@@ -88,10 +88,29 @@ function visibleIn(root, sel) {
 var OVERLAY_SEL = '.pmt-pop, .pmt-findbar, .pmw-ed-find:not([hidden]), [data-pmw-overlay]';
 /* how far below its own place the stage has to start so that a card covers no strip, header row, chat header or open
    overlay in its column */
+/* Jared #19 (2026-10-15, the coordinator's ruling A, by pm7-liquid-glass): on every page the stage hangs tight under the
+   title bar at the bell (BAR_GAP below the bar's bottom edge), so the cards read as the bell's, and drops only past a
+   tab strip right under it (within STRIP_REACH of the bar, across the cards' width). On Home it also clears the
+   panel's strip, header row, chat header or an open overlay, as before. Home's drop used to be measured only when a card
+   arrived on Home and was never cleared, so every other page kept it (cards 74 px down, mid-screen). The stage is now
+   measured again on every page change. */
+var BAR_GAP = 6, STRIP_REACH = 60;
+var STRIP_SEL = '[role="tablist"], .pm-segtab, .pmw-strip, .workspace-tabs';
 function noticeDrop(host) {
-  if (!homeIsPage() || !state.centre) return 0;
   var hr = host.getBoundingClientRect();
   var x = hr.left + hr.width / 2, top = hr.bottom + NOTICE_GAP, want = top;
+  var bar = doc.querySelector('.title-bar'), br = bar && bar.getClientRects().length ? bar.getBoundingClientRect() : null;
+  if (br && br.height) want = Math.max(want, br.bottom + BAR_GAP);
+  var stage = doc.getElementById('rsStage'), half = (stage && stage.offsetWidth ? stage.offsetWidth : 344) / 2;
+  var page = doc.querySelector('.primary-content > .page.active'), base = want;
+  if (page) {
+    var strips = page.querySelectorAll(STRIP_SEL);
+    for (var s0 = 0; s0 < strips.length; s0++) {
+      var sr = strips[s0].getClientRects().length ? strips[s0].getBoundingClientRect() : null;
+      if (sr && sr.width && sr.right > x - half && sr.left < x + half && sr.top < base + STRIP_REACH && sr.bottom > base) want = Math.max(want, sr.bottom + 8);
+    }
+  }
+  if (!homeIsPage() || !state.centre) return Math.max(0, Math.round(want - top));
   var panels = state.centre.querySelectorAll('.pmw-panel');
   for (var i = 0; i < panels.length; i++) {
     var pr = panels[i].getBoundingClientRect();
@@ -117,12 +136,68 @@ function noticeDrop(host) {
   }
   return Math.max(0, Math.round(want - top));
 }
+/* review r3 (2026-10-15), the coordinator's ruling on #19: nothing the notices show may sit over a control. From the
+   place above (under the bell), the cards' column moves to the nearest spot where it covers no button, field, link, tab
+   or switch of the page: first down, then to either side, within reach of the bell. With no such spot it stays and says
+   so (data-pmn-crowded); a toast staged there then shows for a shorter time (onboarding 19-notify.js). The controls are
+   read once per placement from their boxes (no hit tests), and only while a card shows. */
+var CONTROL_SEL = 'button, a[href], input:not([type="hidden"]), select, textarea, summary, [role="button"], [role="tab"], [role="switch"], [role="checkbox"], [role="radio"], [role="menuitem"], [role="option"], [role="slider"], [contenteditable="true"]';
+var SPOT_DOWN = 320, SPOT_SIDE = 280, SPOT_STEP = 12, SPOT_PAD = 4;
+function controlsIn(x0, x1, y0, y1, stage) {
+  /* the page that shows (the others keep their layout while hidden), the chat, the left column and the title bar */
+  var out = [], roots = [doc.querySelector('.primary-content > .page.active'), doc.getElementById('chatPanel'), doc.querySelector('.left-panel'), doc.querySelector('.title-bar')];
+  for (var r = 0; r < roots.length; r++) {
+    if (!roots[r]) continue;
+    var list = roots[r].querySelectorAll(CONTROL_SEL);
+    for (var i = 0; i < list.length; i++) {
+      var e = list[i]; if (stage.contains(e) || e.closest('#notifySlot')) continue;
+      var b = e.getBoundingClientRect();
+      if (b.width < 2 || b.height < 2 || b.right < x0 || b.left > x1 || b.bottom < y0 || b.top > y1) continue;
+      out.push(b);
+    }
+  }
+  return out;
+}
+function noticeSpot(host, stage) {
+  var drop = noticeDrop(host), spot = { drop: drop, shift: 0, crowded: false };
+  var cards = 0; for (var c = stage.firstElementChild; c; c = c.nextElementSibling) if (c.getClientRects().length && !c.classList.contains('pmn-flying') && !c.classList.contains('pmn-leaving')) cards++;
+  if (!cards) return spot;
+  var sr = stage.getBoundingClientRect(); if (sr.height < 4 || sr.width < 4) return spot;
+  /* where the column starts with no drop and no shift: its top from the bell's slot (top: 100% + NOTICE_GAP + drop, in
+     css/20-shell.css), its left from where it is now less the shift it has */
+  var curShift = parseFloat(stage.style.getPropertyValue('--pmw-notice-shift')) || 0;
+  var left0 = sr.left - curShift, top0 = host.getBoundingClientRect().bottom + NOTICE_GAP, w = sr.width, h = sr.height;
+  var vw = doc.documentElement.clientWidth, vh = doc.documentElement.clientHeight;   /* the app's own frame */
+  var cs = controlsIn(left0 - SPOT_SIDE, left0 + w + SPOT_SIDE, top0 + drop, top0 + drop + SPOT_DOWN + h, stage);
+  function free(d, sh) {
+    var x0 = left0 + sh - SPOT_PAD, x1 = left0 + sh + w + SPOT_PAD, y0 = top0 + d - SPOT_PAD, y1 = top0 + d + h + SPOT_PAD;
+    if (x0 < 6 || x1 > vw - 6 || y1 > vh - 6) return false;
+    for (var i = 0; i < cs.length; i++) { var b = cs[i]; if (b.right > x0 && b.left < x1 && b.bottom > y0 && b.top < y1) return false; }
+    return true;
+  }
+  var best = null, bestCost = Infinity;
+  for (var dd = 0; dd <= SPOT_DOWN; dd += SPOT_STEP) {
+    if (dd > bestCost) break;
+    for (var k = 0; k <= SPOT_SIDE; k += SPOT_STEP * 2) {
+      var cost = dd + k * 0.8; if (cost >= bestCost) break;
+      if (free(drop + dd, k)) { best = { drop: drop + dd, shift: k }; bestCost = cost; break; }
+      if (k && free(drop + dd, -k)) { best = { drop: drop + dd, shift: -k }; bestCost = cost; break; }
+    }
+  }
+  if (best) { spot.drop = best.drop; spot.shift = best.shift; } else spot.crowded = true;
+  return spot;
+}
 function applyDrop() {
   var stage = doc.getElementById('rsStage'), host = stage && stage.parentElement;
-  if (!stage || !host) return;
-  var d = noticeDrop(host) + 'px';
+  if (!stage || !host) return false;
+  var spot = noticeSpot(host, stage), d = spot.drop + 'px', x = spot.shift + 'px';
   if (stage.style.getPropertyValue('--pmw-notice-drop') !== d) stage.style.setProperty('--pmw-notice-drop', d);
+  if (stage.style.getPropertyValue('--pmw-notice-shift') !== x) stage.style.setProperty('--pmw-notice-shift', x);
+  if (stage.hasAttribute('data-pmn-crowded') !== spot.crowded) stage.toggleAttribute('data-pmn-crowded', spot.crowded);
+  return spot.crowded;
 }
+/* the notices ask before a toast's time starts (19-notify.js stage()) */
+window.PM_NOTICE_PLACE = applyDrop;
 shell.installNotices = function () {
   if (shell.noticesOn) return true;
   var stage = doc.getElementById('rsStage');
@@ -144,6 +219,24 @@ shell.installNotices = function () {
     pending = requestAnimationFrame(function () { requestAnimationFrame(function () { pending = 0; applyDrop(); }); });
   }
   ['pointerdown', 'keydown', 'focusin'].forEach(function (t) { doc.addEventListener(t, later, true); });
+  /* the page scrolling controls under cards already shown: placed again once per frame */
+  var scrollQ = 0;
+  doc.addEventListener('scroll', function () {
+    if (scrollQ || !stage.firstElementChild) return;
+    scrollQ = requestAnimationFrame(function () { scrollQ = 0; applyDrop(); });
+  }, { capture: true, passive: true });
+  /* a page change: measure again once the new page shows (its strips are laid out two frames on), while a card shows.
+     Only a page's own class counts: every class change inside the pages measured too, and a Usage room change makes
+     hundreds (review r3 R2, 2026-10-15: 95-165 ms of forced style and layout over eight room clicks) */
+  var main = doc.querySelector('.primary-content'), turn = 0;
+  if (main) new MutationObserver(function (list) {
+    if (turn || !stage.firstElementChild) return;
+    for (var i = 0; i < list.length; i++) {
+      if (list[i].target.parentElement !== main) continue;
+      turn = requestAnimationFrame(function () { requestAnimationFrame(function () { turn = 0; applyDrop(); }); });
+      return;
+    }
+  }).observe(main, { attributes: true, subtree: true, attributeFilter: ['class'] });
   applyDrop();
   return true;
 };

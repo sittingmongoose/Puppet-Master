@@ -1,3 +1,4 @@
+# This file no longer feeds PMConcept7. Use scripts/pm7-where.py to find where to edit.
 """Source-owned T39 Usage grid-slot and all-bar-label repairs.
 
 T39 follows T38 and is limited to the two user-confirmed Usage defects:

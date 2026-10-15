@@ -493,12 +493,14 @@ def('n7', 'keyRefused', 'Key refused once: one clear fix', async (d, A) => {
   A.ok(await d.state(() => /shared too widely/.test(document.body.textContent)), 'explains the refusal'); await d.act('fixPerms');
   await until(d, "Object.keys(window.O55.S.sess.ops).some((k) => k.startsWith('sshinstall:nas-home') && window.O55.S.sess.ops[k].state === 'done')", 'fixed', 9000); A.ok(true, 'fixed and verified');
 });
-def('d1', 'fresh', 'Concept demo pill switches the world while the window is open', async (d, A) => {
+def('d1', 'fresh', 'The Demo Studio switches the world while the window is open', async (d, A) => {
   await d.openOnboarding();
-  await d.click('#o55-demo .o55-demopill', 'demo menu button');
-  await d.untilElement('#o55-demo .o55-demomenu', 'demo menu');
-  A.ok(await d.state(() => !!document.querySelector('#o55-demo .o55-demomenu')), 'menu opens over the onboarding scrim');
-  await d.click('#o55-demo [data-demo="scenario"][data-arg="returning"]', 'returning scenario');
+  await d.click('#o55-demo .pmds-entry', 'Concept demo item');
+  await d.untilElement('#pmds-sheet:not([hidden])', 'Demo Studio');
+  A.ok(await d.state(() => !!document.querySelector('#pmds-sheet:not([hidden])')), 'the Studio opens over the onboarding scrim');
+  await d.click('#pmds-tab-onboarding', 'Onboarding section');
+  await d.click('#pmds-sheet [data-pmds-do="pick-base"][data-arg="returning"]', 'returning situation');
+  await d.click('#pmds-sheet [data-pmds-do="run-pick"]', 'run onboarding');
   await until(d, "window.O55.S.env.scenario === 'returning'", 'returning fixture loaded'); await d.untilScreen('welcome');
   A.eq(await d.state(() => window.O55.S.env.scenario), 'returning', 'scenario switched'); A.eq(await d.screen(), 'welcome', 'onboarding restarted');
   A.ok(await d.state(() => /Welcome back/.test(document.body.textContent)), 'returning banner from cached records');

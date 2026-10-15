@@ -125,6 +125,25 @@
     return '#' + v.map((x) => x.toString(16).padStart(2, '0')).join('');
   };
   A.defineFamily = function defineFamily(name, def) { A.families[name] = def; };
+  /* The width of a run of art text in its own units, so a caption can be laid on a surface that covers its whole box
+     (the words in the art keep their contrast whatever passes behind them: a stage edge, a string, a wave). Measured with
+     a detached canvas's measureText, which reads no layout of the page; cached per font and text. A face not loaded yet
+     falls back to a generous estimate. ls: letter-spacing in units, added per character. */
+  const tw = new Map();
+  let twx = null;
+  A.textW = function textW(text, size, family, weight, ls) {
+    text = String(text || ''); const k = `${weight || 600}|${size}|${family}|${ls || 0}|${text}`;
+    if (tw.has(k)) return tw.get(k);
+    let w = text.length * size * 0.62;
+    try {
+      twx = twx || document.createElement('canvas').getContext('2d');
+      twx.font = `${weight || 600} ${size}px ${family}`;
+      const m = twx.measureText(text).width; if (m > 0) w = Math.max(m, text.length * size * 0.42);
+    } catch (_) {}
+    w += (ls || 0) * text.length;
+    if (tw.size > 600) tw.clear();
+    tw.set(k, w); return w;
+  };
   /* Semantic tones: scenes ask for tone 0..3; each family maps them onto its own accents. */
   A.tone = function tone(ctx, i) { const t = ctx.pal.tones || [ctx.pal.ink || '#888']; return t[((i || 0) % t.length + t.length) % t.length]; };
   A.defineScene = function defineScene(id, def) { A.scenes[id] = def; };

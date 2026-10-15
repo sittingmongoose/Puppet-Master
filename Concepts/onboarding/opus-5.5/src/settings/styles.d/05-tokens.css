@@ -4,14 +4,59 @@
    quieter than what it explains. The attention colour, used as text for status words ("Unconfirmed", "Clashes
    with …", "Last checkup: Ready with warnings"), is deepened where it fell under 3 to 1, and a list's selected row
    keeps its details between the value and label colours on its tinted background. High contrast (12-look.css) still wins in the Basic
-   themes. */
+   themes.
 
-html[data-theme="basic-dark"] #panel-settings { --k3-text-3: #989ca5; }
-html[data-theme="friendly-dark"] #panel-settings { --k3-text-3: #9c97a5; }
-html[data-theme="retro-dark"] #panel-settings { --k3-text-3: #858f74; }
-html[data-theme="glass-dark"] #panel-settings { --k3-text-3: rgba(226, 215, 245, .62); }
-html[data-theme="glass-light"] #panel-settings { --k3-text-2: rgba(24, 37, 45, .84); --k3-text-3: rgba(27, 43, 51, .74); --k3-amber: #7a4f06; --k3-red: #a8334a; }
-html[data-theme="friendly-light"] #panel-settings { --k3-text-3: #6e6874; --k3-amber: #a67d1a; }
-html[data-theme="retro-light"] #panel-settings { --k3-amber: #c46200; }
+   Contrast round (2026-10-15): every word Settings sets reads 4.5 to 1 against the worst pixel behind it, measured in
+   the browser on the GPU (glass and wallpaper grounds included), and a disabled control's words 3 to 1. The muted ink
+   now also clears the grounds it missed (the Details head, a chapter's footer links, Glass's frosted sheets over the
+   wallpaper), and these join it, each set only where a look's own colour fell short:
+     --k3-accent-ink  the accent as words (Changed, links, text buttons, eyebrows, chosen chips), drawn toward the label ink;
+     --k3-on-accent   words on an accent fill (the chosen segment): the look's own ink for its accent, as onboarding's;
+     --k3-amber/red/green  the status colours, used as words and marks alike: deepened in the light looks, lightened in
+                      the dark ones where they read under 4.5;
+     --k3-dim         how far a disabled control dims (.5 to .56 took its muted words to 2.1 to 2.7).
+   The rules that read them follow the tables. NieR Mode's inks are generated (13-nier.css, tools/nier_palette.py). */
+
+#panel-settings { --k3-accent-ink: var(--k3-accent); --k3-on-accent: #fff; --k3-dim: .7; }
+
+html[data-theme="basic-dark"] #panel-settings { --k3-text-3: #9fa3ac; --k3-red: #f2716d; --k3-on-accent: #0b1a2b; }
+html[data-theme="basic-light"] #panel-settings { --k3-text-3: #525965; --k3-amber: #b54200; }
+html[data-theme="friendly-dark"] #panel-settings { --k3-text-3: #aaa5b3; --k3-on-accent: #1c1624; }
+html[data-theme="friendly-light"] #panel-settings { --k3-text-3: #6e6874; --k3-amber: #86630f; --k3-dim: .78; --k3-on-accent: #1c1624;
+  --k3-accent-ink: color-mix(in srgb, var(--k3-accent) 46%, var(--k3-text-1)); --k3-red: color-mix(in srgb, #e8654c 64%, var(--k3-text-1)); --k3-green: color-mix(in srgb, #2fa183 62%, var(--k3-text-1)); }
+html[data-theme="retro-dark"] #panel-settings { --k3-text-3: #9aa489; --k3-red: #e27860; --k3-on-accent: #0a0c08; }
+html[data-theme="retro-light"] #panel-settings { --k3-amber: #9c5000; --k3-red: #bd2c2c; }
+html[data-theme="glass-dark"] #panel-settings { --k3-text-2: rgba(240, 234, 253, .92); --k3-text-3: rgba(236, 228, 252, .86); --k3-on-accent: #1d1430;
+  --k3-accent-ink: color-mix(in srgb, var(--k3-accent) 50%, var(--k3-text-1)); --k3-red: color-mix(in srgb, #ff7893 80%, var(--k3-text-1)); }
+/* Glass Light's sheets are frosted over the wallpaper, a mid-tone ground (luminance down to about .3), where only an
+   ink close to the label's reads 4.5 to 1. Its words take the label ink, a little lighter for the quieter ones, and
+   carry their tone (accent, attention, error, ok) as a tint, as on the Projects page; the accent's fills and edges
+   keep the full colour. */
+html[data-theme="glass-light"] #panel-settings { --k3-text-2: rgba(23, 34, 42, .93); --k3-text-3: rgba(23, 34, 42, .88);
+  --k3-accent-ink: color-mix(in srgb, var(--k3-accent) 22%, var(--k3-text-1)); --k3-amber: color-mix(in srgb, #7a4f06 55%, var(--k3-text-1));
+  --k3-red: color-mix(in srgb, #a8334a 55%, var(--k3-text-1)); --k3-green: color-mix(in srgb, var(--accent-lime) 70%, var(--k3-text-1)); }
 
 #panel-settings .pm51-mgr .pm51-roster .resource-row.active .resource-row-meta { color: color-mix(in srgb, var(--k3-text-1) 50%, var(--k3-text-2)); }
+/* the chosen chapter's line in the rail, likewise (it read 3.7 to 4.0 on the chosen row's tint) */
+#panel-settings .domain-link.active .domain-copy small { color: color-mix(in srgb, var(--k3-text-1) 50%, var(--k3-text-2)); }
+
+/* ---- who reads which ink ---------------------------------------------------------------------------------------- */
+/* The rail's chapter headings ("Chapters", "Essential setup") were the base page's fixed #77748c in every look (2.3 to
+   3.9 to 1); they take the look's muted ink, as NieR Mode's already did. */
+#panel-settings .rail-heading { color: var(--k3-text-3); }
+/* Placeholders were Chrome's own #757575 in every field but the two search boxes (2.4 to 4.0 to 1). */
+#panel-settings :is(input, textarea)::placeholder { color: var(--k3-text-3); opacity: 1; }
+/* The chosen segment's words on the accent fill (white read 1.8 to 2.9 on the light accents of the dark looks and of
+   Friendly Light). Glass Light's accent is a mid tone that neither white nor a dark ink reads on (4.2 at best): it is
+   filled with Liquid Glass's selection blue and white words, as Liquid Glass fills its lens and selected rows (its
+   --lg-sel, the same value while Liquid Glass is off); Glass Dark takes that selection too while Liquid Glass is on. */
+#panel-settings .segmented button.active { color: var(--k3-on-accent); }
+html[data-theme="glass-light"] #panel-settings .segmented button.active { background: var(--lg-sel, rgba(0, 95, 204, .88)); color: var(--lg-on-sel, #fff); }
+html[data-lg="on"][data-theme="glass-dark"] #panel-settings .segmented button.active { background: var(--lg-sel); color: var(--lg-on-sel); }
+/* The accent as words */
+#panel-settings :is(.home-eyebrow, .section-kicker, .breadcrumb-domain) { color: var(--k3-accent-ink); }
+/* A disabled control keeps its words at 3 to 1: every word-bearing disabled control in Settings dims to --k3-dim,
+   the page-wide dim of a disabled button included. */
+#panel-settings [data-pm-hover-was-disabled="true"] { opacity: var(--k3-dim); }
+/* Key caps ("⌘ K") read the muted ink on their own lighter cap (4.0 in Basic Dark): they take the selected-row mix. */
+#panel-settings .kbd { color: color-mix(in srgb, var(--k3-text-1) 50%, var(--k3-text-2)); }

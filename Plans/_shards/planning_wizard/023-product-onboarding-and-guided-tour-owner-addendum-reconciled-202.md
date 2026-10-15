@@ -2,9 +2,9 @@
 
 Source: `Plans/Planning_Wizard.md`
 
-Source lines: L1781-L2145
+Source lines: L1781-L2168
 
-Source SHA256: `9408fbc6093882f07c12e9e188d76530bbb93adb5d3c31b74b76e5b6b0e518f0`
+Source SHA256: `b85382c843188bfdda5f422cb4c6f8b3b60ec9eb13e07335be90106e68a9b9a1`
 
 ---
 
@@ -115,18 +115,21 @@ plan_unit_id: PWIZ-021
 unit_type: owner_boundary
 status: accepted
 owner_doc: Plans/Planning_Wizard.md
-canonical_text: Product Onboarding owns the reversible draft-first eleven-stage semantic dependency graph and the
-  unchanged six-stage connect-existing shortcut. Before the context-specific reviewed commit, only bounded read-only
-  preflight and individually consented selected-source authentication may run. Project System commits the selected
-  existing owner command and required child receipts once, including Settings-owned exact-ID copy/rebind and readback,
-  before broad provider setup. The actual committed Project then enters provider_setup, optional free_models_setup
-  and truthful Ready. Explicit Project deferral skips both provider phases without inventing a Project. UI choreography
-  remains fourteen typed local actions (ui.onboarding.choose_look added by DL-153), never an Onboarding backend or
-  command family.
-  Each ui.onboarding.choose_look request replaces only the fields it sets in the session's optional
-  look_choice; absent or null fields mean nothing chosen yet. A resumed setup repaints that stored look
-  choice, NieR Mode included, and null fields fall back to F3-520's start rule; this session choice performs
-  no Settings write before commit.
+canonical_text: >-
+  Product Onboarding owns the reversible draft-first eleven-stage semantic dependency graph and the unchanged
+  six-stage connect-existing shortcut. Before the context-specific reviewed commit, only bounded read-only
+  preflight and individually consented selected-source authentication may run. Project System commits the
+  selected existing owner command and required child receipts once, including Settings-owned exact-ID
+  copy/rebind and readback, before broad provider setup. The actual committed Project then enters
+  provider_setup, optional free_models_setup and truthful Ready. Explicit Project deferral skips both provider
+  phases without inventing a Project. UI choreography remains fourteen typed local actions
+  (ui.onboarding.choose_look added by DL-153), never an Onboarding backend or command family. Each
+  ui.onboarding.choose_look request replaces only the fields it sets in the session's optional look_choice;
+  absent or null fields mean nothing chosen yet. A resumed setup repaints that stored look choice, NieR Mode
+  included, and null fields fall back to F3-520's start rule; this session choice performs no Settings write
+  before commit. The 2026-10-14 presentation updates consume FinalGUISpec F3-655 (Planning Wizard theme
+  matching) and F3-656 (onboarding art and the chosen look through Create Project), with no new local action or
+  commit authority.
 gui_related: true
 gui_classification_reason: Defines the complete visible first-run flow, branching, copy density, actions, and state
   presentation.
@@ -217,6 +220,10 @@ source_lineage:
 - source_packet:PM_Onboarding_Doctor_Newbie_First_Complete_Handoff_2026-09-03/10_ACCEPTANCE_FAILURE_AND_USABILITY_MATRIX.md:81-83
 - source_report:reports/concept-packet-integration-20260926/project-recovery-owner.md
 - source_report:reports/packet-integration-completion-20260926/project-recovery.md
+- /mnt/Cursor/share/puppet-master/2026-10-13-wizard-orch-theme/NOTES.md, SHA-256 ca7f206e6b92440d26972e4eb4113348722fb45245ba8429dad46633b56b49b8
+  (approved campaign source lineage; not native implementation evidence)
+- /mnt/Cursor/share/puppet-master/2026-10-13-onboarding-art-glass/README.md, SHA-256 ce5e5e90df41f180e54b89e4fb3fe0087164039728a902aa481cbcc3adacb088
+  (approved campaign source lineage; not native implementation evidence)
 preserved_exact_tokens:
 - Continue Setup
 - Open Repository
@@ -234,6 +241,7 @@ negative_constraints:
 - Do not claim native/runtime, recovery, security, visual or motion proof from static fixtures.
 stale_retired_dispositions:
   - "Amended 2026-10-11 (Jared 2026-10-10 reseal item 2, DL-153): Resumed Product Onboarding repaints its stored look choice, including NieR Mode."
+
 ```
 
 ### PWIZ-022 - Product Onboarding motion, accessibility, and migration
@@ -243,15 +251,19 @@ plan_unit_id: PWIZ-022
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Planning_Wizard.md
-canonical_text: Product Onboarding uses one bounded modal window over the visibly preserved live application, bounded
-  interruptible Slint-portable motion, deterministic Reduced Motion and low-resource equivalents, exact path-correct
-  progress and keyboard/focus/Back/Close/Escape semantics, no-secret revisioned persistence, and receipt-backed
-  migration from legacy provider-first, five-stage, seven-stage and predecessor nine-stage records without fabricating
-  review or replaying owner mutations; already committed rows resume only after real Project-owner revalidation;
-  it never becomes a full-page route or nested-modal owner branch. A first_run window starts in Basic Dark and a
-  settings_rerun window in the look on screen, each preselected and neither changing a stored value (F3-520,
-  DL-153); its wake, act card and curtain call take five styles, NieR's whenever NieR Mode is painted and otherwise
-  the painted family's own (F3-600), sharing one trigger, end state, snap and sound path and never holding input.
+canonical_text: >-
+  Product Onboarding uses one bounded modal window over the visibly preserved live application, bounded
+  interruptible Slint-portable motion, deterministic Reduced Motion and low-resource equivalents, exact
+  path-correct progress and keyboard/focus/Back/Close/Escape semantics, no-secret revisioned persistence, and
+  receipt-backed migration from legacy provider-first, five-stage, seven-stage and predecessor nine-stage
+  records without fabricating review or replaying owner mutations; already committed rows resume only after real
+  Project-owner revalidation; it never becomes a full-page route or nested-modal owner branch. A first_run
+  window starts in Basic Dark and a settings_rerun window in the look on screen, each preselected and neither
+  changing a stored value (F3-520, DL-153); its wake, act card and curtain call take five styles, NieR's
+  whenever NieR Mode is painted and otherwise the painted family's own (F3-600), sharing one trigger, end state,
+  snap and sound path and never holding input. FinalGUISpec F3-656 owns connected onboarding art and F3-652 the
+  shared Glass material; F3-654 supplies the settled contrast interpretation. These consume the same semantic
+  stages and Reduced Motion boundary.
 gui_related: true
 gui_classification_reason: Defines user-visible motion, responsive layout, focus, copy, error, resume, and migration
   behavior.
@@ -306,12 +318,15 @@ node_compile_hint:
   create_nodeseeds: false
 source_lineage:
 - source_report:wave3-lane2.md#S0098
+- /mnt/Cursor/share/puppet-master/2026-10-13-onboarding-art-glass/README.md, SHA-256 ce5e5e90df41f180e54b89e4fb3fe0087164039728a902aa481cbcc3adacb088
+  (approved campaign source lineage; not native implementation evidence)
 negative_constraints:
 - Do not block input on animation.
 - Do not require browser-only effects.
 - Do not overwrite saved Project or application layout.
 - Do not migrate an unresolved draft directly into confirmed Review or Automatic Preparation; do not replay completed
   Project work when a verified committed row resumes provider setup.
+
 ```
 
 ### PWIZ-023 - Guided Tour newbie-first real-application practice
@@ -322,20 +337,23 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Planning_Wizard.md
 canonical_text: >-
-  Guided Tour is an optional Onboarding handoff in exact Assistant Chat/Teacher, workspace, Planning Wizard order.
-  The learner sends the supplied local question, reads Teacher's same-conversation answer, and sees it in simple
-  words through Explain this reply simply, which adds one extra, simpler reply and leaves the original unchanged
-  (DL-126); the callout then points to the quick dot by the message box, which makes later replies simple, and
-  names the ELI5 popup behind the wand's ELI5 row, where the chat's choice is set (DL-126, ACD-484, F3-581);
-  practises the workspace panels of PWIZ-035 and performs a real widget action; then describes the book-club goal, answers a meaningful question,
-  reviews the plan, edits an answer, and sees the specific consequence before the approval boundary. Planning owns
-  at least half of meaningful actions and dwell time. Try it and Show Me share each mounted owner's handler and
-  success predicate. Tour state never grants approval or starts work. ELI5, Pause, Skip, Back, safe-step resume,
-  Settings-owned Reduced Motion, measured callouts, and focused headings remain usable. Run Onboarding Again resets
-  the tour completely, and Settings offers Resume Guided Tour and Replay Guided Tour as separate entries. Skip restores captured state;
-  Finish restores temporary layout by default or keeps it only on explicit selection, then lands on the real
-  Planning Wizard with the committed Project selected. While any restore runs, the application's own notices about
-  it stay quiet in every look and the Tour's closing note says what was put back (F3-521, DL-153). Both predecessor controllers remain source lineage only.
+  Guided Tour is an optional Onboarding handoff in exact Assistant Chat/Teacher, workspace, Planning Wizard
+  order. The learner sends the supplied local question, reads Teacher's same-conversation answer, and sees it in
+  simple words through Explain this reply simply, which adds one extra, simpler reply and leaves the original
+  unchanged (DL-126); the callout then points to the quick dot by the message box, which makes later replies
+  simple, and names the ELI5 popup behind the wand's ELI5 row, where the chat's choice is set (DL-126, ACD-484,
+  F3-581); practises the workspace panels of PWIZ-035 and performs a real widget action; then describes the
+  book-club goal, answers a meaningful question, reviews the plan, edits an answer, and sees the specific
+  consequence before the approval boundary. Planning owns at least half of meaningful actions and dwell time.
+  Try it and Show Me share each mounted owner's handler and success predicate. Tour state never grants approval
+  or starts work. ELI5, Pause, Skip, Back, safe-step resume, Settings-owned Reduced Motion, measured callouts,
+  and focused headings remain usable. Run Onboarding Again resets the tour completely, and Settings offers
+  Resume Guided Tour and Replay Guided Tour as separate entries. Skip restores captured state; Finish restores
+  temporary layout by default or keeps it only on explicit selection, then lands on the real Planning Wizard
+  with the committed Project selected. While any restore runs, the application's own notices about it stay quiet
+  in every look and the Tour's closing note says what was put back (F3-521, DL-153). Both predecessor
+  controllers remain source lineage only. Guided example/Teacher presentation is F3-656's; resume prompts and
+  page notes consume F3-447's under-bell staging. No tour action, approval or automatic timeout is added.
 gui_related: true
 gui_classification_reason: Defines the three-chapter practice flow, real-application interactions, motion, controls, callouts, focus, and exit state.
 depends_on: [PWIZ-021, ACD-431, ACD-484]
@@ -364,12 +382,17 @@ context_scope: guided_tour_newbie_first_real_application
 implementation_surfaces: [Plans/Planning_Wizard.md, Plans/guided_tour_contracts.schema.json]
 node_compile_hint: {mode: guided_tour_contract, create_worknodes: false, create_nodeseeds: false}
 source_lineage:
-  - "source_report:register-settings-onboarding.md#O-07"
-  - "source_report:wave3-lane2.md#S0095"
-  - "source_packet:PM_Onboarding_Tour_Newbie_First_Addendum_2026-09-03/04_GUIDED_TOUR_REBUILD.md"
-  - "source_packet:PM_Onboarding_Tour_Newbie_First_Addendum_2026-09-03/05_DEMO_SCRIPT_AND_COPY_STANDARD.md"
-  - "source_packet:PM_Onboarding_Tour_Newbie_First_Addendum_2026-09-03/06_IMPLEMENTATION_ACCEPTANCE_AND_IMPACTS.md"
+- source_report:register-settings-onboarding.md#O-07
+- source_report:wave3-lane2.md#S0095
+- source_packet:PM_Onboarding_Tour_Newbie_First_Addendum_2026-09-03/04_GUIDED_TOUR_REBUILD.md
+- source_packet:PM_Onboarding_Tour_Newbie_First_Addendum_2026-09-03/05_DEMO_SCRIPT_AND_COPY_STANDARD.md
+- source_packet:PM_Onboarding_Tour_Newbie_First_Addendum_2026-09-03/06_IMPLEMENTATION_ACCEPTANCE_AND_IMPACTS.md
+- /mnt/Cursor/share/puppet-master/2026-10-13-onboarding-art-glass/README.md, SHA-256 ce5e5e90df41f180e54b89e4fb3fe0087164039728a902aa481cbcc3adacb088
+  (approved campaign source lineage; not native implementation evidence)
+- /mnt/Cursor/share/puppet-master/2026-10-13-notifications/NOTES.md, SHA-256 f09d2b8856652950762b6580b8ebab43022bdf053272738f52720de25922a895
+  (approved campaign source lineage; not native implementation evidence)
 negative_constraints: [Do not restore either predecessor controller., Do not restore ui.guided_tour.restore_layout or ui.guided_tour.keep_layout as separate current actions., Do not build a tooltip carousel or parallel demo., Do not use provider credentials or tokens., Do not fabricate action success., "Do not rewrite, regenerate or replace the example answer for ELI5; the simpler version is one extra reply (DL-126).", Do not add a Guided Tour-specific Reduced Motion toggle., Do not let callouts escape the viewport or point at stale geometry., Do not keep a demonstrated layout without explicit selection., Do not leave a partial composer draft after Skip., Do not expose protected authentication content., Do not promote local page/focus presentation into a domain command or handler., Do not treat fixture completion as runtime certification or approval to begin work.]
 stale_retired_dispositions:
   - "Amended 2026-10-09 (DL-180): the move-or-dock-chat step retires; the workspace chapter teaches panels (PWIZ-035)."
+
 ```

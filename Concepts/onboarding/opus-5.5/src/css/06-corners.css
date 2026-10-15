@@ -1,0 +1,8 @@
+/* Control corners, one pair per look (no-pills, Jared 2026-10-10, card NP-CORNERS; the rule is DL-184 / F3-648).
+   A control is the look's own rectangle: --pm-ctl-r on its outer box, --pm-ctl-r-in on anything inside it (a switch's
+   key, a chosen cell). Both stay well under half of any control's height, so nothing reads as a capsule. Every no-pills
+   pattern reads only these two values; Liquid Glass and later work reuse them instead of choosing their own. */
+html { --pm-ctl-r: 4px; --pm-ctl-r-in: 2px; }
+html[data-theme^="friendly"] { --pm-ctl-r: 6px; --pm-ctl-r-in: 3px; }
+html[data-theme^="glass"] { --pm-ctl-r: 6px; --pm-ctl-r-in: 3px; }
+html[data-theme^="retro"], html[data-o55-nier="on"] { --pm-ctl-r: 0px; --pm-ctl-r-in: 0px; }

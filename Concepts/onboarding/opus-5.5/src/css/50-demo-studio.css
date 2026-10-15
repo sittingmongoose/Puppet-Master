@@ -1,0 +1,525 @@
+/* The Demo Studio (js/90-demo.js, 91-demo-studio.js, 92-demo-studio-ui.js): the "Concept demo" item and the sheet that
+   rises out of it. This file is the structure and the Basic look; 51-demo-studio-looks.css gives Friendly, Retro, Glass
+   and NieR their own forms and holds Reduced Motion. Colours are the live theme's tokens through --pmds-* below, so
+   light and dark follow the page. No capsules: every control is the look's rectangle (--pm-ctl-r), every mark a square,
+   and nothing has a coloured side stripe. Hover belongs to the app's engine (data-pmh on tiles, rows and controls). */
+
+#o55-demo.pmds {
+  --pmds-bg: var(--surface-elevated, var(--surface));
+  --pmds-bg2: color-mix(in srgb, var(--background) 70%, var(--surface));
+  --pmds-ink: var(--text-primary);
+  /* Text tiers (2026-10-14, the landing's contrast floor of 4.5:1 for every settled text): the secondary and muted inks
+     are the look's own ink mixed toward an opaque ground, --pmds-ref, never the theme's --text-muted (too faint for 10.5-12
+     px labels, and translucent in Glass). Each look sets the ground and, where needed, the mix; the result keeps three
+     clear tiers, about 9-17 : 7.5 : 5.5-6 against the ground, and every tier holds 4.5 over the Studio's darkest fill. */
+  --pmds-ref: var(--surface-elevated, var(--surface));
+  --pmds-ink2: color-mix(in srgb, var(--pmds-ink) 83%, var(--pmds-ref));
+  --pmds-mute: color-mix(in srgb, var(--pmds-ink) 68%, var(--pmds-ref));
+  --pmds-line: var(--border);
+  --pmds-line2: var(--border-light, var(--border));
+  --pmds-acc: var(--accent-blue);
+  /* the accent as small text (kickers, In use, On now, the next story point), and the ink on a filled accent */
+  --pmds-acc-text: var(--pmds-acc);
+  --pmds-acc-ink: #fff;
+  --pmds-danger: color-mix(in srgb, var(--accent-error, #d9534f) 60%, #2a0606);
+  --pmds-sel: color-mix(in srgb, var(--text-primary) 9%, transparent);
+  --pmds-wash: color-mix(in srgb, var(--text-primary) 4%, transparent);
+  --pmds-r: 12px; --pmds-r2: 8px; --pmds-ctl: var(--pm-ctl-r, 4px); --pmds-ctl-in: var(--pm-ctl-r-in, 2px);
+  --pmds-font: var(--body-font, 'Inter', system-ui, sans-serif);
+  --pmds-display: var(--display-font, var(--pmds-font));
+  --pmds-mono: 'IBM Plex Mono', 'JetBrains Mono', ui-monospace, Menlo, monospace;
+  --pmds-shadow: 0 28px 70px -22px rgba(0, 0, 0, .6), 0 3px 10px -2px rgba(0, 0, 0, .22);
+  --pmds-tone-a: var(--accent-blue);
+  --pmds-tone-b: var(--accent-magenta);
+  --pmds-tone-c: var(--accent-orange);
+  /* the item never moves or scales: the sheet is position: fixed inside it, and a transform on the item would make the
+     item the sheet's containing block (the onboarding's narrow tab, Usage's 80 % item and the rail review copy's centring
+     all transformed the old item) */
+  transform: none !important; scale: none !important; translate: none !important;
+}
+#o55-demo.pmds[data-o55-narrow] { top: calc(50% - 22px); }
+/* Basic Dark's accent is a light blue: its filled controls carry dark ink */
+#o55-demo.pmds[data-pmds-look="basic"][data-pmds-mode="dark"] { --pmds-acc-ink: #0d1a26; }
+
+/* ---- the item ---- */
+#o55-demo .pmds-entry {
+  display: inline-flex; align-items: center; gap: 7px; height: 30px; padding: 0 11px;
+  border: 1px solid var(--pmds-line); border-radius: var(--pmds-ctl);
+  background: color-mix(in srgb, var(--surface) 94%, var(--background)); color: var(--pmds-ink2);
+  font: 600 12px/1 var(--pmds-font); white-space: nowrap; cursor: pointer;
+  box-shadow: 0 6px 18px -8px rgba(0, 0, 0, .45);
+  transition: background-color 140ms ease, color 140ms ease;
+}
+#o55-demo .pmds-entry .pmds-ico { color: var(--pmds-acc); flex: none; }
+#o55-demo .pmds-entry-world { color: var(--pmds-ink); font-weight: 500; }
+/* the separator dot is drawn text and wears the full ink of the words it introduces: Glass's status bar shows the window
+   behind it, and with the sheet carried away the muted tier fell to 4.2:1 and the secondary one to 4.4:1 there */
+#o55-demo .pmds-entry-world::before { content: "\00b7"; margin-right: 7px; }
+#o55-demo .pmds-entry:focus-visible { outline: 2px solid var(--pmds-acc); outline-offset: 2px; }
+/* the sliders mark: its two knobs slide apart on hover and while the Studio is open, and slide in as the sheet opens */
+#o55-demo .pmds-ico-studio rect { transition: translate 260ms cubic-bezier(.3, 1.4, .5, 1); }
+#o55-demo .pmds-entry:is(:hover, [aria-expanded="true"]) .pmds-ico-studio rect:nth-of-type(1),
+#o55-demo .pmds-sheet:not([hidden]) .pmds-brandmark .pmds-ico-studio rect:nth-of-type(1) { translate: -4px 0; }
+#o55-demo .pmds-entry:is(:hover, [aria-expanded="true"]) .pmds-ico-studio rect:nth-of-type(2),
+#o55-demo .pmds-sheet:not([hidden]) .pmds-brandmark .pmds-ico-studio rect:nth-of-type(2) { translate: 5px 0; }
+#o55-demo .pmds-sheet:not([hidden]) .pmds-brandmark .pmds-ico-studio rect { transition-delay: 160ms; transition-duration: 520ms; }
+#o55-demo[data-o55-narrow] .pmds-entry { width: 20px; height: 44px; padding: 0; justify-content: center; border-left: 0; border-radius: 0 var(--pmds-ctl) var(--pmds-ctl) 0; }
+#o55-demo[data-o55-narrow] .pmds-entry > span { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+/* docked in the status bar (the Home layer styles the button as a status item): the open state reads as pressed */
+html[data-pmw-home="on"] #o55-demo.pmds[data-pmw-docked]:not([data-o55-narrow]) > .pmds-entry[aria-expanded="true"] { color: var(--text-primary); background: color-mix(in srgb, var(--text-primary) 10%, transparent); }
+
+/* ---- the sheet ---- */
+#o55-demo .pmds-sheet {
+  position: fixed; left: var(--pmds-x, 14px); top: var(--pmds-top, 120px); width: var(--pmds-w, 960px); height: var(--pmds-h, 640px);
+  z-index: 1; color: var(--pmds-ink); font: 400 13px/1.45 var(--pmds-font); letter-spacing: normal; text-align: left;
+  transform-origin: 20px 100%; contain: layout style;
+}
+#o55-demo .pmds-sheet[hidden] { display: none; }
+#o55-demo .pmds-frame {
+  position: absolute; inset: 0; display: grid; grid-template-rows: auto minmax(0, 1fr) auto; overflow: hidden;
+  border: 1px solid var(--pmds-line); border-radius: var(--pmds-r); background: var(--pmds-bg); box-shadow: var(--pmds-shadow);
+}
+#o55-demo .pmds-sheet :is(h2, h3, h4, h5, p, ol, ul) { margin: 0; }
+#o55-demo .pmds-sheet :is(ol, ul) { padding: 0; list-style: none; }
+/* :where() keeps this reset below every control's own colour (a filled button's ink must win over inherit) */
+#o55-demo .pmds-sheet :where(button) { font: inherit; color: inherit; }
+/* unavailable (an owner this build does not carry): the form is under "Unavailable" in 51-demo-studio-looks.css */
+#o55-demo .pmds-sheet [aria-disabled="true"] { position: relative; cursor: not-allowed; }
+/* selected words: the Studio's own ink on an opaque accent wash. The page-wide selection (the theme's ink over a 25 %
+   glow) depends on what shows through a translucent sheet; Retro and NieR reverse instead (51-demo-studio-looks.css) */
+#o55-demo ::selection { background: color-mix(in srgb, var(--pmds-acc) 28%, var(--pmds-ref)); color: var(--pmds-ink); }
+#o55-demo .pmds-sheet :focus-visible { outline: 2px solid var(--pmds-acc); outline-offset: 2px; }
+#o55-demo .pmds-ico { display: block; flex: none; }
+/* every hover target is positioned: the app's hover engine draws its Glass rim (and other looks' marks) as a
+   pseudo-element against the target, and an unpositioned tile put that rim around the whole scroll area */
+#o55-demo .pmds-sheet [data-pmh] { position: relative; }
+
+/* header */
+#o55-demo .pmds-head {
+  display: flex; flex-wrap: wrap; align-items: center; gap: 10px 12px;
+  padding: 14px 14px 14px 18px; border-bottom: 1px solid var(--pmds-line2);
+  cursor: grab; touch-action: none; user-select: none;
+}
+#o55-demo .pmds-brand { flex: 1 1 auto; min-width: 0; }
+#o55-demo .pmds-head :is(input, button, label) { cursor: auto; }
+#o55-demo .pmds-head button { cursor: pointer; }
+#o55-demo .pmds-sheet[data-pmds-fixed] .pmds-head { cursor: auto; }
+#o55-demo .pmds-sheet[data-pmds-fixed] .pmds-grip { display: none; }
+#o55-demo .pmds-sheet[data-pmds-dragging] .pmds-head { cursor: grabbing; }
+/* the Move handle (arrow keys move the sheet) and Put back (shown while the sheet is away from its corner) */
+#o55-demo :is(.pmds-grip, .pmds-dock) { display: grid; place-items: center; width: 34px; height: 34px; flex: none; border: 1px solid transparent; border-radius: var(--pmds-ctl); background: transparent; color: var(--pmds-mute); }
+#o55-demo .pmds-grip:hover { background: var(--pmds-wash); color: var(--pmds-ink); }
+#o55-demo .pmds-grip { cursor: grab; }
+#o55-demo .pmds-dock { border-color: var(--pmds-line); color: var(--pmds-acc); }
+#o55-demo .pmds-dock:hover { background: var(--pmds-wash); }
+#o55-demo .pmds-dock[hidden] { display: none; }
+#o55-demo .pmds-sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+/* home, outlined while the sheet is carried; lit when a drop there would put it back */
+#o55-demo .pmds-homeghost {
+  position: fixed; z-index: 0; box-sizing: border-box; pointer-events: none;
+  border: 2px dashed color-mix(in srgb, var(--pmds-ink) 30%, transparent); border-radius: var(--pmds-r);
+  background: color-mix(in srgb, var(--pmds-acc) 4%, transparent);
+  transition: border-color 140ms ease, background-color 140ms ease;
+  animation: pmds-ghost-in 160ms ease both;
+}
+#o55-demo .pmds-homeghost[data-lit] { border-color: var(--pmds-acc); background: color-mix(in srgb, var(--pmds-acc) 12%, transparent); }
+@keyframes pmds-ghost-in { from { opacity: 0; } }
+/* carried: the sheet lifts (each look adds its own touch in 51-demo-studio-looks.css) */
+#o55-demo .pmds-sheet[data-pmds-dragging] .pmds-frame { box-shadow: 0 40px 90px -20px rgba(0, 0, 0, .65), 0 6px 16px -4px rgba(0, 0, 0, .3); }
+#o55-demo .pmds-brandmark { display: grid; place-items: center; width: 36px; height: 36px; border-radius: var(--pmds-r2); color: var(--pmds-acc-ink); background: var(--pmds-acc); }
+#o55-demo .pmds-brandkicker { font: 600 10.5px/1.2 var(--pmds-font); letter-spacing: .08em; text-transform: uppercase; color: var(--pmds-mute); }
+#o55-demo .pmds-title { font: 700 18px/1.2 var(--pmds-display); letter-spacing: -.01em; }
+#o55-demo .pmds-search {
+  flex: 0 1 300px; min-width: 180px;
+  display: flex; align-items: center; gap: 8px; height: 34px; padding: 0 8px 0 10px; color: var(--pmds-mute);
+  border: 1px solid var(--pmds-line); border-radius: var(--pmds-ctl); background: var(--pmds-bg2);
+}
+#o55-demo .pmds-search:focus-within { border-color: var(--pmds-acc); box-shadow: 0 0 0 3px color-mix(in srgb, var(--pmds-acc) 22%, transparent); }
+#o55-demo .pmds-q { flex: 1; min-width: 0; height: 100%; border: 0; outline: 0; background: transparent; color: var(--pmds-ink); font: 400 13px/1 var(--pmds-font); }
+#o55-demo .pmds-q::-webkit-search-cancel-button { display: none; }
+/* the hint sits on the muted tier, 4.5:1 or more over the field in every look; typed words take the full ink */
+#o55-demo .pmds-q::placeholder { color: var(--pmds-mute); opacity: 1; }
+#o55-demo .pmds-search kbd { display: grid; place-items: center; min-width: 18px; height: 18px; padding: 0 4px; border: 1px solid var(--pmds-line); border-radius: 3px; font: 600 10.5px/1 var(--pmds-mono); color: var(--pmds-mute); }
+#o55-demo .pmds-x { display: grid; place-items: center; width: 34px; height: 34px; border: 0; border-radius: var(--pmds-ctl); background: transparent; color: var(--pmds-ink2); cursor: pointer; }
+#o55-demo .pmds-x:hover { background: var(--pmds-wash); color: var(--pmds-ink); }
+
+/* body: the rail and the page */
+#o55-demo .pmds-body { display: grid; grid-template-columns: 228px minmax(0, 1fr); min-height: 0; }
+#o55-demo .pmds-nav { position: relative; display: flex; flex-direction: column; gap: 2px; padding: 10px; overflow: auto; border-right: 1px solid var(--pmds-line2); background: var(--pmds-bg2); }
+#o55-demo .pmds-navink { position: absolute; left: 0; top: 0; z-index: 0; width: 0; height: 0; margin-left: 10px; border-radius: var(--pmds-r2); background: var(--pmds-sel); pointer-events: none; opacity: 0; }
+#o55-demo .pmds-sheet:not([data-pmds-compact]) .pmds-navink { width: calc(100% - 20px) !important; }
+#o55-demo .pmds-tab {
+  position: relative; z-index: 1; display: grid; grid-template-columns: 18px minmax(0, 1fr); align-items: center; gap: 11px;
+  min-height: 46px; padding: 6px 10px; border: 0; border-radius: var(--pmds-r2); background: transparent; color: var(--pmds-ink2); text-align: left; cursor: pointer;
+}
+#o55-demo .pmds-tab .pmds-ico { color: var(--pmds-mute); transition: color 160ms ease; }
+#o55-demo .pmds-tab.pmds-on { color: var(--pmds-ink); }
+#o55-demo .pmds-tab.pmds-on .pmds-ico { color: var(--pmds-acc); }
+/* the chosen section's line rises a tier with it (its fill is lighter or darker than the rail) */
+#o55-demo .pmds-tab.pmds-on .pmds-tabmeta { color: var(--pmds-ink2); }
+#o55-demo .pmds-tabtext { display: grid; min-width: 0; }
+#o55-demo .pmds-tablabel { font: 600 13px/1.25 var(--pmds-font); }
+#o55-demo .pmds-tabmeta { overflow: hidden; font-size: 11px; line-height: 1.3; color: var(--pmds-mute); white-space: nowrap; text-overflow: ellipsis; }
+#o55-demo .pmds-main { position: relative; min-height: 0; overflow: auto; overscroll-behavior: contain; scrollbar-width: thin; }
+#o55-demo .pmds-sheet :is(.pmds-main, .pmds-nav, .pmds-beats, .pmds-keys ul) { scrollbar-color: color-mix(in srgb, var(--pmds-ink) 26%, transparent) transparent; }
+#o55-demo .pmds-main:focus { outline: 0; }
+#o55-demo .pmds-page { padding: 22px 26px 30px; }
+
+/* the foot: what the world is set to now */
+#o55-demo .pmds-now {
+  display: flex; align-items: center; gap: 6px 20px; flex-wrap: wrap; min-height: 38px; padding: 8px 18px;
+  border-top: 1px solid var(--pmds-line2); background: var(--pmds-bg2); font-size: 11.5px; color: var(--pmds-ink2);
+}
+#o55-demo .pmds-nowlabel { font-weight: 700; font-size: 10.5px; letter-spacing: .08em; text-transform: uppercase; color: var(--pmds-mute); }
+#o55-demo .pmds-nowitem { display: inline-flex; gap: 6px; white-space: nowrap; }
+#o55-demo .pmds-nowk { color: var(--pmds-mute); }
+#o55-demo .pmds-nowv { color: var(--pmds-ink); font-weight: 600; font-variant-numeric: tabular-nums; }
+
+/* ---- page parts ---- */
+#o55-demo .pmds-phead { position: relative; margin-bottom: 18px; }
+#o55-demo .pmds-kicker { font: 700 10.5px/1.3 var(--pmds-font); letter-spacing: .1em; text-transform: uppercase; color: var(--pmds-acc-text); }
+#o55-demo .pmds-ptitle { margin-top: 4px !important; font: 700 23px/1.2 var(--pmds-display); letter-spacing: -.015em; }
+#o55-demo .pmds-lead { margin-top: 6px !important; max-width: 64ch; font-size: 13.5px; color: var(--pmds-ink2); }
+#o55-demo .pmds-headacts { position: absolute; right: 0; top: 0; display: flex; gap: 8px; }
+#o55-demo .pmds-block { margin-top: 22px; }
+#o55-demo .pmds-btitle { font: 650 12.5px/1.3 var(--pmds-font); letter-spacing: .02em; color: var(--pmds-ink); }
+#o55-demo .pmds-blead { margin: 3px 0 10px !important; font-size: 12.5px; color: var(--pmds-ink2); }
+#o55-demo .pmds-block > .pmds-btitle + :not(.pmds-blead) { margin-top: 10px; }
+#o55-demo .pmds-gtitle { display: flex; align-items: center; gap: 7px; margin: 0 0 8px !important; font: 650 11px/1.3 var(--pmds-font); letter-spacing: .07em; text-transform: uppercase; color: var(--pmds-mute); }
+#o55-demo .pmds-count { color: var(--pmds-mute); }
+#o55-demo .pmds-fine { font-size: 12px; color: var(--pmds-mute); }
+#o55-demo .pmds-empty { color: var(--pmds-mute); }
+#o55-demo .pmds-rowacts { display: flex; align-items: center; flex-wrap: wrap; gap: 10px 12px; margin-top: 12px; }
+#o55-demo .pmds-indent { margin: -4px 0 8px 46px; }
+#o55-demo .pmds-split { display: grid; grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr); gap: 18px; }
+
+/* buttons */
+#o55-demo .pmds-btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 7px; height: 32px; padding: 0 13px; flex: none;
+  border: 1px solid var(--pmds-line); border-radius: var(--pmds-ctl); background: var(--pmds-bg); color: var(--pmds-ink);
+  font: 600 12.5px/1 var(--pmds-font); white-space: nowrap; cursor: pointer;
+  transition: background-color 140ms ease, border-color 140ms ease, color 140ms ease, scale 120ms ease;
+}
+#o55-demo .pmds-btn:hover { background: var(--pmds-wash); }
+#o55-demo .pmds-btn:active:not([aria-disabled="true"]) { scale: .97; }
+#o55-demo .pmds-btn-primary { border-color: transparent; background: var(--pmds-acc); color: var(--pmds-acc-ink); }
+#o55-demo .pmds-btn-primary:hover { background: color-mix(in srgb, var(--pmds-acc) 88%, var(--pmds-ink)); }
+#o55-demo .pmds-btn-quiet { border-color: transparent; background: transparent; color: var(--pmds-ink2); }
+/* the armed Reset: above every look's own button rule (Friendly's and Glass's plates would otherwise whiten it) */
+#o55-demo.pmds .pmds-sheet .pmds-btn.pmds-btn-danger { border-color: transparent; background: var(--pmds-danger); color: #fff; box-shadow: none; }
+#o55-demo.pmds .pmds-sheet .pmds-btn.pmds-btn-danger:hover { background: color-mix(in srgb, var(--pmds-danger) 88%, #000); }
+
+/* tiles */
+#o55-demo .pmds-grid { display: grid; gap: 10px; }
+#o55-demo .pmds-grid-recipes { grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); }
+#o55-demo .pmds-grid-notices { grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); }
+#o55-demo .pmds-tile {
+  position: relative; display: grid; grid-template-columns: auto minmax(0, 1fr); align-items: start; gap: 12px; padding: 13px 14px;
+  border: 1px solid var(--pmds-line2); border-radius: var(--pmds-r2); background: var(--pmds-bg); color: var(--pmds-ink); text-align: left; cursor: pointer;
+  transition: border-color 160ms ease, background-color 160ms ease, scale 140ms ease;
+}
+#o55-demo .pmds-tile:active:not([aria-disabled="true"]) { scale: .985; }
+#o55-demo .pmds-tile-art { display: grid; place-items: center; width: 36px; height: 36px; border-radius: var(--pmds-r2); color: var(--pmds-tone, var(--pmds-acc)); background: color-mix(in srgb, var(--pmds-tone, var(--pmds-acc)) 14%, transparent); }
+#o55-demo .pmds-tile[data-pmds-tone="a"] { --pmds-tone: var(--pmds-tone-a); }
+#o55-demo .pmds-tile[data-pmds-tone="b"] { --pmds-tone: var(--pmds-tone-b); }
+#o55-demo .pmds-tile[data-pmds-tone="c"] { --pmds-tone: var(--pmds-tone-c); }
+#o55-demo .pmds-tile-text { display: grid; gap: 3px; min-width: 0; }
+#o55-demo .pmds-tile-title { font: 650 13.5px/1.3 var(--pmds-font); }
+#o55-demo .pmds-tile-sub { font-size: 12px; line-height: 1.4; color: var(--pmds-ink2); }
+#o55-demo .pmds-tile-go { position: absolute; right: 14px; top: 16px; color: var(--pmds-mute); transition: translate 180ms ease, color 180ms ease; }
+#o55-demo .pmds-tile:hover .pmds-tile-go { color: var(--pmds-tone, var(--pmds-acc)); translate: 2px 0; }
+#o55-demo .pmds-hero { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
+#o55-demo .pmds-tile-hero { grid-template-columns: 1fr; grid-template-rows: auto 1fr; gap: 16px; min-height: 164px; padding: 18px; border-color: var(--pmds-line); }
+#o55-demo .pmds-tile-hero .pmds-tile-art { width: 52px; height: 52px; border-radius: 12px; }
+#o55-demo .pmds-tile-hero .pmds-tile-title { font: 700 16.5px/1.25 var(--pmds-display); }
+#o55-demo .pmds-tile-hero .pmds-tile-sub { font-size: 12.5px; }
+#o55-demo .pmds-tile-hero .pmds-tile-go { top: 20px; right: 18px; }
+
+/* the Start page's scenes (ART in js/92-demo-studio-ui.js): drawn from the look's tokens, so every look and mode
+   repaints them. They perform once as the page arrives (a 0.5 s wait, then about 1.4 s), and again on hover or focus. */
+#o55-demo .pmds-tile-hero.pmds-arty { grid-template-rows: 100px auto; gap: 14px; }
+#o55-demo .pmds-art {
+  --a-tone: var(--pmds-tone, var(--pmds-acc)); --a-fill: var(--pmds-bg); --a-line: color-mix(in srgb, var(--pmds-ink) 24%, transparent);
+  --a-soft: color-mix(in srgb, var(--pmds-ink) 10%, transparent); --a-scrim: rgba(0, 0, 0, .46);
+  position: relative; display: block; height: 100px; overflow: hidden; border-radius: max(0px, calc(var(--pmds-r2) - 3px));
+  background: radial-gradient(90% 120% at 50% 0%, color-mix(in srgb, var(--a-tone) 16%, transparent), transparent 70%), color-mix(in srgb, var(--a-tone) 7%, var(--pmds-bg2));
+}
+#o55-demo .pmds-art i, #o55-demo .pmds-art b { display: block; font-style: normal; }
+/* onboarding: a small window over its step squares */
+#o55-demo .pmds-a-win { position: absolute; left: 50%; top: 14px; display: grid; grid-template-columns: 58px 1fr; width: 156px; height: 58px; translate: -50% 0; overflow: hidden; border: 1px solid var(--a-line); border-radius: 6px; background: var(--a-fill); box-shadow: 0 10px 20px -14px rgba(0, 0, 0, .6); }
+#o55-demo .pmds-a-stage { position: relative; overflow: hidden; background: color-mix(in srgb, var(--a-tone) 20%, var(--a-fill)); }
+#o55-demo .pmds-a-sun { position: absolute; left: 34px; top: 11px; width: 9px; height: 9px; rotate: 45deg; background: var(--a-tone); }
+#o55-demo .pmds-a-hill { position: absolute; left: -6px; right: -6px; bottom: 0; height: 26px; background: color-mix(in srgb, var(--a-tone) 55%, var(--a-fill)); clip-path: polygon(0 100%, 0 70%, 22% 18%, 40% 64%, 58% 30%, 80% 76%, 100% 44%, 100% 100%); }
+#o55-demo .pmds-a-copy { display: grid; align-content: start; gap: 5px; padding: 9px 9px 0; }
+#o55-demo .pmds-a-copy i { height: 4px; background: var(--a-line); }
+#o55-demo .pmds-a-copy i:nth-child(1) { width: 80%; background: var(--pmds-ink); opacity: .55; }
+#o55-demo .pmds-a-copy i:nth-child(2) { width: 92%; }
+#o55-demo .pmds-a-copy i:nth-child(3) { width: 64%; }
+#o55-demo .pmds-a-copy b { justify-self: end; width: 30px; height: 10px; margin-top: 3px; border-radius: 2px; background: var(--a-tone); }
+#o55-demo .pmds-a-steps { position: absolute; left: 50%; bottom: 13px; display: flex; gap: 5px; translate: -50% 0; }
+#o55-demo .pmds-a-steps i { width: 18px; height: 5px; background: var(--a-soft); transition: background-color 160ms ease; }
+#o55-demo .pmds-a-steps i:nth-child(-n + 2) { background: var(--a-tone); }
+#o55-demo .pmds-tile:is(:hover, :focus-visible) .pmds-a-steps i { background: var(--a-tone); }
+#o55-demo .pmds-tile:is(:hover, :focus-visible) .pmds-a-steps i:nth-child(3) { transition-delay: 90ms; }
+#o55-demo .pmds-tile:is(:hover, :focus-visible) .pmds-a-steps i:nth-child(4) { transition-delay: 180ms; }
+#o55-demo .pmds-tile:is(:hover, :focus-visible) .pmds-a-steps i:nth-child(5) { transition-delay: 270ms; }
+#o55-demo .pmds-tile:is(:hover, :focus-visible) .pmds-a-copy b { animation: pmds-a-press 900ms 300ms ease both; }
+@keyframes pmds-a-press { 0%, 100% { scale: 1; } 40% { scale: .86; } 60% { scale: 1.08; } }
+/* the tour: a spotlight with its callout moving across a small app */
+#o55-demo .pmds-a-app { position: absolute; inset: 14px 22px; display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: 1fr 1fr; gap: 6px; }
+#o55-demo .pmds-a-app i { position: relative; border: 1px solid var(--a-line); border-radius: 4px; background: var(--a-fill); }
+#o55-demo .pmds-a-app i::after { content: ""; position: absolute; left: 6px; right: 40%; top: 7px; height: 4px; background: var(--a-line); }
+#o55-demo .pmds-a-spot { position: absolute; left: 18px; top: 10px; width: calc(50% - 16px); height: 38px; border-radius: 6px; box-shadow: 0 0 0 2px var(--a-tone), 0 0 0 999px var(--a-scrim); transition: translate 640ms cubic-bezier(.3, 1.25, .45, 1); }
+#o55-demo .pmds-a-call { position: absolute; left: calc(50% + 4px); top: 14px; display: grid; gap: 4px; width: 56px; padding: 6px; border: 1.5px solid var(--a-tone); border-radius: 4px; background: var(--a-fill); box-shadow: 0 8px 18px -10px rgba(0, 0, 0, .7); transition: translate 640ms cubic-bezier(.3, 1.25, .45, 1) 40ms; }
+#o55-demo .pmds-a-call i { height: 3px; background: var(--a-line); }
+#o55-demo .pmds-a-call i:first-child { width: 70%; background: var(--a-tone); }
+#o55-demo .pmds-tile:is(:hover, :focus-visible) .pmds-a-spot { translate: calc(100% + 8px) 34px; }
+#o55-demo .pmds-tile:is(:hover, :focus-visible) .pmds-a-call { translate: -78px 34px; }
+/* reset: three layers fanned out fall back into one, the arrow turns once */
+#o55-demo .pmds-a-layer { position: absolute; left: 50%; top: 50%; width: 78px; height: 46px; margin: -23px 0 0 -39px; border: 1px solid var(--a-line); border-radius: 5px; background: var(--a-fill); box-shadow: 0 10px 18px -14px rgba(0, 0, 0, .7); transition: translate 520ms cubic-bezier(.3, 1.2, .45, 1), rotate 520ms cubic-bezier(.3, 1.2, .45, 1); }
+#o55-demo .pmds-a-layer::after { content: ""; position: absolute; left: 7px; right: 45%; top: 8px; height: 4px; background: var(--a-line); }
+#o55-demo .pmds-a-layer:nth-child(1) { translate: -30px -6px; rotate: -9deg; background: color-mix(in srgb, var(--a-tone) 14%, var(--a-fill)); }
+#o55-demo .pmds-a-layer:nth-child(2) { translate: 0 -12px; rotate: 0deg; }
+#o55-demo .pmds-a-layer:nth-child(3) { translate: 30px -2px; rotate: 9deg; background: color-mix(in srgb, var(--a-tone) 26%, var(--a-fill)); }
+#o55-demo .pmds-a-turn { position: absolute; right: 14px; bottom: 10px; display: grid; place-items: center; width: 30px; height: 30px; border-radius: 8px; color: var(--a-tone); background: var(--a-fill); border: 1px solid var(--a-line); transition: rotate 620ms cubic-bezier(.3, 1.1, .45, 1); }
+#o55-demo .pmds-tile:is(:hover, :focus-visible) .pmds-a-layer { translate: 0 0; rotate: 0deg; }
+#o55-demo .pmds-tile:is(:hover, :focus-visible) .pmds-a-layer:nth-child(2) { transition-delay: 40ms; }
+#o55-demo .pmds-tile:is(:hover, :focus-visible) .pmds-a-layer:nth-child(3) { transition-delay: 80ms; }
+#o55-demo .pmds-tile:is(:hover, :focus-visible) .pmds-a-turn { rotate: -360deg; }
+/* the once-on-arrival performance */
+#o55-demo .pmds-page[data-pmds-section="start"] .pmds-a-steps i:nth-child(n + 3) { animation: pmds-a-fill 1500ms ease both; }
+#o55-demo .pmds-page[data-pmds-section="start"] .pmds-a-steps i:nth-child(3) { animation-delay: 600ms; }
+#o55-demo .pmds-page[data-pmds-section="start"] .pmds-a-steps i:nth-child(4) { animation-delay: 700ms; }
+#o55-demo .pmds-page[data-pmds-section="start"] .pmds-a-steps i:nth-child(5) { animation-delay: 800ms; }
+@keyframes pmds-a-fill { 0%, 100% { background: var(--a-soft); } 20%, 70% { background: var(--a-tone); } }
+#o55-demo .pmds-page[data-pmds-section="start"] .pmds-a-spot { animation: pmds-a-spot 1600ms 650ms cubic-bezier(.45, 0, .2, 1) both; }
+#o55-demo .pmds-page[data-pmds-section="start"] .pmds-a-call { animation: pmds-a-call 1600ms 690ms cubic-bezier(.45, 0, .2, 1) both; }
+@keyframes pmds-a-spot { 0%, 100% { translate: 0 0; } 40%, 65% { translate: calc(100% + 8px) 34px; } }
+@keyframes pmds-a-call { 0%, 100% { translate: 0 0; } 40%, 65% { translate: -78px 34px; } }
+#o55-demo .pmds-page[data-pmds-section="start"] .pmds-a-layer { animation: pmds-a-stack 1500ms 700ms cubic-bezier(.45, 0, .2, 1) both; }
+@keyframes pmds-a-stack { 40%, 60% { translate: 0 0; rotate: 0deg; } }
+#o55-demo .pmds-tile:is(:hover, :focus-visible) :is(.pmds-a-steps i, .pmds-a-spot, .pmds-a-call, .pmds-a-layer) { animation: none; }
+
+/* choices: a square mark and two lines */
+#o55-demo .pmds-choices { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 8px; }
+#o55-demo .pmds-choices-base { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+#o55-demo .pmds-choice {
+  display: grid; grid-template-columns: 20px minmax(0, 1fr); align-items: start; gap: 10px; padding: 10px 12px;
+  border: 1px solid var(--pmds-line2); border-radius: var(--pmds-r2); background: var(--pmds-bg); text-align: left; cursor: pointer;
+  transition: border-color 160ms ease, background-color 160ms ease;
+}
+#o55-demo .pmds-choice.pmds-on { border-color: color-mix(in srgb, var(--pmds-acc) 60%, var(--pmds-line)); background: color-mix(in srgb, var(--pmds-acc) 8%, var(--pmds-bg)); }
+#o55-demo .pmds-mark { display: grid; place-items: center; width: 18px; height: 18px; margin-top: 1px; border: 1.5px solid var(--pmds-line); border-radius: var(--pmds-ctl-in); color: transparent; transition: background-color 140ms ease, border-color 140ms ease, color 140ms ease; }
+#o55-demo .pmds-on > .pmds-mark { border-color: var(--pmds-acc); background: var(--pmds-acc); color: var(--pmds-acc-ink); }
+#o55-demo .pmds-choice-text { display: grid; gap: 2px; min-width: 0; }
+#o55-demo .pmds-choice-title { font: 600 13px/1.3 var(--pmds-font); }
+#o55-demo .pmds-choice-sub { font-size: 12px; line-height: 1.4; color: var(--pmds-ink2); }
+#o55-demo .pmds-choice-note { font-size: 11.5px; color: var(--pmds-mute); font-style: italic; }
+#o55-demo .pmds-livemark { margin-left: 6px; font: 600 10.5px/1 var(--pmds-font); letter-spacing: .06em; text-transform: uppercase; color: var(--pmds-acc-text); }
+#o55-demo .pmds-twists { display: grid; gap: 16px; }
+
+/* the run bar: what will run, and the button that runs it */
+#o55-demo .pmds-runbar {
+  /* in the flow, not sticky: a sticky bar hid the choices scrolling under it (and clipped its own first line) */
+  position: relative; display: flex; align-items: center; justify-content: space-between; gap: 14px; flex-wrap: wrap;
+  margin: 0 -6px; padding: 12px 14px; border: 1px solid var(--pmds-line); border-radius: var(--pmds-r2);
+  background: color-mix(in srgb, var(--pmds-bg) 92%, var(--pmds-acc));
+  box-shadow: 0 10px 22px -16px rgba(0, 0, 0, .5);
+}
+#o55-demo .pmds-runtext { display: grid; gap: 2px; min-width: 0; }
+#o55-demo .pmds-runkicker { font: 700 10.5px/1.2 var(--pmds-font); letter-spacing: .08em; text-transform: uppercase; color: var(--pmds-mute); }
+#o55-demo .pmds-runsit { font: 650 14px/1.35 var(--pmds-font); }
+#o55-demo .pmds-runstate { font-size: 12px; color: var(--pmds-ink2); }
+#o55-demo .pmds-runacts { display: flex; gap: 8px; }
+
+/* onboarding screens */
+#o55-demo .pmds-screens { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 14px; }
+#o55-demo .pmds-sclist { display: grid; }
+#o55-demo .pmds-scrow { display: flex; align-items: center; justify-content: space-between; gap: 8px; min-height: 30px; padding: 4px 8px; border: 0; border-radius: var(--pmds-ctl); background: transparent; color: var(--pmds-ink2); font-size: 12.5px; text-align: left; cursor: pointer; }
+#o55-demo .pmds-scrow .pmds-ico { color: var(--pmds-mute); opacity: 0; transition: opacity 140ms ease; }
+#o55-demo .pmds-scrow:hover, #o55-demo .pmds-scrow:focus-visible { background: var(--pmds-wash); color: var(--pmds-ink); }
+#o55-demo .pmds-scrow:hover .pmds-ico, #o55-demo .pmds-scrow:focus-visible .pmds-ico { opacity: 1; }
+
+/* tour chapters */
+#o55-demo .pmds-chapters { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; margin-top: 18px; }
+#o55-demo .pmds-chapter { display: grid; grid-template-rows: auto 1fr auto; gap: 12px; padding: 16px; border: 1px solid var(--pmds-line2); border-radius: var(--pmds-r2); background: var(--pmds-bg); }
+#o55-demo .pmds-chapter header { display: flex; align-items: center; gap: 12px; }
+#o55-demo .pmds-chnum { display: grid; place-items: center; width: 34px; height: 34px; flex: none; border-radius: var(--pmds-r2); font: 700 15px/1 var(--pmds-display); color: var(--pmds-ink); background: color-mix(in srgb, var(--pmds-tone, var(--pmds-acc)) 14%, transparent); }
+#o55-demo .pmds-chapter[data-pmds-tone="a"], #o55-demo .pmds-reset[data-pmds-tone="a"] { --pmds-tone: var(--pmds-tone-a); }
+#o55-demo .pmds-chapter[data-pmds-tone="b"], #o55-demo .pmds-reset[data-pmds-tone="b"] { --pmds-tone: var(--pmds-tone-b); }
+#o55-demo .pmds-chapter[data-pmds-tone="c"], #o55-demo .pmds-reset[data-pmds-tone="c"] { --pmds-tone: var(--pmds-tone-c); }
+#o55-demo .pmds-chtext { display: grid; gap: 1px; min-width: 0; }
+#o55-demo .pmds-chkicker { font-size: 11px; color: var(--pmds-mute); }
+#o55-demo .pmds-chname { font: 650 14px/1.3 var(--pmds-font); }
+#o55-demo .pmds-steps { display: grid; gap: 6px; counter-reset: pmds-step; }
+#o55-demo .pmds-steps li { position: relative; padding-left: 16px; font-size: 12px; line-height: 1.4; color: var(--pmds-ink2); }
+#o55-demo .pmds-steps li::before { content: ""; position: absolute; left: 2px; top: .55em; width: 5px; height: 5px; background: var(--pmds-tone, var(--pmds-acc)); }
+#o55-demo .pmds-steps li.pmds-more { color: var(--pmds-mute); }
+#o55-demo .pmds-steps li.pmds-more::before { background: var(--pmds-line); }
+#o55-demo .pmds-chapter .pmds-btn { justify-self: start; }
+
+/* the story clock */
+#o55-demo .pmds-clock { display: flex; align-items: center; justify-content: space-between; gap: 18px; flex-wrap: wrap; padding: 16px 18px; border: 1px solid var(--pmds-line); border-radius: var(--pmds-r2); background: var(--pmds-bg2); }
+#o55-demo .pmds-clockface { display: grid; gap: 2px; }
+#o55-demo .pmds-clocklabel { font: 700 10.5px/1.2 var(--pmds-font); letter-spacing: .08em; text-transform: uppercase; color: var(--pmds-mute); }
+#o55-demo .pmds-clocktime { font: 600 40px/1 var(--pmds-mono); font-variant-numeric: tabular-nums; letter-spacing: -.02em; }
+#o55-demo .pmds-clockacts { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; }
+#o55-demo .pmds-speed { display: flex; align-items: center; gap: 8px; }
+#o55-demo .pmds-speedlabel { font-size: 12px; color: var(--pmds-mute); }
+
+/* story points: one line, a square node per point */
+#o55-demo .pmds-timeline { position: relative; display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 8px; padding-top: 2px; }
+#o55-demo .pmds-timeline::before, #o55-demo .pmds-timeline::after { content: ""; position: absolute; left: 10%; top: 15px; height: 2px; background: var(--pmds-line); }
+#o55-demo .pmds-timeline::before { right: 10%; }
+#o55-demo .pmds-timeline::after { width: calc(max(0, var(--pmds-done, 0) - 1) * 20%); background: var(--pmds-acc); }
+#o55-demo .pmds-point { position: relative; display: grid; justify-items: center; align-content: start; gap: 8px; text-align: center; }
+#o55-demo .pmds-pnode { position: relative; z-index: 1; display: grid; place-items: center; width: 30px; height: 30px; border: 2px solid var(--pmds-line); border-radius: 8px; background: var(--pmds-bg); font: 700 12px/1 var(--pmds-font); color: var(--pmds-mute); }
+#o55-demo .pmds-done .pmds-pnode { border-color: var(--pmds-acc); background: var(--pmds-acc); color: var(--pmds-acc-ink); }
+#o55-demo .pmds-next .pmds-pnode { border-color: var(--pmds-acc); color: var(--pmds-acc-text); }
+#o55-demo .pmds-plabel { font: 600 12px/1.35 var(--pmds-font); }
+#o55-demo .pmds-pstate { font-size: 11.5px; color: var(--pmds-mute); }
+#o55-demo .pmds-pjump { height: 28px; padding: 0 10px; font-size: 12px; }
+#o55-demo .pmds-beats { display: grid; gap: 1px; max-height: 220px; overflow: auto; font: 12px/1.5 var(--pmds-mono); }
+#o55-demo .pmds-beats li { display: grid; grid-template-columns: 52px minmax(0, 1fr); gap: 10px; padding: 3px 8px; border-radius: var(--pmds-ctl-in); }
+#o55-demo .pmds-beats li:nth-child(odd) { background: var(--pmds-wash); }
+#o55-demo .pmds-bt { color: var(--pmds-ink2); font-variant-numeric: tabular-nums; }
+#o55-demo .pmds-ba { overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
+
+/* workspace */
+#o55-demo .pmds-grid-layouts { grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); }
+#o55-demo .pmds-laytile { display: grid; gap: 8px; padding: 10px; border: 1px solid var(--pmds-line2); border-radius: var(--pmds-r2); background: var(--pmds-bg); text-align: left; cursor: pointer; transition: border-color 160ms ease, background-color 160ms ease; }
+#o55-demo .pmds-laytile.pmds-on { border-color: color-mix(in srgb, var(--pmds-acc) 60%, var(--pmds-line)); background: color-mix(in srgb, var(--pmds-acc) 7%, var(--pmds-bg)); }
+#o55-demo .pmds-lay { display: flex; height: 76px; padding: 4px; border-radius: var(--pmds-ctl); background: var(--pmds-bg2); }
+#o55-demo .pmds-lay-row, #o55-demo .pmds-lay-col { display: flex; flex: 1; gap: 3px; min-width: 0; min-height: 0; }
+#o55-demo .pmds-lay-col { flex-direction: column; }
+#o55-demo .pmds-lay-cell { display: flex; min-width: 0; min-height: 0; }
+#o55-demo .pmds-lay-slot { flex: 1; border-radius: 2px; background: color-mix(in srgb, var(--pmds-ink) 13%, transparent); box-shadow: inset 0 3px 0 color-mix(in srgb, var(--pmds-ink) 10%, transparent); }
+#o55-demo .pmds-laytile.pmds-on .pmds-lay-slot { background: color-mix(in srgb, var(--pmds-acc) 30%, transparent); box-shadow: inset 0 3px 0 color-mix(in srgb, var(--pmds-acc) 45%, transparent); }
+#o55-demo .pmds-laylabel { font: 600 12.5px/1.2 var(--pmds-font); }
+#o55-demo .pmds-laycur { font-size: 11px; color: var(--pmds-acc-text); }
+#o55-demo .pmds-actrows { display: grid; gap: 8px; }
+#o55-demo :is(.pmds-swrow, .pmds-actrow) {
+  display: grid; grid-template-columns: 36px minmax(0, 1fr) auto; align-items: center; gap: 12px; padding: 10px 12px;
+  border: 1px solid var(--pmds-line2); border-radius: var(--pmds-r2); background: var(--pmds-bg);
+}
+#o55-demo .pmds-actrow { grid-template-columns: 36px minmax(0, 1fr) auto auto; }
+#o55-demo .pmds-swrow + .pmds-swrow { margin-top: 8px; }
+#o55-demo .pmds-swart { display: grid; place-items: center; width: 36px; height: 36px; border-radius: var(--pmds-r2); color: var(--pmds-acc); background: color-mix(in srgb, var(--pmds-acc) 12%, transparent); }
+#o55-demo .pmds-swtext { display: grid; gap: 2px; min-width: 0; }
+#o55-demo .pmds-swtitle { font: 600 13px/1.3 var(--pmds-font); }
+#o55-demo .pmds-swsub { font-size: 12px; line-height: 1.4; color: var(--pmds-ink2); }
+#o55-demo .pmds-hourat { font: 600 12px/1 var(--pmds-mono); color: var(--pmds-acc-text); font-variant-numeric: tabular-nums; }
+
+/* the keyed switch (the Settings grammar of 91-no-pills.css: the look's rectangle, a lit layer wiping in behind a
+   square key with a grip, a bar mark when on and a hollow square when off, so the state reads without colour) */
+#o55-demo .pmds-switch {
+  position: relative; width: 42px; height: 24px; padding: 0; flex: none; overflow: hidden; isolation: isolate; cursor: pointer;
+  border: 1px solid var(--pmds-line); border-radius: var(--pmds-ctl);
+  background: color-mix(in srgb, var(--pmds-ink) 10%, var(--pmds-bg)) var(--pm-switch-off-mark) no-repeat right 7px center / 8px 8px;
+}
+#o55-demo .pmds-switch::before {
+  content: ""; position: absolute; inset: 0; z-index: 0;
+  background: linear-gradient(#fff, #fff) no-repeat 9px 50% / 1.5px 8px, var(--pmds-acc);
+  clip-path: inset(0 100% 0 0); transition: clip-path 300ms cubic-bezier(.2, .8, .2, 1);
+}
+#o55-demo .pmds-switch[aria-checked="true"]::before { clip-path: inset(0 0 0 0); }
+#o55-demo .pmds-switch-key {
+  position: absolute; z-index: 1; top: 2px; left: 2px; width: 18px; height: 18px; border-radius: var(--pmds-ctl-in);
+  background: #fbfbfd linear-gradient(90deg, transparent 6.5px, rgba(0, 0, 0, .2) 6.5px 7.5px, transparent 7.5px 10.5px, rgba(0, 0, 0, .2) 10.5px 11.5px, transparent 11.5px) no-repeat 0 50% / 18px 7px;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, .3), 0 0 0 .5px rgba(0, 0, 0, .18);
+  transition: translate 340ms cubic-bezier(.3, 1.4, .5, 1), scale 140ms ease;
+}
+#o55-demo .pmds-switch[aria-checked="true"] .pmds-switch-key { translate: 18px 0; }
+#o55-demo .pmds-switch:active .pmds-switch-key { scale: 1.14 .9; }
+#o55-demo[data-pmds-mode="dark"] .pmds-switch[aria-checked="false"] .pmds-switch-key { background-color: #c9c8d4; }
+
+/* the joined choice row (NP-CHOICE) */
+#o55-demo .pmds-seg { display: inline-flex; padding: 2px; border: 1px solid var(--pmds-line); border-radius: var(--pmds-ctl); background: var(--pmds-bg2); }
+#o55-demo .pmds-segcell { position: relative; display: inline-flex; align-items: center; gap: 6px; height: 28px; padding: 0 12px; border: 0; border-radius: var(--pmds-ctl-in); background: transparent; color: var(--pmds-ink2); font: 600 12px/1 var(--pmds-font); cursor: pointer; }
+#o55-demo .pmds-segcell + .pmds-segcell::before { content: ""; position: absolute; left: 0; top: 6px; bottom: 6px; width: 1px; background: var(--pmds-line2); }
+#o55-demo .pmds-segcell.pmds-on { background: var(--pmds-bg); color: var(--pmds-ink); box-shadow: 0 1px 2px rgba(0, 0, 0, .16), 0 0 0 1px var(--pmds-line2); }
+#o55-demo .pmds-segcell.pmds-on::before, #o55-demo .pmds-segcell.pmds-on + .pmds-segcell::before { opacity: 0; }
+
+/* looks: a small picture of the app in each look, drawn with that look's own tokens (data-theme on the picture) */
+#o55-demo .pmds-looks { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); grid-auto-flow: column; grid-template-rows: auto auto; gap: 10px; }
+#o55-demo .pmds-looktile { display: grid; gap: 8px; padding: 8px; border: 1px solid var(--pmds-line2); border-radius: var(--pmds-r2); background: var(--pmds-bg); color: var(--pmds-ink); text-align: left; cursor: pointer; transition: border-color 160ms ease; }
+#o55-demo .pmds-looktile.pmds-on { border-color: var(--pmds-acc); box-shadow: 0 0 0 1px var(--pmds-acc); }
+#o55-demo .pmds-lookprev { display: grid; grid-template-rows: 9px 1fr; height: 72px; overflow: hidden; border: 1px solid var(--border); border-radius: min(var(--border-radius, 6px), 8px); background: var(--background); }
+#o55-demo .pmds-lp-bar { position: relative; background: var(--surface); border-bottom: 1px solid var(--border-light, var(--border)); }
+#o55-demo .pmds-lp-bar::after { content: ""; position: absolute; left: 5px; top: 3px; width: 14px; height: 3px; background: var(--accent-blue); }
+#o55-demo .pmds-lp-body { display: grid; grid-template-columns: 22% 1fr; min-height: 0; }
+#o55-demo .pmds-lp-rail { background: color-mix(in srgb, var(--surface) 70%, var(--background)); border-right: 1px solid var(--border-light, var(--border)); }
+#o55-demo .pmds-lp-main { display: grid; grid-template-columns: 1fr 1fr; gap: 4px; padding: 5px; }
+#o55-demo .pmds-lp-card { position: relative; border: 1px solid var(--border); border-radius: min(var(--border-radius, 4px), 5px); background: var(--surface); }
+#o55-demo .pmds-lp-card::before { content: ""; position: absolute; left: 4px; right: 40%; top: 5px; height: 3px; background: var(--text-primary); opacity: .55; }
+#o55-demo .pmds-lp-card::after { content: ""; position: absolute; left: 4px; right: 20%; top: 12px; height: 2px; background: var(--text-secondary); opacity: .35; box-shadow: 0 5px 0 color-mix(in srgb, var(--text-secondary) 60%, transparent); }
+#o55-demo .pmds-lp-card2 { background: color-mix(in srgb, var(--accent-blue) 16%, var(--surface)); }
+#o55-demo .pmds-lookprev[data-pmds-prev="glass"] { background: linear-gradient(135deg, color-mix(in srgb, var(--accent-blue) 45%, var(--background)), var(--background) 60%, color-mix(in srgb, var(--accent-magenta) 40%, var(--background))); }
+/* NieR's picture: the NieR Mode palette (src/settings/styles.d/13-nier.css, from nier-automata.json), drawn while NieR
+   Mode may be off, so its tables are not on the page */
+#o55-demo .pmds-lookprev[data-pmds-prev="nier"] { --background: #ccc8b1; --surface: #d1cdb7; --border: #211f1b; --border-light: #8f8b78; --text-primary: #211f1b; --text-secondary: #4d4a40; --accent-blue: #211f1b; border-radius: 0; }
+#o55-demo .pmds-lookprev[data-pmds-prev="nier"][data-theme$="-dark"] { --background: #2f2d26; --surface: #3b3930; --border: #d1cdb7; --border-light: #6f6b5c; --text-primary: #d1cdb7; --text-secondary: #b3af9a; --accent-blue: #d1cdb7; }
+#o55-demo .pmds-lookprev[data-pmds-prev="nier"] .pmds-lp-card, #o55-demo .pmds-lookprev[data-pmds-prev="retro"] .pmds-lp-card { border-radius: 0; }
+#o55-demo .pmds-looklabel { display: flex; align-items: center; gap: 6px; font: 600 12.5px/1.2 var(--pmds-font); }
+#o55-demo .pmds-looklabel .pmds-ico { color: var(--pmds-mute); }
+#o55-demo .pmds-lookmode { margin-left: auto; font-weight: 500; font-size: 11.5px; color: var(--pmds-mute); }
+
+/* the wallpaper gallery: each wallpaper's own thumbnail print */
+#o55-demo .pmds-wps { display: grid; grid-template-columns: repeat(auto-fill, minmax(118px, 1fr)); gap: 8px; margin-bottom: 12px; }
+#o55-demo .pmds-wp { display: grid; gap: 6px; padding: 5px; border: 1px solid transparent; border-radius: var(--pmds-r2); background: transparent; text-align: left; cursor: pointer; }
+#o55-demo .pmds-wp-pic { display: grid; place-items: center; aspect-ratio: 16 / 9; border: 1px solid var(--pmds-line2); border-radius: max(0px, calc(var(--pmds-r2) - 3px)); background: var(--pmds-bg2) center / cover no-repeat; color: var(--pmds-mute); }
+#o55-demo .pmds-wp-name { overflow: hidden; font-size: 12px; white-space: nowrap; text-overflow: ellipsis; color: var(--pmds-ink2); }
+#o55-demo .pmds-wp.pmds-on { border-color: var(--pmds-acc); box-shadow: 0 0 0 1px var(--pmds-acc); }
+#o55-demo .pmds-wp.pmds-on .pmds-wp-name { color: var(--pmds-ink); font-weight: 600; }
+
+/* Liquid Glass's wallpapers */
+#o55-demo .pmds-walls { display: grid; grid-template-columns: repeat(auto-fill, minmax(170px, 1fr)); gap: 4px 8px; }
+#o55-demo .pmds-wall { display: grid; grid-template-columns: 18px minmax(0, 1fr); align-items: center; gap: 8px; min-height: 32px; padding: 4px 8px; border: 0; border-radius: var(--pmds-ctl); background: transparent; text-align: left; cursor: pointer; font-size: 12.5px; }
+#o55-demo .pmds-wall:hover { background: var(--pmds-wash); }
+#o55-demo .pmds-wall .pmds-mark { width: 16px; height: 16px; margin: 0; }
+#o55-demo .pmds-lgrows .pmds-rowacts { margin: 4px 0 14px; }
+
+/* resets */
+#o55-demo .pmds-resets { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; align-items: start; }
+#o55-demo .pmds-reset { display: grid; gap: 10px; padding: 16px; border: 1px solid var(--pmds-line2); border-radius: var(--pmds-r2); background: var(--pmds-bg); transition: border-color 160ms ease, box-shadow 160ms ease; }
+#o55-demo .pmds-reset header { display: flex; align-items: center; gap: 10px; }
+#o55-demo .pmds-reset .pmds-swart { color: var(--pmds-tone, var(--pmds-acc)); background: color-mix(in srgb, var(--pmds-tone, var(--pmds-acc)) 13%, transparent); }
+#o55-demo .pmds-reset .pmds-blead { margin: 0 !important; }
+#o55-demo .pmds-reset .pmds-gtitle { margin: 4px 0 0 !important; }
+#o55-demo .pmds-goes { display: grid; gap: 4px; }
+#o55-demo .pmds-goes li { display: flex; align-items: center; gap: 7px; font-size: 12px; color: var(--pmds-ink2); }
+#o55-demo .pmds-goes .pmds-ico { color: var(--pmds-tone, var(--pmds-acc)); }
+#o55-demo .pmds-reset.pmds-armed { border-color: var(--pmds-danger); box-shadow: 0 0 0 1px var(--pmds-danger); }
+#o55-demo .pmds-resetact { display: grid; justify-items: start; gap: 8px; margin: 2px 0 4px; }
+#o55-demo .pmds-fuse { display: block; width: 100%; height: 3px; background: var(--pmds-danger); transform-origin: 0 50%; animation: pmds-fuse var(--pmds-fuse, 5000ms) linear forwards; }
+@keyframes pmds-fuse { to { transform: scaleX(0); } }
+#o55-demo .pmds-keys summary { font-size: 12px; color: var(--pmds-ink2); cursor: pointer; }
+#o55-demo .pmds-keys ul { display: grid; gap: 1px; max-height: 140px; margin-top: 6px !important; overflow: auto; font: 11px/1.5 var(--pmds-mono); color: var(--pmds-mute); }
+
+/* switches */
+#o55-demo .pmds-choices-load { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+#o55-demo .pmds-addr { display: grid; gap: 8px; }
+#o55-demo .pmds-url { width: 100%; height: 34px; padding: 0 10px; border: 1px solid var(--pmds-line); border-radius: var(--pmds-ctl); background: var(--pmds-bg2); color: var(--pmds-ink); font: 12px/1 var(--pmds-mono); box-sizing: border-box; }
+
+/* search results */
+#o55-demo .pmds-results { display: grid; gap: 4px; }
+#o55-demo .pmds-result { display: grid; grid-template-columns: 36px minmax(0, 1fr) auto; align-items: center; gap: 12px; width: 100%; padding: 8px 10px; border: 1px solid transparent; border-radius: var(--pmds-r2); background: transparent; text-align: left; cursor: pointer; }
+#o55-demo .pmds-result.pmds-first { border-color: var(--pmds-line2); background: var(--pmds-wash); }
+#o55-demo .pmds-resin { font-size: 11.5px; color: var(--pmds-mute); white-space: nowrap; }
+#o55-demo .pmds-search-none { padding: 30px 0; text-align: center; }
+
+/* ---- a narrow sheet: the rail becomes a strip over the page ---- */
+#o55-demo .pmds-sheet[data-pmds-compact] .pmds-search { order: 9; flex: 1 1 100%; }
+#o55-demo .pmds-sheet[data-pmds-compact] .pmds-body { grid-template-columns: minmax(0, 1fr); grid-template-rows: auto minmax(0, 1fr); }
+#o55-demo .pmds-sheet[data-pmds-compact] .pmds-nav { flex-direction: row; padding: 6px 8px; overflow-x: auto; overflow-y: hidden; border-right: 0; border-bottom: 1px solid var(--pmds-line2); }
+#o55-demo .pmds-sheet[data-pmds-compact] .pmds-navink { margin-left: 0; }
+#o55-demo .pmds-sheet[data-pmds-compact] .pmds-tab { flex: none; min-height: 34px; grid-template-columns: 16px auto; gap: 7px; }
+#o55-demo .pmds-sheet[data-pmds-compact] .pmds-tabmeta { display: none; }
+#o55-demo .pmds-sheet[data-pmds-compact] .pmds-page { padding: 16px 16px 24px; }
+#o55-demo .pmds-sheet[data-pmds-compact] :is(.pmds-hero, .pmds-chapters, .pmds-resets, .pmds-split, .pmds-choices-base, .pmds-choices-load) { grid-template-columns: minmax(0, 1fr); }
+#o55-demo .pmds-sheet[data-pmds-compact] .pmds-looks { grid-template-columns: repeat(2, minmax(0, 1fr)); grid-auto-flow: row; grid-template-rows: none; }
+#o55-demo .pmds-sheet[data-pmds-compact] .pmds-timeline { grid-template-columns: minmax(0, 1fr); justify-items: start; }
+#o55-demo .pmds-sheet[data-pmds-compact] .pmds-timeline::before, #o55-demo .pmds-sheet[data-pmds-compact] .pmds-timeline::after { display: none; }
+#o55-demo .pmds-sheet[data-pmds-compact] .pmds-point { grid-template-columns: 30px minmax(0, 1fr) auto; align-items: center; justify-items: start; text-align: left; width: 100%; }
+#o55-demo .pmds-sheet[data-pmds-compact] .pmds-headacts { position: static; margin-top: 10px; }
+#o55-demo .pmds-sheet[data-pmds-compact] .pmds-now { display: none; }

@@ -1,3 +1,4 @@
+# This file no longer feeds PMConcept7. Use scripts/pm7-where.py to find where to edit.
 """Source-owned PMConcept7 global hover/focus tag transform (T47).
 
 The browser artifact is a deterministic prototype of one native
@@ -122,7 +123,11 @@ HOVER_STYLE = r'''<style id="pm-hover-tags-css">
 /* Thousands of persistent accessible descriptions must not form one enormous
    inline formatting row. Keep every role=tooltip node in the accessibility
    tree while giving the hidden owner a bounded, layout-inert paint footprint. */
-.pm-hover-sr > .pm-hover-description {
+/* These owners are already clipped 1px boxes. Keep their layout work inside those boxes without hiding their
+   accessible description nodes or changing the visible tooltip. */
+.pm-hover-sr, .pm-hover-bucket { contain: strict !important; }
+.pm-hover-sr > .pm-hover-bucket,
+.pm-hover-sr .pm-hover-description {
   position: absolute !important; display: block !important;
   inset: 0 auto auto 0 !important; width: 1px !important; height: 1px !important;
   overflow: hidden !important;
@@ -179,7 +184,9 @@ HOVER_SCRIPT = r'''<script id="pm-hover-tags-js">
     'hidden-template':'Inert source template that is never mounted as an interactive surface.',
     'programmatic-focus-landmark':'Static heading focused only to announce a modal or route transition; it is not an action or a second tooltip target.',
     'tooltip-owner':'The shared hover-tag overlay and its persistent description nodes.',
-    'noninteractive-chart-geometry':'Decorative chart scaffolding; each datum mark remains independently bound.'
+    'noninteractive-chart-geometry':'Decorative chart scaffolding; each datum mark remains independently bound.',
+    'labelled-field':'A field in a Settings panel whose label and help line sit beside it; a tag would only repeat them over the heading above.',
+    'menu':'A menu and its rows, back button and search field, which already show their names; a row given its own data-pm-hover-label is not exempt and keeps its tag.'
   });
   var SEMANTIC_ACTION_SELECTOR='a[href],button,input:not([type="hidden"]),select,textarea,summary,[contenteditable="true"],[role="button"],[role="link"],[role="menuitem"],[role="menuitemcheckbox"],[role="menuitemradio"],[role="tab"],[role="checkbox"],[role="radio"],[role="switch"],[role="slider"],[data-action],[data-command-id],[data-ui-action-id],[data-callback],[onclick]';
   var ACTION_SELECTOR=SEMANTIC_ACTION_SELECTOR+',[tabindex]';
@@ -485,7 +492,7 @@ HOVER_SCRIPT = r'''<script id="pm-hover-tags-js">
   PMHoverTag.prototype.text=function(){return this.primary+(this.detail?' '+this.detail:'');};
 
   function HoverTagController(){
-    this.root=null;this.tag=null;this.descriptions=null;this.active=null;this.activeModel=null;
+    this.root=null;this.tag=null;this.descriptions=null;this.descriptionBuckets=[];this.active=null;this.activeModel=null;
     this.pendingOpenTimer=0;this.pendingOpenTarget=null;this.pendingOpenSource=null;this.pendingPointerIntent=null;this.departureTimer=0;this.closeTimer=0;this.scanFrame=0;this.pendingScanScope=null;this.visualEnabled=true;this.observer=null;this.overlayScope=null;this.pageSettling=false;this.pageScanTimer=0;this.overlaySettling=false;this.overlayScanTimer=0;
     this.keyOwners=new Map();this.preparedByElement=new WeakMap();this.scanNodes=[];this.scanPrepareCursor=0;this.scanPhase='idle';this.scanQueue=[];this.scanCursor=0;this.scanning=false;this.scanComplete=true;this.bootstrapPass=0;this.observeAfterBootstrap=false;this.lastScan={candidates:0,bound:0,duration_ms:0,batches:0};
     this.deferredLiveScopes=new Set();this.deferredLiveTimer=0;
@@ -508,6 +515,15 @@ HOVER_SCRIPT = r'''<script id="pm-hover-tags-js">
     if(!root){root=document.createElement('div');root.id=ROOT_ID;root.setAttribute('data-visual-enabled','true');root.setAttribute('data-pm-hover-exempt','tooltip-owner');
       root.innerHTML='<div id="'+TAG_ID+'" class="pm-hover-tag" role="tooltip" aria-hidden="true" data-open="false" data-detail="false" data-placement="above"><strong></strong><p></p></div><div id="'+DESCRIPTIONS_ID+'" class="pm-hover-sr" aria-live="off"></div>';document.body.appendChild(root);}
     this.root=root;this.tag=root.querySelector('#'+TAG_ID);this.descriptions=root.querySelector('#'+DESCRIPTIONS_ID);
+    /* Fixed, invisible groups bound sibling-selector invalidation when one description is added or removed.
+       The description nodes, IDs, text, roles and aria-describedby links are unchanged. Keep groups for the
+       controller's lifetime: adding/removing groups would invalidate all their descendants again. */
+    this.descriptionBuckets=Array.prototype.slice.call(this.descriptions.querySelectorAll('.pm-hover-bucket'));
+    if(!this.descriptionBuckets.length){
+      var existing=Array.prototype.slice.call(this.descriptions.children);
+      for(var bi=0;bi<64;bi++){var bucket=document.createElement('div');bucket.className='pm-hover-bucket';this.descriptions.appendChild(bucket);this.descriptionBuckets.push(bucket);}
+      for(var ei=0;ei<existing.length;ei++){var old=existing[ei];if(old.classList.contains('pm-hover-description'))this.descriptionBuckets[(parseInt(old.id.slice('pm-hover-desc-'.length),36)>>>0)%64].appendChild(old);}
+    }
   };
   HoverTagController.prototype.prepare=function(el){
     var facts=factsFor(el);if(!isCandidate(el,facts)||attr(el,'data-pm-hover-exempt'))return null;
@@ -532,7 +548,7 @@ HOVER_SCRIPT = r'''<script id="pm-hover-tags-js">
     setAttrIfChanged(el,'data-pm-hover-key',key);setAttrIfChanged(el,'data-pm-hover-bound','true');setAttrIfChanged(el,'data-pm-hover-kind',kindList.join(','));
     addDescriptionToken(el,id);
     var desc=document.getElementById(id);
-    if(!desc){desc=document.createElement('span');desc.id=id;desc.className='pm-hover-description';this.descriptions.appendChild(desc);}
+    if(!desc){desc=document.createElement('span');desc.id=id;desc.className='pm-hover-description';this.descriptionBuckets[parseInt(hash(key),36)%64].appendChild(desc);}
     if(overlayAllows(el)){setAttrIfChanged(desc,'role','tooltip');desc.removeAttribute('aria-hidden');}else{setAttrIfChanged(desc,'role','presentation');setAttrIfChanged(desc,'aria-hidden','true');}
     setAttrIfChanged(desc,'data-pm-hover-description-key',key);if(desc.textContent!==currentText)desc.textContent=currentText;
     return new PMHoverTag({key:key,primary:info.label,detail:info.detail,description_id:id,kinds:kindList,visual_enabled:this.visualEnabled});

@@ -1,0 +1,69 @@
+{
+ "family": "nier",
+ "label": "NieR",
+ "owner": "pm7-wallpapers",
+ "order": 50,
+ "about": "NieR Mode's own six ink scenes, drawn from the same art as its Background setting (Concepts/onboarding/opus-5.5/src/settings/nier/scenes, by tools/nier_prints.mjs), ink on parchment and parchment on ink, as faint as NieR Mode shows them. Jared, 2026-10-14 (#11): these replace Archive, Signal, Fragments, Hatch and Flora.",
+ "wallpapers": [
+  {
+   "id": "city",
+   "name": "City Ruins",
+   "description": "Toppled towers, broken walkways and the trees that took them back.",
+   "files": {
+    "dark": "src/walls/city-dark.webp",
+    "light": "src/walls/city-light.webp"
+   },
+   "default_for": null
+  },
+  {
+   "id": "bunker",
+   "name": "The Bunker",
+   "description": "The orbital base: a hexagon shell around the command deck, a star-shaped beacon above it.",
+   "files": {
+    "dark": "src/walls/bunker-dark.webp",
+    "light": "src/walls/bunker-light.webp"
+   },
+   "default_for": null
+  },
+  {
+   "id": "desert",
+   "name": "Desert",
+   "description": "Half-buried housing blocks and broken arches in the dunes, under a pale sun.",
+   "files": {
+    "dark": "src/walls/desert-dark.webp",
+    "light": "src/walls/desert-light.webp"
+   },
+   "default_for": null
+  },
+  {
+   "id": "forest",
+   "name": "Forest Castle",
+   "description": "A castle on the hill above a forest that hides the old roads.",
+   "files": {
+    "dark": "src/walls/forest-dark.webp",
+    "light": "src/walls/forest-light.webp"
+   },
+   "default_for": null
+  },
+  {
+   "id": "park",
+   "name": "Amusement Park",
+   "description": "A big wheel, a coaster loop and the big top, with fireworks over them.",
+   "files": {
+    "dark": "src/walls/park-dark.webp",
+    "light": "src/walls/park-light.webp"
+   },
+   "default_for": null
+  },
+  {
+   "id": "flooded",
+   "name": "Flooded City",
+   "description": "Leaning towers standing in still water, a small boat between them.",
+   "files": {
+    "dark": "src/walls/flooded-dark.webp",
+    "light": "src/walls/flooded-light.webp"
+   },
+   "default_for": null
+  }
+ ]
+}

@@ -16,7 +16,7 @@
 #panel-settings .setting-row.o55-row.is-wide { grid-template-columns: minmax(0, 1fr) 30px; }
 #panel-settings .setting-row.o55-row.is-wide .setting-control { grid-column: 1 / 2; grid-row: 2; justify-content: flex-start; max-width: none; }
 #panel-settings .setting-row.o55-row.is-wide .o55-about { grid-column: 2; grid-row: 1; }
-#panel-settings .o55-changed { display: inline-flex; align-items: center; gap: 5px; font-size: 10.5px; font-weight: 650; letter-spacing: .02em; color: var(--k3-accent); }
+#panel-settings .o55-changed { display: inline-flex; align-items: center; gap: 5px; font-size: 10.5px; font-weight: 650; letter-spacing: .02em; color: var(--k3-accent-ink); }
 #panel-settings .o55-changed i { width: 6px; height: 6px; border-radius: 50%; background: var(--k3-accent); box-shadow: 0 0 0 3px var(--k3-accent-soft); }
 #panel-settings .o55-risk { display: inline-flex; align-items: center; gap: 4px; font-size: 10.5px; font-weight: 650; color: var(--k3-amber); }
 #panel-settings .o55-risk svg { width: 12px; height: 12px; }
@@ -38,7 +38,7 @@
 #panel-settings .o55-row.is-wide .o55-chips { justify-content: flex-start; }
 #panel-settings .o55-chips button { display: inline-flex; align-items: center; gap: 5px; min-height: 28px; padding: 0 11px; border-radius: 7px; border: 1px solid var(--k3-line); background: var(--k3-bg-2); color: var(--k3-text-2); font: inherit; font-size: 12px; font-weight: 560; cursor: pointer; transition: background-color var(--k3-dur-fast, 140ms), border-color var(--k3-dur-fast, 140ms), color var(--k3-dur-fast, 140ms); }
 #panel-settings .o55-chips button:hover { border-color: var(--k3-line-strong); color: var(--k3-text-1); }
-#panel-settings .o55-chips button.active { background: var(--k3-accent-soft); border-color: color-mix(in srgb, var(--k3-accent) 45%, transparent); color: var(--k3-accent); }
+#panel-settings .o55-chips button.active { background: var(--k3-accent-soft); border-color: color-mix(in srgb, var(--k3-accent) 45%, transparent); color: var(--k3-accent-ink); }
 #panel-settings .o55-chips button svg { width: 12px; height: 12px; }
 #panel-settings .o55-chips button .icon { display: inline-grid; }
 #panel-settings .o55-num { display: inline-flex; align-items: center; gap: 0; border: 1px solid var(--k3-line); border-radius: 8px; background: var(--k3-bg-1); overflow: hidden; }
@@ -48,7 +48,7 @@
 #panel-settings .o55-inherit { display: inline-flex; align-items: center; gap: 10px; }
 #panel-settings .o55-auto { display: inline-flex; align-items: center; gap: 6px; font-size: 12.5px; font-weight: 600; color: var(--k3-text-2); }
 #panel-settings .o55-auto svg { width: 14px; height: 14px; color: var(--k3-accent); }
-#panel-settings .o55-textbtn { border: 0; background: none; padding: 4px 2px; font: inherit; font-size: 12px; font-weight: 600; color: var(--k3-accent); cursor: pointer; text-decoration: none; }
+#panel-settings .o55-textbtn { border: 0; background: none; padding: 4px 2px; font: inherit; font-size: 12px; font-weight: 600; color: var(--k3-accent-ink); cursor: pointer; text-decoration: none; }
 #panel-settings .o55-textbtn:hover { text-decoration: underline; text-underline-offset: 3px; }
 #panel-settings .o55-struct { display: inline-flex; align-items: center; gap: 12px; max-width: 340px; min-height: 36px; padding: 6px 10px 6px 12px; border: 1px solid var(--k3-line); border-radius: 9px; background: var(--k3-bg-1); color: var(--k3-text-2); font: inherit; text-align: left; cursor: pointer; transition: border-color var(--k3-dur-fast, 140ms), background-color var(--k3-dur-fast, 140ms); }
 #panel-settings .o55-struct:hover { border-color: var(--k3-line-strong); background: var(--k3-bg-2); }

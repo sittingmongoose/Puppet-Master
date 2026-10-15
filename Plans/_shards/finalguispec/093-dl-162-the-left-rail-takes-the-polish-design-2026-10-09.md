@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L43079-L43537
+Source lines: L43250-L43699
 
-Source SHA256: `3b92db6358fe8c3a4d9cab44dbfd8d0ed98036cfb44ec29c2c5097cd36771b1a`
+Source SHA256: `a7b6f2c562f2ed1728f99ded5da071b1ae82ca324d50ee32f0e274aa0d0c8f37`
 
 ---
 
@@ -96,46 +96,24 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
-  In the left rail nothing is drawn as a pill or capsule and no box carries a coloured side bar (DL-162). A status
-  is a 12 px glyph whose shape is the state, followed by the state's full name in sentence case as a word in the
-  glyph's colour. The glyphs share one 16-unit grid. Done or ready is a solid disc with a check knocked out; failed a
-  solid disc with a cross knocked out; warning, attention, degraded, partial and not configured a solid triangle with
-  an exclamation mark knocked out; blocked a solid disc with a bar knocked out; info a solid disc with an i knocked
-  out; conflict a solid diamond with a cross knocked out; live or running a dot with a soft halo, whose halo pulses
-  only while something is restarting, building or being watched; the current branch or bookmark a ring around a dot;
-  stopped or idle an empty ring; pending, queued or waiting a dashed ring that turns slowly, one turn in 7 s, or in
-  eight steps over 4 s under Retro; stale a ring with clock hands; unknown a dashed ring with a question mark; changed a
-  half-filled circle; orphaned an open arc with a dot; a stash a tray; paused (a debug session) a solid disc with two
-  bars knocked out; immutable (a Jujutsu change) a solid disc with a padlock knocked out. Errored, a harness
-  failure, takes the failed shape in its own colour so it stays distinct from failed; needs input and flaky take the
-  warning triangle; and skipped, cancelled, superseded, terminated and expired take the stopped ring (an expired
-  runtime artifact reads Expired, never stale: owner, 2026-10-10). A row's state is the
-  same in its head and in its opened details. Knock-outs show whatever is behind the glyph,
-  a shelf tint or a selected row. Colours are token roles: done and live --graph-passed, running --graph-running,
-  warning, stale and changed --accent-warning, failed and blocked --graph-failed, pending and info --accent-blue,
-  idle, unknown and immutable the muted text colour, paused --accent-warning, conflict --accent-magenta, orphaned
-  and errored --accent-orange, and current --accent-primary, the selection colour; under NieR Mode every state
-  glyph and word draws in the NieR ink, running, stale, warning, orphaned and errored included (amended 2026-10-09
-  after the shared cleanup, DL-162; until then only done, live, idle and paused did), and only the failure colour
-  (failed and blocked) and conflict keep NieR's red, the shape telling the inked states apart. In the light looks and NieR Mode dark the word takes a deeper tone of its
-  colour, mixed toward the text colour, so it reads at about 4:1, while the glyph keeps more of the colour. Shape
-  and word always carry the state, so it
-  never rests on colour alone. Counts are plain numbers in tabular figures, right-aligned in one column across a
-  panel's shelf heads, never in a capsule, and a count that changes rolls to its new value. The File Manager's git
-  letters (F-074) stay letters, without a capsule, in one fixed column. Wherever a rail panel's owner unit says chip,
-  pill or badge for a status or a count, it renders as this unit's glyph and word or plain number, and a chip that is
-  an action (a clear-filter chip) is one of F3-618's quiet buttons; the owner keeps the state vocabulary, the action
-  and their meaning.
+  Left-rail status presentation consumes F3-658's shared glyph vocabulary, mappings and fitted inks; the former
+  rail-specific solid shapes and the open unification question are superseded by D44. A status has a 12 px
+  shared glyph and its full sentence-case name, with label contrast from F3-654. A row's head and opened details
+  show the same domain state. Expired runtime artifacts read Expired, not stale. Counts are plain tabular
+  numbers, right-aligned in one column across shelf heads, never capsules; changing counts may roll except under
+  Reduced Motion. File Manager git letters remain letters in their fixed column (F-074). Any rail owner saying
+  chip, pill or badge for status/count consumes this mark-and-word or plain-number presentation; an action
+  remains the owner's action with F3-618's control treatment and F3-648's action-button exception. No local
+  status store or lifecycle rule is created.
 gui_related: true
 gui_classification_reason: Defines how every status and count in the left rail is drawn.
 split_recommended: false
 depends_on: [DL-162, F3-618, F-074]
 unblocks: []
 acceptance_criteria:
-  - "The pill detector (an element whose corner radius is at least half its height and which has a fill or a border) and the coloured side-border detector find nothing in the nine rail panels in any theme variant or NieR Mode."
-  - "Every status in the rail shows a glyph and a word; every glyph listed here has a silhouette distinct from every other in grayscale."
-  - "Counts render as plain tabular numbers; no count or status sits in a capsule."
-  - "No WorkNodes, NodeSeeds, executable queues, implementation files, runtime launches, or production build tasks are created by this unit."
+- The label-pill and side-border detectors of F3-648 pass; action buttons, key caps, switch keys and non-label marks
+  are exempt from the label detector.
+- Every rail state maps to F3-658 and retains its full name and domain meaning; counts remain plain numbers.
 validation_surfaces:
   - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
   - python3 scripts/pm-plan-index.py validate
@@ -150,24 +128,31 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
-  - "Plans/Decision_Log.md#DL-162"
-  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/leftrail-polish-20261009/JARED-REQUEST-20261009.md, SHA-256 4923cfc785f4dc020d5bd3ae86e4bf62946a2155572013ee353182dd9bf46b06"
-  - "Concepts/leftrail-redesign/src/concepts/d/00-d.js and css/50-status.src.css (concept lineage only, commit c93e341606)"
-  - "Concepts/leftrail-redesign/src/concepts/d/css/10-tokens.src.css, NieR state colours in ink (shared cleanup lane commit a136797dad; concept lineage only)"
-preserved_exact_tokens:
-  - "glyph and word"
-  - "tabular figures"
-  - "knocked out"
+- Plans/Decision_Log.md#DL-162
+- /mnt/Cursor/PuppetMaster-Evidence/scratch/leftrail-polish-20261009/JARED-REQUEST-20261009.md, SHA-256 4923cfc785f4dc020d5bd3ae86e4bf62946a2155572013ee353182dd9bf46b06
+- Concepts/leftrail-redesign/src/concepts/d/00-d.js and css/50-status.src.css (concept lineage only, commit c93e341606)
+- Concepts/leftrail-redesign/src/concepts/d/css/10-tokens.src.css, NieR state colours in ink (shared cleanup lane
+  commit a136797dad; concept lineage only)
+- /mnt/Cursor/share/puppet-master/2026-10-10-glyph-catalog-addendum/README.md, SHA-256 3d0497f01c878e8aa6f99fa8f602b9b3dbf887aead2a24d62c12969bd47a1d31
+  (approved campaign source lineage; not native implementation evidence)
+- /mnt/Cursor/share/puppet-master/2026-10-11-onboarding-no-pills/README.md, SHA-256 1ab0aedc5910ab03097439cf9cd48da77eb7cefad458ca705a556727d327fd1a
+  (approved campaign source lineage; not native implementation evidence)
+preserved_exact_tokens: []
 negative_constraints:
-  - "Do not draw a status or a count in a capsule, and do not mark state with a coloured side bar."
-  - "Do not show a status by colour alone."
+- Do not draw a status or a count in a capsule, and do not mark state with a coloured side bar.
+- Do not show a status by colour alone.
 compatibility_only_notes: []
 stale_retired_dispositions:
-  - "Pill, chip and badge presentation of statuses and counts in the Cozy Shelves rail panels (F3-497 lineage, F3-477's lifecycle chips, RAP-049's staleness chip, F-074's count chip, ATS-028's attempt badges) is retired for the rail by this unit; the owners' state vocabularies stand."
+- Pill, chip and badge presentation of statuses and counts in the Cozy Shelves rail panels (F3-497 lineage, F3-477's
+  lifecycle chips, RAP-049's staleness chip, F-074's count chip, ATS-028's attempt badges) is retired for the rail
+  by this unit; the owners' state vocabularies stand.
+- 'Amended 2026-10-14: D44 unifies glyphs; the independent rail silhouettes, lower status-word contrast and unanswered
+  unification question are superseded.'
 owner_boundary_notes:
   - "F3-585 owns the assistant chat's 13 status marks and this unit owns the rail's glyphs; neither restates the other. The two sets differ (the chat's failed is a triangle, the rail's warning is), and whether one set should serve both is an open owner question recorded in DL-162."
 owner_hints:
   - Plans/FinalGUISpec.md
+
 ```
 
 ContractRef: ContractName:Plans/Decision_Log.md#DL-162, ContractName:Plans/FinalGUISpec.md#F3-618, ContractName:Plans/FileManager.md#F-074, ContractName:Plans/DRY_Rules.md#DR-057
@@ -416,17 +401,19 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
-  The activity bar's More tray (F3-419) opens as the chat picker of F3-621 beside the More button, under the heading
-  "Hidden from the bar" (DL-162). Each hidden item is a row with the bar's own icon and the item's real name, never
-  its internal id (Actions & Pipelines, not repository_automation). Picking a row restores the item at the end of
-  the bar; pressing a row and dragging it onto the bar restores it at the drop position; dragging a bar icon onto
-  More hides it; a second click on More closes the tray. With nothing hidden, More still opens and says how to hide
-  an icon instead of doing nothing. The tray's keyboard is the picker's (arrows, Enter, Escape with focus back on
-  More), and More itself is reachable by keyboard. The More button shows its hover, open and drop-target states in
-  the look's own treatment, and the drag ghost and drop line use the rail's radii and ink. The rail's resize handle
-  keeps the shell's glow in Basic, Friendly and Glass, is a hard square light in Retro and an ink mark under NieR
-  Mode. The gestures, the activity_bar_order:v1 persistence with its separator position and the hotkey order are
-  F3-419's and are unchanged; no command, action or storage key is added.
+  The activity bar's More tray (F3-419) opens as the chat picker of F3-621 beside the More button, under the
+  heading "Hidden from the bar" (DL-162). Each hidden item is a row with the bar's own icon and the item's real
+  name, never its internal id (Actions & Pipelines, not repository_automation). Picking a row restores the item
+  at the end of the bar; pressing a row and dragging it onto the bar restores it at the drop position; dragging
+  a bar icon onto More hides it; a second click on More closes the tray. With nothing hidden, More still opens
+  and says how to hide an icon instead of doing nothing. The tray's keyboard is the picker's (arrows, Enter,
+  Escape with focus back on More), and More itself is reachable by keyboard. The More button shows its hover,
+  open and drop-target states in the look's own treatment, and the drag ghost and drop line use the rail's radii
+  and ink. The rail's resize handle keeps the shell's glow in Basic, Friendly and Glass, is a hard square light
+  in Retro and an ink mark under NieR Mode. The gestures, the activity_bar_order:v1 persistence with its
+  separator position and the hotkey order are F3-419's and are unchanged; no command, action or storage key is
+  added. F3-657 supersedes the earlier per-rail resize treatment; the rail consumes that shared feedback with
+  its existing resize behavior.
 gui_related: true
 gui_classification_reason: Defines the visible More tray and the rail resize handle in the Polish design.
 split_recommended: false
@@ -451,8 +438,11 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
-  - "Plans/Decision_Log.md#DL-162"
-  - "Concepts/leftrail-redesign/src/concepts/d/41-more.js, 40-bar.js and css/80-bar.src.css, css/81-more.src.css (lane commit 8d4ce13e3e; concept lineage only)"
+- Plans/Decision_Log.md#DL-162
+- Concepts/leftrail-redesign/src/concepts/d/41-more.js, 40-bar.js and css/80-bar.src.css, css/81-more.src.css (lane
+  commit 8d4ce13e3e; concept lineage only)
+- /mnt/Cursor/share/puppet-master/2026-10-13-resize-glow/NOTES.md, SHA-256 0a20256d730c5b51cda138b14845a5dc2e7dfdda04385a3956721a73fb657c16
+  (approved campaign source lineage; not native implementation evidence)
 preserved_exact_tokens:
   - "Hidden from the bar"
   - "activity_bar_order:v1"
@@ -464,6 +454,7 @@ compatibility_only_notes:
 stale_retired_dispositions: []
 owner_hints:
   - Plans/FinalGUISpec.md
+
 ```
 
 ContractRef: ContractName:Plans/Decision_Log.md#DL-162, ContractName:Plans/FinalGUISpec.md#F3-419, ContractName:Plans/FinalGUISpec.md#F3-621

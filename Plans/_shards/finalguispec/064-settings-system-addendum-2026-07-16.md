@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L31376-L32275
+Source lines: L31390-L32323
 
-Source SHA256: `3b92db6358fe8c3a4d9cab44dbfd8d0ed98036cfb44ec29c2c5097cd36771b1a`
+Source SHA256: `a7b6f2c562f2ed1728f99ded5da071b1ae82ca324d50ee32f0e274aa0d0c8f37`
 
 ---
 
@@ -409,29 +409,50 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
-  Setting rows render their control by mapping the inventory type field to a renderer. The
-  renderer set is: toggle, select, radio, slider with a value bubble showing the current
-  value, number, text, path with a Browse control, color, action with working-then-done verb
-  states on invocation, multiselect, list, and keyvalue, where multiselect, list, and
-  keyvalue render as expandable editors that open in place beneath the row. The 824-setting
-  inventory's rows resolve across eleven of these renderer types at promotion; the color
-  renderer is part of the contract and serves color-typed rows. Rows show badges from the
-  vocabulary restart, adjudication, and new; status pills for ok, needs-setup, and attention
-  from the derived-status feed; and scope tags from the six scopes global, project, run,
-  persona, account, and provider. A row whose scope includes both project and global renders
-  an inherit-origin line disclosing that the effective value inherits from the global scope
-  and can be overridden at project scope.
+  Setting rows render their control by mapping the inventory type field to a renderer. The renderer set
+  is: toggle, select, radio, slider with a value bubble showing the current value, number, text, path with
+  a Browse control, color, action with working-then-done verb states on invocation, multiselect, list, and
+  keyvalue, where multiselect, list, and keyvalue render as expandable editors that open in place beneath
+  the row. The 824-setting inventory's rows resolve across eleven of these renderer types at promotion;
+  the color renderer is part of the contract and serves color-typed rows. Rows show badges from the
+  vocabulary restart, adjudication, and new; status marks for ok, needs-setup, and attention from the
+  derived-status feed; and scope tags from the six scopes global, project, run, persona, account, and
+  provider. A Project row discloses its concrete origin (copied, explicit, reset or imported) under
+  SSYS-002 without continuous global inheritance. Amended 2026-10-10 (DL-184, F3-648): a status renders as
+  a mark and a word, the mark in a 1em glyph slot with no container, never a pill; the toggle renderer
+  follows the approved switch grammar below; Glass has F3-652's later curved lens variant. A Settings
+  switch has a gripped key and power marks (bar on, hollow square off); the key slides while color wipes
+  behind it, with stepped reverse-video Retro and ink-block NieR variants. Under Reduced Motion the key
+  goes straight to its place and only color may fade for 160 ms. Joined choices fill their selected cell;
+  meters have square ends and Retro counts in blocks. Non-label switch keys are outside the label-pill
+  detector. The general.visual.wallpaper select renderer is the catalog-backed radio gallery of F3-653;
+  this is a registered presentation of select, not a new inventory type. Scope metadata such as global is
+  interpreted by SSYS-002, never as continuous app-global inheritance. Settings shell navigation, retained
+  updates and first-frame width consume SSYS-053. One shared one-of-several selector grammar applies in
+  Settings, Customize, Usage, the Wizard and other consumers. Choices never wrap while sharing a sliding
+  highlight. First stack neighbouring fields, then shorten visible choices while retaining full accessible
+  names; if the choices still cannot fit, use a one-choice-per-line list with instant highlight placement.
+  A highlight never spans wrapped lines. Joined highlights glide in Basic, Friendly and Glass, step in
+  Retro and NieR, and place immediately under Reduced Motion. Keyboard activation and an in-place Settings
+  update retain focus on the operated control.
 gui_related: true
-gui_classification_reason: This unit defines visible setting row control renderers, badge and status pill vocabulary, scope tags, and the inherit-origin line.
+gui_classification_reason: This unit defines visible setting row control renderers, badge and status mark vocabulary, scope tags, and the inherit-origin line.
 split_recommended: false
 depends_on: [F3-432, F3-441]
 unblocks: []
 acceptance_criteria:
-- "Renderer selection maps the inventory type field to the renderer set toggle, select, radio, slider, number, text, path, color, action, multiselect, list, and keyvalue; multiselect, list, and keyvalue render as expandable editors."
-- "The slider renderer shows a value bubble, the path renderer includes a Browse control, and the action renderer shows working-then-done verb states on invocation."
-- "Rows render badges only from the vocabulary restart, adjudication, and new, and status pills only from ok, needs-setup, and attention."
-- "Scope tags render from the six scopes global, project, run, persona, account, and provider, and Project rows disclose their concrete source such as copied, explicitly set, reset, or imported without continuous inheritance."
-- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+- Renderer selection maps the inventory type field to the renderer set toggle, select, radio, slider, number,
+  text, path, color, action, multiselect, list, and keyvalue; multiselect, list, and keyvalue render as expandable
+  editors.
+- The slider renderer shows a value bubble, the path renderer includes a Browse control, and the action renderer
+  shows working-then-done verb states on invocation.
+- Rows render badges only from the vocabulary restart, adjudication, and new, and status marks (a mark and a
+  word, no pill) only from ok, needs-setup, and attention.
+- Scope tags render from the six scopes global, project, run, persona, account, and provider, and Project rows
+  disclose their concrete source such as copied, explicitly set, reset, or imported without continuous inheritance.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+- Settings Spacing, Light/Dark/Auto, Customize choices, Usage ranges and Wizard work types fit without wrapped
+  highlight tracks, clipped words or lost accessible names; control focus survives an in-place update.
 validation_surfaces:
 - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
 - "python3 scripts/pm-plan-index.py validate"
@@ -444,8 +465,14 @@ node_compile_hint:
   mode: setting_row_renderer_badge_and_scope_contract
   create_worknodes: false
 source_lineage:
-- "Plans/FinalGUISpec.md:1329"
-- "Concepts/pm6-build (PMConcept6 demo; source-lineage-only per Plans/usage-feature.md)"
+- Plans/FinalGUISpec.md:1329
+- Concepts/pm6-build (PMConcept6 demo; source-lineage-only per Plans/usage-feature.md)
+- /mnt/Cursor/share/puppet-master/2026-10-11-onboarding-no-pills/README.md, SHA-256 1ab0aedc5910ab03097439cf9cd48da77eb7cefad458ca705a556727d327fd1a
+  (approved campaign source lineage; not native implementation evidence)
+- /mnt/Cursor/share/puppet-master/2026-10-13-wallpapers/OWNER-PROPOSAL.md, SHA-256 07778e16e4bc6082aa1d56435a826692662718069ceaaa2f20e37ae56984ba2d
+  (approved campaign source lineage; not native implementation evidence)
+- /mnt/Cursor/share/puppet-master/2026-10-14-plans-canon/sources/EDITOR-QUICKSETS.js, SHA-256 3e41e8ae1594be81401985bebaa2a4917e066593236fca04e54f02f9b7e7f7f6
+  (decision/source lineage; not native implementation evidence)
 preserved_exact_tokens:
 - "toggle"
 - "select"
@@ -478,6 +505,7 @@ owner_boundary_notes:
 - "Scope semantics and concrete Project-value source disclosure remain carried by F3-510/F3-442; badge semantics route to their owner contracts (restart rules and adjudication ownership); this unit owns the visible row presentation vocabulary."
 owner_hints:
 - "Plans/FinalGUISpec.md"
+
 ```
 
 ### F3-439 - Instant Apply Model And Save Exceptions
@@ -848,28 +876,31 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
-  The section 15.1 persistence key tables register four settings-driven keys. The shell and
-  layout key table gains `glass_background_mode:v1` (active glass background mode; write
-  frequency on change) and `glass_alpha:v1` (user glass alpha value within the per-theme
-  clamps; write frequency on change, debounced 300ms). The chat, settings, and review state
-  key table gains `settings_recents:v1` (most-recent-first deduplicated settings recents
-  list, cap 8; write frequency on change, debounced 300ms) and
-  `settings_suggestions_dismissed:v1` (dismissed Suggested-shelf entries with dismissal
-  timestamps and signal scope, entries expiring after 90 days; write frequency on change).
-  The concept localStorage names pm.theme, pm.glassBg, pm.glassAlpha, and
-  pm.activity_bar_order:v2 are demo shims, not canonical keys: the canonical keys remain
-  `theme:v1` and `activity_bar_order:v1`, and this addendum registers no other new storage
-  keys.
+  The section 15.1 persistence key tables register four settings-driven keys. The shell and layout key table
+  gains `glass_background_mode:v1` (retired compatibility input at SSYS-054's coordinated publication,
+  interpreted by SP-333; no active writer after that boundary) and `glass_alpha:v1` (user glass alpha value
+  within the per-theme clamps; write frequency on change, debounced 300ms). The chat, settings, and review state
+  key table gains `settings_recents:v1` (most-recent-first deduplicated settings recents list, cap 8; write
+  frequency on change, debounced 300ms) and `settings_suggestions_dismissed:v1` (dismissed Suggested-shelf
+  entries with dismissal timestamps and signal scope, entries expiring after 90 days; write frequency on
+  change). The concept localStorage names pm.theme, pm.glassBg, pm.glassAlpha, and pm.activity_bar_order:v2 are
+  demo shims, not canonical keys: the canonical keys remain `theme:v1` and `activity_bar_order:v1`, and this
+  addendum registers no other new storage keys. The new Wallpaper choice is an existing Project Settings
+  snapshot value under SP-333, not a new local-storage family.
 gui_related: true
 gui_classification_reason: This unit registers GUI persistence keys and write frequencies for theme and settings state.
 split_recommended: false
 depends_on: [F3-217]
 unblocks: []
 acceptance_criteria:
-- "The shell and layout key table registers glass_background_mode:v1 and glass_alpha:v1 with write frequencies, and the chat, settings, and review state table registers settings_recents:v1 and settings_suggestions_dismissed:v1 with write frequencies."
-- "The concept names pm.theme, pm.glassBg, pm.glassAlpha, and pm.activity_bar_order:v2 are recorded as demo shims only; canonical keys remain theme:v1 and activity_bar_order:v1."
-- "No storage keys other than glass_background_mode:v1, glass_alpha:v1, settings_recents:v1, and settings_suggestions_dismissed:v1 are registered by this addendum."
-- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+- The shell and layout key table records glass_background_mode:v1 as retired-at-publication compatibility lineage
+  and glass_alpha:v1 with its write frequency, and the chat, settings, and review state table registers settings_recents:v1
+  and settings_suggestions_dismissed:v1 with write frequencies.
+- The concept names pm.theme, pm.glassBg, pm.glassAlpha, and pm.activity_bar_order:v2 are recorded as demo shims only;
+  canonical keys remain theme:v1 and activity_bar_order:v1.
+- No storage keys other than glass_background_mode:v1, glass_alpha:v1, settings_recents:v1, and settings_suggestions_dismissed:v1
+  are registered by this addendum.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
 validation_surfaces:
 - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
 - "python3 scripts/pm-plan-index.py validate"
@@ -882,10 +913,12 @@ node_compile_hint:
   mode: theme_and_settings_persistence_key_additions
   create_worknodes: false
 source_lineage:
-- "Plans/FinalGUISpec.md:2286"
-- "Plans/FinalGUISpec.md:2301"
-- "Plans/FinalGUISpec.md:15136"
-- "Concepts/pm6-build (PMConcept6 demo; source-lineage-only per Plans/usage-feature.md)"
+- Plans/FinalGUISpec.md:2286
+- Plans/FinalGUISpec.md:2301
+- Plans/FinalGUISpec.md:15136
+- Concepts/pm6-build (PMConcept6 demo; source-lineage-only per Plans/usage-feature.md)
+- /mnt/Cursor/share/puppet-master/2026-10-13-wallpapers/OWNER-PROPOSAL.md, SHA-256 07778e16e4bc6082aa1d56435a826692662718069ceaaa2f20e37ae56984ba2d
+  (approved campaign source lineage; not native implementation evidence)
 preserved_exact_tokens:
 - "glass_background_mode:v1"
 - "glass_alpha:v1"
@@ -907,4 +940,5 @@ owner_boundary_notes:
 - "This unit mirrors the F3-217 registration shape; F3-217 remains the owner of the pre-existing shell and layout key list, and Plans/storage-plan.md remains the consumer doc for storage record truth."
 owner_hints:
 - "Plans/FinalGUISpec.md"
+
 ```

@@ -24,7 +24,7 @@
  *     mounted D at boot, and Current after that must be the rail D never touched.
  *
  *   node Concepts/leftrail-redesign/tools/rail_boot.mjs <out-dir> [--page P[?query]] [--ref R[?query]] [--concepts a,b,c,d|none]
- *        [--panels files,source,docker] [--themes all|basic-dark,...] [--quick] [--shots] [--restore]
+ *        [--panels files,source,docker] [--themes all|basic-dark,...] [--quick] [--shots] [--restore] [--coverage <file>]
  * Skin concepts (d, current) are checked on all nine rail panels, the view concepts (a, b, c) on their three
  * (files, source, docker); --panels overrides both. Writes <out-dir>/rail-boot.json (summary.gpu names the WebGL
  * renderer), prints a summary, exits 1 when a check fails. --shots writes rail screenshots per concept x theme x panel
@@ -38,10 +38,12 @@ import { existsSync, mkdirSync, writeFileSync } from 'node:fs';
 import { pathToFileURL, fileURLToPath } from 'node:url';
 import { resolve, join, dirname } from 'node:path';
 import { homedir } from 'node:os';
+import { beginCoverage, endCoverage, takeCoverageFlag } from '../../onboarding/opus-5.5/tools/coverage_union.mjs';
 
 const here = dirname(fileURLToPath(import.meta.url));
 const concepts = resolve(here, '../..');
 const argv = process.argv.slice(2);
+const coverageFile = takeCoverageFlag(argv);
 const opt = (k, d) => { const i = argv.indexOf('--' + k); return i >= 0 ? (argv[i + 1] && !argv[i + 1].startsWith('--') ? argv[i + 1] : true) : d; };
 const out = resolve(argv[0] && !argv[0].startsWith('--') ? argv[0] : '/tmp/rail-boot');
 mkdirSync(out, { recursive: true });
@@ -115,7 +117,19 @@ const PAGE_LIB = () => {
   /* a pair counts when an element carries it, or carries it as data-legacy-cmd/-arg (the fixture's canon replacement of
      an original action keeps the original pair there on purpose) */
   L.pairs = (panel) => { const s = new Set(); for (const r of L.roots(panel)) { r.querySelectorAll('[data-demo-action]').forEach((e) => s.add(e.getAttribute('data-demo-action') + ' | ' + (e.getAttribute('data-demo-arg') || ''))); r.querySelectorAll('[data-legacy-cmd]').forEach((e) => s.add(e.getAttribute('data-legacy-cmd') + ' | ' + (e.getAttribute('data-legacy-arg') || ''))); } return s; };
+  /* home's narrow ladder (DL-180 D4, 44-narrow.js) folds the side panel to an overlay when the centre is under 760 px, with
+     48 px of hysteresis; the width sweep below (480 px in a 1600 px window beside the chat column) would fold it and leave
+     it folded for every later panel. The rail is measured docked: the ladder is held still for the run and any fold it
+     made is undone (concept D's overlay under the fold is the ladder's own check, not this one) */
+  L.dock = () => {
+    const n = window.PMW && window.PMW.narrow; if (!n) return;
+    n.frozen = true;
+    const s = document.getElementById('sidePanelSlot'), ma = document.querySelector('.main-area');
+    if (s && s.hasAttribute('data-pm-rail-fold')) { s.removeAttribute('data-pm-rail-fold'); document.dispatchEvent(new CustomEvent('pm:rail-fold', { detail: { mode: 'docked', width: 0 } })); }
+    if (ma) ma.removeAttribute('data-pmw-rail-peek');
+  };
   L.open = async (panel) => {
+    L.dock();
     const icon = document.querySelector(`#activityBar .icon[data-target="${'panel-' + panel}"]`);
     const slot = document.getElementById('sidePanelSlot');
     const orig = document.getElementById('panel-' + panel);
@@ -360,6 +374,10 @@ async function bootPage(tgt, { width = 1600, height = 1000 } = {}) {
   const b = {
     id: started.id, errors: [], gpu: null, page: null, cdp: null,
     async close() {
+      if (b.coverage) {
+        const session = b.coverage; b.coverage = null;
+        try { await endCoverage(session, coverageFile); } catch (err) { console.error('coverage:', err.message); }
+      }
       if (browser) { const x = browser; browser = null; try { await x.close(); } catch (_) { /* disconnect is best-effort */ } }
       stopSession(started.id);
     },
@@ -371,6 +389,7 @@ async function bootPage(tgt, { width = 1600, height = 1000 } = {}) {
     page.on('pageerror', (e) => b.errors.push('PAGEERROR ' + String((e && e.message) || e).slice(0, 300)));
     page.on('console', (m) => { if (m.type() === 'error') b.errors.push('CONSOLE ' + m.text().slice(0, 300)); });
     const cdp = await ctx.newCDPSession(page);
+    if (coverageFile) { await beginCoverage(cdp); b.coverage = cdp; }
     await cdp.send('Emulation.setDeviceMetricsOverride', { width, height, deviceScaleFactor: 1, mobile: false });
     await page.goto(pathToFileURL(tgt.file).href + '?o55=off' + (tgt.query ? '&' + tgt.query : ''), { waitUntil: 'load', timeout: 60000 });
     b.gpu = await page.evaluate(GPU_PROBE);

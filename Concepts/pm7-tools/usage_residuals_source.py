@@ -1,3 +1,4 @@
+# This file no longer feeds PMConcept7. Use scripts/pm7-where.py to find where to edit.
 """Assertion-guarded PM7 T35 Usage residual repair.
 
 This source layer is deliberately presentation-local.  It consumes the T34

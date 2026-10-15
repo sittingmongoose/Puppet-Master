@@ -106,14 +106,14 @@ def nier_selector_patches(names: dict | None = None) -> list[tuple[str, str, str
     names = NIER_NAMES if names is None else names
     out = []
     if names.get('cursor'):
-        old = "'.pm51-menu-item', '.pm7u-navbtn', '.pm7u-poprow',"
-        out.append((old, old[:-1] + ', ' + ', '.join(f"'{s}'" for s in names['cursor']) + ',', 'nier cursor list'))
+        old = "'.pm51-menu-item',"
+        out.append((old, old + ' ' + ', '.join(f"'{s}'" for s in names['cursor']) + ',', 'nier cursor list'))
     if names.get('chosen'):
-        old = '.orch-tab, .pm7u-navbtn, .domain-link'
-        out.append((old, '.orch-tab, .pm7u-navbtn, ' + ', '.join(names['chosen']) + ', .domain-link', 'nier chosen list'))
+        old = '.orch-tab, .domain-link'
+        out.append((old, '.orch-tab, ' + ', '.join(names['chosen']) + ', .domain-link', 'nier chosen list'))
     if names.get('strip'):
-        old = ".pm6-tt-mode, .pm7u-range button';"
-        out.append((old, '.pm6-tt-mode, .pm7u-range button, ' + ', '.join(names['strip']) + "';", 'nier strip list'))
+        old = ".pm6-tt-mode';"
+        out.append((old, '.pm6-tt-mode, ' + ', '.join(names['strip']) + "';", 'nier strip list'))
     if names.get('titles'):
         old = "usage: '#pm7uRoomTitle, .pm7u-brand h1',"
         out.append((old, "usage: '" + ', '.join(names['titles']) + "',", 'nier page titles'))
@@ -249,12 +249,15 @@ HOST_SCOPE = ':is(#panel-usage,[data-pmu-host])'
 # 20-board.css: while html[data-lg-frost="painted"] every plate drops its live blur, the carried plate its whole backdrop
 # filter, and the carried plate's lift layer takes its painted frost; a hosted board's plates too) = 2,632, plus D43's
 # account switch rules in 50-accounts.css (8484df3f25: +44, 258db47370: -2, a471fc10bc: +1; buttons, switch column,
-# stacked and narrow rows, look variants and reduced motion; the same account controls on a hosted board) = 2,675. A Usage CSS
+# stacked and narrow rows, look variants and reduced motion; the same account controls on a hosted board) = 2,675, plus
+# the room change's own moment (2026-10-14, Jared #3, 05-film.css: the retired flyers' 9 rules out, Glass's lens rim and
+# NieR's glitch in; a hosted board makes neither: the lens rim is made only for the Usage board's room change and the
+# glitch only in #pmuStage) = 2,670. A Usage CSS
 # edit that adds or removes an anchored rule moves 'rewritten': look at what the new rules style (a hosted board gets
 # them too), then re-pin the number here. Any other use of #panel-usage (a child or sibling combinator, a rule for the
 # panel itself, an anchor outside a selector) stops the build: it would be Usage-only, or not a selector, without
 # saying so.
-HOST_SCOPE_EXPECT = {'rewritten': 2675, 'compound': 1}
+HOST_SCOPE_EXPECT = {'rewritten': 2670, 'compound': 1}
 HOST_AT_GROUPS = ('@media', '@supports', '@container', '@layer')
 _ANCHOR_RX = re.compile(re.escape(HOST_ANCHOR) + r'(?![\w-])')
 

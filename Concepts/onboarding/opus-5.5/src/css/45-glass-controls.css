@@ -1,0 +1,126 @@
+/* Onboarding and the tour in Liquid Glass: the action controls (Jared, 2026-10-11: "update the buttons and switches in
+   the onboarding to match your new look"). This is the rollout of the Glass owner's approved direction (pm7-liquid-glass,
+   glass.css section 11) into the onboarding's own source, so the onboarding wears it whether or not the Glass layer is
+   on: actions are glass, the main action is tinted glass lit from above, choices are glass rows that light up when
+   chosen, segments sit on a glass track, switches are the curved glass switch with a slower, springy knob, and the
+   tour's callout, bar and buttons follow. Corners are concentric with the 22 px window: 12 for rows, 10 for buttons.
+   The colours are the Glass layer's own tokens (--lg-*), read with the same values as fallbacks, so the two always agree.
+   Left alone here: the step rail (the Glass owner's page selector), every label (the no-pills rules), card and row
+   hover (PMH, 22-hover.css), fields (10-window.css) and NieR Mode (data-family is basic while it is painted). With the
+   Glass layer on (data-lg="on") its lens draws a segment's selection, so the raised selection below steps aside. */
+#pm-o55-onboarding[data-family="glass"][data-mode="dark"], .o55t-root[data-family="glass"][data-mode="dark"] {
+  --o55g-fill: var(--lg-fill, rgba(255, 255, 255, 0.075)); --o55g-fill-hover: var(--lg-fill-hover, rgba(255, 255, 255, 0.13)); --o55g-fill-press: var(--lg-fill-press, rgba(255, 255, 255, 0.18));
+  --o55g-line: var(--lg-line, rgba(255, 255, 255, 0.1)); --o55g-edge-top: var(--lg-edge-top, rgba(255, 255, 255, 0.3)); --o55g-edge-bot: var(--lg-edge-bot, rgba(0, 0, 0, 0.28));
+  --o55g-switch-off: var(--lg-switch-off, rgba(255, 255, 255, 0.16)); --o55g-sel: linear-gradient(180deg, rgba(255, 255, 255, 0.22), rgba(255, 255, 255, 0.1));
+  /* the main action's tint: Glass Dark's accent is a pale sky blue, under which white words read at about 2:1, so its
+     glass is cut from a deeper blue (as the Glass layer does), about 5.6:1 */
+  --o55g-action: rgb(38, 102, 210);
+  --o55g-row: var(--o55g-fill); --o55g-row-on: var(--o55g-fill-press); }
+#pm-o55-onboarding[data-family="glass"][data-mode="light"], .o55t-root[data-family="glass"][data-mode="light"] {
+  --o55g-fill: var(--lg-fill, rgba(12, 15, 21, 0.055)); --o55g-fill-hover: var(--lg-fill-hover, rgba(12, 15, 21, 0.09)); --o55g-fill-press: var(--lg-fill-press, rgba(12, 15, 21, 0.13));
+  --o55g-line: var(--lg-line, rgba(12, 15, 21, 0.09)); --o55g-edge-top: var(--lg-edge-top, rgba(255, 255, 255, 0.9)); --o55g-edge-bot: var(--lg-edge-bot, rgba(30, 45, 90, 0.14));
+  --o55g-switch-off: var(--lg-switch-off, rgba(12, 15, 21, 0.14)); --o55g-sel: linear-gradient(180deg, #fff, rgba(255, 255, 255, 0.86));
+  /* Light's action: the accent deepened toward navy, so its white word reads 5.5:1 or more (the plain accent with the
+     old highlight read 3.6:1 at its brightest pixel) */
+  --o55g-action: color-mix(in srgb, var(--accent-blue) 78%, #0b1f4d);
+  /* Light's rows, tiles and segments are white frosted glass on the pale sheet (an ink fill darkened what lay under
+     their words: a tile's description read about 4:1) */
+  --o55g-row: rgba(255, 255, 255, 0.66); --o55g-row-on: rgba(255, 255, 255, 0.86); }
+
+/* actions: a glass button (a fill with light along its top edge and a shade along its foot); the press springs */
+#pm-o55-onboarding[data-family="glass"] :is(.o55-btn, .o55-iconbtn, .o55-sound),
+.o55t-root[data-family="glass"] .o55t-btn {
+  border-color: transparent; border-radius: 10px; color: var(--text-primary); background: var(--o55g-fill);
+  box-shadow: inset 0 1px 0 var(--o55g-edge-top), inset 0 -1px 1px var(--o55g-edge-bot);
+  transition: background-color 160ms ease, box-shadow 200ms ease, transform 380ms cubic-bezier(0.3, 1.3, 0.5, 1), opacity 160ms ease; }
+#pm-o55-onboarding[data-family="glass"] :is(.o55-btn, .o55-iconbtn, .o55-sound):hover,
+.o55t-root[data-family="glass"] .o55t-btn:hover { background-color: var(--o55g-fill-hover); }
+#pm-o55-onboarding[data-family="glass"] .o55-btn:not([aria-disabled="true"]):hover,
+.o55t-root[data-family="glass"] .o55t-btn:not([aria-disabled="true"]):hover { transform: translateY(-1px); }
+#pm-o55-onboarding[data-family="glass"] .o55-btn:not([aria-disabled="true"]):active,
+.o55t-root[data-family="glass"] .o55t-btn:not([aria-disabled="true"]):active { transform: translateY(1px) scale(0.985); transition-duration: 90ms; }
+/* the header's look, sound and close are quiet until the pointer is on them, as the app's toolbar buttons are */
+#pm-o55-onboarding[data-family="glass"] :is(.o55-iconbtn, .o55-sound):not(:hover) { background: transparent; box-shadow: none; }
+/* (the ghost's own !important rules in 10-window.css keep it clear at rest; on the pointer it takes the glass fill) */
+#pm-o55-onboarding[data-family="glass"] .o55-btn.o55-ghost:hover,
+.o55t-root[data-family="glass"] .o55t-ghost:hover { background: var(--o55g-fill-hover) !important; box-shadow: inset 0 1px 0 var(--o55g-edge-top), inset 0 -1px 1px var(--o55g-edge-bot) !important; }
+.o55t-root[data-family="glass"] :is(.o55t-ghost, .o55t-secondary):not(:hover) { background: transparent; box-shadow: inset 0 0 0 1px var(--o55g-line); }
+.o55t-root[data-family="glass"] .o55t-ghost:not(:hover) { box-shadow: none; }
+
+/* the main action: tinted glass, its own light at the top edge and a soft coloured shadow under it */
+#pm-o55-onboarding[data-family="glass"] .o55-btn.o55-primary,
+.o55t-root[data-family="glass"] .o55t-btn.o55t-primary {
+  color: #fff; text-shadow: 0 1px 1px rgba(0, 0, 0, 0.25);
+  /* its light is a sheen along the top edge that has faded out before the word begins */
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.3) 0, rgba(255, 255, 255, 0.08) 18%, rgba(255, 255, 255, 0) 30%),
+    linear-gradient(180deg, color-mix(in srgb, var(--o55g-action) 96%, transparent), color-mix(in srgb, var(--o55g-action) 80%, #0a1430));
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.6), inset 0 -1px 1px rgba(0, 0, 0, 0.22), 0 8px 22px -8px color-mix(in srgb, var(--o55g-action) 75%, transparent), 0 1px 2px rgba(0, 0, 0, 0.25); }
+#pm-o55-onboarding[data-family="glass"] .o55-btn.o55-primary:not([aria-disabled="true"]):hover,
+.o55t-root[data-family="glass"] .o55t-btn.o55t-primary:not([aria-disabled="true"]):hover { filter: brightness(1.06); }
+/* a main action that cannot be pressed yet keeps its glass and its readable label, only quieter */
+#pm-o55-onboarding[data-family="glass"] .o55-btn.o55-primary[aria-disabled="true"] {
+  background: linear-gradient(180deg, color-mix(in srgb, var(--o55g-action) 52%, var(--text-muted)), color-mix(in srgb, var(--o55g-action) 40%, var(--text-muted)));
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.35), inset 0 -1px 1px rgba(0, 0, 0, 0.18); }
+
+/* choices: glass rows; the chosen one lights up with a ring of the accent and a glow under it */
+#pm-o55-onboarding[data-family="glass"] :is(.o55-card, .o55-tile, .o55-provider),
+.o55t-root[data-family="glass"] .o55t-choice {
+  border-color: transparent; border-radius: 12px; background: var(--o55g-row);
+  box-shadow: inset 0 1px 0 var(--o55g-edge-top), inset 0 -1px 1px var(--o55g-edge-bot), 0 0 0 0.5px var(--o55g-line); }
+#pm-o55-onboarding[data-family="glass"] :is(.o55-card, .o55-tile, .o55-provider):is(.o55-on, [aria-checked="true"], [aria-pressed="true"]),
+.o55t-root[data-family="glass"] .o55t-choice.o55t-on {
+  background: radial-gradient(120% 120% at 20% -10%, rgba(255, 255, 255, 0.16), transparent 60%), var(--o55g-row-on);
+  box-shadow: inset 0 1px 0 var(--o55g-edge-top), inset 0 0 0 1.5px color-mix(in srgb, var(--accent-blue) 85%, transparent), 0 10px 26px -14px color-mix(in srgb, var(--accent-blue) 60%, transparent); }
+
+/* segments: a glass track; the chosen segment is a raised piece of clear glass (the Glass layer's lens, when it is
+   on, takes this over) */
+#pm-o55-onboarding[data-family="glass"] .o55-seg,
+.o55t-root[data-family="glass"] .o55t-seg { border-color: transparent; border-radius: 10px; background: var(--o55g-fill); box-shadow: inset 0 1px 1px var(--o55g-edge-bot); padding: 2px; }
+#pm-o55-onboarding[data-family="glass"] .o55-seg button,
+.o55t-root[data-family="glass"] .o55t-seg button { border-radius: 8px; background: transparent; box-shadow: none; color: var(--text-secondary); transition: color 160ms ease, background-color 200ms ease, box-shadow 200ms ease; }
+#pm-o55-onboarding[data-family="glass"] .o55-seg button.o55-on,
+.o55t-root[data-family="glass"] .o55t-seg button.o55t-on { color: var(--text-primary); font-weight: 650; }
+html:not([data-lg="on"]) #pm-o55-onboarding[data-family="glass"] .o55-seg button.o55-on,
+html:not([data-lg="on"]) .o55t-root[data-family="glass"] .o55t-seg button.o55t-on {
+  background: var(--o55g-sel); box-shadow: inset 0 1px 0 var(--o55g-edge-top), 0 1px 3px rgba(0, 0, 0, 0.18), 0 0 0 0.5px var(--o55g-line); }
+
+/* switches: the curved glass switch. A capsule track; a round, glossy knob that glides across and lands with a small
+   overshoot (Jared, 2026-10-11: curved ends, and the switching animation slowed down a bit), the track's colour turning
+   with it. (Filmed at 60 fps on the P1000, the Glass layer's spring curve, cubic-bezier(.3, 1.4, .45, 1), covered four
+   fifths of the travel in the first frame and read as a jump; this curve eases in, so the travel is seen.) */
+#pm-o55-onboarding[data-family="glass"] .o55-switch {
+  width: 38px; height: 22px; border-radius: 11px; background: var(--o55g-switch-off);
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.22), inset 0 0 0 0.5px var(--o55g-line); transition: background-color 380ms ease-in-out; }
+#pm-o55-onboarding[data-family="glass"] .o55-toggle.o55-on .o55-switch { background: var(--accent-blue); }
+#pm-o55-onboarding[data-family="glass"] .o55-switch span {
+  top: 2px; left: 2px; width: 18px; height: 18px; border-radius: 50%;
+  background: radial-gradient(120% 90% at 35% 22%, #fff, #f1f4f9 55%, #dce3ee);
+  box-shadow: inset 0 1px 0 #fff, inset 0 -1px 1px rgba(20, 30, 60, 0.14), 0 2px 5px rgba(0, 8, 30, 0.32);
+  transition: transform 520ms cubic-bezier(0.45, 0, 0.2, 1.15), background 220ms ease; }
+#pm-o55-onboarding[data-family="glass"] .o55-toggle.o55-on .o55-switch span { transform: translateX(16px); }
+
+/* words that have to read on the sheet: a step still to come is lettered at the secondary text's strength (the muted
+   ink read 2.8:1 on Light's pale sheet), and the accent as words (the eyebrow over each title, a link, a card's arrow)
+   is the accent deepened toward the text */
+#pm-o55-onboarding[data-family="glass"] .o55-railitem:not([data-state="current"]) { color: var(--text-secondary); }
+#pm-o55-onboarding[data-family="glass"][data-mode="light"] { --o55-ink-accent: color-mix(in srgb, var(--o55-accent) 68%, var(--text-primary)); }
+
+/* the step rail is the Glass owner's: with the Glass layer on, its lens is the current step's only highlight, so the
+   current node's own halo steps aside (pm7-liquid-glass, 2026-10-13; without the layer the rail is as it was) */
+html[data-lg="on"] #pm-o55-onboarding[data-family="glass"] .o55-railitem[data-state="current"] .o55-railnode { box-shadow: none; }
+
+/* the tour: its callout and bar are glass sheets with concentric corners; the bar's buttons are clear until the pointer
+   is on them, as the app's toolbar buttons are */
+.o55t-root[data-family="glass"] :is(.o55t-callout, .o55t-morph) { border-radius: 16px; }
+.o55t-root[data-family="glass"] .o55t-bar { border-radius: 16px; }
+.o55t-root[data-family="glass"] .o55t-barbtn { border-radius: 8px; transition: background-color 160ms ease, box-shadow 200ms ease; }
+.o55t-root[data-family="glass"] .o55t-barbtn:hover { background: var(--o55g-fill-hover); box-shadow: inset 0 1px 0 var(--o55g-edge-top), inset 0 -1px 1px var(--o55g-edge-bot); }
+
+/* Reduced Motion: the window already cancels every transition (20-motion.css); the tour's glass buttons and segments
+   change state at once too, and no button lifts or sinks */
+html[data-motion="reduced"] .o55t-root[data-family="glass"] :is(.o55t-btn, .o55t-barbtn, .o55t-seg button, .o55t-choice) { transition: none !important; transform: none !important; }
+@media (prefers-reduced-motion: reduce) {
+  .o55t-root[data-family="glass"] :is(.o55t-btn, .o55t-barbtn, .o55t-seg button, .o55t-choice) { transition: none !important; transform: none !important; }
+  #pm-o55-onboarding[data-family="glass"] .o55-btn { transform: none !important; }
+}
+html[data-motion="reduced"] #pm-o55-onboarding[data-family="glass"] .o55-btn { transform: none !important; }

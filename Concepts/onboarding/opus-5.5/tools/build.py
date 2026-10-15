@@ -13,7 +13,9 @@ The base file is read-only. The legacy Product Onboarding and Guided Tour blocks
 spliced between <!-- O55:*:START/END --> markers, and a short list of guarded, exactly-once patches re-point the shell's
 few remaining references (hover-tag overlay ids, labels, Doctor quiet actions, Teacher persona, owner exposures).
 The Usage page is the redesign in Concepts/usage-redesign: its usage_layer replaces the base's Prism Usage page at step 2b.
-Home is the universal panel system and the terminal in Concepts/home-redesign: its home_layer runs last, at step 5.
+Home is the universal panel system and the terminal in Concepts/home-redesign: its home_layer runs at step 5. Liquid
+Glass (Concepts/liquid-glass/opus-5.5) and then the wallpapers (Concepts/wallpapers/opus-5.5) go over the page last, at
+step 6.
 Concepts/PMConcept7.html is published only from here (2026-09-26 user direction): --publish-pm7 writes the same built
 bytes to both outputs, and --check fails while PMConcept7.html is missing or differs by even one byte.
 """
@@ -355,7 +357,130 @@ def duplicate_keys() -> list[str]:
     return out
 
 
+def shared_fitting_patch(text: str) -> str:
+    """M1: fit visible rail content in place; keep the pinned ladder and pass order.
+
+    The region hash is in addition to the pinned-input and exactly-once guards. Intrinsic probes for one
+    dock strip / breakpoint row share a read phase; dependent controls still run in their original order.
+    No hidden pane is exposed for measurement. Its activation schedules the same pre-paint fit callback.
+    """
+    start = text.index('    function overflows(el) {', text.index('(function pillFit()'))
+    end = text.index('    var scheduled = null, pendingScope = null;', start)
+    old = text[start:end]
+    need(hashlib.sha256(old.encode()).hexdigest() ==
+         '8c2dede5e1d6a51a01c0c5c52a793ab20fad515f7ef4e4eb92c91b20793221be',
+         'M1: pinned shared fitter region drift')
+    # Keep probes local to a single flex row: batching unrelated fit decisions would alter leftover-space fitting.
+    a = old.index('    function preferredWidth(el) {')
+    b = old.index('    function bannerCrowded(st) {', a)
+    intrinsic = r'''    function fitStyle(el, name, value) {
+      if (el.style[name] !== value) el.style[name] = value;
+    }
+    function preferredWidths(elements) {
+      var saved = elements.map(function (el) {
+        return { width: el.style.width, flex: el.style.flex, maxWidth: el.style.maxWidth, minWidth: el.style.minWidth };
+      });
+      elements.forEach(function (el) {
+        fitStyle(el, 'width', 'auto'); fitStyle(el, 'flex', '0 0 auto');
+        fitStyle(el, 'maxWidth', 'none'); fitStyle(el, 'minWidth', '0px');
+      });
+      var widths = elements.map(function (el) { return Math.ceil(el.scrollWidth); });
+      elements.forEach(function (el, i) {
+        Object.keys(saved[i]).forEach(function (name) { fitStyle(el, name, saved[i][name]); });
+      });
+      return widths;
+    }
+    function preferredWidth(el) { return el ? preferredWidths([el])[0] : 0; }
+'''
+    new = old[:a] + intrinsic + old[b:]
+    new = replace_once(new, "      if (fit) el.setAttribute('data-fit', fit);\n      else el.removeAttribute('data-fit');\n      void el.offsetWidth;",
+                       "      if (fit) { if (el.getAttribute('data-fit') !== fit) el.setAttribute('data-fit', fit); }\n"
+                       "      else if (el.hasAttribute('data-fit')) el.removeAttribute('data-fit');",
+                       'M1: equal fit writes and eager flush')
+    new = replace_once(new, "      el.removeAttribute('data-stack');\n      void el.offsetWidth;",
+                       "      if (el.hasAttribute('data-stack')) el.removeAttribute('data-stack');",
+                       'M1: breakpoint reset')
+    new = replace_once(new, "        need += preferredWidth(kids[i]);",
+                       "        need += widths[i];", 'M1: breakpoint intrinsic reads')
+    new = replace_once(new, "      var need = 0;\n      for (var i = 0; i < kids.length; i++) {",
+                       "      var widths = preferredWidths(kids);\n      var need = 0;\n      for (var i = 0; i < kids.length; i++) {",
+                       'M1: breakpoint intrinsic stage')
+    new = replace_once(new, "      btn.style.width = '';\n      btn.style.minWidth = '';\n      btn.style.maxWidth = '';",
+                       "      fitStyle(btn, 'width', '');\n      fitStyle(btn, 'minWidth', '');\n      fitStyle(btn, 'maxWidth', '');",
+                       'M1: equal configuration sizing writes')
+    a = new.index('      var worst = 0;\n', new.index('    function segtabCrushed(el) {'))
+    b = new.index('      return worst > el.clientWidth / items.length + 1;', a)
+    new = new[:a] + r'''      var probes = Array.prototype.slice.call(items);
+      var spans = [], saved = [];
+      probes.forEach(function (it) {
+        Array.prototype.forEach.call(it.querySelectorAll('span'), function (s) {
+          spans.push(s); saved.push(s.style.maxWidth); fitStyle(s, 'maxWidth', 'none');
+        });
+      });
+      var widths = preferredWidths(probes);
+      spans.forEach(function (s, i) { fitStyle(s, 'maxWidth', saved[i]); });
+      var worst = Math.max.apply(Math, widths);
+''' + new[b:]
+    a = new.index('    function fitIn(root) {')
+    new = new[:a] + r'''    var fittedInputs = new WeakMap(), fitFontEpoch = 0;
+    function fitVisible(el) {
+      return !el.closest('.side-panel-view:not(.active), [data-pane].pm-hidden') &&
+        isFittable(el) && !!el.getClientRects().length;
+    }
+    function fitInput(el, slotBox) {
+      var row = el.closest(ROW) || el.parentElement;
+      var box = el.getBoundingClientRect(), cs = getComputedStyle(el);
+      var view = el.closest('.side-panel-view'), pane = el.closest('[data-pane]');
+      return JSON.stringify([
+        document.documentElement.getAttribute('data-theme'), document.documentElement.getAttribute('data-o55-nier'),
+        document.documentElement.getAttribute('data-o55-nier-parts'), document.documentElement.style.cssText,
+        fitFontEpoch, window.devicePixelRatio, document.body.className, slot.className, slot.clientWidth, slotBox.width,
+        view && view.id, pane && pane.getAttribute('data-pane'),
+        el.className, el.style.cssText, el.getAttribute('data-fit'), el.getAttribute('data-stack'),
+        el.getAttribute('data-narrow'), el.innerHTML,
+        cs.fontFamily, cs.fontSize, cs.fontWeight, cs.letterSpacing,
+        el.clientWidth, el.scrollWidth, box.width, box.left - slotBox.left,
+        row && row.clientWidth, row && row.scrollWidth, row && row.innerHTML
+      ]);
+    }
+    function run(scope) {
+      if (!slotPageActive()) return;
+      var root = scope && slot.contains(scope) ? scope : slot;
+      var elements = Array.prototype.filter.call(root.querySelectorAll(SELECT), fitVisible);
+      if (!elements.length) return;
+      var slotBox = slot.getBoundingClientRect();
+      var inputs = elements.map(function (el) { return fitInput(el, slotBox); });
+      if (elements.every(function (el, i) { return fittedInputs.get(el) === inputs[i]; })) return;
+      /* Preserve the original sequential dependencies and the complete second pass. All writes and reads below
+         finish in this callback, before the pane's first paint; fitting never defers a newly shown label. */
+      elements.forEach(function (w) {
+        if (w.matches('.sh-cfgwrap')) { scrubCfgTrigger(w); setFit(w, 'full'); }
+      });
+      elements.forEach(fitOne);
+      elements.filter(function (el) { return el.matches('.sh-launchrow'); }).forEach(fitOne);
+      elements.filter(function (el) { return el.matches('.sh-cfgwrap, .sh-sesswrap, .sh-bpedit'); }).forEach(fitOne);
+      slotBox = slot.getBoundingClientRect();
+      elements.forEach(function (el) { fittedInputs.set(el, fitInput(el, slotBox)); });
+    }
+    if (document.fonts && document.fonts.addEventListener) {
+      document.fonts.addEventListener('loadingdone', function () { fitFontEpoch++; schedule(); });
+    }
+'''
+    return replace_once(text, old, new, 'M1: shared visible control fitting')
+
+
 PATCHES = [
+    # Wizard continuity retains the outgoing stage through the incoming entrance. Rebuilding its PRD while
+    # entering the workspace needlessly lays out that retained stage again. Replay similarly leaves the workspace.
+    # Each stage entry renders its current content; requirement events also refresh PRD directly while it is hidden.
+    ("function renderAll() {\n    if (!WS()) return;\n    try { renderPrd(); } catch (e) {}",
+     "function renderAll() {\n    if (!WS()) return;\n    if (W.stage === 'prd_builder') { try { renderPrd(); } catch (e) {} }\n"
+     "    if (W.stage !== 'workspace') { hydrateIcons(); return; }",
+     'wizard stage continuity: render the current stage'),
+    # Preserve the outgoing stage before a synchronous renderer can flush the stage visibility change.
+    ("function setStage(name) {\n    W.stage = name;",
+     "function setStage(name) {\n    if (window.PM_WIZARD_STAGES) window.PM_WIZARD_STAGES.prepare(name);\n    W.stage = name;",
+     'wizard stage continuity: prepare before the stage write'),
     # Hover-tag layer: recognise the new overlay roots instead of the removed pm7 ones.
     ("function activeOverlay(){var tour=document.getElementById('pm7-guided-tour'),onboarding=document.getElementById('pm7-onboarding');",
      "function activeOverlay(){var tour=document.getElementById('pm-o55-tour'),onboarding=document.getElementById('pm-o55-onboarding');",
@@ -538,6 +663,44 @@ PATCHES = [
      "    this.tag.toggleAttribute('data-literal',!!(this.active.closest&&this.active.closest('[data-pmh-tag=\"literal\"]')));   /* O55: before the measure */\n"
      "    var rect=this.tag.getBoundingClientRect(),left=anchor.left+anchor.width/2-rect.width/2;\n",
      'pmh: literal hover tag mark'),
+    # The tag controller exempts an element when it carries any non-empty data-pm-hover-exempt itself (prepare, open
+    # and finishPendingOpen test only that the attribute is set; the value and the element's ancestors are never
+    # consulted). The value matters only to its census, audit(), which reports a value missing from EXEMPTIONS as
+    # undocumented_exemption. Two values the page sets were missing: 'labelled-field' (Settings panel fields,
+    # src/settings/kit.d/16-pages.js) and 'menu' (the Usage menu, its unlabelled rows, back button and search field,
+    # usage-redesign src/js/45-menu.js). Global_hover_tags_source.py lists them too (2026-10-10).
+    ("    'noninteractive-chart-geometry':'Decorative chart scaffolding; each datum mark remains independently bound.'\n"
+     "  });\n",
+     "    'noninteractive-chart-geometry':'Decorative chart scaffolding; each datum mark remains independently bound.',\n"
+     "    'labelled-field':'A field in a Settings panel whose label and help line sit beside it; a tag would only repeat them over the heading above.',\n"
+     "    'menu':'A menu and its rows, back button and search field, which already show their names; a row given its own data-pm-hover-label is not exempt and keeps its tag.'\n"
+     "  });\n",
+     'pmh: hover tag exemptions labelled-field and menu'),
+    # The show-tooltips read deep-cloned the whole app state (PM12_KIMI.getState()) on every call, and the controller
+    # calls it on every input and change event in the document, so each keystroke in a terminal or field cost a full
+    # JSON clone (about 12 ms each with the CPU slowed 4x, ~200 ms over three short commands). The value is now read
+    # once and kept until a Settings write: the first read wraps the Settings tome's save, load, reset and applyPaint
+    # (every state change in the Settings app goes through one of them), and each call clears the kept value. Before
+    # the Settings app exists the read is not kept. setVisualEnabled writes the root and tag only when they change.
+    ("  HoverTagController.prototype.readVisualSetting=function(){\n"
+     "    try{\n"
+     "      var api=window.PM12_KIMI,state=api&&typeof api.getState==='function'?api.getState():null;\n",
+     "  HoverTagController.prototype.readVisualSetting=function(){   /* O55: kept until a Settings write */\n"
+     "    var tome=window.PM7_SETTINGS_TOME,api=window.PM12_KIMI,self=this;\n"
+     "    if(this.visualCacheOk&&this.visualCacheApi===api)return this.visualCache;\n"
+     "    if(tome&&!tome.__pmhTagWatch){['save','load','reset','applyPaint'].forEach(function(name){var f=tome[name];if(typeof f==='function')tome[name]=function(){self.visualCacheOk=false;try{return f.apply(this,arguments);}finally{self.visualCacheOk=false;}};});try{Object.defineProperty(tome,'__pmhTagWatch',{value:true});}catch(_error){}}\n"
+     "    var value=this.readVisualSettingNow();\n"
+     "    this.visualCacheOk=!!(api&&tome&&tome.__pmhTagWatch);this.visualCacheApi=api;this.visualCache=value;return value;\n"
+     "  };\n"
+     "  HoverTagController.prototype.readVisualSettingNow=function(){\n"
+     "    try{\n"
+     "      var api=window.PM12_KIMI,state=api&&typeof api.getState==='function'?api.getState():null;\n",
+     'pmh: hover tag visual setting kept'),
+    ("    this.ensureRoot();this.visualEnabled=value!==false;this.root.setAttribute('data-visual-enabled',String(this.visualEnabled));\n"
+     "    if(!this.visualEnabled){this.cancelPendingOpen();this.active=null;this.activeModel=null;clearTimeout(this.departureTimer);clearTimeout(this.closeTimer);if(this.tag){this.tag.setAttribute('data-open','false');this.tag.hidden=true;}}\n",
+     "    this.ensureRoot();this.visualEnabled=value!==false;setAttrIfChanged(this.root,'data-visual-enabled',String(this.visualEnabled));   /* O55: write only a change */\n"
+     "    if(!this.visualEnabled){this.cancelPendingOpen();this.active=null;this.activeModel=null;clearTimeout(this.departureTimer);clearTimeout(this.closeTimer);if(this.tag){setAttrIfChanged(this.tag,'data-open','false');if(!this.tag.hidden)this.tag.hidden=true;}}\n",
+     'pmh: hover tag visual setting writes'),
     # Setup and tour previews stop on the same events as the built-in tone preview. That player is frozen, so these
     # call the hook the notifications manager exposes (window.PM51_NOTIF_APP_PREVIEW_STOP), which calls
     # O55.sound.stopPreview(). The close line stays a prefix of SETTINGS_ANCHOR so the exposure splice still matches.
@@ -649,7 +812,107 @@ PATCHES = [
      "      });\n"
      "    }).observe(document.body, { childList: true, subtree: true });\n",
      'home density: enroll only inserted surfaces'),
+    # Settings host width (Glass owner's finding, 2026-10-14; M4 follow-up). Entering Settings at 1600 x 900 painted one
+    # frame of a 751 px Settings beside the 515 px chat before the narrow "focus host" took over (1278 px): a 295 px
+    # sideways jump. The T46 host already decides when Settings is shown (its panel observer, before layout), but while
+    # Settings is hidden its width is 0, and the stand-in it used (the whole shell less the chat) left out the Files rail,
+    # so it said 1079 px, wide enough. The first fix decided again in the resize observer after layout, which laid the
+    # first frame out twice (+3.6 to 8.6 % task on the P1000). The stand-in is now the width of the column the pages
+    # share, which is laid out whichever page shows, so the decision made when Settings is shown is right and the resize
+    # observer stays deferred as before.
+    ("var reservedChatWidth=0,shellWidth=0,panelWidth=0,chatWidth=0,resizerWidth=5,syncFrame=0;",
+     "var reservedChatWidth=0,shellWidth=0,panelWidth=0,chatWidth=0,resizerWidth=5,syncFrame=0,pagesWidth=0;",
+     'settings host: the pages column width'),
+    ("var width=panelWidth>0?panelWidth:Math.max(0,shellWidth-reservation);",
+     "var width=panelWidth>0?panelWidth:pagesWidth>0?pagesWidth:Math.max(0,shellWidth-reservation);",
+     'settings host: hidden Settings stands in with the pages column'),
+    ("  observeWidth(panel,function(width){panelWidth=width;});\n",
+     "  observeWidth(panel,function(width){panelWidth=width;});\n"
+     "  observeWidth(panel&&panel.parentElement,function(width){pagesWidth=width;});\n",
+     'settings host: observe the pages column'),
+    # Settings updates in place (M4, 2026-10-14). Two seams in the Settings engine: how renderApp() commits the page's
+    # markup, and how the end space under the chapter's last section is sized. Both keep today's behaviour as their
+    # default; the kit takes them over (src/settings/kit.d/28-in-place.js patches the page in place instead of
+    # replacing it, and 27-place.js sizes the end space so it never pulls the page up under the reader).
+    ("  let softRemount = false;\n",
+     "  let softRemount = false;\n"
+     "  let commitSettingsShell = markup => { root.innerHTML = markup; };\n"
+     "  let sizeSettingsEndSpace = (scroller, end, sections) => {\n"
+     "    if (!sections.length) return;\n"
+     "    const last = sections[sections.length - 1];\n"
+     "    end.style.height = `${Math.max(140, scroller.clientHeight - Math.min(last.offsetHeight, scroller.clientHeight * .62) + 48)}px`;\n"
+     "  };\n",
+     'M4: settings commit and end-space seams'),
+    ("    root.innerHTML = `\n      <div class=\"pm-shell ${state.railOpen ? 'rail-open' : ''}\">",
+     "    commitSettingsShell(`\n      <div class=\"pm-shell ${state.railOpen ? 'rail-open' : ''}\">",
+     'M4: renderApp commits through the seam'),
+    ("      <div class=\"toast-stack\" id=\"toast-stack\"></div>`;\n    root.classList.add('is-ready');",
+     "      <div class=\"toast-stack\" id=\"toast-stack\"></div>`);\n    root.classList.add('is-ready');",
+     'M4: renderApp commit seam close'),
+    ("      if (scroller && end && sections.length) {\n"
+     "        const last = sections[sections.length - 1];\n"
+     "        const required = Math.max(140, scroller.clientHeight - Math.min(last.offsetHeight, scroller.clientHeight * .62) + 48);\n"
+     "        end.style.height = `${required}px`;\n"
+     "      }\n",
+     "      if (scroller && end) sizeSettingsEndSpace(scroller, end, sections);\n",
+     'M4: end space through the seam'),
 ]
+
+# Text typed under a Custom choice survives a reload (2026-10-13, pm7-terminal-options-audit-sol on frozen a1ca: Terminal
+# Colors and Terminal Font kept their typed names until a reload, then lost them while every other value came back).
+# The Settings kit keeps that text in state.pm51.o55Custom (src/settings/kit.d/16-pages.js), and the tome's save() wrote
+# only its listed keys. It now writes the typed strings too, never for a credential setting; load() needs nothing, since
+# it merges the saved projection over the defaults and the kit only fills what is missing.
+CUSTOM_TEXT_PATCHES = [
+    ("settingsSourceSnapshot:clone(snapshot&&snapshot.settingsSourceSnapshot||null)};",
+     "settingsSourceSnapshot:clone(snapshot&&snapshot.settingsSourceSnapshot||null)};"
+     "var o55Typed=snapshot&&snapshot.pm51&&snapshot.pm51.o55Custom;"
+     "if(o55Typed&&typeof o55Typed==='object'){owned.pm51={o55Custom:{}};Object.keys(o55Typed).forEach(function(id){"
+     "if(!credentialSettingIds.has(id)&&typeof o55Typed[id]==='string')owned.pm51.o55Custom[id]=o55Typed[id];});}",
+     'typed Custom text in the saved projection'),
+]
+
+
+# EDITOR_LOOK_ROWS (pm7-editor-customizer, 2026-10-14): the Editor look rows the editor Customize proposal adds to
+# Plans/settings_inventory.json, kept in src/settings/proposed.d/*.json in the inventory's own shape. They join the
+# base page's two embedded inventories (the Settings engine's window.PM12_REFERENCE and #pm7-settings-data) before the
+# Settings layer reads them, exactly as settings_layer._canon_rows admits canon rows, so placement, search, Details,
+# transfer and the editor treat them as the rows they are proposed to become. A row whose id canon already holds is
+# skipped (the Settings layer admits canon's own), so this block retires itself row by row as canon admits them.
+EDITOR_LOOK_ROWS = SRC / 'settings' / 'proposed.d'
+
+
+def editor_look_rows(text: str) -> tuple[str, list]:
+    files = sorted(EDITOR_LOOK_ROWS.glob('*.json')) if EDITOR_LOOK_ROWS.is_dir() else []
+    if not files:
+        return text, []
+    inventory = PKG.parents[2] / 'Plans' / 'settings_inventory.json'
+    canon = {r['id'] for r in json.loads(inventory.read_text(encoding='utf-8'))['settings']} if inventory.exists() else set()
+    rows = [r for p in files for r in json.loads(p.read_text(encoding='utf-8'))['rows']]
+    need(len({r['id'] for r in rows}) == len(rows), 'EDITOR_LOOK_ROWS: a proposed row id is given twice')
+    key = 'window.PM12_REFERENCE = '
+    need(text.count(key) == 1, 'EDITOR_LOOK_ROWS: PM12_REFERENCE anchor drift')
+    s = text.index(key) + len(key)
+    e = text.index('\n', s)
+    ref = json.loads(text[s:e].rstrip(';'))
+    have = {r['id'] for c in ref['byCat'].values() for r in c.get('settings', [])}
+    added = [r for r in rows if r['id'] not in canon and r['id'] not in have]
+    for r in added:
+        cat, sub, _ = r['id'].split('.', 2)
+        need(cat in ref['byCat'] and any(g['id'] == sub for g in ref['byCat'][cat].get('subgroups', [])),
+             f'EDITOR_LOOK_ROWS: {r["id"]} has no reference subgroup')
+        ref['byCat'][cat]['settings'].append(dict(r, cat=cat, sub=sub))
+    if not added:
+        return text, []
+    ref['total'] = sum(len(c.get('settings', [])) for c in ref['byCat'].values())
+    text = text[:s] + json.dumps(ref, ensure_ascii=False, separators=(',', ':')) + ';' + text[e:]
+    m = re.search(r'(<script type="application/json" id="pm7-settings-data">)(.*?)(</script>)', text, re.S)
+    need(m is not None, 'EDITOR_LOOK_ROWS: pm7-settings-data missing')
+    data = json.loads(m.group(2))
+    known = {r['id'] for r in data['settings']}
+    data['settings'].extend(r for r in added if r['id'] not in known)
+    text = text[:m.start(2)] + json.dumps(data, ensure_ascii=False, separators=(',', ':')) + text[m.end(2):]
+    return text, [r['id'] for r in added]
 
 
 def nier_paint(var: str) -> str:
@@ -700,6 +963,22 @@ NIER_PATCHES = [
     ("var PERSONA_CATALOG = ['Product Manager', 'Architect Reviewer', 'Rust Engineer', 'Teacher'];",
      "var PERSONA_CATALOG = ['Product Manager', 'Architect Reviewer', 'Rust Engineer', 'Teacher', 'Pod 042'];",
      'pod 042 persona'),
+]
+
+# The onboarding window's look preview holds the page's theme (2026-10-13, Create Project's theme flicker). While the
+# window owns a preview, PM7_SETTINGS_TOME.applyPaint paints the pair the window names, src/js/60-ui-core.js
+# window.O55_PAINT_PAIR() (the draft's family and Light or Dark, only while the window is open and shown), instead of
+# the selected Project's stored pair: selecting the new Project at Create Project reapplied its Settings and painted
+# the factory Basic Dark for a moment, and the look's save wrote its family before its mode. Loaded Settings, the seed,
+# the save and the NieR paint hook (which runs on the slug below) are unchanged; with no pair, applyPaint is as before.
+THEME_PREVIEW_PATCHES = [
+    ("var mode=p?String(settings['general.visual.theme-mode']||explicitMode).toLowerCase():'dark';\n"
+     "    if(['light','dark','auto'].indexOf(mode)<0)mode=explicitMode;\n",
+     "var mode=p?String(settings['general.visual.theme-mode']||explicitMode).toLowerCase():'dark';\n"
+     "    if(['light','dark','auto'].indexOf(mode)<0)mode=explicitMode;\n"
+     "    var o55Pair=typeof window.O55_PAINT_PAIR==='function'?window.O55_PAINT_PAIR():null;\n"
+     "    if(o55Pair){family=o55Pair[0];mode=o55Pair[1];}\n",
+     'onboarding look preview holds applyPaint'),
 ]
 
 # First paint (2026-10-09). The head boot script painted Basic Dark on every open (T44 had replaced its pm.themeFamily
@@ -875,6 +1154,15 @@ def _home():
     return home_layer
 
 
+def _layer(folder: str, module: str):
+    """A page layer's build tool (Concepts/<folder>/opus-5.5/tools/<module>.py), imported when first needed."""
+    tools = str(CONCEPTS / folder / 'opus-5.5' / 'tools')
+    if tools not in sys.path:
+        sys.path.insert(0, tools)
+    import importlib  # noqa: E402
+    return importlib.import_module(module)
+
+
 def build_text(usage: bool = True, home: bool = True) -> str:
     """The built page. usage=False leaves the base's Prism Usage page in place, and home=False today's Home: private
     reference builds only (build.py --out PATH --no-usage / --no-home; usage_boot.mjs), never published."""
@@ -883,7 +1171,9 @@ def build_text(usage: bool = True, home: bool = True) -> str:
          'TestPMConcept.html changed since the pin; review the strip boundaries and patches, then re-pin BASE_SHA256.')
     text = original.decode('utf-8')
 
-    # 0. Settings: swap the base's T50 managers layer for the Opus 5.5 fork in src/settings.
+    # 0. Settings: swap the base's T50 managers layer for the Opus 5.5 fork in src/settings. The proposed Editor look
+    #    rows join the embedded inventories first (EDITOR_LOOK_ROWS), so the layer places and validates them.
+    text, SETTINGS_NOTES['editor_look_rows'] = editor_look_rows(text)
     text, SETTINGS_NOTES['layer'] = settings_layer.apply(text, need)
 
     # 1. Strip the legacy Product Onboarding + Guided Tour.
@@ -904,8 +1194,14 @@ def build_text(usage: bool = True, home: bool = True) -> str:
     # 2. Guarded patches.
     for old, new, label in PATCHES + NIER_PATCHES + first_paint_patches(text):
         text = replace_once(text, old, new, label)
+    text = shared_fitting_patch(text)
+    for old, new, label in THEME_PREVIEW_PATCHES:
+        text = replace_once(text, old, new, label)
     text = replace_once(text, SETTINGS_ANCHOR, SETTINGS_EXPOSE + SETTINGS_ANCHOR, 'settings transfer exposure')
     text = replace_once(text, LAYOUT_ANCHOR, LAYOUT_EXPOSE + LAYOUT_ANCHOR, 'layout restore exposure')
+
+    for old, new, label in CUSTOM_TEXT_PATCHES:
+        text = replace_once(text, old, new, label)
 
     # 2b. Usage: replace the Prism Usage page with the redesign in Concepts/usage-redesign. This runs after the
     # PATCHES loop because the 'usage card cta :has restyle' patch needs the old rule present, and before the O55
@@ -915,6 +1211,10 @@ def build_text(usage: bool = True, home: bool = True) -> str:
         text, SETTINGS_NOTES['usage'] = usage_layer.apply(text, need)
     else:
         SETTINGS_NOTES.pop('usage', None)
+
+    # 2c. Planning Wizard + Orchestrator theme-matching fixes (tools/wizorch_layer.py)
+    import wizorch_layer  # noqa: E402
+    text, SETTINGS_NOTES['wizorch'] = wizorch_layer.apply(text, need)
 
     # 3. Splice the O55 modules.
     css = settings_layer.inline_fonts(read_parts(SRC / 'css', '.css'), SRC / 'fonts')
@@ -940,12 +1240,108 @@ def build_text(usage: bool = True, home: bool = True) -> str:
         text, SETTINGS_NOTES['home'] = _home().apply(text, need)
     else:
         SETTINGS_NOTES.pop('home', None)
+    # 6. Liquid Glass and the wallpapers (Glass's publish: the coordinator's plan of 2026-10-14, go 2026-10-15, after the
+    #    final review approved Glass round 3). Glass's layer (Concepts/liquid-glass/opus-5.5: glass.css with its prints,
+    #    glass.js) and then the wallpapers package's (Concepts/wallpapers/opus-5.5: every look's prints, the catalog, the
+    #    Settings gallery) go over the whole page, last, each exactly once: Glass's style before </head> and script
+    #    before </body>, then the wallpapers' after them. Both are gated on their own state (html[data-lg] and a Glass
+    #    look; html[data-lg-wall]), so every other look draws what it drew before.
+    for folder, module in (('liquid-glass', 'build_proto'), ('wallpapers', 'build_walls')):
+        layer = _layer(folder, module)
+        try:
+            injected = layer.inject(text)
+        except layer.LayerError as exc:
+            raise BuildError(f'{folder} layer: {exc}') from exc
+        text = injected[0] if isinstance(injected, tuple) else injected
     note = ('<!-- TestOpus5.5PmConcept (Opus 5.5): TestPMConcept.html with a rebuilt Product Onboarding and Guided Tour. '
             'Built by Concepts/onboarding/opus-5.5/tools/build.py; never hand-edit. -->\n')
     return note + text
 
 
+INERT_SOURCES = TOOLS / 'inert_sources.json'
+PAGE_LINT_BASELINE = TOOLS / 'page_lint_baseline.json'
+PAGE_LINT_KEYS = ('page_wide_star', 'html_rooted_has', 'important')
+
+
+def built_stylesheets(html: str) -> list[tuple[str, str]]:
+    """Every <style> body in the built page, named by its id or by style@offset."""
+    sheets = []
+    for match in re.finditer(r'<style\b([^>]*)>(.*?)</style>', html, re.S | re.I):
+        attrs, body = match.group(1), match.group(2)
+        named = re.search(r'\bid="([^"]+)"', attrs)
+        sheets.append((named.group(1) if named else f'style@{match.start()}', body))
+    return sheets
+
+
+def page_lint_counts(html: str) -> dict[str, int]:
+    """Whole-page counts of the three debts the O55 source lint already knows about.
+
+    page_wide_star: selectors whose last compound is a bare `*` and that switch on a runtime
+    state other than a look change (PAGE_STATE_OK). html_rooted_has: selectors whose first
+    compound is html and that use :has(). important: `!important` in stylesheets, comments removed.
+    """
+    star = has = important = 0
+    for _name, body in built_stylesheets(html):
+        for _line, sel in css_selectors(body):
+            names = page_wide_universal(sel)
+            if names and any(name not in PAGE_STATE_OK for name in names):
+                star += 1
+            comps = compounds(sel)
+            if comps and re.match(r'html(?![\w-])', comps[0]) and ':has(' in sel:
+                has += 1
+        important += re.sub(r'/\*[\s\S]*?\*/', '', body).count('!important')
+    return {'page_wide_star': star, 'html_rooted_has': has, 'important': important}
+
+
+def page_lint_growth(actual: dict[str, int], allowed: dict[str, int]) -> list[str]:
+    """Fail only when a recorded count grows. A shrink stays allowed until the baseline is updated."""
+    labels = {
+        'page_wide_star': 'page-wide * selectors',
+        'html_rooted_has': 'html-rooted :has() selectors',
+        'important': '!important',
+    }
+    problems = []
+    for key in PAGE_LINT_KEYS:
+        if actual[key] > allowed[key]:
+            problems.append(f'page lint ratchet: {labels[key]} grew from {allowed[key]} to {actual[key]}')
+    return problems
+
+
+def page_lint_ratchet(html: str) -> list[str]:
+    if not PAGE_LINT_BASELINE.is_file():
+        return [f'page lint ratchet: baseline missing: {PAGE_LINT_BASELINE.relative_to(CONCEPTS.parent)}']
+    allowed = json.loads(PAGE_LINT_BASELINE.read_text(encoding='utf-8')).get('counts', {})
+    missing = [key for key in PAGE_LINT_KEYS if key not in allowed]
+    if missing:
+        return [f'page lint ratchet: baseline has no count for {", ".join(missing)}']
+    return page_lint_growth(page_lint_counts(html), {key: int(allowed[key]) for key in PAGE_LINT_KEYS})
+
+
+def warn_inert_sources() -> None:
+    """Warn when a frozen pm7-tools source or pm6-build part differs from the recorded copy.
+
+    Those files no longer feed PMConcept7. A difference is a WARNING, not a failed check:
+    edit the live source scripts/pm7-where.py names, and leave these files alone.
+    """
+    if not INERT_SOURCES.is_file():
+        print(f'WARNING: inert source manifest missing: {INERT_SOURCES.relative_to(CONCEPTS.parent)}', file=sys.stderr)
+        return
+    recorded = json.loads(INERT_SOURCES.read_text(encoding='utf-8')).get('files', {})
+    repo = CONCEPTS.parent
+    for rel in sorted(recorded):
+        path = repo / rel
+        if not path.is_file():
+            print(f'WARNING: inert source missing (no longer feeds PMConcept7; use scripts/pm7-where.py): {rel}',
+                  file=sys.stderr)
+            continue
+        digest = hashlib.sha256(path.read_bytes()).hexdigest()
+        if digest != recorded[rel]:
+            print(f'WARNING: inert source changed (no longer feeds PMConcept7; use scripts/pm7-where.py): {rel}',
+                  file=sys.stderr)
+
+
 def check(built: str) -> list[str]:
+    warn_inert_sources()
     problems = (lint_sources() + syntax_check(built) + _rail().published_problems(built) + _glyphs().published_problems(built)
                 + _home().published_problems(built))
     for removed in dict.fromkeys(['id="pm7-onboarding"', 'id="pm7-guided-tour"', 'pm7-onboarding-js', 'pm7-guided-tour-js',
@@ -971,6 +1367,7 @@ def check(built: str) -> list[str]:
         problems.append('Concepts/PMConcept7.html is missing; run build.py --publish-pm7')
     elif PM7_TARGET.read_bytes() != expected:
         problems.append('Concepts/PMConcept7.html differs from a fresh build; run build.py --publish-pm7')
+    problems.extend(page_lint_ratchet(built))
     return problems
 
 

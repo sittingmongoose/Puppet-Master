@@ -1,5 +1,5 @@
 {
- "_about": "editor-runtime (Editor & Terminal): wording, conditions, units and bounds from the plain-pages audit (2026-09-27). Hand rows autosave, file-encoding, paste-protect and index-mode are worded here too. The index actions keep the flows they had in 90-flows.json.",
+ "_about": "editor-runtime (Editor & Terminal): wording, conditions, units and bounds from the plain-pages audit (2026-09-27). Hand rows autosave, file-encoding, paste-protect and index-mode are worded here too. The index actions keep the flows they had in 90-flows.json. Editor look rows (pm7-editor-customizer, 2026-10-14): the canon look rows and the proposed ones (src/settings/proposed.d) are worded here.",
  "rows": {
   "code.editing.autosave": {
    "label": "Save files automatically",
@@ -10,19 +10,18 @@
    "help": "Used when a file does not say which encoding it uses."
   },
   "general.interaction.max-editor-tabs": {
-   "label": "Most tabs open at once",
-   "help": "The tab you used least long ago closes first.",
+   "label": "Most editor tabs open at once",
+   "help": "Past it, the editor tab you used least recently closes. Pinned tabs and tabs with unsaved changes stay, and other kinds of tab don't count.",
    "unit": "tabs",
    "min": 1,
    "max": 100
   },
   "general.startup.max-persisted-tabs": {
    "label": "Tabs reopened next time",
-   "help": "Can't be more than the tabs allowed open at once.",
+   "help": "Tabs of every kind. The ones you used least recently are left out first, and each panel's open tab and pinned tabs always come back.",
    "unit": "tabs",
    "min": 1,
-   "max": 100,
-   "maxFrom": "general.interaction.max-editor-tabs"
+   "max": 100
   },
   "general.interaction.hide-ignored-files": {
    "label": "Hide ignored files",
@@ -68,6 +67,19 @@
   "code.editing.diagnostics-visibility": {
    "label": "Problems to highlight",
    "help": "Which code problems are marked in the editor."
+  },
+  "code.editing.tab-size": {
+   "label": "Tab size",
+   "help": "Columns in a level of indentation. A file with its own keeps it while the editor follows it.",
+   "unit": "columns"
+  },
+  "code.editing.insert-spaces": {
+   "label": "Indent with",
+   "help": "What a new level is made of in a file that doesn't already say, and in every file while Follow the file's indentation is off. A tab is drawn and copied as a tab."
+  },
+  "code.editing.detect-indentation": {
+   "label": "Follow the file's indentation",
+   "help": "A file indented with 2 spaces keeps 2; one indented with tabs keeps tabs. Off, Indent with and Tab size decide in every file."
   },
   "code.editing.goto-highlight-ms": {
    "label": "How long a jumped-to line stays lit",
@@ -152,6 +164,13 @@
    "unit": "px",
    "min": 8,
    "max": 32
+  },
+  "code.terminal.font-weight": {
+   "label": "Terminal text weight",
+   "help": "JetBrains Mono 100 to 800, Atkinson Hyperlegible Mono 200 to 800.",
+   "min": 100,
+   "max": 800,
+   "step": 100
   },
   "code.terminal.rendering-mode": {
    "label": "Terminal style",
@@ -351,6 +370,163 @@
    },
    "label": "Clear the index",
    "help": "Frees the space; search rebuilds it when needed."
+  },
+  "code.editing.color-scheme": {
+   "label": "Editor colors",
+   "help": "Follow look uses the look's own code colors. Any scheme the terminal offers works here too."
+  },
+  "code.editing.font-family": {
+   "label": "Editor font"
+  },
+  "code.editing.font-size": {
+   "label": "Editor text size",
+   "unit": "px",
+   "min": 10,
+   "max": 24,
+   "step": 0.5
+  },
+  "code.editing.line-height": {
+   "label": "Editor line spacing",
+   "help": "A multiple of the text size.",
+   "min": 1.2,
+   "max": 2,
+   "step": 0.05
+  },
+  "code.editing.minimap": {
+   "label": "Minimap scrollbar",
+   "help": "Off draws a plain scrollbar with the change marks."
+  },
+  "code.editing.sticky-scroll": {
+   "label": "Sticky scroll",
+   "help": "Keeps the lines that open the block you are reading at the top."
+  },
+  "code.editing.diff-layout": {
+   "label": "Diff layout",
+   "help": "Automatic shows the two sides side by side when the tab is wide enough."
+  },
+  "code.editing.scheme-pair": {
+   "label": "Switch editor colors with light and dark"
+  },
+  "code.editing.bracket-pair-colors": {
+   "label": "Bracket pair colors",
+   "help": "Matching brackets share a color, a new one at each depth."
+  },
+  "code.editing.min-contrast": {
+   "label": "Editor text contrast",
+   "help": "7:1 moves dim colors lighter or darker; their hue stays.",
+   "options": {
+    "4.5:1": "4.5:1 (standard)",
+    "7:1": "7:1 (high)"
+   }
+  },
+  "code.editing.italic-comments": {
+   "label": "Comments in italics"
+  },
+  "code.editing.bold-keywords": {
+   "label": "Keywords in bold"
+  },
+  "code.editing.token-colors": {
+   "label": "Token colours",
+   "help": "One kind of word in one scheme, as scheme/kind: #rrggbb. Set them in the editor's Customize screen, under Colors.",
+   "empty": "None: every scheme's own",
+   "noun": "colour",
+   "nouns": "colours"
+  },
+  "code.editing.font-weight": {
+   "label": "Editor text weight",
+   "help": "JetBrains Mono 400 to 800, Atkinson Hyperlegible Mono 200 to 800.",
+   "min": 200,
+   "max": 800,
+   "step": 100
+  },
+  "code.editing.letter-spacing": {
+   "label": "Editor letter spacing",
+   "unit": "px",
+   "min": -0.5,
+   "max": 2,
+   "step": 0.25
+  },
+  "code.editing.ligatures": {
+   "label": "Ligatures",
+   "help": "Joins -> and != into one symbol where the font has them."
+  },
+  "code.editing.cursor-shape": {
+   "label": "Caret shape"
+  },
+  "code.editing.cursor-width": {
+   "label": "Caret width",
+   "unit": "px",
+   "min": 1,
+   "max": 4,
+   "step": 1
+  },
+  "code.editing.cursor-blink": {
+   "label": "Caret blink",
+   "hints": {
+    "Smooth": "Fades in and out",
+    "Expand": "Grows from its middle",
+    "Solid": "Never blinks"
+   }
+  },
+  "code.editing.cursor-motion": {
+   "label": "Caret movement",
+   "hints": {
+    "Snappy": "A quick glide",
+    "Gliding": "A slower glide"
+   }
+  },
+  "code.editing.cursor-trail": {
+   "label": "Trail when the caret jumps",
+   "help": "Only for jumps of several lines you did not click."
+  },
+  "code.editing.relative-line-numbers": {
+   "label": "Count lines from the caret"
+  },
+  "code.editing.line-highlight": {
+   "label": "Highlight the current line"
+  },
+  "code.editing.indent-guides": {
+   "label": "Indent guides"
+  },
+  "code.editing.indent-guides-active": {
+   "label": "Light the guide of the block I'm in"
+  },
+  "code.editing.render-whitespace": {
+   "label": "Show spaces"
+  },
+  "code.editing.rulers": {
+   "label": "Rulers",
+   "help": "Faint lines at the columns lines should stay within."
+  },
+  "code.editing.wrap-column": {
+   "label": "Wrap long lines at"
+  },
+  "code.editing.sticky-scroll-lines": {
+   "label": "Sticky scroll lines",
+   "unit": "lines",
+   "min": 1,
+   "max": 5,
+   "step": 1
+  },
+  "code.editing.smooth-scroll": {
+   "label": "Smooth scrolling"
+  },
+  "code.editing.reveal-lines": {
+   "label": "Lines arrive when a file opens"
+  },
+  "code.editing.scroll-past-end": {
+   "label": "Scroll past the last line"
+  },
+  "code.editing.dim-unfocused": {
+   "label": "Fade editors I'm not in"
+  },
+  "code.editing.scanlines": {
+   "label": "Scanlines",
+   "help": "Thin still lines across the code, like an old monitor."
+  },
+  "code.editing.text-glow": {
+   "label": "Text glow",
+   "help": "A soft glow around code in its own color."
   }
  }
 }

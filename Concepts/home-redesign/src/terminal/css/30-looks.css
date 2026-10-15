@@ -17,8 +17,9 @@ html[data-theme="glass-light"] .pmt-root[data-pmt-focusfx="rim"].pmt-focused .pm
 .pmt-inactive .pmt-body::after { opacity: var(--pmt-dim-amount, 0); }
 .pmt-root[data-pmt-look="retro"] { --pmt-dim-color: #000; }
 .pmt-root[data-pmt-look="glass"] { --pmt-dim-color: transparent; }
-/* an ended session keeps its own, deeper 72 % (10-view.css) */
-.pmt-root[data-pmt-look="glass"].pmt-inactive:not(.pmt-ended) :is(.pmt-grid, .pmt-fxcanvas) { opacity: .8; }
+/* Glass fades the text instead, by the same amount (its own .22 draws about .8); Dim inactive terminals off is 0, so
+   nothing fades. An ended session keeps its own, deeper 72 % (10-view.css) */
+.pmt-root[data-pmt-look="glass"].pmt-inactive:not(.pmt-ended) :is(.pmt-grid, .pmt-fxcanvas) { opacity: calc(1 - var(--pmt-dim-amount, 0)); }
 
 /* ---- bell ---- */
 .pmt-root[data-pmt-bell="flash"].pmt-bell .pmt-body::after { opacity: 0; background: var(--pmt-fg); animation: pmt-bell-flash .4s ease-out; }
@@ -27,6 +28,9 @@ html[data-theme="glass-light"] .pmt-root[data-pmt-focusfx="rim"].pmt-focused .pm
 .pmt-root[data-pmt-bell="inverse"].pmt-bell .pmt-screen { animation: pmt-bell-inv .12s steps(1) 1; }
 @keyframes pmt-bell-inv { 0% { filter: invert(1); } 100% { filter: none; } }
 .pmt-root[data-pmt-bell="marker"].pmt-bell > .pmw-hrow { box-shadow: inset 0 -2px 0 var(--pmw-warn, var(--accent-warning)); }
+/* the Customize screen's preview has no header: its marker sits on its top edge, where the header would meet it
+   (pm7-customizer-audit #3) */
+.pmt-root.pmt-cz-pvroot[data-pmt-bell="marker"].pmt-bell .pmt-body { box-shadow: inset 0 2px 0 var(--pmw-warn, var(--accent-warning)); }
 
 /* ---- command marks per look ---- */
 .pmt-root[data-pmt-look="retro"] .pmt-mark svg { display: none; }
@@ -65,6 +69,40 @@ html[data-theme="glass-light"] .pmt-root[data-pmt-focusfx="rim"].pmt-focused .pm
 .pmt-root[data-pmt-look="friendly"][data-pmt-scheme="dark"] .pmt-bglayer.pmt-bg-gradient::before { mix-blend-mode: screen; opacity: .05; }
 .pmt-root[data-pmt-look="glass"] { --pmt-glass-veil: color-mix(in srgb, var(--pmw-surface, transparent) 28%, transparent); }
 .pmt-root[data-pmt-look="glass"] .pmt-bglayer.pmt-bg-theme { background: var(--pmt-glass-veil); }
+
+/* ---- moving grounds (round 2, opt-in): a painted layer moved by transform or opacity only, stepped to about 20 fps
+   (the view sets --pmt-bgm-ms and --pmt-bgm-steps; NieR's steps are its own, slower). It plays only while the terminal
+   is focused, visible and in use (52-fx.js sets .pmt-bg-live; it goes still 10 s after the last output or key), and
+   never under Reduced Motion or a battery saver, where its still frame shows. Rain and snow are tiles twice the
+   terminal's height sliding by one tile; aurora and lava sway inside a slightly larger layer; stars twinkle by opacity */
+.pmt-bgmove[data-anim="pmt-bg-fall"], .pmt-bgmove[data-anim="pmt-bg-snow"] { top: -100%; height: 200%; bottom: auto; background-size: 100% 50%; background-repeat: repeat-y; }
+.pmt-bgmove:is([data-anim="pmt-bg-sway"], [data-anim="pmt-bg-rise"]) { inset: -10%; }
+.pmt-bgmove[data-anim="pmt-bg-fall"] { animation: pmt-bg-fall var(--pmt-bgm-ms, 2400ms) steps(var(--pmt-bgm-steps, 48)) infinite; }
+.pmt-bgmove[data-anim="pmt-bg-snow"] { animation: pmt-bg-fall var(--pmt-bgm-ms, 30000ms) steps(var(--pmt-bgm-steps, 600)) infinite; }
+.pmt-bgmove[data-anim="pmt-bg-sway"] { animation: pmt-bg-sway var(--pmt-bgm-ms, 90000ms) steps(var(--pmt-bgm-steps, 1800)) infinite alternate; }
+.pmt-bgmove[data-anim="pmt-bg-rise"] { animation: pmt-bg-rise var(--pmt-bgm-ms, 80000ms) steps(var(--pmt-bgm-steps, 1600)) infinite alternate; }
+.pmt-bgmove[data-anim="pmt-bg-twinkle"] { animation: pmt-bg-twinkle var(--pmt-bgm-ms, 6000ms) steps(var(--pmt-bgm-steps, 120)) infinite alternate; }
+@keyframes pmt-bg-fall { from { transform: translate3d(0, 0, 0); } to { transform: translate3d(0, 50%, 0); } }
+/* a layer twice the terminal's width, its picture repeated once, slid by exactly one picture: the Oscilloscope's trace */
+.pmt-bgmove[data-anim="pmt-bg-pan"] { right: auto; width: 200%; background-size: 50% 100%; background-repeat: repeat-x; animation: pmt-bg-pan var(--pmt-bgm-ms, 5000ms) steps(var(--pmt-bgm-steps, 100)) infinite; }
+@keyframes pmt-bg-pan { from { transform: translate3d(0, 0, 0); } to { transform: translate3d(-50%, 0, 0); } }
+@keyframes pmt-bg-sway { from { transform: translate3d(-3%, -2%, 0) scale(1.02); } to { transform: translate3d(3%, 2%, 0) scale(1.05); } }
+@keyframes pmt-bg-rise { from { transform: translate3d(0, 3%, 0); } to { transform: translate3d(0, -5%, 0); } }
+/* (round 3c: from full to faint, so the still frame, paused or under Reduced Motion, shows the stars at full strength) */
+@keyframes pmt-bg-twinkle { from { opacity: 1; } to { opacity: .45; } }
+.pmt-root:not(.pmt-bg-live) .pmt-bgmove { animation-play-state: paused; }
+html[data-motion="reduced"] .pmt-bgmove, .pmt-bgmove[data-anim="still"] { animation: none; }
+@media (prefers-reduced-motion: reduce) { .pmt-bgmove { animation: none; } }
+
+/* ---- the bezel (round 3): a monitor housing drawn on two canvases by 71-bezel.js (the housing, painted once per size
+   and material; the screen's reflection on it, live). Off by default. The text is laid out inside it (42-appearance.js
+   adds its width to the padding, 70-view.js centres the grid in the glass), so nothing is scaled. ---- */
+.pmt-bezel { position: absolute; inset: 0; z-index: 2; pointer-events: none; }
+.pmt-bezel > canvas { position: absolute; left: 0; top: 0; width: 100%; height: 100%; display: block; }
+/* inside the bezel the sticky header starts at the glass, not across the frame (_placeSticky moves it under curvature) */
+.pmt-root:is([data-pmt-bezel="rim"], [data-pmt-bezel="case"]) .pmt-sticky {
+  left: var(--pmt-bezel-w); right: var(--pmt-bezel-w); top: var(--pmt-bezel-w); padding-left: calc(var(--pmt-pad-x) - var(--pmt-bezel-w));
+}
 
 /* ---- chrome shapes per look ---- */
 .pmt-root[data-pmt-look="friendly"] { --pmt-radius: 8px; }

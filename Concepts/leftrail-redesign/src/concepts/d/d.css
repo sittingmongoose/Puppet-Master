@@ -2494,8 +2494,10 @@
 [data-rail-skin="d"][data-o55-nier="on"] #panel-agents .pm-sumcard-h > .c { text-transform: none !important; letter-spacing: 0 !important; }
 
 /* ---- 10. Activity bar: one tile marks the open panel and glides to the next ---------------------------------------
-   The tile (.d-abind, placed by JS) is the size of an icon's symbol box, so hover and active are the same box. The
-   chat and home toggles keep their own colour state (they are switches, not the open panel). */
+   The tile (.d-abind, placed by JS) is the size of an icon's symbol box, so hover and active are the same box. The Chat
+   switch is lit the same way while the chat column is shown: a tile of its own (.d-abind-chat, the same paint in every
+   look) and the accent mark, in place of the shell's per-look colour state (Jared, 2026-10-14). The Home switch it sat
+   beside toggled the old dashboard, which the panels replaced; the Home layer removes it from the page. */
 [data-rail-skin="d"] { --d-Rbar: 7px; }
 [data-rail-skin="d"][data-theme^="friendly"] { --d-Rbar: 10px; }
 [data-rail-skin="d"][data-theme^="glass"] { --d-Rbar: 10px; }
@@ -2518,24 +2520,38 @@
 [data-rail-skin="d"][data-o55-nier="on"] #activityBar > .d-abind { background: var(--o55-nier-ink); box-shadow: none; }
 [data-rail-skin="d"] #activityBar .icon { z-index: 1; }
 [data-rail-skin="d"] #activityBar .icon .symbol { border-radius: var(--d-Rbar) !important; transition: background-color var(--d-t1) var(--d-ease), color var(--d-t1) var(--d-ease), transform var(--d-t2) var(--d-spring) !important; }
-[data-rail-skin="d"] #activityBar .icon[data-target] .symbol { width: 28px !important; height: 28px !important; }
-[data-rail-skin="d"] #activityBar .icon[data-target]:hover .symbol { background: var(--d-hover) !important; transform: none !important; box-shadow: none !important; }
-[data-rail-skin="d"] #activityBar .icon[data-target].active .symbol { background: none !important; box-shadow: none !important; }
-[data-rail-skin="d"] #activityBar .icon[data-target].active { color: var(--accent-primary) !important; }
-[data-rail-skin="d"][data-o55-nier="on"] #activityBar .icon[data-target].active { color: var(--o55-nier-on-ink) !important; }
-[data-rail-skin="d"] #activityBar .icon[data-target].d-bump .symbol svg { animation: d-bump var(--d-t3) var(--d-spring); }
+[data-rail-skin="d"] #activityBar .icon:is([data-target], [data-ab-id="chat"]) .symbol { width: 28px !important; height: 28px !important; }
+/* Chat takes the bar's own hover too, as it takes the lit tile: the shell's per-look switch hover (Friendly's 1.1 scale
+   and glow) would grow the symbol out from under its tile */
+[data-rail-skin="d"] #activityBar .icon:is([data-target], [data-ab-id="chat"]):hover .symbol { background: var(--d-hover) !important; transform: none !important; box-shadow: none !important; }
+[data-rail-skin="d"] #activityBar .icon:is([data-target], [data-ab-id="chat"]).active .symbol { background: none !important; box-shadow: none !important; }
+[data-rail-skin="d"] #activityBar .icon:is([data-target], [data-ab-id="chat"]).active { color: var(--accent-primary) !important; }
+[data-rail-skin="d"][data-o55-nier="on"] #activityBar .icon:is([data-target], [data-ab-id="chat"]).active { color: var(--o55-nier-on-ink) !important; }
+[data-rail-skin="d"] #activityBar .icon:is([data-target], [data-ab-id="chat"]).d-bump .symbol svg { animation: d-bump var(--d-t3) var(--d-spring); }
 @keyframes d-bump { 0% { transform: scale(.82); } 60% { transform: scale(1.08); } 100% { transform: none; } }
 /* expanded bar labels: readable sentence case (the DOM keeps the shell's capitals, other tooling reads them) */
 [data-rail-skin="d"]:not([data-o55-nier="on"]) #activityBar:not(.collapsed) .icon .icon-label {
   display: block; font: 500 11px/1.2 var(--body-font) !important; letter-spacing: 0 !important; text-transform: lowercase;
 }
 [data-rail-skin="d"]:not([data-o55-nier="on"]) #activityBar:not(.collapsed) .icon .icon-label::first-letter { text-transform: uppercase; }
-[data-rail-skin="d"] #activityBar .icon[data-target].active .icon-label { color: var(--d-text) !important; }
-/* NieR marks the open panel the shell's way, the whole item (icon and name) as one ink band, collapsed or expanded, as
-   it marks Chat and Home: the name is paper on that ink, never ink on ink */
-[data-rail-skin="d"][data-o55-nier="on"] #activityBar .icon[data-target].active .icon-label { color: var(--o55-nier-on-ink) !important; }
-/* Glass light: the Chat and Home switches are white marks on their tiles; their names sit under the tile on the light
-   bar, so they take the text colour (white there could not be read) */
+/* every expanded label reads at least 4.5:1 wherever it lands on the bar (measured on the P1000, 2026-10-14). The
+   shell gave the names the muted ink, about 2.7 in Friendly Light and under 4.5 in Friendly Dark and both Glass looks,
+   and removing the Home switch moved every name up a slot onto another part of the bar's gradient. They take the
+   secondary ink; Glass Light, whose frosted bar is a mid-tone, the text ink; Glass Dark, whose bar runs to a light lilac
+   at the top and under a lit tile's glow, the text ink over a soft shadow of the bar's own deep violet (no box, nothing
+   behind the bar changes). */
+[data-rail-skin="d"]:not([data-o55-nier="on"]) #activityBar:not(.collapsed) .icon:not(.active) .icon-label { color: var(--d-label, var(--d-text-2)) !important; }
+[data-rail-skin="d"][data-theme="glass-light"] { --d-label: var(--text-primary); }
+[data-rail-skin="d"][data-theme="glass-dark"] { --d-label: var(--text-primary); }
+[data-rail-skin="d"][data-theme="glass-dark"]:not([data-o55-nier="on"]) #activityBar:not(.collapsed) .icon .icon-label {
+  text-shadow: 0 1px 2px rgba(18, 10, 36, .85), 0 0 9px rgba(18, 10, 36, .7);
+}
+[data-rail-skin="d"] #activityBar .icon:is([data-target], [data-ab-id="chat"]).active .icon-label { color: var(--d-text) !important; }
+/* NieR marks the open panel and the shown chat the shell's way, the whole item (icon and name) as one ink band,
+   collapsed or expanded: the name is paper on that ink, never ink on ink */
+[data-rail-skin="d"][data-o55-nier="on"] #activityBar .icon:is([data-target], [data-ab-id="chat"]).active .icon-label { color: var(--o55-nier-on-ink) !important; }
+/* Glass light: any other lit switch is a white mark on its tile; its name sits under the tile on the light bar, so it
+   takes the text colour (white there could not be read) */
 [data-rail-skin="d"][data-theme^="glass"][data-theme$="-light"] #activityBar:not(.collapsed) .icon.active:not([data-target]) .icon-label { color: var(--d-text) !important; }
 /* the expand / collapse toggle: a chevron in the same tile as the icons (the shell writes ">" or "<" into it; the text
    stays for other code, the chevron is drawn and turns when the bar shows its names) */
@@ -2599,6 +2615,10 @@
   width: 28px !important; height: 28px !important; border-radius: var(--d-Rbar) !important;
   transition: background-color var(--d-t1) var(--d-ease), color var(--d-t1) var(--d-ease), box-shadow var(--d-t1) var(--d-ease) !important;
 }
+/* empty, the button is the shell's muted affordance (opacity .45 on the whole item); the glyph stays muted, the name is
+   at full label ink so it reads (it still opens: the menu says how to hide an icon) */
+[data-rail-skin="d"] #activityBar > #abMoreBtn[data-empty="1"] { opacity: 1; }
+[data-rail-skin="d"] #activityBar > #abMoreBtn[data-empty="1"]:not(:hover, .is-menu-open, .pm-ab-drop-hot) .symbol { opacity: .45; }
 [data-rail-skin="d"] #activityBar > #abMoreBtn:hover .symbol { background: var(--d-hover) !important; transform: none !important; box-shadow: none !important; }
 [data-rail-skin="d"] #activityBar > #abMoreBtn.is-menu-open { color: var(--d-text) !important; opacity: 1; }
 [data-rail-skin="d"] #activityBar > #abMoreBtn.is-menu-open .symbol { background: var(--d-press) !important; }

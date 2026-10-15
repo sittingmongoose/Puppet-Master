@@ -1,0 +1,59 @@
+{
+ "family": "friendly",
+ "label": "Friendly",
+ "owner": "pm7-wallpapers",
+ "order": 30,
+ "about": "Soft rounded forms and pastel light after the DS, 3DS, Wii and Wii U menus, Cocoon and iiSU. Every one carries Friendly's dot pattern.",
+ "wallpapers": [
+  {
+   "id": "dotwave",
+   "name": "Dot Wave",
+   "description": "A floating dot grid swelling into a halftone wave toward the edges.",
+   "files": {
+    "dark": "src/walls/dotwave-dark.webp",
+    "light": "src/walls/dotwave-light.webp"
+   },
+   "default_for": null
+  },
+  {
+   "id": "channels",
+   "name": "Channels",
+   "description": "Two walls of rounded glossy tiles receding over a floor of dots.",
+   "files": {
+    "dark": "src/walls/channels-dark.webp",
+    "light": "src/walls/channels-light.webp"
+   },
+   "default_for": null
+  },
+  {
+   "id": "bubbles",
+   "name": "Bubbles",
+   "description": "Soap bubbles with a pastel film drifting up from the corners over the dots.",
+   "files": {
+    "dark": "src/walls/bubbles-dark.webp",
+    "light": "src/walls/bubbles-light.webp"
+   },
+   "default_for": null
+  },
+  {
+   "id": "hills",
+   "name": "Hills",
+   "description": "Rolling dotted hills with round trees and soft clouds under a dotted sky.",
+   "files": {
+    "dark": "src/walls/hills-dark.webp",
+    "light": "src/walls/hills-light.webp"
+   },
+   "default_for": null
+  },
+  {
+   "id": "stripes",
+   "name": "Soft Stripes",
+   "description": "Diagonal pastel stripes filled with dots, washing out toward the middle.",
+   "files": {
+    "dark": "src/walls/stripes-dark.webp",
+    "light": "src/walls/stripes-light.webp"
+   },
+   "default_for": null
+  }
+ ]
+}

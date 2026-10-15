@@ -262,14 +262,41 @@ function rollCount(el, up) {
   el.animate([{ transform: 'translateY(' + (up ? 60 : -60) + '%)', opacity: 0 }, { transform: 'none', opacity: 1 }], { duration: f.dur, easing: f.ease });
 }
 const COUNT_SEL = '.sh-hcount, .fm-count, .pm-sumcard-h .c, #fmHintCount, #fmSelCount, #fmSelChipN';
+function applyCount(el, animate) {
+  const t = el.textContent.trim(), n = parseFloat(t);
+  if (el._dCount === t) return;
+  const prev = el._dCountN;
+  el._dCount = t; el._dCountN = n;
+  if (animate && prev != null && !isNaN(n) && n !== prev) rollCount(el, n > prev);
+}
 function applyCounts(root, animate) {
-  root.querySelectorAll(COUNT_SEL).forEach(el => {
-    const t = el.textContent.trim(), n = parseFloat(t);
-    if (el._dCount === t) return;
-    const prev = el._dCountN;
-    el._dCount = t; el._dCountN = n;
-    if (animate && prev != null && !isNaN(n) && n !== prev) rollCount(el, n > prev);
+  root.querySelectorAll(COUNT_SEL).forEach(el => applyCount(el, animate));
+}
+/* A text change can affect its containing counts; inserted subtrees can introduce new ones. The observer already
+   supplies both, so ordinary typing need not search the unchanged contents of all nine panels. Keep the work in the
+   same observer turn, deduplicating counts just as the old one-pass scan did. */
+function applyCountMutations(mutations) {
+  const counts = new Set();
+  mutations.forEach(m => {
+    let el = m.target.nodeType === 1 ? m.target : m.target.parentElement;
+    for (; el; el = el.parentElement) {
+      if (el.matches(COUNT_SEL)) counts.add(el);
+      if (PANEL_IDS.includes(el.id)) break;
+    }
+    if (m.type !== 'childList') return;
+    m.addedNodes.forEach(node => {
+      if (node.nodeType !== 1) return;
+      if (node.matches(COUNT_SEL)) counts.add(node);
+      if (node.childElementCount) node.querySelectorAll(COUNT_SEL).forEach(count => counts.add(count));
+    });
   });
+  const live = Array.from(counts).filter(el => el.isConnected && inPanels(el));
+  /* Preserve the old panel/DOM order, including outer counts before nested counts. */
+  live.sort((a, b) => {
+    const panelOrder = PANEL_IDS.indexOf(a.closest(PANEL_SEL).id) - PANEL_IDS.indexOf(b.closest(PANEL_SEL).id);
+    return panelOrder || (a.compareDocumentPosition(b) & Node.DOCUMENT_POSITION_FOLLOWING ? -1 : 1);
+  });
+  live.forEach(el => applyCount(el, true));
 }
 
 /* an expander opened near the bottom of the list scrolls itself into view while it grows */

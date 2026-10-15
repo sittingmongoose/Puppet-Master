@@ -230,12 +230,14 @@ const o55LookCommit = commitSettingValue;
 commitSettingValue = function (id, value) {
   const ok = o55LookCommit.apply(this, arguments);
   if (ok && O55_LOOK_IDS.includes(id)) window.requestAnimationFrame(o55ApplyLook);
+  if (id === 'general.visual.theme' || id === 'general.visual.theme-mode') window.requestAnimationFrame(o55SyncThemeControls);
   return ok;
 };
 const o55LookRestore = restoreSettingDefault;
 restoreSettingDefault = function (id) {
   const ok = o55LookRestore.apply(this, arguments);
   if (O55_LOOK_IDS.includes(id)) window.requestAnimationFrame(o55ApplyLook);
+  if (id === 'general.visual.theme' || id === 'general.visual.theme-mode') window.requestAnimationFrame(o55SyncThemeControls);
   return ok;
 };
 const o55LookRender = renderApp;
@@ -244,40 +246,68 @@ window.addEventListener('resize', () => { if ((PM51.value('general.visual.interf
 /* A theme change repaints the look and redraws the rows that show the theme's own value. */
 new MutationObserver(() => {
   o55ApplyLook();
+  o55SyncGlassNumber();
   window.requestAnimationFrame(() => Object.keys(O55R).filter(id => O55R[id] && O55R[id].themeOwn).forEach(id => { if (root.querySelector(`[id="setting-${cssEscape(id)}"]`)) refreshSettingRow(id); }));
 }).observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
 window.setTimeout(o55ApplyLook, 0);
 
-/* ---------- Preview a theme before switching ------------------------------------------------------------------------- */
-/* With the switch on, picking a theme shows it at once with a small bar: Keep it, or Go back; left alone it goes back
-   after 15 seconds, like a display-settings change. With it off, the pick simply sticks. */
-let o55Preview = null;
-function o55PreviewEnd(keep) {
-  const pv = o55Preview; if (!pv) return; o55Preview = null;
-  window.clearInterval(pv.timer); if (pv.bar) pv.bar.remove();
-  if (keep) { showToast('Theme kept', PM51.valueLabel('general.visual.theme', PM51.value('general.visual.theme')), 'success', 2200); return; }
-  Object.entries(pv.before).forEach(([id, v]) => { if (v === undefined) restoreSettingDefault(id); else commitSettingValue(id, v); });
-  saveState(); ['general.visual.theme', 'general.visual.theme-mode'].forEach(id => { if (root.querySelector(`[id="setting-${cssEscape(id)}"]`)) refreshSettingRow(id); });
-  showToast('Back to your theme', PM51.valueLabel('general.visual.theme', PM51.value('general.visual.theme')), 'info', 2200);
+/* Theme and Light or dark are one saved choice. A commit changes both values, so both hidden selects and their
+   visible labels must follow it. Otherwise Light stays labelled Dark and choosing Dark emits no change event.
+   A refused write also restores the optimistic dropdown label. Keep the rows in place (the wallpaper follows them). */
+function o55SyncThemeControls() {
+  ['general.visual.theme', 'general.visual.theme-mode'].forEach(id => {
+    const found = findSettingGlobal(id); if (!found) return;
+    root.querySelectorAll(`select[data-setting="${id}"]`).forEach(sel => {
+      sel.value = settingValue(found.setting);
+      const label = sel.closest('.pm51-dd')?.querySelector('.pm51-dd-value'), option = sel.options[sel.selectedIndex];
+      if (label && option) label.textContent = option.textContent;
+    });
+    o55MarkChanged(id);
+  });
+  o55SyncGlassNumber();
 }
-const o55PreviewChange = handleChangeAction;
-handleChangeAction = function (action, el) {
-  const id = el && el.dataset ? el.dataset.setting : '';
-  /* while NieR Mode is painted a picked theme cannot be seen; it is saved and noted instead (kit.d/18-nier.js) */
-  const watch = action === 'change-setting' && (id === 'general.visual.theme' || id === 'general.visual.theme-mode') && o55On(PM51.value('general.visual.theme-preview')) && !o55NierIsPainted();
-  const before = watch && !o55Preview ? { 'general.visual.theme': state.settings['general.visual.theme'], 'general.visual.theme-mode': state.settings['general.visual.theme-mode'] } : null;
-  const r = o55PreviewChange.apply(this, arguments);
-  if (!watch) return r;
-  if (o55Preview) { o55Preview.left = 15; return r; }
-  const bar = document.createElement('div');
-  bar.className = 'o55-preview-bar'; bar.setAttribute('role', 'status');
-  bar.innerHTML = `<span class="o55-preview-text">Previewing ${h(PM51.valueLabel('general.visual.theme', PM51.value('general.visual.theme')))}. <span class="o55-preview-left">Going back in 15 s.</span></span><button type="button" data-o55-preview="keep">Keep it</button><button type="button" data-o55-preview="back">Go back</button>`;
-  document.body.appendChild(bar);
-  o55Preview = { before, bar, left: 15, timer: window.setInterval(() => {
-    const pv = o55Preview; if (!pv) return; pv.left -= 1;
-    const t = pv.bar.querySelector('.o55-preview-text'); if (t) t.innerHTML = `Previewing ${h(PM51.valueLabel('general.visual.theme', PM51.value('general.visual.theme')))}. <span class="o55-preview-left">Going back in ${pv.left} s.</span>`;
-    if (pv.left <= 0) o55PreviewEnd(false);
-  }, 1000) };
-  return r;
+
+/* The existing percent stepper keeps its .01 alpha increments. Its adjacent field uses the existing number
+   control and input styles, shows the same percentage, and accepts fractional percentages. The stored alpha and
+   --glass-alpha stay in .35/.45..1, with the existing dark/light readability floors. */
+const O55_GLASS_ALPHA_ID = 'general.visual.glass-transparency';
+const o55GlassPercent = value => Number((Number(value) * 100).toPrecision(15));
+const o55GlassMinPercent = () => /-light$/.test(document.documentElement.getAttribute('data-theme') || '') ? 45 : 35;
+const o55GlassShownAlpha = () => window.PM7_SETTINGS_TOME.clampGlassAlpha(state.settings, PM51.value(O55_GLASS_ALPHA_ID));
+const o55LookControl = renderControl;
+renderControl = function (setting, value) {
+  if (setting && setting.id === O55_GLASS_ALPHA_ID) value = window.PM7_SETTINGS_TOME.clampGlassAlpha(state.settings, value);
+  const control = o55LookControl.call(this, setting, value);
+  if (!setting || setting.id !== O55_GLASS_ALPHA_ID) return control;
+  const number = o55Number(Object.assign({}, setting, { min: o55GlassMinPercent(), max: 100, unit: '%', label: PM51.rowLabel(setting) }), o55GlassPercent(value))
+    .replace('data-action="input-setting"', 'data-action="o55-glass-alpha"');
+  return `<span class="o55-inherit">${control}${number}</span>`;
 };
-document.addEventListener('click', e => { const b = e.target && e.target.closest ? e.target.closest('[data-o55-preview]') : null; if (b) o55PreviewEnd(b.dataset.o55Preview === 'keep'); });
+/* Details, toasts and search say the value the way the row does: the stored alpha (.56) as the row's stepper shows it
+   (56%), after the same readability floor, never as "0.56 %" (contrast round, 2026-10-15). */
+const o55LookValueText = PM51.valueText;
+PM51.valueText = (setting, v) => {
+  if (!setting || setting.id !== O55_GLASS_ALPHA_ID || v == null || v === '' || !Number.isFinite(Number(v))) return o55LookValueText(setting, v);
+  return `${Math.round(o55GlassPercent(window.PM7_SETTINGS_TOME.clampGlassAlpha(state.settings, v)))}%`;
+};
+function o55SyncGlassNumber() {
+  const shown = o55GlassPercent(o55GlassShownAlpha());
+  root.querySelectorAll(`input[data-action="o55-glass-alpha"]`).forEach(el => {
+    el.min = String(o55GlassMinPercent());
+    if (document.activeElement !== el) el.value = String(shown);
+  });
+  root.querySelectorAll(`[id="setting-${O55_GLASS_ALPHA_ID}"] .stepper-value`).forEach(el => { el.textContent = `${Math.round(shown)}%`; });
+}
+const o55LookInput = handleInputAction;
+handleInputAction = function (action, el) {
+  if (action !== 'o55-glass-alpha') return o55LookInput.apply(this, arguments);
+  if (!el || el.dataset.setting !== O55_GLASS_ALPHA_ID || !el.value.trim() || el.validity.badInput) return;
+  const number = Number(el.value); if (!Number.isFinite(number)) return;
+  const value = Math.max(o55GlassMinPercent(), Math.min(100, number)) / 100;
+  if (!commitSettingValue(O55_GLASS_ALPHA_ID, value)) return;
+  saveState(); o55MarkChanged(O55_GLASS_ALPHA_ID); o55Notify(O55_GLASS_ALPHA_ID, PM51.value(O55_GLASS_ALPHA_ID)); o55SyncGlassNumber();
+};
+document.addEventListener('focusout', e => {
+  const el = e.target;
+  if (el && el.matches && el.matches('input[data-action="o55-glass-alpha"]')) el.value = String(o55GlassPercent(o55GlassShownAlpha()));
+});

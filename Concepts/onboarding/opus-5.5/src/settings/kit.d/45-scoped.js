@@ -62,7 +62,7 @@ PM51.scoped = {
     const kind = row.control || s.control || '';
     const wide = row.layout === 'wide' || (kind === 'multiselect' && (opts.choices || o55Options(s)).length > 4);
     return `<div class="setting-row o55-row o55-scoped${changed ? ' is-changed' : ''}${wide ? ' is-wide' : ''}" data-setting-id="${a(id)}" data-o55-kind="${a(kind)}"${opts.noChanged ? ' data-no-changed="1"' : ''}>
-      <div class="setting-copy"><div class="setting-label">${h(label)}${changed ? '<span class="o55-changed" title="Changed from the default"><i></i><span>Changed</span></span>' : ''}</div>${help ? `<div class="setting-description">${h(help)}</div>` : ''}</div>
+      <div class="setting-copy"><div class="setting-label">${h(label)}${changed ? `<span class="o55-changed" title="Changed from the default">${PM51.mark('change-modified', 'changed')}<span>Changed</span></span>` : ''}</div>${help ? `<div class="setting-description">${h(help)}</div>` : ''}</div>
       <div class="setting-control">${control}</div>
       <button type="button" class="icon-btn details-btn o55-about" data-action="setting-details" data-setting="${a(id)}" data-workspace="${a(found ? found.workspace.id : '')}" data-section="${a(found && found.section ? found.section.id : '')}" aria-label="${a('About ' + label)}" data-pm-hover-label="${a('About ' + label)}" data-pm-hover-detail="What it does and your choices.">${icon('help')}</button>
     </div>`;

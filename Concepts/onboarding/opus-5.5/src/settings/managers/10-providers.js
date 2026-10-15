@@ -116,8 +116,9 @@
   function statusLabelFor(p) {
     const base = plain(p);
     if (p.id === 'free-models') return base === 'Off' ? base : `${base} · ${routesOn()} of ${routes().length} routes on`;
-    const n = activeAccounts(p).length;
-    if (base === 'Ready' && n) return `${base} · ${countText(n, 'account')}`;
+    /* in use of total, so Settings and Usage count the same accounts (a signed-out account still counts in the total) */
+    const n = activeAccounts(p).length, total = (p.accounts || []).length;
+    if (base === 'Ready' && n) return `${base} · ${total > n ? `${n} of ${countText(total, 'account')}` : countText(n, 'account')}`;
     if (base === 'Needs attention' && p.id === 'github-copilot') return 'Needs a Copilot seat';
     return base;
   }

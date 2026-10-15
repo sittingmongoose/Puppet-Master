@@ -130,8 +130,22 @@ with the same slices, in this folder. `jetbrains-mono-latin-100-800-italic.woff2
 terminal thread's `pmt-jetbrains-mono-latin-var-italic.woff2` (SHA-256 `a8afa085e9ca5e53...`, 42,964 bytes, per
 `Concepts/home-redesign/src/terminal/fonts/SOURCE.md` on `concept/home-terminal-20261009`), so both ship the same bytes.
 5.6 Pro does not embed the italic: its chat sets no italic text (J-1, no italic face embedded there).
-The upright Latin file (NieR's) carries a wght axis of 400-800 although the faces declare 100 800, so upright weights
-under 400 draw at 400 in Latin; the upright slices and the italic run the full 100-800.
+NieR's upright Latin file carries a wght axis of 400-800 only, although its faces declare 100 800, so until 2026-10-14
+upright weights under 400 drew at 400 in Latin. Jared decided then that the terminal keeps JetBrains Mono's full
+100-800, so the 'JetBrains Mono' family's upright Latin face now reads `jetbrains-mono-latin-100-800-normal.woff2`, below:
+the same Google Fonts build as the five slices (its latin-ext slice from the same request is byte for byte
+`jetbrains-mono-latin-ext-var.woff2`) with the whole axis, so Thin, ExtraLight and Light draw in Latin. Weights 400-800
+draw exactly as before (the ink of each weight was measured equal in Chromium). It is one variable file, not three static
+Thin, ExtraLight and Light files: Chrome matches one weight group per family, so a face of its own weight split the family
+and the Cyrillic and Greek slices fell back to a serif at every weight (tested 2026-10-14). NieR Mode's PM NieR Mono keeps
+its own Latin file, and 5.6 Pro embeds that one, unchanged. The licence is beside the files: `OFL-JetBrainsMono.txt` in
+this folder is the same text as `src/settings/nier/fonts/OFL-JetBrainsMono.txt` ("Copyright 2020 The JetBrains Mono
+Project Authors", SIL OFL 1.1, no Reserved Font Name).
+
+| File | Source | SHA-256 (first 16) |
+|---|---|---|
+| `jetbrains-mono-latin-100-800-normal.woff2` | Google Fonts css2 `JetBrains Mono:wght@100..800`, latin (JetBrains Mono 2.211, gstatic v24: https://fonts.gstatic.com/s/jetbrainsmono/v24/tDbV2o-flEEny0FZhsfKu5WU4xD7OwE.woff2), wght 100-800, 40,404 bytes | `18be452724bfdc23` |
+| `OFL-JetBrainsMono.txt` | https://github.com/JetBrains/JetBrainsMono/blob/master/OFL.txt (the same text as NieR's copy) | `a76abf002c49097d` |
 
 | File | Source | SHA-256 (first 16) |
 |---|---|---|

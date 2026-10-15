@@ -1,3 +1,4 @@
+# This file no longer feeds PMConcept7. Use scripts/pm7-where.py to find where to edit.
 """Authored PM7 T34 Usage correction transform.
 
 This module owns the 2026-08-27 Usage recovery corrections.  It transforms

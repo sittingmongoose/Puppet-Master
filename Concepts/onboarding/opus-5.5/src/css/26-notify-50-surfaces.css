@@ -1,0 +1,133 @@
+/* PM Notify: the other notices, in the same language (pm7-notifications, Opus 5.5).
+   These surfaces belong to other owners and keep their places, words and behaviour; this file only gives them the
+   look's notification material (the --pmn-* tokens of 26-notify-00..40) so a notice reads the same wherever it shows:
+     - the setup prompt (#o55-resume, #o55-tourchip; src/js/95-boot.js), which 19-notify.js moves into the stage as a
+       pinned card under the bell;
+     - the Home note (.pmw-toast, home-redesign panels) and the Usage note (.pmu-toast, usage-redesign);
+     - the terminal's inline notices (.pmt-notice, home-redesign terminal) and the panels' inline notices
+       (.pmw-notice), including the chat's agent and thread status notices.
+   The terminal keeps its own row motion (pmt-in / pmt-out / pmt-swap); nothing here animates those rows. */
+
+/* ---------------------------------------------------------------------------------------------------------------
+   1. The setup prompt, pinned under the bell
+   --------------------------------------------------------------------------------------------------------------- */
+/* the prompt, once it has joined the bell (19-notify.js tuckPin): its element stays, out of sight and out of the way */
+#rsStage > .o55-resume.pmn-pin.pmn-pin-tucked { display: none !important; }
+#rsStage > .o55-resume.pmn-pin {
+  position: relative !important; top: auto !important; left: auto !important; transform: none !important; z-index: auto !important;
+  display: flex; align-items: stretch; width: 100%; box-sizing: border-box; pointer-events: auto !important;
+  border-radius: var(--pmn-r); background: var(--pmn-surface); color: var(--pmn-text);
+  border: 1px solid color-mix(in srgb, var(--accent-blue) 38%, var(--pmn-line)); box-shadow: var(--pmn-shadow);
+  font: 600 13px/1.3 var(--pmn-font-head); overflow: hidden;
+}
+#rsStage > .o55-resume.pmn-pin [data-o55-chip="resume"] {
+  flex: 1 1 auto; min-width: 0; height: auto; min-height: 46px; padding: 8px 12px 8px 10px; gap: 11px; justify-content: flex-start; text-align: left;
+  color: inherit; font: inherit; border-radius: 0;
+}
+#rsStage > .o55-resume.pmn-pin [data-o55-chip="resume"] > svg {
+  flex: 0 0 auto; width: 30px; height: 30px; padding: 7px; box-sizing: border-box; border-radius: var(--pmn-r-tile);
+  color: var(--accent-blue); background: color-mix(in srgb, var(--accent-blue) 15%, transparent); box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--accent-blue) 22%, transparent);
+}
+#rsStage > .o55-resume.pmn-pin [data-o55-chip="resume"] > span { flex: 1 1 auto; min-width: 0; }
+#rsStage > .o55-resume.pmn-pin [data-o55-chip="resume"]::after {
+  content: ""; flex: 0 0 auto; width: 16px; height: 16px; background: currentColor; opacity: .55;
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M9 6l6 6-6 6'/%3E%3C/svg%3E") center / contain no-repeat;
+  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M9 6l6 6-6 6'/%3E%3C/svg%3E") center / contain no-repeat;
+  transition: transform 160ms ease, opacity 160ms ease;
+}
+#rsStage > .o55-resume.pmn-pin [data-o55-chip="resume"]:hover { background: var(--pmn-hover); }
+#rsStage > .o55-resume.pmn-pin [data-o55-chip="resume"]:hover::after { opacity: .9; transform: translateX(2px); }
+#rsStage > .o55-resume.pmn-pin .o55-resume-x {
+  flex: 0 0 auto; width: 36px; padding: 0; display: grid; place-items: center; font-size: 17px; opacity: .6;
+  border-left: 1px solid var(--pmn-line-soft); color: var(--pmn-text-2);
+}
+#rsStage > .o55-resume.pmn-pin .o55-resume-x:hover { opacity: 1; background: var(--pmn-hover); color: var(--pmn-text); }
+#rsStage > .o55-resume.pmn-pin :is(button):focus-visible { outline: 2px solid color-mix(in srgb, var(--accent-blue) 75%, transparent); outline-offset: -3px; }
+/* Friendly: a glossy card with the app-icon tile */
+html[data-theme^="friendly"] #rsStage > .o55-resume.pmn-pin { background: var(--pmn-gloss), var(--pmn-surface); border-width: 1.5px; border-color: color-mix(in srgb, var(--pm6-cozy-sky, #5AB9E0) 45%, var(--pmn-surface)); }
+html[data-theme^="friendly"] #rsStage > .o55-resume.pmn-pin [data-o55-chip="resume"] > svg { color: #fff; background: linear-gradient(180deg, color-mix(in srgb, var(--pm6-cozy-sky, #5AB9E0) 60%, #fff), var(--pm6-cozy-sky, #5AB9E0)); box-shadow: 0 2px 0 color-mix(in srgb, var(--pm6-cozy-sky, #5AB9E0) 55%, #1e2c4a); }
+/* Retro: a console line with a reverse-video tag */
+html[data-theme^="retro"] #rsStage > .o55-resume.pmn-pin { border: 2px solid color-mix(in srgb, var(--pmn-phos) 70%, var(--pmn-line)); box-shadow: var(--pmn-shadow); text-transform: uppercase; letter-spacing: .04em; font-size: 11.5px; }
+html[data-theme^="retro"] #rsStage > .o55-resume.pmn-pin [data-o55-chip="resume"] > svg { border-radius: 0; background: transparent; box-shadow: inset 0 0 0 2px var(--pmn-phos); color: var(--pmn-phos); }
+html[data-theme^="retro"] #rsStage > .o55-resume.pmn-pin [data-o55-chip="resume"]:hover { background: var(--pmn-phos); color: var(--pmn-on-acc); }
+html[data-theme^="retro"] #rsStage > .o55-resume.pmn-pin .o55-resume-x { border-left: 0; box-shadow: inset 2px 0 0 color-mix(in srgb, var(--pmn-phos) 70%, var(--pmn-line)); }
+/* Glass: a plate; Liquid Glass: the menu material */
+html[data-theme^="glass"] #rsStage > .o55-resume.pmn-pin { border: 0; background: var(--pmn-plate); box-shadow: var(--pmn-edge), var(--pmn-shadow); }
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) #rsStage > .o55-resume.pmn-pin { background: linear-gradient(var(--lg-tint-menu), var(--lg-tint-menu)); -webkit-backdrop-filter: blur(30px) saturate(1.5); backdrop-filter: blur(30px) saturate(1.5); box-shadow: var(--pmn-lg-rim), var(--pmn-lg-depth); }
+/* NieR: parchment, ink tile; the label reads in ink in both modes (it was ink on ink in NieR Light) */
+html[data-o55-nier="on"] #rsStage > .o55-resume.pmn-pin { background: var(--o55-nier-raised); color: var(--o55-nier-ink); border: 1px solid var(--o55-nier-ink); box-shadow: 4px 4px 0 rgba(var(--o55-nier-shadow-rgb), .22); }
+html[data-o55-nier="on"] #rsStage > .o55-resume.pmn-pin [data-o55-chip="resume"] > svg { border-radius: 0; background: var(--o55-nier-ink); color: var(--o55-nier-on-ink); box-shadow: none; }
+html[data-o55-nier="on"] #rsStage > .o55-resume.pmn-pin .o55-resume-x { color: var(--o55-nier-ink); border-left-color: rgba(var(--o55-nier-ink-rgb), .3); }
+html[data-o55-nier-parts~="cursor"] #rsStage > .o55-resume.pmn-pin [data-o55-chip="resume"]:hover { background: var(--o55-nier-ink); color: var(--o55-nier-on-ink); }
+html[data-o55-nier-parts~="cursor"] #rsStage > .o55-resume.pmn-pin [data-o55-chip="resume"]:hover > svg { background: var(--o55-nier-on-ink); color: var(--o55-nier-ink); }
+
+/* ---------------------------------------------------------------------------------------------------------------
+   2. The Home note and the Usage note: the look's toast material in their own places
+   --------------------------------------------------------------------------------------------------------------- */
+.pmw-toast:not(#pmnz) {
+  background: var(--pmn-surface); color: var(--pmn-text); border: 1px solid var(--pmn-line); border-radius: var(--pmn-r);
+  box-shadow: var(--pmn-shadow); font: 600 12.5px/1.35 var(--pmn-font); padding: 10px 16px;
+}
+.pmw-toast:not([hidden]):not(#pmnz) { animation: pmn-note-in 300ms cubic-bezier(.22, 1.3, .36, 1) both; }
+:is(#panel-usage, [data-pmu-host]) .pmu-toast:not(#pmnz) { background: var(--pmn-surface); color: var(--pmn-text); border-color: var(--pmn-line); border-radius: var(--pmn-r); box-shadow: var(--pmn-shadow); font-family: var(--pmn-font); }
+@keyframes pmn-note-in { from { opacity: 0; translate: 0 8px; scale: .96; } to { opacity: 1; translate: 0 0; scale: 1; } }
+@keyframes pmn-note-in-steps { from { clip-path: inset(0 100% 0 0); } to { clip-path: inset(0 0 0 0); } }
+html[data-theme^="friendly"] .pmw-toast:not(#pmnz), html[data-theme^="friendly"] :is(#panel-usage, [data-pmu-host]) .pmu-toast:not(#pmnz) { background: var(--pmn-gloss), var(--pmn-surface); border-width: 1.5px; }
+html[data-theme^="friendly"] .pmw-toast:not([hidden]):not(#pmnz) { animation: pmn-note-in 420ms cubic-bezier(.34, 1.56, .64, 1) both; }
+html[data-theme^="retro"] .pmw-toast:not(#pmnz), html[data-theme^="retro"] :is(#panel-usage, [data-pmu-host]) .pmu-toast:not(#pmnz) { border: 2px solid color-mix(in srgb, var(--pmn-phos) 70%, var(--pmn-line)); box-shadow: var(--pmn-shadow); text-shadow: var(--pmn-glow); }
+html[data-theme^="retro"] .pmw-toast:not([hidden]):not(#pmnz) { animation: pmn-note-in-steps 160ms steps(5, end) both; }
+html[data-theme^="glass"] .pmw-toast:not(#pmnz), html[data-theme^="glass"] :is(#panel-usage, [data-pmu-host]) .pmu-toast:not(#pmnz) { border: 0; background: var(--pmn-plate); box-shadow: var(--pmn-edge), var(--pmn-shadow); }
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) .pmw-toast, html[data-lg="on"][data-theme^="glass"]:not(#lgz) :is(#panel-usage, [data-pmu-host]) .pmu-toast { background: linear-gradient(var(--lg-tint-menu), var(--lg-tint-menu)); -webkit-backdrop-filter: blur(30px) saturate(1.5); backdrop-filter: blur(30px) saturate(1.5); box-shadow: var(--pmn-lg-rim), var(--pmn-lg-depth); }
+html[data-o55-nier="on"] .pmw-toast:not(#pmnz) { background: var(--o55-nier-raised); color: var(--o55-nier-ink); border: 1px solid var(--o55-nier-ink); box-shadow: 4px 4px 0 rgba(var(--o55-nier-shadow-rgb), .22); }
+html[data-o55-nier="on"] .pmw-toast:not([hidden]):not(#pmnz) { animation: pmn-note-in-steps 200ms steps(6, end) both; }
+html[data-motion="reduced"] .pmw-toast:not(#pmnz) { animation: none !important; }
+@media (prefers-reduced-motion: reduce) { .pmw-toast:not(#pmnz) { animation: none !important; } }
+
+/* ---------------------------------------------------------------------------------------------------------------
+   3. Inline notices: the terminal's rows and the panels' notices carry the notice's glyph and the look's keys
+   --------------------------------------------------------------------------------------------------------------- */
+.pmt-notice:not(#pmnz) { --pmn-acc: var(--accent-blue); gap: 10px; min-height: 34px; padding: 4px 8px 4px 12px; background: color-mix(in srgb, var(--pmn-acc) 7%, var(--pmw-surface-2, var(--surface-elevated))); }
+.pmt-notice.pmt-notice-warn:not(#pmnz) { --pmn-acc: var(--accent-warning); background: color-mix(in srgb, var(--pmn-acc) 13%, var(--pmw-surface-2, var(--surface-elevated))); }
+.pmt-notice:not(#pmnz)::before {
+  content: ""; flex: 0 0 auto; width: 15px; height: 15px; background: var(--pmn-acc);
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'%3E%3Ccircle cx='12' cy='12' r='8.6'/%3E%3Cpath d='M12 11v5.2'/%3E%3Cpath d='M12 7.7h.01' stroke-width='2.8'/%3E%3C/svg%3E") center / contain no-repeat;
+  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'%3E%3Ccircle cx='12' cy='12' r='8.6'/%3E%3Cpath d='M12 11v5.2'/%3E%3Cpath d='M12 7.7h.01' stroke-width='2.8'/%3E%3C/svg%3E") center / contain no-repeat;
+}
+.pmt-notice.pmt-notice-warn:not(#pmnz)::before {
+  -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M12 4.3L2.9 19.6h18.2L12 4.3z'/%3E%3Cpath d='M12 10.2v4.2'/%3E%3Cpath d='M12 17.1h.01' stroke-width='2.8'/%3E%3C/svg%3E");
+  mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M12 4.3L2.9 19.6h18.2L12 4.3z'/%3E%3Cpath d='M12 10.2v4.2'/%3E%3Cpath d='M12 17.1h.01' stroke-width='2.8'/%3E%3C/svg%3E");
+}
+.pmt-notice:not(#pmnz) .pmt-notice-text { line-height: 1.4; }
+.pmt-notice:not(#pmnz) .pmt-notice-actions .pmt-textbtn { height: 24px; padding: 0 10px; font-weight: 600; border-radius: var(--pmn-r-btn); background: color-mix(in srgb, var(--pmn-text) 6%, transparent); box-shadow: inset 0 0 0 1px var(--pmn-line); border-color: transparent; }
+.pmt-notice:not(#pmnz) .pmt-notice-actions .pmt-textbtn:hover { background: color-mix(in srgb, var(--pmn-text) 12%, transparent); }
+.pmt-notice:not(#pmnz) .pmt-notice-actions .pmt-textbtn-primary { background: var(--pmn-acc); color: var(--pmn-on-acc); box-shadow: none; }
+.pmt-notice:not(#pmnz) .pmt-notice-actions .pmt-textbtn-primary:hover { background: color-mix(in srgb, var(--pmn-acc) 86%, var(--pmn-text)); }
+html[data-theme^="retro"] .pmt-notice:not(#pmnz) .pmt-notice-actions .pmt-textbtn { text-transform: uppercase; letter-spacing: .04em; font-size: 11px; box-shadow: inset 0 0 0 2px color-mix(in srgb, var(--pmn-acc) 65%, var(--pmn-line)); }
+html[data-theme^="retro"] .pmt-notice:not(#pmnz)::before { border-radius: 0; }
+html[data-theme^="friendly"] .pmt-notice:not(#pmnz) .pmt-notice-actions .pmt-textbtn-primary { color: #fff; background: linear-gradient(180deg, color-mix(in srgb, var(--pmn-acc) 70%, #fff), var(--pmn-acc) 70%); box-shadow: 0 2px 0 color-mix(in srgb, var(--pmn-acc) 60%, #2a1f3a); }
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) .pmt-notice .pmt-notice-actions .pmt-textbtn { background: var(--lg-fill); box-shadow: inset 0 1px 0 var(--lg-edge-top); }
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) .pmt-notice .pmt-notice-actions .pmt-textbtn-primary { background: var(--lg-sel); color: var(--lg-on-sel, #fff); }
+html[data-o55-nier="on"] .pmt-notice:not(#pmnz) { --pmn-acc: var(--o55-nier-ink); background: var(--o55-nier-raised); }
+html[data-o55-nier="on"] .pmt-notice.pmt-notice-warn:not(#pmnz) { --pmn-acc: var(--o55-nier-warn-text); background: var(--o55-nier-warn-surface); }
+html[data-o55-nier="on"] .pmt-notice:not(#pmnz) .pmt-notice-actions .pmt-textbtn { background: transparent; box-shadow: inset 0 0 0 1px var(--o55-nier-line-strong); border-radius: 0; }
+html[data-o55-nier="on"] .pmt-notice:not(#pmnz) .pmt-notice-actions .pmt-textbtn-primary { background: var(--o55-nier-ink); color: var(--o55-nier-on-ink); box-shadow: none; }
+
+.pmw-notice:not(#pmnz) { --pmn-acc: var(--accent-blue); background: color-mix(in srgb, var(--pmn-acc) 6%, transparent); border-color: color-mix(in srgb, var(--pmn-acc) 26%, var(--pmw-line-2, var(--border))); border-radius: var(--pmn-r-item); color: var(--pmn-text-2); }
+.pmw-notice.is-warn:not(#pmnz) { --pmn-acc: var(--accent-warning); background: color-mix(in srgb, var(--pmn-acc) 9%, transparent); }
+.pmw-notice.is-bad:not(#pmnz) { --pmn-acc: var(--accent-error); background: color-mix(in srgb, var(--pmn-acc) 8%, transparent); }
+.pmw-notice.is-ok:not(#pmnz) { --pmn-acc: var(--accent-lime); background: color-mix(in srgb, var(--pmn-acc) 7%, transparent); }
+.pmw-notice:not(#pmnz) .pmw-ico { color: var(--pmn-acc); }
+html[data-theme^="retro"] .pmw-notice:not(#pmnz) { border-radius: 0; border-width: 2px; }
+html[data-o55-nier="on"] .pmw-notice:not(#pmnz) { --pmn-acc: var(--o55-nier-ink); background: var(--o55-nier-raised); border-color: var(--o55-nier-line-strong); border-radius: 0; color: var(--o55-nier-ink); }
+html[data-o55-nier="on"] .pmw-notice.is-warn:not(#pmnz) { --pmn-acc: var(--o55-nier-warn-text); background: var(--o55-nier-warn-surface); }
+html[data-o55-nier="on"] .pmw-notice.is-bad:not(#pmnz) { --pmn-acc: var(--o55-nier-error-text); background: var(--o55-nier-error-surface); }
+
+/* ---------------------------------------------------------------------------------------------------------------
+   4. The Orchestrator's banners (its plan history and fresh-plan rows): only their key matches the notification keys,
+      a theme-matching fix (Jared, 2026-10-13 18:38: minor fixes that make the Orchestrator match the concept's theme)
+   --------------------------------------------------------------------------------------------------------------- */
+.pm6-orch-banner-btn:not(#pmnz) { height: 24px; padding: 0 10px; border: 0; border-radius: var(--pmn-r-btn); font-weight: 600; color: var(--pmn-text); background: color-mix(in srgb, var(--pmn-text) 6%, transparent); box-shadow: inset 0 0 0 1px var(--pmn-line); }
+.pm6-orch-banner-btn:not(#pmnz):hover { background: color-mix(in srgb, var(--pmn-text) 12%, transparent); }
+html[data-theme^="retro"] .pm6-orch-banner-btn:not(#pmnz) { text-transform: uppercase; letter-spacing: .04em; box-shadow: inset 0 0 0 2px var(--pmn-line); }
+html[data-theme^="friendly"] .pm6-orch-banner-btn:not(#pmnz) { height: 26px; background: var(--pmn-gloss), color-mix(in srgb, var(--pmn-text) 5%, var(--pmn-surface)); box-shadow: inset 0 0 0 1px var(--pmn-line), 0 2px 0 color-mix(in srgb, var(--pmn-line) 90%, var(--pmn-text) 10%); }
+html[data-o55-nier="on"] .pm6-orch-banner-btn:not(#pmnz) { background: transparent; box-shadow: inset 0 0 0 1px var(--o55-nier-line-strong); color: var(--o55-nier-ink); }

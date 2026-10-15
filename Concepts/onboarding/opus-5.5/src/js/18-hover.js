@@ -6,11 +6,11 @@
    Targets (the outermost match of SEL; a target inside another target resolves to the outer box)
      the PM8 set, every .pm-sheen, the Usage .pmu-card (not the band, nor while it is pending, leaving, lifted,
      resized, settling after a drop, morphing or flying), and any element with [data-pmh] (an opt-in for future
-     panels; its value names the kind: card | row | tile | icon, empty = card; data-pmh="off" takes an element out of
-     the set). Tabs, text surfaces (inputs, editors, terminals) and resize dividers are never targets, and a pointer on a
+     panels; its value names the kind: card | row | tile | icon | ctl, empty = card; data-pmh="off" takes an element out of
+     the set). Tabs (except those the ctl kind names), text surfaces (inputs, editors, terminals) and resize dividers are never targets, and a pointer on a
      [data-pm-hover-exempt] surface inside a target (the home terminal's input and text) hovers nothing; a target that
      carries the attribute itself, or sits inside an exempt container, still hovers.
-   Kinds: every target gets data-pmh-kind="card|row|tile|icon" once for its lifetime, ahead of time at idle (a few per
+   Kinds: every target gets data-pmh-kind="card|row|tile|icon|ctl" once for its lifetime, ahead of time at idle (a few per
      idle callback, after load, after a look change and after a frame met a new target), so CSS and tokens can differ
      per kind and no hover frame writes it; a frame stamps only a target that appeared since.
    CSS contract (written only on the hovered target and its lit neighbours, only on a visible change)
@@ -31,13 +31,19 @@
                       its opacity.
      #pmh-frame       one overlay with four <i> corners, over the target's rest rect (or following the magnet with
                       --pmh-frame-follow: 1), travelling between targets on a spring or in discrete steps
-                      (--pmh-frame-hz > 0); .pmh-frame-on while shown, .pmh-frame-travel while it moves.
+                      (--pmh-frame-hz > 0) no farther than --pmh-frame-max px; .pmh-frame-on while shown,
+                      .pmh-frame-travel while it moves, .pmh-frame-new from a placement (not a travel) until it next
+                      travels, .pmh-frame-press while the primary button is held on its target. NieR's reticle on cards
+                      and the control marker of Basic, Friendly, Retro and NieR on icon and ctl kinds (2026-10-13).
    Tokens: read from #pmh-probe (one <i data-pmh-kind> per kind, so family rows on <html> and kind rows both apply) at
      the first frame and at the frame after a change of data-theme, data-motion, data-o55-nier, data-o55-nier-parts or
      data-pmh-soft (never inside the observer itself). Names and defaults: TOKENS below.
-   Rests: body.pm-resizing / pm-ab-dragging / pmu-pointer-op / pm7u-pointer-op, html[data-pmu-moment] and a Usage
-     board with [data-op] drop the hover and let the magnet settle to 0; a held pointer button keeps the state but
-     calms the magnet to 0 and freezes the field. The next pointer move after a rest resumes.
+   Rests: body.pm-resizing / pm-ab-dragging / pmu-pointer-op / pm7u-pointer-op / pmw-dragging, html[data-pmu-moment],
+     html[data-pm-page-transition] (a page sliding in) and a Usage board with [data-op] drop the hover and let the
+     magnet settle to 0; a held pointer button keeps the state but calms the magnet to 0 and freezes the field. When a
+     rest ends, and after a click, a key, a pointerdown or a pointerup, one frame looks again at what is under the
+     pointer, so a resting pointer gets its hover back without a move (a page switched by keyboard, the Usage room's
+     entrance over).
    Reduced Motion (O55.motion.reduced(): the Settings switch or the system setting): no magnet, no frame travel, no
      pointer-following field; the hovered target gets --pmh-i: 1 and its classes at once.
    Software-rendered (O55.motion.softwareRendered(), asked off the main thread): html[data-pmh-soft], so CSS can drop
@@ -65,13 +71,20 @@
 
     /* ---- targets and kinds ---- */
     var KINDS = {
-      icon: '.activity-bar .icon,.pm-term-icon-btn,.pm6-dash-iconbtn,.browser-action-btn',
+      icon: '.activity-bar .icon,.pm-term-icon-btn,.pm6-dash-iconbtn,.browser-action-btn,' +
+        '.pm-minibtn,.fm-tbtn,.pmw-tb-btn,#pm-home-more-btn',
+      /* controls that are not icon buttons (2026-10-13 hover polish): the shell's tabs, the rail's segments and rows, the
+         title bar's text buttons and the home chat's text buttons. Like icons they never move; the looks that draw a
+         control marker (#pmh-frame on icon and ctl kinds) give them its plate. A tab is never a target otherwise
+         (BOUNDARY); one named here is. Inside a card they resolve to the card, as icons do. */
+      ctl: '.page-tab,.pmw-tab,.pm-segtab-item,.pmw-sc-btn,#projectMenuBtn,#themeSelect,' +
+        '#sidePanelSlot :is(.fm-row,.sh-row,.tree-item,.pmr-row)',
       tile: '.pm6-dash-catalog-item,.pm6-orch-ctl,.pm6-orch-pc-stat,.pm6-orch-hist-state',
       row: '.pm6-sp-row,.pm6-art-row,.pm6-search-hit',
       card: '.pm6-dash-card,.pm6-proj-card,.project-card-bento,.pm6-wiz-choice-card,.pm6-wiz-attach-card,' +
         '.pm6-wiz-disc-card,.pm6-wiz-topic-card,.pm6-orch-widget,.pm6-chat-card,.pm6-usage-acct-status,.pmu-card,.pm7u-card'
     };
-    var KIND_ORDER = ['icon', 'tile', 'row', 'card'];
+    var KIND_ORDER = ['icon', 'ctl', 'tile', 'row', 'card'];
     var SEL = '[data-pmh],.pm-sheen,' + KIND_ORDER.map(function (k) { return KINDS[k]; }).join(',');
     var BOUNDARY = '[role="tab"],.page-tab,[class*="resizer"],[class*="-divider"],.xterm,textarea,input,select,' +
       '[contenteditable=""],[contenteditable="true"]';
@@ -80,6 +93,10 @@
        target under the pointer (a text surface in a card): a target that carries it itself, or sits inside an
        exempt container (a focus landmark, the Usage board), still hovers. */
     var EXEMPT = '[data-pm-hover-exempt]';
+    /* An open menu or popover is drawn over the cards: while one shows, nothing hovers (the fixed frame and glow proxies
+       sit above the page and would cross its rows), and a pointer on one hovers nothing. Checked only after a click,
+       a key or a pointerdown (when menus open and close), never per frame. */
+    var POPUP = '.pmu-menu,.pmu-pop,[role="menu"]';
     /* Usage plates: the whole head is a move handle and seven resize zones sit 4 px outside the edge, so the magnet
        stays off there (light and glow only); a plate is not a target while the board runs an operation on it, nor
        while it settles into its slot after a drop (a transform animation: a rect read then is not where it lands). */
@@ -102,6 +119,9 @@
       ['frame', '--pmh-frame', 0], ['follow', '--pmh-frame-follow', 0], ['fhz', '--pmh-frame-hz', 0],
       ['fk', '--pmh-frame-k', 0.5], ['fstiff', '--pmh-frame-stiff', 520], ['fdamp', '--pmh-frame-damp', 44],
       ['fsnap', '--pmh-frame-snap-ms', 180], ['freach', '--pmh-frame-reach', 12],
+      /* the longest way the frame travels between two targets, px (0 = any): a farther target is met by a new frame
+         (.pmh-frame-new), so a control marker glides along a toolbar but never flies across the window */
+      ['fmax', '--pmh-frame-max', 0],
       /* proxies on whole device pixels (0 = off): edges rounded the way Blink snaps the target's own border box, so a
          1 px line drawn on a proxy lands on the target's border instead of smearing over two half-intensity pixels at
          a fractional rect (NieR's hairline brackets) */
@@ -153,7 +173,7 @@
     function valid(el) {
       var v = el.getAttribute('data-pmh');
       if (v === 'off' || v === 'none') return false;
-      if (el.matches(BOUNDARY)) return false;
+      if (el.matches(BOUNDARY) && !el.matches(KINDS.ctl)) return false;
       if (el.classList.contains('pmu-card') &&
           (el.matches(PMU_SKIP) || el._pmuLeaving || el.closest('.pmu-ghostboard,#pmuFlight,.pmu-board[data-op]'))) return false;
       return true;
@@ -187,11 +207,26 @@
     var lastHitEl = null, lastHitT = null, lastHitAt = 0;
     var hover = null, springs = new Set(), lit = new Set();
     var running = false, lastT = 0, wasRest = false, bodyRest = false, visCache = null;
+    var recheck = false, popupOpen = false;
+    function anyPopup() {
+      var l = document.querySelectorAll(POPUP);
+      for (var i = 0; i < l.length; i++) { if (l[i].getClientRects().length) return true; }
+      return false;
+    }
+    /* after a click, a key or a pointerdown the page may have changed under a resting pointer (a menu opened, a page
+       switched): the next frame looks again at what is under the pointer. The loop is started even when nothing hovers:
+       an idle engine runs no frame, so the look would otherwise wait for the next pointer move (a page switched by
+       keyboard over a page that had nothing hovered never lit the card under the resting pointer) */
+    function recheckSoon() { recheck = true; moved = true; start(); }
+    /* when a rest ends (a page transition, the Usage room's entrance moment, a gesture), boxes may have moved and a look
+       taken during the rest found nothing: re-measure and look again (a page switch slides the new page in while the
+       outgoing page stays hit-testable, and the Usage room plays its entrance after it, both rests) */
+    function restEnded() { scopeDirty = rectsDirty = geomDirty = true; recheckSoon(); }
 
     function gestureRest() {
       var b = document.body;
       if (b) for (var i = 0; i < REST_BODY.length; i++) { if (b.classList.contains(REST_BODY[i])) return true; }
-      if (root.hasAttribute('data-pmu-moment')) return true;
+      if (root.hasAttribute('data-pmu-moment') || root.hasAttribute('data-pm-page-transition')) return true;
       return !!(hit && hit.closest && hit.closest('.pmu-board[data-op]'));
     }
 
@@ -200,7 +235,10 @@
       px = e.clientX; py = e.clientY; have = true; buttons = e.buttons | 0; hit = e.target;
       var now = e.timeStamp || performance.now();
       if (e.target === lastHitEl && now - lastHitAt < 400) want = lastHitT;
-      else { want = resolve(e.target); lastHitEl = e.target; lastHitT = want; lastHitAt = now; }
+      else {
+        want = e.target && e.target.closest && e.target.closest(POPUP) ? null : resolve(e.target);
+        lastHitEl = e.target; lastHitT = want; lastHitAt = now;
+      }
       moved = true;
       start();
     }
@@ -252,15 +290,21 @@
         scopeEl = c;
         if (mo) mo.disconnect();
         if (c && typeof MutationObserver === 'function') {
-          /* only elements added or removed count: a live widget that rewrites its text (the dashboard's counters, a
-             few times a second) cannot add a target, and a box its new text moves is caught by the read after the
-             next frame */
+          /* only elements added, removed, moved or shown/hidden count: a live widget that rewrites its text (the
+             dashboard's counters, a few times a second) cannot add a target, and a box its new text moves is caught by
+             the read after the next frame. A structural change can put another box under a resting pointer (a search
+             field filtering the Projects grid re-appends the cards and hides some, from a typed character that starts
+             no frame of its own): re-measure and look again under the pointer */
           mo = mo || new MutationObserver(function (ms) {
             for (var i = 0; i < ms.length; i++) {
-              if (hasEl(ms[i].addedNodes) || hasEl(ms[i].removedNodes)) { scopeDirty = rectsDirty = geomDirty = true; if (proxyShown()) start(); return; }
+              if (ms[i].type === 'attributes' || hasEl(ms[i].addedNodes) || hasEl(ms[i].removedNodes)) {
+                scopeDirty = rectsDirty = geomDirty = true;
+                if (have || proxyShown()) recheckSoon();
+                return;
+              }
             }
           });
-          mo.observe(c, { childList: true, subtree: true });
+          mo.observe(c, { childList: true, subtree: true, attributes: true, attributeFilter: ['hidden'] });
         }
       }
       scopeMode = gap ? 'gap' : 'hover'; scopeScan = scan;
@@ -402,7 +446,21 @@
 
       /* READ ------------------------------------------------------------ */
       if (tokensDirty) readTokens();
-      var next = rest || !have ? null : (calm ? hover : want);
+      if (recheck) {
+        recheck = false;
+        popupOpen = anyPopup();
+        if (have && !popupOpen) {
+          var under = document.elementFromPoint(px, py);
+          /* resolved again even when the element is the one met before: a look taken during a rest (plates still
+             entering, pending or settling) may have resolved nothing for it */
+          if (under) { hit = under; want = under.closest && under.closest(POPUP) ? null : resolve(under); lastHitEl = under; lastHitT = want; lastHitAt = now; }
+        }
+        /* the target under the pointer comes from elementFromPoint above; a resolved target without a box (its page
+           went away while the pointer was outside or over a menu) never stays: only the wanted one is tested, so a hover
+           left on a box that was hidden never cancels the new target that took its place */
+        if (want && !want.getClientRects().length) want = null;
+      }
+      var next = rest || !have || popupOpen ? null : (calm ? hover : want);
       if (!next && hover && have && !rest && hover.isConnected && inHoldBand(hover)) next = hover;
       if (next && !next.isConnected) next = null;
       var enter = next !== hover;
@@ -613,7 +671,7 @@
 
     /* ---- proxies ---- */
     var glowEl = null, GL = [], glowCur = -1, glowLastOff = 1;
-    var frameEl = null, FR = { on: false, x: 0, y: 0, w: 0, h: 0, vx: 0, vy: 0, vw: 0, vh: 0, acc: 0, offAt: -1e9, travel: false, clip: '', host: null };
+    var frameEl = null, FR = { fresh: false, press: false, on: false, x: 0, y: 0, w: 0, h: 0, vx: 0, vy: 0, vw: 0, vh: 0, acc: 0, offAt: -1e9, travel: false, clip: '', host: null };
     function proxyWanted(kind) { var t = tk(kind); return !!(t.glow || t.frame); }
     function proxyShown() { return !!(glowCur >= 0 || FR.on); }
     var clipMemo = new WeakMap();   /* ancestor -> 1 clips, 2 clips and is fixed, 3 is fixed, 0 neither (siblings share them) */
@@ -658,8 +716,10 @@
         var d = window.devicePixelRatio || 1, sl = Math.round(b.l * d) / d, sr = Math.round(b.t * d) / d;
         b = { l: sl, t: sr, w: Math.round((b.l + b.w) * d) / d - sl, h: Math.round((b.t + b.h) * d) / d - sr };
       }
-      var tr = 'translate(' + b.l.toFixed(1) + 'px,' + b.t.toFixed(1) + 'px)';
-      if (memo.tr !== tr) { es.transform = tr; memo.tr = tr; stats.writes++; }
+      /* the standalone translate, never transform: a look may scale a proxy (the control marker's press), and the
+         scale property composes inside translate, around the proxy's own centre, but outside transform */
+      var tr = b.l.toFixed(1) + 'px ' + b.t.toFixed(1) + 'px';
+      if (memo.tr !== tr) { es.translate = tr; memo.tr = tr; stats.writes++; }
       var w = Math.round(b.w * 2) / 2, h = Math.round(b.h * 2) / 2;
       if (memo.w !== w) { es.width = w + 'px'; memo.w = w; stats.writes++; }
       if (memo.h !== h) { es.height = h + 'px'; memo.h = h; stats.writes++; }
@@ -718,17 +778,22 @@
       var s = hover ? st(hover) : null, tok = s ? tk(s.kind) : null;
       var target = s && tok.frame && hc ? hover : null;
       if (!target) {
-        if (FR.on) { frameEl.classList.remove('pmh-frame-on', 'pmh-frame-travel'); FR.on = false; FR.travel = false; FR.offAt = now; FR.host = null; stats.writes++; }
+        if (FR.on) { frameEl.classList.remove('pmh-frame-on', 'pmh-frame-travel', 'pmh-frame-press'); FR.on = false; FR.travel = false; FR.press = false; FR.offAt = now; FR.host = null; stats.writes++; }
         return false;
       }
       ensureFrame();
       if (!frameEl) return false;
       var b = boxFor(hc), gx = b.l + (tok.follow ? s.wx : 0), gy = b.t + (tok.follow ? s.wy : 0), gw = b.w, gh = b.h;
+      var far = false;
       if (FR.host !== target) {
         if (frameEl.getAttribute('data-pmh-kind') !== s.kind) frameEl.setAttribute('data-pmh-kind', s.kind);
+        far = tok.fmax > 0 && Math.max(Math.abs(gx - FR.x), Math.abs(gy - FR.y)) > tok.fmax;
         FR.host = target;
       }
-      var snap = reduced || !FR.on && now - FR.offAt > tok.fsnap;
+      var snap = reduced || far || !FR.on && now - FR.offAt > tok.fsnap;
+      /* .pmh-frame-new: the frame met this target anew (placed, not travelled), so a look can play an arrival there;
+         it stays until the frame next travels */
+      if (snap !== FR.fresh && (snap || FR.x !== gx || FR.y !== gy)) { frameEl.classList.toggle('pmh-frame-new', snap); FR.fresh = snap; stats.writes++; }
       if (!FR.on) { FR.on = true; frameEl.classList.add('pmh-frame-on'); stats.writes++; }
       if (snap) { FR.x = gx; FR.y = gy; FR.w = gw; FR.h = gh; FR.vx = FR.vy = FR.vw = FR.vh = 0; }
       else if (tok.fhz > 0) {
@@ -767,12 +832,32 @@
     }
     PM.push(onMove);
     document.addEventListener('pointerout', onLeave);
+    /* the press: .pmh-frame-press on the frame while the primary button is held on the target it marks (a look draws its
+       control marker pressed in), dropped on release, cancel, or when the frame leaves */
+    function pressFrame(on) {
+      if (on === FR.press || !frameEl) return;
+      if (on && !FR.on) return;
+      frameEl.classList.toggle('pmh-frame-press', on); FR.press = on; stats.writes++;
+    }
     document.addEventListener('pointerdown', function (e) {
       if (e.pointerType === 'touch') return;
+      if (e.button === 0 && FR.on && FR.host && e.target && FR.host.contains(e.target)) pressFrame(true);
       buttons = e.buttons | 0 || 1;
       if (hover) { springs.add(st(hover)); start(); }
+      recheckSoon();
     }, { capture: true, passive: true });
-    document.addEventListener('pointerup', function (e) { buttons = e.buttons | 0; }, { capture: true, passive: true });
+    document.addEventListener('pointerup', function (e) { pressFrame(false); buttons = e.buttons | 0; recheckSoon(); }, { capture: true, passive: true });
+    document.addEventListener('pointercancel', function () { pressFrame(false); }, { capture: true, passive: true });
+    document.addEventListener('click', recheckSoon, { capture: true, passive: true });
+    /* a character typed into a text field (the terminal's input, a search box) cannot change what is under the pointer:
+       no frame for it, so typing costs the engine nothing; Enter, Escape, Tab, shortcuts and keys on anything else
+       look again */
+    document.addEventListener('keydown', function (e) {
+      var t = e.target;
+      if (e.key && e.key.length === 1 && !e.ctrlKey && !e.metaKey && !e.altKey && t &&
+          (t.isContentEditable || t.tagName === 'INPUT' || t.tagName === 'TEXTAREA')) return;
+      recheckSoon();
+    }, { capture: true, passive: true });
     window.addEventListener('scroll', function (e) {
       /* only a scroller around the scope moves its boxes (the demo chat stream scrolls on its own all the time) */
       var t = e.target;
@@ -790,15 +875,21 @@
     if (typeof MutationObserver === 'function') {
       new MutationObserver(function (muts) {
         for (var i = 0; i < muts.length; i++) {
-          if (muts[i].attributeName === 'data-pmu-moment') { if (hover || springs.size) { moved = true; start(); } }
+          var an = muts[i].attributeName;
+          if (an === 'data-pmu-moment' || an === 'data-pm-page-transition') {
+            if (!gestureRest()) restEnded();
+            else if (hover || springs.size || lit.size) { moved = true; start(); }
+          }
           else { retokenNextFrame(); return; }
         }
-      }).observe(root, { attributes: true, attributeFilter: ['data-theme', 'data-motion', 'data-o55-nier', 'data-o55-nier-parts', 'data-pmh-soft', 'data-pmu-moment'] });
+      }).observe(root, { attributes: true, attributeFilter: ['data-theme', 'data-motion', 'data-o55-nier', 'data-o55-nier-parts', 'data-pmh-soft', 'data-pmu-moment', 'data-pm-page-transition'] });
       if (document.body) {
         new MutationObserver(function () {
           var r = gestureRest();
+          var ended = bodyRest && !r;
           if (r !== bodyRest) { bodyRest = r; rectsDirty = geomDirty = true; }   /* a resize or drag gesture moves boxes */
-          if (r !== wasRest && (hover || springs.size || lit.size)) { moved = true; start(); }
+          if (ended && !r) restEnded();
+          else if (r !== wasRest && (hover || springs.size || lit.size)) { moved = true; start(); }
         }).observe(document.body, { attributes: true, attributeFilter: ['class'] });
       }
     }

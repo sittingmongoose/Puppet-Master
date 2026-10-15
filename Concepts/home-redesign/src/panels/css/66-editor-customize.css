@@ -1,0 +1,224 @@
+/* The editor's Customize screen (kinds/11-editor-customize.js). It wears the terminal screen's classes and every look's
+   drawing of them (src/terminal/css/26-customize.css, .pmt-cz), so the two screens are one family; this file adds only
+   what the editor shows: its live preview's box, the schemes as tiny editors, the faces, the caret's shapes, blinks
+   and movements, the guides, and the chips' small pictures. Pictures that move (a blink, a glide) move only while the
+   pointer or the focus is on their tile, never at idle, and not at all under Reduced Motion. No pills, no :has(). */
+
+/* ---- the preview: a real editor in a tab body of its own (the editor sizes against @container pmw-body) ---- */
+.pmed-cz .pmt-cz-pvbox { height: 262px; min-height: 200px; }
+.pmed-pvhost { position: absolute; inset: 0; container-type: size; container-name: pmw-body; overflow: hidden; }
+.pmed-cz .pmt-cz-dockbox .pmed-pvhost { inset: 0; }
+.pmed-cz .pmt-cz-dock { height: 176px; width: min(44%, 400px); transition: opacity 160ms ease; }
+/* it steps aside while the pointer or the focus is on what it floats over (11-editor-customize.js dockAside) */
+.pmed-cz .pmt-cz-dock.is-aside { opacity: .1; }
+@media (prefers-reduced-motion: reduce) { .pmed-cz .pmt-cz-dock { transition: none; } }
+html[data-motion="reduced"] .pmed-cz .pmt-cz-dock { transition: none; }
+@container pmt-cz (max-width: 640px) { .pmed-cz .pmt-cz-dock { width: 42%; height: 140px; } }
+@container pmt-cz (max-width: 640px) { .pmed-cz .pmt-cz-pvbox { height: 226px; } }
+@container pmt-cz (max-width: 440px) { .pmed-cz .pmt-cz-pvbox { height: 200px; } }
+/* Liquid Glass (its CONTRACT, pm7-liquid-glass 2026-10-14): the reading plate is a plain fill, the look's editor ground at
+   82 %, a 1 px glass line and a radius concentric with the dialog; no blur and no transparency setting under code */
+html[data-lg="on"][data-theme^="glass"] .pmed-cz .pmt-cz-preview {
+  background: color-mix(in srgb, var(--rg-reading, #14112a) 82%, transparent); border-color: var(--lg-line, rgba(255, 255, 255, .1));
+  border-radius: calc(var(--pmt-cz-radius) - 6px);
+}
+html[data-lg="on"][data-theme="glass-light"] .pmed-cz .pmt-cz-preview { background: color-mix(in srgb, #f0f3f3 82%, transparent); }
+
+/* ---- schemes as tiny editors ---- */
+.pmed-sw { display: flex; flex-direction: column; justify-content: center; gap: 1px; height: 100%; padding: 3px 8px; font: 500 10.5px/1.28 var(--pm-font-code, ui-monospace, monospace); white-space: pre; overflow: hidden; }
+.pmed-swl { display: block; overflow: hidden; text-overflow: clip; }
+.pmed-swl b { font-weight: 650; }
+.pmed-swl i, .pmed-swl u { font-style: normal; text-decoration: none; }
+.pmed-swc { font-style: italic; }
+/* ---- faces: their own letters and a ligature pair ---- */
+.pmed-cz .pmed-face { font-size: 17px; }
+.pmed-face em { margin-left: 10px; font-style: normal; font-size: 13px; opacity: .78; font-variant-ligatures: normal; font-feature-settings: "liga" 1, "calt" 1; }
+
+/* ---- the caret's shapes ---- */
+.pmed-cur { display: flex; align-items: center; gap: 0; height: 100%; padding: 0 10px; font: 12.5px/1 var(--pm-font-code, ui-monospace, monospace); color: var(--pmw-text-2, inherit); white-space: pre; }
+.pmed-cur i { position: relative; display: block; flex: none; width: 2px; height: 17px; margin: 0 1px; background: var(--pmt-cz-accent); border-radius: 1px; }
+.pmed-cur-block i { width: 8px; border-radius: 1px; }
+.pmed-cur-underline i { width: 8px; height: 2px; align-self: flex-end; margin-bottom: 12px; }
+.pmed-cur-look i { width: 8px; background: transparent; outline: 1.5px dashed var(--pmt-cz-accent); outline-offset: -1.5px; }
+/* ---- blinks: played while the tile is pointed at or focused ---- */
+@media (prefers-reduced-motion: no-preference) {
+  html:not([data-motion="reduced"]) .pmt-cz-tile:is(:hover, :focus-visible) .pmed-blink-blink i { animation: pmed-blink 1.06s steps(1, end) infinite; }
+  html:not([data-motion="reduced"]) .pmt-cz-tile:is(:hover, :focus-visible) .pmed-blink-smooth i { animation: pmed-fade 1.06s ease-in-out infinite; }
+  html:not([data-motion="reduced"]) .pmt-cz-tile:is(:hover, :focus-visible) .pmed-blink-expand i { animation: pmed-expand 1.06s ease-in-out infinite; }
+  html:not([data-motion="reduced"]) .pmt-cz-tile:is(:hover, :focus-visible) .pmed-move-instant i { animation: pmed-hop 1.4s steps(1, end) infinite; }
+  html:not([data-motion="reduced"]) .pmt-cz-tile:is(:hover, :focus-visible) .pmed-move-snappy i { animation: pmed-glide 1.4s cubic-bezier(.2, .8, .2, 1) infinite; }
+  html:not([data-motion="reduced"]) .pmt-cz-tile:is(:hover, :focus-visible) .pmed-move-glide i { animation: pmed-glide-slow 1.4s cubic-bezier(.2, .75, .25, 1) infinite; }
+}
+@keyframes pmed-blink { 50% { opacity: 0; } }
+@keyframes pmed-fade { 0%, 22% { opacity: 1; } 50%, 72% { opacity: 0; } 100% { opacity: 1; } }
+@keyframes pmed-expand { 0%, 22% { transform: scaleY(1); } 50%, 72% { transform: scaleY(0); } 100% { transform: scaleY(1); } }
+.pmed-blink-solid i { opacity: 1; }
+.pmed-blink-look i { background: transparent; outline: 1.5px dashed var(--pmt-cz-accent); outline-offset: -1.5px; width: 3px; }
+/* ---- movements: the caret going between two marks ---- */
+.pmed-move { position: relative; display: block; height: 100%; }
+.pmed-move b { position: absolute; top: 50%; width: 4px; height: 4px; margin-top: -2px; border-radius: 1px; background: color-mix(in srgb, var(--pmw-text, #fff) 26%, transparent); }
+.pmed-move b:first-child { left: 14px; }
+.pmed-move b:nth-child(2) { right: 14px; }
+.pmed-move i { position: absolute; left: 22px; top: 50%; width: 2px; height: 17px; margin-top: -8.5px; background: var(--pmt-cz-accent); border-radius: 1px; }
+.pmed-move-look i { background: transparent; outline: 1.5px dashed var(--pmt-cz-accent); outline-offset: -1px; }
+@keyframes pmed-hop { 0%, 49% { transform: translateX(0); } 50%, 100% { transform: translateX(56px); } }
+@keyframes pmed-glide { 0%, 18% { transform: translateX(0); } 30%, 68% { transform: translateX(56px); } 80%, 100% { transform: translateX(0); } }
+@keyframes pmed-glide-slow { 0%, 12% { transform: translateX(0); } 40%, 62% { transform: translateX(56px); } 90%, 100% { transform: translateX(0); } }
+.pmed-cz .pmt-cz-small .pmed-move i { left: 18px; }
+/* ---- guides: three levels of code with their lines ---- */
+.pmed-guides { display: grid; align-content: center; gap: 3px; height: 100%; padding: 0 10px; }
+.pmed-guides span { position: relative; display: block; height: 3px; border-radius: 1.5px; background: color-mix(in srgb, var(--pmw-text, #ccc) 34%, transparent); }
+.pmed-guides span:nth-child(1) { width: 70%; }
+.pmed-guides span:nth-child(2) { width: 58%; margin-left: 14px; }
+.pmed-guides span:nth-child(3) { width: 44%; margin-left: 28px; }
+.pmed-guides span:nth-child(4) { width: 52%; margin-left: 14px; }
+.pmed-guides-plain, .pmed-guides-rainbow { position: relative; }
+.pmed-guides-plain::before, .pmed-guides-rainbow::before { content: ""; position: absolute; top: 9px; bottom: 9px; left: 12px; width: 1px; background: color-mix(in srgb, var(--pmw-text, #ccc) 30%, transparent); }
+.pmed-guides-plain::after, .pmed-guides-rainbow::after { content: ""; position: absolute; top: 15px; bottom: 15px; left: 26px; width: 1px; background: color-mix(in srgb, var(--pmw-text, #ccc) 30%, transparent); }
+.pmed-guides-rainbow::before { background: #e5c07b; }
+.pmed-guides-rainbow::after { background: #c678dd; }
+
+/* ---- the chips' small pictures (the terminal's art box, 26-customize.css, for every chip here) ---- */
+.pmed-cz .pmt-cz-chip .pmt-cz-art { display: block; }
+.pmed-art-syntax { background:
+  linear-gradient(#c678dd, #c678dd) 8px 10px / 12px 3px no-repeat, linear-gradient(#61afef, #61afef) 23px 10px / 18px 3px no-repeat,
+  linear-gradient(#98c379, #98c379) 14px 18px / 26px 3px no-repeat, linear-gradient(#e5c07b, #e5c07b) 8px 26px / 14px 3px no-repeat,
+  linear-gradient(var(--pmt-cz-sfg, #ccc), var(--pmt-cz-sfg, #ccc)) 25px 26px / 16px 3px no-repeat,
+  linear-gradient(color-mix(in srgb, var(--pmt-cz-sfg, #ccc) 50%, transparent), color-mix(in srgb, var(--pmt-cz-sfg, #ccc) 50%, transparent)) 8px 34px / 34px 3px no-repeat,
+  var(--pmt-cz-sbg, #111); }
+.pmed-art-brackets, .pmed-art-lig { display: grid !important; place-items: center; font: 600 13px/1 var(--pm-font-code, ui-monospace, monospace); background: var(--pmt-cz-sbg, #111); color: var(--pmt-cz-sfg, #ccc); }
+.pmed-art-brackets::before { content: "({[ ]})"; letter-spacing: -.02em; color: transparent;
+  background: linear-gradient(90deg, var(--pmt-cz-sbp0, #e5c07b) 0 16%, var(--pmt-cz-sbp1, #c678dd) 16% 33%, var(--pmt-cz-sbp2, #61afef) 33% 66%, var(--pmt-cz-sbp1, #c678dd) 66% 83%, var(--pmt-cz-sbp0, #e5c07b) 83%);
+  -webkit-background-clip: text; background-clip: text; }
+.pmed-art-lig::before { content: "-> !="; font-variant-ligatures: normal; font-feature-settings: "liga" 1, "calt" 1; }
+.pmed-art-wrap { background:
+  linear-gradient(var(--pmt-cz-sfg, #ccc), var(--pmt-cz-sfg, #ccc)) 8px 10px / 40px 3px no-repeat,
+  linear-gradient(var(--pmt-cz-sfg, #ccc), var(--pmt-cz-sfg, #ccc)) 16px 17px / 26px 3px no-repeat,
+  linear-gradient(var(--pmt-cz-sfg, #ccc), var(--pmt-cz-sfg, #ccc)) 8px 27px / 34px 3px no-repeat,
+  linear-gradient(var(--pmt-cz-sfg, #ccc), var(--pmt-cz-sfg, #ccc)) 16px 34px / 18px 3px no-repeat,
+  linear-gradient(color-mix(in srgb, var(--pmt-cz-sfg, #ccc) 26%, transparent), color-mix(in srgb, var(--pmt-cz-sfg, #ccc) 26%, transparent)) 48px 4px / 1px 40px no-repeat,
+  var(--pmt-cz-sbg, #111); }
+.pmed-art-minimap { background:
+  linear-gradient(var(--pmt-cz-sfg, #ccc), var(--pmt-cz-sfg, #ccc)) 8px 10px / 28px 3px no-repeat, linear-gradient(var(--pmt-cz-sfg, #ccc), var(--pmt-cz-sfg, #ccc)) 8px 18px / 22px 3px no-repeat,
+  linear-gradient(var(--pmt-cz-sfg, #ccc), var(--pmt-cz-sfg, #ccc)) 8px 26px / 30px 3px no-repeat,
+  repeating-linear-gradient(to bottom, color-mix(in srgb, var(--pmt-cz-sfg, #ccc) 45%, transparent) 0 1px, transparent 1px 3px) 44px 6px / 9px 34px no-repeat,
+  linear-gradient(color-mix(in srgb, var(--pmt-cz-sfg, #ccc) 22%, transparent), color-mix(in srgb, var(--pmt-cz-sfg, #ccc) 22%, transparent)) 43px 12px / 11px 12px no-repeat,
+  var(--pmt-cz-sbg, #111); }
+.pmed-art-sticky { background:
+  linear-gradient(color-mix(in srgb, var(--pmt-cz-sfg, #ccc) 16%, var(--pmt-cz-sbg, #111)), color-mix(in srgb, var(--pmt-cz-sfg, #ccc) 16%, var(--pmt-cz-sbg, #111))) 0 0 / 100% 12px no-repeat,
+  linear-gradient(var(--pmt-cz-sfg, #ccc), var(--pmt-cz-sfg, #ccc)) 8px 4px / 30px 3px no-repeat,
+  linear-gradient(var(--pmt-cz-sfg, #ccc), var(--pmt-cz-sfg, #ccc)) 14px 20px / 26px 3px no-repeat, linear-gradient(var(--pmt-cz-sfg, #ccc), var(--pmt-cz-sfg, #ccc)) 14px 28px / 18px 3px no-repeat,
+  linear-gradient(var(--pmt-cz-sfg, #ccc), var(--pmt-cz-sfg, #ccc)) 14px 36px / 30px 3px no-repeat, var(--pmt-cz-sbg, #111); }
+.pmed-art-reveal { background:
+  linear-gradient(var(--pmt-cz-sfg, #ccc), var(--pmt-cz-sfg, #ccc)) 8px 10px / 28px 3px no-repeat,
+  linear-gradient(color-mix(in srgb, var(--pmt-cz-sfg, #ccc) 70%, transparent), color-mix(in srgb, var(--pmt-cz-sfg, #ccc) 70%, transparent)) 10px 18px / 34px 3px no-repeat,
+  linear-gradient(color-mix(in srgb, var(--pmt-cz-sfg, #ccc) 42%, transparent), color-mix(in srgb, var(--pmt-cz-sfg, #ccc) 42%, transparent)) 12px 26px / 20px 3px no-repeat,
+  linear-gradient(color-mix(in srgb, var(--pmt-cz-sfg, #ccc) 18%, transparent), color-mix(in srgb, var(--pmt-cz-sfg, #ccc) 18%, transparent)) 14px 34px / 30px 3px no-repeat,
+  var(--pmt-cz-sbg, #111); }
+
+/* ---- Retro: square pictures, phosphor marks ---- */
+.pmed-cz[data-pmt-look="retro"] :is(.pmed-cur i, .pmed-move i, .pmed-move b, .pmed-guides span) { border-radius: 0; }
+.pmed-cz[data-pmt-look="retro"] .pmed-guides-rainbow::before { background: var(--pmt-cz-accent); }
+.pmed-cz[data-pmt-look="retro"] .pmed-guides-rainbow::after { background: color-mix(in srgb, var(--pmt-cz-accent) 55%, transparent); }
+.pmed-cz[data-pmt-look="retro"] .pmt-cz-tile[aria-checked="true"] :is(.pmed-cur i, .pmed-move i) { background: var(--pmt-cz-on-accent); }
+/* ---- NieR: ink and parchment only; marks cut, never glide; squares where its parts ask ---- */
+html[data-o55-nier="on"] .pmed-cz :is(.pmed-cur i, .pmed-move i) { background: var(--o55-nier-ink); border-radius: 0; }
+html[data-o55-nier="on"] .pmed-cz .pmt-cz-tile[aria-checked="true"] :is(.pmed-cur i, .pmed-move i, .pmed-move b) { background: var(--o55-nier-on-ink); }
+html[data-o55-nier="on"] .pmed-cz :is(.pmed-cur-look i, .pmed-blink-look i, .pmed-move-look i) { background: transparent; outline-color: var(--o55-nier-ink); }
+html[data-o55-nier="on"] .pmed-cz .pmed-guides-rainbow::before { background: var(--o55-nier-ink); }
+html[data-o55-nier="on"] .pmed-cz .pmed-guides-rainbow::after { background: var(--o55-nier-warn-text); }
+html[data-o55-nier="on"] .pmed-cz .pmed-art-syntax { background:
+  linear-gradient(var(--o55-nier-ink), var(--o55-nier-ink)) 8px 10px / 12px 3px no-repeat, linear-gradient(var(--o55-nier-ok-text), var(--o55-nier-ok-text)) 14px 18px / 26px 3px no-repeat,
+  linear-gradient(var(--o55-nier-warn-text), var(--o55-nier-warn-text)) 8px 26px / 14px 3px no-repeat,
+  linear-gradient(rgba(var(--o55-nier-ink-rgb), .5), rgba(var(--o55-nier-ink-rgb), .5)) 8px 34px / 34px 3px no-repeat, var(--o55-nier-paper); }
+@media (prefers-reduced-motion: no-preference) {
+  html[data-o55-nier="on"]:not([data-motion="reduced"]) .pmt-cz-tile:is(:hover, :focus-visible) :is(.pmed-move-snappy, .pmed-move-glide) i { animation-timing-function: steps(8, end); }
+}
+
+/* code named in help: the code face, nothing joined */
+.pmed-code { font-family: var(--pm-font-code, ui-monospace, monospace); font-size: .95em; font-variant-ligatures: none; font-feature-settings: "liga" 0, "calt" 0; padding: 0 2px; border-radius: 3px; background: color-mix(in srgb, var(--pmw-text, #fff) 8%, transparent);
+  color: var(--pmw-text, inherit); }   /* the full ink on its tint: the help's second tier read 4.2:1 there (EC-05) */
+.pmed-cz[data-pmt-look="retro"] .pmed-code, html[data-o55-nier="on"] .pmed-cz .pmed-code { border-radius: 0; }
+/* a slider under its own heading: no label in front of it */
+.pmed-cz .pmed-slider-bare { grid-template-columns: minmax(0, 1fr) 54px; }
+.pmed-cz .pmed-slider-bare .pmt-cz-slabel { display: none; }
+/* drawn once almost clear before the entrance (11-editor-customize.js: the costly first paint happens before it plays) */
+.pmed-cz.pmed-prime { opacity: .001; }
+
+/* ---- Token colours (11-editor-customize.js: tokenRows, tokenPicker, paintTokens) ----
+   Each kind of word is shown by a word in its colour on the code's own ground; the picker opens under the list: the
+   scheme's colours as swatches, hue, saturation and lightness on tracks drawn in the colour being made, a hex field,
+   and the contrast it reads at. No pills: rows, swatches and tracks are rounded rectangles */
+.pmed-cz .pmed-tok { display: grid; gap: 8px; margin-top: 4px; }
+.pmed-cz .pmed-tok-lead { margin: 0; }
+.pmed-cz .pmed-tok-list { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 6px; }
+.pmed-cz .pmed-tok-row { display: grid; grid-template-columns: minmax(64px, auto) minmax(0, 1fr) auto; grid-template-areas: "word name meta" "word mine meta";
+  align-items: center; gap: 0 10px; min-height: 42px; padding: 5px 9px 5px 6px; border: 1px solid var(--pmt-cz-line); border-radius: var(--pmt-cz-r);
+  background: transparent; color: inherit; font: inherit; text-align: left; cursor: pointer; transition: background-color 120ms ease, border-color 120ms ease; }
+.pmed-cz .pmed-tok-row:hover { background: var(--pmt-cz-hover); }
+.pmed-cz .pmed-tok-row[aria-expanded="true"] { background: var(--pmt-cz-fill); border-color: var(--pmt-cz-line-2); }
+.pmed-cz .pmed-tok-row:focus-visible { outline: 2px solid var(--pmt-cz-ring); outline-offset: 2px; }
+.pmed-cz .pmed-tok-word { grid-area: word; align-self: stretch; display: flex; align-items: center; justify-content: center; padding: 0 8px; border-radius: var(--pmt-cz-r-in);
+  background: var(--pmed-tok-ground, #111); color: var(--pmed-tok-c, currentColor); font: 500 12.5px/1 var(--pmw-ed-font, var(--pm-font-code, ui-monospace, monospace));
+  white-space: pre; transition: color 140ms ease; box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--pmw-text, #888) 12%, transparent); }
+.pmed-cz .pmed-tok-name { grid-area: name; font-size: 12.5px; line-height: 1.25; color: var(--pmw-text, inherit); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.pmed-cz .pmed-tok-row .pmt-cz-mine { grid-area: mine; display: none; font-size: 10.5px; line-height: 1.2; color: var(--pmw-text-2, inherit); }
+.pmed-cz .pmed-tok-row.pmt-cz-is-mine .pmt-cz-mine { display: block; }
+.pmed-cz .pmed-tok-row:not(.pmt-cz-is-mine) .pmed-tok-name { grid-row: 1 / span 2; align-self: center; }
+.pmed-cz .pmed-tok-row.pmt-cz-is-mine .pmed-tok-name { align-self: end; }
+.pmed-cz .pmed-tok-row.pmt-cz-is-mine .pmt-cz-mine { align-self: start; }
+.pmed-cz .pmed-tok-meta { grid-area: meta; display: inline-flex; align-items: center; gap: 6px; }
+.pmed-cz .pmed-tok-sw { width: 10px; height: 10px; border-radius: 2px; background: var(--pmed-tok-c, currentColor); box-shadow: 0 0 0 1px color-mix(in srgb, var(--pmw-text, #888) 25%, transparent); }
+.pmed-cz .pmed-tok-hex { font: 11px/1 var(--pm-font-code, ui-monospace, monospace); color: var(--pmw-text-2, inherit); letter-spacing: .01em; }
+.pmed-cz .pmed-tok-foot { display: flex; justify-content: flex-end; min-height: 0; }
+.pmed-cz .pmed-tok-pick { display: grid; gap: 12px; padding: 14px; border: 1px solid var(--pmt-cz-line-2); border-radius: var(--pmt-cz-r);
+  background: color-mix(in srgb, var(--pmt-cz-plate) 94%, var(--pmw-text, #888) 3%); }
+.pmed-cz .pmed-tok-pickhead { display: grid; grid-template-columns: auto minmax(0, 1fr) auto; align-items: center; gap: 14px; }
+.pmed-cz .pmed-tok-big { display: inline-flex; align-items: center; min-width: 96px; min-height: 44px; padding: 0 14px; border-radius: var(--pmt-cz-r-in);
+  background: var(--pmed-tok-ground, #111); color: var(--pmed-tok-c, currentColor); font: 600 18px/1 var(--pmw-ed-font, var(--pm-font-code, ui-monospace, monospace));
+  white-space: pre; transition: color 140ms ease; box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--pmw-text, #888) 14%, transparent); }
+.pmed-cz .pmed-tok-picktitles { display: grid; gap: 3px; min-width: 0; }
+.pmed-cz .pmed-tok-picktitles h5 { margin: 0; font-size: 13.5px; font-weight: 650; }
+.pmed-cz .pmed-tok-ratio { font-size: 12px; color: var(--pmw-text-2, inherit); }
+.pmed-cz .pmed-tok-ratio.is-held { color: var(--pmw-text, inherit); font-weight: 600; }
+.pmed-cz .pmed-tok-cap { font: 650 10px/1 var(--pm-font-ui, system-ui); letter-spacing: .08em; text-transform: uppercase; color: var(--pmw-text-2, inherit); }
+.pmed-cz .pmed-tok-swatches { display: flex; flex-wrap: wrap; gap: 7px; margin-top: -4px; }
+.pmed-cz .pmed-tok-swatch { width: 26px; height: 26px; padding: 0; border: 1px solid color-mix(in srgb, var(--pmw-text, #888) 22%, transparent); border-radius: 6px;
+  background: var(--sw); cursor: pointer; transition: transform 120ms ease, box-shadow 120ms ease; }
+.pmed-cz .pmed-tok-swatch:hover { transform: translateY(-1px); }
+.pmed-cz .pmed-tok-swatch[aria-checked="true"] { box-shadow: 0 0 0 2px var(--pmt-cz-plate), 0 0 0 4px var(--pmt-cz-ink); }
+.pmed-cz .pmed-tok-swatch:focus-visible { outline: 2px solid var(--pmt-cz-ring); outline-offset: 4px; }
+.pmed-cz .pmed-tok-sliders { display: grid; gap: 8px; }
+.pmed-cz .pmed-tok-slider { display: grid; grid-template-columns: 84px minmax(0, 1fr) 46px; align-items: center; gap: 10px; font-size: 12px; }
+.pmed-cz .pmed-tok-slider output { font: 11.5px var(--pm-font-code, ui-monospace, monospace); color: var(--pmw-text-2, inherit); text-align: right; }
+.pmed-cz .pmed-tok-slider input[type="range"] { -webkit-appearance: none; appearance: none; width: 100%; height: 12px; margin: 0; border-radius: 4px; cursor: pointer;
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--pmw-text, #888) 18%, transparent); background: var(--track); }
+.pmed-cz [data-hsl="h"] input { --track: linear-gradient(to right, hsl(0 var(--pmed-s) var(--pmed-l)), hsl(60 var(--pmed-s) var(--pmed-l)), hsl(120 var(--pmed-s) var(--pmed-l)),
+  hsl(180 var(--pmed-s) var(--pmed-l)), hsl(240 var(--pmed-s) var(--pmed-l)), hsl(300 var(--pmed-s) var(--pmed-l)), hsl(360 var(--pmed-s) var(--pmed-l))); }
+.pmed-cz [data-hsl="s"] input { --track: linear-gradient(to right, hsl(var(--pmed-h) 0% var(--pmed-l)), hsl(var(--pmed-h) 100% var(--pmed-l))); }
+.pmed-cz [data-hsl="l"] input { --track: linear-gradient(to right, hsl(var(--pmed-h) var(--pmed-s) 0%), hsl(var(--pmed-h) var(--pmed-s) 50%), hsl(var(--pmed-h) var(--pmed-s) 100%)); }
+.pmed-cz .pmed-tok-slider input[type="range"]::-webkit-slider-thumb { -webkit-appearance: none; width: 16px; height: 16px; border-radius: 50%;
+  background: hsl(var(--pmed-h) var(--pmed-s) var(--pmed-l)); border: 2px solid #fff; box-shadow: 0 0 0 1px rgb(0 0 0 / .45), 0 1px 3px rgb(0 0 0 / .35); }
+.pmed-cz .pmed-tok-slider input[type="range"]::-moz-range-thumb { width: 14px; height: 14px; border-radius: 50%; background: hsl(var(--pmed-h) var(--pmed-s) var(--pmed-l));
+  border: 2px solid #fff; box-shadow: 0 0 0 1px rgb(0 0 0 / .45); }
+.pmed-cz .pmed-tok-slider input[type="range"]:focus-visible { outline: 2px solid var(--pmt-cz-ring); outline-offset: 3px; }
+.pmed-cz .pmed-tok-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
+.pmed-cz .pmed-tok-hexlabel { display: inline-flex; align-items: center; gap: 8px; font-size: 12px; }
+.pmed-cz .pmed-tok-hexin { width: 92px; height: 30px; padding: 0 8px; border: 1px solid var(--pmt-cz-line-2); border-radius: var(--pmt-cz-r-in); background: var(--pmt-cz-ground);
+  color: inherit; font: 12.5px var(--pm-font-code, ui-monospace, monospace); }
+.pmed-cz .pmed-tok-hexin:focus-visible { outline: 2px solid var(--pmt-cz-ring); outline-offset: 1px; }
+@container pmt-cz (max-width: 520px) { .pmed-cz .pmed-tok-slider { grid-template-columns: 1fr 46px; } .pmed-cz .pmed-tok-slider .pmed-tok-slabel { grid-column: 1 / -1; } }
+/* each look: Friendly rounder, Retro square with 2 px rules and reverse video for the open row, NieR ink and parchment,
+   Glass the sheet's hairline under Liquid Glass */
+.pmt-cz[data-pmt-look="friendly"] .pmed-tok-row, .pmt-cz[data-pmt-look="friendly"] .pmed-tok-pick { border-radius: 12px; }
+.pmt-cz[data-pmt-look="retro"] :is(.pmed-tok-row, .pmed-tok-pick, .pmed-tok-word, .pmed-tok-big, .pmed-tok-swatch, .pmed-tok-hexin, .pmed-tok-slider input) { border-radius: 0; }
+.pmt-cz[data-pmt-look="retro"] .pmed-tok-row, .pmt-cz[data-pmt-look="retro"] .pmed-tok-pick { border-width: 2px; }
+.pmt-cz[data-pmt-look="retro"] .pmed-tok-row[aria-expanded="true"] { background: var(--pmt-cz-ink); color: var(--pmt-cz-plate); }
+.pmt-cz[data-pmt-look="retro"] .pmed-tok-row[aria-expanded="true"] :is(.pmed-tok-name, .pmed-tok-hex, .pmt-cz-mine) { color: var(--pmt-cz-plate); }
+html[data-o55-nier="on"] .pmt-cz :is(.pmed-tok-row, .pmed-tok-pick) { border-radius: 0; border-color: rgba(var(--o55-nier-ink-rgb), .35); }
+html[data-o55-nier="on"] .pmt-cz .pmed-tok-row[aria-expanded="true"] { background: var(--o55-nier-ink); color: var(--o55-nier-paper, #e9e2cf); }
+html[data-o55-nier="on"] .pmt-cz .pmed-tok-row[aria-expanded="true"] :is(.pmed-tok-name, .pmed-tok-hex, .pmt-cz-mine) { color: var(--o55-nier-paper, #e9e2cf); }
+html[data-lg="on"][data-theme^="glass"] .pmed-cz :is(.pmed-tok-row, .pmed-tok-pick, .pmed-tok-hexin) { border-color: var(--lg-line); }
+@media (prefers-reduced-motion: reduce) { .pmed-cz :is(.pmed-tok-row, .pmed-tok-word, .pmed-tok-big, .pmed-tok-swatch) { transition: none; } }
+html[data-motion="reduced"] .pmed-cz :is(.pmed-tok-row, .pmed-tok-word, .pmed-tok-big, .pmed-tok-swatch) { transition: none; }
+

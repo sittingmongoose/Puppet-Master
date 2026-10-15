@@ -1,3 +1,4 @@
+# This file no longer feeds PMConcept7. Use scripts/pm7-where.py to find where to edit.
 """Source-owned T38 PM7 widget interaction and chart-label repairs.
 
 T38 is deliberately narrow: it repairs the already-authorized Usage reorder

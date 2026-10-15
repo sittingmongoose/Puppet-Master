@@ -172,16 +172,16 @@
   /* the items that become an ink bar (the same list as the CSS in styles.d/14-nier-parts.css) */
   const CURSOR_SEL = ['.page-tab:not(.active)', '.pm6-tb-menu-item', '.pm6-tt-mode', '.pm6-tb-pages-more-item', '.activity-bar .icon', '.domain-link',
     '.side-link', '.index-link', '.page-index-title', '.workspace-tab', '.manager-tab', '.resource-row', '.pm51-popout-item:not([aria-disabled="true"])',
-    '.pm51-menu-item', '.pm7u-navbtn', '.pm7u-poprow', '.orch-tab', '.pm-segtab-item:not(.active)', '.fm-row', '.fm-ctx-item', '.ctx-item', '.menu-item',
+    '.pm51-menu-item', '.orch-tab', '.pm-segtab-item:not(.active)', '.fm-row', '.fm-ctx-item', '.ctx-item', '.menu-item',
     '.chat-dropdown-item', '.pm6-chat-more-item', '.cl-mode-item', '.pm-home-menu-row', '.palette-item', '.search-result-item', '.slash-cmd-item',
     '.pm6-chat-slash-item', '.pm6-fab-item', '.chat-thread-item', '.pm6-dash-catalog-item', '[role="menuitem"]', '[role="option"]:not([aria-disabled="true"])',
     /* the left rail (concept D, Polish, Concepts/leftrail-redesign): its rows and every PMR.menu item carry .pmr-cur;
        their ink bar is the rail package's CSS (src/css/40-nier.css), the square cursor and its tick come from here */
     '.pmr-cur:not(.active):not([aria-disabled="true"])'].join(',');
   /* tabs and places a click chooses, where the brackets lock on (menu items close with their menu) */
-  const CHOSEN_SEL = '.page-tab, .workspace-tab, .manager-tab, .orch-tab, .pm7u-navbtn, .domain-link, .side-link, .index-link, .page-index-title, .pm-segtab-item, .activity-bar .icon, .resource-row';
+  const CHOSEN_SEL = '.page-tab, .workspace-tab, .manager-tab, .orch-tab, .domain-link, .side-link, .index-link, .page-index-title, .pm-segtab-item, .activity-bar .icon, .resource-row';
   /* items in a horizontal strip: the cursor sits under them (a neighbour sits where the left side would be) */
-  const STRIP_SEL = '.page-tab, .workspace-tab, .manager-tab, .orch-tab, .pm-segtab-item, .pm6-tt-mode, .pm7u-range button';
+  const STRIP_SEL = '.page-tab, .workspace-tab, .manager-tab, .orch-tab, .pm-segtab-item, .pm6-tt-mode';
   /* the onboarding window and the tour draw their own cursor (O55.nierFx and their skins): the page's stays out of them,
      or one row of a look menu got a second square (it matched role=menuitem, its neighbours did not).
      The ink on the words is separate from that square. CSS :hover still paints those rows, so the class follows the
@@ -511,7 +511,9 @@
       const at = state.home ? 'home' : `${state.domain}/${state.workspace}`;
       if (at !== settingsAt) {
         const first = !settingsAt; settingsAt = at;
-        if (!first && live.has('decode')) { const h = root.querySelector('.workspace-separator h2'); if (h && h.getClientRects().length) decode(h); }
+        /* a redraw in place is not a page change (the reader scrolled into another page of the chapter): no decode */
+        const inPlace = !!(PM51.place && PM51.place.inPlace);
+        if (!first && !inPlace && live.has('decode')) { const h = root.querySelector('.workspace-separator h2'); if (h && h.getClientRects().length) decode(h); }
       }
     } catch (e) { /* decoration only */ }
     return r;

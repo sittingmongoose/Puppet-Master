@@ -1,7 +1,8 @@
 /* O55 · restraint (owner direction, 2026-09-26): no capsules and no coloured side or top stripes anywhere in Settings.
    - A status is a dot and a word; a tag is a plain word; an engine badge is a word with a dot for its tone.
    - Choices you pick several of are squared tiles with a checkbox, not rounded chips.
-   - Related links in Details are text links. Toggle switches and progress bars keep their own shape.
+   - Related links in Details are text links. Switches and bars were left round here; 91-no-pills.css squares them
+     (Jared, 2026-10-10: no pills anywhere).
    Manager CSS that drew capsules (transfer categories, web service chains) was changed at its source. */
 
 /* engine badges: a word, with a dot when it carries a tone */

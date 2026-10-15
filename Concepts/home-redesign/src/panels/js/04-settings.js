@@ -22,7 +22,9 @@ registerSettings('panels', {
   'tabs.closeOnLeft': { type: 'boolean', label: 'Close button on the left' },
   'plus.default': { type: 'enum', values: ['menu'], label: 'The "+" button' },
   'files.revealIfOpen': { type: 'boolean', label: 'Reveal a file that is already open' },
-  'empty.closePanel': { type: 'boolean', label: 'Close a panel when its last tab closes' }
+  'empty.closePanel': { type: 'boolean', label: 'Close a panel when its last tab closes' },
+  'tabs.maxEditors': { type: 'number', min: 1, max: 100, label: 'Max open editor tabs' },
+  'tabs.maxPersisted': { type: 'number', min: 1, max: 100, label: 'Tabs remembered between sessions' }
 }, {
   'layout.named': 'home',
   'tabs.preview': true,
@@ -30,7 +32,9 @@ registerSettings('panels', {
   'tabs.closeOnLeft': false,
   'plus.default': 'menu',
   'files.revealIfOpen': true,
-  'empty.closePanel': true
+  'empty.closePanel': true,
+  'tabs.maxEditors': 25,
+  'tabs.maxPersisted': 50
 });
 registerSettings('editor', {
   'font.family': { type: 'string', label: 'Editor font' },
@@ -55,8 +59,50 @@ registerSettings('editor', {
    The stored 'chat.width', 'chat.history' and 'chat.pinOpen' from before are carried into the record once and dropped
    (persist.migrateChatColumn, 16-persist.js). */
 
+/* The panels' own Settings rows (Plans/Settings_System.md SSYS-050): a row a person changed in the Project's Settings
+   (window.PM_PANEL_SETTINGS, onboarding src/settings/kit.d/27-panel-rows.js) answers before this model's own value, and
+   a save that changes one tells this model's listeners, so the panels and Settings never disagree. Each entry: the
+   Settings row and its stored words to this model's value (undefined: not readable, the model's own value stands). */
+function intIn(min, max) { return function (v) { var n = Math.round(+v); return isFinite(n) && n >= min ? Math.min(max, n) : undefined; }; }
+var SETTINGS_ROWS = {
+  'panels.tabs.preview': ['general.interaction.preview-tabs', function (v) { return v === true || v === 'On' ? true : v === false || v === 'Off' ? false : undefined; }],
+  'panels.tabs.sizing': ['general.interaction.tab-sizing', function (v) { return /fixed/i.test(String(v)) ? 'fixed' : /shrink/i.test(String(v)) ? 'shrink' : undefined; }],
+  'panels.tabs.maxEditors': ['general.interaction.max-editor-tabs', intIn(1, 100)],
+  'panels.tabs.maxPersisted': ['general.startup.max-persisted-tabs', intIn(1, 100)],
+  'panels.layout.named': ['general.startup.starting-layout', function (v) {
+    var w = String(v || '').toLowerCase();
+    return /^home/.test(w) ? 'home' : /^build/.test(w) ? 'build' : /^terminals/.test(w) ? 'terminals' : /^focus/.test(w) ? 'focus' : undefined;
+  }]
+};
+var rowsSeen = null;
+function rowValue(key) {
+  var row = SETTINGS_ROWS[key], b = window.PM_PANEL_SETTINGS;
+  if (!row || !b || typeof b.values !== 'function') return undefined;
+  if (!rowsSeen) watchRows();
+  var vals; try { vals = b.values() || {}; } catch (_) { return undefined; }
+  if (!Object.prototype.hasOwnProperty.call(vals, row[0])) return undefined;
+  return row[1](vals[row[0]]);
+}
+function watchRows() {
+  var b = window.PM_PANEL_SETTINGS;
+  if (!b || typeof b.onChange !== 'function' || rowsSeen) return;
+  rowsSeen = {};
+  Object.keys(SETTINGS_ROWS).forEach(function (k) { rowsSeen[k] = JSON.stringify(settings.get(k)); });
+  b.onChange(function () {
+    Object.keys(SETTINGS_ROWS).forEach(function (k) {
+      var now = JSON.stringify(settings.get(k));
+      if (now === rowsSeen[k]) return;
+      var old = rowsSeen[k] === undefined ? undefined : JSON.parse(rowsSeen[k]);
+      rowsSeen[k] = now;
+      settingsBus.emit(k, { key: k, value: settings.get(k), old: old });
+      settingsBus.emit('*', { key: k, value: settings.get(k), old: old });
+    });
+  });
+}
+
 var settings = PMW.settings = PM_HOME.settings = {
   get: function (key) {
+    var r = rowValue(key); if (r !== undefined) return r;
     return Object.prototype.hasOwnProperty.call(settingsValues, key) ? settingsValues[key] : settingsDefaults[key];
   },
   set: function (key, value) {
@@ -73,5 +119,8 @@ var settings = PMW.settings = PM_HOME.settings = {
   on: function (key, fn) { return settingsBus.on(key, fn); },
   defaults: function () { return Object.assign({}, settingsDefaults); },
   schema: function () { return JSON.parse(JSON.stringify(settingsSchema)); },
-  register: function (namespace, schema, defaults) { registerSettings(namespace, schema, defaults); }
+  register: function (namespace, schema, defaults) { registerSettings(namespace, schema, defaults); },
+  /* the Settings rows bridge loads with Settings, before the panels: listen once it is there */
+  watchRows: watchRows
 };
+watchRows();

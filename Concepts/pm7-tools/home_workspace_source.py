@@ -1,3 +1,4 @@
+# This file no longer feeds PMConcept7. Use scripts/pm7-where.py to find where to edit.
 """Authored PM7 T20 Home Workspace source.
 
 This file is the only authored source for the PMConcept7 Home Workspace layer.

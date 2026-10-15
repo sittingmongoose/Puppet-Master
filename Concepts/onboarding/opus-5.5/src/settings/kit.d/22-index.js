@@ -130,6 +130,8 @@ setupScrollSpy = function () {
   let raf = 0;
   const update = () => {
     raf = 0;
+    /* an update in place never changes the active section: the tracker judges only a scroll or a landing (27-place.js) */
+    if (PM51.place && !PM51.place.spyMay()) return;
     if (performance.now() < suppressScrollSpyUntil) { raf = requestAnimationFrame(update); return; }
     const blocks = [...scroller.querySelectorAll('[data-workspace-block]')];
     if (!blocks.length) return;

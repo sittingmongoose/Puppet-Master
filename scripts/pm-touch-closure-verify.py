@@ -1782,6 +1782,7 @@ def verify() -> tuple[list[str], dict[str, Any]]:
         *REPOSITORY_LOCAL_PACKET_TOKENS,
         *CONNECTION_DRAFT_LOCAL_PACKET_TOKENS,
         *adjudicated_excluded_sources,
+        "cmd.theme.preview",  # SSYS-010 / DL-200: retired visible theme preview
     }
     if set(excluded_tokens) != expected_excluded:
         failures.append(
@@ -1836,6 +1837,10 @@ def verify() -> tuple[list[str], dict[str, Any]]:
     disposition_counts = Counter(row[4] for row in rows if isinstance(row, list) and len(row) == 6)
     handler_counts = Counter(profiles[row[1]]["handler_status"] for row in rows if row[1] in profiles)
     wiring_counts = Counter(profiles[row[1]]["wiring_status"] for row in rows if row[1] in profiles)
+    # PM7 review reconciliation: +1 editor appearance entry and -1 retired
+    # cmd.theme.preview producer leave 1257 entries (UCC-204, SSYS-010, DL-200).
+    # Retire its sole Touch obligation/profile (682->681, 135->134) and retain
+    # the packet token as an explicit non-actionable exclusion (58->59).
     # production_wiring_entry_count moved 1066 -> 1155 for the Assistant redesign
     # wave (2026-09-03), a reviewed and deliberate +89: 41 redesign command rows
     # plus the 48 catalog commands that previously had no production wiring row at
@@ -1920,12 +1925,17 @@ def verify() -> tuple[list[str], dict[str, Any]]:
     # restore_revision (1256 -> 1257). It dispatches an existing catalog command
     # with its existing handler; no command, Touch row, profile, alias,
     # exclusion, handler or proof is added.
+    # 2026-10-14 PM7 editor Customize (UCC-204, WM-093, UIW-043):
+    # +1 production-intent editor.appearance.field for cmd.editor.appearance.set
+    # (1257 -> 1258). This is the typed This editor writer; All editors reuses
+    # the Settings transaction pair. No Touch row/profile, alias, native handler
+    # evidence or closure promotion is added.
     exact_resolved_denominators = {
-        "row_count": 682,
+        "row_count": 681,
         # ATS-048 / RAP-056 split seven existing consumers out of capture's
         # ten-ID schema. No row, command, handler or evidence promotion added.
-        "profile_count": 135,
-        "excluded_token_count": 58,
+        "profile_count": 134,
+        "excluded_token_count": 59,
         "alias_binding_count": 65,
         "production_wiring_entry_count": 1257,
     }

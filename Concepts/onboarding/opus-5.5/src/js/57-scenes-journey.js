@@ -20,9 +20,10 @@
         /* the beginning hangs from the control bar on a real string */
         { key: 'hero', prop: 'node', x: 240, y: 318, s, layer: 'mid', anim: 'pop', delay: 160, opts: { icon, accent: true, tie: 'a1' } }];
       if (b === 'online') items.push({ key: 'cl', prop: 'cloud', x: 360, y: 214, s: 0.9, layer: 'back', anim: 'drop', delay: 320, amb: 'float' });
-      /* NieR's units are solid ink, so the helper on the right steps aside for the NAS rather than hiding it */
-      const nd = b === 'device' && ctx.family === 'nier';
-      if (b === 'device') items.push({ key: 'nas', prop: 'nas', x: nd ? 398 : 372, y: nd ? 452 : 450, s: R(ctx) ? 1 : nd ? 1 : 1.1, layer: 'mid', anim: 'rise', delay: 320, opts: { label: L('homeNas', 'home nas') } });
+      /* the helper on the right steps aside for the NAS rather than standing in front of it, so the NAS and its caption
+         stay clear in every look (NieR's solid ink units hid it; elsewhere the caption ran across the puppet) */
+      const nd = b === 'device';
+      if (nd) items.push({ key: 'nas', prop: 'nas', x: 398, y: 452, s: 1, layer: 'mid', anim: 'rise', delay: 320, opts: { label: L('homeNas', 'home nas') } });
       if (b === 'restore') items.push({ key: 'rings', prop: 'rings', x: 240, y: 318, s: 1.6, layer: 'back', anim: 'fade', delay: 300, amb: 'pulse' });
       items.push(helper(ctx, 'h0', 110, floorY(ctx) - 20, 0, b === 'new' ? 'wave' : 'point', 380), helper(ctx, 'h2', nd ? 318 : 370, floorY(ctx) - 20, 2, 'carry', 460));
       items.push(...sparks([[84, 110, 0], [404, 96, 2], nd ? [416, 300, 1] : [412, 380, 1]], 900));

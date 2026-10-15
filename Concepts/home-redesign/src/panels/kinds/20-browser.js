@@ -609,6 +609,7 @@ function mountBrowser(host, st, api) {
   var splitter = h('div', { class: 'pmw-br-split', role: 'separator', tabindex: '0', 'aria-label': 'Resize DevTools', 'data-pm-hover-exempt': 'true' });
   var dockEl = h('aside', { class: 'pmw-br-dock', 'aria-label': 'DevTools' });
   main.appendChild(view); main.appendChild(splitter); main.appendChild(dockEl);
+  if (PMW.light) PMW.light.bind(splitter);      // the shared grab light (56-light.css)
   root.appendChild(main);
 
   /* ---- navigation ---- */

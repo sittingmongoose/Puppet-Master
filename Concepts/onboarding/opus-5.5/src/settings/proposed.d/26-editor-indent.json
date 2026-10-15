@@ -1,0 +1,40 @@
+{
+ "_about": "Proposed SSYS-050 rows for indentation (pm7-editor-customizer, 2026-10-14; PROPOSAL-canon.md section 3b). Canon has no editor tab-size row, and the editor hard-coded four spaces: a 2-space file's guides fell on every other level and Tab put in 4. Inventory shape; build.py's EDITOR_LOOK_ROWS block admits a row until canon holds its id.",
+ "rows": [
+  {
+   "id": "code.editing.tab-size",
+   "label": "Tab Size",
+   "desc": "How many columns a level of indentation is. Tab moves to the next level and Backspace in the indentation goes back one; a file's tabs open this wide. A file with indentation of its own keeps it while Follow the File's Indentation is on.",
+   "type": "select",
+   "options": ["2", "4", "8"],
+   "default": "4",
+   "scope": ["global"],
+   "tier": "simple",
+   "search": ["tab size", "tab width", "indent size", "indentation", "spaces per tab"],
+   "related_features": ["editor"]
+  },
+  {
+   "id": "code.editing.insert-spaces",
+   "label": "Indent With",
+   "desc": "What a new level of indentation is made of in a file that doesn't already say: spaces, or a tab. Show Spaces marks a tab as an arrow.",
+   "type": "select",
+   "options": ["Spaces", "Tabs"],
+   "default": "Spaces",
+   "scope": ["global"],
+   "tier": "advanced",
+   "search": ["insert spaces", "tabs or spaces", "soft tabs", "hard tabs", "indentation"],
+   "related_features": ["editor"]
+  },
+  {
+   "id": "code.editing.detect-indentation",
+   "label": "Follow the File's Indentation",
+   "desc": "A file indented with 2 spaces keeps 2 and one indented with tabs keeps tabs, whatever Tab Size and Indent With say. The editor reads it from the file's own lines (and, in the app, its .editorconfig).",
+   "type": "toggle",
+   "default": true,
+   "scope": ["global"],
+   "tier": "advanced",
+   "search": ["detect indentation", "editorconfig", "guess indentation", "indentation"],
+   "related_features": ["editor"]
+  }
+ ]
+}

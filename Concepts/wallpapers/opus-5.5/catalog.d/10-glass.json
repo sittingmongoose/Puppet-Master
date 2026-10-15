@@ -1,0 +1,90 @@
+{
+ "family": "glass",
+ "label": "Glass",
+ "owner": "pm7-liquid-glass",
+ "order": 10,
+ "about": "Crisp structure for the glass to bend at every sheet's rim: bands, shards, rounded forms and light.",
+ "custody": "Glass's wallpapers, drawn by pm7-liquid-glass (Concepts/liquid-glass/opus-5.5/tools/walls.mjs). Transcribed by pm7-wallpapers from glass.js WALLS and the 6b18ee4755 set, pending the Glass owner's OK; the Glass owner owns this file and its images.",
+ "wallpapers": [
+  {
+   "id": "ribbons",
+   "name": "Ribbons",
+   "description": "Layered flowing bands with crisp edges, each lit along its crest.",
+   "files": {
+    "dark": "../../liquid-glass/opus-5.5/src/walls/ribbons-dark.webp",
+    "light": "../../liquid-glass/opus-5.5/src/walls/ribbons-light.webp"
+   },
+   "default_for": "glass"
+  },
+  {
+   "id": "prism",
+   "name": "Prism",
+   "description": "Bold diagonal shards of light with sharp edges and glass-like gradients.",
+   "files": {
+    "dark": "../../liquid-glass/opus-5.5/src/walls/prism-dark.webp",
+    "light": "../../liquid-glass/opus-5.5/src/walls/prism-light.webp"
+   },
+   "default_for": null
+  },
+  {
+   "id": "orbs",
+   "name": "Orbs",
+   "description": "Large overlapping rounded forms with crisp rims, lit from the top left.",
+   "files": {
+    "dark": "../../liquid-glass/opus-5.5/src/walls/orbs-dark.webp",
+    "light": "../../liquid-glass/opus-5.5/src/walls/orbs-light.webp"
+   },
+   "default_for": null
+  },
+  {
+   "id": "aurora",
+   "name": "Aurora",
+   "description": "Curtains of light over a night or dawn sky, above layered ridges with lit edges.",
+   "files": {
+    "dark": "../../liquid-glass/opus-5.5/src/walls/aurora-dark.webp",
+    "light": "../../liquid-glass/opus-5.5/src/walls/aurora-light.webp"
+   },
+   "default_for": null
+  },
+  {
+   "id": "dunes",
+   "name": "Dunes",
+   "description": "Layered dunes at sunset, or dusk in the dark print, each crest a crisp lit line.",
+   "files": {
+    "dark": "../../liquid-glass/opus-5.5/src/walls/dunes-dark.webp",
+    "light": "../../liquid-glass/opus-5.5/src/walls/dunes-light.webp"
+   },
+   "default_for": null
+  },
+  {
+   "id": "bloom",
+   "name": "Bloom",
+   "description": "A fan of petals opening from the lower left, each a crisp-edged gradient leaf.",
+   "files": {
+    "dark": "../../liquid-glass/opus-5.5/src/walls/bloom-dark.webp",
+    "light": "../../liquid-glass/opus-5.5/src/walls/bloom-light.webp"
+   },
+   "default_for": null
+  },
+  {
+   "id": "pool",
+   "name": "Pool",
+   "description": "Sunlight focused by rippled water onto a pool floor: bright curved filaments.",
+   "files": {
+    "dark": "../../liquid-glass/opus-5.5/src/walls/pool-dark.webp",
+    "light": "../../liquid-glass/opus-5.5/src/walls/pool-light.webp"
+   },
+   "default_for": null
+  },
+  {
+   "id": "facets",
+   "name": "Facets",
+   "description": "Cut crystal: a triangle mesh with every facet lit by its own tilt.",
+   "files": {
+    "dark": "../../liquid-glass/opus-5.5/src/walls/facets-dark.webp",
+    "light": "../../liquid-glass/opus-5.5/src/walls/facets-light.webp"
+   },
+   "default_for": null
+  }
+ ]
+}

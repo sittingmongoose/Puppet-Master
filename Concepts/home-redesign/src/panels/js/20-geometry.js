@@ -162,6 +162,36 @@ PMW.treeRects = function () {
   var narrow = !!(PMW.narrow && PMW.narrow.singleColumn());
   return geom.layout(l, cr, { narrow: narrow, narrowFocus: l.view.focus });
 };
+/* The box the tree tiles now (the centre's content box; the last painted rects' union while Home is hidden). */
+PMW.layoutBox = function () {
+  var cr = PMW.render && PMW.render.centreRect ? PMW.render.centreRect() : null;
+  if (cr && cr.w > 0 && cr.h > 0) return cr;
+  var last = PMW.render && PMW.render.rects ? PMW.render.rects() : null;
+  return last ? rectsUnion(last) : null;
+};
+/* The room rule (2026-10-13, Jared: the drag "really didn't want me dragging and dropping above, below, or to the side
+   of other panels"): does `after` give every panel it changed at least its minimum? Both layouts are laid out in tree
+   mode over the same box, so the neighbours along a split give up room exactly as geom.distribute does when it paints,
+   and a panel too narrow to halve still takes a new panel beside it when its row or column has room. A panel already
+   below its minimum fails only if `after` makes it smaller still. Wider than splitFits, which asks only whether both
+   halves of the one panel fit; splitFits stays the rule for the automatic choosers (where an open lands). */
+geom.resultFits = function (before, after, box) {
+  if (!after || !after.root || !box || !(box.w > 0 && box.h > 0)) return false;
+  var ra = geom.layout(after, box, {}), rb = before && before.root ? geom.layout(before, box, {}) : { panels: {} };
+  var ok = true;
+  walk(after.root, function (n, parent) {
+    if (!ok || n.t !== 'panel') return;
+    var r = ra.panels[n.id];
+    if (!r) { ok = false; return; }
+    var m = PMW.panelMin(after, n), was = rb.panels[n.id];
+    var along = n.collapsed && parent ? (parent.dir === 'row' ? 'w' : 'h') : null;
+    ['w', 'h'].forEach(function (ax) {
+      if (ax === along || r[ax] >= m[ax] - 0.5) return;
+      if (!(was && r[ax] >= was[ax] - 0.5)) ok = false;
+    });
+  });
+  return ok;
+};
 geom.rootFits = function (layout, edge, centreRect, incomingMin) {
   var inc = incomingMin || PMW.PANEL_MIN;
   var axis = edge === 'left' || edge === 'right' ? 'w' : 'h';

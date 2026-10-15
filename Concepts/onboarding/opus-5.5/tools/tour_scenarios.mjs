@@ -1,10 +1,11 @@
 /* Guided Tour acceptance, driven by real CDP input against the built concept.
- * node tools/tour_scenarios.mjs <out-dir> [--only t1,t2] [--theme basic-dark] [--snaps] [--page <path>]
+ * node tools/tour_scenarios.mjs <out-dir> [--only t1,t2] [--theme basic-dark] [--snaps] [--page <path>] [--coverage <file>]
  * t1 every step by hand (real clicks, a real mouse drag) then Restore; t2 every action through Show Me then Keep;
  * t3 Skip restores everything; t4 a reload resumes from the saved basis and Skip still restores; t5 a missing target offers Take me there; t6 Back rewinds a
  * step so it can be done again or watched with Show Me; t7 Run Onboarding Again (and a replay) start the tour over.
  * Each run asserts zero network requests and unchanged usage counters, and writes report.json + screenshots. */
 import { launch, sleep } from './chrome.mjs';
+import { beginCoverage, endCoverage, takeCoverageFlag } from './coverage_union.mjs';
 import { mkdirSync, writeFileSync, rmSync } from 'node:fs';
 import { pathToFileURL, fileURLToPath } from 'node:url';
 import { resolve, join, dirname } from 'node:path';
@@ -18,6 +19,7 @@ const dropProfile = async (dir, chrome) => {
 
 const here = dirname(fileURLToPath(import.meta.url));
 const argv = process.argv.slice(2);
+const coverageFile = takeCoverageFlag(argv);
 const out = resolve(argv[0] && !argv[0].startsWith('--') ? argv[0] : '/tmp/o55/tour');
 const opt = (k, d) => { const i = argv.indexOf('--' + k); return i >= 0 ? argv[i + 1] : d; };
 const PAGE = resolve(opt('page', resolve(here, '../../../Onboarding concepts/TestOpus5.5PmConcept.html')));
@@ -31,6 +33,7 @@ const PROFILE_BASE = `${tmpdir()}/pm-cdp-profile-${process.pid}-tour`;
 
 async function openPage(profile) {
   const { page, close, chrome } = await launch({ width: 1600, height: 1000, profile });
+  if (coverageFile) await beginCoverage(page);
   const [fam, mode] = theme.split('-');
   await page.send('Emulation.setEmulatedMedia', { features: [{ name: 'prefers-color-scheme', value: mode }] });
   await page.goto(pathToFileURL(PAGE).href + '?o55=off');
@@ -444,8 +447,13 @@ for (const sc of SC) {
   const r = { id: sc.id, title: sc.title, ms: Date.now() - t0, pass: !error && asserts.every((x) => x.ok) && !t.page.errors.length, error, asserts, errors: t.page.errors.slice(0, 8), inv, state: await t.ev(() => window.O55.tour.state()).catch(() => null) };
   report.push(r);
   console.log((r.pass ? 'PASS ' : 'FAIL ') + sc.id + '  ' + sc.title + (error ? '  !! ' + error : '') + asserts.filter((x) => !x.ok).map((x) => '\n      x ' + x.m).join('') + (t.page.errors.length ? '\n      errors: ' + t.page.errors.slice(0, 3).join(' | ') : ''));
-  await t.close();
-  await dropProfile(profile, t.chrome);
+  if (coverageFile) {
+    try { await endCoverage(t.page, coverageFile); }
+    finally { await t.close(); await dropProfile(profile, t.chrome); }
+  } else {
+    await t.close();
+    await dropProfile(profile, t.chrome);
+  }
 }
 writeFileSync(join(out, 'report.json'), JSON.stringify(report, null, 1));
 console.log(JSON.stringify({ scenarios: report.length, pass: report.filter((r) => r.pass).length, fail: report.filter((r) => !r.pass).map((r) => r.id) }));

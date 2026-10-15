@@ -1,0 +1,849 @@
+/* Liquid Glass v2: the look (pm7-liquid-glass, Opus 5.5, 2026-10-11). glass.js computes each glass element's optics;
+ * this sheet sets the scene and the material's colour, edges and depth. Live only while html[data-lg="on"] and the look
+ * is Glass. Every other look, and Glass with data-lg="off", draws what PMConcept7 draws today.
+ *
+ * The scene follows Apple's own structure: a crisp wallpaper; floating sheets of glass; and controls that sit on a sheet
+ * as vibrant fills, never glass on raw content. The sheets are the title bar, the sidebar (activity bar and rail panel),
+ * Usage's navigation and toolbar, each card, the chat column, menus and the status bar. The chosen tab, segment, row or
+ * rail icon is a clear lens that magnifies the label under it. Fonts are kept. No capsules: controls 6 px (3 px
+ * inside), sheets concentric at 18, 16 and 14 px.
+ * P = html[data-lg="on"][data-theme^="glass"]:not(#lgz); the :not(#id) lifts these rules over the base's id-weighted
+ * Glass rules without touching their sources.
+ */
+
+/* ---------------------------------------------------------------------------------------------------------------
+   1. Tokens
+   --------------------------------------------------------------------------------------------------------------- */
+html[data-lg="on"][data-theme="glass-dark"]:not(#lgz) {
+  --text-primary: #F6F8FC; --text-secondary: #D9DEE8; --text-muted: #BAC2D0;
+  --border: rgba(255, 255, 255, .16); --border-light: rgba(255, 255, 255, .09);
+  --accent-blue: #74B9FF; --accent-primary-rgb: 116, 185, 255; --accent-magenta: #FF86C2; --accent-lime: #5BE38F;
+  --accent-orange: #FFB15C; --accent-warning: #FFD06E; --accent-error: #FF8A8A;
+  --graph-passed: #5BE38F; --graph-failed: #FF8A8A; --graph-running: #FFB15C; --graph-planning: #97A6FF; --graph-gating: #FF86C2; --graph-pending: rgba(217, 222, 232, .6);
+  --background: #04060d; --surface: rgba(12, 16, 30, .46); --surface-elevated: rgba(18, 22, 38, .62);
+  --lg-tint-panel: rgba(7, 10, 22, .66); --lg-tint-card: rgba(7, 10, 22, .70); --lg-tint-bar: rgba(7, 10, 22, .62);
+  --lg-tint-menu: rgba(10, 13, 26, .66); --lg-tint-lens: rgba(255, 255, 255, .05); --lg-tint-ctl: rgba(255, 255, 255, .07);
+  --lg-fill: rgba(255, 255, 255, .075); --lg-fill-hover: rgba(255, 255, 255, .13); --lg-fill-press: rgba(255, 255, 255, .18);
+  --lg-line: rgba(255, 255, 255, .10);
+  --lg-edge-top: rgba(255, 255, 255, .30); --lg-edge-bot: rgba(0, 0, 0, .28); --lg-hl: .95;
+  --lg-shadow: rgba(0, 2, 12, .55); --lg-shadow-near: rgba(0, 2, 12, .30);
+  --lg-sel: rgba(116, 185, 255, .52); --lg-on-sel: #FFFFFF;
+  --lg-head-shade: rgba(4, 6, 14, .30);   /* titles sit on denser glass; the rim light stays above it */
+  --lg-wall: var(--lg-wall-ribbons-dark);
+  color-scheme: dark;
+}
+html[data-lg="on"][data-theme="glass-light"]:not(#lgz) {
+  --text-primary: #0C0F15; --text-secondary: #262C38; --text-muted: #424A59;
+  --border: rgba(12, 15, 21, .14); --border-light: rgba(12, 15, 21, .08);
+  --accent-blue: #005FCC; --accent-primary-rgb: 0, 95, 204; --accent-magenta: #B0216B; --accent-lime: #0B6A2E;
+  --accent-orange: #A04B00; --accent-warning: #714600; --accent-error: #BE1F2A;
+  --graph-passed: #0B6A2E; --graph-failed: #BE1F2A; --graph-running: #A04B00; --graph-planning: #3D50D6; --graph-gating: #B0216B; --graph-pending: rgba(38, 44, 56, .45);
+  --background: #eef1f6; --surface: rgba(255, 255, 255, .5); --surface-elevated: rgba(255, 255, 255, .7);
+  --lg-tint-panel: rgba(255, 255, 255, .56); --lg-tint-card: rgba(255, 255, 255, .62); --lg-tint-bar: rgba(255, 255, 255, .58);
+  --lg-tint-menu: rgba(255, 255, 255, .74); --lg-tint-lens: rgba(255, 255, 255, .05); --lg-tint-ctl: rgba(255, 255, 255, .4);
+  --lg-fill: rgba(12, 15, 21, .055); --lg-fill-hover: rgba(12, 15, 21, .09); --lg-fill-press: rgba(12, 15, 21, .13);
+  --lg-line: rgba(12, 15, 21, .09);
+  --lg-edge-top: rgba(255, 255, 255, .9); --lg-edge-bot: rgba(30, 45, 90, .14); --lg-hl: 1;
+  --lg-shadow: rgba(30, 45, 90, .22); --lg-shadow-near: rgba(30, 45, 90, .12);
+  --lg-sel: rgba(0, 95, 204, .88); --lg-on-sel: #FFFFFF;
+  --lg-head-shade: rgba(255, 255, 255, .28);
+  --lg-wall: var(--lg-wall-ribbons-light);
+  color-scheme: light;
+}
+/* the chosen wallpaper's print lands on --lg-wall through the rules the wallpapers build generates for every catalog id
+   (Concepts/wallpapers/opus-5.5); Ribbons above is Glass's own, and the default without that package */
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) {
+  --border-radius: 16px; --pm-ctl-r: 6px; --pm-ctl-r-in: 3px;
+  --lg-r-sheet: 18px; --lg-r-card: 16px; --lg-r-bar: 14px;
+  --display-font: 'Inter', system-ui, sans-serif; --body-font: 'Inter', system-ui, sans-serif;
+  --pmr-radius: 6px; --pmr-radius-lg: 14px; --pmr-hover: var(--lg-fill-hover); --d-chrome: transparent;
+}
+/* Jared #22 (2026-10-15): "there are still things that are purple". The Glass this look replaces was drawn over
+   PMConcept7's original purple stage, and every token the block above did not restate kept that stage's violet or its
+   cyan accent: Settings' panels, dropdowns, segmented tracks and muted words (--glass-tint-rgb, --k3-text-3), the
+   project cards' rims (--rg-*), Usage's cards on Home (--pmu-*), Settings' violet primary button. Restated here in
+   Liquid Glass's neutral glass and its blue. Usage's data colours (series, providers, token kinds) are charts, not
+   surfaces, and keep their hues. */
+html[data-lg="on"][data-theme="glass-dark"]:not(#lgz) {
+  --accent-primary: #74B9FF; --surface-alt: rgba(10, 14, 26, .38);
+  --glass-tint-rgb: 12, 16, 30; --glass-hairline: rgba(255, 255, 255, .16);
+  --rg-shell: rgba(6, 9, 20, .15); --rg-shell-top: rgba(255, 255, 255, .15); --rg-chrome: rgba(8, 11, 24, .34); --rg-chrome-strong: rgba(12, 16, 30, .51);
+  --rg-pane: rgba(10, 14, 26, .30); --rg-pane-strong: rgba(7, 10, 22, .49); --rg-reading: rgba(4, 6, 14, .70); --rg-reading-soft: rgba(6, 9, 18, .60);
+  --rg-card: rgba(24, 30, 46, .28); --rg-card-hover: rgba(34, 41, 60, .42); --rg-rail-solid: rgb(8, 11, 22); --rg-menu: rgba(10, 13, 26, .94);
+  --rg-rim: rgba(240, 244, 255, .72); --rg-rim-soft: rgba(255, 255, 255, .22); --rg-rim-low: rgba(70, 86, 120, .18);
+  --rg-shadow: rgba(0, 2, 12, .58); --rg-shadow-soft: rgba(0, 2, 12, .34);
+  --rg-cyan: rgba(116, 185, 255, .68); --rg-violet: rgba(151, 166, 255, .62); --rg-warm: rgba(255, 177, 92, .45); --rg-green: rgba(91, 227, 143, .68);
+  --pm6-glass-a-rgb: 116, 185, 255; --pm6-glass-b-rgb: 255, 134, 194; --pm6-glass-plate: rgba(8, 11, 22, calc(.35 + var(--glass-alpha) * .78));
+  --pm6-glass-drop: 0 12px 30px rgba(0, 2, 12, .45); --pm6-glass-pane-shadow: rgba(0, 2, 12, .60); --pm6-glass-pane-shadow2: rgba(0, 2, 12, .40);
+  --shadow: 0 8px 24px rgba(0, 2, 12, .45); --elev-1: 0 2px 8px rgba(0, 2, 12, .35); --elev-2: 0 8px 24px rgba(0, 2, 12, .45); --elev-3: 0 16px 44px rgba(0, 2, 12, .55);
+  --lg-on-accent: #04060D;
+}
+html[data-lg="on"][data-theme="glass-light"]:not(#lgz) {
+  --accent-primary: #005FCC; --surface-alt: rgba(255, 255, 255, .32);
+  --glass-tint-rgb: 244, 246, 250; --glass-hairline: rgba(255, 255, 255, .6);
+  --rg-shell: rgba(240, 243, 248, .11); --rg-chrome: rgba(240, 243, 248, .18); --rg-chrome-strong: rgba(240, 243, 248, .29);
+  --rg-pane: rgba(236, 240, 246, .17); --rg-pane-strong: rgba(240, 243, 248, .29); --rg-reading: rgba(246, 248, 251, .43); --rg-reading-soft: rgba(236, 240, 246, .37);
+  --rg-card: rgba(250, 251, 253, .21); --rg-card-hover: rgba(255, 255, 255, .34); --rg-rail-solid: rgb(214, 220, 230);
+  --rg-rim-low: rgba(30, 45, 90, .14); --rg-shadow: rgba(30, 45, 90, .22); --rg-shadow-soft: rgba(30, 45, 90, .12);
+  --rg-cyan: rgba(0, 95, 204, .5); --rg-violet: rgba(61, 80, 214, .38); --rg-warm: rgba(160, 75, 0, .45); --rg-green: rgba(11, 106, 46, .52);
+  --pm6-glass-a-rgb: 0, 95, 204; --pm6-glass-b-rgb: 176, 33, 107;
+  --pm6-glass-drop: 0 10px 28px rgba(30, 45, 90, .18); --pm6-glass-pane-shadow: rgba(30, 45, 90, .35); --pm6-glass-pane-shadow2: rgba(30, 45, 90, .22);
+  --shadow: 0 8px 24px rgba(30, 45, 90, .16); --elev-1: 0 2px 8px rgba(30, 45, 90, .10); --elev-2: 0 8px 24px rgba(30, 45, 90, .16); --elev-3: 0 16px 44px rgba(30, 45, 90, .22);
+  --lg-on-accent: #FFFFFF;
+}
+html[data-lg="on"][data-theme="glass-dark"]:not(#lgz) #panel-settings { --k3-text-3: var(--text-muted); }
+html[data-lg="on"][data-theme="glass-light"]:not(#lgz) #panel-settings { --k3-text-2: var(--text-secondary); --k3-text-3: var(--text-muted); }
+/* Settings' cards on the wallpaper take Liquid Glass's card tint, which follows Settings' panel transparency like every
+   sheet; what they hold takes the plain inner fill. The old stage's thinner tint (.55 and .38) let the wallpaper's bright
+   ribbons through to 3.2-4.2:1 under muted words (pm7-contrast-opus, 2026-10-15: Settings Home's chapter cards at
+   4.10-4.41). Words that sat straight on the wallpaper (the managers' footer links, Memory's toolbar) get the same
+   ground. Controls keep their own fills. */
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) #panel-settings :is(.domain-card, .panel-card, .pm51-stats, .pm51-panel-card, .pm51-advanced, .pm51-note, .pm51-example, .pm51-hero-facts, .pm51-settings-inline .settings-section, .o55-notif-master, .setting-list):not(:is(.domain-card, .panel-card, .pm51-stats, .pm51-panel-card, .pm51-advanced, .pm51-note, .pm51-example, .pm51-hero-facts, .settings-section, .drawer, .detail-inspector, .o55-notif-master, .setting-list, [data-lg-kind]) *) { background: var(--lg-tint-card) !important; }
+/* a list of settings straight on the wallpaper (Notifications' master switch read 1.0:1 over a bright ribbon) is a card */
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) #panel-settings :is(.o55-notif-master, .setting-list):not(:is(.domain-card, .panel-card, .pm51-stats, .pm51-panel-card, .pm51-advanced, .pm51-note, .pm51-example, .pm51-hero-facts, .settings-section, .drawer, .detail-inspector, .o55-notif-master, .setting-list, [data-lg-kind]) *) { border-radius: var(--lg-r-card) !important; }
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) #panel-settings :is(.panel-card, .pm51-stats, .pm51-panel-card, .pm51-advanced, .pm51-hero-facts, .settings-section) :is(.panel-card, .pm51-stat, .pm51-panel-card, .pm51-advanced, .pm51-note, .pm51-example, .pm51-hero-facts, .settings-section) { background: var(--lg-fill) !important; }
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) #panel-settings :is(.o55-toolbar, .pm51-quiet, .o55-quiet-line, .o55-mgp-lead):not(:is(.domain-card, .panel-card, .pm51-stats, .pm51-panel-card, .pm51-advanced, .pm51-hero-facts, .settings-section, .drawer, .detail-inspector, [data-lg-kind]) *) {
+  background: var(--lg-tint-card) !important; border-color: transparent !important; border-radius: var(--lg-r-bar) !important;
+}
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) #panel-settings :is(.pm51-quiet, .o55-quiet-line, .o55-mgp-lead):not(:is(.domain-card, .panel-card, .pm51-stats, .pm51-panel-card, .pm51-advanced, .pm51-hero-facts, .settings-section, .drawer, .detail-inspector, [data-lg-kind]) *) { padding: 8px 12px !important; }
+/* the section tabs stand on the wallpaper too: their track is the bar's glass, not a control fill */
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) #pm-settings-root nav.workspace-tabs.workspace-tabs { background: var(--lg-tint-bar) !important; }
+/* the chapter rail's descriptions sit on its frosted sheet: muted ink read 4.08:1 over a bright patch in Dark */
+html[data-lg="on"][data-theme="glass-dark"]:not(#lgz) #pm-settings-root .domain-copy small { color: var(--text-secondary) !important; }
+/* the rail's headings kept the old Settings' own muted ink (#77748C, 3.8-4.1:1), and its icons sat at 55 % (2.0-2.7:1) */
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) #pm-settings-root .rail-heading { color: var(--text-muted) !important; }
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) #pm-settings-root :is(span.icon, .o55-about) { opacity: .88 !important; }
+html[data-lg="on"][data-theme="glass-dark"]:not(#lgz) :is(#panel-usage, [data-pmu-host]) .pmu-shell {
+  --pmu-card: rgba(12, 16, 30, .62); --pmu-card-2: rgba(255, 255, 255, .05); --pmu-card-3: rgba(255, 255, 255, .08);
+  --pmu-rule: rgba(255, 255, 255, .14); --pmu-rule-2: rgba(255, 255, 255, .08); --pmu-rule-strong: rgba(255, 255, 255, .26);
+  --pmu-grid: rgba(255, 255, 255, .08); --pmu-track: rgba(255, 255, 255, .10); --pmu-track-hover: rgba(255, 255, 255, .15); --pmu-track-tick: rgba(12, 16, 30, .9);
+  --pmu-row-hover: rgba(255, 255, 255, .06); --pmu-wash: rgba(12, 16, 30, .45);
+  --pmu-shadow-2: inset 0 1px 0 rgba(255, 255, 255, .14), 0 16px 34px rgba(0, 2, 12, .45); --pmu-shadow-pop: 0 18px 44px rgba(0, 2, 12, .55);
+  --pmu-menu-bg: rgba(10, 13, 26, .96); --pmu-menu-border: rgba(255, 255, 255, .18); --pmu-menu-shadow: 0 18px 60px rgba(0, 2, 12, .6), 0 4px 18px rgba(0, 2, 12, .32);
+  --pmu-s7: rgba(217, 222, 232, .55); --pmu-s7-b: rgba(217, 222, 232, .8);
+}
+html[data-lg="on"][data-theme="glass-light"]:not(#lgz) :is(#panel-usage, [data-pmu-host]) .pmu-shell { --pmu-ink-good: #0B6A2E; }
+html[data-lg="on"][data-theme="glass-dark"]:not(#lgz) :is(#panel-usage, [data-pmu-host]) .pmu-shell { --pmu-ink-good: #5BE38F; }
+/* words on the accent fill: the old stage's dark violet (#191128) read 2.9:1 on Light's deeper blue */
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) #panel-wizard :is(.pm6-wiz-bigbtn, .pm6-wiz-btn.primary, .pm6-wiz-integrate-btn:not(:disabled):not([aria-disabled="true"])) { color: var(--lg-on-accent) !important; }
+html[data-lg="on"][data-theme="glass-dark"]:not(#lgz) .page-orchestrator .pm6-orch-ctl.pm6-orch-ctl-primary:not(:disabled) { color: var(--lg-on-accent) !important; }
+/* Settings' primary action: the look's selection blue, not the old stage's violet gradient */
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) #panel-settings .btn.primary {
+  background: var(--lg-sel) !important; background-image: none !important; color: var(--lg-on-sel) !important; border-color: transparent !important;
+  box-shadow: inset 0 1px 0 var(--lg-edge-top), 0 6px 16px -10px var(--lg-shadow) !important;
+}
+
+/* ---------------------------------------------------------------------------------------------------------------
+   2. The scene: the wallpaper, crisp, full bleed; nothing between it and the sheets. The base's cloudscape, sky overlay
+      and opaque shell are forced off (its pm7-architectural-glass-final block uses !important).
+   --------------------------------------------------------------------------------------------------------------- */
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) body { background: var(--background) var(--lg-wall) center / cover no-repeat fixed !important; }
+/* while the sheets' frost catches up with a new wallpaper, the page keeps the print that frost was made from (glass.js) */
+html[data-lg="on"][data-theme^="glass"][data-lg-wall-hold]:not(#lgz) body { background-image: var(--lg-wall-hold) !important; }
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) #glass-bg { display: none !important; }
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) .app-shell,
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) .main-area,
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) .title-bar,
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) #pmuApp.pmu-shell,
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) #pmuStage,
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) #activityBar,
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) #sidePanelSlot,
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) #sidePanelSlot > .side-panel-view {
+  background: transparent !important; border-color: transparent !important; box-shadow: none !important;
+  -webkit-backdrop-filter: none !important; backdrop-filter: none !important;
+}
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) :is(.app-shell, .title-bar, #activityBar, #sidePanelSlot)::before,
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) :is(.app-shell, .title-bar, #activityBar, #sidePanelSlot)::after { opacity: 0 !important; }
+/* The base's Glass theme sizes the main area from its content (flex: 1 1 auto !important), so every change anywhere in
+   the app made the browser measure the whole page's widest content again: one character changed in a Usage card cost
+   4.5-5.3 ms of layout in Glass and 0.3 ms in Basic, and a room change's build ran 3-5 times Basic's layout (review r3
+   R2, 2026-10-15). It is the only area that grows, so it takes the same place from nothing as every other look does
+   (1918 x 1005 either way at 1920 x 1080). Every Glass page, with Liquid Glass on or off. */
+html[data-theme^="glass"]:not(#lgz) .main-area { flex: 1 1 0% !important; }
+
+/* ---------------------------------------------------------------------------------------------------------------
+   3. The glass material. A sheet (title bar, sidebar, navigation, toolbar, card, chat, status bar) stacks, top to
+      bottom: its specular rim (--lg-spec), its tint, its refracted rim ring (--lg-ring: the wallpaper under its bevel,
+      bent and split), and the frosted core (--lg-frost-*: the wallpaper blurred at the window's size, offset by the sheet's
+      layout position so it lines up; never background-attachment: fixed, which a moving board re-anchors).
+      glass.js bakes the ring and the frost from the wallpaper, so a sheet runs no filter at all. Menus blur what is
+      behind them live (they float over content), and lenses refract live. --lg-mat condenses the glass as it arrives.
+   --------------------------------------------------------------------------------------------------------------- */
+@property --lg-mat { syntax: '<number>'; inherits: false; initial-value: 1; }
+/* the per-sheet bakes are read only by the sheet's own background, so they do not inherit: a scroll that moves a sheet's
+   frost (--lg-fx / --lg-fy, every frame) and a new ring or spec map restyle that sheet alone, not every element inside it
+   (a Usage card holds 100 to 400; Jared #3 and #13, 2026-10-14) */
+@property --lg-fx { syntax: '*'; inherits: false; }
+@property --lg-fy { syntax: '*'; inherits: false; }
+@property --lg-ring { syntax: '*'; inherits: false; }
+@property --lg-spec { syntax: '*'; inherits: false; }
+@property --lg-px { syntax: '*'; inherits: false; }
+@property --lg-py { syntax: '*'; inherits: false; }
+/* how see-through the sheets are. Settings' panel transparency (public --glass-alpha, from its floor, .35 dark and .45
+   light, to 1) moves each sheet's tint around today's look, which is the setting's default .55: up to a near-opaque .94
+   at 100 %, and down by at most a quarter of the tint at the floor, so the frost keeps text readable. --lg-ga is
+   registered as a number, so a value that is not one falls back to the default instead of breaking the paint. */
+@property --lg-ga { syntax: '<number>'; inherits: true; initial-value: 0.55; }
+html[data-lg="on"][data-theme="glass-dark"]:not(#lgz) { --lg-ga-floor: .35; }
+html[data-lg="on"][data-theme="glass-light"]:not(#lgz) { --lg-ga-floor: .45; }
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) :is([data-lg-kind="panel"], [data-lg-kind="card"], [data-lg-kind="bar"]) {
+  --lg-ga: clamp(0, var(--glass-alpha, .55), 1);
+  /* tint alpha = alpha * k + add, with up = (ga - .55) / .45 above the default and down = (.55 - ga) / (.55 - floor)
+     below it: k = 1 - up - .25 * down, add = .94 * up */
+  --lg-ga-k: calc(1 - max(0, var(--lg-ga) - 0.55) / 0.45 - 0.25 * min(1, max(0, 0.55 - var(--lg-ga)) / (0.55 - var(--lg-ga-floor, .35))));
+  --lg-ga-add: calc(0.94 * max(0, var(--lg-ga) - 0.55) / 0.45);
+}
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) [data-lg-kind] { border: 0 !important; isolation: isolate; }
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) :is([data-lg-kind="panel"], [data-lg-kind="card"], [data-lg-kind="bar"]) {
+  -webkit-backdrop-filter: none !important; backdrop-filter: none !important;
+}
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) [data-lg-kind="panel"] {
+  background: var(--lg-spec, none) 0 0 / 100% 100% no-repeat, var(--lg-glow, none) 0 0 / 100% 100% no-repeat, linear-gradient(180deg, var(--lg-head-shade), transparent 30px), linear-gradient(rgb(from var(--lg-tint-panel) r g b / calc((alpha * var(--lg-ga-k) + var(--lg-ga-add)) * var(--lg-mat))), rgb(from var(--lg-tint-panel) r g b / calc((alpha * var(--lg-ga-k) + var(--lg-ga-add)) * var(--lg-mat)))),
+    var(--lg-ring, none) 0 0 / 100% 100% no-repeat, var(--lg-frost-heavy, none) var(--lg-fx, 0px) var(--lg-fy, 0px) / var(--lg-vw, 100vw) var(--lg-vh, 100vh) no-repeat !important;
+  border-radius: var(--lg-r-sheet) !important;
+  box-shadow: inset 0 1px 0 var(--lg-edge-top), inset 0 -1px 1px var(--lg-edge-bot), 0 30px 60px -30px var(--lg-shadow), 0 2px 10px var(--lg-shadow-near) !important;
+}
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) [data-lg-kind="card"] {
+  background: var(--lg-spec, none) 0 0 / 100% 100% no-repeat, var(--lg-glow, none) 0 0 / 100% 100% no-repeat, linear-gradient(180deg, var(--lg-head-shade), transparent 30px), linear-gradient(rgb(from var(--lg-tint-card) r g b / calc((alpha * var(--lg-ga-k) + var(--lg-ga-add)) * var(--lg-mat))), rgb(from var(--lg-tint-card) r g b / calc((alpha * var(--lg-ga-k) + var(--lg-ga-add)) * var(--lg-mat)))),
+    var(--lg-ring, none) 0 0 / 100% 100% no-repeat, var(--lg-frost-heavy, none) var(--lg-fx, 0px) var(--lg-fy, 0px) / var(--lg-vw, 100vw) var(--lg-vh, 100vh) no-repeat !important;
+  border-radius: var(--lg-r-card) !important;
+  box-shadow: inset 0 1px 0 var(--lg-edge-top), inset 0 -1px 1px var(--lg-edge-bot), 0 22px 44px -24px var(--lg-shadow), 0 2px 6px var(--lg-shadow-near) !important;
+}
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) [data-lg-kind="bar"] {
+  background: var(--lg-spec, none) 0 0 / 100% 100% no-repeat, var(--lg-glow, none) 0 0 / 100% 100% no-repeat, linear-gradient(180deg, var(--lg-head-shade), transparent 30px), linear-gradient(rgb(from var(--lg-tint-bar) r g b / calc((alpha * var(--lg-ga-k) + var(--lg-ga-add)) * var(--lg-mat))), rgb(from var(--lg-tint-bar) r g b / calc((alpha * var(--lg-ga-k) + var(--lg-ga-add)) * var(--lg-mat)))),
+    var(--lg-ring, none) 0 0 / 100% 100% no-repeat, var(--lg-frost-light, none) var(--lg-fx, 0px) var(--lg-fy, 0px) / var(--lg-vw, 100vw) var(--lg-vh, 100vh) no-repeat !important;
+  border-radius: var(--lg-r-bar) !important;
+  box-shadow: inset 0 1px 0 var(--lg-edge-top), inset 0 -1px 1px var(--lg-edge-bot), 0 16px 34px -18px var(--lg-shadow), 0 1px 4px var(--lg-shadow-near) !important;
+}
+/* Jared #13 (2026-10-14): while its scroller moves, a sheet's frost is pinned to the viewport by the browser itself, so
+   it never trails the content (glass.js sets data-lg-fixed at the first scroll event and lifts it when the scroll settles) */
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) :is([data-lg-kind="panel"], [data-lg-kind="card"], [data-lg-kind="bar"])[data-lg-fixed] {
+  background-attachment: scroll, scroll, scroll, scroll, scroll, fixed !important; background-position: 0 0, 0 0, 0 0, 0 0, 0 0, 0 0 !important;
+}
+/* the page-in class stays on a page after its entrance ends, and its will-change: transform would make every pinned
+   frost element-relative; a running entrance still gets its own layer without it */
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) .primary-content > .page.pm8-page-in { will-change: opacity !important; }
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) [data-lg-kind="menu"] {
+  background: var(--lg-spec, none) 0 0 / 100% 100% no-repeat, linear-gradient(var(--lg-tint-menu), var(--lg-tint-menu)) !important; border-radius: var(--lg-r-card) !important;
+  box-shadow: inset 0 1px 0 var(--lg-edge-top), inset 0 -1px 1px var(--lg-edge-bot), 0 30px 60px -20px var(--lg-shadow), 0 4px 14px var(--lg-shadow-near) !important;
+}
+/* A large floating dialog of dense text (a Customize screen) opts into data-lg-dense: on the GPU tier its live blur
+   keeps a heavier tint, so blurred content behind never mottles its body text. Small menus stay lighter. */
+html[data-lg="on"][data-theme="glass-dark"]:not(#lgz) [data-lg-kind="menu"][data-lg-dense] { --lg-tint-menu: rgba(10, 13, 26, .86); }
+html[data-lg="on"][data-theme="glass-light"]:not(#lgz) [data-lg-kind="menu"][data-lg-dense] { --lg-tint-menu: rgba(250, 251, 253, .88); }
+html[data-lg="on"][data-theme="glass-dark"][data-lg-tier="cpu"]:not(#lgz) [data-lg-kind="menu"][data-lg-dense] { --lg-tint-menu: rgba(12, 15, 28, .97); }
+html[data-lg="on"][data-theme="glass-light"][data-lg-tier="cpu"]:not(#lgz) [data-lg-kind="menu"][data-lg-dense] { --lg-tint-menu: rgba(252, 253, 255, .97); }
+/* the pointer's light: one soft highlight clipped to the sheet under the pointer, moved on the compositor */
+#lg-shine { display: none; }
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) #lg-shine {
+  display: block; position: fixed; left: 0; top: 0; width: 0; height: 0; overflow: hidden; pointer-events: none; z-index: 2; opacity: 0;
+  transition: opacity 260ms ease;
+  /* the blend belongs on this element: it is a stacking context, so a blend on its child only mixed with its own empty
+     layer and the light painted as plain white over the text under the pointer */
+  mix-blend-mode: var(--lg-shine-blend, plus-lighter);
+}
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) #lg-shine.on { opacity: 1; }
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) #lg-shine > i {
+  /* the same radius as every look's hover light (pm7-hover's --pmf-r: 96 px in Glass); it was a 210 px disc */
+  position: absolute; left: calc(var(--pmf-r, 96px) * -1); top: calc(var(--pmf-r, 96px) * -1); width: calc(var(--pmf-r, 96px) * 2); height: calc(var(--pmf-r, 96px) * 2); border-radius: 50%;
+  background: radial-gradient(closest-side, var(--lg-shine-c), transparent); will-change: transform;
+}
+/* Jared #16 (2026-10-14): the circle right under the pointer turned down; the shared hover sheen (pm7-shell-polish)
+   drops to about 0.6x at the same time, the edge light stays */
+html[data-lg="on"][data-theme="glass-dark"]:not(#lgz) { --lg-shine-c: rgba(255, 255, 255, .06); }
+/* light: no pointer light. Any lightening blend lifts the dark letters under the pointer as much as the glass: an
+   additive light washed them to 3.6:1, and the overlay that replaced it (it roughly doubles dark values) still took a
+   chosen tab from 8.0:1 to 5.1:1 while the white-on-white glass around it showed no change at all (2026-10-14).
+   So Light's pointer light is drawn UNDER the sheet's content instead (Jared, 2026-10-14: "add a soft hover light to
+   Glass Light, drawn under the content"): a layer of the lit sheet's own background, above its tint and frost and below
+   every word, so it can only brighten the glass behind dark text (glass.js sets --lg-px / --lg-py on the lit sheet; GPU
+   tier only, since it repaints that sheet's background as the pointer moves). The edge light (the shared hover sheen)
+   is unchanged. */
+html[data-lg="on"][data-theme="glass-light"]:not(#lgz) { --lg-shine-c: transparent; --lg-shine-blend: normal; }
+html[data-lg="on"][data-theme="glass-light"]:not(#lgz) #lg-shine { display: none; }
+html[data-lg="on"][data-lg-tier="gpu"][data-theme="glass-light"]:not(#lgz) :is([data-lg-kind="panel"], [data-lg-kind="card"], [data-lg-kind="bar"])[data-lg-lit] {
+  --lg-glow: radial-gradient(circle calc(var(--pmf-r, 96px) * 1.15) at var(--lg-px, -400px) var(--lg-py, -400px), rgba(255, 255, 255, .95), rgba(255, 255, 255, .5) 38%, rgba(246, 250, 255, .16) 72%, rgba(255, 255, 255, 0) 100%);
+}
+/* the arrival sweep: one band of light across the window as the glass condenses */
+/* calm: no light bands cross the board or the cards when a room or page changes (Jared, 2026-10-11: "The usage page
+   animations are too busy... the side ways swipe across the whole screen when you change tabs can go away") */
+#lg-sweep, html[data-lg="on"][data-theme^="glass"]:not(#lgz) #panel-usage :is(.pmu-film-refract, .pmu-film-glint, .pmu-film-sweep, .pmu-film-floor) { display: none !important; }
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) #lg-sweep { display: none; }
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) #lg-sweep > i {
+  position: absolute; top: -30%; bottom: -30%; left: 0; width: 30%; opacity: 0; mix-blend-mode: plus-lighter;
+  background: linear-gradient(100deg, transparent, var(--lg-shine-c) 45%, var(--lg-shine-c) 55%, transparent); will-change: transform;
+}
+.lg-lens, .lg-press, #lg-lenses { display: none; }
+:is(html[data-lg="on"][data-theme^="glass"], html[data-pm-switch="lens"]):not(#lgz) #lg-lenses { display: block; position: absolute; inset: 0; z-index: 51; pointer-events: none; }
+/* above the title bar, which rises from 40 to 50 while one of its menus is open: at 45 the page selector's lens went
+   under the bar's glass whenever the theme menu, the project picker or the bell's panel was open (review r3, #23). A
+   lens an open menu covers steps aside (lensesUnder), so none is drawn over a menu. */
+:is(html[data-lg="on"][data-theme^="glass"], html[data-pm-switch="lens"]):not(#lgz) .lg-lens.lg-under { opacity: 0; transition: opacity 120ms ease; }
+/* the window is not focused: the glass recedes, its rims dim and its selection greys */
+html[data-lg="on"][data-theme^="glass"][data-lg-inactive]:not(#lgz) { --lg-sel: rgba(150, 156, 170, .45); }
+
+/* ---------------------------------------------------------------------------------------------------------------
+   4. The sheets, placed: everything floats over the wallpaper with gaps that let it through
+   --------------------------------------------------------------------------------------------------------------- */
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) .title-bar { border-radius: var(--lg-r-bar) !important; position: relative; }
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) .title-bar .app-name { color: var(--text-primary) !important; font-weight: 650; letter-spacing: -.01em; }
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) .left-panel { border-radius: var(--lg-r-sheet) !important; position: relative; }
+/* Jared #10 (2026-10-14): the columns sat 18 px apart (the base Glass row's 6 px gap on each side of each resizer, plus
+   each page's own inset), a band of bare wallpaper on both sides of the page. A 2 px gap leaves about 8 px between
+   neighbouring sheets, the same spacing the cards keep; the resizers overlap the gap as before. */
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) .main-area { column-gap: 2px !important; gap: 2px !important; }
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) #chatPanel { border-radius: var(--lg-r-sheet) !important; }
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) #panel-usage .pmu-rail { margin: 0 6px 0 2px; border-radius: var(--lg-r-sheet) !important; position: relative; }
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) #panel-usage .pmu-stagehead { margin: 0 6px 6px; border-radius: var(--lg-r-bar) !important; position: relative; z-index: 4; }
+/* the bar sits 6 px in from each side, so at 1920 x 1080 the room's title had 107 px for its 123 ("Current u..."; Basic
+   shows it whole: review r3 round 3, follow-up 2). The bar's spacing gives 28 px back: its gap 5 px, its controls' 3 px,
+   its right padding 8 px. The left padding stays, so the title still lines up with the board. */
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) #panel-usage .pmu-stagehead { gap: 5px; padding-right: 8px; }
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) #panel-usage .pmu-stagehead > .pmu-headctl { gap: 3px; }
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) #panel-usage .pmu-board > .pmu-card { border-radius: var(--lg-r-card) !important; }
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) #pm7GlobalStatusBar { margin: 0 8px 4px; border-radius: 10px !important; border: 0 !important; }
+/* inside a sheet nothing paints its own plate: the sheet is the material */
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) [data-lg-kind] :is(.sh-banner, .pm-segtab, .fm-toolbar-wrap, .fm-selbar, .fm-filter, .pm7-scm-context, .sh-foot, .pmu-cardhead, .pmu-cardbody, .pmu-brand, .pmu-nav) {
+  background: transparent !important; box-shadow: none !important; -webkit-backdrop-filter: none !important; backdrop-filter: none !important; border-color: transparent !important;
+}
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) #panel-usage .pmu-card :is(.pmu-film-glint) { display: none !important; }
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) #panel-usage .pmu-card::after { opacity: 0 !important; }
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) #activityBar .icon .symbol {
+  -webkit-backdrop-filter: none !important; backdrop-filter: none !important; background: transparent !important; box-shadow: none !important; border: 0 !important;
+  border-radius: var(--pm-ctl-r) !important; color: var(--text-secondary) !important; position: relative; z-index: 6;
+}
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) #activityBar .icon { opacity: 1 !important; }
+/* the hover bead is the rail's hover: no fill of its own under it (two highlights showed in the films while the bead flowed) */
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) #activityBar .icon:hover .symbol { background: transparent !important; color: var(--text-primary) !important; }
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) #activityBar .icon[data-lg-current] .symbol { color: var(--accent-blue) !important; background: transparent !important; }   /* the active window's colour, under the lens */
+html[data-lg="on"][data-theme^="glass"]:not(#lgz)[data-lg-inactive] #activityBar .icon[data-lg-current] .symbol { color: var(--text-primary) !important; }
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) #activityBar :is(.d-abind) { opacity: 0 !important; }
+/* Jared #15 (with pm7-shell-polish, 2026-10-14): while the chat column shows, the rail's Chat icon is lit the way the
+   open panel is - the lens's drop, still, at the icon (the moving lens stays the open panel's), and the accent glyph */
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) #activityBar > .d-abind.d-abind-chat.is-on {
+  opacity: 1 !important; border-radius: var(--pm-ctl-r) !important; -webkit-backdrop-filter: none !important; backdrop-filter: none !important;
+  background: radial-gradient(70% 100% at 30% 0%, var(--lg-lens-glint), transparent 70%) 2px 1px / calc(100% - 4px) 38% no-repeat, linear-gradient(var(--lg-tint-lens), var(--lg-tint-lens)), linear-gradient(var(--lg-lens-body), var(--lg-lens-body)) !important;
+  box-shadow: inset 0 0 0 .5px var(--lg-lens-hair), inset 0 1px 0 var(--lg-edge-top), inset 0 -1px 1px var(--lg-edge-bot), 0 0 0 .5px var(--lg-lens-edge), var(--lg-lens-drop) !important;
+}
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) #activityBar .icon[data-ab-id="chat"].active .symbol { color: var(--accent-blue) !important; }
+
+/* ---------------------------------------------------------------------------------------------------------------
+   5. Controls on a sheet: vibrant fills, the look's 6 px corners, a quiet hover; text buttons sit in their own fill
+   --------------------------------------------------------------------------------------------------------------- */
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) :is(#projectMenuBtn, #pm-home-more-btn, #themeSelect, #tbSearchInput, .pmu-ctlbtn, .pmu-iconbtn, .pmu-livebtn, .pmu-livechev, #fmRootBtn) {
+  background: var(--lg-fill) !important; border: 0 !important; border-radius: var(--pm-ctl-r) !important; box-shadow: none !important;
+  color: var(--text-primary) !important; -webkit-backdrop-filter: none !important; backdrop-filter: none !important;
+  transition: background-color 160ms ease;
+}
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) :is(.pmu-ctlbtn, .pmu-livebtn):hover { background: var(--lg-fill-hover) !important; }
+/* buttons that carry the hover bead keep their resting fill: the bead is their hover */
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) #sidePanelSlot :is(.pm-minibtn, .fm-tbtn, .sh-bhead-acts button):hover { background: transparent !important; }
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) #tbSearchInput::placeholder { color: var(--text-muted) !important; }
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) :is(.pmu-livebtn) { border-radius: var(--pm-ctl-r) 0 0 var(--pm-ctl-r) !important; }
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) :is(.pmu-livechev) { border-radius: 0 var(--pm-ctl-r) var(--pm-ctl-r) 0 !important; margin-left: 1px; }
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) #pmuRefresh { border-radius: var(--pm-ctl-r) 0 0 var(--pm-ctl-r) !important; }
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) #pmuExport { border-radius: 0 var(--pm-ctl-r) var(--pm-ctl-r) 0 !important; margin-left: -5px; }
+/* the tab strips: a fill track on the sheet; the lens does the choosing */
+:is(html[data-lg="on"][data-theme^="glass"], html[data-pm-switch="lens"]):not(#lgz) :is(nav.page-tabs, #pmuRange, .orch-tabs) {
+  background: var(--pm-switch-track, var(--lg-fill)) !important; border: 0 !important; border-radius: var(--pm-switch-r, var(--pm-ctl-r)) !important; box-shadow: none !important;
+  -webkit-backdrop-filter: none !important; backdrop-filter: none !important; position: relative;
+}
+:is(html[data-lg="on"][data-theme^="glass"], html[data-pm-switch="lens"]):not(#lgz) :is(.page-tab-ink, .pmu-seg-ink, .pm-segtab-ink) { opacity: 0 !important; }
+/* a drag across a strip scrubs its lens; it must not select the labels' text on the way */
+:is(html[data-lg="on"][data-theme^="glass"], html[data-pm-switch="lens"]):not(#lgz) :is(nav.page-tabs, #pmuRange, #sidePanelSlot .pm-segtab, .orch-tabs) { -webkit-user-select: none; user-select: none; }
+:is(html[data-lg="on"][data-theme^="glass"], html[data-pm-switch="lens"]):not(#lgz) :is(.page-tab, #pmuRange > button, .pm-segtab-item, .orch-tab) {
+  background: transparent !important; box-shadow: none !important; border-radius: var(--pm-switch-r-in, var(--pm-ctl-r-in)) !important;
+  color: var(--pm-switch-ink, var(--text-secondary)) !important; position: relative; z-index: 1;
+}
+:is(html[data-lg="on"][data-theme^="glass"], html[data-pm-switch="lens"]):not(#lgz) :is(.page-tab, #pmuRange > button, .pm-segtab-item, .orch-tab):hover { color: var(--pm-switch-ink-on, var(--text-primary)) !important; }
+:is(html[data-lg="on"][data-theme^="glass"], html[data-pm-switch="lens"]):not(#lgz) :is(.page-tab, #pmuRange > button, .pm-segtab-item, .orch-tab).active { color: var(--pm-switch-ink-on, var(--text-primary)) !important; font-weight: 600; }
+:is(html[data-lg="on"][data-theme^="glass"], html[data-pm-switch="lens"]):not(#lgz) #sidePanelSlot .pm-segtab { position: relative; }
+:is(html[data-lg="on"][data-theme^="glass"], html[data-pm-switch="lens"]):not(#lgz) #sidePanelSlot .pm-segtab > .pm-segtab-track {
+  display: block; position: absolute; left: 6px; right: 6px; top: 3px; height: 34px; border-radius: var(--pm-switch-r, var(--pm-ctl-r));
+  background: var(--pm-switch-track, var(--lg-fill)); pointer-events: none; z-index: 0;
+}
+.pm-segtab-track { display: none; }
+/* lists on a sheet */
+:is(html[data-lg="on"][data-theme^="glass"], html[data-pm-switch="lens"]):not(#lgz) .pmu-navbtn {
+  background: transparent !important; box-shadow: none !important; border-radius: var(--pm-switch-r, var(--pm-ctl-r)) !important; color: var(--pm-switch-ink, var(--text-secondary)) !important; position: relative; z-index: 1;
+}
+:is(html[data-lg="on"][data-theme^="glass"], html[data-pm-switch="lens"]):not(#lgz) .pmu-navbtn::before, :is(html[data-lg="on"][data-theme^="glass"], html[data-pm-switch="lens"]):not(#lgz) .pmu-navbtn::after { opacity: 0 !important; }
+:is(html[data-lg="on"][data-theme^="glass"], html[data-pm-switch="lens"]):not(#lgz) .pmu-navbtn:hover:not(.active) { background: var(--pm-switch-hover, var(--lg-fill-hover)) !important; color: var(--pm-switch-ink-on, var(--text-primary)) !important; }
+:is(html[data-lg="on"][data-theme^="glass"], html[data-pm-switch="lens"]):not(#lgz) .pmu-navbtn.active, :is(html[data-lg="on"][data-theme^="glass"], html[data-pm-switch="lens"]):not(#lgz) .pmu-navbtn.active * { color: var(--pm-switch-ink-on, var(--text-primary)) !important; }
+:is(html[data-lg="on"][data-theme^="glass"], html[data-pm-switch="lens"]):not(#lgz) .pmu-navbtn.active .pmu-navicon { color: var(--pm-switch-mark, var(--accent-blue)) !important; }
+:is(html[data-lg="on"][data-theme^="glass"], html[data-pm-switch="lens"]):not(#lgz) .pmu-navbtn.active { font-weight: 650; }
+:is(html[data-lg="on"][data-theme^="glass"], html[data-pm-switch="lens"]):not(#lgz) .pmu-navbtn:not(.active) .pmu-navcount { color: var(--accent-warning) !important; }
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) #sidePanelSlot :is(.fm-row, .sh-row, .tree-item, .pmr-row) { border-radius: var(--pm-ctl-r) !important; }
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) #sidePanelSlot :is(.fm-row, .sh-row, .tree-item, .pmr-row):hover { background: var(--lg-fill-hover) !important; }
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) #sidePanelSlot :is(.fm-row, .sh-row, .tree-item, .pmr-row):is(.selected, .active, [aria-selected="true"]) { background: var(--lg-fill-press) !important; box-shadow: none !important; }
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) #sidePanelSlot .fm-row.ignored { opacity: 1 !important; }
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) #sidePanelSlot .fm-row.ignored :is(.fm-name, .fm-count, .fm-gitbadge) { color: var(--text-muted) !important; }
+/* switches: a curved glass track and a round knob (Jared, 2026-10-11: curved, slower; switches are controls, so the
+   pill rule does not apply to them). While held the knob swells and goes clear, lensing the track under it; it lands
+   solid on the other side on a slower, springier slide. Square bar ends stay (no-pills). */
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) #panel-usage :is(.pmu-toggle, .pmu-wswitch-track) {
+  width: 38px !important; height: 22px !important; border-radius: 11px !important;
+  background-color: var(--lg-switch-off) !important;
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, .22), inset 0 0 0 .5px var(--lg-line) !important;
+  transition: background-color 420ms cubic-bezier(.2, .8, .2, 1) !important;
+}
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) #panel-usage :is(.pmu-toggle[aria-checked="true"], .pmu-toggle.on, .pmu-wswitch.on .pmu-wswitch-track) { background-color: var(--accent-blue) !important; }
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) #panel-usage .pmu-toggle::after,
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) #panel-usage .pmu-wswitch-track > i {
+  top: 2px !important; left: 2px !important; width: 18px !important; height: 18px !important; border-radius: 50% !important;
+  background: radial-gradient(120% 90% at 35% 22%, #FFFFFF, #F1F4F9 55%, #DCE3EE) !important;
+  box-shadow: inset 0 1px 0 #FFFFFF, inset 0 -1px 1px rgba(20, 30, 60, .14), 0 2px 5px rgba(0, 8, 30, .32), 0 0 0 .5px rgba(0, 8, 30, .12) !important;
+  transition: transform 520ms cubic-bezier(.45, 0, .2, 1.15), background 220ms ease, box-shadow 220ms ease, width 300ms cubic-bezier(.3, 1.3, .45, 1) !important;
+}
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) #panel-usage :is(.pmu-toggle[aria-checked="true"], .pmu-toggle.on)::after,
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) #panel-usage .pmu-wswitch.on .pmu-wswitch-track > i { transform: translateX(16px) !important; }
+/* held: the knob is a drop of clear glass, wider, lensing the track (one shared 18 px lens, #lg-knob) */
+html[data-lg="on"][data-theme^="glass"]:not(#lgz)[data-lg-tier="gpu"] #panel-usage .pmu-toggle[data-lg-held]::after,
+html[data-lg="on"][data-theme^="glass"]:not(#lgz)[data-lg-tier="gpu"] #panel-usage .pmu-wswitch-track[data-lg-held] > i {
+  background: radial-gradient(120% 90% at 35% 20%, rgba(255, 255, 255, .55), rgba(255, 255, 255, .08) 60%) !important;
+  -webkit-backdrop-filter: url(#lg-knob) saturate(1.4); backdrop-filter: url(#lg-knob) saturate(1.4);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, .9), inset 0 -1px 1px rgba(255, 255, 255, .35), 0 4px 10px rgba(0, 8, 30, .28) !important;
+  transform: scale(1.28, 1.18) !important;
+}
+html[data-lg="on"][data-theme^="glass"]:not(#lgz)[data-lg-tier="gpu"] #panel-usage :is(.pmu-toggle[aria-checked="true"], .pmu-toggle.on)[data-lg-held]::after,
+html[data-lg="on"][data-theme^="glass"]:not(#lgz)[data-lg-tier="gpu"] #panel-usage .pmu-wswitch.on .pmu-wswitch-track[data-lg-held] > i { transform: translateX(16px) scale(1.28, 1.18) !important; }
+html[data-lg="on"][data-theme="glass-dark"]:not(#lgz) { --lg-switch-off: rgba(255, 255, 255, .16); }
+html[data-lg="on"][data-theme="glass-light"]:not(#lgz) { --lg-switch-off: rgba(12, 15, 21, .14); }
+html[data-lg="on"][data-theme^="glass"]:not(#lgz)[data-motion="reduced"] #panel-usage .pmu-toggle::after,
+html[data-lg="on"][data-theme^="glass"]:not(#lgz)[data-motion="reduced"] #panel-usage .pmu-wswitch-track > i { transition: background 160ms ease !important; }
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) .pmu-card :is(.pmu-meter, .pmu-track, .pmu-bar, [class*="meter"] > i, [class*="track"]) { border-radius: 1px !important; }
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) #pmuRoomTitle, html[data-lg="on"][data-theme^="glass"]:not(#lgz) .pmu-rail h1 { color: var(--text-primary) !important; font-weight: 700; letter-spacing: -.015em; }
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) :is(.pmu-pop, .pmr-menu-list) :is(.pmu-poprow, .pmu-mitem, .pmr-menu-item, [role="menuitem"], [role="option"]) { border-radius: var(--pm-ctl-r) !important; }
+
+/* searches inside menus: one glass field; the input inside it has no fill, border or ring of its own */
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) .pmu-msearch { padding: 8px 8px 6px !important; }
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) .pmu-msearchwrap {
+  border: 0 !important; border-radius: var(--pm-ctl-r) !important; background: var(--lg-fill) !important; min-height: 32px;
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, .10), inset 0 0 0 .5px var(--lg-line) !important; transition: box-shadow 160ms ease, background-color 160ms ease;
+}
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) .pmu-msearchwrap:focus-within { background: var(--lg-fill-hover) !important; box-shadow: inset 0 0 0 1.5px rgba(var(--accent-primary-rgb), .75), 0 0 0 3px rgba(var(--accent-primary-rgb), .18) !important; }
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) .pmu-msearchin { background: transparent !important; border: 0 !important; box-shadow: none !important; outline: none !important; color: var(--text-primary) !important; }
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) .pmu-msearchin::placeholder { color: var(--text-muted) !important; }
+/* the title-bar look menu, spaced as one glass menu: a joined Light/Dark/Auto row, then quiet rows (pm7-no-pills owns
+   its shapes in every look; this is Glass's material and spacing only) */
+/* a hover tag never sits on top of an open title-bar menu */
+html[data-lg="on"][data-theme^="glass"][data-lg-tbmenu]:not(#lgz) #pm-hover-tag-root { opacity: 0 !important; }
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) #themeMenu.is-open { padding: 8px !important; min-width: 236px; border: 0 !important; }
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) #themeMenu .pm6-tt-modes { display: flex; gap: 0; margin: 0 0 8px !important; padding: 2px !important; border: 0 !important; border-radius: var(--pm-ctl-r) !important; background: var(--lg-fill) !important; }
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) #themeMenu .pm6-tt-mode { flex: 1; border: 0 !important; border-radius: var(--pm-ctl-r-in) !important; background: transparent !important; box-shadow: none !important; padding: 5px 8px !important; color: var(--text-secondary) !important; }
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) #themeMenu .pm6-tt-mode:is(.is-selected, [aria-pressed="true"], [aria-checked="true"], .active) { background: var(--lg-fill-press) !important; color: var(--text-primary) !important; font-weight: 650; box-shadow: inset 0 1px 0 var(--lg-edge-top) !important; }
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) #themeMenu .pm6-tt-divider { margin: 6px 4px !important; }
+/* Jared #14 (2026-10-14): Light / Dark / Auto is a Glass tab switcher, the lens drawn inside the menu (glass.js); the
+   plain chosen fill above stays only for the moment before the lens lands */
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) #themeMenu .pm6-tt-modes[data-lg-lensed] .pm6-tt-mode:is(.is-selected, [aria-pressed="true"], [aria-checked="true"], .active) { background: transparent !important; }
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) #themeMenu .pm6-tb-menu-item {
+  min-height: 34px; margin: 1px 0 !important; padding: 8px 10px !important; border: 0 !important; border-radius: var(--pm-ctl-r) !important;
+  background: transparent !important; box-shadow: none !important; display: flex; align-items: center; gap: 10px;
+}
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) #themeMenu .pm6-tb-menu-item:hover { background: var(--lg-fill-hover) !important; }
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) #themeMenu .pm6-tb-menu-item.is-selected { background: var(--lg-fill-press) !important; font-weight: 650; }
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) #themeMenu .pm6-tt-chips { display: inline-flex; gap: 5px; margin-left: auto; }
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) #themeMenu .o55-nier-tt-row { display: flex; align-items: center; gap: 6px; }
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) #themeMenu .o55-nier-tt-row > .pm6-tb-menu-item { flex: 1; }
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) #themeMenu .o55-nier-tt-adjust { margin: 0 !important; flex: none; border: 0 !important; border-radius: var(--pm-ctl-r) !important; background: var(--lg-fill) !important; box-shadow: none !important; padding: 6px 10px !important; }
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) #themeMenu .o55-nier-tt-adjust:hover { background: var(--lg-fill-hover) !important; }
+
+/* ---------------------------------------------------------------------------------------------------------------
+   6. The lens: clear glass over the chosen item, the same in every strip and list (page tabs, Usage's range and
+      navigation, the rail's tabs and activity bar). Jared, 2026-10-13: it has to read as magnification and reflection,
+      not as colour fringing. So: no colour split; glass.js bends only its rim, by a couple of pixels, and magnifies the
+      labels themselves as vector text (the chosen label rests a little larger, below, and swells as the lens lifts);
+      the light is a hairline edge, a top catch light, a bottom caustic (--lg-spec) and a glint that slides against the
+      motion (::after). It moves on a spring, stretching with its speed. The bead is the same glass, lifting under the
+      icon button the pointer is on.
+   --------------------------------------------------------------------------------------------------------------- */
+html[data-lg="on"][data-theme="glass-dark"]:not(#lgz) {
+  --lg-lens-hair: rgba(255, 255, 255, .17); --lg-lens-edge: rgba(0, 0, 0, .18); --lg-lens-glint: rgba(255, 255, 255, .24); --lg-lens-glint-blend: plus-lighter;
+  --lg-lens-drop: 0 3px 10px -4px rgba(0, 2, 12, .55), 0 1px 2px rgba(0, 2, 12, .30);
+}
+/* light: white on white would vanish, so the drop is defined by a faint outer edge and a soft shadow, and its glint
+   never brightens the dark label under it */
+html[data-lg="on"][data-theme="glass-light"]:not(#lgz) {
+  --lg-lens-hair: rgba(255, 255, 255, .9); --lg-lens-edge: rgba(30, 45, 90, .13); --lg-lens-glint: rgba(255, 255, 255, .7); --lg-lens-glint-blend: normal;
+  --lg-lens-drop: 0 5px 14px -6px rgba(30, 45, 90, .34), 0 1px 2px rgba(30, 45, 90, .16);
+}
+:is(html[data-lg="on"][data-theme^="glass"], html[data-pm-switch="lens"]):not(#lgz) .lg-lens {
+  display: block; position: absolute; left: 0; top: 0; z-index: 4; pointer-events: none;
+  border-radius: var(--pm-switch-r, var(--pm-ctl-r)); background: var(--lg-spec, none) 0 0 / 100% 100% no-repeat, linear-gradient(var(--pm-switch-fill, var(--lg-tint-lens)), var(--pm-switch-fill, var(--lg-tint-lens)));
+  box-shadow: inset 0 0 0 .5px var(--pm-switch-line, var(--lg-lens-hair)), inset 0 1px 0 var(--pm-switch-top, var(--lg-edge-top)), inset 0 -1px 1px var(--pm-switch-bottom, var(--lg-edge-bot)), 0 0 0 .5px var(--pm-switch-edge, var(--lg-lens-edge)), var(--pm-switch-shadow, var(--lg-lens-drop));
+  transform-origin: 50% 50%; will-change: transform;
+}
+/* the glint: light caught along the drop's upper edge, brightest at the left, sliding back against the motion while
+   it travels; it stays in the top band, clear of the label's letters */
+:is(html[data-lg="on"][data-theme^="glass"], html[data-pm-switch="lens"]):not(#lgz) .lg-lens::after {
+  content: ''; position: absolute; left: 2px; right: 2px; top: 1px; height: 38%; border-radius: inherit; pointer-events: none; opacity: .6;
+  background: radial-gradient(70% 100% at 30% 0%, var(--pm-switch-glint, var(--lg-lens-glint)), transparent 70%); mix-blend-mode: var(--pm-switch-glint-blend, var(--lg-lens-glint-blend));
+}
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) .lg-bead::after { opacity: .45; }
+/* Light: the lens sits above its label, so any white in its body or glint veils the dark text. With a .16 body (.24 on
+   the CPU tier) and a glint reaching into the letters, a chosen label read 6.9:1 against 14.8:1 for its neighbours,
+   the selection looking weaker than what is not selected (2026-10-14). The drop is drawn by its edge and shadow on a
+   white sheet anyway, so the body is nearly clear and the glint stays on the top edge, above the letters. */
+html[data-lg="on"][data-theme="glass-light"]:not(#lgz) .lg-lens::after { height: 26%; }
+
+/* the chosen label rests a little larger under its lens (glass.js keyframes the swell while the lens moves; these match
+   KINDS.lens.magRest and KINDS.lensIcon.magRest) */
+:is(html[data-lg="on"][data-theme^="glass"], html[data-pm-switch="lens"]):not(#lgz) :is(nav.page-tabs .page-tab, #pmuRange > button, #sidePanelSlot .pm-segtab-item, .orch-tabs .orch-tab).active { scale: 1.04; }
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) #activityBar .icon[data-lg-current] .symbol { scale: 1.08; }
+/* the hover bead: lighter than a lens, gone the moment a press lands or a menu opens */
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) .lg-bead { opacity: 0; box-shadow: inset 0 0 0 .5px var(--lg-lens-hair), inset 0 1px 0 var(--lg-edge-top), inset 0 -1px 1px var(--lg-edge-bot), 0 0 0 .5px var(--lg-lens-edge), 0 3px 8px -3px var(--lg-shadow); }
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) .lg-bead.on { opacity: 1; }
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) .lg-bead.lg-under { opacity: 0 !important; }
+:is(html[data-lg="on"][data-theme^="glass"], html[data-pm-switch="lens"]):not(#lgz) .lg-lens[data-lg-lifted] { box-shadow: inset 0 0 0 .5px var(--pm-switch-line, var(--lg-lens-hair)), inset 0 1px 0 var(--pm-switch-top, var(--lg-edge-top)), 0 0 0 .5px var(--pm-switch-edge, var(--lg-lens-edge)), 0 10px 24px -6px var(--lg-shadow, rgba(0, 0, 0, .28)), 0 2px 4px var(--lg-shadow-near, rgba(0, 0, 0, .16)); transition: none; }
+:is(html[data-lg="on"][data-theme^="glass"], html[data-pm-switch="lens"]):not(#lgz) .lg-lens[data-lg-lifted]::after { opacity: 1; }
+/* The Orchestrator's views ride the same lens (a theme match, not its redesign): its capsule fill steps aside. */
+:is(html[data-lg="on"][data-theme^="glass"], html[data-pm-switch="lens"]):not(#lgz) .orch-tabs .orch-tab { box-shadow: none !important; }
+/* A strip the lens has taken over (data-lg-lensed, set by glass.js) hides its own chosen fill and its moving ink. */
+/* (A pseudo-element cannot sit inside :is(), so the fill and the ink are listed apart.) */
+:is(html[data-lg="on"][data-theme^="glass"], html[data-pm-switch="lens"]):not(#lgz) .pmw-ink-row[data-lg-lensed] > .pmw-ink,
+:is(html[data-lg="on"][data-theme^="glass"], html[data-pm-switch="lens"]):not(#lgz) .pmw-ink-row[data-lg-lensed] > .pmw-ink-opt:is([aria-selected="true"], [aria-checked="true"])::after { opacity: 0 !important; }
+/* In-flow indicators that move with their own content (every other segmented choice row and its travelling ink) take
+   the lens's material where they are: a clear drop with a hairline edge, a top catch light, a glint, a bottom shade and
+   a soft drop shadow, the same tokens as .lg-lens, so they read as one glass. The home panels' document tabs are not
+   indicators: their plate is the open document's own surface, one piece with the panel body, and keeps its shape. */
+html[data-lg="on"][data-theme="glass-dark"]:not(#lgz) { --lg-lens-body: rgba(255, 255, 255, .055); }
+html[data-lg="on"][data-theme="glass-light"]:not(#lgz) { --lg-lens-body: rgba(255, 255, 255, .5); }
+:is(html[data-lg="on"][data-theme^="glass"], html[data-pm-switch="lens"]):not(#lgz) .pmw-ink-row:not([data-lg-lensed]) > .pmw-ink,
+:is(html[data-lg="on"][data-theme^="glass"], html[data-pm-switch="lens"]):not(#lgz) .pmw-ink-row:not([data-lg-lensed]) > .pmw-ink-opt:is([aria-selected="true"], [aria-checked="true"])::after,
+:is(html[data-lg="on"][data-theme^="glass"], html[data-pm-switch="lens"]):not(#lgz) #pm-settings-root .segmented > button:is([aria-checked="true"], [aria-pressed="true"]),
+:is(html[data-lg="on"][data-theme^="glass"], html[data-pm-switch="lens"]):not(#lgz) #pm-settings-root .resource-row[aria-current="true"],
+:is(html[data-lg="on"][data-theme^="glass"], html[data-pm-switch="lens"]):not(#lgz) .pmt-cz :is(.pmt-cz-tile[aria-checked="true"], .pmt-cz-set[aria-pressed="true"], .pmt-cz-chipbox.pmt-cz-lit) {
+  background: radial-gradient(70% 100% at 30% 0%, var(--pm-switch-glint, var(--lg-lens-glint)), transparent 70%) 2px 1px / calc(100% - 4px) 38% no-repeat, linear-gradient(var(--pm-switch-fill, var(--lg-tint-lens)), var(--pm-switch-fill, var(--lg-tint-lens))), linear-gradient(var(--pm-switch-body, var(--lg-lens-body)), var(--pm-switch-body, var(--lg-lens-body))) !important;
+  box-shadow: inset 0 0 0 .5px var(--pm-switch-line, var(--lg-lens-hair)), inset 0 1px 0 var(--pm-switch-top, var(--lg-edge-top)), inset 0 -1px 1px var(--pm-switch-bottom, var(--lg-edge-bot)), 0 0 0 .5px var(--pm-switch-edge, var(--lg-lens-edge)), var(--pm-switch-shadow, var(--lg-lens-drop)) !important;
+  border-radius: var(--pm-switch-r, var(--pm-ctl-r)) !important; -webkit-backdrop-filter: none !important; backdrop-filter: none !important;
+}
+/* Jared #1 (2026-10-14): Home's panel tabs. The chosen tab's plate (the silhouette that makes it one surface with the
+   panel body) was glass on the same glass, so nothing showed. In Glass it is the lens's drop instead, drawn inside the
+   plate: it keeps the plate's own glide and liquid stretch, and follows the panel through drags, resizes and
+   reordering because it is the panel's own element. The plate's silhouette and fill step aside. */
+:is(html[data-lg="on"][data-theme^="glass"], html[data-pm-switch="lens"]):not(#lgz) .pmw-plate { clip-path: none !important; background: none !important; filter: none !important; }
+:is(html[data-lg="on"][data-theme^="glass"], html[data-pm-switch="lens"]):not(#lgz) .pmw-plate::before {
+  content: ''; position: absolute; left: var(--pmw-tab-flare, 22px); right: var(--pmw-tab-flare, 22px); top: 3px; bottom: 5px; pointer-events: none;
+  border-radius: var(--pm-switch-r, var(--pm-ctl-r));
+  background: radial-gradient(70% 100% at 30% 0%, var(--pm-switch-glint, var(--lg-lens-glint)), transparent 70%) 2px 1px / calc(100% - 4px) 38% no-repeat, linear-gradient(var(--pm-switch-fill, var(--lg-tint-lens)), var(--pm-switch-fill, var(--lg-tint-lens))), linear-gradient(var(--pm-switch-body, var(--lg-lens-body)), var(--pm-switch-body, var(--lg-lens-body)));
+  box-shadow: inset 0 0 0 .5px var(--pm-switch-line, var(--lg-lens-hair)), inset 0 1px 0 var(--pm-switch-top, var(--lg-edge-top)), inset 0 -1px 1px var(--pm-switch-bottom, var(--lg-edge-bot)), 0 0 0 .5px var(--pm-switch-edge, var(--lg-lens-edge)), var(--pm-switch-shadow, var(--lg-lens-drop));
+}
+/* Jared #2 (2026-10-14): Usage's list has one highlight in Glass, the lens; its own sliding ink steps aside */
+:is(html[data-lg="on"][data-theme^="glass"], html[data-pm-switch="lens"]):not(#lgz) #panel-usage .pmu-navink { opacity: 0 !important; }
+/* Jared #22 (2026-10-15): every selector in Settings is the one switcher. The left bar, the section tabs, the page index
+   and each manager's tabs carry the lens (glass.js STRIPS): each chosen item's own fill, edge, accent bar, dot,
+   underline and sliding ink step aside, and the tab strips sit on the same fill track as the page tabs. */
+:is(html[data-lg="on"][data-theme^="glass"], html[data-pm-switch="lens"]):not(#lgz) #pm-settings-root :is(.rail-scroll > .side-link, .domain-link, .workspace-tab, .pm51-index-group > .index-link, .manager-tab) { position: relative; z-index: 1; }
+:is(html[data-lg="on"][data-theme^="glass"], html[data-pm-switch="lens"]):not(#lgz) #pm-settings-root :is(.rail-scroll > .side-link.active, .domain-link.active, .workspace-tab.is-current, .pm51-index-group > .index-link.is-active, .manager-tab[aria-selected="true"]) {
+  background: transparent !important; background-image: none !important; box-shadow: none !important; border-color: transparent !important; color: var(--pm-switch-ink-on, var(--text-primary)) !important;
+}
+:is(html[data-lg="on"][data-theme^="glass"], html[data-pm-switch="lens"]):not(#lgz) #pm-settings-root :is(.rail-scroll > .side-link.active, .domain-link.active, .workspace-tab.is-current, .manager-tab[aria-selected="true"])::before,
+:is(html[data-lg="on"][data-theme^="glass"], html[data-pm-switch="lens"]):not(#lgz) #pm-settings-root :is(.rail-scroll > .side-link.active, .domain-link.active, .workspace-tab.is-current, .pm51-index-group > .index-link.is-active, .manager-tab[aria-selected="true"])::after,
+:is(html[data-lg="on"][data-theme^="glass"], html[data-pm-switch="lens"]):not(#lgz) #pm-settings-root :is(nav.workspace-tabs, nav.manager-tabs) > .tab-ink { opacity: 0 !important; }
+:is(html[data-lg="on"][data-theme^="glass"], html[data-pm-switch="lens"]):not(#lgz) #pm-settings-root :is(.workspace-tab, .manager-tab):not(.is-current):not([aria-selected="true"]) { color: var(--pm-switch-ink, var(--text-secondary)) !important; }
+:is(html[data-lg="on"][data-theme^="glass"], html[data-pm-switch="lens"]):not(#lgz) #pm-settings-root :is(.workspace-tab, .manager-tab):is(:hover, :focus-visible) { color: var(--pm-switch-ink-on, var(--text-primary)) !important; }
+:is(html[data-lg="on"][data-theme^="glass"], html[data-pm-switch="lens"]):not(#lgz) #pm-settings-root :is(.workspace-tab.is-current, .manager-tab[aria-selected="true"]) { font-weight: 600; }
+:is(html[data-lg="on"][data-theme^="glass"], html[data-pm-switch="lens"]):not(#lgz) #pm-settings-root nav.workspace-tabs {
+  background: var(--pm-switch-track, var(--lg-fill)) !important; border: 0 !important; border-radius: var(--pm-switch-r, var(--pm-ctl-r)) !important; box-shadow: none !important; position: relative;
+}
+/* the manager tabs stay a sticky bar, frosted: the rows scrolling under it are blurred and nearly covered, so none of
+   their words reads between or behind its labels (review r3: at 90 % with no blur, "Work Claude" read through
+   "Limits & switching") */
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) #pm-settings-root nav.manager-tabs {
+  background: color-mix(in srgb, var(--background) 94%, transparent) !important; border-color: var(--lg-line) !important; border-radius: var(--lg-r-bar) !important;
+  -webkit-backdrop-filter: blur(16px) saturate(1.2) !important; backdrop-filter: blur(16px) saturate(1.2) !important;
+}
+/* Settings' search results float over the page: a frosted menu as dense as a Customize screen, so none of the page's
+   words read through them (Glass's publish check, 2026-10-15: 70 % white in Glass Light and 62 % navy in Glass Dark,
+   with no blur, under "Wallpaper"); near opaque without a GPU, where nothing blurs */
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) #panel-settings .search-results {
+  -webkit-backdrop-filter: blur(24px) saturate(1.4); backdrop-filter: blur(24px) saturate(1.4); border-color: var(--lg-line);
+  box-shadow: inset 0 1px 0 var(--lg-edge-top), 0 30px 60px -20px var(--lg-shadow), 0 4px 14px var(--lg-shadow-near);
+}
+html[data-lg="on"][data-theme="glass-dark"]:not(#lgz) #panel-settings .search-results { background: rgba(10, 13, 26, .86); }
+html[data-lg="on"][data-theme="glass-light"]:not(#lgz) #panel-settings .search-results { background: rgba(250, 251, 253, .88); }
+html[data-lg="on"][data-theme="glass-dark"][data-lg-tier="cpu"]:not(#lgz) #panel-settings .search-results { background: rgba(12, 15, 28, .97); }
+html[data-lg="on"][data-theme="glass-light"][data-lg-tier="cpu"]:not(#lgz) #panel-settings .search-results { background: rgba(252, 253, 255, .97); }
+/* field placeholders read as words (review r3: "Filter services" at 2.2-3.0:1) */
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) #pm-settings-root :is(input, textarea)::placeholder { color: var(--text-muted) !important; opacity: 1 !important; }
+/* the page index's open sections: the current one reads by its words and a small blue mark, never a second fill */
+:is(html[data-lg="on"][data-theme^="glass"], html[data-pm-switch="lens"]):not(#lgz) #pm-settings-root .pm51-index-sub > .index-link.is-active { background: transparent !important; color: var(--pm-switch-ink-on, var(--text-primary)) !important; font-weight: 600; }
+:is(html[data-lg="on"][data-theme^="glass"], html[data-pm-switch="lens"]):not(#lgz) #pm-settings-root :is(.pm51-index-sub, .pm51-index-group) > .index-link.is-active::before { background: var(--pm-switch-mark, var(--accent-blue)) !important; box-shadow: none !important; }
+:is(html[data-lg="on"][data-theme^="glass"], html[data-pm-switch="lens"]):not(#lgz) #pm-settings-root :is(.domain-link, .rail-scroll > .side-link, .pm51-index-group > .index-link, .resource-row):not(.active):not(.is-active):not([aria-current="true"]):hover { background: var(--pm-switch-hover, var(--lg-fill-hover)) !important; }
+/* segmented choices: a fill track, and the chosen segment wears the lens's material where it is (see .pmw-ink-row) */
+:is(html[data-lg="on"][data-theme^="glass"], html[data-pm-switch="lens"]):not(#lgz) #pm-settings-root .segmented {
+  background: var(--pm-switch-track, var(--lg-fill)) !important; border-color: transparent !important; border-radius: var(--pm-switch-r, var(--pm-ctl-r)) !important; box-shadow: none !important;
+}
+:is(html[data-lg="on"][data-theme^="glass"], html[data-pm-switch="lens"]):not(#lgz) #pm-settings-root .segmented > button { color: var(--pm-switch-ink, var(--text-secondary)) !important; }
+:is(html[data-lg="on"][data-theme^="glass"], html[data-pm-switch="lens"]):not(#lgz) #pm-settings-root .segmented > button:is(:hover, :focus-visible) { color: var(--pm-switch-ink-on, var(--text-primary)) !important; }
+:is(html[data-lg="on"][data-theme^="glass"], html[data-pm-switch="lens"]):not(#lgz) #pm-settings-root .segmented > button:is([aria-checked="true"], [aria-pressed="true"]) { color: var(--pm-switch-ink-on, var(--text-primary)) !important; font-weight: 600; }
+:is(html[data-lg="on"][data-theme^="glass"], html[data-pm-switch="lens"]):not(#lgz) #pm-settings-root .resource-row[aria-current="true"] { border-color: transparent !important; }
+:is(html[data-lg="on"][data-theme^="glass"], html[data-pm-switch="lens"]):not(#lgz) #pm-settings-root .resource-row[aria-current="true"] .resource-row-name { color: var(--pm-switch-ink-on, var(--text-primary)) !important; }
+/* Jared #17 (2026-10-14): a field is one surface. A bar that wraps its input (Settings' rail and main searches, the
+   number steppers, the chat composer, the title-bar search's popover) wears the control fill and hairline, and the
+   input inside it is clear. A lone input wears them itself. Old Glass gave both layers its purple fill, so the input
+   showed as a darker box inside its bar. (Onboarding's and Usage's fields keep their own rules above.) */
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) :is(input:not([type=checkbox]):not([type=radio]):not([type=range]):not([type=color]), textarea, select) { background-color: var(--lg-fill) !important; border-color: var(--lg-line) !important; }
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) :is(.rail-search, .hero-search, .o55-num, .pm6-tb-search-pop, .pmw-sc-box) { background-color: var(--lg-fill) !important; border-color: var(--lg-line) !important; }
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) :is(.rail-search, .hero-search, .o55-num, .pm6-tb-search-pop, .pmw-sc-box) :is(input:not([type=checkbox]):not([type=radio]):not([type=range]):not([type=color]), textarea) { background: transparent !important; border-color: transparent !important; box-shadow: none !important; }
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) .lg-press {
+  display: block; position: fixed; width: 36px; height: 36px; border-radius: 50%; pointer-events: none; z-index: 2147483000;
+  background: radial-gradient(closest-side, rgba(255, 255, 255, .6), rgba(255, 255, 255, .16) 55%, transparent); mix-blend-mode: plus-lighter;
+}
+
+/* ---------------------------------------------------------------------------------------------------------------
+   7. The CPU path (no GPU): the same sheets, rims and shine as frosted glass without refraction or live blur;
+      denser so text holds over the crisp wallpaper
+   --------------------------------------------------------------------------------------------------------------- */
+/* CPU tier: no live blur, so a menu's translucency is ghost text from whatever is behind it (pm7-editor-customizer,
+   2026-10-14: Usage rows readable through a Customize dialog at .92). Menus are near opaque here (.97). */
+html[data-lg="on"][data-theme="glass-dark"][data-lg-tier="cpu"]:not(#lgz) { --lg-tint-panel: rgba(10, 13, 26, .80); --lg-tint-card: rgba(10, 13, 26, .82); --lg-tint-bar: rgba(10, 13, 26, .80); --lg-tint-menu: rgba(12, 15, 28, .97); --lg-tint-lens: rgba(255, 255, 255, .10); }
+html[data-lg="on"][data-theme="glass-light"][data-lg-tier="cpu"]:not(#lgz) { --lg-tint-panel: rgba(250, 251, 253, .84); --lg-tint-card: rgba(250, 251, 253, .86); --lg-tint-bar: rgba(250, 251, 253, .84); --lg-tint-menu: rgba(252, 253, 255, .97); --lg-tint-lens: rgba(255, 255, 255, .06); }   /* the CPU lens is a plain tint over its label: barely any, so the chosen label stays as dark as its neighbours */
+
+/* ---------------------------------------------------------------------------------------------------------------
+   8. The concept's own control (status bar), in the same material
+   --------------------------------------------------------------------------------------------------------------- */
+#lg-demo-pop { display: none; }
+#lg-demo-pop[data-open] {
+  display: block; position: fixed; z-index: 2147483100; right: 12px; bottom: 36px; width: 300px; padding: 14px;
+  font: 12.5px/1.45 var(--body-font, Inter, system-ui, sans-serif); color: var(--text-primary); border-radius: 16px;
+  background: var(--lg-tint-menu, rgba(20, 20, 30, .9));
+}
+#lg-demo-pop h3 { margin: 0 0 8px; font-size: 13px; font-weight: 650; }
+#lg-demo-pop .lg-row { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin: 8px 0; position: relative; z-index: 6; }
+#lg-demo-pop .lg-row > span { color: var(--text-secondary); }
+#lg-demo-pop .lg-seg { display: inline-flex; padding: 2px; border-radius: 6px; background: var(--lg-fill, rgba(255, 255, 255, .08)); }
+#lg-demo-pop .lg-seg button { all: unset; cursor: pointer; padding: 3px 9px; border-radius: 3px; color: var(--text-secondary); font-weight: 550; }
+#lg-demo-pop .lg-seg button[aria-pressed="true"] { background: var(--lg-fill-press, rgba(255, 255, 255, .18)); color: var(--text-primary); }
+#lg-demo-pop .lg-seg button:focus-visible { outline: 2px solid var(--accent-blue); outline-offset: 1px; }
+
+/* ---------------------------------------------------------------------------------------------------------------
+   9. Wallpapers for every look (Jared, 2026-10-11). The choice, the Settings gallery and the prints for every look
+      belong to the wallpapers package (Concepts/wallpapers/opus-5.5, CONTRACT.md); Glass refracts the print it lands
+      on --lg-wall. Until W5 is on main, the old Glass background row (Mesh, Depth, Minimal) stays hidden here.
+   --------------------------------------------------------------------------------------------------------------- */
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) #setting-general\.visual\.glass-background-mode { display: none !important; }
+
+/* Settings under Liquid Glass: sections are cards on the sheet; the active domain is a lens-like fill */
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) #pm-settings-root :is(.pm-shell, .workspace-shell, .workspace-stage, .document-layout, .document-main) { background: transparent !important; }
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) #pm-settings-root section.settings-section { padding: 18px 20px !important; margin-bottom: 14px !important; }
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) #pm-settings-root :is(.domain-link.active, .side-card) { background: var(--lg-fill-press) !important; box-shadow: inset 0 1px 0 var(--lg-edge-top) !important; border: 0 !important; }
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) #pm-settings-root aside.domain-rail { margin: 0 6px 0 2px; }
+
+/* ---------------------------------------------------------------------------------------------------------------
+   10. Friendly's dot field, spread (Jared, 2026-10-11: "I really like the dots pattern on the wallpapers for friendly,
+       but its not used in a lot of places... Like in the settings/usage/left rail sections and the transcript area of
+       the new chat system"). Friendly is the DS / 3DS / Wii / Wii U menus, Cocoon and iiSU: the same 18 px dot grid as
+       Friendly's ground, with its soft mint and lavender light, now behind Usage's cards, in the rail's panels, behind
+       Settings' sections and under the new chat's transcript. The dots ride with the content as it scrolls (local
+       attachment), like a handheld's menu, and never sit inside a card under text.
+   --------------------------------------------------------------------------------------------------------------- */
+html[data-lg="on"][data-theme^="friendly"] {
+  --lg-dots: radial-gradient(var(--pm6-cozy-dot) 1.3px, transparent 1.8px) 0 0 / 18px 18px;
+  --lg-dots-glow: radial-gradient(60% 46% at 12% 0%, var(--pm6-cozy-glow-mint), transparent 70%), radial-gradient(52% 40% at 96% 100%, var(--pm6-cozy-glow-lav), transparent 70%);
+}
+html[data-lg="on"][data-theme="friendly-light"] { --pm6-cozy-dot: rgba(122, 109, 140, .21); }
+html[data-lg="on"][data-theme="friendly-dark"] { --pm6-cozy-dot: rgba(200, 190, 225, .13); }
+html[data-lg="on"][data-theme^="friendly"] #pmuStage,
+html[data-lg="on"][data-theme^="friendly"] #pm-settings-root .document-main,
+html[data-lg="on"][data-theme^="friendly"] #sidePanelSlot .side-panel-view.active > .sh-scroll,
+html[data-lg="on"][data-theme^="friendly"] #pmw-chat .pmw-sc-scroll {
+  background: var(--lg-dots), var(--lg-dots-glow) !important;
+  background-attachment: local, local, local !important;
+}
+html[data-lg="on"][data-theme^="friendly"] #pmuScroll { background: transparent !important; }
+/* the rail's panel and the chat transcript are lighter fields, so their dots step back a little */
+html[data-lg="on"][data-theme^="friendly"] :is(#sidePanelSlot .side-panel-view.active > .sh-scroll, #pmw-chat .pmw-sc-scroll) { --pm6-cozy-glow-mint: transparent; }
+
+/* ---------------------------------------------------------------------------------------------------------------
+   11. Onboarding and the tour in Liquid Glass (Jared, 2026-10-11: "dont forget about the onboarding wizard and the
+       tour... update the buttons and switches in the onboarding to match your new look"). The window is a sheet; the
+       app behind it fades into a frosted veil of the wallpaper (so the window's glass agrees with what is behind it);
+       the step rail and the light/dark choice carry the lens; actions are tinted glass; choices are glass rows that
+       light up when chosen; switches are the curved glass switch. The tour floats over the live app: its callout and
+       bar blur what is behind them. Corners are concentric with the 22 px window: 12 for cards and tiles, 10 for buttons.
+   --------------------------------------------------------------------------------------------------------------- */
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) #pm-o55-onboarding .o55-scrim {
+  background: linear-gradient(var(--lg-veil), var(--lg-veil)), var(--lg-frost-heavy, none) 0 0 / var(--lg-vw, 100vw) var(--lg-vh, 100vh) no-repeat !important;
+}
+html[data-lg="on"][data-theme="glass-dark"]:not(#lgz) { --lg-veil: rgba(4, 6, 14, .38); }
+html[data-lg="on"][data-theme="glass-light"]:not(#lgz) { --lg-veil: rgba(255, 255, 255, .28); }
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) #pm-o55-onboarding .o55-win { border-radius: 22px !important; }
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) #pm-o55-onboarding :is(.o55-head, .o55-foot) { background: transparent !important; border-color: var(--lg-line) !important; box-shadow: none !important; }
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) #pm-o55-onboarding .o55-head { box-shadow: inset 0 -1px 0 var(--lg-line) !important; }
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) #pm-o55-onboarding .o55-foot { box-shadow: inset 0 1px 0 var(--lg-line) !important; }
+/* the art sits in an inset well of the sheet */
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) #pm-o55-onboarding .o55-stage {
+  background: var(--lg-well) !important; border-radius: 0 0 0 21px !important;
+  box-shadow: inset -1px 0 0 var(--lg-line), inset 0 12px 30px -24px rgba(0, 0, 0, .5) !important;
+}
+html[data-lg="on"][data-theme="glass-dark"]:not(#lgz) { --lg-well: rgba(2, 4, 12, .42); }
+html[data-lg="on"][data-theme="glass-light"]:not(#lgz) { --lg-well: rgba(255, 255, 255, .34); }
+/* actions */
+/* the tour bar's own buttons stay clear until hover (pm7-onboarding-art-glass owns them in source) */
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) :is(#pm-o55-onboarding .o55-btn, .o55t-btn) {
+  border: 0 !important; border-radius: 10px !important; color: var(--text-primary) !important;
+  background: var(--lg-fill) !important; box-shadow: inset 0 1px 0 var(--lg-edge-top), inset 0 -1px 1px var(--lg-edge-bot) !important;
+  transition: background-color 160ms ease, box-shadow 200ms ease, transform 380ms cubic-bezier(.3, 1.3, .5, 1) !important;
+}
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) :is(#pm-o55-onboarding .o55-btn, .o55t-btn):hover { background: var(--lg-fill-hover) !important; transform: translateY(-1px); }
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) #pm-o55-onboarding .o55-btn.o55-ghost:not(:hover) { background: transparent !important; box-shadow: none !important; }
+/* the main action: tinted glass, its own light at the top edge and a soft coloured shadow */
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) :is(#pm-o55-onboarding .o55-btn.o55-primary, .o55t-btn.o55t-primary, .o55t-root .o55t-btn:not(.o55t-secondary):last-child) {
+  color: #FFFFFF !important;
+  background: radial-gradient(120% 140% at 30% -20%, rgba(255, 255, 255, .42), transparent 55%), linear-gradient(180deg, rgba(var(--accent-primary-rgb), .96), rgba(var(--accent-primary-rgb), .78)) !important;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, .6), inset 0 -1px 1px rgba(0, 0, 0, .22), 0 8px 22px -8px rgba(var(--accent-primary-rgb), .75), 0 1px 2px rgba(0, 0, 0, .25) !important;
+  text-shadow: 0 1px 1px rgba(0, 0, 0, .25);
+}
+html[data-lg="on"][data-theme="glass-dark"]:not(#lgz) :is(#pm-o55-onboarding .o55-btn.o55-primary) { --accent-primary-rgb: 52, 128, 232; }
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) #pm-o55-onboarding .o55-btn.o55-primary:hover { filter: brightness(1.06); }
+/* choices: glass rows that light up when chosen */
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) #pm-o55-onboarding :is(.o55-card, .o55-tile, .o55-provider) {
+  border: 0 !important; border-radius: 12px !important; background: var(--lg-fill) !important;
+  box-shadow: inset 0 1px 0 var(--lg-edge-top), inset 0 -1px 1px var(--lg-edge-bot), 0 0 0 .5px var(--lg-line) !important;
+  transition: background-color 180ms ease, box-shadow 220ms ease, transform 380ms cubic-bezier(.3, 1.3, .5, 1) !important;
+}
+/* their hover belongs to the shared hover system (22-hover.css), which also moves them */
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) #pm-o55-onboarding :is(.o55-card, .o55-tile, .o55-provider):is(.o55-on, [aria-checked="true"], [aria-pressed="true"]) {
+  background: radial-gradient(120% 120% at 20% -10%, rgba(255, 255, 255, .16), transparent 60%), var(--lg-fill-press) !important;
+  box-shadow: inset 0 1px 0 var(--lg-edge-top), inset 0 0 0 1.5px rgba(var(--accent-primary-rgb), .85), 0 10px 26px -14px rgba(var(--accent-primary-rgb), .6) !important;
+}
+/* fields: the box the words are typed into is the glass; the field's label and hint stay outside it */
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) #pm-o55-onboarding :is(.o55-inputwrap, .o55-field :is(input, textarea):not(.o55-inputwrap *)) {
+  border: 0 !important; border-radius: 10px !important; background: var(--lg-fill) !important;
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, .12), inset 0 0 0 .5px var(--lg-line) !important;
+}
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) #pm-o55-onboarding :is(.o55-inputwrap:focus-within, .o55-field :is(input, textarea):not(.o55-inputwrap *):focus) { box-shadow: inset 0 0 0 1.5px rgba(var(--accent-primary-rgb), .8), 0 0 0 3px rgba(var(--accent-primary-rgb), .18) !important; }
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) #pm-o55-onboarding .o55-inputwrap :is(input, textarea) { background: transparent !important; border: 0 !important; box-shadow: none !important; outline: none !important; }
+/* segments and the step rail: a fill track, the lens chooses */
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) #pm-o55-onboarding .o55-seg { border: 0 !important; border-radius: 10px !important; background: var(--lg-fill) !important; box-shadow: none !important; padding: 2px !important; }
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) #pm-o55-onboarding .o55-seg button { background: transparent !important; box-shadow: none !important; border: 0 !important; border-radius: 8px !important; color: var(--text-secondary) !important; position: relative; z-index: 1; }
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) #pm-o55-onboarding .o55-seg button.o55-on { color: var(--text-primary) !important; font-weight: 650; }
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) #pm-o55-onboarding .o55-railitem[data-state="current"] .o55-raillabel { color: var(--text-primary) !important; font-weight: 650; }
+/* switches: the same curved glass switch as the app */
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) #pm-o55-onboarding .o55-switch {
+  width: 38px !important; height: 22px !important; border-radius: 11px !important; background: var(--lg-switch-off) !important;
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, .22), inset 0 0 0 .5px var(--lg-line) !important; transition: background-color 420ms cubic-bezier(.2, .8, .2, 1) !important;
+}
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) #pm-o55-onboarding .o55-toggle.o55-on .o55-switch { background: var(--accent-blue) !important; }
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) #pm-o55-onboarding .o55-switch span {
+  top: 2px !important; left: 2px !important; width: 18px !important; height: 18px !important; border-radius: 50% !important;
+  background: radial-gradient(120% 90% at 35% 22%, #FFFFFF, #F1F4F9 55%, #DCE3EE) !important;
+  box-shadow: inset 0 1px 0 #FFFFFF, inset 0 -1px 1px rgba(20, 30, 60, .14), 0 2px 5px rgba(0, 8, 30, .32) !important;
+  transition: transform 520ms cubic-bezier(.45, 0, .2, 1.15), background 220ms ease !important;
+}
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) #pm-o55-onboarding .o55-toggle.o55-on .o55-switch span { transform: translateX(16px) !important; }
+html[data-lg="on"][data-theme^="glass"][data-lg-tier="gpu"]:not(#lgz) #pm-o55-onboarding .o55-switch[data-lg-held] span {
+  background: radial-gradient(120% 90% at 35% 20%, rgba(255, 255, 255, .55), rgba(255, 255, 255, .08) 60%) !important;
+  -webkit-backdrop-filter: url(#lg-knob) saturate(1.4); backdrop-filter: url(#lg-knob) saturate(1.4); transform: scale(1.28, 1.18) !important;
+}
+html[data-lg="on"][data-theme^="glass"][data-lg-tier="gpu"]:not(#lgz) #pm-o55-onboarding .o55-toggle.o55-on .o55-switch[data-lg-held] span { transform: translateX(16px) scale(1.28, 1.18) !important; }
+/* the tour: callout and bar are live glass over the app; its spotlight ring is a lit glass edge */
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) :is(.o55t-callout, .o55t-bar) { border: 0 !important; border-radius: 16px !important; }
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) .o55t-ring { box-shadow: 0 0 0 1.5px rgba(255, 255, 255, .85), 0 0 0 5px rgba(var(--accent-primary-rgb), .35), 0 0 30px 6px rgba(var(--accent-primary-rgb), .3) !important; border-radius: 12px !important; }
+.lg-lenses-local { display: none; }
+:is(html[data-lg="on"][data-theme^="glass"], html[data-pm-switch="lens"]):not(#lgz) .lg-lenses-local { display: block; position: absolute; inset: 0; z-index: 30; pointer-events: none; border-radius: inherit; }
+
+/* Settings' chapter header is a bar sheet under Liquid Glass (glass.js SURFACES): on the bare wallpaper its line, a 62 %
+   tint, read 4.2:1 over Ribbons and 1.9-2.9:1 over Prism or Pool in Glass Dark (2026-10-14). The line takes the look's
+   secondary text on the bar, and the bar keeps the header's own spacing with room inside its corners. */
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) #panel-settings header.workspace-separator[data-lg-kind] { padding: 10px 16px 11px !important; }
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) #panel-settings header.workspace-separator[data-lg-kind] > p { color: var(--text-secondary) !important; }
+/* Settings Home: its intro is a panel and its two lists are cards; the intro's lede and the search's key hint take the
+   look's secondary text */
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) #panel-settings .home-page > section.home-hero[data-lg-kind] { padding: 20px 22px 22px !important; }
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) #panel-settings .home-page > section.home-hero[data-lg-kind] :is(.home-lede, .kbd) { color: var(--text-secondary) !important; }
+
+/* ---------------------------------------------------------------------------------------------------------------
+   12. The switcher (Jared #22, 2026-10-15): one tab, segment and list-selection component for every look.
+   Every strip glass.js lists in STRIPS is this one component:
+   - page tabs, Usage's navigation and range, the rail's tabs, the Orchestrator's views;
+   - Settings' left bar, section tabs, page index and manager tabs;
+   - the Wizard's work type, the theme menu, the Customize screens.
+   It is a track, a lens that travels to the chosen item on a spring, and labels that step from the ink colour to the
+   chosen colour. Selections that live in scrolling content wear the lens's material in place: Settings' segmented
+   choices and service lists, and Home's segmented rows and panel tabs.
+   The rules above draw it from --pm-switch-* tokens and fall back to Glass's own; Glass sets none of them. Another
+   look adopts the component by setting --pm-switch: lens in its theme block with its own values (CONTRACT.md, "The
+   switcher"). glass.js then marks <html data-pm-switch="lens"> and runs the strips and lenses in that look too, without
+   Glass's sheets, frost or refraction. The defaults below have zero specificity; a look gets them for any token it
+   leaves out.
+   --------------------------------------------------------------------------------------------------------------- */
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) { --pm-switch: lens; }
+:where(html[data-pm-switch="lens"]) {
+  --pm-switch-track: color-mix(in srgb, var(--text-primary) 6%, transparent);
+  --pm-switch-hover: color-mix(in srgb, var(--text-primary) 8%, transparent);
+  --pm-switch-fill: color-mix(in srgb, var(--accent-primary) 18%, transparent); --pm-switch-body: transparent;
+  --pm-switch-line: color-mix(in srgb, var(--accent-primary) 55%, transparent); --pm-switch-edge: transparent;
+  --pm-switch-top: transparent; --pm-switch-bottom: transparent;
+  --pm-switch-glint: transparent; --pm-switch-glint-blend: normal; --pm-switch-shadow: 0 0 0 0 transparent;
+  --pm-switch-r: 6px; --pm-switch-r-in: 3px;
+  --pm-switch-ink: var(--text-secondary); --pm-switch-ink-on: var(--text-primary); --pm-switch-mark: var(--accent-primary);
+}
+
+/* ---------------------------------------------------------------------------------------------------------------
+   13. Today's Glass, with Liquid Glass off (coordinator, 2026-10-15, after pm7-contrast-opus's round): Settings' words
+   that stand straight on the wallpaper, where no ink reaches 4.5:1 over a bright print, get that look's own reading
+   surface and blur. These are the chapter headers, Settings Home's intro, the managers' footer links, their toolbars,
+   intro lines and leads, and the Notifications switch. With Liquid Glass on, the headers and the intro are glass sheets
+   and the rest take the card tint (section 1). Found by walking every chapter, section and manager tab for text with no
+   ground under it.
+   --------------------------------------------------------------------------------------------------------------- */
+html[data-theme^="glass"]:not([data-lg="on"]) #panel-settings :is(header.workspace-separator, .home-page > section.home-hero, .pm51-quiet, .o55-toolbar, .o55-quiet-line, .o55-mgp-lead, .o55-notif-master):not(:is(.domain-card, .panel-card, .pm51-stats, .pm51-panel-card, .pm51-advanced, .pm51-hero-facts, .pm51-settings-inline .settings-section, .drawer, .detail-inspector, .o55-notif-master, .o55-toolbar) *) {
+  background: var(--rg-reading) !important; -webkit-backdrop-filter: blur(18px) saturate(1.25); backdrop-filter: blur(18px) saturate(1.25);
+  border-color: transparent !important; border-radius: 14px !important;
+}
+html[data-theme^="glass"]:not([data-lg="on"]) #panel-settings header.workspace-separator { padding: 10px 16px 11px !important; }
+html[data-theme^="glass"]:not([data-lg="on"]) #panel-settings .home-page > section.home-hero { padding: 20px 22px 22px !important; }
+html[data-theme^="glass"]:not([data-lg="on"]) #panel-settings :is(.pm51-quiet, .o55-quiet-line, .o55-mgp-lead):not(:is(.domain-card, .panel-card, .pm51-stats, .pm51-panel-card, .pm51-advanced, .pm51-hero-facts, .pm51-settings-inline .settings-section, .drawer, .detail-inspector) *) { padding: 8px 12px !important; }
+
+/* ---------------------------------------------------------------------------------------------------------------
+   14. The Customize screens (Jared #24, 2026-10-15): the terminal's and the editor's (.pmt-cz; the editor's adds
+   .pmed-cz), opened from a terminal's or an editor's menu, or from Settings' Terminal look and Editor look groups. The
+   dialog is a dense glass menu sheet (data-lg-surface="menu" data-lg-dense, set by 77-customize.js and
+   11-editor-customize.js) and its one-of-several rows ride the lens (STRIPS, .pmt-cz .pmw-ink-row). Inside it, the
+   older "glass" drawing in 26-customize.css used pre-Liquid-Glass tokens, which read in Liquid Glass as white panels
+   with lines that vanished on Glass Light and tiles that were white plates on the sheet. Here:
+   - controls and tiles are glass fills on the sheet, with its hairline and a top catch light;
+   - the chosen tile, scheme, set and lit chip wear the lens's material where they are (section 6, as Settings' choices);
+   - the section bar that stays on top while the options scroll is a frosted bar of the sheet, its jump buttons quiet
+     until pointed at;
+   - the preview that docks while you scroll is a small glass card;
+   - every line and edge is the sheet's hairline.
+   --------------------------------------------------------------------------------------------------------------- */
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) .pmt-cz {
+  --pmt-cz-line: var(--lg-line); --pmt-cz-line-2: color-mix(in srgb, var(--text-primary) 22%, transparent);
+  --pmt-cz-fill: var(--lg-fill); --pmt-cz-hover: var(--lg-fill-hover); --pmt-cz-edge: var(--lg-edge-top);
+  --pmt-cz-radius: var(--lg-r-card); --pmt-cz-r: 10px; --pmt-cz-r-in: 6px;
+}
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) .pmt-cz :is(.pmt-cz-tile, .pmt-cz-set, .pmt-cz-chipbox, .pmt-cz-myset):not([aria-checked="true"]):not([aria-pressed="true"]):not(.pmt-cz-lit) {
+  background: var(--lg-fill) !important; border-color: var(--lg-line) !important; box-shadow: inset 0 1px 0 color-mix(in srgb, var(--lg-edge-top) 45%, transparent) !important;
+}
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) .pmt-cz :is(.pmt-cz-tile, .pmt-cz-set, .pmt-cz-chipbox, .pmt-cz-myset):not([aria-checked="true"]):not([aria-pressed="true"]):not(.pmt-cz-lit):hover {
+  background: var(--lg-fill-hover) !important;
+}
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) .pmt-cz :is(.pmt-cz-tile, .pmt-cz-set, .pmt-cz-chipbox, .pmt-cz-myset) { border-radius: var(--pmt-cz-r) !important; }
+/* buttons: Save this look..., Try it, Reset, the step buttons; Done keeps the look's primary */
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) .pmt-cz :is(.pmt-textbtn, .pmt-step):not(.pmt-textbtn-primary):not(.pmt-cz-nav .pmt-textbtn) {
+  background: var(--lg-fill) !important; border: 1px solid var(--lg-line) !important; border-radius: var(--pm-ctl-r) !important; box-shadow: none !important;
+}
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) .pmt-cz :is(.pmt-textbtn, .pmt-step):not(.pmt-textbtn-primary):not(.pmt-cz-nav .pmt-textbtn):hover { background: var(--lg-fill-hover) !important; }
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) .pmt-cz :is(.pmt-textbtn, .pmt-step):not(.pmt-textbtn-primary):not(.pmt-cz-nav .pmt-textbtn):active { background: var(--lg-fill-press) !important; }
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) .pmt-cz .pmt-cz-done { border-radius: var(--pm-ctl-r) !important; }
+/* the section bar: frosted, so the options scrolling under it blur away instead of reading through its words */
+/* above the dialog's own lens layer (.lg-lenses-local, z-index 30), so a choice row's lens that scrolls under the bar
+   goes under it with its row instead of standing on the bar's words (3.0:1 in Glass Dark) */
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) .pmt-cz .pmt-cz-nav {
+  z-index: 31; margin: -6px 0 -10px; background: color-mix(in srgb, var(--background) 92%, transparent) !important; border: 1px solid var(--lg-line) !important;
+  border-radius: var(--lg-r-bar); -webkit-backdrop-filter: blur(16px) saturate(1.2); backdrop-filter: blur(16px) saturate(1.2);
+}
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) .pmt-cz .pmt-cz-nav .pmt-textbtn { background: transparent !important; border: 0 !important; border-radius: var(--pm-ctl-r) !important; box-shadow: none !important; }
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) .pmt-cz .pmt-cz-nav .pmt-textbtn:hover { background: var(--lg-fill-hover) !important; }
+/* the one-of-several rows: the switcher's track (the lens is the chosen one) */
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) .pmt-cz .pmt-cz-seg { background: var(--pm-switch-track, var(--lg-fill)) !important; border-color: transparent !important; border-radius: var(--pm-ctl-r) !important; }
+/* the sheet's lines, and the plates inside it */
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) .pmt-cz :is(.pmt-cz-head, .pmt-cz-foot, .pmt-cz-meter, .pmt-cz-preview, .pmt-cz-search, .pmt-cz-thumb) { border-color: var(--lg-line) !important; }
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) .pmt-cz .pmt-cz-dock {
+  border-color: var(--lg-line) !important; border-radius: var(--pmt-cz-r) !important;
+  box-shadow: inset 0 1px 0 var(--lg-edge-top), 0 12px 30px -8px var(--lg-shadow), 0 3px 10px var(--lg-shadow-near) !important;
+}

@@ -45,6 +45,8 @@ function stripFont(stripEl) {
 }
 // a look change (theme, NieR and its parts, motion) can change every label's width: measure again and refit
 bus.on('look', function () { measureCache = {}; fontCache.value = ''; render.schedule({ animate: false }); });
+// Tab Sizing changed in Settings: every strip fits again
+PMW.settings.on('panels.tabs.sizing', function () { render.schedule({ animate: false }); });
 
 /* a failed command's mark says what it is in words (a bare number did not; the cross-look review) */
 function exitWords(code) { return 'exited ' + code; }
@@ -93,6 +95,25 @@ strip.fit = function (tabs, recs, activeId, avail, font, frozen, host) {
   }
   if (!others.length) {   // the active tab alone: as wide as the room allows, never under 120
     res.widths[activeId] = activeFor(0); res.size[activeId] = res.widths[activeId] < nat[activeId] ? 'shrunk' : 'full';
+    return res;
+  }
+  /* Tab Sizing: Fixed width (general.interaction.tab-sizing, SSYS-050) skips the shrinking: a run of tabs at their own
+     width around the active one, and what does not fit waits behind "+N" at once (pinned tabs stay 36 px and the active
+     tab stays shown and at least 120 px wide, as in Shrink to fit) */
+  if (PMW.settings.get('panels.tabs.sizing') === 'fixed') {
+    if (activeIn) aW = Math.max(TAB.activeMin, Math.min(aW, room - TAB.more - 2 * TAB.gap));
+    var leftRoom = room - TAB.more - (activeIn ? aW + TAB.gap : 0), keepF = {};
+    var ai0 = activeIn ? rest.indexOf(activeId) : -1, lo = ai0, hi = ai0, goR = true, goL = true;
+    if (ai0 < 0) { lo = -1; hi = -1; goL = false; }
+    while (goR || goL) {
+      if (goR) { var tr = rest[hi + 1]; if (tr !== undefined && leftRoom >= nat[tr] + TAB.gap) { keepF[tr] = true; leftRoom -= nat[tr] + TAB.gap; hi++; } else goR = false; }
+      if (goL) { var tl = rest[lo - 1]; if (tl !== undefined && leftRoom >= nat[tl] + TAB.gap) { keepF[tl] = true; leftRoom -= nat[tl] + TAB.gap; lo--; } else goL = false; }
+    }
+    rest.forEach(function (t) {
+      if (t === activeId) { res.widths[t] = aW; res.size[t] = aW < nat[t] ? 'shrunk' : 'full'; }
+      else if (keepF[t]) { res.widths[t] = nat[t]; res.size[t] = 'full'; }
+      else res.hidden.push(t);
+    });
     return res;
   }
   // 1. shrink inactive tabs evenly toward 72 (a tab never grows past its natural width)
@@ -159,6 +180,11 @@ function fitColumn(p, l, height, pinnedIds, restIds) {
 
 /* ---- render ---- */
 strip.render = function (panelEl, p, l, opts) {
+  var pass = strip.prepare(panelEl, p, l, opts);
+  pass.measure(); pass.place(); pass.finish();
+};
+/* The renderer batches these phases across panels. Standalone strip callers keep the same synchronous contract. */
+strip.prepare = function (panelEl, p, l, opts) {
   opts = opts || {};
   var host = panelEl.querySelector('.pmw-strip-host');
   if (!host._pmw) buildStrip(host, p.id);
@@ -184,53 +210,62 @@ strip.render = function (panelEl, p, l, opts) {
   restIds.forEach(function (tid, i) { placeTab(s, s.tabsEl, tid, i, l, p); });
   setAttr(s.pins, 'hidden', !pinnedIds.length);
   setAttr(s.sep, 'hidden', !pinnedIds.length || !restIds.length);
-  // fit against the panel's target width: an animated paint has only just written the new width, so the strip's own
-  // clientWidth still reports where the glide starts (the panel-to-strip inset is the same at either end of it)
-  var tr = opts.rects && opts.rects.panels && opts.rects.panels[p.id];
-  var stripW = host.clientWidth;
-  if (tr && panelEl.offsetWidth) stripW = Math.max(0, tr.w - (panelEl.offsetWidth - host.clientWidth));
-  else if (!stripW) stripW = render.rects() && render.rects().panels[p.id] ? render.rects().panels[p.id].w : 0;
-  s.fitW = stripW;
-  // a panel collapsed beside another (a row split) is a 35 px column: its tabs stand as icons, one above the other
-  var column = p.collapsed && panelEl.getAttribute('data-collapsed') === 'row';
-  setAttr(host, 'data-column', column);
-  setAttr(s.expand, 'hidden', !p.collapsed);
-  if (p.collapsed) {
-    var kidsOf = model.parentOf(l, p.id), first = kidsOf && kidsOf.kids[0] && kidsOf.kids[0].id === p.id;
-    s.expand.setAttribute('data-dir', column ? (first ? 'right' : 'left') : (first ? 'down' : 'up'));
-  }
-  var fixed = TAB.stripPadL + TAB.stripPadR + TAB.plus + TAB.menu + TAB.gripReserve + (narrow && panels.length > 1 ? 52 : 0) + (pinnedIds.length && restIds.length ? 9 : 0) + (p.collapsed ? TAB.plus + 2 : 0);
-  var font = stripFont(host);
-  var fit = column ? fitColumn(p, l, tr ? tr.h : panelEl.offsetHeight, pinnedIds, restIds)
-    : strip.fit(p.tabs, l.tabs, p.active, Math.max(0, stripW - fixed), font, s.frozen, host);
-  var hiddenSet = {};
-  fit.hidden.forEach(function (t) { hiddenSet[t] = true; });
-  s.hidden = fit.hidden.slice();
-  // every width first, then the labels are measured against them (one layout, not one per tab)
-  p.tabs.forEach(function (tid) {
-    var el = s.tabEls[tid];
-    var w = fit.widths[tid];
-    setAttr(el, 'hidden', !!hiddenSet[tid]);
-    setAttr(el, 'data-size', fit.size[tid] || 'full');
-    if (column) { if (el.style.width) el.style.width = ''; }
-    else if (w != null && !hiddenSet[tid]) { var px = w + 'px'; if (el.style.width !== px) el.style.width = px; }
-  });
-  p.tabs.forEach(function (tid) { if (!hiddenSet[tid]) middleEllipsis(s.tabEls[tid], l.tabs[tid], fit.size[tid]); });
-  // +N: plain text, counts the hidden tabs only
-  var n = fit.hidden.length;
-  setAttr(s.more, 'hidden', !n);
-  if (n) {
-    setText(s.more, '+' + n);
-    var activeHidden = hiddenSet[p.active];
-    s.more.setAttribute('aria-label', n + ' more tab' + (n === 1 ? '' : 's') + (activeHidden ? ', including the active tab' : ''));
-    s.more.setAttribute('data-pm-hover-label', n + ' more tab' + (n === 1 ? '' : 's'));
-    s.more.setAttribute('data-pm-hover-detail', 'List the tabs that do not fit');
-  }
-  setAttr(s.lock, 'hidden', !p.locked);
-  s.plus.setAttribute('data-pm-hover-label', 'New tab or panel');
-  s.plus.setAttribute('data-pm-hover-detail', PMW.keyLabel(KEYS.plusMenu) + ' opens this menu, ' + PMW.keyLabel(KEYS.newTab) + ' makes a new tab of this panel\'s usual kind');
-  setAttr(host, 'data-collapsed', p.collapsed ? 'yes' : null);
-  if (PMW.shape) PMW.shape.sync(host, p, l, opts);
+  var fit, hiddenSet, column;
+  return {
+    measure: function () {
+      // fit against the panel's target width: an animated paint has only just written the new width, so the strip's own
+      // clientWidth still reports where the glide starts (the panel-to-strip inset is the same at either end of it)
+      var tr = opts.rects && opts.rects.panels && opts.rects.panels[p.id];
+      var stripW = host.clientWidth;
+      if (tr && panelEl.offsetWidth) stripW = Math.max(0, tr.w - (panelEl.offsetWidth - host.clientWidth));
+      else if (!stripW) stripW = render.rects() && render.rects().panels[p.id] ? render.rects().panels[p.id].w : 0;
+      s.fitW = stripW;
+      // a panel collapsed beside another (a row split) is a 35 px column: its tabs stand as icons, one above the other
+      column = p.collapsed && panelEl.getAttribute('data-collapsed') === 'row';
+      setAttr(host, 'data-column', column);
+      setAttr(s.expand, 'hidden', !p.collapsed);
+      if (p.collapsed) {
+        var kidsOf = model.parentOf(l, p.id), first = kidsOf && kidsOf.kids[0] && kidsOf.kids[0].id === p.id;
+        s.expand.setAttribute('data-dir', column ? (first ? 'right' : 'left') : (first ? 'down' : 'up'));
+      }
+      var fixed = TAB.stripPadL + TAB.stripPadR + TAB.plus + TAB.menu + TAB.gripReserve + (narrow && panels.length > 1 ? 52 : 0) + (pinnedIds.length && restIds.length ? 9 : 0) + (p.collapsed ? TAB.plus + 2 : 0);
+      var font = stripFont(host);
+      fit = column ? fitColumn(p, l, tr ? tr.h : panelEl.offsetHeight, pinnedIds, restIds)
+        : strip.fit(p.tabs, l.tabs, p.active, Math.max(0, stripW - fixed), font, s.frozen, host);
+      hiddenSet = {};
+      fit.hidden.forEach(function (t) { hiddenSet[t] = true; });
+      s.hidden = fit.hidden.slice();
+    },
+    place: function () {
+      // every width first, then the labels are measured against them (one layout, not one per tab)
+      p.tabs.forEach(function (tid) {
+        var el = s.tabEls[tid];
+        var w = fit.widths[tid];
+        setAttr(el, 'hidden', !!hiddenSet[tid]);
+        setAttr(el, 'data-size', fit.size[tid] || 'full');
+        if (column) { if (el.style.width) el.style.width = ''; }
+        else if (w != null && !hiddenSet[tid]) { var px = w + 'px'; if (el.style.width !== px) el.style.width = px; }
+      });
+    },
+    finish: function () {
+      p.tabs.forEach(function (tid) { if (!hiddenSet[tid]) middleEllipsis(s.tabEls[tid], l.tabs[tid], fit.size[tid]); });
+      // +N: plain text, counts the hidden tabs only
+      var n = fit.hidden.length;
+      setAttr(s.more, 'hidden', !n);
+      if (n) {
+        setText(s.more, '+' + n);
+        var activeHidden = hiddenSet[p.active];
+        s.more.setAttribute('aria-label', n + ' more tab' + (n === 1 ? '' : 's') + (activeHidden ? ', including the active tab' : ''));
+        s.more.setAttribute('data-pm-hover-label', n + ' more tab' + (n === 1 ? '' : 's'));
+        s.more.setAttribute('data-pm-hover-detail', 'List the tabs that do not fit');
+      }
+      setAttr(s.lock, 'hidden', !p.locked);
+      s.plus.setAttribute('data-pm-hover-label', 'New tab or panel');
+      s.plus.setAttribute('data-pm-hover-detail', PMW.keyLabel(KEYS.plusMenu) + ' opens this menu, ' + PMW.keyLabel(KEYS.newTab) + ' makes a new tab of this panel\'s usual kind');
+      setAttr(host, 'data-collapsed', p.collapsed ? 'yes' : null);
+      if (PMW.shape) PMW.shape.sync(host, p, l, opts);
+    }
+  };
 };
 
 /* A shrunk file tab keeps both ends of its name ("rec\u2026es.rs"), so same-prefix files stay apart (research 6.3).
@@ -361,7 +396,7 @@ function buildStrip(host, panelId) {
     'data-pm-hover-detail': 'Show this panel at its size again', 'data-pmh': 'icon' }, [icon('chevronRight', { size: 14 })]);
   s.lock = h('span', { class: 'pmw-lockmark', hidden: true, 'data-pm-hover-label': 'Locked', 'data-pm-hover-detail': 'Files open in other panels' }, [icon('lock', { size: 12 })]);
   s.menuBtn = h('button', { type: 'button', class: 'pmw-pmenu pmw-sbtn', 'aria-label': 'Panel options', 'aria-haspopup': 'menu', 'data-pm-hover-label': 'Panel options', 'data-pmh': 'icon' }, [icon('more', { size: 14 })]);
-  s.grip = h('button', { type: 'button', class: 'pmw-grip', 'aria-label': 'Move panel (drag, or Enter then arrows)', 'data-pm-hover-label': 'Move panel', 'data-pm-hover-detail': 'Drag it to another place, or press Enter and use the arrows', 'data-pmh': 'off' }, [icon('grip', { size: 9 })]);
+  s.grip = h('button', { type: 'button', class: 'pmw-grip', 'aria-label': 'Move panel (drag, or Enter then arrows)', 'data-pm-hover-label': 'Move panel', 'data-pm-hover-detail': 'Drag it to another place, or press Enter and use the arrows', 'data-pmh': 'off' }, [icon('grip', { size: 6 })]);
   s.plate = h('div', { class: 'pmw-plate', 'aria-hidden': 'true' });
   append(host, [s.plate, s.switcher, s.list, s.more, s.plus, s.expand, s.fill, s.lock, s.menuBtn, s.grip]);
   host._pmw = s;

@@ -70,7 +70,9 @@
         ? `<textarea id="${id}" data-o55-bind="${esc(f.bind)}" rows="${f.rows || 3}" placeholder="${esc(f.placeholder || '')}"${U.attrs(X)}>${esc(f.value || '')}</textarea>`
         : `<input id="${id}" type="${type}" data-o55-bind="${esc(f.bind)}" value="${esc(f.value || '')}" placeholder="${esc(f.placeholder || '')}" autocomplete="${f.autocomplete || 'off'}" spellcheck="false"${f.protected ? ' data-o55-protected="true"' : ''}${f.invalid ? ' aria-invalid="true"' : ''}${U.attrs(X)}>`;
       return `<div class="o55-field${f.invalid ? ' o55-invalid' : ''}${f.cls ? ' ' + f.cls : ''}" data-key="field-${esc(f.bind)}"><label for="${id}">${esc(f.label)}</label>${f.prefix ? `<div class="o55-inputwrap"><span class="o55-prefix">${esc(f.prefix)}</span>${input}</div>` : input}`
-        + (f.hint || f.error ? `<span class="o55-hint${f.error ? ' o55-err' : ''}" aria-live="polite">${f.valid ? done(12) : ''}${esc(f.error || f.hint)}</span>` : '') + '</div>';
+        /* f.reserve: the hint's line is always there (empty until there is something to say), so a hint appearing as the
+           person types never pushes what follows the field down under their eyes */
+        + (f.hint || f.error ? `<span class="o55-hint${f.error ? ' o55-err' : ''}" aria-live="polite">${f.valid ? done(12) : ''}${esc(f.error || f.hint)}</span>` : f.reserve ? '<span class="o55-hint" aria-live="polite"></span>' : '') + '</div>';
     },
     toggle(t) {
       return `<button type="button" class="o55-toggle${t.on ? ' o55-on' : ''}" role="switch" aria-checked="${!!t.on}" data-o55-do="${esc(t.do)}"${t.arg != null ? ` data-arg="${esc(t.arg)}"` : ''}${U.attrs(X)} data-key="tg-${esc(t.do)}-${esc(t.arg || '')}">`

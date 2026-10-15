@@ -1,0 +1,221 @@
+{
+  "utc": "2026-10-12T17:09:18.363703+00:00",
+  "worker": "codex-pm7-glass-baking",
+  "branch": "fix/pm7-glass-perf-baking-20261012",
+  "input_head": "fd5d486c435a5d2b62469004b7ed999bc4521bda",
+  "source_path": "Concepts/liquid-glass/opus-5.5/src/glass.js",
+  "source_sha256": "97991f196ced346ac0378aaa2d9a47f6490edcfca7a0a0999ab8f3ddef892b9b",
+  "delivery_commit_binding": "External baking/handoff.json pins final pushed head; this report pins source bytes.",
+  "source_functions": [
+    "cachedMap",
+    "keepMap",
+    "sdf",
+    "profile",
+    "buildMaps",
+    "buildLensMaps",
+    "currentWallUrl",
+    "withWall",
+    "dropFrost",
+    "applyFrost",
+    "makeFrosts",
+    "currentBake",
+    "bakeRing",
+    "scheduleBakes",
+    "flushBakes",
+    "queueBake",
+    "mount",
+    "unmount",
+    "unmountAll"
+  ],
+  "validation": {
+    "distinct_new_cases": 43,
+    "total_executions": 47,
+    "passed_executions": 47,
+    "failed_executions": 0,
+    "rounds": [
+      {
+        "report": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-glass-perf-20261012/baking/first-regression-first.json",
+        "cases": 35,
+        "source_sha256": "a453201b723e5459baec1d2dd09012fb89381bf9345031f69664166cd449e258"
+      },
+      {
+        "report": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-glass-perf-20261012/baking/regression-edge.json",
+        "cases": 6,
+        "source_sha256": "56cb357fc873919faccbb3d9cf090140aa662c186b57b05fca1da85777b84578"
+      },
+      {
+        "report": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-glass-perf-20261012/baking/regression-transition.json",
+        "cases": 6,
+        "source_sha256": "97991f196ced346ac0378aaa2d9a47f6490edcfca7a0a0999ab8f3ddef892b9b"
+      }
+    ],
+    "final_coverage": "First 35 retained; six new edge cases; two new transition cases; four affected existing cases rerun after transition-preserving asset-retention correction. sdf/profile/buildMaps/buildLensMaps are mechanically unchanged except comment indentation since first exact-pixel round.",
+    "node_syntax": "PASS",
+    "git_diff_check": "PASS",
+    "frozen_non_glass_js_page_bytes": "EXACT",
+    "guarantees": "Seven sheet geometries, six RGB lens-map geometries and three ring sampling cases compare exact native JS arithmetic/Float32/pre-encoded RGBA bytes to frozen source; frost cover/draw/filter parameters match.",
+    "limitations": "Canvas/Image/timer doubles do not certify real Chromium PNG encodes, Gaussian filter pixels, GPU frame time or final visual/motion acceptance."
+  },
+  "controlled_operation_model": {
+    "map800x450": {
+      "before": {
+        "canvas": 2,
+        "imageData": 2,
+        "dataURL": 2,
+        "blob": 0,
+        "image": 0,
+        "computedWall": 0,
+        "samplePixels": 0,
+        "pow": 453768,
+        "exp": 302512,
+        "atan": 75628,
+        "asin": 75628,
+        "hypot": 1296,
+        "observed": 0,
+        "unobserved": 0
+      },
+      "after": {
+        "canvas": 1,
+        "imageData": 1,
+        "dataURL": 2,
+        "blob": 0,
+        "image": 0,
+        "computedWall": 0,
+        "samplePixels": 0,
+        "pow": 2280,
+        "exp": 290,
+        "atan": 145,
+        "asin": 145,
+        "hypot": 1296,
+        "observed": 0,
+        "unobserved": 0
+      },
+      "activePixels": 19536,
+      "totalPixels": 360000
+    },
+    "burst100": {
+      "before": {
+        "queued": 100,
+        "ringEncodes": 100,
+        "counters": {
+          "canvas": 206,
+          "imageData": 102,
+          "dataURL": 2,
+          "blob": 102,
+          "image": 1,
+          "computedWall": 101,
+          "samplePixels": 12199200,
+          "pow": 154800,
+          "exp": 103200,
+          "atan": 25800,
+          "asin": 25800,
+          "hypot": 576,
+          "observed": 1,
+          "unobserved": 0
+        }
+      },
+      "after": {
+        "queued": 1,
+        "ringEncodes": 1,
+        "counters": {
+          "canvas": 7,
+          "imageData": 2,
+          "dataURL": 1,
+          "blob": 3,
+          "image": 1,
+          "computedWall": 2,
+          "samplePixels": 121992,
+          "pow": 1084,
+          "exp": 160,
+          "atan": 80,
+          "asin": 80,
+          "hypot": 576,
+          "observed": 1,
+          "unobserved": 0
+        }
+      }
+    },
+    "concurrentWall20": {
+      "before": 20,
+      "after": 1
+    },
+    "concurrentFrost10": {
+      "beforeEncodes": 20,
+      "afterEncodes": 2
+    }
+  },
+  "cache_limits": {
+    "map_entries": 80,
+    "map_estimated_raw_and_string_bytes": 67108864,
+    "decoded_wallpaper_ready_entries": 2,
+    "source_wallpaper_dimensions": [
+      2560,
+      1440
+    ],
+    "two_source_stills_rgba_bytes": 29491200,
+    "frost_pairs": 2,
+    "frost_encoded_blob_bytes": 33554432,
+    "oversized_active_frost_pair": "Retained only while displayed; no reusable-cache insertion.",
+    "active_surface_assets": "One current ring per connected surface; replacement or unmount releases its URL. Connected settled assets persist across Glass-off as in baseline."
+  },
+  "prototype": {
+    "path": "/mnt/Cursor/share/puppet-master/2026-10-12-glass-performance/baking/PMConcept7-baking.html",
+    "sha256": "4ba1fc99e81cbcdce9d23433f48823ded5acf10f1cb3dc28751b31c9203ef1bc",
+    "bytes": 19369544,
+    "base": "/mnt/Cursor/share/puppet-master/2026-10-12-glass-performance/BASE-PMConcept7.html"
+  },
+  "harness": {
+    "path": "/mnt/Cursor/share/puppet-master/2026-10-12-glass-performance/baking/regression.cjs",
+    "sha256": "7bfa1c33c06fbbac52de410cf04f613b1ff8281599325c3cf4cf7a7611b95443",
+    "command": "node /mnt/Cursor/share/puppet-master/2026-10-12-glass-performance/baking/regression.cjs <integration-worktree>",
+    "filter_argument": "Optional substring or re:<expression>; integration may run this focused changed-lifecycle/composition suite once."
+  },
+  "evidence": [
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-glass-perf-20261012/baking/first-regression.cjs",
+      "sha256": "1a9baebb626773494683d91f72c6aeb4a6d3f9a661c4967452b68c4f4e3a05ca",
+      "bytes": 18427
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-glass-perf-20261012/baking/first-regression-first.json",
+      "sha256": "3794f05e901fb323f648fd330d653b0c0e48f19d783a24d0c79a9dde3a428499",
+      "bytes": 5540
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-glass-perf-20261012/baking/first-source.js",
+      "sha256": "a453201b723e5459baec1d2dd09012fb89381bf9345031f69664166cd449e258",
+      "bytes": 68701
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-glass-perf-20261012/baking/regression-edge.json",
+      "sha256": "810e78ea9b0af8a23c20325c1d5b5ac921f6d4d561dcb7eb6118b8527f12a7e6",
+      "bytes": 1334
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-glass-perf-20261012/baking/regression-transition.json",
+      "sha256": "d7dd4419d075818653a91a14162df2517a1915edaa96a80d67011a81a8af7f2f",
+      "bytes": 1266
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-glass-perf-20261012/baking/regression.cjs",
+      "sha256": "7bfa1c33c06fbbac52de410cf04f613b1ff8281599325c3cf4cf7a7611b95443",
+      "bytes": 22833
+    }
+  ],
+  "remaining_limits": [
+    "Profiler owns actual hardware/browser performance and visual comparisons.",
+    "One cold optical map and each full-resolution wallpaper sample/encode still run synchronously; there is no quality reduction.",
+    "Offscreen or hidden connected sheets keep baseline eligibility until profiler evidence establishes an equivalent pruning rule.",
+    "Resolved CSS wallpaper memo follows exact source selectors data-theme/data-lg-wall and an inline --lg-wall override; a future external stylesheet replacement must refresh source state."
+  ],
+  "resources": {
+    "browsers": 0,
+    "gpu_runs": 0,
+    "recorders": 0,
+    "dev_servers": 0,
+    "child_agents": 0,
+    "account_or_model_changes": 0,
+    "main_or_plans_writes": 0,
+    "mail_waiter": "One during delivery; disarmed at final."
+  }
+}

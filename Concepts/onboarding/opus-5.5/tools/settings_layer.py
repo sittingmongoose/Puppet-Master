@@ -29,6 +29,14 @@ MARKER = '/* PM51_SETTINGS_REFRESH */\n'
 BOOT = '  boot();\n})();'
 STYLE_OPEN = '<style id="pm51-settings-refresh">\n'
 
+# Approved canon may precede its concept UI. Do not publish generic fallback rows for
+# these pending features. The editor-customizer and Glass owners remove their IDs
+# when their feature lands, after its Settings placement and controls are integrated.
+# Coordinator direction: pm-mail 1015011245-ba7b, 2026-10-15 UTC.
+# general.visual.wallpaper left with Glass's publish (pm-mail 1015131953-255d): build.py step 6 now carries the
+# wallpapers package, whose Settings gallery takes the row's place (wallpapers.js, setting-general.visual.wallpaper).
+CONCEPT_PENDING_ROWS: set[str] = set()
+
 
 def _t50():
     """Load the T50 transform module with its source folder re-pointed at the fork."""
@@ -380,7 +388,8 @@ def _canon_rows(doc: str, merged: dict, need) -> tuple[str, list]:
     e = doc.index('\n', s)
     ref = json.loads(doc[s:e].rstrip(';'))
     have = {r['id'] for c in ref['byCat'].values() for r in c.get('settings', [])}
-    added = [r for r in canon if r['id'] not in have and r['id'] not in hand]
+    added = [r for r in canon
+             if r['id'] not in have and r['id'] not in hand and r['id'] not in CONCEPT_PENDING_ROWS]
     for r in added:
         cat, sub, _ = r['id'].split('.', 2)
         need(cat in ref['byCat'] and any(g['id'] == sub for g in ref['byCat'][cat].get('subgroups', [])),

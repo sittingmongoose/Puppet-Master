@@ -45,7 +45,7 @@
     var painted = 0;
     var imgGen = term.images ? term.images.gen : 0;
     if (imgGen !== this.imgGen) { full = true; this.imgGen = imgGen; }
-    var frameKey = th.id + '|' + m.devW + 'x' + m.devH + '|' + v.focused + '|' + (v.opts.ligatures ? 1 : 0) + '|' + v.opts.minContrast + '|' + (term.modes.reverse ? 1 : 0) + '|' + (v.dimmed ? 1 : 0);
+    var frameKey = th.id + '|' + m.devW + 'x' + m.devH + '|' + m.font + '|' + v.focused + '|' + (v.opts.ligatures ? 1 : 0) + '|' + v.opts.minContrast + '|' + (term.modes.reverse ? 1 : 0) + '|' + (v.dimmed ? 1 : 0) + '|' + (v.opts.textRendering || '') + '|' + (v.contrastGround === undefined || v.contrastGround === null ? '' : v.contrastGround);
     if (frameKey !== this.frameKey) { full = true; this.frameKey = frameKey; }
     for (var y = 0; y < rows; y++) {
       var abs = top + y;
@@ -108,6 +108,10 @@
     var dc = this.defaults(), defBg = dc.bg;
     var reverse = term.modes.reverse;
     var minC = v.opts.minContrast || 0;
+    /* the floor measures text in a default cell against the ground it is drawn on: a gradient or picture under the
+       canvas brings its worst pixel (T.Appearance.ground), so settled text keeps the floor over every background. A
+       program's own background (OSC 11) and reverse video are drawn by the canvas, so they keep the cell's colour */
+    var floorBg = !reverse && term.dynamic.bg === null && v.contrastGround !== undefined && v.contrastGround !== null ? v.contrastGround : defBg;
     ctx.save();
     ctx.beginPath(); ctx.rect(0, y0, cols * W, H); ctx.clip();
     /* 1. default background: the screen body paints it (--pmt-bg), so the canvas stays transparent there. That keeps
@@ -155,6 +159,8 @@
     var lig = v.opts.ligatures && !m.letterSpacing;
     var curFont = '';
     ctx.textBaseline = 'alphabetic';
+    /* Settings' Font Rendering: Smooth draws unhinted outlines; Crisp and Auto keep the browser's hinting */
+    if ('textRendering' in ctx) ctx.textRendering = v.opts.textRendering || 'auto';
     var baseY = y0 + m.baseline;
     x = 0;
     while (x < cols) {
@@ -162,7 +168,7 @@
       if (f & CELL.SPACER || cp === 0 || cp === 32) { x++; continue; }
       var stx = styles.get(line.st[x]);
       if (stx.flags & A.INVISIBLE) { x++; continue; }
-      var fgc = fgs[x], cellBg = bgs[x] < 0 ? defBg : bgs[x];
+      var fgc = fgs[x], cellBg = bgs[x] < 0 ? floorBg : bgs[x];
       if (cp === 0x10eeee) {
         if (images) images.drawPlaceholder(ctx, line, x, x * W, y0, W, H, stx, v);
         x++; continue;

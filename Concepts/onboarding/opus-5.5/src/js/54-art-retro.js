@@ -20,6 +20,11 @@
     };
   };
   const sprite = A.sprite;
+  /* a prop's caption on the ground: the words on a knock-out of the ground the width of their line (IBM Plex Mono
+     advances 0.6 em), so a star of the field or a fleck of confetti never shows between the letters (a twinkling star
+     inside SAFE HISTORY read 1.2:1). It is drawn first in the prop, under its sprite, so it never clips the drawing */
+  const ko = (p, x, y, s, size) => { if (!s) return ''; const z = size || 9, w = String(s).length * z * 0.6 + 4;
+    return `<rect x="${(x - w / 2).toFixed(1)}" y="${(y - z * 1.1).toFixed(1)}" width="${w.toFixed(1)}" height="${(z * 1.45).toFixed(1)}" fill="${p.bg}" class="o55-shade-ko"/>`; };
   const mono = (p, x, y, s, size, color, anchor) => `<text x="${x}" y="${y}" text-anchor="${anchor || 'middle'}" font-family="'IBM Plex Mono', 'JetBrains Mono', ui-monospace, monospace" font-weight="600" font-size="${size || 9}" fill="${color || p.text}">${U.esc(String(s).toUpperCase())}</text>`;
 
   const HELPER = {
@@ -112,12 +117,12 @@
     computer(ctx, item) {
       const p = ctx.pal, o = item.opts || {};
       const map = { k: p.dark ? '#000' : p.ink, d: p.hw, g: p.screen, w: p.a, p: p.hw2 };
-      return `<g><g transform="translate(0 -30)">${sprite(o.screen === 'check' ? COMPUTER_OK : COMPUTER, map, 6)}</g>${o.label ? mono(p, 0, 24, o.label, 8) : ''}</g>`;
+      return `<g>${ko(p, 0, 24, o.label, 8)}<g transform="translate(0 -30)">${sprite(o.screen === 'check' ? COMPUTER_OK : COMPUTER, map, 6)}</g>${o.label ? mono(p, 0, 24, o.label, 8) : ''}</g>`;
     },
     nas(ctx, item) {
       const p = ctx.pal, o = item.opts || {};
       const map = { k: p.dark ? '#000' : p.ink, d: p.hw, p: p.hw2, L: { fill: p.a, cls: 'o55-px-blink' } };
-      return `<g><g transform="translate(0 -45)">${sprite(NAS, map, 6)}</g>${mono(p, 0, 20, o.label || 'home nas', 8)}</g>`;
+      return `<g>${ko(p, 0, 20, o.label || 'home nas', 8)}<g transform="translate(0 -45)">${sprite(NAS, map, 6)}</g>${mono(p, 0, 20, o.label || 'home nas', 8)}</g>`;
     },
     key(ctx) {
       const p = ctx.pal;
@@ -130,7 +135,7 @@
     node(ctx, item) {
       const p = ctx.pal, o = item.opts || {}, col = [p.a, p.c, p.d, p.b][(o.v || 0) % 4];
       const icon = ICONS[o.icon] || ICONS.spark;
-      return `<g shape-rendering="crispEdges"><rect x="-26" y="-26" width="52" height="52" fill="${p.dark ? '#000' : p.ink}"/><rect x="-22" y="-22" width="44" height="44" fill="${p.panel}"/>`
+      return `<g shape-rendering="crispEdges">${ko(p, 0, 42, o.label, 8)}${ko(p, 0, 53, o.sub, 6.5)}<rect x="-26" y="-26" width="52" height="52" fill="${p.dark ? '#000' : p.ink}"/><rect x="-22" y="-22" width="44" height="44" fill="${p.panel}"/>`
         + `<rect x="-22" y="-22" width="44" height="4" fill="${col}"/><g class="o55-gl o55-gl-${ICONS[o.icon] ? o.icon : 'spark'}">${sprite(icon, { x: col }, 4, 0, 3)}</g>`
         + (o.label ? mono(p, 0, 42, o.label, 8) : '') + (o.sub ? mono(p, 0, 53, o.sub, 6.5, p.mid) : '') + '</g>';
     },
@@ -146,7 +151,7 @@
     },
     folder(ctx, item) {
       const p = ctx.pal;
-      return `<g>${sprite(FOLDER, { k: p.dark ? '#000' : p.ink, y: p.c }, 5)}${(item.opts || {}).label ? mono(p, 0, 36, item.opts.label, 7.5) : ''}</g>`;
+      return `<g>${ko(p, 0, 36, (item.opts || {}).label, 7.5)}${sprite(FOLDER, { k: p.dark ? '#000' : p.ink, y: p.c }, 5)}${(item.opts || {}).label ? mono(p, 0, 36, item.opts.label, 7.5) : ''}</g>`;
     },
     spark(ctx, item) {
       const p = ctx.pal, o = item.opts || {}, c = o.tone != null ? A.tone(ctx, o.tone) : p.c;
@@ -160,7 +165,10 @@
       const p = ctx.pal, o = item.opts || {}, text = `${o.accent ? '> ' : ''}${o.label || ''}`, w = Math.max(80, text.length * 6.2 + (o.glyph ? 30 : 18));
       return `<g shape-rendering="crispEdges"><rect x="${-w / 2}" y="-14" width="${w}" height="28" fill="${p.dark ? '#000' : p.ink}"/><rect x="${-w / 2 + 3}" y="-11" width="${w - 6}" height="22" fill="${o.accent ? p.a : p.panel}"/>`
         + (o.glyph && ICONS[o.glyph] ? sprite(ICONS[o.glyph], { x: o.accent ? p.ink : p.text }, 2, -w / 2 + 14, 0) : '')
-        + mono(p, o.glyph ? 8 : 0, 3.5, text, 8, o.accent ? (p.dark ? '#000' : p.ink) : p.text) + '</g>';
+        /* an accent sign's words: black on Dark's lime, cream on Light's cobalt (ink on cobalt read 1.9:1). PRESS START
+           blinks its block cursor (opts.cursor), not its words: the whole sign blinking down to a quarter read 1.1:1 */
+        + mono(p, (o.glyph ? 8 : 0) - (o.cursor ? 3 : 0), 3.5, text, 8, o.accent ? (p.dark ? '#000' : p.bg) : p.text)
+        + (o.cursor ? `<rect class="o55-amb o55-amb-blink" x="${(text.length * 2.4).toFixed(1)}" y="-3" width="5" height="8" fill="${o.accent ? (p.dark ? '#000' : p.bg) : p.text}"/>` : '') + '</g>';
     },
     identity(ctx, item) {
       const p = ctx.pal, o = item.opts || {};

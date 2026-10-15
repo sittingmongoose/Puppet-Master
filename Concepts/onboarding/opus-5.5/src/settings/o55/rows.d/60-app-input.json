@@ -33,26 +33,6 @@
     ]
    }
   },
-  "general.visual.theme-preview": {
-   "label": "Preview a theme before switching",
-   "help": "Try a look while browsing; it snaps back unless you apply it."
-  },
-  "general.visual.glass-background-mode": {
-   "label": "Glass background",
-   "help": "What shows behind the see-through panels.",
-   "options": {
-    "Mesh": "Drifting colors",
-    "Depth": "Floating shapes",
-    "Minimal": "Plain"
-   },
-   "when": {
-    "id": "general.visual.theme",
-    "in": [
-     "Glass Dark",
-     "Glass Light"
-    ]
-   }
-  },
   "general.visual.glass-transparency": {
    "label": "How see-through panels are",
    "help": "Text always stays readable, whatever you choose.",

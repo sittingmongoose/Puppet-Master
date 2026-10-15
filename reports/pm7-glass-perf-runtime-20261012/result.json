@@ -1,0 +1,148 @@
+{
+  "created_utc": "2026-10-12T16:58:42.207371+00:00",
+  "status": "ready_for_integration_pending_gpu_validation",
+  "branch": "fix/pm7-glass-perf-runtime-20261012",
+  "frozen_input": "fd5d486c435a5d2b62469004b7ed999bc4521bda",
+  "changed_source": "Concepts/liquid-glass/opus-5.5/src/glass.js",
+  "source_sha256": "16b0e5a46d2fc4b171c4fbb0c8e3061703c0612dc65997a23cfdf69b51aa3223",
+  "native_tests": {
+    "status": "PASS",
+    "environment": "Node v22.23.3, jsdom 30.1.2; native DOM MutationObserver; deterministic RAF/timers; layout and optical mount stubbed",
+    "idle_120_frames": {
+      "baseline": {
+        "syncs": 120,
+        "mutationRecords": 240,
+        "pendingFrames": 1,
+        "pendingTimers": 0
+      },
+      "candidate": {
+        "syncs": 0,
+        "mutationRecords": 0,
+        "pendingFrames": 0,
+        "pendingTimers": 0
+      }
+    },
+    "behavior": {
+      "idle": {
+        "syncs": 0,
+        "mutationRecords": 0,
+        "pendingFrames": 0,
+        "pendingTimers": 0
+      },
+      "sameRootValue": {
+        "syncs": 0
+      },
+      "coveredFrame": {
+        "syncsAtImmediate": 1,
+        "syncsAfterFourFrames": 1
+      },
+      "coveredLazy": {
+        "syncsAtHot": 1,
+        "syncsAfter256ms": 1
+      },
+      "generatedChanges": {
+        "syncs": 0
+      },
+      "layerRemoval": {
+        "reconstructed": true,
+        "oldDisconnectedLensesTracked": false
+      },
+      "menu": {
+        "mountedBeforeFrame": true,
+        "mounted": true,
+        "morphDuration": 749.9999999999998,
+        "syncsBeforeFrame": 1,
+        "reopenedMorphs": 1
+      },
+      "detached": {
+        "countBeforeRemoval": 13,
+        "countAfterRemoval": 12,
+        "stillTracked": false,
+        "stillSizeObserved": false
+      },
+      "scroll": {
+        "anchoredCards": [
+          "card-a",
+          "card-b"
+        ]
+      },
+      "hiddenConnected": {
+        "retained": true,
+        "sizeObserved": true
+      },
+      "resize": {
+        "mountedInObserver": true
+      },
+      "focus": {
+        "inactiveOnBlur": true,
+        "inactiveAfterFocus": false
+      },
+      "glassToggle": {
+        "materializeWhenOff": 0,
+        "materializeOnEnter": 6
+      },
+      "wallpaper": {
+        "savedChoice": "prism",
+        "wallpaperInOtherLook": "prism",
+        "outsideGlass": true,
+        "outsideOnGlassReturn": false
+      },
+      "peerHooks": {
+        "unmounted": true,
+        "pruned": true,
+        "suspendedOnReduce": true
+      }
+    },
+    "checks": [
+      "node --check",
+      "git diff --check",
+      "exported BASE rebuild",
+      "all preview bytes outside glass.js equal frozen preview"
+    ],
+    "limitations": [
+      "No browser/GPU/recording from runtime worker; actual look and frame-cost validation belongs to profiler.",
+      "Native layout/optical stubs do not measure rendering or optical baking."
+    ]
+  },
+  "peer_hooks": [
+    "unmount(e) for detached glass, with standalone fallback",
+    "pruneLenses() once before work",
+    "suspendLensMotion() on entering reduced motion"
+  ],
+  "artifact_records": {
+    "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-glass-perf-20261012/runtime/baseline.json": {
+      "bytes": 1634,
+      "sha256": "6503925db7fe7429b9abe438fbf34426202217cd45391c82192c588cde52989a"
+    },
+    "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-glass-perf-20261012/runtime/candidate.json": {
+      "bytes": 1606,
+      "sha256": "cfbac128847971d3b852526f4bd720a4578e9be2406550556c08ec8b60a424a7"
+    },
+    "/mnt/Cursor/share/puppet-master/2026-10-12-glass-performance/runtime/runtime-regression.cjs": {
+      "bytes": 15561,
+      "sha256": "1c72add882db8bbdffda41893857f76f3ddb85febcfba92ef518e18cdc47e98c"
+    },
+    "/mnt/Cursor/share/puppet-master/2026-10-12-glass-performance/runtime/package.json": {
+      "bytes": 51,
+      "sha256": "a830183d45e24b9a59535d05f73554f507ab71407812517b709421e784724d8e"
+    },
+    "/mnt/Cursor/share/puppet-master/2026-10-12-glass-performance/runtime/package-lock.json": {
+      "bytes": 17571,
+      "sha256": "32692a1acc7f17e9a965cea01887383ad1f826fd495f0e3d68584f674c8e28d2"
+    },
+    "/mnt/Cursor/share/puppet-master/2026-10-12-glass-performance/runtime/PMConcept7-LiquidGlass-runtime.html": {
+      "bytes": 19363410,
+      "sha256": "9696047fb1351fba9efb654b3f04b3e4df2fb70acb25465cb3ed422c129b2947"
+    },
+    "Concepts/liquid-glass/opus-5.5/src/glass.js": {
+      "bytes": 62820,
+      "sha256": "16b0e5a46d2fc4b171c4fbb0c8e3061703c0612dc65997a23cfdf69b51aa3223"
+    }
+  },
+  "authority": {
+    "design": false,
+    "canon": false,
+    "governance": false,
+    "main_landing": false
+  }
+}
