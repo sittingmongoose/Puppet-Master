@@ -33359,6 +33359,10 @@ html[data-o55-nier="on"] {
   --pm-switch-swell: 0; --pm-switch-liquid: 0;
 }
 
+/* None of these looks lights its chip with Glass's glint (--pm-switch-glint is transparent in each), so the glint's band,
+   an empty layer that the no-pills gate read as a capsule, is not drawn. */
+html[data-pm-switch="lens"]:not(#lgz):not(#lgy) .lg-lens::after { content: none; }
+
 /* ---- What the component does not draw, in the same material ----------------------------------------------------------
    The title bar's one-of-several menus (the look family, the project) are lists that live in a menu, not strips: the
    chosen row wears the switcher's material in place, as Settings' service list does (glass.css section 6). NieR keeps
