@@ -483,7 +483,7 @@ html[data-lg="on"][data-theme^="glass"]:not(#lgz) #activityBar .icon[data-lg-cur
 html[data-lg="on"][data-theme^="glass"]:not(#lgz) .lg-bead { opacity: 0; box-shadow: inset 0 0 0 .5px var(--lg-lens-hair), inset 0 1px 0 var(--lg-edge-top), inset 0 -1px 1px var(--lg-edge-bot), 0 0 0 .5px var(--lg-lens-edge), 0 3px 8px -3px var(--lg-shadow); }
 html[data-lg="on"][data-theme^="glass"]:not(#lgz) .lg-bead.on { opacity: 1; }
 html[data-lg="on"][data-theme^="glass"]:not(#lgz) .lg-bead.lg-under { opacity: 0 !important; }
-:is(html[data-lg="on"][data-theme^="glass"], html[data-pm-switch="lens"]):not(#lgz) .lg-lens[data-lg-lifted] { box-shadow: inset 0 0 0 .5px var(--pm-switch-line, var(--lg-lens-hair)), inset 0 1px 0 var(--pm-switch-top, var(--lg-edge-top)), 0 0 0 .5px var(--pm-switch-edge, var(--lg-lens-edge)), 0 10px 24px -6px var(--lg-shadow), 0 2px 4px var(--lg-shadow-near); transition: none; }
+:is(html[data-lg="on"][data-theme^="glass"], html[data-pm-switch="lens"]):not(#lgz) .lg-lens[data-lg-lifted] { box-shadow: inset 0 0 0 .5px var(--pm-switch-line, var(--lg-lens-hair)), inset 0 1px 0 var(--pm-switch-top, var(--lg-edge-top)), 0 0 0 .5px var(--pm-switch-edge, var(--lg-lens-edge)), 0 10px 24px -6px var(--lg-shadow, rgba(0, 0, 0, .28)), 0 2px 4px var(--lg-shadow-near, rgba(0, 0, 0, .16)); transition: none; }
 :is(html[data-lg="on"][data-theme^="glass"], html[data-pm-switch="lens"]):not(#lgz) .lg-lens[data-lg-lifted]::after { opacity: 1; }
 /* The Orchestrator's views ride the same lens (a theme match, not its redesign): its capsule fill steps aside. */
 :is(html[data-lg="on"][data-theme^="glass"], html[data-pm-switch="lens"]):not(#lgz) .orch-tabs .orch-tab { box-shadow: none !important; }
@@ -534,10 +534,15 @@ html[data-lg="on"][data-theme="glass-light"]:not(#lgz) { --lg-lens-body: rgba(25
 :is(html[data-lg="on"][data-theme^="glass"], html[data-pm-switch="lens"]):not(#lgz) #pm-settings-root nav.workspace-tabs {
   background: var(--pm-switch-track, var(--lg-fill)) !important; border: 0 !important; border-radius: var(--pm-switch-r, var(--pm-ctl-r)) !important; box-shadow: none !important; position: relative;
 }
-/* the manager tabs stay a sticky bar: dense enough that what scrolls under it never reads through its labels */
-:is(html[data-lg="on"][data-theme^="glass"], html[data-pm-switch="lens"]):not(#lgz) #pm-settings-root nav.manager-tabs {
-  background: color-mix(in srgb, var(--background) 90%, transparent) !important; border-color: var(--lg-line) !important; border-radius: var(--lg-r-bar) !important;
+/* the manager tabs stay a sticky bar, frosted: the rows scrolling under it are blurred and nearly covered, so none of
+   their words reads between or behind its labels (review r3: at 90 % with no blur, "Work Claude" read through
+   "Limits & switching") */
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) #pm-settings-root nav.manager-tabs {
+  background: color-mix(in srgb, var(--background) 94%, transparent) !important; border-color: var(--lg-line) !important; border-radius: var(--lg-r-bar) !important;
+  -webkit-backdrop-filter: blur(16px) saturate(1.2) !important; backdrop-filter: blur(16px) saturate(1.2) !important;
 }
+/* field placeholders read as words (review r3: "Filter services" at 2.2-3.0:1) */
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) #pm-settings-root :is(input, textarea)::placeholder { color: var(--text-muted) !important; opacity: 1 !important; }
 /* the page index's open sections: the current one reads by its words and a small blue mark, never a second fill */
 :is(html[data-lg="on"][data-theme^="glass"], html[data-pm-switch="lens"]):not(#lgz) #pm-settings-root .pm51-index-sub > .index-link.is-active { background: transparent !important; color: var(--pm-switch-ink-on, var(--text-primary)) !important; font-weight: 600; }
 :is(html[data-lg="on"][data-theme^="glass"], html[data-pm-switch="lens"]):not(#lgz) #pm-settings-root :is(.pm51-index-sub, .pm51-index-group) > .index-link.is-active::before { background: var(--pm-switch-mark, var(--accent-blue)) !important; box-shadow: none !important; }
