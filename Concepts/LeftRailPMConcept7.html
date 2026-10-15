@@ -225826,7 +225826,7 @@ try { if (window.PM_HOME && typeof window.PM_HOME.boot === 'function') window.PM
       if (performance.now() - last.t < 1200) {
         var s = lens.style; s.left = last.rect.x + 'px'; s.top = last.rect.y + 'px'; s.width = last.rect.w + 'px'; s.height = last.rect.h + 'px';
         L.rect = last.rect; L.tgt = null; L.pending = last.pending;   /* no target yet: the next sync travels from here */
-      }
+      } else if (last.pending) pressMark(last.pending, false);
     }
     if (cfg.mark && !strip.hasAttribute('data-lg-lensed')) strip.setAttribute('data-lg-lensed', '');
     return L;
@@ -225906,7 +225906,11 @@ try { if (window.PM_HOME && typeof window.PM_HOME.boot === 'function') window.PM
     e.remove();
   }
   function disposeLens(L) {
-    if (L.under && L.rect && L.strip.isConnected && !L.lens.isConnected) L.strip.__lgLast = { rect: visualRect(L) || L.rect, pending: L.pending, t: performance.now() };
+    if (L.under && L.rect && L.strip.isConnected && !L.lens.isConnected) {
+      var carry = L.strip.__lgLast = { rect: visualRect(L) || L.rect, pending: L.pending, t: performance.now() }, cs = L.strip;
+      /* a carry nobody takes up in time lets its press marks go (Glass owner's review) */
+      if (carry.pending) setTimeout(function () { if (cs.__lgLast === carry) { cs.__lgLast = null; pressMark(carry.pending, false); } }, 1300);
+    }
     else if (L.pending) pressMark(L.pending, false);
     L.pending = null;
     forgetAncestors(L.strip, scrollStrips, stripAncestors);
