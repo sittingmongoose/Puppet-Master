@@ -24664,6 +24664,11 @@ html[data-theme="basic-dark"][data-o55-nier-parts~="pointer"] :is(button, a[href
   #panel-settings .domain-document { padding-left: 12px; padding-right: 12px; }
   #panel-settings .o55-group-head { padding-left: 16px; padding-right: 16px; }
   #panel-settings .o55-group > .setting-list { padding-left: 16px; padding-right: 12px; }
+  /* Jared #10 (2026-10-14, pm7-liquid-glass): the page ends near the chat column, as the other pages do. The landing kept
+     its 4 % right padding, 38-42 px from the chat in every look; it now keeps the document's 12. Liquid Glass gives
+     both back to 4 px (its sheets carry their own bevel), so its settings sit about 10 px from the chat, as on Home. */
+  #panel-settings .home-page { padding-right: 12px; }
+  html[data-lg="on"][data-theme^="glass"] #panel-settings :is(.home-page, .domain-document) { padding-right: 4px; }
 }
 
 /* ---- styles.d/15-nier-world.css ---- */
