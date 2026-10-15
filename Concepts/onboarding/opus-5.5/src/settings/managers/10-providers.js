@@ -536,18 +536,25 @@
   const hasOwnPolicy = p => POLICY_IDS.some(id => ownPolicy(p, id) !== undefined);
   /* the shared value a service falls back to, in words */
   const sharedText = id => id === 'ai.accounts.multi-account-switching' ? (isOn(PM51.value(id)) ? 'on' : 'off') : id === 'ai.accounts.cooldown-policy' ? cooldownText(PM51.value(id)) : usedText(PM51.value(id));
+  /* why level v of `id` cannot be picked for service p ('' when it can): the switch level stays under the service's warn
+     level, as on the Usage page (one bound value, one rule): a switch choice at or above the service's warn level, or a
+     warn choice at or below its switch level, is shown but cannot be picked, and says why (item 2 review: Settings let
+     Codex switch and warn at the same 90%); and below it the accounts that set the other level themselves and follow
+     this one keep theirs (item 2 follow-up 2026-10-15: lowering Claude's warn level past Lab's own switch level was
+     stored). The service's dropdowns and the Usage page's level menu and stepper (providerPolicy.block) ask the same. */
+  function levelBlock(p, id, v) {
+    const n = pctLeft(v), isSw = id === SW_ID, isWarn = id === WARN_ID; if (n === null || (!isSw && !isWarn)) return '';
+    const warnN = pctLeft(policyOf(p, WARN_ID)), swN = pctLeft(policyOf(p, SW_ID));
+    if (isSw && warnN !== null && n >= warnN) return `At or past ${p.name}'s warn level (${100 - warnN}% used). Lower the warn level first.`;
+    if (isWarn && swN !== null && n <= swN) return `At or before ${p.name}'s switch level (${100 - swN}% used). Raise the switch level first.`;
+    const followers = accFollowers(p, id);
+    return followers.length ? accCrossing(followers.map(x => ({ name: x.acc.nickname, n: x.n })), id, n, `${p.name}'s ${isSw ? 'switch' : 'warn'} level`) : '';
+  }
   /* a level dropdown: the first choice follows the shared value; a service value off the list keeps its own entry */
   function levelControl(p, id, list, label) {
     const own = ownPolicy(p, id), shared = PM51.value(id), cool = id === 'ai.accounts.cooldown-policy';
-    /* the switch level stays under the warn level, as on the Usage page (one bound value, one rule): a switch choice at or
-       above the service's warn level, or a warn choice at or below its switch level, is shown but cannot be picked, and
-       says why (item 2 review: Settings let Codex switch and warn at the same 90%) */
-    const isSw = id === 'ai.accounts.hard-switch-level', isWarn = id === 'ai.accounts.soft-warning-level';
-    const warnN = pctLeft(policyOf(p, 'ai.accounts.soft-warning-level')), swN = pctLeft(policyOf(p, 'ai.accounts.hard-switch-level'));
-    /* ... and below it the accounts that set the other level themselves and follow this one keep theirs (item 2
-       follow-up 2026-10-15: lowering Claude's warn level past Lab's own switch level was stored) */
-    const followers = isSw || isWarn ? accFollowers(p, id) : [];
-    const block = v => { const n = pctLeft(v); if (n === null) return ''; if (isSw && warnN !== null && n >= warnN) return `At or past ${p.name}'s warn level (${100 - warnN}% used). Lower the warn level first.`; if (isWarn && swN !== null && n <= swN) return `At or before ${p.name}'s switch level (${100 - swN}% used). Raise the switch level first.`; return followers.length ? accCrossing(followers.map(x => ({ name: x.acc.nickname, n: x.n })), id, n, `${p.name}'s ${isSw ? 'switch' : 'warn'} level`) : ''; };
+    /* a crossing level is shown but cannot be picked, and says why (levelBlock) */
+    const block = v => levelBlock(p, id, v);
     /* the shared choice and every level say their level in a few words, so neither the closed dropdown nor the open list
        cuts them (item 2 review: "Shared · provider def…" in Retro, the notes cut to "M…"); where it comes from is said
        in the field's About hover */
@@ -616,8 +623,20 @@
      every level against the accounts that follow it (item 2 follow-up 2026-10-15): a service's or the shared warn write
      is held above the own switch level of each account whose warn level follows it, a switch write below the own warn
      level of each account whose switch level follows it, and the accounts' own values never move.
-     changes: [{ id, value }] for one service p (null: the shared values); -> the changes as they will be stored, or null */
+     changes: [{ id, value }] for one service p (null: the shared values); -> the changes as they will be stored, or null;
+     a refusal leaves its reason in holdWhy, naming the pair that would cross (an account first) */
+  let holdWhy = '';
+  const GENERIC_WHY = 'The switch level has to stay below the warn level.';
+  /* the pair x {sw, warn, name, acc, on, oSw, oWarn} that crosses, in words */
+  function pairWhy(x) {
+    const sw = `${100 - x.sw}% used`, warn = `${100 - x.warn}% used`;
+    if (x.acc && x.oSw && !x.oWarn) return `${x.acc}'s own switch level (${sw}) would be at or past the warn level it follows from ${x.on} (${warn}).`;
+    if (x.acc && x.oWarn && !x.oSw) return `${x.acc}'s own warn level (${warn}) would be at or before the switch level it follows from ${x.on} (${sw}).`;
+    if (x.name) return `${x.name}'s switch level (${sw}) would be at or past its warn level (${warn}).`;
+    return `The shared switch level (${sw}) would be at or past the shared warn level (${warn}).`;
+  }
   function holdOrder(p, changes) {
+    holdWhy = '';
     const next = {}; (changes || []).forEach(c => { next[c.id] = c.value; });
     const has = id => Object.prototype.hasOwnProperty.call(next, id), blank = v => v === null || v === undefined || v === '';
     if (!has(SW_ID) && !has(WARN_ID)) return changes;
@@ -631,11 +650,12 @@
        (wSw / wWarn); a service's accounts follow its levels where they have none of their own */
     const pairs = [];
     const add = (q, sw, warn, wSw, wWarn) => {
-      pairs.push({ sw, warn, wSw, wWarn });
+      pairs.push({ sw, warn, wSw, wWarn, name: q.name });
       (canSwitch(q) ? q.accounts || [] : []).forEach(acc => {
         const oSw = accOwn(acc, SW_ID), oWarn = accOwn(acc, WARN_ID);
         if (oSw === undefined && oWarn === undefined) return;   /* the same pair as its service */
-        pairs.push({ sw: oSw === undefined ? sw : pctLeft(oSw), warn: oWarn === undefined ? warn : pctLeft(oWarn), wSw: wSw && oSw === undefined, wWarn: wWarn && oWarn === undefined });
+        pairs.push({ sw: oSw === undefined ? sw : pctLeft(oSw), warn: oWarn === undefined ? warn : pctLeft(oWarn), wSw: wSw && oSw === undefined, wWarn: wWarn && oWarn === undefined,
+          acc: acc.nickname, on: q.name, oSw: oSw !== undefined, oWarn: oWarn !== undefined });
       });
     };
     if (p) add(p, eff(p, SW_ID), eff(p, WARN_ID), has(SW_ID), has(WARN_ID));
@@ -650,15 +670,19 @@
        value moves nothing, and whatever still crosses after both levels refuses the write */
     const reach = key => pairs.filter(x => x[key] && x.sw !== null && x.warn !== null);
     const crosses = key => reach(key).some(x => x.sw >= x.warn);
+    const refuse = () => {
+      const hit = reach('wSw').concat(reach('wWarn')).filter(x => x.sw >= x.warn).sort((x, y) => (y.acc ? 1 : 0) - (x.acc ? 1 : 0));
+      holdWhy = hit.length ? pairWhy(hit[0]) : GENERIC_WHY; return null;
+    };
     const move = (id, key, pick) => {
       if (!crosses(key) || !has(id) || blank(next[id])) return true;
       const v = pick(reach(key)); if (v === null) return false;
       at(id).value = v; reach(key).forEach(x => { x[id === SW_ID ? 'sw' : 'warn'] = v; });
       return true;
     };
-    if (!move(SW_ID, 'wSw', list => below(Math.min.apply(null, list.map(x => x.warn))))) return null;
-    if (!move(WARN_ID, 'wWarn', list => above(Math.max.apply(null, list.map(x => x.sw))))) return null;
-    if (crosses('wSw') || crosses('wWarn')) return null;
+    if (!move(SW_ID, 'wSw', list => below(Math.min.apply(null, list.map(x => x.warn))))) return refuse();
+    if (!move(WARN_ID, 'wWarn', list => above(Math.max.apply(null, list.map(x => x.sw))))) return refuse();
+    if (crosses('wSw') || crosses('wWarn')) return refuse();
     return out;
   }
   /* the shared rows commit through the page's one Settings write (commitSettingValue: the Settings rows and the Usage
@@ -667,9 +691,36 @@
   commitSettingValue = function (id, value) {
     if (id !== SW_ID && id !== WARN_ID) return o55PolicyCommit.apply(this, arguments);
     const held = holdOrder(null, [{ id, value }]);
-    if (!held) { showToast('Setting was not changed', 'The switch level has to stay below the warn level.', 'warning'); return false; }
+    if (!held) { showToast('Setting was not changed', holdWhy || GENERIC_WHY, 'warning'); return false; }
     const args = Array.prototype.slice.call(arguments); args[1] = held[0].value;
     return o55PolicyCommit.apply(this, args);
+  };
+  /* ... and so do the page's batch write (commitSettingValues: presets, profiles, the look screens), held as one change,
+     and "Back to the default" (restoreSettingDefault, fix cycle 2026-10-15: Details' reset stored the default 20% left
+     while Lab, following it, switched at 25% left). A default is not a level the user picked, so it does not move: a
+     default that would cross an own level of something that follows the shared level is refused, and says whose. */
+  const o55PolicyCommitMany = commitSettingValues;
+  commitSettingValues = function (values) {
+    const ids = Object.keys(values || {}).filter(id => id === SW_ID || id === WARN_ID);
+    if (!ids.length) return o55PolicyCommitMany.apply(this, arguments);
+    const held = holdOrder(null, ids.map(id => ({ id, value: values[id] })));
+    if (!held) { showToast(Object.keys(values).length > 1 ? 'Settings were not changed' : 'Setting was not changed', holdWhy || GENERIC_WHY, 'warning'); return false; }
+    const writes = Object.assign({}, values); held.forEach(c => { writes[c.id] = c.value; });
+    const args = Array.prototype.slice.call(arguments); args[0] = writes;
+    return o55PolicyCommitMany.apply(this, args);
+  };
+  const o55PolicyRestore = restoreSettingDefault;
+  restoreSettingDefault = function (id) {
+    if (id !== SW_ID && id !== WARN_ID) return o55PolicyRestore.apply(this, arguments);
+    const s = PM51.setting(id), def = s ? s.value : undefined;
+    if (def !== undefined && def !== null && def !== '') {
+      const held = holdOrder(null, [{ id, value: def }]);
+      if (!held || String(held[0].value) !== String(def)) {
+        showToast('Default was not restored', `The default is ${leftText(def)}. ${sharedCrossing(id, def) || holdWhy || GENERIC_WHY}`, 'warning');
+        return false;
+      }
+    }
+    return o55PolicyRestore.apply(this, arguments);
   };
   /* The shared rows (Limits & switching › Moving between accounts, their Details choices, All settings) offer no choice
      that holdOrder would move: a crossing level is shown but cannot be picked, and says why, as each service's own
@@ -787,6 +838,11 @@
     /* the changes as they will be stored (pid null: the shared values), or null when they would cross; the Usage page
        sends these in its transaction, so the preview names what is stored */
     hold: (pid, changes) => { if (!pid) return holdOrder(null, changes); const p = find(pid); return p ? holdOrder(p, changes) : null; },
+    /* why the last hold was refused, naming the pair that would cross ('' when it was not) */
+    why: () => holdWhy,
+    /* why level v of `id` cannot be picked (pid null: the shared level), '' when it can: the same reason the Settings
+       choices show (levelBlock, sharedCrossing), so the Usage page's menu and stepper hold back what the owner would move */
+    block: (pid, id, v) => { if (id !== SW_ID && id !== WARN_ID) return ''; if (!pid) return sharedCrossing(id, v); const p = find(pid); return p ? levelBlock(p, id, v) : ''; },
     /* several values of one service at once, held as one change (clearing all four at once never trips on the step
        between them) */
     setMany: (pid, changes) => {
@@ -1015,7 +1071,7 @@
       /* held to the switch-below-warn order (holdOrder, the service's accounts included); a refused write changes
          nothing and says so, and a moved one is named as stored */
       const held = holdOrder(p, [{ id, value }]);
-      if (!held) { showToast('Setting was not changed', 'The switch level has to stay below the warn level.', 'warning'); PM51.refresh(ID, { swap: false }); return false; }
+      if (!held) { showToast('Setting was not changed', holdWhy || GENERIC_WHY, 'warning'); PM51.refresh(ID, { swap: false }); return false; }
       setPolicy(p, id, held[0].value); save();
       return String(held[0].value) !== String(value) ? { who: p.name, value: held[0].value } : p.name;
     }
@@ -1215,7 +1271,7 @@
     const p = prov(el); if (!p) return;
     /* cleared as one change, held like any other: a return to the shared levels that would cross an account's own
        level is refused and nothing changes */
-    if (!holdOrder(p, POLICY_IDS.map(id => ({ id, value: null })))) { showToast('Setting was not changed', 'The switch level has to stay below the warn level.', 'warning'); return; }
+    if (!holdOrder(p, POLICY_IDS.map(id => ({ id, value: null })))) { showToast('Setting was not changed', holdWhy || GENERIC_WHY, 'warning'); return; }
     POLICY_IDS.forEach(id => setPolicy(p, id, null)); save();
     PM51.toast('Saved', `${p.name} follows the shared auto-switch settings.`);
   });

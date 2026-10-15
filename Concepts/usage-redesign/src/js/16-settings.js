@@ -53,6 +53,19 @@
       var v = acc && acc.props ? acc.props[id] : undefined;
       return v === '' || v === null ? undefined : v;
     },
+    /* why the owner refused the last held write, naming the pair that would cross (PM51.providerPolicy.why); '' when it
+       cannot say */
+    holdWhy: function () {
+      var p = pm51(), api = p && p.providerPolicy;
+      try { return api && typeof api.why === 'function' ? String(api.why() || '') : ''; } catch (error) { return ''; }
+    },
+    /* why level v of setting id cannot be picked for a provider (no provider: the shared level), '' when it can: the
+       reason the Settings choices show (PM51.providerPolicy.block), so the level menu and stepper hold back a level the
+       owner would move, such as one past the own warn level of an account that follows it (2026-10-15) */
+    levelBlock: function (providerId, id, v) {
+      var p = pm51(), api = p && p.providerPolicy;
+      try { return api && typeof api.block === 'function' ? String(api.block(providerId || null, id, v) || '') : ''; } catch (error) { return ''; }
+    },
     providerWritable: function () { var p = pm51(); return !!(p && p.providerPolicy && typeof p.providerPolicy.set === 'function'); },
     /* one provider-scope write, as a Settings transaction (canon SSYS-009/018, UCC: cmd.settings.transaction.preview then
        .apply with scope=provider): both go through the page's command seam (a host may cancel either; a cancelled
@@ -68,7 +81,7 @@
          to the nearest choice that keeps the order, the other level never moves) or refuses; the transaction names that */
       if (typeof api.hold === 'function') {
         var held = null; try { held = api.hold(providerId, list || []); } catch (error) { held = null; }
-        if (!held) return { ok: false, reason: 'The switch level has to stay below the warn level' };
+        if (!held) return { ok: false, reason: PMU.settings.holdWhy() || 'The switch level has to stay below the warn level' };
         list = held;
       }
       var changes = (list || []).map(function (x) {
