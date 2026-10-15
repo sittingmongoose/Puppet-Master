@@ -39,6 +39,49 @@ floating window `data-lg-lens-host`. A strip whose items are not choices (a prog
 moves only when the app changes the current item. Disabled, `aria-disabled="true"` and inert items never take a
 press either.
 
+## The switcher: one tab, segment and list-selection component (Jared #22, 2026-10-15)
+
+Every strip in `STRIPS` is one component: a track, a lens that travels on a spring to the chosen item, and labels that
+change from the ink colour to the chosen colour. The strips are:
+- the page tabs, Usage's navigation and range, the rail's tabs and the Orchestrator's views;
+- Settings' left bar, section tabs, page index and manager tabs;
+- the Wizard's work type, the theme menu and the Customize screens.
+
+Choices that live in scrolling content wear the lens's material in place and do not travel: Settings' segmented
+choices and service lists, and Home's segmented rows and panel tabs. Glass draws the component. **Any other look can
+adopt it by tokens**, with no change to `glass.js` or `glass.css`:
+
+```css
+html[data-theme="basic-dark"] {
+  --pm-switch: lens;                                  /* turns the component on in this look */
+  --pm-switch-fill: rgba(100, 181, 246, .16);         /* the lens's body */
+  --pm-switch-line: rgba(100, 181, 246, .7);          /* its hairline */
+  --pm-switch-r: 4px; --pm-switch-r-in: 2px;          /* its corner, and a label's corner inside it */
+}
+```
+
+`glass.js` reads `--pm-switch` when the look changes and marks `<html data-pm-switch="lens">`. The strips and lenses
+then run in that look. Glass's sheets, frost, refraction, hover bead and the activity bar's icon lens stay Glass-only.
+A token you leave out takes the default in `glass.css` section 12.
+
+| Token | Default outside Glass | What it draws |
+|---|---|---|
+| `--pm-switch` | (unset: off) | `lens` turns the component on |
+| `--pm-switch-track` | text colour at 6 % | The strip's track under the items |
+| `--pm-switch-hover` | text colour at 8 % | A list row's hover fill |
+| `--pm-switch-fill` / `--pm-switch-body` | accent at 18 % / clear | The lens's body; the in-place material's extra body |
+| `--pm-switch-line` / `--pm-switch-edge` | accent at 55 % / clear | Its hairline; a faint outer edge |
+| `--pm-switch-top` / `--pm-switch-bottom` | clear | A top catch light; a bottom shade |
+| `--pm-switch-glint` / `--pm-switch-glint-blend` | clear / `normal` | A glint along the top edge, and its blend |
+| `--pm-switch-shadow` | none | The drop shadow |
+| `--pm-switch-r` / `--pm-switch-r-in` | 6 px / 3 px | The lens's corner; a label's corner inside it |
+| `--pm-switch-ink` / `--pm-switch-ink-on` | `--text-secondary` / `--text-primary` | The labels' colour, at rest and chosen |
+| `--pm-switch-mark` | `--accent-primary` | Small marks inside a chosen row (Usage's icon, the index's dot) |
+
+The look's own chosen fills, accent bars, dots, underlines and sliding inks on these strips step aside while the
+component is on. A new strip joins by being added to `STRIPS` (mail me, as under "Ride the lens"). Reduce Motion: the
+lens jumps.
+
 ## Public tokens
 
 | Token | Dark | Light | Use |

@@ -28,6 +28,19 @@
   /* the wallpaper is applied by applyWall() (below) from the saved choice or ?lgwall= */
 
   function isGlass() { return root.getAttribute('data-lg') === 'on' && /^glass/.test(root.getAttribute('data-theme') || ''); }
+  /* the switcher in another look (Jared #22, 2026-10-15): Glass's tabs, segments and list selections are one component
+     (the strips below and their lenses), drawn from --pm-switch-* tokens (glass.css section 12). A look that sets
+     --pm-switch: lens adopts it; its strips and lenses then run here, without Glass's sheets, frost or refraction.
+     Read when the look changes (one style read), and mirrored on <html data-pm-switch> for the CSS. */
+  var switchLook = false;
+  function readSwitch() {
+    var on = false;
+    if (!isGlass()) { try { on = getComputedStyle(root).getPropertyValue('--pm-switch').trim() === 'lens'; } catch (e) {} }
+    switchLook = on;
+    if (on) { if (root.getAttribute('data-pm-switch') !== 'lens') root.setAttribute('data-pm-switch', 'lens'); }
+    else if (root.hasAttribute('data-pm-switch')) root.removeAttribute('data-pm-switch');
+  }
+  function switchOn() { return isGlass() || switchLook; }
   function gpu() { return root.getAttribute('data-lg-tier') !== 'cpu'; }
   function reduced() { return root.getAttribute('data-motion') === 'reduced' || root.getAttribute('data-reduced-motion') === '1' || (window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches); }
   function el(tag, attrs) { var e = document.createElement(tag); for (var k in attrs || {}) e.setAttribute(k, attrs[k]); return e; }
@@ -605,8 +618,8 @@
     ['backdrop-filter', '-webkit-backdrop-filter', '--lg-ring', '--lg-spec'].forEach(function (name) { e.style.removeProperty(name); });
     if (sizeWatch) sizeWatch.unobserve(e); glassSet.delete(e);
   }
-  function unmountAll() {
-    if (typeof suspendLensMotion === 'function') suspendLensMotion();
+  function unmountAll(keepLenses) {
+    if (!keepLenses && typeof suspendLensMotion === 'function') suspendLensMotion();
     bakeEpoch++; bakeFlight = null; bakeQ.clear();
     if (bakeT) { clearTimeout(bakeT); bakeT = 0; }
     if (bakeFrame) { cancelAnimationFrame(bakeFrame); bakeFrame = 0; }
@@ -637,17 +650,28 @@
   }
   function unpin(e) { if (e.hasAttribute('data-lg-fixed')) { anchor(e); e.removeAttribute('data-lg-fixed'); } e.__lgPinTried = false; }
   var scrollQ = false, scrollBoxes = new Set(), settleSheets = new Set(), settleStrips = new Set();
+  /* an entrance (a CSS animation or transition) that ends on an element holding a lensed strip: its strips are measured
+     again at rest, so a lens placed mid-entrance never stays where the entrance began */
+  function endedAround(ev) {
+    if (!switchOn() || !lenses.size) return;
+    var t = ev.target; if (!t || t.nodeType !== 1 || t.closest(GENERATED)) return;
+    var hit = false; lenses.forEach(function (L) { if (!hit && t.contains(L.strip)) hit = true; });
+    if (hit) { dirtyScope(t); queueSync(); }
+  }
+  document.addEventListener('animationend', endedAround, true);
+  document.addEventListener('transitionend', endedAround, true);
   document.addEventListener('scroll', function (ev) {
-    if (!isGlass()) return;
+    if (!switchOn()) return;
     var box = ev.target && ev.target.nodeType === 1 ? ev.target : document.documentElement;
     scrollBoxes.add(box);
     if (!scrollQ) { scrollQ = true; requestAnimationFrame(function () {
       scrollQ = false; var boxes = Array.from(scrollBoxes); scrollBoxes.clear();
-      if (!isGlass()) return;
+      if (!switchOn()) return;
+      var glass = isGlass();
       var sheets = new Set(), strips = new Set(), positions = new Map(), offsets = new Map();
       boxes.forEach(function (b) {
         var ss = scrollSheets.get(b), ls = scrollStrips.get(b);
-        if (ss) ss.forEach(function (e) { if (e.isConnected) { sheets.add(e); settleSheets.add(e); } });
+        if (ss && glass) ss.forEach(function (e) { if (e.isConnected) { sheets.add(e); settleSheets.add(e); } });
         if (ls) ls.forEach(function (s) { if (s.isConnected) { strips.add(s); settleStrips.add(s); } });
       });
       sheets.forEach(function (e) {
@@ -833,11 +857,11 @@
     var s = L.lens.style, A = L.rect;
     if (!A || A.x !== R.x) s.left = R.x + 'px'; if (!A || A.y !== R.y) s.top = R.y + 'px';
     if (!A || A.w !== R.w) s.width = R.w + 'px'; if (!A || A.h !== R.h) s.height = R.h + 'px'; L.rect = R;
-    mount(L.lens, L.cfg.kind);
+    if (isGlass()) mount(L.lens, L.cfg.kind);   /* the refracting optics are Glass's; an adopting look draws the lens from its tokens */
   }
   /* every item size of a strip gets its lens filter while nothing moves, so a move never waits for a map to decode */
   function prewarm(L, cfg, strip) {
-    if (!gpu()) return;
+    if (!gpu() || !isGlass()) return;
     var pad = cfg.pad == null ? 2 : cfg.pad, sizes = [];
     strip.querySelectorAll(cfg.items).forEach(function (it) {
       if (!visible(it)) return; var b = cfg.box ? cfg.box(it) : it; if (!b) return; var r = b.getBoundingClientRect ? boxRect(b) : b;
@@ -874,6 +898,14 @@
       });
     }
     L.ride = out.length ? out : null;
+  }
+  /* a lens first shown in a page or window is measured while that page is still coming in, and content above a strip can
+     still grow by a layout animation (a Settings manager page eases its height as its tab changes, moving every strip
+     below it; no mutation or event says so). It is measured once more when entrances are over, and follows if its
+     item moved (a lens in Settings rested 8 px under its tab otherwise). */
+  function settleCheck(L) {
+    clearTimeout(L.settleT);
+    L.settleT = setTimeout(function () { L.settleT = 0; if (lenses.get(L.strip) === L && L.strip.isConnected && !L.dragging && !L.pending && switchOn()) syncStrip(L.cfg, L.strip); }, 480);
   }
   function stopRide(L) { if (L.ride) { var r = L.ride; L.ride = null; r.forEach(function (m) { m.cancel(); }); } }
   function stopLensTravel(L) {
@@ -1020,9 +1052,9 @@
   }
   function checkShown() {
     showT = 0;
-    if (!isGlass()) { hiddenLenses.clear(); return; }
+    if (!switchOn()) { hiddenLenses.clear(); return; }
     hiddenLenses.forEach(function (cfg, L) {
-      if (!L.strip.isConnected) { hiddenLenses.delete(L); return; }
+      if (!L.strip.isConnected || (cfg.kind === 'lensIcon' && !isGlass())) { hiddenLenses.delete(L); return; }
       if (!visible(L.strip)) return;
       var t = cfg.pick ? cfg.pick(L.strip) : L.strip.querySelector(cfg.items + (cfg.active || '.active'));
       if (t && visible(t)) { hiddenLenses.delete(L); syncStrip(cfg, L.strip); }
@@ -1055,15 +1087,15 @@
     if (L.snap) { L.snap = false; stopLensTravel(L); setLensBox(L, R); return; }
     var quiet = reduced();
     var still = A && (quiet ? A.x === R.x && A.y === R.y && A.w === R.w && A.h === R.h : Math.abs(A.x - R.x) < 0.5 && Math.abs(A.y - R.y) < 0.5 && Math.abs(A.w - R.w) < 0.5 && Math.abs(A.h - R.h) < 0.5);
-    if ((quiet && !L.reducedAnim) || !isGlass()) stopLensTravel(L);
+    if ((quiet && !L.reducedAnim) || !switchOn()) stopLensTravel(L);
     if (still) return;
-    if (!A || quiet || !isGlass()) {
+    if (!A || quiet || !switchOn()) {
       stopLensTravel(L);
       if (A && quiet) { var an = L.lens.animate([{ opacity: 0.3 }, { opacity: 1 }], { duration: 140 }); L.anim = an; L.reducedAnim = true; an.onfinish = function () { if (L.anim === an) { L.anim = null; L.reducedAnim = false; } }; }
       setLensBox(L, R); L.tgt = target;
       /* a lens in the app-wide layer waits for its strip's entrance; one in its host's own layer (a page, a menu, a
          dialog) is part of that entrance already */
-      if (!A && !quiet && isGlass()) { if (L.layer === layer) arrive(L, target); ride(L, target); }
+      if (!A && !quiet && switchOn()) { if (L.layer === layer) arrive(L, target); ride(L, target); settleCheck(L); }
       return;
     }
     /* the destination moved by a pixel or two (the chosen label turned bold): a move in flight carries on, re-based;
@@ -1095,7 +1127,7 @@
     return null;
   }
   document.addEventListener('pointerdown', function (e) {
-    if (!isGlass() || e.button !== 0 || reduced()) return;
+    if (!switchOn() || e.button !== 0 || reduced()) return;
     var hit = stripAt(e.target); if (!hit || !choosable(hit.item, hit.cfg)) return;
     var L = lenses.get(hit.strip); if (!L || !L.rect || L.dragging) return;
     var cur = hit.cfg.pick ? hit.cfg.pick(hit.strip) : hit.strip.querySelector(hit.cfg.items + (hit.cfg.active || '.active'));
@@ -1114,7 +1146,7 @@
   /* scrubbing: press on a tab strip and slide; the lens lifts and follows the pointer like a drop of water, magnifying
      each tab it passes, and drops into the nearest tab on release (which then becomes the chosen one) */
   function scrubbing(e) {
-    if (!isGlass() || e.button !== 0 || reduced()) return;
+    if (!switchOn() || e.button !== 0 || reduced()) return;
     for (var i = 0; i < STRIPS.length; i++) {
       var cfg = STRIPS[i]; if (!cfg.scrub || cfg.press === false) continue;
       var strip = e.target.closest && e.target.closest(cfg.sel); if (!strip) continue;
@@ -1122,7 +1154,7 @@
       if (L.scrubCleanup) L.scrubCleanup();
       var sx = e.clientX, moved2 = false, items = Array.prototype.slice.call(strip.querySelectorAll(cfg.items)).filter(function (it) { return visible(it) && choosable(it, cfg); }), labs = null, mags = magsOf(cfg);
       var onMove = function (ev) {
-        if (!strip.isConnected || !L.lens.isConnected || !isGlass() || reduced()) { cleanup(); return; }
+        if (!strip.isConnected || !L.lens.isConnected || !switchOn() || reduced()) { cleanup(); return; }
         var dx = ev.clientX - sx;
         if (!moved2 && Math.abs(dx) < 6) return;
         if (!moved2) { moved2 = true; L.dragging = true; L.pending = null; stopLensTravel(L); L.lens.setAttribute('data-lg-lifted', ''); labs = labelsOf(cfg, strip, false); try { getSelection().removeAllRanges(); } catch (e2) {} }
@@ -1144,7 +1176,7 @@
       var onUp = function (ev) {
         removeListeners();
         if (!moved2) return;
-        if (ev.type === 'pointercancel' || !strip.isConnected || !L.lens.isConnected || !isGlass() || reduced()) { cleanup(); return; }
+        if (ev.type === 'pointercancel' || !strip.isConnected || !L.lens.isConnected || !switchOn() || reduced()) { cleanup(); return; }
         var best = null, bd = 1e9;
         items.forEach(function (it) { var r = boxRect(it), d = Math.abs(r.left + r.width / 2 - ev.clientX); if (d < bd) { bd = d; best = it; } });
         var cur = L.lens.getBoundingClientRect(), lr2 = L.layer.getBoundingClientRect(), from = { x: cur.left - lr2.left + (cur.width - L.rect.w) / 2, y: L.rect.y, w: L.rect.w, h: L.rect.h };
@@ -1450,16 +1482,18 @@
     sheets.forEach(unpin);   /* the scroll has settled: anchored frost again, at the very spot it is pinned */
     if (root.hasAttribute('data-lg-demo-host') && document.getElementById('lg-demo-btn')) demo();
     applyWall();
-    if (!isGlass()) { unmountAll(); return; }
-    syncSurfaces(scopes, sheets);
+    if (!isGlass()) { unmountAll(switchLook); if (!switchLook) return; }
+    else syncSurfaces(scopes, sheets);
     STRIPS.forEach(function (cfg) {
       var found = cfg.many ? scopedNodes(cfg.sel, scopes) : [document.querySelector(cfg.sel)].filter(function (s) {
         return s && (!scopes || scopes.some(function (p) { return p.contains(s) || s.contains(p); }));
       });
       strips.forEach(function (s) { if (s.matches(cfg.sel) && found.indexOf(s) < 0) found.push(s); });
+      /* the activity bar's icon lens is Glass's own rail design; an adopting look keeps its own lit icon there */
+      if (cfg.kind === 'lensIcon' && !isGlass()) { found.forEach(function (s) { var L = lenses.get(s); if (L) { disposeLens(L); lenses.delete(s); } }); return; }
       found.forEach(function (s) { syncStrip(cfg, s); });
     });
-    scanMenus(scopes);
+    if (isGlass()) scanMenus(scopes);
   }
   function queueSync(scope) {
     if (scope && scope.nodeType === 1) dirtyScope(scope);
@@ -1508,7 +1542,7 @@
     if (!relevant) return;
     var page = document.querySelector('.page-tabs .page-tab.active'); page = page && page.id;
     var changed = Array.from(dirtyRoots), full = dirtyAll;
-    if (hot && isGlass()) hotSync(); else lazySync(false);
+    if (hot && switchOn()) hotSync(); else lazySync(false);
     if (page !== lastPage) {
       var first = lastPage === null; lastPage = page;
       if (pageT) { clearTimeout(pageT); pageT = 0; }
@@ -1531,6 +1565,7 @@
     if (motion !== lastMotion && reduced() && typeof suspendLensMotion === 'function') suspendLensMotion();
     lastTier = tier; lastWall = wall; lastMotion = motion;
     if (th !== lastTheme || lg !== lastLg) {
+      readSwitch();
       var enter = isGlass() && (!/^glass/.test(lastTheme || '') || lastLg !== 'on');
       lastTheme = th; lastLg = lg; lenses.forEach(function (L) { L.rect = null; });
       glassSet.forEach(function (e) { e.__lgSig = null; });
@@ -1547,7 +1582,7 @@
     var m = buildLensMaps(18, 18, 9, 7, 15, 1.16, 1.2); lensFilter(18, 18, m, 0.6, 'lg-knob');
   }
   function start() {
-    ensureDefs(); viewportVars(); knobFilter();
+    ensureDefs(); viewportVars(); knobFilter(); readSwitch();
     window.addEventListener('resize', viewportVars);
     mo.observe(document.body, { subtree: true, childList: true, attributes: true, attributeOldValue: true, attributeFilter: ['class', 'hidden', 'data-open', 'data-lg-surface'] });
     if (window.ResizeObserver) { var ro = new ResizeObserver(function (entries) { entries.forEach(function (en) { dirtyScope(en.target); }); lazySync(false); }); ['.app-shell', '.left-panel', '#sidePanelSlot', '#chatPanel', '#pmuBoard', '#pmuApp'].forEach(function (s) { var e = document.querySelector(s); if (e) ro.observe(e); }); }
