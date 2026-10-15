@@ -1076,8 +1076,10 @@
     /* Settings: its domain rail and section index are sheets, every section is a card */
     ['#pm-settings-root aside.domain-rail', 'panel'], ['#pm-settings-root .document-layout > :is(nav, aside):not(.document-main)', 'panel'],
     ['#pm-settings-root section.settings-section', 'card'],
-    /* a chapter's header (its name and line) is a bar: on the bare wallpaper its line read 1.9-2.9:1 over Prism or Pool */
+    /* a chapter's header (its name and line) is a bar, and Settings Home's intro a panel over its two cards: on the bare
+       wallpaper their lines read 1.9-2.9:1 over Prism or Pool */
     ['#pm-settings-root header.workspace-separator', 'bar'],
+    ['#pm-settings-root .home-page > section.home-hero', 'panel'], ['#pm-settings-root .home-page .home-panel', 'card'],
     /* onboarding: the window is a sheet over a frosted veil of the wallpaper; the tour floats over the live app, so its
        callout and bar blur what is behind them */
     ['#pm-o55-onboarding .o55-win', 'panel'], ['.o55t-callout', 'menu'], ['.o55t-bar', 'menu'],

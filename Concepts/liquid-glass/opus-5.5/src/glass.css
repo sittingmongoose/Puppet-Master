@@ -609,3 +609,7 @@ html[data-lg="on"][data-theme^="glass"]:not(#lgz) .lg-lenses-local { display: bl
    secondary text on the bar, and the bar keeps the header's own spacing with room inside its corners. */
 html[data-lg="on"][data-theme^="glass"]:not(#lgz) #panel-settings header.workspace-separator[data-lg-kind] { padding: 10px 16px 11px !important; }
 html[data-lg="on"][data-theme^="glass"]:not(#lgz) #panel-settings header.workspace-separator[data-lg-kind] > p { color: var(--text-secondary) !important; }
+/* Settings Home: its intro is a panel and its two lists are cards; the intro's lede and the search's key hint take the
+   look's secondary text */
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) #panel-settings .home-page > section.home-hero[data-lg-kind] { padding: 20px 22px 22px !important; }
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) #panel-settings .home-page > section.home-hero[data-lg-kind] :is(.home-lede, .kbd) { color: var(--text-secondary) !important; }
