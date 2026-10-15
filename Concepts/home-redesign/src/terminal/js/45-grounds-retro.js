@@ -140,11 +140,14 @@
     'Extended Memory: 15360K OK', '', 'Detecting Primary Master ... PM-DISK 40MB', 'Detecting Primary Slave  ... None', '', 'Booting from Hard Disk...'];
   PAINT['boot-ghost'] = function (g, W, H, th, h, o) {
     ground(g, W, H, th);
-    var c = pool(th, phos(th, h), 0.3), size = Math.max(10, Math.round(((o && o.rowPx) || 17) * 0.82)), x = Math.round(W * 0.5), y = Math.round(H * 0.16);
-    g.font = '500 ' + size + 'px "JetBrains Mono", "IBM Plex Mono", ui-monospace, monospace'; g.textBaseline = 'top';
+    var c = K.tight(th) ? pool(th, phos(th, h), 0.8) : pool(th, phos(th, h), 0.3), size = Math.max(10, Math.round(((o && o.rowPx) || 17) * 0.82)), x = Math.round(W * 0.5), y = Math.round(H * 0.16);
+    /* (round 3c: on a scheme with no contrast to spare the ghost is drawn crisp and whole, or it vanishes into the pale
+       ground) */
+    var tk = K.tight(th);
+    g.font = (tk ? '700 ' : '500 ') + size + 'px "JetBrains Mono", "IBM Plex Mono", ui-monospace, monospace'; g.textBaseline = 'top';
     var draw = function (dx, dy, a) { g.globalAlpha = a; g.fillStyle = hex(c); BOOT.forEach(function (l, i) { g.fillText(l, x + dx, y + dy + i * size * 1.35); }); };
-    if (K.canFilter) g.filter = 'blur(0.7px)';
-    draw(0, 0, 0.75); draw(1.5, 0, 0.3);
+    if (K.canFilter && !tk) g.filter = 'blur(0.7px)';
+    draw(0, 0, tk ? 1 : 0.75); draw(1.5, 0, tk ? 0.6 : 0.3);
     /* the logo block in the corner, as bright as the text was */
     g.globalAlpha = 0.8; g.fillStyle = hex(pool(th, phos(th, h), 0.4));
     var bx = Math.round(W * 0.84), by = y, s = size * 0.7, logo = ['1110111', '1010101', '1110101', '1000101', '1000101'];
@@ -181,7 +184,7 @@
 
   /* ---- plainer Retro (round 3b, Jared: "the retro wallpapers need some plainer ones"): nothing drawn, only the tube ---- */
   function hiOf(th) { return isDark(th) ? pool(th, 0xffffff, 1) : 0xffffff; }
-  function edgeOf(th, f) { return isDark(th) ? tone(th.bg, -0.09 * f) : pool(th, 0x000000, 0.7 * f); }
+  function edgeOf(th, f) { return isDark(th) ? tone(th.bg, -0.09 * f) : K.poolRaw(th, 0x000000, 0.7 * f); }
   /* Phosphor glow: a lit tube, its phosphor glowing softly from the middle out, its edge falling away into the dark */
   PAINT['phosphor-glow'] = function (g, W, H, th, h) {
     ground(g, W, H, th);
@@ -257,10 +260,10 @@
     }
     g.fillStyle = g.createPattern(t, 'repeat'); g.fillRect(0, 0, W, H);
   };
-  def('retro', 'phosphor-glow', 'Phosphor glow', { looks: ['retro'] });
-  def('retro', 'tube', 'Tube glass', { looks: ['retro'] });
-  def('retro', 'grille', 'Aperture grille', { looks: ['retro'] });
-  def('retro', 'static', 'Static');
+  def('retro', 'phosphor-glow', 'Phosphor glow', { looks: ['retro'], vis: false });
+  def('retro', 'tube', 'Tube glass', { looks: ['retro'], vis: false });
+  def('retro', 'grille', 'Aperture grille', { looks: ['retro'], vis: false });
+  def('retro', 'static', 'Static', { vis: false });
   def('retro', 'phosphor-grid', 'Phosphor grid', { looks: ['retro'] });
   def('retro', 'test-card', 'Test pattern');
   def('retro', 'ansi', 'ANSI art', { looks: ['retro'] });

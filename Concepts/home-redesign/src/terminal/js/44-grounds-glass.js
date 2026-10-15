@@ -28,7 +28,7 @@
     return lo;
   }
   function ink(th) {
-    var dark = isDark(th), shade = pool(th, C.hex('#1e2d5a'), 1);
+    var dark = isDark(th), shade = K.poolRaw(th, C.hex('#1e2d5a'), 1);
     /* no room to darken (the shade is the ground itself): no shadows at all, which a GPU canvas would draw a unit or two
        under the ground */
     var room = dark || C.contrast(shade, th.bg) > 1.04;
@@ -40,7 +40,7 @@
       dark: dark,
       film: dark ? pool(th, 0xffffff, 0.62) : paper ? tintTo('#c4cfe0', 0.45) : C.mix(th.bg, 0xffffff, 0.55),
       hi: dark ? pool(th, 0xffffff, 1) : paper ? tintTo('#8c9fbd', 0.5) : 0xffffff,
-      lo: dark ? tone(th.bg, -0.07) : pool(th, C.hex('#2e3a55'), 0.85),
+      lo: dark ? tone(th.bg, -0.07) : K.poolRaw(th, C.hex('#2e3a55'), 0.85),
       frost: dark ? pool(th, 0xffffff, 1) : paper ? tintTo('#7f93b3', 0.6) : 0xffffff,
       shadow: dark ? 'rgba(0,0,0,.38)' : room ? rgba(shade, 0.5) : 'rgba(0,0,0,0)',
       dropShade: dark ? 'rgba(0,0,0,.22)' : room ? rgba(shade, 0.35) : 'rgba(0,0,0,0)'
@@ -117,7 +117,7 @@
     g.save();
     g.fillStyle = k.dropShade; g.beginPath(); g.ellipse(x, y + r * 0.28, r * 1.02, r * 0.95, 0, 0, Math.PI * 2); g.fill();
     var gr = g.createLinearGradient(x, y - r, x, y + r);
-    gr.addColorStop(0, hex(k.dark ? tone(th.bg, -0.05) : pool(th, C.hex('#2e3a55'), 0.5))); gr.addColorStop(0.55, hex(k.film)); gr.addColorStop(1, hex(k.hi));
+    gr.addColorStop(0, hex(k.dark ? tone(th.bg, -0.05) : K.poolRaw(th, C.hex('#2e3a55'), 0.5))); gr.addColorStop(0.55, hex(k.film)); gr.addColorStop(1, hex(k.hi));
     g.fillStyle = gr; g.beginPath(); g.ellipse(x, y, r, r * 0.94, 0, 0, Math.PI * 2); g.fill();
     g.lineWidth = Math.max(0.6, r * 0.08); g.strokeStyle = rgba(k.hi, k.dark ? 0.35 : 0.8); g.stroke();
     if (r > 1.6) { g.fillStyle = hex(k.hi); g.beginPath(); g.ellipse(x - r * 0.34, y - r * 0.38, r * 0.2, r * 0.14, -0.5, 0, Math.PI * 2); g.fill(); }
@@ -210,7 +210,7 @@
     var w = x1 - x0, h = y1 - y0; if (w < 2 || h < 2) return;
     var img = g.getImageData(x0, y0, w, h), d = img.data, dark = isDark(th), Yb = C.lum(th.bg);
     /* a hair inside the band's edges: a pixel that keeps its hue at exactly the ground's light can round a unit darker */
-    var lo = dark ? Yb * 0.55 : Math.max(Yb, C.lum(pool(th, 0x000000, 0.96))) + 0.008, hi = dark ? C.lum(pool(th, 0xffffff, 0.96)) * 0.97 : 1;
+    var lo = dark ? Yb * 0.55 : Math.max(Yb, C.lum(K.poolRaw(th, 0x000000, 0.96))) + 0.008, hi = dark ? C.lum(pool(th, 0xffffff, 0.96)) * 0.97 : 1;
     var Ymin = Infinity, Ymax = -Infinity, i, Y;
     for (i = 0; i < d.length; i += 4) { Y = 0.2126 * lin(d[i]) + 0.7152 * lin(d[i + 1]) + 0.0722 * lin(d[i + 2]); if (Y < Ymin) Ymin = Y; if (Y > Ymax) Ymax = Y; }
     if (Ymin >= lo && Ymax <= hi) return;
