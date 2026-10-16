@@ -623,12 +623,22 @@
   function nudge() { const w = S.root.querySelector('.o55-win'); O55.motion.play(w, [{ transform: 'scale(1)' }, { transform: 'scale(1.008)' }, { transform: 'scale(1)' }], { duration: 240 }); }
 
   /* ---------------------------------------------------------------- open / close */
-  let returnFocus = null, inerted = [];
+  /* The app beneath is held while the window is open: every part of it is marked data-o55-held (the pause rules in
+     10-window.css key on that, not on [inert]: a rule on any [inert] descendant made every inert toggle anywhere, the
+     editor's sheet included, restyle that whole subtree, 86.8 ms on an editor open, B6 trace), and the parts not inert
+     already are made inert, as before. */
+  let returnFocus = null, inerted = [], held = [];
   function setInert(on) {
     if (on) {
-      inerted = Array.from(document.body.children).filter((n) => n !== S.root && !n.hasAttribute('inert') && n.id !== 'pm-hover-tag-root' && n.id !== 'o55-demo' && n.tagName !== 'SCRIPT');
+      held = Array.from(document.body.children).filter((n) => n !== S.root && n.id !== 'pm-hover-tag-root' && n.id !== 'o55-demo' && n.tagName !== 'SCRIPT');
+      inerted = held.filter((n) => !n.hasAttribute('inert'));
+      held.forEach((n) => n.setAttribute('data-o55-held', ''));
       inerted.forEach((n) => n.setAttribute('inert', ''));
-    } else { inerted.forEach((n) => n.removeAttribute('inert')); inerted = []; }
+    } else {
+      inerted.forEach((n) => n.removeAttribute('inert'));
+      held.forEach((n) => n.removeAttribute('data-o55-held'));
+      inerted = []; held = [];
+    }
   }
   /* Run Onboarding Again (the Home menu, Settings, the demo pill) starts over for real: a new run, a clean fixture
      world, no operation of the old run left running or reporting, and the Guided Tour back at its first step. */

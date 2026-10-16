@@ -137,7 +137,7 @@ PAGE_STATE_OK = {
 # NOTE in every build until its owner gives it a class tail; the rule is then simply gone from here. Measured
 # 2026-10-08 on the NieR look screen (16.7k elements, h-fx2-work/attrcost2.mjs): a toggle with no rule costs 0 ms.
 PAGE_WIDE_DEBT = {
-    ('src/css/10-window.css', 'html[data-o55-open] body > [inert] *'):
+    ('src/css/10-window.css', 'html[data-o55-open] body > [data-o55-held] *'):
         'WINDOW: about 240 ms of style each time the onboarding window opens or closes; name the animated parts '
         '(the next rule already does) instead of every element of the app',
     ('src/css/30-art.css', 'html[data-o55-lowres] .o55-f-nier :is(.o55-nier-online .nv-scan, .o55-nier-online .nv-rest, '

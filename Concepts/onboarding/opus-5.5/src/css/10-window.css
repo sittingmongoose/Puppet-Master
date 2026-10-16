@@ -9,15 +9,16 @@
 html[data-o55-open] #pm-hover-tag-root { display: none !important; }
 /* the app beneath the window is inert and dimmed (its demo clock is paused too): its own loops (working pulses, status
    dots) hold still until the window closes, so every frame's work is the window's own. Restyled in the same frame that
-   makes the app inert, which the window's first held frame already pays for. */
-html[data-o55-open] body > [inert], html[data-o55-open] body > [inert] * { animation-play-state: paused !important; }
+   makes the app inert, which the window's first held frame already pays for. The parts are marked data-o55-held by
+   the window (60-ui-core.js setInert), so an inert toggle elsewhere (the editor's sheet) matches nothing here. */
+html[data-o55-open] body > [data-o55-held], html[data-o55-open] body > [data-o55-held] * { animation-play-state: paused !important; }
 /* NieR Mode's diamond loaders (styles.d/14-nier-parts.css) set their animation with an !important shorthand, which
    resets the play state and outranks the line above: under the window they are paused here by name, so ticking NieR
    Mode in the window never wakes the app beneath (performance rule 6; review W9) */
-html[data-o55-open][data-o55-nier-parts] body > [inert] :is(.pm6-wiz-disc-spin, .pm6-orch-pc-ring span, .o55-spin, .thread-working-pulse, .pm6-spin svg, .pm7u-iconbtn.spinning svg) { animation-play-state: paused !important; }
+html[data-o55-open][data-o55-nier-parts] body > [data-o55-held] :is(.pm6-wiz-disc-spin, .pm6-orch-pc-ring span, .o55-spin, .thread-working-pulse, .pm6-spin svg, .pm7u-iconbtn.spinning svg) { animation-play-state: paused !important; }
 /* the solid backdrop (60-ui-core.js): on a computer that cannot composite the app beneath at full rate, the app is
    not drawn at all while the window is open; the scrim then lies over the page's own ground */
-html[data-o55-open][data-o55-solid] body > [inert] { visibility: hidden !important; }
+html[data-o55-open][data-o55-solid] body > [data-o55-held] { visibility: hidden !important; }
 .o55-scrim { position: absolute; inset: 0; background: color-mix(in srgb, var(--background) 74%, transparent); }
 /* The click paints this dim before the window is built (the open used to stay undimmed through that work).
    The flash is one empty element, so the click frame can paint it; the real scrim replaces it on the next
