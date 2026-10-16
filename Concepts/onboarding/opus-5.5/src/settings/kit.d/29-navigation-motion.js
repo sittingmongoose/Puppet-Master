@@ -35,7 +35,7 @@ function o55NavRetainStage(old, next) {
   [old, ...old.querySelectorAll('[id]')].forEach(n => n.removeAttribute('id'));
   Object.assign(old.style, { position: 'absolute', left: '0', right: '0', bottom: '0', height: held.height + 'px', zIndex: '0', pointerEvents: 'none' });
   /* A nonzero opacity gets the incoming surface rastered while the outgoing one still carries the reader's place. */
-  next.style.opacity = '.001'; next.style.zIndex = '1';
+  next.style.opacity = '.01'; next.style.zIndex = '1';
   return true;
 }
 function o55NavVisible() {
@@ -92,7 +92,7 @@ function o55NavRun(work, selector, chapter, prepare) {
           const cs = getComputedStyle(held.old), from = { opacity: cs.opacity, transform: cs.transform };
           if (o55NavLeaving) { o55NavLeaving.cancel(); o55NavLeaving = null; }
           next.style.removeProperty('opacity');
-          held.arrival = next.animate([{ opacity: .001, transform: 'translateY(4px)' }, { opacity: 1, transform: 'none' }],
+          held.arrival = next.animate([{ opacity: .01, transform: 'translateY(4px)' }, { opacity: 1, transform: 'none' }],
             { duration: 180, easing: 'cubic-bezier(.22,.8,.24,1)' });
           const out = held.old.animate([from, { opacity: 0, transform: 'translateY(-20px)' }],
             { duration: 180, easing: 'ease-out', fill: 'forwards' });

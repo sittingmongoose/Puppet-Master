@@ -9,7 +9,8 @@
    before was a long one (more than 40 ms after the one before it), then plays them from their start: they begin once
    frames come on time (two in a row after a long one), at most `frames` (6) frames later (a page that never draws
    on time, such as software rendering, still moves after that). `anims` is an array of Animations or a function
-   returning one (read again each frame). `o.release`, if given, runs once in the frame the moves start, just before they play. */
+   returning one (read again each frame). `o.release`, if given, runs once in the frame the moves start, just before they play:
+   a page change hands the click's fade over to its exit there (tools/shell_motion.py, ANSWER_FIRST). */
 (function () {
   'use strict';
   /* PM_AFTER_LAYOUT(fn): fn runs in the coming frame after its style and layout, before its paint (a ResizeObserver
