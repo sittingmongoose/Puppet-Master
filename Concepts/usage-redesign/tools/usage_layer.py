@@ -296,13 +296,17 @@ HOST_SCOPE = ':is(#panel-usage,[data-pmu-host])'
 # The raster drawn a part at a time (2026-10-16, P2-03 review cycle 1, 05-film.css: the plates' film-layer rule and the
 # two held-plate rules out; the page chrome's panel rule, the marked rail and stage head, and the marked card and its
 # body in, and the hero's two piece rules: its children hidden, its marked pieces shown) adds three compound uses,
-# Usage-only (a hosted board never takes data-pmu-raster): 'compound' 10, 'rewritten' still 2,680.
+# Usage-only (a hosted board never takes data-pmu-raster): 'compound' 10, 'rewritten' still 2,680. The raster drawn one
+# element of each kind at a time (2026-10-16, P2-03 fix cycle 2, 05-film.css: the hero's two piece rules out; the
+# layer's first box, the drawn card's film layers, and the two element-by-itself rules in: its children hidden, the
+# marked element shown) adds two compound uses, Usage-only (a hosted board never takes data-pmu-raster): 'compound' 12,
+# 'rewritten' still 2,680 (the warm wait in the scroll pane changes from display to visibility, the same rule).
 # A Usage CSS
 # edit that adds or removes an anchored rule moves 'rewritten': look at what the new rules style (a hosted board gets
 # them too), then re-pin the number here. Any other use of #panel-usage (a child or sibling combinator, a rule for the
 # panel itself, an anchor outside a selector) stops the build: it would be Usage-only, or not a selector, without
 # saying so.
-HOST_SCOPE_EXPECT = {'rewritten': 2680, 'compound': 10}
+HOST_SCOPE_EXPECT = {'rewritten': 2680, 'compound': 12}
 HOST_AT_GROUPS = ('@media', '@supports', '@container', '@layer')
 _ANCHOR_RX = re.compile(re.escape(HOST_ANCHOR) + r'(?![\w-])')
 

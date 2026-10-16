@@ -12,35 +12,42 @@
 body.pmu-page-active #panel-dashboard.pm-home-owned.pm8-page-out { position: absolute; }
 
 /* ---- the warm build (motion QA P2-03; 15-film.js warm): while another page shows, the Usage page is laid out unseen in
-   the box it shows in (--pmu-warm-*, from the film) for as long as the next arrival's board takes to build in idle time.
-   It takes no room, no pointer and no paint, and goes back to display: none when the board is built. The built board
-   then waits in its scroll pane, kept out of the arrival's click frame (data-pmu-warm-wait), and shows in the frame
-   after it. ---- */
+   the box it shows in (--pmu-warm-*, from the film), and its next arrival's board is built there in idle time. It takes
+   no room, no pointer and no paint, and the film makes it inert and aria-hidden. It stays laid out there, styled, until
+   the arrival (fix cycle 2: going back to display: none made the arrival's show frame restyle and lay out the whole
+   board, a 99 ms task in the entry's frames on the P1000). At the arrival the board waits one frame in its scroll pane
+   (data-pmu-warm-wait), out of the click's frame, and shows in the frame after it by visibility alone. ---- */
 .primary-content > #panel-usage.page[data-pmu-warm]:not(.active):not(.pm8-page-out) { display: flex; position: absolute;
   left: var(--pmu-warm-x, 0px); top: var(--pmu-warm-y, 0px); width: var(--pmu-warm-w, 100%); height: var(--pmu-warm-h, 100%);
   visibility: hidden; pointer-events: none; z-index: -1; content-visibility: visible; }
-#panel-usage .pmu-scroll[data-pmu-warm-wait] { display: none; }
-/* ---- the warm board's one raster (P2-03; 15-film.js raster): a built board that was never painted made the first visible
+#panel-usage .pmu-scroll[data-pmu-warm-wait] { visibility: hidden; }
+/* ---- the warm board's raster (P2-03; 15-film.js raster): a built board that was never painted made the first visible
    Usage entry compile every GPU program its cards and charts draw with (P1000 F3 cold: 47 program links, ~1.4 s of GPU
    main thread, an 834 ms gap with an empty board on screen). So once per look and board class, with a GPU, in idle
    periods after the warm build, the real board is drawn in its warm box at opacity .004 (.001 is culled) on a
    will-change: opacity layer of its own, above the page that shows (tiles under opaque layers are never rastered), a
-   part at a time: the "paint" token makes the layer, the rail and the stage's head are drawn when marked, "chrome"
-   shows the page around the board (the held plates stay hidden), the room's hero is drawn in pieces, and each card the film marks data-pmu-raster-on is drawn whole, its body too, while the panel itself
-   stays hidden (visibility is inherited: a card shown inside a hidden panel restyles only itself, not the page). The
-   same pass builds the first screen of Costs and Accounts in the spare board element ("spare") and draws its cards the
-   same way. The panel is inert and aria-hidden while data-pmu-raster is set, and taking the tokens and marks off leaves
-   every held rule as it was (the arrival's entrance still plays from its first keyframe). Usage-only. ---- */
+   little at a time so no step links more than a program or two (fix cycle 2: about 30 ms a link on the P1000). The
+   first step ("layer") draws one small box, so the layer's own programs link alone. Then one element of each kind
+   draws by itself (data-pmu-raster-self: the element, not its children), then the rail, the stage's head and the page
+   chrome whole ("chrome": the panel shown, the held plates still hidden), then each card the same way: one element of
+   each kind it brings, then the card whole (data-pmu-raster-on). A card being drawn takes the layers the arrival gives
+   it (its plate the film's will-change, its body its reveal's), so each draws with the programs the arrival will use.
+   The same pass builds the first screen of Costs and Accounts in the spare board element ("spare") and draws its
+   cards the same way. Taking the tokens and marks off leaves every held rule as it was (the arrival's entrance still
+   plays from its first keyframe). Usage-only. ---- */
 .primary-content > #panel-usage.page[data-pmu-warm][data-pmu-raster~="paint"]:not(.active):not(.pm8-page-out) { opacity: .004;
   will-change: opacity; z-index: 2147483000; }
+.primary-content > #panel-usage.page[data-pmu-warm][data-pmu-raster~="layer"]:not(.active):not(.pm8-page-out)::after { content: '';
+  position: absolute; left: 0; top: 0; width: 16px; height: 16px; background: #7f7f7f; visibility: visible; pointer-events: none; }
 .primary-content > #panel-usage.page[data-pmu-warm][data-pmu-raster~="chrome"]:not(.active):not(.pm8-page-out) { visibility: visible; }
 #panel-usage[data-pmu-raster~="paint"] :is(.pmu-rail, .pmu-stagehead)[data-pmu-raster-on] { visibility: visible; }
 #panel-usage[data-pmu-raster~="paint"] .pmu-board > .pmu-card[data-pmu-raster-on] { visibility: visible; opacity: 1; }
-#panel-usage[data-pmu-raster~="paint"] .pmu-board > .pmu-card[data-pmu-raster-on] > .pmu-cardbody { opacity: 1; }
-/* the hero drawn in pieces (data-pmu-raster-on="parts"): its plate shows, its elements stay hidden by inheritance from its
-   own children, and each marked piece shows with what it holds (an element hidden by its own rule stays hidden) */
-#panel-usage[data-pmu-raster~="paint"] .pmu-board > .pmu-card[data-pmu-raster-on="parts"] > * { visibility: hidden; }
-#panel-usage[data-pmu-raster~="paint"] .pmu-board > .pmu-card[data-pmu-raster-on="parts"] [data-pmu-raster-part] { visibility: visible; }
+#panel-usage[data-pmu-raster~="paint"] .pmu-board > .pmu-card:is([data-pmu-raster-on], [data-pmu-raster-pieces]) { will-change: transform, opacity; }
+#panel-usage[data-pmu-raster~="paint"] .pmu-board > .pmu-card:is([data-pmu-raster-on], [data-pmu-raster-pieces]) > .pmu-cardbody { opacity: 1; will-change: opacity; }
+/* one element by itself: its children stay hidden, and a marked element shows over its own hiding rules (the held
+   plate's among them: :not(#pmu-raster-none) gives the rule an id's weight; a marked child of a marked element too) */
+#panel-usage[data-pmu-raster~="paint"] [data-pmu-raster-self] > * { visibility: hidden; }
+#panel-usage[data-pmu-raster~="paint"] [data-pmu-raster-self]:not(#pmu-raster-none) { visibility: visible; }
 #panel-usage[data-pmu-raster~="spare"] .pmu-scroll > .pmu-board[data-pmu-raster-room] { display: grid; }
 
 /* ---- the held board (3.1 Phase A): held cards are laid out (the build measures every body) but not painted, so the
