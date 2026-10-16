@@ -255,12 +255,15 @@ HOST_SCOPE = ':is(#panel-usage,[data-pmu-host])'
 # glitch only in #pmuStage) = 2,670, plus Friendly Dark's own Live control pulse ink (2026-10-15, Friendly's lavender
 # key light; the Live control is the same on a hosted board) = 2,671, plus one disabled look for the switch level's
 # steps and account buttons in the hover bridge's aria-disabled form (2026-10-16, motion QA A15, 50-accounts.css: the
-# steps' disabled hover, and the account button's bridged opacity; the same controls on a hosted board) = 2,673. A Usage CSS
+# steps' disabled hover, and the account button's bridged opacity; the same controls on a hosted board) = 2,673, plus the
+# warm board's wait in its scroll pane (2026-10-16, motion QA P2-03, 05-film.css: a hosted board never takes the attribute)
+# = 2,674; the warm page's own rule (.primary-content > #panel-usage.page[data-pmu-warm], the panel itself) is the second
+# compound use, Usage-only as it should be. A Usage CSS
 # edit that adds or removes an anchored rule moves 'rewritten': look at what the new rules style (a hosted board gets
 # them too), then re-pin the number here. Any other use of #panel-usage (a child or sibling combinator, a rule for the
 # panel itself, an anchor outside a selector) stops the build: it would be Usage-only, or not a selector, without
 # saying so.
-HOST_SCOPE_EXPECT = {'rewritten': 2673, 'compound': 1}
+HOST_SCOPE_EXPECT = {'rewritten': 2674, 'compound': 2}
 HOST_AT_GROUPS = ('@media', '@supports', '@container', '@layer')
 _ANCHOR_RX = re.compile(re.escape(HOST_ANCHOR) + r'(?![\w-])')
 
@@ -637,6 +640,7 @@ def apply(text: str, need) -> tuple[str, dict]:
     for old, new, label in APP_PATCHES:
         text = patch_once(need, text, old, new, label)
     notes['app patches'] = [label for _, _, label in APP_PATCHES]
+    a1_panes_check(need, text)
     notes['bytes_out'] = len(text.encode('utf-8'))
     return text, notes
 
@@ -652,13 +656,52 @@ def patch_once(need, text: str, old: str, new: str, label: str) -> str:
     return replace_once(need, text, old, new, 'app patch ' + label)
 
 
+# The opt-in scroll panes of the base's scrollbar reveal (the rule after A1's anchor, A1_PANE_ANCHOR), each by its
+# selector's subject: the only elements that read --pm6-sb-ink. `.pm6-usage-wrap [class*="scroll"]` has no plain subject
+# and is left out: it named the old Usage page, which this layer removes. a1_panes_check() holds the list to the base.
+A1_PANE_ANCHOR = '    /* opt-in scroll panes (verified overflow:auto hosts across parts) */\n    '
+A1_PANES = (
+    '.primary-content', '.page-projects', '.panel-content', '.message-stream', '.messageStream', '.chat-thread-list',
+    '.terminal-pane-body', '.file-tree', '.s4-shell', '.s4-stage', '.s4-panel-body', '.s4-psm-body', '.s4-rail',
+    '.pm6-usage-tblwrap', '.dashboard-grid', '.bento-card', '.chat-dropdown-list', 'textarea', '.browser-viewport',
+    '.browser-permissions-panel', '.browser-console-pane', '.browser-network-pane', '.browser-evidence-pane',
+    '.wizard-step-panel', '.wizard-annotation-drawer', '.wizard-activity-log', '.pm6-wiz-intake-scroll', '.pm6-wiz-topic-list',
+    '.pm6-wiz-thread-body', '.pm6-wiz-doc', '.pm6-wiz-doc-overlay-body', '.pm6-wiz-chat-log', '.pm6-wiz-prdrail',
+    '.pm6-wiz-prdgrid', '.pm6-wiz-workgrid', '.pm6-wiz-disc-card', '.orch-tab-content', '.pm6-orch-w-body', '.pm6-orch-pc-feed',
+    '.pm6-orch-pc-sidecol', '.pm6-orch-seams', '.pm6-orch-inspector-body', '.pm6-orch-evlist', '.pm6-orch-history',
+    '.pm6-orch-ledger-wrap', '.pm-editor-term-stack', '.pm-inspector-drawer', '.pm-debug-cell', '.pm6-dash-scroll',
+    '.pm6-dash-catalog-panel', '.pm6-proj-sheet', '.pm6-bottom-scroll', '.pm6-bottom-pre', '.pm6-bottom-empty',
+    '.context-detail-pane', '.cdp-scroll', '.cdp-raw-view', '.wt-test-output', '.sa-work-stream', '.sc-accordion-body',
+    '.sh-scroll', '.sh-wtchips', '.rs-panel-list', '.pm6-route-tree', '.pm-ctx-menu', '.msg-body', '.pm6-preblock', 'pre',
+    '.sa-crew-board', '.sa-crew-msg', '.debug-thread-header', '.debug-investigation-ctx', '.activity-card-body', '.rd-console')
+
+
+def a1_panes_check(need, text: str) -> None:
+    """A1 names the panes by their subjects; the base's pane rule must still name exactly those (plus the old Usage one)."""
+    a = text.find(A1_PANE_ANCHOR)
+    need(a >= 0, 'usage layer A1: the base pane rule after "opt-in scroll panes" is gone')
+    sels = text[a + len(A1_PANE_ANCHOR):text.index(' {', a)].split(', ')
+    subjects = []
+    for sel in sels:
+        last = sel.split(' ')[-1]
+        if '[' in last:
+            continue
+        if last not in subjects:
+            subjects.append(last)
+    need(tuple(subjects) == A1_PANES, f'usage layer A1: the base pane list changed; derive A1_PANES again (now {subjects})')
+
+
 APP_PATCHES = [
     # A1: the app's scrollbar reveal wrote --pm6-sb-ink on EVERY hovered element; Chrome then restyled the hovered element's
     # whole subtree on each hover change (pointer entering the Usage board: 1,595 elements, 51-96 ms in one frame on the
     # CPU-only VM). While Usage shows, the hover half stands down; scroll panes still reveal their bar while scrolling
     # (.pm6-sb-active). Every other page keeps the hover reveal.
+    # Motion QA P2-03 (2026-10-16): the hover half names the panes (A1_PANES), the only elements that read the hook. As
+    # `body:not(.pmu-page-active) :hover` it had no subject Blink can key, so turning .pmu-page-active on or off (90-api.js,
+    # in the Usage tab's click) restyled every rendered element: 2,970 elements and 50 ms of the M3 click frame on main,
+    # 6,029 elements and 96 ms in the integration build. Keyed, the class reaches only the panes on screen.
     ('    :is(.pm6-sb-active, :hover) { --pm6-sb-ink: var(--pm6-sb-thumb); }\n',
-     '    .pm6-sb-active, body:not(.pmu-page-active) :hover { --pm6-sb-ink: var(--pm6-sb-thumb); } /* usage layer A1: no hover reveal while Usage shows */\n',
+     '    .pm6-sb-active, body:not(.pmu-page-active) :is(' + ', '.join(A1_PANES) + '):hover { --pm6-sb-ink: var(--pm6-sb-thumb); } /* usage layer A1: no hover reveal while Usage shows */\n',
      'A1 scrollbar hover reveal'),
     # (A3, dropped 2026-10-10: it rested the PM8 pointer field's tick() during a Usage moment. PM8 is off now
     # (opus-5.5 build.py 'pmh: pm8 engine off', so that tick() is dead code), and the merged hover engine PMH

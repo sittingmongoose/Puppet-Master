@@ -811,26 +811,30 @@
        board is held (data-held: nothing visible), so the click and every frame stay short; each body's inner entrance is
        queued by PMU.film.cue and released with the wave. A newer mount supersedes a running build. */
     var buildToken = 0, lateHeld = null;
-    function buildSliced(cards, onBuilt) {
+    /* warm (the warm build, mount opts.warm): slices in idle periods instead of frames, every body built (no data-late)
+       and none revealed: they wait under data-body-wait for the arrival */
+    function buildSliced(cards, onBuilt, warm) {
       /* reading order, the hero first (WOW-SPEC-3 5); without a GPU the bodies outside the viewport wait until the moment
          is over (data-late: never measured or entered by the release; PERF-3) */
       var token = ++buildToken, all = readingOrder(cards).sort(function (a, b) { return b.hasAttribute('data-hero') - a.hasAttribute('data-hero'); });
-      var soft = softGpu();
+      var soft = softGpu() && !warm;
       if (soft) viewNow(true);   /* the mount just read the board's width: the layout is clean */
       var queue = soft ? all.filter(inView) : all, later = soft ? all.filter(function (c) { return !inView(c); }) : [];
       later.forEach(function (c) { c.setAttribute('data-late', ''); });
-      function slice() {
+      var idle = window.requestIdleCallback || function (fn) { return setTimeout(function () { fn({ timeRemaining: function () { return 8; }, didTimeout: false }); }, 40); };
+      function next() { if (warm) idle(slice, { timeout: 1500 }); else requestAnimationFrame(slice); }
+      function slice(deadline) {
         if (token !== buildToken) return;
-        var t0 = performance.now(), builtNow = [];
+        var t0 = performance.now(), builtNow = [], budget = warm && deadline && deadline.timeRemaining ? Math.min(8, Math.max(1, deadline.timeRemaining())) : 8;
         fitSliced(function () {
-          while (queue.length && performance.now() - t0 < 8) {
+          while (queue.length && (!builtNow.length || performance.now() - t0 < budget)) {
             var c = queue.shift();
             if (c.isConnected) { tierPass([c], 'enter'); builtNow.push(c); }
           }
         });
         /* revealed after the slice's fit pass, so a body never shows its unfitted first render */
-        builtNow.forEach(function (c) { if (FILM && FILM.bodyBuilt) FILM.bodyBuilt(c); else c.removeAttribute('data-body-wait'); });
-        if (queue.length) { requestAnimationFrame(slice); return; }
+        if (!warm) builtNow.forEach(function (c) { if (FILM && FILM.bodyBuilt) FILM.bodyBuilt(c); else c.removeAttribute('data-body-wait'); });
+        if (queue.length) { next(); return; }
         if (onBuilt) { try { onBuilt(cards); } catch (error) { console.error('[pm-usage] board built', error); } }
         if (later.length) {
           var lateT = setTimeout(function () { lateHeld && lateHeld(false); }, 1700 * speed());   /* about when the hero's instruments end */
@@ -849,7 +853,7 @@
           };
         }
       }
-      requestAnimationFrame(slice);
+      next();
     }
 
     /* ---- the room change (WOW-SPEC 3.2, WOW-TASKS E-1, coordinator decision 5: no main-thread task over ~50 ms on a
@@ -1315,7 +1319,12 @@
       /* a room change reads no layout (PERF-3 rule 12): the board width is the last one measured while the scroll's
          ResizeObserver has seen no change since; anything else measures */
       var W = opts.transition && current.mounted && current.cls && view.w && Math.abs(view.w - (current.wSeen || -1)) < 0.5 ? current.cls.W : boardWidth();
-      if (W <= 0) { current.pending = true; current.room = room; return; }
+      if (W <= 0) {
+        current.pending = true; current.room = room;
+        /* a mount of the hidden page supersedes a warm board waiting there (PMU.film.warmDrop): the next arrival builds */
+        if (!hosted && !opts.warm && FILM && FILM.warming && FILM.warming()) FILM.warmDrop('pending');
+        return;
+      }
       current.pending = false;
       if (hosted) { seenEpoch = EPOCH; dirty = false; liveStop(); liveKeys = null; liveLead = null; liveMerged = 0; }   /* the mount renders the latest readings */
       flushGravity();
@@ -1435,12 +1444,23 @@
       boardEl.textContent = '';
       if (roomChanged) { scroll.scrollTop = 0; view.top = 0; }
       var heroId = heroOf(rects, ids, room);
-      var held = !!(opts.held && !reduced());
+      var held = !!((opts.held || opts.warm) && !reduced());
       var frag = document.createDocumentFragment();
       var cards = ids.map(function (id) { var card = buildCard(id, room, byId[id]); markHero(card, heroId); if (held) card.setAttribute('data-body-wait', ''); frag.appendChild(card); return card; });
       boardEl.appendChild(frag);
       ensurePreviews();
       if (!cards.length) boardEl.appendChild(PMU.cards.empty(room, api));
+      if (opts.warm) {
+        /* the warm build (motion QA P2-03, PMU.film.warm): while another page shows, the board of the next arrival is built
+           in the Usage page laid out unseen. It stays held (data-held) and plays nothing: its bodies are built in idle
+           slices, the hero first, each body's entrance queued on its card (PMU.film.cue), and the arrival plays them */
+        buildToken++;
+        current.mounted = true;
+        viewNow(true);
+        buildSliced(cards, opts.onBuilt, opts.warm);
+        emit('mount', { room: room, cls: current.cls.name, widgets: ids, warm: true });
+        return;
+      }
       if (held) {
         /* the first arrival (WOW-SPEC-3 5 Phase A): the frames (chrome) are on screen from the first frame and enter in the
            structure wave (PMU.film.frames: one animation per frame); only their BODIES wait, each hidden by opacity
@@ -1475,6 +1495,9 @@
     var refreshQ = null;
     function refresh(reason, ropts) {
       if (!current.mounted) return;
+      /* a warm board waiting unseen is not refreshed in place: it is dropped (PMU.film.warmDrop unmounts it) and the next
+         arrival builds the board as it is then */
+      if (!hosted && FILM && FILM.warming && FILM.warming()) { FILM.warmDrop('refresh'); return; }
       ropts = ropts || {};
       if (refreshQ) { refreshQ.cancelled = true; refreshQ = null; }
       var cards = cardsNow();
@@ -2392,6 +2415,7 @@
     function holdPass() {
       holdT = 0;
       if (dead || hosted && !shownFlag) return;   /* a hidden hosted board holds when it is shown again */
+      if (FILM && FILM.warming && FILM.warming()) return;   /* a warm board holds at its arrival (holdSoon) */
       if (!current.mounted || !PMU.cards || !PMU.cards.holdTarget) return;
       if (gesture || (FILM && FILM.holding && FILM.holding())) { scheduleHold(500); return; }
       var room = current.room, wait = null;
@@ -2596,7 +2620,7 @@
       current.cls = next;
       if (!gesture) cardsNow().forEach(function (c) { place(c, rectOfCard(c)); });
       if (pitchMoved) scheduleHold(400);
-      if (FILM && FILM.holding()) return;   /* the held build measures each card in its own slice */
+      if (FILM && (FILM.holding() || FILM.warming && FILM.warming())) return;   /* the held and warm builds measure each card in its own slice */
       clearTimeout(roTimer);
       roTimer = setTimeout(function () { if (!gesture) tierPass(cardsNow(), false); }, 120);
     }
@@ -3068,6 +3092,10 @@
       config: config, setConfig: setConfig, keyboard: keyboard,
       gesture: function () { return gesture ? { type: gesture.type, id: gesture.id, edge: gesture.edge || null, kb: !!gesture.kb, target: gesture.target, me: gesture.me } : null; },
       cancel: function () { if (gesture) endGesture(gesture, 'cancel'); },
+      /* a dropped warm board (PMU.film.warmDrop): its build stops and the board counts as never mounted, as a hidden Usage
+         board was before the warm build; the next arrival or width pass mounts it */
+      unmount: function () { if (hosted || dead) return; buildToken++; current.mounted = false; current.pending = true; },
+      holdSoon: function (ms) { scheduleHold(ms); },
       card: cardOf, inView: inView, viewNow: viewNow, isLeaving: isLeaving, cardsNow: cardsNow, refreshing: function () { return !!refreshQ; }, fitSliced: fitSliced,
       on: function (evt, fn) { (listeners[evt] = listeners[evt] || []).push(fn); return function () { listeners[evt] = (listeners[evt] || []).filter(function (f) { return f !== fn; }); }; },
       envelope: function () { ensure(); var e = JSON.parse(JSON.stringify(envelope)); e.view = { room: st.room, detail: st.detail, range: st.range, scope: st.scope, more: !!st.more }; e.records = recordsNow(); return e; },

@@ -591,7 +591,10 @@
   var T3 = { frameFade: 200, frameTravel: 420, frameRow: 28, frameCol: 16, frameCap: 220, rule: 300, ghostFade: 140, ghostTravel: 220,
     takeoff: 110, flight: 460, flightStep: 24, flightCap: 120, land: 420, heroAt: 160, quietGap: 140, quietStep: 20, quietCap: 240,
     quietFade: 200, quietTravel: 280, quietDraw: 600, quietFill: 520, beatGap: 6000, liveRoll: 420, liveFlash: 620, liveSweep: 650,
-    rerank: 420, slideOut: 220, heroInstr: 900, heroNum: 40, beatLead: 160 };
+    rerank: 420, slideOut: 220, heroInstr: 900, heroNum: 40, beatLead: 160,
+    /* the warm arrival (motion QA P2-03): its bodies are built before the click, so each supporting body follows its own
+       plate by warmLead (never before the hero + warmAfter) instead of waiting for a build: no plate stands empty */
+    warmLead: 80, warmAfter: 40 };
   function flag(name) { return !PMU.flags || PMU.flags[name] !== false; }
 
   /* ======== MOTION-4 (lane b-motion, Jared's items 7 and 8): one camera you can see, and five voices that differ in kind ========
@@ -1772,29 +1775,216 @@
     try { if (hc) { hc.pageSettling = false; hc.scheduleScan(document.getElementById('panel-usage') || document); } } catch (error) {}
   }
 
+  /* ---- the warm arrival (motion QA P2-03, 2026-10-16). The arrival built its board after the Usage tab's click: Home
+     stood still through the page change, then the page showed its plates empty for as long as the bodies took to build
+     (P1000: 250-400 ms of empty board, drawn at 0.8-1.3 s; M3: a 15-30 ms frame per slice for ~150 ms). Now the next
+     arrival's board is built before it: in an idle period while another page shows, the Usage page is laid out unseen in
+     the box it shows in (#panel-usage[data-pmu-warm], 05-film.css) and the board is mounted held in idle slices
+     (40-board.js mount opts.warm), every body's entrance queued on its card; then the page goes back to display: none
+     and the board waits in its scroll pane (data-pmu-warm-wait). The arrival plays the same entrance on it: the click's
+     frame changes the page and powers the shell on; the next frame shows the board (restyling it is that frame's only
+     work) and its plates rise in the structure wave; the bodies come alive on the room change's clock (the hero at
+     T3.heroAt, the supporting bodies quietly after it). A warm board is used only while nothing it shows has changed
+     (warmKey: the look, Reduce Motion, the room, its view and layout, the data epoch, Settings); a stale one is dropped
+     and the arrival builds as before. Without a GPU nothing is warmed: that profile is set when Usage first shows. ---- */
+  var warm = null, warmT = 0, warmRev = 0, warmLast = null;
+  /* ?pmu-warm=0 leaves it out (A/B measurements) */
+  var WARM_OFF = /[?&]pmu-warm=0(?:&|#|$)/.test(location.search);
+  function pageShown() { var p = document.getElementById('panel-usage'); return !!p && p.classList.contains('active'); }
+  function warmKey() {
+    var B = PMU.board, room = st.room;
+    return [PMU.theme && PMU.theme.look ? PMU.theme.look().key : '', reduced() ? 1 : 0, soft() ? 1 : 0, room, st.range, st.scope, st.detail,
+      st.more ? 1 : 0, warmRev, PMU.boards && PMU.boards.epoch ? PMU.boards.epoch() : 0,
+      B && B.cls ? B.cls().name : '', B ? JSON.stringify(B.layout(room)) + JSON.stringify(B.visible(room)) : ''].join('|');
+  }
+  function warming() { return !!warm; }
+  /* the box the page shows in: .primary-content's content box on every page but Home. Home turns that padding off with a
+     rule of its own (:has its page), so on Home the padding is read from a stand-in of the same class, matched by every
+     other rule (the density, Glass and short-window paddings) */
+  function warmBox(panel) {
+    var pc = panel.parentNode; if (!pc || !pc.parentNode) return null;
+    var probe = null;
+    if (pc.querySelector(':scope > #panel-dashboard.active')) {
+      probe = document.createElement(pc.tagName); probe.className = pc.className; probe.style.display = 'none';
+      pc.parentNode.insertBefore(probe, pc.nextSibling);
+    }
+    var cs = getComputedStyle(probe || pc);
+    var t = parseFloat(cs.paddingTop) || 0, r = parseFloat(cs.paddingRight) || 0, b = parseFloat(cs.paddingBottom) || 0, l = parseFloat(cs.paddingLeft) || 0;
+    if (probe) probe.remove();
+    var w = pc.clientWidth - l - r, h = pc.clientHeight - t - b;
+    return w > 0 && h > 0 ? { x: l, y: t, w: w, h: h } : null;
+  }
+  function warmSoon(ms) {
+    if (WARM_OFF) return;
+    warmWatch();
+    if (warmT || warm || !PMU.board) return;
+    warmT = setTimeout(function () {
+      warmT = 0;
+      (window.requestIdleCallback || function (fn) { return setTimeout(fn, 0); })(warmNow, { timeout: 4000 });
+    }, (ms == null ? 1500 : ms) * M.speed());
+  }
+  function warmNow() {
+    if (warm || warmT || !PMU.board) return;
+    var panel = document.getElementById('panel-usage'), board = document.getElementById('pmuBoard');
+    if (!panel || !board || pageShown() || moment || hold) return;
+    /* not while something else is running (a page change, onboarding, the tour, a hidden tab), nor on the Settings page,
+       where what the board reads can change (leaving it warms again) */
+    var sp = document.getElementById('panel-settings');
+    if (sp && sp.classList.contains('active')) return;
+    if (document.hidden || root.hasAttribute('data-o55-open') || root.hasAttribute('data-o55-tour') || root.hasAttribute('data-pm-page-transition')) { warmSoon(1200); return; }
+    if (typeof softwareRendered === 'function' && softwareRendered()) return;
+    var box = warmBox(panel); if (!box) { warmSoon(2000); return; }
+    var w = warm = { room: st.room, key: null, built: false, box: box, shares: {}, at: performance.now() };
+    panel.style.setProperty('--pmu-warm-x', box.x + 'px'); panel.style.setProperty('--pmu-warm-y', box.y + 'px');
+    panel.style.setProperty('--pmu-warm-w', box.w + 'px'); panel.style.setProperty('--pmu-warm-h', box.h + 'px');
+    panel.setAttribute('data-pmu-warm', '');
+    PMU.board.mount(st.room, { warm: true, onBuilt: function () { warmBuilt(w); } });
+    if (warm !== w) return;
+    if (!w.mounted) { warmDrop('unmounted'); warmSoon(3000); return; }
+    if (!PMU.board.cardsNow().length) { warmDrop('empty'); return; }
+    w.key = warmKey();
+  }
+  function warmBuilt(w) {
+    if (warm !== w) return;
+    if (w.key !== warmKey()) { warmDrop('stale'); warmSoon(1200); return; }
+    w.built = true; w.ms = Math.round(performance.now() - w.at);
+    var board = document.getElementById('pmuBoard'), panel = document.getElementById('panel-usage');
+    if (board && board.parentNode) board.parentNode.setAttribute('data-pmu-warm-wait', '');
+    if (panel) panel.removeAttribute('data-pmu-warm');
+  }
+  function warmDrop(why) {
+    var w = warm; if (!w) return;
+    warm = null;
+    warmLast = { why: why, built: w.built, at: Math.round(performance.now()) };
+    var board = document.getElementById('pmuBoard'), panel = document.getElementById('panel-usage');
+    if (panel) panel.removeAttribute('data-pmu-warm');
+    if (board && board.parentNode) board.parentNode.removeAttribute('data-pmu-warm-wait');
+    if (!pageShown() && PMU.board && PMU.board.unmount) PMU.board.unmount();
+  }
+  /* a live beat while the page is hidden (the dashboards' beat, PMU.live): the warm board's cards that show its readings
+     are rendered again at the arrival */
+  function warmBeat(keys) { if (warm && keys) keys.forEach(function (k) { warm.shares[k] = true; }); }
+  function warmCheck() {
+    if (pageShown()) return;
+    if (warm && (!warm.built || warm.key === warmKey())) return;
+    warmDrop('stale');
+    warmSoon(1200);
+  }
+  /* what can change what the board shows while the page is hidden: a look (PMU.theme), Settings (written from Usage's
+     own controls on a dashboard, or on the Settings page), onboarding, and any other mount of the board */
+  function warmWatch() {
+    if (warmWatch.on || !PMU.board) return;
+    warmWatch.on = true;
+    if (PMU.settings && PMU.settings.onChange) PMU.settings.onChange(function (why) { if (why === 'page') return; warmRev++; warmCheck(); });
+    if (PMU.theme && PMU.theme.onChange) PMU.theme.onChange(function () { warmCheck(); });
+    if (PMU.board.on) PMU.board.on('mount', function (d) { if (!warm) return; if (d && d.warm) warm.mounted = true; else warmDrop('mount'); });
+    if (!window.MutationObserver) return;
+    var sp = document.getElementById('panel-settings'), was = !!sp && sp.classList.contains('active');
+    if (sp) new MutationObserver(function () { var on = sp.classList.contains('active'); if (on === was) return; was = on; warmRev++; if (!on) warmCheck(); })
+      .observe(sp, { attributes: true, attributeFilter: ['class'] });
+    var open = root.hasAttribute('data-o55-open');
+    new MutationObserver(function () { var on = root.hasAttribute('data-o55-open'); if (on === open) return; open = on; if (!on) { warmRev++; warmCheck(); } })
+      .observe(root, { attributes: true, attributeFilter: ['data-o55-open'] });
+  }
+  /* at the arrival: the warm board if it is built and still shows what a build would; anything else is dropped */
+  function warmTake() {
+    clearTimeout(warmT); warmT = 0;
+    var w = warm; if (!w) return null;
+    if (!w.built || w.room !== st.room || w.key !== warmKey()) { warmDrop(w.built ? 'stale' : 'building'); return null; }
+    warm = null;
+    var panel = document.getElementById('panel-usage'); if (panel) panel.removeAttribute('data-pmu-warm');
+    return w;
+  }
+  /* the frame after the click's (two rAFs: the first one's callbacks run before the click's own frame is drawn): the board
+     shows (data-pmu-warm-wait off) and its plates rise; the bodies' entrances are made in the next task, after this
+     frame's layout and paint */
+  function nextFrame(fn) { requestAnimationFrame(function () { requestAnimationFrame(fn); }); }
+  function warmShow(w, board) {
+    var scroll = board.parentNode;
+    if (scroll) scroll.removeAttribute('data-pmu-warm-wait');
+    board.removeAttribute('data-held'); board.removeAttribute('data-hold-bodies');
+    if (PMU.board.viewNow) PMU.board.viewNow(true);
+  }
+  function warmArrive(w, m, board) {
+    nextFrame(function () {
+      if (moment !== m) { warmShow(w, board); Array.prototype.forEach.call(board.querySelectorAll(':scope > .pmu-card[data-body-wait]'), function (c) { c.removeAttribute('data-body-wait'); }); return; }
+      warmShow(w, board);
+      var cards = PMU.board.cardsNow();
+      /* the plates rise as in the held arrival, from about 72 ms after the click (its frames started 40 ms after a build two
+         frames into the page) */
+      w.framedAt = since(m);
+      frames(cards, { dir: 0, base: Math.max(0, 72 - w.framedAt), board: board });
+      board.setAttribute('data-film', '');
+      setTimeout(function () { warmRelease(w, m, board, cards); }, 0);
+    });
+  }
+  function warmRelease(w, m, board, cards) {
+    if (moment !== m) return;
+    cards = cards.filter(function (c) { return c.isConnected; });
+    /* measured once more where it shows (a tile one tier off renders again, entrance queued); the cards that show a
+       reading a live beat changed while the page was hidden render again too */
+    var keys = Object.keys(w.shares || {}), live = keys.length && PMU.boards && PMU.boards.live ? cards.filter(function (c) { return PMU.boards.live.hit(c, keys); }) : [];
+    try {
+      if (PMU.board.tierPass) PMU.board.tierPass(cards.filter(function (c) { var b = c.querySelector(':scope > .pmu-cardbody'); return b && b._pmuKind && live.indexOf(c) < 0; }), 'held');
+      if (live.length) PMU.board.fitSliced(function () { PMU.board.tierPass(live, 'enter'); });
+    } catch (error) { console.error('[pm-usage] warm re-measure', error); }
+    if (PMU.board.viewNow) PMU.board.viewNow(true);
+    m.released = true; m.heroAt = T3.heroAt; m.quietAt = m.heroAt + T3.quietGap;
+    board.removeAttribute('data-pm-hover-exempt');
+    var built = cards.filter(function (c) { var b = c.querySelector(':scope > .pmu-cardbody'); return b && b._pmuKind && c.hasAttribute('data-body-wait'); });
+    built.sort(function (a, b) { return (b.hasAttribute('data-hero') - a.hasAttribute('data-hero')) || (+a.dataset.y - +b.dataset.y) || (+a.dataset.x - +b.dataset.x); });
+    /* the hero at its time with all the light; each supporting body quietly, warmLead after its plate starts to rise */
+    built.forEach(function (c) {
+      if (c.hasAttribute('data-hero') || c._pmuFrameAt == null || !flag('heroRoll')) { bodyBuilt(c); return; }
+      var slot = Math.max(m.heroAt + T3.warmAfter, w.framedAt + c._pmuFrameAt + T3.warmLead);
+      c._pmuRevealAt = Math.max(slot, since(m));
+      reveal(c, { quiet: true, delay: Math.max(0, slot - since(m)) });
+    });
+    deferHoverTags(T3.heroNum + T3.heroInstr + 1500);
+    allBuilt(m.room, cards);
+    /* the preset hold a mount schedules (40-board.js holdPass) waited for the arrival */
+    if (PMU.board.holdSoon) PMU.board.holdSoon(500);
+    last = { room: m.room, at: Math.round(since(m)), why: 'warm', cards: cards.length, warmMs: w.ms, live: live.length };
+  }
+  /* Reduce Motion: the warm board shows in the frame after the click, whole, and dissolves in as the calm entry does */
+  function warmCalm(w, board) {
+    nextFrame(function () {
+      warmShow(w, board);
+      Array.prototype.forEach.call(board.querySelectorAll(':scope > .pmu-card[data-body-wait]'), function (c) { c.removeAttribute('data-body-wait'); });
+      var keys = Object.keys(w.shares || {});
+      if (keys.length && PMU.boards && PMU.boards.live) { try { PMU.board.cardsNow().forEach(function (c) { if (PMU.boards.live.hit(c, keys)) PMU.cards.update(c, 'live'); }); } catch (error) {} }
+      dissolve(board);
+      if (PMU.board.holdSoon) PMU.board.holdSoon(500);
+      last = { room: st.room, at: 0, why: 'warm-calm', cards: PMU.board.cardsNow().length, warmMs: w.ms };
+    });
+  }
+
   /* ---- 5 the first arrival on Usage ---- */
   function arrive(o) {
     o = o || {};
     var app = document.getElementById('pmuApp'), board = document.getElementById('pmuBoard');
     if (!app || !board || !PMU.board) return;
-    if (M.paused()) { finishMoment('instant'); hold = null; PMU.board.mount(st.room, {}); return; }
+    if (M.paused()) { warmDrop('paused'); finishMoment('instant'); hold = null; PMU.board.mount(st.room, {}); return; }
+    var w = warmTake();
     /* Reduce Motion: no arrival; the board is built behind what the board area shows and swapped in whole (40-board.js
        calmSwap), from the frame after the page click (motion QA A14: built inside the click it held the old page for
        200 ms, M3 film, Glass Light) */
     if (reduced()) {
       finishMoment('instant'); hold = null;
+      if (w) { warmCalm(w, board); return; }
       requestAnimationFrame(function () { requestAnimationFrame(function () { if (!moment && !hold) PMU.board.mount(st.room, { calmEntry: true }); }); });
       return;
     }
     var m = begin('arrive', st.room);
-    var h = { board: board, room: st.room, start: performance.now(), built: false, hero: false, m: m };
-    hold = h;
     deferHoverTags(4000);
     /* the app seats the Assistant beside every non-Home page in its first frame after the page change; seating it now
        gives the board its final width before the first slice, so the build never has to start over at a new board class */
     try { if (window.PM7_SHELL_ADJUSTMENTS && typeof window.PM7_SHELL_ADJUSTMENTS.seatChat === 'function') window.PM7_SHELL_ADJUSTMENTS.seatChat(); } catch (error) {}
     shellIntro(app);
     board.setAttribute('data-pm-hover-exempt', 'entering');
+    if (w) { hold = null; warmArrive(w, m, board); return; }
+    var h = { board: board, room: st.room, start: performance.now(), built: false, hero: false, m: m };
+    hold = h;
     /* the board is built in the frame after the click (motion QA A14): the click's frame lays out and paints the page the
        app just switched to, and the held mount's width read inside it forced that whole layout into the click task, then
        built every frame on top of it (Mac: the Usage tab's click frame 132-143 ms, about 30 ms over any other page's).
@@ -1824,6 +2014,9 @@
   PMU.film = { E: E, T: T, T3: T3, VOICES: VOICES, voice: voice, at: at, sequence: sequence, stagger: stagger, wave: wave, enterPlates: enterPlates,
     odometer: odometer, decode: decode, comet: comet, headGlow: headGlow, drop: drop, sweep: sweep, flash: flash, ring: ring, halo: halo, spring: spring,
     key: key, keyPan: keyPan, edgeAt: edgeAt, cue: cue, holding: holding, rehold: rehold, cancelHold: cancelHold, beat: beat, playBeat: playBeat, arrive: arrive,
+    /* the warm arrival (motion QA P2-03) */
+    warmSoon: warmSoon, warming: warming, warmDrop: warmDrop, warmBeat: warmBeat,
+    warmState: function () { return { warm: warm ? { room: warm.room, built: warm.built, ms: warm.ms || null, box: warm.box } : null, last: warmLast }; },
     deferHoverTags: deferHoverTags, last: function () { return last; }, off: off, parsePath: parsePath, yAt: yAt,
     soft: soft, innerOn: innerOn, glint: glint, combo: combo,
     /* round 3 */
@@ -1937,7 +2130,7 @@
     try { info = L.apply(overlay, i); } catch (error) { console.error('[pm-usage] live apply', error); return null; }
     if (!info) return null;
     hosted(info.shares, info.lead);
-    if (hostedOnly) return info;
+    if (hostedOnly) { if (PMU.film && PMU.film.warmBeat) PMU.film.warmBeat(info.shares || []); return info; }
     var p = S.pending || { shares: {}, lead: [], beats: [] };
     (info.shares || []).forEach(function (k) { p.shares[k] = true; });
     p.lead = (info.lead || []).concat(p.lead);
