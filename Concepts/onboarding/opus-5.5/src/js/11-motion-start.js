@@ -7,14 +7,14 @@
    before the new one dealt in.
    PM_START_ON_SHOWN(anims) holds the moves at their start, paused, from the next frame on, for as long as the frame
    before was a long one (more than 40 ms after the one before it), then plays them from their start: they begin once
-   frames come on time, at most `frames` (3) frames later (a page that never draws on time, such as
-   software rendering, still moves after that). `anims` is an array of Animations or a function returning
-   one (read again each frame). `o.release`, if given, runs once in the frame the moves start, just before they play:
+   frames come on time (two in a row after a long one), at most `frames` (6) frames later (a page that never draws
+   on time, such as software rendering, still moves after that). `anims` is an array of Animations or a function
+   returning one (read again each frame). `o.release`, if given, runs once in the frame the moves start, just before they play:
    a page change hands the click's fade over to its exit there (tools/shell_motion.py, ANSWER_FIRST). */
 (function () {
   'use strict';
   window.PM_START_ON_SHOWN = function startOnShown(anims, o) {
-    const max = (o && o.frames) || 3, held = new Set(), before = o && typeof o.release === 'function' ? o.release : null;
+    const max = (o && o.frames) || 6, held = new Set(), before = o && typeof o.release === 'function' ? o.release : null;
     const list = () => { try { return (typeof anims === 'function' ? anims() : anims) || []; } catch (_) { return []; } };
     const hold = () => list().forEach((a) => {
       try { if (a && a.playState !== 'idle' && !held.has(a)) { a.pause(); a.currentTime = 0; held.add(a); } } catch (_) { /* gone */ }
@@ -25,13 +25,20 @@
     };
     /* the frame the moves were begun after: a first frame on time (the task that began them was short) leaves them as
        they are, with no pause and restart, so a fast computer sees nothing of this */
-    let last = document.timeline.currentTime, n = 0;
+    /* After a long frame the moves wait for two frames on time in a row: the long frame's new content is rastered by
+       the GPU after it, and while it rasters (a whole new page: 150-400 ms on the P1000) the compositor draws
+       nothing, so a move begun on the first frame back was still shown in two or three steps (the onboarding window's
+       exit at Enter, round 3). The frames themselves stop while that raster runs, so the second on-time frame comes
+       after it. */
+    let last = document.timeline.currentTime, n = 0, onTime = 0, long = false;
     const tick = () => {
       const now = document.timeline.currentTime;
       if (now == null) { release(); return; }
       const gap = last == null ? Infinity : now - last;
       last = now;
-      if (gap <= 40 || ++n >= max) { release(); return; } /* the frame before this one was on time: play from the start */
+      if (gap <= 40) { onTime++; if (!long || onTime >= 2) { release(); return; } }
+      else { long = true; onTime = 0; }
+      if (++n >= max) { release(); return; }
       hold();
       next();
     };
