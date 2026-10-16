@@ -1008,13 +1008,28 @@ PATCHES = [
     # warm Customize open's click on the P1000 (pm7-p1000-win's traces): closeHeaderSprouts ~4.1 ms, and the hover tags'
     # pruneLiveScopes ~5.65 ms. Both keep their exact behaviour.
     # 1. closeHeaderSprouts runs on every document click. It only ever acts on an open or closing sprout, an expanded
-    #    more button or an open context ring, so one query for those states decides first; when there is none, its three
-    #    document-wide queries would change nothing.
+    #    more button or an open context ring, so headerSproutOpen() decides first; when there is none, its three
+    #    document-wide queries would change nothing. headerSproutOpen asks the same question as the selector
+    #    ':is(<the four sprout classes>):is(.is-open, .is-closing), .pm6-chat-more-btn[aria-expanded="true"],
+    #    .context-usage.is-ctx-open' in four single-class lookups the browser answers on its class fast path, instead of
+    #    matching a selector list against every element (Nas1, 23.6k elements: 2.9 ms for main's three scans, 2.2 ms for
+    #    the one selector-list query, 1.0 ms for these; pm7-f5-editor measured main's scans at 17-31 ms inclusive per
+    #    click with the editor's Customize sheet open).
     ("  function closeHeaderSprouts(except) {\n"
      "    $all('.context-lens-popover, .pm6-chat-more-menu, .wt-bind-dropdown, .context-hover-module').forEach(function (p) {",
+     "  function headerSproutOpen() {\n"
+     "    var sprout = ['context-lens-popover', 'pm6-chat-more-menu', 'wt-bind-dropdown', 'context-hover-module'], state = ['is-open', 'is-closing'];\n"
+     "    for (var s = 0; s < state.length; s++) {\n"
+     "      var list = document.getElementsByClassName(state[s]);\n"
+     "      for (var i = 0; i < list.length; i++) {\n"
+     "        var cl = list[i].classList;\n"
+     "        if (cl.contains(sprout[0]) || cl.contains(sprout[1]) || cl.contains(sprout[2]) || cl.contains(sprout[3])) return true;\n"
+     "      }\n"
+     "    }\n"
+     "    return !!(document.querySelector('.pm6-chat-more-btn[aria-expanded=\"true\"]') || document.querySelector('.context-usage.is-ctx-open'));\n"
+     "  }\n"
      "  function closeHeaderSprouts(except) {\n"
-     "    if (!document.querySelector(':is(.context-lens-popover, .pm6-chat-more-menu, .wt-bind-dropdown, .context-hover-module)"
-     ":is(.is-open, .is-closing), .pm6-chat-more-btn[aria-expanded=\"true\"], .context-usage.is-ctx-open')) return;\n"
+     "    if (!headerSproutOpen()) return;\n"
      "    $all('.context-lens-popover, .pm6-chat-more-menu, .wt-bind-dropdown, .context-hover-module').forEach(function (p) {",
      'B6 shared roots: header sprouts skip when none is open'),
     # 2. The hover tags' mutation observer called enqueueLive once per record, and each call pruned both live sets twice
