@@ -1,0 +1,5 @@
+/* A reduced-motion look change has a still, readable acknowledgement while the new scene is drawn underneath. */
+#o55np-calm {
+  position: fixed; inset: 0; z-index: 2147483600; display: grid; place-content: center;
+  contain: strict; pointer-events: auto; font: 600 15px/1.5 system-ui, sans-serif; letter-spacing: .02em;
+}

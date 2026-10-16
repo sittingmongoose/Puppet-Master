@@ -68,6 +68,7 @@ function o55cKey(n) {
 }
 const o55cForeign = n => n.nodeType === 1 && n.matches(O55C_FOREIGN);
 const o55cOpaque = n => n.id === 'toast-stack' || n.hasAttribute('data-all-settings-window') ||
+  (n.id === 'setting-general.visual.wallpaper' && n.classList.contains('wpk-row')) ||
   (o55cKeepDetail && (n.classList.contains('detail-inspector') || n.classList.contains('detail-scrim')));
 
 /* ---------- patching ----------------------------------------------------------------------------------------------- */

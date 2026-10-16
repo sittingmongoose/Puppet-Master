@@ -1145,11 +1145,16 @@ jumpToWorkspace = function (wsId, behavior) {
 let pm51RosterFitObserver = null, pm51RosterFitTarget = null;
 function installRosterFit() {
   const scroller = root.querySelector('#settings-document'); if (!scroller) return;
-  const apply = () => root.style.setProperty('--pm51-doc-h', scroller.clientHeight + 'px');
-  apply();
   if (pm51RosterFitTarget === scroller || typeof ResizeObserver !== 'function') return;
   if (pm51RosterFitObserver) pm51RosterFitObserver.disconnect();
-  pm51RosterFitObserver = new ResizeObserver(apply); pm51RosterFitObserver.observe(scroller); pm51RosterFitTarget = scroller;
+  /* The document has no border or padding. Its delivered content box is the client height without a forced layout.
+     Keep the prior height across chapter replacement; an unchanged value must not restyle every Settings row. */
+  pm51RosterFitObserver = new ResizeObserver(entries => {
+    const entry = entries.find(e => e.target === scroller); if (!entry || !scroller.isConnected) return;
+    const height = Math.round(entry.contentRect.height) + 'px';
+    if (root.style.getPropertyValue('--pm51-doc-h') !== height) root.style.setProperty('--pm51-doc-h', height);
+  });
+  pm51RosterFitObserver.observe(scroller); pm51RosterFitTarget = scroller;
 }
 const pm51OriginalAfterRender = afterRender;
 afterRender = function () {
@@ -1162,7 +1167,10 @@ const pm51OriginalBoot = boot;
 boot = function () { const r = pm51OriginalBoot.apply(this, arguments); if (window.PM12_KIMI && typeof window.PM12_KIMI === 'object') window.PM12_KIMI.renderApp = (...args) => renderApp(...args); return r; };
 
 /* ---------- motion: no blank frames ----------------------------------- */
+let pm51ClassifyReveal = null;
 armSectionReveal = function () {
+  if (pm51ClassifyReveal) { pm51ClassifyReveal.disconnect(); pm51ClassifyReveal = null; }
+  if (revealObserver) { revealObserver.disconnect(); revealObserver = null; }
   try { PM51.applyFilters(root); } catch (e) { /* filters are a convenience; never block reveal */ }
   /* reduced motion, the system's or the app's own Reduce motion: every section is simply there */
   if (o55Still()) {
@@ -1172,19 +1180,34 @@ armSectionReveal = function () {
   const nodes = root.querySelectorAll('.section-block, .settings-section, .manager-section');
   if (!nodes.length) return;
   const scroller = root.querySelector('#settings-document');
-  const viewBottom = scroller ? scroller.getBoundingClientRect().bottom + 120 : window.innerHeight + 120;
-  if (!revealObserver) {
-    revealObserver = new IntersectionObserver(entries => {
-      for (const entry of entries) { if (!entry.isIntersecting) continue; entry.target.classList.add('is-revealed'); entry.target.classList.remove('will-reveal'); revealObserver.unobserve(entry.target); }
-    }, { threshold: 0.04 });
-  } else revealObserver.disconnect();
-  for (const node of nodes) {
-    if (node.classList.contains('is-revealed')) continue;
-    node.classList.add('section-block');
-    if (node.getBoundingClientRect().top < viewBottom) { node.classList.add('is-revealed', 'pm51-instant'); continue; }
-    node.classList.add('will-reveal');
-    revealObserver.observe(node);
-  }
+  /* Intersection entries carry the positions from the completed layout. Reading every section's rectangle in a
+     ResizeObserver still forced a second layout after another observer's write, and rendered distant contained
+     sections just to classify them. Initially visible sections stay fully painted; the same 260 ms reveal arms
+     only sections beyond the viewport, before the reader can reach them. */
+  const shown = new IntersectionObserver(entries => {
+    for (const entry of entries) {
+      if (!entry.isIntersecting) continue;
+      entry.target.classList.add('is-revealed'); entry.target.classList.remove('will-reveal'); shown.unobserve(entry.target);
+    }
+  }, { threshold: 0.04 });
+  revealObserver = shown;
+  const observer = new IntersectionObserver(entries => {
+    for (const entry of entries) {
+      const node = entry.target;
+      observer.unobserve(node);
+      if (!node.isConnected) continue;
+      node.classList.add('section-block');
+      if (entry.boundingClientRect.top < (entry.rootBounds ? entry.rootBounds.bottom : window.innerHeight + 120)) {
+        node.classList.add('is-revealed', 'pm51-instant'); node.classList.remove('will-reveal');
+      } else {
+        node.classList.add('will-reveal'); shown.observe(node);
+      }
+    }
+  }, { root: scroller, rootMargin: '0px 0px 120px 0px', threshold: 0.04 });
+  /* The 120 px margin is only the initial classification, as before. Later scroll reveals keep the original
+     viewport threshold, so their full motion is visible instead of finishing before the section enters view. */
+  pm51ClassifyReveal = observer;
+  nodes.forEach(node => { if (!node.classList.contains('is-revealed')) observer.observe(node); });
 };
 
 /* ---------- setting Details inspector ---------------------------------- */
@@ -1374,7 +1397,9 @@ PM51.on('all-cats', () => {
 PM51.on('all-more', () => { allSettingsView.moreFilters = !allSettingsView.moreFilters; PM51.refresh('project-settings', { swap: false }); });
 PM51.on('all-changed', el => { allSettingsView.changedOnly = !!el.checked; refreshAllSettingsVirtual(true); });
 PM51.on('all-show-ids', el => { allSettingsView.showIds = !!el.checked; root.querySelector('.pm51-all')?.classList.toggle('pm51-show-ids', allSettingsView.showIds); });
-PM51.on('all-reset', () => confirmDialog('Reset every setting to its default?', 'Every project setting goes back to its default value. You can change them again afterwards.', 'Reset all', () => { restoreAllProjectDefaults(); showToast('Settings reset', 'All project settings are back to their defaults.'); }, true));
+/* The restore transaction owns its outcome message, including the accepted receipt. A caller must never add a
+   success after a refusal, or a second success after the owner has already reported the completed restore. */
+PM51.on('all-reset', () => confirmDialog('Reset every setting to its default?', 'Every project setting goes back to its default value. You can change them again afterwards.', 'Reset all', () => o55AfterPaint(restoreAllProjectDefaults), true));
 PM51.on('all-export', () => { const rows = allSettingsCatalog(); infoDrawer('Export settings list', 'A secret-free list of every setting and its current value, ready to save.', [['Settings', String(rows.length)], ['Format', 'JSON · no secrets'], ['Scope', 'This project']], { intro: 'Exporting stays local. Credentials are never included.' }); });
 
 /* Manager-scoped CSS: each manager file may add a few rules without touching styles.css. */
