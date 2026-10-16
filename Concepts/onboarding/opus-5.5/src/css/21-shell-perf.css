@@ -4,8 +4,13 @@
    are skipped now; the box keeps its place in the column (final motion QA B4, 2026-10-16). */
 html:not([data-o55-tour]) #chatPanel[data-pmw-sc="on"] > .float-content.pm6-chat-root { content-visibility: hidden; }
 
-/* A page change stamps its direction (--pm-dir) on both pages, read only by those pages' own pm8 keyframes.
-   Unregistered, a custom property is inherited, so each write that changed it restyled every element of the page it
-   was set on (a custom property on Home's 2,500 elements: 92-221 ms on Nas1), inside the change's long frame, against
-   1-5 ms registered as not inherited (final motion QA B1 seam, 2026-10-16). */
+/* A page change stamps its direction (--pm-dir) on both pages and the answered fade's start (--pm8-out-from) on the
+   leaving one, read only by those pages' own pm8 keyframes. Unregistered, a custom property is inherited, so each
+   write restyled every element of the page it was set on: 92-221 ms for Home's 2,500 elements on Nas1, inside the
+   change's long frame, against 1-5 ms registered as not inherited (final motion QA B1 seam, 2026-10-16). */
 @property --pm-dir { syntax: '<number>'; inherits: false; initial-value: 1; }
+@property --pm8-out-from { syntax: '<number>'; inherits: false; initial-value: 1; }
+
+/* The page in front, while a page tab is pointed at or focused (src/js/13-page-layer.js): a layer of its own, rastered
+   before the click, so the click's fade of the leaving page runs on the compositor alone. */
+.primary-content > .page.active.pm-page-layer { will-change: opacity; }
