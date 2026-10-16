@@ -103114,7 +103114,7 @@ afterRender = function () {
   /* Terminal Bell: Follow look or Off (Jared, 2026-10-16, P14); a stored Visual is Follow look (retired words below) */
   const bell = rowOf('code.terminal.bell');
   bell.choices = ['Follow look', 'Off'];
-  bell.help = 'What happens when a program rings the bell: Follow look flashes the terminal in the look’s own way, Off does nothing.';
+  bell.help = 'What happens when a program rings the bell: Follow look rings the look’s own bell, Off does nothing.';
   const font = rowOf('code.terminal.font-family');
   font.choices = FACES.map(f => f[0]);
   font.options = Object.assign({}, font.options || {}, Object.fromEntries(FACES));
@@ -219510,11 +219510,14 @@ var T = {};
   /* a near-black screen (Retro's phosphor ground) has little light to give a dark case, so its steps are lifted up to
      a third, and read as far apart as on a grey one (round 5, Q15: Graphite and Gunmetal's Low and Medium, 4.2) */
   function dimScreen(bg) { return 1 + 0.3 * Math.max(0, Math.min(1, (0.016 - C.lum(bg)) / 0.012)); }
+  /* SSYS-051's one stored scale for the Reflection level: Off, Low, Medium and High are 0, 0.25, 0.5 and 1. A level
+     stored as a number (round 3's slider) is the nearest on it; how strongly a level draws is the renderer's own, per
+     screen (STRENGTH, GLASS), never read from the stored number (Plans top-up L3, F3-643) */
+  var SCALE = [0, 0.25, 0.5, 1];
   function levelOf(r, mat, light) {
     if (typeof r === 'number' && isFinite(r)) {
-      /* a level stored as a number (round 3's slider): the nearest */
-      var t = STRENGTH[light ? 'light' : 'dark'], best = 0;
-      for (var i = 1; i < t.length; i++) if (Math.abs(t[i] - r) < Math.abs(t[best] - r)) best = i;
+      var best = 0;
+      for (var i = 1; i < SCALE.length; i++) if (Math.abs(SCALE[i] - r) < Math.abs(SCALE[best] - r)) best = i;
       return LEVELS[best];
     }
     if (LEVELS.indexOf(r) >= 0) return r;
@@ -222192,7 +222195,29 @@ var T = {};
       if (back && back.focus && !root.contains(back)) { try { back.focus({ preventScroll: true }); return; } catch (x) {} }
       if (e.target && e.target.blur) e.target.blur();
     }
-    function rasterEnd() { if (rasterOn) { rasterOn = false; root.classList.remove('pmt-cz-rasterwarm'); root.removeEventListener('focusin', rasterGuard, true); } }
+    function rasterEnd() {
+      if (rasterSample) { rasterSample.remove(); rasterSample = null; }
+      if (rasterOn) { rasterOn = false; root.classList.remove('pmt-cz-rasterwarm'); root.removeEventListener('focusin', rasterGuard, true); }
+    }
+    /* the background tiles' kinds it has not drawn in this look: their rounded picture, gradient and pattern fills
+       linked their GPU programs when a category first showed them (part2's F5a P1000 trace: the Scene tiles, 5 to 7
+       programs, about 195 ms, just after the Hills pick). One sample of each kind is laid among the tiles of the unseen
+       screen, one per painted frame so no frame compiles more than one kind's programs, then removed. Tiles are buttons,
+       which never start the browser's form scan (the rule on inputs in a look switch) */
+    var sampled = {}, rasterSample = null;
+    function sampleTiles(lookKey) {
+      var G = T.Grounds, R = eff(), th = R && R.theme, out = [];
+      if (!G || !th) return out;
+      var seen = {};
+      G.list().forEach(function (d) {
+        var kind = d.cat === 'tonal' || d.cat === 'wash' ? 'gradient' : d.cat;
+        if (seen[kind] || sampled[lookKey + '|' + kind]) return;
+        seen[kind] = 1;
+        out.push({ kind: kind, html: groundTile((G.isGradient(d.id) ? 'g:' : 'i:') + d.id, d.name, th) });
+      });
+      if (!sampled[lookKey + '|solid']) out.push({ kind: 'solid', html: groundTile('theme', 'Scheme', th) });
+      return out;
+    }
     function rasterSoon() {
       if (rasterJob || rasterFrames || !closed || disposed) return;
       var key = (root.getAttribute('data-pmt-look') || '') + '|' + (root.getAttribute('data-pmt-mode') || '');
@@ -222217,7 +222242,21 @@ var T = {};
           rasterSince = 0; rastered[key] = 1; rasterOn = true;
           /* its controls must not take the focus for its three frames (review RW-2; rasterGuard) */
           root.addEventListener('focusin', rasterGuard, true); root.classList.add('pmt-cz-rasterwarm');
-          requestAnimationFrame(function () { requestAnimationFrame(function () { requestAnimationFrame(rasterEnd); }); });
+          var samples = sampleTiles(key), host = root.querySelector('[data-gtiles]');
+          var nextSample = function () {
+            if (!rasterOn) return;
+            if (rasterSample) { rasterSample.remove(); rasterSample = null; }
+            /* only while the person stays away and the page is not in a change; what is left waits for the next look */
+            if (!samples.length || !host || inputRecent() || settling()) { rasterEnd(); return; }
+            var sm = samples.shift(), tmp = document.createElement('div');
+            tmp.innerHTML = sm.html; rasterSample = tmp.firstChild;
+            if (!rasterSample) { nextSample(); return; }
+            rasterSample.setAttribute('aria-hidden', 'true'); rasterSample.tabIndex = -1;
+            host.appendChild(rasterSample);
+            sampled[key + '|' + sm.kind] = 1;
+            requestAnimationFrame(function () { requestAnimationFrame(nextSample); });
+          };
+          requestAnimationFrame(function () { requestAnimationFrame(function () { requestAnimationFrame(nextSample); }); });
         }); });
       };
       rasterJob = window.requestIdleCallback ? requestIdleCallback(run, { timeout: Math.max(1000, WARM_LATEST_MS - (T.util.now() - rasterSince)) }) : setTimeout(run, 300);
