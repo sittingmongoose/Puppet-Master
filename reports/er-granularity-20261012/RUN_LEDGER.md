@@ -263,3 +263,10 @@ verification. Effort A/B on frozen Case D materials runs first.
 See PHASE18-PREREG.md.
 
 Phase 18 complete 2026-10-16: flash 28/27 vs Sol 37/37, flash 2 confirmed MEs, FAIL vs prereg criterion (0 ME and >=Sol-5). See PHASE18-RESULTS.md.
+
+## Phase 18B (2026-10-16, frozen Case E, one-variable tests)
+A. Guarantee audit PASS by union: DS caught both graded MEs (2/2), GLM
+caught M20 only (1/2); single-auditor reliability asymmetric. B. Gated
+design synthesis PASS: 14/18 vs 9/18 on nine design propositions (gain
++5, required >=+4), 0 new material errors. Phase 18 grades unchanged.
+See PHASE18B-RESULTS.md.
