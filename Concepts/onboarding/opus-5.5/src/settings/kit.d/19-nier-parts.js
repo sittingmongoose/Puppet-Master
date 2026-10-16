@@ -38,6 +38,21 @@
   const later = (fn, ms) => window.setTimeout(fn, Math.round(ms * speed()));
   const onboarding = () => html.hasAttribute('data-o55-open');
   const tone = () => (/-light$/.test(html.getAttribute('data-theme') || '') ? 'light' : 'dark');
+  /* Keep the last painted ground for the reduced-motion cover. Reading computed style after the switch's row
+     changes used to flush layout in the click task. This read follows paint, once per look/contrast change. */
+  let calmColors = { background: '#111111', ink: '#ffffff' }, calmReadQueued = false;
+  function cacheCalmColors() {
+    if (calmReadQueued) return;
+    calmReadQueued = true;
+    requestAnimationFrame(() => setTimeout(() => {
+      calmReadQueued = false;
+      if (!document.body) return;
+      const cs = getComputedStyle(document.body);
+      calmColors = { background: cs.backgroundColor, ink: cs.color };
+    }, 0));
+  }
+  new MutationObserver(cacheCalmColors).observe(html, { attributes: true, attributeFilter: ['data-theme', 'data-o55-nier', 'data-contrast'] });
+  cacheCalmColors();
   const zoom = () => { const z = document.body && Number.parseFloat(document.body.style.zoom); return Number.isFinite(z) && z > 0 ? z : 1; };
   const frames = n => new Promise(res => { const step = () => (--n <= 0 ? res() : window.requestAnimationFrame(step)); window.requestAnimationFrame(step); });
   function layer(id, cls) {
@@ -1046,10 +1061,10 @@
        paint before the theme/scene work, then dissolve the cover over the fully drawn result. Its colours belong to
        the outgoing look, so a theme restyle cannot flash the cover itself. There is no looping or spatial motion. */
     if (still() && !document.hidden && document.body && !within && !onboarding() && !rebooting) {
-      const cs = getComputedStyle(document.body), plate = document.createElement('div');
+      const plate = document.createElement('div');
       plate.id = 'o55np-calm'; plate.setAttribute('role', 'status');
-      plate.style.backgroundColor = cs.backgroundColor;
-      plate.style.color = cs.color;
+      plate.style.backgroundColor = calmColors.background;
+      plate.style.color = calmColors.ink;
       plate.textContent = on ? 'Applying NieR Mode…' : 'Restoring your look…';
       document.body.appendChild(plate);
       cue('start');
