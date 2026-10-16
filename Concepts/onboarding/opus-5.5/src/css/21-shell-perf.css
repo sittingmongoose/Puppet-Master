@@ -1,0 +1,5 @@
+/* Chat's own panel (pmw-chat) covers the shell's original chat, which stays in the page only for the Guided Tour and is
+   hidden meanwhile. Hidden, it was still styled and laid out: about 600 elements of every whole-page restyle (a look
+   change, a page switch; 20 % of a theme change on the P1000) and two resize observers that measured it. Its contents
+   are skipped now; the box keeps its place in the column (final motion QA B4, 2026-10-16). */
+html:not([data-o55-tour]) #chatPanel[data-pmw-sc="on"] > .float-content.pm6-chat-root { content-visibility: hidden; }

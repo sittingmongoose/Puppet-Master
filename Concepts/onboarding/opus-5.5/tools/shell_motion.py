@@ -93,4 +93,63 @@ STATUS_BAR.append(
      "      hostItem.setAttribute('data-pm-hover-detail', 'The computer Puppet Master runs on, and how quickly it answers.');\n"
      "    }\n",
      'status bar tag: host'))
-PATCHES = STATUS_BAR + HOVER_TAGS
+THEME = [
+    # B4: the theme menu answers first (its radio or row paints on the next frame) and the repaint follows in the next
+    # task, once (src/js/12-theme-transition.js).
+    ("        window.PM7_SETTINGS_TOME.setChromeThemeMode(seg.getAttribute('data-mode-value'));\n"
+     "        return; /* mode is a filter, not a final pick: menu stays open */\n",
+     "        var modeValue = seg.getAttribute('data-mode-value');   /* O55: the radio answers first (B4) */\n"
+     "        menu.querySelectorAll('.pm6-tt-mode').forEach(function (b) { b.setAttribute('aria-checked', b === seg ? 'true' : 'false'); });\n"
+     "        if (window.PM_THEME_TRANSITION) window.PM_THEME_TRANSITION(function () { window.PM7_SETTINGS_TOME.setChromeThemeMode(modeValue); });\n"
+     "        else window.PM7_SETTINGS_TOME.setChromeThemeMode(modeValue);\n"
+     "        return; /* mode is a filter, not a final pick: menu stays open */\n",
+     'theme menu: mode answers first'),
+    ("      window.PM7_SETTINGS_TOME.setChromeThemeFamily(row.getAttribute('data-family'));\n"
+     "      tbMenuClose(menu);\n",
+     "      var familyValue = row.getAttribute('data-family');   /* O55: the row answers first (B4) */\n"
+     "      menu.querySelectorAll('.pm6-tt-family').forEach(function (r) { var on = r === row; r.classList.toggle('is-selected', on); r.setAttribute('aria-checked', on ? 'true' : 'false'); });\n"
+     "      if (window.PM_THEME_TRANSITION) window.PM_THEME_TRANSITION(function () { window.PM7_SETTINGS_TOME.setChromeThemeFamily(familyValue); });\n"
+     "      else window.PM7_SETTINGS_TOME.setChromeThemeFamily(familyValue);\n"
+     "      tbMenuClose(menu);\n",
+     'theme menu: family answers first'),
+]
+
+THEME.append(
+    # B4: the theme's search-width kick announced a resize inside the attribute observer, so every resize listener of
+    # the page measured the half-restyled page there (the tab ink, the rail, Chat, Usage: two to four extra forced
+    # style passes, 300-500 ms on the P1000). The listeners still hear it once, after the new look has painted.
+    ("    new MutationObserver(function (muts) {\n"
+     "      for (var i = 0; i < muts.length; i++) {\n"
+     "        if (muts[i].attributeName === 'data-theme') { kickSearchDensity(); break; }\n"
+     "      }\n",
+     "    var kickPending = false;   /* O55: once, after the new look's frame (B4) */\n"
+     "    new MutationObserver(function (muts) {\n"
+     "      for (var i = 0; i < muts.length; i++) {\n"
+     "        if (muts[i].attributeName === 'data-theme') {\n"
+     "          if (!kickPending) { kickPending = true; requestAnimationFrame(function () { setTimeout(function () { kickPending = false; kickSearchDensity(); }, 0); }); }\n"
+     "          break;\n"
+     "        }\n"
+     "      }\n",
+     'theme: search-width kick after the frame'))
+
+PAGES = [
+    # A1: a page changed under a cover that is about to leave (onboarding's Enter) changes at once; the cover's exit is
+    # the only transition (src/js/74-screens-ready.js openWizard({under})).
+    ("      if (changed && bootPaintDone && !reduced() && oldP && newP && oldP !== newP) {\n",
+     "      if (changed && bootPaintDone && !reduced() && !window.PM_PAGES.instant && oldP && newP && oldP !== newP) {   /* O55: instant under a cover */\n",
+     'page switch: instant under a cover'),
+    # A2: under Reduced Motion (and under a cover) the page swaps at once and arrives whole: .pm8-page-instant stops
+    # the incoming page's own entrance fades (the Wizard's stage faded up from nothing over the bare wallpaper). The
+    # mark leaves a page once it is hidden again, so its next visit enters as usual.
+    ("      var tab = tabFor(pageId);\n"
+     "      var tabMetrics = tab ? measureTab(tab) : null;\n"
+     "      origGo.call(window.PM_PAGES, pageId, subTab);\n",
+     "      var tab = tabFor(pageId);\n"
+     "      var tabMetrics = tab ? measureTab(tab) : null;\n"
+     "      if (changed && newP && oldP !== newP && (reduced() || window.PM_PAGES.instant)) newP.classList.add('pm8-page-instant');   /* O55 */\n"
+     "      origGo.call(window.PM_PAGES, pageId, subTab);\n"
+     "      if (changed) document.querySelectorAll('.primary-content > .page.pm8-page-instant:not(.active):not(.pm8-page-out)').forEach(function (p) { p.classList.remove('pm8-page-instant'); });\n",
+     'page switch: whole arrival when instant'),
+]
+
+PATCHES = STATUS_BAR + HOVER_TAGS + THEME + PAGES
