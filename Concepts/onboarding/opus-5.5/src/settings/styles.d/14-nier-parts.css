@@ -173,8 +173,8 @@ html[data-motion="reduced"][data-o55-nier-parts~="diamonds"] :is(.pm6-wiz-disc-s
    the ink kicker band, lines with a caret-led mask, dot leaders and stamps, the 12-cell meter, the "Synchronising"
    line), the same ink-on-ground as the window's boot log, and leaves as six slats (.o55np-slat, each a copy of the set
    moved up by its own place). --rb-ground is what the list sits on and --rb-text its ink; the masks are the ground,
-   the caret the ink. Motion is transform or opacity only, all one-shot, so the compositor runs it through the
-   repaint's long frames. Until the reveal no press reaches what is under the cover (it is not what will be there):
+   the caret the ink. Motion is transform or opacity only; an indeterminate ink glyph repeats until the render work
+   finishes, so the compositor keeps the wait alive through long frames. Until the reveal no press reaches what is under the cover (it is not what will be there):
    the window's cover takes the pointer; the page's leaves it to the page, so nothing hovered changes under it (a
    full-page change of :hover restyled the whole page), and the script holds the presses.
    Slint: the plate is a clipping Rectangle whose x, y, width and height step; edges, brackets and slats are Rectangles
@@ -238,6 +238,15 @@ html[data-motion="reduced"][data-o55-nier-parts~="diamonds"] :is(.pm6-wiz-disc-s
 /* the list's end state (R) is its resting state; only the Synchronising line changes, by attribute (the slats copy it) */
 #o55np-reboot .o55np-sync[data-ok] .o55np-caret { display: none; }
 #o55np-reboot .o55np-sync[data-ok] :is(.o55np-ln-dots, .o55np-stamp) { visibility: visible; opacity: 1; }
+/* An ink diamond travels between two square end marks while the look is being drawn. Its rail sits outside the log
+   without moving the existing words or meter. Only the tiny diamond layer moves; Reduced Animations uses another cover. */
+#o55np-reboot .o55np-wait { position: absolute; left: 50%; bottom: -26px; width: 104px; height: 14px;
+  box-sizing: border-box; border-left: 1px solid currentColor; border-right: 1px solid currentColor;
+  transform: translateX(-50%); pointer-events: none; }
+#o55np-reboot .o55np-wait::before { content: ""; position: absolute; left: 0; right: 0; top: 6px; height: 1px; background: currentColor; opacity: .25; }
+#o55np-reboot .o55np-wait > i { position: absolute; left: 3px; top: 4px; width: 6px; height: 6px; background: currentColor;
+  transform: rotate(45deg); will-change: transform; }
+#o55np-reboot .o55np-log[data-done] .o55np-wait { opacity: 0; }
 /* the six slats: a sixth of the cover each (1px overlap), each holding the whole set moved up by its own place */
 #o55np-reboot .o55np-slats { position: absolute; inset: 0; pointer-events: none; }
 #o55np-reboot .o55np-slat { position: absolute; left: 0; right: 0; top: calc(var(--i) * 100% / 6); height: calc(100% / 6 + 1px); overflow: hidden; will-change: transform; }
