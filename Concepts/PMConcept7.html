@@ -184770,7 +184770,7 @@ var Motion = {
       var moves = [];
       [].forEach.call(parts, function (p) {
         if (p.getAnimations) p.getAnimations().forEach(function (a) {
-          if (a.effect && a.effect.target === p && /^pmt-m-/.test(a.animationName || '')) moves.push(a);
+          if (a.effect && a.effect.target === p && /^(?:pmt-m-|pmt-cz-slice-)/.test(a.animationName || '')) moves.push(a);
         });
       });
       return moves;
@@ -185605,18 +185605,23 @@ function open(opts) {
   /* a scheme previews when the pointer rests on it (160 ms, so crossing the grid previews nothing on the way) or the
      arrow keys reach it, on the preview and on the editor, at once and without the sweep (the sweep is for keeping
      one); leaving the list or Escape puts the chosen one back */
-  var INTENT_MS = 160, intent = 0, previewing = null, intentTile = null, scrollUntil = 0, pointerX = null, pointerY = null;
-  function cancelIntent() { clearTimeout(intent); intent = 0; intentTile = null; }
-  function previewSoon(tileEl, ms) {
+  var INTENT_MS = 160, intent = 0, intentFrame = 0, previewing = null, intentTile = null, scrollUntil = 0, pointerX = null, pointerY = null;
+  function cancelIntent() { clearTimeout(intent); cancelAnimationFrame(intentFrame); intent = intentFrame = 0; intentTile = null; }
+  function previewSoon(tileEl, ms, pointerIntent) {
     cancelIntent();
     intentTile = tileEl;
     var id = tileEl.getAttribute('data-value');
     if (previewing === id) return;
     intent = setTimeout(function () {
       intent = 0;
-      if (!root.isConnected || openRoot !== root || intentTile !== tileEl) return;
-      previewing = id;
-      EL().preview(v, { scheme: id }); syncPreview();
+      // Passive wheel input can already be queued while this timer runs. The
+      // frame's input delivery must get a chance to cancel before we recolour.
+      intentFrame = requestAnimationFrame(function () {
+        intentFrame = 0;
+        if (!root.isConnected || openRoot !== root || intentTile !== tileEl || (pointerIntent && performance.now() < scrollUntil)) return;
+        previewing = id;
+        EL().preview(v, { scheme: id }); syncPreview();
+      });
     }, ms);
   }
   function endPreview() { cancelIntent(); if (previewing === null) return; previewing = null; EL().endPreview(v); syncPreview(); }
@@ -185630,7 +185635,7 @@ function open(opts) {
     if (!moved) return;
     var o = e.target.closest('.pmt-cz-scheme');
     if (!o || e.buttons || performance.now() < scrollUntil) { cancelIntent(); return; }
-    if (o !== intentTile) previewSoon(o, INTENT_MS);
+    if (o !== intentTile) previewSoon(o, INTENT_MS, true);
   }, { passive: true });
   schemesEl.addEventListener('pointerout', function (e) {
     var next = e.relatedTarget && e.relatedTarget.closest ? e.relatedTarget.closest('.pmt-cz-scheme') : null;
