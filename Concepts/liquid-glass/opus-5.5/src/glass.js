@@ -40,7 +40,8 @@
        size under a moving lens). Unset is 1.
      - --pm-switch-liquid (0..1): how much of the drop's stretch, lift and landing wobble the look keeps. Unset is 1. */
   /* - --pm-switch-motion (glide | step | cut): how the chip moves to a new choice. glide (unset) is the spring above;
-       step hops it tab by tab on a 33 ms tick, at most three hops, with no easing; cut puts it there at once. Retro steps
+       step is two hard jumps on a 33 ms tick (the tab half way, then its own), with no easing; cut puts it there at
+       once. Retro steps
        and NieR Mode cuts (Jared 2026-10-16; F3-438: joined highlights step in Retro and NieR; F3-621). */
   var switchLook = false, switchUnder = false, switchSwell = 1, switchLiquid = 1, switchMotion = 'glide';
   function tokenNumber(v, dflt) { var n = parseFloat(v); return isFinite(n) ? Math.max(0, Math.min(1, n)) : dflt; }
@@ -1247,8 +1248,9 @@
     if (switchMotion !== 'glide' && !isGlass()) { hop(L, from, R, strip, cfg, target, vertical); return; }
     travel(L, from, R, vertical, { labels: labelsOf(cfg, strip, vertical), mags: magsOf(cfg), vertical: vertical });
   }
-  /* Retro's step and NieR's cut. A step moves the chip tab by tab, up to two tabs between (picked evenly) and then its own,
-     one 33 ms tick each: a tab next door is one hop, at once. Each tick moves the chip and the inks in the same callback,
+  /* Retro's step and NieR's cut. A step is two hard jumps: the chip shows on the tab half way (when there is one) at once,
+     and on its own tab one 33 ms tick later, so a press held for longer than a tick has landed before its click runs; a
+     tab next door is one hop, at once. A press released sooner lands as the pointer lifts. Each tick moves the chip and the inks in the same callback,
      on the main thread: the tab under the chip reads as chosen (data-lg-press="on"), the tab it is headed for reads as not
      chosen until it lands ("off", or no mark while a press holds it), and the tab it left as not chosen. If the app holds
      the page (its click), chip and inks wait together, so a landed chip never sits under an old ink (Q16 delta review:
@@ -1261,7 +1263,7 @@
       .map(function (it) { return { it: it, r: rectIn(strip, cfg.box ? cfg.box(it) : it, pad) }; })
       .filter(function (s) { var m = c(s.r); return m > lo + 1 && m < hi - 1; })
       .sort(function (p, q) { return Math.abs(c(p.r) - a) - Math.abs(c(q.r) - a); });
-    if (mids.length > 2) mids = [mids[Math.round(mids.length / 3) - 1], mids[Math.round(mids.length * 2 / 3) - 1]];
+    if (mids.length > 1) mids = [mids[Math.floor((mids.length - 1) / 2)]];
     return mids.concat([{ it: target, r: B }]);
   }
   var hopOwned = new WeakMap();   /* an item whose ink a hop holds: a press settling under it leaves the hop's mark */
@@ -1271,11 +1273,13 @@
     else { if (L.hopMarks.get(el) === el.getAttribute('data-lg-press')) el.removeAttribute('data-lg-press'); L.hopMarks.delete(el); hopOwned.delete(el); }
   }
   function stopHop(L) {
+    L.hopFinish = null;
     if (L.hopT) { clearTimeout(L.hopT); L.hopT = 0; }
     if (L.hopMarks) { L.hopMarks.forEach(function (v, el) { hopOwned.delete(el); if (el.getAttribute('data-lg-press') === v) el.removeAttribute('data-lg-press'); }); L.hopMarks.clear(); }
     var P = L.hopPress; L.hopPress = null;
     if (P && L.pending === P && P.el.isConnected) P.el.setAttribute('data-lg-press', 'on');
   }
+  function finishHop(L) { var f = L.hopFinish; if (f) { clearTimeout(L.hopT); L.hopT = 0; f(); } }
   function hop(L, A, B, strip, cfg, target, vertical) {
     stopLensTravel(L);
     if (switchMotion === 'cut' || !A) { setLensBox(L, B); return; }
@@ -1289,12 +1293,14 @@
       if (switchUnder && prev && prev !== target) hopMark(L, prev, null);
       setLensBox(L, s.r);
       if (s.it === target) {
+        L.hopFinish = null;
         if (switchUnder) { hopMark(L, target, null); var Q = L.hopPress; L.hopPress = null; if (Q && L.pending === Q && Q.el.isConnected) Q.el.setAttribute('data-lg-press', 'on'); }
         return;
       }
       if (switchUnder) hopMark(L, s.it, 'on');
       k++; L.hopT = setTimeout(tick, HOP_MS);
     };
+    L.hopFinish = function () { L.hopFinish = null; k = stops.length - 1; tick(); };
     tick();
   }
   /* the press: the lens leaves for the pressed item at once; the app's choice (or its absence) settles it. Only for
@@ -1338,6 +1344,7 @@
   document.addEventListener('pointerup', function (e) {
     lenses.forEach(function (L) {
       var P = L.pending; if (!P || P.up) return;
+      if (L.hopT && L.hopPress === P) finishHop(L);
       P.up = performance.now(); P.away = !(e.target && P.el.contains(e.target));
       if (P.away) queueSync(L.strip); else setTimeout(function () { queueSync(L.strip); }, 2550);
     });
