@@ -30,8 +30,10 @@ body.pmu-page-active #panel-dashboard.pm-home-owned.pm8-page-out { position: abs
    first step ("layer") draws one small box, so the layer's own programs link alone. Then one element of each kind
    draws by itself (data-pmu-raster-self: the element, not its children), then the rail, the stage's head and the page
    chrome whole ("chrome": the panel shown, the held plates still hidden), then each card the same way: one element of
-   each kind it brings, then the card whole (data-pmu-raster-on). A card being drawn takes the layers the arrival gives
-   it (its plate the film's will-change, its body its reveal's), so each draws with the programs the arrival will use.
+   each kind it brings, a large card kind by kind, then the card whole (data-pmu-raster-on). A card being drawn
+   takes the layers the arrival gives it (its plate the film's will-change, its body its reveal's), so each draws with
+   the programs the arrival will use, and its held opacity 0 (20-board.css) is lifted while it draws (an element drawn
+   by itself inside it showed nothing).
    The same pass builds the first screen of Costs and Accounts in the spare board element ("spare") and draws its
    cards the same way. Taking the tokens and marks off leaves every held rule as it was (the arrival's entrance still
    plays from its first keyframe). Usage-only. ---- */
@@ -40,14 +42,15 @@ body.pmu-page-active #panel-dashboard.pm-home-owned.pm8-page-out { position: abs
 .primary-content > #panel-usage.page[data-pmu-warm][data-pmu-raster~="layer"]:not(.active):not(.pm8-page-out)::after { content: '';
   position: absolute; left: 0; top: 0; width: 16px; height: 16px; background: #7f7f7f; visibility: visible; pointer-events: none; }
 .primary-content > #panel-usage.page[data-pmu-warm][data-pmu-raster~="chrome"]:not(.active):not(.pm8-page-out) { visibility: visible; }
-#panel-usage[data-pmu-raster~="paint"] :is(.pmu-rail, .pmu-stagehead)[data-pmu-raster-on] { visibility: visible; }
-#panel-usage[data-pmu-raster~="paint"] .pmu-board > .pmu-card[data-pmu-raster-on] { visibility: visible; opacity: 1; }
-#panel-usage[data-pmu-raster~="paint"] .pmu-board > .pmu-card:is([data-pmu-raster-on], [data-pmu-raster-pieces]) { will-change: transform, opacity; }
+#panel-usage[data-pmu-raster~="paint"] .pmu-board > .pmu-card:is([data-pmu-raster-on], [data-pmu-raster-pieces]) { opacity: 1; will-change: transform, opacity; }
 #panel-usage[data-pmu-raster~="paint"] .pmu-board > .pmu-card:is([data-pmu-raster-on], [data-pmu-raster-pieces]) > .pmu-cardbody { opacity: 1; will-change: opacity; }
-/* one element by itself: its children stay hidden, and a marked element shows over its own hiding rules (the held
-   plate's among them: :not(#pmu-raster-none) gives the rule an id's weight; a marked child of a marked element too) */
+/* one element by itself (data-pmu-raster-self: its children stay hidden) or a part whole (data-pmu-raster-on: the rail,
+   the stage's head, a card); a marked element shows over its own hiding rules (the held plate's
+   among them: :not(#pmu-raster-none) gives the rule an id's weight), a marked child of an element by itself too */
 #panel-usage[data-pmu-raster~="paint"] [data-pmu-raster-self] > * { visibility: hidden; }
-#panel-usage[data-pmu-raster~="paint"] [data-pmu-raster-self]:not(#pmu-raster-none) { visibility: visible; }
+#panel-usage[data-pmu-raster~="paint"] :is([data-pmu-raster-self], [data-pmu-raster-on]):not(#pmu-raster-none) { visibility: visible; }
+/* one at opacity 0 (an entrance the arrival plays, a control shown on hover) draws at 1, as it will show */
+#panel-usage[data-pmu-raster~="paint"] [data-pmu-raster-self="lit"]:not(#pmu-raster-none) { opacity: 1; }
 #panel-usage[data-pmu-raster~="spare"] .pmu-scroll > .pmu-board[data-pmu-raster-room] { display: grid; }
 
 /* ---- the held board (3.1 Phase A): held cards are laid out (the build measures every body) but not painted, so the
