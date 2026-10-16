@@ -137,6 +137,18 @@
     var r = hash1(i) + (hash1(i + 1) - hash1(i)) * f;
     return 1 - m * r;
   }
+  /* Flicker as keyframes (P2-S1): the same gain, held for the same ambient steps, as a brightness the compositor plays on
+     the picture (52-fx.js), so turning Flicker on builds nothing and holds no frame. The gain is on linear light and a
+     brightness filter scales the encoded value, so each step is gain^(1/2.2). FLICKER_LOOP_MS of steps repeat; value
+     noise over 80 ms knots has no repeat a person can see in that */
+  var FLICKER_LOOP_MS = 4000;
+  function flickerKeyframes(name, amount) {
+    var n = Math.round(FLICKER_LOOP_MS * AMBIENT_FPS / 1000), rows = [];
+    var at = function (i) { return Math.pow(flickerGain(amount, (i + 0.5) * 1000 / AMBIENT_FPS), 1 / 2.2).toFixed(4); };
+    for (var i = 0; i < n; i++) rows.push(Math.round(i / n * 1e5) / 1e3 + '% { filter: brightness(' + at(i) + '); }');
+    rows.push('100% { filter: brightness(' + at(0) + '); }');
+    return '@keyframes ' + name + ' { ' + rows.join(' ') + ' }';
+  }
   function degaussEnvelope(t) { return t < 0 || t >= 1 ? 0 : Math.pow(1 - t, 2.2); }
 
   /* ---- geometry: output uv (top-down) -> source uv; identical maths to the final shader ----
@@ -416,6 +428,20 @@
     return fx;
   }
   function release(gl) { try { var x = gl.getExtension('WEBGL_lose_context'); if (x) x.loseContext(); } catch (e) { /* ignore */ } }
+  /* a GPU, without building anything: create()'s own context and renderer test on a scratch canvas, then the context let
+     go. For what only asks whether a GPU composites (ambient motion played in CSS): building the passes compiles and
+     links every shader at once, which held the main thread up to 1.2 s on the P1000 (P2-S1) */
+  function probe() {
+    var c = typeof document !== 'undefined' && document.createElement ? document.createElement('canvas') : null;
+    if (!c || typeof c.getContext !== 'function') return false;
+    c.width = c.height = 1;
+    var attrs = { failIfMajorPerformanceCaveat: true, antialias: false, depth: false, stencil: false }, gl = null;
+    try { gl = c.getContext('webgl2', attrs) || c.getContext('webgl', attrs); } catch (e) { gl = null; }
+    if (!gl) return false;
+    var ok = !SOFTWARE_RE.test(rendererInfo(gl).renderer);
+    release(gl);
+    return ok;
+  }
 
   function FX(canvas, gl, v2, info, opts) {
     var self = this;
@@ -724,6 +750,9 @@
 
   T.FXGL = {
     create: create,
+    probe: probe,
+    flickerKeyframes: flickerKeyframes,
+    FLICKER_LOOP_MS: FLICKER_LOOP_MS,
     defaults: function () { return normalize({}); },
     normalize: normalize,
     preset: preset,

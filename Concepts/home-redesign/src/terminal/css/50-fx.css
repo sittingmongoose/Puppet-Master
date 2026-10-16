@@ -82,6 +82,15 @@
 /* ---- cursor trail overlay on the CPU path: light styles add in dark schemes ---- */
 [data-pmt-scheme="dark"] .pmt-trail:is([data-pmt-trail="glow"], [data-pmt-trail="phosphor"]) { mix-blend-mode: screen; }
 
+/* ---- Flicker (52-fx.js flickerLive, P2-S1): the picture's brightness, stepped by the shader's own gain 30 times a
+   second (the pmt-flicker keyframes it writes), played by the compositor, so turning it on builds nothing and holds no
+   frame. .pmt-flicker-live is there only while the terminal is focused, visible and in use, never under Reduced Motion
+   (the appearance turns Flicker off there, and 52-fx.js asks again). The CPU glow's drop-shadow
+   is a filter of its own, and that path has no GPU to play this on anyway ---- */
+.pmt-root.pmt-flicker-live :is(.pmt-screen:not(.pmt-fx-glow) > .pmt-grid, .pmt-fxcanvas, .pmt-trail) {
+  animation: pmt-flicker 4000ms step-end infinite; will-change: filter;
+}
+
 /* ---- Reduced Motion: the trail never shows, and nothing in these hooks may move ---- */
 html[data-motion="reduced"] .pmt-trail { display: none !important; }
 html[data-motion="reduced"] :is(.pmt-fx-gl, .pmt-fx-scan, .pmt-fx-glow, .pmt-fx-paper, .pmt-fx-glass),
