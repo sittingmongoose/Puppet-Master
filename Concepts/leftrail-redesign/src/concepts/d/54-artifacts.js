@@ -49,16 +49,23 @@
 
   /* a card whose family and state word do not share line 2 puts the state under the family (fit by layout); the
      attribute is the shared data-d-stack, which clearFit() removes on a concept switch */
-  function stackCards(panel, force) {
+  function stackCards(panel, force) { LANE_E.later(panel, 'Stack', force, f => stackNow(panel, f)); }
+  /* after layout (LANE_E.later), every row read first, then the marks cleared together, every family measured in one
+     pass, the marks set: cleared and measured one card at a time, each card forced its own layout (B5) */
+  function stackNow(panel, force) {
     const rows = Array.from(panel.querySelectorAll('.sh-card > .sh-r1'));
     const widths = rows.map(r => (r.offsetParent ? r.offsetWidth : 0));
+    const todo = [];
     rows.forEach((r, i) => {
       const fam = r.querySelector(':scope > .sh-fam');
       if (!fam || !widths[i] || (!force && r._dStackW === widths[i])) return;
       r._dStackW = widths[i];
-      r.removeAttribute('data-d-stack');
-      if (LANE_E.inkOver(fam)) r.setAttribute('data-d-stack', '');
+      todo.push([r, fam]);
     });
+    if (!todo.length) return;
+    todo.forEach(([r]) => r.removeAttribute('data-d-stack'));
+    const over = todo.map(([, fam]) => LANE_E.inkOver(fam));
+    todo.forEach(([r], i) => { if (over[i]) r.setAttribute('data-d-stack', ''); });
   }
 
   /* motion: the scroller's children are the list (no [data-pane] in this panel) */

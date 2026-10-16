@@ -95,7 +95,9 @@ const LANE_E = (() => {
       const key = keys[i] + '|' + (el._dFull != null ? el._dFull : el.textContent);
       if (!force && el._dEFit === key) return;
       midFit(el);
-      el._dEFit = el.clientWidth + '|' + getComputedStyle(el).font + '|' + (el._dFull != null ? el._dFull : el.textContent);
+      /* the room and font read before the fit (a fit changes the text, not its room): read again after each fit, they
+         forced a layout per id (B5) */
+      el._dEFit = keys[i] + '|' + (el._dFull != null ? el._dFull : el.textContent);
     });
   }
   function clearMid(root) { root.querySelectorAll('*').forEach(el => { delete el._dEFit; delete el._dEStack; }); }
@@ -104,7 +106,9 @@ const LANE_E = (() => {
     if (panel._dEWatch) return;
     panel._dEWatch = true;
     let timer = 0;
-    const soon = () => { clearTimeout(timer); timer = setTimeout(() => { if (D.on && panel.offsetWidth) refit(true); }, 90); };
+    /* the refit checks the panel is shown itself, after layout (later): read here, its width forced a layout in this
+       timer, right after a look change (B5) */
+    const soon = () => { clearTimeout(timer); timer = setTimeout(() => { if (D.on) refit(true); }, 90); };
     const slot = document.getElementById('sidePanelSlot');
     if (window.ResizeObserver && slot) { const ro = new ResizeObserver(soon); ro.observe(slot); D.observers.push(ro); }
     /* the list's own content box: a scrollbar that comes with an opened row narrows it without resizing the slot */
@@ -127,7 +131,26 @@ const LANE_E = (() => {
   }
   /* the panel's rows take the NieR cursor (ink bar + square cursor) like the shared rows do */
   function cursor(panel, sel) { panel.querySelectorAll(sel).forEach(el => addClass(el, 'pmr-cur')); }
-  return { words, mark, chipAs, capOwn, mid, clearMid, watch, headStates, cursor, inkOver };
+  /* A panel's fit runs once per frame, after that frame's layout (the shell's PM_AFTER_LAYOUT, before its paint), so
+     what it measures is already computed: run in an animation frame or a timer, the cards' fit was the first reader of
+     a look change's pending restyle (NieR on, P1000: 263 ms of style and 907 ms of layout, Liquid Glass lane B5
+     baseline). Asks in one frame are run once (forced if any was); a panel that is not shown is fitted when it is
+     shown (its show() asks again), with the force it missed. */
+  function later(panel, name, force, run) {
+    const k = '_dELater' + name, stale = '_dELaterF' + name;
+    if (panel[k]) { if (force) panel[k].force = true; return; }
+    const ask = panel[k] = { force: !!force };
+    const go = () => {
+      panel[k] = null;
+      if (!D.on || !panel.isConnected) return;
+      if (!panel.getClientRects().length) { if (ask.force) panel[stale] = true; return; }
+      const f = ask.force || !!panel[stale];
+      panel[stale] = false;
+      run(f);
+    };
+    if (typeof window.PM_AFTER_LAYOUT === 'function') window.PM_AFTER_LAYOUT(go); else go();
+  }
+  return { words, mark, chipAs, capOwn, mid, clearMid, watch, headStates, cursor, inkOver, later };
 })();
 
 (() => {
@@ -264,15 +287,21 @@ const LANE_E = (() => {
     return new Set(Array.from(r.getClientRects()).filter(x => x.width > 0).map(x => Math.round(x.top))).size;
   }
   function stackRuns(panel, force) {
+    /* every head read first, then the marks cleared together, every meta measured in one pass, the marks set: cleared
+       and measured one head at a time, each head forced its own layout (B5) */
+    const todo = [];
     panel.querySelectorAll('.sh-run-h').forEach(h => {
       const meta = h.querySelector('.sh-meta'), chip = h.querySelector(':scope > .pm-chip');
       if (!meta || !chip || !h.offsetParent) return;
       const key = h.clientWidth + '|' + getComputedStyle(meta).font + '|' + meta.textContent + '|' + chip.textContent;
       if (!force && h._dEStack === key) return;
       h._dEStack = key;
-      h.removeAttribute('data-d-stack');
-      if (lines(meta) > 1) h.setAttribute('data-d-stack', '');
+      todo.push([h, meta]);
     });
+    if (!todo.length) return;
+    todo.forEach(([h]) => h.removeAttribute('data-d-stack'));
+    const two = todo.map(([, meta]) => lines(meta) > 1);
+    todo.forEach(([h], i) => { if (two[i]) h.setAttribute('data-d-stack', ''); });
   }
 
   /* GitHub's first subview is Current Branch (GitHub_Integration GI-011; owner, 2026-10-10): the branch this worktree
@@ -341,7 +370,7 @@ const LANE_E = (() => {
     });
   }
 
-  function fit(panel, force) { LANE_E.mid(panel, MID_GIT, force); stackRuns(panel, force); }
+  function fit(panel, force) { LANE_E.later(panel, 'Fit', force, f => { LANE_E.mid(panel, MID_GIT, f); stackRuns(panel, f); }); }
 
   function onClick(ev) {
     if (!D.on) return;
