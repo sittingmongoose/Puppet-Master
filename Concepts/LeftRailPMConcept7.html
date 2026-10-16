@@ -98247,12 +98247,13 @@ const o55Retro = () => /^retro/.test(document.documentElement.getAttribute('data
 const o55Ease = () => o55Retro() ? 'steps(4, end)' : 'cubic-bezier(.22,.8,.24,1)';
 const o55Still = () => motionReduced() || document.documentElement.getAttribute('data-motion') === 'reduced';
 let o55MorphSeq = 0;
+const o55TabExits = new WeakMap();
 
 /* Swap oldEl for newEl inside host (which gets position:relative for the duration). dir: -1 left, 1 right, 0 rise. */
 function o55Morph(oldEl, newEl, { host, dir = 0, dur = 300 } = {}) {
   host = host || oldEl.parentNode;
   if (!oldEl || !oldEl.isConnected) { return; }
-  if (o55Still()) { oldEl.replaceWith(newEl); return; }
+  if (o55Still()) { const leaving = o55TabExits.get(oldEl); if (leaving) { leaving.cancel(); o55TabExits.delete(oldEl); } oldEl.replaceWith(newEl); return; }
   const seq = ++o55MorphSeq; host.dataset.o55Morph = String(seq);
   host.querySelectorAll(':scope > .o55-leaving').forEach(n => n.remove()); /* a morph interrupted by another */
   const hostPos = getComputedStyle(host).position;
@@ -98267,7 +98268,14 @@ function o55Morph(oldEl, newEl, { host, dir = 0, dur = 300 } = {}) {
   const h1 = host.getBoundingClientRect().height;
   const ease = o55Ease();
   const dx = dir ? 18 * dir : 0, dy = dir ? 0 : 8;
-  const out = oldEl.animate([{ opacity: 1, transform: 'none' }, { opacity: 0, transform: `translate(${-dx * .6}px, ${-dy * .5}px)` }], { duration: dur * .6, easing: ease, fill: 'forwards' });
+  let from = { opacity: 1, transform: 'none' };
+  const leaving = o55TabExits.get(oldEl);
+  if (leaving) {
+    /* Layout has finished. Continue from the actual outgoing pose instead of flashing it back to full opacity. */
+    const cs = getComputedStyle(oldEl); from = { opacity: cs.opacity, transform: cs.transform };
+    leaving.cancel(); o55TabExits.delete(oldEl);
+  }
+  const out = oldEl.animate([from, { opacity: 0, transform: `translate(${-dx * .6}px, ${-dy * .5}px)` }], { duration: dur * .6, easing: ease, fill: 'forwards' });
   newEl.animate([{ opacity: 0, transform: `translate(${dx}px, ${dy}px)` }, { opacity: 1, transform: 'none' }], { duration: dur, delay: dur * .12, easing: ease, fill: 'backwards' });
   let grow = null;
   if (Math.abs(h1 - h0) > 2) { host.style.overflow = 'clip'; grow = host.animate([{ height: h0 + 'px' }, { height: h1 + 'px' }], { duration: dur, easing: ease }); }
@@ -98318,6 +98326,16 @@ PM51.switchTab = function (wsId, tab) {
   const ticket = ++o55TabTicket;
   tabs.forEach((t, i) => { const on = i === to; t.classList.toggle('active', on); t.setAttribute('aria-selected', String(on)); });
   moveTabInks();
+  if (!o55Still() && !o55TabExits.has(oldBody)) {
+    const dir = from < 0 ? 0 : (to > from ? 1 : -1), dx = dir ? 18 * dir : 0, dy = dir ? 0 : 8;
+    /* The existing body begins its exit with the selected ink, before building the replacement. A quiet compositor
+       continuation covers a slow first layout; arrival keeps the same slide, delay and height choreography. */
+    o55TabExits.set(oldBody, oldBody.animate([
+      { opacity: 1, transform: 'none', easing: o55Ease() },
+      { opacity: .55, transform: `translate(${-dx * .18}px, ${-dy * .25}px)`, offset: 260 / 1200, easing: o55Retro() ? 'steps(28, end)' : 'linear' },
+      { opacity: .3, transform: `translate(${-dx * .45}px, ${-dy * .45}px)` }
+    ], { duration: 1200, easing: 'linear', fill: 'forwards' }));
+  }
   o55AfterPaint(() => {
   if (ticket !== o55TabTicket || !page.isConnected) return;
   o55KeepTabsInView(page);
