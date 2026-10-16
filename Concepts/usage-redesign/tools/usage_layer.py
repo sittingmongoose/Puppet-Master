@@ -179,6 +179,33 @@ def stats0() -> dict:
     return {'kept_rules': 0, 'rewritten_rules': 0, 'dropped_rules': 0, 'dropped_keyframes': 0, 'dropped_at': 0}
 
 
+# The chat context's legend and source dots took their colour from seven rules of the form
+# '.pm7ctx-leg:nth-child(N) i' (T21). A descendant part after :nth-child() puts its subject's feature (the tag i) into
+# the page's one nth-sibling invalidation set, so every child inserted into or removed from any parent with positional
+# rules (the Usage board's cards, at every build slice and room change) restyled every <i> after it: 341 elements and
+# 10.7-13.7 ms per insert at the head of the Usage board on Nas1, against 45 elements and 1.4-4.5 ms with the nth part as
+# the subject (P2-03 analysis C, 2026-10-16). Same colours: the nth rule sets --pm7ctx-c on the row and the dot reads it.
+CTX_NTH_RX = re.compile(r'\.pm7ctx-(leg|source):nth-child\((\d+)\) i\{background:([^;{}]+)\}')
+# Each row sets the property, so a dot never reads one inherited from further up: a legend row past the fourth gets none
+# (no dot colour, as before), a source row the blue it had, and a colour token that is not defined leaves the dot
+# transparent, as the old rule did.
+CTX_NTH_BASES = (('.pm7ctx-leg i{width:6px;height:6px;border-radius:2px}',
+                  '.pm7ctx-leg{--pm7ctx-c:initial}.pm7ctx-leg i{width:6px;height:6px;border-radius:2px;background:var(--pm7ctx-c)}'),
+                 ('.pm7ctx-source i{width:7px;height:7px;border-radius:2px;background:var(--accent-blue)}',
+                  '.pm7ctx-source{--pm7ctx-c:var(--accent-blue)}.pm7ctx-source i{width:7px;height:7px;border-radius:2px;background:var(--pm7ctx-c)}'))
+CTX_NTH_COUNT = 7
+
+
+def ctx_nth_subject(need, css: str) -> str:
+    """The seven context dot colour rules with the :nth-child() compound as the subject (CTX_NTH_RX above)."""
+    css, n = CTX_NTH_RX.subn(lambda m: f'.pm7ctx-{m.group(1)}:nth-child({m.group(2)}){{--pm7ctx-c:{m.group(3)}}}', css)
+    need(n == CTX_NTH_COUNT, f'usage layer: {n} chat context nth-child dot rules found, {CTX_NTH_COUNT} expected (T21 changed?)')
+    for old, new in CTX_NTH_BASES:
+        need(css.count(old) == 1, f'usage layer: chat context dot rule {old!r} found {css.count(old)} times, 1 expected')
+        css = css.replace(old, new)
+    return css
+
+
 def filter_css(css: str, stats: dict, keep_ctx_only: bool = False) -> str:
     """Drop Usage-only rules and the Usage parts of mixed selector lists, drop @keyframes pm7u-*, recurse into
     @media/@supports/@container/@layer. keep_ctx_only additionally drops every rule with no context-module part (to
@@ -577,6 +604,7 @@ def apply(text: str, need) -> tuple[str, dict]:
     ctx_css = filter_css(t21[0].group(1), st, keep_ctx_only=True)
     expect(need, 't21 context rules', st)
     notes['t21 context rules'] = st
+    ctx_css = ctx_nth_subject(need, ctx_css)
     kept_styles = []
     for sid in ('pm7-t29-usage-final', 'pm7-t32-final'):
         m = style_body(need, band, sid, '#panel-usage')
