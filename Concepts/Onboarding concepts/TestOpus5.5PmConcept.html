@@ -192820,9 +192820,8 @@ function open(opts) {
      the opening frame, and the page's :hover rules restyled that whole column (about 1100 icons and labels: 120 ms on
      Nas1, 29 ms on the P1000) before the sheet's first frame. Until the pointer next moves, presses or scrolls, or the
      entrance ends, the sheet's plates let it through, so that hover changes later, while the entrance plays on the
-     compositor. A press or a wheel that comes first is kept from the page under the sheet and does nothing else: it
-     comes before the pointer has moved, within the entrance, which in practice is the second press of a double click
-     on the button that opened the sheet. */
+     compositor. A press or a wheel that comes first is kept from the page under the sheet; a press goes to what the
+     sheet shows there. */
   var passing = false, PASS = ['pointermove', 'pointerdown', 'wheel'], passOpts = { capture: true, passive: false };
   function passThrough(on) {
     if (passing === on) return;
@@ -192831,16 +192830,26 @@ function open(opts) {
     PASS.forEach(function (t) { if (on) window.addEventListener(t, endPass, passOpts); else window.removeEventListener(t, endPass, passOpts); });
   }
   function keepFromPage(e) { if (!root.contains(e.target)) { e.preventDefault(); e.stopPropagation(); } }
+  // what the sheet shows at a point: a control, or the scrim and frame, whose click closes it
+  function sheetAt(x, y) {
+    var h = document.elementFromPoint(x, y);
+    return h && root.contains(h) ? h.closest('button, [role="radio"], [role="switch"], .pmt-cz-scrim, .pmt-cz-frame') : null;
+  }
   function endPass(e) {
     if (!passing) return;
     passThrough(false);
     if (e.type === 'pointermove' || closed || root.contains(e.target)) return;
     keepFromPage(e);
     if (e.type !== 'pointerdown') return;
-    // its mouse events and click would reach the page too
+    // The press was hit-tested to the page. Its mouse events and click are kept from the page too, and the sheet's
+    // control under it (now hit) takes the click once the press is released on that same control.
+    var at = sheetAt(e.clientX, e.clientY);
     var types = ['mousedown', 'mouseup', 'click'], done = function () { types.forEach(function (t) { window.removeEventListener(t, keepFromPage, true); }); };
     types.forEach(function (t) { window.addEventListener(t, keepFromPage, true); });
-    window.addEventListener('pointerup', function () { setTimeout(done, 0); }, { capture: true, once: true });
+    window.addEventListener('pointerup', function (u) {
+      setTimeout(done, 0);
+      if (at && !closed && sheetAt(u.clientX, u.clientY) === at) at.click();
+    }, { capture: true, once: true });
     setTimeout(done, 1500);
   }
   function focusStopsOn(on) {
