@@ -255,6 +255,13 @@
   window.PM_WALLPAPERS = {
     version: 'wpk-2026-10-14', key: KEY,
     catalog: function () { return CAT.families.map(function (f) { return { family: f.family, label: f.label, ids: f.wallpapers.map(function (w) { return w.id; }) }; }); },
+    /* Consumers of the committed print must not force root style from an attribute observer. Preparation fills this
+       immutable catalog cache before publishing data-lg-wall. Unknown is undefined; a print with no image is null. */
+    sourceUrl: function (id, mode) {
+      if (!id) return null;
+      var source = imageUrls.get(id + '-' + (mode || (/-light$/.test(root.getAttribute('data-theme') || '') ? 'light' : 'dark')));
+      return source === '' ? null : source;
+    },
     choice: choice, shown: shown, paintChoice: function () { return paintedChoice; }, choose: function (c) { return choose(c, false); }, stale: function () { return stale; }
   };
 })();
