@@ -817,8 +817,16 @@ var SHADOW_CSS = [
   ':host([data-blink="smooth"]) .pmw-ed-caret.is-blink { animation: pmw-ed-fade 1.06s ease-in-out .5s infinite; }',
   ':host([data-blink="expand"]) .pmw-ed-caret.is-blink::before { animation: pmw-ed-expand 1.06s ease-in-out .5s infinite; }',
   ':host([data-blink="expand"]) .pmw-ed-caret.is-blink::after { animation: pmw-ed-fade 1.06s ease-in-out .5s infinite; }',
+  /* Alternate identical names to restart a blink in the next style pass. This
+     preserves its full pause and curve without forcing layout after a move. */
+  ':host([data-blink="blink"]) .pmw-ed-caret.is-blink:where(.is-blink-alt) { animation-name: pmw-ed-blink-alt; }',
+  ':host([data-blink="smooth"]) .pmw-ed-caret.is-blink:where(.is-blink-alt) { animation-name: pmw-ed-fade-alt; }',
+  ':host([data-blink="expand"]) .pmw-ed-caret.is-blink:where(.is-blink-alt)::before { animation-name: pmw-ed-expand-alt; }',
+  ':host([data-blink="expand"]) .pmw-ed-caret.is-blink:where(.is-blink-alt)::after { animation-name: pmw-ed-fade-alt; }',
   '@keyframes pmw-ed-fade { 0%, 22% { opacity: 1; } 50%, 72% { opacity: 0; } 100% { opacity: 1; } }',
   '@keyframes pmw-ed-expand { 0%, 22% { transform: scaleY(1); } 50%, 72% { transform: scaleY(0); } 100% { transform: scaleY(1); } }',
+  '@keyframes pmw-ed-fade-alt { 0%, 22% { opacity: 1; } 50%, 72% { opacity: 0; } 100% { opacity: 1; } }',
+  '@keyframes pmw-ed-expand-alt { 0%, 22% { transform: scaleY(1); } 50%, 72% { transform: scaleY(0); } 100% { transform: scaleY(1); } }',
   /* Caret movement: Snappy and Gliding ease the caret to where it goes (Retro and NieR step there); typing never waits */
   ':host([data-motion="snappy"]) .pmw-ed-caret { transition: transform 80ms cubic-bezier(.2, .8, .2, 1); }',
   ':host([data-motion="glide"]) .pmw-ed-caret { transition: transform 150ms cubic-bezier(.2, .75, .25, 1); }',
@@ -840,6 +848,7 @@ var SHADOW_CSS = [
   '.pmw-ed-ime { position: absolute; left: 0; top: 0; z-index: 3; width: 1px; height: var(--pmw-ed-lh); margin: 0; padding: 0; border: 0; outline: none; resize: none; overflow: hidden; white-space: pre; opacity: 0; color: transparent; caret-color: transparent; background: transparent; font: inherit; line-height: var(--pmw-ed-lh); -webkit-user-select: text; user-select: text; pointer-events: none; }',
   '.pmw-ed-ime.is-composing { opacity: 1; color: var(--pmw-ed-fg); background: var(--pmw-ed-gutbg); text-decoration: underline; text-underline-offset: 3px; box-shadow: 0 0 0 1px var(--pmw-ed-caret-mark); }',
   '@keyframes pmw-ed-blink { 50% { opacity: 0; } }',
+  '@keyframes pmw-ed-blink-alt { 50% { opacity: 0; } }',
   /* diff mode */
   '.pmw-ed-row.is-meta { color: var(--pmw-text-3); }',
   '.pmw-ed-mt { flex: none; padding-left: 10px; display: flex; align-items: center; gap: 12px; }',
@@ -2305,7 +2314,7 @@ function mountEditor(host, st, api) {
       // typing never waits for a glide: a move made by an edit lands at once
       if (typingMove) { caretEl.classList.add('no-glide'); caretEl.style.transform = tf; void caretEl.offsetWidth; caretEl.classList.remove('no-glide'); }
       else caretEl.style.transform = tf;
-      caretEl.classList.remove('is-blink'); void caretEl.offsetWidth; caretEl.classList.add('is-blink');
+      caretEl.classList.toggle('is-blink-alt'); caretEl.classList.add('is-blink');
       caretPx = { x: x, y: y, st: geo.st };
       if (pendingTrail && from) spawnTrail(pendingTrail.from || from, caretPx);
     }
