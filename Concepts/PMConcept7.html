@@ -179774,7 +179774,18 @@ function place() {
   d.style.setProperty('--pmw-sb-font', cs.fontFamily);
   if (!d.hasAttribute('data-pmw-docked')) d.setAttribute('data-pmw-docked', '');
 }
-function schedule() { if (queued) return; queued = true; nextFrame(place); }
+/* a resize or a look change places the dock after a frame's layout (afterLayout: the shell's PM_AFTER_LAYOUT), where
+   its rects and the bar's style are already computed: from the panels' frame queue, before the frame's style, place()
+   was a first reader of a look change's whole-page restyle (NieR switch, B5 census). While the bar or the widget has
+   no box (hidden), nothing is read: the ResizeObserver below places it the moment it shows. */
+function placeShown() {
+  var bar = statusBar(), d = demoEl();
+  if (!bar || !d || !bar.getClientRects().length || !d.getClientRects().length) { queued = false; return; }
+  place();
+}
+/* through the next animation frame first: schedule is also the dock's own ResizeObserver callback, and asking for an
+   after-layout read from inside another observer's delivery is one the browser cannot deliver that frame */
+function schedule() { if (queued) return; queued = true; requestAnimationFrame(function () { afterLayout(placeShown); }); }
 
 shell.install = function () {
   if (shell.installed) return true;
