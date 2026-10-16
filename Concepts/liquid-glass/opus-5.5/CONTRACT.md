@@ -76,10 +76,26 @@ A token you leave out takes the default in `glass.css` section 12.
 | `--pm-switch-shadow` | none | The drop shadow |
 | `--pm-switch-r` / `--pm-switch-r-in` | 6 px / 3 px | The lens's corner; a label's corner inside it |
 | `--pm-switch-ink` / `--pm-switch-ink-on` | `--text-secondary` / `--text-primary` | The labels' colour, at rest and chosen |
-| `--pm-switch-mark` | `--accent-primary` | Small marks inside a chosen row (Usage's icon, the index's dot) |
+| `--pm-switch-ink-hover` | `--pm-switch-ink-on` | A resting label's colour under the pointer. A look whose chip is opaque sets it, because its `--pm-switch-ink-on` is meant for the chip and not for the bare ground. |
+| `--pm-switch-mark` | `--accent-primary` | Small marks beside or inside a chosen row (the index's dot, Usage's icon) |
+| `--pm-switch-mark-on` | `--pm-switch-mark` | A mark inside a chosen item when the chip is opaque (Usage's icon, the rail's tab icon) |
+| `--pm-switch-layer` | (unset: over) | `under` draws each lens inside its own strip, over the track and under the labels: an opaque chip with its label in `--pm-switch-ink-on` (Retro's reverse video, NieR's ink bar). Mirrored on `<html data-pm-switch-layer>` |
+| `--pm-switch-swell` | 1 | How much of the chosen label's swell the look keeps, 0 to 1 (its resting size and its size under a moving lens) |
+| `--pm-switch-liquid` | 1 | How much of the drop's stretch, lift and landing wobble the look keeps, 0 to 1 |
 
 The look's own chosen fills, accent bars, dots, underlines and sliding inks on these strips step aside while the
-component is on. A new strip joins by being added to `STRIPS` (mail me, as under "Ride the lens"). Reduce Motion: the
+component is on.
+
+Every look but Glass adopts it (Q16, 2026-10-15): the token blocks are in
+`Concepts/onboarding/opus-5.5/src/css/60-switcher-looks.css` (Basic, Friendly and Retro, light and dark, and NieR Mode,
+which is re-read whenever NieR Mode is turned on or off). In those looks a press marks the pressed item
+`data-lg-press="on"` and the one it leaves `"off"` until the app chooses. Each label takes its chosen or resting ink at
+once, with no transition, while the chip moves ahead of the app; with `--pm-switch-layer: under` its icons and second
+lines do too. Scrubbing a strip is off in that mode. glass.js still marks `<html data-pm-switch="lens">` and
+`data-pm-switch-layer="under"` for scripts. The CSS, though, names the looks themselves: `html:not([data-theme^="glass"])`
+and `:is(html[data-theme^="retro"], html[data-o55-nier="on"])`, at the marks' specificity. So the switch changes in the
+look's own restyle, not in a second one when glass.js flips the marks after layout (B5, 2026-10-16). A look that opts out
+of the switcher, by setting `--pm-switch` to anything but `lens`, must also be excluded from those selectors. Glass sets none of these tokens. A new strip joins by being added to `STRIPS` (mail me, as under "Ride the lens"). Reduce Motion: the
 lens jumps.
 
 ## Public tokens

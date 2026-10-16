@@ -59,7 +59,9 @@ html[data-theme^="retro"]:not([data-o55-nier="on"]) .pmw-chip { border-radius: 0
 .pmw-tab.pmw-rfx-glow { box-shadow: 0 0 14px color-mix(in srgb, var(--accent-lime) 35%, transparent); animation: pmw-rfx-glow 650ms ease-out forwards; }
 @keyframes pmw-rfx-glow { to { box-shadow: 0 0 14px transparent; } }
 .pmw-tab.pmw-rfx-crt { color: var(--accent-lime); background: repeating-linear-gradient(transparent 0 2px, color-mix(in srgb, var(--accent-lime) 70%, transparent) 2px 3px) 0 0 / 100% 0% no-repeat; animation: pmw-rfx-crt 300ms steps(6, end) forwards; }
-@keyframes pmw-rfx-crt { 0% { background-size: 100% 0%; } 90% { background-size: 100% 100%; color: var(--accent-lime); } 100% { background: var(--accent-lime); background-size: 100% 100%; color: var(--surface); } }
+/* the block and its dark words land in one step: the block used to fade in from the start under the still-phosphor
+   label (1.0-1.9:1 for about 90 ms, a blank tab in the films; Q16 review F3) */
+@keyframes pmw-rfx-crt { 0% { background-size: 100% 0%; background-color: transparent; } 90% { background-size: 100% 100%; background-color: transparent; color: var(--accent-lime); animation-timing-function: steps(1, end); } 100% { background: var(--accent-lime); background-size: 100% 100%; color: var(--surface); } }
 .pmw-tab.pmw-rfx-dos { animation: pmw-rfx-dos 600ms steps(1, end) forwards; }
 @keyframes pmw-rfx-dos {
   0% { background: transparent; color: var(--accent-lime); }
