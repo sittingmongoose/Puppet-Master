@@ -36,11 +36,15 @@
     for (var i = 0; i < 8; i++) blocks += ESC + '[3' + i + 'm' + '██';
     blocks += ' ';
     for (i = 0; i < 8; i++) blocks += ESC + '[9' + i + 'm' + '██';
+    /* the times and the ignored count in faint grey and faint white, as test runners print them: a dark scheme draws its
+       faint grey, a light one its faint white, nearly as its own ground (round 5, Q15: nothing in the preview sat under
+       3:1, so Minimum contrast's Off and 3:1 drew the same; this is the text the floor lifts) */
+    var faint = function (s, c) { return ESC + '[2;' + c + 'm' + s + ESC + '[0m'; };
     return cmd(0, 'cargo test') +
-      '    ' + ESC + '[1;32mFinished' + ESC + '[0m test in 2.31s\r\n' +
-      'test media::thumbs ... ' + ESC + '[32mok' + ESC + '[0m\r\n' +
-      'test search::rank ... ' + ESC + '[1;31mFAILED' + ESC + '[0m\r\n' +
-      ESC + '[33mwarning' + ESC + '[0m: ' + ESC + '[3m2 ignored' + ESC + '[0m, see ' + ESC + '[4;36mtastebook.dev/t' + ESC + '[0m\r\n' +
+      '    ' + ESC + '[1;32mFinished' + ESC + '[0m test ' + faint('[unoptimized]', 90) + ' in ' + faint('2.31s', 90) + '\r\n' +
+      'test media::thumbs ... ' + ESC + '[32mok' + ESC + '[0m ' + faint('0.02s', 37) + '\r\n' +
+      'test search::rank ... ' + ESC + '[1;31mFAILED' + ESC + '[0m ' + faint('0.31s', 90) + '\r\n' +
+      ESC + '[33mwarning' + ESC + '[0m: ' + ESC + '[3;2;37m2 ignored' + ESC + '[0m, see ' + ESC + '[4;36mtastebook.dev/t' + ESC + '[0m\r\n' +
       mark('D', 101) + cmd(101, 'ls') +
       'Cargo.toml  ' + ESC + '[1;34msrc/' + ESC + '[0m  ' + ESC + '[1;32mrun.sh*' + ESC + '[0m  ' + ESC + '[35mlogo.png' + ESC + '[0m  ' + ESC + '[1;31mdist.tgz' + ESC + '[0m\r\n' +
       blocks + ESC + '[0m\r\n' +
@@ -125,10 +129,12 @@
     'sixtyfour-raster': 'Retro, baked scan', 'system': 'This computer’s' };
   /* the effect chips: what each draws, in plain words */
   var EFFECTS = [
-    { key: 'scanlines', name: 'Scanlines', help: 'Thin dark lines across the text, like an old monitor.', strength: ['scanStrength', 0, 0.6, 0.05] },
-    { key: 'glow', name: 'Phosphor glow', help: 'A soft glow around the text in the scheme’s glow colour.', strength: ['glowStrength', 0, 1, 0.05] },
+    { key: 'scanlines', name: 'Scanlines', help: 'Thin dark lines across the text, like an old monitor.', strength: ['scanStrength', 0, 0.6, 0.05, [0, 0.15, 0.3, 0.45, 0.6]] },
+    { key: 'glow', name: 'Phosphor glow', help: 'A soft glow around the text in the scheme’s glow colour.', strength: ['glowStrength', 0, 1, 0.05, [0, 0.15, 0.3, 0.45, 0.6, 0.8, 1]] },
     { key: 'crt', name: 'Full CRT', help: 'A tube: gently curved glass with rounded corners, burn-in and grain. Pointing follows the curve.' },
-    { key: 'flicker', name: 'Flicker', help: 'A faint flicker, at most 3 % and never a flash.', strength: ['flickerAmount', 0, 0.03, 0.005] },
+    /* on or off at one faint level (Jared, 2026-10-16, P10): within the 3 % that keeps it from ever being a flash no two
+       amounts looked apart, and the amount is retired */
+    { key: 'flicker', name: 'Flicker', help: 'A faint flicker, at most 3 % and never a flash.' },
     { key: 'inactiveDim', name: 'Dim terminals I’m not in', help: 'Terminals you are not typing in step back.', tryIt: 'dim' },
     { key: 'smoothScroll', name: 'Smooth scrolling', help: 'Scrolling glides instead of jumping a line at a time.' }
   ];
@@ -144,13 +150,13 @@
     'fontRendering', 'sixtyfourScan', 'sixtyfourBleed', 'cursorShape', 'cursorBlink', 'cursorTrail', 'background', 'bgColor', 'bgGradient', 'bgImage',
     'bgImageData', 'bgDim', 'bgBlur', 'bgStrength', 'bgScale', 'bgMotion', 'bgFit', 'bgDesat', 'opacity', 'padding', 'bezel', 'bezelWidth', 'bezelColor', 'bezelReflect',
     'effects', 'scanlines', 'scanStrength', 'glow', 'glowStrength', 'crt', 'curvature', 'crtMask', 'burnIn',
-    'noise', 'flicker', 'flickerAmount', 'inactiveDim', 'smoothScroll', 'bell', 'stickyHeader', 'copyOnSelect'];
+    'noise', 'flicker', 'inactiveDim', 'smoothScroll', 'bell', 'stickyHeader', 'copyOnSelect'];
   var GROUP_KEYS = {
     colors: ['scheme', 'schemePair', 'minContrast'],
     text: ['font', 'fontSize', 'fontWeight', 'lineHeight', 'letterSpacing', 'ligatures', 'boldBright', 'fontRendering', 'sixtyfourScan', 'sixtyfourBleed'],
     cursor: ['cursorShape', 'cursorBlink', 'cursorTrail'],
     ground: ['background', 'bgColor', 'bgGradient', 'bgImage', 'bgImageData', 'bgDim', 'bgBlur', 'bgStrength', 'bgScale', 'bgMotion', 'bgFit', 'bgDesat', 'opacity', 'padding'],
-    effects: ['effects', 'scanlines', 'scanStrength', 'glow', 'glowStrength', 'crt', 'curvature', 'crtMask', 'burnIn', 'noise', 'flicker', 'flickerAmount', 'inactiveDim', 'smoothScroll',
+    effects: ['effects', 'scanlines', 'scanStrength', 'glow', 'glowStrength', 'crt', 'curvature', 'crtMask', 'burnIn', 'noise', 'flicker', 'inactiveDim', 'smoothScroll',
       'bezel', 'bezelWidth', 'bezelColor', 'bezelReflect'],
     behavior: ['bell', 'stickyHeader', 'copyOnSelect']
   };
@@ -178,10 +184,43 @@
       '<span class="pmt-cz-chiphelp">' + esc(help) + '</span><span class="pmt-cz-chipfoot"><span class="pmt-cz-chipstate">Off</span><span class="pmt-cz-mine">Changed</span></span></span>' +
       '<span class="pmt-cz-art pmt-cz-art-' + key + '" aria-hidden="true"></span></button>' + (extra || '') + '</div>';
   }
-  function slider(key, label, min, max, step, unit) {
+  /* stops (round 4, Q15 #4): the values a slider offers, each one drawing visibly apart from its neighbours, measured
+     in every look; the thumb moves by index. [] is a list the screen works out as it paints (line height, letter
+     spacing and a picture's dim follow the face, the display's density and the picture). A value Settings stored between
+     two stops shows as itself until the slider moves */
+  function slider(key, label, min, max, step, unit, stops) {
+    var range = stops ? ' min="0" max="' + Math.max(0, stops.length - 1) + '" step="1" data-stops="' + esc(JSON.stringify(stops)) + '"' : ' min="' + min + '" max="' + max + '" step="' + step + '"';
     return '<label class="pmt-cz-slider" data-slider="' + key + '"><span class="pmt-cz-slabel">' + esc(label) + '</span>' +
-      '<input type="range" data-key="' + key + '" min="' + min + '" max="' + max + '" step="' + step + '" data-unit="' + (unit || '') + '"' + tagged(label) + NOTAG + '>' +
+      '<input type="range" data-key="' + key + '"' + range + ' data-unit="' + (unit || '') + '"' + tagged(label) + NOTAG + '>' +
       '<output class="pmt-cz-out"></output></label>';
+  }
+  /* how a face draws a weight: a hash of a line of text at 20 px, or null where a canvas cannot tell */
+  var drawn = {};
+  function weightDraws(stack, w) {
+    var key = stack + '|' + w;
+    if (key in drawn) return drawn[key];
+    var h = null;
+    try {
+      var cv = document.createElement('canvas'); cv.width = 180; cv.height = 28;
+      var g = cv.getContext('2d', { willReadFrequently: true });
+      g.font = w + ' 20px ' + stack; g.fillStyle = '#000'; g.textBaseline = 'top'; g.fillText('Hamburg 0123 {[]} ->', 2, 3);
+      var d = g.getImageData(0, 0, 180, 28).data; h = 0;
+      for (var i = 3; i < d.length; i += 4) h = (Math.imul(h, 31) + d[i]) | 0;
+    } catch (e) { h = null; }
+    return (drawn[key] = h);
+  }
+  function stopsOf(r) { var s = r.getAttribute('data-stops'); return s ? JSON.parse(s) : null; }
+  function rangeValue(r) { var st = stopsOf(r), x = parseFloat(r.value); return st && st.length ? st[Math.max(0, Math.min(st.length - 1, Math.round(x)))] : x; }
+  function rangeShow(r, x) {
+    var st = stopsOf(r);
+    if (!st || !st.length) { r.value = String(x); return; }
+    var best = 0; for (var i = 1; i < st.length; i++) if (Math.abs(st[i] - x) < Math.abs(st[best] - x)) best = i;
+    r.value = String(best);
+  }
+  function setStops(r, list) {
+    var j = JSON.stringify(list);
+    if (r.getAttribute('data-stops') === j) return;
+    r.setAttribute('data-stops', j); r.min = '0'; r.max = String(Math.max(0, list.length - 1)); r.step = '1';
   }
   function tile(key, value, label, art, meta) {
     return '<button type="button" class="pmt-cz-tile" role="radio" aria-checked="false" data-key="' + key + '" data-value="' + esc(value) + '" data-pmh="tile"' + NOTAG + '>' +
@@ -288,19 +327,19 @@
       '<div class="pmt-cz-tiles pmt-cz-faces" role="radiogroup" aria-label="Face">' + faceTiles() + '</div>' +
       '<p class="pmt-cz-note" data-note-face hidden></p>' +
       '<div class="pmt-cz-grid2">' +
-      '<div class="pmt-cz-field"><span class="pmt-cz-flabel">Size</span><span class="pmt-stepper pmt-cz-stepper"><button type="button" class="pmt-step" data-step="-0.5" aria-label="Smaller"' + tagged('Smaller', 'Text size half a pixel smaller') + '>−</button>' +
-      '<output class="pmt-cz-out" data-out="fontSize"></output><button type="button" class="pmt-step" data-step="0.5" aria-label="Bigger"' + tagged('Bigger', 'Text size half a pixel bigger') + '>+</button></span>' +
+      '<div class="pmt-cz-field"><span class="pmt-cz-flabel">Size</span><span class="pmt-stepper pmt-cz-stepper"><button type="button" class="pmt-step" data-step="-1" aria-label="Smaller"' + tagged('Smaller', 'The next smaller size that draws differently') + '>−</button>' +
+      '<output class="pmt-cz-out" data-out="fontSize"></output><button type="button" class="pmt-step" data-step="1" aria-label="Bigger"' + tagged('Bigger', 'The next bigger size that draws differently') + '>+</button></span>' +
       '<button type="button" class="pmt-textbtn pmt-cz-default" data-act="default" data-key="fontSize"' + NOTAG + '>Face default</button></div>' +
       '<div class="pmt-cz-field"><span class="pmt-cz-flabel">Weight</span>' + seg('fontWeight', [[100, 'Thin', '100'], [200, 'Extra light', '200'], [300, 'Light', '300'], [400, 'Regular', '400'], [500, 'Medium', '500'], [600, 'Semibold', '600'], [700, 'Bold', '700'], [800, 'Heavy', '800']], 'Weight') +
       '<span class="pmt-cz-fhelp" data-weight-why></span></div>' +
-      slider('lineHeight', 'Line height', F.lineHeight.min, F.lineHeight.max, F.lineHeight.step, '×') +
-      slider('letterSpacing', 'Letter spacing', F.letterSpacing.min, F.letterSpacing.max, F.letterSpacing.step, ' px') +
+      slider('lineHeight', 'Line height', F.lineHeight.min, F.lineHeight.max, F.lineHeight.step, '×', []) +
+      slider('letterSpacing', 'Letter spacing', F.letterSpacing.min, F.letterSpacing.max, F.letterSpacing.step, ' px', []) +
       '<div class="pmt-cz-field"><span class="pmt-cz-flabel">Text drawing</span>' + seg('fontRendering', [['auto', 'Auto'], ['crisp', 'Crisp'], ['smooth', 'Smooth']], 'Text drawing') +
-      '<span class="pmt-cz-fhelp">Crisp keeps glyphs on whole pixels; try it if text looks blurry.</span></div>' +
+      '<span class="pmt-cz-fhelp">Crisp draws hard, pixel-sharp edges; try it if text looks blurry. Smooth draws the exact outlines.</span></div>' +
       '</div><div class="pmt-cz-chips">' + chip('ligatures', 'Ligatures', 'Joins pairs such as -> and != into one glyph where the face has them.') +
-      chip('boldBright', 'Bold as bright', 'Bold text in the bright version of its colour, as older terminals did.') + '</div>' +
+      chip('boldBright', 'Bold as bright', 'Bold text in the bright version of its colour, as older terminals did, or a more intense one where the scheme has none.') + '</div>' +
       '<div class="pmt-cz-axes" data-axes hidden><p class="pmt-cz-glead">Sixtyfour’s own axes: scanlines and bleed drawn by the face itself, with no motion.</p><div class="pmt-cz-grid2">' +
-      slider('sixtyfourScan', 'Scanlines', -53, 100, 1, '') + slider('sixtyfourBleed', 'Bleed', 0, 100, 1, '') + '</div></div></section>';
+      slider('sixtyfourScan', 'Scanlines', -53, 100, 1, '', [-50, -25, 0, 25, 50, 75, 100]) + slider('sixtyfourBleed', 'Bleed', 0, 100, 1, '', [0, 33, 67, 100]) + '</div></div></section>';
     /* cursor */
     html += '<section class="pmt-cz-group" data-group="cursor" aria-labelledby="pmt-cz-g-cursor">' + ghead('cursor', 'Cursor') +
       '<div class="pmt-cz-tiles pmt-cz-small" role="radiogroup" aria-label="Cursor shape">' + CURSORS.map(function (c) { return tile('cursorShape', c[0], c[1], cursorArt(c[0] === 'follow' ? 'look' : c[0]), ''); }).join('') + '</div>' +
@@ -319,13 +358,15 @@
       '<input type="color" class="pmt-cz-color" data-key="bgColor" aria-label="Background colour"' + NOTAG + '><output class="pmt-cz-out" data-out="bgColor"></output></div></div>' +
       '<div class="pmt-cz-gctl" data-gctl="yours" hidden><div class="pmt-cz-import"><button type="button" class="pmt-textbtn" data-act="upload"' + tagged('Choose a picture', 'PNG, JPEG or WebP from this computer, under 4 MB') + '>Choose a picture…</button><span class="pmt-cz-fhelp" data-picture-name></span></div>' +
       '<div class="pmt-cz-field"><span class="pmt-cz-flabel">Fit</span>' + seg('bgFit', [['cover', 'Fill'], ['contain', 'Fit'], ['tile', 'Tile'], ['center', 'Centre']], 'How the picture fits') + '</div>' +
-      '<div class="pmt-cz-grid2">' + slider('bgDim', 'Dim', 0, 0.9, 0.05, '%') + slider('bgBlur', 'Blur', 0, 24, 1, ' px') + slider('bgDesat', 'Less colour', 0, 1, 0.05, '%') + '</div></div>' +
-      '<div class="pmt-cz-gctl" data-gctl="design" hidden><div class="pmt-cz-grid2">' + slider('bgStrength', 'Strength', 0, 1, 0.05, '%') +
-      '<div data-gctl-sub="scene">' + slider('bgBlur', 'Blur', 0, 24, 1, ' px') + '</div></div>' +
+      '<div class="pmt-cz-grid2">' + slider('bgDim', 'Dim', 0, 0.9, 0.05, '%', []) + slider('bgBlur', 'Blur', 0, 24, 1, ' px', [0, 3, 6, 12, 24]) + slider('bgDesat', 'Less colour', 0, 1, 0.05, '%', [0, 0.5, 1]) + '</div>' +
+      '<p class="pmt-cz-fhelp" data-dim-why hidden></p></div>' +
+      /* a design's Strength in three steps; no Blur on the built-in designs (round 4, Q15: their soft art barely changed
+         under it), a picture of yours keeps it */
+      '<div class="pmt-cz-gctl" data-gctl="design" hidden><div class="pmt-cz-grid2">' + slider('bgStrength', 'Strength', 0, 1, 0.05, '%', [0.35, 0.65, 1]) + '</div>' +
       '<div class="pmt-cz-field" data-gctl-sub="pattern"><span class="pmt-cz-flabel">Size</span>' + seg('bgScale', [['fine', 'Fine'], ['medium', 'Medium'], ['coarse', 'Coarse']], 'Pattern size') + '</div>' +
       '<div class="pmt-cz-field" data-gctl-sub="moving"><span class="pmt-cz-flabel">Motion</span>' + seg('bgMotion', [['off', 'Still'], ['gentle', 'Gentle'], ['lively', 'Lively']], 'Motion') +
       '<span class="pmt-cz-fhelp">It moves only while you work in this terminal, and never under Reduced Motion.</span></div></div>' +
-      '<div class="pmt-cz-grid2">' + slider('opacity', 'Opacity (Glass)', 0.4, 1, 0.02, '%') + slider('padding', 'Padding', 0, 24, 1, ' px') + '</div>' +
+      '<div class="pmt-cz-grid2">' + slider('opacity', 'Opacity (Glass)', 0.4, 1, 0.02, '%', []) + slider('padding', 'Padding', 0, 24, 1, ' px') + '</div>' +
       '<p class="pmt-cz-fhelp">Padding is the space round the text: the number is the sides, top and bottom take 60 % of it (8 / 5 px).</p>' +
       '<p class="pmt-cz-note" data-note-ground hidden></p></section>';
     /* effects */
@@ -334,22 +375,27 @@
       '<span class="pmt-cz-fhelp" data-effects-why></span></div>' +
       '<div class="pmt-cz-chips pmt-cz-fxchips">' + EFFECTS.map(function (e) {
         var extra = '';
-        if (e.strength) extra = '<div class="pmt-cz-chipmore" data-more="' + e.key + '">' + slider(e.strength[0], 'Strength', e.strength[1], e.strength[2], e.strength[3], e.key === 'flicker' ? '' : '%') + '</div>';
-        if (e.key === 'crt') extra = '<div class="pmt-cz-chipmore" data-more="crt">' + slider('curvature', 'Curvature', 0, 0.2, 0.01, '') +
+        if (e.strength) extra = '<div class="pmt-cz-chipmore" data-more="' + e.key + '">' + slider(e.strength[0], 'Strength', e.strength[1], e.strength[2], e.strength[3], '%', e.strength[4]) + '</div>';
+        if (e.key === 'crt') extra = '<div class="pmt-cz-chipmore" data-more="crt">' + slider('curvature', 'Curvature', 0, 0.2, 0.02, '') +
           '<label class="pmt-cz-mini"><input type="checkbox" data-key="burnIn"' + NOTAG + '><span>Burn-in</span></label>' +
-          '<label class="pmt-cz-mini"><input type="checkbox" data-key="crtMask"' + NOTAG + '><span>Phosphor mask</span></label>' + slider('noise', 'Grain', 0, 0.12, 0.005, '') + '</div>';
+          '<label class="pmt-cz-mini"><input type="checkbox" data-key="crtMask"' + NOTAG + '><span>Phosphor mask</span></label>' + slider('noise', 'Grain', 0, 0.12, 0.005, '', [0, 0.035, 0.075, 0.12]) + '</div>';
         return chip(e.key, e.name, e.help, extra);
       }).join('') + '</div>' +
       /* the bezel: its own choice, with or without Full CRT (round 2) */
       '<div class="pmt-cz-field"><span class="pmt-cz-flabel">Bezel</span>' + seg('bezel', BEZELS, 'Bezel') + '<span class="pmt-cz-fhelp">A monitor housing round the screen that catches the screen’s light, on its own or with Full CRT.</span></div>' +
-      '<div class="pmt-cz-bezelmore" data-bezel-more hidden><div class="pmt-cz-grid2">' + slider('bezelWidth', 'Width', 2, 48, 1, ' px') + slider('bezelReflect', 'Reflection', 0, 1, 0.05, '%') + '</div>' +
+      /* Width by stops (round 5, Q15 #4): a pixel at a time moved NieR's flat frame too little to see; the slim lip's 6
+         and the case's 24 are among them */
+      '<div class="pmt-cz-bezelmore" data-bezel-more hidden><div class="pmt-cz-grid2">' + slider('bezelWidth', 'Width', 2, 48, 1, ' px', [2, 4, 6, 9, 12, 16, 20, 24, 30, 36, 42, 48]) + '</div>' +
+      /* round 4 (Q15 #2): four levels a person can tell apart, the material's own marked */
+      '<div class="pmt-cz-field" data-reflect-field><span class="pmt-cz-flabel">Reflection</span>' + seg('bezelReflect', [['off', 'Off'], ['low', 'Low'], ['medium', 'Medium'], ['high', 'High']], 'Reflection') +
+      '<span class="pmt-cz-fhelp" data-reflect-why></span></div>' +
       '<div class="pmt-cz-field"><span class="pmt-cz-flabel">Material</span><div class="pmt-cz-swatches" role="radiogroup" aria-label="Bezel material">' + BEZEL_COLORS.map(function (c) {
         return '<button type="button" class="pmt-cz-swatch" role="radio" aria-checked="false" data-key="bezelColor" data-value="' + c[0] + '" aria-label="' + esc(c[1]) + '"' + tagged(c[1]) + NOTAG + '><i data-bz="' + c[0] + '"' + (c[2] ? ' style="background:' + c[2] + '"' : '') + '></i></button>';
       }).join('') + '</div></div></div>' +
       '<p class="pmt-cz-note" data-note-fx hidden></p></section>';
     /* behaviour */
     html += '<section class="pmt-cz-group" data-group="behavior" aria-labelledby="pmt-cz-g-behavior">' + ghead('behavior', 'Behavior') +
-      '<div class="pmt-cz-field"><span class="pmt-cz-flabel">Bell</span>' + seg('bell', [['follow', 'Follow look', 'Look'], ['visual', 'Visual'], ['off', 'Off']], 'Bell') +
+      '<div class="pmt-cz-field"><span class="pmt-cz-flabel">Bell</span>' + seg('bell', [['follow', 'Follow look', 'Look'], ['off', 'Off']], 'Bell') +
       '<span class="pmt-cz-fhelp">What a program’s bell does: the look’s own flash, or nothing.</span></div>' +
       '<div class="pmt-cz-chips">' + chip('stickyHeader', 'Keep command titles visible', 'Pins each command’s line while you scroll its output.') +
       chip('copyOnSelect', 'Copy when I highlight', 'Text you select is copied, ready to paste.') + '</div>' +
@@ -438,7 +484,7 @@
       var G = T.Grounds, hexC = T.color.toHex;
       if (gv === 'follow') { var Rf = A().peek({ api: v.api, tabAppearance: { background: 'follow', scheme: val('scheme') }, previewAppearance: null, state: {} }); return Rf.background && Rf.background.css ? Rf.background.css : hexC(th.bg); }
       if (gv === 'theme') return hexC(th.bg);
-      if (gv === 'solid') return val('bgColor') || hexC(th.bg);
+      if (gv === 'solid') return val('bgColor') || A().solidDefault(th);
       if (gv === 'custom') { var u = A().imageUrl('custom', val('bgImageData'), 0); return String(val('bgImageData') || '').match(/^img:/) && u ? 'center / cover no-repeat url("' + u + '"), ' + hexC(th.bg) : hexC(th.bg); }
       var id = gv.slice(2), mot = G.motion(id), painted = G.painted(id);
       if (painted || mot) {
@@ -473,7 +519,12 @@
           });
         root.querySelector('[data-gtiles]').innerHTML = tiles.join('');
         /* solid: the scheme's own, a step deeper and a step softer, then any colour */
-        var C = T.color, sw = [['Scheme', th.bg], ['Deeper', C.mix(th.bg, 0, 0.35)], ['Softer', C.mix(th.bg, th.fg, 0.08)]];
+        /* Deeper is 35 % of the way to black, or further on a ground already near black, until it is a step the eye
+           sees (round 5, Q15: Retro dark's phosphor black drew its 35 % as nearly the same); none under a black ground */
+        var C = T.color, deep = null;
+        for (var dk = 0.35; dk < 1.001 && deep === null; dk += 0.05) { var dc = C.mix(th.bg, 0, Math.min(1, dk)); if (Math.max(C.r(th.bg) - C.r(dc), C.g(th.bg) - C.g(dc), C.b(th.bg) - C.b(dc)) >= 12) deep = dc; }
+        if (deep === null && Math.max(C.r(th.bg), C.g(th.bg), C.b(th.bg)) >= 8) deep = 0;
+        var sw = [['Scheme', th.bg]].concat(deep === null ? [] : [['Deeper', deep]], [['Softer', C.mix(th.bg, th.fg, 0.08)]]);
         root.querySelector('[data-solid-swatches]').innerHTML = sw.map(function (s) {
           return '<button type="button" class="pmt-cz-swatch" data-solid-color="' + C.toHex(s[1]) + '" aria-label="' + esc(s[0]) + '"' + tagged(s[0]) + NOTAG + '><i style="background:' + C.toHex(s[1]) + '"></i></button>';
         }).join('');
@@ -484,11 +535,35 @@
       root.querySelector('[data-gctl="solid"]').hidden = now !== 'solid';
       root.querySelector('[data-gctl="yours"]').hidden = !custom;
       root.querySelector('[data-gctl="design"]').hidden = !design;
-      /* a design's own controls: Blur for painted ones, Size for patterns, Motion for any that moves, whatever its kind */
-      var did = design ? now.slice(2) : '', painted = !!did && G.painted(did), moves = !!did && !!G.motion(did);
+      /* a design's own controls: Size for patterns, Motion for any that moves, whatever its kind */
+      var did = design ? now.slice(2) : '', moves = !!did && !!G.motion(did);
       [].forEach.call(root.querySelectorAll('[data-gctl-sub]'), function (s) { var sub = s.getAttribute('data-gctl-sub');
-        s.hidden = !(sub === 'scene' ? painted || moves : sub === 'moving' ? moves : sub === cat0); });
+        s.hidden = !(sub === 'moving' ? moves : sub === 'pattern' ? !!did && G.sized(did) : sub === cat0); });
       root.querySelector('[data-bezel-more]').hidden = val('bezel') === 'off';
+      /* Reflection: the material's own level named; none for NieR's ink frame, which reflects nothing */
+      var rf = reflect(R), rtxt = rf.own ? rf.name + '’s own is ' + rf.own.charAt(0).toUpperCase() + rf.own.slice(1) + '.' : '';
+      root.querySelector('[data-reflect-field]').hidden = !rf.own;
+      var rw = root.querySelector('[data-reflect-why]'); if (rw.textContent !== rtxt) rw.textContent = rtxt;
+    }
+    /* the case's Reflection now: its level, the material's own level and the material's name (Follow look: the look's own
+       case), as the bezel resolves them (71-bezel.js) */
+    function reflect(R) {
+      var look = R.effects ? R.effects.look : 'basic', th = R.theme || {}, light = th.appearance === 'light' || (th.bg !== undefined && T.color.lum(th.bg) > 0.4);
+      var id = val('bezelColor'), mat = !id || id === 'follow' ? (look === 'nier' ? null : T.Bezel.lookMaterial(look, light)) : id;
+      var nm = BEZEL_COLORS.filter(function (c) { return c[0] === mat; })[0];
+      return { level: T.Bezel.levelOf(val('bezelReflect'), id, look, light), own: T.Bezel.ownLevel(id, look, light), name: nm ? nm[1] : '' };
+    }
+
+    /* the size Smaller or Bigger goes to (round 5, Q15 #4): the nearest whole pixel whose cell is drawn a different
+       number of device pixels wide or tall than the size shown. A cell is whole device pixels (20-metrics.js), so half a
+       pixel often drew the same cell and much the same glyphs (13.5 and 14, 25 and 25.5). null at either end */
+    function nextSize(R, dir) {
+      var f = R.font, mt = pv && pv.metrics ? pv.metrics : v.metrics, dpr = mt ? mt.dpr : (window.devicePixelRatio || 1);
+      var o = { family: f.family, weight: f.weight, boldWeight: f.boldWeight, lineHeight: f.lineHeight, letterSpacing: f.letterSpacing, dpr: dpr, crisp: f.crisp };
+      var cell = function (px) { var m = T.Metrics.measure(Object.assign({}, o, { fontPx: px })); return m.devW + 'x' + m.devH; };
+      var now = cell(f.size);
+      for (var n = dir > 0 ? Math.floor(f.size + 1e-9) + 1 : Math.ceil(f.size - 1e-9) - 1; n >= 8 && n <= 32; n += dir) if (cell(n) !== now) return n;
+      return null;
     }
 
     /* ---- your presets: listed with their own little picture; saved, renamed and deleted in place ---- */
@@ -548,11 +623,9 @@
       if (key === 'lineHeight') return Number(x).toFixed(2) + '×';
       if (key === 'bgDim' || key === 'opacity' || key === 'scanStrength' || key === 'glowStrength' || key === 'bgStrength' || key === 'bgDesat') return Math.round(x * 100) + '%';
       if (key === 'bezelWidth') return Math.round(x) + ' px';
-      if (key === 'bezelReflect') return Math.round(x * 100) + '%';
       /* the number is the sides; top and bottom take 60 % of it (pm7-customizer-audit): both shown, the help says which */
       if (key === 'padding') return Math.round(x) + ' / ' + Math.round(x * 0.6) + ' px';
       if (key === 'letterSpacing' || key === 'bgBlur' || key === 'padding' || key === 'fontSize') return (Math.round(x * 100) / 100) + ' px';
-      if (key === 'flickerAmount') return (Math.round(x * 1000) / 10) + '%';
       return String(Math.round(x * 1000) / 1000);
     }
     function paint() {
@@ -567,11 +640,28 @@
         root.style.setProperty('--pmt-cz-sglow', R.theme.roles && R.theme.roles.glow ? R.theme.roles.glow : T.color.toHex(R.theme.fg));
       }
       root.classList.toggle('pmt-cz-reduced', !!R.look.reduced);
+      /* the weights the face draws apart: a face of this computer (System monospace, or one Settings names) often comes
+         in only two weights, and the browser draws the others as the nearest of them, so each group of weights that
+         draws the same is offered once, as its lightest (Q15 #5). The bundled faces carry every weight they list */
+      var FDw = A().fontDef(R.font.id), wrange = FDw && FDw.weights, wrep = {};
+      if (wrange && (R.font.id === 'system' || R.font.local)) {
+        /* each group shows as Regular (400) or Bold (700) when it holds one, the weights such a face really has */
+        var groups = [], ww, gi;
+        for (ww = wrange[0]; ww <= wrange[1]; ww += 100) {
+          var hh = weightDraws(R.font.family || FDw.stack, ww), last = groups[groups.length - 1];
+          if (hh !== null && last && last.h === hh) last.w.push(ww); else groups.push({ h: hh, w: [ww] });
+        }
+        groups.forEach(function (g) {
+          var lead = g.w.indexOf(400) >= 0 ? 400 : g.w.indexOf(700) >= 0 ? 700 : g.w[0];
+          for (gi = 0; gi < g.w.length; gi++) if (g.w[gi] !== lead) wrep[g.w[gi]] = lead;
+        });
+      }
       /* radios: tiles and segments */
       [].forEach.call(root.querySelectorAll('[role="radio"][data-key]:not([data-key="ground"])'), function (b) {
         var key = b.getAttribute('data-key'), cur = key === 'scope' ? scope : val(key);
         if (key === 'scheme' && /^follow:/.test(String(cur))) cur = 'follow';
-        if (key === 'fontWeight') cur = R.font.weight;
+        if (key === 'fontWeight') cur = wrep[R.font.chosen] || R.font.chosen;
+        if (key === 'bezelReflect') cur = reflect(R).level;
         setA(b, 'aria-checked', String(String(cur) === b.getAttribute('data-value')));
       });
       /* switches: what applies now (Follow look shows the look's own state) */
@@ -581,7 +671,7 @@
       if (val('effects') === 'custom' && !R.look.reduced) on.flicker = !!val('flicker');
       /* ligatures cannot join letters that are spaced apart (canvas text drops them, as CSS does): the chip shows what
          applies and why, and the choice comes back when the spacing is 0 again (pm7-customizer-audit #2) */
-      var ligPaused = !!val('ligatures') && !!R.font.letterSpacing;
+      var ligPaused = !!val('ligatures') && !!R.font.letterSpacing, ligBlocked = !!R.font.letterSpacing;
       if (ligPaused) on.ligatures = false;
       [].forEach.call(root.querySelectorAll('.pmt-cz-chip'), function (c) {
         var key = c.getAttribute('data-key'), o = !!on[key];
@@ -589,13 +679,44 @@
         var st = c.querySelector('.pmt-cz-chipstate'), word = o ? 'On' : 'Off';
         if (fx.off && c.closest('.pmt-cz-fxchips')) word = 'Off · effects off';
         else if (val('effects') === 'follow' && c.closest('.pmt-cz-fxchips')) word += ' · from the look';
-        else if (key === 'ligatures' && ligPaused) word = 'Off while letters are spaced';
+        else if (key === 'ligatures' && ligBlocked) word = 'Needs letter spacing 0';
         if (st.textContent !== word) st.textContent = word;
+        /* and while they are spaced the switch is not offered: either position would draw the same (Q15 #6) */
+        if (key === 'ligatures') setA(c, 'aria-disabled', String(ligBlocked));
         c.classList.toggle('pmt-cz-is-mine', mine(key));
         var box = c.parentNode, more = box.querySelector('.pmt-cz-chipmore'); if (more) more.hidden = !o;
         box.classList.toggle('pmt-cz-lit', o);
       });
       var bi = root.querySelector('input[data-key="burnIn"]'); if (bi) bi.checked = !!val('burnIn');
+      /* the stops that depend on what is drawn (round 4, Q15 #4): a cell is a whole number of device pixels (20-metrics.js),
+         so letter spacing moves by one device pixel and line height by one device pixel of row, from the least row the
+         face takes (anything under it draws that row); a picture's Dim starts at what keeps the text readable */
+      var mt = pv && pv.metrics ? pv.metrics : v.metrics, dpr = mt ? mt.dpr : (window.devicePixelRatio || 1), sl = [], k, opacityOff = false;
+      for (k = Math.ceil(-dpr - 1e-9); k <= Math.floor(3 * dpr + 1e-9); k++) sl.push(Math.round(k / dpr * 1000) / 1000);
+      setStops(root.querySelector('input[data-key="letterSpacing"]'), sl);
+      if (mt) {
+        var fpx = mt.fontPx, lo = Math.max(Math.ceil((mt.ascent + mt.descent) * dpr * 0.9), Math.ceil(fpx * dpr - 1e-9)), hi = Math.round(fpx * 2 * dpr);
+        sl = []; for (k = lo; k <= hi; k++) sl.push(Math.round(k / (fpx * dpr) * 10000) / 10000);
+        if (sl.length) setStops(root.querySelector('input[data-key="lineHeight"]'), sl);
+      }
+      var bgR = R.background || {}, floor = bgR.custom ? Math.ceil((bgR.floor || 0) * 20 - 1e-6) / 20 : 0;
+      sl = []; for (k = floor; k <= 0.9 + 1e-6; k += 0.05) sl.push(Math.round(k * 100) / 100);
+      if (!sl.length) sl = [Math.min(1, Math.round((bgR.floor || 0.9) * 100) / 100)];
+      setStops(root.querySelector('input[data-key="bgDim"]'), sl);
+      root.querySelector('[data-slider="bgDim"]').hidden = sl.length < 2;
+      /* under a heavy dim a picture keeps less of itself, so fewer of its steps can be told apart: from 85 % only full
+         colour or grey, and from 90 % (a scheme with no contrast to spare) colour hardly shows and blur has two steps */
+      var pdim = bgR.custom ? bgR.dim || 0 : 0;
+      setStops(root.querySelector('input[data-key="bgDesat"]'), pdim >= 0.85 ? [0, 1] : [0, 0.5, 1]);
+      setStops(root.querySelector('input[data-key="bgBlur"]'), pdim >= 0.9 ? [0, 12] : [0, 3, 6, 12, 24]);
+      root.querySelector('[data-slider="bgDesat"]').hidden = pdim >= 0.9;
+      note('[data-dim-why]', bgR.custom && sl.length < 2 ? 'Dim stays at ' + Math.round(sl[0] * 100) + ' %: any less and this picture would hide the text.' +
+        (pdim >= 0.9 ? ' So little of it shows that its colour hardly changes, so Less colour is not offered.' : '') : '');
+      /* Glass's opacity: the least, its own (0.74 dark, 0.7 light) and solid. Glass light's terminal lies on glass of its
+         own pale tone, so there it shows only over a wallpaper, and is offered only then (round 4, Q15 #4) */
+      var opLight = R.look && R.look.mode === 'light', opDef = opLight ? 0.7 : 0.74, wall = !!document.documentElement.getAttribute('data-lg-wall');
+      setStops(root.querySelector('input[data-key="opacity"]'), [0.4, opDef, 1]);
+      opacityOff = opLight && !wall;
       /* sliders and outputs */
       [].forEach.call(root.querySelectorAll('input[type="range"][data-key]'), function (r) {
         var key = r.getAttribute('data-key'), x = val(key);
@@ -604,28 +725,28 @@
         if (key === 'sixtyfourScan' || key === 'sixtyfourBleed') x = x === null || x === undefined ? 0 : x;
         /* a width or a dim left to the style or to Auto shows the value in use */
         if (key === 'bezelWidth' && (x === null || x === undefined)) x = R.bezel && R.bezel.width ? R.bezel.width : 24;
-        var autoReflect = key === 'bezelReflect' && (x === null || x === undefined);
-        if (autoReflect) x = T.Bezel ? T.Bezel.reflectOf(val('bezelColor'), R.effects ? R.effects.look : 'basic', R.theme && R.theme.appearance === 'light') : 0.3;
         var autoDim = key === 'bgDim' && (x === null || x === undefined);
         if (autoDim) x = R.background && typeof R.background.dim === 'number' ? R.background.dim : 0.45;
-        if (document.activeElement !== r) r.value = String(x);
-        var out = r.parentNode.querySelector('output'); if (out) out.textContent = (autoDim || autoReflect ? 'Auto · ' : '') + fmt(key, Number(r.value));
+        if (document.activeElement !== r) rangeShow(r, x);
+        var out = r.parentNode.querySelector('output'); if (out) out.textContent = (autoDim ? 'Auto · ' : '') + fmt(key, document.activeElement === r ? rangeValue(r) : x);
         r.closest('[data-slider]').classList.toggle('pmt-cz-is-mine', mine(key));
       });
       var fs = root.querySelector('[data-out="fontSize"]'); if (fs) fs.textContent = fmt('fontSize', R.font.size);
+      [].forEach.call(root.querySelectorAll('[data-step]'), function (b) { setA(b, 'aria-disabled', String(nextSize(R, parseFloat(b.getAttribute('data-step')) < 0 ? -1 : 1) === null)); });
       setA(root.querySelector('[data-act="default"][data-key="fontSize"]'), 'aria-disabled', String(!mine('fontSize')));
-      var col = root.querySelector('input[data-key="bgColor"]'), bgc = val('bgColor') || (R.theme ? T.color.toHex(R.theme.bg) : '#000000');
+      var col = root.querySelector('input[data-key="bgColor"]'), bgc = val('bgColor') || (R.theme ? A().solidDefault(R.theme) : '#000000');
       if (col && document.activeElement !== col) col.value = bgc;
       var bo = root.querySelector('[data-out="bgColor"]'); if (bo) bo.textContent = bgc;
       /* what shows when (SSYS-051's visibility rule, kept for the person's sake: a hidden part keeps its value) */
       var ground = val('background');
       paintGround(R);
-      root.querySelector('[data-slider="opacity"]').hidden = look !== 'glass';
+      root.querySelector('[data-slider="opacity"]').hidden = look !== 'glass' || opacityOff;
       root.querySelector('[data-axes]').hidden = R.font.id !== 'sixtyfour';
       /* weights the face has */
       var FD = A().fontDef(R.font.id), wr = FD && FD.weights;
-      [].forEach.call(root.querySelectorAll('[data-key="fontWeight"]'), function (b) { var n = Number(b.getAttribute('data-value')); b.hidden = !wr || n < wr[0] || n > wr[1]; });
-      var why = root.querySelector('[data-weight-why]'), wtxt = wr ? '' : R.font.label + ' comes in one weight.';
+      [].forEach.call(root.querySelectorAll('[data-key="fontWeight"]'), function (b) { var n = Number(b.getAttribute('data-value')); b.hidden = !wr || n < wr[0] || n > wr[1] || !!wrep[n]; });
+      var nw = wr ? Object.keys(wrep).length : 0;
+      var why = root.querySelector('[data-weight-why]'), wtxt = wr ? (nw ? 'Only the weights ' + R.font.label + ' has on this computer.' : '') : R.font.label + ' comes in one weight.';
       if (why.textContent !== wtxt) why.textContent = wtxt;
       root.querySelector('[data-seg="fontWeight"]').hidden = !wr;
       /* thumbnails that follow the look and the scheme */
@@ -651,7 +772,8 @@
         isNier && !/(^|\s)sweep(\s|$)/.test(document.documentElement.getAttribute('data-o55-nier-parts') || '') ? 'NieR’s trace needs its Scan sweep part; with it removed the trail stays off.' : '');
       var pic = String(val('bgImageData') || '');
       note('[data-note-ground]', ground === 'image' && val('bgImage') === 'custom' && pic.indexOf('path:') === 0 ? 'Settings names ' + pic.slice(5) + ', which this page cannot open; choose the picture here to use it.' :
-        look !== 'glass' && A().own(scope, v, 'opacity') !== undefined ? 'Opacity applies under a Glass look; this one draws the ground solid.' : '');
+        look !== 'glass' && A().own(scope, v, 'opacity') !== undefined ? 'Opacity applies under a Glass look; this one draws the ground solid.' :
+        opacityOff && A().own(scope, v, 'opacity') !== undefined ? 'Opacity shows over a wallpaper: without one, Glass light’s terminal lies on glass of its own pale tone.' : '');
       var eNotes = [], effective = v.fx ? v.fx.effective : {};
       if (R.look.reduced) eNotes.push('Reduced Motion is on: nothing moves; still effects stay.');
       else if (effective.motion && /^Battery saver/.test(effective.motion)) eNotes.push('Battery saver is on: nothing moves; still effects stay.');
@@ -754,7 +876,7 @@
         write({ scheme: value, schemePair: false });
         pairNote = 'Switch with light and dark is now off, so ' + pick.name + ' stays while the app is ' + mode + '.';
         paint();
-      } else put(key, value);
+      } else put(key, key === 'bezelReflect' && value === reflect(eff()).own ? null : value);   /* the material's own level is its Auto */
       moveInk(key, before);
       if (key === 'scheme') v.announce('Scheme: ' + b.querySelector('.pmt-cz-tname').textContent);
       if ((key === 'cursorShape' || key === 'cursorTrail') && preview) preview.moveCursor();
@@ -779,7 +901,7 @@
       if (b.getAttribute('aria-disabled') === 'true') return;
       if (b.getAttribute('role') === 'radio' && b.hasAttribute('data-key')) { choose(b); return; }
       if (b.getAttribute('role') === 'switch') { toggle(b); return; }
-      if (b.hasAttribute('data-step')) { var R = eff(); put('fontSize', T.util.clamp(R.font.size + parseFloat(b.getAttribute('data-step')), 8, 32)); return; }
+      if (b.hasAttribute('data-step')) { var ns = nextSize(eff(), parseFloat(b.getAttribute('data-step')) < 0 ? -1 : 1); if (ns !== null) put('fontSize', ns); return; }
       if (b.hasAttribute('data-set')) { quickSet(b.getAttribute('data-set')); return; }
       if (b.hasAttribute('data-gcat')) { gcat = b.getAttribute('data-gcat'); gSig = ''; paint(); return; }
       if (b.hasAttribute('data-solid-color')) { write({ background: 'solid', bgColor: b.getAttribute('data-solid-color') }); return; }
@@ -826,7 +948,7 @@
       if (t.classList.contains('pmt-cz-search')) { filter(t.value); return; }
       if (!key) return;
       if (t.type === 'range') {
-        var x = parseFloat(t.value);
+        var x = rangeValue(t);
         A().live(scope, key, x, v); syncPreview();
         var out = t.parentNode.querySelector('output'); if (out) out.textContent = fmt(key, x);
         return;
@@ -1000,6 +1122,7 @@
     }
     root._pmtClose = function (noFocus) {
       endPreview();
+      if (v._czLook === onLook) v._czLook = null;
       if (offChange) offChange();
       window.removeEventListener('resize', onResize);
       if (ro) ro.disconnect();
@@ -1035,7 +1158,9 @@
     /* the focus starts on the scope switch, the first thing to decide; the dialog's name and lead are its context */
     var first = root.querySelector('[data-seg="scope"] [aria-checked="true"]') || dialog;
     first.focus({ preventScroll: true });
-    v._apRender = function () { paint(); };
+    /* the host's look or mode changed while the screen is open (View.onLook): the preview resolves again, so a scheme
+       that switches with light and dark switches in the preview too (Q15 #7) */
+    var onLook = v._czLook = function () { if (v.pop === root) { syncPreview(); paint(); } };
     return { el: root, close: function () { close(); }, refresh: function () { if (v.pop === root) { syncPreview(); paint(); } } };
   }
 

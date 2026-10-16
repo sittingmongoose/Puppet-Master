@@ -35,7 +35,7 @@
    soft edge), the tube edge darkens 8 % over 4 px as Royale's border does, and the vignette is pow(16uv(1-u)(1-v), e)
    with e = 0.08. Scanlines live in content space, locked to the text rows (a whole number of lines per row, about 3
    device px each) and box-filtered against moire, so they curve with the text; the optional phosphor mask is a
-   'lite' aperture grille in screen space, drawn only at a device pixel ratio of 2 or more. Scanlines, mask and
+   aperture grille in screen space, three device px to a triad at any device pixel ratio. Scanlines, mask and
    vignette multiply in linear light. The bezel is the view's own CSS frame now (30-looks.css): the shader no longer
    insets the picture for it. (A curved silhouette over flat text, the research's "edges only", would clip the corner
    cells, since this canvas is exactly the text grid; it is not offered, and uFlat stays 0.) */
@@ -48,7 +48,10 @@
   var SAG_PER_CURVE = 0.125;    // relative edge sag s per unit of the Curvature field (0.04 -> 0.005, 0.2 -> 0.025)
   var CORNER_CSS = 10;          // the tube's rounded corner, CSS px, whenever Full CRT is on
   var EDGE_DARK = 0.08, EDGE_CSS = 4;   // the tube edge: 8 % darker over 4 CSS px inside the glass
-  var MASK_LITE = 0.10;         // the phosphor mask's depth ('lite' grille), only at DPR >= 2
+  /* the phosphor mask's depth: each device px column loses this much of one of red, green and blue in turn (an
+     aperture grille's stripes), its brightness kept. Round 4 (Q15 #3): drawn at every density, since at 1x a 3 px triad
+     is what emulators draw on a 1080p screen; deeper than round 2's 'lite' 0.10, which read as nothing at 2x either */
+  var MASK_DEPTH = 0.24;
   var SCAN_REGAIN = 0.5;        // scanlines give back part of the light they take, in linear light
   var SCAN_TARGET_CSS = 3;      // about one scanline per 3 device px (DPR 1) or 2 CSS px (DPR >= 1.5), whole lines per row
   var BURN_GHOST = 0.65;        // afterglow brightness relative to the content that left (cool-retro-term uses 0.65)
@@ -97,7 +100,7 @@
       mask: { on: on(p.mask, D.mask.on) },
       rowPx: num(p.rowPx, 0) > 0 ? p.rowPx : 0,
       outside: Array.isArray(p.outside) && p.outside.length === 3 ? p.outside.slice() : null,
-      burnIn: { on: on(bi, D.burnIn.on), persistMs: clamp(num(bi.persistMs, D.burnIn.persistMs), L.persistMs[0], L.persistMs[1]) },
+      burnIn: { on: on(bi, D.burnIn.on), persistMs: clamp(num(bi.persistMs, D.burnIn.persistMs), L.persistMs[0], L.persistMs[1]), ink: !!bi.ink },
       noise: { on: on(nz, D.noise.on), amount: clamp(num(nz.amount, D.noise.amount), L.noise[0], L.noise[1]) },
       flicker: { on: on(fl, D.flicker.on), amount: clamp(num(fl.amount, D.flicker.amount), L.flicker[0], L.flicker[1]) },
       degauss: dg,
@@ -241,17 +244,21 @@
   var FS_COPY = PREC + 'varying vec2 vUv;\nuniform sampler2D uTex;\nvoid main() { gl_FragColor = texture2D(uTex, vUv); }\n';
   var FS_BURN = PREC + [
     'varying vec2 vUv;',
-    'uniform sampler2D uAcc; uniform sampler2D uPrev; uniform float uDecay; uniform float uAddPrev;',
+    'uniform sampler2D uAcc; uniform sampler2D uPrev; uniform float uDecay; uniform float uAddPrev; uniform float uInk;',
     'void main() {',
     '  vec4 a = max(texture2D(uAcc, vUv) - vec4(uDecay), vec4(0.0));',
-    '  gl_FragColor = max(a, texture2D(uPrev, vUv) * uAddPrev);',
+    '  vec4 pv = texture2D(uPrev, vUv);',
+    /* on a ground lighter than its text the ghost is the text's ink: keep how dark each pixel was (premultiplied) */
+    '  if (uInk > 0.5) pv.rgb = pv.a - pv.rgb;',
+    '  gl_FragColor = max(a, pv * uAddPrev);',
     '}'].join('\n');
   var FS_DOWN = PREC + [
     'varying vec2 vUv;',
-    'uniform sampler2D uSrc; uniform sampler2D uAcc; uniform float uBurnK; uniform vec2 uTexel;',
+    'uniform sampler2D uSrc; uniform sampler2D uAcc; uniform float uBurnK; uniform vec2 uTexel; uniform float uInk;',
+    'vec4 ghost(vec4 c, vec4 g) { if (uInk < 0.5) return max(c, g); vec4 d = max(vec4(c.a - c.rgb, c.a), g); return vec4(d.a - d.rgb, d.a); }',
     'vec4 tap(vec2 p) {',
     '  vec4 c = texture2D(uSrc, p);',
-    '  if (uBurnK > 0.0) c = max(c, texture2D(uAcc, p) * uBurnK);',
+    '  if (uBurnK > 0.0) c = ghost(c, texture2D(uAcc, p) * uBurnK);',
     '  vec3 s = c.rgb / max(c.a, 0.0001);',
     '  float l = dot(s, vec3(0.2126, 0.7152, 0.0722));',
     '  return c * smoothstep(0.12, 0.5, l);',
@@ -275,8 +282,9 @@
     'uniform sampler2D uSrc; uniform sampler2D uAcc; uniform sampler2D uGlow;',
     'uniform vec2 uOut; uniform float uDpr;',
     'uniform vec2 uWarp; uniform float uFlat; uniform float uRadius; uniform vec2 uEdge; uniform float uVigExp; uniform float uMask; uniform vec3 uOutside;',
-    'uniform vec4 uScan; uniform float uGlowK; uniform float uBurnK;',
+    'uniform vec4 uScan; uniform float uGlowK; uniform float uBurnK; uniform float uInk;',
     'uniform vec2 uNoise; uniform float uGain; uniform vec2 uDeg; uniform float uDim;',
+    'vec4 ghost(vec4 c, vec4 g) { if (uInk < 0.5) return max(c, g); vec4 d = max(vec4(c.a - c.rgb, c.a), g); return vec4(d.a - d.rgb, d.a); }',
     /* Lottes' warp with shape-normalised coefficients (round 2): the centre row and column stay where they are */
     'vec2 warp(vec2 p) { vec2 q = p * 2.0 - 1.0; q *= vec2(1.0 + q.y * q.y * uWarp.x, 1.0 + q.x * q.x * uWarp.y); return q * 0.5 + 0.5; }',
     'float hash12(vec2 p) { vec3 p3 = fract(vec3(p.xyx) * 0.1031); p3 += dot(p3, p3.yzx + 33.33); return fract((p3.x + p3.y) * p3.z); }',
@@ -307,7 +315,7 @@
     '  } else {',
     '    c = texture2D(uSrc, t);',
     '  }',
-    '  if (uBurnK > 0.0) c = max(c, texture2D(uAcc, t) * uBurnK);',
+    '  if (uBurnK > 0.0) c = ghost(c, texture2D(uAcc, t) * uBurnK);',
     '  if (uGlowK > 0.0) {',
     '    vec3 g = min(texture2D(uGlow, t).rgb * uGlowK, vec3(1.0));',
     '    c.rgb += g * (1.0 - c.rgb / max(c.a, 0.0001));',
@@ -354,7 +362,14 @@
     '  if (uNoise.x > 0.0) {',
     '    vec2 cell = floor(gl_FragCoord.xy / uDpr);',
     '    float n = hash12(cell + uNoise.y * vec2(7.13, 3.71));',
-    '    c.rgb += vec3(n * uNoise.x * max(0.0, 1.0 - length(uv - 0.5) * 1.3)) * c.a;',
+    '    float gv = uNoise.x * max(0.0, 1.0 - length(uv - 0.5) * 1.3);',
+    '    c.rgb += vec3(n * gv) * c.a;',
+    /* round 4 (Q15): where the screen is see-through (Friendly's stage, Glass) the grain lies over the ground under it as
+       well, light and dark specks in turn so it shows on a pale ground too; it had touched the text alone there. Round 5:
+       a half as strong again there, as the stage's soft light swallowed the default grain (Friendly dark, Off beside 0.035:
+       4.33 as filmed) */
+    '    float tg = (1.0 - c.a) * (n - 0.5) * 3.0 * gv;',
+    '    c = tg > 0.0 ? c + vec4(tg) : vec4(c.rgb, c.a - tg);',
     '  }',
     '  if (uGain < 1.0) {',
     '    vec3 st = c.rgb / max(c.a, 0.0001);',
@@ -562,7 +577,7 @@
     /* 1. burn-in: the content that is about to be replaced joins the accumulator at full strength; older ghosts fade
           linearly by dt / persistMs, in exact 1/255 steps (the remainder carries to the next frame). */
     var burnOn = p.burnIn.on && this.hasSource && !sizeChanged;
-    if (!p.burnIn.on) this.accValid = false;
+    if (!p.burnIn.on || !!p.burnIn.ink !== this.accInk) { this.accValid = false; this.accInk = !!p.burnIn.ink; }
     if (burnOn) {
       var A = this._target('accA', W, H), B = this._target('accB', W, H);
       if (!this.accValid) {
@@ -575,7 +590,7 @@
         var pb = this.prog.burn;
         gl.useProgram(pb.p);
         this._bind(0, A.tex, pb, 'uAcc'); this._bind(1, any ? this._srcTex() : null, pb, 'uPrev');
-        gl.uniform1f(pb.u.uDecay, q); gl.uniform1f(pb.u.uAddPrev, any ? 1 : 0);
+        gl.uniform1f(pb.u.uDecay, q); gl.uniform1f(pb.u.uAddPrev, any ? 1 : 0); gl.uniform1f(pb.u.uInk, p.burnIn.ink ? 1 : 0);
         this._draw(pb, B, W, H);
         this.targets.accA = B; this.targets.accB = A;
         this.accCarry = decay >= 1 ? 0 : decay - q; this.lastBurnMs = now;
@@ -623,7 +638,7 @@
         var G1 = this._target('glowA', hw, hh), G2 = this._target('glowB', hw, hh), pd = this.prog.down, pl = this.prog.blur;
         gl.useProgram(pd.p);
         this._bind(0, src, pd, 'uSrc'); this._bind(1, burnK ? this.targets.accA.tex : null, pd, 'uAcc');
-        gl.uniform1f(pd.u.uBurnK, burnK); gl.uniform2f(pd.u.uTexel, 1 / W, 1 / H);
+        gl.uniform1f(pd.u.uBurnK, burnK); gl.uniform1f(pd.u.uInk, p.burnIn.ink ? 1 : 0); gl.uniform2f(pd.u.uTexel, 1 / W, 1 / H);
         this._draw(pd, G1, hw, hh);
         var stride = Math.max(1, sigma / 2);
         gl.useProgram(pl.p); gl.uniform1fv(pl.u.uW, this._weights);
@@ -648,9 +663,9 @@
     var oc = outsideColor(p); gl.uniform3f(u.uOutside, oc[0], oc[1], oc[2]);
     /* scanlines: locked to the text rows (rowPx, device px) when the view says how tall a row is */
     gl.uniform4f(u.uScan, p.scanlines.on ? p.scanlines.strength : 0, scanPeriod(p.rowPx, this.dpr), 0, SCAN_REGAIN);
-    gl.uniform1f(u.uMask, p.mask.on && this.dpr >= 2 ? MASK_LITE : 0);
+    gl.uniform1f(u.uMask, p.mask.on ? MASK_DEPTH : 0);
     gl.uniform1f(u.uGlowK, this.glowValid ? p.glow.strength * GLOW_GAIN : 0);
-    gl.uniform1f(u.uBurnK, burnK);
+    gl.uniform1f(u.uBurnK, burnK); gl.uniform1f(u.uInk, p.burnIn.ink ? 1 : 0);
     gl.uniform1f(u.uVigExp, p.vignette.on ? p.vignette.strength : 0);
     gl.uniform2f(u.uNoise, p.noise.on ? p.noise.amount : 0, ambientStep(now) % 997);
     gl.uniform1f(u.uGain, p.flicker.on ? flickerGain(p.flicker.amount, now) : 1);

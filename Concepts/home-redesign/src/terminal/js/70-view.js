@@ -66,6 +66,8 @@
     this.term = session.term;
     this.opts = { ligatures: true, boldBright: false, minContrast: 4.5, cursor: { shape: 'block', blink: true } };
     this.focused = false; this.visible = true; this.dimmed = false;
+    /* visible = the host shows this terminal's tab (onShow/onHide) and its root is on screen (_visibility) */
+    this.hostVisible = true; this.onScreen = true;
     this.followBottom = true; this.scrollAbs = 0;
     this.blinkOn = true; this.lastInput = T.util.now();
     this.hoverLinkId = 0; this.hoverRange = null;
@@ -171,6 +173,17 @@
     var onWall = function () { var bg = self._bgSpec; if (bg && bg.paint === 'lens') { self.contrastGround = self._applyBackground(bg); self.renderer.invalidate(); self.schedule(true); } };
     window.addEventListener('pmt-wall', onWall);
     this.disposers.push(function () { window.removeEventListener('pmt-wall', onWall); });
+    /* a page the host does not know about (PM_PAGES: Settings over Home) hides this terminal without onHide: watch the
+       root's place on screen too */
+    if (typeof IntersectionObserver === 'function') {
+      var io = new IntersectionObserver(function (entries) {
+        var e = entries[entries.length - 1];
+        self.onScreen = !!(e && e.isIntersecting);
+        self._visibility();
+      });
+      io.observe(this.root);
+      this.disposers.push(function () { io.disconnect(); });
+    }
     if (T.FX && T.FX.attach) { this.fx = T.FX.attach(this); this.fx.configure(this.appearance.effects || {}); }
     if (T.Agent && T.Agent.attach) this.agent = T.Agent.attach(this);
     this._updateLabel(); this._updateHeader();
@@ -366,6 +379,8 @@
           mv.style.setProperty('--pmt-bgm-ms', Math.round(bg.motion.ms) + 'ms');
           /* about 20 fps; NieR moves in its own visible steps, about 2.5 a second */
           mv.style.setProperty('--pmt-bgm-steps', String(Math.max(1, Math.round(bg.motion.ms / (T.look().nier ? 400 : 50)))));
+          /* a Lively drift's second motion (its pulse), stepped the same way */
+          if (bg.motion.pulse) { mv.style.setProperty('--pmt-bgm-pulse-ms', Math.round(bg.motion.pulse) + 'ms'); mv.style.setProperty('--pmt-bgm-steps2', String(Math.max(1, Math.round(bg.motion.pulse / (T.look().nier ? 400 : 50))))); }
           mv.setAttribute('data-anim', bg.motion.on ? bg.motion.anim : 'still');
           if (M.worst !== null) worsts.push(M.worst);
         }
@@ -389,6 +404,8 @@
     } else if (bg.kind === 'gradient' && bg.css) L.style.background = bg.css;
     else if (bg.kind === 'solid' && bg.color) L.style.background = bg.color;
     this.bgScrim.style.opacity = dim > 0 ? String(Math.round(dim * 1000) / 1000) : '0';
+    /* a picture on a scheme with no contrast to spare is veiled in white or black, not the scheme's ground (round 4) */
+    this.bgScrim.style.background = bg.custom && bg.veil ? bg.veil : '';
     /* Glass: a design is laid on the glass at Glass's own opacity, so the app still shows through as it does on the
        theme surface (no blur is added, F3-431) */
     if (typeof bg.alpha === 'number' && bg.alpha < 1) L.style.opacity = String(bg.alpha);
@@ -1133,8 +1150,12 @@
     if (this._lastBell && now - this._lastBell < 1000) return; /* at most one visual bell a second (WCAG 2.3.1) */
     this._lastBell = now;
     var r = this.root;
-    r.classList.remove('pmt-bell'); void r.offsetWidth; r.classList.add('pmt-bell');
-    setTimeout(function () { r.classList.remove('pmt-bell'); }, 420);
+    /* Bell Off draws nothing in any look (Q15 #8: NieR's bracket snap and Reduced Motion's marker ran with it off);
+       an unfocused terminal still asks for attention */
+    if (r.getAttribute('data-pmt-bell') !== 'off') {
+      r.classList.remove('pmt-bell'); void r.offsetWidth; r.classList.add('pmt-bell');
+      setTimeout(function () { r.classList.remove('pmt-bell'); }, 420);
+    }
     if (!this.focused && this.api && this.api.update) this.api.update({ attention: true });
   };
   View.prototype.setProgress = function (p) {
@@ -1208,9 +1229,19 @@
       if (max !== this._max) { this._max = max; this.hrow.setAction('max', { label: max ? 'Restore' : 'Maximize', icon: max ? 'restore' : 'maximize' }); }
     }
   };
-  /* image animation runs only while the terminal shows (SPEC section 7) */
-  View.prototype.onShow = function () { this.visible = true; if (this.term.images) this.term.images.pause(false); this.layout(); this._groundSoon(); this.schedule(true); if (this.fx) this.fx.visible(true); };
-  View.prototype.onHide = function () { this.visible = false; if (this.term.images) this.term.images.pause(true); if (this.fx) this.fx.visible(false); if (this.pop && this.closeAppearance) this.closeAppearance(true); };
+  /* A terminal is visible while the host shows its tab and its root is on screen; a page the host does not know about
+     (Settings over Home) hides it as well (B6, 2026-10-16: rows drawn behind Settings cost about 72 ms on the frame its
+     editor Customize opens). Hidden, nothing is drawn and nothing moves: the renderer, the effects, the bezel and image
+     animation (SPEC section 7) all wait. The terminal itself (its grid, scrollback and programs) keeps going, and one full
+     repaint follows when it shows again. show: the host showed its tab, which lays out and repaints even if it showed */
+  View.prototype._visibility = function (show) {
+    var on = !!(this.hostVisible && this.onScreen), was = this.visible;
+    this.visible = on;
+    if (on !== was) { if (this.term.images) this.term.images.pause(!on); if (this.fx) this.fx.visible(on); }
+    if (on && (on !== was || show)) { this.layout(); this._groundSoon(); this.schedule(true); }
+  };
+  View.prototype.onShow = function () { this.hostVisible = true; this._visibility(true); };
+  View.prototype.onHide = function () { this.hostVisible = false; this._visibility(); if (this.pop && this.closeAppearance) this.closeAppearance(true); };
   View.prototype.onLook = function () {
     var h = document.documentElement;
     /* the resolved Reduced Motion flag too: the system setting can change with no attribute changing */
@@ -1220,12 +1251,13 @@
     this._lookSig = sig;
     if (T.Appearance) this.applyAppearance(T.Appearance.resolve(this));
     else this.applyAppearance(this._fallbackAppearance());
+    if (this._czLook) this._czLook();
   };
   View.prototype.setDimmed = function (on) { if (this.dimmed === on) return; this.dimmed = on; this.root.classList.toggle('pmt-inactive', on); this.schedule(true); };
   View.prototype.dispose = function () {
     /* out of the appearance registry, so a closed or restarted terminal is neither kept alive nor configured again;
        an open popover goes with its document listener, without taking the focus */
-    this.visible = false;
+    this.hostVisible = false; this.visible = false;
     if (this.closeAppearance) this.closeAppearance(true);
     if (T.Appearance && T.Appearance.forget) T.Appearance.forget(this);
     this.disposers.forEach(function (d) { try { d(); } catch (e) {} });

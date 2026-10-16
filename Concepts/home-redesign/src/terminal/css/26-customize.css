@@ -73,8 +73,8 @@ html[data-theme="basic-light"] .pmt-cz { --pmt-cz-fill: color-mix(in srgb, var(-
 /* unavailable: no fade (45 % put its words near 2.9:1). Its words go to the second tier, a step under the button's own
    ink that still holds 4.5:1 on the plate and on the token picker in every look, and a dashed edge says it is off, as
    Demo Studio's unavailable controls do (landing QA EC-01) */
-.pmt-cz .pmt-textbtn[aria-disabled="true"] { opacity: 1; color: var(--pmw-text-2, var(--text-secondary)); border-style: dashed; border-color: var(--pmt-cz-line-2); cursor: default; }
-.pmt-cz .pmt-textbtn[aria-disabled="true"]:hover { background: transparent; }
+.pmt-cz :is(.pmt-textbtn, .pmt-step)[aria-disabled="true"] { opacity: 1; color: var(--pmw-text-2, var(--text-secondary)); border-style: dashed; border-color: var(--pmt-cz-line-2); cursor: default; }
+.pmt-cz :is(.pmt-textbtn, .pmt-step)[aria-disabled="true"]:hover { background: transparent; }
 
 /* ---- top: preview and side column ---- */
 .pmt-cz-top { display: grid; grid-template-columns: minmax(0, 1fr) 214px; gap: 14px; align-items: stretch; }
@@ -316,6 +316,10 @@ html[data-o55-nier="on"] .pmt-cz .pmt-cz-dock { box-shadow: 0 3px 10px rgba(var(
 .pmt-cz-chip[aria-checked="true"]::after { content: ""; position: absolute; left: 12px; top: 12px; width: 16px; height: 16px; background: var(--pmt-cz-on-accent);
   -webkit-mask: var(--pmt-cz-check) center / 12px no-repeat; mask: var(--pmt-cz-check) center / 12px no-repeat; }
 .pmt-cz-chip[aria-checked="true"] .pmt-cz-chipstate { color: var(--pmw-text, inherit); }
+/* a switch that cannot act now (Ligatures while letters are spaced): a dashed box, no hover; its words say why */
+.pmt-cz .pmt-cz-chip[aria-disabled="true"] { cursor: default; }
+.pmt-cz .pmt-cz-chip[aria-disabled="true"]:hover { background: transparent; }
+.pmt-cz-chip[aria-disabled="true"]::before { border-style: dashed; }
 .pmt-cz-chipmore { display: grid; gap: 8px; padding: 2px 12px 11px 38px; }
 .pmt-cz-mini { display: inline-flex; align-items: center; gap: 7px; font-size: 12px; cursor: pointer; }
 .pmt-cz-mini input { accent-color: var(--pmt-cz-accent); width: 15px; height: 15px; margin: 0; }

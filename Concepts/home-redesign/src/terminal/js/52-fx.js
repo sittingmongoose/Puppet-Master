@@ -96,7 +96,11 @@
     if (style !== 'off' && T.FXTrail && !this.trail) this.trail = T.FXTrail.create(v.trailCanvas);
     this.trailStyle = style;
     v.trailCanvas.hidden = style === 'off' || this.active;
-    v.trailCanvas.style.mixBlendMode = this.trail && this.trail.blend === 'add' ? 'screen' : '';
+    /* the chosen style's own blend, not the last jump's (round 5, Q15: after Glow or Phosphor, a Trace or Soft trail kept
+       the screen blend, and on a light ground its dark ink vanished) */
+    var spec = T.FXTrail && T.FXTrail.STYLES[style];
+    if (this.trail && spec) this.trail.blend = spec.blend;
+    v.trailCanvas.style.mixBlendMode = spec && spec.blend === 'add' ? 'screen' : '';
     this.kick();
   };
   Policy.prototype.params = function (now) {
@@ -109,7 +113,9 @@
       /* scanlines lock to the text rows; beyond the tube is the scheme's own ground, unlit */
       rowPx: v.metrics ? v.metrics.devH : 0,
       outside: e.tube ? [parseInt(e.tube.slice(1, 3), 16) / 255, parseInt(e.tube.slice(3, 5), 16) / 255, parseInt(e.tube.slice(5, 7), 16) / 255] : null,
-      burnIn: { on: !!(e.burnIn && e.burnIn.on) && !reduced, persistMs: e.burnIn ? e.burnIn.persistMs : 450 },
+      /* a light ground keeps the cleared text's ink as its ghost, a dark one its light (Q15 #9) */
+      burnIn: { on: !!(e.burnIn && e.burnIn.on) && !reduced, persistMs: e.burnIn ? e.burnIn.persistMs : 450,
+        ink: !!(v.theme && T.color.lum(v.theme.bg) > T.color.lum(v.theme.fg)) },
       noise: { on: !!(e.noise && e.noise.on) && moving, amount: e.noise ? e.noise.amount : 0 },
       flicker: { on: !!(e.flicker && e.flicker.on) && moving, amount: e.flicker ? Math.min(0.03, e.flicker.amount) : 0 },
       degauss: this.degaussAt && !reduced ? { startMs: this.degaussAt } : null,

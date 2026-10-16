@@ -65,7 +65,9 @@ test('defaults are the Retro dark defaults from the brief', () => {
   assert.deepEqual(d.curvature, { on: false, amount: 0.04, flatText: false });
   assert.deepEqual(d.bezel, { on: false, light: false });
   assert.deepEqual(d.vignette, { on: false, strength: 0.08 });
-  assert.deepEqual(d.burnIn, { on: false, persistMs: 450 });
+  assert.deepEqual(d.burnIn, { on: false, persistMs: 450, ink: false });
+  /* round 4: a light ground's burn-in keeps the text's ink (the flag passes through normalize) */
+  assert.equal(G.normalize({ burnIn: { on: true, ink: true } }).burnIn.ink, true);
   assert.deepEqual(d.noise, { on: false, amount: 0.035 });
   assert.deepEqual(d.flicker, { on: false, amount: 0.02 });
   assert.equal(d.degauss, null); assert.equal(d.dim, 0);

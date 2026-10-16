@@ -163,9 +163,14 @@
     /* (round 3b: more runs, longer and brighter, so Running rain is its own design even when it rests) */
     for (var i = 0; i < Math.max(8, Math.round(W / 55)); i++) {
       var x = R() * W, y = R() * H, r = 3 + R() * 3.5, len = H * (0.35 + R() * 0.45);
-      g.save(); g.strokeStyle = rgba(k.hi, k.dark ? 0.2 : 0.55); g.lineWidth = r * 0.75; g.lineCap = 'round'; g.beginPath(); g.moveTo(x, y);
-      for (var t = 1; t <= 10; t++) g.lineTo(x + Math.sin(t * 1.3 + i) * r * 0.4, y - len * t / 10);
-      g.stroke(); g.restore();
+      var run = function (dx) { g.beginPath(); g.moveTo(x + dx, y); for (var t = 1; t <= 10; t++) g.lineTo(x + dx + Math.sin(t * 1.3 + i) * r * 0.4, y - len * t / 10); };
+      g.save(); g.lineCap = 'round';
+      /* (round 5, Q15: on a pale pane a run of white light barely showed, so Gentle and Lively looked alike. There a run
+         clears the fog as it goes: the pane shows through it in the scheme's own ground, never darker than the text
+         allows, with the light caught along its edge) */
+      if (!k.dark) { g.strokeStyle = rgba(th.bg, 0.9); g.lineWidth = r * 0.9; run(0); g.stroke(); g.strokeStyle = rgba(k.hi, 0.85); g.lineWidth = Math.max(1, r * 0.22); run(r * 0.3); g.stroke(); }
+      else { g.strokeStyle = rgba(k.hi, 0.2); g.lineWidth = r * 0.75; run(0); g.stroke(); }
+      g.restore();
       drop(g, k, x, y, r, th); if (y - len < 0) drop(g, k, x, y + H, r, th);
     }
   };
@@ -458,6 +463,7 @@
   def('glass', 'raindrops', 'Rain on glass', { looks: ['glass'] });
   def('glass', 'lens', 'Lens', { looks: ['glass'] });
   def('glass', 'etched', 'Etched glass', { looks: ['glass'] });
-  def('glass', 'rain-glass', 'Running rain', { motion: { layer: 'glassrun', anim: 'pmt-bg-fall', ms: 16000, under: 'fogged' } });
+  /* (round 5, Q15: Lively four times as fast, not twice: on a pale pane twice as fast read as Gentle) */
+  def('glass', 'rain-glass', 'Running rain', { motion: { layer: 'glassrun', anim: 'pmt-bg-fall', ms: 16000, lively: 0.25, under: 'fogged' } });
   K.suggest('glass', ['clear-glass', 'frost', 'tinted', 'raindrops', 'lens']);
 })();

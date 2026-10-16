@@ -298,7 +298,8 @@
   function px(n, o) { return Math.round(n * (SCALE[o && o.scale] || 1)); }
   def('pattern', 'dots', 'Dot grid', { looks: ['basic', 'friendly'], css: function (th, h, o) {
     var d = ink(th, 0.1), s = px(20, o);
-    var dr = th.reflect ? 1.7 : 1.2;
+    /* (round 5, Q15: Coarse's dots are larger, as a coarser screen's are; Medium and Coarse were 4.3 apart in Glass dark) */
+    var dr = (th.reflect ? 1.7 : 1.2) * (o && o.scale === 'coarse' ? 1.6 : 1);
     return { css: 'radial-gradient(circle at 50% 50%, ' + hex(d) + ' 0 ' + dr + 'px, transparent ' + (dr + 0.6) + 'px) 0 0 / ' + s + 'px ' + s + 'px, ' + hex(th.bg), colors: [th.bg, d] };
   } });
   def('pattern', 'graph', 'Graph paper', { looks: ['basic'], css: function (th, h, o) {
@@ -308,8 +309,12 @@
   } });
   def('pattern', 'grid', 'Blueprint', { legacy: true, css: function (th, h, o) {
     var line = wash(th, h.a, isDark(th) ? 0.14 : 0.24), major = wash(th, h.a, isDark(th) ? 0.2 : 0.34), ground = wash(th, h.a, 0.05), s = px(24, o), m = s * 5;
-    var l = function (c, n) { return 'linear-gradient(' + hex(c) + ' 1px, transparent 1px) 0 0 / ' + n + 'px ' + n + 'px, linear-gradient(90deg, ' + hex(c) + ' 1px, transparent 1px) 0 0 / ' + n + 'px ' + n + 'px'; };
-    return { css: l(major, m) + ', ' + l(line, s) + ', ' + hex(ground), colors: [ground, line, major] };
+    /* (round 5, Q15: drawn in light on a pale ground, its lines lighter still, they nearly vanished and Fine, Medium and
+       Coarse drew alike. There the paper is the light one and the lines are the scheme's own ground, which the text is
+       made for, every fifth twice as thick) */
+    if (th.reflect) { line = major = th.bg; }
+    var l = function (c, n, lw) { return 'linear-gradient(' + hex(c) + ' ' + lw + 'px, transparent ' + lw + 'px) 0 0 / ' + n + 'px ' + n + 'px, linear-gradient(90deg, ' + hex(c) + ' ' + lw + 'px, transparent ' + lw + 'px) 0 0 / ' + n + 'px ' + n + 'px'; };
+    return { css: l(major, m, th.reflect ? 2 : 1) + ', ' + l(line, s, 1) + ', ' + hex(ground), colors: [ground, line, major] };
   } });
   def('pattern', 'hatch', 'Diagonal hatch', { css: function (th, h, o) {
     var d = ink(th, 0.05), s = px(9, o);
@@ -332,15 +337,19 @@
         paths += '<path d="' + d + 'Z"/>';
       }
     });
-    var svg = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ' + W + ' ' + H + '" preserveAspectRatio="xMaxYMax slice"><g fill="none" stroke="' + hex(line) + '" stroke-width="1" vector-effect="non-scaling-stroke">' + paths + '</g></svg>';
+    /* (round 4, Q15: drawn in light on a pale ground its hairlines matched Dot grid, Starfield and Rain; twice as thick there) */
+    /* (round 5, Q15: Coarse's wider contours are drawn half as heavy again, as a larger map's are; Medium and Coarse were
+       4.4 apart in Retro dark) */
+    var svg = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ' + W + ' ' + H + '" preserveAspectRatio="xMaxYMax slice"><g fill="none" stroke="' + hex(line) + '" stroke-width="' + (th.reflect ? 2 : 1) * (k > 1.2 ? 1.5 : 1) + '" vector-effect="non-scaling-stroke">' + paths + '</g></svg>';
     return { css: svgUrl(svg) + ' right bottom / cover no-repeat, ' + hex(th.bg), colors: [th.bg, line] };
   } });
-  /* waves: four ribbons across the bottom third, each 3 % of lightness from the next */
-  def('pattern', 'waves', 'Waves', { css: function (th, h) {
-    var W = 1600, H = 900, bands = '', step = isDark(th) ? 0.022 : -0.012;
+  /* waves: four ribbons across the bottom third, each 3 % of lightness from the next; Size is the swell, short and low to
+     long and high (round 5, Q15: Size was offered here and drew nothing) */
+  def('pattern', 'waves', 'Waves', { css: function (th, h, o) {
+    var W = 1600, H = 900, bands = '', step = isDark(th) ? 0.022 : -0.012, k = SCALE[o && o.scale] || 1;
     for (var i = 0; i < 4; i++) {
       var y0 = H * (0.66 + i * 0.085), d = 'M0 ' + H;
-      for (var x = 0; x <= W; x += 20) d += 'L' + x + ' ' + (y0 + Math.sin(x / (260 - i * 30) + i * 1.3) * 22 + Math.sin(x / 90 + i) * 5).toFixed(1);
+      for (var x = 0; x <= W; x += 20) d += 'L' + x + ' ' + (y0 + Math.sin(x / ((260 - i * 30) * k) + i * 1.3) * 22 * k + Math.sin(x / (90 * k) + i) * 5).toFixed(1);
       bands += '<path fill="' + hex(tone(wash(th, h.a, 0.03 * (i + 1)), step * (i + 1))) + '" d="' + d + 'L' + W + ' ' + H + 'Z"/>';
     }
     var svg = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ' + W + ' ' + H + '" preserveAspectRatio="xMidYMax slice">' + bands + '</svg>';
@@ -356,10 +365,15 @@
     var svg = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ' + W + ' ' + H + '" preserveAspectRatio="xMaxYMax slice"><g fill="' + hex(d) + '">' + dots + '</g></svg>';
     return { css: svgUrl(svg) + ' right bottom / cover no-repeat, ' + hex(th.bg), colors: [th.bg, d] };
   } });
-  /* Retro's scanline field: one dark row in three across the ground, and the tube's own vignette */
-  def('pattern', 'scanfield', 'Scanline field', { looks: ['retro'], css: function (th) {
+  /* Retro's scanline field: one dark row in three across the ground, and the tube's own vignette; Size is the pitch, one
+     row in two, three or five (two dark), as a finer or coarser tube (round 5, Q15: Size was offered and drew nothing) */
+  def('pattern', 'scanfield', 'Scanline field', { looks: ['retro'], css: function (th, h, o) {
     var d = tone(th.bg, isDark(th) ? -0.09 : -0.03), edge = tone(th.bg, isDark(th) ? -0.13 : -0.03);
-    return { css: 'repeating-linear-gradient(180deg, transparent 0 2px, ' + hex(d) + ' 2px 3px), radial-gradient(130% 120% at 50% 45%, ' + hex(th.bg) + ' 55%, ' + hex(edge) + ' 100%)', colors: [th.bg, d, edge] };
+    /* (a ground too near black for a darker row to show, Retro's phosphor black, has its rows lit instead, as a tube's
+       lines are brighter than the gaps between them) */
+    if (C.lum(th.bg) < 0.012) d = lift(th, 0.03);
+    var pitch = { fine: [1, 2], coarse: [3, 5] }[o && o.scale] || [2, 3];
+    return { css: 'repeating-linear-gradient(180deg, transparent 0 ' + pitch[0] + 'px, ' + hex(d) + ' ' + pitch[0] + 'px ' + pitch[1] + 'px), radial-gradient(130% 120% at 50% 45%, ' + hex(th.bg) + ' 55%, ' + hex(edge) + ' 100%)', colors: [th.bg, d, edge] };
   } });
   /* NieR: staff lines (Kijima's "staff lines, bass clefs and the double-bar lines") and sparse squares */
   def('pattern', 'staff', 'Staff lines', { looks: ['nier'], css: function (th, h, o) {
@@ -382,7 +396,9 @@
     return { css: svgUrl(svg) + ' right bottom / cover no-repeat, ' + hex(th.bg), colors: [th.bg, d] };
   } });
   /* paper (the earlier picture's id): fine fibres on a high-key ground, seeded so it never reads as dirt */
-  def('pattern', 'fibre', 'Paper', { legacy: 'paper', css: function (th) {
+  /* (round 5, Q15: Size was offered here and drew nothing; scaled, a fibre texture still looks the same on a pale paper,
+     so Paper takes no Size) */
+  def('pattern', 'fibre', 'Paper', { legacy: 'paper', unsized: true, css: function (th) {
     var dark = isDark(th), v = dark ? 1 : 0.2;
     var svg = '<svg xmlns="http://www.w3.org/2000/svg" width="220" height="220"><filter id="f" x="0" y="0" width="100%" height="100%"><feTurbulence type="fractalNoise" baseFrequency="0.02 0.7" numOctaves="3" seed="13" stitchTiles="stitch"/>' +
       '<feColorMatrix values="0 0 0 0 ' + v + ' 0 0 0 0 ' + v + ' 0 0 0 0 ' + v + ' 0 0 0 ' + (dark ? 0.16 : 0.12) + ' 0"/></filter><rect width="220" height="220" filter="url(#f)"/></svg>';
@@ -419,13 +435,19 @@
   def('scene', 'caustics', 'Caustics');
   def('scene', 'bokeh', 'Bokeh');
   def('scene', 'clouds', 'Clouds', { looks: ['friendly'] });
-  /* moving: a painted layer bigger than the terminal, moved by transform only, stepped to about 20 fps */
-  def('moving', 'aurora-drift', 'Drifting aurora', { motion: { layer: 'aurora', anim: 'pmt-bg-sway', ms: 45000 } });
+  /* moving: a painted layer bigger than the terminal, moved by transform only, stepped to about 20 fps. Lively is twice
+     as fast, and four times for the two slow drifts (round 4, Q15: at twice, Gentle and Lively looked alike for seconds) */
+  /* Lively is a livelier motion of its own for the two slow drifts (round 5, Q15: four times as fast still looked like
+     Gentle for the first seconds): the aurora dances (its curtains sweep further, lean as they go and pulse brighter and
+     fainter, as a real aurora does), the lava boils (it rises faster and its wax stretches and swells as it climbs).
+     pulse is the second motion's period, ms */
+  def('moving', 'aurora-drift', 'Drifting aurora', { motion: { layer: 'aurora', anim: 'pmt-bg-sway', ms: 45000, lively: 0.25, livelyAnim: 'pmt-bg-dance', pulse: 2400 } });
   /* (round 3b: its few bright stars on the scheme's own sky, no longer over Starfield's, so the two are distinct at rest) */
-  def('moving', 'twinkle', 'Twinkling stars', { motion: { layer: 'stars2', anim: 'pmt-bg-twinkle', ms: 6000 } });
+  /* (round 4: a 2.6 s fade, 1.3 s when Lively; at 6 s a star hardly changed in the time it takes to look) */
+  def('moving', 'twinkle', 'Twinkling stars', { motion: { layer: 'stars2', anim: 'pmt-bg-twinkle', ms: 2600 } });
   def('moving', 'rain', 'Rain', { motion: { layer: 'rain', anim: 'pmt-bg-fall', ms: 2400 } });
   def('moving', 'snow', 'Snow', { motion: { layer: 'snow', anim: 'pmt-bg-snow', ms: 30000 } });
-  def('moving', 'lava', 'Lava', { motion: { layer: 'lava', anim: 'pmt-bg-rise', ms: 80000 } });
+  def('moving', 'lava', 'Lava', { motion: { layer: 'lava', anim: 'pmt-bg-rise', ms: 80000, lively: 0.1, livelyAnim: 'pmt-bg-boil', pulse: 1600 } });
 
   /* ---- painting ---- */
   function rng(seed) { var s = seed >>> 0; return function () { s = (s + 0x6D2B79F5) >>> 0; var t = s; t = Math.imul(t ^ (t >>> 15), t | 1); t ^= t + Math.imul(t ^ (t >>> 7), t | 61); return ((t ^ (t >>> 14)) >>> 0) / 4294967296; }; }
@@ -461,6 +483,18 @@
         g.fillStyle = gr; g.beginPath(); g.moveTo(0, H);
         for (var x = 0; x <= W; x += 6) g.lineTo(x, y0 + Math.sin(x / (W / (1.2 + k * 0.6)) + k * 2.2) * H * 0.03);
         g.lineTo(W, H); g.closePath(); g.fill();
+        /* (round 4, Q15: wind ripples down each face, fine wavy lines that follow its curve, so Dunes are sand and not
+           Ridgelines' ranges) */
+        g.strokeStyle = hex(tone(base, dark ? 0.035 : -0.03)); g.lineWidth = 1;
+        for (var j = 1; j <= 4; j++) {
+          g.globalAlpha = 0.85 - j * 0.15; g.beginPath();
+          for (x = 0; x <= W; x += 3) {
+            var yy = y0 + Math.sin(x / (W / (1.2 + k * 0.6)) + k * 2.2) * H * 0.03 + j * H * 0.017 + Math.sin(x / 7 + j * 1.3 + k) * 1.1;
+            if (x) g.lineTo(x, yy); else g.moveTo(x, yy);
+          }
+          g.stroke();
+        }
+        g.globalAlpha = 1;
       }
     },
     city: function (g, W, H, th, h) {
@@ -542,7 +576,9 @@
       /* (round 3c: each a four-pointed star with long rays and short diagonal ones, so it reads as a star, never as a
          flake of Snow or a dot) */
       for (var i = 0; i < Math.round(W * H / (tight(th) ? 4500 : 7000)); i++) {
-        var x = R() * W, y = R() * H, r = 1.2 + R() * 1.2, a = tight(th) ? 1 : 0.55 + R() * 0.4, L = r * (6 + R() * 3);
+        /* (round 5, Q15: on a scheme with no contrast to spare its stars can only be light on a pale pane, and Gentle's and
+           Lively's fades looked alike there; they are drawn half as large again) */
+        var x = R() * W, y = R() * H, r = (1.2 + R() * 1.2) * (tight(th) ? 1.5 : 1), a = tight(th) ? 1 : 0.55 + R() * 0.4, L = r * (6 + R() * 3);
         var gl = g.createRadialGradient(x, y, 0, x, y, r * 4); gl.addColorStop(0, rgba(s, a * 0.45)); gl.addColorStop(1, rgba(s, 0)); g.fillStyle = gl; g.fillRect(x - r * 4, y - r * 4, r * 8, r * 8);
         g.fillStyle = rgba(s, a); g.beginPath(); g.arc(x, y, r * 0.9, 0, Math.PI * 2); g.fill();
         [[1, 0, L], [0, 1, L], [0.7071, 0.7071, L * 0.45], [0.7071, -0.7071, L * 0.45]].forEach(function (q) {
@@ -558,9 +594,11 @@
          they were nearly invisible there) */
       var dark = isDark(th), R = rng(31), c = dark ? wash(th, h.c, 0.32) : inkUp(th, h.c, th.mono ? 0.3 : 0.35), a0 = dark ? 0.25 : tight(th) ? 0.7 : 0.35, a1 = dark ? 0.4 : tight(th) ? 0.3 : 0.6;
       /* (and long, slanted streaks: rain, not flakes or dots) */
-      g.strokeStyle = hex(c); g.lineWidth = dark ? 1.1 : 1.3; g.lineCap = 'round';
+      /* (round 4, Q15: longer and firmer still on a ground with no contrast to spare, where they came close to Snow) */
+      var tk = tight(th);
+      g.strokeStyle = hex(c); g.lineWidth = dark ? 1.1 : tk ? 1.6 : 1.3; g.lineCap = 'round';
       for (var i = 0; i < Math.round(W * H / 3200); i++) {
-        var x = R() * W, y = R() * H, l = 16 + R() * 26;
+        var x = R() * W, y = R() * H, l = tk ? 26 + R() * 34 : 16 + R() * 26;
         g.globalAlpha = a0 + R() * a1; g.beginPath(); g.moveTo(x, y); g.lineTo(x - l * 0.06, y + l); g.stroke();
       }
       g.globalAlpha = 1; g.lineCap = 'butt';
@@ -711,6 +749,8 @@
     css: cssFor,
     paint: paint,
     motion: function (id) { var d = BY[id]; return d && d.motion ? d.motion : null; },
+    /* a pattern whose Size draws differently (round 5: Paper's does not) */
+    sized: function (id) { var d = BY[id]; return !!d && d.cat === 'pattern' && !d.unsized; },
     /* painted at the terminal's own size (scenes, glass, retro art), rather than drawn in CSS */
     painted: function (id) { var d = BY[id]; return !!d && !d.css && !d.motion && !!PAINT[id]; },
     worst: worst,
