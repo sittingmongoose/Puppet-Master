@@ -443,19 +443,28 @@
     if (tier) return tier === 'gpu';
     return !!(T.FXGL && T.FXGL.probe && T.FXGL.probe());
   }
-  Bezel.warm = function (view) {
-    if (!view || !view.root || !view.root.isConnected || !T.Appearance || !gpuTier()) return;
+  Bezel.warm = function (views) {
+    views = [].concat(views || []).filter(function (view) { return view && view.root && view.root.isConnected; });
+    if (!views.length || !T.Appearance || !gpuTier()) return;
     if (!inputWatch) {
       inputWatch = true;
       ['pointerdown', 'keydown', 'wheel'].forEach(function (t) { window.addEventListener(t, function () { lastInput = T.util.now(); }, { capture: true, passive: true }); });
     }
-    var A = T.Appearance, todo = ['rim', 'case'].map(function (style) {
-      var ap = A.peek({ api: view.api, tabAppearance: Object.assign({}, view.tabAppearance || {}, { bezel: style }), previewAppearance: null, state: {} });
-      return ap && ap.bezel && ap.bezel.style === style ? ap : null;
-    }).filter(function (ap) {
-      var b = ap.bezel, key = [b.style, b.width, b.color, b.reflect, ap.theme && ap.theme.appearance, ap.effects && ap.effects.look].join('|');
-      if (warmedBezel[key]) return false;
-      warmedBezel[key] = 1; return true;
+    /* each view at its own size: a terminal and the Customize screen's preview of it draw the same case at different
+       sizes, and picking Monitor draws both (part2's F4 trace: with only the terminal's size warmed, a canvas stroke and
+       rounded-rectangle program still linked at the click, 87-90 ms) */
+    var A = T.Appearance, todo = [];
+    views.forEach(function (view) {
+      var w = Math.max(80, view.screen ? view.screen.clientWidth : 0), h = Math.max(60, view.screen ? view.screen.clientHeight : 0);
+      var dpr = (view.metrics && view.metrics.dpr) || window.devicePixelRatio || 1;
+      ['rim', 'case'].forEach(function (style) {
+        var ap = A.peek({ api: view.api, tabAppearance: Object.assign({}, view.tabAppearance || {}, { bezel: style }), previewAppearance: null, state: {} });
+        if (!ap || !ap.bezel || ap.bezel.style !== style) return;
+        var b = ap.bezel, key = [b.style, b.width, b.color, b.reflect, ap.theme && ap.theme.appearance, ap.effects && ap.effects.look, Math.round(w / 64), Math.round(h / 64), dpr].join('|');
+        if (warmedBezel[key]) return;
+        warmedBezel[key] = 1;
+        todo.push({ view: view, ap: ap, w: w, h: h, dpr: dpr });
+      });
     });
     if (!todo.length) return;
     var host = null, bz = null;
@@ -466,21 +475,23 @@
       return T.util.now() - lastInput >= 600;
     }
     function step() {
-      if (!view.root.isConnected) { done(); return; }
+      if (!todo.length) { done(); return; }
+      if (!todo[0].view.root.isConnected) { todo.shift(); idle(step); return; }
       if (!ready()) { setTimeout(function () { idle(step); }, 400); return; }
       /* and only after two frames that came on time, as the Customize screen's raster warm waits (review RW-4) */
       requestAnimationFrame(function (t1) { requestAnimationFrame(function (t2) {
-        if (!view.root.isConnected) { done(); return; }
+        if (!todo.length) { done(); return; }
         if (t2 - t1 > 25 || !ready()) { setTimeout(function () { idle(step); }, 400); return; }
         draw();
       }); });
     }
     function draw() {
-      var ap = todo.shift(), b = ap.bezel, w = Math.max(80, view.screen ? view.screen.clientWidth : 0), h = Math.max(60, view.screen ? view.screen.clientHeight : 0);
-      var dpr = (view.metrics && view.metrics.dpr) || window.devicePixelRatio || 1, inset = (b.width || 0) + (b.gap || 0);
-      if (!host) {
+      var it = todo.shift(), view = it.view, ap = it.ap, b = ap.bezel, w = it.w, h = it.h, inset = (b.width || 0) + (b.gap || 0);
+      /* one unseen layer per size: a new one for each view's own size */
+      if (!host || host._w !== w || host._h !== h) {
+        done();
         host = document.createElement('div');
-        host.setAttribute('aria-hidden', 'true'); host.inert = true;
+        host.setAttribute('aria-hidden', 'true'); host.inert = true; host._w = w; host._h = h;
         host.style.cssText = 'position:fixed;left:0;top:0;width:' + w + 'px;height:' + h + 'px;opacity:.004;will-change:opacity;pointer-events:none;z-index:2147483000;contain:strict';
         document.body.appendChild(host);
         bz = new Bezel({ root: document.createElement('div'), canvas: view.canvas, visible: true, fx: null, renderer: null });
@@ -488,8 +499,9 @@
         bz.housing.style.cssText = 'position:absolute;left:0;top:0;width:100%;height:100%;display:block';
         host.appendChild(bz.el);
       }
+      bz.view.canvas = view.canvas;
       bz.configure(b, ap);
-      bz.g = { w: w, h: h, gx: inset, gy: inset, gw: Math.max(20, w - inset * 2), gh: Math.max(20, h - inset * 2), dpr: dpr };
+      bz.g = { w: w, h: h, gx: inset, gy: inset, gw: Math.max(20, w - inset * 2), gh: Math.max(20, h - inset * 2), dpr: it.dpr };
       try { bz._paint(); } catch (e) { done(); return; }
       /* kept for one painted frame, then the next style at the next idle moment */
       requestAnimationFrame(function () { requestAnimationFrame(function () { if (todo.length) idle(step); else done(); }); });
