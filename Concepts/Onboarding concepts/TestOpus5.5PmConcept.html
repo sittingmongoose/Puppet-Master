@@ -218649,12 +218649,86 @@ window.PM_WALLPAPERS_CATALOG = {"version":1,"families":[{"family":"glass","label
     return root.getAttribute('data-lg-tier') === 'cpu' || root.getAttribute('data-motion') === 'reduced' ||
       root.getAttribute('data-reduced-motion') === '1' || matchMedia('(prefers-reduced-motion: reduce)').matches;
   }
-  function prepare(url) {
+  function prepare(url, options) {
     if (!url) return Promise.resolve(true);
-    if (window.PM_LG && PM_LG.prepareWallpaper) return PM_LG.prepareWallpaper(url);
+    if (window.PM_LG && PM_LG.prepareWallpaper) return PM_LG.prepareWallpaper(url, options);
     var im = new Image(); im.src = url;
     return im.decode ? im.decode().then(function () { return true; }, function () { return false; }) : Promise.resolve(true);
   }
+  /* Prepare only choices in and immediately around the gallery's viewport. Glass owns the byte budget and both
+     caches; this queue stores no images. One idle job at a time leaves the input path independent of warming. */
+  var warmObserver = null, warmTargets = new Map(), warmDone = new Map(), warmEpoch = 0;
+  var warmTimer = 0, warmIdle = 0, warmRunning = false, warmInput = 0;
+  function warmBusy() {
+    if (document.hidden) return true;
+    if (window.PM51 && PM51.place && PM51.place.mode === 'nav') return true;
+    if (document.querySelector('#panel-settings .o55-leaving,#panel-settings [data-o55-nav-pending]')) return true;
+    if (typeof window.PM_BUSY === 'function') return !!window.PM_BUSY();
+    if (root.hasAttribute('data-pm-page-transition') || root.hasAttribute('data-pmu-moment') || root.hasAttribute('data-o55-open')) return true;
+    if (document.querySelector('#o55np-reboot,#o55np-calm,.o55nw-boot,.o55t-bootcover')) return true;
+    var n = window.PM_NIER;
+    return !!(n && n.wanted && n.on && n.wanted() !== n.on());
+  }
+  function warmAllowed(epoch) {
+    var panel = document.getElementById('panel-settings');
+    return epoch === warmEpoch && panel && panel.classList.contains('active') && !warmBusy() &&
+      performance.now() - warmInput >= 120 &&
+      !(navigator.scheduling && navigator.scheduling.isInputPending && navigator.scheduling.isInputPending());
+  }
+  function queueWarm() {
+    if (warmTimer || warmIdle || warmRunning || !warmTargets.size || !window.requestIdleCallback ||
+        !window.PM_LG || !PM_LG.prepareWallpaper) return;
+    warmIdle = requestIdleCallback(function (deadline) {
+      warmIdle = 0;
+      var epoch = warmEpoch;
+      if (!warmAllowed(epoch) || deadline.timeRemaining() < 8) {
+        warmTimer = setTimeout(function () { warmTimer = 0; queueWarm(); }, 200);
+        return;
+      }
+      /* IntersectionObserver supplies geometry without a new layout read. Keep two spare frost slots for the
+         current print and an explicit hover/click; opaque looks use only the two-image decoded cache. */
+      var glass = look() === 'glass' && !inNier(), limit = glass ? 6 : 2, viewport = innerWidth + 'x' + innerHeight;
+      var candidates = Array.from(warmTargets.entries()).filter(function (item) { return item[0].isConnected; });
+      candidates.sort(function (a, b) { return b[1].intersectionRatio - a[1].intersectionRatio || a[1].boundingClientRect.top - b[1].boundingClientRect.top; });
+      var ids = [];
+      candidates.some(function (item) {
+        var id = item[0].getAttribute('data-wpk-pick'); if (id === 'look') id = lookDefault(look());
+        if (id && ids.indexOf(id) < 0) ids.push(id);
+        return ids.length >= limit;
+      });
+      var mode = /-light$/.test(root.getAttribute('data-theme') || '') ? 'light' : 'dark';
+      var id = ids.find(function (value) { return !warmDone.has(value + '-' + mode + '|' + viewport); });
+      if (!id) return;
+      var key = id + '-' + mode + '|' + viewport;
+      warmRunning = true;
+      prepare(imageUrl(id), { canRun: function () { return warmAllowed(epoch); } }).catch(function () { return false; }).then(function (ok) {
+        /* Retry a cover/input cancellation when idle again. A failed image gets one attempt per viewport/epoch;
+           the explicit choice path can still retry it without a background error spinning an idle loop. */
+        if (epoch === warmEpoch && (ok || warmAllowed(epoch))) {
+          warmDone.delete(key); warmDone.set(key, !!ok);
+          while (warmDone.size > (glass ? 8 : 2)) warmDone.delete(warmDone.keys().next().value);
+        }
+      }).then(function () { warmRunning = false; queueWarm(); });
+    });
+  }
+  function resetWarm() { ++warmEpoch; warmDone.clear(); queueWarm(); }
+  function watchWarm(r) {
+    if (!window.IntersectionObserver) return;
+    if (warmObserver) warmObserver.disconnect();
+    warmTargets.clear(); resetWarm();
+    warmObserver = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) warmTargets.set(entry.target, entry); else warmTargets.delete(entry.target);
+      });
+      queueWarm();
+    }, { root: r.closest('#settings-document'), rootMargin: '160px 0px', threshold: [0, 0.5, 1] });
+    r.querySelectorAll('.wpk-tile').forEach(function (tile) { warmObserver.observe(tile); });
+  }
+  ['pointerdown', 'keydown', 'wheel', 'touchstart'].forEach(function (type) {
+    document.addEventListener(type, function () { warmInput = performance.now(); }, { capture: true, passive: true });
+  });
+  window.addEventListener('pm-idle', queueWarm);
+  window.addEventListener('resize', resetWarm, { passive: true });
   function apply(animate) {
     var id = shown(), selected = choice(), theme = root.getAttribute('data-theme'), key = theme + '|' + id;
     if (key === paintKey) { paintedChoice = selected; return; }
@@ -218732,7 +218806,7 @@ window.PM_WALLPAPERS_CATALOG = {"version":1,"families":[{"family":"glass","label
     el.className = 'setting-row o55-row wpk-row'; el.id = ROW_ID; el.setAttribute('data-o55-kind', 'gallery'); el.innerHTML = rowHtml();
     if (r) r.parentNode.replaceChild(el, r);   /* an older picker in the same place */
     else { var after = document.getElementById('setting-general.visual.theme-mode') || themeRow; after.parentNode.insertBefore(el, after.nextSibling); }
-    sync();
+    sync(); watchWarm(el);
   }
   /* bring the gallery's state up to the choice: the chosen tile, the one tab stop, the Changed mark, the note */
   function sync() {
@@ -218796,7 +218870,7 @@ window.PM_WALLPAPERS_CATALOG = {"version":1,"families":[{"family":"glass","label
     choice();
     /* the other writer showed a saved id this build lacks (choice() has just set it back to 'look'): paint the default
        now, not at the other writer's next pass, so no frame shows a missing image */
-    if (relook || stale !== was) apply();
+    if (relook || stale !== was) { apply(); resetWarm(); }
     sync();
   }).observe(root, { attributes: true, attributeFilter: ['data-theme', 'data-o55-nier', 'data-lg-wall'] });
   /* Settings renders its rows again on many changes: mount the gallery whenever the Theme row is there without it */
