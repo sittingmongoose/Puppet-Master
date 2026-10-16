@@ -14,7 +14,9 @@
    starting one restyles the whole page by itself in Chrome (230-300 ms on the P1000 before its callback runs).
 
    window.PM_THEME_TRANSITION(apply, hint)  — apply() writes the theme; hint { mode } or { family } names the look
-   it goes to (for the cover's colours). Picks made before it runs keep only the latest. */
+   it goes to (for the cover's colours). Picks made before it runs keep only the latest.
+   window.PM_LOOK_COVERED()  — true while a look is changed under a cover: this one until it starts to lift, or the
+   NieR reboot plate (settings/kit.d/19-nier-parts.js) until its reveal. */
 (function () {
   'use strict';
   const html = document.documentElement;
@@ -210,5 +212,13 @@
     if (document.hidden || !document.body) { requestAnimationFrame(() => window.setTimeout(runJob, 0)); return; }
     if (phase === 'covering' || phase === 'covered') return;   /* the latest pick applies under the cover */
     cover(hint);
+  };
+  /* What only the covered page shows can wait for the cover to go (the hover material's tokens and moves,
+     js/18-hover.js): read under it, in an animation frame, it was the first reader of the look's whole-page restyle.
+     The plate leaves the pointer to the page at its reveal, the moment the page shows again. */
+  window.PM_LOOK_COVERED = function lookCovered() {
+    if (phase === 'covering' || phase === 'covered') return true;
+    const plate = document.getElementById('o55np-reboot');
+    return !!(plate && plate.style.pointerEvents !== 'none');
   };
 })();

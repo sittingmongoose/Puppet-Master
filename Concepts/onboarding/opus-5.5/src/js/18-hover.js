@@ -403,22 +403,34 @@
       if (frameEl) frameEl.setAttribute('data-pmh-family', fam);
     }
     function tk(kind) { return T[kind] || T.card; }
+    /* The look's tokens are read after the frame's layout (the shell's PM_AFTER_LAYOUT, before its paint), where its
+       style is already computed, and once the look's cover has gone (PM_LOOK_COVERED, js/12-theme-transition.js):
+       read in an animation frame callback, before that frame's style, the probe was the first reader of a look
+       change's whole-page restyle (880 ms forced on a Glass Light NieR switch, P1000, Settings lane B5 trace). Under
+       the cover nothing of the hover shows; its moves wait there too (tick). */
+    function covered() { var f = window.PM_LOOK_COVERED; try { return typeof f === 'function' && !!f(); } catch (_) { return false; } }
     function retokenNextFrame() {
       tokensDirty = true; rectsDirty = geomDirty = true;   /* a look change can change every box's size */
       if (tokenFrame) return;
-      tokenFrame = raf(function retokenFrame() {
+      var retokenFrame = function () {
+        if (covered()) { raf(function () { window.PM_AFTER_LAYOUT(retokenFrame); }); return; }
         tokenFrame = 0;
         if (tokensDirty) readTokens();
         if (isReduced()) snapMagnets();
         stampSoon(300);
         if (hover || springs.size || lit.size) { moved = true; start(); }
-      });
+      };
+      if (typeof window.PM_AFTER_LAYOUT === 'function') { tokenFrame = 1; window.PM_AFTER_LAYOUT(retokenFrame); }
+      else tokenFrame = raf(retokenFrame);
     }
 
     /* ---- the loop ---- */
     function start() { if (!running) { running = true; lastT = performance.now(); raf(tick); } }
 
     function tick(now) {
+      /* under a look's cover the moves hold where they are and read nothing (the page's style is the look's restyle,
+         still pending); they go on from there once it starts to go */
+      if (covered()) { lastT = now; raf(tick); return; }
       var t0 = performance.now();
       phase.tokens = phase.scope = false; phase.rects = stats.rects;
       try { frame(now); } catch (err) {
