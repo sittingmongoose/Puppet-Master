@@ -8,7 +8,7 @@
    - Basic: a precise tinted chip with a crisp accent hairline, gliding with a little give;
    - Friendly: a soft mint pebble with a glow, the page tabs' own plate (in place it keeps the plate's card body), gliding like
      Glass's drop;
-   - Retro: a reverse-video phosphor block (opaque, square, the label inverted) that hops tab by tab on a 33 ms tick;
+   - Retro: a reverse-video phosphor block (opaque, square, the label inverted) that jumps in two hard steps on a 33 ms tick;
    - NieR Mode: the game's ink bar (opaque ink, paper words, square), cut straight to its tab; its hover ink bars stay as
      they are.
    The rules below name the adopting looks by the look itself, not by the <html data-pm-switch(-layer)> marks that glass.js
@@ -128,9 +128,15 @@ html[data-o55-nier="on"] {
    (1.03-1.46:1; Q16 review F2), so its bar and words are restated here for the switcher's own items. A chosen item
    keeps the chip; with the cursor part off a hovered word takes --pm-switch-ink-hover. */
 html[data-o55-nier="on"][data-o55-nier-parts~="cursor"]:not(#lgz):not(#lgy) :is(.page-tab, #pmuRange > button, .pm-segtab-item, .orch-tab, .pmu-navbtn):hover:not(.active, [aria-pressed="true"], [aria-selected="true"], [aria-checked="true"]),
-html[data-o55-nier="on"][data-o55-nier-parts~="cursor"]:not(#lgz):not(#lgy) #pm-settings-root :is(.workspace-tab:not(.is-current), .manager-tab:not([aria-selected="true"]), .domain-link:not(.active), .rail-scroll > .side-link:not(.active), .pm51-index-group > .index-link:not(.is-active)):hover {
+html[data-o55-nier="on"][data-o55-nier-parts~="cursor"]:not(#lgz):not(#lgy) #pm-settings-root :is(.workspace-tab:not(.is-current), .manager-tab:not([aria-selected="true"]), .domain-link:not(.active), .rail-scroll > .side-link:not(.active), .pm51-index-group > .index-link:not(.is-active), .resource-row:not([aria-current="true"])):hover {
   background: var(--o55-nier-ink) !important; color: var(--o55-nier-on-ink) !important;
 }
+/* a hovered list row's second line (a service's status, a chapter's summary) steps half way to the words' ink, so it
+   holds on the look's hover tint (a service's status read 4.17-4.97:1 on Basic, Friendly and Retro Dark's tints, where
+   Settings' own fainter hover had kept it at 4.7-5.5; a Retro Dark chapter's summary fell from 5.74 to 5.28; Q16 delta
+   review and its row sweep) */
+html:not([data-theme^="glass"]):not(#lgz) #pm-settings-root .resource-row:not([aria-current="true"]):hover .resource-row-meta,
+html:not([data-theme^="glass"]):not(#lgz) #pm-settings-root .domain-link:not(.active):hover small { color: color-mix(in srgb, var(--text-primary) 50%, var(--text-secondary)); }
 /* Settings' section and manager tabs brighten under the pointer as every other strip does (and as they did in these looks
    before the switcher): Glass's resting ink for them outranks its own hover rule, so they stayed in resting ink */
 html:not([data-theme^="glass"]):not(#lgz):not(#lgy) #pm-settings-root :is(.workspace-tab:not(.is-current), .manager-tab:not([aria-selected="true"])):hover:not([data-lg-press]) { color: var(--pm-switch-ink-hover, var(--pm-switch-ink-on)) !important; }
@@ -147,6 +153,26 @@ html[data-o55-nier="on"][data-o55-nier-parts~="cursor"]:not(#lgz) :is(.page-tab,
 /* None of these looks lights its chip with Glass's glint (--pm-switch-glint is transparent in each), so the glint's band,
    an empty layer that the no-pills gate read as a capsule, is not drawn. */
 html:not([data-theme^="glass"]):not(#lgz):not(#lgy) .lg-lens::after { content: none; }
+
+/* Reverse video is on or off: in the looks whose chip steps or cuts, a switcher's words and marks change ink at once, never
+   fading, so the tab under the chip is the one in the chip's ink in every frame (Q16 delta review: a 140-200 ms colour
+   fade left a tab the chip had left still inked, and a tab it had reached not yet). One plain selector per kind of item
+   and part, so the browser's ancestor filter rejects every other element. */
+:is(html[data-theme^="retro"], html[data-o55-nier="on"]):not(#lgz) nav.page-tabs .page-tab,
+:is(html[data-theme^="retro"], html[data-o55-nier="on"]):not(#lgz) #pmuRange > button,
+:is(html[data-theme^="retro"], html[data-o55-nier="on"]):not(#lgz) #sidePanelSlot .pm-segtab-item,
+:is(html[data-theme^="retro"], html[data-o55-nier="on"]):not(#lgz) .orch-tabs .orch-tab,
+:is(html[data-theme^="retro"], html[data-o55-nier="on"]):not(#lgz) #pmuNav .pmu-navbtn,
+:is(html[data-theme^="retro"], html[data-o55-nier="on"]):not(#lgz) #pmuNav .pmu-navbtn .pmu-navicon,
+:is(html[data-theme^="retro"], html[data-o55-nier="on"]):not(#lgz) #pmuNav .pmu-navbtn .pmu-navtext,
+:is(html[data-theme^="retro"], html[data-o55-nier="on"]):not(#lgz) #pm-settings-root .rail-scroll > .side-link,
+:is(html[data-theme^="retro"], html[data-o55-nier="on"]):not(#lgz) #pm-settings-root .domain-link,
+:is(html[data-theme^="retro"], html[data-o55-nier="on"]):not(#lgz) #pm-settings-root .domain-link small,
+:is(html[data-theme^="retro"], html[data-o55-nier="on"]):not(#lgz) #pm-settings-root .workspace-tab,
+:is(html[data-theme^="retro"], html[data-o55-nier="on"]):not(#lgz) #pm-settings-root .manager-tab,
+:is(html[data-theme^="retro"], html[data-o55-nier="on"]):not(#lgz) #pm-settings-root .pm51-index-group > .index-link,
+:is(html[data-theme^="retro"], html[data-o55-nier="on"]):not(#lgz) #themeMenu .pm6-tt-mode,
+:is(html[data-theme^="retro"], html[data-o55-nier="on"]):not(#lgz) #panel-wizard .pm6-wiz-intent-chip { transition-property: none; }
 
 /* ---- What the component does not draw, in the same material ----------------------------------------------------------
    The title bar's one-of-several menus (the look family, the project) are lists that live in a menu, not strips: the
