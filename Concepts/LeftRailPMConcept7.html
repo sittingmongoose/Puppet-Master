@@ -47387,6 +47387,13 @@ html[data-o55-nier="on"] .pmt-cz .pmt-cz-dock { box-shadow: 0 3px 10px rgba(var(
 .pmt-cz.pmt-in .pmt-cz-scrim > i, .pmt-cz.pmt-in .pmt-cz-frame { animation: pmt-m-fade-in var(--pmt-t-in, 120ms) linear both; }
 .pmt-cz.pmt-in .pmt-cz-dialog { transform-origin: 50% 0; animation: var(--pmt-a-pop-in, pmt-m-fade-in) var(--pmt-t-in, 120ms) var(--pmt-ease-move, linear) both; }
 .pmt-cz.pmt-out { pointer-events: none; }
+/* the screen kept ready between visits (77-customize.js, prepared): laid out, drawn nowhere and out of reach. Its
+   contents are hidden by visibility, which takes every tab stop with it in one inherited property (tab stops set one by
+   one would touch every element); the dialog itself stays visible to Liquid Glass, which mounts its sheet while it waits
+   rather than on the click, and is clipped away with the rest. Its preview's moving ground waits too */
+.pmt-cz.pmt-cz-parked { clip-path: inset(100%); pointer-events: none; }
+.pmt-cz.pmt-cz-parked > :not(.pmt-cz-dialog), .pmt-cz.pmt-cz-parked .pmt-cz-dialog > * { visibility: hidden; }
+.pmt-cz.pmt-cz-parked .pmt-bgmove { animation-play-state: paused; }
 .pmt-cz.pmt-out .pmt-cz-scrim > i, .pmt-cz.pmt-out .pmt-cz-frame { animation: pmt-m-fade-out var(--pmt-t-out, 100ms) linear both; }
 .pmt-cz.pmt-out .pmt-cz-dialog { transform-origin: 50% 0; animation: var(--pmt-a-pop-out, pmt-m-fade-out) var(--pmt-t-out, 100ms) var(--pmt-ease-exit, linear) both; }
 .pmt-cz-body.pmt-rescope { animation: var(--pmt-a-rescope, pmt-m-dim-in) calc(var(--pmt-t-swap, 120ms) * 1.1) var(--pmt-ease-fade, linear) both; }
@@ -220271,16 +220278,21 @@ var T = {};
   var Motion = T.Motion = {
     /* a safety net: nothing here is longer than about 600 ms, and a stalled animation must not hold an element */
     limit: 900,
-    /* fn() once every finite animation and transition on el and inside it has finished (at once when there is none) */
+    /* fn() once every finite animation and transition on el and inside it has finished (when there is none, after the
+       next frame). The animations are asked for after that frame has styled el: asked at once, right after a class
+       started them, they would make the browser style the whole element on the spot (P2-02: about 116 ms of a Customize
+       screen's open on Nas1), work the frame does anyway */
     finished: function (el, fn) {
-      var list = el.isConnected && el.getAnimations ? el.getAnimations({ subtree: true }).filter(function (a) {
-        var t = a.effect && a.effect.getComputedTiming ? a.effect.getComputedTiming() : null;
-        return !t || t.endTime !== Infinity;
-      }) : [];
-      if (!list.length) { fn(); return; }
-      var done = false, go = function () { if (!done) { done = true; clearTimeout(timer); fn(); } };
-      var timer = setTimeout(go, Motion.limit);
-      Promise.all(list.map(function (a) { return a.finished.catch(function () {}); })).then(go);
+      requestAnimationFrame(function () { setTimeout(function () {
+        var list = el.isConnected && el.getAnimations ? el.getAnimations({ subtree: true }).filter(function (a) {
+          var t = a.effect && a.effect.getComputedTiming ? a.effect.getComputedTiming() : null;
+          return !t || t.endTime !== Infinity;
+        }) : [];
+        if (!list.length) { fn(); return; }
+        var done = false, go = function () { if (!done) { done = true; clearTimeout(timer); fn(); } };
+        var timer = setTimeout(go, Motion.limit);
+        Promise.all(list.map(function (a) { return a.finished.catch(function () {}); })).then(go);
+      }, 0); });
     },
     /* plays a one-shot class (default pmt-in) from its start; a later play or leave supersedes it */
     play: function (el, cls, then) {
@@ -222933,10 +222945,12 @@ var T = {};
       blocks + ESC + '[0m\r\n' +
       mark('D', 0) + mark('A') + prompt(0) + mark('B');
   }
+  function cwdOf(v) { return v.session && v.session.shell ? v.session.shell.cwd : v.session && v.session.cwd; }
   function Preview(box, v) {
-    var cwd = v.session && v.session.shell ? v.session.shell.cwd : v.session && v.session.cwd;
+    var cwd = this.cwd = cwdOf(v), self = this;
+    this.host = v;
     this.session = new T.Session({ profile: 'zsh', cwd: cwd, by: 'user', cols: 64, rows: 12 });
-    var api = { look: v.api && v.api.look ? function () { return v.api.look(); } : undefined };
+    var api = { look: v.api && v.api.look ? function () { return self.host.api.look(); } : undefined };
     this.view = new T.View(box, api, this.session, { appearance: {} });
     var pv = this.view;
     pv.root.classList.add('pmt-cz-pvroot');
@@ -222947,6 +222961,15 @@ var T = {};
     pv.renderer.invalidate(); pv.marksDirty = true; pv.schedule(true);
     this.timers = [];
   }
+  /* moved with a kept screen to another terminal (open): its look, and its own folder in the transcript */
+  Preview.prototype.retarget = function (v) {
+    this.host = v;
+    var cwd = cwdOf(v);
+    if (cwd === this.cwd) return;
+    this.cwd = cwd;
+    this.session.term.write('\x1bc' + transcript(this.session.nonce, cwd));
+    this.view.renderer.invalidate(); this.view.marksDirty = true; this.view.schedule(true);
+  };
   /* "media::thumbs" selected, so the scheme's selection colours show too; found by its text after each layout (a
      resize reflows the lines under new absolute numbers) */
   Preview.prototype.select = function () {
@@ -223153,9 +223176,9 @@ var T = {};
     return ka.join('|') === kb.join('|') && ka.every(function (k) { return String(a[k]) === String(b[k]); });
   }
 
+  function termLabel(v) { var label = 'Terminal'; try { label = JSON.parse(v._lsig || '{}').label || label; } catch (e) {} return label; }
   function skeleton(v) {
-    var label = 'Terminal';
-    try { label = JSON.parse(v._lsig || '{}').label || label; } catch (e) {}
+    var label = termLabel(v);
     var F = A().FIELDS;
     var html = '';
     html += '<div class="pmt-cz-scrim" data-act="scrim" aria-hidden="true"><i></i><i></i><i></i><i></i></div><div class="pmt-cz-frame" aria-hidden="true"><span class="pmt-cz-framelabel">This terminal</span></div>';
@@ -223290,21 +223313,34 @@ var T = {};
     return html;
   }
 
-  /* ---------------- the screen ---------------- */
+  /* ---------------- the screen ----------------
+     One screen is kept ready (P2-02, pm7-motion-part2: built on the click it held the More menu about 470 ms on the
+     P1000 before it appeared whole). It is built while the app is idle for the terminal in view (prepareSoon), laid out
+     and measured there, and parked: clipped away, its contents out of the tab order and the accessibility tree with no
+     element in them touched (26-customize.css .pmt-cz-parked). A click shows it and plays its entrance; a close parks it
+     again for the next visit. Opened on another terminal it moves there (one is kept), and it goes with its terminal,
+     another being prepared then. The editor's screen does the same (11-editor-customize.js, .pmed-prepared) */
+  var prepared = null;
   function open(v, opts) {
     opts = opts || {};
+    if (prepared && prepared.el.isConnected) {
+      if (prepared.v === v) return opts.prepare ? prepared : prepared.show(opts);
+      /* another terminal's screen: closed there if it shows, and moved to this one rather than built again */
+      if (!opts.prepare) { if (prepared.v.pop === prepared.el) prepared.v.closeAppearance(true); prepared.retarget(v); return prepared.show(opts); }
+    }
+    if (prepared) { prepared.dispose(); prepared = null; }
     if (v.pop) v.closeAppearance(true);
     var overlay = document.getElementById('pmw-overlay') || document.body;
-    var root = el('div', 'pmt-cz pmt-calm');
+    var root = el('div', 'pmt-cz pmt-calm pmt-cz-parked');
+    root.setAttribute('aria-hidden', 'true');
     root.setAttribute('data-pmw-overlay', 'terminal-appearance');
     root.innerHTML = skeleton(v);
     overlay.appendChild(root);
-    v.pop = root;
-    v._apOnClose = typeof opts.onClose === 'function' ? opts.onClose : null;
     var dialog = root.querySelector('.pmt-cz-dialog'), body = root.querySelector('.pmt-cz-body');
     /* the scope: All terminals when Settings opens it, for that visit only; otherwise the one last picked on this
        terminal's screen (remembered while the tab lives), This terminal at first. The editor's screen does the same */
     var scope = opts.scope === 'app' ? 'app' : v._apScope || 'tab';
+    var closed = true, visit = 0, disposed = false;
     var preview = null;
     try { preview = new Preview(root.querySelector('[data-pv-box]'), v); } catch (e) { console.error('[pmt] the preview could not start', e); }
     var pv = preview && preview.view;
@@ -223316,11 +223352,17 @@ var T = {};
     function eff() { return A().peek(scopeView()); }
     function val(key) { var o = A().own(scope, v, key); return o !== undefined ? o : A().get(scope === 'tab' ? v : scopeView(), key); }
     function mine(key) { return A().own(scope, v, key) !== undefined; }
+    /* applied only when it resolves differently: applying measures the face again, a forced layout of the whole screen */
+    var pvSig = '';
     function syncPreview() {
       if (!pv) return;
       pv.tabAppearance = scope === 'tab' ? v.tabAppearance || {} : {};
       pv.previewAppearance = v.previewAppearance || null;
-      pv.applyAppearance(A().resolve(pv));
+      var R = A().resolve(pv), sig;
+      try { sig = JSON.stringify(R); } catch (e) { sig = null; }
+      if (sig !== null && sig === pvSig) return;
+      pvSig = sig || '';
+      pv.applyAppearance(R);
     }
     function write(patch) {
       A().setMany(scope, patch, v);
@@ -223991,29 +224033,80 @@ var T = {};
       input.click();
     }
 
-    /* ---- open, refresh, close ---- */
-    var offChange = A().onChange(function () { if (root.isConnected) { if (pv && pv.tabAppearance !== (scope === 'tab' ? v.tabAppearance || {} : pv.tabAppearance)) syncPreview(); paint(); } });
+    /* ---- show, close, park ----
+       While the screen shows it follows the appearance, the window and the terminal; parked, it listens to nothing and
+       catches up when it shows again */
+    var offChange = null, ro = null;
     var onResize = function () { place(); if (pv) pv.layout(); };
-    window.addEventListener('resize', onResize);
-    var ro = typeof ResizeObserver === 'function' ? new ResizeObserver(function (list) {
-      list.forEach(function (en) { if (en.target === v.root) place(); else if (pv) { pv.layout(); preview.select(); } });
-    }) : null;
-    if (ro) { ro.observe(v.root); if (pv) { ro.observe(root.querySelector('[data-pv-box]')); ro.observe(root.querySelector('[data-dock-box]')); } }
+    function attach() {
+      if (!offChange) offChange = A().onChange(function () { if (v.pop === root) { if (pv && pv.tabAppearance !== (scope === 'tab' ? v.tabAppearance || {} : pv.tabAppearance)) syncPreview(); paint(); } });
+      window.addEventListener('resize', onResize);
+      if (!ro && typeof ResizeObserver === 'function') {
+        ro = new ResizeObserver(function (list) {
+          if (v.pop !== root) return;
+          list.forEach(function (en) { if (en.target === v.root) place(); else if (pv) { pv.layout(); preview.select(); } });
+        });
+        ro.observe(v.root); if (pv) { ro.observe(root.querySelector('[data-pv-box]')); ro.observe(root.querySelector('[data-dock-box]')); }
+      }
+      if (io) io.observe(root.querySelector('.pmt-cz-preview'));
+      v._czLook = onLook;
+    }
+    function detach() {
+      if (offChange) { offChange(); offChange = null; }
+      window.removeEventListener('resize', onResize);
+      if (ro) { ro.disconnect(); ro = null; }
+      if (io) io.disconnect();
+      if (v._czLook === onLook) v._czLook = null;
+    }
+    /* parked, it keeps up in idle time: a look, a setting or a window size that changes while it waits is drawn and
+       measured then, not by the next click */
+    var warmJob = 0, offWarm = null;
+    function warm() {
+      warmJob = 0;
+      if (!closed || disposed) return;
+      place(); syncPreview(); paint();
+      /* the preview draws what changed now, unseen, so the click has nothing left to draw */
+      if (pv && pv.fullPending) pv.frame();
+    }
+    function warmSoon() {
+      if (warmJob || !closed || disposed) return;
+      warmJob = window.requestIdleCallback ? requestIdleCallback(warm, { timeout: 3000 }) : setTimeout(warm, 300);
+    }
+    function parkedWatch(on) {
+      if (warmJob && !on) { if (window.cancelIdleCallback) cancelIdleCallback(warmJob); clearTimeout(warmJob); warmJob = 0; }
+      if (offWarm) { offWarm(); offWarm = null; }
+      window.removeEventListener('resize', warmSoon);
+      if (v._czLook === warmSoon) v._czLook = null;
+      if (!on) return;
+      offWarm = A().onChange(warmSoon);
+      window.addEventListener('resize', warmSoon);
+      v._czLook = warmSoon;
+    }
     function close(noFocus) {
       if (v.pop !== root) return;
       v.closeAppearance(noFocus);
     }
+    /* v.closeAppearance has let go of it: its exit plays, then it parks */
     root._pmtClose = function (noFocus) {
-      endPreview();
-      if (v._czLook === onLook) v._czLook = null;
-      if (offChange) offChange();
-      window.removeEventListener('resize', onResize);
-      if (ro) ro.disconnect();
-      if (io) io.disconnect();
-      if (preview) preview.dispose();
-      root.setAttribute('aria-hidden', 'true'); root.inert = true;
-      if (noFocus) root.remove(); else T.Motion.leave(root, function () { root.remove(); });
+      if (closed) return;
+      closed = true;
+      var closing = ++visit;
+      endPreview(); detach();
+      if (renaming) presetRenameEnd(false, false);
+      if (preview) { preview.stopDemo(); if (pv) pv.onHide(); }
+      root.setAttribute('aria-hidden', 'true');
+      function park() { if (closing === visit && !disposed) { root.classList.add('pmt-cz-parked'); parkedWatch(true); } }
+      if (noFocus) park(); else T.Motion.leave(root, park);
     };
+    function dispose() {
+      if (disposed) return;
+      disposed = true;
+      if (v.pop === root) v.closeAppearance(true);
+      parkedWatch(false); detach();
+      if (preview) preview.dispose();
+      root.remove();
+      if (prepared === handle) { prepared = null; setTimeout(prepareSoon, 1500); }
+    }
     /* the preview follows you down the screen only where the real terminal is not beside it (the one rule of both
        Customize screens, 2026-10-14): when less than 40 % of its own place shows and the screen is not placed beside
        the terminal (a narrow window, or no room on either side), the same live view moves into the dock under the
@@ -224028,24 +224121,96 @@ var T = {};
       pv.layout(true); preview.select();
     }
     if (pv && typeof IntersectionObserver === 'function') {
-      io = new IntersectionObserver(function (list) { var en = list[list.length - 1]; wantDock = en.intersectionRatio < 0.4; syncDock(); }, { root: body, threshold: [0, 0.4, 1] });
-      io.observe(root.querySelector('.pmt-cz-preview'));
+      io = new IntersectionObserver(function (list) { if (v.pop !== root) return; var en = list[list.length - 1]; wantDock = en.intersectionRatio < 0.4; syncDock(); }, { root: body, threshold: [0, 0.4, 1] });
+    }
+    /* the host's look or mode changed while the screen is open (View.onLook): the preview resolves again, so a scheme
+       that switches with light and dark switches in the preview too (Q15 #7) */
+    var onLook = function () { if (v.pop === root) { syncPreview(); paint(); } };
+    var handle = { el: root, v: v, show: show, dispose: dispose, retarget: retarget, close: function () { close(); }, refresh: function () { if (v.pop === root) { syncPreview(); paint(); } } };
+    /* it goes with the terminal that has it */
+    function own(owner) { owner.disposers.push(function () { if (prepared === handle && handle.v === owner) dispose(); }); }
+    /* moved, parked, to another terminal: every part of the screen reads the terminal through v */
+    function retarget(nv) {
+      if (nv === v) return;
+      parkedWatch(false);
+      v = handle.v = nv;
+      own(nv);
+      var k = root.querySelector('.pmt-cz-kicker span'); if (k) k.textContent = 'Customize · ' + termLabel(nv);
+      if (preview) preview.retarget(nv);
+      parkedWatch(true);
+    }
+    /* the visit: this terminal's scope (or All terminals from Settings), from the top, with an empty search; what changed
+       while it was parked is drawn now, and what was measured before (the place, the fit, the tiles) is kept when
+       nothing about it changed, so the click costs little more than the entrance */
+    function show(next) {
+      opts = next || {};
+      if (v.pop && v.pop !== root) v.closeAppearance(true);
+      v.pop = root;
+      v._apOnClose = typeof opts.onClose === 'function' ? opts.onClose : null;
+      scope = opts.scope === 'app' ? 'app' : v._apScope || 'tab';
+      closed = false;
+      parkedWatch(false);
+      var showing = ++visit;
+      gcat = null; wantDock = false; dockTo(false); body.scrollTop = 0;
+      var q = root.querySelector('.pmt-cz-search'); if (q) q.value = '';
+      presetSaveClose(false);
+      attach();
+      /* the preview's canvas still holds what it drew: only rows that changed are drawn again (the renderer redraws in
+         full by itself when its frame or images changed) */
+      if (pv) { var pend = pv.fullPending; pv.onShow(); if (!pend) pv.fullPending = false; }
+      place();
+      syncPreview(); paint(); filter('');
+      if (preview) preview.select();
+      /* the click is answered by the frame it paints (the menu goes, a press shows), and the screen comes in on the next
+         one, already drawn and measured: revealed in the click, the browser would style and lay it out there, under the
+         menu's focus return (P2-02). The focus starts on the scope switch, the first thing to decide (the dialog's name
+         and lead are its context), once the screen has painted */
+      requestAnimationFrame(function () { requestAnimationFrame(function () {
+        if (closed || showing !== visit) return;
+        root.removeAttribute('aria-hidden');
+        root.classList.remove('pmt-cz-parked');
+        T.Motion.play(root);
+        setTimeout(function () {
+          if (closed || showing !== visit) return;
+          (root.querySelector('[data-seg="scope"] [aria-checked="true"]') || dialog).focus({ preventScroll: true });
+        }, 0);
+      }); });
+      return handle;
     }
     root._pmtPreview = preview; /* the preview, for checks that read what it draws */
+    /* built parked: laid out, fitted and drawn once here, and the preview drawn once, then still until the screen shows */
     place();
     if (pv) { pv.layout(true); preview.select(); }
     syncPreview();
     paint();
     filter('');
-    T.Motion.play(root);
-    /* the focus starts on the scope switch, the first thing to decide; the dialog's name and lead are its context */
-    var first = root.querySelector('[data-seg="scope"] [aria-checked="true"]') || dialog;
-    first.focus({ preventScroll: true });
-    /* the host's look or mode changed while the screen is open (View.onLook): the preview resolves again, so a scheme
-       that switches with light and dark switches in the preview too (Q15 #7) */
-    var onLook = v._czLook = function () { if (v.pop === root) { syncPreview(); paint(); } };
-    return { el: root, close: function () { close(); }, refresh: function () { if (v.pop === root) { syncPreview(); paint(); } } };
+    if (pv) pv.onHide();
+    parkedWatch(true);
+    own(v);
+    prepared = handle;
+    return opts.prepare ? handle : show(opts);
   }
+
+  /* one screen ready while the app is idle, for the terminal in view (the one you are in, else the first on the page);
+     never underneath onboarding or while a page or Usage transition plays, and not again while one is kept. Opened on
+     another terminal, the kept screen moves there (open) */
+  function prepareSoon() {
+    if (prepared) return;
+    var de = document.documentElement, P = window.PMT;
+    var busy = de.hasAttribute('data-o55-open') || de.hasAttribute('data-pm-page-transition') || de.hasAttribute('data-pmu-moment');
+    var v = !busy && P && typeof P.sessions === 'function' ? P.sessions().map(function (s) { return P.view(s.id); })
+      .filter(function (x) { return x && x.root && x.root.isConnected && x.visible && !x.pop; })
+      .sort(function (a, b) { return (b.focused ? 1 : 0) - (a.focused ? 1 : 0) || (a.root.compareDocumentPosition(b.root) & 4 ? -1 : 1); })[0] : null;
+    if (!v) { setTimeout(prepareSoon, 1500); return; }
+    var build = function () {
+      if (prepared || v.pop || !v.root.isConnected) { if (!prepared) setTimeout(prepareSoon, 1500); return; }
+      if (de.hasAttribute('data-o55-open') || de.hasAttribute('data-pm-page-transition') || de.hasAttribute('data-pmu-moment')) { setTimeout(prepareSoon, 1500); return; }
+      try { open(v, { prepare: true }); } catch (e) { console.error('[pmt] the Customize screen could not be prepared', e); }
+    };
+    if (window.requestIdleCallback) requestIdleCallback(build, { timeout: 4000 }); else setTimeout(build, 500);
+  }
+  if (document.readyState === 'complete') setTimeout(prepareSoon, 1500);
+  else window.addEventListener('load', function () { setTimeout(prepareSoon, 1500); }, { once: true });
 
   T.Customize = { open: open, transcript: transcript };
 })();

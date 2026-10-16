@@ -363,6 +363,13 @@ html[data-o55-nier="on"] .pmt-cz .pmt-cz-dock { box-shadow: 0 3px 10px rgba(var(
 .pmt-cz.pmt-in .pmt-cz-scrim > i, .pmt-cz.pmt-in .pmt-cz-frame { animation: pmt-m-fade-in var(--pmt-t-in, 120ms) linear both; }
 .pmt-cz.pmt-in .pmt-cz-dialog { transform-origin: 50% 0; animation: var(--pmt-a-pop-in, pmt-m-fade-in) var(--pmt-t-in, 120ms) var(--pmt-ease-move, linear) both; }
 .pmt-cz.pmt-out { pointer-events: none; }
+/* the screen kept ready between visits (77-customize.js, prepared): laid out, drawn nowhere and out of reach. Its
+   contents are hidden by visibility, which takes every tab stop with it in one inherited property (tab stops set one by
+   one would touch every element); the dialog itself stays visible to Liquid Glass, which mounts its sheet while it waits
+   rather than on the click, and is clipped away with the rest. Its preview's moving ground waits too */
+.pmt-cz.pmt-cz-parked { clip-path: inset(100%); pointer-events: none; }
+.pmt-cz.pmt-cz-parked > :not(.pmt-cz-dialog), .pmt-cz.pmt-cz-parked .pmt-cz-dialog > * { visibility: hidden; }
+.pmt-cz.pmt-cz-parked .pmt-bgmove { animation-play-state: paused; }
 .pmt-cz.pmt-out .pmt-cz-scrim > i, .pmt-cz.pmt-out .pmt-cz-frame { animation: pmt-m-fade-out var(--pmt-t-out, 100ms) linear both; }
 .pmt-cz.pmt-out .pmt-cz-dialog { transform-origin: 50% 0; animation: var(--pmt-a-pop-out, pmt-m-fade-out) var(--pmt-t-out, 100ms) var(--pmt-ease-exit, linear) both; }
 .pmt-cz-body.pmt-rescope { animation: var(--pmt-a-rescope, pmt-m-dim-in) calc(var(--pmt-t-swap, 120ms) * 1.1) var(--pmt-ease-fade, linear) both; }

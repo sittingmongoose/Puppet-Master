@@ -30,16 +30,21 @@
   var Motion = T.Motion = {
     /* a safety net: nothing here is longer than about 600 ms, and a stalled animation must not hold an element */
     limit: 900,
-    /* fn() once every finite animation and transition on el and inside it has finished (at once when there is none) */
+    /* fn() once every finite animation and transition on el and inside it has finished (when there is none, after the
+       next frame). The animations are asked for after that frame has styled el: asked at once, right after a class
+       started them, they would make the browser style the whole element on the spot (P2-02: about 116 ms of a Customize
+       screen's open on Nas1), work the frame does anyway */
     finished: function (el, fn) {
-      var list = el.isConnected && el.getAnimations ? el.getAnimations({ subtree: true }).filter(function (a) {
-        var t = a.effect && a.effect.getComputedTiming ? a.effect.getComputedTiming() : null;
-        return !t || t.endTime !== Infinity;
-      }) : [];
-      if (!list.length) { fn(); return; }
-      var done = false, go = function () { if (!done) { done = true; clearTimeout(timer); fn(); } };
-      var timer = setTimeout(go, Motion.limit);
-      Promise.all(list.map(function (a) { return a.finished.catch(function () {}); })).then(go);
+      requestAnimationFrame(function () { setTimeout(function () {
+        var list = el.isConnected && el.getAnimations ? el.getAnimations({ subtree: true }).filter(function (a) {
+          var t = a.effect && a.effect.getComputedTiming ? a.effect.getComputedTiming() : null;
+          return !t || t.endTime !== Infinity;
+        }) : [];
+        if (!list.length) { fn(); return; }
+        var done = false, go = function () { if (!done) { done = true; clearTimeout(timer); fn(); } };
+        var timer = setTimeout(go, Motion.limit);
+        Promise.all(list.map(function (a) { return a.finished.catch(function () {}); })).then(go);
+      }, 0); });
     },
     /* plays a one-shot class (default pmt-in) from its start; a later play or leave supersedes it */
     play: function (el, cls, then) {
