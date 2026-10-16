@@ -141785,12 +141785,15 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
   const busyRoot = document.documentElement;
   const BUSY_ATTRS = [['data-pm-page-transition', 'page'], ['data-pmu-moment', 'usage'], ['data-o55-open', 'onboarding'], ['data-o55-boot-wait', 'boot']];
   const BUSY_IDS = [['o55np-reboot', 'reboot'], ['o55np-calm', 'calm'], ['o55nw-boot', 'boot']];
-  const tourCovers = document.getElementsByClassName('o55t-bootcover');
+  /* the tour's boot cover is always a child of the body (85-tour-nier.js coverBoot): its ~30 children are looked at,
+     never a live collection, whose length walks the whole document again after any DOM change (4.3 ms a call on
+     Nas1 during an editor open, Glass lane) */
+  const tourCovered = () => { for (let c = document.body && document.body.lastElementChild; c; c = c.previousElementSibling) if (c.classList.contains('o55t-bootcover')) return true; return false; };
   let busyFrame = 0, busyTimer = 0;
   const busyNow = () => {
     for (const [a, why] of BUSY_ATTRS) if (busyRoot.hasAttribute(a)) return why;
     for (const [id, why] of BUSY_IDS) if (document.getElementById(id)) return why;
-    if (tourCovers.length) return 'boot';
+    if (tourCovered()) return 'boot';
     try { const t = window.PM_THEME_TRANSITION; if (t && typeof t.busy === 'function' && t.busy()) return 'theme'; } catch (_) { /* none */ }
     try { const n = window.PM_NIER; if (n && typeof n.wanted === 'function' && typeof n.on === 'function' && !!n.wanted() !== !!n.on()) return 'nier'; } catch (_) { /* none */ }
     return '';
@@ -146558,21 +146561,36 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
     var hover = null, springs = new Set(), lit = new Set();
     var running = false, lastT = 0, wasRest = false, bodyRest = false, visCache = null;
     var recheck = false, popupOpen = false;
-    /* A popup open anywhere holds the hover. The class-named ones are live collections (no search); the [role="menu"]
-       elements are found again only when the document's elements or roles changed since the last look: searched on
-       every click and key, the whole ~21k-element document cost 3.2 ms per look on Nas1 (8-40 ms with the forced
-       reads, T8 speed team). The same popups answer, in the same frame. */
-    var popByClass = [document.getElementsByClassName('pmu-menu'), document.getElementsByClassName('pmu-pop')];
-    var roleMenus = null, roleWatch = false;
+    /* A popup open anywhere holds the hover. The popups are kept as a set: found once, then from the elements the
+       document gains and the role attributes it changes (the popup classes are only ever given at creation), so a look
+       after a click or key never walks the page: a search of the whole ~21k-element document cost 3.2 ms per look on
+       Nas1 (8-40 ms with its forced reads, T8 speed team), and a live collection's length walks it again after any DOM
+       change (Glass lane). The same popups answer, in the same frame. */
+    var popups = new Set(), popWatch = false;
+    function addPopups(n) {
+      if (!n || n.nodeType !== 1) return;
+      if (n.matches(POPUP)) popups.add(n);
+      if (n.firstElementChild) { var l = n.querySelectorAll(POPUP); for (var i = 0; i < l.length; i++) popups.add(l[i]); }
+    }
     try {
-      new MutationObserver(function () { roleMenus = null; }).observe(document, { childList: true, subtree: true, attributes: true, attributeFilter: ['role'] });
-      roleWatch = true;
-    } catch (_) { roleWatch = false; }
-    function shownIn(l) { for (var i = 0; i < l.length; i++) { if (l[i].getClientRects().length) return true; } return false; }
+      Array.prototype.forEach.call(document.querySelectorAll(POPUP), function (e) { popups.add(e); });
+      new MutationObserver(function (muts) {
+        for (var i = 0; i < muts.length; i++) {
+          var m = muts[i];
+          if (m.type === 'attributes') { if (m.target.matches(POPUP)) popups.add(m.target); else popups.delete(m.target); }
+          else for (var j = 0; j < m.addedNodes.length; j++) addPopups(m.addedNodes[j]);
+        }
+      }).observe(document, { childList: true, subtree: true, attributes: true, attributeFilter: ['role'] });
+      popWatch = true;
+    } catch (_) { popWatch = false; }
     function anyPopup() {
-      if (shownIn(popByClass[0]) || shownIn(popByClass[1])) return true;
-      if (!roleMenus || !roleWatch) roleMenus = document.querySelectorAll('[role="menu"]');
-      return shownIn(roleMenus);
+      var open = false;
+      if (!popWatch) { var l = document.querySelectorAll(POPUP); for (var i = 0; i < l.length && !open; i++) open = !!l[i].getClientRects().length; return open; }
+      popups.forEach(function (e) {
+        if (!e.isConnected) { popups.delete(e); return; }   /* gone (put back, it is found again as an added node) */
+        if (!open && e.getClientRects().length) open = true;
+      });
+      return open;
     }
     /* after a click, a key or a pointerdown the page may have changed under a resting pointer (a menu opened, a page
        switched): the next frame looks again at what is under the pointer. The loop is started even when nothing hovers:
@@ -147288,34 +147306,55 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
        instead of landing in the first hover frame near a box; and the proxies the look uses are made, so their layers
        exist before the first hover. Again after a look change and whenever a frame meets a target not stamped yet (new
        DOM). */
-    var stampTimer = 0, stampList = null, stampAt = 0, stampOuter = null;
+    var stampTimer = 0, stampNext = null, stampWalk = null, stampBusy = false;
     function stampSoon(ms) {
-      if (stampTimer || stampList) return;
+      if (stampTimer || stampBusy) return;
       stampTimer = setTimeout(function () { stampTimer = 0; idle(stampRun); }, ms || 700);
+    }
+    /* In idle slices of at most ~4 ms, as a walk of the page in document order that can stop and go on: the look's
+       tokens and the glow and frame layers in the first slice, then each element tried against the targets, the
+       inside of a target stamped (or one already stamped) skipped whole. One search of the whole ~21k-element page
+       ran in a single idle callback, 28 ms on Nas1, and a click landing in it waited (F2 idle-slice census). The same
+       outermost targets get the same kinds, in the same order. */
+    function stampAfter(el) {   /* the next element after el and everything inside it */
+      var w = stampWalk;
+      w.currentNode = el;
+      var s = w.nextSibling();
+      if (s) return s;
+      w.currentNode = el;
+      while (w.parentNode()) { s = w.nextSibling(); if (s) return s; }
+      return null;
     }
     function stampRun(dl) {
       if (!document.body) return;
-      if (!stampList) {
-        if (tokensDirty) readTokens();
-        var g = false, f = false;
-        for (var k in T) { if (T[k].glow) g = true; if (T[k].frame) f = true; }
-        if (g) ensureGlow();
-        if (f) ensureFrame();
-        stampList = document.querySelectorAll(SEL); stampAt = 0; stampOuter = null;
+      var t0 = performance.now();
+      var spent = function () { return performance.now() - t0 > 4 || (dl && dl.timeRemaining && dl.timeRemaining() < 2); };
+      if (!stampBusy || !stampNext || !stampNext.isConnected) {
+        if (!stampBusy) {
+          if (tokensDirty) readTokens();
+          var g = false, f = false;
+          for (var k in T) { if (T[k].glow) g = true; if (T[k].frame) f = true; }
+          if (g) ensureGlow();
+          if (f) ensureFrame();
+        }
+        stampBusy = true;
+        stampWalk = document.createTreeWalker(document.documentElement, NodeFilter.SHOW_ELEMENT);
+        stampNext = stampWalk.nextNode();
+        if (spent()) { idle(stampRun); return; }
       }
-      var n = 0, t0 = performance.now();
-      while (stampAt < stampList.length) {
-        var el = stampList[stampAt++];
-        if (stampOuter && stampOuter.contains(el)) continue;
-        if (!el.isConnected || !valid(el)) continue;
-        stampOuter = el;
-        if (el.hasAttribute('data-pmh-kind')) continue;
-        var kd = kindOf(el);
-        el.setAttribute('data-pmh-kind', kd); stats.writes++; stats.stamped = (stats.stamped || 0) + 1;
-        if (++n >= 12 || performance.now() - t0 > 4 || (dl && dl.timeRemaining && dl.timeRemaining() < 2)) break;
+      var n = 0, el = stampNext;
+      while (el) {
+        var next;
+        if (el.matches(SEL) && valid(el)) {
+          if (!el.hasAttribute('data-pmh-kind')) { el.setAttribute('data-pmh-kind', kindOf(el)); stats.writes++; stats.stamped = (stats.stamped || 0) + 1; n++; }
+          next = stampAfter(el);
+        } else { stampWalk.currentNode = el; next = stampWalk.nextNode(); }
+        el = next;
+        if (n >= 12 || spent()) break;
       }
+      stampNext = el;
       for (var q = kindQueue.length - 1; q >= 0; q--) if (kindQueue[q].hasAttribute('data-pmh-kind')) kindQueue.splice(q, 1);
-      if (stampAt < stampList.length) idle(stampRun); else stampList = null;
+      if (el) idle(stampRun); else { stampBusy = false; stampWalk = null; }
     }
 
     /* software rendering: asked twice, late and off the main thread (the worker answers within a few seconds; where no
@@ -147343,6 +147382,8 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
       resolve: resolve,
       kindOf: function (el) { return el ? kindOf(el) : null; },
       retoken: function () { readTokens(); return JSON.parse(JSON.stringify(T)); },
+      stamp: function () { return { busy: stampBusy, timer: !!stampTimer, stamped: stats.stamped || 0 }; },
+      popups: function () { return { open: anyPopup(), kept: popups.size, watched: popWatch }; },
       stats: function () { var o = {}; for (var k in stats) o[k] = stats[k]; o.slow = stats.slow.slice(); o.hist = Object.assign({}, stats.hist); o.enters = Object.assign({}, stats.enters); o.totalMs = Math.round(stats.totalMs * 100) / 100; o.running = running; o.springs = springs.size; o.lit = lit.size; return o; },
       state: function () {
         var hs = hover ? ST.get(hover) : null;
