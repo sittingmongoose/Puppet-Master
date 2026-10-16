@@ -48,7 +48,8 @@ HOVER_TAGS = [
      "    if(el&&el.matches&&el.matches('[role=\"tab\"],[data-page]'))return ['', 'Show this page.'];\n",
      'hover tag: status bar detail'),
     # A16: a tag never covers a primary action (the chat's Send). It slides off it sideways, or goes to the other
-    # side of its control; with no free place left it stays shut (its description is still read out).
+    # side of its control; with no free place left it stays shut (its description is still read out). A control can
+    # opt in as a primary action with the class pm-hover-avoid.
     ("    left=clamp(left,viewport.left+marginX,viewportRight-marginX-rect.width);\n"
      "    top=clamp(top,viewport.top+marginY,viewportBottom-marginY-rect.height);\n"
      "    this.tag.style.left=Math.round(left)+'px';this.tag.style.top=Math.round(top)+'px';this.tag.setAttribute('data-placement',placement);\n",
@@ -60,9 +61,9 @@ HOVER_TAGS = [
      "    this.tag.style.left=Math.round(left)+'px';this.tag.style.top=Math.round(top)+'px';this.tag.setAttribute('data-placement',placement);\n",
      'hover tag: avoid primary actions'),
     ("  HoverTagController.prototype.position=function(){\n",
-     "  var PRIMARY_ACTIONS='.pm6-chat-send,.pmw-sc-send,.pm6-wiz-send,[data-pm-hover-avoid]';\n"
+     "  var PRIMARY_CLASSES=['pm6-chat-send','pmw-sc-send','pm6-wiz-send','pm-hover-avoid'];\n"
      "  function avoidPrimary(active,tagRoot,left,top,rect,anchor,viewport,marginX,marginY){\n"
-     "    var nodes=document.querySelectorAll(PRIMARY_ACTIONS),boxes=[];\n"
+     "    var nodes=[],boxes=[];PRIMARY_CLASSES.forEach(function(c){var l=document.getElementsByClassName(c);for(var k=0;k<l.length;k++)nodes.push(l[k]);});   /* live lists: no document-wide selector match */\n"
      "    for(var i=0;i<nodes.length;i++){var n=nodes[i];if(n===active||n.contains(active)||active.contains(n))continue;var b=n.getBoundingClientRect();if(!(b.width>0&&b.height>0))continue;\n"
      "      var stack=document.elementsFromPoint(b.left+b.width/2,b.top+b.height/2),front=null;\n"
      "      for(var s=0;s<stack.length;s++)if(!(tagRoot&&tagRoot.contains(stack[s]))){front=stack[s];break;}\n"
@@ -162,6 +163,38 @@ PAGES = [
      "    var origGo = window.PM_PAGES.go;\n"
      "    window.PM_PAGES.go = function (pageId, subTab) {\n",
      'page switch: finish entrances helper'),
+    # A3, A5: a page change's first frame can be long (the arriving page is styled and laid out, first visits build
+    # their content), and the exit and entrance, started inside it, were spent unseen: on the P1000 the Wizard sat still
+    # ~470 ms, then vanished in one frame. Both moves start again together on the frame after the first one shown.
+    ("      oldP.classList.add('pm8-page-out');\n"
+     "      newP.classList.add('pm8-page-in');\n",
+     "      oldP.classList.add('pm8-page-out');\n"
+     "      newP.classList.add('pm8-page-in');\n"
+     "      requestAnimationFrame(function () { requestAnimationFrame(function () {   /* O55: start on a shown frame */\n"
+     "        var t = document.timeline.currentTime; if (t == null) return;\n"
+     "        [oldP, newP].forEach(function (p) { p.getAnimations().forEach(function (a) {\n"
+     "          if (a.animationName === 'pm8-page-in' || a.animationName === 'pm8-page-out') { try { if (a.playState !== 'idle') a.startTime = t; } catch (e) {} }\n"
+     "        }); });\n"
+     "      }); });\n",
+     'page switch: moves start on a shown frame'),
+    # A3, A5: the edge-dissolve header offsets (PM_EDGE) measured each newly shown page's head synchronously inside the
+    # page change, forcing the arriving page's style and layout there (~100 ms on the P1000) before the rest of the
+    # change wrote to it again. Its ResizeObserver delivers the first measure itself, after the frame's layout and before
+    # its paint, so the header offset is still right on the first frame.
+    ("        if (entry.stack || entry.gap) {\n"
+     "          for (var s = head.previousElementSibling; s; s = s.previousElementSibling) ro.observe(s);\n"
+     "        }\n"
+     "      } catch (e) {}\n"
+     "      measure(host, head, entry);\n"
+     "    }\n",
+     "        if (entry.stack || entry.gap) {\n"
+     "          for (var s = head.previousElementSibling; s; s = s.previousElementSibling) ro.observe(s);\n"
+     "        }\n"
+     "        return;   /* O55: the observer's first callback measures, after layout */\n"
+     "      } catch (e) {}\n"
+     "      measure(host, head, entry);\n"
+     "    }\n",
+     'edge dissolve: first measure from the observer'),
 ]
 
 CENSUS = [
