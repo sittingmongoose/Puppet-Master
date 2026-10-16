@@ -162,7 +162,8 @@ function watchPanels() {
   let last = activeTarget(), lastHidden = s.classList.contains('hidden');
   const check = () => {
     const now = activeTarget(), hidden = s.classList.contains('hidden');
-    if ((now !== last || hidden !== lastHidden) && now && !hidden) notifyShown(now, { reason: 'switch', from: last });
+    /* opened: the slot was hidden before, so nothing was on screen to hand over from (a skin holds no leaving panel) */
+    if ((now !== last || hidden !== lastHidden) && now && !hidden) notifyShown(now, { reason: 'switch', from: last, opened: lastHidden });
     if (now !== last || hidden !== lastHidden) {
       Object.keys(HOST.inst).forEach(k => {
         const p = PMR.PANELS.find(x => x.id === k);

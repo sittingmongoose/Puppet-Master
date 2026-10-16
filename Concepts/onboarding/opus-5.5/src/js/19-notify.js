@@ -131,7 +131,8 @@
   };
   const motion = () => MOTION[look()]();
   /* Web Animations (Animation speed scales them through kit.d/17-look.js); real() keeps reading time unscaled */
-  function play(el, frames, o) {
+  function play(el, frames, o) { return playNow(el, frames, o); }
+  function playNow(el, frames, o) {
     if (!el || typeof el.animate !== 'function') return null;
     try { return el.animate(frames, Object.assign({ fill: 'none' }, o)); } catch (_) { return null; }
   }
@@ -479,20 +480,28 @@
        stack now, and it is placed again; still crowded, a lasting card joins the stack too (the badge counts it) and a
        quick note shows for a shorter time. */
     const place = () => typeof window.PM_NOTICE_PLACE === 'function' && window.PM_NOTICE_PLACE() === true;
-    if (place()) {
-      let joined = false;
-      staged.forEach((r) => { if (r !== rec && !r.leaving && r.it.durable) { finishStaged(r, 'join'); joined = true; } });
-      if (!joined || place()) {
-        if (it.durable && method() !== 'Banner') { finishStaged(rec, 'join'); sound('callout', 0.4); return; }
-        it.stageMs = Math.min(it.stageMs, Math.max(1800, Math.round(it.stageMs * 0.5)));
+    /* placed after the coming frame's layout and before its paint (B5: placed at once, a toast staged inside a look
+       change's commit measured the whole page while that restyle was pending); the card's first frame is already
+       in its place */
+    const settle = (crowded) => {
+      if (!staged.has(it.id) || staged.get(it.id) !== rec || rec.leaving) return;
+      if (crowded) {
+        let joined = false;
+        staged.forEach((r) => { if (r !== rec && !r.leaving && r.it.durable) { finishStaged(r, 'join'); joined = true; } });
+        if (!joined || place()) {
+          if (it.durable && method() !== 'Banner') { finishStaged(rec, 'join'); sound('callout', 0.4); return; }
+          it.stageMs = Math.min(it.stageMs, Math.max(1800, Math.round(it.stageMs * 0.5)));
+        }
       }
-    }
-    flip(before, c);
-    /* the cards already showing slide down first; the new one arrives into the slot they open, so two titles never
-       show through each other (frame review, 2026-10-13) */
-    if (still()) { /* Reduced Motion: it is simply there */ }
-    else enter(c, it, before.size ? Math.round(motion().move.duration * (look() === 'retro' || look() === 'nier' ? 0.5 : 0.32)) : 0);
-    startTimer(rec);
+      flip(before, c);
+      /* the cards already showing slide down first; the new one arrives into the slot they open, so two titles never
+         show through each other (frame review, 2026-10-13) */
+      if (still()) { /* Reduced Motion: it is simply there */ }
+      else enter(c, it, before.size ? Math.round(motion().move.duration * (look() === 'retro' || look() === 'nier' ? 0.5 : 0.32)) : 0);
+      startTimer(rec);
+    };
+    if (typeof window.PM_NOTICE_PLACE === 'function' && window.PM_NOTICE_PLACE.length >= 1) window.PM_NOTICE_PLACE(settle);
+    else settle(place());
     sound(it.level === 'blocking' ? (it.severity === 'error' ? 'error' : 'callout') : it.level === 'attention' ? 'warn' : it.level === 'notice' ? 'callout' : null, it.level === 'quiet' ? 0.3 : 0.55);
   }
   function enter(c, it, delay) {
@@ -950,6 +959,11 @@
     sound('open', 0.4);
     if (!still()) {
       const m = motion(), L = look(), chrome = panelEl.querySelector('.pmn-chrome');
+      /* every entrance below plays on the frames that are shown (11-motion-start.js; final motion QA B10): a first frame
+         that is long (Glass rastering its blur on first show, about half a second on the P1000) otherwise ran the whole
+         entrance behind it, and the panel appeared already open */
+      const opening = [], play = (el, frames, o) => { const a = playNow(el, frames, o); if (a) opening.push(a); return a; };
+      if (window.PM_START_ON_SHOWN) window.PM_START_ON_SHOWN(() => (open ? opening : []));
       if (L === 'retro') {
         play(chrome, [{ transform: 'scale(1, .01)', filter: 'brightness(3)' }, { transform: 'scale(1, .01)', filter: 'brightness(2)', offset: 0.35 }, { transform: 'none', filter: 'none' }], { duration: 260, easing: 'steps(6, end)' });
       } else if (L === 'nier') {

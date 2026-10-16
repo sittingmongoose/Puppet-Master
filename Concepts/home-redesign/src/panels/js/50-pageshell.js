@@ -146,11 +146,17 @@ var SPOT_DOWN = 320, SPOT_SIDE = 280, SPOT_STEP = 12, SPOT_PAD = 4;
 function controlsIn(x0, x1, y0, y1, stage) {
   /* the page that shows (the others keep their layout while hidden), the chat, the left column and the title bar */
   var out = [], roots = [doc.querySelector('.primary-content > .page.active'), doc.getElementById('chatPanel'), doc.querySelector('.left-panel'), doc.querySelector('.title-bar')];
+  /* only what can be in reach: a root that does not overlap the area is passed over, and so is a control that is not
+     drawn (hidden, or inside a content-visibility section the browser has skipped): measuring one forced its skipped
+     subtree's layout, once per control (B5, Settings lane read probe) */
+  var seen = function (e) { try { return !e.checkVisibility || e.checkVisibility({ contentVisibilityAuto: true, visibilityProperty: true }); } catch (_) { return true; } };
   for (var r = 0; r < roots.length; r++) {
     if (!roots[r]) continue;
+    var rr = roots[r].getBoundingClientRect();
+    if (!rr.width || rr.right < x0 || rr.left > x1 || rr.bottom < y0 || rr.top > y1) continue;
     var list = roots[r].querySelectorAll(CONTROL_SEL);
     for (var i = 0; i < list.length; i++) {
-      var e = list[i]; if (stage.contains(e) || e.closest('#notifySlot')) continue;
+      var e = list[i]; if (stage.contains(e) || e.closest('#notifySlot') || !seen(e)) continue;
       var b = e.getBoundingClientRect();
       if (b.width < 2 || b.height < 2 || b.right < x0 || b.left > x1 || b.bottom < y0 || b.top > y1) continue;
       out.push(b);
@@ -196,8 +202,33 @@ function applyDrop() {
   if (stage.hasAttribute('data-pmn-crowded') !== spot.crowded) stage.toggleAttribute('data-pmn-crowded', spot.crowded);
   return spot.crowded;
 }
-/* the notices ask before a toast's time starts (19-notify.js stage()) */
-window.PM_NOTICE_PLACE = applyDrop;
+/* the notices ask before a toast's time starts (19-notify.js stage()). Asked with a callback, the stage is placed after
+   the coming frame's layout, before its paint, and the callback hears whether it is crowded: asked at once, a toast
+   staged inside a look change's commit measured the page while that restyle was pending (B5). Asked without one, it is
+   placed now. */
+window.PM_NOTICE_PLACE = function (done) {
+  if (typeof done !== 'function') return applyDrop();
+  afterLayout(function () { var crowded = false; try { crowded = applyDrop(); } catch (e) { /* placed by the next ask */ } done(crowded === true); });
+};
+/* A placement asked for by a frame (a scroll, an overlay opening, a page change) reads its boxes once that frame's own
+   style and layout are done, from the first ResizeObserver delivery after them, not in an animation frame callback
+   before them: there the read pulled a pending whole-page restyle (a look change, NieR Mode under its calm cover)
+   forward into the frame that should first show the change (49 and 32 ms on the M3, final motion QA 2026-10-16). */
+var layoutQ = [], layoutRo = null;
+function afterLayout(fn) {
+  /* the shell's one early observer (onboarding 11-motion-start.js): it is told before the page's other observers, so
+     these reads come before any of them writes in the same delivery */
+  if (typeof window.PM_AFTER_LAYOUT === 'function') { window.PM_AFTER_LAYOUT(fn); return; }
+  if (typeof ResizeObserver !== 'function') { fn(); return; }
+  if (layoutQ.indexOf(fn) < 0) layoutQ.push(fn);
+  if (layoutRo) return;
+  layoutRo = new ResizeObserver(function () {
+    layoutRo.disconnect(); layoutRo = null;
+    var q = layoutQ; layoutQ = [];
+    for (var i = 0; i < q.length; i++) { try { q[i](); } catch (e) { /* the next ask places it */ } }
+  });
+  layoutRo.observe(doc.documentElement);
+}
 shell.installNotices = function () {
   if (shell.noticesOn) return true;
   var stage = doc.getElementById('rsStage');
@@ -207,23 +238,25 @@ shell.installNotices = function () {
     return false;
   }
   shell.noticesOn = true;
-  // a card arriving: measure before the browser paints it (a microtask after the DOM change)
+  // a card arriving: measured before the browser paints it, after the coming frame's layout (B5, Liquid Glass lane
+  // profile: measured in the microtask after the DOM change, it forced the pending restyle of a NieR switch, and
+  // every other ask in the same frame forced it again; asks made in one frame are placed once, after its layout)
   new MutationObserver(function (list) {
-    for (var i = 0; i < list.length; i++) if (list[i].addedNodes.length) { applyDrop(); return; }
+    for (var i = 0; i < list.length; i++) if (list[i].addedNodes.length) { afterLayout(applyDrop); return; }
   }).observe(stage, { childList: true });
   // an overlay opening or closing under cards already shown (a press, a key or focus moving): measure again two frames
   // later, once it has opened, and only while a card shows
   var pending = 0;
   function later() {
     if (pending || !stage.firstElementChild) return;
-    pending = requestAnimationFrame(function () { requestAnimationFrame(function () { pending = 0; applyDrop(); }); });
+    pending = requestAnimationFrame(function () { requestAnimationFrame(function () { pending = 0; afterLayout(applyDrop); }); });
   }
   ['pointerdown', 'keydown', 'focusin'].forEach(function (t) { doc.addEventListener(t, later, true); });
   /* the page scrolling controls under cards already shown: placed again once per frame */
   var scrollQ = 0;
   doc.addEventListener('scroll', function () {
     if (scrollQ || !stage.firstElementChild) return;
-    scrollQ = requestAnimationFrame(function () { scrollQ = 0; applyDrop(); });
+    scrollQ = requestAnimationFrame(function () { scrollQ = 0; afterLayout(applyDrop); });
   }, { capture: true, passive: true });
   /* a page change: measure again once the new page shows (its strips are laid out two frames on), while a card shows.
      Only a page's own class counts: every class change inside the pages measured too, and a Usage room change makes
@@ -233,7 +266,7 @@ shell.installNotices = function () {
     if (turn || !stage.firstElementChild) return;
     for (var i = 0; i < list.length; i++) {
       if (list[i].target.parentElement !== main) continue;
-      turn = requestAnimationFrame(function () { requestAnimationFrame(function () { turn = 0; applyDrop(); }); });
+      turn = requestAnimationFrame(function () { requestAnimationFrame(function () { turn = 0; afterLayout(applyDrop); }); });
       return;
     }
   }).observe(main, { attributes: true, subtree: true, attributeFilter: ['class'] });

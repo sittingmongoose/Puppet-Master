@@ -231,7 +231,10 @@ function syncBodies(panelEl, p, l, panelHidden) {
     if (visible !== rec.visible) {
       rec.visible = visible;
       var inst = rec.instance;
-      if (inst) {
+      /* onShow and onHide follow the page in front as well: while Home is hidden every shown tab has been told onHide
+         (onPageChange, 90-boot.js) and is told onShow when Home is in front again, so a render meanwhile (a Settings
+         change re-laying Home out) wakes none of them. The tab's hidden state still follows the layout. */
+      if (inst && homeIsPage()) {
         try { if (visible && inst.onShow) inst.onShow(); else if (!visible && inst.onHide) inst.onHide(); }
         catch (err) { try { console.error('[pm-home] show/hide failed', err); } catch (_) {} }
       }
