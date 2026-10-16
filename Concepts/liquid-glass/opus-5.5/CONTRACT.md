@@ -20,7 +20,8 @@ Set `data-lg-surface` on the element:
 - `panel`, `card` and `bar` are baked: they frost the wallpaper, not what is drawn under them. Put them directly on
   the wallpaper and clear any filled wrapper between. Never put a sheet on a sheet (one blur, F3-427). Inner cards
   are plain fills (below), with no `backdrop-filter`.
-- Each baked sheet costs a cold bake on first show and on resize. Keep it to about three per page.
+- Each baked sheet costs a cold bake on first show and on resize. Keep it to about three per page. The bake runs in a
+  worker: the page only reads the sheet's size and place after a layout, and its rim arrives a frame or more later.
 - A large floating dialog full of text (a Customize screen) adds `data-lg-dense` next to `data-lg-surface="menu"`:
   its tint is heavier, so what is behind never shows through its text. On the CPU tier (no live blur) every menu is
   near opaque anyway.
