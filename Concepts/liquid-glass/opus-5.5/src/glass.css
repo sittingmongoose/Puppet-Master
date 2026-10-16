@@ -97,15 +97,18 @@ html[data-lg="on"][data-theme="glass-light"]:not(#lgz) #panel-settings { --k3-te
    sheet; what they hold takes the plain inner fill. The old stage's thinner tint (.55 and .38) let the wallpaper's bright
    ribbons through to 3.2-4.2:1 under muted words (pm7-contrast-opus, 2026-10-15: Settings Home's chapter cards at
    4.10-4.41). Words that sat straight on the wallpaper (the managers' footer links, Memory's toolbar) get the same
-   ground. Controls keep their own fills. */
-html[data-lg="on"][data-theme^="glass"]:not(#lgz) #panel-settings :is(.domain-card, .panel-card, .pm51-stats, .pm51-panel-card, .pm51-advanced, .pm51-note, .pm51-example, .pm51-hero-facts, .pm51-settings-inline .settings-section, .o55-notif-master, .setting-list):not(:is(.domain-card, .panel-card, .pm51-stats, .pm51-panel-card, .pm51-advanced, .pm51-note, .pm51-example, .pm51-hero-facts, .settings-section, .drawer, .detail-inspector, .o55-notif-master, .setting-list, [data-lg-kind]) *) { background: var(--lg-tint-card) !important; }
+   ground. Controls keep their own fills. "Inside a sheet" names Settings' sheets by the selectors glass.js mounts them
+   by (SURFACES and the data-lg-surface opt-ins), not by [data-lg-kind]: inside :not(), the attribute glass.js adds
+   made every mark restyle all the sheet holds (155-165 ms for one 704-element section; a chapter change marks a dozen,
+   2026-10-16). Keep the two lists in step. */
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) #panel-settings :is(.domain-card, .panel-card, .pm51-stats, .pm51-panel-card, .pm51-advanced, .pm51-note, .pm51-example, .pm51-hero-facts, .pm51-settings-inline .settings-section, .o55-notif-master, .setting-list):not(:is(.domain-card, .panel-card, .pm51-stats, .pm51-panel-card, .pm51-advanced, .pm51-note, .pm51-example, .pm51-hero-facts, .settings-section, .drawer, .detail-inspector, .o55-notif-master, .setting-list, aside.domain-rail, .document-layout > :is(nav, aside):not(.document-main), header.workspace-separator, .home-page > section.home-hero, .home-page .home-panel, [data-lg-surface="menu"], [data-lg-surface="card"], [data-lg-surface="bar"], [data-lg-surface="panel"]) *) { background: var(--lg-tint-card) !important; }
 /* a list of settings straight on the wallpaper (Notifications' master switch read 1.0:1 over a bright ribbon) is a card */
-html[data-lg="on"][data-theme^="glass"]:not(#lgz) #panel-settings :is(.o55-notif-master, .setting-list):not(:is(.domain-card, .panel-card, .pm51-stats, .pm51-panel-card, .pm51-advanced, .pm51-note, .pm51-example, .pm51-hero-facts, .settings-section, .drawer, .detail-inspector, .o55-notif-master, .setting-list, [data-lg-kind]) *) { border-radius: var(--lg-r-card) !important; }
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) #panel-settings :is(.o55-notif-master, .setting-list):not(:is(.domain-card, .panel-card, .pm51-stats, .pm51-panel-card, .pm51-advanced, .pm51-note, .pm51-example, .pm51-hero-facts, .settings-section, .drawer, .detail-inspector, .o55-notif-master, .setting-list, aside.domain-rail, .document-layout > :is(nav, aside):not(.document-main), header.workspace-separator, .home-page > section.home-hero, .home-page .home-panel, [data-lg-surface="menu"], [data-lg-surface="card"], [data-lg-surface="bar"], [data-lg-surface="panel"]) *) { border-radius: var(--lg-r-card) !important; }
 html[data-lg="on"][data-theme^="glass"]:not(#lgz) #panel-settings :is(.panel-card, .pm51-stats, .pm51-panel-card, .pm51-advanced, .pm51-hero-facts, .settings-section) :is(.panel-card, .pm51-stat, .pm51-panel-card, .pm51-advanced, .pm51-note, .pm51-example, .pm51-hero-facts, .settings-section) { background: var(--lg-fill) !important; }
-html[data-lg="on"][data-theme^="glass"]:not(#lgz) #panel-settings :is(.o55-toolbar, .pm51-quiet, .o55-quiet-line, .o55-mgp-lead):not(:is(.domain-card, .panel-card, .pm51-stats, .pm51-panel-card, .pm51-advanced, .pm51-hero-facts, .settings-section, .drawer, .detail-inspector, [data-lg-kind]) *) {
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) #panel-settings :is(.o55-toolbar, .pm51-quiet, .o55-quiet-line, .o55-mgp-lead):not(:is(.domain-card, .panel-card, .pm51-stats, .pm51-panel-card, .pm51-advanced, .pm51-hero-facts, .settings-section, .drawer, .detail-inspector, aside.domain-rail, .document-layout > :is(nav, aside):not(.document-main), header.workspace-separator, .home-page > section.home-hero, .home-page .home-panel, [data-lg-surface="menu"], [data-lg-surface="card"], [data-lg-surface="bar"], [data-lg-surface="panel"]) *) {
   background: var(--lg-tint-card) !important; border-color: transparent !important; border-radius: var(--lg-r-bar) !important;
 }
-html[data-lg="on"][data-theme^="glass"]:not(#lgz) #panel-settings :is(.pm51-quiet, .o55-quiet-line, .o55-mgp-lead):not(:is(.domain-card, .panel-card, .pm51-stats, .pm51-panel-card, .pm51-advanced, .pm51-hero-facts, .settings-section, .drawer, .detail-inspector, [data-lg-kind]) *) { padding: 8px 12px !important; }
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) #panel-settings :is(.pm51-quiet, .o55-quiet-line, .o55-mgp-lead):not(:is(.domain-card, .panel-card, .pm51-stats, .pm51-panel-card, .pm51-advanced, .pm51-hero-facts, .settings-section, .drawer, .detail-inspector, aside.domain-rail, .document-layout > :is(nav, aside):not(.document-main), header.workspace-separator, .home-page > section.home-hero, .home-page .home-panel, [data-lg-surface="menu"], [data-lg-surface="card"], [data-lg-surface="bar"], [data-lg-surface="panel"]) *) { padding: 8px 12px !important; }
 /* the section tabs stand on the wallpaper too: their track is the bar's glass, not a control fill */
 html[data-lg="on"][data-theme^="glass"]:not(#lgz) #pm-settings-root nav.workspace-tabs.workspace-tabs { background: var(--lg-tint-bar) !important; }
 /* the chapter rail's descriptions sit on its frosted sheet: muted ink read 4.08:1 over a bright patch in Dark */
@@ -172,18 +175,24 @@ html[data-theme^="glass"]:not(#lgz) .main-area { flex: 1 1 0% !important; }
 @property --lg-mat { syntax: '<number>'; inherits: false; initial-value: 1; }
 /* the per-sheet bakes are read only by the sheet's own background, so they do not inherit: a scroll that moves a sheet's
    frost (--lg-fx / --lg-fy, every frame) and a new ring or spec map restyle that sheet alone, not every element inside it
-   (a Usage card holds 100 to 400; Jared #3 and #13, 2026-10-14) */
+   (a Usage card holds 100 to 400; Jared #3 and #13, 2026-10-14). The same for the pointer's light on a sheet (--lg-glow,
+   Glass Light): the pointer entering a sheet restyled all it holds. */
 @property --lg-fx { syntax: '*'; inherits: false; }
 @property --lg-fy { syntax: '*'; inherits: false; }
 @property --lg-ring { syntax: '*'; inherits: false; }
 @property --lg-spec { syntax: '*'; inherits: false; }
 @property --lg-px { syntax: '*'; inherits: false; }
 @property --lg-py { syntax: '*'; inherits: false; }
+@property --lg-glow { syntax: '*'; inherits: false; }
 /* how see-through the sheets are. Settings' panel transparency (public --glass-alpha, from its floor, .35 dark and .45
    light, to 1) moves each sheet's tint around today's look, which is the setting's default .55: up to a near-opaque .94
    at 100 %, and down by at most a quarter of the tint at the floor, so the frost keeps text readable. --lg-ga is
-   registered as a number, so a value that is not one falls back to the default instead of breaking the paint. */
-@property --lg-ga { syntax: '<number>'; inherits: true; initial-value: 0.55; }
+   registered as a number, so a value that is not one falls back to the default instead of breaking the paint. These three
+   are read only by the sheet's own tint, so they do not inherit either: a sheet marked on a Settings chapter change
+   restyled every element it holds (1,130 at once, 2026-10-16), where it now restyles alone. */
+@property --lg-ga { syntax: '<number>'; inherits: false; initial-value: 0.55; }
+@property --lg-ga-k { syntax: '*'; inherits: false; }
+@property --lg-ga-add { syntax: '*'; inherits: false; }
 html[data-lg="on"][data-theme="glass-dark"]:not(#lgz) { --lg-ga-floor: .35; }
 html[data-lg="on"][data-theme="glass-light"]:not(#lgz) { --lg-ga-floor: .45; }
 html[data-lg="on"][data-theme^="glass"]:not(#lgz) :is([data-lg-kind="panel"], [data-lg-kind="card"], [data-lg-kind="bar"]) {
