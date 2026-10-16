@@ -777,7 +777,8 @@
     var sig2 = W + 'x' + H + ':' + R.toFixed(1) + ':' + kind + ':' + gpu();
     if (e.__lgSig === sig2) return e.__lgF;
     var lf = k.lens ? lensFilterFor(kind, W, H, R) : null;
-    var m = lf ? lf.m : buildMaps(W, H, Math.round(R), Math.round(B), Math.round(T), k.mag, k.light);
+    /* only the light map is drawn (a menu blurs in CSS): its displacement map was encoded for nothing, on every new size */
+    var m = lf ? lf.m : buildMaps(W, H, Math.round(R), Math.round(B), Math.round(T), k.mag, k.light, null, true);
     e.style.setProperty('--lg-spec', 'url(' + m.spec + ')');
     e.__lgSig = sig2; e.__lgF = null;
     var bf = null;
