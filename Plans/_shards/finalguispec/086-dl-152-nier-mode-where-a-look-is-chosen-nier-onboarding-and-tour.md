@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L42449-L42714
+Source lines: L42461-L42731
 
-Source SHA256: `c4af950579b79e1ad4ff8ab776dc4bb023d87acec95fb0265f9c680fd3f744ee`
+Source SHA256: `39ead3da53e7659467ebf5d6a5143f3ab02502e95505f86a58d634bb18f2bf0c`
 
 ---
 
@@ -94,6 +94,8 @@ canonical_text: >-
   `ui.onboarding.choose_look`, the editor's open, close and Play reboot moment are `ui.settings.nier_editor.open`,
   `ui.settings.nier_editor.close` and `ui.settings.nier_editor.replay`, and every live control composes the Settings
   transaction pair (SSYS-043, DL-153).
+  Amended 2026-10-16 (DL-215): the reboot cover's exit is smooth: its slats tear the cover away in place,
+  with no sideways jumps of the cover over the page beneath (Jared, 2026-10-16).
 gui_related: true
 gui_classification_reason: Defines where NieR Mode is turned on and how onboarding and the Guided Tour look under it.
 split_recommended: false
@@ -133,6 +135,9 @@ source_lineage:
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/nier-onb-20261007/JARED-REQUEST-20261007.md, SHA-256 416638453431ef6bac2b4a8066560214c4fa3bcd8e0663cf778fba89bc63e652"
   - "Concepts/onboarding/opus-5.5/README.md (concept lineage only; branch t3/concept/polish-nier-onboarding-sounds)"
   - "/home/sittingmongoose/pm-scratch/nier-onb-20261007/design/puppets-final/spec.md (the unit marionette design, concept lineage only)"
+  - /mnt/Cursor/share/puppet-master/2026-10-16-plans-topup/sources/2026-10-16-motion-pass--JUDGEMENT.md,
+    SHA-256 8a3291ea2558da05d40c5a051a958f378802ec9c36454b83dbaf5ffc7efe8cf9 (the global acceptance bar
+    and the A4, A11, A13 and B9 findings; source lineage)
 preserved_exact_tokens:
   - "NieR Mode"
   - "Adjust NieR look"

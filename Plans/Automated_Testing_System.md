@@ -6509,8 +6509,8 @@ canonical_text: >-
   restoration, F3-447 crowded placement and setup joining, F3-628 rapid room reversals, F3-655 stage
   continuity, and SSYS-044/MA-073 held writes and refused defaults. Q21/Q21b timings,
   drop-performance measurements and concept test results are evidence of their measured builds, not
-  universal native performance guarantees. Deferred glyph surfaces and the four top-up lanes remain
-  explicitly unverified. Picker accessibility checks require New tab or panel at the + root, Back to
+  universal native performance guarantees; motion cases are judged against ACD-475's motion bar (DL-215).
+  Deferred glyph surfaces, Q13 and the motion fix lanes remain explicitly unverified. Picker accessibility checks require New tab or panel at the + root, Back to
   <level>, Filter: <title>, and Esc or Backspace (Esc or Delete on Mac), with prior
   query/scroll/focus restored in each F3-632 context.
 gui_related: true
@@ -6530,6 +6530,11 @@ acceptance_criteria:
   cases; missing catalog/asset references and invalid inputs refuse cleanly.
 - Exercise picker Back from each origin with query/scroll/focus restoration and zero command dispatch;
   a final choice dispatches once.
+- Motion cases measure every look against ACD-475's motion bar on P1000-class and M3-class hardware; a
+  concept film is evidence, never a native pass.
+- Terminal cases cover DL-213's retired values (a stored Flicker amount, a stored Bell Visual) and every
+  offered choice drawing apart; switcher cases cover DL-214's per-look chips, press inks and the seated
+  Home tab.
 validation_surfaces:
 - python3 scripts/pm7-canon-check.py
 - python3 scripts/pm-shard-plans.py --check

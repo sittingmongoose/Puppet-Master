@@ -4,7 +4,7 @@ Source: `Plans/UI_Wiring_Rules.md`
 
 Source lines: L2096-L2511
 
-Source SHA256: `573a5980b038104f2a62ab20adf88c7151ce9b71520e93157aed2d1abb674ca5`
+Source SHA256: `1a338eb5882b76b436f4ab5857d026d7b64a61918ed6ffe9f54cce1891827b1d`
 
 ---
 
@@ -368,8 +368,8 @@ canonical_text: >-
   from value patches. A binding cannot substitute all editor or terminal fields for a smaller quick set. The
   round-3 bezel/background/mask fields and saved terminal preset controls are now enumerated. Local library
   actions explicitly declare their SP-331-only persistence; picker Back explicitly declares no persistence.
-  The pending terminal round-5 and non-Glass consistency proposals are not executable bindings in this
-  edition. The two bell Continue controls are separate local census rows forwarding the original prompt's
+  Terminal round 5 (DL-213) retires the Flicker Amount bindings and narrows Bell to Follow look and Off; the
+  consistency pass (DL-214) adds no binding, command or stored state. The two bell Continue controls are separate local census rows forwarding the original prompt's
   own typed action. Setup retains PWIZ-021/UCC-106's ui.onboarding.start and closed
   pm.product_onboarding.action_request.v2 resume context; Guided Tour retains PWIZ-023's
   ui.guided_tour.resume and pm.guided_tour.action_request.v3 session/checkpoint/currentness context. They

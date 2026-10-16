@@ -31840,8 +31840,8 @@ canonical_text: >-
   consumers. Choices never wrap while sharing a sliding highlight. First stack neighbouring fields,
   then shorten visible choices while retaining full accessible names; if the choices still cannot
   fit, use a one-choice-per-line list with instant highlight placement. A highlight never spans
-  wrapped lines. Joined highlights glide in Basic, Friendly and Glass, step in Retro and NieR, and
-  place immediately under Reduced Motion. Keyboard activation and an in-place Settings update retain
+  wrapped lines. Joined highlights glide in every look, Retro and NieR rigidly with no stretch or
+  swell (F3-652, DL-214), and place immediately under Reduced Motion. Keyboard activation and an in-place Settings update retain
   focus on the operated control. Current/default values in rows, Details, search and result toasts
   consume SSYS-006's one formatter and effective display floor; percentage representation never
   changes the stored fractional value.
@@ -31910,7 +31910,9 @@ negative_constraints:
 - "Renderer selection must consume the inventory type field only; renderers must not be inferred from labels, descriptions, or id patterns."
 compatibility_only_notes:
 - "Slint portability: control renderers map to native widget composition and expandable editors to conditional in-place composition over opaque precomputed surfaces; no arbitrary-content backdrop blur, no SVG filters, and color math is precomputed rather than runtime-mixed."
-stale_retired_dispositions: []
+stale_retired_dispositions:
+- 'Amended 2026-10-16 (DL-214): Retro and NieR joined highlights glide rigidly with F3-652''s switcher; it
+  read: step in Retro and NieR.'
 owner_boundary_notes:
 - "Scope semantics and concrete Project-value source disclosure remain carried by F3-510/F3-442; badge semantics route to their owner contracts (restart rules and adjudication ownership); this unit owns the visible row presentation vocabulary."
 owner_hints:
@@ -33210,6 +33212,8 @@ canonical_text: >-
   Amended 2026-10-09 (DL-184): Friendly's cozy pill bar and mint pill tabs and Glass's rounded frosted bar become
   rectangles with the look's inner radius, never capsules (F3-648); the tab set, the active fill and the bottom margin
   stand.
+  Amended 2026-10-16 (DL-214): the Orchestrator's view strip is F3-652's switcher in each look's material;
+  the legacy underline strip in Retro and Basic and Friendly's capsule are retired.
 gui_related: true
 gui_classification_reason: This unit defines visible Orchestrator tab-strip theme skins and the content gap beneath the strip.
 split_recommended: false
@@ -33217,7 +33221,7 @@ depends_on: [DL-184]
 unblocks: []
 acceptance_criteria:
 - "The Orchestrator tab set (Progress, Plan Compile, Seams, Node Graph, Evidence, History, Ledger) is unchanged by this unit; only presentation changes."
-- "Friendly renders the rounded cozy pill bar with mint active pills and no underline; glass renders the frosted step-2 bar with hairline and inset edge and a step-3 active tab; retro and basic keep the legacy underline strip."
+- "The active view is F3-652's switcher in each look's material, on the frosted step-2 bar in Glass, never an underline or a capsule; it read: mint active pills, a step-3 Glass tab and the legacy underline strip in Retro and Basic (superseded 2026-10-16, DL-214)."
 - "The strip has bottom margin so the Node Graph pane and other panes do not sit flush beneath it."
 - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
 validation_surfaces:
@@ -33243,6 +33247,8 @@ compatibility_only_notes:
 - "Slint portability: the tab strip renders as opaque precomputed surfaces; no arbitrary-content backdrop blur, no SVG filters, and color math is precomputed rather than runtime-mixed."
 stale_retired_dispositions:
 - "Amended 2026-10-09 (DL-184): the Orchestrator strip's pill skins are retired (F3-648)."
+- 'Amended 2026-10-16 (DL-214): the legacy underline strip in Retro and Basic and the remaining pill
+  wording retire into F3-652''s per-look switcher.'
 owner_boundary_notes:
 - "The Orchestrator tab set and tab semantics are owned by Plans/Orchestrator_Page.md; this unit owns tab-strip theme presentation and the content gap only."
 owner_hints:
@@ -33272,6 +33278,11 @@ canonical_text: >-
   Amended 2026-10-09 (DL-184): Glass's step-3 frost pill and Friendly's mint-mix pill become ink slabs with the look's
   inner radius, never capsules (F3-648); the shared spring, the directional page transitions and the reduced-motion
   rules stand.
+  Amended 2026-10-16 (DL-214, DL-215): the per-theme ink skins above are superseded by F3-652's switcher
+  in each look's material, Retro's lime slab becoming its reverse-video block and Basic's accent slab its
+  tinted chip. In NieR Mode a page change erases the leaving page and wipes the entering one in; the empty
+  beat between the erase and the wipe-in is at most 50 ms, and the wipe-in may start as the erase ends
+  (Jared, 2026-10-16). Reduced Motion still skips the page animation.
 gui_related: true
 gui_classification_reason: This unit defines visible page-tab active chrome motion and directional page transitions.
 split_recommended: false
@@ -33283,6 +33294,7 @@ acceptance_criteria:
 - "The ink snap-resyncs on theme or motion change, window resize, and fonts-ready; reduced motion snaps the ink and skips the panel animation entirely."
 - "First paint never runs an enter animation and transitions gate until after boot."
 - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+- In NieR Mode no page change shows more than 50 ms of empty ground between the erase and the wipe-in.
 validation_surfaces:
 - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
 - "python3 scripts/pm-plan-index.py validate"
@@ -42532,6 +42544,8 @@ canonical_text: >-
   `ui.onboarding.choose_look`, the editor's open, close and Play reboot moment are `ui.settings.nier_editor.open`,
   `ui.settings.nier_editor.close` and `ui.settings.nier_editor.replay`, and every live control composes the Settings
   transaction pair (SSYS-043, DL-153).
+  Amended 2026-10-16 (DL-215): the reboot cover's exit is smooth: its slats tear the cover away in place,
+  with no sideways jumps of the cover over the page beneath (Jared, 2026-10-16).
 gui_related: true
 gui_classification_reason: Defines where NieR Mode is turned on and how onboarding and the Guided Tour look under it.
 split_recommended: false
@@ -42571,6 +42585,9 @@ source_lineage:
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/nier-onb-20261007/JARED-REQUEST-20261007.md, SHA-256 416638453431ef6bac2b4a8066560214c4fa3bcd8e0663cf778fba89bc63e652"
   - "Concepts/onboarding/opus-5.5/README.md (concept lineage only; branch t3/concept/polish-nier-onboarding-sounds)"
   - "/home/sittingmongoose/pm-scratch/nier-onb-20261007/design/puppets-final/spec.md (the unit marionette design, concept lineage only)"
+  - /mnt/Cursor/share/puppet-master/2026-10-16-plans-topup/sources/2026-10-16-motion-pass--JUDGEMENT.md,
+    SHA-256 8a3291ea2558da05d40c5a051a958f378802ec9c36454b83dbaf5ffc7efe8cf9 (the global acceptance bar
+    and the A4, A11, A13 and B9 findings; source lineage)
 preserved_exact_tokens:
   - "NieR Mode"
   - "Adjust NieR look"
@@ -43619,6 +43636,11 @@ canonical_text: >-
   family's shadow and entrance, Glass keeping the shell's frosted box and nothing moving under reduced motion, and
   its fitting follows the overlay's width; when the side panel eases or folds, and Pin, belong to the home layer,
   and the fold is view-local, never saved, with no command or wiring row.
+  Amended 2026-10-16 (DL-214, DL-215): the rail strips' ink and the activity bar's tile are F3-652's
+  switcher in each look's material; in Retro and NieR the chip glides rigidly instead of hopping tick by
+  tick or cutting, and a pressed tab's words take the chip's ink in the press's own frame. NieR's hover
+  inks and Target brackets stay as above. NieR's rail wipe, with its brief empty outline of about 83 ms,
+  is kept as NieR's identity (Jared, 2026-10-16).
 gui_related: true
 gui_classification_reason: Defines the left rail's dropdown look and its motion in each theme family.
 split_recommended: false
@@ -44110,6 +44132,12 @@ canonical_text: >-
   Usage glyph adoption consumes F3-658: Current uses the check marker, calm state marks do not
   replay mount acts, and Export uses the shared outbox glyph. Home-hosted Usage widgets share that
   consumer; this does not claim Home strip adoption.
+  Amended 2026-10-16 (DL-214, DL-215): Friendly's hero key light tops in Friendly's lavender, #6F55A8 in
+  light and #D2C4EE in dark, not rose, and the Live control's dot and pulse take the same lavender (Jared,
+  2026-10-15). A cancel back to the room still on screen returns from the handover's current visual state,
+  with no snap-back and no glimpse of the cancelled room; in NieR and Retro, whose handover erases the
+  board, the cancel reverses the wipe instead of erasing the board to empty ground and rebuilding it
+  (Jared, 2026-10-16).
 gui_related: true
 gui_classification_reason: Defines the look, menus, marks, heroes, charts, previews, hover and motion of the redesigned Usage page.
 split_recommended: false
@@ -44166,6 +44194,9 @@ acceptance_criteria:
   tasks are created by this unit.
 - Rapid room changes and returning to the currently visible room leave the final title, rail and board
   in agreement, with no stale room or stuck lens, in every look and Reduced Motion.
+- 'Friendly''s key light and Live dot are lavender (#6F55A8 light, #D2C4EE dark); a cancel back to the
+  visible room never snaps, shows the cancelled room or rebuilds the board, and NieR and Retro reverse
+  their wipe.'
 validation_surfaces:
   - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
   - python3 scripts/pm-plan-index.py validate
@@ -44214,6 +44245,12 @@ source_lineage:
 - /mnt/Cursor/share/puppet-master/2026-10-16-plans-pass2/sources/2026-10-15-glyph-rollout-landing--LANDING.md,
   SHA-256 9bd8e1ed3deb6d61e516a42f0f524a36639ee098f7ce7496cb50434c9ca4ce90 (source lineage; not native
   certification)
+- /mnt/Cursor/share/puppet-master/2026-10-16-plans-topup/sources/c0305227f7-friendly-lavender.diff,
+  SHA-256 fb6f7127bfa67d809d9fdfef3b44da8603511e24c4782b1f24627376566a3b77 (landed main c0305227f7; Jared
+  approved lavender 2026-10-15; source lineage)
+- /mnt/Cursor/share/puppet-master/2026-10-16-plans-topup/sources/2026-10-16-motion-pass--JUDGEMENT.md,
+  SHA-256 8a3291ea2558da05d40c5a051a958f378802ec9c36454b83dbaf5ffc7efe8cf9 (the global acceptance bar and
+  the A4, A11, A13 and B9 findings; source lineage)
 preserved_exact_tokens:
   - "N more"
   - "16%"
@@ -44619,6 +44656,13 @@ canonical_text: >-
   shown. F3-658 owns shape, priority, tone and still/one-shot motion. These are canonical lifecycle
   rules, while Home strip adoption is explicitly deferred in the glyph landing. Move to panel and
   kind submenus use F3-632's one level/Back contract.
+  Amended 2026-10-16 (DL-214; Jared's 2026-10-15 panel items 4 and 5): the active tab's mark is the look's
+  switcher chip of F3-652, drawn in place without a travelling lens: exactly the tab's own box, standing
+  on the panel's top rule (Retro's phosphor line, NieR's ink line) without covering it, at every tab size
+  and width and on a folded panel's column. It replaces the fused plate and the per-look crown, shoulder
+  and flare silhouette as the mark of the active tab; Retro's chip replaces its notched tab, as Jared
+  chose over the notch. A chosen tab's close control and status read in the chip's ink, an exit status on
+  a light look's tinted chip deepened toward that ink.
 gui_related: true
 gui_classification_reason: Defines the one tab strip every panel uses, its silhouette, widths, marks, reorder and keyboard.
 split_recommended: false
@@ -44699,6 +44743,8 @@ compatibility_only_notes:
 stale_retired_dispositions:
   - "Amended 2026-10-10 (DL-187, D34): Terminal tabs show no colour or icon of the person's choosing until the neon glyph system redesigns them; a kind may add its own rows at the end of the tab menu after a hairline (the terminal's Mute notifications)."
   - "Amended 2026-10-10 (DL-187, D38): only the tab menu's own rows each dispatch one command; a kind's rows do what the kind registers, and the terminal's Mute notifications is the typed local action ui.terminal.mute_notifications."
+  - 'Amended 2026-10-16 (DL-214): the active tab''s mark is the look''s switcher chip standing on the
+    panel''s rule; the fused plate and silhouette, and Retro''s notch, retire as that mark.'
 owner_hints:
   - Plans/FinalGUISpec.md
 
@@ -45854,8 +45900,8 @@ canonical_text: >-
   Measurements: the Agents tab body pads its cards 12, 12 and 16 px, or 8, 8 and 12 px below 420 px of
   width; Agents cards sit in tracks at least 240 px wide, one column below 420 px; the header row is icon-only below
   520 px and hidden below 150 px (F3-635). The Board menu is 320 px wide, Start from 340 px and Add widget 380 px. The
-  Live mark is a 7 px dot with a 1.5 px ring, 6 px from its word set at weight 550, in the ok colour (Friendly #C2557A,
-  #E07BA0 in dark; Glass with a 6 px glow); Retro shows [LIVE] and a 6 x 11 px block and NieR Mode LIVE and a 6 px ink
+  Live mark is a 7 px dot with a 1.5 px ring, 6 px from its word set at weight 550, in the ok colour (Friendly's
+  lavender #6F55A8, #D2C4EE in dark, DL-214; Glass with a 6 px glow); Retro shows [LIVE] and a 6 x 11 px block and NieR Mode LIVE and a 6 px ink
   diamond, both in the code face; its pulse is a 240 ms two-step blink in Retro and NieR Mode and, in the other looks,
   a 600 ms ring that grows from 0.6 to 2.2 times and fades. The Undo notice sits 16 px above the tab's foot (10 px
   below 420 px of width), centred, with 12.5/18 px text and a 28 px Undo button with a 14 % accent fill (outlined in
@@ -45897,6 +45943,9 @@ canonical_text: >-
   applied layout does not hold keeps its current contents. The lab-only Demo time reads on paint, on each
   beat and every 2 s while the demo hour plays and the tab is visible; its Board rows remain Play the next
   hour or Back to now, disabled with the availability reason, within F3-649's Demo Studio.
+  Amended 2026-10-16 (DL-214; Jared's 2026-10-15 panel item 1): the Home board opens as the pinned 36 px
+  Home tab from every path, the "+" menu, the Board menu and a page's subtab, never as a second, unpinned
+  tab at natural width.
 gui_related: true
 gui_classification_reason: Defines how a dashboard looks and behaves as a tab kind in any panel.
 split_recommended: false
@@ -45947,6 +45996,12 @@ source_lineage:
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/plans-home-audit.md, SHA-256 f8e65fd64028014e3ee9bebf68594356d40eb5c831975645da6a3406cef2e3e8 (audit lineage only)"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/small-round/panels-NUMBERS-51c316e18b.md, SHA-256 a9c42b88e5cb50706ff1716a254cb68e026a538bb7a0c840905779a9a482cff2 (small-round concept lineage only)"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/small-round/panels-CONTRACT-2926ad987e.md, SHA-256 c579d0dfef41fd1fc7327d14c2adb9e2b101c24b216ff64a9db5fc19895ad989 (small-round concept lineage only)"
+  - /mnt/Cursor/share/puppet-master/2026-10-16-plans-topup/sources/Concepts--home-redesign--src--panels--kinds--30-dashboard.js,
+    SHA-256 68f488e94f6ffb0927ea52c46a03771d93f9dde05a7852b2f19170fe0a9781e5 (Q16 head f9925db90b; source
+    lineage; not native certification)
+  - /mnt/Cursor/share/puppet-master/2026-10-16-plans-topup/sources/c0305227f7-friendly-lavender.diff,
+    SHA-256 fb6f7127bfa67d809d9fdfef3b44da8603511e24c4782b1f24627376566a3b77 (landed main c0305227f7;
+    Jared approved lavender 2026-10-15; source lineage)
 preserved_exact_tokens:
   - "dashboard:home"
   - "dashboard:dash-<n>"
@@ -45982,6 +46037,8 @@ stale_retired_dispositions:
   - "Amended 2026-10-10 (lead ruling on the Undo after Start from): Undo dispatches cmd.widget.reset_layout with restore_revision, the board's committed layout revision just before the Start from."
   - "Amended 2026-10-11 (wave 2, panels NUMBERS 51c316e18b): Dashboard controls gain the remaining round-two menu, name, focus and Undo details."
   - "Amended 2026-10-11 (wave 2, panels NUMBERS 51c316e18b): Only Agents uses the measured card-body padding; the engine board keeps its own layout."
+  - 'Amended 2026-10-16 (DL-214): Friendly''s Live mark is lavender (#6F55A8, #D2C4EE in dark); it read
+    the rose #C2557A and #E07BA0, outside Friendly''s palette.'
 owner_hints:
   - Plans/FinalGUISpec.md
   - Plans/Widget_System.md
@@ -46213,6 +46270,16 @@ canonical_text: >-
   becomes visible; Retro and NieR cut the old level and step in the new. The plate morphs its size
   and position without row reflow, keeping its bottom edge when it opens upward. Reduced Motion
   swaps immediately.
+  Amended 2026-10-16 (DL-214, the consistency pass): the active Home tab in every look is F3-631's
+  switcher chip, Retro's reverse-video block seated on its rule line. The add-a-tab picker's search is the
+  look's own search field, a raised surface with the look's hairline and corner, and in Glass one seamless
+  Glass field whose typing area blends into its bar (as F3-652's Find fields). Every control draws only
+  its own look's palette: Settings' primary buttons take the look's accent with its on-accent ink, Retro's
+  the reverse-video key the chat's primary buttons use; danger buttons take the look's own red and
+  attention notes its own amber; Projects, the Planning Wizard and the Orchestrator take each look's own
+  hues; Glass Dark's quieter Settings words and its toggle key take Glass's cool white, not lavender. Hues
+  kept on purpose: swatches that show a real choice, Basic's Usage good teal (its colour-blind separation
+  from warn), the approved glyph status cyan in Glass, and Friendly Light's own lavender borders.
 gui_related: true
 gui_classification_reason: Defines how panels, strips, menus, dividers and drags render in each look, NieR Mode and Reduced Motion.
 split_recommended: false
@@ -46276,6 +46343,15 @@ source_lineage:
 - /mnt/Cursor/share/puppet-master/2026-10-16-plans-pass2/sources/2026-10-15-panels-picker-back--NOTES.md,
   SHA-256 29bac44f166cb8e0e67f4f00634cb15d0a3be576eb2f68e7e19606f3a4a1a71c (source lineage; not native
   certification)
+- /mnt/Cursor/share/puppet-master/2026-10-16-plans-topup/sources/2026-10-15-consistency-pass--NOTES.md,
+  SHA-256 3065192be40e317876ab989ca939d0d016faeec1f8592628a3a2d1edfb5de5ae (source lineage; not native
+  certification)
+- /mnt/Cursor/share/puppet-master/2026-10-16-plans-topup/sources/Concepts--onboarding--opus-5.5--src--css--61-look-palette.css,
+  SHA-256 dedf821b9a498b3841ee59656e4e742c17936bcc6100b66b52d04520ff334fd6 (Q16 head f9925db90b; source
+  lineage; not native certification)
+- /mnt/Cursor/share/puppet-master/2026-10-16-plans-topup/sources/2026-10-15-consistency-pass--JARED-FEEDBACK-20261015.md,
+  SHA-256 afd66d07739267c5a7d7d6f711af6bd7a709062ef5afd8f3834d2ea819a4dda5 (Jared's 2026-10-15 panel items
+  and the Retro chip ruling; decision lineage)
 preserved_exact_tokens:
   - "NieR Mode"
   - "square"
@@ -47954,8 +48030,7 @@ canonical_text: >-
   Orchestrator views, Settings chapters, section/index/manager tabs, Wizard work type, theme menu
   and both Customize screens. Choices in scrolling content (Settings segmented choices/service lists
   and Home segmented rows/panel tabs) use its material in place without a travelling lens. Adopting
-  the switcher does not enable Glass sheets or optics in another look; the non-Glass consistency
-  pass remains a separate adoption decision. A newly shown strip, restored hidden strip or opened
+  the switcher does not enable Glass sheets or optics in another look. A newly shown strip, restored hidden strip or opened
   theme menu places its selected state before the first visible frame. A title-bar menu never
   removes the page selection; remeasure a hidden strip on reveal without a visible zero-position
   reset. The component replaces competing fills, dots, underlines and sliding highlights rather than
@@ -47966,6 +48041,21 @@ canonical_text: >-
   action or stored switcher state. The concept-only Liquid Glass status-bar toggle (html[data-lg],
   window.PM_LG) is demonstration machinery and is not a product setting, command or native alternate
   material mode.
+  Amended 2026-10-16 (DL-214, the consistency pass Q16): every look adopts the switcher, each in its own
+  material, so every tab, segment and list selection in a look is one component drawn one way. Glass keeps
+  its approved clear lens unchanged. Basic draws a precise tinted chip: an accent tint, a crisp accent
+  hairline, a 6 px corner and a faint top catch light, gliding with a little give and a slight label
+  swell. Friendly draws its page tabs' soft mint plate everywhere: a mint tint, hairline and glow, a 10 px
+  corner, never a pill, mint chosen words, gliding as Glass's drop does but softer; the Orchestrator's
+  capsule is gone. Retro draws reverse video: an opaque square phosphor block under the labels, every
+  word, icon and count on it inverted to the screen colour, blooming on Retro dark and a step deeper with
+  a printed hard shadow on Retro light. NieR Mode draws its ink bar: opaque ink under the labels, paper
+  words, square, its hover ink bars, cursor square and brackets unchanged. Retro and NieR glide rigidly,
+  with no stretch, wobble or label swell. Reduced Motion places the chip at once. The same material serves
+  the activity bar's tile, the theme menu's family rows and the project picker's chosen row, in place. A
+  pressed item's words, icons and counts take the chip's ink in the press's own frame, and the item it
+  leaves takes its resting ink in that frame, so no label lags the chip; a hovered resting label stays at
+  4.5:1 or more on the bare ground. This adds no stored switcher state or command.
 gui_related: true
 gui_classification_reason: Liquid Glass material and motion.
 split_recommended: false
@@ -47986,6 +48076,9 @@ acceptance_criteria:
 - Every listed strip enters and re-enters with one correctly placed selection, keeps it while a title-bar
   menu is open, and clears competing markers.
 - Both Customize screens use dense Glass material and keep scrolling lenses below the sticky section bar.
+- In every look every tab, segment and list selection is the one switcher in that look's material (Basic
+  tinted chip, Friendly mint plate, Retro reverse-video block, NieR ink bar, Glass lens unchanged); Retro
+  and NieR glide rigidly; a pressed label changes ink with the chip; hovered resting labels keep 4.5:1.
 validation_surfaces:
 - python3 scripts/pm-shard-plans.py --check
 - python3 scripts/pm-plan-index.py validate
@@ -48024,6 +48117,12 @@ source_lineage:
 - /mnt/Cursor/share/puppet-master/2026-10-16-plans-pass2/sources/Concepts--liquid-glass--opus-5.5--CONTRACT.md,
   SHA-256 84a12b3c917ab557ae0478b2158be1146294900b1a10b5bacdc684cdcf11f74e (source lineage; not native
   certification)
+- /mnt/Cursor/share/puppet-master/2026-10-16-plans-topup/sources/2026-10-15-consistency-pass--NOTES.md,
+  SHA-256 3065192be40e317876ab989ca939d0d016faeec1f8592628a3a2d1edfb5de5ae (source lineage; not native
+  certification)
+- /mnt/Cursor/share/puppet-master/2026-10-16-plans-topup/sources/Concepts--onboarding--opus-5.5--src--css--60-switcher-looks.css,
+  SHA-256 803ee5c952cfbe9ba69108bc6b8fefbcaaaa06b8ff65647ffa9a25a606cc4de7 (Q16 head f9925db90b; source
+  lineage; not native certification)
 preserved_exact_tokens:
 - Liquid Glass
 negative_constraints: []
@@ -48032,6 +48131,8 @@ owner_hints:
 stale_retired_dispositions:
 - 'Amended 2026-10-16 (PM7 pass 2): The combined Glass/wallpaper publication hold is closed by ad37be9a23;
   native implementation evidence is still required.'
+- 'Amended 2026-10-16 (DL-214): the non-Glass consistency pass is adopted; it read: the non-Glass
+  consistency pass remains a separate adoption decision.'
 ```
 
 ContractRef: ContractName:Plans/FinalGUISpec.md#F3-427, ContractName:Plans/FinalGUISpec.md#F3-431, ContractName:Plans/FinalGUISpec.md#F3-653, ContractName:Plans/FinalGUISpec.md#F3-654

@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L32974-L33764
+Source lines: L32976-L33776
 
-Source SHA256: `c4af950579b79e1ad4ff8ab776dc4bb023d87acec95fb0265f9c680fd3f744ee`
+Source SHA256: `39ead3da53e7659467ebf5d6a5143f3ab02502e95505f86a58d634bb18f2bf0c`
 
 ---
 
@@ -247,6 +247,8 @@ canonical_text: >-
   Amended 2026-10-09 (DL-184): Friendly's cozy pill bar and mint pill tabs and Glass's rounded frosted bar become
   rectangles with the look's inner radius, never capsules (F3-648); the tab set, the active fill and the bottom margin
   stand.
+  Amended 2026-10-16 (DL-214): the Orchestrator's view strip is F3-652's switcher in each look's material;
+  the legacy underline strip in Retro and Basic and Friendly's capsule are retired.
 gui_related: true
 gui_classification_reason: This unit defines visible Orchestrator tab-strip theme skins and the content gap beneath the strip.
 split_recommended: false
@@ -254,7 +256,7 @@ depends_on: [DL-184]
 unblocks: []
 acceptance_criteria:
 - "The Orchestrator tab set (Progress, Plan Compile, Seams, Node Graph, Evidence, History, Ledger) is unchanged by this unit; only presentation changes."
-- "Friendly renders the rounded cozy pill bar with mint active pills and no underline; glass renders the frosted step-2 bar with hairline and inset edge and a step-3 active tab; retro and basic keep the legacy underline strip."
+- "The active view is F3-652's switcher in each look's material, on the frosted step-2 bar in Glass, never an underline or a capsule; it read: mint active pills, a step-3 Glass tab and the legacy underline strip in Retro and Basic (superseded 2026-10-16, DL-214)."
 - "The strip has bottom margin so the Node Graph pane and other panes do not sit flush beneath it."
 - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
 validation_surfaces:
@@ -280,6 +282,8 @@ compatibility_only_notes:
 - "Slint portability: the tab strip renders as opaque precomputed surfaces; no arbitrary-content backdrop blur, no SVG filters, and color math is precomputed rather than runtime-mixed."
 stale_retired_dispositions:
 - "Amended 2026-10-09 (DL-184): the Orchestrator strip's pill skins are retired (F3-648)."
+- 'Amended 2026-10-16 (DL-214): the legacy underline strip in Retro and Basic and the remaining pill
+  wording retire into F3-652''s per-look switcher.'
 owner_boundary_notes:
 - "The Orchestrator tab set and tab semantics are owned by Plans/Orchestrator_Page.md; this unit owns tab-strip theme presentation and the content gap only."
 owner_hints:
@@ -309,6 +313,11 @@ canonical_text: >-
   Amended 2026-10-09 (DL-184): Glass's step-3 frost pill and Friendly's mint-mix pill become ink slabs with the look's
   inner radius, never capsules (F3-648); the shared spring, the directional page transitions and the reduced-motion
   rules stand.
+  Amended 2026-10-16 (DL-214, DL-215): the per-theme ink skins above are superseded by F3-652's switcher
+  in each look's material, Retro's lime slab becoming its reverse-video block and Basic's accent slab its
+  tinted chip. In NieR Mode a page change erases the leaving page and wipes the entering one in; the empty
+  beat between the erase and the wipe-in is at most 50 ms, and the wipe-in may start as the erase ends
+  (Jared, 2026-10-16). Reduced Motion still skips the page animation.
 gui_related: true
 gui_classification_reason: This unit defines visible page-tab active chrome motion and directional page transitions.
 split_recommended: false
@@ -320,6 +329,7 @@ acceptance_criteria:
 - "The ink snap-resyncs on theme or motion change, window resize, and fonts-ready; reduced motion snaps the ink and skips the panel animation entirely."
 - "First paint never runs an enter animation and transitions gate until after boot."
 - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+- In NieR Mode no page change shows more than 50 ms of empty ground between the erase and the wipe-in.
 validation_surfaces:
 - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
 - "python3 scripts/pm-plan-index.py validate"

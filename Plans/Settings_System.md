@@ -449,6 +449,13 @@ canonical_text: >-
   inherited-value paths. A crossing default is refused before commit, naming the first blocking
   account and counting additional blockers; no ordinary reset bypasses that owner validation.
   SSYS-044 and UF-107 consume the same result.
+  Amended 2026-10-16 (DL-215; Jared, 2026-10-16): Reset all, the everything scope of Reset Settings to
+  Defaults (system.advanced.reset-defaults) and All Settings' Reset all to defaults, is Restore Defaults
+  over every live ordinary setting id of the open Project in one transaction, after one confirmation;
+  accounts, keys and history are not settings and are kept. It really restores: the Project reads back at
+  its registry defaults. It shows exactly one outcome toast: success only after the commit reads back,
+  otherwise one failure naming the refusal (such as MA-073's crossing default), with nothing changed. A
+  success toast never follows a refusal.
 gui_related: true
 gui_classification_reason: Instant changes, theme selection, Restore Defaults, busy/blocked state, and rollback are visible behavior.
 depends_on: [SSYS-002, SSYS-004]
@@ -457,6 +464,9 @@ acceptance_criteria:
   - Stale revision, invalid value, missing Project, permission denial, and read-back mismatch produce no partial committed state.
   - Theme family and mode cannot commit at different revisions or yield an impossible derived variant.
   - Restore Defaults previews and atomically commits the exact ID set and can restore the prior valid revision.
+  - Reset all restores every live ordinary setting of the open Project to its registry default in one
+    revision and shows exactly one outcome toast; a refused Reset all changes nothing and never shows
+    success.
 validation_surfaces: [future settings CAS/idempotency fixtures, future theme-pair fixtures, future restore-defaults rollback fixtures]
 risk_class: settings_atomicity_or_default_recovery_failure
 reasoning_tier: high

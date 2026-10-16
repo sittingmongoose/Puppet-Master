@@ -26555,6 +26555,14 @@ canonical_text: >-
   DL-138 confirms that theme-specific durations apply to sheets and a card's own changes,
   while transcript entrances retain this unit's shared timing and order; wand cards which opt out
   of the family entrance do not play an additional transcript entrance.
+  Amended 2026-10-16 (DL-215; Jared's motion bar): every motion on every surface, these voices and every
+  owner's own, meets one acceptance bar: the control acknowledges the input within 100 ms (its pressed or
+  selected state shows, or the ink moves); the new state is fully drawn within 300 ms on P1000-class
+  hardware, or a deliberate transition starts within 100 ms and covers the work; no frame is held longer
+  than 100 ms mid-transition; and on M3-class hardware the click's Event Timing duration is 100 ms or
+  less. Nothing a person can see may flash, blank, jump, ghost, snap late or stall. Reduced Motion still
+  lands every beat at its end state. Measured concept films are evidence for this bar, not native
+  certification.
 gui_related: true
 gui_classification_reason: "Defines per-theme motion and the chat's sound cues."
 split_recommended: false
@@ -26568,6 +26576,9 @@ acceptance_criteria:
   - "Reduced motion from either source lands end states."
   - "Chat cues route through the Notifications & Sounds owner; no chat-local sound setting or volume exists."
   - "No more than one cue plays per 120ms and no step tick within 250ms of another; nothing plays before a user gesture."
+  - Every interaction acknowledges within 100 ms, is fully drawn within 300 ms on P1000-class hardware or
+    starts a covering transition within 100 ms, holds no frame over 100 ms mid-transition, and has an
+    Event Timing duration of 100 ms or less on M3-class hardware.
 validation_surfaces:
   - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
   - python3 scripts/pm-plan-index.py validate
@@ -26589,6 +26600,12 @@ source_lineage:
   - "Plans/Decision_Log.md#DL-179 (owner note of 2026-10-09: Friendly and Glass distinct from Basic)"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/usage-mockups-20261001/lane-reports-20261010/b-motion-REPORT.md, SHA-256 a1f292802f9ae740765c721f8f6196b44ad98ec3a41271f208528c7c03fed87a (the Usage port's motion lane: the voices as built, with GPU evidence for the blur and scale rules)"
   - "Concepts/chat-assistant-concepts/5.6 Pro/Chat updates.md (concept lineage only)"
+  - /mnt/Cursor/share/puppet-master/2026-10-16-plans-topup/sources/2026-10-16-motion-pass--JUDGEMENT.md,
+    SHA-256 8a3291ea2558da05d40c5a051a958f378802ec9c36454b83dbaf5ffc7efe8cf9 (the global acceptance bar
+    and the A4, A11, A13 and B9 findings; source lineage)
+  - /mnt/Cursor/share/puppet-master/2026-10-16-plans-topup/sources/2026-10-13-pm7-coordinator-handoff--COORDINATOR-LOG-20261016.md,
+    SHA-256 d52085df3ab4a82f323d1fd2ed0a846b8e858fcaf7ec746a2ff79cc9cf2a97ba (Jared's 2026-10-15 and
+    2026-10-16 rulings as relayed by the coordinator; decision lineage)
 preserved_exact_tokens:
   - "DL-138"
   - "Basic"

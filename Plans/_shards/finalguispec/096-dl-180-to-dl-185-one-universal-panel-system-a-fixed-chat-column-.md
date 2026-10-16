@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L44249-L46471
+Source lines: L44286-L46547
 
-Source SHA256: `c4af950579b79e1ad4ff8ab776dc4bb023d87acec95fb0265f9c680fd3f744ee`
+Source SHA256: `39ead3da53e7659467ebf5d6a5143f3ab02502e95505f86a58d634bb18f2bf0c`
 
 ---
 
@@ -381,6 +381,13 @@ canonical_text: >-
   shown. F3-658 owns shape, priority, tone and still/one-shot motion. These are canonical lifecycle
   rules, while Home strip adoption is explicitly deferred in the glyph landing. Move to panel and
   kind submenus use F3-632's one level/Back contract.
+  Amended 2026-10-16 (DL-214; Jared's 2026-10-15 panel items 4 and 5): the active tab's mark is the look's
+  switcher chip of F3-652, drawn in place without a travelling lens: exactly the tab's own box, standing
+  on the panel's top rule (Retro's phosphor line, NieR's ink line) without covering it, at every tab size
+  and width and on a folded panel's column. It replaces the fused plate and the per-look crown, shoulder
+  and flare silhouette as the mark of the active tab; Retro's chip replaces its notched tab, as Jared
+  chose over the notch. A chosen tab's close control and status read in the chip's ink, an exit status on
+  a light look's tinted chip deepened toward that ink.
 gui_related: true
 gui_classification_reason: Defines the one tab strip every panel uses, its silhouette, widths, marks, reorder and keyboard.
 split_recommended: false
@@ -461,6 +468,8 @@ compatibility_only_notes:
 stale_retired_dispositions:
   - "Amended 2026-10-10 (DL-187, D34): Terminal tabs show no colour or icon of the person's choosing until the neon glyph system redesigns them; a kind may add its own rows at the end of the tab menu after a hairline (the terminal's Mute notifications)."
   - "Amended 2026-10-10 (DL-187, D38): only the tab menu's own rows each dispatch one command; a kind's rows do what the kind registers, and the terminal's Mute notifications is the typed local action ui.terminal.mute_notifications."
+  - 'Amended 2026-10-16 (DL-214): the active tab''s mark is the look''s switcher chip standing on the
+    panel''s rule; the fused plate and silhouette, and Retro''s notch, retire as that mark.'
 owner_hints:
   - Plans/FinalGUISpec.md
 
@@ -1616,8 +1625,8 @@ canonical_text: >-
   Measurements: the Agents tab body pads its cards 12, 12 and 16 px, or 8, 8 and 12 px below 420 px of
   width; Agents cards sit in tracks at least 240 px wide, one column below 420 px; the header row is icon-only below
   520 px and hidden below 150 px (F3-635). The Board menu is 320 px wide, Start from 340 px and Add widget 380 px. The
-  Live mark is a 7 px dot with a 1.5 px ring, 6 px from its word set at weight 550, in the ok colour (Friendly #C2557A,
-  #E07BA0 in dark; Glass with a 6 px glow); Retro shows [LIVE] and a 6 x 11 px block and NieR Mode LIVE and a 6 px ink
+  Live mark is a 7 px dot with a 1.5 px ring, 6 px from its word set at weight 550, in the ok colour (Friendly's
+  lavender #6F55A8, #D2C4EE in dark, DL-214; Glass with a 6 px glow); Retro shows [LIVE] and a 6 x 11 px block and NieR Mode LIVE and a 6 px ink
   diamond, both in the code face; its pulse is a 240 ms two-step blink in Retro and NieR Mode and, in the other looks,
   a 600 ms ring that grows from 0.6 to 2.2 times and fades. The Undo notice sits 16 px above the tab's foot (10 px
   below 420 px of width), centred, with 12.5/18 px text and a 28 px Undo button with a 14 % accent fill (outlined in
@@ -1659,6 +1668,9 @@ canonical_text: >-
   applied layout does not hold keeps its current contents. The lab-only Demo time reads on paint, on each
   beat and every 2 s while the demo hour plays and the tab is visible; its Board rows remain Play the next
   hour or Back to now, disabled with the availability reason, within F3-649's Demo Studio.
+  Amended 2026-10-16 (DL-214; Jared's 2026-10-15 panel item 1): the Home board opens as the pinned 36 px
+  Home tab from every path, the "+" menu, the Board menu and a page's subtab, never as a second, unpinned
+  tab at natural width.
 gui_related: true
 gui_classification_reason: Defines how a dashboard looks and behaves as a tab kind in any panel.
 split_recommended: false
@@ -1709,6 +1721,12 @@ source_lineage:
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/plans-home-audit.md, SHA-256 f8e65fd64028014e3ee9bebf68594356d40eb5c831975645da6a3406cef2e3e8 (audit lineage only)"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/small-round/panels-NUMBERS-51c316e18b.md, SHA-256 a9c42b88e5cb50706ff1716a254cb68e026a538bb7a0c840905779a9a482cff2 (small-round concept lineage only)"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/small-round/panels-CONTRACT-2926ad987e.md, SHA-256 c579d0dfef41fd1fc7327d14c2adb9e2b101c24b216ff64a9db5fc19895ad989 (small-round concept lineage only)"
+  - /mnt/Cursor/share/puppet-master/2026-10-16-plans-topup/sources/Concepts--home-redesign--src--panels--kinds--30-dashboard.js,
+    SHA-256 68f488e94f6ffb0927ea52c46a03771d93f9dde05a7852b2f19170fe0a9781e5 (Q16 head f9925db90b; source
+    lineage; not native certification)
+  - /mnt/Cursor/share/puppet-master/2026-10-16-plans-topup/sources/c0305227f7-friendly-lavender.diff,
+    SHA-256 fb6f7127bfa67d809d9fdfef3b44da8603511e24c4782b1f24627376566a3b77 (landed main c0305227f7;
+    Jared approved lavender 2026-10-15; source lineage)
 preserved_exact_tokens:
   - "dashboard:home"
   - "dashboard:dash-<n>"
@@ -1744,6 +1762,8 @@ stale_retired_dispositions:
   - "Amended 2026-10-10 (lead ruling on the Undo after Start from): Undo dispatches cmd.widget.reset_layout with restore_revision, the board's committed layout revision just before the Start from."
   - "Amended 2026-10-11 (wave 2, panels NUMBERS 51c316e18b): Dashboard controls gain the remaining round-two menu, name, focus and Undo details."
   - "Amended 2026-10-11 (wave 2, panels NUMBERS 51c316e18b): Only Agents uses the measured card-body padding; the engine board keeps its own layout."
+  - 'Amended 2026-10-16 (DL-214): Friendly''s Live mark is lavender (#6F55A8, #D2C4EE in dark); it read
+    the rose #C2557A and #E07BA0, outside Friendly''s palette.'
 owner_hints:
   - Plans/FinalGUISpec.md
   - Plans/Widget_System.md
@@ -1975,6 +1995,16 @@ canonical_text: >-
   becomes visible; Retro and NieR cut the old level and step in the new. The plate morphs its size
   and position without row reflow, keeping its bottom edge when it opens upward. Reduced Motion
   swaps immediately.
+  Amended 2026-10-16 (DL-214, the consistency pass): the active Home tab in every look is F3-631's
+  switcher chip, Retro's reverse-video block seated on its rule line. The add-a-tab picker's search is the
+  look's own search field, a raised surface with the look's hairline and corner, and in Glass one seamless
+  Glass field whose typing area blends into its bar (as F3-652's Find fields). Every control draws only
+  its own look's palette: Settings' primary buttons take the look's accent with its on-accent ink, Retro's
+  the reverse-video key the chat's primary buttons use; danger buttons take the look's own red and
+  attention notes its own amber; Projects, the Planning Wizard and the Orchestrator take each look's own
+  hues; Glass Dark's quieter Settings words and its toggle key take Glass's cool white, not lavender. Hues
+  kept on purpose: swatches that show a real choice, Basic's Usage good teal (its colour-blind separation
+  from warn), the approved glyph status cyan in Glass, and Friendly Light's own lavender borders.
 gui_related: true
 gui_classification_reason: Defines how panels, strips, menus, dividers and drags render in each look, NieR Mode and Reduced Motion.
 split_recommended: false
@@ -2038,6 +2068,15 @@ source_lineage:
 - /mnt/Cursor/share/puppet-master/2026-10-16-plans-pass2/sources/2026-10-15-panels-picker-back--NOTES.md,
   SHA-256 29bac44f166cb8e0e67f4f00634cb15d0a3be576eb2f68e7e19606f3a4a1a71c (source lineage; not native
   certification)
+- /mnt/Cursor/share/puppet-master/2026-10-16-plans-topup/sources/2026-10-15-consistency-pass--NOTES.md,
+  SHA-256 3065192be40e317876ab989ca939d0d016faeec1f8592628a3a2d1edfb5de5ae (source lineage; not native
+  certification)
+- /mnt/Cursor/share/puppet-master/2026-10-16-plans-topup/sources/Concepts--onboarding--opus-5.5--src--css--61-look-palette.css,
+  SHA-256 dedf821b9a498b3841ee59656e4e742c17936bcc6100b66b52d04520ff334fd6 (Q16 head f9925db90b; source
+  lineage; not native certification)
+- /mnt/Cursor/share/puppet-master/2026-10-16-plans-topup/sources/2026-10-15-consistency-pass--JARED-FEEDBACK-20261015.md,
+  SHA-256 afd66d07739267c5a7d7d6f711af6bd7a709062ef5afd8f3834d2ea819a4dda5 (Jared's 2026-10-15 panel items
+  and the Retro chip ruling; decision lineage)
 preserved_exact_tokens:
   - "NieR Mode"
   - "square"

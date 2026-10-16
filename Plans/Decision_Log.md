@@ -15350,7 +15350,8 @@ owner_doc: Plans/Decision_Log.md
 canonical_text: 'Recorded 2026-10-16. The landed #20–24 corrections use F3-652''s one token-driven switcher,
   placed on the first visible frame and restored on reveal, including both Glass Customize screens. F3-628
   owns the new family room handover and rapid reversal/return semantics; no shared-element flights return.
-  Non-Glass adoption from the consistency pass is pending a separate top-up.'
+  Non-Glass adoption from the consistency pass is pending a separate top-up. Amended 2026-10-16: DL-214
+  records that adoption.'
 gui_related: true
 gui_classification_reason: Shared Switcher And Room Handover.
 split_recommended: false
@@ -15380,6 +15381,8 @@ source_lineage:
   certification)
 preserved_exact_tokens: []
 negative_constraints: []
+stale_retired_dispositions:
+- 'Amended 2026-10-16 (DL-214): non-Glass switcher adoption is no longer pending.'
 owner_hints:
 - Plans/Decision_Log.md
 ```
@@ -15727,6 +15730,10 @@ source_lineage:
   certification)
 preserved_exact_tokens: []
 negative_constraints: []
+stale_retired_dispositions:
+- 'Amended 2026-10-16 (Plans top-up): terminal round 5 is recorded by DL-213, the consistency pass and
+  Friendly lavender by DL-214, and the motion decisions by DL-215; panel-drop performance Q13 and the
+  motion fix lanes remain pending until they land.'
 owner_hints:
 - Plans/Decision_Log.md
 ```
@@ -15798,3 +15805,115 @@ owner_hints:
 ```
 
 ContractRef: ContractName:Plans/FinalGUISpec.md#F3-642, ContractName:Plans/FinalGUISpec.md#F3-643, ContractName:Plans/FinalGUISpec.md#F3-644, ContractName:Plans/FinalGUISpec.md#F3-650, ContractName:Plans/Settings_System.md#SSYS-051
+
+### DL-214 - One Switcher Per Look, Seated Home Tabs And Friendly Lavender
+
+```yaml
+plan_unit_id: DL-214
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: >-
+  Recorded 2026-10-16. The consistency pass Q16 (head f9925db90b on main 5b43e73891, Glass owner approved,
+  review fixes made) adopts F3-652's one switcher in every look, each in its own material: Basic's tinted
+  chip, Friendly's mint plate, Retro's reverse-video block and NieR's ink bar, Glass's lens unchanged,
+  Retro and NieR gliding rigidly. F3-438, F3-463, F3-464 and F3-621 read their selection marks through
+  F3-652. Jared's 2026-10-15 panel items: a Home board opens pinned from every path (F3-638); the
+  add-a-tab picker's search is the look's own search field, seamless in Glass (F3-647); the active Home
+  tab is the look's chip standing on the panel's rule (F3-631), and Retro's chip replaces the notch, his
+  'new draft design'. Every control draws only its own look's palette (F3-647). Jared approved Friendly's
+  lavender for the Usage key light, Live dot and Home Live mark (F3-628, F3-638; landed c0305227f7).
+  Picker Back stays DL-211's. Retro and NieR's rigid glide is a reviewed concept choice; DL-152's stepped
+  NieR motion still governs every other NieR surface. Concept measurements are not native certification.
+gui_related: true
+gui_classification_reason: One Switcher Per Look, Seated Home Tabs And Friendly Lavender.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- The linked owners and finite companions agree with this decision; source publication is not native certification.
+validation_surfaces:
+- python3 scripts/pm-shard-plans.py --check
+- python3 scripts/pm-plan-index.py validate
+- python3 scripts/pm-plans-verify.py run-gates
+risk_class: owner_drift
+reasoning_tier: high
+context_scope: one_switcher_per_look_seated_home_tabs_and_friendly_lavender
+implementation_surfaces:
+- Plans/Decision_Log.md
+node_compile_hint:
+  mode: owner_decision_record
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- /mnt/Cursor/share/puppet-master/2026-10-16-plans-topup/sources/2026-10-15-consistency-pass--PLAN.md,
+  SHA-256 5e69a60a2d05dff1a5f0e9bbb1f72ab53c4ecc0836880df0a02a66eeccf8c569 (source lineage; not native certification)
+- /mnt/Cursor/share/puppet-master/2026-10-16-plans-topup/sources/2026-10-15-consistency-pass--NOTES.md,
+  SHA-256 3065192be40e317876ab989ca939d0d016faeec1f8592628a3a2d1edfb5de5ae (source lineage; not native certification)
+- /mnt/Cursor/share/puppet-master/2026-10-16-plans-topup/sources/2026-10-15-consistency-pass--LANDING-HANDOFF.md,
+  SHA-256 017ef32f6e5b29cd9242fed6b0496ccd118bfae5594ddd5b1059d300cc215907 (source lineage; not native certification)
+- /mnt/Cursor/share/puppet-master/2026-10-16-plans-topup/sources/2026-10-15-consistency-pass--JARED-FEEDBACK-20261015.md,
+  SHA-256 afd66d07739267c5a7d7d6f711af6bd7a709062ef5afd8f3834d2ea819a4dda5 (Jared's panel items and Retro chip ruling; decision lineage)
+- /mnt/Cursor/share/puppet-master/2026-10-16-plans-topup/sources/c0305227f7-friendly-lavender.diff,
+  SHA-256 fb6f7127bfa67d809d9fdfef3b44da8603511e24c4782b1f24627376566a3b77 (landed c0305227f7; source lineage)
+- /mnt/Cursor/share/puppet-master/2026-10-16-plans-topup/sources/2026-10-13-pm7-coordinator-handoff--COORDINATOR-LOG-20261016.md,
+  SHA-256 d52085df3ab4a82f323d1fd2ed0a846b8e858fcaf7ec746a2ff79cc9cf2a97ba (Jared's rulings of 2026-10-15 (~19:20, ~19:30 ET) and 2026-10-16 (~09:05 ET); decision lineage)
+preserved_exact_tokens: []
+negative_constraints: []
+owner_hints:
+- Plans/Decision_Log.md
+```
+
+ContractRef: ContractName:Plans/FinalGUISpec.md#F3-652, ContractName:Plans/FinalGUISpec.md#F3-631, ContractName:Plans/FinalGUISpec.md#F3-647, ContractName:Plans/FinalGUISpec.md#F3-638, ContractName:Plans/FinalGUISpec.md#F3-628
+
+### DL-215 - Motion Acceptance Bar And Jared's Motion Calls
+
+```yaml
+plan_unit_id: DL-215
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: >-
+  Recorded 2026-10-16. Jared's bar for every motion, from the final motion QA judgement: input
+  acknowledged within 100 ms; the new state fully drawn within 300 ms on P1000-class hardware, or a
+  deliberate transition that starts within 100 ms and covers the work; no frame held over 100 ms
+  mid-transition; and an Event Timing click duration of 100 ms or less on M3-class hardware. ACD-475, the
+  owner of every surface's motion, holds it; it is an acceptance bar for motion, distinct from DL-209's
+  refusal to turn concept microbenchmarks into guarantees. His calls on the judgement's design-intent
+  items: NieR's page wipe keeps an empty beat of at most 50 ms (F3-464); a NieR or Retro Usage cancel
+  reverses the wipe (F3-628); Reset all really restores defaults, with exactly one outcome toast
+  (SSYS-009); NieR's rail wipe stays (F3-621); and the NieR reboot cover's exit is smoothed (F3-598). The
+  Retro chip over the notch is DL-214's. The motion fix lanes' own contract changes are recorded as they
+  land.
+gui_related: true
+gui_classification_reason: Motion Acceptance Bar And Jared's Motion Calls.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- The linked owners and finite companions agree with this decision; source publication is not native certification.
+validation_surfaces:
+- python3 scripts/pm-shard-plans.py --check
+- python3 scripts/pm-plan-index.py validate
+- python3 scripts/pm-plans-verify.py run-gates
+risk_class: owner_drift
+reasoning_tier: high
+context_scope: motion_acceptance_bar_and_motion_calls
+implementation_surfaces:
+- Plans/Decision_Log.md
+node_compile_hint:
+  mode: owner_decision_record
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- /mnt/Cursor/share/puppet-master/2026-10-16-plans-topup/sources/2026-10-16-motion-pass--JUDGEMENT.md,
+  SHA-256 8a3291ea2558da05d40c5a051a958f378802ec9c36454b83dbaf5ffc7efe8cf9 (source lineage; not native certification)
+- /mnt/Cursor/share/puppet-master/2026-10-16-plans-topup/sources/2026-10-13-pm7-coordinator-handoff--COORDINATOR-LOG-20261016.md,
+  SHA-256 d52085df3ab4a82f323d1fd2ed0a846b8e858fcaf7ec746a2ff79cc9cf2a97ba (Jared's rulings of 2026-10-15 (~19:20, ~19:30 ET) and 2026-10-16 (~09:05 ET); decision lineage)
+preserved_exact_tokens: []
+negative_constraints: []
+owner_hints:
+- Plans/Decision_Log.md
+```
+
+ContractRef: ContractName:Plans/assistant-chat-design.md#ACD-475, ContractName:Plans/FinalGUISpec.md#F3-464, ContractName:Plans/FinalGUISpec.md#F3-628, ContractName:Plans/Settings_System.md#SSYS-009, ContractName:Plans/FinalGUISpec.md#F3-598

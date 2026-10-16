@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L43986-L44245
+Source lines: L44008-L44282
 
-Source SHA256: `c4af950579b79e1ad4ff8ab776dc4bb023d87acec95fb0265f9c680fd3f744ee`
+Source SHA256: `39ead3da53e7659467ebf5d6a5143f3ab02502e95505f86a58d634bb18f2bf0c`
 
 ---
 
@@ -135,6 +135,12 @@ canonical_text: >-
   Usage glyph adoption consumes F3-658: Current uses the check marker, calm state marks do not
   replay mount acts, and Export uses the shared outbox glyph. Home-hosted Usage widgets share that
   consumer; this does not claim Home strip adoption.
+  Amended 2026-10-16 (DL-214, DL-215): Friendly's hero key light tops in Friendly's lavender, #6F55A8 in
+  light and #D2C4EE in dark, not rose, and the Live control's dot and pulse take the same lavender (Jared,
+  2026-10-15). A cancel back to the room still on screen returns from the handover's current visual state,
+  with no snap-back and no glimpse of the cancelled room; in NieR and Retro, whose handover erases the
+  board, the cancel reverses the wipe instead of erasing the board to empty ground and rebuilding it
+  (Jared, 2026-10-16).
 gui_related: true
 gui_classification_reason: Defines the look, menus, marks, heroes, charts, previews, hover and motion of the redesigned Usage page.
 split_recommended: false
@@ -191,6 +197,9 @@ acceptance_criteria:
   tasks are created by this unit.
 - Rapid room changes and returning to the currently visible room leave the final title, rail and board
   in agreement, with no stale room or stuck lens, in every look and Reduced Motion.
+- 'Friendly''s key light and Live dot are lavender (#6F55A8 light, #D2C4EE dark); a cancel back to the
+  visible room never snaps, shows the cancelled room or rebuilds the board, and NieR and Retro reverse
+  their wipe.'
 validation_surfaces:
   - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
   - python3 scripts/pm-plan-index.py validate
@@ -239,6 +248,12 @@ source_lineage:
 - /mnt/Cursor/share/puppet-master/2026-10-16-plans-pass2/sources/2026-10-15-glyph-rollout-landing--LANDING.md,
   SHA-256 9bd8e1ed3deb6d61e516a42f0f524a36639ee098f7ce7496cb50434c9ca4ce90 (source lineage; not native
   certification)
+- /mnt/Cursor/share/puppet-master/2026-10-16-plans-topup/sources/c0305227f7-friendly-lavender.diff,
+  SHA-256 fb6f7127bfa67d809d9fdfef3b44da8603511e24c4782b1f24627376566a3b77 (landed main c0305227f7; Jared
+  approved lavender 2026-10-15; source lineage)
+- /mnt/Cursor/share/puppet-master/2026-10-16-plans-topup/sources/2026-10-16-motion-pass--JUDGEMENT.md,
+  SHA-256 8a3291ea2558da05d40c5a051a958f378802ec9c36454b83dbaf5ffc7efe8cf9 (the global acceptance bar and
+  the A4, A11, A13 and B9 findings; source lineage)
 preserved_exact_tokens:
   - "N more"
   - "16%"

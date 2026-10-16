@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L46473-L48517
+Source lines: L46549-L48618
 
-Source SHA256: `c4af950579b79e1ad4ff8ab776dc4bb023d87acec95fb0265f9c680fd3f744ee`
+Source SHA256: `39ead3da53e7659467ebf5d6a5143f3ab02502e95505f86a58d634bb18f2bf0c`
 
 ---
 
@@ -1492,8 +1492,7 @@ canonical_text: >-
   Orchestrator views, Settings chapters, section/index/manager tabs, Wizard work type, theme menu
   and both Customize screens. Choices in scrolling content (Settings segmented choices/service lists
   and Home segmented rows/panel tabs) use its material in place without a travelling lens. Adopting
-  the switcher does not enable Glass sheets or optics in another look; the non-Glass consistency
-  pass remains a separate adoption decision. A newly shown strip, restored hidden strip or opened
+  the switcher does not enable Glass sheets or optics in another look. A newly shown strip, restored hidden strip or opened
   theme menu places its selected state before the first visible frame. A title-bar menu never
   removes the page selection; remeasure a hidden strip on reveal without a visible zero-position
   reset. The component replaces competing fills, dots, underlines and sliding highlights rather than
@@ -1504,6 +1503,21 @@ canonical_text: >-
   action or stored switcher state. The concept-only Liquid Glass status-bar toggle (html[data-lg],
   window.PM_LG) is demonstration machinery and is not a product setting, command or native alternate
   material mode.
+  Amended 2026-10-16 (DL-214, the consistency pass Q16): every look adopts the switcher, each in its own
+  material, so every tab, segment and list selection in a look is one component drawn one way. Glass keeps
+  its approved clear lens unchanged. Basic draws a precise tinted chip: an accent tint, a crisp accent
+  hairline, a 6 px corner and a faint top catch light, gliding with a little give and a slight label
+  swell. Friendly draws its page tabs' soft mint plate everywhere: a mint tint, hairline and glow, a 10 px
+  corner, never a pill, mint chosen words, gliding as Glass's drop does but softer; the Orchestrator's
+  capsule is gone. Retro draws reverse video: an opaque square phosphor block under the labels, every
+  word, icon and count on it inverted to the screen colour, blooming on Retro dark and a step deeper with
+  a printed hard shadow on Retro light. NieR Mode draws its ink bar: opaque ink under the labels, paper
+  words, square, its hover ink bars, cursor square and brackets unchanged. Retro and NieR glide rigidly,
+  with no stretch, wobble or label swell. Reduced Motion places the chip at once. The same material serves
+  the activity bar's tile, the theme menu's family rows and the project picker's chosen row, in place. A
+  pressed item's words, icons and counts take the chip's ink in the press's own frame, and the item it
+  leaves takes its resting ink in that frame, so no label lags the chip; a hovered resting label stays at
+  4.5:1 or more on the bare ground. This adds no stored switcher state or command.
 gui_related: true
 gui_classification_reason: Liquid Glass material and motion.
 split_recommended: false
@@ -1524,6 +1538,9 @@ acceptance_criteria:
 - Every listed strip enters and re-enters with one correctly placed selection, keeps it while a title-bar
   menu is open, and clears competing markers.
 - Both Customize screens use dense Glass material and keep scrolling lenses below the sticky section bar.
+- In every look every tab, segment and list selection is the one switcher in that look's material (Basic
+  tinted chip, Friendly mint plate, Retro reverse-video block, NieR ink bar, Glass lens unchanged); Retro
+  and NieR glide rigidly; a pressed label changes ink with the chip; hovered resting labels keep 4.5:1.
 validation_surfaces:
 - python3 scripts/pm-shard-plans.py --check
 - python3 scripts/pm-plan-index.py validate
@@ -1562,6 +1579,12 @@ source_lineage:
 - /mnt/Cursor/share/puppet-master/2026-10-16-plans-pass2/sources/Concepts--liquid-glass--opus-5.5--CONTRACT.md,
   SHA-256 84a12b3c917ab557ae0478b2158be1146294900b1a10b5bacdc684cdcf11f74e (source lineage; not native
   certification)
+- /mnt/Cursor/share/puppet-master/2026-10-16-plans-topup/sources/2026-10-15-consistency-pass--NOTES.md,
+  SHA-256 3065192be40e317876ab989ca939d0d016faeec1f8592628a3a2d1edfb5de5ae (source lineage; not native
+  certification)
+- /mnt/Cursor/share/puppet-master/2026-10-16-plans-topup/sources/Concepts--onboarding--opus-5.5--src--css--60-switcher-looks.css,
+  SHA-256 803ee5c952cfbe9ba69108bc6b8fefbcaaaa06b8ff65647ffa9a25a606cc4de7 (Q16 head f9925db90b; source
+  lineage; not native certification)
 preserved_exact_tokens:
 - Liquid Glass
 negative_constraints: []
@@ -1570,6 +1593,8 @@ owner_hints:
 stale_retired_dispositions:
 - 'Amended 2026-10-16 (PM7 pass 2): The combined Glass/wallpaper publication hold is closed by ad37be9a23;
   native implementation evidence is still required.'
+- 'Amended 2026-10-16 (DL-214): the non-Glass consistency pass is adopted; it read: the non-Glass
+  consistency pass remains a separate adoption decision.'
 ```
 
 ContractRef: ContractName:Plans/FinalGUISpec.md#F3-427, ContractName:Plans/FinalGUISpec.md#F3-431, ContractName:Plans/FinalGUISpec.md#F3-653, ContractName:Plans/FinalGUISpec.md#F3-654
