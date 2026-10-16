@@ -94,15 +94,15 @@
   }
   /* Painted ahead is not rastered ahead: a cover at opacity 0 is never drawn, so its motion parts were rastered on
      the first pick's own frame (the click's next paint 136-216 ms on the P1000 against 72-96 ms for the pick back,
-     B4 films of d87b67ef49). After each paint the cover is drawn for a few frames at opacity 0.002, its parts shown
-     where the compositor will move them, so their tiles exist before any pick. 0.002 of a colour moves no pixel by
-     more than one level. */
+     B4 films of d87b67ef49). After each paint the cover is drawn for a few frames at opacity 0.004, its parts shown
+     where the compositor will move them, so their tiles exist before any pick. 0.004 of a colour moves no pixel by
+     more than one level; lower rounds to nothing drawn on the P1000 (0.001 there drew nothing, Glass lane B1 trace). */
   function warm(v) {
     if (!v || v.__warm === v.__key || phase !== 'idle' || document.hidden || typeof v.animate !== 'function') return;
     v.__warm = v.__key;
     v.setAttribute('data-warm', '');
     let a = null;
-    try { a = v.animate([{ opacity: 0.002 }, { opacity: 0.002 }], { duration: 160 }); } catch (_) { a = null; }
+    try { a = v.animate([{ opacity: 0.004 }, { opacity: 0.004 }], { duration: 160 }); } catch (_) { a = null; }
     const done = () => v.removeAttribute('data-warm');
     if (a) a.finished.then(done, done); else done();
   }
