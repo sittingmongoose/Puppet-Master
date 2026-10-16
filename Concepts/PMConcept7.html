@@ -218769,9 +218769,10 @@ window.PM_WALLPAPERS_CATALOG = {"version":1,"families":[{"family":"glass","label
     return im.decode ? im.decode().then(function () { return true; }, function () { return false; }) : Promise.resolve(true);
   }
   /* Prepare only choices in and immediately around the gallery's viewport. Glass owns the byte budget and both
-     caches; this queue stores no images. One idle job at a time leaves the input path independent of warming. */
+     caches; this queue stores no images. Hover/focus intent can advance one job outside idle, sharing the same flight. */
   var warmObserver = null, warmRow = null, warmTargets = new Map(), warmDone = new Map(), warmEpoch = 0;
   var warmTimer = 0, warmIdle = 0, warmRunning = false, warmInput = 0, warmPointer = null, warmHover = null, warmRefusals = 0;
+  var warmIntent = null, intentTimer = 0, warmScroll = 0;
   var retainTimer = 0, retainQueued = false, retainedUrls = new Set(), retainedViewport = '', retainedBy = null, retainedPanel = null;
   function retainActive() {
     var panel = document.getElementById('panel-settings');
@@ -218819,26 +218820,63 @@ window.PM_WALLPAPERS_CATALOG = {"version":1,"families":[{"family":"glass","label
   function watchRetainPanel() {
     var panel = document.getElementById('panel-settings'); if (!panel || panel === retainedPanel) return;
     retainedPanel = panel;
-    new MutationObserver(function () { queueRetain(true); }).observe(panel, { attributes: true, attributeFilter: ['class'] });
+    new MutationObserver(function () { if (!panel.classList.contains('active')) clearIntent(); queueRetain(true); }).observe(panel, { attributes: true, attributeFilter: ['class'] });
   }
   function warmBusy() {
     if (document.hidden) return true;
     if (window.PM51 && PM51.place && PM51.place.mode === 'nav') return true;
     if (document.querySelector('#panel-settings .o55-leaving,#panel-settings [data-o55-nav-pending]')) return true;
-    if (typeof window.PM_BUSY === 'function') return !!window.PM_BUSY();
+    if (typeof window.PM_BUSY === 'function' && window.PM_BUSY()) return true;
     if (root.hasAttribute('data-pm-page-transition') || root.hasAttribute('data-pmu-moment') || root.hasAttribute('data-o55-open')) return true;
     if (document.querySelector('#o55np-reboot,#o55np-calm,.o55nw-boot,.o55t-bootcover')) return true;
     var n = window.PM_NIER;
     return !!(n && n.wanted && n.on && n.wanted() !== n.on());
   }
-  function warmAllowed(epoch) {
+  function warmAllowed(epoch, pressed) {
     var panel = document.getElementById('panel-settings');
     return epoch === warmEpoch && panel && panel.classList.contains('active') && !warmBusy() &&
-      performance.now() - warmInput >= 120 &&
+      performance.now() - warmScroll >= 120 && (pressed || performance.now() - warmInput >= 120) &&
       !(navigator.scheduling && navigator.scheduling.isInputPending && navigator.scheduling.isInputPending());
   }
-  function runWarm(epoch) {
-  if (warmRunning || !warmAllowed(epoch)) { queueWarm(); return; }
+  function clearIntent() { clearTimeout(intentTimer); intentTimer = 0; warmIntent = null; }
+  function intentAllowed(intent) {
+    return intent === warmIntent && intent.tile.isConnected && warmRow && warmRow.contains(intent.tile) &&
+      warmTargets.has(intent.tile) && warmAllowed(intent.epoch, intent.kind === 'press');
+  }
+  function queueIntent(delay) {
+    if (!warmIntent || intentTimer || warmIntent.reading) return;
+    intentTimer = setTimeout(function () {
+      intentTimer = 0;
+      var intent = warmIntent; if (!intent) return;
+      if (!intent.tile.isConnected || intent.epoch !== warmEpoch) { clearIntent(); return; }
+      if (warmRunning || !intentAllowed(intent)) { queueIntent(120); return; }
+      runWarm(intent.epoch, intent);
+    }, delay == null ? 120 : delay);
+  }
+  function requestIntent(tile, kind) {
+    if (!window.PM_LG || !PM_LG.prepareWallpaper) return;
+    clearIntent(); warmIntent = { tile: tile, kind: kind, epoch: warmEpoch, reading: false };
+    queueIntent(kind === 'press' ? 0 : 120);
+  }
+  /* A newly exposed tile may not have its immutable URL cached yet. Fill it after layout, not by forcing style in
+     pointerdown or the following choice task. The current request and all guards are checked again before baking. */
+  function readIntentUrl(intent, id) {
+    intent.reading = true;
+    var read = function () {
+      intent.reading = false;
+      if (intent !== warmIntent) return;
+      if (intentAllowed(intent)) imageUrl(id);
+      queueIntent(0);
+    };
+    if (typeof window.PM_AFTER_LAYOUT === 'function') window.PM_AFTER_LAYOUT(read);
+    else requestAnimationFrame(function () {
+      if (typeof ResizeObserver !== 'function') { read(); return; }
+      var ready = new ResizeObserver(function () { ready.disconnect(); read(); }); ready.observe(document.body);
+    });
+  }
+  function runWarm(epoch, intent) {
+  var allowed = function () { return intent ? intentAllowed(intent) : !warmIntent && warmAllowed(epoch); };
+  if (warmRunning || !allowed()) { if (intent) queueIntent(); else queueWarm(); return; }
   /* IntersectionObserver supplies geometry without a new layout read. Glass bounds frost by encoded bytes,
      so every visible choice can be prepared; opaque looks retain only two decoded images. */
   var glass = look() === 'glass' && root.getAttribute('data-lg') === 'on' && !inNier(), limit = glass ? order.length : 2, viewport = innerWidth + 'x' + innerHeight;
@@ -218860,20 +218898,26 @@ window.PM_WALLPAPERS_CATALOG = {"version":1,"families":[{"family":"glass","label
     return ids.length >= limit;
   });
   var mode = /-light$/.test(root.getAttribute('data-theme') || '') ? 'light' : 'dark';
-  var id = ids.find(function (value) { return !warmDone.has(value + '-' + mode + '|' + viewport); });
-  if (!id) return;
+  var id = intent ? intent.tile.getAttribute('data-wpk-pick') : ids.find(function (value) { return !warmDone.has(value + '-' + mode + '|' + viewport); });
+  if (id === 'look') id = lookDefault(look());
+  if (!id) { if (intent) { clearIntent(); queueWarm(); } return; }
   var key = id + '-' + mode + '|' + viewport;
+  /* Glass is authoritative about readiness: an earlier idle success may since have left its byte-bounded cache.
+     A kept pair resolves immediately; an evicted one is prepared again only for this deliberate intent. */
+  if (intent && !imageUrls.has(id + '-' + mode)) { readIntentUrl(intent, id); return; }
   warmRunning = true;
-  prepare(imageUrl(id), { canRun: function () { return warmAllowed(epoch); } }).catch(function () { return false; }).then(function (ok) {
+  prepare(imageUrl(id), { canRun: allowed }).catch(function () { return false; }).then(function (ok) {
     /* Retry a cover/input cancellation when idle again. A failed image gets one attempt per viewport/epoch;
        the explicit choice path can still retry it without a background error spinning an idle loop. */
-    if (epoch === warmEpoch && (ok || warmAllowed(epoch))) {
+    if (epoch === warmEpoch && (ok || allowed())) {
       warmDone.delete(key); warmDone.set(key, !!ok);
       while (warmDone.size > (glass ? order.length : 2)) warmDone.delete(warmDone.keys().next().value);
     }
-  }).then(function () { warmRunning = false; queueWarm(); });
+    if (intent === warmIntent && (ok || allowed())) clearIntent();
+  }).then(function () { warmRunning = false; if (warmIntent) queueIntent(0); else queueWarm(); });
   }
   function queueWarm() {
+    if (warmIntent) { queueIntent(); return; }
     if (warmTimer || warmIdle || warmRunning || !warmTargets.size || !window.requestIdleCallback ||
         !window.PM_LG || !PM_LG.prepareWallpaper) return;
     warmIdle = requestIdleCallback(function (deadline) {
@@ -218892,7 +218936,7 @@ window.PM_WALLPAPERS_CATALOG = {"version":1,"families":[{"family":"glass","label
       }
     });
   }
-  function resetWarm() { ++warmEpoch; warmRefusals = 0; warmDone.clear(); queueRetain(true); queueWarm(); }
+  function resetWarm() { ++warmEpoch; clearIntent(); warmRefusals = 0; warmDone.clear(); queueRetain(true); queueWarm(); }
   function watchWarm(r) {
     if (!window.IntersectionObserver) return;
     if (warmObserver) warmObserver.disconnect();
@@ -218909,7 +218953,11 @@ window.PM_WALLPAPERS_CATALOG = {"version":1,"families":[{"family":"glass","label
     r.querySelectorAll('.wpk-tile').forEach(function (tile) { warmObserver.observe(tile); });
   }
   ['pointerdown', 'keydown', 'wheel', 'touchstart'].forEach(function (type) {
-    document.addEventListener(type, function () { warmInput = performance.now(); warmRefusals = 0; }, { capture: true, passive: true });
+    document.addEventListener(type, function (e) {
+      warmInput = performance.now(); warmRefusals = 0;
+      if (type === 'wheel' || type === 'touchstart') { warmScroll = warmInput; clearIntent(); }
+      else if (!(e.target.closest && e.target.closest('.wpk-row .wpk-tile'))) clearIntent();
+    }, { capture: true, passive: true });
   });
   document.addEventListener('pointermove', function (e) {
     warmInput = performance.now();
@@ -218919,8 +218967,10 @@ window.PM_WALLPAPERS_CATALOG = {"version":1,"families":[{"family":"glass","label
   }, { passive: true });
   window.addEventListener('pm-idle', queueWarm);
   window.addEventListener('resize', resetWarm, { passive: true });
-  document.addEventListener('scroll', function (e) { if (e.target && e.target.id === 'settings-document') queueRetain(); }, { capture: true, passive: true });
-  document.addEventListener('visibilitychange', function () { queueRetain(true); });
+  document.addEventListener('scroll', function (e) {
+    if (e.target && e.target.id === 'settings-document') { warmScroll = performance.now(); queueRetain(); }
+  }, { capture: true, passive: true });
+  document.addEventListener('visibilitychange', function () { if (document.hidden) clearIntent(); queueRetain(true); });
   function apply(animate) {
     var id = shown(), selected = choice(), theme = root.getAttribute('data-theme'), key = theme + '|' + id;
     if (key === paintKey) { paintedChoice = selected; return; }
@@ -219032,12 +219082,24 @@ window.PM_WALLPAPERS_CATALOG = {"version":1,"families":[{"family":"glass","label
   document.addEventListener('pointerover', function (e) {
     var t = e.target.closest && e.target.closest('.wpk-row .wpk-tile');
     if (!t || t.contains(e.relatedTarget)) return;
-    /* Hover is a priority hint for the same guarded, serial idle queue. A moving pointer must not launch a bake
-       for each tile it crosses, and a late decode must still pass the queue's input/busy/epoch guard. */
-    warmHover = t; warmInput = performance.now(); warmRefusals = 0; queueWarm();
+    /* One quiet hover advances its tile outside idle. A sweep replaces that intent; a late decode still checks
+       that it is the newest request, with the same cover, scrolling, navigation and epoch guards. */
+    warmHover = t; warmInput = performance.now(); warmRefusals = 0; requestIntent(t, 'hover'); queueWarm();
   }, { passive: true });
   document.addEventListener('pointerout', function (e) {
     if (warmHover && warmHover.contains(e.target) && !warmHover.contains(e.relatedTarget)) warmHover = null;
+    if (warmIntent && warmIntent.kind === 'hover' && warmIntent.tile.contains(e.target) && !warmIntent.tile.contains(e.relatedTarget)) clearIntent();
+  }, { passive: true });
+  document.addEventListener('focusin', function (e) {
+    var t = e.target.closest && e.target.closest('.wpk-row .wpk-tile');
+    if (t && !(warmIntent && warmIntent.tile === t && warmIntent.kind === 'press')) requestIntent(t, 'focus');
+  });
+  document.addEventListener('focusout', function (e) {
+    if (warmIntent && warmIntent.kind === 'focus' && warmIntent.tile.contains(e.target) && !warmIntent.tile.contains(e.relatedTarget)) clearIntent();
+  });
+  document.addEventListener('pointerdown', function (e) {
+    var t = e.target.closest && e.target.closest('.wpk-row .wpk-tile');
+    if (t && e.button === 0) requestIntent(t, 'press');
   }, { passive: true });
 
   /* clicks and keys: one radiogroup across the families */
@@ -219058,7 +219120,7 @@ window.PM_WALLPAPERS_CATALOG = {"version":1,"families":[{"family":"glass","label
         if (d < best) { best = d; next = k; }
       });
       if (next < 0) return;
-    } else if (e.key === ' ' || e.key === 'Enter') { choose(t.getAttribute('data-wpk-pick'), false); e.preventDefault(); return; }
+    } else if (e.key === ' ' || e.key === 'Enter') { requestIntent(t, 'press'); choose(t.getAttribute('data-wpk-pick'), false); e.preventDefault(); return; }
     else return;
     e.preventDefault();
     tiles[next].focus(); choose(tiles[next].getAttribute('data-wpk-pick'), true);
