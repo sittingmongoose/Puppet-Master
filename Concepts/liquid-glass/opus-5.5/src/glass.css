@@ -537,6 +537,7 @@ html[data-lg="on"][data-theme="glass-light"]:not(#lgz) { --lg-lens-body: rgba(25
 :is(html[data-lg="on"][data-theme^="glass"], html:not([data-theme^="glass"])):not(#lgz) .pmw-ink-row:not([data-lg-lensed]) > .pmw-ink,
 :is(html[data-lg="on"][data-theme^="glass"], html:not([data-theme^="glass"])):not(#lgz) .pmw-ink-row:not([data-lg-lensed]) > .pmw-ink-opt:is([aria-selected="true"], [aria-checked="true"])::after,
 :is(html[data-lg="on"][data-theme^="glass"], html:not([data-theme^="glass"])):not(#lgz) #pm-settings-root .segmented > button:is([aria-checked="true"], [aria-pressed="true"]),
+:is(html[data-lg="on"][data-theme^="glass"], html:not([data-theme^="glass"])):not(#lgz) #pm-settings-root .segmented > lg-under > .lg-lens,
 :is(html[data-lg="on"][data-theme^="glass"], html:not([data-theme^="glass"])):not(#lgz) #pm-settings-root .resource-row[aria-current="true"],
 :is(html[data-lg="on"][data-theme^="glass"], html:not([data-theme^="glass"])):not(#lgz) .pmt-cz :is(.pmt-cz-tile[aria-checked="true"], .pmt-cz-set[aria-pressed="true"], .pmt-cz-chipbox.pmt-cz-lit) {
   background: radial-gradient(70% 100% at 30% 0%, var(--pm-switch-glint, var(--lg-lens-glint)), transparent 70%) 2px 1px / calc(100% - 4px) 38% no-repeat, linear-gradient(var(--pm-switch-fill, var(--lg-tint-lens)), var(--pm-switch-fill, var(--lg-tint-lens))), linear-gradient(var(--pm-switch-body, var(--lg-lens-body)), var(--pm-switch-body, var(--lg-lens-body))) !important;
@@ -777,6 +778,17 @@ html[data-lg="on"][data-theme^="glass"]:not(#lgz) .o55t-ring { box-shadow: 0 0 0
    a layer too); its travel animates on the compositor as any transform animation does */
 :is(html[data-theme^="retro"], html[data-o55-nier="on"]):not([data-theme^="glass"]):not(#lgz) lg-under.lg-lenses-under .lg-lens { will-change: auto; }
 :is(html[data-theme^="retro"], html[data-o55-nier="on"]):not([data-theme^="glass"]):not(#lgz) :is(#themeMenu .pm6-tt-mode, #panel-wizard .pm6-wiz-intent-chip, #pm-o55-onboarding .o55-seg button, #pm-o55-onboarding .o55-railitem) { position: relative; z-index: 1; }
+/* Settings' segmented choices (glass.js STRIPS under): in every look, Glass included, the chip is the control's own
+   under-layer, so it scrolls with the control and stays under the sticky bars. It shows only while it moves
+   (data-lg-moving): at rest the chosen segment wears the material in place (above), as it always did. While it moves it
+   wears that same material at the segment's box, and the chosen segments' own fills step aside; the glint is the
+   material's */
+:is(html[data-lg="on"][data-theme^="glass"], html:not([data-theme^="glass"])):not(#lgz) #pm-settings-root .segmented > lg-under.lg-lenses-under { display: block; position: absolute; inset: 0; z-index: 0; pointer-events: none; }
+:is(html[data-lg="on"][data-theme^="glass"], html:not([data-theme^="glass"])):not(#lgz) #pm-settings-root .segmented > lg-under > .lg-lens { will-change: auto; }
+:is(html[data-lg="on"][data-theme^="glass"], html:not([data-theme^="glass"])):not(#lgz) #pm-settings-root .segmented > lg-under > .lg-lens::after { display: none; }
+:is(html[data-lg="on"][data-theme^="glass"], html:not([data-theme^="glass"])):not(#lgz) #pm-settings-root .segmented[data-lg-lensed] > button { position: relative; z-index: 1; }
+:is(html[data-lg="on"][data-theme^="glass"], html:not([data-theme^="glass"])):not(#lgz) #pm-settings-root .segmented:not([data-lg-moving]) > lg-under > .lg-lens { visibility: hidden; }
+:is(html[data-lg="on"][data-theme^="glass"], html:not([data-theme^="glass"])):not(#lgz):not(#lgy) #pm-settings-root .segmented[data-lg-moving] > button:is([aria-checked="true"], [aria-pressed="true"]) { background: transparent !important; box-shadow: none !important; }
 /* a Retro step's blocks (glass.js hop): above the labels, in the chip's material, each holding an inverted copy of its
    tab's label clipped to the block; they show and hide on the compositor and go once the app has chosen the tab */
 lg-over { display: none; }

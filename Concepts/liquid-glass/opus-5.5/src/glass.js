@@ -1137,6 +1137,10 @@
        the scroll); the sections under an open page are words only */
     { sel: '#pm-settings-root nav.page-index-card', items: '.pm51-index-group > .index-link', many: true, vertical: true, kind: 'lensRow', active: '.is-active', mark: true },
     { sel: '#pm-settings-root nav.manager-tabs', items: '.manager-tab', many: true, kind: 'lens', active: '[aria-selected="true"]', magRest: 1, mark: true },
+    /* 2026-10-16 (after Q16): Settings' segmented choices. They live in content that scrolls under Settings' sticky bars,
+       so in every look their chip is the control's own under-layer (under: the lens inside the control, under its
+       labels), which scrolls with it and stays under the bars; it wears the material the chosen segment wore in place */
+    { sel: '#pm-settings-root .segmented', items: ':scope > button', many: true, kind: 'lens', active: ':is([aria-checked="true"], [aria-pressed="true"])', pad: 0, magRest: 1, mark: true, under: true },
   ];
   function railIcon(strip) {
     var sp = document.getElementById('sidePanelSlot'); if (!sp || !visible(sp)) return null;
@@ -1156,8 +1160,10 @@
      measured mid-slide in the app-wide layer and then sliding the last 50 px into place */
   var LENS_HOSTS = '#pm-o55-onboarding .o55-win, #pmw-overlay .pmt-cz-dialog, #pmw-overlay [role="dialog"], #themeMenu, [data-lg-lens-host], .primary-content > .page';
   var lenses = new Map(), layer = null, localLayers = new WeakMap();
+  /* strips whose lens is always their own under-layer, whatever the look's layer mode (STRIPS' under) */
+  var ownUnder = new WeakSet();
   function lensLayer(strip) {
-    if (switchUnder && strip) return underLayer(strip);
+    if (strip && (switchUnder || ownUnder.has(strip))) return underLayer(strip);
     var host = strip && strip.closest && strip.closest(LENS_HOSTS);
     if (host) {
       var own = localLayers.get(host);
@@ -1227,6 +1233,17 @@
   }
   function rectIn(strip, t, pad) {
     var L = lensLayer(strip); pad = pad || 0;
+    /* a chip that is always under its labels (ownUnder) replaces the fill the chosen item wore in place, so at rest it has
+       to sit on that fill's exact box: the offset chain rounds to whole pixels and left a one-pixel seam at each edge.
+       The item's own box, fractions kept, in the strip's padding box (an untransformed item; a transformed one is
+       placed by the offset chain as before) */
+    if (ownUnder.has(strip) && t.getBoundingClientRect && L.parentElement === strip) {
+      var ts = getComputedStyle(t);
+      if (ts.transform === 'none' && ts.scale === 'none' && ts.translate === 'none') {
+        var tr = t.getBoundingClientRect(), sr = strip.getBoundingClientRect(), k = stripScale(strip, sr);
+        return { x: (tr.left - sr.left) / k - strip.clientLeft - pad, y: (tr.top - sr.top) / k - strip.clientTop - pad, w: tr.width / k + 2 * pad, h: tr.height / k + 2 * pad };
+      }
+    }
     if (t.getBoundingClientRect && L !== layer && L.parentElement) {
       var h = hostRect(t, L.parentElement);
       if (h) return { x: h.left - pad, y: h.top - pad, w: h.width + 2 * pad, h: h.height + 2 * pad };
@@ -1241,12 +1258,18 @@
     indexAncestors(strip, scrollStrips, stripAncestors);
     var parked = unparkLens(strip);
     if (parked) { parked.cfg = cfg; lenses.set(strip, parked); if (cfg.mark && !strip.hasAttribute('data-lg-lensed')) strip.setAttribute('data-lg-lensed', ''); return parked; }
+    if (cfg.under) ownUnder.add(strip);
+    /* a control the app drew again from scratch (a Settings manager redraws its body on a change) takes the chip of the one
+       it replaced: same strip kind, same label and choices, gone within the last 1.2 s. Its chip starts where the old one
+       was drawn, so it moves on to the new choice instead of appearing there */
+    var heir = cfg.under ? inheritLens(strip, cfg) : null;
     var lens = el('i', { class: 'lg-lens', 'aria-hidden': 'true', 'data-lg-lens': cfg.kind }), own = lensLayer(strip);
     own.appendChild(lens);
     L = { strip: strip, lens: lens, layer: own, under: own.classList.contains('lg-lenses-under'), rect: null, anim: null, glintAnim: null, magAnims: null, scrubCleanup: null, cfg: cfg, warm: '', scroller: preread(strip) ? preread(strip).scroller : scrollerOf(strip) }; lenses.set(strip, L); strip.__lgPre = null;
     /* an under-layer lens lost with its layer while its strip stays (the app redrew the strip's rows: Settings' left bar
        on a chapter change) comes back where the old chip was drawn, so it glides on to the new choice instead of
        appearing there */
+    if (heir) { var hs = lens.style; hs.left = heir.x + 'px'; hs.top = heir.y + 'px'; hs.width = heir.w + 'px'; hs.height = heir.h + 'px'; L.rect = heir; L.tgt = null; }
     var last = L.under && strip.__lgLast;
     if (last) {
       strip.__lgLast = null;
@@ -1258,6 +1281,33 @@
     if (cfg.mark && !strip.hasAttribute('data-lg-lensed')) strip.setAttribute('data-lg-lensed', '');
     return L;
   }
+  function stripKey(strip, cfg) {
+    var b = strip.querySelectorAll(cfg.items), a = b.length ? b[0].getAttribute('data-action') || '' : '';
+    return cfg.sel + '|' + (strip.getAttribute('aria-label') || '') + '|' + a + '|' + b.length + '|' + Array.prototype.map.call(b, function (x) { return x.getAttribute('data-value') || x.textContent.trim(); }).join('/');
+  }
+  /* the scale a transform puts on a strip (a page's entrance); offsetWidth is whole pixels, so a width that differs by less
+     than one is the rounding, not a scale (dividing by it put a chip a fifth of a pixel off its segment) */
+  function stripScale(strip, sr) { var w = strip.offsetWidth; return w && Math.abs(sr.width - w) >= 1 ? sr.width / w : 1; }
+  /* chips of controls the app took away right after a choice on them (pruneLenses), for the control drawn in their place */
+  var heirs = [];
+  function inheritLens(strip, cfg) {
+    var key = stripKey(strip, cfg), now = performance.now(), out = null;
+    heirs = heirs.filter(function (h) { return now - h.t < 1200; });
+    for (var i = 0; i < heirs.length && !out; i++) {
+      if (heirs[i].key !== key) continue;
+      var h = heirs.splice(i, 1)[0], sr = strip.getBoundingClientRect(), k = stripScale(strip, sr);
+      out = { x: (h.x - sr.left) / k - strip.clientLeft, y: (h.y - sr.top) / k - strip.clientTop, w: h.w, h: h.h };
+    }
+    return out;
+  }
+  /* a choice made on a control whose chip is its own (ownUnder): where the control is on screen now, before the app's
+     handler can take it away (a click from the pointer or the keyboard, in the capture phase) */
+  document.addEventListener('click', function (e) {
+    var hit = e.target && e.target.closest ? stripAt(e.target) : null; if (!hit || !hit.cfg.under) return;
+    var L = lenses.get(hit.strip); if (!L || !L.rect) return;
+    var sr = hit.strip.getBoundingClientRect(), k = stripScale(hit.strip, sr);
+    L.choseAt = performance.now(); L.choseBox = { left: sr.left + hit.strip.clientLeft * k, top: sr.top + hit.strip.clientTop * k, k: k, key: stripKey(hit.strip, hit.cfg) };
+  }, true);
   /* the nearest ancestor that scrolls this strip: its lens follows it at once while it scrolls, and steps out of
      sight when its target leaves the visible part (the lens layer is not clipped by the strip's container) */
   var preSerial = 0;
@@ -1274,11 +1324,14 @@
     var s = L.lens.style, A = L.rect;
     if (!A || A.x !== R.x) s.left = R.x + 'px'; if (!A || A.y !== R.y) s.top = R.y + 'px';
     if (!A || A.w !== R.w) s.width = R.w + 'px'; if (!A || A.h !== R.h) s.height = R.h + 'px'; L.rect = R;
-    if (isGlass()) mount(L.lens, L.cfg.kind);   /* the refracting optics are Glass's; an adopting look draws the lens from its tokens */
+    /* the refracting optics are Glass's; an adopting look draws the lens from its tokens, and a lens that is always under
+       its labels (ownUnder) wears the in-place material with no live filter: under the labels it would only bend the
+       track, at the price of a render pass per control */
+    if (isGlass() && !ownUnder.has(L.strip)) mount(L.lens, L.cfg.kind);
   }
   /* every item size of a strip gets its lens filter while nothing moves, so a move never waits for a map to decode */
   function prewarm(L, cfg, strip) {
-    if (!gpu() || !isGlass()) return;
+    if (!gpu() || !isGlass() || cfg.under) return;
     var pad = cfg.pad == null ? 2 : cfg.pad, sizes = [];
     strip.querySelectorAll(cfg.items).forEach(function (it) {
       if (!visible(it)) return; var b = cfg.box ? cfg.box(it) : it; if (!b) return; var r = b.getBoundingClientRect ? boxRect(b) : b;
@@ -1396,11 +1449,20 @@
     return P;
   }
   function relayerLenses() {
-    lenses.forEach(function (L) { if (L.strip.isConnected && L.lens.isConnected) parkLens(L); else disposeLens(L); }); lenses.clear();
+    /* a strip whose lens is always under (ownUnder) keeps it: its layer does not change with the look's mode */
+    lenses.forEach(function (L, strip) { if (ownUnder.has(strip) && L.strip.isConnected && L.lens.isConnected) return; if (L.strip.isConnected && L.lens.isConnected) parkLens(L); else disposeLens(L); lenses.delete(strip); });
     if (typeof hiddenLenses !== 'undefined') hiddenLenses.clear();
   }
   function pruneLenses() {
-    lenses.forEach(function (L, strip) { if (!strip.isConnected || !L.lens.isConnected) { disposeLens(L); lenses.delete(strip); } });
+    lenses.forEach(function (L, strip) {
+      if (strip.isConnected && L.lens.isConnected) return;
+      /* the control went with a choice just made on it: its chip passes to the control drawn in its place (inheritLens) */
+      if (!strip.isConnected && L.choseBox && performance.now() - L.choseAt < 1200 && L.rect) {
+        var r = visualRect(L) || L.rect, b = L.choseBox;
+        heirs.push({ key: b.key, t: L.choseAt, x: b.left + r.x * b.k, y: b.top + r.y * b.k, w: r.w, h: r.h });
+      }
+      disposeLens(L); lenses.delete(strip);
+    });
     [parkedLenses.over, parkedLenses.under].forEach(function (park) {
       park.forEach(function (L, strip) { if (!strip.isConnected || !L.lens.isConnected) { disposeLens(L); park.delete(strip); } });
     });
@@ -1492,7 +1554,7 @@
     var an = L.lens.animate(frames, { duration: dur, easing: 'linear' }); L.anim = an; L.path = { t0: performance.now(), dur: dur, rects: rects };
     try { L.glintAnim = L.lens.animate(glint, { duration: dur, easing: 'linear', pseudoElement: '::after' }); } catch (e) { L.glintAnim = null; }
     magnifyAlong(L, track, dur, o);
-    an.onfinish = function () { if (L.anim === an) L.anim = null; };
+    an.onfinish = function () { if (L.anim === an) L.anim = null; ownRest(L); };
   }
   /* A strip that is still arriving (its rows sliding in, its bar fading in: Usage's first arrival, a page's entrance)
      shows its lens as it lands, never ahead of it over a blank bar (Jared #2, 2026-10-14). The arrival is whatever
@@ -1552,7 +1614,22 @@
     });
     if (hiddenLenses.size) showT = setTimeout(checkShown, 400);
   }
+  /* A strip whose chip is its own (ownUnder, Settings' segmented choices) shows that chip only while it moves: at rest the
+     chosen segment wears the material in place, exactly as it did before the chip existed, so nothing at rest changes
+     (a resting segment's printed shadow, a divider, a font load or a resize all stay the segment's own). From the press,
+     or the app's change, until the chip rests on the segment the app has chosen, the strip carries data-lg-moving: the
+     chip shows and the chosen segments' own fills step aside (glass.css), so one fill is on screen in every frame */
+  function ownRest(L) {
+    var strip = L.strip; if (!ownUnder.has(strip)) return;
+    var chosen = strip.querySelector(L.cfg.items + (L.cfg.active || '.active'));
+    var moving = !!(L.pending || L.anim || L.hopFrames || (L.rect && chosen && L.tgt !== chosen));
+    if (moving !== strip.hasAttribute('data-lg-moving')) { if (moving) strip.setAttribute('data-lg-moving', ''); else strip.removeAttribute('data-lg-moving'); }
+  }
   function syncStrip(cfg, strip) {
+    syncStripNow(cfg, strip);
+    if (cfg.under) { var L = lenses.get(strip); if (L) ownRest(L); }
+  }
+  function syncStripNow(cfg, strip) {
     var L = lensFor(strip, cfg), P0 = L.pending;
     var target = cfg.pick ? cfg.pick(strip) : strip.querySelector(cfg.items + (cfg.active || '.active'));
     if (L.pending) {
@@ -1586,7 +1663,7 @@
     if (still) return;
     if (!A || quiet || !switchOn()) {
       stopLensTravel(L);
-      if (A && quiet) { var an = L.lens.animate([{ opacity: 0.3 }, { opacity: 1 }], { duration: 140 }); L.anim = an; L.reducedAnim = true; an.onfinish = function () { if (L.anim === an) { L.anim = null; L.reducedAnim = false; } }; }
+      if (A && quiet) { var an = L.lens.animate([{ opacity: 0.3 }, { opacity: 1 }], { duration: 140 }); L.anim = an; L.reducedAnim = true; an.onfinish = function () { if (L.anim === an) { L.anim = null; L.reducedAnim = false; } ownRest(L); }; }
       setLensBox(L, R); L.tgt = target;
       /* a lens in the app-wide layer waits for its strip's entrance; one in its host's own layer (a page, a menu, a
          dialog) is part of that entrance already */
@@ -1666,6 +1743,7 @@
     if (L.hopMarks) { L.hopMarks.forEach(function (v, el) { hopOwned.delete(el); if (el.getAttribute('data-lg-press') === v) el.removeAttribute('data-lg-press'); }); L.hopMarks.clear(); }
     var P = L.hopPress; L.hopPress = null; L.hopTarget = null;
     if (P && L.pending === P && P.el.isConnected && !hopOwned.has(P.el)) P.el.setAttribute('data-lg-press', 'on');
+    ownRest(L);
   }
   function stopHop(L) { endHop(L); }
   /* the blocks go once the app has chosen the tab they show (and not before the landing): the chip under the labels and
@@ -1682,7 +1760,7 @@
     stopLensTravel(L);
     if (switchMotion === 'cut' || !A) { setLensBox(L, B); return; }
     var stops = hopStops(A, B, strip, cfg, target, vertical);
-    if (stops.length < 2 || !switchUnder) { setLensBox(L, B); return; }
+    if (stops.length < 2 || !L.under) { setLensBox(L, B); return; }
     var now = strip.querySelector(cfg.items + (cfg.active || '.active')), weight = getComputedStyle(now || target).fontWeight;
     var over = overLayer(strip), pad = cfg.pad == null ? 2 : cfg.pad, frames = stops.map(function (s) {
       var F = el('i', { class: 'lg-lens lg-hop', 'aria-hidden': 'true' }), st = F.style, ir = rectIn(strip, s.it, 0);
@@ -1725,7 +1803,11 @@
   function stripAt(target) {
     for (var i = 0; i < STRIPS.length; i++) {
       var cfg = STRIPS[i], strip = target.closest && target.closest(cfg.sel); if (!strip) continue;
-      var item = target.closest(cfg.items); if (!item || !strip.contains(item)) return null;
+      /* the strip's own items, searched from the strip: an item selector written from the strip (':scope > button', Usage's
+         range) never matches through closest(), where :scope is the item itself, so a press there never moved the chip */
+      var item = null, list = strip.querySelectorAll(cfg.items);
+      for (var j = 0; j < list.length && !item; j++) if (list[j].contains(target)) item = list[j];
+      if (!item) return null;
       return { cfg: cfg, strip: strip, item: item };
     }
     return null;
@@ -2212,7 +2294,7 @@
     if (scope !== false) { if (scope && scope.nodeType === 1) dirtyScope(scope); else dirtyAll = true; }
     if (!lazyT) lazyT = setTimeout(function () { lazyT = 0; queueSync(); }, 140);
   }
-  var HOT = '[data-lg-surface], .page-tab, #pmuRange > button, .pmu-navbtn, .pm-segtab-item, #activityBar .icon, .side-panel-view, .pmu-pop, .pmr-menu-list, .pmr-menu-group, .pm6-tb-menu, .o55-railitem, .o55-seg button, .o55-win, .o55t-callout, .o55t-bar';
+  var HOT = '[data-lg-surface], .page-tab, #pmuRange > button, .pmu-navbtn, .pm-segtab-item, #activityBar .icon, .side-panel-view, .pmu-pop, .pmr-menu-list, .pmr-menu-group, .pm6-tb-menu, .o55-railitem, .o55-seg button, #pm-settings-root .segmented > button, .o55-win, .o55t-callout, .o55t-bar';
   var GENERATED = '#lg-optics, #lg-lenses, .lg-lenses-local, .lg-lenses-under, .lg-hops, #lg-shine, .lg-press, .pm-segtab-track, #lg-post, #lg-shown, lg-warm';
   /* menus that pour out of their control (morph) or hide the hover tag sync inside the click's task, so the spring's
      first frame is the menu's first frame. Any other floating sheet ([data-lg-surface], the onboarding window, the tour)
@@ -2249,7 +2331,7 @@
     for (var i = 0; i < recs.length; i++) {
       /* an app redrew a strip and dropped its under-layer with the chip in it: the chip comes back in this frame, not after
          the lazy sync (an opaque chip gone for 140 ms left its inverted label on bare ground) */
-      if (switchUnder && recs[i].type === 'childList') for (var u = 0; u < recs[i].removedNodes.length; u++) { var rn = recs[i].removedNodes[u]; if (rn.nodeType === 1 && rn.matches('.lg-lenses-under')) hot = true; }
+      if (recs[i].type === 'childList' && recs[i].removedNodes.length) for (var u = 0; u < recs[i].removedNodes.length; u++) { var rn = recs[i].removedNodes[u]; if (rn.nodeType === 1 && rn.matches('.lg-lenses-under')) hot = true; }
       /* optics, lenses and light are outputs of sync, never inputs that should schedule it again */
       if (generatedMutation(recs[i])) continue;
       if (recs[i].type === 'attributes' && recs[i].oldValue === recs[i].target.getAttribute(recs[i].attributeName)) continue;
@@ -2260,7 +2342,7 @@
       /* a <details> opening shows sheets that were not drawn: they are mounted in this frame (inClosedDetails) */
       if (recs[i].attributeName === 'open' && t.tagName === 'DETAILS') { hot = true; dirtyScope(t); if (t.open) bakeSoon(t); }
       if (t.matches(HOT)) { hot = true; if (t.matches(MENU_HOT)) menuHot = true; }
-      else for (var j = 0; j < recs[i].addedNodes.length; j++) { var nd = recs[i].addedNodes[j]; if (nd.nodeType === 1 && (nd.matches(HOT) || nd.matches('.pmu-card') || (nd.querySelector && nd.querySelector('.pmr-menu-list, .pmu-card')))) { hot = true; if (area && (nd.matches(MENU_HOT) || (nd.querySelector && nd.querySelector('.pmr-menu-list')))) menuHot = true; break; } }
+      else for (var j = 0; j < recs[i].addedNodes.length; j++) { var nd = recs[i].addedNodes[j]; if (nd.nodeType === 1 && (nd.matches(HOT) || nd.matches('.pmu-card') || (nd.querySelector && nd.querySelector('.pmr-menu-list, .pmu-card, #pm-settings-root .segmented')))) { hot = true; if (area && (nd.matches(MENU_HOT) || (nd.querySelector && nd.querySelector('.pmr-menu-list')))) menuHot = true; break; } }
     }
     if (!relevant) return;
     var page = document.querySelector('.page-tabs .page-tab.active'); page = page && page.id;
