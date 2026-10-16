@@ -55047,7 +55047,8 @@ html[data-o55-nier="on"] :is(#panel-usage,[data-pmu-host]) .pmu-toggle::after { 
 :is(#panel-usage,[data-pmu-host]) .pmu-stepper button:hover { background: var(--pmu-row-hover); color: var(--pmu-ink); }
 :is(#panel-usage,[data-pmu-host]) .pmu-stepper button svg { width: 12px; height: 12px; }
 :is(#panel-usage,[data-pmu-host]) .pmu-stepper output, :is(#panel-usage,[data-pmu-host]) .pmu-stepper .pmu-stepval { min-width: 40px; padding: 0 4px; text-align: center; font-size: 13px; font-weight: 600; font-variant-numeric: tabular-nums; }
-html[data-theme^="retro"] :is(#panel-usage,[data-pmu-host]) :is(.pmu-toggle, .pmu-toggle::after, .pmu-stepper) { border-radius: 0; }
+/* a pseudo-element is dropped inside :is(), so the knob is its own selector-list entry */
+html[data-theme^="retro"] :is(#panel-usage,[data-pmu-host]) :is(.pmu-toggle, .pmu-stepper), html[data-theme^="retro"] :is(#panel-usage,[data-pmu-host]) .pmu-toggle::after { border-radius: 0; }
 html[data-theme^="retro"] :is(#panel-usage,[data-pmu-host]) .pmu-toggle::after { transition-timing-function: steps(2, jump-start); }
 /* the value-change underline (B v2 8.5) */
 :is(#panel-usage,[data-pmu-host]) .pmu-pulse-ul { position: relative; }
@@ -55096,7 +55097,7 @@ body.pmu-page-active #o55-demo { transform-origin: 0 100%; scale: .8; }
 html[data-theme^="retro"] :is(#panel-usage,[data-pmu-host]) .pmu-toast { border-radius: 0; }
 /* during a gesture: nothing restyles the application. user-select on body would restyle all ~15k nodes (98 ms on the VM),
    so text selection is blocked by a selectstart listener instead; the grabbing cursor lives on the lifted card. */
-html[data-motion="reduced"] :is(#panel-usage,[data-pmu-host]) :is(.pmu-seg-ink, .pmu-toggle, .pmu-toggle::after, .pmu-ctlchev, .pmu-navicon) { transition: none !important; }
+html[data-motion="reduced"] :is(#panel-usage,[data-pmu-host]) :is(.pmu-seg-ink, .pmu-toggle, .pmu-ctlchev, .pmu-navicon), html[data-motion="reduced"] :is(#panel-usage,[data-pmu-host]) .pmu-toggle::after { transition: none !important; }
 
 /* narrow heads (DESIGN-SPEC 2.1: nothing overlaps the title): below 1000 px of panel the subtitle goes to the title's
    hover tag, the range strip collapses into its menu and the scope label shortens; below 860 px the scope button keeps
@@ -57099,7 +57100,7 @@ html[data-pmu-soft] :is(#panel-usage,[data-pmu-host]) .pmu-skyswitch { filter: n
    (moved by translateX; opacity 0 at rest) */
 :is(#panel-usage,[data-pmu-host]) .pmu-skyfront { position: absolute; left: -4px; width: 34px; height: 12px; margin-bottom: -7px; opacity: 0; pointer-events: none; border-radius: 6px;
   background: radial-gradient(50% 50% at 70% 50%, color-mix(in srgb, #fff 55%, var(--pmu-warn)), color-mix(in srgb, var(--pmu-warn) 55%, transparent) 45%, transparent 100%); }
-html[data-theme^="retro"] :is(#panel-usage,[data-pmu-host]) :is(.pmu-skytrack, .pmu-skyfill, .pmu-skyfill::before, .pmu-skyflare, .pmu-skyfront) { border-radius: 0; }
+html[data-theme^="retro"] :is(#panel-usage,[data-pmu-host]) :is(.pmu-skytrack, .pmu-skyfill, .pmu-skyflare, .pmu-skyfront), html[data-theme^="retro"] :is(#panel-usage,[data-pmu-host]) .pmu-skyfill::before { border-radius: 0; }
 html[data-theme^="retro"] :is(#panel-usage,[data-pmu-host]) .pmu-skyfill { background: color-mix(in srgb, var(--c) 78%, transparent); }
 html[data-o55-nier="on"] :is(#panel-usage,[data-pmu-host]) .pmu-skyfill { background: repeating-linear-gradient(to top, var(--o55-nier-ink) 0 5px, transparent 5px 7px); }
 html[data-o55-nier="on"] :is(#panel-usage,[data-pmu-host]) .pmu-skyfill::before { background: var(--o55-nier-ink); box-shadow: none; border-radius: 0; }
@@ -57922,8 +57923,8 @@ html[data-o55-nier="on"] :is(#panel-usage,[data-pmu-host]) .pmu-stagehead { back
 
 /* square: every element; rings and dots stay SVG so they stay round */
 html[data-o55-nier-parts~="square"] :is(#panel-usage,[data-pmu-host]) :is(.pmu-card, .pmu-morph, .pmu-landing, .pmu-outline, .pmu-outline-label, .pmu-ctlbtn, .pmu-iconbtn, .pmu-navbtn, .pmu-navink,
-  .pmu-menu, .pmu-mitem, .pmu-micon, .pmu-mrailbtn, .pmu-msearchwrap, .pmu-mback, .pmu-cardtools, .pmu-pmark, .pmu-toggle, .pmu-toggle::after, .pmu-stepper, .pmu-irow,
-  .pmu-inspact, .pmu-seg-ink) { border-radius: 0; }
+  .pmu-menu, .pmu-mitem, .pmu-micon, .pmu-mrailbtn, .pmu-msearchwrap, .pmu-mback, .pmu-cardtools, .pmu-pmark, .pmu-toggle, .pmu-stepper, .pmu-irow,
+  .pmu-inspact, .pmu-seg-ink), html[data-o55-nier-parts~="square"] :is(#panel-usage,[data-pmu-host]) .pmu-toggle::after { border-radius: 0; }
 
 /* ticks: corner ticks and the U-nn coordinate on every card (account and group cards count like every widget) */
 html[data-o55-nier-parts~="ticks"] :is(#panel-usage,[data-pmu-host]) .pmu-board { counter-reset: pmu-nier-usage; }
