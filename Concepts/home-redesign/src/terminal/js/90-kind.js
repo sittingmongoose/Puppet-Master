@@ -109,6 +109,7 @@
   function mountView(host, api, rec, state) {
     var view = new T.View(host, api, rec.session, state);
     if (T.Find) T.Find.attach(view);
+    if (T.Customize && T.Customize.wake) T.Customize.wake();   /* a kept Customize screen can be prepared for it */
     rec.view = view; rec.api = api;
     if (state && state.mute) rec.muted = true;
     wireNotify(rec);

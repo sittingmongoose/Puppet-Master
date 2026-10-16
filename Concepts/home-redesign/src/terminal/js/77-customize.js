@@ -1268,7 +1268,8 @@
       parkedWatch(false); detach();
       if (preview) preview.dispose();
       root.remove();
-      if (prepared === handle) { prepared = null; setTimeout(prepareSoon, 1500); }
+      clearTimeout(keptTimer);
+      if (prepared === handle) { prepared = null; prepareLater(1500); }
     }
     /* the preview follows you down the screen only where the real terminal is not beside it (the one rule of both
        Customize screens, 2026-10-14): when less than 40 % of its own place shows and the screen is not placed beside
@@ -1301,15 +1302,26 @@
       if (v.pop === root) v.closeAppearance(true);
       handle.kept = true; changed = true;
       parkedWatch(false); detach();
-      setTimeout(prepareSoon, 1500);
+      /* nothing of the terminal that went is held (its view, with its DOM and buffers; review TP-1): the screen reads a
+         stand-in until a terminal takes it, and goes itself when none has in KEPT_MS */
+      v = handle.v = keptStandIn();
+      if (preview) preview.host = v;
+      clearTimeout(keptTimer);
+      keptTimer = setTimeout(function () { if (handle.kept && !disposed) dispose(); }, KEPT_MS);
+      prepareLater(1500);
     }
     function adopt(nv) { retarget(nv); warmSoon(); }
+    var KEPT_MS = 60000, keptTimer = 0;
+    function keptStandIn() {
+      return { pop: null, root: null, disposers: [], tabAppearance: {}, previewAppearance: null, _czLook: null,
+        api: { look: function () { return T.look(); } }, closeAppearance: function () {} };
+    }
     /* moved, parked, to another terminal: every part of the screen reads the terminal through v */
     function retarget(nv) {
       if (nv === v) return;
       parkedWatch(false);
       v = handle.v = nv;
-      handle.kept = false;
+      handle.kept = false; clearTimeout(keptTimer);
       own(nv);
       var k = root.querySelector('.pmt-cz-kicker span'); if (k) k.textContent = 'Customize · ' + termLabel(nv);
       if (preview) preview.retarget(nv);
@@ -1393,21 +1405,29 @@
     try { if (N && typeof N.wanted === 'function' && N.ready && N.ready() && !!N.wanted() !== !!N.on()) return true; } catch (e) {}
     return false;
   }
+  /* one poll pending at a time; with no terminal session at all it stops, and the next terminal to mount wakes it
+     (90-kind.js mountView, T.Customize.wake; review TP-1: it polled every 1.5 s for the rest of the session) */
+  var prepTimer = 0;
+  function prepareLater(ms) {
+    if (prepTimer) return;
+    prepTimer = setTimeout(function () { prepTimer = 0; prepareSoon(); }, ms);
+  }
   function prepareSoon() {
     if (prepared && !prepared.kept) return;
     var de = document.documentElement, P = window.PMT;
+    if (!P || typeof P.sessions !== 'function' || !P.sessions().length) return;
     var busy = pageSettling();
     var v = !busy && P && typeof P.sessions === 'function' ? P.sessions().map(function (s) { return P.view(s.id); })
       .filter(function (x) { return x && x.root && x.root.isConnected && x.visible && !x.pop; })
       .sort(function (a, b) { return (b.focused ? 1 : 0) - (a.focused ? 1 : 0) || (a.root.compareDocumentPosition(b.root) & 4 ? -1 : 1); })[0] : null;
-    if (!v) { setTimeout(prepareSoon, 1500); return; }
+    if (!v) { prepareLater(1500); return; }
     /* built in a really idle moment where it can (an idle period of 45 ms or more: nothing is drawing frames), never under
        a cover or a switch; after 4 s it takes the next idle moment, since a page with motion of its own never fully rests
        and a screen built late only makes the first click pay for it */
     var since = T.util.now();
     var build = function (deadline) {
-      if ((prepared && !prepared.kept) || v.pop || !v.root.isConnected) { if (!prepared || prepared.kept) setTimeout(prepareSoon, 1500); return; }
-      if (pageSettling()) { setTimeout(prepareSoon, 1500); return; }
+      if ((prepared && !prepared.kept) || v.pop || !v.root.isConnected) { if (!prepared || prepared.kept) prepareLater(1500); return; }
+      if (pageSettling()) { prepareLater(1500); return; }
       if (deadline && typeof deadline.timeRemaining === 'function' && !deadline.didTimeout && deadline.timeRemaining() < 45 && T.util.now() - since < 4000) {
         requestIdleCallback(build, { timeout: Math.max(500, 4000 - (T.util.now() - since)) }); return;
       }
@@ -1415,8 +1435,11 @@
     };
     if (window.requestIdleCallback) requestIdleCallback(build, { timeout: 4000 }); else setTimeout(build, 500);
   }
-  if (document.readyState === 'complete') setTimeout(prepareSoon, 1500);
-  else window.addEventListener('load', function () { setTimeout(prepareSoon, 1500); }, { once: true });
+  if (document.readyState === 'complete') prepareLater(1500);
+  else window.addEventListener('load', function () { prepareLater(1500); }, { once: true });
 
-  T.Customize = { open: open, transcript: transcript };
+  /* open(v, opts) returns the screen's handle { el, close, refresh }, or null when none is kept yet and the screen is
+     built after the click's frame (review TP-2; no caller reads it). wake(): a terminal mounted, so a screen can be
+     prepared for it again */
+  T.Customize = { open: open, transcript: transcript, wake: function () { if (!prepared || prepared.kept) prepareLater(1500); } };
 })();

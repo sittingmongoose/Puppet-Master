@@ -275,7 +275,7 @@ attr 3, esc 6, mac 5, link 4, head 4, code 2 (`T.Appearance.EDITOR_FROM_ANSI`). 
 - `on('retro-phosphor', fn)` -> unsubscribe function; `fn(value)` fires once each time that value changes (checked after
   every write to the app or project layer and every host settings event for `terminal.*`).
 
-`PMT.AppearancePopover.open(anchor, { surface: 'editor'|'terminal', get, set, onClose })` -> `{ el, close, refresh }`
+`PMT.AppearancePopover.open(anchor, { surface: 'editor'|'terminal', get, set, onClose })` -> `{ el, close, refresh }` (the terminal surface returns `null` when no Customize screen is kept yet: it is built in the task after the click's frame, P2-02; no caller reads the return)
 (`T.AppearancePopover`, 76-popover.js). `surface: 'terminal'` is the terminal's own popover (`View.openAppearance`
 opens it with `{ view }`; it binds `T.Appearance` at the scope its switch shows). `surface: 'editor'` shows only the
 colour scheme (with "Follow look" first, the default: the look's own scheme, and in Retro dark the phosphor
