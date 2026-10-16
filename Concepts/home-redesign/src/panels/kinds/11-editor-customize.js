@@ -870,7 +870,7 @@ function open(opts) {
     var next = e.relatedTarget && e.relatedTarget.closest ? e.relatedTarget.closest('.pmt-cz-scheme') : null;
     if (next !== intentTile) cancelIntent();
   }, { passive: true });
-  schemesEl.addEventListener('pointerleave', function () { endPreview(); });
+  schemesEl.addEventListener('pointerleave', function () { pointerX = pointerY = null; endPreview(); });
   function scrollPreview() { scrollUntil = performance.now() + 200; endPreview(); }
   body.addEventListener('wheel', scrollPreview, { passive: true });
   body.addEventListener('scroll', scrollPreview, { passive: true });
