@@ -53,9 +53,9 @@
   function shown() { var c = q.get('lgwall') || choice(); return c === 'look' ? lookDefault(look()) : c; }
   function attr(a, v) { if (v === null) { if (root.hasAttribute(a)) root.removeAttribute(a); } else if (root.getAttribute(a) !== v) root.setAttribute(a, v); }
   /* A selected radio paints before decoding or restyling. Two permanent background layers carry the print fade;
-     the cached frost joins at its midpoint. No snapshots or nodes are added to the live sheets on a choice. */
+     the cached frost joins when the fade starts. No snapshots or nodes are added to the live sheets on a choice. */
   var paintedChoice = choice(), paintKey = '', paintedUrl = '', paintSerial = 0, commitT = 0, commitFrame = 0;
-  var printLayers = [], printAnimations = [], printTimer = 0, printFinish = null, imageUrls = new Map();
+  var printLayers = [], printAnimations = [], printFinish = null, imageUrls = new Map();
   function mountPrints() {
     if (printLayers.length || !document.body) return;
     for (var i = 0; i < 2; i++) {
@@ -103,18 +103,18 @@
         e.style.backgroundImage = (i ? url : paintedUrl) ? 'url(' + JSON.stringify(i ? url : paintedUrl) + ')' : 'none';
       });
       printLayers[0].style.opacity = '1'; printLayers[1].style.opacity = '0';
-      var done = false, committed = false;
-      function mid() { if (!committed) { committed = true; commit(); } }
+      var done = false;
       function finish() {
-        if (done) return; done = true; clearTimeout(printTimer); mid();
+        if (done) return; done = true;
         printLayers.forEach(function (e) { e.style.opacity = '0'; });
         printAnimations.forEach(function (a) { a.cancel(); }); printAnimations = [];
         if (printFinish === finish) printFinish = null;
       }
       printFinish = finish;
-      /* Opacity runs on the compositor while the new frost and rims are committed on the main thread. */
+      /* Start the prepared frost with the body fade. Waiting for the midpoint left the sheets showing the old
+         print for another 120 ms, followed by their raster cost, even when preparation was a cache hit. */
       var fade = printLayers[1].animate([{ opacity: 0 }, { opacity: 1 }], { duration: 240, easing: 'linear', fill: 'forwards' });
-      printAnimations = [fade]; printTimer = setTimeout(mid, 120);
+      printAnimations = [fade]; commit();
       fade.finished.then(finish, finish);
     });
   }
