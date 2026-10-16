@@ -1120,7 +1120,7 @@
        whole screen when you change tabs can go away").
      - Retro keeps its phosphor wipe and NieR its scanline, and NieR adds a signal glitch (three ink lines in steps).
      Without a GPU the old room goes in the new chrome's frame and the board rises as one (6.2). Reduce Motion: nothing
-     travels; the new room dissolves in (dissolve(), 46-shell.js). */
+     travels; the new room dissolves in (dissolve(), from 40-board.js calmSwap). */
   /* both start at 80 on the click's clock: 40-board.js lays no new plate before 90 */
   var WIPE = { basic: { at: 80, ms: 300, ease: 'cubic-bezier(.45,0,.25,1)' }, friendly: { at: 80, ms: 340, ease: 'cubic-bezier(.4,0,.3,1)' } },
     IRIS = { at: 80, ms: 420, ease: 'cubic-bezier(.4,.1,.2,1)', n: 48 },
