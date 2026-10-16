@@ -1324,6 +1324,7 @@ function open(opts) {
     io.observe(root.querySelector('.pmt-cz-preview'));
   }
   var closed = true, disposed = false, visit = 0;
+  var importError = root.querySelector('[data-import-error]');
   function focusStopsOn(on) {
     // Keep layout available to idle preparation while excluding the entire
     // parked subtree from focus, selection and find-in-page, including the
@@ -1389,6 +1390,11 @@ function open(opts) {
     // focus/animation writes invalidate style. A cached visit already has its
     // full preview and controls: only a changed model or context needs paint.
     place();
+    // The retained DOM is a new visit. Keep saved appearance choices, but
+    // discard the previous visit's open picker and one-off explanations.
+    if (tokOpen) { tokEndPreview(); tokOpen = null; tokPick.hidden = true; controlsDirty = true; }
+    if (pairNote) { pairNote = ''; controlsDirty = true; }
+    if (importError && !importError.hidden) { importError.hidden = true; setT(importError, ''); }
     var needsPaint = controlsDirty || paintedContext !== controlContext();
     closed = false; ++visit; openRoot = root;
     root.inert = false;
