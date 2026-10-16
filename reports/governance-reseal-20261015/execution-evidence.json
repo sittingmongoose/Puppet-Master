@@ -131,6 +131,50 @@
       "sha256": "864130c059d1aaf28f84c228fe32b19dc173b15a858d4684d522e59352479fcb"
     }
   ],
-  "post_push_followup": null,
+  "post_push_followup": {
+    "first_main_push_sha": "8552129defaa6cbbf50016438c8c05c6a1f763ba",
+    "landing_base_commit": "3d37380471304a2b8c328256b89e748d0de86536",
+    "mode": "REAL",
+    "new_run_id": "pds-20261016-003-current-planunit-snapshot",
+    "outputs": [
+      {
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261016/phase2/landing/landing-check.out",
+        "sha256": "8c428514e6e1b4fe3cc0b19864bdbd1a3863a061354b66bfc969a10e32734796"
+      },
+      {
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261016/phase2/landing/currentness-shared.out",
+        "sha256": "c1a812cd48c307af8ff0870839204f748202c0c5f035eb6751650741bc0a384b"
+      },
+      {
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261016/phase2/landing/shared-readiness-after-currentness.out",
+        "sha256": "98b7f216d72df3160b1a379511199471c726a2729f44e735e5821aae24c6b899"
+      },
+      {
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261016/phase2/landing/currentness-installed.SHA256SUMS",
+        "sha256": "139f7447d1fb4bce5a1e0480b268e0737f9287e27edd2d78c1b82cd0e549070f"
+      },
+      {
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261016/phase2/landing/record-baseline.out",
+        "sha256": "5e15f24bddb44ad6e6bd0689832b559939c6b134798ea67cc6f4ca18a4e78468"
+      },
+      {
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261016/phase2/landing/in-place-write-config.json",
+        "sha256": "fb267b15f2e172b42b9e7b2d4892190dfff52962a3af4547b6b9ef990f4463c7"
+      },
+      {
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261016/phase2/landing/shared-edition-at-lock.manifest.json",
+        "sha256": "e4604729031ba0ea28569b82fe70e8de52aec198bd38e0bbf522eaa6d59f66b5"
+      }
+    ],
+    "prepared_commit": "8552129defaa6cbbf50016438c8c05c6a1f763ba",
+    "readiness_residual_kinds": {
+      "buildability_gate_report_stale_or_not_canonical": 1,
+      "event_denominator_unresolved": 2,
+      "event_family_contract_depth_unresolved": 2,
+      "event_legacy_fixture_root_mismatch": 1,
+      "implementation_readiness_self_tests_failed": 1,
+      "pnc019_source_hash_stale": 16
+    }
+  },
   "schema_id": "pm.governance.reseal.execution_evidence.v1"
 }
