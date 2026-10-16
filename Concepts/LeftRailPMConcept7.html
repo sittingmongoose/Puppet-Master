@@ -11043,7 +11043,7 @@ html[data-theme^="glass"] #panel-settings :is(.rail-search,.hero-search) input {
     will-change: transform, opacity;
   }
   @keyframes pm8-page-out {
-    from { opacity: var(--pm8-out-from, 1); transform: translateX(0); }   /* O55: continues an answered fade */
+    from { opacity: 1; transform: translateX(0); }
     to   { opacity: 0; transform: translateX(calc(var(--pm-dir, 1) * -50px)); }
   }
   /* Retire the legacy per-page `animation: fadeIn 0.3s` (wizard +
@@ -22037,9 +22037,9 @@ html[data-theme^="basic"] :is(.editor-pane, .dashboard-view):has(.ed-shape-on) {
             kickPending = true;
             /* inside the first ResizeObserver delivery after the new look's layout: style and layout are already
                computed for that frame, so the listeners' reads never pull a pending restyle forward */
-            var kickRo = typeof ResizeObserver === 'function' ? new ResizeObserver(function () { kickRo.disconnect(); kickPending = false; kickSearchDensity(); }) : null;
-            if (kickRo) kickRo.observe(document.documentElement);
-            else requestAnimationFrame(function () { setTimeout(function () { kickPending = false; kickSearchDensity(); }, 0); });
+            var kick = function () { kickPending = false; kickSearchDensity(); };
+            if (typeof window.PM_AFTER_LAYOUT === 'function') window.PM_AFTER_LAYOUT(kick);   /* the shell's early observer */
+            else requestAnimationFrame(function () { setTimeout(kick, 0); });
           }
           break;
         }
@@ -28695,12 +28695,11 @@ html[data-motion="reduced"] #pm-o55-onboarding.o55-accept .o55-win { transform: 
    are skipped now; the box keeps its place in the column (final motion QA B4, 2026-10-16). */
 html:not([data-o55-tour]) #chatPanel[data-pmw-sc="on"] > .float-content.pm6-chat-root { content-visibility: hidden; }
 
-/* A page change stamps its direction (--pm-dir) on both pages and the answered fade's start (--pm8-out-from) on the
-   leaving one, read only by those pages' own pm8 keyframes. Unregistered, a custom property is inherited, so each
-   write restyled every element of the page it was set on: 92-221 ms for Home's 2,500 elements on Nas1, inside the
-   change's long frame, against 1-5 ms registered as not inherited (final motion QA B1 seam, 2026-10-16). */
+/* A page change stamps its direction (--pm-dir) on both pages, read only by those pages' own pm8 keyframes.
+   Unregistered, a custom property is inherited, so each write that changed it restyled every element of the page it
+   was set on (a custom property on Home's 2,500 elements: 92-221 ms on Nas1), inside the change's long frame, against
+   1-5 ms registered as not inherited (final motion QA B1 seam, 2026-10-16). */
 @property --pm-dir { syntax: '<number>'; inherits: false; initial-value: 1; }
-@property --pm8-out-from { syntax: '<number>'; inherits: false; initial-value: 1; }
 
 /* ---- css/22-hover.css ---- */
 /* PMH: the merged hover system (engine: src/js/18-hover.js, which documents the whole contract). This file has two
@@ -114673,23 +114672,10 @@ html[data-theme^="retro"] #panel-settings .o55-goals-phase-n { border-radius: 0;
         [oldP, newP].forEach(function (p) { p.getAnimations().forEach(function (a) { if (a.animationName === 'pm8-page-in' || a.animationName === 'pm8-page-out') out.push(a); }); });
         return out;
       };
-      /* O55: the click's fade (goSoon) keeps running, on the compositor, through this change's long frame; the
-         exit takes over from the opacity it has reached in the frame the moves start */
-      var lift = window.PM_PAGES.__lift; window.PM_PAGES.__lift = null;
-      var handoff = function () {
-        if (!lift || lift.el !== oldP) { if (lift) try { lift.anim.cancel(); } catch (e) {} return; }
-        try {
-          /* still pending here, it reads as its start while the compositor has been running it since its first frame */
-          var a = lift.anim, ran = document.timeline.currentTime - lift.at;
-          if ((a.pending || !(a.currentTime > 0)) && ran > 0) a.currentTime = Math.min(ran, 140);
-          oldP.style.setProperty('--pm8-out-from', getComputedStyle(oldP).opacity); a.cancel();
-        } catch (e) {}
-      };
-      if (window.PM_START_ON_SHOWN) window.PM_START_ON_SHOWN(pageMoves, { release: handoff }); else handoff();
+      if (window.PM_START_ON_SHOWN) window.PM_START_ON_SHOWN(pageMoves);
       var stopEntrance = null, finished = false;
       function cleanupOut() {
         oldP.classList.remove('pm8-page-out');
-        oldP.style.removeProperty('--pm8-out-from');   /* O55: the answered fade's start is this exit's only */
         oldP.style.top = oldP.style.left = oldP.style.width = oldP.style.height = '';
         if (oldP.__pm8PageCleanup === cleanupOut) oldP.__pm8PageCleanup = null;
       }
@@ -114742,21 +114728,19 @@ html[data-theme^="retro"] #panel-settings .o55-goals-phase-n { border-radius: 0;
       var P = window.PM_PAGES, prev = P.current;
       if (soon) { soon.page = pageId; }
       else if (!pageId || pageId === prev || !bootPaintDone || document.hidden || !panelFor(pageId)) { P.go(pageId); return; }
-      var tab = tabFor(pageId), oldP = prev ? panelFor(prev) : null;
+      var tab = tabFor(pageId);
       document.querySelectorAll('.page-tab').forEach(function (t) { var on = t.getAttribute('data-page') === pageId; t.classList.toggle('active', on); t.setAttribute('aria-selected', on ? 'true' : 'false'); });
       if (tab) { springTo(tab, measureTab(tab)); P.__answered = pageId; }
       if (soon) return;
-      var html = document.documentElement, nier = html.getAttribute('data-o55-nier') === 'on', retro = /^retro/.test(html.getAttribute('data-theme') || '');
-      /* NieR answers with its wipe and the ink; the other looks start the leaving page's fade (Retro in steps) */
-      var lift = !nier && !reduced() && oldP && oldP.animate && !oldP.classList.contains('pm8-page-out') ? oldP.animate([{ opacity: 1 }, { opacity: 0.86 }], { duration: 140, easing: retro ? 'steps(2, end)' : 'cubic-bezier(.2, 0, 0, 1)', fill: 'forwards' }) : null;
+      /* the tabs and the ink are the answer, drawn on the click's own frame. A fade of the leaving page from the
+         click (0.86 over 140 ms, tried 2026-10-16) made that page a new compositor layer there: the P1000 rastered
+         the whole page before the click's frame could show (a Settings entry's first paint 280 ms after the click,
+         nothing moving for 770 ms) and drew the Wizard empty for frames when it changed under the fade */
       soon = { page: pageId };
-      requestAnimationFrame(function (shown) { setTimeout(function () {
+      requestAnimationFrame(function () { setTimeout(function () {
         var to = soon.page; soon = null;
-        /* the fade is not read here: a move begun a frame ago still reads as its start on this thread */
-        P.__lift = lift ? { el: oldP, anim: lift, at: shown } : null;
         if (P.__answered !== to) P.__answered = null;
         P.go(to);
-        if (P.__lift) { try { P.__lift.anim.cancel(); } catch (e) {} P.__lift = null; }   /* no exit took it over */
       }, 0); });
     };
     function resync() {
@@ -140526,10 +140510,34 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
    before was a long one (more than 40 ms after the one before it), then plays them from their start: they begin once
    frames come on time (two in a row after a long one), at most `frames` (6) frames later (a page that never draws
    on time, such as software rendering, still moves after that). `anims` is an array of Animations or a function
-   returning one (read again each frame). `o.release`, if given, runs once in the frame the moves start, just before they play:
-   a page change hands the click's fade over to its exit there (tools/shell_motion.py, ANSWER_FIRST). */
+   returning one (read again each frame). `o.release`, if given, runs once in the frame the moves start, just before they play. */
 (function () {
   'use strict';
+  /* PM_AFTER_LAYOUT(fn): fn runs in the coming frame after its style and layout, before its paint (a ResizeObserver
+     delivery), so what it reads is already computed. One observer, made as this script loads, serves every caller:
+     ResizeObservers are told in the order they were made, and one made at the moment it was needed was told after the
+     page's older observers, some of which write in that same delivery (the Liquid Glass root observer), so the read
+     paid a whole-page restyle anyway (Home's notice placement 215 ms, the theme's resize kick 389 ms on the P1000,
+     Settings lane trace). Callers queued meanwhile run once, in the order they asked. */
+  const afterQ = [];
+  let afterRo = null, observing = false, flushing = false;
+  const watch = () => { if (!observing && afterQ.length) { observing = true; afterRo.observe(document.documentElement); } };
+  const flushAfter = () => {
+    if (afterRo && observing) { afterRo.unobserve(document.documentElement); observing = false; }
+    const q = afterQ.splice(0);
+    flushing = true;
+    for (const fn of q) { try { fn(); } catch (e) { try { console.error('[PM_AFTER_LAYOUT]', e); } catch (_) { /* none */ } } }
+    flushing = false;
+    /* asked again from inside this delivery: the next frame's (observing again here would be a loop the browser
+       reports as undelivered notifications) */
+    if (afterQ.length && afterRo) requestAnimationFrame(watch);
+  };
+  try { afterRo = typeof ResizeObserver === 'function' ? new ResizeObserver(flushAfter) : null; } catch (_) { afterRo = null; }
+  window.PM_AFTER_LAYOUT = function afterLayout(fn) {
+    if (afterQ.indexOf(fn) < 0) afterQ.push(fn);
+    if (!afterRo) { requestAnimationFrame(() => setTimeout(flushAfter, 0)); return; }
+    if (!flushing) watch();
+  };
   window.PM_START_ON_SHOWN = function startOnShown(anims, o) {
     const max = (o && o.frames) || 6, held = new Set(), before = o && typeof o.release === 'function' ? o.release : null;
     const list = () => { try { return (typeof anims === 'function' ? anims() : anims) || []; } catch (_) { return []; } };
@@ -140563,15 +140571,11 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
       hold();
       next();
     };
-    /* Each check runs in its frame after layout (a one-shot ResizeObserver delivers there, before paint), so reading
+    /* Each check runs in its frame after layout (PM_AFTER_LAYOUT, before paint), so reading
        the moves (getAnimations for CSS animations) finds style already computed: from an animation frame callback it
        forced that frame's style early (49.7 ms on the P1000 for the customizer's six panels, editor lane). What the
        check changes is drawn in the same frame. */
-    const next = () => requestAnimationFrame(() => {
-      if (typeof ResizeObserver !== 'function') { tick(); return; }
-      const ro = new ResizeObserver(() => { ro.disconnect(); tick(); });
-      ro.observe(document.documentElement);
-    });
+    const next = () => requestAnimationFrame(() => window.PM_AFTER_LAYOUT(tick));
     next();
   };
 })();
@@ -180291,7 +180295,10 @@ function syncBodies(panelEl, p, l, panelHidden) {
     if (visible !== rec.visible) {
       rec.visible = visible;
       var inst = rec.instance;
-      if (inst) {
+      /* onShow and onHide follow the page in front as well: while Home is hidden every shown tab has been told onHide
+         (onPageChange, 90-boot.js) and is told onShow when Home is in front again, so a render meanwhile (a Settings
+         change re-laying Home out) wakes none of them. The tab's hidden state still follows the layout. */
+      if (inst && homeIsPage()) {
         try { if (visible && inst.onShow) inst.onShow(); else if (!visible && inst.onHide) inst.onHide(); }
         catch (err) { try { console.error('[pm-home] show/hide failed', err); } catch (_) {} }
       }
@@ -187628,6 +187635,9 @@ window.PM_NOTICE_PLACE = applyDrop;
    forward into the frame that should first show the change (49 and 32 ms on the M3, final motion QA 2026-10-16). */
 var layoutQ = [], layoutRo = null;
 function afterLayout(fn) {
+  /* the shell's one early observer (onboarding 11-motion-start.js): it is told before the page's other observers, so
+     these reads come before any of them writes in the same delivery */
+  if (typeof window.PM_AFTER_LAYOUT === 'function') { window.PM_AFTER_LAYOUT(fn); return; }
   if (typeof ResizeObserver !== 'function') { fn(); return; }
   if (layoutQ.indexOf(fn) < 0) layoutQ.push(fn);
   if (layoutRo) return;
