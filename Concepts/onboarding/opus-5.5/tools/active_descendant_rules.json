@@ -48,14 +48,9 @@
    "omit": false,
    "variants": [
     {
-     "original": ":is(html[data-lg=\"on\"][data-theme^=\"glass\"], html[data-pm-switch=\"lens\"]):not(#lgz) .pmu-navbtn.active *",
-     "replacement": ":is(html[data-lg=\"on\"][data-theme^=\"glass\"], html[data-pm-switch=\"lens\"]):not(#lgz) .pmu-navbtn.active :where(.nx-a-fill,.nx-a-seq,.nx-a-wave,.nx-c,.nx-f,.nx-h,.nx-p0,.nx-p1,.nx-p2,.nx-pc,.nx-r-concept,.pmu-navcount,.pmu-navicon,.pmu-navtext)",
-     "where": "main b9a08db90f"
-    },
-    {
      "original": ":is(html[data-lg=\"on\"][data-theme^=\"glass\"], html:not([data-theme^=\"glass\"])):not(#lgz) .pmu-navbtn.active *",
      "replacement": ":is(html[data-lg=\"on\"][data-theme^=\"glass\"], html:not([data-theme^=\"glass\"])):not(#lgz) .pmu-navbtn.active :where(.nx-a-fill,.nx-a-seq,.nx-a-wave,.nx-c,.nx-f,.nx-h,.nx-p0,.nx-p1,.nx-p2,.nx-pc,.nx-r-concept,.pmu-navcount,.pmu-navicon,.pmu-navtext)",
-     "where": "Glass fix/pm7-glass-bake-20261016 @ 09f42b1efa (look-keyed, d6761fe5e0)"
+     "where": "main 2b5ed6092d (Glass look-keyed text, landed in L1 a0f844455c; the pre-Glass main variant was dropped then, T2-4)"
     }
    ]
   },
