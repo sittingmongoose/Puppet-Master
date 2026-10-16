@@ -163882,7 +163882,11 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
   HoverTagController.prototype.start=function(){
     if(this.started)return this;this.started=true;this.ensureRoot();var self=this;
     if(this.motionQuery){var motionChanged=function(event){self.reduced=!!event.matches;if(self.reduced&&self.tag)self.tag.style.transition='none';else if(self.tag)self.tag.style.transition='';};if(this.motionQuery.addEventListener)this.motionQuery.addEventListener('change',motionChanged);else if(this.motionQuery.addListener)this.motionQuery.addListener(motionChanged);}
-    document.addEventListener('pointerover',function(event){var el=event.target&&event.target.closest&&event.target.closest('[data-pm-hover-bound="true"],'+ACTION_SELECTOR+','+SEMANTIC_SELECTOR);if(el&&!inOwner(el))self.open(el,'pointer',event);},true);
+    var pointerAsk=null;   /* O55: opened after layout (B5) */
+    document.addEventListener('pointerover',function(event){var el=event.target&&event.target.closest&&event.target.closest('[data-pm-hover-bound="true"],'+ACTION_SELECTOR+','+SEMANTIC_SELECTOR);if(!el||inOwner(el))return;
+      if(typeof window.PM_AFTER_LAYOUT!=='function'){self.open(el,'pointer',event);return;}
+      var first=!pointerAsk;pointerAsk={el:el,event:event};
+      if(first)window.PM_AFTER_LAYOUT(function(){var a=pointerAsk;pointerAsk=null;if(a&&a.el.isConnected&&a.el.matches(':hover'))self.open(a.el,'pointer',a.event);});},true);
     document.addEventListener('pointermove',function(event){var el=event.target&&event.target.closest&&event.target.closest('[data-pm-hover-bound="true"],'+ACTION_SELECTOR+','+SEMANTIC_SELECTOR);if(el&&!inOwner(el))self.notePointerMove(event,el);},true);
     document.addEventListener('pointerout',function(event){var el=event.target&&event.target.closest&&event.target.closest('[data-pm-hover-bound="true"]');if(el&&(!event.relatedTarget||!el.contains(event.relatedTarget)))self.depart(el);},true);
     document.addEventListener('pointerdown',function(){if(self.pendingOpenSource==='pointer')self.cancelPendingOpen();if(self.active&&self.tag&&self.tag.getAttribute('data-source')==='pointer')self.close(true);},true);
@@ -178450,9 +178454,11 @@ shell.installNotices = function () {
     return false;
   }
   shell.noticesOn = true;
-  // a card arriving: measure before the browser paints it (a microtask after the DOM change)
+  // a card arriving: measured before the browser paints it, after the coming frame's layout (B5, Liquid Glass lane
+  // profile: measured in the microtask after the DOM change, it forced the pending restyle of a NieR switch, and
+  // every other ask in the same frame forced it again; asks made in one frame are placed once, after its layout)
   new MutationObserver(function (list) {
-    for (var i = 0; i < list.length; i++) if (list[i].addedNodes.length) { applyDrop(); return; }
+    for (var i = 0; i < list.length; i++) if (list[i].addedNodes.length) { afterLayout(applyDrop); return; }
   }).observe(stage, { childList: true });
   // an overlay opening or closing under cards already shown (a press, a key or focus moving): measure again two frames
   // later, once it has opened, and only while a card shows
