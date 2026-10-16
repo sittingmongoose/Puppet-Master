@@ -98033,17 +98033,23 @@ afterRender = function () {
   saveState = function () { const r = o55ElSave.apply(this, arguments); ver++; notify(); return r; };
 
   // Customize owns the immediate selection and live editor paint. Its saved
-  // Settings rows can follow one per frame, instead of rebuilding a whole
-  // quick set underneath the sheet inside the same click handler.
+  // Settings rows can follow one at a time after paint, instead of rebuilding a
+  // whole quick set underneath the sheet before the preview's first frame.
   const pendingRows = new Set();
-  let rowFrame = 0;
+  let rowJob = 0;
+  function scheduleRows() {
+    if (rowJob || !pendingRows.size) return;
+    rowJob = window.requestIdleCallback
+      ? window.requestIdleCallback(refreshRows, { timeout: 500 })
+      : window.requestAnimationFrame(() => { rowJob = setTimeout(refreshRows, 0); });
+  }
   function refreshRows() {
-    rowFrame = 0;
+    rowJob = 0;
     const id = pendingRows.values().next().value;
     if (!id) return;
     pendingRows.delete(id);
     try { if (root.querySelector(`[id="setting-${cssEscape(id)}"]`)) refreshSettingRow(id); } catch (e) { /* the row is not drawn now */ }
-    if (pendingRows.size) rowFrame = window.requestAnimationFrame(refreshRows);
+    scheduleRows();
   }
   function refreshRow(id) {
     if (!document.querySelector('.pmed-cz:not([aria-hidden="true"])')) {
@@ -98051,7 +98057,7 @@ afterRender = function () {
       return;
     }
     pendingRows.add(id);
-    if (!rowFrame) rowFrame = window.requestAnimationFrame(refreshRows);
+    scheduleRows();
   }
 
   function set(writes) {
@@ -180279,17 +180285,25 @@ function mountEditor(host, st, api) {
   function tokenColor(name) { probe.style.color = 'var(' + name + ')'; return cssRgb(getComputedStyle(probe).color); }
   // Resolve the complete palette with one style flush. Reusing a single probe
   // and changing its color between reads forced a document restyle per token.
-  var colorProbes = {};
+  var colorProbes = {}, paletteProbe = null, colorRead = { key: '', values: {}, blend: '' };
   function tokenColors(names) {
-    var fragment = document.createDocumentFragment(), out = {};
-    names.forEach(function (n) {
+    // Contrast changes the floor, not the look's underlying palette. Read that
+    // palette once, outside the track that carries scheme and floor overrides.
+    var key = [R.lookKey, R.look.mode, root.getAttribute('data-phosphor') || ''].join('|');
+    if (colorRead.key !== key) colorRead = { key: key, values: {}, blend: '' };
+    var missing = names.filter(function (n) { return !Object.prototype.hasOwnProperty.call(colorRead.values, n); });
+    if (!missing.length) return colorRead.values;
+    if (!paletteProbe) { paletteProbe = h('i', { class: 'pmw-ed-probe', 'aria-hidden': 'true' }); root.appendChild(paletteProbe); }
+    var fragment = document.createDocumentFragment();
+    missing.forEach(function (n) {
       if (colorProbes[n]) return;
       var p = document.createElement('i'); p.style.color = 'var(' + n + ')';
       colorProbes[n] = p; fragment.appendChild(p);
     });
-    if (fragment.childNodes.length) probe.appendChild(fragment);
-    names.forEach(function (n) { out[n] = cssRgb(getComputedStyle(colorProbes[n]).color); });
-    return out;
+    if (fragment.childNodes.length) paletteProbe.appendChild(fragment);
+    colorRead.blend = getComputedStyle(root).getPropertyValue('--pmw-ed-sel-blend').trim();
+    missing.forEach(function (n) { colorRead.values[n] = cssRgb(getComputedStyle(colorProbes[n]).color); });
+    return colorRead.values;
   }
   var floorRead = { key: '' }, floorReads = Object.create(null);
   function textGrounds() {
@@ -180313,7 +180327,7 @@ function mountEditor(host, st, api) {
       if (!bgc) { floorRead = { key: '' }; return; }
       var bg = bgc[3] < 1 ? mixRgb(base, bgc, bgc[3]) : bgc.slice(0, 3);
       var on = function (base, c) { return c[3] < 1 ? mixRgb(base, c, c[3]) : c.slice(0, 3); };
-      var blend = getComputedStyle(root).getPropertyValue('--pmw-ed-sel-blend').trim() === 'difference';
+      var blend = colorRead.blend === 'difference';
       var layers = (blend ? ['--pmw-ed-line'] : ['--pmw-ed-sel', '--pmw-ed-sel-blur', '--pmw-ed-line']).map(color).filter(Boolean);
       var tints = ['--pmw-ed-add-bg', '--pmw-ed-mod-bg', '--pmw-ed-del-bg', '--pmw-ed-conf-bg'].map(color).filter(Boolean);
       // a changed row's tint under a selection is a ground too (the landing sweep found words there at 3.4:1)
@@ -185079,7 +185093,7 @@ function open(opts) {
     return name + ' has no indentation to follow yet, so Tab puts in ' + (I.tabs ? 'a tab, ' + I.unit + ' columns wide.' : I.unit + ' spaces.');
   }
   function note(sel, text) { var e = root.querySelector(sel); if (!e) return; e.hidden = !text; if (e.textContent !== text) e.textContent = text; }
-  /* the look's own code colours (Follow look), read off the editor once per look, colour mode, contrast and phosphor,
+  /* the look's own code colours (Follow look), read off the editor once per look, colour mode and phosphor,
      in a frame of its own; until it lands the screen keeps what it drew */
   var LOOK_TOKENS = ['--pmw-ed-fg', '--pmw-ed-bg', '--pmw-ed-gutbg', '--pmw-ed-s-kw', '--pmw-ed-s-fn', '--pmw-ed-s-str', '--pmw-ed-s-com', '--pmw-ed-bp-0', '--pmw-ed-bp-1', '--pmw-ed-bp-2'];
   var lookRead = { key: null, v: null }, lookRaf = 0;
@@ -185115,7 +185129,9 @@ function open(opts) {
     /* the effect pictures are drawn in this scope's own colours (the terminal's art reads these): a scheme's from the
        editor's own variables, the look's from a reading taken once per look (lookTokens); never a computed-style read
        inside a choice, which made the page restyle everything at once and froze the sweep (a GPU film) */
-    var lkKey = lk + '|' + R.look.mode + '|' + R.colors.contrast + '|' + (inst.root && inst.root.getAttribute('data-phosphor') || '');
+    // The look tokens are inherited from the editor root; the contrast floor is
+    // applied on its code surfaces. Changing the floor needs no new art reading.
+    var lkKey = lk + '|' + R.look.mode + '|' + (inst.root && inst.root.getAttribute('data-phosphor') || '');
     var sv = inst.schemeVarsNow ? inst.schemeVarsNow() : null, lt = lookTokens(lkKey);
     var tok = function (n) { return (sv && sv[n]) || (lt && lt[n]) || ''; };
     setVar('--pmt-cz-sfg', tok('--pmw-ed-fg') || '#ccc');

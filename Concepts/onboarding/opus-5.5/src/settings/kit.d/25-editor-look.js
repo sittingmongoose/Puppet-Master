@@ -41,17 +41,23 @@
   saveState = function () { const r = o55ElSave.apply(this, arguments); ver++; notify(); return r; };
 
   // Customize owns the immediate selection and live editor paint. Its saved
-  // Settings rows can follow one per frame, instead of rebuilding a whole
-  // quick set underneath the sheet inside the same click handler.
+  // Settings rows can follow one at a time after paint, instead of rebuilding a
+  // whole quick set underneath the sheet before the preview's first frame.
   const pendingRows = new Set();
-  let rowFrame = 0;
+  let rowJob = 0;
+  function scheduleRows() {
+    if (rowJob || !pendingRows.size) return;
+    rowJob = window.requestIdleCallback
+      ? window.requestIdleCallback(refreshRows, { timeout: 500 })
+      : window.requestAnimationFrame(() => { rowJob = setTimeout(refreshRows, 0); });
+  }
   function refreshRows() {
-    rowFrame = 0;
+    rowJob = 0;
     const id = pendingRows.values().next().value;
     if (!id) return;
     pendingRows.delete(id);
     try { if (root.querySelector(`[id="setting-${cssEscape(id)}"]`)) refreshSettingRow(id); } catch (e) { /* the row is not drawn now */ }
-    if (pendingRows.size) rowFrame = window.requestAnimationFrame(refreshRows);
+    scheduleRows();
   }
   function refreshRow(id) {
     if (!document.querySelector('.pmed-cz:not([aria-hidden="true"])')) {
@@ -59,7 +65,7 @@
       return;
     }
     pendingRows.add(id);
-    if (!rowFrame) rowFrame = window.requestAnimationFrame(refreshRows);
+    scheduleRows();
   }
 
   function set(writes) {

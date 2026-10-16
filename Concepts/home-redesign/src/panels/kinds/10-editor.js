@@ -1582,17 +1582,25 @@ function mountEditor(host, st, api) {
   function tokenColor(name) { probe.style.color = 'var(' + name + ')'; return cssRgb(getComputedStyle(probe).color); }
   // Resolve the complete palette with one style flush. Reusing a single probe
   // and changing its color between reads forced a document restyle per token.
-  var colorProbes = {};
+  var colorProbes = {}, paletteProbe = null, colorRead = { key: '', values: {}, blend: '' };
   function tokenColors(names) {
-    var fragment = document.createDocumentFragment(), out = {};
-    names.forEach(function (n) {
+    // Contrast changes the floor, not the look's underlying palette. Read that
+    // palette once, outside the track that carries scheme and floor overrides.
+    var key = [R.lookKey, R.look.mode, root.getAttribute('data-phosphor') || ''].join('|');
+    if (colorRead.key !== key) colorRead = { key: key, values: {}, blend: '' };
+    var missing = names.filter(function (n) { return !Object.prototype.hasOwnProperty.call(colorRead.values, n); });
+    if (!missing.length) return colorRead.values;
+    if (!paletteProbe) { paletteProbe = h('i', { class: 'pmw-ed-probe', 'aria-hidden': 'true' }); root.appendChild(paletteProbe); }
+    var fragment = document.createDocumentFragment();
+    missing.forEach(function (n) {
       if (colorProbes[n]) return;
       var p = document.createElement('i'); p.style.color = 'var(' + n + ')';
       colorProbes[n] = p; fragment.appendChild(p);
     });
-    if (fragment.childNodes.length) probe.appendChild(fragment);
-    names.forEach(function (n) { out[n] = cssRgb(getComputedStyle(colorProbes[n]).color); });
-    return out;
+    if (fragment.childNodes.length) paletteProbe.appendChild(fragment);
+    colorRead.blend = getComputedStyle(root).getPropertyValue('--pmw-ed-sel-blend').trim();
+    missing.forEach(function (n) { colorRead.values[n] = cssRgb(getComputedStyle(colorProbes[n]).color); });
+    return colorRead.values;
   }
   var floorRead = { key: '' }, floorReads = Object.create(null);
   function textGrounds() {
@@ -1616,7 +1624,7 @@ function mountEditor(host, st, api) {
       if (!bgc) { floorRead = { key: '' }; return; }
       var bg = bgc[3] < 1 ? mixRgb(base, bgc, bgc[3]) : bgc.slice(0, 3);
       var on = function (base, c) { return c[3] < 1 ? mixRgb(base, c, c[3]) : c.slice(0, 3); };
-      var blend = getComputedStyle(root).getPropertyValue('--pmw-ed-sel-blend').trim() === 'difference';
+      var blend = colorRead.blend === 'difference';
       var layers = (blend ? ['--pmw-ed-line'] : ['--pmw-ed-sel', '--pmw-ed-sel-blur', '--pmw-ed-line']).map(color).filter(Boolean);
       var tints = ['--pmw-ed-add-bg', '--pmw-ed-mod-bg', '--pmw-ed-del-bg', '--pmw-ed-conf-bg'].map(color).filter(Boolean);
       // a changed row's tint under a selection is a ground too (the landing sweep found words there at 3.4:1)

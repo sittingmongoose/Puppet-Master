@@ -507,7 +507,7 @@ function open(opts) {
     return name + ' has no indentation to follow yet, so Tab puts in ' + (I.tabs ? 'a tab, ' + I.unit + ' columns wide.' : I.unit + ' spaces.');
   }
   function note(sel, text) { var e = root.querySelector(sel); if (!e) return; e.hidden = !text; if (e.textContent !== text) e.textContent = text; }
-  /* the look's own code colours (Follow look), read off the editor once per look, colour mode, contrast and phosphor,
+  /* the look's own code colours (Follow look), read off the editor once per look, colour mode and phosphor,
      in a frame of its own; until it lands the screen keeps what it drew */
   var LOOK_TOKENS = ['--pmw-ed-fg', '--pmw-ed-bg', '--pmw-ed-gutbg', '--pmw-ed-s-kw', '--pmw-ed-s-fn', '--pmw-ed-s-str', '--pmw-ed-s-com', '--pmw-ed-bp-0', '--pmw-ed-bp-1', '--pmw-ed-bp-2'];
   var lookRead = { key: null, v: null }, lookRaf = 0;
@@ -543,7 +543,9 @@ function open(opts) {
     /* the effect pictures are drawn in this scope's own colours (the terminal's art reads these): a scheme's from the
        editor's own variables, the look's from a reading taken once per look (lookTokens); never a computed-style read
        inside a choice, which made the page restyle everything at once and froze the sweep (a GPU film) */
-    var lkKey = lk + '|' + R.look.mode + '|' + R.colors.contrast + '|' + (inst.root && inst.root.getAttribute('data-phosphor') || '');
+    // The look tokens are inherited from the editor root; the contrast floor is
+    // applied on its code surfaces. Changing the floor needs no new art reading.
+    var lkKey = lk + '|' + R.look.mode + '|' + (inst.root && inst.root.getAttribute('data-phosphor') || '');
     var sv = inst.schemeVarsNow ? inst.schemeVarsNow() : null, lt = lookTokens(lkKey);
     var tok = function (n) { return (sv && sv[n]) || (lt && lt[n]) || ''; };
     setVar('--pmt-cz-sfg', tok('--pmw-ed-fg') || '#ccc');
