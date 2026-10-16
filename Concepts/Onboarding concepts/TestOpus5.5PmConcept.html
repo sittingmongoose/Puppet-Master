@@ -93482,6 +93482,15 @@ PM51.settingRows = (ids, { title, help, overrides = {}, cls, id: sectionId } = {
    Every row the kit can draw again goes through PM51.swapRow, which patches the row in place (kit.d/28-in-place.js):
    the control that was used keeps focus and hover and runs its own transition (M4, 2026-10-14). */
 const pm51OriginalRefreshSettingRow = refreshSettingRow;
+let pm51SavedRowProjection = 0;
+/* A bridge that already committed and saved a transaction only needs to draw its rows. Saving again for each row
+   cloned the entire project repeatedly underneath Customize. The normal row path still persists, and this narrow
+   synchronous scope cannot swallow a later input or an asynchronous save. Missing rows wait for their next mount. */
+PM51.refreshSavedRow = id => {
+  if (!root.querySelector(`#setting-${cssEscape(id)}`) || !findSettingGlobal(id)) return;
+  pm51SavedRowProjection++;
+  try { return refreshSettingRow(id); } finally { pm51SavedRowProjection--; }
+};
 const pm51FocusIndex = el => { const act = document.activeElement; if (!act || !el.contains(act)) return -1; return [...el.querySelectorAll('button, input, select, textarea, [tabindex]')].indexOf(act); };
 PM51.swapRow = (el, next) => {
   if (!el || !next) return;
@@ -93496,7 +93505,7 @@ refreshSettingRow = function (id) {
   const inspecting = state.detailSetting === id || detailInspectorVisible;
   const own = !!(override && el && el.closest('.pm51-setting-rows'));
   if (!own && !inspecting && !(el && findSettingGlobal(id))) return pm51OriginalRefreshSettingRow.apply(this, arguments);
-  saveState();
+  if (!pm51SavedRowProjection) saveState();
   if (el) {
     const found = own ? null : findSettingGlobal(id);
     const tpl = document.createElement('template');
