@@ -1,0 +1,237 @@
+/* O55 · The switcher in every look (Q16 consistency pass, pm7-q16-consistency, 2026-10-15).
+   Jared #22: "There are many different tab selectors too, the left bar, the center left bar, the tabs in managers ...
+   Frankly we should do that for all the themes (including nier mode) too."
+   Every tab, segment and list selection is one component: Liquid Glass's switcher (Concepts/liquid-glass/opus-5.5:
+   glass.js STRIPS and glass.css sections 6 and 12; CONTRACT.md, "The switcher"). Glass draws it as the clear lens Jared
+   approved and sets none of these tokens. Each other look adopts it here, by tokens only, so it stays itself and is
+   the same everywhere inside itself:
+   - Basic: a precise tinted chip with a crisp accent hairline, gliding with a little give;
+   - Friendly: a soft mint pebble with a glow, the page tabs' own plate (in place it keeps the plate's card body), gliding like
+     Glass's drop;
+   - Retro: a reverse-video phosphor block (opaque, square, the label inverted) that hops tab by tab on a 33 ms tick;
+   - NieR Mode: the game's ink bar (opaque ink, paper words, square), cut straight to its tab; its hover ink bars stay as
+     they are.
+   The rules below name the adopting looks by the look itself, not by the <html data-pm-switch(-layer)> marks that glass.js
+   sets from these tokens after the look's own restyle: html:not([data-theme^="glass"]) for "the switcher is on" and
+   :is(html[data-theme^="retro"], html[data-o55-nier="on"]) for "its chip is opaque". Keyed on the marks, every NieR toggle
+   restyled the page a second time once glass.js flipped them (Q16, B5, with pm7-liquid-glass and pm7-motion-settings,
+   2026-10-16). Same specificity as the marks. A look that opts out (--pm-switch other than lens) must be excluded here too.
+   An opaque chip needs the lens under its labels (--pm-switch-layer: under). Labels: --pm-switch-ink at rest,
+   --pm-switch-ink-on when chosen; inside an opaque chip every line and icon reads in that one ink, as reverse video and
+   NieR's ink bar do. Reduce Motion: the chip jumps (glass.js). */
+
+/* ---- Basic --------------------------------------------------------------------------------------------------------- */
+html[data-theme="basic-dark"]:not([data-o55-nier="on"]) {
+  --pm-switch: lens;
+  --pm-switch-track: color-mix(in srgb, var(--text-primary) 5%, transparent);
+  --pm-switch-hover: color-mix(in srgb, var(--text-primary) 7%, transparent);
+  --pm-switch-fill: color-mix(in srgb, var(--accent-primary) 17%, transparent); --pm-switch-body: transparent;
+  --pm-switch-line: color-mix(in srgb, var(--accent-primary) 80%, transparent); --pm-switch-edge: transparent;
+  --pm-switch-top: rgba(255, 255, 255, .07); --pm-switch-bottom: transparent;
+  --pm-switch-glint: transparent; --pm-switch-glint-blend: normal;
+  --pm-switch-shadow: 0 1px 2px rgba(0, 0, 0, .45);
+  --pm-switch-r: 6px; --pm-switch-r-in: 4px;
+  --pm-switch-ink: color-mix(in srgb, var(--text-primary) 72%, var(--text-secondary)); --pm-switch-ink-on: var(--text-primary);
+  --pm-switch-mark: var(--accent-primary);
+  --pm-switch-swell: .5; --pm-switch-liquid: .35;
+}
+html[data-theme="basic-light"]:not([data-o55-nier="on"]) {
+  --pm-switch: lens;
+  --pm-switch-track: color-mix(in srgb, var(--text-primary) 5%, transparent);
+  --pm-switch-hover: color-mix(in srgb, var(--text-primary) 6%, transparent);
+  --pm-switch-fill: color-mix(in srgb, var(--accent-primary) 11%, transparent); --pm-switch-body: transparent;
+  --pm-switch-line: color-mix(in srgb, var(--accent-primary) 70%, transparent); --pm-switch-edge: transparent;
+  --pm-switch-top: rgba(255, 255, 255, .55); --pm-switch-bottom: transparent;
+  --pm-switch-glint: transparent; --pm-switch-glint-blend: normal;
+  --pm-switch-shadow: 0 1px 2px rgba(16, 24, 40, .10);
+  --pm-switch-r: 6px; --pm-switch-r-in: 4px;
+  --pm-switch-ink: var(--text-secondary); --pm-switch-ink-on: var(--text-primary);
+  --pm-switch-mark: var(--accent-primary);
+  --pm-switch-swell: .5; --pm-switch-liquid: .35;
+}
+
+/* ---- Friendly: the page tabs' mint plate and glow, everywhere ------------------------------------------------------ */
+html[data-theme="friendly-dark"]:not([data-o55-nier="on"]) {
+  --pm-switch: lens;
+  --pm-switch-track: color-mix(in srgb, var(--text-primary) 5%, transparent);
+  --pm-switch-hover: color-mix(in srgb, var(--pm6-cozy-mint) 9%, transparent);
+  --pm-switch-fill: color-mix(in srgb, var(--pm6-cozy-mint) 17%, transparent); --pm-switch-body: color-mix(in srgb, var(--pm6-cozy-card-base) 55%, transparent);
+  --pm-switch-line: color-mix(in srgb, var(--pm6-cozy-mint) 42%, transparent); --pm-switch-edge: transparent;
+  --pm-switch-top: rgba(255, 255, 255, .08); --pm-switch-bottom: transparent;
+  --pm-switch-glint: transparent; --pm-switch-glint-blend: normal;
+  --pm-switch-shadow: 0 0 14px color-mix(in srgb, var(--pm6-cozy-mint) 28%, transparent), 0 2px 6px -2px rgba(0, 0, 0, .4);
+  --pm-switch-r: 10px; --pm-switch-r-in: 7px;
+  --pm-switch-ink: var(--text-secondary); --pm-switch-ink-on: color-mix(in srgb, var(--pm6-cozy-mint) 72%, #fff);
+  --pm-switch-mark: var(--pm6-cozy-mint);
+  --pm-switch-swell: .75; --pm-switch-liquid: .85;
+}
+html[data-theme="friendly-light"]:not([data-o55-nier="on"]) {
+  --pm-switch: lens;
+  --pm-switch-track: color-mix(in srgb, var(--text-primary) 5%, transparent);
+  --pm-switch-hover: color-mix(in srgb, var(--pm6-cozy-mint) 10%, transparent);
+  --pm-switch-fill: color-mix(in srgb, var(--pm6-cozy-mint) 20%, transparent); --pm-switch-body: color-mix(in srgb, var(--pm6-cozy-card-base) 72%, transparent);
+  --pm-switch-line: color-mix(in srgb, var(--pm6-cozy-mint) 55%, transparent); --pm-switch-edge: transparent;
+  --pm-switch-top: rgba(255, 255, 255, .8); --pm-switch-bottom: transparent;
+  --pm-switch-glint: transparent; --pm-switch-glint-blend: normal;
+  --pm-switch-shadow: 0 0 12px color-mix(in srgb, var(--pm6-cozy-mint) 30%, transparent), 0 2px 6px -3px rgba(74, 69, 80, .25);
+  --pm-switch-r: 10px; --pm-switch-r-in: 7px;
+  --pm-switch-ink: color-mix(in srgb, var(--text-primary) 70%, var(--text-secondary)); --pm-switch-ink-on: color-mix(in srgb, var(--accent-lime) 42%, #000);
+  --pm-switch-mark: var(--accent-lime);
+  --pm-switch-swell: .75; --pm-switch-liquid: .85;
+}
+
+/* ---- Retro: reverse video ------------------------------------------------------------------------------------------- */
+html[data-theme^="retro"]:not([data-o55-nier="on"]) {
+  --pm-switch: lens; --pm-switch-layer: under;
+  --pm-switch-track: color-mix(in srgb, var(--accent-lime) 6%, transparent);
+  --pm-switch-hover: color-mix(in srgb, var(--accent-lime) 13%, transparent);
+  --pm-switch-fill: var(--accent-lime); --pm-switch-body: transparent;
+  --pm-switch-line: transparent; --pm-switch-edge: transparent;
+  --pm-switch-top: transparent; --pm-switch-bottom: transparent;
+  --pm-switch-glint: transparent; --pm-switch-glint-blend: normal;
+  --pm-switch-r: 0px; --pm-switch-r-in: 0px;
+  --pm-switch-ink: var(--text-secondary); --pm-switch-ink-on: var(--surface);
+  /* a hovered word is on the screen, not on the chip: it brightens to the screen's own ink (the chip's ink, the screen
+     colour, left it at 1.0-1.6:1; Q16 review F2) */
+  --pm-switch-ink-hover: var(--text-primary);
+  --pm-switch-mark: var(--accent-lime); --pm-switch-mark-on: var(--surface);
+  --pm-switch-swell: 0; --pm-switch-liquid: 0;
+  /* the phosphor steps, never glides (Jared 2026-10-16; F3-438, F3-621) */
+  --pm-switch-motion: step;
+}
+/* the phosphor's bloom on the dark screen, a printed key's hard shadow on the light one */
+html[data-theme="retro-dark"]:not([data-o55-nier="on"]) { --pm-switch-shadow: 0 0 7px color-mix(in srgb, var(--accent-lime) 24%, transparent); }
+/* Retro Light's chip is its lime a step deeper: the cream words read 5.7:1 on it (4.65 on #2F7A3D itself) */
+html[data-theme="retro-light"]:not([data-o55-nier="on"]) { --pm-switch-fill: color-mix(in srgb, var(--accent-lime) 86%, #000); --pm-switch-shadow: 2px 2px 0 color-mix(in srgb, var(--text-primary) 70%, transparent); }
+
+/* ---- NieR Mode: the ink bar ----------------------------------------------------------------------------------------- */
+html[data-o55-nier="on"] {
+  --pm-switch: lens; --pm-switch-layer: under;
+  --pm-switch-track: transparent;
+  --pm-switch-hover: var(--o55-nier-hover, rgba(var(--o55-nier-ink-rgb), .10));
+  --pm-switch-fill: var(--o55-nier-ink); --pm-switch-body: transparent;
+  --pm-switch-line: transparent; --pm-switch-edge: transparent;
+  --pm-switch-top: transparent; --pm-switch-bottom: transparent;
+  --pm-switch-glint: transparent; --pm-switch-glint-blend: normal;
+  --pm-switch-shadow: 0 0 0 0 transparent;
+  --pm-switch-r: 0px; --pm-switch-r-in: 0px;
+  --pm-switch-ink: color-mix(in srgb, var(--text-primary) 60%, var(--text-secondary)); --pm-switch-ink-on: var(--o55-nier-on-ink);
+  --pm-switch-ink-hover: var(--text-primary);
+  --pm-switch-mark: var(--o55-nier-ink); --pm-switch-mark-on: var(--o55-nier-on-ink);
+  --pm-switch-swell: 0; --pm-switch-liquid: 0;
+  /* the ink cuts straight to its tab (Jared 2026-10-16; F3-438, F3-621) */
+  --pm-switch-motion: cut;
+}
+/* NieR's cursor owns hover, as it did before the switcher (14-nier-parts.css): the item under the pointer is an ink bar
+   with paper words. Glass's step-asides and hover rules (glass.css sections 6 and 12) outrank that cursor in every look
+   that adopts the switcher, and turned the bar into a faint tint with paper words or the words into ink on ink
+   (1.03-1.46:1; Q16 review F2), so its bar and words are restated here for the switcher's own items. A chosen item
+   keeps the chip; with the cursor part off a hovered word takes --pm-switch-ink-hover. */
+html[data-o55-nier="on"][data-o55-nier-parts~="cursor"]:not(#lgz):not(#lgy) :is(.page-tab, #pmuRange > button, .pm-segtab-item, .orch-tab, .pmu-navbtn):hover:not(.active, [aria-pressed="true"], [aria-selected="true"], [aria-checked="true"]),
+html[data-o55-nier="on"][data-o55-nier-parts~="cursor"]:not(#lgz):not(#lgy) #pm-settings-root :is(.workspace-tab:not(.is-current), .manager-tab:not([aria-selected="true"]), .domain-link:not(.active), .rail-scroll > .side-link:not(.active), .pm51-index-group > .index-link:not(.is-active)):hover {
+  background: var(--o55-nier-ink) !important; color: var(--o55-nier-on-ink) !important;
+}
+/* Settings' section and manager tabs brighten under the pointer as every other strip does (and as they did in these looks
+   before the switcher): Glass's resting ink for them outranks its own hover rule, so they stayed in resting ink */
+html:not([data-theme^="glass"]):not(#lgz):not(#lgy) #pm-settings-root :is(.workspace-tab:not(.is-current), .manager-tab:not([aria-selected="true"])):hover:not([data-lg-press]) { color: var(--pm-switch-ink-hover, var(--pm-switch-ink-on)) !important; }
+/* the page index's rows rest in Settings' own second ink (.pm51-index-tab), not the switcher's resting ink: the row a press
+   leaves takes that ink, so it does not step twice (switcher ink, then its own once the click lands; resting-pointer press
+   check) */
+html:not([data-theme^="glass"]):not(#lgz):not(#lgy):not(#lgx) #pm-settings-root .pm51-index-group > .index-link[data-lg-press="off"] { color: var(--k3-text-2) !important; }
+/* an icon on an opaque chip takes its item's ink, as the words do, with the pointer on it too. The glyphs' hover ignite
+   (pm7-hover-bridge.css) inks a hovered icon in the screen's --text, and on the chip (a chosen or pressed item under the
+   pointer) or on NieR's hover bar that is the chip's own colour (Q16 review, resting-pointer press check) */
+:is(html[data-theme^="retro"], html[data-o55-nier="on"]):not(#lgz) :is(.page-tab, #pmuRange > button, .pm-segtab-item, .orch-tab, .pmu-navbtn, .domain-link, .side-link, .index-link, .workspace-tab, .manager-tab, .pm6-tt-mode):is(.active, .is-active, .is-current, [aria-selected="true"], [aria-checked="true"], [data-lg-press="on"]) svg.nx,
+html[data-o55-nier="on"][data-o55-nier-parts~="cursor"]:not(#lgz) :is(.page-tab, #pmuRange > button, .pm-segtab-item, .orch-tab, .pmu-navbtn, .domain-link, .side-link, .index-link, .workspace-tab, .manager-tab):hover svg.nx { --nx-ink: currentColor; }
+
+/* None of these looks lights its chip with Glass's glint (--pm-switch-glint is transparent in each), so the glint's band,
+   an empty layer that the no-pills gate read as a capsule, is not drawn. */
+html:not([data-theme^="glass"]):not(#lgz):not(#lgy) .lg-lens::after { content: none; }
+
+/* ---- What the component does not draw, in the same material ----------------------------------------------------------
+   The title bar's one-of-several menus (the look family, the project) are lists that live in a menu, not strips: the
+   chosen row wears the switcher's material in place, as Settings' service list does (glass.css section 6). NieR keeps
+   its ink bar there (14-nier-parts.css), which is the same chip. */
+html:not([data-theme^="glass"]):not([data-o55-nier="on"]) .pm6-tb-menu-item.is-selected {
+  background: linear-gradient(var(--pm-switch-fill), var(--pm-switch-fill)), linear-gradient(var(--pm-switch-body), var(--pm-switch-body));
+  box-shadow: inset 0 0 0 .5px var(--pm-switch-line), inset 0 1px 0 var(--pm-switch-top), 0 0 0 .5px var(--pm-switch-edge), var(--pm-switch-shadow);
+  border-radius: var(--pm-switch-r); color: var(--pm-switch-ink-on);
+}
+
+/* ---- Inside an opaque chip (--pm-switch-layer: under) -------------------------------------------------------------
+   Every word, icon and count of the chosen item takes the chip's ink (the item's own colour, set by glass.css), so a
+   chapter's line, a service's state, a tab's icon and a view's count never sit in their resting colours on the chip. A
+   service's status dot keeps its colour inside a ring of that ink. The press marks (glass.css section 12) carry the same
+   inks while the chip moves ahead of the app's choice. NieR's own rules (14-nier-parts.css) say the same for its list. */
+/* (one plain selector per kind of item, so the browser's ancestor filter rejects every other element at once: a single
+   :is() list of these items in front of a bare * was tested against every element on every restyle, about 18 ms more
+   style and layout in each page switch in Retro, measured. It names the looks whose chip is opaque (Retro, NieR Mode, as
+   their token blocks above do) rather than <html data-pm-switch-layer>: glass.js sets that attribute after the look's own
+   restyle, and a bare * keyed on it restyled the whole page a second time on every NieR toggle, 266 -> 58 ms of the
+   flip on Nas1; keyed on the look, it rides the look's own restyle) */
+:is(html[data-theme^="retro"], html[data-o55-nier="on"]):not(#lgz) #pm-settings-root .rail-scroll > .side-link.active *,
+:is(html[data-theme^="retro"], html[data-o55-nier="on"]):not(#lgz) #pm-settings-root .domain-link.active *,
+:is(html[data-theme^="retro"], html[data-o55-nier="on"]):not(#lgz) #pm-settings-root .pm51-index-group > .index-link.is-active *,
+:is(html[data-theme^="retro"], html[data-o55-nier="on"]):not(#lgz) #pm-settings-root .resource-row[aria-current="true"] *,
+:is(html[data-theme^="retro"], html[data-o55-nier="on"]):not(#lgz) #pm-settings-root .workspace-tab.is-current *,
+:is(html[data-theme^="retro"], html[data-o55-nier="on"]):not(#lgz) #pm-settings-root .manager-tab[aria-selected="true"] *,
+:is(html[data-theme^="retro"], html[data-o55-nier="on"]):not(#lgz) #pmuRange > button.active *,
+:is(html[data-theme^="retro"], html[data-o55-nier="on"]):not(#lgz) nav.page-tabs .page-tab.active *,
+:is(html[data-theme^="retro"], html[data-o55-nier="on"]):not(#lgz) .orch-tabs .orch-tab.active *,
+:is(html[data-theme^="retro"], html[data-o55-nier="on"]):not(#lgz) #themeMenu .pm6-tt-mode[aria-checked="true"] *,
+:is(html[data-theme^="retro"], html[data-o55-nier="on"]):not(#lgz) #panel-wizard .pm6-wiz-intent-chip.sel *,
+:is(html[data-theme^="retro"], html[data-o55-nier="on"]):not(#lgz) .pm6-tb-menu-item.is-selected * {
+  color: inherit; -webkit-text-fill-color: currentColor;
+}
+/* the items whose own words glass.css does not colour (it colours a service's name, not its row) */
+:is(html[data-theme^="retro"], html[data-o55-nier="on"]):not(#lgz) :is(#pm-settings-root .resource-row[aria-current="true"], #panel-wizard .pm6-wiz-intent-chip.sel) { color: var(--pm-switch-ink-on); }
+:is(html[data-theme^="retro"], html[data-o55-nier="on"]):not(#lgz) #pm-settings-root .resource-row[aria-current="true"] .status-dot { box-shadow: 0 0 0 1.5px var(--pm-switch-ink-on); }
+
+/* ---- The look's own marks that the component does not already set aside ----------------------------------------------
+   The Orchestrator's views kept their 3 px underline under the chip (Basic's blue, Retro's green). */
+html:not([data-theme^="glass"]) .orch-tabs .orch-tab.active { border-bottom-color: transparent; }
+/* The onboarding window's segments (Light / Dark, and every one-of-several in its screens) kept their own raised chip,
+   and Retro its accent block, over or instead of the switcher's (Retro Light showed cobalt over its lime chip). */
+html:not([data-theme^="glass"]):not(#lgz) #pm-o55-onboarding .o55-seg { background: var(--pm-switch-track); }
+html:not([data-theme^="glass"]):not(#lgz) #pm-o55-onboarding .o55-seg button.o55-on { background: transparent; box-shadow: none; color: var(--pm-switch-ink-on); }
+/* Usage's range sits on the stage head, which Usage lights with each look's key light (Basic's blue, Friendly's coral):
+   the switcher's faint track let the resting words fall to 2.4-3.3:1 there. It is a recessed well of the look's surface
+   instead, so every word sits on a calm ground. (Glass sets no tokens and keeps its own track.) */
+html:not([data-theme^="glass"]) #pmuRange { --pm-switch-track: color-mix(in srgb, var(--surface) 72%, transparent); }
+/* a count on a chosen view reads in the chip's full ink (it was at 78 % opacity: 3.5:1 on Retro Light's chip) */
+html:not([data-theme^="glass"]) #panel-orchestrator .orch-tabs .orch-tab.active .orch-tab-badge { opacity: 1; }
+/* an opaque chip reaches a pressed view before its click lands: the view's count takes the chip's ink with it, as it will
+   once chosen (it kept the resting muted ink, 1.6:1 on NieR's ink bar and on Retro's lime, for the length of the press).
+   Glass's own press-mark arms (glass.css) cover the other strips; this one count colours itself. */
+:is(html[data-theme^="retro"], html[data-o55-nier="on"]):not(#lgz):not(#lgy):not(#lgx) #panel-orchestrator .orch-tab[data-lg-press="on"] .orch-tab-badge { color: inherit; opacity: 1; }
+
+/* ---- Home panels: the chosen tab is seated on the panel's edge (Jared, 2026-10-15: "the tabs ... doesnt look like it is
+   sitting well", on Retro's ":: Agents") ----------------------------------------------------------------------------------
+   The chip glass.css draws in the plate (section 6) floated: 7 px under the strip's top, 4 px over the panel's edge, so
+   the label row read as sinking toward the panel. In a look that adopts the switcher the chip is now exactly the tab's
+   own box (the plate's top is the tab's top) and ends 1 px over the strip's foot, so it stands on the panel's rule (Retro's
+   phosphor line, NieR's ink line) without covering it, at every tab size and panel width. A seated tab casts no drop
+   shadow onto that rule (Retro Light's printed shadow stays on its other chips). Glass keeps its approved lens drop. */
+html:not([data-theme^="glass"]):not(#lgz):not(#lgy) .pmw-plate::before { top: 0; bottom: 2px; }
+/* the chosen tab's words are the switcher's chosen ink, as on every other chip of the look */
+html:not([data-theme^="glass"]):not(#lgz) :is(#pm-home-centre, .pmw-scope) { --pmw-tab-active: var(--pm-switch-ink-on); }
+/* and its close x (and the unsaved dot in it) is part of the chip too: the chip's ink, with a square of that ink under the
+   pointer (the resting grey read 1.2-1.4:1 on Retro Light's and NieR's chips and 3.6 on the light looks' tints, and its
+   hover ink 1.4 on Retro's lime; Q16 review F4) */
+html:not([data-theme^="glass"]):not(#lgz) .pmw-tab[data-active] .pmw-tclose { color: var(--pm-switch-ink-on); }
+html:not([data-theme^="glass"]):not(#lgz) .pmw-tab[data-active] .pmw-tclose:hover { color: var(--pm-switch-ink-on); background: color-mix(in srgb, var(--pm-switch-ink-on) 16%, transparent); }
+/* so is a chosen terminal tab's exit status ("exited 101"): a tinted chip keeps its red, deepened toward the chip's ink;
+   an opaque chip (the monochrome looks, where NieR already prints it in ink) gives it the chip's ink (it read 3.3-3.9:1 on
+   the light looks' chips) */
+html:not([data-theme^="glass"]):not(#lgz) .pmw-tab[data-active] .pmw-exit { color: color-mix(in srgb, var(--pmw-bad) 62%, var(--pm-switch-ink-on)); }
+:is(html[data-theme^="retro"], html[data-o55-nier="on"]):not(#lgz) .pmw-tab[data-active] .pmw-exit { color: var(--pm-switch-ink-on); }
+html:not([data-theme^="glass"]) .pmw-plate { --pm-switch-shadow: 0 0 0 0 transparent; }
+html[data-theme="retro-dark"]:not([data-theme^="glass"]) .pmw-plate { --pm-switch-shadow: 0 0 7px color-mix(in srgb, var(--accent-lime) 24%, transparent); }
+html[data-theme="friendly-dark"]:not([data-theme^="glass"]) .pmw-plate { --pm-switch-shadow: 0 0 14px color-mix(in srgb, var(--pm6-cozy-mint) 28%, transparent); }
+html[data-theme="friendly-light"]:not([data-theme^="glass"]) .pmw-plate { --pm-switch-shadow: 0 0 12px color-mix(in srgb, var(--pm6-cozy-mint) 30%, transparent); }
+/* a panel folded to a column of icon tabs: its chosen tab is the same chip, in place (it was the neutral press fill) */
+html:not([data-theme^="glass"]):not(#lgz) .pmw-strip[data-column] .pmw-tab[data-active] {
+  background: linear-gradient(var(--pm-switch-fill), var(--pm-switch-fill)), linear-gradient(var(--pm-switch-body), var(--pm-switch-body));
+  box-shadow: inset 0 0 0 .5px var(--pm-switch-line), inset 0 1px 0 var(--pm-switch-top), 0 0 0 .5px var(--pm-switch-edge), var(--pm-switch-shadow);
+  border-radius: var(--pm-switch-r); color: var(--pm-switch-ink-on);
+}
