@@ -95402,7 +95402,9 @@ const pm51OriginalBoot = boot;
 boot = function () { const r = pm51OriginalBoot.apply(this, arguments); if (window.PM12_KIMI && typeof window.PM12_KIMI === 'object') window.PM12_KIMI.renderApp = (...args) => renderApp(...args); return r; };
 
 /* ---------- motion: no blank frames ----------------------------------- */
+let pm51ClassifyReveal = null;
 armSectionReveal = function () {
+  if (pm51ClassifyReveal) { pm51ClassifyReveal.disconnect(); pm51ClassifyReveal = null; }
   if (revealObserver) { revealObserver.disconnect(); revealObserver = null; }
   try { PM51.applyFilters(root); } catch (e) { /* filters are a convenience; never block reveal */ }
   /* reduced motion, the system's or the app's own Reduce motion: every section is simply there */
@@ -95417,21 +95419,29 @@ armSectionReveal = function () {
      ResizeObserver still forced a second layout after another observer's write, and rendered distant contained
      sections just to classify them. Initially visible sections stay fully painted; the same 260 ms reveal arms
      only sections beyond the viewport, before the reader can reach them. */
-  const first = new WeakSet();
+  const shown = new IntersectionObserver(entries => {
+    for (const entry of entries) {
+      if (!entry.isIntersecting) continue;
+      entry.target.classList.add('is-revealed'); entry.target.classList.remove('will-reveal'); shown.unobserve(entry.target);
+    }
+  }, { threshold: 0.04 });
+  revealObserver = shown;
   const observer = new IntersectionObserver(entries => {
     for (const entry of entries) {
       const node = entry.target;
-      if (!node.isConnected) { observer.unobserve(node); continue; }
-      const initial = !first.has(node); first.add(node);
+      observer.unobserve(node);
+      if (!node.isConnected) continue;
       node.classList.add('section-block');
-      if (initial && entry.boundingClientRect.top < (entry.rootBounds ? entry.rootBounds.bottom : window.innerHeight + 120)) {
-        node.classList.add('is-revealed', 'pm51-instant'); node.classList.remove('will-reveal'); observer.unobserve(node);
-      } else if (entry.isIntersecting) {
-        node.classList.add('is-revealed'); node.classList.remove('will-reveal'); observer.unobserve(node);
-      } else node.classList.add('will-reveal');
+      if (entry.boundingClientRect.top < (entry.rootBounds ? entry.rootBounds.bottom : window.innerHeight + 120)) {
+        node.classList.add('is-revealed', 'pm51-instant'); node.classList.remove('will-reveal');
+      } else {
+        node.classList.add('will-reveal'); shown.observe(node);
+      }
     }
   }, { root: scroller, rootMargin: '0px 0px 120px 0px', threshold: 0.04 });
-  revealObserver = observer;
+  /* The 120 px margin is only the initial classification, as before. Later scroll reveals keep the original
+     viewport threshold, so their full motion is visible instead of finishing before the section enters view. */
+  pm51ClassifyReveal = observer;
   nodes.forEach(node => { if (!node.classList.contains('is-revealed')) observer.observe(node); });
 };
 
