@@ -550,7 +550,7 @@ dispatchAction = function (action, el, event) {
       break;
     }
     case 'toggle-setting': {
-      if (found) { const next = !settingValue(found.setting); if (!commitSettingValue(id, next)) return; saveState(); refreshSettingRow(id); o55Changed(found.setting, next); return; }
+      if (found) { const next = !settingValue(found.setting); if (!commitSettingValue(id, next)) return; saveState(); PM51.refreshSavedRow(id); o55Changed(found.setting, next); return; }
       break;
     }
   }
