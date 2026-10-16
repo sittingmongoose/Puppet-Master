@@ -260,12 +260,15 @@ HOST_SCOPE = ':is(#panel-usage,[data-pmu-host])'
 # = 2,674; the warm page's own rule (.primary-content > #panel-usage.page[data-pmu-warm], the panel itself) is the second
 # compound use, Usage-only as it should be. The four pseudo-elements moved out of :is() into their own selector-list
 # entries (2026-10-16, T7-2: the browser drops a pseudo-element inside :is(); the Retro and NieR square toggle knob, the
-# Retro skyfill top bar, the Reduce Animations toggle knob) bring 'rewritten' to 2,678. A Usage CSS
+# Retro skyfill top bar, the Reduce Animations toggle knob) bring 'rewritten' to 2,678. The warm board's one raster
+# (2026-10-16, P2-03 item 1, 05-film.css: the panel's own raster rule and four rules keyed on the panel's
+# data-pmu-raster token, the held plates and bodies drawn, the plates' film layers and the spare room laid out) adds five
+# compound uses, Usage-only as they should be (a hosted board never takes data-pmu-raster): 'compound' 7. A Usage CSS
 # edit that adds or removes an anchored rule moves 'rewritten': look at what the new rules style (a hosted board gets
 # them too), then re-pin the number here. Any other use of #panel-usage (a child or sibling combinator, a rule for the
 # panel itself, an anchor outside a selector) stops the build: it would be Usage-only, or not a selector, without
 # saying so.
-HOST_SCOPE_EXPECT = {'rewritten': 2678, 'compound': 2}
+HOST_SCOPE_EXPECT = {'rewritten': 2678, 'compound': 7}
 HOST_AT_GROUPS = ('@media', '@supports', '@container', '@layer')
 _ANCHOR_RX = re.compile(re.escape(HOST_ANCHOR) + r'(?![\w-])')
 

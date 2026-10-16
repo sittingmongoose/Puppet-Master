@@ -1780,8 +1780,8 @@
      (P1000: 250-400 ms of empty board, drawn at 0.8-1.3 s; M3: a 15-30 ms frame per slice for ~150 ms). Now the next
      arrival's board is built before it: in an idle period while another page shows, the Usage page is laid out unseen in
      the box it shows in (#panel-usage[data-pmu-warm], 05-film.css) and the board is mounted held in idle slices
-     (40-board.js mount opts.warm), every body's entrance queued on its card; then the page goes back to display: none
-     and the board waits in its scroll pane (data-pmu-warm-wait). The arrival plays the same entrance on it: the click's
+     (40-board.js mount opts.warm), every body's entrance queued on its card; then it is drawn once unseen (the raster,
+     below), the page goes back to display: none and the board waits in its scroll pane (data-pmu-warm-wait). The arrival plays the same entrance on it: the click's
      frame changes the page and powers the shell on; the next frame shows the board (restyling it is that frame's only
      work) and its plates rise in the structure wave; the bodies come alive on the room change's clock (the hero at
      T3.heroAt, the supporting bodies quietly after it). A warm board is used only while nothing it shows has changed
@@ -1832,7 +1832,7 @@
     var sp = document.getElementById('panel-settings');
     if (sp && sp.classList.contains('active')) return;
     if (document.hidden || root.hasAttribute('data-o55-open') || root.hasAttribute('data-o55-tour') || root.hasAttribute('data-pm-page-transition')) { warmSoon(1200); return; }
-    if (typeof softwareRendered === 'function' && softwareRendered()) return;
+    if (typeof softwareRendered === 'function' && softwareRendered()) { rasterLog.skipped = 'software'; return; }
     var box = warmBox(panel); if (!box) { warmSoon(2000); return; }
     var w = warm = { room: st.room, key: null, built: false, box: box, shares: {}, at: performance.now() };
     panel.style.setProperty('--pmu-warm-x', box.x + 'px'); panel.style.setProperty('--pmu-warm-y', box.y + 'px');
@@ -1848,12 +1848,171 @@
     if (warm !== w) return;
     if (w.key !== warmKey()) { warmDrop('stale'); warmSoon(1200); return; }
     w.built = true; w.ms = Math.round(performance.now() - w.at);
+    rasterSoon(w);
+  }
+  /* the built board waits in its scroll pane for the arrival (after its raster, or at once without one) */
+  function warmPark(w) {
+    if (warm !== w) return;
     var board = document.getElementById('pmuBoard'), panel = document.getElementById('panel-usage');
     if (board && board.parentNode) board.parentNode.setAttribute('data-pmu-warm-wait', '');
     if (panel) panel.removeAttribute('data-pmu-warm');
   }
+
+  /* ---- the warm board's one raster (P2-03; 05-film.css data-pmu-raster). The warm build laid the board out but never
+     painted it, so the first visible entry paid for every GPU program its cards and charts draw with (P1000 F3 cold: 47
+     program links, ~1.4 s of GPU main thread, an 834 ms gap). Right after the warm build, in idle periods, the REAL board
+     is drawn in place for a few frames at opacity .004 on a will-change: opacity layer above the page that shows: first
+     with every plate on its own layer as the entrance draws it ('film'), then flat as it draws at rest. Each phase is
+     held for three animation frames (the frame that paints it, the one whose commit waits for its activation, and one
+     more), its attribute changes made and flushed in idle callbacks so the frames only paint. Then the first screen of
+     each other room the rail leads with (Overview, Costs, Accounts, less the arrival's room) is built in the spare board
+     element (40-board.js rasterRoom), drawn the same way and torn down, one room per idle period. Once per look, board
+     class and room per page load; a room the page has shown is done. Nothing of the held state changes: no animation,
+     no inline style, the cues, data-held and data-body-wait stay, so the arrival (warmArrive) and the Reduce Motion
+     dissolve (warmCalm) play as before. Gates: a GPU (Glass's html[data-lg-tier="gpu"], set at boot in every look; never
+     on the no-GPU profile), the tab shown, the app idle (window.PM_BUSY, then its 'pm-idle'), 600 ms after any input,
+     not on Settings or under onboarding. The arrival (warmTake) or a drop stops it at once. ?pmu-raster=0 leaves it out,
+     ?pmu-raster=1 forces it (a CPU-only VM exercises the code path). PMU.film.warmState().raster says what ran. ---- */
+  var RASTER = (function () { var m = /[?&]pmu-raster=([01])(?:&|#|$)/.exec(location.search); return m ? m[1] : null; })();
+  var RASTER_ROOMS = ['overview', 'costs', 'accounts'], RASTER_GIVEUP = 12000, RASTER_QUIET = 600;
+  var rast = null, rasterDone = {}, rasterLog = { rooms: [], at: null, ms: null, skipped: WARM_OFF ? 'warm-off' : null };
+  function rasterKey(room, cls) {
+    var look = (root.getAttribute('data-theme') || '') + (root.getAttribute('data-o55-nier') === 'on' ? '+nier' : '');
+    return look + '|' + (cls || (PMU.board && PMU.board.cls && PMU.board.cls() ? PMU.board.cls().name : '')) + '|' + room;
+  }
+  /* true, or why not */
+  function rasterGpu() {
+    if (RASTER === '0') return 'off';
+    if (RASTER === '1') return true;
+    if (soft() || root.hasAttribute('data-pmh-soft') || /[?&]pmu-soft=1\b/.test(location.search)) return 'soft';
+    var tier = root.getAttribute('data-lg-tier');
+    if (tier !== 'gpu') return tier === 'cpu' ? 'cpu' : 'no-tier';
+    if (typeof softwareRendered === 'function' && softwareRendered()) return 'software';
+    return true;
+  }
+  function rasterIdle(fn) { return (window.requestIdleCallback || function (f) { return setTimeout(function () { f({ timeRemaining: function () { return 8; }, didTimeout: false }); }, 40); })(fn, { timeout: 2000 }); }
+  function rasterSoon(w) {
+    var g = rasterGpu();
+    if (g !== true) { rasterLog.skipped = g; warmPark(w); return; }
+    var rooms = [w.room].concat(RASTER_ROOMS.filter(function (r) { return r !== w.room; })).filter(function (r) { return !rasterDone[rasterKey(r)]; });
+    if (!rooms.length) { rasterLog.skipped = 'done'; warmPark(w); return; }
+    var r = rast = { w: w, rooms: rooms, t0: performance.now(), seq: 0, lastInput: 0, timer: 0, saved: null, room: null };
+    rasterLog = { rooms: [], at: Math.round(r.t0), ms: null, skipped: null, gate: null };
+    r.onInput = function () { r.lastInput = performance.now(); };
+    ['pointerdown', 'pointermove', 'keydown', 'wheel', 'touchstart'].forEach(function (t) { window.addEventListener(t, r.onInput, { capture: true, passive: true }); });
+    rasterWait(r, rasterStep);
+  }
+  /* what holds the pass now ('' when nothing) */
+  function rasterHeld(r) {
+    if (document.hidden) return 'hidden';
+    var busy = ''; try { busy = typeof window.PM_BUSY === 'function' ? window.PM_BUSY() : ''; } catch (error) {}
+    if (busy) return 'busy:' + busy;
+    var sp = document.getElementById('panel-settings');
+    if (sp && sp.classList.contains('active')) return 'settings';
+    if (root.hasAttribute('data-o55-tour')) return 'tour';
+    if (performance.now() - r.lastInput < RASTER_QUIET) return 'input';
+    return '';
+  }
+  /* run fn in an idle period once every gate holds (each wait re-arms on its own event or timer) */
+  function rasterWait(r, fn) {
+    if (rast !== r) return;
+    clearTimeout(r.timer); r.timer = 0;
+    var seq = ++r.seq, go = function () { if (rast === r && r.seq === seq) rasterWait(r, fn); };
+    if (warm !== r.w || pageShown() || moment || hold) { rasterStop('page'); return; }
+    if (performance.now() - r.t0 > RASTER_GIVEUP) { rasterEnd('timeout'); return; }
+    var why = rasterHeld(r);
+    rasterLog.gate = why || null;
+    if (why === 'hidden') { document.addEventListener('visibilitychange', go, { once: true }); return; }
+    if (why.indexOf('busy') === 0) { window.addEventListener('pm-idle', go, { once: true }); r.timer = setTimeout(go, 1500); return; }
+    if (why === 'input') { r.timer = setTimeout(go, Math.max(60, RASTER_QUIET - (performance.now() - r.lastInput) + 20)); return; }
+    if (why) { r.timer = setTimeout(go, 1000); return; }
+    rasterIdle(function () {
+      if (rast !== r || r.seq !== seq) return;
+      if (warm !== r.w || pageShown() || moment || hold || rasterHeld(r)) { rasterWait(r, fn); return; }
+      fn(r);
+    });
+  }
+  /* the panel's token; the first one makes the panel inert and hidden from assistive tech (restored at the end) */
+  function rasterTok(r, tok) {
+    var panel = document.getElementById('panel-usage'); if (!panel) return null;
+    if (tok && !r.saved) { r.saved = { inert: panel.inert, aria: panel.getAttribute('aria-hidden') }; panel.inert = true; panel.setAttribute('aria-hidden', 'true'); }
+    if (tok) panel.setAttribute('data-pmu-raster', tok); else panel.removeAttribute('data-pmu-raster');
+    return panel;
+  }
+  function rasterRestore(r) {
+    var panel = document.getElementById('panel-usage');
+    if (!panel) return;
+    panel.removeAttribute('data-pmu-raster');
+    if (r.saved) {
+      panel.inert = !!r.saved.inert;
+      if (r.saved.aria == null) panel.removeAttribute('aria-hidden'); else panel.setAttribute('aria-hidden', r.saved.aria);
+      r.saved = null;
+    }
+  }
+  /* three animation frames after the change (flushed in idle, so the first one only paints it) */
+  function rasterFrames(r, n, fn) {
+    var seq = r.seq;
+    var step = function () { if (rast !== r || r.seq !== seq) return; if (--n <= 0) { fn(); return; } requestAnimationFrame(step); };
+    requestAnimationFrame(step);
+  }
+  function rasterPaint(r, kind, then) {
+    var t0 = performance.now(), seq = r.seq;
+    var panel = rasterTok(r, kind + ' paint film');
+    if (!panel) { rasterEnd('no-panel'); return; }
+    void panel.offsetHeight;   /* style and layout now, in idle: the frame that follows only paints */
+    rasterFrames(r, 3, function () {
+      rasterIdle(function () {
+        if (rast !== r || r.seq !== seq) return;
+        rasterTok(r, kind + ' paint'); void panel.offsetHeight;
+        rasterFrames(r, 3, function () {
+          rasterIdle(function () {
+            if (rast !== r || r.seq !== seq) return;
+            then(Math.round(performance.now() - t0));
+          });
+        });
+      });
+    });
+  }
+  function rasterStep(r) {
+    var room = r.rooms[0];
+    if (!room) { rasterEnd(null); return; }
+    var done = function (ms, cards) {
+      rasterDone[rasterKey(room)] = true;
+      rasterLog.rooms.push({ room: room, at: Math.round(performance.now()), ms: ms, cards: cards, how: room === r.w.room ? 'board' : 'spare' });
+      r.rooms.shift();
+      rasterWait(r, rasterStep);
+    };
+    if (room === r.w.room) {
+      var n = PMU.board.cardsNow().length;
+      rasterPaint(r, 'board', function (ms) { done(ms, n); });
+      return;
+    }
+    /* another room: built unseen in the spare (laid out under the 'spare' token, the page still hidden), then drawn */
+    var panel = rasterTok(r, 'spare');
+    var job = panel && PMU.board.rasterRoom ? PMU.board.rasterRoom(room, function (b) {
+      if (rast !== r) return;
+      rasterWait(r, function () { rasterPaint(r, 'spare', function (ms) { if (PMU.board.rasterClear) PMU.board.rasterClear(); rasterTok(r, 'spare'); done(ms + b.ms, b.cards); }); });
+    }) : null;
+    if (!job) { rasterLog.rooms.push({ room: room, skipped: 'board-busy' }); r.rooms.shift(); rasterWait(r, rasterStep); }
+  }
+  /* the pass is over: the panel as it was, the board parked for the arrival */
+  function rasterEnd(why) {
+    var r = rast; if (!r) return;
+    rast = null;
+    clearTimeout(r.timer);
+    ['pointerdown', 'pointermove', 'keydown', 'wheel', 'touchstart'].forEach(function (t) { window.removeEventListener(t, r.onInput, { capture: true }); });
+    if (PMU.board && PMU.board.rasterClear) PMU.board.rasterClear();
+    rasterRestore(r);
+    rasterLog.ms = Math.round(performance.now() - r.t0);
+    if (why) rasterLog.skipped = why;
+    rasterLog.gate = null;
+    warmPark(r.w);
+  }
+  /* stopped from outside (the arrival, a drop): the same, at once */
+  function rasterStop(why) { if (rast) rasterEnd('stopped:' + (why || '')); }
   function warmDrop(why) {
     var w = warm; if (!w) return;
+    rasterStop('drop');
     warm = null;
     warmLast = { why: why, built: w.built, at: Math.round(performance.now()) };
     var board = document.getElementById('pmuBoard'), panel = document.getElementById('panel-usage');
@@ -1877,7 +2036,11 @@
     warmWatch.on = true;
     if (PMU.settings && PMU.settings.onChange) PMU.settings.onChange(function (why) { if (why === 'page') return; warmRev++; warmCheck(); });
     if (PMU.theme && PMU.theme.onChange) PMU.theme.onChange(function () { warmCheck(); });
-    if (PMU.board.on) PMU.board.on('mount', function (d) { if (!warm) return; if (d && d.warm) warm.mounted = true; else warmDrop('mount'); });
+    if (PMU.board.on) PMU.board.on('mount', function (d) {
+      /* a room the page has shown compiled what it draws: the raster leaves it out */
+      if (d && !d.warm && d.room && d.cls && pageShown()) rasterDone[rasterKey(d.room, d.cls)] = true;
+      if (!warm) return; if (d && d.warm) warm.mounted = true; else warmDrop('mount');
+    });
     if (!window.MutationObserver) return;
     var sp = document.getElementById('panel-settings'), was = !!sp && sp.classList.contains('active');
     if (sp) new MutationObserver(function () { var on = sp.classList.contains('active'); if (on === was) return; was = on; warmRev++; if (!on) warmCheck(); })
@@ -1891,6 +2054,8 @@
     clearTimeout(warmT); warmT = 0;
     var w = warm; if (!w) return null;
     if (!w.built || w.room !== st.room || w.key !== warmKey()) { warmDrop(w.built ? 'stale' : 'building'); return null; }
+    /* a raster still running stops now and the board parks (its wait on) before the page shows */
+    rasterStop('arrival');
     warm = null;
     var panel = document.getElementById('panel-usage'); if (panel) panel.removeAttribute('data-pmu-warm');
     return w;
@@ -2036,7 +2201,11 @@
     key: key, keyPan: keyPan, edgeAt: edgeAt, cue: cue, holding: holding, rehold: rehold, cancelHold: cancelHold, beat: beat, playBeat: playBeat, arrive: arrive,
     /* the warm arrival (motion QA P2-03) */
     warmSoon: warmSoon, warming: warming, warmDrop: warmDrop, warmBeat: warmBeat,
-    warmState: function () { return { warm: warm ? { room: warm.room, built: warm.built, ms: warm.ms || null, box: warm.box } : null, last: warmLast }; },
+    warmState: function () {
+      return { warm: warm ? { room: warm.room, built: warm.built, ms: warm.ms || null, box: warm.box } : null, last: warmLast,
+        raster: { running: rast ? { rooms: rast.rooms.slice(), gate: rasterLog.gate } : null, rooms: rasterLog.rooms.slice(), at: rasterLog.at, ms: rasterLog.ms,
+          skipped: rasterLog.skipped, done: Object.keys(rasterDone) } };
+    },
     deferHoverTags: deferHoverTags, last: function () { return last; }, off: off, parsePath: parsePath, yAt: yAt,
     soft: soft, innerOn: innerOn, glint: glint, combo: combo,
     /* round 3 */
