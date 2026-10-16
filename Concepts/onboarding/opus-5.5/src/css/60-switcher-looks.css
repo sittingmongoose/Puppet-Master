@@ -8,8 +8,9 @@
    - Basic: a precise tinted chip with a crisp accent hairline, gliding with a little give;
    - Friendly: a soft mint pebble with a glow, the page tabs' own plate (in place it keeps the plate's card body), gliding like
      Glass's drop;
-   - Retro: a reverse-video phosphor block (opaque, square, the label inverted), gliding rigidly;
-   - NieR Mode: the game's ink bar (opaque ink, paper words, square), gliding rigidly; its hover ink bars stay as they are.
+   - Retro: a reverse-video phosphor block (opaque, square, the label inverted) that hops tab by tab on a 33 ms tick;
+   - NieR Mode: the game's ink bar (opaque ink, paper words, square), cut straight to its tab; its hover ink bars stay as
+     they are.
    The rules below name the adopting looks by the look itself, not by the <html data-pm-switch(-layer)> marks that glass.js
    sets from these tokens after the look's own restyle: html:not([data-theme^="glass"]) for "the switcher is on" and
    :is(html[data-theme^="retro"], html[data-o55-nier="on"]) for "its chip is opaque". Keyed on the marks, every NieR toggle
@@ -95,6 +96,8 @@ html[data-theme^="retro"]:not([data-o55-nier="on"]) {
   --pm-switch-ink-hover: var(--text-primary);
   --pm-switch-mark: var(--accent-lime); --pm-switch-mark-on: var(--surface);
   --pm-switch-swell: 0; --pm-switch-liquid: 0;
+  /* the phosphor steps, never glides (Jared 2026-10-16; F3-438, F3-621) */
+  --pm-switch-motion: step;
 }
 /* the phosphor's bloom on the dark screen, a printed key's hard shadow on the light one */
 html[data-theme="retro-dark"]:not([data-o55-nier="on"]) { --pm-switch-shadow: 0 0 7px color-mix(in srgb, var(--accent-lime) 24%, transparent); }
@@ -116,6 +119,8 @@ html[data-o55-nier="on"] {
   --pm-switch-ink-hover: var(--text-primary);
   --pm-switch-mark: var(--o55-nier-ink); --pm-switch-mark-on: var(--o55-nier-on-ink);
   --pm-switch-swell: 0; --pm-switch-liquid: 0;
+  /* the ink cuts straight to its tab (Jared 2026-10-16; F3-438, F3-621) */
+  --pm-switch-motion: cut;
 }
 /* NieR's cursor owns hover, as it did before the switcher (14-nier-parts.css): the item under the pointer is an ink bar
    with paper words. Glass's step-asides and hover rules (glass.css sections 6 and 12) outrank that cursor in every look
