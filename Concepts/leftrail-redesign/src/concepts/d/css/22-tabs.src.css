@@ -65,7 +65,8 @@
 §{nier} .pm-segtab > .pm-segtab-item.o55np-cur-over:not(.active) :is(svg, .pm-ico, span, .eq-full) { color: inherit !important; }
 § .pm-segtab-item.active { color: var(--d-tab-fg, var(--d-text)) !important; }
 § .pm-segtab-item svg, § .pm-segtab-item .pm-ico { width: 15px !important; height: 15px !important; flex: none; transform: none !important; transition-property: none !important; }
-§ .pm-segtab-item.active svg { color: var(--d-tab-fg, var(--accent-primary)); }
+/* the chosen tab's icon: the switcher's mark in a look that adopts it (Q16), its chip's ink when the chip is opaque */
+§ .pm-segtab-item.active svg { color: var(--d-tab-fg, var(--pm-switch-mark-on, var(--pm-switch-mark, var(--accent-primary)))); }
 /* labels: shown for every tab when they all fit, for the chosen tab only when only that fits, never abbreviated; a
    change shows or hides them in one step. The label clips its width (it hides by max-width), and its line box is the
    item's 1.0 line height, so it keeps 3 px above and below inside the clip (taken back by the margins) for the
