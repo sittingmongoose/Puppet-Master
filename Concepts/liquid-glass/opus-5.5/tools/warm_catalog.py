@@ -24,6 +24,39 @@ CSS = {'boxShadow': 'box-shadow', 'borderTopLeftRadius': 'border-top-left-radius
        'backdropFilter': 'backdrop-filter', 'mixBlendMode': 'mix-blend-mode', 'opacity': 'opacity', 'textShadow': 'text-shadow', 'color': 'color'}
 
 
+COLOR = re.compile(r'rgba?\(\s*[\d.]+,\s*[\d.]+,\s*[\d.]+(?:,\s*([\d.]+))?\s*\)|color\(srgb\s+[\d.]+\s+[\d.]+\s+[\d.]+(?:\s*/\s*([\d.]+))?\s*\)')
+
+
+def norm_colors(v):
+    """one grey per colour, keeping whether it is opaque, translucent or clear: the GPU program does not depend on the hue"""
+    def sub(m):
+        a = m.group(1) or m.group(2)
+        a = 1.0 if a is None else float(a)
+        return 'rgba(128,128,128,0)' if a == 0 else ('rgb(128,128,128)' if a >= 1 else 'rgba(128,128,128,0.5)')
+    return COLOR.sub(sub, v)
+
+
+def compact(decl):
+    """shorthands where all four sides agree, and no outline width without an outline"""
+    d = dict(x.split(':', 1) for x in decl)
+    sides = ('top', 'right', 'bottom', 'left')
+    if d.get('outline-style', 'none') == 'none':
+        for k in ('outline-width', 'outline-color', 'outline-offset'):
+            d.pop(k, None)
+    radii = [d.get('border-%s-radius' % c) for c in ('top-left', 'top-right', 'bottom-right', 'bottom-left')]
+    if all(radii) and len(set(radii)) == 1:
+        for c in ('top-left', 'top-right', 'bottom-right', 'bottom-left'):
+            d.pop('border-%s-radius' % c)
+        d['border-radius'] = radii[0]
+    for part in ('width', 'style', 'color'):
+        vals = [d.get('border-%s-%s' % (s, part)) for s in sides]
+        if all(vals) and len(set(vals)) == 1:
+            for s in sides:
+                d.pop('border-%s-%s' % (s, part))
+            d['border-' + part] = vals[0]
+    return ['%s:%s' % kv for kv in d.items()]
+
+
 def entry(s):
     st = s['style']
     has_border = any(st.get(k) not in (None, '0px') for k in ('borderTopWidth', 'borderRightWidth', 'borderBottomWidth', 'borderLeftWidth'))
@@ -40,8 +73,9 @@ def entry(s):
             continue
         if 'Radius' in k and v == '0px':
             continue
-        v = v.replace('linear-gradient(transparent, transparent)', 'var(--lg-warm-img)')
+        v = norm_colors(v.replace('linear-gradient(transparent, transparent)', 'var(--lg-warm-img)'))
         decl.append('%s:%s' % (prop, v))
+    decl = compact(decl)
     clips = [[c.get('r', '0px'), min(int(c.get('w', 0)), 420), min(int(c.get('h', 0)), 420), c.get('clip', '')]
              for c in (s.get('clips') or []) if 'inset(100%' not in (c.get('clip') or '')]
     return [';'.join(decl), min(int(s['w']), 400), min(int(s['h']), 400), 1 if s.get('text') else 0, clips]
