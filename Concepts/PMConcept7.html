@@ -144211,7 +144211,11 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
      ResizeObservers are told in the order they were made, and one made at the moment it was needed was told after the
      page's older observers, some of which write in that same delivery (the Liquid Glass root observer), so the read
      paid a whole-page restyle anyway (Home's notice placement 215 ms, the theme's resize kick 389 ms on the P1000,
-     Settings lane trace). Callers queued meanwhile run once, in the order they asked. */
+     Settings lane trace). Callers queued meanwhile run once, in the order they asked.
+     Never ask from inside another ResizeObserver's callback: that code already runs after layout, so do the work there.
+     The root observed from inside a delivery cannot be delivered in that frame; the browser reports it as a
+     'ResizeObserver loop' error and fn runs a frame late (the panels' bodyObserver asking for its resize flush, F4
+     settle bisect). Asked from inside this helper's own delivery, fn is moved to the next frame on purpose. */
   const afterQ = [];
   let afterRo = null, observing = false, flushing = false, flushedAt = null;
   const watch = () => { if (!observing && afterQ.length) { observing = true; afterRo.observe(document.documentElement); } };
