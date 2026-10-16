@@ -92,12 +92,26 @@
     v.setAttribute('data-ready', '');
     return v;
   }
+  /* Painted ahead is not rastered ahead: a cover at opacity 0 is never drawn, so its motion parts were rastered on
+     the first pick's own frame (the click's next paint 136-216 ms on the P1000 against 72-96 ms for the pick back,
+     B4 films of d87b67ef49). After each paint the cover is drawn for a few frames at opacity 0.002, its parts shown
+     where the compositor will move them, so their tiles exist before any pick. 0.002 of a colour moves no pixel by
+     more than one level. */
+  function warm(v) {
+    if (!v || v.__warm === v.__key || phase !== 'idle' || document.hidden || typeof v.animate !== 'function') return;
+    v.__warm = v.__key;
+    v.setAttribute('data-warm', '');
+    let a = null;
+    try { a = v.animate([{ opacity: 0.002 }, { opacity: 0.002 }], { duration: 160 }); } catch (_) { a = null; }
+    const done = () => v.removeAttribute('data-warm');
+    if (a) a.finished.then(done, done); else done();
+  }
   const whenIdle = (fn) => (typeof requestIdleCallback === 'function' ? requestIdleCallback(fn, { timeout: 4000 }) : setTimeout(fn, 1500));
   let painting = false;
   const paintSoon = () => {
     if (painting) return;
     painting = true;
-    whenIdle(() => { painting = false; if (!document.body) return; if (phase !== 'idle') { paintSoon(); return; } paint('light'); paint('dark'); });
+    whenIdle(() => { painting = false; if (!document.body) return; if (phase !== 'idle') { paintSoon(); return; } warm(paint('light')); warm(paint('dark')); });
   };
   if (document.readyState === 'complete') paintSoon();
   else window.addEventListener('load', paintSoon, { once: true });
@@ -218,6 +232,8 @@
     if (phase === 'lifting' && veil === v) { try { from = parseFloat(getComputedStyle(v).opacity) || 0; } catch (_) { from = 0; } }
     else if (veil && veil !== v) { veil.removeAttribute('data-on'); stopMotion(veil); }
     veil = v;
+    v.removeAttribute('data-warm');
+    v.getAnimations().forEach((a) => { if (a !== coverAnim) { try { a.cancel(); } catch (_) { /* gone */ } } });   /* a warm still running */
     v.setAttribute('data-on', '');
     phase = 'covering';
     if (typeof window.PM_BUSY === 'function') window.PM_BUSY();   /* its 'pm-idle' once the lift has ended */
