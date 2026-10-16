@@ -31324,8 +31324,11 @@ html:is([data-motion="reduced"], [data-o55-still]) #panel-wizard > .pm6-wiz-stag
   #panel-wizard > .pm6-wiz-stage.wo-stage-out { animation: wo-fade 140ms ease-out both; }
 }
 /* Through the page's exit the stage that was on screen stays drawn as it was, and a stage switched to meanwhile is not
-   displayed until the exit has finished (27-wizard-stage.js). */
-#panel-wizard > .pm6-wiz-stage.wo-stage-hold { display: flex; animation: none; }
+   displayed until the exit has finished (27-wizard-stage.js). The active stage is a layer of its own (its finished
+   entrance keeps it composited); the held stage stays one (will-change), so the exit keeps its raster: dropped into
+   the page's layer, the whole Wizard was rastered again inside the exit, and the P1000 drew the leaving page empty
+   for two to seven frames meanwhile (Wizard to Orchestrator, round 3). */
+#panel-wizard > .pm6-wiz-stage.wo-stage-hold { display: flex; animation: none; will-change: transform, opacity; }
 #panel-wizard > .pm6-wiz-stage.active.wo-stage-defer { display: none; }
 
 /* ---- css/30-art.css ---- */
