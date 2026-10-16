@@ -458,15 +458,17 @@
   var localApp = {};
   try { localApp = JSON.parse(localStorage.getItem('pm.home.terminal:v1:app') || '{}') || {}; } catch (e) { localApp = {}; }
   function saveLocal() { try { localStorage.setItem('pm.home.terminal:v1:app', JSON.stringify(localApp)); } catch (e) {} }
-  /* retired choices still read (Jared, 2026-10-16, P10 and P14): in a layer that holds no Flicker of its own, an amount
-     stored by the retired slider means Flicker on; Bell's Visual means Follow look. mine(key) says whether the layer
-     holds the field itself, and keep(on) writes the amount back once as that layer's own Flicker and forgets it, so
-     putting Flicker back to its default later leaves it off */
+  /* retired choices still read (Jared, 2026-10-16, P10 and P14). An amount stored by the retired slider means Flicker on
+     only in a layer that holds no Flicker of its own: a Flicker the layer holds, Off included, always wins. Either way
+     the amount is read once: keep(on) writes Flicker on back as that layer's own when on, and forgets the amount, so no
+     reset or default can bring it back. mine(key) says whether the layer holds the field itself. Bell's Visual means
+     Follow look */
+  var RETIRED_FIELDS = ['flickerAmount'];
   function legacy(key, get, mine, keep) {
     var v = get(key);
-    if (key === 'flicker' && !mine(key)) {
+    if (key === 'flicker') {
       var a = get('flickerAmount');
-      if (a !== undefined && a !== null) { var on = parseFloat(a) > 0; keep(on); if (on) return true; }
+      if (a !== undefined && a !== null) { var on = !mine(key) && parseFloat(a) > 0; keep(on); if (on) return true; }
     }
     return key === 'bell' && v === 'visual' ? 'follow' : v;
   }
@@ -478,7 +480,7 @@
     }, appOwn, function (on) { if (on) writeLocal('app', 'flicker', true); writeLocal('app', 'flickerAmount', null); saveLocal(); });
   }
   /* All terminals holds the field itself: kept on this computer, or a host value other than its registered default (the
-     host model answers that default when nothing is stored there) */
+     host model answers that default when nothing is stored there; Flicker registers none, so a stored Off counts) */
   function appOwn(key) {
     if (localApp[key] !== undefined) return true;
     var s = settings(); if (!s) return false;
@@ -528,19 +530,19 @@
          it in the Customize screen does (Follow look draws the look's own effects whatever those rows hold) */
       if (L.effect && v !== null) promote = true;
     });
-    /* the retired Flicker Amount row (P10): an amount stored there reads as Flicker on, unless Flicker itself is stored,
-       and is written back once as the Flicker row */
-    if (!has(out, 'flicker') && has(raw, S + 'flicker-amount')) {
-      var on = num(0, 0.03)(raw[S + 'flicker-amount']) > 0;
-      if (on) { out.flicker = true; promote = true; }
+    /* the retired Flicker Amount row (P10): an amount stored there reads as Flicker on unless the Flicker row is stored
+       (Off included), is written back once as the Flicker row when it does, and is forgotten either way */
+    if (has(raw, S + 'flicker-amount')) {
+      if (!has(out, 'flicker') && num(0, 0.03)(raw[S + 'flicker-amount']) > 0) { out.flicker = true; promote = true; }
       retireAmount(b);
     }
     if (promote && !has(out, 'effects')) out.effects = 'custom';
     slCache = out; slVer = ver;
     return out;
   }
-  /* once Settings can be written: Flicker stored as the row itself and the retired row forgotten (the bridge forgets a
-     retired row on a null write). Tried again only if the row went, so a Settings that cannot forget it is asked once */
+  /* once Settings can be written: the retired row forgotten (the bridge forgets a retired row on a null write), and Flicker
+     stored as the row itself when the amount meant on. Tried again only if the row went, so a Settings that cannot
+     forget it is asked once */
   var retiring = false;
   function retireAmount(b) {
     if (retiring || !settingsReady()) return;
@@ -827,6 +829,8 @@
     if (scope === 'tab' && view) {
       view.tabAppearance = view.tabAppearance || {};
       keys.forEach(function (k) { var v = patch[k]; if (v === null || v === undefined) delete view.tabAppearance[k]; else view.tabAppearance[k] = v; });
+      /* Flicker written or cleared in a scope takes the retired amount there with it (P10) */
+      if (has(patch, 'flicker')) delete view.tabAppearance.flickerAmount;
       view.state.appearance = view.tabAppearance;
       view.applyAppearance(resolve(view));
       changeEvents.emit('change');
@@ -843,6 +847,7 @@
       }
       rest[k] = v;
     });
+    if (has(rows, S + 'flicker')) rows[S + 'flicker-amount'] = null;
     if (b && Object.keys(rows).length) {
       writing++;
       try { ok = b.set(rows) !== false; } catch (e) { ok = false; console.warn('[pmt] Settings write failed', e); }
@@ -854,6 +859,7 @@
       } else Object.keys(LINK).forEach(function (k) { if (has(rows, LINK[k].id)) rest[k] = patch[k]; });
     }
     Object.keys(rest).forEach(function (k) { writeLocal(scope, k, rest[k]); });
+    if (has(patch, 'flicker')) writeLocal(scope, 'flickerAmount', null);
     if (scope !== 'project') saveLocal();
     refreshAll();
     return ok;
@@ -877,10 +883,11 @@
     if (b) {
       var rows = {}, sl = settingsLayer();
       Object.keys(LINK).forEach(function (k) { if (has(sl, k)) rows[LINK[k].id] = null; });
+      try { if (has(b.values() || {}, S + 'flicker-amount')) rows[S + 'flicker-amount'] = null; } catch (e) {}
       try { if (Object.keys(rows).length) b.set(rows); } catch (e) { console.warn('[pmt] Settings reset failed', e); }
       slVer = -1;
     }
-    Object.keys(FIELDS).forEach(function (k) { if (localApp[k] !== undefined) delete localApp[k]; var s = settings(); if (s) try { s.set('terminal.' + k, null); } catch (e) {} });
+    Object.keys(FIELDS).concat(RETIRED_FIELDS).forEach(function (k) { if (localApp[k] !== undefined) delete localApp[k]; var s = settings(); if (s) try { s.set('terminal.' + k, null); } catch (e) {} });
     writing--;
     saveLocal();
     refreshAll();
@@ -1146,7 +1153,9 @@
   if (PH && PH.settings && PH.settings.register) {
     try {
       var schema = {}; var defs = {};
-      Object.keys(FIELDS).forEach(function (k) { schema['terminal.' + k] = FIELDS[k]; defs['terminal.' + k] = FIELDS[k].default; });
+      /* Flicker registers no default, so the host answers a stored Off and nothing stored apart (an amount from the retired
+         slider means on only where no Flicker is stored, P10) */
+      Object.keys(FIELDS).forEach(function (k) { schema['terminal.' + k] = FIELDS[k]; defs['terminal.' + k] = k === 'flicker' ? undefined : FIELDS[k].default; });
       PH.settings.register('terminal', schema, defs);
       /* the host emits one { key, value, old } object per change (Settings > Terminal, the only writer of the project layer) */
       if (PH.settings.on) PH.settings.on('*', function (e) {

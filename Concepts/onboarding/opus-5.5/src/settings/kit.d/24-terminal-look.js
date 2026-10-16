@@ -95,8 +95,7 @@
   const EARLIER = ['dusk', 'dawn', 'deep', 'paper', 'hills', 'grid', 'fibre'];   /* named by the inventory's own words */
   PM51.moreChoices('code.terminal.background-gradient', () => grounds().filter(g => g.gradient && EARLIER.indexOf(g.id) < 0).map(g => ({ value: g.name, label: g.name, meta: KIND[g.cat] || '' })));
   PM51.moreChoices('code.terminal.background-image', () => grounds().filter(g => !g.gradient && EARLIER.indexOf(g.id) < 0).map(g => ({ value: g.name, label: g.name, meta: KIND[g.cat] || '' })));
-  /* Terminal Bell: Follow look or Off (Jared, 2026-10-16, P14); a stored Visual still shows as Follow look, as the
-     terminal reads it */
+  /* Terminal Bell: Follow look or Off (Jared, 2026-10-16, P14); a stored Visual is Follow look (retired words below) */
   const bell = rowOf('code.terminal.bell');
   bell.choices = ['Follow look', 'Off'];
   bell.help = 'What happens when a program rings the bell: Follow look flashes the terminal in the look’s own way, Off does nothing.';
@@ -140,6 +139,38 @@
     };
     setTimeout(go, 80);
   });
+
+  /* ---------- retired words and rows (Jared, 2026-10-16), read once wherever Settings takes its values ----------
+     P14: Bell's Visual is Follow look. A row shows it as Follow look (settingValue), a write of it saves Follow look
+     (normalizedSettingValue), and a stored Visual is stored again as Follow look whenever Settings loads, resets,
+     imports or switches project (ensureStateShape).
+     P10: a stored Flicker Amount means Flicker on only where no Flicker is stored (an Off stays Off), and is forgotten
+     either way, so no reset can bring it back. The terminal reads it by the same rule (42-appearance.js). */
+  const BELL = PREFIX + 'bell', FLICKER = PREFIX + 'flicker', AMOUNT = PREFIX + 'flicker-amount';
+  const bellWord = v => (typeof v === 'string' && v.trim().toLowerCase() === 'visual' ? 'Follow look' : v);
+  function migrateStored() {
+    if (!state || !state.settings) return false;
+    let moved = false;
+    if (bellWord(state.settings[BELL]) !== state.settings[BELL]) { state.settings[BELL] = 'Follow look'; moved = true; }
+    const changed = state.changed || {};
+    if (changed[AMOUNT]) {
+      if (!changed[FLICKER] && parseFloat(state.settings[AMOUNT]) > 0) { state.settings[FLICKER] = true; changed[FLICKER] = true; }
+      delete changed[AMOUNT];
+      moved = true;
+    }
+    return moved;
+  }
+  const o55TlShape = ensureStateShape;
+  ensureStateShape = function () {
+    const r = o55TlShape.apply(this, arguments);
+    try { if (migrateStored()) saveState(); } catch (e) { /* the next load reads it again */ }
+    return r;
+  };
+  const o55TlValue = settingValue;
+  settingValue = function (setting) { const v = o55TlValue.apply(this, arguments); return setting && setting.id === BELL ? bellWord(v) : v; };
+  const o55TlNormal = normalizedSettingValue;
+  normalizedSettingValue = function (id, value) { return o55TlNormal.call(this, id, id === BELL ? bellWord(value) : value); };
+  try { if (migrateStored()) saveState(); } catch (e) { /* the next load reads it again */ }
 
   seen = (() => { try { return JSON.stringify(values()); } catch (e) { return ''; } })();
   window.PM_TERMINAL_SETTINGS = Object.freeze({

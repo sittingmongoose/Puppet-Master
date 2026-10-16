@@ -166,25 +166,120 @@ test('retired choices still read (Jared, 2026-10-16): a stored Flicker amount is
   clear();
 });
 
-test('All terminals: an amount the host model keeps is Flicker on, though the host answers Flicker\'s default', () => {
-  clear(); store.clear();
-  const host = new Map([['terminal.flickerAmount', 0.02]]), defs = { 'terminal.flicker': false, 'terminal.bell': 'follow' };
-  window.PM_HOME = { settings: {
-    get: k => (host.has(k) ? host.get(k) : defs[k]), defaults: () => Object.assign({}, defs),
-    set: (k, v) => { if (v === null || v === undefined) host.delete(k); else host.set(k, v); } } };
-  ready = false;
-  try {
-    assert.equal(A.get(view(), 'flicker'), true);
-    assert.equal(A.layerOf(view(), 'flicker'), 'app');
-    assert.equal(host.get('terminal.flicker'), true);         /* written back once as Flicker itself */
-    assert.equal(host.has('terminal.flickerAmount'), false);
-    A.reset('app', null);
-    assert.equal(A.get(view(), 'flicker'), false);            /* so a reset leaves it off */
-    host.set('terminal.flickerAmount', 0.02); host.set('terminal.flicker', true);
-    A.set('app', 'flicker', false, null);
-    assert.equal(A.get(view(), 'flicker'), false);            /* Flicker of its own wins */
-  } finally { delete window.PM_HOME; ready = true; store.clear(); A.reset('app', null); }
+/* P10 (Jared, 2026-10-16; the round-5 re-check's cases): a Flicker a layer holds, Off included, always wins over an
+   amount the retired slider stored there; the amount is read once and forgotten, so no reset or default brings it back;
+   only an amount with no Flicker beside it means on */
+const LOOKS = ['basic', 'friendly', 'glass', 'retro'].flatMap(f => ['dark', 'light'].map(m => ({ family: f, mode: m, nier: false, reduced: false })))
+  .concat(['dark', 'light'].map(m => ({ family: 'basic', mode: m, nier: true, reduced: false })));
+/* a host settings model as the panels keep it (panels/js/04-settings.js): a registered default answers when nothing is
+   stored. The terminal registers its fields as it loads, so each host gets its own copy of the terminal */
+function hostPage(values) {
+  store.delete('pm.home.terminal:v1:app');
+  const stored = new Map(Object.entries(values)), defaults = {};
+  const settings = {
+    get: k => (stored.has(k) ? stored.get(k) : defaults[k]),
+    set: (k, v) => { if (v === null || v === undefined) stored.delete(k); else stored.set(k, v); },
+    defaults: () => Object.assign({}, defaults), schema: () => ({}), on: () => () => {},
+    register: (ns, schema, defs) => { for (const k in defs) defaults[k.indexOf(ns + '.') === 0 ? k : ns + '.' + k] = defs[k]; }
+  };
+  const w = { PM_HOME: { settings }, PM_TERMINAL_SETTINGS: { ready: () => false, values: () => ({}), version: () => 0, set: () => true, onChange: () => () => {} } };
+  console.warn = () => {};
+  const H = loadT(['00-core.js', '41-schemes-data.js', '42-appearance.js', '44-import.js'], { window: w, document }).Appearance;
+  console.warn = warn;
+  return { A: H, stored, defaults };
+}
+
+test('Settings: a stored Off or On wins over an amount, and Reset all terminals leaves nothing to bring Flicker back', () => {
   clear();
+  put('flicker', false); put('flicker-amount', 0.02);
+  assert.equal(A.get(view(), 'flicker'), false);
+  A.reset('app', null);
+  assert.equal('code.terminal.flicker-amount' in rows, false);
+  assert.equal(A.get(view(), 'flicker'), false);
+  clear();
+  put('flicker', true); put('flicker-amount', 0.02);
+  assert.equal(A.get(view(), 'flicker'), true);
+  A.reset('app', null);
+  assert.equal('code.terminal.flicker-amount' in rows, false);
+  assert.equal(A.get(view(), 'flicker'), false);
+  clear();
+  put('flicker-amount', 0.02);                               /* an amount alone: on, and a reset clears it */
+  assert.equal(A.get(view(), 'flicker'), true);
+  A.reset('app', null);
+  assert.equal(A.get(view(), 'flicker'), false);
+  put('flicker-amount', 0.02);                               /* Flicker set from Customize takes the amount with it */
+  A.set('app', 'flicker', false, null);
+  assert.equal('code.terminal.flicker-amount' in rows, false);
+  A.set('app', 'flicker', null, null);
+  assert.equal(A.get(view(), 'flicker'), false);
+  clear();
+});
+
+test('a host model: a stored Off with an amount stays Off, an amount alone is on once, and a reset leaves it off', () => {
+  let h = hostPage({ 'terminal.flicker': false, 'terminal.flickerAmount': 0.02 });
+  assert.equal('terminal.flicker' in h.defaults && h.defaults['terminal.flicker'], undefined);  /* registers no default */
+  assert.equal(h.A.get(view(), 'flicker'), false);
+  assert.equal(h.A.layerOf(view(), 'flicker'), 'app');
+  assert.equal(h.stored.has('terminal.flickerAmount'), false);  /* read once and forgotten */
+  h.A.reset('app', null);
+  assert.equal(h.A.get(view(), 'flicker'), false);
+
+  h = hostPage({ 'terminal.flicker': false, 'terminal.flickerAmount': 0.02 });
+  h.A.reset('app', null);                                    /* reset before anything read it */
+  assert.equal(h.stored.has('terminal.flickerAmount'), false);
+  assert.equal(h.A.get(view(), 'flicker'), false);
+
+  h = hostPage({ 'terminal.flicker': true, 'terminal.flickerAmount': 0.02 });
+  assert.equal(h.A.get(view(), 'flicker'), true);
+  h.A.reset('app', null);
+  assert.equal(h.A.get(view(), 'flicker'), false);
+
+  h = hostPage({ 'terminal.flickerAmount': 0.02 });
+  assert.equal(h.A.get(view(), 'flicker'), true);
+  assert.equal(h.stored.get('terminal.flicker'), true);      /* written back as Flicker itself */
+  assert.equal(h.stored.has('terminal.flickerAmount'), false);
+  h.A.reset('app', null);
+  assert.equal(h.A.get(view(), 'flicker'), false);
+
+  h = hostPage({ 'terminal.flicker': false });
+  h.A.set('app', 'flicker', null, null);
+  assert.equal(h.A.get(view(), 'flicker'), false);
+
+  h = hostPage({ 'terminal.project.flicker': false, 'terminal.project.flickerAmount': 0.02 });   /* the project the same */
+  assert.equal(h.A.get(view(), 'flicker'), false);
+  assert.equal(h.stored.has('terminal.project.flickerAmount'), false);
+  h = hostPage({ 'terminal.project.flickerAmount': 0.02 });
+  assert.equal(h.A.get(view(), 'flicker'), true);
+  assert.equal(h.stored.get('terminal.project.flicker'), true);
+
+  h = hostPage({ 'terminal.bell': 'visual' });
+  assert.equal(h.A.get(view(), 'bell'), 'follow');
+  store.delete('pm.home.terminal:v1:app');
+});
+
+test('a terminal of its own, in all ten looks: an Off with an amount stays Off, and clearing it falls back, never to on', () => {
+  clear();
+  for (const look of LOOKS) {
+    const name = JSON.stringify(look), inherited = A.get(view({}, look), 'flicker');
+    let t = { flicker: false, flickerAmount: 0.02 }, v = view(t, look);
+    assert.equal(A.get(v, 'flicker'), false, name);
+    assert.equal('flickerAmount' in t, false, name);
+    A.set('tab', 'flicker', null, v);
+    assert.equal(A.get(v, 'flicker'), inherited, name);
+    t = { flicker: false, flickerAmount: 0.02 }; v = view(t, look);      /* cleared before anything read it */
+    A.set('tab', 'flicker', null, v);
+    assert.equal('flickerAmount' in v.tabAppearance, false, name);
+    assert.equal(A.get(v, 'flicker'), inherited, name);
+    v = view({ flicker: true, flickerAmount: 0.02 }, look);
+    A.reset('tab', v);
+    assert.equal(A.get(v, 'flicker'), inherited, name);
+  }
+});
+
+test('a preset: an Off with an amount stays Off; an amount alone is Flicker on, and never a field of its own', () => {
+  assert.equal(A.presets.patch({ flicker: false, flickerAmount: 0.02 }).flicker, false);
+  assert.equal(A.presets.patch({ flickerAmount: 0.02 }).flicker, true);
+  assert.equal('flickerAmount' in A.presets.patch({ flickerAmount: 0.02 }), false);
 });
 
 test('a row this Settings does not carry keeps its field on this computer (round 5)', () => {
