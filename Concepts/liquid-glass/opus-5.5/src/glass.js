@@ -1841,9 +1841,13 @@
     if (!relevant) return;
     var page = document.querySelector('.page-tabs .page-tab.active'); page = page && page.id;
     var changed = Array.from(dirtyRoots), full = dirtyAll;
-    /* a change syncs after layout (afterLayout); a menu opening still gets its first keyframe at once */
+    /* a change syncs after the frame's own layout (afterLayout), where every read is free, instead of forcing the app's
+       half-built page through style and layout inside its click; a menu opening in Glass still gets its first keyframe at
+       once. A look that adopts the switcher has no glass to keep in step: its strips sync after the frame's own layout,
+       where every read is free, instead of forcing the app's half-built page through style and layout inside its click
+       (Q16). A press still moves the lens at once (pointerdown). */
     if (area && !menuHot) afterLayout();
-    else if (hot && switchOn()) { if (menuHot || !afterLayout()) hotSync(); }
+    else if (hot && switchOn()) { if ((menuHot && isGlass()) || !afterLayout()) hotSync(); }
     else lazySync(false);
     if (page !== lastPage) {
       var first = lastPage === null; lastPage = page;
