@@ -15,7 +15,8 @@ few remaining references (hover-tag overlay ids, labels, Doctor quiet actions, T
 The Usage page is the redesign in Concepts/usage-redesign: its usage_layer replaces the base's Prism Usage page at step 2b.
 Home is the universal panel system and the terminal in Concepts/home-redesign: its home_layer runs at step 5. Liquid
 Glass (Concepts/liquid-glass/opus-5.5) and then the wallpapers (Concepts/wallpapers/opus-5.5) go over the page last, at
-step 6.
+step 6. Step 7 (tools/css_bucket_split.py) rewrites the finished page's selectors so the browser can bucket them; the
+page lint reads the page from before that step.
 Concepts/PMConcept7.html is published only from here (2026-09-26 user direction): --publish-pm7 writes the same built
 bytes to both outputs, and --check fails while PMConcept7.html is missing or differs by even one byte.
 """
@@ -31,6 +32,7 @@ import nier_palette
 import nier_scene_art
 import nier_scenes
 import settings_layer
+import css_bucket_split
 
 TOOLS = Path(__file__).resolve().parent
 PKG = TOOLS.parent
@@ -1271,6 +1273,8 @@ LAYOUT_EXPOSE = ('    o55RestoreSnapshot: function (snapshot) { var problem = va
 
 
 SETTINGS_NOTES: dict = {}
+# the page as it was before step 7, keyed by the built text: the page lint ratchet counts what the sources wrote
+UNSPLIT: dict = {}
 
 
 def _rail():
@@ -1406,7 +1410,15 @@ def build_text(usage: bool = True, home: bool = True) -> str:
         text = injected[0] if isinstance(injected, tuple) else injected
     note = ('<!-- TestOpus5.5PmConcept (Opus 5.5): TestPMConcept.html with a rebuilt Product Onboarding and Guided Tour. '
             'Built by Concepts/onboarding/opus-5.5/tools/build.py; never hand-edit. -->\n')
-    return note + text
+    # 7. Selector bucketing (P1000 speed team, T7): a rule whose subject is only a multi-argument :is()/:where() has no
+    #    id, class, attribute or tag for the browser to file it under, so every whole-page restyle (a look or NieR
+    #    switch) matches it against every element. css_bucket_split splits that one :is()/:where() into single-argument
+    #    parts with the same matches and the same specificity, in every <style> block, last, so every layer is covered.
+    unsplit = note + text
+    built, SETTINGS_NOTES['bucket_split'] = css_bucket_split.apply(unsplit)
+    UNSPLIT.clear()
+    UNSPLIT[built] = unsplit
+    return built
 
 
 INERT_SOURCES = TOOLS / 'inert_sources.json'
@@ -1518,7 +1530,7 @@ def check(built: str) -> list[str]:
         problems.append('Concepts/PMConcept7.html is missing; run build.py --publish-pm7')
     elif PM7_TARGET.read_bytes() != expected:
         problems.append('Concepts/PMConcept7.html differs from a fresh build; run build.py --publish-pm7')
-    problems.extend(page_lint_ratchet(built))
+    problems.extend(page_lint_ratchet(UNSPLIT.get(built, built)))
     return problems
 
 
