@@ -227335,7 +227335,13 @@ try { if (window.PM_HOME && typeof window.PM_HOME.boot === 'function') window.PM
     if (typeof pruneLenses === 'function') pruneLenses();
   }
   function syncAll() { dirtyAll = true; syncPending(); }
+  /* a look or NieR Mode changed: its switcher tokens are read by the next sync, after the frame's own layout. Read from the
+     root observer, getComputedStyle(<html>) forced the whole page through the new look's style while the app was still
+     writing it, and the sync then forced it again (NieR Mode on under Reduce Motion: 760 + 741 ms on the P1000,
+     pm7-motion-settings 2026-10-16) */
+  var switchStale = false;
   function syncPending() {
+    if (switchStale) { switchStale = false; readSwitch(); }
     /* an immediate hot/API sync covers queued work; keep no second callback that can remount it next frame */
     if (syncQ) { cancelAnimationFrame(syncQ); syncQ = 0; }
     if (lazyT) { clearTimeout(lazyT); lazyT = 0; }
@@ -227490,7 +227496,7 @@ try { if (window.PM_HOME && typeof window.PM_HOME.boot === 'function') window.PM
     /* NieR Mode paints over a Basic look without changing data-theme: a look's switcher tokens may differ with it on
        (Q16), so they are read again and every strip synced */
     var nier = root.getAttribute('data-o55-nier');
-    if (nier !== lastNier) { lastNier = nier; readSwitch(); lenses.forEach(function (L) { L.rect = null; }); syncAll(); }
+    if (nier !== lastNier) { lastNier = nier; switchStale = true; lenses.forEach(function (L) { L.rect = null; }); dirtyAll = true; queueSync(); }
     if (th === lastTheme && lg === lastLg && tier === lastTier && wall === lastWall && motion === lastMotion) return;
     /* the print is about to change under glass that stays glass: hold the one the current frost was made from */
     var wasGlass = lastLg === 'on' && /^glass/.test(lastTheme || '');
@@ -227499,7 +227505,7 @@ try { if (window.PM_HOME && typeof window.PM_HOME.boot === 'function') window.PM
     if (motion !== lastMotion && reduced() && typeof suspendLensMotion === 'function') suspendLensMotion();
     lastTier = tier; lastWall = wall; lastMotion = motion;
     if (th !== lastTheme || lg !== lastLg) {
-      readSwitch();
+      switchStale = true;
       /* the hover bead is Glass's alone: a look that leaves Glass drops it (a look that adopts the switcher paints every
          .lg-lens as its chip, so a bead left behind stood on the title bar as a block until a reload; Q16 review F1) */
       if (!isGlass() && bead) { resetBead(); removeLensElement(bead); bead = null; }
@@ -227509,7 +227515,7 @@ try { if (window.PM_HOME && typeof window.PM_HOME.boot === 'function') window.PM
       /* after the new look's own style and layout, not forcing them here (then the entrance, on the sheets just mounted).
          Its wallpaper is chosen now, so the look's first style pass already has it. */
       applyWall(); dirtyAll = true;
-      if (!afterLayout(function () { if (enter && isGlass()) materialize(Array.from(glassSet)); })) { syncAll(); if (enter) materialize(Array.from(glassSet)); }
+      if (!afterLayout(function () { if (enter && isGlass()) materialize(Array.from(glassSet)); })) { readSwitch(); switchStale = false; syncAll(); if (enter) materialize(Array.from(glassSet)); }
       else afterLayout();
       lastWall = root.getAttribute('data-lg-wall');
     } else { dirtyAll = true; queueSync(); }
