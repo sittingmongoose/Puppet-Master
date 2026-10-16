@@ -194757,12 +194757,20 @@ function open(opts) {
     nextWarmPhase();
   }
   if (document.fonts && document.fonts.addEventListener) document.fonts.addEventListener('loadingdone', warmMeasurementsSoon);
+  var controlsDirty = true, paintedContext = '';
+  function controlContext() {
+    return JSON.stringify([scope, inst.path, inst.indent ? inst.indent() : null,
+      EL().settingsReady(), v.tabAppearance || {}, v.previewAppearance || null]);
+  }
   function paint() {
     // The tile, Changed mark, group count and footer all read the same fields.
     // Resolve each layer once for this paint, without caching across edits.
     if (paintRead) return;
     paintRead = { own: Object.create(null), values: Object.create(null) };
-    try { paintControls(); } finally { paintRead = null; }
+    try {
+      paintControls();
+      paintedContext = controlContext(); controlsDirty = false;
+    } finally { paintRead = null; }
     if (closed) warmMeasurementsSoon();
   }
   function paintControls() {
@@ -195063,12 +195071,12 @@ function open(opts) {
   function filter(q) {
     var ql = String(q || '').trim().toLowerCase(), n = 0, fam = null, famHas = false;
     [].forEach.call(root.querySelectorAll('.pmt-cz-schemes > *'), function (x) {
-      if (x.classList.contains('pmt-cz-fam')) { if (fam) fam.hidden = !famHas; fam = x; famHas = false; return; }
+      if (x.classList.contains('pmt-cz-fam')) { if (fam && fam.hidden !== !famHas) fam.hidden = !famHas; fam = x; famHas = false; return; }
       var hit = !ql || (x.getAttribute('data-name') || '').indexOf(ql) >= 0;
-      x.hidden = !hit; if (hit) { n++; famHas = true; }
+      if (x.hidden !== !hit) x.hidden = !hit; if (hit) { n++; famHas = true; }
     });
-    if (fam) fam.hidden = !famHas;
-    var fn = root.querySelector('[data-find-n]'); fn.textContent = ql ? (n ? n + (n === 1 ? ' scheme' : ' schemes') : 'No scheme matches') : '';
+    if (fam && fam.hidden !== !famHas) fam.hidden = !famHas;
+    setT(root.querySelector('[data-find-n]'), ql ? (n ? n + (n === 1 ? ' scheme' : ' schemes') : 'No scheme matches') : '');
   }
   /* a scheme previews when the pointer rests on it (160 ms, so crossing the grid previews nothing on the way) or the
      arrow keys reach it, on the preview and on the editor, at once and without the sweep (the sweep is for keeping
@@ -195335,6 +195343,7 @@ function open(opts) {
   warmInputTypes.forEach(function (type) { window.addEventListener(type, warmInput, { capture: true, passive: true }); });
   var offChange = EL().onChange(function () {
     if (!root.isConnected) return;
+    controlsDirty = true;
     if (!closed) { syncPreview(); paint(); return; }
     warmPaintSoon();
   });
@@ -195449,14 +195458,22 @@ function open(opts) {
     cancelWarmMeasurements(); cancelWarmPaint();
     opts = next; anchor = opts.anchor || null;
     scope = opts.scope === 'app' ? 'app' : v._apScope || 'tab';
+    // Read placement while the prepared sheet is still parked, before its
+    // focus/animation writes invalidate style. A cached visit already has its
+    // full preview and controls: only a changed model or context needs paint.
+    place();
+    var needsPaint = controlsDirty || paintedContext !== controlContext();
     closed = false; ++visit; openRoot = root;
     root.inert = false;
     root._pmedGen = (root._pmedGen || 0) + 1;
-    root.classList.remove('pmt-in', 'pmt-out');
+    if (root.classList.contains('pmt-in') || root.classList.contains('pmt-out')) root.classList.remove('pmt-in', 'pmt-out');
     wantDock = false; dockTo(false); body.scrollTop = 0;
-    root.querySelector('.pmt-cz-search').value = ''; filter('');
+    var search = root.querySelector('.pmt-cz-search');
+    if (search.value) { search.value = ''; filter(''); }
     if (inst.customizing) inst.customizing(true);
-    syncPreview(); paint(); place(); focusStopsOn(true);
+    syncPreview();
+    if (needsPaint) paint(); else PMW.czFit(root);
+    focusStopsOn(true);
     root.removeAttribute('aria-hidden');
     root.classList.remove('pmed-prepared');
     Motion.play(root);
