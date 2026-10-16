@@ -938,34 +938,55 @@
        instead of landing in the first hover frame near a box; and the proxies the look uses are made, so their layers
        exist before the first hover. Again after a look change and whenever a frame meets a target not stamped yet (new
        DOM). */
-    var stampTimer = 0, stampList = null, stampAt = 0, stampOuter = null;
+    var stampTimer = 0, stampNext = null, stampWalk = null, stampBusy = false;
     function stampSoon(ms) {
-      if (stampTimer || stampList) return;
+      if (stampTimer || stampBusy) return;
       stampTimer = setTimeout(function () { stampTimer = 0; idle(stampRun); }, ms || 700);
+    }
+    /* In idle slices of at most ~4 ms, as a walk of the page in document order that can stop and go on: the look's
+       tokens and the glow and frame layers in the first slice, then each element tried against the targets, the
+       inside of a target stamped (or one already stamped) skipped whole. One search of the whole ~21k-element page
+       ran in a single idle callback, 28 ms on Nas1, and a click landing in it waited (F2 idle-slice census). The same
+       outermost targets get the same kinds, in the same order. */
+    function stampAfter(el) {   /* the next element after el and everything inside it */
+      var w = stampWalk;
+      w.currentNode = el;
+      var s = w.nextSibling();
+      if (s) return s;
+      w.currentNode = el;
+      while (w.parentNode()) { s = w.nextSibling(); if (s) return s; }
+      return null;
     }
     function stampRun(dl) {
       if (!document.body) return;
-      if (!stampList) {
-        if (tokensDirty) readTokens();
-        var g = false, f = false;
-        for (var k in T) { if (T[k].glow) g = true; if (T[k].frame) f = true; }
-        if (g) ensureGlow();
-        if (f) ensureFrame();
-        stampList = document.querySelectorAll(SEL); stampAt = 0; stampOuter = null;
+      var t0 = performance.now();
+      var spent = function () { return performance.now() - t0 > 4 || (dl && dl.timeRemaining && dl.timeRemaining() < 2); };
+      if (!stampBusy || !stampNext || !stampNext.isConnected) {
+        if (!stampBusy) {
+          if (tokensDirty) readTokens();
+          var g = false, f = false;
+          for (var k in T) { if (T[k].glow) g = true; if (T[k].frame) f = true; }
+          if (g) ensureGlow();
+          if (f) ensureFrame();
+        }
+        stampBusy = true;
+        stampWalk = document.createTreeWalker(document.documentElement, NodeFilter.SHOW_ELEMENT);
+        stampNext = stampWalk.nextNode();
+        if (spent()) { idle(stampRun); return; }
       }
-      var n = 0, t0 = performance.now();
-      while (stampAt < stampList.length) {
-        var el = stampList[stampAt++];
-        if (stampOuter && stampOuter.contains(el)) continue;
-        if (!el.isConnected || !valid(el)) continue;
-        stampOuter = el;
-        if (el.hasAttribute('data-pmh-kind')) continue;
-        var kd = kindOf(el);
-        el.setAttribute('data-pmh-kind', kd); stats.writes++; stats.stamped = (stats.stamped || 0) + 1;
-        if (++n >= 12 || performance.now() - t0 > 4 || (dl && dl.timeRemaining && dl.timeRemaining() < 2)) break;
+      var n = 0, el = stampNext;
+      while (el) {
+        var next;
+        if (el.matches(SEL) && valid(el)) {
+          if (!el.hasAttribute('data-pmh-kind')) { el.setAttribute('data-pmh-kind', kindOf(el)); stats.writes++; stats.stamped = (stats.stamped || 0) + 1; n++; }
+          next = stampAfter(el);
+        } else { stampWalk.currentNode = el; next = stampWalk.nextNode(); }
+        el = next;
+        if (n >= 12 || spent()) break;
       }
+      stampNext = el;
       for (var q = kindQueue.length - 1; q >= 0; q--) if (kindQueue[q].hasAttribute('data-pmh-kind')) kindQueue.splice(q, 1);
-      if (stampAt < stampList.length) idle(stampRun); else stampList = null;
+      if (el) idle(stampRun); else { stampBusy = false; stampWalk = null; }
     }
 
     /* software rendering: asked twice, late and off the main thread (the worker answers within a few seconds; where no
@@ -993,6 +1014,7 @@
       resolve: resolve,
       kindOf: function (el) { return el ? kindOf(el) : null; },
       retoken: function () { readTokens(); return JSON.parse(JSON.stringify(T)); },
+      stamp: function () { return { busy: stampBusy, timer: !!stampTimer, stamped: stats.stamped || 0 }; },
       stats: function () { var o = {}; for (var k in stats) o[k] = stats[k]; o.slow = stats.slow.slice(); o.hist = Object.assign({}, stats.hist); o.enters = Object.assign({}, stats.enters); o.totalMs = Math.round(stats.totalMs * 100) / 100; o.running = running; o.springs = springs.size; o.lit = lit.size; return o; },
       state: function () {
         var hs = hover ? ST.get(hover) : null;
