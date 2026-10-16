@@ -194,7 +194,7 @@ PAGES = [
      "        try {\n"
      "          /* still pending here, it reads as its start while the compositor has been running it since its first frame */\n"
      "          var a = lift.anim, ran = document.timeline.currentTime - lift.at;\n"
-     "          if ((a.pending || !(a.currentTime > 0)) && ran > 0) a.currentTime = Math.min(ran, 140);\n"
+     "          if ((a.pending || !(a.currentTime > 0)) && ran > 0) a.currentTime = Math.min(ran, a.__pmLiftMs || 140);\n"
      "          oldP.style.setProperty('--pm8-out-from', getComputedStyle(oldP).opacity); a.cancel();\n"
      "        } catch (e) {}\n"
      "      };\n"
@@ -333,8 +333,16 @@ ANSWER_FIRST = [
      "      if (tab) { springTo(tab, measureTab(tab)); P.__answered = pageId; }\n"
      "      if (soon) return;\n"
      "      var html = document.documentElement, nier = html.getAttribute('data-o55-nier') === 'on', retro = /^retro/.test(html.getAttribute('data-theme') || '');\n"
-     "      /* NieR answers with its wipe and the ink; the other looks start the leaving page's fade (Retro in steps) */\n"
-     "      var lift = !nier && !reduced() && oldP && oldP.animate && !oldP.classList.contains('pm8-page-out') ? oldP.animate([{ opacity: 1 }, { opacity: 0.86 }], { duration: 140, easing: retro ? 'steps(2, end)' : 'cubic-bezier(.2, 0, 0, 1)', fill: 'forwards' }) : null;\n"
+     "      /* NieR answers with its wipe and the ink; the other looks start the leaving page's fade (Retro in its two steps\n"
+     "         to 0.86 and no further). The fade keeps going while the change's long frames run (0.86 at 140 ms, then on to\n"
+     "         0.72 by 740 ms, on the compositor), so a wait for the arriving page (the P1000's Settings entry: Home sat at\n"
+     "         0.86 to ~583 ms) reads as the page leaving; the exit takes over from wherever it has reached */\n"
+     "      var LIFT_MS = retro ? 140 : 740;\n"
+     "      var lift = !nier && !reduced() && oldP && oldP.animate && !oldP.classList.contains('pm8-page-out') ? oldP.animate(retro\n"
+     "        ? [{ opacity: 1 }, { opacity: 0.86 }]\n"
+     "        : [{ opacity: 1, easing: 'cubic-bezier(.2, 0, 0, 1)' }, { opacity: 0.86, offset: 140 / 740, easing: 'cubic-bezier(.3, 0, .3, 1)' }, { opacity: 0.72 }],\n"
+     "        { duration: LIFT_MS, easing: retro ? 'steps(2, end)' : 'linear', fill: 'forwards' }) : null;\n"
+     "      if (lift) lift.__pmLiftMs = LIFT_MS;\n"
      "      soon = { page: pageId };\n"
      "      requestAnimationFrame(function (shown) { setTimeout(function () {\n"
      "        var to = soon.page; soon = null;\n"
@@ -519,7 +527,20 @@ FIELD = [
      'pointer field: look values after layout'),
 ]
 
-PATCHES = STATUS_BAR + HOVER_TAGS + THEME + PAGES + CENSUS + ANSWER_FIRST + CHAT + EDGES + FIELD
+TITLE_MENUS = [
+    # T8 (speed team, 2026-10-16): every click outside the title-bar menus, and every Escape, wrote aria-expanded on
+    # every menu's trigger whether it changed or not; each write queues a record to every observer and invalidates the
+    # trigger's style. It is written only when it changes. The menus close exactly as before.
+    ("      if (btn) btn.setAttribute('aria-expanded', 'false');\n"
+     "    });\n"
+     "  }\n",
+     "      if (btn && btn.getAttribute('aria-expanded') !== 'false') btn.setAttribute('aria-expanded', 'false');   /* O55: only a change (T8) */\n"
+     "    });\n"
+     "  }\n",
+     'title-bar menus: aria-expanded written only when it changes'),
+]
+
+PATCHES = STATUS_BAR + HOVER_TAGS + THEME + PAGES + CENSUS + ANSWER_FIRST + CHAT + EDGES + FIELD + TITLE_MENUS
 
 # The census's own frame requests, between scheduleScan and refresh (scan, delayed scan, live, delayed live, and their
 # continuations): every one becomes censusFrame.

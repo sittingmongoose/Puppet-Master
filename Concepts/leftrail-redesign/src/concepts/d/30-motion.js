@@ -217,6 +217,7 @@ function releaseLeaving(el) {
   const keep = el._dLeave; el._dLeave = null; leaving.delete(el);
   if (keep.anim) { try { keep.anim.cancel(); } catch (e) { /* gone */ } }
   el.classList.remove('d-leaving');
+  if (!keep.inert) el.inert = false;
   if (keep.inline) ['display', 'top', 'left', 'width'].forEach(k => el.style.removeProperty(k));
   const slot = document.getElementById('sidePanelSlot');
   if (slot && ![...leaving].some(x => x.classList.contains('side-panel-view'))) slot.classList.remove('d-has-leaving');
@@ -226,8 +227,11 @@ function releaseAllLeaving() { [...leaving].forEach(releaseLeaving); }
 function holdLeaving(el, box) {
   if (!el || reduced() || fam() === 'nier' || !D.on) return null;
   releaseAllLeaving();
-  el._dLeave = { inline: !!box, anim: null };
+  el._dLeave = { inline: !!box, anim: null, inert: el.inert };
   leaving.add(el);
+  /* drawn for its fade only: out of the tab order and the accessibility tree, and a field focused in it takes no more
+     keys (landing review SH-4) */
+  el.inert = true;
   if (box) {
     el.style.setProperty('display', box.display, 'important');
     el.style.setProperty('top', box.top + 'px'); el.style.setProperty('left', box.left + 'px'); el.style.setProperty('width', box.width + 'px');

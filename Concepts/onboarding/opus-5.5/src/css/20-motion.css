@@ -102,8 +102,12 @@ html[data-o55-vt]::view-transition { pointer-events: none; }
 html[data-o55-vt]::view-transition-old(root), html[data-o55-vt]::view-transition-new(root) { animation: none; mix-blend-mode: normal; }
 
 /* ---- Reduced Motion: order and cause/effect kept, movement removed ---------------------------------------------- */
-html[data-motion="reduced"] #pm-o55-onboarding .o55-entering .o55-st, html[data-motion="reduced"] #pm-o55-onboarding .o55-entering .o55-main *,
+html[data-motion="reduced"] #pm-o55-onboarding .o55-entering .o55-st,
 html[data-motion="reduced"] #pm-o55-onboarding .o55-entering .o55-promise li { animation: o55-fadeonly 140ms ease both !important; }
+/* the screen's body fades as one (it is an .o55-st): its contents hold still inside it. Each of them was given a fade of
+   its own, every node of the look screen's four live tile scenes too (1,511 elements), and starting them was 108 ms of
+   the click's style on Nas1 (190 -> 82 ms; P2-06, Welcome to Get Started) */
+html[data-motion="reduced"] #pm-o55-onboarding .o55-entering .o55-main * { animation: none !important; }
 html[data-motion="reduced"] #pm-o55-onboarding .o55-pane > .o55-layer.o55-out { animation: o55-fadeout 100ms ease both !important; }
 html[data-motion="reduced"] #pm-o55-onboarding.o55-opening .o55-win, html[data-motion="reduced"] #pm-o55-onboarding.o55-closing .o55-win { animation: o55-fadeonly 160ms ease both !important; }
 html[data-motion="reduced"] #pm-o55-onboarding.o55-closing .o55-win { animation-name: o55-fadeout !important; }
@@ -112,10 +116,12 @@ html[data-motion="reduced"] #pm-o55-onboarding.o55-closing .o55-win { animation-
    transition's end.) */
 html[data-motion="reduced"] #pm-o55-onboarding * { transition: none !important; }
 @media (prefers-reduced-motion: reduce) {
-  #pm-o55-onboarding .o55-entering .o55-st, #pm-o55-onboarding .o55-entering .o55-main *, #pm-o55-onboarding .o55-entering .o55-promise li { animation: o55-fadeonly 140ms ease both !important; }
+  #pm-o55-onboarding .o55-entering .o55-st, #pm-o55-onboarding .o55-entering .o55-promise li { animation: o55-fadeonly 140ms ease both !important; }
+  #pm-o55-onboarding .o55-entering .o55-main * { animation: none !important; }
   #pm-o55-onboarding .o55-pane > .o55-layer.o55-out { animation: o55-fadeout 100ms ease both !important; }
   #pm-o55-onboarding.o55-opening .o55-win { animation: o55-fadeonly 160ms ease both !important; }
   #pm-o55-onboarding.o55-closing .o55-win { animation: o55-fadeout 160ms ease both !important; }
+  #pm-o55-onboarding.o55-accept .o55-win { transform: none; opacity: 0.86; animation: o55-accept-calm 180ms ease-out both; }
   #pm-o55-onboarding * { transition: none !important; }
 }
 /* The stage's colours in one custom property, so a look change is one read (60-ui-core.js readStageTokens) rather than
@@ -128,4 +134,9 @@ html, [data-theme], [data-o55-nier-preview] {
    the window then stood half a second while the Wizard was built; Retro settles in two steps. */
 #pm-o55-onboarding.o55-accept .o55-win { transform: scale(0.986); transition: transform 200ms cubic-bezier(0.2, 0, 0, 1); }
 #pm-o55-onboarding[data-family="retro"].o55-accept .o55-win { transform: scale(0.986); transition: transform 160ms steps(2, end); }
-html[data-motion="reduced"] #pm-o55-onboarding.o55-accept .o55-win { transform: none; transition: none; }
+/* Under Reduced Motion the answer is the calm one: the window dims a little on the click's own frame, without moving,
+   and its fade out goes on from there. With nothing new drawn on that frame, the click's next paint was the Wizard's
+   and the window's together (P2-06: the dialog changed 0.61-0.83 s after the click on the P1000, Event Timing
+   648-880 ms, M3 96-152 ms). */
+@keyframes o55-accept-calm { from { opacity: 1; } }
+html[data-motion="reduced"] #pm-o55-onboarding.o55-accept .o55-win { transform: none; transition: none; opacity: 0.86; animation: o55-accept-calm 180ms ease-out both; }

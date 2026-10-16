@@ -130,8 +130,11 @@
     el = el || (S.root && S.root.querySelector('.o55-stage')) || root;
     const owner = tokenOwner(el), key = tokenKey(owner), hit = tokSnaps.get(key);
     if (hit) return Object.assign({}, hit);
-    /* a miss on a held screen would style it before it is shown and hand that paint to the release frame */
-    if (!packReady || (el.closest && el.closest('.o55-hold'))) return null;
+    /* a miss on a held screen would style it before it is shown and hand that paint to the release frame; on a screen
+       still being built (Reduced Motion builds it shown) it styled the whole new screen inside the click, three times for
+       the look screen's tiles: 168 + 85 + 24 ms on Nas1, where the art's own cache (warmed at idle) answers at no cost,
+       as it does for a held one (P2-06, Welcome to Get Started) */
+    if (!packReady || (el.closest && el.closest('.o55-hold, .o55-entering'))) return null;
     if (tokSnaps.size > 40) tokSnaps.clear();
     const raw = (getComputedStyle(el).getPropertyValue('--o55-tokpack') || '').trim();
     const parts = raw.split('|').map((s) => s.trim().replace(/^["']|["']$/g, ''));
@@ -425,7 +428,7 @@
     const focusHeading = () => O55.motion.after(60, () => { const a = document.activeElement; if (h && S.open && !(a && a !== layer && layer.contains(a))) h.focus({ preventScroll: true }); });
     U.announce(O55.stages.progress(S, def).announce + '. ' + (val(def.title) || ''), S.root.querySelector('.o55-win'));
     def.mounted && def.mounted(S, layer, true);
-    if (!hold) { leave(); focusHeading(); skin('screen', layer, dir); armStageTokens(); return; }
+    if (!hold) { leave(); focusHeading(); skin('screen', layer, dir); O55.motion.real.setTimeout(armStageTokens, 1600); return; }
     O55.motion.release(() => {
       S.root.classList.remove('o55-hold');
       if (dir === 'open') checkSolid(); /* the opening is the window's busiest motion: measured while it plays */
@@ -623,12 +626,22 @@
   function nudge() { const w = S.root.querySelector('.o55-win'); O55.motion.play(w, [{ transform: 'scale(1)' }, { transform: 'scale(1.008)' }, { transform: 'scale(1)' }], { duration: 240 }); }
 
   /* ---------------------------------------------------------------- open / close */
-  let returnFocus = null, inerted = [];
+  /* The app beneath is held while the window is open: every part of it is marked data-o55-held (the pause rules in
+     10-window.css key on that, not on [inert]: a rule on any [inert] descendant made every inert toggle anywhere, the
+     editor's sheet included, restyle that whole subtree, 86.8 ms on an editor open, B6 trace), and the parts not inert
+     already are made inert, as before. */
+  let returnFocus = null, inerted = [], held = [];
   function setInert(on) {
     if (on) {
-      inerted = Array.from(document.body.children).filter((n) => n !== S.root && !n.hasAttribute('inert') && n.id !== 'pm-hover-tag-root' && n.id !== 'o55-demo' && n.tagName !== 'SCRIPT');
+      held = Array.from(document.body.children).filter((n) => n !== S.root && n.id !== 'pm-hover-tag-root' && n.id !== 'o55-demo' && n.tagName !== 'SCRIPT');
+      inerted = held.filter((n) => !n.hasAttribute('inert'));
+      held.forEach((n) => n.setAttribute('data-o55-held', ''));
       inerted.forEach((n) => n.setAttribute('inert', ''));
-    } else { inerted.forEach((n) => n.removeAttribute('inert')); inerted = []; }
+    } else {
+      inerted.forEach((n) => n.removeAttribute('inert'));
+      held.forEach((n) => n.removeAttribute('data-o55-held'));
+      inerted = []; held = [];
+    }
   }
   /* Run Onboarding Again (the Home menu, Settings, the demo pill) starts over for real: a new run, a clean fixture
      world, no operation of the old run left running or reporting, and the Guided Tour back at its first step. */
@@ -826,7 +839,7 @@
        first frame for half a second on the P1000, and the timeline that frame draws at is from before that work, so the
        window and its scrim were already gone when it was drawn. They play on the frames that are shown
        (11-motion-start.js; final motion QA A1). */
-    if (!handoff && !O55.motion.reduced() && window.PM_START_ON_SHOWN) window.PM_START_ON_SHOWN(() => (S.open ? [] :
+    if (!handoff && window.PM_START_ON_SHOWN) window.PM_START_ON_SHOWN(() => (S.open ? [] :
       [r.querySelector('.o55-win'), r.querySelector('.o55-scrim')].flatMap((el) => (el ? el.getAnimations().filter((a) => Number.isFinite(a.effect.getComputedTiming().endTime)) : []))));
     if (!handoff) O55.sound.play(reason === 'done' ? 'finish' : 'close');
     /* the skin may keep the root (and its scrim) a while: NieR folds the window to a line that carries on into the
@@ -849,8 +862,11 @@
     if (typeof hold === 'number' && hold > 0) O55.motion.after(hold, finish);
     /* the app wakes (inert off, its paused loops resumed: a restyle of the whole page) only once both the window and
        its scrim have finished leaving, and a frame later, so that restyle never holds a frame of the exit itself */
-    else if (O55.motion.reduced()) finish();
-    else Promise.all([O55.motion.settled(r.querySelector('.o55-win'), { subtree: false, fallback: 700 }), O55.motion.settled(r.querySelector('.o55-scrim'), { subtree: false, fallback: 700 })])
+    /* Reduced Motion fades too (160 ms, no movement), on frames that are shown, and the app wakes after it: it closed
+       at once, so the window went, the Wizard was drawn and the whole app woke in one long frame (P2-06) */
+    /* the fallback allows for the moves being held for frames that are shown (up to 6, PM_START_ON_SHOWN): the P1000's
+       dialog fade ended at +733 ms, past the 700 ms this once was, and finish() hid the window mid-exit (SH-5) */
+    else Promise.all([O55.motion.settled(r.querySelector('.o55-win'), { subtree: false, fallback: 1200 }), O55.motion.settled(r.querySelector('.o55-scrim'), { subtree: false, fallback: 1200 })])
       .then(() => requestAnimationFrame(() => window.setTimeout(finish, 0)));
     window.dispatchEvent(new CustomEvent('o55:onboarding', { detail: { type: reason === 'skip' ? 'skipped' : reason === 'done' ? 'finished' : 'closed', screen: S.sess.screen } }));
   }

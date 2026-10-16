@@ -47,6 +47,12 @@
   }, { capture: true, passive: true });
   document.addEventListener('pointerover', (e) => { if (tabOf(e.target)) promote(); }, true);
   document.addEventListener('pointerout', (e) => { if (tabOf(e.target) && !tabOf(e.relatedTarget) && !near) dropSoon(); }, true);
+  /* a press or a key anywhere but on a page tab drops it at once: a sheet or toast it opens (from the band under the
+     title bar, or by a shortcut while a tab has focus) would otherwise sit inside the page's stacking context, under
+     the rail, chat or status bar, until the pointer had been away 900 ms (landing review SH-6) */
+  const dropNow = (e) => { if (!tabOf(e.target)) { clearTimeout(dropTimer); drop(); } };
+  document.addEventListener('pointerdown', dropNow, { capture: true, passive: true });
+  document.addEventListener('keydown', dropNow, true);
   document.addEventListener('focusin', (e) => { if (tabOf(e.target)) promote(); }, true);
   document.addEventListener('focusout', (e) => { if (tabOf(e.target) && !tabOf(e.relatedTarget)) dropSoon(); }, true);
   window.PM_PAGE_LAYER = { promote, drop };

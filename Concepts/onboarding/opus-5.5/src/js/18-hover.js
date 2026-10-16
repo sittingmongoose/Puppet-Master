@@ -208,10 +208,41 @@
     var hover = null, springs = new Set(), lit = new Set();
     var running = false, lastT = 0, wasRest = false, bodyRest = false, visCache = null;
     var recheck = false, popupOpen = false;
+    /* A popup open anywhere holds the hover. The popups are kept as a set: found once, then from the elements the
+       document gains and the role attributes it changes (the popup classes are only ever given at creation), so a look
+       after a click or key never walks the page: a search of the whole ~21k-element document cost 3.2 ms per look on
+       Nas1 (8-40 ms with its forced reads, T8 speed team), and a live collection's length walks it again after any DOM
+       change (Glass lane). The same popups answer, in the same frame. */
+    var popups = new Set(), popWatch = false;
+    function addPopups(n) {
+      if (!n || n.nodeType !== 1) return;
+      if (n.matches(POPUP)) popups.add(n);
+      if (n.firstElementChild) { var l = n.querySelectorAll(POPUP); for (var i = 0; i < l.length; i++) popups.add(l[i]); }
+    }
+    try {
+      Array.prototype.forEach.call(document.querySelectorAll(POPUP), function (e) { popups.add(e); });
+      new MutationObserver(function (muts) {
+        for (var i = 0; i < muts.length; i++) {
+          var m = muts[i];
+          if (m.type === 'attributes') { if (m.target.matches(POPUP)) popups.add(m.target); else popups.delete(m.target); }
+          else for (var j = 0; j < m.addedNodes.length; j++) addPopups(m.addedNodes[j]);
+        }
+      }).observe(document, { childList: true, subtree: true, attributes: true, attributeFilter: ['role'] });
+      popWatch = true;
+    } catch (_) { popWatch = false; }
+    /* A popup inside the parked chat root (21-shell-perf.css: content-visibility hidden outside the Guided Tour) is never
+       drawn, and a rect read there lays out the whole locked root: the chat's more menus did, 2 reads at +100-140 ms
+       after a Settings click on the 3090 (T9b). The selector match reads no style. */
+    var PARKED = 'html:not([data-o55-tour]) #chatPanel[data-pmw-sc="on"] > .float-content.pm6-chat-root';
+    function drawn(e) { return !e.closest(PARKED) && e.getClientRects().length > 0; }
     function anyPopup() {
-      var l = document.querySelectorAll(POPUP);
-      for (var i = 0; i < l.length; i++) { if (l[i].getClientRects().length) return true; }
-      return false;
+      var open = false;
+      if (!popWatch) { var l = document.querySelectorAll(POPUP); for (var i = 0; i < l.length && !open; i++) open = drawn(l[i]); return open; }
+      popups.forEach(function (e) {
+        if (!e.isConnected) { popups.delete(e); return; }   /* gone (put back, it is found again as an added node) */
+        if (!open && drawn(e)) open = true;
+      });
+      return open;
     }
     /* after a click, a key or a pointerdown the page may have changed under a resting pointer (a menu opened, a page
        switched): the next frame looks again at what is under the pointer. The loop is started even when nothing hovers:
@@ -892,14 +923,19 @@
       if (hover || lit.size) { moved = true; start(); }
     }, { passive: true });
     if (typeof MutationObserver === 'function') {
+      /* every record in a batch counts: a look attribute written in the same task as a page change ending (or a Usage
+         moment) once returned before the rest's end was seen, so the card under a resting pointer was never looked
+         at again after the page came back (hover14 bug 1, intermittent: F1-cover on the M3, Nas1 under load) */
       new MutationObserver(function (muts) {
+        var look = false, rest = false;
         for (var i = 0; i < muts.length; i++) {
           var an = muts[i].attributeName;
-          if (an === 'data-pmu-moment' || an === 'data-pm-page-transition') {
-            if (!gestureRest()) restEnded();
-            else if (hover || springs.size || lit.size) { moved = true; start(); }
-          }
-          else { retokenNextFrame(); return; }
+          if (an === 'data-pmu-moment' || an === 'data-pm-page-transition') rest = true; else look = true;
+        }
+        if (look) retokenNextFrame();
+        if (rest) {
+          if (!gestureRest()) restEnded();
+          else if (hover || springs.size || lit.size) { moved = true; start(); }
         }
       }).observe(root, { attributes: true, attributeFilter: ['data-theme', 'data-motion', 'data-o55-nier', 'data-o55-nier-parts', 'data-pmh-soft', 'data-pmu-moment', 'data-pm-page-transition'] });
       if (document.body) {
@@ -922,34 +958,76 @@
        instead of landing in the first hover frame near a box; and the proxies the look uses are made, so their layers
        exist before the first hover. Again after a look change and whenever a frame meets a target not stamped yet (new
        DOM). */
-    var stampTimer = 0, stampList = null, stampAt = 0, stampOuter = null;
+    var stampTimer = 0, stampNext = null, stampWalk = null, stampBusy = false, stampLast = null, stampLastSkip = false, stampUp = null;
+    var stampRegion = null, stampRegionTimes = 0;
     function stampSoon(ms) {
-      if (stampTimer || stampList) return;
+      if (stampTimer || stampBusy) return;
       stampTimer = setTimeout(function () { stampTimer = 0; idle(stampRun); }, ms || 700);
+    }
+    /* In idle slices of at most ~4 ms, as a walk of the page in document order that can stop and go on: the look's
+       tokens and the glow and frame layers in the first slice, then each element tried against the targets, the
+       inside of a target stamped (or one already stamped) skipped whole. One search of the whole ~21k-element page
+       ran in a single idle callback, 28 ms on Nas1, and a click landing in it waited (F2 idle-slice census). The same
+       outermost targets get the same kinds, in the same order. */
+    function stampAfter(el) {   /* the next element after el and everything inside it */
+      var w = stampWalk;
+      w.currentNode = el;
+      var s = w.nextSibling();
+      if (s) return s;
+      w.currentNode = el;
+      while (w.parentNode()) { s = w.nextSibling(); if (s) return s; }
+      return null;
+    }
+    /* where a walk goes on when the element it stopped at has been taken out of the page: after the last element it
+       looked at, or else from the stopped element's nearest ancestor still in the page (what is stamped there already is
+       passed over). It started again from the top, and under steady churn (a streaming terminal, Usage's live beats) it
+       could keep starting again (landing review SH5-1). A region replaced under the walk again and again (a list drawn
+       anew each frame) is walked twice at most and then passed, so every walk ends; a target missed by a move or a
+       passed region is still stamped when a frame meets it. */
+    function stampResume() {
+      var w = stampWalk;
+      stats.stampResumes = (stats.stampResumes || 0) + 1;
+      if (stampLast && stampLast.isConnected) { w.currentNode = stampLast; return stampLastSkip ? stampAfter(stampLast) : w.nextNode(); }
+      for (var i = 0; stampUp && i < stampUp.length; i++) {
+        var a = stampUp[i];
+        if (!a.isConnected) continue;
+        if (a !== stampRegion) { stampRegion = a; stampRegionTimes = 0; }
+        if (++stampRegionTimes > 2 && a !== document.body && a !== document.documentElement) { stats.stampPassed = (stats.stampPassed || 0) + 1; stampRegion = null; return stampAfter(a); }
+        w.currentNode = a; return w.nextNode();
+      }
+      w.currentNode = document.documentElement; return w.nextNode();
     }
     function stampRun(dl) {
       if (!document.body) return;
-      if (!stampList) {
+      var t0 = performance.now();
+      var spent = function () { return performance.now() - t0 > 4 || (dl && dl.timeRemaining && dl.timeRemaining() < 2); };
+      if (!stampBusy) {
         if (tokensDirty) readTokens();
         var g = false, f = false;
         for (var k in T) { if (T[k].glow) g = true; if (T[k].frame) f = true; }
         if (g) ensureGlow();
         if (f) ensureFrame();
-        stampList = document.querySelectorAll(SEL); stampAt = 0; stampOuter = null;
+        stampBusy = true; stampLast = null; stampUp = null; stampRegion = null;
+        stampWalk = document.createTreeWalker(document.documentElement, NodeFilter.SHOW_ELEMENT);
+        stampNext = stampWalk.nextNode();
+        if (spent()) { idle(stampRun); return; }
+      } else if (stampNext && !stampNext.isConnected) stampNext = stampResume();
+      var n = 0, el = stampNext;
+      while (el) {
+        var next, skip = false;
+        if (el.matches(SEL) && valid(el)) {
+          if (!el.hasAttribute('data-pmh-kind')) { el.setAttribute('data-pmh-kind', kindOf(el)); stats.writes++; stats.stamped = (stats.stamped || 0) + 1; n++; }
+          next = stampAfter(el); skip = true;
+        } else { stampWalk.currentNode = el; next = stampWalk.nextNode(); }
+        stampLast = el; stampLastSkip = skip;
+        el = next;
+        if (n >= 12 || spent()) break;
       }
-      var n = 0, t0 = performance.now();
-      while (stampAt < stampList.length) {
-        var el = stampList[stampAt++];
-        if (stampOuter && stampOuter.contains(el)) continue;
-        if (!el.isConnected || !valid(el)) continue;
-        stampOuter = el;
-        if (el.hasAttribute('data-pmh-kind')) continue;
-        var kd = kindOf(el);
-        el.setAttribute('data-pmh-kind', kd); stats.writes++; stats.stamped = (stats.stamped || 0) + 1;
-        if (++n >= 12 || performance.now() - t0 > 4 || (dl && dl.timeRemaining && dl.timeRemaining() < 2)) break;
-      }
+      stampNext = el;
+      stampUp = null;
+      if (el) { stampUp = []; for (var up = el.parentElement; up; up = up.parentElement) stampUp.push(up); }
       for (var q = kindQueue.length - 1; q >= 0; q--) if (kindQueue[q].hasAttribute('data-pmh-kind')) kindQueue.splice(q, 1);
-      if (stampAt < stampList.length) idle(stampRun); else stampList = null;
+      if (el) idle(stampRun); else { stampBusy = false; stampWalk = null; stampLast = null; stampUp = null; stats.stampRuns = (stats.stampRuns || 0) + 1; }
     }
 
     /* software rendering: asked twice, late and off the main thread (the worker answers within a few seconds; where no
@@ -977,6 +1055,8 @@
       resolve: resolve,
       kindOf: function (el) { return el ? kindOf(el) : null; },
       retoken: function () { readTokens(); return JSON.parse(JSON.stringify(T)); },
+      stamp: function () { return { busy: stampBusy, timer: !!stampTimer, stamped: stats.stamped || 0, resumes: stats.stampResumes || 0, passed: stats.stampPassed || 0, runs: stats.stampRuns || 0 }; },
+      popups: function () { return { open: anyPopup(), kept: popups.size, watched: popWatch }; },
       stats: function () { var o = {}; for (var k in stats) o[k] = stats[k]; o.slow = stats.slow.slice(); o.hist = Object.assign({}, stats.hist); o.enters = Object.assign({}, stats.enters); o.totalMs = Math.round(stats.totalMs * 100) / 100; o.running = running; o.springs = springs.size; o.lit = lit.size; return o; },
       state: function () {
         var hs = hover ? ST.get(hover) : null;
