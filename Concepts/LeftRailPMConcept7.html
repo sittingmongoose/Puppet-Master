@@ -227501,7 +227501,11 @@ try { if (window.PM_HOME && typeof window.PM_HOME.boot === 'function') window.PM
   }
   var HOT = '[data-lg-surface], .page-tab, #pmuRange > button, .pmu-navbtn, .pm-segtab-item, #activityBar .icon, .side-panel-view, .pmu-pop, .pmr-menu-list, .pmr-menu-group, .pm6-tb-menu, .o55-railitem, .o55-seg button, .o55-win, .o55t-callout, .o55t-bar';
   var GENERATED = '#lg-optics, #lg-lenses, .lg-lenses-local, .lg-lenses-under, #lg-shine, .lg-press, .pm-segtab-track, #lg-post, #lg-shown';
-  var MENU_HOT = '[data-lg-surface], .pmu-pop, .pmr-menu-list, .pm6-tb-menu, .o55-win, .o55t-callout, .o55t-bar';
+  /* menus that pour out of their control (morph) or hide the hover tag sync inside the click's task, so the spring's
+     first frame is the menu's first frame. Any other floating sheet ([data-lg-surface], the onboarding window, the tour)
+     is mounted after the frame's own layout, still before that frame is painted, instead of forcing the app's style for
+     the whole new sheet inside the click (the editor's Customize screen: 28-38 ms forced on a P1000, 2026-10-16) */
+  var MENU_HOT = '.pmu-pop, .pmr-menu-list, .pm6-tb-menu, #themeMenu';
   function generatedMutation(rec) {
     var t = rec.target;
     if (t.nodeType === 1 && t.closest(GENERATED)) return true;
@@ -227549,10 +227553,9 @@ try { if (window.PM_HOME && typeof window.PM_HOME.boot === 'function') window.PM
     var page = document.querySelector('.page-tabs .page-tab.active'); page = page && page.id;
     var changed = Array.from(dirtyRoots), full = dirtyAll;
     /* a change syncs after the frame's own layout (afterLayout), where every read is free, instead of forcing the app's
-       half-built page through style and layout inside its click; a menu opening in Glass still gets its first keyframe at
-       once. A look that adopts the switcher has no glass to keep in step: its strips sync after the frame's own layout,
-       where every read is free, instead of forcing the app's half-built page through style and layout inside its click
-       (Q16). A press still moves the lens at once (pointerdown). */
+       half-built page through style and layout inside its click; a menu that morphs opening in Glass still gets its first
+       keyframe at once (MENU_HOT). A look that adopts the switcher has no glass to keep in step: its strips sync after
+       the frame's own layout too (Q16). A press still moves the lens at once (pointerdown). */
     if (area && !menuHot) afterLayout();
     else if (hot && switchOn()) { if ((menuHot && isGlass()) || !afterLayout()) hotSync(); }
     else lazySync(false);
