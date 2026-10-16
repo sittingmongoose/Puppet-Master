@@ -352,7 +352,9 @@
      Both are redrawn only when the sheet moves or resizes, or the look or wallpaper changes. They cost nothing per frame
      and draw the same with or without a GPU. */
   var wallUrl = '', wallSources = new Map(), wallSourceUrls = new Map(), wallSourceKey = null, wallSourceUrl = '', wallSourceId = 0;
-  var frosts = {}, frostKey = '', frostWallUrl = '', frostCache = new Map(), frostBytes = 0, frostJobs = new Map(), FROST_BYTES = 32 * 1024 * 1024;
+  /* encoded frost pairs are kept for the last FROST_PAIRS prints, within FROST_BYTES: a pair is 40-430 KB at 1920 x 1080,
+     and with only two kept a third wallpaper evicted the next one back, which was prepared cold again (B3, 2026-10-16) */
+  var frosts = {}, frostKey = '', frostWallUrl = '', frostCache = new Map(), frostBytes = 0, frostJobs = new Map(), FROST_BYTES = 32 * 1024 * 1024, FROST_PAIRS = 8;
   var bakeQ = new Map(), bakeT = 0, bakeFrame = 0, bakeIdle = 0, bakeFlight = null, bakeEpoch = 0, bakeAvg = 8;
   function currentWallUrl(refresh) {
     /* The body's selected image is deliberately not on html. Resolve an immutable catalog source once per id/mode,
@@ -494,7 +496,7 @@
         /* Apply both frost levels together. An older encoder can never replace half of the current wallpaper. */
         var previous = frosts, previousUncached = !Array.from(frostCache.values()).some(function (r) { return r.urls === previous; });
         if (!prepare) applyFrost(rec);
-        while (frostCache.size && (frostCache.size >= 2 || frostBytes + rec.bytes > FROST_BYTES)) {
+        while (frostCache.size && (frostCache.size >= FROST_PAIRS || frostBytes + rec.bytes > FROST_BYTES)) {
           /* Preparation may evict another cached print, never the frost still visible on the sheets. */
           var oldest = Array.from(frostCache.keys()).find(function (k) { return frostCache.get(k).urls !== frosts; });
           if (oldest == null) break;
