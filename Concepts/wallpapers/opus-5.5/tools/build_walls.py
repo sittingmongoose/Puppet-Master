@@ -200,8 +200,8 @@ def inject(base, fragments=None, rep=None):
                     images.append(f'  {var}: url(data:image/webp;base64,{b64});\n')
                 tb = base64.b64encode((PKG / 'src' / 'thumbs' / f'{wid}-{mode}.webp').read_bytes()).decode()
                 thumbs.append(f'  --wpk-t-{wid}-{mode}: url(data:image/webp;base64,{tb});\n')
-                rules.append(f'html[data-lg-wall="{wid}"][data-theme$="-{mode}"] {{ --lg-wall-any: var({var}); }}\n'
-                             f'html[data-lg="on"][data-theme="glass-{mode}"][data-lg-wall="{wid}"]:not(#lgz) {{ --lg-wall: var({var}); }}\n'
+                rules.append(f'html[data-lg-wall="{wid}"][data-theme$="-{mode}"] body {{ --lg-wall-any: var({var}); }}\n'
+                             f'html[data-lg="on"][data-theme="glass-{mode}"][data-lg-wall="{wid}"]:not(#lgz) body {{ --lg-wall: var({var}); }}\n'
                              f'html[data-theme$="-{mode}"] .wpk-thumb[data-wpk-id="{wid}"] {{ background-image: var(--wpk-t-{wid}-{mode}); }}\n')
         catalog['families'].append(fam)
     css = (PKG / 'src' / 'wallpapers.css').read_text(encoding='utf-8')

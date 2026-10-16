@@ -283,9 +283,9 @@ PMW.hypo = {
 };
 /* the room rule (geom.resultFits) for a hypothetical layout, against the layout as it is now; in the single-column
    ladder (narrow) nothing splits, so nothing fits */
-PMW.roomFits = function (after) {
+PMW.roomFits = function (after, box) {
   if (!after || (PMW.narrow && PMW.narrow.singleColumn())) return false;
-  return geom.resultFits(L(), after, PMW.layoutBox());
+  return geom.resultFits(L(), after, box || PMW.layoutBox());
 };
 
 PMW.moveTab = function (tabId, panelId, index, opts) {
@@ -312,7 +312,9 @@ PMW.moveTabToSplit = function (tabId, panelId, edge, opts) {
   if (from.id === panelId && from.tabs.length === 1) return false;   // splitting a panel by its only tab changes nothing
   // every caller (menus, keyboard, strip, drag) gets the same fit rule, the room rule on the move's own result,
   // measured on the tree, not the maximized rects
-  if (panelId !== '@root' && !opts.force && treeRects() && !PMW.roomFits(PMW.hypo.split(tabId, panelId, edge, opts.ratio))) {
+  // A pointer release measured the centre before retiring its drag styles. Use that same box for the room rule;
+  // menus and keyboard callers still measure the current tree here.
+  if (panelId !== '@root' && !opts.force && (opts.centreRect || treeRects()) && !PMW.roomFits(PMW.hypo.split(tabId, panelId, edge, opts.ratio), opts.centreRect)) {
     if (!opts.quiet) PMW.toast(edge === 'left' || edge === 'right' ? 'There is not room to split this panel side by side. Try Split down.' : 'There is not room to split this panel. Try Split right.');
     return null;
   }

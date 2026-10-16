@@ -345,17 +345,23 @@
          sharp, with a slight red-blue split; a ring image, transparent inside.
      Both are redrawn only when the sheet moves or resizes, or the look or wallpaper changes. They cost nothing per frame
      and draw the same with or without a GPU. */
-  var wallUrl = '', wallSources = new Map(), wallSourceKey = null, wallSourceUrl = '', wallSourceId = 0;
-  var frosts = {}, frostKey = '', frostCache = new Map(), frostBytes = 0, frostJobs = new Map(), FROST_BYTES = 32 * 1024 * 1024;
+  var wallUrl = '', wallSources = new Map(), wallSourceUrls = new Map(), wallSourceKey = null, wallSourceUrl = '', wallSourceId = 0;
+  var frosts = {}, frostKey = '', frostWallUrl = '', frostCache = new Map(), frostBytes = 0, frostJobs = new Map(), FROST_BYTES = 32 * 1024 * 1024;
   var bakeQ = new Map(), bakeT = 0, bakeFrame = 0, bakeIdle = 0, bakeFlight = null, bakeEpoch = 0, bakeAvg = 8;
   function currentWallUrl(refresh) {
-    /* The source's wallpaper variables are selected only by these attributes. Keep the large data URL out of each
-       surface signature and resolve the computed variable once per choice: reading it serialises a print of several MB
-       (100-165 ms on a P1000 or an M3, 2026-10-16). An empty read is read again, as a host may add the sheet later. */
-    var key = [root.getAttribute('data-theme'), root.getAttribute('data-lg-wall'), root.style.getPropertyValue('--lg-wall')].join('|');
+    /* The body's selected image is deliberately not on html. Resolve an immutable catalog source once per id/mode,
+       using the gallery's prepared cache when present. Empty misses are retried because a lab host can add its sheet
+       after startup. No computed-style read or large URL serialization occurs on a prepared wallpaper commit. */
+    var id = root.getAttribute('data-lg-wall') || 'ribbons';
+    var mode = /-light$/.test(root.getAttribute('data-theme') || '') ? 'light' : 'dark', key = id + '-' + mode;
     if (!refresh && key === wallSourceKey && wallSourceUrl) return wallSourceUrl;
-    var v = getComputedStyle(root).getPropertyValue('--lg-wall') || ''; var m = v.match(/url\(["']?(.*?)["']?\)\s*$/);
-    var u = m ? m[1] : '';
+    var u = !refresh && wallSourceUrls.get(key);
+    if (!u && window.PM_WALLPAPERS && PM_WALLPAPERS.sourceUrl) u = PM_WALLPAPERS.sourceUrl(id, mode);
+    if (!u) {
+      var v = getComputedStyle(root).getPropertyValue('--lg-wall-' + key) || '', m = v.match(/url\(["']?(.*?)["']?\)\s*$/);
+      u = m ? m[1] : '';
+    }
+    if (u) wallSourceUrls.set(key, u);
     if (u !== wallSourceUrl) { wallSourceUrl = u; wallSourceId++; }
     wallSourceKey = key; return u;
   }
@@ -418,11 +424,23 @@
   function viewportVars() { root.style.setProperty('--lg-vw', innerWidth + 'px'); root.style.setProperty('--lg-vh', innerHeight + 'px'); }
   function cover(im) { var vw = innerWidth, vh = innerHeight, sc = Math.max(vw / im.naturalWidth, vh / im.naturalHeight); return { s: sc, ox: (vw - im.naturalWidth * sc) / 2, oy: (vh - im.naturalHeight * sc) / 2, vw: vw, vh: vh }; }
   var FROST = { heavy: { blur: 26, sat: 1.65 }, light: { blur: 14, sat: 1.6 } }, FROST_SCALE = 1 / 3;
+  var wallpaperPaintStyle = null;
+  function wallpaperPaintRule(index) {
+    if (!wallpaperPaintStyle || !wallpaperPaintStyle.isConnected) {
+      wallpaperPaintStyle = document.createElement('style'); wallpaperPaintStyle.id = 'lg-frost';
+      wallpaperPaintStyle.textContent = 'html[data-lg="on"] :is([data-lg-kind], #pm-o55-onboarding .o55-scrim) {}\nhtml[data-lg="on"] body {}';
+      document.head.appendChild(wallpaperPaintStyle);
+    }
+    return wallpaperPaintStyle.sheet.cssRules[index].style;
+  }
   function dropFrost(rec) { Object.keys(rec.urls).forEach(function (name) { URL.revokeObjectURL(rec.urls[name]); }); }
   function applyFrost(rec) {
     if (frostKey === rec.key) return;
-    frosts = rec.urls; frostKey = rec.key;
-    Object.keys(frosts).forEach(function (name) { root.style.setProperty('--lg-frost-' + name, 'url(' + frosts[name] + ')'); });
+    frosts = rec.urls; frostKey = rec.key; frostWallUrl = rec.wall;
+    /* Even a non-inherited custom property on html's inline style invalidates the whole app in Chromium. A rule
+       scoped to the actual painters changes the same pixels in this commit without restyling their contents. */
+    var paint = wallpaperPaintRule(0);
+    Object.keys(frosts).forEach(function (name) { paint.setProperty('--lg-frost-' + name, 'url(' + JSON.stringify(frosts[name]) + ')'); });
     releaseWallHold();
   }
   /* A wallpaper or mode change shows the new print at once, but the sheets' frost is encoded from it a few hundred ms
@@ -431,12 +449,12 @@
   var wallHoldT = 0;
   function holdWall(url) {
     if (!url) return;
-    root.style.setProperty('--lg-wall-hold', 'url("' + url + '")'); root.setAttribute('data-lg-wall-hold', '');
+    wallpaperPaintRule(1).setProperty('--lg-wall-hold', 'url(' + JSON.stringify(url) + ')'); root.setAttribute('data-lg-wall-hold', '');
     clearTimeout(wallHoldT); wallHoldT = setTimeout(releaseWallHold, 2000);
   }
   function releaseWallHold() {
     clearTimeout(wallHoldT); wallHoldT = 0;
-    if (root.hasAttribute('data-lg-wall-hold')) { root.removeAttribute('data-lg-wall-hold'); root.style.removeProperty('--lg-wall-hold'); }
+    if (root.hasAttribute('data-lg-wall-hold')) { root.removeAttribute('data-lg-wall-hold'); wallpaperPaintRule(1).removeProperty('--lg-wall-hold'); }
   }
   /* a canvas as a PNG blob, now. canvas.toBlob encodes in the main thread's idle time, so while a Glass entry or a room
      change kept it busy a frost or a ring came back up to a second later (P1000 trace: the frosts drawn at +1.2 s, their
@@ -448,12 +466,12 @@
       return new Blob([a], { type: 'image/png' });
     } catch (e) { return null; }
   }
-  function makeFrosts(im, done) {
+  function makeFrosts(im, done, prepare) {
     var c = cover(im), u = im.__lgWallUrl || wallUrl, key = u + ':' + c.vw + 'x' + c.vh, epoch = bakeEpoch;
-    if (!isGlass() || currentWallUrl() !== u) { done(false); return; }
+    if (!isGlass() || (!prepare && currentWallUrl() !== u)) { done(false); return; }
     if (frostKey === key) { done(true); return; }
     var cached = frostCache.get(key);
-    if (cached) { frostCache.delete(key); frostCache.set(key, cached); applyFrost(cached); done(true); return; }
+    if (cached) { frostCache.delete(key); frostCache.set(key, cached); if (!prepare) applyFrost(cached); done(true); return; }
     var job = frostJobs.get(key);
     if (job && job.epoch === epoch) { job.waiters.push(done); return; }
     var names = Object.keys(FROST);
@@ -462,21 +480,25 @@
       job.blobs[name] = blob;
       if (--job.pending) return;
       if (frostJobs.get(key) === job) frostJobs.delete(key);
-      var valid = epoch === bakeEpoch && isGlass() && currentWallUrl() === u && innerWidth === c.vw && innerHeight === c.vh;
+      var valid = epoch === bakeEpoch && isGlass() && (prepare || currentWallUrl() === u) && innerWidth === c.vw && innerHeight === c.vh;
       valid = valid && names.every(function (n) { return !!job.blobs[n]; });
       if (valid) {
-        var rec = { key: key, urls: {}, bytes: 0 };
+        var rec = { key: key, wall: u, urls: {}, bytes: 0 };
         names.forEach(function (n) { rec.urls[n] = URL.createObjectURL(job.blobs[n]); rec.bytes += job.blobs[n].size; });
         /* Apply both frost levels together. An older encoder can never replace half of the current wallpaper. */
         var previous = frosts, previousUncached = !Array.from(frostCache.values()).some(function (r) { return r.urls === previous; });
-        applyFrost(rec);
+        if (!prepare) applyFrost(rec);
         while (frostCache.size && (frostCache.size >= 2 || frostBytes + rec.bytes > FROST_BYTES)) {
-          var oldest = frostCache.keys().next().value, old = frostCache.get(oldest);
+          /* Preparation may evict another cached print, never the frost still visible on the sheets. */
+          var oldest = Array.from(frostCache.keys()).find(function (k) { return frostCache.get(k).urls !== frosts; });
+          if (oldest == null) break;
+          var old = frostCache.get(oldest);
           frostBytes -= old.bytes; frostCache.delete(oldest); dropFrost(old);
         }
-        if (rec.bytes <= FROST_BYTES) { frostCache.set(key, rec); frostBytes += rec.bytes; }
+        if (frostBytes + rec.bytes <= FROST_BYTES) { frostCache.set(key, rec); frostBytes += rec.bytes; }
+        else if (prepare) { dropFrost(rec); valid = false; }
         /* An unusually large active pair is kept only while displayed, rather than exceeding the cache budget. */
-        if (previous !== rec.urls && previousUncached) {
+        if (!prepare && previous !== rec.urls && previousUncached) {
           Object.keys(previous).forEach(function (n) { URL.revokeObjectURL(previous[n]); });
         }
       }
@@ -1985,8 +2007,12 @@
     if (th === lastTheme && lg === lastLg && tier === lastTier && wall === lastWall && motion === lastMotion) return;
     /* the print is about to change under glass that stays glass: hold the one the current frost was made from */
     var wasGlass = lastLg === 'on' && /^glass/.test(lastTheme || '');
-    if (wasGlass && isGlass() && wall !== lastWall && th === lastTheme && wallSourceUrl) holdWall(wallSourceUrl);
-    else if (!isGlass()) releaseWallHold();
+    if (wasGlass && isGlass() && wall !== lastWall && th === lastTheme && wallSourceUrl) {
+      var previousWall = wallSourceUrl, nextWall = currentWallUrl();
+      /* This observer handles wallpaper identity, while resize owns viewport changes. No layout read may split
+         the prepared attribute/frost transaction after the caller's writes. */
+      if (frostWallUrl !== nextWall) holdWall(previousWall);
+    } else if (!isGlass()) releaseWallHold();
     if (motion !== lastMotion && reduced() && typeof suspendLensMotion === 'function') suspendLensMotion();
     lastTier = tier; lastWall = wall; lastMotion = motion;
     if (th !== lastTheme || lg !== lastLg) {
@@ -2043,7 +2069,7 @@
   }
   function wallChoice() { try { return localStorage.getItem(WALL_KEY) || 'look'; } catch (e) { return 'look'; } }
   function applyWall() {
-    var c = q.get('lgwall') || wallChoice(), fam = (root.getAttribute('data-theme') || '').split('-')[0], ws = catalogWalls();
+    var c = q.get('lgwall') || (window.PM_WALLPAPERS && window.PM_WALLPAPERS.paintChoice ? window.PM_WALLPAPERS.paintChoice() : wallChoice()), fam = (root.getAttribute('data-theme') || '').split('-')[0], ws = catalogWalls();
     if (c !== 'look' && ws.length && !ws.some(function (w) { return w.id === c; })) c = 'look';   /* a stale id: the package resets it */
     var id = c === 'look' ? lookDefault(fam) : c;
     if (id) { if (root.getAttribute('data-lg-wall') !== id) root.setAttribute('data-lg-wall', id); }
@@ -2095,6 +2121,25 @@
      chooses a wallpaper for every look; walls() lists them; surfaces: data-lg-surface on any element (see syncSurfaces). */
   window.PM_LG = { version: 'v3-2026-10-13', sync: syncAll, materialize: function () { materialize(Array.from(glassSet)); }, kinds: KINDS, count: function () { return glassSet.size; },
     set: function (o) { for (var k in o) { if (o[k] == null) root.removeAttribute(k); else root.setAttribute(k, o[k]); } syncAll(); },
+    /* Decode and bake through the same bounded caches as visible sheets. Preparation changes no visible pixels. */
+    prepareWallpaper: function (url) { return new Promise(function (resolve) {
+      withWall(function (im) { if (!im) { resolve(false); return; } if (isGlass()) makeFrosts(im, resolve, true); else resolve(true); }, url);
+    }); },
+    commitWallpaper: function (id, url, viewport) {
+      if (!isGlass() || root.getAttribute('data-lg-wall') !== id) return false;
+      /* The caller sampled the viewport before its attribute writes. Even innerWidth after those writes can force
+         style/layout (83 ms on M3) before the frost variables join the same commit. */
+      viewport = viewport || { width: innerWidth, height: innerHeight };
+      var rec = frostCache.get(url + ':' + viewport.width + 'x' + viewport.height);
+      if (!rec) return false;
+      /* The prepared URL is exactly the image selected by this attribute commit. Reading computed style between
+         that write and the frost writes forced a full extra restyle (166 ms on M3). Keep the existing source cache
+         current without flushing layout; the next genuinely different theme/attribute key still resolves normally. */
+      if (wallSourceUrl !== url) { wallSourceUrl = url; wallSourceId++; }
+      wallSourceKey = id + '-' + (/-light$/.test(root.getAttribute('data-theme') || '') ? 'light' : 'dark');
+      wallSourceUrls.set(wallSourceKey, url);
+      applyFrost(rec); return true;
+    },
     wall: function (id) { setWall(id || 'look'); }, walls: function () { return catalogWalls().map(function (w) { return { id: w.id, name: w.name, family: w.family }; }); } };
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', start); else start();
 })();

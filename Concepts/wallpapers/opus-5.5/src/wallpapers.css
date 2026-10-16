@@ -6,6 +6,18 @@
  * Glass paints --lg-wall itself (glass.css, glass.js); this sheet paints --lg-wall-any.
  */
 
+/* Only the body consumes these changing images. Keep them off html: even a non-inherited variable change there
+   restyles the app's descendants. The selected print is now scoped to its painter and stops inheriting there.
+   The immutable catalogue image variables and the root's wallpaper identity retain their existing contract. */
+@property --lg-wall { syntax: "*"; inherits: false; }
+@property --lg-wall-any { syntax: "*"; inherits: false; }
+@property --lg-wall-hold { syntax: "*"; inherits: false; }
+body { isolation: isolate; }
+/* Permanent out-of-flow print planes: no app layout, no surface copies, no input interception. The body remains
+   the canonical settled background. These planes are above its print and below all of the interface. */
+.wpk-print { position: fixed; inset: 0; z-index: -1; pointer-events: none; opacity: 0; contain: strict;
+  background: center / cover no-repeat; will-change: opacity; }
+
 /* ---------------------------------------------------------------------------------------------------------------
    1. The paint. Basic, Friendly, Retro and NieR Mode show the chosen wallpaper around and between their opaque
       panels: the shell's grounds go clear and the body carries the image. In NieR Mode it takes the place of NieR's
@@ -15,8 +27,6 @@
 html[data-lg-wall-any]:not([data-theme^="glass"]):not(#wpkz) body { background: var(--background) var(--lg-wall-any, none) center / cover no-repeat !important; }
 html[data-lg-wall-any]:not([data-theme^="glass"]):not(#wpkz) :is(.app-shell, .main-area) { background: transparent !important; }
 html[data-lg-wall-any][data-o55-nier-scene]:not(#wpkz) #o55-nier-scene { display: none !important; }
-/* Glass, between a choice and its new frost: the body keeps the print it showed (wallpapers.js, "hold") */
-html[data-lg="on"][data-theme^="glass"][data-wpk-hold]:not(#lgz):not(#wpkz) body { background-image: var(--wpk-hold) !important; }
 /* The page grounds that NieR's scenes already show through (the Usage board, Settings Home) show the wallpaper too,
    under a light veil of the look's ground, so the few words that sit between the cards keep their contrast. The cards,
    the board's header and its rail keep their own fills. */
@@ -27,7 +37,7 @@ html[data-lg-wall-any]:not([data-theme^="glass"]):not(#wpkz) :is(#pmuStage.pmu-s
 /* ---------------------------------------------------------------------------------------------------------------
    2. The gallery: one Settings row, the full width of the section. Tiles are the look's controls: its surface, its
       line, its corners (square in Retro and NieR), no pills. Nothing in it moves: a choice, a hover and focus change
-      at once, so Reduce motion has nothing to stop and the wallpaper itself is swapped in one frame.
+      at once. Reduce motion swaps the prepared print and frost together without the backdrop crossfade.
    --------------------------------------------------------------------------------------------------------------- */
 /* Settings styles its buttons from #panel-settings (font: inherit), so the gallery's rules carry :not(#wpkz) too */
 .wpk-row { display: block !important; }

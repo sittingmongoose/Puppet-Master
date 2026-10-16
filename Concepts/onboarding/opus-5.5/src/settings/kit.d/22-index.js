@@ -97,7 +97,30 @@ function pm51MarkIndex() {
   pm51RevealIndex();
 }
 /* The index scrolls itself so the highlighted entry stays in view (with a little of what is around it). */
+let pm51IndexRevealReady = null, pm51IndexRevealBox = null, pm51IndexRevealFrame = 0;
 function pm51RevealIndex() {
+  const box = root.querySelector('.page-index'); if (!box) return;
+  if (pm51IndexRevealReady || pm51IndexRevealFrame) {
+    if (pm51IndexRevealBox === box) return;
+    if (pm51IndexRevealReady) pm51IndexRevealReady.disconnect();
+    if (pm51IndexRevealFrame) cancelAnimationFrame(pm51IndexRevealFrame);
+    pm51IndexRevealReady = null; pm51IndexRevealFrame = 0;
+  }
+  /* Rebuilding the index also changes the manager body. Measuring scrollHeight here used to force that entire
+     layout inside the switch. Coalesce requests and read after layout; the selected entry is already highlighted. */
+  pm51IndexRevealBox = box;
+  pm51IndexRevealFrame = requestAnimationFrame(() => {
+    pm51IndexRevealFrame = 0;
+    if (!box.isConnected) { pm51IndexRevealBox = null; return; }
+    if (typeof ResizeObserver !== 'function') { pm51IndexRevealBox = null; pm51RevealIndexNow(); return; }
+    const ready = new ResizeObserver(() => {
+      ready.disconnect(); pm51IndexRevealReady = null; pm51IndexRevealBox = null;
+      if (box.isConnected) pm51RevealIndexNow();
+    });
+    pm51IndexRevealReady = ready; ready.observe(box);
+  });
+}
+function pm51RevealIndexNow() {
   const box = root.querySelector('.page-index'); if (!box || box.scrollHeight <= box.clientHeight + 1) return;
   const hit = box.querySelector('.index-link.is-active') || box.querySelector('.page-index-title.is-current'); if (!hit) return;
   const key = (hit.dataset.workspace || '') + '|' + (hit.dataset.section || hit.dataset.tab || '');
@@ -127,12 +150,27 @@ root.addEventListener('pointerdown', e => { if (e.target && e.target.id === 'set
 setupScrollSpy = function () {
   const scroller = root.querySelector('#settings-document');
   if (!scroller) return;
-  let raf = 0;
+  let raf = 0, ready = null;
+  /* Initial chapter layout must include the index writes made later in afterRender. Reading synchronously here
+     forced that first layout early (283 ms on P1000), then the completed index forced another. Scroll updates use
+     the same after-layout read batch; all active-state writes follow the geometry reads. */
+  const schedule = () => {
+    if (raf || ready) return;
+    raf = requestAnimationFrame(() => {
+      raf = 0;
+      if (!scroller.isConnected) return;
+      if (typeof ResizeObserver !== 'function') { update(); return; }
+      ready = new ResizeObserver(() => {
+        ready.disconnect(); ready = null;
+        if (scroller.isConnected) update();
+      });
+      ready.observe(scroller);
+    });
+  };
   const update = () => {
-    raf = 0;
     /* an update in place never changes the active section: the tracker judges only a scroll or a landing (27-place.js) */
     if (PM51.place && !PM51.place.spyMay()) return;
-    if (performance.now() < suppressScrollSpyUntil) { raf = requestAnimationFrame(update); return; }
+    if (performance.now() < suppressScrollSpyUntil) { schedule(); return; }
     const blocks = [...scroller.querySelectorAll('[data-workspace-block]')];
     if (!blocks.length) return;
     const top = scroller.scrollTop, line = top + Math.min(140, scroller.clientHeight * .3);
@@ -144,9 +182,9 @@ setupScrollSpy = function () {
     if (pinOn) block = pinEl.closest('[data-workspace-block]') || block;
     else for (const b of blocks) if (pm51LandTop(scroller, b) <= line) block = b;
     const ws = block.getAttribute('data-workspace-block');
-    if (ws && ws !== state.workspace) { state.workspace = ws; syncWorkspaceChrome(ws); updateHash(); }
+    const chooseWorkspace = () => { if (ws && ws !== state.workspace) { state.workspace = ws; syncWorkspaceChrome(ws); updateHash(); } };
     const anchors = [...block.querySelectorAll('[data-section-id]')].filter(pm51SpyShown);
-    if (!anchors.length) return;
+    if (!anchors.length) { chooseWorkspace(); return; }
     let active = anchors[0].getAttribute('data-section-id');
     if (pinOn) active = pm51SpyPin;
     else {
@@ -158,12 +196,13 @@ setupScrollSpy = function () {
         if (reached || inUpperView) active = a.getAttribute('data-section-id');
       }
     }
+    chooseWorkspace();
     setActiveLocalSection(ws || state.workspace, active, false);
   };
-  const onScroll = () => { if (!raf) raf = requestAnimationFrame(update); };
+  const onScroll = schedule;
   scroller.addEventListener('scroll', onScroll, { passive: true });
-  update();
-  scrollCleanup = () => { scroller.removeEventListener('scroll', onScroll); if (raf) cancelAnimationFrame(raf); };
+  schedule();
+  scrollCleanup = () => { scroller.removeEventListener('scroll', onScroll); if (raf) cancelAnimationFrame(raf); if (ready) ready.disconnect(); };
 };
 
 /* ---------- jumps ------------------------------------------------------------------------------------------------ */

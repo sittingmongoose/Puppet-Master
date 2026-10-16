@@ -52,35 +52,80 @@
   /* the wallpaper on show: ?lgwall= first, as glass.js reads it, then the saved choice */
   function shown() { var c = q.get('lgwall') || choice(); return c === 'look' ? lookDefault(look()) : c; }
   function attr(a, v) { if (v === null) { if (root.hasAttribute(a)) root.removeAttribute(a); } else if (root.getAttribute(a) !== v) root.setAttribute(a, v); }
-  /* Glass bakes its sheets' frost from the wallpaper after the wallpaper changes, a third of a second later on an
-     RTX 3090 (films, 2026-10-13), so for that long the sheets showed the old frost over the new picture. While Glass
-     rebakes, the body keeps the print it showed, and the moment glass.js lands the new frost (it writes --lg-frost-*
-     on <html>) the hold lets go in the same task: picture and frost change in one frame. If no new frost comes, the
-     hold lets go after 1.5 s. (Glass follow-up G4 would do this inside glass.js.) */
-  var hold = null;
-  function frostNow() { return root.style.getPropertyValue('--lg-frost-heavy'); }
-  function release() { if (!hold) return; clearTimeout(hold.t); hold = null; root.removeAttribute('data-wpk-hold'); root.style.removeProperty('--wpk-hold'); }
-  function holdPrint(prev) {
-    release();
-    var url = getComputedStyle(root).getPropertyValue('--lg-wall-' + prev + '-' + (/-light$/.test(root.getAttribute('data-theme') || '') ? 'light' : 'dark')).trim();
-    if (!url) return;
-    hold = { frost: frostNow(), t: setTimeout(release, 1500) };
-    root.style.setProperty('--wpk-hold', url); root.setAttribute('data-wpk-hold', '');
+  /* A selected radio paints before decoding or restyling. Two permanent background layers carry the print fade;
+     the cached frost joins at its midpoint. No snapshots or nodes are added to the live sheets on a choice. */
+  var paintedChoice = choice(), paintKey = '', paintedUrl = '', paintSerial = 0, commitT = 0, commitFrame = 0;
+  var printLayers = [], printAnimations = [], printTimer = 0, printFinish = null, imageUrls = new Map();
+  function mountPrints() {
+    if (printLayers.length || !document.body) return;
+    for (var i = 0; i < 2; i++) {
+      var e = document.createElement('div'); e.className = 'wpk-print'; e.setAttribute('aria-hidden', 'true');
+      document.body.appendChild(e); printLayers.push(e);
+    }
   }
-  new MutationObserver(function () { if (hold && frostNow() !== hold.frost) release(); }).observe(root, { attributes: true, attributeFilter: ['style'] });
-  function apply() {
-    var id = shown(), prev = root.getAttribute('data-lg-wall'), glass = look() === 'glass' && root.getAttribute('data-lg') === 'on';
-    if (glass && prev && id && prev !== id && byId[prev] && frostNow()) holdPrint(prev); else if (!glass) release();
-    attr('data-lg-wall', id || null); attr('data-lg-wall-any', id && look() !== 'glass' ? '' : null);
+  function imageUrl(id) {
+    if (!id) return '';
+    var mode = /-light$/.test(root.getAttribute('data-theme') || '') ? 'light' : 'dark';
+    var key = id + '-' + mode; if (imageUrls.has(key)) return imageUrls.get(key);
+    var v = getComputedStyle(root).getPropertyValue('--lg-wall-' + key).trim();
+    var m = v.match(/url\(["']?(.*?)["']?\)\s*$/), url = m ? m[1] : '';
+    imageUrls.set(key, url); return url;
+  }
+  function still() {
+    return root.getAttribute('data-lg-tier') === 'cpu' || root.getAttribute('data-motion') === 'reduced' ||
+      root.getAttribute('data-reduced-motion') === '1' || matchMedia('(prefers-reduced-motion: reduce)').matches;
+  }
+  function prepare(url) {
+    if (!url) return Promise.resolve(true);
+    if (window.PM_LG && PM_LG.prepareWallpaper) return PM_LG.prepareWallpaper(url);
+    var im = new Image(); im.src = url;
+    return im.decode ? im.decode().then(function () { return true; }, function () { return false; }) : Promise.resolve(true);
+  }
+  function apply(animate) {
+    var id = shown(), selected = choice(), theme = root.getAttribute('data-theme'), key = theme + '|' + id;
+    if (key === paintKey) { paintedChoice = selected; return; }
+    var serial = ++paintSerial, url = imageUrl(id);
+    prepare(url).then(function (ok) {
+      if (!ok || serial !== paintSerial || theme !== root.getAttribute('data-theme')) return;
+      var viewport = { width: innerWidth, height: innerHeight };
+      var commit = function () {
+        if (serial !== paintSerial) return;
+        paintedChoice = selected; paintKey = key; paintedUrl = url;
+        attr('data-lg-wall', id || null); attr('data-lg-wall-any', id && look() !== 'glass' ? '' : null);
+        if (url && window.PM_LG && PM_LG.commitWallpaper) PM_LG.commitWallpaper(id, url, viewport);
+      };
+      if (printFinish) printFinish();
+      mountPrints();
+      if (!animate || still() || printLayers.length !== 2) { commit(); return; }
+      var ground = getComputedStyle(document.body).backgroundColor;
+      printLayers.forEach(function (e, i) {
+        e.style.backgroundColor = ground;
+        e.style.backgroundImage = (i ? url : paintedUrl) ? 'url(' + JSON.stringify(i ? url : paintedUrl) + ')' : 'none';
+      });
+      printLayers[0].style.opacity = '1'; printLayers[1].style.opacity = '0';
+      var done = false, committed = false;
+      function mid() { if (!committed) { committed = true; commit(); } }
+      function finish() {
+        if (done) return; done = true; clearTimeout(printTimer); mid();
+        printLayers.forEach(function (e) { e.style.opacity = '0'; });
+        printAnimations.forEach(function (a) { a.cancel(); }); printAnimations = [];
+        if (printFinish === finish) printFinish = null;
+      }
+      printFinish = finish;
+      /* Opacity runs on the compositor while the new frost and rims are committed on the main thread. */
+      var fade = printLayers[1].animate([{ opacity: 0 }, { opacity: 1 }], { duration: 240, easing: 'linear', fill: 'forwards' });
+      printAnimations = [fade]; printTimer = setTimeout(mid, 120);
+      fade.finished.then(finish, finish);
+    });
   }
 
-  var commitT = 0;
   function choose(c, later) {
     if (c !== 'look' && !byId[c]) return false;
     try { localStorage.setItem(KEY, c); } catch (e) {}
-    clearTimeout(commitT);
-    if (later) commitT = setTimeout(apply, 240); else apply();
+    clearTimeout(commitT); cancelAnimationFrame(commitFrame); ++paintSerial;
     sync();
+    /* The timeout begins after a presented frame, rather than inside that frame's rAF callback. */
+    commitFrame = requestAnimationFrame(function () { commitFrame = 0; commitT = setTimeout(function () { apply(true); }, later ? 160 : 0); });
     return true;
   }
 
@@ -105,7 +150,7 @@
     return h + '</div>';
   }
   function row() { return document.getElementById(ROW_ID); }
-  function mine(r) { return r && r.classList.contains('wpk-row'); }
+  function mine(r) { return r && r.classList.contains('wpk-row') && !!r.querySelector('.wpk-gallery'); }
   function mount() {
     var themeRow = document.getElementById('setting-general.visual.theme'); if (!themeRow) return;
     var r = row(); if (mine(r)) return;
@@ -122,7 +167,10 @@
     r.querySelectorAll('.wpk-tile').forEach(function (t) {
       var on = t.getAttribute('data-wpk-pick') === c;
       if (t.getAttribute('aria-checked') !== String(on)) t.setAttribute('aria-checked', String(on));
-      t.tabIndex = on ? 0 : -1;
+      /* The tabIndex property can ask whether a button is focusable, flushing the pending wallpaper restyle.
+         Its reflected attribute carries the same keyboard state without a synchronous style read. */
+      var tabIndex = on ? '0' : '-1';
+      if (t.getAttribute('tabindex') !== tabIndex) t.setAttribute('tabindex', tabIndex);
     });
     r.classList.toggle('is-changed', c !== 'look'); r.querySelector('.o55-changed').hidden = c === 'look';
     var own = r.querySelector('[data-wpk-own]');
@@ -134,6 +182,13 @@
       : def ? lookName + ' shows ' + byId[def].name + ' until you choose another.' : lookName + ' keeps its own background until you choose one.';
     var n = r.querySelector('.wpk-note'); if (n.textContent !== note) n.textContent = note;
   }
+
+  document.addEventListener('pointerover', function (e) {
+    var t = e.target.closest && e.target.closest('.wpk-row .wpk-tile');
+    if (!t || t.contains(e.relatedTarget)) return;
+    var id = t.getAttribute('data-wpk-pick'); if (id === 'look') id = lookDefault(look());
+    if (id) prepare(imageUrl(id));
+  });
 
   /* clicks and keys: one radiogroup across the families */
   document.addEventListener('click', function (e) {
@@ -175,7 +230,7 @@
   function queueMount() { if (!mountQ) mountQ = requestAnimationFrame(function () { mountQ = 0; mount(); }); }
   function watch() { new MutationObserver(function () { var r = row(); if (!mine(r) && document.getElementById('setting-general.visual.theme')) queueMount(); }).observe(document.body, { childList: true, subtree: true }); mount(); }
   /* another window chose a wallpaper */
-  window.addEventListener('storage', function (e) { if (e.key === KEY || e.key === null) { apply(); sync(); } });
+  window.addEventListener('storage', function (e) { if (e.key === KEY || e.key === null) { sync(); requestAnimationFrame(function () { setTimeout(function () { apply(true); }, 0); }); } });
 
   /* Jared #18 (2026-10-14): the most recent wallpaper decision wins, from either control. NieR Mode's customizer writes
      only its own background (general.visual.nier-background); when that committed value changes, this package hands the
@@ -197,12 +252,19 @@
   }
   if (!hookNier()) { var nierTries = 0; (function retry() { if (hookNier() || ++nierTries > 60) return; setTimeout(retry, 250); })(); }
 
-  apply();
+  mountPrints(); apply();
   if (document.body) watch(); else document.addEventListener('DOMContentLoaded', watch);
 
   window.PM_WALLPAPERS = {
     version: 'wpk-2026-10-14', key: KEY,
     catalog: function () { return CAT.families.map(function (f) { return { family: f.family, label: f.label, ids: f.wallpapers.map(function (w) { return w.id; }) }; }); },
-    choice: choice, shown: shown, choose: function (c) { return choose(c, false); }, stale: function () { return stale; }
+    /* Consumers of the committed print must not force root style from an attribute observer. Preparation fills this
+       immutable catalog cache before publishing data-lg-wall. Unknown is undefined; a print with no image is null. */
+    sourceUrl: function (id, mode) {
+      if (!id) return null;
+      var source = imageUrls.get(id + '-' + (mode || (/-light$/.test(root.getAttribute('data-theme') || '') ? 'light' : 'dark')));
+      return source === '' ? null : source;
+    },
+    choice: choice, shown: shown, paintChoice: function () { return paintedChoice; }, choose: function (c) { return choose(c, false); }, stale: function () { return stale; }
   };
 })();
