@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L5592-L27106
+Source lines: L5592-L27119
 
-Source SHA256: `0c97cd6f5b6224997d7d5c5cdc61575c613b3bfdf6e8648ba20d182b5059e1c3`
+Source SHA256: `4559a2a9b43ac6440f893848ee6669df884ebb99a1b0fee005c56e0ea6f11a2a`
 
 ---
 
@@ -4224,6 +4224,11 @@ canonical_text: >-
   Superseded lineage
   (2026-07-16, kept findable): the prior rule named restart for font family changes between
   Retro and Basic and kept Basic one built-in theme family.
+  Amended 2026-10-16 (DL-216, Jared): a live theme family or light/dark switch whose new look cannot be
+  fully drawn at once is covered by a deliberate cover that starts within 100 ms (ACD-475) and moves in
+  the look's own language, motion or a shimmer, so it never reads as blank or frozen; the new look then
+  appears whole, never a frame that is half the old look and half the new. Under Reduced Motion the cover
+  is calm and still never blank.
 gui_related: true
 gui_classification_reason: >-
   This unit defines user-visible GUI surface, shell, copy, control, or projection behavior.
@@ -4236,6 +4241,8 @@ acceptance_criteria:
   - "The behavior is addressable through this fine-grained PlanUnit instead of broad F3-001 coverage."
   - "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
   - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+  - Every live theme family or light/dark switch acknowledges within 100 ms with a cover animated in the
+    look's own language, shows no blank, frozen or half-old frame, and reveals the new look whole.
 validation_surfaces:
   - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
   - "python3 scripts/pm-plan-index.py validate"
@@ -4250,6 +4257,12 @@ node_compile_hint:
 source_lineage:
   - "Plans/Decision_Log.md#DL-138 (owner answers, 2026-09-29)"
   - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0062"
+  - /mnt/Cursor/share/puppet-master/2026-10-16-plans-topup/sources/2026-10-16-p1000-decision--JARED-DECISIONS.md,
+    SHA-256 a1dedd6e70bfa51ec0b07c34a86bfa65583439b18ff4ace266c4fe9e2a0aa3a6 (Jared's decisions of
+    2026-10-16 ~12:10Z; decision lineage)
+  - /mnt/Cursor/share/puppet-master/2026-10-16-plans-topup/sources/2026-10-16-motion-pass--PART2.md,
+    SHA-256 3d5a20ca7293c065906642c09ebd322a08129931636b943eafc3570b5bf8898c (P2-01 theme switch, P2-05
+    NieR cover, P2-S6 bell; source lineage)
 preserved_exact_tokens:
   - "Poppins"
   - "IBM Plex Mono"

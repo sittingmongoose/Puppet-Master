@@ -15920,3 +15920,57 @@ owner_hints:
 ```
 
 ContractRef: ContractName:Plans/assistant-chat-design.md#ACD-475, ContractName:Plans/FinalGUISpec.md#F3-464, ContractName:Plans/FinalGUISpec.md#F3-628, ContractName:Plans/Settings_System.md#SSYS-009, ContractName:Plans/FinalGUISpec.md#F3-598
+
+### DL-216 - P1000 Raster Reading, Animated Covers, Silent Bell And Frost Crossfade
+
+```yaml
+plan_unit_id: DL-216
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: >-
+  Recorded 2026-10-16. Jared's decisions of 2026-10-16 (about 12:10Z) on the P1000 decision packet and the
+  motion part-2 owner checks. P1000 bar, option A: every effect is kept; main-thread work meets ACD-475's
+  full bar; a frame held only by the GPU's first draw or raster on P1000-class hardware is recorded, not
+  failed, when its moment starts within 100 ms and never blanks; no low-end-GPU tier is added, and the
+  P1000 speed-up work continues separately. The theme switch cover is animated in each look's own language
+  so it never reads as blank (F3-077). The NieR reboot cover moves while it waits, a scanline or progress
+  glyph in NieR's language (F3-598). The terminal bell stays invisible in Basic and NieR (F3-643). A
+  wallpaper change crossfades the full frost with the print (F3-653); its implementation lands in a later
+  lane. Concept films and measurements are evidence, not native certification.
+gui_related: true
+gui_classification_reason: P1000 Raster Reading, Animated Covers, Silent Bell And Frost Crossfade.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- The linked owners and finite companions agree with this decision; source publication is not native certification.
+validation_surfaces:
+- python3 scripts/pm-shard-plans.py --check
+- python3 scripts/pm-plan-index.py validate
+- python3 scripts/pm-plans-verify.py run-gates
+risk_class: owner_drift
+reasoning_tier: high
+context_scope: p1000_raster_reading_animated_covers_silent_bell_and_frost_crossfade
+implementation_surfaces:
+- Plans/Decision_Log.md
+node_compile_hint:
+  mode: owner_decision_record
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- /mnt/Cursor/share/puppet-master/2026-10-16-plans-topup/sources/2026-10-16-p1000-decision--JARED-DECISIONS.md,
+  SHA-256 a1dedd6e70bfa51ec0b07c34a86bfa65583439b18ff4ace266c4fe9e2a0aa3a6 (Jared's decisions of 2026-10-16 ~12:10Z; decision lineage)
+- /mnt/Cursor/share/puppet-master/2026-10-16-plans-topup/sources/2026-10-16-p1000-decision--DRAFT.md,
+  SHA-256 9fe06d34054ed8510ac5df4e621b2371fc75e451f7620d09c3f43af6c01c5813 (the P1000 decision packet and its measurements; source lineage)
+- /mnt/Cursor/share/puppet-master/2026-10-16-plans-topup/sources/2026-10-16-motion-pass--PART2.md,
+  SHA-256 3d5a20ca7293c065906642c09ebd322a08129931636b943eafc3570b5bf8898c (P2-01 theme switch, P2-05 NieR cover, P2-S6 bell; source lineage)
+- /mnt/Cursor/share/puppet-master/2026-10-16-plans-topup/sources/pm-mail-1016121015-af12.txt,
+  SHA-256 685a0a89c78f08b56ecf940bc87d68852dbf13489c860df76643758bf4bc108c (coordinator mail asking these be recorded; decision lineage)
+preserved_exact_tokens: []
+negative_constraints: []
+owner_hints:
+- Plans/Decision_Log.md
+```
+
+ContractRef: ContractName:Plans/assistant-chat-design.md#ACD-475, ContractName:Plans/FinalGUISpec.md#F3-077, ContractName:Plans/FinalGUISpec.md#F3-598, ContractName:Plans/FinalGUISpec.md#F3-643, ContractName:Plans/FinalGUISpec.md#F3-653

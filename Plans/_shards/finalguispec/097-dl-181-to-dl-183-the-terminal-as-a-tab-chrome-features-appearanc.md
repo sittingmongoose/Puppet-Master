@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L46547-L48622
+Source lines: L46566-L48653
 
-Source SHA256: `0c97cd6f5b6224997d7d5c5cdc61575c613b3bfdf6e8648ba20d182b5059e1c3`
+Source SHA256: `4559a2a9b43ac6440f893848ee6669df884ebb99a1b0fee005c56e0ea6f11a2a`
 
 ---
 
@@ -654,9 +654,10 @@ canonical_text: >-
   the cap no two amounts look different), and a stored amount is read once as SSYS-051 says. The
   effect fields (F3-642) default to: effects Follow look; scan strength 0.30; glow strength 0.45;
   Full CRT off; curvature 0.04, active only with Full CRT; burn-in on within Full CRT; noise 0.035;
-  flicker off. The bell is Follow look or Off (DL-213): Follow look rings the look's own visual
-  bell, and Off draws nothing in any look; there is no separate Visual choice, because every look's
-  own bell is already visual. NieR
+  flicker off. The bell is Follow look or Off (DL-213): Follow look rings the look's own bell,
+  Friendly's flash, Glass's rim and Retro's inverse video, and Basic's and NieR's own bell stays
+  invisible by design (Jared, 2026-10-16, DL-216); Off draws nothing in any look. There is no
+  separate Visual choice. NieR
   Mode's terminal has a parchment texture under the text and ink focus brackets, and no glow. By the
   NieR rule for new surfaces (DL-152, SSYS-043, F3-598, DR-056), NieR paints the terminal only while
   NieR Mode is on and each touch only with its own installed part: the parchment with the `ground`
@@ -715,8 +716,8 @@ acceptance_criteria:
 - A fresh Retro dark terminal shows scanlines and phosphor glow; no other look shows them by default;
   Full CRT and flicker are off by default in every look.
 - Flicker is on or off and draws at 0.02, never above 0.03 of relative luminance; no control offers an amount.
-- Bell offers Follow look and Off; Follow look rings the look's own visual bell and Off draws nothing in any
-  look.
+- Bell offers Follow look and Off; Follow look shows Friendly's flash, Glass's rim and Retro's inverse video,
+  Basic and NieR stay invisible by design, and Off draws nothing in any look.
 - Degauss is a one-shot action in Retro, not a setting, and stops at its end.
 - With NieR Mode on, the parchment shows only with the ground part and the focus brackets only with the
   brackets part, NieR's own terminal look has no glow, filter or blur, and no surface larger than 340x256
@@ -800,6 +801,9 @@ source_lineage:
 - /mnt/Cursor/share/puppet-master/2026-10-16-plans-topup/sources/Concepts--home-redesign--src--terminal--js--71-bezel.js,
   SHA-256 a360d1f65e2d5bd5007b4dbb7f450e4f5cab5b641532ad633c6ecf93e20885b1 (round-5 head f1042f7d3e; source
   lineage; not native certification)
+- /mnt/Cursor/share/puppet-master/2026-10-16-plans-topup/sources/2026-10-16-p1000-decision--JARED-DECISIONS.md,
+  SHA-256 a1dedd6e70bfa51ec0b07c34a86bfa65583439b18ff4ace266c4fe9e2a0aa3a6 (Jared's decisions of
+  2026-10-16 ~12:10Z; decision lineage)
 preserved_exact_tokens:
   - "10 s"
   - "P1000-class"
@@ -1636,7 +1640,9 @@ canonical_text: >-
   resets that shared choice to look so the chosen NieR scene shows. SSYS-054 owns the one-writer
   transaction; SP-333 owns persistence. Wallpapers show around opaque panels in the other looks;
   Usage and Settings Home may use the approved light veil. Glass optics derive from the same chosen
-  print and swap in the same painted frame. The gallery's final space is present in Settings' first
+  print and change with it: a wallpaper change crossfades the old print and its full frost into the
+  new print and its frost together, never switching the frost once partway through or showing a
+  print under another print's frost (Jared, 2026-10-16, DL-216). The gallery's final space is present in Settings' first
   frame; thumbnail loading never displaces following rows. Missing/stale stored catalog ids display
   Look's own with a clear fallback, never a broken image. The Project's committed wallpaper applies
   with its look before first paint. Prints and thumbnails are shared packaged assets, not
@@ -1699,10 +1705,16 @@ source_lineage:
 - /mnt/Cursor/share/puppet-master/2026-10-16-plans-pass2/sources/Concepts--wallpapers--opus-5.5--CONTRACT.md,
   SHA-256 6550b3e5d31dbeca5e9d5cf11f7c06db13f37e189da270ac25e6504a5ec4a3da (source lineage; not native
   certification)
+- /mnt/Cursor/share/puppet-master/2026-10-16-plans-topup/sources/2026-10-16-p1000-decision--JARED-DECISIONS.md,
+  SHA-256 a1dedd6e70bfa51ec0b07c34a86bfa65583439b18ff4ace266c4fe9e2a0aa3a6 (Jared's decisions of
+  2026-10-16 ~12:10Z; decision lineage)
 preserved_exact_tokens:
 - Look's own
 - Ribbons
 negative_constraints: []
+stale_retired_dispositions:
+- 'Amended 2026-10-16 (DL-216): a wallpaper change crossfades print and frost together; it read: Glass
+  optics swap in the same painted frame.'
 owner_hints:
 - Plans/FinalGUISpec.md
 

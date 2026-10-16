@@ -26563,6 +26563,11 @@ canonical_text: >-
   less. Nothing a person can see may flash, blank, jump, ghost, snap late or stall. Reduced Motion still
   lands every beat at its end state. Measured concept films are evidence for this bar, not native
   certification.
+  Amended 2026-10-16 (DL-216; Jared chose option A of the P1000 decision): every effect is kept.
+  Everything bound to the main thread meets the full bar on P1000-class hardware. A frame held only by the
+  GPU's first draw or raster there (tile raster, texture upload, a first-use shader compile) is recorded,
+  not failed, as long as the moment starts within 100 ms and never blanks. No low-end-GPU tier reduces
+  effects.
 gui_related: true
 gui_classification_reason: "Defines per-theme motion and the chat's sound cues."
 split_recommended: false
@@ -26579,6 +26584,8 @@ acceptance_criteria:
   - Every interaction acknowledges within 100 ms, is fully drawn within 300 ms on P1000-class hardware or
     starts a covering transition within 100 ms, holds no frame over 100 ms mid-transition, and has an
     Event Timing duration of 100 ms or less on M3-class hardware.
+  - On P1000-class hardware main-thread work meets the full bar; a GPU-raster-bound hold is recorded, not
+    failed, only when its moment started within 100 ms and showed no blank frame.
 validation_surfaces:
   - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
   - python3 scripts/pm-plan-index.py validate
@@ -26606,6 +26613,12 @@ source_lineage:
   - /mnt/Cursor/share/puppet-master/2026-10-16-plans-topup/sources/2026-10-13-pm7-coordinator-handoff--COORDINATOR-LOG-20261016.md,
     SHA-256 d52085df3ab4a82f323d1fd2ed0a846b8e858fcaf7ec746a2ff79cc9cf2a97ba (Jared's 2026-10-15 and
     2026-10-16 rulings as relayed by the coordinator; decision lineage)
+  - /mnt/Cursor/share/puppet-master/2026-10-16-plans-topup/sources/2026-10-16-p1000-decision--JARED-DECISIONS.md,
+    SHA-256 a1dedd6e70bfa51ec0b07c34a86bfa65583439b18ff4ace266c4fe9e2a0aa3a6 (Jared's decisions of
+    2026-10-16 ~12:10Z; decision lineage)
+  - /mnt/Cursor/share/puppet-master/2026-10-16-plans-topup/sources/2026-10-16-p1000-decision--DRAFT.md,
+    SHA-256 9fe06d34054ed8510ac5df4e621b2371fc75e451f7620d09c3f43af6c01c5813 (the P1000 decision packet
+    and its measurements; source lineage)
 preserved_exact_tokens:
   - "DL-138"
   - "Basic"

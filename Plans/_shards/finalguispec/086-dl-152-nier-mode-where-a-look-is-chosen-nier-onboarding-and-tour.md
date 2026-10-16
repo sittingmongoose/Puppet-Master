@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L42459-L42729
+Source lines: L42472-L42748
 
-Source SHA256: `0c97cd6f5b6224997d7d5c5cdc61575c613b3bfdf6e8648ba20d182b5059e1c3`
+Source SHA256: `4559a2a9b43ac6440f893848ee6669df884ebb99a1b0fee005c56e0ea6f11a2a`
 
 ---
 
@@ -96,6 +96,9 @@ canonical_text: >-
   transaction pair (SSYS-043, DL-153).
   Amended 2026-10-16 (DL-215): the reboot cover's exit is smooth: its slats tear the cover away in place,
   with no sideways jumps of the cover over the page beneath (Jared, 2026-10-16).
+  Amended 2026-10-16 (DL-216, Jared): while the reboot cover waits for the look to finish applying, it
+  keeps moving in NieR's language, a scanline sweep or a progress glyph within NieR's stepped motion rule,
+  so a long wait never reads as frozen.
 gui_related: true
 gui_classification_reason: Defines where NieR Mode is turned on and how onboarding and the Guided Tour look under it.
 split_recommended: false
@@ -138,6 +141,9 @@ source_lineage:
   - /mnt/Cursor/share/puppet-master/2026-10-16-plans-topup/sources/2026-10-16-motion-pass--JUDGEMENT.md,
     SHA-256 8a3291ea2558da05d40c5a051a958f378802ec9c36454b83dbaf5ffc7efe8cf9 (the global acceptance bar
     and the A4, A11, A13 and B9 findings; source lineage)
+  - /mnt/Cursor/share/puppet-master/2026-10-16-plans-topup/sources/2026-10-16-p1000-decision--JARED-DECISIONS.md,
+    SHA-256 a1dedd6e70bfa51ec0b07c34a86bfa65583439b18ff4ace266c4fe9e2a0aa3a6 (Jared's decisions of
+    2026-10-16 ~12:10Z; decision lineage)
 preserved_exact_tokens:
   - "NieR Mode"
   - "Adjust NieR look"
