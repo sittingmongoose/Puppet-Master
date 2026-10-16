@@ -113480,6 +113480,8 @@ html[data-theme^="retro"] #panel-settings .o55-goals-phase-n { border-radius: 0;
         requestAnimationFrame(tick);
         return;
       }
+      /* O55: held under a look's cover (B5) */
+      if (typeof window.PM_LOOK_COVERED === 'function' && window.PM_LOOK_COVERED()) { baseDirty = true; requestAnimationFrame(tick); return; }
 
       if (reduced()) { killAll(); running = false; return; }
       if (elsDirty) {
@@ -113845,7 +113847,11 @@ html[data-theme^="retro"] #panel-settings .o55-goals-phase-n { border-radius: 0;
       }).observe(document.body, { childList: true, subtree: true });
       var themeFrame = 0;
       new MutationObserver(function () {
-        if (!themeFrame) themeFrame = requestAnimationFrame(function () { themeFrame = 0; readTheme(); });
+        if (!themeFrame) themeFrame = requestAnimationFrame(function themeSoon() {   /* O55: after layout, once the cover has gone (B5) */
+          if (typeof window.PM_LOOK_COVERED === 'function' && window.PM_LOOK_COVERED()) { themeFrame = requestAnimationFrame(themeSoon); return; }
+          var go = function () { themeFrame = 0; readTheme(); };
+          if (typeof window.PM_AFTER_LAYOUT === 'function') window.PM_AFTER_LAYOUT(go); else go();
+        });
         bloomHost = null;   /* radius may change with the theme */
         if (reduced()) { killAll(); return; }
         if (havePointer) start();
@@ -114018,13 +114024,16 @@ html[data-theme^="retro"] #panel-settings .o55-goals-phase-n { border-radius: 0;
       return null;
     }
 
-    function layoutBands(el, st) {
+    /* O55: a band's scroller geometry, read apart from its writes (B5) */
+    function bandGeom(el) {
+      var cs = window.getComputedStyle(el);
+      return { x: el.offsetLeft + (parseFloat(cs.borderLeftWidth) || 0), y: el.offsetTop + (parseFloat(cs.borderTopWidth) || 0), w: el.clientWidth, h: el.clientHeight };
+    }
+    function layoutBands(el, st, g) {
       if (!st.bands) return;
       try {
-        var cs = window.getComputedStyle(el);
-        var x = el.offsetLeft + (parseFloat(cs.borderLeftWidth) || 0);
-        var y = el.offsetTop + (parseFloat(cs.borderTopWidth) || 0);
-        var w = el.clientWidth, h = el.clientHeight, s;
+        if (!g) g = bandGeom(el);
+        var x = g.x, y = g.y, w = g.w, h = g.h, s;
         /* zero-extent scrollports (an EMPTY workspace dock is an 8px-or-less
            box on a 0px grid track) must not park 30px bands past their
            parent's edge -- those bands were 22px of phantom horizontal
@@ -114104,9 +114113,20 @@ html[data-theme^="retro"] #panel-settings .o55-goals-phase-n { border-radius: 0;
       } catch (e) {}
     }
 
+    /* O55: the flush runs after the frame's layout; under a look's or the boot's cover it waits, a frame at a time,
+       with the dirty scrollers kept (B5) */
+    function edgesHeld() {
+      var f = window.PM_BUSY, why = '';
+      try { why = typeof f === 'function' ? f() : ''; } catch (e) { why = ''; }
+      return why === 'reboot' || why === 'calm' || why === 'theme' || why === 'boot' || why === 'nier';
+    }
+    function flushAfterLayout() {
+      if (!document.hidden && edgesHeld()) { rafId = window.requestAnimationFrame(flushAfterLayout); return; }
+      if (typeof window.PM_AFTER_LAYOUT === 'function') window.PM_AFTER_LAYOUT(flush); else flush();
+    }
     function schedule() {
       if (!rafId) {
-        try { rafId = window.requestAnimationFrame(flush); }
+        try { rafId = window.requestAnimationFrame(flushAfterLayout); }
         catch (e) { rafId = 0; flush(); }
       }
     }
@@ -114149,13 +114169,18 @@ html[data-theme^="retro"] #panel-settings .o55-goals-phase-n { border-radius: 0;
       if (s.r !== st.r) { cls.toggle('pm-edge-r', s.r); st.r = s.r; if (st.bands && st.bands.right) st.bands.right.classList.toggle('pm-edge-band-on', s.r); }
     }
 
-    function relayoutVisible() {
-      var scope = geometryScope || pageScope();
+    /* O55: every visible band's geometry read first, then every band placed (B5) */
+    function readVisibleGeometry() {
+      var scope = geometryScope || pageScope(), out = [];
       enrolled.forEach(function (el) {
         var st = el.__pmEdge, page = el.closest && el.closest('.primary-content > .page');
         if (page && scope && !scope.contains(el)) return;
-        if (st && st.bands && isVisible(el)) layoutBands(el, st);
+        if (st && st.bands && isVisible(el)) { try { out.push({ el: el, st: st, g: bandGeom(el) }); } catch (e) {} }
       });
+      return out;
+    }
+    function relayoutVisible(geom) {
+      (geom || readVisibleGeometry()).forEach(function (o) { layoutBands(o.el, o.st, o.g); });
     }
 
     function flush() {
@@ -114170,9 +114195,13 @@ html[data-theme^="retro"] #panel-settings .o55-goals-phase-n { border-radius: 0;
             ops.push({ el: el, st: st, s: readState(el, st) });
           } catch (e) {}
         });
+        /* O55: the bands' geometry is read with the scroll metrics, before any class is written (B5) */
+        var geom = null;
+        if (geomDirty && !document.body.classList.contains('pm-resizing')) { geomDirty = false; geom = readVisibleGeometry(); }
         for (var i = 0; i < ops.length; i++) {
           try { writeState(ops[i].el, ops[i].st, ops[i].s); } catch (e) {}
         }
+        if (geom) relayoutVisible(geom);
         /* Band geometry only. relayoutAll walks every enrolled scroller
            (~60), not just the dirty ones, with a getComputedStyle and four
            layout reads each — far too much for a drag frame. The edge
