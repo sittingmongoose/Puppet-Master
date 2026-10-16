@@ -217353,8 +217353,24 @@ try { if (window.PM_HOME && typeof window.PM_HOME.boot === 'function') window.PM
     hiddenLenses.set(L, cfg);
     if (!showT) showT = setTimeout(checkShown, 400);
   }
+  /* the check reads after the frame's own layout (a ResizeObserver delivery, as afterLayout does), never from the timer
+     itself: a tick that landed while an app was rebuilding a page forced the half-built page through layout (a Settings
+     chapter in Basic Dark: 242 ms, P1000, pm7-motion-settings 2026-10-16) */
+  var shownRO = null, shownEl = null;
   function checkShown() {
     showT = 0;
+    if (!switchOn()) { hiddenLenses.clear(); return; }
+    if (!window.ResizeObserver || !document.body) { checkShownNow(); return; }
+    if (!shownRO) shownRO = new ResizeObserver(function () { shownRO.unobserve(shownEl); checkShownNow(); });
+    if (!shownEl || !shownEl.isConnected) {
+      shownEl = el('i', { id: 'lg-shown', 'aria-hidden': 'true' });
+      shownEl.style.cssText = 'position:fixed;left:-8px;top:-8px;width:2px;height:2px;pointer-events:none;visibility:hidden';
+      document.body.appendChild(shownEl);
+    }
+    shownRO.observe(shownEl);
+  }
+  function checkShownNow() {
+    if (showT) return;
     if (!switchOn()) { hiddenLenses.clear(); return; }
     hiddenLenses.forEach(function (cfg, L) {
       if (!L.strip.isConnected || (cfg.kind === 'lensIcon' && !isGlass())) { hiddenLenses.delete(L); return; }
@@ -217859,7 +217875,7 @@ try { if (window.PM_HOME && typeof window.PM_HOME.boot === 'function') window.PM
     if (!lazyT) lazyT = setTimeout(function () { lazyT = 0; queueSync(); }, 140);
   }
   var HOT = '[data-lg-surface], .page-tab, #pmuRange > button, .pmu-navbtn, .pm-segtab-item, #activityBar .icon, .side-panel-view, .pmu-pop, .pmr-menu-list, .pmr-menu-group, .pm6-tb-menu, .o55-railitem, .o55-seg button, .o55-win, .o55t-callout, .o55t-bar';
-  var GENERATED = '#lg-optics, #lg-lenses, .lg-lenses-local, .lg-lenses-under, #lg-shine, .lg-press, .pm-segtab-track, #lg-post';
+  var GENERATED = '#lg-optics, #lg-lenses, .lg-lenses-local, .lg-lenses-under, #lg-shine, .lg-press, .pm-segtab-track, #lg-post, #lg-shown';
   var MENU_HOT = '[data-lg-surface], .pmu-pop, .pmr-menu-list, .pm6-tb-menu, .o55-win, .o55t-callout, .o55t-bar';
   function generatedMutation(rec) {
     var t = rec.target;
