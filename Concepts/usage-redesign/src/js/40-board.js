@@ -3169,8 +3169,9 @@
       gesture: function () { return gesture ? { type: gesture.type, id: gesture.id, edge: gesture.edge || null, kb: !!gesture.kb, target: gesture.target, me: gesture.me } : null; },
       cancel: function () { if (gesture) endGesture(gesture, 'cancel'); },
       /* a dropped warm board (PMU.film.warmDrop): its build stops and the board counts as never mounted, as a hidden Usage
-         board was before the warm build; the next arrival or width pass mounts it */
-      unmount: function () { if (hosted || dead) return; rasterClear(); buildToken++; current.mounted = false; current.pending = true; },
+         board was before the warm build; the next arrival or width pass mounts it. The page's waiting inert and
+         aria-hidden go with it (PMU.film.warmUnhide) */
+      unmount: function () { if (hosted || dead) return; rasterClear(); buildToken++; current.mounted = false; current.pending = true; if (FILM && FILM.warmUnhide) FILM.warmUnhide(); },
       /* the warm raster's other rooms (P2-03, PMU.film raster) */
       rasterRoom: rasterRoom, rasterClear: rasterClear,
       holdSoon: function (ms) { scheduleHold(ms); },
