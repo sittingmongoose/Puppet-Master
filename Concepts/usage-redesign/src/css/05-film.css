@@ -25,8 +25,8 @@ body.pmu-page-active #panel-dashboard.pm-home-owned.pm8-page-out { position: abs
    main thread, an 834 ms gap with an empty board on screen). So once per look and board class, with a GPU, in idle
    periods after the warm build, the real board is drawn in its warm box at opacity .004 (.001 is culled) on a
    will-change: opacity layer of its own, above the page that shows (tiles under opaque layers are never rastered), a
-   few cards at a time: the "paint" token makes the layer, "chrome" shows the page around the board (the held plates
-   stay hidden), and each card the film marks data-pmu-raster-on is drawn whole, its body too, while the panel itself
+   part at a time: the "paint" token makes the layer, the rail and the stage's head are drawn when marked, "chrome"
+   shows the page around the board (the held plates stay hidden), the room's hero is drawn in pieces, and each card the film marks data-pmu-raster-on is drawn whole, its body too, while the panel itself
    stays hidden (visibility is inherited: a card shown inside a hidden panel restyles only itself, not the page). The
    same pass builds the first screen of Costs and Accounts in the spare board element ("spare") and draws its cards the
    same way. The panel is inert and aria-hidden while data-pmu-raster is set, and taking the tokens and marks off leaves
@@ -34,8 +34,13 @@ body.pmu-page-active #panel-dashboard.pm-home-owned.pm8-page-out { position: abs
 .primary-content > #panel-usage.page[data-pmu-warm][data-pmu-raster~="paint"]:not(.active):not(.pm8-page-out) { opacity: .004;
   will-change: opacity; z-index: 2147483000; }
 .primary-content > #panel-usage.page[data-pmu-warm][data-pmu-raster~="chrome"]:not(.active):not(.pm8-page-out) { visibility: visible; }
+#panel-usage[data-pmu-raster~="paint"] :is(.pmu-rail, .pmu-stagehead)[data-pmu-raster-on] { visibility: visible; }
 #panel-usage[data-pmu-raster~="paint"] .pmu-board > .pmu-card[data-pmu-raster-on] { visibility: visible; opacity: 1; }
 #panel-usage[data-pmu-raster~="paint"] .pmu-board > .pmu-card[data-pmu-raster-on] > .pmu-cardbody { opacity: 1; }
+/* the hero drawn in pieces (data-pmu-raster-on="parts"): its plate shows, its elements stay hidden by inheritance from its
+   own children, and each marked piece shows with what it holds (an element hidden by its own rule stays hidden) */
+#panel-usage[data-pmu-raster~="paint"] .pmu-board > .pmu-card[data-pmu-raster-on="parts"] > * { visibility: hidden; }
+#panel-usage[data-pmu-raster~="paint"] .pmu-board > .pmu-card[data-pmu-raster-on="parts"] [data-pmu-raster-part] { visibility: visible; }
 #panel-usage[data-pmu-raster~="spare"] .pmu-scroll > .pmu-board[data-pmu-raster-room] { display: grid; }
 
 /* ---- the held board (3.1 Phase A): held cards are laid out (the build measures every body) but not painted, so the
