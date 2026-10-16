@@ -224172,13 +224172,20 @@ var T = {};
     /* parked, it keeps up in idle time: a look, a setting or a window size that changes while it waits is drawn and
        measured then, not by the next click. Not while the change is still playing: drawing it reads the look's colours
        and measures the screen, which made the browser style and lay out the page in the gaps of the NieR switch (B5,
-       pm7-motion-settings: 125 ms and 105 ms on Nas1). So it waits until nothing has changed for WARM_SETTLE_MS and no
-       page, Usage or onboarding transition runs, then for an idle moment; a click before that draws what changed itself */
-    var WARM_SETTLE_MS = 2000, warmJob = 0, warmWait = 0, offWarm = null;
+       pm7-motion-settings: 125 ms and 105 ms on Nas1, 131-253 ms over the P1000's cover). So it waits until nothing has
+       changed for WARM_SETTLE_MS and no page, Usage or onboarding transition runs, and then for the page to be really
+       idle: an idle period of WARM_IDLE_MS or more, which the browser gives only when nothing is drawing frames (a switch
+       still playing leaves only slivers between its frames). WARM_LATEST_MS is the backstop for a page that never rests.
+       A click before that draws what changed itself */
+    var WARM_SETTLE_MS = 3000, WARM_IDLE_MS = 45, WARM_LATEST_MS = 20000, warmJob = 0, warmWait = 0, warmSince = 0, offWarm = null;
     function settling() { var de = document.documentElement; return de.hasAttribute('data-pm-page-transition') || de.hasAttribute('data-pmu-moment') || de.hasAttribute('data-o55-open'); }
-    function warm() {
+    function warm(deadline) {
       warmJob = 0;
       if (!closed || disposed) return;
+      if (deadline && typeof deadline.timeRemaining === 'function' && !deadline.didTimeout && deadline.timeRemaining() < WARM_IDLE_MS && T.util.now() - warmSince < WARM_LATEST_MS) {
+        warmJob = requestIdleCallback(warm, { timeout: Math.max(1000, WARM_LATEST_MS - (T.util.now() - warmSince)) });
+        return;
+      }
       place(); syncPreview(); paint();
       /* the preview draws what changed now, unseen, so the click has nothing left to draw */
       if (pv && pv.fullPending) pv.frame();
@@ -224194,7 +224201,8 @@ var T = {};
         warmWait = 0;
         if (!closed || disposed) return;
         if (settling()) { warmSoon(); return; }
-        warmJob = window.requestIdleCallback ? requestIdleCallback(warm, { timeout: 4000 }) : setTimeout(warm, 300);
+        warmSince = T.util.now();
+        warmJob = window.requestIdleCallback ? requestIdleCallback(warm, { timeout: WARM_LATEST_MS }) : setTimeout(warm, 300);
       }, WARM_SETTLE_MS);
     }
     function parkedWatch(on) {
@@ -224327,12 +224335,18 @@ var T = {};
       .filter(function (x) { return x && x.root && x.root.isConnected && x.visible && !x.pop; })
       .sort(function (a, b) { return (b.focused ? 1 : 0) - (a.focused ? 1 : 0) || (a.root.compareDocumentPosition(b.root) & 4 ? -1 : 1); })[0] : null;
     if (!v) { setTimeout(prepareSoon, 1500); return; }
-    var build = function () {
+    /* built only in a really idle moment (an idle period of 45 ms or more: nothing is drawing frames), so it never lands
+       inside an entrance or a look switch; 20 s is the backstop for a page that never rests */
+    var since = T.util.now();
+    var build = function (deadline) {
       if (prepared || v.pop || !v.root.isConnected) { if (!prepared) setTimeout(prepareSoon, 1500); return; }
       if (de.hasAttribute('data-o55-open') || de.hasAttribute('data-pm-page-transition') || de.hasAttribute('data-pmu-moment')) { setTimeout(prepareSoon, 1500); return; }
+      if (deadline && typeof deadline.timeRemaining === 'function' && !deadline.didTimeout && deadline.timeRemaining() < 45 && T.util.now() - since < 20000) {
+        requestIdleCallback(build, { timeout: Math.max(1000, 20000 - (T.util.now() - since)) }); return;
+      }
       try { open(v, { prepare: true }); } catch (e) { console.error('[pmt] the Customize screen could not be prepared', e); }
     };
-    if (window.requestIdleCallback) requestIdleCallback(build, { timeout: 4000 }); else setTimeout(build, 500);
+    if (window.requestIdleCallback) requestIdleCallback(build, { timeout: 20000 }); else setTimeout(build, 500);
   }
   if (document.readyState === 'complete') setTimeout(prepareSoon, 1500);
   else window.addEventListener('load', function () { setTimeout(prepareSoon, 1500); }, { once: true });
