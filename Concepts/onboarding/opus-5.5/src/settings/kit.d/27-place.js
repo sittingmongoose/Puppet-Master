@@ -131,11 +131,12 @@ PLACE.capture = function (kind, from) {
   const top = unit.getBoundingClientRect().top;
   /* rows above it, nearest first, in case it disappears. Each hit test costs about a millisecond on the P1000, and this
      runs in the pointerdown of every control (14 of them, 18.5 ms, in an editor-open click; F5 editor trace): one test
-     at the middle of the page per step, and the next step starts just above the row it found instead of inside it.
-     The reading-line anchor itself (o55pPick) still tries across the page. */
-  const near = [], mid = [.5];
+     at the middle of the page per step (a third and two thirds across only when the middle falls in a gap, as in the
+     wallpaper gallery's grid), and the next step starts just above the row it found instead of inside it. The
+     reading-line anchor itself (o55pPick) still tries across the page. */
+  const near = [], mid = [.5], sides = [.3, .7];
   for (let y = top - 6, seen = new Set([unit]); near.length < 3 && y > st - 300 * z; y -= 40 * z) {
-    const u = o55pUnitAt(sc, y, mid);
+    const u = o55pUnitAt(sc, y, mid) || o55pUnitAt(sc, y, sides);
     if (!u) continue;
     const ut = u.getBoundingClientRect().top;
     if (!seen.has(u) && ut < top) { seen.add(u); near.push({ el: u, path: o55pPath(u, sc), offset: o55pTop(u, sc) }); }
