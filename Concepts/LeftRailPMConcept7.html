@@ -181838,11 +181838,18 @@ render.remountKind = function (kindId) {
 };
 
 /* ---- resize delivery: once per frame per tab, final when nothing is moving ---- */
+/* a host's own size change is delivered here, already after the frame's layout, so its tab hears it now. Asking
+   PM_AFTER_LAYOUT from inside this delivery (queueResize) made an observation that could not be delivered in the same
+   frame: Chrome reported 'ResizeObserver loop completed with undelivered notifications' and the delivery slipped a
+   frame (pm7-motion-shell's bisect, 2026-10-16: 6 asks, 6 errors, only on this lane). A delivery already queued for
+   another reason takes these tabs with it */
 var bodyObserver = typeof ResizeObserver === 'function' ? new ResizeObserver(function (entries) {
+  var any = false;
   for (var i = 0; i < entries.length; i++) {
     var tid = entries[i].target.getAttribute('data-pmw-tab');
-    if (tid) queueResize(tid);
+    if (tid) { resizePending[tid] = true; any = true; }
   }
+  if (any && !resizeQueued) { var all = resizeAll; resizeAll = false; flushResizes(all); }
 }) : null;
 function observeBody(entry) { if (bodyObserver) bodyObserver.observe(entry.host); }
 var resizePending = {}, resizeQueued = false, resizeAll = false;
