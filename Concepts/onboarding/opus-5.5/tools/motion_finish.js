@@ -44,9 +44,10 @@
       names.forEach(function (n, i) {
         if (n === 'none' || (n !== name && (animation || n !== 'all'))) return;
         var d = ms(durations[i % durations.length]);
-        if (d <= 0) return;
         var count = parseFloat(iterations[i % iterations.length]);
-        if (!Number.isFinite(count)) count = 1;
+        // Infinite loops are decoration, not finite entrance work. A finite
+        // zero-duration entry can still be pending through a positive delay.
+        if (!Number.isFinite(count)) return;
         duration = Math.max(duration, d * count + ms(delays[i % delays.length]));
       });
       if (duration <= 0) { finish(); return; }
