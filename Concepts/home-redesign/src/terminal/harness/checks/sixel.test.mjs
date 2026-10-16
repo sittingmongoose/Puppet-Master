@@ -10,6 +10,14 @@ const src = readFileSync(join(here, '..', '..', 'js', '32-sixel.js'), 'utf8');
 const T = {};
 new Function('window', 'T', src)({}, T);
 const S = T.Sixel;
+/* the time budgets are judged by this thread's CPU time, not the wall clock. On a loaded machine the decoder waits for a
+   core for most of a wall-clock measurement (Nas1 at a load of 25-30 on 5 cores, 2026-10-16: a 1000x600 decode took
+   58 ms by the clock and 8.6 ms of CPU; the fuzz's worst case 50-96 ms by the clock, 12.5 ms of CPU), while a slower
+   decoder still costs more CPU. Wall times are still reported. A Node without threadCpuUsage falls back to the
+   process's CPU time, then to the clock */
+const work = typeof process.threadCpuUsage === 'function' ? { name: 'CPU', now: () => { const u = process.threadCpuUsage(); return (u.user + u.system) / 1000; } }
+  : typeof process.cpuUsage === 'function' ? { name: 'process CPU', now: () => { const u = process.cpuUsage(); return (u.user + u.system) / 1000; } }
+  : { name: 'wall', now: () => performance.now() };
 
 let failed = 0, passed = 0;
 const timings = {};
@@ -202,11 +210,11 @@ test('time is linear in the input', () => {
     'blank sixels 4 MiB': '?'.repeat(4 << 20)
   };
   for (const [name, data] of Object.entries(cases)) {
-    const t0 = performance.now();
+    const t0 = performance.now(), w0 = work.now();
     S.decode([], data);
-    const ms = performance.now() - t0;
-    timings['linear: ' + name] = ms.toFixed(1) + ' ms';
-    assert.ok(ms < 400, name + ' took ' + ms.toFixed(1) + ' ms');
+    const ms = work.now() - w0, wall = performance.now() - t0;
+    timings['linear: ' + name] = ms.toFixed(1) + ' ms ' + work.name + ', ' + wall.toFixed(1) + ' ms wall';
+    assert.ok(ms < 400, name + ' took ' + ms.toFixed(1) + ' ms ' + work.name + ' (' + wall.toFixed(1) + ' ms wall)');
   }
 });
 
@@ -287,7 +295,7 @@ test('round trip: transparency and few colours', () => {
 
 // ---------------------------------------------------------------- performance
 
-test('decode 1000x600 256-colour image under 50 ms', () => {
+test('decode 1000x600 256-colour image under 50 ms of CPU', () => {
   const w = 1000, h = 600, img = procedural(w, h);
   let t0 = performance.now();
   const seq = S.encode(img, w, h, { colors: 256 });
@@ -297,23 +305,23 @@ test('decode 1000x600 256-colour image under 50 ms', () => {
   timings['encode 1000x600 256 colours dithered'] = (performance.now() - t0).toFixed(1) + ' ms, ' + (seqD.length / 1024).toFixed(0) + ' KiB';
   for (const [label, s] of [['', seq], [' dithered', seqD]]) {
     const { params, data } = split(s);
-    const runs = [];
+    const runs = [], costs = [];
     for (let k = 0; k < 7; k++) {
-      const t = performance.now();
+      const t = performance.now(), c0 = work.now();
       const r = S.decode(params, data);
-      runs.push(performance.now() - t);
+      costs.push(work.now() - c0); runs.push(performance.now() - t);
       assert.equal(r.ok, true); assert.equal(r.width, w); assert.equal(r.height, h);
     }
-    const sorted = runs.slice().sort((a, b) => a - b), median = sorted[3];
-    timings['decode 1000x600' + label] = 'first ' + runs[0].toFixed(1) + ' ms, median ' + median.toFixed(1) +
-      ' ms, best ' + sorted[0].toFixed(1) + ' ms';
-    assert.ok(median < 50, 'median decode ' + median.toFixed(1) + ' ms');
+    const sorted = runs.slice().sort((a, b) => a - b), median = costs.slice().sort((a, b) => a - b)[3];
+    timings['decode 1000x600' + label] = 'median ' + median.toFixed(1) + ' ms ' + work.name + '; wall first ' + runs[0].toFixed(1) +
+      ' ms, median ' + sorted[3].toFixed(1) + ' ms, best ' + sorted[0].toFixed(1) + ' ms';
+    assert.ok(median < 50, 'median decode ' + median.toFixed(1) + ' ms ' + work.name + ' (' + sorted[3].toFixed(1) + ' ms wall)');
   }
 });
 
 // ---------------------------------------------------------------- fuzz
 
-test('fuzz: 2000 cases, random bytes and mutations of valid images, no throw, each under 50 ms', () => {
+test('fuzz: 2000 cases, random bytes and mutations of valid images, no throw, each under 50 ms of CPU', () => {
   const rand = rng(0x5eed51);
   const ri = (n) => Math.floor(rand() * n);
   const alphabet = '0123456789;#!"$-?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~';
@@ -324,7 +332,7 @@ test('fuzz: 2000 cases, random bytes and mutations of valid images, no throw, ea
     const ww = s % 2 ? Math.max(2, w) : w, hh = s % 2 ? Math.max(2, h) : h;
     seeds.push(split(S.encode(img, ww, hh, { colors: 2 + ri(255), dither: s % 3 === 0, transparent: s % 4 === 0 })));
   }
-  let worst = 0, okCount = 0, codes = {}, retimed = 0;
+  let worst = 0, worstWall = 0, okCount = 0, codes = {}, retimed = 0;
   for (let c = 0; c < 2000; c++) {
     let data, params = [ri(10), ri(3), ri(2)];
     if (c % 2 === 0) {
@@ -348,18 +356,18 @@ test('fuzz: 2000 cases, random bytes and mutations of valid images, no throw, ea
       }
       data = arr.join('');
     }
-    let r, ms = Infinity;
-    // a case over budget is timed twice more and judged by its best run, so scheduler or GC noise on a
-    // shared machine does not fail it; the count of re-timed cases is reported
+    let r, ms = Infinity, wall = Infinity;
+    // a case over budget is timed twice more and judged by its best run, so GC noise does not fail it; the count of
+    // re-timed cases is reported
     for (let attempt = 0; attempt < 3 && ms >= 50; attempt++) {
       if (attempt) retimed++;
-      const t0 = performance.now();
+      const t0 = performance.now(), w0 = work.now();
       try { r = S.decode(params, data); }
       catch (e) { throw new Error('case ' + c + ' threw'); }
-      ms = Math.min(ms, performance.now() - t0);
+      ms = Math.min(ms, work.now() - w0); wall = Math.min(wall, performance.now() - t0);
     }
-    if (ms > worst) worst = ms;
-    assert.ok(ms < 50, 'case ' + c + ' took ' + ms.toFixed(1) + ' ms (' + data.length + ' chars, ' + (r.ok ? r.width + 'x' + r.height : r.code) + ')');
+    if (ms > worst) { worst = ms; worstWall = wall; }
+    assert.ok(ms < 50, 'case ' + c + ' took ' + ms.toFixed(1) + ' ms ' + work.name + ', ' + wall.toFixed(1) + ' ms wall (' + data.length + ' chars, ' + (r.ok ? r.width + 'x' + r.height : r.code) + ')');
     if (r.ok) {
       okCount++;
       assert.equal(r.rgba.length, r.width * r.height * 4);
@@ -370,7 +378,7 @@ test('fuzz: 2000 cases, random bytes and mutations of valid images, no throw, ea
       codes[r.code] = (codes[r.code] || 0) + 1;
     }
   }
-  timings['fuzz 2000 cases'] = 'worst ' + worst.toFixed(1) + ' ms (' + retimed + ' re-timed runs), ' + okCount + ' decoded, errors ' + JSON.stringify(codes);
+  timings['fuzz 2000 cases'] = 'worst ' + worst.toFixed(1) + ' ms ' + work.name + ' (' + worstWall.toFixed(1) + ' ms wall; ' + retimed + ' re-timed runs), ' + okCount + ' decoded, errors ' + JSON.stringify(codes);
 });
 
 test('encode never throws on odd input', () => {
