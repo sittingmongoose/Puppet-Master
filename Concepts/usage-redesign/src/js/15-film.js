@@ -786,6 +786,10 @@
      waiting bodies show as built) and the next moment starts from there. Nothing stacks. */
   function finishMoment(why, next) {
     var m = moment; if (!m) return;
+    /* a hand-off still waiting for its painted frame plays now (and is finished below like everything else), as it did
+       when it started with the chrome; a Retro or NieR erase not yet started too */
+    if (m.holding) { try { handOff(m); } catch (error) { console.error('[pm-usage] hand-off', error); } }
+    if (m.stepErase) { var se0 = m.stepErase; m.stepErase = null; try { se0(); } catch (error) {} }
     moment = null; M.track(null);
     root.removeAttribute('data-pmu-moment');
     m.timers.forEach(clearTimeout);
@@ -848,9 +852,52 @@
      520 HOP, Glass scale(1.02) 520 DEPTH (no blur on an arriving plate), Retro STEP(4) 240 with rows 60 apart, NieR boots the
      frame first. Without a GPU: the fade only (o.from lets a room change start part-way). Cards outside the viewport get
      no entrance. o.wave === false keeps the cards' own _pmuEnterDelay. ---- */
+  /* ---- never an empty board (P2-03 item 2): a room change's hand-off (the old room's cut, lens, fade or erase, and the new
+     plates' rise) starts at the new room's first painted frame, not when its chrome is inserted. The chrome and the first
+     build slice (the hero's body first) go in under data-plate-hold: the plates at opacity .004 on their film layers, the
+     bodies built in the hold drawn inside them (05-film.css), so the GPU rasters the new room unseen while the old room
+     stands. Two animation frames later (the second runs only once the frame that drew them is activated: the compositor
+     sends no main frame before that) or at HOLD_CAP ms, whichever is first, the hold lifts and the hand-off plays in the
+     look's own voice on the moment's clock (the plates' delays less the time held; a late hand-off moves the clock as
+     before). A body built in the hold is revealed at the hand-off at its slot. Retro and NieR erase the old room at the
+     hand-off too (their erase ran on the click's clock: on a slow first slice the board stood empty). Anything that ends
+     the moment first (a rapid click, leaving the page, Reduce Motion) hands off at once, so what follows is unchanged.
+     Not on the no-GPU profile (no ghost: the old room goes with the new chrome in one batch) and not under Reduce Motion
+     (calmSwap swaps whole rooms). ?pmu-hold=0 leaves it out (A/B). ---- */
+  var HOLD_CAP = 300, HOLD_OFF = /[?&]pmu-hold=0(?:&|#|$)/.test(location.search);
+  function painted(m, fn, cap) {
+    if (document.hidden || M.paused()) { fn(); return; }
+    var ran = false, go = function () { if (ran) return; ran = true; fn(); };
+    requestAnimationFrame(function () { requestAnimationFrame(go); });
+    mtimer(m, cap, go);
+  }
+  function holdOn(m, cards, o) {
+    if (!m || m.kind !== 'room' || !o.dir || o.handoff || m.handed || HOLD_OFF || kept || soft() || reduced() || M.paused() || !cards || !cards.length) return false;
+    return !!m.stepErase || !!(m.ghost && !m.ghost.gone && !m.ghost.fade);
+  }
+  function handOff(m) {
+    var h = m && m.holding; if (!h) return;
+    m.holding = null; m.handed = true;
+    var cards = h.cards.filter(function (c) { return c.isConnected; });
+    if (moment !== m) { cards.forEach(function (c) { c.removeAttribute('data-plate-hold'); }); return; }
+    var held = (performance.now() - h.at) / M.speed();
+    m.holdMs = Math.round(held);
+    cards.forEach(function (c) { c.removeAttribute('data-plate-hold'); c._pmuEnterDelay = Math.max(0, (c._pmuEnterDelay || 0) - held); });
+    frames(cards, Object.assign({}, h.o, { handoff: true }));
+    var built = m.heldBodies || []; m.heldBodies = null;
+    built.forEach(function (c) { if (c.isConnected) bodyBuilt(c); });
+  }
   function frames(cards, o) {
     var m = moment;
     o = o || {};
+    if (holdOn(m, cards, o)) {
+      m.holding = { cards: cards.slice(), o: o, at: performance.now() }; m.heldBodies = [];
+      cards.forEach(function (c) { c.setAttribute('data-plate-hold', ''); });
+      painted(m, function () { handOff(m); }, HOLD_CAP);
+      return;
+    }
+    /* Retro and NieR: the old room's erase starts here (ghost) */
+    if (m && m.stepErase) { var se = m.stepErase; m.stepErase = null; se(); }
     /* the new chrome is in: the old room leaves now (MOTION-4 RC2: never earlier, so no empty board), wiped away at the
        hand-off's edge where the voice has one (Jared #3: a fade let the new headings draw over a dimmed old room for up to
        650 ms on a slow frame), else faded */
@@ -996,6 +1043,8 @@
     if (!card || !card.isConnected) return;
     if (!m) { reveal(card, { quiet: true, delay: 0 }); return; }
     var hero = card.hasAttribute('data-hero');
+    /* a room change still holding for its first painted frame: revealed at the hand-off */
+    if (m.holding && m.heldBodies) { if (m.heldBodies.indexOf(card) < 0) m.heldBodies.push(card); return; }
     if (!m.released) { if (hero && hold) hold.hero = true; return; }
     var slot = hero ? m.heroAt
       : !flag('heroRoll') ? m.heroAt + Math.min(T3.quietCap, T3.quietStep * (m.rank++)) : m.quietAt + Math.min(T3.quietCap, T3.quietStep * (m.rank++));
@@ -1046,16 +1095,35 @@
     }
     /* this ghost's life: a reversal (reverse) or a newer ghost of the same element makes this one's end a no-op */
     var gen = g._pmuGen = (g._pmuGen || 0) + 1;
-    var f = fam(), dir = o.dir || 1, base = o.sTop ? 'translateY(' + (-o.sTop) + 'px)' : '', a, gAnims = [];
+    var f = fam(), dir = o.dir || 1, base = o.sTop ? 'translateY(' + (-o.sTop) + 'px)' : '', a, gAnims = [], deferred = null;
     if (soft()) a = anim(g, [{ opacity: 1, transform: base || 'none' }, { opacity: 0, transform: base || 'none' }], { dur: T3.ghostFade, easing: E.exit, fill: 'forwards' });
     else if (f === 'retro' || f === 'nier') {
       var n = f === 'nier' ? 8 : 8, ms = f === 'nier' ? 200 : 180;
-      a = anim(g, [{ clipPath: 'inset(0 0 0 0)', transform: base || 'none' }, { clipPath: 'inset(100% 0 0 0)', transform: base || 'none' }], { dur: ms, easing: 'steps(' + n + ',jump-end)', fill: 'forwards' });
-      var line = H('i', f === 'nier' ? 'pmu-film-scan pmu-ghostscan' : 'pmu-film-scanbar pmu-ghostscan', g);
-      var lineA = anim(line, [{ transform: 'translateY(0%)', opacity: 1 }, { transform: 'translateY(100%)', opacity: 1, offset: 0.97 }, { transform: 'translateY(100%)', opacity: 0 }], { dur: ms, easing: 'steps(' + n + ',jump-end)', fill: 'both' });
-      gone(lineA, line);
-      /* what a click back to this room steps back (reverse; motion QA A13, Jared 2026-10-16) */
-      g._pmuRev = { erase: a, lineA: lineA, ms: ms, n: n };
+      var erase = function () {
+        var e = anim(g, [{ clipPath: 'inset(0 0 0 0)', transform: base || 'none' }, { clipPath: 'inset(100% 0 0 0)', transform: base || 'none' }], { dur: ms, easing: 'steps(' + n + ',jump-end)', fill: 'forwards' });
+        var line = H('i', f === 'nier' ? 'pmu-film-scan pmu-ghostscan' : 'pmu-film-scanbar pmu-ghostscan', g);
+        var lineA = anim(line, [{ transform: 'translateY(0%)', opacity: 1 }, { transform: 'translateY(100%)', opacity: 1, offset: 0.97 }, { transform: 'translateY(100%)', opacity: 0 }], { dur: ms, easing: 'steps(' + n + ',jump-end)', fill: 'both' });
+        gone(lineA, line);
+        return { erase: e, lineA: lineA };
+      };
+      var ms0 = moment;
+      if (ms0 && ms0.kind === 'room' && !HOLD_OFF) {
+        /* never an empty board (P2-03 item 2): the erase starts at the room change's hand-off (frames), not on the click's
+           clock; the old room stands whole until then. What a click back to this room steps back stays in _pmuRev (an
+           erase not started reverses from 0). The new chrome never came (an empty room): it starts on its own at 600 ms. */
+        var R = g._pmuRev = { erase: null, lineA: null, ms: ms, n: n };
+        deferred = function () {
+          if (R.erase || g._pmuRev !== R || g._pmuRevived || g._pmuGen !== gen || !g.isConnected) return;
+          var x = erase(); R.erase = x.erase; R.lineA = x.lineA;
+          if (x.erase) { gAnims.push(x.erase); x.erase.finished.then(function () { later(done); }, done); } else done();
+        };
+        ms0.stepErase = deferred;
+        mtimer(ms0, 600, function () { if (!ms0.holding) deferred(); });
+      } else {
+        var x0 = erase(); a = x0.erase;
+        /* what a click back to this room steps back (reverse; motion QA A13, Jared 2026-10-16) */
+        g._pmuRev = { erase: a, lineA: x0.lineA, ms: ms, n: n };
+      }
     } else {
       /* MOTION-4 RC1 / RC2 and 4.2: the camera's first half. The old room moves from the click (this task) on its voice's
          path, at full opacity: Basic pans P up the rail (-P x dir, scale .985, 360 SLIDE); Friendly steps back and tilts
@@ -1076,10 +1144,10 @@
       if (mm && a) {
         mm.ghost = { el: g, fade: null, fadeMs: CV.fade, done: null, move: a, anims: gAnims, sTop: o.sTop || 0, blur: gv.blur && !soft() && irisOn(f) ? gv.blur : 0 };
         /* the new chrome never came (an empty room): the old room fades on its own */
-        mtimer(mm, 600, function () { fadeGhost(mm); });
+        mtimer(mm, 600, function () { if (!mm.holding) fadeGhost(mm); });
       } else if (a) gAnims.push(anim(g, [{ opacity: 1 }, { opacity: 0 }], { dur: CV.fade, delay: 100, easing: E.exit, fill: 'forwards' }));
     }
-    gAnims.push(a);
+    if (a) gAnims.push(a);
     var done = function () {
       if (done.ran || g._pmuGen !== gen || g._pmuRevived) return; done.ran = true;
       g._pmuRev = null;
@@ -1092,6 +1160,7 @@
     };
     var mg = moment && moment.ghost && moment.ghost.el === g ? moment.ghost : null;
     if (mg) mg.done = done;
+    else if (deferred) { /* its erase hooks done when it starts */ }
     else if (a) a.finished.then(function () { later(done); }, done); else done();
     return g;
   }
