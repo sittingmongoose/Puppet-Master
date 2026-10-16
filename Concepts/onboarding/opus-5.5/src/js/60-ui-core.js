@@ -838,9 +838,14 @@
       if (reason !== 'done' && returnFocus && document.contains(returnFocus)) { try { returnFocus.focus(); } catch (_) {} }
       O55.boot && O55.boot.chip && O55.boot.chip();
       if (heldResize) { heldResize = false; window.dispatchEvent(new Event('resize')); }
+      window.dispatchEvent(new CustomEvent('o55:onboarding-gone', { detail: { reason } }));
     };
     if (typeof hold === 'number' && hold > 0) O55.motion.after(hold, finish);
-    else if (O55.motion.reduced()) finish(); else O55.motion.settled(r.querySelector('.o55-win'), { subtree: false, fallback: 700 }).then(finish);
+    /* the app wakes (inert off, its paused loops resumed: a restyle of the whole page) only once both the window and
+       its scrim have finished leaving, and a frame later, so that restyle never holds a frame of the exit itself */
+    else if (O55.motion.reduced()) finish();
+    else Promise.all([O55.motion.settled(r.querySelector('.o55-win'), { subtree: false, fallback: 700 }), O55.motion.settled(r.querySelector('.o55-scrim'), { subtree: false, fallback: 700 })])
+      .then(() => requestAnimationFrame(() => window.setTimeout(finish, 0)));
     window.dispatchEvent(new CustomEvent('o55:onboarding', { detail: { type: reason === 'skip' ? 'skipped' : reason === 'done' ? 'finished' : 'closed', screen: S.sess.screen } }));
   }
 

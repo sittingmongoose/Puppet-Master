@@ -17,3 +17,9 @@ html:is([data-motion="reduced"], [data-o55-still]) #panel-wizard > .pm6-wiz-stag
    displayed until the exit has finished (27-wizard-stage.js). */
 #panel-wizard > .pm6-wiz-stage.wo-stage-hold { display: flex; animation: none; }
 #panel-wizard > .pm6-wiz-stage.active.wo-stage-defer { display: none; }
+/* A page that arrives at once (.pm8-page-instant: opened under the onboarding window, 74-screens-ready.js
+   openWizard({under}), or any page change under Reduced Motion) is there whole on its first frame: its stage and the
+   entrances inside it do not also fade up from nothing (Reduced Motion's own fade rule is outranked here). */
+html #panel-wizard.pm8-page-instant > .pm6-wiz-stage.active,
+html #panel-wizard.pm8-page-instant > .pm6-wiz-stage.active :is(.pm-enter-up, .pm-enter-scale) { animation: none !important; }
+html #panel-orchestrator.pm8-page-instant :is(.pm-enter-up, .pm-enter-scale, .pm6-orch-widget) { animation: none !important; }

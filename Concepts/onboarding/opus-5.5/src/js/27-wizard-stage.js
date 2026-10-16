@@ -96,6 +96,8 @@
     function prepare(name) {
       const incoming = stages.find(s => s.dataset.wizStage === name);
       if (!incoming || incoming === current) return;
+      // A page shown under the onboarding window skipped its stage entrance (.pm8-page-instant); later stages enter.
+      if (root.classList.contains('pm8-page-instant')) root.classList.remove('pm8-page-instant');
       const outgoing = current;
       const scrollTop = root.scrollTop;
       const reversing = leaving.has(incoming);
@@ -145,6 +147,7 @@
       // While the page exit still paints, a stage switch in progress keeps its outgoing stage too.
       if (exiting()) return;
       if (held.size || deferred.size) releaseExit();
+      if (!pageShown && root.classList.contains('pm8-page-instant')) root.classList.remove('pm8-page-instant');
       if (!pageShown) finish(serial, current);
     });
     observer.observe(root, { attributes: true, attributeFilter: ['class'] });
