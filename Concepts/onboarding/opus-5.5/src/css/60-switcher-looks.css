@@ -198,6 +198,11 @@ html[data-pm-switch="lens"]:not(#lgz) :is(#pm-home-centre, .pmw-scope) { --pmw-t
    hover ink 1.4 on Retro's lime; Q16 review F4) */
 html[data-pm-switch="lens"]:not(#lgz) .pmw-tab[data-active] .pmw-tclose { color: var(--pm-switch-ink-on); }
 html[data-pm-switch="lens"]:not(#lgz) .pmw-tab[data-active] .pmw-tclose:hover { color: var(--pm-switch-ink-on); background: color-mix(in srgb, var(--pm-switch-ink-on) 16%, transparent); }
+/* so is a chosen terminal tab's exit status ("exited 101"): a tinted chip keeps its red, deepened toward the chip's ink;
+   an opaque chip (the monochrome looks, where NieR already prints it in ink) gives it the chip's ink (it read 3.3-3.9:1 on
+   the light looks' chips) */
+html[data-pm-switch="lens"]:not(#lgz) .pmw-tab[data-active] .pmw-exit { color: color-mix(in srgb, var(--pmw-bad) 62%, var(--pm-switch-ink-on)); }
+html[data-pm-switch-layer="under"]:not(#lgz) .pmw-tab[data-active] .pmw-exit { color: var(--pm-switch-ink-on); }
 html[data-pm-switch="lens"] .pmw-plate { --pm-switch-shadow: 0 0 0 0 transparent; }
 html[data-theme="retro-dark"][data-pm-switch="lens"] .pmw-plate { --pm-switch-shadow: 0 0 7px color-mix(in srgb, var(--accent-lime) 24%, transparent); }
 html[data-theme="friendly-dark"][data-pm-switch="lens"] .pmw-plate { --pm-switch-shadow: 0 0 14px color-mix(in srgb, var(--pm6-cozy-mint) 28%, transparent); }
