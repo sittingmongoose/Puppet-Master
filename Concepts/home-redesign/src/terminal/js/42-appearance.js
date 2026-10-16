@@ -147,11 +147,14 @@
     crtMask: { type: 'bool', default: false, label: 'Phosphor mask' },
     burnIn: { type: 'bool', default: true, label: 'Burn-in' },
     noise: { type: 'number', min: 0, max: 0.12, step: 0.005, default: 0.035, label: 'Noise' },
+    /* on or off, at one faint, safe level (Jared, 2026-10-16, P10: the amount slider and its Settings row are retired; an
+       amount stored by them reads as Flicker on, see legacy() below) */
     flicker: { type: 'bool', default: false, label: 'Flicker' },
-    flickerAmount: { type: 'number', min: 0, max: 0.03, step: 0.005, default: 0.02, label: 'Flicker amount' },
     inactiveDim: { type: 'bool', default: null, label: 'Dim inactive terminals' },
     smoothScroll: { type: 'bool', default: null, label: 'Smooth scrolling' },
-    bell: { type: 'enum', values: ['follow', 'visual', 'off'], default: 'follow', label: 'Bell' },
+    /* Follow look or Off (Jared, 2026-10-16, P14: Visual drew what Follow look draws in every look and is retired; a
+       stored Visual reads as Follow look) */
+    bell: { type: 'enum', values: ['follow', 'off'], default: 'follow', label: 'Bell' },
     stickyHeader: { type: 'bool', default: true, label: 'Sticky command header' },
     copyOnSelect: { type: 'bool', default: false, label: 'Copy on select' },
     /* Sixtyfour's own axes, drawn through an instance of the face (sixtyfourFamily); none until someone sets them */
@@ -159,9 +162,12 @@
     sixtyfourBleed: { type: 'number', min: 0, max: 100, step: 1, default: null, label: 'Sixtyfour bleed' }
   };
   var DEFAULTS = {}; Object.keys(FIELDS).forEach(function (k) { DEFAULTS[k] = FIELDS[k].default; });
-  /* round 2 fields Settings has no row for yet (proposed to the Settings owner): "All terminals" keeps them on this
-     computer, beside the earlier copies, until a row exists */
-  var LOCAL_FIELDS = ['bezel', 'bezelWidth', 'bezelColor', 'bezelReflect', 'crtMask', 'bgStrength', 'bgScale', 'bgMotion', 'bgFit', 'bgDesat'];
+  /* Flicker's one level: canon's default, under its 3 % cap (P10) */
+  var FLICKER_AMOUNT = 0.02;
+  /* fields with no Settings row: none since round 5, when the bezel, background and mask rows were admitted (the Plans
+     pass's code.terminal.background-strength ... phosphor-mask). Until a Project's Settings carries a row, "All
+     terminals" still keeps that field on this computer (setMany asks the bridge whether it has the row) */
+  var LOCAL_FIELDS = [];
 
   /* ---- the Settings rows (SSYS-051, the Terminal look groups): one row per field, its stored words to and from the
      field's value. in() returns undefined for a value it cannot read (the field then falls through) and null for an
@@ -255,8 +261,27 @@
     gradient: lazyWords(function () { return groundWords(true, { 'Dusk': 'dusk', 'Dawn': 'dawn', 'Deep': 'deep', 'Paper': 'paper' }); }),
     picture: lazyWords(function () { return groundWords(false, { 'Hills': 'hills', 'Grid': 'grid', 'Paper': 'paper', 'Custom': 'custom' }); }),
     effects: words({ 'Follow look': 'follow', 'Off': 'off', 'Custom': 'custom' }),
-    bell: words({ 'Follow look': 'follow', 'Visual': 'visual', 'Off': 'off' })
+    /* the retired Visual still reads, as Follow look */
+    bell: words({ 'Follow look': 'follow', 'Off': 'off', 'Visual': 'follow' }),
+    scale: words({ 'Fine': 'fine', 'Medium': 'medium', 'Coarse': 'coarse' }),
+    motion: words({ 'Off': 'off', 'Gentle': 'gentle', 'Lively': 'lively', 'Still': 'off' }),
+    fit: words({ 'Cover': 'cover', 'Contain': 'contain', 'Tile': 'tile', 'Centre': 'center', 'Center': 'center', 'Fill': 'cover', 'Fit': 'contain' }),
+    bezel: words({ 'Off': 'off', 'Slim': 'rim', 'Monitor': 'case', 'Rim': 'rim', 'Case': 'case' }),
+    material: words({ 'Follow look': 'follow', 'Graphite': 'charcoal', 'Black gloss': 'black', 'Platinum': 'platinum', 'Putty': 'putty',
+      'Brushed aluminium': 'aluminium', 'Gunmetal': 'gunmetal', 'Glass': 'glass', 'Accent': 'accent', 'Graphite plastic': 'charcoal',
+      'Platinum plastic': 'platinum', 'Putty plastic': 'putty', 'Accent plastic': 'accent', 'Charcoal': 'charcoal', 'Aluminium': 'aluminium' })
   };
+  /* Bezel Reflection: Auto is the material's own level; a level is a word or the nearest of these numbers */
+  var REFLECT_AT = { off: 0, low: 0.25, medium: 0.5, high: 1 };
+  function reflectIn(v) {
+    var k = String(v === undefined || v === null ? '' : v).trim().toLowerCase();
+    if (!k) return undefined;
+    if (k === 'auto' || k === 'follow look' || k === 'material') return null;
+    if (has(REFLECT_AT, k)) return k;
+    var n = num(0, 1)(v); if (n === undefined) return undefined;
+    var best = 'off'; Object.keys(REFLECT_AT).forEach(function (l) { if (Math.abs(REFLECT_AT[l] - n) < Math.abs(REFLECT_AT[best] - n)) best = l; });
+    return best;
+  }
   var numOut = function (v) { return typeof v === 'number' && isFinite(v) ? v : undefined; };
   var boolOut = function (v) { return typeof v === 'boolean' ? v : undefined; };
   var LINK = {
@@ -296,14 +321,26 @@
     burnIn: { id: S + 'burn-in', in: bool, out: boolOut },
     noise: { id: S + 'noise', in: num(0, 0.12), out: numOut },
     flicker: { id: S + 'flicker', in: bool, out: boolOut, effect: true },
-    flickerAmount: { id: S + 'flicker-amount', in: num(0, 0.03), out: numOut },
     inactiveDim: { id: S + 'inactive-dim', in: tri, out: triOut, effect: true },
     smoothScroll: { id: S + 'smooth-scroll', in: tri, out: triOut, effect: true },
     bell: { id: S + 'bell', in: WORDS.bell.in, out: WORDS.bell.out },
     stickyHeader: { id: S + 'sticky-header', in: bool, out: boolOut },
     copyOnSelect: { id: S + 'copy-on-select', in: bool, out: boolOut },
     sixtyfourScan: { id: S + 'sixtyfour-scan', in: num(-53, 100, 1), out: numOut },
-    sixtyfourBleed: { id: S + 'sixtyfour-bleed', in: num(0, 100, 1), out: numOut }
+    sixtyfourBleed: { id: S + 'sixtyfour-bleed', in: num(0, 100, 1), out: numOut },
+    /* round 5: the bezel, background and mask rows (the Plans pass's ids and words) */
+    bgStrength: { id: S + 'background-strength', in: num(0, 1), out: numOut },
+    bgScale: { id: S + 'background-scale', in: WORDS.scale.in, out: WORDS.scale.out },
+    bgMotion: { id: S + 'background-motion', in: WORDS.motion.in, out: WORDS.motion.out },
+    bgFit: { id: S + 'background-fit', in: WORDS.fit.in, out: WORDS.fit.out },
+    bgDesat: { id: S + 'background-desaturate', in: num(0, 1), out: numOut },
+    bezel: { id: S + 'bezel', in: WORDS.bezel.in, out: WORDS.bezel.out },
+    bezelWidth: { id: S + 'bezel-width', in: function (v) { return /^(style default|auto|follow look)$/i.test(String(v)) ? null : num(2, 48)(v); }, out: function (v) { return v === null ? 'Style default' : numOut(v); } },
+    bezelColor: { id: S + 'bezel-material', in: WORDS.material.in, out: WORDS.material.out },
+    /* the row is round 3's 0-1 slider (or its levels, if canon takes P2's words); a level is written as the number that
+       reads back as it on a dark screen and a light one alike, and a number reads as the nearest level */
+    bezelReflect: { id: S + 'bezel-reflection', in: reflectIn, out: function (v) { return v === null ? 'Auto' : has(REFLECT_AT, v) ? REFLECT_AT[v] : undefined; } },
+    crtMask: { id: S + 'phosphor-mask', in: bool, out: boolOut }
   };
 
   /* ---- schemes ---- */
@@ -421,16 +458,28 @@
   var localApp = {};
   try { localApp = JSON.parse(localStorage.getItem('pm.home.terminal:v1:app') || '{}') || {}; } catch (e) { localApp = {}; }
   function saveLocal() { try { localStorage.setItem('pm.home.terminal:v1:app', JSON.stringify(localApp)); } catch (e) {} }
+  /* retired choices still read (Jared, 2026-10-16, P10 and P14): in a layer that holds no Flicker of its own, an amount
+     stored by the retired slider means Flicker on; Bell's Visual means Follow look */
+  function legacy(key, get) {
+    var v = get(key);
+    if ((v === undefined || v === null) && key === 'flicker') { var a = get('flickerAmount'); if (a !== undefined && a !== null && parseFloat(a) > 0) return true; }
+    return key === 'bell' && v === 'visual' ? 'follow' : v;
+  }
   function appGet(key) {
-    var s = settings();
-    if (s) { try { var v = s.get('terminal.' + key); if (v !== undefined && v !== null) return v; } catch (e) {} }
-    return localApp[key];
+    return legacy(key, function (k) {
+      var s = settings();
+      if (s) { try { var v = s.get('terminal.' + k); if (v !== undefined && v !== null) return v; } catch (e) {} }
+      return localApp[k];
+    });
   }
   function projectGet(key) {
-    var s = settings();
-    if (s) { try { var v = s.get('terminal.project.' + key); if (v !== undefined && v !== null) return v; } catch (e) {} }
-    return undefined;
+    return legacy(key, function (k) {
+      var s = settings();
+      if (s) { try { var v = s.get('terminal.project.' + k); if (v !== undefined && v !== null) return v; } catch (e) {} }
+      return undefined;
+    });
   }
+  function tabGet(t, key) { return t ? legacy(key, function (k) { var v = t[k]; return v === null ? undefined : v; }) : undefined; }
   /* Settings (kit.d/24-terminal-look.js publishes window.PM_TERMINAL_SETTINGS while a Project's Settings can be
      written): the rows a person changed, read through LINK. Read again whenever Settings saved (its version moves) */
   var linked = false, slCache = null, slVer = -1;
@@ -461,6 +510,8 @@
          it in the Customize screen does (Follow look draws the look's own effects whatever those rows hold) */
       if (L.effect && v !== null) promote = true;
     });
+    /* the retired Flicker Amount row (P10): an amount stored there reads as Flicker on, unless Flicker itself is stored */
+    if (!has(out, 'flicker') && has(raw, S + 'flicker-amount') && num(0, 0.03)(raw[S + 'flicker-amount']) > 0) { out.flicker = true; promote = true; }
     if (promote && !has(out, 'effects')) out.effects = 'custom';
     slCache = out; slVer = ver;
     return out;
@@ -468,9 +519,9 @@
   /* "All terminals" while a slider is being dragged: shown at once, written to Settings when it is let go */
   var liveApp = {};
   function field(view, key) {
-    var t = view && view.tabAppearance;
+    var t = view && view.tabAppearance, tv = tabGet(t, key);
     if (view && view.previewAppearance && view.previewAppearance[key] !== undefined) return view.previewAppearance[key];
-    if (t && t[key] !== undefined && t[key] !== null) return t[key];
+    if (tv !== undefined) return tv;
     if (has(liveApp, key)) return liveApp[key];
     var sl = settingsLayer(); if (has(sl, key)) return sl[key] === null ? DEFAULTS[key] : sl[key];
     var p = projectGet(key); if (p !== undefined) return p;
@@ -479,7 +530,7 @@
   }
   /* where a field's value comes from: 'tab', 'settings', 'project' and 'app' (the earlier stores) or 'look' */
   function layerOf(view, key) {
-    if (view && view.tabAppearance && view.tabAppearance[key] !== undefined && view.tabAppearance[key] !== null) return 'tab';
+    if (view && tabGet(view.tabAppearance, key) !== undefined) return 'tab';
     if (has(liveApp, key) || has(settingsLayer(), key)) return 'settings';
     if (projectGet(key) !== undefined) return 'project';
     /* the host model answers its registered default when nothing is stored there, and that is nobody's choice */
@@ -489,7 +540,7 @@
   }
   /* the value a scope holds itself (undefined when it holds none): 'tab' this terminal's own, 'app' All terminals' */
   function own(scope, view, key) {
-    if (scope === 'tab') { var t = view && view.tabAppearance; return t && t[key] !== undefined && t[key] !== null ? t[key] : undefined; }
+    if (scope === 'tab') return tabGet(view && view.tabAppearance, key);
     if (has(liveApp, key)) return liveApp[key];
     var sl = settingsLayer(); if (has(sl, key)) return sl[key] === null ? undefined : sl[key];
     var p = projectGet(key); if (p !== undefined) return p;
@@ -653,7 +704,7 @@
       bezel: { on: false }, vignette: { on: crtOn, strength: mode === 'light' ? 0.05 : 0.08 },
       burnIn: { on: crtOn && f('burnIn') && !reduced, persistMs: 450 },
       noise: { on: crtOn && f('noise') > 0 && !reduced, amount: f('noise') },
-      flicker: { on: !fxOff && !follow && !!f('flicker') && !reduced, amount: Math.min(0.03, f('flickerAmount')) },
+      flicker: { on: !fxOff && !follow && !!f('flicker') && !reduced, amount: FLICKER_AMOUNT },
       glowColor: theme && theme.roles.glow
     };
     /* the bezel: a slim frame (6 px) or a monitor case (24 px) unless a width was chosen. Round 3's research: a case
@@ -743,7 +794,8 @@
     keys.forEach(function (k) {
       delete liveApp[k];
       var L = LINK[k], v = patch[k];
-      if (b && L) {
+      /* only a row this Project's Settings carries (a row not yet admitted, or held back, keeps the field on this computer) */
+      if (b && L && (typeof b.has !== 'function' || b.has(L.id))) {
         var out = v === null || v === undefined ? null : L.out(v);
         if (out !== undefined) { rows[L.id] = out; return; }
       }
@@ -846,7 +898,7 @@
       return presetStore(l);
     },
     /* every field the preset holds, and null (follow the look) for every other: one write, one transaction */
-    patch: function (fields) { var out = {}; Object.keys(FIELDS).forEach(function (k) { out[k] = fields && has(fields, k) ? fields[k] : null; }); return out; },
+    patch: function (fields) { var out = {}; Object.keys(FIELDS).forEach(function (k) { var v = fields ? tabGet(fields, k) : undefined; out[k] = v === undefined ? null : v; }); return out; },
     apply: function (id, scope, view) {
       var p = presetList().filter(function (x) { return x.id === id; })[0]; if (!p) return false;
       return setMany(scope, presets.patch(p.fields), view);

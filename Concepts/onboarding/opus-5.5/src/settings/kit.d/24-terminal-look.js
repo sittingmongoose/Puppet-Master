@@ -8,6 +8,8 @@
        values()     -> { 'code.terminal.<row>': value } for the rows a person changed, and '<id>#custom' for the text
                        typed under an earlier Custom choice (Terminal Colors, Terminal Font)
        set(writes)  -> { id: value | null }: one transaction; null puts the row back to its default. false when refused
+       has(id)      -> true when this Settings carries the row (a row canon admitted but the concept holds back, or not
+                       yet published, is false, and the terminal keeps that field on this computer instead)
        version()    -> a number that moves whenever Settings saved
        onChange(fn) -> fn() after a save that changed a code.terminal.* row; returns an unsubscribe
      }
@@ -87,6 +89,11 @@
   const EARLIER = ['dusk', 'dawn', 'deep', 'paper', 'hills', 'grid', 'fibre'];   /* named by the inventory's own words */
   PM51.moreChoices('code.terminal.background-gradient', () => grounds().filter(g => g.gradient && EARLIER.indexOf(g.id) < 0).map(g => ({ value: g.name, label: g.name, meta: KIND[g.cat] || '' })));
   PM51.moreChoices('code.terminal.background-image', () => grounds().filter(g => !g.gradient && EARLIER.indexOf(g.id) < 0).map(g => ({ value: g.name, label: g.name, meta: KIND[g.cat] || '' })));
+  /* Terminal Bell: Follow look or Off (Jared, 2026-10-16, P14); a stored Visual still shows as Follow look, as the
+     terminal reads it */
+  const bell = rowOf('code.terminal.bell');
+  bell.choices = ['Follow look', 'Off'];
+  bell.help = 'What happens when a program rings the bell: Follow look flashes the terminal in the look’s own way, Off does nothing.';
   const font = rowOf('code.terminal.font-family');
   font.choices = FACES.map(f => f[0]);
   font.options = Object.assign({}, font.options || {}, Object.fromEntries(FACES));
@@ -131,6 +138,7 @@
   seen = (() => { try { return JSON.stringify(values()); } catch (e) { return ''; } })();
   window.PM_TERMINAL_SETTINGS = Object.freeze({
     ready, values, set, version: () => ver,
+    has: id => { try { return typeof id === 'string' && id.indexOf(PREFIX) === 0 && !!findSettingGlobal(id); } catch (e) { return false; } },
     onChange: fn => { if (typeof fn !== 'function') return () => {}; listeners.add(fn); return () => { listeners.delete(fn); }; }
   });
 })();

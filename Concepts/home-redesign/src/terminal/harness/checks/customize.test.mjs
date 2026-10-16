@@ -49,8 +49,10 @@ test('every field has one Settings row, and its words go both ways (round 2 fiel
   const samples = { schemePair: false, minContrast: 7, fontSize: 24, fontWeight: 600, lineHeight: 1.5, letterSpacing: 1.25, ligatures: false, boldBright: true,
     fontRendering: 'crisp', cursorShape: 'bar', cursorBlink: false, cursorTrail: 'trace', background: 'gradient', bgColor: '#123456', bgGradient: 'deep',
     bgImage: 'grid', bgDim: 0.6, bgBlur: 12, opacity: 0.5, padding: 14, effects: 'custom', scanlines: true, scanStrength: 0.5, glow: false, glowStrength: 0.8,
-    crt: true, curvature: 0.12, burnIn: false, noise: 0.06, flicker: true, flickerAmount: 0.025, inactiveDim: false, smoothScroll: true, bell: 'off',
-    stickyHeader: false, copyOnSelect: true, sixtyfourScan: 45, sixtyfourBleed: 40 };
+    crt: true, curvature: 0.12, burnIn: false, noise: 0.06, flicker: true, inactiveDim: false, smoothScroll: true, bell: 'off',
+    stickyHeader: false, copyOnSelect: true, sixtyfourScan: 45, sixtyfourBleed: 40,
+    bgStrength: 0.65, bgScale: 'coarse', bgMotion: 'lively', bgFit: 'center', bgDesat: 1, bezel: 'case', bezelWidth: 30, bezelColor: 'gunmetal',
+    bezelReflect: 'high', crtMask: true };
   for (const k of Object.keys(samples)) {
     const L = A.LINK[k], out = L.out(samples[k]);
     assert.notEqual(out, undefined, k + ' has no words for ' + samples[k]);
@@ -67,7 +69,23 @@ test('Settings words: Follow look, numbers as text, the earlier choices', () => 
   assert.equal(A.LINK.fontSize.in(99), 32);
   assert.equal(A.LINK.fontSize.in(14.25), 14.25);          /* Departure's 13.75 + 0.5 stays on its quarter */
   assert.equal(A.LINK.lineHeight.in(1.45), 1.45);          /* no binary remainder from the step */
-  assert.equal(A.LINK.flickerAmount.in('0.025'), 0.025);
+  /* round 5's rows: canon's words, a style's own width, Reflection's Auto and round 3's numbers */
+  assert.equal(A.LINK.bezel.in('Monitor'), 'case');
+  assert.equal(A.LINK.bezelWidth.in('Style default'), null);
+  assert.equal(A.LINK.bezelColor.in('Brushed aluminium'), 'aluminium');
+  assert.equal(A.LINK.bezelReflect.in('Auto'), null);
+  assert.equal(A.LINK.bezelReflect.in(0.45), 'medium');
+  assert.equal(A.LINK.bezelReflect.in('0.2'), 'low');
+  assert.equal(A.LINK.bezelReflect.out('medium'), 0.5);
+  assert.equal(A.LINK.bgFit.in('Centre'), 'center');
+  assert.equal(A.LINK.bgMotion.out('off'), 'Off');
+  assert.equal(A.LINK.crtMask.in('true'), true);
+  /* retired (Jared, 2026-10-16): no Flicker Amount row; Bell's Visual reads as Follow look and is never written */
+  assert.equal(A.LINK.flickerAmount, undefined);
+  assert.equal(A.FIELDS.flickerAmount, undefined);
+  assert.equal(A.LINK.bell.in('Visual'), 'follow');
+  assert.equal(A.LINK.bell.out('follow'), 'Follow look');
+  assert.deepEqual(A.FIELDS.bell.values, ['follow', 'off']);
   assert.equal(A.LINK.minContrast.in('4.5:1'), 4.5);
   assert.equal(A.LINK.scheme.in('Match App Theme'), 'follow');
   assert.equal(A.LINK.scheme.in('Light'), 'follow:light');
@@ -124,6 +142,39 @@ test('an effect switched in Settings while Terminal Effects follows the look mea
   assert.equal(A.resolve(view()).effects.scanlines.on, false);   /* Basic's own: none */
   put('effects', 'Off');
   assert.equal(A.resolve(view()).effects.off, true);
+});
+
+test('retired choices still read (Jared, 2026-10-16): a stored Flicker amount is Flicker on, Visual is Follow look', () => {
+  clear();
+  put('flicker-amount', 0.025);
+  assert.equal(A.get(view(), 'flicker'), true);
+  assert.equal(A.get(view(), 'effects'), 'custom');
+  put('flicker', 'Off');
+  assert.equal(A.get(view(), 'flicker'), false);            /* Flicker itself stored wins */
+  clear();
+  put('flicker-amount', 0);
+  assert.equal(A.get(view(), 'flicker'), false);
+  clear();
+  assert.equal(A.get(view({ flickerAmount: 0.01 }), 'flicker'), true);
+  assert.equal(A.get(view({ bell: 'visual' }), 'bell'), 'follow');
+  put('bell', 'Visual');
+  assert.equal(A.get(view(), 'bell'), 'follow');
+  assert.equal(A.presets.patch({ flickerAmount: 0.02, bell: 'visual' }).flicker, true);
+  assert.equal(A.presets.patch({ flickerAmount: 0.02, bell: 'visual' }).bell, 'follow');
+  clear();
+});
+
+test('a row this Settings does not carry keeps its field on this computer (round 5)', () => {
+  clear();
+  window.PM_TERMINAL_SETTINGS.has = id => id !== 'code.terminal.bezel';
+  A.setMany('app', { bezel: 'case', bezelColor: 'glass' }, view());
+  assert.equal(rows['code.terminal.bezel'], undefined);          /* not sent where it would be dropped */
+  assert.equal(rows['code.terminal.bezel-material'], 'Glass');
+  assert.equal(A.get(view(), 'bezel'), 'case');                   /* kept here, and still drawn */
+  assert.equal(A.get(view(), 'bezelColor'), 'glass');
+  delete window.PM_TERMINAL_SETTINGS.has;
+  A.setMany('app', { bezel: null, bezelColor: null }, view());
+  clear();
 });
 
 test('setMany writes one Settings transaction', () => {

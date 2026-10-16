@@ -132,8 +132,8 @@
     { key: 'scanlines', name: 'Scanlines', help: 'Thin dark lines across the text, like an old monitor.', strength: ['scanStrength', 0, 0.6, 0.05, [0, 0.15, 0.3, 0.45, 0.6]] },
     { key: 'glow', name: 'Phosphor glow', help: 'A soft glow around the text in the scheme’s glow colour.', strength: ['glowStrength', 0, 1, 0.05, [0, 0.15, 0.3, 0.45, 0.6, 0.8, 1]] },
     { key: 'crt', name: 'Full CRT', help: 'A tube: gently curved glass with rounded corners, burn-in and grain. Pointing follows the curve.' },
-    /* no amount slider (round 4, Q15 #4): within the 3 % that keeps it from ever being a flash, no two amounts look
-       apart; Settings still holds the amount */
+    /* on or off at one faint level (Jared, 2026-10-16, P10): within the 3 % that keeps it from ever being a flash no two
+       amounts looked apart, and the amount is retired */
     { key: 'flicker', name: 'Flicker', help: 'A faint flicker, at most 3 % and never a flash.' },
     { key: 'inactiveDim', name: 'Dim terminals I’m not in', help: 'Terminals you are not typing in step back.', tryIt: 'dim' },
     { key: 'smoothScroll', name: 'Smooth scrolling', help: 'Scrolling glides instead of jumping a line at a time.' }
@@ -150,13 +150,13 @@
     'fontRendering', 'sixtyfourScan', 'sixtyfourBleed', 'cursorShape', 'cursorBlink', 'cursorTrail', 'background', 'bgColor', 'bgGradient', 'bgImage',
     'bgImageData', 'bgDim', 'bgBlur', 'bgStrength', 'bgScale', 'bgMotion', 'bgFit', 'bgDesat', 'opacity', 'padding', 'bezel', 'bezelWidth', 'bezelColor', 'bezelReflect',
     'effects', 'scanlines', 'scanStrength', 'glow', 'glowStrength', 'crt', 'curvature', 'crtMask', 'burnIn',
-    'noise', 'flicker', 'flickerAmount', 'inactiveDim', 'smoothScroll', 'bell', 'stickyHeader', 'copyOnSelect'];
+    'noise', 'flicker', 'inactiveDim', 'smoothScroll', 'bell', 'stickyHeader', 'copyOnSelect'];
   var GROUP_KEYS = {
     colors: ['scheme', 'schemePair', 'minContrast'],
     text: ['font', 'fontSize', 'fontWeight', 'lineHeight', 'letterSpacing', 'ligatures', 'boldBright', 'fontRendering', 'sixtyfourScan', 'sixtyfourBleed'],
     cursor: ['cursorShape', 'cursorBlink', 'cursorTrail'],
     ground: ['background', 'bgColor', 'bgGradient', 'bgImage', 'bgImageData', 'bgDim', 'bgBlur', 'bgStrength', 'bgScale', 'bgMotion', 'bgFit', 'bgDesat', 'opacity', 'padding'],
-    effects: ['effects', 'scanlines', 'scanStrength', 'glow', 'glowStrength', 'crt', 'curvature', 'crtMask', 'burnIn', 'noise', 'flicker', 'flickerAmount', 'inactiveDim', 'smoothScroll',
+    effects: ['effects', 'scanlines', 'scanStrength', 'glow', 'glowStrength', 'crt', 'curvature', 'crtMask', 'burnIn', 'noise', 'flicker', 'inactiveDim', 'smoothScroll',
       'bezel', 'bezelWidth', 'bezelColor', 'bezelReflect'],
     behavior: ['bell', 'stickyHeader', 'copyOnSelect']
   };
@@ -395,7 +395,7 @@
       '<p class="pmt-cz-note" data-note-fx hidden></p></section>';
     /* behaviour */
     html += '<section class="pmt-cz-group" data-group="behavior" aria-labelledby="pmt-cz-g-behavior">' + ghead('behavior', 'Behavior') +
-      '<div class="pmt-cz-field"><span class="pmt-cz-flabel">Bell</span>' + seg('bell', [['follow', 'Follow look', 'Look'], ['visual', 'Visual'], ['off', 'Off']], 'Bell') +
+      '<div class="pmt-cz-field"><span class="pmt-cz-flabel">Bell</span>' + seg('bell', [['follow', 'Follow look', 'Look'], ['off', 'Off']], 'Bell') +
       '<span class="pmt-cz-fhelp">What a program’s bell does: the look’s own flash, or nothing.</span></div>' +
       '<div class="pmt-cz-chips">' + chip('stickyHeader', 'Keep command titles visible', 'Pins each command’s line while you scroll its output.') +
       chip('copyOnSelect', 'Copy when I highlight', 'Text you select is copied, ready to paste.') + '</div>' +
@@ -626,7 +626,6 @@
       /* the number is the sides; top and bottom take 60 % of it (pm7-customizer-audit): both shown, the help says which */
       if (key === 'padding') return Math.round(x) + ' / ' + Math.round(x * 0.6) + ' px';
       if (key === 'letterSpacing' || key === 'bgBlur' || key === 'padding' || key === 'fontSize') return (Math.round(x * 100) / 100) + ' px';
-      if (key === 'flickerAmount') return (Math.round(x * 1000) / 10) + '%';
       return String(Math.round(x * 1000) / 1000);
     }
     function paint() {
