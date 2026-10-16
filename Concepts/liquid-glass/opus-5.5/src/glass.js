@@ -1223,6 +1223,8 @@
     var quiet = reduced();
     var still = A && (quiet ? A.x === R.x && A.y === R.y && A.w === R.w && A.h === R.h : Math.abs(A.x - R.x) < 0.5 && Math.abs(A.y - R.y) < 0.5 && Math.abs(A.w - R.w) < 0.5 && Math.abs(A.h - R.h) < 0.5);
     if ((quiet && !L.reducedAnim) || !switchOn()) stopLensTravel(L);
+    /* a step's blocks wait for the app to choose their tab; the chip is already at rest on it underneath */
+    if (L.hopFrames && L.hopTarget === target) { hopSettle(L); return; }
     if (still) return;
     if (!A || quiet || !switchOn()) {
       stopLensTravel(L);
@@ -1242,20 +1244,20 @@
     /* the lens travels only when the chosen item changes. The same item seen somewhere else (its page or menu settled,
        the strip scrolled or reflowed) is followed at once (Jared #21: a lens measured mid-entrance slid 50 px into
        place after the page had landed) */
-    if (L.tgt === target && !L.dragging) { stopLensTravel(L); setLensBox(L, R); return; }
+    if (L.tgt === target && !L.dragging) { if (L.hopFrames) { hopSettle(L); return; } stopLensTravel(L); setLensBox(L, R); return; }
     L.tgt = target;
     var from = visualRect(L) || A, vertical = !!cfg.vertical || Math.abs(from.y - R.y) > Math.abs(from.x - R.x);
     if (switchMotion !== 'glide' && !isGlass()) { hop(L, from, R, strip, cfg, target, vertical); return; }
     travel(L, from, R, vertical, { labels: labelsOf(cfg, strip, vertical), mags: magsOf(cfg), vertical: vertical });
   }
-  /* Retro's step and NieR's cut. A step is two hard jumps: the chip shows on the tab half way (when there is one) at once,
-     and on its own tab one 33 ms tick later, so a press held for longer than a tick has landed before its click runs; a
-     tab next door is one hop, at once. A press released sooner lands as the pointer lifts. Each tick moves the chip and the inks in the same callback,
-     on the main thread: the tab under the chip reads as chosen (data-lg-press="on"), the tab it is headed for reads as not
-     chosen until it lands ("off", or no mark while a press holds it), and the tab it left as not chosen. If the app holds
-     the page (its click), chip and inks wait together, so a landed chip never sits under an old ink (Q16 delta review:
-     the compositor-run step landed the chip 120-350 ms before a timer could ink its label; F3-621: only the tab under the
-     ink looks chosen). */
+  /* Retro's step and NieR's cut. A step is two hard jumps, 33 ms apart: to the tab half way (when there is one), then to
+     its own; a tab next door is one jump, at once. Every frame of it runs on the compositor, so it keeps its time however
+     long the app's click holds the page (Q16 delta review R1: a main-thread step froze on the half-way tab for 12-29
+     frames while the page switched). Each stop is a block of the chip's material ABOVE the labels, holding an inverted
+     copy of its tab's label (the item cloned, its look copied, in the chip's ink), clipped to the block; the blocks show
+     and hide by step-timed opacity. The real labels stay in their resting ink underneath, the tab headed for held there
+     ('off') until the app has chosen it; then the blocks go and the chip under the labels, with the chosen label's own
+     ink, looks the same (F3-621: only the tab under the ink looks chosen). */
   var HOP_MS = 33;
   function hopStops(A, B, strip, cfg, target, vertical) {
     var c = function (r) { return vertical ? r.y + r.h / 2 : r.x + r.w / 2; }, a = c(A), b = c(B), lo = Math.min(a, b), hi = Math.max(a, b), pad = cfg.pad == null ? 2 : cfg.pad;
@@ -1272,36 +1274,75 @@
     if (v) { if (el.getAttribute('data-lg-press') !== v) el.setAttribute('data-lg-press', v); L.hopMarks.set(el, v); hopOwned.set(el, v); }
     else { if (L.hopMarks.get(el) === el.getAttribute('data-lg-press')) el.removeAttribute('data-lg-press'); L.hopMarks.delete(el); hopOwned.delete(el); }
   }
-  function stopHop(L) {
-    L.hopFinish = null;
-    if (L.hopT) { clearTimeout(L.hopT); L.hopT = 0; }
-    if (L.hopMarks) { L.hopMarks.forEach(function (v, el) { hopOwned.delete(el); if (el.getAttribute('data-lg-press') === v) el.removeAttribute('data-lg-press'); }); L.hopMarks.clear(); }
-    var P = L.hopPress; L.hopPress = null;
-    if (P && L.pending === P && P.el.isConnected) P.el.setAttribute('data-lg-press', 'on');
+  /* the layer above a strip's labels that holds a step's blocks while it runs */
+  function overLayer(strip) {
+    var own = strip.__lgOver;
+    if (own && own.parentElement === strip) return own;
+    own = el('lg-over', { class: 'lg-hops', 'aria-hidden': 'true', 'data-o55-foreign': '' });
+    if (getComputedStyle(strip).position === 'static') { strip.style.position = 'relative'; strip.__lgPosOver = true; }
+    strip.appendChild(own); strip.__lgOver = own; return own;
   }
-  function finishHop(L) { var f = L.hopFinish; if (f) { clearTimeout(L.hopT); L.hopT = 0; f(); } }
+  /* a label's inverted copy: the item cloned without its classes, ids or roles (no script finds it as a tab), its own box
+     and text styles copied inline, in the chosen weight; glass.css inks it and everything in it in the chip's ink */
+  var TWIN_PROPS = ['font-family', 'font-size', 'font-style', 'font-stretch', 'font-variant-numeric', 'font-feature-settings', 'letter-spacing', 'word-spacing', 'line-height',
+    'text-transform', 'text-align', 'text-indent', 'white-space', 'display', 'flex-direction', 'flex-wrap', 'align-items', 'justify-content', 'gap',
+    'padding-top', 'padding-right', 'padding-bottom', 'padding-left', 'border-top-width', 'border-right-width', 'border-bottom-width', 'border-left-width',
+    'border-top-style', 'border-right-style', 'border-bottom-style', 'border-left-style', 'box-sizing', 'overflow', 'text-overflow'];
+  function twinOf(item, box, weight) {
+    var c = item.cloneNode(true), cs = getComputedStyle(item), css = [];
+    TWIN_PROPS.forEach(function (p) { css.push(p + ':' + cs.getPropertyValue(p)); });
+    [c].concat(Array.prototype.slice.call(c.querySelectorAll('[id], [tabindex], [role], [aria-selected], [aria-current], [aria-checked], [aria-pressed], [data-lg-press]'))).forEach(function (n) {
+      ['id', 'tabindex', 'role', 'aria-selected', 'aria-current', 'aria-checked', 'aria-pressed', 'aria-controls', 'aria-label', 'data-lg-press'].forEach(function (a) { n.removeAttribute(a); });
+    });
+    c.setAttribute('class', 'lg-twin'); c.setAttribute('aria-hidden', 'true'); c.setAttribute('inert', '');
+    c.style.cssText = css.join(';') + ';font-weight:' + weight + ';position:absolute;margin:0;left:' + box.x + 'px;top:' + box.y + 'px;width:' + box.w + 'px;height:' + box.h + 'px';
+    return c;
+  }
+  function endHop(L) {
+    if (L.hopT) { clearTimeout(L.hopT); L.hopT = 0; }
+    if (L.hopSafety) { clearTimeout(L.hopSafety); L.hopSafety = 0; }
+    if (L.hopFrames) { L.hopFrames.forEach(function (F) { F.getAnimations().forEach(function (a) { a.cancel(); }); F.remove(); }); L.hopFrames = null; }
+    /* the chip under the labels shows the moment the blocks go */
+    if (L.hopHide) { var hh = L.hopHide; L.hopHide = null; if (L.anim === hh) L.anim = null; hh.cancel(); }
+    var over = L.strip && L.strip.__lgOver; if (over && !over.children.length) { over.remove(); L.strip.__lgOver = null; if (L.strip.__lgPosOver && !L.strip.__lgUnder) { L.strip.style.removeProperty('position'); } L.strip.__lgPosOver = false; }
+    if (L.hopMarks) { L.hopMarks.forEach(function (v, el) { hopOwned.delete(el); if (el.getAttribute('data-lg-press') === v) el.removeAttribute('data-lg-press'); }); L.hopMarks.clear(); }
+    var P = L.hopPress; L.hopPress = null; L.hopTarget = null;
+    if (P && L.pending === P && P.el.isConnected && !hopOwned.has(P.el)) P.el.setAttribute('data-lg-press', 'on');
+  }
+  function stopHop(L) { endHop(L); }
+  /* the blocks go once the app has chosen the tab they show (and not before the landing): the chip under the labels and
+     the chosen label's own ink then look the same */
+  function hopSettle(L) {
+    var T = L.hopTarget; if (!T || !L.hopFrames) return;
+    if (!T.isConnected) { endHop(L); return; }
+    var cfg = L.cfg; if (!T.matches(cfg.active || '.active')) return;
+    var wait = L.hopEnd - performance.now();
+    if (wait > 0) { if (!L.hopT) L.hopT = setTimeout(function () { L.hopT = 0; hopSettle(L); }, wait + 1); return; }
+    endHop(L);
+  }
   function hop(L, A, B, strip, cfg, target, vertical) {
     stopLensTravel(L);
     if (switchMotion === 'cut' || !A) { setLensBox(L, B); return; }
-    var stops = hopStops(A, B, strip, cfg, target, vertical), k = 0;
-    var P = L.pending && L.pending.el === target ? L.pending : null;
+    var stops = hopStops(A, B, strip, cfg, target, vertical);
+    if (stops.length < 2 || !switchUnder) { setLensBox(L, B); return; }
+    var now = strip.querySelector(cfg.items + (cfg.active || '.active')), weight = getComputedStyle(now || target).fontWeight;
+    var over = overLayer(strip), pad = cfg.pad == null ? 2 : cfg.pad, frames = stops.map(function (s) {
+      var F = el('i', { class: 'lg-lens lg-hop', 'aria-hidden': 'true' }), st = F.style, ir = rectIn(strip, s.it, 0);
+      st.left = s.r.x + 'px'; st.top = s.r.y + 'px'; st.width = s.r.w + 'px'; st.height = s.r.h + 'px';
+      F.appendChild(twinOf(s.it, { x: ir.x - s.r.x, y: ir.y - s.r.y, w: ir.w, h: ir.h }, weight)); over.appendChild(F); return F;
+    });
+    frames[0].animate([{ opacity: 1 }, { opacity: 0 }], { duration: HOP_MS, easing: 'step-end', fill: 'forwards' });
+    frames[1].animate([{ opacity: 0 }, { opacity: 1 }], { duration: HOP_MS, easing: 'step-end', fill: 'forwards' });
+    setLensBox(L, B); L.path = null;
+    /* the chip under the labels stays hidden for the whole step (the blocks cover its tab from the landing on), so no
+       frame can show both: animations on the new blocks may start a frame after one on the chip */
+    L.anim = L.hopHide = L.lens.animate([{ opacity: 0 }, { opacity: 0 }], { duration: 600000 });
     if (!L.hopMarks) L.hopMarks = new Map();
-    if (switchUnder && stops.length > 1) { if (P) L.hopPress = P; hopMark(L, target, 'off'); }
-    var tick = function () {
-      L.hopT = 0;
-      var s = stops[k], prev = k > 0 ? stops[k - 1].it : null;
-      if (switchUnder && prev && prev !== target) hopMark(L, prev, null);
-      setLensBox(L, s.r);
-      if (s.it === target) {
-        L.hopFinish = null;
-        if (switchUnder) { hopMark(L, target, null); var Q = L.hopPress; L.hopPress = null; if (Q && L.pending === Q && Q.el.isConnected) Q.el.setAttribute('data-lg-press', 'on'); }
-        return;
-      }
-      if (switchUnder) hopMark(L, s.it, 'on');
-      k++; L.hopT = setTimeout(tick, HOP_MS);
-    };
-    L.hopFinish = function () { L.hopFinish = null; k = stops.length - 1; tick(); };
-    tick();
+    L.hopFrames = frames; L.hopTarget = target; L.hopEnd = performance.now() + HOP_MS;
+    var P = L.pending && L.pending.el === target ? L.pending : null; if (P) L.hopPress = P;
+    hopMark(L, target, 'off');
+    L.hopT = setTimeout(function () { L.hopT = 0; hopSettle(L); }, HOP_MS + 1);
+    L.hopSafety = setTimeout(function () { L.hopSafety = 0; if (L.hopFrames) { endHop(L); queueSync(L.strip); } }, 3000);
   }
   /* the press: the lens leaves for the pressed item at once; the app's choice (or its absence) settles it. Only for
      items the app can choose: a disabled or inert item, or a strip that takes no press (a progress rail), keeps the lens
@@ -1344,7 +1385,6 @@
   document.addEventListener('pointerup', function (e) {
     lenses.forEach(function (L) {
       var P = L.pending; if (!P || P.up) return;
-      if (L.hopT && L.hopPress === P) finishHop(L);
       P.up = performance.now(); P.away = !(e.target && P.el.contains(e.target));
       if (P.away) queueSync(L.strip); else setTimeout(function () { queueSync(L.strip); }, 2550);
     });
@@ -1747,7 +1787,7 @@
     if (!lazyT) lazyT = setTimeout(function () { lazyT = 0; queueSync(); }, 140);
   }
   var HOT = '[data-lg-surface], .page-tab, #pmuRange > button, .pmu-navbtn, .pm-segtab-item, #activityBar .icon, .side-panel-view, .pmu-pop, .pmr-menu-list, .pmr-menu-group, .pm6-tb-menu, .o55-railitem, .o55-seg button, .o55-win, .o55t-callout, .o55t-bar';
-  var GENERATED = '#lg-optics, #lg-lenses, .lg-lenses-local, .lg-lenses-under, #lg-shine, .lg-press, .pm-segtab-track, #lg-post, #lg-shown';
+  var GENERATED = '#lg-optics, #lg-lenses, .lg-lenses-local, .lg-lenses-under, .lg-hops, #lg-shine, .lg-press, .pm-segtab-track, #lg-post, #lg-shown';
   var MENU_HOT = '[data-lg-surface], .pmu-pop, .pmr-menu-list, .pm6-tb-menu, .o55-win, .o55t-callout, .o55t-bar';
   function generatedMutation(rec) {
     var t = rec.target;
@@ -1755,7 +1795,7 @@
     if (rec.type !== 'childList') return false;
     /* app replacement can remove a persistent output layer; let that schedule its reconstruction */
     for (var i = 0; i < rec.removedNodes.length; i++) {
-      var n = rec.removedNodes[i]; if (n.nodeType !== 1 || !n.matches('#lg-shine, .lg-press')) return false;
+      var n = rec.removedNodes[i]; if (n.nodeType !== 1 || !n.matches('#lg-shine, .lg-press, .lg-hops')) return false;
     }
     var nodes = Array.prototype.slice.call(rec.addedNodes).concat(Array.prototype.slice.call(rec.removedNodes));
     return nodes.length > 0 && nodes.every(function (n) { return n.nodeType === 1 && n.matches(GENERATED); });
