@@ -2039,20 +2039,32 @@
       var job = rasterJob = { room: room, el: sp, cards: [], queue: [], built: false, at: performance.now() };
       var idle = window.requestIdleCallback || function (fn) { return setTimeout(function () { fn({ timeRemaining: function () { return 8; }, didTimeout: false }); }, 40); };
       var heroId = heroOf(rects, ids, room);
+      /* a build that throws tears the spare down and tells the film (onBuilt(null)), which goes on to its next room: the
+         panel is never left laid out and inert waiting for a room that will not come */
+      function failed(error) {
+        console.error('[pm-usage] raster room', error);
+        if (rasterJob !== job) return;
+        rasterClear();
+        if (onBuilt) { try { onBuilt(null); } catch (e2) { console.error('[pm-usage] raster room', e2); } }
+      }
       idle(function () {
         if (rasterJob !== job) return;
-        var frag = document.createDocumentFragment();
-        job.cards = ids.map(function (id) { var c = buildCard(id, room, byId[id]); markHero(c, heroId); frag.appendChild(c); return c; });
-        sp.appendChild(frag);
-        job.queue = readingOrder(job.cards);
+        try {
+          var frag = document.createDocumentFragment();
+          job.cards = ids.map(function (id) { var c = buildCard(id, room, byId[id]); markHero(c, heroId); frag.appendChild(c); return c; });
+          sp.appendChild(frag);
+          job.queue = readingOrder(job.cards);
+        } catch (error) { failed(error); return; }
         idle(slice, { timeout: 2000 });
       }, { timeout: 2000 });
       function slice(deadline) {
         if (rasterJob !== job) return;
         var t0 = performance.now(), n = 0, budget = deadline && deadline.timeRemaining ? Math.min(8, Math.max(1, deadline.timeRemaining())) : 8;
-        fitSliced(function () {
-          while (job.queue.length && (!n || performance.now() - t0 < budget)) { var c = job.queue.shift(); if (c.isConnected) { tierPass([c], false); n++; } }
-        });
+        try {
+          fitSliced(function () {
+            while (job.queue.length && (!n || performance.now() - t0 < budget)) { var c = job.queue.shift(); if (c.isConnected) { tierPass([c], false); n++; } }
+          });
+        } catch (error) { failed(error); return; }
         if (job.queue.length) { idle(slice, { timeout: 2000 }); return; }
         job.built = true;
         job.ms = Math.round(performance.now() - job.at);

@@ -293,6 +293,9 @@ HOST_SCOPE = ':is(#panel-usage,[data-pmu-host])'
 # compound uses, Usage-only as they should be (a hosted board never takes data-pmu-raster): 'compound' 7. The room
 # change's hold for its first painted frame (2026-10-16, P2-03 item 2, 05-film.css: the held plates at .004 and the
 # bodies built in the hold drawn inside them; a hosted board never takes data-plate-hold) brings 'rewritten' to 2,680.
+# The raster drawn a few cards at a time (2026-10-16, P2-03 review cycle 1, 05-film.css: the plates' film-layer rule and
+# the two held-plate rules out; the page chrome's panel rule and the marked card and its body in) keeps five compound
+# uses, so 'compound' stays 7 and 'rewritten' 2,680.
 # A Usage CSS
 # edit that adds or removes an anchored rule moves 'rewritten': look at what the new rules style (a hosted board gets
 # them too), then re-pin the number here. Any other use of #panel-usage (a child or sibling combinator, a rule for the
