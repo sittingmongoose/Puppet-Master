@@ -50,7 +50,10 @@
       const cs = getComputedStyle(document.body);
       calmColors = { background: cs.backgroundColor, ink: cs.color };
     };
-    if (typeof ResizeObserver === 'function') {
+    /* The shared observer is installed before the layout writers. A fresh observer on body runs after those
+       writers and can force their pending theme restyle just to read this cover's two colours. */
+    if (typeof window.PM_AFTER_LAYOUT === 'function') window.PM_AFTER_LAYOUT(read);
+    else if (typeof ResizeObserver === 'function') {
       const ready = new ResizeObserver(() => { ready.disconnect(); read(); });
       ready.observe(document.body || html);
     } else requestAnimationFrame(() => setTimeout(read, 0));
