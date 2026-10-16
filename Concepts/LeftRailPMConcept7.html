@@ -25724,6 +25724,27 @@ html[data-motion="reduced"] #panel-settings .pm51-mgr > .pm51-tabs .tab-ink { tr
 #panel-settings .o55-doctor-last { display: inline-flex; align-items: center; gap: 10px; }
 #panel-settings .o55-doctor-last small { font-size: 11.5px; color: var(--k3-text-3); }
 
+/* ---- styles.d/29-navigation-motion.css ---- */
+/* Pending is the next destination, acknowledged in the input's first paint. Its final selected style remains owned
+   by the existing rail/tab rules; this short wash uses the same ink and adds no label or persistent chrome. */
+#panel-settings [data-o55-nav-pending] {
+  background-color: color-mix(in srgb, var(--k3-accent) 20%, var(--k3-surface-0));
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--k3-accent) 55%, transparent);
+}
+/* Layout and paint of distant settings sections need not join the chapter's first frame. Auto size remembers their
+   measured height, so returning to a section keeps its scroll geometry and the place holder can retain its anchor. */
+#panel-settings .workspace-block-body > .settings-section:nth-child(n+3) {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 460px;
+}
+
+/* ---- styles.d/29-nier-calm.css ---- */
+/* A reduced-motion look change has a still, readable acknowledgement while the new scene is drawn underneath. */
+#o55np-calm {
+  position: fixed; inset: 0; z-index: 2147483600; display: grid; place-content: center;
+  contain: strict; pointer-events: auto; font: 600 15px/1.5 system-ui, sans-serif; letter-spacing: .02em;
+}
+
 /* ---- styles.d/30-inspector.css ---- */
 /* O55 · setting Details panel content (the panel's frame and spring are the engine's). */
 #panel-settings .detail-inspector { overflow: hidden; display: flex; flex-direction: column; }
@@ -50220,179 +50241,179 @@ html {
   --wpk-t-flooded-dark: url(data:image/webp;base64,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);
   --wpk-t-flooded-light: url(data:image/webp;base64,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);
 }
-html[data-lg-wall="ribbons"][data-theme$="-dark"] { --lg-wall-any: var(--lg-wall-ribbons-dark); }
-html[data-lg="on"][data-theme="glass-dark"][data-lg-wall="ribbons"]:not(#lgz) { --lg-wall: var(--lg-wall-ribbons-dark); }
+html[data-lg-wall="ribbons"][data-theme$="-dark"] body { --lg-wall-any: var(--lg-wall-ribbons-dark); }
+html[data-lg="on"][data-theme="glass-dark"][data-lg-wall="ribbons"]:not(#lgz) body { --lg-wall: var(--lg-wall-ribbons-dark); }
 html[data-theme$="-dark"] .wpk-thumb[data-wpk-id="ribbons"] { background-image: var(--wpk-t-ribbons-dark); }
-html[data-lg-wall="ribbons"][data-theme$="-light"] { --lg-wall-any: var(--lg-wall-ribbons-light); }
-html[data-lg="on"][data-theme="glass-light"][data-lg-wall="ribbons"]:not(#lgz) { --lg-wall: var(--lg-wall-ribbons-light); }
+html[data-lg-wall="ribbons"][data-theme$="-light"] body { --lg-wall-any: var(--lg-wall-ribbons-light); }
+html[data-lg="on"][data-theme="glass-light"][data-lg-wall="ribbons"]:not(#lgz) body { --lg-wall: var(--lg-wall-ribbons-light); }
 html[data-theme$="-light"] .wpk-thumb[data-wpk-id="ribbons"] { background-image: var(--wpk-t-ribbons-light); }
-html[data-lg-wall="prism"][data-theme$="-dark"] { --lg-wall-any: var(--lg-wall-prism-dark); }
-html[data-lg="on"][data-theme="glass-dark"][data-lg-wall="prism"]:not(#lgz) { --lg-wall: var(--lg-wall-prism-dark); }
+html[data-lg-wall="prism"][data-theme$="-dark"] body { --lg-wall-any: var(--lg-wall-prism-dark); }
+html[data-lg="on"][data-theme="glass-dark"][data-lg-wall="prism"]:not(#lgz) body { --lg-wall: var(--lg-wall-prism-dark); }
 html[data-theme$="-dark"] .wpk-thumb[data-wpk-id="prism"] { background-image: var(--wpk-t-prism-dark); }
-html[data-lg-wall="prism"][data-theme$="-light"] { --lg-wall-any: var(--lg-wall-prism-light); }
-html[data-lg="on"][data-theme="glass-light"][data-lg-wall="prism"]:not(#lgz) { --lg-wall: var(--lg-wall-prism-light); }
+html[data-lg-wall="prism"][data-theme$="-light"] body { --lg-wall-any: var(--lg-wall-prism-light); }
+html[data-lg="on"][data-theme="glass-light"][data-lg-wall="prism"]:not(#lgz) body { --lg-wall: var(--lg-wall-prism-light); }
 html[data-theme$="-light"] .wpk-thumb[data-wpk-id="prism"] { background-image: var(--wpk-t-prism-light); }
-html[data-lg-wall="orbs"][data-theme$="-dark"] { --lg-wall-any: var(--lg-wall-orbs-dark); }
-html[data-lg="on"][data-theme="glass-dark"][data-lg-wall="orbs"]:not(#lgz) { --lg-wall: var(--lg-wall-orbs-dark); }
+html[data-lg-wall="orbs"][data-theme$="-dark"] body { --lg-wall-any: var(--lg-wall-orbs-dark); }
+html[data-lg="on"][data-theme="glass-dark"][data-lg-wall="orbs"]:not(#lgz) body { --lg-wall: var(--lg-wall-orbs-dark); }
 html[data-theme$="-dark"] .wpk-thumb[data-wpk-id="orbs"] { background-image: var(--wpk-t-orbs-dark); }
-html[data-lg-wall="orbs"][data-theme$="-light"] { --lg-wall-any: var(--lg-wall-orbs-light); }
-html[data-lg="on"][data-theme="glass-light"][data-lg-wall="orbs"]:not(#lgz) { --lg-wall: var(--lg-wall-orbs-light); }
+html[data-lg-wall="orbs"][data-theme$="-light"] body { --lg-wall-any: var(--lg-wall-orbs-light); }
+html[data-lg="on"][data-theme="glass-light"][data-lg-wall="orbs"]:not(#lgz) body { --lg-wall: var(--lg-wall-orbs-light); }
 html[data-theme$="-light"] .wpk-thumb[data-wpk-id="orbs"] { background-image: var(--wpk-t-orbs-light); }
-html[data-lg-wall="aurora"][data-theme$="-dark"] { --lg-wall-any: var(--lg-wall-aurora-dark); }
-html[data-lg="on"][data-theme="glass-dark"][data-lg-wall="aurora"]:not(#lgz) { --lg-wall: var(--lg-wall-aurora-dark); }
+html[data-lg-wall="aurora"][data-theme$="-dark"] body { --lg-wall-any: var(--lg-wall-aurora-dark); }
+html[data-lg="on"][data-theme="glass-dark"][data-lg-wall="aurora"]:not(#lgz) body { --lg-wall: var(--lg-wall-aurora-dark); }
 html[data-theme$="-dark"] .wpk-thumb[data-wpk-id="aurora"] { background-image: var(--wpk-t-aurora-dark); }
-html[data-lg-wall="aurora"][data-theme$="-light"] { --lg-wall-any: var(--lg-wall-aurora-light); }
-html[data-lg="on"][data-theme="glass-light"][data-lg-wall="aurora"]:not(#lgz) { --lg-wall: var(--lg-wall-aurora-light); }
+html[data-lg-wall="aurora"][data-theme$="-light"] body { --lg-wall-any: var(--lg-wall-aurora-light); }
+html[data-lg="on"][data-theme="glass-light"][data-lg-wall="aurora"]:not(#lgz) body { --lg-wall: var(--lg-wall-aurora-light); }
 html[data-theme$="-light"] .wpk-thumb[data-wpk-id="aurora"] { background-image: var(--wpk-t-aurora-light); }
-html[data-lg-wall="dunes"][data-theme$="-dark"] { --lg-wall-any: var(--lg-wall-dunes-dark); }
-html[data-lg="on"][data-theme="glass-dark"][data-lg-wall="dunes"]:not(#lgz) { --lg-wall: var(--lg-wall-dunes-dark); }
+html[data-lg-wall="dunes"][data-theme$="-dark"] body { --lg-wall-any: var(--lg-wall-dunes-dark); }
+html[data-lg="on"][data-theme="glass-dark"][data-lg-wall="dunes"]:not(#lgz) body { --lg-wall: var(--lg-wall-dunes-dark); }
 html[data-theme$="-dark"] .wpk-thumb[data-wpk-id="dunes"] { background-image: var(--wpk-t-dunes-dark); }
-html[data-lg-wall="dunes"][data-theme$="-light"] { --lg-wall-any: var(--lg-wall-dunes-light); }
-html[data-lg="on"][data-theme="glass-light"][data-lg-wall="dunes"]:not(#lgz) { --lg-wall: var(--lg-wall-dunes-light); }
+html[data-lg-wall="dunes"][data-theme$="-light"] body { --lg-wall-any: var(--lg-wall-dunes-light); }
+html[data-lg="on"][data-theme="glass-light"][data-lg-wall="dunes"]:not(#lgz) body { --lg-wall: var(--lg-wall-dunes-light); }
 html[data-theme$="-light"] .wpk-thumb[data-wpk-id="dunes"] { background-image: var(--wpk-t-dunes-light); }
-html[data-lg-wall="bloom"][data-theme$="-dark"] { --lg-wall-any: var(--lg-wall-bloom-dark); }
-html[data-lg="on"][data-theme="glass-dark"][data-lg-wall="bloom"]:not(#lgz) { --lg-wall: var(--lg-wall-bloom-dark); }
+html[data-lg-wall="bloom"][data-theme$="-dark"] body { --lg-wall-any: var(--lg-wall-bloom-dark); }
+html[data-lg="on"][data-theme="glass-dark"][data-lg-wall="bloom"]:not(#lgz) body { --lg-wall: var(--lg-wall-bloom-dark); }
 html[data-theme$="-dark"] .wpk-thumb[data-wpk-id="bloom"] { background-image: var(--wpk-t-bloom-dark); }
-html[data-lg-wall="bloom"][data-theme$="-light"] { --lg-wall-any: var(--lg-wall-bloom-light); }
-html[data-lg="on"][data-theme="glass-light"][data-lg-wall="bloom"]:not(#lgz) { --lg-wall: var(--lg-wall-bloom-light); }
+html[data-lg-wall="bloom"][data-theme$="-light"] body { --lg-wall-any: var(--lg-wall-bloom-light); }
+html[data-lg="on"][data-theme="glass-light"][data-lg-wall="bloom"]:not(#lgz) body { --lg-wall: var(--lg-wall-bloom-light); }
 html[data-theme$="-light"] .wpk-thumb[data-wpk-id="bloom"] { background-image: var(--wpk-t-bloom-light); }
-html[data-lg-wall="pool"][data-theme$="-dark"] { --lg-wall-any: var(--lg-wall-pool-dark); }
-html[data-lg="on"][data-theme="glass-dark"][data-lg-wall="pool"]:not(#lgz) { --lg-wall: var(--lg-wall-pool-dark); }
+html[data-lg-wall="pool"][data-theme$="-dark"] body { --lg-wall-any: var(--lg-wall-pool-dark); }
+html[data-lg="on"][data-theme="glass-dark"][data-lg-wall="pool"]:not(#lgz) body { --lg-wall: var(--lg-wall-pool-dark); }
 html[data-theme$="-dark"] .wpk-thumb[data-wpk-id="pool"] { background-image: var(--wpk-t-pool-dark); }
-html[data-lg-wall="pool"][data-theme$="-light"] { --lg-wall-any: var(--lg-wall-pool-light); }
-html[data-lg="on"][data-theme="glass-light"][data-lg-wall="pool"]:not(#lgz) { --lg-wall: var(--lg-wall-pool-light); }
+html[data-lg-wall="pool"][data-theme$="-light"] body { --lg-wall-any: var(--lg-wall-pool-light); }
+html[data-lg="on"][data-theme="glass-light"][data-lg-wall="pool"]:not(#lgz) body { --lg-wall: var(--lg-wall-pool-light); }
 html[data-theme$="-light"] .wpk-thumb[data-wpk-id="pool"] { background-image: var(--wpk-t-pool-light); }
-html[data-lg-wall="facets"][data-theme$="-dark"] { --lg-wall-any: var(--lg-wall-facets-dark); }
-html[data-lg="on"][data-theme="glass-dark"][data-lg-wall="facets"]:not(#lgz) { --lg-wall: var(--lg-wall-facets-dark); }
+html[data-lg-wall="facets"][data-theme$="-dark"] body { --lg-wall-any: var(--lg-wall-facets-dark); }
+html[data-lg="on"][data-theme="glass-dark"][data-lg-wall="facets"]:not(#lgz) body { --lg-wall: var(--lg-wall-facets-dark); }
 html[data-theme$="-dark"] .wpk-thumb[data-wpk-id="facets"] { background-image: var(--wpk-t-facets-dark); }
-html[data-lg-wall="facets"][data-theme$="-light"] { --lg-wall-any: var(--lg-wall-facets-light); }
-html[data-lg="on"][data-theme="glass-light"][data-lg-wall="facets"]:not(#lgz) { --lg-wall: var(--lg-wall-facets-light); }
+html[data-lg-wall="facets"][data-theme$="-light"] body { --lg-wall-any: var(--lg-wall-facets-light); }
+html[data-lg="on"][data-theme="glass-light"][data-lg-wall="facets"]:not(#lgz) body { --lg-wall: var(--lg-wall-facets-light); }
 html[data-theme$="-light"] .wpk-thumb[data-wpk-id="facets"] { background-image: var(--wpk-t-facets-light); }
-html[data-lg-wall="blueprint"][data-theme$="-dark"] { --lg-wall-any: var(--lg-wall-blueprint-dark); }
-html[data-lg="on"][data-theme="glass-dark"][data-lg-wall="blueprint"]:not(#lgz) { --lg-wall: var(--lg-wall-blueprint-dark); }
+html[data-lg-wall="blueprint"][data-theme$="-dark"] body { --lg-wall-any: var(--lg-wall-blueprint-dark); }
+html[data-lg="on"][data-theme="glass-dark"][data-lg-wall="blueprint"]:not(#lgz) body { --lg-wall: var(--lg-wall-blueprint-dark); }
 html[data-theme$="-dark"] .wpk-thumb[data-wpk-id="blueprint"] { background-image: var(--wpk-t-blueprint-dark); }
-html[data-lg-wall="blueprint"][data-theme$="-light"] { --lg-wall-any: var(--lg-wall-blueprint-light); }
-html[data-lg="on"][data-theme="glass-light"][data-lg-wall="blueprint"]:not(#lgz) { --lg-wall: var(--lg-wall-blueprint-light); }
+html[data-lg-wall="blueprint"][data-theme$="-light"] body { --lg-wall-any: var(--lg-wall-blueprint-light); }
+html[data-lg="on"][data-theme="glass-light"][data-lg-wall="blueprint"]:not(#lgz) body { --lg-wall: var(--lg-wall-blueprint-light); }
 html[data-theme$="-light"] .wpk-thumb[data-wpk-id="blueprint"] { background-image: var(--wpk-t-blueprint-light); }
-html[data-lg-wall="contour"][data-theme$="-dark"] { --lg-wall-any: var(--lg-wall-contour-dark); }
-html[data-lg="on"][data-theme="glass-dark"][data-lg-wall="contour"]:not(#lgz) { --lg-wall: var(--lg-wall-contour-dark); }
+html[data-lg-wall="contour"][data-theme$="-dark"] body { --lg-wall-any: var(--lg-wall-contour-dark); }
+html[data-lg="on"][data-theme="glass-dark"][data-lg-wall="contour"]:not(#lgz) body { --lg-wall: var(--lg-wall-contour-dark); }
 html[data-theme$="-dark"] .wpk-thumb[data-wpk-id="contour"] { background-image: var(--wpk-t-contour-dark); }
-html[data-lg-wall="contour"][data-theme$="-light"] { --lg-wall-any: var(--lg-wall-contour-light); }
-html[data-lg="on"][data-theme="glass-light"][data-lg-wall="contour"]:not(#lgz) { --lg-wall: var(--lg-wall-contour-light); }
+html[data-lg-wall="contour"][data-theme$="-light"] body { --lg-wall-any: var(--lg-wall-contour-light); }
+html[data-lg="on"][data-theme="glass-light"][data-lg-wall="contour"]:not(#lgz) body { --lg-wall: var(--lg-wall-contour-light); }
 html[data-theme$="-light"] .wpk-thumb[data-wpk-id="contour"] { background-image: var(--wpk-t-contour-light); }
-html[data-lg-wall="folds"][data-theme$="-dark"] { --lg-wall-any: var(--lg-wall-folds-dark); }
-html[data-lg="on"][data-theme="glass-dark"][data-lg-wall="folds"]:not(#lgz) { --lg-wall: var(--lg-wall-folds-dark); }
+html[data-lg-wall="folds"][data-theme$="-dark"] body { --lg-wall-any: var(--lg-wall-folds-dark); }
+html[data-lg="on"][data-theme="glass-dark"][data-lg-wall="folds"]:not(#lgz) body { --lg-wall: var(--lg-wall-folds-dark); }
 html[data-theme$="-dark"] .wpk-thumb[data-wpk-id="folds"] { background-image: var(--wpk-t-folds-dark); }
-html[data-lg-wall="folds"][data-theme$="-light"] { --lg-wall-any: var(--lg-wall-folds-light); }
-html[data-lg="on"][data-theme="glass-light"][data-lg-wall="folds"]:not(#lgz) { --lg-wall: var(--lg-wall-folds-light); }
+html[data-lg-wall="folds"][data-theme$="-light"] body { --lg-wall-any: var(--lg-wall-folds-light); }
+html[data-lg="on"][data-theme="glass-light"][data-lg-wall="folds"]:not(#lgz) body { --lg-wall: var(--lg-wall-folds-light); }
 html[data-theme$="-light"] .wpk-thumb[data-wpk-id="folds"] { background-image: var(--wpk-t-folds-light); }
-html[data-lg-wall="sheets"][data-theme$="-dark"] { --lg-wall-any: var(--lg-wall-sheets-dark); }
-html[data-lg="on"][data-theme="glass-dark"][data-lg-wall="sheets"]:not(#lgz) { --lg-wall: var(--lg-wall-sheets-dark); }
+html[data-lg-wall="sheets"][data-theme$="-dark"] body { --lg-wall-any: var(--lg-wall-sheets-dark); }
+html[data-lg="on"][data-theme="glass-dark"][data-lg-wall="sheets"]:not(#lgz) body { --lg-wall: var(--lg-wall-sheets-dark); }
 html[data-theme$="-dark"] .wpk-thumb[data-wpk-id="sheets"] { background-image: var(--wpk-t-sheets-dark); }
-html[data-lg-wall="sheets"][data-theme$="-light"] { --lg-wall-any: var(--lg-wall-sheets-light); }
-html[data-lg="on"][data-theme="glass-light"][data-lg-wall="sheets"]:not(#lgz) { --lg-wall: var(--lg-wall-sheets-light); }
+html[data-lg-wall="sheets"][data-theme$="-light"] body { --lg-wall-any: var(--lg-wall-sheets-light); }
+html[data-lg="on"][data-theme="glass-light"][data-lg-wall="sheets"]:not(#lgz) body { --lg-wall: var(--lg-wall-sheets-light); }
 html[data-theme$="-light"] .wpk-thumb[data-wpk-id="sheets"] { background-image: var(--wpk-t-sheets-light); }
-html[data-lg-wall="arcs"][data-theme$="-dark"] { --lg-wall-any: var(--lg-wall-arcs-dark); }
-html[data-lg="on"][data-theme="glass-dark"][data-lg-wall="arcs"]:not(#lgz) { --lg-wall: var(--lg-wall-arcs-dark); }
+html[data-lg-wall="arcs"][data-theme$="-dark"] body { --lg-wall-any: var(--lg-wall-arcs-dark); }
+html[data-lg="on"][data-theme="glass-dark"][data-lg-wall="arcs"]:not(#lgz) body { --lg-wall: var(--lg-wall-arcs-dark); }
 html[data-theme$="-dark"] .wpk-thumb[data-wpk-id="arcs"] { background-image: var(--wpk-t-arcs-dark); }
-html[data-lg-wall="arcs"][data-theme$="-light"] { --lg-wall-any: var(--lg-wall-arcs-light); }
-html[data-lg="on"][data-theme="glass-light"][data-lg-wall="arcs"]:not(#lgz) { --lg-wall: var(--lg-wall-arcs-light); }
+html[data-lg-wall="arcs"][data-theme$="-light"] body { --lg-wall-any: var(--lg-wall-arcs-light); }
+html[data-lg="on"][data-theme="glass-light"][data-lg-wall="arcs"]:not(#lgz) body { --lg-wall: var(--lg-wall-arcs-light); }
 html[data-theme$="-light"] .wpk-thumb[data-wpk-id="arcs"] { background-image: var(--wpk-t-arcs-light); }
-html[data-lg-wall="dotwave"][data-theme$="-dark"] { --lg-wall-any: var(--lg-wall-dotwave-dark); }
-html[data-lg="on"][data-theme="glass-dark"][data-lg-wall="dotwave"]:not(#lgz) { --lg-wall: var(--lg-wall-dotwave-dark); }
+html[data-lg-wall="dotwave"][data-theme$="-dark"] body { --lg-wall-any: var(--lg-wall-dotwave-dark); }
+html[data-lg="on"][data-theme="glass-dark"][data-lg-wall="dotwave"]:not(#lgz) body { --lg-wall: var(--lg-wall-dotwave-dark); }
 html[data-theme$="-dark"] .wpk-thumb[data-wpk-id="dotwave"] { background-image: var(--wpk-t-dotwave-dark); }
-html[data-lg-wall="dotwave"][data-theme$="-light"] { --lg-wall-any: var(--lg-wall-dotwave-light); }
-html[data-lg="on"][data-theme="glass-light"][data-lg-wall="dotwave"]:not(#lgz) { --lg-wall: var(--lg-wall-dotwave-light); }
+html[data-lg-wall="dotwave"][data-theme$="-light"] body { --lg-wall-any: var(--lg-wall-dotwave-light); }
+html[data-lg="on"][data-theme="glass-light"][data-lg-wall="dotwave"]:not(#lgz) body { --lg-wall: var(--lg-wall-dotwave-light); }
 html[data-theme$="-light"] .wpk-thumb[data-wpk-id="dotwave"] { background-image: var(--wpk-t-dotwave-light); }
-html[data-lg-wall="channels"][data-theme$="-dark"] { --lg-wall-any: var(--lg-wall-channels-dark); }
-html[data-lg="on"][data-theme="glass-dark"][data-lg-wall="channels"]:not(#lgz) { --lg-wall: var(--lg-wall-channels-dark); }
+html[data-lg-wall="channels"][data-theme$="-dark"] body { --lg-wall-any: var(--lg-wall-channels-dark); }
+html[data-lg="on"][data-theme="glass-dark"][data-lg-wall="channels"]:not(#lgz) body { --lg-wall: var(--lg-wall-channels-dark); }
 html[data-theme$="-dark"] .wpk-thumb[data-wpk-id="channels"] { background-image: var(--wpk-t-channels-dark); }
-html[data-lg-wall="channels"][data-theme$="-light"] { --lg-wall-any: var(--lg-wall-channels-light); }
-html[data-lg="on"][data-theme="glass-light"][data-lg-wall="channels"]:not(#lgz) { --lg-wall: var(--lg-wall-channels-light); }
+html[data-lg-wall="channels"][data-theme$="-light"] body { --lg-wall-any: var(--lg-wall-channels-light); }
+html[data-lg="on"][data-theme="glass-light"][data-lg-wall="channels"]:not(#lgz) body { --lg-wall: var(--lg-wall-channels-light); }
 html[data-theme$="-light"] .wpk-thumb[data-wpk-id="channels"] { background-image: var(--wpk-t-channels-light); }
-html[data-lg-wall="bubbles"][data-theme$="-dark"] { --lg-wall-any: var(--lg-wall-bubbles-dark); }
-html[data-lg="on"][data-theme="glass-dark"][data-lg-wall="bubbles"]:not(#lgz) { --lg-wall: var(--lg-wall-bubbles-dark); }
+html[data-lg-wall="bubbles"][data-theme$="-dark"] body { --lg-wall-any: var(--lg-wall-bubbles-dark); }
+html[data-lg="on"][data-theme="glass-dark"][data-lg-wall="bubbles"]:not(#lgz) body { --lg-wall: var(--lg-wall-bubbles-dark); }
 html[data-theme$="-dark"] .wpk-thumb[data-wpk-id="bubbles"] { background-image: var(--wpk-t-bubbles-dark); }
-html[data-lg-wall="bubbles"][data-theme$="-light"] { --lg-wall-any: var(--lg-wall-bubbles-light); }
-html[data-lg="on"][data-theme="glass-light"][data-lg-wall="bubbles"]:not(#lgz) { --lg-wall: var(--lg-wall-bubbles-light); }
+html[data-lg-wall="bubbles"][data-theme$="-light"] body { --lg-wall-any: var(--lg-wall-bubbles-light); }
+html[data-lg="on"][data-theme="glass-light"][data-lg-wall="bubbles"]:not(#lgz) body { --lg-wall: var(--lg-wall-bubbles-light); }
 html[data-theme$="-light"] .wpk-thumb[data-wpk-id="bubbles"] { background-image: var(--wpk-t-bubbles-light); }
-html[data-lg-wall="hills"][data-theme$="-dark"] { --lg-wall-any: var(--lg-wall-hills-dark); }
-html[data-lg="on"][data-theme="glass-dark"][data-lg-wall="hills"]:not(#lgz) { --lg-wall: var(--lg-wall-hills-dark); }
+html[data-lg-wall="hills"][data-theme$="-dark"] body { --lg-wall-any: var(--lg-wall-hills-dark); }
+html[data-lg="on"][data-theme="glass-dark"][data-lg-wall="hills"]:not(#lgz) body { --lg-wall: var(--lg-wall-hills-dark); }
 html[data-theme$="-dark"] .wpk-thumb[data-wpk-id="hills"] { background-image: var(--wpk-t-hills-dark); }
-html[data-lg-wall="hills"][data-theme$="-light"] { --lg-wall-any: var(--lg-wall-hills-light); }
-html[data-lg="on"][data-theme="glass-light"][data-lg-wall="hills"]:not(#lgz) { --lg-wall: var(--lg-wall-hills-light); }
+html[data-lg-wall="hills"][data-theme$="-light"] body { --lg-wall-any: var(--lg-wall-hills-light); }
+html[data-lg="on"][data-theme="glass-light"][data-lg-wall="hills"]:not(#lgz) body { --lg-wall: var(--lg-wall-hills-light); }
 html[data-theme$="-light"] .wpk-thumb[data-wpk-id="hills"] { background-image: var(--wpk-t-hills-light); }
-html[data-lg-wall="stripes"][data-theme$="-dark"] { --lg-wall-any: var(--lg-wall-stripes-dark); }
-html[data-lg="on"][data-theme="glass-dark"][data-lg-wall="stripes"]:not(#lgz) { --lg-wall: var(--lg-wall-stripes-dark); }
+html[data-lg-wall="stripes"][data-theme$="-dark"] body { --lg-wall-any: var(--lg-wall-stripes-dark); }
+html[data-lg="on"][data-theme="glass-dark"][data-lg-wall="stripes"]:not(#lgz) body { --lg-wall: var(--lg-wall-stripes-dark); }
 html[data-theme$="-dark"] .wpk-thumb[data-wpk-id="stripes"] { background-image: var(--wpk-t-stripes-dark); }
-html[data-lg-wall="stripes"][data-theme$="-light"] { --lg-wall-any: var(--lg-wall-stripes-light); }
-html[data-lg="on"][data-theme="glass-light"][data-lg-wall="stripes"]:not(#lgz) { --lg-wall: var(--lg-wall-stripes-light); }
+html[data-lg-wall="stripes"][data-theme$="-light"] body { --lg-wall-any: var(--lg-wall-stripes-light); }
+html[data-lg="on"][data-theme="glass-light"][data-lg-wall="stripes"]:not(#lgz) body { --lg-wall: var(--lg-wall-stripes-light); }
 html[data-theme$="-light"] .wpk-thumb[data-wpk-id="stripes"] { background-image: var(--wpk-t-stripes-light); }
-html[data-lg-wall="horizon"][data-theme$="-dark"] { --lg-wall-any: var(--lg-wall-horizon-dark); }
-html[data-lg="on"][data-theme="glass-dark"][data-lg-wall="horizon"]:not(#lgz) { --lg-wall: var(--lg-wall-horizon-dark); }
+html[data-lg-wall="horizon"][data-theme$="-dark"] body { --lg-wall-any: var(--lg-wall-horizon-dark); }
+html[data-lg="on"][data-theme="glass-dark"][data-lg-wall="horizon"]:not(#lgz) body { --lg-wall: var(--lg-wall-horizon-dark); }
 html[data-theme$="-dark"] .wpk-thumb[data-wpk-id="horizon"] { background-image: var(--wpk-t-horizon-dark); }
-html[data-lg-wall="horizon"][data-theme$="-light"] { --lg-wall-any: var(--lg-wall-horizon-light); }
-html[data-lg="on"][data-theme="glass-light"][data-lg-wall="horizon"]:not(#lgz) { --lg-wall: var(--lg-wall-horizon-light); }
+html[data-lg-wall="horizon"][data-theme$="-light"] body { --lg-wall-any: var(--lg-wall-horizon-light); }
+html[data-lg="on"][data-theme="glass-light"][data-lg-wall="horizon"]:not(#lgz) body { --lg-wall: var(--lg-wall-horizon-light); }
 html[data-theme$="-light"] .wpk-thumb[data-wpk-id="horizon"] { background-image: var(--wpk-t-horizon-light); }
-html[data-lg-wall="peaks"][data-theme$="-dark"] { --lg-wall-any: var(--lg-wall-peaks-dark); }
-html[data-lg="on"][data-theme="glass-dark"][data-lg-wall="peaks"]:not(#lgz) { --lg-wall: var(--lg-wall-peaks-dark); }
+html[data-lg-wall="peaks"][data-theme$="-dark"] body { --lg-wall-any: var(--lg-wall-peaks-dark); }
+html[data-lg="on"][data-theme="glass-dark"][data-lg-wall="peaks"]:not(#lgz) body { --lg-wall: var(--lg-wall-peaks-dark); }
 html[data-theme$="-dark"] .wpk-thumb[data-wpk-id="peaks"] { background-image: var(--wpk-t-peaks-dark); }
-html[data-lg-wall="peaks"][data-theme$="-light"] { --lg-wall-any: var(--lg-wall-peaks-light); }
-html[data-lg="on"][data-theme="glass-light"][data-lg-wall="peaks"]:not(#lgz) { --lg-wall: var(--lg-wall-peaks-light); }
+html[data-lg-wall="peaks"][data-theme$="-light"] body { --lg-wall-any: var(--lg-wall-peaks-light); }
+html[data-lg="on"][data-theme="glass-light"][data-lg-wall="peaks"]:not(#lgz) body { --lg-wall: var(--lg-wall-peaks-light); }
 html[data-theme$="-light"] .wpk-thumb[data-wpk-id="peaks"] { background-image: var(--wpk-t-peaks-light); }
-html[data-lg-wall="circuit"][data-theme$="-dark"] { --lg-wall-any: var(--lg-wall-circuit-dark); }
-html[data-lg="on"][data-theme="glass-dark"][data-lg-wall="circuit"]:not(#lgz) { --lg-wall: var(--lg-wall-circuit-dark); }
+html[data-lg-wall="circuit"][data-theme$="-dark"] body { --lg-wall-any: var(--lg-wall-circuit-dark); }
+html[data-lg="on"][data-theme="glass-dark"][data-lg-wall="circuit"]:not(#lgz) body { --lg-wall: var(--lg-wall-circuit-dark); }
 html[data-theme$="-dark"] .wpk-thumb[data-wpk-id="circuit"] { background-image: var(--wpk-t-circuit-dark); }
-html[data-lg-wall="circuit"][data-theme$="-light"] { --lg-wall-any: var(--lg-wall-circuit-light); }
-html[data-lg="on"][data-theme="glass-light"][data-lg-wall="circuit"]:not(#lgz) { --lg-wall: var(--lg-wall-circuit-light); }
+html[data-lg-wall="circuit"][data-theme$="-light"] body { --lg-wall-any: var(--lg-wall-circuit-light); }
+html[data-lg="on"][data-theme="glass-light"][data-lg-wall="circuit"]:not(#lgz) body { --lg-wall: var(--lg-wall-circuit-light); }
 html[data-theme$="-light"] .wpk-thumb[data-wpk-id="circuit"] { background-image: var(--wpk-t-circuit-light); }
-html[data-lg-wall="dither"][data-theme$="-dark"] { --lg-wall-any: var(--lg-wall-dither-dark); }
-html[data-lg="on"][data-theme="glass-dark"][data-lg-wall="dither"]:not(#lgz) { --lg-wall: var(--lg-wall-dither-dark); }
+html[data-lg-wall="dither"][data-theme$="-dark"] body { --lg-wall-any: var(--lg-wall-dither-dark); }
+html[data-lg="on"][data-theme="glass-dark"][data-lg-wall="dither"]:not(#lgz) body { --lg-wall: var(--lg-wall-dither-dark); }
 html[data-theme$="-dark"] .wpk-thumb[data-wpk-id="dither"] { background-image: var(--wpk-t-dither-dark); }
-html[data-lg-wall="dither"][data-theme$="-light"] { --lg-wall-any: var(--lg-wall-dither-light); }
-html[data-lg="on"][data-theme="glass-light"][data-lg-wall="dither"]:not(#lgz) { --lg-wall: var(--lg-wall-dither-light); }
+html[data-lg-wall="dither"][data-theme$="-light"] body { --lg-wall-any: var(--lg-wall-dither-light); }
+html[data-lg="on"][data-theme="glass-light"][data-lg-wall="dither"]:not(#lgz) body { --lg-wall: var(--lg-wall-dither-light); }
 html[data-theme$="-light"] .wpk-thumb[data-wpk-id="dither"] { background-image: var(--wpk-t-dither-light); }
-html[data-lg-wall="stars"][data-theme$="-dark"] { --lg-wall-any: var(--lg-wall-stars-dark); }
-html[data-lg="on"][data-theme="glass-dark"][data-lg-wall="stars"]:not(#lgz) { --lg-wall: var(--lg-wall-stars-dark); }
+html[data-lg-wall="stars"][data-theme$="-dark"] body { --lg-wall-any: var(--lg-wall-stars-dark); }
+html[data-lg="on"][data-theme="glass-dark"][data-lg-wall="stars"]:not(#lgz) body { --lg-wall: var(--lg-wall-stars-dark); }
 html[data-theme$="-dark"] .wpk-thumb[data-wpk-id="stars"] { background-image: var(--wpk-t-stars-dark); }
-html[data-lg-wall="stars"][data-theme$="-light"] { --lg-wall-any: var(--lg-wall-stars-light); }
-html[data-lg="on"][data-theme="glass-light"][data-lg-wall="stars"]:not(#lgz) { --lg-wall: var(--lg-wall-stars-light); }
+html[data-lg-wall="stars"][data-theme$="-light"] body { --lg-wall-any: var(--lg-wall-stars-light); }
+html[data-lg="on"][data-theme="glass-light"][data-lg-wall="stars"]:not(#lgz) body { --lg-wall: var(--lg-wall-stars-light); }
 html[data-theme$="-light"] .wpk-thumb[data-wpk-id="stars"] { background-image: var(--wpk-t-stars-light); }
-html[data-lg-wall="city"][data-theme$="-dark"] { --lg-wall-any: var(--lg-wall-city-dark); }
-html[data-lg="on"][data-theme="glass-dark"][data-lg-wall="city"]:not(#lgz) { --lg-wall: var(--lg-wall-city-dark); }
+html[data-lg-wall="city"][data-theme$="-dark"] body { --lg-wall-any: var(--lg-wall-city-dark); }
+html[data-lg="on"][data-theme="glass-dark"][data-lg-wall="city"]:not(#lgz) body { --lg-wall: var(--lg-wall-city-dark); }
 html[data-theme$="-dark"] .wpk-thumb[data-wpk-id="city"] { background-image: var(--wpk-t-city-dark); }
-html[data-lg-wall="city"][data-theme$="-light"] { --lg-wall-any: var(--lg-wall-city-light); }
-html[data-lg="on"][data-theme="glass-light"][data-lg-wall="city"]:not(#lgz) { --lg-wall: var(--lg-wall-city-light); }
+html[data-lg-wall="city"][data-theme$="-light"] body { --lg-wall-any: var(--lg-wall-city-light); }
+html[data-lg="on"][data-theme="glass-light"][data-lg-wall="city"]:not(#lgz) body { --lg-wall: var(--lg-wall-city-light); }
 html[data-theme$="-light"] .wpk-thumb[data-wpk-id="city"] { background-image: var(--wpk-t-city-light); }
-html[data-lg-wall="bunker"][data-theme$="-dark"] { --lg-wall-any: var(--lg-wall-bunker-dark); }
-html[data-lg="on"][data-theme="glass-dark"][data-lg-wall="bunker"]:not(#lgz) { --lg-wall: var(--lg-wall-bunker-dark); }
+html[data-lg-wall="bunker"][data-theme$="-dark"] body { --lg-wall-any: var(--lg-wall-bunker-dark); }
+html[data-lg="on"][data-theme="glass-dark"][data-lg-wall="bunker"]:not(#lgz) body { --lg-wall: var(--lg-wall-bunker-dark); }
 html[data-theme$="-dark"] .wpk-thumb[data-wpk-id="bunker"] { background-image: var(--wpk-t-bunker-dark); }
-html[data-lg-wall="bunker"][data-theme$="-light"] { --lg-wall-any: var(--lg-wall-bunker-light); }
-html[data-lg="on"][data-theme="glass-light"][data-lg-wall="bunker"]:not(#lgz) { --lg-wall: var(--lg-wall-bunker-light); }
+html[data-lg-wall="bunker"][data-theme$="-light"] body { --lg-wall-any: var(--lg-wall-bunker-light); }
+html[data-lg="on"][data-theme="glass-light"][data-lg-wall="bunker"]:not(#lgz) body { --lg-wall: var(--lg-wall-bunker-light); }
 html[data-theme$="-light"] .wpk-thumb[data-wpk-id="bunker"] { background-image: var(--wpk-t-bunker-light); }
-html[data-lg-wall="desert"][data-theme$="-dark"] { --lg-wall-any: var(--lg-wall-desert-dark); }
-html[data-lg="on"][data-theme="glass-dark"][data-lg-wall="desert"]:not(#lgz) { --lg-wall: var(--lg-wall-desert-dark); }
+html[data-lg-wall="desert"][data-theme$="-dark"] body { --lg-wall-any: var(--lg-wall-desert-dark); }
+html[data-lg="on"][data-theme="glass-dark"][data-lg-wall="desert"]:not(#lgz) body { --lg-wall: var(--lg-wall-desert-dark); }
 html[data-theme$="-dark"] .wpk-thumb[data-wpk-id="desert"] { background-image: var(--wpk-t-desert-dark); }
-html[data-lg-wall="desert"][data-theme$="-light"] { --lg-wall-any: var(--lg-wall-desert-light); }
-html[data-lg="on"][data-theme="glass-light"][data-lg-wall="desert"]:not(#lgz) { --lg-wall: var(--lg-wall-desert-light); }
+html[data-lg-wall="desert"][data-theme$="-light"] body { --lg-wall-any: var(--lg-wall-desert-light); }
+html[data-lg="on"][data-theme="glass-light"][data-lg-wall="desert"]:not(#lgz) body { --lg-wall: var(--lg-wall-desert-light); }
 html[data-theme$="-light"] .wpk-thumb[data-wpk-id="desert"] { background-image: var(--wpk-t-desert-light); }
-html[data-lg-wall="forest"][data-theme$="-dark"] { --lg-wall-any: var(--lg-wall-forest-dark); }
-html[data-lg="on"][data-theme="glass-dark"][data-lg-wall="forest"]:not(#lgz) { --lg-wall: var(--lg-wall-forest-dark); }
+html[data-lg-wall="forest"][data-theme$="-dark"] body { --lg-wall-any: var(--lg-wall-forest-dark); }
+html[data-lg="on"][data-theme="glass-dark"][data-lg-wall="forest"]:not(#lgz) body { --lg-wall: var(--lg-wall-forest-dark); }
 html[data-theme$="-dark"] .wpk-thumb[data-wpk-id="forest"] { background-image: var(--wpk-t-forest-dark); }
-html[data-lg-wall="forest"][data-theme$="-light"] { --lg-wall-any: var(--lg-wall-forest-light); }
-html[data-lg="on"][data-theme="glass-light"][data-lg-wall="forest"]:not(#lgz) { --lg-wall: var(--lg-wall-forest-light); }
+html[data-lg-wall="forest"][data-theme$="-light"] body { --lg-wall-any: var(--lg-wall-forest-light); }
+html[data-lg="on"][data-theme="glass-light"][data-lg-wall="forest"]:not(#lgz) body { --lg-wall: var(--lg-wall-forest-light); }
 html[data-theme$="-light"] .wpk-thumb[data-wpk-id="forest"] { background-image: var(--wpk-t-forest-light); }
-html[data-lg-wall="park"][data-theme$="-dark"] { --lg-wall-any: var(--lg-wall-park-dark); }
-html[data-lg="on"][data-theme="glass-dark"][data-lg-wall="park"]:not(#lgz) { --lg-wall: var(--lg-wall-park-dark); }
+html[data-lg-wall="park"][data-theme$="-dark"] body { --lg-wall-any: var(--lg-wall-park-dark); }
+html[data-lg="on"][data-theme="glass-dark"][data-lg-wall="park"]:not(#lgz) body { --lg-wall: var(--lg-wall-park-dark); }
 html[data-theme$="-dark"] .wpk-thumb[data-wpk-id="park"] { background-image: var(--wpk-t-park-dark); }
-html[data-lg-wall="park"][data-theme$="-light"] { --lg-wall-any: var(--lg-wall-park-light); }
-html[data-lg="on"][data-theme="glass-light"][data-lg-wall="park"]:not(#lgz) { --lg-wall: var(--lg-wall-park-light); }
+html[data-lg-wall="park"][data-theme$="-light"] body { --lg-wall-any: var(--lg-wall-park-light); }
+html[data-lg="on"][data-theme="glass-light"][data-lg-wall="park"]:not(#lgz) body { --lg-wall: var(--lg-wall-park-light); }
 html[data-theme$="-light"] .wpk-thumb[data-wpk-id="park"] { background-image: var(--wpk-t-park-light); }
-html[data-lg-wall="flooded"][data-theme$="-dark"] { --lg-wall-any: var(--lg-wall-flooded-dark); }
-html[data-lg="on"][data-theme="glass-dark"][data-lg-wall="flooded"]:not(#lgz) { --lg-wall: var(--lg-wall-flooded-dark); }
+html[data-lg-wall="flooded"][data-theme$="-dark"] body { --lg-wall-any: var(--lg-wall-flooded-dark); }
+html[data-lg="on"][data-theme="glass-dark"][data-lg-wall="flooded"]:not(#lgz) body { --lg-wall: var(--lg-wall-flooded-dark); }
 html[data-theme$="-dark"] .wpk-thumb[data-wpk-id="flooded"] { background-image: var(--wpk-t-flooded-dark); }
-html[data-lg-wall="flooded"][data-theme$="-light"] { --lg-wall-any: var(--lg-wall-flooded-light); }
-html[data-lg="on"][data-theme="glass-light"][data-lg-wall="flooded"]:not(#lgz) { --lg-wall: var(--lg-wall-flooded-light); }
+html[data-lg-wall="flooded"][data-theme$="-light"] body { --lg-wall-any: var(--lg-wall-flooded-light); }
+html[data-lg="on"][data-theme="glass-light"][data-lg-wall="flooded"]:not(#lgz) body { --lg-wall: var(--lg-wall-flooded-light); }
 html[data-theme$="-light"] .wpk-thumb[data-wpk-id="flooded"] { background-image: var(--wpk-t-flooded-light); }
 /* Wallpapers for every look: the paint and the Settings gallery (pm7-wallpapers, Opus 5.5, 2026-10-13).
  *
@@ -50401,6 +50422,18 @@ html[data-theme$="-light"] .wpk-thumb[data-wpk-id="flooded"] { background-image:
  * for every catalog id the rules that land its print on --lg-wall (Glass) and --lg-wall-any (every other look).
  * Glass paints --lg-wall itself (glass.css, glass.js); this sheet paints --lg-wall-any.
  */
+
+/* Only the body consumes these changing images. Keep them off html: even a non-inherited variable change there
+   restyles the app's descendants. The selected print is now scoped to its painter and stops inheriting there.
+   The immutable catalogue image variables and the root's wallpaper identity retain their existing contract. */
+@property --lg-wall { syntax: "*"; inherits: false; }
+@property --lg-wall-any { syntax: "*"; inherits: false; }
+@property --lg-wall-hold { syntax: "*"; inherits: false; }
+body { isolation: isolate; }
+/* Permanent out-of-flow print planes: no app layout, no surface copies, no input interception. The body remains
+   the canonical settled background. These planes are above its print and below all of the interface. */
+.wpk-print { position: fixed; inset: 0; z-index: -1; pointer-events: none; opacity: 0; contain: strict;
+  background: center / cover no-repeat; will-change: opacity; }
 
 /* ---------------------------------------------------------------------------------------------------------------
    1. The paint. Basic, Friendly, Retro and NieR Mode show the chosen wallpaper around and between their opaque
@@ -50411,8 +50444,6 @@ html[data-theme$="-light"] .wpk-thumb[data-wpk-id="flooded"] { background-image:
 html[data-lg-wall-any]:not([data-theme^="glass"]):not(#wpkz) body { background: var(--background) var(--lg-wall-any, none) center / cover no-repeat !important; }
 html[data-lg-wall-any]:not([data-theme^="glass"]):not(#wpkz) :is(.app-shell, .main-area) { background: transparent !important; }
 html[data-lg-wall-any][data-o55-nier-scene]:not(#wpkz) #o55-nier-scene { display: none !important; }
-/* Glass, between a choice and its new frost: the body keeps the print it showed (wallpapers.js, "hold") */
-html[data-lg="on"][data-theme^="glass"][data-wpk-hold]:not(#lgz):not(#wpkz) body { background-image: var(--wpk-hold) !important; }
 /* The page grounds that NieR's scenes already show through (the Usage board, Settings Home) show the wallpaper too,
    under a light veil of the look's ground, so the few words that sit between the cards keep their contrast. The cards,
    the board's header and its rail keep their own fills. */
@@ -50423,7 +50454,7 @@ html[data-lg-wall-any]:not([data-theme^="glass"]):not(#wpkz) :is(#pmuStage.pmu-s
 /* ---------------------------------------------------------------------------------------------------------------
    2. The gallery: one Settings row, the full width of the section. Tiles are the look's controls: its surface, its
       line, its corners (square in Retro and NieR), no pills. Nothing in it moves: a choice, a hover and focus change
-      at once, so Reduce motion has nothing to stop and the wallpaper itself is swapped in one frame.
+      at once. Reduce motion swaps the prepared print and frost together without the backdrop crossfade.
    --------------------------------------------------------------------------------------------------------------- */
 /* Settings styles its buttons from #panel-settings (font: inherit), so the gallery's rules carry :not(#wpkz) too */
 .wpk-row { display: block !important; }
@@ -87806,6 +87837,33 @@ window.PM12_REFERENCE = {"version":"1.0.0","total":1000,"inventory_sha256":"be85
     if(k&&!window.PM_SETTINGS_REGISTRY&&CONCEPT_FIXTURE_MODE)try{localStorage.setItem(k,JSON.stringify(owned));}catch(_e){}
     if(!bridgeDepth)applyPaint(snapshot);
   }
+/* Inserted inside the existing project Settings adapter by settings_layer.py. The demo uses the same projection
+   key as ordinary edits. Defaults, history and the rollback snapshot are one atomic localStorage replacement. */
+function restoreProjectDefaults(request) {
+  var p = projectRecord(), k = key();
+  if (window.PM_SETTINGS_REGISTRY || !CONCEPT_FIXTURE_MODE) return { ok: false, reason: 'The attached Settings owner must restore this project.' };
+  if (!p || !k || !request || request.project_id !== p.id) return { ok: false, reason: 'Select the project whose defaults you want to restore.' };
+  if (window.PM_SETTINGS_PROJECT_SNAPSHOTS && window.PM_SETTINGS_PROJECT_SNAPSHOTS[p.id]) return { ok: false, reason: 'This supplied project snapshot is read only.' };
+  try {
+    var before = scrubCredentialSettings(JSON.parse(localStorage.getItem(k) || '{}'));
+    var next = clone(before), receipt = 'settings-restore-' + (crypto.randomUUID ? crypto.randomUUID() : Date.now() + '-' + Math.random().toString(16).slice(2));
+    next.schema_version = 'pm7.settings.project_projection.v1';
+    next.settings = {}; next.changed = {};
+    next.settingsTransferRollbacks = next.settingsTransferRollbacks || {};
+    next.settingsTransferRollbacks[receipt] = { settings: clone(before.settings || {}), changed: clone(before.changed || {}) };
+    next.settingsTransferHistory = next.settingsTransferHistory || [];
+    next.settingsTransferHistory.unshift({ time: new Date().toISOString(), action: 'Restored project defaults',
+      result: 'Project settings restored. Saved sign-ins and project history were kept.',
+      receipt_id: receipt, rollback_ref: receipt, rollback_available: true, fixture_mode: true });
+    var bytes = JSON.stringify(next);
+    localStorage.setItem(k, bytes);
+    if (localStorage.getItem(k) !== bytes) return { ok: false, reason: 'The saved defaults could not be verified.' };
+    return { ok: true, receipt_id: receipt, rollback_ref: receipt };
+  } catch (error) {
+    return { ok: false, reason: 'The project settings could not be saved. Check that browser storage is available and try again.' };
+  }
+}
+
   function reset(){var k=key();if(k)try{localStorage.removeItem(k);}catch(_e){}}
   function projectSnapshot(projectId){
     var owner=window.PM_SETTINGS_REGISTRY,registry=owner&&owner.getProjectSnapshot;
@@ -87916,7 +87974,7 @@ window.PM12_REFERENCE = {"version":"1.0.0","total":1000,"inventory_sha256":"be85
     document.addEventListener('page.changed',closeIfInactive);
     new MutationObserver(function(){closeIfInactive({page:panel.classList.contains('active')?'settings':'inactive'});}).observe(panel,{attributes:true,attributeFilter:['class']});
   }
-  window.PM7_SETTINGS_TOME={load:load,save:save,reset:reset,projectSnapshot:projectSnapshot,dispatch:dispatch,consumeCommandResult:consumeCommandResult,applyPaint:applyPaint,clampGlassAlpha:clampGlassAlpha,configuredThemeSlug:configuredThemeSlug,setChromeThemeFamily:setChromeThemeFamily,setChromeThemeMode:setChromeThemeMode,project:projectRecord,projectLabel:function(){var p=projectRecord();return p?p.label:'No project';},portal:function(){return document.getElementById('pm-settings-portals')||document.getElementById('panel-settings')||document.body;},ownsEvent:function(target){var root=document.getElementById('pm-settings-root'),portal=document.getElementById('pm-settings-portals');return !!(target&&((root&&root.contains(target))||(portal&&portal.contains(target))));},openBloom:openBloom};
+  window.PM7_SETTINGS_TOME={load:load,save:save,reset:reset,restoreProjectDefaults:restoreProjectDefaults,projectSnapshot:projectSnapshot,dispatch:dispatch,consumeCommandResult:consumeCommandResult,applyPaint:applyPaint,clampGlassAlpha:clampGlassAlpha,configuredThemeSlug:configuredThemeSlug,setChromeThemeFamily:setChromeThemeFamily,setChromeThemeMode:setChromeThemeMode,project:projectRecord,projectLabel:function(){var p=projectRecord();return p?p.label:'No project';},portal:function(){return document.getElementById('pm-settings-portals')||document.getElementById('panel-settings')||document.body;},ownsEvent:function(target){var root=document.getElementById('pm-settings-root'),portal=document.getElementById('pm-settings-portals');return !!(target&&((root&&root.contains(target))||(portal&&portal.contains(target))));},openBloom:openBloom};
   window.PM7_SETTINGS_OPEN_BLOOM=openBloom;
   document.addEventListener('DOMContentLoaded',function(){setTimeout(function(){redirectProjectModal();reloadOnProjectChange();installPanelLifecycle();window.addEventListener('pm7.settings.runtime-context.changed',function(){if(window.PM12_KIMI&&typeof window.PM12_KIMI.renderApp==='function')window.PM12_KIMI.renderApp({soft:true});});if(window.PM12_KIMI)applyPaint(window.PM12_KIMI.getState());},0);});
 })();
@@ -88288,14 +88346,14 @@ window.PM12_REFERENCE = {"version":"1.0.0","total":1000,"inventory_sha256":"be85
     delete state.settings[id];delete state.changed[id];return true;
   }
   function restoreAllProjectDefaults(){
-    const project=window.PM7_SETTINGS_TOME.project(),registry=window.PM_SETTINGS_REGISTRY,restore=registry&&registry.restoreProjectDefaults;
+    const project=window.PM7_SETTINGS_TOME.project(),registry=window.PM_SETTINGS_REGISTRY,restore=registry?registry.restoreProjectDefaults:window.PM7_SETTINGS_TOME.restoreProjectDefaults;
     if(!project){showToast('Select or create a project','No-project mode has no persisted Settings defaults to restore.','warning');return false;}
     if(state.settingsProjectionReadOnly===true){showToast('Defaults were not restored','The attached Settings owner has not supplied a current readable project projection.','error');return false;}
     if(typeof restore!=='function'){showToast('Defaults were not restored','The Settings owner does not expose the required atomic restore-all transaction.','warning');return false;}
     const result=restore({project_id:project.id,create_rollback:true,preserve_credential_references:true});
     if(result&&typeof result.then==='function'){showToast('Defaults were not restored','The concept requires an accepted owner receipt before updating its projection.','error');return false;}
     if(!result||result.ok===false){showToast('Defaults were not restored',result?.safe_user_message||result?.reason||'The Settings owner rejected restore-all.','error');return false;}
-    state=loadState();ensureStateShape();state.detailSetting=null;renderApp();window.PM7_SETTINGS_TOME.applyPaint(state);showToast('Project defaults restored','The owner restored ordinary project Settings atomically and preserved secure credential references.','warning');return true;
+    const restorePlace={home:state.home,domain:state.domain,workspace:state.workspace,activeSection:clone(state.activeSection||{})};state=loadState();ensureStateShape();Object.assign(state,restorePlace);state.detailSetting=null;renderApp();window.PM7_SETTINGS_TOME.applyPaint(state);showToast('Project defaults restored','Project settings are back to their defaults. Saved sign-ins and history were kept.','success');return true;
   }
   function portalFrame(){const portal=portalRoot(),rect=portal.getBoundingClientRect();return {portal,rect,width:portal.clientWidth||rect.width,height:portal.clientHeight||rect.height};}
   let hostWidth=0;
@@ -94244,6 +94302,15 @@ PM51.settingRows = (ids, { title, help, overrides = {}, cls, id: sectionId } = {
    Every row the kit can draw again goes through PM51.swapRow, which patches the row in place (kit.d/28-in-place.js):
    the control that was used keeps focus and hover and runs its own transition (M4, 2026-10-14). */
 const pm51OriginalRefreshSettingRow = refreshSettingRow;
+let pm51SavedRowProjection = 0;
+/* A bridge that already committed and saved a transaction only needs to draw its rows. Saving again for each row
+   cloned the entire project repeatedly underneath Customize. The normal row path still persists, and this narrow
+   synchronous scope cannot swallow a later input or an asynchronous save. Missing rows wait for their next mount. */
+PM51.refreshSavedRow = id => {
+  if (!root.querySelector(`#setting-${cssEscape(id)}`) || !findSettingGlobal(id)) return;
+  pm51SavedRowProjection++;
+  try { return refreshSettingRow(id); } finally { pm51SavedRowProjection--; }
+};
 const pm51FocusIndex = el => { const act = document.activeElement; if (!act || !el.contains(act)) return -1; return [...el.querySelectorAll('button, input, select, textarea, [tabindex]')].indexOf(act); };
 PM51.swapRow = (el, next) => {
   if (!el || !next) return;
@@ -94258,7 +94325,7 @@ refreshSettingRow = function (id) {
   const inspecting = state.detailSetting === id || detailInspectorVisible;
   const own = !!(override && el && el.closest('.pm51-setting-rows'));
   if (!own && !inspecting && !(el && findSettingGlobal(id))) return pm51OriginalRefreshSettingRow.apply(this, arguments);
-  saveState();
+  if (!pm51SavedRowProjection) saveState();
   if (el) {
     const found = own ? null : findSettingGlobal(id);
     const tpl = document.createElement('template');
@@ -94905,11 +94972,16 @@ jumpToWorkspace = function (wsId, behavior) {
 let pm51RosterFitObserver = null, pm51RosterFitTarget = null;
 function installRosterFit() {
   const scroller = root.querySelector('#settings-document'); if (!scroller) return;
-  const apply = () => root.style.setProperty('--pm51-doc-h', scroller.clientHeight + 'px');
-  apply();
   if (pm51RosterFitTarget === scroller || typeof ResizeObserver !== 'function') return;
   if (pm51RosterFitObserver) pm51RosterFitObserver.disconnect();
-  pm51RosterFitObserver = new ResizeObserver(apply); pm51RosterFitObserver.observe(scroller); pm51RosterFitTarget = scroller;
+  /* The document has no border or padding. Its delivered content box is the client height without a forced layout.
+     Keep the prior height across chapter replacement; an unchanged value must not restyle every Settings row. */
+  pm51RosterFitObserver = new ResizeObserver(entries => {
+    const entry = entries.find(e => e.target === scroller); if (!entry || !scroller.isConnected) return;
+    const height = Math.round(entry.contentRect.height) + 'px';
+    if (root.style.getPropertyValue('--pm51-doc-h') !== height) root.style.setProperty('--pm51-doc-h', height);
+  });
+  pm51RosterFitObserver.observe(scroller); pm51RosterFitTarget = scroller;
 }
 const pm51OriginalAfterRender = afterRender;
 afterRender = function () {
@@ -94922,7 +94994,10 @@ const pm51OriginalBoot = boot;
 boot = function () { const r = pm51OriginalBoot.apply(this, arguments); if (window.PM12_KIMI && typeof window.PM12_KIMI === 'object') window.PM12_KIMI.renderApp = (...args) => renderApp(...args); return r; };
 
 /* ---------- motion: no blank frames ----------------------------------- */
+let pm51ClassifyReveal = null;
 armSectionReveal = function () {
+  if (pm51ClassifyReveal) { pm51ClassifyReveal.disconnect(); pm51ClassifyReveal = null; }
+  if (revealObserver) { revealObserver.disconnect(); revealObserver = null; }
   try { PM51.applyFilters(root); } catch (e) { /* filters are a convenience; never block reveal */ }
   /* reduced motion, the system's or the app's own Reduce motion: every section is simply there */
   if (o55Still()) {
@@ -94932,19 +95007,34 @@ armSectionReveal = function () {
   const nodes = root.querySelectorAll('.section-block, .settings-section, .manager-section');
   if (!nodes.length) return;
   const scroller = root.querySelector('#settings-document');
-  const viewBottom = scroller ? scroller.getBoundingClientRect().bottom + 120 : window.innerHeight + 120;
-  if (!revealObserver) {
-    revealObserver = new IntersectionObserver(entries => {
-      for (const entry of entries) { if (!entry.isIntersecting) continue; entry.target.classList.add('is-revealed'); entry.target.classList.remove('will-reveal'); revealObserver.unobserve(entry.target); }
-    }, { threshold: 0.04 });
-  } else revealObserver.disconnect();
-  for (const node of nodes) {
-    if (node.classList.contains('is-revealed')) continue;
-    node.classList.add('section-block');
-    if (node.getBoundingClientRect().top < viewBottom) { node.classList.add('is-revealed', 'pm51-instant'); continue; }
-    node.classList.add('will-reveal');
-    revealObserver.observe(node);
-  }
+  /* Intersection entries carry the positions from the completed layout. Reading every section's rectangle in a
+     ResizeObserver still forced a second layout after another observer's write, and rendered distant contained
+     sections just to classify them. Initially visible sections stay fully painted; the same 260 ms reveal arms
+     only sections beyond the viewport, before the reader can reach them. */
+  const shown = new IntersectionObserver(entries => {
+    for (const entry of entries) {
+      if (!entry.isIntersecting) continue;
+      entry.target.classList.add('is-revealed'); entry.target.classList.remove('will-reveal'); shown.unobserve(entry.target);
+    }
+  }, { threshold: 0.04 });
+  revealObserver = shown;
+  const observer = new IntersectionObserver(entries => {
+    for (const entry of entries) {
+      const node = entry.target;
+      observer.unobserve(node);
+      if (!node.isConnected) continue;
+      node.classList.add('section-block');
+      if (entry.boundingClientRect.top < (entry.rootBounds ? entry.rootBounds.bottom : window.innerHeight + 120)) {
+        node.classList.add('is-revealed', 'pm51-instant'); node.classList.remove('will-reveal');
+      } else {
+        node.classList.add('will-reveal'); shown.observe(node);
+      }
+    }
+  }, { root: scroller, rootMargin: '0px 0px 120px 0px', threshold: 0.04 });
+  /* The 120 px margin is only the initial classification, as before. Later scroll reveals keep the original
+     viewport threshold, so their full motion is visible instead of finishing before the section enters view. */
+  pm51ClassifyReveal = observer;
+  nodes.forEach(node => { if (!node.classList.contains('is-revealed')) observer.observe(node); });
 };
 
 /* ---------- setting Details inspector ---------------------------------- */
@@ -95134,7 +95224,9 @@ PM51.on('all-cats', () => {
 PM51.on('all-more', () => { allSettingsView.moreFilters = !allSettingsView.moreFilters; PM51.refresh('project-settings', { swap: false }); });
 PM51.on('all-changed', el => { allSettingsView.changedOnly = !!el.checked; refreshAllSettingsVirtual(true); });
 PM51.on('all-show-ids', el => { allSettingsView.showIds = !!el.checked; root.querySelector('.pm51-all')?.classList.toggle('pm51-show-ids', allSettingsView.showIds); });
-PM51.on('all-reset', () => confirmDialog('Reset every setting to its default?', 'Every project setting goes back to its default value. You can change them again afterwards.', 'Reset all', () => { restoreAllProjectDefaults(); showToast('Settings reset', 'All project settings are back to their defaults.'); }, true));
+/* The restore transaction owns its outcome message, including the accepted receipt. A caller must never add a
+   success after a refusal, or a second success after the owner has already reported the completed restore. */
+PM51.on('all-reset', () => confirmDialog('Reset every setting to its default?', 'Every project setting goes back to its default value. You can change them again afterwards.', 'Reset all', () => o55AfterPaint(restoreAllProjectDefaults), true));
 PM51.on('all-export', () => { const rows = allSettingsCatalog(); infoDrawer('Export settings list', 'A secret-free list of every setting and its current value, ready to save.', [['Settings', String(rows.length)], ['Format', 'JSON · no secrets'], ['Scope', 'This project']], { intro: 'Exporting stays local. Credentials are never included.' }); });
 
 /* Manager-scoped CSS: each manager file may add a few rules without touching styles.css. */
@@ -95330,12 +95422,48 @@ function o55Inherited(setting, value) {
 /* A fine-tuning number the theme decides (Border width, Corner roundness, Scrollbar width; rows.d `themeOwn`) reads
    as the theme's own value until a number is set, and "Use the theme's" hands it back. The inventory default is
    the Retro value, which was shown as if it were in use on every theme. */
+const o55ThemeNumbers = new Map();
+let o55ThemeNumbersKey = '', o55ThemeNumbersPending = false;
+const o55ThemeNumberRows = () => Object.entries(O55R).filter(([, row]) => row.themeOwn && row.themeToken);
+const o55ThemeNumberKey = () => JSON.stringify([
+  ...['data-theme', 'data-o55-nier', 'data-contrast'].map(name => document.documentElement.getAttribute(name)),
+  ...o55ThemeNumberRows().map(([id]) => typeof o55LookChosen === 'function' ? o55LookChosen(id) : state.settings && state.settings[id])
+]);
+function o55ReadThemeNumbers() {
+  if (o55ThemeNumbersPending) return;
+  o55ThemeNumbersPending = true;
+  const read = () => {
+    o55ThemeNumbersPending = false;
+    const style = getComputedStyle(document.documentElement);
+    /* Read all three tokens before touching their labels. A manager's string renderer must never force style
+       just to reproduce these unchanged numbers (85 ms on the P1000 after a tab selection). */
+    const values = o55ThemeNumberRows().map(([, row]) => [row.themeToken, style.getPropertyValue(row.themeToken).trim()]);
+    o55ThemeNumbersKey = o55ThemeNumberKey();
+    values.forEach(([token, value]) => o55ThemeNumbers.set(token, value));
+    root.querySelectorAll('[data-o55-theme-token]').forEach(label => {
+      const value = o55ThemeNumbers.get(label.dataset.o55ThemeToken) || '';
+      const text = "The theme's own" + (value ? ' · ' + value : '');
+      if (label.textContent !== text) label.textContent = text;
+    });
+  };
+  if (typeof ResizeObserver === 'function') {
+    const ready = new ResizeObserver(() => { ready.disconnect(); read(); }); ready.observe(document.documentElement);
+  } else requestAnimationFrame(read);
+}
+function o55ThemeNumber(token) {
+  const key = o55ThemeNumberKey();
+  if (key !== o55ThemeNumbersKey) { o55ThemeNumbers.clear(); o55ThemeNumbersKey = key; }
+  if (!o55ThemeNumbers.has(token)) o55ReadThemeNumbers();
+  return o55ThemeNumbers.get(token) || '';
+}
+new MutationObserver(() => { o55ThemeNumbers.clear(); o55ReadThemeNumbers(); }).observe(document.documentElement,
+  { attributes: true, attributeFilter: ['data-theme', 'data-o55-nier', 'data-contrast'] });
 function o55ThemeOwn(setting, value) {
   const row = O55R[setting.id] || {};
   const chosen = typeof o55LookChosen === 'function' ? o55LookChosen(setting.id) : value;
   if (chosen == null) {
-    let now = ''; try { now = row.themeToken ? getComputedStyle(document.documentElement).getPropertyValue(row.themeToken).trim() : ''; } catch (e) { now = ''; }
-    return `<span class="o55-inherit"><span class="o55-auto">${icon('spark')}<span>${h("The theme's own")}${now ? ` · ${h(now)}` : ''}</span></span><button type="button" class="o55-textbtn" data-action="set-slider-override" data-setting="${a(setting.id)}">Set a number</button></span>`;
+    const now = row.themeToken ? o55ThemeNumber(row.themeToken) : '';
+    return `<span class="o55-inherit"><span class="o55-auto">${icon('spark')}<span${row.themeToken ? ` data-o55-theme-token="${a(row.themeToken)}"` : ''}>${h("The theme's own")}${now ? ` · ${h(now)}` : ''}</span></span><button type="button" class="o55-textbtn" data-action="set-slider-override" data-setting="${a(setting.id)}">Set a number</button></span>`;
   }
   return `<span class="o55-inherit">${o55Number(setting, chosen)}<button type="button" class="o55-textbtn" data-action="o55-auto-number" data-setting="${a(setting.id)}">Use the theme's</button></span>`;
 }
@@ -96997,6 +97125,25 @@ window.PM_NIER = Object.freeze({
   const later = (fn, ms) => window.setTimeout(fn, Math.round(ms * speed()));
   const onboarding = () => html.hasAttribute('data-o55-open');
   const tone = () => (/-light$/.test(html.getAttribute('data-theme') || '') ? 'light' : 'dark');
+  /* Keep the last laid-out ground for the reduced-motion cover. A timer after paint can still meet another pending
+     theme write (190 ms forced style on M3). Read in the first layout delivery, once per look/contrast change. */
+  let calmColors = { background: '#111111', ink: '#ffffff' }, calmReadQueued = false;
+  function cacheCalmColors() {
+    if (calmReadQueued) return;
+    calmReadQueued = true;
+    const read = () => {
+      calmReadQueued = false;
+      if (!document.body) return;
+      const cs = getComputedStyle(document.body);
+      calmColors = { background: cs.backgroundColor, ink: cs.color };
+    };
+    if (typeof ResizeObserver === 'function') {
+      const ready = new ResizeObserver(() => { ready.disconnect(); read(); });
+      ready.observe(document.body || html);
+    } else requestAnimationFrame(() => setTimeout(read, 0));
+  }
+  new MutationObserver(cacheCalmColors).observe(html, { attributes: true, attributeFilter: ['data-theme', 'data-o55-nier', 'data-contrast'] });
+  cacheCalmColors();
   const zoom = () => { const z = document.body && Number.parseFloat(document.body.style.zoom); return Number.isFinite(z) && z > 0 ? z : 1; };
   const frames = n => new Promise(res => { const step = () => (--n <= 0 ? res() : window.requestAnimationFrame(step)); window.requestAnimationFrame(step); });
   function layer(id, cls) {
@@ -97941,20 +98088,18 @@ window.PM_NIER = Object.freeze({
     log.style.display = 'none';
     cover.style.pointerEvents = 'none'; if (ctx.unhold) ctx.unhold();
     ctx.cue('reveal');
-    const G = [0.1, 0.25, 0.45, 0.7, 0.9, 1], rects = G.map(f => lerpRect(full, to, f)), off = G.map(f => -14 + 17 * f), TOTAL = 450;
-    const clips = rects.map(r => clipOf(r, box)), idle = clipOf(full, box), last = clipOf(to, box);
-    const fold = ground.animate(walk([{ t: 0, v: { transform: idle[0], opacity: 1 } }, ...clips.map((c, k) => ({ t: 60 * (k + 1), v: { transform: c[0], opacity: 1 } })),
-      { t: 390, v: { transform: last[0], opacity: 0 } }, { t: TOTAL, v: { transform: last[0], opacity: 0 } }], TOTAL), { duration: TOTAL, fill: 'forwards' });
-    inner.animate(walk([{ t: 0, v: { transform: idle[1] } }, ...clips.map((c, k) => ({ t: 60 * (k + 1), v: { transform: c[1] } })), { t: TOTAL, v: { transform: last[1] } }], TOTAL),
-      { duration: TOTAL, fill: 'forwards' });
-    const poses = [rbPose(full, -14, box), ...rects.map((r, k) => rbPose(r, off[k], box))], let1 = rbPose(to, 7, box);
-    deco.forEach((el, j) => {
-      const fr = poses.map((p, k) => ({ t: 60 * k, v: { transform: p[j], opacity: 1 } }));
-      if (j < 4) fr.push({ t: 390, v: { transform: poses[6][j], opacity: 0 } });
-      else fr.push({ t: 420, v: { transform: let1[j], opacity: 1 } }, { t: 450, v: { transform: let1[j], opacity: 0 } });
-      fr.push({ t: TOTAL, v: { transform: j < 4 ? poses[6][j] : let1[j], opacity: 0 } });
-      el.animate(walk(fr, TOTAL), { duration: TOTAL, fill: 'forwards' });
+    /* The same plate returns to the same control, continuously. The old step-end path moved its left edge in
+       six jumps while the inverse ground transform disagreed between steps. Sample the geometric fold densely
+       and interpolate, so the ground stays registered and the decorative brackets follow one smooth contour. */
+    const TOTAL = 450, frames = Array.from({ length: 31 }, (_, i) => {
+      const t = i / 30, f = 1 - Math.pow(1 - t, 3), rect = lerpRect(full, to, f);
+      return { offset: t, rect, clip: clipOf(rect, box), pose: rbPose(rect, -14 + 21 * f, box), opacity: t < .8 ? 1 : (1 - t) / .2 };
     });
+    const fold = ground.animate(frames.map(f => ({ offset: f.offset, transform: f.clip[0], opacity: f.opacity })),
+      { duration: TOTAL, easing: 'linear', fill: 'forwards' });
+    inner.animate(frames.map(f => ({ offset: f.offset, transform: f.clip[1] })), { duration: TOTAL, easing: 'linear', fill: 'forwards' });
+    deco.forEach((el, j) => el.animate(frames.map(f => ({ offset: f.offset, transform: f.pose[j], opacity: f.opacity })),
+      { duration: TOTAL, easing: 'linear', fill: 'forwards' }));
     await ctx.wait(settled(fold));
     rbRelease(ctx);
   }
@@ -98003,6 +98148,27 @@ window.PM_NIER = Object.freeze({
     };
     let painted = false;
     const paint = () => { if (painted) return; painted = true; repaint(); sync(); };
+    /* Reduce Animations removes the theatrical reboot, not the acknowledgement. Let the switch and a quiet cover
+       paint before the theme/scene work, then dissolve the cover over the fully drawn result. Its colours belong to
+       the outgoing look, so a theme restyle cannot flash the cover itself. There is no looping or spatial motion. */
+    if (still() && !document.hidden && document.body && !within && !onboarding() && !rebooting) {
+      const plate = document.createElement('div');
+      plate.id = 'o55np-calm'; plate.setAttribute('role', 'status');
+      plate.style.backgroundColor = calmColors.background;
+      plate.style.color = calmColors.ink;
+      plate.textContent = on ? 'Applying NieR Mode…' : 'Restoring your look…';
+      document.body.appendChild(plate);
+      cue('start');
+      const paintedFrame = () => new Promise(resolve => requestAnimationFrame(() => setTimeout(resolve, 0)));
+      try {
+        await paintedFrame();
+        paint();
+        await paintedFrame();
+        cue('reveal');
+        if (plate.animate) await plate.animate([{ opacity: 1 }, { opacity: 0 }], { duration: 100, easing: 'linear', fill: 'forwards' }).finished;
+      } finally { paint(); plate.remove(); cue('gone'); }
+      return;
+    }
     if (rebooting || !installed('reboot') || still() || document.hidden || !document.body || (onboarding() && !within)) {
       cue('start'); paint(); cue('reveal'); cue('gone'); return;
     }
@@ -98094,6 +98260,8 @@ function o55Morph(oldEl, newEl, { host, dir = 0, dur = 300 } = {}) {
   oldEl.after(newEl);
   Object.assign(oldEl.style, { position: 'absolute', top: top + 'px', left: left + 'px', width: width + 'px', margin: '0', pointerEvents: 'none', zIndex: '0' });
   oldEl.classList.add('o55-leaving'); oldEl.setAttribute('aria-hidden', 'true'); oldEl.setAttribute('inert', '');
+  const arrive = () => {
+  if (!newEl.isConnected || host.dataset.o55Morph !== String(seq)) return;
   const h1 = host.getBoundingClientRect().height;
   const ease = o55Ease();
   const dx = dir ? 18 * dir : 0, dy = dir ? 0 : 8;
@@ -98107,6 +98275,12 @@ function o55Morph(oldEl, newEl, { host, dir = 0, dur = 300 } = {}) {
   };
   (grow || out).finished.then(done, done);
   window.setTimeout(done, dur + 200);
+  };
+  /* New content gets its ordinary layout once. The observer runs before paint, so the arriving body never flashes
+     at rest and reading its final height does not force a second layout inside the input task. */
+  if (typeof ResizeObserver === 'function') {
+    const ready = new ResizeObserver(() => { ready.disconnect(); arrive(); }); ready.observe(newEl);
+  } else requestAnimationFrame(arrive);
 }
 PM51.morph = o55Morph;
 
@@ -98129,6 +98303,8 @@ function o55KeepTabsInView(page) {
   const st = scroller.getBoundingClientRect(), tt = tabs.getBoundingClientRect();
   if (tt.top < st.top + 4) scroller.scrollTo({ top: scroller.scrollTop + (tt.top - st.top) - 12, behavior: o55Still() ? 'auto' : 'smooth' });
 }
+let o55TabTicket = 0;
+const o55AfterPaint = fn => requestAnimationFrame(() => setTimeout(fn, 0));
 PM51.switchTab = function (wsId, tab) {
   const body = root.querySelector(`[data-continuous-workspace-body="${cssEscape(wsId)}"]`);
   const page = body && body.querySelector('.pm51-mgr');
@@ -98137,6 +98313,12 @@ PM51.switchTab = function (wsId, tab) {
   const from = tabs.findIndex(t => t.classList.contains('active')), to = tabs.findIndex(t => t.dataset.tab === tab);
   PM51.setTab(wsId, tab);
   if (!page || !oldBody || to < 0) { PM51.refresh(wsId); return; }
+  const ticket = ++o55TabTicket;
+  tabs.forEach((t, i) => { const on = i === to; t.classList.toggle('active', on); t.setAttribute('aria-selected', String(on)); });
+  moveTabInks();
+  o55AfterPaint(() => {
+  if (ticket !== o55TabTicket || !page.isConnected) return;
+  o55KeepTabsInView(page);
   popoutClose({ restoreFocus: false });
   const fresh = o55Fresh(wsId); const nextPage = fresh && fresh.querySelector('.pm51-mgr'); const nextBody = nextPage && nextPage.querySelector(':scope > .manager-body');
   if (!nextBody) { PM51.refresh(wsId); return; }
@@ -98146,28 +98328,86 @@ PM51.switchTab = function (wsId, tab) {
   o55Morph(oldBody, nextBody, { host: page, dir: from < 0 ? 0 : (to > from ? 1 : -1) });
   requestAnimationFrame(() => moveTabInks(measureTabInks(true, page)));
   try { syncDetailButtonStates(); } catch (e) { /* cosmetic */ }
-  o55KeepTabsInView(page);
   if (PM51.syncIndexTabs) PM51.syncIndexTabs(wsId);
   saveState();
+  });
 };
 PM51.on('tab', el => PM51.switchTab(ds(el, 'manager'), ds(el, 'tab')));
 
 /* The engine places a strip's thumb from a cached left and width. A strip that wraps needs the chosen tab's line too,
    and the cache is stale once a resize moves a tab to another line, so a manager's strip is measured live, and again
    whenever the strip itself changes size (a page index or an open Details panel narrows it without a window resize). */
-const o55InkSizes = typeof ResizeObserver === 'function' ? new ResizeObserver(() => requestAnimationFrame(() => moveTabInks())) : null;
+const o55InkSizes = typeof ResizeObserver === 'function' ? new ResizeObserver(() => moveTabInks()) : null;
 const o55InkWatched = new WeakSet();
-const o55EngineMoveInks = moveTabInks;
+const o55InkMoves = new WeakMap();
+let o55InkFrame = 0;
+/* The engine's old measurement API is a request now. Its theme/resize/render callers used to measure immediately,
+   write each ink, then measure the next strip and sticky state against dirty style. One frame reads every rectangle
+   first, then writes every ink. A moving ink keeps its final layout box and carries its slide/stretch by transform. */
+measureTabInks = function () { return null; };
 moveTabInks = function () {
-  const r = o55EngineMoveInks.apply(this, arguments);
-  root.querySelectorAll('.pm51-mgr > .pm51-tabs').forEach(nav => {
-    if (o55InkSizes && !o55InkWatched.has(nav)) { o55InkWatched.add(nav); o55InkSizes.observe(nav); }
-    const ink = nav.querySelector(':scope > .tab-ink'), btn = nav.querySelector('.manager-tab.active');
-    if (!ink || !btn) return;
-    Object.assign(ink.style, { left: btn.offsetLeft + 'px', width: btn.offsetWidth + 'px', top: btn.offsetTop + 'px', height: btn.offsetHeight + 'px', bottom: 'auto' });
+  if (o55InkFrame) return;
+  o55InkFrame = 1;
+  const fit = () => {
+    o55InkFrame = 0;
+    const panel = document.getElementById('panel-settings');
+    if (panel && !panel.classList.contains('active')) return;
+    const scroller = root.querySelector('#settings-document');
+    const top = scroller ? scroller.getBoundingClientRect().top + 1 : 0;
+    const rows = [...root.querySelectorAll('.workspace-tabs, .manager-tabs')].map(nav => {
+      const btn = nav.querySelector('.workspace-tab.active, .manager-tab.active');
+      const row = { nav, ink: nav.querySelector(':scope > .tab-ink'), btn,
+        left: btn ? btn.offsetLeft : 0, width: btn ? btn.offsetWidth : 0,
+        top: btn ? btn.offsetTop : 0, height: btn ? btn.offsetHeight : 0,
+        manager: nav.matches('.pm51-mgr > .pm51-tabs'),
+        stuck: !!(scroller && nav.matches('.pm51-mgr.has-manager-tabs > .pm51-tabs') && nav.getBoundingClientRect().top <= top) };
+      const ink = row.ink;
+      row.changed = !!(ink && (parseFloat(ink.style.left) !== row.left || parseFloat(ink.style.width) !== row.width ||
+        (row.manager && (parseFloat(ink.style.top) !== row.top || parseFloat(ink.style.height) !== row.height))));
+      if (ink && row.changed && !o55Still()) {
+        const cs = getComputedStyle(ink), matrix = new DOMMatrixReadOnly(cs.transform);
+        row.from = { left: (parseFloat(ink.style.left) || 0) + matrix.e, width: (parseFloat(ink.style.width) || 0) * matrix.a,
+          top: (parseFloat(ink.style.top) || 0) + matrix.f, height: (parseFloat(ink.style.height) || row.height) * matrix.d };
+        row.ease = o55Retro() ? 'steps(4, end)' : cs.getPropertyValue('--k3-ease-spring').trim() || 'cubic-bezier(.22,.8,.24,1)';
+      }
+      return row;
+    });
+    rows.forEach(row => {
+      const { nav, btn } = row;
+      if (row.manager && o55InkSizes && !o55InkWatched.has(nav)) { o55InkWatched.add(nav); o55InkSizes.observe(nav); }
+      let ink = row.ink;
+      if (!btn) { if (ink) ink.style.opacity = '0'; return; }
+      if (!ink) { ink = document.createElement('span'); ink.className = 'tab-ink'; ink.setAttribute('aria-hidden', 'true'); }
+      /* Left/width transitions relaid out the document during every ink frame. Set the destination once and carry
+         the same slide and stretch by transform. Retargeting starts from the actually drawn transform, read above. */
+      ink.style.transition = o55Still() ? 'none' : 'opacity 160ms ease';
+      ink.style.transformOrigin = '0 0';
+      const previous = o55InkMoves.get(ink);
+      if (previous && (row.changed || o55Still())) { previous.cancel(); o55InkMoves.delete(ink); }
+      Object.assign(ink.style, { left: row.left + 'px', width: row.width + 'px', opacity: '1' });
+      if (row.manager) Object.assign(ink.style, { top: row.top + 'px', height: row.height + 'px', bottom: 'auto' });
+      if (!row.ink) nav.appendChild(ink);
+      if (row.from && row.from.width > 0 && row.width > 0) {
+        const from = row.from, dy = row.manager ? from.top - row.top : 0, sy = row.manager && row.height ? from.height / row.height : 1;
+        const move = ink.animate([{ transform: `translate(${from.left - row.left}px, ${dy}px) scale(${from.width / row.width}, ${sy})` }, { transform: 'none' }],
+          { duration: (row.manager ? 420 : 320) * (typeof o55SpeedFactor === 'number' ? o55SpeedFactor : 1), easing: row.ease });
+        o55InkMoves.set(ink, move);
+        const done = () => { if (o55InkMoves.get(ink) === move) o55InkMoves.delete(ink); };
+        move.finished.then(done, done);
+      }
+      if (row.manager) nav.classList.toggle('is-stuck', row.stuck);
+    });
+  };
+  /* Selection and mounting have changed the strip. The first layout delivery supplies its final geometry; a
+     pre-layout rAF read forced the just-mounted workspace (81 ms on the P1000). All strip reads still precede
+     every ink write, and the existing transform animation retains its duration, curve and retargeting. */
+  requestAnimationFrame(() => {
+    /* A strip-size observer and the shell's resize kick can request this from another ResizeObserver delivery.
+       Arm in the next frame's normal phase so a new root observation never starts inside a deeper delivery. */
+    if (typeof ResizeObserver === 'function') {
+      const ready = new ResizeObserver(() => { ready.disconnect(); fit(); }); ready.observe(root);
+    } else fit();
   });
-  o55MarkStuck();
-  return r;
 };
 
 /* Arrow keys, Home and End move along the strip and choose the tab they land on, as in any tab list. */
@@ -98186,9 +98426,7 @@ root.addEventListener('keydown', e => {
 
 /* A strip is stuck while its top sits at the top of the page's scroller; checked once a frame while that scrolls. */
 function o55MarkStuck() {
-  const scroller = root.querySelector('#settings-document'); if (!scroller) return;
-  const top = scroller.getBoundingClientRect().top + 1;
-  scroller.querySelectorAll('.pm51-mgr.has-manager-tabs > .pm51-tabs').forEach(nav => nav.classList.toggle('is-stuck', nav.getBoundingClientRect().top <= top));
+  moveTabInks();
 }
 let o55StuckFrame = 0;
 document.addEventListener('scroll', e => {
@@ -98800,7 +99038,19 @@ let o55ScnSubscribed = false;
 function o55ScnSubscribe() {
   const N = window.PM_NIER;
   if (o55ScnSubscribed || !N || typeof N.onChange !== 'function') return !!o55ScnSubscribed;
-  try { N.onChange(() => o55ScnSoon(0)); o55ScnSubscribed = true; } catch (e) { /* keep the fallbacks */ }
+  try {
+    N.onChange(change => {
+      /* Turning the look on/off already has its cover and one theme repaint. Install/remove the scene in that same
+         write batch: a later timer changed data-o55-nier-scene after the first layout and restyled the shell again.
+         There is no opacity read on this path (no old art on entry, no new art on exit). Scene-to-scene and page
+         changes retain their existing delayed cross-dissolve. */
+      if (change && (change.reason === 'on' || change.reason === 'off' || change.reason === 'init')) {
+        if (o55ScnTimer) { window.clearTimeout(o55ScnTimer); o55ScnTimer = 0; }
+        o55ScnApply();
+      } else o55ScnSoon(0);
+    });
+    o55ScnSubscribed = true;
+  } catch (e) { /* keep the fallbacks */ }
   return o55ScnSubscribed;
 }
 if (!o55ScnSubscribe()) {
@@ -98919,7 +99169,30 @@ function pm51MarkIndex() {
   pm51RevealIndex();
 }
 /* The index scrolls itself so the highlighted entry stays in view (with a little of what is around it). */
+let pm51IndexRevealReady = null, pm51IndexRevealBox = null, pm51IndexRevealFrame = 0;
 function pm51RevealIndex() {
+  const box = root.querySelector('.page-index'); if (!box) return;
+  if (pm51IndexRevealReady || pm51IndexRevealFrame) {
+    if (pm51IndexRevealBox === box) return;
+    if (pm51IndexRevealReady) pm51IndexRevealReady.disconnect();
+    if (pm51IndexRevealFrame) cancelAnimationFrame(pm51IndexRevealFrame);
+    pm51IndexRevealReady = null; pm51IndexRevealFrame = 0;
+  }
+  /* Rebuilding the index also changes the manager body. Measuring scrollHeight here used to force that entire
+     layout inside the switch. Coalesce requests and read after layout; the selected entry is already highlighted. */
+  pm51IndexRevealBox = box;
+  pm51IndexRevealFrame = requestAnimationFrame(() => {
+    pm51IndexRevealFrame = 0;
+    if (!box.isConnected) { pm51IndexRevealBox = null; return; }
+    if (typeof ResizeObserver !== 'function') { pm51IndexRevealBox = null; pm51RevealIndexNow(); return; }
+    const ready = new ResizeObserver(() => {
+      ready.disconnect(); pm51IndexRevealReady = null; pm51IndexRevealBox = null;
+      if (box.isConnected) pm51RevealIndexNow();
+    });
+    pm51IndexRevealReady = ready; ready.observe(box);
+  });
+}
+function pm51RevealIndexNow() {
   const box = root.querySelector('.page-index'); if (!box || box.scrollHeight <= box.clientHeight + 1) return;
   const hit = box.querySelector('.index-link.is-active') || box.querySelector('.page-index-title.is-current'); if (!hit) return;
   const key = (hit.dataset.workspace || '') + '|' + (hit.dataset.section || hit.dataset.tab || '');
@@ -98949,12 +99222,27 @@ root.addEventListener('pointerdown', e => { if (e.target && e.target.id === 'set
 setupScrollSpy = function () {
   const scroller = root.querySelector('#settings-document');
   if (!scroller) return;
-  let raf = 0;
+  let raf = 0, ready = null;
+  /* Initial chapter layout must include the index writes made later in afterRender. Reading synchronously here
+     forced that first layout early (283 ms on P1000), then the completed index forced another. Scroll updates use
+     the same after-layout read batch; all active-state writes follow the geometry reads. */
+  const schedule = () => {
+    if (raf || ready) return;
+    raf = requestAnimationFrame(() => {
+      raf = 0;
+      if (!scroller.isConnected) return;
+      if (typeof ResizeObserver !== 'function') { update(); return; }
+      ready = new ResizeObserver(() => {
+        ready.disconnect(); ready = null;
+        if (scroller.isConnected) update();
+      });
+      ready.observe(scroller);
+    });
+  };
   const update = () => {
-    raf = 0;
     /* an update in place never changes the active section: the tracker judges only a scroll or a landing (27-place.js) */
     if (PM51.place && !PM51.place.spyMay()) return;
-    if (performance.now() < suppressScrollSpyUntil) { raf = requestAnimationFrame(update); return; }
+    if (performance.now() < suppressScrollSpyUntil) { schedule(); return; }
     const blocks = [...scroller.querySelectorAll('[data-workspace-block]')];
     if (!blocks.length) return;
     const top = scroller.scrollTop, line = top + Math.min(140, scroller.clientHeight * .3);
@@ -98966,9 +99254,9 @@ setupScrollSpy = function () {
     if (pinOn) block = pinEl.closest('[data-workspace-block]') || block;
     else for (const b of blocks) if (pm51LandTop(scroller, b) <= line) block = b;
     const ws = block.getAttribute('data-workspace-block');
-    if (ws && ws !== state.workspace) { state.workspace = ws; syncWorkspaceChrome(ws); updateHash(); }
+    const chooseWorkspace = () => { if (ws && ws !== state.workspace) { state.workspace = ws; syncWorkspaceChrome(ws); updateHash(); } };
     const anchors = [...block.querySelectorAll('[data-section-id]')].filter(pm51SpyShown);
-    if (!anchors.length) return;
+    if (!anchors.length) { chooseWorkspace(); return; }
     let active = anchors[0].getAttribute('data-section-id');
     if (pinOn) active = pm51SpyPin;
     else {
@@ -98980,12 +99268,13 @@ setupScrollSpy = function () {
         if (reached || inUpperView) active = a.getAttribute('data-section-id');
       }
     }
+    chooseWorkspace();
     setActiveLocalSection(ws || state.workspace, active, false);
   };
-  const onScroll = () => { if (!raf) raf = requestAnimationFrame(update); };
+  const onScroll = schedule;
   scroller.addEventListener('scroll', onScroll, { passive: true });
-  update();
-  scrollCleanup = () => { scroller.removeEventListener('scroll', onScroll); if (raf) cancelAnimationFrame(raf); };
+  schedule();
+  scrollCleanup = () => { scroller.removeEventListener('scroll', onScroll); if (raf) cancelAnimationFrame(raf); if (ready) ready.disconnect(); };
 };
 
 /* ---------- jumps ------------------------------------------------------------------------------------------------ */
@@ -100159,19 +100448,22 @@ PLACE.correct = function () {
 };
 
 /* ---------- the end space -------------------------------------------------------------------------------------------- */
+const o55pBoxHeights = new WeakMap();
 function o55pLastSection(sc) {
   const blocks = sc.querySelectorAll('[data-workspace-block]'), block = blocks[blocks.length - 1];
   const body = block && block.querySelector('[data-continuous-workspace-body]');
   if (!body) return null;
   if (body.dataset.workspaceMounted === 'false') return body;
-  const own = [...body.querySelectorAll('[data-section-id]')].filter(s => s.parentElement.closest('[data-section-id]') === null && s.offsetHeight > 0);
+  const own = [...body.querySelectorAll('[data-section-id]')].filter(s => s.parentElement.closest('[data-section-id]') === null && (o55pBoxHeights.get(s) || 0) > 0);
   return own[own.length - 1] || body;
 }
 PLACE.sizeEnd = function (sc, end) {
   sc = sc || o55pScroller(); end = end || (sc && sc.querySelector(':scope > .domain-document > .settings-end-space, .settings-end-space'));
-  if (!sc || !end || !sc.clientHeight) return;
-  const ch = sc.clientHeight, last = o55pLastSection(sc);
-  const want = Math.max(140, ch - Math.min(last ? last.offsetHeight : 0, ch * .62) + 48);
+  if (!sc || !end) return;
+  const ch = o55pBoxHeights.get(sc), last = o55pLastSection(sc);
+  const lastHeight = last && o55pBoxHeights.get(last);
+  if (!ch || lastHeight == null) return;
+  const want = Math.max(140, ch - Math.min(lastHeight, ch * .62) + 48);
   const set = parseFloat(end.style.height), cur = Number.isFinite(set) ? set : 0;
   let next = want;
   /* shrinking by more than the room below the screen would pull the page up under the reader */
@@ -100179,13 +100471,21 @@ PLACE.sizeEnd = function (sc, end) {
   end.__o55Want = want;
   if (!Number.isFinite(set) || Math.abs(next - cur) >= .5) end.style.height = Math.round(next * 100) / 100 + 'px';
 };
-sizeSettingsEndSpace = (scroller, end) => PLACE.sizeEnd(scroller, end);
+sizeSettingsEndSpace = function (scroller, end) {
+  /* The place observer supplies both the scroller and section sizes in one delivery. No live geometry read is
+     needed here: a different observer may already have dirtied style by the time this callback runs. */
+  if (scroller && scroller.isConnected) o55pWatch(scroller, PLACE.anchor && PLACE.anchor.el);
+};
 
 /* ---------- watching layout: one observer for the page's blocks, sections, the anchor's ancestors ------------------- */
 let o55pObserver = null, o55pWatched = null;
 /* Layout is done when this runs, so reading it costs nothing. The end space is sized here too: nothing the observer
    watches changes size when it does (the document column and the end space itself are left out on purpose). */
-function o55pOnResize() {
+function o55pOnResize(entries) {
+  entries.forEach(entry => {
+    const box = entry.borderBoxSize && entry.borderBoxSize[0];
+    o55pBoxHeights.set(entry.target, entry.target.id === 'settings-document' ? entry.contentRect.height : box ? box.blockSize : entry.contentRect.height);
+  });
   if (PLACE.mode !== 'hold' && !o55pSettle) o55pSettleSoon();   /* e.g. Settings shown again while a landing was pending */
   PLACE.correct();
   PLACE.sizeEnd();
@@ -100194,7 +100494,7 @@ function o55pWatch(sc, anchorEl) {
   if (typeof ResizeObserver !== 'function' || !sc) return;
   if (!o55pObserver) o55pObserver = new ResizeObserver(o55pOnResize);
   const want = new Set([sc]);
-  sc.querySelectorAll('[data-workspace-block], [data-section-id]').forEach(n => want.add(n));
+  sc.querySelectorAll('[data-workspace-block], [data-continuous-workspace-body], [data-section-id]').forEach(n => want.add(n));
   /* the anchor's ancestors and everything beside them: any size change above the anchor is one of these */
   for (let n = anchorEl; n && n !== sc; n = n.parentElement) {
     if (n.classList.contains('domain-document')) break;   /* the place resizes the reserve and the end space in here */
@@ -100368,6 +100668,7 @@ function o55cKey(n) {
 }
 const o55cForeign = n => n.nodeType === 1 && n.matches(O55C_FOREIGN);
 const o55cOpaque = n => n.id === 'toast-stack' || n.hasAttribute('data-all-settings-window') ||
+  (n.id === 'setting-general.visual.wallpaper' && n.classList.contains('wpk-row')) ||
   (o55cKeepDetail && (n.classList.contains('detail-inspector') || n.classList.contains('detail-scrim')));
 
 /* ---------- patching ----------------------------------------------------------------------------------------------- */
@@ -100698,6 +100999,124 @@ boot = function () {
     try { if (root.querySelector('[data-continuous-workspace-body="toolchain"]')) PM51.refresh('toolchain', { swap: false }); } catch (e) { /* not drawn yet */ }
   });
 })();
+
+/* ---- kit.d/29-navigation-motion.js ---- */
+/* Navigation acknowledges the destination before building it. The outgoing chapter starts moving on the compositor
+   before the build task, then the incoming chapter arrives after its first layout. No snapshot capture pauses the
+   compositor, and no duplicate live IDs or rows are introduced. Rapid requests coalesce to the latest destination. */
+let o55NavTicket = 0, o55NavRunning = false, o55NavLeaving = null;
+function o55NavVisible() {
+  const panel = document.getElementById('panel-settings');
+  return !!(panel && panel.classList.contains('active') && root.querySelector('#workspace-stage'));
+}
+function o55NavAck(selector) {
+  root.querySelectorAll('[data-o55-nav-pending]').forEach(n => n.removeAttribute('data-o55-nav-pending'));
+  if (selector) root.querySelectorAll(selector).forEach(n => {
+    n.setAttribute('data-o55-nav-pending', '');
+    if (n.classList.contains('workspace-tab')) {
+      /* Move the existing selected plate in the acknowledgement frame, while the old workspace is still painted.
+         Hydration and exact-position scrolling follow after that paint; the ink carries the same 320 ms motion. */
+      n.parentElement.querySelectorAll('.workspace-tab').forEach(tab => {
+        const on = tab === n; tab.classList.toggle('active', on);
+        if (tab.hasAttribute('aria-selected')) tab.setAttribute('aria-selected', String(on));
+      });
+      moveTabInks();
+    }
+  });
+}
+function o55NavRun(work, selector, chapter, prepare) {
+  if (o55NavRunning || !o55NavVisible()) return work();
+  const ticket = ++o55NavTicket;
+  o55NavAck(selector);
+  const commit = () => {
+    if (ticket !== o55NavTicket) return;
+    o55NavRunning = true;
+    try { work(); } finally { o55NavRunning = false; o55NavAck(null); }
+  };
+  if (o55NavLeaving) { o55NavLeaving.cancel(); o55NavLeaving = null; }
+  const stage = root.querySelector('#workspace-stage');
+  const moving = chapter && !o55Still() && stage;
+  if (moving) o55NavLeaving = stage.animate([
+    { opacity: 1, transform: 'none' }, { opacity: .55, transform: 'translateY(-4px)' }
+  ], { duration: 260, easing: 'ease-out', fill: 'forwards' });
+  const complete = () => {
+    if (ticket !== o55NavTicket) return;
+    commit();
+    const next = root.querySelector('#workspace-stage');
+    const arrive = () => {
+      if (ticket !== o55NavTicket) return;
+      if (o55NavLeaving) { o55NavLeaving.cancel(); o55NavLeaving = null; }
+      /* The in-place shell patch retains #workspace-stage while replacing its chapter children. That retained
+         container still needs the incoming motion; identity alone does not mean the old chapter survived. */
+      if (!next || !next.isConnected || !moving) return;
+      next.animate([{ opacity: .55, transform: 'translateY(4px)' }, { opacity: 1, transform: 'none' }],
+        { duration: 180, easing: 'cubic-bezier(.22,.8,.24,1)' });
+    };
+    if (moving && next && typeof ResizeObserver === 'function') {
+      const ready = new ResizeObserver(() => { ready.disconnect(); arrive(); }); ready.observe(next);
+    } else arrive();
+  };
+  o55AfterPaint(() => {
+    if (ticket !== o55NavTicket) return;
+    if (!prepare || !prepare() || typeof ResizeObserver !== 'function') { complete(); return; }
+    /* A cold workspace hydrates its preceding blocks for an exact landing. Let their first layout finish before
+       the existing landing path reads its offset; measuring immediately forced that layout in the input follow-up
+       (48 ms M3 / 222 ms P1000). The destination ink is already travelling during this work. */
+    const scroller = root.querySelector('#settings-document');
+    if (!scroller) { complete(); return; }
+    const ready = new ResizeObserver(() => {
+      ready.disconnect();
+      if (scroller.isConnected && scroller === root.querySelector('#settings-document')) complete();
+    });
+    ready.observe(scroller);
+  });
+}
+const o55NavNavigate = navigate;
+navigate = function (domainId, workspaceId, options) {
+  const args = arguments, domain = getDomain(domainId), chapter = state.home || state.domain !== domain.id;
+  return o55NavRun(() => o55NavNavigate.apply(this, args), `.domain-link[data-domain="${cssEscape(domain.id)}"]`, chapter);
+};
+const o55NavHome = goHome;
+goHome = function () {
+  const args = arguments;
+  return o55NavRun(() => o55NavHome.apply(this, args), '[data-action="home"]', !state.home);
+};
+const o55NavDispatch = dispatchAction;
+let o55NierAckTicket = 0, o55NierAckDesired = null;
+dispatchAction = function (action, el) {
+  const args = arguments;
+  /* A reduced-motion NieR click still saved and rebuilt its row before the calm cover could paint (166–236 ms
+     in the P1000 click handler). Paint the switch's existing selected style first, then perform that same write.
+     Coalesce repeated input to the latest desired value; a refused write restores the owner's actual row. */
+  if (action === 'toggle-setting' && ds(el, 'setting') === 'general.visual.nier-mode' &&
+      args[2] && args[2].isTrusted && o55Still() && !state.settingsProjectionReadOnly &&
+      !el.disabled && el.getAttribute('aria-disabled') !== 'true') {
+    const id = 'general.visual.nier-mode', ticket = ++o55NierAckTicket;
+    o55NierAckDesired = o55NierAckDesired === null ? !o55On(PM51.value(id)) : !o55NierAckDesired;
+    el.classList.toggle('on', o55NierAckDesired); el.setAttribute('aria-checked', String(o55NierAckDesired));
+    if (el.hasAttribute('aria-pressed')) el.setAttribute('aria-pressed', String(o55NierAckDesired));
+    o55AfterPaint(() => {
+      if (ticket !== o55NierAckTicket) return;
+      const desired = o55NierAckDesired; o55NierAckDesired = null;
+      try { if (o55On(PM51.value(id)) !== desired) o55NavDispatch.apply(this, args); }
+      finally {
+        const actual = o55On(PM51.value(id));
+        if (el.isConnected && (el.classList.contains('on') !== actual || el.getAttribute('aria-checked') !== String(actual))) refreshSettingRow(id);
+      }
+    });
+    return;
+  }
+  if (action !== 'jump-workspace') return o55NavDispatch.apply(this, args);
+  const ws = ds(el, 'workspace');
+  const prepare = () => {
+    const ids = getDomain().workspaces.map(w => w.id), to = ids.indexOf(ws);
+    const cold = ids.slice(0, to + 1).some(id => root.querySelector(`[data-continuous-workspace-body="${cssEscape(id)}"][data-workspace-mounted="false"]`));
+    if (!cold) return false;
+    PLACE.nav(); pm51MountPreceding(ws); mountContinuousWorkspace(ws);
+    return true;
+  };
+  return o55NavRun(() => o55NavDispatch.apply(this, args), `.workspace-tab[data-workspace="${cssEscape(ws)}"]`, false, prepare);
+};
 
 /* ---- kit.d/30-inspector.js ---- */
 /* O55 · the setting Details panel. The panel itself (its spring in and out, its width, the scrim) is the engine's and
@@ -167258,24 +167677,39 @@ function fitAll(only) {
 }
 /* a cut name is checked once more after things settle (a face that finished loading, an entrance that ended between
    the measurement and the paint): any middle-truncated name that still overflows its box is fitted again */
-let recheckTimer = 0;
+let recheckTimer = 0, recheckReady = null;
 function recheckSoon() {
-  if (recheckTimer) return;
+  if (recheckTimer || recheckReady) return;
   recheckTimer = setTimeout(() => {
     recheckTimer = 0;
     if (!D.on) return;
-    panelEls().forEach(p => {
-      if (!p.offsetWidth) return;
-      const over = Array.from(p.querySelectorAll(MID_SEL)).filter(el => el._dFull != null && el.offsetParent && overflows(el));
-      if (!over.length) return;
-      over.forEach(el => { delete el._dFitKey; });
-      midFitAll(p);
-    });
+    const recheck = () => {
+      if (recheckReady) { recheckReady.disconnect(); recheckReady = null; }
+      if (!D.on) return;
+      /* A 450 ms timer can still meet the theme's pending style writes. Read after ordinary layout (170 ms of
+         forced style on an M3 NieR toggle before this change), and read every panel before any fitting writes. */
+      const rows = panelEls().filter(p => p.isConnected && p.offsetWidth).map(p => ({
+        panel: p,
+        over: Array.from(p.querySelectorAll(MID_SEL)).filter(el => el._dFull != null && el.offsetParent && overflows(el))
+      }));
+      rows.forEach(({ panel, over }) => {
+        if (!over.length) return;
+        over.forEach(el => { delete el._dFitKey; });
+        midFitAll(panel);
+      });
+    };
+    const slot = document.getElementById('sidePanelSlot');
+    if (window.ResizeObserver && slot) { recheckReady = new ResizeObserver(recheck); recheckReady.observe(slot); }
+    else requestAnimationFrame(recheck);
   }, 450);
 }
 let fitTimer = 0;
 function fitSoon() { clearTimeout(fitTimer); fitTimer = setTimeout(() => { if (D.on) fitAll(); }, 60); }
 function watchFit() {
+  remember(() => {
+    clearTimeout(recheckTimer); recheckTimer = 0;
+    if (recheckReady) { recheckReady.disconnect(); recheckReady = null; }
+  });
   const slot = document.getElementById('sidePanelSlot');
   if (window.ResizeObserver && slot) {
     const ro = new ResizeObserver(fitSoon);
@@ -167872,16 +168306,52 @@ function stopTabs(st) {
   const els = [st, st.querySelector(':scope > .d-ink')].concat(tabItems(st).flatMap(it => [it].concat(Array.from(it.children))));
   els.forEach(el => { if (el && el.getAnimations) el.getAnimations().forEach(a => { if (a.id === 'd-tab') a.cancel(); }); });
 }
-/* the ink at rest on the chosen tab; a no-op while nothing moved, so a refit never cuts a move short */
-function placeInk(st, force) {
-  if (!D.on || !st.offsetWidth) return;
-  const ink = inkOf(st), act = tabActive(st);
-  if (!act) { ink.style.width = '0px'; ink._dBox = null; return; }
-  const b = stripBox(st, act);
+/* Refit requests can follow writes in another panel or Settings. Read all requested strips after ordinary layout,
+   then write all inks; the former per-strip read/write pass forced the whole app's layout between strips. Explicit
+   animation setup (force) stays synchronous so its icons, labels and ink retain their shared animation clock. */
+const inkRefits = new Set();
+let inkRefitReady = null;
+const lensOwnsInk = () => {
+  const r = document.documentElement;
+  return r.getAttribute('data-pm-switch') === 'lens' ||
+    (r.getAttribute('data-lg') === 'on' && /^glass-/.test(r.getAttribute('data-theme') || ''));
+};
+function readInk(st, force) {
+  if (!D.on || !st.isConnected) return null;
+  if (!force && lensOwnsInk()) { st._dInkSkipped = true; return null; }
+  if (!st.offsetWidth) return null;
+  const ink = st.querySelector(':scope > .d-ink'), act = tabActive(st);
+  const b = act ? stripBox(st, act) : null;
+  return { st, ink, b, force: force || st._dInkSkipped };
+}
+function writeInk(row) {
+  if (!row) return;
+  const { st, b, force } = row, ink = row.ink || inkOf(st);
+  delete st._dInkSkipped;
+  if (!b) { ink.style.width = '0px'; ink._dBox = null; return; }
   if (!force && sameBox(ink._dBox, b)) return;
   if (ink._dBox) stopTabs(st);
   ink.style.width = b.w.toFixed(2) + 'px'; ink.style.height = b.h.toFixed(2) + 'px'; ink.style.transform = inkMove(b);
   ink._dBox = b;
+}
+/* the ink at rest on the chosen tab; a no-op while nothing moved, so a refit never cuts a move short */
+function placeInk(st, force) {
+  if (!D.on) return;
+  if (force) { inkRefits.delete(st); writeInk(readInk(st, true)); return; }
+  /* This ink is already hidden by the active lens skin. Do not measure it on a Settings or wallpaper update.
+     Re-entering the legacy skin forces the next refit even if its old cached box happens to compare equal. */
+  if (lensOwnsInk()) { st._dInkSkipped = true; return; }
+  inkRefits.add(st);
+  if (inkRefitReady) { if (inkRefitReady.observe) inkRefitReady.observe(st); return; }
+  const flush = () => {
+    if (inkRefitReady && inkRefitReady.disconnect) inkRefitReady.disconnect();
+    inkRefitReady = null;
+    const strips = Array.from(inkRefits); inkRefits.clear();
+    const rows = strips.map(s => readInk(s, false));
+    rows.forEach(writeInk);
+  };
+  if (window.ResizeObserver) { inkRefitReady = new ResizeObserver(flush); inkRefitReady.observe(st); }
+  else { inkRefitReady = { pending: true }; requestAnimationFrame(flush); }
 }
 
 /* The shell's fit pass after a tab click (PMPillFit, scheduled by its own document click listener for any
@@ -168093,7 +168563,21 @@ function wireStrip(st) {
 /* the strips of a panel; the capture and key listeners once for all panels */
 function wireTabs(panel) {
   panel.querySelectorAll(':scope > .pm-segtab').forEach(wireStrip);
-  if (!tabsWired) { tabsWired = true; listen(document, 'click', onTabCapture, true); listen(document, 'keydown', onTabKey); }
+  if (!tabsWired) {
+    tabsWired = true; listen(document, 'click', onTabCapture, true); listen(document, 'keydown', onTabKey);
+    /* Turning the lens skin off need not change data-theme, so the ordinary theme refit does not see it. */
+    const skin = new MutationObserver(() => {
+      if (!D.on) return;
+      const hidden = lensOwnsInk();
+      document.querySelectorAll('#sidePanelSlot .pm-segtab').forEach(st => {
+        if (!st.querySelector(':scope > .d-ink')) return;
+        if (hidden) st._dInkSkipped = true;
+        else if (st._dInkSkipped) placeInk(st);
+      });
+    });
+    skin.observe(document.documentElement, { attributes: true, attributeFilter: ['data-lg', 'data-pm-switch'] });
+    D.observers.push(skin);
+  }
 }
 PANEL_IDS.forEach(id => panelHook(id, {
   apply(panel) { wireTabs(panel); },
@@ -227433,35 +227917,80 @@ window.PM_WALLPAPERS_CATALOG = {"version":1,"families":[{"family":"glass","label
   /* the wallpaper on show: ?lgwall= first, as glass.js reads it, then the saved choice */
   function shown() { var c = q.get('lgwall') || choice(); return c === 'look' ? lookDefault(look()) : c; }
   function attr(a, v) { if (v === null) { if (root.hasAttribute(a)) root.removeAttribute(a); } else if (root.getAttribute(a) !== v) root.setAttribute(a, v); }
-  /* Glass bakes its sheets' frost from the wallpaper after the wallpaper changes, a third of a second later on an
-     RTX 3090 (films, 2026-10-13), so for that long the sheets showed the old frost over the new picture. While Glass
-     rebakes, the body keeps the print it showed, and the moment glass.js lands the new frost (it writes --lg-frost-*
-     on <html>) the hold lets go in the same task: picture and frost change in one frame. If no new frost comes, the
-     hold lets go after 1.5 s. (Glass follow-up G4 would do this inside glass.js.) */
-  var hold = null;
-  function frostNow() { return root.style.getPropertyValue('--lg-frost-heavy'); }
-  function release() { if (!hold) return; clearTimeout(hold.t); hold = null; root.removeAttribute('data-wpk-hold'); root.style.removeProperty('--wpk-hold'); }
-  function holdPrint(prev) {
-    release();
-    var url = getComputedStyle(root).getPropertyValue('--lg-wall-' + prev + '-' + (/-light$/.test(root.getAttribute('data-theme') || '') ? 'light' : 'dark')).trim();
-    if (!url) return;
-    hold = { frost: frostNow(), t: setTimeout(release, 1500) };
-    root.style.setProperty('--wpk-hold', url); root.setAttribute('data-wpk-hold', '');
+  /* A selected radio paints before decoding or restyling. Two permanent background layers carry the print fade;
+     the cached frost joins at its midpoint. No snapshots or nodes are added to the live sheets on a choice. */
+  var paintedChoice = choice(), paintKey = '', paintedUrl = '', paintSerial = 0, commitT = 0, commitFrame = 0;
+  var printLayers = [], printAnimations = [], printTimer = 0, printFinish = null, imageUrls = new Map();
+  function mountPrints() {
+    if (printLayers.length || !document.body) return;
+    for (var i = 0; i < 2; i++) {
+      var e = document.createElement('div'); e.className = 'wpk-print'; e.setAttribute('aria-hidden', 'true');
+      document.body.appendChild(e); printLayers.push(e);
+    }
   }
-  new MutationObserver(function () { if (hold && frostNow() !== hold.frost) release(); }).observe(root, { attributes: true, attributeFilter: ['style'] });
-  function apply() {
-    var id = shown(), prev = root.getAttribute('data-lg-wall'), glass = look() === 'glass' && root.getAttribute('data-lg') === 'on';
-    if (glass && prev && id && prev !== id && byId[prev] && frostNow()) holdPrint(prev); else if (!glass) release();
-    attr('data-lg-wall', id || null); attr('data-lg-wall-any', id && look() !== 'glass' ? '' : null);
+  function imageUrl(id) {
+    if (!id) return '';
+    var mode = /-light$/.test(root.getAttribute('data-theme') || '') ? 'light' : 'dark';
+    var key = id + '-' + mode; if (imageUrls.has(key)) return imageUrls.get(key);
+    var v = getComputedStyle(root).getPropertyValue('--lg-wall-' + key).trim();
+    var m = v.match(/url\(["']?(.*?)["']?\)\s*$/), url = m ? m[1] : '';
+    imageUrls.set(key, url); return url;
+  }
+  function still() {
+    return root.getAttribute('data-lg-tier') === 'cpu' || root.getAttribute('data-motion') === 'reduced' ||
+      root.getAttribute('data-reduced-motion') === '1' || matchMedia('(prefers-reduced-motion: reduce)').matches;
+  }
+  function prepare(url) {
+    if (!url) return Promise.resolve(true);
+    if (window.PM_LG && PM_LG.prepareWallpaper) return PM_LG.prepareWallpaper(url);
+    var im = new Image(); im.src = url;
+    return im.decode ? im.decode().then(function () { return true; }, function () { return false; }) : Promise.resolve(true);
+  }
+  function apply(animate) {
+    var id = shown(), selected = choice(), theme = root.getAttribute('data-theme'), key = theme + '|' + id;
+    if (key === paintKey) { paintedChoice = selected; return; }
+    var serial = ++paintSerial, url = imageUrl(id);
+    prepare(url).then(function (ok) {
+      if (!ok || serial !== paintSerial || theme !== root.getAttribute('data-theme')) return;
+      var viewport = { width: innerWidth, height: innerHeight };
+      var commit = function () {
+        if (serial !== paintSerial) return;
+        paintedChoice = selected; paintKey = key; paintedUrl = url;
+        attr('data-lg-wall', id || null); attr('data-lg-wall-any', id && look() !== 'glass' ? '' : null);
+        if (url && window.PM_LG && PM_LG.commitWallpaper) PM_LG.commitWallpaper(id, url, viewport);
+      };
+      if (printFinish) printFinish();
+      mountPrints();
+      if (!animate || still() || printLayers.length !== 2) { commit(); return; }
+      var ground = getComputedStyle(document.body).backgroundColor;
+      printLayers.forEach(function (e, i) {
+        e.style.backgroundColor = ground;
+        e.style.backgroundImage = (i ? url : paintedUrl) ? 'url(' + JSON.stringify(i ? url : paintedUrl) + ')' : 'none';
+      });
+      printLayers[0].style.opacity = '1'; printLayers[1].style.opacity = '0';
+      var done = false, committed = false;
+      function mid() { if (!committed) { committed = true; commit(); } }
+      function finish() {
+        if (done) return; done = true; clearTimeout(printTimer); mid();
+        printLayers.forEach(function (e) { e.style.opacity = '0'; });
+        printAnimations.forEach(function (a) { a.cancel(); }); printAnimations = [];
+        if (printFinish === finish) printFinish = null;
+      }
+      printFinish = finish;
+      /* Opacity runs on the compositor while the new frost and rims are committed on the main thread. */
+      var fade = printLayers[1].animate([{ opacity: 0 }, { opacity: 1 }], { duration: 240, easing: 'linear', fill: 'forwards' });
+      printAnimations = [fade]; printTimer = setTimeout(mid, 120);
+      fade.finished.then(finish, finish);
+    });
   }
 
-  var commitT = 0;
   function choose(c, later) {
     if (c !== 'look' && !byId[c]) return false;
     try { localStorage.setItem(KEY, c); } catch (e) {}
-    clearTimeout(commitT);
-    if (later) commitT = setTimeout(apply, 240); else apply();
+    clearTimeout(commitT); cancelAnimationFrame(commitFrame); ++paintSerial;
     sync();
+    /* The timeout begins after a presented frame, rather than inside that frame's rAF callback. */
+    commitFrame = requestAnimationFrame(function () { commitFrame = 0; commitT = setTimeout(function () { apply(true); }, later ? 160 : 0); });
     return true;
   }
 
@@ -227486,7 +228015,7 @@ window.PM_WALLPAPERS_CATALOG = {"version":1,"families":[{"family":"glass","label
     return h + '</div>';
   }
   function row() { return document.getElementById(ROW_ID); }
-  function mine(r) { return r && r.classList.contains('wpk-row'); }
+  function mine(r) { return r && r.classList.contains('wpk-row') && !!r.querySelector('.wpk-gallery'); }
   function mount() {
     var themeRow = document.getElementById('setting-general.visual.theme'); if (!themeRow) return;
     var r = row(); if (mine(r)) return;
@@ -227503,7 +228032,10 @@ window.PM_WALLPAPERS_CATALOG = {"version":1,"families":[{"family":"glass","label
     r.querySelectorAll('.wpk-tile').forEach(function (t) {
       var on = t.getAttribute('data-wpk-pick') === c;
       if (t.getAttribute('aria-checked') !== String(on)) t.setAttribute('aria-checked', String(on));
-      t.tabIndex = on ? 0 : -1;
+      /* The tabIndex property can ask whether a button is focusable, flushing the pending wallpaper restyle.
+         Its reflected attribute carries the same keyboard state without a synchronous style read. */
+      var tabIndex = on ? '0' : '-1';
+      if (t.getAttribute('tabindex') !== tabIndex) t.setAttribute('tabindex', tabIndex);
     });
     r.classList.toggle('is-changed', c !== 'look'); r.querySelector('.o55-changed').hidden = c === 'look';
     var own = r.querySelector('[data-wpk-own]');
@@ -227515,6 +228047,13 @@ window.PM_WALLPAPERS_CATALOG = {"version":1,"families":[{"family":"glass","label
       : def ? lookName + ' shows ' + byId[def].name + ' until you choose another.' : lookName + ' keeps its own background until you choose one.';
     var n = r.querySelector('.wpk-note'); if (n.textContent !== note) n.textContent = note;
   }
+
+  document.addEventListener('pointerover', function (e) {
+    var t = e.target.closest && e.target.closest('.wpk-row .wpk-tile');
+    if (!t || t.contains(e.relatedTarget)) return;
+    var id = t.getAttribute('data-wpk-pick'); if (id === 'look') id = lookDefault(look());
+    if (id) prepare(imageUrl(id));
+  });
 
   /* clicks and keys: one radiogroup across the families */
   document.addEventListener('click', function (e) {
@@ -227556,7 +228095,7 @@ window.PM_WALLPAPERS_CATALOG = {"version":1,"families":[{"family":"glass","label
   function queueMount() { if (!mountQ) mountQ = requestAnimationFrame(function () { mountQ = 0; mount(); }); }
   function watch() { new MutationObserver(function () { var r = row(); if (!mine(r) && document.getElementById('setting-general.visual.theme')) queueMount(); }).observe(document.body, { childList: true, subtree: true }); mount(); }
   /* another window chose a wallpaper */
-  window.addEventListener('storage', function (e) { if (e.key === KEY || e.key === null) { apply(); sync(); } });
+  window.addEventListener('storage', function (e) { if (e.key === KEY || e.key === null) { sync(); requestAnimationFrame(function () { setTimeout(function () { apply(true); }, 0); }); } });
 
   /* Jared #18 (2026-10-14): the most recent wallpaper decision wins, from either control. NieR Mode's customizer writes
      only its own background (general.visual.nier-background); when that committed value changes, this package hands the
@@ -227578,13 +228117,20 @@ window.PM_WALLPAPERS_CATALOG = {"version":1,"families":[{"family":"glass","label
   }
   if (!hookNier()) { var nierTries = 0; (function retry() { if (hookNier() || ++nierTries > 60) return; setTimeout(retry, 250); })(); }
 
-  apply();
+  mountPrints(); apply();
   if (document.body) watch(); else document.addEventListener('DOMContentLoaded', watch);
 
   window.PM_WALLPAPERS = {
     version: 'wpk-2026-10-14', key: KEY,
     catalog: function () { return CAT.families.map(function (f) { return { family: f.family, label: f.label, ids: f.wallpapers.map(function (w) { return w.id; }) }; }); },
-    choice: choice, shown: shown, choose: function (c) { return choose(c, false); }, stale: function () { return stale; }
+    /* Consumers of the committed print must not force root style from an attribute observer. Preparation fills this
+       immutable catalog cache before publishing data-lg-wall. Unknown is undefined; a print with no image is null. */
+    sourceUrl: function (id, mode) {
+      if (!id) return null;
+      var source = imageUrls.get(id + '-' + (mode || (/-light$/.test(root.getAttribute('data-theme') || '') ? 'light' : 'dark')));
+      return source === '' ? null : source;
+    },
+    choice: choice, shown: shown, paintChoice: function () { return paintedChoice; }, choose: function (c) { return choose(c, false); }, stale: function () { return stale; }
   };
 })();
 </script>

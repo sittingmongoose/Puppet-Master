@@ -205,7 +205,19 @@ let o55ScnSubscribed = false;
 function o55ScnSubscribe() {
   const N = window.PM_NIER;
   if (o55ScnSubscribed || !N || typeof N.onChange !== 'function') return !!o55ScnSubscribed;
-  try { N.onChange(() => o55ScnSoon(0)); o55ScnSubscribed = true; } catch (e) { /* keep the fallbacks */ }
+  try {
+    N.onChange(change => {
+      /* Turning the look on/off already has its cover and one theme repaint. Install/remove the scene in that same
+         write batch: a later timer changed data-o55-nier-scene after the first layout and restyled the shell again.
+         There is no opacity read on this path (no old art on entry, no new art on exit). Scene-to-scene and page
+         changes retain their existing delayed cross-dissolve. */
+      if (change && (change.reason === 'on' || change.reason === 'off' || change.reason === 'init')) {
+        if (o55ScnTimer) { window.clearTimeout(o55ScnTimer); o55ScnTimer = 0; }
+        o55ScnApply();
+      } else o55ScnSoon(0);
+    });
+    o55ScnSubscribed = true;
+  } catch (e) { /* keep the fallbacks */ }
   return o55ScnSubscribed;
 }
 if (!o55ScnSubscribe()) {
