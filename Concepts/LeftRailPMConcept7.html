@@ -195154,11 +195154,7 @@ function mountPlan(host, state, api) {
         run: function () { if (v === viewing) return; remember(); viewing = v; paint(); if (frame) frame._scroll.scrollTop = 0; api.announce('Showing version ' + v); api.saveSoon(); } };
     }) };
   }
-  function remember() {
-    // A tab hidden with display:none has no scroll box and reports zero. A hidden Home page can keep its boxes,
-    // so use the host's hidden flag, not the kind's onHide state, to avoid only the known-zero layout read.
-    if (frame) scrolls[view] = host.hidden ? 0 : frame._scroll.scrollTop;
-  }
+  function remember() { if (frame) scrolls[view] = frame._scroll.scrollTop; }
 
   /* ---- body ---- */
   function blocksNow() { return plan.revisions[viewing]; }
