@@ -468,6 +468,14 @@
     function step() {
       if (!view.root.isConnected) { done(); return; }
       if (!ready()) { setTimeout(function () { idle(step); }, 400); return; }
+      /* and only after two frames that came on time, as the Customize screen's raster warm waits (review RW-4) */
+      requestAnimationFrame(function (t1) { requestAnimationFrame(function (t2) {
+        if (!view.root.isConnected) { done(); return; }
+        if (t2 - t1 > 25 || !ready()) { setTimeout(function () { idle(step); }, 400); return; }
+        draw();
+      }); });
+    }
+    function draw() {
       var ap = todo.shift(), b = ap.bezel, w = Math.max(80, view.screen ? view.screen.clientWidth : 0), h = Math.max(60, view.screen ? view.screen.clientHeight : 0);
       var dpr = (view.metrics && view.metrics.dpr) || window.devicePixelRatio || 1, inset = (b.width || 0) + (b.gap || 0);
       if (!host) {
