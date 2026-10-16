@@ -1700,7 +1700,11 @@
     var changed = Array.from(dirtyRoots), full = dirtyAll;
     /* a Usage room change syncs after layout (afterLayout); a menu opening still gets its first keyframe at once */
     if (area && !menuHot) afterLayout();
-    else if (hot && switchOn()) hotSync(); else lazySync(false);
+    /* a look that adopts the switcher has no glass to keep in step: its strips sync after the frame's own layout, where
+       every read is free, instead of forcing the app's half-built page through style and layout inside its click (Q16).
+       A press still moves the lens at once (pointerdown). */
+    else if (hot && switchOn()) { if (isGlass() || !afterLayout()) hotSync(); }
+    else lazySync(false);
     if (page !== lastPage) {
       var first = lastPage === null; lastPage = page;
       if (pageT) { clearTimeout(pageT); pageT = 0; }
