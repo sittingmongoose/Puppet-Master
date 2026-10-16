@@ -162,6 +162,10 @@ html[data-pm-switch="lens"]:not(#lgz) #pm-o55-onboarding .o55-seg button.o55-on 
 html[data-pm-switch="lens"] #pmuRange { --pm-switch-track: color-mix(in srgb, var(--surface) 72%, transparent); }
 /* a count on a chosen view reads in the chip's full ink (it was at 78 % opacity: 3.5:1 on Retro Light's chip) */
 html[data-pm-switch="lens"] #panel-orchestrator .orch-tabs .orch-tab.active .orch-tab-badge { opacity: 1; }
+/* an opaque chip reaches a pressed view before its click lands: the view's count takes the chip's ink with it, as it will
+   once chosen (it kept the resting muted ink, 1.6:1 on NieR's ink bar and on Retro's lime, for the length of the press).
+   Glass's own press-mark arms (glass.css) cover the other strips; this one count colours itself. */
+html[data-pm-switch-layer="under"]:not(#lgz):not(#lgy):not(#lgx) #panel-orchestrator .orch-tab[data-lg-press="on"] .orch-tab-badge { color: inherit; opacity: 1; }
 
 /* ---- Home panels: the chosen tab is seated on the panel's edge (Jared, 2026-10-15: "the tabs ... doesnt look like it is
    sitting well", on Retro's ":: Agents") ----------------------------------------------------------------------------------
