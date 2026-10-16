@@ -15989,26 +15989,28 @@ unit_type: decision
 status: accepted
 owner_doc: Plans/Decision_Log.md
 canonical_text: >-
-  Recorded 2026-10-16. Contracts the motion fix lanes add, recorded as each lands on main. The terminal
-  lane (main 89d1a6c057) makes the wallpaper owner's synchronous, cache-only source query the one way a
-  consumer finds the selected print (DR-073); its other changes (the Customize screen kept ready, Flicker
-  on the compositor, nothing drawn for a terminal off screen, idle and busy waits) change no product
-  contract, nor does its B5 follow-up (main dd511b683e), which applies a look change to a hidden terminal
-  as it shows and to a visible one after the frame's layout, inside F3-642's live-apply rule. The Usage
-  lane (main d2e038618b) implements F3-628's cancel and reversal rules (DL-215) and adds no contract. The
-  shell lane (main b9a08db90f) adds ACD-475's one shared busy signal, look-cover answer and on-time start,
-  and F3-077's look-cover sequence. Q13 (main a2c537cb61) removes redundant forced layout from panel drops
-  and adds no contract: drops are judged by ACD-475's bar, the concept's own 50 ms worst-frame target
-  stays open and is not a canon requirement, and the Plan tab's first resize now keeps a nonzero scroll
-  when nothing was saved. Drafted from branch heads, to be confirmed at their main commits when they land
-  together: the Glass lane (90565f62ea) adds F3-652's worker bakes, idle shader warm-up and cover-only
-  strip deferral; the Settings lane (0d510df290) adds DR-073's wallpaper preparation, F3-598's Reduced
-  Motion calm cover and SSYS-053's acknowledged, coalesced navigation. The editor lane is added when it
-  lands. Win's trace attributes the B5 fade delay to Chrome's own autofill form extraction, which no page
-  code causes; the coordinator ruled it a concept harness matter: films stay on the default browser and
-  record it, the cost is reported separately and never subtracted, and an autofill-off run is allowed only
-  for both arms of an A/B (TCME-007); product canon is unchanged (AI-045). Concept evidence is not native
-  certification.
+  Recorded 2026-10-16. Contracts the motion fix lanes add, recorded as each lands on main. Landed: the
+  terminal lane (main 89d1a6c057) makes the wallpaper owner's synchronous, cache-only source query the one
+  way a consumer finds the selected print (DR-073); its other changes, and its B5 follow-up (main
+  dd511b683e), change no product contract. The Usage lane (main d2e038618b) implements F3-628's cancel and
+  reversal rules (DL-215). The shell lane (main b9a08db90f) adds ACD-475's one shared busy signal,
+  look-cover answer and on-time start, and F3-077's look-cover sequence. Q13 (main a2c537cb61) removes
+  redundant forced layout from panel drops and adds no contract: drops are judged by ACD-475's bar, the
+  concept's own 50 ms worst-frame target stays open and is not a canon requirement, and the Plan tab's
+  first resize keeps a nonzero scroll when nothing was saved. Approved by Jared to land, recorded from
+  their pinned heads for confirmation at their main commits: train L1, with Glass 554b3d3a65 (F3-652's
+  worker bakes, idle shader warm-up and cover-only strip deferral), Settings d02f2ac26b (DR-073's
+  wallpaper preparation, F3-598's Reduced Motion calm cover, SSYS-053's acknowledged, coalesced
+  navigation), the editor d6647a2fc1 (F3-650: the editor screen opens over Settings), and shell
+  ff77ba2788, terminal cc36402ab4, panels 89e0639749, T2 76c2f44ca9, isplit ba33681a3c and Usage
+  96a309b9f3, which are performance and build-time work with no new contract (the shell's Reduced Motion
+  Enter fade sits inside F3-520's short opacity settle); then train L2, with the frost crossfade
+  10ba7d6427 and its seam c17316f6cf (F3-653) and the seg plate e7f4a4fa8d (F3-652: Settings' segmented
+  choices slide their chip). Win's trace attributes the B5 fade delay to Chrome's own autofill form
+  extraction, which no page code causes; the coordinator ruled it a concept harness matter: films stay on
+  the default browser and record it, the cost is reported separately and never subtracted, and an
+  autofill-off run is allowed only for both arms of an A/B (TCME-007); product canon is unchanged
+  (AI-045). Concept evidence is not native certification.
 gui_related: true
 gui_classification_reason: Contracts Added By The Motion Fix Lanes.
 split_recommended: false
@@ -16064,6 +16066,29 @@ source_lineage:
 - /mnt/Cursor/share/puppet-master/2026-10-16-plans-topup/sources/pm-mail-1016161708-f80e.txt, SHA-256
   b4a25d5f50b882188b35a9da348972d7471030edff0dd86bc1a2f3303c9880a8 (coordinator correction, films stay on
   the default browser; decision lineage)
+- /mnt/Cursor/share/puppet-master/2026-10-16-plans-topup/sources/pm-mail-1016175437-8a2c.txt, SHA-256
+  c36ac2ab8fd07c28e447d0b8a5993ba646cdc83785382f725b8ddc1dc9e9059e (Jared's approval of trains L1 and L2
+  with their pinned heads; decision lineage)
+- /mnt/Cursor/share/puppet-master/2026-10-16-plans-topup/sources/2026-10-16-motion-pass--LANDING-TRAIN-BRIEF.md,
+  SHA-256 7b119ebaaa01af1d49cee9e3dacacfdd24b8ac8843fb797c3d44d907ea8a1ce0 (landing train brief; source
+  lineage)
+- /mnt/Cursor/share/puppet-master/2026-10-16-plans-topup/sources/d02f2ac26b--Concepts--wallpapers--opus-5.5--CONTRACT.md,
+  SHA-256 1687dac3d7dc7905598780595e7df743255edaf6619f038c97d5bfcaa043d544 (Settings head d02f2ac26b;
+  source lineage)
+- /mnt/Cursor/share/puppet-master/2026-10-16-plans-topup/sources/554b3d3a65--Concepts--liquid-glass--opus-5.5--CONTRACT.md,
+  SHA-256 acd64cd195435ff1bb143d2dd00dab6f0cc7420a7dc8132ee8703f185ebab629 (Glass head 554b3d3a65; source
+  lineage)
+- /mnt/Cursor/share/puppet-master/2026-10-16-plans-topup/sources/2026-10-16-frost-crossfade--NOTES.md,
+  SHA-256 a90acd28ecc0d3930fa26091b69a55ff3f484a78c150a501a4784c388b3e7d2f (frost crossfade lane; source
+  lineage)
+- /mnt/Cursor/share/puppet-master/2026-10-16-plans-topup/sources/e7f4a4fa8d-seg-plate-commit.txt, SHA-256
+  e5d22ffe6fb3afab65144b8da3742d32adf0b7bfbcf3653d5288cf903b879128 (seg plate head; source lineage)
+- /mnt/Cursor/share/puppet-master/2026-10-16-plans-topup/sources/ff77ba2788-shell-reduced-enter-commit.txt,
+  SHA-256 05fe18d67f4bd18351e6b3a3dd36142c77f926154f26ac44deefb518f3e785b2 (shell follow-up, Reduced
+  Motion Enter; source lineage)
+- /mnt/Cursor/share/puppet-master/2026-10-16-plans-topup/sources/2026-10-16-motion-fixes--pm7-motion-editor--NOTES.md,
+  SHA-256 a9d113635287031b45c99d01df04710b80b6812f2a6f00838ec57462b3f448e5 (editor lane B6; source
+  lineage)
 preserved_exact_tokens: []
 negative_constraints: []
 owner_hints:

@@ -4049,11 +4049,13 @@ canonical_text: >-
   print, and a watch on the selected print never forces a style recalculation. In the concept this is
   PM_WALLPAPERS.sourceUrl(id, mode), returning a URL, undefined or null.
   Amended 2026-10-16 (DL-217, the Settings and Glass lanes): the owner prepares a print and its frost
-  before the choice is published, and fills the source query's cache first. Preparing nearby and visible
-  choices ahead of a pick runs at idle, one job at a time, pauses for input, Settings navigation and the
-  shared busy signal, and never delays a pick; hovering a tile only moves it to the front of that queue. A
-  cancelled or stale preparation changes nothing on screen, and only the newest pick commits. Glass alone
-  keeps the decoded prints and a byte-bounded frost cache; the gallery keeps no image cache of its own.
+  before the choice is published, and fills the source query's cache first. Preparing nearby and visible choices ahead of a pick runs at idle, one job at a time, pauses for input,
+  Settings navigation and the shared busy signal, and never delays a pick; hover or keyboard focus
+  prepares the intended tile after a short quiet pause, and a press requests it at once, still behind
+  those guards. A cancelled or stale preparation changes nothing on screen and only the newest pick
+  commits; a pick whose preparation fails still commits through the ordinary print and frost fallback, so
+  no pick is lost. Glass alone keeps the decoded prints, the visible gallery choices among them within a
+  bounded budget, and a byte-bounded frost cache; the gallery keeps no image cache of its own.
 gui_related: true
 gui_classification_reason: One wallpaper catalog and one writer.
 split_recommended: false
@@ -4096,9 +4098,9 @@ source_lineage:
 - /mnt/Cursor/share/puppet-master/2026-10-16-plans-topup/sources/2026-10-16-motion-fixes--LANDING-REVIEW.md,
   SHA-256 b1ca802f406fa585b3be8d1096e8aefada4bac0c94ef81a3ee93f3be3611918e (cross-lane contract check;
   source lineage)
-- /mnt/Cursor/share/puppet-master/2026-10-16-plans-topup/sources/0d510df290--Concepts--wallpapers--opus-5.5--CONTRACT.md,
-  SHA-256 817dc779652ba04c4f23d6201d0b88d855a651f568496880f24731a7a3c535d0 (Settings lane head 0d510df290,
-  wallpaper preparation and source cache; source lineage; not native certification)
+- /mnt/Cursor/share/puppet-master/2026-10-16-plans-topup/sources/d02f2ac26b--Concepts--wallpapers--opus-5.5--CONTRACT.md, SHA-256
+  1687dac3d7dc7905598780595e7df743255edaf6619f038c97d5bfcaa043d544 (Settings lane head d02f2ac26b, pinned
+  for L1, wallpaper preparation and source cache; source lineage; not native certification)
 preserved_exact_tokens: []
 negative_constraints: []
 owner_hints:

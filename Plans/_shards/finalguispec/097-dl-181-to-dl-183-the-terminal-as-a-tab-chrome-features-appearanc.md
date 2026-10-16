@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L46595-L48700
+Source lines: L46595-L48720
 
-Source SHA256: `69171808f4f19d31de2ee03a7826c3664b1378aa101e9bd874f6e261eb9505f7`
+Source SHA256: `b2e573c1085b6ee57a8116466dbbb465d79e76ca9198acce648ad05cacf165ae`
 
 ---
 
@@ -1207,8 +1207,10 @@ canonical_text: >-
   actions and grouped controls. It sits beside the real surface without covering it and frames the
   live target. One rule decides docking on both screens: the preview follows scrolling only when the
   real editor or terminal is not visible beside the screen, including narrow or maximized layouts.
-  Settings entry routes to Home beside the real target; origin in Settings alone does not force
-  docking. Opening the screen never starts a shell, runs a command or changes a file. Without a
+  From Settings, the terminal screen routes to Home beside the real target and the editor screen opens
+  over Settings itself, Settings kept beneath, with no detour to Home (amended 2026-10-16, DL-217, the
+  editor lane); an editor's More menu still opens it beside the real editor. Origin in Settings alone does
+  not force docking. Opening the screen never starts a shell, runs a command or changes a file. Without a
   suitable target the All scope remains useful through the isolated renderer preview, and This is
   unavailable with a reason. Close and Escape undo uncommitted previews, keep committed choices and
   return focus to the invoking control. Quick sets change only their named fields through the
@@ -1324,6 +1326,9 @@ source_lineage:
 - /mnt/Cursor/share/puppet-master/2026-10-16-plans-pass2/sources/COORDINATOR-PRESET-CUSTODY-1016001056-4c95.md,
   SHA-256 ad3b14eebf173550efe88a594b4a869588e3175e7e1277120e86405753bc7f3f (source lineage; not native
   certification)
+- /mnt/Cursor/share/puppet-master/2026-10-16-plans-topup/sources/2026-10-16-motion-fixes--pm7-motion-editor--NOTES.md,
+  SHA-256 a9d113635287031b45c99d01df04710b80b6812f2a6f00838ec57462b3f448e5 (editor lane, head d6647a2fc1
+  pinned for L1, B6; source lineage)
 preserved_exact_tokens:
 - This editor
 - All editors
@@ -1331,6 +1336,9 @@ preserved_exact_tokens:
 - All terminals
 - Open Customize
 negative_constraints: []
+stale_retired_dispositions:
+- 'Amended 2026-10-16 (DL-217): the editor screen opened from Settings opens over Settings; it read:
+  Settings entry routes to Home beside the real target.'
 owner_hints:
 - Plans/FinalGUISpec.md
 ```
@@ -1500,8 +1508,9 @@ canonical_text: >-
   The shared switcher has one selection authority and one track/lens/label component, adopted
   through family material tokens. It serves the page tabs, rail tabs, Usage navigation and range,
   Orchestrator views, Settings chapters, section/index/manager tabs, Wizard work type, theme menu
-  and both Customize screens. Choices in scrolling content (Settings segmented choices/service lists
-  and Home segmented rows/panel tabs) use its material in place without a travelling lens. Adopting
+  and both Customize screens. Choices in scrolling content (Settings service lists and Home segmented rows/panel tabs) use its
+  material in place without a travelling lens; Settings' segmented choices have a sliding chip in every
+  look, Retro and NieR stepped per F3-438 (amended 2026-10-16, DL-217, the seg plate lane). Adopting
   the switcher does not enable Glass sheets or optics in another look. A newly shown strip, restored hidden strip or opened
   theme menu places its selected state before the first visible frame. A title-bar menu never
   removes the page selection; remeasure a hidden strip on reveal without a visible zero-position
@@ -1608,9 +1617,12 @@ source_lineage:
 - /mnt/Cursor/share/puppet-master/2026-10-16-plans-topup/sources/aec2916c94--Concepts--liquid-glass--opus-5.5--src--glass.js,
   SHA-256 782352b2f604875dcb16ae6683a033b5a8bd0bbd0af39d3de70300b4dadc6593 (Q16 landed on main as
   aec2916c94, Retro's two-jump step and NieR's cut; source lineage; not native certification)
-- /mnt/Cursor/share/puppet-master/2026-10-16-plans-topup/sources/90565f62ea--Concepts--liquid-glass--opus-5.5--CONTRACT.md,
-  SHA-256 8c4dcd540ee6fa4129c7a9286e679c8ac70519f9a56804e7f16a9afcced349c9 (Glass lane head 90565f62ea,
-  worker bakes and shader warm-up; source lineage; not native certification)
+- /mnt/Cursor/share/puppet-master/2026-10-16-plans-topup/sources/554b3d3a65--Concepts--liquid-glass--opus-5.5--CONTRACT.md, SHA-256
+  acd64cd195435ff1bb143d2dd00dab6f0cc7420a7dc8132ee8703f185ebab629 (Glass lane head 554b3d3a65, pinned for
+  L1, worker bakes and shader warm-up; source lineage; not native certification)
+- /mnt/Cursor/share/puppet-master/2026-10-16-plans-topup/sources/e7f4a4fa8d-seg-plate-commit.txt, SHA-256
+  e5d22ffe6fb3afab65144b8da3742d32adf0b7bfbcf3653d5288cf903b879128 (seg plate head e7f4a4fa8d, L2; source
+  lineage)
 preserved_exact_tokens:
 - Liquid Glass
 negative_constraints: []
@@ -1621,6 +1633,8 @@ stale_retired_dispositions:
   native implementation evidence is still required.'
 - 'Amended 2026-10-16 (DL-214): the non-Glass consistency pass is adopted; it read: the non-Glass
   consistency pass remains a separate adoption decision.'
+- 'Amended 2026-10-16 (DL-217): Settings'' segmented choices slide their chip; it read: Settings segmented
+  choices use the material in place without a travelling lens.'
 ```
 
 ContractRef: ContractName:Plans/FinalGUISpec.md#F3-427, ContractName:Plans/FinalGUISpec.md#F3-431, ContractName:Plans/FinalGUISpec.md#F3-653, ContractName:Plans/FinalGUISpec.md#F3-654
@@ -1668,6 +1682,9 @@ canonical_text: >-
   choices are compatibility lineage only. Friendly's content ground extends its dot pattern through
   Settings, Usage, rail panels and the chat transcript, moving with content rather than as a second
   fixed overlay.
+  Amended 2026-10-16 (DL-217, the frost crossfade lane): every shown frosted sheet crossfades its frost
+  from the old print to the new one in step with the print's fade, under the sheet's content; under
+  Reduced Motion, on a look change and without a GPU the print and its frost swap at once.
 gui_related: true
 gui_classification_reason: One wallpaper gallery for every look.
 split_recommended: false
@@ -1726,6 +1743,9 @@ source_lineage:
 - /mnt/Cursor/share/puppet-master/2026-10-16-plans-topup/sources/2026-10-16-p1000-decision--JARED-DECISIONS.md,
   SHA-256 a1dedd6e70bfa51ec0b07c34a86bfa65583439b18ff4ace266c4fe9e2a0aa3a6 (Jared's decisions of
   2026-10-16 ~12:10Z; decision lineage)
+- /mnt/Cursor/share/puppet-master/2026-10-16-plans-topup/sources/2026-10-16-frost-crossfade--NOTES.md,
+  SHA-256 a90acd28ecc0d3930fa26091b69a55ff3f484a78c150a501a4784c388b3e7d2f (frost crossfade lane
+  10ba7d6427 with seam c17316f6cf, L2; source lineage)
 preserved_exact_tokens:
 - Look's own
 - Ribbons
