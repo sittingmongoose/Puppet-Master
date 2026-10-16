@@ -567,6 +567,18 @@ PATCHES = [
         window.PM7_MOTION_FINISH(el, 'transition', 'transform', settle);
       });''',
      'motion completion: dashboard FLIP cleanup'),
+    (r"""      el.style.transition = 'none';
+      el.style.transform = 'translate(' + dx + 'px,' + dy + 'px)';""",
+     r"""      window.PM7_MOTION_FINISH.cancel(el, 'transition', 'transform');
+      el.style.transition = 'none';
+      el.style.transform = 'translate(' + dx + 'px,' + dy + 'px)';""",
+     'motion completion: retire dashboard FLIP before replacing its styles'),
+    (r'''      var element = entry.element;
+      element.style.transition = "none";''',
+     r'''      var element = entry.element;
+      window.PM7_MOTION_FINISH.cancel(element, 'transition', 'transform');
+      element.style.transition = "none";''',
+     'motion completion: retire Home FLIP before replacing its styles'),
     (r'''      var settle = function (event) {
         if (event.target !== element || event.propertyName !== "transform") return;
         element.removeEventListener("transitionend", settle);''',

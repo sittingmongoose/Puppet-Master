@@ -26535,6 +26535,12 @@ html:is([data-theme^="retro"], [data-o55-nier="on"]) #panel-settings .toggle.pm-
     });
     return stop;
   };
+  // Retire a previous FLIP wait before its replacement changes styles. Its
+  // cancellation event must not clean the replacement's initial geometry.
+  window.PM7_MOTION_FINISH.cancel = function (el, kind, name) {
+    var active = waits.get(el), stop = active && active.get(kind + ':' + name);
+    if (stop) stop();
+  };
 })();
 
 </script>
@@ -121346,6 +121352,7 @@ html[data-theme^="retro"] #panel-settings .o55-goals-phase-n { border-radius: 0;
       var now = el.getBoundingClientRect();
       var dx = entry.rect.left - now.left, dy = entry.rect.top - now.top;
       if (!dx && !dy) return;
+      window.PM7_MOTION_FINISH.cancel(el, 'transition', 'transform');
       el.style.transition = 'none';
       el.style.transform = 'translate(' + dx + 'px,' + dy + 'px)';
       var settle = function () {
@@ -124617,6 +124624,7 @@ html[data-theme^="retro"] #panel-settings .o55-goals-phase-n { border-radius: 0;
     moved.sort(function (a, b) { return a.order - b.order; });
     moved.forEach(function (entry, index) {
       var element = entry.element;
+      window.PM7_MOTION_FINISH.cancel(element, 'transition', 'transform');
       element.style.transition = "none";
       element.style.transform = "translate(" + entry.dx + "px," + entry.dy + "px)";
       /* Mid-flight marker for hit-testing: the inline transform is EMPTY

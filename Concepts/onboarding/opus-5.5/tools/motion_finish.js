@@ -64,4 +64,10 @@
     });
     return stop;
   };
+  // Retire a previous FLIP wait before its replacement changes styles. Its
+  // cancellation event must not clean the replacement's initial geometry.
+  window.PM7_MOTION_FINISH.cancel = function (el, kind, name) {
+    var active = waits.get(el), stop = active && active.get(kind + ':' + name);
+    if (stop) stop();
+  };
 })();
