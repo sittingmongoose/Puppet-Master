@@ -399,6 +399,13 @@
 [data-rail-skin="d"][data-motion="reduced"] #sidePanelSlot[data-pm-rail-fold], [data-rail-skin="d"][data-reduced-motion="1"] #sidePanelSlot[data-pm-rail-fold] { animation: none !important; }
 @media (prefers-reduced-motion: reduce) { [data-rail-skin="d"] #sidePanelSlot[data-pm-rail-fold] { animation: none !important; } }
 
+/* A view that is leaving (30-motion.js holdLeaving, final motion QA A8): drawn where it was, above the view coming in,
+   without input, until its fade ends. A panel covers the panel slot; a tab pane keeps its own place in its scroller
+   (its display, top, left and width are written inline from the box read before the shell hid it). */
+[data-rail-skin="d"] #sidePanelSlot.d-has-leaving { position: relative; }
+[data-rail-skin="d"] #sidePanelSlot > .side-panel-view.d-leaving { display: flex; position: absolute; inset: 0; z-index: 3; pointer-events: none; }
+[data-rail-skin="d"] :is(#panel-files,#panel-search,#panel-source,#panel-git,#panel-docker,#panel-testing,#panel-run,#panel-agents,#panel-artifacts) .sh-scroll > [data-pane].d-leaving { position: absolute; z-index: 3; pointer-events: none; }
+
 /* ---- 3. Shelves: the coloured boxes that group the rail -------------------------------------------------------------
    The shelf is the only box. Its head is a band flush with the shelf's top (the shelf clips, so the band always has
    exactly the shelf's corners); a collapsed shelf is just its head, with no dead strip under it. Rows inside sit one

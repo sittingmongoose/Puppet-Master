@@ -14,7 +14,7 @@ function restoreProjectDefaults(request) {
     next.settingsTransferRollbacks[receipt] = { settings: clone(before.settings || {}), changed: clone(before.changed || {}) };
     next.settingsTransferHistory = next.settingsTransferHistory || [];
     next.settingsTransferHistory.unshift({ time: new Date().toISOString(), action: 'Restored project defaults',
-      categories: 0, result: 'Project settings restored; credential references and project history preserved.',
+      result: 'Project settings restored. Saved sign-ins and project history were kept.',
       receipt_id: receipt, rollback_ref: receipt, rollback_available: true, fixture_mode: true });
     var bytes = JSON.stringify(next);
     localStorage.setItem(k, bytes);

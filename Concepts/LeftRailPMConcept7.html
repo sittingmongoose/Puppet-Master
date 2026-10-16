@@ -31296,12 +31296,6 @@ html:is([data-motion="reduced"], [data-o55-still]) #panel-wizard > .pm6-wiz-stag
    displayed until the exit has finished (27-wizard-stage.js). */
 #panel-wizard > .pm6-wiz-stage.wo-stage-hold { display: flex; animation: none; }
 #panel-wizard > .pm6-wiz-stage.active.wo-stage-defer { display: none; }
-/* A page that arrives at once (.pm8-page-instant: opened under the onboarding window, 74-screens-ready.js
-   openWizard({under}), or any page change under Reduced Motion) is there whole on its first frame: its stage and the
-   entrances inside it do not also fade up from nothing (Reduced Motion's own fade rule is outranked here). */
-html #panel-wizard.pm8-page-instant > .pm6-wiz-stage.active,
-html #panel-wizard.pm8-page-instant > .pm6-wiz-stage.active :is(.pm-enter-up, .pm-enter-scale) { animation: none !important; }
-html #panel-orchestrator.pm8-page-instant :is(.pm-enter-up, .pm-enter-scale, .pm6-orch-widget) { animation: none !important; }
 
 /* ---- css/30-art.css ---- */
 /* ---- O55 art: scene layers, family choreography, ambient loops -------------------------------------------------
@@ -34017,6 +34011,13 @@ html[data-o55-nier="on"] .pmr-view { --pmr-st-ok: var(--o55-nier-ink); --pmr-st-
 @keyframes d-fold-ink { from { clip-path: inset(0 100% 0 0); } to { clip-path: inset(0 0 0 0); } }
 [data-rail-skin="d"][data-motion="reduced"] #sidePanelSlot[data-pm-rail-fold], [data-rail-skin="d"][data-reduced-motion="1"] #sidePanelSlot[data-pm-rail-fold] { animation: none !important; }
 @media (prefers-reduced-motion: reduce) { [data-rail-skin="d"] #sidePanelSlot[data-pm-rail-fold] { animation: none !important; } }
+
+/* A view that is leaving (30-motion.js holdLeaving, final motion QA A8): drawn where it was, above the view coming in,
+   without input, until its fade ends. A panel covers the panel slot; a tab pane keeps its own place in its scroller
+   (its display, top, left and width are written inline from the box read before the shell hid it). */
+[data-rail-skin="d"] #sidePanelSlot.d-has-leaving { position: relative; }
+[data-rail-skin="d"] #sidePanelSlot > .side-panel-view.d-leaving { display: flex; position: absolute; inset: 0; z-index: 3; pointer-events: none; }
+[data-rail-skin="d"] :is(#panel-files,#panel-search,#panel-source,#panel-git,#panel-docker,#panel-testing,#panel-run,#panel-agents,#panel-artifacts) .sh-scroll > [data-pane].d-leaving { position: absolute; z-index: 3; pointer-events: none; }
 
 /* ---- 3. Shelves: the coloured boxes that group the rail -------------------------------------------------------------
    The shelf is the only box. Its head is a band flush with the shelf's top (the shelf clips, so the band always has
@@ -87855,7 +87856,7 @@ function restoreProjectDefaults(request) {
     next.settingsTransferRollbacks[receipt] = { settings: clone(before.settings || {}), changed: clone(before.changed || {}) };
     next.settingsTransferHistory = next.settingsTransferHistory || [];
     next.settingsTransferHistory.unshift({ time: new Date().toISOString(), action: 'Restored project defaults',
-      categories: 0, result: 'Project settings restored; credential references and project history preserved.',
+      result: 'Project settings restored. Saved sign-ins and project history were kept.',
       receipt_id: receipt, rollback_ref: receipt, rollback_available: true, fixture_mode: true });
     var bytes = JSON.stringify(next);
     localStorage.setItem(k, bytes);
@@ -88355,7 +88356,7 @@ function restoreProjectDefaults(request) {
     const result=restore({project_id:project.id,create_rollback:true,preserve_credential_references:true});
     if(result&&typeof result.then==='function'){showToast('Defaults were not restored','The concept requires an accepted owner receipt before updating its projection.','error');return false;}
     if(!result||result.ok===false){showToast('Defaults were not restored',result?.safe_user_message||result?.reason||'The Settings owner rejected restore-all.','error');return false;}
-    state=loadState();ensureStateShape();state.detailSetting=null;renderApp();window.PM7_SETTINGS_TOME.applyPaint(state);showToast('Project defaults restored','Project settings are back to their defaults. Credential references and history were kept.','success');return true;
+    const restorePlace={home:state.home,domain:state.domain,workspace:state.workspace,activeSection:clone(state.activeSection||{})};state=loadState();ensureStateShape();Object.assign(state,restorePlace);state.detailSetting=null;renderApp();window.PM7_SETTINGS_TOME.applyPaint(state);showToast('Project defaults restored','Project settings are back to their defaults. Saved sign-ins and history were kept.','success');return true;
   }
   function portalFrame(){const portal=portalRoot(),rect=portal.getBoundingClientRect();return {portal,rect,width:portal.clientWidth||rect.width,height:portal.clientHeight||rect.height};}
   let hostWidth=0;
@@ -97467,7 +97468,7 @@ window.PM_NIER = Object.freeze({
     later(() => {
       if (!live.has('decode')) return;
       [...document.querySelectorAll(sel)].filter(e => e.getClientRects().length).slice(0, 4).forEach(decode);
-    }, live.has('wipe') ? 110 : 0);
+    }, live.has('wipe') ? 60 : 0);
   }
   PARTS.decode = { on() {}, off() {} };
 
@@ -97479,8 +97480,13 @@ window.PM_NIER = Object.freeze({
     const z = zoom();
     wipe.style.cssText = `left:${r.left / z}px;top:${r.top / z}px;width:${r.width / z}px;height:${r.height / z}px;display:block`;
     if (wipeAnim) wipeAnim.cancel();
-    const a = wipeAnim = wipe.firstChild.animate([{ transform: 'translateX(0)' }, { transform: 'translateX(0)', offset: 0.2 }, { transform: 'translateX(101%)' }],
-      { duration: 400, easing: 'cubic-bezier(.65, 0, .3, 1)', fill: 'both' });
+    /* the band leaves as soon as the new page is drawn under it (final motion QA A4, Jared 2026-10-16: the empty beat
+       at most 50 ms): no held keyframe (under the old ease-in-out it held the bare band for ~150 ms), a curve that is
+       moving from its first frames, and a start reset to the first frame after the page change, so a long first frame
+       never eats the slide */
+    const a = wipeAnim = wipe.firstChild.animate([{ transform: 'translateX(0)' }, { transform: 'translateX(101%)' }],
+      { duration: 380, easing: 'cubic-bezier(.3, .15, .2, 1)', fill: 'both' });
+    requestAnimationFrame(() => { if (wipeAnim === a && a.playState === 'running') { try { a.startTime = document.timeline.currentTime; } catch (_) { /* gone */ } } });
     a.onfinish = () => { if (wipeAnim !== a) return; wipeAnim = null; if (wipe) wipe.style.display = 'none'; a.cancel(); };
   }
   PARTS.wipe = { on() {}, off() { if (wipeAnim) wipeAnim.cancel(); wipeAnim = null; if (wipe) wipe.remove(); wipe = null; } };
@@ -114815,6 +114821,13 @@ html[data-theme^="retro"] #panel-settings .o55-goals-phase-n { border-radius: 0;
          340 ms while the faded outgoing subtree stays inert. */
       stopEntrance = window.PM7_MOTION_FINISH(newP, 'animation', 'pm8-page-in', cleanupIn, 80);
     }
+    /* O55 (motion QA A1, A2): a page that arrives at once shows its end state on its first frame */
+    function finishEntrances(panel) {
+      if (!panel || !panel.classList.contains('active') || !panel.getAnimations) return;
+      panel.getAnimations({ subtree: true }).forEach(function (a) {
+        try { var t = a.effect && a.effect.getComputedTiming(); if (t && isFinite(t.endTime) && a.playState !== 'finished') a.finish(); } catch (e) {}
+      });
+    }
     var origGo = window.PM_PAGES.go;
     window.PM_PAGES.go = function (pageId, subTab) {
       var prev = window.PM_PAGES.current;
@@ -114827,9 +114840,9 @@ html[data-theme^="retro"] #panel-settings .o55-goals-phase-n { border-radius: 0;
       }
       var tab = tabFor(pageId);
       var tabMetrics = tab ? measureTab(tab) : null;
-      if (changed && newP && oldP !== newP && (reduced() || window.PM_PAGES.instant)) newP.classList.add('pm8-page-instant');   /* O55 */
+      var whole = changed && newP && oldP !== newP && (reduced() || window.PM_PAGES.instant) && /^(wizard|orchestrator)$/.test(pageId);   /* O55 */
       origGo.call(window.PM_PAGES, pageId, subTab);
-      if (changed) document.querySelectorAll('.primary-content > .page.pm8-page-instant:not(.active):not(.pm8-page-out)').forEach(function (p) { p.classList.remove('pm8-page-instant'); });
+      if (whole) requestAnimationFrame(function () { finishEntrances(newP); });
       if (tab) (changed ? springTo : snap)(tab, tabMetrics);
       if (!rect) { requestAnimationFrame(cacheActiveRect); return; }
       animatePages(oldP, newP, tabIndex(pageId) >= tabIndex(prev) ? 1 : -1, rect);
@@ -145810,7 +145823,8 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
   };
   const motion = () => MOTION[look()]();
   /* Web Animations (Animation speed scales them through kit.d/17-look.js); real() keeps reading time unscaled */
-  function play(el, frames, o) {
+  function play(el, frames, o) { return playNow(el, frames, o); }
+  function playNow(el, frames, o) {
     if (!el || typeof el.animate !== 'function') return null;
     try { return el.animate(frames, Object.assign({ fill: 'none' }, o)); } catch (_) { return null; }
   }
@@ -146629,6 +146643,11 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
     sound('open', 0.4);
     if (!still()) {
       const m = motion(), L = look(), chrome = panelEl.querySelector('.pmn-chrome');
+      /* every entrance below starts again, together, on the first frame after the open (final motion QA B10): a first
+         frame that is long (Glass rastering its blur on first show, about half a second on the P1000) otherwise ran the
+         whole entrance behind it, and the panel appeared already open */
+      const opening = [], play = (el, frames, o) => { const a = playNow(el, frames, o); if (a) opening.push(a); return a; };
+      requestAnimationFrame(() => { const t = document.timeline.currentTime; if (t == null || !open) return; opening.forEach((a) => { try { if (a.playState !== 'idle') a.startTime = t; } catch (_) { /* gone */ } }); });
       if (L === 'retro') {
         play(chrome, [{ transform: 'scale(1, .01)', filter: 'brightness(3)' }, { transform: 'scale(1, .01)', filter: 'brightness(2)', offset: 0.35 }, { transform: 'none', filter: 'none' }], { duration: 260, easing: 'steps(6, end)' });
       } else if (L === 'nier') {
@@ -147278,8 +147297,6 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
     function prepare(name) {
       const incoming = stages.find(s => s.dataset.wizStage === name);
       if (!incoming || incoming === current) return;
-      // A page shown under the onboarding window skipped its stage entrance (.pm8-page-instant); later stages enter.
-      if (root.classList.contains('pm8-page-instant')) root.classList.remove('pm8-page-instant');
       const outgoing = current;
       const scrollTop = root.scrollTop;
       const reversing = leaving.has(incoming);
@@ -147329,7 +147346,6 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
       // While the page exit still paints, a stage switch in progress keeps its outgoing stage too.
       if (exiting()) return;
       if (held.size || deferred.size) releaseExit();
-      if (!pageShown && root.classList.contains('pm8-page-instant')) root.classList.remove('pm8-page-instant');
       if (!pageShown) finish(serial, current);
     });
     observer.observe(root, { attributes: true, attributeFilter: ['class'] });
@@ -167969,10 +167985,60 @@ function viewInOff() {
   if (slot) slot.removeAttribute('data-d-viewin');
 }
 
+/* What was on screen stays until the new view's first frame has been shown (final motion QA A8, 2026-10-16). The
+   panel or tab pane that is leaving keeps its place above the one coming in, takes no input, and fades out while the
+   new one deals in, started with the rest of the change (startTogether): the change's first frame, which the shell's
+   fit pass can hold for a sixth of a second, shows the old view instead of an empty pane. NieR keeps its own erase
+   (the wipe is its look) and Reduced Motion swaps at once. */
+const LEAVE = { basic: .45, friendly: .3, glass: .25, retro: .5 };
+const leaving = new Set();
+function releaseLeaving(el) {
+  if (!el._dLeave) return;
+  const keep = el._dLeave; el._dLeave = null; leaving.delete(el);
+  if (keep.anim) { try { keep.anim.cancel(); } catch (e) { /* gone */ } }
+  el.classList.remove('d-leaving');
+  if (keep.inline) ['display', 'top', 'left', 'width'].forEach(k => el.style.removeProperty(k));
+  const slot = document.getElementById('sidePanelSlot');
+  if (slot && ![...leaving].some(x => x.classList.contains('side-panel-view'))) slot.classList.remove('d-has-leaving');
+}
+function releaseAllLeaving() { [...leaving].forEach(releaseLeaving); }
+/* keep el drawn where it was; box: a pane's place inside its scroller, read before the shell hid it */
+function holdLeaving(el, box) {
+  if (!el || reduced() || fam() === 'nier' || !D.on) return null;
+  releaseAllLeaving();
+  el._dLeave = { inline: !!box, anim: null };
+  leaving.add(el);
+  if (box) {
+    el.style.setProperty('display', box.display, 'important');
+    el.style.setProperty('top', box.top + 'px'); el.style.setProperty('left', box.left + 'px'); el.style.setProperty('width', box.width + 'px');
+  } else {
+    const slot = document.getElementById('sidePanelSlot');
+    if (slot) slot.classList.add('d-has-leaving');
+  }
+  el.classList.add('d-leaving');
+  return el;
+}
+/* the held view fades out with the change's own start */
+function fadeLeaving(el, anims) {
+  if (!el || !el._dLeave) return;
+  const f = spec(), k = LEAVE[fam()] || .5, retro = fam() === 'retro';
+  const a = el.animate([{ opacity: 1 }, { opacity: 0 }], { duration: Math.max(retro ? 3 * TICK : 90, Math.round(f.dur * k)), easing: retro ? 'steps(3, end)' : 'cubic-bezier(.4, 0, 1, 1)', fill: 'forwards' });
+  a.id = 'd-leave';
+  el._dLeave.anim = a;
+  a.finished.then(() => releaseLeaving(el), () => {});
+  if (anims) anims.push(a);
+}
+/* a pane's place inside its scroller, before the shell hides it */
+function paneBox(pane) {
+  if (!pane || !pane.getClientRects().length) return null;
+  return { top: pane.offsetTop, left: pane.offsetLeft, width: pane.offsetWidth, display: getComputedStyle(pane).display };
+}
+
 /* the panel comes in: its chrome settles first, the content deals in right behind it. The content is the shown tab's
-   pane; a panel without tab panes (Testing, Debug & Run, Agents, Runtime artifacts) deals its scroller's own list. */
-function enterPanel(panel) {
-  if (reduced() || !panel) return;
+   pane; a panel without tab panes (Testing, Debug & Run, Agents, Runtime artifacts) deals its scroller's own list.
+   left: the panel that was shown, held by holdLeaving until this entrance starts */
+function enterPanel(panel, left) {
+  if (reduced() || !panel) { if (left) releaseLeaving(left); return; }
   const chrome = [':scope > .sh-banner', ':scope > .pm7-scm-context', ':scope > .pm7-automation-context', ':scope > .pm-segtab', ':scope > .fm-toolbar-wrap']
     .map(s => panel.querySelector(s)).filter(visible);
   const f = spec(), anims = [];
@@ -167989,6 +168055,7 @@ function enterPanel(panel) {
     const k = fam() === 'retro' ? 'steps(4, end)' : 'cubic-bezier(.3, 1.6, .5, 1)';
     anims.push(ico.animate([{ transform: 'scale(.7) rotate(-12deg)' }, { transform: 'none' }], { duration: Math.round(f.dur * 1.2), easing: k }));
   }
+  if (left) fadeLeaving(left, anims);
   startTogether(anims);
 }
 
@@ -168220,6 +168287,9 @@ function onTabCapture(ev) {
   const st = tab.parentElement;
   if (!st || !st.classList.contains('pm-segtab') || !st.offsetWidth) return;
   st._dFrom = snapStrip(st, tab);
+  /* the view on screen, and its place, before the shell switches it (held while the new one comes in: holdLeaving) */
+  const panel = tab.closest('.side-panel-view'), pane = panel && activePane(panel);
+  if (panel) panel._dFromPane = pane ? { pane, box: paneBox(pane) } : null;
 }
 
 /* bubble phase (onClickMotion, after the shell switched): refit now, move on the next frame */
@@ -168232,21 +168302,25 @@ function tabChanged(tab) {
   const st = tab.parentElement && tab.parentElement.classList.contains('pm-segtab') ? tab.parentElement : null;
   const from = st && st._dFrom;
   if (st) delete st._dFrom;
+  const fromPane = panel._dFromPane; panel._dFromPane = null;
   if (now === was) return;
   /* the label shows in this same task, so the target brackets (placed on the next frame) measure the final box */
   if (st) fitTabs(st);
-  playTabs(st, from, now > was ? 1 : -1, () => activePane(panel));
+  const shown = activePane(panel);
+  const left = fromPane && fromPane.box && fromPane.pane !== shown && fromPane.pane.isConnected ? holdLeaving(fromPane.pane, fromPane.box) : null;
+  playTabs(st, from, now > was ? 1 : -1, () => activePane(panel), null, left);
 }
 /* one frame callback makes every animation of a change, and startTogether starts them all on the next frame: the ink,
    the icons, the inverse tick and the rows share one clock, whatever the shell's fit pass costs this frame. paneOf: the
    view that comes in (read in that frame); after(pane): a strip's own fitting of that view */
-function playTabs(st, from, dir, paneOf, after) {
+function playTabs(st, from, dir, paneOf, after, left) {
   requestAnimationFrame(() => {
-    if (!D.on) return;
+    if (!D.on) { if (left) releaseLeaving(left); return; }
     const anims = [];
     if (st) moveTabs(st, from, dir, anims);
     const pane = paneOf();
     if (pane) { stackHeads(pane); stackRows(pane); midFitAll(pane); if (after) after(pane); enterPane(pane, dir, anims); }
+    if (left) fadeLeaving(left, anims);
     /* NieR: the target brackets made their lock-on in this same frame (their frame callback runs first); it starts
        with the rest of the change, or the shell's fit pass would eat it and the brackets would just appear */
     const ret = document.getElementById('o55np-reticle');
@@ -170067,6 +170141,8 @@ function unmountSkin() {
   });
   clearFit();
   viewInOff();
+  releaseAllLeaving();
+  D.shown = null;
   panelEls().forEach(p => hooksFor(p, 'unmount').forEach(h => h.unmount(p)));
   undoAll();
 }
@@ -170080,9 +170156,14 @@ PMR.concepts.register('d', {
         const p = document.getElementById(info && info.target);
         if (!p) return;
         if (info.reason === 'switch' && D.on) viewIn();
+        /* the panel that was on screen stays until this one's entrance starts (30-motion.js holdLeaving) */
+        const was = D.shown && D.shown !== p && D.shown.isConnected && info.reason === 'switch' ? D.shown : null;
+        D.shown = p;
+        const left = was ? holdLeaving(was) : null;
         requestAnimationFrame(() => {
           fitAll(p);
-          if (info.reason === 'switch' || info.reason === 'concept') enterPanel(p);
+          if (info.reason === 'switch' || info.reason === 'concept') enterPanel(p, left);
+          else if (left) releaseLeaving(left);
           hooksFor(p, 'show').forEach(h => h.show(p, info));
         });
       },
