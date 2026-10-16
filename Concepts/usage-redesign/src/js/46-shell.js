@@ -317,8 +317,8 @@
          fresh copy of the Settings state, 10 ms on the CPU-only VM) */
       if (roomChange) {
         PMU.board.mount(st.room, { dir: ROOM_ORDER.indexOf(st.room) < ROOM_ORDER.indexOf(prevRoom) ? -1 : 1, transition: true });
-        /* Reduce Motion's room change (Jared #3): the new room dissolves in, still (the board makes no transition then) */
-        if (PMU.motion.reduced() && PMU.film && PMU.film.dissolve) PMU.film.dissolve(document.getElementById('pmuBoard'));
+        /* Reduce Motion's room change (Jared #3): the new room dissolves in, still; the board dissolves it itself when it
+           swaps it in (40-board.js calmSwap: it is built unseen behind the room on screen first, motion QA A14) */
         if (titleAnims.length && PMU.film && PMU.film.adopt) PMU.film.adopt(titleAnims);
         titleAnims = [];
       }

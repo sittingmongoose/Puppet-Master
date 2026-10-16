@@ -77,8 +77,9 @@ function inFlow(el) { var p = getComputedStyle(el).position; return p !== 'absol
 narrow.measure = function () {
   var centre = state.centre;
   // only while Home is the page shown: on another page the centre can still have boxes (it is hidden, not removed), and
-  // solving against it there overwrote the chat's width
-  if (!centre || !centre.getClientRects().length || !homeIsPage()) return null;
+  // solving against it there overwrote the chat's width. The page test comes first: getClientRects() forces a layout,
+  // and on the Usage page that was 5-32 ms inside every room change's build (M3, motion QA A14, 2026-10-16)
+  if (!centre || !homeIsPage() || !centre.getClientRects().length) return null;
   var chat = qs('#chatPanel');
   var ma = mainArea();
   var floating = !!(ma && ma.hasAttribute('data-pmw-chat-float'));
@@ -99,11 +100,24 @@ narrow.measure = function () {
    then down to its 400 px minimum, and grows back toward the user's width as the board gets room. Measured from what
    is applied now, never saved. */
 function usageBoard() { var b = qs('#panel-usage #pmuBoard'); return b && b.offsetParent !== null && b.getClientRects().length ? b : null; }
-var usageWatched = null;
+/* the floor follows the board's width only, through one observer on the board's scroll pane, which never changes: the
+   Usage board hands #pmuBoard between two board elements on every room change, so observing #pmuBoard added an observer
+   per room change, and the board's height changing with each room scheduled this pass two or three times inside every
+   room change's build (motion QA A14, 2026-10-16). The pane is as wide as the board. */
+var usageWatched = null, usageRO = null, usageW = -1;
 narrow.usageFloor = function () {
   var board = usageBoard(), chat = qs('#chatPanel'), ma = mainArea();
   if (!board || !chat || chat.classList.contains('hidden') || (ma && ma.hasAttribute('data-pmw-chat-float')) || !inFlow(chat)) return false;
-  if (usageWatched !== board && typeof ResizeObserver === 'function') { usageWatched = board; new ResizeObserver(narrow.schedule).observe(board); }
+  var pane = board.parentNode;
+  if (pane && usageWatched !== pane && typeof ResizeObserver === 'function') {
+    usageWatched = pane; usageW = -1;
+    if (!usageRO) usageRO = new ResizeObserver(function (entries) {
+      var w = entries && entries[0] && entries[0].contentRect ? entries[0].contentRect.width : -1;
+      if (Math.abs(w - usageW) < 0.5) return;
+      usageW = w; narrow.schedule();
+    });
+    usageRO.disconnect(); usageRO.observe(pane);
+  }
   var hist = historyW();
   var room = chat.getBoundingClientRect().width + board.getBoundingClientRect().width - LADDER.usageBoardMin;
   var want = chatUser() + hist, h = hist;
