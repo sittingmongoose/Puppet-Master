@@ -97,7 +97,14 @@
       const incoming = stages.find(s => s.dataset.wizStage === name);
       if (!incoming || incoming === current) return;
       const outgoing = current;
-      const scrollTop = root.scrollTop;
+      /* Read only while the page is shown. A switch made as the page leaves (Orchestrator's first entry resyncs the
+         Wizard) runs after the page write took .active off and before its exit class is on: the page is undisplayed
+         for that moment, and a layout read then computed it so, which cancelled every finished entrance in it
+         (.pm-enter-up). When the exit showed the page again they all ran again from opacity 0, so the Wizard went
+         empty for three frames in the middle of its exit and its cards came back one by one (A3, P1000 films;
+         Nas1 invalidation trace: "Removed from layout" from this read). */
+      const shown = !!outgoing && pageShown && root.classList.contains('active');
+      const scrollTop = shown ? root.scrollTop : 0;
       const reversing = leaving.has(incoming);
       current = incoming;
       const token = ++serial;
