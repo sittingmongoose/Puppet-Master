@@ -366,12 +366,36 @@
     return rec.decoded;
   }
   function whenDecoded(rec, fn) { if (!rec || !rec.urls) { fn(); return; } (rec.decoded || decodeFrost(rec)).then(fn, fn); }
-  /* decoded pairs cost about 1.8 MB each at 1080p: only the FROST_DECODED most recent keep theirs (the rest decode again,
-     about 5 ms, when they are used: landing review GL-4) */
-  var FROST_DECODED = 8;
+  /* decoded pairs cost about 1.8 MB each at 1080p: the FROST_DECODED most recent keep theirs, and so does every pair
+     prepared or committed in the last FROST_RECENT ms, so the whole gallery a user is browsing stays decoded (B3: a pick
+     decoded again cost 62 ms on Nas1). The rest decode again when they are used (landing review GL-4); a timer lets the
+     recent ones go once they are no longer recent. */
+  var FROST_DECODED = 8, FROST_RECENT = 60000, trimT = 0;
+  function frostUsed(rec) { rec.used = performance.now(); }
+  /* what each prepare and commit found (B3 attribution for films): a performance mark 'pm-lg-wall' per event, detail
+     { what, wall, ms }, and the last 64 in PM_LG.frostLog(). what: kept (the pair was cached, decoded), kept-decode (cached,
+     decoded again), joined (its bake was already running), baked (made now), refused (canRun said no), failed, evicted,
+     commit (the pair was there) or commit-miss. wall names the print by its id and mode where Glass knows it. */
+  var frostLogBuf = [];
+  function wallName(url) {
+    var name = ''; wallSourceUrls.forEach(function (u, k) { if (u === url) name = k; });
+    return name || (url ? 'url#' + url.length + ':' + url.slice(-16) : '');
+  }
+  function frostLog(what, url, t0, extra) {
+    var d = { what: what, wall: wallName(url), ms: t0 == null ? 0 : Math.round(performance.now() - t0), t: Math.round(performance.now()) };
+    if (extra) for (var k in extra) d[k] = extra[k];
+    frostLogBuf.push(d); if (frostLogBuf.length > 64) frostLogBuf.shift();
+    try { performance.mark('pm-lg-wall', { detail: d }); } catch (e) {}
+  }
   function trimDecoded() {
-    var keys = Array.from(frostCache.keys());
-    for (var i = 0; i < keys.length - FROST_DECODED; i++) { var r = frostCache.get(keys[i]); if (r.urls !== frosts) { r.imgs = null; r.decoded = null; } }
+    var keys = Array.from(frostCache.keys()), now = performance.now(), next = 0;
+    clearTimeout(trimT); trimT = 0;
+    for (var i = 0; i < keys.length - FROST_DECODED; i++) {
+      var r = frostCache.get(keys[i]), left = (r.used || 0) + FROST_RECENT - now;
+      if (left > 0) { if (r.decoded) next = next ? Math.min(next, left) : left; continue; }
+      if (r.urls !== frosts) { r.imgs = null; r.decoded = null; }
+    }
+    if (next) trimT = setTimeout(trimDecoded, next + 50);
   }
   var bakeQ = new Map(), bakeT = 0, bakeFrame = 0, bakeIdle = 0, bakeFlight = null, bakeEpoch = 0, bakeAvg = 8;
   function currentWallUrl(refresh) {
@@ -499,7 +523,7 @@
     if (frostKey === key) { done(true); return; }
     var cached = frostCache.get(key);
     if (cached) {
-      frostCache.delete(key); frostCache.set(key, cached);
+      frostCache.delete(key); frostCache.set(key, cached); frostUsed(cached);
       whenDecoded(cached, function () { if (!prepare && frostCache.get(key) === cached && currentWallUrl() === u) applyFrost(cached); done(true); });
       return;
     }
@@ -514,7 +538,7 @@
       var valid = epoch === bakeEpoch && isGlass() && (prepare || currentWallUrl() === u) && innerWidth === c.vw && innerHeight === c.vh;
       valid = valid && names.every(function (n) { return !!job.blobs[n]; });
       if (valid) {
-        var rec = { key: key, wall: u, urls: {}, bytes: 0 };
+        var rec = { key: key, wall: u, urls: {}, bytes: 0, used: performance.now() };
         names.forEach(function (n) { rec.urls[n] = URL.createObjectURL(job.blobs[n]); rec.bytes += job.blobs[n].size; });
         decodeFrost(rec);
         /* Apply both frost levels together. An older encoder can never replace half of the current wallpaper. */
@@ -525,7 +549,7 @@
           var oldest = Array.from(frostCache.keys()).find(function (k) { return frostCache.get(k).urls !== frosts; });
           if (oldest == null) break;
           var old = frostCache.get(oldest);
-          frostBytes -= old.bytes; frostCache.delete(oldest); dropFrost(old);
+          frostBytes -= old.bytes; frostCache.delete(oldest); dropFrost(old); frostLog('evicted', old.wall);
         }
         if (frostBytes + rec.bytes <= FROST_BYTES) { frostCache.set(key, rec); frostBytes += rec.bytes; trimDecoded(); }
         else if (prepare) { dropFrost(rec); valid = false; }
@@ -2383,23 +2407,27 @@
     }
     function done() { INPUT.forEach(function (t) { removeEventListener(t, onInput, { capture: true, passive: true }); }); host.remove(); }
     function later(fn) { if (window.requestIdleCallback) requestIdleCallback(fn, { timeout: 1000 }); else setTimeout(fn, 50); }
-    /* one kind per frame: in each frame's animation callback the kind drawn in the last frame gives its place to the next,
-       so each is painted in exactly one frame (it took two, plus an idle wait, before: 1012 kinds ran about 2 minutes on
-       a P1000). A kind put in from idle time is painted in the next frame, so it gives way a frame later. */
-    var shown = null;
-    function step(inFrame) {
-      if (shown) { shown.remove(); shown = null; }
+    /* one kind per frame, swapped in idle time: a kind put in during one idle period is painted in the next frame, and in
+       the idle period after that frame the next kind takes its place in the same task, so each frame paints one new kind
+       (it took two frames plus an idle wait before: 1012 kinds ran about 2 minutes on a P1000). A frame that leaves under
+       10 ms of idle time goes by without a swap, and no frame is asked for, so other idle-time work has its turn (the
+       wallpaper gallery's warming needs 8 ms: B3); a kind still goes in at least every 250 ms. */
+    var shown = null, framed = false, lastPut = 0;
+    function step(deadline) {
       if (!host.isConnected) { done(); return; }
+      if (shown && !framed) { later(step); return; }
       if (document.hidden) { document.addEventListener('visibilitychange', resume, { once: true }); return; }
       if (pageBusy()) { addEventListener('pm-idle', resume, { once: true }); return; }
-      var quiet = performance.now() - lastInput;
+      var now = performance.now(), quiet = now - lastInput;
       if (quiet < 600) { setTimeout(resume, 600 - quiet); return; }
+      if (deadline && deadline.timeRemaining && !deadline.didTimeout && deadline.timeRemaining() < 10 && now - lastPut < 250) { later(step); return; }
+      if (shown) { shown.remove(); shown = null; }
       var make, node = null;
       while (!node && (make = queue.shift())) node = make();
       if (!node) { done(); return; }
-      box.appendChild(shown = node);
-      if (inFrame === true) requestAnimationFrame(function () { step(true); });
-      else requestAnimationFrame(function () { requestAnimationFrame(function () { step(true); }); });
+      box.appendChild(shown = node); lastPut = now; framed = false;
+      requestAnimationFrame(function () { framed = true; });
+      later(step);
     }
     function resume() { later(step); }
     document.body.appendChild(host);
@@ -2485,12 +2513,19 @@
       /* a print whose frost pair is still kept is ready to commit without decoding the print again (raw prints are kept
          for 2, frost pairs within FROST_BYTES); it resolves once that pair's images are decoded; its rims rebake after
          the commit, as for any print */
-      var keptKey = url + ':' + innerWidth + 'x' + innerHeight, kept = isGlass() && frostCache.get(keptKey);
-      if (kept) { frostCache.delete(keptKey); frostCache.set(keptKey, kept); trimDecoded(); whenDecoded(kept, function () { resolve(true); }); return; }
+      var keptKey = url + ':' + innerWidth + 'x' + innerHeight, kept = isGlass() && frostCache.get(keptKey), t0 = performance.now();
+      if (kept) {
+        var was = !!kept.decoded;
+        frostCache.delete(keptKey); frostCache.set(keptKey, kept); frostUsed(kept); trimDecoded();
+        whenDecoded(kept, function () { frostLog(was ? 'kept' : 'kept-decode', url, t0); resolve(true); }); return;
+      }
       withWall(function (im) {
-        if (!im) { resolve(false); return; }
-        if (canRun && !canRun()) { resolve(false); return; }
-        if (isGlass()) makeFrosts(im, resolve, true); else resolve(true);
+        if (!im) { frostLog('failed', url, t0); resolve(false); return; }
+        if (canRun && !canRun()) { frostLog('refused', url, t0); resolve(false); return; }
+        var printMs = Math.round(performance.now() - t0), k = url + ':' + innerWidth + 'x' + innerHeight;
+        var how = frostCache.has(k) ? 'kept' : frostJobs.has(k) ? 'joined' : 'baked';
+        if (isGlass()) makeFrosts(im, function (ok) { frostLog(ok ? how : 'failed', url, t0, { printMs: printMs, gallery: !!canRun }); resolve(ok); }, true);
+        else resolve(true);
       }, url);
     }); },
     commitWallpaper: function (id, url, viewport) {
@@ -2499,7 +2534,9 @@
          style/layout (83 ms on M3) before the frost variables join the same commit. */
       viewport = viewport || { width: innerWidth, height: innerHeight };
       var rec = frostCache.get(url + ':' + viewport.width + 'x' + viewport.height);
+      frostLog(rec ? 'commit' : 'commit-miss', url, null, rec ? { decoded: !!rec.decoded } : null);
       if (!rec) return false;
+      frostUsed(rec);
       /* The prepared URL is exactly the image selected by this attribute commit. Reading computed style between
          that write and the frost writes forced a full extra restyle (166 ms on M3). Keep the existing source cache
          current without flushing layout; the next genuinely different theme/attribute key still resolves normally. */
@@ -2508,6 +2545,7 @@
       wallSourceUrls.set(wallSourceKey, url);
       applyFrost(rec); return true;
     },
+    frostLog: function () { return frostLogBuf.slice(); },
     wall: function (id) { setWall(id || 'look'); }, walls: function () { return catalogWalls().map(function (w) { return { id: w.id, name: w.name, family: w.family }; }); } };
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', start); else start();
 })();
