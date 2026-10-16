@@ -226,9 +226,11 @@ shell.installNotices = function () {
     return false;
   }
   shell.noticesOn = true;
-  // a card arriving: measure before the browser paints it (a microtask after the DOM change)
+  // a card arriving: measured before the browser paints it, after the coming frame's layout (B5, Liquid Glass lane
+  // profile: measured in the microtask after the DOM change, it forced the pending restyle of a NieR switch, and
+  // every other ask in the same frame forced it again; asks made in one frame are placed once, after its layout)
   new MutationObserver(function (list) {
-    for (var i = 0; i < list.length; i++) if (list[i].addedNodes.length) { applyDrop(); return; }
+    for (var i = 0; i < list.length; i++) if (list[i].addedNodes.length) { afterLayout(applyDrop); return; }
   }).observe(stage, { childList: true });
   // an overlay opening or closing under cards already shown (a press, a key or focus moving): measure again two frames
   // later, once it has opened, and only while a card shows

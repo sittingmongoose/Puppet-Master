@@ -98431,7 +98431,12 @@ window.PM_NIER = Object.freeze({
         const first = !settingsAt; settingsAt = at;
         /* a redraw in place is not a page change (the reader scrolled into another page of the chapter): no decode */
         const inPlace = !!(PM51.place && PM51.place.inPlace);
-        if (!first && !inPlace && live.has('decode')) { const h = root.querySelector('.workspace-separator h2'); if (h && h.getClientRects().length) decode(h); }
+        if (!first && !inPlace && live.has('decode')) {
+          const h = root.querySelector('.workspace-separator h2');
+          if (h) o55NavOnShown(h, () => {
+            if (settingsAt === at && h.isConnected && live.has('decode')) decode(h);
+          });
+        }
       }
     } catch (e) { /* decoration only */ }
     return r;
@@ -101885,7 +101890,7 @@ boot = function () {
 /* Navigation acknowledges the destination before building it. The outgoing chapter starts moving on the compositor
    before the build task, then the incoming chapter arrives after its first layout. No snapshot capture pauses the
    compositor, and no duplicate live IDs or rows are introduced. Rapid requests coalesce to the latest destination. */
-let o55NavTicket = 0, o55NavRunning = false, o55NavLeaving = null;
+let o55NavTicket = 0, o55NavLanding = 0, o55NavRunning = false, o55NavLeaving = null;
 let o55NavStage = null, o55NavWatched = null;
 const o55NavStageHeights = new WeakMap();
 const o55NavStageSize = typeof ResizeObserver === 'function' ? new ResizeObserver(entries => {
@@ -101893,13 +101898,41 @@ const o55NavStageSize = typeof ResizeObserver === 'function' ? new ResizeObserve
 }) : null;
 const o55NavAfterRender = afterRender;
 afterRender = function () {
+  /* A chapter's pending jump used to measure its fresh document inside afterRender, before its first layout.
+     Keep the workspace and optional section together: hydrate first, then take their normal landing path after
+     layout. Splitting the two jumps would let the workspace jump overwrite an exact search/section destination. */
+  const target = !state.home && pendingScroll && !(softRemount && preservedScrollTop != null) ? pendingScroll : null;
+  const ticket = o55NavTicket, landing = target ? ++o55NavLanding : o55NavLanding, domain = state.domain;
+  if (target) { pendingScroll = null; suppressScrollSpyUntil = performance.now() + 1200; }
   const r = o55NavAfterRender.apply(this, arguments), stage = root.querySelector('#workspace-stage');
   if (o55NavStageSize && stage !== o55NavWatched) {
     o55NavStageSize.disconnect(); o55NavWatched = stage;
     if (stage) o55NavStageSize.observe(stage);
   }
+  if (target) {
+    const scroller = root.querySelector('#settings-document');
+    pm51MountPreceding(target.workspace); mountContinuousWorkspace(target.workspace);
+    const land = () => {
+      if (ticket !== o55NavTicket || landing !== o55NavLanding || state.home || state.domain !== domain || !scroller ||
+          !scroller.isConnected || scroller !== root.querySelector('#settings-document')) return;
+      jumpToWorkspace(target.workspace, 'auto');
+      if (target.section) scrollToSection(target.section, false);
+    };
+    if (window.PM_AFTER_LAYOUT) window.PM_AFTER_LAYOUT(land); else o55AfterPaint(land);
+  }
   return r;
 };
+/* Title decoding belongs to the incoming surface's reveal, after its layout. Starting it at DOM commit both
+   forced that layout and spent the effect while the incoming surface was still behind the outgoing one. */
+function o55NavOnShown(node, run) {
+  const held = o55NavStage;
+  if (held && held.retained && held.next && held.next.contains(node)) {
+    (held.onShown || (held.onShown = [])).push(run);
+    return;
+  }
+  const shown = () => { if (node.isConnected && node.getClientRects().length) run(); };
+  if (window.PM_AFTER_LAYOUT) window.PM_AFTER_LAYOUT(shown); else o55AfterPaint(shown);
+}
 function o55NavReleaseStage() {
   const held = o55NavStage; o55NavStage = null;
   if (o55NavLeaving) { o55NavLeaving.cancel(); o55NavLeaving = null; }
@@ -101975,6 +102008,7 @@ function o55NavRun(work, selector, chapter, prepare) {
           if (ticket !== o55NavTicket || o55NavStage !== held || !next.isConnected) return;
           const cs = getComputedStyle(held.old), from = { opacity: cs.opacity, transform: cs.transform };
           if (o55NavLeaving) { o55NavLeaving.cancel(); o55NavLeaving = null; }
+          (held.onShown || []).splice(0).forEach(run => run());
           next.style.removeProperty('opacity');
           held.arrival = next.animate([{ opacity: .01, transform: 'translateY(4px)' }, { opacity: 1, transform: 'none' }],
             { duration: 180, easing: 'cubic-bezier(.22,.8,.24,1)' });
@@ -143586,10 +143620,15 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
     roomOut.set(ctx, master);
     return { master, comp };
   }
-  function ensureContext() {
-    if (S.ctx) { if (S.ctx.state === 'suspended') S.ctx.resume().catch(() => {}); return S.ctx; }
+  /* The one context and its master chain. Opening the device holds the main thread (about 60 ms on the M3 for the
+     first context; soundClick 61.8 ms of a 104 ms NieR Settings entry, Settings lane trace), so it is made once the
+     page is idle after load (makeAhead, below): made before any gesture it starts suspended, as autoplay rules allow,
+     and the first press or key resumes it. Nothing plays before that first gesture: ensureContext() still answers
+     null until then, so no sound is queued on the suspended context. */
+  function makeContext() {
+    if (S.ctx) return S.ctx;
     const AC = window.AudioContext || window.webkitAudioContext;
-    if (!AC || !hasGesture()) return null;
+    if (!AC) return null;
     try {
       const ctx = new AC();
       const { master, comp } = buildMaster(ctx);
@@ -143599,9 +143638,16 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
       return ctx;
     } catch (_) { return null; }
   }
+  function ensureContext() {
+    if (!hasGesture()) return null;
+    if (!S.ctx && !makeContext()) return null;
+    if (S.ctx.state === 'suspended') S.ctx.resume().catch(() => {});
+    return S.ctx;
+  }
   S.unlock = function unlock() { const c = ensureContext(); return !!c; };
-  /* The shell may stay silent until a usage warning. Warm its context and takes in idle time after the first
-     gesture, so that warning's flush does not also open the audio device. Onboarding keeps its immediate unlock.
+  /* When the context was not made ahead (sound off at load, the page hidden), it is warmed with its takes in idle time
+     after the first gesture, so a later sound's flush (a usage warning) does not also open the audio device.
+     Onboarding keeps its immediate unlock.
      Opening the device holds the main thread (about 160 ms on the M3, for the first context only), and the first idle
      gap after a click falls in the middle of whatever that click animates: the warm waits for a quiet moment instead,
      1.2 s after the last input with no page change, window, tour or Usage moment running. */
@@ -143622,6 +143668,19 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
       warmingContext = false; ensureContext();
     });
   }
+  /* made ahead: once the page is idle after load (and again after the sound is turned on), with sound on and the page
+     shown; the first trusted press or key anywhere resumes it, before that gesture's click handlers ask to play */
+  function makeAhead() {
+    if (S.ctx || S.muted || document.visibilityState !== 'visible') return;
+    makeContext();
+  }
+  const aheadSoon = () => (window.requestIdleCallback ? window.requestIdleCallback(makeAhead, { timeout: 4000 }) : window.setTimeout(makeAhead, 1500));
+  if (document.readyState === 'complete') aheadSoon(); else window.addEventListener('load', aheadSoon, { once: true });
+  window.addEventListener('o55:sound', (e) => { if (e && e.detail && e.detail.muted === false) aheadSoon(); });
+  document.addEventListener('visibilitychange', () => { if (!S.ctx && document.visibilityState === 'visible') aheadSoon(); });
+  ['pointerdown', 'keydown'].forEach((ev) => document.addEventListener(ev, (e) => {
+    if (e.isTrusted && S.ctx && S.ctx.state === 'suspended' && !S.muted) S.ctx.resume().catch(() => {});
+  }, true));
   ['pointerdown', 'keydown'].forEach((ev) => document.addEventListener(ev, (e) => {
     if (!e.isTrusted) return;
     lastInput = performance.now();
@@ -143771,7 +143830,7 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
      look PCM and invalidate its outstanding jobs; playing Web Audio nodes keep their own tails intact. */
   let warmingLook = null, lookIdle = false;
   function warmLook() {
-    if (!S.ctx || !hasGesture()) return;
+    if (!S.ctx) return;
     const kit = kitFor('tap', {});
     if (warmingLook !== kit) {
       warmingLook = kit; preparing.clear(); nextBanks.clear();
@@ -143786,7 +143845,7 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
     S.prepare(S.ctx.sampleRate, kit);
   }
   new MutationObserver(() => {
-    if (!S.ctx || !hasGesture() || lookIdle) return;
+    if (!S.ctx || lookIdle) return;
     lookIdle = true; idle(() => { lookIdle = false; warmLook(); });
   }).observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme', 'data-o55-nier', 'data-o55-nier-parts'] });
   /* Exact next-play takes for callouts and the large fixed stings. These recipes ignore musical rotation,
@@ -166769,7 +166828,11 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
   HoverTagController.prototype.start=function(){
     if(this.started)return this;this.started=true;this.ensureRoot();var self=this;
     if(this.motionQuery){var motionChanged=function(event){self.reduced=!!event.matches;if(self.reduced&&self.tag)self.tag.style.transition='none';else if(self.tag)self.tag.style.transition='';};if(this.motionQuery.addEventListener)this.motionQuery.addEventListener('change',motionChanged);else if(this.motionQuery.addListener)this.motionQuery.addListener(motionChanged);}
-    document.addEventListener('pointerover',function(event){var el=event.target&&event.target.closest&&event.target.closest('[data-pm-hover-bound="true"],'+ACTION_SELECTOR+','+SEMANTIC_SELECTOR);if(el&&!inOwner(el))self.open(el,'pointer',event);},true);
+    var pointerAsk=null;   /* O55: opened after layout (B5) */
+    document.addEventListener('pointerover',function(event){var el=event.target&&event.target.closest&&event.target.closest('[data-pm-hover-bound="true"],'+ACTION_SELECTOR+','+SEMANTIC_SELECTOR);if(!el||inOwner(el))return;
+      if(typeof window.PM_AFTER_LAYOUT!=='function'){self.open(el,'pointer',event);return;}
+      var first=!pointerAsk;pointerAsk={el:el,event:event};
+      if(first)window.PM_AFTER_LAYOUT(function(){var a=pointerAsk;pointerAsk=null;if(a&&a.el.isConnected&&a.el.matches(':hover'))self.open(a.el,'pointer',a.event);});},true);
     document.addEventListener('pointermove',function(event){var el=event.target&&event.target.closest&&event.target.closest('[data-pm-hover-bound="true"],'+ACTION_SELECTOR+','+SEMANTIC_SELECTOR);if(el&&!inOwner(el))self.notePointerMove(event,el);},true);
     document.addEventListener('pointerout',function(event){var el=event.target&&event.target.closest&&event.target.closest('[data-pm-hover-bound="true"]');if(el&&(!event.relatedTarget||!el.contains(event.relatedTarget)))self.depart(el);},true);
     document.addEventListener('pointerdown',function(){if(self.pendingOpenSource==='pointer')self.cancelPendingOpen();if(self.active&&self.tag&&self.tag.getAttribute('data-source')==='pointer')self.close(true);},true);
@@ -189132,9 +189195,11 @@ shell.installNotices = function () {
     return false;
   }
   shell.noticesOn = true;
-  // a card arriving: measure before the browser paints it (a microtask after the DOM change)
+  // a card arriving: measured before the browser paints it, after the coming frame's layout (B5, Liquid Glass lane
+  // profile: measured in the microtask after the DOM change, it forced the pending restyle of a NieR switch, and
+  // every other ask in the same frame forced it again; asks made in one frame are placed once, after its layout)
   new MutationObserver(function (list) {
-    for (var i = 0; i < list.length; i++) if (list[i].addedNodes.length) { applyDrop(); return; }
+    for (var i = 0; i < list.length; i++) if (list[i].addedNodes.length) { afterLayout(applyDrop); return; }
   }).observe(stage, { childList: true });
   // an overlay opening or closing under cards already shown (a press, a key or focus moving): measure again two frames
   // later, once it has opened, and only while a card shows
@@ -196266,7 +196331,7 @@ var Motion = {
       var moves = [];
       [].forEach.call(parts, function (p) {
         if (p.getAnimations) p.getAnimations().forEach(function (a) {
-          if (a.effect && a.effect.target === p && /^pmt-m-/.test(a.animationName || '')) moves.push(a);
+          if (a.effect && a.effect.target === p && /^(?:pmt-m-|pmt-cz-slice-)/.test(a.animationName || '')) moves.push(a);
         });
       });
       return moves;
@@ -197101,18 +197166,23 @@ function open(opts) {
   /* a scheme previews when the pointer rests on it (160 ms, so crossing the grid previews nothing on the way) or the
      arrow keys reach it, on the preview and on the editor, at once and without the sweep (the sweep is for keeping
      one); leaving the list or Escape puts the chosen one back */
-  var INTENT_MS = 160, intent = 0, previewing = null, intentTile = null, scrollUntil = 0, pointerX = null, pointerY = null;
-  function cancelIntent() { clearTimeout(intent); intent = 0; intentTile = null; }
-  function previewSoon(tileEl, ms) {
+  var INTENT_MS = 160, intent = 0, intentFrame = 0, previewing = null, intentTile = null, scrollUntil = 0, pointerX = null, pointerY = null;
+  function cancelIntent() { clearTimeout(intent); cancelAnimationFrame(intentFrame); intent = intentFrame = 0; intentTile = null; }
+  function previewSoon(tileEl, ms, pointerIntent) {
     cancelIntent();
     intentTile = tileEl;
     var id = tileEl.getAttribute('data-value');
     if (previewing === id) return;
     intent = setTimeout(function () {
       intent = 0;
-      if (!root.isConnected || openRoot !== root || intentTile !== tileEl) return;
-      previewing = id;
-      EL().preview(v, { scheme: id }); syncPreview();
+      // Passive wheel input can already be queued while this timer runs. The
+      // frame's input delivery must get a chance to cancel before we recolour.
+      intentFrame = requestAnimationFrame(function () {
+        intentFrame = 0;
+        if (!root.isConnected || openRoot !== root || intentTile !== tileEl || (pointerIntent && performance.now() < scrollUntil)) return;
+        previewing = id;
+        EL().preview(v, { scheme: id }); syncPreview();
+      });
     }, ms);
   }
   function endPreview() { cancelIntent(); if (previewing === null) return; previewing = null; EL().endPreview(v); syncPreview(); }
@@ -197126,7 +197196,7 @@ function open(opts) {
     if (!moved) return;
     var o = e.target.closest('.pmt-cz-scheme');
     if (!o || e.buttons || performance.now() < scrollUntil) { cancelIntent(); return; }
-    if (o !== intentTile) previewSoon(o, INTENT_MS);
+    if (o !== intentTile) previewSoon(o, INTENT_MS, true);
   }, { passive: true });
   schemesEl.addEventListener('pointerout', function (e) {
     var next = e.relatedTarget && e.relatedTarget.closest ? e.relatedTarget.closest('.pmt-cz-scheme') : null;
@@ -226603,8 +226673,12 @@ var T = {};
       if (v._czLook === onLook) v._czLook = null;
     }
     /* parked, it keeps up in idle time: a look, a setting or a window size that changes while it waits is drawn and
-       measured then, not by the next click */
-    var warmJob = 0, offWarm = null;
+       measured then, not by the next click. Not while the change is still playing: drawing it reads the look's colours
+       and measures the screen, which made the browser style and lay out the page in the gaps of the NieR switch (B5,
+       pm7-motion-settings: 125 ms and 105 ms on Nas1). So it waits until nothing has changed for WARM_SETTLE_MS and no
+       page, Usage or onboarding transition runs, then for an idle moment; a click before that draws what changed itself */
+    var WARM_SETTLE_MS = 2000, warmJob = 0, warmWait = 0, offWarm = null;
+    function settling() { var de = document.documentElement; return de.hasAttribute('data-pm-page-transition') || de.hasAttribute('data-pmu-moment') || de.hasAttribute('data-o55-open'); }
     function warm() {
       warmJob = 0;
       if (!closed || disposed) return;
@@ -226612,12 +226686,22 @@ var T = {};
       /* the preview draws what changed now, unseen, so the click has nothing left to draw */
       if (pv && pv.fullPending) pv.frame();
     }
+    function warmCancel() {
+      clearTimeout(warmWait); warmWait = 0;
+      if (warmJob) { if (window.cancelIdleCallback) cancelIdleCallback(warmJob); clearTimeout(warmJob); warmJob = 0; }
+    }
     function warmSoon() {
-      if (warmJob || !closed || disposed) return;
-      warmJob = window.requestIdleCallback ? requestIdleCallback(warm, { timeout: 3000 }) : setTimeout(warm, 300);
+      if (!closed || disposed) return;
+      warmCancel();
+      warmWait = setTimeout(function () {
+        warmWait = 0;
+        if (!closed || disposed) return;
+        if (settling()) { warmSoon(); return; }
+        warmJob = window.requestIdleCallback ? requestIdleCallback(warm, { timeout: 4000 }) : setTimeout(warm, 300);
+      }, WARM_SETTLE_MS);
     }
     function parkedWatch(on) {
-      if (warmJob && !on) { if (window.cancelIdleCallback) cancelIdleCallback(warmJob); clearTimeout(warmJob); warmJob = 0; }
+      if (!on) warmCancel();
       if (offWarm) { offWarm(); offWarm = null; }
       window.removeEventListener('resize', warmSoon);
       if (v._czLook === warmSoon) v._czLook = null;
@@ -230311,7 +230395,11 @@ try { if (window.PM_HOME && typeof window.PM_HOME.boot === 'function') window.PM
   }
   var HOT = '[data-lg-surface], .page-tab, #pmuRange > button, .pmu-navbtn, .pm-segtab-item, #activityBar .icon, .side-panel-view, .pmu-pop, .pmr-menu-list, .pmr-menu-group, .pm6-tb-menu, .o55-railitem, .o55-seg button, .o55-win, .o55t-callout, .o55t-bar';
   var GENERATED = '#lg-optics, #lg-lenses, .lg-lenses-local, .lg-lenses-under, #lg-shine, .lg-press, .pm-segtab-track, #lg-post, #lg-shown';
-  var MENU_HOT = '[data-lg-surface], .pmu-pop, .pmr-menu-list, .pm6-tb-menu, .o55-win, .o55t-callout, .o55t-bar';
+  /* menus that pour out of their control (morph) or hide the hover tag sync inside the click's task, so the spring's
+     first frame is the menu's first frame. Any other floating sheet ([data-lg-surface], the onboarding window, the tour)
+     is mounted after the frame's own layout, still before that frame is painted, instead of forcing the app's style for
+     the whole new sheet inside the click (the editor's Customize screen: 28-38 ms forced on a P1000, 2026-10-16) */
+  var MENU_HOT = '.pmu-pop, .pmr-menu-list, .pm6-tb-menu, #themeMenu';
   function generatedMutation(rec) {
     var t = rec.target;
     if (t.nodeType === 1 && t.closest(GENERATED)) return true;
@@ -230359,10 +230447,9 @@ try { if (window.PM_HOME && typeof window.PM_HOME.boot === 'function') window.PM
     var page = document.querySelector('.page-tabs .page-tab.active'); page = page && page.id;
     var changed = Array.from(dirtyRoots), full = dirtyAll;
     /* a change syncs after the frame's own layout (afterLayout), where every read is free, instead of forcing the app's
-       half-built page through style and layout inside its click; a menu opening in Glass still gets its first keyframe at
-       once. A look that adopts the switcher has no glass to keep in step: its strips sync after the frame's own layout,
-       where every read is free, instead of forcing the app's half-built page through style and layout inside its click
-       (Q16). A press still moves the lens at once (pointerdown). */
+       half-built page through style and layout inside its click; a menu that morphs opening in Glass still gets its first
+       keyframe at once (MENU_HOT). A look that adopts the switcher has no glass to keep in step: its strips sync after
+       the frame's own layout too (Q16). A press still moves the lens at once (pointerdown). */
     if (area && !menuHot) afterLayout();
     else if (hot && switchOn()) { if ((menuHot && isGlass()) || !afterLayout()) hotSync(); }
     else lazySync(false);

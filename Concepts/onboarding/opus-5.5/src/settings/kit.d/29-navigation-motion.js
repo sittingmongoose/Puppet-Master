@@ -1,7 +1,7 @@
 /* Navigation acknowledges the destination before building it. The outgoing chapter starts moving on the compositor
    before the build task, then the incoming chapter arrives after its first layout. No snapshot capture pauses the
    compositor, and no duplicate live IDs or rows are introduced. Rapid requests coalesce to the latest destination. */
-let o55NavTicket = 0, o55NavRunning = false, o55NavLeaving = null;
+let o55NavTicket = 0, o55NavLanding = 0, o55NavRunning = false, o55NavLeaving = null;
 let o55NavStage = null, o55NavWatched = null;
 const o55NavStageHeights = new WeakMap();
 const o55NavStageSize = typeof ResizeObserver === 'function' ? new ResizeObserver(entries => {
@@ -9,13 +9,41 @@ const o55NavStageSize = typeof ResizeObserver === 'function' ? new ResizeObserve
 }) : null;
 const o55NavAfterRender = afterRender;
 afterRender = function () {
+  /* A chapter's pending jump used to measure its fresh document inside afterRender, before its first layout.
+     Keep the workspace and optional section together: hydrate first, then take their normal landing path after
+     layout. Splitting the two jumps would let the workspace jump overwrite an exact search/section destination. */
+  const target = !state.home && pendingScroll && !(softRemount && preservedScrollTop != null) ? pendingScroll : null;
+  const ticket = o55NavTicket, landing = target ? ++o55NavLanding : o55NavLanding, domain = state.domain;
+  if (target) { pendingScroll = null; suppressScrollSpyUntil = performance.now() + 1200; }
   const r = o55NavAfterRender.apply(this, arguments), stage = root.querySelector('#workspace-stage');
   if (o55NavStageSize && stage !== o55NavWatched) {
     o55NavStageSize.disconnect(); o55NavWatched = stage;
     if (stage) o55NavStageSize.observe(stage);
   }
+  if (target) {
+    const scroller = root.querySelector('#settings-document');
+    pm51MountPreceding(target.workspace); mountContinuousWorkspace(target.workspace);
+    const land = () => {
+      if (ticket !== o55NavTicket || landing !== o55NavLanding || state.home || state.domain !== domain || !scroller ||
+          !scroller.isConnected || scroller !== root.querySelector('#settings-document')) return;
+      jumpToWorkspace(target.workspace, 'auto');
+      if (target.section) scrollToSection(target.section, false);
+    };
+    if (window.PM_AFTER_LAYOUT) window.PM_AFTER_LAYOUT(land); else o55AfterPaint(land);
+  }
   return r;
 };
+/* Title decoding belongs to the incoming surface's reveal, after its layout. Starting it at DOM commit both
+   forced that layout and spent the effect while the incoming surface was still behind the outgoing one. */
+function o55NavOnShown(node, run) {
+  const held = o55NavStage;
+  if (held && held.retained && held.next && held.next.contains(node)) {
+    (held.onShown || (held.onShown = [])).push(run);
+    return;
+  }
+  const shown = () => { if (node.isConnected && node.getClientRects().length) run(); };
+  if (window.PM_AFTER_LAYOUT) window.PM_AFTER_LAYOUT(shown); else o55AfterPaint(shown);
+}
 function o55NavReleaseStage() {
   const held = o55NavStage; o55NavStage = null;
   if (o55NavLeaving) { o55NavLeaving.cancel(); o55NavLeaving = null; }
@@ -91,6 +119,7 @@ function o55NavRun(work, selector, chapter, prepare) {
           if (ticket !== o55NavTicket || o55NavStage !== held || !next.isConnected) return;
           const cs = getComputedStyle(held.old), from = { opacity: cs.opacity, transform: cs.transform };
           if (o55NavLeaving) { o55NavLeaving.cancel(); o55NavLeaving = null; }
+          (held.onShown || []).splice(0).forEach(run => run());
           next.style.removeProperty('opacity');
           held.arrival = next.animate([{ opacity: .01, transform: 'translateY(4px)' }, { opacity: 1, transform: 'none' }],
             { duration: 180, easing: 'cubic-bezier(.22,.8,.24,1)' });

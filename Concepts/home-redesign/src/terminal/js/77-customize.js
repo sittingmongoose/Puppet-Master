@@ -1164,8 +1164,12 @@
       if (v._czLook === onLook) v._czLook = null;
     }
     /* parked, it keeps up in idle time: a look, a setting or a window size that changes while it waits is drawn and
-       measured then, not by the next click */
-    var warmJob = 0, offWarm = null;
+       measured then, not by the next click. Not while the change is still playing: drawing it reads the look's colours
+       and measures the screen, which made the browser style and lay out the page in the gaps of the NieR switch (B5,
+       pm7-motion-settings: 125 ms and 105 ms on Nas1). So it waits until nothing has changed for WARM_SETTLE_MS and no
+       page, Usage or onboarding transition runs, then for an idle moment; a click before that draws what changed itself */
+    var WARM_SETTLE_MS = 2000, warmJob = 0, warmWait = 0, offWarm = null;
+    function settling() { var de = document.documentElement; return de.hasAttribute('data-pm-page-transition') || de.hasAttribute('data-pmu-moment') || de.hasAttribute('data-o55-open'); }
     function warm() {
       warmJob = 0;
       if (!closed || disposed) return;
@@ -1173,12 +1177,22 @@
       /* the preview draws what changed now, unseen, so the click has nothing left to draw */
       if (pv && pv.fullPending) pv.frame();
     }
+    function warmCancel() {
+      clearTimeout(warmWait); warmWait = 0;
+      if (warmJob) { if (window.cancelIdleCallback) cancelIdleCallback(warmJob); clearTimeout(warmJob); warmJob = 0; }
+    }
     function warmSoon() {
-      if (warmJob || !closed || disposed) return;
-      warmJob = window.requestIdleCallback ? requestIdleCallback(warm, { timeout: 3000 }) : setTimeout(warm, 300);
+      if (!closed || disposed) return;
+      warmCancel();
+      warmWait = setTimeout(function () {
+        warmWait = 0;
+        if (!closed || disposed) return;
+        if (settling()) { warmSoon(); return; }
+        warmJob = window.requestIdleCallback ? requestIdleCallback(warm, { timeout: 4000 }) : setTimeout(warm, 300);
+      }, WARM_SETTLE_MS);
     }
     function parkedWatch(on) {
-      if (warmJob && !on) { if (window.cancelIdleCallback) cancelIdleCallback(warmJob); clearTimeout(warmJob); warmJob = 0; }
+      if (!on) warmCancel();
       if (offWarm) { offWarm(); offWarm = null; }
       window.removeEventListener('resize', warmSoon);
       if (v._czLook === warmSoon) v._czLook = null;
