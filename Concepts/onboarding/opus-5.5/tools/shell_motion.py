@@ -250,8 +250,9 @@ ANSWER_FIRST = [
     # click on a page tab now paints its answer first: the tab strip shows the choice, its ink starts gliding and the
     # leaving page starts to fade, all on layers that already exist. The page change itself (classes, page.changed,
     # first renders) runs in the task after that frame; its exit continues from where the fade has got to, and the
-    # moves start again on the frames that are shown. Programmatic clicks (tab.click() from other code) and Reduced
-    # Motion keep the immediate, synchronous change.
+    # moves start again on the frames that are shown. Under Reduced Motion the answer is the tab strip alone (the ink
+    # snaps, nothing fades) and the page then swaps at once. Programmatic clicks (tab.click() from other code) keep the
+    # immediate, synchronous change.
     ("      document.addEventListener('click', function(e) {\n"
      "        if (!window.PM_PAGES || !window.PM_PAGES.go) return;\n"
      "        var tab = e.target && e.target.closest ? e.target.closest('.page-tab[data-page]') : null;\n"
@@ -288,14 +289,14 @@ ANSWER_FIRST = [
      "    window.PM_PAGES.goSoon = function (pageId) {\n"
      "      var P = window.PM_PAGES, prev = P.current;\n"
      "      if (soon) { soon.page = pageId; }\n"
-     "      else if (!pageId || pageId === prev || !bootPaintDone || reduced() || document.hidden || !panelFor(pageId)) { P.go(pageId); return; }\n"
+     "      else if (!pageId || pageId === prev || !bootPaintDone || document.hidden || !panelFor(pageId)) { P.go(pageId); return; }\n"
      "      var tab = tabFor(pageId), oldP = prev ? panelFor(prev) : null;\n"
      "      document.querySelectorAll('.page-tab').forEach(function (t) { var on = t.getAttribute('data-page') === pageId; t.classList.toggle('active', on); t.setAttribute('aria-selected', on ? 'true' : 'false'); });\n"
      "      if (tab) { springTo(tab, measureTab(tab)); P.__answered = pageId; }\n"
      "      if (soon) return;\n"
      "      var html = document.documentElement, nier = html.getAttribute('data-o55-nier') === 'on', retro = /^retro/.test(html.getAttribute('data-theme') || '');\n"
      "      /* NieR answers with its wipe and the ink; the other looks start the leaving page's fade (Retro in steps) */\n"
-     "      var lift = !nier && oldP && oldP.animate && !oldP.classList.contains('pm8-page-out') ? oldP.animate([{ opacity: 1 }, { opacity: 0.86 }], { duration: 140, easing: retro ? 'steps(2, end)' : 'cubic-bezier(.2, 0, 0, 1)', fill: 'forwards' }) : null;\n"
+     "      var lift = !nier && !reduced() && oldP && oldP.animate && !oldP.classList.contains('pm8-page-out') ? oldP.animate([{ opacity: 1 }, { opacity: 0.86 }], { duration: 140, easing: retro ? 'steps(2, end)' : 'cubic-bezier(.2, 0, 0, 1)', fill: 'forwards' }) : null;\n"
      "      soon = { page: pageId };\n"
      "      requestAnimationFrame(function () { setTimeout(function () {\n"
      "        var to = soon.page; soon = null;\n"
@@ -308,6 +309,32 @@ ANSWER_FIRST = [
      "      cacheTabMetrics();\n",
      'page switch: answer-first entry point'),
 ]
+
+ANSWER_FIRST.append(
+    # The rail answers the same way (final motion QA A8; P1000 Event Timing 232-440 ms for a section switch): a
+    # trusted click on another section lights its icon on the click's own frame, and the section is shown in the task
+    # after it (the leaving section is then held over it until the new one deals in, leftrail 30-motion.js). Opening
+    # the rail from closed, closing it and programmatic clicks stay immediate.
+    ("                    const targetId = iconBtn.getAttribute('data-target');\n"
+     "                    if (targetId) {\n"
+     "                        document.querySelectorAll('.side-panel-view').forEach(v => v.classList.remove('active'));\n"
+     "                        const targetView = document.getElementById(targetId);\n"
+     "                        if (targetView) targetView.classList.add('active');\n"
+     "                        if (sidePanelSlot) sidePanelSlot.classList.remove('hidden');\n"
+     "                    }\n",
+     "                    const targetId = iconBtn.getAttribute('data-target');\n"
+     "                    const showTarget = () => {\n"
+     "                        document.querySelectorAll('.side-panel-view').forEach(v => v.classList.remove('active'));\n"
+     "                        const targetView = document.getElementById(targetId);\n"
+     "                        if (targetView) targetView.classList.add('active');\n"
+     "                        if (sidePanelSlot) sidePanelSlot.classList.remove('hidden');\n"
+     "                    };\n"
+     "                    /* O55: a click on another section answers first (its icon), the section follows a frame later */\n"
+     "                    if (targetId && e.isTrusted && sidePanelSlot && !sidePanelSlot.classList.contains('hidden') && !window.__pmRailSoon) {\n"
+     "                        window.__pmRailSoon = true;\n"
+     "                        requestAnimationFrame(() => setTimeout(() => { window.__pmRailSoon = false; if (iconBtn.classList.contains('active')) showTarget(); }, 0));\n"
+     "                    } else if (targetId) showTarget();\n",
+     'rail: a section switch answers first'))
 
 PATCHES = STATUS_BAR + HOVER_TAGS + THEME + PAGES + CENSUS + ANSWER_FIRST
 

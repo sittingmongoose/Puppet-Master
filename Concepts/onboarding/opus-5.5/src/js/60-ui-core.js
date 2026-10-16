@@ -840,7 +840,7 @@
     if (reason !== 'done' && O55.shell && O55.shell.flushLook) O55.shell.flushLook(400);
     const finish = () => {
       if (S.open) return; /* opened again before this close had finished (Run Onboarding Again): it stays */
-      r.hidden = true; r.setAttribute('data-open', 'false'); r.classList.remove('o55-closing', 'o55-handoff');
+      r.hidden = true; r.setAttribute('data-open', 'false'); r.classList.remove('o55-closing', 'o55-handoff', 'o55-accept');
       document.documentElement.removeAttribute('data-o55-open');
       setInert(false);
       if (S.pausedClock && window.PM_DEMO && window.PM_DEMO.clock && window.PM_DEMO.clock.resume) { try { window.PM_DEMO.clock.resume(); } catch (_) {} }
