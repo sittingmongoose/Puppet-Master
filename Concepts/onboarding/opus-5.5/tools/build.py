@@ -1416,6 +1416,8 @@ def build_text(usage: bool = True, home: bool = True) -> str:
     #    parts with the same matches and the same specificity, in every <style> block, last, so every layer is covered.
     unsplit = note + text
     built, SETTINGS_NOTES['bucket_split'] = css_bucket_split.apply(unsplit)
+    need(not SETTINGS_NOTES['bucket_split']['problems'], 'step 7 (css_bucket_split): '
+         + '; '.join(SETTINGS_NOTES['bucket_split']['problems']))
     UNSPLIT.clear()
     UNSPLIT[built] = unsplit
     return built
