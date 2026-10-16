@@ -99309,7 +99309,8 @@ afterRender = function () {
        ready()      -> true while a Project's Settings can be written (not no-project mode, not read-only)
        values()     -> { 'code.terminal.<row>': value } for the rows a person changed, and '<id>#custom' for the text
                        typed under an earlier Custom choice (Terminal Colors, Terminal Font)
-       set(writes)  -> { id: value | null }: one transaction; null puts the row back to its default. false when refused
+       set(writes)  -> { id: value | null }: one transaction; null puts the row back to its default, and forgets a value
+                       a person still holds in a retired row the terminal reads once (RETIRED). false when refused
        has(id)      -> true when this Settings carries the row (a row canon admitted but the concept holds back, or not
                        yet published, is false, and the terminal keeps that field on this computer instead)
        version()    -> a number that moves whenever Settings saved
@@ -99325,6 +99326,9 @@ afterRender = function () {
 (function o55TerminalLookModule() {
   const PREFIX = 'code.terminal.';
   const CUSTOM_ROWS = ['code.terminal.theme', 'code.terminal.font-family'];
+  /* rows Settings no longer draws (placement retire_ids) whose stored value the terminal still reads once and then
+     writes back as a current row (P10, Jared 2026-10-16: an amount means Flicker on) */
+  const RETIRED = new Set(['code.terminal.flicker-amount']);
   const listeners = new Set();
   let ver = 0, seen = '';
   const ready = () => {
@@ -99352,16 +99356,18 @@ afterRender = function () {
 
   function set(writes) {
     if (!ready() || !writes || typeof writes !== 'object') return false;
-    const put = {}, back = [];
+    const put = {}, back = [], forget = [];
     Object.keys(writes).forEach(id => {
-      if (id.indexOf(PREFIX) !== 0 || !findSettingGlobal(id)) return;
-      const v = writes[id];
-      if (v === null || v === undefined) { if ((state.changed || {})[id]) back.push(id); }
+      if (id.indexOf(PREFIX) !== 0) return;
+      const v = writes[id], clear = v === null || v === undefined;
+      if (!findSettingGlobal(id)) { if (clear && RETIRED.has(id) && (state.changed || {})[id]) forget.push(id); return; }
+      if (clear) { if ((state.changed || {})[id]) back.push(id); }
       else put[id] = v;
     });
     if (Object.keys(put).length && !commitSettingValues(put)) return false;
     for (const id of back) if (!restoreSettingDefault(id)) return false;
-    if (!Object.keys(put).length && !back.length) return true;
+    forget.forEach(id => { delete state.changed[id]; });
+    if (!Object.keys(put).length && !back.length && !forget.length) return true;
     saveState();
     Object.keys(put).concat(back).forEach(id => {
       try { if (root.querySelector(`[id="setting-${cssEscape(id)}"]`)) refreshSettingRow(id); } catch (e) { /* the row is not drawn now */ }
@@ -210122,10 +210128,15 @@ var T = {};
   try { localApp = JSON.parse(localStorage.getItem('pm.home.terminal:v1:app') || '{}') || {}; } catch (e) { localApp = {}; }
   function saveLocal() { try { localStorage.setItem('pm.home.terminal:v1:app', JSON.stringify(localApp)); } catch (e) {} }
   /* retired choices still read (Jared, 2026-10-16, P10 and P14): in a layer that holds no Flicker of its own, an amount
-     stored by the retired slider means Flicker on; Bell's Visual means Follow look */
-  function legacy(key, get) {
+     stored by the retired slider means Flicker on; Bell's Visual means Follow look. mine(key) says whether the layer
+     holds the field itself, and keep(on) writes the amount back once as that layer's own Flicker and forgets it, so
+     putting Flicker back to its default later leaves it off */
+  function legacy(key, get, mine, keep) {
     var v = get(key);
-    if ((v === undefined || v === null) && key === 'flicker') { var a = get('flickerAmount'); if (a !== undefined && a !== null && parseFloat(a) > 0) return true; }
+    if (key === 'flicker' && !mine(key)) {
+      var a = get('flickerAmount');
+      if (a !== undefined && a !== null) { var on = parseFloat(a) > 0; keep(on); if (on) return true; }
+    }
     return key === 'bell' && v === 'visual' ? 'follow' : v;
   }
   function appGet(key) {
@@ -210133,16 +210144,29 @@ var T = {};
       var s = settings();
       if (s) { try { var v = s.get('terminal.' + k); if (v !== undefined && v !== null) return v; } catch (e) {} }
       return localApp[k];
-    });
+    }, appOwn, function (on) { if (on) writeLocal('app', 'flicker', true); writeLocal('app', 'flickerAmount', null); saveLocal(); });
+  }
+  /* All terminals holds the field itself: kept on this computer, or a host value other than its registered default (the
+     host model answers that default when nothing is stored there) */
+  function appOwn(key) {
+    if (localApp[key] !== undefined) return true;
+    var s = settings(); if (!s) return false;
+    try { var v = s.get('terminal.' + key), d = s.defaults ? s.defaults()['terminal.' + key] : undefined; return v !== undefined && v !== null && v !== d; } catch (e) { return false; }
   }
   function projectGet(key) {
-    return legacy(key, function (k) {
+    function get(k) {
       var s = settings();
       if (s) { try { var v = s.get('terminal.project.' + k); if (v !== undefined && v !== null) return v; } catch (e) {} }
       return undefined;
-    });
+    }
+    return legacy(key, get, function (k) { return get(k) !== undefined; },
+      function (on) { if (on) writeLocal('project', 'flicker', true); writeLocal('project', 'flickerAmount', null); });
   }
-  function tabGet(t, key) { return t ? legacy(key, function (k) { var v = t[k]; return v === null ? undefined : v; }) : undefined; }
+  function tabGet(t, key) {
+    if (!t) return undefined;
+    function get(k) { var v = t[k]; return v === null ? undefined : v; }
+    return legacy(key, get, function (k) { return get(k) !== undefined; }, function (on) { if (on) t.flicker = true; delete t.flickerAmount; });
+  }
   /* Settings (kit.d/24-terminal-look.js publishes window.PM_TERMINAL_SETTINGS while a Project's Settings can be
      written): the rows a person changed, read through LINK. Read again whenever Settings saved (its version moves) */
   var linked = false, slCache = null, slVer = -1;
@@ -210173,11 +210197,35 @@ var T = {};
          it in the Customize screen does (Follow look draws the look's own effects whatever those rows hold) */
       if (L.effect && v !== null) promote = true;
     });
-    /* the retired Flicker Amount row (P10): an amount stored there reads as Flicker on, unless Flicker itself is stored */
-    if (!has(out, 'flicker') && has(raw, S + 'flicker-amount') && num(0, 0.03)(raw[S + 'flicker-amount']) > 0) { out.flicker = true; promote = true; }
+    /* the retired Flicker Amount row (P10): an amount stored there reads as Flicker on, unless Flicker itself is stored,
+       and is written back once as the Flicker row */
+    if (!has(out, 'flicker') && has(raw, S + 'flicker-amount')) {
+      var on = num(0, 0.03)(raw[S + 'flicker-amount']) > 0;
+      if (on) { out.flicker = true; promote = true; }
+      retireAmount(b);
+    }
     if (promote && !has(out, 'effects')) out.effects = 'custom';
     slCache = out; slVer = ver;
     return out;
+  }
+  /* once Settings can be written: Flicker stored as the row itself and the retired row forgotten (the bridge forgets a
+     retired row on a null write). Tried again only if the row went, so a Settings that cannot forget it is asked once */
+  var retiring = false;
+  function retireAmount(b) {
+    if (retiring || !settingsReady()) return;
+    retiring = true;
+    setTimeout(function () {
+      var raw = {}; try { raw = b.values() || {}; } catch (e) {}
+      if (!has(raw, S + 'flicker-amount') || !settingsReady()) { retiring = false; return; }
+      var w = {}; w[S + 'flicker-amount'] = null;
+      if (!has(raw, S + 'flicker') && num(0, 0.03)(raw[S + 'flicker-amount']) > 0) w[S + 'flicker'] = LINK.flicker.out(true);
+      writing++;
+      try { b.set(w); } catch (e) { console.warn('[pmt] Settings write failed', e); }
+      writing--;
+      slVer = -1;
+      try { retiring = has(b.values() || {}, S + 'flicker-amount'); } catch (e) {}
+      refreshAll();
+    }, 0);
   }
   /* "All terminals" while a slider is being dragged: shown at once, written to Settings when it is let go */
   var liveApp = {};

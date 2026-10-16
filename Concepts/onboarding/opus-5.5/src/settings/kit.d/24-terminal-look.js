@@ -7,7 +7,8 @@
        ready()      -> true while a Project's Settings can be written (not no-project mode, not read-only)
        values()     -> { 'code.terminal.<row>': value } for the rows a person changed, and '<id>#custom' for the text
                        typed under an earlier Custom choice (Terminal Colors, Terminal Font)
-       set(writes)  -> { id: value | null }: one transaction; null puts the row back to its default. false when refused
+       set(writes)  -> { id: value | null }: one transaction; null puts the row back to its default, and forgets a value
+                       a person still holds in a retired row the terminal reads once (RETIRED). false when refused
        has(id)      -> true when this Settings carries the row (a row canon admitted but the concept holds back, or not
                        yet published, is false, and the terminal keeps that field on this computer instead)
        version()    -> a number that moves whenever Settings saved
@@ -23,6 +24,9 @@
 (function o55TerminalLookModule() {
   const PREFIX = 'code.terminal.';
   const CUSTOM_ROWS = ['code.terminal.theme', 'code.terminal.font-family'];
+  /* rows Settings no longer draws (placement retire_ids) whose stored value the terminal still reads once and then
+     writes back as a current row (P10, Jared 2026-10-16: an amount means Flicker on) */
+  const RETIRED = new Set(['code.terminal.flicker-amount']);
   const listeners = new Set();
   let ver = 0, seen = '';
   const ready = () => {
@@ -50,16 +54,18 @@
 
   function set(writes) {
     if (!ready() || !writes || typeof writes !== 'object') return false;
-    const put = {}, back = [];
+    const put = {}, back = [], forget = [];
     Object.keys(writes).forEach(id => {
-      if (id.indexOf(PREFIX) !== 0 || !findSettingGlobal(id)) return;
-      const v = writes[id];
-      if (v === null || v === undefined) { if ((state.changed || {})[id]) back.push(id); }
+      if (id.indexOf(PREFIX) !== 0) return;
+      const v = writes[id], clear = v === null || v === undefined;
+      if (!findSettingGlobal(id)) { if (clear && RETIRED.has(id) && (state.changed || {})[id]) forget.push(id); return; }
+      if (clear) { if ((state.changed || {})[id]) back.push(id); }
       else put[id] = v;
     });
     if (Object.keys(put).length && !commitSettingValues(put)) return false;
     for (const id of back) if (!restoreSettingDefault(id)) return false;
-    if (!Object.keys(put).length && !back.length) return true;
+    forget.forEach(id => { delete state.changed[id]; });
+    if (!Object.keys(put).length && !back.length && !forget.length) return true;
     saveState();
     Object.keys(put).concat(back).forEach(id => {
       try { if (root.querySelector(`[id="setting-${cssEscape(id)}"]`)) refreshSettingRow(id); } catch (e) { /* the row is not drawn now */ }

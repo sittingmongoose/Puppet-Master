@@ -155,12 +155,35 @@ test('retired choices still read (Jared, 2026-10-16): a stored Flicker amount is
   put('flicker-amount', 0);
   assert.equal(A.get(view(), 'flicker'), false);
   clear();
-  assert.equal(A.get(view({ flickerAmount: 0.01 }), 'flicker'), true);
+  const tab = { flickerAmount: 0.01 };
+  assert.equal(A.get(view(tab), 'flicker'), true);
+  assert.deepEqual(tab, { flicker: true });                  /* written back once as this terminal's own Flicker */
   assert.equal(A.get(view({ bell: 'visual' }), 'bell'), 'follow');
   put('bell', 'Visual');
   assert.equal(A.get(view(), 'bell'), 'follow');
   assert.equal(A.presets.patch({ flickerAmount: 0.02, bell: 'visual' }).flicker, true);
   assert.equal(A.presets.patch({ flickerAmount: 0.02, bell: 'visual' }).bell, 'follow');
+  clear();
+});
+
+test('All terminals: an amount the host model keeps is Flicker on, though the host answers Flicker\'s default', () => {
+  clear(); store.clear();
+  const host = new Map([['terminal.flickerAmount', 0.02]]), defs = { 'terminal.flicker': false, 'terminal.bell': 'follow' };
+  window.PM_HOME = { settings: {
+    get: k => (host.has(k) ? host.get(k) : defs[k]), defaults: () => Object.assign({}, defs),
+    set: (k, v) => { if (v === null || v === undefined) host.delete(k); else host.set(k, v); } } };
+  ready = false;
+  try {
+    assert.equal(A.get(view(), 'flicker'), true);
+    assert.equal(A.layerOf(view(), 'flicker'), 'app');
+    assert.equal(host.get('terminal.flicker'), true);         /* written back once as Flicker itself */
+    assert.equal(host.has('terminal.flickerAmount'), false);
+    A.reset('app', null);
+    assert.equal(A.get(view(), 'flicker'), false);            /* so a reset leaves it off */
+    host.set('terminal.flickerAmount', 0.02); host.set('terminal.flicker', true);
+    A.set('app', 'flicker', false, null);
+    assert.equal(A.get(view(), 'flicker'), false);            /* Flicker of its own wins */
+  } finally { delete window.PM_HOME; ready = true; store.clear(); A.reset('app', null); }
   clear();
 });
 
@@ -229,5 +252,27 @@ test('a hovered scheme previews as it is; a stored pick still switches with ligh
   v.previewAppearance = null; v.tabAppearance.schemePair = false;
   assert.equal(A.resolve(v).scheme.id, 'catppuccin-latte');
 });
+
+/* the retired Flicker Amount row is written back once as the Flicker row and forgotten, so putting Flicker back to its
+   default afterwards leaves it off */
+await new Promise(r => setTimeout(r, 5));
+await (async () => {
+  try {
+    clear();
+    put('flicker-amount', 0.02);
+    assert.equal(A.get(view(), 'flicker'), true);
+    await new Promise(r => setTimeout(r, 5));
+    assert.equal(rows['code.terminal.flicker'], true);
+    assert.equal('code.terminal.flicker-amount' in rows, false);
+    A.set('app', 'flicker', null, null);
+    assert.equal(A.get(view(), 'flicker'), false);
+    put('flicker-amount', 0);                                /* no amount: forgotten, Flicker untouched */
+    assert.equal(A.get(view(), 'flicker'), false);
+    await new Promise(r => setTimeout(r, 5));
+    assert.equal('code.terminal.flicker-amount' in rows, false);
+    assert.equal('code.terminal.flicker' in rows, false);
+    clear(); passed++;
+  } catch (e) { console.error('FAIL a Settings amount is written back once as Flicker itself'); throw e; }
+})();
 
 console.log(`customize.test: ${passed} passed`);
