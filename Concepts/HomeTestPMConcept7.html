@@ -192999,14 +192999,16 @@ PMW.edCustomize = { open: open };
 window.PM_EDITOR_CUSTOMIZE = Object.freeze({
   open: function (o) {
     o = o || {};
+    // A click that opens nothing says why in the console, where page-error checks and films see it.
+    var said = function (why) { try { console.error('[pm-editor] Customize did not open: ' + why); } catch (_) {} };
     var inst = PMW.editorInView ? PMW.editorInView(o.from === 'settings') : null;
-    if (inst) return open(Object.assign({}, o, { view: inst.view, scope: o.scope || 'app' }));
+    if (inst) { var h = open(Object.assign({}, o, { view: inst.view, scope: o.scope || 'app' })); if (!h) said('the editor found has no view or look'); return h; }
     try { PM_HOME.open({ kind: 'editor', path: 'src/main.rs' }); } catch (_) {}
     var tries = 0;
     (function wait() {
       var e2 = PMW.editorInView ? PMW.editorInView(o.from === 'settings') : null;
-      if (e2) { open(Object.assign({}, o, { view: e2.view, scope: o.scope || 'app' })); return; }
-      if (++tries < 30) setTimeout(wait, 100);
+      if (e2) { if (!open(Object.assign({}, o, { view: e2.view, scope: o.scope || 'app' }))) said('the editor opened for it has no view or look'); return; }
+      if (++tries < 30) setTimeout(wait, 100); else said('no editor was mounted within 3 s');
     })();
     return null;
   }
