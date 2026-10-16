@@ -89,7 +89,9 @@
 #panel-usage .pmu-swat { font-size: 12.5px; color: var(--pmu-ink-2); }
 #panel-usage .pmu-stepval { border: 0; background: transparent; color: var(--pmu-ink); font: inherit; cursor: pointer; }
 #panel-usage .pmu-stepval:hover { background: var(--pmu-row-hover); }
-#panel-usage .pmu-stepper button[disabled] { opacity: .35; cursor: default; }
+/* one disabled look in either form (motion QA A15: the hover bridge's aria-disabled form drew at .56) */
+#panel-usage .pmu-stepper button:is([disabled], [aria-disabled="true"]) { opacity: .35; cursor: default; }
+#panel-usage .pmu-stepper button:is([disabled], [aria-disabled="true"]):hover { background: transparent; color: var(--pmu-ink-3); }
 #panel-usage .pmu-swwarn { margin-left: 6px; color: var(--pmu-ink-3); white-space: nowrap; }
 #panel-usage .pmu-swwarn b { font-weight: 600; color: var(--pmu-ink-2); }
 #panel-usage .pmu-swfams { display: flex; align-items: center; flex-wrap: nowrap; gap: 8px 18px; min-width: 0; overflow: hidden; }
@@ -339,8 +341,9 @@ html[data-o55-nier="on"] #panel-usage .pmu-accpol { border-top-style: dashed; }
 #panel-usage .pmu-accsw:focus-visible { outline: 2px solid var(--pmu-accent); outline-offset: 1px; }
 /* off or unavailable: the value and the notch dim, the provider's mark never does (marks are never tinted) */
 #panel-usage .pmu-accsw[data-off] :is(.is-own, .pmu-accswv) { opacity: .55; }
-#panel-usage .pmu-accsw[disabled] { cursor: default; }
-#panel-usage .pmu-accsw[disabled] :is(.is-own, .pmu-accswv) { opacity: .5; }
+#panel-usage .pmu-accsw:is([disabled], [aria-disabled="true"]) { cursor: default; }
+#panel-usage .pmu-accsw:is([disabled], [aria-disabled="true"]) :is(.is-own, .pmu-accswv) { opacity: .5; }
+#panel-usage .pmu-accsw[data-pm-hover-was-disabled="true"] { opacity: 1; }
 /* its own column: the value, and under it what it is (the word starts at the glyph's left edge) */
 #panel-usage .pmu-accswcell { display: flex; flex-direction: column; align-items: flex-start; justify-content: center; gap: 2px; min-width: 0; }
 #panel-usage .pmu-accsww { padding-left: 5px; font-size: 12px; line-height: 14px; color: var(--pmu-ink-3); white-space: nowrap; }
