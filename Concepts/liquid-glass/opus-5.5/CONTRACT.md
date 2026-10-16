@@ -92,7 +92,11 @@ Every look but Glass adopts it (Q16, 2026-10-15): the token blocks are in
 which is re-read whenever NieR Mode is turned on or off). In those looks a press marks the pressed item
 `data-lg-press="on"` and the one it leaves `"off"` until the app chooses. Each label takes its chosen or resting ink at
 once, with no transition, while the chip moves ahead of the app; with `--pm-switch-layer: under` its icons and second
-lines do too. Scrubbing a strip is off in that mode. Glass sets none of these tokens. A new strip joins by being added to `STRIPS` (mail me, as under "Ride the lens"). Reduce Motion: the
+lines do too. Scrubbing a strip is off in that mode. glass.js still marks `<html data-pm-switch="lens">` and
+`data-pm-switch-layer="under"` for scripts. The CSS, though, names the looks themselves: `html:not([data-theme^="glass"])`
+and `:is(html[data-theme^="retro"], html[data-o55-nier="on"])`, at the marks' specificity. So the switch changes in the
+look's own restyle, not in a second one when glass.js flips the marks after layout (B5, 2026-10-16). A look that opts out
+of the switcher, by setting `--pm-switch` to anything but `lens`, must also be excluded from those selectors. Glass sets none of these tokens. A new strip joins by being added to `STRIPS` (mail me, as under "Ride the lens"). Reduce Motion: the
 lens jumps.
 
 ## Public tokens
