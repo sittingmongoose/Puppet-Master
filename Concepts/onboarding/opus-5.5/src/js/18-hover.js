@@ -230,12 +230,17 @@
       }).observe(document, { childList: true, subtree: true, attributes: true, attributeFilter: ['role'] });
       popWatch = true;
     } catch (_) { popWatch = false; }
+    /* A popup inside the parked chat root (21-shell-perf.css: content-visibility hidden outside the Guided Tour) is never
+       drawn, and a rect read there lays out the whole locked root: the chat's more menus did, 2 reads at +100-140 ms
+       after a Settings click on the 3090 (T9b). The selector match reads no style. */
+    var PARKED = 'html:not([data-o55-tour]) #chatPanel[data-pmw-sc="on"] > .float-content.pm6-chat-root';
+    function drawn(e) { return !e.closest(PARKED) && e.getClientRects().length > 0; }
     function anyPopup() {
       var open = false;
-      if (!popWatch) { var l = document.querySelectorAll(POPUP); for (var i = 0; i < l.length && !open; i++) open = !!l[i].getClientRects().length; return open; }
+      if (!popWatch) { var l = document.querySelectorAll(POPUP); for (var i = 0; i < l.length && !open; i++) open = drawn(l[i]); return open; }
       popups.forEach(function (e) {
         if (!e.isConnected) { popups.delete(e); return; }   /* gone (put back, it is found again as an added node) */
-        if (!open && e.getClientRects().length) open = true;
+        if (!open && drawn(e)) open = true;
       });
       return open;
     }
