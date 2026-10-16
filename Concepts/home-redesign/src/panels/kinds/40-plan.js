@@ -819,7 +819,8 @@ function mountPlan(host, state, api) {
     next._scroll.setAttribute('data-pmh', 'off');
     if (frame) frame.replaceWith(next); else stage.appendChild(next);
     frame = next;
-    frame._scroll.scrollTop = keepScroll;
+    // This is a new scroller, already at zero. Even assigning zero forces layout of the freshly mounted document.
+    if (keepScroll) frame._scroll.scrollTop = keepScroll;
     frame._scroll.addEventListener('scroll', function () { scrolls[view] = frame._scroll.scrollTop; }, { passive: true });
     if (key) {
       var el = host.querySelector('[data-k="' + key.replace(/"/g, '\\"') + '"]');
@@ -855,7 +856,7 @@ function mountPlan(host, state, api) {
     onResize: function (s) {
       width = s.w;
       root.classList.toggle('is-narrow', s.w < NARROW_FOOT);
-      if (!restored && frame) { restored = true; frame._scroll.scrollTop = scrolls[view] || 0; }
+      if (!restored && frame) { restored = true; if (scrolls[view]) frame._scroll.scrollTop = scrolls[view]; }
       syncMax();
     },
     focus: function () { var t = frame && frame._scroll; if (t) { t.setAttribute('tabindex', '-1'); try { t.focus({ preventScroll: true }); } catch (_) {} } },
