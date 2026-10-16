@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L5592-L27119
+Source lines: L5592-L27127
 
-Source SHA256: `ff708c0c06505dae5039714c5a3cd7febc03cf746df89f8d1ae2143b202cb246`
+Source SHA256: `d40c6881c955912298ed6098e9fc9a11519a353dc2048eb3e61c43e91c948193`
 
 ---
 
@@ -4229,6 +4229,11 @@ canonical_text: >-
   and moves in the look's own language, motion or a shimmer, so it never reads as blank or frozen; the new look then
   appears whole, never a frame that is half the old look and half the new. Under Reduced Motion the cover
   is calm and still never blank.
+  Amended 2026-10-16 (DL-217, the shell lane): the pressed theme control shows its new state on the next
+  frame; the cover then washes over the app in the new look's own background with that look's motion, the
+  theme is written under the full cover, and the cover lifts once frames come on time again, the new
+  look's own colour transitions finished beneath it. Picks made before a pending switch runs keep only the
+  latest.
 gui_related: true
 gui_classification_reason: >-
   This unit defines user-visible GUI surface, shell, copy, control, or projection behavior.
@@ -4263,6 +4268,9 @@ source_lineage:
   - /mnt/Cursor/share/puppet-master/2026-10-16-plans-topup/sources/2026-10-16-motion-pass--PART2.md,
     SHA-256 3d5a20ca7293c065906642c09ebd322a08129931636b943eafc3570b5bf8898c (P2-01 theme switch, P2-05
     NieR cover, P2-S6 bell; source lineage)
+  - /mnt/Cursor/share/puppet-master/2026-10-16-plans-topup/sources/1d44afa8ce--Concepts--onboarding--opus-5.5--src--js--12-theme-transition.js,
+    SHA-256 643b432a82dff4d71c037f175a7afca0c336e053d30f8724ce389504ab051787 (shell lane head 1d44afa8ce,
+    the look cover; source lineage; not native certification)
 preserved_exact_tokens:
   - "Poppins"
   - "IBM Plex Mono"

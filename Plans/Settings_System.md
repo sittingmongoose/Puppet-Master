@@ -3830,6 +3830,9 @@ canonical_text: >-
   formatter used by the settled row and Details; this reader-preservation unit does not define a
   second formatter. A page jump followed immediately by an in-place update retains the settled
   target section and reading line under the same placement authority.
+  Amended 2026-10-16 (DL-217, the Settings lane): the chosen chapter is acknowledged at once, before the
+  new chapter renders; rapid chapter changes coalesce to the newest choice; and the state change of a
+  navigation stays synchronous for its callers, only its visual move being deferred.
 gui_related: true
 gui_classification_reason: Settings preserves the reader and opens chapters at the top.
 split_recommended: false
@@ -3878,6 +3881,9 @@ source_lineage:
 - /mnt/Cursor/share/puppet-master/2026-10-16-plans-pass2/sources/2026-10-14-m4-settings-anchor--LANDING.md,
   SHA-256 e428692dadbcf877a352a4f9852cb681c00f7ab8bf19833b1c32f181ddbb747a (source lineage; not native
   certification)
+- /mnt/Cursor/share/puppet-master/2026-10-16-plans-topup/sources/2026-10-16-motion-fixes--pm7-motion-settings--NOTES.md,
+  SHA-256 969a47e289d72c048f7f44b94488b1953a2edeba0fa28c41b72bdc5d4ca5e094 (Settings lane notes, B1, B3
+  and B5; source lineage)
 preserved_exact_tokens: []
 negative_constraints: []
 owner_hints:

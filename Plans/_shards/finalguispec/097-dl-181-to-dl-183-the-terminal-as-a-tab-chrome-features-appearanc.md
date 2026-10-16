@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L46580-L48676
+Source lines: L46595-L48700
 
-Source SHA256: `ff708c0c06505dae5039714c5a3cd7febc03cf746df89f8d1ae2143b202cb246`
+Source SHA256: `d40c6881c955912298ed6098e9fc9a11519a353dc2048eb3e61c43e91c948193`
 
 ---
 
@@ -1528,6 +1528,12 @@ canonical_text: >-
   pressed item's words, icons and counts take the chip's ink in the press's own frame, and the item it
   leaves takes its resting ink in that frame, so no label lags the chip; a hovered resting label stays at
   4.5:1 or more on the bare ground. This adds no stored switcher state or command.
+  Amended 2026-10-16 (DL-217, the Glass lane): static optics are prepared off the input path: a sheet's
+  rim is baked in a worker from its size and place read after layout, and arrives a frame or more later.
+  At idle after start-up, paused while the shared busy signal reports a cover or transition, after any
+  input and while the page is hidden, Glass draws each kind of box once, nearly invisibly, so first-use
+  GPU programs are compiled before the first page or chapter change rather than during it. A switcher
+  strip defers its sync only under a look's cover and resyncs as the cover begins to lift.
 gui_related: true
 gui_classification_reason: Liquid Glass material and motion.
 split_recommended: false
@@ -1602,6 +1608,9 @@ source_lineage:
 - /mnt/Cursor/share/puppet-master/2026-10-16-plans-topup/sources/aec2916c94--Concepts--liquid-glass--opus-5.5--src--glass.js,
   SHA-256 782352b2f604875dcb16ae6683a033b5a8bd0bbd0af39d3de70300b4dadc6593 (Q16 landed on main as
   aec2916c94, Retro's two-jump step and NieR's cut; source lineage; not native certification)
+- /mnt/Cursor/share/puppet-master/2026-10-16-plans-topup/sources/90565f62ea--Concepts--liquid-glass--opus-5.5--CONTRACT.md,
+  SHA-256 8c4dcd540ee6fa4129c7a9286e679c8ac70519f9a56804e7f16a9afcced349c9 (Glass lane head 90565f62ea,
+  worker bakes and shader warm-up; source lineage; not native certification)
 preserved_exact_tokens:
 - Liquid Glass
 negative_constraints: []

@@ -9810,6 +9810,11 @@ canonical_text: >-
   and moves in the look's own language, motion or a shimmer, so it never reads as blank or frozen; the new look then
   appears whole, never a frame that is half the old look and half the new. Under Reduced Motion the cover
   is calm and still never blank.
+  Amended 2026-10-16 (DL-217, the shell lane): the pressed theme control shows its new state on the next
+  frame; the cover then washes over the app in the new look's own background with that look's motion, the
+  theme is written under the full cover, and the cover lifts once frames come on time again, the new
+  look's own colour transitions finished beneath it. Picks made before a pending switch runs keep only the
+  latest.
 gui_related: true
 gui_classification_reason: >-
   This unit defines user-visible GUI surface, shell, copy, control, or projection behavior.
@@ -9844,6 +9849,9 @@ source_lineage:
   - /mnt/Cursor/share/puppet-master/2026-10-16-plans-topup/sources/2026-10-16-motion-pass--PART2.md,
     SHA-256 3d5a20ca7293c065906642c09ebd322a08129931636b943eafc3570b5bf8898c (P2-01 theme switch, P2-05
     NieR cover, P2-S6 bell; source lineage)
+  - /mnt/Cursor/share/puppet-master/2026-10-16-plans-topup/sources/1d44afa8ce--Concepts--onboarding--opus-5.5--src--js--12-theme-transition.js,
+    SHA-256 643b432a82dff4d71c037f175a7afca0c336e053d30f8724ce389504ab051787 (shell lane head 1d44afa8ce,
+    the look cover; source lineage; not native certification)
 preserved_exact_tokens:
   - "Poppins"
   - "IBM Plex Mono"
@@ -42571,6 +42579,10 @@ canonical_text: >-
   Amended 2026-10-16 (DL-216, Jared): while the reboot cover waits for the look to finish applying, it
   keeps moving in NieR's language, a scanline sweep or a progress glyph within NieR's stepped motion rule,
   so a long wait never reads as frozen.
+  Amended 2026-10-16 (DL-217, the Settings lane): under Reduced Motion the NieR switch shows a calm cover
+  in the outgoing look's colours, with no slats or travel, that names what is being applied, is announced
+  politely, and lifts once the new look is drawn; the waiting reboot cover's movement is a compositor ink
+  glyph inside its segmented meter.
 gui_related: true
 gui_classification_reason: Defines where NieR Mode is turned on and how onboarding and the Guided Tour look under it.
 split_recommended: false
@@ -42616,6 +42628,9 @@ source_lineage:
   - /mnt/Cursor/share/puppet-master/2026-10-16-plans-topup/sources/2026-10-16-p1000-decision--JARED-DECISIONS.md,
     SHA-256 a1dedd6e70bfa51ec0b07c34a86bfa65583439b18ff4ace266c4fe9e2a0aa3a6 (Jared's decisions of
     2026-10-16 ~12:10Z; decision lineage)
+  - /mnt/Cursor/share/puppet-master/2026-10-16-plans-topup/sources/2026-10-16-motion-fixes--pm7-motion-settings--NOTES.md,
+    SHA-256 969a47e289d72c048f7f44b94488b1953a2edeba0fa28c41b72bdc5d4ca5e094 (Settings lane notes, B1, B3
+    and B5; source lineage)
 preserved_exact_tokens:
   - "NieR Mode"
   - "Adjust NieR look"
@@ -48097,6 +48112,12 @@ canonical_text: >-
   pressed item's words, icons and counts take the chip's ink in the press's own frame, and the item it
   leaves takes its resting ink in that frame, so no label lags the chip; a hovered resting label stays at
   4.5:1 or more on the bare ground. This adds no stored switcher state or command.
+  Amended 2026-10-16 (DL-217, the Glass lane): static optics are prepared off the input path: a sheet's
+  rim is baked in a worker from its size and place read after layout, and arrives a frame or more later.
+  At idle after start-up, paused while the shared busy signal reports a cover or transition, after any
+  input and while the page is hidden, Glass draws each kind of box once, nearly invisibly, so first-use
+  GPU programs are compiled before the first page or chapter change rather than during it. A switcher
+  strip defers its sync only under a look's cover and resyncs as the cover begins to lift.
 gui_related: true
 gui_classification_reason: Liquid Glass material and motion.
 split_recommended: false
@@ -48171,6 +48192,9 @@ source_lineage:
 - /mnt/Cursor/share/puppet-master/2026-10-16-plans-topup/sources/aec2916c94--Concepts--liquid-glass--opus-5.5--src--glass.js,
   SHA-256 782352b2f604875dcb16ae6683a033b5a8bd0bbd0af39d3de70300b4dadc6593 (Q16 landed on main as
   aec2916c94, Retro's two-jump step and NieR's cut; source lineage; not native certification)
+- /mnt/Cursor/share/puppet-master/2026-10-16-plans-topup/sources/90565f62ea--Concepts--liquid-glass--opus-5.5--CONTRACT.md,
+  SHA-256 8c4dcd540ee6fa4129c7a9286e679c8ac70519f9a56804e7f16a9afcced349c9 (Glass lane head 90565f62ea,
+  worker bakes and shader warm-up; source lineage; not native certification)
 preserved_exact_tokens:
 - Liquid Glass
 negative_constraints: []

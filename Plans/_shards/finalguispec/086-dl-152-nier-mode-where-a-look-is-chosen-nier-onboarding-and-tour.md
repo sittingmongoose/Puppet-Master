@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L42483-L42759
+Source lines: L42491-L42774
 
-Source SHA256: `ff708c0c06505dae5039714c5a3cd7febc03cf746df89f8d1ae2143b202cb246`
+Source SHA256: `d40c6881c955912298ed6098e9fc9a11519a353dc2048eb3e61c43e91c948193`
 
 ---
 
@@ -99,6 +99,10 @@ canonical_text: >-
   Amended 2026-10-16 (DL-216, Jared): while the reboot cover waits for the look to finish applying, it
   keeps moving in NieR's language, a scanline sweep or a progress glyph within NieR's stepped motion rule,
   so a long wait never reads as frozen.
+  Amended 2026-10-16 (DL-217, the Settings lane): under Reduced Motion the NieR switch shows a calm cover
+  in the outgoing look's colours, with no slats or travel, that names what is being applied, is announced
+  politely, and lifts once the new look is drawn; the waiting reboot cover's movement is a compositor ink
+  glyph inside its segmented meter.
 gui_related: true
 gui_classification_reason: Defines where NieR Mode is turned on and how onboarding and the Guided Tour look under it.
 split_recommended: false
@@ -144,6 +148,9 @@ source_lineage:
   - /mnt/Cursor/share/puppet-master/2026-10-16-plans-topup/sources/2026-10-16-p1000-decision--JARED-DECISIONS.md,
     SHA-256 a1dedd6e70bfa51ec0b07c34a86bfa65583439b18ff4ace266c4fe9e2a0aa3a6 (Jared's decisions of
     2026-10-16 ~12:10Z; decision lineage)
+  - /mnt/Cursor/share/puppet-master/2026-10-16-plans-topup/sources/2026-10-16-motion-fixes--pm7-motion-settings--NOTES.md,
+    SHA-256 969a47e289d72c048f7f44b94488b1953a2edeba0fa28c41b72bdc5d4ca5e094 (Settings lane notes, B1, B3
+    and B5; source lineage)
 preserved_exact_tokens:
   - "NieR Mode"
   - "Adjust NieR look"

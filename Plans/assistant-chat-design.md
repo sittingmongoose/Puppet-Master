@@ -26568,6 +26568,16 @@ canonical_text: >-
   and accept the P1000's GPU first-draw and raster limit. The full bar still applies to everything bound
   to the main thread. GPU-raster-bound frames on the P1000 are recorded, not failed, as long as each
   moment starts within 100 ms and never blanks. No low-end-GPU tier reduces effects.
+  Amended 2026-10-16 (DL-217, the shell lane): one shared busy signal answers for every surface whether
+  the app is in a page change, a Usage moment, the onboarding window, a boot cover, the NieR reboot plate
+  or calm cover, a look cover or a NieR switch not yet painted. It reads no style or layout, and an idle
+  notice follows the end of each busy spell. Background refreshes, measurements, prewarming and catch-up
+  wait on it, and no surface keeps an idle detector of its own. A second shared answer says whether a
+  look's cover hides the page; a surface it hides draws nothing new until the cover lifts, and a selection
+  chip waits only for a real cover, never for a merely busy page. A move begun in a frame that was drawn
+  late starts from its beginning once frames come on time again, at most six frames later, so no move is
+  spent before it is seen. In the concept these are PM_BUSY, the pm-idle event, PM_LOOK_COVERED and
+  PM_START_ON_SHOWN.
 gui_related: true
 gui_classification_reason: "Defines per-theme motion and the chat's sound cues."
 split_recommended: false
@@ -26586,6 +26596,8 @@ acceptance_criteria:
     Event Timing duration of 100 ms or less on M3-class hardware.
   - On P1000-class hardware main-thread work meets the full bar; a GPU-raster-bound hold is recorded, not
     failed, only when its moment started within 100 ms and showed no blank frame.
+  - Deferred work on every surface waits on the one shared busy signal; nothing draws new content under a
+    look cover; a move begun in a late frame is seen from its start.
 validation_surfaces:
   - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
   - python3 scripts/pm-plan-index.py validate
@@ -26619,6 +26631,9 @@ source_lineage:
   - /mnt/Cursor/share/puppet-master/2026-10-16-plans-topup/sources/2026-10-16-p1000-decision--DRAFT.md,
     SHA-256 9fe06d34054ed8510ac5df4e621b2371fc75e451f7620d09c3f43af6c01c5813 (the P1000 decision packet
     and its measurements; source lineage)
+  - /mnt/Cursor/share/puppet-master/2026-10-16-plans-topup/sources/1d44afa8ce--Concepts--onboarding--opus-5.5--src--js--11-motion-start.js,
+    SHA-256 b042bcd35aab9cd50ba71fcfd8b2330015b12e07cadff7886c2647e4648e84bf (shell lane head 1d44afa8ce,
+    the shared busy signal and on-time start; source lineage; not native certification)
 preserved_exact_tokens:
   - "DL-138"
   - "Basic"
