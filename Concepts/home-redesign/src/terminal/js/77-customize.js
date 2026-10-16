@@ -1243,8 +1243,9 @@
       /* the preview draws what changed now, unseen, so the click has nothing left to draw */
       if (pv && pv.fullPending) pv.frame();
       rasterSoon();
-      /* the case styles this screen offers, drawn once unseen in the look now in force (71-bezel.js Bezel.warm) */
-      if (T.Bezel && T.Bezel.warm) T.Bezel.warm(v);
+      /* the case styles this screen offers, drawn once unseen in the look now in force, at the terminal's size and at its
+         preview's (71-bezel.js Bezel.warm) */
+      if (T.Bezel && T.Bezel.warm) T.Bezel.warm([v, pv]);
     }
     /* parked, the screen is clipped away, so the GPU had never drawn it: its first showing compiled the GPU programs its
        surfaces need and rastered every tile in the click's frames (P2-02, F3 on the P1000: the compositor held about
@@ -1254,7 +1255,13 @@
     var rastered = {}, rasterJob = 0, rasterSince = 0, rasterFrames = false, rasterOn = false;
     /* nothing inside takes the focus while it is drawn: a focus that lands inside is let go at once. inert did the same,
        but setting and clearing it restyled the whole screen twice per warm (review RW-4) */
-    function rasterGuard(e) { if (rasterOn && e.target && e.target.blur) e.target.blur(); }
+    function rasterGuard(e) {
+      if (!rasterOn) return;
+      /* the focus goes back where it came from rather than to the page (review TF5-1) */
+      var back = e.relatedTarget;
+      if (back && back.focus && !root.contains(back)) { try { back.focus({ preventScroll: true }); return; } catch (x) {} }
+      if (e.target && e.target.blur) e.target.blur();
+    }
     function rasterEnd() { if (rasterOn) { rasterOn = false; root.classList.remove('pmt-cz-rasterwarm'); root.removeEventListener('focusin', rasterGuard, true); } }
     function rasterSoon() {
       if (rasterJob || rasterFrames || !closed || disposed) return;
@@ -1464,7 +1471,7 @@
     parkedWatch(true);
     own(v);
     prepared = handle;
-    if (opts.prepare) { rasterSoon(); if (T.Bezel && T.Bezel.warm) T.Bezel.warm(v); }
+    if (opts.prepare) { rasterSoon(); if (T.Bezel && T.Bezel.warm) T.Bezel.warm([v, pv]); }
     return opts.prepare ? handle : show(opts);
   }
 
