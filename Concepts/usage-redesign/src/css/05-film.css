@@ -46,6 +46,12 @@ body.pmu-page-active #panel-dashboard.pm-home-owned.pm8-page-out { position: abs
    the later slices, PERF-3); the frames enter at once and each body waits unseen by opacity until it is built (never
    by visibility: an animation created under visibility: hidden runs on the main thread) */
 #panel-usage .pmu-board > .pmu-card[data-body-wait] > .pmu-cardbody { opacity: 0; }
+/* never an empty board (P2-03 item 2; 15-film.js frames, handOff): a room change's new plates wait under the old room for
+   the new room's first painted frame at opacity .004 (.001 is culled), each on its film layer, the bodies built meanwhile
+   drawn inside them, so the GPU rasters the new room unseen before the hand-off uncovers it. A hosted board never takes
+   the attribute. */
+#panel-usage .pmu-board > .pmu-card[data-plate-hold] { opacity: .004; }
+#panel-usage .pmu-board > .pmu-card[data-plate-hold][data-body-wait] > .pmu-cardbody { opacity: 1; }
 /* while a film moment runs (data-film, set at the release and removed once at its end) each plate keeps its layer until
    its own entrance has ended (data-film-rest, 15-film.js plateLayer): a plate at rest never draws its text from a layer
    that kept the raster scale of a scaled entrance (Jared's note 5, 2026-10-09) */
