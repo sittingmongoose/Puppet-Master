@@ -1078,21 +1078,50 @@
        paint before the theme/scene work, then dissolve the cover over the fully drawn result. Its colours belong to
        the outgoing look, so a theme restyle cannot flash the cover itself. There is no looping or spatial motion. */
     if (still() && !document.hidden && document.body && !within && !onboarding() && !rebooting) {
+      rebooting = true;
       const plate = document.createElement('div');
       plate.id = 'o55np-calm'; plate.setAttribute('role', 'status');
       plate.style.backgroundColor = calmColors.background;
       plate.style.color = calmColors.ink;
-      plate.textContent = on ? 'Applying NieR Mode…' : 'Restoring your look…';
       document.body.appendChild(plate);
       cue('start');
-      const paintedFrame = () => new Promise(resolve => requestAnimationFrame(() => setTimeout(resolve, 0)));
+      let finishFrame = null, fade = null;
+      const hidden = () => {
+        if (!document.hidden) return;
+        if (finishFrame) finishFrame();
+        if (fade) fade.cancel();
+      };
+      document.addEventListener('visibilitychange', hidden);
+      /* A hidden document can stop delivering frames. Each paint wait has a bound and resolves immediately on hide,
+         so the one calm cover always releases its busy guard. A second toggle uses the current cover. */
+      const paintedFrame = () => new Promise(resolve => {
+        if (document.hidden) { resolve(); return; }
+        let done = false, frame = 0, timer = 0;
+        const finish = () => {
+          if (done) return;
+          done = true; cancelAnimationFrame(frame); clearTimeout(timer); finishFrame = null; resolve();
+        };
+        finishFrame = finish; timer = setTimeout(finish, 120);
+        frame = requestAnimationFrame(() => { clearTimeout(timer); timer = setTimeout(finish, 0); });
+      });
       try {
+        /* Insert the live region empty first, then announce its state after it exists in the accessibility tree. */
+        await paintedFrame();
+        plate.textContent = on ? 'Applying NieR Mode…' : 'Restoring your look…';
         await paintedFrame();
         paint();
         await paintedFrame();
         cue('reveal');
-        if (plate.animate) await plate.animate([{ opacity: 1 }, { opacity: 0 }], { duration: 100, easing: 'linear', fill: 'forwards' }).finished;
-      } finally { paint(); plate.remove(); cue('gone'); }
+        if (!document.hidden && plate.animate) {
+          fade = plate.animate([{ opacity: 1 }, { opacity: 0 }], { duration: 100, easing: 'linear', fill: 'forwards' });
+          await fade.finished.catch(() => {});
+        }
+      } finally {
+        document.removeEventListener('visibilitychange', hidden);
+        if (finishFrame) finishFrame();
+        if (fade) fade.cancel();
+        try { paint(); } finally { plate.remove(); rebooting = false; cue('gone'); }
+      }
       return;
     }
     if (rebooting || !installed('reboot') || still() || document.hidden || !document.body || (onboarding() && !within)) {
