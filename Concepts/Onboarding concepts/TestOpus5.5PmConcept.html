@@ -224637,13 +224637,21 @@ try { if (window.PM_HOME && typeof window.PM_HOME.boot === 'function') window.PM
        waited for the page's own raster first (Jared #12: 812 ms of toBlob on a P1000, on every Glass entry and every
        wallpaper change) */
     var k = FROST_SCALE;
+    /* the print is scaled once, to the largest scale the draws below use (the margin copy's, 1.12 x the cover scale at
+       FROST_SCALE), and every draw of every level takes it from that copy: scaling the 2560 px print four times cost about
+       110 ms of the main thread a print, about 40 ms now, so a pick the gallery had not reached commits sooner and the
+       gallery warms more prints in the same time (B3, F5). The frost differs by at most 4/255 (mean under 0.5/255) under
+       its blur. */
+    var ms = c.s * k * 1.12, mid = document.createElement('canvas');
+    mid.width = Math.ceil(im.naturalWidth * ms); mid.height = Math.ceil(im.naturalHeight * ms);
+    mid.getContext('2d', { willReadFrequently: true }).drawImage(im, 0, 0, mid.width, mid.height);
     names.forEach(function (name) {
       var F = FROST[name], pad = F.blur * 3, W = c.vw + pad * 2, H = c.vh + pad * 2;
       var src = document.createElement('canvas'); src.width = Math.ceil(W * k); src.height = Math.ceil(H * k); var g = src.getContext('2d', { willReadFrequently: true });
       g.scale(k, k);
       /* fill the margin with a slightly larger copy, so the blur has real colour to pull from at the window's edges */
-      g.save(); g.translate(W / 2, H / 2); g.scale(1.12, 1.12); g.translate(-W / 2, -H / 2); g.drawImage(im, c.ox + pad, c.oy + pad, im.naturalWidth * c.s, im.naturalHeight * c.s); g.restore();
-      g.drawImage(im, c.ox + pad, c.oy + pad, im.naturalWidth * c.s, im.naturalHeight * c.s);
+      g.save(); g.translate(W / 2, H / 2); g.scale(1.12, 1.12); g.translate(-W / 2, -H / 2); g.drawImage(mid, c.ox + pad, c.oy + pad, im.naturalWidth * c.s, im.naturalHeight * c.s); g.restore();
+      g.drawImage(mid, c.ox + pad, c.oy + pad, im.naturalWidth * c.s, im.naturalHeight * c.s);
       var out = document.createElement('canvas'); out.width = Math.round(c.vw * k); out.height = Math.round(c.vh * k); var o = out.getContext('2d', { willReadFrequently: true });
       o.filter = 'blur(' + (F.blur * k).toFixed(2) + 'px) saturate(' + F.sat + ')'; o.drawImage(src, -pad * k, -pad * k); o.filter = 'none';
       finish(name, pngNow(out));
