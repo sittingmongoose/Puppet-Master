@@ -1280,9 +1280,9 @@
         var kind = d.cat === 'tonal' || d.cat === 'wash' ? 'gradient' : d.cat;
         if (seen[kind] || sampled[lookKey + '|' + kind]) return;
         seen[kind] = 1;
-        out.push({ kind: kind, html: groundTile((G.isGradient(d.id) ? 'g:' : 'i:') + d.id, d.name, th) });
+        out.push({ kind: kind, gv: (G.isGradient(d.id) ? 'g:' : 'i:') + d.id, name: d.name });
       });
-      if (!sampled[lookKey + '|solid']) out.push({ kind: 'solid', html: groundTile('theme', 'Scheme', th) });
+      if (!sampled[lookKey + '|solid']) out.push({ kind: 'solid', gv: 'theme', name: 'Scheme' });
       return out;
     }
     function rasterSoon() {
@@ -1315,8 +1315,11 @@
             if (rasterSample) { rasterSample.remove(); rasterSample = null; }
             /* only while the person stays away and the page is not in a change; what is left waits for the next look */
             if (!samples.length || !host || inputRecent() || settling()) { rasterEnd(); return; }
-            var sm = samples.shift(), tmp = document.createElement('div');
-            tmp.innerHTML = sm.html; rasterSample = tmp.firstChild;
+            /* each sample is drawn in its own frame, its picture too (a painted design is a canvas and a PNG; review
+               TF5b-1: built all at once, every one of them ran in the frame the warm began) */
+            var sm = samples.shift(), R = eff(), th = R && R.theme, tmp = document.createElement('div');
+            if (!th) { rasterEnd(); return; }
+            tmp.innerHTML = groundTile(sm.gv, sm.name, th); rasterSample = tmp.firstChild;
             if (!rasterSample) { nextSample(); return; }
             rasterSample.setAttribute('aria-hidden', 'true'); rasterSample.tabIndex = -1;
             host.appendChild(rasterSample);
