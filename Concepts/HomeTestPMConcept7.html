@@ -98037,6 +98037,13 @@ afterRender = function () {
   // whole quick set underneath the sheet before the preview's first frame.
   const pendingRows = new Set();
   let rowJob = 0, rowsNotBefore = 0;
+  function projectSavedRow(id) {
+    // set() has already persisted the transaction. Updating its displayed row
+    // must not save the complete Settings model again for every changed field.
+    const api = window.PM51;
+    if (api && typeof api.refreshSavedRow === 'function') return api.refreshSavedRow(id);
+    return refreshSettingRow(id);
+  }
   function scheduleRows() {
     if (rowJob || !pendingRows.size) return;
     rowJob = window.requestIdleCallback
@@ -98052,13 +98059,13 @@ afterRender = function () {
     const id = pendingRows.values().next().value;
     if (!id) return;
     pendingRows.delete(id);
-    try { if (root.querySelector(`[id="setting-${cssEscape(id)}"]`)) refreshSettingRow(id); } catch (e) { /* the row is not drawn now */ }
+    try { if (root.querySelector(`[id="setting-${cssEscape(id)}"]`)) projectSavedRow(id); } catch (e) { /* the row is not drawn now */ }
     scheduleRows();
   }
   function refreshRow(id) {
     if (!document.querySelector('.pmed-cz:not([aria-hidden="true"])')) {
       pendingRows.delete(id);
-      try { if (root.querySelector(`[id="setting-${cssEscape(id)}"]`)) refreshSettingRow(id); } catch (e) { /* the row is not drawn now */ }
+      try { if (root.querySelector(`[id="setting-${cssEscape(id)}"]`)) projectSavedRow(id); } catch (e) { /* the row is not drawn now */ }
       return;
     }
     rowsNotBefore = performance.now() + 250;
