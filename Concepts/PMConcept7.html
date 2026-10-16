@@ -219125,17 +219125,36 @@ try { if (window.PM_HOME && typeof window.PM_HOME.boot === 'function') window.PM
     return rec.decoded;
   }
   function whenDecoded(rec, fn) { if (!rec || !rec.urls) { fn(); return; } (rec.decoded || decodeFrost(rec)).then(fn, fn); }
-  /* decoded pairs cost about 1.8 MB each at 1080p: the FROST_DECODED most recent keep theirs, and so does every pair
-     prepared or committed in the last FROST_RECENT ms, so the whole gallery a user is browsing stays decoded (B3: a pick
-     decoded again cost 62 ms on Nas1). The rest decode again when they are used (landing review GL-4); a timer lets the
-     recent ones go once they are no longer recent. */
-  var FROST_DECODED = 8, FROST_RECENT = 60000, trimT = 0;
+  /* decoded pairs cost about 1.8 MB each at 1080p (7.4 MB at 4K). The pair on the sheets and the prints the gallery
+     retains (below) keep theirs. Of the rest, the FROST_DECODED most recent and every pair prepared or committed in the
+     last FROST_RECENT ms keep theirs too (B3: a pick decoded again cost 62 ms on Nas1), within FROST_DECODED_BYTES, the
+     least recently used let go first (landing review GF-1). The others decode again when they are used (GL-4); a timer
+     lets the recent ones go once they are no longer recent. */
+  var FROST_DECODED = 8, FROST_RECENT = 60000, FROST_DECODED_BYTES = 64 * 1024 * 1024, trimT = 0;
   function frostUsed(rec) { rec.used = performance.now(); }
-  /* what each prepare and commit found (B3 attribution for films): a performance mark 'pm-lg-wall' per event, detail
+  /* the prints the Settings gallery shows or is about to (PM_LG.retainVisible(urls), Settings' contract, B3): their pairs
+     keep their decoded images while they are in that set, whatever their age; a print that leaves the set starts the
+     60 s release from then. A retained pair that has lost its decoded images decodes again in idle time (off the main
+     thread); nothing is baked or decoded in the call itself. At most RETAIN_MAX prints. */
+  var retained = new Set(), RETAIN_MAX = 64, retainIdle = 0;
+  function retainVisible(urls) {
+    var next = new Set(), now = performance.now();
+    (Array.isArray(urls) ? urls : []).forEach(function (u) { if (typeof u === 'string' && u && next.size < RETAIN_MAX) next.add(u); });
+    frostCache.forEach(function (r) { if (retained.has(r.wall) && !next.has(r.wall)) r.used = now; });
+    retained = next;
+    frostLog('retain', '', null, { n: retained.size });
+    trimDecoded();
+    if (!retainIdle && retained.size && window.requestIdleCallback) retainIdle = requestIdleCallback(function () {
+      retainIdle = 0;
+      frostCache.forEach(function (r) { if (retained.has(r.wall) && !r.decoded) decodeFrost(r); });
+    }, { timeout: 2000 });
+  }
+  /* what each prepare and commit found (B3 attribution for films): a performance mark 'pm-lg-wall:<n>' per event, detail
      { what, wall, ms }, and the last 64 in PM_LG.frostLog(). what: kept (the pair was cached, decoded), kept-decode (cached,
      decoded again), joined (its bake was already running), baked (made now), refused (canRun said no), failed, evicted,
-     commit (the pair was there) or commit-miss. wall names the print by its id and mode where Glass knows it. */
-  var frostLogBuf = [];
+     commit (the pair was there), commit-miss or retain (detail n: how many prints the gallery keeps decoded). wall names
+     the print by its id and mode where Glass knows it. */
+  var frostLogBuf = [], markN = 0;
   function wallName(url) {
     var name = ''; wallSourceUrls.forEach(function (u, k) { if (u === url) name = k; });
     return name || (url ? 'url#' + url.length + ':' + url.slice(-16) : '');
@@ -219144,16 +219163,22 @@ try { if (window.PM_HOME && typeof window.PM_HOME.boot === 'function') window.PM
     var d = { what: what, wall: wallName(url), ms: t0 == null ? 0 : Math.round(performance.now() - t0), t: Math.round(performance.now()) };
     if (extra) for (var k in extra) d[k] = extra[k];
     frostLogBuf.push(d); if (frostLogBuf.length > 64) frostLogBuf.shift();
-    try { performance.mark('pm-lg-wall', { detail: d }); } catch (e) {}
+    /* one mark per event, 'pm-lg-wall:<n>', and only the last 64 stay in the page's timeline (landing review GF-3) */
+    try { markN++; performance.mark('pm-lg-wall:' + markN, { detail: d }); if (markN > 64) performance.clearMarks('pm-lg-wall:' + (markN - 64)); } catch (e) {}
   }
   function trimDecoded() {
-    var keys = Array.from(frostCache.keys()), now = performance.now(), next = 0;
+    var keys = Array.from(frostCache.keys()), now = performance.now(), next = 0, tail = [], sum = 0;
     clearTimeout(trimT); trimT = 0;
-    for (var i = 0; i < keys.length - FROST_DECODED; i++) {
-      var r = frostCache.get(keys[i]), left = (r.used || 0) + FROST_RECENT - now;
-      if (left > 0) { if (r.decoded) next = next ? Math.min(next, left) : left; continue; }
-      if (r.urls !== frosts) { r.imgs = null; r.decoded = null; }
-    }
+    keys.forEach(function (k, i) {
+      var r = frostCache.get(k);
+      if (!r.decoded || r.urls === frosts || retained.has(r.wall)) return;
+      var left = (r.used || 0) + FROST_RECENT - now;
+      if (i < keys.length - FROST_DECODED && left <= 0) { r.imgs = null; r.decoded = null; return; }
+      if (left > 0) next = next ? Math.min(next, left) : left;
+      tail.push(r);
+    });
+    tail.sort(function (a, b) { return (b.used || 0) - (a.used || 0); });
+    tail.forEach(function (r) { sum += r.dbytes || 0; if (sum > FROST_DECODED_BYTES) { r.imgs = null; r.decoded = null; } });
     if (next) trimT = setTimeout(trimDecoded, next + 50);
   }
   var bakeQ = new Map(), bakeT = 0, bakeFrame = 0, bakeIdle = 0, bakeFlight = null, bakeEpoch = 0, bakeAvg = 8;
@@ -219297,7 +219322,8 @@ try { if (window.PM_HOME && typeof window.PM_HOME.boot === 'function') window.PM
       var valid = epoch === bakeEpoch && isGlass() && (prepare || currentWallUrl() === u) && innerWidth === c.vw && innerHeight === c.vh;
       valid = valid && names.every(function (n) { return !!job.blobs[n]; });
       if (valid) {
-        var rec = { key: key, wall: u, urls: {}, bytes: 0, used: performance.now() };
+        var rec = { key: key, wall: u, urls: {}, bytes: 0, used: performance.now(),
+          dbytes: names.length * 4 * Math.ceil(c.vw * FROST_SCALE) * Math.ceil(c.vh * FROST_SCALE) };
         names.forEach(function (n) { rec.urls[n] = URL.createObjectURL(job.blobs[n]); rec.bytes += job.blobs[n].size; });
         decodeFrost(rec);
         /* Apply both frost levels together. An older encoder can never replace half of the current wallpaper. */
@@ -221174,8 +221200,8 @@ try { if (window.PM_HOME && typeof window.PM_HOME.boot === 'function') window.PM
     var shown = null, framed = false, lastPut = 0;
     function step(deadline) {
       if (!host.isConnected) { done(); return; }
-      if (shown && !framed) { later(step); return; }
       if (document.hidden) { document.addEventListener('visibilitychange', resume, { once: true }); return; }
+      if (shown && !framed) { later(step); return; }
       if (pageBusy()) { addEventListener('pm-idle', resume, { once: true }); return; }
       var now = performance.now(), quiet = now - lastInput;
       if (quiet < 600) { setTimeout(resume, 600 - quiet); return; }
@@ -221305,6 +221331,9 @@ try { if (window.PM_HOME && typeof window.PM_HOME.boot === 'function') window.PM
       applyFrost(rec); return true;
     },
     frostLog: function () { return frostLogBuf.slice(); },
+    /* urls: the print URLs (the strings given to prepareWallpaper, current mode) the gallery shows or is about to; [] when
+       it closes. Only retention changes: see retainVisible */
+    retainVisible: function (urls) { retainVisible(urls); },
     wall: function (id) { setWall(id || 'look'); }, walls: function () { return catalogWalls().map(function (w) { return { id: w.id, name: w.name, family: w.family }; }); } };
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', start); else start();
 })();
