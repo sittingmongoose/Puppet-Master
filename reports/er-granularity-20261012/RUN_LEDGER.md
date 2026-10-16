@@ -261,3 +261,5 @@ absence discipline, host conditions checklist, coverage audit,
 contradiction + gate-composition critics, defect-string repair
 verification. Effort A/B on frozen Case D materials runs first.
 See PHASE18-PREREG.md.
+
+Phase 18 complete 2026-10-16: flash 28/27 vs Sol 37/37, flash 2 confirmed MEs, FAIL vs prereg criterion (0 ME and >=Sol-5). See PHASE18-RESULTS.md.
