@@ -692,11 +692,22 @@ function mountTranscript(host, state, api) {
 
   var restoredScroll = state.scrollTop;
   var firstResize = true;
+  /* the host's look changed: the Jump button asks the feed where it is (atBottom reads its scroll box). Hidden, that
+     waits for the tab to show; shown, it is read after the coming frame's layout (the shell's PM_AFTER_LAYOUT), not in
+     the look's own frame, where it paid the whole page's pending restyle (B5, the NieR switch). At once without it */
+  var lookStale = false;
+  function lookJump() { if (gone) return; if (!visible) { lookStale = true; return; } paintJump(); }
+  function onLook() {
+    if (!visible) { lookStale = true; return; }
+    if (typeof window.PM_AFTER_LAYOUT === 'function') window.PM_AFTER_LAYOUT(lookJump);
+    else paintJump();
+  }
   return {
     onShow: function () {
       visible = true;
       paintHead(); paintTicker();
       schedule();
+      if (lookStale) { lookStale = false; onLook(); }
     },
     onHide: function () {
       visible = false;
@@ -710,7 +721,7 @@ function mountTranscript(host, state, api) {
         paintJump();
       } else if (follow) toBottom(false);
     },
-    onLook: function () { paintJump(); },
+    onLook: onLook,
     focus: function () { try { scroll.focus({ preventScroll: true }); } catch (_) {} },
     serialize: function () { return { agentId: agentId, follow: follow, open: Object.keys(open), scrollTop: Math.round(scroll.scrollTop) }; },
     unmount: function () { gone = true; clearTimeout(timer); clearInterval(tick); if (revealing) clearInterval(revealing); }
