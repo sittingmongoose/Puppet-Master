@@ -221211,7 +221211,14 @@ try { if (window.PM_HOME && typeof window.PM_HOME.boot === 'function') window.PM
        path atlas or tessellates it by the path's size and style, so each kind of chart is drawn once at its own size (the
        warm F3.1 Usage entry on the P1000 still linked 6 DrawAtlasPathOp programs among 23). The copy carries the styles the
        page's CSS gives each shape, and the gradients they name, since neither reaches into the closed root. */
-    queue.push(function () { Array.prototype.slice.call(document.querySelectorAll('svg')).reverse().forEach(addChart); return null; });
+    queue.push(function () {
+      /* only charts are queued (the page has 1,600 svgs, nearly all icons): each one's box is read here, in one pass */
+      Array.prototype.slice.call(document.querySelectorAll('svg')).filter(function (svg) {
+        if (!svg.querySelector('path, polyline, polygon')) return false;
+        var r = svg.getBoundingClientRect(); return r.width >= 40 || r.height >= 40;
+      }).reverse().forEach(addChart);
+      return null;
+    });
     WARM_CATALOG.forEach(function (e) { queue.push(function () { return build(e, true); }); });
     /* again with a crowd of the page's icons beside it: a tile holding several complex paths is rastered multisampled,
        which uses its own programs (a Settings page's icons put its boxes in such tiles) */
@@ -221298,8 +221305,13 @@ try { if (window.PM_HOME && typeof window.PM_HOME.boot === 'function') window.PM
       var quiet = performance.now() - lastInput;
       if (quiet < 600) { setTimeout(resume, 600 - quiet); return; }
       if (shown) { shown.remove(); shown = null; }
+      /* kinds already drawn and shapes no longer there give no node: the next is tried at once, until the idle time left
+         is short (review GW-1), then the rest waits for the next idle callback */
       var make, node = null;
-      while (!node && (make = queue.shift())) node = make();
+      while (!node && (make = queue.shift())) {
+        node = make();
+        if (!node && deadline && deadline.timeRemaining && !deadline.didTimeout && deadline.timeRemaining() < 3) { later(step); return; }
+      }
       if (!node) { done(); return; }
       box.appendChild(shown = node); framed = false;
       requestAnimationFrame(function () { framed = true; });
