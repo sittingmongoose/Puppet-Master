@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L31430-L32377
+Source lines: L31430-L32385
 
-Source SHA256: `4559a2a9b43ac6440f893848ee6669df884ebb99a1b0fee005c56e0ea6f11a2a`
+Source SHA256: `0680986468bd39daefcdaf4241659710cb78b378d07bcdd84518bdf8ade25ec8`
 
 ---
 
@@ -435,7 +435,10 @@ canonical_text: >-
   then shorten visible choices while retaining full accessible names; if the choices still cannot
   fit, use a one-choice-per-line list with instant highlight placement. A highlight never spans
   wrapped lines. Joined highlights glide in Basic, Friendly and Glass, step in Retro and NieR, and
-  place immediately under Reduced Motion. Keyboard activation and an in-place Settings update retain
+  place immediately under Reduced Motion. Amended 2026-10-16 (DL-214; Jared kept Retro and NieR
+  stepped): Retro's step is two hard jumps on a 33 ms tick, the item half way and then its own (a
+  neighbour is one jump, at once), with no easing, and a press released sooner lands as the pointer
+  lifts; NieR's cut places the chip at once. This holds on every strip that uses F3-652's switcher. Keyboard activation and an in-place Settings update retain
   focus on the operated control. Current/default values in rows, Details, search and result toasts
   consume SSYS-006's one formatter and effective display floor; percentage representation never
   changes the stored fractional value.
@@ -477,6 +480,9 @@ source_lineage:
   (approved campaign source lineage; not native implementation evidence)
 - /mnt/Cursor/share/puppet-master/2026-10-14-plans-canon/sources/EDITOR-QUICKSETS.js, SHA-256 3e41e8ae1594be81401985bebaa2a4917e066593236fca04e54f02f9b7e7f7f6
   (decision/source lineage; not native implementation evidence)
+- /mnt/Cursor/share/puppet-master/2026-10-16-plans-topup/sources/pm-mail-1016075014-d904.txt, SHA-256
+  c47ba9668ab4537387f255ce3c05384c84c114d4f27eb04a1572a1adf337dcf6 (Jared's stepped-motion ruling;
+  decision lineage)
 preserved_exact_tokens:
 - "toggle"
 - "select"
@@ -504,7 +510,9 @@ negative_constraints:
 - "Renderer selection must consume the inventory type field only; renderers must not be inferred from labels, descriptions, or id patterns."
 compatibility_only_notes:
 - "Slint portability: control renderers map to native widget composition and expandable editors to conditional in-place composition over opaque precomputed surfaces; no arbitrary-content backdrop blur, no SVG filters, and color math is precomputed rather than runtime-mixed."
-stale_retired_dispositions: []
+stale_retired_dispositions:
+- 'Amended 2026-10-16 (DL-214): Retro''s step is defined as two hard jumps on a 33 ms tick; Retro and NieR
+  stay stepped, never gliding.'
 owner_boundary_notes:
 - "Scope semantics and concrete Project-value source disclosure remain carried by F3-510/F3-442; badge semantics route to their owner contracts (restart rules and adjudication ownership); this unit owns the visible row presentation vocabulary."
 owner_hints:

@@ -8051,7 +8051,7 @@
   {
    "id": "code.terminal.flicker-amount",
    "label": "Flicker Amount",
-   "desc": "How strong the flicker was. A stored amount is read once as Flicker on where no Flicker is stored beside it, then forgotten. (Superseded by Flicker, which is on or off at one faint level, code.terminal.flicker; DL-213)",
+   "desc": "How strong the flicker was. (Superseded by Flicker, on or off at one faint level, code.terminal.flicker; a stored amount is read once per SSYS-051; DL-213)",
    "type": "slider",
    "default": 0.02,
    "scope": [
@@ -8122,7 +8122,7 @@
   {
    "id": "code.terminal.bell",
    "label": "Terminal Bell",
-   "desc": "What happens when a program rings the bell: Follow look flashes the terminal in the look's own way, Off does nothing.",
+   "desc": "What happens when a program rings the bell: Follow look rings the look's own bell, Off does nothing.",
    "type": "select",
    "options": [
     "Follow look",
@@ -23488,7 +23488,7 @@
   {
    "id": "code.terminal.bezel-reflection",
    "label": "Bezel Reflection",
-   "desc": "How much of the screen the bezel gives back: Off, Low, Medium or High, starting at the material's own level, which Auto stores. A stored number from 0 to 1 reads as the nearest level (Off 0, Low 0.25, Medium 0.5, High 1). Not offered on NieR's own ink frame (F3-643).",
+   "desc": "How much of the screen the bezel gives back: Off, Low, Medium or High, starting at the material's own level, which Auto stores. A stored number reads as the nearest level (SSYS-051). Not offered on NieR's own ink frame (F3-643).",
    "type": "slider",
    "default": "Auto",
    "scope": [

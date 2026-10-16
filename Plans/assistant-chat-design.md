@@ -26560,14 +26560,14 @@ canonical_text: >-
   selected state shows, or the ink moves); the new state is fully drawn within 300 ms on P1000-class
   hardware, or a deliberate transition starts within 100 ms and covers the work; no frame is held longer
   than 100 ms mid-transition; and on M3-class hardware the click's Event Timing duration is 100 ms or
-  less. Nothing a person can see may flash, blank, jump, ghost, snap late or stall. Reduced Motion still
+  less. The final motion judgement, standing in for Jared, also counts any flash, blank, jump, ghost,
+  late snap or stall a person sees as a failure. Reduced Motion still
   lands every beat at its end state. Measured concept films are evidence for this bar, not native
   certification.
-  Amended 2026-10-16 (DL-216; Jared chose option A of the P1000 decision): every effect is kept.
-  Everything bound to the main thread meets the full bar on P1000-class hardware. A frame held only by the
-  GPU's first draw or raster there (tile raster, texture upload, a first-use shader compile) is recorded,
-  not failed, as long as the moment starts within 100 ms and never blanks. No low-end-GPU tier reduces
-  effects.
+  Amended 2026-10-16 (DL-216; Jared chose option A of the P1000 decision, in his words): keep every effect
+  and accept the P1000's GPU first-draw and raster limit. The full bar still applies to everything bound
+  to the main thread. GPU-raster-bound frames on the P1000 are recorded, not failed, as long as each
+  moment starts within 100 ms and never blanks. No low-end-GPU tier reduces effects.
 gui_related: true
 gui_classification_reason: "Defines per-theme motion and the chat's sound cues."
 split_recommended: false

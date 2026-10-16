@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L43383-L43837
+Source lines: L43391-L43846
 
-Source SHA256: `4559a2a9b43ac6440f893848ee6669df884ebb99a1b0fee005c56e0ea6f11a2a`
+Source SHA256: `0680986468bd39daefcdaf4241659710cb78b378d07bcdd84518bdf8ade25ec8`
 
 ---
 
@@ -262,7 +262,7 @@ canonical_text: >-
   relayout: the chosen tab's label appears in one step with no width morph, one ink sits exactly on the chosen
   tab's box, and every animation of the change, the ink, the tabs and the new pane, starts together on one clock.
   Basic glides the ink, Friendly springs it with the overshoot held inside the strip, and Glass glides it with a
-  liquid stretch. Retro runs on a 33 ms tick: the ink hops tab by tab, the chosen tab keeps the colour it had
+  liquid stretch. Retro runs on a 33 ms tick: the ink steps in F3-438's two hard jumps, the chosen tab keeps the colour it had
   before the click until the ink lands on it, shows one tick of inverse video and then its active colours, so only
   the tab under the ink ever looks chosen, and the new view prints line by line with its boxes growing with their
   lines, as Retro panel entrances and expanders also do. Under NieR Mode hovering a tab inks it with the same box
@@ -282,9 +282,8 @@ canonical_text: >-
   its fitting follows the overlay's width; when the side panel eases or folds, and Pin, belong to the home layer,
   and the fold is view-local, never saved, with no command or wiring row.
   Amended 2026-10-16 (DL-214, DL-215): the rail strips' ink and the activity bar's tile are F3-652's
-  switcher in each look's material: Retro's block still hops tab by tab and NieR's ink bar still cuts
-  straight to the tab, as above (Jared, 2026-10-16), and a pressed tab's words take the chip's ink in the
-  press's own frame. NieR's hover inks and Target brackets stay as above. NieR's rail wipe, with its brief empty outline of about 83 ms,
+  switcher in each look's material; Retro and NieR keep F3-438's stepped motion (Jared, 2026-10-16), and
+  a pressed tab's words take the chip's ink in the press's own frame. NieR's hover inks and Target brackets stay as above. NieR's rail wipe, with its brief empty outline of about 83 ms,
   is kept as NieR's identity (Jared, 2026-10-16).
 gui_related: true
 gui_classification_reason: Defines the left rail's dropdown look and its motion in each theme family.
@@ -328,7 +327,9 @@ compatibility_only_notes:
   - "The concept times its motion with the theme tokens it has (about 240, 420, 480 and 200 ms); the product's motion tokens own exact durations and the beats and voices here bind."
   - "The concept reaches NieR Mode's Menu cursor and Target brackets parts through two hooks in the NieR kit (opus-5.5 settings kit, 19-nier-parts.js): .pmr-cur in its cursor selector list, and a .pmr-lock branch in its bracket placement that places the brackets after the click lands; the hooks are concept plumbing, the behaviour above is canon."
   - "In the concept the home layer writes data-pm-rail-fold, eased or overlay, on #sidePanelSlot and dispatches pm:rail-fold with the mode and width, and the rail styles and refits from them; the attribute and event are concept plumbing agreed with the home redesign thread on 2026-10-09."
-stale_retired_dispositions: []
+stale_retired_dispositions:
+- 'Amended 2026-10-16 (DL-214): Retro''s rail ink steps in F3-438''s two hard jumps; it read: the ink hops
+  tab by tab.'
 owner_boundary_notes:
   - "ACD-439 owns the sprout motion and the chat pickers' look; this unit applies them to the rail and adds only placement and keyboard."
   - "The home redesign owns the narrow-window behaviour (the side panel eased to 240 px, then below a 760 px centre the rail folded to its icon bar with the side panel as an overlay, Pin restoring docking, never saved); its canon is not on main at this amendment (DL-180 on plans/home-panels-terminal-canon-20261009). This unit owns only how the rail draws and fits in that overlay."

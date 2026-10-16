@@ -452,7 +452,9 @@ canonical_text: >-
   Amended 2026-10-16 (DL-215; Jared, 2026-10-16): Reset all, the everything scope of Reset Settings to
   Defaults (system.advanced.reset-defaults) and All Settings' Reset all to defaults, is Restore Defaults
   over every live ordinary setting id of the open Project in one transaction, after one confirmation;
-  accounts, keys and history are not settings and are kept. It really restores: the Project reads back at
+  accounts, keys and history are not settings and are kept, as the concept's confirmation says. The row's
+  global scope is applicability metadata (SSYS-002): with no app-wide store admitted (q-035), Reset all
+  restores the open Project only. It really restores: the Project reads back at
   its registry defaults. It shows exactly one outcome toast: success only after the commit reads back,
   otherwise one failure naming the refusal (such as MA-073's crossing default), with nothing changed. A
   success toast never follows a refusal.
@@ -479,6 +481,11 @@ source_lineage:
 - /mnt/Cursor/share/puppet-master/2026-10-16-plans-pass2/sources/2026-10-15-usage-warn-hold--LANDING.md,
   SHA-256 5357dc0dd60b0e08548f4dab5d5359662ee0ea0f159f7201a25577067372c238 (source lineage; not native
   certification)
+- '/mnt/Cursor/share/puppet-master/2026-10-16-plans-topup/sources/Concepts--onboarding--opus-5.5--src--settings--kit.d--10-values.js,
+  SHA-256 435a06801d3f64a8218ed668c8e5235f89162e8f5737663c458ef210d0d7d676 (main at 95a8450f81, line 508:
+  the Reset Settings to Defaults confirmation; source lineage; not native certification)'
+- /mnt/Cursor/share/puppet-master/2026-10-16-plans-topup/sources/2026-10-16-motion-pass--JUDGEMENT.md,
+  SHA-256 8a3291ea2558da05d40c5a051a958f378802ec9c36454b83dbaf5ffc7efe8cf9 (B9; source lineage)
 preserved_exact_tokens: [atomic, theme pair, Restore Defaults, read-back, rollback, idempotency]
 negative_constraints: [Do not persist theme family and mode independently., Do not treat command acceptance as successful read-back., Do not perform partial bulk reset.]
 owner_hints: [Plans/Settings_System.md, Plans/storage-plan.md, Plans/Permissions_System.md]
@@ -3280,7 +3287,7 @@ Amended 2026-10-16 (DL-213, terminal rounds 4 and 5, Jared's P10 and P14): the r
 | `code.terminal.bezel` | Terminal Bezel | select: Off, Slim, Monitor | Off |
 | `code.terminal.bezel-width` | Bezel Width | slider | Style default |
 | `code.terminal.bezel-material` | Bezel Material | select: Follow look, Graphite, Black gloss, Platinum, Putty, Brushed aluminium, Gunmetal, Glass, Accent | Follow look |
-| `code.terminal.bezel-reflection` | Bezel Reflection | slider: Auto (the material's own level) or Off, Low, Medium, High, stored as 0, 0.25, 0.5, 1; any stored number reads as the nearest level | Auto |
+| `code.terminal.bezel-reflection` | Bezel Reflection | slider: Auto (the material's own level) or one of four levels, stored on SSYS-051's scale | Auto |
 | `code.terminal.phosphor-mask` | Phosphor Mask | toggle, within Full CRT; drawn at every display density | off |
 
 The existing scheme, font, size, copy-on-select and sticky-header rows retain their owners; the exact appearance writer/reset field set remains SSYS-051's companion inventory. A field that reads Follow look, Font default or none falls through to the look's default (for the scheme, font and effects, the per-look defaults of F3-642 and F3-644); none is a value the sources have not settled yet, listed for the next installment. Scanlines and Phosphor Glow left on Follow look draw what the look draws: on in Retro dark, off elsewhere (F3-643).
@@ -3551,10 +3558,14 @@ canonical_text: >-
   stored amount, an Off beside it included, is then forgotten, and writing, clearing or resetting
   Flicker in a scope removes an amount stored there, so no reset or default brings it back.
   code.terminal.bell offers Follow look and Off; a stored Visual reads as Follow look and is stored
-  again as Follow look wherever Settings reads it (load, reset, import, a project switch or a write).
-  Neither rule adds a notice. background-desaturate defaults to 0.5. bezel-reflection stores Auto
+  again as Follow look wherever it is read (load, reset, import, a project switch, a write, a tab's
+  override or a saved preset). Both rules run on a saved preset entry before it is validated against
+  Plans/terminal_appearance_presets.schema.json, and the entry is written back without the retired
+  value, so a preset saved before round 5 migrates rather than being quarantined (SP-331). Neither
+  rule adds a notice. background-desaturate defaults to 0.5. bezel-reflection stores Auto
   (the material's own level) or a number from 0 to 1 that reads as the nearest of F3-643's four
-  levels, a level being written as 0, 0.25, 0.5 or 1. Line height and letter spacing keep the exact
+  levels, a level being written as 0, 0.25, 0.5 or 1: this is the one stored scale, and the terminal
+  draws the level it reads at its own per-screen strength (F3-643). Line height and letter spacing keep the exact
   stop the Customize screen offered, to four decimals, so All terminals reads back what it drew.
   The ten round-3 rows are live, shown under the visibility amendment of this addendum.
 gui_related: true

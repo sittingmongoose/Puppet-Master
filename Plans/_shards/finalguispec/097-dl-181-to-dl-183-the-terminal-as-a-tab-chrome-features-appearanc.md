@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L46566-L48653
+Source lines: L46577-L48670
 
-Source SHA256: `4559a2a9b43ac6440f893848ee6669df884ebb99a1b0fee005c56e0ea6f11a2a`
+Source SHA256: `0680986468bd39daefcdaf4241659710cb78b378d07bcdd84518bdf8ade25ec8`
 
 ---
 
@@ -234,8 +234,9 @@ canonical_text: >-
   select (Ctrl+Shift+E) puts short labels over the URLs, paths, hashes and IP addresses in view: typing a label
   copies its text, Shift with the label inserts it at the prompt, Alt with the label opens it, and Esc cancels.
   Terminals you are not in are dimmed by their look (F3-643). Progress a program reports with OSC 9;4 shows inside
-  its own tab as advisory progress that completes nothing (F3-546). The visual bell, when the bell setting asks for
-  it, flashes the tab in its look's form (F3-643), and the attention it raises follows SMPFS-183. Notifications (D38,
+  its own tab as advisory progress that completes nothing (F3-546). With the Bell setting (code.terminal.bell, Follow
+  look or Off, DL-213) on Follow look, the look's bell (F3-643) shows in the tab, and the attention it raises follows
+  SMPFS-183. Notifications (D38,
   DL-187): a notification a program sends (OSC 9, OSC 777 `notify` or OSC 99; OSC 9;4 stays progress) raises a system
   notification while Puppet Master is in the background; while it is in front the notification is announced
   instead, and the terminal's tab, when it is not the focused one, takes its attention mark. A terminal raises at most
@@ -312,6 +313,8 @@ compatibility_only_notes: []
 stale_retired_dispositions:
   - "Amended 2026-10-10 (DL-187, D38; terminal SPEC 01c5e78c42): adds system notifications from OSC 9, OSC 777 and OSC 99 in the background, the 3 s limit, the per-tab mute and the permission notice."
   - "Amended 2026-10-11 (wave 2, terminal SPEC dbffa7a1b2): Full CRT marks follow their shown rows and survive prompt redraw."
+  - 'Amended 2026-10-16 (DL-213): the bell sentence points to F3-643''s per-look bell; it read: the visual
+    bell, when the bell setting asks for it, flashes the tab in its look''s form.'
 owner_hints:
   - Plans/FinalGUISpec.md
   - Plans/Section15_MVP_Promoted_Features_Spec.md
@@ -655,9 +658,11 @@ canonical_text: >-
   effect fields (F3-642) default to: effects Follow look; scan strength 0.30; glow strength 0.45;
   Full CRT off; curvature 0.04, active only with Full CRT; burn-in on within Full CRT; noise 0.035;
   flicker off. The bell is Follow look or Off (DL-213): Follow look rings the look's own bell,
-  Friendly's flash, Glass's rim and Retro's inverse video, and Basic's and NieR's own bell stays
-  invisible by design (Jared, 2026-10-16, DL-216); Off draws nothing in any look. There is no
-  separate Visual choice. NieR
+  Friendly's flash, Glass's rim and Retro's inverse video. Basic draws a 2 px warn marker on the tab's
+  header and NieR a motion-only bracket glitch (only while its brackets and glitch parts are on), and
+  under Reduced Motion every look's bell is a still 1 px warn outline; these are deliberately
+  near-invisible, and no flash, rim or inverse is added to them (Jared, 2026-10-16, DL-216). Off draws
+  nothing in any look. There is no separate Visual choice. NieR
   Mode's terminal has a parchment texture under the text and ink focus brackets, and no glow. By the
   NieR rule for new surfaces (DL-152, SSYS-043, F3-598, DR-056), NieR paints the terminal only while
   NieR Mode is on and each touch only with its own installed part: the parchment with the `ground`
@@ -678,7 +683,7 @@ canonical_text: >-
   at its own level, which Auto stores: Low for Platinum, Putty and Accent, and for Brushed aluminium
   on a dark screen; Medium for Graphite, Black gloss, Gunmetal and Glass, and for Brushed aluminium
   on a light screen. Choosing the material's own level stores nothing, so the choice keeps following
-  the material, and a stored 0–1 number reads as the nearest level. Every level draws visibly apart
+  the material, and a stored number reads as the nearest level on SSYS-051's scale. Every level draws visibly apart
   from its neighbours on every material in every look, and a case paler than a dark screen shows the
   mirror as a gloss over its face. Width is offered at 2, 4, 6, 9, 12, 16, 20, 24, 30, 36, 42 and 48
   px. The housing has a flat outer frame, sloped corner-joined faces, a
@@ -716,8 +721,9 @@ acceptance_criteria:
 - A fresh Retro dark terminal shows scanlines and phosphor glow; no other look shows them by default;
   Full CRT and flicker are off by default in every look.
 - Flicker is on or off and draws at 0.02, never above 0.03 of relative luminance; no control offers an amount.
-- Bell offers Follow look and Off; Follow look shows Friendly's flash, Glass's rim and Retro's inverse video,
-  Basic and NieR stay invisible by design, and Off draws nothing in any look.
+- Bell offers Follow look and Off; Follow look shows Friendly's flash, Glass's rim, Retro's inverse video,
+  Basic's 2 px marker and NieR's motion-only bracket glitch (deliberately near-invisible, nothing added), a
+  still 1 px outline under Reduced Motion, and Off draws nothing in any look.
 - Degauss is a one-shot action in Retro, not a setting, and stops at its end.
 - With NieR Mode on, the parchment shows only with the ground part and the focus brackets only with the
   brackets part, NieR's own terminal look has no glow, filter or blur, and no surface larger than 340x256
@@ -1516,10 +1522,8 @@ canonical_text: >-
   capsule is gone. Retro draws reverse video: an opaque square phosphor block under the labels, every
   word, icon and count on it inverted to the screen colour, blooming on Retro dark and a step deeper with
   a printed hard shadow on Retro light. NieR Mode draws its ink bar: opaque ink under the labels, paper
-  words, square, its hover ink bars, cursor square and brackets unchanged. Retro and NieR keep their
-  stepped motion (Jared, 2026-10-16): Retro's block steps from tab to tab and NieR's ink bar cuts
-  straight to the chosen item, as F3-438 and F3-621 say, with no glide, stretch, wobble or label swell.
-  Reduced Motion places the chip at once. The same material serves
+  words, square, its hover ink bars, cursor square and brackets unchanged. Retro and NieR keep F3-438's
+  stepped motion (Jared, 2026-10-16), never gliding. Reduced Motion places the chip at once. The same material serves
   the activity bar's tile, the theme menu's family rows and the project picker's chosen row, in place. A
   pressed item's words, icons and counts take the chip's ink in the press's own frame, and the item it
   leaves takes its resting ink in that frame, so no label lags the chip; a hovered resting label stays at
@@ -1663,6 +1667,8 @@ acceptance_criteria:
 - Keyboard selection, reload, Project switching and unknown stored ids preserve the one-setting contract.
 - A wallpaper swap never paints new wallpaper behind old frost, and gallery loading never shifts a reader's
   anchor.
+- A wallpaper change crossfades print and full frost together; no frame shows a print under another print's
+  frost.
 - The five withdrawn prints are not offered; the six packaged replacement scenes and both selection orders
   follow SSYS-054. Concept publication is complete; native asset/rendering verification remains required.
 - All 29 catalog ids have packaged Dark/Light assets, including the six NieR scenes, and no withdrawn

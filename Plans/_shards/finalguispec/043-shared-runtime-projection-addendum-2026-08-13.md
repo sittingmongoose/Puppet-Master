@@ -4,7 +4,7 @@ Source: `Plans/FinalGUISpec.md`
 
 Source lines: L5592-L27119
 
-Source SHA256: `4559a2a9b43ac6440f893848ee6669df884ebb99a1b0fee005c56e0ea6f11a2a`
+Source SHA256: `0680986468bd39daefcdaf4241659710cb78b378d07bcdd84518bdf8ade25ec8`
 
 ---
 
@@ -4225,8 +4225,8 @@ canonical_text: >-
   (2026-07-16, kept findable): the prior rule named restart for font family changes between
   Retro and Basic and kept Basic one built-in theme family.
   Amended 2026-10-16 (DL-216, Jared): a live theme family or light/dark switch whose new look cannot be
-  fully drawn at once is covered by a deliberate cover that starts within 100 ms (ACD-475) and moves in
-  the look's own language, motion or a shimmer, so it never reads as blank or frozen; the new look then
+  fully drawn at once is covered by a deliberate cover that starts within ACD-475's acknowledgement bar
+  and moves in the look's own language, motion or a shimmer, so it never reads as blank or frozen; the new look then
   appears whole, never a frame that is half the old look and half the new. Under Reduced Motion the cover
   is calm and still never blank.
 gui_related: true
@@ -4241,7 +4241,7 @@ acceptance_criteria:
   - "The behavior is addressable through this fine-grained PlanUnit instead of broad F3-001 coverage."
   - "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
   - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
-  - Every live theme family or light/dark switch acknowledges within 100 ms with a cover animated in the
+  - Every live theme family or light/dark switch acknowledges within ACD-475's bar with a cover animated in the
     look's own language, shows no blank, frozen or half-old frame, and reveals the new look whole.
 validation_surfaces:
   - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"

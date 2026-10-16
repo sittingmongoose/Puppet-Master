@@ -15817,8 +15817,8 @@ canonical_text: >-
   Recorded 2026-10-16. The consistency pass Q16 (head f9925db90b on main 5b43e73891, Glass owner approved,
   review fixes made) adopts F3-652's one switcher in every look, each in its own material: Basic's tinted
   chip, Friendly's mint plate, Retro's reverse-video block and NieR's ink bar, Glass's lens unchanged.
-  Jared decided on 2026-10-16 that Retro and NieR chips keep their stepped motion, Retro stepping and NieR
-  cutting as F3-438 and F3-621 say, not the concept's glide, whose tokens Q16 changes. F3-463, F3-464 and
+  Jared decided on 2026-10-16 that Retro and NieR chips keep F3-438's stepped motion, not the concept's
+  glide; Q16 changed its tokens to match. F3-463, F3-464 and
   F3-621 read their selection marks through F3-652. Jared's 2026-10-15 panel items: a Home board opens pinned from every path (F3-638); the
   add-a-tab picker's search is the look's own search field, seamless in Glass (F3-647); the active Home
   tab is the look's chip standing on the panel's rule (F3-631), and Retro's chip replaces the notch, his
@@ -15877,14 +15877,13 @@ unit_type: decision
 status: accepted
 owner_doc: Plans/Decision_Log.md
 canonical_text: >-
-  Recorded 2026-10-16. Jared's bar for every motion, from the final motion QA judgement: input
-  acknowledged within 100 ms; the new state fully drawn within 300 ms on P1000-class hardware, or a
-  deliberate transition that starts within 100 ms and covers the work; no frame held over 100 ms
-  mid-transition; and an Event Timing click duration of 100 ms or less on M3-class hardware. ACD-475, the
-  owner of every surface's motion, holds it; it is an acceptance bar for motion, distinct from DL-209's
+  Recorded 2026-10-16. Jared's bar for every motion, from the final motion QA judgement (acknowledgement,
+  fully drawn or a covering transition, no held frame, and M3 Event Timing), is stated once in ACD-475, the
+  owner of every surface's motion; it is an acceptance bar for motion, distinct from DL-209's
   refusal to turn concept microbenchmarks into guarantees. His calls on the judgement's design-intent
   items: NieR's page wipe keeps an empty beat of at most 50 ms (F3-464); a NieR or Retro Usage cancel
-  reverses the wipe (F3-628); Reset all really restores defaults, with exactly one outcome toast
+  reverses the wipe, and with the judgement's A12 must-fix no Usage cancel snaps back or shows the
+  cancelled room (F3-628); Reset all really restores defaults, with exactly one outcome toast
   (SSYS-009); NieR's rail wipe stays (F3-621); and the NieR reboot cover's exit is smoothed (F3-598). The
   Retro chip over the notch is DL-214's. The motion fix lanes' own contract changes are recorded as they
   land.
@@ -15930,12 +15929,13 @@ status: accepted
 owner_doc: Plans/Decision_Log.md
 canonical_text: >-
   Recorded 2026-10-16. Jared's decisions of 2026-10-16 (about 12:10Z) on the P1000 decision packet and the
-  motion part-2 owner checks. P1000 bar, option A: every effect is kept; main-thread work meets ACD-475's
-  full bar; a frame held only by the GPU's first draw or raster on P1000-class hardware is recorded, not
-  failed, when its moment starts within 100 ms and never blanks; no low-end-GPU tier is added, and the
-  P1000 speed-up work continues separately. The theme switch cover is animated in each look's own language
+  motion part-2 owner checks. P1000 bar: option A, recorded in his words in ACD-475; no low-end-GPU tier is
+  added, and the P1000 speed-up work continues separately. The theme switch cover is animated in each look's own language
   so it never reads as blank (F3-077). The NieR reboot cover moves while it waits, a scanline or progress
-  glyph in NieR's language (F3-598). The terminal bell stays invisible in Basic and NieR (F3-643). A
+  glyph in NieR's language (F3-598). The terminal bell stays invisible in Basic and NieR, meaning it is left
+  as it is: Basic's 2 px warn marker, NieR's motion-only bracket glitch and the Reduced Motion 1 px outline
+  stay deliberately near-invisible, and no flash, rim or inverse is added (F3-643); the Bell row's help
+  text becomes 'Follow look rings the look's own bell'. A
   wallpaper change crossfades the full frost with the print (F3-653); its implementation lands in a later
   lane. Concept films and measurements are evidence, not native certification.
 gui_related: true
@@ -15967,6 +15967,12 @@ source_lineage:
   SHA-256 3d5a20ca7293c065906642c09ebd322a08129931636b943eafc3570b5bf8898c (P2-01 theme switch, P2-05 NieR cover, P2-S6 bell; source lineage)
 - /mnt/Cursor/share/puppet-master/2026-10-16-plans-topup/sources/pm-mail-1016121015-af12.txt,
   SHA-256 685a0a89c78f08b56ecf940bc87d68852dbf13489c860df76643758bf4bc108c (coordinator mail asking these be recorded; decision lineage)
+- /mnt/Cursor/share/puppet-master/2026-10-16-plans-topup/sources/pm-mail-1016125551-0a2f.txt, SHA-256
+  a2dab08eb221ea2fc9853907f1eefca60ec99e76ba8047f9a552c17f04c0189e (coordinator rulings on the pre-review,
+  including Jared's bell answer; decision lineage)
+- /mnt/Cursor/share/puppet-master/2026-10-16-plans-topup/sources/pm-mail-1016125628-2167.txt, SHA-256
+  f9e6f05b20c1a4e2fd1f4dc412c20cd8d6fdd0044b5fb700d6a6e04bb16871ab (bell reading (A), help text and stored
+  reflection scale; decision lineage)
 preserved_exact_tokens: []
 negative_constraints: []
 owner_hints:

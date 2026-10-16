@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L44303-L46564
+Source lines: L44312-L46575
 
-Source SHA256: `4559a2a9b43ac6440f893848ee6669df884ebb99a1b0fee005c56e0ea6f11a2a`
+Source SHA256: `0680986468bd39daefcdaf4241659710cb78b378d07bcdd84518bdf8ade25ec8`
 
 ---
 
@@ -2004,7 +2004,9 @@ canonical_text: >-
   attention notes its own amber; Projects, the Planning Wizard and the Orchestrator take each look's own
   hues; Glass Dark's quieter Settings words and its toggle key take Glass's cool white, not lavender. Hues
   kept on purpose: swatches that show a real choice, Basic's Usage good teal (its colour-blind separation
-  from warn), the approved glyph status cyan in Glass, and Friendly Light's own lavender borders.
+  from warn), the approved glyph status cyan and the Usage pulse in Glass, Settings' pick-several chip
+  toggles in the palette's accent (their checkbox carries the state), and Friendly Light's own lavender
+  borders.
 gui_related: true
 gui_classification_reason: Defines how panels, strips, menus, dividers and drags render in each look, NieR Mode and Reduced Motion.
 split_recommended: false
