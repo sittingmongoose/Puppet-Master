@@ -1268,6 +1268,10 @@
       if (cards.length !== ids.length || !ids.every(function (id) { return have[id]; })) return false;
       lastGhost = null;
       var incoming = boardEl, sTop = g.sTop || 0;
+      /* the film reverses first, before anything here changes the old board (its test reads the ghost's state: removing the
+         ghost's class first made Retro and NieR refuse, and their finished erase then emptied the live board) */
+      var back = FILM.reverse(el, { shift: sTop });
+      if (!back) return false;
       /* the arriving room's build stops, and its board empties into the spare now (no frame shows it after this one) */
       buildToken++; streaming = null; lateHeld = null;
       clearTimeout(filmEndT); filmEndT = 0;
@@ -1286,7 +1290,6 @@
       if (sTop) scroll.scrollTop = sTop;
       view.top = sTop;
       current.mounted = true;
-      var back = FILM.reverse(el, { shift: sTop }) || { ms: 0 };
       keyShift(room);
       deferHover(back.ms + 200);
       /* the preview elements and the end of the film window wait for the drift to rest (inserting the morph before the
