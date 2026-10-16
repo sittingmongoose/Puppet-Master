@@ -7,7 +7,10 @@
        ready()      -> true while a Project's Settings can be written (not no-project mode, not read-only)
        values()     -> { 'code.terminal.<row>': value } for the rows a person changed, and '<id>#custom' for the text
                        typed under an earlier Custom choice (Terminal Colors, Terminal Font)
-       set(writes)  -> { id: value | null }: one transaction; null puts the row back to its default. false when refused
+       set(writes)  -> { id: value | null }: one transaction; null puts the row back to its default, and forgets a value
+                       a person still holds in a retired row the terminal reads once (RETIRED). false when refused
+       has(id)      -> true when this Settings carries the row (a row canon admitted but the concept holds back, or not
+                       yet published, is false, and the terminal keeps that field on this computer instead)
        version()    -> a number that moves whenever Settings saved
        onChange(fn) -> fn() after a save that changed a code.terminal.* row; returns an unsubscribe
      }
@@ -21,6 +24,9 @@
 (function o55TerminalLookModule() {
   const PREFIX = 'code.terminal.';
   const CUSTOM_ROWS = ['code.terminal.theme', 'code.terminal.font-family'];
+  /* rows Settings no longer draws (placement retire_ids) whose stored value the terminal still reads once and then
+     writes back as a current row (P10, Jared 2026-10-16: an amount means Flicker on) */
+  const RETIRED = new Set(['code.terminal.flicker-amount']);
   const listeners = new Set();
   let ver = 0, seen = '';
   const ready = () => {
@@ -48,16 +54,18 @@
 
   function set(writes) {
     if (!ready() || !writes || typeof writes !== 'object') return false;
-    const put = {}, back = [];
+    const put = {}, back = [], forget = [];
     Object.keys(writes).forEach(id => {
-      if (id.indexOf(PREFIX) !== 0 || !findSettingGlobal(id)) return;
-      const v = writes[id];
-      if (v === null || v === undefined) { if ((state.changed || {})[id]) back.push(id); }
+      if (id.indexOf(PREFIX) !== 0) return;
+      const v = writes[id], clear = v === null || v === undefined;
+      if (!findSettingGlobal(id)) { if (clear && RETIRED.has(id) && (state.changed || {})[id]) forget.push(id); return; }
+      if (clear) { if ((state.changed || {})[id]) back.push(id); }
       else put[id] = v;
     });
     if (Object.keys(put).length && !commitSettingValues(put)) return false;
     for (const id of back) if (!restoreSettingDefault(id)) return false;
-    if (!Object.keys(put).length && !back.length) return true;
+    forget.forEach(id => { delete state.changed[id]; });
+    if (!Object.keys(put).length && !back.length && !forget.length) return true;
     saveState();
     Object.keys(put).concat(back).forEach(id => {
       try { if (root.querySelector(`[id="setting-${cssEscape(id)}"]`)) refreshSettingRow(id); } catch (e) { /* the row is not drawn now */ }
@@ -87,6 +95,10 @@
   const EARLIER = ['dusk', 'dawn', 'deep', 'paper', 'hills', 'grid', 'fibre'];   /* named by the inventory's own words */
   PM51.moreChoices('code.terminal.background-gradient', () => grounds().filter(g => g.gradient && EARLIER.indexOf(g.id) < 0).map(g => ({ value: g.name, label: g.name, meta: KIND[g.cat] || '' })));
   PM51.moreChoices('code.terminal.background-image', () => grounds().filter(g => !g.gradient && EARLIER.indexOf(g.id) < 0).map(g => ({ value: g.name, label: g.name, meta: KIND[g.cat] || '' })));
+  /* Terminal Bell: Follow look or Off (Jared, 2026-10-16, P14); a stored Visual is Follow look (retired words below) */
+  const bell = rowOf('code.terminal.bell');
+  bell.choices = ['Follow look', 'Off'];
+  bell.help = 'What happens when a program rings the bell: Follow look flashes the terminal in the look’s own way, Off does nothing.';
   const font = rowOf('code.terminal.font-family');
   font.choices = FACES.map(f => f[0]);
   font.options = Object.assign({}, font.options || {}, Object.fromEntries(FACES));
@@ -128,9 +140,42 @@
     setTimeout(go, 80);
   });
 
+  /* ---------- retired words and rows (Jared, 2026-10-16), read once wherever Settings takes its values ----------
+     P14: Bell's Visual is Follow look. A row shows it as Follow look (settingValue), a write of it saves Follow look
+     (normalizedSettingValue), and a stored Visual is stored again as Follow look whenever Settings loads, resets,
+     imports or switches project (ensureStateShape).
+     P10: a stored Flicker Amount means Flicker on only where no Flicker is stored (an Off stays Off), and is forgotten
+     either way, so no reset can bring it back. The terminal reads it by the same rule (42-appearance.js). */
+  const BELL = PREFIX + 'bell', FLICKER = PREFIX + 'flicker', AMOUNT = PREFIX + 'flicker-amount';
+  const bellWord = v => (typeof v === 'string' && v.trim().toLowerCase() === 'visual' ? 'Follow look' : v);
+  function migrateStored() {
+    if (!state || !state.settings) return false;
+    let moved = false;
+    if (bellWord(state.settings[BELL]) !== state.settings[BELL]) { state.settings[BELL] = 'Follow look'; moved = true; }
+    const changed = state.changed || {};
+    if (changed[AMOUNT]) {
+      if (!changed[FLICKER] && parseFloat(state.settings[AMOUNT]) > 0) { state.settings[FLICKER] = true; changed[FLICKER] = true; }
+      delete changed[AMOUNT];
+      moved = true;
+    }
+    return moved;
+  }
+  const o55TlShape = ensureStateShape;
+  ensureStateShape = function () {
+    const r = o55TlShape.apply(this, arguments);
+    try { if (migrateStored()) saveState(); } catch (e) { /* the next load reads it again */ }
+    return r;
+  };
+  const o55TlValue = settingValue;
+  settingValue = function (setting) { const v = o55TlValue.apply(this, arguments); return setting && setting.id === BELL ? bellWord(v) : v; };
+  const o55TlNormal = normalizedSettingValue;
+  normalizedSettingValue = function (id, value) { return o55TlNormal.call(this, id, id === BELL ? bellWord(value) : value); };
+  try { if (migrateStored()) saveState(); } catch (e) { /* the next load reads it again */ }
+
   seen = (() => { try { return JSON.stringify(values()); } catch (e) { return ''; } })();
   window.PM_TERMINAL_SETTINGS = Object.freeze({
     ready, values, set, version: () => ver,
+    has: id => { try { return typeof id === 'string' && id.indexOf(PREFIX) === 0 && !!findSettingGlobal(id); } catch (e) { return false; } },
     onChange: fn => { if (typeof fn !== 'function') return () => {}; listeners.add(fn); return () => { listeners.delete(fn); }; }
   });
 })();

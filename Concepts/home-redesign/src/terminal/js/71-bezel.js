@@ -20,25 +20,49 @@
    canvas itself (no blend layer that the compositor would redo on every repaint of the text).
    Materials: Platinum and Putty (beige plastic: IBM, Apple), Graphite (grey plastic: DEC), Black gloss (Sony PVM),
    Brushed aluminium and Gunmetal, Glass (a clear case lit in Liquid Glass's public tokens, neutral white light only, no
-   colour split: its CONTRACT.md), and the scheme's accent in plastic. NieR Mode keeps its own flat ink frame: no glow,
-   no blur, square (DL-152). */
+   colour split: its CONTRACT.md), and the scheme's accent in plastic. NieR Mode's own case (Follow look) is its flat ink
+   frame: no glow, no blur, square; a material chosen in NieR is that material's housing, as in any look (round 4, Q15
+   #1: the nine choices drew the one ink frame). Reflection is four levels, Off, Low, Medium and High, each material
+   starting at its own (Q15 #2: 21 steps of 5 % were too fine to tell apart, and the face saturated above 80 %). */
 (function () {
   'use strict';
   var C = T.color;
   var MAX_FPS = 15;
 
-  /* the case colour, how much of the screen's light the face gives back (the Reflection slider's Auto), roughness (the
-     reflection's blur, CSS px), grain; a dark case's face is lifted above its frame so its lighting reads */
+  /* the case colour, its own Reflection level (on a dark screen and on a light one), roughness (the reflection's blur,
+     CSS px), grain; a dark case's face is lifted above its frame so its lighting reads */
   var MATERIALS = {
-    platinum: { base: '#cbc4b2', reflect: 0.22, blur: 2.4, grain: 'plastic', faceLift: 1.0, light: true },
-    putty: { base: '#b9b09c', reflect: 0.18, blur: 2.8, grain: 'plastic', faceLift: 1.0, light: true },
-    charcoal: { base: '#2c2d31', reflect: 0.45, blur: 1.8, grain: 'plastic', faceLift: 1.7 },
-    black: { base: '#141416', reflect: 0.58, blur: 1.2, grain: 'gloss', faceLift: 2.1 },
-    aluminium: { base: '#a2a6ad', reflect: 0.38, blur: 1.6, grain: 'brushed', faceLift: 1.0, light: true },
-    gunmetal: { base: '#3a3d43', reflect: 0.48, blur: 1.4, grain: 'brushed', faceLift: 1.5 },
-    glass: { base: null, reflect: 0.5, blur: 1.0, grain: 'frost', faceLift: 1.0 },
-    accent: { base: null, reflect: 0.32, blur: 2.0, grain: 'plastic', faceLift: 1.2 }
+    platinum: { base: '#cbc4b2', own: ['low', 'low'], blur: 2.4, grain: 'plastic', faceLift: 1.0, light: true },
+    putty: { base: '#b9b09c', own: ['low', 'low'], blur: 2.8, grain: 'plastic', faceLift: 1.0, light: true },
+    charcoal: { base: '#2c2d31', own: ['medium', 'medium'], blur: 1.8, grain: 'plastic', faceLift: 1.7 },
+    black: { base: '#141416', own: ['medium', 'medium'], blur: 1.2, grain: 'gloss', faceLift: 2.1 },
+    aluminium: { base: '#a2a6ad', own: ['low', 'medium'], blur: 1.6, grain: 'brushed', faceLift: 1.0, light: true },
+    gunmetal: { base: '#3a3d43', own: ['medium', 'medium'], blur: 1.4, grain: 'brushed', faceLift: 1.5 },
+    glass: { base: null, own: ['medium', 'medium'], blur: 1.0, grain: 'frost', faceLift: 1.0 },
+    accent: { base: null, own: ['low', 'low'], blur: 2.0, grain: 'plastic', faceLift: 1.2 }
   };
+  /* the four Reflection levels as the share of the screen's light the face gives back. A light screen lights its case
+     far more than a dark one does, so its steps are smaller; each step measured apart from its neighbours in every
+     look (round 4). Medium on a dark screen is round 3's black gloss and graphite; Low on a light one its putty */
+  var LEVELS = ['off', 'low', 'medium', 'high'];
+  var STRENGTH = { dark: [0, 0.3, 0.6, 1.3], light: [0, 0.2, 0.42, 0.8] };
+  /* clear glass gives back more, level by level: its film shows the page behind it, so the same light reads fainter
+     there (round 5, Q15: Low beside Off on Retro's paper, 3.81, and Low beside Medium in NieR dark, 4.28) */
+  var GLASS = { dark: [0, 1.2, 1.45, 1.3], light: [0, 2.0, 2.2, 2.0] };
+  /* a near-black screen (Retro's phosphor ground) has little light to give a dark case, so its steps are lifted up to
+     a third, and read as far apart as on a grey one (round 5, Q15: Graphite and Gunmetal's Low and Medium, 4.2) */
+  function dimScreen(bg) { return 1 + 0.3 * Math.max(0, Math.min(1, (0.016 - C.lum(bg)) / 0.012)); }
+  function levelOf(r, mat, light) {
+    if (typeof r === 'number' && isFinite(r)) {
+      /* a level stored as a number (round 3's slider): the nearest */
+      var t = STRENGTH[light ? 'light' : 'dark'], best = 0;
+      for (var i = 1; i < t.length; i++) if (Math.abs(t[i] - r) < Math.abs(t[best] - r)) best = i;
+      return LEVELS[best];
+    }
+    if (LEVELS.indexOf(r) >= 0) return r;
+    var M = MATERIALS[mat];
+    return M ? M.own[light ? 1 : 0] : 'off';
+  }
   /* the look's own case: graphite or brushed aluminium in Basic, graphite or putty in Friendly, glass in Glass, black gloss
      or platinum in Retro (the two classic terminals), ink in NieR */
   function lookMaterial(look, light) {
@@ -119,8 +143,16 @@
   /* the resolved bezel (42-appearance.js): style, width, gap, material, reflection; and the look's theme */
   Bezel.prototype.configure = function (bz, ap) {
     var th = ap.theme || {}, light = th.appearance === 'light' || C.lum(th.bg) > 0.4, look = (ap.effects && ap.effects.look) || 'basic';
-    var mat = bz.style === 'off' ? null : look === 'nier' ? 'ink' : (bz.color && bz.color !== 'follow' ? bz.color : lookMaterial(look, light));
-    this.spec = { style: bz.style || 'off', width: bz.width || 0, gap: bz.gap || 0, material: mat, reflect: bz.reflect,
+    var chosen = bz.color && bz.color !== 'follow' && MATERIALS[bz.color] ? bz.color : null;
+    var mat = bz.style === 'off' ? null : chosen || (look === 'nier' ? 'ink' : lookMaterial(look, light));
+    var level = mat === 'ink' ? 'off' : levelOf(bz.reflect, mat, light);
+    /* a case paler than a dark screen shows the mirror as a gloss (_reflect): decided by how light its face is drawn, so
+       the accent plastic, a mid tone in most schemes, takes it too (round 5, Q15: its four levels drew alike in Retro dark,
+       2.87, as light added to a mid tone barely shows) */
+    var M0 = MATERIALS[mat], face0 = !M0 || mat === 'glass' ? null : lit(mat === 'accent' ? C.mix(th.palette ? th.palette[4] : th.fg, 0x5c5c5c, 0.45) : C.hex(M0.base), M0.faceLift, !!M0.light);
+    var gloss = !light && face0 !== null && C.lum(face0) >= 0.12, li = LEVELS.indexOf(level), side = light ? 'light' : 'dark';
+    this.spec = { style: bz.style || 'off', width: bz.width || 0, gap: bz.gap || 0, material: mat, reflect: level, gloss: gloss,
+      strength: STRENGTH[side][li] * (mat === 'glass' ? GLASS[side][li] : 1) * (light || gloss ? 1 : dimScreen(th.bg)),
       light: light, bg: th.bg, fg: th.fg, accent: th.palette ? th.palette[4] : th.fg, glow: !!(ap.effects && ap.effects.glow && ap.effects.glow.on), look: look };
     this.el.hidden = !this.on();
     this.view.root.setAttribute('data-pmt-bezel', this.spec.style);
@@ -136,7 +168,7 @@
     this.paintTimer = setTimeout(function () { self.paintTimer = 0; self._paint(); }, 30);
   };
   Bezel.prototype.frame = function () {
-    if (!this.on() || !this.geo) return;
+    if (!this.on() || !this.geo || !this.spec.strength) return;   /* Reflection Off: the case never changes */
     /* only when the screen's picture changed (the renderer counts the frames it actually paints) */
     var st = this.view.renderer && this.view.renderer.stats, n = st ? st.frames : -1;
     if (n === this.seenFrames && !this.dirty) return;
@@ -336,17 +368,19 @@
     if (!this.view.visible && !force) { this.dirty = true; return; }
     var out = this.housing, oc = out.getContext('2d');
     if (out.width !== geo.W || out.height !== geo.H) { out.width = geo.W; out.height = geo.H; }
-    var M = MATERIALS[s.material], strength = s.reflect === null || s.reflect === undefined ? (M ? M.reflect : 0) : s.reflect;
-    var R = M && strength > 0 && this.masks ? this._light(Math.min(1, strength)) : null;
+    var M = MATERIALS[s.material], strength = s.strength || 0;
+    var R = M && strength > 0 && this.masks ? this._light(strength) : null;
     /* the four strips: the housing, then the screen's light on it as light (screen blend; Glass in light mode lays it on
-       plainly, as Liquid Glass's glint does there) */
-    var glassLight = s.material === 'glass' && s.light;
+       plainly, as Liquid Glass's glint does there). A pale case (platinum, putty, aluminium) over a dark screen shows the
+       mirror as a gloss, the dark picture laid over its face, since a dark screen adds almost no light to a pale one
+       (round 4, Q15: its levels drew alike there) */
+    var glassLight = s.material === 'glass' && s.light, gloss = !!(M && s.gloss);
     geo.strips.forEach(function (q) {
       oc.clearRect(q[0], q[1], q[2], q[3]);
       oc.drawImage(this.cache, q[0], q[1], q[2], q[3], q[0], q[1], q[2], q[3]);
       if (R) {
         oc.save(); oc.beginPath(); oc.rect(q[0], q[1], q[2], q[3]); oc.clip();
-        oc.globalCompositeOperation = glassLight ? 'source-over' : 'screen'; oc.globalAlpha = glassLight ? 0.6 : 1;
+        oc.globalCompositeOperation = glassLight || gloss ? 'source-over' : 'screen'; oc.globalAlpha = glassLight ? GLASS_LIGHT : gloss ? 0.85 : 1;
         oc.drawImage(R, 0, 0, geo.W, geo.H);
         oc.restore();
       }
@@ -355,6 +389,9 @@
   /* each face shows the picture mirrored about the glass edge beside it and folded (a narrow face still shows whole rows),
      sharp, then diffused; the glow is the picture unfolded and very soft, over the whole case */
   var FOLD = 2.6;
+  /* clear glass on a light screen lays the reflection on plainly (Liquid Glass's glint does so there); round 3's 0.6 made
+     its Medium hard to tell from Off (Q15), so it is laid on whole */
+  var GLASS_LIGHT = 1;
   Bezel.prototype._light = function (strength) {
     var snap = this._snapshot(); if (!snap) return null;
     var geo = this.geo, g = this.g, s = this.spec, M = MATERIALS[s.material], bb = geo.bb, m = this.masks;
@@ -381,7 +418,11 @@
       tc.filter = 'none';
       tc.globalCompositeOperation = 'destination-in'; tc.drawImage(mask, 0, 0);
       tc.restore();
-      rc.globalAlpha = Math.min(1, alpha); rc.globalCompositeOperation = 'lighter'; rc.drawImage(T2, 0, 0); rc.globalAlpha = 1; rc.globalCompositeOperation = 'source-over';
+      /* added as light; past full strength (High) the same pass is added again, so the face keeps brightening instead of
+         stopping at one copy */
+      rc.globalCompositeOperation = 'lighter';
+      for (var a = alpha; a > 0.004; a -= 1) { rc.globalAlpha = Math.min(1, a); rc.drawImage(T2, 0, 0); }
+      rc.globalAlpha = 1; rc.globalCompositeOperation = 'source-over';
     };
     pass(M.blur, m.direct, strength * 1.25, FOLD, 'face');
     pass(M.blur * 4 + 3, m.diffused, strength * 0.55, FOLD, 'face');
@@ -392,6 +433,11 @@
   T.Bezel = Bezel;
   T.Bezel.MATERIALS = Object.keys(MATERIALS);
   T.Bezel.lookMaterial = lookMaterial;
-  /* the share of the screen's light a material gives back, the Reflection slider's Auto */
-  T.Bezel.reflectOf = function (id, look, light) { var m = MATERIALS[!id || id === 'follow' ? lookMaterial(look, light) : id]; return m ? m.reflect : 0; };
+  /* a material's own Reflection level (Follow look gives the look's own case; NieR's ink frame reflects nothing) */
+  T.Bezel.LEVELS = LEVELS;
+  T.Bezel.ownLevel = function (id, look, light) {
+    var m = !id || id === 'follow' ? (look === 'nier' ? null : lookMaterial(look, light)) : id;
+    return m && MATERIALS[m] ? MATERIALS[m].own[light ? 1 : 0] : null;
+  };
+  T.Bezel.levelOf = function (r, id, look, light) { var m = !id || id === 'follow' ? (look === 'nier' ? null : lookMaterial(look, light)) : id; return m ? levelOf(r, m, light) : null; };
 })();

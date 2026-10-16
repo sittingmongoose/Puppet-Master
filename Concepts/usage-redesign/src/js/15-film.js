@@ -591,7 +591,10 @@
   var T3 = { frameFade: 200, frameTravel: 420, frameRow: 28, frameCol: 16, frameCap: 220, rule: 300, ghostFade: 140, ghostTravel: 220,
     takeoff: 110, flight: 460, flightStep: 24, flightCap: 120, land: 420, heroAt: 160, quietGap: 140, quietStep: 20, quietCap: 240,
     quietFade: 200, quietTravel: 280, quietDraw: 600, quietFill: 520, beatGap: 6000, liveRoll: 420, liveFlash: 620, liveSweep: 650,
-    rerank: 420, slideOut: 220, heroInstr: 900, heroNum: 40, beatLead: 160 };
+    rerank: 420, slideOut: 220, heroInstr: 900, heroNum: 40, beatLead: 160,
+    /* the warm arrival (motion QA P2-03): its bodies are built before the click, so each supporting body follows its own
+       plate by warmLead (never before the hero + warmAfter) instead of waiting for a build: no plate stands empty */
+    warmLead: 80, warmAfter: 40 };
   function flag(name) { return !PMU.flags || PMU.flags[name] !== false; }
 
   /* ======== MOTION-4 (lane b-motion, Jared's items 7 and 8): one camera you can see, and five voices that differ in kind ========
@@ -747,6 +750,9 @@
      finishes it at once), holds the light budget and the reveal timeline, and ends when its signature beat is over ---- */
   var moment = null, inBeat = 0, momentListeners = [];
   function emitMoment(what, m) { momentListeners.slice().forEach(function (fn) { try { fn(what, m); } catch (error) { console.error('[pm-usage] moment', error); } }); }
+  /* at the end of the current task: a reversal's 'finish' is heard once the board has retired the room that was arriving
+     (a listener's fit pass would otherwise measure that room's bodies) */
+  emitMoment.later = function (what, m) { Promise.resolve().then(function () { emitMoment(what, m); }); };
   function begin(kind, room) {
     var prev = moment, now0 = performance.now(), quick = kind === 'room' && !!prev && prev.kind === 'room' && now0 - prev.start < 900;
     finishMoment('next', kind === 'room' ? room : null);
@@ -1025,6 +1031,7 @@
     var g = o.ghost;
     if (g) {
       /* the old board element itself (40-board.js swapped in a new one): nothing is moved */
+      g._pmuRevived = false;
       g.classList.add('pmu-ghostboard');
       Array.prototype.forEach.call(g.querySelectorAll(':scope > :not(.pmu-card)'), function (n) { n.remove(); });
       cards.forEach(function (c) { c._pmuLeaving = true; });
@@ -1037,13 +1044,18 @@
       cards.forEach(function (c) { c._pmuLeaving = true; c.removeAttribute('data-hero'); g.appendChild(c); });
       scroll.appendChild(g);
     }
+    /* this ghost's life: a reversal (reverse) or a newer ghost of the same element makes this one's end a no-op */
+    var gen = g._pmuGen = (g._pmuGen || 0) + 1;
     var f = fam(), dir = o.dir || 1, base = o.sTop ? 'translateY(' + (-o.sTop) + 'px)' : '', a, gAnims = [];
     if (soft()) a = anim(g, [{ opacity: 1, transform: base || 'none' }, { opacity: 0, transform: base || 'none' }], { dur: T3.ghostFade, easing: E.exit, fill: 'forwards' });
     else if (f === 'retro' || f === 'nier') {
       var n = f === 'nier' ? 8 : 8, ms = f === 'nier' ? 200 : 180;
       a = anim(g, [{ clipPath: 'inset(0 0 0 0)', transform: base || 'none' }, { clipPath: 'inset(100% 0 0 0)', transform: base || 'none' }], { dur: ms, easing: 'steps(' + n + ',jump-end)', fill: 'forwards' });
       var line = H('i', f === 'nier' ? 'pmu-film-scan pmu-ghostscan' : 'pmu-film-scanbar pmu-ghostscan', g);
-      gone(anim(line, [{ transform: 'translateY(0%)', opacity: 1 }, { transform: 'translateY(100%)', opacity: 1, offset: 0.97 }, { transform: 'translateY(100%)', opacity: 0 }], { dur: ms, easing: 'steps(' + n + ',jump-end)', fill: 'both' }), line);
+      var lineA = anim(line, [{ transform: 'translateY(0%)', opacity: 1 }, { transform: 'translateY(100%)', opacity: 1, offset: 0.97 }, { transform: 'translateY(100%)', opacity: 0 }], { dur: ms, easing: 'steps(' + n + ',jump-end)', fill: 'both' });
+      gone(lineA, line);
+      /* what a click back to this room steps back (reverse; motion QA A13, Jared 2026-10-16) */
+      g._pmuRev = { erase: a, lineA: lineA, ms: ms, n: n };
     } else {
       /* MOTION-4 RC1 / RC2 and 4.2: the camera's first half. The old room moves from the click (this task) on its voice's
          path, at full opacity: Basic pans P up the rail (-P x dir, scale .985, 360 SLIDE); Friendly steps back and tilts
@@ -1069,7 +1081,8 @@
     }
     gAnims.push(a);
     var done = function () {
-      if (done.ran) return; done.ran = true;
+      if (done.ran || g._pmuGen !== gen || g._pmuRevived) return; done.ran = true;
+      g._pmuRev = null;
       if (mg) mg.gone = true;
       drop(Array.prototype.slice.call(g.querySelectorAll(':scope > .pmu-card')));
       /* the old board element empties into the hidden spare (40-board.js), never leaves the scroll pane, and carries no
@@ -1113,7 +1126,7 @@
        whole screen when you change tabs can go away").
      - Retro keeps its phosphor wipe and NieR its scanline, and NieR adds a signal glitch (three ink lines in steps).
      Without a GPU the old room goes in the new chrome's frame and the board rises as one (6.2). Reduce Motion: nothing
-     travels; the new room dissolves in (dissolve(), 46-shell.js). */
+     travels; the new room dissolves in (dissolve(), from 40-board.js calmSwap). */
   /* both start at 80 on the click's clock: 40-board.js lays no new plate before 90 */
   var WIPE = { basic: { at: 80, ms: 300, ease: 'cubic-bezier(.45,0,.25,1)' }, friendly: { at: 80, ms: 340, ease: 'cubic-bezier(.4,0,.3,1)' } },
     IRIS = { at: 80, ms: 420, ease: 'cubic-bezier(.4,.1,.2,1)', n: 48 },
@@ -1279,8 +1292,12 @@
     var at = whole || !G.fade || G.fade === true ? 0 : cutAt(G);
     [G.fade, G.fadeA].concat(G.anims || []).forEach(function (a) { if (a && a !== true && a !== G.move) { try { a.cancel(); } catch (error) {} } });
     G.fadeA = null; G.from = 0; G.q = 0;
-    /* the camera's drift goes back the way it came; the cut or lens closes from where it stands (140 OUT) */
-    if (G.move && G.move.playState !== 'idle') { try { G.move.playbackRate = -2; G.move.play(); } catch (error) {} }
+    /* the camera's drift goes back the way it came; the cut or lens closes from where it stands (140 OUT). Basic, Friendly
+       and Glass drift back on an even ease from where they stand (settleBack: played backwards at twice its speed, the
+       ease-out drift landed its last 20-37 px in one frame, motion QA A12); Retro and NieR step back as they stepped out */
+    var stepped0 = fam() === 'retro' || fam() === 'nier';
+    if (G.move && G.move.playState !== 'idle' && !stepped0) { var back0 = readBack(G.el); try { G.move.cancel(); } catch (error) {} G.move = writeBack(G.el, back0, { transformOnly: true, rest: G.sTop ? 'translateY(' + (-G.sTop) + 'px)' : null }).move; }
+    else if (G.move && G.move.playState !== 'idle') { try { G.move.playbackRate = -2; G.move.play(); } catch (error) {} }
     var k = null;
     if (at > 0 && G.cut === 'iris' && G.iris) {
       var b = G.blur && !soft() ? G.blur * Math.min(1, at / 0.55) : 0;
@@ -1311,6 +1328,125 @@
     if (G && G.sTop && scroll) scroll.scrollTop = G.sTop;
     dropKept();
     endMoment(m);
+  }
+  /* ======== a click back to the room still leaving (motion QA A12, 2026-10-16) ========
+     Overview -> Costs -> Overview inside the hand-off kept the old room over a copy of itself that the change built under
+     it: the old room's drift played backwards at twice its speed on its ease-out curve, so its last 20-37 px landed in one
+     frame (Mac films: a 37 px snap), and the Costs room that had started to arrive showed through the part of the board
+     the cut had uncovered. The change is reversed instead. The room the user goes back to is the room still on screen, so
+     it becomes the live board again as it stands (40-board.js; nothing is built again); it drifts back from where it
+     stands to rest on an even ease, about 12.5 ms per pixel its corners travel (240-720 ms: Glass's pull-back is the
+     longest, about 70 px at its corners; no frame moves it much more than 2 px), its cut or lens closes from where it
+     stands (180 OUT), its defocus and fade with it; the room that was arriving
+     goes in the click's own frame. Retro and NieR step their erase back up the same way (A13, Jared 2026-10-16: the
+     board the user never left just returns, with no erase and rebuild). */
+  function stepped3(f) { return f === 'retro' || f === 'nier'; }
+  function reversible(el) {
+    var m = moment, G = m && m.ghost, f = fam();
+    if (!el || !el.isConnected || el._pmuRevived || reduced() || soft() || M.paused() || kept) return false;
+    if (carryQ.some(function (c) { return !c.G.gone && c.G.el.isConnected; })) return false;
+    /* Retro and NieR: the old room is being erased from its top (its erase and scanline, no camera); it reverses while
+       its cards are still there, its erase finished or not (they go a beat later, with the batch of finished layers) */
+    if (stepped3(f)) return !!el._pmuRev && el.classList.contains('pmu-ghostboard') && !!el.querySelector(':scope > .pmu-card') && (!m || m.kind === 'room') && !(G && G.el === el);
+    if (!m || m.kind !== 'room' || !G || G.el !== el || G.gone || G.leaving || G.carried) return false;
+    if (G.fade && G.fade !== true && (G.fade.playState === 'finished' || G.fade.playState === 'idle')) return false;
+    if ((m.carried || []).some(function (C) { return liveGhost(C); })) return false;
+    return true;
+  }
+  /* where the old room stands now: one style read of its one element, before its animations go */
+  function readBack(el) {
+    var cs = getComputedStyle(el);
+    return { tf: cs.transform, org: cs.transformOrigin, cp: cs.clipPath, fl: cs.filter, op: parseFloat(cs.opacity) };
+  }
+  /* how far the board's visible corners stand from rest under the transform s.tf (board pixels; no layout read) */
+  function travelOf(s) {
+    var m = /^matrix\(([^)]+)\)$/.exec(s.tf || ''); if (!m) return 0;
+    var v = m[1].split(',').map(Number), o = String(s.org || '0 0').split(' ').map(parseFloat), W = boardW(), H = Math.max(200, (window.innerHeight || 900) - 170), d = 0;
+    [[0, 0], [W, 0], [0, H], [W, H]].forEach(function (p) {
+      var x = p[0] - (o[0] || 0), y = p[1] - (o[1] || 0);
+      d = Math.max(d, Math.hypot(v[0] * x + v[2] * y + v[4] - x, v[1] * x + v[3] * y + v[5] - y));
+    });
+    return d;
+  }
+  /* the old room back to rest from s (readBack): the drift on an even ease (EXIT) for 12.5 ms per pixel of travel, 240-720;
+     the cut, lens, defocus and fade in 180 OUT. o.shift: px the board moves down when the scroll it kept is given back
+     (its keyframes start that much lower, so nothing moves on screen); o.iris: the lens it closes; o.transformOnly: the
+     drift alone (keepRoom closes the cut itself); o.rest: the transform it rests at, held (a kept room keeps the scroll
+     offset it left with until swapKept gives the scroll back) */
+  function writeBack(el, s, o) {
+    o = o || {};
+    var out = { move: null, close: null, ms: 0 }, shift = o.shift ? 'translateY(' + o.shift + 'px) ' : '';
+    var tf0 = (s.tf && s.tf !== 'none') ? s.tf : '';
+    if (tf0 || shift) {
+      var ms = Math.round(Math.max(240, Math.min(720, travelOf(s) * 12.5)));
+      out.move = anim(el, [{ transform: (shift + tf0).trim() || 'none', transformOrigin: s.org }, { transform: o.rest || 'none', transformOrigin: s.org }], { dur: ms, easing: E.exit, fill: o.rest ? 'forwards' : 'none' });
+      out.ms = ms;
+    }
+    if (o.transformOnly) return out;
+    var k0 = {}, k1 = {}, any = false;
+    if (s.cp && s.cp !== 'none') {
+      any = true; k0.clipPath = s.cp;
+      k1.clipPath = /^polygon/.test(s.cp) && o.iris ? irisClip(o.iris.x, o.iris.cy, 0) : 'inset(0px 0px 0px 0px)';
+    }
+    if (s.fl && s.fl !== 'none') { any = true; k0.filter = s.fl; k1.filter = 'blur(0px)'; }
+    if (s.op < 0.999) { any = true; k0.opacity = s.op; k1.opacity = 1; }
+    if (any) { out.close = anim(el, [k0, k1], { dur: 180, easing: E.out, fill: 'none' }); out.ms = Math.max(out.ms, 180); }
+    return out;
+  }
+  /* the reversal itself (the board has made el its live board again): the hand-off on the old room stops where it stands
+     and nothing of it may empty the board now (its done), the lens rim fades where it stands, the moment ends without
+     finishing what it made (the arriving room went with its board), and the old room goes back to rest */
+  /* the moment ends without finishing what it made: the arriving room went with its board */
+  function dropMoment(m) {
+    if (!m || moment !== m) return;
+    moment = null; M.track(null);
+    m.timers.forEach(clearTimeout); m.timers = []; m.queue = [];
+    root.removeAttribute('data-pmu-moment');
+    if (hold) hold = null;
+    releaseBeatHold();
+  }
+  /* Retro and NieR step back as they stepped out: the erase runs back up from where it stands, in as many of its eight
+     steps as it had taken and at its own pace (180 / 200 ms for the whole board), its phosphor bar or ink scanline
+     climbing with it */
+  function reverseStepped(el, m, o) {
+    var R = el._pmuRev, f = fam(), cs = getComputedStyle(el), hit = /inset\(\s*([\d.]+)%/.exec(cs.clipPath || '');
+    var p = hit ? Math.min(1, +hit[1] / 100) : (R.erase && R.erase.playState === 'finished' ? 1 : 0);
+    el._pmuRevived = true; el._pmuRev = null;
+    [R.erase, R.lineA].forEach(function (x) { if (x && x.cancel) { try { x.cancel(); } catch (error) {} } });
+    Array.prototype.forEach.call(el.querySelectorAll(':scope > .pmu-ghostscan'), function (n) { n.remove(); });
+    dropMoment(m);
+    /* (the erase kept the old scroll as a base transform; with it cancelled and the scroll given back, nothing moves) */
+    var out = { move: null, close: null, ms: 0 };
+    if (p > 0.001) {
+      var n = Math.max(1, Math.round(p * R.n)), ms = Math.max(60, Math.round(p * R.ms)), ease = 'steps(' + n + ',jump-end)';
+      out.close = anim(el, [{ clipPath: 'inset(' + (p * 100).toFixed(2) + '% 0 0 0)' }, { clipPath: 'inset(0% 0 0 0)' }], { dur: ms, easing: ease, fill: 'none' });
+      var line = H('i', f === 'nier' ? 'pmu-film-scan pmu-ghostscan' : 'pmu-film-scanbar pmu-ghostscan', el);
+      gone(anim(line, [{ transform: 'translateY(' + (p * 100).toFixed(2) + '%)', opacity: 1 }, { transform: 'translateY(0%)', opacity: 1, offset: 0.97 }, { transform: 'translateY(0%)', opacity: 0 }], { dur: ms, easing: ease, fill: 'both' }), line);
+      out.ms = ms;
+    }
+    emitMoment.later('finish', m || { kind: 'room' });
+    return out;
+  }
+  function reverse(el, o) {
+    var m = moment, G = m && m.ghost;
+    if (!reversible(el)) return null;
+    o = o || {};
+    if (stepped3(fam())) return reverseStepped(el, m, o);
+    el._pmuRevived = true;
+    var s = readBack(el), iris = G.cut === 'iris' ? G.iris : null;
+    var list = [G.move, G.fade, G.fadeA].concat(G.anims || []);
+    G.gone = true; G.done = null; G.fade = null; G.fadeA = null; G.move = null; G.anims = [];
+    list.forEach(function (x) { if (x && x !== true && x.cancel) { try { x.cancel(); } catch (error) {} } });
+    var rim = iris && el.parentNode ? liveRim(el.parentNode) : null;
+    if (rim && rim._pmuA) {
+      freeze(rim._pmuA);
+      rim.classList.add('pmu-iris-out');
+      rimTrack(rim, anim(rim, [{ opacity: 1 }, { opacity: 0 }], { dur: 140, easing: E.out, fill: 'forwards' }));
+    }
+    dropMoment(m);
+    var back = writeBack(el, s, { shift: o.shift || 0, iris: iris });
+    emitMoment.later('finish', m);
+    return back;
   }
   /* finishMoment('next'): the elements whose animations play on (the room carried into the next change, the board that
      becomes the next ghost, a lens rim fading where it stands), or null for none */
@@ -1639,23 +1775,247 @@
     try { if (hc) { hc.pageSettling = false; hc.scheduleScan(document.getElementById('panel-usage') || document); } } catch (error) {}
   }
 
+  /* ---- the warm arrival (motion QA P2-03, 2026-10-16). The arrival built its board after the Usage tab's click: Home
+     stood still through the page change, then the page showed its plates empty for as long as the bodies took to build
+     (P1000: 250-400 ms of empty board, drawn at 0.8-1.3 s; M3: a 15-30 ms frame per slice for ~150 ms). Now the next
+     arrival's board is built before it: in an idle period while another page shows, the Usage page is laid out unseen in
+     the box it shows in (#panel-usage[data-pmu-warm], 05-film.css) and the board is mounted held in idle slices
+     (40-board.js mount opts.warm), every body's entrance queued on its card; then the page goes back to display: none
+     and the board waits in its scroll pane (data-pmu-warm-wait). The arrival plays the same entrance on it: the click's
+     frame changes the page and powers the shell on; the next frame shows the board (restyling it is that frame's only
+     work) and its plates rise in the structure wave; the bodies come alive on the room change's clock (the hero at
+     T3.heroAt, the supporting bodies quietly after it). A warm board is used only while nothing it shows has changed
+     (warmKey: the look, Reduce Motion, the room, its view and layout, the data epoch, Settings); a stale one is dropped
+     and the arrival builds as before. Without a GPU nothing is warmed: that profile is set when Usage first shows. ---- */
+  var warm = null, warmT = 0, warmRev = 0, warmLast = null;
+  /* ?pmu-warm=0 leaves it out (A/B measurements) */
+  var WARM_OFF = /[?&]pmu-warm=0(?:&|#|$)/.test(location.search);
+  function pageShown() { var p = document.getElementById('panel-usage'); return !!p && p.classList.contains('active'); }
+  function warmKey() {
+    var B = PMU.board, room = st.room;
+    return [PMU.theme && PMU.theme.look ? PMU.theme.look().key : '', reduced() ? 1 : 0, soft() ? 1 : 0, room, st.range, st.scope, st.detail,
+      st.more ? 1 : 0, warmRev, PMU.boards && PMU.boards.epoch ? PMU.boards.epoch() : 0,
+      B && B.cls ? B.cls().name : '', B ? JSON.stringify(B.layout(room)) + JSON.stringify(B.visible(room)) : ''].join('|');
+  }
+  function warming() { return !!warm; }
+  /* the box the page shows in: .primary-content's content box on every page but Home. Home turns that padding off with a
+     rule of its own (:has its page), so on Home the padding is read from a stand-in of the same class, matched by every
+     other rule (the density, Glass and short-window paddings) */
+  function warmBox(panel) {
+    var pc = panel.parentNode; if (!pc || !pc.parentNode) return null;
+    var probe = null;
+    if (pc.querySelector(':scope > #panel-dashboard.active')) {
+      probe = document.createElement(pc.tagName); probe.className = pc.className; probe.style.display = 'none';
+      pc.parentNode.insertBefore(probe, pc.nextSibling);
+    }
+    var cs = getComputedStyle(probe || pc);
+    var t = parseFloat(cs.paddingTop) || 0, r = parseFloat(cs.paddingRight) || 0, b = parseFloat(cs.paddingBottom) || 0, l = parseFloat(cs.paddingLeft) || 0;
+    if (probe) probe.remove();
+    var w = pc.clientWidth - l - r, h = pc.clientHeight - t - b;
+    return w > 0 && h > 0 ? { x: l, y: t, w: w, h: h } : null;
+  }
+  function warmSoon(ms) {
+    if (WARM_OFF) return;
+    warmWatch();
+    if (warmT || warm || !PMU.board) return;
+    warmT = setTimeout(function () {
+      warmT = 0;
+      (window.requestIdleCallback || function (fn) { return setTimeout(fn, 0); })(warmNow, { timeout: 4000 });
+    }, (ms == null ? 1500 : ms) * M.speed());
+  }
+  function warmNow() {
+    if (warm || warmT || !PMU.board) return;
+    var panel = document.getElementById('panel-usage'), board = document.getElementById('pmuBoard');
+    if (!panel || !board || pageShown() || moment || hold) return;
+    /* not while something else is running (a page change, onboarding, the tour, a hidden tab), nor on the Settings page,
+       where what the board reads can change (leaving it warms again) */
+    var sp = document.getElementById('panel-settings');
+    if (sp && sp.classList.contains('active')) return;
+    if (document.hidden || root.hasAttribute('data-o55-open') || root.hasAttribute('data-o55-tour') || root.hasAttribute('data-pm-page-transition')) { warmSoon(1200); return; }
+    if (typeof softwareRendered === 'function' && softwareRendered()) return;
+    var box = warmBox(panel); if (!box) { warmSoon(2000); return; }
+    var w = warm = { room: st.room, key: null, built: false, box: box, shares: {}, at: performance.now() };
+    panel.style.setProperty('--pmu-warm-x', box.x + 'px'); panel.style.setProperty('--pmu-warm-y', box.y + 'px');
+    panel.style.setProperty('--pmu-warm-w', box.w + 'px'); panel.style.setProperty('--pmu-warm-h', box.h + 'px');
+    panel.setAttribute('data-pmu-warm', '');
+    PMU.board.mount(st.room, { warm: true, onBuilt: function () { warmBuilt(w); } });
+    if (warm !== w) return;
+    if (!w.mounted) { warmDrop('unmounted'); warmSoon(3000); return; }
+    if (!PMU.board.cardsNow().length) { warmDrop('empty'); return; }
+    w.key = warmKey();
+  }
+  function warmBuilt(w) {
+    if (warm !== w) return;
+    if (w.key !== warmKey()) { warmDrop('stale'); warmSoon(1200); return; }
+    w.built = true; w.ms = Math.round(performance.now() - w.at);
+    var board = document.getElementById('pmuBoard'), panel = document.getElementById('panel-usage');
+    if (board && board.parentNode) board.parentNode.setAttribute('data-pmu-warm-wait', '');
+    if (panel) panel.removeAttribute('data-pmu-warm');
+  }
+  function warmDrop(why) {
+    var w = warm; if (!w) return;
+    warm = null;
+    warmLast = { why: why, built: w.built, at: Math.round(performance.now()) };
+    var board = document.getElementById('pmuBoard'), panel = document.getElementById('panel-usage');
+    if (panel) panel.removeAttribute('data-pmu-warm');
+    if (board && board.parentNode) board.parentNode.removeAttribute('data-pmu-warm-wait');
+    if (!pageShown() && PMU.board && PMU.board.unmount) PMU.board.unmount();
+  }
+  /* a live beat while the page is hidden (the dashboards' beat, PMU.live): the warm board's cards that show its readings
+     are rendered again at the arrival */
+  function warmBeat(keys) { if (warm && keys) keys.forEach(function (k) { warm.shares[k] = true; }); }
+  function warmCheck() {
+    if (pageShown()) return;
+    if (warm && (!warm.built || warm.key === warmKey())) return;
+    warmDrop('stale');
+    warmSoon(1200);
+  }
+  /* what can change what the board shows while the page is hidden: a look (PMU.theme), Settings (written from Usage's
+     own controls on a dashboard, or on the Settings page), onboarding, and any other mount of the board */
+  function warmWatch() {
+    if (warmWatch.on || !PMU.board) return;
+    warmWatch.on = true;
+    if (PMU.settings && PMU.settings.onChange) PMU.settings.onChange(function (why) { if (why === 'page') return; warmRev++; warmCheck(); });
+    if (PMU.theme && PMU.theme.onChange) PMU.theme.onChange(function () { warmCheck(); });
+    if (PMU.board.on) PMU.board.on('mount', function (d) { if (!warm) return; if (d && d.warm) warm.mounted = true; else warmDrop('mount'); });
+    if (!window.MutationObserver) return;
+    var sp = document.getElementById('panel-settings'), was = !!sp && sp.classList.contains('active');
+    if (sp) new MutationObserver(function () { var on = sp.classList.contains('active'); if (on === was) return; was = on; warmRev++; if (!on) warmCheck(); })
+      .observe(sp, { attributes: true, attributeFilter: ['class'] });
+    var open = root.hasAttribute('data-o55-open');
+    new MutationObserver(function () { var on = root.hasAttribute('data-o55-open'); if (on === open) return; open = on; if (!on) { warmRev++; warmCheck(); } })
+      .observe(root, { attributes: true, attributeFilter: ['data-o55-open'] });
+  }
+  /* at the arrival: the warm board if it is built and still shows what a build would; anything else is dropped */
+  function warmTake() {
+    clearTimeout(warmT); warmT = 0;
+    var w = warm; if (!w) return null;
+    if (!w.built || w.room !== st.room || w.key !== warmKey()) { warmDrop(w.built ? 'stale' : 'building'); return null; }
+    warm = null;
+    var panel = document.getElementById('panel-usage'); if (panel) panel.removeAttribute('data-pmu-warm');
+    return w;
+  }
+  /* the frame after the click's (two rAFs: the first one's callbacks run before the click's own frame is drawn): the board
+     shows (data-pmu-warm-wait off) and its plates rise; the bodies' entrances are made in the next task, after this
+     frame's layout and paint */
+  function nextFrame(fn) { requestAnimationFrame(function () { requestAnimationFrame(fn); }); }
+  /* the page's own entrance (pm8-page-in) held by the shell: after a long frame the shell keeps a page's moves at their
+     start until two frames in a row come on time (PM_START_ON_SHOWN, at most 6 frames). The board's first frame waits
+     for that, then comes in the frame after it: a board shown into those frames kept them late, and the page stood at
+     opacity 0 for all six (P1000 film, NieR Dark: 570 ms of blank page after Home left). Read after the frame's layout
+     (PM_AFTER_LAYOUT, the shell's), so the check forces no style; without the shell's hold, two frames as before. */
+  function pageHeld() {
+    var p = document.getElementById('panel-usage');
+    if (!p || !p.getAnimations) return false;
+    return p.getAnimations().some(function (a) { return a.animationName === 'pm8-page-in' && a.playState === 'paused'; });
+  }
+  function afterPage(fn) {
+    var n = 0, after = window.PM_AFTER_LAYOUT;
+    if (typeof after !== 'function' || typeof window.PM_START_ON_SHOWN !== 'function') { nextFrame(fn); return; }
+    var check = function () { if (pageHeld() && ++n < 10) { requestAnimationFrame(function () { after(check); }); return; } requestAnimationFrame(fn); };
+    requestAnimationFrame(function () { after(check); });
+  }
+  function warmShow(w, board) {
+    var scroll = board.parentNode;
+    if (scroll) scroll.removeAttribute('data-pmu-warm-wait');
+    board.removeAttribute('data-held'); board.removeAttribute('data-hold-bodies');
+    if (PMU.board.viewNow) PMU.board.viewNow(true);
+  }
+  function warmArrive(w, m, board) {
+    afterPage(function () {
+      if (moment !== m) { warmShow(w, board); Array.prototype.forEach.call(board.querySelectorAll(':scope > .pmu-card[data-body-wait]'), function (c) { c.removeAttribute('data-body-wait'); }); return; }
+      warmShow(w, board);
+      var cards = PMU.board.cardsNow();
+      /* the plates rise as in the held arrival, about 72 ms into the moment (its frames started 40 ms after a build two
+         frames into the page); a board shown later (a slow machine, the page's entrance held) moves the moment's clock
+         on, so the wave, the hero's light and the bodies play in full from here */
+      var late = since(m) - 72;
+      if (late > 0) { m.t0 += late * M.speed(); m.lag = late; }
+      w.framedAt = since(m);
+      frames(cards, { dir: 0, base: Math.max(0, 72 - w.framedAt), board: board });
+      board.setAttribute('data-film', '');
+      setTimeout(function () { warmRelease(w, m, board, cards); }, 0);
+    });
+  }
+  function warmRelease(w, m, board, cards) {
+    if (moment !== m) return;
+    cards = cards.filter(function (c) { return c.isConnected; });
+    /* measured once more where it shows (a tile one tier off renders again, entrance queued); the cards that show a
+       reading a live beat changed while the page was hidden render again too */
+    var keys = Object.keys(w.shares || {}), live = keys.length && PMU.boards && PMU.boards.live ? cards.filter(function (c) { return PMU.boards.live.hit(c, keys); }) : [];
+    try {
+      if (PMU.board.tierPass) PMU.board.tierPass(cards.filter(function (c) { var b = c.querySelector(':scope > .pmu-cardbody'); return b && b._pmuKind && live.indexOf(c) < 0; }), 'held');
+      if (live.length) PMU.board.fitSliced(function () { PMU.board.tierPass(live, 'enter'); });
+    } catch (error) { console.error('[pm-usage] warm re-measure', error); }
+    if (PMU.board.viewNow) PMU.board.viewNow(true);
+    m.released = true; m.heroAt = T3.heroAt; m.quietAt = m.heroAt + T3.quietGap;
+    board.removeAttribute('data-pm-hover-exempt');
+    var built = cards.filter(function (c) { var b = c.querySelector(':scope > .pmu-cardbody'); return b && b._pmuKind && c.hasAttribute('data-body-wait'); });
+    built.sort(function (a, b) { return (b.hasAttribute('data-hero') - a.hasAttribute('data-hero')) || (+a.dataset.y - +b.dataset.y) || (+a.dataset.x - +b.dataset.x); });
+    /* the hero at its time with all the light; each supporting body quietly, warmLead after its plate starts to rise */
+    built.forEach(function (c) {
+      if (c.hasAttribute('data-hero') || c._pmuFrameAt == null || !flag('heroRoll')) { bodyBuilt(c); return; }
+      var slot = Math.max(m.heroAt + T3.warmAfter, w.framedAt + c._pmuFrameAt + T3.warmLead);
+      c._pmuRevealAt = Math.max(slot, since(m));
+      reveal(c, { quiet: true, delay: Math.max(0, slot - since(m)) });
+    });
+    deferHoverTags(T3.heroNum + T3.heroInstr + 1500);
+    allBuilt(m.room, cards);
+    /* the preset hold a mount schedules (40-board.js holdPass) waited for the arrival */
+    if (PMU.board.holdSoon) PMU.board.holdSoon(500);
+    last = { room: m.room, at: Math.round(since(m)), why: 'warm', cards: cards.length, warmMs: w.ms, live: live.length };
+  }
+  /* Reduce Motion: the warm board shows in the frame after the click, whole, and dissolves in as the calm entry does */
+  function warmCalm(w, board) {
+    afterPage(function () {
+      warmShow(w, board);
+      Array.prototype.forEach.call(board.querySelectorAll(':scope > .pmu-card[data-body-wait]'), function (c) { c.removeAttribute('data-body-wait'); });
+      var keys = Object.keys(w.shares || {});
+      if (keys.length && PMU.boards && PMU.boards.live) { try { PMU.board.cardsNow().forEach(function (c) { if (PMU.boards.live.hit(c, keys)) PMU.cards.update(c, 'live'); }); } catch (error) {} }
+      dissolve(board);
+      if (PMU.board.holdSoon) PMU.board.holdSoon(500);
+      last = { room: st.room, at: 0, why: 'warm-calm', cards: PMU.board.cardsNow().length, warmMs: w.ms };
+    });
+  }
+
   /* ---- 5 the first arrival on Usage ---- */
   function arrive(o) {
     o = o || {};
     var app = document.getElementById('pmuApp'), board = document.getElementById('pmuBoard');
     if (!app || !board || !PMU.board) return;
-    if (reduced() || M.paused()) { finishMoment('instant'); hold = null; PMU.board.mount(st.room, {}); return; }
+    if (M.paused()) { warmDrop('paused'); finishMoment('instant'); hold = null; PMU.board.mount(st.room, {}); return; }
+    var w = warmTake();
+    /* Reduce Motion: no arrival; the board is built behind what the board area shows and swapped in whole (40-board.js
+       calmSwap), from the frame after the page click (motion QA A14: built inside the click it held the old page for
+       200 ms, M3 film, Glass Light) */
+    if (reduced()) {
+      finishMoment('instant'); hold = null;
+      if (w) { warmCalm(w, board); return; }
+      requestAnimationFrame(function () { requestAnimationFrame(function () { if (!moment && !hold) PMU.board.mount(st.room, { calmEntry: true }); }); });
+      return;
+    }
     var m = begin('arrive', st.room);
-    var h = { board: board, room: st.room, start: performance.now(), built: false, hero: false, m: m };
-    hold = h;
     deferHoverTags(4000);
     /* the app seats the Assistant beside every non-Home page in its first frame after the page change; seating it now
        gives the board its final width before the first slice, so the build never has to start over at a new board class */
     try { if (window.PM7_SHELL_ADJUSTMENTS && typeof window.PM7_SHELL_ADJUSTMENTS.seatChat === 'function') window.PM7_SHELL_ADJUSTMENTS.seatChat(); } catch (error) {}
     shellIntro(app);
     board.setAttribute('data-pm-hover-exempt', 'entering');
-    PMU.board.mount(st.room, { held: true, onBuilt: function (cards) { if (hold === h) h.built = true; else if (moment === m && m.released) allBuilt(h.room, cards || []); } });
-    watch(h);
+    if (w) { hold = null; warmArrive(w, m, board); return; }
+    var h = { board: board, room: st.room, start: performance.now(), built: false, hero: false, m: m };
+    hold = h;
+    /* the board is built in the frame after the click (motion QA A14): the click's frame lays out and paints the page the
+       app just switched to, and the held mount's width read inside it forced that whole layout into the click task, then
+       built every frame on top of it (Mac: the Usage tab's click frame 132-143 ms, about 30 ms over any other page's).
+       Nothing shows a frame later than before: the shell's power-on and the frames all start from opacity 0 on delays of
+       40 ms and more. Until then the last visit's board is held hidden (data-held). The build also waits for the shell
+       to start the page's own entrance (afterPage, motion QA P2-03). */
+    board.setAttribute('data-held', '');
+    afterPage(function () {
+      if (hold !== h || moment !== m) return;
+      PMU.board.mount(st.room, { held: true, onBuilt: function (cards) { if (hold === h) h.built = true; else if (moment === m && m.released) allBuilt(h.room, cards || []); } });
+      watch(h);
+    });
   }
   /* a board class change while held rebuilds the board held under the same arrival (never the instant remount) */
   function rehold(onBuilt) {
@@ -1674,11 +2034,14 @@
   PMU.film = { E: E, T: T, T3: T3, VOICES: VOICES, voice: voice, at: at, sequence: sequence, stagger: stagger, wave: wave, enterPlates: enterPlates,
     odometer: odometer, decode: decode, comet: comet, headGlow: headGlow, drop: drop, sweep: sweep, flash: flash, ring: ring, halo: halo, spring: spring,
     key: key, keyPan: keyPan, edgeAt: edgeAt, cue: cue, holding: holding, rehold: rehold, cancelHold: cancelHold, beat: beat, playBeat: playBeat, arrive: arrive,
+    /* the warm arrival (motion QA P2-03) */
+    warmSoon: warmSoon, warming: warming, warmDrop: warmDrop, warmBeat: warmBeat,
+    warmState: function () { return { warm: warm ? { room: warm.room, built: warm.built, ms: warm.ms || null, box: warm.box } : null, last: warmLast }; },
     deferHoverTags: deferHoverTags, last: function () { return last; }, off: off, parsePath: parsePath, yAt: yAt,
     soft: soft, innerOn: innerOn, glint: glint, combo: combo,
     /* round 3 */
     begin: begin, finish: finishMoment, moment: function () { return moment; }, onMoment: function (fn) { momentListeners.push(fn); },
-    frames: frames, reveal: reveal, bodyBuilt: bodyBuilt, allBuilt: allBuilt, ghost: ghost,
+    frames: frames, reveal: reveal, bodyBuilt: bodyBuilt, allBuilt: allBuilt, ghost: ghost, reversible: reversible, reverse: reverse,
     lit: lit, isQuiet: quietEl, lightBudget: lightBudget, flag: flag,
     budget: function (card, on) { if (card) card._pmuBudget = on !== false; }, lightAt: lightAt, rectIn: rectIn,
     snapShares: noop, flight: noop, pairFlights: noop, flightCards: function () { return []; }, irisAt: irisAt, glitch: glitch, dissolve: dissolve,
@@ -1787,7 +2150,7 @@
     try { info = L.apply(overlay, i); } catch (error) { console.error('[pm-usage] live apply', error); return null; }
     if (!info) return null;
     hosted(info.shares, info.lead);
-    if (hostedOnly) return info;
+    if (hostedOnly) { if (PMU.film && PMU.film.warmBeat) PMU.film.warmBeat(info.shares || []); return info; }
     var p = S.pending || { shares: {}, lead: [], beats: [] };
     (info.shares || []).forEach(function (k) { p.shares[k] = true; });
     p.lead = (info.lead || []).concat(p.lead);

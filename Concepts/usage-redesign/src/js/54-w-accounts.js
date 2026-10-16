@@ -105,13 +105,27 @@
     return '<button type="button" class="pmu-toggle' + (pol.auto ? ' on' : '') + '" role="switch" aria-checked="' + pol.auto + '" aria-label="Auto-switch for ' + esc(p.name) + '" data-pmu-act="auto" data-prov="' + esc(p.id) + '"' +
       (share ? C.shareAttr('ctl:auto:' + p.id) : '') + (ok ? '' : ' disabled') + C.hover('Auto-switch · ' + p.name, ok ? polDetail(p) : 'Settings is not available') + '></button>';
   }
+  /* one disabled form for the stepper's steps (motion QA A15): aria-disabled, never the native attribute. The app's hover
+     bridge turns a native disabled button into aria-disabled + data-pm-hover-was-disabled (so its tag can say why) as soon
+     as it scans it, after a menu for example, and another rule then drew it at .56 instead of .35: a step that cannot be
+     taken looked enabled again. The act dispatcher (50-w-common.js) refuses an aria-disabled button. */
+  var OFF = ' aria-disabled="true"';
+  /* a control patched in place takes the next render's state in that one form, and drops the bridge's (a button the
+     bridge had taken over and that is enabled again would otherwise stay aria-disabled and blocked by it) */
+  function offFrom(b0, b1) {
+    var off = !!(b1.disabled || b1.getAttribute('aria-disabled') === 'true');
+    if (b0.disabled) b0.disabled = false;
+    if (b0.hasAttribute('data-pm-hover-was-disabled')) b0.removeAttribute('data-pm-hover-was-disabled');
+    if (off) { if (b0.getAttribute('aria-disabled') !== 'true') b0.setAttribute('aria-disabled', 'true'); }
+    else if (b0.hasAttribute('aria-disabled')) b0.removeAttribute('aria-disabled');
+  }
   /* the level as a stepper "at [- 90% +] used" (the plate) */
   function polStepper(p) {
     var pol = polOf(p), ok = pol.available, used = 100 - pol.switchLeft, pid = esc(p.id);
     return '<span class="pmu-swat">at</span><span class="pmu-stepper" data-prov="' + pid + '"' + C.hover('Switch level · ' + p.name, ok ? polDetail(p) : 'Settings is not available') + '>' +
-      '<button type="button" data-pmu-act="sw-step" data-prov="' + pid + '" data-value="1" aria-label="Switch ' + esc(p.name) + ' earlier"' + (ok && pol.switchLeft + 5 < Math.min(35, pol.warnLeft) && !PMU.settings.levelBlock(p.id, IDS().switchLeft, pol.switchLeft + 5) ? '' : ' disabled') + '>' + PMU.icon('minus') + '</button>' +
+      '<button type="button" data-pmu-act="sw-step" data-prov="' + pid + '" data-value="1" aria-label="Switch ' + esc(p.name) + ' earlier"' + (ok && pol.switchLeft + 5 < Math.min(35, pol.warnLeft) && !PMU.settings.levelBlock(p.id, IDS().switchLeft, pol.switchLeft + 5) ? '' : OFF) + '>' + PMU.icon('minus') + '</button>' +
       '<button type="button" class="pmu-stepval" data-pmu-act="sw-pick" data-prov="' + pid + '" aria-haspopup="menu"' + (ok ? '' : ' disabled') + '>' + used + '%</button>' +
-      '<button type="button" data-pmu-act="sw-step" data-prov="' + pid + '" data-value="-1" aria-label="Switch ' + esc(p.name) + ' later"' + (ok && pol.switchLeft > 5 ? '' : ' disabled') + '>' + PMU.icon('plus') + '</button></span><span class="pmu-swat">used</span>';
+      '<button type="button" data-pmu-act="sw-step" data-prov="' + pid + '" data-value="-1" aria-label="Switch ' + esc(p.name) + ' later"' + (ok && pol.switchLeft > 5 ? '' : OFF) + '>' + PMU.icon('plus') + '</button></span><span class="pmu-swat">used</span>';
   }
   /* the level as one value that opens the level menu (the hero's cells) */
   function polValue(p) {
@@ -157,7 +171,7 @@
     var fin = ctx && (ctx.liveFinal || ctx.reason === 'live');
     Array.prototype.forEach.call(next.querySelectorAll('.pmu-toggle[data-prov]'), function (t1) {
       var t0 = live.querySelector('.pmu-toggle[data-prov="' + t1.getAttribute('data-prov') + '"]'); if (!t0) return;
-      t0.classList.toggle('on', t1.classList.contains('on')); t0.setAttribute('aria-checked', t1.getAttribute('aria-checked')); t0.disabled = t1.disabled; copyHover(t1, t0);
+      t0.classList.toggle('on', t1.classList.contains('on')); t0.setAttribute('aria-checked', t1.getAttribute('aria-checked')); offFrom(t0, t1); copyHover(t1, t0);
     });
     Array.prototype.forEach.call(next.querySelectorAll('.pmu-stepval[data-prov], .pmu-polval[data-prov]'), function (v1) {
       var sel = (v1.classList.contains('pmu-polval') ? '.pmu-polval' : '.pmu-stepval') + '[data-prov="' + v1.getAttribute('data-prov') + '"]', v0 = live.querySelector(sel); if (!v0) return;
@@ -168,7 +182,7 @@
       else v0.textContent = v1.textContent;
     });
     Array.prototype.forEach.call(next.querySelectorAll('[data-pmu-act="sw-step"][data-prov]'), function (b1) {
-      var b0 = live.querySelector('[data-pmu-act="sw-step"][data-prov="' + b1.getAttribute('data-prov') + '"][data-value="' + b1.getAttribute('data-value') + '"]'); if (b0) b0.disabled = b1.disabled;
+      var b0 = live.querySelector('[data-pmu-act="sw-step"][data-prov="' + b1.getAttribute('data-prov') + '"][data-value="' + b1.getAttribute('data-value') + '"]'); if (b0) offFrom(b0, b1);
     });
     Array.prototype.forEach.call(next.querySelectorAll('.pmu-stepper[data-prov]'), function (s1) { var s0 = live.querySelector('.pmu-stepper[data-prov="' + s1.getAttribute('data-prov') + '"]'); if (s0) copyHover(s1, s0); });
     ['.pmu-polscope', '.pmu-polstat', '.pmu-polshared'].forEach(function (sel) {
@@ -235,7 +249,7 @@
       var a = PMU.roster.account(b0.getAttribute('data-value')), p = a && PMU.roster.provider(a.providerId); if (!p) return;
       var tmp = document.createElement('div'); tmp.innerHTML = accSwBtn(a, p);
       var b1 = tmp.firstChild, wasOwn = b0.hasAttribute('data-own'), own = b1.hasAttribute('data-own');
-      b0.toggleAttribute('data-own', own); b0.toggleAttribute('data-off', b1.hasAttribute('data-off')); b0.disabled = b1.disabled;
+      b0.toggleAttribute('data-own', own); b0.toggleAttribute('data-off', b1.hasAttribute('data-off')); offFrom(b0, b1);
       b0.setAttribute('aria-label', b1.getAttribute('aria-label')); copyHover(b1, b0);
       var v0 = b0.querySelector('.pmu-accswv'), to = accSwAt(a, p), from = v0 ? parseFloat(v0.textContent) : NaN;
       if (v0 && from !== to) {

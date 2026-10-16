@@ -1,12 +1,13 @@
 {
- "_about": "editor-runtime: sections from the plain-pages audit (2026-09-27). Saving and tabs, the file tree, editing, four terminal groups and the search index; big-file limits and rarely changed terminal and index options under More options. The page is named Editor & Terminal: its containers moved to Containers. Duplicate hand rows are dropped: format-save (Tidy code automatically, Toolchain), large-file (the three inventory size limits), terminal-profile (Shell), terminal-restore (Terminals when a project reopens), index-exclusions (Leave out of search). In: tabs reopened next time, from App & Input; Preview Tabs and Tab Sizing too (canon SSYS-050 groups them in Editor & Terminal, Saving & tabs; Jared, 2026-10-14). Editor look (pm7-editor-customizer, 2026-10-14): the editor's look rows leave Editing for their own group, as the terminal's have Terminal look, with the rarer ones under Editor look: more options; the proposed rows (src/settings/proposed.d) join them. Start With Editor Strip Collapsed is retired (Settings_System.md, Rows retired: there is no separate editor strip, DL-180), so it is drawn nowhere. So are the five terminal rows canon retired (DL-181; code.terminal.search by lead ruling L18): Preferred Layout, Auto-Open a Second Pane, Explain What Commands Do, Tab Purpose Hints and Search in Terminal.",
+ "_about": "editor-runtime: sections from the plain-pages audit (2026-09-27). Saving and tabs, the file tree, editing, four terminal groups and the search index; big-file limits and rarely changed terminal and index options under More options. The page is named Editor & Terminal: its containers moved to Containers. Duplicate hand rows are dropped: format-save (Tidy code automatically, Toolchain), large-file (the three inventory size limits), terminal-profile (Shell), terminal-restore (Terminals when a project reopens), index-exclusions (Leave out of search). In: tabs reopened next time, from App & Input; Preview Tabs and Tab Sizing too (canon SSYS-050 groups them in Editor & Terminal, Saving & tabs; Jared, 2026-10-14). Editor look (pm7-editor-customizer, 2026-10-14): the editor's look rows leave Editing for their own group, as the terminal's have Terminal look, with the rarer ones under Editor look: more options; the proposed rows (src/settings/proposed.d) join them. Start With Editor Strip Collapsed is retired (Settings_System.md, Rows retired: there is no separate editor strip, DL-180), so it is drawn nowhere. So are the five terminal rows canon retired (DL-181; code.terminal.search by lead ruling L18): Preferred Layout, Auto-Open a Second Pane, Explain What Commands Do, Tab Purpose Hints and Search in Terminal. And Flicker Amount (Jared, 2026-10-16, P10: Flicker is on or off at one faint level; a stored amount reads as on).",
  "retire_ids": [
   "code.editing.editor-strip-collapsed",
   "code.terminal.layout-style",
   "code.terminal.auto-second-pane",
   "code.terminal.explanations",
   "code.terminal.tab-role",
-  "code.terminal.search"
+  "code.terminal.search",
+  "code.terminal.flicker-amount"
  ],
  "pages": {
   "editor-runtime": {

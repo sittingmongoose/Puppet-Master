@@ -11,6 +11,16 @@
    about 600 ms, then jumped. The app already pins the outgoing page's top, left, width and height for this. ---- */
 body.pmu-page-active #panel-dashboard.pm-home-owned.pm8-page-out { position: absolute; }
 
+/* ---- the warm build (motion QA P2-03; 15-film.js warm): while another page shows, the Usage page is laid out unseen in
+   the box it shows in (--pmu-warm-*, from the film) for as long as the next arrival's board takes to build in idle time.
+   It takes no room, no pointer and no paint, and goes back to display: none when the board is built. The built board
+   then waits in its scroll pane, kept out of the arrival's click frame (data-pmu-warm-wait), and shows in the frame
+   after it. ---- */
+.primary-content > #panel-usage.page[data-pmu-warm]:not(.active):not(.pm8-page-out) { display: flex; position: absolute;
+  left: var(--pmu-warm-x, 0px); top: var(--pmu-warm-y, 0px); width: var(--pmu-warm-w, 100%); height: var(--pmu-warm-h, 100%);
+  visibility: hidden; pointer-events: none; z-index: -1; content-visibility: visible; }
+#panel-usage .pmu-scroll[data-pmu-warm-wait] { display: none; }
+
 /* ---- the held board (3.1 Phase A): held cards are laid out (the build measures every body) but not painted, so the
    slices cost the frame no paint and no layerization; the release animates them in from their first keyframe ---- */
 #panel-usage .pmu-board[data-held] > .pmu-card { visibility: hidden; }

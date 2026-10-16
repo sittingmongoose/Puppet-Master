@@ -73,8 +73,8 @@ html[data-theme="basic-light"] .pmt-cz { --pmt-cz-fill: color-mix(in srgb, var(-
 /* unavailable: no fade (45 % put its words near 2.9:1). Its words go to the second tier, a step under the button's own
    ink that still holds 4.5:1 on the plate and on the token picker in every look, and a dashed edge says it is off, as
    Demo Studio's unavailable controls do (landing QA EC-01) */
-.pmt-cz .pmt-textbtn[aria-disabled="true"] { opacity: 1; color: var(--pmw-text-2, var(--text-secondary)); border-style: dashed; border-color: var(--pmt-cz-line-2); cursor: default; }
-.pmt-cz .pmt-textbtn[aria-disabled="true"]:hover { background: transparent; }
+.pmt-cz :is(.pmt-textbtn, .pmt-step)[aria-disabled="true"] { opacity: 1; color: var(--pmw-text-2, var(--text-secondary)); border-style: dashed; border-color: var(--pmt-cz-line-2); cursor: default; }
+.pmt-cz :is(.pmt-textbtn, .pmt-step)[aria-disabled="true"]:hover { background: transparent; }
 
 /* ---- top: preview and side column ---- */
 .pmt-cz-top { display: grid; grid-template-columns: minmax(0, 1fr) 214px; gap: 14px; align-items: stretch; }
@@ -94,7 +94,9 @@ html[data-theme="basic-light"] .pmt-cz { --pmt-cz-fill: color-mix(in srgb, var(-
 .pmt-cz-cells > i { border-radius: 1.5px; background: color-mix(in srgb, var(--pmw-text, #fff) 12%, transparent); transition: background-color var(--pmt-t-tint, 0ms) linear; }
 .pmt-cz-cells > i.pmt-cz-on { background: var(--pmt-cz-accent); }
 .pmt-cz-sets { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
-.pmt-cz .pmt-cz-set { display: grid; align-content: start; gap: 1px; min-height: 52px; padding: 7px 9px; text-align: left; cursor: pointer; color: inherit; font: inherit;
+/* a preset is the box of the hover's own frame (its ::after, absolutely placed by the hover controls), as tiles and chips
+   are: unpositioned, that frame took the whole dialog, and a hover painted 918 x 992 px (pm7-motion-editor) */
+.pmt-cz .pmt-cz-set { position: relative; display: grid; align-content: start; gap: 1px; min-height: 52px; padding: 7px 9px; text-align: left; cursor: pointer; color: inherit; font: inherit;
   border: 1px solid var(--pmt-cz-line); border-radius: var(--pmt-cz-r); background: transparent;
   transition: background-color var(--pmt-t-tint, 0ms) linear, border-color var(--pmt-t-tint, 0ms) linear; }
 .pmt-cz-set span { font-weight: 650; font-size: 12px; }
@@ -316,6 +318,10 @@ html[data-o55-nier="on"] .pmt-cz .pmt-cz-dock { box-shadow: 0 3px 10px rgba(var(
 .pmt-cz-chip[aria-checked="true"]::after { content: ""; position: absolute; left: 12px; top: 12px; width: 16px; height: 16px; background: var(--pmt-cz-on-accent);
   -webkit-mask: var(--pmt-cz-check) center / 12px no-repeat; mask: var(--pmt-cz-check) center / 12px no-repeat; }
 .pmt-cz-chip[aria-checked="true"] .pmt-cz-chipstate { color: var(--pmw-text, inherit); }
+/* a switch that cannot act now (Ligatures while letters are spaced): a dashed box, no hover; its words say why */
+.pmt-cz .pmt-cz-chip[aria-disabled="true"] { cursor: default; }
+.pmt-cz .pmt-cz-chip[aria-disabled="true"]:hover { background: transparent; }
+.pmt-cz-chip[aria-disabled="true"]::before { border-style: dashed; }
 .pmt-cz-chipmore { display: grid; gap: 8px; padding: 2px 12px 11px 38px; }
 .pmt-cz-mini { display: inline-flex; align-items: center; gap: 7px; font-size: 12px; cursor: pointer; }
 .pmt-cz-mini input { accent-color: var(--pmt-cz-accent); width: 15px; height: 15px; margin: 0; }
@@ -359,6 +365,13 @@ html[data-o55-nier="on"] .pmt-cz .pmt-cz-dock { box-shadow: 0 3px 10px rgba(var(
 .pmt-cz.pmt-in .pmt-cz-scrim > i, .pmt-cz.pmt-in .pmt-cz-frame { animation: pmt-m-fade-in var(--pmt-t-in, 120ms) linear both; }
 .pmt-cz.pmt-in .pmt-cz-dialog { transform-origin: 50% 0; animation: var(--pmt-a-pop-in, pmt-m-fade-in) var(--pmt-t-in, 120ms) var(--pmt-ease-move, linear) both; }
 .pmt-cz.pmt-out { pointer-events: none; }
+/* the screen kept ready between visits (77-customize.js, prepared): laid out, drawn nowhere and out of reach. Its
+   contents are hidden by visibility, which takes every tab stop with it in one inherited property (tab stops set one by
+   one would touch every element); the dialog itself stays visible to Liquid Glass, which mounts its sheet while it waits
+   rather than on the click, and is clipped away with the rest. Its preview's moving ground waits too */
+.pmt-cz.pmt-cz-parked { clip-path: inset(100%); pointer-events: none; }
+.pmt-cz.pmt-cz-parked > :not(.pmt-cz-dialog), .pmt-cz.pmt-cz-parked .pmt-cz-dialog > * { visibility: hidden; }
+.pmt-cz.pmt-cz-parked .pmt-bgmove { animation-play-state: paused; }
 .pmt-cz.pmt-out .pmt-cz-scrim > i, .pmt-cz.pmt-out .pmt-cz-frame { animation: pmt-m-fade-out var(--pmt-t-out, 100ms) linear both; }
 .pmt-cz.pmt-out .pmt-cz-dialog { transform-origin: 50% 0; animation: var(--pmt-a-pop-out, pmt-m-fade-out) var(--pmt-t-out, 100ms) var(--pmt-ease-exit, linear) both; }
 .pmt-cz-body.pmt-rescope { animation: var(--pmt-a-rescope, pmt-m-dim-in) calc(var(--pmt-t-swap, 120ms) * 1.1) var(--pmt-ease-fade, linear) both; }

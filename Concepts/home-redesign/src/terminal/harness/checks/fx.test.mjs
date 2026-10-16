@@ -65,7 +65,9 @@ test('defaults are the Retro dark defaults from the brief', () => {
   assert.deepEqual(d.curvature, { on: false, amount: 0.04, flatText: false });
   assert.deepEqual(d.bezel, { on: false, light: false });
   assert.deepEqual(d.vignette, { on: false, strength: 0.08 });
-  assert.deepEqual(d.burnIn, { on: false, persistMs: 450 });
+  assert.deepEqual(d.burnIn, { on: false, persistMs: 450, ink: false });
+  /* round 4: a light ground's burn-in keeps the text's ink (the flag passes through normalize) */
+  assert.equal(G.normalize({ burnIn: { on: true, ink: true } }).burnIn.ink, true);
   assert.deepEqual(d.noise, { on: false, amount: 0.035 });
   assert.deepEqual(d.flicker, { on: false, amount: 0.02 });
   assert.equal(d.degauss, null); assert.equal(d.dim, 0);
@@ -105,6 +107,28 @@ test('flicker gain never modulates relative luminance by more than 0.03', () => 
   // held for one ambient step (30 fps): equal values inside a step
   assert.equal(G.flickerGain(0.03, 1000), G.flickerGain(0.03, 1000 + 1000 / 30 - 0.5));
 });
+/* ---- flicker played by the compositor (P2-S1) ---- */
+test('flicker keyframes replay the shader gain, step by step, and stay under the cap', () => {
+  const css = G.flickerKeyframes('pmt-flicker', 0.02);
+  const steps = [...css.matchAll(/([\d.]+)% \{ filter: brightness\(([\d.]+)\); \}/g)].map(m => [Number(m[1]), Number(m[2])]);
+  const n = G.FLICKER_LOOP_MS * G.AMBIENT_FPS / 1000;
+  assert.equal(steps.length, n + 1);
+  assert.ok(css.startsWith('@keyframes pmt-flicker {'));
+  for (let i = 0; i < n; i++) {
+    const g = G.flickerGain(0.02, (i + 0.5) * 1000 / G.AMBIENT_FPS);
+    assert.ok(Math.abs(steps[i][1] - Math.pow(g, 1 / 2.2)) < 1e-4, 'step ' + i);
+    assert.ok(Math.abs(steps[i][0] - i / n * 100) < 1e-3);
+    /* a brightness b on the encoded value is b^2.2 on linear light: never darker than the cap allows, never brighter */
+    assert.ok(Math.pow(steps[i][1], 2.2) >= 1 - G.FLICKER_CAP - 1e-4 && steps[i][1] <= 1);
+  }
+  assert.equal(steps[n][0], 100);
+  assert.ok(new Set(steps.map(s => s[1])).size > 20, 'it moves');
+});
+test('the GPU probe answers without building the effects pass', () => {
+  assert.equal(typeof G.probe, 'function');
+  assert.equal(G.probe(), false);           /* no document here: nothing to ask */
+});
+
 test('degauss envelope: full at the press, zero from 600 ms, monotone', () => {
   assert.equal(G.degaussEnvelope(0), 1); assert.equal(G.degaussEnvelope(1), 0); assert.equal(G.degaussEnvelope(-0.1), 0);
   let prev = 2;

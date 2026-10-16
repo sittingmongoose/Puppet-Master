@@ -23,15 +23,22 @@
     }).catch(function () {});
   } catch (e) {}
 
-  /* is there a GPU at all (asked once, on a scratch canvas, by the same test the effects pass uses) */
+  /* is there a GPU at all (asked once, on a scratch canvas, by the context and renderer test the effects pass makes; not
+     by building the pass, whose shaders hold the main thread up to a second on some drivers, P2-S1) */
   function hasGpu() {
     if (gpu !== null) return gpu;
-    if (hasGpu.probe === undefined) {
-      var c = document.createElement('canvas'); c.width = c.height = 1;
-      var fx = T.FXGL ? T.FXGL.create(c) : null;
-      hasGpu.probe = !!fx; if (fx) fx.dispose();
-    }
+    if (hasGpu.probe === undefined) hasGpu.probe = !!(T.FXGL && T.FXGL.probe && T.FXGL.probe());
     return hasGpu.probe;
+  }
+  /* Flicker (P2-S1): a brightness the compositor plays on the picture (50-fx.css .pmt-flicker-live), from the shader's own
+     gain (T.FXGL.flickerKeyframes), so turning it on never builds the effects pass and never holds a frame (it froze the
+     P1000 0.84-1.2 s in 8 of 10 looks). One sheet for the page, written again only if the amount changes */
+  var flickerSheet = null, flickerAmountNow = -1;
+  function flickerStyle(amount) {
+    if (amount === flickerAmountNow || !T.FXGL || !T.FXGL.flickerKeyframes) return;
+    flickerAmountNow = amount;
+    if (!flickerSheet) { flickerSheet = document.createElement('style'); flickerSheet.setAttribute('data-pmt-flicker', ''); document.head.appendChild(flickerSheet); }
+    flickerSheet.textContent = T.FXGL.flickerKeyframes('pmt-flicker', amount);
   }
   function Policy(view) {
     this.view = view; this.cfg = {}; this.gl = null; this.trail = null; this.active = false;
@@ -40,7 +47,7 @@
     this.failedAt = '';      /* the grid size (WxH device px) the GL pass could not draw, until the grid changes size */
     var self = this;
     view._on(view.term, 'dirty', function () { self.lastActivity = T.util.now(); });
-    view.on('focus', function () { self.lastActivity = T.util.now(); self.kick(); self.groundLive(); });
+    view.on('focus', function () { self.lastActivity = T.util.now(); self.kick(); self.groundLive(); self.flickerLive(); });
     policies.add(this);
   }
   Policy.prototype.configure = function (e) {
@@ -51,7 +58,8 @@
     root.setAttribute('data-pmt-bell', e.bell || 'marker');
     root.style.setProperty('--pmt-dim-amount', String(e.dim || 0));
     var reduced = !!e.reduced, saver = battery.saver;
-    var wantGL = !e.off && ((e.scanlines && e.scanlines.on) || (e.glow && e.glow.on) || e.crt || (e.flicker && e.flicker.on));
+    /* Flicker is played by the compositor (flickerLive), so it never asks for the effects pass on its own */
+    var wantGL = !e.off && ((e.scanlines && e.scanlines.on) || (e.glow && e.glow.on) || e.crt);
     if (wantGL && gpu !== false && !this.gl) {
       /* a lost context (a GPU reset, or the browser dropping the oldest of too many contexts, which may never come
          back) shows the grid canvas and the CSS fallbacks instead of a blank screen; a restored one draws again */
@@ -96,7 +104,12 @@
     if (style !== 'off' && T.FXTrail && !this.trail) this.trail = T.FXTrail.create(v.trailCanvas);
     this.trailStyle = style;
     v.trailCanvas.hidden = style === 'off' || this.active;
-    v.trailCanvas.style.mixBlendMode = this.trail && this.trail.blend === 'add' ? 'screen' : '';
+    /* the chosen style's own blend, not the last jump's (round 5, Q15: after Glow or Phosphor, a Trace or Soft trail kept
+       the screen blend, and on a light ground its dark ink vanished) */
+    var spec = T.FXTrail && T.FXTrail.STYLES[style];
+    if (this.trail && spec) this.trail.blend = spec.blend;
+    v.trailCanvas.style.mixBlendMode = spec && spec.blend === 'add' ? 'screen' : '';
+    this.flickerLive();
     this.kick();
   };
   Policy.prototype.params = function (now) {
@@ -109,9 +122,12 @@
       /* scanlines lock to the text rows; beyond the tube is the scheme's own ground, unlit */
       rowPx: v.metrics ? v.metrics.devH : 0,
       outside: e.tube ? [parseInt(e.tube.slice(1, 3), 16) / 255, parseInt(e.tube.slice(3, 5), 16) / 255, parseInt(e.tube.slice(5, 7), 16) / 255] : null,
-      burnIn: { on: !!(e.burnIn && e.burnIn.on) && !reduced, persistMs: e.burnIn ? e.burnIn.persistMs : 450 },
+      /* a light ground keeps the cleared text's ink as its ghost, a dark one its light (Q15 #9) */
+      burnIn: { on: !!(e.burnIn && e.burnIn.on) && !reduced, persistMs: e.burnIn ? e.burnIn.persistMs : 450,
+        ink: !!(v.theme && T.color.lum(v.theme.bg) > T.color.lum(v.theme.fg)) },
       noise: { on: !!(e.noise && e.noise.on) && moving, amount: e.noise ? e.noise.amount : 0 },
-      flicker: { on: !!(e.flicker && e.flicker.on) && moving, amount: e.flicker ? Math.min(0.03, e.flicker.amount) : 0 },
+      /* the compositor plays Flicker (flickerLive); the shader never does, so it never doubles */
+      flicker: { on: false, amount: 0 },
       degauss: this.degaussAt && !reduced ? { startMs: this.degaussAt } : null,
       dim: 0
     };
@@ -130,10 +146,23 @@
     clearTimeout(this.liveTimer);
     if (live) this.liveTimer = setTimeout(function () { self.groundLive(); }, left + 20);
   };
+  /* Flicker plays only while this terminal is focused, visible and in use (10 s after the last output or key, as every
+     ambient effect), never under Reduced Motion or a battery saver, and only where a GPU composites */
+  Policy.prototype.flickerLive = function (now) {
+    var v = this.view, e = this.cfg, self = this, f = e.flicker;
+    now = now || T.util.now();
+    var left = IDLE_MS - (now - this.lastActivity);
+    var live = !!(f && f.on && f.amount > 0 && !e.off && v.focused && v.visible && left > 0 && !e.reduced && !battery.saver && hasGpu());
+    if (live) flickerStyle(Math.min(T.FXGL ? T.FXGL.FLICKER_CAP : 0.03, f.amount));
+    v.root.classList.toggle('pmt-flicker-live', live);
+    clearTimeout(this.flickTimer);
+    if (live) this.flickTimer = setTimeout(function () { self.flickerLive(); }, left + 20);
+  };
   /* called by the view after each grid paint */
   Policy.prototype.frame = function () {
     var v = this.view, now = T.util.now();
     this.groundLive(now);
+    this.flickerLive(now);
     this._trackCursor(now);
     var size = v.canvas.width + 'x' + v.canvas.height;
     if (this.failedAt && this.failedAt !== size) { this.failedAt = ''; this.configure(this.cfg); }
@@ -217,7 +246,8 @@
   Policy.prototype.dispose = function () {
     policies.delete(this);
     if (this.raf) { cancelAnimationFrame(this.raf); clearTimeout(this.raf); }
-    clearTimeout(this.liveTimer);
+    clearTimeout(this.liveTimer); clearTimeout(this.flickTimer);
+    this.view.root.classList.remove('pmt-flicker-live');
     if (this.gl) this.gl.dispose();
     if (this.trail && this.trail.clear) this.trail.clear();
   };

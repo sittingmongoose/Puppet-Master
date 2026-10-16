@@ -132,6 +132,8 @@ function syncUsageLayer() {
      held in slices, then the plates rise in one wave and every instrument comes alive */
   if (active && !was && PMU.board) { if (PMU.film && PMU.film.arrive) PMU.film.arrive(); else PMU.board.mount(state.room, {}); }
   if (!active && was) { if (PMU.film) PMU.film.cancelHold(); if (PMU.menu) PMU.menu.close(); if (PMU.board) PMU.board.cancel(); if (PMU.inspector) PMU.inspector.close(); }
+  /* leaving Usage: the next arrival's board is built in an idle period while the other page shows (PMU.film warm, motion QA P2-03) */
+  if (!active && was && PMU.film && PMU.film.warmSoon) PMU.film.warmSoon(2000);
 }
 
 if (app) {
@@ -241,3 +243,5 @@ if (PMU.board) PMU.board.init();
 PMU.shell.render();
 if (PMU.board) PMU.board.mount(state.room, {});
 syncUsageLayer();
+/* the first arrival's board is built ahead, in an idle period after the page has loaded (PMU.film warm, motion QA P2-03) */
+if (PMU.film && PMU.film.warmSoon && !document.getElementById('panel-usage').classList.contains('active')) PMU.film.warmSoon(2500);
