@@ -44,7 +44,7 @@
   // Settings rows can follow one at a time after paint, instead of rebuilding a
   // whole quick set underneath the sheet before the preview's first frame.
   const pendingRows = new Set();
-  let rowJob = 0;
+  let rowJob = 0, rowsNotBefore = 0;
   function scheduleRows() {
     if (rowJob || !pendingRows.size) return;
     rowJob = window.requestIdleCallback
@@ -53,6 +53,10 @@
   }
   function refreshRows() {
     rowJob = 0;
+    // Main-thread idle can precede the GPU presenting a large editor repaint.
+    // Give that first paint its own budget before rebuilding the covered rows.
+    const wait = rowsNotBefore - performance.now();
+    if (wait > 0) { rowJob = setTimeout(refreshRows, wait); return; }
     const id = pendingRows.values().next().value;
     if (!id) return;
     pendingRows.delete(id);
@@ -61,9 +65,11 @@
   }
   function refreshRow(id) {
     if (!document.querySelector('.pmed-cz:not([aria-hidden="true"])')) {
+      pendingRows.delete(id);
       try { if (root.querySelector(`[id="setting-${cssEscape(id)}"]`)) refreshSettingRow(id); } catch (e) { /* the row is not drawn now */ }
       return;
     }
+    rowsNotBefore = performance.now() + 250;
     pendingRows.add(id);
     scheduleRows();
   }

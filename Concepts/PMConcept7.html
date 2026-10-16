@@ -98036,7 +98036,7 @@ afterRender = function () {
   // Settings rows can follow one at a time after paint, instead of rebuilding a
   // whole quick set underneath the sheet before the preview's first frame.
   const pendingRows = new Set();
-  let rowJob = 0;
+  let rowJob = 0, rowsNotBefore = 0;
   function scheduleRows() {
     if (rowJob || !pendingRows.size) return;
     rowJob = window.requestIdleCallback
@@ -98045,6 +98045,10 @@ afterRender = function () {
   }
   function refreshRows() {
     rowJob = 0;
+    // Main-thread idle can precede the GPU presenting a large editor repaint.
+    // Give that first paint its own budget before rebuilding the covered rows.
+    const wait = rowsNotBefore - performance.now();
+    if (wait > 0) { rowJob = setTimeout(refreshRows, wait); return; }
     const id = pendingRows.values().next().value;
     if (!id) return;
     pendingRows.delete(id);
@@ -98053,9 +98057,11 @@ afterRender = function () {
   }
   function refreshRow(id) {
     if (!document.querySelector('.pmed-cz:not([aria-hidden="true"])')) {
+      pendingRows.delete(id);
       try { if (root.querySelector(`[id="setting-${cssEscape(id)}"]`)) refreshSettingRow(id); } catch (e) { /* the row is not drawn now */ }
       return;
     }
+    rowsNotBefore = performance.now() + 250;
     pendingRows.add(id);
     scheduleRows();
   }
@@ -180381,6 +180387,14 @@ function mountEditor(host, st, api) {
     geo.trackH = track.clientHeight;
     geo.st = scroller.scrollTop; geo.sl = scroller.scrollLeft;
   }
+  function glyphWidth(p) {
+    // An entrance can scale the dialog while a font is measured. Geometry is
+    // in layout pixels, so remove that scale from the text's painted width.
+    // These are one read batch, after the font writes have already settled.
+    var width = p.getBoundingClientRect().width;
+    var shown = root.getBoundingClientRect().width, layoutWidth = parseFloat(getComputedStyle(root).width);
+    return width / 100 * (shown > 0 && layoutWidth > 0 ? layoutWidth / shown : 1);
+  }
   function measure() {
     var F = R.font;
     fs = clamp(+F.size || 13, 10, 24);
@@ -180393,7 +180407,7 @@ function mountEditor(host, st, api) {
     setVar('--pmw-ed-ls', F.letterSpacing ? F.letterSpacing + 'px' : null);
     if (F.ligatures) root.setAttribute('data-lig', ''); else root.removeAttribute('data-lig');
     var known = primedFontWidths.get(fontWidthKey(F));
-    var w = known || measureEl.getBoundingClientRect().width / 100;
+    var w = known || glyphWidth(measureEl);
     if (w > 2) cw = w; else cw = fs * 0.6 + (+F.letterSpacing || 0);
     setVar('--pmw-ed-cw', cw + 'px');
   }
@@ -180403,8 +180417,8 @@ function mountEditor(host, st, api) {
   function primeFont(F) {
     var key = fontWidthKey(F);
     if (primedFontWidths.has(key)) return;
-    // Called only on the parked preview: its ancestors have no entrance
-    // transform, so this is the same unscaled measurement the editor uses.
+    // Called on the parked preview; normalize any container transform so the
+    // cache stores the same layout-pixel width the live editor uses.
     var p = measureEl.cloneNode(true);
     p.style.fontFamily = F.id === 'jetbrains-mono' ? 'var(--pm-font-code)' : F.stack;
     p.style.fontSize = clamp(+F.size || 13, 10, 24) + 'px';
@@ -180416,16 +180430,24 @@ function mountEditor(host, st, api) {
     if (document.fonts && document.fonts.load) {
       document.fonts.load('italic ' + (F.weight || 400) + ' ' + (clamp(+F.size || 13, 10, 24)) + 'px ' + getComputedStyle(p).fontFamily, '0').catch(function () {});
     }
-    var w = p.getBoundingClientRect().width / 100;
+    var w = glyphWidth(p);
     p.remove();
     if (w > 2) {
       if (primedFontWidths.size >= 64) primedFontWidths.delete(primedFontWidths.keys().next().value);
       primedFontWidths.set(key, w);
     }
   }
-  function layout() {
-    headH = head.offsetHeight;
-    var bodyW = host.clientWidth, bodyH = host.clientHeight;
+  var layoutBox = null;
+  function layout(box) {
+    // A font/line-option change cannot resize this absolute viewport or its UI
+    // header. Reuse its last measured box for that pass, then derive the new
+    // scroll extent from the same sizer dimensions we write below. Resize and
+    // look changes still take the browser's actual geometry.
+    headH = box ? box.head : head.offsetHeight;
+    var bodyW = box ? box.width : host.clientWidth, bodyH = box ? box.height : host.clientHeight;
+    // A hidden/collapsed viewport can have its scroll offset reset by the
+    // browser without a scroll event. Sample it with the resize read batch.
+    if (!box) { geo.st = scroller.scrollTop; geo.sl = scroller.scrollLeft; }
     var mm = R.lines.minimap && bodyW >= NARROW_TRACK_W;
     trackW = special ? 0 : (mm ? 22 : 10);
     setVar('--pmw-ed-head', headH + 'px');
@@ -180457,10 +180479,23 @@ function mountEditor(host, st, api) {
     setVar('--pmw-ed-tx', textX + 'px');
     setVar('--pmw-ed-half', half + 'px');
     sizer.style.width = contentW + 'px';
-    sizer.style.height = (padT + vCount() * lh + padB) + 'px';
+    var contentH = padT + vCount() * lh + padB;
+    sizer.style.height = contentH + 'px';
     track.setAttribute('aria-valuemax', String(Math.max(1, n)));
     layoutRulers();
-    readGeo();
+    if (!special) {
+      // The old rows can still overflow until renderRows patches their positions.
+      // Reading scrollHeight here captured that transient extent. The sizer is
+      // the text model's exact extent, and the viewport has absolute insets.
+      var oldLeft = geo.sl;
+      geo.ch = bodyH; geo.cwid = sw;
+      geo.sh = Math.max(contentH, bodyH); geo.sw = Math.max(contentW, sw);
+      geo.trackH = Math.max(0, bodyH - headH);
+      geo.st = clamp(geo.st, 0, Math.max(0, geo.sh - geo.ch));
+      geo.sl = clamp(geo.sl, 0, Math.max(0, geo.sw - geo.cwid));
+      if (geo.sl !== oldLeft) scroller.scrollLeft = geo.sl;
+    } else readGeo();
+    layoutBox = { head: headH, width: bodyW, height: bodyH };
   }
   /* ==== wrapping (Wrap long lines, code.editing.word-wrap): one row per line stays the model (the caret, selection,
      find and undo keep line and column), and a map gives each line its visual rows. Off, the map is null and every
@@ -182306,6 +182341,7 @@ function mountEditor(host, st, api) {
   }
   function onResize(sz) {
     if (!alive) return;
+    layoutBox = null;
     if (!isShown()) { pendingLayout = true; return; }
     if (!firstDone) { pendingLayout = false; firstPaint(); return; }
     if (pendingLayout) { pendingLayout = false; resolveLayout(false); relayoutAll(); return; }
@@ -182314,16 +182350,17 @@ function mountEditor(host, st, api) {
     if (!changed) { layout(); renderRows(true); renderOverlays(); updateThumb(); updateHbar(); sticky._key = null; updateSticky(); }
     queueDraw();
   }
-  function relayoutAll() {
+  function relayoutAll(box) {
     if (!firstDone) return;
     // Settings can change a mounted editor while Home is hidden. Measure it
     // when it is shown, at its real size; the Customize preview stays live.
     if (!isShown()) { pendingLayout = true; return; }
     var top = topRow();
     measure();
-    layout();
+    layout(box);
     renderRows(true);
-    setTop(yRow(top) - headH);
+    var nextTop = clamp(yRow(top) - headH, 0, Math.max(0, geo.sh - geo.ch));
+    if (nextTop !== geo.st) setTop(nextTop);
     sticky._key = null;
     updateSticky(); renderOverlays(); updateThumb(); updateHbar(); queueDraw();
   }
@@ -182415,7 +182452,10 @@ function mountEditor(host, st, api) {
     if (prev.behavior.diffLayout !== R.behavior.diffLayout && mode === 'diff' && !diffLayoutPick) resolveLayout(true);
     // the header's height can only change with the look (its face and spacing), never with colours: reading it forces
     // the whole page to restyle and lay out at once, so it is read only when the look itself changed
-    else if (reopened || g !== geoSig || ((R.lookKey !== prev.lookKey || R.look.mode !== prev.look.mode) && head.offsetHeight !== headH)) relayoutAll();
+    else if (reopened || g !== geoSig || ((R.lookKey !== prev.lookKey || R.look.mode !== prev.look.mode) && head.offsetHeight !== headH)) {
+      var sameBox = !special && !reopened && R.lookKey === prev.lookKey && R.look.mode === prev.look.mode && R.behavior.diffLayout === prev.behavior.diffLayout;
+      relayoutAll(sameBox ? layoutBox : null);
+    }
     else if (l !== lookSig) { renderRows(true); sticky._key = null; updateSticky(); renderOverlays(); }
     else if (JSON.stringify(R.caret) !== JSON.stringify(prev.caret)) renderOverlays();
     geoSig = g; lookSig = l;
@@ -182492,7 +182532,7 @@ function mountEditor(host, st, api) {
       if (usedGuess && (done || rendered.b < d.tokFrom)) { usedGuess = false; renderRows(true); renderOverlays(); }
       if (done) { sticky._key = null; updateSticky(); updateSymbol(); }
     },
-    relayout: relayoutAll,
+    relayout: function () { relayoutAll(); },
     scheme: function () { if (!alive) return; if (EL) onLook(EL.resolve(view)); else { applyScheme(); if (firstDone) queueDraw(); } },
     savedNow: function () { if (alive) setDirty(isDirty()); }
   };
@@ -182537,7 +182577,7 @@ function mountEditor(host, st, api) {
       if (pendingLayout) { pendingLayout = false; resolveLayout(false); relayoutAll(); return; }
       queueDraw();
     },
-    onHide: function () { visible = false; clearTimeout(scrollIdle); if (R.behavior.autosave === 'focus') autoSave(); },
+    onHide: function () { visible = false; layoutBox = null; clearTimeout(scrollIdle); if (R.behavior.autosave === 'focus') autoSave(); },
     // the host's focus lifecycle (CONTRACT section 3): Fade editors I'm not in steps this editor back while another
     // panel has the focus
     onFocus: function () { dimmed = false; applyDim(); },
@@ -182681,7 +182721,7 @@ function mountEditor(host, st, api) {
       });
     },
     _debug: function () { return { mode: mode, side: !!(V && V.side), caret: caret, anchor: anchor, n: V ? V.n : 0, lh: lh, cw: cw, headH: headH, padT: padT, padB: padB, trackW: trackW, gutW: gutW, lnW: lnW, textX: textX, stickyH: stickyH, find: { q: find.q, n: find.hits.length, cur: find.cur }, dirty: isDirty(), rendered: rowEls.size, lang: d.lang,
-      wrap: WR ? { cols: WR.cols, rows: WR.total } : null, contentW: contentW, dimmed: dimmed, problems: diagRects.length, look: JSON.parse(JSON.stringify(R, function (k, v) { return k === 'schemeObj' || k === 'followScheme' ? undefined : v; })) }; }
+      wrap: WR ? { cols: WR.cols, rows: WR.total } : null, contentW: contentW, geo: Object.assign({}, geo), dimmed: dimmed, problems: diagRects.length, look: JSON.parse(JSON.stringify(R, function (k, v) { return k === 'schemeObj' || k === 'followScheme' ? undefined : v; })) }; }
   };
   if (preview && preview.caret) instance.demo.place(preview.caret.r, preview.caret.c, preview.caret.ar, preview.caret.ac);
   host._pmwEditor = instance;
