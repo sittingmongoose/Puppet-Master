@@ -33,8 +33,17 @@
       last = now;
       if (gap <= 40 || ++n >= max) { release(); return; } /* the frame before this one was on time: play from the start */
       hold();
-      requestAnimationFrame(tick);
+      next();
     };
-    requestAnimationFrame(tick);
+    /* Each check runs in its frame after layout (a one-shot ResizeObserver delivers there, before paint), so reading
+       the moves (getAnimations for CSS animations) finds style already computed: from an animation frame callback it
+       forced that frame's style early (49.7 ms on the P1000 for the customizer's six panels, editor lane). What the
+       check changes is drawn in the same frame. */
+    const next = () => requestAnimationFrame(() => {
+      if (typeof ResizeObserver !== 'function') { tick(); return; }
+      const ro = new ResizeObserver(() => { ro.disconnect(); tick(); });
+      ro.observe(document.documentElement);
+    });
+    next();
   };
 })();
