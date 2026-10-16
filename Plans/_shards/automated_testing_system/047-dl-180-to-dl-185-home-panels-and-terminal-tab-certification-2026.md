@@ -2,9 +2,9 @@
 
 Source: `Plans/Automated_Testing_System.md`
 
-Source lines: L5955-L6550
+Source lines: L5955-L6578
 
-Source SHA256: `bd4b41d43bbc0188598dd787c7820a725f32067fe68c004a7fc4a8c2b05d22ed`
+Source SHA256: `f7efb1fcec5a05afc8bce41d52706a50f7fa721384eebb6d79ebe62ab1bab612`
 
 ---
 
@@ -532,43 +532,60 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Automated_Testing_System.md
 canonical_text: >-
-  Appearance and shell acceptance consumes the requirements without copying them: F3-650/F3-651 for both
-  Customize entries/scopes, preview visibility, token colors, caret, indentation and no-wrap;
+  Appearance and shell acceptance consumes the requirements without copying them: F3-650/F3-651 for
+  both Customize entries/scopes, preview visibility, token colors, caret, indentation and no-wrap;
   SSYS-052/SSYS-054 for inventory and Project ownership; SSYS-053 for per-frame anchor, chapter top,
-  return, rail focus/scroll and first-frame width; F3-652/F3-653 for held Glass and wallpapers;
-  F3-447/F3-453/F3-460 for notification timing, read dwell, dismissal and the shared under-bell stage;
-  F3-655/F3-656 for Wizard/Orchestrator and onboarding; F3-648/F3-654 for label detectors and settled
-  contrast; F3-465/F3-658 for shared hover and glyphs; F3-630/F3-657 for drop captions, global fit and
-  resize glow. Run pointer and keyboard paths in all ten looks and app/system Reduced Motion. Record
-  intermediate transition contrast separately when under 0.4 s; measure resting hover/placeholder text on
-  the actual worst composited background, and measure disabled text separately at F3-654’s 3:1 floor.
-  Classify decorative scheme thumbnails as imagery only with hidden illustrative content and a name label
-  meeting 4.5:1; test terminal output choices separately from chrome. Layout tests inspect each painted
-  frame, not just the final screenshot. Every dispatch test uses UIW-043's census and asserts request,
-  availability/refusal, receipt, saved readback and exact event delta; local tests assert zero
-  dispatch/write. Token maps, unset overlays, unknown scheme/wallpaper ids, stale state, replay and
+  return, rail focus/scroll and first-frame width; F3-652/F3-653 for Glass and wallpapers;
+  F3-447/F3-453/F3-460 for notification timing, read dwell, dismissal and the shared under-bell
+  stage; F3-655/F3-656 for Wizard/Orchestrator and onboarding; F3-648/F3-654 for label detectors and
+  settled contrast; F3-465/F3-658 for shared hover and glyphs; F3-630/F3-657 for drop captions,
+  global fit and resize glow. Run pointer and keyboard paths in all ten looks and app/system Reduced
+  Motion. Record intermediate transition contrast separately when under 0.4 s; measure resting
+  hover/placeholder text on the actual worst composited background, and measure disabled text
+  separately at F3-654’s 3:1 floor. Classify decorative scheme thumbnails as imagery only with
+  hidden illustrative content and a name label meeting 4.5:1; test terminal output choices
+  separately from chrome. Layout tests inspect each painted frame, not just the final screenshot.
+  Every dispatch test uses UIW-043's census and asserts request, availability/refusal, receipt,
+  saved readback and exact event delta; transient local tests assert zero dispatch/write, while
+  preset-library local tests permit only SP-331's validated library write and no dispatcher
+  receipt/event. Token maps, unset overlays, unknown scheme/wallpaper ids, stale state, replay and
   serialized-state bounds need negative fixtures. The shared status registry needs warning/failed
   distinction, 3:1 marks and 4.5:1 text. Concept source/harness evidence is lineage only; native
-  certification remains owed. Pending Glass publication is recorded as pending, never presented as a
-  passed implementation case. scripts/pm7-canon-check.py validates the finite companion census, strict
-  editor request/result fixtures, Settings and production wiring schema shapes, shared glyph vocabulary
-  and wallpaper asset pairs. It is static validation only. The top-of-General Spacing-to-Compact case must
-  exercise SSYS-053’s reserve through shrink, growth and scrolling out of view. Exact quick-set fixtures
-  verify the intended patches and preserve unrelated token maps, autosave and indentation. Every exposed
-  customization choice must produce its declared effect on both the real surface and preview, including
-  Follow look versus explicit block and distinct cursor/caret trails; a label-only control or identical
-  effects where distinct behavior is promised fails. Held replacement catalogs, preset controls and Glass
-  tuning have explicit unimplemented results.
+  certification remains owed. The published Glass concept remains source evidence, never a passed
+  native implementation case. scripts/pm7-canon-check.py validates the finite companion census,
+  strict editor request/result fixtures, Settings and production wiring schema shapes, shared glyph
+  vocabulary and wallpaper asset pairs. It is static validation only. The top-of-General
+  Spacing-to-Compact case must exercise SSYS-053’s reserve through shrink, growth and scrolling out
+  of view. Exact quick-set fixtures verify the intended patches and preserve unrelated token maps,
+  autosave and indentation. Every exposed customization choice must produce its declared effect on
+  both the real surface and preview, including Follow look versus explicit block and distinct
+  cursor/caret trails; a label-only control or identical effects where distinct behavior is promised
+  fails. The static companions additionally validate the terminal design catalog, extended
+  field/reset closure and saved-preset record/replace semantics. Native cases cover F3-632 Back
+  restoration, F3-447 crowded placement and setup joining, F3-628 rapid room reversals, F3-655 stage
+  continuity, and SSYS-044/MA-073 held writes and refused defaults. Q21/Q21b timings,
+  drop-performance measurements and concept test results are evidence of their measured builds, not
+  universal native performance guarantees. Deferred glyph surfaces and the four top-up lanes remain
+  explicitly unverified. Picker accessibility checks require New tab or panel at the + root, Back to
+  <level>, Filter: <title>, and Esc or Backspace (Esc or Delete on Mac), with prior
+  query/scroll/focus restored in each F3-632 context.
 gui_related: true
 gui_classification_reason: Appearance And Shell Acceptance.
 split_recommended: false
 depends_on: []
 unblocks: []
 acceptance_criteria:
-- Glass Light hover, GLY-4 scene/control separation and shared font weights have cases against F3-652, F3-656/F3-658 and F3-644; an approved decision alone does not mark the implementation passed.
-- "Rapid Usage room changes in every look satisfy F3-628: the latest change takes over promptly, animations never stack and no shadow trails the selector; retired flights and the pending replacement are tested with explicit implementation status, and Reduced Motion retains its owner behavior."
+- Glass Light hover, GLY-4 scene/control separation and shared font weights have cases against F3-652,
+  F3-656/F3-658 and F3-644; an approved decision alone does not mark the implementation passed.
+- 'Rapid Usage room changes in every look satisfy F3-628: the latest change takes over promptly, animations
+  never stack and no shadow trails the selector; retired flights remain absent and the published concept
+  replacement is distinguished from native verification, and Reduced Motion retains its owner behavior.'
 - Every cited owner has a matrix case or an explicit unimplemented/held result, never an inferred pass.
 - Static schema/registry/census checks pass before draft review; native evidence is separately required.
+- Validate every new terminal field in both scopes, exact quick-set replacement and schema-negative preset
+  cases; missing catalog/asset references and invalid inputs refuse cleanly.
+- Exercise picker Back from each origin with query/scroll/focus restoration and zero command dispatch;
+  a final choice dispatches once.
 validation_surfaces:
 - python3 scripts/pm7-canon-check.py
 - python3 scripts/pm-shard-plans.py --check
@@ -584,7 +601,9 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
-- "/mnt/Cursor/share/puppet-master/2026-10-14-plans-canon/sources/COORDINATOR-LOG-20261014-LATE-DECISIONS.md, SHA-256 126ae52840c8e5a30d2c1788b5427e6dc219cd2804d7cbd43f94d25aa0de2d07 (Jared decisions at lines 296 and 306; not implementation evidence)"
+- /mnt/Cursor/share/puppet-master/2026-10-14-plans-canon/sources/COORDINATOR-LOG-20261014-LATE-DECISIONS.md,
+  SHA-256 126ae52840c8e5a30d2c1788b5427e6dc219cd2804d7cbd43f94d25aa0de2d07 (Jared decisions at lines 296
+  and 306; not implementation evidence)
 - /mnt/Cursor/share/puppet-master/2026-10-14-editor-customizer/PROPOSAL-canon.md, SHA-256 8b8f3179c3970cb165e4fb4722eb02381f0456faad235c4330207d2bec5f5431
   (approved campaign source lineage; not native implementation evidence)
 - /mnt/Cursor/share/puppet-master/2026-10-13-perf-fixes/M4-DESIGN-DECISION.md, SHA-256 df7fa857254291a428bc6d9ef6411e1b586beee52aec8a11557ece98ee257df0
@@ -596,6 +615,15 @@ source_lineage:
 - Plans/Automated_Testing_System.md#ATS-075
 - Plans/UI_Wiring_Rules.md#UIW-043
 - Plans/FinalGUISpec.md#F3-654
+- /mnt/Cursor/share/puppet-master/2026-10-16-plans-pass2/sources/2026-10-14-terminal-round3--LANDING.md,
+  SHA-256 4d6556ff98168f22719c5d401c4e677d5d380d2ef370b67a838cb3aa45301c2d (source lineage; not native
+  certification)
+- /mnt/Cursor/share/puppet-master/2026-10-16-plans-pass2/sources/2026-10-15-panels-picker-back--NOTES.md,
+  SHA-256 29bac44f166cb8e0e67f4f00634cb15d0a3be576eb2f68e7e19606f3a4a1a71c (source lineage; not native
+  certification)
+- /mnt/Cursor/share/puppet-master/2026-10-16-plans-pass2/sources/2026-10-15-usage-warn-hold--LANDING.md,
+  SHA-256 5357dc0dd60b0e08548f4dab5d5359662ee0ea0f159f7201a25577067372c238 (source lineage; not native
+  certification)
 preserved_exact_tokens: []
 negative_constraints: []
 owner_hints:

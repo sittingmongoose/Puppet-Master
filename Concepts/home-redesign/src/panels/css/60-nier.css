@@ -66,6 +66,36 @@ html[data-o55-nier="on"][data-o55-nier-parts~="headers"] .pmw-mlist { counter-re
 html[data-o55-nier="on"][data-o55-nier-parts~="headers"] .pmw-msec { counter-increment: pmw-sec; }
 html[data-o55-nier="on"][data-o55-nier-parts~="headers"] .pmw-msec::before { content: counter(pmw-sec, decimal-leading-zero) "  "; }
 html[data-o55-nier="on"][data-o55-nier-parts~="headers"] .pmw-empty-title, html[data-o55-nier="on"][data-o55-nier-parts~="headers"] .pmw-empty-sec { text-transform: uppercase; letter-spacing: .16em; }
+/* the level head's Back control (30-menu.css). On the plate it is a row's cousin: NieR's hover, and with the cursor part
+   the ink bar (the page's cursor rule paints every hovered menu item so; keyboard focus here matches it). On the headers
+   part's ink bar it is the bar's caption in on-ink caps, and hover and focus draw the YoRHa corner brackets around it
+   (the cursor rule's ink would vanish into the bar, so the marks are on ::before, which that rule does not reach) */
+html[data-o55-nier="on"] .pmw-mback { color: var(--pmw-text); border-radius: 0; }
+html[data-o55-nier="on"] .pmw-mback:is(:hover, :focus) { background: var(--o55-nier-hover); color: var(--o55-nier-ink); }
+html[data-o55-nier="on"][data-o55-nier-parts~="cursor"] .pmw-mback:focus { background: var(--o55-nier-ink); color: var(--o55-nier-on-ink); }
+html[data-o55-nier="on"] .pmw-mbackchev { transition: transform 120ms steps(2, end); }
+html[data-o55-nier="on"][data-o55-nier-parts~="headers"] .pmw-mback { color: var(--o55-nier-on-ink); font-size: 11px; text-transform: uppercase; letter-spacing: .16em; }
+html[data-o55-nier="on"][data-o55-nier-parts~="headers"] .pmw-mback:is(:hover, :focus) { background: transparent; color: var(--o55-nier-on-ink); }
+html[data-o55-nier="on"][data-o55-nier-parts~="headers"] .pmw-mback::after { background: color-mix(in srgb, var(--o55-nier-on-ink) 45%, transparent); }
+html[data-o55-nier="on"][data-o55-nier-parts~="headers"] .pmw-mback::before {
+  content: ""; position: absolute; inset: 0; pointer-events: none; opacity: 0;
+  background:
+    linear-gradient(var(--o55-nier-on-ink), var(--o55-nier-on-ink)) 0 0 / 6px 1px no-repeat,
+    linear-gradient(var(--o55-nier-on-ink), var(--o55-nier-on-ink)) 0 0 / 1px 6px no-repeat,
+    linear-gradient(var(--o55-nier-on-ink), var(--o55-nier-on-ink)) 100% 0 / 6px 1px no-repeat,
+    linear-gradient(var(--o55-nier-on-ink), var(--o55-nier-on-ink)) 100% 0 / 1px 6px no-repeat,
+    linear-gradient(var(--o55-nier-on-ink), var(--o55-nier-on-ink)) 0 100% / 6px 1px no-repeat,
+    linear-gradient(var(--o55-nier-on-ink), var(--o55-nier-on-ink)) 0 100% / 1px 6px no-repeat,
+    linear-gradient(var(--o55-nier-on-ink), var(--o55-nier-on-ink)) 100% 100% / 6px 1px no-repeat,
+    linear-gradient(var(--o55-nier-on-ink), var(--o55-nier-on-ink)) 100% 100% / 1px 6px no-repeat;
+  transition: opacity 120ms steps(2, end);
+}
+html[data-o55-nier="on"][data-o55-nier-parts~="headers"] .pmw-mback:is(:hover, :focus)::before { opacity: 1; }
+/* levels change in four hard steps (30-menu.css): the old level is cut at once, the new one steps in from its first frame */
+html[data-o55-nier="on"] .pmw-menu { --pmw-level-shift: 16px; --pmw-level-scale: 1; --pmw-level-in: 160ms; --pmw-level-ease: steps(4, jump-start); }
+html[data-o55-nier="on"] .pmw-menu > [data-lv="in-fwd"] { animation-name: pmw-level-snap-fwd; }
+html[data-o55-nier="on"] .pmw-menu > [data-lv="in-back"] { animation-name: pmw-level-snap-back; }
+html[data-o55-nier="on"] .pmw-menu > :is([data-lv="out-fwd"], [data-lv="out-back"]) { animation: none; opacity: 0; }
 /* cursor part: menu rows and launcher rows take the ink bar on hover and focus (the page's cursor lists carry .pmw-cur) */
 html[data-o55-nier="on"][data-o55-nier-parts~="cursor"] :is(.pmw-mitem, .pmw-empty-btn, .pmw-mru-row, .pmw-mlink):is(:hover, :focus-visible, .is-current) {
   background: var(--o55-nier-ink) !important; color: var(--o55-nier-on-ink) !important;

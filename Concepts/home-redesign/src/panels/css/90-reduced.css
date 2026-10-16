@@ -5,8 +5,14 @@ html[data-motion="reduced"] .pmw-scope, html[data-motion="reduced"] #pm-home-cen
 html[data-motion="reduced"] .pmw-panel, html[data-motion="reduced"] .pmw-divider, html[data-motion="reduced"] .pmw-divider-line,
 html[data-motion="reduced"] .pmw-menu, html[data-motion="reduced"] .pmw-tab, html[data-motion="reduced"] #chatPanel.chat-panel { transition: none !important; }
 html[data-motion="reduced"] .pmw-tab, html[data-motion="reduced"] .pmw-tab *, html[data-motion="reduced"] .pmw-plate { animation: none !important; }
+/* a menu's levels swap at once (36-menu.js lifts no leaving level then; this covers a switch made mid-change), and the
+   Back control's chevron stays still */
+html[data-motion="reduced"] .pmw-menu > [data-lv] { animation: none; }
+html[data-motion="reduced"] .pmw-mback .pmw-mbackchev { transition: none; transform: none; }
 @media (prefers-reduced-motion: reduce) {
   .pmw-scope, #pm-home-centre { --pmw-t-fast: 0ms; --pmw-t-med: 0ms; --pmw-t-slow: 0ms; }
   .pmw-panel, .pmw-divider, .pmw-divider-line, .pmw-menu, .pmw-tab { transition: none !important; }
   .pmw-tab, .pmw-tab *, .pmw-plate { animation: none !important; }
+  :root .pmw-menu > [data-lv] { animation: none; }
+  :root .pmw-mback .pmw-mbackchev { transition: none; transform: none; }
 }

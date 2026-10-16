@@ -3,7 +3,7 @@
   "owner_ref": "Plans/FinalGUISpec.md#F3-653",
   "setting_id": "general.visual.wallpaper",
   "default": "look",
-  "publication_status": "pending_jared_review",
+  "publication_status": "concept_published_2026-10-15_native_verification_required",
   "look_defaults": {
     "basic": "own_ground",
     "friendly": "own_ground",
@@ -333,6 +333,96 @@
       "thumbnail_source": "same packaged print, resized without changing its crop semantics",
       "source_ref": "Concepts/wallpapers/opus-5.5/catalog.d/40-retro.json",
       "source_sha256": "48c2c84d7428069f0be76635440545202c392ce791beaac3e85901814c9fe0ae"
+    },
+    {
+      "id": "city",
+      "name": "City Ruins",
+      "family": "nier",
+      "family_order": 50,
+      "description": "Toppled towers, broken walkways and the trees that took them back.",
+      "assets": {
+        "dark": "Concepts/wallpapers/opus-5.5/src/walls/city-dark.webp",
+        "light": "Concepts/wallpapers/opus-5.5/src/walls/city-light.webp"
+      },
+      "thumbnail_source": "Packaged thumbnail rendered from the same NieR scene drawing in full ink",
+      "default_for": null,
+      "source_ref": "Concepts/wallpapers/opus-5.5/catalog.d/50-nier.json",
+      "source_sha256": "80634365e443cfdbf1a330319dda874da90808068ef6dec9a6c856c243c77629"
+    },
+    {
+      "id": "bunker",
+      "name": "The Bunker",
+      "family": "nier",
+      "family_order": 50,
+      "description": "The orbital base: a hexagon shell around the command deck, a star-shaped beacon above it.",
+      "assets": {
+        "dark": "Concepts/wallpapers/opus-5.5/src/walls/bunker-dark.webp",
+        "light": "Concepts/wallpapers/opus-5.5/src/walls/bunker-light.webp"
+      },
+      "thumbnail_source": "Packaged thumbnail rendered from the same NieR scene drawing in full ink",
+      "default_for": null,
+      "source_ref": "Concepts/wallpapers/opus-5.5/catalog.d/50-nier.json",
+      "source_sha256": "80634365e443cfdbf1a330319dda874da90808068ef6dec9a6c856c243c77629"
+    },
+    {
+      "id": "desert",
+      "name": "Desert",
+      "family": "nier",
+      "family_order": 50,
+      "description": "Half-buried housing blocks and broken arches in the dunes, under a pale sun.",
+      "assets": {
+        "dark": "Concepts/wallpapers/opus-5.5/src/walls/desert-dark.webp",
+        "light": "Concepts/wallpapers/opus-5.5/src/walls/desert-light.webp"
+      },
+      "thumbnail_source": "Packaged thumbnail rendered from the same NieR scene drawing in full ink",
+      "default_for": null,
+      "source_ref": "Concepts/wallpapers/opus-5.5/catalog.d/50-nier.json",
+      "source_sha256": "80634365e443cfdbf1a330319dda874da90808068ef6dec9a6c856c243c77629"
+    },
+    {
+      "id": "forest",
+      "name": "Forest Castle",
+      "family": "nier",
+      "family_order": 50,
+      "description": "A castle on the hill above a forest that hides the old roads.",
+      "assets": {
+        "dark": "Concepts/wallpapers/opus-5.5/src/walls/forest-dark.webp",
+        "light": "Concepts/wallpapers/opus-5.5/src/walls/forest-light.webp"
+      },
+      "thumbnail_source": "Packaged thumbnail rendered from the same NieR scene drawing in full ink",
+      "default_for": null,
+      "source_ref": "Concepts/wallpapers/opus-5.5/catalog.d/50-nier.json",
+      "source_sha256": "80634365e443cfdbf1a330319dda874da90808068ef6dec9a6c856c243c77629"
+    },
+    {
+      "id": "park",
+      "name": "Amusement Park",
+      "family": "nier",
+      "family_order": 50,
+      "description": "A big wheel, a coaster loop and the big top, with fireworks over them.",
+      "assets": {
+        "dark": "Concepts/wallpapers/opus-5.5/src/walls/park-dark.webp",
+        "light": "Concepts/wallpapers/opus-5.5/src/walls/park-light.webp"
+      },
+      "thumbnail_source": "Packaged thumbnail rendered from the same NieR scene drawing in full ink",
+      "default_for": null,
+      "source_ref": "Concepts/wallpapers/opus-5.5/catalog.d/50-nier.json",
+      "source_sha256": "80634365e443cfdbf1a330319dda874da90808068ef6dec9a6c856c243c77629"
+    },
+    {
+      "id": "flooded",
+      "name": "Flooded City",
+      "family": "nier",
+      "family_order": 50,
+      "description": "Leaning towers standing in still water, a small boat between them.",
+      "assets": {
+        "dark": "Concepts/wallpapers/opus-5.5/src/walls/flooded-dark.webp",
+        "light": "Concepts/wallpapers/opus-5.5/src/walls/flooded-light.webp"
+      },
+      "thumbnail_source": "Packaged thumbnail rendered from the same NieR scene drawing in full ink",
+      "default_for": null,
+      "source_ref": "Concepts/wallpapers/opus-5.5/catalog.d/50-nier.json",
+      "source_sha256": "80634365e443cfdbf1a330319dda874da90808068ef6dec9a6c856c243c77629"
     }
   ],
   "withdrawn_ids": [
@@ -342,40 +432,5 @@
     "hatch",
     "signal"
   ],
-  "pending_families": [
-    {
-      "family": "nier",
-      "status": "approved_scene_contract_publication_pending",
-      "default_for": null,
-      "owner_ref": "Plans/FinalGUISpec.md#F3-653",
-      "selection_owner": "Plans/Settings_System.md#SSYS-054",
-      "scene_choices": [
-        {
-          "id": "city",
-          "name": "City Ruins"
-        },
-        {
-          "id": "bunker",
-          "name": "The Bunker"
-        },
-        {
-          "id": "desert",
-          "name": "Desert"
-        },
-        {
-          "id": "forest",
-          "name": "Forest Castle"
-        },
-        {
-          "id": "park",
-          "name": "Amusement Park"
-        },
-        {
-          "id": "flooded",
-          "name": "Flooded City"
-        }
-      ],
-      "hold": "The built concept contract at 201d602f7d confirms the scene identities and selection rules. Native asset admission and coordinated Glass/wallpaper publication remain held; no placeholder paths or stale print aliases."
-    }
-  ]
+  "pending_families": []
 }

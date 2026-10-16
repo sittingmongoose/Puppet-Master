@@ -4,6 +4,7 @@
    submenu from the row. Narrow panels show only the kind rows; very short ones a single line. The whole body is a drop
    target (the tab drag treats it as a merge). */
 
+var EMPTY_LEVEL = { label: 'the empty panel' };
 PMW.renderEmpty = function (panelEl, p) {
   var body = panelEl.querySelector('.pmw-body');
   var el = body.querySelector('.pmw-empty');
@@ -24,15 +25,18 @@ PMW.renderEmpty = function (panelEl, p) {
     var b = h('button', { type: 'button', class: 'pmw-empty-btn pmw-cur' }, [kindIcon(r.kind || 'file'), h('b', { text: r.label }), trail]);
     if (r.submenu) b.setAttribute('aria-haspopup', 'menu');
     // the row button is the anchor of a picker the row opens (Plan or document..., Artifact...; the Output, Problems,
-    // Ports, Debug Console row opens its own list there), never the centre
+    // Ports, Debug Console row opens its own list there), never the centre; this list is that picker's level before, so
+    // its Back control (and Escape, Backspace) closes it onto this row
     b.addEventListener('click', function (e) {
-      if (r.submenu) { PMW.menu.open(b, typeof r.submenu === 'function' ? r.submenu() : r.submenu); return; }
-      r.run({ alt: e.altKey, row: r, anchor: b });
+      PMW.menu.from(EMPTY_LEVEL, function () {
+        if (r.submenu) { PMW.menu.open(b, typeof r.submenu === 'function' ? r.submenu() : r.submenu); return; }
+        r.run({ alt: e.altKey, row: r, anchor: b });
+      });
     });
     row.appendChild(b);
     if (r.alt) {
       var c = h('button', { type: 'button', class: 'pmw-empty-cell', 'aria-label': 'Open in new panel: ' + r.label, 'data-pm-hover-label': 'Open in new panel' }, [icon('newPanel', { size: 14 })]);
-      c.addEventListener('click', function () { r.alt.run({ row: r, anchor: c }); });
+      c.addEventListener('click', function () { PMW.menu.from(EMPTY_LEVEL, function () { r.alt.run({ row: r, anchor: c }); }); });
       row.appendChild(c);
     }
     if (!links) { list.appendChild(row); return; }

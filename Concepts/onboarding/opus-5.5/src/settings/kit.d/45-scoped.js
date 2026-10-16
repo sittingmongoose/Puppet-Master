@@ -80,7 +80,11 @@ PM51.scoped = {
 
 function o55ScopedSet(el, value, { quiet } = {}) {
   const scope = ds(el, 'scope'), id = ds(el, 'setting'), fn = o55Setters[scope]; if (!fn) return;
-  const who = fn(id, value, el);
+  let who = fn(id, value, el);
+  /* a setter that refused the write has said why (false); one that stored another value than asked names it
+     ({ who, value }), so the row and the toast say what was stored */
+  if (who === false) return;
+  if (who && typeof who === 'object') { value = who.value; who = who.who; }
   const s = PM51.setting(id);
   const row = el.closest('.o55-scoped, .o55-field');
   if (row && s && !row.dataset.noChanged) row.classList.toggle('is-changed', !o55Same(value, s.value));

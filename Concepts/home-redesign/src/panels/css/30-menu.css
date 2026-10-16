@@ -39,8 +39,85 @@
 .pmw-mhead { display: flex; align-items: center; gap: 8px; min-height: 34px; padding: 6px 8px 7px; margin: -2px 0 4px; border-bottom: 1px solid var(--pmw-pop-line); }
 .pmw-mhead strong { font-size: 13px; font-weight: 650; flex: 1 1 auto; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .pmw-mmeta { font-size: 12px; color: var(--pmw-text-3); font-variant-numeric: tabular-nums; }
-.pmw-mback { width: 24px; height: 24px; border: 0; border-radius: 7px; background: transparent; color: var(--pmw-text-2); display: grid; place-items: center; cursor: pointer; }
-.pmw-mback:hover { background: var(--pmw-hover); color: var(--pmw-text); }
+/* the level head's Back control (36-menu.js levels): the chevron and the word at the head's start, a hairline before
+   the title; at rest the dim ink, on hover and focus the row's fill. Per look below, NieR in 60-nier.css. */
+.pmw-mhead.has-back { padding-left: 4px; gap: 13px; }
+.pmw-mback {
+  position: relative;
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  height: 26px;
+  margin: -2px 0;
+  padding: 0 9px 0 4px;
+  border: 0;
+  border-radius: var(--pmw-row-radius);
+  background: transparent;
+  color: var(--pmw-text-2);
+  font: inherit;
+  font-size: 12.5px;
+  font-weight: 600;
+  line-height: 1;
+  cursor: pointer;
+  outline: none;
+  transition: background-color var(--pmw-t-fast) ease, color var(--pmw-t-fast) ease;
+}
+.pmw-mback::after { content: ""; position: absolute; top: 6px; bottom: 6px; right: -7px; width: 1px; background: var(--pmw-pop-line); pointer-events: none; }
+.pmw-mbackchev { display: grid; place-items: center; width: 16px; height: 16px; transition: transform var(--pmw-t-med) var(--pmw-ease-slide); }
+.pmw-mbackchev .pmw-ico { color: inherit; }
+.pmw-mback:is(:hover, :focus) { background: var(--pmw-hover); color: var(--pmw-text); }
+.pmw-mback:is(:hover, :focus) .pmw-mbackchev { transform: translate3d(-2px, 0, 0); }
+.pmw-mback:active { transform: scale(.97); }
+/* Glass: the row's frost and Glass's own hairline rim */
+html[data-theme^="glass"]:not([data-o55-nier="on"]) .pmw-mback:is(:hover, :focus) { box-shadow: inset 0 0 0 1px var(--rg-rim-soft, rgba(255, 255, 255, .18)); }
+/* Friendly: the tabs' weight and a mint-tinted hover */
+html[data-theme^="friendly"]:not([data-o55-nier="on"]) .pmw-mback { font-weight: 700; }
+html[data-theme^="friendly"]:not([data-o55-nier="on"]) .pmw-mback:is(:hover, :focus) { background: color-mix(in srgb, var(--accent-lime) 16%, transparent); }
+/* Retro: the bracket glyph of "[+]" in the code face, reverse video on hover and focus, square, no glide */
+html[data-theme^="retro"]:not([data-o55-nier="on"]) .pmw-mback { gap: 6px; padding: 0 8px 0 6px; border-radius: 0; font-family: var(--pm-font-code); font-size: 12px; color: var(--pmw-text); transition: none; }
+html[data-theme^="retro"]:not([data-o55-nier="on"]) .pmw-mbackchev { width: auto; transition: none; color: var(--pmw-tab-inactive); }
+html[data-theme^="retro"]:not([data-o55-nier="on"]) .pmw-mbackchev > svg { display: none; }
+html[data-theme^="retro"]:not([data-o55-nier="on"]) .pmw-mbackchev::before { content: "[<]"; }
+html[data-theme^="retro"]:not([data-o55-nier="on"]) .pmw-mback:is(:hover, :focus) { background: var(--accent-lime); color: var(--surface); }
+html[data-theme^="retro"]:not([data-o55-nier="on"]) .pmw-mback:is(:hover, :focus) .pmw-mbackchev { color: inherit; transform: none; }
+html[data-theme^="retro"]:not([data-o55-nier="on"]) .pmw-mback:active { transform: none; }
+html[data-theme^="retro"]:not([data-o55-nier="on"]) .pmw-mback::after { background: var(--pmw-pop-line); }
+
+/* levels (36-menu.js level()): the new level comes in from the side it lies on while the old one's own parts, lifted
+   out of the flow where they stood, leave toward the other; the plate morphs between them. A shared axis, never a
+   double exposure: the old level is gone in the first third, and the new one, already gliding, shows only after it.
+   Per look: Glass a long soft glide with a breath of scale, Friendly a gentle give, Basic crisp; Retro and NieR cut the
+   old level on the first frame and step the new one in. Instant under Reduced Motion (nothing is lifted then). A
+   level that can be gone back to waits parked in the plate at its own width, out of the flow and clipped away, so Back
+   only reveals it. Each state is a data-lv value and sets only properties nothing inherits (36-menu.js says why). */
+.pmw-menu {
+  --pmw-level-shift: 16px;
+  --pmw-level-scale: 1;
+  --pmw-level-in: 220ms;
+  --pmw-level-out: 90ms;
+  --pmw-level-ease: cubic-bezier(.22, 1, .36, 1);
+  --pmw-level-ease-out: cubic-bezier(.4, 0, 1, 1);
+}
+html[data-theme^="glass"]:not([data-o55-nier="on"]) .pmw-menu { --pmw-level-shift: 24px; --pmw-level-scale: .985; --pmw-level-in: 320ms; --pmw-level-out: 120ms; --pmw-level-ease: cubic-bezier(.16, 1, .3, 1); }
+html[data-theme^="friendly"]:not([data-o55-nier="on"]) .pmw-menu { --pmw-level-shift: 18px; --pmw-level-in: 280ms; --pmw-level-out: 110ms; --pmw-level-ease: cubic-bezier(.34, 1.28, .64, 1); }
+html[data-theme^="retro"]:not([data-o55-nier="on"]) .pmw-menu { --pmw-level-shift: 12px; --pmw-level-in: 120ms; --pmw-level-ease: steps(3, jump-start); }
+/* Retro snaps: the old level is cut at once and the new one steps in from its first frame */
+html[data-theme^="retro"]:not([data-o55-nier="on"]) .pmw-menu > [data-lv="in-fwd"] { animation-name: pmw-level-snap-fwd; }
+html[data-theme^="retro"]:not([data-o55-nier="on"]) .pmw-menu > [data-lv="in-back"] { animation-name: pmw-level-snap-back; }
+html[data-theme^="retro"]:not([data-o55-nier="on"]) .pmw-menu > :is([data-lv="out-fwd"], [data-lv="out-back"]) { animation: none; opacity: 0; }
+.pmw-menu[data-mlevel] { overflow: hidden; }
+.pmw-menu > [data-lv="park"] { position: absolute; left: 0; top: 0; height: 0; min-height: 0; overflow: hidden; clip-path: inset(50%); }
+.pmw-menu > [data-lv="in-fwd"] { animation: pmw-level-in-fwd var(--pmw-level-in) var(--pmw-level-ease) both; }
+.pmw-menu > [data-lv="in-back"] { animation: pmw-level-in-back var(--pmw-level-in) var(--pmw-level-ease) both; }
+.pmw-menu > [data-lv="out-fwd"] { animation: pmw-level-out-fwd var(--pmw-level-out) var(--pmw-level-ease-out) both; }
+.pmw-menu > [data-lv="out-back"] { animation: pmw-level-out-back var(--pmw-level-out) var(--pmw-level-ease-out) both; }
+@keyframes pmw-level-in-fwd { 0% { opacity: 0; transform: translate3d(var(--pmw-level-shift), 0, 0) scale(var(--pmw-level-scale)); } 30% { opacity: 0; } }
+@keyframes pmw-level-in-back { 0% { opacity: 0; transform: translate3d(calc(-1 * var(--pmw-level-shift)), 0, 0) scale(var(--pmw-level-scale)); } 30% { opacity: 0; } }
+@keyframes pmw-level-snap-fwd { from { opacity: 0; transform: translate3d(var(--pmw-level-shift), 0, 0); } }
+@keyframes pmw-level-snap-back { from { opacity: 0; transform: translate3d(calc(-1 * var(--pmw-level-shift)), 0, 0); } }
+@keyframes pmw-level-out-fwd { to { opacity: 0; transform: translate3d(calc(-1 * var(--pmw-level-shift)), 0, 0); } }
+@keyframes pmw-level-out-back { to { opacity: 0; transform: translate3d(var(--pmw-level-shift), 0, 0); } }
 .pmw-msearch { display: flex; align-items: center; gap: 7px; height: 32px; margin: 0 0 6px; padding: 0 9px; border: 1px solid var(--pmw-pop-line); border-radius: var(--pmw-row-radius); color: var(--pmw-text-3); }
 .pmw-msearch:focus-within { border-color: color-mix(in srgb, var(--pmw-accent) 60%, transparent); }
 .pmw-msearchin { flex: 1 1 auto; min-width: 0; height: 30px; border: 0; outline: none; background: transparent; color: var(--pmw-text); font: inherit; font-size: 13px; }
@@ -48,7 +125,9 @@
 /* one focus ring: the field's box. The page's input:focus-visible outline (and Glass's 3 px halo) would draw a second
    ring inside it, so the input itself never shows one (the accessibility focus styles' !important rules still win) */
 .pmw-msearch .pmw-msearchin:is(:focus, :focus-visible) { outline: none; box-shadow: none; }
-.pmw-mlist { display: flex; flex-direction: column; min-height: 0; }
+/* the rows scroll inside the plate, so the head (its Back control), the search field and the foot stay put; it reaches
+   4 px into the plate's padding so a focus ring at a row's edge is not cut */
+.pmw-mlist { display: flex; flex-direction: column; flex: 1 1 auto; min-height: 0; margin: 0 -4px; padding: 0 4px; overflow-y: auto; overscroll-behavior: contain; scrollbar-width: thin; }
 .pmw-msec { padding: 8px 8px 4px; font-size: 11px; font-weight: 500; letter-spacing: .06em; text-transform: uppercase; color: var(--pmw-text-3); font-family: var(--pm-font-code); }
 .pmw-mdiv { height: 1px; margin: 5px 3px; background: var(--pmw-pop-line); }
 .pmw-mrow { display: flex; align-items: stretch; border-radius: var(--pmw-row-radius); }
@@ -126,6 +205,6 @@
    weight, in Friendly only, so kinds' own two-class rules still win and NieR's square part keeps its square corners */
 :where(html[data-theme^="friendly"]:not([data-o55-nier="on"][data-o55-nier-parts~="square"])) button.pmw-mitem { border-radius: var(--pmw-row-radius); }
 :where(html[data-theme^="friendly"]:not([data-o55-nier="on"][data-o55-nier-parts~="square"])) button.pmw-mcell { border-radius: 0 var(--pmw-row-radius) var(--pmw-row-radius) 0; }
-:where(html[data-theme^="friendly"]:not([data-o55-nier="on"][data-o55-nier-parts~="square"])) button.pmw-mback { border-radius: 7px; }
+:where(html[data-theme^="friendly"]:not([data-o55-nier="on"][data-o55-nier-parts~="square"])) button.pmw-mback { border-radius: var(--pmw-row-radius); }
 :where(html[data-theme^="friendly"]:not([data-o55-nier="on"][data-o55-nier-parts~="square"])) button.pmw-mlink { border-radius: 5px; }
 :where(html[data-theme^="friendly"]:not([data-o55-nier="on"][data-o55-nier-parts~="square"])) button.pmw-btn { border-radius: 7px; }

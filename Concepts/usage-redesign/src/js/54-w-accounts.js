@@ -109,7 +109,7 @@
   function polStepper(p) {
     var pol = polOf(p), ok = pol.available, used = 100 - pol.switchLeft, pid = esc(p.id);
     return '<span class="pmu-swat">at</span><span class="pmu-stepper" data-prov="' + pid + '"' + C.hover('Switch level · ' + p.name, ok ? polDetail(p) : 'Settings is not available') + '>' +
-      '<button type="button" data-pmu-act="sw-step" data-prov="' + pid + '" data-value="1" aria-label="Switch ' + esc(p.name) + ' earlier"' + (ok && pol.switchLeft + 5 < Math.min(35, pol.warnLeft) ? '' : ' disabled') + '>' + PMU.icon('minus') + '</button>' +
+      '<button type="button" data-pmu-act="sw-step" data-prov="' + pid + '" data-value="1" aria-label="Switch ' + esc(p.name) + ' earlier"' + (ok && pol.switchLeft + 5 < Math.min(35, pol.warnLeft) && !PMU.settings.levelBlock(p.id, IDS().switchLeft, pol.switchLeft + 5) ? '' : ' disabled') + '>' + PMU.icon('minus') + '</button>' +
       '<button type="button" class="pmu-stepval" data-pmu-act="sw-pick" data-prov="' + pid + '" aria-haspopup="menu"' + (ok ? '' : ' disabled') + '>' + used + '%</button>' +
       '<button type="button" data-pmu-act="sw-step" data-prov="' + pid + '" data-value="-1" aria-label="Switch ' + esc(p.name) + ' later"' + (ok && pol.switchLeft > 5 ? '' : ' disabled') + '>' + PMU.icon('plus') + '</button></span><span class="pmu-swat">used</span>';
   }
@@ -1323,11 +1323,16 @@
     var cap = rippleCapture(), ok, p = pid ? PMU.roster.provider(pid) : null, r = null, ids = Array.isArray(id) ? id : [id];
     if (pid) { r = PMU.settings.setProviderMany(pid, ids.map(function (x) { return { id: x, value: value }; }), 'usage.accounts'); ok = !!(r && r.ok); }
     else ok = PMU.settings.set(id, value);
-    if (!ok) { PMU.shell.toast('Not saved: ' + ((r && r.reason) || 'Settings is not available')); return false; }
+    if (!ok) { PMU.shell.toast('Not saved: ' + ((r && r.reason) || (!pid && PMU.settings.holdWhy()) || 'Settings is not available')); return false; }
     refreshAccounts(pid);
     id = ids.length > 1 ? null : ids[0];
     var pol = PMU.roster.thresholds(pid || null), what = !id ? 'follows the shared settings' : id === 'ai.accounts.multi-account-switching' ? (pol.auto ? 'auto-switch on' : 'auto-switch off')
       : id === 'ai.accounts.hard-switch-level' ? 'switches at ' + (100 - pol.switchLeft) + '% used' : id === 'ai.accounts.soft-warning-level' ? 'warns at ' + (100 - pol.warnLeft) + '% used' : POL_WORD[id] + ' ' + pol.cooldown;
+    /* the Settings owner holds a level to the switch-below-warn order (the accounts that follow it included, 2026-10-15):
+       a level it moved is named as stored, and says why it is not the one asked for */
+    var asked = id && value !== null && value !== undefined && value !== '' ? Number(value) : null;
+    if (asked !== null && id === IDS().warnLeft && asked !== pol.warnLeft) what += ' (the nearest level that keeps every switch level below it)';
+    else if (asked !== null && id === IDS().switchLeft && asked !== pol.switchLeft) what += ' (the nearest level that keeps it below every warn level)';
     PMU.shell.toast(t('toast.saved_settings') + ' · ' + (p ? p.name : 'shared setting') + ': ' + what + (pid && id && value === null ? ' (shared)' : ''));
     ripplePlay(cap, step || 30);
     return true;
@@ -1504,8 +1509,17 @@
     /* one line per level ("85% used", its % left on the right), so the whole list fits the room above a plate at 1440
        (item 2 review: the 75 % row was cut and the 70 % row hidden behind a scroll); a level at or past the warn level
        is shown dim, its reason in the section label and its hover tag */
-    var levels = LEVELS.map(function (v) { var off = v >= th.warnLeft; return { value: v, label: (100 - v) + '% used', right: v + '% left' + (p ? '' : v === 10 ? ' · default' : ''), disabled: off, hover: off ? 'At or past the warn level (' + warnAt + '% used)' : '' }; });
-    var anyOff = levels.some(function (o) { return o.disabled; });
+    /* ... and a level the Settings owner would move, past the own warn level of an account (or, for the shared level, a
+       service) that follows this switch level, is held back the same way with the owner's reason, which names it
+       (2026-10-15); the current level never is */
+    var anyAcc = false;
+    var levels = LEVELS.map(function (v) {
+      var off = v >= th.warnLeft, why = off || (own && v === th.switchLeft) ? '' : PMU.settings.levelBlock(pid, IDS().switchLeft, v);
+      if (why) anyAcc = true;
+      return { value: v, label: (100 - v) + '% used', right: v + '% left' + (p ? '' : v === 10 ? ' · default' : ''), disabled: off || !!why, hover: off ? 'At or past the warn level (' + warnAt + '% used)' : why };
+    });
+    var anyOff = LEVELS.some(function (v) { return v >= th.warnLeft; });
+    var sharedWhy = p && own ? PMU.settings.levelBlock(pid, IDS().switchLeft, g.switchLeft) : '';
     /* the head is the question alone, in the provider's Settings name where it fits (the "Current · 90% used" meta beside
        it cut the title to "Switch Claude accounts…" in five looks); the check on the active row says the current level */
     var MW = 400, title = 'Switch accounts at';
@@ -1514,9 +1528,9 @@
       foot: (p ? p.name + ' only, shared with Settings. ' : 'Shared with Settings > AI > Providers & Accounts. ') + t('accounts.not_consent'),
       onPick: function (v) { if (v === 'shared') PMU.accounts.useShared(pid, IDS().switchLeft); else PMU.accounts.setSwitchLevel(v, pid); } };
     /* a provider's menu leads with the shared setting (what it follows when it has no level of its own) */
-    if (p) spec.sections = [{ rows: [{ value: 'shared', label: 'Shared setting · ' + (100 - g.switchLeft) + '% used', sub: 'Follows Settings > Limits & switching', active: !own }] },
-      { label: 'Its own level' + (anyOff ? ' · under the ' + warnAt + '% warn level' : ''), rows: levels.map(function (o) { return Object.assign({ active: own && o.value === th.switchLeft }, o); }) }];
-    else { spec.options = levels; if (anyOff) spec.foot = 'Under the ' + warnAt + '% warn level. ' + spec.foot; }
+    if (p) spec.sections = [{ rows: [Object.assign({ value: 'shared', label: 'Shared setting · ' + (100 - g.switchLeft) + '% used', sub: 'Follows Settings > Limits & switching', active: !own }, sharedWhy ? { disabled: true, hover: sharedWhy } : {})] },
+      { label: 'Its own level' + (anyOff ? ' · under the ' + warnAt + '% warn level' : anyAcc ? ' · under its accounts’ warn levels' : ''), rows: levels.map(function (o) { return Object.assign({ active: own && o.value === th.switchLeft }, o); }) }];
+    else { spec.options = levels; if (anyOff) spec.foot = 'Under the ' + warnAt + '% warn level. ' + spec.foot; else if (anyAcc) spec.foot = 'Under the own warn levels that follow it. ' + spec.foot; }
     PMU.menu.choice(el, spec);
   });
   /* the shared setting's line opens its Settings row (UCC-147: Settings opens reuse cmd.settings.open) */

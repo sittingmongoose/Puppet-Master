@@ -202,8 +202,8 @@ html[data-motion="reduced"] .pmw-dash-agent-fill { transition: none; }
 .pmw-dash .pmw-hfact[data-id="hour"] .pmw-ico { color: var(--pmw-accent); }
 
 /* Friendly: the Usage page's Live rose; Glass: the dot glows as the Usage page's does */
-html[data-theme^="friendly"] .pmw-dash { --pmw-dash-live: #C2557A; }
-html[data-theme="friendly-dark"] .pmw-dash { --pmw-dash-live: #E07BA0; }
+html[data-theme^="friendly"] .pmw-dash { --pmw-dash-live: #6F55A8; }
+html[data-theme="friendly-dark"] .pmw-dash { --pmw-dash-live: #D2C4EE; }
 html[data-theme^="glass"] .pmw-dash-live-dot { box-shadow: 0 0 6px color-mix(in srgb, var(--pmw-dash-live) 70%, transparent); }
 /* the notice frosts what is under it as Glass frosts the package's menus (the same plate, blur and saturation) */
 html[data-theme^="glass"] .pmw-dash > .pmw-dash-undo { -webkit-backdrop-filter: blur(30px) saturate(1.5); backdrop-filter: blur(30px) saturate(1.5); }

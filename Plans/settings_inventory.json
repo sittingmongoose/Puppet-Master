@@ -2,7 +2,7 @@
  "$schema": "Plans/settings_inventory.schema.json",
  "schema_id": "pm.settings_inventory.v1",
  "schema_version": "1.0.0",
- "generated_at_utc": "2026-10-14T18:30:00Z",
+ "generated_at_utc": "2026-10-16T00:28:48Z",
  "owner_doc": "Plans/FinalGUISpec.md",
  "owner_plan_unit": "F3-441",
  "provenance": {
@@ -600,19 +600,17 @@
   {
    "id": "general.visual.glass-background-mode",
    "label": "Glass Background",
-   "desc": "Retired at the coordinated Liquid Glass and wallpaper publication (SSYS-054); compatibility lineage only. Wallpaper replaces Mesh/Depth/Minimal. Publication remains pending Jared review.",
+   "desc": "Compatibility lineage only; never rendered or written. Wallpaper replaces Mesh/Depth/Minimal; SP-333 owns migration. (Superseded by SSYS-054 at the 2026-10-15 Liquid Glass/wallpaper publication.)",
    "type": "select",
    "options": [
     "Mesh",
     "Depth",
     "Minimal"
    ],
-   "default": "Mesh",
    "scope": [
     "global"
    ],
    "tier": "simple",
-   "recommended": "Mesh",
    "search": [
     "mesh",
     "depth",
@@ -7587,7 +7585,7 @@
   {
    "id": "code.terminal.background",
    "label": "Terminal Background",
-   "desc": "What is drawn behind the text: Follow look uses the look's own, Theme surface the panel's surface, or a Solid color, a Gradient or an Image you choose below.",
+   "desc": "Look's own and Solid color are always offered. Theme surface is offered separately only where its drawing differs (Friendly); a saved Theme surface remains valid and displays Look's own where equal. Gradient/Image choices come from the one terminal background catalog (F3-642).",
    "type": "select",
    "options": [
     "Follow look",
@@ -7634,13 +7632,22 @@
   {
    "id": "code.terminal.background-gradient",
    "label": "Background Gradient",
-   "desc": "The gradient behind the text when Terminal Background is Gradient.",
+   "desc": "Choices come from Plans/terminal_background_catalog.json, available in every look. Earlier saved labels/ids retain their catalog meaning; the renderer derives the design from the selected scheme. Custom images use SP-331 asset references.",
    "type": "select",
    "options": [
-    "Dusk",
-    "Dawn",
+    "Fade",
+    "Corner light",
+    "Horizon",
+    "Vignette",
+    "Split",
     "Deep",
-    "Paper"
+    "Warm paper",
+    "Aurora",
+    "Nebula",
+    "Dawn",
+    "Ink bloom",
+    "Dusk",
+    "Prism edge"
    ],
    "scope": [
     "global",
@@ -7652,17 +7659,66 @@
    ],
    "related_features": [
     "terminal"
-   ]
+   ],
+   "default": "Fade"
   },
   {
    "id": "code.terminal.background-image",
    "label": "Background Image",
-   "desc": "The picture behind the text when Terminal Background is Image, or Custom for one of your own.",
+   "desc": "Choices come from Plans/terminal_background_catalog.json, available in every look. Earlier saved labels/ids retain their catalog meaning; the renderer derives the design from the selected scheme. Custom images use SP-331 asset references.",
    "type": "select",
    "options": [
-    "Hills",
-    "Grid",
+    "Dot grid",
+    "Graph paper",
+    "Blueprint",
+    "Diagonal hatch",
+    "Pixel checker",
+    "Topography",
+    "Waves",
+    "Halftone",
+    "Scanline field",
+    "Staff lines",
+    "Squares",
     "Paper",
+    "Puppet cross",
+    "Droplet",
+    "Prompt",
+    "Glyph",
+    "Ridgelines",
+    "Dunes",
+    "Night city",
+    "Starfield",
+    "Synthwave",
+    "Caustics",
+    "Bokeh",
+    "Clouds",
+    "Drifting aurora",
+    "Twinkling stars",
+    "Rain",
+    "Snow",
+    "Lava",
+    "Clear glass",
+    "Frosted glass",
+    "Tinted glass",
+    "Reeded glass",
+    "Frosted panes",
+    "Layered sheets",
+    "Rain on glass",
+    "Lens",
+    "Etched glass",
+    "Running rain",
+    "Green-bar paper",
+    "Phosphor glow",
+    "Tube glass",
+    "Aperture grille",
+    "Static",
+    "Phosphor grid",
+    "Test pattern",
+    "ANSI art",
+    "Vector terrain",
+    "Boot ghost",
+    "Oscilloscope",
+    "Glyph rain",
     "Custom"
    ],
    "scope": [
@@ -7676,7 +7732,8 @@
    ],
    "related_features": [
     "terminal"
-   ]
+   ],
+   "default": "Ridgelines"
   },
   {
    "id": "code.terminal.background-image-file",
@@ -7699,9 +7756,9 @@
   {
    "id": "code.terminal.background-dim",
    "label": "Background Image Dimming",
-   "desc": "How much a background image is dimmed under the text so the text stays readable.",
+   "desc": "Auto applies the least dim needed for the selected output contrast floor; an explicit 0–0.9 choice cannot defeat that floor. Auto is distinct from zero (F3-642).",
    "type": "slider",
-   "default": 0.45,
+   "default": "Auto",
    "scope": [
     "global",
     "project"
@@ -7918,9 +7975,9 @@
   {
    "id": "code.terminal.curvature",
    "label": "Screen Curvature",
-   "desc": "How curved the glass looks in Full CRT; pointing and selecting follow the curve. The 0.08 value is historical tuning, held for the revised CRT contract (F3-643); it is not acceptance of the criticized curvature.",
+   "desc": "Full CRT only: 0–0.2, default 0.04. Each edge bows by one eighth of the value, independent of aspect ratio; pointing and selection follow the curve (F3-643). Full CRT remains off by default.",
    "type": "slider",
-   "default": 0.08,
+   "default": 0.04,
    "scope": [
     "global",
     "project"
@@ -23243,6 +23300,228 @@
    ],
    "related_features": [
     "editor"
+   ]
+  },
+  {
+   "id": "code.terminal.background-strength",
+   "label": "Background Strength",
+   "desc": "Strength of a built-in terminal design, 0–1; its readable maximum remains bounded by F3-642.",
+   "type": "slider",
+   "default": 1,
+   "scope": [
+    "global",
+    "project"
+   ],
+   "tier": "advanced",
+   "search": [
+    "background strength",
+    "terminal look"
+   ],
+   "related_features": [
+    "terminal"
+   ]
+  },
+  {
+   "id": "code.terminal.background-scale",
+   "label": "Pattern Size",
+   "desc": "Size of a terminal pattern; the design stays in the current scheme.",
+   "type": "select",
+   "default": "Medium",
+   "scope": [
+    "global",
+    "project"
+   ],
+   "tier": "advanced",
+   "search": [
+    "pattern size",
+    "terminal look"
+   ],
+   "related_features": [
+    "terminal"
+   ],
+   "options": [
+    "Fine",
+    "Medium",
+    "Coarse"
+   ]
+  },
+  {
+   "id": "code.terminal.background-motion",
+   "label": "Background Motion",
+   "desc": "Applies only to a moving design, under F3-643 focus, visibility, battery and Reduced Motion gates.",
+   "type": "select",
+   "default": "Gentle",
+   "scope": [
+    "global",
+    "project"
+   ],
+   "tier": "advanced",
+   "search": [
+    "background motion",
+    "terminal look"
+   ],
+   "related_features": [
+    "terminal"
+   ],
+   "options": [
+    "Off",
+    "Gentle",
+    "Lively"
+   ]
+  },
+  {
+   "id": "code.terminal.background-fit",
+   "label": "Picture Fit",
+   "desc": "How a custom terminal picture fits its screen.",
+   "type": "select",
+   "default": "Cover",
+   "scope": [
+    "global",
+    "project"
+   ],
+   "tier": "advanced",
+   "search": [
+    "picture fit",
+    "terminal look"
+   ],
+   "related_features": [
+    "terminal"
+   ],
+   "options": [
+    "Cover",
+    "Contain",
+    "Tile",
+    "Centre"
+   ]
+  },
+  {
+   "id": "code.terminal.background-desaturate",
+   "label": "Picture Desaturation",
+   "desc": "How much colour a custom picture loses, 0–1; the round-3 default is 0.3.",
+   "type": "slider",
+   "default": 0.3,
+   "scope": [
+    "global",
+    "project"
+   ],
+   "tier": "advanced",
+   "search": [
+    "picture desaturation",
+    "terminal look"
+   ],
+   "related_features": [
+    "terminal"
+   ]
+  },
+  {
+   "id": "code.terminal.bezel",
+   "label": "Terminal Bezel",
+   "desc": "An independently optional housing around the terminal, off by default; Slim/Monitor map to rim/case.",
+   "type": "select",
+   "default": "Off",
+   "scope": [
+    "global",
+    "project"
+   ],
+   "tier": "advanced",
+   "search": [
+    "terminal bezel",
+    "terminal look"
+   ],
+   "related_features": [
+    "terminal"
+   ],
+   "options": [
+    "Off",
+    "Slim",
+    "Monitor"
+   ]
+  },
+  {
+   "id": "code.terminal.bezel-width",
+   "label": "Bezel Width",
+   "desc": "2–48 px, or the style default: Slim 6 px and Monitor 24 px. No bezel is enabled by changing width.",
+   "type": "slider",
+   "default": "Style default",
+   "scope": [
+    "global",
+    "project"
+   ],
+   "tier": "advanced",
+   "search": [
+    "bezel width",
+    "terminal look"
+   ],
+   "related_features": [
+    "terminal"
+   ]
+  },
+  {
+   "id": "code.terminal.bezel-material",
+   "label": "Bezel Material",
+   "desc": "F3-643 owns the material and per-look defaults; NieR Follow look is a flat ink frame.",
+   "type": "select",
+   "default": "Follow look",
+   "scope": [
+    "global",
+    "project"
+   ],
+   "tier": "advanced",
+   "search": [
+    "bezel material",
+    "terminal look"
+   ],
+   "related_features": [
+    "terminal"
+   ],
+   "options": [
+    "Follow look",
+    "Graphite",
+    "Black gloss",
+    "Platinum",
+    "Putty",
+    "Brushed aluminium",
+    "Gunmetal",
+    "Glass",
+    "Accent"
+   ]
+  },
+  {
+   "id": "code.terminal.bezel-reflection",
+   "label": "Bezel Reflection",
+   "desc": "Auto is retained as the stored default. Numeric 0\u20131 reflection values remain readable compatibility inputs; final offered range, steps and material levels are pending terminal round 5 under F3-643.",
+   "type": "slider",
+   "default": "Auto",
+   "scope": [
+    "global",
+    "project"
+   ],
+   "tier": "advanced",
+   "search": [
+    "bezel reflection",
+    "terminal look"
+   ],
+   "related_features": [
+    "terminal"
+   ]
+  },
+  {
+   "id": "code.terminal.phosphor-mask",
+   "label": "Phosphor Mask",
+   "desc": "Full CRT phosphor mask, off by default. Its display-density and capability behavior is pending terminal round 5 (F3-643); the published DPR-1 no-op remains an acceptance defect.",
+   "type": "toggle",
+   "default": false,
+   "scope": [
+    "global",
+    "project"
+   ],
+   "tier": "advanced",
+   "search": [
+    "phosphor mask",
+    "terminal look"
+   ],
+   "related_features": [
+    "terminal"
    ]
   }
 ]

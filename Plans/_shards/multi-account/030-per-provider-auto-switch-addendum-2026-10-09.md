@@ -2,9 +2,9 @@
 
 Source: `Plans/Multi-Account.md`
 
-Source lines: L5377-L5509
+Source lines: L5377-L5516
 
-Source SHA256: `ea963f5bde327df3fdffb268efe8ebeb01c6813b9a918ef9a1b96af1208ae907`
+Source SHA256: `181b1cea7944f86544de9675e1c5d25d6becae40f626900d1f8a64f82be2240e`
 
 ---
 
@@ -33,7 +33,14 @@ canonical_text: >-
   stored as percent left and shown as percent used. A provider's or an account's resolved switch level always stays
   below the warning level that applies to it:
   neither surface offers a level that would cross them (on Usage the stepper stops and the menu disables levels at or
-  past the warning level; Settings disables a crossing choice with the reason, Settings_System section 8). A
+  past the warning level; Settings disables a crossing choice with the reason, Settings_System section 8). From
+  2026-10-15 the Settings owner holds every write to that order as well: the level being written moves to the nearest
+  choice on its own list that keeps every switch level it reaches below the warning level that applies, the other
+  level never moves, and a write with no such choice is refused; a provider's or the shared warning level is held
+  against the own switch level of every account whose warning level follows it, whose own value never moves, and the
+  crossing choice names that account. Restoring a level to its default is the one write that is not moved: a default
+  that would cross is refused, with the reason naming whose level blocks it, because a default is not a level the
+  user chose. A
   provider's value is one Settings value: Settings > Providers & Accounts edits all four rows in the provider's own
   section, and the Usage Accounts room hosts the provider's auto-switch toggle and switch point; both edit it through
   the Settings owner with cmd.settings.transaction.preview and then cmd.settings.transaction.apply at scope provider
