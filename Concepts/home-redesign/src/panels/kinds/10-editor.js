@@ -1045,6 +1045,9 @@ function wrapPieces(text, cols) {
 /* ======================================================================================================== */
 
 var SYN_KEYS = ['kw', 'str', 'num', 'com', 'fn', 'ty', 'var', 'prop', 'op', 'pun', 'tag', 'attr', 'esc', 'mac', 'link', 'head', 'code'];
+// The parked Customize preview can measure its offered faces before a pick.
+// Keep exact DOM measurements, shared by the live editor and its preview.
+var primedFontWidths = new Map();
 function edAppearance() {
   try {
     var A = window.PMT && window.PMT.Appearance;
@@ -1684,9 +1687,36 @@ function mountEditor(host, st, api) {
     setVar('--pmw-ed-wt', F.weight === 400 ? null : String(F.weight));
     setVar('--pmw-ed-ls', F.letterSpacing ? F.letterSpacing + 'px' : null);
     if (F.ligatures) root.setAttribute('data-lig', ''); else root.removeAttribute('data-lig');
-    var w = measureEl.getBoundingClientRect().width / 100;
+    var known = primedFontWidths.get(fontWidthKey(F));
+    var w = known || measureEl.getBoundingClientRect().width / 100;
     if (w > 2) cw = w; else cw = fs * 0.6 + (+F.letterSpacing || 0);
     setVar('--pmw-ed-cw', cw + 'px');
+  }
+  function fontWidthKey(F) {
+    return [R.lookKey, R.look.mode, F.id, F.stack, F.size, F.weight, F.letterSpacing, window.devicePixelRatio || 1].join('|');
+  }
+  function primeFont(F) {
+    var key = fontWidthKey(F);
+    if (primedFontWidths.has(key)) return;
+    // Called only on the parked preview: its ancestors have no entrance
+    // transform, so this is the same unscaled measurement the editor uses.
+    var p = measureEl.cloneNode(true);
+    p.style.fontFamily = F.id === 'jetbrains-mono' ? 'var(--pm-font-code)' : F.stack;
+    p.style.fontSize = clamp(+F.size || 13, 10, 24) + 'px';
+    p.style.fontWeight = String(F.weight || 400);
+    p.style.letterSpacing = (+F.letterSpacing || 0) + 'px';
+    root.appendChild(p);
+    // Code can use the italic face on the first pick too. Load it here, so its
+    // arrival does not invalidate the measurements in that input's frame.
+    if (document.fonts && document.fonts.load) {
+      document.fonts.load('italic ' + (F.weight || 400) + ' ' + (clamp(+F.size || 13, 10, 24)) + 'px ' + getComputedStyle(p).fontFamily, '0').catch(function () {});
+    }
+    var w = p.getBoundingClientRect().width / 100;
+    p.remove();
+    if (w > 2) {
+      if (primedFontWidths.size >= 64) primedFontWidths.delete(primedFontWidths.keys().next().value);
+      primedFontWidths.set(key, w);
+    }
   }
   function layout() {
     headH = head.offsetHeight;
@@ -3799,6 +3829,7 @@ function mountEditor(host, st, api) {
     view: view,
     root: root,
     look: function () { return R; },
+    primeFont: primeFont,
     /* the colours change under a sweep in the look's own motion, from the point of the choice (a scheme tile): a plate
        of the old ground lifts away (Basic fades, Friendly blooms from the point, Glass glides across, Retro steps,
        NieR wipes in its eight steps); Reduced Motion changes at once */
@@ -4097,7 +4128,7 @@ function setup() {
 
   /* re-measure every open editor when a font arrives (JetBrains Mono loads on first use) */
   try {
-    if (doc.fonts && doc.fonts.addEventListener) doc.fonts.addEventListener('loadingdone', function () { EDITORS.forEach(function (v) { v.relayout(); }); });
+    if (doc.fonts && doc.fonts.addEventListener) doc.fonts.addEventListener('loadingdone', function () { primedFontWidths.clear(); EDITORS.forEach(function (v) { v.relayout(); }); });
   } catch (_) {}
   /* PMW.editorPreview(host, { text, base, language, problems, view, caret }): a live editor that draws the given text the
      way an editor tab with that view's look would, as the Customize screen's preview; it takes no input */

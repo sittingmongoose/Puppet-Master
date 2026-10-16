@@ -216,9 +216,26 @@ PMW.czFit = function (root) {
   var segs = [].slice.call(root.querySelectorAll('.pmt-cz-seg')).filter(function (s) { return !s.closest('[hidden]'); });
   var shown = segs.map(function (s) { return s.getAttribute('data-seg') + ':' + s.querySelectorAll('.pmt-cz-segopt:not([hidden])').length; }).join(',');
   var de = document.documentElement;
-  var key = [dialog.style.width, root.getAttribute('data-pmt-look'), root.getAttribute('data-pmt-mode'), de.getAttribute('data-o55-nier-parts') || '', czFitEpoch, shown].join('|');
+  var base = [dialog.style.width, root.getAttribute('data-pmt-look'), root.getAttribute('data-pmt-mode'), de.getAttribute('data-o55-nier-parts') || '', czFitEpoch].join('|');
+  var key = base + '|' + shown;
   if (root._czFit === key) return;
   root._czFit = key;
+  // Editor face choices change the available weights. Reuse the exact fit of
+  // each offered set; the terminal keeps the existing fitting path.
+  var fits = null;
+  if (root.classList.contains('pmed-cz')) {
+    if (root._pmedFitBase !== base) { root._pmedFitBase = base; root._pmedFits = Object.create(null); }
+    fits = root._pmedFits;
+    if (fits[shown]) {
+      fits[shown].forEach(function (r) {
+        ['data-cols', 'data-fit'].forEach(function (a, i) {
+          if (r[0].getAttribute(a) === r[i + 1]) return;
+          if (r[i + 1] === null) r[0].removeAttribute(a); else r[0].setAttribute(a, r[i + 1]);
+        });
+      });
+      return;
+    }
+  }
   var gridOf = function (s) { var f = s.closest('.pmt-cz-field'), g = f && f.parentElement; return g && (g.classList.contains('pmt-cz-grid2') || g.classList.contains('pmt-cz-row')) ? g : null; };
   [].forEach.call(root.querySelectorAll('.pmt-cz-grid2[data-cols], .pmt-cz-row[data-cols]'), function (g) { g.removeAttribute('data-cols'); });
   [].forEach.call(root.querySelectorAll('.pmt-cz-seg[data-fit]'), function (s) { s.removeAttribute('data-fit'); });
@@ -232,6 +249,7 @@ PMW.czFit = function (root) {
   short.forEach(function (s) { s.setAttribute('data-fit', 'short'); });
   if (short.length) left = left.filter(over);
   left.forEach(function (s) { s.setAttribute('data-fit', 'stack'); });
+  if (fits) fits[shown] = [].map.call(root.querySelectorAll('.pmt-cz-grid2, .pmt-cz-row, .pmt-cz-seg'), function (e) { return [e, e.getAttribute('data-cols'), e.getAttribute('data-fit')]; });
 };
 if (document.fonts && document.fonts.addEventListener) document.fonts.addEventListener('loadingdone', function () {
   czFitEpoch += 1;
@@ -527,12 +545,60 @@ function open(opts) {
   // Only these small pictures use the chosen scheme. Putting their colours on
   // the sheet restyled every control and scheme tile for each colour pick.
   function setVar(n, val) { if (varsSet[n] === val) return; varsSet[n] = val; [].forEach.call(artHosts, function (a) { a.style.setProperty(n, val); }); }
+  var warmMeasureJob = 0, warmMeasureStamp = '', warmMeasureQueue = [];
+  function measurementStamp() {
+    return [dialog.style.width, root.getAttribute('data-pmt-look'), root.getAttribute('data-pmt-mode'), czFitEpoch,
+      document.documentElement.getAttribute('data-o55-nier-parts') || '', scope, JSON.stringify(eff().font)].join('|');
+  }
+  function cancelWarmMeasurements() {
+    if (warmMeasureJob) {
+      if (window.cancelIdleCallback) cancelIdleCallback(warmMeasureJob); else clearTimeout(warmMeasureJob);
+    }
+    warmMeasureJob = 0; warmMeasureQueue = [];
+  }
+  function warmMeasurementsSoon() {
+    if (disposed || !closed || warmMeasureJob || !root.classList.contains('pmed-prepared')) return;
+    var stamp = measurementStamp();
+    if (warmMeasureStamp === stamp) return;
+    var faces = EL().FACES || {}, base = scope === 'tab' ? v.tabAppearance || {} : {};
+    var patches = Object.keys(faces).map(function (id) { return { font: id }; });
+    SETS.forEach(function (s) { if (s.patch && s.patch.font) patches.push(s.patch); });
+    warmMeasureQueue = patches.map(function (patch) { return function () {
+      if (preview && preview.primeFont) preview.primeFont(EL().resolve({ tabAppearance: Object.assign({}, base, patch) }).font);
+    }; });
+    var weights = [].slice.call(root.querySelectorAll('[data-seg="fontWeight"] [data-value]'));
+    var seen = {};
+    Object.keys(faces).forEach(function (id) {
+      var range = faces[id].weights, key = range && range.join('|');
+      if (!range || seen[key]) return; seen[key] = true;
+      warmMeasureQueue.push(function () {
+        var hidden = weights.map(function (b) { return b.hidden; });
+        weights.forEach(function (b) { var n = Number(b.getAttribute('data-value')), hide = n < range[0] || n > range[1]; if (b.hidden !== hide) b.hidden = hide; });
+        PMW.czFit(root);
+        weights.forEach(function (b, i) { if (b.hidden !== hidden[i]) b.hidden = hidden[i]; });
+        PMW.czFit(root);
+      });
+    });
+    function next() {
+      warmMeasureJob = window.requestIdleCallback ? requestIdleCallback(run) : setTimeout(run, 50);
+    }
+    function run() {
+      warmMeasureJob = 0;
+      if (disposed || !closed || !root.classList.contains('pmed-prepared')) { warmMeasureQueue = []; return; }
+      if (measurementStamp() !== stamp) { warmMeasureQueue = []; warmMeasurementsSoon(); return; }
+      var work = warmMeasureQueue.shift(); if (work) work();
+      if (warmMeasureQueue.length) next(); else warmMeasureStamp = stamp;
+    }
+    next();
+  }
+  if (document.fonts && document.fonts.addEventListener) document.fonts.addEventListener('loadingdone', warmMeasurementsSoon);
   function paint() {
     // The tile, Changed mark, group count and footer all read the same fields.
     // Resolve each layer once for this paint, without caching across edits.
     if (paintRead) return;
     paintRead = { own: Object.create(null), values: Object.create(null) };
     try { paintControls(); } finally { paintRead = null; }
+    if (closed) warmMeasurementsSoon();
   }
   function paintControls() {
     var R = eff(), lk = R.lookKey, isNier = lk === 'nier';
@@ -1126,6 +1192,8 @@ function open(opts) {
     if (ro) ro.disconnect();
     if (io) io.disconnect();
     if (root._pmedFinish) root._pmedFinish();
+    cancelWarmMeasurements();
+    if (document.fonts && document.fonts.removeEventListener) document.fonts.removeEventListener('loadingdone', warmMeasurementsSoon);
     cancelAnimationFrame(lookRaf); cancelAnimationFrame(asideRaf); cancelAnimationFrame(resizeRaf);
     clearTimeout(warmPaint);
     if (preview) { try { preview.unmount(); } catch (_) {} preview = null; }
@@ -1149,6 +1217,7 @@ function open(opts) {
       if (closing !== visit || disposed) return;
       root.classList.add('pmed-prepared');
       if (inst.customizing) inst.customizing(false);
+      warmMeasurementsSoon();
     }
     if (noFocus) park(); else Motion.leave(root, park);
     if (typeof opts.onClose === 'function') { try { opts.onClose(); } catch (_) {} }
@@ -1164,6 +1233,7 @@ function open(opts) {
   var handle = { el: root, inst: inst, dispose: dispose, show: show, close: function () { close(); }, refresh: function () { if (!closed) { syncPreview(); paint(); } }, preview: preview };
   function show(next) {
     if (next.prepare) return handle;
+    cancelWarmMeasurements();
     opts = next; anchor = opts.anchor || null;
     scope = opts.scope === 'app' ? 'app' : v._apScope || 'tab';
     closed = false; ++visit; openRoot = root;
