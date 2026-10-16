@@ -9,10 +9,34 @@
    before was a long one (more than 40 ms after the one before it), then plays them from their start: they begin once
    frames come on time (two in a row after a long one), at most `frames` (6) frames later (a page that never draws
    on time, such as software rendering, still moves after that). `anims` is an array of Animations or a function
-   returning one (read again each frame). `o.release`, if given, runs once in the frame the moves start, just before they play:
-   a page change hands the click's fade over to its exit there (tools/shell_motion.py, ANSWER_FIRST). */
+   returning one (read again each frame). `o.release`, if given, runs once in the frame the moves start, just before they play. */
 (function () {
   'use strict';
+  /* PM_AFTER_LAYOUT(fn): fn runs in the coming frame after its style and layout, before its paint (a ResizeObserver
+     delivery), so what it reads is already computed. One observer, made as this script loads, serves every caller:
+     ResizeObservers are told in the order they were made, and one made at the moment it was needed was told after the
+     page's older observers, some of which write in that same delivery (the Liquid Glass root observer), so the read
+     paid a whole-page restyle anyway (Home's notice placement 215 ms, the theme's resize kick 389 ms on the P1000,
+     Settings lane trace). Callers queued meanwhile run once, in the order they asked. */
+  const afterQ = [];
+  let afterRo = null, observing = false, flushing = false;
+  const watch = () => { if (!observing && afterQ.length) { observing = true; afterRo.observe(document.documentElement); } };
+  const flushAfter = () => {
+    if (afterRo && observing) { afterRo.unobserve(document.documentElement); observing = false; }
+    const q = afterQ.splice(0);
+    flushing = true;
+    for (const fn of q) { try { fn(); } catch (e) { try { console.error('[PM_AFTER_LAYOUT]', e); } catch (_) { /* none */ } } }
+    flushing = false;
+    /* asked again from inside this delivery: the next frame's (observing again here would be a loop the browser
+       reports as undelivered notifications) */
+    if (afterQ.length && afterRo) requestAnimationFrame(watch);
+  };
+  try { afterRo = typeof ResizeObserver === 'function' ? new ResizeObserver(flushAfter) : null; } catch (_) { afterRo = null; }
+  window.PM_AFTER_LAYOUT = function afterLayout(fn) {
+    if (afterQ.indexOf(fn) < 0) afterQ.push(fn);
+    if (!afterRo) { requestAnimationFrame(() => setTimeout(flushAfter, 0)); return; }
+    if (!flushing) watch();
+  };
   window.PM_START_ON_SHOWN = function startOnShown(anims, o) {
     const max = (o && o.frames) || 6, held = new Set(), before = o && typeof o.release === 'function' ? o.release : null;
     const list = () => { try { return (typeof anims === 'function' ? anims() : anims) || []; } catch (_) { return []; } };
@@ -46,15 +70,11 @@
       hold();
       next();
     };
-    /* Each check runs in its frame after layout (a one-shot ResizeObserver delivers there, before paint), so reading
+    /* Each check runs in its frame after layout (PM_AFTER_LAYOUT, before paint), so reading
        the moves (getAnimations for CSS animations) finds style already computed: from an animation frame callback it
        forced that frame's style early (49.7 ms on the P1000 for the customizer's six panels, editor lane). What the
        check changes is drawn in the same frame. */
-    const next = () => requestAnimationFrame(() => {
-      if (typeof ResizeObserver !== 'function') { tick(); return; }
-      const ro = new ResizeObserver(() => { ro.disconnect(); tick(); });
-      ro.observe(document.documentElement);
-    });
+    const next = () => requestAnimationFrame(() => window.PM_AFTER_LAYOUT(tick));
     next();
   };
 })();

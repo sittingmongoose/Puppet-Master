@@ -133,9 +133,9 @@ THEME.append(
      "            kickPending = true;\n"
      "            /* inside the first ResizeObserver delivery after the new look's layout: style and layout are already\n"
      "               computed for that frame, so the listeners' reads never pull a pending restyle forward */\n"
-     "            var kickRo = typeof ResizeObserver === 'function' ? new ResizeObserver(function () { kickRo.disconnect(); kickPending = false; kickSearchDensity(); }) : null;\n"
-     "            if (kickRo) kickRo.observe(document.documentElement);\n"
-     "            else requestAnimationFrame(function () { setTimeout(function () { kickPending = false; kickSearchDensity(); }, 0); });\n"
+     "            var kick = function () { kickPending = false; kickSearchDensity(); };\n"
+     "            if (typeof window.PM_AFTER_LAYOUT === 'function') window.PM_AFTER_LAYOUT(kick);   /* the shell's early observer */\n"
+     "            else requestAnimationFrame(function () { setTimeout(kick, 0); });\n"
      "          }\n"
      "          break;\n"
      "        }\n"
@@ -186,26 +186,8 @@ PAGES = [
      "        [oldP, newP].forEach(function (p) { p.getAnimations().forEach(function (a) { if (a.animationName === 'pm8-page-in' || a.animationName === 'pm8-page-out') out.push(a); }); });\n"
      "        return out;\n"
      "      };\n"
-     "      /* O55: the click's fade (goSoon) keeps running, on the compositor, through this change's long frame; the\n"
-     "         exit takes over from the opacity it has reached in the frame the moves start */\n"
-     "      var lift = window.PM_PAGES.__lift; window.PM_PAGES.__lift = null;\n"
-     "      var handoff = function () {\n"
-     "        if (!lift || lift.el !== oldP) { if (lift) try { lift.anim.cancel(); } catch (e) {} return; }\n"
-     "        try {\n"
-     "          /* still pending here, it reads as its start while the compositor has been running it since its first frame */\n"
-     "          var a = lift.anim, ran = document.timeline.currentTime - lift.at;\n"
-     "          if ((a.pending || !(a.currentTime > 0)) && ran > 0) a.currentTime = Math.min(ran, 140);\n"
-     "          oldP.style.setProperty('--pm8-out-from', getComputedStyle(oldP).opacity); a.cancel();\n"
-     "        } catch (e) {}\n"
-     "      };\n"
-     "      if (window.PM_START_ON_SHOWN) window.PM_START_ON_SHOWN(pageMoves, { release: handoff }); else handoff();\n",
+     "      if (window.PM_START_ON_SHOWN) window.PM_START_ON_SHOWN(pageMoves);\n",
      'page switch: moves start on a shown frame'),
-    ("      function cleanupOut() {\n"
-     "        oldP.classList.remove('pm8-page-out');\n",
-     "      function cleanupOut() {\n"
-     "        oldP.classList.remove('pm8-page-out');\n"
-     "        oldP.style.removeProperty('--pm8-out-from');   /* O55: the answered fade's start is this exit's only */\n",
-     'page exit: forget the answered start'),
     # A3, A5: the edge-dissolve header offsets (PM_EDGE) measured each newly shown page's head synchronously inside the
     # page change, forcing the arriving page's style and layout there (~100 ms on the P1000) before the rest of the
     # change wrote to it again. Its ResizeObserver delivers the first measure itself, after the frame's layout and before
@@ -265,11 +247,10 @@ CENSUS = [
 ANSWER_FIRST = [
     # Page tabs answer on the click's own frame (final motion QA, planner 2026-10-16: Settings entry measured 440 ms
     # click-to-paint with 17 ms of handlers; the arriving page's first style, layout and paint is the rest). A trusted
-    # click on a page tab now paints its answer first: the tab strip shows the choice, its ink starts gliding and the
-    # leaving page starts to fade, all on layers that already exist. The page change itself (classes, page.changed,
-    # first renders) runs in the task after that frame; its exit continues from where the fade has got to, and the
-    # moves start again on the frames that are shown. Under Reduced Motion the answer is the tab strip alone (the ink
-    # snaps, nothing fades) and the page then swaps at once. Programmatic clicks (tab.click() from other code) keep the
+    # click on a page tab now paints its answer first: the tab strip shows the choice and its ink starts gliding, on
+    # layers that already exist. The page change itself (classes, page.changed, first renders) runs in the task after
+    # that frame, and its moves start on the frames that are shown. Under Reduced Motion the answer is the tab strip
+    # alone (the ink snaps) and the page then swaps at once. Programmatic clicks (tab.click() from other code) keep the
     # immediate, synchronous change.
     ("      document.addEventListener('click', function(e) {\n"
      "        if (!window.PM_PAGES || !window.PM_PAGES.go) return;\n"
@@ -293,9 +274,6 @@ ANSWER_FIRST = [
      "          if (!pageId) return;\n"
      "          if (window.PM_PAGES && typeof window.PM_PAGES.go === 'function') return;   /* O55: PM_PAGES switches */\n",
      'page tabs: legacy switch only without PM_PAGES'),
-    ("    from { opacity: 1; transform: translateX(0); }\n",
-     "    from { opacity: var(--pm8-out-from, 1); transform: translateX(0); }   /* O55: continues an answered fade */\n",
-     'page exit: starts where the answer left it'),
     ("      if (tab) (changed ? springTo : snap)(tab, tabMetrics);\n",
      "      if (tab && window.PM_PAGES.__answered !== pageId) (changed ? springTo : snap)(tab, tabMetrics);   /* O55: the answer already started it */\n"
      "      window.PM_PAGES.__answered = null;\n",
@@ -308,21 +286,19 @@ ANSWER_FIRST = [
      "      var P = window.PM_PAGES, prev = P.current;\n"
      "      if (soon) { soon.page = pageId; }\n"
      "      else if (!pageId || pageId === prev || !bootPaintDone || document.hidden || !panelFor(pageId)) { P.go(pageId); return; }\n"
-     "      var tab = tabFor(pageId), oldP = prev ? panelFor(prev) : null;\n"
+     "      var tab = tabFor(pageId);\n"
      "      document.querySelectorAll('.page-tab').forEach(function (t) { var on = t.getAttribute('data-page') === pageId; t.classList.toggle('active', on); t.setAttribute('aria-selected', on ? 'true' : 'false'); });\n"
      "      if (tab) { springTo(tab, measureTab(tab)); P.__answered = pageId; }\n"
      "      if (soon) return;\n"
-     "      var html = document.documentElement, nier = html.getAttribute('data-o55-nier') === 'on', retro = /^retro/.test(html.getAttribute('data-theme') || '');\n"
-     "      /* NieR answers with its wipe and the ink; the other looks start the leaving page's fade (Retro in steps) */\n"
-     "      var lift = !nier && !reduced() && oldP && oldP.animate && !oldP.classList.contains('pm8-page-out') ? oldP.animate([{ opacity: 1 }, { opacity: 0.86 }], { duration: 140, easing: retro ? 'steps(2, end)' : 'cubic-bezier(.2, 0, 0, 1)', fill: 'forwards' }) : null;\n"
+     "      /* the tabs and the ink are the answer, drawn on the click's own frame. A fade of the leaving page from the\n"
+     "         click (0.86 over 140 ms, tried 2026-10-16) made that page a new compositor layer there: the P1000 rastered\n"
+     "         the whole page before the click's frame could show (a Settings entry's first paint 280 ms after the click,\n"
+     "         nothing moving for 770 ms) and drew the Wizard empty for frames when it changed under the fade */\n"
      "      soon = { page: pageId };\n"
-     "      requestAnimationFrame(function (shown) { setTimeout(function () {\n"
+     "      requestAnimationFrame(function () { setTimeout(function () {\n"
      "        var to = soon.page; soon = null;\n"
-     "        /* the fade is not read here: a move begun a frame ago still reads as its start on this thread */\n"
-     "        P.__lift = lift ? { el: oldP, anim: lift, at: shown } : null;\n"
      "        if (P.__answered !== to) P.__answered = null;\n"
      "        P.go(to);\n"
-     "        if (P.__lift) { try { P.__lift.anim.cancel(); } catch (e) {} P.__lift = null; }   /* no exit took it over */\n"
      "      }, 0); });\n"
      "    };\n"
      "    function resync() {\n"

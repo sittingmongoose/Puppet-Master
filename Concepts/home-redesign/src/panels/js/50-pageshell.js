@@ -204,6 +204,9 @@ window.PM_NOTICE_PLACE = applyDrop;
    forward into the frame that should first show the change (49 and 32 ms on the M3, final motion QA 2026-10-16). */
 var layoutQ = [], layoutRo = null;
 function afterLayout(fn) {
+  /* the shell's one early observer (onboarding 11-motion-start.js): it is told before the page's other observers, so
+     these reads come before any of them writes in the same delivery */
+  if (typeof window.PM_AFTER_LAYOUT === 'function') { window.PM_AFTER_LAYOUT(fn); return; }
   if (typeof ResizeObserver !== 'function') { fn(); return; }
   if (layoutQ.indexOf(fn) < 0) layoutQ.push(fn);
   if (layoutRo) return;
