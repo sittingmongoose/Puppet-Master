@@ -2,9 +2,9 @@
 
 Source: `Plans/Personas.md`
 
-Source lines: L3516-L3551
+Source lines: L3516-L3552
 
-Source SHA256: `4d1b135530da355136f04b8acf387eb1f09aac87588183ae1e30413d827b5507`
+Source SHA256: `5b91f117e602609c2221530c7cc2fb50cbcfce9b891ffa60647f5331fd27d33e`
 
 ---
 
@@ -28,12 +28,13 @@ not a final answer and is not an evidence claim; Wonderer does not conclude.
 
 ### WONV-003..004 — Default abstention, retained voice
 
-An active Wonderer abstains from the final BrainStorm vote by default and is excluded from the
-quorum and majority denominators. A surface may show `Abstained` without depressing the support
-percentage, and abstention is never counted as opposition.
+An active Wonderer never votes in a BrainStorm: it abstains and is excluded from the quorum and
+majority denominators. A surface may show `Abstained` without depressing the support percentage,
+and abstention is never counted as opposition.
 
-Wonderer may challenge proposals and contribute to debate before abstaining. Its transcript stays
-part of synthesis evidence; it is not removed from the discussion because it cannot vote.
+Wonderer takes no debate turn and never argues for or against a proposal (DL-218). It delivers
+its passes and answers questions put to it about its leads, and its passes stay part of synthesis
+evidence; it is not removed from the discussion because it cannot vote.
 
 ### WONV-006..007 — Role changes and additivity
 

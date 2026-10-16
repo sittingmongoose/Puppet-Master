@@ -4,7 +4,7 @@ Source: `Plans/Decision_Log.md`
 
 Source lines: L13-L4289
 
-Source SHA256: `df46fd9a7d4bb7de58a5b663f91554e80867c2390d6998540e7b67b062b59233`
+Source SHA256: `4028370eb09c5464f3715e19609c7f83fe0ef8770be8850b946af836e6c4e0dc`
 
 ---
 
@@ -2845,7 +2845,7 @@ Jared answered all 29 distinct wand-modules questions (33 ledger question record
 | 7 | Stored Build At grace and occurrence summary | Version the saved ExecutionSchedule to persist grace_seconds; define an occurrence summary rebuilt from existing owner records. | SQR-015, SQR-016 |
 | 8 | Plan-card Cancel schedule | Add plan_card as an allowed origin for cmd.execution_window.cancel. | SQR-013, UCC-169 |
 | 9 | Pause all automations companions | Approve storage, wiring, runtime acceptance and event-registration work; complete the first three now and retain event registration as an outstanding Event Authority obligation under the required admission procedure. | SQR-018, ATS-064 |
-| 10 | Grill Me outside BrainStorm | Question peers and research independently; ask the user only through the ordinary needs-you path, with no new allowance. | CWR-028 |
+| 10 | Grill Me outside BrainStorm | Question peers and research independently; ask the user only through the ordinary needs-you path, with no new allowance. Replaced 2026-10-16 by DL-218: Grill Me is a switch, and the coordinator or moderator grills the user. | CWR-028 |
 | 11 | Crew Auto parallelism | Use Crew parallelism capped by app limits and show a read-only value on the sheet. | CWR-021 |
 | 12 | Hard budget vs run limit | Hard budgets always cap a run limit and the sheet shows both requested and effective limits. | CWR-032, CWR-029, UF-106 |
 | 13 | First Crew Auto run | Create untouched configuration version 1 with the project; no confirmation sheet before first use, then show the note and settings link. | CWR-004, CWR-021 |

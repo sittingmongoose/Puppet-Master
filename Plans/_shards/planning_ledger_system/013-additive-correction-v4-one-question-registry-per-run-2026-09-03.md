@@ -2,9 +2,9 @@
 
 Source: `Plans/Planning_Ledger_System.md`
 
-Source lines: L1356-L1372
+Source lines: L1356-L1373
 
-Source SHA256: `90fa584e9dc777abc3dc135ee5bc7929cb154b7ceab5a72911a7fe63366f038c`
+Source SHA256: `f4b8a3f6e36aa96abd6d41e3149ce24f67e7729459452c7716d1ad7afb9d2165`
 
 ---
 
@@ -15,8 +15,9 @@ single-registry guarantee; the arithmetic and the admission decision are owned b
 `Plans/Assistant_Plan_Runtime.md` (`QMAX-001..016`).
 
 - The registry is keyed by the **planning run**, not by participant, agent, pass, or card. Every
-  BrainStorm participant, the Wonderer role, and the Grill Me specialist read and write the same
-  registry, so the ceiling is never multiplied by participant count.
+  BrainStorm participant, the Wonderer role, and the participant running Grill Me (a switch, not a
+  participant of its own, DL-218) read and write the same registry, so the ceiling is never
+  multiplied by participant count.
 - A `QuestionItem` is charged once, when its stable identity is first durably presented to the
   user. Re-render, reconnect, restart, retry, and panel reopen resolve the existing record rather
   than writing a new one.

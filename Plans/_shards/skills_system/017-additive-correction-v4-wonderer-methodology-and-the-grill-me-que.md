@@ -4,7 +4,7 @@ Source: `Plans/Skills_System.md`
 
 Source lines: L2651-L2688
 
-Source SHA256: `1e0850e11d06906d3292c4aa514eea249ecda3b85766af436d18a4119acae139`
+Source SHA256: `2ce1a05502605f2b0f530d1bbd8202c1f5c6639a91ad834f86df60fb1759e039`
 
 ---
 
@@ -26,8 +26,8 @@ Fertility is never promoted to truth, and an interesting lead is not a finding.
 
 ### QMAX-003, QMAX-006 — Grill Me extends one shared allowance
 
-Grill Me is a reusable methodology Skill applied through a dedicated participant role that widens
-the question frontier. It adds exactly **25** questions to the owning workflow's allowance —
+Grill Me is a reusable methodology Skill, the grilling Skill of SS-038, turned on by a switch that
+widens the question frontier; it is never a participant (DL-218). It adds exactly **25** questions to the owning workflow's allowance —
 retiring the former `+10` — and the allowance is one counter shared by every participant in the
 run, never a per-agent quota.
 
@@ -43,6 +43,6 @@ admission rather than re-asked.
 
 ### PART-013 — Question pressure is not voting weight
 
-Grill Me contributes questions and decision pressure. It has no automatic final vote unless it is
-explicitly configured as an additional ordinary voting role, and the number of questions it
-raised never implies voting weight. It has no implementation authority.
+Grill Me contributes questions and decision pressure. It is a switch, not a participant, so it has
+no vote, and the number of questions it raised never implies voting weight (DL-218). It has no
+implementation authority.

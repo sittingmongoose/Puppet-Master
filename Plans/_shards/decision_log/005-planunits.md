@@ -2,9 +2,9 @@
 
 Source: `Plans/Decision_Log.md`
 
-Source lines: L4297-L14467
+Source lines: L4297-L14468
 
-Source SHA256: `df46fd9a7d4bb7de58a5b663f91554e80867c2390d6998540e7b67b062b59233`
+Source SHA256: `4028370eb09c5464f3715e19609c7f83fe0ef8770be8850b946af836e6c4e0dc`
 
 ---
 
@@ -7403,7 +7403,8 @@ canonical_text: >-
   the required admission procedure.
 
   10. Grill Me outside BrainStorm: Question peers and research independently; ask the user only through the ordinary
-  needs-you path, with no new allowance.
+  needs-you path, with no new allowance. Replaced 2026-10-16 by DL-218: Grill Me is a switch, and the coordinator or
+  moderator grills the user.
 
   11. Crew Auto parallelism: Use Crew parallelism capped by app limits and show a read-only value on the sheet.
 

@@ -74,7 +74,7 @@
         "Plans/usage-feature.md",
         "scripts/pm-audit-closure.py"
       ],
-      "line_count": 6087,
+      "line_count": 6090,
       "path": "Plans/00-plans-index.md",
       "plan_unit_count": 68,
       "plan_unit_ids": [
@@ -214,7 +214,7 @@
         "visible_source_control_surface_routing",
         "web_firecrawl_owner_set"
       ],
-      "sha256": "ada7e7f512381b48643f91836298dfa8ed8771d2d103bc05a05df2a66c11e90d",
+      "sha256": "d191e84528995641831ff78ebf9008d5e58afaf9d4a9ad6d0c621c1ba37c28c8",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 68
@@ -1722,9 +1722,9 @@
       "all_planunits_have_gui_related": true,
       "gui_related_counts": {
         "False": 4,
-        "True": 14
+        "True": 15
       },
-      "heading_count": 83,
+      "heading_count": 85,
       "implementation_surfaces": [
         "Concepts/chat-assistant-concepts/5.6 Pro/plans.js",
         "Plans/Assistant_Plan_Runtime.md",
@@ -1738,11 +1738,13 @@
         "Plans/Planning_Wizard.md",
         "Plans/Prompt_Pipeline.md",
         "Plans/Scheduling_and_Quota_Resume.md",
-        "Plans/ToDo_Runtime.md"
+        "Plans/Skills_System.md",
+        "Plans/ToDo_Runtime.md",
+        "Plans/assistant-chat-design.md"
       ],
-      "line_count": 1795,
+      "line_count": 1856,
       "path": "Plans/Assistant_Plan_Runtime.md",
-      "plan_unit_count": 18,
+      "plan_unit_count": 19,
       "plan_unit_ids": [
         "APR-001",
         "APR-002",
@@ -1761,7 +1763,8 @@
         "APR-015",
         "APR-016",
         "APR-017",
-        "APR-071"
+        "APR-071",
+        "APR-072"
       ],
       "reasoning_tiers": [
         "high",
@@ -1770,6 +1773,7 @@
       "risk_classes": [
         "assistant_plan_owner_collapse",
         "goal_cancellation_original_authority_or_effect_loss",
+        "grill_me_acts_before_confirm",
         "implicit_orchestrator_entry_from_assistant_plan",
         "multiple_current_plan_or_superseded_regression",
         "optimistic_or_duplicated_build_control",
@@ -1786,16 +1790,16 @@
         "wrong_version_or_duplicate_scheduled_build",
         "wrong_version_or_hidden_build_state"
       ],
-      "sha256": "0902c7beecb969db7acec7d2338719eb765901d79ab21e527bddfdc46b002e43",
+      "sha256": "2961aa19634efe8776be4b4faa1433a17b1d86630baf32ec47baf40cd1d42067",
       "source_preserving_unit_ids": [],
       "status_counts": {
-        "accepted": 18
+        "accepted": 19
       },
       "title": "Assistant Plan Runtime",
       "unit_type_counts": {
         "constraint": 1,
         "owner_boundary": 1,
-        "requirement": 14,
+        "requirement": 15,
         "schema_contract": 2
       },
       "validation_surfaces": [
@@ -3572,10 +3576,10 @@
     {
       "all_planunits_have_gui_related": true,
       "gui_related_counts": {
-        "False": 4,
-        "True": 36
+        "False": 6,
+        "True": 37
       },
-      "heading_count": 113,
+      "heading_count": 117,
       "implementation_surfaces": [
         "Concepts/chat-assistant-concepts/5.6 Pro/collaboration.js",
         "Plans/Assistant_Plan_Runtime.md",
@@ -3595,6 +3599,7 @@
         "Plans/Planning_Wizard.md",
         "Plans/Provider_OpenCode.md",
         "Plans/Run_Modes.md",
+        "Plans/Runtime_Artifacts_Panel.md",
         "Plans/Scheduling_and_Quota_Resume.md",
         "Plans/Settings_System.md",
         "Plans/Skills_System.md",
@@ -3602,12 +3607,13 @@
         "Plans/UI_Command_Catalog.md",
         "Plans/Working_Notebook.md",
         "Plans/assistant-chat-design.md",
+        "Plans/collaborative_workflows_contracts.schema.json",
         "Plans/orchestrator-subagent-integration.md",
         "Plans/storage-plan.md"
       ],
-      "line_count": 3150,
+      "line_count": 3425,
       "path": "Plans/Collaborative_Workflows.md",
-      "plan_unit_count": 40,
+      "plan_unit_count": 43,
       "plan_unit_ids": [
         "CWR-001",
         "CWR-002",
@@ -3648,7 +3654,10 @@
         "CWR-037",
         "CWR-038",
         "CWR-039",
-        "CWR-040"
+        "CWR-040",
+        "CWR-041",
+        "CWR-042",
+        "CWR-043"
       ],
       "reasoning_tiers": [
         "high",
@@ -3676,6 +3685,7 @@
         "fabricated_collaborative_history_on_migration",
         "fabricated_participant_output_or_lost_transcript",
         "four_duplicate_collaborative_runtimes",
+        "grill_me_answers_for_the_user",
         "hidden_brainstorm_overlay_or_target_mutation",
         "implicit_promotion_from_room_discussion",
         "invented_or_persisted_live_activity",
@@ -3694,17 +3704,19 @@
         "sheet_side_effect_before_start_or_false_estimate",
         "silent_model_substitution_or_retroactive_default",
         "silent_stand_in_for_chosen_model",
-        "specialist_replaces_core_role"
+        "specialist_replaces_core_role",
+        "wonderer_converges_or_contaminates_blind_phase",
+        "wonderer_or_grill_me_misrepresented"
       ],
-      "sha256": "9c0a26fe3d28c7f2231f418e666ce5ff6969ae9c8a40ceaeead14c1b892a2e87",
+      "sha256": "c9087233878237d395dcd5ff6907963d117998fe88ffd9e80829414d9edb29de",
       "source_preserving_unit_ids": [],
       "status_counts": {
-        "accepted": 40
+        "accepted": 43
       },
       "title": "Collaborative Workflows",
       "unit_type_counts": {
         "constraint": 1,
-        "requirement": 39
+        "requirement": 42
       },
       "validation_surfaces": [
         "Plans/working_notebook_contract_fixtures.json",
@@ -5513,7 +5525,7 @@
         "usage_attention_acknowledged_semantics_drift",
         "wrapper_command_navigation_drift"
       ],
-      "sha256": "8828021b9b39d038cc0465d5dff5817a3d374afbe0bba5e83a0406be43f245f7",
+      "sha256": "ccda3e8abbc8b7ebdafd4b39c843b14633be3df2ba5be96a4625a8011aa75c9d",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 52
@@ -5648,9 +5660,9 @@
       "all_planunits_have_gui_related": true,
       "gui_related_counts": {
         "False": 56,
-        "True": 140
+        "True": 141
       },
-      "heading_count": 368,
+      "heading_count": 369,
       "implementation_surfaces": [
         ".claude/CLAUDE.md",
         ".gitignore",
@@ -5705,6 +5717,7 @@
         "Plans/Section15_MVP_Promoted_Features_Spec.md",
         "Plans/Server_System.md",
         "Plans/Settings_System.md",
+        "Plans/Skills_System.md",
         "Plans/Source_Control_System.md",
         "Plans/ToDo_Runtime.md",
         "Plans/UI_Command_Catalog.md",
@@ -5757,9 +5770,9 @@
         "scripts/pm_pnc019_currentness.py",
         "tests/test_pm_wiring_vocabulary.py"
       ],
-      "line_count": 16103,
+      "line_count": 16173,
       "path": "Plans/Decision_Log.md",
-      "plan_unit_count": 196,
+      "plan_unit_count": 197,
       "plan_unit_ids": [
         "DL-002",
         "DL-003",
@@ -5956,7 +5969,8 @@
         "DL-214",
         "DL-215",
         "DL-216",
-        "DL-217"
+        "DL-217",
+        "DL-218"
       ],
       "reasoning_tiers": [
         "high",
@@ -6118,15 +6132,15 @@
         "workflow_verification_exception_route_drift",
         "working_activity_behaviour_drift"
       ],
-      "sha256": "df46fd9a7d4bb7de58a5b663f91554e80867c2390d6998540e7b67b062b59233",
+      "sha256": "4028370eb09c5464f3715e19609c7f83fe0ef8770be8850b946af836e6c4e0dc",
       "source_preserving_unit_ids": [],
       "status_counts": {
-        "accepted": 196
+        "accepted": 197
       },
       "title": "Decision Log",
       "unit_type_counts": {
         "compatibility_disposition": 1,
-        "decision": 107,
+        "decision": 108,
         "requirement": 88
       },
       "validation_surfaces": [
@@ -7691,7 +7705,7 @@
         "tests/fixtures/pm7_shared",
         "tests/fixtures/usage_gui"
       ],
-      "line_count": 48726,
+      "line_count": 48730,
       "path": "Plans/FinalGUISpec.md",
       "plan_unit_count": 646,
       "plan_unit_ids": [
@@ -8480,7 +8494,7 @@
         "wand_sheet_presentation_drift",
         "web_client_stack_or_parity_drift"
       ],
-      "sha256": "b775ea74b55d4a585a6fbcc3a86089ccd634ebac202e16a10e985b4e8ac9ae04",
+      "sha256": "2275c1b1a7e92f750c394e3ea2dc9bf52b0a63ce908b6e642a50d3be1d58f3fa",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 639,
@@ -13641,10 +13655,10 @@
     {
       "all_planunits_have_gui_related": true,
       "gui_related_counts": {
-        "False": 41,
+        "False": 42,
         "True": 17
       },
-      "heading_count": 131,
+      "heading_count": 133,
       "implementation_surfaces": [
         "Plans/Back_Seat_Driver.md",
         "Plans/Collaborative_Workflows.md",
@@ -13659,9 +13673,9 @@
         "Plans/orchestrator-subagent-integration.md",
         "future Teacher persona routing"
       ],
-      "line_count": 3639,
+      "line_count": 3690,
       "path": "Plans/Personas.md",
-      "plan_unit_count": 58,
+      "plan_unit_count": 59,
       "plan_unit_ids": [
         "P-002",
         "P-003",
@@ -13720,7 +13734,8 @@
         "P-055",
         "P-056",
         "P-057",
-        "P-058"
+        "P-058",
+        "P-059"
       ],
       "reasoning_tiers": [
         "high",
@@ -13784,12 +13799,13 @@
         "subagent_registry_persona_registry_conflation",
         "teacher_persona_doc_guessing_drift",
         "teacher_persona_scope_drift",
-        "team_persona_identity_drift"
+        "team_persona_identity_drift",
+        "wonderer_persona_converges"
       ],
-      "sha256": "4d1b135530da355136f04b8acf387eb1f09aac87588183ae1e30413d827b5507",
+      "sha256": "5b91f117e602609c2221530c7cc2fb50cbcfce9b891ffa60647f5331fd27d33e",
       "source_preserving_unit_ids": [],
       "status_counts": {
-        "accepted": 57,
+        "accepted": 58,
         "retired": 1
       },
       "title": "Personas (Canonical SSOT)",
@@ -13797,7 +13813,7 @@
         "compatibility_disposition": 1,
         "constraint": 17,
         "decision": 1,
-        "requirement": 39
+        "requirement": 40
       },
       "validation_surfaces": [
         "Persona scope and thread-locality fixtures",
@@ -14158,7 +14174,7 @@
         "scripts/pm-prd-planning-runtime-validate.py",
         "tests/test_pm_audit_closure.py"
       ],
-      "line_count": 1451,
+      "line_count": 1452,
       "path": "Plans/Planning_Ledger_System.md",
       "plan_unit_count": 23,
       "plan_unit_ids": [
@@ -14213,7 +14229,7 @@
         "source_loss",
         "vague_compile_output"
       ],
-      "sha256": "90fa584e9dc777abc3dc135ee5bc7929cb154b7ceab5a72911a7fe63366f038c",
+      "sha256": "f4b8a3f6e36aa96abd6d41e3149ce24f67e7729459452c7716d1ad7afb9d2165",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 23
@@ -16290,7 +16306,7 @@
         "future runtime artifact rows",
         "future runtime artifacts panel"
       ],
-      "line_count": 3238,
+      "line_count": 3244,
       "path": "Plans/Runtime_Artifacts_Panel.md",
       "plan_unit_count": 59,
       "plan_unit_ids": [
@@ -16418,7 +16434,7 @@
         "teacher_activity_trace_gap",
         "vision_artifact_lineage_loss"
       ],
-      "sha256": "ba25a15996b0a9dc4c4054f337c02353cef6e3c2c6490fc3308451e77a5b114c",
+      "sha256": "f37269b54ee47641bbafcf473c12d92cb05e38a4045b1c1a3d1b11c89cdd6dc6",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 58,
@@ -17850,19 +17866,23 @@
     {
       "all_planunits_have_gui_related": true,
       "gui_related_counts": {
-        "False": 24,
+        "False": 26,
         "True": 12
       },
-      "heading_count": 77,
+      "heading_count": 80,
       "implementation_surfaces": [
+        "Plans/Assistant_Plan_Runtime.md",
+        "Plans/Collaborative_Workflows.md",
         "Plans/Permissions_System.md",
+        "Plans/Personas.md",
         "Plans/Prompt_Pipeline.md",
+        "Plans/Runtime_Artifacts_Panel.md",
         "Plans/Skills_System.md",
         "Plans/Tools.md"
       ],
-      "line_count": 2688,
+      "line_count": 2833,
       "path": "Plans/Skills_System.md",
-      "plan_unit_count": 36,
+      "plan_unit_count": 38,
       "plan_unit_ids": [
         "SS-002",
         "SS-003",
@@ -17899,7 +17919,9 @@
         "SS-034",
         "SS-001",
         "SS-035",
-        "SS-036"
+        "SS-036",
+        "SS-037",
+        "SS-038"
       ],
       "reasoning_tiers": [
         "high",
@@ -17907,21 +17929,23 @@
       ],
       "risk_classes": [
         "fable_residual_skills_invocation_drift",
+        "grill_me_answers_for_the_user",
         "progressive_skill_materialization_drift",
         "retired_bridge_overreach",
         "skills_acceptance_drift",
-        "skills_system_drift"
+        "skills_system_drift",
+        "wonderer_drift_or_premature_convergence"
       ],
-      "sha256": "1e0850e11d06906d3292c4aa514eea249ecda3b85766af436d18a4119acae139",
+      "sha256": "2ce1a05502605f2b0f530d1bbd8202c1f5c6639a91ad834f86df60fb1759e039",
       "source_preserving_unit_ids": [],
       "status_counts": {
-        "accepted": 35,
+        "accepted": 37,
         "retired": 1
       },
       "title": "Skills System (Canonical SSOT)",
       "unit_type_counts": {
         "compatibility_disposition": 1,
-        "requirement": 35
+        "requirement": 37
       },
       "validation_surfaces": [
         "python3 scripts/pm-audit-closure.py validate --audit-dir Plans/.audits/fable-20260706 --require-closure-matrix --require-effective-status",
@@ -20934,7 +20958,7 @@
       ]
     }
   ],
-  "generated_at_utc": "2026-10-16T20:04:37Z",
+  "generated_at_utc": "2026-10-16T22:12:40Z",
   "schema_id": "pm.plan_index.doc_cards.v1",
   "source_scope": "top-level live Plans/*.md; excludes ledgers, generated shards, evidence, and pipeline artifacts",
   "summary": {
@@ -20942,13 +20966,13 @@
     "docs_with_plan_units": 96,
     "docs_without_plan_units": 0,
     "gui_related_counts": {
-      "False": 3562,
-      "True": 3582
+      "False": 3567,
+      "True": 3585
     },
-    "plan_unit_count": 7144,
+    "plan_unit_count": 7152,
     "source_preserving_unit_count": 0,
     "status_counts": {
-      "accepted": 6939,
+      "accepted": 6947,
       "retired": 182,
       "superseded": 23
     },
@@ -20981,7 +21005,7 @@
       "contract": 5,
       "contract_requirement": 2,
       "data_contract": 8,
-      "decision": 130,
+      "decision": 131,
       "deferred_enhancement": 8,
       "delta_contract": 1,
       "derived_control_policy": 1,
@@ -21015,7 +21039,7 @@
       "recovery_requirement": 4,
       "reference": 5,
       "reference_formula": 1,
-      "requirement": 5488,
+      "requirement": 5495,
       "risk": 2,
       "runtime_contract": 22,
       "runtime_disclosure": 2,

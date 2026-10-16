@@ -1360,8 +1360,9 @@ single-registry guarantee; the arithmetic and the admission decision are owned b
 `Plans/Assistant_Plan_Runtime.md` (`QMAX-001..016`).
 
 - The registry is keyed by the **planning run**, not by participant, agent, pass, or card. Every
-  BrainStorm participant, the Wonderer role, and the Grill Me specialist read and write the same
-  registry, so the ceiling is never multiplied by participant count.
+  BrainStorm participant, the Wonderer role, and the participant running Grill Me (a switch, not a
+  participant of its own, DL-218) read and write the same registry, so the ceiling is never
+  multiplied by participant count.
 - A `QuestionItem` is charged once, when its stable identity is first durably presented to the
   user. Re-render, reconnect, restart, retry, and panel reopen resolve the existing record rather
   than writing a new one.

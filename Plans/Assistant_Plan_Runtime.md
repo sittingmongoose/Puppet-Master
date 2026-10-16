@@ -659,7 +659,7 @@ deep_thorough | deep_exhaustive | deep_brainstorm -> backend: ledger_bound
 
 Regular depth behavior is a bounded obligation, not a token budget. `Quick` performs only the inspection and questioning that the request requires, produces a compact document and a bounded To-Do hierarchy, and still may not omit obvious safety or validation work. `Standard` is the default practical depth and covers relevant context, dependencies, risks, expected outcomes, and appropriate validation To-Dos. `Thorough` broadens cross-file and cross-system inspection, records alternatives, downstream effects, compatibility, and rollback, and produces finer To-Dos while remaining an Assistant task Plan rather than a product specification.
 
-Deep depth obligations are defined in section 6. `Grill Me` is an additive, persistent check option in the Deep Plan submenu; it does not create a seventh choice and does not change the backend. Question-allowance arithmetic for Grill Me is owned by `QMAX-001..016` in the Additive Correction v4 section of this document (`+25`, one shared counter); `Plans/Skills_System.md` owns the Grill Me methodology. `assistant.chat.deep_plan.grill_me_default` remains a Settings value, not a Plan record field.
+Deep depth obligations are defined in section 6. `Grill Me` is an additive, persistent check option in the Deep Plan submenu; it does not create a seventh choice and does not change the backend. Question-allowance arithmetic for Grill Me is owned by `QMAX-001..016` in the Additive Correction v4 section of this document (`+25`, one shared counter); `Plans/Skills_System.md` owns the Grill Me methodology (SS-038), and APR-072 how the assistant applies it (DL-218). `assistant.chat.deep_plan.grill_me_default` remains a Settings value, not a Plan record field.
 
 Default strategy per workflow comes from Settings (`assistant.chat.plan.default_strategy`, default `standard`; `assistant.chat.deep_plan.default_strategy`, default `thorough`). Settings stores the preference; this runtime stores the strategy actually frozen into the created Plan. A later Settings change never rewrites an existing `AssistantPlanRecord`.
 
@@ -1012,7 +1012,7 @@ charged and is never persisted as asked.
 
 Question admission for a Plan or Deep Plan run uses exactly one durable counter, keyed by the
 planning run, not by participant, agent, specialist, pass, or card. BrainStorm participants,
-the Wonderer role, and the Grill Me specialist read and write that one counter. The ceiling is
+the Wonderer role, and the participant running Grill Me read and write that one counter. The ceiling is
 never multiplied by participant count and is never partitioned into per-agent pools.
 
 For a Deep Plan run, `Plans/Planning_Ledger_System.md` owns the durable question record and its
@@ -1793,3 +1793,64 @@ owner_hints: [Plans/Assistant_Plan_Runtime.md, Plans/Collaborative_Workflows.md,
 ```
 
 ContractRef: ContractName:Plans/Assistant_Plan_Runtime.md#pfail-001002--four-labels-and-where-trouble-is-told, ContractName:Plans/Assistant_Plan_Runtime.md#build-with-crew-and-build-at, ContractName:Plans/Collaborative_Workflows.md, ContractName:Plans/Scheduling_and_Quota_Resume.md, UICommand:cmd.chat.plan.build_with_crew, UICommand:cmd.chat.plan.schedule_build
+
+## Grill Me In Plan And Deep Plan Addendum (2026-10-16)
+
+DL-218 makes Grill Me the grilling Skill of `Plans/Skills_System.md` SS-038 turned on by a switch, never a participant. In a Plan or Deep Plan run the participant that talks to the user is the assistant itself, so the assistant runs it. This addendum fixes how, over the question counter of QMAX-001..016. BrainStorm's intake is the coordinator's and is owned by `Plans/Collaborative_Workflows.md` CWR-042.
+
+### APR-072 - The Assistant Grills The User When Grill Me Is On
+
+```yaml
+plan_unit_id: APR-072
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Assistant_Plan_Runtime.md
+canonical_text: >-
+  With Grill Me on in a Plan or Deep Plan run, the assistant asks its questions as the grilling Skill
+  (SS-038, DL-218). It works the frontier in rounds through the existing questionnaire host: each round
+  asks every decision whose prerequisites are settled, each question numbered and carrying a recommended
+  answer that yes accepts, and a question that depends on one still open waits for a later round. A fact
+  goes to research and is never asked, and research holds only the questions that depend on it. The
+  session ends when the frontier is empty or the user presses Wrap up; the effective limit of QMAX-001..004
+  is a safety net, and reaching it ends the session with the typed exhaustion of QMAX-014..015. When the
+  session ends the user sees What we agreed, every decision with its answer and every decision left open,
+  with Confirm and Keep going, and the Plan document is not written or revised from those answers until
+  the user confirms; Keep going returns to the interview within the limit. Every question still counts once
+  against the run's one counter (QMAX-005..007), and Grill Me adds no participant and no second counter.
+gui_related: true
+gui_classification_reason: The rounds, Wrap up and the What we agreed step are visible in the chat's questionnaire.
+depends_on: [APR-002, APR-009]
+unblocks: []
+acceptance_criteria:
+  - With Grill Me on, every round holds only questions whose prerequisites are settled, each with a recommended answer.
+  - The session ends at an empty frontier, at Wrap up or at the effective limit.
+  - No Plan document is written from the answers before Confirm.
+  - Grill Me charges the same one counter and adds no second one.
+validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
+risk_class: grill_me_acts_before_confirm
+reasoning_tier: standard
+context_scope: assistant_plan_questions
+implementation_surfaces:
+  - Plans/Assistant_Plan_Runtime.md
+  - Plans/Skills_System.md
+  - Plans/assistant-chat-design.md
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - Plans/Decision_Log.md#DL-218
+  - "/mnt/Cursor/share/puppet-master/2026-10-16-wonderer-grill-me/DECISIONS.md sha256:dfa2f354936defd187d610de4aee77a3d8b75b6d25692e592ba48f7b66bfebce (Grill Me 1, 3, 4)"
+preserved_exact_tokens:
+  - "Wrap up"
+  - "What we agreed"
+  - "question_budget_exhausted"
+negative_constraints:
+  - Do not write or revise the Plan from grilling answers before Confirm.
+  - Do not add a Grill Me participant or a second question counter.
+owner_hints:
+  - Plans/Assistant_Plan_Runtime.md
+```
+
+ContractRef: ContractName:Plans/Skills_System.md, ContractName:Plans/Collaborative_Workflows.md, ContractName:Plans/Decision_Log.md#DL-218
