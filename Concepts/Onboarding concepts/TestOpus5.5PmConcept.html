@@ -215137,17 +215137,38 @@ var T = {};
      P1000 before it appeared whole). It is built while the app is idle for the terminal in view (prepareSoon), laid out
      and measured there, and parked: clipped away, its contents out of the tab order and the accessibility tree with no
      element in them touched (26-customize.css .pmt-cz-parked). A click shows it and plays its entrance; a close parks it
-     again for the next visit. Opened on another terminal it moves there (one is kept), and it goes with its terminal,
-     another being prepared then. The editor's screen does the same (11-editor-customize.js, .pmed-prepared) */
-  var prepared = null;
+     again for the next visit. Opened on another terminal it moves there (one is kept); when its terminal goes it is kept
+     for the next one. The editor's screen does the same (11-editor-customize.js, .pmed-prepared) */
+  var prepared = null, asked = null;
+  /* fn runs in the task after the coming frame has painted */
+  function afterPaint(fn) { requestAnimationFrame(function () { setTimeout(fn, 0); }); }
   function open(v, opts) {
     opts = opts || {};
+    /* a click's own open replaces one still waiting for its frame; preparing in idle time does not */
+    if (!opts.prepare) asked = null;
     if (prepared && prepared.el.isConnected) {
       if (prepared.v === v) return opts.prepare ? prepared : prepared.show(opts);
+      /* a screen kept from a terminal that went: this one takes it, parked, and it catches up in idle time */
+      if (opts.prepare) { if (prepared.kept) prepared.adopt(v); return prepared; }
       /* another terminal's screen: closed there if it shows, and moved to this one rather than built again */
-      if (!opts.prepare) { if (prepared.v.pop === prepared.el) prepared.v.closeAppearance(true); prepared.retarget(v); return prepared.show(opts); }
+      if (prepared.v.pop === prepared.el) prepared.v.closeAppearance(true);
+      prepared.retarget(v);
+      return prepared.show(opts);
     }
     if (prepared) { prepared.dispose(); prepared = null; }
+    /* none kept yet (the first seconds after the page loads, before one is ready): the click is answered by the frame it
+       paints (the menu goes) and the screen is built in the task after it, so the build does not hold the menu (P2-02,
+       F1A on the P1000: built in the click, the menu held about 0.5 s). Asked again meanwhile, it is still built once */
+    if (!opts.prepare && !opts.now) {
+      var ask = asked = { v: v };
+      afterPaint(function () {
+        if (asked !== ask) return;
+        asked = null;
+        if (v.pop || !v.root.isConnected) return;
+        open(v, Object.assign({}, opts, { now: true }));
+      });
+      return null;
+    }
     if (v.pop) v.closeAppearance(true);
     var overlay = document.getElementById('pmw-overlay') || document.body;
     var root = el('div', 'pmt-cz pmt-calm pmt-cz-parked');
@@ -215886,6 +215907,9 @@ var T = {};
        still playing leaves only slivers between its frames). WARM_LATEST_MS is the backstop for a page whose own motion
        never rests (no cover or switch is up by then). A click before that draws what changed itself */
     var WARM_SETTLE_MS = 3000, WARM_IDLE_MS = 45, WARM_LATEST_MS = 10000, warmJob = 0, warmWait = 0, warmSince = 0, offWarm = null;
+    /* changed: something it shows may have changed while nothing watched it (kept from a terminal that went), so it
+       draws again before it shows */
+    var changed = false;
     function settling() { return pageSettling(); }
     function warm(deadline) {
       warmJob = 0;
@@ -215896,6 +215920,7 @@ var T = {};
         return;
       }
       place(); syncPreview(); paint();
+      changed = false;
       /* the preview draws what changed now, unseen, so the click has nothing left to draw */
       if (pv && pv.fullPending) pv.frame();
     }
@@ -215928,7 +215953,7 @@ var T = {};
       window.removeEventListener('resize', warmSoon);
       window.removeEventListener('pm-idle', warmOnIdle);
       if (v._czLook === warmSoon) v._czLook = null;
-      if (!on) return;
+      if (!on || handle.kept) return;
       offWarm = A().onChange(warmSoon);
       window.addEventListener('resize', warmSoon);
       window.addEventListener('pm-idle', warmOnIdle);
@@ -215978,14 +216003,27 @@ var T = {};
     /* the host's look or mode changed while the screen is open (View.onLook): the preview resolves again, so a scheme
        that switches with light and dark switches in the preview too (Q15 #7) */
     var onLook = function () { if (v.pop === root) { syncPreview(); paint(); } };
-    var handle = { el: root, v: v, show: show, dispose: dispose, retarget: retarget, close: function () { close(); }, refresh: function () { if (v.pop === root) { syncPreview(); paint(); } } };
-    /* it goes with the terminal that has it */
-    function own(owner) { owner.disposers.push(function () { if (prepared === handle && handle.v === owner) dispose(); }); }
+    var handle = { el: root, v: v, kept: false, show: show, dispose: dispose, retarget: retarget, adopt: adopt, close: function () { close(); }, refresh: function () { if (v.pop === root) { syncPreview(); paint(); } } };
+    /* the terminal that has it went (closed, restarted, or its panel left the page and came back, as Home's pinned tab
+       does when it is added again): the screen is kept, parked, for the next terminal rather than built again for it
+       (P2-02, F1A on the P1000: the session opened Customize just after Home came back, and the screen built in the
+       click held the menu about 0.5 s). Nothing watches the old terminal meanwhile; the next open, or prepareSoon for
+       the terminal in view, moves it on (the view closes an open screen before its disposers run) */
+    function own(owner) { owner.disposers.push(function () { if (prepared === handle && handle.v === owner) keep(); }); }
+    function keep() {
+      if (disposed) return;
+      if (v.pop === root) v.closeAppearance(true);
+      handle.kept = true; changed = true;
+      parkedWatch(false); detach();
+      setTimeout(prepareSoon, 1500);
+    }
+    function adopt(nv) { retarget(nv); warmSoon(); }
     /* moved, parked, to another terminal: every part of the screen reads the terminal through v */
     function retarget(nv) {
       if (nv === v) return;
       parkedWatch(false);
       v = handle.v = nv;
+      handle.kept = false;
       own(nv);
       var k = root.querySelector('.pmt-cz-kicker span'); if (k) k.textContent = 'Customize · ' + termLabel(nv);
       if (preview) preview.retarget(nv);
@@ -216001,32 +216039,43 @@ var T = {};
       v._apOnClose = typeof opts.onClose === 'function' ? opts.onClose : null;
       scope = opts.scope === 'app' ? 'app' : v._apScope || 'tab';
       closed = false;
+      /* something changed while it was parked and its catch-up has not run yet (a look just switched, a screen kept from a
+         terminal that went): drawn in the click, the browser would style and lay it out there, holding the menu
+         (P2-02, F1A on the P1000) */
+      var owed = changed || !!(warmWait || warmJob);
       parkedWatch(false);
       var showing = ++visit;
       gcat = null; wantDock = false; dockTo(false); body.scrollTop = 0;
       var q = root.querySelector('.pmt-cz-search'); if (q) q.value = '';
       presetSaveClose(false);
       attach();
-      /* the preview's canvas still holds what it drew: only rows that changed are drawn again (the renderer redraws in
-         full by itself when its frame or images changed) */
-      if (pv) { var pend = pv.fullPending; pv.onShow(); if (!pend) pv.fullPending = false; }
-      place();
-      syncPreview(); paint(); filter('');
-      if (preview) preview.select();
+      function draw() {
+        /* the preview's canvas still holds what it drew: only rows that changed are drawn again (the renderer redraws in
+           full by itself when its frame or images changed) */
+        if (pv) { var pend = pv.fullPending; pv.onShow(); if (!pend) pv.fullPending = false; }
+        place();
+        syncPreview(); paint(); filter('');
+        changed = false;
+        if (preview) preview.select();
+      }
       /* the click is answered by the frame it paints (the menu goes, a press shows), and the screen comes in on the next
          one, already drawn and measured: revealed in the click, the browser would style and lay it out there, under the
          menu's focus return (P2-02). The focus starts on the scope switch, the first thing to decide (the dialog's name
          and lead are its context), once the screen has painted */
-      requestAnimationFrame(function () { requestAnimationFrame(function () {
-        if (closed || showing !== visit) return;
-        root.removeAttribute('aria-hidden');
-        root.classList.remove('pmt-cz-parked');
-        T.Motion.play(root);
-        setTimeout(function () {
+      function reveal() {
+        requestAnimationFrame(function () { requestAnimationFrame(function () {
           if (closed || showing !== visit) return;
-          (root.querySelector('[data-seg="scope"] [aria-checked="true"]') || dialog).focus({ preventScroll: true });
-        }, 0);
-      }); });
+          root.removeAttribute('aria-hidden');
+          root.classList.remove('pmt-cz-parked');
+          T.Motion.play(root);
+          setTimeout(function () {
+            if (closed || showing !== visit) return;
+            (root.querySelector('[data-seg="scope"] [aria-checked="true"]') || dialog).focus({ preventScroll: true });
+          }, 0);
+        }); });
+      }
+      if (owed) afterPaint(function () { if (closed || showing !== visit) return; draw(); reveal(); });
+      else { draw(); reveal(); }
       return handle;
     }
     root._pmtPreview = preview; /* the preview, for checks that read what it draws */
@@ -216059,7 +216108,7 @@ var T = {};
     return false;
   }
   function prepareSoon() {
-    if (prepared) return;
+    if (prepared && !prepared.kept) return;
     var de = document.documentElement, P = window.PMT;
     var busy = pageSettling();
     var v = !busy && P && typeof P.sessions === 'function' ? P.sessions().map(function (s) { return P.view(s.id); })
@@ -216071,7 +216120,7 @@ var T = {};
        and a screen built late only makes the first click pay for it */
     var since = T.util.now();
     var build = function (deadline) {
-      if (prepared || v.pop || !v.root.isConnected) { if (!prepared) setTimeout(prepareSoon, 1500); return; }
+      if ((prepared && !prepared.kept) || v.pop || !v.root.isConnected) { if (!prepared || prepared.kept) setTimeout(prepareSoon, 1500); return; }
       if (pageSettling()) { setTimeout(prepareSoon, 1500); return; }
       if (deadline && typeof deadline.timeRemaining === 'function' && !deadline.didTimeout && deadline.timeRemaining() < 45 && T.util.now() - since < 4000) {
         requestIdleCallback(build, { timeout: Math.max(500, 4000 - (T.util.now() - since)) }); return;
