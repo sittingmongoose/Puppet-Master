@@ -4798,7 +4798,17 @@
         "code.terminal.sixtyfour-scan",
         "code.terminal.sixtyfour-bleed",
         "code.terminal.sticky-header",
-        "code.terminal.copy-on-select"
+        "code.terminal.copy-on-select",
+        "code.terminal.background-strength",
+        "code.terminal.background-scale",
+        "code.terminal.background-motion",
+        "code.terminal.background-fit",
+        "code.terminal.background-desaturate",
+        "code.terminal.bezel",
+        "code.terminal.bezel-width",
+        "code.terminal.bezel-material",
+        "code.terminal.bezel-reflection",
+        "code.terminal.phosphor-mask"
       ],
       "payload": "Use appearance_quick_sets.json kinds.terminal.quick_sets.look_own, operation reset_scope, via scope_adapters.this; exact affected ids are setting_ids. Supply the selected tab identity and its current owner preconditions for This; supply Project identity, expected revision, actor and idempotency for All. Apply exactly one atomic patch/transaction; no implicit changes outside that set.",
       "no_production_reason": "",
@@ -4856,7 +4866,17 @@
         "code.terminal.sixtyfour-scan",
         "code.terminal.sixtyfour-bleed",
         "code.terminal.sticky-header",
-        "code.terminal.copy-on-select"
+        "code.terminal.copy-on-select",
+        "code.terminal.background-strength",
+        "code.terminal.background-scale",
+        "code.terminal.background-motion",
+        "code.terminal.background-fit",
+        "code.terminal.background-desaturate",
+        "code.terminal.bezel",
+        "code.terminal.bezel-width",
+        "code.terminal.bezel-material",
+        "code.terminal.bezel-reflection",
+        "code.terminal.phosphor-mask"
       ],
       "payload": "Use appearance_quick_sets.json kinds.terminal.quick_sets.look_own, operation reset_scope, via scope_adapters.this; exact affected ids are setting_ids. Supply the selected tab identity and its current owner preconditions for This; supply Project identity, expected revision, actor and idempotency for All. Apply exactly one atomic patch/transaction; no implicit changes outside that set.",
       "no_production_reason": "",
@@ -4879,7 +4899,8 @@
         "code.terminal.cursor-trail",
         "code.terminal.smooth-scroll",
         "code.terminal.flicker",
-        "code.terminal.crt"
+        "code.terminal.crt",
+        "code.terminal.background-motion"
       ],
       "payload": "Use appearance_quick_sets.json kinds.terminal.quick_sets.calm, operation set, via scope_adapters.this; exact affected ids are setting_ids. Supply the selected tab identity and its current owner preconditions for This; supply Project identity, expected revision, actor and idempotency for All. Apply exactly one atomic patch/transaction; no implicit changes outside that set.",
       "no_production_reason": "",
@@ -4922,7 +4943,9 @@
         "code.terminal.scanlines",
         "code.terminal.glow",
         "code.terminal.crt",
-        "code.terminal.cursor-trail"
+        "code.terminal.cursor-trail",
+        "code.terminal.curvature",
+        "code.terminal.bezel"
       ],
       "payload": "Use appearance_quick_sets.json kinds.terminal.quick_sets.old_monitor, operation set, via scope_adapters.this; exact affected ids are setting_ids. Supply the selected tab identity and its current owner preconditions for This; supply Project identity, expected revision, actor and idempotency for All. Apply exactly one atomic patch/transaction; no implicit changes outside that set.",
       "no_production_reason": "",
@@ -4982,7 +5005,17 @@
         "code.terminal.sixtyfour-scan",
         "code.terminal.sixtyfour-bleed",
         "code.terminal.sticky-header",
-        "code.terminal.copy-on-select"
+        "code.terminal.copy-on-select",
+        "code.terminal.background-strength",
+        "code.terminal.background-scale",
+        "code.terminal.background-motion",
+        "code.terminal.background-fit",
+        "code.terminal.background-desaturate",
+        "code.terminal.bezel",
+        "code.terminal.bezel-width",
+        "code.terminal.bezel-material",
+        "code.terminal.bezel-reflection",
+        "code.terminal.phosphor-mask"
       ],
       "payload": "Use appearance_quick_sets.json kinds.terminal.quick_sets.look_own, operation reset_scope, via scope_adapters.all; exact affected ids are setting_ids. Supply the selected tab identity and its current owner preconditions for This; supply Project identity, expected revision, actor and idempotency for All. Apply exactly one atomic patch/transaction; no implicit changes outside that set.",
       "no_production_reason": "",
@@ -5042,7 +5075,17 @@
         "code.terminal.sixtyfour-scan",
         "code.terminal.sixtyfour-bleed",
         "code.terminal.sticky-header",
-        "code.terminal.copy-on-select"
+        "code.terminal.copy-on-select",
+        "code.terminal.background-strength",
+        "code.terminal.background-scale",
+        "code.terminal.background-motion",
+        "code.terminal.background-fit",
+        "code.terminal.background-desaturate",
+        "code.terminal.bezel",
+        "code.terminal.bezel-width",
+        "code.terminal.bezel-material",
+        "code.terminal.bezel-reflection",
+        "code.terminal.phosphor-mask"
       ],
       "payload": "Use appearance_quick_sets.json kinds.terminal.quick_sets.look_own, operation reset_scope, via scope_adapters.all; exact affected ids are setting_ids. Supply the selected tab identity and its current owner preconditions for This; supply Project identity, expected revision, actor and idempotency for All. Apply exactly one atomic patch/transaction; no implicit changes outside that set.",
       "no_production_reason": "",
@@ -5067,7 +5110,8 @@
         "code.terminal.cursor-trail",
         "code.terminal.smooth-scroll",
         "code.terminal.flicker",
-        "code.terminal.crt"
+        "code.terminal.crt",
+        "code.terminal.background-motion"
       ],
       "payload": "Use appearance_quick_sets.json kinds.terminal.quick_sets.calm, operation set, via scope_adapters.all; exact affected ids are setting_ids. Supply the selected tab identity and its current owner preconditions for This; supply Project identity, expected revision, actor and idempotency for All. Apply exactly one atomic patch/transaction; no implicit changes outside that set.",
       "no_production_reason": "",
@@ -5114,7 +5158,9 @@
         "code.terminal.scanlines",
         "code.terminal.glow",
         "code.terminal.crt",
-        "code.terminal.cursor-trail"
+        "code.terminal.cursor-trail",
+        "code.terminal.curvature",
+        "code.terminal.bezel"
       ],
       "payload": "Use appearance_quick_sets.json kinds.terminal.quick_sets.old_monitor, operation set, via scope_adapters.all; exact affected ids are setting_ids. Supply the selected tab identity and its current owner preconditions for This; supply Project identity, expected revision, actor and idempotency for All. Apply exactly one atomic patch/transaction; no implicit changes outside that set.",
       "no_production_reason": "",
@@ -6811,7 +6857,12 @@
         "code.terminal.background-dim",
         "code.terminal.background-blur",
         "code.terminal.opacity",
-        "code.terminal.padding"
+        "code.terminal.padding",
+        "code.terminal.background-strength",
+        "code.terminal.background-scale",
+        "code.terminal.background-motion",
+        "code.terminal.background-fit",
+        "code.terminal.background-desaturate"
       ],
       "payload": "Reset only appearance_quick_sets.json kinds.terminal.reset_groups.ground through scope_adapters.this. One atomic command/transaction; preserve every value outside this exact group.",
       "no_production_reason": "",
@@ -6839,7 +6890,12 @@
         "code.terminal.background-dim",
         "code.terminal.background-blur",
         "code.terminal.opacity",
-        "code.terminal.padding"
+        "code.terminal.padding",
+        "code.terminal.background-strength",
+        "code.terminal.background-scale",
+        "code.terminal.background-motion",
+        "code.terminal.background-fit",
+        "code.terminal.background-desaturate"
       ],
       "payload": "Reset only appearance_quick_sets.json kinds.terminal.reset_groups.ground through scope_adapters.all. One atomic command/transaction; preserve every value outside this exact group.",
       "no_production_reason": "",
@@ -6869,7 +6925,12 @@
         "code.terminal.flicker",
         "code.terminal.flicker-amount",
         "code.terminal.inactive-dim",
-        "code.terminal.smooth-scroll"
+        "code.terminal.smooth-scroll",
+        "code.terminal.bezel",
+        "code.terminal.bezel-width",
+        "code.terminal.bezel-material",
+        "code.terminal.bezel-reflection",
+        "code.terminal.phosphor-mask"
       ],
       "payload": "Reset only appearance_quick_sets.json kinds.terminal.reset_groups.effects through scope_adapters.this. One atomic command/transaction; preserve every value outside this exact group.",
       "no_production_reason": "",
@@ -6901,7 +6962,12 @@
         "code.terminal.flicker",
         "code.terminal.flicker-amount",
         "code.terminal.inactive-dim",
-        "code.terminal.smooth-scroll"
+        "code.terminal.smooth-scroll",
+        "code.terminal.bezel",
+        "code.terminal.bezel-width",
+        "code.terminal.bezel-material",
+        "code.terminal.bezel-reflection",
+        "code.terminal.phosphor-mask"
       ],
       "payload": "Reset only appearance_quick_sets.json kinds.terminal.reset_groups.effects through scope_adapters.all. One atomic command/transaction; preserve every value outside this exact group.",
       "no_production_reason": "",
@@ -6948,23 +7014,685 @@
       "payload": "Reset only appearance_quick_sets.json kinds.terminal.reset_groups.behavior through scope_adapters.all. One atomic command/transaction; preserve every value outside this exact group.",
       "no_production_reason": "",
       "reset_group_ref": "terminal.behavior"
+    },
+    {
+      "control_id": "terminal.this.background-strength",
+      "surface": "Terminal Customize > This terminal > Background Strength",
+      "owner_ref": "Plans/FinalGUISpec.md#F3-642",
+      "disposition": "command",
+      "action_ids": [
+        "cmd.terminal.appearance.set"
+      ],
+      "production_entries": [
+        "terminal.appearance.field"
+      ],
+      "setting_ids": [
+        "code.terminal.background-strength"
+      ],
+      "payload": "panel_tab_id and matching F3-642 field from the inventory id; unset clears the tab override",
+      "no_production_reason": ""
+    },
+    {
+      "control_id": "terminal.all.background-strength",
+      "surface": "Terminal Customize > All terminals; Settings > Terminal look > Background Strength",
+      "owner_ref": "Plans/Settings_System.md#SSYS-051",
+      "disposition": "command",
+      "action_ids": [
+        "cmd.settings.transaction.preview",
+        "cmd.settings.transaction.apply"
+      ],
+      "production_entries": [
+        "catalog.settings_transaction_preview",
+        "catalog.settings_transaction_apply"
+      ],
+      "setting_ids": [
+        "code.terminal.background-strength"
+      ],
+      "payload": "operation_kind set; exact_setting_ids=[id]; inventory value; apply current preview",
+      "no_production_reason": ""
+    },
+    {
+      "control_id": "terminal.this.background-scale",
+      "surface": "Terminal Customize > This terminal > Pattern Size",
+      "owner_ref": "Plans/FinalGUISpec.md#F3-642",
+      "disposition": "command",
+      "action_ids": [
+        "cmd.terminal.appearance.set"
+      ],
+      "production_entries": [
+        "terminal.appearance.field"
+      ],
+      "setting_ids": [
+        "code.terminal.background-scale"
+      ],
+      "payload": "panel_tab_id and matching F3-642 field from the inventory id; unset clears the tab override",
+      "no_production_reason": ""
+    },
+    {
+      "control_id": "terminal.all.background-scale",
+      "surface": "Terminal Customize > All terminals; Settings > Terminal look > Pattern Size",
+      "owner_ref": "Plans/Settings_System.md#SSYS-051",
+      "disposition": "command",
+      "action_ids": [
+        "cmd.settings.transaction.preview",
+        "cmd.settings.transaction.apply"
+      ],
+      "production_entries": [
+        "catalog.settings_transaction_preview",
+        "catalog.settings_transaction_apply"
+      ],
+      "setting_ids": [
+        "code.terminal.background-scale"
+      ],
+      "payload": "operation_kind set; exact_setting_ids=[id]; inventory value; apply current preview",
+      "no_production_reason": ""
+    },
+    {
+      "control_id": "terminal.this.background-motion",
+      "surface": "Terminal Customize > This terminal > Background Motion",
+      "owner_ref": "Plans/FinalGUISpec.md#F3-642",
+      "disposition": "command",
+      "action_ids": [
+        "cmd.terminal.appearance.set"
+      ],
+      "production_entries": [
+        "terminal.appearance.field"
+      ],
+      "setting_ids": [
+        "code.terminal.background-motion"
+      ],
+      "payload": "panel_tab_id and matching F3-642 field from the inventory id; unset clears the tab override",
+      "no_production_reason": ""
+    },
+    {
+      "control_id": "terminal.all.background-motion",
+      "surface": "Terminal Customize > All terminals; Settings > Terminal look > Background Motion",
+      "owner_ref": "Plans/Settings_System.md#SSYS-051",
+      "disposition": "command",
+      "action_ids": [
+        "cmd.settings.transaction.preview",
+        "cmd.settings.transaction.apply"
+      ],
+      "production_entries": [
+        "catalog.settings_transaction_preview",
+        "catalog.settings_transaction_apply"
+      ],
+      "setting_ids": [
+        "code.terminal.background-motion"
+      ],
+      "payload": "operation_kind set; exact_setting_ids=[id]; inventory value; apply current preview",
+      "no_production_reason": ""
+    },
+    {
+      "control_id": "terminal.this.background-fit",
+      "surface": "Terminal Customize > This terminal > Picture Fit",
+      "owner_ref": "Plans/FinalGUISpec.md#F3-642",
+      "disposition": "command",
+      "action_ids": [
+        "cmd.terminal.appearance.set"
+      ],
+      "production_entries": [
+        "terminal.appearance.field"
+      ],
+      "setting_ids": [
+        "code.terminal.background-fit"
+      ],
+      "payload": "panel_tab_id and matching F3-642 field from the inventory id; unset clears the tab override",
+      "no_production_reason": ""
+    },
+    {
+      "control_id": "terminal.all.background-fit",
+      "surface": "Terminal Customize > All terminals; Settings > Terminal look > Picture Fit",
+      "owner_ref": "Plans/Settings_System.md#SSYS-051",
+      "disposition": "command",
+      "action_ids": [
+        "cmd.settings.transaction.preview",
+        "cmd.settings.transaction.apply"
+      ],
+      "production_entries": [
+        "catalog.settings_transaction_preview",
+        "catalog.settings_transaction_apply"
+      ],
+      "setting_ids": [
+        "code.terminal.background-fit"
+      ],
+      "payload": "operation_kind set; exact_setting_ids=[id]; inventory value; apply current preview",
+      "no_production_reason": ""
+    },
+    {
+      "control_id": "terminal.this.background-desaturate",
+      "surface": "Terminal Customize > This terminal > Picture Desaturation",
+      "owner_ref": "Plans/FinalGUISpec.md#F3-642",
+      "disposition": "command",
+      "action_ids": [
+        "cmd.terminal.appearance.set"
+      ],
+      "production_entries": [
+        "terminal.appearance.field"
+      ],
+      "setting_ids": [
+        "code.terminal.background-desaturate"
+      ],
+      "payload": "panel_tab_id and matching F3-642 field from the inventory id; unset clears the tab override",
+      "no_production_reason": ""
+    },
+    {
+      "control_id": "terminal.all.background-desaturate",
+      "surface": "Terminal Customize > All terminals; Settings > Terminal look > Picture Desaturation",
+      "owner_ref": "Plans/Settings_System.md#SSYS-051",
+      "disposition": "command",
+      "action_ids": [
+        "cmd.settings.transaction.preview",
+        "cmd.settings.transaction.apply"
+      ],
+      "production_entries": [
+        "catalog.settings_transaction_preview",
+        "catalog.settings_transaction_apply"
+      ],
+      "setting_ids": [
+        "code.terminal.background-desaturate"
+      ],
+      "payload": "operation_kind set; exact_setting_ids=[id]; inventory value; apply current preview",
+      "no_production_reason": ""
+    },
+    {
+      "control_id": "terminal.this.bezel",
+      "surface": "Terminal Customize > This terminal > Terminal Bezel",
+      "owner_ref": "Plans/FinalGUISpec.md#F3-643",
+      "disposition": "command",
+      "action_ids": [
+        "cmd.terminal.appearance.set"
+      ],
+      "production_entries": [
+        "terminal.appearance.field"
+      ],
+      "setting_ids": [
+        "code.terminal.bezel"
+      ],
+      "payload": "panel_tab_id and matching F3-642 field from the inventory id; unset clears the tab override",
+      "no_production_reason": ""
+    },
+    {
+      "control_id": "terminal.all.bezel",
+      "surface": "Terminal Customize > All terminals; Settings > Terminal look > Terminal Bezel",
+      "owner_ref": "Plans/Settings_System.md#SSYS-051",
+      "disposition": "command",
+      "action_ids": [
+        "cmd.settings.transaction.preview",
+        "cmd.settings.transaction.apply"
+      ],
+      "production_entries": [
+        "catalog.settings_transaction_preview",
+        "catalog.settings_transaction_apply"
+      ],
+      "setting_ids": [
+        "code.terminal.bezel"
+      ],
+      "payload": "operation_kind set; exact_setting_ids=[id]; inventory value; apply current preview",
+      "no_production_reason": ""
+    },
+    {
+      "control_id": "terminal.this.bezel-width",
+      "surface": "Terminal Customize > This terminal > Bezel Width",
+      "owner_ref": "Plans/FinalGUISpec.md#F3-643",
+      "disposition": "command",
+      "action_ids": [
+        "cmd.terminal.appearance.set"
+      ],
+      "production_entries": [
+        "terminal.appearance.field"
+      ],
+      "setting_ids": [
+        "code.terminal.bezel-width"
+      ],
+      "payload": "panel_tab_id and matching F3-642 field from the inventory id; unset clears the tab override",
+      "no_production_reason": ""
+    },
+    {
+      "control_id": "terminal.all.bezel-width",
+      "surface": "Terminal Customize > All terminals; Settings > Terminal look > Bezel Width",
+      "owner_ref": "Plans/Settings_System.md#SSYS-051",
+      "disposition": "command",
+      "action_ids": [
+        "cmd.settings.transaction.preview",
+        "cmd.settings.transaction.apply"
+      ],
+      "production_entries": [
+        "catalog.settings_transaction_preview",
+        "catalog.settings_transaction_apply"
+      ],
+      "setting_ids": [
+        "code.terminal.bezel-width"
+      ],
+      "payload": "operation_kind set; exact_setting_ids=[id]; inventory value; apply current preview",
+      "no_production_reason": ""
+    },
+    {
+      "control_id": "terminal.this.bezel-material",
+      "surface": "Terminal Customize > This terminal > Bezel Material",
+      "owner_ref": "Plans/FinalGUISpec.md#F3-643",
+      "disposition": "command",
+      "action_ids": [
+        "cmd.terminal.appearance.set"
+      ],
+      "production_entries": [
+        "terminal.appearance.field"
+      ],
+      "setting_ids": [
+        "code.terminal.bezel-material"
+      ],
+      "payload": "panel_tab_id and matching F3-642 field from the inventory id; unset clears the tab override",
+      "no_production_reason": ""
+    },
+    {
+      "control_id": "terminal.all.bezel-material",
+      "surface": "Terminal Customize > All terminals; Settings > Terminal look > Bezel Material",
+      "owner_ref": "Plans/Settings_System.md#SSYS-051",
+      "disposition": "command",
+      "action_ids": [
+        "cmd.settings.transaction.preview",
+        "cmd.settings.transaction.apply"
+      ],
+      "production_entries": [
+        "catalog.settings_transaction_preview",
+        "catalog.settings_transaction_apply"
+      ],
+      "setting_ids": [
+        "code.terminal.bezel-material"
+      ],
+      "payload": "operation_kind set; exact_setting_ids=[id]; inventory value; apply current preview",
+      "no_production_reason": ""
+    },
+    {
+      "control_id": "terminal.this.bezel-reflection",
+      "surface": "Terminal Customize > This terminal > Bezel Reflection",
+      "owner_ref": "Plans/FinalGUISpec.md#F3-643",
+      "disposition": "command",
+      "action_ids": [
+        "cmd.terminal.appearance.set"
+      ],
+      "production_entries": [
+        "terminal.appearance.field"
+      ],
+      "setting_ids": [
+        "code.terminal.bezel-reflection"
+      ],
+      "payload": "panel_tab_id and matching F3-642 field from the inventory id; unset clears the tab override",
+      "no_production_reason": ""
+    },
+    {
+      "control_id": "terminal.all.bezel-reflection",
+      "surface": "Terminal Customize > All terminals; Settings > Terminal look > Bezel Reflection",
+      "owner_ref": "Plans/Settings_System.md#SSYS-051",
+      "disposition": "command",
+      "action_ids": [
+        "cmd.settings.transaction.preview",
+        "cmd.settings.transaction.apply"
+      ],
+      "production_entries": [
+        "catalog.settings_transaction_preview",
+        "catalog.settings_transaction_apply"
+      ],
+      "setting_ids": [
+        "code.terminal.bezel-reflection"
+      ],
+      "payload": "operation_kind set; exact_setting_ids=[id]; inventory value; apply current preview",
+      "no_production_reason": ""
+    },
+    {
+      "control_id": "terminal.this.phosphor-mask",
+      "surface": "Terminal Customize > This terminal > Phosphor Mask",
+      "owner_ref": "Plans/FinalGUISpec.md#F3-643",
+      "disposition": "command",
+      "action_ids": [
+        "cmd.terminal.appearance.set"
+      ],
+      "production_entries": [
+        "terminal.appearance.field"
+      ],
+      "setting_ids": [
+        "code.terminal.phosphor-mask"
+      ],
+      "payload": "panel_tab_id and matching F3-642 field from the inventory id; unset clears the tab override",
+      "no_production_reason": ""
+    },
+    {
+      "control_id": "terminal.all.phosphor-mask",
+      "surface": "Terminal Customize > All terminals; Settings > Terminal look > Phosphor Mask",
+      "owner_ref": "Plans/Settings_System.md#SSYS-051",
+      "disposition": "command",
+      "action_ids": [
+        "cmd.settings.transaction.preview",
+        "cmd.settings.transaction.apply"
+      ],
+      "production_entries": [
+        "catalog.settings_transaction_preview",
+        "catalog.settings_transaction_apply"
+      ],
+      "setting_ids": [
+        "code.terminal.phosphor-mask"
+      ],
+      "payload": "operation_kind set; exact_setting_ids=[id]; inventory value; apply current preview",
+      "no_production_reason": ""
+    },
+    {
+      "control_id": "terminal.this.preset.apply",
+      "surface": "Terminal Customize > this > Your presets > Apply",
+      "owner_ref": "Plans/FinalGUISpec.md#F3-650",
+      "disposition": "command",
+      "action_ids": [
+        "cmd.terminal.appearance.set"
+      ],
+      "production_entries": [
+        "terminal.appearance.field"
+      ],
+      "setting_ids": [
+        "code.terminal.theme",
+        "code.terminal.font-family",
+        "code.terminal.font-size",
+        "code.terminal.font-rendering",
+        "code.terminal.scheme-pair",
+        "code.terminal.min-contrast",
+        "code.terminal.font-weight",
+        "code.terminal.line-height",
+        "code.terminal.letter-spacing",
+        "code.terminal.ligatures",
+        "code.terminal.bold-bright",
+        "code.terminal.cursor-shape",
+        "code.terminal.cursor-blink",
+        "code.terminal.cursor-trail",
+        "code.terminal.background",
+        "code.terminal.background-color",
+        "code.terminal.background-gradient",
+        "code.terminal.background-image",
+        "code.terminal.background-image-file",
+        "code.terminal.background-dim",
+        "code.terminal.background-blur",
+        "code.terminal.opacity",
+        "code.terminal.padding",
+        "code.terminal.effects",
+        "code.terminal.scanlines",
+        "code.terminal.scan-strength",
+        "code.terminal.glow",
+        "code.terminal.glow-strength",
+        "code.terminal.crt",
+        "code.terminal.curvature",
+        "code.terminal.burn-in",
+        "code.terminal.noise",
+        "code.terminal.flicker",
+        "code.terminal.flicker-amount",
+        "code.terminal.inactive-dim",
+        "code.terminal.smooth-scroll",
+        "code.terminal.bell",
+        "code.terminal.sixtyfour-scan",
+        "code.terminal.sixtyfour-bleed",
+        "code.terminal.sticky-header",
+        "code.terminal.copy-on-select",
+        "code.terminal.background-strength",
+        "code.terminal.background-scale",
+        "code.terminal.background-motion",
+        "code.terminal.background-fit",
+        "code.terminal.background-desaturate",
+        "code.terminal.bezel",
+        "code.terminal.bezel-width",
+        "code.terminal.bezel-material",
+        "code.terminal.bezel-reflection",
+        "code.terminal.phosphor-mask"
+      ],
+      "payload": "Read a validated preset snapshot. Replace exactly terminal reset_ids in one write: saved values plus null for omitted tab overrides; existing lower layers remain visible",
+      "no_production_reason": ""
+    },
+    {
+      "control_id": "terminal.all.preset.apply",
+      "surface": "Terminal Customize > all > Your presets > Apply",
+      "owner_ref": "Plans/FinalGUISpec.md#F3-650",
+      "disposition": "command",
+      "action_ids": [
+        "cmd.settings.transaction.preview",
+        "cmd.settings.transaction.apply"
+      ],
+      "production_entries": [
+        "catalog.settings_transaction_preview",
+        "catalog.settings_transaction_apply"
+      ],
+      "setting_ids": [
+        "code.terminal.theme",
+        "code.terminal.font-family",
+        "code.terminal.font-size",
+        "code.terminal.font-rendering",
+        "code.terminal.scheme-pair",
+        "code.terminal.min-contrast",
+        "code.terminal.font-weight",
+        "code.terminal.line-height",
+        "code.terminal.letter-spacing",
+        "code.terminal.ligatures",
+        "code.terminal.bold-bright",
+        "code.terminal.cursor-shape",
+        "code.terminal.cursor-blink",
+        "code.terminal.cursor-trail",
+        "code.terminal.background",
+        "code.terminal.background-color",
+        "code.terminal.background-gradient",
+        "code.terminal.background-image",
+        "code.terminal.background-image-file",
+        "code.terminal.background-dim",
+        "code.terminal.background-blur",
+        "code.terminal.opacity",
+        "code.terminal.padding",
+        "code.terminal.effects",
+        "code.terminal.scanlines",
+        "code.terminal.scan-strength",
+        "code.terminal.glow",
+        "code.terminal.glow-strength",
+        "code.terminal.crt",
+        "code.terminal.curvature",
+        "code.terminal.burn-in",
+        "code.terminal.noise",
+        "code.terminal.flicker",
+        "code.terminal.flicker-amount",
+        "code.terminal.inactive-dim",
+        "code.terminal.smooth-scroll",
+        "code.terminal.bell",
+        "code.terminal.sixtyfour-scan",
+        "code.terminal.sixtyfour-bleed",
+        "code.terminal.sticky-header",
+        "code.terminal.copy-on-select",
+        "code.terminal.background-strength",
+        "code.terminal.background-scale",
+        "code.terminal.background-motion",
+        "code.terminal.background-fit",
+        "code.terminal.background-desaturate",
+        "code.terminal.bezel",
+        "code.terminal.bezel-width",
+        "code.terminal.bezel-material",
+        "code.terminal.bezel-reflection",
+        "code.terminal.phosphor-mask"
+      ],
+      "payload": "Read a validated preset snapshot. Replace exactly terminal reset_ids in one write: saved values plus inventory defaults for omitted Project fields in one set preview/apply; no sequential reset transaction",
+      "no_production_reason": ""
+    },
+    {
+      "control_id": "terminal.preset.save",
+      "surface": "Terminal Customize > Your presets > save",
+      "owner_ref": "Plans/FinalGUISpec.md#F3-650",
+      "disposition": "local",
+      "action_ids": [
+        "ui.terminal.preset.save"
+      ],
+      "production_entries": [],
+      "setting_ids": [],
+      "payload": "Typed SP-331 computer-local library mutation; stable preset id and validated name/fields as appropriate; atomic readback. Does not apply appearance.",
+      "no_production_reason": "Library action, not a UICommand; persists only terminal_appearance_presets:v1, no dispatcher receipt/event."
+    },
+    {
+      "control_id": "terminal.preset.rename",
+      "surface": "Terminal Customize > Your presets > rename",
+      "owner_ref": "Plans/FinalGUISpec.md#F3-650",
+      "disposition": "local",
+      "action_ids": [
+        "ui.terminal.preset.rename"
+      ],
+      "production_entries": [],
+      "setting_ids": [],
+      "payload": "Typed SP-331 computer-local library mutation; stable preset id and validated name/fields as appropriate; atomic readback. Does not apply appearance.",
+      "no_production_reason": "Library action, not a UICommand; persists only terminal_appearance_presets:v1, no dispatcher receipt/event."
+    },
+    {
+      "control_id": "terminal.preset.delete",
+      "surface": "Terminal Customize > Your presets > delete",
+      "owner_ref": "Plans/FinalGUISpec.md#F3-650",
+      "disposition": "local",
+      "action_ids": [
+        "ui.terminal.preset.delete"
+      ],
+      "production_entries": [],
+      "setting_ids": [],
+      "payload": "Typed SP-331 computer-local library mutation; stable preset id and validated name/fields as appropriate; atomic readback. Does not apply appearance.",
+      "no_production_reason": "Library action, not a UICommand; persists only terminal_appearance_presets:v1, no dispatcher receipt/event."
+    },
+    {
+      "control_id": "terminal.preset.undo",
+      "surface": "Terminal Customize > Your presets > undo",
+      "owner_ref": "Plans/FinalGUISpec.md#F3-650",
+      "disposition": "local",
+      "action_ids": [
+        "ui.terminal.preset.undo"
+      ],
+      "production_entries": [],
+      "setting_ids": [],
+      "payload": "Typed SP-331 computer-local library mutation; stable preset id and validated name/fields as appropriate; atomic readback. Does not apply appearance.",
+      "no_production_reason": "Library action, not a UICommand; persists only terminal_appearance_presets:v1, no dispatcher receipt/event."
+    },
+    {
+      "control_id": "panel.picker.back.plus.file",
+      "surface": "Home plus.file > nested picker level > Back",
+      "owner_ref": "Plans/FinalGUISpec.md#F3-632",
+      "disposition": "local",
+      "action_ids": [
+        "ui.panel_tab.picker_back"
+      ],
+      "production_entries": [],
+      "setting_ids": [],
+      "payload": "Pointer Back or Escape/Left/fresh empty-query Backspace restores the prior query, rows, scroll and originating focus; launcher returns to its row. Standalone/root dismissal uses the owner close behavior.",
+      "no_production_reason": "Transient menu navigation; no command, receipt, event, storage or item creation."
+    },
+    {
+      "control_id": "panel.picker.back.plus.plan",
+      "surface": "Home plus.plan > nested picker level > Back",
+      "owner_ref": "Plans/FinalGUISpec.md#F3-632",
+      "disposition": "local",
+      "action_ids": [
+        "ui.panel_tab.picker_back"
+      ],
+      "production_entries": [],
+      "setting_ids": [],
+      "payload": "Pointer Back or Escape/Left/fresh empty-query Backspace restores the prior query, rows, scroll and originating focus; launcher returns to its row. Standalone/root dismissal uses the owner close behavior.",
+      "no_production_reason": "Transient menu navigation; no command, receipt, event, storage or item creation."
+    },
+    {
+      "control_id": "panel.picker.back.plus.artifact",
+      "surface": "Home plus.artifact > nested picker level > Back",
+      "owner_ref": "Plans/FinalGUISpec.md#F3-632",
+      "disposition": "local",
+      "action_ids": [
+        "ui.panel_tab.picker_back"
+      ],
+      "production_entries": [],
+      "setting_ids": [],
+      "payload": "Pointer Back or Escape/Left/fresh empty-query Backspace restores the prior query, rows, scroll and originating focus; launcher returns to its row. Standalone/root dismissal uses the owner close behavior.",
+      "no_production_reason": "Transient menu navigation; no command, receipt, event, storage or item creation."
+    },
+    {
+      "control_id": "panel.picker.back.plus.tools",
+      "surface": "Home plus.tools > nested picker level > Back",
+      "owner_ref": "Plans/FinalGUISpec.md#F3-632",
+      "disposition": "local",
+      "action_ids": [
+        "ui.panel_tab.picker_back"
+      ],
+      "production_entries": [],
+      "setting_ids": [],
+      "payload": "Pointer Back or Escape/Left/fresh empty-query Backspace restores the prior query, rows, scroll and originating focus; launcher returns to its row. Standalone/root dismissal uses the owner close behavior.",
+      "no_production_reason": "Transient menu navigation; no command, receipt, event, storage or item creation."
+    },
+    {
+      "control_id": "panel.picker.back.plus.ssh",
+      "surface": "Home plus.ssh > nested picker level > Back",
+      "owner_ref": "Plans/FinalGUISpec.md#F3-632",
+      "disposition": "local",
+      "action_ids": [
+        "ui.panel_tab.picker_back"
+      ],
+      "production_entries": [],
+      "setting_ids": [],
+      "payload": "Pointer Back or Escape/Left/fresh empty-query Backspace restores the prior query, rows, scroll and originating focus; launcher returns to its row. Standalone/root dismissal uses the owner close behavior.",
+      "no_production_reason": "Transient menu navigation; no command, receipt, event, storage or item creation."
+    },
+    {
+      "control_id": "panel.picker.back.plus.dashboards",
+      "surface": "Home plus.dashboards > nested picker level > Back",
+      "owner_ref": "Plans/FinalGUISpec.md#F3-632",
+      "disposition": "local",
+      "action_ids": [
+        "ui.panel_tab.picker_back"
+      ],
+      "production_entries": [],
+      "setting_ids": [],
+      "payload": "Pointer Back or Escape/Left/fresh empty-query Backspace restores the prior query, rows, scroll and originating focus; launcher returns to its row. Standalone/root dismissal uses the owner close behavior.",
+      "no_production_reason": "Transient menu navigation; no command, receipt, event, storage or item creation."
+    },
+    {
+      "control_id": "panel.picker.back.launcher",
+      "surface": "Home launcher > nested picker level > Back",
+      "owner_ref": "Plans/FinalGUISpec.md#F3-632",
+      "disposition": "local",
+      "action_ids": [
+        "ui.panel_tab.picker_back"
+      ],
+      "production_entries": [],
+      "setting_ids": [],
+      "payload": "Pointer Back or Escape/Left/fresh empty-query Backspace restores the prior query, rows, scroll and originating focus; launcher returns to its row. Standalone/root dismissal uses the owner close behavior.",
+      "no_production_reason": "Transient menu navigation; no command, receipt, event, storage or item creation."
+    },
+    {
+      "control_id": "panel.picker.back.panel_menu",
+      "surface": "Home panel_menu > nested picker level > Back",
+      "owner_ref": "Plans/FinalGUISpec.md#F3-632",
+      "disposition": "local",
+      "action_ids": [
+        "ui.panel_tab.picker_back"
+      ],
+      "production_entries": [],
+      "setting_ids": [],
+      "payload": "Pointer Back or Escape/Left/fresh empty-query Backspace restores the prior query, rows, scroll and originating focus; launcher returns to its row. Standalone/root dismissal uses the owner close behavior.",
+      "no_production_reason": "Transient menu navigation; no command, receipt, event, storage or item creation."
+    },
+    {
+      "control_id": "panel.picker.back.tab_menu",
+      "surface": "Home tab_menu > nested picker level > Back",
+      "owner_ref": "Plans/FinalGUISpec.md#F3-632",
+      "disposition": "local",
+      "action_ids": [
+        "ui.panel_tab.picker_back"
+      ],
+      "production_entries": [],
+      "setting_ids": [],
+      "payload": "Pointer Back or Escape/Left/fresh empty-query Backspace restores the prior query, rows, scroll and originating focus; launcher returns to its row. Standalone/root dismissal uses the owner close behavior.",
+      "no_production_reason": "Transient menu navigation; no command, receipt, event, storage or item creation."
+    },
+    {
+      "control_id": "notifications.setup.continue",
+      "surface": "Bell inbox > Finish setting up / resume prompt > Continue",
+      "owner_ref": "Plans/Planning_Wizard.md#PWIZ-023",
+      "disposition": "local",
+      "action_ids": [
+        "ui.onboarding.start"
+      ],
+      "production_entries": [],
+      "setting_ids": [],
+      "payload": "Forward the original owner prompt’s admitted resume intent and closed UCC-106/PWIZ-021–023 context; no new action, command, approval or owner work. The actual context must pass pm.product_onboarding.action_request.v2.",
+      "no_production_reason": "Existing typed owner-local onboarding action; bell entry is only the prompt projection, with no production UICommand receipt/event."
     }
   ],
-  "held_controls": [
-    {
-      "owner_ref": "Plans/FinalGUISpec.md#F3-650",
-      "direction": "User-saved terminal look presets",
-      "reason": "Approved direction; final save/apply affordances, field model and storage/scope await the terminal owner packet. Fixed quick sets do not satisfy this requirement."
-    },
-    {
-      "owner_ref": "Plans/FinalGUISpec.md#F3-643",
-      "direction": "Smaller removable/customizable terminal bezel and convincing opt-in curvature",
-      "reason": "Approved direction; final fields/ranges and controls await the terminal owner. Default bezel/curvature remain absent."
-    },
-    {
-      "owner_ref": "Plans/FinalGUISpec.md#F3-642",
-      "direction": "Expanded terminal backgrounds",
-      "reason": "Approved direction; the researched replacement catalog and any new chooser fields await the terminal owner."
-    }
-  ]
+  "held_controls": []
 }

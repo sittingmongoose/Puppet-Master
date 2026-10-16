@@ -7769,25 +7769,31 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/UI_Command_Catalog.md
 canonical_text: >-
-  UCC-106 retains eleven historical cmd.onboarding.* identifiers as searchable command-era source lineage only; none is
-  a current command, alias, primary handler, or production-wiring row. Current Product Onboarding uses exactly fourteen typed
-  owner-local actions ui.onboarding.start, ui.onboarding.next, ui.onboarding.back, ui.onboarding.close,
-  ui.onboarding.skip, ui.onboarding.defer, ui.onboarding.open_details, ui.onboarding.more_ways,
+  UCC-106 retains eleven historical cmd.onboarding.* identifiers as searchable command-era source
+  lineage only; none is a current command, alias, primary handler, or production-wiring row. Current
+  Product Onboarding uses exactly fourteen typed owner-local actions ui.onboarding.start,
+  ui.onboarding.next, ui.onboarding.back, ui.onboarding.close, ui.onboarding.skip,
+  ui.onboarding.defer, ui.onboarding.open_details, ui.onboarding.more_ways,
   ui.onboarding.choose_simple_path, ui.onboarding.open_owner_flow,
-  ui.onboarding.run_automatic_preparation, ui.onboarding.choose_first_project, ui.onboarding.finish, and
-  ui.onboarding.choose_look. These are local
-  UI actions, not semantic commands or catalog registrations, and use the closed pm.product_onboarding.action_request.v2
-  and pm.product_onboarding.action_result.v2 contracts. ui.onboarding.choose_look (DL-153) is a local look preview,
-  and so is the look ui.onboarding.start opens in (Basic Dark for first_run, the look on screen for settings_rerun):
-  neither dispatches cmd.theme.* or a Settings transaction, and the look is written with the Project at commit. Every request consumes PWIZ-021's closed, normalized, secret-free
-  local_context, including phase-specific draft/preflight/commit bindings as defined by the owner schema;
-  arbitrary/raw payload fields and secret-bearing values are rejected. An action that launches owner work carries a typed owner
-  route or intent and maps to that owner's existing canonical command and sole handler. The command-era reference to
-  cmd.health.provider_setup.open does not give Product Onboarding a Health/Doctor handler. Teacher links continue to use
-  the existing Teacher/Teach command routes from UCC-102 and CS-053. The packet candidates cmd.onboarding.back,
-  cmd.onboarding.cancel, cmd.onboarding.continue, cmd.onboarding.defer, cmd.onboarding.finish,
-  cmd.onboarding.open_details, cmd.onboarding.resume, and cmd.onboarding.skip are source-lineage candidate tokens only;
-  each is rejected as a command, alias, and handler because its semantics are owned by typed local ui.onboarding.* actions.
+  ui.onboarding.run_automatic_preparation, ui.onboarding.choose_first_project, ui.onboarding.finish,
+  and ui.onboarding.choose_look. These are local UI actions, not semantic commands or catalog
+  registrations, and use the closed pm.product_onboarding.action_request.v2 and
+  pm.product_onboarding.action_result.v2 contracts. ui.onboarding.choose_look (DL-153) is a local
+  look preview, and so is the look ui.onboarding.start opens in (Basic Dark for first_run, the look
+  on screen for settings_rerun): neither dispatches cmd.theme.* or a Settings transaction, and the
+  look is written with the Project at commit. Every request consumes PWIZ-021's closed, normalized,
+  secret-free local_context, including phase-specific draft/preflight/commit bindings as defined by
+  the owner schema; arbitrary/raw payload fields and secret-bearing values are rejected. An action
+  that launches owner work carries a typed owner route or intent and maps to that owner's existing
+  canonical command and sole handler. The command-era reference to cmd.health.provider_setup.open
+  does not give Product Onboarding a Health/Doctor handler. Teacher links continue to use the
+  existing Teacher/Teach command routes from UCC-102 and CS-053. The packet candidates
+  cmd.onboarding.back, cmd.onboarding.cancel, cmd.onboarding.continue, cmd.onboarding.defer,
+  cmd.onboarding.finish, cmd.onboarding.open_details, cmd.onboarding.resume, and cmd.onboarding.skip
+  are source-lineage candidate tokens only; each is rejected as a command, alias, and handler
+  because its semantics are owned by typed local ui.onboarding.* actions. The bell's setup/resume
+  Continue entry forwards the original prompt's admitted ui.onboarding.* action with the same closed
+  owner context; it adds no fifteenth action and never revives cmd.onboarding.resume.
 gui_related: true
 gui_classification_reason: Reconciles retired visible onboarding command-era controls with the current typed owner-local Product Onboarding actions.
 depends_on: [PWIZ-021, PWIZ-022, PWIZ-023, UCC-102, CS-053]
@@ -15216,78 +15222,95 @@ unit_type: command_contract
 status: accepted
 owner_doc: Plans/UI_Command_Catalog.md
 canonical_text: >-
-  Home's universal panels (DL-180) have one command family for tabs and one for layout. Tab operations are
-  cmd.panel_tab.open, cmd.panel_tab.close, cmd.panel_tab.rename, cmd.panel_tab.move, cmd.panel_tab.keep,
-  cmd.panel_tab.pin, cmd.panel_tab.unpin and cmd.panel_tab.reopen_closed. Layout operations extend
-  cmd.workspace_layout.*: split, move_surface (a whole panel; edge center moves its tabs into another panel),
-  resize_surface (one commit on release, or per changed divider key press), set_collapsed (any panel),
-  close_panel, lock, apply_named, save_named and reset (Restore home layout, also the Settings row
-  general.startup.reset-home-layout). Every row carries project_id, workspace_tab_id, expected_layout_revision and
-  idempotency_key; a tab is named by panel_tab_id, never by route tab_id or workspace_tab_id, and a home panel by
-  panel_id. Every committed structural change emits the one existing event workspace.layout_changed with its v2
-  payload (CV-361); an open that only reveals an existing tab emits nothing, and a failed commit rolls back and emits
-  nothing. View state is typed local actions with no receipt and no event: ui.panel_tab.activate,
-  ui.workspace_layout.maximize, ui.workspace_layout.focus_panel and ui.output.select_channel. Opening the "+" menu, the "+N" list, the
-  every-tab and recent-tab lists, a panel menu, a tab menu, a picker or a prompt, hovering and dragging dispatch
-  nothing, and each leaf dispatches exactly one command or typed local action as this addendum's tables map it,
-  with a typed no_change for an already-done target and a disabled reason from the closed set otherwise. A "+" row's
-  body opens a new tab in this panel (where tab) and its trailing cell, Alt+click or Alt+Enter a new panel (where
-  panel); the empty-panel launcher dispatches the same ids. Where a domain id exists for the thing opened the caller
-  dispatches it: cmd.file.open, cmd.nav.open_subject, cmd.browser.open_workspace_preview and cmd.terminal.open keep
-  their ids, carry the placement fields where, mode, by and background whose contract is CV-360, and resolve through
-  the one opening module (F3-634, DR-071) like every other route in the open-routes table; cmd.panel_tab.open is
-  dispatched directly only for a new terminal, a blank browser, a dashboard tab, an editor buffer and the tool tabs.
-  cmd.editor.close_tab is an alias of cmd.panel_tab.close. cmd.editor.open_panel, cmd.editor.close_panel and the
-  never-registered cmd.artifacts.open_panel retire, and target_editor_panel_id, target_editor_group_id and
-  target_group never select a home panel. A dashboard tab opens or reveals with cmd.panel_tab.open and a board_id; the Dashboard row body opens or reveals dashboard:home and its sub-rows open or reveal the other boards, and New dashboard makes a custom one (amended 2026-10-10, DL-186; it read: no board is created, renamed or deleted in wave 1); widget commands inside it stay cmd.widget.* naming the board in their existing room field (WS-030; amended 2026-10-10, DL-186; it read: addressed by board_id) and emit no
-  workspace.layout_changed. The shell keeps Ctrl+1..9 and Ctrl+K, so tab N is Alt+N and there are no Ctrl+K chords;
-  in the web client Ctrl+T, Ctrl+W, Ctrl+Shift+T and Ctrl+Tab are answered as Alt+T, Alt+W, Alt+Shift+T and Alt+`.
-  This unit supersedes UCC-144.
-  Output opens or reveals `output`; its channel picker switches the channel with `ui.output.select_channel`, a
-  view action with no command, receipt or event. "Open in new tab" dispatches `cmd.panel_tab.open` with
-  `output:<channel>` and shows only that channel. Other channel opens follow F3-634.
-  Amended 2026-10-10 (DL-186; D10 P1 to P13, D35; lead rulings F1, F2, F3 and F7): every dashboard tab is its own
-  board on the Usage board engine. The "+" menu's Dashboard sub-row lists Home, Metrics, Monitoring, Agents, this
-  project's custom dashboards and New dashboard; New dashboard, and Ctrl+T or a split in a panel whose usual kind is
-  the dashboard, dispatch cmd.panel_tab.open (or cmd.workspace_layout.split) with a dashboard spec and no board_id,
-  which makes a new, empty custom dashboard. A dashboard tab's controls map as the Dashboard tab controls table
-  says: Add widget is cmd.widget.add; Start from, a preset's Start from this preset and Reset widgets are one
-  cmd.widget.reset_layout with scope room and the board in room, Start from naming its set in the new optional
-  set_id (default, room:<room_id>, host:dashboard or user:<preset_id>) and Reset widgets naming none; Tidy is one
-  cmd.widget.move carrying arrange with detail diagnostics (WS-019); Range and Scope are the typed local action
-  ui.widget_board.set_view, and saving, renaming and deleting a preset are ui.widget_preset.save,
-  ui.widget_preset.rename and ui.widget_preset.delete, each with no receipt and no event; Live readings is the
-  Usage page's Live / Paused view state; Rename dashboard... is cmd.panel_tab.rename and Delete dashboard..., after
-  its confirm, cmd.panel_tab.close, both for custom dashboards only, so no command family is added; Agents is drawn
-  by the kind, its Show filter view state. Widget payloads do not change: a dashboard board is named in their
-  existing room field, never in a board_id field. A named layout's save keeps the boards of its dashboard tabs up to
-  64 KB, and its apply puts them back, with no argument added. The Undo in the notice that follows Start from
-  dispatches one cmd.widget.reset_layout with { scope: room, room: <board_id>, restore_revision }, restore_revision
-  being the board's committed layout revision just before that Start from, with one receipt and only while the
-  notice is up (8 s, held on pointer or focus, F3-638); restore_revision and set_id never travel together; the owner
-  puts back exactly that revision's records, and a restore is refused without dispatch and disabled with a reason when any other board change was committed since, excluding the preset hold's settling resizes; like every widget command it emits no workspace.layout_changed (CV-361) (amended
-  2026-10-10, lead ruling; it read: The Undo that follows Start from has no id yet and waits for the lead's ruling.)
-  Amended 2026-10-10 (DL-187; D33, D38, D39, D40, lead rulings F5 and F6): the Terminal row lists every installed
-  shell, uncapped, and an SSH hosts row opens a submenu of hosts that dispatch cmd.panel_tab.open with that host's
-  profile; the empty-panel launcher's sub-row links dispatch what the menu's sub-rows dispatch; the Debug Console
-  row opens or reveals the one debug-console tab, whose session sub-tab is view state that dispatches nothing; a
-  kind's own tab-menu rows sit at the end after a hairline and do what the kind registers, the terminal's Mute
-  notifications being ui.terminal.mute_notifications; the title bar's Keep the chat open in narrow windows is the
-  typed local action ui.chat_column.keep_open, no longer a Settings write.
-  Amended 2026-10-10 (lead ruling F8; DL-188): cmd.chat.plan.open_details and cmd.chat.plan.open_version join the
-  open routes as plan tabs carrying the placement fields, open_version opening the exact version (DL-157); every
-  route that adds a tab emits workspace.layout_changed, admitted at family revision 2.0.0.
-  Amended 2026-10-10 (lead ruling): cmd.chat.attachment.open joins the table of routes that open or reveal a tab;
-  it opens the attachment's document or artifact tab through the one opening module, and an open that adds a tab
-  emits workspace.layout_changed (CV-361). cmd.browser.focus_browser_tab is layout-only with no event, and a
-  collapsed host panel expands through cmd.workspace_layout.set_collapsed.
-  The same dashboard Undo notice and existing Undo route serve Start from and a Reset widgets that changed
-  anything: one cmd.widget.reset_layout { scope: 'room', room: <board_id>, restore_revision }, one receipt
-  and no workspace.layout_changed, never set_id with restore_revision. The revision and its envelope are
-  captured before that operation and written back and read by the board owner after acceptance. Any other
-  committed board change disables Undo without dispatch, except the preset hold's settling resizes;
-  eligibility is rechecked while the notice is up on commit, pointer or focus entering and click (WS-030,
-  F3-638).
+  Home's universal panels (DL-180) have one command family for tabs and one for layout. Tab
+  operations are cmd.panel_tab.open, cmd.panel_tab.close, cmd.panel_tab.rename, cmd.panel_tab.move,
+  cmd.panel_tab.keep, cmd.panel_tab.pin, cmd.panel_tab.unpin and cmd.panel_tab.reopen_closed. Layout
+  operations extend cmd.workspace_layout.*: split, move_surface (a whole panel; edge center moves
+  its tabs into another panel), resize_surface (one commit on release, or per changed divider key
+  press), set_collapsed (any panel), close_panel, lock, apply_named, save_named and reset (Restore
+  home layout, also the Settings row general.startup.reset-home-layout). Every row carries
+  project_id, workspace_tab_id, expected_layout_revision and idempotency_key; a tab is named by
+  panel_tab_id, never by route tab_id or workspace_tab_id, and a home panel by panel_id. Every
+  committed structural change emits the one existing event workspace.layout_changed with its v2
+  payload (CV-361); an open that only reveals an existing tab emits nothing, and a failed commit
+  rolls back and emits nothing. View state is typed local actions with no receipt and no event:
+  ui.panel_tab.activate, ui.workspace_layout.maximize, ui.workspace_layout.focus_panel and
+  ui.output.select_channel. Opening the "+" menu, the "+N" list, the every-tab and recent-tab lists,
+  a panel menu, a tab menu, a picker or a prompt, hovering and dragging dispatch nothing, and each
+  leaf dispatches exactly one command or typed local action as this addendum's tables map it, with a
+  typed no_change for an already-done target and a disabled reason from the closed set otherwise. A
+  "+" row's body opens a new tab in this panel (where tab) and its trailing cell, Alt+click or
+  Alt+Enter a new panel (where panel); the empty-panel launcher dispatches the same ids. Where a
+  domain id exists for the thing opened the caller dispatches it: cmd.file.open,
+  cmd.nav.open_subject, cmd.browser.open_workspace_preview and cmd.terminal.open keep their ids,
+  carry the placement fields where, mode, by and background whose contract is CV-360, and resolve
+  through the one opening module (F3-634, DR-071) like every other route in the open-routes table;
+  cmd.panel_tab.open is dispatched directly only for a new terminal, a blank browser, a dashboard
+  tab, an editor buffer and the tool tabs. cmd.editor.close_tab is an alias of cmd.panel_tab.close.
+  cmd.editor.open_panel, cmd.editor.close_panel and the never-registered cmd.artifacts.open_panel
+  retire, and target_editor_panel_id, target_editor_group_id and target_group never select a home
+  panel. A dashboard tab opens or reveals with cmd.panel_tab.open and a board_id; the Dashboard row
+  body opens or reveals dashboard:home and its sub-rows open or reveal the other boards, and New
+  dashboard makes a custom one (amended 2026-10-10, DL-186; it read: no board is created, renamed or
+  deleted in wave 1); widget commands inside it stay cmd.widget.* naming the board in their existing
+  room field (WS-030; amended 2026-10-10, DL-186; it read: addressed by board_id) and emit no
+  workspace.layout_changed. The shell keeps Ctrl+1..9 and Ctrl+K, so tab N is Alt+N and there are no
+  Ctrl+K chords; in the web client Ctrl+T, Ctrl+W, Ctrl+Shift+T and Ctrl+Tab are answered as Alt+T,
+  Alt+W, Alt+Shift+T and Alt+`. This unit supersedes UCC-144. Output opens or reveals `output`; its
+  channel picker switches the channel with `ui.output.select_channel`, a view action with no
+  command, receipt or event. "Open in new tab" dispatches `cmd.panel_tab.open` with
+  `output:<channel>` and shows only that channel. Other channel opens follow F3-634. Amended
+  2026-10-10 (DL-186; D10 P1 to P13, D35; lead rulings F1, F2, F3 and F7): every dashboard tab is
+  its own board on the Usage board engine. The "+" menu's Dashboard sub-row lists Home, Metrics,
+  Monitoring, Agents, this project's custom dashboards and New dashboard; New dashboard, and Ctrl+T
+  or a split in a panel whose usual kind is the dashboard, dispatch cmd.panel_tab.open (or
+  cmd.workspace_layout.split) with a dashboard spec and no board_id, which makes a new, empty custom
+  dashboard. A dashboard tab's controls map as the Dashboard tab controls table says: Add widget is
+  cmd.widget.add; Start from, a preset's Start from this preset and Reset widgets are one
+  cmd.widget.reset_layout with scope room and the board in room, Start from naming its set in the
+  new optional set_id (default, room:<room_id>, host:dashboard or user:<preset_id>) and Reset
+  widgets naming none; Tidy is one cmd.widget.move carrying arrange with detail diagnostics
+  (WS-019); Range and Scope are the typed local action ui.widget_board.set_view, and saving,
+  renaming and deleting a preset are ui.widget_preset.save, ui.widget_preset.rename and
+  ui.widget_preset.delete, each with no receipt and no event; Live readings is the Usage page's Live
+  / Paused view state; Rename dashboard... is cmd.panel_tab.rename and Delete dashboard..., after
+  its confirm, cmd.panel_tab.close, both for custom dashboards only, so no command family is added;
+  Agents is drawn by the kind, its Show filter view state. Widget payloads do not change: a
+  dashboard board is named in their existing room field, never in a board_id field. A named layout's
+  save keeps the boards of its dashboard tabs up to 64 KB, and its apply puts them back, with no
+  argument added. The Undo in the notice that follows Start from dispatches one
+  cmd.widget.reset_layout with { scope: room, room: <board_id>, restore_revision }, restore_revision
+  being the board's committed layout revision just before that Start from, with one receipt and only
+  while the notice is up (8 s, held on pointer or focus, F3-638); restore_revision and set_id never
+  travel together; the owner puts back exactly that revision's records, and a restore is refused
+  without dispatch and disabled with a reason when any other board change was committed since,
+  excluding the preset hold's settling resizes; like every widget command it emits no
+  workspace.layout_changed (CV-361) (amended 2026-10-10, lead ruling; it read: The Undo that follows
+  Start from has no id yet and waits for the lead's ruling.) Amended 2026-10-10 (DL-187; D33, D38,
+  D39, D40, lead rulings F5 and F6): the Terminal row lists every installed shell, uncapped, and an
+  SSH hosts row opens a submenu of hosts that dispatch cmd.panel_tab.open with that host's profile;
+  the empty-panel launcher's sub-row links dispatch what the menu's sub-rows dispatch; the Debug
+  Console row opens or reveals the one debug-console tab, whose session sub-tab is view state that
+  dispatches nothing; a kind's own tab-menu rows sit at the end after a hairline and do what the
+  kind registers, the terminal's Mute notifications being ui.terminal.mute_notifications; the title
+  bar's Keep the chat open in narrow windows is the typed local action ui.chat_column.keep_open, no
+  longer a Settings write. Amended 2026-10-10 (lead ruling F8; DL-188): cmd.chat.plan.open_details
+  and cmd.chat.plan.open_version join the open routes as plan tabs carrying the placement fields,
+  open_version opening the exact version (DL-157); every route that adds a tab emits
+  workspace.layout_changed, admitted at family revision 2.0.0. Amended 2026-10-10 (lead ruling):
+  cmd.chat.attachment.open joins the table of routes that open or reveal a tab; it opens the
+  attachment's document or artifact tab through the one opening module, and an open that adds a tab
+  emits workspace.layout_changed (CV-361). cmd.browser.focus_browser_tab is layout-only with no
+  event, and a collapsed host panel expands through cmd.workspace_layout.set_collapsed. The same
+  dashboard Undo notice and existing Undo route serve Start from and a Reset widgets that changed
+  anything: one cmd.widget.reset_layout { scope: 'room', room: <board_id>, restore_revision }, one
+  receipt and no workspace.layout_changed, never set_id with restore_revision. The revision and its
+  envelope are captured before that operation and written back and read by the board owner after
+  acceptance. Any other committed board change disables Undo without dispatch, except the preset
+  hold's settling resizes; eligibility is rechecked while the notice is up on commit, pointer or
+  focus entering and click (WS-030, F3-638). Picker Back and its keyboard equivalents are
+  ui.panel_tab.picker_back under CS-100, consuming F3-632; no Back cmd.* is minted. Restoring a
+  level never opens an item or changes the layout.
 gui_related: true
 gui_classification_reason: "Owns the command ids, arguments, availability, disabled reasons, events and keys of every control the universal panels add."
 split_recommended: false
@@ -15328,21 +15351,40 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
-  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/panels-NUMBERS-6026fa8432.md, SHA-256 27ddd358f2c98848e424d7802e753435e09568a9555330884a84c725a844f2c7 (concept lineage only)"
-  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/followup/DECISIONS-ADDENDUM-2.md, SHA-256 1eecc96b03a1a774f52d06420c913553d5f5d1917e1bd5705e2f6e0bbc11fad6 (D31)"
-  - "Plans/Decision_Log.md#DL-180"
-  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/DECISIONS.md (SHA-256 0d2b45466c91734e15fd8659e9a8e3b17b70d92be785421e57e084dc8daf6b64; D1, D2, D5 to D10)"
-  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/panels-CONTRACT-v1-778c8494e6.md (SHA-256 aa16fc080f44f6824b0ef32a2b568bfcae81277b6962caaba1b441015d68dae9; sections 6 to 9; concept lineage only)"
-  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/panels-NUMBERS-407e6fb6fe.md (SHA-256 019721f5215d95c80b999d5b61e1ee4bf79b29afc5b229a12bccde6f738c5162; Commands and keys; concept lineage only)"
-  - "Plans/Decision_Log.md#DL-186"
-  - "Plans/Decision_Log.md#DL-187"
-  - "Plans/Decision_Log.md#DL-188"
-  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/followup/DECISIONS-ADDENDUM-3.md, SHA-256 ecd18c2f2d8ac8f714f9578170d321584fb871e3d19601a68061898ffd6759a9 (D33, D35, D38, D39, D40, D42)"
-  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/followup/D10-DESIGN-per-instance-boards.md, SHA-256 927d0ed893c513f2f20efa3ff678f19ba785ac43cf84d690412038daa5d41796 (P1-P13; design lineage only)"
-  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/followup/panels-NUMBERS-339203bd76.md, SHA-256 2e2c2a95819842cd5cbcc108ed302460ddea3ed0a98be7dfe4f1b78507660ce6 (the \"+\" menu's shells and SSH hosts, the launcher links, the Debug Console; concept lineage only)"
-  - "The panels thread's build facts, pm-mail 1010221905-e13e and 1010223444-a10e (2026-10-10): set_id and its set ids, presets, rename and delete through the tab commands"
-  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/small-round/panels-CONTRACT-2926ad987e.md, SHA-256 c579d0dfef41fd1fc7327d14c2adb9e2b101c24b216ff64a9db5fc19895ad989 (small-round concept lineage only)"
-  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/small-round/panels-NUMBERS-51c316e18b.md, SHA-256 a9c42b88e5cb50706ff1716a254cb68e026a538bb7a0c840905779a9a482cff2 (small-round concept lineage only)"
+- /mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/panels-NUMBERS-6026fa8432.md,
+  SHA-256 27ddd358f2c98848e424d7802e753435e09568a9555330884a84c725a844f2c7 (concept lineage only)
+- /mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/followup/DECISIONS-ADDENDUM-2.md,
+  SHA-256 1eecc96b03a1a774f52d06420c913553d5f5d1917e1bd5705e2f6e0bbc11fad6 (D31)
+- Plans/Decision_Log.md#DL-180
+- /mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/DECISIONS.md (SHA-256 0d2b45466c91734e15fd8659e9a8e3b17b70d92be785421e57e084dc8daf6b64;
+  D1, D2, D5 to D10)
+- /mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/panels-CONTRACT-v1-778c8494e6.md
+  (SHA-256 aa16fc080f44f6824b0ef32a2b568bfcae81277b6962caaba1b441015d68dae9; sections 6 to 9; concept
+  lineage only)
+- /mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/panels-NUMBERS-407e6fb6fe.md
+  (SHA-256 019721f5215d95c80b999d5b61e1ee4bf79b29afc5b229a12bccde6f738c5162; Commands and keys; concept
+  lineage only)
+- Plans/Decision_Log.md#DL-186
+- Plans/Decision_Log.md#DL-187
+- Plans/Decision_Log.md#DL-188
+- /mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/followup/DECISIONS-ADDENDUM-3.md,
+  SHA-256 ecd18c2f2d8ac8f714f9578170d321584fb871e3d19601a68061898ffd6759a9 (D33, D35, D38, D39, D40, D42)
+- /mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/followup/D10-DESIGN-per-instance-boards.md,
+  SHA-256 927d0ed893c513f2f20efa3ff678f19ba785ac43cf84d690412038daa5d41796 (P1-P13; design lineage only)
+- /mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/followup/panels-NUMBERS-339203bd76.md,
+  SHA-256 2e2c2a95819842cd5cbcc108ed302460ddea3ed0a98be7dfe4f1b78507660ce6 (the "+" menu's shells and
+  SSH hosts, the launcher links, the Debug Console; concept lineage only)
+- 'The panels thread''s build facts, pm-mail 1010221905-e13e and 1010223444-a10e (2026-10-10): set_id
+  and its set ids, presets, rename and delete through the tab commands'
+- /mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/small-round/panels-CONTRACT-2926ad987e.md,
+  SHA-256 c579d0dfef41fd1fc7327d14c2adb9e2b101c24b216ff64a9db5fc19895ad989 (small-round concept lineage
+  only)
+- /mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/small-round/panels-NUMBERS-51c316e18b.md,
+  SHA-256 a9c42b88e5cb50706ff1716a254cb68e026a538bb7a0c840905779a9a482cff2 (small-round concept lineage
+  only)
+- /mnt/Cursor/share/puppet-master/2026-10-16-plans-pass2/sources/2026-10-15-panels-picker-back--NOTES.md,
+  SHA-256 29bac44f166cb8e0e67f4f00634cb15d0a3be576eb2f68e7e19606f3a4a1a71c (source lineage; not native
+  certification)
 preserved_exact_tokens:
   - "set_id"
   - "restore_revision"
@@ -15899,28 +15941,38 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/UI_Command_Catalog.md
 canonical_text: >-
-  cmd.editor.appearance.set is a shell_view command with normalization.kind none, normalizes_to_contract
-  F3-651 and no alias. Its typed request/result are Plans/editor_appearance.schema.json; it changes only
-  an existing editor tab's sparse appearance fields under the Project/workspace context and owner-state
-  guard. A null field clears its override; a token-map null entry clears that key, revealing the next
-  layer. Reset and quick sets are one atomic patch, never one dispatch per field. The result is a bounded
+  cmd.editor.appearance.set is a shell_view command with normalization.kind none,
+  normalizes_to_contract F3-651 and no alias. Its typed request/result are
+  Plans/editor_appearance.schema.json; it changes only an existing editor tab's sparse appearance
+  fields under the Project/workspace context and owner-state guard. A null field clears its
+  override; a token-map null entry clears that key, revealing the next layer. Reset and quick sets
+  are one atomic patch, never one dispatch per field. The result is a bounded
   applied/no_change/refused/failed receipt with owner readback, no domain event and no
   workspace.layout_changed. No Project returns no_project_context and no write. All editors and All
-  terminals, Settings fields, wallpaper selection and resetting those Project values compose the existing
-  cmd.settings.transaction.preview and cmd.settings.transaction.apply with exact inventory ids; the same
-  CAS/permission/readback rules apply and no app-global fallback is admitted. This terminal retains
-  cmd.terminal.appearance.set and import retains cmd.terminal.appearance.import_scheme. CS-102 and WM-093
-  enumerate typed local affordances and producer bindings; local previews never run a shell command or
-  modify a real file. No new shortcut is added for Customize: More, Open Customize and Indentation are
-  keyboard-reachable entry points. Panel split/move keys retain UCC-200's Alt+Shift+arrows; the earlier
-  concept Ctrl+Alt claim is retired. Notification toast dismissal is view-local and moves a lasting notice
-  into the inbox without resolving it; inbox dismissal uses cmd.alert.dismiss, and Clear all composes that
-  existing command for the captured eligible ids/revisions, preserving truthful per-item refusals and
-  keeping arrivals after the capture. Existing notice action commands retain domain approval semantics.
-  This unit creates no bulk resolve or dismiss-all command. The retired visible app-theme preview has no
+  terminals, Settings fields, wallpaper selection and resetting those Project values compose the
+  existing cmd.settings.transaction.preview and cmd.settings.transaction.apply with exact inventory
+  ids; the same CAS/permission/readback rules apply and no app-global fallback is admitted. This
+  terminal retains cmd.terminal.appearance.set and import retains
+  cmd.terminal.appearance.import_scheme. CS-102 and WM-093 enumerate typed local affordances and
+  producer bindings; local previews never run a shell command or modify a real file. No new shortcut
+  is added for Customize: More, Open Customize and Indentation are keyboard-reachable entry points.
+  Panel split/move keys retain UCC-200's Alt+Shift+arrows; the earlier concept Ctrl+Alt claim is
+  retired. Notification toast dismissal is view-local and moves a lasting notice into the inbox
+  without resolving it; inbox dismissal uses cmd.alert.dismiss, and Clear all composes that existing
+  command for the captured eligible ids/revisions, preserving truthful per-item refusals and keeping
+  arrivals after the capture. Existing notice action commands retain domain approval semantics. This
+  unit creates no bulk resolve or dismiss-all command. The retired visible app-theme preview has no
   producer: cmd.theme.preview is retired, not an alias of cmd.settings.transaction.preview. Legacy
-  requests cannot open a timed theme trial or create a preview receipt. Activated theme changes retain
-  SSYS-010’s internal Settings transaction; code-scheme previews remain CS-102’s typed local actions.
+  requests cannot open a timed theme trial or create a preview receipt. Activated theme changes
+  retain SSYS-010’s internal Settings transaction; code-scheme previews remain CS-102’s typed local
+  actions. Saved terminal preset Apply reuses cmd.terminal.appearance.set for This terminal and the
+  existing Settings preview/apply pair for All terminals. Its replacement adapter takes the complete
+  terminal reset_ids from Plans/appearance_quick_sets.json: This sends saved values plus null for
+  omitted ids; All sends saved values plus inventory defaults for omitted ids in one set preview. It
+  never runs reset and apply as two commits. Save, Rename, Delete and Undo are
+  ui.terminal.preset.save, ui.terminal.preset.rename, ui.terminal.preset.delete and
+  ui.terminal.preset.undo, local library actions owned by F3-650/SP-331. There is no cmd.* preset
+  family, per-preset command, new event or shortcut. Picker Back remains CS-100's local navigation.
 gui_related: true
 gui_classification_reason: Editor appearance and shared control dispatch.
 split_recommended: false
@@ -15955,6 +16007,12 @@ source_lineage:
 - Plans/Wiring_Matrix.md#WM-093
 - Plans/Settings_System.md#SSYS-009
 - Plans/storage-plan.md#SP-333
+- /mnt/Cursor/share/puppet-master/2026-10-16-plans-pass2/sources/2026-10-14-terminal-round3--LANDING.md,
+  SHA-256 4d6556ff98168f22719c5d401c4e677d5d380d2ef370b67a838cb3aa45301c2d (source lineage; not native
+  certification)
+- /mnt/Cursor/share/puppet-master/2026-10-16-plans-pass2/sources/2026-10-15-panels-picker-back--NOTES.md,
+  SHA-256 29bac44f166cb8e0e67f4f00634cb15d0a3be576eb2f68e7e19606f3a4a1a71c (source lineage; not native
+  certification)
 preserved_exact_tokens:
 - cmd.editor.appearance.set
 negative_constraints: []

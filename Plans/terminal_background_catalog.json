@@ -1,0 +1,761 @@
+{
+  "schema_id": "pm.terminal_background_catalog.v1",
+  "owner_ref": "Plans/FinalGUISpec.md#F3-642",
+  "categories": [
+    "tonal",
+    "wash",
+    "pattern",
+    "scene",
+    "glass",
+    "retro",
+    "mark",
+    "moving"
+  ],
+  "defaults": {
+    "gradient": "fade",
+    "image": "hills"
+  },
+  "compatibility": {
+    "gradient": {
+      "dusk": "dusk",
+      "dawn": "dawn",
+      "deep": "deep",
+      "paper": "paper"
+    },
+    "image": {
+      "hills": "hills",
+      "grid": "grid",
+      "paper": "fibre"
+    }
+  },
+  "plain_choices": {
+    "always": [
+      "Follow look",
+      "Solid color"
+    ],
+    "theme_surface": "Offer separately only where visibly distinct from Follow look; retain valid stored Theme surface elsewhere."
+  },
+  "designs": [
+    {
+      "id": "fade",
+      "name": "Fade",
+      "category": "tonal",
+      "field": "code.terminal.background-gradient",
+      "settings_value": "Fade",
+      "suggested_looks": [
+        "basic"
+      ],
+      "moving": false,
+      "available_in_all_looks": true
+    },
+    {
+      "id": "corner",
+      "name": "Corner light",
+      "category": "tonal",
+      "field": "code.terminal.background-gradient",
+      "settings_value": "Corner light",
+      "suggested_looks": [
+        "friendly"
+      ],
+      "moving": false,
+      "available_in_all_looks": true
+    },
+    {
+      "id": "horizon",
+      "name": "Horizon",
+      "category": "tonal",
+      "field": "code.terminal.background-gradient",
+      "settings_value": "Horizon",
+      "suggested_looks": [],
+      "moving": false,
+      "available_in_all_looks": true
+    },
+    {
+      "id": "vignette",
+      "name": "Vignette",
+      "category": "tonal",
+      "field": "code.terminal.background-gradient",
+      "settings_value": "Vignette",
+      "suggested_looks": [
+        "basic",
+        "retro"
+      ],
+      "moving": false,
+      "available_in_all_looks": true
+    },
+    {
+      "id": "split",
+      "name": "Split",
+      "category": "tonal",
+      "field": "code.terminal.background-gradient",
+      "settings_value": "Split",
+      "suggested_looks": [],
+      "moving": false,
+      "available_in_all_looks": true
+    },
+    {
+      "id": "deep",
+      "name": "Deep",
+      "category": "tonal",
+      "field": "code.terminal.background-gradient",
+      "settings_value": "Deep",
+      "suggested_looks": [],
+      "moving": false,
+      "available_in_all_looks": true
+    },
+    {
+      "id": "paper",
+      "name": "Warm paper",
+      "category": "tonal",
+      "field": "code.terminal.background-gradient",
+      "settings_value": "Warm paper",
+      "suggested_looks": [
+        "nier"
+      ],
+      "moving": false,
+      "available_in_all_looks": true
+    },
+    {
+      "id": "aurora",
+      "name": "Aurora",
+      "category": "wash",
+      "field": "code.terminal.background-gradient",
+      "settings_value": "Aurora",
+      "suggested_looks": [
+        "glass"
+      ],
+      "moving": false,
+      "available_in_all_looks": true
+    },
+    {
+      "id": "nebula",
+      "name": "Nebula",
+      "category": "wash",
+      "field": "code.terminal.background-gradient",
+      "settings_value": "Nebula",
+      "suggested_looks": [],
+      "moving": false,
+      "available_in_all_looks": true
+    },
+    {
+      "id": "dawn",
+      "name": "Dawn",
+      "category": "wash",
+      "field": "code.terminal.background-gradient",
+      "settings_value": "Dawn",
+      "suggested_looks": [
+        "friendly"
+      ],
+      "moving": false,
+      "available_in_all_looks": true
+    },
+    {
+      "id": "bloom",
+      "name": "Ink bloom",
+      "category": "wash",
+      "field": "code.terminal.background-gradient",
+      "settings_value": "Ink bloom",
+      "suggested_looks": [],
+      "moving": false,
+      "available_in_all_looks": true
+    },
+    {
+      "id": "dusk",
+      "name": "Dusk",
+      "category": "wash",
+      "field": "code.terminal.background-gradient",
+      "settings_value": "Dusk",
+      "suggested_looks": [],
+      "moving": false,
+      "available_in_all_looks": true
+    },
+    {
+      "id": "prism",
+      "name": "Prism edge",
+      "category": "wash",
+      "field": "code.terminal.background-gradient",
+      "settings_value": "Prism edge",
+      "suggested_looks": [],
+      "moving": false,
+      "available_in_all_looks": true
+    },
+    {
+      "id": "dots",
+      "name": "Dot grid",
+      "category": "pattern",
+      "field": "code.terminal.background-image",
+      "settings_value": "Dot grid",
+      "suggested_looks": [
+        "basic",
+        "friendly"
+      ],
+      "moving": false,
+      "available_in_all_looks": true
+    },
+    {
+      "id": "graph",
+      "name": "Graph paper",
+      "category": "pattern",
+      "field": "code.terminal.background-image",
+      "settings_value": "Graph paper",
+      "suggested_looks": [
+        "basic"
+      ],
+      "moving": false,
+      "available_in_all_looks": true
+    },
+    {
+      "id": "grid",
+      "name": "Blueprint",
+      "category": "pattern",
+      "field": "code.terminal.background-image",
+      "settings_value": "Blueprint",
+      "suggested_looks": [],
+      "moving": false,
+      "available_in_all_looks": true
+    },
+    {
+      "id": "hatch",
+      "name": "Diagonal hatch",
+      "category": "pattern",
+      "field": "code.terminal.background-image",
+      "settings_value": "Diagonal hatch",
+      "suggested_looks": [],
+      "moving": false,
+      "available_in_all_looks": true
+    },
+    {
+      "id": "checker",
+      "name": "Pixel checker",
+      "category": "pattern",
+      "field": "code.terminal.background-image",
+      "settings_value": "Pixel checker",
+      "suggested_looks": [],
+      "moving": false,
+      "available_in_all_looks": true
+    },
+    {
+      "id": "topo",
+      "name": "Topography",
+      "category": "pattern",
+      "field": "code.terminal.background-image",
+      "settings_value": "Topography",
+      "suggested_looks": [],
+      "moving": false,
+      "available_in_all_looks": true
+    },
+    {
+      "id": "waves",
+      "name": "Waves",
+      "category": "pattern",
+      "field": "code.terminal.background-image",
+      "settings_value": "Waves",
+      "suggested_looks": [],
+      "moving": false,
+      "available_in_all_looks": true
+    },
+    {
+      "id": "halftone",
+      "name": "Halftone",
+      "category": "pattern",
+      "field": "code.terminal.background-image",
+      "settings_value": "Halftone",
+      "suggested_looks": [],
+      "moving": false,
+      "available_in_all_looks": true
+    },
+    {
+      "id": "scanfield",
+      "name": "Scanline field",
+      "category": "pattern",
+      "field": "code.terminal.background-image",
+      "settings_value": "Scanline field",
+      "suggested_looks": [
+        "retro"
+      ],
+      "moving": false,
+      "available_in_all_looks": true
+    },
+    {
+      "id": "staff",
+      "name": "Staff lines",
+      "category": "pattern",
+      "field": "code.terminal.background-image",
+      "settings_value": "Staff lines",
+      "suggested_looks": [
+        "nier"
+      ],
+      "moving": false,
+      "available_in_all_looks": true
+    },
+    {
+      "id": "squares",
+      "name": "Squares",
+      "category": "pattern",
+      "field": "code.terminal.background-image",
+      "settings_value": "Squares",
+      "suggested_looks": [
+        "nier"
+      ],
+      "moving": false,
+      "available_in_all_looks": true
+    },
+    {
+      "id": "fibre",
+      "name": "Paper",
+      "category": "pattern",
+      "field": "code.terminal.background-image",
+      "settings_value": "Paper",
+      "suggested_looks": [],
+      "moving": false,
+      "available_in_all_looks": true
+    },
+    {
+      "id": "mark-strings",
+      "name": "Puppet cross",
+      "category": "mark",
+      "field": "code.terminal.background-image",
+      "settings_value": "Puppet cross",
+      "suggested_looks": [],
+      "moving": false,
+      "available_in_all_looks": true
+    },
+    {
+      "id": "mark-drop",
+      "name": "Droplet",
+      "category": "mark",
+      "field": "code.terminal.background-image",
+      "settings_value": "Droplet",
+      "suggested_looks": [],
+      "moving": false,
+      "available_in_all_looks": true
+    },
+    {
+      "id": "mark-cursor",
+      "name": "Prompt",
+      "category": "mark",
+      "field": "code.terminal.background-image",
+      "settings_value": "Prompt",
+      "suggested_looks": [
+        "retro"
+      ],
+      "moving": false,
+      "available_in_all_looks": true
+    },
+    {
+      "id": "mark-glyph",
+      "name": "Glyph",
+      "category": "mark",
+      "field": "code.terminal.background-image",
+      "settings_value": "Glyph",
+      "suggested_looks": [
+        "nier"
+      ],
+      "moving": false,
+      "available_in_all_looks": true
+    },
+    {
+      "id": "hills",
+      "name": "Ridgelines",
+      "category": "scene",
+      "field": "code.terminal.background-image",
+      "settings_value": "Ridgelines",
+      "suggested_looks": [
+        "friendly"
+      ],
+      "moving": false,
+      "available_in_all_looks": true
+    },
+    {
+      "id": "dunes",
+      "name": "Dunes",
+      "category": "scene",
+      "field": "code.terminal.background-image",
+      "settings_value": "Dunes",
+      "suggested_looks": [],
+      "moving": false,
+      "available_in_all_looks": true
+    },
+    {
+      "id": "city",
+      "name": "Night city",
+      "category": "scene",
+      "field": "code.terminal.background-image",
+      "settings_value": "Night city",
+      "suggested_looks": [],
+      "moving": false,
+      "available_in_all_looks": true
+    },
+    {
+      "id": "stars",
+      "name": "Starfield",
+      "category": "scene",
+      "field": "code.terminal.background-image",
+      "settings_value": "Starfield",
+      "suggested_looks": [
+        "retro"
+      ],
+      "moving": false,
+      "available_in_all_looks": true
+    },
+    {
+      "id": "synthwave",
+      "name": "Synthwave",
+      "category": "scene",
+      "field": "code.terminal.background-image",
+      "settings_value": "Synthwave",
+      "suggested_looks": [],
+      "moving": false,
+      "available_in_all_looks": true
+    },
+    {
+      "id": "caustics",
+      "name": "Caustics",
+      "category": "scene",
+      "field": "code.terminal.background-image",
+      "settings_value": "Caustics",
+      "suggested_looks": [],
+      "moving": false,
+      "available_in_all_looks": true
+    },
+    {
+      "id": "bokeh",
+      "name": "Bokeh",
+      "category": "scene",
+      "field": "code.terminal.background-image",
+      "settings_value": "Bokeh",
+      "suggested_looks": [],
+      "moving": false,
+      "available_in_all_looks": true
+    },
+    {
+      "id": "clouds",
+      "name": "Clouds",
+      "category": "scene",
+      "field": "code.terminal.background-image",
+      "settings_value": "Clouds",
+      "suggested_looks": [
+        "friendly"
+      ],
+      "moving": false,
+      "available_in_all_looks": true
+    },
+    {
+      "id": "aurora-drift",
+      "name": "Drifting aurora",
+      "category": "moving",
+      "field": "code.terminal.background-image",
+      "settings_value": "Drifting aurora",
+      "suggested_looks": [],
+      "moving": true,
+      "available_in_all_looks": true
+    },
+    {
+      "id": "twinkle",
+      "name": "Twinkling stars",
+      "category": "moving",
+      "field": "code.terminal.background-image",
+      "settings_value": "Twinkling stars",
+      "suggested_looks": [],
+      "moving": true,
+      "available_in_all_looks": true
+    },
+    {
+      "id": "rain",
+      "name": "Rain",
+      "category": "moving",
+      "field": "code.terminal.background-image",
+      "settings_value": "Rain",
+      "suggested_looks": [],
+      "moving": true,
+      "available_in_all_looks": true
+    },
+    {
+      "id": "snow",
+      "name": "Snow",
+      "category": "moving",
+      "field": "code.terminal.background-image",
+      "settings_value": "Snow",
+      "suggested_looks": [],
+      "moving": true,
+      "available_in_all_looks": true
+    },
+    {
+      "id": "lava",
+      "name": "Lava",
+      "category": "moving",
+      "field": "code.terminal.background-image",
+      "settings_value": "Lava",
+      "suggested_looks": [],
+      "moving": true,
+      "available_in_all_looks": true
+    },
+    {
+      "id": "clear-glass",
+      "name": "Clear glass",
+      "category": "glass",
+      "field": "code.terminal.background-image",
+      "settings_value": "Clear glass",
+      "suggested_looks": [
+        "glass"
+      ],
+      "moving": false,
+      "available_in_all_looks": true
+    },
+    {
+      "id": "frost",
+      "name": "Frosted glass",
+      "category": "glass",
+      "field": "code.terminal.background-image",
+      "settings_value": "Frosted glass",
+      "suggested_looks": [
+        "glass"
+      ],
+      "moving": false,
+      "available_in_all_looks": true
+    },
+    {
+      "id": "tinted",
+      "name": "Tinted glass",
+      "category": "glass",
+      "field": "code.terminal.background-image",
+      "settings_value": "Tinted glass",
+      "suggested_looks": [
+        "glass"
+      ],
+      "moving": false,
+      "available_in_all_looks": true
+    },
+    {
+      "id": "reeded",
+      "name": "Reeded glass",
+      "category": "glass",
+      "field": "code.terminal.background-image",
+      "settings_value": "Reeded glass",
+      "suggested_looks": [
+        "glass"
+      ],
+      "moving": false,
+      "available_in_all_looks": true
+    },
+    {
+      "id": "frosted",
+      "name": "Frosted panes",
+      "category": "glass",
+      "field": "code.terminal.background-image",
+      "settings_value": "Frosted panes",
+      "suggested_looks": [
+        "glass"
+      ],
+      "moving": false,
+      "available_in_all_looks": true
+    },
+    {
+      "id": "sheets",
+      "name": "Layered sheets",
+      "category": "glass",
+      "field": "code.terminal.background-image",
+      "settings_value": "Layered sheets",
+      "suggested_looks": [
+        "glass"
+      ],
+      "moving": false,
+      "available_in_all_looks": true
+    },
+    {
+      "id": "raindrops",
+      "name": "Rain on glass",
+      "category": "glass",
+      "field": "code.terminal.background-image",
+      "settings_value": "Rain on glass",
+      "suggested_looks": [
+        "glass"
+      ],
+      "moving": false,
+      "available_in_all_looks": true
+    },
+    {
+      "id": "lens",
+      "name": "Lens",
+      "category": "glass",
+      "field": "code.terminal.background-image",
+      "settings_value": "Lens",
+      "suggested_looks": [
+        "glass"
+      ],
+      "moving": false,
+      "available_in_all_looks": true
+    },
+    {
+      "id": "etched",
+      "name": "Etched glass",
+      "category": "glass",
+      "field": "code.terminal.background-image",
+      "settings_value": "Etched glass",
+      "suggested_looks": [
+        "glass"
+      ],
+      "moving": false,
+      "available_in_all_looks": true
+    },
+    {
+      "id": "rain-glass",
+      "name": "Running rain",
+      "category": "glass",
+      "field": "code.terminal.background-image",
+      "settings_value": "Running rain",
+      "suggested_looks": [],
+      "moving": true,
+      "available_in_all_looks": true
+    },
+    {
+      "id": "greenbar",
+      "name": "Green-bar paper",
+      "category": "retro",
+      "field": "code.terminal.background-image",
+      "settings_value": "Green-bar paper",
+      "suggested_looks": [
+        "retro"
+      ],
+      "moving": false,
+      "available_in_all_looks": true
+    },
+    {
+      "id": "phosphor-glow",
+      "name": "Phosphor glow",
+      "category": "retro",
+      "field": "code.terminal.background-image",
+      "settings_value": "Phosphor glow",
+      "suggested_looks": [
+        "retro"
+      ],
+      "moving": false,
+      "available_in_all_looks": true
+    },
+    {
+      "id": "tube",
+      "name": "Tube glass",
+      "category": "retro",
+      "field": "code.terminal.background-image",
+      "settings_value": "Tube glass",
+      "suggested_looks": [
+        "retro"
+      ],
+      "moving": false,
+      "available_in_all_looks": true
+    },
+    {
+      "id": "grille",
+      "name": "Aperture grille",
+      "category": "retro",
+      "field": "code.terminal.background-image",
+      "settings_value": "Aperture grille",
+      "suggested_looks": [
+        "retro"
+      ],
+      "moving": false,
+      "available_in_all_looks": true
+    },
+    {
+      "id": "static",
+      "name": "Static",
+      "category": "retro",
+      "field": "code.terminal.background-image",
+      "settings_value": "Static",
+      "suggested_looks": [],
+      "moving": false,
+      "available_in_all_looks": true
+    },
+    {
+      "id": "phosphor-grid",
+      "name": "Phosphor grid",
+      "category": "retro",
+      "field": "code.terminal.background-image",
+      "settings_value": "Phosphor grid",
+      "suggested_looks": [
+        "retro"
+      ],
+      "moving": false,
+      "available_in_all_looks": true
+    },
+    {
+      "id": "test-card",
+      "name": "Test pattern",
+      "category": "retro",
+      "field": "code.terminal.background-image",
+      "settings_value": "Test pattern",
+      "suggested_looks": [],
+      "moving": false,
+      "available_in_all_looks": true
+    },
+    {
+      "id": "ansi",
+      "name": "ANSI art",
+      "category": "retro",
+      "field": "code.terminal.background-image",
+      "settings_value": "ANSI art",
+      "suggested_looks": [
+        "retro"
+      ],
+      "moving": false,
+      "available_in_all_looks": true
+    },
+    {
+      "id": "wireframe",
+      "name": "Vector terrain",
+      "category": "retro",
+      "field": "code.terminal.background-image",
+      "settings_value": "Vector terrain",
+      "suggested_looks": [],
+      "moving": false,
+      "available_in_all_looks": true
+    },
+    {
+      "id": "boot-ghost",
+      "name": "Boot ghost",
+      "category": "retro",
+      "field": "code.terminal.background-image",
+      "settings_value": "Boot ghost",
+      "suggested_looks": [],
+      "moving": false,
+      "available_in_all_looks": true
+    },
+    {
+      "id": "scope",
+      "name": "Oscilloscope",
+      "category": "retro",
+      "field": "code.terminal.background-image",
+      "settings_value": "Oscilloscope",
+      "suggested_looks": [],
+      "moving": true,
+      "available_in_all_looks": true
+    },
+    {
+      "id": "glyph-rain",
+      "name": "Glyph rain",
+      "category": "retro",
+      "field": "code.terminal.background-image",
+      "settings_value": "Glyph rain",
+      "suggested_looks": [],
+      "moving": true,
+      "available_in_all_looks": true
+    }
+  ],
+  "source_refs": [
+    {
+      "path": "Concepts/home-redesign/src/terminal/js/43-grounds.js",
+      "sha256": "617315678ff086bf94d334774384cbe93997d2afcbd753c048644ca5cae77b11",
+      "revision": "a42713eff4"
+    },
+    {
+      "path": "Concepts/home-redesign/src/terminal/js/44-grounds-glass.js",
+      "sha256": "0448c5b4406adc41bf9aa9ccfd5b302ed0943e9d48449d400d7703bde58b6ccc",
+      "revision": "a42713eff4"
+    },
+    {
+      "path": "Concepts/home-redesign/src/terminal/js/45-grounds-retro.js",
+      "sha256": "ed926a61e8081058a702938bc8b612b3b0f70d706d38142a5bd06bd0478a954a",
+      "revision": "a42713eff4"
+    }
+  ]
+}

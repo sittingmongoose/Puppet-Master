@@ -2109,52 +2109,69 @@ unit_type: wiring_rule
 status: accepted
 owner_doc: Plans/UI_Wiring_Rules.md
 canonical_text: >-
-  The Home census is a closed list, and every control on it resolves to exactly one wiring row in WM-090's tables: a
-  production entry, a typed local action or a view-local disposition. The tab strip of every panel: a tab (activate,
-  its close target, middle click, Delete, double click to keep, Alt+click, drag within the strip, drag to another
-  strip, drag to a panel edge or the centre's outer edge, drop on "+N", tear-off), a double click on the strip's empty
-  space, the "+" button, the "+N" button, and the tab menu (Close, Close others, Close to the right, Keep open, Pin or
-  Unpin, Rename..., Move to new panel, Move to panel, Split right with this tab, Split down with this tab). The "+"
-  menu: its filter field, the Terminal row with each shell profile and SSH host, Browser with its recent addresses,
-  File... with its three recent files, Dashboard with its boards, Plan or document..., Artifact..., the Output,
-  Problems, Ports, Debug Console row with its submenu, Split right, Split down and Reopen closed tab, each item's body
-  (a new tab in this panel) and its trailing cell, Alt+click or Alt+Enter (a new panel). Quick Open. The empty-panel
-  launcher's rows, each row's body (a new tab in this panel) and its trailing cell, Alt+click or Alt+Enter (a new
-  panel), its five recent files and its hint. The "+N" list and the every-tab list (a row, its close target,
-  the search field). A panel's grip and Move panel, its dividers (drag, double click, the divider keys), and its panel
-  menu (Split right, Split down, Maximize or Restore panels, Collapse to tabs or Expand, Lock or Unlock panel, Show all
-  tabs in this panel, Layouts with the named and saved layouts, Save this layout... and Restore home layout, Close
-  other tabs, Close panel). The title bar's Home options menu (F3-502: the named and saved layouts, Show or Hide the
-  chat, Pop out the chat or Dock the chat back, Keep the chat open in narrow windows, Save this layout..., Restore home
-  layout, Run setup wizard) and Settings' Restore home layout row. The chat column: the activity bar's Chat toggle,
-  its inner edge (width), its header menu's Pop out, the popped-out window's Dock back and the 32 px edge strip of a
-  narrow window. The narrow switcher. The Home keys of the keyboard map in
-  `Plans/FinalGUISpec.md#F3-635` and `Plans/UI_Command_Catalog.md#UCC-200` (the rows of WM-090's Keys table) with the
-  web-client mapping (Ctrl+T, Ctrl+W, Ctrl+Shift+T and Ctrl+Tab answered as Alt+T, Alt+W, Alt+Shift+T and Alt+` in a
-  browser). Retired, with no row: the four editor panels' grab, close, pop-out, Open Browser and resizers; Open Panel and Open Browser in Panel
-  with Panel 1 to Panel 4; File Manager's Open in Panel 1 to 4; the host drop targets, the dock track and the floating
-  corner resizer; the dashboard's grab, pop-out and resizer; the chat's grab; the terminal sections (grab, bottom
-  toggle, new section, split pane, move workgroup, resizer); and Collapse Bottom Terminal. A disabled control projects
-  its owner's reason (UCC-200) and dispatches nothing. Amended 2026-10-10 (DL-186, DL-187): the list adds the "+"
-  menu's SSH hosts row with its hosts and the Dashboard sub-row's custom dashboards and New dashboard; the empty-panel
-  launcher's sub-row links (a shell, a host, a recent address, a recent file, a board, New dashboard); the Terminal row
-  lists installed shells. A dashboard tab: its header row (Add widget with its list, Board, Maximize or Restore), the
-  Board menu (Dashboards with each dashboard and New dashboard; This dashboard with Range, Scope, Start from and its
-  sets, Save as preset..., Tidy and Reset widgets; Live readings; and on a custom dashboard only Rename dashboard...
-  and Delete dashboard... with its confirm), Start from's Your presets (Save this dashboard as a preset..., Start from
-  this preset, Rename preset..., Delete preset... with its confirm), the Undo notice after Start from, the empty
-  board's Add widget and Start from..., a widget card's Details (its gestures, size picker and menus are the Usage
-  board's own controls), and on Agents the Show filters and each agent's card. The Debug Console's session sub-tabs.
-  The chat header's Keep the chat open in narrow windows beside the Home options menu's, both the typed local action
-  ui.chat_column.keep_open, and the activity bar's Chat on every page. The Undo in the notice that follows Start
-  from maps to its WM-090 row, home.dashboard_tab.undo_start_from: one cmd.widget.reset_layout with restore_revision
-  (UCC-200), so the census has no open item (amended 2026-10-10, lead ruling; it read: The Undo after Start from
-  has a WM-090 row with no id until the lead rules on its id; it is the census's one open item; and before that,
-  amended 2026-10-10, DL-186: The Undo after Start from has no wiring row until the lead rules on its id). ui.chat_column.pin_history is a typed local action (view state); its value is saved in the v2 record's chat column as history_pinned, with no workspace.layout_changed event, revision advance or receipt, like ui.workspace_layout.maximize. WM-090 lists it as a typed local action with no production entry; ACD-500 owns the control. The census reports
-  unresolved_count=0 (amended 2026-10-10, lead ruling: the Undo after Start from has its id; it read: The census
-  reports unresolved_count=1, the Undo's missing id, until the lead rules, and 0 after; and before that, amended
-  2026-10-10, DL-186: The census reports unresolved_count=0). This census supersedes
-  the fixed-zone rows that UIW-010's amendments and the 2026-08-04 Home rules list.
+  The Home census is a closed list, and every control on it resolves to exactly one wiring row in
+  WM-090's tables: a production entry, a typed local action or a view-local disposition. The tab
+  strip of every panel: a tab (activate, its close target, middle click, Delete, double click to
+  keep, Alt+click, drag within the strip, drag to another strip, drag to a panel edge or the
+  centre's outer edge, drop on "+N", tear-off), a double click on the strip's empty space, the "+"
+  button, the "+N" button, and the tab menu (Close, Close others, Close to the right, Keep open, Pin
+  or Unpin, Rename..., Move to new panel, Move to panel, Split right with this tab, Split down with
+  this tab). The "+" menu: its filter field, the Terminal row with each shell profile and SSH host,
+  Browser with its recent addresses, File... with its three recent files, Dashboard with its boards,
+  Plan or document..., Artifact..., the Output, Problems, Ports, Debug Console row with its submenu,
+  Split right, Split down and Reopen closed tab, each item's body (a new tab in this panel) and its
+  trailing cell, Alt+click or Alt+Enter (a new panel). Quick Open. The empty-panel launcher's rows,
+  each row's body (a new tab in this panel) and its trailing cell, Alt+click or Alt+Enter (a new
+  panel), its five recent files and its hint. The "+N" list and the every-tab list (a row, its close
+  target, the search field). A panel's grip and Move panel, its dividers (drag, double click, the
+  divider keys), and its panel menu (Split right, Split down, Maximize or Restore panels, Collapse
+  to tabs or Expand, Lock or Unlock panel, Show all tabs in this panel, Layouts with the named and
+  saved layouts, Save this layout... and Restore home layout, Close other tabs, Close panel). The
+  title bar's Home options menu (F3-502: the named and saved layouts, Show or Hide the chat, Pop out
+  the chat or Dock the chat back, Keep the chat open in narrow windows, Save this layout..., Restore
+  home layout, Run setup wizard) and Settings' Restore home layout row. The chat column: the
+  activity bar's Chat toggle, its inner edge (width), its header menu's Pop out, the popped-out
+  window's Dock back and the 32 px edge strip of a narrow window. The narrow switcher. The Home keys
+  of the keyboard map in `Plans/FinalGUISpec.md#F3-635` and `Plans/UI_Command_Catalog.md#UCC-200`
+  (the rows of WM-090's Keys table) with the web-client mapping (Ctrl+T, Ctrl+W, Ctrl+Shift+T and
+  Ctrl+Tab answered as Alt+T, Alt+W, Alt+Shift+T and Alt+` in a browser). Retired, with no row: the
+  four editor panels' grab, close, pop-out, Open Browser and resizers; Open Panel and Open Browser
+  in Panel with Panel 1 to Panel 4; File Manager's Open in Panel 1 to 4; the host drop targets, the
+  dock track and the floating corner resizer; the dashboard's grab, pop-out and resizer; the chat's
+  grab; the terminal sections (grab, bottom toggle, new section, split pane, move workgroup,
+  resizer); and Collapse Bottom Terminal. A disabled control projects its owner's reason (UCC-200)
+  and dispatches nothing. Amended 2026-10-10 (DL-186, DL-187): the list adds the "+" menu's SSH
+  hosts row with its hosts and the Dashboard sub-row's custom dashboards and New dashboard; the
+  empty-panel launcher's sub-row links (a shell, a host, a recent address, a recent file, a board,
+  New dashboard); the Terminal row lists installed shells. A dashboard tab: its header row (Add
+  widget with its list, Board, Maximize or Restore), the Board menu (Dashboards with each dashboard
+  and New dashboard; This dashboard with Range, Scope, Start from and its sets, Save as preset...,
+  Tidy and Reset widgets; Live readings; and on a custom dashboard only Rename dashboard... and
+  Delete dashboard... with its confirm), Start from's Your presets (Save this dashboard as a
+  preset..., Start from this preset, Rename preset..., Delete preset... with its confirm), the Undo
+  notice after Start from, the empty board's Add widget and Start from..., a widget card's Details
+  (its gestures, size picker and menus are the Usage board's own controls), and on Agents the Show
+  filters and each agent's card. The Debug Console's session sub-tabs. The chat header's Keep the
+  chat open in narrow windows beside the Home options menu's, both the typed local action
+  ui.chat_column.keep_open, and the activity bar's Chat on every page. The Undo in the notice that
+  follows Start from maps to its WM-090 row, home.dashboard_tab.undo_start_from: one
+  cmd.widget.reset_layout with restore_revision (UCC-200), so the census has no open item (amended
+  2026-10-10, lead ruling; it read: The Undo after Start from has a WM-090 row with no id until the
+  lead rules on its id; it is the census's one open item; and before that, amended 2026-10-10,
+  DL-186: The Undo after Start from has no wiring row until the lead rules on its id).
+  ui.chat_column.pin_history is a typed local action (view state); its value is saved in the v2
+  record's chat column as history_pinned, with no workspace.layout_changed event, revision advance
+  or receipt, like ui.workspace_layout.maximize. WM-090 lists it as a typed local action with no
+  production entry; ACD-500 owns the control. The census reports unresolved_count=0 (amended
+  2026-10-10, lead ruling: the Undo after Start from has its id; it read: The census reports
+  unresolved_count=1, the Undo's missing id, until the lead rules, and 0 after; and before that,
+  amended 2026-10-10, DL-186: The census reports unresolved_count=0). This census supersedes the
+  fixed-zone rows that UIW-010's amendments and the 2026-08-04 Home rules list. The census includes
+  F3-632's Back and equivalent level-navigation keys in + pickers, launcher pickers, Move panel,
+  Layouts, Move to panel, Show all tabs and kind submenus. They resolve to ui.panel_tab.picker_back,
+  a typed local navigation action with no production entry, Settings write, receipt or event; final
+  row selection alone uses its existing command. F3-647 owns drawing, F3-635 keys, and the exact
+  controls are listed in pm7_control_bindings.json.
 gui_related: true
 gui_classification_reason: "The closed list of visible Home controls that the wiring must cover, one row each."
 split_recommended: false
@@ -2417,25 +2434,30 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/UI_Wiring_Rules.md
 canonical_text: >-
-  Plans/pm7_control_bindings.json is the finite appearance and shell producer census, extending UIW-040
-  through UIW-042. Each row names the visible control, owner unit, setting/field payload, exact command
-  path or typed local action/non-dispatch disposition, and the corresponding production entry or reason it
-  has none. Each admitted editor setting and every retained customizer field has its own row; aliases and
-  view-local affordances never become invented cmd.* ids. Plans/Wiring_Matrix.production.json remains the
-  runtime command wiring inventory; a producer binding can reuse its canonical command entry only when the
-  census names that entry and exact argument mapping. Its schema is not relaxed for local controls: local
-  exclusions are explicit in the census and the production exclusions notes. Required evidence includes
-  the rendered pointer/keyboard path, projected availability and disabled reason, request/result,
-  readback, receipt/event delta, focus and accessible names. Static source declarations certify neither
-  native handlers nor the complete rendered census. Every PM7 control must be classified, including
+  Plans/pm7_control_bindings.json is the finite appearance and shell producer census, extending
+  UIW-040 through UIW-042. Each row names the visible control, owner unit, setting/field payload,
+  exact command path or typed local action/non-dispatch disposition, and the corresponding
+  production entry or reason it has none. Each admitted editor setting and every retained customizer
+  field has its own row; aliases and view-local affordances never become invented cmd.* ids.
+  Plans/Wiring_Matrix.production.json remains the runtime command wiring inventory; a producer
+  binding can reuse its canonical command entry only when the census names that entry and exact
+  argument mapping. Its schema is not relaxed for local controls: local exclusions are explicit in
+  the census and the production exclusions notes. Required evidence includes the rendered
+  pointer/keyboard path, projected availability and disabled reason, request/result, readback,
+  receipt/event delta, focus and accessible names. Static source declarations certify neither native
+  handlers nor the complete rendered census. Every PM7 control must be classified, including
   Settings entry/scope/reset, token color channels/hex/reset, preview/sample actions, wallpaper
-  keys/default, notifications, DnD and each resize surface. Demo-only controls and preview harnesses are
-  outside the product census. Composite quick-set rows reference the one exact field/value patch in
-  Plans/appearance_quick_sets.json, list only its affected setting ids in either scope, and adapt it
-  atomically to the existing writer. Reset/restore-default operations have an explicit exact id set
-  distinct from value patches. A binding cannot substitute all editor or terminal fields for a smaller
-  quick set. Controls whose final contract is held, including the new saved terminal presets and bezel
-  choices, remain disclosed owner holds rather than fabricated executable bindings.
+  keys/default, notifications, DnD and each resize surface. Demo-only controls and preview harnesses
+  are outside the product census. Composite quick-set rows reference the one exact field/value patch
+  in Plans/appearance_quick_sets.json, list only its affected setting ids in either scope, and adapt
+  it atomically to the existing writer. Reset/restore-default operations have an explicit exact id
+  set distinct from value patches. A binding cannot substitute all editor or terminal fields for a
+  smaller quick set. The round-3 bezel/background/mask fields and saved terminal preset controls are
+  now enumerated. Local library actions explicitly declare their SP-331-only persistence; picker
+  Back explicitly declares no persistence. The pending terminal round-5 and non-Glass consistency
+  proposals are not executable bindings in this edition. The setup/resume bell Continue control is a
+  local census row forwarding the original prompt's UCC-106 action and closed PWIZ context; it
+  creates no command, event or new action id.
 gui_related: true
 gui_classification_reason: Appearance And Shell Control Census.
 split_recommended: false
@@ -2461,8 +2483,9 @@ node_compile_hint:
 source_lineage:
 - /mnt/Cursor/share/puppet-master/2026-10-14-editor-customizer/PROPOSAL-canon.md, SHA-256 8b8f3179c3970cb165e4fb4722eb02381f0456faad235c4330207d2bec5f5431
   (approved campaign source lineage; not native implementation evidence)
-- /mnt/Cursor/share/puppet-master/2026-10-13-terminal-customizer/PROPOSAL-canon-followups.md, SHA-256 1e0739b70d9b0f8c55f8df4747d80ff099baae6d40caf6ae784dc13864d580b0
-  (approved campaign source lineage; not native implementation evidence)
+- /mnt/Cursor/share/puppet-master/2026-10-13-terminal-customizer/PROPOSAL-canon-followups.md, SHA-256
+  1e0739b70d9b0f8c55f8df4747d80ff099baae6d40caf6ae784dc13864d580b0 (approved campaign source lineage;
+  not native implementation evidence)
 - /mnt/Cursor/share/puppet-master/2026-10-13-notifications/NOTES.md, SHA-256 f09d2b8856652950762b6580b8ebab43022bdf053272738f52720de25922a895
   (approved campaign source lineage; not native implementation evidence)
 - /mnt/Cursor/share/puppet-master/2026-10-13-wallpapers/OWNER-PROPOSAL.md, SHA-256 07778e16e4bc6082aa1d56435a826692662718069ceaaa2f20e37ae56984ba2d
@@ -2472,6 +2495,12 @@ source_lineage:
 - Plans/Wiring_Matrix.md#WM-093
 - Plans/UI_Command_Catalog.md#UCC-204
 - Plans/Commands_System.md#CS-102
+- /mnt/Cursor/share/puppet-master/2026-10-16-plans-pass2/sources/2026-10-14-terminal-round3--LANDING.md,
+  SHA-256 4d6556ff98168f22719c5d401c4e677d5d380d2ef370b67a838cb3aa45301c2d (source lineage; not native
+  certification)
+- /mnt/Cursor/share/puppet-master/2026-10-16-plans-pass2/sources/2026-10-15-panels-picker-back--NOTES.md,
+  SHA-256 29bac44f166cb8e0e67f4f00634cb15d0a3be576eb2f68e7e19606f3a4a1a71c (source lineage; not native
+  certification)
 preserved_exact_tokens: []
 negative_constraints: []
 owner_hints:

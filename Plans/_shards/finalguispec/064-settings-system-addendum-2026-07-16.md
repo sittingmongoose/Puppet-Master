@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L31390-L32323
+Source lines: L31414-L32361
 
-Source SHA256: `a7b6f2c562f2ed1728f99ded5da071b1ae82ca324d50ee32f0e274aa0d0c8f37`
+Source SHA256: `0fe3f5d31ad816457e489d5066aa86cce3a2e4dc879b1a8b07f98b28db9b889f`
 
 ---
 
@@ -409,32 +409,36 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
-  Setting rows render their control by mapping the inventory type field to a renderer. The renderer set
-  is: toggle, select, radio, slider with a value bubble showing the current value, number, text, path with
-  a Browse control, color, action with working-then-done verb states on invocation, multiselect, list, and
-  keyvalue, where multiselect, list, and keyvalue render as expandable editors that open in place beneath
-  the row. The 824-setting inventory's rows resolve across eleven of these renderer types at promotion;
-  the color renderer is part of the contract and serves color-typed rows. Rows show badges from the
-  vocabulary restart, adjudication, and new; status marks for ok, needs-setup, and attention from the
-  derived-status feed; and scope tags from the six scopes global, project, run, persona, account, and
-  provider. A Project row discloses its concrete origin (copied, explicit, reset or imported) under
-  SSYS-002 without continuous global inheritance. Amended 2026-10-10 (DL-184, F3-648): a status renders as
-  a mark and a word, the mark in a 1em glyph slot with no container, never a pill; the toggle renderer
-  follows the approved switch grammar below; Glass has F3-652's later curved lens variant. A Settings
-  switch has a gripped key and power marks (bar on, hollow square off); the key slides while color wipes
-  behind it, with stepped reverse-video Retro and ink-block NieR variants. Under Reduced Motion the key
-  goes straight to its place and only color may fade for 160 ms. Joined choices fill their selected cell;
-  meters have square ends and Retro counts in blocks. Non-label switch keys are outside the label-pill
-  detector. The general.visual.wallpaper select renderer is the catalog-backed radio gallery of F3-653;
-  this is a registered presentation of select, not a new inventory type. Scope metadata such as global is
-  interpreted by SSYS-002, never as continuous app-global inheritance. Settings shell navigation, retained
-  updates and first-frame width consume SSYS-053. One shared one-of-several selector grammar applies in
-  Settings, Customize, Usage, the Wizard and other consumers. Choices never wrap while sharing a sliding
-  highlight. First stack neighbouring fields, then shorten visible choices while retaining full accessible
-  names; if the choices still cannot fit, use a one-choice-per-line list with instant highlight placement.
-  A highlight never spans wrapped lines. Joined highlights glide in Basic, Friendly and Glass, step in
-  Retro and NieR, and place immediately under Reduced Motion. Keyboard activation and an in-place Settings
-  update retain focus on the operated control.
+  Setting rows render their control by mapping the inventory type field to a renderer. The renderer
+  set is: toggle, select, radio, slider with a value bubble showing the current value, number, text,
+  path with a Browse control, color, action with working-then-done verb states on invocation,
+  multiselect, list, and keyvalue, where multiselect, list, and keyvalue render as expandable
+  editors that open in place beneath the row. The 824-setting inventory's rows resolve across eleven
+  of these renderer types at promotion; the color renderer is part of the contract and serves
+  color-typed rows. Rows show badges from the vocabulary restart, adjudication, and new; status
+  marks for ok, needs-setup, and attention from the derived-status feed; and scope tags from the six
+  scopes global, project, run, persona, account, and provider. A Project row discloses its concrete
+  origin (copied, explicit, reset or imported) under SSYS-002 without continuous global inheritance.
+  Amended 2026-10-10 (DL-184, F3-648): a status renders as a mark and a word, the mark in a 1em
+  glyph slot with no container, never a pill; the toggle renderer follows the approved switch
+  grammar below; Glass has F3-652's later curved lens variant. A Settings switch has a gripped key
+  and power marks (bar on, hollow square off); the key slides while color wipes behind it, with
+  stepped reverse-video Retro and ink-block NieR variants. Under Reduced Motion the key goes
+  straight to its place and only color may fade for 160 ms. Joined choices fill their selected cell;
+  meters have square ends and Retro counts in blocks. Non-label switch keys are outside the
+  label-pill detector. The general.visual.wallpaper select renderer is the catalog-backed radio
+  gallery of F3-653; this is a registered presentation of select, not a new inventory type. Scope
+  metadata such as global is interpreted by SSYS-002, never as continuous app-global inheritance.
+  Settings shell navigation, retained updates and first-frame width consume SSYS-053. One shared
+  one-of-several selector grammar applies in Settings, Customize, Usage, the Wizard and other
+  consumers. Choices never wrap while sharing a sliding highlight. First stack neighbouring fields,
+  then shorten visible choices while retaining full accessible names; if the choices still cannot
+  fit, use a one-choice-per-line list with instant highlight placement. A highlight never spans
+  wrapped lines. Joined highlights glide in Basic, Friendly and Glass, step in Retro and NieR, and
+  place immediately under Reduced Motion. Keyboard activation and an in-place Settings update retain
+  focus on the operated control. Current/default values in rows, Details, search and result toasts
+  consume SSYS-006's one formatter and effective display floor; percentage representation never
+  changes the stored fractional value.
 gui_related: true
 gui_classification_reason: This unit defines visible setting row control renderers, badge and status mark vocabulary, scope tags, and the inherit-origin line.
 split_recommended: false
@@ -569,26 +573,28 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
-  The instant-apply model binds specific settings to live shell surfaces: the theme setting
-  drives the theme engine and persists at `theme:v1`; the glass background mode setting
-  drives the glass composition layer and persists at `glass_background_mode:v1`; the glass
-  alpha setting drives `--glass-alpha` within the per-theme clamps of F3-429 and persists at
-  `glass_alpha:v1`; the reduce-animations setting drives the application reduced-motion
-  state; and the chat layout mode setting drove the chat mount layout until it retired (amended 2026-10-10,
-  DL-187: general.visual.chat-layout-mode retires with no options; the chat is a fixed column, F3-637, and a stored
-  Overlay or Detached value is ignored and cleared on first read, SSYS-050). Each binding applies
-  on change with no reload. The concept's interface-density live-apply hook had no consumer
-  and is demo residue excluded from this canonical wiring map.
+  The instant-apply model binds specific settings to live shell surfaces: the theme setting drives
+  the theme engine and persists at `theme:v1`; the shared Wallpaper setting drives F3-653 through
+  SSYS-054 and SP-333; `glass_background_mode:v1` is a retired migration input with no live writer;
+  the glass alpha setting drives `--glass-alpha` within the per-theme clamps of F3-429 and persists
+  at `glass_alpha:v1`; the reduce-animations setting drives the application reduced-motion state;
+  and the chat layout mode setting drove the chat mount layout until it retired (amended 2026-10-10,
+  DL-187: general.visual.chat-layout-mode retires with no options; the chat is a fixed column,
+  F3-637, and a stored Overlay or Detached value is ignored and cleared on first read, SSYS-050).
+  Each binding applies on change with no reload. The concept's interface-density live-apply hook had
+  no consumer and is demo residue excluded from this canonical wiring map.
 gui_related: true
 gui_classification_reason: This unit defines visible live-apply bindings between settings and shell surfaces.
 split_recommended: false
 depends_on: [F3-425, F3-428, F3-429, F3-432, F3-444, DL-187]
 unblocks: []
 acceptance_criteria:
-- "Changing theme, glass background mode, glass alpha or reduce-animations applies live to the theme engine, glass composition, --glass-alpha within clamps and reduced-motion state respectively, with no reload; the retired chat layout mode binds nothing (amended 2026-10-10, DL-187)."
-- "The theme, glass background mode, and glass alpha bindings persist through theme:v1, glass_background_mode:v1, and glass_alpha:v1 respectively."
-- "The interface-density hook is excluded from the wiring map as demo residue and gains no canonical binding."
-- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+- Theme, Wallpaper, Glass transparency and reduced-motion changes reach their existing owner bindings
+  live; the retired background-mode and chat-layout preferences have no writer.
+- Theme and transparency retain theme:v1 and glass_alpha:v1; Wallpaper uses SP-333's Project Settings
+  custody, while glass_background_mode:v1 is migration input only.
+- The interface-density hook is excluded from the wiring map as demo residue and gains no canonical binding.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
 validation_surfaces:
 - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
 - "python3 scripts/pm-plan-index.py validate"
@@ -825,21 +831,21 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
-  Glass-only settings, specifically the glass background mode setting and the glass alpha
-  slider, render as locked rows with an unsupported-reason chip when a non-glass theme is
-  active. Locked rows remain visible, searchable, and command-addressable rather than
-  disappearing. Lock state derives from the active theme family: the rows unlock when a glass
-  family variant is active and lock under the friendly, retro, and basic families, and the
-  chip names the unsupported reason.
+  SSYS-010 owns the current theme family row visibility. Glass transparency is offered only while
+  Glass is active, within F3-429's clamps; no background-mode row or unsupported-reason chip
+  remains. The former glass background mode setting is retired under SSYS-054, and Wallpaper is
+  available in every look. Earlier locked-row wording is historical lineage.
 gui_related: true
 gui_classification_reason: This unit defines visible locked-row presentation for glass-only settings.
 split_recommended: false
 depends_on: [F3-429, F3-438]
 unblocks: []
 acceptance_criteria:
-- "Glass background mode and glass alpha rows render locked with an unsupported-reason chip whenever a non-glass theme is active, and unlock when a glass family variant is active."
-- "Locked rows stay visible, searchable, and command-addressable; lock state derives from the active theme family, not from per-row static data."
-- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+- Glass transparency appears only for Glass under SSYS-010; the retired background-mode row is absent
+  from every look and Wallpaper is available in all looks.
+- No unsupported-reason chip, live command binding or second wallpaper store survives for the retired
+  row.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
 validation_surfaces:
 - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
 - "python3 scripts/pm-plan-index.py validate"
@@ -861,7 +867,9 @@ negative_constraints:
 - "Glass-only settings must not disappear from the settings surface under non-glass themes; they render locked with a stated reason."
 compatibility_only_notes:
 - "Slint portability: locked rows are a disabled visual state with a chip label driven by typed theme-family state; no arbitrary-content backdrop blur, no SVG filters, and color styling is precomputed rather than runtime-mixed."
-stale_retired_dispositions: []
+stale_retired_dispositions:
+- 'Amended 2026-10-16 (PM7 pass 2): The older Glass-background and non-Glass locked rows are superseded
+  by SSYS-010/SSYS-054; do not render retired controls.'
 owner_boundary_notes:
 - "Glass alpha clamps and slider behavior are owned by F3-429; row renderer and badge mechanics are owned by F3-438; this unit owns only the lock presentation and its theme-family derivation."
 owner_hints:
@@ -876,28 +884,31 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
-  The section 15.1 persistence key tables register four settings-driven keys. The shell and layout key table
-  gains `glass_background_mode:v1` (retired compatibility input at SSYS-054's coordinated publication,
-  interpreted by SP-333; no active writer after that boundary) and `glass_alpha:v1` (user glass alpha value
-  within the per-theme clamps; write frequency on change, debounced 300ms). The chat, settings, and review state
-  key table gains `settings_recents:v1` (most-recent-first deduplicated settings recents list, cap 8; write
-  frequency on change, debounced 300ms) and `settings_suggestions_dismissed:v1` (dismissed Suggested-shelf
-  entries with dismissal timestamps and signal scope, entries expiring after 90 days; write frequency on
-  change). The concept localStorage names pm.theme, pm.glassBg, pm.glassAlpha, and pm.activity_bar_order:v2 are
-  demo shims, not canonical keys: the canonical keys remain `theme:v1` and `activity_bar_order:v1`, and this
-  addendum registers no other new storage keys. The new Wallpaper choice is an existing Project Settings
-  snapshot value under SP-333, not a new local-storage family.
+  The section 15.1 persistence key tables register four settings-driven keys. The shell and layout
+  key table gains `glass_background_mode:v1` (retired compatibility input since SSYS-054's
+  2026-10-15 publication, interpreted by SP-333; no active writer after that boundary) and
+  `glass_alpha:v1` (user glass alpha value within the per-theme clamps; write frequency on change,
+  debounced 300ms). The chat, settings, and review state key table gains `settings_recents:v1`
+  (most-recent-first deduplicated settings recents list, cap 8; write frequency on change, debounced
+  300ms) and `settings_suggestions_dismissed:v1` (dismissed Suggested-shelf entries with dismissal
+  timestamps and signal scope, entries expiring after 90 days; write frequency on change). The
+  concept localStorage names pm.theme, pm.glassBg, pm.glassAlpha, and pm.activity_bar_order:v2 are
+  demo shims, not canonical keys: the canonical keys remain `theme:v1` and `activity_bar_order:v1`,
+  and this addendum registers no other new storage keys. The new Wallpaper choice is an existing
+  Project Settings snapshot value under SP-333, not a new local-storage family. On reading
+  activity_bar_order:v1, remove ids absent from F3-042's current rail destinations, including those
+  kept under More; retain the relative order of remaining ids.
 gui_related: true
 gui_classification_reason: This unit registers GUI persistence keys and write frequencies for theme and settings state.
 split_recommended: false
 depends_on: [F3-217]
 unblocks: []
 acceptance_criteria:
-- The shell and layout key table records glass_background_mode:v1 as retired-at-publication compatibility lineage
-  and glass_alpha:v1 with its write frequency, and the chat, settings, and review state table registers settings_recents:v1
-  and settings_suggestions_dismissed:v1 with write frequencies.
-- The concept names pm.theme, pm.glassBg, pm.glassAlpha, and pm.activity_bar_order:v2 are recorded as demo shims only;
-  canonical keys remain theme:v1 and activity_bar_order:v1.
+- The shell and layout key table records glass_background_mode:v1 as retired compatibility lineage since
+  2026-10-15 and glass_alpha:v1 with its write frequency, and the chat, settings, and review state table
+  registers settings_recents:v1 and settings_suggestions_dismissed:v1 with write frequencies.
+- The concept names pm.theme, pm.glassBg, pm.glassAlpha, and pm.activity_bar_order:v2 are recorded as
+  demo shims only; canonical keys remain theme:v1 and activity_bar_order:v1.
 - No storage keys other than glass_background_mode:v1, glass_alpha:v1, settings_recents:v1, and settings_suggestions_dismissed:v1
   are registered by this addendum.
 - No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
@@ -919,6 +930,9 @@ source_lineage:
 - Concepts/pm6-build (PMConcept6 demo; source-lineage-only per Plans/usage-feature.md)
 - /mnt/Cursor/share/puppet-master/2026-10-13-wallpapers/OWNER-PROPOSAL.md, SHA-256 07778e16e4bc6082aa1d56435a826692662718069ceaaa2f20e37ae56984ba2d
   (approved campaign source lineage; not native implementation evidence)
+- /mnt/Cursor/share/puppet-master/2026-10-16-plans-pass2/sources/2026-10-14-glass-review--LANDING.md,
+  SHA-256 4585c89ab98c4ee6c88f0683ac8d00244725047fe2637fe657371ec42cff17bd (source lineage; not native
+  certification)
 preserved_exact_tokens:
 - "glass_background_mode:v1"
 - "glass_alpha:v1"
