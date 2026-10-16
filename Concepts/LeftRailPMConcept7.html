@@ -230740,9 +230740,11 @@ var T = {};
        in this scheme, 43-grounds.js) are built in the task after it, as a pick is (part2's F4 M3 pass: NieR Dark, Scene,
        112 ms to the next paint, 80 ms in this handler). A later choice in the meantime wins */
     function chooseCat(b) {
-      var cat = b.getAttribute('data-gcat'), pick = ++catPick;
+      var pick = ++catPick;
+      /* the choice itself is made in the click, so any paint before the deferred one keeps the new tab (review TC-1) */
+      gcat = b.getAttribute('data-gcat'); gSig = '';
       [].forEach.call(root.querySelectorAll('[data-gcat]'), function (x) { setA(x, 'aria-selected', String(x === b)); });
-      afterPaint(function () { if (pick !== catPick || disposed) return; gcat = cat; gSig = ''; paint(); });
+      afterPaint(function () { if (pick !== catPick || disposed) return; paint(); });
     }
     function chooseGround(gv) {
       clearTimeout(intent);
