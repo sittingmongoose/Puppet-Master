@@ -9,6 +9,9 @@
 .pmed-pvhost { position: absolute; inset: 0; container-type: size; container-name: pmw-body; overflow: hidden; }
 .pmed-cz .pmt-cz-dockbox .pmed-pvhost { inset: 0; }
 .pmed-cz .pmt-cz-dialog { contain: layout style; }
+/* The hover material's absolute shine belongs to its quick-set button. Without
+   this containing block it covers and repaints the entire dialog. */
+.pmed-cz .pmt-cz-set { position: relative; }
 .pmed-cz .pmt-cz-dock { height: 176px; width: min(44%, 400px); transition: opacity 160ms ease; }
 /* it steps aside while the pointer or the focus is on what it floats over (11-editor-customize.js dockAside) */
 .pmed-cz .pmt-cz-dock.is-aside { opacity: .1; }
