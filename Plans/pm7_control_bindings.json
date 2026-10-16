@@ -7682,16 +7682,29 @@
     },
     {
       "control_id": "notifications.setup.continue",
-      "surface": "Bell inbox > Finish setting up / resume prompt > Continue",
-      "owner_ref": "Plans/Planning_Wizard.md#PWIZ-023",
+      "surface": "Bell inbox > Finish setting up > Continue",
+      "owner_ref": "Plans/Planning_Wizard.md#PWIZ-021",
       "disposition": "local",
       "action_ids": [
         "ui.onboarding.start"
       ],
       "production_entries": [],
       "setting_ids": [],
-      "payload": "Forward the original owner prompt’s admitted resume intent and closed UCC-106/PWIZ-021–023 context; no new action, command, approval or owner work. The actual context must pass pm.product_onboarding.action_request.v2.",
+      "payload": "Forward the original setup prompt’s ui.onboarding.start with its admitted resume intent and closed PWIZ-021/UCC-106 context under pm.product_onboarding.action_request.v2; retain owner validation and effects. No new action, command or approval.",
       "no_production_reason": "Existing typed owner-local onboarding action; bell entry is only the prompt projection, with no production UICommand receipt/event."
+    },
+    {
+      "control_id": "notifications.tour_resume.continue",
+      "surface": "Bell inbox > Resume Guided Tour > Continue",
+      "owner_ref": "Plans/Planning_Wizard.md#PWIZ-023",
+      "disposition": "local",
+      "action_ids": [
+        "ui.guided_tour.resume"
+      ],
+      "production_entries": [],
+      "setting_ids": [],
+      "payload": "Forward the original tour prompt’s ui.guided_tour.resume with its existing session, safe checkpoint, revision and currentness context under pm.guided_tour.action_request.v3; retain PWIZ-023 validation and effects.",
+      "no_production_reason": "Existing typed owner-local Guided Tour action; bell entry is only the prompt projection, with no production UICommand receipt/event."
     }
   ],
   "held_controls": []

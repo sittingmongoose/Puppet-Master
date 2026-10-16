@@ -2,9 +2,9 @@
 
 Source: `Plans/Decision_Log.md`
 
-Source lines: L14489-L15725
+Source lines: L14489-L15729
 
-Source SHA256: `2bb811254290fab278d950ca72cc71fe6435bae3c55fcad38ba65cfed45d0095`
+Source SHA256: `2ac6a5d78de58de3020e050d73e4edef318edf3aa27cd02c24d0c0736148febf`
 
 ---
 
@@ -915,9 +915,13 @@ plan_unit_id: DL-206
 unit_type: decision
 status: accepted
 owner_doc: Plans/Decision_Log.md
-canonical_text: Recorded 2026-10-16. The approved terminal round-3 landing 9cee10982c closes the catalog/bezel/curvature
-  holds in DL-189. F3-642 owns the 64 cross-look designs, Lens and Plain choice behavior; F3-643 owns
-  the independently optional monitor housing, continuous width/reflection and revised opt-in CRT defaults.
+canonical_text: >-
+  Recorded 2026-10-16. The approved terminal round-3 landing 9cee10982c closes the catalog/bezel/curvature
+  holds in DL-189. F3-642 owns the 64 cross-look designs, Lens and Plain choice behavior; F3-643 owns the
+  independently optional monitor housing, width and revised opt-in CRT defaults. Numeric 0–1 reflection
+  values remain readable compatibility input; final offered reflection range, steps and material levels are
+  held for round 5. Mask display-density/capability behavior is also held: the source's DPR-2-only drawing
+  and DPR-1 no-op are source lineage and an unresolved acceptance defect, not an admitted capability rule.
   Settings and machine companions consume those owners. Later round-4/5 discrete controls and mask changes
   remain pending; the prior contrast ruling DL-197 is unchanged.
 gui_related: true

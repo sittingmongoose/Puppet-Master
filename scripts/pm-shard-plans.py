@@ -118,6 +118,20 @@ def load_config(path: Path) -> dict[str, Any]:
     data = json.loads(path.read_text(encoding="utf-8"))
     if not isinstance(data.get("sources"), list) or not data["sources"]:
         raise SystemExit(f"{rel(path)} must define a non-empty sources array")
+    pins = data.get("line_chunk_end_pins", {})
+    if not isinstance(pins, dict):
+        raise SystemExit("line_chunk_end_pins must map registered sources to line ends")
+    for source_ref, ends in pins.items():
+        if source_ref not in data["sources"] or not isinstance(ends, list):
+            raise SystemExit(f"Invalid line_chunk_end_pins source/list: {source_ref}")
+        source, error = exact_path(source_ref)
+        if error or source is None or not source.is_file():
+            raise SystemExit(f"Pinned source is unavailable: {source_ref}")
+        # Preflight before generation removes any existing outputs.
+        try:
+            split_markdown(source.read_text(encoding="utf-8").splitlines(keepends=True), ends)
+        except ValueError as exc:
+            raise SystemExit(f"Invalid line_chunk_end_pins for {source_ref}: {exc}") from exc
     return data
 
 
@@ -128,7 +142,11 @@ def normalize_generated_markdown(text: str) -> str:
     return "\n".join(lines) + "\n"
 
 
-def split_markdown(lines: list[str]) -> list[dict[str, Any]]:
+def split_markdown(lines: list[str], line_chunk_end_pins: list[int] | None = None) -> list[dict[str, Any]]:
+    pins = line_chunk_end_pins or []
+    if (any(type(end) is not int or end < 1 or end > len(lines) for end in pins)
+            or pins != sorted(set(pins))):
+        raise ValueError("line ends must be unique, increasing integers within the source")
     def trimmed_section_end(start: int, end: int) -> int:
         while end > start and not lines[end - 1].strip():
             end -= 1
@@ -147,6 +165,8 @@ def split_markdown(lines: list[str]) -> list[dict[str, Any]]:
 
     sections: list[dict[str, Any]] = []
     if starts:
+        if pins:
+            raise ValueError("line-end pins apply only to line-count fallback sources")
         if starts[0] > 0:
             starts = [0] + starts
         for index, start in enumerate(starts):
@@ -164,23 +184,28 @@ def split_markdown(lines: list[str]) -> list[dict[str, Any]]:
             )
         return sections
 
-    chunk_size = 200
-    for start in range(0, len(lines), chunk_size):
-        end = min(start + chunk_size, len(lines))
-        sections.append(
-            {
-                "start": start + 1,
-                "end": end,
-                "heading": f"Lines {start + 1}-{end}",
-                "lines": lines[start:end],
-                "split_rule": "line-count-200",
-            }
-        )
+    # A former tail may be referenced by sealed evidence. Explicit source pins
+    # keep its line range/name stable when new rows extend that source.
+    segment_start = 0
+    for boundary in sorted(set([*pins, len(lines)])):
+        for start in range(segment_start, boundary, 200):
+            end = min(start + 200, boundary)
+            sections.append(
+                {
+                    "start": start + 1,
+                    "end": end,
+                    "heading": f"Lines {start + 1}-{end}",
+                    "lines": lines[start:end],
+                    "split_rule": "line-count-200",
+                }
+            )
+        segment_start = boundary
     return sections
 
 
 def shard_source(source: Path, output_root: Path, generated_at: str,
-                 previous_manifests: dict[str, dict[str, Any]] | None = None) -> dict[str, Any]:
+                 previous_manifests: dict[str, dict[str, Any]] | None = None,
+                 line_chunk_end_pins: list[int] | None = None) -> dict[str, Any]:
     source_bytes = source.read_bytes()
     source_hash = hashlib.sha256(source_bytes).hexdigest()
     text = source_bytes.decode("utf-8", errors="replace")
@@ -192,7 +217,7 @@ def shard_source(source: Path, output_root: Path, generated_at: str,
 
     shards: list[dict[str, Any]] = []
     used_names: set[str] = set()
-    for index, section in enumerate(split_markdown(lines), start=1):
+    for index, section in enumerate(split_markdown(lines, line_chunk_end_pins), start=1):
         base_name = slugify(section["heading"])[:64]
         name = f"{index:03d}-{base_name}.md"
         while name in used_names:
@@ -293,7 +318,8 @@ def generate(config_path: Path, report_path: Path | None) -> dict[str, Any]:
         if not source.exists():
             failures.append({"source": source_ref, "error": "missing_source"})
             continue
-        docs.append(shard_source(source, output_root, generated_at, previous_manifests))
+        docs.append(shard_source(source, output_root, generated_at, previous_manifests,
+                                 config.get("line_chunk_end_pins", {}).get(source_ref)))
 
     report = {
         "schema_id": "pm.plan_shards.report.v1",
@@ -387,6 +413,17 @@ def check(config_path: Path, report_path: Path | None) -> dict[str, Any]:
             doc_result["failures"].append({"path": rel(manifest_path), "error": "index_path_mismatch"})
         if manifest.get("index_sha256") != sha256_file(index_path):
             doc_result["failures"].append({"path": rel(index_path), "error": "index_hash_stale"})
+
+        pins = config.get("line_chunk_end_pins", {}).get(source_ref)
+        if pins:
+            expected_ranges = [(section["start"], section["end"]) for section in
+                               split_markdown(source.read_text(encoding="utf-8").splitlines(keepends=True), pins)]
+            actual_ranges = [(row.get("source_line_start"), row.get("source_line_end"))
+                             for row in manifest.get("shards", [])]
+            if actual_ranges != expected_ranges:
+                doc_result["failures"].append(
+                    {"path": rel(manifest_path), "error": "pinned_line_chunk_partition_mismatch"}
+                )
 
         index_text = index_path.read_text(encoding="utf-8")
         expected_doc_files = {manifest_path, index_path}

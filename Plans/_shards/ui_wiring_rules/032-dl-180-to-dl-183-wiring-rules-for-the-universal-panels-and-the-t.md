@@ -2,9 +2,9 @@
 
 Source: `Plans/UI_Wiring_Rules.md`
 
-Source lines: L2096-L2510
+Source lines: L2096-L2511
 
-Source SHA256: `2e8524945b45da5dc2953f153f3b4b85cf5d262c033dd78288df3d4a44918118`
+Source SHA256: `573a5980b038104f2a62ab20adf88c7151ce9b71520e93157aed2d1abb674ca5`
 
 ---
 
@@ -349,30 +349,31 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/UI_Wiring_Rules.md
 canonical_text: >-
-  Plans/pm7_control_bindings.json is the finite appearance and shell producer census, extending
-  UIW-040 through UIW-042. Each row names the visible control, owner unit, setting/field payload,
-  exact command path or typed local action/non-dispatch disposition, and the corresponding
-  production entry or reason it has none. Each admitted editor setting and every retained customizer
-  field has its own row; aliases and view-local affordances never become invented cmd.* ids.
-  Plans/Wiring_Matrix.production.json remains the runtime command wiring inventory; a producer
-  binding can reuse its canonical command entry only when the census names that entry and exact
-  argument mapping. Its schema is not relaxed for local controls: local exclusions are explicit in
-  the census and the production exclusions notes. Required evidence includes the rendered
-  pointer/keyboard path, projected availability and disabled reason, request/result, readback,
+  Plans/pm7_control_bindings.json is the finite appearance and shell producer census, extending UIW-040
+  through UIW-042. Each row names the visible control, owner unit, setting/field payload, exact command path
+  or typed local action/non-dispatch disposition, and the corresponding production entry or reason it has
+  none. Each admitted editor setting and every retained customizer field has its own row; aliases and
+  view-local affordances never become invented cmd.* ids. Plans/Wiring_Matrix.production.json remains the
+  runtime command wiring inventory; a producer binding can reuse its canonical command entry only when the
+  census names that entry and exact argument mapping. Its schema is not relaxed for local controls: local
+  exclusions are explicit in the census and the production exclusions notes. Required evidence includes the
+  rendered pointer/keyboard path, projected availability and disabled reason, request/result, readback,
   receipt/event delta, focus and accessible names. Static source declarations certify neither native
-  handlers nor the complete rendered census. Every PM7 control must be classified, including
-  Settings entry/scope/reset, token color channels/hex/reset, preview/sample actions, wallpaper
-  keys/default, notifications, DnD and each resize surface. Demo-only controls and preview harnesses
-  are outside the product census. Composite quick-set rows reference the one exact field/value patch
-  in Plans/appearance_quick_sets.json, list only its affected setting ids in either scope, and adapt
-  it atomically to the existing writer. Reset/restore-default operations have an explicit exact id
-  set distinct from value patches. A binding cannot substitute all editor or terminal fields for a
-  smaller quick set. The round-3 bezel/background/mask fields and saved terminal preset controls are
-  now enumerated. Local library actions explicitly declare their SP-331-only persistence; picker
-  Back explicitly declares no persistence. The pending terminal round-5 and non-Glass consistency
-  proposals are not executable bindings in this edition. The setup/resume bell Continue control is a
-  local census row forwarding the original prompt's UCC-106 action and closed PWIZ context; it
-  creates no command, event or new action id.
+  handlers nor the complete rendered census. Every PM7 control must be classified, including Settings
+  entry/scope/reset, token color channels/hex/reset, preview/sample actions, wallpaper keys/default,
+  notifications, DnD and each resize surface. Demo-only controls and preview harnesses are outside the
+  product census. Composite quick-set rows reference the one exact field/value patch in
+  Plans/appearance_quick_sets.json, list only its affected setting ids in either scope, and adapt it
+  atomically to the existing writer. Reset/restore-default operations have an explicit exact id set distinct
+  from value patches. A binding cannot substitute all editor or terminal fields for a smaller quick set. The
+  round-3 bezel/background/mask fields and saved terminal preset controls are now enumerated. Local library
+  actions explicitly declare their SP-331-only persistence; picker Back explicitly declares no persistence.
+  The pending terminal round-5 and non-Glass consistency proposals are not executable bindings in this
+  edition. The two bell Continue controls are separate local census rows forwarding the original prompt's
+  own typed action. Setup retains PWIZ-021/UCC-106's ui.onboarding.start and closed
+  pm.product_onboarding.action_request.v2 resume context; Guided Tour retains PWIZ-023's
+  ui.guided_tour.resume and pm.guided_tour.action_request.v3 session/checkpoint/currentness context. They
+  create no command, event or new action id.
 gui_related: true
 gui_classification_reason: Appearance And Shell Control Census.
 split_recommended: false

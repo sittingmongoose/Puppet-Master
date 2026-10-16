@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L30312-L31412
+Source lines: L30313-L31415
 
-Source SHA256: `0fe3f5d31ad816457e489d5066aa86cce3a2e4dc879b1a8b07f98b28db9b889f`
+Source SHA256: `ef219d9c3c18f4b2d4c1b66696f24c0c36da83975965f717d257758547ad4437`
 
 ---
 
@@ -1080,7 +1080,9 @@ Companion editor treatments carried in the same span (04-css-glass-b.part.html:1
 | Settings modal (glass themes) | `.s4-panel`, `.s4-psm` slabs | `blur(34px) saturate(160%)` | 10-css-settings.part.html:933-934 |
 | Setup popups (all themes, Skia GPU path only) | wand-module configuration sheets (F3-566) | backdrop blur drawn by the Skia renderer extensions (F3-582); not drawn on the Skia CPU raster, where the sheet is solid; the scrim is never blurred | DL-139 (no PMConcept6 source) |
 
-#### Glass background mode layer inventory (02-css-tokens.part.html:554-733; baked per F3-431)
+#### Retired Glass background mode layer inventory (2026-10-15 source lineage; 02-css-tokens.part.html:554-733)
+
+Mesh/Depth/Minimal, including the former mesh default below, are historical source lineage only. SSYS-054 and SP-333 own current shared Wallpaper and compatibility migration; this table supplies no active mode, default, parallax obligation or writer.
 
 | Mode | Layers | Layer blur | Drift and parallax | Baked per F3-431 |
 |---|---|---|---|---|

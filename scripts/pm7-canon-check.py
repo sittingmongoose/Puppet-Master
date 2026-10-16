@@ -190,8 +190,17 @@ def check():
     for control_id in local_ids:
         row = next(row for row in census if row['control_id'] == control_id)
         require(row['disposition'] == 'local' and not row['production_entries'] and not row['setting_ids'], f'{control_id}: local action acquired a command or Settings write')
-    bell_continue = next(row for row in census if row['control_id'] == 'notifications.setup.continue')
-    require(bell_continue['action_ids'] == ['ui.onboarding.start'] and bell_continue['disposition'] == 'local' and not bell_continue['production_entries'], 'Bell Continue does not reuse the typed onboarding resume route')
+    for control_id, action, owner, schema in [
+        ('notifications.setup.continue', 'ui.onboarding.start', 'PWIZ-021', 'pm.product_onboarding.action_request.v2'),
+        ('notifications.tour_resume.continue', 'ui.guided_tour.resume', 'PWIZ-023', 'pm.guided_tour.action_request.v3'),
+    ]:
+        bell_continue = next(row for row in census if row['control_id'] == control_id)
+        require(bell_continue['action_ids'] == [action]
+                and bell_continue['owner_ref'] == f'Plans/Planning_Wizard.md#{owner}'
+                and schema in bell_continue['payload']
+                and bell_continue['disposition'] == 'local'
+                and not bell_continue['production_entries'] and not bell_continue['setting_ids'],
+                f'{control_id}: bell Continue lost its original prompt owner/action/schema')
 
     preset_cases = read('pm7_canon.fixtures.json')['terminal_preset_cases']
     for case in preset_cases:

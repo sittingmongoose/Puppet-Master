@@ -2,9 +2,9 @@
 
 Source: `Plans/Planning_Wizard.md`
 
-Source lines: L1781-L2175
+Source lines: L1781-L2178
 
-Source SHA256: `f1abbe4a6765ea10c9daa64cc53616aa80ecbdd11a66d40cd8b065a284b85d3c`
+Source SHA256: `5bcfdfe2d87332d6a3479f8df7acdb3a953084a6ff4ce0df690813e0c668715d`
 
 ---
 
@@ -337,28 +337,29 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Planning_Wizard.md
 canonical_text: >-
-  Guided Tour is an optional Onboarding handoff in exact Assistant Chat/Teacher, workspace, Planning
-  Wizard order. The learner sends the supplied local question, reads Teacher's same-conversation
-  answer, and sees it in simple words through Explain this reply simply, which adds one extra,
-  simpler reply and leaves the original unchanged (DL-126); the callout then points to the quick dot
-  by the message box, which makes later replies simple, and names the ELI5 popup behind the wand's
-  ELI5 row, where the chat's choice is set (DL-126, ACD-484, F3-581); practises the workspace panels
-  of PWIZ-035 and performs a real widget action; then describes the book-club goal, answers a
-  meaningful question, reviews the plan, edits an answer, and sees the specific consequence before
-  the approval boundary. Planning owns at least half of meaningful actions and dwell time. Try it
-  and Show Me share each mounted owner's handler and success predicate. Tour state never grants
-  approval or starts work. ELI5, Pause, Skip, Back, safe-step resume, Settings-owned Reduced Motion,
-  measured callouts, and focused headings remain usable. Run Onboarding Again resets the tour
-  completely, and Settings offers Resume Guided Tour and Replay Guided Tour as separate entries.
-  Skip restores captured state; Finish restores temporary layout by default or keeps it only on
-  explicit selection, then lands on the real Planning Wizard with the committed Project selected.
-  While any restore runs, the application's own notices about it stay quiet in every look and the
-  Tour's closing note says what was put back (F3-521, DL-153). Both predecessor controllers remain
-  source lineage only. Guided example/Teacher presentation is F3-656's; resume prompts and page
-  notes consume F3-447's under-bell staging. The F3-447 reading interval or interaction elsewhere
-  tucks the prompt into F3-453's shared inbox; this is placement, not a tour timeout, Skip,
-  completion or approval. Continue reuses the original UCC-106 typed owner-local action and context,
-  and removal of the owner prompt removes its bell entry. No new tour action or approval is added.
+  Guided Tour is an optional Onboarding handoff in exact Assistant Chat/Teacher, workspace, Planning Wizard
+  order. The learner sends the supplied local question, reads Teacher's same-conversation answer, and sees
+  it in simple words through Explain this reply simply, which adds one extra, simpler reply and leaves the
+  original unchanged (DL-126); the callout then points to the quick dot by the message box, which makes
+  later replies simple, and names the ELI5 popup behind the wand's ELI5 row, where the chat's choice is set
+  (DL-126, ACD-484, F3-581); practises the workspace panels of PWIZ-035 and performs a real widget action;
+  then describes the book-club goal, answers a meaningful question, reviews the plan, edits an answer, and
+  sees the specific consequence before the approval boundary. Planning owns at least half of meaningful
+  actions and dwell time. Try it and Show Me share each mounted owner's handler and success predicate. Tour
+  state never grants approval or starts work. ELI5, Pause, Skip, Back, safe-step resume, Settings-owned
+  Reduced Motion, measured callouts, and focused headings remain usable. Run Onboarding Again resets the
+  tour completely, and Settings offers Resume Guided Tour and Replay Guided Tour as separate entries. Skip
+  restores captured state; Finish restores temporary layout by default or keeps it only on explicit
+  selection, then lands on the real Planning Wizard with the committed Project selected. While any restore
+  runs, the application's own notices about it stay quiet in every look and the Tour's closing note says
+  what was put back (F3-521, DL-153). Both predecessor controllers remain source lineage only. Guided
+  example/Teacher presentation is F3-656's; resume prompts and page notes consume F3-447's under-bell
+  staging. The F3-447 reading interval or interaction elsewhere tucks the prompt into F3-453's shared inbox;
+  this is placement, not a tour timeout, Skip, completion or approval. Continue forwards the original
+  prompt's own typed action: this tour's ui.guided_tour.resume with the existing
+  pm.guided_tour.action_request.v3 session, checkpoint and currentness validation. The separate setup prompt
+  retains PWIZ-021/UCC-106's ui.onboarding.start and pm.product_onboarding.action_request.v2 resume context.
+  Removal of either owner prompt removes its own bell entry. No new tour action or approval is added.
 gui_related: true
 gui_classification_reason: Defines the three-chapter practice flow, real-application interactions, motion, controls, callouts, focus, and exit state.
 depends_on: [PWIZ-021, ACD-431, ACD-484]
@@ -402,4 +403,6 @@ negative_constraints: [Do not restore either predecessor controller., Do not res
 stale_retired_dispositions:
   - "Amended 2026-10-09 (DL-180): the move-or-dock-chat step retires; the workspace chapter teaches panels (PWIZ-035)."
 
+preserved_exact_tokens:
+- ui.guided_tour.resume
 ```
