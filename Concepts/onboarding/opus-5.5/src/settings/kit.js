@@ -1145,11 +1145,16 @@ jumpToWorkspace = function (wsId, behavior) {
 let pm51RosterFitObserver = null, pm51RosterFitTarget = null;
 function installRosterFit() {
   const scroller = root.querySelector('#settings-document'); if (!scroller) return;
-  const apply = () => root.style.setProperty('--pm51-doc-h', scroller.clientHeight + 'px');
-  apply();
   if (pm51RosterFitTarget === scroller || typeof ResizeObserver !== 'function') return;
   if (pm51RosterFitObserver) pm51RosterFitObserver.disconnect();
-  pm51RosterFitObserver = new ResizeObserver(apply); pm51RosterFitObserver.observe(scroller); pm51RosterFitTarget = scroller;
+  /* The document has no border or padding. Its delivered content box is the client height without a forced layout.
+     Keep the prior height across chapter replacement; an unchanged value must not restyle every Settings row. */
+  pm51RosterFitObserver = new ResizeObserver(entries => {
+    const entry = entries.find(e => e.target === scroller); if (!entry || !scroller.isConnected) return;
+    const height = Math.round(entry.contentRect.height) + 'px';
+    if (root.style.getPropertyValue('--pm51-doc-h') !== height) root.style.setProperty('--pm51-doc-h', height);
+  });
+  pm51RosterFitObserver.observe(scroller); pm51RosterFitTarget = scroller;
 }
 const pm51OriginalAfterRender = afterRender;
 afterRender = function () {
@@ -1178,10 +1183,11 @@ armSectionReveal = function () {
       for (const entry of entries) { if (!entry.isIntersecting) continue; entry.target.classList.add('is-revealed'); entry.target.classList.remove('will-reveal'); revealObserver.unobserve(entry.target); }
     }, { threshold: 0.04 });
   } else revealObserver.disconnect();
-  for (const node of nodes) {
-    if (node.classList.contains('is-revealed')) continue;
+  const pending = [...nodes].filter(node => !node.classList.contains('is-revealed'))
+    .map(node => ({ node, inView: node.getBoundingClientRect().top < viewBottom }));
+  for (const { node, inView } of pending) {
     node.classList.add('section-block');
-    if (node.getBoundingClientRect().top < viewBottom) { node.classList.add('is-revealed', 'pm51-instant'); continue; }
+    if (inView) { node.classList.add('is-revealed', 'pm51-instant'); continue; }
     node.classList.add('will-reveal');
     revealObserver.observe(node);
   }

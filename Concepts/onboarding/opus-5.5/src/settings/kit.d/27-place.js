@@ -211,7 +211,18 @@ PLACE.sizeEnd = function (sc, end) {
   end.__o55Want = want;
   if (!Number.isFinite(set) || Math.abs(next - cur) >= .5) end.style.height = Math.round(next * 100) / 100 + 'px';
 };
-sizeSettingsEndSpace = (scroller, end) => PLACE.sizeEnd(scroller, end);
+let o55pEndReady = null;
+sizeSettingsEndSpace = function (scroller, end) {
+  if (o55pEndReady) { o55pEndReady.disconnect(); o55pEndReady = null; }
+  if (typeof ResizeObserver !== 'function') { requestAnimationFrame(() => PLACE.sizeEnd(scroller, end)); return; }
+  /* A chapter's new DOM has not had layout yet. Size its end space on the first delivered layout, not in the
+     render callback between writes. Replaced chapters cancel their pending measurement. */
+  const ready = new ResizeObserver(() => {
+    ready.disconnect(); o55pEndReady = null;
+    if (scroller.isConnected && end.isConnected) PLACE.sizeEnd(scroller, end);
+  });
+  o55pEndReady = ready; ready.observe(scroller);
+};
 
 /* ---------- watching layout: one observer for the page's blocks, sections, the anchor's ancestors ------------------- */
 let o55pObserver = null, o55pWatched = null;

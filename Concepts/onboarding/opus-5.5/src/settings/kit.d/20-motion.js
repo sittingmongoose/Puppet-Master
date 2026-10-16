@@ -90,12 +90,12 @@ PM51.switchTab = function (wsId, tab) {
   moveTabInks();
   o55AfterPaint(() => {
   if (ticket !== o55TabTicket || !page.isConnected) return;
+  o55KeepTabsInView(page);
   popoutClose({ restoreFocus: false });
   const fresh = o55Fresh(wsId); const nextPage = fresh && fresh.querySelector('.pm51-mgr'); const nextBody = nextPage && nextPage.querySelector(':scope > .manager-body');
   if (!nextBody) { PM51.refresh(wsId); return; }
   tabs.forEach((t, i) => { const on = i === to; t.classList.toggle('active', on); t.setAttribute('aria-selected', on ? 'true' : 'false'); });
   if (nextPage.dataset.pm51Placed) page.dataset.pm51Placed = nextPage.dataset.pm51Placed;
-  o55KeepTabsInView(page);
   o55PostMount(nextBody);
   o55Morph(oldBody, nextBody, { host: page, dir: from < 0 ? 0 : (to > from ? 1 : -1) });
   requestAnimationFrame(() => moveTabInks(measureTabInks(true, page)));
@@ -111,10 +111,11 @@ PM51.on('tab', el => PM51.switchTab(ds(el, 'manager'), ds(el, 'tab')));
    whenever the strip itself changes size (a page index or an open Details panel narrows it without a window resize). */
 const o55InkSizes = typeof ResizeObserver === 'function' ? new ResizeObserver(() => moveTabInks()) : null;
 const o55InkWatched = new WeakSet();
+const o55InkMoves = new WeakMap();
 let o55InkFrame = 0;
 /* The engine's old measurement API is a request now. Its theme/resize/render callers used to measure immediately,
    write each ink, then measure the next strip and sticky state against dirty style. One frame reads every rectangle
-   first, then writes every ink. Fresh inks acquire their transition on the following frame without a layout flush. */
+   first, then writes every ink. A moving ink keeps its final layout box and carries its slide/stretch by transform. */
 measureTabInks = function () { return null; };
 moveTabInks = function () {
   if (o55InkFrame) return;
@@ -126,25 +127,47 @@ moveTabInks = function () {
     const top = scroller ? scroller.getBoundingClientRect().top + 1 : 0;
     const rows = [...root.querySelectorAll('.workspace-tabs, .manager-tabs')].map(nav => {
       const btn = nav.querySelector('.workspace-tab.active, .manager-tab.active');
-      return { nav, ink: nav.querySelector(':scope > .tab-ink'), btn,
+      const row = { nav, ink: nav.querySelector(':scope > .tab-ink'), btn,
         left: btn ? btn.offsetLeft : 0, width: btn ? btn.offsetWidth : 0,
         top: btn ? btn.offsetTop : 0, height: btn ? btn.offsetHeight : 0,
         manager: nav.matches('.pm51-mgr > .pm51-tabs'),
         stuck: !!(scroller && nav.matches('.pm51-mgr.has-manager-tabs > .pm51-tabs') && nav.getBoundingClientRect().top <= top) };
+      const ink = row.ink;
+      row.changed = !!(ink && (parseFloat(ink.style.left) !== row.left || parseFloat(ink.style.width) !== row.width ||
+        (row.manager && (parseFloat(ink.style.top) !== row.top || parseFloat(ink.style.height) !== row.height))));
+      if (ink && row.changed && !o55Still()) {
+        const cs = getComputedStyle(ink), matrix = new DOMMatrixReadOnly(cs.transform);
+        row.from = { left: (parseFloat(ink.style.left) || 0) + matrix.e, width: (parseFloat(ink.style.width) || 0) * matrix.a,
+          top: (parseFloat(ink.style.top) || 0) + matrix.f, height: (parseFloat(ink.style.height) || row.height) * matrix.d };
+        row.ease = o55Retro() ? 'steps(4, end)' : cs.getPropertyValue('--k3-ease-spring').trim() || 'cubic-bezier(.22,.8,.24,1)';
+      }
+      return row;
     });
-    const fresh = [];
     rows.forEach(row => {
       const { nav, btn } = row;
       if (row.manager && o55InkSizes && !o55InkWatched.has(nav)) { o55InkWatched.add(nav); o55InkSizes.observe(nav); }
       let ink = row.ink;
       if (!btn) { if (ink) ink.style.opacity = '0'; return; }
-      if (!ink) { ink = document.createElement('span'); ink.className = 'tab-ink'; ink.style.transition = 'none'; fresh.push(ink); }
+      if (!ink) { ink = document.createElement('span'); ink.className = 'tab-ink'; ink.setAttribute('aria-hidden', 'true'); }
+      /* Left/width transitions relaid out the document during every ink frame. Set the destination once and carry
+         the same slide and stretch by transform. Retargeting starts from the actually drawn transform, read above. */
+      ink.style.transition = o55Still() ? 'none' : 'opacity 160ms ease';
+      ink.style.transformOrigin = '0 0';
+      const previous = o55InkMoves.get(ink);
+      if (previous && (row.changed || o55Still())) { previous.cancel(); o55InkMoves.delete(ink); }
       Object.assign(ink.style, { left: row.left + 'px', width: row.width + 'px', opacity: '1' });
       if (row.manager) Object.assign(ink.style, { top: row.top + 'px', height: row.height + 'px', bottom: 'auto' });
       if (!row.ink) nav.appendChild(ink);
+      if (row.from && row.from.width > 0 && row.width > 0) {
+        const from = row.from, dy = row.manager ? from.top - row.top : 0, sy = row.manager && row.height ? from.height / row.height : 1;
+        const move = ink.animate([{ transform: `translate(${from.left - row.left}px, ${dy}px) scale(${from.width / row.width}, ${sy})` }, { transform: 'none' }],
+          { duration: (row.manager ? 420 : 320) * (typeof o55SpeedFactor === 'number' ? o55SpeedFactor : 1), easing: row.ease });
+        o55InkMoves.set(ink, move);
+        const done = () => { if (o55InkMoves.get(ink) === move) o55InkMoves.delete(ink); };
+        move.finished.then(done, done);
+      }
       if (row.manager) nav.classList.toggle('is-stuck', row.stuck);
     });
-    if (fresh.length) requestAnimationFrame(() => fresh.forEach(ink => { if (ink.isConnected) ink.style.transition = ''; }));
   });
 };
 

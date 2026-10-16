@@ -22033,7 +22033,14 @@ html[data-theme^="basic"] :is(.editor-pane, .dashboard-view):has(.ed-shape-on) {
     new MutationObserver(function (muts) {
       for (var i = 0; i < muts.length; i++) {
         if (muts[i].attributeName === 'data-theme') {
-          if (!kickPending) { kickPending = true; requestAnimationFrame(function () { setTimeout(function () { kickPending = false; kickSearchDensity(); }, 0); }); }
+          if (!kickPending) {
+            kickPending = true;
+            /* inside the first ResizeObserver delivery after the new look's layout: style and layout are already
+               computed for that frame, so the listeners' reads never pull a pending restyle forward */
+            var kickRo = typeof ResizeObserver === 'function' ? new ResizeObserver(function () { kickRo.disconnect(); kickPending = false; kickSearchDensity(); }) : null;
+            if (kickRo) kickRo.observe(document.documentElement);
+            else requestAnimationFrame(function () { setTimeout(function () { kickPending = false; kickSearchDensity(); }, 0); });
+          }
           break;
         }
       }
@@ -94972,11 +94979,16 @@ jumpToWorkspace = function (wsId, behavior) {
 let pm51RosterFitObserver = null, pm51RosterFitTarget = null;
 function installRosterFit() {
   const scroller = root.querySelector('#settings-document'); if (!scroller) return;
-  const apply = () => root.style.setProperty('--pm51-doc-h', scroller.clientHeight + 'px');
-  apply();
   if (pm51RosterFitTarget === scroller || typeof ResizeObserver !== 'function') return;
   if (pm51RosterFitObserver) pm51RosterFitObserver.disconnect();
-  pm51RosterFitObserver = new ResizeObserver(apply); pm51RosterFitObserver.observe(scroller); pm51RosterFitTarget = scroller;
+  /* The document has no border or padding. Its delivered content box is the client height without a forced layout.
+     Keep the prior height across chapter replacement; an unchanged value must not restyle every Settings row. */
+  pm51RosterFitObserver = new ResizeObserver(entries => {
+    const entry = entries.find(e => e.target === scroller); if (!entry || !scroller.isConnected) return;
+    const height = Math.round(entry.contentRect.height) + 'px';
+    if (root.style.getPropertyValue('--pm51-doc-h') !== height) root.style.setProperty('--pm51-doc-h', height);
+  });
+  pm51RosterFitObserver.observe(scroller); pm51RosterFitTarget = scroller;
 }
 const pm51OriginalAfterRender = afterRender;
 afterRender = function () {
@@ -95005,10 +95017,11 @@ armSectionReveal = function () {
       for (const entry of entries) { if (!entry.isIntersecting) continue; entry.target.classList.add('is-revealed'); entry.target.classList.remove('will-reveal'); revealObserver.unobserve(entry.target); }
     }, { threshold: 0.04 });
   } else revealObserver.disconnect();
-  for (const node of nodes) {
-    if (node.classList.contains('is-revealed')) continue;
+  const pending = [...nodes].filter(node => !node.classList.contains('is-revealed'))
+    .map(node => ({ node, inView: node.getBoundingClientRect().top < viewBottom }));
+  for (const { node, inView } of pending) {
     node.classList.add('section-block');
-    if (node.getBoundingClientRect().top < viewBottom) { node.classList.add('is-revealed', 'pm51-instant'); continue; }
+    if (inView) { node.classList.add('is-revealed', 'pm51-instant'); continue; }
     node.classList.add('will-reveal');
     revealObserver.observe(node);
   }
@@ -98260,12 +98273,12 @@ PM51.switchTab = function (wsId, tab) {
   moveTabInks();
   o55AfterPaint(() => {
   if (ticket !== o55TabTicket || !page.isConnected) return;
+  o55KeepTabsInView(page);
   popoutClose({ restoreFocus: false });
   const fresh = o55Fresh(wsId); const nextPage = fresh && fresh.querySelector('.pm51-mgr'); const nextBody = nextPage && nextPage.querySelector(':scope > .manager-body');
   if (!nextBody) { PM51.refresh(wsId); return; }
   tabs.forEach((t, i) => { const on = i === to; t.classList.toggle('active', on); t.setAttribute('aria-selected', on ? 'true' : 'false'); });
   if (nextPage.dataset.pm51Placed) page.dataset.pm51Placed = nextPage.dataset.pm51Placed;
-  o55KeepTabsInView(page);
   o55PostMount(nextBody);
   o55Morph(oldBody, nextBody, { host: page, dir: from < 0 ? 0 : (to > from ? 1 : -1) });
   requestAnimationFrame(() => moveTabInks(measureTabInks(true, page)));
@@ -98281,10 +98294,11 @@ PM51.on('tab', el => PM51.switchTab(ds(el, 'manager'), ds(el, 'tab')));
    whenever the strip itself changes size (a page index or an open Details panel narrows it without a window resize). */
 const o55InkSizes = typeof ResizeObserver === 'function' ? new ResizeObserver(() => moveTabInks()) : null;
 const o55InkWatched = new WeakSet();
+const o55InkMoves = new WeakMap();
 let o55InkFrame = 0;
 /* The engine's old measurement API is a request now. Its theme/resize/render callers used to measure immediately,
    write each ink, then measure the next strip and sticky state against dirty style. One frame reads every rectangle
-   first, then writes every ink. Fresh inks acquire their transition on the following frame without a layout flush. */
+   first, then writes every ink. A moving ink keeps its final layout box and carries its slide/stretch by transform. */
 measureTabInks = function () { return null; };
 moveTabInks = function () {
   if (o55InkFrame) return;
@@ -98296,25 +98310,47 @@ moveTabInks = function () {
     const top = scroller ? scroller.getBoundingClientRect().top + 1 : 0;
     const rows = [...root.querySelectorAll('.workspace-tabs, .manager-tabs')].map(nav => {
       const btn = nav.querySelector('.workspace-tab.active, .manager-tab.active');
-      return { nav, ink: nav.querySelector(':scope > .tab-ink'), btn,
+      const row = { nav, ink: nav.querySelector(':scope > .tab-ink'), btn,
         left: btn ? btn.offsetLeft : 0, width: btn ? btn.offsetWidth : 0,
         top: btn ? btn.offsetTop : 0, height: btn ? btn.offsetHeight : 0,
         manager: nav.matches('.pm51-mgr > .pm51-tabs'),
         stuck: !!(scroller && nav.matches('.pm51-mgr.has-manager-tabs > .pm51-tabs') && nav.getBoundingClientRect().top <= top) };
+      const ink = row.ink;
+      row.changed = !!(ink && (parseFloat(ink.style.left) !== row.left || parseFloat(ink.style.width) !== row.width ||
+        (row.manager && (parseFloat(ink.style.top) !== row.top || parseFloat(ink.style.height) !== row.height))));
+      if (ink && row.changed && !o55Still()) {
+        const cs = getComputedStyle(ink), matrix = new DOMMatrixReadOnly(cs.transform);
+        row.from = { left: (parseFloat(ink.style.left) || 0) + matrix.e, width: (parseFloat(ink.style.width) || 0) * matrix.a,
+          top: (parseFloat(ink.style.top) || 0) + matrix.f, height: (parseFloat(ink.style.height) || row.height) * matrix.d };
+        row.ease = o55Retro() ? 'steps(4, end)' : cs.getPropertyValue('--k3-ease-spring').trim() || 'cubic-bezier(.22,.8,.24,1)';
+      }
+      return row;
     });
-    const fresh = [];
     rows.forEach(row => {
       const { nav, btn } = row;
       if (row.manager && o55InkSizes && !o55InkWatched.has(nav)) { o55InkWatched.add(nav); o55InkSizes.observe(nav); }
       let ink = row.ink;
       if (!btn) { if (ink) ink.style.opacity = '0'; return; }
-      if (!ink) { ink = document.createElement('span'); ink.className = 'tab-ink'; ink.style.transition = 'none'; fresh.push(ink); }
+      if (!ink) { ink = document.createElement('span'); ink.className = 'tab-ink'; ink.setAttribute('aria-hidden', 'true'); }
+      /* Left/width transitions relaid out the document during every ink frame. Set the destination once and carry
+         the same slide and stretch by transform. Retargeting starts from the actually drawn transform, read above. */
+      ink.style.transition = o55Still() ? 'none' : 'opacity 160ms ease';
+      ink.style.transformOrigin = '0 0';
+      const previous = o55InkMoves.get(ink);
+      if (previous && (row.changed || o55Still())) { previous.cancel(); o55InkMoves.delete(ink); }
       Object.assign(ink.style, { left: row.left + 'px', width: row.width + 'px', opacity: '1' });
       if (row.manager) Object.assign(ink.style, { top: row.top + 'px', height: row.height + 'px', bottom: 'auto' });
       if (!row.ink) nav.appendChild(ink);
+      if (row.from && row.from.width > 0 && row.width > 0) {
+        const from = row.from, dy = row.manager ? from.top - row.top : 0, sy = row.manager && row.height ? from.height / row.height : 1;
+        const move = ink.animate([{ transform: `translate(${from.left - row.left}px, ${dy}px) scale(${from.width / row.width}, ${sy})` }, { transform: 'none' }],
+          { duration: (row.manager ? 420 : 320) * (typeof o55SpeedFactor === 'number' ? o55SpeedFactor : 1), easing: row.ease });
+        o55InkMoves.set(ink, move);
+        const done = () => { if (o55InkMoves.get(ink) === move) o55InkMoves.delete(ink); };
+        move.finished.then(done, done);
+      }
       if (row.manager) nav.classList.toggle('is-stuck', row.stuck);
     });
-    if (fresh.length) requestAnimationFrame(() => fresh.forEach(ink => { if (ink.isConnected) ink.style.transition = ''; }));
   });
 };
 
@@ -99065,7 +99101,23 @@ function pm51MarkIndex() {
   pm51RevealIndex();
 }
 /* The index scrolls itself so the highlighted entry stays in view (with a little of what is around it). */
+let pm51IndexRevealReady = null, pm51IndexRevealBox = null;
 function pm51RevealIndex() {
+  const box = root.querySelector('.page-index'); if (!box) return;
+  if (pm51IndexRevealReady) {
+    if (pm51IndexRevealBox === box) return;
+    pm51IndexRevealReady.disconnect(); pm51IndexRevealReady = null;
+  }
+  /* Rebuilding the index also changes the manager body. Measuring scrollHeight here used to force that entire
+     layout inside the switch. Coalesce requests and read after layout; the selected entry is already highlighted. */
+  if (typeof ResizeObserver !== 'function') { requestAnimationFrame(pm51RevealIndexNow); return; }
+  const ready = new ResizeObserver(() => {
+    ready.disconnect(); pm51IndexRevealReady = null; pm51IndexRevealBox = null;
+    if (box.isConnected) pm51RevealIndexNow();
+  });
+  pm51IndexRevealReady = ready; pm51IndexRevealBox = box; ready.observe(box);
+}
+function pm51RevealIndexNow() {
   const box = root.querySelector('.page-index'); if (!box || box.scrollHeight <= box.clientHeight + 1) return;
   const hit = box.querySelector('.index-link.is-active') || box.querySelector('.page-index-title.is-current'); if (!hit) return;
   const key = (hit.dataset.workspace || '') + '|' + (hit.dataset.section || hit.dataset.tab || '');
@@ -100280,7 +100332,18 @@ PLACE.sizeEnd = function (sc, end) {
   end.__o55Want = want;
   if (!Number.isFinite(set) || Math.abs(next - cur) >= .5) end.style.height = Math.round(next * 100) / 100 + 'px';
 };
-sizeSettingsEndSpace = (scroller, end) => PLACE.sizeEnd(scroller, end);
+let o55pEndReady = null;
+sizeSettingsEndSpace = function (scroller, end) {
+  if (o55pEndReady) { o55pEndReady.disconnect(); o55pEndReady = null; }
+  if (typeof ResizeObserver !== 'function') { requestAnimationFrame(() => PLACE.sizeEnd(scroller, end)); return; }
+  /* A chapter's new DOM has not had layout yet. Size its end space on the first delivered layout, not in the
+     render callback between writes. Replaced chapters cancel their pending measurement. */
+  const ready = new ResizeObserver(() => {
+    ready.disconnect(); o55pEndReady = null;
+    if (scroller.isConnected && end.isConnected) PLACE.sizeEnd(scroller, end);
+  });
+  o55pEndReady = ready; ready.observe(scroller);
+};
 
 /* ---------- watching layout: one observer for the page's blocks, sections, the anchor's ancestors ------------------- */
 let o55pObserver = null, o55pWatched = null;
@@ -114806,6 +114869,12 @@ html[data-theme^="retro"] #panel-settings .o55-goals-phase-n { border-radius: 0;
       newP.style.setProperty('--pm-dir', String(dir));
       oldP.classList.add('pm8-page-out');
       newP.classList.add('pm8-page-in');
+      requestAnimationFrame(function () { requestAnimationFrame(function () {   /* O55: start on a shown frame */
+        var t = document.timeline.currentTime; if (t == null) return;
+        [oldP, newP].forEach(function (p) { p.getAnimations().forEach(function (a) {
+          if (a.animationName === 'pm8-page-in' || a.animationName === 'pm8-page-out') { try { if (a.playState !== 'idle') a.startTime = t; } catch (e) {} }
+        }); });
+      }); });
       var stopEntrance = null, finished = false;
       function cleanupOut() {
         oldP.classList.remove('pm8-page-out');
@@ -116137,6 +116206,7 @@ html[data-theme^="retro"] #panel-settings .o55-goals-phase-n { border-radius: 0;
         if (entry.stack || entry.gap) {
           for (var s = head.previousElementSibling; s; s = s.previousElementSibling) ro.observe(s);
         }
+        return;   /* O55: the observer's first callback measures, after layout */
       } catch (e) {}
       measure(host, head, entry);
     }
@@ -165030,9 +165100,9 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
       if(!focused&&!hovered)self.close(false);
     },DEPARTURE_GRACE_MS);
   };
-  var PRIMARY_ACTIONS='.pm6-chat-send,.pmw-sc-send,.pm6-wiz-send,[data-pm-hover-avoid]';
+  var PRIMARY_CLASSES=['pm6-chat-send','pmw-sc-send','pm6-wiz-send','pm-hover-avoid'];
   function avoidPrimary(active,tagRoot,left,top,rect,anchor,viewport,marginX,marginY){
-    var nodes=document.querySelectorAll(PRIMARY_ACTIONS),boxes=[];
+    var nodes=[],boxes=[];PRIMARY_CLASSES.forEach(function(c){var l=document.getElementsByClassName(c);for(var k=0;k<l.length;k++)nodes.push(l[k]);});   /* live lists: no document-wide selector match */
     for(var i=0;i<nodes.length;i++){var n=nodes[i];if(n===active||n.contains(active)||active.contains(n))continue;var b=n.getBoundingClientRect();if(!(b.width>0&&b.height>0))continue;
       var stack=document.elementsFromPoint(b.left+b.width/2,b.top+b.height/2),front=null;
       for(var s=0;s<stack.length;s++)if(!(tagRoot&&tagRoot.contains(stack[s]))){front=stack[s];break;}
@@ -187440,6 +187510,22 @@ function applyDrop() {
 }
 /* the notices ask before a toast's time starts (19-notify.js stage()) */
 window.PM_NOTICE_PLACE = applyDrop;
+/* A placement asked for by a frame (a scroll, an overlay opening, a page change) reads its boxes once that frame's own
+   style and layout are done, from the first ResizeObserver delivery after them, not in an animation frame callback
+   before them: there the read pulled a pending whole-page restyle (a look change, NieR Mode under its calm cover)
+   forward into the frame that should first show the change (49 and 32 ms on the M3, final motion QA 2026-10-16). */
+var layoutQ = [], layoutRo = null;
+function afterLayout(fn) {
+  if (typeof ResizeObserver !== 'function') { fn(); return; }
+  if (layoutQ.indexOf(fn) < 0) layoutQ.push(fn);
+  if (layoutRo) return;
+  layoutRo = new ResizeObserver(function () {
+    layoutRo.disconnect(); layoutRo = null;
+    var q = layoutQ; layoutQ = [];
+    for (var i = 0; i < q.length; i++) { try { q[i](); } catch (e) { /* the next ask places it */ } }
+  });
+  layoutRo.observe(doc.documentElement);
+}
 shell.installNotices = function () {
   if (shell.noticesOn) return true;
   var stage = doc.getElementById('rsStage');
@@ -187458,14 +187544,14 @@ shell.installNotices = function () {
   var pending = 0;
   function later() {
     if (pending || !stage.firstElementChild) return;
-    pending = requestAnimationFrame(function () { requestAnimationFrame(function () { pending = 0; applyDrop(); }); });
+    pending = requestAnimationFrame(function () { requestAnimationFrame(function () { pending = 0; afterLayout(applyDrop); }); });
   }
   ['pointerdown', 'keydown', 'focusin'].forEach(function (t) { doc.addEventListener(t, later, true); });
   /* the page scrolling controls under cards already shown: placed again once per frame */
   var scrollQ = 0;
   doc.addEventListener('scroll', function () {
     if (scrollQ || !stage.firstElementChild) return;
-    scrollQ = requestAnimationFrame(function () { scrollQ = 0; applyDrop(); });
+    scrollQ = requestAnimationFrame(function () { scrollQ = 0; afterLayout(applyDrop); });
   }, { capture: true, passive: true });
   /* a page change: measure again once the new page shows (its strips are laid out two frames on), while a card shows.
      Only a page's own class counts: every class change inside the pages measured too, and a Usage room change makes
@@ -187475,7 +187561,7 @@ shell.installNotices = function () {
     if (turn || !stage.firstElementChild) return;
     for (var i = 0; i < list.length; i++) {
       if (list[i].target.parentElement !== main) continue;
-      turn = requestAnimationFrame(function () { requestAnimationFrame(function () { turn = 0; applyDrop(); }); });
+      turn = requestAnimationFrame(function () { requestAnimationFrame(function () { turn = 0; afterLayout(applyDrop); }); });
       return;
     }
   }).observe(main, { attributes: true, subtree: true, attributeFilter: ['class'] });

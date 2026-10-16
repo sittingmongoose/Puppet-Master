@@ -97,7 +97,23 @@ function pm51MarkIndex() {
   pm51RevealIndex();
 }
 /* The index scrolls itself so the highlighted entry stays in view (with a little of what is around it). */
+let pm51IndexRevealReady = null, pm51IndexRevealBox = null;
 function pm51RevealIndex() {
+  const box = root.querySelector('.page-index'); if (!box) return;
+  if (pm51IndexRevealReady) {
+    if (pm51IndexRevealBox === box) return;
+    pm51IndexRevealReady.disconnect(); pm51IndexRevealReady = null;
+  }
+  /* Rebuilding the index also changes the manager body. Measuring scrollHeight here used to force that entire
+     layout inside the switch. Coalesce requests and read after layout; the selected entry is already highlighted. */
+  if (typeof ResizeObserver !== 'function') { requestAnimationFrame(pm51RevealIndexNow); return; }
+  const ready = new ResizeObserver(() => {
+    ready.disconnect(); pm51IndexRevealReady = null; pm51IndexRevealBox = null;
+    if (box.isConnected) pm51RevealIndexNow();
+  });
+  pm51IndexRevealReady = ready; pm51IndexRevealBox = box; ready.observe(box);
+}
+function pm51RevealIndexNow() {
   const box = root.querySelector('.page-index'); if (!box || box.scrollHeight <= box.clientHeight + 1) return;
   const hit = box.querySelector('.index-link.is-active') || box.querySelector('.page-index-title.is-current'); if (!hit) return;
   const key = (hit.dataset.workspace || '') + '|' + (hit.dataset.section || hit.dataset.tab || '');
