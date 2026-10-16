@@ -352,9 +352,20 @@
      Both are redrawn only when the sheet moves or resizes, or the look or wallpaper changes. They cost nothing per frame
      and draw the same with or without a GPU. */
   var wallUrl = '', wallSources = new Map(), wallSourceUrls = new Map(), wallSourceKey = null, wallSourceUrl = '', wallSourceId = 0;
-  /* encoded frost pairs are kept for the last FROST_PAIRS prints, within FROST_BYTES: a pair is 40-430 KB at 1920 x 1080,
-     and with only two kept a third wallpaper evicted the next one back, which was prepared cold again (B3, 2026-10-16) */
-  var frosts = {}, frostKey = '', frostWallUrl = '', frostCache = new Map(), frostBytes = 0, frostJobs = new Map(), FROST_BYTES = 32 * 1024 * 1024, FROST_PAIRS = 8;
+  /* encoded frost pairs are kept, least recently used first out, within FROST_BYTES only: a pair is 40-430 KB at
+     1920 x 1080, so every choice the Settings gallery shows fits, and the gallery warms them while the page is idle (B3,
+     2026-10-16). Each kept pair is decoded once it is made (decodeFrost), so a commit swaps images already decoded: with
+     encoded data alone, the sheets showed the old frost for about 85 ms after the commit while the new one decoded. */
+  var frosts = {}, frostKey = '', frostWallUrl = '', frostCache = new Map(), frostBytes = 0, frostJobs = new Map(), FROST_BYTES = 32 * 1024 * 1024;
+  function decodeFrost(rec) {
+    rec.imgs = [];
+    rec.decoded = Promise.all(Object.keys(rec.urls).map(function (n) {
+      var im = new Image(); im.decoding = 'async'; im.src = rec.urls[n]; rec.imgs.push(im);
+      return im.decode ? im.decode().catch(function () {}) : Promise.resolve();
+    }));
+    return rec.decoded;
+  }
+  function whenDecoded(rec, fn) { if (rec && rec.decoded) rec.decoded.then(fn, fn); else fn(); }
   var bakeQ = new Map(), bakeT = 0, bakeFrame = 0, bakeIdle = 0, bakeFlight = null, bakeEpoch = 0, bakeAvg = 8;
   function currentWallUrl(refresh) {
     /* The body's selected image is deliberately not on html. Resolve an immutable catalog source once per id/mode,
@@ -441,7 +452,7 @@
     }
     return wallpaperPaintStyle.sheet.cssRules[index].style;
   }
-  function dropFrost(rec) { Object.keys(rec.urls).forEach(function (name) { URL.revokeObjectURL(rec.urls[name]); }); }
+  function dropFrost(rec) { rec.imgs = null; rec.decoded = null; Object.keys(rec.urls).forEach(function (name) { URL.revokeObjectURL(rec.urls[name]); }); }
   function applyFrost(rec) {
     if (frostKey === rec.key) return;
     frosts = rec.urls; frostKey = rec.key; frostWallUrl = rec.wall;
@@ -479,7 +490,11 @@
     if (!isGlass() || (!prepare && currentWallUrl() !== u)) { done(false); return; }
     if (frostKey === key) { done(true); return; }
     var cached = frostCache.get(key);
-    if (cached) { frostCache.delete(key); frostCache.set(key, cached); if (!prepare) applyFrost(cached); done(true); return; }
+    if (cached) {
+      frostCache.delete(key); frostCache.set(key, cached);
+      whenDecoded(cached, function () { if (!prepare && frostCache.get(key) === cached && currentWallUrl() === u) applyFrost(cached); done(true); });
+      return;
+    }
     var job = frostJobs.get(key);
     if (job && job.epoch === epoch) { job.waiters.push(done); return; }
     var names = Object.keys(FROST);
@@ -493,10 +508,11 @@
       if (valid) {
         var rec = { key: key, wall: u, urls: {}, bytes: 0 };
         names.forEach(function (n) { rec.urls[n] = URL.createObjectURL(job.blobs[n]); rec.bytes += job.blobs[n].size; });
+        decodeFrost(rec);
         /* Apply both frost levels together. An older encoder can never replace half of the current wallpaper. */
         var previous = frosts, previousUncached = !Array.from(frostCache.values()).some(function (r) { return r.urls === previous; });
         if (!prepare) applyFrost(rec);
-        while (frostCache.size && (frostCache.size >= FROST_PAIRS || frostBytes + rec.bytes > FROST_BYTES)) {
+        while (frostCache.size && frostBytes + rec.bytes > FROST_BYTES) {
           /* Preparation may evict another cached print, never the frost still visible on the sheets. */
           var oldest = Array.from(frostCache.keys()).find(function (k) { return frostCache.get(k).urls !== frosts; });
           if (oldest == null) break;
@@ -510,7 +526,10 @@
           Object.keys(previous).forEach(function (n) { URL.revokeObjectURL(previous[n]); });
         }
       }
-      var waiters = job.waiters; job.waiters = []; waiters.forEach(function (cb) { cb(valid); });
+      /* preparation resolves once the new pair is decoded, so the caller's commit swaps decoded images */
+      var waiters = job.waiters; job.waiters = [];
+      var tell = function () { waiters.forEach(function (cb) { cb(valid); }); };
+      if (valid && prepare && frostCache.get(key) === rec) whenDecoded(rec, tell); else tell();
     }
     /* each frost is drawn at FROST_SCALE of the window and stretched back by its background-size (glass.css: / --lg-vw
        --lg-vh): a 26 px or 14 px blur holds no detail that a third of the pixels cannot carry, and the blur and the encode
@@ -2393,9 +2412,11 @@
        and the caller tries again later (the gallery warms nearby prints only while the page is idle; Settings, B3) */
     prepareWallpaper: function (url, opts) { return new Promise(function (resolve) {
       var canRun = opts && typeof opts.canRun === 'function' ? opts.canRun : null;
-      /* a print whose frost pair is still kept is ready to commit without decoding it again (raw prints are kept for 2,
-         frost pairs for FROST_PAIRS); its rims rebake after the commit, as for any print */
-      if (isGlass() && frostCache.has(url + ':' + innerWidth + 'x' + innerHeight)) { resolve(true); return; }
+      /* a print whose frost pair is still kept is ready to commit without decoding the print again (raw prints are kept
+         for 2, frost pairs within FROST_BYTES); it resolves once that pair's images are decoded; its rims rebake after
+         the commit, as for any print */
+      var kept = isGlass() && frostCache.get(url + ':' + innerWidth + 'x' + innerHeight);
+      if (kept) { whenDecoded(kept, function () { resolve(true); }); return; }
       withWall(function (im) {
         if (!im) { resolve(false); return; }
         if (canRun && !canRun()) { resolve(false); return; }
