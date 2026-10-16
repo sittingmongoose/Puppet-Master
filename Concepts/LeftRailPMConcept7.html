@@ -97426,11 +97426,11 @@ window.PM_NIER = Object.freeze({
     if (wipeAnim) wipeAnim.cancel();
     /* the band leaves as soon as the new page is drawn under it (final motion QA A4, Jared 2026-10-16: the empty beat
        at most 50 ms): no held keyframe (under the old ease-in-out it held the bare band for ~150 ms), a curve that is
-       moving from its first frames, and a start reset to the first frame after the page change, so a long first frame
-       never eats the slide */
+       moving from its first frames, and a start that waits for the frames after the page change to come on time
+       (src/js/11-motion-start.js), so a long first frame never eats the slide */
     const a = wipeAnim = wipe.firstChild.animate([{ transform: 'translateX(0)' }, { transform: 'translateX(101%)' }],
       { duration: 380, easing: 'cubic-bezier(.3, .15, .2, 1)', fill: 'both' });
-    requestAnimationFrame(() => { if (wipeAnim === a && a.playState === 'running') { try { a.startTime = document.timeline.currentTime; } catch (_) { /* gone */ } } });
+    if (window.PM_START_ON_SHOWN) window.PM_START_ON_SHOWN(() => (wipeAnim === a ? [a] : []));
     a.onfinish = () => { if (wipeAnim !== a) return; wipeAnim = null; if (wipe) wipe.style.display = 'none'; a.cancel(); };
   }
   PARTS.wipe = { on() {}, off() { if (wipeAnim) wipeAnim.cancel(); wipeAnim = null; if (wipe) wipe.remove(); wipe = null; } };
@@ -114625,13 +114625,12 @@ html[data-theme^="retro"] #panel-settings .o55-goals-phase-n { border-radius: 0;
       newP.style.setProperty('--pm-dir', String(dir));
       oldP.classList.add('pm8-page-out');
       newP.classList.add('pm8-page-in');
-      var restartMoves = function () {   /* O55: the moves start on a shown frame */
-        var t = document.timeline.currentTime; if (t == null) return;
-        [oldP, newP].forEach(function (p) { p.getAnimations().forEach(function (a) {
-          if (a.animationName === 'pm8-page-in' || a.animationName === 'pm8-page-out') { try { if (a.playState !== 'idle') a.startTime = t; } catch (e) {} }
-        }); });
+      var pageMoves = function () {   /* O55: the moves play on frames that are shown (src/js/11-motion-start.js) */
+        var out = [];
+        [oldP, newP].forEach(function (p) { p.getAnimations().forEach(function (a) { if (a.animationName === 'pm8-page-in' || a.animationName === 'pm8-page-out') out.push(a); }); });
+        return out;
       };
-      requestAnimationFrame(function () { restartMoves(); requestAnimationFrame(restartMoves); });
+      if (window.PM_START_ON_SHOWN) window.PM_START_ON_SHOWN(pageMoves);
       var stopEntrance = null, finished = false;
       function cleanupOut() {
         oldP.classList.remove('pm8-page-out');
@@ -140457,6 +140456,42 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
   };
 })();
 
+/* ---- js/11-motion-start.js ---- */
+/* Moves begun in a long frame play on the frames that are shown (final motion QA, 2026-10-16). A click's first frame
+   can take a third of a second or more (the arriving page or panel is styled and laid out, a first visit builds its
+   content), and so can the frame after it (its first paint, Glass's first blur). A move started in such a frame was
+   over, or most of the way through, by the time it was first drawn: the timeline that frame runs on is from before its
+   work, and a move run by the compositor takes its start from that time too. The page exit vanished in one frame, the
+   onboarding window's exit was lost (and came back for one frame when restarted later), the rail's held panel went
+   before the new one dealt in.
+   PM_START_ON_SHOWN(anims) holds the moves at their start, paused, from the next frame on, for as long as the frame
+   before was a long one (more than 40 ms after the one before it), then plays them from their start: they begin once
+   frames come on time, at most `frames` (3) frames later (a page that never draws on time, such as
+   software rendering, still moves after that). `anims` is an array of Animations or a function returning
+   one (read again each frame). */
+(function () {
+  'use strict';
+  window.PM_START_ON_SHOWN = function startOnShown(anims, o) {
+    const max = (o && o.frames) || 3, held = new Set();
+    const list = () => { try { return (typeof anims === 'function' ? anims() : anims) || []; } catch (_) { return []; } };
+    const hold = () => list().forEach((a) => {
+      try { if (a && a.playState !== 'idle' && !held.has(a)) { a.pause(); a.currentTime = 0; held.add(a); } } catch (_) { /* gone */ }
+    });
+    const release = () => held.forEach((a) => { try { if (a.playState === 'paused') a.play(); } catch (_) { /* gone */ } });
+    let last = null, n = 0;
+    const tick = () => {
+      const now = document.timeline.currentTime;
+      if (now == null) { release(); return; }
+      const gap = last == null ? Infinity : now - last;
+      last = now;
+      if (gap <= 40 || ++n >= max) { release(); return; } /* the frame before this one was on time: play from the start */
+      hold();
+      requestAnimationFrame(tick);
+    };
+    requestAnimationFrame(tick);
+  };
+})();
+
 /* ---- js/12-theme-transition.js ---- */
 /* A look change answers at once (final motion QA B4, 2026-10-16). Repainting the whole app for a new theme restyles
    every drawn element in one pass (about 250 ms on the P1000, a fraction of that on the M3), and the old menu ran that
@@ -146498,11 +146533,11 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
     sound('open', 0.4);
     if (!still()) {
       const m = motion(), L = look(), chrome = panelEl.querySelector('.pmn-chrome');
-      /* every entrance below starts again, together, on the first frame after the open (final motion QA B10): a first
-         frame that is long (Glass rastering its blur on first show, about half a second on the P1000) otherwise ran the
-         whole entrance behind it, and the panel appeared already open */
+      /* every entrance below plays on the frames that are shown (11-motion-start.js; final motion QA B10): a first frame
+         that is long (Glass rastering its blur on first show, about half a second on the P1000) otherwise ran the whole
+         entrance behind it, and the panel appeared already open */
       const opening = [], play = (el, frames, o) => { const a = playNow(el, frames, o); if (a) opening.push(a); return a; };
-      requestAnimationFrame(() => { const t = document.timeline.currentTime; if (t == null || !open) return; opening.forEach((a) => { try { if (a.playState !== 'idle') a.startTime = t; } catch (_) { /* gone */ } }); });
+      if (window.PM_START_ON_SHOWN) window.PM_START_ON_SHOWN(() => (open ? opening : []));
       if (L === 'retro') {
         play(chrome, [{ transform: 'scale(1, .01)', filter: 'brightness(3)' }, { transform: 'scale(1, .01)', filter: 'brightness(2)', offset: 0.35 }, { transform: 'none', filter: 'none' }], { duration: 260, easing: 'steps(6, end)' });
       } else if (L === 'nier') {
@@ -152933,13 +152968,10 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
     r.classList.remove('o55-opening'); r.classList.add('o55-closing'); r.classList.toggle('o55-handoff', handoff); r.setAttribute('data-o55-ambient', 'off');
     /* the exit plays on frames that are shown: the close's own task (Enter puts the Wizard in place first) can hold the
        first frame for half a second on the P1000, and the timeline that frame draws at is from before that work, so the
-       window and its scrim were already gone when it was drawn. They are put back to their start in that frame and
-       again in the next one (final motion QA A1). */
-    if (!handoff && !O55.motion.reduced()) {
-      const restart = () => { const t = document.timeline.currentTime; if (t == null || S.open) return;
-        [r.querySelector('.o55-win'), r.querySelector('.o55-scrim')].forEach((el) => { if (el) el.getAnimations().forEach((a) => { try { if (a.playState !== 'idle' && Number.isFinite(a.effect.getComputedTiming().endTime)) a.startTime = t; } catch (_) { /* gone */ } }); }); };
-      requestAnimationFrame(() => { restart(); requestAnimationFrame(restart); });
-    }
+       window and its scrim were already gone when it was drawn. They play on the frames that are shown
+       (11-motion-start.js; final motion QA A1). */
+    if (!handoff && !O55.motion.reduced() && window.PM_START_ON_SHOWN) window.PM_START_ON_SHOWN(() => (S.open ? [] :
+      [r.querySelector('.o55-win'), r.querySelector('.o55-scrim')].flatMap((el) => (el ? el.getAnimations().filter((a) => Number.isFinite(a.effect.getComputedTiming().endTime)) : []))));
     if (!handoff) O55.sound.play(reason === 'done' ? 'finish' : 'close');
     /* the skin may keep the root (and its scrim) a while: NieR folds the window to a line that carries on into the
        Guided Tour, and the scrim stays until the tour's own has taken over, so the app never comes up lit between */
@@ -167703,9 +167735,11 @@ function stopEnter(el) { el.getAnimations().forEach(a => { if (a.id === 'd-enter
    next frame: the first frame shows the start, then everything runs from one start time. */
 function startTogether(anims) {
   if (!anims || !anims.length) return;
-  /* ...and once more on the frame after that one: that frame can itself be the long one (the fit pass and the new
-     view's first layout), and the time it draws at is from before its work, so a move started in it was over before it
-     showed (P1000 films, final motion QA A8: the held panel gone and the new one still empty for ~100 ms) */
+  /* ...and again at every frame that follows a long one: such a frame (the fit pass, the new view's first layout and
+     paint) draws at the time from before its work, so a move started in it was over before it showed (P1000 films,
+     final motion QA A8: the held panel gone and the new one still empty for ~100 ms). The page's PM_START_ON_SHOWN
+     does this; the double reset below is the fallback for the review copy without it. */
+  if (window.PM_START_ON_SHOWN) { window.PM_START_ON_SHOWN(anims); return; }   /* opus-5.5 src/js/11-motion-start.js */
   const restart = () => {
     const t = document.timeline.currentTime;
     if (t == null) return;
