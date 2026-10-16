@@ -103331,7 +103331,13 @@ afterRender = function () {
     const C = window.PM_EDITOR_CUSTOMIZE;
     if (!C || typeof C.open !== 'function') { showToast('Not available', 'The editor is not loaded on this page.', 'warning', 3600); return; }
     try { C.open({ scope: 'app', from: 'settings', anchor: document.activeElement }); }
-    catch (e) { showToast('Could not open Customize', 'The editor did not answer.', 'warning', 3600); }
+    catch (e) {
+      showToast('Could not open Customize', 'The editor did not answer.', 'warning', 3600);
+      /* the toast alone left a click that did nothing with no trace: say it in the console, and as a page error
+         (reportError fires window 'error'), so page-error checks and films catch it */
+      try { console.error('[pm-settings] Could not open Customize: ' + (e && e.message || e), e); } catch (_) {}
+      try { if (typeof reportError === 'function') reportError(e); } catch (_) {}
+    }
   });
 
   seen = (() => { try { return JSON.stringify(values()); } catch (e) { return ''; } })();
