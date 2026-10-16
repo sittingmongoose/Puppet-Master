@@ -2051,7 +2051,6 @@
         "values_by_setting_id": {
           "general.visual.theme": "Glass",
           "general.visual.theme-mode": "Light",
-          "general.visual.glass-background-mode": "Mesh",
           "general.visual.glass-transparency": 0.55,
           "general.interaction.show-tooltips": true,
           "general.visual.reduce-animations": false
@@ -2059,7 +2058,6 @@
         "source_by_setting_id": {
           "general.visual.theme": "explicit",
           "general.visual.theme-mode": "explicit",
-          "general.visual.glass-background-mode": "default",
           "general.visual.glass-transparency": "explicit",
           "general.interaction.show-tooltips": "default",
           "general.visual.reduce-animations": "explicit"
@@ -2071,7 +2069,6 @@
           },
           "effective_theme_variant": "Glass Light",
           "glass": {
-            "background_mode": "Mesh",
             "alpha": 0.55,
             "availability": {
               "state": "available",
@@ -2096,7 +2093,6 @@
           "derived_from_setting_ids": [
             "general.visual.theme",
             "general.visual.theme-mode",
-            "general.visual.glass-background-mode",
             "general.visual.glass-transparency",
             "general.interaction.show-tooltips",
             "general.visual.reduce-animations"
@@ -2586,7 +2582,6 @@
           },
           "effective_theme_variant": "Basic Dark",
           "glass": {
-            "background_mode": null,
             "alpha": null,
             "availability": {
               "state": "disabled",
@@ -2611,7 +2606,6 @@
           "derived_from_setting_ids": [
             "general.visual.theme",
             "general.visual.theme-mode",
-            "general.visual.glass-background-mode",
             "general.visual.glass-transparency",
             "general.interaction.show-tooltips",
             "general.visual.reduce-animations"
@@ -3640,6 +3634,150 @@
         "owner_gap_reason": "Counterexample: the closed owner_local_action_refs enum admits only the eight CS-081 commands.* IDs, so the rejected cmd.shortcuts.bind alias is schema-rejected here."
       },
       "expected_keyword": "enum"
+    },
+    {
+      "case_id": "invalid-retired-glass-mode-projection",
+      "schema_ref": "#/$defs/project_settings_snapshot",
+      "record": {
+        "record_type": "project_settings_snapshot",
+        "schema_id": "pm.project_settings_snapshot.v1",
+        "schema_version": "1.0.0",
+        "snapshot_id": "snapshot:settings/42",
+        "project_id": "project:demo",
+        "revision": 42,
+        "inventory_schema_version": "1.0.0",
+        "values_by_setting_id": {
+          "general.visual.theme": "Glass",
+          "general.visual.theme-mode": "Light",
+          "general.visual.glass-transparency": 0.55,
+          "general.interaction.show-tooltips": true,
+          "general.visual.reduce-animations": false
+        },
+        "source_by_setting_id": {
+          "general.visual.theme": "explicit",
+          "general.visual.theme-mode": "explicit",
+          "general.visual.glass-transparency": "explicit",
+          "general.interaction.show-tooltips": "default",
+          "general.visual.reduce-animations": "explicit"
+        },
+        "appearance_projection": {
+          "theme_pair": {
+            "family": "Glass",
+            "presentation_mode": "Light"
+          },
+          "effective_theme_variant": "Glass Light",
+          "glass": {
+            "alpha": 0.55,
+            "availability": {
+              "state": "available",
+              "reason_code": null,
+              "human_reason": null,
+              "selector_ref": "settings.appearance.glass.available",
+              "evaluated_at_utc": "2026-08-31T12:00:00Z",
+              "projection_generation": 7
+            },
+            "background_mode": "Mesh"
+          },
+          "tooltips": {
+            "hover_tooltips_enabled": true,
+            "focus_accessible_description_retained": true,
+            "help_details_retained": true
+          },
+          "reduced_motion": {
+            "project_requested": false,
+            "platform_requested": false,
+            "effective": false,
+            "policy": "calm_nonessential_motion_preserve_state_feedback"
+          },
+          "derived_from_setting_ids": [
+            "general.visual.theme",
+            "general.visual.theme-mode",
+            "general.visual.glass-transparency",
+            "general.interaction.show-tooltips",
+            "general.visual.reduce-animations"
+          ]
+        },
+        "owner_validation_refs": [
+          "owner-validation:appearance/42"
+        ],
+        "projection_generation": 7,
+        "committed_at_utc": "2026-08-31T12:00:00Z",
+        "content_sha256": "1111111111111111111111111111111111111111111111111111111111111111",
+        "migration_receipt_ref": null
+      },
+      "expected_keyword": "additionalProperties"
+    },
+    {
+      "case_id": "invalid-retired-glass-mode-derivation",
+      "schema_ref": "#/$defs/project_settings_snapshot",
+      "record": {
+        "record_type": "project_settings_snapshot",
+        "schema_id": "pm.project_settings_snapshot.v1",
+        "schema_version": "1.0.0",
+        "snapshot_id": "snapshot:settings/42",
+        "project_id": "project:demo",
+        "revision": 42,
+        "inventory_schema_version": "1.0.0",
+        "values_by_setting_id": {
+          "general.visual.theme": "Glass",
+          "general.visual.theme-mode": "Light",
+          "general.visual.glass-transparency": 0.55,
+          "general.interaction.show-tooltips": true,
+          "general.visual.reduce-animations": false
+        },
+        "source_by_setting_id": {
+          "general.visual.theme": "explicit",
+          "general.visual.theme-mode": "explicit",
+          "general.visual.glass-transparency": "explicit",
+          "general.interaction.show-tooltips": "default",
+          "general.visual.reduce-animations": "explicit"
+        },
+        "appearance_projection": {
+          "theme_pair": {
+            "family": "Glass",
+            "presentation_mode": "Light"
+          },
+          "effective_theme_variant": "Glass Light",
+          "glass": {
+            "alpha": 0.55,
+            "availability": {
+              "state": "available",
+              "reason_code": null,
+              "human_reason": null,
+              "selector_ref": "settings.appearance.glass.available",
+              "evaluated_at_utc": "2026-08-31T12:00:00Z",
+              "projection_generation": 7
+            }
+          },
+          "tooltips": {
+            "hover_tooltips_enabled": true,
+            "focus_accessible_description_retained": true,
+            "help_details_retained": true
+          },
+          "reduced_motion": {
+            "project_requested": false,
+            "platform_requested": false,
+            "effective": false,
+            "policy": "calm_nonessential_motion_preserve_state_feedback"
+          },
+          "derived_from_setting_ids": [
+            "general.visual.theme",
+            "general.visual.theme-mode",
+            "general.visual.glass-background-mode",
+            "general.visual.glass-transparency",
+            "general.interaction.show-tooltips",
+            "general.visual.reduce-animations"
+          ]
+        },
+        "owner_validation_refs": [
+          "owner-validation:appearance/42"
+        ],
+        "projection_generation": 7,
+        "committed_at_utc": "2026-08-31T12:00:00Z",
+        "content_sha256": "1111111111111111111111111111111111111111111111111111111111111111",
+        "migration_receipt_ref": null
+      },
+      "expected_keyword": "const"
     }
   ]
 }

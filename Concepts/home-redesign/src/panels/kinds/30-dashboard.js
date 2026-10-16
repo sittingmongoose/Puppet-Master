@@ -161,6 +161,11 @@ function mintId() {
   return max >= 9999 ? 'dashboard:home' : 'dashboard:dash-' + (max + 1);
 }
 
+/* the Home board opens as the pinned Home tab from every path (the "+" menu, the Board menu, a page's subtab), so a Home
+   tab opened anywhere is the same compact tab the layouts make (14-layouts.js 'dashboard:home'; Jared, 2026-10-15: "you
+   can add another home but its not small like the first one is") */
+function homePinned(b) { return b === 'home'; }
+
 /* ---- tabs of this kind ---- */
 var recs = {};          // tabId -> rec
 var curProject = null;  // the project the mounted boards are keyed to
@@ -936,7 +941,7 @@ function enterEmpty(E) {
 function openBoard(rec, b) {
   if (b === 'new') { rec.api.open({ kind: 'dashboard', board: 'new' }); return; }
   if (b === rec.board) return;
-  rec.api.open({ kind: 'dashboard', id: 'dashboard:' + b, board: b, label: labelOf(b) });
+  rec.api.open({ kind: 'dashboard', id: 'dashboard:' + b, board: b, label: labelOf(b), pinned: homePinned(b) });
 }
 /* a custom dashboard's second line: how many widgets it holds (a board not open is read from its key) */
 function storedCount(b) {
@@ -1116,7 +1121,7 @@ PM_HOME.registerKind('dashboard', {
     spec: function (sub) {
       if (sub === 'new') return { kind: 'dashboard', board: 'new' };
       var b = isBoard(sub) ? sub : 'home';
-      return { kind: 'dashboard', board: b, id: 'dashboard:' + b, label: labelOf(b) };
+      return { kind: 'dashboard', board: b, id: 'dashboard:' + b, label: labelOf(b), pinned: homePinned(b) };
     }
   },
   mount: function (host, st, api) {
@@ -1196,7 +1201,7 @@ PM_HOME.registerKind('dashboard', {
    when one is made, renamed or the project changes) */
 PM_HOME.catalog.add('dashboard', FIXED_IDS.map(function (b) {
   return { id: 'dashboard:' + b, label: FIXED[b].label, sub: FIXED[b].sub, icon: 'dashboard', keywords: 'dashboard board widgets ' + b,
-    spec: { kind: 'dashboard', board: b, id: 'dashboard:' + b, label: FIXED[b].label } };
+    spec: { kind: 'dashboard', board: b, id: 'dashboard:' + b, label: FIXED[b].label, pinned: homePinned(b) } };
 }).concat([{ id: 'dashboard:new', label: 'New dashboard', sub: NEW_SUB, icon: 'dashboard', keywords: 'dashboard board widgets new empty',
   spec: { kind: 'dashboard', board: 'new' } }]));
 function refreshCatalog() {
@@ -1215,7 +1220,7 @@ function refreshCatalog() {
 function reveal(board) {
   if (board === 'new') return PM_HOME.open({ kind: 'dashboard', board: 'new' });
   if (!isBoard(board)) board = 'home';
-  return PM_HOME.open({ kind: 'dashboard', id: 'dashboard:' + board, board: board, label: labelOf(board) });
+  return PM_HOME.open({ kind: 'dashboard', id: 'dashboard:' + board, board: board, label: labelOf(board), pinned: homePinned(board) });
 }
 /* the stored dashboards of this project: every key of an engine board id, plus the live boards' (a board not written
    yet reads null) */

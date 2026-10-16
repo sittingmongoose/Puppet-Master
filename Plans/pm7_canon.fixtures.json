@@ -386,7 +386,8 @@
         "code.terminal.cursor-trail": "Off",
         "code.terminal.smooth-scroll": "Off",
         "code.terminal.flicker": false,
-        "code.terminal.crt": false
+        "code.terminal.crt": false,
+        "code.terminal.background-motion": "Off"
       },
       "unchanged_values": {
         "code.editing.token-colors": {
@@ -410,7 +411,8 @@
         "code.terminal.cursor-trail": "Off",
         "code.terminal.smooth-scroll": "Off",
         "code.terminal.flicker": false,
-        "code.terminal.crt": false
+        "code.terminal.crt": false,
+        "code.terminal.background-motion": "Off"
       },
       "unchanged_values": {
         "code.editing.token-colors": {
@@ -477,7 +479,9 @@
         "code.terminal.scanlines": "On",
         "code.terminal.glow": "On",
         "code.terminal.crt": true,
-        "code.terminal.cursor-trail": "Phosphor"
+        "code.terminal.cursor-trail": "Phosphor",
+        "code.terminal.curvature": 0.06,
+        "code.terminal.bezel": "Monitor"
       },
       "unchanged_values": {
         "code.editing.token-colors": {
@@ -500,7 +504,9 @@
         "code.terminal.scanlines": "On",
         "code.terminal.glow": "On",
         "code.terminal.crt": true,
-        "code.terminal.cursor-trail": "Phosphor"
+        "code.terminal.cursor-trail": "Phosphor",
+        "code.terminal.curvature": 0.06,
+        "code.terminal.bezel": "Monitor"
       },
       "unchanged_values": {
         "code.editing.token-colors": {
@@ -619,6 +625,624 @@
       "unchanged_values": {
         "code.terminal.padding": 12,
         "code.terminal.font-size": 16
+      }
+    }
+  ],
+  "terminal_preset_cases": [
+    {
+      "name": "valid_sparse_library",
+      "valid": true,
+      "value": {
+        "schema_version": "1.0.0",
+        "presets": [
+          {
+            "id": "saved-1",
+            "name": "My monitor",
+            "saved_at": "2026-10-16T00:00:00Z",
+            "fields": {
+              "code.terminal.bezel": "Monitor",
+              "code.terminal.curvature": 0.06
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "unknown_field",
+      "valid": false,
+      "value": {
+        "schema_version": "1.0.0",
+        "presets": [
+          {
+            "id": "saved-1",
+            "name": "My monitor",
+            "saved_at": "2026-10-16T00:00:00Z",
+            "fields": {
+              "code.terminal.bezel": "Monitor",
+              "code.terminal.curvature": 0.06,
+              "run.command": "secret"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "out_of_range_width",
+      "valid": false,
+      "value": {
+        "schema_version": "1.0.0",
+        "presets": [
+          {
+            "id": "saved-1",
+            "name": "My monitor",
+            "saved_at": "2026-10-16T00:00:00Z",
+            "fields": {
+              "code.terminal.bezel": "Monitor",
+              "code.terminal.curvature": 0.06,
+              "code.terminal.bezel-width": 49
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "invalid_design",
+      "valid": false,
+      "value": {
+        "schema_version": "1.0.0",
+        "presets": [
+          {
+            "id": "saved-1",
+            "name": "My monitor",
+            "saved_at": "2026-10-16T00:00:00Z",
+            "fields": {
+              "code.terminal.bezel": "Monitor",
+              "code.terminal.curvature": 0.06,
+              "code.terminal.background-image": "missing design"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "extra_record_field",
+      "valid": false,
+      "value": {
+        "schema_version": "1.0.0",
+        "presets": [
+          {
+            "id": "saved-1",
+            "name": "My monitor",
+            "saved_at": "2026-10-16T00:00:00Z",
+            "fields": {
+              "code.terminal.bezel": "Monitor",
+              "code.terminal.curvature": 0.06
+            },
+            "terminal_output": "private"
+          }
+        ]
+      }
+    },
+    {
+      "name": "over_capacity",
+      "valid": false,
+      "value": {
+        "schema_version": "1.0.0",
+        "presets": [
+          {
+            "id": "saved-0",
+            "name": "Saved 0",
+            "saved_at": "2026-10-16T00:00:00Z",
+            "fields": {
+              "code.terminal.bezel": "Monitor",
+              "code.terminal.curvature": 0.06
+            }
+          },
+          {
+            "id": "saved-1",
+            "name": "Saved 1",
+            "saved_at": "2026-10-16T00:00:00Z",
+            "fields": {
+              "code.terminal.bezel": "Monitor",
+              "code.terminal.curvature": 0.06
+            }
+          },
+          {
+            "id": "saved-2",
+            "name": "Saved 2",
+            "saved_at": "2026-10-16T00:00:00Z",
+            "fields": {
+              "code.terminal.bezel": "Monitor",
+              "code.terminal.curvature": 0.06
+            }
+          },
+          {
+            "id": "saved-3",
+            "name": "Saved 3",
+            "saved_at": "2026-10-16T00:00:00Z",
+            "fields": {
+              "code.terminal.bezel": "Monitor",
+              "code.terminal.curvature": 0.06
+            }
+          },
+          {
+            "id": "saved-4",
+            "name": "Saved 4",
+            "saved_at": "2026-10-16T00:00:00Z",
+            "fields": {
+              "code.terminal.bezel": "Monitor",
+              "code.terminal.curvature": 0.06
+            }
+          },
+          {
+            "id": "saved-5",
+            "name": "Saved 5",
+            "saved_at": "2026-10-16T00:00:00Z",
+            "fields": {
+              "code.terminal.bezel": "Monitor",
+              "code.terminal.curvature": 0.06
+            }
+          },
+          {
+            "id": "saved-6",
+            "name": "Saved 6",
+            "saved_at": "2026-10-16T00:00:00Z",
+            "fields": {
+              "code.terminal.bezel": "Monitor",
+              "code.terminal.curvature": 0.06
+            }
+          },
+          {
+            "id": "saved-7",
+            "name": "Saved 7",
+            "saved_at": "2026-10-16T00:00:00Z",
+            "fields": {
+              "code.terminal.bezel": "Monitor",
+              "code.terminal.curvature": 0.06
+            }
+          },
+          {
+            "id": "saved-8",
+            "name": "Saved 8",
+            "saved_at": "2026-10-16T00:00:00Z",
+            "fields": {
+              "code.terminal.bezel": "Monitor",
+              "code.terminal.curvature": 0.06
+            }
+          },
+          {
+            "id": "saved-9",
+            "name": "Saved 9",
+            "saved_at": "2026-10-16T00:00:00Z",
+            "fields": {
+              "code.terminal.bezel": "Monitor",
+              "code.terminal.curvature": 0.06
+            }
+          },
+          {
+            "id": "saved-10",
+            "name": "Saved 10",
+            "saved_at": "2026-10-16T00:00:00Z",
+            "fields": {
+              "code.terminal.bezel": "Monitor",
+              "code.terminal.curvature": 0.06
+            }
+          },
+          {
+            "id": "saved-11",
+            "name": "Saved 11",
+            "saved_at": "2026-10-16T00:00:00Z",
+            "fields": {
+              "code.terminal.bezel": "Monitor",
+              "code.terminal.curvature": 0.06
+            }
+          },
+          {
+            "id": "saved-12",
+            "name": "Saved 12",
+            "saved_at": "2026-10-16T00:00:00Z",
+            "fields": {
+              "code.terminal.bezel": "Monitor",
+              "code.terminal.curvature": 0.06
+            }
+          },
+          {
+            "id": "saved-13",
+            "name": "Saved 13",
+            "saved_at": "2026-10-16T00:00:00Z",
+            "fields": {
+              "code.terminal.bezel": "Monitor",
+              "code.terminal.curvature": 0.06
+            }
+          },
+          {
+            "id": "saved-14",
+            "name": "Saved 14",
+            "saved_at": "2026-10-16T00:00:00Z",
+            "fields": {
+              "code.terminal.bezel": "Monitor",
+              "code.terminal.curvature": 0.06
+            }
+          },
+          {
+            "id": "saved-15",
+            "name": "Saved 15",
+            "saved_at": "2026-10-16T00:00:00Z",
+            "fields": {
+              "code.terminal.bezel": "Monitor",
+              "code.terminal.curvature": 0.06
+            }
+          },
+          {
+            "id": "saved-16",
+            "name": "Saved 16",
+            "saved_at": "2026-10-16T00:00:00Z",
+            "fields": {
+              "code.terminal.bezel": "Monitor",
+              "code.terminal.curvature": 0.06
+            }
+          },
+          {
+            "id": "saved-17",
+            "name": "Saved 17",
+            "saved_at": "2026-10-16T00:00:00Z",
+            "fields": {
+              "code.terminal.bezel": "Monitor",
+              "code.terminal.curvature": 0.06
+            }
+          },
+          {
+            "id": "saved-18",
+            "name": "Saved 18",
+            "saved_at": "2026-10-16T00:00:00Z",
+            "fields": {
+              "code.terminal.bezel": "Monitor",
+              "code.terminal.curvature": 0.06
+            }
+          },
+          {
+            "id": "saved-19",
+            "name": "Saved 19",
+            "saved_at": "2026-10-16T00:00:00Z",
+            "fields": {
+              "code.terminal.bezel": "Monitor",
+              "code.terminal.curvature": 0.06
+            }
+          },
+          {
+            "id": "saved-20",
+            "name": "Saved 20",
+            "saved_at": "2026-10-16T00:00:00Z",
+            "fields": {
+              "code.terminal.bezel": "Monitor",
+              "code.terminal.curvature": 0.06
+            }
+          },
+          {
+            "id": "saved-21",
+            "name": "Saved 21",
+            "saved_at": "2026-10-16T00:00:00Z",
+            "fields": {
+              "code.terminal.bezel": "Monitor",
+              "code.terminal.curvature": 0.06
+            }
+          },
+          {
+            "id": "saved-22",
+            "name": "Saved 22",
+            "saved_at": "2026-10-16T00:00:00Z",
+            "fields": {
+              "code.terminal.bezel": "Monitor",
+              "code.terminal.curvature": 0.06
+            }
+          },
+          {
+            "id": "saved-23",
+            "name": "Saved 23",
+            "saved_at": "2026-10-16T00:00:00Z",
+            "fields": {
+              "code.terminal.bezel": "Monitor",
+              "code.terminal.curvature": 0.06
+            }
+          },
+          {
+            "id": "saved-24",
+            "name": "Saved 24",
+            "saved_at": "2026-10-16T00:00:00Z",
+            "fields": {
+              "code.terminal.bezel": "Monitor",
+              "code.terminal.curvature": 0.06
+            }
+          },
+          {
+            "id": "saved-25",
+            "name": "Saved 25",
+            "saved_at": "2026-10-16T00:00:00Z",
+            "fields": {
+              "code.terminal.bezel": "Monitor",
+              "code.terminal.curvature": 0.06
+            }
+          },
+          {
+            "id": "saved-26",
+            "name": "Saved 26",
+            "saved_at": "2026-10-16T00:00:00Z",
+            "fields": {
+              "code.terminal.bezel": "Monitor",
+              "code.terminal.curvature": 0.06
+            }
+          },
+          {
+            "id": "saved-27",
+            "name": "Saved 27",
+            "saved_at": "2026-10-16T00:00:00Z",
+            "fields": {
+              "code.terminal.bezel": "Monitor",
+              "code.terminal.curvature": 0.06
+            }
+          },
+          {
+            "id": "saved-28",
+            "name": "Saved 28",
+            "saved_at": "2026-10-16T00:00:00Z",
+            "fields": {
+              "code.terminal.bezel": "Monitor",
+              "code.terminal.curvature": 0.06
+            }
+          },
+          {
+            "id": "saved-29",
+            "name": "Saved 29",
+            "saved_at": "2026-10-16T00:00:00Z",
+            "fields": {
+              "code.terminal.bezel": "Monitor",
+              "code.terminal.curvature": 0.06
+            }
+          },
+          {
+            "id": "saved-30",
+            "name": "Saved 30",
+            "saved_at": "2026-10-16T00:00:00Z",
+            "fields": {
+              "code.terminal.bezel": "Monitor",
+              "code.terminal.curvature": 0.06
+            }
+          },
+          {
+            "id": "saved-31",
+            "name": "Saved 31",
+            "saved_at": "2026-10-16T00:00:00Z",
+            "fields": {
+              "code.terminal.bezel": "Monitor",
+              "code.terminal.curvature": 0.06
+            }
+          },
+          {
+            "id": "saved-32",
+            "name": "Saved 32",
+            "saved_at": "2026-10-16T00:00:00Z",
+            "fields": {
+              "code.terminal.bezel": "Monitor",
+              "code.terminal.curvature": 0.06
+            }
+          },
+          {
+            "id": "saved-33",
+            "name": "Saved 33",
+            "saved_at": "2026-10-16T00:00:00Z",
+            "fields": {
+              "code.terminal.bezel": "Monitor",
+              "code.terminal.curvature": 0.06
+            }
+          },
+          {
+            "id": "saved-34",
+            "name": "Saved 34",
+            "saved_at": "2026-10-16T00:00:00Z",
+            "fields": {
+              "code.terminal.bezel": "Monitor",
+              "code.terminal.curvature": 0.06
+            }
+          },
+          {
+            "id": "saved-35",
+            "name": "Saved 35",
+            "saved_at": "2026-10-16T00:00:00Z",
+            "fields": {
+              "code.terminal.bezel": "Monitor",
+              "code.terminal.curvature": 0.06
+            }
+          },
+          {
+            "id": "saved-36",
+            "name": "Saved 36",
+            "saved_at": "2026-10-16T00:00:00Z",
+            "fields": {
+              "code.terminal.bezel": "Monitor",
+              "code.terminal.curvature": 0.06
+            }
+          },
+          {
+            "id": "saved-37",
+            "name": "Saved 37",
+            "saved_at": "2026-10-16T00:00:00Z",
+            "fields": {
+              "code.terminal.bezel": "Monitor",
+              "code.terminal.curvature": 0.06
+            }
+          },
+          {
+            "id": "saved-38",
+            "name": "Saved 38",
+            "saved_at": "2026-10-16T00:00:00Z",
+            "fields": {
+              "code.terminal.bezel": "Monitor",
+              "code.terminal.curvature": 0.06
+            }
+          },
+          {
+            "id": "saved-39",
+            "name": "Saved 39",
+            "saved_at": "2026-10-16T00:00:00Z",
+            "fields": {
+              "code.terminal.bezel": "Monitor",
+              "code.terminal.curvature": 0.06
+            }
+          },
+          {
+            "id": "saved-40",
+            "name": "Saved 40",
+            "saved_at": "2026-10-16T00:00:00Z",
+            "fields": {
+              "code.terminal.bezel": "Monitor",
+              "code.terminal.curvature": 0.06
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "inline_image",
+      "valid": false,
+      "value": {
+        "schema_version": "1.0.0",
+        "presets": [
+          {
+            "id": "saved-1",
+            "name": "My monitor",
+            "saved_at": "2026-10-16T00:00:00Z",
+            "fields": {
+              "code.terminal.bezel": "Monitor",
+              "code.terminal.curvature": 0.06,
+              "code.terminal.background-image-file": "data:image/png;base64,AAAA"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "local_image_path",
+      "valid": false,
+      "value": {
+        "schema_version": "1.0.0",
+        "presets": [
+          {
+            "id": "saved-1",
+            "name": "My monitor",
+            "saved_at": "2026-10-16T00:00:00Z",
+            "fields": {
+              "code.terminal.bezel": "Monitor",
+              "code.terminal.curvature": 0.06,
+              "code.terminal.background-image-file": "/home/person/wall.png"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "duplicate_id",
+      "valid": false,
+      "value": {
+        "schema_version": "1.0.0",
+        "presets": [
+          {
+            "id": "saved-1",
+            "name": "My monitor",
+            "saved_at": "2026-10-16T00:00:00Z",
+            "fields": {
+              "code.terminal.bezel": "Monitor",
+              "code.terminal.curvature": 0.06
+            }
+          },
+          {
+            "id": "saved-1",
+            "name": "Second",
+            "saved_at": "2026-10-16T00:00:00Z",
+            "fields": {
+              "code.terminal.bezel": "Monitor",
+              "code.terminal.curvature": 0.06
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "duplicate_name",
+      "valid": false,
+      "value": {
+        "schema_version": "1.0.0",
+        "presets": [
+          {
+            "id": "saved-1",
+            "name": "My monitor",
+            "saved_at": "2026-10-16T00:00:00Z",
+            "fields": {
+              "code.terminal.bezel": "Monitor",
+              "code.terminal.curvature": 0.06
+            }
+          },
+          {
+            "id": "saved-2",
+            "name": "MY MONITOR",
+            "saved_at": "2026-10-16T00:00:00Z",
+            "fields": {
+              "code.terminal.bezel": "Monitor",
+              "code.terminal.curvature": 0.06
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "unnormalized_name",
+      "valid": false,
+      "value": {
+        "schema_version": "1.0.0",
+        "presets": [
+          {
+            "id": "saved-1",
+            "name": "  My  monitor ",
+            "saved_at": "2026-10-16T00:00:00Z",
+            "fields": {
+              "code.terminal.bezel": "Monitor",
+              "code.terminal.curvature": 0.06
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "terminal_preset_apply_cases": [
+    {
+      "name": "replace_this_preserves_other_settings",
+      "scope": "this",
+      "saved_fields": {
+        "code.terminal.bezel": "Monitor",
+        "code.terminal.curvature": 0.06
+      },
+      "before": {
+        "code.terminal.font-weight": 600,
+        "code.editing.tab-size": 4
+      },
+      "expected_cleared": "code.terminal.font-weight",
+      "unchanged": {
+        "code.editing.tab-size": 4
+      }
+    },
+    {
+      "name": "replace_all_uses_defaults",
+      "scope": "all",
+      "saved_fields": {
+        "code.terminal.bezel": "Monitor",
+        "code.terminal.curvature": 0.06
+      },
+      "before": {
+        "code.terminal.font-weight": 600,
+        "code.editing.tab-size": 4
+      },
+      "expected_default": "code.terminal.font-weight",
+      "unchanged": {
+        "code.editing.tab-size": 4
       }
     }
   ]

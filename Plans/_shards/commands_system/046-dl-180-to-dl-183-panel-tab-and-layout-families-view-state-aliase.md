@@ -2,9 +2,9 @@
 
 Source: `Plans/Commands_System.md`
 
-Source lines: L7639-L7953
+Source lines: L7639-L7979
 
-Source SHA256: `03b8c80e7607d8842caf0e229b2202705bc80070b7126d744c780d3c1094b2d0`
+Source SHA256: `58974ba2d88de4f2b6bf1193005a54961a122fc830ae44cf01570c7d7228a7a5`
 
 ---
 
@@ -42,27 +42,34 @@ unit_type: constraint
 status: accepted
 owner_doc: Plans/Commands_System.md
 canonical_text: >-
-  The reserved command-prefix registry of CS-060 extends to cmd.panel_tab. (open, close, rename, move, keep, pin,
-  unpin, reopen_closed) and cmd.workspace_layout. (split, move_surface, resize_surface, set_collapsed, close_panel,
-  lock, apply_named, save_named, reset), with Plans/UI_Command_Catalog.md the only minter. panel_tab is kept apart
-  from workspace_tab_id, from route tab_id and from cmd.panel.switch, whose closed vocabulary home panels never
-  join. ui.panel_tab., ui.workspace_layout., ui.terminal., ui.output. and ui.chat_column. are typed local action prefixes in the pattern of
-  ui.guided_tour.focus_route: no catalog command row, no central registration, no receipt, no event, and never also
-  a cmd.* id; a ui.terminal.mark.* action that runs a command dispatches that catalog command. View state is ruled:
-  choosing a tab, maximizing or restoring a panel and focusing a panel are ui.panel_tab.activate,
-  ui.workspace_layout.maximize and ui.workspace_layout.focus_panel, written with the layout record's view state;
-  selecting Output's channel is ui.output.select_channel, view state of the one output tab, never part of its id;
-  pinning the chat's History list is ui.chat_column.pin_history, view state saved in the layout record's chat column;
-  amended 2026-10-10 (DL-186, DL-187; lead rulings F1, F2, F5 and F6): ui.widget_board. and ui.widget_preset. are
-  typed local action prefixes too; a dashboard board's range and scope are ui.widget_board.set_view, saving, renaming
-  and deleting a preset are ui.widget_preset.save, ui.widget_preset.rename and ui.widget_preset.delete, a terminal's
-  mute is ui.terminal.mute_notifications and the chat's narrow-window pin is ui.chat_column.keep_open, each with no
-  receipt and no event; using a preset stays the catalog command cmd.widget.reset_layout with set_id; choosing the
-  Debug Console's session sub-tab dispatches nothing;
-  opening any menu, list, picker or prompt, hovering, drag previews and the narrow ladder's states dispatch nothing
-  and are never saved. Every committed structural change is one shell_view catalog command with a receipt that emits
-  workspace.layout_changed; an open that only reveals emits nothing; a failed commit rolls back; no event family is
-  added. Open routes that keep their domain ids stay navigation_wrapper and resolve through the one opening module.
+  The reserved command-prefix registry of CS-060 extends to cmd.panel_tab. (open, close, rename,
+  move, keep, pin, unpin, reopen_closed) and cmd.workspace_layout. (split, move_surface,
+  resize_surface, set_collapsed, close_panel, lock, apply_named, save_named, reset), with
+  Plans/UI_Command_Catalog.md the only minter. panel_tab is kept apart from workspace_tab_id, from
+  route tab_id and from cmd.panel.switch, whose closed vocabulary home panels never join.
+  ui.panel_tab., ui.workspace_layout., ui.terminal., ui.output. and ui.chat_column. are typed local
+  action prefixes in the pattern of ui.guided_tour.focus_route: no catalog command row, no central
+  registration, no receipt, no event, and never also a cmd.* id; a ui.terminal.mark.* action that
+  runs a command dispatches that catalog command. View state is ruled: choosing a tab, maximizing or
+  restoring a panel and focusing a panel are ui.panel_tab.activate, ui.workspace_layout.maximize and
+  ui.workspace_layout.focus_panel, written with the layout record's view state; selecting Output's
+  channel is ui.output.select_channel, view state of the one output tab, never part of its id;
+  pinning the chat's History list is ui.chat_column.pin_history, view state saved in the layout
+  record's chat column; amended 2026-10-10 (DL-186, DL-187; lead rulings F1, F2, F5 and F6):
+  ui.widget_board. and ui.widget_preset. are typed local action prefixes too; a dashboard board's
+  range and scope are ui.widget_board.set_view, saving, renaming and deleting a preset are
+  ui.widget_preset.save, ui.widget_preset.rename and ui.widget_preset.delete, a terminal's mute is
+  ui.terminal.mute_notifications and the chat's narrow-window pin is ui.chat_column.keep_open, each
+  with no receipt and no event; using a preset stays the catalog command cmd.widget.reset_layout
+  with set_id; choosing the Debug Console's session sub-tab dispatches nothing; opening any menu,
+  list, picker or prompt, hovering, drag previews and the narrow ladder's states dispatch nothing
+  and are never saved. Every committed structural change is one shell_view catalog command with a
+  receipt that emits workspace.layout_changed; an open that only reveals emits nothing; a failed
+  commit rolls back; no event family is added. Open routes that keep their domain ids stay
+  navigation_wrapper and resolve through the one opening module. F3-632's picker Back,
+  Escape/Left/empty-query Backspace and level restoration are typed local navigation
+  ui.panel_tab.picker_back, with no catalog primary, receipt, event or persisted menu stack. A final
+  picked item still uses its existing owner command.
 gui_related: true
 gui_classification_reason: "Registers the command families and local action prefixes behind every universal panel and terminal control and rules which of them are view state."
 split_recommended: false
@@ -91,14 +98,21 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
-  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/followup/DECISIONS-ADDENDUM-2.md, SHA-256 1eecc96b03a1a774f52d06420c913553d5f5d1917e1bd5705e2f6e0bbc11fad6 (D31)"
-  - "Plans/Commands_System.md CDRY-006 What stays view state (a prose heading with no PlanUnit; cited, not a dependency (lead ruling L22, 2026-10-10))"
-  - "Plans/Decision_Log.md#DL-180"
-  - "Plans/Decision_Log.md#DL-181"
-  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/DECISIONS.md (SHA-256 0d2b45466c91734e15fd8659e9a8e3b17b70d92be785421e57e084dc8daf6b64)"
-  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/panels-CONTRACT-v1-778c8494e6.md (SHA-256 aa16fc080f44f6824b0ef32a2b568bfcae81277b6962caaba1b441015d68dae9; section 8; concept lineage only)"
-  - "Plans/Decision_Log.md#DL-186"
-  - "Plans/Decision_Log.md#DL-187"
+- /mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/followup/DECISIONS-ADDENDUM-2.md,
+  SHA-256 1eecc96b03a1a774f52d06420c913553d5f5d1917e1bd5705e2f6e0bbc11fad6 (D31)
+- Plans/Commands_System.md CDRY-006 What stays view state (a prose heading with no PlanUnit; cited, not
+  a dependency (lead ruling L22, 2026-10-10))
+- Plans/Decision_Log.md#DL-180
+- Plans/Decision_Log.md#DL-181
+- /mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/DECISIONS.md (SHA-256 0d2b45466c91734e15fd8659e9a8e3b17b70d92be785421e57e084dc8daf6b64)
+- /mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/panels-CONTRACT-v1-778c8494e6.md
+  (SHA-256 aa16fc080f44f6824b0ef32a2b568bfcae81277b6962caaba1b441015d68dae9; section 8; concept lineage
+  only)
+- Plans/Decision_Log.md#DL-186
+- Plans/Decision_Log.md#DL-187
+- /mnt/Cursor/share/puppet-master/2026-10-16-plans-pass2/sources/2026-10-15-panels-picker-back--NOTES.md,
+  SHA-256 29bac44f166cb8e0e67f4f00634cb15d0a3be576eb2f68e7e19606f3a4a1a71c (source lineage; not native
+  certification)
 preserved_exact_tokens:
   - "ui.widget_board."
   - "ui.widget_preset."
@@ -264,26 +278,34 @@ owner_doc: Plans/Commands_System.md
 canonical_text: >-
   UCC-204 mints cmd.editor.appearance.set under the existing reserved cmd.editor. prefix. Its
   expected_state_hash guards the editor tab's saved nonstructural state; a mismatch refuses as
-  stale_projection, a replay with the same idempotency key returns the existing receipt, and conflicting
-  reuse refuses. Validation/permission, bounded serialization, write and readback complete before applied
-  is returned; failure retains or restores the earlier state. Plans/editor_appearance.schema.json closes
-  fields and fixed failure reasons; no arbitrary code, path payload or unknown field is accepted.
-  UI_Command_Catalog remains the only command minter. ui.appearance.open, close, set_scope, search,
-  preview_scheme, cancel_preview, select_token and try_sample are typed local actions, parameterized by
-  editor/terminal and target tab where available; Indentation opens the same editor screen at its
-  indentation group. Scope selection is saved tab view state only when invoked from that tab; Settings'
-  All entry is temporary. ui.notifications.open, close, expand_group, mark_visible_read, dismiss_toast and
-  explain_state operate the one shared inbox's presentation/read projection and never resolve its source.
-  Mark_visible_read names only notices actually shown for the F3-453 dwell. No catalog row, dispatcher
-  receipt or domain event belongs to these ui.* ids. Picker/menu openings, hover, keyboard gallery
-  navigation before selection, change-meter display, drag previews, glow and timer suspension dispatch
-  nothing and write nothing. Choosing a background file returns a validated owner asset reference then
-  uses the selected scope's writer; importing a scheme uses the existing import command. Sample
-  cursor/caret, bell, typing, problem and Step back trials affect only isolated sample state. Committed
-  quick sets, reset, fields and token edits always use UCC-204's writers, never a view-local bypass. The
-  production/exclusion census is WM-093/UIW-043 and Plans/pm7_control_bindings.json. SSYS-010 retires the
-  visible app-theme preview and cmd.theme.preview; it is not normalized to the internal Settings preview
-  command. The retained scheme-preview local actions belong only to the editor/terminal Customize screens.
+  stale_projection, a replay with the same idempotency key returns the existing receipt, and
+  conflicting reuse refuses. Validation/permission, bounded serialization, write and readback
+  complete before applied is returned; failure retains or restores the earlier state.
+  Plans/editor_appearance.schema.json closes fields and fixed failure reasons; no arbitrary code,
+  path payload or unknown field is accepted. UI_Command_Catalog remains the only command minter.
+  ui.appearance.open, close, set_scope, search, preview_scheme, cancel_preview, select_token and
+  try_sample are typed local actions, parameterized by editor/terminal and target tab where
+  available; Indentation opens the same editor screen at its indentation group. Scope selection is
+  saved tab view state only when invoked from that tab; Settings' All entry is temporary.
+  ui.notifications.open, close, expand_group, mark_visible_read, dismiss_toast and explain_state
+  operate the one shared inbox's presentation/read projection and never resolve its source.
+  Mark_visible_read names only notices actually shown for the F3-453 dwell. No catalog row,
+  dispatcher receipt or domain event belongs to these ui.* ids. Picker/menu openings, hover,
+  keyboard gallery navigation before selection, change-meter display, drag previews, glow and timer
+  suspension dispatch nothing and write nothing. Choosing a background file returns a validated
+  owner asset reference then uses the selected scope's writer; importing a scheme uses the existing
+  import command. Sample cursor/caret, bell, typing, problem and Step back trials affect only
+  isolated sample state. Committed quick sets, reset, fields and token edits always use UCC-204's
+  writers, never a view-local bypass. The production/exclusion census is WM-093/UIW-043 and
+  Plans/pm7_control_bindings.json. SSYS-010 retires the visible app-theme preview and
+  cmd.theme.preview; it is not normalized to the internal Settings preview command. The retained
+  scheme-preview local actions belong only to the editor/terminal Customize screens.
+  ui.terminal.preset.save, ui.terminal.preset.rename, ui.terminal.preset.delete and
+  ui.terminal.preset.undo are typed local library actions under the existing ui.terminal. prefix.
+  Unlike a transient preview, they persist only SP-331's computer-local preset library, with its
+  validation/readback and no dispatcher receipt or event. Naming/selection/search remain view-local.
+  Applying a preset always uses UCC-204's existing This or All writer and never writes appearance
+  through a local action.
 gui_related: true
 gui_classification_reason: Customize and notification local actions.
 split_recommended: false
@@ -308,13 +330,17 @@ node_compile_hint:
 source_lineage:
 - /mnt/Cursor/share/puppet-master/2026-10-14-editor-customizer/PROPOSAL-canon.md, SHA-256 8b8f3179c3970cb165e4fb4722eb02381f0456faad235c4330207d2bec5f5431
   (approved campaign source lineage; not native implementation evidence)
-- /mnt/Cursor/share/puppet-master/2026-10-13-terminal-customizer/PROPOSAL-canon-followups.md, SHA-256 1e0739b70d9b0f8c55f8df4747d80ff099baae6d40caf6ae784dc13864d580b0
-  (approved campaign source lineage; not native implementation evidence)
+- /mnt/Cursor/share/puppet-master/2026-10-13-terminal-customizer/PROPOSAL-canon-followups.md, SHA-256
+  1e0739b70d9b0f8c55f8df4747d80ff099baae6d40caf6ae784dc13864d580b0 (approved campaign source lineage;
+  not native implementation evidence)
 - /mnt/Cursor/share/puppet-master/2026-10-13-notifications/NOTES.md, SHA-256 f09d2b8856652950762b6580b8ebab43022bdf053272738f52720de25922a895
   (approved campaign source lineage; not native implementation evidence)
 - Plans/UI_Command_Catalog.md#UCC-204
 - Plans/UI_Wiring_Rules.md#UIW-043
 - Plans/Wiring_Matrix.md#WM-093
+- /mnt/Cursor/share/puppet-master/2026-10-16-plans-pass2/sources/2026-10-14-terminal-round3--LANDING.md,
+  SHA-256 4d6556ff98168f22719c5d401c4e677d5d380d2ef370b67a838cb3aa45301c2d (source lineage; not native
+  certification)
 preserved_exact_tokens: []
 negative_constraints: []
 owner_hints:

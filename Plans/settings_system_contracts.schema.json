@@ -374,25 +374,10 @@
     "glass_projection": {
       "type": "object",
       "required": [
-        "background_mode",
         "alpha",
         "availability"
       ],
       "properties": {
-        "background_mode": {
-          "oneOf": [
-            {
-              "enum": [
-                "Mesh",
-                "Depth",
-                "Minimal"
-              ]
-            },
-            {
-              "type": "null"
-            }
-          ]
-        },
         "alpha": {
           "oneOf": [
             {
@@ -549,9 +534,6 @@
               "const": "general.visual.theme-mode"
             },
             {
-              "const": "general.visual.glass-background-mode"
-            },
-            {
               "const": "general.visual.glass-transparency"
             },
             {
@@ -562,8 +544,8 @@
             }
           ],
           "items": false,
-          "minItems": 6,
-          "maxItems": 6
+          "minItems": 5,
+          "maxItems": 5
         }
       },
       "allOf": [
@@ -595,13 +577,6 @@
               },
               "glass": {
                 "properties": {
-                  "background_mode": {
-                    "enum": [
-                      "Mesh",
-                      "Depth",
-                      "Minimal"
-                    ]
-                  },
                   "alpha": {
                     "type": "number",
                     "minimum": 0.35,
@@ -628,9 +603,6 @@
             "properties": {
               "glass": {
                 "properties": {
-                  "background_mode": {
-                    "type": "null"
-                  },
                   "alpha": {
                     "type": "null"
                   },

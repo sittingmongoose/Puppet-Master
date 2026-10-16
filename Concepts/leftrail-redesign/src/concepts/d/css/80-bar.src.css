@@ -9,11 +9,15 @@
 /* square corners in Retro, and in NieR only with its "Square hairlines" part, as the rest of D's NieR corners */
 §R[data-theme^="retro"], §R[data-o55-nier-parts~="square"] { --d-Rbar: 0px; }
 §B { position: relative; }
+/* A look that adopts the shared switcher (Q16: Concepts/onboarding/opus-5.5/src/css/60-switcher-looks.css, glass.css
+   section 12) paints the tile as its switcher's chip: the same fill, hairline, catch light, shadow and corner as every
+   tab and list selection in that look, and the lit icon in the chip's mark. Glass, and any look without the tokens,
+   keeps the tile below. */
 §B > .d-abind {
   position: absolute; left: 0; top: 0; width: 28px; height: 28px; z-index: 0; pointer-events: none;
-  border-radius: var(--d-Rbar); opacity: 0;
-  background: color-mix(in srgb, var(--accent-primary) 17%, transparent);
-  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--accent-primary) 30%, transparent);
+  border-radius: var(--pm-switch-r, var(--d-Rbar)); opacity: 0;
+  background: var(--pm-switch-fill, color-mix(in srgb, var(--accent-primary) 17%, transparent));
+  box-shadow: inset 0 0 0 1px var(--pm-switch-line, color-mix(in srgb, var(--accent-primary) 30%, transparent)), inset 0 1px 0 var(--pm-switch-top, transparent), var(--pm-switch-shadow, 0 0 0 0 transparent);
   transition: opacity var(--d-t2) var(--d-ease);
 }
 §B > .d-abind.is-on { opacity: 1; }
@@ -21,8 +25,6 @@
   background: linear-gradient(180deg, color-mix(in srgb, var(--accent-primary) 30%, transparent), color-mix(in srgb, var(--accent-primary) 14%, transparent));
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, .22), inset 0 0 0 1px color-mix(in srgb, var(--accent-primary) 36%, transparent), 0 2px 10px color-mix(in srgb, var(--accent-primary) 22%, transparent);
 }
-§R[data-theme^="retro"] #activityBar > .d-abind { box-shadow: inset 0 0 0 1px var(--accent-primary), 2px 2px 0 color-mix(in srgb, var(--accent-primary) 40%, transparent); }
-§R[data-o55-nier="on"] #activityBar > .d-abind { background: var(--o55-nier-ink); box-shadow: none; }
 §B .icon { z-index: 1; }
 §B .icon .symbol { border-radius: var(--d-Rbar) !important; transition: background-color var(--d-t1) var(--d-ease), color var(--d-t1) var(--d-ease), transform var(--d-t2) var(--d-spring) !important; }
 §B .icon:is([data-target], [data-ab-id="chat"]) .symbol { width: 28px !important; height: 28px !important; }
@@ -30,7 +32,7 @@
    and glow) would grow the symbol out from under its tile */
 §B .icon:is([data-target], [data-ab-id="chat"]):hover .symbol { background: var(--d-hover) !important; transform: none !important; box-shadow: none !important; }
 §B .icon:is([data-target], [data-ab-id="chat"]).active .symbol { background: none !important; box-shadow: none !important; }
-§B .icon:is([data-target], [data-ab-id="chat"]).active { color: var(--accent-primary) !important; }
+§B .icon:is([data-target], [data-ab-id="chat"]).active { color: var(--pm-switch-mark-on, var(--pm-switch-mark, var(--accent-primary))) !important; }
 §R[data-o55-nier="on"] #activityBar .icon:is([data-target], [data-ab-id="chat"]).active { color: var(--o55-nier-on-ink) !important; }
 §B .icon:is([data-target], [data-ab-id="chat"]).d-bump .symbol svg { animation: d-bump var(--d-t3) var(--d-spring); }
 @keyframes d-bump { 0% { transform: scale(.82); } 60% { transform: scale(1.08); } 100% { transform: none; } }

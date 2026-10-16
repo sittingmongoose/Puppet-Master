@@ -1,0 +1,460 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "pm.terminal_appearance_presets.v1",
+  "title": "Computer-local terminal appearance preset library (logical contract)",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "presets"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "1.0.0"
+    },
+    "presets": {
+      "type": "array",
+      "maxItems": 40,
+      "items": {
+        "$ref": "#/$defs/preset"
+      }
+    }
+  },
+  "$defs": {
+    "fields": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "code.terminal.theme": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "code.terminal.font-family": {
+          "enum": [
+            "Follow look",
+            "JetBrains Mono",
+            "Atkinson Hyperlegible Mono",
+            "VT323",
+            "Departure Mono",
+            "Sixtyfour",
+            "Sixtyfour Raster",
+            "System monospace"
+          ]
+        },
+        "code.terminal.font-size": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "const": "Font default"
+            }
+          ]
+        },
+        "code.terminal.font-rendering": {
+          "enum": [
+            "Auto",
+            "Crisp",
+            "Smooth"
+          ]
+        },
+        "code.terminal.scheme-pair": {
+          "type": "boolean"
+        },
+        "code.terminal.min-contrast": {
+          "enum": [
+            "Off",
+            "3:1",
+            "4.5:1",
+            "7:1"
+          ]
+        },
+        "code.terminal.font-weight": {
+          "type": "number"
+        },
+        "code.terminal.line-height": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "const": "Font default"
+            }
+          ]
+        },
+        "code.terminal.letter-spacing": {
+          "type": "number"
+        },
+        "code.terminal.ligatures": {
+          "type": "boolean"
+        },
+        "code.terminal.bold-bright": {
+          "type": "boolean"
+        },
+        "code.terminal.cursor-shape": {
+          "enum": [
+            "Follow look",
+            "Block",
+            "Bar",
+            "Underline"
+          ]
+        },
+        "code.terminal.cursor-blink": {
+          "type": "boolean"
+        },
+        "code.terminal.cursor-trail": {
+          "enum": [
+            "Follow look",
+            "Off",
+            "Soft",
+            "Glow",
+            "Phosphor",
+            "Trace"
+          ]
+        },
+        "code.terminal.background": {
+          "enum": [
+            "Follow look",
+            "Theme surface",
+            "Solid color",
+            "Gradient",
+            "Image"
+          ]
+        },
+        "code.terminal.background-color": {
+          "anyOf": [
+            {
+              "type": "string",
+              "maxLength": 1024
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "code.terminal.background-gradient": {
+          "enum": [
+            "Fade",
+            "Corner light",
+            "Horizon",
+            "Vignette",
+            "Split",
+            "Deep",
+            "Warm paper",
+            "Aurora",
+            "Nebula",
+            "Dawn",
+            "Ink bloom",
+            "Dusk",
+            "Prism edge",
+            "Paper"
+          ]
+        },
+        "code.terminal.background-image": {
+          "enum": [
+            "Dot grid",
+            "Graph paper",
+            "Blueprint",
+            "Diagonal hatch",
+            "Pixel checker",
+            "Topography",
+            "Waves",
+            "Halftone",
+            "Scanline field",
+            "Staff lines",
+            "Squares",
+            "Paper",
+            "Puppet cross",
+            "Droplet",
+            "Prompt",
+            "Glyph",
+            "Ridgelines",
+            "Dunes",
+            "Night city",
+            "Starfield",
+            "Synthwave",
+            "Caustics",
+            "Bokeh",
+            "Clouds",
+            "Drifting aurora",
+            "Twinkling stars",
+            "Rain",
+            "Snow",
+            "Lava",
+            "Clear glass",
+            "Frosted glass",
+            "Tinted glass",
+            "Reeded glass",
+            "Frosted panes",
+            "Layered sheets",
+            "Rain on glass",
+            "Lens",
+            "Etched glass",
+            "Running rain",
+            "Green-bar paper",
+            "Phosphor glow",
+            "Tube glass",
+            "Aperture grille",
+            "Static",
+            "Phosphor grid",
+            "Test pattern",
+            "ANSI art",
+            "Vector terrain",
+            "Boot ghost",
+            "Oscilloscope",
+            "Glyph rain",
+            "Custom",
+            "Hills",
+            "Grid"
+          ]
+        },
+        "code.terminal.background-image-file": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256,
+              "description": "Validated SP-222 asset reference only; never inline image bytes or a local path.",
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]*$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "code.terminal.background-dim": {
+          "anyOf": [
+            {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 0.9
+            },
+            {
+              "const": "Auto"
+            }
+          ]
+        },
+        "code.terminal.background-blur": {
+          "type": "number"
+        },
+        "code.terminal.opacity": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "const": "Follow look"
+            }
+          ]
+        },
+        "code.terminal.padding": {
+          "type": "number"
+        },
+        "code.terminal.effects": {
+          "enum": [
+            "Follow look",
+            "Off",
+            "Custom"
+          ]
+        },
+        "code.terminal.scanlines": {
+          "enum": [
+            "Follow look",
+            "On",
+            "Off"
+          ]
+        },
+        "code.terminal.scan-strength": {
+          "type": "number"
+        },
+        "code.terminal.glow": {
+          "enum": [
+            "Follow look",
+            "On",
+            "Off"
+          ]
+        },
+        "code.terminal.glow-strength": {
+          "type": "number"
+        },
+        "code.terminal.crt": {
+          "type": "boolean"
+        },
+        "code.terminal.curvature": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 0.2
+        },
+        "code.terminal.burn-in": {
+          "type": "boolean"
+        },
+        "code.terminal.noise": {
+          "type": "number"
+        },
+        "code.terminal.flicker": {
+          "type": "boolean"
+        },
+        "code.terminal.flicker-amount": {
+          "type": "number"
+        },
+        "code.terminal.inactive-dim": {
+          "enum": [
+            "Follow look",
+            "On",
+            "Off"
+          ]
+        },
+        "code.terminal.smooth-scroll": {
+          "enum": [
+            "Follow look",
+            "On",
+            "Off"
+          ]
+        },
+        "code.terminal.bell": {
+          "enum": [
+            "Follow look",
+            "Visual",
+            "Off"
+          ]
+        },
+        "code.terminal.sixtyfour-scan": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "code.terminal.sixtyfour-bleed": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "code.terminal.sticky-header": {
+          "type": "boolean"
+        },
+        "code.terminal.copy-on-select": {
+          "type": "boolean"
+        },
+        "code.terminal.background-strength": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "code.terminal.background-scale": {
+          "enum": [
+            "Fine",
+            "Medium",
+            "Coarse"
+          ]
+        },
+        "code.terminal.background-motion": {
+          "enum": [
+            "Off",
+            "Gentle",
+            "Lively"
+          ]
+        },
+        "code.terminal.background-fit": {
+          "enum": [
+            "Cover",
+            "Contain",
+            "Tile",
+            "Centre"
+          ]
+        },
+        "code.terminal.background-desaturate": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "code.terminal.bezel": {
+          "enum": [
+            "Off",
+            "Slim",
+            "Monitor"
+          ]
+        },
+        "code.terminal.bezel-width": {
+          "anyOf": [
+            {
+              "type": "number",
+              "minimum": 2,
+              "maximum": 48
+            },
+            {
+              "const": "Style default"
+            }
+          ]
+        },
+        "code.terminal.bezel-material": {
+          "enum": [
+            "Follow look",
+            "Graphite",
+            "Black gloss",
+            "Platinum",
+            "Putty",
+            "Brushed aluminium",
+            "Gunmetal",
+            "Glass",
+            "Accent"
+          ]
+        },
+        "code.terminal.bezel-reflection": {
+          "anyOf": [
+            {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1
+            },
+            {
+              "const": "Auto"
+            }
+          ]
+        },
+        "code.terminal.phosphor-mask": {
+          "type": "boolean"
+        }
+      }
+    },
+    "preset": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "name",
+        "saved_at",
+        "fields"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128
+        },
+        "name": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 48,
+          "description": "40-character normalized base plus a numeric uniqueness suffix."
+        },
+        "saved_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "fields": {
+          "$ref": "#/$defs/fields"
+        }
+      }
+    }
+  }
+}

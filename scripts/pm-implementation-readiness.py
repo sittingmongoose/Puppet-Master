@@ -770,16 +770,19 @@ STORAGE_VALUE_REGISTRY_SCHEMA_URI = (
 # widget_layout:v1:{project_id}:{board_id}) and widget_presets (per-user presets under widget_presets:v1) add two
 # deferred_not_build_blocking later_gui_or_feature_projection families, deferred until the widget-layout envelope
 # has a physical value schema. Retention policies and critical/MVP memberships are unchanged.
-STORAGE_VALUE_REGISTRY_EXPECTED_FAMILY_COUNT = 299
+# Re-pinned 2026-10-16 for SP-331: terminal_appearance_presets adds one computer-local per-user
+# deferred_not_build_blocking later_gui_or_feature_projection family. Native physical custody remains
+# deferred; retention policies and critical/MVP memberships are unchanged.
+STORAGE_VALUE_REGISTRY_EXPECTED_FAMILY_COUNT = 300
 STORAGE_VALUE_REGISTRY_EXPECTED_RETENTION_POLICY_COUNT = 27
 STORAGE_VALUE_REGISTRY_EXPECTED_STATUS_COUNTS = {
     "materialized": 277,
-    "deferred_not_build_blocking": 21,
+    "deferred_not_build_blocking": 22,
     "compatibility_alias": 1,
 }
 STORAGE_VALUE_REGISTRY_EXPECTED_TIER_COUNTS = {
     "tier_0_launch_critical": 40,
-    "later_gui_or_feature_projection": 249,
+    "later_gui_or_feature_projection": 250,
     "migration_only": 10,
 }
 STORAGE_VALUE_REQUIRED_LAUNCH_FAMILIES = [

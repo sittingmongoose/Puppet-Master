@@ -55971,7 +55971,8 @@
         "Each look surface named in ui_location is a local affordance that composes cmd.settings.transaction.preview then cmd.settings.transaction.apply over the exact IDs: the theme family and mode as the SSYS-009 atomic pair, a NieR preset as one value of general.visual.nier-parts, several NieR rows changed together as one atomic group, the Tour's sound control as general.interaction.sound-effects. Availability and disabled reasons are these commands'. The title bar's Light/Dark/Auto segmented control keeps cmd.theme.set_mode; the onboarding window's look choice is ui.onboarding.choose_look and dispatches neither command before the Project commit (WM-041).",
         "WM-093/pm7_control_bindings.json enumerates every PM7 Settings producer and exact id; preview/apply is the only Project writer, rejects no_project_context, validates catalog wallpaper ids, and keeps the reader anchored under SSYS-053.",
         "Project reset/look own uses restore_defaults for the exact affected ids; tab overrides remain above the Project result and are disclosed.",
-        "All-scope quick sets use only their exact registered ids/values. SSYS-054’s NieR background change binds both nier-background and wallpaper=look in one preview/apply; both selection orders preserve most-recent accepted choice with no second writer."
+        "All-scope quick sets use only their exact registered ids/values. SSYS-054’s NieR background change binds both nier-background and wallpaper=look in one preview/apply; both selection orders preserve most-recent accepted choice with no second writer.",
+        "All-terminal saved-preset Apply is one exact set patch over appearance_quick_sets.json terminal reset_ids, with saved values and inventory defaults for omissions; it never performs reset then apply as two commits. MA-073 remains the sole validator for switch/warn writes and refused default restoration."
       ],
       "evidence_required": "Production-intent wiring only; native dispatcher, sole-owner routing, CAS/race, idempotent replay, restart, readback, partial-failure, and rollback fixtures are required before certification.",
       "state_selector": "state.commands.settings_transaction_apply.availability",
@@ -56041,7 +56042,8 @@
         "Each look surface named in ui_location is a local affordance that composes cmd.settings.transaction.preview then cmd.settings.transaction.apply over the exact IDs: the theme family and mode as the SSYS-009 atomic pair, a NieR preset as one value of general.visual.nier-parts, several NieR rows changed together as one atomic group, the Tour's sound control as general.interaction.sound-effects. Availability and disabled reasons are these commands'. The title bar's Light/Dark/Auto segmented control keeps cmd.theme.set_mode; the onboarding window's look choice is ui.onboarding.choose_look and dispatches neither command before the Project commit (WM-041).",
         "WM-093/pm7_control_bindings.json enumerates every PM7 Settings producer and exact id; preview/apply is the only Project writer, rejects no_project_context, validates catalog wallpaper ids, and keeps the reader anchored under SSYS-053.",
         "Project reset/look own uses restore_defaults for the exact affected ids; tab overrides remain above the Project result and are disclosed.",
-        "All-scope quick sets use only their exact registered ids/values. SSYS-054’s NieR background change binds both nier-background and wallpaper=look in one preview/apply; both selection orders preserve most-recent accepted choice with no second writer."
+        "All-scope quick sets use only their exact registered ids/values. SSYS-054’s NieR background change binds both nier-background and wallpaper=look in one preview/apply; both selection orders preserve most-recent accepted choice with no second writer.",
+        "All-terminal saved-preset Apply is one exact set patch over appearance_quick_sets.json terminal reset_ids, with saved values and inventory defaults for omissions; it never performs reset then apply as two commits. MA-073 remains the sole validator for switch/warn writes and refused default restoration."
       ],
       "evidence_required": "Production-intent wiring only; native dispatcher, owner-resolution, permission, stale-CAS, and no-write fixtures are required before production certification.",
       "state_selector": "state.commands.settings_transaction_preview.availability",
@@ -73449,7 +73451,7 @@
     },
     "terminal.appearance.field": {
       "ui_element_id": "terminal.appearance.field",
-      "ui_location": "Terminal More > Customize > This terminal > each field/reset/quick set in Plans/pm7_control_bindings.json",
+      "ui_location": "Terminal More > Customize > This terminal > each field/reset/quick set/saved-preset Apply in Plans/pm7_control_bindings.json",
       "ui_command_id": "cmd.terminal.appearance.set",
       "handler_location": "handlers::terminal::appearance_set",
       "expected_event_types": [],
@@ -73463,7 +73465,9 @@
         "Opening the menu or row that holds this control dispatches nothing; a refused dispatch changes nothing.",
         "terminal.appearance.field emits no event and no workspace.layout_changed.",
         "The full F3-650 Customize screen replaces the old compact popover; all controls/scopes/trials are enumerated by WM-093.",
-        "F3-650 quick sets adapt the exact appearance_quick_sets.json patch to This terminal; its ids equal the binding’s affected ids, unrelated values are unchanged, and reset clears only its explicit set. Sticky header and Copy When I Highlight use this same appearance writer."
+        "F3-650 quick sets adapt the exact appearance_quick_sets.json patch to This terminal; its ids equal the binding’s affected ids, unrelated values are unchanged, and reset clears only its explicit set. Sticky header and Copy When I Highlight use this same appearance writer.",
+        "Extended F3-642/F3-643 background, bezel and mask fields use this same owner; preset Apply replaces exactly the terminal reset_ids atomically, rejecting invalid or missing preset/asset input without a partial write.",
+        "Save/Rename/Delete/Undo persist only the SP-331 library as typed local actions; picker Back only restores a menu level. None dispatches this command or emits a layout event."
       ],
       "evidence_required": "handler_status: planned. Required future evidence only; this row does not assert that the planned handler, dispatcher or runtime exists. owner_doc_ref: Plans/FinalGUISpec.md#F3-642. Registration: Plans/UI_Command_Catalog.md#UCC-201. Wiring: Plans/Wiring_Matrix.md#WM-091; census: Plans/UI_Wiring_Rules.md#UIW-042. Production certification requires render/control evidence, a dispatcher fixture, the typed payload and result, the projected state selector and disabled reason, the receipt or event assertion, an accessibility check and a regression test. The fixed-model cases of Concepts/pm7-tools/verify/home_workspace_matrix.mjs do not prove this row; replacement executable cases are owed (Plans/Automated_Testing_System.md#ATS-076).",
       "state_selector": "state.terminal_tab.terminal_appearance_field.availability",
