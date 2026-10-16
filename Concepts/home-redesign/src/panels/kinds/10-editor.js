@@ -1517,13 +1517,13 @@ function mountEditor(host, st, api) {
   var schemeOn = null, floorOn = null;
   function applyScheme() {
     hookPmt();
-    if (retroPhosphor() === 'amber') root.setAttribute('data-phosphor', 'amber'); else root.removeAttribute('data-phosphor');
+    setAttr(root, 'data-phosphor', retroPhosphor() === 'amber' ? 'amber' : null);
     var id = R.scheme;                     // already the light or dark sibling when Switch with light and dark is on
     var vars = special ? null : schemeVars(id, R.colors.contrast);
     var old = schemeOn || {};
     Object.keys(old).forEach(function (n) { if (!vars || !(n in vars)) codeEls.forEach(function (el) { el.style.removeProperty(n); }); });
     if (vars) Object.keys(vars).forEach(function (n) { if (old[n] !== vars[n]) codeEls.forEach(function (el) { el.style.setProperty(n, vars[n]); }); });
-    if (vars) root.setAttribute('data-scheme', id); else root.removeAttribute('data-scheme');
+    setAttr(root, 'data-scheme', vars ? id : null);
     schemeOn = vars;
     applyFloor(!vars && !special ? (R.colors.contrast === 7 ? 7 : 4.5) : 0);
     applyTokens();
@@ -1533,14 +1533,13 @@ function mountEditor(host, st, api) {
      the text floor with its hue kept like every scheme colour. Set after the scheme and the floor, every time, so
      neither leaves its own value over a chosen one; a colour no longer chosen gets the scheme's (or floor's) back */
   var tokOn = null, lookRead = { key: '', ground: null, tokens: null };
-  var lookProbe = null;
   function lookTokens() {
     // the look's own token table (Follow look), read through a probe on the editor's root, which no scheme or choice
     // writes on (the code elements carry those); once per look, colour mode and phosphor
     var key = R.lookKey + '|' + R.look.mode + '|' + (root.getAttribute('data-phosphor') || '');
     if (lookRead.key !== key) {
-      if (!lookProbe) { lookProbe = h('i', { class: 'pmw-ed-probe', 'aria-hidden': 'true' }); root.appendChild(lookProbe); }
-      var read = function (n) { lookProbe.style.color = 'var(' + n + ')'; var c = cssRgb(getComputedStyle(lookProbe).color); return c ? hexOf(c.slice(0, 3)) : ''; };
+      var colors = tokenColors(SYN_KEYS.map(function (k) { return '--pmw-ed-s-' + k; }).concat(['--pmw-ed-gutbg', '--pmw-ed-bg']));
+      var read = function (n) { var c = colors[n]; return c ? hexOf(c.slice(0, 3)) : ''; };
       var t = {};
       SYN_KEYS.forEach(function (k) { t['--pmw-ed-s-' + k] = read('--pmw-ed-s-' + k); });
       var g = read('--pmw-ed-gutbg') || read('--pmw-ed-bg');
@@ -1581,6 +1580,20 @@ function mountEditor(host, st, api) {
     return null;
   }
   function tokenColor(name) { probe.style.color = 'var(' + name + ')'; return cssRgb(getComputedStyle(probe).color); }
+  // Resolve the complete palette with one style flush. Reusing a single probe
+  // and changing its color between reads forced a document restyle per token.
+  var colorProbes = {};
+  function tokenColors(names) {
+    var fragment = document.createDocumentFragment(), out = {};
+    names.forEach(function (n) {
+      if (colorProbes[n]) return;
+      var p = document.createElement('i'); p.style.color = 'var(' + n + ')';
+      colorProbes[n] = p; fragment.appendChild(p);
+    });
+    if (fragment.childNodes.length) probe.appendChild(fragment);
+    names.forEach(function (n) { out[n] = cssRgb(getComputedStyle(colorProbes[n]).color); });
+    return out;
+  }
   var floorRead = { key: '' };
   function textGrounds() {
     if (schemeOn) return schemeOn._onText || [groundNow()];
@@ -1592,22 +1605,25 @@ function mountEditor(host, st, api) {
     if (F && floorRead.key !== key) {
       Object.keys(old).forEach(function (n) { codeEls.forEach(function (el) { el.style.removeProperty(n); }); });
       old = {}; floorOn = null;
-      var bgc = tokenColor('--pmw-ed-gutbg'), base = [16, 16, 20];
+      var names = SYN_KEYS.map(function (k) { return '--pmw-ed-s-' + k; }).concat(['--pmw-ed-fg', '--pmw-ed-ln', '--pmw-ed-ln-cur', '--pmw-ed-add-fg', '--pmw-ed-mod-fg', '--pmw-ed-del-fg', '--pmw-ed-conf-fg',
+        '--pmw-ed-bp-0', '--pmw-ed-bp-1', '--pmw-ed-bp-2', '--pmw-ed-bp-3', '--pmw-ed-bp-4', '--pmw-ed-bp-5']);
+      var colors = tokenColors(names.concat(['--pmw-ed-gutbg', '--pmw-ed-sel', '--pmw-ed-sel-blur', '--pmw-ed-line', '--pmw-ed-add-bg', '--pmw-ed-mod-bg', '--pmw-ed-del-bg', '--pmw-ed-conf-bg']));
+      var color = function (n) { return colors[n]; };
+      var bgc = color('--pmw-ed-gutbg'), base = [16, 16, 20];
       if (!bgc) { floorRead = { key: '' }; return; }
       var bg = bgc[3] < 1 ? mixRgb(base, bgc, bgc[3]) : bgc.slice(0, 3);
       var on = function (base, c) { return c[3] < 1 ? mixRgb(base, c, c[3]) : c.slice(0, 3); };
       var blend = getComputedStyle(root).getPropertyValue('--pmw-ed-sel-blend').trim() === 'difference';
-      var layers = (blend ? ['--pmw-ed-line'] : ['--pmw-ed-sel', '--pmw-ed-sel-blur', '--pmw-ed-line']).map(tokenColor).filter(Boolean);
-      var tints = ['--pmw-ed-add-bg', '--pmw-ed-mod-bg', '--pmw-ed-del-bg', '--pmw-ed-conf-bg'].map(tokenColor).filter(Boolean);
+      var layers = (blend ? ['--pmw-ed-line'] : ['--pmw-ed-sel', '--pmw-ed-sel-blur', '--pmw-ed-line']).map(color).filter(Boolean);
+      var tints = ['--pmw-ed-add-bg', '--pmw-ed-mod-bg', '--pmw-ed-del-bg', '--pmw-ed-conf-bg'].map(color).filter(Boolean);
       // a changed row's tint under a selection is a ground too (the landing sweep found words there at 3.4:1)
       var grounds = [bg].concat(tints.map(function (t) { return on(bg, t); }));
       var onText = [], onGutter = grounds.slice();
       grounds.forEach(function (g) { onText.push(g); layers.forEach(function (l) { onText.push(on(g, l)); }); });
       var out = {};
       var GUTTER = /^--pmw-ed-(ln|ln-cur|add-fg|mod-fg|del-fg|conf-fg)$/;
-      SYN_KEYS.map(function (k) { return '--pmw-ed-s-' + k; }).concat(['--pmw-ed-fg', '--pmw-ed-ln', '--pmw-ed-ln-cur', '--pmw-ed-add-fg', '--pmw-ed-mod-fg', '--pmw-ed-del-fg', '--pmw-ed-conf-fg',
-        '--pmw-ed-bp-0', '--pmw-ed-bp-1', '--pmw-ed-bp-2', '--pmw-ed-bp-3', '--pmw-ed-bp-4', '--pmw-ed-bp-5']).forEach(function (n) {
-        var c = tokenColor(n); if (!c) return;
+      names.forEach(function (n) {
+        var c = color(n); if (!c) return;
         var flat = c[3] < 1 ? mixRgb(bg, c, c[3]) : c.slice(0, 3);
         var to = legibleOn(flat, GUTTER.test(n) ? onGutter : onText, F);
         // a see-through colour is written flat and floored: over a selection it would blend darker than it measured here
@@ -3623,8 +3639,13 @@ function mountEditor(host, st, api) {
   function applyDim() { setAttr(root, 'data-dim', R.motion.inactiveDim && (preview ? demoDim : dimmed) ? '' : null); }
   /* what of the colours needs the rows drawn again: token colours are CSS variables only (applyTokens), so a colour
      slider being dragged repaints without rebuilding a row */
-  function colorSig() { var c = R.colors; return [c.syntax, c.bracketPairs, c.contrast, c.italicComments, c.boldKeywords]; }
+  function colorSig() { var c = R.colors; return [c.syntax, c.bracketPairs]; }
+  function rowLookKey() { return JSON.stringify([colorSig(), R.lines, R.behavior.diagnostics, IND.unit, IND.tabs]); }
+  var appliedLook = '';
   function onLook(R2) {
+    var applied = JSON.stringify(R2);
+    if (applied === appliedLook) return;
+    appliedLook = applied;
     var prev = R; R = R2;
     if (!alive) return;
     var reopened = resolveIndent();
@@ -3637,19 +3658,21 @@ function mountEditor(host, st, api) {
     drawKey = dk;
     if (!firstDone || (same && !reopened)) return;
     var g = JSON.stringify([R.font, R.lines.numbers, R.lines.wrap, R.lines.wrapColumn, R.lines.minimap, R.motion.pastEnd, R.lines.rulers]);
-    var l = JSON.stringify([colorSig(), R.lines, R.caret, R.scheme, R.lookKey, R.look.mode, R.behavior.diagnostics, IND.unit, IND.tabs]);
+    var l = rowLookKey();
     if (prev.behavior.diffLayout !== R.behavior.diffLayout && mode === 'diff' && !diffLayoutPick) resolveLayout(true);
     // the header's height can only change with the look (its face and spacing), never with colours: reading it forces
     // the whole page to restyle and lay out at once, so it is read only when the look itself changed
     else if (reopened || g !== geoSig || ((R.lookKey !== prev.lookKey || R.look.mode !== prev.look.mode) && head.offsetHeight !== headH)) relayoutAll();
     else if (l !== lookSig) { renderRows(true); sticky._key = null; updateSticky(); renderOverlays(); }
+    else if (JSON.stringify(R.caret) !== JSON.stringify(prev.caret)) renderOverlays();
     geoSig = g; lookSig = l;
     if (R.lines.relative !== prev.lines.relative) markCurrentRow();
     colorCache = null;
     queueDraw();
   }
   geoSig = JSON.stringify([R.font, R.lines.numbers, R.lines.wrap, R.lines.wrapColumn, R.lines.minimap, R.motion.pastEnd, R.lines.rulers]);
-  lookSig = JSON.stringify([colorSig(), R.lines, R.caret, R.scheme, R.lookKey, R.look.mode, R.behavior.diagnostics, IND.unit, IND.tabs]);
+  lookSig = rowLookKey();
+  appliedLook = JSON.stringify(R);
   function noTokens(k, x) { return k === 'tokens' ? undefined : x; }
   var drawKey = JSON.stringify(R, noTokens);
   applyAttrs();
@@ -4078,7 +4101,7 @@ function setup() {
     return inst;
   };
   /* the editor a person is working in: the last one used, while it is still on screen; else the widest one shown */
-  PMW.editorInView = function () {
+  PMW.editorInView = function (includeHidden) {
     var shown = function (inst) { return inst && inst.root && inst.root.isConnected && inst.root.getBoundingClientRect().width > 0; };
     if (shown(lastUsed)) return lastUsed;
     var best = null, bw = 0;
@@ -4086,7 +4109,12 @@ function setup() {
       var e = b._pmwEditor; if (!shown(e)) return;
       var w = e.root.getBoundingClientRect().width; if (w > bw) { bw = w; best = e; }
     });
-    return best;
+    if (best || !includeHidden) return best;
+    // Settings can customize a mounted editor without navigating through Home.
+    if (lastUsed && lastUsed.root && lastUsed.root.isConnected) return lastUsed;
+    var bodies = doc.querySelectorAll('.pmw-tabbody');
+    for (var i = 0; i < bodies.length; i++) if (bodies[i]._pmwEditor) return bodies[i]._pmwEditor;
+    return null;
   };
   PMW.editorOf = function (tabId) {
     var body = doc.querySelector('.pmw-tabbody[data-pmw-tab="' + String(tabId).replace(/"/g, '\\"') + '"]');

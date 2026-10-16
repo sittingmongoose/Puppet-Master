@@ -40,6 +40,28 @@
   const o55ElSave = saveState;
   saveState = function () { const r = o55ElSave.apply(this, arguments); ver++; notify(); return r; };
 
+  // Customize owns the immediate selection and live editor paint. Its saved
+  // Settings rows can follow one per frame, instead of rebuilding a whole
+  // quick set underneath the sheet inside the same click handler.
+  const pendingRows = new Set();
+  let rowFrame = 0;
+  function refreshRows() {
+    rowFrame = 0;
+    const id = pendingRows.values().next().value;
+    if (!id) return;
+    pendingRows.delete(id);
+    try { if (root.querySelector(`[id="setting-${cssEscape(id)}"]`)) refreshSettingRow(id); } catch (e) { /* the row is not drawn now */ }
+    if (pendingRows.size) rowFrame = window.requestAnimationFrame(refreshRows);
+  }
+  function refreshRow(id) {
+    if (!document.querySelector('.pmed-cz:not([aria-hidden="true"])')) {
+      try { if (root.querySelector(`[id="setting-${cssEscape(id)}"]`)) refreshSettingRow(id); } catch (e) { /* the row is not drawn now */ }
+      return;
+    }
+    pendingRows.add(id);
+    if (!rowFrame) rowFrame = window.requestAnimationFrame(refreshRows);
+  }
+
   function set(writes) {
     if (!ready() || !writes || typeof writes !== 'object') return false;
     const put = {}, back = [];
@@ -54,7 +76,7 @@
     if (!Object.keys(put).length && !back.length) return true;
     saveState();
     Object.keys(put).concat(back).forEach(id => {
-      try { if (root.querySelector(`[id="setting-${cssEscape(id)}"]`)) refreshSettingRow(id); } catch (e) { /* the row is not drawn now */ }
+      refreshRow(id);
       if (typeof o55Notify === 'function') o55Notify(id, put[id]);
     });
     return true;
@@ -73,15 +95,15 @@
 
   /* ---------- the Customize screen from Settings: the Editor look group's owner line ----------
      Settings' rows set one field at a time; the editor's Customize screen shows them all on a live preview. Its button
-     goes Home and opens the screen on the editor in view (the one last used), in "All editors", the scope these rows
-     hold. With no editor on Home it opens the project's entry file first. */
+     opens over Settings on the last editor, in "All editors", the scope these rows hold. Keeping Settings underneath
+     avoids an unrelated page handoff and returns the reader to the same row when the screen closes. */
   const look = PLACEMENT && PLACEMENT.sections && PLACEMENT.sections['editor-look'];
   if (look && !look.owner) look.owner = { text: 'See every look option on a live editor, with a preview, in the editor’s Customize screen.', buttons: [{ label: 'Open Customize', action: 'pm51-o55-editor-customize' }] };
   PM51.on('o55-editor-customize', () => {
     const C = window.PM_EDITOR_CUSTOMIZE;
     if (!C || typeof C.open !== 'function') { showToast('Not available', 'The editor is not loaded on this page.', 'warning', 3600); return; }
-    const home = document.getElementById('tab-dashboard'); if (home) home.click();
-    setTimeout(() => { try { C.open({ scope: 'app', from: 'settings' }); } catch (e) { showToast('Could not open Customize', 'The editor did not answer.', 'warning', 3600); } }, 80);
+    try { C.open({ scope: 'app', from: 'settings', anchor: document.activeElement }); }
+    catch (e) { showToast('Could not open Customize', 'The editor did not answer.', 'warning', 3600); }
   });
 
   seen = (() => { try { return JSON.stringify(values()); } catch (e) { return ''; } })();
