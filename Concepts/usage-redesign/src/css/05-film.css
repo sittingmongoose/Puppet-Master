@@ -16,11 +16,20 @@ body.pmu-page-active #panel-dashboard.pm-home-owned.pm8-page-out { position: abs
    no room, no pointer and no paint, and the film makes it inert and aria-hidden. It stays laid out there, styled, until
    the arrival (fix cycle 2: going back to display: none made the arrival's show frame restyle and lay out the whole
    board, a 99 ms task in the entry's frames on the P1000). At the arrival the board waits one frame in its scroll pane
-   (data-pmu-warm-wait), out of the click's frame, and shows in the frame after it by visibility alone. ---- */
+   (data-pmu-warm-wait), out of the click's frame, and shows in the frame after it by opacity alone. ---- */
 .primary-content > #panel-usage.page[data-pmu-warm]:not(.active):not(.pm8-page-out) { display: flex; position: absolute;
   left: var(--pmu-warm-x, 0px); top: var(--pmu-warm-y, 0px); width: var(--pmu-warm-w, 100%); height: var(--pmu-warm-h, 100%);
   visibility: hidden; pointer-events: none; z-index: -1; content-visibility: visible; }
-#panel-usage .pmu-scroll[data-pmu-warm-wait] { visibility: hidden; }
+#panel-usage .pmu-scroll[data-pmu-warm-wait] { opacity: 0; }
+/* fix cycle 2, measured (RTX 3090 and Nas1 traces of the entry): what the waiting board keeps must stay what it shows
+   with, or the entry's frames restyle or lay out the whole board again. The page keeps its warm box through the
+   arrival (data-pmu-warm-pin: the same width and height as a fixed size; as a flex item sized by flex: 1 its 1,700
+   elements were laid out again in the click's frame, 103 ms on the 3090), until the box it shows in changes size. The
+   wait in the scroll pane and the held plates hide by opacity, which is not inherited: hidden by visibility, the show
+   frame walked every element of the board twice (59 ms of style on the 3090, 76 ms on Nas1). Opacity 0 is not
+   painted, and the waiting page is inert. */
+.primary-content > #panel-usage.page.active[data-pmu-warm-pin] { flex: none; width: var(--pmu-warm-w); height: var(--pmu-warm-h); }
+#panel-usage .pmu-board[data-held][data-pmu-warm-held] > .pmu-card { visibility: inherit; }
 /* ---- the warm board's raster (P2-03; 15-film.js raster): a built board that was never painted made the first visible
    Usage entry compile every GPU program its cards and charts draw with (P1000 F3 cold: 47 program links, ~1.4 s of GPU
    main thread, an 834 ms gap with an empty board on screen). So once per look and board class, with a GPU, in idle
