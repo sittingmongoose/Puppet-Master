@@ -317,8 +317,8 @@
     if (u !== wallSourceUrl) { wallSourceUrl = u; wallSourceId++; }
     wallSourceKey = key; return u;
   }
-  function withWall(cb) {
-    var u = currentWallUrl(true); if (!u) { cb(null); return; }
+  function withWall(cb, sourceUrl) {
+    var u = sourceUrl || currentWallUrl(); if (!u) { cb(null); return; }
     var rec = wallSources.get(u);
     if (rec) {
       wallSources.delete(u); wallSources.set(u, rec);
@@ -406,12 +406,12 @@
       return new Blob([a], { type: 'image/png' });
     } catch (e) { return null; }
   }
-  function makeFrosts(im, done) {
+  function makeFrosts(im, done, prepare) {
     var c = cover(im), u = im.__lgWallUrl || wallUrl, key = u + ':' + c.vw + 'x' + c.vh, epoch = bakeEpoch;
-    if (!isGlass() || currentWallUrl() !== u) { done(false); return; }
+    if (!isGlass() || (!prepare && currentWallUrl() !== u)) { done(false); return; }
     if (frostKey === key) { done(true); return; }
     var cached = frostCache.get(key);
-    if (cached) { frostCache.delete(key); frostCache.set(key, cached); applyFrost(cached); done(true); return; }
+    if (cached) { frostCache.delete(key); frostCache.set(key, cached); if (!prepare) applyFrost(cached); done(true); return; }
     var job = frostJobs.get(key);
     if (job && job.epoch === epoch) { job.waiters.push(done); return; }
     var names = Object.keys(FROST);
@@ -420,21 +420,25 @@
       job.blobs[name] = blob;
       if (--job.pending) return;
       if (frostJobs.get(key) === job) frostJobs.delete(key);
-      var valid = epoch === bakeEpoch && isGlass() && currentWallUrl() === u && innerWidth === c.vw && innerHeight === c.vh;
+      var valid = epoch === bakeEpoch && isGlass() && (prepare || currentWallUrl() === u) && innerWidth === c.vw && innerHeight === c.vh;
       valid = valid && names.every(function (n) { return !!job.blobs[n]; });
       if (valid) {
         var rec = { key: key, urls: {}, bytes: 0 };
         names.forEach(function (n) { rec.urls[n] = URL.createObjectURL(job.blobs[n]); rec.bytes += job.blobs[n].size; });
         /* Apply both frost levels together. An older encoder can never replace half of the current wallpaper. */
         var previous = frosts, previousUncached = !Array.from(frostCache.values()).some(function (r) { return r.urls === previous; });
-        applyFrost(rec);
+        if (!prepare) applyFrost(rec);
         while (frostCache.size && (frostCache.size >= 2 || frostBytes + rec.bytes > FROST_BYTES)) {
-          var oldest = frostCache.keys().next().value, old = frostCache.get(oldest);
+          /* Preparation may evict another cached print, never the frost still visible on the sheets. */
+          var oldest = Array.from(frostCache.keys()).find(function (k) { return frostCache.get(k).urls !== frosts; });
+          if (oldest == null) break;
+          var old = frostCache.get(oldest);
           frostBytes -= old.bytes; frostCache.delete(oldest); dropFrost(old);
         }
-        if (rec.bytes <= FROST_BYTES) { frostCache.set(key, rec); frostBytes += rec.bytes; }
+        if (frostBytes + rec.bytes <= FROST_BYTES) { frostCache.set(key, rec); frostBytes += rec.bytes; }
+        else if (prepare) { dropFrost(rec); valid = false; }
         /* An unusually large active pair is kept only while displayed, rather than exceeding the cache budget. */
-        if (previous !== rec.urls && previousUncached) {
+        if (!prepare && previous !== rec.urls && previousUncached) {
           Object.keys(previous).forEach(function (n) { URL.revokeObjectURL(previous[n]); });
         }
       }
@@ -1637,8 +1641,10 @@
     if (th === lastTheme && lg === lastLg && tier === lastTier && wall === lastWall && motion === lastMotion) return;
     /* the print is about to change under glass that stays glass: hold the one the current frost was made from */
     var wasGlass = lastLg === 'on' && /^glass/.test(lastTheme || '');
-    if (wasGlass && isGlass() && wall !== lastWall && th === lastTheme && wallSourceUrl) holdWall(wallSourceUrl);
-    else if (!isGlass()) releaseWallHold();
+    if (wasGlass && isGlass() && wall !== lastWall && th === lastTheme && wallSourceUrl) {
+      var previousWall = wallSourceUrl, nextWall = currentWallUrl();
+      if (frostKey !== nextWall + ':' + innerWidth + 'x' + innerHeight) holdWall(previousWall);
+    } else if (!isGlass()) releaseWallHold();
     if (motion !== lastMotion && reduced() && typeof suspendLensMotion === 'function') suspendLensMotion();
     lastTier = tier; lastWall = wall; lastMotion = motion;
     if (th !== lastTheme || lg !== lastLg) {
@@ -1688,7 +1694,7 @@
   }
   function wallChoice() { try { return localStorage.getItem(WALL_KEY) || 'look'; } catch (e) { return 'look'; } }
   function applyWall() {
-    var c = q.get('lgwall') || wallChoice(), fam = (root.getAttribute('data-theme') || '').split('-')[0], ws = catalogWalls();
+    var c = q.get('lgwall') || (window.PM_WALLPAPERS && window.PM_WALLPAPERS.paintChoice ? window.PM_WALLPAPERS.paintChoice() : wallChoice()), fam = (root.getAttribute('data-theme') || '').split('-')[0], ws = catalogWalls();
     if (c !== 'look' && ws.length && !ws.some(function (w) { return w.id === c; })) c = 'look';   /* a stale id: the package resets it */
     var id = c === 'look' ? lookDefault(fam) : c;
     if (id) { if (root.getAttribute('data-lg-wall') !== id) root.setAttribute('data-lg-wall', id); }
@@ -1740,6 +1746,24 @@
      chooses a wallpaper for every look; walls() lists them; surfaces: data-lg-surface on any element (see syncSurfaces). */
   window.PM_LG = { version: 'v3-2026-10-13', sync: syncAll, materialize: function () { materialize(Array.from(glassSet)); }, kinds: KINDS, count: function () { return glassSet.size; },
     set: function (o) { for (var k in o) { if (o[k] == null) root.removeAttribute(k); else root.setAttribute(k, o[k]); } syncAll(); },
+    /* Decode and bake through the same bounded caches as visible sheets. Preparation changes no visible pixels. */
+    prepareWallpaper: function (url) { return new Promise(function (resolve) {
+      withWall(function (im) { if (!im) { resolve(false); return; } if (isGlass()) makeFrosts(im, resolve, true); else resolve(true); }, url);
+    }); },
+    commitWallpaper: function (id, url, viewport) {
+      if (!isGlass() || root.getAttribute('data-lg-wall') !== id) return false;
+      /* The caller sampled the viewport before its attribute writes. Even innerWidth after those writes can force
+         style/layout (83 ms on M3) before the frost variables join the same commit. */
+      viewport = viewport || { width: innerWidth, height: innerHeight };
+      var rec = frostCache.get(url + ':' + viewport.width + 'x' + viewport.height);
+      if (!rec) return false;
+      /* The prepared URL is exactly the image selected by this attribute commit. Reading computed style between
+         that write and the frost writes forced a full extra restyle (166 ms on M3). Keep the existing source cache
+         current without flushing layout; the next genuinely different theme/attribute key still resolves normally. */
+      if (wallSourceUrl !== url) { wallSourceUrl = url; wallSourceId++; }
+      wallSourceKey = [root.getAttribute('data-theme'), root.getAttribute('data-lg-wall'), root.style.getPropertyValue('--lg-wall')].join('|');
+      applyFrost(rec); return true;
+    },
     wall: function (id) { setWall(id || 'look'); }, walls: function () { return catalogWalls().map(function (w) { return { id: w.id, name: w.name, family: w.family }; }); } };
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', start); else start();
 })();

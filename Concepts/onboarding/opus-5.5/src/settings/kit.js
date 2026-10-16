@@ -1374,7 +1374,9 @@ PM51.on('all-cats', () => {
 PM51.on('all-more', () => { allSettingsView.moreFilters = !allSettingsView.moreFilters; PM51.refresh('project-settings', { swap: false }); });
 PM51.on('all-changed', el => { allSettingsView.changedOnly = !!el.checked; refreshAllSettingsVirtual(true); });
 PM51.on('all-show-ids', el => { allSettingsView.showIds = !!el.checked; root.querySelector('.pm51-all')?.classList.toggle('pm51-show-ids', allSettingsView.showIds); });
-PM51.on('all-reset', () => confirmDialog('Reset every setting to its default?', 'Every project setting goes back to its default value. You can change them again afterwards.', 'Reset all', () => { restoreAllProjectDefaults(); showToast('Settings reset', 'All project settings are back to their defaults.'); }, true));
+/* The restore transaction owns its outcome message, including the accepted receipt. A caller must never add a
+   success after a refusal, or a second success after the owner has already reported the completed restore. */
+PM51.on('all-reset', () => confirmDialog('Reset every setting to its default?', 'Every project setting goes back to its default value. You can change them again afterwards.', 'Reset all', () => o55AfterPaint(restoreAllProjectDefaults), true));
 PM51.on('all-export', () => { const rows = allSettingsCatalog(); infoDrawer('Export settings list', 'A secret-free list of every setting and its current value, ready to save.', [['Settings', String(rows.length)], ['Format', 'JSON · no secrets'], ['Scope', 'This project']], { intro: 'Exporting stays local. Credentials are never included.' }); });
 
 /* Manager-scoped CSS: each manager file may add a few rules without touching styles.css. */

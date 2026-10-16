@@ -982,20 +982,18 @@
     log.style.display = 'none';
     cover.style.pointerEvents = 'none'; if (ctx.unhold) ctx.unhold();
     ctx.cue('reveal');
-    const G = [0.1, 0.25, 0.45, 0.7, 0.9, 1], rects = G.map(f => lerpRect(full, to, f)), off = G.map(f => -14 + 17 * f), TOTAL = 450;
-    const clips = rects.map(r => clipOf(r, box)), idle = clipOf(full, box), last = clipOf(to, box);
-    const fold = ground.animate(walk([{ t: 0, v: { transform: idle[0], opacity: 1 } }, ...clips.map((c, k) => ({ t: 60 * (k + 1), v: { transform: c[0], opacity: 1 } })),
-      { t: 390, v: { transform: last[0], opacity: 0 } }, { t: TOTAL, v: { transform: last[0], opacity: 0 } }], TOTAL), { duration: TOTAL, fill: 'forwards' });
-    inner.animate(walk([{ t: 0, v: { transform: idle[1] } }, ...clips.map((c, k) => ({ t: 60 * (k + 1), v: { transform: c[1] } })), { t: TOTAL, v: { transform: last[1] } }], TOTAL),
-      { duration: TOTAL, fill: 'forwards' });
-    const poses = [rbPose(full, -14, box), ...rects.map((r, k) => rbPose(r, off[k], box))], let1 = rbPose(to, 7, box);
-    deco.forEach((el, j) => {
-      const fr = poses.map((p, k) => ({ t: 60 * k, v: { transform: p[j], opacity: 1 } }));
-      if (j < 4) fr.push({ t: 390, v: { transform: poses[6][j], opacity: 0 } });
-      else fr.push({ t: 420, v: { transform: let1[j], opacity: 1 } }, { t: 450, v: { transform: let1[j], opacity: 0 } });
-      fr.push({ t: TOTAL, v: { transform: j < 4 ? poses[6][j] : let1[j], opacity: 0 } });
-      el.animate(walk(fr, TOTAL), { duration: TOTAL, fill: 'forwards' });
+    /* The same plate returns to the same control, continuously. The old step-end path moved its left edge in
+       six jumps while the inverse ground transform disagreed between steps. Sample the geometric fold densely
+       and interpolate, so the ground stays registered and the decorative brackets follow one smooth contour. */
+    const TOTAL = 450, frames = Array.from({ length: 31 }, (_, i) => {
+      const t = i / 30, f = 1 - Math.pow(1 - t, 3), rect = lerpRect(full, to, f);
+      return { offset: t, rect, clip: clipOf(rect, box), pose: rbPose(rect, -14 + 21 * f, box), opacity: t < .8 ? 1 : (1 - t) / .2 };
     });
+    const fold = ground.animate(frames.map(f => ({ offset: f.offset, transform: f.clip[0], opacity: f.opacity })),
+      { duration: TOTAL, easing: 'linear', fill: 'forwards' });
+    inner.animate(frames.map(f => ({ offset: f.offset, transform: f.clip[1] })), { duration: TOTAL, easing: 'linear', fill: 'forwards' });
+    deco.forEach((el, j) => el.animate(frames.map(f => ({ offset: f.offset, transform: f.pose[j], opacity: f.opacity })),
+      { duration: TOTAL, easing: 'linear', fill: 'forwards' }));
     await ctx.wait(settled(fold));
     rbRelease(ctx);
   }
@@ -1044,6 +1042,27 @@
     };
     let painted = false;
     const paint = () => { if (painted) return; painted = true; repaint(); sync(); };
+    /* Reduce Animations removes the theatrical reboot, not the acknowledgement. Let the switch and a quiet cover
+       paint before the theme/scene work, then dissolve the cover over the fully drawn result. Its colours belong to
+       the outgoing look, so a theme restyle cannot flash the cover itself. There is no looping or spatial motion. */
+    if (still() && !document.hidden && document.body && !within && !onboarding() && !rebooting) {
+      const cs = getComputedStyle(document.body), plate = document.createElement('div');
+      plate.id = 'o55np-calm'; plate.setAttribute('role', 'status');
+      plate.style.backgroundColor = cs.backgroundColor;
+      plate.style.color = cs.color;
+      plate.textContent = on ? 'Applying NieR Mode…' : 'Restoring your look…';
+      document.body.appendChild(plate);
+      cue('start');
+      const paintedFrame = () => new Promise(resolve => requestAnimationFrame(() => setTimeout(resolve, 0)));
+      try {
+        await paintedFrame();
+        paint();
+        await paintedFrame();
+        cue('reveal');
+        if (plate.animate) await plate.animate([{ opacity: 1 }, { opacity: 0 }], { duration: 100, easing: 'linear', fill: 'forwards' }).finished;
+      } finally { paint(); plate.remove(); cue('gone'); }
+      return;
+    }
     if (rebooting || !installed('reboot') || still() || document.hidden || !document.body || (onboarding() && !within)) {
       cue('start'); paint(); cue('reveal'); cue('gone'); return;
     }

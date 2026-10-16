@@ -25724,6 +25724,36 @@ html[data-motion="reduced"] #panel-settings .pm51-mgr > .pm51-tabs .tab-ink { tr
 #panel-settings .o55-doctor-last { display: inline-flex; align-items: center; gap: 10px; }
 #panel-settings .o55-doctor-last small { font-size: 11.5px; color: var(--k3-text-3); }
 
+/* ---- styles.d/29-navigation-motion.css ---- */
+/* Pending is the next destination, acknowledged in the input's first paint. Its final selected style remains owned
+   by the existing rail/tab rules; this short wash uses the same ink and adds no label or persistent chrome. */
+#panel-settings [data-o55-nav-pending] {
+  background-color: color-mix(in srgb, var(--k3-accent) 20%, var(--k3-surface-0));
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--k3-accent) 55%, transparent);
+}
+html.o55-settings-transition { view-transition-name: none; }
+html.o55-settings-transition #workspace-stage { view-transition-name: o55-settings-page; }
+::view-transition-group(o55-settings-page) { animation-duration: 220ms; }
+::view-transition-old(o55-settings-page) { animation: o55-settings-leave 180ms ease-out both; }
+::view-transition-new(o55-settings-page) { animation: o55-settings-arrive 220ms cubic-bezier(.22,.8,.24,1) both; }
+@keyframes o55-settings-leave { to { opacity: 0; transform: translateY(-4px); } }
+@keyframes o55-settings-arrive { from { opacity: 0; transform: translateY(4px); } }
+html:is([data-theme^="retro"], [data-o55-nier="on"])::view-transition-old(o55-settings-page),
+html:is([data-theme^="retro"], [data-o55-nier="on"])::view-transition-new(o55-settings-page) { animation-timing-function: steps(4, end); }
+/* Layout and paint of distant settings sections need not join the chapter's first frame. Auto size remembers their
+   measured height, so returning to a section keeps its scroll geometry and the place holder can retain its anchor. */
+#panel-settings .workspace-block-body > .settings-section:nth-child(n+3) {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 460px;
+}
+
+/* ---- styles.d/29-nier-calm.css ---- */
+/* A reduced-motion look change has a still, readable acknowledgement while the new scene is drawn underneath. */
+#o55np-calm {
+  position: fixed; inset: 0; z-index: 2147483600; display: grid; place-content: center;
+  contain: strict; pointer-events: auto; font: 600 15px/1.5 system-ui, sans-serif; letter-spacing: .02em;
+}
+
 /* ---- styles.d/30-inspector.css ---- */
 /* O55 · setting Details panel content (the panel's frame and spring are the engine's). */
 #panel-settings .detail-inspector { overflow: hidden; display: flex; flex-direction: column; }
@@ -50264,6 +50294,18 @@ html[data-theme$="-light"] .wpk-thumb[data-wpk-id="flooded"] { background-image:
  * Glass paints --lg-wall itself (glass.css, glass.js); this sheet paints --lg-wall-any.
  */
 
+/* Only the wallpaper painter consumes these changing images. Without registration each choice invalidated inherited
+   image values on all 20,000 app elements. The root remains Glass's source; the body explicitly adopts the image,
+   and inheritance stops there. The immutable catalogue image variables retain their existing contract. */
+@property --lg-wall { syntax: "*"; inherits: false; }
+@property --lg-wall-any { syntax: "*"; inherits: false; }
+@property --lg-wall-hold { syntax: "*"; inherits: false; }
+body { --lg-wall: inherit; --lg-wall-any: inherit; --lg-wall-hold: inherit; }
+/* Permanent out-of-flow print planes: no app layout, no surface copies, no input interception. The body remains
+   the canonical settled background. These planes are above its print and below all of the interface. */
+.wpk-print { position: fixed; inset: 0; z-index: -1; pointer-events: none; opacity: 0; contain: strict;
+  background: center / cover no-repeat; will-change: opacity; }
+
 /* ---------------------------------------------------------------------------------------------------------------
    1. The paint. Basic, Friendly, Retro and NieR Mode show the chosen wallpaper around and between their opaque
       panels: the shell's grounds go clear and the body carries the image. In NieR Mode it takes the place of NieR's
@@ -50273,8 +50315,6 @@ html[data-theme$="-light"] .wpk-thumb[data-wpk-id="flooded"] { background-image:
 html[data-lg-wall-any]:not([data-theme^="glass"]):not(#wpkz) body { background: var(--background) var(--lg-wall-any, none) center / cover no-repeat !important; }
 html[data-lg-wall-any]:not([data-theme^="glass"]):not(#wpkz) :is(.app-shell, .main-area) { background: transparent !important; }
 html[data-lg-wall-any][data-o55-nier-scene]:not(#wpkz) #o55-nier-scene { display: none !important; }
-/* Glass, between a choice and its new frost: the body keeps the print it showed (wallpapers.js, "hold") */
-html[data-lg="on"][data-theme^="glass"][data-wpk-hold]:not(#lgz):not(#wpkz) body { background-image: var(--wpk-hold) !important; }
 /* The page grounds that NieR's scenes already show through (the Usage board, Settings Home) show the wallpaper too,
    under a light veil of the look's ground, so the few words that sit between the cards keep their contrast. The cards,
    the board's header and its rail keep their own fills. */
@@ -50285,7 +50325,7 @@ html[data-lg-wall-any]:not([data-theme^="glass"]):not(#wpkz) :is(#pmuStage.pmu-s
 /* ---------------------------------------------------------------------------------------------------------------
    2. The gallery: one Settings row, the full width of the section. Tiles are the look's controls: its surface, its
       line, its corners (square in Retro and NieR), no pills. Nothing in it moves: a choice, a hover and focus change
-      at once, so Reduce motion has nothing to stop and the wallpaper itself is swapped in one frame.
+      at once. Reduce motion swaps the prepared print and frost together without the backdrop crossfade.
    --------------------------------------------------------------------------------------------------------------- */
 /* Settings styles its buttons from #panel-settings (font: inherit), so the gallery's rules carry :not(#wpkz) too */
 .wpk-row { display: block !important; }
@@ -87662,6 +87702,33 @@ window.PM12_REFERENCE = {"version":"1.0.0","total":990,"inventory_sha256":"be85c
     if(k&&!window.PM_SETTINGS_REGISTRY&&CONCEPT_FIXTURE_MODE)try{localStorage.setItem(k,JSON.stringify(owned));}catch(_e){}
     if(!bridgeDepth)applyPaint(snapshot);
   }
+/* Inserted inside the existing project Settings adapter by settings_layer.py. The demo uses the same projection
+   key as ordinary edits. Defaults, history and the rollback snapshot are one atomic localStorage replacement. */
+function restoreProjectDefaults(request) {
+  var p = projectRecord(), k = key();
+  if (window.PM_SETTINGS_REGISTRY || !CONCEPT_FIXTURE_MODE) return { ok: false, reason: 'The attached Settings owner must restore this project.' };
+  if (!p || !k || !request || request.project_id !== p.id) return { ok: false, reason: 'Select the project whose defaults you want to restore.' };
+  if (window.PM_SETTINGS_PROJECT_SNAPSHOTS && window.PM_SETTINGS_PROJECT_SNAPSHOTS[p.id]) return { ok: false, reason: 'This supplied project snapshot is read only.' };
+  try {
+    var before = scrubCredentialSettings(JSON.parse(localStorage.getItem(k) || '{}'));
+    var next = clone(before), receipt = 'settings-restore-' + (crypto.randomUUID ? crypto.randomUUID() : Date.now() + '-' + Math.random().toString(16).slice(2));
+    next.schema_version = 'pm7.settings.project_projection.v1';
+    next.settings = {}; next.changed = {};
+    next.settingsTransferRollbacks = next.settingsTransferRollbacks || {};
+    next.settingsTransferRollbacks[receipt] = { settings: clone(before.settings || {}), changed: clone(before.changed || {}) };
+    next.settingsTransferHistory = next.settingsTransferHistory || [];
+    next.settingsTransferHistory.unshift({ time: new Date().toISOString(), action: 'Restored project defaults',
+      categories: 0, result: 'Project settings restored; credential references and project history preserved.',
+      receipt_id: receipt, rollback_ref: receipt, rollback_available: true, fixture_mode: true });
+    var bytes = JSON.stringify(next);
+    localStorage.setItem(k, bytes);
+    if (localStorage.getItem(k) !== bytes) return { ok: false, reason: 'The saved defaults could not be verified.' };
+    return { ok: true, receipt_id: receipt, rollback_ref: receipt };
+  } catch (error) {
+    return { ok: false, reason: 'The project settings could not be saved. Check that browser storage is available and try again.' };
+  }
+}
+
   function reset(){var k=key();if(k)try{localStorage.removeItem(k);}catch(_e){}}
   function projectSnapshot(projectId){
     var owner=window.PM_SETTINGS_REGISTRY,registry=owner&&owner.getProjectSnapshot;
@@ -87772,7 +87839,7 @@ window.PM12_REFERENCE = {"version":"1.0.0","total":990,"inventory_sha256":"be85c
     document.addEventListener('page.changed',closeIfInactive);
     new MutationObserver(function(){closeIfInactive({page:panel.classList.contains('active')?'settings':'inactive'});}).observe(panel,{attributes:true,attributeFilter:['class']});
   }
-  window.PM7_SETTINGS_TOME={load:load,save:save,reset:reset,projectSnapshot:projectSnapshot,dispatch:dispatch,consumeCommandResult:consumeCommandResult,applyPaint:applyPaint,clampGlassAlpha:clampGlassAlpha,configuredThemeSlug:configuredThemeSlug,setChromeThemeFamily:setChromeThemeFamily,setChromeThemeMode:setChromeThemeMode,project:projectRecord,projectLabel:function(){var p=projectRecord();return p?p.label:'No project';},portal:function(){return document.getElementById('pm-settings-portals')||document.getElementById('panel-settings')||document.body;},ownsEvent:function(target){var root=document.getElementById('pm-settings-root'),portal=document.getElementById('pm-settings-portals');return !!(target&&((root&&root.contains(target))||(portal&&portal.contains(target))));},openBloom:openBloom};
+  window.PM7_SETTINGS_TOME={load:load,save:save,reset:reset,restoreProjectDefaults:restoreProjectDefaults,projectSnapshot:projectSnapshot,dispatch:dispatch,consumeCommandResult:consumeCommandResult,applyPaint:applyPaint,clampGlassAlpha:clampGlassAlpha,configuredThemeSlug:configuredThemeSlug,setChromeThemeFamily:setChromeThemeFamily,setChromeThemeMode:setChromeThemeMode,project:projectRecord,projectLabel:function(){var p=projectRecord();return p?p.label:'No project';},portal:function(){return document.getElementById('pm-settings-portals')||document.getElementById('panel-settings')||document.body;},ownsEvent:function(target){var root=document.getElementById('pm-settings-root'),portal=document.getElementById('pm-settings-portals');return !!(target&&((root&&root.contains(target))||(portal&&portal.contains(target))));},openBloom:openBloom};
   window.PM7_SETTINGS_OPEN_BLOOM=openBloom;
   document.addEventListener('DOMContentLoaded',function(){setTimeout(function(){redirectProjectModal();reloadOnProjectChange();installPanelLifecycle();window.addEventListener('pm7.settings.runtime-context.changed',function(){if(window.PM12_KIMI&&typeof window.PM12_KIMI.renderApp==='function')window.PM12_KIMI.renderApp({soft:true});});if(window.PM12_KIMI)applyPaint(window.PM12_KIMI.getState());},0);});
 })();
@@ -88144,14 +88211,14 @@ window.PM12_REFERENCE = {"version":"1.0.0","total":990,"inventory_sha256":"be85c
     delete state.settings[id];delete state.changed[id];return true;
   }
   function restoreAllProjectDefaults(){
-    const project=window.PM7_SETTINGS_TOME.project(),registry=window.PM_SETTINGS_REGISTRY,restore=registry&&registry.restoreProjectDefaults;
+    const project=window.PM7_SETTINGS_TOME.project(),registry=window.PM_SETTINGS_REGISTRY,restore=registry?registry.restoreProjectDefaults:window.PM7_SETTINGS_TOME.restoreProjectDefaults;
     if(!project){showToast('Select or create a project','No-project mode has no persisted Settings defaults to restore.','warning');return false;}
     if(state.settingsProjectionReadOnly===true){showToast('Defaults were not restored','The attached Settings owner has not supplied a current readable project projection.','error');return false;}
     if(typeof restore!=='function'){showToast('Defaults were not restored','The Settings owner does not expose the required atomic restore-all transaction.','warning');return false;}
     const result=restore({project_id:project.id,create_rollback:true,preserve_credential_references:true});
     if(result&&typeof result.then==='function'){showToast('Defaults were not restored','The concept requires an accepted owner receipt before updating its projection.','error');return false;}
     if(!result||result.ok===false){showToast('Defaults were not restored',result?.safe_user_message||result?.reason||'The Settings owner rejected restore-all.','error');return false;}
-    state=loadState();ensureStateShape();state.detailSetting=null;renderApp();window.PM7_SETTINGS_TOME.applyPaint(state);showToast('Project defaults restored','The owner restored ordinary project Settings atomically and preserved secure credential references.','warning');return true;
+    state=loadState();ensureStateShape();state.detailSetting=null;renderApp();window.PM7_SETTINGS_TOME.applyPaint(state);showToast('Project defaults restored','Project settings are back to their defaults. Credential references and history were kept.','success');return true;
   }
   function portalFrame(){const portal=portalRoot(),rect=portal.getBoundingClientRect();return {portal,rect,width:portal.clientWidth||rect.width,height:portal.clientHeight||rect.height};}
   let hostWidth=0;
@@ -94991,7 +95058,9 @@ PM51.on('all-cats', () => {
 PM51.on('all-more', () => { allSettingsView.moreFilters = !allSettingsView.moreFilters; PM51.refresh('project-settings', { swap: false }); });
 PM51.on('all-changed', el => { allSettingsView.changedOnly = !!el.checked; refreshAllSettingsVirtual(true); });
 PM51.on('all-show-ids', el => { allSettingsView.showIds = !!el.checked; root.querySelector('.pm51-all')?.classList.toggle('pm51-show-ids', allSettingsView.showIds); });
-PM51.on('all-reset', () => confirmDialog('Reset every setting to its default?', 'Every project setting goes back to its default value. You can change them again afterwards.', 'Reset all', () => { restoreAllProjectDefaults(); showToast('Settings reset', 'All project settings are back to their defaults.'); }, true));
+/* The restore transaction owns its outcome message, including the accepted receipt. A caller must never add a
+   success after a refusal, or a second success after the owner has already reported the completed restore. */
+PM51.on('all-reset', () => confirmDialog('Reset every setting to its default?', 'Every project setting goes back to its default value. You can change them again afterwards.', 'Reset all', () => o55AfterPaint(restoreAllProjectDefaults), true));
 PM51.on('all-export', () => { const rows = allSettingsCatalog(); infoDrawer('Export settings list', 'A secret-free list of every setting and its current value, ready to save.', [['Settings', String(rows.length)], ['Format', 'JSON · no secrets'], ['Scope', 'This project']], { intro: 'Exporting stays local. Credentials are never included.' }); });
 
 /* Manager-scoped CSS: each manager file may add a few rules without touching styles.css. */
@@ -97798,20 +97867,18 @@ window.PM_NIER = Object.freeze({
     log.style.display = 'none';
     cover.style.pointerEvents = 'none'; if (ctx.unhold) ctx.unhold();
     ctx.cue('reveal');
-    const G = [0.1, 0.25, 0.45, 0.7, 0.9, 1], rects = G.map(f => lerpRect(full, to, f)), off = G.map(f => -14 + 17 * f), TOTAL = 450;
-    const clips = rects.map(r => clipOf(r, box)), idle = clipOf(full, box), last = clipOf(to, box);
-    const fold = ground.animate(walk([{ t: 0, v: { transform: idle[0], opacity: 1 } }, ...clips.map((c, k) => ({ t: 60 * (k + 1), v: { transform: c[0], opacity: 1 } })),
-      { t: 390, v: { transform: last[0], opacity: 0 } }, { t: TOTAL, v: { transform: last[0], opacity: 0 } }], TOTAL), { duration: TOTAL, fill: 'forwards' });
-    inner.animate(walk([{ t: 0, v: { transform: idle[1] } }, ...clips.map((c, k) => ({ t: 60 * (k + 1), v: { transform: c[1] } })), { t: TOTAL, v: { transform: last[1] } }], TOTAL),
-      { duration: TOTAL, fill: 'forwards' });
-    const poses = [rbPose(full, -14, box), ...rects.map((r, k) => rbPose(r, off[k], box))], let1 = rbPose(to, 7, box);
-    deco.forEach((el, j) => {
-      const fr = poses.map((p, k) => ({ t: 60 * k, v: { transform: p[j], opacity: 1 } }));
-      if (j < 4) fr.push({ t: 390, v: { transform: poses[6][j], opacity: 0 } });
-      else fr.push({ t: 420, v: { transform: let1[j], opacity: 1 } }, { t: 450, v: { transform: let1[j], opacity: 0 } });
-      fr.push({ t: TOTAL, v: { transform: j < 4 ? poses[6][j] : let1[j], opacity: 0 } });
-      el.animate(walk(fr, TOTAL), { duration: TOTAL, fill: 'forwards' });
+    /* The same plate returns to the same control, continuously. The old step-end path moved its left edge in
+       six jumps while the inverse ground transform disagreed between steps. Sample the geometric fold densely
+       and interpolate, so the ground stays registered and the decorative brackets follow one smooth contour. */
+    const TOTAL = 450, frames = Array.from({ length: 31 }, (_, i) => {
+      const t = i / 30, f = 1 - Math.pow(1 - t, 3), rect = lerpRect(full, to, f);
+      return { offset: t, rect, clip: clipOf(rect, box), pose: rbPose(rect, -14 + 21 * f, box), opacity: t < .8 ? 1 : (1 - t) / .2 };
     });
+    const fold = ground.animate(frames.map(f => ({ offset: f.offset, transform: f.clip[0], opacity: f.opacity })),
+      { duration: TOTAL, easing: 'linear', fill: 'forwards' });
+    inner.animate(frames.map(f => ({ offset: f.offset, transform: f.clip[1] })), { duration: TOTAL, easing: 'linear', fill: 'forwards' });
+    deco.forEach((el, j) => el.animate(frames.map(f => ({ offset: f.offset, transform: f.pose[j], opacity: f.opacity })),
+      { duration: TOTAL, easing: 'linear', fill: 'forwards' }));
     await ctx.wait(settled(fold));
     rbRelease(ctx);
   }
@@ -97860,6 +97927,27 @@ window.PM_NIER = Object.freeze({
     };
     let painted = false;
     const paint = () => { if (painted) return; painted = true; repaint(); sync(); };
+    /* Reduce Animations removes the theatrical reboot, not the acknowledgement. Let the switch and a quiet cover
+       paint before the theme/scene work, then dissolve the cover over the fully drawn result. Its colours belong to
+       the outgoing look, so a theme restyle cannot flash the cover itself. There is no looping or spatial motion. */
+    if (still() && !document.hidden && document.body && !within && !onboarding() && !rebooting) {
+      const cs = getComputedStyle(document.body), plate = document.createElement('div');
+      plate.id = 'o55np-calm'; plate.setAttribute('role', 'status');
+      plate.style.backgroundColor = cs.backgroundColor;
+      plate.style.color = cs.color;
+      plate.textContent = on ? 'Applying NieR Mode…' : 'Restoring your look…';
+      document.body.appendChild(plate);
+      cue('start');
+      const paintedFrame = () => new Promise(resolve => requestAnimationFrame(() => setTimeout(resolve, 0)));
+      try {
+        await paintedFrame();
+        paint();
+        await paintedFrame();
+        cue('reveal');
+        if (plate.animate) await plate.animate([{ opacity: 1 }, { opacity: 0 }], { duration: 100, easing: 'linear', fill: 'forwards' }).finished;
+      } finally { paint(); plate.remove(); cue('gone'); }
+      return;
+    }
     if (rebooting || !installed('reboot') || still() || document.hidden || !document.body || (onboarding() && !within)) {
       cue('start'); paint(); cue('reveal'); cue('gone'); return;
     }
@@ -97951,6 +98039,8 @@ function o55Morph(oldEl, newEl, { host, dir = 0, dur = 300 } = {}) {
   oldEl.after(newEl);
   Object.assign(oldEl.style, { position: 'absolute', top: top + 'px', left: left + 'px', width: width + 'px', margin: '0', pointerEvents: 'none', zIndex: '0' });
   oldEl.classList.add('o55-leaving'); oldEl.setAttribute('aria-hidden', 'true'); oldEl.setAttribute('inert', '');
+  const arrive = () => {
+  if (!newEl.isConnected || host.dataset.o55Morph !== String(seq)) return;
   const h1 = host.getBoundingClientRect().height;
   const ease = o55Ease();
   const dx = dir ? 18 * dir : 0, dy = dir ? 0 : 8;
@@ -97964,6 +98054,12 @@ function o55Morph(oldEl, newEl, { host, dir = 0, dur = 300 } = {}) {
   };
   (grow || out).finished.then(done, done);
   window.setTimeout(done, dur + 200);
+  };
+  /* New content gets its ordinary layout once. The observer runs before paint, so the arriving body never flashes
+     at rest and reading its final height does not force a second layout inside the input task. */
+  if (typeof ResizeObserver === 'function') {
+    const ready = new ResizeObserver(() => { ready.disconnect(); arrive(); }); ready.observe(newEl);
+  } else requestAnimationFrame(arrive);
 }
 PM51.morph = o55Morph;
 
@@ -97986,6 +98082,8 @@ function o55KeepTabsInView(page) {
   const st = scroller.getBoundingClientRect(), tt = tabs.getBoundingClientRect();
   if (tt.top < st.top + 4) scroller.scrollTo({ top: scroller.scrollTop + (tt.top - st.top) - 12, behavior: o55Still() ? 'auto' : 'smooth' });
 }
+let o55TabTicket = 0;
+const o55AfterPaint = fn => requestAnimationFrame(() => setTimeout(fn, 0));
 PM51.switchTab = function (wsId, tab) {
   const body = root.querySelector(`[data-continuous-workspace-body="${cssEscape(wsId)}"]`);
   const page = body && body.querySelector('.pm51-mgr');
@@ -97994,37 +98092,67 @@ PM51.switchTab = function (wsId, tab) {
   const from = tabs.findIndex(t => t.classList.contains('active')), to = tabs.findIndex(t => t.dataset.tab === tab);
   PM51.setTab(wsId, tab);
   if (!page || !oldBody || to < 0) { PM51.refresh(wsId); return; }
+  const ticket = ++o55TabTicket;
+  tabs.forEach((t, i) => { const on = i === to; t.classList.toggle('active', on); t.setAttribute('aria-selected', String(on)); });
+  moveTabInks();
+  o55AfterPaint(() => {
+  if (ticket !== o55TabTicket || !page.isConnected) return;
   popoutClose({ restoreFocus: false });
   const fresh = o55Fresh(wsId); const nextPage = fresh && fresh.querySelector('.pm51-mgr'); const nextBody = nextPage && nextPage.querySelector(':scope > .manager-body');
   if (!nextBody) { PM51.refresh(wsId); return; }
   tabs.forEach((t, i) => { const on = i === to; t.classList.toggle('active', on); t.setAttribute('aria-selected', on ? 'true' : 'false'); });
   if (nextPage.dataset.pm51Placed) page.dataset.pm51Placed = nextPage.dataset.pm51Placed;
+  o55KeepTabsInView(page);
   o55PostMount(nextBody);
   o55Morph(oldBody, nextBody, { host: page, dir: from < 0 ? 0 : (to > from ? 1 : -1) });
   requestAnimationFrame(() => moveTabInks(measureTabInks(true, page)));
   try { syncDetailButtonStates(); } catch (e) { /* cosmetic */ }
-  o55KeepTabsInView(page);
   if (PM51.syncIndexTabs) PM51.syncIndexTabs(wsId);
   saveState();
+  });
 };
 PM51.on('tab', el => PM51.switchTab(ds(el, 'manager'), ds(el, 'tab')));
 
 /* The engine places a strip's thumb from a cached left and width. A strip that wraps needs the chosen tab's line too,
    and the cache is stale once a resize moves a tab to another line, so a manager's strip is measured live, and again
    whenever the strip itself changes size (a page index or an open Details panel narrows it without a window resize). */
-const o55InkSizes = typeof ResizeObserver === 'function' ? new ResizeObserver(() => requestAnimationFrame(() => moveTabInks())) : null;
+const o55InkSizes = typeof ResizeObserver === 'function' ? new ResizeObserver(() => moveTabInks()) : null;
 const o55InkWatched = new WeakSet();
-const o55EngineMoveInks = moveTabInks;
+let o55InkFrame = 0;
+/* The engine's old measurement API is a request now. Its theme/resize/render callers used to measure immediately,
+   write each ink, then measure the next strip and sticky state against dirty style. One frame reads every rectangle
+   first, then writes every ink. Fresh inks acquire their transition on the following frame without a layout flush. */
+measureTabInks = function () { return null; };
 moveTabInks = function () {
-  const r = o55EngineMoveInks.apply(this, arguments);
-  root.querySelectorAll('.pm51-mgr > .pm51-tabs').forEach(nav => {
-    if (o55InkSizes && !o55InkWatched.has(nav)) { o55InkWatched.add(nav); o55InkSizes.observe(nav); }
-    const ink = nav.querySelector(':scope > .tab-ink'), btn = nav.querySelector('.manager-tab.active');
-    if (!ink || !btn) return;
-    Object.assign(ink.style, { left: btn.offsetLeft + 'px', width: btn.offsetWidth + 'px', top: btn.offsetTop + 'px', height: btn.offsetHeight + 'px', bottom: 'auto' });
+  if (o55InkFrame) return;
+  o55InkFrame = requestAnimationFrame(() => {
+    o55InkFrame = 0;
+    const panel = document.getElementById('panel-settings');
+    if (panel && !panel.classList.contains('active')) return;
+    const scroller = root.querySelector('#settings-document');
+    const top = scroller ? scroller.getBoundingClientRect().top + 1 : 0;
+    const rows = [...root.querySelectorAll('.workspace-tabs, .manager-tabs')].map(nav => {
+      const btn = nav.querySelector('.workspace-tab.active, .manager-tab.active');
+      return { nav, ink: nav.querySelector(':scope > .tab-ink'), btn,
+        left: btn ? btn.offsetLeft : 0, width: btn ? btn.offsetWidth : 0,
+        top: btn ? btn.offsetTop : 0, height: btn ? btn.offsetHeight : 0,
+        manager: nav.matches('.pm51-mgr > .pm51-tabs'),
+        stuck: !!(scroller && nav.matches('.pm51-mgr.has-manager-tabs > .pm51-tabs') && nav.getBoundingClientRect().top <= top) };
+    });
+    const fresh = [];
+    rows.forEach(row => {
+      const { nav, btn } = row;
+      if (row.manager && o55InkSizes && !o55InkWatched.has(nav)) { o55InkWatched.add(nav); o55InkSizes.observe(nav); }
+      let ink = row.ink;
+      if (!btn) { if (ink) ink.style.opacity = '0'; return; }
+      if (!ink) { ink = document.createElement('span'); ink.className = 'tab-ink'; ink.style.transition = 'none'; fresh.push(ink); }
+      Object.assign(ink.style, { left: row.left + 'px', width: row.width + 'px', opacity: '1' });
+      if (row.manager) Object.assign(ink.style, { top: row.top + 'px', height: row.height + 'px', bottom: 'auto' });
+      if (!row.ink) nav.appendChild(ink);
+      if (row.manager) nav.classList.toggle('is-stuck', row.stuck);
+    });
+    if (fresh.length) requestAnimationFrame(() => fresh.forEach(ink => { if (ink.isConnected) ink.style.transition = ''; }));
   });
-  o55MarkStuck();
-  return r;
 };
 
 /* Arrow keys, Home and End move along the strip and choose the tab they land on, as in any tab list. */
@@ -98043,9 +98171,7 @@ root.addEventListener('keydown', e => {
 
 /* A strip is stuck while its top sits at the top of the page's scroller; checked once a frame while that scrolls. */
 function o55MarkStuck() {
-  const scroller = root.querySelector('#settings-document'); if (!scroller) return;
-  const top = scroller.getBoundingClientRect().top + 1;
-  scroller.querySelectorAll('.pm51-mgr.has-manager-tabs > .pm51-tabs').forEach(nav => nav.classList.toggle('is-stuck', nav.getBoundingClientRect().top <= top));
+  moveTabInks();
 }
 let o55StuckFrame = 0;
 document.addEventListener('scroll', e => {
@@ -100180,6 +100306,7 @@ function o55cKey(n) {
 }
 const o55cForeign = n => n.nodeType === 1 && n.matches(O55C_FOREIGN);
 const o55cOpaque = n => n.id === 'toast-stack' || n.hasAttribute('data-all-settings-window') ||
+  (n.id === 'setting-general.visual.wallpaper' && n.classList.contains('wpk-row')) ||
   (o55cKeepDetail && (n.classList.contains('detail-inspector') || n.classList.contains('detail-scrim')));
 
 /* ---------- patching ----------------------------------------------------------------------------------------------- */
@@ -100510,6 +100637,64 @@ boot = function () {
     try { if (root.querySelector('[data-continuous-workspace-body="toolchain"]')) PM51.refresh('toolchain', { swap: false }); } catch (e) { /* not drawn yet */ }
   });
 })();
+
+/* ---- kit.d/29-navigation-motion.js ---- */
+/* Navigation acknowledges the destination before building it. Keep the current chapter readable while its successor
+   is prepared; a scoped snapshot crossfade retains its pixels through the handoff, without duplicate live IDs, rows,
+   or observers. Ordinary row edits still use the in-place renderer. Rapid requests coalesce to the latest destination. */
+let o55NavTicket = 0, o55NavRunning = false, o55NavTransition = null;
+function o55NavVisible() {
+  const panel = document.getElementById('panel-settings');
+  return !!(panel && panel.classList.contains('active') && root.querySelector('#workspace-stage'));
+}
+function o55NavAck(selector) {
+  root.querySelectorAll('[data-o55-nav-pending]').forEach(n => n.removeAttribute('data-o55-nav-pending'));
+  if (selector) root.querySelectorAll(selector).forEach(n => n.setAttribute('data-o55-nav-pending', ''));
+}
+function o55NavRun(work, selector, chapter) {
+  if (o55NavRunning || !o55NavVisible()) return work();
+  const ticket = ++o55NavTicket;
+  o55NavAck(selector);
+  const commit = () => {
+    if (ticket !== o55NavTicket) return;
+    o55NavRunning = true;
+    try { work(); } finally { o55NavRunning = false; o55NavAck(null); }
+  };
+  o55AfterPaint(() => {
+    if (ticket !== o55NavTicket) return;
+    if (!chapter || o55Still() || typeof document.startViewTransition !== 'function') { commit(); return; }
+    if (o55NavTransition) o55NavTransition.skipTransition();
+    const html = document.documentElement;
+    html.classList.add('o55-settings-transition');
+    const transition = document.startViewTransition(() => {
+      commit();
+      /* afterRender is already queued; let it place the first viewport before the incoming picture is taken. */
+      return new Promise(resolve => requestAnimationFrame(resolve));
+    });
+    o55NavTransition = transition;
+    const done = () => {
+      if (o55NavTransition !== transition) return;
+      o55NavTransition = null; html.classList.remove('o55-settings-transition');
+    };
+    transition.finished.then(done, done);
+  });
+}
+const o55NavNavigate = navigate;
+navigate = function (domainId, workspaceId, options) {
+  const args = arguments, domain = getDomain(domainId), chapter = state.home || state.domain !== domain.id;
+  return o55NavRun(() => o55NavNavigate.apply(this, args), `.domain-link[data-domain="${cssEscape(domain.id)}"]`, chapter);
+};
+const o55NavHome = goHome;
+goHome = function () {
+  const args = arguments;
+  return o55NavRun(() => o55NavHome.apply(this, args), '[data-action="home"]', !state.home);
+};
+const o55NavDispatch = dispatchAction;
+dispatchAction = function (action, el) {
+  const args = arguments;
+  if (action !== 'jump-workspace') return o55NavDispatch.apply(this, args);
+  return o55NavRun(() => o55NavDispatch.apply(this, args), `.workspace-tab[data-workspace="${cssEscape(ds(el, 'workspace'))}"]`, false);
+};
 
 /* ---- kit.d/30-inspector.js ---- */
 /* O55 · the setting Details panel. The panel itself (its spring in and out, its width, the scrim) is the engine's and
@@ -225335,8 +225520,8 @@ try { if (window.PM_HOME && typeof window.PM_HOME.boot === 'function') window.PM
     if (u !== wallSourceUrl) { wallSourceUrl = u; wallSourceId++; }
     wallSourceKey = key; return u;
   }
-  function withWall(cb) {
-    var u = currentWallUrl(true); if (!u) { cb(null); return; }
+  function withWall(cb, sourceUrl) {
+    var u = sourceUrl || currentWallUrl(); if (!u) { cb(null); return; }
     var rec = wallSources.get(u);
     if (rec) {
       wallSources.delete(u); wallSources.set(u, rec);
@@ -225424,12 +225609,12 @@ try { if (window.PM_HOME && typeof window.PM_HOME.boot === 'function') window.PM
       return new Blob([a], { type: 'image/png' });
     } catch (e) { return null; }
   }
-  function makeFrosts(im, done) {
+  function makeFrosts(im, done, prepare) {
     var c = cover(im), u = im.__lgWallUrl || wallUrl, key = u + ':' + c.vw + 'x' + c.vh, epoch = bakeEpoch;
-    if (!isGlass() || currentWallUrl() !== u) { done(false); return; }
+    if (!isGlass() || (!prepare && currentWallUrl() !== u)) { done(false); return; }
     if (frostKey === key) { done(true); return; }
     var cached = frostCache.get(key);
-    if (cached) { frostCache.delete(key); frostCache.set(key, cached); applyFrost(cached); done(true); return; }
+    if (cached) { frostCache.delete(key); frostCache.set(key, cached); if (!prepare) applyFrost(cached); done(true); return; }
     var job = frostJobs.get(key);
     if (job && job.epoch === epoch) { job.waiters.push(done); return; }
     var names = Object.keys(FROST);
@@ -225438,21 +225623,25 @@ try { if (window.PM_HOME && typeof window.PM_HOME.boot === 'function') window.PM
       job.blobs[name] = blob;
       if (--job.pending) return;
       if (frostJobs.get(key) === job) frostJobs.delete(key);
-      var valid = epoch === bakeEpoch && isGlass() && currentWallUrl() === u && innerWidth === c.vw && innerHeight === c.vh;
+      var valid = epoch === bakeEpoch && isGlass() && (prepare || currentWallUrl() === u) && innerWidth === c.vw && innerHeight === c.vh;
       valid = valid && names.every(function (n) { return !!job.blobs[n]; });
       if (valid) {
         var rec = { key: key, urls: {}, bytes: 0 };
         names.forEach(function (n) { rec.urls[n] = URL.createObjectURL(job.blobs[n]); rec.bytes += job.blobs[n].size; });
         /* Apply both frost levels together. An older encoder can never replace half of the current wallpaper. */
         var previous = frosts, previousUncached = !Array.from(frostCache.values()).some(function (r) { return r.urls === previous; });
-        applyFrost(rec);
+        if (!prepare) applyFrost(rec);
         while (frostCache.size && (frostCache.size >= 2 || frostBytes + rec.bytes > FROST_BYTES)) {
-          var oldest = frostCache.keys().next().value, old = frostCache.get(oldest);
+          /* Preparation may evict another cached print, never the frost still visible on the sheets. */
+          var oldest = Array.from(frostCache.keys()).find(function (k) { return frostCache.get(k).urls !== frosts; });
+          if (oldest == null) break;
+          var old = frostCache.get(oldest);
           frostBytes -= old.bytes; frostCache.delete(oldest); dropFrost(old);
         }
-        if (rec.bytes <= FROST_BYTES) { frostCache.set(key, rec); frostBytes += rec.bytes; }
+        if (frostBytes + rec.bytes <= FROST_BYTES) { frostCache.set(key, rec); frostBytes += rec.bytes; }
+        else if (prepare) { dropFrost(rec); valid = false; }
         /* An unusually large active pair is kept only while displayed, rather than exceeding the cache budget. */
-        if (previous !== rec.urls && previousUncached) {
+        if (!prepare && previous !== rec.urls && previousUncached) {
           Object.keys(previous).forEach(function (n) { URL.revokeObjectURL(previous[n]); });
         }
       }
@@ -226655,8 +226844,10 @@ try { if (window.PM_HOME && typeof window.PM_HOME.boot === 'function') window.PM
     if (th === lastTheme && lg === lastLg && tier === lastTier && wall === lastWall && motion === lastMotion) return;
     /* the print is about to change under glass that stays glass: hold the one the current frost was made from */
     var wasGlass = lastLg === 'on' && /^glass/.test(lastTheme || '');
-    if (wasGlass && isGlass() && wall !== lastWall && th === lastTheme && wallSourceUrl) holdWall(wallSourceUrl);
-    else if (!isGlass()) releaseWallHold();
+    if (wasGlass && isGlass() && wall !== lastWall && th === lastTheme && wallSourceUrl) {
+      var previousWall = wallSourceUrl, nextWall = currentWallUrl();
+      if (frostKey !== nextWall + ':' + innerWidth + 'x' + innerHeight) holdWall(previousWall);
+    } else if (!isGlass()) releaseWallHold();
     if (motion !== lastMotion && reduced() && typeof suspendLensMotion === 'function') suspendLensMotion();
     lastTier = tier; lastWall = wall; lastMotion = motion;
     if (th !== lastTheme || lg !== lastLg) {
@@ -226706,7 +226897,7 @@ try { if (window.PM_HOME && typeof window.PM_HOME.boot === 'function') window.PM
   }
   function wallChoice() { try { return localStorage.getItem(WALL_KEY) || 'look'; } catch (e) { return 'look'; } }
   function applyWall() {
-    var c = q.get('lgwall') || wallChoice(), fam = (root.getAttribute('data-theme') || '').split('-')[0], ws = catalogWalls();
+    var c = q.get('lgwall') || (window.PM_WALLPAPERS && window.PM_WALLPAPERS.paintChoice ? window.PM_WALLPAPERS.paintChoice() : wallChoice()), fam = (root.getAttribute('data-theme') || '').split('-')[0], ws = catalogWalls();
     if (c !== 'look' && ws.length && !ws.some(function (w) { return w.id === c; })) c = 'look';   /* a stale id: the package resets it */
     var id = c === 'look' ? lookDefault(fam) : c;
     if (id) { if (root.getAttribute('data-lg-wall') !== id) root.setAttribute('data-lg-wall', id); }
@@ -226758,6 +226949,24 @@ try { if (window.PM_HOME && typeof window.PM_HOME.boot === 'function') window.PM
      chooses a wallpaper for every look; walls() lists them; surfaces: data-lg-surface on any element (see syncSurfaces). */
   window.PM_LG = { version: 'v3-2026-10-13', sync: syncAll, materialize: function () { materialize(Array.from(glassSet)); }, kinds: KINDS, count: function () { return glassSet.size; },
     set: function (o) { for (var k in o) { if (o[k] == null) root.removeAttribute(k); else root.setAttribute(k, o[k]); } syncAll(); },
+    /* Decode and bake through the same bounded caches as visible sheets. Preparation changes no visible pixels. */
+    prepareWallpaper: function (url) { return new Promise(function (resolve) {
+      withWall(function (im) { if (!im) { resolve(false); return; } if (isGlass()) makeFrosts(im, resolve, true); else resolve(true); }, url);
+    }); },
+    commitWallpaper: function (id, url, viewport) {
+      if (!isGlass() || root.getAttribute('data-lg-wall') !== id) return false;
+      /* The caller sampled the viewport before its attribute writes. Even innerWidth after those writes can force
+         style/layout (83 ms on M3) before the frost variables join the same commit. */
+      viewport = viewport || { width: innerWidth, height: innerHeight };
+      var rec = frostCache.get(url + ':' + viewport.width + 'x' + viewport.height);
+      if (!rec) return false;
+      /* The prepared URL is exactly the image selected by this attribute commit. Reading computed style between
+         that write and the frost writes forced a full extra restyle (166 ms on M3). Keep the existing source cache
+         current without flushing layout; the next genuinely different theme/attribute key still resolves normally. */
+      if (wallSourceUrl !== url) { wallSourceUrl = url; wallSourceId++; }
+      wallSourceKey = [root.getAttribute('data-theme'), root.getAttribute('data-lg-wall'), root.style.getPropertyValue('--lg-wall')].join('|');
+      applyFrost(rec); return true;
+    },
     wall: function (id) { setWall(id || 'look'); }, walls: function () { return catalogWalls().map(function (w) { return { id: w.id, name: w.name, family: w.family }; }); } };
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', start); else start();
 })();
@@ -226818,35 +227027,80 @@ window.PM_WALLPAPERS_CATALOG = {"version":1,"families":[{"family":"glass","label
   /* the wallpaper on show: ?lgwall= first, as glass.js reads it, then the saved choice */
   function shown() { var c = q.get('lgwall') || choice(); return c === 'look' ? lookDefault(look()) : c; }
   function attr(a, v) { if (v === null) { if (root.hasAttribute(a)) root.removeAttribute(a); } else if (root.getAttribute(a) !== v) root.setAttribute(a, v); }
-  /* Glass bakes its sheets' frost from the wallpaper after the wallpaper changes, a third of a second later on an
-     RTX 3090 (films, 2026-10-13), so for that long the sheets showed the old frost over the new picture. While Glass
-     rebakes, the body keeps the print it showed, and the moment glass.js lands the new frost (it writes --lg-frost-*
-     on <html>) the hold lets go in the same task: picture and frost change in one frame. If no new frost comes, the
-     hold lets go after 1.5 s. (Glass follow-up G4 would do this inside glass.js.) */
-  var hold = null;
-  function frostNow() { return root.style.getPropertyValue('--lg-frost-heavy'); }
-  function release() { if (!hold) return; clearTimeout(hold.t); hold = null; root.removeAttribute('data-wpk-hold'); root.style.removeProperty('--wpk-hold'); }
-  function holdPrint(prev) {
-    release();
-    var url = getComputedStyle(root).getPropertyValue('--lg-wall-' + prev + '-' + (/-light$/.test(root.getAttribute('data-theme') || '') ? 'light' : 'dark')).trim();
-    if (!url) return;
-    hold = { frost: frostNow(), t: setTimeout(release, 1500) };
-    root.style.setProperty('--wpk-hold', url); root.setAttribute('data-wpk-hold', '');
+  /* A selected radio paints before decoding or restyling. Two permanent background layers carry the print fade;
+     the cached frost joins at its midpoint. No snapshots or nodes are added to the live sheets on a choice. */
+  var paintedChoice = choice(), paintKey = '', paintedUrl = '', paintSerial = 0, commitT = 0, commitFrame = 0;
+  var printLayers = [], printAnimations = [], printTimer = 0, printFinish = null, imageUrls = new Map();
+  function mountPrints() {
+    if (printLayers.length || !document.body) return;
+    for (var i = 0; i < 2; i++) {
+      var e = document.createElement('div'); e.className = 'wpk-print'; e.setAttribute('aria-hidden', 'true');
+      document.body.appendChild(e); printLayers.push(e);
+    }
   }
-  new MutationObserver(function () { if (hold && frostNow() !== hold.frost) release(); }).observe(root, { attributes: true, attributeFilter: ['style'] });
-  function apply() {
-    var id = shown(), prev = root.getAttribute('data-lg-wall'), glass = look() === 'glass' && root.getAttribute('data-lg') === 'on';
-    if (glass && prev && id && prev !== id && byId[prev] && frostNow()) holdPrint(prev); else if (!glass) release();
-    attr('data-lg-wall', id || null); attr('data-lg-wall-any', id && look() !== 'glass' ? '' : null);
+  function imageUrl(id) {
+    if (!id) return '';
+    var mode = /-light$/.test(root.getAttribute('data-theme') || '') ? 'light' : 'dark';
+    var key = id + '-' + mode; if (imageUrls.has(key)) return imageUrls.get(key);
+    var v = getComputedStyle(root).getPropertyValue('--lg-wall-' + key).trim();
+    var m = v.match(/url\(["']?(.*?)["']?\)\s*$/), url = m ? m[1] : '';
+    imageUrls.set(key, url); return url;
+  }
+  function still() {
+    return root.getAttribute('data-lg-tier') === 'cpu' || root.getAttribute('data-motion') === 'reduced' ||
+      root.getAttribute('data-reduced-motion') === '1' || matchMedia('(prefers-reduced-motion: reduce)').matches;
+  }
+  function prepare(url) {
+    if (!url) return Promise.resolve(true);
+    if (window.PM_LG && PM_LG.prepareWallpaper) return PM_LG.prepareWallpaper(url);
+    var im = new Image(); im.src = url;
+    return im.decode ? im.decode().then(function () { return true; }, function () { return false; }) : Promise.resolve(true);
+  }
+  function apply(animate) {
+    var id = shown(), selected = choice(), theme = root.getAttribute('data-theme'), key = theme + '|' + id;
+    if (key === paintKey) { paintedChoice = selected; return; }
+    var serial = ++paintSerial, url = imageUrl(id);
+    prepare(url).then(function (ok) {
+      if (!ok || serial !== paintSerial || theme !== root.getAttribute('data-theme')) return;
+      var viewport = { width: innerWidth, height: innerHeight };
+      var commit = function () {
+        if (serial !== paintSerial) return;
+        paintedChoice = selected; paintKey = key; paintedUrl = url;
+        attr('data-lg-wall', id || null); attr('data-lg-wall-any', id && look() !== 'glass' ? '' : null);
+        if (url && window.PM_LG && PM_LG.commitWallpaper) PM_LG.commitWallpaper(id, url, viewport);
+      };
+      if (printFinish) printFinish();
+      mountPrints();
+      if (!animate || still() || printLayers.length !== 2) { commit(); return; }
+      var ground = getComputedStyle(document.body).backgroundColor;
+      printLayers.forEach(function (e, i) {
+        e.style.backgroundColor = ground;
+        e.style.backgroundImage = (i ? url : paintedUrl) ? 'url(' + JSON.stringify(i ? url : paintedUrl) + ')' : 'none';
+      });
+      printLayers[0].style.opacity = '1'; printLayers[1].style.opacity = '0';
+      var done = false, committed = false;
+      function mid() { if (!committed) { committed = true; commit(); } }
+      function finish() {
+        if (done) return; done = true; clearTimeout(printTimer); mid();
+        printLayers.forEach(function (e) { e.style.opacity = '0'; });
+        printAnimations.forEach(function (a) { a.cancel(); }); printAnimations = [];
+        if (printFinish === finish) printFinish = null;
+      }
+      printFinish = finish;
+      /* Opacity runs on the compositor while the new frost and rims are committed on the main thread. */
+      var fade = printLayers[1].animate([{ opacity: 0 }, { opacity: 1 }], { duration: 240, easing: 'linear', fill: 'forwards' });
+      printAnimations = [fade]; printTimer = setTimeout(mid, 120);
+      fade.finished.then(finish, finish);
+    });
   }
 
-  var commitT = 0;
   function choose(c, later) {
     if (c !== 'look' && !byId[c]) return false;
     try { localStorage.setItem(KEY, c); } catch (e) {}
-    clearTimeout(commitT);
-    if (later) commitT = setTimeout(apply, 240); else apply();
+    clearTimeout(commitT); cancelAnimationFrame(commitFrame); ++paintSerial;
     sync();
+    /* The timeout begins after a presented frame, rather than inside that frame's rAF callback. */
+    commitFrame = requestAnimationFrame(function () { commitFrame = 0; commitT = setTimeout(function () { apply(true); }, later ? 160 : 0); });
     return true;
   }
 
@@ -226871,7 +227125,7 @@ window.PM_WALLPAPERS_CATALOG = {"version":1,"families":[{"family":"glass","label
     return h + '</div>';
   }
   function row() { return document.getElementById(ROW_ID); }
-  function mine(r) { return r && r.classList.contains('wpk-row'); }
+  function mine(r) { return r && r.classList.contains('wpk-row') && !!r.querySelector('.wpk-gallery'); }
   function mount() {
     var themeRow = document.getElementById('setting-general.visual.theme'); if (!themeRow) return;
     var r = row(); if (mine(r)) return;
@@ -226900,6 +227154,13 @@ window.PM_WALLPAPERS_CATALOG = {"version":1,"families":[{"family":"glass","label
       : def ? lookName + ' shows ' + byId[def].name + ' until you choose another.' : lookName + ' keeps its own background until you choose one.';
     var n = r.querySelector('.wpk-note'); if (n.textContent !== note) n.textContent = note;
   }
+
+  document.addEventListener('pointerover', function (e) {
+    var t = e.target.closest && e.target.closest('.wpk-row .wpk-tile');
+    if (!t || t.contains(e.relatedTarget)) return;
+    var id = t.getAttribute('data-wpk-pick'); if (id === 'look') id = lookDefault(look());
+    if (id) prepare(imageUrl(id));
+  });
 
   /* clicks and keys: one radiogroup across the families */
   document.addEventListener('click', function (e) {
@@ -226941,7 +227202,7 @@ window.PM_WALLPAPERS_CATALOG = {"version":1,"families":[{"family":"glass","label
   function queueMount() { if (!mountQ) mountQ = requestAnimationFrame(function () { mountQ = 0; mount(); }); }
   function watch() { new MutationObserver(function () { var r = row(); if (!mine(r) && document.getElementById('setting-general.visual.theme')) queueMount(); }).observe(document.body, { childList: true, subtree: true }); mount(); }
   /* another window chose a wallpaper */
-  window.addEventListener('storage', function (e) { if (e.key === KEY || e.key === null) { apply(); sync(); } });
+  window.addEventListener('storage', function (e) { if (e.key === KEY || e.key === null) { sync(); requestAnimationFrame(function () { setTimeout(function () { apply(true); }, 0); }); } });
 
   /* Jared #18 (2026-10-14): the most recent wallpaper decision wins, from either control. NieR Mode's customizer writes
      only its own background (general.visual.nier-background); when that committed value changes, this package hands the
@@ -226963,13 +227224,13 @@ window.PM_WALLPAPERS_CATALOG = {"version":1,"families":[{"family":"glass","label
   }
   if (!hookNier()) { var nierTries = 0; (function retry() { if (hookNier() || ++nierTries > 60) return; setTimeout(retry, 250); })(); }
 
-  apply();
+  mountPrints(); apply();
   if (document.body) watch(); else document.addEventListener('DOMContentLoaded', watch);
 
   window.PM_WALLPAPERS = {
     version: 'wpk-2026-10-14', key: KEY,
     catalog: function () { return CAT.families.map(function (f) { return { family: f.family, label: f.label, ids: f.wallpapers.map(function (w) { return w.id; }) }; }); },
-    choice: choice, shown: shown, choose: function (c) { return choose(c, false); }, stale: function () { return stale; }
+    choice: choice, shown: shown, paintChoice: function () { return paintedChoice; }, choose: function (c) { return choose(c, false); }, stale: function () { return stale; }
   };
 })();
 </script>
