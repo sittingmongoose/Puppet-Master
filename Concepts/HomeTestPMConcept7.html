@@ -221207,6 +221207,11 @@ try { if (window.PM_HOME && typeof window.PM_HOME.boot === 'function') window.PM
       return top;
     }
     WARM_CATALOG.forEach(function (e) { queue.push(function () { return build(e, false); }); });
+    /* the page's charts (Usage's sparklines, trends and gauges), right after the first pass: Skia draws a path through its
+       path atlas or tessellates it by the path's size and style, so each kind of chart is drawn once at its own size (the
+       warm F3.1 Usage entry on the P1000 still linked 6 DrawAtlasPathOp programs among 23). The copy carries the styles the
+       page's CSS gives each shape, and the gradients they name, since neither reaches into the closed root. */
+    queue.push(function () { Array.prototype.slice.call(document.querySelectorAll('svg')).reverse().forEach(addChart); return null; });
     WARM_CATALOG.forEach(function (e) { queue.push(function () { return build(e, true); }); });
     /* again with a crowd of the page's icons beside it: a tile holding several complex paths is rastered multisampled,
        which uses its own programs (a Settings page's icons put its boxes in such tiles) */
@@ -221227,6 +221232,37 @@ try { if (window.PM_HOME && typeof window.PM_HOME.boot === 'function') window.PM
     }
     WARM_CATALOG.forEach(function (e) { queue.push(function () { return crowded(e, false); }); });
     WARM_CATALOG.forEach(function (e) { queue.push(function () { return crowded(e, true); }); });
+    var seenChart = {}, SHAPES = 'path, polyline, polygon, line, circle, rect, ellipse',
+      PAINT = ['fill', 'fill-opacity', 'fill-rule', 'stroke', 'stroke-width', 'stroke-linecap', 'stroke-linejoin', 'stroke-dasharray', 'stroke-opacity', 'opacity', 'filter', 'vector-effect'];
+    function addChart(svg) {
+      if (!svg.querySelector('path, polyline, polygon')) return;
+      /* to the front of the queue (the scan walks the page's svgs last to first, so they keep their order) */
+      queue.unshift(function () {
+        if (!svg.isConnected) return null;
+        var r = svg.getBoundingClientRect(); if (r.width < 40 && r.height < 40) return null;   /* an icon: the icon pass */
+        var src = Array.prototype.slice.call(svg.querySelectorAll(SHAPES));
+        var paint = src.map(function (sh) { var c = getComputedStyle(sh); return PAINT.map(function (k) { return c.getPropertyValue(k); }); });
+        var kinds = paint.map(function (st, i) {
+          return [src[i].tagName, st[0] === 'none' ? '' : /url/.test(st[0]) ? 'g' : 'f', st[3] === 'none' ? '' : (/url/.test(st[3]) ? 'G' : 's') + Math.round(parseFloat(st[4]) * 2) + st[5] + st[6],
+            st[7] === 'none' ? '' : 'd', st[10] === 'none' ? '' : 'b', +st[9] < 1 ? 'o' : ''].join('');
+        }).filter(function (x, i, a) { return a.indexOf(x) === i; }).sort();
+        var key = Math.min(8, Math.round(r.width / 60)) + 'x' + Math.min(8, Math.round(r.height / 30)) + '|' + kinds.join(',');
+        if (seenChart[key]) return null; seenChart[key] = 1;
+        var k = svg.cloneNode(true); k.removeAttribute('id');
+        Array.prototype.slice.call(k.querySelectorAll(SHAPES)).forEach(function (sh, i) { var st = paint[i]; if (st) PAINT.forEach(function (prop, j) { sh.style.setProperty(prop, st[j]); }); });
+        var ids = {}, defs = null;
+        paint.forEach(function (st) { [st[0], st[3]].forEach(function (v) { var m = /url\("?#([^")]+)"?\)/.exec(v || ''); if (m) ids[m[1]] = 1; }); });
+        Object.keys(ids).forEach(function (id) {
+          if (k.querySelector('[id="' + id + '"]')) return;
+          var g = document.getElementById(id); if (!g) return;
+          if (!defs) { defs = document.createElementNS(SVGNS, 'defs'); k.insertBefore(defs, k.firstChild); }
+          defs.appendChild(g.cloneNode(true));
+        });
+        k.setAttribute('width', r.width); k.setAttribute('height', r.height);
+        k.style.cssText = 'position:absolute;left:0;top:0;width:' + r.width + 'px;height:' + r.height + 'px;overflow:hidden;color:' + getComputedStyle(svg).color + ';';
+        return k;
+      });
+    }
     var seen = {};
     queue.push(function () { Array.prototype.slice.call(document.querySelectorAll('svg')).forEach(addIcon); return null; });
     function addIcon(svg) {
