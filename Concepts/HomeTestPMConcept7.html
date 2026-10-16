@@ -97232,9 +97232,13 @@ moveTabInks = function () {
   /* Selection and mounting have changed the strip. The first layout delivery supplies its final geometry; a
      pre-layout rAF read forced the just-mounted workspace (81 ms on the P1000). All strip reads still precede
      every ink write, and the existing transform animation retains its duration, curve and retargeting. */
-  if (typeof ResizeObserver === 'function') {
-    const ready = new ResizeObserver(() => { ready.disconnect(); fit(); }); ready.observe(root);
-  } else requestAnimationFrame(fit);
+  requestAnimationFrame(() => {
+    /* A strip-size observer and the shell's resize kick can request this from another ResizeObserver delivery.
+       Arm in the next frame's normal phase so a new root observation never starts inside a deeper delivery. */
+    if (typeof ResizeObserver === 'function') {
+      const ready = new ResizeObserver(() => { ready.disconnect(); fit(); }); ready.observe(root);
+    } else fit();
+  });
 };
 
 /* Arrow keys, Home and End move along the strip and choose the tab they land on, as in any tab list. */
@@ -99803,7 +99807,18 @@ function o55NavVisible() {
 }
 function o55NavAck(selector) {
   root.querySelectorAll('[data-o55-nav-pending]').forEach(n => n.removeAttribute('data-o55-nav-pending'));
-  if (selector) root.querySelectorAll(selector).forEach(n => n.setAttribute('data-o55-nav-pending', ''));
+  if (selector) root.querySelectorAll(selector).forEach(n => {
+    n.setAttribute('data-o55-nav-pending', '');
+    if (n.classList.contains('workspace-tab')) {
+      /* Move the existing selected plate in the acknowledgement frame, while the old workspace is still painted.
+         Hydration and exact-position scrolling follow after that paint; the ink carries the same 320 ms motion. */
+      n.parentElement.querySelectorAll('.workspace-tab').forEach(tab => {
+        const on = tab === n; tab.classList.toggle('active', on);
+        if (tab.hasAttribute('aria-selected')) tab.setAttribute('aria-selected', String(on));
+      });
+      moveTabInks();
+    }
+  });
 }
 function o55NavRun(work, selector, chapter) {
   if (o55NavRunning || !o55NavVisible()) return work();

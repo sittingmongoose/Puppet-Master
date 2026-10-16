@@ -8,7 +8,18 @@ function o55NavVisible() {
 }
 function o55NavAck(selector) {
   root.querySelectorAll('[data-o55-nav-pending]').forEach(n => n.removeAttribute('data-o55-nav-pending'));
-  if (selector) root.querySelectorAll(selector).forEach(n => n.setAttribute('data-o55-nav-pending', ''));
+  if (selector) root.querySelectorAll(selector).forEach(n => {
+    n.setAttribute('data-o55-nav-pending', '');
+    if (n.classList.contains('workspace-tab')) {
+      /* Move the existing selected plate in the acknowledgement frame, while the old workspace is still painted.
+         Hydration and exact-position scrolling follow after that paint; the ink carries the same 320 ms motion. */
+      n.parentElement.querySelectorAll('.workspace-tab').forEach(tab => {
+        const on = tab === n; tab.classList.toggle('active', on);
+        if (tab.hasAttribute('aria-selected')) tab.setAttribute('aria-selected', String(on));
+      });
+      moveTabInks();
+    }
+  });
 }
 function o55NavRun(work, selector, chapter) {
   if (o55NavRunning || !o55NavVisible()) return work();

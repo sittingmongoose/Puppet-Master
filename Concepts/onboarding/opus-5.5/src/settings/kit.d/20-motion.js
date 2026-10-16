@@ -173,9 +173,13 @@ moveTabInks = function () {
   /* Selection and mounting have changed the strip. The first layout delivery supplies its final geometry; a
      pre-layout rAF read forced the just-mounted workspace (81 ms on the P1000). All strip reads still precede
      every ink write, and the existing transform animation retains its duration, curve and retargeting. */
-  if (typeof ResizeObserver === 'function') {
-    const ready = new ResizeObserver(() => { ready.disconnect(); fit(); }); ready.observe(root);
-  } else requestAnimationFrame(fit);
+  requestAnimationFrame(() => {
+    /* A strip-size observer and the shell's resize kick can request this from another ResizeObserver delivery.
+       Arm in the next frame's normal phase so a new root observation never starts inside a deeper delivery. */
+    if (typeof ResizeObserver === 'function') {
+      const ready = new ResizeObserver(() => { ready.disconnect(); fit(); }); ready.observe(root);
+    } else fit();
+  });
 };
 
 /* Arrow keys, Home and End move along the strip and choose the tab they land on, as in any tab list. */
