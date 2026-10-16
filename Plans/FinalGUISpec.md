@@ -3562,9 +3562,10 @@ Amended 2026-10-09 (DL-180): the Home layout lives in the v2 Home layout record 
 | `widget_layout:v1:dashboard` | Dashboard widget grid layout, positions, sizes, and widget IDs. Amended 2026-10-09 (DL-180): each dashboard board keeps `widget_layout:v1:dashboard:<board_id>` and this key moves into the Home dashboard's board as WS-030 says. Amended 2026-10-10 (DL-186): dashboard boards are kept per project under `widget_layout:v1:<project_id>:<board_id>`; the per-board key above was never written, and this key, the old Home widgets' grid, is no board's key (WS-030); no write goes to it now, and it stays only a read-only record and rollback backup (`Plans/Widget_System.md#WS-009`), so the write frequency in this row is lineage; what storage keeps of the key is `Plans/storage-plan.md`'s | On change (debounced 300ms); lineage, no write now (DL-186) |
 | `widget_layout:v1:<project_id>:<board_id>` | One dashboard board's widgets with their positions, sizes and settings, its own range and scope, and the set it started from; the record and its one-time adoption of an older unscoped key are WS-030's (added 2026-10-10, DL-186) | On each settled change of that board (WS-030) |
 | `widget_presets:v1` | The person's saved dashboard presets, shared by every project; the record is WS-030's (added 2026-10-10, DL-186) | On saving, renaming or deleting a preset |
+| `terminal_appearance_presets:v1` | Computer-local per-user terminal preset library; logical custody and deferred native physical storage are SP-331's (2026-10-16, DL-207) | Existing typed local Save/Rename/Delete/Undo actions; native persistence remains deferred |
 | `activity_bar_order:v1` | Ordered list of activity bar item IDs + separator position | On change (debounced 300ms) |
 | `theme:v1` | Theme family + presentation mode (Light/Dark/Auto), with the resolved ThemeVariant enum value kept for readers | On change |
-| `glass_background_mode:v1` | Glass wallpaper background mode (mesh, depth, or minimal) for the Glass theme family | On change |
+| `glass_background_mode:v1` | Retired compatibility input since 2026-10-15; SSYS-054 owns shared Wallpaper and SP-333 owns migration of old mesh/depth/minimal values | No active writer |
 | `glass_alpha:v1` | Glass surface alpha within the per-theme clamps (Glass Dark 0.35-0.85, Glass Light 0.45-0.88) | On change (debounced 300ms) |
 | `editor_workspace_state.v1:{project_id}` | Canonical project-wide editor workspace state: open tabs, active tab, and per-tab scroll/cursor presentation; contains no unsaved buffer bytes | On change (debounced 500ms) |
 | `filetree_state:v1:{project_id}` | Expanded folder set, local filter text, and tree scroll position | On change (debounced 300ms) |
@@ -31381,7 +31382,9 @@ Companion editor treatments carried in the same span (04-css-glass-b.part.html:1
 | Settings modal (glass themes) | `.s4-panel`, `.s4-psm` slabs | `blur(34px) saturate(160%)` | 10-css-settings.part.html:933-934 |
 | Setup popups (all themes, Skia GPU path only) | wand-module configuration sheets (F3-566) | backdrop blur drawn by the Skia renderer extensions (F3-582); not drawn on the Skia CPU raster, where the sheet is solid; the scrim is never blurred | DL-139 (no PMConcept6 source) |
 
-#### Glass background mode layer inventory (02-css-tokens.part.html:554-733; baked per F3-431)
+#### Retired Glass background mode layer inventory (2026-10-15 source lineage; 02-css-tokens.part.html:554-733)
+
+Mesh/Depth/Minimal, including the former mesh default below, are historical source lineage only. SSYS-054 and SP-333 own current shared Wallpaper and compatibility migration; this table supplies no active mode, default, parallax obligation or writer.
 
 | Mode | Layers | Layer blur | Drift and parallax | Baked per F3-431 |
 |---|---|---|---|---|
@@ -32436,26 +32439,31 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
-  Shell elements carrying the sheen treatment, approximately 40 shell elements, keep their place as hover targets:
-  the sheen class marks them into the F3-465 merged hover system, which owns their whole hover look and motion. The
-  former sheen hover-lift and its glow (the base, Friendly and Glass `.pm-sheen:hover` lift, border and glow) are
-  retired in favour of F3-465 (DL-171), and no sheen element carries a hover-lift or glow of its own. Hover is driven
-  by event delegation from a shared pointer handler and executed through compositor-friendly writes rather than
-  per-frame style writes. Pointer parallax on background layers runs only while the glass theme family's depth
-  background mode is active, and all document-level pointer-move work, including parallax sampling and the F3-465
-  hover driver, is merged into a single shared document pointer-move handler (`window.PM7_PMOVE` in the concept)
-  that every consumer hooks into rather than listening itself. Parallax is fully disabled under reduced motion, and
-  F3-465 sets the hover's reduced-motion form.
+  Shell elements carrying the sheen treatment, approximately 40 shell elements, keep their place as hover
+  targets: the sheen class marks them into the F3-465 merged hover system, which owns their whole hover look
+  and motion. The former sheen hover-lift and its glow (the base, Friendly and Glass `.pm-sheen:hover` lift,
+  border and glow) are retired in favour of F3-465 (DL-171), and no sheen element carries a hover-lift or
+  glow of its own. Hover is driven by event delegation from a shared pointer handler and executed through
+  compositor-friendly writes rather than per-frame style writes. Amended 2026-10-16 (SSYS-054/SP-333): the
+  former glass depth background mode and its pointer parallax obligation are retired compatibility/source
+  lineage; no current Wallpaper selection enables that old mode or revives its sampler. All active
+  document-level pointer-move work, including the F3-465 hover driver, remains merged into a single shared
+  document pointer-move handler (`window.PM7_PMOVE` in the concept) that every consumer hooks into rather
+  than listening itself. The retired parallax sampler stays inactive under every motion preference; F3-465
+  sets the active hover's reduced-motion form.
 gui_related: true
 gui_classification_reason: This unit defines the sheen hover targets, glass depth parallax and the single merged pointer-move handler on shell controls.
 split_recommended: false
 depends_on: [F3-428]
 unblocks: [F3-465]
 acceptance_criteria:
-- "Sheen-treated shell elements are F3-465 hover targets and show F3-465's hover; no `.pm-sheen:hover` lift, border or glow of their own remains in any family."
-- "Pointer parallax runs only in the glass depth background mode, and exactly one merged document pointer-move handler services parallax, delegated hover effects, and the F3-465 hover driver."
-- "With reduced motion active, parallax is disabled and the sheen elements show F3-465's reduced-motion hover."
-- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+- Sheen-treated shell elements are F3-465 hover targets and show F3-465's hover; no `.pm-sheen:hover` lift, border
+  or glow of their own remains in any family.
+- The retired glass depth mode activates no pointer parallax; exactly one merged document pointer-move handler
+  services active delegated hover effects and the F3-465 hover driver.
+- With reduced motion active, the sheen elements show F3-465's reduced-motion hover; the retired parallax sampler
+  remains inactive.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
 validation_surfaces:
 - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
 - "python3 scripts/pm-plan-index.py validate"
@@ -32476,9 +32484,9 @@ preserved_exact_tokens:
 - "parallax"
 - "depth"
 negative_constraints:
-- "Do not attach per-control pointer-move listeners or multiple document pointer-move handlers for these effects."
-- "Do not run pointer parallax outside the glass depth background mode."
-- "Do not restore a sheen hover-lift or glow beside the F3-465 hover."
+- Do not attach per-control pointer-move listeners or multiple document pointer-move handlers for these effects.
+- Do not reactivate the retired glass depth mode or its pointer parallax sampler through a Wallpaper selection.
+- Do not restore a sheen hover-lift or glow beside the F3-465 hover.
 compatibility_only_notes:
 - "Slint portability: the sheen elements' hover follows F3-465's Slint notes; parallax maps to a translate on opaque precomputed background layers with no per-frame style writes; no arbitrary-content backdrop blur, no SVG filters, and color math is precomputed rather than runtime-mixed."
 stale_retired_dispositions:
@@ -32882,37 +32890,43 @@ status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
   This unit owns the shared alert store. Alerts carry an acknowledge (ack) and snooze lifecycle:
-  acknowledging clears an alert's unread state, snoozing hides the alert until its snooze window
-  elapses, and unresolved alerts persist in the store and render in the title-bar sprout inbox list.
-  Unread alerts drive the count badge on the title-bar notification stack (F3-460). The title-bar
-  collapsed stack and the sprout inbox panel render from this one alert store; no surface keeps a
-  private copy of alert state. The inbox sorts Needs you first, then groups by source (Usage, Runs,
-  Planning, Agents, Settings, Projects); a group with at least three notices folds to a newest-first
-  deck and opens without changing its underlying work. The badge counts unread, not all retained
-  items. Opening the inbox marks the items actually shown read after about one second of reading;
-  hidden/unshown items do not become read by implication. Dismiss/Delete and Clear all remove inbox
-  presentation, never approve, deny or resolve domain work. After Clear all, later arrivals and a
-  reopened inbox show their headings and rows normally. Existing approval, permission, FileSafe and
-  concern actions keep their owner commands, reasons and holds. A blocking item's attention ring
-  remains until its underlying need is resolved; dismissing a card alone is not that resolution.
-  Read projection is CS-102's ui.notifications.mark_visible_read, distinct from an explicit domain
-  acknowledge action. Dismiss/Delete and Clear all use UCC-204's existing alert-command composition;
-  a refused item remains visible and arrivals after the captured Clear all set are retained. A setup
-  or resume prompt that joins under F3-447 is an owner-linked entry in this same inbox and
-  participates in its unread badge, not a private durable task or new approval. Continue forwards
-  the original prompt's existing typed ui.onboarding.* action and owner context under
-  UCC-106/PWIZ-021–023. The owner removing that prompt removes its inbox projection.
-  Dismissal/read/placement never completes setup, skips the tour or resolves its underlying need.
+  acknowledging clears an alert's unread state, snoozing hides the alert until its snooze window elapses,
+  and unresolved alerts persist in the store and render in the title-bar sprout inbox list. Unread alerts
+  drive the count badge on the title-bar notification stack (F3-460). The title-bar collapsed stack and the
+  sprout inbox panel render from this one alert store; no surface keeps a private copy of alert state. The
+  inbox sorts Needs you first, then groups by source (Usage, Runs, Planning, Agents, Settings, Projects); a
+  group with at least three notices folds to a newest-first deck and opens without changing its underlying
+  work. The badge counts unread, not all retained items. Opening the inbox marks the items actually shown
+  read after about one second of reading; hidden/unshown items do not become read by implication.
+  Dismiss/Delete and Clear all remove inbox presentation, never approve, deny or resolve domain work. After
+  Clear all, later arrivals and a reopened inbox show their headings and rows normally. Existing approval,
+  permission, FileSafe and concern actions keep their owner commands, reasons and holds. A blocking item's
+  attention ring remains until its underlying need is resolved; dismissing a card alone is not that
+  resolution. Read projection is CS-102's ui.notifications.mark_visible_read, distinct from an explicit
+  domain acknowledge action. Dismiss/Delete and Clear all use UCC-204's existing alert-command composition;
+  a refused item remains visible and arrivals after the captured Clear all set are retained. A setup or
+  resume prompt that joins under F3-447 is an owner-linked entry in this same inbox and participates in its
+  unread badge, not a private durable task or new approval. Continue forwards the original prompt's own
+  typed action and owner context: the setup prompt uses ui.onboarding.start with admitted resume intent and
+  the closed pm.product_onboarding.action_request.v2 context (PWIZ-021/UCC-106); the tour-resume prompt uses
+  ui.guided_tour.resume with its session, safe checkpoint and currentness context under
+  pm.guided_tour.action_request.v3 (PWIZ-023). Each route retains its owner's validation and effects. The
+  owner removing that prompt removes its inbox projection. Dismissal/read/placement never completes setup,
+  skips the tour or resolves its underlying need.
 gui_related: true
 gui_classification_reason: This unit defines the shared alert store, alert lifecycle controls, and the unread indicator contract.
 split_recommended: false
 depends_on: [F3-042]
 unblocks: []
 acceptance_criteria:
-- "Alerts support acknowledge and snooze; ack clears unread state and snooze hides the alert until its snooze window elapses; unresolved alerts persist in the shared alert store."
-- "Unread alerts drive the count badge on the title-bar notification stack (F3-460)."
-- "The title-bar collapsed stack and the sprout inbox panel render from one shared alert store; no surface keeps a private alert copy."
-- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+- Alerts support acknowledge and snooze; ack clears unread state and snooze hides the alert until its snooze window
+  elapses; unresolved alerts persist in the shared alert store.
+- Unread alerts drive the count badge on the title-bar notification stack (F3-460).
+- The title-bar collapsed stack and the sprout inbox panel render from one shared alert store; no surface keeps
+  a private alert copy.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+- Setup and Guided Tour bell Continue entries retain their distinct existing typed actions and request schemas;
+  neither routes to the other owner's flow.
 validation_surfaces:
 - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
 - "python3 scripts/pm-plan-index.py validate"
@@ -32935,9 +32949,11 @@ source_lineage:
 - /mnt/Cursor/share/puppet-master/2026-10-16-plans-pass2/sources/opus-5.5--src--js--19-notify.js, SHA-256
   80f415f7e4ef676748322cdf8ce40ea25b4a0adfa5897d4002e83f2ae327f667 (source lineage; not native certification)
 preserved_exact_tokens:
-- "ack"
-- "snooze"
-- "count badge"
+- ack
+- snooze
+- count badge
+- ui.onboarding.start
+- ui.guided_tour.resume
 negative_constraints:
 - "No surface may maintain a private alert copy; the title-bar collapsed stack and the sprout inbox panel consume the one shared alert store."
 - "Alert severity, source, and owner-route data follow the shared notification model; the inbox panel must not invent local alert state."
@@ -44287,149 +44303,147 @@ status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
   The home centre, between the left rail and the chat column (F3-637), is one universal panel system
-  (DL-180). Its layout is an n-ary split tree: a split is a row or a column of two or more children,
-  each child a panel or another split, and every leaf is a panel. A panel is a tab group, one tab
-  strip (F3-631) over one body, and any panel can hold any tab kind (F3-635). Every split has its
-  own sizes, stored as proportions of that split, never as pixels, so panel widths and heights are
-  independent. The tree always keeps these invariants: every leaf is a panel; a split has two or
-  more children and never runs in its parent's direction; every size is above 0.02; a tab lives in
-  exactly one panel; pinned tabs come first in their strip; a panel has at most one preview tab. A
-  panel's minimum is the largest content minimum of its tabs (F3-635) and never less than 280 x 120
-  px. Inserting a panel starts from half the target's share, redistributing available room from
-  neighbours when necessary to preserve every resulting panel's own minimum; a new panel along the
-  centre's outer edge takes 0.34 of the root. Removing a panel gives its share to its previous
-  sibling, else to the next. Closing the last tab of a panel closes the panel and its neighbour
-  takes the space, unless it is the only panel in the centre or the user locked it: then it stays
-  and shows the empty-panel launcher (F3-632). Closing a panel closes its tabs, each kind asking
-  first where it asks (F3-635). Locking a panel keeps it in place when its last tab closes, and
-  automatic placement skips it (F3-634). Split fit rule: offer a split whenever the complete
-  resulting layout can meet each panel's own minimum, borrowing available room from neighbours;
-  drag, split menus, Move panel and Alt+Shift+arrows use this one rule. For an unspecified side
-  prefer right, then below, else refuse with a reason. Panels are 6 px apart, the divider line in
-  the middle of the gap, and the centre is inset 6 px from the rail, the chat and the bars; a
-  divider's hit target is 8 px. Dragging a divider moves only the two neighbours it separates and
-  commits once on release (cmd.workspace_layout.resize_surface); from the keyboard, Tab reaches a
-  divider, arrows move it 8 px, Shift+arrows 48 px, Home and End move it to a neighbour's minimum,
-  and Enter or a double click evens the two sides. A panel dragged below half its minimum along the
-  divider's axis collapses to its 35 px strip and keeps every tab and its state; dragging it out
-  again, or Expand in its panel menu, restores it (cmd.workspace_layout.set_collapsed). This
-  replaces Collapse Bottom Terminal for every panel. Maximize is a flag outside the tree: the
-  maximized panel fills the centre and the tree underneath does not change; Shift+Escape, the panel
-  menu, or Escape while focus is in its strip restores it (ui.workspace_layout.maximize, view state
-  with no receipt and no event). Each panel has a small corner grip and a panel menu (⋮) at the end
-  of its strip: Split right, Split down, Maximize or Restore, Collapse or Expand, Move panel, Lock
-  panel or Unlock panel, Layouts, and Close panel. A whole panel moves by its grip, or by Move panel
-  from the menu or Enter on the grip (cmd.workspace_layout.move_surface): beside another panel on
-  any edge, along the centre's outer edge, or into another panel as its tabs. A tab dragged into the
-  diagonal region nearest a panel side splits on that side (cmd.panel_tab.move with a split target);
-  dropped on a strip, it moves into that panel at the drop position; pulled off its strip by 14 px
-  vertically or 40 px horizontally beyond the strip band, it tears off and follows the pointer until
-  it lands on a strip, an edge band or the "+N" list (F3-633). The panel body is divided along
-  diagonals into four side regions. Only the central Join tile or a strip slot joins as tabs; other
-  body regions split. A central guide shows the four sides around Join, and outer-side dock targets
-  plus thin left/right/bottom edge bands create a full-height or full-width panel; a drag starts
-  after 4 px of travel, a zone is adopted after 100 ms of dwell (skipped on release; retained under
-  Reduced Motion, which removes travel), and an adopted zone holds while the pointer stays within 12
-  px of it. Every drag runs the gesture transaction Home already uses and shares with the Usage
-  board's gesture kit (F3-HOME-002, F3-503, DR-066): the preview is local, nothing dispatches while
-  dragging, a changed release commits one command, an unchanged release, Escape, a pointer cancel, a
-  lost pointer capture, a lost window or a drop past the workspace commits nothing and restores the
-  exact earlier picture, and a failed commit rolls back. Every drag outcome also has a menu path and
-  a keyboard path (Move panel, Move to panel, Alt+Shift+arrows; F3-635). Motion: a panel glides into
-  its new place in 180 ms by default, in Friendly 220 ms, Glass 260 ms, Basic 200 ms, Retro 140 ms
-  in steps and NieR Mode 200 ms; the landing preview glides in 160 ms and fades in 140 ms;
-  neighbours slide aside in 250 ms on cubic-bezier(.22,1,.36,1); a tab settles in 160 ms on
-  cubic-bezier(.17,.84,.29,.99); a drop settles on a critically damped spring of stiffness 520 and
-  damping 45.6; a cancel returns in 300 ms; under Reduced Motion every one of these is 0. The
-  default layout, Home, keeps a full-width bottom row where the terminal sat before, 0.4 of the
-  centre's height: an ordinary panel row that holds any tab kind and can be split side by side. Four
-  named layouts ship. Home: a column of a row of 0.6 (a dashboard panel 0.5 holding the pinned Home
-  dashboard, F3-638, and a documents panel 0.5) over a tools row of 0.4 holding terminals and
-  Output. Build: a column of a row of 0.62 (documents 0.66 and a side panel 0.34 for browsers and
-  dashboards) over a row of 0.38 (terminals 0.6 and tools 0.4 holding Output and Problems).
-  Terminals 2x2: a column of two rows of two terminal panels, every size 0.5, one terminal in each,
-  new ones started where fewer than four are open, and every other tab joining the first panel in
-  the background. Focus: one panel holding every tab. Applying a named layout keeps every open tab:
-  no terminal session ends, no unsaved buffer is dropped, and each tab moves to the slot that holds
-  its kind (cmd.workspace_layout.apply_named). Restore home layout (cmd.workspace_layout.reset; the
-  Settings row general.startup.reset-home-layout) applies Home the same way, keeping every tab. A
-  user can save the current arrangement as a named layout (cmd.workspace_layout.save_named); a saved
-  layout keeps its shape, its sizes and the kinds each slot holds, never the tabs themselves. The
-  named and saved layouts, Save this layout... and Restore home layout sit in the panel menu's
-  Layouts submenu and in the title bar's Home options menu (F3-502). The layout persists in the v2
-  Home layout record `home_workspace_layout.v2:{project_id}:{workspace_tab_id}`, the only Home
-  layout authority (Plans/storage-plan.md#SP-330, Plans/home_workspace_layout_v2.schema.json),
-  through F3-HOME-004's write-then-read-back transaction; this unit does not restate its fields.
-  Narrow states (F3-636), menus, overlays and drags are never saved. A layout from before this
-  redesign is converted on first read and never reset: an upgrade never loses a user's tabs or
-  layout. Every committed change emits the one existing event workspace.layout_changed (CV-361); a
-  reveal of an open tab emits nothing. This unit supersedes F3-501 and the composition of
-  F3-HOME-001 (four fixed editor panels, the singleton dashboard, the chat as a movable surface,
-  terminal sections docked at the bottom), the fixed bottom runtime zone of sections 3.1, 3.2, 5 and
-  7.20 (F3-034, F3-035, F3-060, F3-061, F3-066, F3-151), F3-502's Collapse Bottom Terminal row, the
-  host registries, host caps and per-kind fair-share minimums of F3-HOME-002 and F3-503, and, for
-  home panels, section 5.8's 240 px panel minimum. A saved named layout also keeps at most 64 KB
-  (65,536 bytes) of its dashboard boards' contents; a larger save keeps the layout without those
-  contents, records boards_skipped_bytes and says so (SP-330). The guide responds immediately while
-  a stable-intent gate prevents a passing pointer from repeatedly rearranging the live preview. A
-  split ghost shows the resulting panel/tab, joining opens the destination strip slot, a moving
-  panel leaves an outline, and a source emptied by the move fades back. Escape returns the exact
-  earlier arrangement; release commits precisely the shown result. Every target name remains outside
-  the carried tab, pointer, other docks and preview tab/mark, including a resting pointer at bottom
-  and edge docks. Each zone has an ordered list of caption positions: choose the first with 12 px
-  clearance from the carried tab and pointer, retain it while at least 4 px remains clear, and
-  return to an earlier place only after 160 ms. Captions draw above the carried tab. After ordinary
-  clear positions fail, a position just past the carried tab is tried before sacrificing the preview
-  mark or tab. Bottom, left and right outer docks prefer above the carried tab; the top dock uses
-  below; the +N caption is below the strip. The existing clearance and hysteresis apply to every
-  candidate, so a resting pointer never hides a target name. While a carried tab rests over "+N",
-  that target stays under the pointer with no insertion gap pushing it away, shows "To the end", and
-  release appends the tab to that strip. Approaching through the end insertion slot or directly
-  produces the same settled target. The guide, captions and preview use each family's motion and
-  material; Reduced Motion keeps the legible end state without spatial travel. The screen reader
-  announces the held destination once its intent settles. F3-657 owns resize feedback. Jared’s
-  2026-10-14 grip correction puts the grip’s narrow end in the panel’s top-right corner. Orientation
-  changes no drag threshold, menu route or command. Move panel and Layouts levels consume the shared
-  F3-632 level/Back rule and F3-647 material; navigating them dispatches nothing.
+  (DL-180). Its layout is an n-ary split tree: a split is a row or a column of two or more children, each
+  child a panel or another split, and every leaf is a panel. A panel is a tab group, one tab strip (F3-631)
+  over one body, and any panel can hold any tab kind (F3-635). Every split has its own sizes, stored as
+  proportions of that split, never as pixels, so panel widths and heights are independent. The tree always
+  keeps these invariants: every leaf is a panel; a split has two or more children and never runs in its
+  parent's direction; every size is above 0.02; a tab lives in exactly one panel; pinned tabs come first in
+  their strip; a panel has at most one preview tab. A panel's minimum is the largest content minimum of its
+  tabs (F3-635) and never less than 280 x 120 px. Inserting a panel starts from half the target's share,
+  redistributing available room from neighbours when necessary to preserve every resulting panel's own
+  minimum; a new panel along the centre's outer edge takes 0.34 of the root. Removing a panel gives its
+  share to its previous sibling, else to the next. Closing the last tab of a panel closes the panel and its
+  neighbour takes the space, unless it is the only panel in the centre or the user locked it: then it stays
+  and shows the empty-panel launcher (F3-632). Closing a panel closes its tabs, each kind asking first where
+  it asks (F3-635). Locking a panel keeps it in place when its last tab closes, and automatic placement
+  skips it (F3-634). Split fit rule: offer a split whenever the complete resulting layout can meet each
+  panel's own minimum, borrowing available room from neighbours; drag, split menus, Move panel and
+  Alt+Shift+arrows use this one rule. For an unspecified side prefer right, then below, else refuse with a
+  reason. Panels are 6 px apart, the divider line in the middle of the gap, and the centre is inset 6 px
+  from the rail, the chat and the bars; a divider's hit target is 8 px. Dragging a divider moves only the
+  two neighbours it separates and commits once on release (cmd.workspace_layout.resize_surface); from the
+  keyboard, Tab reaches a divider, arrows move it 8 px, Shift+arrows 48 px, Home and End move it to a
+  neighbour's minimum, and Enter or a double click evens the two sides. A panel dragged below half its
+  minimum along the divider's axis collapses to its 35 px strip and keeps every tab and its state; dragging
+  it out again, or Expand in its panel menu, restores it (cmd.workspace_layout.set_collapsed). This replaces
+  Collapse Bottom Terminal for every panel. Maximize is a flag outside the tree: the maximized panel fills
+  the centre and the tree underneath does not change; Shift+Escape, the panel menu, or Escape while focus is
+  in its strip restores it (ui.workspace_layout.maximize, view state with no receipt and no event). Each
+  panel has a small corner grip and a panel menu (⋮) at the end of its strip: Split right, Split down,
+  Maximize or Restore, Collapse or Expand, Move panel, Lock panel or Unlock panel, Layouts, and Close panel.
+  A whole panel moves by its grip, or by Move panel from the menu or Enter on the grip
+  (cmd.workspace_layout.move_surface): beside another panel on any edge, along the centre's outer edge, or
+  into another panel as its tabs. A tab dragged into the diagonal region nearest a panel side splits on that
+  side (cmd.panel_tab.move with a split target); dropped on a strip, it moves into that panel at the drop
+  position; pulled off its strip by 14 px vertically or 40 px horizontally beyond the strip band, it tears
+  off and follows the pointer until it lands on a strip, an edge band or the "+N" list (F3-633). The panel
+  body is divided along diagonals into four side regions. Only the central Join tile or a strip slot joins
+  as tabs; other body regions split. A whole panel carried onto another panel's strip shows the exact
+  caption Join as tabs and reuses the existing join command and caption placement rule. A central guide
+  shows the four sides around Join, and outer-side dock targets plus thin left/right/bottom edge bands
+  create a full-height or full-width panel; a drag starts after 4 px of travel, a zone is adopted after 100
+  ms of dwell (skipped on release; retained under Reduced Motion, which removes travel), and an adopted zone
+  holds while the pointer stays within 12 px of it. Every drag runs the gesture transaction Home already
+  uses and shares with the Usage board's gesture kit (F3-HOME-002, F3-503, DR-066): the preview is local,
+  nothing dispatches while dragging, a changed release commits one command, an unchanged release, Escape, a
+  pointer cancel, a lost pointer capture, a lost window or a drop past the workspace commits nothing and
+  restores the exact earlier picture, and a failed commit rolls back. Every drag outcome also has a menu
+  path and a keyboard path (Move panel, Move to panel, Alt+Shift+arrows; F3-635). Motion: a panel glides
+  into its new place in 180 ms by default, in Friendly 220 ms, Glass 260 ms, Basic 200 ms, Retro 140 ms in
+  steps and NieR Mode 200 ms; the landing preview glides in 160 ms and fades in 140 ms; neighbours slide
+  aside in 250 ms on cubic-bezier(.22,1,.36,1); a tab settles in 160 ms on cubic-bezier(.17,.84,.29,.99); a
+  drop settles on a critically damped spring of stiffness 520 and damping 45.6; a cancel returns in 300 ms;
+  under Reduced Motion every one of these is 0. The default layout, Home, keeps a full-width bottom row
+  where the terminal sat before, 0.4 of the centre's height: an ordinary panel row that holds any tab kind
+  and can be split side by side. Four named layouts ship. Home: a column of a row of 0.6 (a dashboard panel
+  0.5 holding the pinned Home dashboard, F3-638, and a documents panel 0.5) over a tools row of 0.4 holding
+  terminals and Output. Build: a column of a row of 0.62 (documents 0.66 and a side panel 0.34 for browsers
+  and dashboards) over a row of 0.38 (terminals 0.6 and tools 0.4 holding Output and Problems). Terminals
+  2x2: a column of two rows of two terminal panels, every size 0.5, one terminal in each, new ones started
+  where fewer than four are open, and every other tab joining the first panel in the background. Focus: one
+  panel holding every tab. Applying a named layout keeps every open tab: no terminal session ends, no
+  unsaved buffer is dropped, and each tab moves to the slot that holds its kind
+  (cmd.workspace_layout.apply_named). Restore home layout (cmd.workspace_layout.reset; the Settings row
+  general.startup.reset-home-layout) applies Home the same way, keeping every tab. A user can save the
+  current arrangement as a named layout (cmd.workspace_layout.save_named); a saved layout keeps its shape,
+  its sizes and the kinds each slot holds, never the tabs themselves. The named and saved layouts, Save this
+  layout... and Restore home layout sit in the panel menu's Layouts submenu and in the title bar's Home
+  options menu (F3-502). The layout persists in the v2 Home layout record
+  `home_workspace_layout.v2:{project_id}:{workspace_tab_id}`, the only Home layout authority
+  (Plans/storage-plan.md#SP-330, Plans/home_workspace_layout_v2.schema.json), through F3-HOME-004's
+  write-then-read-back transaction; this unit does not restate its fields. Narrow states (F3-636), menus,
+  overlays and drags are never saved. A layout from before this redesign is converted on first read and
+  never reset: an upgrade never loses a user's tabs or layout. Every committed change emits the one existing
+  event workspace.layout_changed (CV-361); a reveal of an open tab emits nothing. This unit supersedes
+  F3-501 and the composition of F3-HOME-001 (four fixed editor panels, the singleton dashboard, the chat as
+  a movable surface, terminal sections docked at the bottom), the fixed bottom runtime zone of sections 3.1,
+  3.2, 5 and 7.20 (F3-034, F3-035, F3-060, F3-061, F3-066, F3-151), F3-502's Collapse Bottom Terminal row,
+  the host registries, host caps and per-kind fair-share minimums of F3-HOME-002 and F3-503, and, for home
+  panels, section 5.8's 240 px panel minimum. A saved named layout also keeps at most 64 KB (65,536 bytes)
+  of its dashboard boards' contents; a larger save keeps the layout without those contents, records
+  boards_skipped_bytes and says so (SP-330). The guide responds immediately while a stable-intent gate
+  prevents a passing pointer from repeatedly rearranging the live preview. A split ghost shows the resulting
+  panel/tab, joining opens the destination strip slot, a moving panel leaves an outline, and a source
+  emptied by the move fades back. Escape returns the exact earlier arrangement; release commits precisely
+  the shown result. Every target name remains outside the carried tab, pointer, other docks and preview
+  tab/mark, including a resting pointer at bottom and edge docks. Each zone has an ordered list of caption
+  positions: choose the first with 12 px clearance from the carried tab and pointer, retain it while at
+  least 4 px remains clear, and return to an earlier place only after 160 ms. Captions draw above the
+  carried tab. After ordinary clear positions fail, a position just past the carried tab is tried before
+  sacrificing the preview mark or tab. Bottom, left and right outer docks prefer above the carried tab; the
+  top dock uses below; the +N caption is below the strip. The existing clearance and hysteresis apply to
+  every candidate, so a resting pointer never hides a target name. While a carried tab rests over "+N", that
+  target stays under the pointer with no insertion gap pushing it away, shows "To the end", and release
+  appends the tab to that strip. Approaching through the end insertion slot or directly produces the same
+  settled target. The guide, captions and preview use each family's motion and material; Reduced Motion
+  keeps the legible end state without spatial travel. The screen reader announces the held destination once
+  its intent settles. F3-657 owns resize feedback. Jared’s 2026-10-14 grip correction puts the grip’s narrow
+  end in the panel’s top-right corner. Orientation changes no drag threshold, menu route or command. Move
+  panel and Layouts levels consume the shared F3-632 level/Back rule and F3-647 material; navigating them
+  dispatches nothing.
 gui_related: true
 gui_classification_reason: Defines the home centre's panel model, its layout tree, its named layouts and how panels move, split, collapse and persist.
 split_recommended: false
 depends_on: [DL-180, DL-181, F3-503]
 unblocks: [SP-330, CV-361, UCC-200, CS-100, WM-090, UIW-040, UIW-041, SSYS-050, DR-065, DR-066, ATS-075, GRRC-040]
 acceptance_criteria:
-- 'The layout is an n-ary split tree whose leaves are panels, sizes are proportions per split, and after every commit
-  the invariants hold: every leaf a panel, two or more children per split, no split in its parent''s direction, every
-  size above 0.02, each tab in exactly one panel, pinned tabs first, at most one preview tab per panel.'
-- Inserting a panel starts with half the target share, then the complete-layout fit allocator redistributes only as
-  needed to satisfy every visible minimum; a new panel at the centre's outer edge takes 0.34 of the root; a removed
-  panel's share goes to its previous sibling, else the next.
-- Closing the last tab closes the panel unless it is the only panel or locked, which then shows the empty-panel launcher;
-  a locked panel is skipped by automatic placement.
-- A requested split is offered when the complete layout can fit all visible minima after allocation; menus, keys and
-  drag previews use the same fit result.
-- A divider drag moves only its two neighbours and commits once on release; the divider keys move 8 px and 48 px,
-  Home and End reach a neighbour's minimum, and Enter or a double click evens the sides.
-- A panel dragged below half its minimum collapses to its 35 px strip with every tab and its state kept, and any panel,
-  the bottom row included, can collapse.
-- Maximize leaves the tree unchanged and restores with Shift+Escape, the panel menu or Escape in the strip; it emits
-  no event.
-- The default layout Home has a full-width bottom row of 0.4 that holds any tab kind, and Home, Build, Terminals 2x2
-  and Focus build exactly the trees and proportions stated here.
-- Applying a named layout or Restore home layout ends no terminal session, drops no unsaved buffer and closes no tab.
-- A tab dragged to one of the panel's diagonal split regions splits that panel; the center Join target and tab strip
-  alone merge; a tab pulled 14 px vertically or 40 px horizontally off its strip tears off; a whole panel moves by
-  its grip or Move panel; each drag has a menu and keyboard equivalent.
+- 'The layout is an n-ary split tree whose leaves are panels, sizes are proportions per split, and after every
+  commit the invariants hold: every leaf a panel, two or more children per split, no split in its parent''s direction,
+  every size above 0.02, each tab in exactly one panel, pinned tabs first, at most one preview tab per panel.'
+- Inserting a panel starts with half the target share, then the complete-layout fit allocator redistributes only
+  as needed to satisfy every visible minimum; a new panel at the centre's outer edge takes 0.34 of the root; a
+  removed panel's share goes to its previous sibling, else the next.
+- Closing the last tab closes the panel unless it is the only panel or locked, which then shows the empty-panel
+  launcher; a locked panel is skipped by automatic placement.
+- A requested split is offered when the complete layout can fit all visible minima after allocation; menus, keys
+  and drag previews use the same fit result.
+- A divider drag moves only its two neighbours and commits once on release; the divider keys move 8 px and 48
+  px, Home and End reach a neighbour's minimum, and Enter or a double click evens the sides.
+- A panel dragged below half its minimum collapses to its 35 px strip with every tab and its state kept, and any
+  panel, the bottom row included, can collapse.
+- Maximize leaves the tree unchanged and restores with Shift+Escape, the panel menu or Escape in the strip; it
+  emits no event.
+- The default layout Home has a full-width bottom row of 0.4 that holds any tab kind, and Home, Build, Terminals
+  2x2 and Focus build exactly the trees and proportions stated here.
+- Applying a named layout or Restore home layout ends no terminal session, drops no unsaved buffer and closes
+  no tab.
+- A tab dragged to one of the panel's diagonal split regions splits that panel; the center Join target and tab
+  strip alone merge; a tab pulled 14 px vertically or 40 px horizontally off its strip tears off; a whole panel
+  moves by its grip or Move panel; each drag has a menu and keyboard equivalent.
 - During a drag nothing dispatches; a changed release commits one command; Escape, pointer cancel, a lost pointer
-  capture, window blur, a drop past the workspace and an unchanged release restore the exact earlier layout with no
-  command, persistence or event; a failed commit rolls back.
+  capture, window blur, a drop past the workspace and an unchanged release restore the exact earlier layout with
+  no command, persistence or event; a failed commit rolls back.
 - Under Reduced Motion every glide, slide, settle and cancel duration is 0 and every drag still shows its landing
   preview.
-- Approaching "+N" directly or through the end insertion slot keeps the target under the resting pointer,
-  with no gap, a visible "To the end" caption and a release that appends the tab, in every look and Reduced Motion.
-- An existing Home layout from before this redesign opens converted, with its tabs, on first read; no upgrade resets
-  it.
-- No WorkNodes, NodeSeeds, executable queues, implementation files, runtime launches, or production build tasks are
-  created by this unit.
+- Approaching "+N" directly or through the end insertion slot keeps the target under the resting pointer, with
+  no gap, a visible "To the end" caption and a release that appends the tab, in every look and Reduced Motion.
+- An existing Home layout from before this redesign opens converted, with its tabs, on first read; no upgrade
+  resets it.
+- No WorkNodes, NodeSeeds, executable queues, implementation files, runtime launches, or production build tasks
+  are created by this unit.
+- A whole-panel drop onto another panel's strip displays Join as tabs, with the existing join command and caption
+  clearance/placement behavior.
 validation_surfaces:
   - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
   - python3 scripts/pm-plan-index.py validate
@@ -44487,22 +44501,23 @@ source_lineage:
   SHA-256 29bac44f166cb8e0e67f4f00634cb15d0a3be576eb2f68e7e19606f3a4a1a71c (source lineage; not native
   certification)
 preserved_exact_tokens:
-  - "n-ary split tree"
-  - "0.34"
-  - "0.02"
-  - "280 x 120"
-  - "35 px"
-  - "Home"
-  - "Build"
-  - "Terminals 2x2"
-  - "Focus"
-  - "Restore home layout"
-  - "cmd.workspace_layout.resize_surface"
-  - "cmd.workspace_layout.set_collapsed"
-  - "cmd.workspace_layout.move_surface"
-  - "ui.workspace_layout.maximize"
-  - "home_workspace_layout.v2:{project_id}:{workspace_tab_id}"
-  - "workspace.layout_changed"
+- n-ary split tree
+- '0.34'
+- '0.02'
+- 280 x 120
+- 35 px
+- Home
+- Build
+- Terminals 2x2
+- Focus
+- Restore home layout
+- cmd.workspace_layout.resize_surface
+- cmd.workspace_layout.set_collapsed
+- cmd.workspace_layout.move_surface
+- ui.workspace_layout.maximize
+- home_workspace_layout.v2:{project_id}:{workspace_tab_id}
+- workspace.layout_changed
+- Join as tabs
 negative_constraints:
   - "Do not reintroduce fixed editor panel slots, a singleton dashboard surface, terminal sections or a fixed bottom runtime zone."
   - "Do not store panel sizes in pixels or equalize siblings when a panel is inserted."

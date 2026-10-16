@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L32363-L32956
+Source lines: L32366-L32972
 
-Source SHA256: `0fe3f5d31ad816457e489d5066aa86cce3a2e4dc879b1a8b07f98b28db9b889f`
+Source SHA256: `ef219d9c3c18f4b2d4c1b66696f24c0c36da83975965f717d257758547ad4437`
 
 ---
 
@@ -84,26 +84,31 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
-  Shell elements carrying the sheen treatment, approximately 40 shell elements, keep their place as hover targets:
-  the sheen class marks them into the F3-465 merged hover system, which owns their whole hover look and motion. The
-  former sheen hover-lift and its glow (the base, Friendly and Glass `.pm-sheen:hover` lift, border and glow) are
-  retired in favour of F3-465 (DL-171), and no sheen element carries a hover-lift or glow of its own. Hover is driven
-  by event delegation from a shared pointer handler and executed through compositor-friendly writes rather than
-  per-frame style writes. Pointer parallax on background layers runs only while the glass theme family's depth
-  background mode is active, and all document-level pointer-move work, including parallax sampling and the F3-465
-  hover driver, is merged into a single shared document pointer-move handler (`window.PM7_PMOVE` in the concept)
-  that every consumer hooks into rather than listening itself. Parallax is fully disabled under reduced motion, and
-  F3-465 sets the hover's reduced-motion form.
+  Shell elements carrying the sheen treatment, approximately 40 shell elements, keep their place as hover
+  targets: the sheen class marks them into the F3-465 merged hover system, which owns their whole hover look
+  and motion. The former sheen hover-lift and its glow (the base, Friendly and Glass `.pm-sheen:hover` lift,
+  border and glow) are retired in favour of F3-465 (DL-171), and no sheen element carries a hover-lift or
+  glow of its own. Hover is driven by event delegation from a shared pointer handler and executed through
+  compositor-friendly writes rather than per-frame style writes. Amended 2026-10-16 (SSYS-054/SP-333): the
+  former glass depth background mode and its pointer parallax obligation are retired compatibility/source
+  lineage; no current Wallpaper selection enables that old mode or revives its sampler. All active
+  document-level pointer-move work, including the F3-465 hover driver, remains merged into a single shared
+  document pointer-move handler (`window.PM7_PMOVE` in the concept) that every consumer hooks into rather
+  than listening itself. The retired parallax sampler stays inactive under every motion preference; F3-465
+  sets the active hover's reduced-motion form.
 gui_related: true
 gui_classification_reason: This unit defines the sheen hover targets, glass depth parallax and the single merged pointer-move handler on shell controls.
 split_recommended: false
 depends_on: [F3-428]
 unblocks: [F3-465]
 acceptance_criteria:
-- "Sheen-treated shell elements are F3-465 hover targets and show F3-465's hover; no `.pm-sheen:hover` lift, border or glow of their own remains in any family."
-- "Pointer parallax runs only in the glass depth background mode, and exactly one merged document pointer-move handler services parallax, delegated hover effects, and the F3-465 hover driver."
-- "With reduced motion active, parallax is disabled and the sheen elements show F3-465's reduced-motion hover."
-- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+- Sheen-treated shell elements are F3-465 hover targets and show F3-465's hover; no `.pm-sheen:hover` lift, border
+  or glow of their own remains in any family.
+- The retired glass depth mode activates no pointer parallax; exactly one merged document pointer-move handler
+  services active delegated hover effects and the F3-465 hover driver.
+- With reduced motion active, the sheen elements show F3-465's reduced-motion hover; the retired parallax sampler
+  remains inactive.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
 validation_surfaces:
 - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
 - "python3 scripts/pm-plan-index.py validate"
@@ -124,9 +129,9 @@ preserved_exact_tokens:
 - "parallax"
 - "depth"
 negative_constraints:
-- "Do not attach per-control pointer-move listeners or multiple document pointer-move handlers for these effects."
-- "Do not run pointer parallax outside the glass depth background mode."
-- "Do not restore a sheen hover-lift or glow beside the F3-465 hover."
+- Do not attach per-control pointer-move listeners or multiple document pointer-move handlers for these effects.
+- Do not reactivate the retired glass depth mode or its pointer parallax sampler through a Wallpaper selection.
+- Do not restore a sheen hover-lift or glow beside the F3-465 hover.
 compatibility_only_notes:
 - "Slint portability: the sheen elements' hover follows F3-465's Slint notes; parallax maps to a translate on opaque precomputed background layers with no per-frame style writes; no arbitrary-content backdrop blur, no SVG filters, and color math is precomputed rather than runtime-mixed."
 stale_retired_dispositions:
@@ -530,37 +535,43 @@ status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
   This unit owns the shared alert store. Alerts carry an acknowledge (ack) and snooze lifecycle:
-  acknowledging clears an alert's unread state, snoozing hides the alert until its snooze window
-  elapses, and unresolved alerts persist in the store and render in the title-bar sprout inbox list.
-  Unread alerts drive the count badge on the title-bar notification stack (F3-460). The title-bar
-  collapsed stack and the sprout inbox panel render from this one alert store; no surface keeps a
-  private copy of alert state. The inbox sorts Needs you first, then groups by source (Usage, Runs,
-  Planning, Agents, Settings, Projects); a group with at least three notices folds to a newest-first
-  deck and opens without changing its underlying work. The badge counts unread, not all retained
-  items. Opening the inbox marks the items actually shown read after about one second of reading;
-  hidden/unshown items do not become read by implication. Dismiss/Delete and Clear all remove inbox
-  presentation, never approve, deny or resolve domain work. After Clear all, later arrivals and a
-  reopened inbox show their headings and rows normally. Existing approval, permission, FileSafe and
-  concern actions keep their owner commands, reasons and holds. A blocking item's attention ring
-  remains until its underlying need is resolved; dismissing a card alone is not that resolution.
-  Read projection is CS-102's ui.notifications.mark_visible_read, distinct from an explicit domain
-  acknowledge action. Dismiss/Delete and Clear all use UCC-204's existing alert-command composition;
-  a refused item remains visible and arrivals after the captured Clear all set are retained. A setup
-  or resume prompt that joins under F3-447 is an owner-linked entry in this same inbox and
-  participates in its unread badge, not a private durable task or new approval. Continue forwards
-  the original prompt's existing typed ui.onboarding.* action and owner context under
-  UCC-106/PWIZ-021–023. The owner removing that prompt removes its inbox projection.
-  Dismissal/read/placement never completes setup, skips the tour or resolves its underlying need.
+  acknowledging clears an alert's unread state, snoozing hides the alert until its snooze window elapses,
+  and unresolved alerts persist in the store and render in the title-bar sprout inbox list. Unread alerts
+  drive the count badge on the title-bar notification stack (F3-460). The title-bar collapsed stack and the
+  sprout inbox panel render from this one alert store; no surface keeps a private copy of alert state. The
+  inbox sorts Needs you first, then groups by source (Usage, Runs, Planning, Agents, Settings, Projects); a
+  group with at least three notices folds to a newest-first deck and opens without changing its underlying
+  work. The badge counts unread, not all retained items. Opening the inbox marks the items actually shown
+  read after about one second of reading; hidden/unshown items do not become read by implication.
+  Dismiss/Delete and Clear all remove inbox presentation, never approve, deny or resolve domain work. After
+  Clear all, later arrivals and a reopened inbox show their headings and rows normally. Existing approval,
+  permission, FileSafe and concern actions keep their owner commands, reasons and holds. A blocking item's
+  attention ring remains until its underlying need is resolved; dismissing a card alone is not that
+  resolution. Read projection is CS-102's ui.notifications.mark_visible_read, distinct from an explicit
+  domain acknowledge action. Dismiss/Delete and Clear all use UCC-204's existing alert-command composition;
+  a refused item remains visible and arrivals after the captured Clear all set are retained. A setup or
+  resume prompt that joins under F3-447 is an owner-linked entry in this same inbox and participates in its
+  unread badge, not a private durable task or new approval. Continue forwards the original prompt's own
+  typed action and owner context: the setup prompt uses ui.onboarding.start with admitted resume intent and
+  the closed pm.product_onboarding.action_request.v2 context (PWIZ-021/UCC-106); the tour-resume prompt uses
+  ui.guided_tour.resume with its session, safe checkpoint and currentness context under
+  pm.guided_tour.action_request.v3 (PWIZ-023). Each route retains its owner's validation and effects. The
+  owner removing that prompt removes its inbox projection. Dismissal/read/placement never completes setup,
+  skips the tour or resolves its underlying need.
 gui_related: true
 gui_classification_reason: This unit defines the shared alert store, alert lifecycle controls, and the unread indicator contract.
 split_recommended: false
 depends_on: [F3-042]
 unblocks: []
 acceptance_criteria:
-- "Alerts support acknowledge and snooze; ack clears unread state and snooze hides the alert until its snooze window elapses; unresolved alerts persist in the shared alert store."
-- "Unread alerts drive the count badge on the title-bar notification stack (F3-460)."
-- "The title-bar collapsed stack and the sprout inbox panel render from one shared alert store; no surface keeps a private alert copy."
-- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+- Alerts support acknowledge and snooze; ack clears unread state and snooze hides the alert until its snooze window
+  elapses; unresolved alerts persist in the shared alert store.
+- Unread alerts drive the count badge on the title-bar notification stack (F3-460).
+- The title-bar collapsed stack and the sprout inbox panel render from one shared alert store; no surface keeps
+  a private alert copy.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+- Setup and Guided Tour bell Continue entries retain their distinct existing typed actions and request schemas;
+  neither routes to the other owner's flow.
 validation_surfaces:
 - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
 - "python3 scripts/pm-plan-index.py validate"
@@ -583,9 +594,11 @@ source_lineage:
 - /mnt/Cursor/share/puppet-master/2026-10-16-plans-pass2/sources/opus-5.5--src--js--19-notify.js, SHA-256
   80f415f7e4ef676748322cdf8ce40ea25b4a0adfa5897d4002e83f2ae327f667 (source lineage; not native certification)
 preserved_exact_tokens:
-- "ack"
-- "snooze"
-- "count badge"
+- ack
+- snooze
+- count badge
+- ui.onboarding.start
+- ui.guided_tour.resume
 negative_constraints:
 - "No surface may maintain a private alert copy; the title-bar collapsed stack and the sprout inbox panel consume the one shared alert store."
 - "Alert severity, source, and owner-route data follow the shared notification model; the inbox panel must not invent local alert state."

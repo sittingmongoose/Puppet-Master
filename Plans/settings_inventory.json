@@ -23489,7 +23489,7 @@
   {
    "id": "code.terminal.bezel-reflection",
    "label": "Bezel Reflection",
-   "desc": "Auto follows the material reflectivity in F3-643; an explicit 0–1 value overrides it. This edition retains the round-3 continuous control.",
+   "desc": "Auto is retained as the stored default. Numeric 0\u20131 reflection values remain readable compatibility inputs; final offered range, steps and material levels are pending terminal round 5 under F3-643.",
    "type": "slider",
    "default": "Auto",
    "scope": [
@@ -23508,7 +23508,7 @@
   {
    "id": "code.terminal.phosphor-mask",
    "label": "Phosphor Mask",
-   "desc": "Full CRT mask, off by default; drawn only at device pixel ratio 2 or higher in the round-3 contract.",
+   "desc": "Full CRT phosphor mask, off by default. Its display-density and capability behavior is pending terminal round 5 (F3-643); the published DPR-1 no-op remains an acceptance defect.",
    "type": "toggle",
    "default": false,
    "scope": [
