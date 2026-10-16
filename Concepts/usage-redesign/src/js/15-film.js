@@ -1899,6 +1899,22 @@
      shows (data-pmu-warm-wait off) and its plates rise; the bodies' entrances are made in the next task, after this
      frame's layout and paint */
   function nextFrame(fn) { requestAnimationFrame(function () { requestAnimationFrame(fn); }); }
+  /* the page's own entrance (pm8-page-in) held by the shell: after a long frame the shell keeps a page's moves at their
+     start until two frames in a row come on time (PM_START_ON_SHOWN, at most 6 frames). The board's first frame waits
+     for that, then comes in the frame after it: a board shown into those frames kept them late, and the page stood at
+     opacity 0 for all six (P1000 film, NieR Dark: 570 ms of blank page after Home left). Read after the frame's layout
+     (PM_AFTER_LAYOUT, the shell's), so the check forces no style; without the shell's hold, two frames as before. */
+  function pageHeld() {
+    var p = document.getElementById('panel-usage');
+    if (!p || !p.getAnimations) return false;
+    return p.getAnimations().some(function (a) { return a.animationName === 'pm8-page-in' && a.playState === 'paused'; });
+  }
+  function afterPage(fn) {
+    var n = 0, after = window.PM_AFTER_LAYOUT;
+    if (typeof after !== 'function' || typeof window.PM_START_ON_SHOWN !== 'function') { nextFrame(fn); return; }
+    var check = function () { if (pageHeld() && ++n < 10) { requestAnimationFrame(function () { after(check); }); return; } requestAnimationFrame(fn); };
+    requestAnimationFrame(function () { after(check); });
+  }
   function warmShow(w, board) {
     var scroll = board.parentNode;
     if (scroll) scroll.removeAttribute('data-pmu-warm-wait');
@@ -1906,12 +1922,15 @@
     if (PMU.board.viewNow) PMU.board.viewNow(true);
   }
   function warmArrive(w, m, board) {
-    nextFrame(function () {
+    afterPage(function () {
       if (moment !== m) { warmShow(w, board); Array.prototype.forEach.call(board.querySelectorAll(':scope > .pmu-card[data-body-wait]'), function (c) { c.removeAttribute('data-body-wait'); }); return; }
       warmShow(w, board);
       var cards = PMU.board.cardsNow();
-      /* the plates rise as in the held arrival, from about 72 ms after the click (its frames started 40 ms after a build two
-         frames into the page) */
+      /* the plates rise as in the held arrival, about 72 ms into the moment (its frames started 40 ms after a build two
+         frames into the page); a board shown later (a slow machine, the page's entrance held) moves the moment's clock
+         on, so the wave, the hero's light and the bodies play in full from here */
+      var late = since(m) - 72;
+      if (late > 0) { m.t0 += late * M.speed(); m.lag = late; }
       w.framedAt = since(m);
       frames(cards, { dir: 0, base: Math.max(0, 72 - w.framedAt), board: board });
       board.setAttribute('data-film', '');
@@ -1948,7 +1967,7 @@
   }
   /* Reduce Motion: the warm board shows in the frame after the click, whole, and dissolves in as the calm entry does */
   function warmCalm(w, board) {
-    nextFrame(function () {
+    afterPage(function () {
       warmShow(w, board);
       Array.prototype.forEach.call(board.querySelectorAll(':scope > .pmu-card[data-body-wait]'), function (c) { c.removeAttribute('data-body-wait'); });
       var keys = Object.keys(w.shares || {});
@@ -1989,13 +2008,14 @@
        app just switched to, and the held mount's width read inside it forced that whole layout into the click task, then
        built every frame on top of it (Mac: the Usage tab's click frame 132-143 ms, about 30 ms over any other page's).
        Nothing shows a frame later than before: the shell's power-on and the frames all start from opacity 0 on delays of
-       40 ms and more. Until then the last visit's board is held hidden (data-held). */
+       40 ms and more. Until then the last visit's board is held hidden (data-held). The build also waits for the shell
+       to start the page's own entrance (afterPage, motion QA P2-03). */
     board.setAttribute('data-held', '');
-    requestAnimationFrame(function () { requestAnimationFrame(function () {
+    afterPage(function () {
       if (hold !== h || moment !== m) return;
       PMU.board.mount(st.room, { held: true, onBuilt: function (cards) { if (hold === h) h.built = true; else if (moment === m && m.released) allBuilt(h.room, cards || []); } });
       watch(h);
-    }); });
+    });
   }
   /* a board class change while held rebuilds the board held under the same arrival (never the instant remount) */
   function rehold(onBuilt) {
