@@ -118,7 +118,8 @@ THEME = [
 THEME.append(
     # B4: the theme's search-width kick announced a resize inside the attribute observer, so every resize listener of
     # the page measured the half-restyled page there (the tab ink, the rail, Chat, Usage: two to four extra forced
-    # style passes, 300-500 ms on the P1000). The listeners still hear it once, after the new look has painted.
+    # style passes, 300-500 ms on the P1000). The listeners still hear it once, from the first ResizeObserver delivery
+    # after the new look's layout (style and layout already done for that frame, so nothing is pulled forward).
     ("    new MutationObserver(function (muts) {\n"
      "      for (var i = 0; i < muts.length; i++) {\n"
      "        if (muts[i].attributeName === 'data-theme') { kickSearchDensity(); break; }\n"
@@ -127,7 +128,14 @@ THEME.append(
      "    new MutationObserver(function (muts) {\n"
      "      for (var i = 0; i < muts.length; i++) {\n"
      "        if (muts[i].attributeName === 'data-theme') {\n"
-     "          if (!kickPending) { kickPending = true; requestAnimationFrame(function () { setTimeout(function () { kickPending = false; kickSearchDensity(); }, 0); }); }\n"
+     "          if (!kickPending) {\n"
+     "            kickPending = true;\n"
+     "            /* inside the first ResizeObserver delivery after the new look's layout: style and layout are already\n"
+     "               computed for that frame, so the listeners' reads never pull a pending restyle forward */\n"
+     "            var kickRo = typeof ResizeObserver === 'function' ? new ResizeObserver(function () { kickRo.disconnect(); kickPending = false; kickSearchDensity(); }) : null;\n"
+     "            if (kickRo) kickRo.observe(document.documentElement);\n"
+     "            else requestAnimationFrame(function () { setTimeout(function () { kickPending = false; kickSearchDensity(); }, 0); });\n"
+     "          }\n"
      "          break;\n"
      "        }\n"
      "      }\n",

@@ -198,6 +198,22 @@ function applyDrop() {
 }
 /* the notices ask before a toast's time starts (19-notify.js stage()) */
 window.PM_NOTICE_PLACE = applyDrop;
+/* A placement asked for by a frame (a scroll, an overlay opening, a page change) reads its boxes once that frame's own
+   style and layout are done, from the first ResizeObserver delivery after them, not in an animation frame callback
+   before them: there the read pulled a pending whole-page restyle (a look change, NieR Mode under its calm cover)
+   forward into the frame that should first show the change (49 and 32 ms on the M3, final motion QA 2026-10-16). */
+var layoutQ = [], layoutRo = null;
+function afterLayout(fn) {
+  if (typeof ResizeObserver !== 'function') { fn(); return; }
+  if (layoutQ.indexOf(fn) < 0) layoutQ.push(fn);
+  if (layoutRo) return;
+  layoutRo = new ResizeObserver(function () {
+    layoutRo.disconnect(); layoutRo = null;
+    var q = layoutQ; layoutQ = [];
+    for (var i = 0; i < q.length; i++) { try { q[i](); } catch (e) { /* the next ask places it */ } }
+  });
+  layoutRo.observe(doc.documentElement);
+}
 shell.installNotices = function () {
   if (shell.noticesOn) return true;
   var stage = doc.getElementById('rsStage');
@@ -216,14 +232,14 @@ shell.installNotices = function () {
   var pending = 0;
   function later() {
     if (pending || !stage.firstElementChild) return;
-    pending = requestAnimationFrame(function () { requestAnimationFrame(function () { pending = 0; applyDrop(); }); });
+    pending = requestAnimationFrame(function () { requestAnimationFrame(function () { pending = 0; afterLayout(applyDrop); }); });
   }
   ['pointerdown', 'keydown', 'focusin'].forEach(function (t) { doc.addEventListener(t, later, true); });
   /* the page scrolling controls under cards already shown: placed again once per frame */
   var scrollQ = 0;
   doc.addEventListener('scroll', function () {
     if (scrollQ || !stage.firstElementChild) return;
-    scrollQ = requestAnimationFrame(function () { scrollQ = 0; applyDrop(); });
+    scrollQ = requestAnimationFrame(function () { scrollQ = 0; afterLayout(applyDrop); });
   }, { capture: true, passive: true });
   /* a page change: measure again once the new page shows (its strips are laid out two frames on), while a card shows.
      Only a page's own class counts: every class change inside the pages measured too, and a Usage room change makes
@@ -233,7 +249,7 @@ shell.installNotices = function () {
     if (turn || !stage.firstElementChild) return;
     for (var i = 0; i < list.length; i++) {
       if (list[i].target.parentElement !== main) continue;
-      turn = requestAnimationFrame(function () { requestAnimationFrame(function () { turn = 0; applyDrop(); }); });
+      turn = requestAnimationFrame(function () { requestAnimationFrame(function () { turn = 0; afterLayout(applyDrop); }); });
       return;
     }
   }).observe(main, { attributes: true, subtree: true, attributeFilter: ['class'] });
