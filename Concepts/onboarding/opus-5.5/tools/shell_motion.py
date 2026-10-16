@@ -410,7 +410,116 @@ CHAT.append(
      "      resyncFrame = requestAnimationFrame(function () { resyncFrame = 0; resync(); });\n",
      'page-tab ink: theme resync after layout'))
 
-PATCHES = STATUS_BAR + HOVER_TAGS + THEME + PAGES + CENSUS + ANSWER_FIRST + CHAT
+EDGES = [
+    # B5 (Settings lane, frozen 25b13069be): the scroll edges' flush ran in an animation frame callback, before the
+    # frame's style, and read every dirty scroller's scroll metrics, then wrote their classes, then read each band's
+    # scroller geometry (getComputedStyle, offsets) after the band before it was moved: the first reader of a look
+    # change's whole-page restyle and a read after every write (114-151 ms forced per NieR switch on the P1000). It now
+    # runs after the frame's layout (PM_AFTER_LAYOUT, js/11-motion-start.js), reads everything first and writes after,
+    # and waits under a look's or the boot's cover and while a NieR switch is still to paint (PM_BUSY): the page is
+    # hidden there. Page changes, Usage moments and the onboarding window keep it live, since the edges show there.
+    # The edges are the same: the same reads, written in the same frame.
+    ("    function layoutBands(el, st) {\n"
+     "      if (!st.bands) return;\n"
+     "      try {\n"
+     "        var cs = window.getComputedStyle(el);\n"
+     "        var x = el.offsetLeft + (parseFloat(cs.borderLeftWidth) || 0);\n"
+     "        var y = el.offsetTop + (parseFloat(cs.borderTopWidth) || 0);\n"
+     "        var w = el.clientWidth, h = el.clientHeight, s;\n",
+     "    /* O55: a band's scroller geometry, read apart from its writes (B5) */\n"
+     "    function bandGeom(el) {\n"
+     "      var cs = window.getComputedStyle(el);\n"
+     "      return { x: el.offsetLeft + (parseFloat(cs.borderLeftWidth) || 0), y: el.offsetTop + (parseFloat(cs.borderTopWidth) || 0), w: el.clientWidth, h: el.clientHeight };\n"
+     "    }\n"
+     "    function layoutBands(el, st, g) {\n"
+     "      if (!st.bands) return;\n"
+     "      try {\n"
+     "        if (!g) g = bandGeom(el);\n"
+     "        var x = g.x, y = g.y, w = g.w, h = g.h, s;\n",
+     'scroll edges: band geometry read apart'),
+    ("    function schedule() {\n"
+     "      if (!rafId) {\n"
+     "        try { rafId = window.requestAnimationFrame(flush); }\n",
+     "    /* O55: the flush runs after the frame's layout; under a look's or the boot's cover it waits, a frame at a time,\n"
+     "       with the dirty scrollers kept (B5) */\n"
+     "    function edgesHeld() {\n"
+     "      var f = window.PM_BUSY, why = '';\n"
+     "      try { why = typeof f === 'function' ? f() : ''; } catch (e) { why = ''; }\n"
+     "      return why === 'reboot' || why === 'calm' || why === 'theme' || why === 'boot' || why === 'nier';\n"
+     "    }\n"
+     "    function flushAfterLayout() {\n"
+     "      if (!document.hidden && edgesHeld()) { rafId = window.requestAnimationFrame(flushAfterLayout); return; }\n"
+     "      if (typeof window.PM_AFTER_LAYOUT === 'function') window.PM_AFTER_LAYOUT(flush); else flush();\n"
+     "    }\n"
+     "    function schedule() {\n"
+     "      if (!rafId) {\n"
+     "        try { rafId = window.requestAnimationFrame(flushAfterLayout); }\n",
+     'scroll edges: flush after layout'),
+    ("    function relayoutVisible() {\n"
+     "      var scope = geometryScope || pageScope();\n"
+     "      enrolled.forEach(function (el) {\n"
+     "        var st = el.__pmEdge, page = el.closest && el.closest('.primary-content > .page');\n"
+     "        if (page && scope && !scope.contains(el)) return;\n"
+     "        if (st && st.bands && isVisible(el)) layoutBands(el, st);\n"
+     "      });\n"
+     "    }\n",
+     "    /* O55: every visible band's geometry read first, then every band placed (B5) */\n"
+     "    function readVisibleGeometry() {\n"
+     "      var scope = geometryScope || pageScope(), out = [];\n"
+     "      enrolled.forEach(function (el) {\n"
+     "        var st = el.__pmEdge, page = el.closest && el.closest('.primary-content > .page');\n"
+     "        if (page && scope && !scope.contains(el)) return;\n"
+     "        if (st && st.bands && isVisible(el)) { try { out.push({ el: el, st: st, g: bandGeom(el) }); } catch (e) {} }\n"
+     "      });\n"
+     "      return out;\n"
+     "    }\n"
+     "    function relayoutVisible(geom) {\n"
+     "      (geom || readVisibleGeometry()).forEach(function (o) { layoutBands(o.el, o.st, o.g); });\n"
+     "    }\n",
+     'scroll edges: visible geometry read before it is written'),
+    ("        for (var i = 0; i < ops.length; i++) {\n"
+     "          try { writeState(ops[i].el, ops[i].st, ops[i].s); } catch (e) {}\n"
+     "        }\n",
+     "        /* O55: the bands' geometry is read with the scroll metrics, before any class is written (B5) */\n"
+     "        var geom = null;\n"
+     "        if (geomDirty && !document.body.classList.contains('pm-resizing')) { geomDirty = false; geom = readVisibleGeometry(); }\n"
+     "        for (var i = 0; i < ops.length; i++) {\n"
+     "          try { writeState(ops[i].el, ops[i].st, ops[i].s); } catch (e) {}\n"
+     "        }\n"
+     "        if (geom) relayoutVisible(geom);\n",
+     'scroll edges: reads before writes'),
+]
+
+FIELD = [
+    # B5 (Settings lane, frozen 25b13069be: getComputedStyle(bloomSrc).borderRadius, 126 ms forced on Basic's NieR off):
+    # the PM8 pointer field's loop reads every target's rect and, after a look change, the bloom host's radius, in an
+    # animation frame callback. With the pointer on the control that changed the look, the loop was the first reader
+    # of its whole-page restyle. Under a look's cover (PM_LOOK_COVERED, js/12-theme-transition.js) it now holds, the way
+    # it holds through a resizer drag, and measures again once the page shows; the look's field values are read after
+    # layout once the cover has gone. The field is the same once the page shows.
+    ("      if (document.body.classList.contains('pm-resizing')) {\n"
+     "        baseDirty = true;\n"
+     "        requestAnimationFrame(tick);\n"
+     "        return;\n"
+     "      }\n",
+     "      if (document.body.classList.contains('pm-resizing')) {\n"
+     "        baseDirty = true;\n"
+     "        requestAnimationFrame(tick);\n"
+     "        return;\n"
+     "      }\n"
+     "      /* O55: held under a look's cover (B5) */\n"
+     "      if (typeof window.PM_LOOK_COVERED === 'function' && window.PM_LOOK_COVERED()) { baseDirty = true; requestAnimationFrame(tick); return; }\n",
+     'pointer field: held under a cover'),
+    ("if (!themeFrame) themeFrame = requestAnimationFrame(function () { themeFrame = 0; readTheme(); });",
+     "if (!themeFrame) themeFrame = requestAnimationFrame(function themeSoon() {   /* O55: after layout, once the cover has gone (B5) */\n"
+     "          if (typeof window.PM_LOOK_COVERED === 'function' && window.PM_LOOK_COVERED()) { themeFrame = requestAnimationFrame(themeSoon); return; }\n"
+     "          var go = function () { themeFrame = 0; readTheme(); };\n"
+     "          if (typeof window.PM_AFTER_LAYOUT === 'function') window.PM_AFTER_LAYOUT(go); else go();\n"
+     "        });",
+     'pointer field: look values after layout'),
+]
+
+PATCHES = STATUS_BAR + HOVER_TAGS + THEME + PAGES + CENSUS + ANSWER_FIRST + CHAT + EDGES + FIELD
 
 # The census's own frame requests, between scheduleScan and refresh (scan, delayed scan, live, delayed live, and their
 # continuations): every one becomes censusFrame.
