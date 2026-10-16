@@ -1298,6 +1298,8 @@ function mountEditor(host, st, api) {
   var V = null;                                     // the row model for the current mode
   var caret = { r: 0, c: 0 }, anchor = null, side = 'r', goalCol = -1;
   var focused = !!preview, visible = true, alive = true, dimmed = false;
+  var pageHost = preview ? null : host.closest('#panel-dashboard'), pendingLayout = false;
+  function isShown() { return visible && (!pageHost || pageHost.classList.contains('active')); }
   /* while a Customize screen is open on this editor, it draws what it draws when focused (the caret, the current line's
      band), though the screen has the focus: it is the preview beside the screen, and a blurred editor showed none of
      the caret's or the current line's choices */
@@ -2464,9 +2466,9 @@ function mountEditor(host, st, api) {
     }
   }
   function queueDraw() {
-    if (timers.drawQueued) return;
+    if (timers.drawQueued || !isShown()) return;
     timers.drawQueued = true;
-    requestAnimationFrame(function () { if (alive) drawTrack(); });
+    requestAnimationFrame(function () { timers.drawQueued = false; if (alive && isShown()) drawTrack(); });
   }
 
   /* track pointer: grab keeps its offset, a track press centres the thumb and keeps dragging, Escape cancels */
@@ -3601,7 +3603,9 @@ function mountEditor(host, st, api) {
   }
   function onResize(sz) {
     if (!alive) return;
-    if (!firstDone) { firstPaint(); return; }
+    if (!isShown()) { pendingLayout = true; return; }
+    if (!firstDone) { pendingLayout = false; firstPaint(); return; }
+    if (pendingLayout) { pendingLayout = false; resolveLayout(false); relayoutAll(); return; }
     if (sz && sz.final === false && mode === 'diff') { layout(); renderRows(true); renderOverlays(); updateThumb(); return; }
     var changed = resolveLayout(false);
     if (!changed) { layout(); renderRows(true); renderOverlays(); updateThumb(); updateHbar(); sticky._key = null; updateSticky(); }
@@ -3609,6 +3613,9 @@ function mountEditor(host, st, api) {
   }
   function relayoutAll() {
     if (!firstDone) return;
+    // Settings can change a mounted editor while Home is hidden. Measure it
+    // when it is shown, at its real size; the Customize preview stays live.
+    if (!isShown()) { pendingLayout = true; return; }
     var top = topRow();
     measure();
     layout();
@@ -3701,6 +3708,7 @@ function mountEditor(host, st, api) {
     if (!firstDone || (same && !reopened)) return;
     var g = JSON.stringify([R.font, R.lines.numbers, R.lines.wrap, R.lines.wrapColumn, R.lines.minimap, R.motion.pastEnd, R.lines.rulers]);
     var l = rowLookKey();
+    if (!isShown()) { pendingLayout = true; geoSig = g; lookSig = l; colorCache = null; return; }
     if (prev.behavior.diffLayout !== R.behavior.diffLayout && mode === 'diff' && !diffLayoutPick) resolveLayout(true);
     // the header's height can only change with the look (its face and spacing), never with colours: reading it forces
     // the whole page to restyle and lay out at once, so it is read only when the look itself changed
@@ -3819,7 +3827,13 @@ function mountEditor(host, st, api) {
       return out;
     },
     onResize: onResize,
-    onShow: function () { visible = true; if (!firstDone) { firstPaint(); return; } queueDraw(); },
+    onShow: function () {
+      visible = true;
+      if (!isShown()) return;
+      if (!firstDone) { pendingLayout = false; firstPaint(); return; }
+      if (pendingLayout) { pendingLayout = false; resolveLayout(false); relayoutAll(); return; }
+      queueDraw();
+    },
     onHide: function () { visible = false; clearTimeout(scrollIdle); if (R.behavior.autosave === 'focus') autoSave(); },
     // the host's focus lifecycle (CONTRACT section 3): Fade editors I'm not in steps this editor back while another
     // panel has the focus
