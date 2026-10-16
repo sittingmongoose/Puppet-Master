@@ -1322,8 +1322,9 @@
      frame (Mac films: a 37 px snap), and the Costs room that had started to arrive showed through the part of the board
      the cut had uncovered. The change is reversed instead. The room the user goes back to is the room still on screen, so
      it becomes the live board again as it stands (40-board.js; nothing is built again); it drifts back from where it
-     stands to rest on an even ease, about 12.5 ms per pixel of travel (240-560 ms, so no frame moves it more than about
-     2 px), its cut or lens closes from where it stands (180 OUT), its defocus and fade with it; the room that was arriving
+     stands to rest on an even ease, about 12.5 ms per pixel its corners travel (240-720 ms: Glass's pull-back is the
+     longest, about 70 px at its corners; no frame moves it much more than 2 px), its cut or lens closes from where it
+     stands (180 OUT), its defocus and fade with it; the room that was arriving
      goes in the click's own frame. Retro and NieR keep their erase and rebuild until Jared rules on it (A13). */
   function reversible(el) {
     var m = moment, G = m && m.ghost, f = fam();
@@ -1349,7 +1350,8 @@
     });
     return d;
   }
-  /* the old room back to rest from s (readBack). o.shift: px the board moves down when the scroll it kept is given back
+  /* the old room back to rest from s (readBack): the drift on an even ease (EXIT) for 12.5 ms per pixel of travel, 240-720;
+     the cut, lens, defocus and fade in 180 OUT. o.shift: px the board moves down when the scroll it kept is given back
      (its keyframes start that much lower, so nothing moves on screen); o.iris: the lens it closes; o.transformOnly: the
      drift alone (keepRoom closes the cut itself); o.rest: the transform it rests at, held (a kept room keeps the scroll
      offset it left with until swapKept gives the scroll back) */
@@ -1358,7 +1360,7 @@
     var out = { move: null, close: null, ms: 0 }, shift = o.shift ? 'translateY(' + o.shift + 'px) ' : '';
     var tf0 = (s.tf && s.tf !== 'none') ? s.tf : '';
     if (tf0 || shift) {
-      var ms = Math.round(Math.max(240, Math.min(560, travelOf(s) * 12.5)));
+      var ms = Math.round(Math.max(240, Math.min(720, travelOf(s) * 12.5)));
       out.move = anim(el, [{ transform: (shift + tf0).trim() || 'none', transformOrigin: s.org }, { transform: o.rest || 'none', transformOrigin: s.org }], { dur: ms, easing: E.exit, fill: o.rest ? 'forwards' : 'none' });
       out.ms = ms;
     }
