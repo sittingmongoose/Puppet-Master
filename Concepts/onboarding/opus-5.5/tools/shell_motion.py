@@ -269,6 +269,17 @@ CENSUS = [
      "    var ls=el&&(el.id||(el.closest&&el.closest('label')))?el.labels:null,ln=ls?ls.length:0;   /* O55: read once (B6) */\n"
      "    if(ln){var own=[];for(var li=0;li<ln;li++)own.push(ls[li]);var labels=own.map(visibleText).filter(Boolean).join(' ');if(labels)return labels;}\n",
      'hover census: labels read once'),
+    # B5 (Liquid Glass lane profile, NieR switch): a pointerover right after a click bound and measured its control at
+    # once, while that click's restyle was still pending (125 ms forced, 1,558 elements). The open waits for the
+    # coming frame's layout (PM_AFTER_LAYOUT, before its paint), keeps only the latest target, and opens only if the
+    # pointer is still over it; the open's own intent timing is unchanged.
+    ("    document.addEventListener('pointerover',function(event){var el=event.target&&event.target.closest&&event.target.closest('[data-pm-hover-bound=\"true\"],'+ACTION_SELECTOR+','+SEMANTIC_SELECTOR);if(el&&!inOwner(el))self.open(el,'pointer',event);},true);",
+     "    var pointerAsk=null;   /* O55: opened after layout (B5) */\n"
+     "    document.addEventListener('pointerover',function(event){var el=event.target&&event.target.closest&&event.target.closest('[data-pm-hover-bound=\"true\"],'+ACTION_SELECTOR+','+SEMANTIC_SELECTOR);if(!el||inOwner(el))return;\n"
+     "      if(typeof window.PM_AFTER_LAYOUT!=='function'){self.open(el,'pointer',event);return;}\n"
+     "      var first=!pointerAsk;pointerAsk={el:el,event:event};\n"
+     "      if(first)window.PM_AFTER_LAYOUT(function(){var a=pointerAsk;pointerAsk=null;if(a&&a.el.isConnected&&a.el.matches(':hover'))self.open(a.el,'pointer',a.event);});},true);",
+     'hover tags: pointer open after layout'),
 ]
 
 ANSWER_FIRST = [
