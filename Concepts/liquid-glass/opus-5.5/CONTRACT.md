@@ -26,6 +26,13 @@ Set `data-lg-surface` on the element:
   its tint is heavier, so what is behind never shows through its text. On the CPU tier (no live blur) every menu is
   near opaque anyway.
 - `data-lg-kind` is my internal mark. Read it as a selector if you need to, but never set it.
+- A baked sheet is its own containing block. Glass makes a `panel`, `card` or `bar` that your CSS leaves static
+  `position: relative`, at zero specificity, so a position you set yourself still wins. An absolutely positioned child
+  of a sheet is therefore placed against the sheet. Give it a positioned parent inside the sheet if it must reach
+  further out (none does today: every page and Settings chapter was scanned, popouts and hover tags included).
+- While a wallpaper change crossfades (about 240 ms), Glass draws a baked sheet's outgoing frost in the sheet's own
+  `::after` (`data-lg-xf` on the sheet, z-index -1, under its content). Paint nothing of your own in a baked sheet's
+  `::after` in Glass; use `::before` or a child element.
 
 ## Ride the lens
 
@@ -169,3 +176,11 @@ The wallpaper choice, its catalog and the Settings gallery belong to the wallpap
 `Concepts/wallpapers/opus-5.5/CONTRACT.md`. Glass owns `catalog.d/10-glass.json`. `glass.js` keeps no list or picker of
 its own: it reads each look's default from `window.PM_WALLPAPERS_CATALOG` (Ribbons for Glass when the package is
 absent) and follows the package's rule for `<html data-lg-wall>`.
+
+The package commits a prepared print with `PM_LG.commitWallpaper(id, url, viewport, fade)`, where `fade` is its body
+print's `Animation`, made in the same task (pm7-frost-crossfade, Jared 2026-10-16, F3-653). Every shown baked sheet then
+crossfades its frost from the outgoing print to the new one, in step with that fade: its `::after` paints the sheet's
+outgoing background (frost, rim, tint and light) over the new one and fades from 1 to 0 on the compositor with the
+fade's duration and easing, starting on the same frame. The overlay is transient. It goes when that fade finishes or is
+cancelled; a new commit replaces it at once, and a look, tier or motion change, a resize or leaving Glass clears it.
+Without `fade` (a look change, Reduce Animations, the CPU path) the frost changes at once.

@@ -51428,10 +51428,10 @@ html[data-lg="on"][data-theme^="glass"]:not(#lgz) :where(.app-shell):not(#t7:not
 html[data-lg="on"][data-theme^="glass"]:not(#lgz) :where(.title-bar):not(#t7:not(*))::before,
 html[data-lg="on"][data-theme^="glass"]:not(#lgz) :is(#activityBar)::before,
 html[data-lg="on"][data-theme^="glass"]:not(#lgz) :is(#sidePanelSlot)::before,
-html[data-lg="on"][data-theme^="glass"]:not(#lgz) :where(.app-shell):not(#t7:not(*))::after,
-html[data-lg="on"][data-theme^="glass"]:not(#lgz) :where(.title-bar):not(#t7:not(*))::after,
-html[data-lg="on"][data-theme^="glass"]:not(#lgz) :is(#activityBar)::after,
-html[data-lg="on"][data-theme^="glass"]:not(#lgz) :is(#sidePanelSlot)::after { opacity: 0 !important; }
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) :where(.app-shell):not(#t7:not(*)):not([data-lg-xf])::after,
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) :where(.title-bar):not(#t7:not(*)):not([data-lg-xf])::after,
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) :is(#activityBar):not([data-lg-xf])::after,
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) :is(#sidePanelSlot):not([data-lg-xf])::after { opacity: 0 !important; }
 /* The base's Glass theme sizes the main area from its content (flex: 1 1 auto !important), so every change anywhere in
    the app made the browser measure the whole page's widest content again: one character changed in a Usage card cost
    4.5-5.3 ms of layout in Glass and 0.3 ms in Basic, and a room change's build ran 3-5 times Basic's layout (review r3
@@ -51512,6 +51512,53 @@ html[data-lg="on"][data-theme^="glass"]:not(#lgz) [data-lg-kind="bar"] {
    it never trails the content (glass.js sets data-lg-fixed at the first scroll event and lifts it when the scroll settles) */
 html[data-lg="on"][data-theme^="glass"]:not(#lgz) :is([data-lg-kind="panel"], [data-lg-kind="card"], [data-lg-kind="bar"])[data-lg-fixed] {
   background-attachment: scroll, scroll, scroll, scroll, scroll, fixed !important; background-position: 0 0, 0 0, 0 0, 0 0, 0 0, 0 0 !important;
+}
+/* The frost crossfade (pm7-frost-crossfade, Jared 2026-10-16, F3-653). While a wallpaper change fades the body's print,
+   each shown sheet carries data-lg-xf (glass.js startFrostFade), and its ::after paints the sheet's outgoing background
+   over the new one, under the sheet's content: the stack above with the outgoing frost (--lg-xf-heavy / -light, which
+   glass.js sets on the overlay itself) and the sheet's outgoing rim (--lg-xf-ring), plus the inset rim lines it covers.
+   It fades from 1 to 0 on the compositor, in step with the print, and goes when the print's fade ends. The sheet is its
+   containing block and its stacking context: every sheet is isolated (above), and one the app leaves static is made
+   relative at zero specificity, so a sheet the app positions keeps its own position. In a sheet that scrolls itself the
+   overlay is moved by the scroll offset Glass recorded (--lg-xf-x / -y). Two ids of specificity (#lgz, #lgy) and no
+   !important: the page's !important ratchet does not grow, and no rule that can match a sheet's ::after outranks these. */
+@property --lg-xf-ring { syntax: '*'; inherits: false; }
+@property --lg-xf-x { syntax: '*'; inherits: false; }
+@property --lg-xf-y { syntax: '*'; inherits: false; }
+@keyframes lg-xf-a { from { opacity: 1; } to { opacity: 0; } }
+@keyframes lg-xf-b { from { opacity: 1; } to { opacity: 0; } }
+:where(html[data-lg="on"][data-theme^="glass"]) :where([data-lg-kind="panel"]),
+:where(html[data-lg="on"][data-theme^="glass"]) :where([data-lg-kind="card"]),
+:where(html[data-lg="on"][data-theme^="glass"]) :where([data-lg-kind="bar"]) { position: relative; }
+html[data-lg="on"][data-theme^="glass"]:not(#lgz):not(#lgy) :is([data-lg-kind="panel"], [data-lg-kind="card"], [data-lg-kind="bar"])[data-lg-xf]::after {
+  content: ''; display: block; position: absolute; z-index: -1;
+  inset: var(--lg-xf-y, 0px) calc(-1 * var(--lg-xf-x, 0px)) calc(-1 * var(--lg-xf-y, 0px)) var(--lg-xf-x, 0px);
+  width: auto; height: auto; margin: 0; padding: 0; border: 0; border-radius: inherit;
+  pointer-events: none; transform: none; translate: none; scale: none; rotate: none;
+  filter: none; -webkit-mask: none; mask: none; clip-path: none; mix-blend-mode: normal;
+  visibility: visible; transition: none;
+  --lg-spec: inherit; --lg-glow: inherit; --lg-fx: inherit; --lg-fy: inherit; --lg-mat: inherit; --lg-ga-k: inherit; --lg-ga-add: inherit;
+  --lg-xf-ring: inherit; --lg-xf-x: inherit; --lg-xf-y: inherit;
+  box-shadow: inset 0 1px 0 var(--lg-edge-top), inset 0 -1px 1px var(--lg-edge-bot);
+  opacity: 1; will-change: opacity;
+  animation: lg-xf-a var(--lg-xf-ms, 240ms) var(--lg-xf-ease, linear) both;
+}
+/* a fade that replaces a running one starts again from 1 under the other name */
+html[data-lg="on"][data-theme^="glass"]:not(#lgz):not(#lgy) :is([data-lg-kind="panel"], [data-lg-kind="card"], [data-lg-kind="bar"])[data-lg-xf="b"]::after { animation-name: lg-xf-b; }
+html[data-lg="on"][data-theme^="glass"]:not(#lgz):not(#lgy) [data-lg-kind="panel"][data-lg-xf]::after {
+  background: var(--lg-spec, none) 0 0 / 100% 100% no-repeat, var(--lg-glow, none) 0 0 / 100% 100% no-repeat, linear-gradient(180deg, var(--lg-head-shade), transparent 30px), linear-gradient(rgb(from var(--lg-tint-panel) r g b / calc((alpha * var(--lg-ga-k) + var(--lg-ga-add)) * var(--lg-mat))), rgb(from var(--lg-tint-panel) r g b / calc((alpha * var(--lg-ga-k) + var(--lg-ga-add)) * var(--lg-mat)))),
+    var(--lg-xf-ring, none) 0 0 / 100% 100% no-repeat, var(--lg-xf-heavy, none) var(--lg-fx, 0px) var(--lg-fy, 0px) / var(--lg-vw, 100vw) var(--lg-vh, 100vh) no-repeat;
+}
+html[data-lg="on"][data-theme^="glass"]:not(#lgz):not(#lgy) [data-lg-kind="card"][data-lg-xf]::after {
+  background: var(--lg-spec, none) 0 0 / 100% 100% no-repeat, var(--lg-glow, none) 0 0 / 100% 100% no-repeat, linear-gradient(180deg, var(--lg-head-shade), transparent 30px), linear-gradient(rgb(from var(--lg-tint-card) r g b / calc((alpha * var(--lg-ga-k) + var(--lg-ga-add)) * var(--lg-mat))), rgb(from var(--lg-tint-card) r g b / calc((alpha * var(--lg-ga-k) + var(--lg-ga-add)) * var(--lg-mat)))),
+    var(--lg-xf-ring, none) 0 0 / 100% 100% no-repeat, var(--lg-xf-heavy, none) var(--lg-fx, 0px) var(--lg-fy, 0px) / var(--lg-vw, 100vw) var(--lg-vh, 100vh) no-repeat;
+}
+html[data-lg="on"][data-theme^="glass"]:not(#lgz):not(#lgy) [data-lg-kind="bar"][data-lg-xf]::after {
+  background: var(--lg-spec, none) 0 0 / 100% 100% no-repeat, var(--lg-glow, none) 0 0 / 100% 100% no-repeat, linear-gradient(180deg, var(--lg-head-shade), transparent 30px), linear-gradient(rgb(from var(--lg-tint-bar) r g b / calc((alpha * var(--lg-ga-k) + var(--lg-ga-add)) * var(--lg-mat))), rgb(from var(--lg-tint-bar) r g b / calc((alpha * var(--lg-ga-k) + var(--lg-ga-add)) * var(--lg-mat)))),
+    var(--lg-xf-ring, none) 0 0 / 100% 100% no-repeat, var(--lg-xf-light, none) var(--lg-fx, 0px) var(--lg-fy, 0px) / var(--lg-vw, 100vw) var(--lg-vh, 100vh) no-repeat;
+}
+html[data-lg="on"][data-theme^="glass"]:not(#lgz):not(#lgy) :is([data-lg-kind="panel"], [data-lg-kind="card"], [data-lg-kind="bar"])[data-lg-fixed][data-lg-xf]::after {
+  background-attachment: scroll, scroll, scroll, scroll, scroll, fixed; background-position: 0 0, 0 0, 0 0, 0 0, 0 0, 0 0;
 }
 /* the page-in class stays on a page after its entrance ends, and its will-change: transform would make every pinned
    frost element-relative; a running entrance still gets its own layer without it */
@@ -51614,7 +51661,7 @@ html[data-lg="on"][data-theme^="glass"]:not(#lgz) [data-lg-kind] :is(.pmu-nav) {
   background: transparent !important; box-shadow: none !important; -webkit-backdrop-filter: none !important; backdrop-filter: none !important; border-color: transparent !important;
 }
 html[data-lg="on"][data-theme^="glass"]:not(#lgz) #panel-usage .pmu-card :is(.pmu-film-glint) { display: none !important; }
-html[data-lg="on"][data-theme^="glass"]:not(#lgz) #panel-usage .pmu-card::after { opacity: 0 !important; }
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) #panel-usage .pmu-card:not([data-lg-xf])::after { opacity: 0 !important; }
 html[data-lg="on"][data-theme^="glass"]:not(#lgz) #activityBar .icon .symbol {
   -webkit-backdrop-filter: none !important; backdrop-filter: none !important; background: transparent !important; box-shadow: none !important; border: 0 !important;
   border-radius: var(--pm-ctl-r) !important; color: var(--text-secondary) !important; position: relative; z-index: 6;
@@ -224339,7 +224386,7 @@ try { if (window.PM_HOME && typeof window.PM_HOME.boot === 'function') window.PM
     clearTimeout(trimT); trimT = 0;
     keys.forEach(function (k, i) {
       var r = frostCache.get(k);
-      if (!r.decoded || r.urls === frosts || kept.has(r)) return;
+      if (!r.decoded || r.urls === frosts || kept.has(r) || (xf && r.urls === xf.frosts)) return;
       var left = (r.used || 0) + FROST_RECENT - now;
       if (i < keys.length - FROST_DECODED && left <= 0) { r.imgs = null; r.decoded = null; return; }
       if (left > 0) next = next ? Math.min(next, left) : left;
@@ -224431,7 +224478,7 @@ try { if (window.PM_HOME && typeof window.PM_HOME.boot === 'function') window.PM
   function wallpaperPaintRule(index) {
     if (!wallpaperPaintStyle || !wallpaperPaintStyle.isConnected) {
       wallpaperPaintStyle = document.createElement('style'); wallpaperPaintStyle.id = 'lg-frost';
-      wallpaperPaintStyle.textContent = 'html[data-lg="on"] :is([data-lg-kind], #pm-o55-onboarding .o55-scrim) {}\nhtml[data-lg="on"] body {}';
+      wallpaperPaintStyle.textContent = 'html[data-lg="on"] :is([data-lg-kind], #pm-o55-onboarding .o55-scrim) {}\nhtml[data-lg="on"] body {}\nhtml[data-lg="on"] [data-lg-xf]::after {}';
       document.head.appendChild(wallpaperPaintStyle);
     }
     return wallpaperPaintStyle.sheet.cssRules[index].style;
@@ -224458,6 +224505,60 @@ try { if (window.PM_HOME && typeof window.PM_HOME.boot === 'function') window.PM
   function releaseWallHold() {
     clearTimeout(wallHoldT); wallHoldT = 0;
     if (root.hasAttribute('data-lg-wall-hold')) { root.removeAttribute('data-lg-wall-hold'); wallpaperPaintRule(1).removeProperty('--lg-wall-hold'); }
+  }
+  /* ---- the frost crossfade (pm7-frost-crossfade, Jared 2026-10-16, F3-653) ------------------------------------------
+     A wallpaper change fades the body's print over 240 ms (the wallpapers package) and commits the new frost as the fade
+     starts, so the sheets switched to the new frost at once while the picture around them was still fading. Now every
+     shown sheet crossfades with the print. The sheet takes the new frost in the same task as before (applyFrost), and its
+     ::after (glass.css section 3) paints the sheet's outgoing background over it, under its content: the outgoing frost,
+     the sheet's outgoing rim, and the same tint, light and rim lines. The overlay fades from 1 to 0 on the compositor. Its
+     animation starts in the same task as the print's fade and takes that fade's duration and easing, so the two share a
+     start frame and a curve: each sheet is (1 - t) old + t new while the print is.
+     Transient: it exists from commitWallpaper(id, url, viewport, fade) to the end of that fade. The next commit, a
+     cancelled print fade, a look, tier or motion change, a resize or leaving Glass drop it at once, as the print layers
+     drop theirs. Nothing is read: each sheet's size, place, scroll offset and whether it can hold the overlay were read
+     when it was mounted. The outgoing frost pair and rims are kept from eviction and revocation until the overlay goes. */
+  var xf = null, xfSerial = 0;
+  function xfShown(e, vw, vh) {
+    if (!e.isConnected || !e.__lgXfOk || !/^(panel|card|bar)$/.test(e.getAttribute('data-lg-kind') || '')) return false;
+    var z = String(e.__lgSize || '').split('x'), W = +z[0] || 0, H = +z[1] || 0, x = -parseFloat(e.__lgFx), y = -parseFloat(e.__lgFy);
+    return W > 0 && H > 0 && isFinite(x) && isFinite(y) && x < vw && y < vh && x + W > 0 && y + H > 0;
+  }
+  function startFrostFade(prev, fade, viewport) {
+    var t = null; try { t = fade.effect.getTiming(); } catch (err) {}
+    var ms = t && typeof t.duration === 'number' ? t.duration : 0;
+    if (!(ms > 0) || !prev || !prev.heavy || !prev.light || !isGlass() || !gpu() || reduced()) return;
+    var list = [];
+    glassSet.forEach(function (e) { if (xfShown(e, viewport.width, viewport.height)) list.push(e); });
+    if (!list.length) return;
+    var gen = ++xfSerial, x = xf = { gen: gen, frosts: prev, sheets: list, t: 0 }, paint = wallpaperPaintRule(2);
+    paint.setProperty('--lg-xf-heavy', 'url(' + JSON.stringify(prev.heavy) + ')'); paint.setProperty('--lg-xf-light', 'url(' + JSON.stringify(prev.light) + ')');
+    paint.setProperty('--lg-xf-ms', ms + 'ms'); paint.setProperty('--lg-xf-ease', t.easing || 'linear');
+    list.forEach(function (e) {
+      e.__lgXfRing = e.__lgRing || null;
+      if (e.__lgXfRing) e.style.setProperty('--lg-xf-ring', 'url(' + e.__lgXfRing + ')');
+      if (e.__lgScroller && (e.__lgSx || e.__lgSy)) { e.style.setProperty('--lg-xf-x', (e.__lgSx || 0) + 'px'); e.style.setProperty('--lg-xf-y', (e.__lgSy || 0) + 'px'); }
+      e.setAttribute('data-lg-xf', gen % 2 ? 'a' : 'b');
+    });
+    function done() { endFrostFade(gen); }
+    if (fade.finished && typeof fade.finished.then === 'function') fade.finished.then(done, done);
+    /* a print fade that never settles */
+    x.t = setTimeout(done, ms + (t.delay || 0) + 1000);
+  }
+  function endFrostFade(gen) {
+    var x = xf; if (!x || (gen != null && gen !== x.gen)) return;
+    xf = null; clearTimeout(x.t);
+    x.sheets.forEach(function (e) {
+      if (e.hasAttribute('data-lg-xf')) e.removeAttribute('data-lg-xf');
+      ['--lg-xf-ring', '--lg-xf-x', '--lg-xf-y'].forEach(function (name) { e.style.removeProperty(name); });
+      var u = e.__lgXfRing; e.__lgXfRing = null;
+      if (u && u !== e.__lgRing && !ringUrls.has(u) && !ringShown(u)) URL.revokeObjectURL(u);
+    });
+    var paint = wallpaperPaintRule(2);
+    ['--lg-xf-heavy', '--lg-xf-light', '--lg-xf-ms', '--lg-xf-ease'].forEach(function (name) { paint.removeProperty(name); });
+    /* the outgoing pair goes now if it is neither shown nor kept */
+    var kept = x.frosts === frosts || Array.from(frostCache.values()).some(function (r) { return r.urls === x.frosts; });
+    if (!kept) Object.keys(x.frosts).forEach(function (n) { URL.revokeObjectURL(x.frosts[n]); });
   }
   /* a canvas as a PNG blob, now. canvas.toBlob encodes in the main thread's idle time, so while a Glass entry or a room
      change kept it busy a frost or a ring came back up to a second later (P1000 trace: the frosts drawn at +1.2 s, their
@@ -224498,8 +224599,9 @@ try { if (window.PM_HOME && typeof window.PM_HOME.boot === 'function') window.PM
         var previous = frosts, previousUncached = !Array.from(frostCache.values()).some(function (r) { return r.urls === previous; });
         if (!prepare) applyFrost(rec);
         while (frostCache.size && frostBytes + rec.bytes > FROST_BYTES) {
-          /* Preparation may evict another cached print, never the frost still visible on the sheets. */
-          var oldest = Array.from(frostCache.keys()).find(function (k) { return frostCache.get(k).urls !== frosts; });
+          /* Preparation may evict another cached print, never the frost still visible on the sheets (nor the outgoing
+             frost a crossfade still shows) */
+          var oldest = Array.from(frostCache.keys()).find(function (k) { var u = frostCache.get(k).urls; return u !== frosts && !(xf && u === xf.frosts); });
           if (oldest == null) break;
           var old = frostCache.get(oldest);
           frostBytes -= old.bytes; frostCache.delete(oldest); dropFrost(old); frostLog('evicted', old.wall);
@@ -224507,7 +224609,7 @@ try { if (window.PM_HOME && typeof window.PM_HOME.boot === 'function') window.PM
         if (frostBytes + rec.bytes <= FROST_BYTES) { frostCache.set(key, rec); frostBytes += rec.bytes; trimDecoded(); }
         else if (prepare) { dropFrost(rec); valid = false; }
         /* An unusually large active pair is kept only while displayed, rather than exceeding the cache budget. */
-        if (!prepare && previous !== rec.urls && previousUncached) {
+        if (!prepare && previous !== rec.urls && previousUncached && !(xf && previous === xf.frosts)) {
           Object.keys(previous).forEach(function (n) { URL.revokeObjectURL(previous[n]); });
         }
       }
@@ -224545,7 +224647,12 @@ try { if (window.PM_HOME && typeof window.PM_HOME.boot === 'function') window.PM
      back to the same place takes the ring it had, in the same frame, with no bake. The cache owns the rings' URLs; an
      element only points at one, and a URL is revoked when it has left the cache and no sheet shows it. */
   var ringCache = new Map(), ringUrls = new Set(), RING_COUNT = 128;
-  function ringShown(url, except) { var on = false; glassSet.forEach(function (x) { if (x !== except && x.__lgRing === url) on = true; }); return on; }
+  function ringShown(url, except) {
+    var on = false; glassSet.forEach(function (x) { if (x !== except && x.__lgRing === url) on = true; });
+    /* an outgoing rim a frost crossfade still shows, its own sheet's included */
+    if (xf) xf.sheets.forEach(function (x) { if (x.__lgXfRing === url) on = true; });
+    return on;
+  }
   function releaseRing(e) {
     var url = e.__lgRing; e.__lgRing = null;
     if (url && !ringUrls.has(url) && !ringShown(url, e)) URL.revokeObjectURL(url);
@@ -224898,9 +225005,18 @@ try { if (window.PM_HOME && typeof window.PM_HOME.boot === 'function') window.PM
     });
     measured.forEach(function (m, e) { if (m.fresh) e.setAttribute('data-lg-kind', m.kind); });
     measured.forEach(function (m, e) {
-      if (m.fresh) m.radius = parseFloat(getComputedStyle(e).borderTopLeftRadius) || 0;
+      var bake = KINDS[m.kind] && KINDS[m.kind].bake, cs = (m.fresh || bake) && getComputedStyle(e);
+      if (m.fresh) m.radius = parseFloat(cs.borderTopLeftRadius) || 0;
       m.R = Math.max(0, Math.min(m.radius, m.W / 2 - 0.5, m.H / 2 - 0.5));
-      if (KINDS[m.kind] && KINDS[m.kind].bake) m.lp = layoutPos(e, offsets);
+      if (bake) {
+        m.lp = layoutPos(e, offsets);
+        /* what the frost crossfade needs, read here with the rest (startFrostFade reads nothing): whether the sheet can hold
+           its overlay (a positioned, isolated box: glass.css makes a static sheet relative unless the app sets its position),
+           and, for a sheet that clips or scrolls its own content, the scroll offset the overlay must follow */
+        e.__lgXfOk = cs.position !== 'static' && cs.isolation === 'isolate';
+        e.__lgScroller = cs.overflowX !== 'visible' && cs.overflowX !== 'clip' || cs.overflowY !== 'visible' && cs.overflowY !== 'clip';
+        if (e.__lgScroller) { var so = offsets.get(e); e.__lgSx = so ? so.x : 0; e.__lgSy = so ? so.y : 0; }
+      }
     });
     measured.forEach(function (m, e) { mount(e, m.kind, m); });
   }
@@ -224914,6 +225030,7 @@ try { if (window.PM_HOME && typeof window.PM_HOME.boot === 'function') window.PM
   }
   function unmountAll(keepLenses) {
     if (!keepLenses && typeof suspendLensMotion === 'function') suspendLensMotion();
+    endFrostFade();
     bakeEpoch++; bakeFlight = null; bakeQ.clear(); bakeWReady = [];
     if (bakeW) bakeW.postMessage({ type: 'epoch', epoch: bakeEpoch });
     if (bakeT) { clearTimeout(bakeT); bakeT = 0; }
@@ -224970,6 +225087,8 @@ try { if (window.PM_HOME && typeof window.PM_HOME.boot === 'function') window.PM
       var area = boardMoment() ? document.querySelector(BOARD_AREA) : null;
       boxes.forEach(function (b) {
         var ss = scrollSheets.get(b), ls = scrollStrips.get(b);
+        /* a sheet that scrolls its own content: where its frost crossfade's overlay must sit (startFrostFade) */
+        if (b.__lgScroller && glass && glassSet.has(b)) { b.__lgSx = b.scrollLeft; b.__lgSy = b.scrollTop; }
         if (ss && glass) ss.forEach(function (e) { if (!e.isConnected) return; if (area && area.contains(e)) { boardStale = true; return; } sheets.add(e); settleSheets.add(e); });
         if (ls) ls.forEach(function (s) { if (s.isConnected) { strips.add(s); settleStrips.add(s); } });
       });
@@ -226245,6 +226364,8 @@ try { if (window.PM_HOME && typeof window.PM_HOME.boot === 'function') window.PM
     var nier = root.getAttribute('data-o55-nier');
     if (nier !== lastNier) { lastNier = nier; switchStale = true; lenses.forEach(function (L) { L.rect = null; }); dirtyAll = true; queueSync(); }
     if (th === lastTheme && lg === lastLg && tier === lastTier && wall === lastWall && motion === lastMotion) return;
+    /* a look, tier or motion change ends a frost crossfade at once (the wallpapers package drops its print fade too) */
+    if (xf && (th !== lastTheme || lg !== lastLg || tier !== lastTier || (motion !== lastMotion && reduced()))) endFrostFade();
     /* the print is about to change under glass that stays glass: hold the one the current frost was made from */
     var wasGlass = lastLg === 'on' && /^glass/.test(lastTheme || '');
     if (wasGlass && isGlass() && wall !== lastWall && th === lastTheme && wallSourceUrl) {
@@ -226282,6 +226403,8 @@ try { if (window.PM_HOME && typeof window.PM_HOME.boot === 'function') window.PM
   function start() {
     ensureDefs(); viewportVars(); knobFilter(); readSwitch();
     window.addEventListener('resize', viewportVars);
+    /* the frost is drawn for one viewport: a resize mid-crossfade ends it */
+    window.addEventListener('resize', function () { endFrostFade(); });
     mo.observe(document.body, { subtree: true, childList: true, attributes: true, attributeOldValue: true, attributeFilter: ['class', 'hidden', 'data-open', 'data-lg-surface', 'open'] });
     if (window.ResizeObserver) { var ro = new ResizeObserver(function (entries) { entries.forEach(function (en) { dirtyScope(en.target); }); lazySync(false); }); ['.app-shell', '.left-panel', '#sidePanelSlot', '#chatPanel', '#pmuBoard', '#pmuApp'].forEach(function (s) { var e = document.querySelector(s); if (e) ro.observe(e); }); }
     window.addEventListener('resize', lazySync);
@@ -226571,7 +226694,12 @@ try { if (window.PM_HOME && typeof window.PM_HOME.boot === 'function') window.PM
         else resolve(true);
       }, url);
     }); },
-    commitWallpaper: function (id, url, viewport) {
+    /* fade (optional): the body print's Animation, made in the same task just before this commit. With it, every shown
+       sheet crossfades its frost in step with that fade (startFrostFade); without it (a look change, Reduce Animations,
+       the CPU path, any other caller) the frost changes at once. A crossfade still running ends here first, at once, as
+       the caller has just ended its own print fade. */
+    commitWallpaper: function (id, url, viewport, fade) {
+      endFrostFade();
       if (!isGlass() || root.getAttribute('data-lg-wall') !== id) return false;
       /* The caller sampled the viewport before its attribute writes. Even innerWidth after those writes can force
          style/layout (83 ms on M3) before the frost variables join the same commit. */
@@ -226586,7 +226714,10 @@ try { if (window.PM_HOME && typeof window.PM_HOME.boot === 'function') window.PM
       if (wallSourceUrl !== url) { wallSourceUrl = url; wallSourceId++; }
       wallSourceKey = id + '-' + (/-light$/.test(root.getAttribute('data-theme') || '') ? 'light' : 'dark');
       wallSourceUrls.set(wallSourceKey, url);
-      applyFrost(rec); return true;
+      var outgoing = frosts, was = frostKey;
+      applyFrost(rec);
+      if (fade && was && was !== frostKey) startFrostFade(outgoing, fade, viewport);
+      return true;
     },
     frostLog: function () { return frostLogBuf.slice(); },
     /* urls: the print URLs (the strings given to prepareWallpaper, current mode) the gallery shows or is about to; [] when
