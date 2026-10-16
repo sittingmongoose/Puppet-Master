@@ -1409,14 +1409,34 @@
   }
   S.unlock = function unlock() { const c = ensureContext(); return !!c; };
   /* The shell may stay silent until a usage warning. Warm its context and takes in idle time after the first
-     gesture, so that warning's flush does not also open the audio device. Onboarding keeps its immediate unlock. */
-  let warmingContext = false;
+     gesture, so that warning's flush does not also open the audio device. Onboarding keeps its immediate unlock.
+     Opening the device holds the main thread (about 160 ms on the M3, for the first context only), and the first idle
+     gap after a click falls in the middle of whatever that click animates: the warm waits for a quiet moment instead,
+     1.2 s after the last input with no page change, window, tour or Usage moment running. */
+  let warmingContext = false, lastInput = 0;
+  const QUIET_MS = 1200;
+  const busy = () => {
+    const h = document.documentElement;
+    return h.hasAttribute('data-pm-page-transition') || h.hasAttribute('data-o55-open') || h.hasAttribute('data-o55-tour')
+      || h.hasAttribute('data-pmu-moment') || document.visibilityState !== 'visible';
+  };
+  function warmWhenQuiet() {
+    if (S.ctx) { warmingContext = false; return; }
+    const wait = lastInput + QUIET_MS - performance.now();
+    if (wait > 0 || busy()) { window.setTimeout(warmWhenQuiet, Math.max(wait, 300)); return; }
+    idle(() => {
+      if (S.ctx) { warmingContext = false; return; }
+      if (performance.now() - lastInput < QUIET_MS || busy()) { warmWhenQuiet(); return; }
+      warmingContext = false; ensureContext();
+    });
+  }
   ['pointerdown', 'keydown'].forEach((ev) => document.addEventListener(ev, (e) => {
     if (!e.isTrusted) return;
+    lastInput = performance.now();
     if (document.documentElement.hasAttribute('data-o55-open') || document.documentElement.hasAttribute('data-o55-tour')) ensureContext();
     else if (!S.ctx && !warmingContext) {
       warmingContext = true;
-      idle(() => { warmingContext = false; ensureContext(); });
+      warmWhenQuiet();
     }
   }, true));
 

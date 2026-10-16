@@ -1,0 +1,6 @@
+/* A view that is leaving (30-motion.js holdLeaving, final motion QA A8): drawn where it was, above the view coming in,
+   without input, until its fade ends. A panel covers the panel slot; a tab pane keeps its own place in its scroller
+   (its display, top, left and width are written inline from the box read before the shell hid it). */
+§R #sidePanelSlot.d-has-leaving { position: relative; }
+§R #sidePanelSlot > .side-panel-view.d-leaving { display: flex; position: absolute; inset: 0; z-index: 3; pointer-events: none; }
+§ .sh-scroll > [data-pane].d-leaving { position: absolute; z-index: 3; pointer-events: none; }
