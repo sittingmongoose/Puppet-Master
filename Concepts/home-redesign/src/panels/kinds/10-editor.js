@@ -1276,8 +1276,8 @@ function mountEditor(host, st, api) {
      file's own when it has one; IND.tabs says the file's indentation is tabs, which Show spaces marks as such. A tabbed
      file, still as it was opened, takes a new Tab size by opening its tabs again at the new width ---- */
   var IND = { unit: 4, tabs: false, own: 0 };
-  function resolveIndent() {
-    var I = R.indent || FALLBACK_LOOK.indent;
+  function resolveIndent(look) {
+    var I = (look || R).indent || FALLBACK_LOOK.indent;
     if (d.indentGuess == null || (!d.indentGuess && d.indentGuessAt !== d.version)) { d.indentGuess = guessIndent(d.lines); d.indentGuessAt = d.version; }
     var own = I.detect && !d.tabbed ? d.indentGuess : 0;
     IND.own = own;
@@ -4064,7 +4064,9 @@ function mountEditor(host, st, api) {
     },
     // the file's indentation as this editor reads it (the Customize screen's Indentation note)
     path: path,
-    indent: function () { resolveIndent(); return { unit: IND.unit, tabs: IND.tabs, own: IND.own, tabbed: !!d.tabbed }; },
+    // A covered editor defers drawing its new look, but its file details
+    // already follow that pending choice when the customizer asks for them.
+    indent: function () { resolveIndent(pendingLook); return { unit: IND.unit, tabs: IND.tabs, own: IND.own, tabbed: !!d.tabbed }; },
     focus: function () { if (special) { root.setAttribute('tabindex', '-1'); root.focus({ preventScroll: true }); return; } scroller.focus({ preventScroll: true }); },
     reveal: function (s) { reveal(s || {}); },     // focus is the host's call (D8: an agent's open never takes it)
     wantsKey: function (e) {
