@@ -86,3 +86,7 @@ html:not([data-theme^="glass"]) .pmw-menu .pmw-msearch:focus-within, html[data-o
    its own. */
 html:not([data-theme^="glass"]) #panel-settings .pm51-note.tone-attention { border-color: color-mix(in srgb, var(--k3-amber) 32%, transparent); background: color-mix(in srgb, var(--k3-amber) 9%, transparent); }
 html:not([data-theme^="glass"]) #panel-settings .pm51-section.tone-attention { border-color: color-mix(in srgb, var(--k3-amber) 35%, transparent); }
+
+/* ---- Settings' accordion heads take the accent under the pointer: in Friendly Light that mint is too pale on its card
+   (3.09:1, the same on main). It steps toward the words' ink there, still mint. */
+html[data-theme="friendly-light"]:not([data-o55-nier="on"]) #panel-settings .pm51-acc-head:hover .pm51-acc-title { color: color-mix(in srgb, var(--k3-accent) 45%, var(--text-primary)); }
