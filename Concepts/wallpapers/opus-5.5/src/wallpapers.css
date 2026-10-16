@@ -12,7 +12,7 @@
 @property --lg-wall { syntax: "*"; inherits: false; }
 @property --lg-wall-any { syntax: "*"; inherits: false; }
 @property --lg-wall-hold { syntax: "*"; inherits: false; }
-body { --lg-wall: inherit; --lg-wall-any: inherit; --lg-wall-hold: inherit; }
+body { --lg-wall: inherit; --lg-wall-any: inherit; --lg-wall-hold: inherit; isolation: isolate; }
 /* Permanent out-of-flow print planes: no app layout, no surface copies, no input interception. The body remains
    the canonical settled background. These planes are above its print and below all of the interface. */
 .wpk-print { position: fixed; inset: 0; z-index: -1; pointer-events: none; opacity: 0; contain: strict;

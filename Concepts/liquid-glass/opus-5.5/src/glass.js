@@ -305,7 +305,7 @@
      Both are redrawn only when the sheet moves or resizes, or the look or wallpaper changes. They cost nothing per frame
      and draw the same with or without a GPU. */
   var wallUrl = '', wallSources = new Map(), wallSourceKey = null, wallSourceUrl = '', wallSourceId = 0;
-  var frosts = {}, frostKey = '', frostCache = new Map(), frostBytes = 0, frostJobs = new Map(), FROST_BYTES = 32 * 1024 * 1024;
+  var frosts = {}, frostKey = '', frostWallUrl = '', frostCache = new Map(), frostBytes = 0, frostJobs = new Map(), FROST_BYTES = 32 * 1024 * 1024;
   var bakeQ = new Map(), bakeT = 0, bakeFrame = 0, bakeIdle = 0, bakeFlight = null, bakeEpoch = 0, bakeAvg = 8;
   function currentWallUrl(refresh) {
     /* The source's wallpaper variables are selected only by these attributes. Keep the large data URL out of each
@@ -379,7 +379,7 @@
   function dropFrost(rec) { Object.keys(rec.urls).forEach(function (name) { URL.revokeObjectURL(rec.urls[name]); }); }
   function applyFrost(rec) {
     if (frostKey === rec.key) return;
-    frosts = rec.urls; frostKey = rec.key;
+    frosts = rec.urls; frostKey = rec.key; frostWallUrl = rec.wall;
     Object.keys(frosts).forEach(function (name) { root.style.setProperty('--lg-frost-' + name, 'url(' + frosts[name] + ')'); });
     releaseWallHold();
   }
@@ -423,7 +423,7 @@
       var valid = epoch === bakeEpoch && isGlass() && (prepare || currentWallUrl() === u) && innerWidth === c.vw && innerHeight === c.vh;
       valid = valid && names.every(function (n) { return !!job.blobs[n]; });
       if (valid) {
-        var rec = { key: key, urls: {}, bytes: 0 };
+        var rec = { key: key, wall: u, urls: {}, bytes: 0 };
         names.forEach(function (n) { rec.urls[n] = URL.createObjectURL(job.blobs[n]); rec.bytes += job.blobs[n].size; });
         /* Apply both frost levels together. An older encoder can never replace half of the current wallpaper. */
         var previous = frosts, previousUncached = !Array.from(frostCache.values()).some(function (r) { return r.urls === previous; });
@@ -1643,7 +1643,9 @@
     var wasGlass = lastLg === 'on' && /^glass/.test(lastTheme || '');
     if (wasGlass && isGlass() && wall !== lastWall && th === lastTheme && wallSourceUrl) {
       var previousWall = wallSourceUrl, nextWall = currentWallUrl();
-      if (frostKey !== nextWall + ':' + innerWidth + 'x' + innerHeight) holdWall(previousWall);
+      /* This observer handles wallpaper identity, while resize owns viewport changes. No layout read may split
+         the prepared attribute/frost transaction after the caller's writes. */
+      if (frostWallUrl !== nextWall) holdWall(previousWall);
     } else if (!isGlass()) releaseWallHold();
     if (motion !== lastMotion && reduced() && typeof suspendLensMotion === 'function') suspendLensMotion();
     lastTier = tier; lastWall = wall; lastMotion = motion;
