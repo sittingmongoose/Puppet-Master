@@ -117889,7 +117889,14 @@ html[data-theme^="retro"] #panel-settings .o55-goals-phase-n { border-radius: 0;
         if (inkShown && !was) { var at = getActive(); if (at) snap(at); } };   /* shown again: on the active item exactly */
       var shownSoon = function () { if (!ink.isConnected) return; if (typeof window.PM_AFTER_LAYOUT === 'function') window.PM_AFTER_LAYOUT(readShown); else requestAnimationFrame(readShown); };
       shownSoon();
-      try { new MutationObserver(shownSoon).observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme', 'data-lg', 'data-o55-nier'] }); } catch (eM) {}
+      /* one observer for every attached ink (a segment strip made again attaches again): an ink no longer in the page
+         is dropped from it at the next look change, so nothing keeps its closure alive (landing review SH8-1) */
+      var shownReg = attach._o55Shown || (attach._o55Shown = { list: [], mo: null });
+      shownReg.list.push({ ink: ink, soon: shownSoon });
+      if (!shownReg.mo) try {
+        shownReg.mo = new MutationObserver(function () { shownReg.list = shownReg.list.filter(function (r) { return r.ink.isConnected; }); for (var si = 0; si < shownReg.list.length; si++) shownReg.list[si].soon(); });
+        shownReg.mo.observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme', 'data-lg', 'data-o55-nier'] });
+      } catch (eM) {}
       var pos = {
         a: null, s: null, va: 0, vs: 0, raf: 0,
         jiggleT: 0, blendT: 0, lastStretch: 0,
