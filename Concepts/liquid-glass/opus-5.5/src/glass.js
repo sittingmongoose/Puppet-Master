@@ -96,14 +96,18 @@
     out = out || [0, 0, 0]; out[0] = d; out[1] = nx; out[2] = ny; return out;
   }
   function profile(t) { return Math.pow(1 - Math.pow(1 - t, 4), 0.25); }
-  function buildMaps(W, H, R, B, T, mag, lightK, ring, specOnly) {
-    ring = ring || [3, 8];
-    var key = [W, H, R, B, T, mag, lightK, ring, !!specOnly].join('|'), hit = cachedMap(key);
-    if (hit) return hit;
+  /* the maps of one rounded rectangle as plain numbers, with no DOM: buildMaps below encodes them for the page, and the
+     rim bake worker runs this same function from its source text (bakeWorker) */
+  function mapsCore(W, H, R, B, T, mag, lightK, ring) {
     var n = W * H, dx = new Float32Array(n), dy = new Float32Array(n), sp = new Float32Array(n), edge = new Float32Array(n), active = [];
     var hx = W / 2 - R, hy = H / 2 - R, cx = W / 2, cy = H / 2, L0 = -0.55, L1 = -0.83, max = 0;
     var scratch = [0, 0, 0], bends = new Map(), lights = new Map();
-    for (var y = 0; y < H; y++) for (var x = 0; x < W; x++) {
+    /* only the bevel band can hold a value: a pixel more than max(B, R) + 1.5 px inside both straight edges is at least
+       B deep in the shape, where (at mag 1) there is no bend, no light and no edge, so its maps stay zero and that face is
+       skipped. Walking every pixel of a panel's map took most of a 467 ms bake frame on the P1000 (2026-10-16). */
+    var M = Math.ceil(Math.max(B, R)) + 2, band = mag <= 1 && W - M > M;
+    for (var y = 0; y < H; y++) for (var x = 0, mid = band && y >= M && y < H - M; x < W; x++) {
+      if (mid && x === M) x = W - M;
       var i = y * W + x, px = x + 0.5 - cx, py = y + 0.5 - cy, s = sdf(px, py, hx, hy, R, scratch), d = s[0];
       if (d <= 0) continue;
       /* only the outer few pixels stay sharp: text near an edge must sit on frost, never on raw refracted lines */
@@ -130,6 +134,22 @@
       }
       dx[i] = vx; dy[i] = vy; var mm = Math.max(Math.abs(vx), Math.abs(vy)); if (mm > max) max = mm;
     }
+    return { n: n, dx: dx, dy: dy, sp: sp, edge: edge, active: active, max: max };
+  }
+  /* the rim bake reads the maps at the active pixels only, so only those are kept (raw.dx[j] is pixel raw.active[j]): a
+     panel's maps are a few hundred KB instead of 16 bytes a pixel, and the cache keeps every sheet size on screen */
+  function compactMaps(core) {
+    var A = new Uint32Array(core.active), dx = new Float32Array(A.length), dy = new Float32Array(A.length), edge = new Float32Array(A.length);
+    for (var j = 0; j < A.length; j++) { dx[j] = core.dx[A[j]]; dy[j] = core.dy[A[j]]; edge[j] = core.edge[A[j]]; }
+    return { dx: dx, dy: dy, edge: edge, active: A };
+  }
+  /* the specular map's pixels: white, its light in the alpha */
+  function specPixels(D, sp, n) { for (var i = 0; i < n; i++) { var o = i * 4; D[o] = D[o + 1] = D[o + 2] = 255; D[o + 3] = Math.round(sp[i] * 255); } }
+  function buildMaps(W, H, R, B, T, mag, lightK, ring, specOnly) {
+    ring = ring || [3, 8];
+    var key = [W, H, R, B, T, mag, lightK, ring, !!specOnly].join('|'), hit = cachedMap(key);
+    if (hit) return hit;
+    var core = mapsCore(W, H, R, B, T, mag, lightK, ring), n = core.n, dx = core.dx, dy = core.dy, max = core.max;
     /* the maps are encoded on a CPU canvas: on a GPU canvas toDataURL read back synchronously behind the page's own raster
        (Jared #12: 363 ms of toDataURL in one Glass entry on a P1000) */
     var canvas = document.createElement('canvas'); canvas.width = W; canvas.height = H;
@@ -137,9 +157,9 @@
     function img(fill) { fill(pixels.data); ctx.putImageData(pixels, 0, 0); return canvas.toDataURL('image/png'); }
     var k = max || 1;
     var res = {
-      scale: max * 2, max: max, raw: { dx: dx, dy: dy, edge: edge, active: new Uint32Array(active) },
+      scale: max * 2, max: max, raw: compactMaps(core),
       disp: specOnly ? null : img(function (D) { for (var i = 0; i < n; i++) { var o = i * 4; D[o] = 128 + Math.round(dx[i] / k * 127); D[o + 1] = 128 + Math.round(dy[i] / k * 127); D[o + 2] = 128; D[o + 3] = 255; } }),
-      spec: img(function (D) { for (var i = 0; i < n; i++) { var o = i * 4; D[o] = D[o + 1] = D[o + 2] = 255; D[o + 3] = Math.round(sp[i] * 255); } }),
+      spec: img(function (D) { specPixels(D, core.sp, n); }),
     };
     return keepMap(key, res);
   }
@@ -309,16 +329,17 @@
   var bakeQ = new Map(), bakeT = 0, bakeFrame = 0, bakeIdle = 0, bakeFlight = null, bakeEpoch = 0, bakeAvg = 8;
   function currentWallUrl(refresh) {
     /* The source's wallpaper variables are selected only by these attributes. Keep the large data URL out of each
-       surface signature and resolve the computed variable once per choice, with a fresh read before loading it. */
+       surface signature and resolve the computed variable once per choice: reading it serialises a print of several MB
+       (100-165 ms on a P1000 or an M3, 2026-10-16). An empty read is read again, as a host may add the sheet later. */
     var key = [root.getAttribute('data-theme'), root.getAttribute('data-lg-wall'), root.style.getPropertyValue('--lg-wall')].join('|');
-    if (!refresh && key === wallSourceKey) return wallSourceUrl;
+    if (!refresh && key === wallSourceKey && wallSourceUrl) return wallSourceUrl;
     var v = getComputedStyle(root).getPropertyValue('--lg-wall') || ''; var m = v.match(/url\(["']?(.*?)["']?\)\s*$/);
     var u = m ? m[1] : '';
     if (u !== wallSourceUrl) { wallSourceUrl = u; wallSourceId++; }
     wallSourceKey = key; return u;
   }
-  function withWall(cb) {
-    var u = currentWallUrl(true); if (!u) { cb(null); return; }
+  function withWall(cb, sourceUrl) {
+    var u = sourceUrl || currentWallUrl(); if (!u) { cb(null); return; }
     var rec = wallSources.get(u);
     if (rec) {
       wallSources.delete(u); wallSources.set(u, rec);
@@ -484,43 +505,184 @@
   function useRing(e, rec) {
     if (e.__lgBake) { bakeQ.delete(e); e.__lgBake = null; }
     if (e.__lgRing !== rec.url) { releaseRing(e); e.__lgRing = rec.url; }
-    e.style.setProperty('--lg-spec', 'url(' + rec.spec + ')'); e.style.setProperty('--lg-ring', 'url(' + rec.url + ')');
+    e.__lgSpec = rec.spec; e.style.setProperty('--lg-spec', 'url(' + rec.spec + ')'); e.style.setProperty('--lg-ring', 'url(' + rec.url + ')');
   }
-  function bakeRing(e, kind, im, job) {
-    if (!currentBake(job, im)) return;
-    var k = KINDS[kind], W = Math.round(e.offsetWidth), H = Math.round(e.offsetHeight);
-    if (W < 4 || H < 4) return;
-    var r = anchor(e); r = { left: r.x, top: r.y };
-    var R = radiusOf(e, W, H), B = Math.max(2, Math.min(k.bezel, Math.min(W, H) / 2 - 1)), T = Math.min(k.thick, B * 2.4);
-    var m = buildMaps(W, H, Math.round(R), Math.round(B), Math.round(T), 1, k.light, k.ring, true), raw = m.raw, c = cover(im);
-    var p = Math.ceil(m.max) + 3, SW = W + 2 * p, SH = H + 2 * p;
-    /* read back on the CPU: a GPU canvas paid a readback in getImageData and again in toBlob (about 20 ms a card) */
-    var sc = document.createElement('canvas'); sc.width = SW; sc.height = SH; var g = sc.getContext('2d', { willReadFrequently: true });
-    g.filter = 'saturate(' + k.sat + ')';
-    g.setTransform(c.s, 0, 0, c.s, c.ox - (r.left - p), c.oy - (r.top - p)); g.drawImage(im, 0, 0); g.setTransform(1, 0, 0, 1, 0, 0);
-    var S = g.getImageData(0, 0, SW, SH).data, out = new ImageData(W, H), O = out.data, ca = k.ca || 0;
+  /* a rim's pixels: each active pixel of the bevel takes the wallpaper under it (S, SW x SH, with a margin of p px) at
+     its bent place, with red and blue split by ca. Plain numbers, shared with the bake worker. */
+  function sampleRing(S, SW, SH, raw, W, p, ca, O) {
     function at(x, y, ch) {   /* bilinear sample of one channel */
       x = Math.max(0, Math.min(SW - 1.001, x)); y = Math.max(0, Math.min(SH - 1.001, y));
       var x0 = x | 0, y0 = y | 0, fx = x - x0, fy = y - y0, i00 = (y0 * SW + x0) * 4 + ch, i10 = i00 + 4, i01 = i00 + SW * 4, i11 = i01 + 4;
       return (S[i00] * (1 - fx) + S[i10] * fx) * (1 - fy) + (S[i01] * (1 - fx) + S[i11] * fx) * fy;
     }
     for (var j = 0; j < raw.active.length; j++) {
-      var i = raw.active[j], x = i % W, y = (i / W) | 0, a = raw.edge[i];
-      var vx = raw.dx[i], vy = raw.dy[i], bx = x + p + 0.5, by = y + p + 0.5, o = i * 4;
+      var i = raw.active[j], x = i % W, y = (i / W) | 0, a = raw.edge[j];
+      var vx = raw.dx[j], vy = raw.dy[j], bx = x + p + 0.5, by = y + p + 0.5, o = i * 4;
       O[o] = at(bx + vx * (1 - ca), by + vy * (1 - ca), 0); O[o + 1] = at(bx + vx, by + vy, 1); O[o + 2] = at(bx + vx * (1 + ca), by + vy * (1 + ca), 2); O[o + 3] = a * 255;
     }
+  }
+  /* what a rim bake needs to know of its sheet, read where layout is clean (a bake step runs after layout) */
+  function bakeGeometry(e, kind) {
+    var k = KINDS[kind], W = Math.round(e.offsetWidth), H = Math.round(e.offsetHeight);
+    if (W < 4 || H < 4) return null;
+    var lp = anchor(e), R = radiusOf(e, W, H), B = Math.max(2, Math.min(k.bezel, Math.min(W, H) / 2 - 1)), T = Math.min(k.thick, B * 2.4);
+    var G = { k: k, W: W, H: H, left: lp.x, top: lp.y, R: Math.round(R), B: Math.round(B), T: Math.round(T) };
+    G.key = [W, H, G.R, G.B, G.T, 1, k.light, k.ring, true].join('|');
+    return G;
+  }
+  function sameGeometry(e, G) {
+    var lp = layoutPos(e);
+    return Math.round(e.offsetWidth) === G.W && Math.round(e.offsetHeight) === G.H && Math.round(lp.x) === Math.round(G.left) && Math.round(lp.y) === Math.round(G.top);
+  }
+  /* the page's own rim bake: the fallback when the bake worker cannot run (no Worker, OffscreenCanvas or canvas filter) */
+  function bakeRing(e, kind, im, job) {
+    if (!currentBake(job, im)) return;
+    var G = bakeGeometry(e, kind); if (!G) return;
+    var k = G.k, W = G.W, H = G.H, r = { left: G.left, top: G.top };
+    var m = buildMaps(W, H, G.R, G.B, G.T, 1, k.light, k.ring, true), c = cover(im);
+    var p = Math.ceil(m.max) + 3, SW = W + 2 * p, SH = H + 2 * p;
+    /* read back on the CPU: a GPU canvas paid a readback in getImageData and again in toBlob (about 20 ms a card) */
+    var sc = document.createElement('canvas'); sc.width = SW; sc.height = SH; var g = sc.getContext('2d', { willReadFrequently: true });
+    g.filter = 'saturate(' + k.sat + ')';
+    g.setTransform(c.s, 0, 0, c.s, c.ox - (r.left - p), c.oy - (r.top - p)); g.drawImage(im, 0, 0); g.setTransform(1, 0, 0, 1, 0, 0);
+    var S = g.getImageData(0, 0, SW, SH).data, out = new ImageData(W, H);
+    sampleRing(S, SW, SH, m.raw, W, p, k.ca || 0, out.data);
     var oc = document.createElement('canvas'); oc.width = W; oc.height = H; oc.getContext('2d', { willReadFrequently: true }).putImageData(out, 0, 0);
     e.style.setProperty('--lg-spec', 'url(' + m.spec + ')');
     (function (b) {
       if (!b) { e.__lgSig = null; return; }
-      var lp = layoutPos(e);
-      if (Math.round(e.offsetWidth) !== W || Math.round(e.offsetHeight) !== H || Math.round(lp.x) !== Math.round(r.left) || Math.round(lp.y) !== Math.round(r.top)) {
-        e.__lgSig = null; mount(e, kind); return;
-      }
+      if (!sameGeometry(e, G)) { e.__lgSig = null; mount(e, kind); return; }
       var url = URL.createObjectURL(b); keepRing(job.sig, url, m.spec);
       if (e.__lgRing !== url) { releaseRing(e); e.__lgRing = url; }
       e.style.setProperty('--lg-ring', 'url(' + url + ')');
     })(pngNow(oc));
+  }
+
+  /* ---- the bake worker ------------------------------------------------------------------------------------------------
+     A rim bake builds its sheet's maps, samples the wallpaper under its bevel and encodes two PNGs, all in proportion to
+     the sheet's area: on the P1000 a 646 x 2946 Settings card took 257 ms and a chapter change baked 27 of them in a row
+     (1.2 s, 2026-10-16), so a bake held its frame however the steps were cut. So the bake runs in a worker. The page reads
+     each sheet's size, place and corner after layout, posts them, and applies the finished rim after a later layout; the
+     worker runs this file's own mapsCore, compactMaps, specPixels and sampleRing (their source text) on OffscreenCanvas,
+     which draws the same pixels as a page canvas (the saturate filter included). The wallpaper goes over once per print,
+     as an ImageBitmap. Without a Worker, OffscreenCanvas or a canvas filter there, the page bakes as before (bakeRing). */
+  function bakeWorkerMain() {
+    var walls = new Map(), maps = new Map(), queue = [], busy = false, epoch = 0;
+    var probe = typeof OffscreenCanvas === 'function' && new OffscreenCanvas(1, 1).getContext('2d');
+    if (!probe || !('filter' in probe) || typeof probe.getImageData !== 'function') { postMessage({ type: 'unsupported' }); return; }
+    function mapsFor(j) {
+      var rec = maps.get(j.key);
+      if (rec) { maps.delete(j.key); maps.set(j.key, rec); return Promise.resolve(rec); }
+      var core = mapsCore(j.W, j.H, j.R, j.B, j.T, 1, j.light, j.ring);
+      var cv = new OffscreenCanvas(j.W, j.H), cx = cv.getContext('2d', { willReadFrequently: true }), px = cx.createImageData(j.W, j.H);
+      specPixels(px.data, core.sp, core.n); cx.putImageData(px, 0, 0);
+      return cv.convertToBlob({ type: 'image/png' }).then(function (spec) {
+        rec = { max: core.max, raw: compactMaps(core), spec: spec }; maps.set(j.key, rec);
+        while (maps.size > 64) maps.delete(maps.keys().next().value);
+        return rec;
+      });
+    }
+    function bake(j) {
+      var bm = walls.get(j.wall); if (!bm) return Promise.resolve({ id: j.id, error: 'wall' });
+      return mapsFor(j).then(function (rec) {
+        var p = Math.ceil(rec.max) + 3, SW = j.W + 2 * p, SH = j.H + 2 * p, c = j.c;
+        var sc = new OffscreenCanvas(SW, SH), g = sc.getContext('2d', { willReadFrequently: true });
+        g.filter = 'saturate(' + j.sat + ')';
+        g.setTransform(c.s, 0, 0, c.s, c.ox - (j.left - p), c.oy - (j.top - p)); g.drawImage(bm, 0, 0); g.setTransform(1, 0, 0, 1, 0, 0);
+        var S = g.getImageData(0, 0, SW, SH).data, out = new ImageData(j.W, j.H);
+        sampleRing(S, SW, SH, rec.raw, j.W, p, j.ca, out.data);
+        var oc = new OffscreenCanvas(j.W, j.H); oc.getContext('2d', { willReadFrequently: true }).putImageData(out, 0, 0);
+        return oc.convertToBlob({ type: 'image/png' }).then(function (ring) { return { id: j.id, key: j.key, ring: ring, spec: j.needSpec ? rec.spec : null }; });
+      });
+    }
+    function pump() {
+      if (busy) return;
+      while (queue.length && queue[0].epoch < epoch) queue.shift();
+      if (!queue.length) return;
+      busy = true; var j = queue.shift();
+      bake(j).then(function (r) { postMessage(r); }, function (err) { postMessage({ id: j.id, error: String((err && err.message) || err) }); })
+        .then(function () { busy = false; pump(); });
+    }
+    onmessage = function (ev) {
+      var m = ev.data;
+      if (m.type === 'wall') walls.set(m.id, m.bm);
+      else if (m.type === 'unwall') { var old = walls.get(m.id); if (old) { old.close(); walls.delete(m.id); } }
+      else if (m.type === 'epoch') { epoch = m.epoch; pump(); }
+      else { queue.push(m); pump(); }
+    };
+  }
+  var bakeW = null, bakeWOn = 0, bakeWJobs = new Map(), bakeWIds = 0, bakeWWalls = new Map(), bakeWWallId = 0, bakeWReady = [], bakeWErrors = 0;
+  var specUrls = new Map(), SPEC_COUNT = 192;
+  function bakeWorker() {
+    if (bakeWOn) return bakeWOn > 0 ? bakeW : null;
+    bakeWOn = -1;
+    try {
+      if (!window.Worker || !window.OffscreenCanvas || !window.createImageBitmap) return null;
+      var src = [sdf, profile, mapsCore, compactMaps, specPixels, sampleRing].map(function (f) { return 'var ' + f.name + ' = ' + f.toString() + ';\n'; }).join('') +
+        '(' + bakeWorkerMain.toString() + ')();\n';
+      bakeW = new Worker(URL.createObjectURL(new Blob([src], { type: 'text/javascript' })));
+      bakeW.onmessage = bakeWMessage; bakeW.onerror = function () { bakeWFail(); };
+      bakeWOn = 1; return bakeW;
+    } catch (e) { bakeW = null; return null; }
+  }
+  /* the worker cannot bake here: every sheet it held is baked by the page instead */
+  function bakeWFail() {
+    if (bakeWOn < 0 && !bakeW) return;
+    bakeWOn = -1; try { if (bakeW) bakeW.terminate(); } catch (e) {} bakeW = null;
+    bakeWJobs.forEach(function (job) { if (job.e.__lgBake === job) job.e.__lgSig = null; }); bakeWJobs.clear(); bakeWWalls.clear();
+    dirtyAll = true; queueSync();
+  }
+  /* the wallpaper's print goes to the worker once, as an ImageBitmap (the last two are kept there) */
+  function bakeWWall(im, done) {
+    var u = im.__lgWallUrl, id = bakeWWalls.get(u);
+    if (id) { bakeWWalls.delete(u); bakeWWalls.set(u, id); done(id); return; }
+    createImageBitmap(im).then(function (bm) {
+      if (!bakeW) { bm.close(); done(0); return; }
+      id = ++bakeWWallId; bakeW.postMessage({ type: 'wall', id: id, bm: bm }, [bm]); bakeWWalls.set(u, id);
+      while (bakeWWalls.size > 2) { var oldest = bakeWWalls.keys().next().value; bakeW.postMessage({ type: 'unwall', id: bakeWWalls.get(oldest) }); bakeWWalls.delete(oldest); }
+      done(id);
+    }, function () { done(0); });
+  }
+  function postBake(job, im, wall) {
+    if (!currentBake(job, im)) return;
+    var G = bakeGeometry(job.e, job.kind); if (!G) return;
+    job.geo = G; job.id = ++bakeWIds; bakeWJobs.set(job.id, job);
+    bakeW.postMessage({ id: job.id, epoch: bakeEpoch, wall: wall, key: G.key, W: G.W, H: G.H, R: G.R, B: G.B, T: G.T, light: G.k.light, ring: G.k.ring,
+      sat: G.k.sat, ca: G.k.ca || 0, left: G.left, top: G.top, c: cover(im), needSpec: !specUrls.has(G.key) });
+  }
+  function keepSpec(key, url) {
+    specUrls.delete(key); specUrls.set(key, url);
+    if (specUrls.size <= SPEC_COUNT) return;
+    /* the oldest light no cached or shown rim uses is let go */
+    var used = new Set(); ringCache.forEach(function (rec) { used.add(rec.spec); }); glassSet.forEach(function (x) { if (x.__lgSpec) used.add(x.__lgSpec); });
+    for (var it = specUrls.keys(), k = it.next(); !k.done && specUrls.size > SPEC_COUNT; k = it.next()) {
+      var u = specUrls.get(k.value); if (!used.has(u)) { specUrls.delete(k.value); URL.revokeObjectURL(u); }
+    }
+  }
+  function bakeWMessage(ev) {
+    var m = ev.data;
+    if (m.type === 'unsupported') { bakeWFail(); return; }
+    /* a bake the worker keeps failing goes back to the page (a print it no longer holds is only a stale job) */
+    if (m.error && m.error !== 'wall' && ++bakeWErrors > 3) { bakeWFail(); return; }
+    var job = bakeWJobs.get(m.id); bakeWJobs.delete(m.id);
+    if (m.spec && !specUrls.has(m.key)) keepSpec(m.key, URL.createObjectURL(m.spec));
+    if (!job) return;
+    if (!m.ring) { if (job.e.__lgBake === job) { job.e.__lgSig = null; dirtyScope(job.e.parentElement || job.e); lazySync(false); } return; }
+    bakeWReady.push({ job: job, ring: m.ring });
+    if (bakeWReady.length === 1 && !afterLayout(applyBakes)) applyBakes();
+  }
+  /* finished rims are applied after a layout, where checking that the sheet has not moved since is free */
+  function applyBakes() {
+    var list = bakeWReady; bakeWReady = [];
+    list.forEach(function (x) {
+      var job = x.job, e = job.e, G = job.geo, spec = specUrls.get(G.key);
+      if (!currentBake(job, null)) return;
+      if (!spec || !sameGeometry(e, G)) { e.__lgSig = null; mount(e, job.kind); return; }
+      e.__lgSpec = spec; e.style.setProperty('--lg-spec', 'url(' + spec + ')');
+      var url = URL.createObjectURL(x.ring); keepRing(job.sig, url, spec);
+      if (e.__lgRing !== url) { releaseRing(e); e.__lgRing = url; }
+      e.style.setProperty('--lg-ring', 'url(' + url + ')');
+    });
   }
   function scheduleBakes() { if (!bakeT && !bakeFlight && bakeQ.size && isGlass()) bakeT = setTimeout(flushBakes, 60); }
   function flushBakes() {
@@ -560,15 +722,26 @@
             if (deadline ? !deadline.didTimeout && left < bakeAvg + 1 : ran && left <= 0) break;
             if (deadline && deadline.didTimeout && ran) break;
             var job = list[next++];
-            if (currentBake(job, im)) { var b0 = performance.now(); bakeRing(job.e, job.kind, im, job); bakeAvg = bakeAvg * 0.7 + (performance.now() - b0) * 0.3; ran++; }
+            if (currentBake(job, im)) {
+              var b0 = performance.now();
+              if (wall && bakeW) postBake(job, im, wall); else bakeRing(job.e, job.kind, im, job);
+              bakeAvg = bakeAvg * 0.7 + (performance.now() - b0) * 0.3; ran++;
+            }
           }
           if (next < list.length) nextStep(); else finish(false);
         }
+        /* a step runs after its frame's layout (afterLayout), where a bake's reads of the sheet's size, place and corner are
+           free. Run from the timer or a frame callback, the first read forced the page's pending style and layout inside
+           the bake: an app's open or a chapter change paid it there (the editor customizer's open, 2026-10-16: a 223 ms
+           flush, then frames of 194 and 82 ms). The next step is observed from a frame callback, so it lands after that
+           frame's layout and never inside this observer's own delivery. */
         function nextStep() {
           if (boardMoment() && window.requestIdleCallback) bakeIdle = requestIdleCallback(step, { timeout: 700 });
-          else bakeFrame = requestAnimationFrame(function () { step(null); });
+          else bakeFrame = requestAnimationFrame(function () { bakeFrame = 0; if (!afterLayout(function () { step(null); })) step(null); });
         }
-        if (boardMoment()) nextStep(); else step(null);
+        function start() { if (boardMoment()) nextStep(); else if (!afterLayout(function () { step(null); })) step(null); }
+        var wall = 0;
+        if (bakeWorker()) bakeWWall(im, function (id) { if (bakeFlight !== flight) return; wall = id; start(); }); else start();
       });
     });
   }
@@ -645,7 +818,8 @@
   }
   function unmountAll(keepLenses) {
     if (!keepLenses && typeof suspendLensMotion === 'function') suspendLensMotion();
-    bakeEpoch++; bakeFlight = null; bakeQ.clear();
+    bakeEpoch++; bakeFlight = null; bakeQ.clear(); bakeWReady = [];
+    if (bakeW) bakeW.postMessage({ type: 'epoch', epoch: bakeEpoch });
     if (bakeT) { clearTimeout(bakeT); bakeT = 0; }
     if (bakeFrame) { cancelAnimationFrame(bakeFrame); bakeFrame = 0; }
     if (bakeIdle) { cancelIdleCallback(bakeIdle); bakeIdle = 0; }
@@ -1537,23 +1711,28 @@
   /* During a Usage room change, a sync waits for the frame's own layout: a ResizeObserver's first report of a fresh
      observation comes after layout, where every read is free. Synced in the click task or a frame callback, it forced
      the room's layout (up to 137 ms) and Usage's next callbacks dirtied it again, so the frame laid out a second time
-     (125 ms more: one 312 ms task in r64's trace). */
-  var postEl = null, postRO = null, postQ = false;
-  function afterLayout() {
+     (125 ms more: one 312 ms task in r64's trace). afterLayout(fn) runs fn there too (a rim bake's step). */
+  var postEl = null, postRO = null, postQ = false, postOn = false, postFns = [];
+  function afterLayout(fn) {
     if (!window.ResizeObserver || !document.body) return false;
-    if (postQ) return true;
+    if (fn) postFns.push(fn); else postQ = true;
+    if (postOn) return true;
     if (!postRO) postRO = new ResizeObserver(function () {
-      if (!postQ) return;
-      postQ = false; postRO.unobserve(postEl);
-      if (syncQ) { cancelAnimationFrame(syncQ); syncQ = 0; }
-      syncPending();
+      if (!postOn) return;
+      postOn = false; postRO.unobserve(postEl);
+      if (postQ) {
+        postQ = false;
+        if (syncQ) { cancelAnimationFrame(syncQ); syncQ = 0; }
+        syncPending();
+      }
+      var fns = postFns; postFns = []; fns.forEach(function (f) { f(); });
     });
     if (!postEl || !postEl.isConnected) {
       postEl = el('i', { id: 'lg-post', 'aria-hidden': 'true' });
       postEl.style.cssText = 'position:fixed;left:-8px;top:-8px;width:2px;height:2px;pointer-events:none;visibility:hidden';
       document.body.appendChild(postEl);
     }
-    postQ = true; postRO.observe(postEl);
+    postOn = true; postRO.observe(postEl);
     return true;
   }
   /* One immediate input sync per actual frame; later genuine changes share the next before-paint pass. A newly
