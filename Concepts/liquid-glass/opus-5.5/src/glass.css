@@ -157,7 +157,7 @@ html[data-lg="on"][data-theme^="glass"]:not(#lgz) #sidePanelSlot > .side-panel-v
   -webkit-backdrop-filter: none !important; backdrop-filter: none !important;
 }
 html[data-lg="on"][data-theme^="glass"]:not(#lgz) :is(.app-shell, .title-bar, #activityBar, #sidePanelSlot)::before,
-html[data-lg="on"][data-theme^="glass"]:not(#lgz) :is(.app-shell, .title-bar, #activityBar, #sidePanelSlot)::after { opacity: 0 !important; }
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) :is(.app-shell, .title-bar, #activityBar, #sidePanelSlot):not([data-lg-xf])::after { opacity: 0 !important; }
 /* The base's Glass theme sizes the main area from its content (flex: 1 1 auto !important), so every change anywhere in
    the app made the browser measure the whole page's widest content again: one character changed in a Usage card cost
    4.5-5.3 ms of layout in Glass and 0.3 ms in Basic, and a room change's build ran 3-5 times Basic's layout (review r3
@@ -234,6 +234,51 @@ html[data-lg="on"][data-theme^="glass"]:not(#lgz) [data-lg-kind="bar"] {
    it never trails the content (glass.js sets data-lg-fixed at the first scroll event and lifts it when the scroll settles) */
 html[data-lg="on"][data-theme^="glass"]:not(#lgz) :is([data-lg-kind="panel"], [data-lg-kind="card"], [data-lg-kind="bar"])[data-lg-fixed] {
   background-attachment: scroll, scroll, scroll, scroll, scroll, fixed !important; background-position: 0 0, 0 0, 0 0, 0 0, 0 0, 0 0 !important;
+}
+/* The frost crossfade (pm7-frost-crossfade, Jared 2026-10-16, F3-653). While a wallpaper change fades the body's print,
+   each shown sheet carries data-lg-xf (glass.js startFrostFade), and its ::after paints the sheet's outgoing background
+   over the new one, under the sheet's content: the stack above with the outgoing frost (--lg-xf-heavy / -light, which
+   glass.js sets on the overlay itself) and the sheet's outgoing rim (--lg-xf-ring), plus the inset rim lines it covers.
+   It fades from 1 to 0 on the compositor, in step with the print, and goes when the print's fade ends. The sheet is its
+   containing block and its stacking context: every sheet is isolated (above), and one the app leaves static is made
+   relative at zero specificity, so a sheet the app positions keeps its own position. In a sheet that scrolls itself the
+   overlay is moved by the scroll offset Glass recorded (--lg-xf-x / -y). Two ids of specificity (#lgz, #lgy) and no
+   !important: the page's !important ratchet does not grow, and no rule that can match a sheet's ::after outranks these. */
+@property --lg-xf-ring { syntax: '*'; inherits: false; }
+@property --lg-xf-x { syntax: '*'; inherits: false; }
+@property --lg-xf-y { syntax: '*'; inherits: false; }
+@keyframes lg-xf-a { from { opacity: 1; } to { opacity: 0; } }
+@keyframes lg-xf-b { from { opacity: 1; } to { opacity: 0; } }
+:where(html[data-lg="on"][data-theme^="glass"]) :where([data-lg-kind="panel"], [data-lg-kind="card"], [data-lg-kind="bar"]) { position: relative; }
+html[data-lg="on"][data-theme^="glass"]:not(#lgz):not(#lgy) :is([data-lg-kind="panel"], [data-lg-kind="card"], [data-lg-kind="bar"])[data-lg-xf]::after {
+  content: ''; display: block; position: absolute; z-index: -1;
+  inset: var(--lg-xf-y, 0px) calc(-1 * var(--lg-xf-x, 0px)) calc(-1 * var(--lg-xf-y, 0px)) var(--lg-xf-x, 0px);
+  width: auto; height: auto; margin: 0; padding: 0; border: 0; border-radius: inherit;
+  pointer-events: none; transform: none; translate: none; scale: none; rotate: none;
+  filter: none; -webkit-mask: none; mask: none; clip-path: none; mix-blend-mode: normal;
+  visibility: visible; transition: none;
+  --lg-spec: inherit; --lg-glow: inherit; --lg-fx: inherit; --lg-fy: inherit; --lg-mat: inherit; --lg-ga-k: inherit; --lg-ga-add: inherit;
+  --lg-xf-ring: inherit; --lg-xf-x: inherit; --lg-xf-y: inherit;
+  box-shadow: inset 0 1px 0 var(--lg-edge-top), inset 0 -1px 1px var(--lg-edge-bot);
+  opacity: 1; will-change: opacity;
+  animation: lg-xf-a var(--lg-xf-ms, 240ms) var(--lg-xf-ease, linear) both;
+}
+/* a fade that replaces a running one starts again from 1 under the other name */
+html[data-lg="on"][data-theme^="glass"]:not(#lgz):not(#lgy) :is([data-lg-kind="panel"], [data-lg-kind="card"], [data-lg-kind="bar"])[data-lg-xf="b"]::after { animation-name: lg-xf-b; }
+html[data-lg="on"][data-theme^="glass"]:not(#lgz):not(#lgy) [data-lg-kind="panel"][data-lg-xf]::after {
+  background: var(--lg-spec, none) 0 0 / 100% 100% no-repeat, var(--lg-glow, none) 0 0 / 100% 100% no-repeat, linear-gradient(180deg, var(--lg-head-shade), transparent 30px), linear-gradient(rgb(from var(--lg-tint-panel) r g b / calc((alpha * var(--lg-ga-k) + var(--lg-ga-add)) * var(--lg-mat))), rgb(from var(--lg-tint-panel) r g b / calc((alpha * var(--lg-ga-k) + var(--lg-ga-add)) * var(--lg-mat)))),
+    var(--lg-xf-ring, none) 0 0 / 100% 100% no-repeat, var(--lg-xf-heavy, none) var(--lg-fx, 0px) var(--lg-fy, 0px) / var(--lg-vw, 100vw) var(--lg-vh, 100vh) no-repeat;
+}
+html[data-lg="on"][data-theme^="glass"]:not(#lgz):not(#lgy) [data-lg-kind="card"][data-lg-xf]::after {
+  background: var(--lg-spec, none) 0 0 / 100% 100% no-repeat, var(--lg-glow, none) 0 0 / 100% 100% no-repeat, linear-gradient(180deg, var(--lg-head-shade), transparent 30px), linear-gradient(rgb(from var(--lg-tint-card) r g b / calc((alpha * var(--lg-ga-k) + var(--lg-ga-add)) * var(--lg-mat))), rgb(from var(--lg-tint-card) r g b / calc((alpha * var(--lg-ga-k) + var(--lg-ga-add)) * var(--lg-mat)))),
+    var(--lg-xf-ring, none) 0 0 / 100% 100% no-repeat, var(--lg-xf-heavy, none) var(--lg-fx, 0px) var(--lg-fy, 0px) / var(--lg-vw, 100vw) var(--lg-vh, 100vh) no-repeat;
+}
+html[data-lg="on"][data-theme^="glass"]:not(#lgz):not(#lgy) [data-lg-kind="bar"][data-lg-xf]::after {
+  background: var(--lg-spec, none) 0 0 / 100% 100% no-repeat, var(--lg-glow, none) 0 0 / 100% 100% no-repeat, linear-gradient(180deg, var(--lg-head-shade), transparent 30px), linear-gradient(rgb(from var(--lg-tint-bar) r g b / calc((alpha * var(--lg-ga-k) + var(--lg-ga-add)) * var(--lg-mat))), rgb(from var(--lg-tint-bar) r g b / calc((alpha * var(--lg-ga-k) + var(--lg-ga-add)) * var(--lg-mat)))),
+    var(--lg-xf-ring, none) 0 0 / 100% 100% no-repeat, var(--lg-xf-light, none) var(--lg-fx, 0px) var(--lg-fy, 0px) / var(--lg-vw, 100vw) var(--lg-vh, 100vh) no-repeat;
+}
+html[data-lg="on"][data-theme^="glass"]:not(#lgz):not(#lgy) :is([data-lg-kind="panel"], [data-lg-kind="card"], [data-lg-kind="bar"])[data-lg-fixed][data-lg-xf]::after {
+  background-attachment: scroll, scroll, scroll, scroll, scroll, fixed; background-position: 0 0, 0 0, 0 0, 0 0, 0 0, 0 0;
 }
 /* the page-in class stays on a page after its entrance ends, and its will-change: transform would make every pinned
    frost element-relative; a running entrance still gets its own layer without it */
@@ -322,7 +367,7 @@ html[data-lg="on"][data-theme^="glass"]:not(#lgz) [data-lg-kind] :is(.sh-banner,
   background: transparent !important; box-shadow: none !important; -webkit-backdrop-filter: none !important; backdrop-filter: none !important; border-color: transparent !important;
 }
 html[data-lg="on"][data-theme^="glass"]:not(#lgz) #panel-usage .pmu-card :is(.pmu-film-glint) { display: none !important; }
-html[data-lg="on"][data-theme^="glass"]:not(#lgz) #panel-usage .pmu-card::after { opacity: 0 !important; }
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) #panel-usage .pmu-card:not([data-lg-xf])::after { opacity: 0 !important; }
 html[data-lg="on"][data-theme^="glass"]:not(#lgz) #activityBar .icon .symbol {
   -webkit-backdrop-filter: none !important; backdrop-filter: none !important; background: transparent !important; box-shadow: none !important; border: 0 !important;
   border-radius: var(--pm-ctl-r) !important; color: var(--text-secondary) !important; position: relative; z-index: 6;
