@@ -75,6 +75,19 @@ var Motion = {
     var parts = node.querySelectorAll('.pmt-cz-scrim > i, .pmt-cz-frame, .pmt-cz-dialog');
     var clear = function (p) { p.classList.remove('pmed-sheet-in', 'pmed-sheet-out', 'pmed-shade-in', 'pmed-shade-out'); };
     [].forEach.call(parts, function (p) { clear(p); p.classList.add((p.classList.contains('pmt-cz-dialog') ? 'pmed-sheet-' : 'pmed-shade-') + (leaving ? 'out' : 'in')); });
+    // Keep the full family motion when the opening/closing frame is expensive.
+    // The shared helper reads these six moving plates on a later frame, never
+    // the sheet's subtree in the input handler. A newer visit owns its moves.
+    if (!reducedNow() && window.PM_START_ON_SHOWN) window.PM_START_ON_SHOWN(function () {
+      if (!node.isConnected || node._pmedGen !== gen) return [];
+      var moves = [];
+      [].forEach.call(parts, function (p) {
+        if (p.getAnimations) p.getAnimations().forEach(function (a) {
+          if (a.effect && a.effect.target === p && /^pmt-m-/.test(a.animationName || '')) moves.push(a);
+        });
+      });
+      return moves;
+    });
     Motion.finished(node, function () { if (node._pmedGen !== gen) return; [].forEach.call(parts, clear); done(); });
   }
 };
