@@ -9,7 +9,8 @@ Home (~1,530 elements) was restyled inside the switch's layout (pm7-p1000-astra,
 This step runs last in build.build_text(). It replaces each of those selectors in the composed page with the same
 selector whose descendant names the classes and element types it reaches today (active_descendant_rules.json; both
 `*` and `:where(...)` have specificity 0), or drops the arm for the two carriers that hold text only. Declarations,
-rule order and every other selector are untouched. In the published page every original must be found exactly once.
+rule order and every other selector are untouched. Only CSS inside real <style> elements is searched (never a script).
+In the published page every original must be found exactly once.
 """
 from __future__ import annotations
 
@@ -41,23 +42,45 @@ def _pattern(sel: str) -> str:
     return ''.join(parts)
 
 
+def _style_spans(text: str) -> list[tuple[int, int]]:
+    """[start, end) of the CSS inside every real <style> element; never text inside a <script> (a script may hold
+    '<style' in a string), the same scan css_bucket_split uses."""
+    spans, pos = [], 0
+    tag = re.compile(r'<(script|style)\b[^>]*>', re.I)
+    while True:
+        m = tag.search(text, pos)
+        if not m:
+            return spans
+        close = re.compile(r'</' + m.group(1) + r'\s*>', re.I).search(text, m.end())
+        if not close:
+            return spans
+        if m.group(1).lower() == 'style':
+            spans.append((m.end(), close.start()))
+        pos = close.end()
+
+
 def apply(text: str, strict: bool, need) -> tuple[str, dict]:
     rules = json.loads(RULES_FILE.read_text(encoding='utf-8'))['rules']
     notes = {'replaced': 0, 'omitted': 0, 'missing': []}
     for r in rules:
         variants = r.get('variants') or [{'original': r['original'], 'replacement': r.get('replacement', '')}]
+        spans = _style_spans(text)
         found = []
         for v in variants:
             body = _pattern(v['original'])
             if r['omit']:
                 # one arm of a selector list: take it with the comma after it, else the comma before it
-                m = list(re.finditer(body + r'\s*,\s*', text)) or list(re.finditer(r'\s*,\s*' + body + r'(?=\s*\{)', text))
+                pats = [re.compile(body + r'\s*,\s*'), re.compile(r'\s*,\s*' + body + r'(?=\s*\{)')]
             else:
-                m = list(re.finditer(body + r'(?=\s*[,{])', text))
-            found += [(x, v) for x in m]
+                pats = [re.compile(body + r'(?=\s*[,{])')]
+            for pat in pats:
+                hits = [(x, v) for a, b in spans for x in pat.finditer(text, a, b)]
+                if hits:
+                    found += hits
+                    break
         if not found:
             notes['missing'].append(r['rule'])
-            need(not strict, f"T2 active rewrite: rule {r['rule']} ({r['source']}) not found in the composed page")
+            need(not strict, f"T2 active rewrite: rule {r['rule']} ({r['source']}) not found in the composed page's <style> blocks")
             continue
         need(len(found) == 1, f"T2 active rewrite: rule {r['rule']} found {len(found)} times across its variants (need exactly 1)")
         (m, v), = found
