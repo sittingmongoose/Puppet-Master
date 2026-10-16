@@ -33381,8 +33381,9 @@ html #o55-demo.pmds[data-pmds-look] .pmds-sheet .pmds-unavail .pmds-swart { opac
    - Basic: a precise tinted chip with a crisp accent hairline, gliding with a little give;
    - Friendly: a soft mint pebble with a glow, the page tabs' own plate (in place it keeps the plate's card body), gliding like
      Glass's drop;
-   - Retro: a reverse-video phosphor block (opaque, square, the label inverted), gliding rigidly;
-   - NieR Mode: the game's ink bar (opaque ink, paper words, square), gliding rigidly; its hover ink bars stay as they are.
+   - Retro: a reverse-video phosphor block (opaque, square, the label inverted) that hops tab by tab on a 33 ms tick;
+   - NieR Mode: the game's ink bar (opaque ink, paper words, square), cut straight to its tab; its hover ink bars stay as
+     they are.
    The rules below name the adopting looks by the look itself, not by the <html data-pm-switch(-layer)> marks that glass.js
    sets from these tokens after the look's own restyle: html:not([data-theme^="glass"]) for "the switcher is on" and
    :is(html[data-theme^="retro"], html[data-o55-nier="on"]) for "its chip is opaque". Keyed on the marks, every NieR toggle
@@ -33468,6 +33469,8 @@ html[data-theme^="retro"]:not([data-o55-nier="on"]) {
   --pm-switch-ink-hover: var(--text-primary);
   --pm-switch-mark: var(--accent-lime); --pm-switch-mark-on: var(--surface);
   --pm-switch-swell: 0; --pm-switch-liquid: 0;
+  /* the phosphor steps, never glides (Jared 2026-10-16; F3-438, F3-621) */
+  --pm-switch-motion: step;
 }
 /* the phosphor's bloom on the dark screen, a printed key's hard shadow on the light one */
 html[data-theme="retro-dark"]:not([data-o55-nier="on"]) { --pm-switch-shadow: 0 0 7px color-mix(in srgb, var(--accent-lime) 24%, transparent); }
@@ -33489,6 +33492,8 @@ html[data-o55-nier="on"] {
   --pm-switch-ink-hover: var(--text-primary);
   --pm-switch-mark: var(--o55-nier-ink); --pm-switch-mark-on: var(--o55-nier-on-ink);
   --pm-switch-swell: 0; --pm-switch-liquid: 0;
+  /* the ink cuts straight to its tab (Jared 2026-10-16; F3-438, F3-621) */
+  --pm-switch-motion: cut;
 }
 /* NieR's cursor owns hover, as it did before the switcher (14-nier-parts.css): the item under the pointer is an ink bar
    with paper words. Glass's step-asides and hover rules (glass.css sections 6 and 12) outrank that cursor in every look
@@ -216264,19 +216269,24 @@ try { if (window.PM_HOME && typeof window.PM_HOME.boot === 'function') window.PM
      - --pm-switch-swell (0..1): how much of Glass's label swell the look keeps (the chosen label's resting size and its
        size under a moving lens). Unset is 1.
      - --pm-switch-liquid (0..1): how much of the drop's stretch, lift and landing wobble the look keeps. Unset is 1. */
-  var switchLook = false, switchUnder = false, switchSwell = 1, switchLiquid = 1;
+  /* - --pm-switch-motion (glide | step | cut): how the chip moves to a new choice. glide (unset) is the spring above;
+       step hops it tab by tab on a 33 ms tick, at most three hops, with no easing; cut puts it there at once. Retro steps
+       and NieR Mode cuts (Jared 2026-10-16; F3-438: joined highlights step in Retro and NieR; F3-621). */
+  var switchLook = false, switchUnder = false, switchSwell = 1, switchLiquid = 1, switchMotion = 'glide';
   function tokenNumber(v, dflt) { var n = parseFloat(v); return isFinite(n) ? Math.max(0, Math.min(1, n)) : dflt; }
   function readSwitch() {
-    var on = false, under = false, swell = 1, liquid = 1;
+    var on = false, under = false, swell = 1, liquid = 1, motion = 'glide';
     if (!isGlass()) {
       try {
         var cs = getComputedStyle(root); on = cs.getPropertyValue('--pm-switch').trim() === 'lens';
         if (on) {
           under = cs.getPropertyValue('--pm-switch-layer').trim() === 'under';
           swell = tokenNumber(cs.getPropertyValue('--pm-switch-swell'), 1); liquid = tokenNumber(cs.getPropertyValue('--pm-switch-liquid'), 1);
+          motion = cs.getPropertyValue('--pm-switch-motion').trim(); if (motion !== 'step' && motion !== 'cut') motion = 'glide';
         }
       } catch (e) {}
     }
+    switchMotion = motion;
     var relayer = under !== switchUnder;
     switchLook = on; switchUnder = under; switchSwell = swell; switchLiquid = liquid;
     if (on) { if (root.getAttribute('data-pm-switch') !== 'lens') root.setAttribute('data-pm-switch', 'lens'); }
@@ -217665,7 +217675,43 @@ try { if (window.PM_HOME && typeof window.PM_HOME.boot === 'function') window.PM
     if (L.tgt === target && !L.dragging) { stopLensTravel(L); setLensBox(L, R); return; }
     L.tgt = target;
     var from = visualRect(L) || A, vertical = !!cfg.vertical || Math.abs(from.y - R.y) > Math.abs(from.x - R.x);
+    if (switchMotion !== 'glide' && !isGlass()) { hop(L, from, R, strip, cfg, target, vertical); return; }
     travel(L, from, R, vertical, { labels: labelsOf(cfg, strip, vertical), mags: magsOf(cfg), vertical: vertical });
+  }
+  /* Retro's step and NieR's cut. A step shows the chip on up to two tabs between (or, next door, half way) for one 33 ms
+     tick each, then on its tab: hard jumps, nothing eased or stretched. The press marks follow the chip: the tab it
+     leaves drops its chosen ink at once, and the tab it lands on takes it with the landing, or when the pointer lifts if
+     that is sooner, so the app's click can never hold a landed chip under the old ink (F3-621: only the tab under the
+     ink looks chosen). */
+  var HOP_MS = 33;
+  function hopStops(A, B, strip, cfg, target, vertical) {
+    var c = function (r) { return vertical ? r.y + r.h / 2 : r.x + r.w / 2; }, a = c(A), b = c(B), lo = Math.min(a, b), hi = Math.max(a, b), pad = cfg.pad == null ? 2 : cfg.pad;
+    var mids = Array.prototype.slice.call(strip.querySelectorAll(cfg.items)).filter(function (it) { return it !== target && visible(it); })
+      .map(function (it) { return rectIn(strip, cfg.box ? cfg.box(it) : it, pad); })
+      .filter(function (r) { var m = c(r); return m > lo + 1 && m < hi - 1; })
+      .sort(function (p, q) { return Math.abs(c(p) - a) - Math.abs(c(q) - a); });
+    if (!mids.length) return [{ x: (A.x + B.x) / 2, y: (A.y + B.y) / 2, w: (A.w + B.w) / 2, h: (A.h + B.h) / 2 }];
+    if (mids.length <= 2) return mids;
+    return [mids[Math.round(mids.length / 3) - 1], mids[Math.round(mids.length * 2 / 3) - 1]];
+  }
+  function hop(L, A, B, strip, cfg, target, vertical) {
+    stopLensTravel(L);
+    setLensBox(L, B);
+    var P = L.pending && L.pending.el === target ? L.pending : null;
+    if (switchMotion === 'cut' || !A) return;
+    var stops = hopStops(A, B, strip, cfg, target, vertical), n = stops.length, dur = n * HOP_MS, frames = [], rects = [{ t: 0, x: A.x, y: A.y, w: A.w, h: A.h }];
+    var bx = B.x + B.w / 2, by = B.y + B.h / 2;
+    stops.forEach(function (S, k) {
+      frames.push({ offset: k / n, easing: 'step-end', transform: 'translate3d(' + (S.x + S.w / 2 - bx).toFixed(2) + 'px,' + (S.y + S.h / 2 - by).toFixed(2) + 'px,0) scale(' + (S.w / B.w).toFixed(4) + ',' + (S.h / B.h).toFixed(4) + ')' });
+      rects.push({ t: (k + 1) * HOP_MS - 0.01, x: S.x, y: S.y, w: S.w, h: S.h });
+    });
+    frames.push({ offset: 1, transform: 'none' }); rects.push({ t: dur, x: B.x, y: B.y, w: B.w, h: B.h });
+    var an = L.lens.animate(frames, { duration: dur, easing: 'linear' }); L.anim = an; L.path = { t0: performance.now(), dur: dur, rects: rects };
+    an.onfinish = function () { if (L.anim === an) L.anim = null; };
+    if (P && switchUnder && P.el.getAttribute('data-lg-press') === 'on') {
+      P.el.removeAttribute('data-lg-press');
+      clearTimeout(P.landT); P.landT = setTimeout(function () { P.landT = 0; if (L.pending === P && P.el.isConnected) P.el.setAttribute('data-lg-press', 'on'); }, dur);
+    }
   }
   /* the press: the lens leaves for the pressed item at once; the app's choice (or its absence) settles it. Only for
      items the app can choose: a disabled or inert item, or a strip that takes no press (a progress rail), keeps the lens
@@ -217676,6 +217722,7 @@ try { if (window.PM_HOME && typeof window.PM_HOME.boot === 'function') window.PM
      chosen ink after the chip had gone (Friendly's mint words, Q16 review). Every look that adopts the switcher; never
      Glass, whose clear lens needs no second ink */
   function pressMark(P, on) {
+    if (P && !on && P.landT) { clearTimeout(P.landT); P.landT = 0; }
     if (!P || (on && !switchLook)) return;
     [[P.el, 'on'], [P.from, 'off']].forEach(function (x) {
       var e = x[0]; if (!e) return;
@@ -217707,6 +217754,7 @@ try { if (window.PM_HOME && typeof window.PM_HOME.boot === 'function') window.PM
   document.addEventListener('pointerup', function (e) {
     lenses.forEach(function (L) {
       var P = L.pending; if (!P || P.up) return;
+      if (P.landT) { clearTimeout(P.landT); P.landT = 0; if (P.el.isConnected) P.el.setAttribute('data-lg-press', 'on'); }
       P.up = performance.now(); P.away = !(e.target && P.el.contains(e.target));
       if (P.away) queueSync(L.strip); else setTimeout(function () { queueSync(L.strip); }, 2550);
     });
