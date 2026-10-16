@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L46595-L48720
+Source lines: L46595-L48726
 
-Source SHA256: `b2e573c1085b6ee57a8116466dbbb465d79e76ca9198acce648ad05cacf165ae`
+Source SHA256: `7a918fe1ff899f98711c73f4ca7811bfd48c347c65f1282c3e275caa8f5efc0f`
 
 ---
 
@@ -1328,7 +1328,7 @@ source_lineage:
   certification)
 - /mnt/Cursor/share/puppet-master/2026-10-16-plans-topup/sources/2026-10-16-motion-fixes--pm7-motion-editor--NOTES.md,
   SHA-256 a9d113635287031b45c99d01df04710b80b6812f2a6f00838ec57462b3f448e5 (editor lane, head d6647a2fc1
-  pinned for L1, B6; source lineage)
+  landed unchanged on main a0f844455c (L1), B6; source lineage)
 preserved_exact_tokens:
 - This editor
 - All editors
@@ -1509,8 +1509,9 @@ canonical_text: >-
   through family material tokens. It serves the page tabs, rail tabs, Usage navigation and range,
   Orchestrator views, Settings chapters, section/index/manager tabs, Wizard work type, theme menu
   and both Customize screens. Choices in scrolling content (Settings service lists and Home segmented rows/panel tabs) use its
-  material in place without a travelling lens; Settings' segmented choices have a sliding chip in every
-  look, Retro and NieR stepped per F3-438 (amended 2026-10-16, DL-217, the seg plate lane). Adopting
+  material in place without a travelling lens; Settings' segmented choices keep that material in place at rest and show the switcher's chip only while
+  the choice moves, inside the control under its labels, in every look, Retro and NieR stepped per F3-438
+  (amended 2026-10-16, DL-217, the seg plate lane, main 2b5ed6092d). Adopting
   the switcher does not enable Glass sheets or optics in another look. A newly shown strip, restored hidden strip or opened
   theme menu places its selected state before the first visible frame. A title-bar menu never
   removes the page selection; remeasure a hidden strip on reveal without a visible zero-position
@@ -1618,11 +1619,13 @@ source_lineage:
   SHA-256 782352b2f604875dcb16ae6683a033b5a8bd0bbd0af39d3de70300b4dadc6593 (Q16 landed on main as
   aec2916c94, Retro's two-jump step and NieR's cut; source lineage; not native certification)
 - /mnt/Cursor/share/puppet-master/2026-10-16-plans-topup/sources/554b3d3a65--Concepts--liquid-glass--opus-5.5--CONTRACT.md, SHA-256
-  acd64cd195435ff1bb143d2dd00dab6f0cc7420a7dc8132ee8703f185ebab629 (Glass lane head 554b3d3a65, pinned for
-  L1, worker bakes and shader warm-up; source lineage; not native certification)
+  acd64cd195435ff1bb143d2dd00dab6f0cc7420a7dc8132ee8703f185ebab629 (Glass lane head 554b3d3a65, landed unchanged on main a0f844455c (L1), worker bakes and shader warm-up; source lineage; not native certification)
 - /mnt/Cursor/share/puppet-master/2026-10-16-plans-topup/sources/e7f4a4fa8d-seg-plate-commit.txt, SHA-256
-  e5d22ffe6fb3afab65144b8da3742d32adf0b7bfbcf3653d5288cf903b879128 (seg plate head e7f4a4fa8d, L2; source
+  e5d22ffe6fb3afab65144b8da3742d32adf0b7bfbcf3653d5288cf903b879128 (seg plate head e7f4a4fa8d, landed on main 2b5ed6092d (L2); source
   lineage)
+- /mnt/Cursor/share/puppet-master/2026-10-16-plans-topup/sources/2b5ed6092d--Concepts--liquid-glass--opus-5.5--CONTRACT.md,
+  SHA-256 eccaf9ec55718c72256e45a0b92575688f7305b6b79c1dd954868de05f095d24 (main 2b5ed6092d after L2, the
+  seg plate and frost overlay; source lineage; not native certification)
 preserved_exact_tokens:
 - Liquid Glass
 negative_constraints: []
@@ -1745,7 +1748,10 @@ source_lineage:
   2026-10-16 ~12:10Z; decision lineage)
 - /mnt/Cursor/share/puppet-master/2026-10-16-plans-topup/sources/2026-10-16-frost-crossfade--NOTES.md,
   SHA-256 a90acd28ecc0d3930fa26091b69a55ff3f484a78c150a501a4784c388b3e7d2f (frost crossfade lane
-  10ba7d6427 with seam c17316f6cf, L2; source lineage)
+  10ba7d6427 with seam c17316f6cf, landed on main 2b5ed6092d (L2); source lineage)
+- /mnt/Cursor/share/puppet-master/2026-10-16-plans-topup/sources/2b5ed6092d--Concepts--liquid-glass--opus-5.5--CONTRACT.md,
+  SHA-256 eccaf9ec55718c72256e45a0b92575688f7305b6b79c1dd954868de05f095d24 (main 2b5ed6092d after L2, the
+  frost crossfade; source lineage; not native certification)
 preserved_exact_tokens:
 - Look's own
 - Ribbons

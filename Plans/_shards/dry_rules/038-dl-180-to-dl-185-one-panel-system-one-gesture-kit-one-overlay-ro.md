@@ -4,7 +4,7 @@ Source: `Plans/DRY_Rules.md`
 
 Source lines: L3448-L4110
 
-Source SHA256: `f06fb704d82968e8ed8977b37ae88317c070c8e37a3c2ba1be3929fd3b88420c`
+Source SHA256: `7553c468db9b04e3bc5e4d5b3305aa47f2e9428b32952f32d0b2c64201c67b88`
 
 ---
 
@@ -662,8 +662,8 @@ source_lineage:
   SHA-256 b1ca802f406fa585b3be8d1096e8aefada4bac0c94ef81a3ee93f3be3611918e (cross-lane contract check;
   source lineage)
 - /mnt/Cursor/share/puppet-master/2026-10-16-plans-topup/sources/d02f2ac26b--Concepts--wallpapers--opus-5.5--CONTRACT.md, SHA-256
-  1687dac3d7dc7905598780595e7df743255edaf6619f038c97d5bfcaa043d544 (Settings lane head d02f2ac26b, pinned
-  for L1, wallpaper preparation and source cache; source lineage; not native certification)
+  1687dac3d7dc7905598780595e7df743255edaf6619f038c97d5bfcaa043d544 (Settings lane head d02f2ac26b, landed unchanged on main
+  a0f844455c (L1), wallpaper preparation and source cache; source lineage; not native certification)
 preserved_exact_tokens: []
 negative_constraints: []
 owner_hints:
