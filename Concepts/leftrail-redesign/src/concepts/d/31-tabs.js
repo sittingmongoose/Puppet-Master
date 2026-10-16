@@ -97,8 +97,16 @@ function placeInk(st, force) {
     const rows = strips.map(s => readInk(s, false));
     rows.forEach(writeInk);
   };
-  if (window.ResizeObserver) { inkRefitReady = new ResizeObserver(flush); inkRefitReady.observe(st); }
-  else { inkRefitReady = { pending: true }; requestAnimationFrame(flush); }
+  /* A strip's own ResizeObserver can request this refit. Arm the measurement observer on the next frame so its
+     initial delivery cannot recurse into that same observer cycle. All strips requested meanwhile join one read. */
+  inkRefitReady = { pending: true };
+  requestAnimationFrame(() => {
+    if (!inkRefits.size) { inkRefitReady = null; return; }
+    if (window.ResizeObserver) {
+      inkRefitReady = new ResizeObserver(flush);
+      inkRefits.forEach(strip => inkRefitReady.observe(strip));
+    } else flush();
+  });
 }
 
 /* The shell's fit pass after a tab click (PMPillFit, scheduled by its own document click listener for any
