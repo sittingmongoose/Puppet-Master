@@ -480,20 +480,28 @@
        stack now, and it is placed again; still crowded, a lasting card joins the stack too (the badge counts it) and a
        quick note shows for a shorter time. */
     const place = () => typeof window.PM_NOTICE_PLACE === 'function' && window.PM_NOTICE_PLACE() === true;
-    if (place()) {
-      let joined = false;
-      staged.forEach((r) => { if (r !== rec && !r.leaving && r.it.durable) { finishStaged(r, 'join'); joined = true; } });
-      if (!joined || place()) {
-        if (it.durable && method() !== 'Banner') { finishStaged(rec, 'join'); sound('callout', 0.4); return; }
-        it.stageMs = Math.min(it.stageMs, Math.max(1800, Math.round(it.stageMs * 0.5)));
+    /* placed after the coming frame's layout and before its paint (B5: placed at once, a toast staged inside a look
+       change's commit measured the whole page while that restyle was pending); the card's first frame is already
+       in its place */
+    const settle = (crowded) => {
+      if (!staged.has(it.id) || staged.get(it.id) !== rec || rec.leaving) return;
+      if (crowded) {
+        let joined = false;
+        staged.forEach((r) => { if (r !== rec && !r.leaving && r.it.durable) { finishStaged(r, 'join'); joined = true; } });
+        if (!joined || place()) {
+          if (it.durable && method() !== 'Banner') { finishStaged(rec, 'join'); sound('callout', 0.4); return; }
+          it.stageMs = Math.min(it.stageMs, Math.max(1800, Math.round(it.stageMs * 0.5)));
+        }
       }
-    }
-    flip(before, c);
-    /* the cards already showing slide down first; the new one arrives into the slot they open, so two titles never
-       show through each other (frame review, 2026-10-13) */
-    if (still()) { /* Reduced Motion: it is simply there */ }
-    else enter(c, it, before.size ? Math.round(motion().move.duration * (look() === 'retro' || look() === 'nier' ? 0.5 : 0.32)) : 0);
-    startTimer(rec);
+      flip(before, c);
+      /* the cards already showing slide down first; the new one arrives into the slot they open, so two titles never
+         show through each other (frame review, 2026-10-13) */
+      if (still()) { /* Reduced Motion: it is simply there */ }
+      else enter(c, it, before.size ? Math.round(motion().move.duration * (look() === 'retro' || look() === 'nier' ? 0.5 : 0.32)) : 0);
+      startTimer(rec);
+    };
+    if (typeof window.PM_NOTICE_PLACE === 'function' && window.PM_NOTICE_PLACE.length >= 1) window.PM_NOTICE_PLACE(settle);
+    else settle(place());
     sound(it.level === 'blocking' ? (it.severity === 'error' ? 'error' : 'callout') : it.level === 'attention' ? 'warn' : it.level === 'notice' ? 'callout' : null, it.level === 'quiet' ? 0.3 : 0.55);
   }
   function enter(c, it, delay) {

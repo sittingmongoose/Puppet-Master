@@ -146,11 +146,17 @@ var SPOT_DOWN = 320, SPOT_SIDE = 280, SPOT_STEP = 12, SPOT_PAD = 4;
 function controlsIn(x0, x1, y0, y1, stage) {
   /* the page that shows (the others keep their layout while hidden), the chat, the left column and the title bar */
   var out = [], roots = [doc.querySelector('.primary-content > .page.active'), doc.getElementById('chatPanel'), doc.querySelector('.left-panel'), doc.querySelector('.title-bar')];
+  /* only what can be in reach: a root that does not overlap the area is passed over, and so is a control that is not
+     drawn (hidden, or inside a content-visibility section the browser has skipped): measuring one forced its skipped
+     subtree's layout, once per control (B5, Settings lane read probe) */
+  var seen = function (e) { try { return !e.checkVisibility || e.checkVisibility({ contentVisibilityAuto: true, visibilityProperty: true }); } catch (_) { return true; } };
   for (var r = 0; r < roots.length; r++) {
     if (!roots[r]) continue;
+    var rr = roots[r].getBoundingClientRect();
+    if (!rr.width || rr.right < x0 || rr.left > x1 || rr.bottom < y0 || rr.top > y1) continue;
     var list = roots[r].querySelectorAll(CONTROL_SEL);
     for (var i = 0; i < list.length; i++) {
-      var e = list[i]; if (stage.contains(e) || e.closest('#notifySlot')) continue;
+      var e = list[i]; if (stage.contains(e) || e.closest('#notifySlot') || !seen(e)) continue;
       var b = e.getBoundingClientRect();
       if (b.width < 2 || b.height < 2 || b.right < x0 || b.left > x1 || b.bottom < y0 || b.top > y1) continue;
       out.push(b);
@@ -196,8 +202,14 @@ function applyDrop() {
   if (stage.hasAttribute('data-pmn-crowded') !== spot.crowded) stage.toggleAttribute('data-pmn-crowded', spot.crowded);
   return spot.crowded;
 }
-/* the notices ask before a toast's time starts (19-notify.js stage()) */
-window.PM_NOTICE_PLACE = applyDrop;
+/* the notices ask before a toast's time starts (19-notify.js stage()). Asked with a callback, the stage is placed after
+   the coming frame's layout, before its paint, and the callback hears whether it is crowded: asked at once, a toast
+   staged inside a look change's commit measured the page while that restyle was pending (B5). Asked without one, it is
+   placed now. */
+window.PM_NOTICE_PLACE = function (done) {
+  if (typeof done !== 'function') return applyDrop();
+  afterLayout(function () { var crowded = false; try { crowded = applyDrop(); } catch (e) { /* placed by the next ask */ } done(crowded === true); });
+};
 /* A placement asked for by a frame (a scroll, an overlay opening, a page change) reads its boxes once that frame's own
    style and layout are done, from the first ResizeObserver delivery after them, not in an animation frame callback
    before them: there the read pulled a pending whole-page restyle (a look change, NieR Mode under its calm cover)
