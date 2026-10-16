@@ -119466,6 +119466,12 @@ html[data-theme^="retro"] #panel-settings .o55-goals-phase-n { border-radius: 0;
       var strip = opts.strip, ink = opts.ink, getActive = opts.getActive;
       var axis = opts.axis === 'v' ? 'v' : 'h';
       if (!strip || !ink || typeof getActive !== 'function') return null;
+      var inkShown = true;   /* O55 (B1): drawn? read after layout, at load and on each look change; hidden, it snaps */
+      var readShown = function () { var was = inkShown; try { inkShown = getComputedStyle(ink).opacity !== '0'; } catch (eI) { inkShown = true; }
+        if (inkShown && !was) { var at = getActive(); if (at) snap(at); } };   /* shown again: on the active item exactly */
+      var shownSoon = function () { if (!ink.isConnected) return; if (typeof window.PM_AFTER_LAYOUT === 'function') window.PM_AFTER_LAYOUT(readShown); else requestAnimationFrame(readShown); };
+      shownSoon();
+      try { new MutationObserver(shownSoon).observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme', 'data-lg', 'data-o55-nier'] }); } catch (eM) {}
       var pos = {
         a: null, s: null, va: 0, vs: 0, raf: 0,
         jiggleT: 0, blendT: 0, lastStretch: 0,
@@ -119567,7 +119573,7 @@ html[data-theme^="retro"] #panel-settings .o55-goals-phase-n { border-radius: 0;
       }
       function springTo(el) {
         if (!el) return;
-        if (pos.a === null || reduced()) { snap(el); return; }
+        if (pos.a === null || reduced() || !inkShown) { snap(el); return; }   /* O55 (B1): a hidden ink is placed at once */
         cancelAnimationFrame(pos.raf);
         var m0 = metrics(el);
         var ta = m0.a, ts = m0.s;
@@ -119660,7 +119666,8 @@ html[data-theme^="retro"] #panel-settings .o55-goals-phase-n { border-radius: 0;
     var strip = document.querySelector('.title-bar .page-tabs');
     var ink = strip && strip.querySelector('.page-tab-ink');
     var inkShown = true;   /* O55 (B1): drawn? read after layout, at load and on each look change */
-    function readInkShown() { try { inkShown = !!ink && getComputedStyle(ink).opacity !== '0'; } catch (eI) { inkShown = true; } }
+    function readInkShown() { var was = inkShown; try { inkShown = !!ink && getComputedStyle(ink).opacity !== '0'; } catch (eI) { inkShown = true; }
+      if (inkShown && !was) { var at = strip.querySelector('.page-tab.active'); if (at) snap(at); } }   /* shown again: on the tab exactly */
     function inkSoon() { if (typeof window.PM_AFTER_LAYOUT === 'function') window.PM_AFTER_LAYOUT(readInkShown); else requestAnimationFrame(readInkShown); }
     if (ink) { inkSoon(); try { new MutationObserver(inkSoon).observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme', 'data-lg', 'data-o55-nier'] }); } catch (eM) {} }
     if (!strip || !ink || !window.PM_PAGES || !window.PM_PAGES.go) return;
