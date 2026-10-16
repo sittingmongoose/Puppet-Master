@@ -953,7 +953,8 @@
        instead of landing in the first hover frame near a box; and the proxies the look uses are made, so their layers
        exist before the first hover. Again after a look change and whenever a frame meets a target not stamped yet (new
        DOM). */
-    var stampTimer = 0, stampNext = null, stampWalk = null, stampBusy = false;
+    var stampTimer = 0, stampNext = null, stampWalk = null, stampBusy = false, stampLast = null, stampLastSkip = false, stampUp = null;
+    var stampRegion = null, stampRegionTimes = 0;
     function stampSoon(ms) {
       if (stampTimer || stampBusy) return;
       stampTimer = setTimeout(function () { stampTimer = 0; idle(stampRun); }, ms || 700);
@@ -972,36 +973,56 @@
       while (w.parentNode()) { s = w.nextSibling(); if (s) return s; }
       return null;
     }
+    /* where a walk goes on when the element it stopped at has been taken out of the page: after the last element it
+       looked at, or else from the stopped element's nearest ancestor still in the page (what is stamped there already is
+       passed over). It started again from the top, and under steady churn (a streaming terminal, Usage's live beats) it
+       could keep starting again (landing review SH5-1). A region replaced under the walk again and again (a list drawn
+       anew each frame) is walked twice at most and then passed, so every walk ends; a target missed by a move or a
+       passed region is still stamped when a frame meets it. */
+    function stampResume() {
+      var w = stampWalk;
+      stats.stampResumes = (stats.stampResumes || 0) + 1;
+      if (stampLast && stampLast.isConnected) { w.currentNode = stampLast; return stampLastSkip ? stampAfter(stampLast) : w.nextNode(); }
+      for (var i = 0; stampUp && i < stampUp.length; i++) {
+        var a = stampUp[i];
+        if (!a.isConnected) continue;
+        if (a !== stampRegion) { stampRegion = a; stampRegionTimes = 0; }
+        if (++stampRegionTimes > 2 && a !== document.body && a !== document.documentElement) { stats.stampPassed = (stats.stampPassed || 0) + 1; stampRegion = null; return stampAfter(a); }
+        w.currentNode = a; return w.nextNode();
+      }
+      w.currentNode = document.documentElement; return w.nextNode();
+    }
     function stampRun(dl) {
       if (!document.body) return;
       var t0 = performance.now();
       var spent = function () { return performance.now() - t0 > 4 || (dl && dl.timeRemaining && dl.timeRemaining() < 2); };
-      if (!stampBusy || !stampNext || !stampNext.isConnected) {
-        if (!stampBusy) {
-          if (tokensDirty) readTokens();
-          var g = false, f = false;
-          for (var k in T) { if (T[k].glow) g = true; if (T[k].frame) f = true; }
-          if (g) ensureGlow();
-          if (f) ensureFrame();
-        }
-        stampBusy = true;
+      if (!stampBusy) {
+        if (tokensDirty) readTokens();
+        var g = false, f = false;
+        for (var k in T) { if (T[k].glow) g = true; if (T[k].frame) f = true; }
+        if (g) ensureGlow();
+        if (f) ensureFrame();
+        stampBusy = true; stampLast = null; stampUp = null; stampRegion = null;
         stampWalk = document.createTreeWalker(document.documentElement, NodeFilter.SHOW_ELEMENT);
         stampNext = stampWalk.nextNode();
         if (spent()) { idle(stampRun); return; }
-      }
+      } else if (stampNext && !stampNext.isConnected) stampNext = stampResume();
       var n = 0, el = stampNext;
       while (el) {
-        var next;
+        var next, skip = false;
         if (el.matches(SEL) && valid(el)) {
           if (!el.hasAttribute('data-pmh-kind')) { el.setAttribute('data-pmh-kind', kindOf(el)); stats.writes++; stats.stamped = (stats.stamped || 0) + 1; n++; }
-          next = stampAfter(el);
+          next = stampAfter(el); skip = true;
         } else { stampWalk.currentNode = el; next = stampWalk.nextNode(); }
+        stampLast = el; stampLastSkip = skip;
         el = next;
         if (n >= 12 || spent()) break;
       }
       stampNext = el;
+      stampUp = null;
+      if (el) { stampUp = []; for (var up = el.parentElement; up; up = up.parentElement) stampUp.push(up); }
       for (var q = kindQueue.length - 1; q >= 0; q--) if (kindQueue[q].hasAttribute('data-pmh-kind')) kindQueue.splice(q, 1);
-      if (el) idle(stampRun); else { stampBusy = false; stampWalk = null; }
+      if (el) idle(stampRun); else { stampBusy = false; stampWalk = null; stampLast = null; stampUp = null; stats.stampRuns = (stats.stampRuns || 0) + 1; }
     }
 
     /* software rendering: asked twice, late and off the main thread (the worker answers within a few seconds; where no
@@ -1029,7 +1050,7 @@
       resolve: resolve,
       kindOf: function (el) { return el ? kindOf(el) : null; },
       retoken: function () { readTokens(); return JSON.parse(JSON.stringify(T)); },
-      stamp: function () { return { busy: stampBusy, timer: !!stampTimer, stamped: stats.stamped || 0 }; },
+      stamp: function () { return { busy: stampBusy, timer: !!stampTimer, stamped: stats.stamped || 0, resumes: stats.stampResumes || 0, passed: stats.stampPassed || 0, runs: stats.stampRuns || 0 }; },
       popups: function () { return { open: anyPopup(), kept: popups.size, watched: popWatch }; },
       stats: function () { var o = {}; for (var k in stats) o[k] = stats[k]; o.slow = stats.slow.slice(); o.hist = Object.assign({}, stats.hist); o.enters = Object.assign({}, stats.enters); o.totalMs = Math.round(stats.totalMs * 100) / 100; o.running = running; o.springs = springs.size; o.lit = lit.size; return o; },
       state: function () {
