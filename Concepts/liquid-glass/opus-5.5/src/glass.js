@@ -1622,7 +1622,9 @@
   function ownRest(L) {
     var strip = L.strip; if (!ownUnder.has(strip)) return;
     var chosen = strip.querySelector(L.cfg.items + (L.cfg.active || '.active'));
-    var moving = !!(L.pending || L.anim || L.hopFrames || (L.rect && chosen && L.tgt !== chosen));
+    /* a lens placed without a target (a snap, a restored box) is at rest; one with a target is moving until that
+       target is the segment the app chose */
+    var moving = !!(L.pending || L.anim || L.hopFrames || (L.rect && chosen && L.tgt && L.tgt !== chosen));
     if (moving !== strip.hasAttribute('data-lg-moving')) { if (moving) strip.setAttribute('data-lg-moving', ''); else strip.removeAttribute('data-lg-moving'); }
   }
   function syncStrip(cfg, strip) {
