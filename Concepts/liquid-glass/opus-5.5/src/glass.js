@@ -2486,23 +2486,24 @@
     function later(fn) { if (window.requestIdleCallback) requestIdleCallback(fn, { timeout: 1000 }); else setTimeout(fn, 50); }
     /* one kind per frame, swapped in idle time: a kind put in during one idle period is painted in the next frame, and in
        the idle period after that frame the next kind takes its place in the same task, so each frame paints one new kind
-       (it took two frames plus an idle wait before: 1012 kinds ran about 2 minutes on a P1000). A frame that leaves under
-       10 ms of idle time goes by without a swap, and no frame is asked for, so other idle-time work has its turn (the
-       wallpaper gallery's warming needs 8 ms: B3); a kind still goes in at least every 250 ms. */
-    var shown = null, framed = false, lastPut = 0;
+       (it took two frames plus an idle wait before: 1012 kinds ran about 2 minutes on a P1000). Each swap is its own idle
+       callback, so other idle-time work queued meanwhile runs between them (the wallpaper gallery's warming admits jobs
+       from 2 ms of idle, Settings F3). F3 also let a frame with under 10 ms of idle go by without a swap; in Glass the
+       warm-up's own frames leave less than that, so it fell to a kind every 250 ms and did not finish in 240 s on the
+       P1000 (Glass Light, F3 9480d3f327). That rule is gone. */
+    var shown = null, framed = false;
     function step(deadline) {
       if (!host.isConnected) { done(); return; }
       if (document.hidden) { document.addEventListener('visibilitychange', resume, { once: true }); return; }
       if (shown && !framed) { later(step); return; }
       if (pageBusy()) { addEventListener('pm-idle', resume, { once: true }); return; }
-      var now = performance.now(), quiet = now - lastInput;
+      var quiet = performance.now() - lastInput;
       if (quiet < 600) { setTimeout(resume, 600 - quiet); return; }
-      if (deadline && deadline.timeRemaining && !deadline.didTimeout && deadline.timeRemaining() < 10 && now - lastPut < 250) { later(step); return; }
       if (shown) { shown.remove(); shown = null; }
       var make, node = null;
       while (!node && (make = queue.shift())) node = make();
       if (!node) { done(); return; }
-      box.appendChild(shown = node); lastPut = now; framed = false;
+      box.appendChild(shown = node); framed = false;
       requestAnimationFrame(function () { framed = true; });
       later(step);
     }
