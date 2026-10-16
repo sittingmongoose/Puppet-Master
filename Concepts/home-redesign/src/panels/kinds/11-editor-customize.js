@@ -1405,7 +1405,9 @@ function open(opts) {
      the opening frame, and the page's :hover rules restyled that whole column (about 1100 icons and labels: 120 ms on
      Nas1, 29 ms on the P1000) before the sheet's first frame. Until the pointer next moves, presses or scrolls, or the
      entrance ends, the sheet's plates let it through, so that hover changes later, while the entrance plays on the
-     compositor. A press or a wheel that comes first is kept from the page under the sheet. */
+     compositor. A press or a wheel that comes first is kept from the page under the sheet and does nothing else: it
+     comes before the pointer has moved, within the entrance, which in practice is the second press of a double click
+     on the button that opened the sheet. */
   var passing = false, PASS = ['pointermove', 'pointerdown', 'wheel'], passOpts = { capture: true, passive: false };
   function passThrough(on) {
     if (passing === on) return;

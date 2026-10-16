@@ -159,8 +159,11 @@ html[data-o55-nier="on"] .pmed-cz .pmed-art-syntax { background:
    drawing them below the scrollport. Their original contents appear before
    they enter view; no tile or effect is replaced by a placeholder. */
 /* The groups below the fold do the same: opening the sheet releases its inert, which restyles every node it holds,
-   and a group out of view is styled and drawn when it comes near the scrollport, at its measured height. */
+   and a group out of view is styled and drawn when it comes near the scrollport, at its measured height. A group has
+   no padding, and content-visibility contains its painting: the clip margin keeps its controls' focus rings (6 px)
+   and hover lifts (Glass's reaches 46 px) whole at its edges. */
 .pmed-cz.pmed-contained :is(.pmt-cz-scheme, .pmt-cz-group)[data-pmed-sized] { content-visibility: auto; }
+.pmed-cz.pmed-contained .pmt-cz-group[data-pmed-sized] { overflow-clip-margin: 48px; }
 /* Apply the same family keyframes directly to the six moving plates. Changing
    an ancestor's generic pmt-in/out class invalidated every code tile and control. */
 .pmed-cz .pmed-sheet-in { transform-origin: 50% 0; animation: var(--pmt-a-pop-in, pmt-m-fade-in) var(--pmt-t-in, 120ms) var(--pmt-ease-move, linear) both; }
