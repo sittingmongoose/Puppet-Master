@@ -295,9 +295,6 @@
         "code.terminal.flicker": {
           "type": "boolean"
         },
-        "code.terminal.flicker-amount": {
-          "type": "number"
-        },
         "code.terminal.inactive-dim": {
           "enum": [
             "Follow look",
@@ -315,7 +312,6 @@
         "code.terminal.bell": {
           "enum": [
             "Follow look",
-            "Visual",
             "Off"
           ]
         },

@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L46473-L48443
+Source lines: L46473-L48517
 
-Source SHA256: `ef219d9c3c18f4b2d4c1b66696f24c0c36da83975965f717d257758547ad4437`
+Source SHA256: `c4af950579b79e1ad4ff8ab776dc4bb023d87acec95fb0265f9c680fd3f744ee`
 
 ---
 
@@ -381,7 +381,7 @@ canonical_text: >-
   the least dim needed for readable text) and image blur (0 px, baked once into the image and never
   a backdrop blur); opacity (Glass); padding (0 px by default, the vertical padding 60 % of the
   selected horizontal padding); effects (Follow look, off or custom) with the effect fields of
-  F3-643; inactive dimming; smooth scrolling; bell (Follow look, visual or off); sticky header (on);
+  F3-643; inactive dimming; smooth scrolling; bell (Follow look or off, F3-643); sticky header (on);
   copy on select (off); and Sixtyfour's scan and bleed axes. Cell geometry: a cell is a whole number
   of device pixels, its width round((advance + letter spacing) x device pixel ratio) and its height
   round(font size in px x line height x device pixel ratio), never less than 90 % of the font's
@@ -408,7 +408,8 @@ canonical_text: >-
   scheme exactly as named, regardless of light/dark pairing. Choosing a scheme of the opposite
   appearance keeps that scheme and turns pairing off in the chosen scope, with a visible
   explanation. Scheme hints read the catalog's actual Light/Dark appearance. Font Rendering offers
-  Auto (renderer default), Crisp (whole device-pixel text placement) and Smooth (unhinted outlines);
+  Auto (renderer default), Crisp (whole device-pixel text placement with hard pixel edges, as a
+  terminal with anti-aliasing off) and Smooth (unhinted outlines);
   unsupported capabilities are disclosed, not silently mislabeled. Sixtyfour Scanlines and Bleed are
   static face-axis choices, not a native-only promise. Off and 3:1 remain valid program-output
   choices and are not rewritten on read. The look's app-default layer remains the bundled inventory
@@ -427,13 +428,30 @@ canonical_text: >-
   different choices into an identical plain surface. Strength is 0–1, default 1; pattern Size is
   Fine/Medium/Coarse, default Medium; Motion is Off/Gentle/Lively, default Gentle and active only
   for moving designs under F3-643; a custom picture offers Cover/Contain/Tile/Centre, default Cover,
-  and desaturation 0–1, default 0.3. Auto dim is not an explicit zero; an explicit dim never defeats
+  and desaturation 0–1, default 0.5. Auto dim is not an explicit zero; an explicit dim never defeats
   the readability floor. Look's own and Solid colour always appear in Plain. Theme surface appears
   separately only when it differs from Look's own (Friendly in the landed design); an existing saved
   Theme surface remains valid and selects Look's own where their drawing coincides. F3-643 owns the
-  independent bezel and CRT fields; F3-650 owns saved presets. The options audit's Glass Light
-  uploaded-image case that becomes wholly hidden by Auto dim remains an acceptance defect; the
-  published source is not evidence that this image/fit/dim behavior passes.
+  independent bezel and CRT fields; F3-650 owns saved presets. Amended 2026-10-16 (DL-213, terminal
+  rounds 4 and 5): every choice a field offers draws visibly apart from every other in every look,
+  an inheritance choice (Follow look, Auto, the style's or face's own) aside. A custom picture is
+  prepared at its own size, at most 1920 x 1200, so Tile and Centre differ for a small picture; Blur
+  is a custom picture's own and the built-in designs take none; on a scheme with no contrast to
+  spare (Glass light's Tokyo Night Day) the picture is veiled in white, or in black under light
+  text, and shows as a pale print at the same text contrast, rather than being covered by the
+  scheme's ground; under a dim of 85 % it offers full colour or grey only, and under 90 % Dim stays
+  at 90 %, Blur offers 0 or 12 px and desaturation is not offered, the screen saying why in one line.
+  Pattern Size applies to every Pattern design but Paper, whose fibre looks alike at any scale: on
+  Waves it is the swell and on Scanline field the pitch. Lively is a motion of its own, not only a
+  faster Gentle: Drifting aurora's curtains sweep twice as far, lean and pulse; Lava climbs further
+  and swells; Running rain runs four times as fast and a run clears a pale pane's fog. Solid colour
+  with no colour picked is the scheme's ground a visible step away from its text, so it always shows
+  and only gains contrast. Bold as bright takes a more intense colour where a
+  scheme's bright colour is within a small step of its normal one (on NieR's two-tone schemes,
+  toward the text). In NieR Mode the YoRHa scheme of the other mode keeps its own colours. Glass
+  Opacity in Glass light is offered only over a wallpaper, where its stops differ. The Glass light
+  uploaded-picture case the options audit found wholly hidden is closed by the veil (40 cases,
+  lowest text contrast 4.78:1 in the concept); that is concept evidence, not native certification.
   Plans/terminal_background_catalog.schema.json validates the catalog's closed finite-data shape;
   scripts/pm7-canon-check.py checks unique ids, choices and defaults against the Settings rows.
 gui_related: true
@@ -481,6 +499,9 @@ acceptance_criteria:
   the same catalog and Theme surface aliases only visually where identical.
 - Lens follows wallpaper changes and keeps text readable; distinct designs remain distinct on light and
   dark schemes.
+- Every offered choice of every field draws apart from every other in all ten looks, inheritance choices aside;
+  Paper offers no Size; a custom picture stays visible as a pale print on a scheme with no contrast to spare,
+  at the selected text contrast; Picture Desaturation defaults to 0.5; the built-in designs offer no Blur.
 validation_surfaces:
   - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
   - python3 scripts/pm-plan-index.py validate
@@ -540,6 +561,15 @@ source_lineage:
 - /mnt/Cursor/share/puppet-master/2026-10-16-plans-pass2/sources/2026-10-15-terminal-options-audit--NOTES.md,
   SHA-256 7cb5f1b3977e3923b4773260376626ac56827754ea663519a023b510065fc5ff (source lineage; not native
   certification)
+- /mnt/Cursor/share/puppet-master/2026-10-16-plans-topup/sources/2026-10-15-terminal-round4--CANON-PROPOSALS.md,
+  SHA-256 6be6e2e0743fe3af41ba338d508573eab7d0c60e42ee7517cd18bb77ee35ade7 (source lineage; not native
+  certification)
+- /mnt/Cursor/share/puppet-master/2026-10-16-plans-topup/sources/2026-10-15-terminal-round5--NOTES.md,
+  SHA-256 77c878854cf0c02b0612ce422a5f68797b3646f6d2aee2b316059d35be342541 (source lineage; not native
+  certification)
+- /mnt/Cursor/share/puppet-master/2026-10-16-plans-topup/sources/Concepts--home-redesign--src--terminal--js--43-grounds.js,
+  SHA-256 1dcede78aa98198b87661a64d6012c1ef420a1ec5573b9cccd48cb143b226b05 (round-5 head f1042f7d3e; source
+  lineage; not native certification)
 preserved_exact_tokens:
   - "Follow look"
   - "Switch with light and dark"
@@ -582,6 +612,9 @@ stale_retired_dispositions:
   3:1 remain program-output choices (DL-197).'
 - 'Amended 2026-10-16 (PM7 pass 2): The old small background list and final-catalog hold are superseded
   by the landed round-3 catalog; later terminal rounds remain separate.'
+- 'Amended 2026-10-16 (DL-213, terminal rounds 4 and 5): Desaturation defaults to 0.5 (it read 0.3); Blur is
+  a custom picture''s own; the no-contrast veil closes the Glass light uploaded-picture defect; Size, Lively,
+  Solid colour, Crisp and Bold as bright draw apart; Bell is Follow look or off.'
 owner_hints:
   - Plans/FinalGUISpec.md
   - Plans/Settings_System.md
@@ -615,11 +648,15 @@ canonical_text: >-
   attention marks, and an on-demand Retro degauss, an action in the Customize screen (F3-650) rather
   than a setting, which runs to its end and stops. Scanlines and phosphor glow are Retro's: on by
   default in Retro dark and off by default elsewhere. Full CRT is off by default in every look, and
-  the user turns it on. Flicker is off by default in every look; its amount defaults to 0.02 and is
-  capped at 0.03 of relative luminance, against the 0.10 change that WCAG 2.3.1 counts as a flash,
-  so flicker can never be a flash. The effect fields (F3-642) default to: effects Follow look; scan
-  strength 0.30; glow strength 0.45; Full CRT off; curvature 0.04, active only with Full CRT;
-  burn-in on within Full CRT; noise 0.035; flicker off; flicker amount 0.02, capped at 0.03. NieR
+  the user turns it on. Flicker is on or off, off by default in every look, and draws at one faint
+  level, 0.02 of relative luminance, under a cap of 0.03, against the 0.10 change that WCAG 2.3.1
+  counts as a flash, so flicker can never be a flash; there is no amount to choose (DL-213: within
+  the cap no two amounts look different), and a stored amount is read once as SSYS-051 says. The
+  effect fields (F3-642) default to: effects Follow look; scan strength 0.30; glow strength 0.45;
+  Full CRT off; curvature 0.04, active only with Full CRT; burn-in on within Full CRT; noise 0.035;
+  flicker off. The bell is Follow look or Off (DL-213): Follow look rings the look's own visual
+  bell, and Off draws nothing in any look; there is no separate Visual choice, because every look's
+  own bell is already visual. NieR
   Mode's terminal has a parchment texture under the text and ink focus brackets, and no glow. By the
   NieR rule for new surfaces (DL-152, SSYS-043, F3-598, DR-056), NieR paints the terminal only while
   NieR Mode is on and each touch only with its own installed part: the parchment with the `ground`
@@ -634,22 +671,28 @@ canonical_text: >-
   px) or Monitor (stored case, width 24 px); explicit width is 2–48 px. Material offers Follow look,
   Graphite, Black gloss, Platinum, Putty, Brushed aluminium, Gunmetal, Glass and Accent. Follow look
   is Graphite/Aluminium for Basic dark/light, Graphite/Putty for Friendly, Glass for Glass, Black
-  gloss/Platinum for Retro, and NieR's flat ink frame. Reflection Auto means the material's own
-  level. The round-3 source's numeric 0–1 values remain readable compatibility inputs; the final
-  offered range, steps and material levels are held for round 5, rather than certifying the audited
-  ineffective NieR controls. The housing has a flat outer frame, sloped corner-joined faces, a
+  gloss/Platinum for Retro, and NieR's flat ink frame. In NieR Mode, Follow look is that flat ink
+  frame, which has no reflection and offers none; a material chosen in NieR is drawn as that
+  material, as in every other look. Reflection is Off, Low, Medium or High, each material starting
+  at its own level, which Auto stores: Low for Platinum, Putty and Accent, and for Brushed aluminium
+  on a dark screen; Medium for Graphite, Black gloss, Gunmetal and Glass, and for Brushed aluminium
+  on a light screen. Choosing the material's own level stores nothing, so the choice keeps following
+  the material, and a stored 0–1 number reads as the nearest level. Every level draws visibly apart
+  from its neighbours on every material in every look, and a case paler than a dark screen shows the
+  mirror as a gloss over its face. Width is offered at 2, 4, 6, 9, 12, 16, 20, 24, 30, 36, 42 and 48
+  px. The housing has a flat outer frame, sloped corner-joined faces, a
   bright lip and dark inner ring, with screen light/reflection following actual output at no more
   than 15 updates/s and zero updates while the picture is still. Full CRT's curved inner edge meets
   the housing without clipping selection or text. A bezel adds 3 px Slim or 6 px Monitor breathing
   room beyond selected padding. Curvature is 0–0.2, default 0.04, with each edge's bow one eighth of
   that value independent of aspect ratio and the text centre stationary. Phosphor mask is Off by
-  default. Its final density/capability behavior is held for round 5; the published DPR-1 no-op is
-  an acceptance defect, not a requirement to offer an ineffective control. Without a GPU the static
+  default and is Full CRT's own choice: an aperture grille of three device pixels to a triad, drawn
+  at every display density, so it shows at 1x as at 2x. Without a GPU the static
   rounded glass/edge/vignette and housing can remain, but curvature and moving effects do not run.
   Moving designs are opt-in and obey the same focus, visibility, activity, ten-second idle, battery
   and Reduced Motion policy; they stop under a full-screen terminal program too. This adopts the
-  approved round-3 housing and plain-background direction; later discrete reflection/stops and
-  mask-density proposals are not part of this edition. Degauss is the one-shot action in the
+  approved round-3 housing and plain-background direction and the landed round-4 and round-5
+  levels, stops and mask (DL-213). Degauss is the one-shot action in the
   Customize screen's effects group (F3-650), with the same existing command and no stored setting.
   The shared Follow look cursor/caret voices are Basic line with on/off blink, no trail and no
   smooth scrolling; Friendly line with smooth blink, soft trail and smooth scrolling; Glass line
@@ -671,7 +714,9 @@ acceptance_criteria:
 - Under Reduced Motion no part of the terminal moves, and the static looks stay.
 - A fresh Retro dark terminal shows scanlines and phosphor glow; no other look shows them by default;
   Full CRT and flicker are off by default in every look.
-- The flicker amount defaults to 0.02 and cannot exceed 0.03 of relative luminance.
+- Flicker is on or off and draws at 0.02, never above 0.03 of relative luminance; no control offers an amount.
+- Bell offers Follow look and Off; Follow look rings the look's own visual bell and Off draws nothing in any
+  look.
 - Degauss is a one-shot action in Retro, not a setting, and stops at its end.
 - With NieR Mode on, the parchment shows only with the ground part and the focus brackets only with the
   brackets part, NieR's own terminal look has no glow, filter or blur, and no surface larger than 340x256
@@ -685,9 +730,9 @@ acceptance_criteria:
   updating at rest and does not enable CRT implicitly.
 - Curvature, mask and moving backgrounds respect the specified GPU, density, activity and Reduced Motion
   fallbacks.
-- Audited ineffective NieR material/reflection controls, invisible Glass Light uploaded pictures and DPR-1
-  mask no-ops are unresolved acceptance findings, not approved behavior. Round-5 control stops and mask
-  density remain pending.
+- Reflection offers Off, Low, Medium and High from each material's own level, every pair visibly apart; NieR's
+  own ink frame offers no reflection and a material chosen in NieR draws as itself; Width offers the twelve
+  listed stops; the phosphor mask shows at 1x and at 2x.
 validation_surfaces:
   - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
   - python3 scripts/pm-plan-index.py validate
@@ -743,6 +788,18 @@ source_lineage:
 - /mnt/Cursor/share/puppet-master/2026-10-16-plans-pass2/sources/2026-10-15-terminal-options-audit--NOTES.md,
   SHA-256 7cb5f1b3977e3923b4773260376626ac56827754ea663519a023b510065fc5ff (source lineage; not native
   certification)
+- /mnt/Cursor/share/puppet-master/2026-10-16-plans-topup/sources/2026-10-15-terminal-round4--NOTES.md,
+  SHA-256 2c1ec6ce72a08a6b4bbbe3b8256d713571379fef7e3a39a5fb927e992e685fcf (source lineage; not native
+  certification)
+- /mnt/Cursor/share/puppet-master/2026-10-16-plans-topup/sources/2026-10-15-terminal-round5--NOTES.md,
+  SHA-256 77c878854cf0c02b0612ce422a5f68797b3646f6d2aee2b316059d35be342541 (source lineage; not native
+  certification)
+- /mnt/Cursor/share/puppet-master/2026-10-16-plans-topup/sources/2026-10-15-terminal-round5--CANON-PROPOSALS.md,
+  SHA-256 9d55ddc569405b468fcad2c51aed61540563eea3d89d9402a891e071a0547d93 (P10 and P14 decided by Jared
+  2026-10-16; source lineage; not native certification)
+- /mnt/Cursor/share/puppet-master/2026-10-16-plans-topup/sources/Concepts--home-redesign--src--terminal--js--71-bezel.js,
+  SHA-256 a360d1f65e2d5bd5007b4dbb7f450e4f5cab5b641532ad633c6ecf93e20885b1 (round-5 head f1042f7d3e; source
+  lineage; not native certification)
 preserved_exact_tokens:
   - "10 s"
   - "P1000-class"
@@ -770,6 +827,10 @@ stale_retired_dispositions:
   trail.'
 - 'Amended 2026-10-16 (PM7 pass 2): The old 0.08 curvature and held round-two bezel direction are replaced
   by approved round-3 values. Round-4/5 proposals remain outside this pass.'
+- 'Amended 2026-10-16 (DL-213, terminal rounds 4 and 5, Jared''s P10 and P14): Flicker is on or off at one
+  level (the amount retires); Bell is Follow look or Off (Visual retires); Reflection is four levels from the
+  material''s own; NieR draws chosen materials; Width has twelve stops; the mask draws at every density. The
+  round-5 holds and the DPR-1 and NieR-material acceptance findings close.'
 owner_hints:
   - Plans/FinalGUISpec.md
 ```
@@ -828,7 +889,11 @@ canonical_text: >-
   full JetBrains Mono 100–800 promise on 2026-10-14: the shared embedding pipeline now includes the
   40,404-byte full-axis Latin upright for JetBrains Mono, so Thin, ExtraLight and Light have real
   outlines. PM NieR Mono retains its own earlier Latin file. This source delivery closes the asset
-  hold; native text-rendering verification is still required.
+  hold; native text-rendering verification is still required. Amended 2026-10-16 (DL-213, terminal
+  round 4): JetBrains Mono's stored 600 and 700 are drawn at 580 and 720 on the variable axis, so
+  Semibold and Bold read apart as every other adjacent pair does; all eight weights remain, stored
+  as 100–800. For the system face, Customize offers only the weights this computer's face actually
+  draws differently.
 gui_related: true
 gui_classification_reason: Defines the built-in faces, defaults and licence rule of the editor's and the terminal's visible text.
 split_recommended: false
@@ -1176,7 +1241,16 @@ canonical_text: >-
   whole-scope reset and The look’s own use the separately registered full set. Both scopes adapt
   those exact sets through the existing writers. A save that fails storage/readback shows its
   failure and creates no apparent saved entry. SP-331 owns missing-image/scheme refusal and library
-  backup/Undo reachability.
+  backup/Undo reachability. Amended 2026-10-16 (DL-213, terminal rounds 4 and 5): the terminal
+  screen's sliders offer stops, each measured to draw apart from its neighbours in every look, and a
+  value stored between two stops still shows as itself: letter spacing and line height move one
+  device pixel of cell at a time; Size's Smaller and Bigger go to the next whole pixel whose cell is
+  drawn a different number of device pixels, ending at 8 and 32; Strength 35, 65 and 100 %;
+  desaturation full colour, half and grey; Blur 0, 3, 6, 12 and 24 px; Grain 0, 0.035, 0.075 and
+  0.12; Curvature steps of 0.02; Bezel width and Reflection as F3-643 lists. Settings rows keep their
+  own ranges (SSYS-051). Ligatures is not offered while letters are spaced: it shows Needs letter
+  spacing 0 and returns at spacing 0. A field shows only where it draws (SSYS-051's visibility
+  amendment lists the Settings side).
 gui_related: true
 gui_classification_reason: The editor and terminal Customize screens.
 split_recommended: false

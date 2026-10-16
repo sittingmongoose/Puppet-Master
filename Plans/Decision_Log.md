@@ -15394,6 +15394,8 @@ unit_type: decision
 status: accepted
 owner_doc: Plans/Decision_Log.md
 canonical_text: >-
+  Historical decision as recorded on 2026-10-16; its round-5 holds on reflection, stops and the mask are
+  resolved by DL-213 the same day. The earlier decision text follows for lineage.
   Recorded 2026-10-16. The approved terminal round-3 landing 9cee10982c closes the catalog/bezel/curvature
   holds in DL-189. F3-642 owns the 64 cross-look designs, Lens and Plain choice behavior; F3-643 owns the
   independently optional monitor housing, width and revised opt-in CRT defaults. Numeric 0–1 reflection
@@ -15431,6 +15433,9 @@ source_lineage:
   certification)
 preserved_exact_tokens: []
 negative_constraints: []
+stale_retired_dispositions:
+- 'Amended 2026-10-16 (DL-213): read F3-642/F3-643 and SSYS-051 through DL-213; the round-4/5 holds above
+  are closed.'
 owner_hints:
 - Plans/Decision_Log.md
 ```
@@ -15727,3 +15732,69 @@ owner_hints:
 ```
 
 ContractRef: ContractName:Plans/FinalGUISpec.md#F3-631, ContractName:Plans/FinalGUISpec.md#F3-652, ContractName:Plans/DRY_Rules.md#DR-070
+
+### DL-213 - Terminal Rounds Four And Five, Flicker On Or Off, Bell Follow Look Or Off
+
+```yaml
+plan_unit_id: DL-213
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: >-
+  Recorded 2026-10-16. Terminal rounds 4 and 5 (round-5 head f1042f7d3e, which carries round 4, approved to
+  land after the Q15 delta re-audit) close the holds DL-206 left open. Jared decided P10 and P14 on 2026-10-16:
+  Flicker is on or off at one faint level, and the Flicker Amount row retires (a stored amount reads once as
+  Flicker on where no Flicker is stored beside it, then is forgotten); Bell is Follow look or Off, and a stored
+  Visual reads and is stored again as Follow look. F3-643 owns the bezel's four Reflection levels from each
+  material's own, the twelve Width stops, NieR's chosen materials and the mask drawn at every density;
+  F3-642 owns the picture veil, picture-only Blur, the half desaturation default and the designs that now
+  draw apart; F3-644 owns JetBrains Mono's drawn Semibold and Bold; F3-650 owns the offered stops; SSYS-051
+  owns the rows, the read-once rules and the ten round-3 rows' visibility, which are now live in the
+  published concept with no publication guard. Distinctness, contrast and film figures are concept evidence,
+  not native certification. The DL-197 contrast ruling is unchanged.
+gui_related: true
+gui_classification_reason: Terminal Rounds Four And Five, Flicker On Or Off, Bell Follow Look Or Off.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- The linked owners and finite companions agree with this decision; source publication is not native certification.
+validation_surfaces:
+- python3 scripts/pm-shard-plans.py --check
+- python3 scripts/pm-plan-index.py validate
+- python3 scripts/pm7-canon-check.py
+risk_class: owner_drift
+reasoning_tier: high
+context_scope: terminal_rounds_four_and_five
+implementation_surfaces:
+- Plans/Decision_Log.md
+node_compile_hint:
+  mode: owner_decision_record
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- /mnt/Cursor/share/puppet-master/2026-10-16-plans-topup/sources/2026-10-15-terminal-round5--CANON-PROPOSALS.md,
+  SHA-256 9d55ddc569405b468fcad2c51aed61540563eea3d89d9402a891e071a0547d93 (P10 and P14 decided; source lineage;
+  not native certification)
+- /mnt/Cursor/share/puppet-master/2026-10-16-plans-topup/sources/2026-10-15-terminal-round5--NOTES.md,
+  SHA-256 77c878854cf0c02b0612ce422a5f68797b3646f6d2aee2b316059d35be342541 (source lineage; not native
+  certification)
+- /mnt/Cursor/share/puppet-master/2026-10-16-plans-topup/sources/2026-10-15-terminal-round5--LANDING-HANDOFF.md,
+  SHA-256 722e8c035f500fca7929a589197b0ad6fa5f8dbb68347e383b57b20e10b25df6 (source lineage; not native
+  certification)
+- /mnt/Cursor/share/puppet-master/2026-10-16-plans-topup/sources/2026-10-15-terminal-round4--CANON-PROPOSALS.md,
+  SHA-256 6be6e2e0743fe3af41ba338d508573eab7d0c60e42ee7517cd18bb77ee35ade7 (source lineage; not native
+  certification)
+- /mnt/Cursor/share/puppet-master/2026-10-16-plans-topup/sources/2026-10-15-terminal-round4--NOTES.md,
+  SHA-256 2c1ec6ce72a08a6b4bbbe3b8256d713571379fef7e3a39a5fb927e992e685fcf (source lineage; not native
+  certification)
+- /mnt/Cursor/share/puppet-master/2026-10-16-plans-topup/sources/2026-10-13-pm7-coordinator-handoff--COORDINATOR-LOG-20261016.md,
+  SHA-256 d52085df3ab4a82f323d1fd2ed0a846b8e858fcaf7ec746a2ff79cc9cf2a97ba (Jared's P10/P14 ruling, ~02:05 ET;
+  the Q15 delta LAND verdict, ~12:10 ET; decision lineage)
+preserved_exact_tokens: []
+negative_constraints: []
+owner_hints:
+- Plans/Decision_Log.md
+```
+
+ContractRef: ContractName:Plans/FinalGUISpec.md#F3-642, ContractName:Plans/FinalGUISpec.md#F3-643, ContractName:Plans/FinalGUISpec.md#F3-644, ContractName:Plans/FinalGUISpec.md#F3-650, ContractName:Plans/Settings_System.md#SSYS-051

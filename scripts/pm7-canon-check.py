@@ -68,6 +68,10 @@ def check():
     require(settings['code.terminal.min-contrast']['options'] == ['Off', '3:1', '4.5:1', '7:1'], 'Terminal program-output choices differ from the approved contract')
     require(settings['code.terminal.min-contrast']['default'] == '4.5:1', 'Terminal program-output contrast default changed')
     require(settings['code.terminal.padding']['default'] == 0, 'Terminal padding is not zero by default')
+    # DL-213 (Jared, 2026-10-16, P10 and P14): Flicker is on or off at one level; Bell is Follow look or Off.
+    require('Superseded by Flicker' in settings['code.terminal.flicker-amount']['desc'], 'The retired Flicker Amount row is not marked superseded')
+    require(not any('code.terminal.flicker-amount' in row['setting_ids'] for row in census), 'A control still writes the retired Flicker Amount')
+    require(settings['code.terminal.bell']['options'] == ['Follow look', 'Off'], 'Terminal Bell offers more than Follow look and Off')
     require('Superseded by SSYS-010' in settings['general.visual.theme-preview']['desc'] and 'default' not in settings['general.visual.theme-preview'], 'The visible theme-preview preference is not retired')
 
     require('catalog.theme_preview' not in wiring, 'Retired visible theme-preview producer remains in production wiring')

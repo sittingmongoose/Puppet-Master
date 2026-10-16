@@ -3781,61 +3781,6 @@
       "no_production_reason": ""
     },
     {
-      "control_id": "settings.code.terminal.flicker-amount",
-      "surface": "Settings > Editor & Terminal > Flicker Amount",
-      "owner_ref": "Plans/Settings_System.md#SSYS-051",
-      "disposition": "command",
-      "action_ids": [
-        "cmd.settings.transaction.preview",
-        "cmd.settings.transaction.apply"
-      ],
-      "production_entries": [
-        "catalog.settings_transaction_preview",
-        "catalog.settings_transaction_apply"
-      ],
-      "setting_ids": [
-        "code.terminal.flicker-amount"
-      ],
-      "payload": "operation_kind set; exact_setting_ids=[id]; proposed value uses the inventory type",
-      "no_production_reason": ""
-    },
-    {
-      "control_id": "terminal.this.flicker-amount",
-      "surface": "Terminal Customize > This terminal > Flicker Amount",
-      "owner_ref": "Plans/FinalGUISpec.md#F3-642",
-      "disposition": "command",
-      "action_ids": [
-        "cmd.terminal.appearance.set"
-      ],
-      "production_entries": [
-        "terminal.appearance.field"
-      ],
-      "setting_ids": [
-        "code.terminal.flicker-amount"
-      ],
-      "payload": "panel_tab_id and matching F3-642 field from the inventory id; unset clears the tab override",
-      "no_production_reason": ""
-    },
-    {
-      "control_id": "terminal.all.flicker-amount",
-      "surface": "Terminal Customize > All terminals > Flicker Amount",
-      "owner_ref": "Plans/Settings_System.md#SSYS-051",
-      "disposition": "command",
-      "action_ids": [
-        "cmd.settings.transaction.preview",
-        "cmd.settings.transaction.apply"
-      ],
-      "production_entries": [
-        "catalog.settings_transaction_preview",
-        "catalog.settings_transaction_apply"
-      ],
-      "setting_ids": [
-        "code.terminal.flicker-amount"
-      ],
-      "payload": "operation_kind set; exact_setting_ids=[id]; inventory value; apply current preview",
-      "no_production_reason": ""
-    },
-    {
       "control_id": "settings.code.terminal.inactive-dim",
       "surface": "Settings > Editor & Terminal > Dim Terminals I'm Not In",
       "owner_ref": "Plans/Settings_System.md#SSYS-051",
@@ -4791,7 +4736,6 @@
         "code.terminal.burn-in",
         "code.terminal.noise",
         "code.terminal.flicker",
-        "code.terminal.flicker-amount",
         "code.terminal.inactive-dim",
         "code.terminal.smooth-scroll",
         "code.terminal.bell",
@@ -4859,7 +4803,6 @@
         "code.terminal.burn-in",
         "code.terminal.noise",
         "code.terminal.flicker",
-        "code.terminal.flicker-amount",
         "code.terminal.inactive-dim",
         "code.terminal.smooth-scroll",
         "code.terminal.bell",
@@ -4998,7 +4941,6 @@
         "code.terminal.burn-in",
         "code.terminal.noise",
         "code.terminal.flicker",
-        "code.terminal.flicker-amount",
         "code.terminal.inactive-dim",
         "code.terminal.smooth-scroll",
         "code.terminal.bell",
@@ -5068,7 +5010,6 @@
         "code.terminal.burn-in",
         "code.terminal.noise",
         "code.terminal.flicker",
-        "code.terminal.flicker-amount",
         "code.terminal.inactive-dim",
         "code.terminal.smooth-scroll",
         "code.terminal.bell",
@@ -6923,7 +6864,6 @@
         "code.terminal.burn-in",
         "code.terminal.noise",
         "code.terminal.flicker",
-        "code.terminal.flicker-amount",
         "code.terminal.inactive-dim",
         "code.terminal.smooth-scroll",
         "code.terminal.bezel",
@@ -6960,7 +6900,6 @@
         "code.terminal.burn-in",
         "code.terminal.noise",
         "code.terminal.flicker",
-        "code.terminal.flicker-amount",
         "code.terminal.inactive-dim",
         "code.terminal.smooth-scroll",
         "code.terminal.bezel",
@@ -7420,7 +7359,6 @@
         "code.terminal.burn-in",
         "code.terminal.noise",
         "code.terminal.flicker",
-        "code.terminal.flicker-amount",
         "code.terminal.inactive-dim",
         "code.terminal.smooth-scroll",
         "code.terminal.bell",
@@ -7489,7 +7427,6 @@
         "code.terminal.burn-in",
         "code.terminal.noise",
         "code.terminal.flicker",
-        "code.terminal.flicker-amount",
         "code.terminal.inactive-dim",
         "code.terminal.smooth-scroll",
         "code.terminal.bell",

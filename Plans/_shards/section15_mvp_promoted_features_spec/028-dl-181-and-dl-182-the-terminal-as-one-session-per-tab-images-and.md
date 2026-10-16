@@ -2,9 +2,9 @@
 
 Source: `Plans/Section15_MVP_Promoted_Features_Spec.md`
 
-Source lines: L12362-L13050
+Source lines: L12362-L13051
 
-Source SHA256: `e0eb07245860165cbb4931869e8c5f6f75269d79165da767eb7c3321020daf8e`
+Source SHA256: `4030f5c09b8f6b7439eb8635defc5bcc1c6b4edca161f252b420a6b6a24af36a`
 
 ---
 
@@ -501,7 +501,7 @@ canonical_text: >-
   host is never opened as a local path. "Open output in an editor tab" opens a buffer, never a preview. OSC 7 reports the
   current folder, which the header row, the tab label, Split and path detection use. OSC 9;4 is advisory progress
   under SMPFS-162. Bell and notifications: BEL shows the look's visual bell (`Plans/FinalGUISpec.md#F3-643`; the
-  `bell` field is follow, visual or off, so there is no audible bell). A bell, or an OSC 9, OSC 777 or OSC 99
+  `bell` field is Follow look or Off, DL-213, so there is no audible bell). A bell, or an OSC 9, OSC 777 or OSC 99
   notification, in a terminal tab the user is not looking at sets that tab's attention mark (the hollow square,
   cleared when the user activates the tab) and is announced politely. Notification text is program text shown as
   plain text; it creates no new notification family and is routed through the attention model (SMPFS-031,
@@ -612,6 +612,7 @@ stale_retired_dispositions:
 - "Amended 2026-10-10 (DL-187, D38): terminal notifications raise system notifications while Puppet Master is in the background, at most one every 3 s per terminal, with a per-terminal mute (lead ruling F5)."
 - "Closes 2026-10-09 (DL-181) the terminal audit's Section 15 gaps on OSC 8, bell and OSC 9, 777 and 99 notifications that SMPFS-162 cited as an existing policy."
 - "Amended 2026-10-11 (wave 2, terminal SPEC dbffa7a1b2): Command marks stay with their displayed Full CRT row and survive a shell-redrawn prompt."
+- "Amended 2026-10-16 (DL-213, Jared's P14): the bell field is Follow look or Off; it read follow, visual or off."
 owner_hints:
 - Plans/Section15_MVP_Promoted_Features_Spec.md
 - Plans/FinalGUISpec.md

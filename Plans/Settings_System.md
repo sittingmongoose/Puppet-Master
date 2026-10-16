@@ -3146,6 +3146,7 @@ Retired rows follow the inventory's own convention, the one `general.visual.basi
 | `code.terminal.explanations` | Explain What Commands Do | No AI inside the terminal (DL-181, D19). | The Teacher persona in the chat (`Plans/Personas.md` section 11.8) |
 | `code.terminal.tab-role` | Tab Purpose Hints | The per-tab role setting retires (DL-181). | Shell profiles (`code.terminal.allowed-profiles`) and the tab's own label (`cmd.panel_tab.rename`) |
 | `code.terminal.search` | Search in Terminal | Find is always present (DL-181). | The terminal find control (`Plans/FinalGUISpec.md#F3-641`) |
+| `code.terminal.flicker-amount` | Flicker Amount | Retired 2026-10-16 (DL-213, Jared's P10): within the 0.03 cap no two amounts look different, so Flicker is on or off at one faint level (F3-643). Unlike the rows above, a stored amount is read once by SSYS-051's rule, then forgotten. | Flicker (`code.terminal.flicker`), on or off |
 
 ### Rows amended
 
@@ -3221,6 +3222,8 @@ Choices the concepts carried that are not rows, and why:
 
 Amended 2026-10-16 (DL-206, SSYS-051): the table now contains forty-six terminal look rows, including the ten admitted round-3 background/housing/mask rows. All carry scope `global` and `project` as applicability metadata and store the Project default under the existing writer. `settings_inventory.json` owns each row's type/default; `terminal_background_catalog.json` owns the finite design choices. F3-642/F3-643 retain behavior ownership and the explicit round-5 holds.
 
+Amended 2026-10-16 (DL-213, terminal rounds 4 and 5, Jared's P10 and P14): the round-5 holds are closed. Forty-five of the forty-six rows are live: Flicker Amount retires (Rows retired above), Terminal Bell offers Follow look and Off, Picture Desaturation defaults to 0.5, Bezel Reflection is the material's own level (Auto) or one of four levels, and Phosphor Mask draws at every display density. The ten round-3 rows are live Settings rows in the published concept; no publication guard holds them back.
+
 | Id | Label | Type and choices | Default |
 |---|---|---|---|
 | `code.terminal.scheme-pair` | Switch With Light and Dark | toggle | on |
@@ -3253,26 +3256,26 @@ Amended 2026-10-16 (DL-206, SSYS-051): the table now contains forty-six terminal
 | `code.terminal.burn-in` | Burn-In | toggle, within Full CRT | on |
 | `code.terminal.noise` | Screen Noise | slider | 0.035 |
 | `code.terminal.flicker` | Flicker | toggle | off |
-| `code.terminal.flicker-amount` | Flicker Amount | slider, never above 0.03 | 0.02 |
+| `code.terminal.flicker-amount` | Flicker Amount (retired 2026-10-16, DL-213: Flicker is on or off at one faint level) | slider | 0.02 |
 | `code.terminal.inactive-dim` | Dim Terminals I'm Not In | select: Follow look, On, Off | Follow look |
 | `code.terminal.smooth-scroll` | Smooth Scrolling | select: Follow look, On, Off | Follow look |
-| `code.terminal.bell` | Terminal Bell | select: Follow look, Visual, Off | Follow look |
+| `code.terminal.bell` | Terminal Bell | select: Follow look, Off | Follow look |
 | `code.terminal.sixtyfour-scan` | Sixtyfour Scanlines | slider, -53 to 100 | none |
 | `code.terminal.sixtyfour-bleed` | Sixtyfour Bleed | slider, 0 to 100 | none |
 | `code.terminal.background-strength` | Background Strength | slider | 1 |
-| `code.terminal.background-scale` | Pattern Size | select: Fine, Medium, Coarse | Medium |
+| `code.terminal.background-scale` | Pattern Size | select: Fine, Medium, Coarse (Pattern designs other than Paper) | Medium |
 | `code.terminal.background-motion` | Background Motion | select: Off, Gentle, Lively | Gentle |
 | `code.terminal.background-fit` | Picture Fit | select: Cover, Contain, Tile, Centre | Cover |
-| `code.terminal.background-desaturate` | Picture Desaturation | slider | 0.3 |
+| `code.terminal.background-desaturate` | Picture Desaturation | slider: full colour, half or grey | 0.5 |
 | `code.terminal.bezel` | Terminal Bezel | select: Off, Slim, Monitor | Off |
 | `code.terminal.bezel-width` | Bezel Width | slider | Style default |
 | `code.terminal.bezel-material` | Bezel Material | select: Follow look, Graphite, Black gloss, Platinum, Putty, Brushed aluminium, Gunmetal, Glass, Accent | Follow look |
-| `code.terminal.bezel-reflection` | Bezel Reflection | slider; stored numeric compatibility values, offered presentation pending round 5 | Auto |
-| `code.terminal.phosphor-mask` | Phosphor Mask | toggle; display-density/capability pending round 5 | off |
+| `code.terminal.bezel-reflection` | Bezel Reflection | slider: Auto (the material's own level) or Off, Low, Medium, High, stored as 0, 0.25, 0.5, 1; any stored number reads as the nearest level | Auto |
+| `code.terminal.phosphor-mask` | Phosphor Mask | toggle, within Full CRT; drawn at every display density | off |
 
 The existing scheme, font, size, copy-on-select and sticky-header rows retain their owners; the exact appearance writer/reset field set remains SSYS-051's companion inventory. A field that reads Follow look, Font default or none falls through to the look's default (for the scheme, font and effects, the per-look defaults of F3-642 and F3-644); none is a value the sources have not settled yet, listed for the next installment. Scanlines and Phosphor Glow left on Follow look draw what the look draws: on in Retro dark, off elsewhere (F3-643).
 
-Visibility amendment 2026-10-16 (DL-206): terminal round 5 owns final conditional visibility and live Settings mappings for the ten newly admitted rows; this edition keeps their approved concept publication guard and does not invent those dependencies. The previously admitted rows retain the visibility rule of the presentation rework, section 5: Background Color only while Terminal Background is Solid color; Background Gradient only while it is Gradient; Background Image, Background Image Dimming and Background Image Blur only while it is Image; Custom Background Image only while Background Image is Custom; Terminal Opacity (Glass) only under a Glass theme, as SSYS-010's family-specific rows; Scanlines, Phosphor Glow, Full CRT and Flicker only while Terminal Effects is Custom; Scanline Strength while Scanlines is On, Glow Strength while Phosphor Glow is On, Screen Curvature, Burn-In and Screen Noise while Full CRT is on, and Flicker Amount while Flicker is on; Sixtyfour Scanlines and Sixtyfour Bleed only while Terminal Font is Sixtyfour. A hidden row keeps its stored value. No row turns an effect on where F3-643 keeps it off: effects run only in the focused terminal and stop when it is idle, every moving part (cursor blink and trail, smooth scrolling, burn-in, noise, flicker, the bell's flash) stops under Reduce Animations and on battery saver, and the no-GPU path draws what F3-643 says it can.
+Visibility amendment 2026-10-16 (DL-213, closing DL-206's round-5 hold): the ten round-3 rows show where the Customize screen (F3-650) offers their control. Background Strength only while Terminal Background is Gradient or a built-in Image design; Pattern Size only while that design is a Pattern design other than Paper; Background Motion only while it is a moving design (the catalog's `moving`); Picture Fit and Picture Desaturation only while Background Image is Custom, Picture Desaturation also hidden while the picture's dim is 90 % or more (F3-642); Bezel Width, Bezel Material and Bezel Reflection only while Terminal Bezel is Slim or Monitor, Bezel Reflection also hidden on NieR's own ink frame, which has no reflection (F3-643); Phosphor Mask only while Full CRT is on. Flicker Amount is retired and renders nowhere. The previously admitted rows retain the visibility rule of the presentation rework, section 5: Background Color only while Terminal Background is Solid color; Background Gradient only while it is Gradient; Background Image, Background Image Dimming and Background Image Blur only while it is Image; Custom Background Image only while Background Image is Custom; Terminal Opacity (Glass) only under a Glass theme, as SSYS-010's family-specific rows; Scanlines, Phosphor Glow, Full CRT and Flicker only while Terminal Effects is Custom; Scanline Strength while Scanlines is On, Glow Strength while Phosphor Glow is On, Screen Curvature, Burn-In and Screen Noise while Full CRT is on; Sixtyfour Scanlines and Sixtyfour Bleed only while Terminal Font is Sixtyfour. A hidden row keeps its stored value. No row turns an effect on where F3-643 keeps it off: effects run only in the focused terminal and stop when it is idle, every moving part (cursor blink and trail, smooth scrolling, burn-in, noise, flicker, the bell's flash) stops under Reduce Animations and on battery saver, and the no-GPU path draws what F3-643 says it can.
 
 Where the terminal rows sit (SSYS-040's Editor & Terminal groups). Terminal: Default Shell Profile, Starting Folder, Run When a Terminal Opens, Before Closing a Busy Terminal, Terminals When Reopening a Project. Terminal look: Terminal Colors, Switch With Light and Dark, Minimum Text Contrast, Import a Color Scheme, Terminal Font, Terminal Text Size, Terminal Line Spacing, the three cursor rows, the background rows except the blur, Terminal Opacity (Glass), Terminal Effects and the effect rows, Dim Terminals I'm Not In, Smooth Scrolling and Terminal Bell. Terminal look: more options (folded): Terminal Text Weight, Letter Spacing, Ligatures, Bold As Bright, Font Rendering, Terminal Padding, Background Image Blur and the two Sixtyfour rows. Terminal output & history holds Keep Command Titles Visible, Search in Terminal and Saved Terminal Output, and Copy & paste keeps Copy When I Highlight and Right-Click to Paste. Terminal: more options keeps Allowed Shell Profiles, Rendering Mode, Shell Integration, Performance Mode and Terminal Debug Logging.
 
@@ -3491,9 +3494,9 @@ canonical_text: >-
   background-image-file, background-dim (Auto) and background-blur (0, made once on the picture),
   opacity (Glass; Follow look, 70 % light and 74 % dark), padding (0, Jared 2026-10-14), effects
   (Follow look, Off or Custom) with scanlines, scan-strength (0.30), glow, glow-strength (0.45), crt
-  (off), curvature (0.04, F3-643), burn-in (on), noise (0.035), flicker (off) and flicker-amount
-  (0.02, never above 0.03), inactive-dim, smooth-scroll, bell (Follow look, Visual or Off),
-  sixtyfour-scan and sixtyfour-bleed; a field without a settled default falls through to the look.
+  (off), curvature (0.04, F3-643), burn-in (on), noise (0.035), flicker (off; on or off at one
+  faint level, F3-643), inactive-dim, smooth-scroll, bell (Follow look or Off), sixtyfour-scan and
+  sixtyfour-bleed; a field without a settled default falls through to the look.
   Detail rows show only while the row they depend on makes them apply, and no row turns on what
   F3-643 keeps off: effects run only in the focused terminal, and every moving part stops under
   Reduce Animations and on battery saver. The rows sit in SSYS-040's Terminal look group, the finer
@@ -3530,7 +3533,20 @@ canonical_text: >-
   bezel-reflection and phosphor-mask. Their bounds/defaults are those owners' and
   Plans/terminal_background_catalog.json supplies the gradient/image choices. Each applies live
   through the same Project Settings transaction and tab writer as the existing appearance fields.
-  F3-650's personal preset library is not a Settings row or another default layer.
+  F3-650's personal preset library is not a Settings row or another default layer. Amended
+  2026-10-16 (DL-213; Jared's P10 and P14; terminal rounds 4 and 5): code.terminal.flicker-amount
+  retires by the inventory's Superseded by convention and renders nowhere. A stored amount above 0
+  with no Flicker stored beside it in the same layer (the Project's settings, a tab's override or a
+  saved preset) is read once as Flicker on and written back as that layer's own Flicker; every
+  stored amount, an Off beside it included, is then forgotten, and writing, clearing or resetting
+  Flicker in a scope removes an amount stored there, so no reset or default brings it back.
+  code.terminal.bell offers Follow look and Off; a stored Visual reads as Follow look and is stored
+  again as Follow look wherever Settings reads it (load, reset, import, a project switch or a write).
+  Neither rule adds a notice. background-desaturate defaults to 0.5. bezel-reflection stores Auto
+  (the material's own level) or a number from 0 to 1 that reads as the nearest of F3-643's four
+  levels, a level being written as 0, 0.25, 0.5 or 1. Line height and letter spacing keep the exact
+  stop the Customize screen offered, to four decimals, so All terminals reads back what it drew.
+  The ten round-3 rows are live, shown under the visibility amendment of this addendum.
 gui_related: true
 gui_classification_reason: Each row is a visible Settings > Terminal control whose change shows at once in every terminal.
 split_recommended: false
@@ -3566,10 +3582,18 @@ acceptance_criteria:
 - No Settings row exists for the saved-scrollback secret scrub, the 512 MiB total, a terminal's notification
   mute, the notification rate or a terminal tab's colour or icon; Saved Terminal Output's description names
   the scrub and the 512 MiB total, and Allowed Shell Profiles' names the SSH hosts submenu.
+- Flicker Amount renders nowhere and no control writes it; a stored amount with no Flicker beside it turns
+  Flicker on once and is forgotten, an amount beside a stored Off leaves Flicker off, and after any reset of
+  Flicker no stored amount turns it on again.
+- Terminal Bell offers exactly Follow look and Off, and a stored Visual shows, saves and reloads as Follow look.
+- Picture Desaturation defaults to 0.5; Bezel Reflection reads Auto as the material's own level and any stored
+  number as the nearest level; the ten round-3 rows show only under their visibility conditions and keep their
+  stored values while hidden.
 validation_surfaces:
   - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
   - python3 scripts/pm-plan-index.py validate
   - jq and schema census over Plans/settings_inventory.json
+  - python3 scripts/pm7-canon-check.py
 risk_class: home_panels_terminal_redesign_drift
 reasoning_tier: high
 context_scope: home_panels_terminal
@@ -3616,6 +3640,18 @@ source_lineage:
 - /mnt/Cursor/share/puppet-master/2026-10-16-plans-pass2/sources/2026-10-14-terminal-round3--CANON-PROPOSALS.md,
   SHA-256 4a4b91f257467e76ec6d43e37a04a81cf5f9dee515242177f0d08db04483700d (source lineage; not native
   certification)
+- /mnt/Cursor/share/puppet-master/2026-10-16-plans-topup/sources/2026-10-15-terminal-round5--CANON-PROPOSALS.md,
+  SHA-256 9d55ddc569405b468fcad2c51aed61540563eea3d89d9402a891e071a0547d93 (P10 and P14 decided by Jared
+  2026-10-16; source lineage; not native certification)
+- /mnt/Cursor/share/puppet-master/2026-10-16-plans-topup/sources/2026-10-15-terminal-round5--NOTES.md,
+  SHA-256 77c878854cf0c02b0612ce422a5f68797b3646f6d2aee2b316059d35be342541 (source lineage; not native
+  certification)
+- /mnt/Cursor/share/puppet-master/2026-10-16-plans-topup/sources/Concepts--onboarding--opus-5.5--src--settings--kit.d--24-terminal-look.js,
+  SHA-256 631c558d955673e16b78aeb369f51d735d28514f21ba3a02e4b04dc3f66801e2 (round-5 head f1042f7d3e; the
+  Settings read rules for Visual and a stored amount; source lineage; not native certification)
+- /mnt/Cursor/share/puppet-master/2026-10-16-plans-topup/sources/Concepts--home-redesign--src--terminal--js--77-customize.js,
+  SHA-256 4e19ed616d68af253f105bbdf9a6986a42fa54a7bc08155d20d7efe0434604fc (round-5 head f1042f7d3e; where
+  Customize offers each control; source lineage; not native certification)
 preserved_exact_tokens:
   - "512 MiB"
   - "Follow look"
@@ -3648,6 +3684,7 @@ stale_retired_dispositions:
   - "Amended 2026-10-10 (R35 a): Terminal Font's default reads Follow look; the scheme note says the per-look scheme was previously labelled Follow theme."
   - "Superseded 2026-10-09 (DL-183): the restart badges on code.terminal.theme and code.terminal.font-family, the six-entry colour list, and Fira Code, SF Mono and Custom as terminal fonts."
   - "Superseded 2026-10-09 (DL-182): code.terminal.transcript-retention's Session Only default and its 24 Hours, 7 Days, 30 Days and Forever choices, which SP-332's saved scrollback rule replaces."
+  - "Amended 2026-10-16 (DL-213): Flicker Amount retires (a stored amount reads once as Flicker on where no Flicker is stored beside it), Bell's Visual retires into Follow look, Picture Desaturation defaults to 0.5 (it read 0.3), Bezel Reflection is four levels from the material's own, and the round-5 visibility and publication holds close."
 
 ```
 

@@ -1210,6 +1210,64 @@
           }
         ]
       }
+    },
+    {
+      "name": "bell_follow_look_or_off",
+      "valid": true,
+      "value": {
+        "schema_version": "1.0.0",
+        "presets": [
+          {
+            "id": "saved-1",
+            "name": "My monitor",
+            "saved_at": "2026-10-16T00:00:00Z",
+            "fields": {
+              "code.terminal.bezel": "Monitor",
+              "code.terminal.curvature": 0.06,
+              "code.terminal.bell": "Off",
+              "code.terminal.flicker": true
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "retired_bell_visual",
+      "valid": false,
+      "value": {
+        "schema_version": "1.0.0",
+        "presets": [
+          {
+            "id": "saved-1",
+            "name": "My monitor",
+            "saved_at": "2026-10-16T00:00:00Z",
+            "fields": {
+              "code.terminal.bezel": "Monitor",
+              "code.terminal.curvature": 0.06,
+              "code.terminal.bell": "Visual"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "retired_flicker_amount",
+      "valid": false,
+      "value": {
+        "schema_version": "1.0.0",
+        "presets": [
+          {
+            "id": "saved-1",
+            "name": "My monitor",
+            "saved_at": "2026-10-16T00:00:00Z",
+            "fields": {
+              "code.terminal.bezel": "Monitor",
+              "code.terminal.curvature": 0.06,
+              "code.terminal.flicker-amount": 0.02
+            }
+          }
+        ]
+      }
     }
   ],
   "terminal_preset_apply_cases": [
