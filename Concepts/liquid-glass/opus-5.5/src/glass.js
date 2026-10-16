@@ -1215,11 +1215,13 @@
   /* the press: the lens leaves for the pressed item at once; the app's choice (or its absence) settles it. Only for
      items the app can choose: a disabled or inert item, or a strip that takes no press (a progress rail), keeps the lens
      where it is (it used to sit on the pressed step for the 2.5 s hold, then slide back). */
-  /* under its labels (--pm-switch-layer: under) the lens is an opaque chip and the chosen label is inverted: while a press
-     moves the chip ahead of the app's choice, the pressed item reads as chosen and the one it leaves as not
-     (data-lg-press on / off, glass.css section 12), so neither label sits in its old colour on the wrong ground */
+  /* while a press moves the chip ahead of the app's choice, the pressed item reads as chosen and the one it leaves as not
+     (data-lg-press on / off, glass.css section 12), so neither label sits in its old colour on the wrong ground: under an
+     opaque chip (--pm-switch-layer: under) the chosen label is inverted, and on a tinted one the label it left kept its
+     chosen ink after the chip had gone (Friendly's mint words, Q16 review). Every look that adopts the switcher; never
+     Glass, whose clear lens needs no second ink */
   function pressMark(P, on) {
-    if (!P || (on && !switchUnder)) return;
+    if (!P || (on && !switchLook)) return;
     [[P.el, 'on'], [P.from, 'off']].forEach(function (x) {
       var e = x[0]; if (!e) return;
       if (on) { if (e.getAttribute('data-lg-press') !== x[1]) e.setAttribute('data-lg-press', x[1]); }

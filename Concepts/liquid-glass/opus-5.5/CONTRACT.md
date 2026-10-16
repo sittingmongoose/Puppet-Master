@@ -88,9 +88,10 @@ component is on.
 
 Every look but Glass adopts it (Q16, 2026-10-15): the token blocks are in
 `Concepts/onboarding/opus-5.5/src/css/60-switcher-looks.css` (Basic, Friendly and Retro, light and dark, and NieR Mode,
-which is re-read whenever NieR Mode is turned on or off). With `--pm-switch-layer: under`, a press marks the pressed item
-`data-lg-press="on"` and the one it leaves `"off"` until the app chooses, so each label takes its chosen or resting ink
-while the chip moves ahead of the app; scrubbing a strip is off in that mode. Glass sets none of these tokens. A new strip joins by being added to `STRIPS` (mail me, as under "Ride the lens"). Reduce Motion: the
+which is re-read whenever NieR Mode is turned on or off). In those looks a press marks the pressed item
+`data-lg-press="on"` and the one it leaves `"off"` until the app chooses. Each label takes its chosen or resting ink at
+once, with no transition, while the chip moves ahead of the app; with `--pm-switch-layer: under` its icons and second
+lines do too. Scrubbing a strip is off in that mode. Glass sets none of these tokens. A new strip joins by being added to `STRIPS` (mail me, as under "Ride the lens"). Reduce Motion: the
 lens jumps.
 
 ## Public tokens

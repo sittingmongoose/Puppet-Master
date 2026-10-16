@@ -760,13 +760,14 @@ html[data-pm-switch="lens"][data-pm-switch-layer="under"]:not(#lgz) lg-under.lg-
 html[data-pm-switch="lens"][data-pm-switch-layer="under"]:not(#lgz) lg-under.lg-lenses-under .lg-lens { will-change: auto; }
 html[data-pm-switch="lens"][data-pm-switch-layer="under"]:not(#lgz) :is(#themeMenu .pm6-tt-mode, #panel-wizard .pm6-wiz-intent-chip, #pm-o55-onboarding .o55-seg button, #pm-o55-onboarding .o55-railitem) { position: relative; z-index: 1; }
 /* while a press moves the chip ahead of the app's choice (glass.js pressMark), the pressed item reads as chosen and the
-   one it leaves as not, so neither label sits in its old colour on the wrong ground (three ids: above the chosen ink). The item
-   and the parts that colour themselves (icons, Settings' second lines, Usage's room names), each anchored on its item's
+   one it leaves as not, so neither label sits in its old colour on the wrong ground (three ids: above the chosen ink). The
+   item's own ink follows in every look that adopts the switcher (Glass sets no data-pm-switch); under an opaque chip so do
+   the parts that colour themselves (icons, Settings' second lines, Usage's room names), each arm anchored on its item's
    class so the browser's ancestor filter rejects every other element at once (a descendant *, or a part keyed only by the
    attribute, was tested against every element or every icon on every restyle). The inks change in the press's own frame,
    with no transition and no delay (Retro's icons strike 33 ms late): the app's click can hold the page for a third of a
    second while the chip glides on, and a change left waiting kept the old ink on the landed chip (Q16 review F3). */
-html[data-pm-switch="lens"][data-pm-switch-layer="under"]:not(#lgz):not(#lgy):not(#lgx) [data-lg-press="on"],
+html[data-pm-switch="lens"]:not(#lgz):not(#lgy):not(#lgx) [data-lg-press="on"],
 html[data-pm-switch="lens"][data-pm-switch-layer="under"]:not(#lgz):not(#lgy):not(#lgx) .pmu-navbtn[data-lg-press="on"] .pmu-navtext,
 html[data-pm-switch="lens"][data-pm-switch-layer="under"]:not(#lgz):not(#lgy):not(#lgx) .pmu-navbtn[data-lg-press="on"] svg,
 html[data-pm-switch="lens"][data-pm-switch-layer="under"]:not(#lgz):not(#lgy):not(#lgx) .pmu-navbtn[data-lg-press="on"] path,
@@ -781,7 +782,7 @@ html[data-pm-switch="lens"][data-pm-switch-layer="under"]:not(#lgz):not(#lgy):no
 html[data-pm-switch="lens"][data-pm-switch-layer="under"]:not(#lgz):not(#lgy):not(#lgx) .pm-segtab-item[data-lg-press="on"] path,
 html[data-pm-switch="lens"][data-pm-switch-layer="under"]:not(#lgz):not(#lgy):not(#lgx) .pm6-tt-mode[data-lg-press="on"] svg,
 html[data-pm-switch="lens"][data-pm-switch-layer="under"]:not(#lgz):not(#lgy):not(#lgx) .pm6-tt-mode[data-lg-press="on"] path { color: var(--pm-switch-ink-on) !important; transition: none !important; }
-html[data-pm-switch="lens"][data-pm-switch-layer="under"]:not(#lgz):not(#lgy):not(#lgx) [data-lg-press="off"],
+html[data-pm-switch="lens"]:not(#lgz):not(#lgy):not(#lgx) [data-lg-press="off"],
 html[data-pm-switch="lens"][data-pm-switch-layer="under"]:not(#lgz):not(#lgy):not(#lgx) .pmu-navbtn[data-lg-press="off"] .pmu-navtext,
 html[data-pm-switch="lens"][data-pm-switch-layer="under"]:not(#lgz):not(#lgy):not(#lgx) .pmu-navbtn[data-lg-press="off"] svg,
 html[data-pm-switch="lens"][data-pm-switch-layer="under"]:not(#lgz):not(#lgy):not(#lgx) .pmu-navbtn[data-lg-press="off"] path,
