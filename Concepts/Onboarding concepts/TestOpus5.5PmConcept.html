@@ -27086,15 +27086,16 @@ html[data-theme^="retro"], html[data-o55-nier="on"] { --pm-ctl-r: 0px; --pm-ctl-
 html[data-o55-open] #pm-hover-tag-root { display: none !important; }
 /* the app beneath the window is inert and dimmed (its demo clock is paused too): its own loops (working pulses, status
    dots) hold still until the window closes, so every frame's work is the window's own. Restyled in the same frame that
-   makes the app inert, which the window's first held frame already pays for. */
-html[data-o55-open] body > [inert], html[data-o55-open] body > [inert] * { animation-play-state: paused !important; }
+   makes the app inert, which the window's first held frame already pays for. The parts are marked data-o55-held by
+   the window (60-ui-core.js setInert), so an inert toggle elsewhere (the editor's sheet) matches nothing here. */
+html[data-o55-open] body > [data-o55-held], html[data-o55-open] body > [data-o55-held] * { animation-play-state: paused !important; }
 /* NieR Mode's diamond loaders (styles.d/14-nier-parts.css) set their animation with an !important shorthand, which
    resets the play state and outranks the line above: under the window they are paused here by name, so ticking NieR
    Mode in the window never wakes the app beneath (performance rule 6; review W9) */
-html[data-o55-open][data-o55-nier-parts] body > [inert] :is(.pm6-wiz-disc-spin, .pm6-orch-pc-ring span, .o55-spin, .thread-working-pulse, .pm6-spin svg, .pm7u-iconbtn.spinning svg) { animation-play-state: paused !important; }
+html[data-o55-open][data-o55-nier-parts] body > [data-o55-held] :is(.pm6-wiz-disc-spin, .pm6-orch-pc-ring span, .o55-spin, .thread-working-pulse, .pm6-spin svg, .pm7u-iconbtn.spinning svg) { animation-play-state: paused !important; }
 /* the solid backdrop (60-ui-core.js): on a computer that cannot composite the app beneath at full rate, the app is
    not drawn at all while the window is open; the scrim then lies over the page's own ground */
-html[data-o55-open][data-o55-solid] body > [inert] { visibility: hidden !important; }
+html[data-o55-open][data-o55-solid] body > [data-o55-held] { visibility: hidden !important; }
 .o55-scrim { position: absolute; inset: 0; background: color-mix(in srgb, var(--background) 74%, transparent); }
 /* The click paints this dim before the window is built (the open used to stay undimmed through that work).
    The flash is one empty element, so the click frame can paint it; the real scrim replaces it on the next
@@ -152979,12 +152980,22 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
   function nudge() { const w = S.root.querySelector('.o55-win'); O55.motion.play(w, [{ transform: 'scale(1)' }, { transform: 'scale(1.008)' }, { transform: 'scale(1)' }], { duration: 240 }); }
 
   /* ---------------------------------------------------------------- open / close */
-  let returnFocus = null, inerted = [];
+  /* The app beneath is held while the window is open: every part of it is marked data-o55-held (the pause rules in
+     10-window.css key on that, not on [inert]: a rule on any [inert] descendant made every inert toggle anywhere, the
+     editor's sheet included, restyle that whole subtree, 86.8 ms on an editor open, B6 trace), and the parts not inert
+     already are made inert, as before. */
+  let returnFocus = null, inerted = [], held = [];
   function setInert(on) {
     if (on) {
-      inerted = Array.from(document.body.children).filter((n) => n !== S.root && !n.hasAttribute('inert') && n.id !== 'pm-hover-tag-root' && n.id !== 'o55-demo' && n.tagName !== 'SCRIPT');
+      held = Array.from(document.body.children).filter((n) => n !== S.root && n.id !== 'pm-hover-tag-root' && n.id !== 'o55-demo' && n.tagName !== 'SCRIPT');
+      inerted = held.filter((n) => !n.hasAttribute('inert'));
+      held.forEach((n) => n.setAttribute('data-o55-held', ''));
       inerted.forEach((n) => n.setAttribute('inert', ''));
-    } else { inerted.forEach((n) => n.removeAttribute('inert')); inerted = []; }
+    } else {
+      inerted.forEach((n) => n.removeAttribute('inert'));
+      held.forEach((n) => n.removeAttribute('data-o55-held'));
+      inerted = []; held = [];
+    }
   }
   /* Run Onboarding Again (the Home menu, Settings, the demo pill) starts over for real: a new run, a clean fixture
      world, no operation of the old run left running or reporting, and the Guided Tour back at its first step. */
