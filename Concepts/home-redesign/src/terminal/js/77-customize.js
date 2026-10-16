@@ -529,10 +529,39 @@
       var id = gv.slice(2);
       return gv.charAt(0) === 'g' ? { background: 'gradient', bgGradient: id } : { background: 'image', bgImage: id === 'fibre' ? 'paper' : id };
     }
+    /* the pick shows on its tile in the click's own frame, and the ground is drawn in the task after it: a scene is
+       drawn on a canvas at the terminal's size (43-grounds.js), and drawn in the click it held the click's paint
+       (part2's F3.1 M3 pass: Scene, Hills, 128 ms to the next paint, 77 ms of it in this handler). A later pick in the
+       meantime wins. Your own picture still asks for the file in the click, which the file chooser needs.
+       A ground the pointer rested on is already shown as a preview: it stays through the click's frame and goes in the
+       same task as the write, after it, so the old ground is never drawn in the click nor shown for a frame between the
+       preview and the pick (review TG-1: new, old, new); a pointer leaving meanwhile does not end it early (endPreview) */
+    var groundPick = 0, pickPending = false, catPick = 0;
+    /* a background category: its tab shows as chosen in the click's frame, and its tiles (each design drawn on a canvas
+       in this scheme, 43-grounds.js) are built in the task after it, as a pick is (part2's F4 M3 pass: NieR Dark, Scene,
+       112 ms to the next paint, 80 ms in this handler). A later choice in the meantime wins */
+    function chooseCat(b) {
+      var pick = ++catPick;
+      /* the choice itself is made in the click, so any paint before the deferred one keeps the new tab (review TC-1) */
+      gcat = b.getAttribute('data-gcat'); gSig = '';
+      [].forEach.call(root.querySelectorAll('[data-gcat]'), function (x) { setA(x, 'aria-selected', String(x === b)); });
+      afterPaint(function () { if (pick !== catPick || disposed) return; paint(); });
+    }
     function chooseGround(gv) {
-      clearTimeout(intent); if (previewing !== null) { previewing = null; A().endPreview(v); }
-      if (gv === 'custom' && !String(val('bgImageData') || '').match(/^img:/)) { gcat = 'yours'; paint(); uploadImage(); return; }
-      write(groundPatch(gv));
+      clearTimeout(intent);
+      if (gv === 'custom' && !String(val('bgImageData') || '').match(/^img:/)) {
+        if (previewing !== null) { previewing = null; A().endPreview(v); }
+        gcat = 'yours'; paint(); uploadImage(); return;
+      }
+      [].forEach.call(root.querySelectorAll('[data-key="ground"]'), function (b) { setA(b, 'aria-checked', String(b.getAttribute('data-value') === gv)); });
+      var pick = ++groundPick;
+      pickPending = true;
+      afterPaint(function () {
+        if (pick !== groundPick || disposed) return;
+        pickPending = false;
+        write(groundPatch(gv));
+        if (previewing !== null) { previewing = null; A().endPreview(v); syncPreview(); }
+      });
     }
     /* a tile's picture: the design as this scheme draws it, the look's own ground, or your picture */
     function groundArt(gv, th) {
@@ -958,7 +987,7 @@
       if (b.getAttribute('role') === 'switch') { toggle(b); return; }
       if (b.hasAttribute('data-step')) { var ns = nextSize(eff(), parseFloat(b.getAttribute('data-step')) < 0 ? -1 : 1); if (ns !== null) put('fontSize', ns); return; }
       if (b.hasAttribute('data-set')) { quickSet(b.getAttribute('data-set')); return; }
-      if (b.hasAttribute('data-gcat')) { gcat = b.getAttribute('data-gcat'); gSig = ''; paint(); return; }
+      if (b.hasAttribute('data-gcat')) { chooseCat(b); return; }
       if (b.hasAttribute('data-solid-color')) { write({ background: 'solid', bgColor: b.getAttribute('data-solid-color') }); return; }
       if (b.getAttribute('data-key') === 'ground') { chooseGround(b.getAttribute('data-value')); return; }
       if (b.hasAttribute('data-preset')) {
@@ -1041,7 +1070,7 @@
         A().preview(v, isGround ? groundPatch(id) : { scheme: id }); syncPreview();
       }, ms);
     }
-    function endPreview() { clearTimeout(intent); if (previewing === null) return; previewing = null; A().endPreview(v); syncPreview(); }
+    function endPreview() { clearTimeout(intent); if (previewing === null || pickPending) return; previewing = null; A().endPreview(v); syncPreview(); }
     var schemesEl = root.querySelector('.pmt-cz-schemes');
     schemesEl.addEventListener('mouseover', function (e) { var o = e.target.closest('.pmt-cz-scheme'); if (o) previewSoon(o, INTENT_MS); });
     schemesEl.addEventListener('mouseleave', function () { endPreview(); });
@@ -1214,8 +1243,9 @@
       /* the preview draws what changed now, unseen, so the click has nothing left to draw */
       if (pv && pv.fullPending) pv.frame();
       rasterSoon();
-      /* the case styles this screen offers, drawn once unseen in the look now in force (71-bezel.js Bezel.warm) */
-      if (T.Bezel && T.Bezel.warm) T.Bezel.warm(v);
+      /* the case styles this screen offers, drawn once unseen in the look now in force, at the terminal's size and at its
+         preview's (71-bezel.js Bezel.warm) */
+      if (T.Bezel && T.Bezel.warm) T.Bezel.warm([v, pv]);
     }
     /* parked, the screen is clipped away, so the GPU had never drawn it: its first showing compiled the GPU programs its
        surfaces need and rastered every tile in the click's frames (P2-02, F3 on the P1000: the compositor held about
@@ -1223,7 +1253,16 @@
        is drawn at idle for two frames, unseen (opacity 0.004, as the shell warms its theme covers; 0.002 rounds to
        nothing on the P1000), then clipped away again */
     var rastered = {}, rasterJob = 0, rasterSince = 0, rasterFrames = false, rasterOn = false;
-    function rasterEnd() { if (rasterOn) { rasterOn = false; root.classList.remove('pmt-cz-rasterwarm'); root.inert = false; } }
+    /* nothing inside takes the focus while it is drawn: a focus that lands inside is let go at once. inert did the same,
+       but setting and clearing it restyled the whole screen twice per warm (review RW-4) */
+    function rasterGuard(e) {
+      if (!rasterOn) return;
+      /* the focus goes back where it came from rather than to the page (review TF5-1) */
+      var back = e.relatedTarget;
+      if (back && back.focus && !root.contains(back)) { try { back.focus({ preventScroll: true }); return; } catch (x) {} }
+      if (e.target && e.target.blur) e.target.blur();
+    }
+    function rasterEnd() { if (rasterOn) { rasterOn = false; root.classList.remove('pmt-cz-rasterwarm'); root.removeEventListener('focusin', rasterGuard, true); } }
     function rasterSoon() {
       if (rasterJob || rasterFrames || !closed || disposed) return;
       var key = (root.getAttribute('data-pmt-look') || '') + '|' + (root.getAttribute('data-pmt-mode') || '');
@@ -1246,8 +1285,8 @@
           if (!closed || disposed || rastered[key]) return;
           if (t2 - t1 > 25 || settling() || inputRecent()) { rasterSoon(); return; }
           rasterSince = 0; rastered[key] = 1; rasterOn = true;
-          /* inert for its three frames: drawn, its controls could otherwise take the focus (review RW-2) */
-          root.inert = true; root.classList.add('pmt-cz-rasterwarm');
+          /* its controls must not take the focus for its three frames (review RW-2; rasterGuard) */
+          root.addEventListener('focusin', rasterGuard, true); root.classList.add('pmt-cz-rasterwarm');
           requestAnimationFrame(function () { requestAnimationFrame(function () { requestAnimationFrame(rasterEnd); }); });
         }); });
       };
@@ -1432,7 +1471,7 @@
     parkedWatch(true);
     own(v);
     prepared = handle;
-    if (opts.prepare) { rasterSoon(); if (T.Bezel && T.Bezel.warm) T.Bezel.warm(v); }
+    if (opts.prepare) { rasterSoon(); if (T.Bezel && T.Bezel.warm) T.Bezel.warm([v, pv]); }
     return opts.prepare ? handle : show(opts);
   }
 
