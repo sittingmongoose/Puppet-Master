@@ -50034,10 +50034,23 @@ html[data-pm-switch="lens"][data-pm-switch-layer="under"]:not(#lgz) lg-under.lg-
 html[data-pm-switch="lens"][data-pm-switch-layer="under"]:not(#lgz) lg-under.lg-lenses-under .lg-lens { will-change: auto; }
 html[data-pm-switch="lens"][data-pm-switch-layer="under"]:not(#lgz) :is(#themeMenu .pm6-tt-mode, #panel-wizard .pm6-wiz-intent-chip, #pm-o55-onboarding .o55-seg button, #pm-o55-onboarding .o55-railitem) { position: relative; z-index: 1; }
 /* while a press moves the chip ahead of the app's choice (glass.js pressMark), the pressed item reads as chosen and the
-   one it leaves as not, so neither label sits in its old colour on the wrong ground (two ids: above the chosen ink). The item
-   only: its words inherit; a descendant * here was tested against every element on every restyle. */
-html[data-pm-switch="lens"][data-pm-switch-layer="under"]:not(#lgz):not(#lgy) [data-lg-press="on"] { color: var(--pm-switch-ink-on) !important; }
-html[data-pm-switch="lens"][data-pm-switch-layer="under"]:not(#lgz):not(#lgy) [data-lg-press="off"] { color: var(--pm-switch-ink) !important; }
+   one it leaves as not, so neither label sits in its old colour on the wrong ground (three ids: above the chosen ink). The item
+   and the parts that colour themselves (icons, Settings' second lines, Usage's room names), each keyed by its own tag or
+   class: a descendant * here was tested against every element on every restyle. */
+html[data-pm-switch="lens"][data-pm-switch-layer="under"]:not(#lgz):not(#lgy):not(#lgx) [data-lg-press="on"],
+html[data-pm-switch="lens"][data-pm-switch-layer="under"]:not(#lgz):not(#lgy):not(#lgx) [data-lg-press="on"] svg,
+html[data-pm-switch="lens"][data-pm-switch-layer="under"]:not(#lgz):not(#lgy):not(#lgx) [data-lg-press="on"] small,
+html[data-pm-switch="lens"][data-pm-switch-layer="under"]:not(#lgz):not(#lgy):not(#lgx) [data-lg-press="on"] .pmu-navtext,
+html[data-pm-switch="lens"][data-pm-switch-layer="under"]:not(#lgz):not(#lgy):not(#lgx) [data-lg-press="on"] path,
+html[data-pm-switch="lens"][data-pm-switch-layer="under"]:not(#lgz):not(#lgy):not(#lgx) [data-lg-press="on"] circle,
+html[data-pm-switch="lens"][data-pm-switch-layer="under"]:not(#lgz):not(#lgy):not(#lgx) [data-lg-press="on"] rect { color: var(--pm-switch-ink-on) !important; }
+html[data-pm-switch="lens"][data-pm-switch-layer="under"]:not(#lgz):not(#lgy):not(#lgx) [data-lg-press="off"],
+html[data-pm-switch="lens"][data-pm-switch-layer="under"]:not(#lgz):not(#lgy):not(#lgx) [data-lg-press="off"] svg,
+html[data-pm-switch="lens"][data-pm-switch-layer="under"]:not(#lgz):not(#lgy):not(#lgx) [data-lg-press="off"] small,
+html[data-pm-switch="lens"][data-pm-switch-layer="under"]:not(#lgz):not(#lgy):not(#lgx) [data-lg-press="off"] .pmu-navtext,
+html[data-pm-switch="lens"][data-pm-switch-layer="under"]:not(#lgz):not(#lgy):not(#lgx) [data-lg-press="off"] path,
+html[data-pm-switch="lens"][data-pm-switch-layer="under"]:not(#lgz):not(#lgy):not(#lgx) [data-lg-press="off"] circle,
+html[data-pm-switch="lens"][data-pm-switch-layer="under"]:not(#lgz):not(#lgy):not(#lgx) [data-lg-press="off"] rect { color: var(--pm-switch-ink) !important; }
 
 /* Settings' chapter header is a bar sheet under Liquid Glass (glass.js SURFACES): on the bare wallpaper its line, a 62 %
    tint, read 4.2:1 over Ribbons and 1.9-2.9:1 over Prism or Pool in Glass Dark (2026-10-14). The line takes the look's
