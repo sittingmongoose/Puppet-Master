@@ -96269,7 +96269,7 @@ window.PM_NIER = Object.freeze({
     });
     A(log.querySelector('.o55np-meter > i'), [{ transform: 'scaleX(0)' }, { transform: 'scaleX(1)' }], { duration: plan.meter[1] - plan.meter[0], delay: d(plan.meter[0]), easing: 'steps(12, end)' });
     const sync = log.querySelector('.o55np-sync');
-    const show = A(sync, [{ opacity: 0 }, { opacity: 0 }], { duration: Math.max(1, d(plan.sync)) });
+    const show = A(sync, [{ opacity: 0 }, { opacity: 1 }], { duration: Math.max(1, d(plan.sync)), easing: 'steps(1, end)' });
     const blink = A(sync.querySelector('.o55np-caret'), [{ opacity: 1, easing: 'steps(1, end)' }, { opacity: 0, offset: 0.5, easing: 'steps(1, end)' }, { opacity: 1 }], { duration: 900, delay: d(plan.sync), iterations: Infinity, fill: 'none' });
     /* The list can finish before the look's render work. A travelling ink highlight keeps the existing segmented
        meter alive on its own compositor layer; it makes no progress claim and needs no per-frame JavaScript. */
