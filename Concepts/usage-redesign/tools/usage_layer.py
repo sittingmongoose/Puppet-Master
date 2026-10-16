@@ -258,12 +258,14 @@ HOST_SCOPE = ':is(#panel-usage,[data-pmu-host])'
 # steps' disabled hover, and the account button's bridged opacity; the same controls on a hosted board) = 2,673, plus the
 # warm board's wait in its scroll pane (2026-10-16, motion QA P2-03, 05-film.css: a hosted board never takes the attribute)
 # = 2,674; the warm page's own rule (.primary-content > #panel-usage.page[data-pmu-warm], the panel itself) is the second
-# compound use, Usage-only as it should be. A Usage CSS
+# compound use, Usage-only as it should be. The four pseudo-elements moved out of :is() into their own selector-list
+# entries (2026-10-16, T7-2: the browser drops a pseudo-element inside :is(); the Retro and NieR square toggle knob, the
+# Retro skyfill top bar, the Reduce Animations toggle knob) bring 'rewritten' to 2,678. A Usage CSS
 # edit that adds or removes an anchored rule moves 'rewritten': look at what the new rules style (a hosted board gets
 # them too), then re-pin the number here. Any other use of #panel-usage (a child or sibling combinator, a rule for the
 # panel itself, an anchor outside a selector) stops the build: it would be Usage-only, or not a selector, without
 # saying so.
-HOST_SCOPE_EXPECT = {'rewritten': 2674, 'compound': 2}
+HOST_SCOPE_EXPECT = {'rewritten': 2678, 'compound': 2}
 HOST_AT_GROUPS = ('@media', '@supports', '@container', '@layer')
 _ANCHOR_RX = re.compile(re.escape(HOST_ANCHOR) + r'(?![\w-])')
 
