@@ -242,6 +242,14 @@ CENSUS = [
     ("    cancelAnimationFrame(this.scanFrame);cancelAnimationFrame(this.liveFrame);this.scanFrame=0;this.liveFrame=0;\n",
      "    cancelCensusFrame(this.scanFrame);cancelCensusFrame(this.liveFrame);this.scanFrame=0;this.liveFrame=0;\n",
      'hover census: cancel'),
+    # B6 (editor lane trace: two labelText calls 18 ms self each in one live batch on the P1000): a control's <label>
+    # list was read three times per call, and labelText runs several times per control. On a page that keeps
+    # changing, each read of el.labels can walk the whole document for its labels: 122.8 ms for 300 controls on Nas1,
+    # against 1.0 ms reading it once, and only for a control that a label can name (it has an id, or sits in a label).
+    ("    if(el&&el.labels&&el.labels.length){var labels=Array.prototype.map.call(el.labels,visibleText).filter(Boolean).join(' ');if(labels)return labels;}\n",
+     "    var ls=el&&(el.id||(el.closest&&el.closest('label')))?el.labels:null,ln=ls?ls.length:0;   /* O55: read once (B6) */\n"
+     "    if(ln){var own=[];for(var li=0;li<ln;li++)own.push(ls[li]);var labels=own.map(visibleText).filter(Boolean).join(' ');if(labels)return labels;}\n",
+     'hover census: labels read once'),
 ]
 
 ANSWER_FIRST = [
