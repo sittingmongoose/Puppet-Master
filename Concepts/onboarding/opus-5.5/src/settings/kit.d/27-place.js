@@ -63,9 +63,10 @@ function o55pUnitOf(el, sc) {
   }
   return unit;
 }
-function o55pUnitAt(sc, y) {
+const O55P_ACROSS = [.5, .3, .7, .14, .86];
+function o55pUnitAt(sc, y, across) {
   const doc = sc.querySelector('.domain-document') || sc, r = doc.getBoundingClientRect();
-  for (const f of [.5, .3, .7, .14, .86]) {
+  for (const f of across || O55P_ACROSS) {
     const x = r.left + r.width * f;
     for (const el of document.elementsFromPoint(x, y)) {
       if (el === sc || !sc.contains(el)) continue;
@@ -128,11 +129,17 @@ PLACE.capture = function (kind, from) {
   if (!unit) unit = [...sc.querySelectorAll('[data-workspace-block]')].reverse().find(b => b.getBoundingClientRect().top <= st + O55P_LINE * z) || null;
   if (!unit) { this.anchor = null; return null; }
   const top = unit.getBoundingClientRect().top;
-  /* rows above it, nearest first, in case it disappears */
-  const near = [];
+  /* rows above it, nearest first, in case it disappears. Each hit test costs about a millisecond on the P1000, and this
+     runs in the pointerdown of every control (14 of them, 18.5 ms, in an editor-open click; F5 editor trace): one test
+     at the middle of the page per step, and the next step starts just above the row it found instead of inside it.
+     The reading-line anchor itself (o55pPick) still tries across the page. */
+  const near = [], mid = [.5];
   for (let y = top - 6, seen = new Set([unit]); near.length < 3 && y > st - 300 * z; y -= 40 * z) {
-    const u = o55pUnitAt(sc, y);
-    if (u && !seen.has(u) && u.getBoundingClientRect().top < top) { seen.add(u); near.push({ el: u, path: o55pPath(u, sc), offset: o55pTop(u, sc) }); }
+    const u = o55pUnitAt(sc, y, mid);
+    if (!u) continue;
+    const ut = u.getBoundingClientRect().top;
+    if (!seen.has(u) && ut < top) { seen.add(u); near.push({ el: u, path: o55pPath(u, sc), offset: o55pTop(u, sc) }); }
+    y = Math.min(y, ut - 6 + 40 * z);
   }
   this.anchor = { kind, el: unit, path: o55pPath(unit, sc), offset: o55pTop(unit, sc), near };
   this.own = sc.scrollTop;
