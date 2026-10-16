@@ -172,18 +172,21 @@ PAGES = [
      "    window.PM_PAGES.go = function (pageId, subTab) {\n",
      'page switch: finish entrances helper'),
     # A3, A5: a page change's first frame can be long (the arriving page is styled and laid out, first visits build
-    # their content), and the exit and entrance, started inside it, were spent unseen: on the P1000 the Wizard sat still
-    # ~470 ms, then vanished in one frame. Both moves start again together on the frame after the first one shown.
+    # their content), and the exit and entrance were spent unseen: the timeline that frame draws at is the one from
+    # before the long work, so on the P1000 the Wizard sat still ~470-600 ms and then vanished in one frame. Both moves
+    # are put back to their start in that first frame (it draws the old page whole) and again in the next one, after
+    # the long frame, so the whole exit and entrance play on frames that are shown.
     ("      oldP.classList.add('pm8-page-out');\n"
      "      newP.classList.add('pm8-page-in');\n",
      "      oldP.classList.add('pm8-page-out');\n"
      "      newP.classList.add('pm8-page-in');\n"
-     "      requestAnimationFrame(function () { requestAnimationFrame(function () {   /* O55: start on a shown frame */\n"
+     "      var restartMoves = function () {   /* O55: the moves start on a shown frame */\n"
      "        var t = document.timeline.currentTime; if (t == null) return;\n"
      "        [oldP, newP].forEach(function (p) { p.getAnimations().forEach(function (a) {\n"
      "          if (a.animationName === 'pm8-page-in' || a.animationName === 'pm8-page-out') { try { if (a.playState !== 'idle') a.startTime = t; } catch (e) {} }\n"
      "        }); });\n"
-     "      }); });\n",
+     "      };\n"
+     "      requestAnimationFrame(function () { restartMoves(); requestAnimationFrame(restartMoves); });\n",
      'page switch: moves start on a shown frame'),
     # A3, A5: the edge-dissolve header offsets (PM_EDGE) measured each newly shown page's head synchronously inside the
     # page change, forcing the arriving page's style and layout there (~100 ms on the P1000) before the rest of the
@@ -241,7 +244,72 @@ CENSUS = [
      'hover census: cancel'),
 ]
 
-PATCHES = STATUS_BAR + HOVER_TAGS + THEME + PAGES + CENSUS
+ANSWER_FIRST = [
+    # Page tabs answer on the click's own frame (final motion QA, planner 2026-10-16: Settings entry measured 440 ms
+    # click-to-paint with 17 ms of handlers; the arriving page's first style, layout and paint is the rest). A trusted
+    # click on a page tab now paints its answer first: the tab strip shows the choice, its ink starts gliding and the
+    # leaving page starts to fade, all on layers that already exist. The page change itself (classes, page.changed,
+    # first renders) runs in the task after that frame; its exit continues from where the fade has got to, and the
+    # moves start again on the frames that are shown. Programmatic clicks (tab.click() from other code) and Reduced
+    # Motion keep the immediate, synchronous change.
+    ("      document.addEventListener('click', function(e) {\n"
+     "        if (!window.PM_PAGES || !window.PM_PAGES.go) return;\n"
+     "        var tab = e.target && e.target.closest ? e.target.closest('.page-tab[data-page]') : null;\n"
+     "        if (!tab) return;\n"
+     "        window.PM_PAGES.go(tab.getAttribute('data-page'));\n"
+     "      }, true);\n",
+     "      document.addEventListener('click', function(e) {\n"
+     "        if (!window.PM_PAGES || !window.PM_PAGES.go) return;\n"
+     "        var tab = e.target && e.target.closest ? e.target.closest('.page-tab[data-page]') : null;\n"
+     "        if (!tab) return;\n"
+     "        if (e.isTrusted && typeof window.PM_PAGES.goSoon === 'function') window.PM_PAGES.goSoon(tab.getAttribute('data-page'));   /* O55: answer first */\n"
+     "        else window.PM_PAGES.go(tab.getAttribute('data-page'));\n"
+     "      }, true);\n",
+     'page tabs: answer first'),
+    # The tab's own legacy handler switched the pages again by class after PM_PAGES had (a no-op then); with the answer
+    # first it would switch them at once. PM_PAGES is the switch whenever it exists.
+    ("          const pageId = this.getAttribute('data-page');\n"
+     "          if (!pageId) return;\n",
+     "          const pageId = this.getAttribute('data-page');\n"
+     "          if (!pageId) return;\n"
+     "          if (window.PM_PAGES && typeof window.PM_PAGES.go === 'function') return;   /* O55: PM_PAGES switches */\n",
+     'page tabs: legacy switch only without PM_PAGES'),
+    ("    from { opacity: 1; transform: translateX(0); }\n",
+     "    from { opacity: var(--pm8-out-from, 1); transform: translateX(0); }   /* O55: continues an answered fade */\n",
+     'page exit: starts where the answer left it'),
+    ("      if (tab) (changed ? springTo : snap)(tab, tabMetrics);\n",
+     "      if (tab && window.PM_PAGES.__answered !== pageId) (changed ? springTo : snap)(tab, tabMetrics);   /* O55: the answer already started it */\n"
+     "      window.PM_PAGES.__answered = null;\n",
+     'page switch: ink once'),
+    ("    function resync() {\n"
+     "      cacheTabMetrics();\n",
+     "    /* O55: the answer on the click's own frame (see ANSWER_FIRST in tools/shell_motion.py) */\n"
+     "    var soon = null;\n"
+     "    window.PM_PAGES.goSoon = function (pageId) {\n"
+     "      var P = window.PM_PAGES, prev = P.current;\n"
+     "      if (soon) { soon.page = pageId; }\n"
+     "      else if (!pageId || pageId === prev || !bootPaintDone || reduced() || document.hidden || !panelFor(pageId)) { P.go(pageId); return; }\n"
+     "      var tab = tabFor(pageId), oldP = prev ? panelFor(prev) : null;\n"
+     "      document.querySelectorAll('.page-tab').forEach(function (t) { var on = t.getAttribute('data-page') === pageId; t.classList.toggle('active', on); t.setAttribute('aria-selected', on ? 'true' : 'false'); });\n"
+     "      if (tab) { springTo(tab, measureTab(tab)); P.__answered = pageId; }\n"
+     "      if (soon) return;\n"
+     "      var html = document.documentElement, nier = html.getAttribute('data-o55-nier') === 'on', retro = /^retro/.test(html.getAttribute('data-theme') || '');\n"
+     "      /* NieR answers with its wipe and the ink; the other looks start the leaving page's fade (Retro in steps) */\n"
+     "      var lift = !nier && oldP && oldP.animate && !oldP.classList.contains('pm8-page-out') ? oldP.animate([{ opacity: 1 }, { opacity: 0.86 }], { duration: 140, easing: retro ? 'steps(2, end)' : 'cubic-bezier(.2, 0, 0, 1)', fill: 'forwards' }) : null;\n"
+     "      soon = { page: pageId };\n"
+     "      requestAnimationFrame(function () { setTimeout(function () {\n"
+     "        var to = soon.page; soon = null;\n"
+     "        if (lift) { try { oldP.style.setProperty('--pm8-out-from', getComputedStyle(oldP).opacity); lift.cancel(); } catch (e) {} setTimeout(function () { oldP.style.removeProperty('--pm8-out-from'); }, 1500); }\n"
+     "        if (P.__answered !== to) P.__answered = null;\n"
+     "        P.go(to);\n"
+     "      }, 0); });\n"
+     "    };\n"
+     "    function resync() {\n"
+     "      cacheTabMetrics();\n",
+     'page switch: answer-first entry point'),
+]
+
+PATCHES = STATUS_BAR + HOVER_TAGS + THEME + PAGES + CENSUS + ANSWER_FIRST
 
 # The census's own frame requests, between scheduleScan and refresh (scan, delayed scan, live, delayed live, and their
 # continuations): every one becomes censusFrame.

@@ -43,11 +43,15 @@ function stopEnter(el) { el.getAnimations().forEach(a => { if (a.id === 'd-enter
    next frame: the first frame shows the start, then everything runs from one start time. */
 function startTogether(anims) {
   if (!anims || !anims.length) return;
-  requestAnimationFrame(() => {
+  /* ...and once more on the frame after that one: that frame can itself be the long one (the fit pass and the new
+     view's first layout), and the time it draws at is from before its work, so a move started in it was over before it
+     showed (P1000 films, final motion QA A8: the held panel gone and the new one still empty for ~100 ms) */
+  const restart = () => {
     const t = document.timeline.currentTime;
     if (t == null) return;
     anims.forEach(a => { try { if (a.playState !== 'idle') a.startTime = t; } catch (e) { /* gone */ } });
-  });
+  };
+  requestAnimationFrame(() => { restart(); requestAnimationFrame(restart); });
 }
 /* stagger a list in; runs once per call, never on scroll */
 function cascade(list, opts) {
