@@ -98,9 +98,11 @@ function lookView() {
 test('a hidden terminal keeps a look change for when it shows again, and applies it then', () => {
   const { v, log } = lookView();
   offScreen(v, true); log.length = 0;
+  let heard = 0; v._czLook = () => { heard++; };
   v.onLook();
   assert.equal(v._lookStale, true);
   assert.ok(!log.includes('look applied'));
+  assert.equal(heard, 1, 'its parked Customize screen hears the change at once');
   offScreen(v, false);
   assert.ok(log.includes('look applied'));
   assert.ok(log.indexOf('look applied') < log.indexOf('layout'), 'the look before the layout that follows it');
