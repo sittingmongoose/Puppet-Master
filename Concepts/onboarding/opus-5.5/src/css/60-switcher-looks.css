@@ -170,6 +170,7 @@ html:not([data-theme^="glass"]):not(#lgz):not(#lgy) .lg-lens::after { content: n
 :is(html[data-theme^="retro"], html[data-o55-nier="on"]):not(#lgz) #pm-settings-root .domain-link small,
 :is(html[data-theme^="retro"], html[data-o55-nier="on"]):not(#lgz) #pm-settings-root .workspace-tab,
 :is(html[data-theme^="retro"], html[data-o55-nier="on"]):not(#lgz) #pm-settings-root .manager-tab,
+:is(html[data-theme^="retro"], html[data-o55-nier="on"]):not(#lgz) #pm-settings-root .segmented > button,
 :is(html[data-theme^="retro"], html[data-o55-nier="on"]):not(#lgz) #pm-settings-root .pm51-index-group > .index-link,
 :is(html[data-theme^="retro"], html[data-o55-nier="on"]):not(#lgz) #themeMenu .pm6-tt-mode,
 :is(html[data-theme^="retro"], html[data-o55-nier="on"]):not(#lgz) #panel-wizard .pm6-wiz-intent-chip { transition-property: none; }

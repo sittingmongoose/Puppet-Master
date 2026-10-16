@@ -52,11 +52,19 @@ press either.
 Every strip in `STRIPS` is one component: a track, a lens that travels on a spring to the chosen item, and labels that
 change from the ink colour to the chosen colour. The strips are:
 - the page tabs, Usage's navigation and range, the rail's tabs and the Orchestrator's views;
-- Settings' left bar, section tabs, page index and manager tabs;
+- Settings' left bar, section tabs, page index, manager tabs and segmented choices;
 - the Wizard's work type, the theme menu and the Customize screens.
 
-Choices that live in scrolling content wear the lens's material in place and do not travel: Settings' segmented
-choices and service lists, and Home's segmented rows and panel tabs. Glass draws the component. **Any other look can
+Settings' segmented choices live in content that scrolls under its sticky bars, so their lens is always the control's
+own: `under: true` in `STRIPS` draws it inside the control, under its labels, in every look, Glass included. It scrolls
+with the control and stays under the bars. At rest the chosen segment wears the lens's material in place, as before;
+the chip shows only while it moves (`data-lg-moving` on the control, from the press or the app's change until it rests
+on the segment the app chose), in that same material with no refraction filter, at the segments' exact boxes, and the
+chosen segments' own fills step aside meanwhile. A control the app draws again from scratch after a choice on it takes
+the chip of the one it replaced, so the chip moves on instead of appearing.
+
+Other choices that live in scrolling content wear the lens's material in place and do not travel: Settings' service
+lists, and Home's segmented rows and panel tabs. Glass draws the component. **Any other look can
 adopt it by tokens**, with no change to `glass.js` or `glass.css`:
 
 ```css
