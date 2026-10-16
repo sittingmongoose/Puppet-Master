@@ -1274,8 +1274,9 @@
       flushLeaving(true);
       Array.prototype.forEach.call(incoming.querySelectorAll(':scope > .pmu-card'), destroyCard);
       incoming.removeAttribute('id');
-      /* the old board takes the live board's id and role back; its cards stop leaving */
-      el.classList.remove('pmu-ghostboard');
+      /* the old board takes the live board's id and role back; its cards stop leaving. It keeps the ghost's layer
+         (.pmu-ghostboard: will-change) until it rests: dropping the layer under its running drift re-rastered every
+         Glass plate's frost in the reverse's first frames (a 200 ms GPU stall in a Glass Dark M3 film) */
       ['zIndex', 'pointerEvents', 'opacity'].forEach(function (k) { el.style[k] = ''; });
       if (bo.liveId) el.id = bo.liveId;
       boardEl = el;
@@ -1290,7 +1291,7 @@
       deferHover(back.ms + 200);
       /* the preview elements and the end of the film window wait for the drift to rest (inserting the morph before the
          first card restyles the board's positional rules: never during a motion) */
-      setTimeout(function () { if (boardEl !== el || dead) return; ensurePreviews(); if (!(FILM.moment && FILM.moment())) el.removeAttribute('data-film'); }, (back.ms + 60) * speed());
+      setTimeout(function () { if (boardEl !== el || dead) return; el.classList.remove('pmu-ghostboard'); ensurePreviews(); if (!(FILM.moment && FILM.moment())) el.removeAttribute('data-film'); }, (back.ms + 60) * speed());
       return true;
     }
     function mount(room, opts) {
@@ -1418,7 +1419,7 @@
         emit('mount', { room: room, cls: current.cls.name, widgets: ids, transition: true, scrolled: sTop });
         return;
       }
-      if (opts.transition && roomChanged && current.mounted && reduced() && !hosted && bo.rooms && !opts.held) { calmSwap(room, rects, ids, byId); return; }
+      if ((opts.calmEntry || opts.transition && roomChanged && current.mounted) && reduced() && !hosted && bo.rooms && !opts.held) { calmSwap(room, rects, ids, byId); return; }
       lastGhost = null;
       flushLeaving(true);
       dropOld();
