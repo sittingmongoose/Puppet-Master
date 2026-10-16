@@ -1743,8 +1743,17 @@
     try { if (window.PM7_SHELL_ADJUSTMENTS && typeof window.PM7_SHELL_ADJUSTMENTS.seatChat === 'function') window.PM7_SHELL_ADJUSTMENTS.seatChat(); } catch (error) {}
     shellIntro(app);
     board.setAttribute('data-pm-hover-exempt', 'entering');
-    PMU.board.mount(st.room, { held: true, onBuilt: function (cards) { if (hold === h) h.built = true; else if (moment === m && m.released) allBuilt(h.room, cards || []); } });
-    watch(h);
+    /* the board is built in the frame after the click (motion QA A14): the click's frame lays out and paints the page the
+       app just switched to, and the held mount's width read inside it forced that whole layout into the click task, then
+       built every frame on top of it (Mac: the Usage tab's click frame 132-143 ms, about 30 ms over any other page's).
+       Nothing shows a frame later than before: the shell's power-on and the frames all start from opacity 0 on delays of
+       40 ms and more. Until then the last visit's board is held hidden (data-held). */
+    board.setAttribute('data-held', '');
+    requestAnimationFrame(function () { requestAnimationFrame(function () {
+      if (hold !== h || moment !== m) return;
+      PMU.board.mount(st.room, { held: true, onBuilt: function (cards) { if (hold === h) h.built = true; else if (moment === m && m.released) allBuilt(h.room, cards || []); } });
+      watch(h);
+    }); });
   }
   /* a board class change while held rebuilds the board held under the same arrival (never the instant remount) */
   function rehold(onBuilt) {
