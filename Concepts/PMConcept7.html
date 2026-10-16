@@ -48638,7 +48638,10 @@ html[data-lg="on"][data-theme="glass-dark"]:not(#lgz) { --lg-switch-off: rgba(25
 html[data-lg="on"][data-theme="glass-light"]:not(#lgz) { --lg-switch-off: rgba(12, 15, 21, .14); }
 html[data-lg="on"][data-theme^="glass"]:not(#lgz)[data-motion="reduced"] #panel-usage .pmu-toggle::after,
 html[data-lg="on"][data-theme^="glass"]:not(#lgz)[data-motion="reduced"] #panel-usage .pmu-wswitch-track > i { transition: background 160ms ease !important; }
-html[data-lg="on"][data-theme^="glass"]:not(#lgz) .pmu-card :is(.pmu-meter, .pmu-track, .pmu-bar, [class*="meter"] > i, [class*="track"]) { border-radius: 1px !important; }
+/* the meter <i>s by their parents' classes (a census of every Usage state: .pmu-meterclip > i.pmu-meterfill, .pmu-meterfill >
+   i.pmu-meterwash, .pmu-metertrack > i.pmu-meterover). Keyed on [class*="meter"] with a bare i subject, every class change
+   anywhere restyled all the changed element's <i> descendants, in every look (P1000 speed team, (j)). Same specificity. */
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) .pmu-card :is(.pmu-meter, .pmu-track, .pmu-bar, :is(.pmu-meterclip, .pmu-meterfill, .pmu-metertrack) > i, [class*="track"]) { border-radius: 1px !important; }
 html[data-lg="on"][data-theme^="glass"]:not(#lgz) #pmuRoomTitle, html[data-lg="on"][data-theme^="glass"]:not(#lgz) .pmu-rail h1 { color: var(--text-primary) !important; font-weight: 700; letter-spacing: -.015em; }
 html[data-lg="on"][data-theme^="glass"]:not(#lgz) :is(.pmu-pop, .pmr-menu-list) :is(.pmu-poprow, .pmu-mitem, .pmr-menu-item, [role="menuitem"], [role="option"]) { border-radius: var(--pm-ctl-r) !important; }
 
