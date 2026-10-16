@@ -28611,8 +28611,12 @@ html[data-o55-vt]::view-transition { pointer-events: none; }
 html[data-o55-vt]::view-transition-old(root), html[data-o55-vt]::view-transition-new(root) { animation: none; mix-blend-mode: normal; }
 
 /* ---- Reduced Motion: order and cause/effect kept, movement removed ---------------------------------------------- */
-html[data-motion="reduced"] #pm-o55-onboarding .o55-entering .o55-st, html[data-motion="reduced"] #pm-o55-onboarding .o55-entering .o55-main *,
+html[data-motion="reduced"] #pm-o55-onboarding .o55-entering .o55-st,
 html[data-motion="reduced"] #pm-o55-onboarding .o55-entering .o55-promise li { animation: o55-fadeonly 140ms ease both !important; }
+/* the screen's body fades as one (it is an .o55-st): its contents hold still inside it. Each of them was given a fade of
+   its own, every node of the look screen's four live tile scenes too (1,511 elements), and starting them was 108 ms of
+   the click's style on Nas1 (190 -> 82 ms; P2-06, Welcome to Get Started) */
+html[data-motion="reduced"] #pm-o55-onboarding .o55-entering .o55-main * { animation: none !important; }
 html[data-motion="reduced"] #pm-o55-onboarding .o55-pane > .o55-layer.o55-out { animation: o55-fadeout 100ms ease both !important; }
 html[data-motion="reduced"] #pm-o55-onboarding.o55-opening .o55-win, html[data-motion="reduced"] #pm-o55-onboarding.o55-closing .o55-win { animation: o55-fadeonly 160ms ease both !important; }
 html[data-motion="reduced"] #pm-o55-onboarding.o55-closing .o55-win { animation-name: o55-fadeout !important; }
@@ -28621,10 +28625,12 @@ html[data-motion="reduced"] #pm-o55-onboarding.o55-closing .o55-win { animation-
    transition's end.) */
 html[data-motion="reduced"] #pm-o55-onboarding * { transition: none !important; }
 @media (prefers-reduced-motion: reduce) {
-  #pm-o55-onboarding .o55-entering .o55-st, #pm-o55-onboarding .o55-entering .o55-main *, #pm-o55-onboarding .o55-entering .o55-promise li { animation: o55-fadeonly 140ms ease both !important; }
+  #pm-o55-onboarding .o55-entering .o55-st, #pm-o55-onboarding .o55-entering .o55-promise li { animation: o55-fadeonly 140ms ease both !important; }
+  #pm-o55-onboarding .o55-entering .o55-main * { animation: none !important; }
   #pm-o55-onboarding .o55-pane > .o55-layer.o55-out { animation: o55-fadeout 100ms ease both !important; }
   #pm-o55-onboarding.o55-opening .o55-win { animation: o55-fadeonly 160ms ease both !important; }
   #pm-o55-onboarding.o55-closing .o55-win { animation: o55-fadeout 160ms ease both !important; }
+  #pm-o55-onboarding.o55-accept .o55-win { transform: none; opacity: 0.86; animation: o55-accept-calm 180ms ease-out both; }
   #pm-o55-onboarding * { transition: none !important; }
 }
 /* The stage's colours in one custom property, so a look change is one read (60-ui-core.js readStageTokens) rather than
@@ -28637,7 +28643,12 @@ html, [data-theme], [data-o55-nier-preview] {
    the window then stood half a second while the Wizard was built; Retro settles in two steps. */
 #pm-o55-onboarding.o55-accept .o55-win { transform: scale(0.986); transition: transform 200ms cubic-bezier(0.2, 0, 0, 1); }
 #pm-o55-onboarding[data-family="retro"].o55-accept .o55-win { transform: scale(0.986); transition: transform 160ms steps(2, end); }
-html[data-motion="reduced"] #pm-o55-onboarding.o55-accept .o55-win { transform: none; transition: none; }
+/* Under Reduced Motion the answer is the calm one: the window dims a little on the click's own frame, without moving,
+   and its fade out goes on from there. With nothing new drawn on that frame, the click's next paint was the Wizard's
+   and the window's together (P2-06: the dialog changed 0.61-0.83 s after the click on the P1000, Event Timing
+   648-880 ms, M3 96-152 ms). */
+@keyframes o55-accept-calm { from { opacity: 1; } }
+html[data-motion="reduced"] #pm-o55-onboarding.o55-accept .o55-win { transform: none; transition: none; opacity: 0.86; animation: o55-accept-calm 180ms ease-out both; }
 
 /* ---- css/21-look-veil.css ---- */
 /* The cover a look change crosses through (src/js/12-theme-transition.js; final motion QA B4 and part 2 P2-01): the
@@ -145001,12 +145012,17 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
       }).observe(document, { childList: true, subtree: true, attributes: true, attributeFilter: ['role'] });
       popWatch = true;
     } catch (_) { popWatch = false; }
+    /* A popup inside the parked chat root (21-shell-perf.css: content-visibility hidden outside the Guided Tour) is never
+       drawn, and a rect read there lays out the whole locked root: the chat's more menus did, 2 reads at +100-140 ms
+       after a Settings click on the 3090 (T9b). The selector match reads no style. */
+    var PARKED = 'html:not([data-o55-tour]) #chatPanel[data-pmw-sc="on"] > .float-content.pm6-chat-root';
+    function drawn(e) { return !e.closest(PARKED) && e.getClientRects().length > 0; }
     function anyPopup() {
       var open = false;
-      if (!popWatch) { var l = document.querySelectorAll(POPUP); for (var i = 0; i < l.length && !open; i++) open = !!l[i].getClientRects().length; return open; }
+      if (!popWatch) { var l = document.querySelectorAll(POPUP); for (var i = 0; i < l.length && !open; i++) open = drawn(l[i]); return open; }
       popups.forEach(function (e) {
         if (!e.isConnected) { popups.delete(e); return; }   /* gone (put back, it is found again as an added node) */
-        if (!open && e.getClientRects().length) open = true;
+        if (!open && drawn(e)) open = true;
       });
       return open;
     }
@@ -145724,7 +145740,8 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
        instead of landing in the first hover frame near a box; and the proxies the look uses are made, so their layers
        exist before the first hover. Again after a look change and whenever a frame meets a target not stamped yet (new
        DOM). */
-    var stampTimer = 0, stampNext = null, stampWalk = null, stampBusy = false;
+    var stampTimer = 0, stampNext = null, stampWalk = null, stampBusy = false, stampLast = null, stampLastSkip = false, stampUp = null;
+    var stampRegion = null, stampRegionTimes = 0;
     function stampSoon(ms) {
       if (stampTimer || stampBusy) return;
       stampTimer = setTimeout(function () { stampTimer = 0; idle(stampRun); }, ms || 700);
@@ -145743,36 +145760,56 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
       while (w.parentNode()) { s = w.nextSibling(); if (s) return s; }
       return null;
     }
+    /* where a walk goes on when the element it stopped at has been taken out of the page: after the last element it
+       looked at, or else from the stopped element's nearest ancestor still in the page (what is stamped there already is
+       passed over). It started again from the top, and under steady churn (a streaming terminal, Usage's live beats) it
+       could keep starting again (landing review SH5-1). A region replaced under the walk again and again (a list drawn
+       anew each frame) is walked twice at most and then passed, so every walk ends; a target missed by a move or a
+       passed region is still stamped when a frame meets it. */
+    function stampResume() {
+      var w = stampWalk;
+      stats.stampResumes = (stats.stampResumes || 0) + 1;
+      if (stampLast && stampLast.isConnected) { w.currentNode = stampLast; return stampLastSkip ? stampAfter(stampLast) : w.nextNode(); }
+      for (var i = 0; stampUp && i < stampUp.length; i++) {
+        var a = stampUp[i];
+        if (!a.isConnected) continue;
+        if (a !== stampRegion) { stampRegion = a; stampRegionTimes = 0; }
+        if (++stampRegionTimes > 2 && a !== document.body && a !== document.documentElement) { stats.stampPassed = (stats.stampPassed || 0) + 1; stampRegion = null; return stampAfter(a); }
+        w.currentNode = a; return w.nextNode();
+      }
+      w.currentNode = document.documentElement; return w.nextNode();
+    }
     function stampRun(dl) {
       if (!document.body) return;
       var t0 = performance.now();
       var spent = function () { return performance.now() - t0 > 4 || (dl && dl.timeRemaining && dl.timeRemaining() < 2); };
-      if (!stampBusy || !stampNext || !stampNext.isConnected) {
-        if (!stampBusy) {
-          if (tokensDirty) readTokens();
-          var g = false, f = false;
-          for (var k in T) { if (T[k].glow) g = true; if (T[k].frame) f = true; }
-          if (g) ensureGlow();
-          if (f) ensureFrame();
-        }
-        stampBusy = true;
+      if (!stampBusy) {
+        if (tokensDirty) readTokens();
+        var g = false, f = false;
+        for (var k in T) { if (T[k].glow) g = true; if (T[k].frame) f = true; }
+        if (g) ensureGlow();
+        if (f) ensureFrame();
+        stampBusy = true; stampLast = null; stampUp = null; stampRegion = null;
         stampWalk = document.createTreeWalker(document.documentElement, NodeFilter.SHOW_ELEMENT);
         stampNext = stampWalk.nextNode();
         if (spent()) { idle(stampRun); return; }
-      }
+      } else if (stampNext && !stampNext.isConnected) stampNext = stampResume();
       var n = 0, el = stampNext;
       while (el) {
-        var next;
+        var next, skip = false;
         if (el.matches(SEL) && valid(el)) {
           if (!el.hasAttribute('data-pmh-kind')) { el.setAttribute('data-pmh-kind', kindOf(el)); stats.writes++; stats.stamped = (stats.stamped || 0) + 1; n++; }
-          next = stampAfter(el);
+          next = stampAfter(el); skip = true;
         } else { stampWalk.currentNode = el; next = stampWalk.nextNode(); }
+        stampLast = el; stampLastSkip = skip;
         el = next;
         if (n >= 12 || spent()) break;
       }
       stampNext = el;
+      stampUp = null;
+      if (el) { stampUp = []; for (var up = el.parentElement; up; up = up.parentElement) stampUp.push(up); }
       for (var q = kindQueue.length - 1; q >= 0; q--) if (kindQueue[q].hasAttribute('data-pmh-kind')) kindQueue.splice(q, 1);
-      if (el) idle(stampRun); else { stampBusy = false; stampWalk = null; }
+      if (el) idle(stampRun); else { stampBusy = false; stampWalk = null; stampLast = null; stampUp = null; stats.stampRuns = (stats.stampRuns || 0) + 1; }
     }
 
     /* software rendering: asked twice, late and off the main thread (the worker answers within a few seconds; where no
@@ -145800,7 +145837,7 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
       resolve: resolve,
       kindOf: function (el) { return el ? kindOf(el) : null; },
       retoken: function () { readTokens(); return JSON.parse(JSON.stringify(T)); },
-      stamp: function () { return { busy: stampBusy, timer: !!stampTimer, stamped: stats.stamped || 0 }; },
+      stamp: function () { return { busy: stampBusy, timer: !!stampTimer, stamped: stats.stamped || 0, resumes: stats.stampResumes || 0, passed: stats.stampPassed || 0, runs: stats.stampRuns || 0 }; },
       popups: function () { return { open: anyPopup(), kept: popups.size, watched: popWatch }; },
       stats: function () { var o = {}; for (var k in stats) o[k] = stats[k]; o.slow = stats.slow.slice(); o.hist = Object.assign({}, stats.hist); o.enters = Object.assign({}, stats.enters); o.totalMs = Math.round(stats.totalMs * 100) / 100; o.running = running; o.springs = springs.size; o.lit = lit.size; return o; },
       state: function () {
@@ -152528,8 +152565,11 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
     el = el || (S.root && S.root.querySelector('.o55-stage')) || root;
     const owner = tokenOwner(el), key = tokenKey(owner), hit = tokSnaps.get(key);
     if (hit) return Object.assign({}, hit);
-    /* a miss on a held screen would style it before it is shown and hand that paint to the release frame */
-    if (!packReady || (el.closest && el.closest('.o55-hold'))) return null;
+    /* a miss on a held screen would style it before it is shown and hand that paint to the release frame; on a screen
+       still being built (Reduced Motion builds it shown) it styled the whole new screen inside the click, three times for
+       the look screen's tiles: 168 + 85 + 24 ms on Nas1, where the art's own cache (warmed at idle) answers at no cost,
+       as it does for a held one (P2-06, Welcome to Get Started) */
+    if (!packReady || (el.closest && el.closest('.o55-hold, .o55-entering'))) return null;
     if (tokSnaps.size > 40) tokSnaps.clear();
     const raw = (getComputedStyle(el).getPropertyValue('--o55-tokpack') || '').trim();
     const parts = raw.split('|').map((s) => s.trim().replace(/^["']|["']$/g, ''));
@@ -152823,7 +152863,7 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
     const focusHeading = () => O55.motion.after(60, () => { const a = document.activeElement; if (h && S.open && !(a && a !== layer && layer.contains(a))) h.focus({ preventScroll: true }); });
     U.announce(O55.stages.progress(S, def).announce + '. ' + (val(def.title) || ''), S.root.querySelector('.o55-win'));
     def.mounted && def.mounted(S, layer, true);
-    if (!hold) { leave(); focusHeading(); skin('screen', layer, dir); armStageTokens(); return; }
+    if (!hold) { leave(); focusHeading(); skin('screen', layer, dir); O55.motion.real.setTimeout(armStageTokens, 1600); return; }
     O55.motion.release(() => {
       S.root.classList.remove('o55-hold');
       if (dir === 'open') checkSolid(); /* the opening is the window's busiest motion: measured while it plays */
@@ -153234,7 +153274,7 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
        first frame for half a second on the P1000, and the timeline that frame draws at is from before that work, so the
        window and its scrim were already gone when it was drawn. They play on the frames that are shown
        (11-motion-start.js; final motion QA A1). */
-    if (!handoff && !O55.motion.reduced() && window.PM_START_ON_SHOWN) window.PM_START_ON_SHOWN(() => (S.open ? [] :
+    if (!handoff && window.PM_START_ON_SHOWN) window.PM_START_ON_SHOWN(() => (S.open ? [] :
       [r.querySelector('.o55-win'), r.querySelector('.o55-scrim')].flatMap((el) => (el ? el.getAnimations().filter((a) => Number.isFinite(a.effect.getComputedTiming().endTime)) : []))));
     if (!handoff) O55.sound.play(reason === 'done' ? 'finish' : 'close');
     /* the skin may keep the root (and its scrim) a while: NieR folds the window to a line that carries on into the
@@ -153257,7 +153297,8 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
     if (typeof hold === 'number' && hold > 0) O55.motion.after(hold, finish);
     /* the app wakes (inert off, its paused loops resumed: a restyle of the whole page) only once both the window and
        its scrim have finished leaving, and a frame later, so that restyle never holds a frame of the exit itself */
-    else if (O55.motion.reduced()) finish();
+    /* Reduced Motion fades too (160 ms, no movement), on frames that are shown, and the app wakes after it: it closed
+       at once, so the window went, the Wizard was drawn and the whole app woke in one long frame (P2-06) */
     /* the fallback allows for the moves being held for frames that are shown (up to 6, PM_START_ON_SHOWN): the P1000's
        dialog fade ended at +733 ms, past the 700 ms this once was, and finish() hid the window mid-exit (SH-5) */
     else Promise.all([O55.motion.settled(r.querySelector('.o55-win'), { subtree: false, fallback: 1200 }), O55.motion.settled(r.querySelector('.o55-scrim'), { subtree: false, fallback: 1200 })])
