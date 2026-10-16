@@ -224175,13 +224175,14 @@ var T = {};
        pm7-motion-settings: 125 ms and 105 ms on Nas1, 131-253 ms over the P1000's cover). So it waits until nothing has
        changed for WARM_SETTLE_MS and no page, Usage or onboarding transition runs, and then for the page to be really
        idle: an idle period of WARM_IDLE_MS or more, which the browser gives only when nothing is drawing frames (a switch
-       still playing leaves only slivers between its frames). WARM_LATEST_MS is the backstop for a page that never rests.
-       A click before that draws what changed itself */
-    var WARM_SETTLE_MS = 3000, WARM_IDLE_MS = 45, WARM_LATEST_MS = 20000, warmJob = 0, warmWait = 0, warmSince = 0, offWarm = null;
-    function settling() { var de = document.documentElement; return de.hasAttribute('data-pm-page-transition') || de.hasAttribute('data-pmu-moment') || de.hasAttribute('data-o55-open'); }
+       still playing leaves only slivers between its frames). WARM_LATEST_MS is the backstop for a page whose own motion
+       never rests (no cover or switch is up by then). A click before that draws what changed itself */
+    var WARM_SETTLE_MS = 3000, WARM_IDLE_MS = 45, WARM_LATEST_MS = 10000, warmJob = 0, warmWait = 0, warmSince = 0, offWarm = null;
+    function settling() { return pageSettling(); }
     function warm(deadline) {
       warmJob = 0;
       if (!closed || disposed) return;
+      if (settling()) { warmSoon(); return; }
       if (deadline && typeof deadline.timeRemaining === 'function' && !deadline.didTimeout && deadline.timeRemaining() < WARM_IDLE_MS && T.util.now() - warmSince < WARM_LATEST_MS) {
         warmJob = requestIdleCallback(warm, { timeout: Math.max(1000, WARM_LATEST_MS - (T.util.now() - warmSince)) });
         return;
@@ -224327,26 +224328,37 @@ var T = {};
   /* one screen ready while the app is idle, for the terminal in view (the one you are in, else the first on the page);
      never underneath onboarding or while a page or Usage transition plays, and not again while one is kept. Opened on
      another terminal, the kept screen moves there (open) */
+  /* the page is in a moment the kept screen must not draw or measure during: a page or Usage transition, onboarding, the
+     NieR Mode reboot's cover (kit.d/19-nier-parts.js #o55np-reboot, also while Reduced Motion fades it), a NieR switch
+     asked for but not painted yet, or the tour's boot cover */
+  function pageSettling() {
+    var de = document.documentElement, N = window.PM_NIER;
+    if (de.hasAttribute('data-pm-page-transition') || de.hasAttribute('data-pmu-moment') || de.hasAttribute('data-o55-open')) return true;
+    if (document.getElementById('o55np-reboot') || document.querySelector('.o55t-bootcover')) return true;
+    try { if (N && typeof N.wanted === 'function' && N.ready && N.ready() && !!N.wanted() !== !!N.on()) return true; } catch (e) {}
+    return false;
+  }
   function prepareSoon() {
     if (prepared) return;
     var de = document.documentElement, P = window.PMT;
-    var busy = de.hasAttribute('data-o55-open') || de.hasAttribute('data-pm-page-transition') || de.hasAttribute('data-pmu-moment');
+    var busy = pageSettling();
     var v = !busy && P && typeof P.sessions === 'function' ? P.sessions().map(function (s) { return P.view(s.id); })
       .filter(function (x) { return x && x.root && x.root.isConnected && x.visible && !x.pop; })
       .sort(function (a, b) { return (b.focused ? 1 : 0) - (a.focused ? 1 : 0) || (a.root.compareDocumentPosition(b.root) & 4 ? -1 : 1); })[0] : null;
     if (!v) { setTimeout(prepareSoon, 1500); return; }
-    /* built only in a really idle moment (an idle period of 45 ms or more: nothing is drawing frames), so it never lands
-       inside an entrance or a look switch; 20 s is the backstop for a page that never rests */
+    /* built in a really idle moment where it can (an idle period of 45 ms or more: nothing is drawing frames), never under
+       a cover or a switch; after 4 s it takes the next idle moment, since a page with motion of its own never fully rests
+       and a screen built late only makes the first click pay for it */
     var since = T.util.now();
     var build = function (deadline) {
       if (prepared || v.pop || !v.root.isConnected) { if (!prepared) setTimeout(prepareSoon, 1500); return; }
-      if (de.hasAttribute('data-o55-open') || de.hasAttribute('data-pm-page-transition') || de.hasAttribute('data-pmu-moment')) { setTimeout(prepareSoon, 1500); return; }
-      if (deadline && typeof deadline.timeRemaining === 'function' && !deadline.didTimeout && deadline.timeRemaining() < 45 && T.util.now() - since < 20000) {
-        requestIdleCallback(build, { timeout: Math.max(1000, 20000 - (T.util.now() - since)) }); return;
+      if (pageSettling()) { setTimeout(prepareSoon, 1500); return; }
+      if (deadline && typeof deadline.timeRemaining === 'function' && !deadline.didTimeout && deadline.timeRemaining() < 45 && T.util.now() - since < 4000) {
+        requestIdleCallback(build, { timeout: Math.max(500, 4000 - (T.util.now() - since)) }); return;
       }
       try { open(v, { prepare: true }); } catch (e) { console.error('[pmt] the Customize screen could not be prepared', e); }
     };
-    if (window.requestIdleCallback) requestIdleCallback(build, { timeout: 20000 }); else setTimeout(build, 500);
+    if (window.requestIdleCallback) requestIdleCallback(build, { timeout: 4000 }); else setTimeout(build, 500);
   }
   if (document.readyState === 'complete') setTimeout(prepareSoon, 1500);
   else window.addEventListener('load', function () { setTimeout(prepareSoon, 1500); }, { once: true });
