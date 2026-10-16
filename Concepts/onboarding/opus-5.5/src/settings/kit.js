@@ -1167,9 +1167,8 @@ const pm51OriginalBoot = boot;
 boot = function () { const r = pm51OriginalBoot.apply(this, arguments); if (window.PM12_KIMI && typeof window.PM12_KIMI === 'object') window.PM12_KIMI.renderApp = (...args) => renderApp(...args); return r; };
 
 /* ---------- motion: no blank frames ----------------------------------- */
-let pm51RevealReady = null;
 armSectionReveal = function () {
-  if (pm51RevealReady) { pm51RevealReady.disconnect(); pm51RevealReady = null; }
+  if (revealObserver) { revealObserver.disconnect(); revealObserver = null; }
   try { PM51.applyFilters(root); } catch (e) { /* filters are a convenience; never block reveal */ }
   /* reduced motion, the system's or the app's own Reduce motion: every section is simply there */
   if (o55Still()) {
@@ -1179,29 +1178,26 @@ armSectionReveal = function () {
   const nodes = root.querySelectorAll('.section-block, .settings-section, .manager-section');
   if (!nodes.length) return;
   const scroller = root.querySelector('#settings-document');
-  const reveal = () => {
-  const viewBottom = scroller ? scroller.getBoundingClientRect().bottom + 120 : window.innerHeight + 120;
-  if (!revealObserver) {
-    revealObserver = new IntersectionObserver(entries => {
-      for (const entry of entries) { if (!entry.isIntersecting) continue; entry.target.classList.add('is-revealed'); entry.target.classList.remove('will-reveal'); revealObserver.unobserve(entry.target); }
-    }, { threshold: 0.04 });
-  } else revealObserver.disconnect();
-  const pending = [...nodes].filter(node => node.isConnected && !node.classList.contains('is-revealed'))
-    .map(node => ({ node, inView: node.getBoundingClientRect().top < viewBottom }));
-  for (const { node, inView } of pending) {
-    node.classList.add('section-block');
-    if (inView) { node.classList.add('is-revealed', 'pm51-instant'); continue; }
-    node.classList.add('will-reveal');
-    revealObserver.observe(node);
-  }
-  };
-  /* Mounting and filtering have just written the chapter. Read its reveal positions after ordinary layout, before
-     its first paint, rather than forcing the whole chapter's style/layout inside the build task. A newer mount
-     replaces this one pending read, so freshly hydrated workspaces join the same batch. */
-  if (typeof ResizeObserver === 'function') {
-    const ready = new ResizeObserver(() => { ready.disconnect(); if (pm51RevealReady === ready) pm51RevealReady = null; reveal(); });
-    pm51RevealReady = ready; ready.observe(scroller || root);
-  } else requestAnimationFrame(reveal);
+  /* Intersection entries carry the positions from the completed layout. Reading every section's rectangle in a
+     ResizeObserver still forced a second layout after another observer's write, and rendered distant contained
+     sections just to classify them. Initially visible sections stay fully painted; the same 260 ms reveal arms
+     only sections beyond the viewport, before the reader can reach them. */
+  const first = new WeakSet();
+  const observer = new IntersectionObserver(entries => {
+    for (const entry of entries) {
+      const node = entry.target;
+      if (!node.isConnected) { observer.unobserve(node); continue; }
+      const initial = !first.has(node); first.add(node);
+      node.classList.add('section-block');
+      if (initial && entry.boundingClientRect.top < (entry.rootBounds ? entry.rootBounds.bottom : window.innerHeight + 120)) {
+        node.classList.add('is-revealed', 'pm51-instant'); node.classList.remove('will-reveal'); observer.unobserve(node);
+      } else if (entry.isIntersecting) {
+        node.classList.add('is-revealed'); node.classList.remove('will-reveal'); observer.unobserve(node);
+      } else node.classList.add('will-reveal');
+    }
+  }, { root: scroller, rootMargin: '0px 0px 120px 0px', threshold: 0.04 });
+  revealObserver = observer;
+  nodes.forEach(node => { if (!node.classList.contains('is-revealed')) observer.observe(node); });
 };
 
 /* ---------- setting Details inspector ---------------------------------- */

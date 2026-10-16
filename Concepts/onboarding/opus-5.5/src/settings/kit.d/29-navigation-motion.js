@@ -32,7 +32,9 @@ function o55NavRun(work, selector, chapter) {
     const arrive = () => {
       if (ticket !== o55NavTicket) return;
       if (o55NavLeaving) { o55NavLeaving.cancel(); o55NavLeaving = null; }
-      if (!next || !next.isConnected || !moving || next === stage) return;
+      /* The in-place shell patch retains #workspace-stage while replacing its chapter children. That retained
+         container still needs the incoming motion; identity alone does not mean the old chapter survived. */
+      if (!next || !next.isConnected || !moving) return;
       next.animate([{ opacity: .55, transform: 'translateY(4px)' }, { opacity: 1, transform: 'none' }],
         { duration: 180, easing: 'cubic-bezier(.22,.8,.24,1)' });
     };

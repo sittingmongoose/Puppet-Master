@@ -191,19 +191,22 @@ PLACE.correct = function () {
 };
 
 /* ---------- the end space -------------------------------------------------------------------------------------------- */
+const o55pBoxHeights = new WeakMap();
 function o55pLastSection(sc) {
   const blocks = sc.querySelectorAll('[data-workspace-block]'), block = blocks[blocks.length - 1];
   const body = block && block.querySelector('[data-continuous-workspace-body]');
   if (!body) return null;
   if (body.dataset.workspaceMounted === 'false') return body;
-  const own = [...body.querySelectorAll('[data-section-id]')].filter(s => s.parentElement.closest('[data-section-id]') === null && s.offsetHeight > 0);
+  const own = [...body.querySelectorAll('[data-section-id]')].filter(s => s.parentElement.closest('[data-section-id]') === null && (o55pBoxHeights.get(s) || 0) > 0);
   return own[own.length - 1] || body;
 }
 PLACE.sizeEnd = function (sc, end) {
   sc = sc || o55pScroller(); end = end || (sc && sc.querySelector(':scope > .domain-document > .settings-end-space, .settings-end-space'));
-  if (!sc || !end || !sc.clientHeight) return;
-  const ch = sc.clientHeight, last = o55pLastSection(sc);
-  const want = Math.max(140, ch - Math.min(last ? last.offsetHeight : 0, ch * .62) + 48);
+  if (!sc || !end) return;
+  const ch = o55pBoxHeights.get(sc), last = o55pLastSection(sc);
+  const lastHeight = last && o55pBoxHeights.get(last);
+  if (!ch || lastHeight == null) return;
+  const want = Math.max(140, ch - Math.min(lastHeight, ch * .62) + 48);
   const set = parseFloat(end.style.height), cur = Number.isFinite(set) ? set : 0;
   let next = want;
   /* shrinking by more than the room below the screen would pull the page up under the reader */
@@ -211,24 +214,21 @@ PLACE.sizeEnd = function (sc, end) {
   end.__o55Want = want;
   if (!Number.isFinite(set) || Math.abs(next - cur) >= .5) end.style.height = Math.round(next * 100) / 100 + 'px';
 };
-let o55pEndReady = null;
 sizeSettingsEndSpace = function (scroller, end) {
-  if (o55pEndReady) { o55pEndReady.disconnect(); o55pEndReady = null; }
-  if (typeof ResizeObserver !== 'function') { requestAnimationFrame(() => PLACE.sizeEnd(scroller, end)); return; }
-  /* A chapter's new DOM has not had layout yet. Size its end space on the first delivered layout, not in the
-     render callback between writes. Replaced chapters cancel their pending measurement. */
-  const ready = new ResizeObserver(() => {
-    ready.disconnect(); o55pEndReady = null;
-    if (scroller.isConnected && end.isConnected) PLACE.sizeEnd(scroller, end);
-  });
-  o55pEndReady = ready; ready.observe(scroller);
+  /* The place observer supplies both the scroller and section sizes in one delivery. No live geometry read is
+     needed here: a different observer may already have dirtied style by the time this callback runs. */
+  if (scroller && scroller.isConnected) o55pWatch(scroller, PLACE.anchor && PLACE.anchor.el);
 };
 
 /* ---------- watching layout: one observer for the page's blocks, sections, the anchor's ancestors ------------------- */
 let o55pObserver = null, o55pWatched = null;
 /* Layout is done when this runs, so reading it costs nothing. The end space is sized here too: nothing the observer
    watches changes size when it does (the document column and the end space itself are left out on purpose). */
-function o55pOnResize() {
+function o55pOnResize(entries) {
+  entries.forEach(entry => {
+    const box = entry.borderBoxSize && entry.borderBoxSize[0];
+    o55pBoxHeights.set(entry.target, entry.target.id === 'settings-document' ? entry.contentRect.height : box ? box.blockSize : entry.contentRect.height);
+  });
   if (PLACE.mode !== 'hold' && !o55pSettle) o55pSettleSoon();   /* e.g. Settings shown again while a landing was pending */
   PLACE.correct();
   PLACE.sizeEnd();
@@ -237,7 +237,7 @@ function o55pWatch(sc, anchorEl) {
   if (typeof ResizeObserver !== 'function' || !sc) return;
   if (!o55pObserver) o55pObserver = new ResizeObserver(o55pOnResize);
   const want = new Set([sc]);
-  sc.querySelectorAll('[data-workspace-block], [data-section-id]').forEach(n => want.add(n));
+  sc.querySelectorAll('[data-workspace-block], [data-continuous-workspace-body], [data-section-id]').forEach(n => want.add(n));
   /* the anchor's ancestors and everything beside them: any size change above the anchor is one of these */
   for (let n = anchorEl; n && n !== sc; n = n.parentElement) {
     if (n.classList.contains('domain-document')) break;   /* the place resizes the reserve and the end space in here */
