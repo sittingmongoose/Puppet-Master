@@ -15,8 +15,9 @@
 
    window.PM_THEME_TRANSITION(apply, hint)  — apply() writes the theme; hint { mode } or { family } names the look
    it goes to (for the cover's colours). Picks made before it runs keep only the latest.
-   window.PM_LOOK_COVERED()  — true while a look is changed under a cover: this one until it starts to lift, or the
-   NieR reboot plate (settings/kit.d/19-nier-parts.js) until its reveal. */
+   window.PM_LOOK_COVERED()  — true while the page is hidden by a look's cover: this one until it starts to lift, the
+   NieR reboot plate (settings/kit.d/19-nier-parts.js) until its reveal, or the Reduce Animations calm cover
+   (#o55np-calm). PM_THEME_TRANSITION.busy() is true until the lift has ended (for PM_BUSY, js/11-motion-start.js). */
 (function () {
   'use strict';
   const html = document.documentElement;
@@ -162,6 +163,7 @@
     veil = v;
     v.setAttribute('data-on', '');
     phase = 'covering';
+    if (typeof window.PM_BUSY === 'function') window.PM_BUSY();   /* its 'pm-idle' once the lift has ended */
     if (coverAnim) { try { coverAnim.cancel(); } catch (_) { /* gone */ } }
     stopGlow();
     const inMs = still ? 90 : 130;
@@ -219,6 +221,7 @@
   window.PM_LOOK_COVERED = function lookCovered() {
     if (phase === 'covering' || phase === 'covered') return true;
     const plate = document.getElementById('o55np-reboot');
-    return !!(plate && plate.style.pointerEvents !== 'none');
+    return !!(plate && plate.style.pointerEvents !== 'none') || !!document.getElementById('o55np-calm');
   };
+  window.PM_THEME_TRANSITION.busy = () => phase !== 'idle';
 })();

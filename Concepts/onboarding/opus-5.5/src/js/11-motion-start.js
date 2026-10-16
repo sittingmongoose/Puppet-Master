@@ -78,4 +78,46 @@
     const next = () => requestAnimationFrame(() => window.PM_AFTER_LAYOUT(tick));
     next();
   };
+
+  /* PM_BUSY(): one answer for work parked until the app is still (the editor's and terminal's background refreshes,
+     their measurement and token reads), so every caller waits for the same things. It returns what is up, as a short
+     name (truthy), or '' (falsy) when nothing is:
+       'page'        a page change (html[data-pm-page-transition])
+       'usage'       a Usage moment (html[data-pmu-moment])
+       'onboarding'  the onboarding window (html[data-o55-open])
+       'boot'        the boot covers: html[data-o55-boot-wait], NieR's boot log (#o55nw-boot), the tour's (.o55t-bootcover)
+       'reboot'      the NieR reboot plate (#o55np-reboot), until it is removed
+       'calm'        the Reduce Animations NieR cover (#o55np-calm), through its fade
+       'theme'       the look cover (js/12-theme-transition.js), until its lift has ended
+       'nier'        a NieR switch asked and not yet painted (PM_NIER.wanted() differs from on())
+     A hidden tab is not busy by itself (callers keep their own document.hidden check). It reads attributes and ids only,
+     never style or layout, so it costs nothing in any frame. 'pm-idle' is sent on window in the first frame after a
+     busy spell ends: every spell this script sees begin (one of those markers appearing) or that a call finds. */
+  const busyRoot = document.documentElement;
+  const BUSY_ATTRS = [['data-pm-page-transition', 'page'], ['data-pmu-moment', 'usage'], ['data-o55-open', 'onboarding'], ['data-o55-boot-wait', 'boot']];
+  const BUSY_IDS = [['o55np-reboot', 'reboot'], ['o55np-calm', 'calm'], ['o55nw-boot', 'boot']];
+  const tourCovers = document.getElementsByClassName('o55t-bootcover');
+  let busyFrame = 0;
+  const busyNow = () => {
+    for (const [a, why] of BUSY_ATTRS) if (busyRoot.hasAttribute(a)) return why;
+    for (const [id, why] of BUSY_IDS) if (document.getElementById(id)) return why;
+    if (tourCovers.length) return 'boot';
+    try { const t = window.PM_THEME_TRANSITION; if (t && typeof t.busy === 'function' && t.busy()) return 'theme'; } catch (_) { /* none */ }
+    try { const n = window.PM_NIER; if (n && typeof n.wanted === 'function' && typeof n.on === 'function' && !!n.wanted() !== !!n.on()) return 'nier'; } catch (_) { /* none */ }
+    return '';
+  };
+  const busyCheck = () => {
+    busyFrame = 0;
+    if (busyNow()) { busyFrame = requestAnimationFrame(busyCheck); return; }
+    try { window.dispatchEvent(new Event('pm-idle')); } catch (_) { /* none */ }
+  };
+  const busyArm = () => { if (!busyFrame) busyFrame = requestAnimationFrame(busyCheck); };
+  window.PM_BUSY = function busy() { const why = busyNow(); if (why) busyArm(); return why; };
+  /* a spell begins: an attribute on html, or a cover added to the body */
+  try {
+    const seen = new MutationObserver(() => { if (!busyFrame && busyNow()) busyArm(); });
+    seen.observe(busyRoot, { attributes: true, attributeFilter: BUSY_ATTRS.map((a) => a[0]) });
+    const watchBody = () => { if (document.body) seen.observe(document.body, { childList: true }); };
+    if (document.body) watchBody(); else document.addEventListener('DOMContentLoaded', watchBody, { once: true });
+  } catch (_) { /* calls still arm it */ }
 })();
