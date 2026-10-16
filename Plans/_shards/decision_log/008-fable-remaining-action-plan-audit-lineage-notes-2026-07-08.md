@@ -4,7 +4,7 @@ Source: `Plans/Decision_Log.md`
 
 Source lines: L14489-L16030
 
-Source SHA256: `0dbe21804a31bee0752ffa2fcdab2c3c2bf0bc3ced4dee64f59a9402c54d33ca`
+Source SHA256: `a6015c5ad2b0a51acf013f6f2e318481f504a4bc769e4c6304684f2aabf9416f`
 
 ---
 
@@ -1336,8 +1336,8 @@ unit_type: decision
 status: accepted
 owner_doc: Plans/Decision_Log.md
 canonical_text: >-
-  Recorded 2026-10-16. The consistency pass Q16 (head f9925db90b on main 5b43e73891, Glass owner approved,
-  review fixes made) adopts F3-652's one switcher in every look, each in its own material: Basic's tinted
+  Recorded 2026-10-16. The consistency pass Q16 (landed on main as aec2916c94, Glass owner approved, review
+  fixes made) adopts F3-652's one switcher in every look, each in its own material: Basic's tinted
   chip, Friendly's mint plate, Retro's reverse-video block and NieR's ink bar, Glass's lens unchanged.
   Jared decided on 2026-10-16 that Retro and NieR chips keep F3-438's stepped motion, not the concept's
   glide; Q16 changed its tokens to match. F3-463, F3-464 and

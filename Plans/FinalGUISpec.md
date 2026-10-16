@@ -31902,6 +31902,9 @@ source_lineage:
 - /mnt/Cursor/share/puppet-master/2026-10-16-plans-topup/sources/pm-mail-1016075014-d904.txt, SHA-256
   c47ba9668ab4537387f255ce3c05384c84c114d4f27eb04a1572a1adf337dcf6 (Jared's stepped-motion ruling;
   decision lineage)
+- /mnt/Cursor/share/puppet-master/2026-10-16-plans-topup/sources/aec2916c94--Concepts--liquid-glass--opus-5.5--src--glass.js,
+  SHA-256 782352b2f604875dcb16ae6683a033b5a8bd0bbd0af39d3de70300b4dadc6593 (Q16 landed on main as
+  aec2916c94, Retro's two-jump step and NieR's cut; source lineage; not native certification)
 preserved_exact_tokens:
 - "toggle"
 - "select"
@@ -46022,9 +46025,9 @@ source_lineage:
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/plans-home-audit.md, SHA-256 f8e65fd64028014e3ee9bebf68594356d40eb5c831975645da6a3406cef2e3e8 (audit lineage only)"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/small-round/panels-NUMBERS-51c316e18b.md, SHA-256 a9c42b88e5cb50706ff1716a254cb68e026a538bb7a0c840905779a9a482cff2 (small-round concept lineage only)"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/small-round/panels-CONTRACT-2926ad987e.md, SHA-256 c579d0dfef41fd1fc7327d14c2adb9e2b101c24b216ff64a9db5fc19895ad989 (small-round concept lineage only)"
-  - /mnt/Cursor/share/puppet-master/2026-10-16-plans-topup/sources/Concepts--home-redesign--src--panels--kinds--30-dashboard.js,
-    SHA-256 68f488e94f6ffb0927ea52c46a03771d93f9dde05a7852b2f19170fe0a9781e5 (Q16 head f9925db90b; source
-    lineage; not native certification)
+  - /mnt/Cursor/share/puppet-master/2026-10-16-plans-topup/sources/aec2916c94--Concepts--home-redesign--src--panels--kinds--30-dashboard.js,
+    SHA-256 68f488e94f6ffb0927ea52c46a03771d93f9dde05a7852b2f19170fe0a9781e5 (Q16 landed on main as aec2916c94;
+    source lineage; not native certification)
   - /mnt/Cursor/share/puppet-master/2026-10-16-plans-topup/sources/c0305227f7-friendly-lavender.diff,
     SHA-256 fb6f7127bfa67d809d9fdfef3b44da8603511e24c4782b1f24627376566a3b77 (landed main c0305227f7;
     Jared approved lavender 2026-10-15; source lineage)
@@ -46374,9 +46377,9 @@ source_lineage:
 - /mnt/Cursor/share/puppet-master/2026-10-16-plans-topup/sources/2026-10-15-consistency-pass--NOTES.md,
   SHA-256 3065192be40e317876ab989ca939d0d016faeec1f8592628a3a2d1edfb5de5ae (source lineage; not native
   certification)
-- /mnt/Cursor/share/puppet-master/2026-10-16-plans-topup/sources/Concepts--onboarding--opus-5.5--src--css--61-look-palette.css,
-  SHA-256 dedf821b9a498b3841ee59656e4e742c17936bcc6100b66b52d04520ff334fd6 (Q16 head f9925db90b; source
-  lineage; not native certification)
+- /mnt/Cursor/share/puppet-master/2026-10-16-plans-topup/sources/aec2916c94--Concepts--onboarding--opus-5.5--src--css--61-look-palette.css,
+  SHA-256 44f2e9a4e741db9ae8f3adc283713a6b3399e7b5cc57bb3c6eb58cdc19458e23 (Q16 landed on main as aec2916c94;
+  source lineage; not native certification)
 - /mnt/Cursor/share/puppet-master/2026-10-16-plans-topup/sources/2026-10-15-consistency-pass--JARED-FEEDBACK-20261015.md,
   SHA-256 afd66d07739267c5a7d7d6f711af6bd7a709062ef5afd8f3834d2ea819a4dda5 (Jared's 2026-10-15 panel items
   and the Retro chip ruling; decision lineage)
@@ -48159,12 +48162,15 @@ source_lineage:
 - /mnt/Cursor/share/puppet-master/2026-10-16-plans-topup/sources/2026-10-15-consistency-pass--NOTES.md,
   SHA-256 3065192be40e317876ab989ca939d0d016faeec1f8592628a3a2d1edfb5de5ae (source lineage; not native
   certification)
-- /mnt/Cursor/share/puppet-master/2026-10-16-plans-topup/sources/Concepts--onboarding--opus-5.5--src--css--60-switcher-looks.css,
-  SHA-256 803ee5c952cfbe9ba69108bc6b8fefbcaaaa06b8ff65647ffa9a25a606cc4de7 (Q16 head f9925db90b; source
-  lineage; not native certification)
+- /mnt/Cursor/share/puppet-master/2026-10-16-plans-topup/sources/aec2916c94--Concepts--onboarding--opus-5.5--src--css--60-switcher-looks.css,
+  SHA-256 a8ac22dc61024049cc814dcddac1b06e4ffa46d351704cbed8affe000282756d (Q16 landed on main as aec2916c94;
+  source lineage; not native certification)
 - /mnt/Cursor/share/puppet-master/2026-10-16-plans-topup/sources/pm-mail-1016075014-d904.txt, SHA-256
   c47ba9668ab4537387f255ce3c05384c84c114d4f27eb04a1572a1adf337dcf6 (Jared's 2026-10-16 stepped-motion
   ruling; decision lineage)
+- /mnt/Cursor/share/puppet-master/2026-10-16-plans-topup/sources/aec2916c94--Concepts--liquid-glass--opus-5.5--src--glass.js,
+  SHA-256 782352b2f604875dcb16ae6683a033b5a8bd0bbd0af39d3de70300b4dadc6593 (Q16 landed on main as
+  aec2916c94, Retro's two-jump step and NieR's cut; source lineage; not native certification)
 preserved_exact_tokens:
 - Liquid Glass
 negative_constraints: []
