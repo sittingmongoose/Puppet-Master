@@ -23578,7 +23578,8 @@ html[data-lg="on"][data-theme="glass-dark"] #panel-settings .segmented button.ac
   #panel-settings .setting-row.o55-row .o55-about { grid-column: 2; grid-row: 1; }
   #panel-settings .o55-chips { justify-content: flex-start; }
   #panel-settings .o55-row .pm51-dd-trigger { min-width: 0; width: 100%; max-width: 100%; }
-  #panel-settings .o55-row .setting-control > .pm51-dd { width: 100%; }
+  #panel-settings .o55-row .setting-control > .pm51-dd,
+  #panel-settings .o55-row .setting-control > .o55-nier-own[data-o55-owned="off"] > .pm51-dd { width: 100%; }
 }
 @media (prefers-reduced-motion: reduce) {
   #panel-settings .setting-row.o55-row.is-flash, #panel-settings .o55-pointed { animation: none; }
@@ -24253,6 +24254,10 @@ html[data-o55-nier] #panel-settings .btn.primary::after { display: none; }
    off); the note for a family picked while it is on uses the theme preview bar's frame. */
 #panel-settings .o55-nier-own { display: flex; flex-direction: column; align-items: flex-end; gap: 8px; }
 #panel-settings .o55-nier-own > .o55-inherit { justify-content: flex-end; }
+/* The ownership wrapper stays mounted across NieR changes, preserving the native App font select. Off, it has the
+   same layout as the formerly unwrapped control. Explicitly hide its empty note against the authored flex display. */
+.o55-nier-own[data-o55-owned="off"], #panel-settings .o55-nier-own[data-o55-owned="off"] { display: contents; }
+.o55-nier-own > .o55-inherit[hidden], #panel-settings .o55-nier-own > .o55-inherit[hidden] { display: none; }
 .o55-preview-bar.o55-nier-note { z-index: 2147482100; }
 .o55-preview-bar.o55-nier-note button.o55-nier-note-off { border-color: transparent; background: var(--accent-primary); color: var(--o55-nier-on-ink, var(--background)); }
 
@@ -96897,8 +96902,13 @@ const O55_NIER_OWNS = ['general.visual.accent-color', 'general.visual.app-font']
 const o55NierControl = renderControl;
 renderControl = function (setting, value) {
   const html = o55NierControl.apply(this, arguments);
-  if (!setting || !O55_NIER_OWNS.includes(setting.id) || !o55NierIsPainted()) return html;
-  return `<div class="o55-nier-own"><span class="o55-inherit"><span class="o55-auto">${icon('spark')}<span>NieR Mode decides this while it is on</span></span></span>${html}</div>`;
+  if (!setting || !O55_NIER_OWNS.includes(setting.id)) return html;
+  /* Keep the same control below the same wrapper in both states. Adding/removing the wrapper used to replace the
+     App font select in the live document, scheduling Chrome's document-wide Autofill extraction during the fade.
+     Only the note changes now; the off-state wrapper contributes no box, and no hidden ownership text is retained. */
+  const on = o55NierIsPainted();
+  const note = on ? `<span class="o55-auto">${icon('spark')}<span>NieR Mode decides this while it is on</span></span>` : '';
+  return `<div class="o55-nier-own" data-o55-owned="${on ? 'on' : 'off'}"><span class="o55-inherit"${on ? '' : ' hidden'}>${note}</span>${html}</div>`;
 };
 /* Rows that depend on the theme family (High contrast for Basic, the Glass rows, Retro textures) follow the family
    being painted, so while NieR Mode is on they read Basic; their stored values are never touched. kit.d/40-bound.js

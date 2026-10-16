@@ -107,7 +107,8 @@
   #panel-settings .setting-row.o55-row .o55-about { grid-column: 2; grid-row: 1; }
   #panel-settings .o55-chips { justify-content: flex-start; }
   #panel-settings .o55-row .pm51-dd-trigger { min-width: 0; width: 100%; max-width: 100%; }
-  #panel-settings .o55-row .setting-control > .pm51-dd { width: 100%; }
+  #panel-settings .o55-row .setting-control > .pm51-dd,
+  #panel-settings .o55-row .setting-control > .o55-nier-own[data-o55-owned="off"] > .pm51-dd { width: 100%; }
 }
 @media (prefers-reduced-motion: reduce) {
   #panel-settings .setting-row.o55-row.is-flash, #panel-settings .o55-pointed { animation: none; }

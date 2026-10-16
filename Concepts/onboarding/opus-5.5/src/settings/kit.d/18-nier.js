@@ -343,8 +343,13 @@ const O55_NIER_OWNS = ['general.visual.accent-color', 'general.visual.app-font']
 const o55NierControl = renderControl;
 renderControl = function (setting, value) {
   const html = o55NierControl.apply(this, arguments);
-  if (!setting || !O55_NIER_OWNS.includes(setting.id) || !o55NierIsPainted()) return html;
-  return `<div class="o55-nier-own"><span class="o55-inherit"><span class="o55-auto">${icon('spark')}<span>NieR Mode decides this while it is on</span></span></span>${html}</div>`;
+  if (!setting || !O55_NIER_OWNS.includes(setting.id)) return html;
+  /* Keep the same control below the same wrapper in both states. Adding/removing the wrapper used to replace the
+     App font select in the live document, scheduling Chrome's document-wide Autofill extraction during the fade.
+     Only the note changes now; the off-state wrapper contributes no box, and no hidden ownership text is retained. */
+  const on = o55NierIsPainted();
+  const note = on ? `<span class="o55-auto">${icon('spark')}<span>NieR Mode decides this while it is on</span></span>` : '';
+  return `<div class="o55-nier-own" data-o55-owned="${on ? 'on' : 'off'}"><span class="o55-inherit"${on ? '' : ' hidden'}>${note}</span>${html}</div>`;
 };
 /* Rows that depend on the theme family (High contrast for Basic, the Glass rows, Retro textures) follow the family
    being painted, so while NieR Mode is on they read Basic; their stored values are never touched. kit.d/40-bound.js
