@@ -124,9 +124,10 @@ html[data-o55-nier="on"][data-o55-nier-parts~="cursor"]:not(#lgz):not(#lgy) #pm-
 /* Settings' section and manager tabs brighten under the pointer as every other strip does (and as they did in these looks
    before the switcher): Glass's resting ink for them outranks its own hover rule, so they stayed in resting ink */
 html[data-pm-switch="lens"]:not(#lgz):not(#lgy) #pm-settings-root :is(.workspace-tab:not(.is-current), .manager-tab:not([aria-selected="true"])):hover:not([data-lg-press]) { color: var(--pm-switch-ink-hover, var(--pm-switch-ink-on)) !important; }
-/* the page index's rows rest in Settings' own third ink, not the switcher's resting ink: the row a press leaves takes that
-   ink, so it does not step twice (switcher ink, then its own once the click lands; resting-pointer press check) */
-html[data-pm-switch="lens"]:not(#lgz):not(#lgy):not(#lgx) #pm-settings-root .pm51-index-group > .index-link[data-lg-press="off"] { color: var(--k3-text-3) !important; }
+/* the page index's rows rest in Settings' own second ink (.pm51-index-tab), not the switcher's resting ink: the row a press
+   leaves takes that ink, so it does not step twice (switcher ink, then its own once the click lands; resting-pointer press
+   check) */
+html[data-pm-switch="lens"]:not(#lgz):not(#lgy):not(#lgx) #pm-settings-root .pm51-index-group > .index-link[data-lg-press="off"] { color: var(--k3-text-2) !important; }
 /* an icon on an opaque chip takes its item's ink, as the words do, with the pointer on it too. The glyphs' hover ignite
    (pm7-hover-bridge.css) inks a hovered icon in the screen's --text, and on the chip (a chosen or pressed item under the
    pointer) or on NieR's hover bar that is the chip's own colour (Q16 review, resting-pointer press check) */
