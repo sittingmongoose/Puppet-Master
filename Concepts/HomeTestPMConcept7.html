@@ -134378,6 +134378,7 @@ policies for tenant isolation, and add migration script.</textarea>
 
   /* ---------- chrome behavior: context module, lens, more menu, close, chips, rename ---------- */
   function closeHeaderSprouts(except) {
+    if (!document.querySelector(':is(.context-lens-popover, .pm6-chat-more-menu, .wt-bind-dropdown, .context-hover-module):is(.is-open, .is-closing), .pm6-chat-more-btn[aria-expanded="true"], .context-usage.is-ctx-open')) return;
     $all('.context-lens-popover, .pm6-chat-more-menu, .wt-bind-dropdown, .context-hover-module').forEach(function (p) {
       if (except && p === except) return;
       if (portalIsOpen(p) || p.classList.contains('is-closing')) portalCloseAnim(p);
@@ -163993,15 +163994,21 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
     if(this.liveDeep.size>24||this.liveShallow.size>256){var boundedSurface=overlay||activeSurface();this.liveDeep.clear();this.liveShallow.clear();if(boundedSurface&&boundedSurface.nodeType===1&&boundedSurface.isConnected&&!inOwner(boundedSurface))this.liveDeep.add(boundedSurface);}
   };
   HoverTagController.prototype.enqueueLive=function(el,deep){
-    if(this.pageSettling||this.overlaySettling||!el||el.nodeType!==1||!el.isConnected||inOwner(el))return;var self=this,covered=false,remove=[];this.pruneLiveScopes();
+    if(this.pageSettling||this.overlaySettling||!el||el.nodeType!==1||!el.isConnected||inOwner(el))return;var self=this,covered=false,remove=[];
+    if(!this.liveBatch||!this.liveBatchPruned){this.pruneLiveScopes();if(this.liveBatch){this.liveBatchPruned=true;this.liveBatchOverlay=activeOverlay();}}
     if(deep){
       this.liveDeep.forEach(function(root){if(root===el||root.contains(el))covered=true;else if(el.contains(root))remove.push(root);});
       if(!covered){remove.forEach(function(root){self.liveDeep.delete(root);});this.liveDeep.add(el);this.liveShallow.forEach(function(node){if(el.contains(node))self.liveShallow.delete(node);});}
     }else{
       this.liveDeep.forEach(function(root){if(root===el||root.contains(el))covered=true;});if(!covered)this.liveShallow.add(el);
     }
-    this.pruneLiveScopes();
+    if(this.liveBatch)this.pruneLiveAdded(el,deep);else this.pruneLiveScopes();
     if(!this.liveFrame&&!this.liveRunning){this.liveFrame=requestAnimationFrame(function(){self.liveFrame=0;self.beginLive();});}
+  };
+  HoverTagController.prototype.pruneLiveAdded=function(el,deep){
+    var overlay=this.liveBatchOverlay;
+    if(this.liveDeep.size>24||this.liveShallow.size>256){var surface=overlay||activeSurface();this.liveDeep.clear();this.liveShallow.clear();if(surface&&surface.nodeType===1&&surface.isConnected&&!inOwner(surface))this.liveDeep.add(surface);return;}
+    if(overlay){if(deep){if(el!==overlay&&!overlay.contains(el))this.liveDeep.delete(el);}else if(!overlay.contains(el))this.liveShallow.delete(el);}
   };
   HoverTagController.prototype.deferLiveScope=function(el){
     if(this.pageSettling||this.overlaySettling||!el||el.nodeType!==1)return;var self=this,covered=false,remove=[];
@@ -164210,6 +164217,7 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
          layout/state attributes together. Pointer and focus still bind a
          requested target synchronously. */
       if(self.pageSettling||self.overlaySettling)return;
+      self.liveBatch=true;self.liveBatchPruned=false;try{
       for(var i=0;i<records.length;i++){
         var record=records[i];
         if(record.target&&record.target.nodeType===1&&inOwner(record.target))continue;
@@ -164241,6 +164249,7 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
           for(var k=0;k<record.removedNodes.length;k++)if(record.removedNodes[k].nodeType===1)self.cleanupRemoved(record.removedNodes[k]);
         }
       }
+      }finally{self.liveBatch=false;self.liveBatchOverlay=null;}
       self.syncOverlayState();
     });
     this.observer.observe(document.documentElement,{subtree:true,childList:true,characterData:true,attributes:true,attributeOldValue:true,attributeFilter:[

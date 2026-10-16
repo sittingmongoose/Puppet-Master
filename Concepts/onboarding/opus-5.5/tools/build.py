@@ -1003,6 +1003,49 @@ PATCHES = [
      "      }\n",
      "      if (scroller && end) sizeSettingsEndSpace(scroller, end, sections);\n",
      'M4: end space through the seam'),
+    # B6 shared roots (P1000 speed team, 2026-10-16; coordinator 1016135521-581e). Two document-wide costs ran inside the
+    # warm Customize open's click on the P1000 (pm7-p1000-win's traces): closeHeaderSprouts ~4.1 ms, and the hover tags'
+    # pruneLiveScopes ~5.65 ms. Both keep their exact behaviour.
+    # 1. closeHeaderSprouts runs on every document click. It only ever acts on an open or closing sprout, an expanded
+    #    more button or an open context ring, so one query for those states decides first; when there is none, its three
+    #    document-wide queries would change nothing.
+    ("  function closeHeaderSprouts(except) {\n"
+     "    $all('.context-lens-popover, .pm6-chat-more-menu, .wt-bind-dropdown, .context-hover-module').forEach(function (p) {",
+     "  function closeHeaderSprouts(except) {\n"
+     "    if (!document.querySelector(':is(.context-lens-popover, .pm6-chat-more-menu, .wt-bind-dropdown, .context-hover-module)"
+     ":is(.is-open, .is-closing), .pm6-chat-more-btn[aria-expanded=\"true\"], .context-usage.is-ctx-open')) return;\n"
+     "    $all('.context-lens-popover, .pm6-chat-more-menu, .wt-bind-dropdown, .context-hover-module').forEach(function (p) {",
+     'B6 shared roots: header sprouts skip when none is open'),
+    # 2. The hover tags' mutation observer called enqueueLive once per record, and each call pruned both live sets twice
+    #    (isConnected, closest() for the owner, overlay containment on every member). Inside one observer callback the
+    #    DOM does not change, so the sets are pruned once, at the callback's first enqueue; after that only the node an
+    #    enqueue adds can fail the prune, and pruneLiveAdded checks just that node, in the same order (the size bound
+    #    first, then the overlay). The sets hold the same nodes after every record as before.
+    ("      if(self.pageSettling||self.overlaySettling)return;\n      for(var i=0;i<records.length;i++){",
+     "      if(self.pageSettling||self.overlaySettling)return;\n      self.liveBatch=true;self.liveBatchPruned=false;try{\n"
+     "      for(var i=0;i<records.length;i++){",
+     'B6 shared roots: hover live batch begins'),
+    ("          for(var k=0;k<record.removedNodes.length;k++)if(record.removedNodes[k].nodeType===1)self.cleanupRemoved(record.removedNodes[k]);\n"
+     "        }\n      }\n      self.syncOverlayState();\n    });",
+     "          for(var k=0;k<record.removedNodes.length;k++)if(record.removedNodes[k].nodeType===1)self.cleanupRemoved(record.removedNodes[k]);\n"
+     "        }\n      }\n      }finally{self.liveBatch=false;self.liveBatchOverlay=null;}\n      self.syncOverlayState();\n    });",
+     'B6 shared roots: hover live batch ends'),
+    ("    if(this.pageSettling||this.overlaySettling||!el||el.nodeType!==1||!el.isConnected||inOwner(el))return;var self=this,covered=false,remove=[];this.pruneLiveScopes();",
+     "    if(this.pageSettling||this.overlaySettling||!el||el.nodeType!==1||!el.isConnected||inOwner(el))return;var self=this,covered=false,remove=[];\n"
+     "    if(!this.liveBatch||!this.liveBatchPruned){this.pruneLiveScopes();if(this.liveBatch){this.liveBatchPruned=true;this.liveBatchOverlay=activeOverlay();}}",
+     'B6 shared roots: hover live prune once per callback'),
+    ("    this.pruneLiveScopes();\n    if(!this.liveFrame&&!this.liveRunning){this.liveFrame=requestAnimationFrame(function(){self.liveFrame=0;self.beginLive();});}\n"
+     "  };\n  HoverTagController.prototype.deferLiveScope=",
+     "    if(this.liveBatch)this.pruneLiveAdded(el,deep);else this.pruneLiveScopes();\n"
+     "    if(!this.liveFrame&&!this.liveRunning){this.liveFrame=requestAnimationFrame(function(){self.liveFrame=0;self.beginLive();});}\n"
+     "  };\n"
+     "  HoverTagController.prototype.pruneLiveAdded=function(el,deep){\n"
+     "    var overlay=this.liveBatchOverlay;\n"
+     "    if(this.liveDeep.size>24||this.liveShallow.size>256){var surface=overlay||activeSurface();this.liveDeep.clear();this.liveShallow.clear();if(surface&&surface.nodeType===1&&surface.isConnected&&!inOwner(surface))this.liveDeep.add(surface);return;}\n"
+     "    if(overlay){if(deep){if(el!==overlay&&!overlay.contains(el))this.liveDeep.delete(el);}else if(!overlay.contains(el))this.liveShallow.delete(el);}\n"
+     "  };\n"
+     "  HoverTagController.prototype.deferLiveScope=",
+     'B6 shared roots: hover live prune of the added node'),
 ]
 
 # Text typed under a Custom choice survives a reload (2026-10-13, pm7-terminal-options-audit-sol on frozen a1ca: Terminal
