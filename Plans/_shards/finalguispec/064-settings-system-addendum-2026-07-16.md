@@ -4,7 +4,7 @@ Source: `Plans/FinalGUISpec.md`
 
 Source lines: L31438-L32396
 
-Source SHA256: `7a918fe1ff899f98711c73f4ca7811bfd48c347c65f1282c3e275caa8f5efc0f`
+Source SHA256: `b775ea74b55d4a585a6fbcc3a86089ccd634ebac202e16a10e985b4e8ac9ae04`
 
 ---
 
@@ -437,8 +437,8 @@ canonical_text: >-
   wrapped lines. Joined highlights glide in Basic, Friendly and Glass, step in Retro and NieR, and
   place immediately under Reduced Motion. Amended 2026-10-16 (DL-214; Jared kept Retro and NieR
   stepped): Retro's step is two hard jumps on a 33 ms tick, the item half way and then its own (a
-  neighbour is one jump, at once), with no easing, and a press released sooner lands as the pointer
-  lifts; NieR's cut places the chip at once. This holds on every strip that uses F3-652's switcher. Keyboard activation and an in-place Settings update retain
+  neighbour is one jump, at once), with no easing, landing on its own item after the last jump once that
+  item is chosen; NieR's cut places the chip at once. This holds on every strip that uses F3-652's switcher. Keyboard activation and an in-place Settings update retain
   focus on the operated control. Current/default values in rows, Details, search and result toasts
   consume SSYS-006's one formatter and effective display floor; percentage representation never
   changes the stored fractional value.

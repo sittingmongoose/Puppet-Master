@@ -31864,8 +31864,8 @@ canonical_text: >-
   wrapped lines. Joined highlights glide in Basic, Friendly and Glass, step in Retro and NieR, and
   place immediately under Reduced Motion. Amended 2026-10-16 (DL-214; Jared kept Retro and NieR
   stepped): Retro's step is two hard jumps on a 33 ms tick, the item half way and then its own (a
-  neighbour is one jump, at once), with no easing, and a press released sooner lands as the pointer
-  lifts; NieR's cut places the chip at once. This holds on every strip that uses F3-652's switcher. Keyboard activation and an in-place Settings update retain
+  neighbour is one jump, at once), with no easing, landing on its own item after the last jump once that
+  item is chosen; NieR's cut places the chip at once. This holds on every strip that uses F3-652's switcher. Keyboard activation and an in-place Settings update retain
   focus on the operated control. Current/default values in rows, Details, search and result toasts
   consume SSYS-006's one formatter and effective display floor; percentage representation never
   changes the stored fractional value.
@@ -42582,7 +42582,7 @@ canonical_text: >-
   Amended 2026-10-16 (DL-217, the Settings lane): under Reduced Motion the NieR switch shows a calm cover
   in the outgoing look's colours, with no slats or travel, that names what is being applied, is announced
   politely, and lifts once the new look is drawn; the waiting reboot cover's movement is a compositor ink
-  glyph inside its segmented meter.
+  sweep across its segmented meter.
 gui_related: true
 gui_classification_reason: Defines where NieR Mode is turned on and how onboarding and the Guided Tour look under it.
 split_recommended: false

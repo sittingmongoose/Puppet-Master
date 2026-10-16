@@ -4,7 +4,7 @@ Source: `Plans/FinalGUISpec.md`
 
 Source lines: L42491-L42774
 
-Source SHA256: `7a918fe1ff899f98711c73f4ca7811bfd48c347c65f1282c3e275caa8f5efc0f`
+Source SHA256: `b775ea74b55d4a585a6fbcc3a86089ccd634ebac202e16a10e985b4e8ac9ae04`
 
 ---
 
@@ -102,7 +102,7 @@ canonical_text: >-
   Amended 2026-10-16 (DL-217, the Settings lane): under Reduced Motion the NieR switch shows a calm cover
   in the outgoing look's colours, with no slats or travel, that names what is being applied, is announced
   politely, and lifts once the new look is drawn; the waiting reboot cover's movement is a compositor ink
-  glyph inside its segmented meter.
+  sweep across its segmented meter.
 gui_related: true
 gui_classification_reason: Defines where NieR Mode is turned on and how onboarding and the Guided Tour look under it.
 split_recommended: false

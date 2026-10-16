@@ -15733,7 +15733,7 @@ negative_constraints: []
 stale_retired_dispositions:
 - 'Amended 2026-10-16 (Plans top-up): terminal round 5 is recorded by DL-213, the consistency pass and
   Friendly lavender by DL-214, and the motion decisions by DL-215; panel-drop performance Q13 and the
-  motion fix lanes remain pending until they land.'
+  motion fix lanes are recorded as landed in DL-217.'
 owner_hints:
 - Plans/Decision_Log.md
 ```
@@ -16100,4 +16100,4 @@ owner_hints:
 - Plans/Decision_Log.md
 ```
 
-ContractRef: ContractName:Plans/DRY_Rules.md#DR-073, ContractName:Plans/FinalGUISpec.md#F3-628, ContractName:Plans/FinalGUISpec.md#F3-653
+ContractRef: ContractName:Plans/DRY_Rules.md#DR-073, ContractName:Plans/FinalGUISpec.md#F3-628, ContractName:Plans/FinalGUISpec.md#F3-653, ContractName:Plans/assistant-chat-design.md#ACD-475, ContractName:Plans/FinalGUISpec.md#F3-077, ContractName:Plans/FinalGUISpec.md#F3-598, ContractName:Plans/FinalGUISpec.md#F3-650, ContractName:Plans/FinalGUISpec.md#F3-652, ContractName:Plans/Settings_System.md#SSYS-053, ContractName:Plans/Test_Capture_and_Motion_Evidence.md#TCME-007

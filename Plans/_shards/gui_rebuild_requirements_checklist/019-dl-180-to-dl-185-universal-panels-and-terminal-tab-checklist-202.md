@@ -2,9 +2,9 @@
 
 Source: `Plans/GUI_Rebuild_Requirements_Checklist.md`
 
-Source lines: L2092-L2278
+Source lines: L2092-L2277
 
-Source SHA256: `27f91a4cecb1d3ac3c5497614bf0c6a843e478b8f5d942d88a86a32fe2174215`
+Source SHA256: `e10d2d09839d369293eac1cec54ddb57078baf8ab7682e866139d795178518a5`
 
 ---
 
@@ -149,8 +149,7 @@ canonical_text: >-
   F3-652, F3-644 and F3-656 own the settled hover-light, delivered font range and GLY-4 boundaries.
   F3-642/F3-643/F3-650 and SP-331 own round-3 terminal controls/presets, F3-632 owns picker levels,
   and SSYS-044 consumes MA-073. Terminal round 5 (DL-213), the consistency pass and Friendly
-  lavender (DL-214), the motion bar and calls (DL-215) and the P1000 reading and covers (DL-216) and the landed lanes' contracts (DL-217) are recorded; Q13 is recorded in DL-217, and the remaining motion fix
-  lanes stay pending top-up; Home/Settings content glyph adoption is not falsely marked complete. No
+  lavender (DL-214), the motion bar and calls (DL-215) and the P1000 reading and covers (DL-216) and the landed lanes' contracts (DL-217) are recorded, with Q13 and every motion fix lane recorded as landed in DL-217; Home/Settings content glyph adoption is not falsely marked complete. No
   concept-only demo or harness becomes a product surface. An approved packet is specification
   evidence, never native implementation proof.
 gui_related: true
