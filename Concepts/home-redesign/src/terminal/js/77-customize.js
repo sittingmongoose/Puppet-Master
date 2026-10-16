@@ -1210,6 +1210,8 @@
       /* the preview draws what changed now, unseen, so the click has nothing left to draw */
       if (pv && pv.fullPending) pv.frame();
       rasterSoon();
+      /* the case styles this screen offers, drawn once unseen in the look now in force (71-bezel.js Bezel.warm) */
+      if (T.Bezel && T.Bezel.warm) T.Bezel.warm(v);
     }
     /* parked, the screen is clipped away, so the GPU had never drawn it: its first showing compiled the GPU programs its
        surfaces need and rastered every tile in the click's frames (P2-02, F3 on the P1000: the compositor held about
@@ -1414,7 +1416,7 @@
     parkedWatch(true);
     own(v);
     prepared = handle;
-    if (opts.prepare) rasterSoon();
+    if (opts.prepare) { rasterSoon(); if (T.Bezel && T.Bezel.warm) T.Bezel.warm(v); }
     return opts.prepare ? handle : show(opts);
   }
 
