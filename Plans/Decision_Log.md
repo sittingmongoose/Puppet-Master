@@ -16004,7 +16004,10 @@ canonical_text: >-
   together: the Glass lane (90565f62ea) adds F3-652's worker bakes, idle shader warm-up and cover-only
   strip deferral; the Settings lane (0d510df290) adds DR-073's wallpaper preparation, F3-598's Reduced
   Motion calm cover and SSYS-053's acknowledged, coalesced navigation. The editor lane is added when it
-  lands. Concept evidence is not native certification.
+  lands. Win's trace attributes the B5 fade delay to Chrome's own autofill form extraction, which no page
+  code causes; the coordinator ruled it a concept harness matter, so concept acceptance films from F3
+  onward run Chrome with autofill and password-manager extraction off (TCME-007) and product canon is
+  unchanged (AI-045). Concept evidence is not native certification.
 gui_related: true
 gui_classification_reason: Contracts Added By The Motion Fix Lanes.
 split_recommended: false
@@ -16051,6 +16054,12 @@ source_lineage:
 - /mnt/Cursor/share/puppet-master/2026-10-16-plans-topup/sources/2026-10-16-q13-blind-review--REVIEW.md,
   SHA-256 125025f8c54f6d4e44d0444f0bffc7d18ca762e6e4d0b5a91ab31baf3986eb38 (Q13 blind review, LAND with
   qualifications; source lineage)
+- /mnt/Cursor/share/puppet-master/2026-10-16-plans-topup/sources/pm-mail-1016160926-ef62.txt, SHA-256
+  b52026d51089c02c9002cdb5cd0afb44941f8303916bd5f8785f20af76f2fee6 (coordinator ruling relaying Win's
+  autofill trace; decision lineage)
+- /mnt/Cursor/share/puppet-master/2026-10-16-plans-topup/sources/pm-mail-1016161110-3341.txt, SHA-256
+  7e7e95064e16d0c15274b2521afc6c62d05ae8da7a6d55fc2401a563b64a78ca (coordinator choice of option A,
+  concept harness rule only; decision lineage)
 preserved_exact_tokens: []
 negative_constraints: []
 owner_hints:

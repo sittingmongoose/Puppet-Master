@@ -12,7 +12,7 @@
     "unblocks_edge_count": 3219,
     "unresolved_reference_count": 0
   },
-  "generated_at_utc": "2026-10-16T15:35:22Z",
+  "generated_at_utc": "2026-10-16T16:14:30Z",
   "gui_related_units": {
     "count": 3582,
     "units": [
@@ -35156,8 +35156,8 @@
         "source_location": {
           "heading": "TCME-008 - Central Sole Future Handler Bindings",
           "heading_level": 3,
-          "heading_line": 475,
-          "line": 477,
+          "heading_line": 477,
+          "line": 479,
           "path": "Plans/Test_Capture_and_Motion_Evidence.md"
         }
       },
@@ -43765,6 +43765,10 @@
       {
         "error": "event_authority_currentness_source_drift",
         "source_path": "Plans/Settings_System.md"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/Test_Capture_and_Motion_Evidence.md"
       },
       {
         "error": "event_authority_currentness_source_drift",
