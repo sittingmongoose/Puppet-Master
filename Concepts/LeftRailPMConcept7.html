@@ -202105,9 +202105,9 @@ function open(opts) {
   var importError = root.querySelector('[data-import-error]');
   /* The sheet appears under a pointer that rests on Settings. Hit at once, the pointer's hover left Settings' column in
      the opening frame, and the page's :hover rules restyled that whole column (about 1100 icons and labels: 120 ms on
-     Nas1, 29 ms on the P1000) before the sheet's first frame. Until the pointer next moves, presses or scrolls, the
-     sheet's plates let it through, so that hover changes with the first move instead, while the entrance plays. A press
-     or a wheel that comes first ends it too, and is kept from the page under the sheet. */
+     Nas1, 29 ms on the P1000) before the sheet's first frame. Until the pointer next moves, presses or scrolls, or the
+     entrance ends, the sheet's plates let it through, so that hover changes later, while the entrance plays on the
+     compositor. A press or a wheel that comes first is kept from the page under the sheet. */
   var passing = false, PASS = ['pointermove', 'pointerdown', 'wheel'], passOpts = { capture: true, passive: false };
   function passThrough(on) {
     if (passing === on) return;
@@ -202224,7 +202224,8 @@ function open(opts) {
     root.removeAttribute('aria-hidden');
     passThrough(true);
     root.classList.remove('pmed-prepared');
-    Motion.play(root);
+    // the entrance's end lets the pointer hit the sheet too, for a pointer that has not moved
+    Motion.sheet(root, false, function () { passThrough(false); });
     var first = root.querySelector('[data-seg="scope"] [aria-checked="true"]') || dialog;
     // Let the entrance paint before focus asks the browser for geometry. A
     // newer visit invalidates this job, so a quick close cannot reclaim focus.
