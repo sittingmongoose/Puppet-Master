@@ -543,5 +543,9 @@ html[data-o55-nier] #panel-settings .btn.primary::after { display: none; }
    off); the note for a family picked while it is on uses the theme preview bar's frame. */
 #panel-settings .o55-nier-own { display: flex; flex-direction: column; align-items: flex-end; gap: 8px; }
 #panel-settings .o55-nier-own > .o55-inherit { justify-content: flex-end; }
+/* The ownership wrapper stays mounted across NieR changes, preserving the native App font select. Off, it has the
+   same layout as the formerly unwrapped control. Explicitly hide its empty note against the authored flex display. */
+.o55-nier-own[data-o55-owned="off"], #panel-settings .o55-nier-own[data-o55-owned="off"] { display: contents; }
+.o55-nier-own > .o55-inherit[hidden], #panel-settings .o55-nier-own > .o55-inherit[hidden] { display: none; }
 .o55-preview-bar.o55-nier-note { z-index: 2147482100; }
 .o55-preview-bar.o55-nier-note button.o55-nier-note-off { border-color: transparent; background: var(--accent-primary); color: var(--o55-nier-on-ink, var(--background)); }

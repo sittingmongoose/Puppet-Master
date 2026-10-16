@@ -247,7 +247,7 @@ window.addEventListener('resize', () => { if ((PM51.value('general.visual.interf
 new MutationObserver(() => {
   o55ApplyLook();
   o55SyncGlassNumber();
-  window.requestAnimationFrame(() => Object.keys(O55R).filter(id => O55R[id] && O55R[id].themeOwn).forEach(id => { if (root.querySelector(`[id="setting-${cssEscape(id)}"]`)) refreshSettingRow(id); }));
+  window.requestAnimationFrame(() => Object.keys(O55R).filter(id => O55R[id] && O55R[id].themeOwn).forEach(id => PM51.refreshSavedRow(id)));
 }).observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
 window.setTimeout(o55ApplyLook, 0);
 

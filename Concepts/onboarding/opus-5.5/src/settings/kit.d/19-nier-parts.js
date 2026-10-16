@@ -38,6 +38,28 @@
   const later = (fn, ms) => window.setTimeout(fn, Math.round(ms * speed()));
   const onboarding = () => html.hasAttribute('data-o55-open');
   const tone = () => (/-light$/.test(html.getAttribute('data-theme') || '') ? 'light' : 'dark');
+  /* Keep the last laid-out ground for the reduced-motion cover. A timer after paint can still meet another pending
+     theme write (190 ms forced style on M3). Read in the first layout delivery, once per look/contrast change. */
+  let calmColors = { background: '#111111', ink: '#ffffff' }, calmReadQueued = false;
+  function cacheCalmColors() {
+    if (calmReadQueued) return;
+    calmReadQueued = true;
+    const read = () => {
+      calmReadQueued = false;
+      if (!document.body) return;
+      const cs = getComputedStyle(document.body);
+      calmColors = { background: cs.backgroundColor, ink: cs.color };
+    };
+    /* The shared observer is installed before the layout writers. A fresh observer on body runs after those
+       writers and can force their pending theme restyle just to read this cover's two colours. */
+    if (typeof window.PM_AFTER_LAYOUT === 'function') window.PM_AFTER_LAYOUT(read);
+    else if (typeof ResizeObserver === 'function') {
+      const ready = new ResizeObserver(() => { ready.disconnect(); read(); });
+      ready.observe(document.body || html);
+    } else requestAnimationFrame(() => setTimeout(read, 0));
+  }
+  new MutationObserver(cacheCalmColors).observe(html, { attributes: true, attributeFilter: ['data-theme', 'data-o55-nier', 'data-contrast'] });
+  cacheCalmColors();
   const zoom = () => { const z = document.body && Number.parseFloat(document.body.style.zoom); return Number.isFinite(z) && z > 0 ? z : 1; };
   const frames = n => new Promise(res => { const step = () => (--n <= 0 ? res() : window.requestAnimationFrame(step)); window.requestAnimationFrame(step); });
   function layer(id, cls) {
@@ -664,7 +686,7 @@
     log.className = 'o55np-log';
     log.innerHTML = `<div class="o55np-kick"><i></i><i></i><i></i><span class="o55np-kick-t">${esc(RB('kicker', 'NieR Mode'))}</span></div>`
       + `<div class="o55np-lns">${lines.map(l => `<div class="o55np-ln"><span class="o55np-ln-t">${esc(l.text)}</span><span class="o55np-ln-dots"></span><b class="o55np-stamp">${esc(l.stamp)}</b><i class="o55np-ln-mask"></i></div>`).join('')}</div>`
-      + '<div class="o55np-meter"><i></i></div>'
+      + '<div class="o55np-meter"><i></i><span class="o55np-wait" aria-hidden="true"><b></b></span></div>'
       + `<div class="o55np-ln o55np-sync"><span class="o55np-ln-t">${esc(RB('syncing', 'Synchronising'))}</span><i class="o55np-caret"></i><span class="o55np-ln-dots"></span><b class="o55np-stamp">${esc(RB('ok', 'OK'))}</b></div>`;
     return log;
   }
@@ -738,9 +760,14 @@
     });
     A(log.querySelector('.o55np-meter > i'), [{ transform: 'scaleX(0)' }, { transform: 'scaleX(1)' }], { duration: plan.meter[1] - plan.meter[0], delay: d(plan.meter[0]), easing: 'steps(12, end)' });
     const sync = log.querySelector('.o55np-sync');
-    const show = A(sync, [{ opacity: 0 }, { opacity: 0 }], { duration: Math.max(1, d(plan.sync)) });
-    const blink = A(sync.querySelector('.o55np-caret'), [{ opacity: 1, easing: 'step-end' }, { opacity: 0, offset: 0.5, easing: 'step-end' }, { opacity: 1 }], { duration: 900, delay: d(plan.sync), iterations: Infinity, fill: 'none' });
-    return { anims, show, blink };
+    const show = A(sync, [{ opacity: 0 }, { opacity: 1 }], { duration: Math.max(1, d(plan.sync)), easing: 'steps(1, end)' });
+    const blink = A(sync.querySelector('.o55np-caret'), [{ opacity: 1, easing: 'steps(1, end)' }, { opacity: 0, offset: 0.5, easing: 'steps(1, end)' }, { opacity: 1 }], { duration: 900, delay: d(plan.sync), iterations: Infinity, fill: 'none' });
+    /* The list can finish before the look's render work. A travelling ink highlight keeps the existing segmented
+       meter alive on its own compositor layer; it makes no progress claim and needs no per-frame JavaScript. */
+    const wait = A(log.querySelector('.o55np-wait > b'), [
+      { transform: 'translateX(-100%)' }, { transform: 'translateX(400%)' }
+    ], { duration: 1100, iterations: Infinity, easing: 'linear', fill: 'none' });
+    return { anims, show, blink, wait };
   }
   /* at R: the list in its end state (by attribute, so the slats' copies show it too), "All clear" in one step */
   function rbClear(log, typing, plan, t0) {
@@ -862,6 +889,7 @@
   /* the window's effects and the pointers come back once the cover has left: they draw above it, so released at the
      reveal they floated on the still-whole plate and on the slats yet to move (films M7) */
   function rbRelease(ctx) {
+    if (ctx.waitMotion) { ctx.waitMotion.forEach(a => a.cancel()); ctx.waitMotion = null; }
     if (ctx.host) { ctx.host.removeAttribute('data-o55np-cover'); ctx.host = null; }
     if (ctx.unhold) ctx.unhold();
     coverUp = false;
@@ -961,6 +989,7 @@
     log.setAttribute('data-on', '');
     plan = rbShift(plan, since(t0));
     const typing = rbType(log, plan, since(t0));
+    ctx.waitMotion = [typing.wait, typing.blink];
     await ctx.wait(settledStart(typing.anims));
     quiet(5000);
     ctx.paint();
@@ -987,6 +1016,7 @@
     log.style.display = 'none';
     cover.style.pointerEvents = 'none'; if (ctx.unhold) ctx.unhold();
     ctx.cue('reveal');
+    /* Keep the six held poses and the separate bracket let-go beat. Ground and inverse share each step clock. */
     const G = [0.1, 0.25, 0.45, 0.7, 0.9, 1], rects = G.map(f => lerpRect(full, to, f)), off = G.map(f => -14 + 17 * f), TOTAL = 450;
     const clips = rects.map(r => clipOf(r, box)), idle = clipOf(full, box), last = clipOf(to, box);
     const fold = ground.animate(walk([{ t: 0, v: { transform: idle[0], opacity: 1 } }, ...clips.map((c, k) => ({ t: 60 * (k + 1), v: { transform: c[0], opacity: 1 } })),
@@ -1049,6 +1079,56 @@
     };
     let painted = false;
     const paint = () => { if (painted) return; painted = true; repaint(); sync(); };
+    /* Reduce Animations removes the theatrical reboot, not the acknowledgement. Let the switch and a quiet cover
+       paint before the theme/scene work, then dissolve the cover over the fully drawn result. Its colours belong to
+       the outgoing look, so a theme restyle cannot flash the cover itself. There is no looping or spatial motion. */
+    if (still() && !document.hidden && document.body && !within && !onboarding() && !rebooting) {
+      rebooting = true;
+      const plate = document.createElement('div');
+      plate.id = 'o55np-calm'; plate.setAttribute('role', 'status');
+      plate.style.backgroundColor = calmColors.background;
+      plate.style.color = calmColors.ink;
+      document.body.appendChild(plate);
+      cue('start');
+      let finishFrame = null, fade = null;
+      const hidden = () => {
+        if (!document.hidden) return;
+        if (finishFrame) finishFrame();
+        if (fade) fade.cancel();
+      };
+      document.addEventListener('visibilitychange', hidden);
+      /* A hidden document can stop delivering frames. Each paint wait has a bound and resolves immediately on hide,
+         so the one calm cover always releases its busy guard. A second toggle uses the current cover. */
+      const paintedFrame = () => new Promise(resolve => {
+        if (document.hidden) { resolve(); return; }
+        let done = false, frame = 0, timer = 0;
+        const finish = () => {
+          if (done) return;
+          done = true; cancelAnimationFrame(frame); clearTimeout(timer); finishFrame = null; resolve();
+        };
+        finishFrame = finish; timer = setTimeout(finish, 120);
+        frame = requestAnimationFrame(() => { clearTimeout(timer); timer = setTimeout(finish, 0); });
+      });
+      try {
+        /* Insert the live region empty first, then announce its state after it exists in the accessibility tree. */
+        await paintedFrame();
+        plate.textContent = on ? 'Applying NieR Mode…' : 'Restoring your look…';
+        await paintedFrame();
+        paint();
+        await paintedFrame();
+        cue('reveal');
+        if (!document.hidden && plate.animate) {
+          fade = plate.animate([{ opacity: 1 }, { opacity: 0 }], { duration: 100, easing: 'linear', fill: 'forwards' });
+          await fade.finished.catch(() => {});
+        }
+      } finally {
+        document.removeEventListener('visibilitychange', hidden);
+        if (finishFrame) finishFrame();
+        if (fade) fade.cancel();
+        try { paint(); } finally { plate.remove(); rebooting = false; cue('gone'); }
+      }
+      return;
+    }
     if (rebooting || !installed('reboot') || still() || document.hidden || !document.body || (onboarding() && !within)) {
       cue('start'); paint(); cue('reveal'); cue('gone'); return;
     }

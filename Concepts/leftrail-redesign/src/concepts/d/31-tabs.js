@@ -53,16 +53,60 @@ function stopTabs(st) {
   const els = [st, st.querySelector(':scope > .d-ink')].concat(tabItems(st).flatMap(it => [it].concat(Array.from(it.children))));
   els.forEach(el => { if (el && el.getAnimations) el.getAnimations().forEach(a => { if (a.id === 'd-tab') a.cancel(); }); });
 }
-/* the ink at rest on the chosen tab; a no-op while nothing moved, so a refit never cuts a move short */
-function placeInk(st, force) {
-  if (!D.on || !st.offsetWidth) return;
-  const ink = inkOf(st), act = tabActive(st);
-  if (!act) { ink.style.width = '0px'; ink._dBox = null; return; }
-  const b = stripBox(st, act);
+/* Refit requests can follow writes in another panel or Settings. Read all requested strips after ordinary layout,
+   then write all inks; the former per-strip read/write pass forced the whole app's layout between strips. Explicit
+   animation setup (force) stays synchronous so its icons, labels and ink retain their shared animation clock. */
+const inkRefits = new Set();
+let inkRefitReady = null;
+const lensOwnsInk = () => {
+  const r = document.documentElement;
+  return r.getAttribute('data-pm-switch') === 'lens' ||
+    (r.getAttribute('data-lg') === 'on' && /^glass-/.test(r.getAttribute('data-theme') || ''));
+};
+function readInk(st, force) {
+  if (!D.on || !st.isConnected) return null;
+  if (!force && lensOwnsInk()) { st._dInkSkipped = true; return null; }
+  if (!st.offsetWidth) return null;
+  const ink = st.querySelector(':scope > .d-ink'), act = tabActive(st);
+  const b = act ? stripBox(st, act) : null;
+  return { st, ink, b, force: force || st._dInkSkipped };
+}
+function writeInk(row) {
+  if (!row) return;
+  const { st, b, force } = row, ink = row.ink || inkOf(st);
+  delete st._dInkSkipped;
+  if (!b) { ink.style.width = '0px'; ink._dBox = null; return; }
   if (!force && sameBox(ink._dBox, b)) return;
   if (ink._dBox) stopTabs(st);
   ink.style.width = b.w.toFixed(2) + 'px'; ink.style.height = b.h.toFixed(2) + 'px'; ink.style.transform = inkMove(b);
   ink._dBox = b;
+}
+/* the ink at rest on the chosen tab; a no-op while nothing moved, so a refit never cuts a move short */
+function placeInk(st, force) {
+  if (!D.on) return;
+  if (force) { inkRefits.delete(st); writeInk(readInk(st, true)); return; }
+  /* This ink is already hidden by the active lens skin. Do not measure it on a Settings or wallpaper update.
+     Re-entering the legacy skin forces the next refit even if its old cached box happens to compare equal. */
+  if (lensOwnsInk()) { st._dInkSkipped = true; return; }
+  inkRefits.add(st);
+  if (inkRefitReady) { if (inkRefitReady.observe) inkRefitReady.observe(st); return; }
+  const flush = () => {
+    if (inkRefitReady && inkRefitReady.disconnect) inkRefitReady.disconnect();
+    inkRefitReady = null;
+    const strips = Array.from(inkRefits); inkRefits.clear();
+    const rows = strips.map(s => readInk(s, false));
+    rows.forEach(writeInk);
+  };
+  /* A strip's own ResizeObserver can request this refit. Arm the measurement observer on the next frame so its
+     initial delivery cannot recurse into that same observer cycle. All strips requested meanwhile join one read. */
+  inkRefitReady = { pending: true };
+  requestAnimationFrame(() => {
+    if (!inkRefits.size) { inkRefitReady = null; return; }
+    if (window.ResizeObserver) {
+      inkRefitReady = new ResizeObserver(flush);
+      inkRefits.forEach(strip => inkRefitReady.observe(strip));
+    } else flush();
+  });
 }
 
 /* The shell's fit pass after a tab click (PMPillFit, scheduled by its own document click listener for any
@@ -281,7 +325,21 @@ function wireStrip(st) {
 /* the strips of a panel; the capture and key listeners once for all panels */
 function wireTabs(panel) {
   panel.querySelectorAll(':scope > .pm-segtab').forEach(wireStrip);
-  if (!tabsWired) { tabsWired = true; listen(document, 'click', onTabCapture, true); listen(document, 'keydown', onTabKey); }
+  if (!tabsWired) {
+    tabsWired = true; listen(document, 'click', onTabCapture, true); listen(document, 'keydown', onTabKey);
+    /* Turning the lens skin off need not change data-theme, so the ordinary theme refit does not see it. */
+    const skin = new MutationObserver(() => {
+      if (!D.on) return;
+      const hidden = lensOwnsInk();
+      document.querySelectorAll('#sidePanelSlot .pm-segtab').forEach(st => {
+        if (!st.querySelector(':scope > .d-ink')) return;
+        if (hidden) st._dInkSkipped = true;
+        else if (st._dInkSkipped) placeInk(st);
+      });
+    });
+    skin.observe(document.documentElement, { attributes: true, attributeFilter: ['data-lg', 'data-pm-switch'] });
+    D.observers.push(skin);
+  }
 }
 PANEL_IDS.forEach(id => panelHook(id, {
   apply(panel) { wireTabs(panel); },
