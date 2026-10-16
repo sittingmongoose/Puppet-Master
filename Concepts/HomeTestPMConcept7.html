@@ -33590,9 +33590,11 @@ html:not([data-theme^="glass"]):not([data-o55-nier="on"]) .pm6-tb-menu-item.is-s
    The Orchestrator's views kept their 3 px underline under the chip (Basic's blue, Retro's green). */
 html:not([data-theme^="glass"]) .orch-tabs .orch-tab.active { border-bottom-color: transparent; }
 /* The onboarding window's segments (Light / Dark, and every one-of-several in its screens) kept their own raised chip,
-   and Retro its accent block, over or instead of the switcher's (Retro Light showed cobalt over its lime chip). */
+   and Retro its accent block, over or instead of the switcher's (Retro Light showed cobalt over its lime chip). The chosen
+   segment steps aside only while the switcher's chip is there (glass.js marks the strip data-lg-lensed), so a strip the
+   chip has not reached yet keeps its own fill instead of showing its chosen ink on bare ground (Glass review). */
 html:not([data-theme^="glass"]):not(#lgz) #pm-o55-onboarding .o55-seg { background: var(--pm-switch-track); }
-html:not([data-theme^="glass"]):not(#lgz) #pm-o55-onboarding .o55-seg button.o55-on { background: transparent; box-shadow: none; color: var(--pm-switch-ink-on); }
+html:not([data-theme^="glass"]):not(#lgz) #pm-o55-onboarding .o55-seg[data-lg-lensed] button.o55-on { background: transparent; box-shadow: none; color: var(--pm-switch-ink-on); }
 /* Usage's range sits on the stage head, which Usage lights with each look's key light (Basic's blue, Friendly's coral):
    the switcher's faint track let the resting words fall to 2.4-3.3:1 there. It is a recessed well of the look's surface
    instead, so every word sits on a calm ground. (Glass sets no tokens and keeps its own track.) */
