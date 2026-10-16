@@ -378,18 +378,24 @@ function applyPanel(panel, animate) {
   hooksFor(panel, 'apply').forEach(h => h.apply(panel, animate));
 }
 
-/* re-run on redraws, coalesced into one pass per frame pair */
+/* re-run on redraws, coalesced into one pass per frame pair. The pass runs after that frame's layout (the shell's
+   PM_AFTER_LAYOUT): run in the animation frame callback, before the frame's style, fitAll's first width read was the
+   first reader of a look change's whole-page restyle when the change also redrew a panel (614 and 1026 ms forced on a
+   NieR switch, terminal lane's B5 profile). Its own writes are then all that a read waits for. */
 let pending = 0;
 const dirty = new Set();
 function schedule(panel) {
   dirty.add(panel);
   if (pending) return;
-  pending = requestAnimationFrame(() => requestAnimationFrame(() => {
+  const run = () => {
     pending = 0;
     const list = Array.from(dirty);
     dirty.clear();
     if (!D.on) return;
     list.forEach(p => { applyPanel(p, true); fitAll(p); });
+  };
+  pending = requestAnimationFrame(() => requestAnimationFrame(() => {
+    if (typeof window.PM_AFTER_LAYOUT === 'function') window.PM_AFTER_LAYOUT(run); else run();
   }));
 }
 function observePanels() {

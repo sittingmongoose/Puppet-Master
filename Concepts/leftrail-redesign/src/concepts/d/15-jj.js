@@ -708,7 +708,14 @@ function jjWatch(panel) {
     ro.observe(JJ.strip);
     D.observers.push(ro);
   }
-  const mo2 = new MutationObserver(() => { if (D.on) requestAnimationFrame(() => { jjFit(JJ.strip); jjFitDirs(JJ.panes[JJ.tab]); }); });
+  /* a look change refits after the next frame's layout, once per frame however many attributes it wrote (in an
+     animation frame callback the fit was the first reader of its whole-page restyle, Settings lane B5 profile) */
+  let lookFit = 0;
+  const lookRefit = () => { lookFit = 0; if (D.on) { jjFit(JJ.strip); jjFitDirs(JJ.panes[JJ.tab]); } };
+  const mo2 = new MutationObserver(() => {
+    if (!D.on || lookFit) return;
+    lookFit = requestAnimationFrame(() => { if (typeof window.PM_AFTER_LAYOUT === 'function') window.PM_AFTER_LAYOUT(lookRefit); else lookRefit(); });
+  });
   mo2.observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme', 'data-o55-nier', 'style'] });
   D.observers.push(mo2);
 }
