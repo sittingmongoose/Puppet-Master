@@ -94,7 +94,9 @@ var Motion = {
         });
       });
       return moves;
-    });
+    // An entrance starts from nothing (a fade from zero, a 2 px slice): after a long opening frame it starts on the
+    // first frame on time, so the sheet shows through the GPU's first draw of it; exits keep the default.
+    }, leaving ? undefined : { start: 'commit' });
     Motion.finished(node, function () { if (node._pmedGen !== gen) return; [].forEach.call(parts, clear); done(); });
   }
 };
@@ -664,7 +666,7 @@ function open(opts) {
     });
     var tiles = [], heights = [], sizing = false, contained = false;
     keepWarmCleanup(function () { if (sizing && !contained) root.classList.remove('pmed-contained'); });
-    append(function () { sizing = true; root.classList.remove('pmed-contained'); tiles = [].slice.call(root.querySelectorAll('.pmt-cz-scheme')); });
+    append(function () { sizing = true; root.classList.remove('pmed-contained'); tiles = [].slice.call(root.querySelectorAll('.pmt-cz-scheme, .pmt-cz-group')); });
     append(function () {
       heights = tiles.map(function (tile) {
         var css = getComputedStyle(tile), height = parseFloat(css.height);
@@ -1095,6 +1097,7 @@ function open(opts) {
       intentFrame = requestAnimationFrame(function () {
         intentFrame = 0;
         if (!root.isConnected || openRoot !== root || intentTile !== tileEl || (pointerIntent && performance.now() < scrollUntil)) return;
+        flushWrite();
         previewing = id;
         previewPointer = !!pointerIntent;
         EL().preview(v, { scheme: id }); syncPreview();
@@ -1141,6 +1144,7 @@ function open(opts) {
   }
   /* how: 'live' while a slider moves (shown, not written), 'keep' (written), 'preview' (a swatch the pointer rests on) */
   function tokSet(tok, hex, how) {
+    flushWrite();
     if (how === 'preview') {
       var I = tokInfo(); if (!I) return;
       var pv = {}; pv[I.key + '/' + tok] = hex;
