@@ -228432,7 +228432,17 @@ try { if (window.PM_HOME && typeof window.PM_HOME.boot === 'function') window.PM
      keep their decoded images while they are in that set, whatever their age; a print that leaves the set starts the
      60 s release from then. A retained pair that has lost its decoded images decodes again in idle time (off the main
      thread); nothing is baked or decoded in the call itself. At most RETAIN_MAX prints. */
-  var retained = new Set(), RETAIN_MAX = 64, retainIdle = 0;
+  var retained = new Set(), RETAIN_MAX = 64, RETAIN_BYTES = 128 * 1024 * 1024, retainIdle = 0, vpKey = '';
+  /* the retained prints' pairs for the current window size, within RETAIN_BYTES of decoded images, the most recently
+     used first (landing review GR-1); a retained print past that budget, or a pair made for another window size,
+     follows the tail's rules. The pair on the sheets is kept apart from both. */
+  function retainedPairs() {
+    var list = [], out = new Set(), sum = 0;
+    retained.forEach(function (u) { var r = frostCache.get(u + ':' + vpKey); if (r && r.urls !== frosts) list.push(r); });
+    list.sort(function (a, b) { return (b.used || 0) - (a.used || 0); });
+    list.forEach(function (r) { if ((sum += r.dbytes || 0) <= RETAIN_BYTES) out.add(r); });
+    return out;
+  }
   function retainVisible(urls) {
     var next = new Set(), now = performance.now();
     (Array.isArray(urls) ? urls : []).forEach(function (u) { if (typeof u === 'string' && u && next.size < RETAIN_MAX) next.add(u); });
@@ -228442,7 +228452,7 @@ try { if (window.PM_HOME && typeof window.PM_HOME.boot === 'function') window.PM
     trimDecoded();
     if (!retainIdle && retained.size && window.requestIdleCallback) retainIdle = requestIdleCallback(function () {
       retainIdle = 0;
-      frostCache.forEach(function (r) { if (retained.has(r.wall) && !r.decoded) decodeFrost(r); });
+      retainedPairs().forEach(function (r) { if (!r.decoded) decodeFrost(r); });
     }, { timeout: 2000 });
   }
   /* what each prepare and commit found (B3 attribution for films): a performance mark 'pm-lg-wall:<n>' per event, detail
@@ -228463,11 +228473,11 @@ try { if (window.PM_HOME && typeof window.PM_HOME.boot === 'function') window.PM
     try { markN++; performance.mark('pm-lg-wall:' + markN, { detail: d }); if (markN > 64) performance.clearMarks('pm-lg-wall:' + (markN - 64)); } catch (e) {}
   }
   function trimDecoded() {
-    var keys = Array.from(frostCache.keys()), now = performance.now(), next = 0, tail = [], sum = 0;
+    var keys = Array.from(frostCache.keys()), now = performance.now(), next = 0, tail = [], sum = 0, kept = retainedPairs();
     clearTimeout(trimT); trimT = 0;
     keys.forEach(function (k, i) {
       var r = frostCache.get(k);
-      if (!r.decoded || r.urls === frosts || retained.has(r.wall)) return;
+      if (!r.decoded || r.urls === frosts || kept.has(r)) return;
       var left = (r.used || 0) + FROST_RECENT - now;
       if (i < keys.length - FROST_DECODED && left <= 0) { r.imgs = null; r.decoded = null; return; }
       if (left > 0) next = next ? Math.min(next, left) : left;
@@ -228552,7 +228562,7 @@ try { if (window.PM_HOME && typeof window.PM_HOME.boot === 'function') window.PM
     if (e.__lgFy !== fy) { e.__lgFy = fy; e.style.setProperty('--lg-fy', fy); }
     return lp;
   }
-  function viewportVars() { root.style.setProperty('--lg-vw', innerWidth + 'px'); root.style.setProperty('--lg-vh', innerHeight + 'px'); }
+  function viewportVars() { vpKey = innerWidth + 'x' + innerHeight; root.style.setProperty('--lg-vw', innerWidth + 'px'); root.style.setProperty('--lg-vh', innerHeight + 'px'); }
   function cover(im) { var vw = innerWidth, vh = innerHeight, sc = Math.max(vw / im.naturalWidth, vh / im.naturalHeight); return { s: sc, ox: (vw - im.naturalWidth * sc) / 2, oy: (vh - im.naturalHeight * sc) / 2, vw: vw, vh: vh }; }
   var FROST = { heavy: { blur: 26, sat: 1.65 }, light: { blur: 14, sat: 1.6 } }, FROST_SCALE = 1 / 3;
   var wallpaperPaintStyle = null;
