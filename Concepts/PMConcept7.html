@@ -173788,9 +173788,9 @@ PMW.hypo = {
 };
 /* the room rule (geom.resultFits) for a hypothetical layout, against the layout as it is now; in the single-column
    ladder (narrow) nothing splits, so nothing fits */
-PMW.roomFits = function (after) {
+PMW.roomFits = function (after, box) {
   if (!after || (PMW.narrow && PMW.narrow.singleColumn())) return false;
-  return geom.resultFits(L(), after, PMW.layoutBox());
+  return geom.resultFits(L(), after, box || PMW.layoutBox());
 };
 
 PMW.moveTab = function (tabId, panelId, index, opts) {
@@ -173817,7 +173817,9 @@ PMW.moveTabToSplit = function (tabId, panelId, edge, opts) {
   if (from.id === panelId && from.tabs.length === 1) return false;   // splitting a panel by its only tab changes nothing
   // every caller (menus, keyboard, strip, drag) gets the same fit rule, the room rule on the move's own result,
   // measured on the tree, not the maximized rects
-  if (panelId !== '@root' && !opts.force && treeRects() && !PMW.roomFits(PMW.hypo.split(tabId, panelId, edge, opts.ratio))) {
+  // A pointer release measured the centre before retiring its drag styles. Use that same box for the room rule;
+  // menus and keyboard callers still measure the current tree here.
+  if (panelId !== '@root' && !opts.force && (opts.centreRect || treeRects()) && !PMW.roomFits(PMW.hypo.split(tabId, panelId, edge, opts.ratio), opts.centreRect)) {
     if (!opts.quiet) PMW.toast(edge === 'left' || edge === 'right' ? 'There is not room to split this panel side by side. Try Split down.' : 'There is not room to split this panel. Try Split right.');
     return null;
   }
@@ -176537,7 +176539,7 @@ function drop(g, z) {
   var ok;
   if (z.type === 'strip') ok = PMW.moveTab(g.tid, z.panelId, z.index);
   else if (z.type === 'merge') ok = PMW.moveTab(g.tid, z.panelId, null);
-  else if (z.type === 'split') ok = !!PMW.moveTabToSplit(g.tid, z.panelId, z.edge, { ratio: 0.5 });
+  else if (z.type === 'split') ok = !!PMW.moveTabToSplit(g.tid, z.panelId, z.edge, { ratio: 0.5, centreRect: g.releaseCentreRect });
   else if (z.type === 'root') ok = !!PMW.moveTabToSplit(g.tid, '@root', z.edge, { ratio: 0.34 });
   if (!ok) { dropView.glideHome(); restore(g); if (g.chip) { g.chip.remove(); g.chip = null; } return true; }
   // what listeners heard at the grab is no longer true: the source shows its previous tab, the carried tab is the
@@ -192313,7 +192315,8 @@ function mountPlan(host, state, api) {
     next._scroll.setAttribute('data-pmh', 'off');
     if (frame) frame.replaceWith(next); else stage.appendChild(next);
     frame = next;
-    frame._scroll.scrollTop = keepScroll;
+    // This is a new scroller, already at zero. Even assigning zero forces layout of the freshly mounted document.
+    if (keepScroll) frame._scroll.scrollTop = keepScroll;
     frame._scroll.addEventListener('scroll', function () { scrolls[view] = frame._scroll.scrollTop; }, { passive: true });
     if (key) {
       var el = host.querySelector('[data-k="' + key.replace(/"/g, '\\"') + '"]');
@@ -192349,7 +192352,7 @@ function mountPlan(host, state, api) {
     onResize: function (s) {
       width = s.w;
       root.classList.toggle('is-narrow', s.w < NARROW_FOOT);
-      if (!restored && frame) { restored = true; frame._scroll.scrollTop = scrolls[view] || 0; }
+      if (!restored && frame) { restored = true; if (scrolls[view]) frame._scroll.scrollTop = scrolls[view]; }
       syncMax();
     },
     focus: function () { var t = frame && frame._scroll; if (t) { t.setAttribute('tabindex', '-1'); try { t.focus({ preventScroll: true }); } catch (_) {} } },
