@@ -173,8 +173,11 @@
     var id = shown(), selected = choice(), theme = root.getAttribute('data-theme'), key = theme + '|' + id;
     if (key === paintKey) { paintedChoice = selected; return; }
     var serial = ++paintSerial, url = imageUrl(id);
-    prepare(url).then(function (ok) {
-      if (!ok || serial !== paintSerial || theme !== root.getAttribute('data-theme')) return;
+    /* A viewport/Glass epoch change or failed bake can invalidate preparation without invalidating the choice.
+       Keep the current choice authoritative and let the normal image/frost fallback commit it. Superseded choices
+       and modes still never commit. The same print fade remains available when the prepared frost was unavailable. */
+    prepare(url).catch(function () { return false; }).then(function () {
+      if (serial !== paintSerial || theme !== root.getAttribute('data-theme')) return;
       var viewport = { width: innerWidth, height: innerHeight };
       var commit = function () {
         if (serial !== paintSerial) return;
@@ -194,7 +197,9 @@
       var done = false;
       function finish() {
         if (done) return; done = true;
-        printLayers.forEach(function (e) { e.style.opacity = '0'; });
+        printLayers.forEach(function (e) {
+          e.style.opacity = '0'; e.style.backgroundImage = 'none'; e.style.backgroundColor = '';
+        });
         printAnimations.forEach(function (a) { a.cancel(); }); printAnimations = [];
         if (printFinish === finish) printFinish = null;
       }
