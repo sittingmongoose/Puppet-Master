@@ -1252,7 +1252,10 @@
        is drawn at idle for two frames, unseen (opacity 0.004, as the shell warms its theme covers; 0.002 rounds to
        nothing on the P1000), then clipped away again */
     var rastered = {}, rasterJob = 0, rasterSince = 0, rasterFrames = false, rasterOn = false;
-    function rasterEnd() { if (rasterOn) { rasterOn = false; root.classList.remove('pmt-cz-rasterwarm'); root.inert = false; } }
+    /* nothing inside takes the focus while it is drawn: a focus that lands inside is let go at once. inert did the same,
+       but setting and clearing it restyled the whole screen twice per warm (review RW-4) */
+    function rasterGuard(e) { if (rasterOn && e.target && e.target.blur) e.target.blur(); }
+    function rasterEnd() { if (rasterOn) { rasterOn = false; root.classList.remove('pmt-cz-rasterwarm'); root.removeEventListener('focusin', rasterGuard, true); } }
     function rasterSoon() {
       if (rasterJob || rasterFrames || !closed || disposed) return;
       var key = (root.getAttribute('data-pmt-look') || '') + '|' + (root.getAttribute('data-pmt-mode') || '');
@@ -1275,8 +1278,8 @@
           if (!closed || disposed || rastered[key]) return;
           if (t2 - t1 > 25 || settling() || inputRecent()) { rasterSoon(); return; }
           rasterSince = 0; rastered[key] = 1; rasterOn = true;
-          /* inert for its three frames: drawn, its controls could otherwise take the focus (review RW-2) */
-          root.inert = true; root.classList.add('pmt-cz-rasterwarm');
+          /* its controls must not take the focus for its three frames (review RW-2; rasterGuard) */
+          root.addEventListener('focusin', rasterGuard, true); root.classList.add('pmt-cz-rasterwarm');
           requestAnimationFrame(function () { requestAnimationFrame(function () { requestAnimationFrame(rasterEnd); }); });
         }); });
       };
