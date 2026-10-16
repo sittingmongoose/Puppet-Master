@@ -570,7 +570,14 @@ INK = [
      "        if (inkShown && !was) { var at = getActive(); if (at) snap(at); } };   /* shown again: on the active item exactly */\n"
      "      var shownSoon = function () { if (!ink.isConnected) return; if (typeof window.PM_AFTER_LAYOUT === 'function') window.PM_AFTER_LAYOUT(readShown); else requestAnimationFrame(readShown); };\n"
      "      shownSoon();\n"
-     "      try { new MutationObserver(shownSoon).observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme', 'data-lg', 'data-o55-nier'] }); } catch (eM) {}\n",
+     "      /* one observer for every attached ink (a segment strip made again attaches again): an ink no longer in the page\n"
+     "         is dropped from it at the next look change, so nothing keeps its closure alive (landing review SH8-1) */\n"
+     "      var shownReg = attach._o55Shown || (attach._o55Shown = { list: [], mo: null });\n"
+     "      shownReg.list.push({ ink: ink, soon: shownSoon });\n"
+     "      if (!shownReg.mo) try {\n"
+     "        shownReg.mo = new MutationObserver(function () { shownReg.list = shownReg.list.filter(function (r) { return r.ink.isConnected; }); for (var si = 0; si < shownReg.list.length; si++) shownReg.list[si].soon(); });\n"
+     "        shownReg.mo.observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme', 'data-lg', 'data-o55-nier'] });\n"
+     "      } catch (eM) {}\n",
      'liquid ink: drawn flag'),
     ("        if (pos.a === null || reduced()) { snap(el); return; }\n",
      "        if (pos.a === null || reduced() || !inkShown) { snap(el); return; }   /* O55 (B1): a hidden ink is placed at once */\n",
