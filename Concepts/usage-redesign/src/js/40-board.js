@@ -1175,6 +1175,48 @@
       var h = PMU.menu && PMU.menu.current ? PMU.menu.current() : null;
       return !!h && (h.board === api || !!(h.anchor && h.anchor.nodeType === 1 && rootEl && rootEl.contains(h.anchor)));
     }
+    /* ---- the reversal (motion QA A12, 2026-10-16): a click back to the room still leaving makes its board, which is
+       still on screen as the ghost (PMU.film.ghost), the live board again as it stands: PMU.film.reverse drifts it back
+       to rest from where it stands and closes its cut or lens, and the room that was arriving goes in the click's frame
+       (its board empties into the spare at once; the user never left the old room, so nothing of it is built again).
+       Only when the old board lent no card to the arriving room (a widget in both rooms moved across), the board class
+       and the room's widgets are unchanged, and the film says the hand-off can reverse (PMU.film.reversible: Basic,
+       Friendly and Glass with a GPU, no room carried from an earlier click). Anything else takes the room change. ---- */
+    var lastGhost = null;
+    function reverseTo(room, ids) {
+      var g = lastGhost, el = g && g.el;
+      if (!g || !FILM || !FILM.reverse || !FILM.reversible || !el || el === boardEl || el.hidden || g.lent) return false;
+      if (el.getAttribute('data-room') !== room || el.getAttribute('data-cls') !== current.cls.name || !FILM.reversible(el)) return false;
+      var cards = Array.prototype.filter.call(el.children, function (n) { return n.classList.contains('pmu-card'); });
+      var have = {}; cards.forEach(function (c) { have[c.getAttribute('data-widget')] = true; });
+      if (cards.length !== ids.length || !ids.every(function (id) { return have[id]; })) return false;
+      lastGhost = null;
+      var incoming = boardEl, sTop = g.sTop || 0;
+      /* the arriving room's build stops, and its board empties into the spare now (no frame shows it after this one) */
+      buildToken++; streaming = null; lateHeld = null;
+      clearTimeout(filmEndT); filmEndT = 0;
+      flushLeaving(true);
+      Array.prototype.forEach.call(incoming.querySelectorAll(':scope > .pmu-card'), destroyCard);
+      incoming.removeAttribute('id');
+      /* the old board takes the live board's id and role back; its cards stop leaving */
+      el.classList.remove('pmu-ghostboard');
+      ['zIndex', 'pointerEvents', 'opacity'].forEach(function (k) { el.style[k] = ''; });
+      if (bo.liveId) el.id = bo.liveId;
+      boardEl = el;
+      retireBoard(incoming);
+      cards.forEach(function (c) { c._pmuLeaving = false; if (c.hasAttribute('data-leaving')) c.removeAttribute('data-leaving'); });
+      /* the scroll it left with comes back (its keyframes start that much lower, so it does not move on screen) */
+      if (sTop) scroll.scrollTop = sTop;
+      view.top = sTop;
+      current.mounted = true;
+      var back = FILM.reverse(el, { shift: sTop }) || { ms: 0 };
+      keyShift(room);
+      deferHover(back.ms + 200);
+      /* the preview elements and the end of the film window wait for the drift to rest (inserting the morph before the
+         first card restyles the board's positional rules: never during a motion) */
+      setTimeout(function () { if (boardEl !== el || dead) return; ensurePreviews(); if (!(FILM.moment && FILM.moment())) el.removeAttribute('data-film'); }, (back.ms + 60) * speed());
+      return true;
+    }
     function mount(room, opts) {
       ensure();
       prewarmEnd();
@@ -1208,6 +1250,9 @@
       if (transition) {
         try { performance.mark('pmu-room-click'); } catch (error) {}
         var dir = opts.dir || 1;
+        /* a click back to the room still leaving reverses the change (motion QA A12): no new moment, nothing built */
+        if (reverseTo(room, ids)) { emit('mount', { room: room, cls: current.cls.name, widgets: ids, transition: true, reversed: true }); return; }
+        lastGhost = null;
         /* rapid switching (WOW-SPEC-3 6.2): a running arrival or room change finishes at once (its animations jump to their
            end, its unbuilt bodies stay unbuilt: they leave with the ghost), and this room change starts from there */
         if (FILM && FILM.holding && FILM.holding()) FILM.cancelHold();
@@ -1256,7 +1301,10 @@
             if (sTop) oldBoard.style.transform = 'translateY(' + (-sTop) + 'px)';
             pendingOld = { el: oldBoard, cards: outgoing, sTop: sTop };
           }
-          else FILM.ghost(outgoing, { dir: dir, sTop: sTop, board: nb, ghost: oldBoard, destroy: destroyCard });
+          else {
+            FILM.ghost(outgoing, { dir: dir, sTop: sTop, board: nb, ghost: oldBoard, destroy: destroyCard });
+            lastGhost = { el: oldBoard, sTop: sTop, lent: Object.keys(reuse).length > 0 };
+          }
         } else outgoing.forEach(function (c) { destroyCard(c); c.remove(); });
         /* what exists in both rooms flies (6.3): the flyers lift at their old place now; they pair with their targets once the
            target bodies are built (the slices) */
@@ -1293,6 +1341,7 @@
         emit('mount', { room: room, cls: current.cls.name, widgets: ids, transition: true, scrolled: sTop });
         return;
       }
+      lastGhost = null;
       flushLeaving(true);
       dropOld();
       cardsNow().forEach(destroyCard);
