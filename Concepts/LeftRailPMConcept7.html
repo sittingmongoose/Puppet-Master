@@ -33505,10 +33505,12 @@ html[data-o55-nier="on"][data-o55-nier-parts~="cursor"]:not(#lgz):not(#lgy) :is(
 html[data-o55-nier="on"][data-o55-nier-parts~="cursor"]:not(#lgz):not(#lgy) #pm-settings-root :is(.workspace-tab:not(.is-current), .manager-tab:not([aria-selected="true"]), .domain-link:not(.active), .rail-scroll > .side-link:not(.active), .pm51-index-group > .index-link:not(.is-active), .resource-row:not([aria-current="true"])):hover {
   background: var(--o55-nier-ink) !important; color: var(--o55-nier-on-ink) !important;
 }
-/* a hovered service row's status line steps half way to the words' ink, so it holds on the look's hover tint (it read
-   4.17-4.97:1 on Basic, Friendly and Retro Dark's tints, where Settings' own fainter hover had kept it at 4.7-5.5; Q16
-   delta review) */
-html:not([data-theme^="glass"]):not(#lgz) #pm-settings-root .resource-row:not([aria-current="true"]):hover .resource-row-meta { color: color-mix(in srgb, var(--text-primary) 50%, var(--text-secondary)); }
+/* a hovered list row's second line (a service's status, a chapter's summary) steps half way to the words' ink, so it
+   holds on the look's hover tint (a service's status read 4.17-4.97:1 on Basic, Friendly and Retro Dark's tints, where
+   Settings' own fainter hover had kept it at 4.7-5.5; a Retro Dark chapter's summary fell from 5.74 to 5.28; Q16 delta
+   review and its row sweep) */
+html:not([data-theme^="glass"]):not(#lgz) #pm-settings-root .resource-row:not([aria-current="true"]):hover .resource-row-meta,
+html:not([data-theme^="glass"]):not(#lgz) #pm-settings-root .domain-link:not(.active):hover small { color: color-mix(in srgb, var(--text-primary) 50%, var(--text-secondary)); }
 /* Settings' section and manager tabs brighten under the pointer as every other strip does (and as they did in these looks
    before the switcher): Glass's resting ink for them outranks its own hover rule, so they stayed in resting ink */
 html:not([data-theme^="glass"]):not(#lgz):not(#lgy) #pm-settings-root :is(.workspace-tab:not(.is-current), .manager-tab:not([aria-selected="true"])):hover:not([data-lg-press]) { color: var(--pm-switch-ink-hover, var(--pm-switch-ink-on)) !important; }
@@ -33723,6 +33725,10 @@ html:not([data-theme^="glass"]) .pmw-menu .pmw-msearch:focus-within, html[data-o
    its own. */
 html:not([data-theme^="glass"]) #panel-settings .pm51-note.tone-attention { border-color: color-mix(in srgb, var(--k3-amber) 32%, transparent); background: color-mix(in srgb, var(--k3-amber) 9%, transparent); }
 html:not([data-theme^="glass"]) #panel-settings .pm51-section.tone-attention { border-color: color-mix(in srgb, var(--k3-amber) 35%, transparent); }
+
+/* ---- Settings' accordion heads take the accent under the pointer: in Friendly Light that mint is too pale on its card
+   (3.09:1, the same on main). It steps toward the words' ink there, still mint. */
+html[data-theme="friendly-light"]:not([data-o55-nier="on"]) #panel-settings .pm51-acc-head:hover .pm51-acc-title { color: color-mix(in srgb, var(--k3-accent) 45%, var(--text-primary)); }
 
 </style>
 <!-- O55:CSS:END -->
