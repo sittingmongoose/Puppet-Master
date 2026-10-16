@@ -30395,9 +30395,10 @@ html[data-theme^="retro"] .pmn-empty-title { letter-spacing: .1em; text-shadow: 
 html[data-theme^="retro"] .pmn-empty-sub { text-transform: none; }
 html[data-theme^="retro"] .pmn-scroll { -webkit-mask-image: none; mask-image: none; }
 html[data-theme^="retro"] .pmn-banner { border-width: 2px; border-color: color-mix(in srgb, var(--pmn-acc) 72%, var(--pmn-line)); box-shadow: var(--pmn-shadow); }
-/* Reduced Motion: no blinking (the cursor stays lit) */
-html[data-theme^="retro"][data-motion="reduced"] :is(.pmn-toast .pmn-title::after, .pmn-cursor) { animation: none; }
-@media (prefers-reduced-motion: reduce) { html[data-theme^="retro"] :is(.pmn-toast .pmn-title::after, .pmn-cursor) { animation: none; } }
+/* Reduced Motion: no blinking (the cursor stays lit). The toast title's cursor is a pseudo-element, which :is() cannot
+   take (the browser dropped that argument, so it kept blinking): it is a selector of its own */
+html[data-theme^="retro"][data-motion="reduced"] .pmn-toast .pmn-title::after, html[data-theme^="retro"][data-motion="reduced"] .pmn-cursor { animation: none; }
+@media (prefers-reduced-motion: reduce) { html[data-theme^="retro"] .pmn-toast .pmn-title::after, html[data-theme^="retro"] .pmn-cursor { animation: none; } }
 
 /* typing: the block cursor rides the typed text; the rest keeps its place, unseen */
 html[data-theme^="retro"] .pmn-title[data-typing]::after { display: none; }
