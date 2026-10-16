@@ -536,7 +536,15 @@
        A ground the pointer rested on is already shown as a preview: it stays through the click's frame and goes in the
        same task as the write, after it, so the old ground is never drawn in the click nor shown for a frame between the
        preview and the pick (review TG-1: new, old, new); a pointer leaving meanwhile does not end it early (endPreview) */
-    var groundPick = 0, pickPending = false;
+    var groundPick = 0, pickPending = false, catPick = 0;
+    /* a background category: its tab shows as chosen in the click's frame, and its tiles (each design drawn on a canvas
+       in this scheme, 43-grounds.js) are built in the task after it, as a pick is (part2's F4 M3 pass: NieR Dark, Scene,
+       112 ms to the next paint, 80 ms in this handler). A later choice in the meantime wins */
+    function chooseCat(b) {
+      var cat = b.getAttribute('data-gcat'), pick = ++catPick;
+      [].forEach.call(root.querySelectorAll('[data-gcat]'), function (x) { setA(x, 'aria-selected', String(x === b)); });
+      afterPaint(function () { if (pick !== catPick || disposed) return; gcat = cat; gSig = ''; paint(); });
+    }
     function chooseGround(gv) {
       clearTimeout(intent);
       if (gv === 'custom' && !String(val('bgImageData') || '').match(/^img:/)) {
@@ -977,7 +985,7 @@
       if (b.getAttribute('role') === 'switch') { toggle(b); return; }
       if (b.hasAttribute('data-step')) { var ns = nextSize(eff(), parseFloat(b.getAttribute('data-step')) < 0 ? -1 : 1); if (ns !== null) put('fontSize', ns); return; }
       if (b.hasAttribute('data-set')) { quickSet(b.getAttribute('data-set')); return; }
-      if (b.hasAttribute('data-gcat')) { gcat = b.getAttribute('data-gcat'); gSig = ''; paint(); return; }
+      if (b.hasAttribute('data-gcat')) { chooseCat(b); return; }
       if (b.hasAttribute('data-solid-color')) { write({ background: 'solid', bgColor: b.getAttribute('data-solid-color') }); return; }
       if (b.getAttribute('data-key') === 'ground') { chooseGround(b.getAttribute('data-value')); return; }
       if (b.hasAttribute('data-preset')) {
