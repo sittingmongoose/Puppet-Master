@@ -1737,6 +1737,9 @@
     lastTier = tier; lastWall = wall; lastMotion = motion;
     if (th !== lastTheme || lg !== lastLg) {
       readSwitch();
+      /* the hover bead is Glass's alone: a look that leaves Glass drops it (a look that adopts the switcher paints every
+         .lg-lens as its chip, so a bead left behind stood on the title bar as a block until a reload; Q16 review F1) */
+      if (!isGlass() && bead) { resetBead(); removeLensElement(bead); bead = null; }
       var enter = isGlass() && (!/^glass/.test(lastTheme || '') || lastLg !== 'on');
       lastTheme = th; lastLg = lg; lenses.forEach(function (L) { L.rect = null; });
       glassSet.forEach(function (e) { e.__lgSig = null; });

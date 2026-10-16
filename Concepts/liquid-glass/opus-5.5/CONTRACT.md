@@ -76,6 +76,7 @@ A token you leave out takes the default in `glass.css` section 12.
 | `--pm-switch-shadow` | none | The drop shadow |
 | `--pm-switch-r` / `--pm-switch-r-in` | 6 px / 3 px | The lens's corner; a label's corner inside it |
 | `--pm-switch-ink` / `--pm-switch-ink-on` | `--text-secondary` / `--text-primary` | The labels' colour, at rest and chosen |
+| `--pm-switch-ink-hover` | `--pm-switch-ink-on` | A resting label's colour under the pointer. A look whose chip is opaque sets it, because its `--pm-switch-ink-on` is meant for the chip and not for the bare ground. |
 | `--pm-switch-mark` | `--accent-primary` | Small marks beside or inside a chosen row (the index's dot, Usage's icon) |
 | `--pm-switch-mark-on` | `--pm-switch-mark` | A mark inside a chosen item when the chip is opaque (Usage's icon, the rail's tab icon) |
 | `--pm-switch-layer` | (unset: over) | `under` draws each lens inside its own strip, over the track and under the labels: an opaque chip with its label in `--pm-switch-ink-on` (Retro's reverse video, NieR's ink bar). Mirrored on `<html data-pm-switch-layer>` |
