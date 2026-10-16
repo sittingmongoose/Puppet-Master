@@ -1394,10 +1394,15 @@
     roomOut.set(ctx, master);
     return { master, comp };
   }
-  function ensureContext() {
-    if (S.ctx) { if (S.ctx.state === 'suspended') S.ctx.resume().catch(() => {}); return S.ctx; }
+  /* The one context and its master chain. Opening the device holds the main thread (about 60 ms on the M3 for the
+     first context; soundClick 61.8 ms of a 104 ms NieR Settings entry, Settings lane trace), so it is made once the
+     page is idle after load (makeAhead, below): made before any gesture it starts suspended, as autoplay rules allow,
+     and the first press or key resumes it. Nothing plays before that first gesture: ensureContext() still answers
+     null until then, so no sound is queued on the suspended context. */
+  function makeContext() {
+    if (S.ctx) return S.ctx;
     const AC = window.AudioContext || window.webkitAudioContext;
-    if (!AC || !hasGesture()) return null;
+    if (!AC) return null;
     try {
       const ctx = new AC();
       const { master, comp } = buildMaster(ctx);
@@ -1407,9 +1412,16 @@
       return ctx;
     } catch (_) { return null; }
   }
+  function ensureContext() {
+    if (!hasGesture()) return null;
+    if (!S.ctx && !makeContext()) return null;
+    if (S.ctx.state === 'suspended') S.ctx.resume().catch(() => {});
+    return S.ctx;
+  }
   S.unlock = function unlock() { const c = ensureContext(); return !!c; };
-  /* The shell may stay silent until a usage warning. Warm its context and takes in idle time after the first
-     gesture, so that warning's flush does not also open the audio device. Onboarding keeps its immediate unlock.
+  /* When the context was not made ahead (sound off at load, the page hidden), it is warmed with its takes in idle time
+     after the first gesture, so a later sound's flush (a usage warning) does not also open the audio device.
+     Onboarding keeps its immediate unlock.
      Opening the device holds the main thread (about 160 ms on the M3, for the first context only), and the first idle
      gap after a click falls in the middle of whatever that click animates: the warm waits for a quiet moment instead,
      1.2 s after the last input with no page change, window, tour or Usage moment running. */
@@ -1430,18 +1442,23 @@
       warmingContext = false; ensureContext();
     });
   }
-  /* A press NieR Mode's parts will voice on its click (their menu sounds, settings kit 19-nier-parts.js), before any
-     context exists: the first sound of the session opened the device inside that click (soundClick 61.8 ms of a
-     104 ms Settings entry on the M3, Settings lane trace). The device opens in the task after the press instead, while
-     the button is still held, so the click plays at once; a press that will not sound waits for the quiet window. */
-  const VOICED = '.page-tab, .pm-segtab-item, button, a[href], input, select, [role="button"], [role="tab"], [role="switch"], [role="checkbox"], [role="radio"], .toggle, .switch';
-  const voicedPress = (e) => e.type === 'pointerdown' && !S.muted && document.documentElement.hasAttribute('data-o55-nier') &&
-    nierSounds() && !!(e.target && e.target.closest && e.target.closest(VOICED));
+  /* made ahead: once the page is idle after load (and again after the sound is turned on), with sound on and the page
+     shown; the first trusted press or key anywhere resumes it, before that gesture's click handlers ask to play */
+  function makeAhead() {
+    if (S.ctx || S.muted || document.visibilityState !== 'visible') return;
+    makeContext();
+  }
+  const aheadSoon = () => (window.requestIdleCallback ? window.requestIdleCallback(makeAhead, { timeout: 4000 }) : window.setTimeout(makeAhead, 1500));
+  if (document.readyState === 'complete') aheadSoon(); else window.addEventListener('load', aheadSoon, { once: true });
+  window.addEventListener('o55:sound', (e) => { if (e && e.detail && e.detail.muted === false) aheadSoon(); });
+  document.addEventListener('visibilitychange', () => { if (!S.ctx && document.visibilityState === 'visible') aheadSoon(); });
+  ['pointerdown', 'keydown'].forEach((ev) => document.addEventListener(ev, (e) => {
+    if (e.isTrusted && S.ctx && S.ctx.state === 'suspended' && !S.muted) S.ctx.resume().catch(() => {});
+  }, true));
   ['pointerdown', 'keydown'].forEach((ev) => document.addEventListener(ev, (e) => {
     if (!e.isTrusted) return;
     lastInput = performance.now();
     if (document.documentElement.hasAttribute('data-o55-open') || document.documentElement.hasAttribute('data-o55-tour')) ensureContext();
-    else if (!S.ctx && voicedPress(e)) window.setTimeout(() => { if (!S.ctx) ensureContext(); }, 0);
     else if (!S.ctx && !warmingContext) {
       warmingContext = true;
       warmWhenQuiet();
@@ -1587,7 +1604,7 @@
      look PCM and invalidate its outstanding jobs; playing Web Audio nodes keep their own tails intact. */
   let warmingLook = null, lookIdle = false;
   function warmLook() {
-    if (!S.ctx || !hasGesture()) return;
+    if (!S.ctx) return;
     const kit = kitFor('tap', {});
     if (warmingLook !== kit) {
       warmingLook = kit; preparing.clear(); nextBanks.clear();
@@ -1602,7 +1619,7 @@
     S.prepare(S.ctx.sampleRate, kit);
   }
   new MutationObserver(() => {
-    if (!S.ctx || !hasGesture() || lookIdle) return;
+    if (!S.ctx || lookIdle) return;
     lookIdle = true; idle(() => { lookIdle = false; warmLook(); });
   }).observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme', 'data-o55-nier', 'data-o55-nier-parts'] });
   /* Exact next-play takes for callouts and the large fixed stings. These recipes ignore musical rotation,
