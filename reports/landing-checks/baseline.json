@@ -114,7 +114,6 @@
    "count": 100,
    "error": "artifact_hash_stale",
    "fingerprints": [
-    "006060b1ba34",
     "00aeaf66762d",
     "0208470a833d",
     "02e88efe93f2",
@@ -201,6 +200,7 @@
     "e831bd4210ec",
     "e875772849eb",
     "e8917947a167",
+    "eb42d94cf1f4",
     "edcc9e4c61f5",
     "ee011077a03a",
     "efa93ac8292c",
@@ -230,9 +230,10 @@
   },
   {
    "check": "audit-governance",
-   "count": 20,
+   "count": 22,
    "error": "event_authority_currentness_source_drift",
    "fingerprints": [
+    "006050d34ec8",
     "022973cb2e3a",
     "1e89965ec8c7",
     "314dffac99b6",
@@ -248,6 +249,7 @@
     "a30d32e5cc7b",
     "a40aa02ebc9f",
     "a56f058b4b3a",
+    "bc789a50a5a6",
     "d5be4dc5e9b9",
     "d94a146403ea",
     "df3850d1ccf2",
@@ -290,11 +292,31 @@
   {
    "check": "audit-governance",
    "count": 1,
+   "error": "event_record_spec_lock_hash_stale",
+   "fingerprints": [
+    "5015550b0f6a"
+   ],
+   "path": "Plans/Spec_Lock.json",
+   "subcheck": "implementation_readiness"
+  },
+  {
+   "check": "audit-governance",
+   "count": 1,
    "error": "implementation_readiness_self_tests_failed",
    "fingerprints": [
     "278ef94b633b"
    ],
    "path": "scripts/pm-implementation-readiness.py",
+   "subcheck": "implementation_readiness"
+  },
+  {
+   "check": "audit-governance",
+   "count": 1,
+   "error": "non_executable_closure_spec_lock_hash_stale",
+   "fingerprints": [
+    "5015550b0f6a"
+   ],
+   "path": "Plans/Spec_Lock.json",
    "subcheck": "implementation_readiness"
   },
   {
@@ -324,10 +346,20 @@
   },
   {
    "check": "audit-governance",
+   "count": 2,
+   "error": "storage_value_registry_spec_lock_hash_stale",
+   "fingerprints": [
+    "332cb1f846c0",
+    "5015550b0f6a"
+   ],
+   "path": "Plans/Spec_Lock.json",
+   "subcheck": "implementation_readiness"
+  },
+  {
+   "check": "audit-governance",
    "count": 100,
    "error": "artifact_hash_stale",
    "fingerprints": [
-    "006060b1ba34",
     "00aeaf66762d",
     "0208470a833d",
     "02e88efe93f2",
@@ -414,6 +446,7 @@
     "e831bd4210ec",
     "e875772849eb",
     "e8917947a167",
+    "eb42d94cf1f4",
     "edcc9e4c61f5",
     "ee011077a03a",
     "efa93ac8292c",
@@ -769,6 +802,16 @@
    "fingerprints": [
     "271f85538f3e"
    ],
+   "path": "Plans/sharding_config.json",
+   "subcheck": "spec_lock"
+  },
+  {
+   "check": "audit-governance",
+   "count": 1,
+   "error": "stale_hash",
+   "fingerprints": [
+    "271f85538f3e"
+   ],
    "path": "Plans/storage-plan.md",
    "subcheck": "spec_lock"
   },
@@ -779,7 +822,37 @@
    "fingerprints": [
     "271f85538f3e"
    ],
+   "path": "Plans/storage_value_registry.json",
+   "subcheck": "spec_lock"
+  },
+  {
+   "check": "audit-governance",
+   "count": 1,
+   "error": "stale_hash",
+   "fingerprints": [
+    "271f85538f3e"
+   ],
    "path": "Plans/usage-feature.md",
+   "subcheck": "spec_lock"
+  },
+  {
+   "check": "audit-governance",
+   "count": 1,
+   "error": "stale_hash",
+   "fingerprints": [
+    "271f85538f3e"
+   ],
+   "path": "scripts/pm-implementation-readiness.py",
+   "subcheck": "spec_lock"
+  },
+  {
+   "check": "audit-governance",
+   "count": 1,
+   "error": "stale_hash",
+   "fingerprints": [
+    "271f85538f3e"
+   ],
+   "path": "scripts/pm-shard-plans.py",
    "subcheck": "spec_lock"
   },
   {
@@ -1025,7 +1098,6 @@
     "1d02f20504cd",
     "20a83d82a118",
     "250ba53ef462",
-    "34210f4b20a2",
     "3fe5270c9f97",
     "434b687c7354",
     "5031034ef416",
@@ -1060,6 +1132,7 @@
     "e1ade002c5fa",
     "e831bd4210ec",
     "e8917947a167",
+    "eb42d94cf1f4",
     "efa93ac8292c",
     "f89fc69bb7f2",
     "faaab5c7061a",
@@ -1082,9 +1155,10 @@
   },
   {
    "check": "run-gates",
-   "count": 20,
+   "count": 22,
    "error": "event_authority_currentness_source_drift",
    "fingerprints": [
+    "006050d34ec8",
     "022973cb2e3a",
     "1e89965ec8c7",
     "314dffac99b6",
@@ -1100,6 +1174,7 @@
     "a30d32e5cc7b",
     "a40aa02ebc9f",
     "a56f058b4b3a",
+    "bc789a50a5a6",
     "d5be4dc5e9b9",
     "d94a146403ea",
     "df3850d1ccf2",
@@ -1142,11 +1217,31 @@
   {
    "check": "run-gates",
    "count": 1,
+   "error": "event_record_spec_lock_hash_stale",
+   "fingerprints": [
+    "5015550b0f6a"
+   ],
+   "path": "Plans/Spec_Lock.json",
+   "subcheck": "validate_implementation_readiness"
+  },
+  {
+   "check": "run-gates",
+   "count": 1,
    "error": "implementation_readiness_self_tests_failed",
    "fingerprints": [
     "278ef94b633b"
    ],
    "path": "scripts/pm-implementation-readiness.py",
+   "subcheck": "validate_implementation_readiness"
+  },
+  {
+   "check": "run-gates",
+   "count": 1,
+   "error": "non_executable_closure_spec_lock_hash_stale",
+   "fingerprints": [
+    "5015550b0f6a"
+   ],
+   "path": "Plans/Spec_Lock.json",
    "subcheck": "validate_implementation_readiness"
   },
   {
@@ -1176,6 +1271,17 @@
   },
   {
    "check": "run-gates",
+   "count": 2,
+   "error": "storage_value_registry_spec_lock_hash_stale",
+   "fingerprints": [
+    "332cb1f846c0",
+    "5015550b0f6a"
+   ],
+   "path": "Plans/Spec_Lock.json",
+   "subcheck": "validate_implementation_readiness"
+  },
+  {
+   "check": "run-gates",
    "count": 50,
    "error": "artifact_hash_stale",
    "fingerprints": [
@@ -1188,7 +1294,6 @@
     "1d02f20504cd",
     "20a83d82a118",
     "250ba53ef462",
-    "34210f4b20a2",
     "3fe5270c9f97",
     "434b687c7354",
     "5031034ef416",
@@ -1223,6 +1328,7 @@
     "e1ade002c5fa",
     "e831bd4210ec",
     "e8917947a167",
+    "eb42d94cf1f4",
     "efa93ac8292c",
     "f89fc69bb7f2",
     "faaab5c7061a",
@@ -1512,7 +1618,27 @@
    "fingerprints": [
     "271f85538f3e"
    ],
+   "path": "Plans/sharding_config.json",
+   "subcheck": "verify_spec_lock"
+  },
+  {
+   "check": "run-gates",
+   "count": 1,
+   "error": "stale_hash",
+   "fingerprints": [
+    "271f85538f3e"
+   ],
    "path": "Plans/storage-plan.md",
+   "subcheck": "verify_spec_lock"
+  },
+  {
+   "check": "run-gates",
+   "count": 1,
+   "error": "stale_hash",
+   "fingerprints": [
+    "271f85538f3e"
+   ],
+   "path": "Plans/storage_value_registry.json",
    "subcheck": "verify_spec_lock"
   },
   {
@@ -1524,11 +1650,31 @@
    ],
    "path": "Plans/usage-feature.md",
    "subcheck": "verify_spec_lock"
+  },
+  {
+   "check": "run-gates",
+   "count": 1,
+   "error": "stale_hash",
+   "fingerprints": [
+    "271f85538f3e"
+   ],
+   "path": "scripts/pm-implementation-readiness.py",
+   "subcheck": "verify_spec_lock"
+  },
+  {
+   "check": "run-gates",
+   "count": 1,
+   "error": "stale_hash",
+   "fingerprints": [
+    "271f85538f3e"
+   ],
+   "path": "scripts/pm-shard-plans.py",
+   "subcheck": "verify_spec_lock"
   }
  ],
  "checks": {
   "audit-governance": {
-   "failure_total": 3100,
+   "failure_total": 4272,
    "status": "fail",
    "subchecks": {
     "audit_closure": {
@@ -1536,17 +1682,17 @@
      "sampled": 100
     },
     "evidence": {
-     "exported": 777,
-     "reported": 777,
+     "exported": 1358,
+     "reported": 1358,
      "sampled": 100
     },
     "implementation_readiness": {
-     "reported": 43,
-     "sampled": 43
+     "reported": 49,
+     "sampled": 49
     },
     "plan_graph": {
-     "exported": 777,
-     "reported": 777,
+     "exported": 1358,
+     "reported": 1358,
      "sampled": 100
     },
     "plan_migration": {
@@ -1563,8 +1709,8 @@
      "sampled": 100
     },
     "spec_lock": {
-     "reported": 12,
-     "sampled": 12
+     "reported": 16,
+     "sampled": 16
     }
    }
   },
@@ -1579,7 +1725,7 @@
    }
   },
   "run-gates": {
-   "failure_total": 3117,
+   "failure_total": 4289,
    "status": "fail",
    "subchecks": {
     "json_syntax": {
@@ -1591,17 +1737,17 @@
      "sampled": 50
     },
     "validate_evidence": {
-     "exported": 777,
-     "reported": 777,
+     "exported": 1358,
+     "reported": 1358,
      "sampled": 50
     },
     "validate_implementation_readiness": {
-     "reported": 43,
-     "sampled": 43
+     "reported": 49,
+     "sampled": 49
     },
     "validate_plan_graph": {
-     "exported": 777,
-     "reported": 777,
+     "exported": 1358,
+     "reported": 1358,
      "sampled": 50
     },
     "validate_plan_migration": {
@@ -1618,17 +1764,17 @@
      "sampled": 50
     },
     "verify_spec_lock": {
-     "reported": 12,
-     "sampled": 12
+     "reported": 16,
+     "sampled": 16
     }
    }
   }
  },
- "commit": "c9dbdc5bd32dc82329426a4c6c209569aeddfc7e",
+ "commit": "5b43e7389199a13ea6d874ff82f193efe172a812",
  "export_buckets": [
   {
    "check": "audit-governance",
-   "count": 776,
+   "count": 1357,
    "error": "artifact_hash_stale",
    "fingerprints": null,
    "path": "Plans/.evidence/pm7-usage-recovery-plan-sharding-2026-08-29/evidence.json",
@@ -1646,7 +1792,7 @@
   },
   {
    "check": "audit-governance",
-   "count": 776,
+   "count": 1357,
    "error": "artifact_hash_stale",
    "fingerprints": null,
    "path": "Plans/.evidence/pm7-usage-recovery-plan-sharding-2026-08-29/evidence.json",
@@ -2136,7 +2282,7 @@
   },
   {
    "check": "run-gates",
-   "count": 776,
+   "count": 1357,
    "error": "artifact_hash_stale",
    "fingerprints": null,
    "path": "Plans/.evidence/pm7-usage-recovery-plan-sharding-2026-08-29/evidence.json",
@@ -2154,7 +2300,7 @@
   },
   {
    "check": "run-gates",
-   "count": 776,
+   "count": 1357,
    "error": "artifact_hash_stale",
    "fingerprints": null,
    "path": "Plans/.evidence/pm7-usage-recovery-plan-sharding-2026-08-29/evidence.json",
@@ -2664,8 +2810,8 @@
   },
   "schema_id": "pm.landing_check.readiness_audit_inputs.v1"
  },
- "recorded_at_utc": "2026-10-15T20:10:11Z",
- "run_dir": "Plans/.plan_migration/pds-20261015-002-current-planunit-snapshot",
+ "recorded_at_utc": "2026-10-16T03:52:40Z",
+ "run_dir": "Plans/.plan_migration/pds-20261016-001-current-planunit-snapshot",
  "schema_id": "pm.landing_check.baseline.v1",
  "untracked_inputs": [
   "tests/agent_packet_restrictions"
