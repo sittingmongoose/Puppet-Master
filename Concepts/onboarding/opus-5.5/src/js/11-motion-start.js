@@ -20,12 +20,13 @@
      paid a whole-page restyle anyway (Home's notice placement 215 ms, the theme's resize kick 389 ms on the P1000,
      Settings lane trace). Callers queued meanwhile run once, in the order they asked. */
   const afterQ = [];
-  let afterRo = null, observing = false, flushing = false;
+  let afterRo = null, observing = false, flushing = false, flushedAt = null;
   const watch = () => { if (!observing && afterQ.length) { observing = true; afterRo.observe(document.documentElement); } };
   const flushAfter = () => {
     if (afterRo && observing) { afterRo.unobserve(document.documentElement); observing = false; }
     const q = afterQ.splice(0);
     flushing = true;
+    flushedAt = document.timeline.currentTime;
     for (const fn of q) { try { fn(); } catch (e) { try { console.error('[PM_AFTER_LAYOUT]', e); } catch (_) { /* none */ } } }
     flushing = false;
     /* asked again from inside this delivery: the next frame's (observing again here would be a loop the browser
@@ -36,7 +37,12 @@
   window.PM_AFTER_LAYOUT = function afterLayout(fn) {
     if (afterQ.indexOf(fn) < 0) afterQ.push(fn);
     if (!afterRo) { requestAnimationFrame(() => setTimeout(flushAfter, 0)); return; }
-    if (!flushing) watch();
+    if (flushing) return;
+    /* asked after this frame's delivery already ran (another observer's delivery, later in the same frame): observing
+       the root now would be one the browser cannot deliver this frame and reports as a loop. The next frame's
+       animation frame callbacks observe it instead; a task between frames lands in that same next frame anyway. */
+    if (flushedAt != null && flushedAt === document.timeline.currentTime) { requestAnimationFrame(watch); return; }
+    watch();
   };
   window.PM_START_ON_SHOWN = function startOnShown(anims, o) {
     const max = (o && o.frames) || 6, held = new Set(), before = o && typeof o.release === 'function' ? o.release : null;
@@ -97,7 +103,7 @@
   const BUSY_ATTRS = [['data-pm-page-transition', 'page'], ['data-pmu-moment', 'usage'], ['data-o55-open', 'onboarding'], ['data-o55-boot-wait', 'boot']];
   const BUSY_IDS = [['o55np-reboot', 'reboot'], ['o55np-calm', 'calm'], ['o55nw-boot', 'boot']];
   const tourCovers = document.getElementsByClassName('o55t-bootcover');
-  let busyFrame = 0;
+  let busyFrame = 0, busyTimer = 0;
   const busyNow = () => {
     for (const [a, why] of BUSY_ATTRS) if (busyRoot.hasAttribute(a)) return why;
     for (const [id, why] of BUSY_IDS) if (document.getElementById(id)) return why;
@@ -106,17 +112,27 @@
     try { const n = window.PM_NIER; if (n && typeof n.wanted === 'function' && typeof n.on === 'function' && !!n.wanted() !== !!n.on()) return 'nier'; } catch (_) { /* none */ }
     return '';
   };
+  /* A spell's end is seen where it happens (an attribute or a cover going, the theme cover's lift ending, a NieR switch
+     painting: busyEnded, from the observer below and from 12-theme-transition.js), and checked in that frame; a slow
+     check (250 ms) catches anything else. A spell can last the whole onboarding session, and a frame callback for
+     each of its frames kept a main frame per vsync for nothing (landing review SH-8). */
+  let busySpell = false;
   const busyCheck = () => {
     busyFrame = 0;
-    if (busyNow()) { busyFrame = requestAnimationFrame(busyCheck); return; }
+    if (!busySpell) return;
+    if (busyNow()) { clearTimeout(busyTimer); busyTimer = setTimeout(() => { busyTimer = 0; if (!busyFrame) busyFrame = requestAnimationFrame(busyCheck); }, 250); return; }
+    busySpell = false; clearTimeout(busyTimer); busyTimer = 0;
     try { window.dispatchEvent(new Event('pm-idle')); } catch (_) { /* none */ }
   };
-  const busyArm = () => { if (!busyFrame) busyFrame = requestAnimationFrame(busyCheck); };
+  const busyArm = () => { if (!busySpell) { busySpell = true; if (!busyFrame) busyFrame = requestAnimationFrame(busyCheck); } };
+  const busyEnded = () => { if (busySpell && !busyFrame) busyFrame = requestAnimationFrame(busyCheck); };
   window.PM_BUSY = function busy() { const why = busyNow(); if (why) busyArm(); return why; };
-  /* a spell begins: an attribute on html, or a cover added to the body */
+  window.PM_BUSY.ended = busyEnded;
+  /* a spell begins or ends: an attribute on html (NieR's own for a switch that paints), a cover added to or taken
+     from the body */
   try {
-    const seen = new MutationObserver(() => { if (!busyFrame && busyNow()) busyArm(); });
-    seen.observe(busyRoot, { attributes: true, attributeFilter: BUSY_ATTRS.map((a) => a[0]) });
+    const seen = new MutationObserver(() => { if (busySpell) busyEnded(); else if (busyNow()) busyArm(); });
+    seen.observe(busyRoot, { attributes: true, attributeFilter: BUSY_ATTRS.map((a) => a[0]).concat(['data-o55-nier']) });
     const watchBody = () => { if (document.body) seen.observe(document.body, { childList: true }); };
     if (document.body) watchBody(); else document.addEventListener('DOMContentLoaded', watchBody, { once: true });
   } catch (_) { /* calls still arm it */ }

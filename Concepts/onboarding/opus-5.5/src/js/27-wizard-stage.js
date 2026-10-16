@@ -21,7 +21,7 @@
     const held = new Set(), deferred = new Set();
     const exiting = () => root.classList.contains('pm8-page-out');
     function releaseExit() {
-      for (const stage of held) stage.classList.remove('wo-stage-hold');
+      for (const stage of held) { stage.classList.remove('wo-stage-hold'); stage.inert = !!stage._woWasInert; delete stage._woWasInert; }
       for (const stage of deferred) stage.classList.remove('wo-stage-defer');
       held.clear(); deferred.clear();
     }
@@ -31,7 +31,8 @@
         releaseExit();
         return;
       }
-      if (!held.size && !deferred.has(outgoing)) { outgoing.classList.add('wo-stage-hold'); held.add(outgoing); }
+      /* the held stage is drawn for the exit only: inert while held, as a stage leaving inside the page is (SH-4) */
+      if (!held.size && !deferred.has(outgoing)) { outgoing.classList.add('wo-stage-hold'); outgoing._woWasInert = outgoing.inert; outgoing.inert = true; held.add(outgoing); }
       for (const stage of deferred) if (stage !== incoming) stage.classList.remove('wo-stage-defer');
       deferred.clear();
       incoming.classList.add('wo-stage-defer'); deferred.add(incoming);

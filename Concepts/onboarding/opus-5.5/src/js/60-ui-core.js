@@ -850,7 +850,9 @@
     /* the app wakes (inert off, its paused loops resumed: a restyle of the whole page) only once both the window and
        its scrim have finished leaving, and a frame later, so that restyle never holds a frame of the exit itself */
     else if (O55.motion.reduced()) finish();
-    else Promise.all([O55.motion.settled(r.querySelector('.o55-win'), { subtree: false, fallback: 700 }), O55.motion.settled(r.querySelector('.o55-scrim'), { subtree: false, fallback: 700 })])
+    /* the fallback allows for the moves being held for frames that are shown (up to 6, PM_START_ON_SHOWN): the P1000's
+       dialog fade ended at +733 ms, past the 700 ms this once was, and finish() hid the window mid-exit (SH-5) */
+    else Promise.all([O55.motion.settled(r.querySelector('.o55-win'), { subtree: false, fallback: 1200 }), O55.motion.settled(r.querySelector('.o55-scrim'), { subtree: false, fallback: 1200 })])
       .then(() => requestAnimationFrame(() => window.setTimeout(finish, 0)));
     window.dispatchEvent(new CustomEvent('o55:onboarding', { detail: { type: reason === 'skip' ? 'skipped' : reason === 'done' ? 'finished' : 'closed', screen: S.sess.screen } }));
   }

@@ -43,7 +43,24 @@
     if (f === 'nier') { fam = 'basic'; nier = true; } else if (f) { fam = f; nier = false; }
     return { theme: fam + '-' + mode, nier, retro: fam === 'retro', mode };
   }
+  /* A look's colours. The look on screen is read from html itself (exact), and remembered for the next cover into it.
+     Any other is read from the probe: NieR through its preview attribute (its colours are written on
+     html[data-o55-nier][data-theme=...], which a probe element never matches), and a look whose background is written
+     on html alone takes it from the table below (landing review SH-2: NieR's covers were Basic's colours, Glass
+     Light's the wrong tint, so the wash dissolved into another colour). */
+  /* Glass writes both its modes' background and accent on html (its later html rules win): read from html on this build,
+     the probe gets #E4CDE4 / #241B36 and violet accents instead. Every other family's probe and html agree. */
+  const HTML_ONLY = { 'glass-light': { bg: '#eef1f6', glow: '#005FCC' }, 'glass-dark': { bg: '#04060d', glow: '#74B9FF' } };
+  const seen = {};
   function coloursOf(to) {
+    const key = to.theme + (to.nier ? '|nier' : '');
+    if (key === (html.getAttribute('data-theme') || '') + (nierOn() ? '|nier' : '')) {
+      try {
+        const cs = getComputedStyle(html), c = { bg: cs.getPropertyValue('--background').trim(), glow: cs.getPropertyValue('--accent-blue').trim() };
+        if (c.bg) { seen[key] = c; return c; }
+      } catch (_) { /* the probe */ }
+    }
+    if (seen[key]) return seen[key];
     try {
       if (!probe || !probe.isConnected) {
         probe = document.createElement('i');
@@ -53,8 +70,10 @@
       }
       probe.setAttribute('data-theme', to.theme);
       probe.toggleAttribute('data-o55-nier', to.nier);
+      if (to.nier) probe.setAttribute('data-o55-nier-preview', to.mode); else probe.removeAttribute('data-o55-nier-preview');
       const cs = getComputedStyle(probe);
-      return { bg: cs.getPropertyValue('--background').trim(), glow: cs.getPropertyValue('--accent-blue').trim() };
+      const c = { bg: cs.getPropertyValue('--background').trim(), glow: cs.getPropertyValue('--accent-blue').trim() };
+      return !to.nier && HTML_ONLY[to.theme] ? Object.assign(c, HTML_ONLY[to.theme]) : c;
     } catch (_) { return {}; }
   }
   function veilFor(mode) {
@@ -111,10 +130,22 @@
   const paintSoon = () => {
     if (painting) return;
     painting = true;
-    whenIdle(() => { painting = false; if (!document.body) return; if (phase !== 'idle') { paintSoon(); return; } warm(paint('light')); warm(paint('dark')); });
+    whenIdle(() => {
+      painting = false;
+      if (!document.body) return;
+      if (phase !== 'idle') { paintSoon(); return; }
+      /* both painted now; warmed one per idle callback, so a pick in that moment never meets both rasters at once, the
+         other mode's first, as the likeliest next pick (landing review SW-1) */
+      const mode = (html.getAttribute('data-theme') || '').split('-')[1] === 'light' ? 'light' : 'dark';
+      const first = paint(mode === 'light' ? 'dark' : 'light'), second = paint(mode);
+      warm(first);
+      whenIdle(() => { if (phase === 'idle') warm(second); });
+    });
   };
   if (document.readyState === 'complete') paintSoon();
   else window.addEventListener('load', paintSoon, { once: true });
+  /* a cover painted while the tab was hidden was never warmed: it is when the tab is shown (SW-2) */
+  document.addEventListener('visibilitychange', () => { if (!document.hidden && Object.keys(veils).some((m) => veils[m].__warm !== veils[m].__key)) paintSoon(); });
   try { new MutationObserver(paintSoon).observe(html, { attributes: true, attributeFilter: ['data-theme', 'data-o55-nier'] }); } catch (_) { /* none */ }
   const startOnShown = (anims) => { if (window.PM_START_ON_SHOWN) window.PM_START_ON_SHOWN(anims); };
   const stopGlow = () => { glowAnims.forEach((a) => { try { a.cancel(); } catch (_) { /* gone */ } }); glowAnims = []; };
@@ -218,6 +249,7 @@
       phase = 'idle';
       veil.removeAttribute('data-on');   /* it stays ready (laid out, opacity 0) for the next pick */
       stopMotion(veil);
+      if (window.PM_BUSY && typeof window.PM_BUSY.ended === 'function') window.PM_BUSY.ended();   /* its 'pm-idle' now */
       paintSoon();
       stopGlow();
       try { out.cancel(); } catch (_) { /* gone */ }
@@ -229,8 +261,22 @@
     const t = ++ticket, to = lookAfter(hint), still = reduced();
     const v = veils[to.mode] && veils[to.mode].__key ? veils[to.mode] : paint(to.mode);   /* painted ahead: no paint now */
     let from = 0;
+    const inMs = still ? 90 : 130;
     if (phase === 'lifting' && veil === v) { try { from = parseFloat(getComputedStyle(v).opacity) || 0; } catch (_) { from = 0; } }
-    else if (veil && veil !== v) { veil.removeAttribute('data-on'); stopMotion(veil); }
+    else if (veil && veil !== v) {
+      /* the other mode's cover, picked while this one lifts: the new one rises from where this one is, and this one is
+         held there until the new one is up, so the page never shows between them (landing review SH-3) */
+      const old = veil;
+      let was = 0;
+      try { was = parseFloat(getComputedStyle(old).opacity) || 0; } catch (_) { was = 0; }
+      const gone = () => { if (veil !== old) { old.removeAttribute('data-on'); stopMotion(old); } };
+      if (was > 0.01) {
+        from = was;
+        let hold = null;
+        try { hold = old.animate([{ opacity: was }, { opacity: was }], { duration: inMs + 40, fill: 'forwards' }); } catch (_) { hold = null; }
+        if (hold) hold.finished.then(() => { gone(); try { hold.cancel(); } catch (_) { /* gone */ } }, gone); else gone();
+      } else gone();
+    }
     veil = v;
     v.removeAttribute('data-warm');
     v.getAnimations().forEach((a) => { if (a !== coverAnim) { try { a.cancel(); } catch (_) { /* gone */ } } });   /* a warm still running */
@@ -239,7 +285,6 @@
     if (typeof window.PM_BUSY === 'function') window.PM_BUSY();   /* its 'pm-idle' once the lift has ended */
     if (coverAnim) { try { coverAnim.cancel(); } catch (_) { /* gone */ } }
     stopGlow();
-    const inMs = still ? 90 : 130;
     coverAnim = v.animate([{ opacity: from }, { opacity: COVER }], {
       duration: inMs, easing: to.retro ? 'steps(3, end)' : 'cubic-bezier(.2, 0, 0, 1)', fill: 'forwards'
     });
@@ -276,7 +321,7 @@
     const ready = () => {
       if (t !== ticket || coverAnim !== covering) return;
       let ct = 0;
-      try { ct = covering.playState === 'finished' ? inMs : Number(covering.currentTime) || 0; } catch (_) { ct = inMs; }
+      try { const c = covering.currentTime; ct = covering.playState === 'finished' || c == null ? inMs : Number(c) || 0; } catch (_) { ct = inMs; }   /* null: cancelled from outside, so treated as in */
       if (ct < at) { requestAnimationFrame(ready); return; }
       phase = 'covered';
       setTimeout(() => {
