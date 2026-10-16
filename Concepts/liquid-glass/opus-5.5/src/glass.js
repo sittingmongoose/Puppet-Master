@@ -1148,22 +1148,35 @@
     hiddenLenses.set(L, cfg);
     if (!showT) showT = setTimeout(checkShown, 400);
   }
-  /* the check reads after the frame's own layout (a ResizeObserver delivery, as afterLayout does), never from the timer
-     itself: a tick that landed while an app was rebuilding a page forced the half-built page through layout (a Settings
-     chapter in Basic Dark: 242 ms, P1000, pm7-motion-settings 2026-10-16) */
-  var shownRO = null, shownEl = null;
+  /* onLayout(fn): fn runs once after the frame's own style and layout, before paint (a ResizeObserver's first delivery for a
+     probe, as afterLayout uses), so every read in it is free. Work that a timer or an attribute change would otherwise
+     run in the middle of an app's rebuild waits there instead (Q16, pm7-motion-settings 2026-10-16, P1000): */
+  var layoutFns = new Set(), layoutRO = null, layoutEl = null;
+  function onLayout(fn) {
+    if (!window.ResizeObserver || !document.body) { fn(); return; }
+    layoutFns.add(fn);
+    if (!layoutRO) layoutRO = new ResizeObserver(function () {
+      layoutRO.unobserve(layoutEl);
+      var fns = Array.from(layoutFns); layoutFns.clear();
+      fns.forEach(function (f) { f(); });
+    });
+    if (!layoutEl || !layoutEl.isConnected) {
+      layoutEl = el('i', { id: 'lg-shown', 'aria-hidden': 'true' });
+      layoutEl.style.cssText = 'position:fixed;left:-8px;top:-8px;width:2px;height:2px;pointer-events:none;visibility:hidden';
+      document.body.appendChild(layoutEl);
+    }
+    layoutRO.observe(layoutEl);
+  }
+  /* - the hidden-lens check, whose tick landing on a Settings chapter change forced the half-built page through 242 ms
+       of layout in Basic Dark */
   function checkShown() {
     showT = 0;
     if (!switchOn()) { hiddenLenses.clear(); return; }
-    if (!window.ResizeObserver || !document.body) { checkShownNow(); return; }
-    if (!shownRO) shownRO = new ResizeObserver(function () { shownRO.unobserve(shownEl); checkShownNow(); });
-    if (!shownEl || !shownEl.isConnected) {
-      shownEl = el('i', { id: 'lg-shown', 'aria-hidden': 'true' });
-      shownEl.style.cssText = 'position:fixed;left:-8px;top:-8px;width:2px;height:2px;pointer-events:none;visibility:hidden';
-      document.body.appendChild(shownEl);
-    }
-    shownRO.observe(shownEl);
+    onLayout(checkShownNow);
   }
+  /* - NieR Mode turned on or off: its tokens re-read and every strip synced, which inside the app's toggle forced the
+       half-restyled page through 760 + 741 ms (on) and 535 ms (off) */
+  function nierResync() { readSwitch(); lenses.forEach(function (L) { L.rect = null; }); syncAll(); }
   function checkShownNow() {
     if (showT) return;
     if (!switchOn()) { hiddenLenses.clear(); return; }
@@ -1743,9 +1756,9 @@
     var o55 = root.hasAttribute('data-o55-open');
     if (o55 !== lastO55) { lastO55 = o55; dirtyAll = true; queueSync(); }
     /* NieR Mode paints over a Basic look without changing data-theme: a look's switcher tokens may differ with it on
-       (Q16), so they are read again and every strip synced */
+       (Q16), so they are read again and every strip synced, after the frame's own style and layout (onLayout) */
     var nier = root.getAttribute('data-o55-nier');
-    if (nier !== lastNier) { lastNier = nier; readSwitch(); lenses.forEach(function (L) { L.rect = null; }); syncAll(); }
+    if (nier !== lastNier) { lastNier = nier; onLayout(nierResync); }
     if (th === lastTheme && lg === lastLg && tier === lastTier && wall === lastWall && motion === lastMotion) return;
     /* the print is about to change under glass that stays glass: hold the one the current frost was made from */
     var wasGlass = lastLg === 'on' && /^glass/.test(lastTheme || '');
