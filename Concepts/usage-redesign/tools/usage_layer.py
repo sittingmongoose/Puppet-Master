@@ -301,13 +301,16 @@ HOST_SCOPE = ':is(#panel-usage,[data-pmu-host])'
 # marked rail, stage head and card rules out; the layer's first box, the drawn card's film layers, and the three
 # element-by-itself rules in: its children hidden, a marked element or part shown, one at opacity 0 drawn at 1) adds
 # one compound use, Usage-only (a hosted board never takes data-pmu-raster): 'compound' 11, 'rewritten' still 2,680 (the
-# warm wait in the scroll pane changes from display to visibility, the same rule).
+# warm wait in the scroll pane changes from display to opacity, the same rule). The arrival's pinned warm box and the
+# waiting plates hidden by opacity alone (2026-10-16, P2-03 fix cycle 2, 05-film.css: data-pmu-warm-pin on the panel
+# itself, Usage-only; data-pmu-warm-held on the board, which a hosted board never takes) add one compound use and one
+# anchor: 'compound' 12, 'rewritten' 2,681.
 # A Usage CSS
 # edit that adds or removes an anchored rule moves 'rewritten': look at what the new rules style (a hosted board gets
 # them too), then re-pin the number here. Any other use of #panel-usage (a child or sibling combinator, a rule for the
 # panel itself, an anchor outside a selector) stops the build: it would be Usage-only, or not a selector, without
 # saying so.
-HOST_SCOPE_EXPECT = {'rewritten': 2680, 'compound': 11}
+HOST_SCOPE_EXPECT = {'rewritten': 2681, 'compound': 12}
 HOST_AT_GROUPS = ('@media', '@supports', '@container', '@layer')
 _ANCHOR_RX = re.compile(re.escape(HOST_ANCHOR) + r'(?![\w-])')
 

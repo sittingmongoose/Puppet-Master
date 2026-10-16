@@ -1921,6 +1921,7 @@
     if (document.hidden || root.hasAttribute('data-o55-open') || root.hasAttribute('data-o55-tour') || root.hasAttribute('data-pm-page-transition')) { warmSoon(1200); return; }
     if (typeof softwareRendered === 'function' && softwareRendered()) { rasterLog.skipped = 'software'; return; }
     var box = warmBox(panel); if (!box) { warmSoon(2000); return; }
+    warmUnpin();   /* the last arrival's pin (the page hidden: nothing to lay out) */
     var w = warm = { room: st.room, key: null, built: false, box: box, shares: {}, at: performance.now() };
     panel.style.setProperty('--pmu-warm-x', box.x + 'px'); panel.style.setProperty('--pmu-warm-y', box.y + 'px');
     panel.style.setProperty('--pmu-warm-w', box.w + 'px'); panel.style.setProperty('--pmu-warm-h', box.h + 'px');
@@ -1941,7 +1942,34 @@
   }
   /* the built board waits for the arrival where it was built: laid out and styled in the warm box, hidden and inert
      (after its raster, or at once without one); nothing changes here, so a park or the end of a pass lays nothing out */
-  function warmPark(w) { if (warm === w) w.parked = true; }
+  function warmPark(w) {
+    if (warm !== w) return;
+    w.parked = true;
+    /* its plates hidden by opacity alone from here (05-film.css data-pmu-warm-held), so the show changes 13 plates'
+       opacity, not the visibility every element inherits */
+    var board = document.getElementById('pmuBoard'); if (board) board.setAttribute('data-pmu-warm-held', '');
+  }
+  /* the page keeps its warm box through the arrival and the visit (05-film.css data-pmu-warm-pin) until the box it
+     shows in changes size; the next warm build takes the pin off while the page is hidden (taken off as the page
+     leaves, it laid the leaving board out again) */
+  var pinRO = null;
+  function warmPin(panel) {
+    warmUnpin();
+    panel.setAttribute('data-pmu-warm-pin', '');
+    var pc = panel.parentNode; if (!pc || !window.ResizeObserver) return;
+    var size = null;
+    pinRO = new ResizeObserver(function (entries) {
+      var b = entries[0] && entries[0].contentRect; if (!b) return;
+      var now = Math.round(b.width) + 'x' + Math.round(b.height);
+      if (size == null) { size = now; return; }
+      if (now !== size) warmUnpin();
+    });
+    pinRO.observe(pc);
+  }
+  function warmUnpin() {
+    if (pinRO) { pinRO.disconnect(); pinRO = null; }
+    var panel = document.getElementById('panel-usage'); if (panel) panel.removeAttribute('data-pmu-warm-pin');
+  }
 
   /* ---- the warm board's raster (P2-03; 05-film.css data-pmu-raster). The warm build laid the board out but never
      painted it, so the first visible entry paid for every GPU program its cards and charts draw with (P1000 F3 cold: 47
@@ -2417,6 +2445,7 @@
     warmLast = { why: why, built: w.built, at: Math.round(performance.now()) };
     var board = document.getElementById('pmuBoard'), panel = document.getElementById('panel-usage');
     if (panel) panel.removeAttribute('data-pmu-warm');
+    if (board) board.removeAttribute('data-pmu-warm-held');
     if (board && board.parentNode) board.parentNode.removeAttribute('data-pmu-warm-wait');
     warmUnhide();
     if (!pageShown() && PMU.board && PMU.board.unmount) PMU.board.unmount();
@@ -2491,7 +2520,7 @@
     warm = null;
     var panel = document.getElementById('panel-usage'), board = document.getElementById('pmuBoard');
     if (board && board.parentNode) board.parentNode.setAttribute('data-pmu-warm-wait', '');
-    if (panel) panel.removeAttribute('data-pmu-warm');
+    if (panel) { warmPin(panel); panel.removeAttribute('data-pmu-warm'); }
     warmUnhide();
     return w;
   }
@@ -2515,12 +2544,12 @@
     var check = function () { if (pageHeld() && ++n < 10) { requestAnimationFrame(function () { after(check); }); return; } requestAnimationFrame(fn); };
     requestAnimationFrame(function () { after(check); });
   }
-  /* the board shows: three attributes, no read (the board is styled and laid out already; the release reads its view
+  /* the board shows: four attributes, no read (the board is styled and laid out already; the release reads its view
      after this frame's lifecycle) */
   function warmShow(w, board) {
     var scroll = board.parentNode;
     if (scroll) scroll.removeAttribute('data-pmu-warm-wait');
-    board.removeAttribute('data-held'); board.removeAttribute('data-hold-bodies');
+    board.removeAttribute('data-held'); board.removeAttribute('data-hold-bodies'); board.removeAttribute('data-pmu-warm-held');
   }
   function warmArrive(w, m, board) {
     afterPage(function () {
