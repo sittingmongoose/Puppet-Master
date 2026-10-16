@@ -54697,8 +54697,8 @@ body.pmu-page-active #panel-dashboard.pm-home-owned.pm8-page-out { position: abs
    main thread, an 834 ms gap with an empty board on screen). So once per look and board class, with a GPU, in idle
    periods after the warm build, the real board is drawn in its warm box at opacity .004 (.001 is culled) on a
    will-change: opacity layer of its own, above the page that shows (tiles under opaque layers are never rastered), a
-   few cards at a time: the "paint" token makes the layer, "chrome" shows the page around the board (the held plates
-   stay hidden), and each card the film marks data-pmu-raster-on is drawn whole, its body too, while the panel itself
+   part at a time: the "paint" token makes the layer, the rail and the stage's head are drawn when marked, "chrome"
+   shows the page around the board (the held plates stay hidden), the room's hero is drawn in pieces, and each card the film marks data-pmu-raster-on is drawn whole, its body too, while the panel itself
    stays hidden (visibility is inherited: a card shown inside a hidden panel restyles only itself, not the page). The
    same pass builds the first screen of Costs and Accounts in the spare board element ("spare") and draws its cards the
    same way. The panel is inert and aria-hidden while data-pmu-raster is set, and taking the tokens and marks off leaves
@@ -54706,8 +54706,13 @@ body.pmu-page-active #panel-dashboard.pm-home-owned.pm8-page-out { position: abs
 .primary-content > #panel-usage.page[data-pmu-warm][data-pmu-raster~="paint"]:not(.active):not(.pm8-page-out) { opacity: .004;
   will-change: opacity; z-index: 2147483000; }
 .primary-content > #panel-usage.page[data-pmu-warm][data-pmu-raster~="chrome"]:not(.active):not(.pm8-page-out) { visibility: visible; }
+#panel-usage[data-pmu-raster~="paint"] :is(.pmu-rail, .pmu-stagehead)[data-pmu-raster-on] { visibility: visible; }
 #panel-usage[data-pmu-raster~="paint"] .pmu-board > .pmu-card[data-pmu-raster-on] { visibility: visible; opacity: 1; }
 #panel-usage[data-pmu-raster~="paint"] .pmu-board > .pmu-card[data-pmu-raster-on] > .pmu-cardbody { opacity: 1; }
+/* the hero drawn in pieces (data-pmu-raster-on="parts"): its plate shows, its elements stay hidden by inheritance from its
+   own children, and each marked piece shows with what it holds (an element hidden by its own rule stays hidden) */
+#panel-usage[data-pmu-raster~="paint"] .pmu-board > .pmu-card[data-pmu-raster-on="parts"] > * { visibility: hidden; }
+#panel-usage[data-pmu-raster~="paint"] .pmu-board > .pmu-card[data-pmu-raster-on="parts"] [data-pmu-raster-part] { visibility: visible; }
 #panel-usage[data-pmu-raster~="spare"] .pmu-scroll > .pmu-board[data-pmu-raster-room] { display: grid; }
 
 /* ---- the held board (3.1 Phase A): held cards are laid out (the build measures every body) but not painted, so the
@@ -61906,8 +61911,9 @@ var PMU_SERIES = {
      painted it, so the first visible entry paid for every GPU program its cards and charts draw with (P1000 F3 cold: 47
      program links, ~1.4 s of GPU main thread, an 834 ms gap). Right after the warm build, in idle periods, the REAL board
      is drawn in place at opacity .004 on a will-change: opacity layer above the page that shows, a few cards at a time:
-     the page's chrome first (the panel shown, every held plate still hidden), then the hero, then the other cards in
-     reading order, two per step, each step held for three animation frames (the frame that paints it, the one whose
+     the page's chrome first in three parts (the rail, the stage's head, then the panel itself, every held plate still
+     hidden), then the hero in pieces, then the other cards in reading order, one per step, each step held for three
+     animation frames (the frame that paints it, the one whose
      commit waits for its activation, and one more), its attribute changes made and flushed in an idle callback so the
      frames only paint. Cards already drawn stay drawn, so each step rasters only its own cards and the GPU links the
      board's programs a few at a time across the steps (one frame with every card linked them all at once: a 0.3-0.4 s
@@ -61928,7 +61934,7 @@ var PMU_SERIES = {
      once. ?pmu-raster=0 leaves it out, ?pmu-raster=1 forces it (a CPU-only VM exercises the code path).
      PMU.film.warmState().raster says what ran. ---- */
   var RASTER = (function () { var m = /[?&]pmu-raster=([01])(?:&|#|$)/.exec(location.search); return m ? m[1] : null; })();
-  var RASTER_ROOMS = ['overview', 'costs', 'accounts'], RASTER_QUIET = 600, RASTER_PARK = 1500, RASTER_BATCH = 2, RASTER_FRAMES = 3,
+  var RASTER_ROOMS = ['overview', 'costs', 'accounts'], RASTER_QUIET = 600, RASTER_PARK = 1500, RASTER_FRAMES = 3,
     RASTER_RESUMES = 40;
   var rast = null, rasterDone = {}, rasterLog = { rooms: [], at: null, ms: null, skipped: WARM_OFF ? 'warm-off' : null };
   function rasterKey(room, cls) {
@@ -62042,7 +62048,7 @@ var PMU_SERIES = {
     var panel = document.getElementById('panel-usage'); if (!panel) return;
     var tok = panel.getAttribute('data-pmu-raster') || '';
     if (/\bpaint\b/.test(tok)) rasterTok(r, r.spare ? 'spare' : null);
-    Array.prototype.forEach.call(panel.querySelectorAll('.pmu-card[data-pmu-raster-on]'), function (c) { c.removeAttribute('data-pmu-raster-on'); });
+    Array.prototype.forEach.call(panel.querySelectorAll('[data-pmu-raster-on], [data-pmu-raster-part]'), function (c) { c.removeAttribute('data-pmu-raster-on'); c.removeAttribute('data-pmu-raster-part'); });
   }
   /* a long gate: the board parks as it would after a pass (display: none, the panel as it was); a spare room built and not
      drawn is torn down and built again at the resume */
@@ -62088,21 +62094,53 @@ var PMU_SERIES = {
     var panel = document.getElementById('panel-usage');
     return rasterOrder(panel ? panel.querySelectorAll('.pmu-scroll > .pmu-board[data-pmu-raster-room] > .pmu-card') : []);
   }
-  /* one step of a room: the next cards drawn (with the ones drawn before), held for RASTER_FRAMES frames, then the next
-     step through the gates */
+  /* one step of a room: the next part drawn (with the ones drawn since the last gate), held for RASTER_FRAMES frames,
+     then the next step through the gates. The board room starts with its chrome in three parts (the rail, the stage's
+     head, then the panel itself: the shell's and the stage's ground and the board's own layers, the held plates still
+     hidden). Then the room's first card (the hero, which holds most of what the board draws) in pieces, RASTER_PIECES at
+     a time (its plate, then its head and body a few elements at a time, then whole), and the other cards one a step. On
+     the RTX 3090 one tile flush links every new program it meets, about 19 ms each under ANGLE D3D11: the hero drawn
+     whole linked 18 (251 ms, a 280 ms freeze of Home's frames); in pieces no step linked more than 6 (GPU probe,
+     2026-10-16) */
+  var RASTER_CHROME = ['.pmu-shell > .pmu-rail', '.pmu-stage > .pmu-stagehead', null], RASTER_PIECES = 4;
+  /* the hero's pieces: its elements down to four levels, each taken whole once it holds fewer than six elements */
+  function rasterPieces(card) {
+    var out = [];
+    var walk = function (el, d) {
+      var kids = el.children;
+      if (d >= 4 || !kids.length || el.getElementsByTagName('*').length < 6) { out.push(el); return; }
+      for (var i = 0; i < kids.length; i++) walk(kids[i], d + 1);
+    };
+    for (var i = 0; i < card.children.length; i++) walk(card.children[i], 1);
+    return out;
+  }
   function rasterBatch(r, kind, cur) {
     var panel = document.getElementById('panel-usage');
     if (!panel) { rasterEnd('no-panel'); return; }
-    var cards = rasterCards(kind), chrome = kind === 'board' && !cur.chrome;
-    if (!chrome && cur.next >= cards.length) { rasterRoomDone(r, cur, cards.length, kind); return; }
-    var batch = chrome ? [] : cards.slice(cur.next, cur.next + RASTER_BATCH);
-    /* the cards drawn since the last gate stay marked (drawn already: nothing of theirs rasters again) */
-    batch.forEach(function (c) { c.setAttribute('data-pmu-raster-on', ''); });
-    rasterTok(r, kind === 'board' ? 'board chrome paint' : 'spare paint');
+    var cards = rasterCards(kind), part = kind === 'board' && cur.chrome < RASTER_CHROME.length ? RASTER_CHROME[cur.chrome] : undefined;
+    if (part === undefined && cur.next >= cards.length) { rasterRoomDone(r, cur, cards.length, kind); return; }
+    var mark = [], pieces = null, card = part === undefined ? cards[cur.next] : null;
+    if (part) { var el = panel.querySelector(part); if (el) mark = [el]; }
+    if (card && cur.next === 0) {
+      pieces = rasterPieces(card);
+      if (cur.piece < pieces.length) {
+        pieces = pieces.slice(cur.piece, cur.piece + RASTER_PIECES);
+        card.setAttribute('data-pmu-raster-on', 'parts');
+        pieces.forEach(function (x) { x.setAttribute('data-pmu-raster-part', ''); });
+      } else pieces = null;
+    }
+    if (card && !pieces) {
+      /* a card whole (the hero after its pieces: its part marks go, it shows as the arrival draws it) */
+      Array.prototype.forEach.call(card.querySelectorAll('[data-pmu-raster-part]'), function (x) { x.removeAttribute('data-pmu-raster-part'); });
+      mark = [card];
+    }
+    /* what was drawn since the last gate stays marked (drawn already: nothing of it rasters again) */
+    mark.forEach(function (x) { x.setAttribute('data-pmu-raster-on', ''); });
+    rasterTok(r, kind !== 'board' ? 'spare paint' : part === undefined || part === null ? 'board chrome paint' : 'board paint');
     void panel.offsetHeight;   /* style and layout now, in idle: the frames that follow only paint */
     var t0 = performance.now();
     rasterFrames(r, RASTER_FRAMES, function () {
-      if (chrome) cur.chrome = true; else cur.next += batch.length;
+      if (part !== undefined) cur.chrome++; else if (pieces) cur.piece += pieces.length; else cur.next++;
       cur.steps++; cur.paint += performance.now() - t0;
       rasterWait(r, rasterStep);
     });
@@ -62127,7 +62165,7 @@ var PMU_SERIES = {
   function rasterStep(r) {
     var room = r.rooms[0];
     if (!room) { rasterEnd(null); return; }
-    if (!r.cur || r.cur.room !== room) r.cur = { room: room, key: rasterKey(room), t0: performance.now(), next: 0, chrome: false, steps: 0, paint: 0, build: 0 };
+    if (!r.cur || r.cur.room !== room) r.cur = { room: room, key: rasterKey(room), t0: performance.now(), next: 0, piece: 0, chrome: 0, steps: 0, paint: 0, build: 0 };
     var cur = r.cur;
     if (room === r.w.room) { rasterBatch(r, 'board', cur); return; }
     /* another room: built unseen in the spare (laid out under the 'spare' token, the page still hidden), then drawn step
@@ -62352,7 +62390,7 @@ var PMU_SERIES = {
     warmState: function () {
       return { warm: warm ? { room: warm.room, built: warm.built, ms: warm.ms || null, box: warm.box } : null, last: warmLast,
         raster: { running: rast ? { rooms: rast.rooms.slice(), gate: rasterLog.gate, parked: rast.parked, resumes: rast.resumes,
-            step: rast.cur ? { room: rast.cur.room, next: rast.cur.next, chrome: rast.cur.chrome, spare: rast.spare } : null } : null,
+            step: rast.cur ? { room: rast.cur.room, next: rast.cur.next, piece: rast.cur.piece, chrome: rast.cur.chrome, spare: rast.spare } : null } : null,
           rooms: rasterLog.rooms.slice(), at: rasterLog.at, ms: rasterLog.ms, parks: rasterLog.parks || 0, skipped: rasterLog.skipped, done: Object.keys(rasterDone) } };
     },
     deferHoverTags: deferHoverTags, last: function () { return last; }, off: off, parsePath: parsePath, yAt: yAt,
