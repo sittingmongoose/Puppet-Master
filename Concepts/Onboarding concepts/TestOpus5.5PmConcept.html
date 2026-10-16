@@ -26468,6 +26468,70 @@ html:is([data-theme^="retro"], [data-o55-nier="on"]) #panel-settings .toggle.pm-
 html:is([data-theme^="retro"], [data-o55-nier="on"]) #panel-settings .toggle.pm-switch-from.on::after { background-color: var(--k3-text-1) !important; }
 
 </style>
+<script id="pm7-motion-finish">
+/* Completion for finite CSS motion. End events retain their original timing;
+   disabled motion completes next frame, cancellation immediately, and a lost
+   event has a computed-duration deadline. A new wait retires the previous wait. */
+(function () {
+  var waits = new WeakMap();
+  window.PM7_MOTION_FINISH = function (el, kind, name, done, endHold) {
+    var key = kind + ':' + name, active = waits.get(el);
+    if (!active) { active = new Map(); waits.set(el, active); }
+    if (active.has(key)) active.get(key)();
+    var ended = false, eventEnded = false, frame = 0, timer = 0, hold = 0;
+    var end = kind + 'end', cancel = kind + 'cancel';
+    function stop() {
+      if (ended) return;
+      ended = true;
+      cancelAnimationFrame(frame); clearTimeout(timer); clearTimeout(hold);
+      el.removeEventListener(end, onEnd); el.removeEventListener(cancel, onCancel);
+      if (active.get(key) === stop) active.delete(key);
+    }
+    function finish() { if (ended) return; stop(); done(el); }
+    function matches(ev) {
+      return ev.target === el && !ev.pseudoElement &&
+        (kind === 'animation' ? ev.animationName === name : ev.propertyName === name);
+    }
+    function onEnd(ev) {
+      if (!matches(ev)) return;
+      clearTimeout(timer); eventEnded = true;
+      el.removeEventListener(end, onEnd); el.removeEventListener(cancel, onCancel);
+      if (endHold) hold = setTimeout(finish, endHold); else finish();
+    }
+    function onCancel(ev) { if (matches(ev)) finish(); }
+    function ms(value) {
+      return (parseFloat(value) || 0) * (value.trim().endsWith('ms') ? 1 : 1000);
+    }
+    active.set(key, stop);
+    el.addEventListener(end, onEnd); el.addEventListener(cancel, onCancel);
+    frame = requestAnimationFrame(function () {
+      if (ended) return;
+      var css = getComputedStyle(el), animation = kind === 'animation';
+      var names = (animation ? css.animationName : css.transitionProperty).split(',').map(function (s) { return s.trim(); });
+      var durations = (animation ? css.animationDuration : css.transitionDuration).split(',');
+      var delays = (animation ? css.animationDelay : css.transitionDelay).split(',');
+      var iterations = animation ? css.animationIterationCount.split(',') : ['1'];
+      var duration = 0;
+      names.forEach(function (n, i) {
+        if (n === 'none' || (n !== name && (animation || n !== 'all'))) return;
+        var d = ms(durations[i % durations.length]);
+        if (d <= 0) return;
+        var count = parseFloat(iterations[i % iterations.length]);
+        if (!Number.isFinite(count)) count = 1;
+        duration = Math.max(duration, d * count + ms(delays[i % delays.length]));
+      });
+      if (duration <= 0) { finish(); return; }
+      // A zero-duration animation may dispatch its end before this frame.
+      // Keep this check alive through an end hold; running motion keeps the
+      // original end-event deadline, without starting another safety timer.
+      if (eventEnded) return;
+      timer = setTimeout(finish, duration + (endHold || 0) + 100);
+    });
+    return stop;
+  };
+})();
+
+</script>
 <!-- O55:CSS:START -->
 <style id="pm-o55-css">
 /* ---- css/00-tokens.css ---- */
@@ -80826,11 +80890,9 @@ status: completed with warnings</pre>
                             void sTab.offsetWidth; /* commit the offset frame */
                             sTab.style.transition = 'transform 250ms cubic-bezier(.22,1,.36,1)';
                             sTab.style.transform = '';
-                            sTab.addEventListener('transitionend', function onSlid(te) {
-                                if (te.propertyName !== 'transform') return;
-                                te.target.style.transition = '';
-                                te.target.style.transform = '';
-                                te.target.removeEventListener('transitionend', onSlid);
+                            window.PM7_MOTION_FINISH(sTab, 'transition', 'transform', function (tab) {
+                                tab.style.transition = '';
+                                tab.style.transform = '';
                             });
                         } else {
                             sTab.style.transition = '';
@@ -87609,8 +87671,7 @@ window.PM12_REFERENCE = {"version":"1.0.0","total":990,"inventory_sha256":"be85c
 
   function onDetailOpenSettled(e) {
     const { inspector } = getDetailNodes();
-    if (!inspector || e.target !== inspector || e.propertyName !== 'transform') return;
-    inspector.removeEventListener('transitionend', onDetailOpenSettled);
+    if (!inspector) return;
     if (detailInspectorVisible) inspector.classList.add('is-settled');
   }
 
@@ -87628,14 +87689,14 @@ window.PM12_REFERENCE = {"version":"1.0.0","total":990,"inventory_sha256":"be85c
     // Force layout so translate3d(102%) is the real transition start (W1 pattern)
     void inspector.offsetWidth;
     document.removeEventListener('keydown', onDetailEsc, true);
-    inspector.removeEventListener('transitionend', onDetailOpenSettled);
+    if (inspector.__pmDetailFinish) inspector.__pmDetailFinish();
     requestAnimationFrame(() => {
       requestAnimationFrame(() => {
         if (!detailInspectorVisible) return;
         scrim?.classList.add('is-open');
         inspector.classList.add('is-open');
         if (motionReduced()) inspector.classList.add('is-settled');
-        else inspector.addEventListener('transitionend', onDetailOpenSettled);
+        else inspector.__pmDetailFinish = window.PM7_MOTION_FINISH(inspector, 'transition', 'transform', onDetailOpenSettled);
       });
     });
     document.addEventListener('keydown', onDetailEsc, true);
@@ -87649,7 +87710,7 @@ window.PM12_REFERENCE = {"version":"1.0.0","total":990,"inventory_sha256":"be85c
     }
     detailInspectorVisible = false;
     document.removeEventListener('keydown', onDetailEsc, true);
-    inspector?.removeEventListener('transitionend', onDetailOpenSettled);
+    if (inspector?.__pmDetailFinish) inspector.__pmDetailFinish();
     if (inspector) {
       inspector.classList.remove('is-settled');
       inspector.classList.add('is-closing');
@@ -87962,7 +88023,7 @@ window.PM12_REFERENCE = {"version":"1.0.0","total":990,"inventory_sha256":"be85c
     const cleanup=()=>{document.removeEventListener('keydown',onEsc,true);wrap._pmCleanup=null;};wrap._pmCleanup=cleanup;
     wrap.addEventListener('mousedown',e=>{if(e.target===wrap)closeDrawerWrap(wrap);});
     portalRoot().append(wrap);document.addEventListener('keydown',onEsc,true);void wrap.offsetWidth;
-    requestAnimationFrame(()=>requestAnimationFrame(()=>{if(!wrap.isConnected)return;wrap.classList.add('is-open');if(motionReduced())wrap.classList.add('is-settled');else{const onSettled=e=>{if(e.target!==drawer||e.propertyName!=='transform')return;drawer.removeEventListener('transitionend',onSettled);if(wrap.isConnected&&wrap.classList.contains('is-open'))wrap.classList.add('is-settled');};drawer.addEventListener('transitionend',onSettled);}wrap.querySelector('button')?.focus();}));
+    requestAnimationFrame(()=>requestAnimationFrame(()=>{if(!wrap.isConnected)return;wrap.classList.add('is-open');if(motionReduced())wrap.classList.add('is-settled');else{window.PM7_MOTION_FINISH(drawer,'transition','transform',()=>{if(wrap.isConnected&&wrap.classList.contains('is-open'))wrap.classList.add('is-settled');});}wrap.querySelector('button')?.focus();}));
     return wrap;
   }
 
@@ -92590,7 +92651,7 @@ openDrawer = function ({ title, subtitle = '', pill = '', status = null, eyebrow
   requestAnimationFrame(() => requestAnimationFrame(() => {
     if (!wrap.isConnected) return; wrap.classList.add('is-open');
     if (motionReduced()) wrap.classList.add('is-settled');
-    else { const onSettled = e => { if (e.target !== drawer || e.propertyName !== 'transform') return; drawer.removeEventListener('transitionend', onSettled); if (wrap.isConnected && wrap.classList.contains('is-open')) wrap.classList.add('is-settled'); }; drawer.addEventListener('transitionend', onSettled); }
+    else { window.PM7_MOTION_FINISH(drawer, 'transition', 'transform', () => { if (wrap.isConnected && wrap.classList.contains('is-open')) wrap.classList.add('is-settled'); }); }
     const first = wrap.querySelector('[data-autofocus], .pm51-panel-body input:not(.pm51-dd-native), .pm51-panel-body .pm51-dd-trigger, .pm51-panel-body textarea, .pm51-panel-body button:not(.pm51-panel-close)') || wrap.querySelector('.pm51-panel-body') || wrap;
     if (!first.matches('input, textarea, button, select, [tabindex]')) first.tabIndex = -1;
     try { first.focus({ preventScroll: true }); } catch (e) { first.focus(); }
@@ -112873,31 +112934,26 @@ html[data-theme^="retro"] #panel-settings .o55-goals-phase-n { border-radius: 0;
       newP.style.setProperty('--pm-dir', String(dir));
       oldP.classList.add('pm8-page-out');
       newP.classList.add('pm8-page-in');
-      var cleanupTimer = 0;
+      var stopEntrance = null, finished = false;
       function cleanupOut() {
         oldP.classList.remove('pm8-page-out');
         oldP.style.top = oldP.style.left = oldP.style.width = oldP.style.height = '';
         if (oldP.__pm8PageCleanup === cleanupOut) oldP.__pm8PageCleanup = null;
       }
       function cleanupIn() {
-        clearTimeout(cleanupTimer);cleanupTimer=0;
+        if (finished) return;
+        finished = true;
+        if (stopEntrance) stopEntrance();
         newP.classList.remove('pm8-page-in');
-        newP.removeEventListener('animationend', onIn);
         if (newP.__pm8PageCleanup === cleanupIn) newP.__pm8PageCleanup = null;
         cleanupOut();
         document.documentElement.removeAttribute('data-pm-page-transition');
         requestAnimationFrame(function () { cachePanelRect(newP); cacheTabMetrics(); });
       }
-      function onIn(ev) {
-        if (ev.animationName !== 'pm8-page-in') return;
-        newP.removeEventListener('animationend', onIn);
-        /* Keep the fully faded outgoing page inert through Settings' own
-           340 ms entrance. Hiding its large subtree at 150 ms forced a
-           main-thread restyle through the middle of the visible animation. */
-        cleanupTimer=setTimeout(cleanupIn,80);
-      }
       oldP.__pm8PageCleanup = cleanupOut; newP.__pm8PageCleanup = cleanupIn;
-      newP.addEventListener('animationend', onIn);
+      /* Keep the existing 80 ms post-end hold: Settings still enters for
+         340 ms while the faded outgoing subtree stays inert. */
+      stopEntrance = window.PM7_MOTION_FINISH(newP, 'animation', 'pm8-page-in', cleanupIn, 80);
     }
     var origGo = window.PM_PAGES.go;
     window.PM_PAGES.go = function (pageId, subTab) {
@@ -121286,16 +121342,14 @@ html[data-theme^="retro"] #panel-settings .o55-goals-phase-n { border-radius: 0;
       if (!dx && !dy) return;
       el.style.transition = 'none';
       el.style.transform = 'translate(' + dx + 'px,' + dy + 'px)';
-      var settle = function (ev) {
-        if (ev.target !== el || ev.propertyName !== 'transform') return;
-        el.removeEventListener('transitionend', settle);
+      var settle = function () {
         el.style.removeProperty('transition');
         el.style.removeProperty('transform');
       };
-      el.addEventListener('transitionend', settle);
       requestAnimationFrame(function () {
         el.style.transition = 'transform var(--mo-widget-reflow-dur, 240ms) var(--mo-widget-reflow-ease, cubic-bezier(.45,0,.4,1))';
         el.style.removeProperty('transform');
+        window.PM7_MOTION_FINISH(el, 'transition', 'transform', settle);
       });
     });
   }
@@ -124565,9 +124619,7 @@ html[data-theme^="retro"] #panel-settings .o55-goals-phase-n { border-radius: 0;
          is the only reliable marker. Removed on settle and by
          clearFlipResidue. */
       element.setAttribute("data-pm-home-flip", "");
-      var settle = function (event) {
-        if (event.target !== element || event.propertyName !== "transform") return;
-        element.removeEventListener("transitionend", settle);
+      var settle = function () {
         element.removeAttribute("data-pm-home-flip");
         if (!element.style.transform) {
           element.style.removeProperty("transition");
@@ -124575,11 +124627,11 @@ html[data-theme^="retro"] #panel-settings .o55-goals-phase-n { border-radius: 0;
           element.style.removeProperty("transform");
         }
       };
-      element.addEventListener("transitionend", settle);
       requestAnimationFrame(function () {
         element.style.transition = "transform var(--pm-home-reflow-dur) var(--pm-home-reflow-ease)";
         element.style.transitionDelay = (index * 16) + "ms";
         element.style.removeProperty("transform");
+        window.PM7_MOTION_FINISH(element, 'transition', 'transform', settle);
       });
     });
   }
@@ -136125,7 +136177,7 @@ policies for tenant isolation, and add migration script.</textarea>
           v._pmCozeEntered = true;
           if (!reduce()) {
             v.classList.add('pm-panel-enter');
-            v.addEventListener('animationend', function h() { v.classList.remove('pm-panel-enter'); v.removeEventListener('animationend', h); });
+            window.PM7_MOTION_FINISH(v, 'animation', 'railPanelIn', function () { v.classList.remove('pm-panel-enter'); });
           }
           schedule(v);
         } else if (!v.classList.contains('active')) {
