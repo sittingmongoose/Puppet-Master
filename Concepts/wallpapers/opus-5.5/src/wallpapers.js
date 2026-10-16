@@ -85,7 +85,11 @@
      caches; this queue stores no images. Hover/focus intent can advance one job outside idle, sharing the same flight. */
   var warmObserver = null, warmRow = null, warmTargets = new Map(), warmDone = new Map(), warmEpoch = 0;
   var warmTimer = 0, warmIdle = 0, warmRunning = false, warmInput = 0, warmPointer = null, warmHover = null, warmRefusals = 0;
-  var warmIntent = null, intentTimer = 0, warmScroll = 0;
+  /* B3 (F5, pm7-liquid-glass for Settings): a hover or focus intent starts once the pointer has been still for
+     INTENT_QUIET ms (a sweep never settles, so it starts none), and an intent has its own flight, so it never waits for
+     a background job on another print (F4 P1000: Forest was pressed while the gallery baked another print for 228 ms).
+     Glass bakes a print once however many prepares ask for it. */
+  var warmIntent = null, intentTimer = 0, warmScroll = 0, intentRunning = false, INTENT_QUIET = 50;
   var retainTimer = 0, retainQueued = false, retainedUrls = new Set(), retainedViewport = '', retainedBy = null, retainedPanel = null;
   function retainActive() {
     var panel = document.getElementById('panel-settings');
@@ -145,16 +149,16 @@
     var n = window.PM_NIER;
     return !!(n && n.wanted && n.on && n.wanted() !== n.on());
   }
-  function warmAllowed(epoch, pressed) {
+  function warmAllowed(epoch, pressed, quiet) {
     var panel = document.getElementById('panel-settings');
     return epoch === warmEpoch && panel && panel.classList.contains('active') && !warmBusy() &&
-      performance.now() - warmScroll >= 120 && (pressed || performance.now() - warmInput >= 120) &&
+      performance.now() - warmScroll >= 120 && (pressed || performance.now() - warmInput >= (quiet == null ? 120 : quiet)) &&
       !(navigator.scheduling && navigator.scheduling.isInputPending && navigator.scheduling.isInputPending());
   }
   function clearIntent() { clearTimeout(intentTimer); intentTimer = 0; warmIntent = null; }
   function intentAllowed(intent) {
     return intent === warmIntent && intent.tile.isConnected && warmRow && warmRow.contains(intent.tile) &&
-      warmTargets.has(intent.tile) && warmAllowed(intent.epoch, intent.kind === 'press');
+      warmTargets.has(intent.tile) && warmAllowed(intent.epoch, intent.kind === 'press', INTENT_QUIET);
   }
   function queueIntent(delay) {
     if (!warmIntent || intentTimer || warmIntent.reading) return;
@@ -162,14 +166,15 @@
       intentTimer = 0;
       var intent = warmIntent; if (!intent) return;
       if (!intent.tile.isConnected || intent.epoch !== warmEpoch) { clearIntent(); return; }
-      if (warmRunning || !intentAllowed(intent)) { queueIntent(120); return; }
+      /* still settling, or another intent running: look again shortly (the quiet period is measured from the last input) */
+      if (intentRunning || !intentAllowed(intent)) { queueIntent(intentRunning ? INTENT_QUIET : 20); return; }
       runWarm(intent.epoch, intent);
-    }, delay == null ? 120 : delay);
+    }, delay == null ? INTENT_QUIET : delay);
   }
   function requestIntent(tile, kind) {
     if (!window.PM_LG || !PM_LG.prepareWallpaper) return;
     clearIntent(); warmIntent = { tile: tile, kind: kind, epoch: warmEpoch, reading: false };
-    queueIntent(kind === 'press' ? 0 : 120);
+    queueIntent(kind === 'press' ? 0 : INTENT_QUIET + 5);
   }
   /* A newly exposed tile may not have its immutable URL cached yet. Fill it after layout, not by forcing style in
      pointerdown or the following choice task. The current request and all guards are checked again before baking. */
@@ -189,7 +194,7 @@
   }
   function runWarm(epoch, intent) {
   var allowed = function () { return intent ? intentAllowed(intent) : !warmIntent && warmAllowed(epoch); };
-  if (warmRunning || !allowed()) { if (intent) queueIntent(); else queueWarm(); return; }
+  if ((intent ? intentRunning : warmRunning || intentRunning) || !allowed()) { if (intent) queueIntent(); else queueWarm(); return; }
   /* IntersectionObserver supplies geometry without a new layout read. Glass bounds frost by encoded bytes,
      so every visible choice can be prepared; opaque looks retain only two decoded images. */
   var glass = look() === 'glass' && root.getAttribute('data-lg') === 'on' && !inNier(), limit = glass ? order.length : 2, viewport = innerWidth + 'x' + innerHeight;
@@ -218,7 +223,7 @@
   /* Glass is authoritative about readiness: an earlier idle success may since have left its byte-bounded cache.
      A kept pair resolves immediately; an evicted one is prepared again only for this deliberate intent. */
   if (intent && !imageUrls.has(id + '-' + mode)) { readIntentUrl(intent, id); return; }
-  warmRunning = true;
+  if (intent) intentRunning = true; else warmRunning = true;
   prepare(imageUrl(id), { canRun: allowed }).catch(function () { return false; }).then(function (ok) {
     /* Retry a cover/input cancellation when idle again. A failed image gets one attempt per viewport/epoch;
        the explicit choice path can still retry it without a background error spinning an idle loop. */
@@ -227,11 +232,14 @@
       while (warmDone.size > (glass ? order.length : 2)) warmDone.delete(warmDone.keys().next().value);
     }
     if (intent === warmIntent && (ok || allowed())) clearIntent();
-  }).then(function () { warmRunning = false; if (warmIntent) queueIntent(0); else queueWarm(); });
+  }).then(function () {
+    if (intent) intentRunning = false; else warmRunning = false;
+    if (warmIntent) { clearTimeout(intentTimer); intentTimer = 0; queueIntent(0); } else queueWarm();
+  });
   }
   function queueWarm() {
     if (warmIntent) { queueIntent(); return; }
-    if (warmTimer || warmIdle || warmRunning || !warmTargets.size || !window.requestIdleCallback ||
+    if (warmTimer || warmIdle || warmRunning || intentRunning || !warmTargets.size || !window.requestIdleCallback ||
         !window.PM_LG || !PM_LG.prepareWallpaper) return;
     warmIdle = requestIdleCallback(function (deadline) {
       warmIdle = 0;
