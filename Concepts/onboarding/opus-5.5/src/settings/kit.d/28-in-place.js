@@ -155,7 +155,17 @@ function o55cKids(live, fresh) {
     next = f.nextSibling;
     const l = pair.get(f);
     const node = l ? o55cNode(l, f) : f;
-    if (l && node !== l) { if (at === l) at = l.nextSibling; l.remove(); }   /* replaced outright */
+    if (l && node !== l) {
+      /* A chapter's outgoing compositor layer survives until the incoming stage has painted. It no longer has
+         live IDs or input targets, and the foreign-node rule keeps later patches away from this short-lived layer. */
+      if (typeof o55NavRetainStage === 'function' && o55NavRetainStage(l, node)) {
+        live.insertBefore(node, l);
+        if (at === l) at = l.nextSibling;
+        continue;
+      }
+      if (at === l) at = l.nextSibling;
+      l.remove();
+    }
     skip();
     if (node === at) { at = at.nextSibling; continue; }
     if (node === l) live.insertBefore(l, at);

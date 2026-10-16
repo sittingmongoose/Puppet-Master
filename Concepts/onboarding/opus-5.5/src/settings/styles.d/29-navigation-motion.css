@@ -4,6 +4,9 @@
   background-color: color-mix(in srgb, var(--k3-accent) 20%, var(--k3-surface-0));
   box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--k3-accent) 55%, transparent);
 }
+/* Keep the outgoing and incoming chapter in the same coordinate space and promote before input. */
+#panel-settings .workspace-shell { position: relative; }
+#panel-settings .workspace-stage { will-change: opacity, transform; }
 /* Layout and paint of distant settings sections need not join the chapter's first frame. Auto size remembers their
    measured height, so returning to a section keeps its scroll geometry and the place holder can retain its anchor. */
 #panel-settings .workspace-block-body > .settings-section:nth-child(n+3) {
