@@ -164662,7 +164662,8 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
     var by=attr(el,'aria-labelledby');
     if(by){var text=by.split(/\s+/).map(function(id){var node=document.getElementById(id);return visibleText(node);}).filter(Boolean).join(' ');if(text)return text;}
     var aria=attr(el,'aria-label');if(aria)return aria;
-    if(el&&el.labels&&el.labels.length){var labels=Array.prototype.map.call(el.labels,visibleText).filter(Boolean).join(' ');if(labels)return labels;}
+    var ls=el&&(el.id||(el.closest&&el.closest('label')))?el.labels:null,ln=ls?ls.length:0;   /* O55: read once (B6) */
+    if(ln){var own=[];for(var li=0;li<ln;li++)own.push(ls[li]);var labels=own.map(visibleText).filter(Boolean).join(' ');if(labels)return labels;}
     var text=visibleText(el);if(text)return text;
     return '';
   }
