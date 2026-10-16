@@ -217715,7 +217715,7 @@ try { if (window.PM_HOME && typeof window.PM_HOME.boot === 'function') window.PM
     if (!switchOn()) { hiddenLenses.clear(); return; }
     hiddenLenses.forEach(function (cfg, L) {
       if (!L.strip.isConnected || (cfg.kind === 'lensIcon' && !isGlass())) { hiddenLenses.delete(L); return; }
-      if (!visible(L.strip)) return;
+      if (stripParked(L.strip) || !visible(L.strip)) return;
       var t = cfg.pick ? cfg.pick(L.strip) : L.strip.querySelector(cfg.items + (cfg.active || '.active'));
       if (t && visible(t)) { hiddenLenses.delete(L); syncStrip(cfg, L.strip); }
     });
@@ -218270,6 +218270,7 @@ try { if (window.PM_HOME && typeof window.PM_HOME.boot === 'function') window.PM
     applyWall();
     if (!isGlass()) { unmountAll(switchLook); if (!switchLook) return; }
     else syncSurfaces(scopes, sheets);
+    var busy = pageBusy();
     STRIPS.forEach(function (cfg) {
       var found = cfg.many ? scopedNodes(cfg.sel, scopes) : [document.querySelector(cfg.sel)].filter(function (s) {
         return s && (!scopes || scopes.some(function (p) { return p.contains(s) || s.contains(p); }));
@@ -218277,9 +218278,32 @@ try { if (window.PM_HOME && typeof window.PM_HOME.boot === 'function') window.PM
       strips.forEach(function (s) { if (s.matches(cfg.sel) && found.indexOf(s) < 0) found.push(s); });
       /* the activity bar's icon lens is Glass's own rail design; an adopting look keeps its own lit icon there */
       if (cfg.kind === 'lensIcon' && !isGlass()) { found.forEach(function (s) { var L = lenses.get(s); if (L) { disposeLens(L); lenses.delete(s); } }); return; }
-      found.forEach(function (s) { syncStrip(cfg, s); });
+      found.forEach(function (s) {
+        if (stripParked(s)) { var P = lenses.get(s); if (P && P.rect) { stopLensTravel(P); P.lens.style.opacity = '0'; P.rect = null; } return; }
+        /* while the page is busy, a strip whose lens is not on screen yet waits for 'pm-idle'; a shown lens follows now */
+        if (busy && !(lenses.get(s) && lenses.get(s).rect)) { deferStrip(s); return; }
+        syncStrip(cfg, s);
+      });
     });
     if (isGlass()) scanMenus(scopes);
+  }
+  /* strips Glass leaves alone for now (pm7-motion-editor, 2026-10-16: during Settings' calm cover, 47 style reads hit the
+     editor's parked Customize screen within 2.8 s). A strip inside a parked or hidden subtree (the prepared Customize
+     screen, a [hidden] window) is not measured, and a lens it showed is put out; it is synced when that subtree shows,
+     which the root observer reports. An inert subtree is not skipped: the page behind a dialog stays on screen. While window.PM_BUSY() reports a cover or transition, a strip whose lens is not on screen waits for the
+     page's 'pm-idle'. Nothing here is read from style or layout. */
+  var STRIP_PARKED = '.pmed-prepared, [hidden]', busyStrips = new Set(), busyWait = false;
+  function stripParked(s) { try { return !!s.closest(STRIP_PARKED); } catch (e) { return false; } }
+  function pageBusy() { try { return typeof window.PM_BUSY === 'function' && !!window.PM_BUSY(); } catch (e) { return false; } }
+  function deferStrip(s) {
+    busyStrips.add(s);
+    if (busyWait) return;
+    busyWait = true;
+    window.addEventListener('pm-idle', function onIdle() {
+      window.removeEventListener('pm-idle', onIdle); busyWait = false;
+      busyStrips.forEach(function (x) { if (x.isConnected) settleStrips.add(x); }); busyStrips.clear();
+      queueSync();
+    });
   }
   function queueSync(scope) {
     if (scope && scope.nodeType === 1) dirtyScope(scope);
