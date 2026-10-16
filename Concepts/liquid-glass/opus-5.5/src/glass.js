@@ -2015,7 +2015,8 @@
          that write and the frost writes forced a full extra restyle (166 ms on M3). Keep the existing source cache
          current without flushing layout; the next genuinely different theme/attribute key still resolves normally. */
       if (wallSourceUrl !== url) { wallSourceUrl = url; wallSourceId++; }
-      wallSourceKey = [root.getAttribute('data-theme'), root.getAttribute('data-lg-wall'), root.style.getPropertyValue('--lg-wall')].join('|');
+      wallSourceKey = id + '-' + (/-light$/.test(root.getAttribute('data-theme') || '') ? 'light' : 'dark');
+      wallSourceUrls.set(wallSourceKey, url);
       applyFrost(rec); return true;
     },
     wall: function (id) { setWall(id || 'look'); }, walls: function () { return catalogWalls().map(function (w) { return { id: w.id, name: w.name, family: w.family }; }); } };

@@ -1167,7 +1167,9 @@ const pm51OriginalBoot = boot;
 boot = function () { const r = pm51OriginalBoot.apply(this, arguments); if (window.PM12_KIMI && typeof window.PM12_KIMI === 'object') window.PM12_KIMI.renderApp = (...args) => renderApp(...args); return r; };
 
 /* ---------- motion: no blank frames ----------------------------------- */
+let pm51RevealReady = null;
 armSectionReveal = function () {
+  if (pm51RevealReady) { pm51RevealReady.disconnect(); pm51RevealReady = null; }
   try { PM51.applyFilters(root); } catch (e) { /* filters are a convenience; never block reveal */ }
   /* reduced motion, the system's or the app's own Reduce motion: every section is simply there */
   if (o55Still()) {
@@ -1177,13 +1179,14 @@ armSectionReveal = function () {
   const nodes = root.querySelectorAll('.section-block, .settings-section, .manager-section');
   if (!nodes.length) return;
   const scroller = root.querySelector('#settings-document');
+  const reveal = () => {
   const viewBottom = scroller ? scroller.getBoundingClientRect().bottom + 120 : window.innerHeight + 120;
   if (!revealObserver) {
     revealObserver = new IntersectionObserver(entries => {
       for (const entry of entries) { if (!entry.isIntersecting) continue; entry.target.classList.add('is-revealed'); entry.target.classList.remove('will-reveal'); revealObserver.unobserve(entry.target); }
     }, { threshold: 0.04 });
   } else revealObserver.disconnect();
-  const pending = [...nodes].filter(node => !node.classList.contains('is-revealed'))
+  const pending = [...nodes].filter(node => node.isConnected && !node.classList.contains('is-revealed'))
     .map(node => ({ node, inView: node.getBoundingClientRect().top < viewBottom }));
   for (const { node, inView } of pending) {
     node.classList.add('section-block');
@@ -1191,6 +1194,14 @@ armSectionReveal = function () {
     node.classList.add('will-reveal');
     revealObserver.observe(node);
   }
+  };
+  /* Mounting and filtering have just written the chapter. Read its reveal positions after ordinary layout, before
+     its first paint, rather than forcing the whole chapter's style/layout inside the build task. A newer mount
+     replaces this one pending read, so freshly hydrated workspaces join the same batch. */
+  if (typeof ResizeObserver === 'function') {
+    const ready = new ResizeObserver(() => { ready.disconnect(); if (pm51RevealReady === ready) pm51RevealReady = null; reveal(); });
+    pm51RevealReady = ready; ready.observe(scroller || root);
+  } else requestAnimationFrame(reveal);
 };
 
 /* ---------- setting Details inspector ---------------------------------- */
