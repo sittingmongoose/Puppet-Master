@@ -192224,7 +192224,7 @@ function open(opts) {
     setT(root.querySelector('.pmt-cz-framelabel'), scope === 'tab' ? 'This editor' : 'This editor, like all editors');
     paintTokens();
     roving();
-    if (!closed) PMW.czFit(root);
+    if (!closed) PMW.czFit(root, fitLater || undefined);
   }
   function setPressed(id, mineKeys) {
     var s = SETS.filter(function (x) { return x.id === id; })[0]; if (!s) return false;
@@ -192816,6 +192816,17 @@ function open(opts) {
   }
   var closed = true, disposed = false, visit = 0, parkedAtTop = true;
   var importError = root.querySelector('[data-import-error]');
+  /* An open whose fit is not cached (the editor's own entry places the sheet at a new width) measured its rows right
+     after its writes, so the first read paid a forced layout of the menu's close, the click and the whole sheet (P1000
+     54.5 ms, Glass open-from-editor). The open's fit starts in its frame's own layout instead (PM_AFTER_LAYOUT, before
+     paint) and finishes in that same delivery, so no unfitted row is ever drawn. */
+  var fitLater = null;
+  function fitInFrame(fn) {
+    if (fitLater !== fitInFrame || !window.PM_AFTER_LAYOUT) { fn(); return; }
+    var at = visit;
+    fitLater = null;
+    window.PM_AFTER_LAYOUT(function () { if (!closed && at === visit && root._czFit === null) fn(); });
+  }
   /* The sheet appears under a pointer that rests on Settings. Hit at once, the pointer's hover left Settings' column in
      the opening frame, and the page's :hover rules restyled that whole column (about 1100 icons and labels: 120 ms on
      Nas1, 29 ms on the P1000) before the sheet's first frame. Until the pointer next moves, presses or scrolls, or the
@@ -192938,7 +192949,9 @@ function open(opts) {
     if (search.value) { search.value = ''; filter(''); }
     if (inst.customizing) inst.customizing(true);
     syncPreview();
-    if (needsPaint) paint(); else PMW.czFit(root);
+    fitLater = fitInFrame;
+    if (needsPaint) paint(); else PMW.czFit(root, fitInFrame);
+    fitLater = null;
     focusStopsOn(true);
     root.removeAttribute('aria-hidden');
     passThrough(true);
