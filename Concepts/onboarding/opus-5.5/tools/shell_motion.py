@@ -527,7 +527,20 @@ FIELD = [
      'pointer field: look values after layout'),
 ]
 
-PATCHES = STATUS_BAR + HOVER_TAGS + THEME + PAGES + CENSUS + ANSWER_FIRST + CHAT + EDGES + FIELD
+TITLE_MENUS = [
+    # T8 (speed team, 2026-10-16): every click outside the title-bar menus, and every Escape, wrote aria-expanded on
+    # every menu's trigger whether it changed or not; each write queues a record to every observer and invalidates the
+    # trigger's style. It is written only when it changes. The menus close exactly as before.
+    ("      if (btn) btn.setAttribute('aria-expanded', 'false');\n"
+     "    });\n"
+     "  }\n",
+     "      if (btn && btn.getAttribute('aria-expanded') !== 'false') btn.setAttribute('aria-expanded', 'false');   /* O55: only a change (T8) */\n"
+     "    });\n"
+     "  }\n",
+     'title-bar menus: aria-expanded written only when it changes'),
+]
+
+PATCHES = STATUS_BAR + HOVER_TAGS + THEME + PAGES + CENSUS + ANSWER_FIRST + CHAT + EDGES + FIELD + TITLE_MENUS
 
 # The census's own frame requests, between scheduleScan and refresh (scan, delayed scan, live, delayed live, and their
 # continuations): every one becomes censusFrame.
