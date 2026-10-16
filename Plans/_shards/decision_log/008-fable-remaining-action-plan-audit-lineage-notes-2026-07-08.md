@@ -2,9 +2,9 @@
 
 Source: `Plans/Decision_Log.md`
 
-Source lines: L14489-L16050
+Source lines: L14489-L16051
 
-Source SHA256: `2bf6b8ad8b6225f89c5ad05828297b7beff7b7fdb90c1575fec8a9bd1e5094a9`
+Source SHA256: `cb61bff04149f02312f3c8eb9ac7e2bbfab04977f1e69256d8ce59466acdceb1`
 
 ---
 
@@ -1515,14 +1515,15 @@ canonical_text: >-
   lane (main 89d1a6c057) makes the wallpaper owner's synchronous, cache-only source query the one way a
   consumer finds the selected print (DR-073); its other changes (the Customize screen kept ready, Flicker
   on the compositor, nothing drawn for a terminal off screen, idle and busy waits) change no product
-  contract. The Usage lane (main d2e038618b) implements F3-628's cancel and reversal rules (DL-215) and
-  adds no contract. The shell lane (main b9a08db90f) adds ACD-475's one shared busy signal, look-cover
-  answer and on-time start, and F3-077's look-cover sequence. Drafted from branch heads, to be confirmed
-  at their main commits when they land together: the Glass lane (90565f62ea) adds F3-652's worker bakes,
-  idle shader warm-up and cover-only strip deferral; the Settings lane (0d510df290) adds DR-073's
-  wallpaper preparation, F3-598's Reduced Motion calm cover and SSYS-053's acknowledged, coalesced
-  navigation. The editor lane and Q13 are added when they land. Concept evidence is not native
-  certification.
+  contract, nor does its B5 follow-up (main dd511b683e), which applies a look change to a hidden terminal
+  as it shows and to a visible one after the frame's layout, inside F3-642's live-apply rule. The Usage
+  lane (main d2e038618b) implements F3-628's cancel and reversal rules (DL-215) and adds no contract. The
+  shell lane (main b9a08db90f) adds ACD-475's one shared busy signal, look-cover answer and on-time start,
+  and F3-077's look-cover sequence. Drafted from branch heads, to be confirmed at their main commits when
+  they land together: the Glass lane (90565f62ea) adds F3-652's worker bakes, idle shader warm-up and
+  cover-only strip deferral; the Settings lane (0d510df290) adds DR-073's wallpaper preparation, F3-598's
+  Reduced Motion calm cover and SSYS-053's acknowledged, coalesced navigation. The editor lane and Q13 are
+  added when they land. Concept evidence is not native certification.
 gui_related: true
 gui_classification_reason: Contracts Added By The Motion Fix Lanes.
 split_recommended: false
