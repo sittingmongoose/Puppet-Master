@@ -98950,7 +98950,19 @@ sizeSettingsEndSpace = function (scroller, end) {
 };
 
 /* ---------- watching layout: one observer for the page's blocks, sections, the anchor's ancestors ------------------- */
-let o55pObserver = null, o55pWatched = null;
+let o55pObserver = null, o55pWatched = new Set(), o55pWatchNext = null, o55pWatchFrame = 0, o55pResizeDepth = 0;
+function o55pInResize(fn) {
+  o55pResizeDepth++;
+  try { return fn(); } finally { o55pResizeDepth--; }
+}
+function o55pApplyWatch(want) {
+  /* Keep unchanged observations alive. Re-observing every ancestor during a delivery queues shallower targets which
+     cannot deliver in that cycle, producing an undelivered-notifications loop warning. Anchor reads and corrections
+     still happen after layout; only an observer-delivery change to the target set waits for the next frame. */
+  o55pWatched.forEach(n => { if (!want.has(n)) o55pObserver.unobserve(n); });
+  want.forEach(n => { if (!o55pWatched.has(n)) o55pObserver.observe(n); });
+  o55pWatched = want;
+}
 /* Layout is done when this runs, so reading it costs nothing. The end space is sized here too: nothing the observer
    watches changes size when it does (the document column and the end space itself are left out on purpose). */
 function o55pOnResize(entries) {
@@ -98964,7 +98976,7 @@ function o55pOnResize(entries) {
 }
 function o55pWatch(sc, anchorEl) {
   if (typeof ResizeObserver !== 'function' || !sc) return;
-  if (!o55pObserver) o55pObserver = new ResizeObserver(o55pOnResize);
+  if (!o55pObserver) o55pObserver = new ResizeObserver(entries => o55pInResize(() => o55pOnResize(entries)));
   const want = new Set([sc]);
   sc.querySelectorAll('[data-workspace-block], [data-continuous-workspace-body], [data-section-id]').forEach(n => want.add(n));
   /* the anchor's ancestors and everything beside them: any size change above the anchor is one of these */
@@ -98972,10 +98984,18 @@ function o55pWatch(sc, anchorEl) {
     if (n.classList.contains('domain-document')) break;   /* the place resizes the reserve and the end space in here */
     want.add(n); for (let c = n.parentElement && n.parentElement.firstElementChild; c; c = c.nextElementSibling) if (!c.matches('.settings-end-space, .o55-top-reserve')) want.add(c);
   }
-  if (o55pWatched && want.size === o55pWatched.size && [...want].every(n => o55pWatched.has(n))) return;
-  o55pObserver.disconnect();
-  want.forEach(n => o55pObserver.observe(n));
-  o55pWatched = want;
+  if (o55pResizeDepth) {
+    o55pWatchNext = want;
+    if (!o55pWatchFrame) o55pWatchFrame = requestAnimationFrame(() => {
+      o55pWatchFrame = 0;
+      const next = o55pWatchNext; o55pWatchNext = null;
+      if (next) o55pApplyWatch(next);
+    });
+  } else {
+    if (o55pWatchFrame) cancelAnimationFrame(o55pWatchFrame);
+    o55pWatchFrame = 0; o55pWatchNext = null;
+    o55pApplyWatch(want);
+  }
 }
 PLACE.watch = function () { const sc = o55pScroller(); if (sc) o55pWatch(sc, this.anchor && this.anchor.el); };
 
@@ -98993,13 +99013,13 @@ const o55pBusy = () => { const now = performance.now(); return pendingScroll || 
 let o55pAfter = null;
 function o55pReadSettled(sc) {
   if (typeof ResizeObserver !== 'function') { if (o55pShown(sc)) PLACE.hold('read'); return; }
-  if (!o55pAfter) o55pAfter = new ResizeObserver(() => {
+  if (!o55pAfter) o55pAfter = new ResizeObserver(() => o55pInResize(() => {
     o55pAfter.disconnect();
     if (PLACE.mode === 'hold' || o55pSettle) return;   /* a hold, or a new jump or scroll, came first */
     if (o55pBusy()) { o55pSettleSoon(); return; }
     const s = o55pScroller();
     if (s && s.isConnected && o55pShown(s)) PLACE.hold('read');
-  });
+  }));
   o55pAfter.disconnect();
   o55pAfter.observe(sc);
 }
