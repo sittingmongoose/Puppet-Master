@@ -172,34 +172,60 @@
 
   /* ---- the wallpaper behind the terminal, for the lens: the print the app paints (wallpapers.js's contract: the id on
      html[data-lg-wall], its image in --lg-wall-<id>-<mode>), loaded once per print; never body's computed image, which can
-     hold the previous print for a moment while a choice is in flight ---- */
+     hold the previous print for a moment while a choice is in flight.
+     Where it comes from: the app's cache first (PM_WALLPAPERS.sourceUrl(id, mode): the URL, undefined while not cached,
+     null for no image), which reads no style. Only when that does not know ('' is taken as not known too, and so is a
+     host without it) is the print's custom property read, and only by a lens that is drawing, never by the watch on the
+     root: that read is a whole-app style recalc (about 98 ms on every wallpaper pick, pm7-motion-settings' trace) ---- */
   var wall = { key: '', img: null, loading: '' };
-  function wallNow() {
-    var root = document.documentElement, theme = root.getAttribute('data-theme') || '', glass = /^glass/.test(theme);
-    if (root.getAttribute('data-o55-nier') === 'on') return null;
+  /* the print a lens would show now, from the root's attributes alone: '<id>-<light|dark>', or '' for none */
+  function wallKey() {
+    var root = document.documentElement, theme = root.getAttribute('data-theme') || '';
+    if (root.getAttribute('data-o55-nier') === 'on') return '';
     var id = root.getAttribute('data-lg-wall') || '';
-    if (!id || (!glass && !root.hasAttribute('data-lg-wall-any'))) return null;
-    var key = id + '-' + (/-light$/.test(theme) ? 'light' : 'dark');
+    if (!id || (!/^glass/.test(theme) && !root.hasAttribute('data-lg-wall-any'))) return '';
+    return id + '-' + (/-light$/.test(theme) ? 'light' : 'dark');
+  }
+  function wallCached(key) {
+    var W = window.PM_WALLPAPERS, i = key.lastIndexOf('-'), u;
+    if (W && typeof W.sourceUrl === 'function') { try { u = W.sourceUrl(key.slice(0, i), key.slice(i + 1)); } catch (e) { u = undefined; } }
+    return u === null || (typeof u === 'string' && u) ? u : undefined;
+  }
+  function wallLoad(key, url) {
+    wall.loading = key;
+    if (!url) { wall.key = key; wall.img = null; return; }
+    var img = new Image();
+    img.onload = function () { if (wall.loading !== key) return; wall.key = key; wall.img = img; shownSig = key; window.dispatchEvent(new CustomEvent('pmt-wall')); };
+    img.onerror = function () { if (wall.loading === key) { wall.key = key; wall.img = null; } };
+    img.src = url;
+  }
+  /* for a lens that is drawing: the print, once loaded (null until then, and for none) */
+  function wallNow() {
+    var key = wallKey();
+    if (!key) return null;
     if (wall.key === key) return wall.img ? wall : null;
     if (wall.loading !== key) {
-      wall.loading = key;
-      var v = '';
-      try { v = getComputedStyle(root).getPropertyValue('--lg-wall-' + key).trim(); } catch (e) {}
-      var m = /url\(\s*["']?([^"')]+)["']?\s*\)/.exec(v);
-      if (!m) { wall.key = key; wall.img = null; return null; }
-      var img = new Image();
-      img.onload = function () { if (wall.loading !== key) return; wall.key = key; wall.img = img; shownSig = key; window.dispatchEvent(new CustomEvent('pmt-wall')); };
-      img.onerror = function () { if (wall.loading === key) { wall.key = key; wall.img = null; } };
-      img.src = m[1];
+      var url = wallCached(key);
+      if (url === undefined) {
+        var v = '';
+        try { v = getComputedStyle(document.documentElement).getPropertyValue('--lg-wall-' + key).trim(); } catch (e) {}
+        var m = /url\(\s*["']?([^"')]+)["']?\s*\)/.exec(v);
+        url = m ? m[1] : null;
+      }
+      wallLoad(key, url);
     }
     return null;
   }
-  /* a new print, a print that settled, or a look that shows another: load it, and the lenses repaint when it arrives */
+  /* a new print, a print that settled, or a look that shows another: the lenses repaint (and read the print as they
+     draw). A print the cache already knows starts loading here, so a lens that appears later has it; nothing here reads
+     style */
   var shownSig = '';
-  function wallSig() { var w = wallNow(); return w ? w.key : 'none:' + wall.loading; }
   try {
-    new MutationObserver(function () { var s = wallSig(); if (s !== shownSig) { shownSig = s; window.dispatchEvent(new CustomEvent('pmt-wall')); } })
-      .observe(document.documentElement, { attributes: true, attributeFilter: ['data-lg-wall', 'data-lg-wall-hold', 'data-lg-wall-any', 'data-theme', 'data-o55-nier'] });
+    new MutationObserver(function () {
+      var key = wallKey();
+      if (key && wall.key !== key && wall.loading !== key) { var url = wallCached(key); if (url !== undefined) wallLoad(key, url); }
+      if (key !== shownSig) { shownSig = key; window.dispatchEvent(new CustomEvent('pmt-wall')); }
+    }).observe(document.documentElement, { attributes: true, attributeFilter: ['data-lg-wall', 'data-lg-wall-hold', 'data-lg-wall-any', 'data-theme', 'data-o55-nier'] });
   } catch (e) {}
 
   /* the band the text allows, as relative luminance: on a dark ground [a little under it, the brightest the text allows];
