@@ -298,23 +298,10 @@ def rewrite_complex(cx: str, stats: dict, ancestors: bool = True):
 
 
 # ---- stylesheet pass -----------------------------------------------------------------------------------------------
-def norm(sel: str) -> str:
-    """A selector with whitespace collapsed and combinators/commas spaced the way CSSOM serializes them."""
-    out, last = [], 0
-    for i, ch, depth in _scan(sel):
-        if ch in '>+~' and depth == 0 or ch == ',':
-            out.append(sel[last:i])
-            out.append(' ' + ch + ' ' if ch != ',' else ', ')
-            last = i + 1
-    out.append(sel[last:])
-    return ' '.join(''.join(out).split())
-
-
-def rewrite_css(css: str, ancestors: bool = True, exclude: frozenset = frozenset()) -> tuple[str, dict]:
+def rewrite_css(css: str, ancestors: bool = True) -> tuple[str, dict]:
     """Rewrite every eligible style rule prelude in a stylesheet. Returns (css, stats)."""
     stats = {'rules': 0, 'changed': 0, 'selectors_in': 0, 'selectors_out': 0, 'unparsed': 0, 'spec_unknown': 0,
-             'padded': 0, 'ancestor': 0, 'skipped_nested': 0, 'skipped_comment': 0, 'excluded': 0, 'dropped_invalid': 0,
-             'excluded_hits': {}}
+             'padded': 0, 'ancestor': 0, 'skipped_nested': 0, 'skipped_comment': 0, 'dropped_invalid': 0}
     out, stack, start, i, n = [], [], 0, 0, len(css)
     last = 0
     # stack entries: 'group' (@media and the like: holds rules), 'rule' (a style rule body), 'block' (anything else)
@@ -350,11 +337,6 @@ def rewrite_css(css: str, ancestors: bool = True, exclude: frozenset = frozenset
                     parts = split_top(_lead_comments_off(prelude_raw).strip())
                     new_parts, touched = [], False
                     for p in parts:
-                        if p and norm(p) in exclude:
-                            stats['excluded'] += 1
-                            stats['excluded_hits'][norm(p)] = stats['excluded_hits'].get(norm(p), 0) + 1
-                            new_parts.append(p)
-                            continue
                         rw = rewrite_complex(p, stats, ancestors) if p else None
                         if rw:
                             touched = True
@@ -427,18 +409,13 @@ def _block_end(css: str, open_at: int) -> int:
     return n
 
 
-def rewrite_html(html: str, ancestors: bool = True, exclude: frozenset = frozenset()) -> tuple[str, dict]:
+def rewrite_html(html: str, ancestors: bool = True) -> tuple[str, dict]:
     """Apply rewrite_css to every <style> block of a page."""
     total: dict = {}
     def one_css(text):
-        css, st = rewrite_css(text, ancestors, exclude)
+        css, st = rewrite_css(text, ancestors)
         for k, v in st.items():
-            if isinstance(v, dict):
-                merged = total.setdefault(k, {})
-                for kk, vv in v.items():
-                    merged[kk] = merged.get(kk, 0) + vv
-            else:
-                total[k] = total.get(k, 0) + v
+            total[k] = total.get(k, 0) + v
         return css
     # only real <style> elements: never text inside a <script> (a script may hold '<style' in a string or regex)
     pieces, pos = [], 0
@@ -461,21 +438,9 @@ def rewrite_html(html: str, ancestors: bool = True, exclude: frozenset = frozens
     return ''.join(pieces), total
 
 
-EXCLUDE_FILE = Path(__file__).resolve().with_name('css_bucket_split_exclude.json')
-
-
 def apply(html: str) -> tuple[str, dict]:
-    """The published pass (the last step of build.build_text()): every real <style> block, less the excluded rules.
-    stats['problems'] names every exclusion entry that does not match exactly one selector of the page: an entry left
-    behind when its rule changed would otherwise let the pass split the rewritten rule unseen."""
-    entries = [norm(x) for x in json.loads(EXCLUDE_FILE.read_text(encoding='utf-8'))['selectors']]
-    out, stats = rewrite_html(html, ancestors=True, exclude=frozenset(entries))
-    hits = stats.get('excluded_hits', {})
-    stats['problems'] = [f'{EXCLUDE_FILE.name}: entry matches {hits.get(e, 0)} selectors (needs exactly 1): {e[:160]}'
-                         for e in dict.fromkeys(entries) if hits.get(e, 0) != 1]
-    stats['problems'] += [f'{EXCLUDE_FILE.name}: entry listed twice: {e[:160]}' for e in set(entries) if entries.count(e) > 1]
-    stats.pop('excluded_hits', None)
-    return out, stats
+    """The published pass (the last step of build.build_text()): every real <style> block."""
+    return rewrite_html(html, ancestors=True)
 
 
 if __name__ == '__main__':
@@ -484,4 +449,3 @@ if __name__ == '__main__':
     new, st = apply(Path(src).read_text(encoding='utf-8'))
     Path(dst).write_text(new, encoding='utf-8')
     print(json.dumps(st))
-    sys.exit(1 if st['problems'] else 0)

@@ -25030,15 +25030,61 @@ html[data-o55-nier-parts~="cursor"] :where([role="menuitemradio"][aria-checked="
    hovered item only: a :hover followed by a descendant makes Blink restyle the whole subtree of every element whose
    hover changes. The item's own ink (the rule above) stays on :hover, which invalidates just that element. Chosen
    items keep their own branches. A badge inside the bar turns over again. */
-html[data-o55-nier-parts~="cursor"] :is(.page-tab:not(.active), .pm6-tb-menu-item, .pm6-tt-mode, .pm6-tb-pages-more-item, .activity-bar .icon,
-  .domain-link, .side-link, .index-link, .page-index-title, .workspace-tab, .manager-tab, .resource-row, .pm51-popout-item:not([aria-disabled="true"]), .pm51-menu-item,
-  .pm7u-navbtn, .pm7u-poprow, .orch-tab, .pm-segtab-item:not(.active), .fm-row, .fm-ctx-item, .ctx-item, .menu-item, .chat-dropdown-item,
-  .pm6-chat-more-item, .cl-mode-item, .pm-home-menu-row, .palette-item, .search-result-item, .slash-cmd-item, .pm6-chat-slash-item,
-  .pm6-fab-item, .chat-thread-item, .pm6-dash-catalog-item, [role="menuitem"], [role="option"]:not([aria-disabled="true"])).o55np-cur-over :where(*),
-html[data-o55-nier-parts~="cursor"] :is(.pm6-tb-menu-item.is-selected, .pm6-tt-mode[aria-checked="true"], .activity-bar .icon.active, .domain-link.active,
-  .side-link.active, .index-link.is-active, .page-index-title.is-current, .workspace-tab.active, .manager-tab.active, .resource-row.active,
-  .pm51-popout-item.is-active, .pm51-popout-item[aria-selected="true"], .pm7u-navbtn.active, .pm7u-poprow.active, .orch-tab.active, .fm-row.selected,
-  .chat-dropdown-item.active, .chat-thread-item.active, [role="option"][aria-selected="true"], [role="menuitemradio"][aria-checked="true"]) :where(*) {
+html[data-o55-nier-parts~="cursor"] :is(.page-tab:not(.active)).o55np-cur-over :where(*),
+html[data-o55-nier-parts~="cursor"] :where(.pm6-tb-menu-item):not(.t7.t7:not(*)).o55np-cur-over :where(*),
+html[data-o55-nier-parts~="cursor"] :where(.pm6-tt-mode):not(.t7.t7:not(*)).o55np-cur-over :where(*),
+html[data-o55-nier-parts~="cursor"] :where(.pm6-tb-pages-more-item):not(.t7.t7:not(*)).o55np-cur-over :where(*),
+html[data-o55-nier-parts~="cursor"] :is(.activity-bar .icon).o55np-cur-over :where(*),
+html[data-o55-nier-parts~="cursor"] :where(.domain-link):not(.t7.t7:not(*)).o55np-cur-over :where(*),
+html[data-o55-nier-parts~="cursor"] :where(.side-link):not(.t7.t7:not(*)).o55np-cur-over :where(*),
+html[data-o55-nier-parts~="cursor"] :where(.index-link):not(.t7.t7:not(*)).o55np-cur-over :where(*),
+html[data-o55-nier-parts~="cursor"] :where(.page-index-title):not(.t7.t7:not(*)).o55np-cur-over :where(*),
+html[data-o55-nier-parts~="cursor"] :where(.workspace-tab):not(.t7.t7:not(*)).o55np-cur-over :where(*),
+html[data-o55-nier-parts~="cursor"] :where(.manager-tab):not(.t7.t7:not(*)).o55np-cur-over :where(*),
+html[data-o55-nier-parts~="cursor"] :where(.resource-row):not(.t7.t7:not(*)).o55np-cur-over :where(*),
+html[data-o55-nier-parts~="cursor"] :is(.pm51-popout-item:not([aria-disabled="true"])).o55np-cur-over :where(*),
+html[data-o55-nier-parts~="cursor"] :where(.pm51-menu-item):not(.t7.t7:not(*)).o55np-cur-over :where(*),
+html[data-o55-nier-parts~="cursor"] :where(.pm7u-navbtn):not(.t7.t7:not(*)).o55np-cur-over :where(*),
+html[data-o55-nier-parts~="cursor"] :where(.pm7u-poprow):not(.t7.t7:not(*)).o55np-cur-over :where(*),
+html[data-o55-nier-parts~="cursor"] :where(.orch-tab):not(.t7.t7:not(*)).o55np-cur-over :where(*),
+html[data-o55-nier-parts~="cursor"] :is(.pm-segtab-item:not(.active)).o55np-cur-over :where(*),
+html[data-o55-nier-parts~="cursor"] :where(.fm-row):not(.t7.t7:not(*)).o55np-cur-over :where(*),
+html[data-o55-nier-parts~="cursor"] :where(.fm-ctx-item):not(.t7.t7:not(*)).o55np-cur-over :where(*),
+html[data-o55-nier-parts~="cursor"] :where(.ctx-item):not(.t7.t7:not(*)).o55np-cur-over :where(*),
+html[data-o55-nier-parts~="cursor"] :where(.menu-item):not(.t7.t7:not(*)).o55np-cur-over :where(*),
+html[data-o55-nier-parts~="cursor"] :where(.chat-dropdown-item):not(.t7.t7:not(*)).o55np-cur-over :where(*),
+html[data-o55-nier-parts~="cursor"] :where(.pm6-chat-more-item):not(.t7.t7:not(*)).o55np-cur-over :where(*),
+html[data-o55-nier-parts~="cursor"] :where(.cl-mode-item):not(.t7.t7:not(*)).o55np-cur-over :where(*),
+html[data-o55-nier-parts~="cursor"] :where(.pm-home-menu-row):not(.t7.t7:not(*)).o55np-cur-over :where(*),
+html[data-o55-nier-parts~="cursor"] :where(.palette-item):not(.t7.t7:not(*)).o55np-cur-over :where(*),
+html[data-o55-nier-parts~="cursor"] :where(.search-result-item):not(.t7.t7:not(*)).o55np-cur-over :where(*),
+html[data-o55-nier-parts~="cursor"] :where(.slash-cmd-item):not(.t7.t7:not(*)).o55np-cur-over :where(*),
+html[data-o55-nier-parts~="cursor"] :where(.pm6-chat-slash-item):not(.t7.t7:not(*)).o55np-cur-over :where(*),
+html[data-o55-nier-parts~="cursor"] :where(.pm6-fab-item):not(.t7.t7:not(*)).o55np-cur-over :where(*),
+html[data-o55-nier-parts~="cursor"] :where(.chat-thread-item):not(.t7.t7:not(*)).o55np-cur-over :where(*),
+html[data-o55-nier-parts~="cursor"] :where(.pm6-dash-catalog-item):not(.t7.t7:not(*)).o55np-cur-over :where(*),
+html[data-o55-nier-parts~="cursor"] :where([role="menuitem"]):not(.t7.t7:not(*)).o55np-cur-over :where(*),
+html[data-o55-nier-parts~="cursor"] :is([role="option"]:not([aria-disabled="true"])).o55np-cur-over :where(*),
+html[data-o55-nier-parts~="cursor"] :where(.pm6-tb-menu-item.is-selected):not(.t7.t7.t7:not(*)) :where(*),
+html[data-o55-nier-parts~="cursor"] :where(.pm6-tt-mode[aria-checked="true"]):not(.t7.t7.t7:not(*)) :where(*),
+html[data-o55-nier-parts~="cursor"] :is(.activity-bar .icon.active) :where(*),
+html[data-o55-nier-parts~="cursor"] :where(.domain-link.active):not(.t7.t7.t7:not(*)) :where(*),
+html[data-o55-nier-parts~="cursor"] :where(.side-link.active):not(.t7.t7.t7:not(*)) :where(*),
+html[data-o55-nier-parts~="cursor"] :where(.index-link.is-active):not(.t7.t7.t7:not(*)) :where(*),
+html[data-o55-nier-parts~="cursor"] :where(.page-index-title.is-current):not(.t7.t7.t7:not(*)) :where(*),
+html[data-o55-nier-parts~="cursor"] :where(.workspace-tab.active):not(.t7.t7.t7:not(*)) :where(*),
+html[data-o55-nier-parts~="cursor"] :where(.manager-tab.active):not(.t7.t7.t7:not(*)) :where(*),
+html[data-o55-nier-parts~="cursor"] :where(.resource-row.active):not(.t7.t7.t7:not(*)) :where(*),
+html[data-o55-nier-parts~="cursor"] :where(.pm51-popout-item.is-active):not(.t7.t7.t7:not(*)) :where(*),
+html[data-o55-nier-parts~="cursor"] :where(.pm51-popout-item[aria-selected="true"]):not(.t7.t7.t7:not(*)) :where(*),
+html[data-o55-nier-parts~="cursor"] :where(.pm7u-navbtn.active):not(.t7.t7.t7:not(*)) :where(*),
+html[data-o55-nier-parts~="cursor"] :where(.pm7u-poprow.active):not(.t7.t7.t7:not(*)) :where(*),
+html[data-o55-nier-parts~="cursor"] :where(.orch-tab.active):not(.t7.t7.t7:not(*)) :where(*),
+html[data-o55-nier-parts~="cursor"] :where(.fm-row.selected):not(.t7.t7.t7:not(*)) :where(*),
+html[data-o55-nier-parts~="cursor"] :where(.chat-dropdown-item.active):not(.t7.t7.t7:not(*)) :where(*),
+html[data-o55-nier-parts~="cursor"] :where(.chat-thread-item.active):not(.t7.t7.t7:not(*)) :where(*),
+html[data-o55-nier-parts~="cursor"] :where([role="option"][aria-selected="true"]):not(.t7.t7.t7:not(*)) :where(*),
+html[data-o55-nier-parts~="cursor"] :where([role="menuitemradio"][aria-checked="true"]):not(.t7.t7.t7:not(*)) :where(*) {
   color: inherit !important; -webkit-text-fill-color: currentColor;
 }
 html[data-o55-nier-parts~="cursor"] :is(.orch-tab, .pm7u-navbtn, .resource-row, .chat-thread-item, .fm-row, .index-link).o55np-cur-over :is([class*="badge"]),
@@ -30923,7 +30969,15 @@ html[data-o55-nier][data-o55-nier-parts~="cursor"]:not(#pmhz):not(#pmhz):not(#pm
   box-shadow: none !important; text-shadow: none !important; transition-duration: 0s !important;
 }
 html[data-o55-nier][data-o55-nier-parts~="cursor"]:not(#pmhz):not(#pmhz):not(#pmhz)
-  :is([data-pmh-kind="icon"]:not(.activity-bar .icon), .pmw-tab, .pmw-sc-btn, #projectMenuBtn, #themeSelect):not(.pmw-cur, .pmr-cur, .active, .selected, [aria-selected="true"]).pmh-on :where(*) {
+  :where([data-pmh-kind="icon"]:not(.activity-bar .icon)):not(#t7:not(*)):not(.pmw-cur, .pmr-cur, .active, .selected, [aria-selected="true"]).pmh-on :where(*),
+html[data-o55-nier][data-o55-nier-parts~="cursor"]:not(#pmhz):not(#pmhz):not(#pmhz)
+  :where(.pmw-tab):not(#t7:not(*)):not(.pmw-cur, .pmr-cur, .active, .selected, [aria-selected="true"]).pmh-on :where(*),
+html[data-o55-nier][data-o55-nier-parts~="cursor"]:not(#pmhz):not(#pmhz):not(#pmhz)
+  :where(.pmw-sc-btn):not(#t7:not(*)):not(.pmw-cur, .pmr-cur, .active, .selected, [aria-selected="true"]).pmh-on :where(*),
+html[data-o55-nier][data-o55-nier-parts~="cursor"]:not(#pmhz):not(#pmhz):not(#pmhz)
+  :is(#projectMenuBtn):not(.pmw-cur, .pmr-cur, .active, .selected, [aria-selected="true"]).pmh-on :where(*),
+html[data-o55-nier][data-o55-nier-parts~="cursor"]:not(#pmhz):not(#pmhz):not(#pmhz)
+  :is(#themeSelect):not(.pmw-cur, .pmr-cur, .active, .selected, [aria-selected="true"]).pmh-on :where(*) {
   color: inherit !important; -webkit-text-fill-color: currentColor;
 }
 html[data-o55-nier][data-o55-nier-parts~="cursor"]:not(#pmhz):not(#pmhz):not(#pmhz)
@@ -35387,8 +35441,10 @@ html:not([data-theme^="glass"]):not([data-o55-nier="on"]) .pm6-tb-menu-item.is-s
    their token blocks above do) rather than <html data-pm-switch-layer>: glass.js sets that attribute after the look's own
    restyle, and a bare * keyed on it restyled the whole page a second time on every NieR toggle, 266 -> 58 ms of the
    flip on Nas1; keyed on the look, it rides the look's own restyle) */
-:is(html[data-theme^="retro"], html[data-o55-nier="on"]):not(#lgz) #pm-settings-root .rail-scroll > .side-link.active *,
-:is(html[data-theme^="retro"], html[data-o55-nier="on"]):not(#lgz) #pm-settings-root .domain-link.active *,
+:is(html[data-theme^="retro"]):not(#lgz) #pm-settings-root .rail-scroll > .side-link.active *,
+:is(html[data-o55-nier="on"]):not(#lgz) #pm-settings-root .rail-scroll > .side-link.active *,
+:is(html[data-theme^="retro"]):not(#lgz) #pm-settings-root .domain-link.active *,
+:is(html[data-o55-nier="on"]):not(#lgz) #pm-settings-root .domain-link.active *,
 :is(html[data-theme^="retro"]):not(#lgz) #pm-settings-root .pm51-index-group > .index-link.is-active *,
 :is(html[data-o55-nier="on"]):not(#lgz) #pm-settings-root .pm51-index-group > .index-link.is-active *,
 :is(html[data-theme^="retro"]):not(#lgz) #pm-settings-root .resource-row[aria-current="true"] *,
@@ -35397,9 +35453,12 @@ html:not([data-theme^="glass"]):not([data-o55-nier="on"]) .pm6-tb-menu-item.is-s
 :is(html[data-o55-nier="on"]):not(#lgz) #pm-settings-root .workspace-tab.is-current *,
 :is(html[data-theme^="retro"]):not(#lgz) #pm-settings-root .manager-tab[aria-selected="true"] *,
 :is(html[data-o55-nier="on"]):not(#lgz) #pm-settings-root .manager-tab[aria-selected="true"] *,
-:is(html[data-theme^="retro"], html[data-o55-nier="on"]):not(#lgz) #pmuRange > button.active *,
-:is(html[data-theme^="retro"], html[data-o55-nier="on"]):not(#lgz) nav.page-tabs .page-tab.active *,
-:is(html[data-theme^="retro"], html[data-o55-nier="on"]):not(#lgz) .orch-tabs .orch-tab.active *,
+:is(html[data-theme^="retro"]):not(#lgz) #pmuRange > button.active *,
+:is(html[data-o55-nier="on"]):not(#lgz) #pmuRange > button.active *,
+:is(html[data-theme^="retro"]):not(#lgz) nav.page-tabs .page-tab.active *,
+:is(html[data-o55-nier="on"]):not(#lgz) nav.page-tabs .page-tab.active *,
+:is(html[data-theme^="retro"]):not(#lgz) .orch-tabs .orch-tab.active *,
+:is(html[data-o55-nier="on"]):not(#lgz) .orch-tabs .orch-tab.active *,
 :is(html[data-theme^="retro"]):not(#lgz) #themeMenu .pm6-tt-mode[aria-checked="true"] *,
 :is(html[data-o55-nier="on"]):not(#lgz) #themeMenu .pm6-tt-mode[aria-checked="true"] *,
 :is(html[data-theme^="retro"]):not(#lgz) #panel-wizard .pm6-wiz-intent-chip.sel *,
@@ -35720,7 +35779,9 @@ html[data-o55-nier-parts~="slice"]:not([data-motion="reduced"]) .pmr-menu {
   --pm6-sprout-sx: 1 !important; --pm6-sprout-sy: 1 !important;
 }
 html[data-o55-nier-parts~="cursor"] .pmr-menu .pmr-mi:is(:hover, :focus-visible, .active) { background: var(--o55-nier-ink) !important; color: var(--o55-nier-on-ink) !important; box-shadow: none !important; }
-html[data-o55-nier-parts~="cursor"] .pmr-menu .pmr-mi:is(:hover, :focus-visible, .active) :where(*) { color: inherit !important; }
+html[data-o55-nier-parts~="cursor"] .pmr-menu .pmr-mi:is(:hover) :where(*),
+html[data-o55-nier-parts~="cursor"] .pmr-menu .pmr-mi:is(:focus-visible) :where(*),
+html[data-o55-nier-parts~="cursor"] .pmr-menu .pmr-mi:is(.active) :where(*) { color: inherit !important; }
 
 /* the trigger: the chat selector button's look (surface-elevated, hairline, radius-sm, 26px) at rail text size */
 .pmr-trigger {
@@ -38659,7 +38720,9 @@ html[data-o55-nier="on"] .pmr-view { --pmr-st-ok: var(--o55-nier-ink); --pmr-st-
   background: var(--o55-nier-ink) !important; color: var(--o55-nier-on-ink) !important; border-color: var(--o55-nier-ink) !important;
   box-shadow: none !important; text-shadow: none !important;
 }
-[data-rail-skin="d"][data-o55-nier-parts~="cursor"] #sidePanelSlot :is(.pmr-cur, .fm-row, .pm-segtab-item).o55np-cur-over:not(.active):not([aria-disabled="true"]) :where(*),
+[data-rail-skin="d"][data-o55-nier-parts~="cursor"] #sidePanelSlot :is(.pmr-cur).o55np-cur-over:not(.active):not([aria-disabled="true"]) :where(*),
+[data-rail-skin="d"][data-o55-nier-parts~="cursor"] #sidePanelSlot :is(.fm-row).o55np-cur-over:not(.active):not([aria-disabled="true"]) :where(*),
+[data-rail-skin="d"][data-o55-nier-parts~="cursor"] #sidePanelSlot :is(.pm-segtab-item).o55np-cur-over:not(.active):not([aria-disabled="true"]) :where(*),
 [data-rail-skin="d"][data-o55-nier-parts~="cursor"] #sidePanelSlot .fm-row.selected:not(.active):not([aria-disabled="true"]) :where(*) {
   color: inherit !important; -webkit-text-fill-color: currentColor;
 }
@@ -52752,7 +52815,9 @@ html[data-lg="on"][data-theme^="glass"]:not(#lgz) #pmuExport { border-radius: 0 
 }
 :is(html[data-lg="on"][data-theme^="glass"], html[data-pm-switch="lens"]):not(#lgz) .pmu-navbtn::before, :is(html[data-lg="on"][data-theme^="glass"], html[data-pm-switch="lens"]):not(#lgz) .pmu-navbtn::after { opacity: 0 !important; }
 :is(html[data-lg="on"][data-theme^="glass"], html[data-pm-switch="lens"]):not(#lgz) .pmu-navbtn:hover:not(.active) { background: var(--pm-switch-hover, var(--lg-fill-hover)) !important; color: var(--pm-switch-ink-hover, var(--pm-switch-ink-on, var(--text-primary))) !important; }
-:is(html[data-lg="on"][data-theme^="glass"], html[data-pm-switch="lens"]):not(#lgz) .pmu-navbtn.active, :is(html[data-lg="on"][data-theme^="glass"], html[data-pm-switch="lens"]):not(#lgz) .pmu-navbtn.active * { color: var(--pm-switch-ink-on, var(--text-primary)) !important; }
+:is(html[data-lg="on"][data-theme^="glass"], html[data-pm-switch="lens"]):not(#lgz) .pmu-navbtn.active,
+:is(html[data-lg="on"][data-theme^="glass"]):not(#lgz) .pmu-navbtn.active *,
+:where(html[data-pm-switch="lens"]):not(.t7.t7:not(*)):not(t7:not(*)):not(#lgz) .pmu-navbtn.active * { color: var(--pm-switch-ink-on, var(--text-primary)) !important; }
 :is(html[data-lg="on"][data-theme^="glass"], html[data-pm-switch="lens"]):not(#lgz) .pmu-navbtn.active .pmu-navicon { color: var(--pm-switch-mark-on, var(--pm-switch-mark, var(--accent-blue))) !important; }
 :is(html[data-lg="on"][data-theme^="glass"], html[data-pm-switch="lens"]):not(#lgz) .pmu-navbtn.active { font-weight: 650; }
 /* (Glass only: a look that adopts the switcher keeps Usage's own contrast-tuned count ink; Basic Light's warning colour read
