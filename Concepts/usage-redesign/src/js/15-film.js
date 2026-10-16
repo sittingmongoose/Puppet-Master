@@ -1919,7 +1919,8 @@
     var sp = document.getElementById('panel-settings');
     if (sp && sp.classList.contains('active')) return;
     if (document.hidden || root.hasAttribute('data-o55-open') || root.hasAttribute('data-o55-tour') || root.hasAttribute('data-pm-page-transition')) { warmSoon(1200); return; }
-    if (typeof softwareRendered === 'function' && softwareRendered()) { rasterLog.skipped = 'software'; return; }
+    /* no GPU, or the no-GPU profile forced (?pmu-soft=1): nothing is warmed */
+    if (typeof softwareRendered === 'function' && softwareRendered()) { rasterLog.skipped = /[?&]pmu-soft=1\b/.test(location.search) ? 'soft' : 'software'; return; }
     var box = warmBox(panel); if (!box) { warmSoon(2000); return; }
     warmUnpin();   /* the last arrival's pin (the page hidden: nothing to lay out) */
     var w = warm = { room: st.room, key: null, built: false, box: box, shares: {}, at: performance.now() };
