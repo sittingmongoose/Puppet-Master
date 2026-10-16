@@ -61,6 +61,18 @@
     document.body.appendChild(veil);
     return veil;
   }
+  /* Built once the page is idle and kept laid out at opacity 0 (will-change keeps its layers and their raster), so a
+     pick only starts compositor moves: made at the first pick, its new layers were painted and rastered in the very
+     frame that should show the cover (it came in at +200 ms on the P1000, in three jumps). */
+  function prepare() {
+    if (!document.body) return;
+    const v = ensureVeil();
+    v.setAttribute('data-ready', '');
+    try { const c = coloursOf(lookAfter(null)); if (c.glow) v.style.setProperty('--pm-veil-glow', c.glow); } catch (_) { /* default */ }
+  }
+  const whenIdle = (fn) => (typeof requestIdleCallback === 'function' ? requestIdleCallback(fn, { timeout: 4000 }) : setTimeout(fn, 1500));
+  if (document.readyState === 'complete') whenIdle(prepare);
+  else window.addEventListener('load', () => whenIdle(prepare), { once: true });
   const startOnShown = (anims) => { if (window.PM_START_ON_SHOWN) window.PM_START_ON_SHOWN(anims); };
   const stopGlow = () => { glowAnims.forEach((a) => { try { a.cancel(); } catch (_) { /* gone */ } }); glowAnims = []; };
 
@@ -110,7 +122,7 @@
     out.finished.then(() => {
       if (t !== ticket) return;
       phase = 'idle';
-      veil.removeAttribute('data-on');
+      veil.removeAttribute('data-on');   /* it stays ready (laid out, opacity 0) for the next pick */
       stopGlow();
       try { out.cancel(); } catch (_) { /* gone */ }
       coverAnim = null;
@@ -133,21 +145,21 @@
     coverAnim = v.animate([{ opacity: from }, { opacity: COVER }], {
       duration: inMs, easing: to.retro ? 'steps(3, end)' : 'cubic-bezier(.2, 0, 0, 1)', fill: 'forwards'
     });
-    const anims = [coverAnim];
+    const anims = [];   /* the cover is the answer: it starts at once; the glow waits for a shown frame */
     /* the glow spreads from the control that was pressed and breathes while the new look is drawn (not in Retro's
        flat pixels, nor with less motion) */
     if (!still && !to.retro) {
       const g = v.firstElementChild, src = document.getElementById('themeSelect');
       let x = window.innerWidth - 120, y = 18;
       try { if (src) { const r = src.getBoundingClientRect(); if (r.width) { x = r.left + r.width / 2; y = r.top + r.height / 2; } } } catch (_) { /* default */ }
-      const cx = window.innerWidth / 2, cy = window.innerHeight / 2;
+      const dx = x - window.innerWidth / 2, dy = y - window.innerHeight / 2;
       const spread = g.animate([
-        { transform: `translate(${x}px, ${y}px) scale(.25)`, opacity: 0 },
-        { transform: `translate(${cx}px, ${cy}px) scale(1)`, opacity: 1 }
+        { transform: `translate(${dx}px, ${dy}px) scale(.25)`, opacity: 0 },
+        { transform: 'translate(0, 0) scale(1)', opacity: 1 }
       ], { duration: 900, easing: 'cubic-bezier(.2, .7, .2, 1)', fill: 'forwards' });
       const breathe = g.animate([
-        { transform: `translate(${cx}px, ${cy}px) scale(1)`, opacity: 1 },
-        { transform: `translate(${cx}px, ${cy}px) scale(1.18)`, opacity: .7 }
+        { transform: 'translate(0, 0) scale(1)', opacity: 1 },
+        { transform: 'translate(0, 0) scale(1.18)', opacity: .7 }
       ], { duration: 1300, delay: 900, iterations: Infinity, direction: 'alternate', easing: 'ease-in-out' });
       glowAnims = [spread, breathe];
       anims.push(spread, breathe);

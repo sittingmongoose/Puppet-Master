@@ -1,7 +1,7 @@
 /* The cover a look change crosses through (src/js/12-theme-transition.js; final motion QA B4 and part 2 P2-01): the
    new look's own background over the whole window, above every layer, never taking input, with a soft glow of the new
    accent. Its colours come from the look it goes to; the fallbacks are the plain light and dark backgrounds. Both
-   parts move on the compositor only (opacity, transform), and the glow is drawn small and scaled up. */
+   parts move on the compositor only (opacity, transform); the glow rests at the centre and moves by offsets. */
 #pm-look-veil {
   position: fixed;
   inset: 0;
@@ -15,11 +15,11 @@
   will-change: opacity;
 }
 #pm-look-veil[data-mode="light"] { background: var(--pm-veil-bg, #eaecef); }
-#pm-look-veil[data-on] { display: block; }
+#pm-look-veil:is([data-ready], [data-on]) { display: block; }   /* ready: laid out and rastered, at opacity 0 */
 #pm-look-veil > i {
   position: absolute;
-  left: 0;
-  top: 0;
+  left: 50%;
+  top: 50%;
   width: 70vmax;
   height: 70vmax;
   margin: -35vmax 0 0 -35vmax;
