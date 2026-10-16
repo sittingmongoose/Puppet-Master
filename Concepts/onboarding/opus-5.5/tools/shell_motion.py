@@ -138,18 +138,30 @@ PAGES = [
     ("      if (changed && bootPaintDone && !reduced() && oldP && newP && oldP !== newP) {\n",
      "      if (changed && bootPaintDone && !reduced() && !window.PM_PAGES.instant && oldP && newP && oldP !== newP) {   /* O55: instant under a cover */\n",
      'page switch: instant under a cover'),
-    # A2: under Reduced Motion (and under a cover) the page swaps at once and arrives whole: .pm8-page-instant stops
-    # the incoming page's own entrance fades (the Wizard's stage faded up from nothing over the bare wallpaper). The
-    # mark leaves a page once it is hidden again, so its next visit enters as usual.
+    # A2: under Reduced Motion (and under a cover) the page swaps at once and arrives whole: the Wizard's stage and the
+    # Orchestrator's widgets used to fade up from nothing over the bare wallpaper. Their entrances are finished in the
+    # frame that first draws the page (getAnimations brings its style up to date first), so that frame is the end state.
     ("      var tab = tabFor(pageId);\n"
      "      var tabMetrics = tab ? measureTab(tab) : null;\n"
      "      origGo.call(window.PM_PAGES, pageId, subTab);\n",
      "      var tab = tabFor(pageId);\n"
      "      var tabMetrics = tab ? measureTab(tab) : null;\n"
-     "      if (changed && newP && oldP !== newP && (reduced() || window.PM_PAGES.instant)) newP.classList.add('pm8-page-instant');   /* O55 */\n"
+     "      var whole = changed && newP && oldP !== newP && (reduced() || window.PM_PAGES.instant) && /^(wizard|orchestrator)$/.test(pageId);   /* O55 */\n"
      "      origGo.call(window.PM_PAGES, pageId, subTab);\n"
-     "      if (changed) document.querySelectorAll('.primary-content > .page.pm8-page-instant:not(.active):not(.pm8-page-out)').forEach(function (p) { p.classList.remove('pm8-page-instant'); });\n",
+     "      if (whole) requestAnimationFrame(function () { finishEntrances(newP); });\n",
      'page switch: whole arrival when instant'),
+    ("    var origGo = window.PM_PAGES.go;\n"
+     "    window.PM_PAGES.go = function (pageId, subTab) {\n",
+     "    /* O55 (motion QA A1, A2): a page that arrives at once shows its end state on its first frame */\n"
+     "    function finishEntrances(panel) {\n"
+     "      if (!panel || !panel.classList.contains('active') || !panel.getAnimations) return;\n"
+     "      panel.getAnimations({ subtree: true }).forEach(function (a) {\n"
+     "        try { var t = a.effect && a.effect.getComputedTiming(); if (t && isFinite(t.endTime) && a.playState !== 'finished') a.finish(); } catch (e) {}\n"
+     "      });\n"
+     "    }\n"
+     "    var origGo = window.PM_PAGES.go;\n"
+     "    window.PM_PAGES.go = function (pageId, subTab) {\n",
+     'page switch: finish entrances helper'),
 ]
 
 CENSUS = [

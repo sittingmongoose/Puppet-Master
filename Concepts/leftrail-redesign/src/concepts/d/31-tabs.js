@@ -106,6 +106,9 @@ function onTabCapture(ev) {
   const st = tab.parentElement;
   if (!st || !st.classList.contains('pm-segtab') || !st.offsetWidth) return;
   st._dFrom = snapStrip(st, tab);
+  /* the view on screen, and its place, before the shell switches it (held while the new one comes in: holdLeaving) */
+  const panel = tab.closest('.side-panel-view'), pane = panel && activePane(panel);
+  if (panel) panel._dFromPane = pane ? { pane, box: paneBox(pane) } : null;
 }
 
 /* bubble phase (onClickMotion, after the shell switched): refit now, move on the next frame */
@@ -118,21 +121,25 @@ function tabChanged(tab) {
   const st = tab.parentElement && tab.parentElement.classList.contains('pm-segtab') ? tab.parentElement : null;
   const from = st && st._dFrom;
   if (st) delete st._dFrom;
+  const fromPane = panel._dFromPane; panel._dFromPane = null;
   if (now === was) return;
   /* the label shows in this same task, so the target brackets (placed on the next frame) measure the final box */
   if (st) fitTabs(st);
-  playTabs(st, from, now > was ? 1 : -1, () => activePane(panel));
+  const shown = activePane(panel);
+  const left = fromPane && fromPane.box && fromPane.pane !== shown && fromPane.pane.isConnected ? holdLeaving(fromPane.pane, fromPane.box) : null;
+  playTabs(st, from, now > was ? 1 : -1, () => activePane(panel), null, left);
 }
 /* one frame callback makes every animation of a change, and startTogether starts them all on the next frame: the ink,
    the icons, the inverse tick and the rows share one clock, whatever the shell's fit pass costs this frame. paneOf: the
    view that comes in (read in that frame); after(pane): a strip's own fitting of that view */
-function playTabs(st, from, dir, paneOf, after) {
+function playTabs(st, from, dir, paneOf, after, left) {
   requestAnimationFrame(() => {
-    if (!D.on) return;
+    if (!D.on) { if (left) releaseLeaving(left); return; }
     const anims = [];
     if (st) moveTabs(st, from, dir, anims);
     const pane = paneOf();
     if (pane) { stackHeads(pane); stackRows(pane); midFitAll(pane); if (after) after(pane); enterPane(pane, dir, anims); }
+    if (left) fadeLeaving(left, anims);
     /* NieR: the target brackets made their lock-on in this same frame (their frame callback runs first); it starts
        with the rest of the change, or the shell's fit pass would eat it and the brackets would just appear */
     const ret = document.getElementById('o55np-reticle');

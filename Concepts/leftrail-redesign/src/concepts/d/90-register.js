@@ -39,6 +39,8 @@ function unmountSkin() {
   });
   clearFit();
   viewInOff();
+  releaseAllLeaving();
+  D.shown = null;
   panelEls().forEach(p => hooksFor(p, 'unmount').forEach(h => h.unmount(p)));
   undoAll();
 }
@@ -52,9 +54,14 @@ PMR.concepts.register('d', {
         const p = document.getElementById(info && info.target);
         if (!p) return;
         if (info.reason === 'switch' && D.on) viewIn();
+        /* the panel that was on screen stays until this one's entrance starts (30-motion.js holdLeaving) */
+        const was = D.shown && D.shown !== p && D.shown.isConnected && info.reason === 'switch' ? D.shown : null;
+        D.shown = p;
+        const left = was ? holdLeaving(was) : null;
         requestAnimationFrame(() => {
           fitAll(p);
-          if (info.reason === 'switch' || info.reason === 'concept') enterPanel(p);
+          if (info.reason === 'switch' || info.reason === 'concept') enterPanel(p, left);
+          else if (left) releaseLeaving(left);
           hooksFor(p, 'show').forEach(h => h.show(p, info));
         });
       },

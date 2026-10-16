@@ -199,10 +199,60 @@ function viewInOff() {
   if (slot) slot.removeAttribute('data-d-viewin');
 }
 
+/* What was on screen stays until the new view's first frame has been shown (final motion QA A8, 2026-10-16). The
+   panel or tab pane that is leaving keeps its place above the one coming in, takes no input, and fades out while the
+   new one deals in, started with the rest of the change (startTogether): the change's first frame, which the shell's
+   fit pass can hold for a sixth of a second, shows the old view instead of an empty pane. NieR keeps its own erase
+   (the wipe is its look) and Reduced Motion swaps at once. */
+const LEAVE = { basic: .45, friendly: .3, glass: .25, retro: .5 };
+const leaving = new Set();
+function releaseLeaving(el) {
+  if (!el._dLeave) return;
+  const keep = el._dLeave; el._dLeave = null; leaving.delete(el);
+  if (keep.anim) { try { keep.anim.cancel(); } catch (e) { /* gone */ } }
+  el.classList.remove('d-leaving');
+  if (keep.inline) ['display', 'top', 'left', 'width'].forEach(k => el.style.removeProperty(k));
+  const slot = document.getElementById('sidePanelSlot');
+  if (slot && ![...leaving].some(x => x.classList.contains('side-panel-view'))) slot.classList.remove('d-has-leaving');
+}
+function releaseAllLeaving() { [...leaving].forEach(releaseLeaving); }
+/* keep el drawn where it was; box: a pane's place inside its scroller, read before the shell hid it */
+function holdLeaving(el, box) {
+  if (!el || reduced() || fam() === 'nier' || !D.on) return null;
+  releaseAllLeaving();
+  el._dLeave = { inline: !!box, anim: null };
+  leaving.add(el);
+  if (box) {
+    el.style.setProperty('display', box.display, 'important');
+    el.style.setProperty('top', box.top + 'px'); el.style.setProperty('left', box.left + 'px'); el.style.setProperty('width', box.width + 'px');
+  } else {
+    const slot = document.getElementById('sidePanelSlot');
+    if (slot) slot.classList.add('d-has-leaving');
+  }
+  el.classList.add('d-leaving');
+  return el;
+}
+/* the held view fades out with the change's own start */
+function fadeLeaving(el, anims) {
+  if (!el || !el._dLeave) return;
+  const f = spec(), k = LEAVE[fam()] || .5, retro = fam() === 'retro';
+  const a = el.animate([{ opacity: 1 }, { opacity: 0 }], { duration: Math.max(retro ? 3 * TICK : 90, Math.round(f.dur * k)), easing: retro ? 'steps(3, end)' : 'cubic-bezier(.4, 0, 1, 1)', fill: 'forwards' });
+  a.id = 'd-leave';
+  el._dLeave.anim = a;
+  a.finished.then(() => releaseLeaving(el), () => {});
+  if (anims) anims.push(a);
+}
+/* a pane's place inside its scroller, before the shell hides it */
+function paneBox(pane) {
+  if (!pane || !pane.getClientRects().length) return null;
+  return { top: pane.offsetTop, left: pane.offsetLeft, width: pane.offsetWidth, display: getComputedStyle(pane).display };
+}
+
 /* the panel comes in: its chrome settles first, the content deals in right behind it. The content is the shown tab's
-   pane; a panel without tab panes (Testing, Debug & Run, Agents, Runtime artifacts) deals its scroller's own list. */
-function enterPanel(panel) {
-  if (reduced() || !panel) return;
+   pane; a panel without tab panes (Testing, Debug & Run, Agents, Runtime artifacts) deals its scroller's own list.
+   left: the panel that was shown, held by holdLeaving until this entrance starts */
+function enterPanel(panel, left) {
+  if (reduced() || !panel) { if (left) releaseLeaving(left); return; }
   const chrome = [':scope > .sh-banner', ':scope > .pm7-scm-context', ':scope > .pm7-automation-context', ':scope > .pm-segtab', ':scope > .fm-toolbar-wrap']
     .map(s => panel.querySelector(s)).filter(visible);
   const f = spec(), anims = [];
@@ -219,6 +269,7 @@ function enterPanel(panel) {
     const k = fam() === 'retro' ? 'steps(4, end)' : 'cubic-bezier(.3, 1.6, .5, 1)';
     anims.push(ico.animate([{ transform: 'scale(.7) rotate(-12deg)' }, { transform: 'none' }], { duration: Math.round(f.dur * 1.2), easing: k }));
   }
+  if (left) fadeLeaving(left, anims);
   startTogether(anims);
 }
 
