@@ -172,18 +172,21 @@ PAGES = [
      "    window.PM_PAGES.go = function (pageId, subTab) {\n",
      'page switch: finish entrances helper'),
     # A3, A5: a page change's first frame can be long (the arriving page is styled and laid out, first visits build
-    # their content), and the exit and entrance, started inside it, were spent unseen: on the P1000 the Wizard sat still
-    # ~470 ms, then vanished in one frame. Both moves start again together on the frame after the first one shown.
+    # their content), and the exit and entrance were spent unseen: the timeline that frame draws at is the one from
+    # before the long work, so on the P1000 the Wizard sat still ~470-600 ms and then vanished in one frame. Both moves
+    # are put back to their start in that first frame (it draws the old page whole) and again in the next one, after
+    # the long frame, so the whole exit and entrance play on frames that are shown.
     ("      oldP.classList.add('pm8-page-out');\n"
      "      newP.classList.add('pm8-page-in');\n",
      "      oldP.classList.add('pm8-page-out');\n"
      "      newP.classList.add('pm8-page-in');\n"
-     "      requestAnimationFrame(function () { requestAnimationFrame(function () {   /* O55: start on a shown frame */\n"
+     "      var restartMoves = function () {   /* O55: the moves start on a shown frame */\n"
      "        var t = document.timeline.currentTime; if (t == null) return;\n"
      "        [oldP, newP].forEach(function (p) { p.getAnimations().forEach(function (a) {\n"
      "          if (a.animationName === 'pm8-page-in' || a.animationName === 'pm8-page-out') { try { if (a.playState !== 'idle') a.startTime = t; } catch (e) {} }\n"
      "        }); });\n"
-     "      }); });\n",
+     "      };\n"
+     "      requestAnimationFrame(function () { restartMoves(); requestAnimationFrame(restartMoves); });\n",
      'page switch: moves start on a shown frame'),
     # A3, A5: the edge-dissolve header offsets (PM_EDGE) measured each newly shown page's head synchronously inside the
     # page change, forcing the arriving page's style and layout there (~100 ms on the P1000) before the rest of the
