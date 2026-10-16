@@ -278,7 +278,9 @@ function o55NierPaint(want) {
   o55NierRepaintTheme();
   /* the look layer: NieR Mode decides Accent color and App font, and the rows that follow the painted family */
   o55LookKey = ''; o55ApplyLook();
-  O55_NIER_OWNS.forEach(id => { if (root.querySelector(`[id="setting-${cssEscape(id)}"]`)) refreshSettingRow(id); });
+  /* These rows only change their presented owner. Persisting each redraw repeated the full project save and theme
+     paint while the new look was still being laid out; their stored values have not changed. */
+  O55_NIER_OWNS.forEach(id => PM51.refreshSavedRow(id));
   if (typeof o55SyncDependents === 'function') o55SyncDependents('general.visual.theme');
 }
 /* opts: within (the element the transition plays inside), sound (false: the caller plays its own), and the in-window
@@ -407,7 +409,7 @@ function o55NierAdopt(id) {
   const ids = Object.keys(writes);
   if (ids.length && commitSettingValues(writes)) {
     saveState();
-    ids.forEach(w => { if (root.querySelector(`[id="setting-${cssEscape(w)}"]`)) refreshSettingRow(w); if (typeof o55Notify === 'function') o55Notify(w, writes[w]); });
+    ids.forEach(w => { PM51.refreshSavedRow(w); if (typeof o55Notify === 'function') o55Notify(w, writes[w]); });
   }
   /* a switch that now differs from the paint runs its transition; otherwise the attributes follow and listeners hear */
   if (o55NierWanted() !== o55NierIsPainted()) o55NierRun(); else { o55NierWriteAttrs(); o55NierEmit(); }
@@ -456,7 +458,7 @@ function o55NierCommitPreview() {
   if (ids.length) {
     if (!commitSettingValues(writes)) return false;
     saveState();
-    ids.forEach(id => { refreshSettingRow(id); if (typeof o55Notify === 'function') o55Notify(id, writes[id]); });
+    ids.forEach(id => { PM51.refreshSavedRow(id); if (typeof o55Notify === 'function') o55Notify(id, writes[id]); });
   }
   o55NierPreviewDrop();
   /* the look pass runs only if a stored value changed (its key holds them); the attributes follow either way */
@@ -473,7 +475,7 @@ function o55NierLinger() {
 function o55NierCommitRow(id, value) {
   const found = findSettingGlobal(id); if (!found) return false;
   if (!commitSettingValue(id, value)) return false;
-  saveState(); refreshSettingRow(id);
+  saveState(); PM51.refreshSavedRow(id);
   if (typeof o55Notify === 'function') o55Notify(id, value);
   return true;
 }

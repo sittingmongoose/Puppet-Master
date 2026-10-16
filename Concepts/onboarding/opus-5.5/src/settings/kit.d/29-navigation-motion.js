@@ -2,6 +2,42 @@
    before the build task, then the incoming chapter arrives after its first layout. No snapshot capture pauses the
    compositor, and no duplicate live IDs or rows are introduced. Rapid requests coalesce to the latest destination. */
 let o55NavTicket = 0, o55NavRunning = false, o55NavLeaving = null;
+let o55NavStage = null, o55NavWatched = null;
+const o55NavStageHeights = new WeakMap();
+const o55NavStageSize = typeof ResizeObserver === 'function' ? new ResizeObserver(entries => {
+  entries.forEach(e => { if (e.contentRect.height > 0) o55NavStageHeights.set(e.target, e.contentRect.height); });
+}) : null;
+const o55NavAfterRender = afterRender;
+afterRender = function () {
+  const r = o55NavAfterRender.apply(this, arguments), stage = root.querySelector('#workspace-stage');
+  if (o55NavStageSize && stage !== o55NavWatched) {
+    o55NavStageSize.disconnect(); o55NavWatched = stage;
+    if (stage) o55NavStageSize.observe(stage);
+  }
+  return r;
+};
+function o55NavReleaseStage() {
+  const held = o55NavStage; o55NavStage = null;
+  if (o55NavLeaving) { o55NavLeaving.cancel(); o55NavLeaving = null; }
+  if (!held) return;
+  if (held.arrival) { try { held.arrival.finish(); } catch (_) {} }
+  if (held.next) { held.next.style.removeProperty('opacity'); held.next.style.removeProperty('z-index'); }
+  if (held.tabs) held.tabs.style.zIndex = held.tabZ;
+  if (held.retained) held.old.remove();
+}
+function o55NavRetainStage(old, next) {
+  const held = o55NavStage;
+  if (!held || held.old !== old || held.ticket !== o55NavTicket || !held.height || next.id !== 'workspace-stage') return false;
+  held.retained = true; held.next = next;
+  held.tabs = old.parentNode.querySelector(':scope > .workspace-tabs');
+  if (held.tabs) { held.tabZ = held.tabs.style.zIndex; held.tabs.style.zIndex = '2'; }
+  old.classList.add('o55-leaving'); old.setAttribute('aria-hidden', 'true'); old.inert = true;
+  [old, ...old.querySelectorAll('[id]')].forEach(n => n.removeAttribute('id'));
+  Object.assign(old.style, { position: 'absolute', left: '0', right: '0', bottom: '0', height: held.height + 'px', zIndex: '0', pointerEvents: 'none' });
+  /* A nonzero opacity gets the incoming surface rastered while the outgoing one still carries the reader's place. */
+  next.style.opacity = '.001'; next.style.zIndex = '1';
+  return true;
+}
 function o55NavVisible() {
   const panel = document.getElementById('panel-settings');
   return !!(panel && panel.classList.contains('active') && root.querySelector('#workspace-stage'));
@@ -30,18 +66,41 @@ function o55NavRun(work, selector, chapter, prepare) {
     o55NavRunning = true;
     try { work(); } finally { o55NavRunning = false; o55NavAck(null); }
   };
-  if (o55NavLeaving) { o55NavLeaving.cancel(); o55NavLeaving = null; }
+  o55NavReleaseStage();
   const stage = root.querySelector('#workspace-stage');
   const moving = chapter && !o55Still() && stage;
-  if (moving) o55NavLeaving = stage.animate([
-    { opacity: 1, transform: 'none' }, { opacity: .55, transform: 'translateY(-4px)' }
-  ], { duration: 260, easing: 'ease-out', fill: 'forwards' });
+  if (moving) {
+    o55NavStage = { old: stage, height: o55NavStageHeights.get(stage), ticket };
+    /* The original 260 ms exit is followed by a quiet continuation only while layout is still busy. Both run on the
+       compositor; a slow layout cannot leave the reader staring at an ended animation. Arrival never waits for it. */
+    o55NavLeaving = stage.animate([
+      { opacity: 1, transform: 'none', easing: 'ease-out' },
+      { opacity: .55, transform: 'translateY(-4px)', offset: 260 / 1200, easing: 'linear' },
+      { opacity: .3, transform: 'translateY(-20px)' }
+    ], { duration: 1200, easing: 'linear', fill: 'forwards' });
+  }
   const complete = () => {
     if (ticket !== o55NavTicket) return;
     commit();
     const next = root.querySelector('#workspace-stage');
     const arrive = () => {
       if (ticket !== o55NavTicket) return;
+      const held = o55NavStage;
+      if (held && held.retained && next && next.isConnected) {
+        o55AfterPaint(() => {
+          if (ticket !== o55NavTicket || o55NavStage !== held || !next.isConnected) return;
+          const cs = getComputedStyle(held.old), from = { opacity: cs.opacity, transform: cs.transform };
+          if (o55NavLeaving) { o55NavLeaving.cancel(); o55NavLeaving = null; }
+          next.style.removeProperty('opacity');
+          held.arrival = next.animate([{ opacity: .001, transform: 'translateY(4px)' }, { opacity: 1, transform: 'none' }],
+            { duration: 180, easing: 'cubic-bezier(.22,.8,.24,1)' });
+          const out = held.old.animate([from, { opacity: 0, transform: 'translateY(-20px)' }],
+            { duration: 180, easing: 'ease-out', fill: 'forwards' });
+          const done = () => { if (o55NavStage === held) o55NavReleaseStage(); };
+          Promise.all([held.arrival.finished, out.finished]).then(done, done);
+        });
+        return;
+      }
       if (o55NavLeaving) { o55NavLeaving.cancel(); o55NavLeaving = null; }
       /* The in-place shell patch retains #workspace-stage while replacing its chapter children. That retained
          container still needs the incoming motion; identity alone does not mean the old chapter survived. */

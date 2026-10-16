@@ -25723,6 +25723,9 @@ html[data-motion="reduced"] #panel-settings .pm51-mgr > .pm51-tabs .tab-ink { tr
   background-color: color-mix(in srgb, var(--k3-accent) 20%, var(--k3-surface-0));
   box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--k3-accent) 55%, transparent);
 }
+/* Keep the outgoing and incoming chapter in the same coordinate space and promote before input. */
+#panel-settings .workspace-shell { position: relative; }
+#panel-settings .workspace-stage { will-change: opacity, transform; }
 /* Layout and paint of distant settings sections need not join the chapter's first frame. Auto size remembers their
    measured height, so returning to a section keeps its scroll geometry and the place holder can retain its anchor. */
 #panel-settings .workspace-block-body > .settings-section:nth-child(n+3) {
@@ -48154,7 +48157,6 @@ html[data-lg="on"][data-theme="glass-dark"]:not(#lgz) {
   --lg-shadow: rgba(0, 2, 12, .55); --lg-shadow-near: rgba(0, 2, 12, .30);
   --lg-sel: rgba(116, 185, 255, .52); --lg-on-sel: #FFFFFF;
   --lg-head-shade: rgba(4, 6, 14, .30);   /* titles sit on denser glass; the rim light stays above it */
-  --lg-wall: var(--lg-wall-ribbons-dark);
   color-scheme: dark;
 }
 html[data-lg="on"][data-theme="glass-light"]:not(#lgz) {
@@ -48172,11 +48174,13 @@ html[data-lg="on"][data-theme="glass-light"]:not(#lgz) {
   --lg-shadow: rgba(30, 45, 90, .22); --lg-shadow-near: rgba(30, 45, 90, .12);
   --lg-sel: rgba(0, 95, 204, .88); --lg-on-sel: #FFFFFF;
   --lg-head-shade: rgba(255, 255, 255, .28);
-  --lg-wall: var(--lg-wall-ribbons-light);
   color-scheme: light;
 }
-/* the chosen wallpaper's print lands on --lg-wall through the rules the wallpapers build generates for every catalog id
-   (Concepts/wallpapers/opus-5.5); Ribbons above is Glass's own, and the default without that package */
+/* The print changes only on its body painter. The wallpaper package overrides these defaults for each catalog id;
+   Ribbons remains Glass's default without that package. Keep the root's immutable source variables unchanged. */
+@property --lg-wall { syntax: '*'; inherits: false; }
+html[data-lg="on"][data-theme="glass-dark"]:not(#lgz) body { --lg-wall: var(--lg-wall-ribbons-dark); }
+html[data-lg="on"][data-theme="glass-light"]:not(#lgz) body { --lg-wall: var(--lg-wall-ribbons-light); }
 html[data-lg="on"][data-theme^="glass"]:not(#lgz) {
   --border-radius: 16px; --pm-ctl-r: 6px; --pm-ctl-r-in: 3px;
   --lg-r-sheet: 18px; --lg-r-card: 16px; --lg-r-bar: 14px;
@@ -48309,6 +48313,11 @@ html[data-theme^="glass"]:not(#lgz) .main-area { flex: 1 1 0% !important; }
 @property --lg-px { syntax: '*'; inherits: false; }
 @property --lg-py { syntax: '*'; inherits: false; }
 @property --lg-glow { syntax: '*'; inherits: false; }
+/* Frost belongs to the sheet's own background and the onboarding scrim. The painter supplies it through a rule
+   scoped to those readers, so changing an image neither inherits through every row nor mutates html's inline style. */
+@property --lg-frost-heavy { syntax: '*'; inherits: false; }
+@property --lg-frost-light { syntax: '*'; inherits: false; }
+@property --lg-wall-hold { syntax: '*'; inherits: false; }
 /* how see-through the sheets are. Settings' panel transparency (public --glass-alpha, from its floor, .35 dark and .45
    light, to 1) moves each sheet's tint around today's look, which is the setting's default .55: up to a near-opaque .94
    at 100 %, and down by at most a quarter of the tint at the floor, so the frost keeps text readable. --lg-ga is
@@ -95039,7 +95048,7 @@ dispatchAction = function (action, el, event) {
       break;
     }
     case 'toggle-setting': {
-      if (found) { const next = !settingValue(found.setting); if (!commitSettingValue(id, next)) return; saveState(); refreshSettingRow(id); o55Changed(found.setting, next); return; }
+      if (found) { const next = !settingValue(found.setting); if (!commitSettingValue(id, next)) return; saveState(); PM51.refreshSavedRow(id); o55Changed(found.setting, next); return; }
       break;
     }
   }
@@ -95685,7 +95694,7 @@ window.addEventListener('resize', () => { if ((PM51.value('general.visual.interf
 new MutationObserver(() => {
   o55ApplyLook();
   o55SyncGlassNumber();
-  window.requestAnimationFrame(() => Object.keys(O55R).filter(id => O55R[id] && O55R[id].themeOwn).forEach(id => { if (root.querySelector(`[id="setting-${cssEscape(id)}"]`)) refreshSettingRow(id); }));
+  window.requestAnimationFrame(() => Object.keys(O55R).filter(id => O55R[id] && O55R[id].themeOwn).forEach(id => PM51.refreshSavedRow(id)));
 }).observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
 window.setTimeout(o55ApplyLook, 0);
 
@@ -96031,7 +96040,9 @@ function o55NierPaint(want) {
   o55NierRepaintTheme();
   /* the look layer: NieR Mode decides Accent color and App font, and the rows that follow the painted family */
   o55LookKey = ''; o55ApplyLook();
-  O55_NIER_OWNS.forEach(id => { if (root.querySelector(`[id="setting-${cssEscape(id)}"]`)) refreshSettingRow(id); });
+  /* These rows only change their presented owner. Persisting each redraw repeated the full project save and theme
+     paint while the new look was still being laid out; their stored values have not changed. */
+  O55_NIER_OWNS.forEach(id => PM51.refreshSavedRow(id));
   if (typeof o55SyncDependents === 'function') o55SyncDependents('general.visual.theme');
 }
 /* opts: within (the element the transition plays inside), sound (false: the caller plays its own), and the in-window
@@ -96160,7 +96171,7 @@ function o55NierAdopt(id) {
   const ids = Object.keys(writes);
   if (ids.length && commitSettingValues(writes)) {
     saveState();
-    ids.forEach(w => { if (root.querySelector(`[id="setting-${cssEscape(w)}"]`)) refreshSettingRow(w); if (typeof o55Notify === 'function') o55Notify(w, writes[w]); });
+    ids.forEach(w => { PM51.refreshSavedRow(w); if (typeof o55Notify === 'function') o55Notify(w, writes[w]); });
   }
   /* a switch that now differs from the paint runs its transition; otherwise the attributes follow and listeners hear */
   if (o55NierWanted() !== o55NierIsPainted()) o55NierRun(); else { o55NierWriteAttrs(); o55NierEmit(); }
@@ -96209,7 +96220,7 @@ function o55NierCommitPreview() {
   if (ids.length) {
     if (!commitSettingValues(writes)) return false;
     saveState();
-    ids.forEach(id => { refreshSettingRow(id); if (typeof o55Notify === 'function') o55Notify(id, writes[id]); });
+    ids.forEach(id => { PM51.refreshSavedRow(id); if (typeof o55Notify === 'function') o55Notify(id, writes[id]); });
   }
   o55NierPreviewDrop();
   /* the look pass runs only if a stored value changed (its key holds them); the attributes follow either way */
@@ -96226,7 +96237,7 @@ function o55NierLinger() {
 function o55NierCommitRow(id, value) {
   const found = findSettingGlobal(id); if (!found) return false;
   if (!commitSettingValue(id, value)) return false;
-  saveState(); refreshSettingRow(id);
+  saveState(); PM51.refreshSavedRow(id);
   if (typeof o55Notify === 'function') o55Notify(id, value);
   return true;
 }
@@ -97459,12 +97470,13 @@ const o55Retro = () => /^retro/.test(document.documentElement.getAttribute('data
 const o55Ease = () => o55Retro() ? 'steps(4, end)' : 'cubic-bezier(.22,.8,.24,1)';
 const o55Still = () => motionReduced() || document.documentElement.getAttribute('data-motion') === 'reduced';
 let o55MorphSeq = 0;
+const o55TabExits = new WeakMap();
 
 /* Swap oldEl for newEl inside host (which gets position:relative for the duration). dir: -1 left, 1 right, 0 rise. */
 function o55Morph(oldEl, newEl, { host, dir = 0, dur = 300 } = {}) {
   host = host || oldEl.parentNode;
   if (!oldEl || !oldEl.isConnected) { return; }
-  if (o55Still()) { oldEl.replaceWith(newEl); return; }
+  if (o55Still()) { const leaving = o55TabExits.get(oldEl); if (leaving) { leaving.cancel(); o55TabExits.delete(oldEl); } oldEl.replaceWith(newEl); return; }
   const seq = ++o55MorphSeq; host.dataset.o55Morph = String(seq);
   host.querySelectorAll(':scope > .o55-leaving').forEach(n => n.remove()); /* a morph interrupted by another */
   const hostPos = getComputedStyle(host).position;
@@ -97479,7 +97491,14 @@ function o55Morph(oldEl, newEl, { host, dir = 0, dur = 300 } = {}) {
   const h1 = host.getBoundingClientRect().height;
   const ease = o55Ease();
   const dx = dir ? 18 * dir : 0, dy = dir ? 0 : 8;
-  const out = oldEl.animate([{ opacity: 1, transform: 'none' }, { opacity: 0, transform: `translate(${-dx * .6}px, ${-dy * .5}px)` }], { duration: dur * .6, easing: ease, fill: 'forwards' });
+  let from = { opacity: 1, transform: 'none' };
+  const leaving = o55TabExits.get(oldEl);
+  if (leaving) {
+    /* Layout has finished. Continue from the actual outgoing pose instead of flashing it back to full opacity. */
+    const cs = getComputedStyle(oldEl); from = { opacity: cs.opacity, transform: cs.transform };
+    leaving.cancel(); o55TabExits.delete(oldEl);
+  }
+  const out = oldEl.animate([from, { opacity: 0, transform: `translate(${-dx * .6}px, ${-dy * .5}px)` }], { duration: dur * .6, easing: ease, fill: 'forwards' });
   newEl.animate([{ opacity: 0, transform: `translate(${dx}px, ${dy}px)` }, { opacity: 1, transform: 'none' }], { duration: dur, delay: dur * .12, easing: ease, fill: 'backwards' });
   let grow = null;
   if (Math.abs(h1 - h0) > 2) { host.style.overflow = 'clip'; grow = host.animate([{ height: h0 + 'px' }, { height: h1 + 'px' }], { duration: dur, easing: ease }); }
@@ -97530,6 +97549,16 @@ PM51.switchTab = function (wsId, tab) {
   const ticket = ++o55TabTicket;
   tabs.forEach((t, i) => { const on = i === to; t.classList.toggle('active', on); t.setAttribute('aria-selected', String(on)); });
   moveTabInks();
+  if (!o55Still() && !o55TabExits.has(oldBody)) {
+    const dir = from < 0 ? 0 : (to > from ? 1 : -1), dx = dir ? 18 * dir : 0, dy = dir ? 0 : 8;
+    /* The existing body begins its exit with the selected ink, before building the replacement. A quiet compositor
+       continuation covers a slow first layout; arrival keeps the same slide, delay and height choreography. */
+    o55TabExits.set(oldBody, oldBody.animate([
+      { opacity: 1, transform: 'none', easing: o55Ease() },
+      { opacity: .55, transform: `translate(${-dx * .18}px, ${-dy * .25}px)`, offset: 260 / 1200, easing: o55Retro() ? 'steps(28, end)' : 'linear' },
+      { opacity: .3, transform: `translate(${-dx * .45}px, ${-dy * .45}px)` }
+    ], { duration: 1200, easing: 'linear', fill: 'forwards' }));
+  }
   o55AfterPaint(() => {
   if (ticket !== o55TabTicket || !page.isConnected) return;
   o55KeepTabsInView(page);
@@ -100010,7 +100039,17 @@ function o55cKids(live, fresh) {
     next = f.nextSibling;
     const l = pair.get(f);
     const node = l ? o55cNode(l, f) : f;
-    if (l && node !== l) { if (at === l) at = l.nextSibling; l.remove(); }   /* replaced outright */
+    if (l && node !== l) {
+      /* A chapter's outgoing compositor layer survives until the incoming stage has painted. It no longer has
+         live IDs or input targets, and the foreign-node rule keeps later patches away from this short-lived layer. */
+      if (typeof o55NavRetainStage === 'function' && o55NavRetainStage(l, node)) {
+        live.insertBefore(node, l);
+        if (at === l) at = l.nextSibling;
+        continue;
+      }
+      if (at === l) at = l.nextSibling;
+      l.remove();
+    }
     skip();
     if (node === at) { at = at.nextSibling; continue; }
     if (node === l) live.insertBefore(l, at);
@@ -100260,6 +100299,42 @@ boot = function () {
    before the build task, then the incoming chapter arrives after its first layout. No snapshot capture pauses the
    compositor, and no duplicate live IDs or rows are introduced. Rapid requests coalesce to the latest destination. */
 let o55NavTicket = 0, o55NavRunning = false, o55NavLeaving = null;
+let o55NavStage = null, o55NavWatched = null;
+const o55NavStageHeights = new WeakMap();
+const o55NavStageSize = typeof ResizeObserver === 'function' ? new ResizeObserver(entries => {
+  entries.forEach(e => { if (e.contentRect.height > 0) o55NavStageHeights.set(e.target, e.contentRect.height); });
+}) : null;
+const o55NavAfterRender = afterRender;
+afterRender = function () {
+  const r = o55NavAfterRender.apply(this, arguments), stage = root.querySelector('#workspace-stage');
+  if (o55NavStageSize && stage !== o55NavWatched) {
+    o55NavStageSize.disconnect(); o55NavWatched = stage;
+    if (stage) o55NavStageSize.observe(stage);
+  }
+  return r;
+};
+function o55NavReleaseStage() {
+  const held = o55NavStage; o55NavStage = null;
+  if (o55NavLeaving) { o55NavLeaving.cancel(); o55NavLeaving = null; }
+  if (!held) return;
+  if (held.arrival) { try { held.arrival.finish(); } catch (_) {} }
+  if (held.next) { held.next.style.removeProperty('opacity'); held.next.style.removeProperty('z-index'); }
+  if (held.tabs) held.tabs.style.zIndex = held.tabZ;
+  if (held.retained) held.old.remove();
+}
+function o55NavRetainStage(old, next) {
+  const held = o55NavStage;
+  if (!held || held.old !== old || held.ticket !== o55NavTicket || !held.height || next.id !== 'workspace-stage') return false;
+  held.retained = true; held.next = next;
+  held.tabs = old.parentNode.querySelector(':scope > .workspace-tabs');
+  if (held.tabs) { held.tabZ = held.tabs.style.zIndex; held.tabs.style.zIndex = '2'; }
+  old.classList.add('o55-leaving'); old.setAttribute('aria-hidden', 'true'); old.inert = true;
+  [old, ...old.querySelectorAll('[id]')].forEach(n => n.removeAttribute('id'));
+  Object.assign(old.style, { position: 'absolute', left: '0', right: '0', bottom: '0', height: held.height + 'px', zIndex: '0', pointerEvents: 'none' });
+  /* A nonzero opacity gets the incoming surface rastered while the outgoing one still carries the reader's place. */
+  next.style.opacity = '.001'; next.style.zIndex = '1';
+  return true;
+}
 function o55NavVisible() {
   const panel = document.getElementById('panel-settings');
   return !!(panel && panel.classList.contains('active') && root.querySelector('#workspace-stage'));
@@ -100288,18 +100363,41 @@ function o55NavRun(work, selector, chapter, prepare) {
     o55NavRunning = true;
     try { work(); } finally { o55NavRunning = false; o55NavAck(null); }
   };
-  if (o55NavLeaving) { o55NavLeaving.cancel(); o55NavLeaving = null; }
+  o55NavReleaseStage();
   const stage = root.querySelector('#workspace-stage');
   const moving = chapter && !o55Still() && stage;
-  if (moving) o55NavLeaving = stage.animate([
-    { opacity: 1, transform: 'none' }, { opacity: .55, transform: 'translateY(-4px)' }
-  ], { duration: 260, easing: 'ease-out', fill: 'forwards' });
+  if (moving) {
+    o55NavStage = { old: stage, height: o55NavStageHeights.get(stage), ticket };
+    /* The original 260 ms exit is followed by a quiet continuation only while layout is still busy. Both run on the
+       compositor; a slow layout cannot leave the reader staring at an ended animation. Arrival never waits for it. */
+    o55NavLeaving = stage.animate([
+      { opacity: 1, transform: 'none', easing: 'ease-out' },
+      { opacity: .55, transform: 'translateY(-4px)', offset: 260 / 1200, easing: 'linear' },
+      { opacity: .3, transform: 'translateY(-20px)' }
+    ], { duration: 1200, easing: 'linear', fill: 'forwards' });
+  }
   const complete = () => {
     if (ticket !== o55NavTicket) return;
     commit();
     const next = root.querySelector('#workspace-stage');
     const arrive = () => {
       if (ticket !== o55NavTicket) return;
+      const held = o55NavStage;
+      if (held && held.retained && next && next.isConnected) {
+        o55AfterPaint(() => {
+          if (ticket !== o55NavTicket || o55NavStage !== held || !next.isConnected) return;
+          const cs = getComputedStyle(held.old), from = { opacity: cs.opacity, transform: cs.transform };
+          if (o55NavLeaving) { o55NavLeaving.cancel(); o55NavLeaving = null; }
+          next.style.removeProperty('opacity');
+          held.arrival = next.animate([{ opacity: .001, transform: 'translateY(4px)' }, { opacity: 1, transform: 'none' }],
+            { duration: 180, easing: 'cubic-bezier(.22,.8,.24,1)' });
+          const out = held.old.animate([from, { opacity: 0, transform: 'translateY(-20px)' }],
+            { duration: 180, easing: 'ease-out', fill: 'forwards' });
+          const done = () => { if (o55NavStage === held) o55NavReleaseStage(); };
+          Promise.all([held.arrival.finished, out.finished]).then(done, done);
+        });
+        return;
+      }
       if (o55NavLeaving) { o55NavLeaving.cancel(); o55NavLeaving = null; }
       /* The in-place shell patch retains #workspace-stage while replacing its chapter children. That retained
          container still needs the incoming motion; identity alone does not mean the old chapter survived. */
@@ -219235,17 +219333,23 @@ try { if (window.PM_HOME && typeof window.PM_HOME.boot === 'function') window.PM
          sharp, with a slight red-blue split; a ring image, transparent inside.
      Both are redrawn only when the sheet moves or resizes, or the look or wallpaper changes. They cost nothing per frame
      and draw the same with or without a GPU. */
-  var wallUrl = '', wallSources = new Map(), wallSourceKey = null, wallSourceUrl = '', wallSourceId = 0;
-  var frosts = {}, frostKey = '', frostCache = new Map(), frostBytes = 0, frostJobs = new Map(), FROST_BYTES = 32 * 1024 * 1024;
+  var wallUrl = '', wallSources = new Map(), wallSourceUrls = new Map(), wallSourceKey = null, wallSourceUrl = '', wallSourceId = 0;
+  var frosts = {}, frostKey = '', frostWallUrl = '', frostCache = new Map(), frostBytes = 0, frostJobs = new Map(), FROST_BYTES = 32 * 1024 * 1024;
   var bakeQ = new Map(), bakeT = 0, bakeFrame = 0, bakeIdle = 0, bakeFlight = null, bakeEpoch = 0, bakeAvg = 8;
   function currentWallUrl(refresh) {
-    /* The source's wallpaper variables are selected only by these attributes. Keep the large data URL out of each
-       surface signature and resolve the computed variable once per choice: reading it serialises a print of several MB
-       (100-165 ms on a P1000 or an M3, 2026-10-16). An empty read is read again, as a host may add the sheet later. */
-    var key = [root.getAttribute('data-theme'), root.getAttribute('data-lg-wall'), root.style.getPropertyValue('--lg-wall')].join('|');
+    /* The body's selected image is deliberately not on html. Resolve an immutable catalog source once per id/mode,
+       using the gallery's prepared cache when present. Empty misses are retried because a lab host can add its sheet
+       after startup. No computed-style read or large URL serialization occurs on a prepared wallpaper commit. */
+    var id = root.getAttribute('data-lg-wall') || 'ribbons';
+    var mode = /-light$/.test(root.getAttribute('data-theme') || '') ? 'light' : 'dark', key = id + '-' + mode;
     if (!refresh && key === wallSourceKey && wallSourceUrl) return wallSourceUrl;
-    var v = getComputedStyle(root).getPropertyValue('--lg-wall') || ''; var m = v.match(/url\(["']?(.*?)["']?\)\s*$/);
-    var u = m ? m[1] : '';
+    var u = !refresh && wallSourceUrls.get(key);
+    if (!u && window.PM_WALLPAPERS && PM_WALLPAPERS.sourceUrl) u = PM_WALLPAPERS.sourceUrl(id, mode);
+    if (!u) {
+      var v = getComputedStyle(root).getPropertyValue('--lg-wall-' + key) || '', m = v.match(/url\(["']?(.*?)["']?\)\s*$/);
+      u = m ? m[1] : '';
+    }
+    if (u) wallSourceUrls.set(key, u);
     if (u !== wallSourceUrl) { wallSourceUrl = u; wallSourceId++; }
     wallSourceKey = key; return u;
   }
@@ -219308,11 +219412,23 @@ try { if (window.PM_HOME && typeof window.PM_HOME.boot === 'function') window.PM
   function viewportVars() { root.style.setProperty('--lg-vw', innerWidth + 'px'); root.style.setProperty('--lg-vh', innerHeight + 'px'); }
   function cover(im) { var vw = innerWidth, vh = innerHeight, sc = Math.max(vw / im.naturalWidth, vh / im.naturalHeight); return { s: sc, ox: (vw - im.naturalWidth * sc) / 2, oy: (vh - im.naturalHeight * sc) / 2, vw: vw, vh: vh }; }
   var FROST = { heavy: { blur: 26, sat: 1.65 }, light: { blur: 14, sat: 1.6 } }, FROST_SCALE = 1 / 3;
+  var wallpaperPaintStyle = null;
+  function wallpaperPaintRule(index) {
+    if (!wallpaperPaintStyle || !wallpaperPaintStyle.isConnected) {
+      wallpaperPaintStyle = document.createElement('style'); wallpaperPaintStyle.id = 'lg-frost';
+      wallpaperPaintStyle.textContent = 'html[data-lg="on"] :is([data-lg-kind], #pm-o55-onboarding .o55-scrim) {}\nhtml[data-lg="on"] body {}';
+      document.head.appendChild(wallpaperPaintStyle);
+    }
+    return wallpaperPaintStyle.sheet.cssRules[index].style;
+  }
   function dropFrost(rec) { Object.keys(rec.urls).forEach(function (name) { URL.revokeObjectURL(rec.urls[name]); }); }
   function applyFrost(rec) {
     if (frostKey === rec.key) return;
-    frosts = rec.urls; frostKey = rec.key;
-    Object.keys(frosts).forEach(function (name) { root.style.setProperty('--lg-frost-' + name, 'url(' + frosts[name] + ')'); });
+    frosts = rec.urls; frostKey = rec.key; frostWallUrl = rec.wall;
+    /* Even a non-inherited custom property on html's inline style invalidates the whole app in Chromium. A rule
+       scoped to the actual painters changes the same pixels in this commit without restyling their contents. */
+    var paint = wallpaperPaintRule(0);
+    Object.keys(frosts).forEach(function (name) { paint.setProperty('--lg-frost-' + name, 'url(' + JSON.stringify(frosts[name]) + ')'); });
     releaseWallHold();
   }
   /* A wallpaper or mode change shows the new print at once, but the sheets' frost is encoded from it a few hundred ms
@@ -219321,12 +219437,12 @@ try { if (window.PM_HOME && typeof window.PM_HOME.boot === 'function') window.PM
   var wallHoldT = 0;
   function holdWall(url) {
     if (!url) return;
-    root.style.setProperty('--lg-wall-hold', 'url("' + url + '")'); root.setAttribute('data-lg-wall-hold', '');
+    wallpaperPaintRule(1).setProperty('--lg-wall-hold', 'url(' + JSON.stringify(url) + ')'); root.setAttribute('data-lg-wall-hold', '');
     clearTimeout(wallHoldT); wallHoldT = setTimeout(releaseWallHold, 2000);
   }
   function releaseWallHold() {
     clearTimeout(wallHoldT); wallHoldT = 0;
-    if (root.hasAttribute('data-lg-wall-hold')) { root.removeAttribute('data-lg-wall-hold'); root.style.removeProperty('--lg-wall-hold'); }
+    if (root.hasAttribute('data-lg-wall-hold')) { root.removeAttribute('data-lg-wall-hold'); wallpaperPaintRule(1).removeProperty('--lg-wall-hold'); }
   }
   /* a canvas as a PNG blob, now. canvas.toBlob encodes in the main thread's idle time, so while a Glass entry or a room
      change kept it busy a frost or a ring came back up to a second later (P1000 trace: the frosts drawn at +1.2 s, their
@@ -219338,12 +219454,12 @@ try { if (window.PM_HOME && typeof window.PM_HOME.boot === 'function') window.PM
       return new Blob([a], { type: 'image/png' });
     } catch (e) { return null; }
   }
-  function makeFrosts(im, done) {
+  function makeFrosts(im, done, prepare) {
     var c = cover(im), u = im.__lgWallUrl || wallUrl, key = u + ':' + c.vw + 'x' + c.vh, epoch = bakeEpoch;
-    if (!isGlass() || currentWallUrl() !== u) { done(false); return; }
+    if (!isGlass() || (!prepare && currentWallUrl() !== u)) { done(false); return; }
     if (frostKey === key) { done(true); return; }
     var cached = frostCache.get(key);
-    if (cached) { frostCache.delete(key); frostCache.set(key, cached); applyFrost(cached); done(true); return; }
+    if (cached) { frostCache.delete(key); frostCache.set(key, cached); if (!prepare) applyFrost(cached); done(true); return; }
     var job = frostJobs.get(key);
     if (job && job.epoch === epoch) { job.waiters.push(done); return; }
     var names = Object.keys(FROST);
@@ -219352,21 +219468,25 @@ try { if (window.PM_HOME && typeof window.PM_HOME.boot === 'function') window.PM
       job.blobs[name] = blob;
       if (--job.pending) return;
       if (frostJobs.get(key) === job) frostJobs.delete(key);
-      var valid = epoch === bakeEpoch && isGlass() && currentWallUrl() === u && innerWidth === c.vw && innerHeight === c.vh;
+      var valid = epoch === bakeEpoch && isGlass() && (prepare || currentWallUrl() === u) && innerWidth === c.vw && innerHeight === c.vh;
       valid = valid && names.every(function (n) { return !!job.blobs[n]; });
       if (valid) {
-        var rec = { key: key, urls: {}, bytes: 0 };
+        var rec = { key: key, wall: u, urls: {}, bytes: 0 };
         names.forEach(function (n) { rec.urls[n] = URL.createObjectURL(job.blobs[n]); rec.bytes += job.blobs[n].size; });
         /* Apply both frost levels together. An older encoder can never replace half of the current wallpaper. */
         var previous = frosts, previousUncached = !Array.from(frostCache.values()).some(function (r) { return r.urls === previous; });
-        applyFrost(rec);
+        if (!prepare) applyFrost(rec);
         while (frostCache.size && (frostCache.size >= 2 || frostBytes + rec.bytes > FROST_BYTES)) {
-          var oldest = frostCache.keys().next().value, old = frostCache.get(oldest);
+          /* Preparation may evict another cached print, never the frost still visible on the sheets. */
+          var oldest = Array.from(frostCache.keys()).find(function (k) { return frostCache.get(k).urls !== frosts; });
+          if (oldest == null) break;
+          var old = frostCache.get(oldest);
           frostBytes -= old.bytes; frostCache.delete(oldest); dropFrost(old);
         }
-        if (rec.bytes <= FROST_BYTES) { frostCache.set(key, rec); frostBytes += rec.bytes; }
+        if (frostBytes + rec.bytes <= FROST_BYTES) { frostCache.set(key, rec); frostBytes += rec.bytes; }
+        else if (prepare) { dropFrost(rec); valid = false; }
         /* An unusually large active pair is kept only while displayed, rather than exceeding the cache budget. */
-        if (previous !== rec.urls && previousUncached) {
+        if (!prepare && previous !== rec.urls && previousUncached) {
           Object.keys(previous).forEach(function (n) { URL.revokeObjectURL(previous[n]); });
         }
       }
@@ -220913,8 +221033,12 @@ try { if (window.PM_HOME && typeof window.PM_HOME.boot === 'function') window.PM
     if (th === lastTheme && lg === lastLg && tier === lastTier && wall === lastWall && motion === lastMotion) return;
     /* the print is about to change under glass that stays glass: hold the one the current frost was made from */
     var wasGlass = lastLg === 'on' && /^glass/.test(lastTheme || '');
-    if (wasGlass && isGlass() && wall !== lastWall && th === lastTheme && wallSourceUrl) holdWall(wallSourceUrl);
-    else if (!isGlass()) releaseWallHold();
+    if (wasGlass && isGlass() && wall !== lastWall && th === lastTheme && wallSourceUrl) {
+      var previousWall = wallSourceUrl, nextWall = currentWallUrl();
+      /* This observer handles wallpaper identity, while resize owns viewport changes. No layout read may split
+         the prepared attribute/frost transaction after the caller's writes. */
+      if (frostWallUrl !== nextWall) holdWall(previousWall);
+    } else if (!isGlass()) releaseWallHold();
     if (motion !== lastMotion && reduced() && typeof suspendLensMotion === 'function') suspendLensMotion();
     lastTier = tier; lastWall = wall; lastMotion = motion;
     if (th !== lastTheme || lg !== lastLg) {
@@ -220971,7 +221095,7 @@ try { if (window.PM_HOME && typeof window.PM_HOME.boot === 'function') window.PM
   }
   function wallChoice() { try { return localStorage.getItem(WALL_KEY) || 'look'; } catch (e) { return 'look'; } }
   function applyWall() {
-    var c = q.get('lgwall') || wallChoice(), fam = (root.getAttribute('data-theme') || '').split('-')[0], ws = catalogWalls();
+    var c = q.get('lgwall') || (window.PM_WALLPAPERS && window.PM_WALLPAPERS.paintChoice ? window.PM_WALLPAPERS.paintChoice() : wallChoice()), fam = (root.getAttribute('data-theme') || '').split('-')[0], ws = catalogWalls();
     if (c !== 'look' && ws.length && !ws.some(function (w) { return w.id === c; })) c = 'look';   /* a stale id: the package resets it */
     var id = c === 'look' ? lookDefault(fam) : c;
     if (id) { if (root.getAttribute('data-lg-wall') !== id) root.setAttribute('data-lg-wall', id); }
@@ -221023,6 +221147,25 @@ try { if (window.PM_HOME && typeof window.PM_HOME.boot === 'function') window.PM
      chooses a wallpaper for every look; walls() lists them; surfaces: data-lg-surface on any element (see syncSurfaces). */
   window.PM_LG = { version: 'v3-2026-10-13', sync: syncAll, materialize: function () { materialize(Array.from(glassSet)); }, kinds: KINDS, count: function () { return glassSet.size; },
     set: function (o) { for (var k in o) { if (o[k] == null) root.removeAttribute(k); else root.setAttribute(k, o[k]); } syncAll(); },
+    /* Decode and bake through the same bounded caches as visible sheets. Preparation changes no visible pixels. */
+    prepareWallpaper: function (url) { return new Promise(function (resolve) {
+      withWall(function (im) { if (!im) { resolve(false); return; } if (isGlass()) makeFrosts(im, resolve, true); else resolve(true); }, url);
+    }); },
+    commitWallpaper: function (id, url, viewport) {
+      if (!isGlass() || root.getAttribute('data-lg-wall') !== id) return false;
+      /* The caller sampled the viewport before its attribute writes. Even innerWidth after those writes can force
+         style/layout (83 ms on M3) before the frost variables join the same commit. */
+      viewport = viewport || { width: innerWidth, height: innerHeight };
+      var rec = frostCache.get(url + ':' + viewport.width + 'x' + viewport.height);
+      if (!rec) return false;
+      /* The prepared URL is exactly the image selected by this attribute commit. Reading computed style between
+         that write and the frost writes forced a full extra restyle (166 ms on M3). Keep the existing source cache
+         current without flushing layout; the next genuinely different theme/attribute key still resolves normally. */
+      if (wallSourceUrl !== url) { wallSourceUrl = url; wallSourceId++; }
+      wallSourceKey = id + '-' + (/-light$/.test(root.getAttribute('data-theme') || '') ? 'light' : 'dark');
+      wallSourceUrls.set(wallSourceKey, url);
+      applyFrost(rec); return true;
+    },
     wall: function (id) { setWall(id || 'look'); }, walls: function () { return catalogWalls().map(function (w) { return { id: w.id, name: w.name, family: w.family }; }); } };
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', start); else start();
 })();
