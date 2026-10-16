@@ -28,3 +28,73 @@
   background: radial-gradient(closest-side, color-mix(in srgb, var(--pm-veil-glow, #6aa8ff) 24%, transparent), transparent);
   will-change: transform, opacity;
 }
+
+/* The cover moves while the new look is drawn (Jared, 2026-10-16: never a still, blank colour through the P1000's
+   restyle). A few parts painted with the cover, in the language of the look on screen (data-fx), moved only by
+   transform and opacity, so the compositor keeps them going while the main thread restyles:
+     basic     two soft sheens of the accent sweep across, under the glow
+     friendly  three soft rounded lights, accent, warm and mint, drift and swell
+     retro     scanlines crawl in 2 px steps while a bright bar steps down the screen
+     glass     two light pools drift past each other and a specular streak crosses
+     nier      a scan line sweeps down over a drifting dot grid; a block cursor blinks at the centre
+   With Reduce Animations nothing travels: the glow, the scanlines or the dot grid only breathe.
+   src/js/12-theme-transition.js starts them with the cover and ends them once it has gone. */
+.pm-look-veil { --pm-veil-hi: color-mix(in srgb, #fff 18%, transparent); --pm-veil-sheen: color-mix(in srgb, var(--pm-veil-glow, #6aa8ff) 34%, transparent); }
+.pm-look-veil[data-mode="light"] { --pm-veil-hi: color-mix(in srgb, #fff 90%, transparent); --pm-veil-sheen: color-mix(in srgb, var(--pm-veil-glow, #6aa8ff) 30%, transparent); }
+/* NieR's ink in the cover's own mode (its palette, settings/kit.d: light #211f1b on paper, dark #d1cdb7) */
+.pm-look-veil[data-fx="nier"] { --pm-veil-ink: #d1cdb7; }
+.pm-look-veil[data-fx="nier"][data-mode="light"] { --pm-veil-ink: #211f1b; }
+.pm-look-veil > b { position: absolute; inset: 0; pointer-events: none; }
+.pm-look-veil > b > i { position: absolute; display: none; opacity: 0; will-change: transform, opacity; }
+
+/* basic: the sheens (tall bands, tilted as they sweep) */
+.pm-look-veil[data-fx="basic"] > b > i:nth-child(-n+2) {
+  display: block; left: 0; top: 50%; width: 36vmax; height: 240vmax; margin: -120vmax 0 0 -36vmax;
+  background: linear-gradient(90deg, transparent, var(--pm-veil-sheen) 50%, transparent);
+}
+
+/* friendly: the rounded lights */
+.pm-look-veil[data-fx="friendly"] > b > i {
+  display: block; width: 48vmax; height: 48vmax; margin: -24vmax 0 0 -24vmax; border-radius: 50%;
+}
+.pm-look-veil[data-fx="friendly"] > b > i:nth-child(1) { left: 28%; top: 62%; background: radial-gradient(closest-side, color-mix(in srgb, var(--pm-veil-glow, #6aa8ff) 30%, transparent), transparent); }
+.pm-look-veil[data-fx="friendly"] > b > i:nth-child(2) { left: 72%; top: 36%; background: radial-gradient(closest-side, color-mix(in srgb, #ffb067 28%, transparent), transparent); }
+.pm-look-veil[data-fx="friendly"] > b > i:nth-child(3) { left: 52%; top: 18%; background: radial-gradient(closest-side, color-mix(in srgb, #5fd3b0 24%, transparent), transparent); }
+
+/* retro: scanlines (a little taller than the window, so their 2 px crawl never shows an edge) and the bar */
+.pm-look-veil[data-fx="retro"] > b > i:nth-child(1) {
+  display: block; left: 0; right: 0; top: -8px; bottom: -8px;
+  background: repeating-linear-gradient(0deg, color-mix(in srgb, var(--pm-veil-glow, #6aa8ff) 20%, transparent) 0 2px, transparent 2px 4px);
+}
+.pm-look-veil[data-fx="retro"] > b > i:nth-child(2) {
+  display: block; left: 0; right: 0; top: 0; height: 16vh;
+  background: linear-gradient(transparent, color-mix(in srgb, var(--pm-veil-glow, #6aa8ff) 24%, transparent) 78%,
+    color-mix(in srgb, var(--pm-veil-glow, #6aa8ff) 55%, transparent) 78% 84%, transparent 84%);
+}
+
+/* glass: the light pools and the streak */
+.pm-look-veil[data-fx="glass"] > b > i:nth-child(-n+2) {
+  display: block; width: 66vmax; height: 42vmax; margin: -21vmax 0 0 -33vmax; border-radius: 50%;
+}
+.pm-look-veil[data-fx="glass"] > b > i:nth-child(1) { left: 34%; top: 40%; background: radial-gradient(closest-side, var(--pm-veil-hi), transparent); }
+.pm-look-veil[data-fx="glass"] > b > i:nth-child(2) { left: 66%; top: 62%; background: radial-gradient(closest-side, color-mix(in srgb, var(--pm-veil-glow, #6aa8ff) 24%, transparent), transparent); }
+.pm-look-veil[data-fx="glass"] > b > i:nth-child(3) {
+  display: block; left: 0; top: 50%; width: 10vmax; height: 240vmax; margin: -120vmax 0 0 -10vmax;
+  background: linear-gradient(90deg, transparent, var(--pm-veil-hi) 50%, transparent);
+}
+
+/* nier: the scan line (a trail and its bright edge), the dot grid (a cell wider than the window, for its drift) and
+   the block cursor, all in the NieR ink */
+.pm-look-veil[data-fx="nier"] > b > i:nth-child(1) {
+  display: block; left: 0; right: 0; top: 0; height: 22vh;
+  background: linear-gradient(transparent, color-mix(in srgb, var(--pm-veil-ink, var(--pm-veil-glow, #b4ae96)) 16%, transparent) 94%,
+    color-mix(in srgb, var(--pm-veil-ink, var(--pm-veil-glow, #b4ae96)) 62%, transparent) 94% 100%);
+}
+.pm-look-veil[data-fx="nier"] > b > i:nth-child(2) {
+  display: block; left: -24px; top: -24px; right: -24px; bottom: -24px;
+  background: radial-gradient(circle, color-mix(in srgb, var(--pm-veil-ink, var(--pm-veil-glow, #b4ae96)) 40%, transparent) 1px, transparent 1.6px) 0 0 / 24px 24px;
+}
+.pm-look-veil[data-fx="nier"] > b > i:nth-child(3) {
+  display: block; left: 50%; top: 50%; width: 14px; height: 14px; margin: -7px 0 0 -7px;
+  background: var(--pm-veil-ink, var(--pm-veil-glow, #b4ae96));
+}

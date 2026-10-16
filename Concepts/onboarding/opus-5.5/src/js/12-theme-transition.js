@@ -65,6 +65,8 @@
     v.setAttribute('aria-hidden', 'true');
     v.setAttribute('data-mode', mode);
     v.appendChild(document.createElement('i'));
+    const parts = v.appendChild(document.createElement('b'));   /* the cover's motion (css/21-look-veil.css) */
+    for (let k = 0; k < 3; k++) parts.appendChild(document.createElement('i'));
     document.body.appendChild(v);
     return v;
   }
@@ -78,10 +80,13 @@
     const v = veilFor(mode);
     try {
       const c = coloursOf(lookAfter({ mode })), key = (c.bg || '') + '|' + (c.glow || '');
-      if (v.__key !== key) {
-        v.__key = key;
+      /* the motion speaks the language of the look on screen, as the cover wears its colours */
+      const fx = nierOn() ? 'nier' : ((html.getAttribute('data-theme') || 'basic').split('-')[0] || 'basic');
+      if (v.__key !== key + '|' + fx) {
+        v.__key = key + '|' + fx;
         if (c.bg) v.style.setProperty('--pm-veil-bg', c.bg); else v.style.removeProperty('--pm-veil-bg');
         if (c.glow) v.style.setProperty('--pm-veil-glow', c.glow); else v.style.removeProperty('--pm-veil-glow');
+        v.setAttribute('data-fx', FX[fx] ? fx : 'basic');
       }
     } catch (_) { /* the fallbacks */ }
     v.setAttribute('data-ready', '');
@@ -99,6 +104,57 @@
   try { new MutationObserver(paintSoon).observe(html, { attributes: true, attributeFilter: ['data-theme', 'data-o55-nier'] }); } catch (_) { /* none */ }
   const startOnShown = (anims) => { if (window.PM_START_ON_SHOWN) window.PM_START_ON_SHOWN(anims); };
   const stopGlow = () => { glowAnims.forEach((a) => { try { a.cancel(); } catch (_) { /* gone */ } }); glowAnims = []; };
+
+  /* The cover's motion (css/21-look-veil.css says what each look does). Every part loops on the compositor
+     (transform, opacity) from the cover's first frame until it has gone, so the cover never stands as a blank colour
+     while the main thread restyles; started together and never held, since a loop has no first frame to lose. With
+     Reduce Animations nothing travels: a texture or the glow only breathes, slowly. */
+  const loop = (el, frames, o) => el.animate(frames, Object.assign({ iterations: Infinity, fill: 'both' }, o));
+  const sweep = (el, deg, ms, delay, peak) => loop(el, [
+    { transform: `translateX(0) rotate(${deg}deg)`, opacity: 0 },
+    { opacity: peak, offset: 0.2 }, { opacity: peak, offset: 0.8 },
+    { transform: `translateX(calc(100vw + 72vmax)) rotate(${deg}deg)`, opacity: 0 }
+  ], { duration: ms, delay, easing: 'cubic-bezier(.45, 0, .3, 1)' });
+  const fadeIn = (el, to, ms, easing) => el.animate([{ opacity: 0 }, { opacity: to }], { duration: ms, easing: easing || 'ease-out', fill: 'forwards' });
+  const drift = (el, a, b, ms, lag) => loop(el, [{ transform: a }, { transform: b }], { duration: ms, delay: -lag, direction: 'alternate', easing: 'ease-in-out' });
+  const breatheCalm = (el, lo, hi, ms, easing) => loop(el, [{ opacity: lo }, { opacity: hi }], { duration: ms, direction: 'alternate', easing: easing || 'ease-in-out' });
+  const FX = {
+    basic: (p, calm) => calm ? [] : [sweep(p[0], 18, 1400, 0, 1), sweep(p[1], 18, 1400, 560, 0.55)],
+    friendly: (p, calm) => calm ? [] : [
+      fadeIn(p[0], 1, 260), drift(p[0], 'translate(-6vmax, 4vmax) scale(.9)', 'translate(6vmax, -5vmax) scale(1.12)', 1600, 0),
+      fadeIn(p[1], 1, 320), drift(p[1], 'translate(5vmax, -3vmax) scale(1.08)', 'translate(-7vmax, 5vmax) scale(.9)', 2000, 700),
+      fadeIn(p[2], 1, 380), drift(p[2], 'translate(-4vmax, -2vmax) scale(.94)', 'translate(5vmax, 4vmax) scale(1.1)', 2400, 1300)
+    ],
+    retro: (p, calm) => calm ? [breatheCalm(p[0], 0.45, 1, 1200, 'steps(2, jump-none)')] : [
+      fadeIn(p[0], 1, 120, 'steps(2, end)'),
+      loop(p[0], [{ transform: 'translateY(0)' }, { transform: 'translateY(4px)' }], { duration: 240, easing: 'steps(2, end)', composite: 'replace' }),
+      loop(p[1], [{ transform: 'translateY(-16vh)', opacity: 1 }, { transform: 'translateY(100vh)', opacity: 1 }], { duration: 1200, easing: 'steps(12, end)' })
+    ],
+    glass: (p, calm) => calm ? [] : [
+      fadeIn(p[0], 1, 300), drift(p[0], 'translate(-8vmax, 5vmax) rotate(-8deg)', 'translate(9vmax, -6vmax) rotate(10deg)', 2400, 0),
+      fadeIn(p[1], 1, 360), drift(p[1], 'translate(8vmax, -4vmax) rotate(6deg)', 'translate(-9vmax, 6vmax) rotate(-9deg)', 2800, 900),
+      sweep(p[2], 24, 1700, 240, 0.9)
+    ],
+    nier: (p, calm) => calm ? [breatheCalm(p[1], 0.35, 0.7, 1800)] : [
+      loop(p[0], [{ transform: 'translateY(-22vh)', opacity: 1 }, { transform: 'translateY(100vh)', opacity: 1 }], { duration: 1500, easing: 'linear' }),
+      fadeIn(p[1], 0.75, 200, 'steps(3, end)'),
+      loop(p[1], [{ transform: 'translate(0, 0)' }, { transform: 'translate(24px, 24px)' }], { duration: 3000, easing: 'linear' }),
+      loop(p[2], [{ opacity: 1, easing: 'step-end' }, { opacity: 0, offset: 0.5, easing: 'step-end' }, { opacity: 1 }], { duration: 640 })
+    ]
+  };
+  function startMotion(v, calm) {
+    if (v.__motion && v.__motionCalm === calm) return;   /* a pick while it lifts: the parts go on where they are */
+    stopMotion(v);
+    const parts = v.querySelector(':scope > b');
+    const make = FX[v.getAttribute('data-fx')] || FX.basic;
+    try { v.__motion = parts ? make([...parts.children], calm) : []; } catch (_) { v.__motion = []; }
+    v.__motionCalm = calm;
+  }
+  function stopMotion(v) {
+    if (!v || !v.__motion) return;
+    v.__motion.forEach((a) => { try { a.cancel(); } catch (_) { /* gone */ } });
+    v.__motion = null;
+  }
 
   function runJob() {
     const apply = job; job = null;
@@ -147,6 +203,7 @@
       if (t !== ticket) return;
       phase = 'idle';
       veil.removeAttribute('data-on');   /* it stays ready (laid out, opacity 0) for the next pick */
+      stopMotion(veil);
       paintSoon();
       stopGlow();
       try { out.cancel(); } catch (_) { /* gone */ }
@@ -159,7 +216,7 @@
     const v = veils[to.mode] && veils[to.mode].__key ? veils[to.mode] : paint(to.mode);   /* painted ahead: no paint now */
     let from = 0;
     if (phase === 'lifting' && veil === v) { try { from = parseFloat(getComputedStyle(v).opacity) || 0; } catch (_) { from = 0; } }
-    else if (veil && veil !== v) { veil.removeAttribute('data-on'); }
+    else if (veil && veil !== v) { veil.removeAttribute('data-on'); stopMotion(veil); }
     veil = v;
     v.setAttribute('data-on', '');
     phase = 'covering';
@@ -170,10 +227,16 @@
     coverAnim = v.animate([{ opacity: from }, { opacity: COVER }], {
       duration: inMs, easing: to.retro ? 'steps(3, end)' : 'cubic-bezier(.2, 0, 0, 1)', fill: 'forwards'
     });
+    startMotion(v, still);
     const anims = [];   /* the cover is the answer: it starts at once; the glow waits for a shown frame */
     /* the glow spreads from the control that was pressed and breathes while the new look is drawn (not in Retro's
-       flat pixels, nor with less motion) */
-    if (!still && !to.retro) {
+       flat pixels or NieR's ink; with less motion it only breathes where it rests) */
+    const fx = v.getAttribute('data-fx'), glows = fx !== 'retro' && fx !== 'nier' && !to.retro;
+    if (still && glows) {
+      const g = v.firstElementChild;
+      glowAnims = [g.animate([{ opacity: 0.35 }, { opacity: 0.8 }], { duration: 1600, iterations: Infinity, direction: 'alternate', easing: 'ease-in-out', fill: 'both' })];
+    }
+    if (!still && glows) {
       const g = v.firstElementChild, src = document.getElementById('themeSelect');
       let x = window.innerWidth - 120, y = 18;
       try { if (src) { const r = src.getBoundingClientRect(); if (r.width) { x = r.left + r.width / 2; y = r.top + r.height / 2; } } } catch (_) { /* default */ }
