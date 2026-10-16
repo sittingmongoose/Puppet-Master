@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L5591-L27100
+Source lines: L5592-L27106
 
-Source SHA256: `a7b6f2c562f2ed1728f99ded5da071b1ae82ca324d50ee32f0e274aa0d0c8f37`
+Source SHA256: `ef219d9c3c18f4b2d4c1b66696f24c0c36da83975965f717d257758547ad4437`
 
 ---
 
@@ -2290,19 +2290,22 @@ status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
   The canonical side-panel inventory and labels are search, chat, files, source_control,
-  repository_automation, docker_manager, artifacts, run_debug, testing, and agents with matching labels,
-  tooltips, shortcuts, and command IDs. The testing and agents panels joined the inventory per the
-  2026-07-16 shell sweep promotion (F3-451, F3-452). Amended 2026-10-10 (DL-187, D40): `chat` stays an
-  activity-bar entry but opens no side panel. A click on it, or Enter or Space where the entry takes
-  focus, shows the chat column (F3-637) when the chat is not on screen and hides it when it is, on every
-  page, and never changes the page in front; where the narrow ladder has folded the chat to its strip, the
-  entry opens the chat over the centre (F3-636). Each show or hide is one cmd.panel.switch with chat and
-  one receipt. A press that moves 4 px or more, or ends as the rail's own drag, reorders the rail (or
-  moves the entry into More) and shows or hides nothing. The entry is lit while the column is shown, its
-  folded strip included, and its hover tag reads Chat, "Shows or hides the chat column". Jared reaffirmed
-  the shown-chat indicator on 2026-10-14 and removed the separate Dashboard activity-bar button. Dashboard
-  remains a Home panel/tab kind; removal does not delete dashboard content or its existing commands. The
-  bar and More tray offer no removed Dashboard button.
+  repository_automation, docker_manager, artifacts, run_debug, testing, and agents with matching
+  labels, tooltips, shortcuts, and command IDs. The testing and agents panels joined the inventory
+  per the 2026-07-16 shell sweep promotion (F3-451, F3-452). Amended 2026-10-10 (DL-187, D40):
+  `chat` stays an activity-bar entry but opens no side panel. A click on it, or Enter or Space where
+  the entry takes focus, shows the chat column (F3-637) when the chat is not on screen and hides it
+  when it is, on every page, and never changes the page in front; where the narrow ladder has folded
+  the chat to its strip, the entry opens the chat over the centre (F3-636). Each show or hide is one
+  cmd.panel.switch with chat and one receipt. A press that moves 4 px or more, or ends as the rail's
+  own drag, reorders the rail (or moves the entry into More) and shows or hides nothing. The entry
+  is lit while the column is shown, its folded strip included, and its hover tag reads Chat, "Shows
+  or hides the chat column". Jared reaffirmed the shown-chat indicator on 2026-10-14 and removed the
+  separate Dashboard activity-bar button. Dashboard remains a Home panel/tab kind; removal does not
+  delete dashboard content or its existing commands. The bar and More tray offer no removed
+  Dashboard button. A saved rail order or item hidden under More drops an id that is no longer a
+  live bar destination; removal of the Dashboard rail destination therefore cannot leave a dead
+  saved item. F3-444 owns the order key.
 gui_related: true
 gui_classification_reason: >-
   This unit defines user-visible GUI surface, shell, copy, control, or projection behavior.
@@ -2339,13 +2342,15 @@ source_lineage:
 - /mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/followup/DECISIONS-ADDENDUM-3.md,
   SHA-256 ecd18c2f2d8ac8f714f9578170d321584fb871e3d19601a68061898ffd6759a9 (D40)
 - /mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/followup/panels-NUMBERS-339203bd76.md,
-  SHA-256 2e2c2a95819842cd5cbcc108ed302460ddea3ed0a98be7dfe4f1b78507660ce6 (the rail's Chat entry; concept lineage
-  only)
+  SHA-256 2e2c2a95819842cd5cbcc108ed302460ddea3ed0a98be7dfe4f1b78507660ce6 (the rail's Chat entry; concept
+  lineage only)
 - /mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/followup/panels-CONTRACT-339203bd76.md,
-  SHA-256 6937e47dd9e63466f9c17653bf54f2a70583efbde7270d8cf9609a1920150165 (sections 6.1 and 6.3; concept lineage
-  only)
+  SHA-256 6937e47dd9e63466f9c17653bf54f2a70583efbde7270d8cf9609a1920150165 (sections 6.1 and 6.3; concept
+  lineage only)
 - /mnt/Cursor/share/puppet-master/2026-10-14-plans-canon/sources/JARED-FEEDBACK-20261014.md, SHA-256 47218ab2d7bfdbb58e983f9e4b489f3c29cedfc7b54bcf77788d06ced0ef10e6
   (decision/source lineage; not native implementation evidence)
+- /mnt/Cursor/share/puppet-master/2026-10-16-plans-pass2/sources/2026-10-14-shell-polish--NOTES.md, SHA-256
+  7669cbc5856a21182b47649b2a76ec6b89bb215fe82f308c1afd1d4ca099ae66 (source lineage; not native certification)
 preserved_exact_tokens:
 - "search"
 - "chat"

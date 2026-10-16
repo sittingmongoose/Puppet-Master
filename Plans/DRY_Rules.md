@@ -2799,15 +2799,20 @@ unit_type: invariant
 status: accepted
 owner_doc: Plans/DRY_Rules.md
 canonical_text: >-
-  The concepts' embedded copies of the theme web fonts are one set of files. Every face the 5.6 Pro chat
-  concept embeds (Inter, Poppins, IBM Plex Mono and JetBrains Mono, each with its unicode-range script slices, in
-  Concepts/chat-assistant-concepts/5.6 Pro/styles.css and pmx-system.css) is carried byte for byte by PMConcept7's
-  Concepts/onboarding/opus-5.5/src/fonts or, for JetBrains Mono, src/settings/nier/fonts, where the same files are
-  NieR Mode's PM NieR Mono; src/fonts/SOURCE.md lists each file's source and SHA-256, and 5.6 Pro's NieR faces are
-  generated from those files (amended 2026-10-09, DL-161). A concept that adds or changes a shared face changes it for
-  both, and Concepts/onboarding/opus-5.5/tools/build.py --check fails while a face 5.6 Pro embeds is missing
-  from src/fonts byte for byte. Which faces each theme family uses stays F3-430's; this rule only fixes that the
-  concepts do not keep two versions of the same face.
+  The concepts' embedded copies of the theme web fonts are one set of files. Every face the 5.6 Pro
+  chat concept embeds (Inter, Poppins, IBM Plex Mono and JetBrains Mono, each with its unicode-range
+  script slices, in Concepts/chat-assistant-concepts/5.6 Pro/styles.css and pmx-system.css) is
+  carried byte for byte by PMConcept7's Concepts/onboarding/opus-5.5/src/fonts or, for JetBrains
+  Mono, src/settings/nier/fonts, where the same files are NieR Mode's PM NieR Mono;
+  src/fonts/SOURCE.md lists each file's source and SHA-256, and 5.6 Pro's NieR faces are generated
+  from those files (amended 2026-10-09, DL-161). A concept that adds or changes a shared face
+  changes it for both, and Concepts/onboarding/opus-5.5/tools/build.py --check fails while a face
+  5.6 Pro embeds is missing from src/fonts byte for byte. The one dated exception is the full-axis
+  Latin upright admitted by F3-644 on 2026-10-16: PMConcept7's JetBrains Mono uses the new 100–800
+  file, while PM NieR Mono and the existing 5.6 Pro face retain their old Latin bytes; shared
+  non-Latin slices stay identical. F3-644 owns that file choice and its source hash. Which faces
+  each theme family uses stays F3-430's; this rule fixes shared-file custody without undoing that
+  explicit exception.
 gui_related: true
 gui_classification_reason: "Keeps the concepts' theme faces identical so both concepts draw the same letters."
 split_recommended: false
@@ -2831,8 +2836,11 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
-  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/pm7-fonts-20261009/README.md, SHA-256 51df0972bff7f0f909d1cf3438aa1389eaa9e76c3b12b5ac8363814fbded11e4"
-  - "Plans/Decision_Log.md#DL-161"
+- /mnt/Cursor/PuppetMaster-Evidence/scratch/pm7-fonts-20261009/README.md, SHA-256 51df0972bff7f0f909d1cf3438aa1389eaa9e76c3b12b5ac8363814fbded11e4
+- Plans/Decision_Log.md#DL-161
+- /mnt/Cursor/share/puppet-master/2026-10-16-plans-pass2/sources/Concepts--onboarding--opus-5.5--src--fonts--SOURCE.md,
+  SHA-256 76985bc806939e214326c3bfd498e377cb868bfda68ed4b641b24599e57cf97b (source lineage; not native
+  certification)
 preserved_exact_tokens:
   - "F3-430"
   - "SOURCE.md"
@@ -2843,6 +2851,9 @@ negative_constraints:
 owner_hints:
   - Plans/DRY_Rules.md
   - Plans/FinalGUISpec.md
+stale_retired_dispositions:
+- 'Amended 2026-10-16 (PM7 pass 2): The universal same-Latin-bytes statement is qualified by F3-644’s
+  full-axis JetBrains Mono delivery; no duplicate terminal embedding is introduced.'
 ```
 
 ContractRef: ContractName:Plans/FinalGUISpec.md#F3-430, ContractName:Plans/Decision_Log.md#DL-161
@@ -3687,33 +3698,40 @@ unit_type: invariant
 status: accepted
 owner_doc: Plans/DRY_Rules.md
 canonical_text: >-
-  The terminal has one appearance model (DL-183, D15). Four layers resolve field by field, an unset field
-  falling through: the look's defaults ("Follow look": the current look's scheme, face and effects), then
-  the app default (Settings > Terminal), then the project default, then the per-tab override, each later
-  layer winning (F3-642). The Customize screen (F3-650) in the terminal's More menu, Settings > Terminal
-  and the per-look defaults read and write this one model: the Customize screen writes This terminal (the
-  tab's override) or All terminals (the project default, written through the same Settings transaction
-  Settings uses over SSYS-051's rows, F3-642), no surface writes an app-wide value until q-035 admits an
-  app-wide store (SSYS-002), and the look layer reads the current look from its one store (SSYS-010,
-  DR-056) and keeps no copy. The fields are F3-642's, the storage SP-331's (the app default in Settings
-  rows, the project default in the Project's Settings, the override inside the terminal tab's saved state)
-  and the Settings rows SSYS-051's; the existing terminal appearance rows, code.terminal.theme and
-  code.terminal.font-family among them, bind the Project layer under SSYS-002. The app-default layer is
-  reserved compatibility/default lineage, not an admitted writable app store. There is no fifth layer (a
-  shell profile carries no appearance of its own), and no second terminal theme, scheme, font, background
-  or effects store or terminal-local settings key outside the model. Every field applies live, and no
-  terminal appearance setting carries a restart badge. The faces are F3-644's and their files DR-050's one
-  set. The effects (F3-643) are paint on the terminal's own screen inside this model, not motion voices:
-  DR-043's per-family motion voices and its accent rule stand, so the scheme colours the screen and the
-  terminal's chrome takes the theme's token roles. One code colour-scheme catalog and the shared Customize
-  presentation serve the editor and terminal (F3-642, F3-650, F3-651). Each curated scheme carries the
-  terminal palette and editor syntax colours. Each surface has its own scheme choice, defaulting to
-  "Follow look"; neither surface keeps its own scheme list or duplicate Customize implementation. F3-650
-  alone owns scope entry and preview docking for both screens; F3-438 owns the shared selector layout.
-  F3-651 owns editor field behavior; SSYS-052 and SSYS-051 own their Project rows. Compatibility concept
-  keys never authorize a no-Project write. Each kind’s quick sets resolve from
-  Plans/appearance_quick_sets.json; This and All adapt the same exact patch to their existing writers,
-  never maintain their own patch copies. Separate editor/terminal field identities remain intact.
+  The terminal has one appearance model (DL-183, D15). Four layers resolve field by field, an unset
+  field falling through: the look's defaults ("Follow look": the current look's scheme, face and
+  effects), then the app default (Settings > Terminal), then the project default, then the per-tab
+  override, each later layer winning (F3-642). The Customize screen (F3-650) in the terminal's More
+  menu, Settings > Terminal and the per-look defaults read and write this one model: the Customize
+  screen writes This terminal (the tab's override) or All terminals (the project default, written
+  through the same Settings transaction Settings uses over SSYS-051's rows, F3-642), no surface
+  writes an app-wide value until q-035 admits an app-wide store (SSYS-002), and the look layer reads
+  the current look from its one store (SSYS-010, DR-056) and keeps no copy. The fields are F3-642's,
+  the storage SP-331's (the app default in Settings rows, the project default in the Project's
+  Settings, the override inside the terminal tab's saved state) and the Settings rows SSYS-051's;
+  the existing terminal appearance rows, code.terminal.theme and code.terminal.font-family among
+  them, bind the Project layer under SSYS-002. The app-default layer is reserved
+  compatibility/default lineage, not an admitted writable app store. There is no fifth layer (a
+  shell profile carries no appearance of its own), and no second terminal theme, scheme, font,
+  background or effects store or terminal-local settings key outside the model. Every field applies
+  live, and no terminal appearance setting carries a restart badge. The faces are F3-644's and their
+  files DR-050's one set. The effects (F3-643) are paint on the terminal's own screen inside this
+  model, not motion voices: DR-043's per-family motion voices and its accent rule stand, so the
+  scheme colours the screen and the terminal's chrome takes the theme's token roles. One code
+  colour-scheme catalog and the shared Customize presentation serve the editor and terminal (F3-642,
+  F3-650, F3-651). Each curated scheme carries the terminal palette and editor syntax colours. Each
+  surface has its own scheme choice, defaulting to "Follow look"; neither surface keeps its own
+  scheme list or duplicate Customize implementation. F3-650 alone owns scope entry and preview
+  docking for both screens; F3-438 owns the shared selector layout. F3-651 owns editor field
+  behavior; SSYS-052 and SSYS-051 own their Project rows. Compatibility concept keys never authorize
+  a no-Project write. Each kind’s quick sets resolve from Plans/appearance_quick_sets.json; This and
+  All adapt the same exact patch to their existing writers, never maintain their own patch copies.
+  Separate editor/terminal field identities remain intact. Plans/terminal_background_catalog.json
+  owns design ids/categories/names and compatibility mapping; Customize, Settings and the renderer
+  consume it. F3-650's saved preset library is a reusable set of sparse field values, never a fifth
+  appearance layer; SP-331 owns its computer-local custody and the existing scope writers alone
+  apply it. The extended bezel/background fields use the existing one model and shared
+  reset/quick-set registry.
 gui_related: true
 gui_classification_reason: "Fixes one layered appearance model for every terminal."
 split_recommended: false
@@ -3753,11 +3771,15 @@ source_lineage:
 - /mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/DECISIONS.md, SHA-256 0d2b45466c91734e15fd8659e9a8e3b17b70d92be785421e57e084dc8daf6b64
   (D15, D16)
 - /mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/terminal-SPEC-ac63b1f467.md,
-  SHA-256 4e3b5aabb4e41fed43d338a1b8c852b752b5860277f2058332575ba3953dbc8b, section 6 (concept lineage only)
-- /mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/plans-terminal-audit.md, SHA-256 12f95fa6f79b1c0a1f9f34b1eee004cac9edacfd8e0a7f4e6495fe1af23aabe3,
-  Appendix 7, E.3.4 and E.5 (worklist)
+  SHA-256 4e3b5aabb4e41fed43d338a1b8c852b752b5860277f2058332575ba3953dbc8b, section 6 (concept lineage
+  only)
+- /mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/plans-terminal-audit.md, SHA-256
+  12f95fa6f79b1c0a1f9f34b1eee004cac9edacfd8e0a7f4e6495fe1af23aabe3, Appendix 7, E.3.4 and E.5 (worklist)
 - /mnt/Cursor/share/puppet-master/2026-10-14-editor-customizer/PROPOSAL-canon.md, SHA-256 8b8f3179c3970cb165e4fb4722eb02381f0456faad235c4330207d2bec5f5431
   (approved campaign source lineage; not native implementation evidence)
+- /mnt/Cursor/share/puppet-master/2026-10-16-plans-pass2/sources/2026-10-14-terminal-round3--LANDING.md,
+  SHA-256 4d6556ff98168f22719c5d401c4e677d5d380d2ef370b67a838cb3aa45301c2d (source lineage; not native
+  certification)
 preserved_exact_tokens:
   - "Follow look"
   - "This terminal"
@@ -4015,8 +4037,11 @@ canonical_text: >-
   One wallpaper registry supplies stable ids, family/order, names, dark/light assets, thumbnails and
   defaults to every wallpaper consumer. Plans/wallpaper_catalog.json is that registry; F3-653 owns
   presentation, SSYS-054 owns the single Project choice and SP-333 owns storage. No theme, Settings
-  gallery, onboarding or native renderer keeps a competing list or default. Picking through any surface
-  uses the Settings transaction, never a wallpaper-specific settings store or duplicate command.
+  gallery, onboarding or native renderer keeps a competing list or default. Picking through any
+  surface uses the Settings transaction, never a wallpaper-specific settings store or duplicate
+  command. The terminal Lens consumes the same selected print and catalog as Glass; it never derives
+  another wallpaper from computed page styling or stores a second choice. The six NieR prints derive
+  from the original scene drawings, while their native packaged assets are registered here.
 gui_related: true
 gui_classification_reason: One wallpaper catalog and one writer.
 split_recommended: false
@@ -4045,6 +4070,12 @@ source_lineage:
 - Plans/Settings_System.md#SSYS-054
 - Plans/storage-plan.md#SP-333
 - Plans/FinalGUISpec.md#F3-650
+- /mnt/Cursor/share/puppet-master/2026-10-16-plans-pass2/sources/Concepts--wallpapers--opus-5.5--CONTRACT.md,
+  SHA-256 6550b3e5d31dbeca5e9d5cf11f7c06db13f37e189da270ac25e6504a5ec4a3da (source lineage; not native
+  certification)
+- /mnt/Cursor/share/puppet-master/2026-10-16-plans-pass2/sources/2026-10-14-terminal-round3--CANON-PROPOSALS.md,
+  SHA-256 4a4b91f257467e76ec6d43e37a04a81cf5f9dee515242177f0d08db04483700d (source lineage; not native
+  certification)
 preserved_exact_tokens: []
 negative_constraints: []
 owner_hints:

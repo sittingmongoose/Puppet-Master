@@ -14502,18 +14502,21 @@ unit_type: decision
 status: accepted
 owner_doc: Plans/Decision_Log.md
 canonical_text: >-
-  Jared approved both terminal Customize entry points on 2026-10-13. The screen keeps live field editing,
-  quick sets, sample trials and truthful hints; All terminals writes the same Project rows as Settings and
-  This terminal stays an override. F3-650 owns the screen and F3-642/SSYS-051 its fields and persistence
-  boundaries. On 2026-10-14 Jared set terminal padding to zero and required more background choices, a
-  smaller removable/customizable bezel, a default look without bezel or curvature, and user-saved look
-  presets. F3-642/F3-643/F3-650 record the approved direction and the pending detailed contracts; the
-  earlier small catalog and CRT treatment are not final acceptance of those new requirements. Later
-  on 2026-10-14 Jared reaffirmed JetBrains Mono's full 100–800 range and directed adding the missing
-  upright 100–300 files. F3-644 owns the unchanged range and shared asset delivery; this closes the
-  product question without claiming that the files have landed. His later round-three bezel review
-  requires another revision or a removal recommendation; F3-643 records that direction and keeps the
-  final effect/control contract held. Round two is not accepted as the final bezel.
+  Historical decision as recorded on 2026-10-14; its publication/contract holds and superseded
+  presentation are resolved by DL-206/DL-207 on 2026-10-16. The earlier decision text follows for
+  lineage: Jared approved both terminal Customize entry points on 2026-10-13. The screen keeps live
+  field editing, quick sets, sample trials and truthful hints; All terminals writes the same Project
+  rows as Settings and This terminal stays an override. F3-650 owns the screen and F3-642/SSYS-051
+  its fields and persistence boundaries. On 2026-10-14 Jared set terminal padding to zero and
+  required more background choices, a smaller removable/customizable bezel, a default look without
+  bezel or curvature, and user-saved look presets. F3-642/F3-643/F3-650 record the approved
+  direction and the pending detailed contracts; the earlier small catalog and CRT treatment are not
+  final acceptance of those new requirements. Later on 2026-10-14 Jared reaffirmed JetBrains Mono's
+  full 100–800 range and directed adding the missing upright 100–300 files. F3-644 owns the
+  unchanged range and shared asset delivery; this closes the product question without claiming that
+  the files have landed. His later round-three bezel review requires another revision or a removal
+  recommendation; F3-643 records that direction and keeps the final effect/control contract held.
+  Round two is not accepted as the final bezel.
 gui_related: true
 gui_classification_reason: Terminal Customize from the panel and Settings.
 split_recommended: false
@@ -14550,6 +14553,9 @@ negative_constraints: []
 owner_hints:
 - Plans/Decision_Log.md
 
+stale_retired_dispositions:
+- 'Amended 2026-10-16 (PM7 pass 2): Read the current owners through DL-206/DL-207; earlier pending/held
+  wording is historical, not an active hold.'
 ```
 
 ContractRef: ContractName:Plans/FinalGUISpec.md#F3-650, ContractName:Plans/Settings_System.md#SSYS-051
@@ -14612,19 +14618,21 @@ unit_type: decision
 status: accepted
 owner_doc: Plans/Decision_Log.md
 canonical_text: >-
-  Jared approved the v2/v3 Glass direction and asked for magnification/reflections rather than chromatic
-  corruption, calmer transitions, curved slower switches and coherent controls. F3-652 replaces the old
-  Glass material constraints. Publishing Glass together with wallpapers remains pending his final review;
-  a source-only landing is not publication. His 2026-10-14 review requires the theme-selector lens, placed
-  single highlights on entry, coherent Usage/Settings transitions and wallpaper/scroll material, and
-  seamless Settings search fields. Later on 2026-10-14 he chose a Glass Light hover light beneath
-  the content, with readable text and retained edge glow. F3-652 carries that answer; Glass publication
-  remains held, but the under-content hover-light choice is no longer open.
-  Jared's Usage room-switching correction applies in every look, not only Glass; F3-628 owns the
-  shared responsive takeover and no-trailing-shadow requirement. His later Usage #3 direction
-  retires shared-element flights in every look in favour of a different expressive room-change
-  animation. F3-628 owns this supersession of DL-178's flights; replacement details remain pending
-  with the motion owner.
+  Historical decision as recorded on 2026-10-14; its publication/contract holds and superseded
+  presentation are resolved by DL-203/DL-205 on 2026-10-16. The earlier decision text follows for
+  lineage: Jared approved the v2/v3 Glass direction and asked for magnification/reflections rather
+  than chromatic corruption, calmer transitions, curved slower switches and coherent controls.
+  F3-652 replaces the old Glass material constraints. Publishing Glass together with wallpapers
+  remains pending his final review; a source-only landing is not publication. His 2026-10-14 review
+  requires the theme-selector lens, placed single highlights on entry, coherent Usage/Settings
+  transitions and wallpaper/scroll material, and seamless Settings search fields. Later on
+  2026-10-14 he chose a Glass Light hover light beneath the content, with readable text and retained
+  edge glow. F3-652 carries that answer; Glass publication remains held, but the under-content
+  hover-light choice is no longer open. Jared's Usage room-switching correction applies in every
+  look, not only Glass; F3-628 owns the shared responsive takeover and no-trailing-shadow
+  requirement. His later Usage #3 direction retires shared-element flights in every look in favour
+  of a different expressive room-change animation. F3-628 owns this supersession of DL-178's
+  flights; replacement details remain pending with the motion owner.
 gui_related: true
 gui_classification_reason: Liquid Glass reads as lenses and reflections.
 split_recommended: false
@@ -14661,6 +14669,9 @@ negative_constraints: []
 owner_hints:
 - Plans/Decision_Log.md
 
+stale_retired_dispositions:
+- 'Amended 2026-10-16 (PM7 pass 2): Read the current owners through DL-203/DL-205; earlier pending/held
+  wording is historical, not an active hold.'
 ```
 
 ContractRef: ContractName:Plans/FinalGUISpec.md#F3-652
@@ -14673,17 +14684,19 @@ unit_type: decision
 status: accepted
 owner_doc: Plans/Decision_Log.md
 canonical_text: >-
-  Jared initially approved W1 and retained W2–W4: five wallpapers for each other look, all selectable from
-  any look, one choice across looks, each look keeping its own ground by default and NieR returning to its
-  scenes through Look's own. Ribbons remains Glass's default. W5 retires the old Glass background row at
-  the coordinated Glass/wallpaper publication, held after the 19:25 correction. F3-653, SSYS-054 and
-  DR-073 own the result. On 2026-10-14 his review item 11 withdrew Archive, Signal, Fragments, Hatch and
-  Flora and replaced that direction with the NieR customizer’s own ink scenes available in the shared
-  gallery. His same-day item 18 says the most recent change wins from either control. The approved owner
-  contract names city, bunker, desert, forest, park and flooded; a gallery pick sets the shared wallpaper
-  id and a NieR background change sets the shared choice to look through its one owner. F3-653/SSYS-054
-  own those details; final assets/publication remain held. The five withdrawn prints are no longer an
-  accepted selectable set.
+  Historical decision as recorded on 2026-10-14; its publication/contract holds and superseded
+  presentation are resolved by DL-203 on 2026-10-16. The earlier decision text follows for lineage:
+  Jared initially approved W1 and retained W2–W4: five wallpapers for each other look, all
+  selectable from any look, one choice across looks, each look keeping its own ground by default and
+  NieR returning to its scenes through Look's own. Ribbons remains Glass's default. W5 retires the
+  old Glass background row at the coordinated Glass/wallpaper publication, held after the 19:25
+  correction. F3-653, SSYS-054 and DR-073 own the result. On 2026-10-14 his review item 11 withdrew
+  Archive, Signal, Fragments, Hatch and Flora and replaced that direction with the NieR customizer’s
+  own ink scenes available in the shared gallery. His same-day item 18 says the most recent change
+  wins from either control. The approved owner contract names city, bunker, desert, forest, park and
+  flooded; a gallery pick sets the shared wallpaper id and a NieR background change sets the shared
+  choice to look through its one owner. F3-653/SSYS-054 own those details; final assets/publication
+  remain held. The five withdrawn prints are no longer an accepted selectable set.
 gui_related: true
 gui_classification_reason: Wallpapers are selectable from every look.
 split_recommended: false
@@ -14723,6 +14736,9 @@ negative_constraints: []
 owner_hints:
 - Plans/Decision_Log.md
 
+stale_retired_dispositions:
+- 'Amended 2026-10-16 (PM7 pass 2): Read the current owners through DL-203; earlier pending/held wording
+  is historical, not an active hold.'
 ```
 
 ContractRef: ContractName:Plans/FinalGUISpec.md#F3-653, ContractName:Plans/Settings_System.md#SSYS-054, ContractName:Plans/DRY_Rules.md#DR-073
@@ -14735,10 +14751,12 @@ unit_type: decision
 status: accepted
 owner_doc: Plans/Decision_Log.md
 canonical_text: >-
-  Jared approved the built defaults for notification questions 1–6 and explicitly answered question 7: Usage
-  notices appear under the bell like every other page. F3-447 owns timing/staging, F3-453 the shared inbox and
-  F3-460 material. The unbuilt automatic eight-second terminal-notice dismissal was not adopted by approval of
-  built defaults.
+  Historical decision as recorded on 2026-10-14; its publication/contract holds and superseded
+  presentation are resolved by DL-204 on 2026-10-16. The earlier decision text follows for lineage:
+  Jared approved the built defaults for notification questions 1–6 and explicitly answered question
+  7: Usage notices appear under the bell like every other page. F3-447 owns timing/staging, F3-453
+  the shared inbox and F3-460 material. The unbuilt automatic eight-second terminal-notice dismissal
+  was not adopted by approval of built defaults.
 gui_related: true
 gui_classification_reason: Notification defaults and Usage under the bell.
 split_recommended: false
@@ -14772,6 +14790,9 @@ negative_constraints: []
 owner_hints:
 - Plans/Decision_Log.md
 
+stale_retired_dispositions:
+- 'Amended 2026-10-16 (PM7 pass 2): Read the current owners through DL-204; earlier pending/held wording
+  is historical, not an active hold.'
 ```
 
 ContractRef: ContractName:Plans/FinalGUISpec.md#F3-447, ContractName:Plans/FinalGUISpec.md#F3-453, ContractName:Plans/FinalGUISpec.md#F3-460
@@ -15184,11 +15205,14 @@ plan_unit_id: DL-202
 unit_type: decision
 status: accepted
 owner_doc: Plans/Decision_Log.md
-canonical_text: Jared’s 2026-10-14 review puts the panel grip’s narrow end in the top-right corner, reduces
-  excess spacing beside the rail and chat, reaffirms the rail’s visible Chat state and removes its Dashboard
-  button. F3-630, F3-637 and F3-042 own those changes. The existing panel/chat commands and dashboard content
-  remain; final spacing dimensions are held for the shell/Glass owners. F3-465 and DL-198 separately own the
-  reduced central pointer spotlight.
+canonical_text: >-
+  Jared’s 2026-10-14 review puts the panel grip’s narrow end in the top-right corner, reduces excess
+  spacing beside the rail and chat, reaffirms the rail’s visible Chat state and removes its
+  Dashboard button. F3-630, F3-637 and F3-042 own those changes. The existing panel/chat commands
+  and dashboard content remain; final spacing dimensions are held for the shell/Glass owners. F3-465
+  and DL-198 separately own the reduced central pointer spotlight. Superseded 2026-10-16 by
+  DL-209/F3-637 for spacing: the later landed shell/Glass dimensions close this final-dimensions
+  hold.
 gui_related: true
 gui_classification_reason: Records approved panel-grip, shell-spacing and rail-control presentation.
 split_recommended: false
@@ -15219,6 +15243,487 @@ preserved_exact_tokens: []
 negative_constraints: []
 owner_hints:
 - Plans/Decision_Log.md
+stale_retired_dispositions:
+- 'Amended 2026-10-16 (PM7 pass 2): F3-637 now owns the landed shell/Settings/Orchestrator spacing; earlier
+  final-dimensions hold is closed.'
 ```
 
 ContractRef: ContractName:Plans/FinalGUISpec.md#F3-630, ContractName:Plans/FinalGUISpec.md#F3-637, ContractName:Plans/FinalGUISpec.md#F3-042
+
+### DL-203 - Liquid Glass And Wallpaper Publication
+
+```yaml
+plan_unit_id: DL-203
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: 'Recorded 2026-10-16. Jared approved Glass after round-three corrections on 2026-10-15,
+  and ad37be9a23 published Glass together with the wallpaper gallery. F3-652/F3-653, SSYS-054 and SP-333
+  now consume that publication: the six NieR scene prints ship, Mesh/Depth/Minimal retires, and the most
+  recent accepted gallery or NieR background change still wins through the one Project transaction. This
+  closes the publication holds in DL-191/DL-192 without a native certification claim.'
+gui_related: true
+gui_classification_reason: Liquid Glass And Wallpaper Publication.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- The linked owners and finite companions agree with this decision; source publication is not native certification.
+validation_surfaces:
+- python3 scripts/pm-shard-plans.py --check
+- python3 scripts/pm-plan-index.py validate
+- python3 scripts/pm-plans-verify.py run-gates
+risk_class: owner_drift
+reasoning_tier: high
+context_scope: liquid_glass_and_wallpaper_publication
+implementation_surfaces:
+- Plans/Decision_Log.md
+node_compile_hint:
+  mode: owner_decision_record
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- /mnt/Cursor/share/puppet-master/2026-10-16-plans-pass2/sources/2026-10-14-glass-review--LANDING.md,
+  SHA-256 4585c89ab98c4ee6c88f0683ac8d00244725047fe2637fe657371ec42cff17bd (source lineage; not native
+  certification)
+- /mnt/Cursor/share/puppet-master/2026-10-16-plans-pass2/sources/2026-10-14-glass-review--JARED-FEEDBACK.md,
+  SHA-256 8fe51092727cd7d2a319228114448e4bf8ac42e673461aff6968ac46ecf53d5a (source lineage; not native
+  certification)
+preserved_exact_tokens: []
+negative_constraints: []
+owner_hints:
+- Plans/Decision_Log.md
+```
+
+ContractRef: ContractName:Plans/FinalGUISpec.md#F3-652, ContractName:Plans/FinalGUISpec.md#F3-653, ContractName:Plans/Settings_System.md#SSYS-054
+
+### DL-204 - Bell Staging And Setup Continuation
+
+```yaml
+plan_unit_id: DL-204
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: 'Recorded 2026-10-16. Jared''s Glass round-three #19 is owned by F3-447/F3-460: every
+  page stages under the shared bell, crowded lasting cards join it, and optional setup joins after its
+  reading interval or interaction elsewhere. F3-453 remains the only lasting store; existing resume and
+  alert actions retain their owners. This supersedes DL-193''s indefinite pinned-card presentation.'
+gui_related: true
+gui_classification_reason: Bell Staging And Setup Continuation.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- The linked owners and finite companions agree with this decision; source publication is not native certification.
+validation_surfaces:
+- python3 scripts/pm-shard-plans.py --check
+- python3 scripts/pm-plan-index.py validate
+- python3 scripts/pm-plans-verify.py run-gates
+risk_class: owner_drift
+reasoning_tier: high
+context_scope: bell_staging_and_setup_continuation
+implementation_surfaces:
+- Plans/Decision_Log.md
+node_compile_hint:
+  mode: owner_decision_record
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- /mnt/Cursor/share/puppet-master/2026-10-16-plans-pass2/sources/2026-10-14-glass-review--JARED-FEEDBACK.md,
+  SHA-256 8fe51092727cd7d2a319228114448e4bf8ac42e673461aff6968ac46ecf53d5a (source lineage; not native
+  certification)
+preserved_exact_tokens: []
+negative_constraints: []
+owner_hints:
+- Plans/Decision_Log.md
+```
+
+ContractRef: ContractName:Plans/FinalGUISpec.md#F3-447, ContractName:Plans/FinalGUISpec.md#F3-460
+
+### DL-205 - Shared Switcher And Room Handover
+
+```yaml
+plan_unit_id: DL-205
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: 'Recorded 2026-10-16. The landed #20–24 corrections use F3-652''s one token-driven switcher,
+  placed on the first visible frame and restored on reveal, including both Glass Customize screens. F3-628
+  owns the new family room handover and rapid reversal/return semantics; no shared-element flights return.
+  Non-Glass adoption from the consistency pass is pending a separate top-up.'
+gui_related: true
+gui_classification_reason: Shared Switcher And Room Handover.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- The linked owners and finite companions agree with this decision; source publication is not native certification.
+validation_surfaces:
+- python3 scripts/pm-shard-plans.py --check
+- python3 scripts/pm-plan-index.py validate
+- python3 scripts/pm-plans-verify.py run-gates
+risk_class: owner_drift
+reasoning_tier: high
+context_scope: shared_switcher_and_room_handover
+implementation_surfaces:
+- Plans/Decision_Log.md
+node_compile_hint:
+  mode: owner_decision_record
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- /mnt/Cursor/share/puppet-master/2026-10-16-plans-pass2/sources/2026-10-14-glass-review--JARED-FEEDBACK.md,
+  SHA-256 8fe51092727cd7d2a319228114448e4bf8ac42e673461aff6968ac46ecf53d5a (source lineage; not native
+  certification)
+- /mnt/Cursor/share/puppet-master/2026-10-16-plans-pass2/sources/Concepts--liquid-glass--opus-5.5--CONTRACT.md,
+  SHA-256 84a12b3c917ab557ae0478b2158be1146294900b1a10b5bacdc684cdcf11f74e (source lineage; not native
+  certification)
+preserved_exact_tokens: []
+negative_constraints: []
+owner_hints:
+- Plans/Decision_Log.md
+```
+
+ContractRef: ContractName:Plans/FinalGUISpec.md#F3-652, ContractName:Plans/FinalGUISpec.md#F3-628
+
+### DL-206 - Terminal Backgrounds And Monitor Housing
+
+```yaml
+plan_unit_id: DL-206
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: >-
+  Recorded 2026-10-16. The approved terminal round-3 landing 9cee10982c closes the catalog/bezel/curvature
+  holds in DL-189. F3-642 owns the 64 cross-look designs, Lens and Plain choice behavior; F3-643 owns the
+  independently optional monitor housing, width and revised opt-in CRT defaults. Numeric 0–1 reflection
+  values remain readable compatibility input; final offered reflection range, steps and material levels are
+  held for round 5. Mask display-density/capability behavior is also held: the source's DPR-2-only drawing
+  and DPR-1 no-op are source lineage and an unresolved acceptance defect, not an admitted capability rule.
+  Settings and machine companions consume those owners. Later round-4/5 discrete controls and mask changes
+  remain pending; the prior contrast ruling DL-197 is unchanged.
+gui_related: true
+gui_classification_reason: Terminal Backgrounds And Monitor Housing.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- The linked owners and finite companions agree with this decision; source publication is not native certification.
+validation_surfaces:
+- python3 scripts/pm-shard-plans.py --check
+- python3 scripts/pm-plan-index.py validate
+- python3 scripts/pm-plans-verify.py run-gates
+risk_class: owner_drift
+reasoning_tier: high
+context_scope: terminal_backgrounds_and_monitor_housing
+implementation_surfaces:
+- Plans/Decision_Log.md
+node_compile_hint:
+  mode: owner_decision_record
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- /mnt/Cursor/share/puppet-master/2026-10-16-plans-pass2/sources/2026-10-14-terminal-round3--LANDING.md,
+  SHA-256 4d6556ff98168f22719c5d401c4e677d5d380d2ef370b67a838cb3aa45301c2d (source lineage; not native
+  certification)
+- /mnt/Cursor/share/puppet-master/2026-10-16-plans-pass2/sources/2026-10-14-glass-review--JARED-FEEDBACK.md,
+  SHA-256 8fe51092727cd7d2a319228114448e4bf8ac42e673461aff6968ac46ecf53d5a (source lineage; not native
+  certification)
+preserved_exact_tokens: []
+negative_constraints: []
+owner_hints:
+- Plans/Decision_Log.md
+```
+
+ContractRef: ContractName:Plans/FinalGUISpec.md#F3-642, ContractName:Plans/FinalGUISpec.md#F3-643, ContractName:Plans/Settings_System.md#SSYS-051
+
+### DL-207 - Personal Terminal Presets
+
+```yaml
+plan_unit_id: DL-207
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: >-
+  Recorded 2026-10-16. Saved terminal looks are a computer-local reusable library, not Project-bound
+  and not another app-wide appearance layer. F3-650 owns the controls and capture/apply behavior,
+  SP-331 owns custody and the 40-entry limit, and UCC-204/CS-102 reuse existing scope apply writers
+  with typed local Save/Rename/Delete/Undo library actions. This closes DL-189's preset-contract
+  hold. Coordinator confirmation 1016001056-4c95 on 2026-10-16 resolves the custody boundary by the
+  existing widget-preset precedent; q-035 remains open for app-wide appearance defaults.
+gui_related: true
+gui_classification_reason: Personal Terminal Presets.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- The linked owners and finite companions agree with this decision; source publication is not native certification.
+validation_surfaces:
+- python3 scripts/pm-shard-plans.py --check
+- python3 scripts/pm-plan-index.py validate
+- python3 scripts/pm-plans-verify.py run-gates
+risk_class: owner_drift
+reasoning_tier: high
+context_scope: personal_terminal_presets
+implementation_surfaces:
+- Plans/Decision_Log.md
+node_compile_hint:
+  mode: owner_decision_record
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- /mnt/Cursor/share/puppet-master/2026-10-16-plans-pass2/sources/2026-10-14-terminal-round3--LANDING.md,
+  SHA-256 4d6556ff98168f22719c5d401c4e677d5d380d2ef370b67a838cb3aa45301c2d (source lineage; not native
+  certification)
+- /mnt/Cursor/share/puppet-master/2026-10-16-plans-pass2/sources/Concepts--home-redesign--src--terminal--js--42-appearance.js,
+  SHA-256 60379cc762cb98e4fbc4d6fb0a44751cbc7447da3c1e9ff4a04589c8186fefc9 (source lineage; not native
+  certification)
+- /mnt/Cursor/share/puppet-master/2026-10-16-plans-pass2/sources/COORDINATOR-PRESET-CUSTODY-1016001056-4c95.md,
+  SHA-256 ad3b14eebf173550efe88a594b4a869588e3175e7e1277120e86405753bc7f3f (source lineage; not native
+  certification)
+preserved_exact_tokens: []
+negative_constraints: []
+owner_hints:
+- Plans/Decision_Log.md
+```
+
+ContractRef: ContractName:Plans/FinalGUISpec.md#F3-650, ContractName:Plans/storage-plan.md#SP-331, ContractName:Plans/UI_Command_Catalog.md#UCC-204
+
+### DL-208 - Editor Delivery And Shared Glyph Rollout
+
+```yaml
+plan_unit_id: DL-208
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: Recorded 2026-10-16. Editor landing 1baf19c6d7 integrates all 31 already-canonical rows,
+  and F3-651 records the additional live-preview behavior. F3-644 records delivery of the full-axis Latin
+  upright while preserving the 100–800 range. Glyph landing 1f74bf9ac8 keeps F3-658's approved vocabulary
+  and GLY-4 boundary; Home panel/tab/terminal and Settings content icons are still deferred adoption,
+  not completed rollout.
+gui_related: true
+gui_classification_reason: Editor Delivery And Shared Glyph Rollout.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- The linked owners and finite companions agree with this decision; source publication is not native certification.
+validation_surfaces:
+- python3 scripts/pm-shard-plans.py --check
+- python3 scripts/pm-plan-index.py validate
+- python3 scripts/pm-plans-verify.py run-gates
+risk_class: owner_drift
+reasoning_tier: high
+context_scope: editor_delivery_and_shared_glyph_rollout
+implementation_surfaces:
+- Plans/Decision_Log.md
+node_compile_hint:
+  mode: owner_decision_record
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- /mnt/Cursor/share/puppet-master/2026-10-16-plans-pass2/sources/2026-10-14-editor-customizer--LANDING.md,
+  SHA-256 4d2abf07b2ca9d3eae6e1d9b18143c23263dd8e4deef0ab5f940a18382d8f71b (source lineage; not native
+  certification)
+- /mnt/Cursor/share/puppet-master/2026-10-16-plans-pass2/sources/2026-10-15-glyph-rollout-landing--LANDING.md,
+  SHA-256 9bd8e1ed3deb6d61e516a42f0f524a36639ee098f7ce7496cb50434c9ca4ce90 (source lineage; not native
+  certification)
+preserved_exact_tokens: []
+negative_constraints: []
+owner_hints:
+- Plans/Decision_Log.md
+```
+
+ContractRef: ContractName:Plans/FinalGUISpec.md#F3-651, ContractName:Plans/FinalGUISpec.md#F3-644, ContractName:Plans/FinalGUISpec.md#F3-658, ContractName:Plans/Settings_System.md#SSYS-052
+
+### DL-209 - Continuity And Settled Presentation
+
+```yaml
+plan_unit_id: DL-209
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: >-
+  Recorded 2026-10-16. The Wizard continuity, combined DnD, M4 settle-read, shell polish, Projects
+  no-pill and contrast landings consume F3-655, F3-630, SSYS-053, F3-042/F3-465 and F3-648/F3-654.
+  Only uncovered behavior is amended there. Jared's existing contrast and label-only pill rulings
+  stand; action buttons remain allowed. Drop and sound-cache implementation improvements introduce
+  no new settings, commands or universal microbenchmark guarantees. The Glass landing also closes
+  DL-202's spacing hold through F3-637, with the Orchestrator consuming that shell owner in F3-655.
+gui_related: true
+gui_classification_reason: Continuity And Settled Presentation.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- The linked owners and finite companions agree with this decision; source publication is not native certification.
+validation_surfaces:
+- python3 scripts/pm-shard-plans.py --check
+- python3 scripts/pm-plan-index.py validate
+- python3 scripts/pm-plans-verify.py run-gates
+risk_class: owner_drift
+reasoning_tier: high
+context_scope: continuity_and_settled_presentation
+implementation_surfaces:
+- Plans/Decision_Log.md
+node_compile_hint:
+  mode: owner_decision_record
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- /mnt/Cursor/share/puppet-master/2026-10-16-plans-pass2/sources/2026-10-14-mech-fixes--wizard-stage-blank--LANDING.md,
+  SHA-256 c95281d78ea2d46661242f40b0d1f0b3a6250f1e0fa409b472edeccd927cf679 (source lineage; not native
+  certification)
+- /mnt/Cursor/share/puppet-master/2026-10-16-plans-pass2/sources/2026-10-13-panel-dnd-resize--NOTES.md,
+  SHA-256 6ffc7b0308acc0b371f997fd643f5711169f4d7d9f431ea090f3243668752734 (source lineage; not native
+  certification)
+- /mnt/Cursor/share/puppet-master/2026-10-16-plans-pass2/sources/2026-10-15-contrast-round--NOTES.md,
+  SHA-256 0b6b3c5aa2833176f83f1601a83fb3d1b3e7b8e3511cbd76bed9e8cb8fd85354 (source lineage; not native
+  certification)
+- /mnt/Cursor/share/puppet-master/2026-10-16-plans-pass2/sources/2026-10-15-q21b-sounds--NOTES.md, SHA-256
+  22b863ac31a61b0fff025139d583ef497cf77506e6b216eef4d503c04fc60c40 (source lineage; not native certification)
+preserved_exact_tokens: []
+negative_constraints: []
+owner_hints:
+- Plans/Decision_Log.md
+```
+
+ContractRef: ContractName:Plans/FinalGUISpec.md#F3-655, ContractName:Plans/FinalGUISpec.md#F3-630, ContractName:Plans/Settings_System.md#SSYS-053, ContractName:Plans/FinalGUISpec.md#F3-654
+
+### DL-210 - Account Warning Hold Consumers
+
+```yaml
+plan_unit_id: DL-210
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: Recorded 2026-10-16. MA-073 already owns the 2026-10-15 all-writer switch/warn hold and
+  refused default restoration. SSYS-044 and UF-107 consume that exact rule for hosted controls, named
+  refusals, batch writes and inherited values. No second threshold algorithm, value store, setting or
+  command is added by this pass.
+gui_related: true
+gui_classification_reason: Account Warning Hold Consumers.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- The linked owners and finite companions agree with this decision; source publication is not native certification.
+validation_surfaces:
+- python3 scripts/pm-shard-plans.py --check
+- python3 scripts/pm-plan-index.py validate
+- python3 scripts/pm-plans-verify.py run-gates
+risk_class: owner_drift
+reasoning_tier: high
+context_scope: account_warning_hold_consumers
+implementation_surfaces:
+- Plans/Decision_Log.md
+node_compile_hint:
+  mode: owner_decision_record
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- /mnt/Cursor/share/puppet-master/2026-10-16-plans-pass2/sources/2026-10-15-usage-warn-hold--LANDING.md,
+  SHA-256 5357dc0dd60b0e08548f4dab5d5359662ee0ea0f159f7201a25577067372c238 (source lineage; not native
+  certification)
+preserved_exact_tokens: []
+negative_constraints: []
+owner_hints:
+- Plans/Decision_Log.md
+```
+
+ContractRef: ContractName:Plans/Multi-Account.md#MA-073, ContractName:Plans/Settings_System.md#SSYS-044, ContractName:Plans/usage-feature.md#UF-107
+
+### DL-211 - Picker Back Navigation
+
+```yaml
+plan_unit_id: DL-211
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: Recorded 2026-10-16. Jared's 2026-10-15 add-tab feedback is implemented by a42713eff4.
+  F3-632 owns same-plate levels, visible Back, keyboard equivalents, prior query/scroll/focus restoration
+  and launcher/standalone roots. UCC-200/CS-100 classify Back as local navigation; a final item pick alone
+  invokes its existing opening command.
+gui_related: true
+gui_classification_reason: Picker Back Navigation.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- The linked owners and finite companions agree with this decision; source publication is not native certification.
+validation_surfaces:
+- python3 scripts/pm-shard-plans.py --check
+- python3 scripts/pm-plan-index.py validate
+- python3 scripts/pm-plans-verify.py run-gates
+risk_class: owner_drift
+reasoning_tier: high
+context_scope: picker_back_navigation
+implementation_surfaces:
+- Plans/Decision_Log.md
+node_compile_hint:
+  mode: owner_decision_record
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- /mnt/Cursor/share/puppet-master/2026-10-16-plans-pass2/sources/2026-10-15-panels-picker-back--NOTES.md,
+  SHA-256 29bac44f166cb8e0e67f4f00634cb15d0a3be576eb2f68e7e19606f3a4a1a71c (source lineage; not native
+  certification)
+- /mnt/Cursor/share/puppet-master/2026-10-16-plans-pass2/sources/2026-10-15-consistency-pass--JARED-FEEDBACK-20261015.md,
+  SHA-256 afd66d07739267c5a7d7d6f711af6bd7a709062ef5afd8f3834d2ea819a4dda5 (source lineage; not native
+  certification)
+preserved_exact_tokens: []
+negative_constraints: []
+owner_hints:
+- Plans/Decision_Log.md
+```
+
+ContractRef: ContractName:Plans/FinalGUISpec.md#F3-632, ContractName:Plans/UI_Command_Catalog.md#UCC-200, ContractName:Plans/Commands_System.md#CS-100
+
+### DL-212 - Pass Two Scope And Deferred Successors
+
+```yaml
+plan_unit_id: DL-212
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: Recorded 2026-10-16. This 2026-10-16 canon pass is bounded by landed input a42713eff4
+  after 386c792b2c. The consistency pass, panel-drop performance Q13, terminal round 5 and Friendly lavender
+  are pending a small top-up. The consistency feedback approving a Retro chip in place of the notch and
+  requesting Home tab size, seamless search and seating corrections is retained as pending direction,
+  not a claim that Q16 landed. Demo Studio stays concept-only; quick-wins/build tooling and sound-cache
+  mechanics add no product surface. Existing native verification and governance staleness remain obligations
+  of their owners; no seal, WorkNode or build task is created.
+gui_related: true
+gui_classification_reason: Pass Two Scope And Deferred Successors.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- The linked owners and finite companions agree with this decision; source publication is not native certification.
+validation_surfaces:
+- python3 scripts/pm-shard-plans.py --check
+- python3 scripts/pm-plan-index.py validate
+- python3 scripts/pm-plans-verify.py run-gates
+risk_class: owner_drift
+reasoning_tier: high
+context_scope: pass_two_scope_and_deferred_successors
+implementation_surfaces:
+- Plans/Decision_Log.md
+node_compile_hint:
+  mode: owner_decision_record
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- /mnt/Cursor/share/puppet-master/2026-10-16-plans-pass2/sources/2026-10-15-consistency-pass--JARED-FEEDBACK-20261015.md,
+  SHA-256 afd66d07739267c5a7d7d6f711af6bd7a709062ef5afd8f3834d2ea819a4dda5 (source lineage; not native
+  certification)
+- /mnt/Cursor/share/puppet-master/2026-10-16-plans-pass2/sources/2026-10-15-terminal-round4--CANON-PROPOSALS.md,
+  SHA-256 6be6e2e0743fe3af41ba338d508573eab7d0c60e42ee7517cd18bb77ee35ade7 (source lineage; not native
+  certification)
+preserved_exact_tokens: []
+negative_constraints: []
+owner_hints:
+- Plans/Decision_Log.md
+```
+
+ContractRef: ContractName:Plans/FinalGUISpec.md#F3-631, ContractName:Plans/FinalGUISpec.md#F3-652, ContractName:Plans/DRY_Rules.md#DR-070

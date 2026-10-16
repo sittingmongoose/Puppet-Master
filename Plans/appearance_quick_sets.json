@@ -204,7 +204,17 @@
         "code.terminal.sixtyfour-scan",
         "code.terminal.sixtyfour-bleed",
         "code.terminal.sticky-header",
-        "code.terminal.copy-on-select"
+        "code.terminal.copy-on-select",
+        "code.terminal.background-strength",
+        "code.terminal.background-scale",
+        "code.terminal.background-motion",
+        "code.terminal.background-fit",
+        "code.terminal.background-desaturate",
+        "code.terminal.bezel",
+        "code.terminal.bezel-width",
+        "code.terminal.bezel-material",
+        "code.terminal.bezel-reflection",
+        "code.terminal.phosphor-mask"
       ],
       "quick_sets": {
         "look_own": {
@@ -218,7 +228,8 @@
             "code.terminal.cursor-trail": "Off",
             "code.terminal.smooth-scroll": "Off",
             "code.terminal.flicker": false,
-            "code.terminal.crt": false
+            "code.terminal.crt": false,
+            "code.terminal.background-motion": "Off"
           }
         },
         "easy_reading": {
@@ -237,12 +248,14 @@
             "code.terminal.scanlines": "On",
             "code.terminal.glow": "On",
             "code.terminal.crt": true,
-            "code.terminal.cursor-trail": "Phosphor"
+            "code.terminal.cursor-trail": "Phosphor",
+            "code.terminal.curvature": 0.06,
+            "code.terminal.bezel": "Monitor"
           }
         }
       },
-      "source_ref": "/mnt/Cursor/share/puppet-master/2026-10-14-plans-canon/sources/TERMINAL-QUICKSETS.js",
-      "source_sha256": "351b7a4234021f745188a26cb97f8f6a1402235267596c47059e25c76e532879",
+      "source_ref": "Concepts/home-redesign/src/terminal/js/77-customize.js",
+      "source_sha256": "688b8a4ec7d55b6f40ddc6ce2687b851778a75500590e4b6d63b72f5d74ae6e0",
       "reset_groups": {
         "colors": [
           "code.terminal.theme",
@@ -275,7 +288,12 @@
           "code.terminal.background-dim",
           "code.terminal.background-blur",
           "code.terminal.opacity",
-          "code.terminal.padding"
+          "code.terminal.padding",
+          "code.terminal.background-strength",
+          "code.terminal.background-scale",
+          "code.terminal.background-motion",
+          "code.terminal.background-fit",
+          "code.terminal.background-desaturate"
         ],
         "effects": [
           "code.terminal.effects",
@@ -290,7 +308,12 @@
           "code.terminal.flicker",
           "code.terminal.flicker-amount",
           "code.terminal.inactive-dim",
-          "code.terminal.smooth-scroll"
+          "code.terminal.smooth-scroll",
+          "code.terminal.bezel",
+          "code.terminal.bezel-width",
+          "code.terminal.bezel-material",
+          "code.terminal.bezel-reflection",
+          "code.terminal.phosphor-mask"
         ],
         "behavior": [
           "code.terminal.bell",
@@ -298,8 +321,8 @@
           "code.terminal.copy-on-select"
         ]
       },
-      "group_source_ref": "/mnt/Cursor/share/puppet-master/2026-10-14-plans-canon/sources/CUSTOMIZE-RESET-GROUPS.md",
-      "group_source_sha256": "f875b1dfdfe5e81386358fb5d92463fbfaeccb85bb186ef50ab3bcd5309b7753"
+      "group_source_ref": "Concepts/home-redesign/src/terminal/js/77-customize.js",
+      "group_source_sha256": "688b8a4ec7d55b6f40ddc6ce2687b851778a75500590e4b6d63b72f5d74ae6e0"
     }
   }
 }

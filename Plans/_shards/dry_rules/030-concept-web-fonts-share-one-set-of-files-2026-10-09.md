@@ -2,9 +2,9 @@
 
 Source: `Plans/DRY_Rules.md`
 
-Source lines: L2790-L2906
+Source lines: L2790-L2917
 
-Source SHA256: `4aa7bd6ee1af112ccab687f9529d837be981b39a8c7c6161cc351b914e590cae`
+Source SHA256: `6b3770ac4ae8188c7ed835f0fe6c358bb93eb5d6693dec5fddce06da60ab278f`
 
 ---
 
@@ -20,15 +20,20 @@ unit_type: invariant
 status: accepted
 owner_doc: Plans/DRY_Rules.md
 canonical_text: >-
-  The concepts' embedded copies of the theme web fonts are one set of files. Every face the 5.6 Pro chat
-  concept embeds (Inter, Poppins, IBM Plex Mono and JetBrains Mono, each with its unicode-range script slices, in
-  Concepts/chat-assistant-concepts/5.6 Pro/styles.css and pmx-system.css) is carried byte for byte by PMConcept7's
-  Concepts/onboarding/opus-5.5/src/fonts or, for JetBrains Mono, src/settings/nier/fonts, where the same files are
-  NieR Mode's PM NieR Mono; src/fonts/SOURCE.md lists each file's source and SHA-256, and 5.6 Pro's NieR faces are
-  generated from those files (amended 2026-10-09, DL-161). A concept that adds or changes a shared face changes it for
-  both, and Concepts/onboarding/opus-5.5/tools/build.py --check fails while a face 5.6 Pro embeds is missing
-  from src/fonts byte for byte. Which faces each theme family uses stays F3-430's; this rule only fixes that the
-  concepts do not keep two versions of the same face.
+  The concepts' embedded copies of the theme web fonts are one set of files. Every face the 5.6 Pro
+  chat concept embeds (Inter, Poppins, IBM Plex Mono and JetBrains Mono, each with its unicode-range
+  script slices, in Concepts/chat-assistant-concepts/5.6 Pro/styles.css and pmx-system.css) is
+  carried byte for byte by PMConcept7's Concepts/onboarding/opus-5.5/src/fonts or, for JetBrains
+  Mono, src/settings/nier/fonts, where the same files are NieR Mode's PM NieR Mono;
+  src/fonts/SOURCE.md lists each file's source and SHA-256, and 5.6 Pro's NieR faces are generated
+  from those files (amended 2026-10-09, DL-161). A concept that adds or changes a shared face
+  changes it for both, and Concepts/onboarding/opus-5.5/tools/build.py --check fails while a face
+  5.6 Pro embeds is missing from src/fonts byte for byte. The one dated exception is the full-axis
+  Latin upright admitted by F3-644 on 2026-10-16: PMConcept7's JetBrains Mono uses the new 100–800
+  file, while PM NieR Mono and the existing 5.6 Pro face retain their old Latin bytes; shared
+  non-Latin slices stay identical. F3-644 owns that file choice and its source hash. Which faces
+  each theme family uses stays F3-430's; this rule fixes shared-file custody without undoing that
+  explicit exception.
 gui_related: true
 gui_classification_reason: "Keeps the concepts' theme faces identical so both concepts draw the same letters."
 split_recommended: false
@@ -52,8 +57,11 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
-  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/pm7-fonts-20261009/README.md, SHA-256 51df0972bff7f0f909d1cf3438aa1389eaa9e76c3b12b5ac8363814fbded11e4"
-  - "Plans/Decision_Log.md#DL-161"
+- /mnt/Cursor/PuppetMaster-Evidence/scratch/pm7-fonts-20261009/README.md, SHA-256 51df0972bff7f0f909d1cf3438aa1389eaa9e76c3b12b5ac8363814fbded11e4
+- Plans/Decision_Log.md#DL-161
+- /mnt/Cursor/share/puppet-master/2026-10-16-plans-pass2/sources/Concepts--onboarding--opus-5.5--src--fonts--SOURCE.md,
+  SHA-256 76985bc806939e214326c3bfd498e377cb868bfda68ed4b641b24599e57cf97b (source lineage; not native
+  certification)
 preserved_exact_tokens:
   - "F3-430"
   - "SOURCE.md"
@@ -64,6 +72,9 @@ negative_constraints:
 owner_hints:
   - Plans/DRY_Rules.md
   - Plans/FinalGUISpec.md
+stale_retired_dispositions:
+- 'Amended 2026-10-16 (PM7 pass 2): The universal same-Latin-bytes statement is qualified by F3-644’s
+  full-axis JetBrains Mono delivery; no duplicate terminal embedding is introduced.'
 ```
 
 ContractRef: ContractName:Plans/FinalGUISpec.md#F3-430, ContractName:Plans/Decision_Log.md#DL-161

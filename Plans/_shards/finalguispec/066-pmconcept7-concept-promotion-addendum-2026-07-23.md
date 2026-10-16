@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L32882-L33665
+Source lines: L32974-L33764
 
-Source SHA256: `a7b6f2c562f2ed1728f99ded5da071b1ae82ca324d50ee32f0e274aa0d0c8f37`
+Source SHA256: `ef219d9c3c18f4b2d4c1b66696f24c0c36da83975965f717d257758547ad4437`
 
 ---
 
@@ -20,39 +20,42 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
-  The title-bar bell and unread stack sit between page tabs and search, centered in that gap, and are the
-  sole in-app notification affordance. F3-447 owns staging and F3-453 the shared alert state. With no
-  waiting notice the bell stands alone; otherwise the newest title and at most two peeking cards form the
-  stack, fanning on hover, with a rectangular unread badge. The inbox and each card share glyph,
-  source/time, title, body, actions and timer anatomy. Basic is a neutral hairline plate with a restrained
-  arrival and join. Friendly is a speech bubble pointing to the bell, an app-icon glyph tile, soft pressed
-  keys, dot timer, hopping join and mail light; its inbox is a dotted tray with white/plum cards, not the
-  old unsupported free-floating heading. Retro is a console window with reverse-video severity, typed
-  title, stepped block timer and CRT opening/closing; Light uses perforated paper and no glow. At the
-  coordinated publication, Glass uses F3-652's menu material, with condensation/stack-origin opening. NieR
-  uses parchment/ink, the existing parts for headers, glyphs, blocks, ground, cursor and brackets, stepped
-  motion and no glow/blur. Arrivals, warning/error, join and inbox open/close use the existing family
-  sound kit only when notifications and sound are enabled. Reduced Motion removes flights, springs,
-  slides, typing, cursor blink, twinkles and condensation while retaining meaning, timer/count and
-  permitted sound. Terminal and panel inline notices consume the same material but retain their own
-  owner's placement and dismissal; the restored-terminal notice does not gain the proposed eight-second
-  auto-dismiss. The setup prompt remains a pinned card, not a second private inbox.
+  The title-bar bell and unread stack sit between page tabs and search, centered in that gap, and
+  are the sole in-app notification affordance. F3-447 owns staging and F3-453 the shared alert
+  state. With no waiting notice the bell stands alone; otherwise the newest title and at most two
+  peeking cards form the stack, fanning on hover, with a rectangular unread badge. The inbox and
+  each card share glyph, source/time, title, body, actions and timer anatomy. Basic is a neutral
+  hairline plate with a restrained arrival and join. Friendly is a speech bubble pointing to the
+  bell, an app-icon glyph tile, soft pressed keys, dot timer, hopping join and mail light; its inbox
+  is a dotted tray with white/plum cards, not the old unsupported free-floating heading. Retro is a
+  console window with reverse-video severity, typed title, stepped block timer and CRT
+  opening/closing; Light uses perforated paper and no glow. Glass uses F3-652's menu material, with
+  condensation/stack-origin opening. NieR uses parchment/ink, the existing parts for headers,
+  glyphs, blocks, ground, cursor and brackets, stepped motion and no glow/blur. Arrivals,
+  warning/error, join and inbox open/close use the existing family sound kit only when notifications
+  and sound are enabled. Reduced Motion removes flights, springs, slides, typing, cursor blink,
+  twinkles and condensation while retaining meaning, timer/count and permitted sound. Terminal and
+  panel inline notices consume the same material but retain their own owner's placement and
+  dismissal; the restored-terminal notice does not gain the proposed eight-second auto-dismiss.
+  Setup-prompt arrival and joining follow F3-447, and the resulting entry belongs to F3-453's shared
+  inbox. The unread badge includes the owner-linked setup entry under F3-453; its Continue control
+  reuses that original prompt's action.
 gui_related: true
 gui_classification_reason: This unit defines the visible title-bar notification stack, staging, join, and count badge behavior.
 split_recommended: false
 depends_on: [F3-453]
 unblocks: []
 acceptance_criteria:
-- The title bar renders the rightward notification stack and count badge between the title-bar page tabs and the title-bar
-  search, exactly centred in that gap (|center(stack) - midpoint(pageTabs.right, search.left)| <= 2 px, including
-  stacked-width animation and page-tab overflow modes), and no other in-app surface offers a standing notification
-  affordance.
-- Ephemeral toasts stage beneath the stack per the F3-447 contract and never join the stack or leave an alert store
-  entry.
-- Durable notifications join the collapsed stack with a join animation, and the count badge renders the unread count
-  from the shared alert store.
-- Each look follows this unit's material; Friendly cards float on the dotted tray, Glass uses F3-652's readable menu
-  material at publication, and Reduced Motion removes spatial/typing effects.
+- The title bar renders the rightward notification stack and count badge between the title-bar page tabs
+  and the title-bar search, exactly centred in that gap (|center(stack) - midpoint(pageTabs.right, search.left)|
+  <= 2 px, including stacked-width animation and page-tab overflow modes), and no other in-app surface
+  offers a standing notification affordance.
+- Ephemeral toasts stage beneath the stack per the F3-447 contract and never join the stack or leave an
+  alert store entry.
+- Durable notifications join the collapsed stack with a join animation, and the count badge renders the
+  unread count from the shared alert store.
+- Each look follows this unit's material; Friendly cards float on the dotted tray, Glass uses F3-652's
+  readable menu material since the 2026-10-15 publication, and Reduced Motion removes spatial/typing effects.
 - No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
 validation_surfaces:
 - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
@@ -72,13 +75,17 @@ source_lineage:
   (approved campaign source lineage; not native implementation evidence)
 - /mnt/Cursor/share/puppet-master/2026-10-14-plans-canon/sources/COORDINATOR-LOG.md, SHA-256 82267ce22bcc9c7d17d9f19ad806902718e1978555ada3559d24558baabbdd4f
   (approved campaign source lineage; not native implementation evidence)
+- /mnt/Cursor/share/puppet-master/2026-10-16-plans-pass2/sources/2026-10-14-glass-review--JARED-FEEDBACK.md,
+  SHA-256 8fe51092727cd7d2a319228114448e4bf8ac42e673461aff6968ac46ecf53d5a (source lineage; not native
+  certification)
 preserved_exact_tokens:
 - "count badge"
 - "rgba(0,0,0,.72)"
 - "4%"
 negative_constraints:
-- "Do not reintroduce a bottom-right standing toast stack, a status-bar notifications bell, an activity-bar notifications shortcut or unread dot, or a dedicated Notifications side panel affordance."
-- "Do not keep private alert state on the stack; stacked items render from the F3-453 shared alert store."
+- Do not reintroduce a bottom-right standing toast stack, a status-bar notifications bell, an activity-bar
+  notifications shortcut or unread dot, or a dedicated Notifications side panel affordance.
+- Do not keep private alert state on the stack; stacked items render from the F3-453 shared alert store.
 compatibility_only_notes:
 - "Slint portability: the collapsed stack, staged toasts, and count badge render as opaque precomputed surfaces with translate/opacity/height animations via Slint property animations; no arbitrary-content backdrop blur, no SVG filters, and color math is precomputed rather than runtime-mixed."
 stale_retired_dispositions:
