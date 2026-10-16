@@ -540,7 +540,27 @@ TITLE_MENUS = [
      'title-bar menus: aria-expanded written only when it changes'),
 ]
 
-PATCHES = STATUS_BAR + HOVER_TAGS + THEME + PAGES + CENSUS + ANSWER_FIRST + CHAT + EDGES + FIELD + TITLE_MENUS
+INK = [
+    # The page-tab ink is drawn only in Glass with Liquid Glass off (liquid-glass/src/glass.css hides it in every other look,
+    # and with Liquid Glass on, which is how the app runs, the selection is drawn by Liquid Glass itself). Hidden, its spring
+    # still wrote the ink's width, height and transform on every frame for about 580 ms after each page switch, and each
+    # write re-layerized the whole page: Layerize was 116 ms of a switch's 243 ms of main-thread time on Nas1, and hiding
+    # the ink took it to 16 ms (B1, P1000 speed lead, share/2026-10-16-p1000-speed/B1-INK.md). A hidden ink now takes its
+    # place at once, as it does under Reduced Motion, so it is in place whenever it is shown. Whether it is drawn is read
+    # after layout (the shell's PM_AFTER_LAYOUT), at load and after each look change, never inside a click.
+    ("    var ink = strip && strip.querySelector('.page-tab-ink');\n",
+     "    var ink = strip && strip.querySelector('.page-tab-ink');\n"
+     "    var inkShown = true;   /* O55 (B1): drawn? read after layout, at load and on each look change */\n"
+     "    function readInkShown() { try { inkShown = !!ink && getComputedStyle(ink).opacity !== '0'; } catch (eI) { inkShown = true; } }\n"
+     "    function inkSoon() { if (typeof window.PM_AFTER_LAYOUT === 'function') window.PM_AFTER_LAYOUT(readInkShown); else requestAnimationFrame(readInkShown); }\n"
+     "    if (ink) { inkSoon(); try { new MutationObserver(inkSoon).observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme', 'data-lg', 'data-o55-nier'] }); } catch (eM) {} }\n",
+     'page-tab ink: drawn flag'),
+    ("      if (pos.x === null || reduced()) { snap(tab, geometry); return; }\n",
+     "      if (pos.x === null || reduced() || !inkShown) { snap(tab, geometry); return; }   /* O55 (B1): a hidden ink is placed at once */\n",
+     'page-tab ink: hidden ink snaps'),
+]
+
+PATCHES = STATUS_BAR + HOVER_TAGS + THEME + PAGES + CENSUS + ANSWER_FIRST + CHAT + EDGES + FIELD + TITLE_MENUS + INK
 
 # The census's own frame requests, between scheduleScan and refresh (scan, delayed scan, live, delayed live, and their
 # continuations): every one becomes censusFrame.
