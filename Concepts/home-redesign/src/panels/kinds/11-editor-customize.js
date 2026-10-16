@@ -82,6 +82,11 @@ var Motion = {
     // Keep the full family motion when the opening/closing frame is expensive.
     // The shared helper reads these six moving plates on a later frame, never
     // the sheet's subtree in the input handler. A newer visit owns its moves.
+    var contentStart = function () {
+      if (!leaving && node._pmedGen === gen && node._pmedStartContent) {
+        var start = node._pmedStartContent; node._pmedStartContent = null; start();
+      }
+    };
     if (!reducedNow() && window.PM_START_ON_SHOWN) window.PM_START_ON_SHOWN(function () {
       if (!node.isConnected || node._pmedGen !== gen) return [];
       var moves = [];
@@ -91,7 +96,8 @@ var Motion = {
         });
       });
       return moves;
-    });
+    }, { release: contentStart });
+    else requestAnimationFrame(contentStart);
     Motion.finished(node, function () { if (node._pmedGen !== gen) return; [].forEach.call(parts, clear); done(); });
   }
 };
@@ -1117,7 +1123,7 @@ function open(opts) {
     }
     if (e.key === 'Tab') {
       var items = [].filter.call(dialog.querySelectorAll('button, input, select, textarea, [tabindex]'), function (x) {
-        return !x.disabled && x.tabIndex >= 0 && !x.closest('[hidden], [inert]') && x.getClientRects().length && x.getAttribute('aria-hidden') !== 'true';
+        return !x.disabled && x.tabIndex >= 0 && !x.closest('[hidden], [inert], .pmed-content-wait') && x.getClientRects().length && x.getAttribute('aria-hidden') !== 'true';
       });
       if (!items.length) return;
       var first = items[0], last = items[items.length - 1], a = document.activeElement;
@@ -1246,6 +1252,42 @@ function open(opts) {
     io.observe(root.querySelector('.pmt-cz-preview'));
   }
   var closed = true, disposed = false, visit = 0;
+  var contentRaf = 0, contentTimer = 0, contentFocus = null;
+  var contentPhases = [
+    [root.querySelector('.pmt-cz-preview')],
+    [root.querySelector('.pmt-cz-side'), root.querySelector('.pmt-cz-nav')],
+    [].slice.call(body.querySelectorAll(':scope > .pmt-cz-group'))
+  ];
+  function cancelContent(clear) {
+    cancelAnimationFrame(contentRaf); clearTimeout(contentTimer);
+    contentRaf = 0; contentTimer = 0; contentFocus = null;
+    root._pmedStartContent = null;
+    if (clear) contentPhases.forEach(function (parts) {
+      parts.forEach(function (p) { p.classList.remove('pmed-content-wait', 'pmed-content-in'); });
+    });
+  }
+  function prepareContent() {
+    cancelContent(true);
+    contentPhases.forEach(function (parts) { parts.forEach(function (p) { p.classList.add('pmed-content-wait'); }); });
+    var opening = visit;
+    // The original chrome and scrim own the first frame. The finished preview,
+    // controls and tiles follow in small paint batches, using the family's fade.
+    // Each task starts after a frame, so a cold sheet cannot monopolize raster.
+    root._pmedStartContent = function () {
+      var phase = 0;
+      function next() {
+        contentRaf = requestAnimationFrame(function () { contentRaf = 0; contentTimer = setTimeout(reveal, 0); });
+      }
+      function reveal() {
+        contentTimer = 0;
+        if (disposed || closed || visit !== opening) return;
+        contentPhases[phase++].forEach(function (p) { p.classList.remove('pmed-content-wait'); p.classList.add('pmed-content-in'); });
+        if (phase < contentPhases.length) next();
+        else if (contentFocus && !root.contains(document.activeElement)) contentFocus.focus({ preventScroll: true });
+      }
+      next();
+    };
+  }
   var focusStops = new WeakMap();
   function focusStopsOn(on) {
     [].forEach.call(root.querySelectorAll('button, input, select, textarea, [tabindex]'), function (e) {
@@ -1257,6 +1299,7 @@ function open(opts) {
   }
   function dispose() {
     disposed = true;
+    cancelContent(false);
     stopDemo(); endPreview(); tokEndPreview();
     if (offChange) offChange();
     window.removeEventListener('resize', onResize);
@@ -1276,6 +1319,7 @@ function open(opts) {
     if (closed) return;
     closed = true;
     var closing = ++visit;
+    cancelContent(false);
     stopDemo(); endPreview(); tokEndPreview();
     if (openRoot === root) openRoot = null;
     // Focus returns before the exit's writes. Toggling inert on the ancestor
@@ -1287,6 +1331,7 @@ function open(opts) {
     function park() {
       if (closing !== visit || disposed) return;
       root.classList.add('pmed-prepared');
+      cancelContent(true);
       if (inst.customizing) inst.customizing(false);
       warmMeasurementsSoon();
     }
@@ -1314,6 +1359,7 @@ function open(opts) {
     root.querySelector('.pmt-cz-search').value = ''; filter('');
     if (inst.customizing) inst.customizing(true);
     syncPreview(); paint(); place(); focusStopsOn(true);
+    prepareContent();
     root.removeAttribute('aria-hidden');
     root.classList.remove('pmed-prepared');
     Motion.play(root);
@@ -1325,7 +1371,7 @@ function open(opts) {
       if (!closed && showing === visit && !opts.group) first.focus({ preventScroll: true });
     }, 0); });
     var goTo = opts.group && root.querySelector('[data-group="' + opts.group + '"]' + (opts.at ? ' [data-at="' + opts.at + '"]' : ''));
-    if (goTo) { goTo.scrollIntoView({ block: 'start' }); var gh = goTo.querySelector('h3, h4'); if (gh) { gh.tabIndex = -1; gh.focus({ preventScroll: true }); } }
+    if (goTo) { goTo.scrollIntoView({ block: 'start' }); var gh = goTo.querySelector('h3, h4'); if (gh) { gh.tabIndex = -1; contentFocus = gh; } }
     return handle;
   }
   prepared = handle;

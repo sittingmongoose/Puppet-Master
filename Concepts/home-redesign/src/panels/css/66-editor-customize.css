@@ -156,6 +156,10 @@ html[data-o55-nier="on"] .pmed-cz .pmed-art-syntax { background:
 .pmed-cz .pmed-sheet-out { transform-origin: 50% 0; animation: var(--pmt-a-pop-out, pmt-m-fade-out) var(--pmt-t-out, 100ms) var(--pmt-ease-exit, linear) both; }
 .pmed-cz .pmed-shade-in { animation: pmt-m-fade-in var(--pmt-t-in, 120ms) linear both; }
 .pmed-cz .pmed-shade-out { animation: pmt-m-fade-out var(--pmt-t-out, 100ms) linear both; }
+/* The original frame arrives first; finished content follows without changing
+   its layout. Short fades use the same family timing, including reduced motion. */
+.pmed-cz .pmed-content-wait { opacity: 0; visibility: hidden; pointer-events: none; }
+.pmed-cz .pmed-content-in { animation: pmt-m-fade-in var(--pmt-t-in, 120ms) var(--pmt-ease-fade, linear) both; }
 
 /* ---- Token colours (11-editor-customize.js: tokenRows, tokenPicker, paintTokens) ----
    Each kind of word is shown by a word in its colour on the code's own ground; the picker opens under the list: the
