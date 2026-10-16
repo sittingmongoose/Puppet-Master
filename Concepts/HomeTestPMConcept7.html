@@ -192822,12 +192822,16 @@ function open(opts) {
      entrance ends, the sheet's plates let it through, so that hover changes later, while the entrance plays on the
      compositor. A press or a wheel that comes first is kept from the page under the sheet and does nothing else: it
      comes before the pointer has moved, within the entrance, which in practice is the second press of a double click
-     on the button that opened the sheet. */
-  var passing = false, PASS = ['pointermove', 'pointerdown', 'wheel'], passOpts = { capture: true, passive: false };
+     on the button that opened the sheet. The longest entrance (260 ms) with the six frames it can be held at its start
+     (PM_START_ON_SHOWN) ends within PASS_MAX: pass-through never outlasts that, so a sheet whose entrance end is not
+     heard (a newer move on its plates, a lost animationend) is still hit without the pointer moving, by a keyboard or
+     assistive-technology user and a resting pointer alike. */
+  var passing = false, passTimer = 0, PASS_MAX = 500, PASS = ['pointermove', 'pointerdown', 'wheel'], passOpts = { capture: true, passive: false };
   function passThrough(on) {
     if (passing === on) return;
     passing = on;
     root.classList.toggle('pmed-pass', on);
+    clearTimeout(passTimer); passTimer = on ? setTimeout(function () { passThrough(false); }, PASS_MAX) : 0;
     PASS.forEach(function (t) { if (on) window.addEventListener(t, endPass, passOpts); else window.removeEventListener(t, endPass, passOpts); });
   }
   function keepFromPage(e) { if (!root.contains(e.target)) { e.preventDefault(); e.stopPropagation(); } }
