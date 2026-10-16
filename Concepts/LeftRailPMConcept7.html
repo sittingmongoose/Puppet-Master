@@ -11043,7 +11043,7 @@ html[data-theme^="glass"] #panel-settings :is(.rail-search,.hero-search) input {
     will-change: transform, opacity;
   }
   @keyframes pm8-page-out {
-    from { opacity: 1; transform: translateX(0); }
+    from { opacity: var(--pm8-out-from, 1); transform: translateX(0); }   /* O55: continues an answered fade */
     to   { opacity: 0; transform: translateX(calc(var(--pm-dir, 1) * -50px)); }
   }
   /* Retire the legacy per-page `animation: fadeIn 0.3s` (wizard +
@@ -22029,9 +22029,20 @@ html[data-theme^="basic"] :is(.editor-pane, .dashboard-view):has(.ed-shape-on) {
     } catch (e) {}
   }
   if (typeof MutationObserver === 'function') {
+    var kickPending = false;   /* O55: once, after the new look's frame (B4) */
     new MutationObserver(function (muts) {
       for (var i = 0; i < muts.length; i++) {
-        if (muts[i].attributeName === 'data-theme') { kickSearchDensity(); break; }
+        if (muts[i].attributeName === 'data-theme') {
+          if (!kickPending) {
+            kickPending = true;
+            /* inside the first ResizeObserver delivery after the new look's layout: style and layout are already
+               computed for that frame, so the listeners' reads never pull a pending restyle forward */
+            var kick = function () { kickPending = false; kickSearchDensity(); };
+            if (typeof window.PM_AFTER_LAYOUT === 'function') window.PM_AFTER_LAYOUT(kick);   /* the shell's early observer */
+            else requestAnimationFrame(function () { setTimeout(kick, 0); });
+          }
+          break;
+        }
       }
     }).observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
   }
@@ -28621,6 +28632,137 @@ html[data-motion="reduced"] #pm-o55-onboarding * { transition: none !important; 
 html, [data-theme], [data-o55-nier-preview] {
   --o55-tokpack: var(--background, #121212) | var(--surface, #1e1e1e) | var(--text-primary, #e8e8e8) | var(--text-secondary, #aaa) | var(--text-muted, #888) | var(--border, #333) | var(--accent-blue, #64b5f6) | var(--accent-magenta, #ff69b4) | var(--accent-lime, #3dd68c) | var(--accent-orange, #ffa347) | var(--accent-warning, #f5c542) | var(--accent-error, #ef5350) | var(--accent-primary, var(--accent-blue, #64b5f6)) | var(--surface-elevated, var(--surface, #1e1e1e)) | var(--o55-nier-on-ink, var(--background, #121212));
 }
+/* Enter's answer (74-screens-ready.js O55.finish): the window settles back on the click's own frame, before the
+   Wizard is put in place under it; its exit then starts from there. At 0.994 it was not seen on the P1000 films, where
+   the window then stood half a second while the Wizard was built; Retro settles in two steps. */
+#pm-o55-onboarding.o55-accept .o55-win { transform: scale(0.986); transition: transform 200ms cubic-bezier(0.2, 0, 0, 1); }
+#pm-o55-onboarding[data-family="retro"].o55-accept .o55-win { transform: scale(0.986); transition: transform 160ms steps(2, end); }
+html[data-motion="reduced"] #pm-o55-onboarding.o55-accept .o55-win { transform: none; transition: none; }
+
+/* ---- css/21-look-veil.css ---- */
+/* The cover a look change crosses through (src/js/12-theme-transition.js; final motion QA B4 and part 2 P2-01): the
+   new look's own background over the whole window, above every layer, never taking input, with a soft glow of the new
+   accent. Its colours come from the look it goes to; the fallbacks are the plain light and dark backgrounds. Both
+   parts move on the compositor only (opacity, transform); the glow rests at the centre and moves by offsets. */
+.pm-look-veil {
+  position: fixed;
+  inset: 0;
+  z-index: 2147483600;
+  display: none;
+  pointer-events: none;
+  overflow: hidden;
+  contain: strict;
+  opacity: 0;
+  background: var(--pm-veil-bg, #12141a);
+  will-change: opacity;
+}
+.pm-look-veil[data-mode="light"] { background: var(--pm-veil-bg, #eaecef); }
+.pm-look-veil:is([data-ready], [data-on]) { display: block; }   /* ready: laid out and rastered, at opacity 0 */
+.pm-look-veil > i {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 70vmax;
+  height: 70vmax;
+  margin: -35vmax 0 0 -35vmax;
+  border-radius: 50%;
+  opacity: 0;
+  background: radial-gradient(closest-side, color-mix(in srgb, var(--pm-veil-glow, #6aa8ff) 24%, transparent), transparent);
+  will-change: transform, opacity;
+}
+
+/* The cover moves while the new look is drawn (Jared, 2026-10-16: never a still, blank colour through the P1000's
+   restyle). A few parts painted with the cover, in the language of the look on screen (data-fx), moved only by
+   transform and opacity, so the compositor keeps them going while the main thread restyles:
+     basic     two soft sheens of the accent sweep across, under the glow
+     friendly  three soft rounded lights, accent, warm and mint, drift and swell
+     retro     scanlines crawl in 2 px steps while a bright bar steps down the screen
+     glass     two light pools drift past each other and a specular streak crosses
+     nier      a scan line sweeps down over a drifting dot grid; a block cursor blinks at the centre
+   With Reduce Animations nothing travels: the glow, the scanlines or the dot grid only breathe.
+   src/js/12-theme-transition.js starts them with the cover and ends them once it has gone. */
+.pm-look-veil { --pm-veil-hi: color-mix(in srgb, #fff 18%, transparent); --pm-veil-sheen: color-mix(in srgb, var(--pm-veil-glow, #6aa8ff) 34%, transparent); }
+.pm-look-veil[data-mode="light"] { --pm-veil-hi: color-mix(in srgb, #fff 90%, transparent); --pm-veil-sheen: color-mix(in srgb, var(--pm-veil-glow, #6aa8ff) 30%, transparent); }
+/* NieR's ink in the cover's own mode (its palette, settings/kit.d: light #211f1b on paper, dark #d1cdb7) */
+.pm-look-veil[data-fx="nier"] { --pm-veil-ink: #d1cdb7; }
+.pm-look-veil[data-fx="nier"][data-mode="light"] { --pm-veil-ink: #211f1b; }
+.pm-look-veil > b { position: absolute; inset: 0; pointer-events: none; }
+.pm-look-veil > b > i { position: absolute; display: none; opacity: 0; will-change: transform, opacity; }
+
+/* basic: the sheens (tall bands, tilted as they sweep) */
+.pm-look-veil[data-fx="basic"] > b > i:nth-child(-n+2) {
+  display: block; left: 0; top: 50%; width: 36vmax; height: 240vmax; margin: -120vmax 0 0 -36vmax;
+  background: linear-gradient(90deg, transparent, var(--pm-veil-sheen) 50%, transparent);
+}
+
+/* friendly: the rounded lights */
+.pm-look-veil[data-fx="friendly"] > b > i {
+  display: block; width: 48vmax; height: 48vmax; margin: -24vmax 0 0 -24vmax; border-radius: 50%;
+}
+.pm-look-veil[data-fx="friendly"] > b > i:nth-child(1) { left: 28%; top: 62%; background: radial-gradient(closest-side, color-mix(in srgb, var(--pm-veil-glow, #6aa8ff) 30%, transparent), transparent); }
+.pm-look-veil[data-fx="friendly"] > b > i:nth-child(2) { left: 72%; top: 36%; background: radial-gradient(closest-side, color-mix(in srgb, #ffb067 28%, transparent), transparent); }
+.pm-look-veil[data-fx="friendly"] > b > i:nth-child(3) { left: 52%; top: 18%; background: radial-gradient(closest-side, color-mix(in srgb, #5fd3b0 24%, transparent), transparent); }
+
+/* retro: scanlines (a little taller than the window, so their 2 px crawl never shows an edge) and the bar */
+.pm-look-veil[data-fx="retro"] > b > i:nth-child(1) {
+  display: block; left: 0; right: 0; top: -8px; bottom: -8px;
+  background: repeating-linear-gradient(0deg, color-mix(in srgb, var(--pm-veil-glow, #6aa8ff) 20%, transparent) 0 2px, transparent 2px 4px);
+}
+.pm-look-veil[data-fx="retro"] > b > i:nth-child(2) {
+  display: block; left: 0; right: 0; top: 0; height: 16vh;
+  background: linear-gradient(transparent, color-mix(in srgb, var(--pm-veil-glow, #6aa8ff) 24%, transparent) 78%,
+    color-mix(in srgb, var(--pm-veil-glow, #6aa8ff) 55%, transparent) 78% 84%, transparent 84%);
+}
+
+/* glass: the light pools and the streak */
+.pm-look-veil[data-fx="glass"] > b > i:nth-child(-n+2) {
+  display: block; width: 66vmax; height: 42vmax; margin: -21vmax 0 0 -33vmax; border-radius: 50%;
+}
+.pm-look-veil[data-fx="glass"] > b > i:nth-child(1) { left: 34%; top: 40%; background: radial-gradient(closest-side, var(--pm-veil-hi), transparent); }
+.pm-look-veil[data-fx="glass"] > b > i:nth-child(2) { left: 66%; top: 62%; background: radial-gradient(closest-side, color-mix(in srgb, var(--pm-veil-glow, #6aa8ff) 24%, transparent), transparent); }
+.pm-look-veil[data-fx="glass"] > b > i:nth-child(3) {
+  display: block; left: 0; top: 50%; width: 10vmax; height: 240vmax; margin: -120vmax 0 0 -10vmax;
+  background: linear-gradient(90deg, transparent, var(--pm-veil-hi) 50%, transparent);
+}
+
+/* nier: the scan line (a trail and its bright edge), the dot grid (a cell wider than the window, for its drift) and
+   the block cursor, all in the NieR ink */
+.pm-look-veil[data-fx="nier"] > b > i:nth-child(1) {
+  display: block; left: 0; right: 0; top: 0; height: 22vh;
+  background: linear-gradient(transparent, color-mix(in srgb, var(--pm-veil-ink, var(--pm-veil-glow, #b4ae96)) 16%, transparent) 94%,
+    color-mix(in srgb, var(--pm-veil-ink, var(--pm-veil-glow, #b4ae96)) 62%, transparent) 94% 100%);
+}
+.pm-look-veil[data-fx="nier"] > b > i:nth-child(2) {
+  display: block; left: -24px; top: -24px; right: -24px; bottom: -24px;
+  background: radial-gradient(circle, color-mix(in srgb, var(--pm-veil-ink, var(--pm-veil-glow, #b4ae96)) 40%, transparent) 1px, transparent 1.6px) 0 0 / 24px 24px;
+}
+.pm-look-veil[data-fx="nier"] > b > i:nth-child(3) {
+  display: block; left: 50%; top: 50%; width: 14px; height: 14px; margin: -7px 0 0 -7px;
+  background: var(--pm-veil-ink, var(--pm-veil-glow, #b4ae96));
+}
+
+/* the warm (src/js/12-theme-transition.js): for a few frames after each paint, at the cover's opacity of 0.004, every
+   part is shown, and the sweeping bands are brought on screen, so the compositor has their tiles before a pick */
+.pm-look-veil[data-warm] > b > i { opacity: 1; }
+.pm-look-veil[data-warm][data-fx="basic"] > b > i, .pm-look-veil[data-warm][data-fx="glass"] > b > i:nth-child(3) { translate: 50vw 0; }
+
+/* ---- css/21-shell-perf.css ---- */
+/* Chat's own panel (pmw-chat) covers the shell's original chat, which stays in the page only for the Guided Tour and is
+   hidden meanwhile. Hidden, it was still styled and laid out: about 600 elements of every whole-page restyle (a look
+   change, a page switch; 20 % of a theme change on the P1000) and two resize observers that measured it. Its contents
+   are skipped now; the box keeps its place in the column (final motion QA B4, 2026-10-16). */
+html:not([data-o55-tour]) #chatPanel[data-pmw-sc="on"] > .float-content.pm6-chat-root { content-visibility: hidden; }
+
+/* A page change stamps its direction (--pm-dir) on both pages and the answered fade's start (--pm8-out-from) on the
+   leaving one, read only by those pages' own pm8 keyframes. Unregistered, a custom property is inherited, so each
+   write restyled every element of the page it was set on: 92-221 ms for Home's 2,500 elements on Nas1, inside the
+   change's long frame, against 1-5 ms registered as not inherited (final motion QA B1 seam, 2026-10-16). */
+@property --pm-dir { syntax: '<number>'; inherits: false; initial-value: 1; }
+@property --pm8-out-from { syntax: '<number>'; inherits: false; initial-value: 1; }
+
+/* The page in front, while a page tab is pointed at or focused (src/js/13-page-layer.js): a layer of its own, rastered
+   before the click, so the click's fade of the leaving page runs on the compositor alone. */
+.primary-content > .page.active.pm-page-layer { will-change: opacity; }
 
 /* ---- css/22-hover.css ---- */
 /* PMH: the merged hover system (engine: src/js/18-hover.js, which documents the whole contract). This file has two
@@ -31246,6 +31388,13 @@ html:is([data-motion="reduced"], [data-o55-still]) #panel-wizard > .pm6-wiz-stag
 @media (prefers-reduced-motion: reduce) {
   #panel-wizard > .pm6-wiz-stage.wo-stage-out { animation: wo-fade 140ms ease-out both; }
 }
+/* Through the page's exit the stage that was on screen stays drawn as it was, and a stage switched to meanwhile is not
+   displayed until the exit has finished (27-wizard-stage.js). The active stage is a layer of its own (its finished
+   entrance keeps it composited); the held stage stays one (will-change), so the exit keeps its raster: dropped into
+   the page's layer, the whole Wizard was rastered again inside the exit, and the P1000 drew the leaving page empty
+   for two to seven frames meanwhile (Wizard to Orchestrator, round 3). */
+#panel-wizard > .pm6-wiz-stage.wo-stage-hold { display: flex; animation: none; will-change: transform, opacity; }
+#panel-wizard > .pm6-wiz-stage.active.wo-stage-defer { display: none; }
 
 /* ---- css/30-art.css ---- */
 /* ---- O55 art: scene layers, family choreography, ambient loops -------------------------------------------------
@@ -34321,6 +34470,13 @@ html[data-o55-nier="on"] .pmr-view { --pmr-st-ok: var(--o55-nier-ink); --pmr-st-
 @keyframes d-fold-ink { from { clip-path: inset(0 100% 0 0); } to { clip-path: inset(0 0 0 0); } }
 [data-rail-skin="d"][data-motion="reduced"] #sidePanelSlot[data-pm-rail-fold], [data-rail-skin="d"][data-reduced-motion="1"] #sidePanelSlot[data-pm-rail-fold] { animation: none !important; }
 @media (prefers-reduced-motion: reduce) { [data-rail-skin="d"] #sidePanelSlot[data-pm-rail-fold] { animation: none !important; } }
+
+/* A view that is leaving (30-motion.js holdLeaving, final motion QA A8): drawn where it was, above the view coming in,
+   without input, until its fade ends. A panel covers the panel slot; a tab pane keeps its own place in its scroller
+   (its display, top, left and width are written inline from the box read before the shell hid it). */
+[data-rail-skin="d"] #sidePanelSlot.d-has-leaving { position: relative; }
+[data-rail-skin="d"] #sidePanelSlot > .side-panel-view.d-leaving { display: flex; position: absolute; inset: 0; z-index: 3; pointer-events: none; }
+[data-rail-skin="d"] :is(#panel-files,#panel-search,#panel-source,#panel-git,#panel-docker,#panel-testing,#panel-run,#panel-agents,#panel-artifacts) .sh-scroll > [data-pane].d-leaving { position: absolute; z-index: 3; pointer-events: none; }
 
 /* ---- 3. Shelves: the coloured boxes that group the rail -------------------------------------------------------------
    The shelf is the only box. Its head is a band flush with the shelf's top (the shelf clips, so the band always has
@@ -82662,7 +82818,8 @@ status: completed with warnings</pre>
         if (!window.PM_PAGES || !window.PM_PAGES.go) return;
         var tab = e.target && e.target.closest ? e.target.closest('.page-tab[data-page]') : null;
         if (!tab) return;
-        window.PM_PAGES.go(tab.getAttribute('data-page'));
+        if (e.isTrusted && typeof window.PM_PAGES.goSoon === 'function') window.PM_PAGES.goSoon(tab.getAttribute('data-page'));   /* O55: answer first */
+        else window.PM_PAGES.go(tab.getAttribute('data-page'));
       }, true);
       /* ── pm6 W2 (js-integration): theme persistence shim ────────────
          Title-bar theme is a sprout menu (#themeSelect trigger). PM_THEME
@@ -83928,12 +84085,17 @@ status: completed with warnings</pre>
                 } else {
                     iconBtn.classList.add('active');
                     const targetId = iconBtn.getAttribute('data-target');
-                    if (targetId) {
+                    const showTarget = () => {
                         document.querySelectorAll('.side-panel-view').forEach(v => v.classList.remove('active'));
                         const targetView = document.getElementById(targetId);
                         if (targetView) targetView.classList.add('active');
                         if (sidePanelSlot) sidePanelSlot.classList.remove('hidden');
-                    }
+                    };
+                    /* O55: a click on another section answers first (its icon), the section follows a frame later */
+                    if (targetId && e.isTrusted && sidePanelSlot && !sidePanelSlot.classList.contains('hidden') && !window.__pmRailSoon) {
+                        window.__pmRailSoon = true;
+                        requestAnimationFrame(() => setTimeout(() => { window.__pmRailSoon = false; if (iconBtn.classList.contains('active')) showTarget(); }, 0));
+                    } else if (targetId) showTarget();
                 }
             }
         }
@@ -84163,6 +84325,7 @@ status: completed with warnings</pre>
         tab.addEventListener('click', function() {
           const pageId = this.getAttribute('data-page');
           if (!pageId) return;
+          if (window.PM_PAGES && typeof window.PM_PAGES.go === 'function') return;   /* O55: PM_PAGES switches */
           document.querySelectorAll('.page-tab').forEach(function(t) { t.classList.remove('active'); });
           this.classList.add('active');
           document.querySelectorAll('.primary-content > .page').forEach(function(p) {
@@ -98372,7 +98535,7 @@ window.PM_NIER = Object.freeze({
     later(() => {
       if (!live.has('decode')) return;
       [...document.querySelectorAll(sel)].filter(e => e.getClientRects().length).slice(0, 4).forEach(decode);
-    }, live.has('wipe') ? 110 : 0);
+    }, live.has('wipe') ? 60 : 0);
   }
   PARTS.decode = { on() {}, off() {} };
 
@@ -98384,8 +98547,13 @@ window.PM_NIER = Object.freeze({
     const z = zoom();
     wipe.style.cssText = `left:${r.left / z}px;top:${r.top / z}px;width:${r.width / z}px;height:${r.height / z}px;display:block`;
     if (wipeAnim) wipeAnim.cancel();
-    const a = wipeAnim = wipe.firstChild.animate([{ transform: 'translateX(0)' }, { transform: 'translateX(0)', offset: 0.2 }, { transform: 'translateX(101%)' }],
-      { duration: 400, easing: 'cubic-bezier(.65, 0, .3, 1)', fill: 'both' });
+    /* the band leaves as soon as the new page is drawn under it (final motion QA A4, Jared 2026-10-16: the empty beat
+       at most 50 ms): no held keyframe (under the old ease-in-out it held the bare band for ~150 ms), a curve that is
+       moving from its first frames, and a start that waits for the frames after the page change to come on time
+       (src/js/11-motion-start.js), so a long first frame never eats the slide */
+    const a = wipeAnim = wipe.firstChild.animate([{ transform: 'translateX(0)' }, { transform: 'translateX(101%)' }],
+      { duration: 380, easing: 'cubic-bezier(.3, .15, .2, 1)', fill: 'both' });
+    if (window.PM_START_ON_SHOWN) window.PM_START_ON_SHOWN(() => (wipeAnim === a ? [a] : []));
     a.onfinish = () => { if (wipeAnim !== a) return; wipeAnim = null; if (wipe) wipe.style.display = 'none'; a.cancel(); };
   }
   PARTS.wipe = { on() {}, off() { if (wipeAnim) wipeAnim.cancel(); wipeAnim = null; if (wipe) wipe.remove(); wipe = null; } };
@@ -115625,9 +115793,29 @@ html[data-theme^="retro"] #panel-settings .o55-goals-phase-n { border-radius: 0;
       newP.style.setProperty('--pm-dir', String(dir));
       oldP.classList.add('pm8-page-out');
       newP.classList.add('pm8-page-in');
+      var pageMoves = function () {   /* O55: the moves play on frames that are shown (src/js/11-motion-start.js) */
+        var out = [];
+        [oldP, newP].forEach(function (p) { p.getAnimations().forEach(function (a) { if (a.animationName === 'pm8-page-in' || a.animationName === 'pm8-page-out') out.push(a); }); });
+        return out;
+      };
+      /* O55: the click's fade (goSoon) keeps running, on the compositor, through this change's long frame; the
+         exit takes over from the opacity it has reached in the frame the moves start */
+      var lift = window.PM_PAGES.__lift; window.PM_PAGES.__lift = null;
+      var handoff = function () {
+        if (!lift || lift.el !== oldP || !oldP.classList.contains('pm8-page-out')) { if (lift) try { lift.anim.cancel(); } catch (e) {} return; }   /* a change made over it has cleaned up */
+        try {
+          /* still pending here, it reads as its start while the compositor has been running it since its first frame */
+          var a = lift.anim, ran = document.timeline.currentTime - lift.at;
+          if ((a.pending || !(a.currentTime > 0)) && ran > 0) a.currentTime = Math.min(ran, 140);
+          oldP.style.setProperty('--pm8-out-from', getComputedStyle(oldP).opacity); a.cancel();
+        } catch (e) {}
+      };
+      if (window.PM_START_ON_SHOWN) window.PM_START_ON_SHOWN(pageMoves, { release: handoff }); else handoff();
       var stopEntrance = null, finished = false;
       function cleanupOut() {
         oldP.classList.remove('pm8-page-out');
+        oldP.style.removeProperty('--pm8-out-from');   /* O55: the answered fade's start is this exit's only */
+        oldP.classList.remove('pm-page-layer');   /* O55: its layer for the answer (src/js/13-page-layer.js) */
         oldP.style.top = oldP.style.left = oldP.style.width = oldP.style.height = '';
         if (oldP.__pm8PageCleanup === cleanupOut) oldP.__pm8PageCleanup = null;
       }
@@ -115646,6 +115834,13 @@ html[data-theme^="retro"] #panel-settings .o55-goals-phase-n { border-radius: 0;
          340 ms while the faded outgoing subtree stays inert. */
       stopEntrance = window.PM7_MOTION_FINISH(newP, 'animation', 'pm8-page-in', cleanupIn, 80);
     }
+    /* O55 (motion QA A1, A2): a page that arrives at once shows its end state on its first frame */
+    function finishEntrances(panel) {
+      if (!panel || !panel.classList.contains('active') || !panel.getAnimations) return;
+      panel.getAnimations({ subtree: true }).forEach(function (a) {
+        try { var t = a.effect && a.effect.getComputedTiming(); if (t && isFinite(t.endTime) && a.playState !== 'finished') a.finish(); } catch (e) {}
+      });
+    }
     var origGo = window.PM_PAGES.go;
     window.PM_PAGES.go = function (pageId, subTab) {
       var prev = window.PM_PAGES.current;
@@ -115653,17 +115848,43 @@ html[data-theme^="retro"] #panel-settings .o55-goals-phase-n { border-radius: 0;
       var oldP = changed ? panelFor(prev) : null;
       var newP = changed ? panelFor(pageId) : null;
       var rect = null;
-      if (changed && bootPaintDone && !reduced() && oldP && newP && oldP !== newP) {
+      if (changed && bootPaintDone && !reduced() && !window.PM_PAGES.instant && oldP && newP && oldP !== newP) {   /* O55: instant under a cover */
         rect = measureActive(oldP);
       }
       var tab = tabFor(pageId);
       var tabMetrics = tab ? measureTab(tab) : null;
+      var whole = changed && newP && oldP !== newP && (reduced() || window.PM_PAGES.instant) && /^(wizard|orchestrator)$/.test(pageId);   /* O55 */
       origGo.call(window.PM_PAGES, pageId, subTab);
-      if (tab) (changed ? springTo : snap)(tab, tabMetrics);
+      if (whole) requestAnimationFrame(function () { finishEntrances(newP); });
+      if (tab && window.PM_PAGES.__answered !== pageId) (changed ? springTo : snap)(tab, tabMetrics);   /* O55: the answer already started it */
+      window.PM_PAGES.__answered = null;
       if (!rect) { requestAnimationFrame(cacheActiveRect); return; }
       animatePages(oldP, newP, tabIndex(pageId) >= tabIndex(prev) ? 1 : -1, rect);
     };
 
+    /* O55: the answer on the click's own frame (see ANSWER_FIRST in tools/shell_motion.py) */
+    var soon = null;
+    window.PM_PAGES.goSoon = function (pageId) {
+      var P = window.PM_PAGES, prev = P.current;
+      if (soon) { soon.page = pageId; }
+      else if (!pageId || pageId === prev || !bootPaintDone || document.hidden || !panelFor(pageId)) { P.go(pageId); return; }
+      var tab = tabFor(pageId), oldP = prev ? panelFor(prev) : null;
+      document.querySelectorAll('.page-tab').forEach(function (t) { var on = t.getAttribute('data-page') === pageId; t.classList.toggle('active', on); t.setAttribute('aria-selected', on ? 'true' : 'false'); });
+      if (tab) { springTo(tab, measureTab(tab)); P.__answered = pageId; }
+      if (soon) return;
+      var html = document.documentElement, nier = html.getAttribute('data-o55-nier') === 'on', retro = /^retro/.test(html.getAttribute('data-theme') || '');
+      /* NieR answers with its wipe and the ink; the other looks start the leaving page's fade (Retro in steps) */
+      var lift = !nier && !reduced() && oldP && oldP.animate && !oldP.classList.contains('pm8-page-out') ? oldP.animate([{ opacity: 1 }, { opacity: 0.86 }], { duration: 140, easing: retro ? 'steps(2, end)' : 'cubic-bezier(.2, 0, 0, 1)', fill: 'forwards' }) : null;
+      soon = { page: pageId };
+      requestAnimationFrame(function (shown) { setTimeout(function () {
+        var to = soon.page; soon = null;
+        /* the fade is not read here: a move begun a frame ago still reads as its start on this thread */
+        P.__lift = lift ? { el: oldP, anim: lift, at: shown } : null;
+        if (P.__answered !== to) P.__answered = null;
+        P.go(to);
+        if (P.__lift) { try { P.__lift.anim.cancel(); } catch (e) {} P.__lift = null; }   /* no exit took it over */
+      }, 0); });
+    };
     function resync() {
       cacheTabMetrics();
       cacheActiveRect();
@@ -115677,6 +115898,7 @@ html[data-theme^="retro"] #panel-settings .o55-goals-phase-n { border-radius: 0;
     var resyncFrame = 0;
     function resyncNextFrame() {
       if (resyncFrame) return;
+      if (typeof window.PM_AFTER_LAYOUT === 'function') { resyncFrame = 1; window.PM_AFTER_LAYOUT(function () { resyncFrame = 0; resync(); }); return; }   /* O55: after layout (B5) */
       resyncFrame = requestAnimationFrame(function () { resyncFrame = 0; resync(); });
     }
     try {
@@ -115961,6 +116183,8 @@ html[data-theme^="retro"] #panel-settings .o55-goals-phase-n { border-radius: 0;
         requestAnimationFrame(tick);
         return;
       }
+      /* O55: held under a look's cover (B5) */
+      if (typeof window.PM_LOOK_COVERED === 'function' && window.PM_LOOK_COVERED()) { baseDirty = true; requestAnimationFrame(tick); return; }
 
       if (reduced()) { killAll(); running = false; return; }
       if (elsDirty) {
@@ -116326,7 +116550,11 @@ html[data-theme^="retro"] #panel-settings .o55-goals-phase-n { border-radius: 0;
       }).observe(document.body, { childList: true, subtree: true });
       var themeFrame = 0;
       new MutationObserver(function () {
-        if (!themeFrame) themeFrame = requestAnimationFrame(function () { themeFrame = 0; readTheme(); });
+        if (!themeFrame) themeFrame = requestAnimationFrame(function themeSoon() {   /* O55: after layout, once the cover has gone (B5) */
+          if (typeof window.PM_LOOK_COVERED === 'function' && window.PM_LOOK_COVERED()) { themeFrame = requestAnimationFrame(themeSoon); return; }
+          var go = function () { themeFrame = 0; readTheme(); };
+          if (typeof window.PM_AFTER_LAYOUT === 'function') window.PM_AFTER_LAYOUT(go); else go();
+        });
         bloomHost = null;   /* radius may change with the theme */
         if (reduced()) { killAll(); return; }
         if (havePointer) start();
@@ -116499,13 +116727,16 @@ html[data-theme^="retro"] #panel-settings .o55-goals-phase-n { border-radius: 0;
       return null;
     }
 
-    function layoutBands(el, st) {
+    /* O55: a band's scroller geometry, read apart from its writes (B5) */
+    function bandGeom(el) {
+      var cs = window.getComputedStyle(el);
+      return { x: el.offsetLeft + (parseFloat(cs.borderLeftWidth) || 0), y: el.offsetTop + (parseFloat(cs.borderTopWidth) || 0), w: el.clientWidth, h: el.clientHeight };
+    }
+    function layoutBands(el, st, g) {
       if (!st.bands) return;
       try {
-        var cs = window.getComputedStyle(el);
-        var x = el.offsetLeft + (parseFloat(cs.borderLeftWidth) || 0);
-        var y = el.offsetTop + (parseFloat(cs.borderTopWidth) || 0);
-        var w = el.clientWidth, h = el.clientHeight, s;
+        if (!g) g = bandGeom(el);
+        var x = g.x, y = g.y, w = g.w, h = g.h, s;
         /* zero-extent scrollports (an EMPTY workspace dock is an 8px-or-less
            box on a 0px grid track) must not park 30px bands past their
            parent's edge -- those bands were 22px of phantom horizontal
@@ -116585,9 +116816,20 @@ html[data-theme^="retro"] #panel-settings .o55-goals-phase-n { border-radius: 0;
       } catch (e) {}
     }
 
+    /* O55: the flush runs after the frame's layout; under a look's or the boot's cover it waits, a frame at a time,
+       with the dirty scrollers kept (B5) */
+    function edgesHeld() {
+      var f = window.PM_BUSY, why = '';
+      try { why = typeof f === 'function' ? f() : ''; } catch (e) { why = ''; }
+      return why === 'reboot' || why === 'calm' || why === 'theme' || why === 'boot' || why === 'nier';
+    }
+    function flushAfterLayout() {
+      if (!document.hidden && edgesHeld()) { rafId = window.requestAnimationFrame(flushAfterLayout); return; }
+      if (typeof window.PM_AFTER_LAYOUT === 'function') window.PM_AFTER_LAYOUT(flush); else flush();
+    }
     function schedule() {
       if (!rafId) {
-        try { rafId = window.requestAnimationFrame(flush); }
+        try { rafId = window.requestAnimationFrame(flushAfterLayout); }
         catch (e) { rafId = 0; flush(); }
       }
     }
@@ -116630,13 +116872,18 @@ html[data-theme^="retro"] #panel-settings .o55-goals-phase-n { border-radius: 0;
       if (s.r !== st.r) { cls.toggle('pm-edge-r', s.r); st.r = s.r; if (st.bands && st.bands.right) st.bands.right.classList.toggle('pm-edge-band-on', s.r); }
     }
 
-    function relayoutVisible() {
-      var scope = geometryScope || pageScope();
+    /* O55: every visible band's geometry read first, then every band placed (B5) */
+    function readVisibleGeometry() {
+      var scope = geometryScope || pageScope(), out = [];
       enrolled.forEach(function (el) {
         var st = el.__pmEdge, page = el.closest && el.closest('.primary-content > .page');
         if (page && scope && !scope.contains(el)) return;
-        if (st && st.bands && isVisible(el)) layoutBands(el, st);
+        if (st && st.bands && isVisible(el)) { try { out.push({ el: el, st: st, g: bandGeom(el) }); } catch (e) {} }
       });
+      return out;
+    }
+    function relayoutVisible(geom) {
+      (geom || readVisibleGeometry()).forEach(function (o) { layoutBands(o.el, o.st, o.g); });
     }
 
     function flush() {
@@ -116651,9 +116898,13 @@ html[data-theme^="retro"] #panel-settings .o55-goals-phase-n { border-radius: 0;
             ops.push({ el: el, st: st, s: readState(el, st) });
           } catch (e) {}
         });
+        /* O55: the bands' geometry is read with the scroll metrics, before any class is written (B5) */
+        var geom = null;
+        if (geomDirty && !document.body.classList.contains('pm-resizing')) { geomDirty = false; geom = readVisibleGeometry(); }
         for (var i = 0; i < ops.length; i++) {
           try { writeState(ops[i].el, ops[i].st, ops[i].s); } catch (e) {}
         }
+        if (geom) relayoutVisible(geom);
         /* Band geometry only. relayoutAll walks every enrolled scroller
            (~60), not just the dirty ones, with a getComputedStyle and four
            layout reads each — far too much for a drag frame. The edge
@@ -116947,6 +117198,7 @@ html[data-theme^="retro"] #panel-settings .o55-goals-phase-n { border-radius: 0;
         if (entry.stack || entry.gap) {
           for (var s = head.previousElementSibling; s; s = s.previousElementSibling) ro.observe(s);
         }
+        return;   /* O55: the observer's first callback measures, after layout */
       } catch (e) {}
       measure(host, head, entry);
     }
@@ -133859,23 +134111,23 @@ policies for tenant isolation, and add migration script.</textarea>
     if (footer && active && footer.style.display !== 'none') {
       fh = footer.offsetHeight || 0;
     }
-    wrap.style.setProperty('--chat-footer-stack-height', fh + 'px');
+    if (wrap.style.getPropertyValue('--chat-footer-stack-height') !== fh + 'px') wrap.style.setProperty('--chat-footer-stack-height', fh + 'px');   /* O55: only a change (B5) */
     if (active && stream && footer && footer.style.display !== 'none') {
       var footerBottom = parseFloat(getComputedStyle(footer).bottom) || 4;
       var clearance = 8;
       var inset = fh + footerBottom + clearance;
-      wrap.style.setProperty('--chat-footer-inset', inset + 'px');
+      if (wrap.style.getPropertyValue('--chat-footer-inset') !== inset + 'px') wrap.style.setProperty('--chat-footer-inset', inset + 'px');
       /* Content inset, not scrollport shrink: the stream extends behind the
          floating pill (see-through around it); the bottom padding keeps the
          newest row clear of the pill when pinned to bottom. */
-      stream.style.paddingBottom = inset + 'px';
+      if (stream.style.paddingBottom !== inset + 'px') stream.style.paddingBottom = inset + 'px';
       stream.style.marginBottom = '';
       if (!jumpIsAway(stream)) {
         requestAnimationFrame(function () { stream.scrollTop = stream.scrollHeight; });
       }
     } else {
-      wrap.style.removeProperty('--chat-footer-inset');
-      wrap.style.setProperty('--chat-footer-stack-height', '0px');
+      if (wrap.style.getPropertyValue('--chat-footer-inset')) wrap.style.removeProperty('--chat-footer-inset');
+      if (wrap.style.getPropertyValue('--chat-footer-stack-height') !== '0px') wrap.style.setProperty('--chat-footer-stack-height', '0px');
       if (stream) {
         stream.style.marginBottom = '';
         stream.style.paddingBottom = '';
@@ -134721,7 +134973,7 @@ policies for tenant isolation, and add migration script.</textarea>
       if (!header) return;
       var set = function () {
         var h = Math.ceil(header.getBoundingClientRect().height);
-        if (h > 0) root.style.setProperty('--pm-chat-head-h', h + 'px');
+        if (h > 0 && root.style.getPropertyValue('--pm-chat-head-h') !== h + 'px') root.style.setProperty('--pm-chat-head-h', h + 'px');   /* O55: only a change (B5) */
       };
       var ro = new ResizeObserver(set);
       root._pm6HeadObs = ro;
@@ -137584,13 +137836,19 @@ policies for tenant isolation, and add migration script.</textarea>
       var seg = ev.target && ev.target.closest ? ev.target.closest('.pm6-tt-mode[data-mode-value]') : null;
       if (seg) {
         ev.preventDefault();
-        window.PM7_SETTINGS_TOME.setChromeThemeMode(seg.getAttribute('data-mode-value'));
+        var modeValue = seg.getAttribute('data-mode-value');   /* O55: the radio answers first (B4) */
+        menu.querySelectorAll('.pm6-tt-mode').forEach(function (b) { b.setAttribute('aria-checked', b === seg ? 'true' : 'false'); });
+        if (window.PM_THEME_TRANSITION) window.PM_THEME_TRANSITION(function () { window.PM7_SETTINGS_TOME.setChromeThemeMode(modeValue); }, { mode: modeValue });
+        else window.PM7_SETTINGS_TOME.setChromeThemeMode(modeValue);
         return; /* mode is a filter, not a final pick: menu stays open */
       }
       var row = ev.target && ev.target.closest ? ev.target.closest('.pm6-tt-family[data-family]') : null;
       if (!row) return;
       ev.preventDefault();
-      window.PM7_SETTINGS_TOME.setChromeThemeFamily(row.getAttribute('data-family'));
+      var familyValue = row.getAttribute('data-family');   /* O55: the row answers first (B4) */
+      menu.querySelectorAll('.pm6-tt-family').forEach(function (r) { var on = r === row; r.classList.toggle('is-selected', on); r.setAttribute('aria-checked', on ? 'true' : 'false'); });
+      if (window.PM_THEME_TRANSITION) window.PM_THEME_TRANSITION(function () { window.PM7_SETTINGS_TOME.setChromeThemeFamily(familyValue); }, { family: familyValue });
+      else window.PM7_SETTINGS_TOME.setChromeThemeFamily(familyValue);
       tbMenuClose(menu);
       btn.setAttribute('aria-expanded', 'false');
     });
@@ -140885,22 +141143,27 @@ policies for tenant isolation, and add migration script.</textarea>
       bar.setAttribute('aria-label','Workspace status');
       bar.innerHTML =
         '<div class="pm7-statusbar-group">' +
-          '<button type="button" class="pm7-statusitem" data-status-action="system" title="Open system status"><span class="pm7-status-dot"></span><strong>Ready</strong></button>' +
-          '<span class="pm7-statusitem" title="Project root"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2.5 5.5h5l1.6 1.8h8.4v8.2h-15z"/></svg>~/Puppet-Master</span>' +
+          '<button type="button" class="pm7-statusitem" data-status-action="system" title="Open system status" data-pm-hover-label="System status" data-pm-hover-detail="Everything Puppet Master needs is running. Click to see each service."><span class="pm7-status-dot"></span><strong>Ready</strong></button>' +
+          '<span class="pm7-statusitem" title="Project root" data-pm-hover-label="Project folder" data-pm-hover-detail="Where this Project\'s files are kept on this computer."><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2.5 5.5h5l1.6 1.8h8.4v8.2h-15z"/></svg>~/Puppet-Master</span>' +
         '</div>' +
         '<div class="pm7-statusbar-group">' +
-          '<button type="button" class="pm7-statusitem" data-status-action="source" title="Source control"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="5" cy="4.5" r="2"/><circle cx="5" cy="15.5" r="2"/><circle cx="15" cy="10" r="2"/><path d="M5 6.5v7M7 6c4.5 0 3 4 6 4"/></svg>main</button>' +
-          '<span class="pm7-statusitem" data-status-priority="medium">Up to date · <strong>7048acf</strong></span>' +
+          '<button type="button" class="pm7-statusitem" data-status-action="source" title="Source control" data-pm-hover-label="Source control" data-pm-hover-detail="The branch you are working on. Click to see its state."><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="5" cy="4.5" r="2"/><circle cx="5" cy="15.5" r="2"/><circle cx="15" cy="10" r="2"/><path d="M5 6.5v7M7 6c4.5 0 3 4 6 4"/></svg>main</button>' +
+          '<span class="pm7-statusitem" data-status-priority="medium" data-pm-hover-label="Up to date" data-pm-hover-detail="Your work matches its online copy. 7048acf names the latest saved version.">Up to date · <strong>7048acf</strong></span>' +
         '</div>' +
         '<span class="pm7-statusbar-grow"></span>' +
         '<div class="pm7-statusbar-group">' +
-          '<span class="pm7-statusitem" data-status-priority="low">Plan index <strong>current</strong></span>' +
+          '<span class="pm7-statusitem" data-status-priority="low" data-pm-hover-label="Plan index" data-pm-hover-detail="The plan\'s index matches its documents.">Plan index <strong>current</strong></span>' +
           '<span class="pm7-statusitem" data-status-priority="low" data-status-item="host">Runs on <strong>this computer</strong> · 2ms</span>' +
-          '<button type="button" class="pm7-statusitem" data-status-action="snapshot" data-status-priority="medium">Snapshot <strong>10m ago</strong></button>' +
-          '<span class="pm7-statusitem" data-status-page><strong>Home</strong></span>' +
+          '<button type="button" class="pm7-statusitem" data-status-action="snapshot" data-status-priority="medium" data-pm-hover-label="Snapshot" data-pm-hover-detail="When your work was last kept as a safe point. Click to see it.">Snapshot <strong>10m ago</strong></button>' +
+          '<span class="pm7-statusitem" data-status-page data-pm-hover-detail="The page you are on."><strong>Home</strong></span>' +
         '</div>';
       shell.appendChild(bar);
     } else if (bar.parentNode !== shell) shell.appendChild(bar);
+    var hostItem = bar.querySelector('[data-status-item="host"]');   /* O55: the host item's tag (A16) */
+    if (hostItem && !hostItem.hasAttribute('data-pm-hover-label')) {
+      hostItem.setAttribute('data-pm-hover-label', 'Where it runs');
+      hostItem.setAttribute('data-pm-hover-detail', 'The computer Puppet Master runs on, and how quickly it answers.');
+    }
     function updatePage() {
       var page = document.querySelector('.page.active'), tab = page && document.querySelector('[data-page="' + page.id.replace(/^panel-/,'') + '"]');
       var name = tab ? tab.textContent.trim() : (page ? page.id.replace(/^panel-/,'') : 'Home');
@@ -141405,6 +141668,494 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
     document.documentElement.toggleAttribute('data-o55-lowres', M.lowResource);
     window.dispatchEvent(new CustomEvent('o55:lowresource', { detail: { on: M.lowResource, reason } }));
   };
+})();
+
+/* ---- js/11-motion-start.js ---- */
+/* Moves begun in a long frame play on the frames that are shown (final motion QA, 2026-10-16). A click's first frame
+   can take a third of a second or more (the arriving page or panel is styled and laid out, a first visit builds its
+   content), and so can the frame after it (its first paint, Glass's first blur). A move started in such a frame was
+   over, or most of the way through, by the time it was first drawn: the timeline that frame runs on is from before its
+   work, and a move run by the compositor takes its start from that time too. The page exit vanished in one frame, the
+   onboarding window's exit was lost (and came back for one frame when restarted later), the rail's held panel went
+   before the new one dealt in.
+   PM_START_ON_SHOWN(anims) holds the moves at their start, paused, from the next frame on, for as long as the frame
+   before was a long one (more than 40 ms after the one before it), then plays them from their start: they begin once
+   frames come on time (two in a row after a long one), at most `frames` (6) frames later (a page that never draws
+   on time, such as software rendering, still moves after that). `anims` is an array of Animations or a function
+   returning one (read again each frame). `o.release`, if given, runs once in the frame the moves start, just before they play:
+   a page change hands the click's fade over to its exit there (tools/shell_motion.py, ANSWER_FIRST). */
+(function () {
+  'use strict';
+  /* PM_AFTER_LAYOUT(fn): fn runs in the coming frame after its style and layout, before its paint (a ResizeObserver
+     delivery), so what it reads is already computed. One observer, made as this script loads, serves every caller:
+     ResizeObservers are told in the order they were made, and one made at the moment it was needed was told after the
+     page's older observers, some of which write in that same delivery (the Liquid Glass root observer), so the read
+     paid a whole-page restyle anyway (Home's notice placement 215 ms, the theme's resize kick 389 ms on the P1000,
+     Settings lane trace). Callers queued meanwhile run once, in the order they asked. */
+  const afterQ = [];
+  let afterRo = null, observing = false, flushing = false;
+  const watch = () => { if (!observing && afterQ.length) { observing = true; afterRo.observe(document.documentElement); } };
+  const flushAfter = () => {
+    if (afterRo && observing) { afterRo.unobserve(document.documentElement); observing = false; }
+    const q = afterQ.splice(0);
+    flushing = true;
+    for (const fn of q) { try { fn(); } catch (e) { try { console.error('[PM_AFTER_LAYOUT]', e); } catch (_) { /* none */ } } }
+    flushing = false;
+    /* asked again from inside this delivery: the next frame's (observing again here would be a loop the browser
+       reports as undelivered notifications) */
+    if (afterQ.length && afterRo) requestAnimationFrame(watch);
+  };
+  try { afterRo = typeof ResizeObserver === 'function' ? new ResizeObserver(flushAfter) : null; } catch (_) { afterRo = null; }
+  window.PM_AFTER_LAYOUT = function afterLayout(fn) {
+    if (afterQ.indexOf(fn) < 0) afterQ.push(fn);
+    if (!afterRo) { requestAnimationFrame(() => setTimeout(flushAfter, 0)); return; }
+    if (!flushing) watch();
+  };
+  window.PM_START_ON_SHOWN = function startOnShown(anims, o) {
+    const max = (o && o.frames) || 6, held = new Set(), before = o && typeof o.release === 'function' ? o.release : null;
+    const list = () => { try { return (typeof anims === 'function' ? anims() : anims) || []; } catch (_) { return []; } };
+    const hold = () => list().forEach((a) => {
+      try { if (a && a.playState !== 'idle' && !held.has(a)) { a.pause(); a.currentTime = 0; held.add(a); } } catch (_) { /* gone */ }
+    });
+    const release = () => {
+      if (before) { try { before(); } catch (_) { /* decoration only */ } }
+      held.forEach((a) => { try { if (a.playState === 'paused') a.play(); } catch (_) { /* gone */ } });
+    };
+    /* the frame the moves were begun after: a first frame on time (the task that began them was short) leaves them as
+       they are, with no pause and restart, so a fast computer sees nothing of this */
+    /* After a long frame the moves wait for two frames on time in a row: the long frame's new content is rastered by
+       the GPU after it, and while it rasters (a whole new page: 150-400 ms on the P1000) the compositor draws
+       nothing, so a move begun on the first frame back was still shown in two or three steps (the onboarding window's
+       exit at Enter, round 3). The frames themselves stop while that raster runs, so the second on-time frame comes
+       after it. */
+    let last = document.timeline.currentTime, n = 0, onTime = 0, long = false;
+    const tick = () => {
+      const now = document.timeline.currentTime;
+      if (now == null) { release(); return; }
+      /* a frame is long when it began late, or when its own style and layout have already run long (this check runs
+         after them): the Wizard built under the onboarding window is styled inside the frame that begins right after
+         Enter, so the frames began on time while that one ran 300 ms, and the window's exit, started from that
+         frame's time, was over by its first draw */
+      const gap = last == null ? Infinity : now - last, late = performance.now() - now;
+      last = now;
+      if (gap <= 40 && late <= 40) { onTime++; if (!long || onTime >= 2) { release(); return; } }
+      else { long = true; onTime = 0; }
+      if (++n >= max) { release(); return; }
+      hold();
+      next();
+    };
+    /* Each check runs in its frame after layout (PM_AFTER_LAYOUT, before paint), so reading
+       the moves (getAnimations for CSS animations) finds style already computed: from an animation frame callback it
+       forced that frame's style early (49.7 ms on the P1000 for the customizer's six panels, editor lane). What the
+       check changes is drawn in the same frame. */
+    const next = () => requestAnimationFrame(() => window.PM_AFTER_LAYOUT(tick));
+    next();
+  };
+
+  /* PM_BUSY(): one answer for work parked until the app is still (the editor's and terminal's background refreshes,
+     their measurement and token reads), so every caller waits for the same things. It returns what is up, as a short
+     name (truthy), or '' (falsy) when nothing is:
+       'page'        a page change (html[data-pm-page-transition])
+       'usage'       a Usage moment (html[data-pmu-moment])
+       'onboarding'  the onboarding window (html[data-o55-open])
+       'boot'        the boot covers: html[data-o55-boot-wait], NieR's boot log (#o55nw-boot), the tour's (.o55t-bootcover)
+       'reboot'      the NieR reboot plate (#o55np-reboot), until it is removed
+       'calm'        the Reduce Animations NieR cover (#o55np-calm), through its fade
+       'theme'       the look cover (js/12-theme-transition.js), until its lift has ended
+       'nier'        a NieR switch asked and not yet painted (PM_NIER.wanted() differs from on())
+     A hidden tab is not busy by itself (callers keep their own document.hidden check). It reads attributes and ids only,
+     never style or layout, so it costs nothing in any frame. 'pm-idle' is sent on window in the first frame after a
+     busy spell ends: every spell this script sees begin (one of those markers appearing) or that a call finds. */
+  const busyRoot = document.documentElement;
+  const BUSY_ATTRS = [['data-pm-page-transition', 'page'], ['data-pmu-moment', 'usage'], ['data-o55-open', 'onboarding'], ['data-o55-boot-wait', 'boot']];
+  const BUSY_IDS = [['o55np-reboot', 'reboot'], ['o55np-calm', 'calm'], ['o55nw-boot', 'boot']];
+  const tourCovers = document.getElementsByClassName('o55t-bootcover');
+  let busyFrame = 0;
+  const busyNow = () => {
+    for (const [a, why] of BUSY_ATTRS) if (busyRoot.hasAttribute(a)) return why;
+    for (const [id, why] of BUSY_IDS) if (document.getElementById(id)) return why;
+    if (tourCovers.length) return 'boot';
+    try { const t = window.PM_THEME_TRANSITION; if (t && typeof t.busy === 'function' && t.busy()) return 'theme'; } catch (_) { /* none */ }
+    try { const n = window.PM_NIER; if (n && typeof n.wanted === 'function' && typeof n.on === 'function' && !!n.wanted() !== !!n.on()) return 'nier'; } catch (_) { /* none */ }
+    return '';
+  };
+  const busyCheck = () => {
+    busyFrame = 0;
+    if (busyNow()) { busyFrame = requestAnimationFrame(busyCheck); return; }
+    try { window.dispatchEvent(new Event('pm-idle')); } catch (_) { /* none */ }
+  };
+  const busyArm = () => { if (!busyFrame) busyFrame = requestAnimationFrame(busyCheck); };
+  window.PM_BUSY = function busy() { const why = busyNow(); if (why) busyArm(); return why; };
+  /* a spell begins: an attribute on html, or a cover added to the body */
+  try {
+    const seen = new MutationObserver(() => { if (!busyFrame && busyNow()) busyArm(); });
+    seen.observe(busyRoot, { attributes: true, attributeFilter: BUSY_ATTRS.map((a) => a[0]) });
+    const watchBody = () => { if (document.body) seen.observe(document.body, { childList: true }); };
+    if (document.body) watchBody(); else document.addEventListener('DOMContentLoaded', watchBody, { once: true });
+  } catch (_) { /* calls still arm it */ }
+})();
+
+/* ---- js/12-theme-transition.js ---- */
+/* A look change crosses through its new background (final motion QA B4, 2026-10-16; part 2 P2-01).
+   Repainting the whole app for a new theme restyles every drawn element in one pass: 133-433 ms on the M3, 0.8-2.5 s
+   on the P1000 (where the compositor then rasters the new page for up to 1.7 s more), and nothing on screen moved
+   while it ran: the app froze, then cut to the new look through a frame where the editor and terminal were still in
+   the old one. The control pressed still shows its new state on the next frame. From that frame a cover in the new
+   look's own background washes over the app, with a soft glow of its accent spreading from the theme control; the
+   theme is written as the cover comes in, its first frame drawn under the full cover, and the cover lifts once
+   frames come on time again, with the colour transitions the new look started finished under it, so the new look is
+   shown whole (about half a second in all on the M3). The cover and its glow run on the compositor, so they keep
+   moving while the main thread restyles. The cover is opaque: the page beneath it is then not rastered while it is
+   covered, which halved the time the P1000's GPU spent rastering the new page with nothing drawn (400 to 200 ms in a
+   trace). That raster, after the restyle, still holds every frame there, the cover's included, for a few hundred ms.
+   A View Transition (snapshot crossfade, then a circular reveal from the control) was tried first and dropped:
+   starting one restyles the whole page by itself in Chrome (230-300 ms on the P1000 before its callback runs).
+
+   window.PM_THEME_TRANSITION(apply, hint)  — apply() writes the theme; hint { mode } or { family } names the look
+   it goes to (for the cover's colours). Picks made before it runs keep only the latest.
+   window.PM_LOOK_COVERED()  — true while the page is hidden by a look's cover: this one until it starts to lift, the
+   NieR reboot plate (settings/kit.d/19-nier-parts.js) until its reveal, or the Reduce Animations calm cover
+   (#o55np-calm). PM_THEME_TRANSITION.busy() is true until the lift has ended (for PM_BUSY, js/11-motion-start.js). */
+(function () {
+  'use strict';
+  const html = document.documentElement;
+  const COVER = 1;
+  let job = null, phase = 'idle', veil = null, probe = null, coverAnim = null, glowAnims = [], ticket = 0;
+  const veils = {};   /* one cover per mode, painted ahead in the current family's colours for that mode */
+
+  const reduced = () => {
+    try { if (window.O55 && O55.motion && typeof O55.motion.reduced === 'function') return !!O55.motion.reduced(); } catch (_) { /* below */ }
+    return html.getAttribute('data-reduced-motion') === '1' || html.getAttribute('data-motion') === 'reduced' ||
+      !!(window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches);
+  };
+  const nierOn = () => html.hasAttribute('data-o55-nier') && html.getAttribute('data-o55-nier') !== 'off';
+
+  /* the look a pick goes to, and its colours read from a hidden one-element probe (only the probe is styled) */
+  function lookAfter(hint) {
+    const cur = (html.getAttribute('data-theme') || 'basic-dark').split('-');
+    let fam = cur[0] || 'basic', mode = cur[1] || 'dark', nier = nierOn();
+    const m = hint && hint.mode && String(hint.mode).toLowerCase();
+    if (m === 'light' || m === 'dark') mode = m;
+    else if (m === 'auto') mode = window.matchMedia && matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+    const f = hint && hint.family && String(hint.family).toLowerCase();
+    if (f === 'nier') { fam = 'basic'; nier = true; } else if (f) { fam = f; nier = false; }
+    return { theme: fam + '-' + mode, nier, retro: fam === 'retro', mode };
+  }
+  function coloursOf(to) {
+    try {
+      if (!probe || !probe.isConnected) {
+        probe = document.createElement('i');
+        probe.setAttribute('aria-hidden', 'true');
+        probe.style.cssText = 'position:fixed;left:0;top:0;width:0;height:0;overflow:hidden;visibility:hidden;contain:strict;pointer-events:none';
+        document.body.appendChild(probe);
+      }
+      probe.setAttribute('data-theme', to.theme);
+      probe.toggleAttribute('data-o55-nier', to.nier);
+      const cs = getComputedStyle(probe);
+      return { bg: cs.getPropertyValue('--background').trim(), glow: cs.getPropertyValue('--accent-blue').trim() };
+    } catch (_) { return {}; }
+  }
+  function veilFor(mode) {
+    let v = veils[mode];
+    if (v && v.isConnected) return v;
+    v = veils[mode] = document.createElement('div');
+    v.className = 'pm-look-veil';
+    v.setAttribute('aria-hidden', 'true');
+    v.setAttribute('data-mode', mode);
+    v.appendChild(document.createElement('i'));
+    const parts = v.appendChild(document.createElement('b'));   /* the cover's motion (css/21-look-veil.css) */
+    for (let k = 0; k < 3; k++) parts.appendChild(document.createElement('i'));
+    document.body.appendChild(v);
+    return v;
+  }
+  /* Both covers are built once the page is idle, painted in the light and dark colours of the family on screen, and
+     kept laid out at opacity 0 (will-change keeps their layers and raster). A pick then only starts compositor
+     moves: made, or painted in its colours, at the pick, a cover's new paint had to be rastered before the
+     compositor would start its fade, in the very frames that should show it (it came in at +190-200 ms on the P1000,
+     in three jumps). A family pick crosses through the cover of the family it leaves, in the new mode's tone; the
+     lift then dissolves into the new family. They are painted again, at idle, after every look change. */
+  function paint(mode) {
+    const v = veilFor(mode);
+    try {
+      const c = coloursOf(lookAfter({ mode })), key = (c.bg || '') + '|' + (c.glow || '');
+      /* the motion speaks the language of the look on screen, as the cover wears its colours */
+      const fx = nierOn() ? 'nier' : ((html.getAttribute('data-theme') || 'basic').split('-')[0] || 'basic');
+      if (v.__key !== key + '|' + fx) {
+        v.__key = key + '|' + fx;
+        if (c.bg) v.style.setProperty('--pm-veil-bg', c.bg); else v.style.removeProperty('--pm-veil-bg');
+        if (c.glow) v.style.setProperty('--pm-veil-glow', c.glow); else v.style.removeProperty('--pm-veil-glow');
+        v.setAttribute('data-fx', FX[fx] ? fx : 'basic');
+      }
+    } catch (_) { /* the fallbacks */ }
+    v.setAttribute('data-ready', '');
+    return v;
+  }
+  /* Painted ahead is not rastered ahead: a cover at opacity 0 is never drawn, so its motion parts were rastered on
+     the first pick's own frame (the click's next paint 136-216 ms on the P1000 against 72-96 ms for the pick back,
+     B4 films of d87b67ef49). After each paint the cover is drawn for a few frames at opacity 0.004, its parts shown
+     where the compositor will move them, so their tiles exist before any pick. 0.004 of a colour moves no pixel by
+     more than one level; lower rounds to nothing drawn on the P1000 (0.001 there drew nothing, Glass lane B1 trace). */
+  function warm(v) {
+    if (!v || v.__warm === v.__key || phase !== 'idle' || document.hidden || typeof v.animate !== 'function') return;
+    v.__warm = v.__key;
+    v.setAttribute('data-warm', '');
+    let a = null;
+    try { a = v.animate([{ opacity: 0.004 }, { opacity: 0.004 }], { duration: 160 }); } catch (_) { a = null; }
+    const done = () => v.removeAttribute('data-warm');
+    if (a) a.finished.then(done, done); else done();
+  }
+  const whenIdle = (fn) => (typeof requestIdleCallback === 'function' ? requestIdleCallback(fn, { timeout: 4000 }) : setTimeout(fn, 1500));
+  let painting = false;
+  const paintSoon = () => {
+    if (painting) return;
+    painting = true;
+    whenIdle(() => { painting = false; if (!document.body) return; if (phase !== 'idle') { paintSoon(); return; } warm(paint('light')); warm(paint('dark')); });
+  };
+  if (document.readyState === 'complete') paintSoon();
+  else window.addEventListener('load', paintSoon, { once: true });
+  try { new MutationObserver(paintSoon).observe(html, { attributes: true, attributeFilter: ['data-theme', 'data-o55-nier'] }); } catch (_) { /* none */ }
+  const startOnShown = (anims) => { if (window.PM_START_ON_SHOWN) window.PM_START_ON_SHOWN(anims); };
+  const stopGlow = () => { glowAnims.forEach((a) => { try { a.cancel(); } catch (_) { /* gone */ } }); glowAnims = []; };
+
+  /* The cover's motion (css/21-look-veil.css says what each look does). Every part loops on the compositor
+     (transform, opacity) from the cover's first frame until it has gone, so the cover never stands as a blank colour
+     while the main thread restyles; started together and never held, since a loop has no first frame to lose. With
+     Reduce Animations nothing travels: a texture or the glow only breathes, slowly. */
+  const loop = (el, frames, o) => el.animate(frames, Object.assign({ iterations: Infinity, fill: 'both' }, o));
+  const sweep = (el, deg, ms, delay, peak) => loop(el, [
+    { transform: `translateX(0) rotate(${deg}deg)`, opacity: 0 },
+    { opacity: peak, offset: 0.2 }, { opacity: peak, offset: 0.8 },
+    { transform: `translateX(calc(100vw + 72vmax)) rotate(${deg}deg)`, opacity: 0 }
+  ], { duration: ms, delay, easing: 'cubic-bezier(.45, 0, .3, 1)' });
+  const fadeIn = (el, to, ms, easing) => el.animate([{ opacity: 0 }, { opacity: to }], { duration: ms, easing: easing || 'ease-out', fill: 'forwards' });
+  const drift = (el, a, b, ms, lag) => loop(el, [{ transform: a }, { transform: b }], { duration: ms, delay: -lag, direction: 'alternate', easing: 'ease-in-out' });
+  const breatheCalm = (el, lo, hi, ms, easing) => loop(el, [{ opacity: lo }, { opacity: hi }], { duration: ms, direction: 'alternate', easing: easing || 'ease-in-out' });
+  const FX = {
+    basic: (p, calm) => calm ? [] : [sweep(p[0], 18, 1400, 0, 1), sweep(p[1], 18, 1400, 560, 0.55)],
+    friendly: (p, calm) => calm ? [] : [
+      fadeIn(p[0], 1, 260), drift(p[0], 'translate(-6vmax, 4vmax) scale(.9)', 'translate(6vmax, -5vmax) scale(1.12)', 1600, 0),
+      fadeIn(p[1], 1, 320), drift(p[1], 'translate(5vmax, -3vmax) scale(1.08)', 'translate(-7vmax, 5vmax) scale(.9)', 2000, 700),
+      fadeIn(p[2], 1, 380), drift(p[2], 'translate(-4vmax, -2vmax) scale(.94)', 'translate(5vmax, 4vmax) scale(1.1)', 2400, 1300)
+    ],
+    retro: (p, calm) => calm ? [breatheCalm(p[0], 0.45, 1, 1200, 'steps(2, jump-none)')] : [
+      fadeIn(p[0], 1, 120, 'steps(2, end)'),
+      loop(p[0], [{ transform: 'translateY(0)' }, { transform: 'translateY(4px)' }], { duration: 240, easing: 'steps(2, end)', composite: 'replace' }),
+      loop(p[1], [{ transform: 'translateY(-16vh)', opacity: 1 }, { transform: 'translateY(100vh)', opacity: 1 }], { duration: 1200, easing: 'steps(12, end)' })
+    ],
+    glass: (p, calm) => calm ? [] : [
+      fadeIn(p[0], 1, 300), drift(p[0], 'translate(-8vmax, 5vmax) rotate(-8deg)', 'translate(9vmax, -6vmax) rotate(10deg)', 2400, 0),
+      fadeIn(p[1], 1, 360), drift(p[1], 'translate(8vmax, -4vmax) rotate(6deg)', 'translate(-9vmax, 6vmax) rotate(-9deg)', 2800, 900),
+      sweep(p[2], 24, 1700, 240, 0.9)
+    ],
+    nier: (p, calm) => calm ? [breatheCalm(p[1], 0.35, 0.7, 1800)] : [
+      loop(p[0], [{ transform: 'translateY(-22vh)', opacity: 1 }, { transform: 'translateY(100vh)', opacity: 1 }], { duration: 1500, easing: 'linear' }),
+      fadeIn(p[1], 0.75, 200, 'steps(3, end)'),
+      loop(p[1], [{ transform: 'translate(0, 0)' }, { transform: 'translate(24px, 24px)' }], { duration: 3000, easing: 'linear' }),
+      loop(p[2], [{ opacity: 1, easing: 'step-end' }, { opacity: 0, offset: 0.5, easing: 'step-end' }, { opacity: 1 }], { duration: 640 })
+    ]
+  };
+  function startMotion(v, calm) {
+    if (v.__motion && v.__motionCalm === calm) return;   /* a pick while it lifts: the parts go on where they are */
+    stopMotion(v);
+    const parts = v.querySelector(':scope > b');
+    const make = FX[v.getAttribute('data-fx')] || FX.basic;
+    try { v.__motion = parts ? make([...parts.children], calm) : []; } catch (_) { v.__motion = []; }
+    v.__motionCalm = calm;
+  }
+  function stopMotion(v) {
+    if (!v || !v.__motion) return;
+    v.__motion.forEach((a) => { try { a.cancel(); } catch (_) { /* gone */ } });
+    v.__motion = null;
+  }
+
+  function runJob() {
+    const apply = job; job = null;
+    if (!apply) return;
+    try { apply(); } catch (e) { try { console.error('[PM_THEME_TRANSITION]', e); } catch (_) { /* none */ } }
+  }
+
+  /* The colour transitions the new look starts (hundreds of elements easing from the old colours: the editor and
+     terminal still dark in the frame part 2 caught) are finished at once under the cover: unseen there, they would
+     restyle their elements on every frame of it and show the old look when it lifts. */
+  function finishColourTransitions() {
+    try {
+      document.getAnimations().forEach((a) => {
+        if (a.transitionProperty && a.playState === 'running' && /color|background|border|shadow|fill|stroke|outline/.test(a.transitionProperty)) a.finish();
+      });
+    } catch (_) { /* decoration only */ }
+  }
+  /* The new look is drawn: three frames after the repaint (its first paint, the observers that follow a look in the
+     next frame), the last two on time; on a computer whose frames never come on time, 1.2 s after the repaint. */
+  function whenDrawn(t, done) {
+    let last = null, onTime = 0, count = 0, began = performance.now();
+    const frame = (now) => {
+      if (t !== ticket) return;
+      if (job) { runJob(); last = null; onTime = 0; count = 0; began = performance.now(); }   /* a later pick, also under the cover */
+      finishColourTransitions();
+      count++;
+      if (last != null) onTime = now - last <= 40 ? onTime + 1 : 0;
+      last = now;
+      if (count >= 3 && (onTime >= 2 || performance.now() - began >= 1200)) { done(); return; }
+      requestAnimationFrame(frame);
+    };
+    requestAnimationFrame(frame);
+  }
+
+  function lift(t, to) {
+    if (t !== ticket) return;
+    phase = 'lifting';
+    const still = reduced();
+    const out = veil.animate([{ opacity: COVER }, { opacity: 0 }], {
+      duration: still ? 140 : 240, easing: to.retro ? 'steps(3, end)' : 'cubic-bezier(.3, 0, .2, 1)', fill: 'forwards'
+    });
+    if (coverAnim) { try { coverAnim.cancel(); } catch (_) { /* gone */ } }
+    coverAnim = out;
+    startOnShown([out]);
+    out.finished.then(() => {
+      if (t !== ticket) return;
+      phase = 'idle';
+      veil.removeAttribute('data-on');   /* it stays ready (laid out, opacity 0) for the next pick */
+      stopMotion(veil);
+      paintSoon();
+      stopGlow();
+      try { out.cancel(); } catch (_) { /* gone */ }
+      coverAnim = null;
+    }, () => null);
+  }
+
+  function cover(hint) {
+    const t = ++ticket, to = lookAfter(hint), still = reduced();
+    const v = veils[to.mode] && veils[to.mode].__key ? veils[to.mode] : paint(to.mode);   /* painted ahead: no paint now */
+    let from = 0;
+    if (phase === 'lifting' && veil === v) { try { from = parseFloat(getComputedStyle(v).opacity) || 0; } catch (_) { from = 0; } }
+    else if (veil && veil !== v) { veil.removeAttribute('data-on'); stopMotion(veil); }
+    veil = v;
+    v.removeAttribute('data-warm');
+    v.getAnimations().forEach((a) => { if (a !== coverAnim) { try { a.cancel(); } catch (_) { /* gone */ } } });   /* a warm still running */
+    v.setAttribute('data-on', '');
+    phase = 'covering';
+    if (typeof window.PM_BUSY === 'function') window.PM_BUSY();   /* its 'pm-idle' once the lift has ended */
+    if (coverAnim) { try { coverAnim.cancel(); } catch (_) { /* gone */ } }
+    stopGlow();
+    const inMs = still ? 90 : 130;
+    coverAnim = v.animate([{ opacity: from }, { opacity: COVER }], {
+      duration: inMs, easing: to.retro ? 'steps(3, end)' : 'cubic-bezier(.2, 0, 0, 1)', fill: 'forwards'
+    });
+    startMotion(v, still);
+    const anims = [];   /* the cover is the answer: it starts at once; the glow waits for a shown frame */
+    /* the glow spreads from the control that was pressed and breathes while the new look is drawn (not in Retro's
+       flat pixels or NieR's ink; with less motion it only breathes where it rests) */
+    const fx = v.getAttribute('data-fx'), glows = fx !== 'retro' && fx !== 'nier' && !to.retro;
+    if (still && glows) {
+      const g = v.firstElementChild;
+      glowAnims = [g.animate([{ opacity: 0.35 }, { opacity: 0.8 }], { duration: 1600, iterations: Infinity, direction: 'alternate', easing: 'ease-in-out', fill: 'both' })];
+    }
+    if (!still && glows) {
+      const g = v.firstElementChild, src = document.getElementById('themeSelect');
+      let x = window.innerWidth - 120, y = 18;
+      try { if (src) { const r = src.getBoundingClientRect(); if (r.width) { x = r.left + r.width / 2; y = r.top + r.height / 2; } } } catch (_) { /* default */ }
+      const dx = x - window.innerWidth / 2, dy = y - window.innerHeight / 2;
+      const spread = g.animate([
+        { transform: `translate(${dx}px, ${dy}px) scale(.25)`, opacity: 0 },
+        { transform: 'translate(0, 0) scale(1)', opacity: 1 }
+      ], { duration: 900, easing: 'cubic-bezier(.2, .7, .2, 1)', fill: 'forwards' });
+      const breathe = g.animate([
+        { transform: 'translate(0, 0) scale(1)', opacity: 1 },
+        { transform: 'translate(0, 0) scale(1.18)', opacity: .7 }
+      ], { duration: 1300, delay: 900, iterations: Infinity, direction: 'alternate', easing: 'ease-in-out' });
+      glowAnims = [spread, breathe];
+      anims.push(spread, breathe);
+    }
+    startOnShown(anims);
+    /* The theme is written once the cover has been shown most of its way in (it is over 0.9 by then): the compositor
+       carries it the rest of the way while the main thread restyles, so the new look's first frame is drawn under the
+       full cover and a fast computer does not wait out the whole fade first. Retro's steps wait for the last one. */
+    const covering = coverAnim, at = to.retro ? inMs : inMs * 0.62;
+    const ready = () => {
+      if (t !== ticket || coverAnim !== covering) return;
+      let ct = 0;
+      try { ct = covering.playState === 'finished' ? inMs : Number(covering.currentTime) || 0; } catch (_) { ct = inMs; }
+      if (ct < at) { requestAnimationFrame(ready); return; }
+      phase = 'covered';
+      setTimeout(() => {
+        if (t !== ticket) return;
+        runJob();
+        whenDrawn(t, () => lift(t, to));
+      }, 0);
+    };
+    requestAnimationFrame(ready);
+  }
+
+  window.PM_THEME_TRANSITION = function themeTransition(apply, hint) {
+    job = apply;
+    if (document.hidden || !document.body) { requestAnimationFrame(() => window.setTimeout(runJob, 0)); return; }
+    if (phase === 'covering' || phase === 'covered') return;   /* the latest pick applies under the cover */
+    cover(hint);
+  };
+  /* What only the covered page shows can wait for the cover to go (the hover material's tokens and moves,
+     js/18-hover.js): read under it, in an animation frame, it was the first reader of the look's whole-page restyle.
+     The plate leaves the pointer to the page at its reveal, the moment the page shows again. */
+  window.PM_LOOK_COVERED = function lookCovered() {
+    if (phase === 'covering' || phase === 'covered') return true;
+    const plate = document.getElementById('o55np-reboot');
+    return !!(plate && plate.style.pointerEvents !== 'none') || !!document.getElementById('o55np-calm');
+  };
+  window.PM_THEME_TRANSITION.busy = () => phase !== 'idle';
+})();
+
+/* ---- js/13-page-layer.js ---- */
+/* The page in front becomes a compositor layer of its own when the pointer comes near the title bar (or onto it), or
+   the keyboard to a page tab, so the click's answer (the leaving page's fade to 0.86, tools/shell_motion.py
+   ANSWER_FIRST) runs on a layer that is already rastered. Made at the click, that layer had to be rastered first: on
+   the P1000 the click's frame came 280 ms late and the fade was never seen, and a page changing under it (the
+   Wizard's stages) was drawn empty while it rastered again (round 4 films). The layer is kept only while the pointer is
+   near the title bar or a page tab is focused, and a little after: a layer is a stacking context, and the pages hold
+   modals and toasts meant to sit above the whole app, so a page showing one of those is not promoted. It is dropped
+   when the page leaves (its exit's cleanup) and when the pointer moves on. Promoted or not, every look draws the same
+   pixels (Nas1 screenshots, five looks by four pages); its GPU memory is within the noise (P1000, nvidia-smi). */
+(function () {
+  'use strict';
+  const OVER = '#pm6-proj-sheet, #projectSettingsModal, #pm6WizDocOverlay, #pm6OrchSpModal, [aria-modal="true"]';
+  let dropTimer = 0;
+  const pageInFront = () => document.querySelector('.primary-content > .page.active');
+  /* the title bar is crossed on the way to any page tab: promoting there gives the raster a little more time */
+  const tabOf = (n) => (n && n.nodeType === 1 && n.closest ? n.closest('.page-tab[data-page], .title-bar') : null);
+  function overlayShown(page) {
+    for (const el of page.querySelectorAll(OVER)) if (el.getClientRects().length) return true;
+    const toasts = page.querySelector('.toast-stack');
+    return !!(toasts && toasts.childElementCount && toasts.getClientRects().length);
+  }
+  function promote() {
+    clearTimeout(dropTimer);
+    const page = pageInFront();
+    if (!page || page.classList.contains('pm-page-layer') || page.classList.contains('pm8-page-in') || overlayShown(page)) return;
+    page.classList.add('pm-page-layer');
+  }
+  function drop() {
+    document.querySelectorAll('.primary-content > .page.pm-page-layer').forEach((p) => {
+      if (!p.classList.contains('pm8-page-out')) p.classList.remove('pm-page-layer');
+    });
+  }
+  const dropSoon = () => { clearTimeout(dropTimer); dropTimer = setTimeout(drop, 900); };
+  /* the band under the title bar counts as on the way (a quick move to a tab gives the raster too little time: the
+     film harness reaches the tab 60 ms before its press, and the page's raster then fell on the press, P1000 round 5).
+     Its edge is read once and again after a resize, from the title bar's box. */
+  const NEAR = 72;
+  let edge = -1, near = false;
+  const readEdge = () => { const bar = document.querySelector('.title-bar'); const r = bar && bar.getBoundingClientRect(); edge = r && r.height ? r.bottom + NEAR : 0; };
+  window.addEventListener('resize', () => { edge = -1; }, { passive: true });
+  document.addEventListener('pointermove', (e) => {
+    if (e.pointerType === 'touch') return;
+    if (edge < 0) readEdge();
+    const inBand = e.clientY <= edge;
+    if (inBand && !near) { near = true; promote(); }
+    else if (!inBand && near && e.clientY > edge + 40) { near = false; dropSoon(); }
+  }, { capture: true, passive: true });
+  document.addEventListener('pointerover', (e) => { if (tabOf(e.target)) promote(); }, true);
+  document.addEventListener('pointerout', (e) => { if (tabOf(e.target) && !tabOf(e.relatedTarget) && !near) dropSoon(); }, true);
+  document.addEventListener('focusin', (e) => { if (tabOf(e.target)) promote(); }, true);
+  document.addEventListener('focusout', (e) => { if (tabOf(e.target) && !tabOf(e.relatedTarget)) dropSoon(); }, true);
+  window.PM_PAGE_LAYER = { promote, drop };
 })();
 
 /* ---- js/15-sound.js ---- */
@@ -142804,10 +143555,15 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
     roomOut.set(ctx, master);
     return { master, comp };
   }
-  function ensureContext() {
-    if (S.ctx) { if (S.ctx.state === 'suspended') S.ctx.resume().catch(() => {}); return S.ctx; }
+  /* The one context and its master chain. Opening the device holds the main thread (about 60 ms on the M3 for the
+     first context; soundClick 61.8 ms of a 104 ms NieR Settings entry, Settings lane trace), so it is made once the
+     page is idle after load (makeAhead, below): made before any gesture it starts suspended, as autoplay rules allow,
+     and the first press or key resumes it. Nothing plays before that first gesture: ensureContext() still answers
+     null until then, so no sound is queued on the suspended context. */
+  function makeContext() {
+    if (S.ctx) return S.ctx;
     const AC = window.AudioContext || window.webkitAudioContext;
-    if (!AC || !hasGesture()) return null;
+    if (!AC) return null;
     try {
       const ctx = new AC();
       const { master, comp } = buildMaster(ctx);
@@ -142817,16 +143573,56 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
       return ctx;
     } catch (_) { return null; }
   }
+  function ensureContext() {
+    if (!hasGesture()) return null;
+    if (!S.ctx && !makeContext()) return null;
+    if (S.ctx.state === 'suspended') S.ctx.resume().catch(() => {});
+    return S.ctx;
+  }
   S.unlock = function unlock() { const c = ensureContext(); return !!c; };
-  /* The shell may stay silent until a usage warning. Warm its context and takes in idle time after the first
-     gesture, so that warning's flush does not also open the audio device. Onboarding keeps its immediate unlock. */
-  let warmingContext = false;
+  /* When the context was not made ahead (sound off at load, the page hidden), it is warmed with its takes in idle time
+     after the first gesture, so a later sound's flush (a usage warning) does not also open the audio device.
+     Onboarding keeps its immediate unlock.
+     Opening the device holds the main thread (about 160 ms on the M3, for the first context only), and the first idle
+     gap after a click falls in the middle of whatever that click animates: the warm waits for a quiet moment instead,
+     1.2 s after the last input with no page change, window, tour or Usage moment running. */
+  let warmingContext = false, lastInput = 0;
+  const QUIET_MS = 1200;
+  const busy = () => {
+    const h = document.documentElement;
+    return h.hasAttribute('data-pm-page-transition') || h.hasAttribute('data-o55-open') || h.hasAttribute('data-o55-tour')
+      || h.hasAttribute('data-pmu-moment') || document.visibilityState !== 'visible';
+  };
+  function warmWhenQuiet() {
+    if (S.ctx) { warmingContext = false; return; }
+    const wait = lastInput + QUIET_MS - performance.now();
+    if (wait > 0 || busy()) { window.setTimeout(warmWhenQuiet, Math.max(wait, 300)); return; }
+    idle(() => {
+      if (S.ctx) { warmingContext = false; return; }
+      if (performance.now() - lastInput < QUIET_MS || busy()) { warmWhenQuiet(); return; }
+      warmingContext = false; ensureContext();
+    });
+  }
+  /* made ahead: once the page is idle after load (and again after the sound is turned on), with sound on and the page
+     shown; the first trusted press or key anywhere resumes it, before that gesture's click handlers ask to play */
+  function makeAhead() {
+    if (S.ctx || S.muted || document.visibilityState !== 'visible') return;
+    makeContext();
+  }
+  const aheadSoon = () => (window.requestIdleCallback ? window.requestIdleCallback(makeAhead, { timeout: 4000 }) : window.setTimeout(makeAhead, 1500));
+  if (document.readyState === 'complete') aheadSoon(); else window.addEventListener('load', aheadSoon, { once: true });
+  window.addEventListener('o55:sound', (e) => { if (e && e.detail && e.detail.muted === false) aheadSoon(); });
+  document.addEventListener('visibilitychange', () => { if (!S.ctx && document.visibilityState === 'visible') aheadSoon(); });
+  ['pointerdown', 'keydown'].forEach((ev) => document.addEventListener(ev, (e) => {
+    if (e.isTrusted && S.ctx && S.ctx.state === 'suspended' && !S.muted) S.ctx.resume().catch(() => {});
+  }, true));
   ['pointerdown', 'keydown'].forEach((ev) => document.addEventListener(ev, (e) => {
     if (!e.isTrusted) return;
+    lastInput = performance.now();
     if (document.documentElement.hasAttribute('data-o55-open') || document.documentElement.hasAttribute('data-o55-tour')) ensureContext();
     else if (!S.ctx && !warmingContext) {
       warmingContext = true;
-      idle(() => { warmingContext = false; ensureContext(); });
+      warmWhenQuiet();
     }
   }, true));
 
@@ -142969,7 +143765,7 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
      look PCM and invalidate its outstanding jobs; playing Web Audio nodes keep their own tails intact. */
   let warmingLook = null, lookIdle = false;
   function warmLook() {
-    if (!S.ctx || !hasGesture()) return;
+    if (!S.ctx) return;
     const kit = kitFor('tap', {});
     if (warmingLook !== kit) {
       warmingLook = kit; preparing.clear(); nextBanks.clear();
@@ -142984,7 +143780,7 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
     S.prepare(S.ctx.sampleRate, kit);
   }
   new MutationObserver(() => {
-    if (!S.ctx || !hasGesture() || lookIdle) return;
+    if (!S.ctx || lookIdle) return;
     lookIdle = true; idle(() => { lookIdle = false; warmLook(); });
   }).observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme', 'data-o55-nier', 'data-o55-nier-parts'] });
   /* Exact next-play takes for callouts and the large fixed stings. These recipes ignore musical rotation,
@@ -145880,22 +146676,41 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
       if (frameEl) frameEl.setAttribute('data-pmh-family', fam);
     }
     function tk(kind) { return T[kind] || T.card; }
+    /* The look's tokens are read after the frame's layout (the shell's PM_AFTER_LAYOUT, before its paint), where its
+       style is already computed, and once the app is still again (PM_BUSY, js/11-motion-start.js): read in an
+       animation frame callback, before that frame's style, the probe was the first reader of a look change's
+       whole-page restyle (880 ms forced on a Glass Light NieR switch, P1000, Settings lane B5 trace; 703 ms on the
+       frozen 25b13069be). Only the onboarding window does not hold it: the window shows the hover, and stays open for
+       minutes. Until then a frame that needs the tokens reads them itself; the moves wait only while a cover hides the
+       page (PM_LOOK_COVERED, tick), so no hover is held while it shows. */
+    function covered() { var f = window.PM_LOOK_COVERED; try { return typeof f === 'function' && !!f(); } catch (_) { return false; } }
+    function busy() {
+      var f = window.PM_BUSY;
+      try { if (typeof f === 'function') { var why = f(); return !!why && why !== 'onboarding'; } } catch (_) { /* below */ }
+      return covered();
+    }
     function retokenNextFrame() {
       tokensDirty = true; rectsDirty = geomDirty = true;   /* a look change can change every box's size */
       if (tokenFrame) return;
-      tokenFrame = raf(function retokenFrame() {
+      var retokenFrame = function () {
+        if (busy()) { raf(function () { window.PM_AFTER_LAYOUT(retokenFrame); }); return; }
         tokenFrame = 0;
         if (tokensDirty) readTokens();
         if (isReduced()) snapMagnets();
         stampSoon(300);
         if (hover || springs.size || lit.size) { moved = true; start(); }
-      });
+      };
+      if (typeof window.PM_AFTER_LAYOUT === 'function') { tokenFrame = 1; window.PM_AFTER_LAYOUT(retokenFrame); }
+      else tokenFrame = raf(retokenFrame);
     }
 
     /* ---- the loop ---- */
     function start() { if (!running) { running = true; lastT = performance.now(); raf(tick); } }
 
     function tick(now) {
+      /* under a look's cover the moves hold where they are and read nothing (the page's style is the look's restyle,
+         still pending); they go on from there once it starts to go */
+      if (covered()) { lastT = now; raf(tick); return; }
       var t0 = performance.now();
       phase.tokens = phase.scope = false; phase.rects = stats.rects;
       try { frame(now); } catch (err) {
@@ -146584,7 +147399,8 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
   };
   const motion = () => MOTION[look()]();
   /* Web Animations (Animation speed scales them through kit.d/17-look.js); real() keeps reading time unscaled */
-  function play(el, frames, o) {
+  function play(el, frames, o) { return playNow(el, frames, o); }
+  function playNow(el, frames, o) {
     if (!el || typeof el.animate !== 'function') return null;
     try { return el.animate(frames, Object.assign({ fill: 'none' }, o)); } catch (_) { return null; }
   }
@@ -146932,20 +147748,28 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
        stack now, and it is placed again; still crowded, a lasting card joins the stack too (the badge counts it) and a
        quick note shows for a shorter time. */
     const place = () => typeof window.PM_NOTICE_PLACE === 'function' && window.PM_NOTICE_PLACE() === true;
-    if (place()) {
-      let joined = false;
-      staged.forEach((r) => { if (r !== rec && !r.leaving && r.it.durable) { finishStaged(r, 'join'); joined = true; } });
-      if (!joined || place()) {
-        if (it.durable && method() !== 'Banner') { finishStaged(rec, 'join'); sound('callout', 0.4); return; }
-        it.stageMs = Math.min(it.stageMs, Math.max(1800, Math.round(it.stageMs * 0.5)));
+    /* placed after the coming frame's layout and before its paint (B5: placed at once, a toast staged inside a look
+       change's commit measured the whole page while that restyle was pending); the card's first frame is already
+       in its place */
+    const settle = (crowded) => {
+      if (!staged.has(it.id) || staged.get(it.id) !== rec || rec.leaving) return;
+      if (crowded) {
+        let joined = false;
+        staged.forEach((r) => { if (r !== rec && !r.leaving && r.it.durable) { finishStaged(r, 'join'); joined = true; } });
+        if (!joined || place()) {
+          if (it.durable && method() !== 'Banner') { finishStaged(rec, 'join'); sound('callout', 0.4); return; }
+          it.stageMs = Math.min(it.stageMs, Math.max(1800, Math.round(it.stageMs * 0.5)));
+        }
       }
-    }
-    flip(before, c);
-    /* the cards already showing slide down first; the new one arrives into the slot they open, so two titles never
-       show through each other (frame review, 2026-10-13) */
-    if (still()) { /* Reduced Motion: it is simply there */ }
-    else enter(c, it, before.size ? Math.round(motion().move.duration * (look() === 'retro' || look() === 'nier' ? 0.5 : 0.32)) : 0);
-    startTimer(rec);
+      flip(before, c);
+      /* the cards already showing slide down first; the new one arrives into the slot they open, so two titles never
+         show through each other (frame review, 2026-10-13) */
+      if (still()) { /* Reduced Motion: it is simply there */ }
+      else enter(c, it, before.size ? Math.round(motion().move.duration * (look() === 'retro' || look() === 'nier' ? 0.5 : 0.32)) : 0);
+      startTimer(rec);
+    };
+    if (typeof window.PM_NOTICE_PLACE === 'function' && window.PM_NOTICE_PLACE.length >= 1) window.PM_NOTICE_PLACE(settle);
+    else settle(place());
     sound(it.level === 'blocking' ? (it.severity === 'error' ? 'error' : 'callout') : it.level === 'attention' ? 'warn' : it.level === 'notice' ? 'callout' : null, it.level === 'quiet' ? 0.3 : 0.55);
   }
   function enter(c, it, delay) {
@@ -147403,6 +148227,11 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
     sound('open', 0.4);
     if (!still()) {
       const m = motion(), L = look(), chrome = panelEl.querySelector('.pmn-chrome');
+      /* every entrance below plays on the frames that are shown (11-motion-start.js; final motion QA B10): a first frame
+         that is long (Glass rastering its blur on first show, about half a second on the P1000) otherwise ran the whole
+         entrance behind it, and the panel appeared already open */
+      const opening = [], play = (el, frames, o) => { const a = playNow(el, frames, o); if (a) opening.push(a); return a; };
+      if (window.PM_START_ON_SHOWN) window.PM_START_ON_SHOWN(() => (open ? opening : []));
       if (L === 'retro') {
         play(chrome, [{ transform: 'scale(1, .01)', filter: 'brightness(3)' }, { transform: 'scale(1, .01)', filter: 'brightness(2)', offset: 0.35 }, { transform: 'none', filter: 'none' }], { duration: 260, easing: 'steps(6, end)' });
       } else if (L === 'nier') {
@@ -147957,6 +148786,11 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
 /* A stage's CSS entrance can spend several frames pending at opacity 0 while Chrome prepares its layers. Keep the
    outgoing stage underneath it until that entrance finishes. The existing entrance still owns its duration,
    easing and movement (including Reduced Motion); its actual ready/start time also drives the outgoing fade. */
+/* The page's own exit (.pm8-page-out) paints the page that was on screen while the next page enters over it. A stage
+   switch made then (Orchestrator's first entry backfills the demo story, and the Wizard resyncs into its workspace)
+   must not paint during that exit: the stage that was on screen stays drawn (.wo-stage-hold) and the stage switched
+   to stays undisplayed (.wo-stage-defer) until the exit has finished. The page exit then fades only what was on
+   screen before the click, and its centre never goes empty under the arriving page. */
 (function () {
   'use strict';
   function boot() {
@@ -147969,6 +148803,24 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
     let watching = null;
     const leaving = new Map();
     const scrollOrigins = new Map();
+    const held = new Set(), deferred = new Set();
+    const exiting = () => root.classList.contains('pm8-page-out');
+    function releaseExit() {
+      for (const stage of held) stage.classList.remove('wo-stage-hold');
+      for (const stage of deferred) stage.classList.remove('wo-stage-defer');
+      held.clear(); deferred.clear();
+    }
+    function holdThroughExit(outgoing, incoming) {
+      if (held.has(incoming)) {
+        // Switched back to the stage still on screen: it is simply the stage again.
+        releaseExit();
+        return;
+      }
+      if (!held.size && !deferred.has(outgoing)) { outgoing.classList.add('wo-stage-hold'); held.add(outgoing); }
+      for (const stage of deferred) if (stage !== incoming) stage.classList.remove('wo-stage-defer');
+      deferred.clear();
+      incoming.classList.add('wo-stage-defer'); deferred.add(incoming);
+    }
 
     function release(stage) {
       const exit = leaving.get(stage);
@@ -148030,13 +148882,23 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
       const incoming = stages.find(s => s.dataset.wizStage === name);
       if (!incoming || incoming === current) return;
       const outgoing = current;
-      const scrollTop = root.scrollTop;
+      /* Read only while the page is shown. A switch made as the page leaves (Orchestrator's first entry resyncs the
+         Wizard) runs after the page write took .active off and before its exit class is on: the page is undisplayed
+         for that moment, and a layout read then computed it so, which cancelled every finished entrance in it
+         (.pm-enter-up). When the exit showed the page again they all ran again from opacity 0, so the Wizard went
+         empty for three frames in the middle of its exit and its cards came back one by one (A3, P1000 films;
+         Nas1 invalidation trace: "Removed from layout" from this read). */
+      const shown = !!outgoing && pageShown && root.classList.contains('active');
+      const scrollTop = shown ? root.scrollTop : 0;
       const reversing = leaving.has(incoming);
       current = incoming;
       const token = ++serial;
       watching = null;
       release(incoming);
       if (!outgoing || !pageShown || !root.classList.contains('active')) {
+        // pageShown still reads true when the page was hidden earlier in this task: its exit class is added after the
+        // page write that runs this switch (the observer then keeps or drops the hold).
+        if (outgoing && (exiting() || pageShown)) holdThroughExit(outgoing, incoming);
         finish(token, incoming);
         return;
       }
@@ -148072,6 +148934,9 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
     window.PM_WIZARD_STAGES = { prepare };
     const observer = new MutationObserver(() => {
       pageShown = root.classList.contains('active');
+      // While the page exit still paints, a stage switch in progress keeps its outgoing stage too.
+      if (exiting()) return;
+      if (held.size || deferred.size) releaseExit();
       if (!pageShown) finish(serial, current);
     });
     observer.observe(root, { attributes: true, attributeFilter: ['class'] });
@@ -153802,6 +154667,12 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
     r.classList.remove('o55-scrim-lit'); clearOpenScrim(); /* the close plays its own scrim */
     setSolid(false); /* the app is back under the scrim before the window leaves */
     r.classList.remove('o55-opening'); r.classList.add('o55-closing'); r.classList.toggle('o55-handoff', handoff); r.setAttribute('data-o55-ambient', 'off');
+    /* the exit plays on frames that are shown: the close's own task (Enter puts the Wizard in place first) can hold the
+       first frame for half a second on the P1000, and the timeline that frame draws at is from before that work, so the
+       window and its scrim were already gone when it was drawn. They play on the frames that are shown
+       (11-motion-start.js; final motion QA A1). */
+    if (!handoff && !O55.motion.reduced() && window.PM_START_ON_SHOWN) window.PM_START_ON_SHOWN(() => (S.open ? [] :
+      [r.querySelector('.o55-win'), r.querySelector('.o55-scrim')].flatMap((el) => (el ? el.getAnimations().filter((a) => Number.isFinite(a.effect.getComputedTiming().endTime)) : []))));
     if (!handoff) O55.sound.play(reason === 'done' ? 'finish' : 'close');
     /* the skin may keep the root (and its scrim) a while: NieR folds the window to a line that carries on into the
        Guided Tour, and the scrim stays until the tour's own has taken over, so the app never comes up lit between */
@@ -153811,16 +154682,21 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
     if (reason !== 'done' && O55.shell && O55.shell.flushLook) O55.shell.flushLook(400);
     const finish = () => {
       if (S.open) return; /* opened again before this close had finished (Run Onboarding Again): it stays */
-      r.hidden = true; r.setAttribute('data-open', 'false'); r.classList.remove('o55-closing', 'o55-handoff');
+      r.hidden = true; r.setAttribute('data-open', 'false'); r.classList.remove('o55-closing', 'o55-handoff', 'o55-accept');
       document.documentElement.removeAttribute('data-o55-open');
       setInert(false);
       if (S.pausedClock && window.PM_DEMO && window.PM_DEMO.clock && window.PM_DEMO.clock.resume) { try { window.PM_DEMO.clock.resume(); } catch (_) {} }
       if (reason !== 'done' && returnFocus && document.contains(returnFocus)) { try { returnFocus.focus(); } catch (_) {} }
       O55.boot && O55.boot.chip && O55.boot.chip();
       if (heldResize) { heldResize = false; window.dispatchEvent(new Event('resize')); }
+      window.dispatchEvent(new CustomEvent('o55:onboarding-gone', { detail: { reason } }));
     };
     if (typeof hold === 'number' && hold > 0) O55.motion.after(hold, finish);
-    else if (O55.motion.reduced()) finish(); else O55.motion.settled(r.querySelector('.o55-win'), { subtree: false, fallback: 700 }).then(finish);
+    /* the app wakes (inert off, its paused loops resumed: a restyle of the whole page) only once both the window and
+       its scrim have finished leaving, and a frame later, so that restyle never holds a frame of the exit itself */
+    else if (O55.motion.reduced()) finish();
+    else Promise.all([O55.motion.settled(r.querySelector('.o55-win'), { subtree: false, fallback: 700 }), O55.motion.settled(r.querySelector('.o55-scrim'), { subtree: false, fallback: 700 })])
+      .then(() => requestAnimationFrame(() => window.setTimeout(finish, 0)));
     window.dispatchEvent(new CustomEvent('o55:onboarding', { detail: { type: reason === 'skip' ? 'skipped' : reason === 'done' ? 'finished' : 'closed', screen: S.sess.screen } }));
   }
 
@@ -160412,7 +161288,16 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
       lookTimer = O55.motion.after(ms, () => { lookTimer = null; writeLook(); });
       return true;
     },
-    openWizard() { const t = document.getElementById('tab-wizard') || document.querySelector('[data-page="wizard"]'); if (t) { t.click(); return true; } return false; }
+    /* o.under: the window still covers the app, so the page changes at once with no page transition of its own and
+       the Wizard is drawn whole beneath the window, whose exit is then the only move (final motion QA A1) */
+    openWizard(o) {
+      const t = document.getElementById('tab-wizard') || document.querySelector('[data-page="wizard"]');
+      if (!t) return false;
+      const P = window.PM_PAGES, under = !!(o && o.under);
+      if (under && P) P.instant = true;
+      try { t.click(); } finally { if (P) P.instant = false; }
+      return true;
+    }
   };
 
   let look = null, lookTimer = null, lookWritten = '';
@@ -160435,6 +161320,16 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
   /* finish(S, {tour, project}) — close onboarding as done and land in the app. */
   O55.finish = function finish(S, o) {
     o = o || {};
+    /* Enter answers on the click's own frame (final motion QA A1: the click's task, which selects the Project, reloads
+       its settings and puts the Wizard in place, held the first frame 0.5-1.2 s on the P1000): the window settles a
+       touch on the compositor, and the work and the window's exit follow in the task after that frame */
+    if (!o.tour && !o.answered) {
+      if (S.finishing) return;
+      S.finishing = true;
+      if (S.root) S.root.classList.add('o55-accept');
+      requestAnimationFrame(() => window.setTimeout(() => { S.finishing = false; finish(S, Object.assign({}, o, { answered: true })); }, 0));
+      return;
+    }
     O55.shell.commitLook(S, { defer: true });
     const cm = S.sess.commit || {}, d = md(S);
     const projectId = o.project || cm.projectId, name = o.projectName || (cm.projectId === projectId ? d.project_name : null) || projectId;
@@ -160446,12 +161341,22 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
        the tour itself ends on the Planning Wizard, so the page is not switched here */
     const win = S.root && S.root.querySelector('.o55-win'), from = tour && win ? win.getBoundingClientRect() : null;
     const handoff = tour && from && O55.nierWindow && O55.nierWindow.handoff ? O55.nierWindow.handoff() : null;
+    /* Enter: the Wizard is put in place under the window first, so the window's exit reveals it (one move, never Home) */
+    if (!tour) O55.shell.openWizard({ under: true });
     O55.ui.close('done', { handoff: tour && !!from });
     /* a tour taken at the end of an onboarding run always starts at its first step (only the resume chip continues one) */
     if (tour) O55.tour.start({ source: 'onboarding', fresh: true, project: projectId, from: from ? { left: from.left, top: from.top, width: from.width, height: from.height } : null, handoff });
-    else O55.shell.openWizard();
-    /* the theme is written once the window has handed over (the line has reached the tour), or has gone */
-    O55.shell.flushLook(handoff ? 1600 : 400);
+    /* the theme is written once the window has handed over (the line has reached the tour), or has gone: its repaint
+       restyles the whole app, so it waits for the first quiet moment after the window has left rather than landing in
+       the middle of its exit */
+    if (handoff) O55.shell.flushLook(1600);
+    else {
+      let done = false;
+      const flush = () => { if (done) return; done = true; window.removeEventListener('o55:onboarding-gone', gone); O55.shell.flushLook(0); };
+      const gone = () => (window.requestIdleCallback ? window.requestIdleCallback(flush, { timeout: 500 }) : O55.motion.after(120, flush));
+      window.addEventListener('o55:onboarding-gone', gone);
+      O55.motion.after(2500, flush);
+    }
   };
 
   function summary(S) {
@@ -165178,7 +166083,8 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
     var by=attr(el,'aria-labelledby');
     if(by){var text=by.split(/\s+/).map(function(id){var node=document.getElementById(id);return visibleText(node);}).filter(Boolean).join(' ');if(text)return text;}
     var aria=attr(el,'aria-label');if(aria)return aria;
-    if(el&&el.labels&&el.labels.length){var labels=Array.prototype.map.call(el.labels,visibleText).filter(Boolean).join(' ');if(labels)return labels;}
+    var ls=el&&(el.id||(el.closest&&el.closest('label')))?el.labels:null,ln=ls?ls.length:0;   /* O55: read once (B6) */
+    if(ln){var own=[];for(var li=0;li<ln;li++)own.push(ls[li]);var labels=own.map(visibleText).filter(Boolean).join(' ');if(labels)return labels;}
     var text=visibleText(el);if(text)return text;
     return '';
   }
@@ -165321,6 +166227,7 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
     if(/save|apply|confirm/.test(signal))return ['Save changes','Keep the choices you made.'];
     if(attr(el,'aria-expanded'))return ['',attr(el,'aria-expanded')==='true'?'Hide the related choices.':'Show the related choices.'];
     if(attr(el,'aria-pressed'))return ['',attr(el,'aria-pressed')==='true'?'Turn this choice off.':'Turn this choice on.'];
+    if(el&&el.closest&&el.closest('#pm7GlobalStatusBar'))return ['',el.matches('button,[role="button"]')?'Click to see the details.':'Shows the latest known state.'];   /* O55 */
     if(el&&el.matches&&el.matches('[role="tab"],[data-page]'))return ['', 'Show this page.'];
     if(el&&el.matches&&el.matches('a[href]'))return ['', 'Open the linked page.'];
     if(el&&el.matches&&el.matches('input,select,textarea,[role="checkbox"],[role="radio"],[role="switch"],[role="slider"]'))return ['', 'Change this setting.'];
@@ -165522,17 +166429,24 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
     if(a===b||a.contains(b))return a;if(b.contains(a))return b;
     var node=a.parentElement;while(node&&!node.contains(b))node=node.parentElement;return node||document;
   }
+  var censusDeadline=null;   /* O55: the census runs in idle time (motion QA, 2026-10-16) */
+  function censusFrame(fn){
+    if(typeof requestIdleCallback!=='function')return requestAnimationFrame(fn);
+    return requestIdleCallback(function(deadline){censusDeadline=deadline;try{fn();}finally{censusDeadline=null;}},{timeout:900});
+  }
+  function cancelCensusFrame(id){if(!id)return;if(typeof cancelIdleCallback==='function')cancelIdleCallback(id);else cancelAnimationFrame(id);}
+  function censusTime(started,ms){if(performance.now()-started>=ms)return false;return !censusDeadline||censusDeadline.didTimeout||censusDeadline.timeRemaining()>1;}
   HoverTagController.prototype.scheduleScan=function(scope){
     var self=this,next=scope&&scope.isConnected?scope:document;
     this.pendingScanScope=this.pendingScanScope?commonScanScope(this.pendingScanScope,next):next;
     this.scanComplete=false;if(this.scanFrame||this.scanning)return;
-    this.scanFrame=requestAnimationFrame(function(){var pending=self.pendingScanScope||document;self.pendingScanScope=null;self.scanFrame=0;self.beginScan(pending);});
+    this.scanFrame=censusFrame(function(){var pending=self.pendingScanScope||document;self.pendingScanScope=null;self.scanFrame=0;self.beginScan(pending);});
   };
   HoverTagController.prototype.pruneKeyOwners=function(){
     var self=this;this.keyOwners.forEach(function(el,key){if(el&&el.isConnected)return;self.keyOwners.delete(key);var desc=document.getElementById(descriptionId(key));if(desc)desc.remove();});
   };
   HoverTagController.prototype.beginScan=function(scope){
-    if(this.liveRunning){var delayed=this;this.scanFrame=requestAnimationFrame(function(){delayed.scanFrame=0;delayed.beginScan(scope);});return;}
+    if(this.liveRunning){var delayed=this;this.scanFrame=censusFrame(function(){delayed.scanFrame=0;delayed.beginScan(scope);});return;}
     this.ensureRoot();this.syncVisualSetting();this.preparedByElement=new WeakMap();
     this.scanStartedAt=performance.now();this.scanNodes=this.collect(scope);this.scanPrepareCursor=0;this.scanPhase='prepare';this.scanQueue=[];this.scanCursor=0;this.scanning=true;this.scanComplete=false;this.scanBound=0;this.scanCandidates=0;this.scanBatches=0;this.processScanBatch();
   };
@@ -165545,16 +166459,16 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
          descriptions unsettled for many seconds. Keep a generous count guard
          for pathological clocks while consuming cheap rows until 3 ms. */
       limit=Math.min(this.scanNodes.length,this.scanPrepareCursor+384);
-      while(this.scanPrepareCursor<limit&&performance.now()-started<3){var candidate=this.prepare(this.scanNodes[this.scanPrepareCursor++]);if(candidate){this.scanQueue.push(candidate);this.preparedByElement.set(candidate.el,candidate);}}
+      while(this.scanPrepareCursor<limit&&censusTime(started,3)){var candidate=this.prepare(this.scanNodes[this.scanPrepareCursor++]);if(candidate){this.scanQueue.push(candidate);this.preparedByElement.set(candidate.el,candidate);}}
       this.scanBatches++;
-      if(this.scanPrepareCursor<this.scanNodes.length){this.scanFrame=requestAnimationFrame(function(){self.scanFrame=0;self.processScanBatch();});return;}
+      if(this.scanPrepareCursor<this.scanNodes.length){this.scanFrame=censusFrame(function(){self.scanFrame=0;self.processScanBatch();});return;}
       this.scanCandidates=this.scanQueue.length;this.scanNodes=[];this.scanPhase='bind';
-      this.scanFrame=requestAnimationFrame(function(){self.scanFrame=0;self.processScanBatch();});return;
+      this.scanFrame=censusFrame(function(){self.scanFrame=0;self.processScanBatch();});return;
     }
     limit=Math.min(this.scanQueue.length,this.scanCursor+192);
-    while(this.scanCursor<limit&&performance.now()-started<4){var row=this.scanQueue[this.scanCursor++];if(this.bind(row.el,row))this.scanBound++;}
+    while(this.scanCursor<limit&&censusTime(started,4)){var row=this.scanQueue[this.scanCursor++];if(this.bind(row.el,row))this.scanBound++;}
     this.scanBatches++;
-    if(this.scanCursor<this.scanQueue.length){this.scanFrame=requestAnimationFrame(function(){self.scanFrame=0;self.processScanBatch();});return;}
+    if(this.scanCursor<this.scanQueue.length){this.scanFrame=censusFrame(function(){self.scanFrame=0;self.processScanBatch();});return;}
     this.scanning=false;this.scanPhase='idle';this.scanQueue=[];this.preparedByElement=new WeakMap();this.pruneKeyOwners();this.lastScan={candidates:this.scanCandidates,bound:this.scanBound,duration_ms:performance.now()-this.scanStartedAt,batches:this.scanBatches};
     if(this.pendingScanScope){var pending=this.pendingScanScope;this.pendingScanScope=null;this.scheduleScan(pending);return;}
     this.scanComplete=true;
@@ -165583,7 +166497,7 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
       this.liveDeep.forEach(function(root){if(root===el||root.contains(el))covered=true;});if(!covered)this.liveShallow.add(el);
     }
     this.pruneLiveScopes();
-    if(!this.liveFrame&&!this.liveRunning){this.liveFrame=requestAnimationFrame(function(){self.liveFrame=0;self.beginLive();});}
+    if(!this.liveFrame&&!this.liveRunning){this.liveFrame=censusFrame(function(){self.liveFrame=0;self.beginLive();});}
   };
   HoverTagController.prototype.deferLiveScope=function(el){
     if(this.pageSettling||this.overlaySettling||!el||el.nodeType!==1)return;var self=this,covered=false,remove=[];
@@ -165600,24 +166514,26 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
     nodes.forEach(function(node){self.release(node);});if(this.active&&(this.active===root||root.contains(this.active)))this.close(true);
   };
   HoverTagController.prototype.beginLive=function(){
-    var self=this;if(this.pageSettling||this.overlaySettling){this.liveShallow.clear();this.liveDeep.clear();return;}if(this.scanning||this.scanFrame){this.liveFrame=requestAnimationFrame(function(){self.liveFrame=0;self.beginLive();});return;}this.pruneLiveScopes();
+    var self=this;if(this.pageSettling||this.overlaySettling){this.liveShallow.clear();this.liveDeep.clear();return;}if(this.scanning||this.scanFrame){this.liveFrame=censusFrame(function(){self.liveFrame=0;self.beginLive();});return;}this.pruneLiveScopes();
     var nodes=[],seen=new Set();function add(node){if(!node||node.nodeType!==1||!node.isConnected||inOwner(node)||seen.has(node))return;seen.add(node);nodes.push(node);}
     this.liveShallow.forEach(add);this.liveDeep.forEach(function(root){
       add(root);var descendants=root.querySelectorAll?root.querySelectorAll(ACTION_SELECTOR+','+SEMANTIC_SELECTOR+',[data-pm-hover-bound="true"]'):[];
       for(var i=0;i<descendants.length;i++)add(descendants[i]);
     });
     this.liveShallow.clear();this.liveDeep.clear();var queue=[];
-    for(var i=0;i<nodes.length;i++){var prepared=this.prepare(nodes[i]);if(prepared||attr(nodes[i],'data-pm-hover-bound')==='true')queue.push({el:nodes[i],prepared:prepared});}
+    for(var i=0;i<nodes.length;i++)queue.push({el:nodes[i],prepared:undefined});   /* O55: prepared in the batches */
     if(!queue.length){this.lastLive={candidates:0,bound:0,released:0,duration_ms:0,batches:0};return;}
     this.liveQueue=queue;this.liveCursor=0;this.liveRunning=true;this.liveStartedAt=performance.now();this.liveBound=0;this.liveReleased=0;this.liveBatches=0;this.processLiveBatch();
   };
   HoverTagController.prototype.processLiveBatch=function(){
     if(!this.liveRunning)return;var self=this,started=performance.now(),limit=Math.min(this.liveQueue.length,this.liveCursor+72);
-    while(this.liveCursor<limit&&performance.now()-started<4){var row=this.liveQueue[this.liveCursor++];if(!row.el.isConnected||!row.prepared){if(this.release(row.el))this.liveReleased++;}else{var model=this.bind(row.el,row.prepared);if(model){this.liveBound++;if(this.active===row.el){this.activeModel=model;this.render(model);this.position();}}}}
+    while(this.liveCursor<limit&&censusTime(started,4)){var row=this.liveQueue[this.liveCursor++];
+      if(row.prepared===undefined){row.prepared=row.el.isConnected?this.prepare(row.el):null;if(!row.prepared&&attr(row.el,'data-pm-hover-bound')!=='true')continue;}
+      if(!row.el.isConnected||!row.prepared){if(this.release(row.el))this.liveReleased++;}else{var model=this.bind(row.el,row.prepared);if(model){this.liveBound++;if(this.active===row.el){this.activeModel=model;this.render(model);this.position();}}}}
     this.liveBatches++;
-    if(this.liveCursor<this.liveQueue.length){this.liveFrame=requestAnimationFrame(function(){self.liveFrame=0;self.processLiveBatch();});return;}
+    if(this.liveCursor<this.liveQueue.length){this.liveFrame=censusFrame(function(){self.liveFrame=0;self.processLiveBatch();});return;}
     this.liveRunning=false;this.liveQueue=[];this.lastLive={candidates:this.liveCursor,bound:this.liveBound,released:this.liveReleased,duration_ms:performance.now()-this.liveStartedAt,batches:this.liveBatches};
-    if(this.liveShallow.size||this.liveDeep.size)this.liveFrame=requestAnimationFrame(function(){self.liveFrame=0;self.beginLive();});
+    if(this.liveShallow.size||this.liveDeep.size)this.liveFrame=censusFrame(function(){self.liveFrame=0;self.beginLive();});
   };
   HoverTagController.prototype.refresh=function(el){
     if(!el||!el.isConnected)return null;var model=this.bind(el);
@@ -165716,6 +166632,24 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
       if(!focused&&!hovered)self.close(false);
     },DEPARTURE_GRACE_MS);
   };
+  var PRIMARY_CLASSES=['pm6-chat-send','pmw-sc-send','pm6-wiz-send','pm-hover-avoid'];
+  function avoidPrimary(active,tagRoot,left,top,rect,anchor,viewport,marginX,marginY){
+    var nodes=[],boxes=[];PRIMARY_CLASSES.forEach(function(c){var l=document.getElementsByClassName(c);for(var k=0;k<l.length;k++)nodes.push(l[k]);});   /* live lists: no document-wide selector match */
+    for(var i=0;i<nodes.length;i++){var n=nodes[i];if(n===active||n.contains(active)||active.contains(n))continue;var b=n.getBoundingClientRect();if(!(b.width>0&&b.height>0))continue;
+      var stack=document.elementsFromPoint(b.left+b.width/2,b.top+b.height/2),front=null;
+      for(var s=0;s<stack.length;s++)if(!(tagRoot&&tagRoot.contains(stack[s]))){front=stack[s];break;}
+      if(front&&(front===n||n.contains(front)))boxes.push(b);}   /* only an action on screen (under the tag itself or not), not one under the composer */
+    if(!boxes.length)return null;
+    var PAD=6,w=rect.width,h=rect.height,minX=viewport.left+marginX,maxX=viewport.left+viewport.width-marginX-w,minY=viewport.top+marginY,maxY=viewport.top+viewport.height-marginY-h;
+    function hit(l,t){for(var j=0;j<boxes.length;j++){var b=boxes[j];if(l<b.right+PAD&&l+w>b.left-PAD&&t<b.bottom+PAD&&t+h>b.top-PAD)return b;}return null;}
+    if(!hit(left,top))return null;
+    function slide(dir){var l=left;for(var k=0;k<boxes.length+1;k++){var b=hit(l,top);if(!b)return l;l=dir<0?b.left-PAD-w:b.right+PAD;}return NaN;}
+    var other=anchor.top-h-GAP>=minY&&top>anchor.top?{top:anchor.top-h-GAP,placement:'above'}:{top:anchor.bottom+GAP,placement:'below'};
+    var tries=[{left:slide(-1),top:top},{left:slide(1),top:top},{left:left,top:other.top,placement:other.placement}];
+    tries=tries.filter(function(c){return c.left===c.left&&c.left>=minX-0.5&&c.left<=maxX+0.5&&c.top>=minY-0.5&&c.top<=maxY+0.5&&!hit(c.left,c.top);});
+    tries.sort(function(a,b){return Math.abs(a.left-left)+Math.abs(a.top-top)-Math.abs(b.left-left)-Math.abs(b.top-top);});
+    return tries.length?tries[0]:{left:left,top:top,shut:true};
+  }
   HoverTagController.prototype.position=function(){
     if(this.dropStaleTargets()||!this.active||!this.tag||this.tag.hidden)return null;
     var anchor=this.active.getBoundingClientRect(),viewport=viewportGeometry(),marginX=feasibleMargin(viewport.width),marginY=feasibleMargin(viewport.height);
@@ -165741,6 +166675,9 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
     ].filter(function(row){return row.left>=viewport.left+marginX&&row.top>=viewport.top+marginY&&row.left+rect.width<=viewportRight-marginX&&row.top+rect.height<=viewportBottom-marginY;});if(outside.length){outside.sort(function(a,b){var ah=Math.abs(a.left-(anchor.left+anchor.width/2))+Math.abs(a.top-(anchor.top+anchor.height/2)),bh=Math.abs(b.left-(anchor.left+anchor.width/2))+Math.abs(b.top-(anchor.top+anchor.height/2));return ah-bh;});left=outside[0].left;top=outside[0].top;placement=outside[0].placement;}}
     left=clamp(left,viewport.left+marginX,viewportRight-marginX-rect.width);
     top=clamp(top,viewport.top+marginY,viewportBottom-marginY-rect.height);
+    var avoided=avoidPrimary(this.active,this.root||this.tag,left,top,rect,anchor,viewport,marginX,marginY);   /* O55: never over Send */
+    if(avoided){left=avoided.left;top=avoided.top;if(avoided.placement)placement=avoided.placement;}
+    this.tag.style.visibility=avoided&&avoided.shut?'hidden':'';
     this.tag.style.left=Math.round(left)+'px';this.tag.style.top=Math.round(top)+'px';this.tag.setAttribute('data-placement',placement);
     return {left:left,top:top,width:rect.width,height:rect.height,placement:placement,gap:GAP,margin_x:marginX,margin_y:marginY};
   };
@@ -165767,7 +166704,7 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
     return this.visualEnabled;
   };
   HoverTagController.prototype.pauseBackgroundCensus=function(){
-    cancelAnimationFrame(this.scanFrame);cancelAnimationFrame(this.liveFrame);this.scanFrame=0;this.liveFrame=0;
+    cancelCensusFrame(this.scanFrame);cancelCensusFrame(this.liveFrame);this.scanFrame=0;this.liveFrame=0;
     clearTimeout(this.deferredLiveTimer);this.deferredLiveTimer=0;this.deferredLiveScopes.clear();
     this.pendingScanScope=null;this.scanNodes=[];this.scanPrepareCursor=0;this.scanPhase='idle';this.scanQueue=[];this.scanCursor=0;
     this.liveQueue=[];this.liveCursor=0;this.liveShallow.clear();this.liveDeep.clear();this.scanning=false;this.liveRunning=false;this.scanComplete=true;
@@ -165860,7 +166797,11 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
   HoverTagController.prototype.start=function(){
     if(this.started)return this;this.started=true;this.ensureRoot();var self=this;
     if(this.motionQuery){var motionChanged=function(event){self.reduced=!!event.matches;if(self.reduced&&self.tag)self.tag.style.transition='none';else if(self.tag)self.tag.style.transition='';};if(this.motionQuery.addEventListener)this.motionQuery.addEventListener('change',motionChanged);else if(this.motionQuery.addListener)this.motionQuery.addListener(motionChanged);}
-    document.addEventListener('pointerover',function(event){var el=event.target&&event.target.closest&&event.target.closest('[data-pm-hover-bound="true"],'+ACTION_SELECTOR+','+SEMANTIC_SELECTOR);if(el&&!inOwner(el))self.open(el,'pointer',event);},true);
+    var pointerAsk=null;   /* O55: opened after layout (B5) */
+    document.addEventListener('pointerover',function(event){var el=event.target&&event.target.closest&&event.target.closest('[data-pm-hover-bound="true"],'+ACTION_SELECTOR+','+SEMANTIC_SELECTOR);if(!el||inOwner(el))return;
+      if(typeof window.PM_AFTER_LAYOUT!=='function'){self.open(el,'pointer',event);return;}
+      var first=!pointerAsk;pointerAsk={el:el,event:event};
+      if(first)window.PM_AFTER_LAYOUT(function(){var a=pointerAsk;pointerAsk=null;if(a&&a.el.isConnected&&a.el.matches(':hover'))self.open(a.el,'pointer',a.event);});},true);
     document.addEventListener('pointermove',function(event){var el=event.target&&event.target.closest&&event.target.closest('[data-pm-hover-bound="true"],'+ACTION_SELECTOR+','+SEMANTIC_SELECTOR);if(el&&!inOwner(el))self.notePointerMove(event,el);},true);
     document.addEventListener('pointerout',function(event){var el=event.target&&event.target.closest&&event.target.closest('[data-pm-hover-bound="true"]');if(el&&(!event.relatedTarget||!el.contains(event.relatedTarget)))self.depart(el);},true);
     document.addEventListener('pointerdown',function(){if(self.pendingOpenSource==='pointer')self.cancelPendingOpen();if(self.active&&self.tag&&self.tag.getAttribute('data-source')==='pointer')self.close(true);},true);
@@ -166648,7 +167589,8 @@ function watchPanels() {
   let last = activeTarget(), lastHidden = s.classList.contains('hidden');
   const check = () => {
     const now = activeTarget(), hidden = s.classList.contains('hidden');
-    if ((now !== last || hidden !== lastHidden) && now && !hidden) notifyShown(now, { reason: 'switch', from: last });
+    /* opened: the slot was hidden before, so nothing was on screen to hand over from (a skin holds no leaving panel) */
+    if ((now !== last || hidden !== lastHidden) && now && !hidden) notifyShown(now, { reason: 'switch', from: last, opened: lastHidden });
     if (now !== last || hidden !== lastHidden) {
       Object.keys(HOST.inst).forEach(k => {
         const p = PMR.PANELS.find(x => x.id === k);
@@ -168500,11 +169442,17 @@ function stopEnter(el) { el.getAnimations().forEach(a => { if (a.id === 'd-enter
    next frame: the first frame shows the start, then everything runs from one start time. */
 function startTogether(anims) {
   if (!anims || !anims.length) return;
-  requestAnimationFrame(() => {
+  /* ...and again at every frame that follows a long one: such a frame (the fit pass, the new view's first layout and
+     paint) draws at the time from before its work, so a move started in it was over before it showed (P1000 films,
+     final motion QA A8: the held panel gone and the new one still empty for ~100 ms). The page's PM_START_ON_SHOWN
+     does this; the double reset below is the fallback for the review copy without it. */
+  if (window.PM_START_ON_SHOWN) { window.PM_START_ON_SHOWN(anims); return; }   /* opus-5.5 src/js/11-motion-start.js */
+  const restart = () => {
     const t = document.timeline.currentTime;
     if (t == null) return;
     anims.forEach(a => { try { if (a.playState !== 'idle') a.startTime = t; } catch (e) { /* gone */ } });
-  });
+  };
+  requestAnimationFrame(() => { restart(); requestAnimationFrame(restart); });
 }
 /* stagger a list in; runs once per call, never on scroll */
 function cascade(list, opts) {
@@ -168656,10 +169604,60 @@ function viewInOff() {
   if (slot) slot.removeAttribute('data-d-viewin');
 }
 
+/* What was on screen stays until the new view's first frame has been shown (final motion QA A8, 2026-10-16). The
+   panel or tab pane that is leaving keeps its place above the one coming in, takes no input, and fades out while the
+   new one deals in, started with the rest of the change (startTogether): the change's first frame, which the shell's
+   fit pass can hold for a sixth of a second, shows the old view instead of an empty pane. NieR keeps its own erase
+   (the wipe is its look) and Reduced Motion swaps at once. */
+const LEAVE = { basic: .45, friendly: .3, glass: .25, retro: .5 };
+const leaving = new Set();
+function releaseLeaving(el) {
+  if (!el._dLeave) return;
+  const keep = el._dLeave; el._dLeave = null; leaving.delete(el);
+  if (keep.anim) { try { keep.anim.cancel(); } catch (e) { /* gone */ } }
+  el.classList.remove('d-leaving');
+  if (keep.inline) ['display', 'top', 'left', 'width'].forEach(k => el.style.removeProperty(k));
+  const slot = document.getElementById('sidePanelSlot');
+  if (slot && ![...leaving].some(x => x.classList.contains('side-panel-view'))) slot.classList.remove('d-has-leaving');
+}
+function releaseAllLeaving() { [...leaving].forEach(releaseLeaving); }
+/* keep el drawn where it was; box: a pane's place inside its scroller, read before the shell hid it */
+function holdLeaving(el, box) {
+  if (!el || reduced() || fam() === 'nier' || !D.on) return null;
+  releaseAllLeaving();
+  el._dLeave = { inline: !!box, anim: null };
+  leaving.add(el);
+  if (box) {
+    el.style.setProperty('display', box.display, 'important');
+    el.style.setProperty('top', box.top + 'px'); el.style.setProperty('left', box.left + 'px'); el.style.setProperty('width', box.width + 'px');
+  } else {
+    const slot = document.getElementById('sidePanelSlot');
+    if (slot) slot.classList.add('d-has-leaving');
+  }
+  el.classList.add('d-leaving');
+  return el;
+}
+/* the held view fades out with the change's own start */
+function fadeLeaving(el, anims) {
+  if (!el || !el._dLeave) return;
+  const f = spec(), k = LEAVE[fam()] || .5, retro = fam() === 'retro';
+  const a = el.animate([{ opacity: 1 }, { opacity: 0 }], { duration: Math.max(retro ? 3 * TICK : 90, Math.round(f.dur * k)), easing: retro ? 'steps(3, end)' : 'cubic-bezier(.4, 0, 1, 1)', fill: 'forwards' });
+  a.id = 'd-leave';
+  el._dLeave.anim = a;
+  a.finished.then(() => releaseLeaving(el), () => {});
+  if (anims) anims.push(a);
+}
+/* a pane's place inside its scroller, before the shell hides it */
+function paneBox(pane) {
+  if (!pane || !pane.getClientRects().length) return null;
+  return { top: pane.offsetTop, left: pane.offsetLeft, width: pane.offsetWidth, display: getComputedStyle(pane).display };
+}
+
 /* the panel comes in: its chrome settles first, the content deals in right behind it. The content is the shown tab's
-   pane; a panel without tab panes (Testing, Debug & Run, Agents, Runtime artifacts) deals its scroller's own list. */
-function enterPanel(panel) {
-  if (reduced() || !panel) return;
+   pane; a panel without tab panes (Testing, Debug & Run, Agents, Runtime artifacts) deals its scroller's own list.
+   left: the panel that was shown, held by holdLeaving until this entrance starts */
+function enterPanel(panel, left) {
+  if (reduced() || !panel) { if (left) releaseLeaving(left); return; }
   const chrome = [':scope > .sh-banner', ':scope > .pm7-scm-context', ':scope > .pm7-automation-context', ':scope > .pm-segtab', ':scope > .fm-toolbar-wrap']
     .map(s => panel.querySelector(s)).filter(visible);
   const f = spec(), anims = [];
@@ -168676,6 +169674,7 @@ function enterPanel(panel) {
     const k = fam() === 'retro' ? 'steps(4, end)' : 'cubic-bezier(.3, 1.6, .5, 1)';
     anims.push(ico.animate([{ transform: 'scale(.7) rotate(-12deg)' }, { transform: 'none' }], { duration: Math.round(f.dur * 1.2), easing: k }));
   }
+  if (left) fadeLeaving(left, anims);
   startTogether(anims);
 }
 
@@ -168907,6 +169906,9 @@ function onTabCapture(ev) {
   const st = tab.parentElement;
   if (!st || !st.classList.contains('pm-segtab') || !st.offsetWidth) return;
   st._dFrom = snapStrip(st, tab);
+  /* the view on screen, and its place, before the shell switches it (held while the new one comes in: holdLeaving) */
+  const panel = tab.closest('.side-panel-view'), pane = panel && activePane(panel);
+  if (panel) panel._dFromPane = pane ? { pane, box: paneBox(pane) } : null;
 }
 
 /* bubble phase (onClickMotion, after the shell switched): refit now, move on the next frame */
@@ -168919,21 +169921,25 @@ function tabChanged(tab) {
   const st = tab.parentElement && tab.parentElement.classList.contains('pm-segtab') ? tab.parentElement : null;
   const from = st && st._dFrom;
   if (st) delete st._dFrom;
+  const fromPane = panel._dFromPane; panel._dFromPane = null;
   if (now === was) return;
   /* the label shows in this same task, so the target brackets (placed on the next frame) measure the final box */
   if (st) fitTabs(st);
-  playTabs(st, from, now > was ? 1 : -1, () => activePane(panel));
+  const shown = activePane(panel);
+  const left = fromPane && fromPane.box && fromPane.pane !== shown && fromPane.pane.isConnected ? holdLeaving(fromPane.pane, fromPane.box) : null;
+  playTabs(st, from, now > was ? 1 : -1, () => activePane(panel), null, left);
 }
 /* one frame callback makes every animation of a change, and startTogether starts them all on the next frame: the ink,
    the icons, the inverse tick and the rows share one clock, whatever the shell's fit pass costs this frame. paneOf: the
    view that comes in (read in that frame); after(pane): a strip's own fitting of that view */
-function playTabs(st, from, dir, paneOf, after) {
+function playTabs(st, from, dir, paneOf, after, left) {
   requestAnimationFrame(() => {
-    if (!D.on) return;
+    if (!D.on) { if (left) releaseLeaving(left); return; }
     const anims = [];
     if (st) moveTabs(st, from, dir, anims);
     const pane = paneOf();
     if (pane) { stackHeads(pane); stackRows(pane); midFitAll(pane); if (after) after(pane); enterPane(pane, dir, anims); }
+    if (left) fadeLeaving(left, anims);
     /* NieR: the target brackets made their lock-on in this same frame (their frame callback runs first); it starts
        with the rest of the change, or the shell's fit pass would eat it and the brackets would just appear */
     const ret = document.getElementById('o55np-reticle');
@@ -169186,7 +170192,10 @@ function mountBar(barEl) {
   if (ro) ro.observe(barEl);
   const onResize = () => place(false);
   window.addEventListener('resize', onResize);
-  barEl.addEventListener('transitionend', onResize);
+  /* only the bar's own box: every icon's colour transition ends here too (a look change ends dozens at once), and each
+     one re-measured the bar after the page had been restyled (35-75 ms a time on the P1000, final motion QA B4) */
+  const onBarEnd = ev => { if (ev.target === barEl) place(false); };
+  barEl.addEventListener('transitionend', onBarEnd);
   /* the bar widens or narrows (names shown or hidden): the tile rides along every frame of the width transition
      instead of waiting at the old place and jumping when it ends */
   let follow = 0;
@@ -169216,7 +170225,7 @@ function mountBar(barEl) {
       barEl.removeEventListener('transitionend', onWidthEnd);
       barEl.removeEventListener('transitioncancel', onWidthEnd);
       more.destroy();
-      window.removeEventListener('resize', onResize); barEl.removeEventListener('transitionend', onResize);
+      window.removeEventListener('resize', onResize); barEl.removeEventListener('transitionend', onBarEnd);
       barEl.querySelectorAll('.d-bump').forEach(i => i.classList.remove('d-bump'));
       tile.remove(); chatTile.remove();
     },
@@ -170029,7 +171038,9 @@ const LANE_E = (() => {
       const key = keys[i] + '|' + (el._dFull != null ? el._dFull : el.textContent);
       if (!force && el._dEFit === key) return;
       midFit(el);
-      el._dEFit = el.clientWidth + '|' + getComputedStyle(el).font + '|' + (el._dFull != null ? el._dFull : el.textContent);
+      /* the room and font read before the fit (a fit changes the text, not its room): read again after each fit, they
+         forced a layout per id (B5) */
+      el._dEFit = keys[i] + '|' + (el._dFull != null ? el._dFull : el.textContent);
     });
   }
   function clearMid(root) { root.querySelectorAll('*').forEach(el => { delete el._dEFit; delete el._dEStack; }); }
@@ -170038,7 +171049,9 @@ const LANE_E = (() => {
     if (panel._dEWatch) return;
     panel._dEWatch = true;
     let timer = 0;
-    const soon = () => { clearTimeout(timer); timer = setTimeout(() => { if (D.on && panel.offsetWidth) refit(true); }, 90); };
+    /* the refit checks the panel is shown itself, after layout (later): read here, its width forced a layout in this
+       timer, right after a look change (B5) */
+    const soon = () => { clearTimeout(timer); timer = setTimeout(() => { if (D.on) refit(true); }, 90); };
     const slot = document.getElementById('sidePanelSlot');
     if (window.ResizeObserver && slot) { const ro = new ResizeObserver(soon); ro.observe(slot); D.observers.push(ro); }
     /* the list's own content box: a scrollbar that comes with an opened row narrows it without resizing the slot */
@@ -170061,7 +171074,26 @@ const LANE_E = (() => {
   }
   /* the panel's rows take the NieR cursor (ink bar + square cursor) like the shared rows do */
   function cursor(panel, sel) { panel.querySelectorAll(sel).forEach(el => addClass(el, 'pmr-cur')); }
-  return { words, mark, chipAs, capOwn, mid, clearMid, watch, headStates, cursor, inkOver };
+  /* A panel's fit runs once per frame, after that frame's layout (the shell's PM_AFTER_LAYOUT, before its paint), so
+     what it measures is already computed: run in an animation frame or a timer, the cards' fit was the first reader of
+     a look change's pending restyle (NieR on, P1000: 263 ms of style and 907 ms of layout, Liquid Glass lane B5
+     baseline). Asks in one frame are run once (forced if any was); a panel that is not shown is fitted when it is
+     shown (its show() asks again), with the force it missed. */
+  function later(panel, name, force, run) {
+    const k = '_dELater' + name, stale = '_dELaterF' + name;
+    if (panel[k]) { if (force) panel[k].force = true; return; }
+    const ask = panel[k] = { force: !!force };
+    const go = () => {
+      panel[k] = null;
+      if (!D.on || !panel.isConnected) return;
+      if (!panel.getClientRects().length) { if (ask.force) panel[stale] = true; return; }
+      const f = ask.force || !!panel[stale];
+      panel[stale] = false;
+      run(f);
+    };
+    if (typeof window.PM_AFTER_LAYOUT === 'function') window.PM_AFTER_LAYOUT(go); else go();
+  }
+  return { words, mark, chipAs, capOwn, mid, clearMid, watch, headStates, cursor, inkOver, later };
 })();
 
 (() => {
@@ -170198,15 +171230,21 @@ const LANE_E = (() => {
     return new Set(Array.from(r.getClientRects()).filter(x => x.width > 0).map(x => Math.round(x.top))).size;
   }
   function stackRuns(panel, force) {
+    /* every head read first, then the marks cleared together, every meta measured in one pass, the marks set: cleared
+       and measured one head at a time, each head forced its own layout (B5) */
+    const todo = [];
     panel.querySelectorAll('.sh-run-h').forEach(h => {
       const meta = h.querySelector('.sh-meta'), chip = h.querySelector(':scope > .pm-chip');
       if (!meta || !chip || !h.offsetParent) return;
       const key = h.clientWidth + '|' + getComputedStyle(meta).font + '|' + meta.textContent + '|' + chip.textContent;
       if (!force && h._dEStack === key) return;
       h._dEStack = key;
-      h.removeAttribute('data-d-stack');
-      if (lines(meta) > 1) h.setAttribute('data-d-stack', '');
+      todo.push([h, meta]);
     });
+    if (!todo.length) return;
+    todo.forEach(([h]) => h.removeAttribute('data-d-stack'));
+    const two = todo.map(([, meta]) => lines(meta) > 1);
+    todo.forEach(([h], i) => { if (two[i]) h.setAttribute('data-d-stack', ''); });
   }
 
   /* GitHub's first subview is Current Branch (GitHub_Integration GI-011; owner, 2026-10-10): the branch this worktree
@@ -170275,7 +171313,7 @@ const LANE_E = (() => {
     });
   }
 
-  function fit(panel, force) { LANE_E.mid(panel, MID_GIT, force); stackRuns(panel, force); }
+  function fit(panel, force) { LANE_E.later(panel, 'Fit', force, f => { LANE_E.mid(panel, MID_GIT, f); stackRuns(panel, f); }); }
 
   function onClick(ev) {
     if (!D.on) return;
@@ -170358,16 +171396,23 @@ const LANE_E = (() => {
 
   /* a card whose family and state word do not share line 2 puts the state under the family (fit by layout); the
      attribute is the shared data-d-stack, which clearFit() removes on a concept switch */
-  function stackCards(panel, force) {
+  function stackCards(panel, force) { LANE_E.later(panel, 'Stack', force, f => stackNow(panel, f)); }
+  /* after layout (LANE_E.later), every row read first, then the marks cleared together, every family measured in one
+     pass, the marks set: cleared and measured one card at a time, each card forced its own layout (B5) */
+  function stackNow(panel, force) {
     const rows = Array.from(panel.querySelectorAll('.sh-card > .sh-r1'));
     const widths = rows.map(r => (r.offsetParent ? r.offsetWidth : 0));
+    const todo = [];
     rows.forEach((r, i) => {
       const fam = r.querySelector(':scope > .sh-fam');
       if (!fam || !widths[i] || (!force && r._dStackW === widths[i])) return;
       r._dStackW = widths[i];
-      r.removeAttribute('data-d-stack');
-      if (LANE_E.inkOver(fam)) r.setAttribute('data-d-stack', '');
+      todo.push([r, fam]);
     });
+    if (!todo.length) return;
+    todo.forEach(([r]) => r.removeAttribute('data-d-stack'));
+    const over = todo.map(([, fam]) => LANE_E.inkOver(fam));
+    todo.forEach(([r], i) => { if (over[i]) r.setAttribute('data-d-stack', ''); });
   }
 
   /* motion: the scroller's children are the list (no [data-pane] in this panel) */
@@ -170754,6 +171799,8 @@ function unmountSkin() {
   });
   clearFit();
   viewInOff();
+  releaseAllLeaving();
+  D.shown = null;
   panelEls().forEach(p => hooksFor(p, 'unmount').forEach(h => h.unmount(p)));
   undoAll();
 }
@@ -170767,9 +171814,15 @@ PMR.concepts.register('d', {
         const p = document.getElementById(info && info.target);
         if (!p) return;
         if (info.reason === 'switch' && D.on) viewIn();
+        /* the panel that was on screen stays until this one's entrance starts (30-motion.js holdLeaving); a rail opened
+           from closed had none on screen, so the panel shown before it closed is never held over the new one */
+        const was = D.shown && D.shown !== p && D.shown.isConnected && info.reason === 'switch' && !info.opened ? D.shown : null;
+        D.shown = p;
+        const left = was ? holdLeaving(was) : null;
         requestAnimationFrame(() => {
           fitAll(p);
-          if (info.reason === 'switch' || info.reason === 'concept') enterPanel(p);
+          if (info.reason === 'switch' || info.reason === 'concept') enterPanel(p, left);
+          else if (left) releaseLeaving(left);
           hooksFor(p, 'show').forEach(h => h.show(p, info));
         });
       },
@@ -180706,7 +181759,10 @@ function syncBodies(panelEl, p, l, panelHidden) {
     if (visible !== rec.visible) {
       rec.visible = visible;
       var inst = rec.instance;
-      if (inst) {
+      /* onShow and onHide follow the page in front as well: while Home is hidden every shown tab has been told onHide
+         (onPageChange, 90-boot.js) and is told onShow when Home is in front again, so a render meanwhile (a Settings
+         change re-laying Home out) wakes none of them. The tab's hidden state still follows the layout. */
+      if (inst && homeIsPage()) {
         try { if (visible && inst.onShow) inst.onShow(); else if (!visible && inst.onHide) inst.onHide(); }
         catch (err) { try { console.error('[pm-home] show/hide failed', err); } catch (_) {} }
       }
@@ -187999,11 +189055,17 @@ var SPOT_DOWN = 320, SPOT_SIDE = 280, SPOT_STEP = 12, SPOT_PAD = 4;
 function controlsIn(x0, x1, y0, y1, stage) {
   /* the page that shows (the others keep their layout while hidden), the chat, the left column and the title bar */
   var out = [], roots = [doc.querySelector('.primary-content > .page.active'), doc.getElementById('chatPanel'), doc.querySelector('.left-panel'), doc.querySelector('.title-bar')];
+  /* only what can be in reach: a root that does not overlap the area is passed over, and so is a control that is not
+     drawn (hidden, or inside a content-visibility section the browser has skipped): measuring one forced its skipped
+     subtree's layout, once per control (B5, Settings lane read probe) */
+  var seen = function (e) { try { return !e.checkVisibility || e.checkVisibility({ contentVisibilityAuto: true, visibilityProperty: true }); } catch (_) { return true; } };
   for (var r = 0; r < roots.length; r++) {
     if (!roots[r]) continue;
+    var rr = roots[r].getBoundingClientRect();
+    if (!rr.width || rr.right < x0 || rr.left > x1 || rr.bottom < y0 || rr.top > y1) continue;
     var list = roots[r].querySelectorAll(CONTROL_SEL);
     for (var i = 0; i < list.length; i++) {
-      var e = list[i]; if (stage.contains(e) || e.closest('#notifySlot')) continue;
+      var e = list[i]; if (stage.contains(e) || e.closest('#notifySlot') || !seen(e)) continue;
       var b = e.getBoundingClientRect();
       if (b.width < 2 || b.height < 2 || b.right < x0 || b.left > x1 || b.bottom < y0 || b.top > y1) continue;
       out.push(b);
@@ -188049,8 +189111,33 @@ function applyDrop() {
   if (stage.hasAttribute('data-pmn-crowded') !== spot.crowded) stage.toggleAttribute('data-pmn-crowded', spot.crowded);
   return spot.crowded;
 }
-/* the notices ask before a toast's time starts (19-notify.js stage()) */
-window.PM_NOTICE_PLACE = applyDrop;
+/* the notices ask before a toast's time starts (19-notify.js stage()). Asked with a callback, the stage is placed after
+   the coming frame's layout, before its paint, and the callback hears whether it is crowded: asked at once, a toast
+   staged inside a look change's commit measured the page while that restyle was pending (B5). Asked without one, it is
+   placed now. */
+window.PM_NOTICE_PLACE = function (done) {
+  if (typeof done !== 'function') return applyDrop();
+  afterLayout(function () { var crowded = false; try { crowded = applyDrop(); } catch (e) { /* placed by the next ask */ } done(crowded === true); });
+};
+/* A placement asked for by a frame (a scroll, an overlay opening, a page change) reads its boxes once that frame's own
+   style and layout are done, from the first ResizeObserver delivery after them, not in an animation frame callback
+   before them: there the read pulled a pending whole-page restyle (a look change, NieR Mode under its calm cover)
+   forward into the frame that should first show the change (49 and 32 ms on the M3, final motion QA 2026-10-16). */
+var layoutQ = [], layoutRo = null;
+function afterLayout(fn) {
+  /* the shell's one early observer (onboarding 11-motion-start.js): it is told before the page's other observers, so
+     these reads come before any of them writes in the same delivery */
+  if (typeof window.PM_AFTER_LAYOUT === 'function') { window.PM_AFTER_LAYOUT(fn); return; }
+  if (typeof ResizeObserver !== 'function') { fn(); return; }
+  if (layoutQ.indexOf(fn) < 0) layoutQ.push(fn);
+  if (layoutRo) return;
+  layoutRo = new ResizeObserver(function () {
+    layoutRo.disconnect(); layoutRo = null;
+    var q = layoutQ; layoutQ = [];
+    for (var i = 0; i < q.length; i++) { try { q[i](); } catch (e) { /* the next ask places it */ } }
+  });
+  layoutRo.observe(doc.documentElement);
+}
 shell.installNotices = function () {
   if (shell.noticesOn) return true;
   var stage = doc.getElementById('rsStage');
@@ -188060,23 +189147,25 @@ shell.installNotices = function () {
     return false;
   }
   shell.noticesOn = true;
-  // a card arriving: measure before the browser paints it (a microtask after the DOM change)
+  // a card arriving: measured before the browser paints it, after the coming frame's layout (B5, Liquid Glass lane
+  // profile: measured in the microtask after the DOM change, it forced the pending restyle of a NieR switch, and
+  // every other ask in the same frame forced it again; asks made in one frame are placed once, after its layout)
   new MutationObserver(function (list) {
-    for (var i = 0; i < list.length; i++) if (list[i].addedNodes.length) { applyDrop(); return; }
+    for (var i = 0; i < list.length; i++) if (list[i].addedNodes.length) { afterLayout(applyDrop); return; }
   }).observe(stage, { childList: true });
   // an overlay opening or closing under cards already shown (a press, a key or focus moving): measure again two frames
   // later, once it has opened, and only while a card shows
   var pending = 0;
   function later() {
     if (pending || !stage.firstElementChild) return;
-    pending = requestAnimationFrame(function () { requestAnimationFrame(function () { pending = 0; applyDrop(); }); });
+    pending = requestAnimationFrame(function () { requestAnimationFrame(function () { pending = 0; afterLayout(applyDrop); }); });
   }
   ['pointerdown', 'keydown', 'focusin'].forEach(function (t) { doc.addEventListener(t, later, true); });
   /* the page scrolling controls under cards already shown: placed again once per frame */
   var scrollQ = 0;
   doc.addEventListener('scroll', function () {
     if (scrollQ || !stage.firstElementChild) return;
-    scrollQ = requestAnimationFrame(function () { scrollQ = 0; applyDrop(); });
+    scrollQ = requestAnimationFrame(function () { scrollQ = 0; afterLayout(applyDrop); });
   }, { capture: true, passive: true });
   /* a page change: measure again once the new page shows (its strips are laid out two frames on), while a card shows.
      Only a page's own class counts: every class change inside the pages measured too, and a Usage room change makes
@@ -188086,7 +189175,7 @@ shell.installNotices = function () {
     if (turn || !stage.firstElementChild) return;
     for (var i = 0; i < list.length; i++) {
       if (list[i].target.parentElement !== main) continue;
-      turn = requestAnimationFrame(function () { requestAnimationFrame(function () { turn = 0; applyDrop(); }); });
+      turn = requestAnimationFrame(function () { requestAnimationFrame(function () { turn = 0; afterLayout(applyDrop); }); });
       return;
     }
   }).observe(main, { attributes: true, subtree: true, attributeFilter: ['class'] });
