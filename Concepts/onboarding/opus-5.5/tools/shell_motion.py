@@ -376,7 +376,31 @@ ANSWER_FIRST.append(
      "                    } else if (targetId) showTarget();\n",
      'rail: a section switch answers first'))
 
-PATCHES = STATUS_BAR + HOVER_TAGS + THEME + PAGES + CENSUS + ANSWER_FIRST
+CHAT = [
+    # B5 (Liquid Glass lane invalidation trace): the chat footer and header write inherited custom properties on their
+    # containers at every resize (the synthetic theme kick among them), and each write restyled the chat's subtree.
+    # Their descendants read them (the stream's padding, the body's and stream's offsets), so they stay inherited; a
+    # write is made only when the value changes. The chat's layout is the same.
+    ("    wrap.style.setProperty('--chat-footer-stack-height', fh + 'px');\n",
+     "    if (wrap.style.getPropertyValue('--chat-footer-stack-height') !== fh + 'px') wrap.style.setProperty('--chat-footer-stack-height', fh + 'px');   /* O55: only a change (B5) */\n",
+     'chat footer: stack height only when it changes'),
+    ("      wrap.style.setProperty('--chat-footer-inset', inset + 'px');\n",
+     "      if (wrap.style.getPropertyValue('--chat-footer-inset') !== inset + 'px') wrap.style.setProperty('--chat-footer-inset', inset + 'px');\n",
+     'chat footer: inset only when it changes'),
+    ("      stream.style.paddingBottom = inset + 'px';\n",
+     "      if (stream.style.paddingBottom !== inset + 'px') stream.style.paddingBottom = inset + 'px';\n",
+     'chat footer: stream padding only when it changes'),
+    ("      wrap.style.removeProperty('--chat-footer-inset');\n"
+     "      wrap.style.setProperty('--chat-footer-stack-height', '0px');\n",
+     "      if (wrap.style.getPropertyValue('--chat-footer-inset')) wrap.style.removeProperty('--chat-footer-inset');\n"
+     "      if (wrap.style.getPropertyValue('--chat-footer-stack-height') !== '0px') wrap.style.setProperty('--chat-footer-stack-height', '0px');\n",
+     'chat footer: cleared only when set'),
+    ("if (h > 0) root.style.setProperty('--pm-chat-head-h', h + 'px');",
+     "if (h > 0 && root.style.getPropertyValue('--pm-chat-head-h') !== h + 'px') root.style.setProperty('--pm-chat-head-h', h + 'px');   /* O55: only a change (B5) */",
+     'chat header: height only when it changes'),
+]
+
+PATCHES = STATUS_BAR + HOVER_TAGS + THEME + PAGES + CENSUS + ANSWER_FIRST + CHAT
 
 # The census's own frame requests, between scheduleScan and refresh (scan, delayed scan, live, delayed live, and their
 # continuations): every one becomes censusFrame.
