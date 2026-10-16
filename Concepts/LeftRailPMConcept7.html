@@ -228217,11 +228217,11 @@ window.PM_WALLPAPERS_CATALOG = {"version":1,"families":[{"family":"glass","label
     prepare(url).catch(function () { return false; }).then(function () {
       if (serial !== paintSerial || theme !== root.getAttribute('data-theme')) return;
       var viewport = { width: innerWidth, height: innerHeight };
-      var commit = function () {
+      var commit = function (fade) {
         if (serial !== paintSerial) return;
         paintedChoice = selected; paintKey = key; paintedUrl = url;
         attr('data-lg-wall', id || null); attr('data-lg-wall-any', id && look() !== 'glass' ? '' : null);
-        if (url && window.PM_LG && PM_LG.commitWallpaper) PM_LG.commitWallpaper(id, url, viewport);
+        if (url && window.PM_LG && PM_LG.commitWallpaper) PM_LG.commitWallpaper(id, url, viewport, fade);
       };
       if (printFinish) printFinish();
       mountPrints();
@@ -228246,7 +228246,7 @@ window.PM_WALLPAPERS_CATALOG = {"version":1,"families":[{"family":"glass","label
       /* Start the prepared frost with the body fade. Waiting for the midpoint left the sheets showing the old
          print for another 120 ms, followed by their raster cost, even when preparation was a cache hit. */
       var fade = printLayers[1].animate([{ opacity: 0 }, { opacity: 1 }], { duration: 240, easing: 'linear', fill: 'forwards' });
-      printAnimations = [fade]; commit();
+      printAnimations = [fade]; commit(fade);
       fade.finished.then(finish, finish);
     });
   }
