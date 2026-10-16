@@ -681,9 +681,8 @@
     log.className = 'o55np-log';
     log.innerHTML = `<div class="o55np-kick"><i></i><i></i><i></i><span class="o55np-kick-t">${esc(RB('kicker', 'NieR Mode'))}</span></div>`
       + `<div class="o55np-lns">${lines.map(l => `<div class="o55np-ln"><span class="o55np-ln-t">${esc(l.text)}</span><span class="o55np-ln-dots"></span><b class="o55np-stamp">${esc(l.stamp)}</b><i class="o55np-ln-mask"></i></div>`).join('')}</div>`
-      + '<div class="o55np-meter"><i></i></div>'
-      + `<div class="o55np-ln o55np-sync"><span class="o55np-ln-t">${esc(RB('syncing', 'Synchronising'))}</span><i class="o55np-caret"></i><span class="o55np-ln-dots"></span><b class="o55np-stamp">${esc(RB('ok', 'OK'))}</b></div>`
-      + '<div class="o55np-wait" aria-hidden="true"><i></i></div>';
+      + '<div class="o55np-meter"><i></i><span class="o55np-wait" aria-hidden="true"><b></b></span></div>'
+      + `<div class="o55np-ln o55np-sync"><span class="o55np-ln-t">${esc(RB('syncing', 'Synchronising'))}</span><i class="o55np-caret"></i><span class="o55np-ln-dots"></span><b class="o55np-stamp">${esc(RB('ok', 'OK'))}</b></div>`;
     return log;
   }
 
@@ -757,12 +756,12 @@
     A(log.querySelector('.o55np-meter > i'), [{ transform: 'scaleX(0)' }, { transform: 'scaleX(1)' }], { duration: plan.meter[1] - plan.meter[0], delay: d(plan.meter[0]), easing: 'steps(12, end)' });
     const sync = log.querySelector('.o55np-sync');
     const show = A(sync, [{ opacity: 0 }, { opacity: 0 }], { duration: Math.max(1, d(plan.sync)) });
-    const blink = A(sync.querySelector('.o55np-caret'), [{ opacity: 1, easing: 'step-end' }, { opacity: 0, offset: 0.5, easing: 'step-end' }, { opacity: 1 }], { duration: 900, delay: d(plan.sync), iterations: Infinity, fill: 'none' });
-    /* The list can finish before the look's render work. This indeterminate ink glyph keeps travelling on its own
-       compositor layer throughout that wait; it makes no progress claim and needs no per-frame JavaScript. */
-    const wait = A(log.querySelector('.o55np-wait > i'), [
-      { transform: 'translateX(0) rotate(45deg)' }, { transform: 'translateX(90px) rotate(45deg)' }
-    ], { duration: 1100, direction: 'alternate', iterations: Infinity, easing: 'linear', fill: 'none' });
+    const blink = A(sync.querySelector('.o55np-caret'), [{ opacity: 1, easing: 'steps(1, end)' }, { opacity: 0, offset: 0.5, easing: 'steps(1, end)' }, { opacity: 1 }], { duration: 900, delay: d(plan.sync), iterations: Infinity, fill: 'none' });
+    /* The list can finish before the look's render work. A travelling ink highlight keeps the existing segmented
+       meter alive on its own compositor layer; it makes no progress claim and needs no per-frame JavaScript. */
+    const wait = A(log.querySelector('.o55np-wait > b'), [
+      { transform: 'translateX(-100%)' }, { transform: 'translateX(400%)' }
+    ], { duration: 1100, iterations: Infinity, easing: 'linear', fill: 'none' });
     return { anims, show, blink, wait };
   }
   /* at R: the list in its end state (by attribute, so the slats' copies show it too), "All clear" in one step */
@@ -885,7 +884,7 @@
   /* the window's effects and the pointers come back once the cover has left: they draw above it, so released at the
      reveal they floated on the still-whole plate and on the slats yet to move (films M7) */
   function rbRelease(ctx) {
-    if (ctx.waitMotion) { ctx.waitMotion.cancel(); ctx.waitMotion = null; }
+    if (ctx.waitMotion) { ctx.waitMotion.forEach(a => a.cancel()); ctx.waitMotion = null; }
     if (ctx.host) { ctx.host.removeAttribute('data-o55np-cover'); ctx.host = null; }
     if (ctx.unhold) ctx.unhold();
     coverUp = false;
@@ -985,7 +984,7 @@
     log.setAttribute('data-on', '');
     plan = rbShift(plan, since(t0));
     const typing = rbType(log, plan, since(t0));
-    ctx.waitMotion = typing.wait;
+    ctx.waitMotion = [typing.wait, typing.blink];
     await ctx.wait(settledStart(typing.anims));
     quiet(5000);
     ctx.paint();

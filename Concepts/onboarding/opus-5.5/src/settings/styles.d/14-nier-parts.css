@@ -231,22 +231,20 @@ html[data-motion="reduced"][data-o55-nier-parts~="diamonds"] :is(.pm6-wiz-disc-s
 #o55np-reboot .o55np-ln-mask::before { content: ""; position: absolute; left: -8px; top: 6px; bottom: 6px; width: 8px; background: var(--rb-text); }
 #o55np-reboot .o55np-meter { position: relative; height: 8px; margin-top: 12px; border: 1px solid currentColor; }
 #o55np-reboot .o55np-meter > i { position: absolute; inset: 1px; transform-origin: left center; will-change: transform;
-  background: repeating-linear-gradient(90deg, currentColor 0 calc(8.333% - 2px), transparent calc(8.333% - 2px) 8.333%); }
+  opacity: .42; background: repeating-linear-gradient(90deg, currentColor 0 calc(8.333% - 2px), transparent calc(8.333% - 2px) 8.333%); }
 #o55np-reboot .o55np-sync { margin-top: 8px; }
-#o55np-reboot .o55np-caret { flex: none; width: 8px; height: 12px; background: currentColor; }
+#o55np-reboot .o55np-caret { flex: none; width: 8px; height: 12px; background: currentColor; will-change: opacity; }
 #o55np-reboot .o55np-sync :is(.o55np-ln-dots, .o55np-stamp) { visibility: hidden; }
 /* the list's end state (R) is its resting state; only the Synchronising line changes, by attribute (the slats copy it) */
 #o55np-reboot .o55np-sync[data-ok] .o55np-caret { display: none; }
 #o55np-reboot .o55np-sync[data-ok] :is(.o55np-ln-dots, .o55np-stamp) { visibility: visible; opacity: 1; }
-/* An ink diamond travels between two square end marks while the look is being drawn. Its rail sits outside the log
-   without moving the existing words or meter. Only the tiny diamond layer moves; Reduced Animations uses another cover. */
-#o55np-reboot .o55np-wait { position: absolute; left: 50%; bottom: -26px; width: 104px; height: 14px;
-  box-sizing: border-box; border-left: 1px solid currentColor; border-right: 1px solid currentColor;
-  transform: translateX(-50%); pointer-events: none; }
-#o55np-reboot .o55np-wait::before { content: ""; position: absolute; left: 0; right: 0; top: 6px; height: 1px; background: currentColor; opacity: .25; }
-#o55np-reboot .o55np-wait > i { position: absolute; left: 3px; top: 4px; width: 6px; height: 6px; background: currentColor;
-  transform: rotate(45deg); will-change: transform; }
+/* The ink highlight lives inside the existing meter. Its clipped layer travels across the resting segments while
+   the look is drawn, then the finished meter returns to full ink. Reduced Animations uses a separate calm cover. */
+#o55np-reboot .o55np-wait { position: absolute; inset: 1px; overflow: hidden; pointer-events: none; }
+#o55np-reboot .o55np-wait > b { position: absolute; inset: 0 auto 0 0; width: 25%; will-change: transform;
+  background: linear-gradient(90deg, transparent, currentColor 55%, currentColor 75%, transparent); transform: translateX(-100%); }
 #o55np-reboot .o55np-log[data-done] .o55np-wait { opacity: 0; }
+#o55np-reboot .o55np-log[data-done] .o55np-meter > i { opacity: 1; }
 /* the six slats: a sixth of the cover each (1px overlap), each holding the whole set moved up by its own place */
 #o55np-reboot .o55np-slats { position: absolute; inset: 0; pointer-events: none; }
 #o55np-reboot .o55np-slat { position: absolute; left: 0; right: 0; top: calc(var(--i) * 100% / 6); height: calc(100% / 6 + 1px); overflow: hidden; will-change: transform; }

@@ -24489,22 +24489,20 @@ html[data-motion="reduced"][data-o55-nier-parts~="diamonds"] :is(.pm6-wiz-disc-s
 #o55np-reboot .o55np-ln-mask::before { content: ""; position: absolute; left: -8px; top: 6px; bottom: 6px; width: 8px; background: var(--rb-text); }
 #o55np-reboot .o55np-meter { position: relative; height: 8px; margin-top: 12px; border: 1px solid currentColor; }
 #o55np-reboot .o55np-meter > i { position: absolute; inset: 1px; transform-origin: left center; will-change: transform;
-  background: repeating-linear-gradient(90deg, currentColor 0 calc(8.333% - 2px), transparent calc(8.333% - 2px) 8.333%); }
+  opacity: .42; background: repeating-linear-gradient(90deg, currentColor 0 calc(8.333% - 2px), transparent calc(8.333% - 2px) 8.333%); }
 #o55np-reboot .o55np-sync { margin-top: 8px; }
-#o55np-reboot .o55np-caret { flex: none; width: 8px; height: 12px; background: currentColor; }
+#o55np-reboot .o55np-caret { flex: none; width: 8px; height: 12px; background: currentColor; will-change: opacity; }
 #o55np-reboot .o55np-sync :is(.o55np-ln-dots, .o55np-stamp) { visibility: hidden; }
 /* the list's end state (R) is its resting state; only the Synchronising line changes, by attribute (the slats copy it) */
 #o55np-reboot .o55np-sync[data-ok] .o55np-caret { display: none; }
 #o55np-reboot .o55np-sync[data-ok] :is(.o55np-ln-dots, .o55np-stamp) { visibility: visible; opacity: 1; }
-/* An ink diamond travels between two square end marks while the look is being drawn. Its rail sits outside the log
-   without moving the existing words or meter. Only the tiny diamond layer moves; Reduced Animations uses another cover. */
-#o55np-reboot .o55np-wait { position: absolute; left: 50%; bottom: -26px; width: 104px; height: 14px;
-  box-sizing: border-box; border-left: 1px solid currentColor; border-right: 1px solid currentColor;
-  transform: translateX(-50%); pointer-events: none; }
-#o55np-reboot .o55np-wait::before { content: ""; position: absolute; left: 0; right: 0; top: 6px; height: 1px; background: currentColor; opacity: .25; }
-#o55np-reboot .o55np-wait > i { position: absolute; left: 3px; top: 4px; width: 6px; height: 6px; background: currentColor;
-  transform: rotate(45deg); will-change: transform; }
+/* The ink highlight lives inside the existing meter. Its clipped layer travels across the resting segments while
+   the look is drawn, then the finished meter returns to full ink. Reduced Animations uses a separate calm cover. */
+#o55np-reboot .o55np-wait { position: absolute; inset: 1px; overflow: hidden; pointer-events: none; }
+#o55np-reboot .o55np-wait > b { position: absolute; inset: 0 auto 0 0; width: 25%; will-change: transform;
+  background: linear-gradient(90deg, transparent, currentColor 55%, currentColor 75%, transparent); transform: translateX(-100%); }
 #o55np-reboot .o55np-log[data-done] .o55np-wait { opacity: 0; }
+#o55np-reboot .o55np-log[data-done] .o55np-meter > i { opacity: 1; }
 /* the six slats: a sixth of the cover each (1px overlap), each holding the whole set moved up by its own place */
 #o55np-reboot .o55np-slats { position: absolute; inset: 0; pointer-events: none; }
 #o55np-reboot .o55np-slat { position: absolute; left: 0; right: 0; top: calc(var(--i) * 100% / 6); height: calc(100% / 6 + 1px); overflow: hidden; will-change: transform; }
@@ -96197,9 +96195,8 @@ window.PM_NIER = Object.freeze({
     log.className = 'o55np-log';
     log.innerHTML = `<div class="o55np-kick"><i></i><i></i><i></i><span class="o55np-kick-t">${esc(RB('kicker', 'NieR Mode'))}</span></div>`
       + `<div class="o55np-lns">${lines.map(l => `<div class="o55np-ln"><span class="o55np-ln-t">${esc(l.text)}</span><span class="o55np-ln-dots"></span><b class="o55np-stamp">${esc(l.stamp)}</b><i class="o55np-ln-mask"></i></div>`).join('')}</div>`
-      + '<div class="o55np-meter"><i></i></div>'
-      + `<div class="o55np-ln o55np-sync"><span class="o55np-ln-t">${esc(RB('syncing', 'Synchronising'))}</span><i class="o55np-caret"></i><span class="o55np-ln-dots"></span><b class="o55np-stamp">${esc(RB('ok', 'OK'))}</b></div>`
-      + '<div class="o55np-wait" aria-hidden="true"><i></i></div>';
+      + '<div class="o55np-meter"><i></i><span class="o55np-wait" aria-hidden="true"><b></b></span></div>'
+      + `<div class="o55np-ln o55np-sync"><span class="o55np-ln-t">${esc(RB('syncing', 'Synchronising'))}</span><i class="o55np-caret"></i><span class="o55np-ln-dots"></span><b class="o55np-stamp">${esc(RB('ok', 'OK'))}</b></div>`;
     return log;
   }
 
@@ -96273,12 +96270,12 @@ window.PM_NIER = Object.freeze({
     A(log.querySelector('.o55np-meter > i'), [{ transform: 'scaleX(0)' }, { transform: 'scaleX(1)' }], { duration: plan.meter[1] - plan.meter[0], delay: d(plan.meter[0]), easing: 'steps(12, end)' });
     const sync = log.querySelector('.o55np-sync');
     const show = A(sync, [{ opacity: 0 }, { opacity: 0 }], { duration: Math.max(1, d(plan.sync)) });
-    const blink = A(sync.querySelector('.o55np-caret'), [{ opacity: 1, easing: 'step-end' }, { opacity: 0, offset: 0.5, easing: 'step-end' }, { opacity: 1 }], { duration: 900, delay: d(plan.sync), iterations: Infinity, fill: 'none' });
-    /* The list can finish before the look's render work. This indeterminate ink glyph keeps travelling on its own
-       compositor layer throughout that wait; it makes no progress claim and needs no per-frame JavaScript. */
-    const wait = A(log.querySelector('.o55np-wait > i'), [
-      { transform: 'translateX(0) rotate(45deg)' }, { transform: 'translateX(90px) rotate(45deg)' }
-    ], { duration: 1100, direction: 'alternate', iterations: Infinity, easing: 'linear', fill: 'none' });
+    const blink = A(sync.querySelector('.o55np-caret'), [{ opacity: 1, easing: 'steps(1, end)' }, { opacity: 0, offset: 0.5, easing: 'steps(1, end)' }, { opacity: 1 }], { duration: 900, delay: d(plan.sync), iterations: Infinity, fill: 'none' });
+    /* The list can finish before the look's render work. A travelling ink highlight keeps the existing segmented
+       meter alive on its own compositor layer; it makes no progress claim and needs no per-frame JavaScript. */
+    const wait = A(log.querySelector('.o55np-wait > b'), [
+      { transform: 'translateX(-100%)' }, { transform: 'translateX(400%)' }
+    ], { duration: 1100, iterations: Infinity, easing: 'linear', fill: 'none' });
     return { anims, show, blink, wait };
   }
   /* at R: the list in its end state (by attribute, so the slats' copies show it too), "All clear" in one step */
@@ -96401,7 +96398,7 @@ window.PM_NIER = Object.freeze({
   /* the window's effects and the pointers come back once the cover has left: they draw above it, so released at the
      reveal they floated on the still-whole plate and on the slats yet to move (films M7) */
   function rbRelease(ctx) {
-    if (ctx.waitMotion) { ctx.waitMotion.cancel(); ctx.waitMotion = null; }
+    if (ctx.waitMotion) { ctx.waitMotion.forEach(a => a.cancel()); ctx.waitMotion = null; }
     if (ctx.host) { ctx.host.removeAttribute('data-o55np-cover'); ctx.host = null; }
     if (ctx.unhold) ctx.unhold();
     coverUp = false;
@@ -96501,7 +96498,7 @@ window.PM_NIER = Object.freeze({
     log.setAttribute('data-on', '');
     plan = rbShift(plan, since(t0));
     const typing = rbType(log, plan, since(t0));
-    ctx.waitMotion = typing.wait;
+    ctx.waitMotion = [typing.wait, typing.blink];
     await ctx.wait(settledStart(typing.anims));
     quiet(5000);
     ctx.paint();
