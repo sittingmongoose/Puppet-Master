@@ -33381,11 +33381,21 @@ html[data-pm-switch="lens"]:not([data-o55-nier="on"]) .pm6-tb-menu-item.is-selec
    chapter's line, a service's state, a tab's icon and a view's count never sit in their resting colours on the chip. A
    service's status dot keeps its colour inside a ring of that ink. The press marks (glass.css section 12) carry the same
    inks while the chip moves ahead of the app's choice. NieR's own rules (14-nier-parts.css) say the same for its list. */
-html[data-pm-switch-layer="under"]:not(#lgz) :is(#pm-settings-root .rail-scroll > .side-link.active, #pm-settings-root .domain-link.active,
-  #pm-settings-root .pm51-index-group > .index-link.is-active, #pm-settings-root .resource-row[aria-current="true"], #pm-settings-root .workspace-tab.is-current,
-  #pm-settings-root .manager-tab[aria-selected="true"], #pmuNav .pmu-navbtn.active, #pmuRange > button.active, #sidePanelSlot .pm-segtab-item.active,
-  nav.page-tabs .page-tab.active, .orch-tabs .orch-tab.active, #themeMenu .pm6-tt-mode[aria-checked="true"], #panel-wizard .pm6-wiz-intent-chip.sel,
-  .pm6-tb-menu-item.is-selected) :where(*) {
+/* (one plain selector per kind of item, so the browser's ancestor filter rejects every other element at once: a single
+   :is() list of these items in front of a bare * was tested against every element on every restyle, about 18 ms more
+   style and layout in each page switch in Retro, measured) */
+html[data-pm-switch-layer="under"]:not(#lgz) #pm-settings-root .rail-scroll > .side-link.active *,
+html[data-pm-switch-layer="under"]:not(#lgz) #pm-settings-root .domain-link.active *,
+html[data-pm-switch-layer="under"]:not(#lgz) #pm-settings-root .pm51-index-group > .index-link.is-active *,
+html[data-pm-switch-layer="under"]:not(#lgz) #pm-settings-root .resource-row[aria-current="true"] *,
+html[data-pm-switch-layer="under"]:not(#lgz) #pm-settings-root .workspace-tab.is-current *,
+html[data-pm-switch-layer="under"]:not(#lgz) #pm-settings-root .manager-tab[aria-selected="true"] *,
+html[data-pm-switch-layer="under"]:not(#lgz) #pmuRange > button.active *,
+html[data-pm-switch-layer="under"]:not(#lgz) nav.page-tabs .page-tab.active *,
+html[data-pm-switch-layer="under"]:not(#lgz) .orch-tabs .orch-tab.active *,
+html[data-pm-switch-layer="under"]:not(#lgz) #themeMenu .pm6-tt-mode[aria-checked="true"] *,
+html[data-pm-switch-layer="under"]:not(#lgz) #panel-wizard .pm6-wiz-intent-chip.sel *,
+html[data-pm-switch-layer="under"]:not(#lgz) .pm6-tb-menu-item.is-selected * {
   color: inherit; -webkit-text-fill-color: currentColor;
 }
 /* the items whose own words glass.css does not colour (it colours a service's name, not its row) */
@@ -50019,11 +50029,15 @@ html[data-lg="on"][data-theme^="glass"]:not(#lgz) .o55t-ring { box-shadow: 0 0 0
 /* --pm-switch-layer: under (Q16; never in Glass): each lens is inside its own strip, over the strip's track and under its
    items, which are lifted to z-index 1 here where the rules above do not already */
 html[data-pm-switch="lens"][data-pm-switch-layer="under"]:not(#lgz) lg-under.lg-lenses-under { display: block; position: absolute; inset: 0; z-index: 0; pointer-events: none; }
+/* a chip under its labels is not kept on a compositor layer of its own while it rests (that pulled every label above it onto
+   a layer too); its travel animates on the compositor as any transform animation does */
+html[data-pm-switch="lens"][data-pm-switch-layer="under"]:not(#lgz) lg-under.lg-lenses-under .lg-lens { will-change: auto; }
 html[data-pm-switch="lens"][data-pm-switch-layer="under"]:not(#lgz) :is(#themeMenu .pm6-tt-mode, #panel-wizard .pm6-wiz-intent-chip, #pm-o55-onboarding .o55-seg button, #pm-o55-onboarding .o55-railitem) { position: relative; z-index: 1; }
 /* while a press moves the chip ahead of the app's choice (glass.js pressMark), the pressed item reads as chosen and the
-   one it leaves as not, so neither label sits in its old colour on the wrong ground (two ids: above the chosen ink) */
-html[data-pm-switch="lens"][data-pm-switch-layer="under"]:not(#lgz):not(#lgy) :is([data-lg-press="on"], [data-lg-press="on"] *) { color: var(--pm-switch-ink-on) !important; }
-html[data-pm-switch="lens"][data-pm-switch-layer="under"]:not(#lgz):not(#lgy) :is([data-lg-press="off"], [data-lg-press="off"] *) { color: var(--pm-switch-ink) !important; }
+   one it leaves as not, so neither label sits in its old colour on the wrong ground (two ids: above the chosen ink). The item
+   only: its words inherit; a descendant * here was tested against every element on every restyle. */
+html[data-pm-switch="lens"][data-pm-switch-layer="under"]:not(#lgz):not(#lgy) [data-lg-press="on"] { color: var(--pm-switch-ink-on) !important; }
+html[data-pm-switch="lens"][data-pm-switch-layer="under"]:not(#lgz):not(#lgy) [data-lg-press="off"] { color: var(--pm-switch-ink) !important; }
 
 /* Settings' chapter header is a bar sheet under Liquid Glass (glass.js SURFACES): on the bare wallpaper its line, a 62 %
    tint, read 4.2:1 over Ribbons and 1.9-2.9:1 over Prism or Pool in Glass Dark (2026-10-14). The line takes the look's

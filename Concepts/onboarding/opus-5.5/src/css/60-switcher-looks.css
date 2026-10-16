@@ -128,11 +128,21 @@ html[data-pm-switch="lens"]:not([data-o55-nier="on"]) .pm6-tb-menu-item.is-selec
    chapter's line, a service's state, a tab's icon and a view's count never sit in their resting colours on the chip. A
    service's status dot keeps its colour inside a ring of that ink. The press marks (glass.css section 12) carry the same
    inks while the chip moves ahead of the app's choice. NieR's own rules (14-nier-parts.css) say the same for its list. */
-html[data-pm-switch-layer="under"]:not(#lgz) :is(#pm-settings-root .rail-scroll > .side-link.active, #pm-settings-root .domain-link.active,
-  #pm-settings-root .pm51-index-group > .index-link.is-active, #pm-settings-root .resource-row[aria-current="true"], #pm-settings-root .workspace-tab.is-current,
-  #pm-settings-root .manager-tab[aria-selected="true"], #pmuNav .pmu-navbtn.active, #pmuRange > button.active, #sidePanelSlot .pm-segtab-item.active,
-  nav.page-tabs .page-tab.active, .orch-tabs .orch-tab.active, #themeMenu .pm6-tt-mode[aria-checked="true"], #panel-wizard .pm6-wiz-intent-chip.sel,
-  .pm6-tb-menu-item.is-selected) :where(*) {
+/* (one plain selector per kind of item, so the browser's ancestor filter rejects every other element at once: a single
+   :is() list of these items in front of a bare * was tested against every element on every restyle, about 18 ms more
+   style and layout in each page switch in Retro, measured) */
+html[data-pm-switch-layer="under"]:not(#lgz) #pm-settings-root .rail-scroll > .side-link.active *,
+html[data-pm-switch-layer="under"]:not(#lgz) #pm-settings-root .domain-link.active *,
+html[data-pm-switch-layer="under"]:not(#lgz) #pm-settings-root .pm51-index-group > .index-link.is-active *,
+html[data-pm-switch-layer="under"]:not(#lgz) #pm-settings-root .resource-row[aria-current="true"] *,
+html[data-pm-switch-layer="under"]:not(#lgz) #pm-settings-root .workspace-tab.is-current *,
+html[data-pm-switch-layer="under"]:not(#lgz) #pm-settings-root .manager-tab[aria-selected="true"] *,
+html[data-pm-switch-layer="under"]:not(#lgz) #pmuRange > button.active *,
+html[data-pm-switch-layer="under"]:not(#lgz) nav.page-tabs .page-tab.active *,
+html[data-pm-switch-layer="under"]:not(#lgz) .orch-tabs .orch-tab.active *,
+html[data-pm-switch-layer="under"]:not(#lgz) #themeMenu .pm6-tt-mode[aria-checked="true"] *,
+html[data-pm-switch-layer="under"]:not(#lgz) #panel-wizard .pm6-wiz-intent-chip.sel *,
+html[data-pm-switch-layer="under"]:not(#lgz) .pm6-tb-menu-item.is-selected * {
   color: inherit; -webkit-text-fill-color: currentColor;
 }
 /* the items whose own words glass.css does not colour (it colours a service's name, not its row) */
