@@ -1175,6 +1175,128 @@
       var h = PMU.menu && PMU.menu.current ? PMU.menu.current() : null;
       return !!h && (h.board === api || !!(h.anchor && h.anchor.nodeType === 1 && rootEl && rootEl.contains(h.anchor)));
     }
+    /* ---- the reversal (motion QA A12, 2026-10-16): a click back to the room still leaving makes its board, which is
+       still on screen as the ghost (PMU.film.ghost), the live board again as it stands: PMU.film.reverse drifts it back
+       to rest from where it stands and closes its cut or lens, and the room that was arriving goes in the click's frame
+       (its board empties into the spare at once; the user never left the old room, so nothing of it is built again).
+       Only when the old board lent no card to the arriving room (a widget in both rooms moved across), the board class
+       and the room's widgets are unchanged, and the film says the hand-off can reverse (PMU.film.reversible: Basic,
+       Friendly and Glass with a GPU, no room carried from an earlier click). Anything else takes the room change. ---- */
+    /* ---- Reduce Motion's room change (motion QA A14, 2026-10-16). Nothing travels, and the new room used to be built
+       whole inside the click (M3: a 117 ms frame in Glass Light; the rail and title waited for it too). Now the click's
+       frame paints the rail and title at once while the room on screen stays as it is; the new room is built in
+       the spare board element, laid out but unseen (visibility): its chrome in the next frame, then its bodies in slices
+       of at most 8 ms per frame, what the first screen shows first; when that is built the two boards swap in one frame and the new room dissolves in (160 ms
+       from .35, PMU.film.dissolve: the same dissolve as before, now on the room it is for). The cards below the first
+       screen are built after the swap, unseen. A newer room click, a gesture or a re-class completes or drops it. ---- */
+    var calm = null;
+    function dropCalm() {
+      var c = calm; calm = null; if (!c) return;
+      if (c.el !== boardEl) { Array.prototype.forEach.call(c.el.querySelectorAll(':scope > .pmu-card'), destroyCard); retireBoard(c.el); }
+    }
+    function calmSwap(room, rects, ids, byId) {
+      lastGhost = null; flushLeaving(true); dropOld();
+      if (FILM && FILM.holding && FILM.holding()) FILM.cancelHold();
+      var token = ++buildToken; streaming = null; lateHeld = null; clearTimeout(filmEndT); filmEndT = 0;
+      var old = boardEl, nb = spareBoard();
+      Array.prototype.slice.call(old.attributes).forEach(function (at) { if (at.name !== 'id' && at.name !== 'class' && at.name !== 'hidden' && at.name !== 'style' && !/^data-(film|op|held|hold-bodies)$/.test(at.name)) nb.setAttribute(at.name, at.value); });
+      nb.className = 'pmu-board';
+      nb.style.gridTemplateColumns = 'repeat(' + current.cls.tracks + ', minmax(0px, 1fr))';
+      nb.setAttribute('data-cls', current.cls.name);
+      nb.setAttribute('data-room', room);
+      nb.setAttribute('aria-hidden', 'true');
+      nb.style.visibility = 'hidden'; nb.style.pointerEvents = 'none';
+      nb.hidden = false;
+      current.mounted = true;
+      calm = { el: nb, old: old, token: token };
+      /* the chrome too is built after the click's frame (as a room change's: inside the click the clicked button's focus
+         forced its layout), in one batch */
+      var heroId = heroOf(rects, ids, room), cards = null, first = [], rest = [];
+      function chromes() {
+        if (cards) return;
+        var frag = document.createDocumentFragment();
+        cards = ids.map(function (id) { var card = buildCard(id, room, byId[id]); markHero(card, heroId); frag.appendChild(card); return card; });
+        nb.appendChild(frag);
+        if (!cards.length) nb.appendChild(PMU.cards.empty(room, api));
+        var top = padCache ? padCache.t : 0, vh = view.h || (window.innerHeight || 900);
+        first = readingOrder(cards.filter(function (c) { return top + (+c.dataset.y || 0) * ROW < vh + 24; }));
+        rest = readingOrder(cards.filter(function (c) { return first.indexOf(c) < 0; }));
+      }
+      var swapped = false;
+      function swap() {
+        if (swapped || token !== buildToken || !calm || calm.el !== nb) return;
+        swapped = true;
+        /* (the room on screen stayed live meanwhile: restyling it inert cost the click a whole-board style pass; a menu it
+           opened in that window closes with it) */
+        if (PMU.menu && menuOwned()) PMU.menu.close();
+        Array.prototype.forEach.call(old.querySelectorAll(':scope > .pmu-card'), destroyCard);
+        old.removeAttribute('id');
+        nb.style.visibility = ''; nb.style.pointerEvents = ''; nb.removeAttribute('aria-hidden');
+        if (bo.liveId) nb.id = bo.liveId;
+        boardEl = nb;
+        retireBoard(old);
+        scroll.scrollTop = 0; view.top = 0;
+        ensurePreviews();
+        if (FILM && FILM.dissolve) FILM.dissolve(nb);
+        deferHover(400);
+      }
+      function run(list, all) {
+        var t0 = performance.now();
+        fitSliced(function () { while (list.length && (all || performance.now() - t0 < 8)) { var c = list.shift(); if (c.isConnected) tierPass([c], true); } });
+      }
+      function slice() {
+        if (token !== buildToken || !calm || calm.el !== nb) return;
+        if (!cards) { chromes(); requestAnimationFrame(slice); return; }
+        if (first.length) { run(first, false); if (first.length) { requestAnimationFrame(slice); return; } swap(); requestAnimationFrame(slice); return; }
+        run(rest, false);
+        if (rest.length) { requestAnimationFrame(slice); return; }
+        if (calm && calm.el === nb) calm = null;
+        if (streaming && streaming.token === token) streaming = null;
+        emit('built', { room: room, cards: cards.length, ms: 0 });
+      }
+      streaming = { token: token, complete: function () { chromes(); run(first, true); swap(); run(rest, true); if (calm && calm.el === nb) calm = null; }, late: function () {} };
+      requestAnimationFrame(function () { requestAnimationFrame(slice); });
+      emit('mount', { room: room, cls: current.cls.name, widgets: ids, calm: true });
+    }
+    var lastGhost = null;
+    function reverseTo(room, ids) {
+      var g = lastGhost, el = g && g.el;
+      if (!g || !FILM || !FILM.reverse || !FILM.reversible || !el || el === boardEl || el.hidden || g.lent) return false;
+      if (el.getAttribute('data-room') !== room || el.getAttribute('data-cls') !== current.cls.name || !FILM.reversible(el)) return false;
+      var cards = Array.prototype.filter.call(el.children, function (n) { return n.classList.contains('pmu-card'); });
+      var have = {}; cards.forEach(function (c) { have[c.getAttribute('data-widget')] = true; });
+      if (cards.length !== ids.length || !ids.every(function (id) { return have[id]; })) return false;
+      lastGhost = null;
+      var incoming = boardEl, sTop = g.sTop || 0;
+      /* the film reverses first, before anything here changes the old board (its test reads the ghost's state: removing the
+         ghost's class first made Retro and NieR refuse, and their finished erase then emptied the live board) */
+      var back = FILM.reverse(el, { shift: sTop });
+      if (!back) return false;
+      /* the arriving room's build stops, and its board empties into the spare now (no frame shows it after this one) */
+      buildToken++; streaming = null; lateHeld = null;
+      clearTimeout(filmEndT); filmEndT = 0;
+      flushLeaving(true);
+      Array.prototype.forEach.call(incoming.querySelectorAll(':scope > .pmu-card'), destroyCard);
+      incoming.removeAttribute('id');
+      /* the old board takes the live board's id and role back; its cards stop leaving. It keeps the ghost's layer
+         (.pmu-ghostboard: will-change) until it rests: dropping the layer under its running drift re-rastered every
+         Glass plate's frost in the reverse's first frames (a 200 ms GPU stall in a Glass Dark M3 film) */
+      ['zIndex', 'pointerEvents', 'opacity'].forEach(function (k) { el.style[k] = ''; });
+      if (bo.liveId) el.id = bo.liveId;
+      boardEl = el;
+      retireBoard(incoming);
+      cards.forEach(function (c) { c._pmuLeaving = false; if (c.hasAttribute('data-leaving')) c.removeAttribute('data-leaving'); });
+      /* the scroll it left with comes back (its keyframes start that much lower, so it does not move on screen) */
+      if (sTop) scroll.scrollTop = sTop;
+      view.top = sTop;
+      current.mounted = true;
+      keyShift(room);
+      deferHover(back.ms + 200);
+      /* the preview elements and the end of the film window wait for the drift to rest (inserting the morph before the
+         first card restyles the board's positional rules: never during a motion) */
+      setTimeout(function () { if (boardEl !== el || dead) return; el.classList.remove('pmu-ghostboard'); ensurePreviews(); if (!(FILM.moment && FILM.moment())) el.removeAttribute('data-film'); }, (back.ms + 60) * speed());
+      return true;
+    }
     function mount(room, opts) {
       ensure();
       prewarmEnd();
@@ -1197,6 +1319,7 @@
       current.pending = false;
       if (hosted) { seenEpoch = EPOCH; dirty = false; liveStop(); liveKeys = null; liveLead = null; liveMerged = 0; }   /* the mount renders the latest readings */
       flushGravity();
+      if (calm) dropCalm();   /* a Reduce Motion build still behind the room on screen goes (a newer mount supersedes it) */
       var t0 = performance.now(), sTop = scroll.scrollTop;   /* every read before the first write */
       var roomChanged = current.room !== room;
       var transition = !!FILM && !!opts.transition && current.mounted && roomChanged && !opts.instant && !opts.held && !reduced() && !PMU.motion.paused();
@@ -1208,6 +1331,9 @@
       if (transition) {
         try { performance.mark('pmu-room-click'); } catch (error) {}
         var dir = opts.dir || 1;
+        /* a click back to the room still leaving reverses the change (motion QA A12): no new moment, nothing built */
+        if (reverseTo(room, ids)) { emit('mount', { room: room, cls: current.cls.name, widgets: ids, transition: true, reversed: true }); return; }
+        lastGhost = null;
         /* rapid switching (WOW-SPEC-3 6.2): a running arrival or room change finishes at once (its animations jump to their
            end, its unbuilt bodies stay unbuilt: they leave with the ghost), and this room change starts from there */
         if (FILM && FILM.holding && FILM.holding()) FILM.cancelHold();
@@ -1256,7 +1382,10 @@
             if (sTop) oldBoard.style.transform = 'translateY(' + (-sTop) + 'px)';
             pendingOld = { el: oldBoard, cards: outgoing, sTop: sTop };
           }
-          else FILM.ghost(outgoing, { dir: dir, sTop: sTop, board: nb, ghost: oldBoard, destroy: destroyCard });
+          else {
+            FILM.ghost(outgoing, { dir: dir, sTop: sTop, board: nb, ghost: oldBoard, destroy: destroyCard });
+            lastGhost = { el: oldBoard, sTop: sTop, lent: Object.keys(reuse).length > 0 };
+          }
         } else outgoing.forEach(function (c) { destroyCard(c); c.remove(); });
         /* what exists in both rooms flies (6.3): the flyers lift at their old place now; they pair with their targets once the
            target bodies are built (the slices) */
@@ -1293,6 +1422,8 @@
         emit('mount', { room: room, cls: current.cls.name, widgets: ids, transition: true, scrolled: sTop });
         return;
       }
+      if ((opts.calmEntry || opts.transition && roomChanged && current.mounted) && reduced() && !hosted && bo.rooms && !opts.held) { calmSwap(room, rects, ids, byId); return; }
+      lastGhost = null;
       flushLeaving(true);
       dropOld();
       cardsNow().forEach(destroyCard);

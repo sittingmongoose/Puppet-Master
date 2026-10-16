@@ -1221,7 +1221,12 @@
      item moved (a lens in Settings rested 8 px under its tab otherwise). */
   function settleCheck(L) {
     clearTimeout(L.settleT);
-    L.settleT = setTimeout(function () { L.settleT = 0; if (lenses.get(L.strip) === L && L.strip.isConnected && !L.dragging && !L.pending && switchOn()) syncStrip(L.cfg, L.strip); }, 480);
+    /* measured after that frame's layout, not in the timer (where it forced what the page had pending) */
+    L.settleT = setTimeout(function () {
+      L.settleT = 0;
+      var now = function () { if (lenses.get(L.strip) === L && L.strip.isConnected && !L.dragging && !L.pending && switchOn()) syncStrip(L.cfg, L.strip); };
+      if (!afterLayout(now)) now();
+    }, 480);
   }
   function stopRide(L) { if (L.ride) { var r = L.ride; L.ride = null; r.forEach(function (m) { m.cancel(); }); } }
   function stopLensTravel(L) {
@@ -1384,8 +1389,19 @@
     hiddenLenses.set(L, cfg);
     if (!showT) showT = setTimeout(checkShown, 400);
   }
+  /* onLayout(fn): fn runs once after the frame's own style and layout, before paint, so every read in it is free (Q16).
+     It is afterLayout(fn): one probe and one ResizeObserver for all of Glass. Work that a timer would otherwise run in the
+     middle of an app's rebuild waits there instead: */
+  function onLayout(fn) { if (!afterLayout(fn)) fn(); }
+  /* - the hidden-lens check, whose tick landing on a Settings chapter change forced the half-built page through 242 ms
+       of layout in Basic Dark */
   function checkShown() {
     showT = 0;
+    if (!switchOn()) { hiddenLenses.clear(); return; }
+    onLayout(checkShownNow);
+  }
+  function checkShownNow() {
+    if (showT) return;
     if (!switchOn()) { hiddenLenses.clear(); return; }
     hiddenLenses.forEach(function (cfg, L) {
       if (!L.strip.isConnected || (cfg.kind === 'lensIcon' && !isGlass())) { hiddenLenses.delete(L); return; }
@@ -1826,7 +1842,13 @@
     if (typeof pruneLenses === 'function') pruneLenses();
   }
   function syncAll() { dirtyAll = true; syncPending(); }
+  /* a look or NieR Mode changed: its switcher tokens are read by the next sync, after the frame's own layout. Read from the
+     root observer, getComputedStyle(<html>) forced the whole page through the new look's style while the app was still
+     writing it, and the sync then forced it again (NieR Mode on under Reduce Motion: 760 + 741 ms on the P1000,
+     pm7-motion-settings 2026-10-16) */
+  var switchStale = false;
   function syncPending() {
+    if (switchStale) { switchStale = false; readSwitch(); }
     /* an immediate hot/API sync covers queued work; keep no second callback that can remount it next frame */
     if (syncQ) { cancelAnimationFrame(syncQ); syncQ = 0; }
     if (lazyT) { clearTimeout(lazyT); lazyT = 0; }
@@ -1903,7 +1925,7 @@
     if (!lazyT) lazyT = setTimeout(function () { lazyT = 0; queueSync(); }, 140);
   }
   var HOT = '[data-lg-surface], .page-tab, #pmuRange > button, .pmu-navbtn, .pm-segtab-item, #activityBar .icon, .side-panel-view, .pmu-pop, .pmr-menu-list, .pmr-menu-group, .pm6-tb-menu, .o55-railitem, .o55-seg button, .o55-win, .o55t-callout, .o55t-bar';
-  var GENERATED = '#lg-optics, #lg-lenses, .lg-lenses-local, .lg-lenses-under, #lg-shine, .lg-press, .pm-segtab-track, #lg-post';
+  var GENERATED = '#lg-optics, #lg-lenses, .lg-lenses-local, .lg-lenses-under, #lg-shine, .lg-press, .pm-segtab-track, #lg-post, #lg-shown';
   var MENU_HOT = '[data-lg-surface], .pmu-pop, .pmr-menu-list, .pm6-tb-menu, .o55-win, .o55t-callout, .o55t-bar';
   function generatedMutation(rec) {
     var t = rec.target;
@@ -1979,9 +2001,9 @@
     var o55 = root.hasAttribute('data-o55-open');
     if (o55 !== lastO55) { lastO55 = o55; dirtyAll = true; queueSync(); }
     /* NieR Mode paints over a Basic look without changing data-theme: a look's switcher tokens may differ with it on
-       (Q16), so they are read again and every strip synced */
+       (Q16), so they are read again and every strip synced, by the next sync after the frame's own layout (switchStale) */
     var nier = root.getAttribute('data-o55-nier');
-    if (nier !== lastNier) { lastNier = nier; readSwitch(); lenses.forEach(function (L) { L.rect = null; }); syncAll(); }
+    if (nier !== lastNier) { lastNier = nier; switchStale = true; lenses.forEach(function (L) { L.rect = null; }); dirtyAll = true; queueSync(); }
     if (th === lastTheme && lg === lastLg && tier === lastTier && wall === lastWall && motion === lastMotion) return;
     /* the print is about to change under glass that stays glass: hold the one the current frost was made from */
     var wasGlass = lastLg === 'on' && /^glass/.test(lastTheme || '');
@@ -1994,7 +2016,7 @@
     if (motion !== lastMotion && reduced() && typeof suspendLensMotion === 'function') suspendLensMotion();
     lastTier = tier; lastWall = wall; lastMotion = motion;
     if (th !== lastTheme || lg !== lastLg) {
-      readSwitch();
+      switchStale = true;
       /* the hover bead is Glass's alone: a look that leaves Glass drops it (a look that adopts the switcher paints every
          .lg-lens as its chip, so a bead left behind stood on the title bar as a block until a reload; Q16 review F1) */
       if (!isGlass() && bead) { resetBead(); removeLensElement(bead); bead = null; }
@@ -2004,7 +2026,7 @@
       /* after the new look's own style and layout, not forcing them here (then the entrance, on the sheets just mounted).
          Its wallpaper is chosen now, so the look's first style pass already has it. */
       applyWall(); dirtyAll = true;
-      if (!afterLayout(function () { if (enter && isGlass()) materialize(Array.from(glassSet)); })) { syncAll(); if (enter) materialize(Array.from(glassSet)); }
+      if (!afterLayout(function () { if (enter && isGlass()) materialize(Array.from(glassSet)); })) { readSwitch(); switchStale = false; syncAll(); if (enter) materialize(Array.from(glassSet)); }
       else afterLayout();
       lastWall = root.getAttribute('data-lg-wall');
     } else { dirtyAll = true; queueSync(); }

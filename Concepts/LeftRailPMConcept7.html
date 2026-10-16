@@ -28659,12 +28659,51 @@ html, [data-theme], [data-o55-nier-preview] {
 #pm-o55-onboarding[data-family="retro"].o55-accept .o55-win { transform: none; transition: none; }
 html[data-motion="reduced"] #pm-o55-onboarding.o55-accept .o55-win { transform: none; transition: none; }
 
+/* ---- css/21-look-veil.css ---- */
+/* The cover a look change crosses through (src/js/12-theme-transition.js; final motion QA B4 and part 2 P2-01): the
+   new look's own background over the whole window, above every layer, never taking input, with a soft glow of the new
+   accent. Its colours come from the look it goes to; the fallbacks are the plain light and dark backgrounds. Both
+   parts move on the compositor only (opacity, transform), and the glow is drawn small and scaled up. */
+#pm-look-veil {
+  position: fixed;
+  inset: 0;
+  z-index: 2147483600;
+  display: none;
+  pointer-events: none;
+  overflow: hidden;
+  contain: strict;
+  opacity: 0;
+  background: var(--pm-veil-bg, #12141a);
+  will-change: opacity;
+}
+#pm-look-veil[data-mode="light"] { background: var(--pm-veil-bg, #eaecef); }
+#pm-look-veil[data-on] { display: block; }
+#pm-look-veil > i {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 70vmax;
+  height: 70vmax;
+  margin: -35vmax 0 0 -35vmax;
+  border-radius: 50%;
+  opacity: 0;
+  background: radial-gradient(closest-side, color-mix(in srgb, var(--pm-veil-glow, #6aa8ff) 24%, transparent), transparent);
+  will-change: transform, opacity;
+}
+
 /* ---- css/21-shell-perf.css ---- */
 /* Chat's own panel (pmw-chat) covers the shell's original chat, which stays in the page only for the Guided Tour and is
    hidden meanwhile. Hidden, it was still styled and laid out: about 600 elements of every whole-page restyle (a look
    change, a page switch; 20 % of a theme change on the P1000) and two resize observers that measured it. Its contents
    are skipped now; the box keeps its place in the column (final motion QA B4, 2026-10-16). */
 html:not([data-o55-tour]) #chatPanel[data-pmw-sc="on"] > .float-content.pm6-chat-root { content-visibility: hidden; }
+
+/* A page change stamps its direction (--pm-dir) on both pages and the answered fade's start (--pm8-out-from) on the
+   leaving one, read only by those pages' own pm8 keyframes. Unregistered, a custom property is inherited, so each
+   write restyled every element of the page it was set on: 92-221 ms for Home's 2,500 elements on Nas1, inside the
+   change's long frame, against 1-5 ms registered as not inherited (final motion QA B1 seam, 2026-10-16). */
+@property --pm-dir { syntax: '<number>'; inherits: false; initial-value: 1; }
+@property --pm8-out-from { syntax: '<number>'; inherits: false; initial-value: 1; }
 
 /* ---- css/22-hover.css ---- */
 /* PMH: the merged hover system (engine: src/js/18-hover.js, which documents the whole contract). This file has two
@@ -46480,6 +46519,7 @@ html[data-motion="reduced"] :is(.pmw-tx, .pmw-ctx, .pmw-rec) *, html[data-motion
 .pmed-cz .pmt-cz-pvbox { height: 262px; min-height: 200px; }
 .pmed-pvhost { position: absolute; inset: 0; container-type: size; container-name: pmw-body; overflow: hidden; }
 .pmed-cz .pmt-cz-dockbox .pmed-pvhost { inset: 0; }
+.pmed-cz .pmt-cz-dialog { contain: layout style; }
 .pmed-cz .pmt-cz-dock { height: 176px; width: min(44%, 400px); transition: opacity 160ms ease; }
 /* it steps aside while the pointer or the focus is on what it floats over (11-editor-customize.js dockAside) */
 .pmed-cz .pmt-cz-dock.is-aside { opacity: .1; }
@@ -46614,8 +46654,15 @@ html[data-o55-nier="on"] .pmed-cz .pmed-art-syntax { background:
 /* a slider under its own heading: no label in front of it */
 .pmed-cz .pmed-slider-bare { grid-template-columns: minmax(0, 1fr) 54px; }
 .pmed-cz .pmed-slider-bare .pmt-cz-slabel { display: none; }
-/* drawn once almost clear before the entrance (11-editor-customize.js: the costly first paint happens before it plays) */
-.pmed-cz.pmed-prime { opacity: .001; }
+/* Retain the measured sheet between visits, outside hit testing and accessibility. */
+.pmed-cz { contain: layout style; }
+.pmed-cz.pmed-prepared { opacity: 0; clip-path: inset(100%); }
+/* Apply the same family keyframes directly to the six moving plates. Changing
+   an ancestor's generic pmt-in/out class invalidated every code tile and control. */
+.pmed-cz .pmed-sheet-in { transform-origin: 50% 0; animation: var(--pmt-a-pop-in, pmt-m-fade-in) var(--pmt-t-in, 120ms) var(--pmt-ease-move, linear) both; }
+.pmed-cz .pmed-sheet-out { transform-origin: 50% 0; animation: var(--pmt-a-pop-out, pmt-m-fade-out) var(--pmt-t-out, 100ms) var(--pmt-ease-exit, linear) both; }
+.pmed-cz .pmed-shade-in { animation: pmt-m-fade-in var(--pmt-t-in, 120ms) linear both; }
+.pmed-cz .pmed-shade-out { animation: pmt-m-fade-out var(--pmt-t-out, 100ms) linear both; }
 
 /* ---- Token colours (11-editor-customize.js: tokenRows, tokenPicker, paintTokens) ----
    Each kind of word is shown by a word in its colour on the code's own ground; the picker opens under the list: the
@@ -57235,7 +57282,9 @@ html[data-theme^="retro"] :is(#panel-usage,[data-pmu-host]) .pmu-szoutline, html
 :is(#panel-usage,[data-pmu-host]) .pmu-swat { font-size: 12.5px; color: var(--pmu-ink-2); }
 :is(#panel-usage,[data-pmu-host]) .pmu-stepval { border: 0; background: transparent; color: var(--pmu-ink); font: inherit; cursor: pointer; }
 :is(#panel-usage,[data-pmu-host]) .pmu-stepval:hover { background: var(--pmu-row-hover); }
-:is(#panel-usage,[data-pmu-host]) .pmu-stepper button[disabled] { opacity: .35; cursor: default; }
+/* one disabled look in either form (motion QA A15: the hover bridge's aria-disabled form drew at .56) */
+:is(#panel-usage,[data-pmu-host]) .pmu-stepper button:is([disabled], [aria-disabled="true"]) { opacity: .35; cursor: default; }
+:is(#panel-usage,[data-pmu-host]) .pmu-stepper button:is([disabled], [aria-disabled="true"]):hover { background: transparent; color: var(--pmu-ink-3); }
 :is(#panel-usage,[data-pmu-host]) .pmu-swwarn { margin-left: 6px; color: var(--pmu-ink-3); white-space: nowrap; }
 :is(#panel-usage,[data-pmu-host]) .pmu-swwarn b { font-weight: 600; color: var(--pmu-ink-2); }
 :is(#panel-usage,[data-pmu-host]) .pmu-swfams { display: flex; align-items: center; flex-wrap: nowrap; gap: 8px 18px; min-width: 0; overflow: hidden; }
@@ -57485,8 +57534,9 @@ html[data-o55-nier="on"] :is(#panel-usage,[data-pmu-host]) .pmu-accpol { border-
 :is(#panel-usage,[data-pmu-host]) .pmu-accsw:focus-visible { outline: 2px solid var(--pmu-accent); outline-offset: 1px; }
 /* off or unavailable: the value and the notch dim, the provider's mark never does (marks are never tinted) */
 :is(#panel-usage,[data-pmu-host]) .pmu-accsw[data-off] :is(.is-own, .pmu-accswv) { opacity: .55; }
-:is(#panel-usage,[data-pmu-host]) .pmu-accsw[disabled] { cursor: default; }
-:is(#panel-usage,[data-pmu-host]) .pmu-accsw[disabled] :is(.is-own, .pmu-accswv) { opacity: .5; }
+:is(#panel-usage,[data-pmu-host]) .pmu-accsw:is([disabled], [aria-disabled="true"]) { cursor: default; }
+:is(#panel-usage,[data-pmu-host]) .pmu-accsw:is([disabled], [aria-disabled="true"]) :is(.is-own, .pmu-accswv) { opacity: .5; }
+:is(#panel-usage,[data-pmu-host]) .pmu-accsw[data-pm-hover-was-disabled="true"] { opacity: 1; }
 /* its own column: the value, and under it what it is (the word starts at the glyph's left edge) */
 :is(#panel-usage,[data-pmu-host]) .pmu-accswcell { display: flex; flex-direction: column; align-items: flex-start; justify-content: center; gap: 2px; min-width: 0; }
 :is(#panel-usage,[data-pmu-host]) .pmu-accsww { padding-left: 5px; font-size: 12px; line-height: 14px; color: var(--pmu-ink-3); white-space: nowrap; }
@@ -60534,6 +60584,9 @@ var PMU_SERIES = {
      finishes it at once), holds the light budget and the reveal timeline, and ends when its signature beat is over ---- */
   var moment = null, inBeat = 0, momentListeners = [];
   function emitMoment(what, m) { momentListeners.slice().forEach(function (fn) { try { fn(what, m); } catch (error) { console.error('[pm-usage] moment', error); } }); }
+  /* at the end of the current task: a reversal's 'finish' is heard once the board has retired the room that was arriving
+     (a listener's fit pass would otherwise measure that room's bodies) */
+  emitMoment.later = function (what, m) { Promise.resolve().then(function () { emitMoment(what, m); }); };
   function begin(kind, room) {
     var prev = moment, now0 = performance.now(), quick = kind === 'room' && !!prev && prev.kind === 'room' && now0 - prev.start < 900;
     finishMoment('next', kind === 'room' ? room : null);
@@ -60812,6 +60865,7 @@ var PMU_SERIES = {
     var g = o.ghost;
     if (g) {
       /* the old board element itself (40-board.js swapped in a new one): nothing is moved */
+      g._pmuRevived = false;
       g.classList.add('pmu-ghostboard');
       Array.prototype.forEach.call(g.querySelectorAll(':scope > :not(.pmu-card)'), function (n) { n.remove(); });
       cards.forEach(function (c) { c._pmuLeaving = true; });
@@ -60824,13 +60878,18 @@ var PMU_SERIES = {
       cards.forEach(function (c) { c._pmuLeaving = true; c.removeAttribute('data-hero'); g.appendChild(c); });
       scroll.appendChild(g);
     }
+    /* this ghost's life: a reversal (reverse) or a newer ghost of the same element makes this one's end a no-op */
+    var gen = g._pmuGen = (g._pmuGen || 0) + 1;
     var f = fam(), dir = o.dir || 1, base = o.sTop ? 'translateY(' + (-o.sTop) + 'px)' : '', a, gAnims = [];
     if (soft()) a = anim(g, [{ opacity: 1, transform: base || 'none' }, { opacity: 0, transform: base || 'none' }], { dur: T3.ghostFade, easing: E.exit, fill: 'forwards' });
     else if (f === 'retro' || f === 'nier') {
       var n = f === 'nier' ? 8 : 8, ms = f === 'nier' ? 200 : 180;
       a = anim(g, [{ clipPath: 'inset(0 0 0 0)', transform: base || 'none' }, { clipPath: 'inset(100% 0 0 0)', transform: base || 'none' }], { dur: ms, easing: 'steps(' + n + ',jump-end)', fill: 'forwards' });
       var line = H('i', f === 'nier' ? 'pmu-film-scan pmu-ghostscan' : 'pmu-film-scanbar pmu-ghostscan', g);
-      gone(anim(line, [{ transform: 'translateY(0%)', opacity: 1 }, { transform: 'translateY(100%)', opacity: 1, offset: 0.97 }, { transform: 'translateY(100%)', opacity: 0 }], { dur: ms, easing: 'steps(' + n + ',jump-end)', fill: 'both' }), line);
+      var lineA = anim(line, [{ transform: 'translateY(0%)', opacity: 1 }, { transform: 'translateY(100%)', opacity: 1, offset: 0.97 }, { transform: 'translateY(100%)', opacity: 0 }], { dur: ms, easing: 'steps(' + n + ',jump-end)', fill: 'both' });
+      gone(lineA, line);
+      /* what a click back to this room steps back (reverse; motion QA A13, Jared 2026-10-16) */
+      g._pmuRev = { erase: a, lineA: lineA, ms: ms, n: n };
     } else {
       /* MOTION-4 RC1 / RC2 and 4.2: the camera's first half. The old room moves from the click (this task) on its voice's
          path, at full opacity: Basic pans P up the rail (-P x dir, scale .985, 360 SLIDE); Friendly steps back and tilts
@@ -60856,7 +60915,8 @@ var PMU_SERIES = {
     }
     gAnims.push(a);
     var done = function () {
-      if (done.ran) return; done.ran = true;
+      if (done.ran || g._pmuGen !== gen || g._pmuRevived) return; done.ran = true;
+      g._pmuRev = null;
       if (mg) mg.gone = true;
       drop(Array.prototype.slice.call(g.querySelectorAll(':scope > .pmu-card')));
       /* the old board element empties into the hidden spare (40-board.js), never leaves the scroll pane, and carries no
@@ -60900,7 +60960,7 @@ var PMU_SERIES = {
        whole screen when you change tabs can go away").
      - Retro keeps its phosphor wipe and NieR its scanline, and NieR adds a signal glitch (three ink lines in steps).
      Without a GPU the old room goes in the new chrome's frame and the board rises as one (6.2). Reduce Motion: nothing
-     travels; the new room dissolves in (dissolve(), 46-shell.js). */
+     travels; the new room dissolves in (dissolve(), from 40-board.js calmSwap). */
   /* both start at 80 on the click's clock: 40-board.js lays no new plate before 90 */
   var WIPE = { basic: { at: 80, ms: 300, ease: 'cubic-bezier(.45,0,.25,1)' }, friendly: { at: 80, ms: 340, ease: 'cubic-bezier(.4,0,.3,1)' } },
     IRIS = { at: 80, ms: 420, ease: 'cubic-bezier(.4,.1,.2,1)', n: 48 },
@@ -61066,8 +61126,12 @@ var PMU_SERIES = {
     var at = whole || !G.fade || G.fade === true ? 0 : cutAt(G);
     [G.fade, G.fadeA].concat(G.anims || []).forEach(function (a) { if (a && a !== true && a !== G.move) { try { a.cancel(); } catch (error) {} } });
     G.fadeA = null; G.from = 0; G.q = 0;
-    /* the camera's drift goes back the way it came; the cut or lens closes from where it stands (140 OUT) */
-    if (G.move && G.move.playState !== 'idle') { try { G.move.playbackRate = -2; G.move.play(); } catch (error) {} }
+    /* the camera's drift goes back the way it came; the cut or lens closes from where it stands (140 OUT). Basic, Friendly
+       and Glass drift back on an even ease from where they stand (settleBack: played backwards at twice its speed, the
+       ease-out drift landed its last 20-37 px in one frame, motion QA A12); Retro and NieR step back as they stepped out */
+    var stepped0 = fam() === 'retro' || fam() === 'nier';
+    if (G.move && G.move.playState !== 'idle' && !stepped0) { var back0 = readBack(G.el); try { G.move.cancel(); } catch (error) {} G.move = writeBack(G.el, back0, { transformOnly: true, rest: G.sTop ? 'translateY(' + (-G.sTop) + 'px)' : null }).move; }
+    else if (G.move && G.move.playState !== 'idle') { try { G.move.playbackRate = -2; G.move.play(); } catch (error) {} }
     var k = null;
     if (at > 0 && G.cut === 'iris' && G.iris) {
       var b = G.blur && !soft() ? G.blur * Math.min(1, at / 0.55) : 0;
@@ -61098,6 +61162,125 @@ var PMU_SERIES = {
     if (G && G.sTop && scroll) scroll.scrollTop = G.sTop;
     dropKept();
     endMoment(m);
+  }
+  /* ======== a click back to the room still leaving (motion QA A12, 2026-10-16) ========
+     Overview -> Costs -> Overview inside the hand-off kept the old room over a copy of itself that the change built under
+     it: the old room's drift played backwards at twice its speed on its ease-out curve, so its last 20-37 px landed in one
+     frame (Mac films: a 37 px snap), and the Costs room that had started to arrive showed through the part of the board
+     the cut had uncovered. The change is reversed instead. The room the user goes back to is the room still on screen, so
+     it becomes the live board again as it stands (40-board.js; nothing is built again); it drifts back from where it
+     stands to rest on an even ease, about 12.5 ms per pixel its corners travel (240-720 ms: Glass's pull-back is the
+     longest, about 70 px at its corners; no frame moves it much more than 2 px), its cut or lens closes from where it
+     stands (180 OUT), its defocus and fade with it; the room that was arriving
+     goes in the click's own frame. Retro and NieR step their erase back up the same way (A13, Jared 2026-10-16: the
+     board the user never left just returns, with no erase and rebuild). */
+  function stepped3(f) { return f === 'retro' || f === 'nier'; }
+  function reversible(el) {
+    var m = moment, G = m && m.ghost, f = fam();
+    if (!el || !el.isConnected || el._pmuRevived || reduced() || soft() || M.paused() || kept) return false;
+    if (carryQ.some(function (c) { return !c.G.gone && c.G.el.isConnected; })) return false;
+    /* Retro and NieR: the old room is being erased from its top (its erase and scanline, no camera); it reverses while
+       its cards are still there, its erase finished or not (they go a beat later, with the batch of finished layers) */
+    if (stepped3(f)) return !!el._pmuRev && el.classList.contains('pmu-ghostboard') && !!el.querySelector(':scope > .pmu-card') && (!m || m.kind === 'room') && !(G && G.el === el);
+    if (!m || m.kind !== 'room' || !G || G.el !== el || G.gone || G.leaving || G.carried) return false;
+    if (G.fade && G.fade !== true && (G.fade.playState === 'finished' || G.fade.playState === 'idle')) return false;
+    if ((m.carried || []).some(function (C) { return liveGhost(C); })) return false;
+    return true;
+  }
+  /* where the old room stands now: one style read of its one element, before its animations go */
+  function readBack(el) {
+    var cs = getComputedStyle(el);
+    return { tf: cs.transform, org: cs.transformOrigin, cp: cs.clipPath, fl: cs.filter, op: parseFloat(cs.opacity) };
+  }
+  /* how far the board's visible corners stand from rest under the transform s.tf (board pixels; no layout read) */
+  function travelOf(s) {
+    var m = /^matrix\(([^)]+)\)$/.exec(s.tf || ''); if (!m) return 0;
+    var v = m[1].split(',').map(Number), o = String(s.org || '0 0').split(' ').map(parseFloat), W = boardW(), H = Math.max(200, (window.innerHeight || 900) - 170), d = 0;
+    [[0, 0], [W, 0], [0, H], [W, H]].forEach(function (p) {
+      var x = p[0] - (o[0] || 0), y = p[1] - (o[1] || 0);
+      d = Math.max(d, Math.hypot(v[0] * x + v[2] * y + v[4] - x, v[1] * x + v[3] * y + v[5] - y));
+    });
+    return d;
+  }
+  /* the old room back to rest from s (readBack): the drift on an even ease (EXIT) for 12.5 ms per pixel of travel, 240-720;
+     the cut, lens, defocus and fade in 180 OUT. o.shift: px the board moves down when the scroll it kept is given back
+     (its keyframes start that much lower, so nothing moves on screen); o.iris: the lens it closes; o.transformOnly: the
+     drift alone (keepRoom closes the cut itself); o.rest: the transform it rests at, held (a kept room keeps the scroll
+     offset it left with until swapKept gives the scroll back) */
+  function writeBack(el, s, o) {
+    o = o || {};
+    var out = { move: null, close: null, ms: 0 }, shift = o.shift ? 'translateY(' + o.shift + 'px) ' : '';
+    var tf0 = (s.tf && s.tf !== 'none') ? s.tf : '';
+    if (tf0 || shift) {
+      var ms = Math.round(Math.max(240, Math.min(720, travelOf(s) * 12.5)));
+      out.move = anim(el, [{ transform: (shift + tf0).trim() || 'none', transformOrigin: s.org }, { transform: o.rest || 'none', transformOrigin: s.org }], { dur: ms, easing: E.exit, fill: o.rest ? 'forwards' : 'none' });
+      out.ms = ms;
+    }
+    if (o.transformOnly) return out;
+    var k0 = {}, k1 = {}, any = false;
+    if (s.cp && s.cp !== 'none') {
+      any = true; k0.clipPath = s.cp;
+      k1.clipPath = /^polygon/.test(s.cp) && o.iris ? irisClip(o.iris.x, o.iris.cy, 0) : 'inset(0px 0px 0px 0px)';
+    }
+    if (s.fl && s.fl !== 'none') { any = true; k0.filter = s.fl; k1.filter = 'blur(0px)'; }
+    if (s.op < 0.999) { any = true; k0.opacity = s.op; k1.opacity = 1; }
+    if (any) { out.close = anim(el, [k0, k1], { dur: 180, easing: E.out, fill: 'none' }); out.ms = Math.max(out.ms, 180); }
+    return out;
+  }
+  /* the reversal itself (the board has made el its live board again): the hand-off on the old room stops where it stands
+     and nothing of it may empty the board now (its done), the lens rim fades where it stands, the moment ends without
+     finishing what it made (the arriving room went with its board), and the old room goes back to rest */
+  /* the moment ends without finishing what it made: the arriving room went with its board */
+  function dropMoment(m) {
+    if (!m || moment !== m) return;
+    moment = null; M.track(null);
+    m.timers.forEach(clearTimeout); m.timers = []; m.queue = [];
+    root.removeAttribute('data-pmu-moment');
+    if (hold) hold = null;
+    releaseBeatHold();
+  }
+  /* Retro and NieR step back as they stepped out: the erase runs back up from where it stands, in as many of its eight
+     steps as it had taken and at its own pace (180 / 200 ms for the whole board), its phosphor bar or ink scanline
+     climbing with it */
+  function reverseStepped(el, m, o) {
+    var R = el._pmuRev, f = fam(), cs = getComputedStyle(el), hit = /inset\(\s*([\d.]+)%/.exec(cs.clipPath || '');
+    var p = hit ? Math.min(1, +hit[1] / 100) : (R.erase && R.erase.playState === 'finished' ? 1 : 0);
+    el._pmuRevived = true; el._pmuRev = null;
+    [R.erase, R.lineA].forEach(function (x) { if (x && x.cancel) { try { x.cancel(); } catch (error) {} } });
+    Array.prototype.forEach.call(el.querySelectorAll(':scope > .pmu-ghostscan'), function (n) { n.remove(); });
+    dropMoment(m);
+    /* (the erase kept the old scroll as a base transform; with it cancelled and the scroll given back, nothing moves) */
+    var out = { move: null, close: null, ms: 0 };
+    if (p > 0.001) {
+      var n = Math.max(1, Math.round(p * R.n)), ms = Math.max(60, Math.round(p * R.ms)), ease = 'steps(' + n + ',jump-end)';
+      out.close = anim(el, [{ clipPath: 'inset(' + (p * 100).toFixed(2) + '% 0 0 0)' }, { clipPath: 'inset(0% 0 0 0)' }], { dur: ms, easing: ease, fill: 'none' });
+      var line = H('i', f === 'nier' ? 'pmu-film-scan pmu-ghostscan' : 'pmu-film-scanbar pmu-ghostscan', el);
+      gone(anim(line, [{ transform: 'translateY(' + (p * 100).toFixed(2) + '%)', opacity: 1 }, { transform: 'translateY(0%)', opacity: 1, offset: 0.97 }, { transform: 'translateY(0%)', opacity: 0 }], { dur: ms, easing: ease, fill: 'both' }), line);
+      out.ms = ms;
+    }
+    emitMoment.later('finish', m || { kind: 'room' });
+    return out;
+  }
+  function reverse(el, o) {
+    var m = moment, G = m && m.ghost;
+    if (!reversible(el)) return null;
+    o = o || {};
+    if (stepped3(fam())) return reverseStepped(el, m, o);
+    el._pmuRevived = true;
+    var s = readBack(el), iris = G.cut === 'iris' ? G.iris : null;
+    var list = [G.move, G.fade, G.fadeA].concat(G.anims || []);
+    G.gone = true; G.done = null; G.fade = null; G.fadeA = null; G.move = null; G.anims = [];
+    list.forEach(function (x) { if (x && x !== true && x.cancel) { try { x.cancel(); } catch (error) {} } });
+    var rim = iris && el.parentNode ? liveRim(el.parentNode) : null;
+    if (rim && rim._pmuA) {
+      freeze(rim._pmuA);
+      rim.classList.add('pmu-iris-out');
+      rimTrack(rim, anim(rim, [{ opacity: 1 }, { opacity: 0 }], { dur: 140, easing: E.out, fill: 'forwards' }));
+    }
+    dropMoment(m);
+    var back = writeBack(el, s, { shift: o.shift || 0, iris: iris });
+    emitMoment.later('finish', m);
+    return back;
   }
   /* finishMoment('next'): the elements whose animations play on (the room carried into the next change, the board that
      becomes the next ghost, a lens rim fading where it stands), or null for none */
@@ -61431,7 +61614,15 @@ var PMU_SERIES = {
     o = o || {};
     var app = document.getElementById('pmuApp'), board = document.getElementById('pmuBoard');
     if (!app || !board || !PMU.board) return;
-    if (reduced() || M.paused()) { finishMoment('instant'); hold = null; PMU.board.mount(st.room, {}); return; }
+    if (M.paused()) { finishMoment('instant'); hold = null; PMU.board.mount(st.room, {}); return; }
+    /* Reduce Motion: no arrival; the board is built behind what the board area shows and swapped in whole (40-board.js
+       calmSwap), from the frame after the page click (motion QA A14: built inside the click it held the old page for
+       200 ms, M3 film, Glass Light) */
+    if (reduced()) {
+      finishMoment('instant'); hold = null;
+      requestAnimationFrame(function () { requestAnimationFrame(function () { if (!moment && !hold) PMU.board.mount(st.room, { calmEntry: true }); }); });
+      return;
+    }
     var m = begin('arrive', st.room);
     var h = { board: board, room: st.room, start: performance.now(), built: false, hero: false, m: m };
     hold = h;
@@ -61441,8 +61632,17 @@ var PMU_SERIES = {
     try { if (window.PM7_SHELL_ADJUSTMENTS && typeof window.PM7_SHELL_ADJUSTMENTS.seatChat === 'function') window.PM7_SHELL_ADJUSTMENTS.seatChat(); } catch (error) {}
     shellIntro(app);
     board.setAttribute('data-pm-hover-exempt', 'entering');
-    PMU.board.mount(st.room, { held: true, onBuilt: function (cards) { if (hold === h) h.built = true; else if (moment === m && m.released) allBuilt(h.room, cards || []); } });
-    watch(h);
+    /* the board is built in the frame after the click (motion QA A14): the click's frame lays out and paints the page the
+       app just switched to, and the held mount's width read inside it forced that whole layout into the click task, then
+       built every frame on top of it (Mac: the Usage tab's click frame 132-143 ms, about 30 ms over any other page's).
+       Nothing shows a frame later than before: the shell's power-on and the frames all start from opacity 0 on delays of
+       40 ms and more. Until then the last visit's board is held hidden (data-held). */
+    board.setAttribute('data-held', '');
+    requestAnimationFrame(function () { requestAnimationFrame(function () {
+      if (hold !== h || moment !== m) return;
+      PMU.board.mount(st.room, { held: true, onBuilt: function (cards) { if (hold === h) h.built = true; else if (moment === m && m.released) allBuilt(h.room, cards || []); } });
+      watch(h);
+    }); });
   }
   /* a board class change while held rebuilds the board held under the same arrival (never the instant remount) */
   function rehold(onBuilt) {
@@ -61465,7 +61665,7 @@ var PMU_SERIES = {
     soft: soft, innerOn: innerOn, glint: glint, combo: combo,
     /* round 3 */
     begin: begin, finish: finishMoment, moment: function () { return moment; }, onMoment: function (fn) { momentListeners.push(fn); },
-    frames: frames, reveal: reveal, bodyBuilt: bodyBuilt, allBuilt: allBuilt, ghost: ghost,
+    frames: frames, reveal: reveal, bodyBuilt: bodyBuilt, allBuilt: allBuilt, ghost: ghost, reversible: reversible, reverse: reverse,
     lit: lit, isQuiet: quietEl, lightBudget: lightBudget, flag: flag,
     budget: function (card, on) { if (card) card._pmuBudget = on !== false; }, lightAt: lightAt, rectIn: rectIn,
     snapShares: noop, flight: noop, pairFlights: noop, flightCards: function () { return []; }, irisAt: irisAt, glitch: glitch, dissolve: dissolve,
@@ -68626,6 +68826,128 @@ var PMU_SERIES = {
       var h = PMU.menu && PMU.menu.current ? PMU.menu.current() : null;
       return !!h && (h.board === api || !!(h.anchor && h.anchor.nodeType === 1 && rootEl && rootEl.contains(h.anchor)));
     }
+    /* ---- the reversal (motion QA A12, 2026-10-16): a click back to the room still leaving makes its board, which is
+       still on screen as the ghost (PMU.film.ghost), the live board again as it stands: PMU.film.reverse drifts it back
+       to rest from where it stands and closes its cut or lens, and the room that was arriving goes in the click's frame
+       (its board empties into the spare at once; the user never left the old room, so nothing of it is built again).
+       Only when the old board lent no card to the arriving room (a widget in both rooms moved across), the board class
+       and the room's widgets are unchanged, and the film says the hand-off can reverse (PMU.film.reversible: Basic,
+       Friendly and Glass with a GPU, no room carried from an earlier click). Anything else takes the room change. ---- */
+    /* ---- Reduce Motion's room change (motion QA A14, 2026-10-16). Nothing travels, and the new room used to be built
+       whole inside the click (M3: a 117 ms frame in Glass Light; the rail and title waited for it too). Now the click's
+       frame paints the rail and title at once while the room on screen stays as it is; the new room is built in
+       the spare board element, laid out but unseen (visibility): its chrome in the next frame, then its bodies in slices
+       of at most 8 ms per frame, what the first screen shows first; when that is built the two boards swap in one frame and the new room dissolves in (160 ms
+       from .35, PMU.film.dissolve: the same dissolve as before, now on the room it is for). The cards below the first
+       screen are built after the swap, unseen. A newer room click, a gesture or a re-class completes or drops it. ---- */
+    var calm = null;
+    function dropCalm() {
+      var c = calm; calm = null; if (!c) return;
+      if (c.el !== boardEl) { Array.prototype.forEach.call(c.el.querySelectorAll(':scope > .pmu-card'), destroyCard); retireBoard(c.el); }
+    }
+    function calmSwap(room, rects, ids, byId) {
+      lastGhost = null; flushLeaving(true); dropOld();
+      if (FILM && FILM.holding && FILM.holding()) FILM.cancelHold();
+      var token = ++buildToken; streaming = null; lateHeld = null; clearTimeout(filmEndT); filmEndT = 0;
+      var old = boardEl, nb = spareBoard();
+      Array.prototype.slice.call(old.attributes).forEach(function (at) { if (at.name !== 'id' && at.name !== 'class' && at.name !== 'hidden' && at.name !== 'style' && !/^data-(film|op|held|hold-bodies)$/.test(at.name)) nb.setAttribute(at.name, at.value); });
+      nb.className = 'pmu-board';
+      nb.style.gridTemplateColumns = 'repeat(' + current.cls.tracks + ', minmax(0px, 1fr))';
+      nb.setAttribute('data-cls', current.cls.name);
+      nb.setAttribute('data-room', room);
+      nb.setAttribute('aria-hidden', 'true');
+      nb.style.visibility = 'hidden'; nb.style.pointerEvents = 'none';
+      nb.hidden = false;
+      current.mounted = true;
+      calm = { el: nb, old: old, token: token };
+      /* the chrome too is built after the click's frame (as a room change's: inside the click the clicked button's focus
+         forced its layout), in one batch */
+      var heroId = heroOf(rects, ids, room), cards = null, first = [], rest = [];
+      function chromes() {
+        if (cards) return;
+        var frag = document.createDocumentFragment();
+        cards = ids.map(function (id) { var card = buildCard(id, room, byId[id]); markHero(card, heroId); frag.appendChild(card); return card; });
+        nb.appendChild(frag);
+        if (!cards.length) nb.appendChild(PMU.cards.empty(room, api));
+        var top = padCache ? padCache.t : 0, vh = view.h || (window.innerHeight || 900);
+        first = readingOrder(cards.filter(function (c) { return top + (+c.dataset.y || 0) * ROW < vh + 24; }));
+        rest = readingOrder(cards.filter(function (c) { return first.indexOf(c) < 0; }));
+      }
+      var swapped = false;
+      function swap() {
+        if (swapped || token !== buildToken || !calm || calm.el !== nb) return;
+        swapped = true;
+        /* (the room on screen stayed live meanwhile: restyling it inert cost the click a whole-board style pass; a menu it
+           opened in that window closes with it) */
+        if (PMU.menu && menuOwned()) PMU.menu.close();
+        Array.prototype.forEach.call(old.querySelectorAll(':scope > .pmu-card'), destroyCard);
+        old.removeAttribute('id');
+        nb.style.visibility = ''; nb.style.pointerEvents = ''; nb.removeAttribute('aria-hidden');
+        if (bo.liveId) nb.id = bo.liveId;
+        boardEl = nb;
+        retireBoard(old);
+        scroll.scrollTop = 0; view.top = 0;
+        ensurePreviews();
+        if (FILM && FILM.dissolve) FILM.dissolve(nb);
+        deferHover(400);
+      }
+      function run(list, all) {
+        var t0 = performance.now();
+        fitSliced(function () { while (list.length && (all || performance.now() - t0 < 8)) { var c = list.shift(); if (c.isConnected) tierPass([c], true); } });
+      }
+      function slice() {
+        if (token !== buildToken || !calm || calm.el !== nb) return;
+        if (!cards) { chromes(); requestAnimationFrame(slice); return; }
+        if (first.length) { run(first, false); if (first.length) { requestAnimationFrame(slice); return; } swap(); requestAnimationFrame(slice); return; }
+        run(rest, false);
+        if (rest.length) { requestAnimationFrame(slice); return; }
+        if (calm && calm.el === nb) calm = null;
+        if (streaming && streaming.token === token) streaming = null;
+        emit('built', { room: room, cards: cards.length, ms: 0 });
+      }
+      streaming = { token: token, complete: function () { chromes(); run(first, true); swap(); run(rest, true); if (calm && calm.el === nb) calm = null; }, late: function () {} };
+      requestAnimationFrame(function () { requestAnimationFrame(slice); });
+      emit('mount', { room: room, cls: current.cls.name, widgets: ids, calm: true });
+    }
+    var lastGhost = null;
+    function reverseTo(room, ids) {
+      var g = lastGhost, el = g && g.el;
+      if (!g || !FILM || !FILM.reverse || !FILM.reversible || !el || el === boardEl || el.hidden || g.lent) return false;
+      if (el.getAttribute('data-room') !== room || el.getAttribute('data-cls') !== current.cls.name || !FILM.reversible(el)) return false;
+      var cards = Array.prototype.filter.call(el.children, function (n) { return n.classList.contains('pmu-card'); });
+      var have = {}; cards.forEach(function (c) { have[c.getAttribute('data-widget')] = true; });
+      if (cards.length !== ids.length || !ids.every(function (id) { return have[id]; })) return false;
+      lastGhost = null;
+      var incoming = boardEl, sTop = g.sTop || 0;
+      /* the film reverses first, before anything here changes the old board (its test reads the ghost's state: removing the
+         ghost's class first made Retro and NieR refuse, and their finished erase then emptied the live board) */
+      var back = FILM.reverse(el, { shift: sTop });
+      if (!back) return false;
+      /* the arriving room's build stops, and its board empties into the spare now (no frame shows it after this one) */
+      buildToken++; streaming = null; lateHeld = null;
+      clearTimeout(filmEndT); filmEndT = 0;
+      flushLeaving(true);
+      Array.prototype.forEach.call(incoming.querySelectorAll(':scope > .pmu-card'), destroyCard);
+      incoming.removeAttribute('id');
+      /* the old board takes the live board's id and role back; its cards stop leaving. It keeps the ghost's layer
+         (.pmu-ghostboard: will-change) until it rests: dropping the layer under its running drift re-rastered every
+         Glass plate's frost in the reverse's first frames (a 200 ms GPU stall in a Glass Dark M3 film) */
+      ['zIndex', 'pointerEvents', 'opacity'].forEach(function (k) { el.style[k] = ''; });
+      if (bo.liveId) el.id = bo.liveId;
+      boardEl = el;
+      retireBoard(incoming);
+      cards.forEach(function (c) { c._pmuLeaving = false; if (c.hasAttribute('data-leaving')) c.removeAttribute('data-leaving'); });
+      /* the scroll it left with comes back (its keyframes start that much lower, so it does not move on screen) */
+      if (sTop) scroll.scrollTop = sTop;
+      view.top = sTop;
+      current.mounted = true;
+      keyShift(room);
+      deferHover(back.ms + 200);
+      /* the preview elements and the end of the film window wait for the drift to rest (inserting the morph before the
+         first card restyles the board's positional rules: never during a motion) */
+      setTimeout(function () { if (boardEl !== el || dead) return; el.classList.remove('pmu-ghostboard'); ensurePreviews(); if (!(FILM.moment && FILM.moment())) el.removeAttribute('data-film'); }, (back.ms + 60) * speed());
+      return true;
+    }
     function mount(room, opts) {
       ensure();
       prewarmEnd();
@@ -68648,6 +68970,7 @@ var PMU_SERIES = {
       current.pending = false;
       if (hosted) { seenEpoch = EPOCH; dirty = false; liveStop(); liveKeys = null; liveLead = null; liveMerged = 0; }   /* the mount renders the latest readings */
       flushGravity();
+      if (calm) dropCalm();   /* a Reduce Motion build still behind the room on screen goes (a newer mount supersedes it) */
       var t0 = performance.now(), sTop = scroll.scrollTop;   /* every read before the first write */
       var roomChanged = current.room !== room;
       var transition = !!FILM && !!opts.transition && current.mounted && roomChanged && !opts.instant && !opts.held && !reduced() && !PMU.motion.paused();
@@ -68659,6 +68982,9 @@ var PMU_SERIES = {
       if (transition) {
         try { performance.mark('pmu-room-click'); } catch (error) {}
         var dir = opts.dir || 1;
+        /* a click back to the room still leaving reverses the change (motion QA A12): no new moment, nothing built */
+        if (reverseTo(room, ids)) { emit('mount', { room: room, cls: current.cls.name, widgets: ids, transition: true, reversed: true }); return; }
+        lastGhost = null;
         /* rapid switching (WOW-SPEC-3 6.2): a running arrival or room change finishes at once (its animations jump to their
            end, its unbuilt bodies stay unbuilt: they leave with the ghost), and this room change starts from there */
         if (FILM && FILM.holding && FILM.holding()) FILM.cancelHold();
@@ -68707,7 +69033,10 @@ var PMU_SERIES = {
             if (sTop) oldBoard.style.transform = 'translateY(' + (-sTop) + 'px)';
             pendingOld = { el: oldBoard, cards: outgoing, sTop: sTop };
           }
-          else FILM.ghost(outgoing, { dir: dir, sTop: sTop, board: nb, ghost: oldBoard, destroy: destroyCard });
+          else {
+            FILM.ghost(outgoing, { dir: dir, sTop: sTop, board: nb, ghost: oldBoard, destroy: destroyCard });
+            lastGhost = { el: oldBoard, sTop: sTop, lent: Object.keys(reuse).length > 0 };
+          }
         } else outgoing.forEach(function (c) { destroyCard(c); c.remove(); });
         /* what exists in both rooms flies (6.3): the flyers lift at their old place now; they pair with their targets once the
            target bodies are built (the slices) */
@@ -68744,6 +69073,8 @@ var PMU_SERIES = {
         emit('mount', { room: room, cls: current.cls.name, widgets: ids, transition: true, scrolled: sTop });
         return;
       }
+      if ((opts.calmEntry || opts.transition && roomChanged && current.mounted) && reduced() && !hosted && bo.rooms && !opts.held) { calmSwap(room, rects, ids, byId); return; }
+      lastGhost = null;
       flushLeaving(true);
       dropOld();
       cardsNow().forEach(destroyCard);
@@ -72573,8 +72904,8 @@ var PMU_SERIES = {
          fresh copy of the Settings state, 10 ms on the CPU-only VM) */
       if (roomChange) {
         PMU.board.mount(st.room, { dir: ROOM_ORDER.indexOf(st.room) < ROOM_ORDER.indexOf(prevRoom) ? -1 : 1, transition: true });
-        /* Reduce Motion's room change (Jared #3): the new room dissolves in, still (the board makes no transition then) */
-        if (PMU.motion.reduced() && PMU.film && PMU.film.dissolve) PMU.film.dissolve(document.getElementById('pmuBoard'));
+        /* Reduce Motion's room change (Jared #3): the new room dissolves in, still; the board dissolves it itself when it
+           swaps it in (40-board.js calmSwap: it is built unseen behind the room on screen first, motion QA A14) */
         if (titleAnims.length && PMU.film && PMU.film.adopt) PMU.film.adopt(titleAnims);
         titleAnims = [];
       }
@@ -76059,13 +76390,27 @@ var PMU_SERIES = {
     return '<button type="button" class="pmu-toggle' + (pol.auto ? ' on' : '') + '" role="switch" aria-checked="' + pol.auto + '" aria-label="Auto-switch for ' + esc(p.name) + '" data-pmu-act="auto" data-prov="' + esc(p.id) + '"' +
       (share ? C.shareAttr('ctl:auto:' + p.id) : '') + (ok ? '' : ' disabled') + C.hover('Auto-switch · ' + p.name, ok ? polDetail(p) : 'Settings is not available') + '></button>';
   }
+  /* one disabled form for the stepper's steps (motion QA A15): aria-disabled, never the native attribute. The app's hover
+     bridge turns a native disabled button into aria-disabled + data-pm-hover-was-disabled (so its tag can say why) as soon
+     as it scans it, after a menu for example, and another rule then drew it at .56 instead of .35: a step that cannot be
+     taken looked enabled again. The act dispatcher (50-w-common.js) refuses an aria-disabled button. */
+  var OFF = ' aria-disabled="true"';
+  /* a control patched in place takes the next render's state in that one form, and drops the bridge's (a button the
+     bridge had taken over and that is enabled again would otherwise stay aria-disabled and blocked by it) */
+  function offFrom(b0, b1) {
+    var off = !!(b1.disabled || b1.getAttribute('aria-disabled') === 'true');
+    if (b0.disabled) b0.disabled = false;
+    if (b0.hasAttribute('data-pm-hover-was-disabled')) b0.removeAttribute('data-pm-hover-was-disabled');
+    if (off) { if (b0.getAttribute('aria-disabled') !== 'true') b0.setAttribute('aria-disabled', 'true'); }
+    else if (b0.hasAttribute('aria-disabled')) b0.removeAttribute('aria-disabled');
+  }
   /* the level as a stepper "at [- 90% +] used" (the plate) */
   function polStepper(p) {
     var pol = polOf(p), ok = pol.available, used = 100 - pol.switchLeft, pid = esc(p.id);
     return '<span class="pmu-swat">at</span><span class="pmu-stepper" data-prov="' + pid + '"' + C.hover('Switch level · ' + p.name, ok ? polDetail(p) : 'Settings is not available') + '>' +
-      '<button type="button" data-pmu-act="sw-step" data-prov="' + pid + '" data-value="1" aria-label="Switch ' + esc(p.name) + ' earlier"' + (ok && pol.switchLeft + 5 < Math.min(35, pol.warnLeft) && !PMU.settings.levelBlock(p.id, IDS().switchLeft, pol.switchLeft + 5) ? '' : ' disabled') + '>' + PMU.icon('minus') + '</button>' +
+      '<button type="button" data-pmu-act="sw-step" data-prov="' + pid + '" data-value="1" aria-label="Switch ' + esc(p.name) + ' earlier"' + (ok && pol.switchLeft + 5 < Math.min(35, pol.warnLeft) && !PMU.settings.levelBlock(p.id, IDS().switchLeft, pol.switchLeft + 5) ? '' : OFF) + '>' + PMU.icon('minus') + '</button>' +
       '<button type="button" class="pmu-stepval" data-pmu-act="sw-pick" data-prov="' + pid + '" aria-haspopup="menu"' + (ok ? '' : ' disabled') + '>' + used + '%</button>' +
-      '<button type="button" data-pmu-act="sw-step" data-prov="' + pid + '" data-value="-1" aria-label="Switch ' + esc(p.name) + ' later"' + (ok && pol.switchLeft > 5 ? '' : ' disabled') + '>' + PMU.icon('plus') + '</button></span><span class="pmu-swat">used</span>';
+      '<button type="button" data-pmu-act="sw-step" data-prov="' + pid + '" data-value="-1" aria-label="Switch ' + esc(p.name) + ' later"' + (ok && pol.switchLeft > 5 ? '' : OFF) + '>' + PMU.icon('plus') + '</button></span><span class="pmu-swat">used</span>';
   }
   /* the level as one value that opens the level menu (the hero's cells) */
   function polValue(p) {
@@ -76111,7 +76456,7 @@ var PMU_SERIES = {
     var fin = ctx && (ctx.liveFinal || ctx.reason === 'live');
     Array.prototype.forEach.call(next.querySelectorAll('.pmu-toggle[data-prov]'), function (t1) {
       var t0 = live.querySelector('.pmu-toggle[data-prov="' + t1.getAttribute('data-prov') + '"]'); if (!t0) return;
-      t0.classList.toggle('on', t1.classList.contains('on')); t0.setAttribute('aria-checked', t1.getAttribute('aria-checked')); t0.disabled = t1.disabled; copyHover(t1, t0);
+      t0.classList.toggle('on', t1.classList.contains('on')); t0.setAttribute('aria-checked', t1.getAttribute('aria-checked')); offFrom(t0, t1); copyHover(t1, t0);
     });
     Array.prototype.forEach.call(next.querySelectorAll('.pmu-stepval[data-prov], .pmu-polval[data-prov]'), function (v1) {
       var sel = (v1.classList.contains('pmu-polval') ? '.pmu-polval' : '.pmu-stepval') + '[data-prov="' + v1.getAttribute('data-prov') + '"]', v0 = live.querySelector(sel); if (!v0) return;
@@ -76122,7 +76467,7 @@ var PMU_SERIES = {
       else v0.textContent = v1.textContent;
     });
     Array.prototype.forEach.call(next.querySelectorAll('[data-pmu-act="sw-step"][data-prov]'), function (b1) {
-      var b0 = live.querySelector('[data-pmu-act="sw-step"][data-prov="' + b1.getAttribute('data-prov') + '"][data-value="' + b1.getAttribute('data-value') + '"]'); if (b0) b0.disabled = b1.disabled;
+      var b0 = live.querySelector('[data-pmu-act="sw-step"][data-prov="' + b1.getAttribute('data-prov') + '"][data-value="' + b1.getAttribute('data-value') + '"]'); if (b0) offFrom(b0, b1);
     });
     Array.prototype.forEach.call(next.querySelectorAll('.pmu-stepper[data-prov]'), function (s1) { var s0 = live.querySelector('.pmu-stepper[data-prov="' + s1.getAttribute('data-prov') + '"]'); if (s0) copyHover(s1, s0); });
     ['.pmu-polscope', '.pmu-polstat', '.pmu-polshared'].forEach(function (sel) {
@@ -76189,7 +76534,7 @@ var PMU_SERIES = {
       var a = PMU.roster.account(b0.getAttribute('data-value')), p = a && PMU.roster.provider(a.providerId); if (!p) return;
       var tmp = document.createElement('div'); tmp.innerHTML = accSwBtn(a, p);
       var b1 = tmp.firstChild, wasOwn = b0.hasAttribute('data-own'), own = b1.hasAttribute('data-own');
-      b0.toggleAttribute('data-own', own); b0.toggleAttribute('data-off', b1.hasAttribute('data-off')); b0.disabled = b1.disabled;
+      b0.toggleAttribute('data-own', own); b0.toggleAttribute('data-off', b1.hasAttribute('data-off')); offFrom(b0, b1);
       b0.setAttribute('aria-label', b1.getAttribute('aria-label')); copyHover(b1, b0);
       var v0 = b0.querySelector('.pmu-accswv'), to = accSwAt(a, p), from = v0 ? parseFloat(v0.textContent) : NaN;
       if (v0 && from !== to) {
@@ -100496,6 +100841,34 @@ afterRender = function () {
   const o55ElSave = saveState;
   saveState = function () { const r = o55ElSave.apply(this, arguments); ver++; notify(); return r; };
 
+  // Customize owns the immediate selection and live editor paint. Its saved
+  // Settings rows can follow one at a time after paint, instead of rebuilding a
+  // whole quick set underneath the sheet before the preview's first frame.
+  const pendingRows = new Set();
+  let rowJob = 0;
+  function scheduleRows() {
+    if (rowJob || !pendingRows.size) return;
+    rowJob = window.requestIdleCallback
+      ? window.requestIdleCallback(refreshRows, { timeout: 500 })
+      : window.requestAnimationFrame(() => { rowJob = setTimeout(refreshRows, 0); });
+  }
+  function refreshRows() {
+    rowJob = 0;
+    const id = pendingRows.values().next().value;
+    if (!id) return;
+    pendingRows.delete(id);
+    try { if (root.querySelector(`[id="setting-${cssEscape(id)}"]`)) refreshSettingRow(id); } catch (e) { /* the row is not drawn now */ }
+    scheduleRows();
+  }
+  function refreshRow(id) {
+    if (!document.querySelector('.pmed-cz:not([aria-hidden="true"])')) {
+      try { if (root.querySelector(`[id="setting-${cssEscape(id)}"]`)) refreshSettingRow(id); } catch (e) { /* the row is not drawn now */ }
+      return;
+    }
+    pendingRows.add(id);
+    scheduleRows();
+  }
+
   function set(writes) {
     if (!ready() || !writes || typeof writes !== 'object') return false;
     const put = {}, back = [];
@@ -100510,7 +100883,7 @@ afterRender = function () {
     if (!Object.keys(put).length && !back.length) return true;
     saveState();
     Object.keys(put).concat(back).forEach(id => {
-      try { if (root.querySelector(`[id="setting-${cssEscape(id)}"]`)) refreshSettingRow(id); } catch (e) { /* the row is not drawn now */ }
+      refreshRow(id);
       if (typeof o55Notify === 'function') o55Notify(id, put[id]);
     });
     return true;
@@ -100529,15 +100902,15 @@ afterRender = function () {
 
   /* ---------- the Customize screen from Settings: the Editor look group's owner line ----------
      Settings' rows set one field at a time; the editor's Customize screen shows them all on a live preview. Its button
-     goes Home and opens the screen on the editor in view (the one last used), in "All editors", the scope these rows
-     hold. With no editor on Home it opens the project's entry file first. */
+     opens over Settings on the last editor, in "All editors", the scope these rows hold. Keeping Settings underneath
+     avoids an unrelated page handoff and returns the reader to the same row when the screen closes. */
   const look = PLACEMENT && PLACEMENT.sections && PLACEMENT.sections['editor-look'];
   if (look && !look.owner) look.owner = { text: 'See every look option on a live editor, with a preview, in the editor’s Customize screen.', buttons: [{ label: 'Open Customize', action: 'pm51-o55-editor-customize' }] };
   PM51.on('o55-editor-customize', () => {
     const C = window.PM_EDITOR_CUSTOMIZE;
     if (!C || typeof C.open !== 'function') { showToast('Not available', 'The editor is not loaded on this page.', 'warning', 3600); return; }
-    const home = document.getElementById('tab-dashboard'); if (home) home.click();
-    setTimeout(() => { try { C.open({ scope: 'app', from: 'settings' }); } catch (e) { showToast('Could not open Customize', 'The editor did not answer.', 'warning', 3600); } }, 80);
+    try { C.open({ scope: 'app', from: 'settings', anchor: document.activeElement }); }
+    catch (e) { showToast('Could not open Customize', 'The editor did not answer.', 'warning', 3600); }
   });
 
   seen = (() => { try { return JSON.stringify(values()); } catch (e) { return ''; } })();
@@ -101437,7 +101810,7 @@ function o55NavAck(selector) {
     }
   });
 }
-function o55NavRun(work, selector, chapter) {
+function o55NavRun(work, selector, chapter, prepare) {
   if (o55NavRunning || !o55NavVisible()) return work();
   const ticket = ++o55NavTicket;
   o55NavAck(selector);
@@ -101452,7 +101825,7 @@ function o55NavRun(work, selector, chapter) {
   if (moving) o55NavLeaving = stage.animate([
     { opacity: 1, transform: 'none' }, { opacity: .55, transform: 'translateY(-4px)' }
   ], { duration: 260, easing: 'ease-out', fill: 'forwards' });
-  o55AfterPaint(() => {
+  const complete = () => {
     if (ticket !== o55NavTicket) return;
     commit();
     const next = root.querySelector('#workspace-stage');
@@ -101468,6 +101841,20 @@ function o55NavRun(work, selector, chapter) {
     if (moving && next && typeof ResizeObserver === 'function') {
       const ready = new ResizeObserver(() => { ready.disconnect(); arrive(); }); ready.observe(next);
     } else arrive();
+  };
+  o55AfterPaint(() => {
+    if (ticket !== o55NavTicket) return;
+    if (!prepare || !prepare() || typeof ResizeObserver !== 'function') { complete(); return; }
+    /* A cold workspace hydrates its preceding blocks for an exact landing. Let their first layout finish before
+       the existing landing path reads its offset; measuring immediately forced that layout in the input follow-up
+       (48 ms M3 / 222 ms P1000). The destination ink is already travelling during this work. */
+    const scroller = root.querySelector('#settings-document');
+    if (!scroller) { complete(); return; }
+    const ready = new ResizeObserver(() => {
+      ready.disconnect();
+      if (scroller.isConnected && scroller === root.querySelector('#settings-document')) complete();
+    });
+    ready.observe(scroller);
   });
 }
 const o55NavNavigate = navigate;
@@ -101506,7 +101893,15 @@ dispatchAction = function (action, el) {
     return;
   }
   if (action !== 'jump-workspace') return o55NavDispatch.apply(this, args);
-  return o55NavRun(() => o55NavDispatch.apply(this, args), `.workspace-tab[data-workspace="${cssEscape(ds(el, 'workspace'))}"]`, false);
+  const ws = ds(el, 'workspace');
+  const prepare = () => {
+    const ids = getDomain().workspaces.map(w => w.id), to = ids.indexOf(ws);
+    const cold = ids.slice(0, to + 1).some(id => root.querySelector(`[data-continuous-workspace-body="${cssEscape(id)}"][data-workspace-mounted="false"]`));
+    if (!cold) return false;
+    PLACE.nav(); pm51MountPreceding(ws); mountContinuousWorkspace(ws);
+    return true;
+  };
+  return o55NavRun(() => o55NavDispatch.apply(this, args), `.workspace-tab[data-workspace="${cssEscape(ws)}"]`, false, prepare);
 };
 
 /* ---- kit.d/30-inspector.js ---- */
@@ -115458,10 +115853,23 @@ html[data-theme^="retro"] #panel-settings .o55-goals-phase-n { border-radius: 0;
         [oldP, newP].forEach(function (p) { p.getAnimations().forEach(function (a) { if (a.animationName === 'pm8-page-in' || a.animationName === 'pm8-page-out') out.push(a); }); });
         return out;
       };
-      if (window.PM_START_ON_SHOWN) window.PM_START_ON_SHOWN(pageMoves);
+      /* O55: the click's fade (goSoon) keeps running, on the compositor, through this change's long frame; the
+         exit takes over from the opacity it has reached in the frame the moves start */
+      var lift = window.PM_PAGES.__lift; window.PM_PAGES.__lift = null;
+      var handoff = function () {
+        if (!lift || lift.el !== oldP) { if (lift) try { lift.anim.cancel(); } catch (e) {} return; }
+        try {
+          /* still pending here, it reads as its start while the compositor has been running it since its first frame */
+          var a = lift.anim, ran = document.timeline.currentTime - lift.at;
+          if ((a.pending || !(a.currentTime > 0)) && ran > 0) a.currentTime = Math.min(ran, 140);
+          oldP.style.setProperty('--pm8-out-from', getComputedStyle(oldP).opacity); a.cancel();
+        } catch (e) {}
+      };
+      if (window.PM_START_ON_SHOWN) window.PM_START_ON_SHOWN(pageMoves, { release: handoff }); else handoff();
       var stopEntrance = null, finished = false;
       function cleanupOut() {
         oldP.classList.remove('pm8-page-out');
+        oldP.style.removeProperty('--pm8-out-from');   /* O55: the answered fade's start is this exit's only */
         oldP.style.top = oldP.style.left = oldP.style.width = oldP.style.height = '';
         if (oldP.__pm8PageCleanup === cleanupOut) oldP.__pm8PageCleanup = null;
       }
@@ -115522,11 +115930,13 @@ html[data-theme^="retro"] #panel-settings .o55-goals-phase-n { border-radius: 0;
       /* NieR answers with its wipe and the ink; the other looks start the leaving page's fade (Retro in steps) */
       var lift = !nier && !reduced() && oldP && oldP.animate && !oldP.classList.contains('pm8-page-out') ? oldP.animate([{ opacity: 1 }, { opacity: 0.86 }], { duration: 140, easing: retro ? 'steps(2, end)' : 'cubic-bezier(.2, 0, 0, 1)', fill: 'forwards' }) : null;
       soon = { page: pageId };
-      requestAnimationFrame(function () { setTimeout(function () {
+      requestAnimationFrame(function (shown) { setTimeout(function () {
         var to = soon.page; soon = null;
-        if (lift) { try { oldP.style.setProperty('--pm8-out-from', getComputedStyle(oldP).opacity); lift.cancel(); } catch (e) {} setTimeout(function () { oldP.style.removeProperty('--pm8-out-from'); }, 1500); }
+        /* the fade is not read here: a move begun a frame ago still reads as its start on this thread */
+        P.__lift = lift ? { el: oldP, anim: lift, at: shown } : null;
         if (P.__answered !== to) P.__answered = null;
         P.go(to);
+        if (P.__lift) { try { P.__lift.anim.cancel(); } catch (e) {} P.__lift = null; }   /* no exit took it over */
       }, 0); });
     };
     function resync() {
@@ -137452,7 +137862,7 @@ policies for tenant isolation, and add migration script.</textarea>
         ev.preventDefault();
         var modeValue = seg.getAttribute('data-mode-value');   /* O55: the radio answers first (B4) */
         menu.querySelectorAll('.pm6-tt-mode').forEach(function (b) { b.setAttribute('aria-checked', b === seg ? 'true' : 'false'); });
-        if (window.PM_THEME_TRANSITION) window.PM_THEME_TRANSITION(function () { window.PM7_SETTINGS_TOME.setChromeThemeMode(modeValue); });
+        if (window.PM_THEME_TRANSITION) window.PM_THEME_TRANSITION(function () { window.PM7_SETTINGS_TOME.setChromeThemeMode(modeValue); }, { mode: modeValue });
         else window.PM7_SETTINGS_TOME.setChromeThemeMode(modeValue);
         return; /* mode is a filter, not a final pick: menu stays open */
       }
@@ -137461,7 +137871,7 @@ policies for tenant isolation, and add migration script.</textarea>
       ev.preventDefault();
       var familyValue = row.getAttribute('data-family');   /* O55: the row answers first (B4) */
       menu.querySelectorAll('.pm6-tt-family').forEach(function (r) { var on = r === row; r.classList.toggle('is-selected', on); r.setAttribute('aria-checked', on ? 'true' : 'false'); });
-      if (window.PM_THEME_TRANSITION) window.PM_THEME_TRANSITION(function () { window.PM7_SETTINGS_TOME.setChromeThemeFamily(familyValue); });
+      if (window.PM_THEME_TRANSITION) window.PM_THEME_TRANSITION(function () { window.PM7_SETTINGS_TOME.setChromeThemeFamily(familyValue); }, { family: familyValue });
       else window.PM7_SETTINGS_TOME.setChromeThemeFamily(familyValue);
       tbMenuClose(menu);
       btn.setAttribute('aria-expanded', 'false');
@@ -141296,17 +141706,23 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
    before was a long one (more than 40 ms after the one before it), then plays them from their start: they begin once
    frames come on time, at most `frames` (3) frames later (a page that never draws on time, such as
    software rendering, still moves after that). `anims` is an array of Animations or a function returning
-   one (read again each frame). */
+   one (read again each frame). `o.release`, if given, runs once in the frame the moves start, just before they play:
+   a page change hands the click's fade over to its exit there (tools/shell_motion.py, ANSWER_FIRST). */
 (function () {
   'use strict';
   window.PM_START_ON_SHOWN = function startOnShown(anims, o) {
-    const max = (o && o.frames) || 3, held = new Set();
+    const max = (o && o.frames) || 3, held = new Set(), before = o && typeof o.release === 'function' ? o.release : null;
     const list = () => { try { return (typeof anims === 'function' ? anims() : anims) || []; } catch (_) { return []; } };
     const hold = () => list().forEach((a) => {
       try { if (a && a.playState !== 'idle' && !held.has(a)) { a.pause(); a.currentTime = 0; held.add(a); } } catch (_) { /* gone */ }
     });
-    const release = () => held.forEach((a) => { try { if (a.playState === 'paused') a.play(); } catch (_) { /* gone */ } });
-    let last = null, n = 0;
+    const release = () => {
+      if (before) { try { before(); } catch (_) { /* decoration only */ } }
+      held.forEach((a) => { try { if (a.playState === 'paused') a.play(); } catch (_) { /* gone */ } });
+    };
+    /* the frame the moves were begun after: a first frame on time (the task that began them was short) leaves them as
+       they are, with no pause and restart, so a fast computer sees nothing of this */
+    let last = document.timeline.currentTime, n = 0;
     const tick = () => {
       const now = document.timeline.currentTime;
       if (now == null) { release(); return; }
@@ -141314,33 +141730,201 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
       last = now;
       if (gap <= 40 || ++n >= max) { release(); return; } /* the frame before this one was on time: play from the start */
       hold();
-      requestAnimationFrame(tick);
+      next();
     };
-    requestAnimationFrame(tick);
+    /* Each check runs in its frame after layout (a one-shot ResizeObserver delivers there, before paint), so reading
+       the moves (getAnimations for CSS animations) finds style already computed: from an animation frame callback it
+       forced that frame's style early (49.7 ms on the P1000 for the customizer's six panels, editor lane). What the
+       check changes is drawn in the same frame. */
+    const next = () => requestAnimationFrame(() => {
+      if (typeof ResizeObserver !== 'function') { tick(); return; }
+      const ro = new ResizeObserver(() => { ro.disconnect(); tick(); });
+      ro.observe(document.documentElement);
+    });
+    next();
   };
 })();
 
 /* ---- js/12-theme-transition.js ---- */
-/* A look change answers at once (final motion QA B4, 2026-10-16). Repainting the whole app for a new theme restyles
-   every drawn element in one pass (about 250 ms on the P1000, a fraction of that on the M3), and the old menu ran that
-   pass, and two or three more forced by the theme's listeners, inside the click: nothing moved for most of a second.
-   Now the control pressed shows its new state on the next frame, and the repaint runs in the task after that frame,
-   once. A View Transition was tried for a crossfade and dropped: starting one restyles the whole page by itself in
-   Chrome (measured 230-300 ms on the P1000 before its callback runs), which doubled the wait.
+/* A look change crosses through its new background (final motion QA B4, 2026-10-16; part 2 P2-01).
+   Repainting the whole app for a new theme restyles every drawn element in one pass: 133-433 ms on the M3, 0.8-2.5 s
+   on the P1000 (where the compositor then rasters the new page for up to 1.7 s more), and nothing on screen moved
+   while it ran: the app froze, then cut to the new look through a frame where the editor and terminal were still in
+   the old one. The control pressed still shows its new state on the next frame. From that frame a cover in the new
+   look's own background washes over the app, with a soft glow of its accent spreading from the theme control; the
+   theme is written as the cover comes in, its first frame drawn under the full cover, and the cover lifts once
+   frames come on time again, with the colour transitions the new look started finished under it, so the new look is
+   shown whole (about half a second in all on the M3). The cover and its glow run on the
+   compositor, so they keep moving while the main thread restyles. The cover stops just short of opaque: content
+   beneath an opaque layer is not rastered, and would then be drawn as it rasters while the cover lifts.
+   A View Transition (snapshot crossfade, then a circular reveal from the control) was tried first and dropped:
+   starting one restyles the whole page by itself in Chrome (230-300 ms on the P1000 before its callback runs).
 
-   window.PM_THEME_TRANSITION(apply)  — apply() writes the theme; picks made before it runs keep only the latest. */
+   window.PM_THEME_TRANSITION(apply, hint)  — apply() writes the theme; hint { mode } or { family } names the look
+   it goes to (for the cover's colours). Picks made before it runs keep only the latest. */
 (function () {
   'use strict';
-  let job = null;
-  function run() {
+  const html = document.documentElement;
+  const COVER = 0.995;
+  let job = null, phase = 'idle', veil = null, probe = null, coverAnim = null, glowAnims = [], ticket = 0;
+
+  const reduced = () => {
+    try { if (window.O55 && O55.motion && typeof O55.motion.reduced === 'function') return !!O55.motion.reduced(); } catch (_) { /* below */ }
+    return html.getAttribute('data-reduced-motion') === '1' || html.getAttribute('data-motion') === 'reduced' ||
+      !!(window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches);
+  };
+  const nierOn = () => html.hasAttribute('data-o55-nier') && html.getAttribute('data-o55-nier') !== 'off';
+
+  /* the look a pick goes to, and its colours read from a hidden one-element probe (only the probe is styled) */
+  function lookAfter(hint) {
+    const cur = (html.getAttribute('data-theme') || 'basic-dark').split('-');
+    let fam = cur[0] || 'basic', mode = cur[1] || 'dark', nier = nierOn();
+    const m = hint && hint.mode && String(hint.mode).toLowerCase();
+    if (m === 'light' || m === 'dark') mode = m;
+    else if (m === 'auto') mode = window.matchMedia && matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+    const f = hint && hint.family && String(hint.family).toLowerCase();
+    if (f === 'nier') { fam = 'basic'; nier = true; } else if (f) { fam = f; nier = false; }
+    return { theme: fam + '-' + mode, nier, retro: fam === 'retro', mode };
+  }
+  function coloursOf(to) {
+    try {
+      if (!probe || !probe.isConnected) {
+        probe = document.createElement('i');
+        probe.setAttribute('aria-hidden', 'true');
+        probe.style.cssText = 'position:fixed;left:0;top:0;width:0;height:0;overflow:hidden;visibility:hidden;contain:strict;pointer-events:none';
+        document.body.appendChild(probe);
+      }
+      probe.setAttribute('data-theme', to.theme);
+      probe.toggleAttribute('data-o55-nier', to.nier);
+      const cs = getComputedStyle(probe);
+      return { bg: cs.getPropertyValue('--background').trim(), glow: cs.getPropertyValue('--accent-blue').trim() };
+    } catch (_) { return {}; }
+  }
+  function ensureVeil() {
+    if (veil && veil.isConnected) return veil;
+    veil = document.createElement('div');
+    veil.id = 'pm-look-veil';
+    veil.setAttribute('aria-hidden', 'true');
+    veil.appendChild(document.createElement('i'));
+    document.body.appendChild(veil);
+    return veil;
+  }
+  const startOnShown = (anims) => { if (window.PM_START_ON_SHOWN) window.PM_START_ON_SHOWN(anims); };
+  const stopGlow = () => { glowAnims.forEach((a) => { try { a.cancel(); } catch (_) { /* gone */ } }); glowAnims = []; };
+
+  function runJob() {
     const apply = job; job = null;
     if (!apply) return;
-    try { apply(); } catch (e) { try { console.error('[PM_THEME_TRANSITION]', e); } catch (_) {} }
+    try { apply(); } catch (e) { try { console.error('[PM_THEME_TRANSITION]', e); } catch (_) { /* none */ } }
   }
-  window.PM_THEME_TRANSITION = function themeTransition(apply) {
-    const queued = !!job;
+
+  /* The colour transitions the new look starts (hundreds of elements easing from the old colours: the editor and
+     terminal still dark in the frame part 2 caught) are finished at once under the cover: unseen there, they would
+     restyle their elements on every frame of it and show the old look when it lifts. */
+  function finishColourTransitions() {
+    try {
+      document.getAnimations().forEach((a) => {
+        if (a.transitionProperty && a.playState === 'running' && /color|background|border|shadow|fill|stroke|outline/.test(a.transitionProperty)) a.finish();
+      });
+    } catch (_) { /* decoration only */ }
+  }
+  /* The new look is drawn: three frames after the repaint (its first paint, the observers that follow a look in the
+     next frame), the last two on time; on a computer whose frames never come on time, 1.2 s after the repaint. */
+  function whenDrawn(t, done) {
+    let last = null, onTime = 0, count = 0, began = performance.now();
+    const frame = (now) => {
+      if (t !== ticket) return;
+      if (job) { runJob(); last = null; onTime = 0; count = 0; began = performance.now(); }   /* a later pick, also under the cover */
+      finishColourTransitions();
+      count++;
+      if (last != null) onTime = now - last <= 40 ? onTime + 1 : 0;
+      last = now;
+      if (count >= 3 && (onTime >= 2 || performance.now() - began >= 1200)) { done(); return; }
+      requestAnimationFrame(frame);
+    };
+    requestAnimationFrame(frame);
+  }
+
+  function lift(t, to) {
+    if (t !== ticket) return;
+    phase = 'lifting';
+    const still = reduced();
+    const out = veil.animate([{ opacity: COVER }, { opacity: 0 }], {
+      duration: still ? 140 : 240, easing: to.retro ? 'steps(3, end)' : 'cubic-bezier(.3, 0, .2, 1)', fill: 'forwards'
+    });
+    if (coverAnim) { try { coverAnim.cancel(); } catch (_) { /* gone */ } }
+    coverAnim = out;
+    startOnShown([out]);
+    out.finished.then(() => {
+      if (t !== ticket) return;
+      phase = 'idle';
+      veil.removeAttribute('data-on');
+      stopGlow();
+      try { out.cancel(); } catch (_) { /* gone */ }
+      coverAnim = null;
+    }, () => null);
+  }
+
+  function cover(hint) {
+    const t = ++ticket, to = lookAfter(hint), c = coloursOf(to), still = reduced();
+    const v = ensureVeil();
+    let from = 0;
+    if (phase === 'lifting') { try { from = parseFloat(getComputedStyle(v).opacity) || 0; } catch (_) { from = 0; } }
+    if (c.bg) v.style.setProperty('--pm-veil-bg', c.bg); else v.style.removeProperty('--pm-veil-bg');
+    if (c.glow) v.style.setProperty('--pm-veil-glow', c.glow); else v.style.removeProperty('--pm-veil-glow');
+    v.setAttribute('data-mode', to.mode);
+    v.setAttribute('data-on', '');
+    phase = 'covering';
+    if (coverAnim) { try { coverAnim.cancel(); } catch (_) { /* gone */ } }
+    stopGlow();
+    const inMs = still ? 90 : 130;
+    coverAnim = v.animate([{ opacity: from }, { opacity: COVER }], {
+      duration: inMs, easing: to.retro ? 'steps(3, end)' : 'cubic-bezier(.2, 0, 0, 1)', fill: 'forwards'
+    });
+    const anims = [coverAnim];
+    /* the glow spreads from the control that was pressed and breathes while the new look is drawn (not in Retro's
+       flat pixels, nor with less motion) */
+    if (!still && !to.retro) {
+      const g = v.firstElementChild, src = document.getElementById('themeSelect');
+      let x = window.innerWidth - 120, y = 18;
+      try { if (src) { const r = src.getBoundingClientRect(); if (r.width) { x = r.left + r.width / 2; y = r.top + r.height / 2; } } } catch (_) { /* default */ }
+      const cx = window.innerWidth / 2, cy = window.innerHeight / 2;
+      const spread = g.animate([
+        { transform: `translate(${x}px, ${y}px) scale(.25)`, opacity: 0 },
+        { transform: `translate(${cx}px, ${cy}px) scale(1)`, opacity: 1 }
+      ], { duration: 900, easing: 'cubic-bezier(.2, .7, .2, 1)', fill: 'forwards' });
+      const breathe = g.animate([
+        { transform: `translate(${cx}px, ${cy}px) scale(1)`, opacity: 1 },
+        { transform: `translate(${cx}px, ${cy}px) scale(1.18)`, opacity: .7 }
+      ], { duration: 1300, delay: 900, iterations: Infinity, direction: 'alternate', easing: 'ease-in-out' });
+      glowAnims = [spread, breathe];
+      anims.push(spread, breathe);
+    }
+    startOnShown(anims);
+    /* The theme is written once the cover has been shown most of its way in (it is over 0.9 by then): the compositor
+       carries it the rest of the way while the main thread restyles, so the new look's first frame is drawn under the
+       full cover and a fast computer does not wait out the whole fade first. Retro's steps wait for the last one. */
+    const covering = coverAnim, at = to.retro ? inMs : inMs * 0.62;
+    const ready = () => {
+      if (t !== ticket || coverAnim !== covering) return;
+      let ct = 0;
+      try { ct = covering.playState === 'finished' ? inMs : Number(covering.currentTime) || 0; } catch (_) { ct = inMs; }
+      if (ct < at) { requestAnimationFrame(ready); return; }
+      phase = 'covered';
+      setTimeout(() => {
+        if (t !== ticket) return;
+        runJob();
+        whenDrawn(t, () => lift(t, to));
+      }, 0);
+    };
+    requestAnimationFrame(ready);
+  }
+
+  window.PM_THEME_TRANSITION = function themeTransition(apply, hint) {
     job = apply;
-    if (!queued) requestAnimationFrame(() => window.setTimeout(run, 0));
+    if (document.hidden || !document.body) { requestAnimationFrame(() => window.setTimeout(runJob, 0)); return; }
+    if (phase === 'covering' || phase === 'covered') return;   /* the latest pick applies under the cover */
+    cover(hint);
   };
 })();
 
@@ -182230,9 +182814,9 @@ PMW.hypo = {
 };
 /* the room rule (geom.resultFits) for a hypothetical layout, against the layout as it is now; in the single-column
    ladder (narrow) nothing splits, so nothing fits */
-PMW.roomFits = function (after) {
+PMW.roomFits = function (after, box) {
   if (!after || (PMW.narrow && PMW.narrow.singleColumn())) return false;
-  return geom.resultFits(L(), after, PMW.layoutBox());
+  return geom.resultFits(L(), after, box || PMW.layoutBox());
 };
 
 PMW.moveTab = function (tabId, panelId, index, opts) {
@@ -182259,7 +182843,9 @@ PMW.moveTabToSplit = function (tabId, panelId, edge, opts) {
   if (from.id === panelId && from.tabs.length === 1) return false;   // splitting a panel by its only tab changes nothing
   // every caller (menus, keyboard, strip, drag) gets the same fit rule, the room rule on the move's own result,
   // measured on the tree, not the maximized rects
-  if (panelId !== '@root' && !opts.force && treeRects() && !PMW.roomFits(PMW.hypo.split(tabId, panelId, edge, opts.ratio))) {
+  // A pointer release measured the centre before retiring its drag styles. Use that same box for the room rule;
+  // menus and keyboard callers still measure the current tree here.
+  if (panelId !== '@root' && !opts.force && (opts.centreRect || treeRects()) && !PMW.roomFits(PMW.hypo.split(tabId, panelId, edge, opts.ratio), opts.centreRect)) {
     if (!opts.quiet) PMW.toast(edge === 'left' || edge === 'right' ? 'There is not room to split this panel side by side. Try Split down.' : 'There is not room to split this panel. Try Split right.');
     return null;
   }
@@ -184979,7 +185565,7 @@ function drop(g, z) {
   var ok;
   if (z.type === 'strip') ok = PMW.moveTab(g.tid, z.panelId, z.index);
   else if (z.type === 'merge') ok = PMW.moveTab(g.tid, z.panelId, null);
-  else if (z.type === 'split') ok = !!PMW.moveTabToSplit(g.tid, z.panelId, z.edge, { ratio: 0.5 });
+  else if (z.type === 'split') ok = !!PMW.moveTabToSplit(g.tid, z.panelId, z.edge, { ratio: 0.5, centreRect: g.releaseCentreRect });
   else if (z.type === 'root') ok = !!PMW.moveTabToSplit(g.tid, '@root', z.edge, { ratio: 0.34 });
   if (!ok) { dropView.glideHome(); restore(g); if (g.chip) { g.chip.remove(); g.chip = null; } return true; }
   // what listeners heard at the grab is no longer true: the source shows its previous tab, the carried tab is the
@@ -187222,8 +187808,9 @@ function inFlow(el) { var p = getComputedStyle(el).position; return p !== 'absol
 narrow.measure = function () {
   var centre = state.centre;
   // only while Home is the page shown: on another page the centre can still have boxes (it is hidden, not removed), and
-  // solving against it there overwrote the chat's width
-  if (!centre || !centre.getClientRects().length || !homeIsPage()) return null;
+  // solving against it there overwrote the chat's width. The page test comes first: getClientRects() forces a layout,
+  // and on the Usage page that was 5-32 ms inside every room change's build (M3, motion QA A14, 2026-10-16)
+  if (!centre || !homeIsPage() || !centre.getClientRects().length) return null;
   var chat = qs('#chatPanel');
   var ma = mainArea();
   var floating = !!(ma && ma.hasAttribute('data-pmw-chat-float'));
@@ -187244,11 +187831,24 @@ narrow.measure = function () {
    then down to its 400 px minimum, and grows back toward the user's width as the board gets room. Measured from what
    is applied now, never saved. */
 function usageBoard() { var b = qs('#panel-usage #pmuBoard'); return b && b.offsetParent !== null && b.getClientRects().length ? b : null; }
-var usageWatched = null;
+/* the floor follows the board's width only, through one observer on the board's scroll pane, which never changes: the
+   Usage board hands #pmuBoard between two board elements on every room change, so observing #pmuBoard added an observer
+   per room change, and the board's height changing with each room scheduled this pass two or three times inside every
+   room change's build (motion QA A14, 2026-10-16). The pane is as wide as the board. */
+var usageWatched = null, usageRO = null, usageW = -1;
 narrow.usageFloor = function () {
   var board = usageBoard(), chat = qs('#chatPanel'), ma = mainArea();
   if (!board || !chat || chat.classList.contains('hidden') || (ma && ma.hasAttribute('data-pmw-chat-float')) || !inFlow(chat)) return false;
-  if (usageWatched !== board && typeof ResizeObserver === 'function') { usageWatched = board; new ResizeObserver(narrow.schedule).observe(board); }
+  var pane = board.parentNode;
+  if (pane && usageWatched !== pane && typeof ResizeObserver === 'function') {
+    usageWatched = pane; usageW = -1;
+    if (!usageRO) usageRO = new ResizeObserver(function (entries) {
+      var w = entries && entries[0] && entries[0].contentRect ? entries[0].contentRect.width : -1;
+      if (Math.abs(w - usageW) < 0.5) return;
+      usageW = w; narrow.schedule();
+    });
+    usageRO.disconnect(); usageRO.observe(pane);
+  }
   var hist = historyW();
   var room = chat.getBoundingClientRect().width + board.getBoundingClientRect().width - LADDER.usageBoardMin;
   var want = chatUser() + hist, h = hist;
@@ -190389,6 +190989,9 @@ function wrapPieces(text, cols) {
 /* ======================================================================================================== */
 
 var SYN_KEYS = ['kw', 'str', 'num', 'com', 'fn', 'ty', 'var', 'prop', 'op', 'pun', 'tag', 'attr', 'esc', 'mac', 'link', 'head', 'code'];
+// The parked Customize preview can measure its offered faces before a pick.
+// Keep exact DOM measurements, shared by the live editor and its preview.
+var primedFontWidths = new Map();
 function edAppearance() {
   try {
     var A = window.PMT && window.PMT.Appearance;
@@ -190639,6 +191242,8 @@ function mountEditor(host, st, api) {
   var V = null;                                     // the row model for the current mode
   var caret = { r: 0, c: 0 }, anchor = null, side = 'r', goalCol = -1;
   var focused = !!preview, visible = true, alive = true, dimmed = false;
+  var pageHost = preview ? null : host.closest('#panel-dashboard'), pendingLayout = false;
+  function isShown() { return visible && (!pageHost || pageHost.classList.contains('active')); }
   /* while a Customize screen is open on this editor, it draws what it draws when focused (the caret, the current line's
      band), though the screen has the focus: it is the preview beside the screen, and a blurred editor showed none of
      the caret's or the current line's choices */
@@ -190861,13 +191466,13 @@ function mountEditor(host, st, api) {
   var schemeOn = null, floorOn = null;
   function applyScheme() {
     hookPmt();
-    if (retroPhosphor() === 'amber') root.setAttribute('data-phosphor', 'amber'); else root.removeAttribute('data-phosphor');
+    setAttr(root, 'data-phosphor', retroPhosphor() === 'amber' ? 'amber' : null);
     var id = R.scheme;                     // already the light or dark sibling when Switch with light and dark is on
     var vars = special ? null : schemeVars(id, R.colors.contrast);
     var old = schemeOn || {};
     Object.keys(old).forEach(function (n) { if (!vars || !(n in vars)) codeEls.forEach(function (el) { el.style.removeProperty(n); }); });
     if (vars) Object.keys(vars).forEach(function (n) { if (old[n] !== vars[n]) codeEls.forEach(function (el) { el.style.setProperty(n, vars[n]); }); });
-    if (vars) root.setAttribute('data-scheme', id); else root.removeAttribute('data-scheme');
+    setAttr(root, 'data-scheme', vars ? id : null);
     schemeOn = vars;
     applyFloor(!vars && !special ? (R.colors.contrast === 7 ? 7 : 4.5) : 0);
     applyTokens();
@@ -190877,14 +191482,13 @@ function mountEditor(host, st, api) {
      the text floor with its hue kept like every scheme colour. Set after the scheme and the floor, every time, so
      neither leaves its own value over a chosen one; a colour no longer chosen gets the scheme's (or floor's) back */
   var tokOn = null, lookRead = { key: '', ground: null, tokens: null };
-  var lookProbe = null;
   function lookTokens() {
     // the look's own token table (Follow look), read through a probe on the editor's root, which no scheme or choice
     // writes on (the code elements carry those); once per look, colour mode and phosphor
     var key = R.lookKey + '|' + R.look.mode + '|' + (root.getAttribute('data-phosphor') || '');
     if (lookRead.key !== key) {
-      if (!lookProbe) { lookProbe = h('i', { class: 'pmw-ed-probe', 'aria-hidden': 'true' }); root.appendChild(lookProbe); }
-      var read = function (n) { lookProbe.style.color = 'var(' + n + ')'; var c = cssRgb(getComputedStyle(lookProbe).color); return c ? hexOf(c.slice(0, 3)) : ''; };
+      var colors = tokenColors(SYN_KEYS.map(function (k) { return '--pmw-ed-s-' + k; }).concat(['--pmw-ed-gutbg', '--pmw-ed-bg']));
+      var read = function (n) { var c = colors[n]; return c ? hexOf(c.slice(0, 3)) : ''; };
       var t = {};
       SYN_KEYS.forEach(function (k) { t['--pmw-ed-s-' + k] = read('--pmw-ed-s-' + k); });
       var g = read('--pmw-ed-gutbg') || read('--pmw-ed-bg');
@@ -190925,7 +191529,29 @@ function mountEditor(host, st, api) {
     return null;
   }
   function tokenColor(name) { probe.style.color = 'var(' + name + ')'; return cssRgb(getComputedStyle(probe).color); }
-  var floorRead = { key: '' };
+  // Resolve the complete palette with one style flush. Reusing a single probe
+  // and changing its color between reads forced a document restyle per token.
+  var colorProbes = {}, paletteProbe = null, colorRead = { key: '', values: {}, blend: '' };
+  function tokenColors(names) {
+    // Contrast changes the floor, not the look's underlying palette. Read that
+    // palette once, outside the track that carries scheme and floor overrides.
+    var key = [R.lookKey, R.look.mode, root.getAttribute('data-phosphor') || ''].join('|');
+    if (colorRead.key !== key) colorRead = { key: key, values: {}, blend: '' };
+    var missing = names.filter(function (n) { return !Object.prototype.hasOwnProperty.call(colorRead.values, n); });
+    if (!missing.length) return colorRead.values;
+    if (!paletteProbe) { paletteProbe = h('i', { class: 'pmw-ed-probe', 'aria-hidden': 'true' }); root.appendChild(paletteProbe); }
+    var fragment = document.createDocumentFragment();
+    missing.forEach(function (n) {
+      if (colorProbes[n]) return;
+      var p = document.createElement('i'); p.style.color = 'var(' + n + ')';
+      colorProbes[n] = p; fragment.appendChild(p);
+    });
+    if (fragment.childNodes.length) paletteProbe.appendChild(fragment);
+    colorRead.blend = getComputedStyle(root).getPropertyValue('--pmw-ed-sel-blend').trim();
+    missing.forEach(function (n) { colorRead.values[n] = cssRgb(getComputedStyle(colorProbes[n]).color); });
+    return colorRead.values;
+  }
+  var floorRead = { key: '' }, floorReads = Object.create(null);
   function textGrounds() {
     if (schemeOn) return schemeOn._onText || [groundNow()];
     return floorOn && floorRead.on ? floorRead.on : [groundNow()];
@@ -190933,31 +191559,38 @@ function mountEditor(host, st, api) {
   function applyFloor(F) {
     var key = F ? [R.lookKey, R.look.mode, root.getAttribute('data-phosphor') || '', F].join('|') : '';
     var old = floorOn || {};
+    // Quick sets commonly alternate 4.5 and 7. Keep both proven palettes so
+    // Reset can restore the same floored colours without another style read.
+    if (F && floorReads[key]) floorRead = floorReads[key];
     if (F && floorRead.key !== key) {
       Object.keys(old).forEach(function (n) { codeEls.forEach(function (el) { el.style.removeProperty(n); }); });
       old = {}; floorOn = null;
-      var bgc = tokenColor('--pmw-ed-gutbg'), base = [16, 16, 20];
+      var names = SYN_KEYS.map(function (k) { return '--pmw-ed-s-' + k; }).concat(['--pmw-ed-fg', '--pmw-ed-ln', '--pmw-ed-ln-cur', '--pmw-ed-add-fg', '--pmw-ed-mod-fg', '--pmw-ed-del-fg', '--pmw-ed-conf-fg',
+        '--pmw-ed-bp-0', '--pmw-ed-bp-1', '--pmw-ed-bp-2', '--pmw-ed-bp-3', '--pmw-ed-bp-4', '--pmw-ed-bp-5']);
+      var colors = tokenColors(names.concat(['--pmw-ed-gutbg', '--pmw-ed-sel', '--pmw-ed-sel-blur', '--pmw-ed-line', '--pmw-ed-add-bg', '--pmw-ed-mod-bg', '--pmw-ed-del-bg', '--pmw-ed-conf-bg']));
+      var color = function (n) { return colors[n]; };
+      var bgc = color('--pmw-ed-gutbg'), base = [16, 16, 20];
       if (!bgc) { floorRead = { key: '' }; return; }
       var bg = bgc[3] < 1 ? mixRgb(base, bgc, bgc[3]) : bgc.slice(0, 3);
       var on = function (base, c) { return c[3] < 1 ? mixRgb(base, c, c[3]) : c.slice(0, 3); };
-      var blend = getComputedStyle(root).getPropertyValue('--pmw-ed-sel-blend').trim() === 'difference';
-      var layers = (blend ? ['--pmw-ed-line'] : ['--pmw-ed-sel', '--pmw-ed-sel-blur', '--pmw-ed-line']).map(tokenColor).filter(Boolean);
-      var tints = ['--pmw-ed-add-bg', '--pmw-ed-mod-bg', '--pmw-ed-del-bg', '--pmw-ed-conf-bg'].map(tokenColor).filter(Boolean);
+      var blend = colorRead.blend === 'difference';
+      var layers = (blend ? ['--pmw-ed-line'] : ['--pmw-ed-sel', '--pmw-ed-sel-blur', '--pmw-ed-line']).map(color).filter(Boolean);
+      var tints = ['--pmw-ed-add-bg', '--pmw-ed-mod-bg', '--pmw-ed-del-bg', '--pmw-ed-conf-bg'].map(color).filter(Boolean);
       // a changed row's tint under a selection is a ground too (the landing sweep found words there at 3.4:1)
       var grounds = [bg].concat(tints.map(function (t) { return on(bg, t); }));
       var onText = [], onGutter = grounds.slice();
       grounds.forEach(function (g) { onText.push(g); layers.forEach(function (l) { onText.push(on(g, l)); }); });
       var out = {};
       var GUTTER = /^--pmw-ed-(ln|ln-cur|add-fg|mod-fg|del-fg|conf-fg)$/;
-      SYN_KEYS.map(function (k) { return '--pmw-ed-s-' + k; }).concat(['--pmw-ed-fg', '--pmw-ed-ln', '--pmw-ed-ln-cur', '--pmw-ed-add-fg', '--pmw-ed-mod-fg', '--pmw-ed-del-fg', '--pmw-ed-conf-fg',
-        '--pmw-ed-bp-0', '--pmw-ed-bp-1', '--pmw-ed-bp-2', '--pmw-ed-bp-3', '--pmw-ed-bp-4', '--pmw-ed-bp-5']).forEach(function (n) {
-        var c = tokenColor(n); if (!c) return;
+      names.forEach(function (n) {
+        var c = color(n); if (!c) return;
         var flat = c[3] < 1 ? mixRgb(bg, c, c[3]) : c.slice(0, 3);
         var to = legibleOn(flat, GUTTER.test(n) ? onGutter : onText, F);
         // a see-through colour is written flat and floored: over a selection it would blend darker than it measured here
         if (to !== flat || c[3] < 1) out[n] = hexOf(to);
       });
       floorRead = { key: key, out: out, on: onText };
+      floorReads[key] = floorRead;
     }
     var next = F ? floorRead.out : {};
     Object.keys(old).forEach(function (n) { if (!(n in next)) codeEls.forEach(function (el) { el.style.removeProperty(n); }); });
@@ -191000,9 +191633,36 @@ function mountEditor(host, st, api) {
     setVar('--pmw-ed-wt', F.weight === 400 ? null : String(F.weight));
     setVar('--pmw-ed-ls', F.letterSpacing ? F.letterSpacing + 'px' : null);
     if (F.ligatures) root.setAttribute('data-lig', ''); else root.removeAttribute('data-lig');
-    var w = measureEl.getBoundingClientRect().width / 100;
+    var known = primedFontWidths.get(fontWidthKey(F));
+    var w = known || measureEl.getBoundingClientRect().width / 100;
     if (w > 2) cw = w; else cw = fs * 0.6 + (+F.letterSpacing || 0);
     setVar('--pmw-ed-cw', cw + 'px');
+  }
+  function fontWidthKey(F) {
+    return [R.lookKey, R.look.mode, F.id, F.stack, F.size, F.weight, F.letterSpacing, window.devicePixelRatio || 1].join('|');
+  }
+  function primeFont(F) {
+    var key = fontWidthKey(F);
+    if (primedFontWidths.has(key)) return;
+    // Called only on the parked preview: its ancestors have no entrance
+    // transform, so this is the same unscaled measurement the editor uses.
+    var p = measureEl.cloneNode(true);
+    p.style.fontFamily = F.id === 'jetbrains-mono' ? 'var(--pm-font-code)' : F.stack;
+    p.style.fontSize = clamp(+F.size || 13, 10, 24) + 'px';
+    p.style.fontWeight = String(F.weight || 400);
+    p.style.letterSpacing = (+F.letterSpacing || 0) + 'px';
+    root.appendChild(p);
+    // Code can use the italic face on the first pick too. Load it here, so its
+    // arrival does not invalidate the measurements in that input's frame.
+    if (document.fonts && document.fonts.load) {
+      document.fonts.load('italic ' + (F.weight || 400) + ' ' + (clamp(+F.size || 13, 10, 24)) + 'px ' + getComputedStyle(p).fontFamily, '0').catch(function () {});
+    }
+    var w = p.getBoundingClientRect().width / 100;
+    p.remove();
+    if (w > 2) {
+      if (primedFontWidths.size >= 64) primedFontWidths.delete(primedFontWidths.keys().next().value);
+      primedFontWidths.set(key, w);
+    }
   }
   function layout() {
     headH = head.offsetHeight;
@@ -191750,9 +192410,9 @@ function mountEditor(host, st, api) {
     }
   }
   function queueDraw() {
-    if (timers.drawQueued) return;
+    if (timers.drawQueued || !isShown()) return;
     timers.drawQueued = true;
-    requestAnimationFrame(function () { if (alive) drawTrack(); });
+    requestAnimationFrame(function () { timers.drawQueued = false; if (alive && isShown()) drawTrack(); });
   }
 
   /* track pointer: grab keeps its offset, a track press centres the thumb and keeps dragging, Escape cancels */
@@ -192887,7 +193547,9 @@ function mountEditor(host, st, api) {
   }
   function onResize(sz) {
     if (!alive) return;
-    if (!firstDone) { firstPaint(); return; }
+    if (!isShown()) { pendingLayout = true; return; }
+    if (!firstDone) { pendingLayout = false; firstPaint(); return; }
+    if (pendingLayout) { pendingLayout = false; resolveLayout(false); relayoutAll(); return; }
     if (sz && sz.final === false && mode === 'diff') { layout(); renderRows(true); renderOverlays(); updateThumb(); return; }
     var changed = resolveLayout(false);
     if (!changed) { layout(); renderRows(true); renderOverlays(); updateThumb(); updateHbar(); sticky._key = null; updateSticky(); }
@@ -192895,6 +193557,9 @@ function mountEditor(host, st, api) {
   }
   function relayoutAll() {
     if (!firstDone) return;
+    // Settings can change a mounted editor while Home is hidden. Measure it
+    // when it is shown, at its real size; the Customize preview stays live.
+    if (!isShown()) { pendingLayout = true; return; }
     var top = topRow();
     measure();
     layout();
@@ -192967,8 +193632,13 @@ function mountEditor(host, st, api) {
   function applyDim() { setAttr(root, 'data-dim', R.motion.inactiveDim && (preview ? demoDim : dimmed) ? '' : null); }
   /* what of the colours needs the rows drawn again: token colours are CSS variables only (applyTokens), so a colour
      slider being dragged repaints without rebuilding a row */
-  function colorSig() { var c = R.colors; return [c.syntax, c.bracketPairs, c.contrast, c.italicComments, c.boldKeywords]; }
+  function colorSig() { var c = R.colors; return [c.syntax, c.bracketPairs]; }
+  function rowLookKey() { return JSON.stringify([colorSig(), R.lines, R.behavior.diagnostics, IND.unit, IND.tabs]); }
+  var appliedLook = '';
   function onLook(R2) {
+    var applied = JSON.stringify(R2);
+    if (applied === appliedLook) return;
+    appliedLook = applied;
     var prev = R; R = R2;
     if (!alive) return;
     var reopened = resolveIndent();
@@ -192981,19 +193651,22 @@ function mountEditor(host, st, api) {
     drawKey = dk;
     if (!firstDone || (same && !reopened)) return;
     var g = JSON.stringify([R.font, R.lines.numbers, R.lines.wrap, R.lines.wrapColumn, R.lines.minimap, R.motion.pastEnd, R.lines.rulers]);
-    var l = JSON.stringify([colorSig(), R.lines, R.caret, R.scheme, R.lookKey, R.look.mode, R.behavior.diagnostics, IND.unit, IND.tabs]);
+    var l = rowLookKey();
+    if (!isShown()) { pendingLayout = true; geoSig = g; lookSig = l; colorCache = null; return; }
     if (prev.behavior.diffLayout !== R.behavior.diffLayout && mode === 'diff' && !diffLayoutPick) resolveLayout(true);
     // the header's height can only change with the look (its face and spacing), never with colours: reading it forces
     // the whole page to restyle and lay out at once, so it is read only when the look itself changed
     else if (reopened || g !== geoSig || ((R.lookKey !== prev.lookKey || R.look.mode !== prev.look.mode) && head.offsetHeight !== headH)) relayoutAll();
     else if (l !== lookSig) { renderRows(true); sticky._key = null; updateSticky(); renderOverlays(); }
+    else if (JSON.stringify(R.caret) !== JSON.stringify(prev.caret)) renderOverlays();
     geoSig = g; lookSig = l;
     if (R.lines.relative !== prev.lines.relative) markCurrentRow();
     colorCache = null;
     queueDraw();
   }
   geoSig = JSON.stringify([R.font, R.lines.numbers, R.lines.wrap, R.lines.wrapColumn, R.lines.minimap, R.motion.pastEnd, R.lines.rulers]);
-  lookSig = JSON.stringify([colorSig(), R.lines, R.caret, R.scheme, R.lookKey, R.look.mode, R.behavior.diagnostics, IND.unit, IND.tabs]);
+  lookSig = rowLookKey();
+  appliedLook = JSON.stringify(R);
   function noTokens(k, x) { return k === 'tokens' ? undefined : x; }
   var drawKey = JSON.stringify(R, noTokens);
   applyAttrs();
@@ -193098,7 +193771,13 @@ function mountEditor(host, st, api) {
       return out;
     },
     onResize: onResize,
-    onShow: function () { visible = true; if (!firstDone) { firstPaint(); return; } queueDraw(); },
+    onShow: function () {
+      visible = true;
+      if (!isShown()) return;
+      if (!firstDone) { pendingLayout = false; firstPaint(); return; }
+      if (pendingLayout) { pendingLayout = false; resolveLayout(false); relayoutAll(); return; }
+      queueDraw();
+    },
     onHide: function () { visible = false; clearTimeout(scrollIdle); if (R.behavior.autosave === 'focus') autoSave(); },
     // the host's focus lifecycle (CONTRACT section 3): Fade editors I'm not in steps this editor back while another
     // panel has the focus
@@ -193108,6 +193787,7 @@ function mountEditor(host, st, api) {
     view: view,
     root: root,
     look: function () { return R; },
+    primeFont: primeFont,
     /* the colours change under a sweep in the look's own motion, from the point of the choice (a scheme tile): a plate
        of the old ground lifts away (Basic fades, Friendly blooms from the point, Glass glides across, Retro steps,
        NieR wipes in its eight steps); Reduced Motion changes at once */
@@ -193406,7 +194086,7 @@ function setup() {
 
   /* re-measure every open editor when a font arrives (JetBrains Mono loads on first use) */
   try {
-    if (doc.fonts && doc.fonts.addEventListener) doc.fonts.addEventListener('loadingdone', function () { EDITORS.forEach(function (v) { v.relayout(); }); });
+    if (doc.fonts && doc.fonts.addEventListener) doc.fonts.addEventListener('loadingdone', function () { primedFontWidths.clear(); EDITORS.forEach(function (v) { v.relayout(); }); });
   } catch (_) {}
   /* PMW.editorPreview(host, { text, base, language, problems, view, caret }): a live editor that draws the given text the
      way an editor tab with that view's look would, as the Customize screen's preview; it takes no input */
@@ -193422,7 +194102,7 @@ function setup() {
     return inst;
   };
   /* the editor a person is working in: the last one used, while it is still on screen; else the widest one shown */
-  PMW.editorInView = function () {
+  PMW.editorInView = function (includeHidden) {
     var shown = function (inst) { return inst && inst.root && inst.root.isConnected && inst.root.getBoundingClientRect().width > 0; };
     if (shown(lastUsed)) return lastUsed;
     var best = null, bw = 0;
@@ -193430,7 +194110,12 @@ function setup() {
       var e = b._pmwEditor; if (!shown(e)) return;
       var w = e.root.getBoundingClientRect().width; if (w > bw) { bw = w; best = e; }
     });
-    return best;
+    if (best || !includeHidden) return best;
+    // Settings can customize a mounted editor without navigating through Home.
+    if (lastUsed && lastUsed.root && lastUsed.root.isConnected) return lastUsed;
+    var bodies = doc.querySelectorAll('.pmw-tabbody');
+    for (var i = 0; i < bodies.length; i++) if (bodies[i]._pmwEditor) return bodies[i]._pmwEditor;
+    return null;
   };
   PMW.editorOf = function (tabId) {
     var body = doc.querySelector('.pmw-tabbody[data-pmw-tab="' + String(tabId).replace(/"/g, '\\"') + '"]');
@@ -195214,6 +195899,23 @@ function reducedNow() { return PMW.reduced ? PMW.reduced() : false; }
 /* motion: the terminal's one-shot classes (.pmt-in, .pmt-out; 60-motion.css gives them each look's voice) */
 var Motion = {
   finished: function (node, fn) {
+    if (node.classList.contains('pmed-cz')) {
+      // The sheet has one entrance/exit on its dialog. Waiting for its event
+      // avoids getAnimations(subtree), which flushes style for every tile in the
+      // input handler just after adding the animation class.
+      if (node._pmedFinish) node._pmedFinish();
+      var target = node.querySelector('.pmt-cz-dialog'), timer, ended = false;
+      var de = document.documentElement;
+      // NieR without Slice has no dialog animation. Its scrim still owns the
+      // short fade, including the stationary Reduced Motion version.
+      if (de.getAttribute('data-o55-nier') === 'on' && (reducedNow() || !/(^|\s)slice(\s|$)/.test(de.getAttribute('data-o55-nier-parts') || ''))) target = node.querySelector('.pmt-cz-scrim > i');
+      var clean = function () { clearTimeout(timer); target.removeEventListener('animationend', end); node._pmedFinish = null; };
+      var end = function (e) { if (e && e.target !== target) return; if (ended) return; ended = true; clean(); fn(); };
+      node._pmedFinish = clean;
+      target.addEventListener('animationend', end);
+      timer = setTimeout(end, 900);
+      return;
+    }
     var list = node.isConnected && node.getAnimations ? node.getAnimations({ subtree: true }).filter(function (a) {
       var t = a.effect && a.effect.getComputedTiming ? a.effect.getComputedTiming() : null;
       return !t || t.endTime !== Infinity;
@@ -195225,6 +195927,7 @@ var Motion = {
   },
   play: function (node, cls) {
     cls = cls || 'pmt-in';
+    if (node.classList.contains('pmed-cz')) { Motion.sheet(node, false, function () {}); return; }
     var gen = node._pmedGen = (node._pmedGen || 0) + 1;
     node.classList.remove('pmt-out');
     if (node.classList.contains(cls)) { node.classList.remove(cls); void node.offsetWidth; }
@@ -195232,10 +195935,32 @@ var Motion = {
     Motion.finished(node, function () { if (node._pmedGen === gen) node.classList.remove(cls); });
   },
   leave: function (node, done) {
+    if (node.classList.contains('pmed-cz')) { Motion.sheet(node, true, done); return; }
     var gen = node._pmedGen = (node._pmedGen || 0) + 1;
     node.classList.remove('pmt-in');
     node.classList.add('pmt-out');
     Motion.finished(node, function () { if (node._pmedGen === gen) { node.classList.remove('pmt-out'); done(); } });
+  },
+  sheet: function (node, leaving, done) {
+    if (node._pmedFinish) node._pmedFinish();
+    var gen = node._pmedGen = (node._pmedGen || 0) + 1;
+    var parts = node.querySelectorAll('.pmt-cz-scrim > i, .pmt-cz-frame, .pmt-cz-dialog');
+    var clear = function (p) { p.classList.remove('pmed-sheet-in', 'pmed-sheet-out', 'pmed-shade-in', 'pmed-shade-out'); };
+    [].forEach.call(parts, function (p) { clear(p); p.classList.add((p.classList.contains('pmt-cz-dialog') ? 'pmed-sheet-' : 'pmed-shade-') + (leaving ? 'out' : 'in')); });
+    // Keep the full family motion when the opening/closing frame is expensive.
+    // The shared helper reads these six moving plates on a later frame, never
+    // the sheet's subtree in the input handler. A newer visit owns its moves.
+    if (!reducedNow() && window.PM_START_ON_SHOWN) window.PM_START_ON_SHOWN(function () {
+      if (!node.isConnected || node._pmedGen !== gen) return [];
+      var moves = [];
+      [].forEach.call(parts, function (p) {
+        if (p.getAnimations) p.getAnimations().forEach(function (a) {
+          if (a.effect && a.effect.target === p && /^pmt-m-/.test(a.animationName || '')) moves.push(a);
+        });
+      });
+      return moves;
+    });
+    Motion.finished(node, function () { if (node._pmedGen !== gen) return; [].forEach.call(parts, clear); done(); });
   }
 };
 
@@ -195376,9 +196101,26 @@ PMW.czFit = function (root) {
   var segs = [].slice.call(root.querySelectorAll('.pmt-cz-seg')).filter(function (s) { return !s.closest('[hidden]'); });
   var shown = segs.map(function (s) { return s.getAttribute('data-seg') + ':' + s.querySelectorAll('.pmt-cz-segopt:not([hidden])').length; }).join(',');
   var de = document.documentElement;
-  var key = [dialog.style.width, root.getAttribute('data-pmt-look'), root.getAttribute('data-pmt-mode'), de.getAttribute('data-o55-nier-parts') || '', czFitEpoch, shown].join('|');
+  var base = [dialog.style.width, root.getAttribute('data-pmt-look'), root.getAttribute('data-pmt-mode'), de.getAttribute('data-o55-nier-parts') || '', czFitEpoch].join('|');
+  var key = base + '|' + shown;
   if (root._czFit === key) return;
   root._czFit = key;
+  // Editor face choices change the available weights. Reuse the exact fit of
+  // each offered set; the terminal keeps the existing fitting path.
+  var fits = null;
+  if (root.classList.contains('pmed-cz')) {
+    if (root._pmedFitBase !== base) { root._pmedFitBase = base; root._pmedFits = Object.create(null); }
+    fits = root._pmedFits;
+    if (fits[shown]) {
+      fits[shown].forEach(function (r) {
+        ['data-cols', 'data-fit'].forEach(function (a, i) {
+          if (r[0].getAttribute(a) === r[i + 1]) return;
+          if (r[i + 1] === null) r[0].removeAttribute(a); else r[0].setAttribute(a, r[i + 1]);
+        });
+      });
+      return;
+    }
+  }
   var gridOf = function (s) { var f = s.closest('.pmt-cz-field'), g = f && f.parentElement; return g && (g.classList.contains('pmt-cz-grid2') || g.classList.contains('pmt-cz-row')) ? g : null; };
   [].forEach.call(root.querySelectorAll('.pmt-cz-grid2[data-cols], .pmt-cz-row[data-cols]'), function (g) { g.removeAttribute('data-cols'); });
   [].forEach.call(root.querySelectorAll('.pmt-cz-seg[data-fit]'), function (s) { s.removeAttribute('data-fit'); });
@@ -195392,6 +196134,7 @@ PMW.czFit = function (root) {
   short.forEach(function (s) { s.setAttribute('data-fit', 'short'); });
   if (short.length) left = left.filter(over);
   left.forEach(function (s) { s.setAttribute('data-fit', 'stack'); });
+  if (fits) fits[shown] = [].map.call(root.querySelectorAll('.pmt-cz-grid2, .pmt-cz-row, .pmt-cz-seg'), function (e) { return [e, e.getAttribute('data-cols'), e.getAttribute('data-fit')]; });
 };
 if (document.fonts && document.fonts.addEventListener) document.fonts.addEventListener('loadingdone', function () {
   czFitEpoch += 1;
@@ -195568,23 +196311,25 @@ function skeleton(name) {
 }
 
 /* ---------------- the screen ---------------- */
-var openRoot = null;
+var openRoot = null, prepared = null;
 function open(opts) {
   opts = opts || {};
   if (!EL()) return null;
   var inst = opts.view && opts.view.editor ? opts.view.editor() : (PMW.editorInView ? PMW.editorInView() : null);
   if (!inst || !inst.view) return null;
   var v = inst.view;
+  if (prepared && prepared.inst === inst && prepared.el.isConnected) return prepared.show(opts);
+  if (prepared) { prepared.dispose(); prepared = null; }
   if (openRoot && openRoot._pmedClose) openRoot._pmedClose(true);
   // the editor beside the screen draws its caret and current line while the screen is open (10-editor.js, customizing)
-  if (inst.customizing) inst.customizing(true);
+  if (!opts.prepare && inst.customizing) inst.customizing(true);
   var overlay = PMW.overlay ? PMW.overlay() : document.body;
-  var root = el('div', 'pmt-cz pmed-cz pmt-calm');
+  var root = el('div', 'pmt-cz pmed-cz pmt-calm pmed-prepared');
+  root.setAttribute('aria-hidden', 'true');
   root.setAttribute('data-pmw-overlay', 'editor-appearance');
   var label = (inst.root && inst.root.querySelector('.pmw-ed-seg.is-file') || {}).textContent || 'Editor';
   root.innerHTML = skeleton(label);
   overlay.appendChild(root);
-  openRoot = root;
   var dialog = root.querySelector('.pmt-cz-dialog'), body = root.querySelector('.pmt-cz-body');
   /* the scope, as the terminal's screen keeps it: All editors when Settings opens it, for that visit only; otherwise
      the one last picked on this editor's screen (remembered while the tab lives), This editor at first */
@@ -195606,17 +196351,31 @@ function open(opts) {
 
   function scopeView() { return scope === 'tab' ? v : { tabAppearance: {}, previewAppearance: v.previewAppearance }; }
   function eff() { return EL().resolve(scopeView()); }
-  function val(key) { var o = EL().own(scope, v, key); return o !== undefined ? o : EL().get(scopeView(), key); }
+  var paintRead = null;
+  function ownValue(key) {
+    if (paintRead && Object.prototype.hasOwnProperty.call(paintRead.own, key)) return paintRead.own[key];
+    var o = EL().own(scope, v, key);
+    if (paintRead) paintRead.own[key] = o;
+    return o;
+  }
+  function val(key) {
+    if (paintRead && Object.prototype.hasOwnProperty.call(paintRead.values, key)) return paintRead.values[key];
+    var o = ownValue(key), value = o !== undefined ? o : EL().get(scopeView(), key);
+    if (paintRead) paintRead.values[key] = value;
+    return value;
+  }
   function mine(key) {
     if (key === 'lineNumberMode') return mine('lineNumbers') || mine('relativeNumbers');
-    return EL().own(scope, v, key) !== undefined;
+    return ownValue(key) !== undefined;
   }
   function syncPreview() {
     pvView.tabAppearance = scope === 'tab' ? v.tabAppearance || {} : {};
     pvView.previewAppearance = v.previewAppearance || null;
     if (pvView.applyLook) pvView.applyLook(EL().resolve(pvView));
   }
-  function write(patch) { EL().setMany(scope, patch, v); syncPreview(); paint(); }
+  // setMany emits one change after updating the editors. That notification owns the
+  // controls and preview too; doing them again here forced a second layout per pick.
+  function write(patch) { EL().setMany(scope, patch, v); }
   function put(key, value) { var p = {}; p[key] = value; write(p); }
 
   /* ---- painting: every control shows this scope's value ---- */
@@ -195651,7 +196410,7 @@ function open(opts) {
     return name + ' has no indentation to follow yet, so Tab puts in ' + (I.tabs ? 'a tab, ' + I.unit + ' columns wide.' : I.unit + ' spaces.');
   }
   function note(sel, text) { var e = root.querySelector(sel); if (!e) return; e.hidden = !text; if (e.textContent !== text) e.textContent = text; }
-  /* the look's own code colours (Follow look), read off the editor once per look, colour mode, contrast and phosphor,
+  /* the look's own code colours (Follow look), read off the editor once per look, colour mode and phosphor,
      in a frame of its own; until it lands the screen keeps what it drew */
   var LOOK_TOKENS = ['--pmw-ed-fg', '--pmw-ed-bg', '--pmw-ed-gutbg', '--pmw-ed-s-kw', '--pmw-ed-s-fn', '--pmw-ed-s-str', '--pmw-ed-s-com', '--pmw-ed-bp-0', '--pmw-ed-bp-1', '--pmw-ed-bp-2'];
   var lookRead = { key: null, v: null }, lookRaf = 0;
@@ -195667,18 +196426,77 @@ function open(opts) {
     });
     return lookRead.v;
   }
-  var varsSet = {};
-  function setVar(n, val) { if (varsSet[n] === val) return; varsSet[n] = val; root.style.setProperty(n, val); }
+  var varsSet = {}, artHosts = [].map.call(root.querySelectorAll('.pmt-cz-art'), function (a) { return a.parentElement; });
+  // Only these small pictures use the chosen scheme. Putting their colours on
+  // the sheet restyled every control and scheme tile for each colour pick.
+  function setVar(n, val) { if (varsSet[n] === val) return; varsSet[n] = val; [].forEach.call(artHosts, function (a) { a.style.setProperty(n, val); }); }
+  var warmMeasureJob = 0, warmMeasureStamp = '', warmMeasureQueue = [];
+  function measurementStamp() {
+    return [dialog.style.width, root.getAttribute('data-pmt-look'), root.getAttribute('data-pmt-mode'), czFitEpoch,
+      document.documentElement.getAttribute('data-o55-nier-parts') || '', scope, JSON.stringify(eff().font)].join('|');
+  }
+  function cancelWarmMeasurements() {
+    if (warmMeasureJob) {
+      if (window.cancelIdleCallback) cancelIdleCallback(warmMeasureJob); else clearTimeout(warmMeasureJob);
+    }
+    warmMeasureJob = 0; warmMeasureQueue = [];
+  }
+  function warmMeasurementsSoon() {
+    if (disposed || !closed || warmMeasureJob || !root.classList.contains('pmed-prepared')) return;
+    var stamp = measurementStamp();
+    if (warmMeasureStamp === stamp) return;
+    var faces = EL().FACES || {}, base = scope === 'tab' ? v.tabAppearance || {} : {};
+    var patches = Object.keys(faces).map(function (id) { return { font: id }; });
+    SETS.forEach(function (s) { if (s.patch && s.patch.font) patches.push(s.patch); });
+    warmMeasureQueue = patches.map(function (patch) { return function () {
+      if (preview && preview.primeFont) preview.primeFont(EL().resolve({ tabAppearance: Object.assign({}, base, patch) }).font);
+    }; });
+    var weights = [].slice.call(root.querySelectorAll('[data-seg="fontWeight"] [data-value]'));
+    var seen = {};
+    Object.keys(faces).forEach(function (id) {
+      var range = faces[id].weights, key = range && range.join('|');
+      if (!range || seen[key]) return; seen[key] = true;
+      warmMeasureQueue.push(function () {
+        var hidden = weights.map(function (b) { return b.hidden; });
+        weights.forEach(function (b) { var n = Number(b.getAttribute('data-value')), hide = n < range[0] || n > range[1]; if (b.hidden !== hide) b.hidden = hide; });
+        PMW.czFit(root);
+        weights.forEach(function (b, i) { if (b.hidden !== hidden[i]) b.hidden = hidden[i]; });
+        PMW.czFit(root);
+      });
+    });
+    function next() {
+      warmMeasureJob = window.requestIdleCallback ? requestIdleCallback(run) : setTimeout(run, 50);
+    }
+    function run() {
+      warmMeasureJob = 0;
+      if (disposed || !closed || !root.classList.contains('pmed-prepared')) { warmMeasureQueue = []; return; }
+      if (measurementStamp() !== stamp) { warmMeasureQueue = []; warmMeasurementsSoon(); return; }
+      var work = warmMeasureQueue.shift(); if (work) work();
+      if (warmMeasureQueue.length) next(); else warmMeasureStamp = stamp;
+    }
+    next();
+  }
+  if (document.fonts && document.fonts.addEventListener) document.fonts.addEventListener('loadingdone', warmMeasurementsSoon);
   function paint() {
+    // The tile, Changed mark, group count and footer all read the same fields.
+    // Resolve each layer once for this paint, without caching across edits.
+    if (paintRead) return;
+    paintRead = { own: Object.create(null), values: Object.create(null) };
+    try { paintControls(); } finally { paintRead = null; }
+    if (closed) warmMeasurementsSoon();
+  }
+  function paintControls() {
     var R = eff(), lk = R.lookKey, isNier = lk === 'nier';
-    root.setAttribute('data-pmt-look', lk);
-    root.setAttribute('data-pmt-mode', R.look.mode === 'light' ? 'light' : 'dark');
-    root.setAttribute('data-scope', scope);
+    setA(root, 'data-pmt-look', lk);
+    setA(root, 'data-pmt-mode', R.look.mode === 'light' ? 'light' : 'dark');
+    setA(root, 'data-scope', scope);
     root.classList.toggle('pmt-cz-reduced', !!R.look.reduced);
     /* the effect pictures are drawn in this scope's own colours (the terminal's art reads these): a scheme's from the
        editor's own variables, the look's from a reading taken once per look (lookTokens); never a computed-style read
        inside a choice, which made the page restyle everything at once and froze the sweep (a GPU film) */
-    var lkKey = lk + '|' + R.look.mode + '|' + R.colors.contrast + '|' + (inst.root && inst.root.getAttribute('data-phosphor') || '');
+    // The look tokens are inherited from the editor root; the contrast floor is
+    // applied on its code surfaces. Changing the floor needs no new art reading.
+    var lkKey = lk + '|' + R.look.mode + '|' + (inst.root && inst.root.getAttribute('data-phosphor') || '');
     var sv = inst.schemeVarsNow ? inst.schemeVarsNow() : null, lt = lookTokens(lkKey);
     var tok = function (n) { return (sv && sv[n]) || (lt && lt[n]) || ''; };
     setVar('--pmt-cz-sfg', tok('--pmw-ed-fg') || '#ccc');
@@ -195746,7 +196564,7 @@ function open(opts) {
     /* the preview's caption, also its text alternative */
     var desc = R.schemeName + ', ' + R.font.label + ' ' + (Math.round(R.font.size * 10) / 10) + ' px, ' + R.caret.shape + ' caret' + (R.lines.wrap ? ', wraps' : '') + (R.lines.guides !== 'off' ? ', guides' : '');
     var pd = root.querySelector('[data-pv-desc]'); if (pd.textContent !== desc) pd.textContent = desc;
-    homeBox.setAttribute('aria-label', 'Preview: ' + desc);
+    setA(homeBox, 'aria-label', 'Preview: ' + desc);
     /* counts */
     var mineKeys = COUNTED.filter(mine), n = mineKeys.length;
     [].forEach.call(root.querySelectorAll('.pmt-cz-cells > i'), function (c, i) { c.classList.toggle('pmt-cz-on', mine(COUNTED[i])); });
@@ -195778,9 +196596,14 @@ function open(opts) {
 
   /* ---- placement: beside the editor when there is room, otherwise over the middle; the scrim leaves the editor
      itself uncovered ---- */
+  var placed = '';
   function place() {
     var de = document.documentElement, W = de.clientWidth || 1024, H = de.clientHeight || 768;
-    var r = inst.root && inst.root.isConnected ? inst.root.getBoundingClientRect() : { left: 0, top: 0, right: 0, bottom: 0, width: 0, height: 0 };
+    var homeVisible = opts.from !== 'settings' && document.getElementById('panel-dashboard').classList.contains('active');
+    var r = homeVisible && inst.root && inst.root.isConnected ? inst.root.getBoundingClientRect() : { left: 0, top: 0, right: 0, bottom: 0, width: 0, height: 0 };
+    var placement = [W, H, r.left, r.top, r.right, r.bottom].join('|');
+    if (placed === placement) return;
+    placed = placement;
     var hole = r.width > 0 && r.height > 0;
     var M = 12, want = Math.min(920, W - 2 * M), narrow = W < 720, left, width = want;
     if (narrow) { left = 8; width = W - 16; }
@@ -195856,6 +196679,7 @@ function open(opts) {
     if (key === 'inactiveDim' && next) tryDim();
   }
   root.addEventListener('click', function (e) {
+    if (closed) return;
     var t = e.target;
     if (t.closest('.pmt-cz-scrim, .pmt-cz-frame')) { close(); return; }
     var b = t.closest('button, [role="radio"], [role="switch"]'); if (!b || !root.contains(b)) return;
@@ -195869,7 +196693,7 @@ function open(opts) {
     if (b.hasAttribute('data-jump')) { var g = root.querySelector('[data-group="' + b.getAttribute('data-jump') + '"]'); if (g) { g.scrollIntoView({ block: 'start', behavior: reducedNow() ? 'auto' : 'smooth' }); var hd = g.querySelector('h3'); if (hd) { hd.tabIndex = -1; hd.focus({ preventScroll: true }); } } return; }
     var act = b.getAttribute('data-act');
     if (act === 'close') close();
-    else if (act === 'reset') { EL().reset(scope, v); syncPreview(); paint(); PMW.announce(scope === 'tab' ? 'This editor follows All editors again' : 'All editors follow the look again'); }
+    else if (act === 'reset') { EL().reset(scope, v); PMW.announce(scope === 'tab' ? 'This editor follows All editors again' : 'All editors follow the look again'); }
     else if (act === 'group-reset') { var gpatch = {}; GROUP_KEYS[b.getAttribute('data-group')].forEach(function (k) { if (EL().own(scope, v, k) !== undefined) gpatch[k] = null; }); write(gpatch); }
     else if (act === 'default') put(b.getAttribute('data-key'), null);
     else if (act === 'try-move') tryMove();
@@ -195887,7 +196711,7 @@ function open(opts) {
   });
   function quickSet(id) {
     var s = SETS.filter(function (x) { return x.id === id; })[0]; if (!s) return;
-    if (!s.patch) { EL().reset(scope, v); syncPreview(); paint(); return; }
+    if (!s.patch) { EL().reset(scope, v); return; }
     /* a set changes its own fields and leaves the rest of this scope's choices (the scheme you picked stays) */
     write(Object.assign({}, s.patch));
   }
@@ -195966,21 +196790,42 @@ function open(opts) {
   /* a scheme previews when the pointer rests on it (160 ms, so crossing the grid previews nothing on the way) or the
      arrow keys reach it, on the preview and on the editor, at once and without the sweep (the sweep is for keeping
      one); leaving the list or Escape puts the chosen one back */
-  var INTENT_MS = 160, intent = 0, previewing = null;
+  var INTENT_MS = 160, intent = 0, previewing = null, intentTile = null, scrollUntil = 0, pointerX = null, pointerY = null;
+  function cancelIntent() { clearTimeout(intent); intent = 0; intentTile = null; }
   function previewSoon(tileEl, ms) {
-    clearTimeout(intent);
+    cancelIntent();
+    intentTile = tileEl;
     var id = tileEl.getAttribute('data-value');
     if (previewing === id) return;
     intent = setTimeout(function () {
-      if (!root.isConnected || openRoot !== root) return;
+      intent = 0;
+      if (!root.isConnected || openRoot !== root || intentTile !== tileEl) return;
       previewing = id;
       EL().preview(v, { scheme: id }); syncPreview();
     }, ms);
   }
-  function endPreview() { clearTimeout(intent); if (previewing === null) return; previewing = null; EL().endPreview(v); syncPreview(); }
+  function endPreview() { cancelIntent(); if (previewing === null) return; previewing = null; EL().endPreview(v); syncPreview(); }
   var schemesEl = root.querySelector('.pmt-cz-schemes');
-  schemesEl.addEventListener('mouseover', function (e) { var o = e.target.closest('.pmt-cz-scheme'); if (o) previewSoon(o, INTENT_MS); });
-  schemesEl.addEventListener('mouseleave', function () { endPreview(); });
+  // A scroll moves tiles under a stationary pointer. Only genuine pointer travel
+  // can start hover intent, after scrolling has been quiet for 200 ms. Gaps and
+  // departures cancel the pending tile even when the pointer stays in the grid.
+  schemesEl.addEventListener('pointermove', function (e) {
+    var moved = e.clientX !== pointerX || e.clientY !== pointerY;
+    pointerX = e.clientX; pointerY = e.clientY;
+    if (!moved) return;
+    var o = e.target.closest('.pmt-cz-scheme');
+    if (!o || e.buttons || performance.now() < scrollUntil) { cancelIntent(); return; }
+    if (o !== intentTile) previewSoon(o, INTENT_MS);
+  }, { passive: true });
+  schemesEl.addEventListener('pointerout', function (e) {
+    var next = e.relatedTarget && e.relatedTarget.closest ? e.relatedTarget.closest('.pmt-cz-scheme') : null;
+    if (next !== intentTile) cancelIntent();
+  }, { passive: true });
+  schemesEl.addEventListener('pointerleave', function () { pointerX = pointerY = null; endPreview(); });
+  function scrollPreview() { scrollUntil = performance.now() + 200; endPreview(); }
+  body.addEventListener('wheel', scrollPreview, { passive: true });
+  body.addEventListener('scroll', scrollPreview, { passive: true });
+  schemesEl.addEventListener('pointerdown', cancelIntent, { passive: true });
   /* ---- Token colours: one kind of word in the scheme this scope draws, picked from the scheme's own colours or by
      hue, saturation and lightness; shown on the preview and on the editor as it changes, and held to the text floor
      there like every scheme colour (the picker says when a colour is drawn lighter or darker to read) ---- */
@@ -196034,10 +196879,14 @@ function open(opts) {
     var m = /^look:([a-z]+)-(light|dark)$/.exec(I.key);
     return m ? { name: (LOOK_NAME[m[1]] || m[1]) + ' ' + m[2], own: 'The look’s own', lead: (LOOK_NAME[m[1]] || m[1]) + ' ' + m[2] + '’s own colours' } : { name: I.scheme, own: 'The scheme’s own', lead: I.scheme };
   }
+  var paintedTokens = '';
   function paintTokens() {
     if (!tokList) return;
     var I = tokInfo(); if (!I) return;
     var mine = tokMap(), held = 0, who = tokOwner(I);
+    var signature = JSON.stringify([I, mine, tokOpen, tokLive]);
+    if (paintedTokens === signature) return;
+    paintedTokens = signature;
     var lead = root.querySelector('[data-tok-lead]'), ltxt = 'Change one kind of word in ' + who.lead +
       '. A colour that would read under ' + I.floor + ':1 on this ground is drawn a little lighter or darker, its hue kept.';
     if (lead.textContent !== ltxt) lead.textContent = ltxt;
@@ -196091,6 +196940,7 @@ function open(opts) {
   /* keyboard: Escape closes, Tab stays inside, arrows move within a group of tiles or a segment (choosing, as radios
      do; in the schemes they preview, and Enter or Space keeps one) */
   root.addEventListener('keydown', function (e) {
+    if (closed) return;
     if (e.key === 'Escape') {
       e.preventDefault(); e.stopPropagation();
       if (previewing !== null) { endPreview(); return; }
@@ -196137,7 +196987,7 @@ function open(opts) {
   function roving() {
     [].forEach.call(root.querySelectorAll('[role="radiogroup"]'), function (g) {
       var opts2 = g.querySelectorAll('[role="radio"]'), chosen = g.querySelector('[role="radio"][aria-checked="true"]:not([hidden])') || [].filter.call(opts2, function (o) { return !o.hidden; })[0];
-      [].forEach.call(opts2, function (o) { var t = o === chosen ? 0 : -1; if (o.tabIndex !== t) o.tabIndex = t; });   // a write only where it changes: each one restyles
+      [].forEach.call(opts2, function (o) { var t = !closed && o === chosen ? 0 : -1; if (o.tabIndex !== t) o.tabIndex = t; });   // a write only where it changes: each one restyles
     });
   }
   function importScheme() {
@@ -196154,11 +197004,26 @@ function open(opts) {
   }
 
   /* ---- open, refresh, close ---- */
-  var offChange = EL().onChange(function () { if (root.isConnected) paint(); });
-  var onResize = function () { place(); if (preview && preview.demo) preview.demo.relayout(); };
+  var warmPaint = 0;
+  var offChange = EL().onChange(function () {
+    if (!root.isConnected) return;
+    if (!closed) { syncPreview(); paint(); return; }
+    if (!warmPaint) warmPaint = setTimeout(function () { warmPaint = 0; if (!disposed && closed) { syncPreview(); paint(); } }, 250);
+  });
+  var onResize = function () { if (closed) return; place(); if (preview && preview.demo) preview.demo.relayout(); };
   window.addEventListener('resize', onResize);
+  var resizeRaf = 0, placeAfterResize = false;
   var ro = typeof ResizeObserver === 'function' ? new ResizeObserver(function (list) {
-    list.forEach(function (en) { if (en.target === inst.root) place(); else if (preview && preview.demo) preview.demo.relayout(); });
+    if (closed) return;
+    list.forEach(function (en) { if (en.target === inst.root) placeAfterResize = true; });
+    // Relayout writes the preview's geometry. Keep that out of the observer's
+    // delivery loop and combine the home and dock notifications into one pass.
+    if (!resizeRaf) resizeRaf = requestAnimationFrame(function () {
+      resizeRaf = 0;
+      if (closed) return;
+      if (placeAfterResize) { placeAfterResize = false; place(); }
+      if (preview && preview.demo) preview.demo.relayout();
+    });
   }) : null;
   if (ro) { if (inst.root) ro.observe(inst.root); ro.observe(homeBox); ro.observe(dockBox); }
   /* the preview follows you down the screen only where the real editor is not beside it (the one rule of both
@@ -196191,24 +197056,55 @@ function open(opts) {
   body.addEventListener('scroll', function () { if (asideAt) asideSoon(asideAt); }, { passive: true });
   root.addEventListener('focusin', function (e) { if (body.contains(e.target) && !dock.contains(e.target)) asideSoon({ el: e.target }); });
   if (preview && typeof IntersectionObserver === 'function') {
-    io = new IntersectionObserver(function (list) { var en = list[list.length - 1]; wantDock = en.intersectionRatio < 0.4; syncDock(); }, { root: body, threshold: [0, 0.4, 1] });
+    io = new IntersectionObserver(function (list) { if (closed) return; var en = list[list.length - 1]; wantDock = en.intersectionRatio < 0.4; syncDock(); }, { root: body, threshold: [0, 0.4, 1] });
     io.observe(root.querySelector('.pmt-cz-preview'));
   }
-  var closed = false;
-  function close(noFocus) {
-    if (closed) return;
-    closed = true;
+  var closed = true, disposed = false, visit = 0;
+  var focusStops = new WeakMap();
+  function focusStopsOn(on) {
+    [].forEach.call(root.querySelectorAll('button, input, select, textarea, [tabindex]'), function (e) {
+      if (!focusStops.has(e)) focusStops.set(e, e.tabIndex);
+      var t = on ? focusStops.get(e) : -1;
+      if (e.tabIndex !== t) e.tabIndex = t;
+    });
+    if (on) roving();
+  }
+  function dispose() {
+    disposed = true;
     stopDemo(); endPreview(); tokEndPreview();
     if (offChange) offChange();
     window.removeEventListener('resize', onResize);
     if (ro) ro.disconnect();
     if (io) io.disconnect();
+    if (root._pmedFinish) root._pmedFinish();
+    cancelWarmMeasurements();
+    if (document.fonts && document.fonts.removeEventListener) document.fonts.removeEventListener('loadingdone', warmMeasurementsSoon);
+    cancelAnimationFrame(lookRaf); cancelAnimationFrame(asideRaf); cancelAnimationFrame(resizeRaf);
+    clearTimeout(warmPaint);
     if (preview) { try { preview.unmount(); } catch (_) {} preview = null; }
-    if (openRoot === root) openRoot = null;
     if (inst.customizing) inst.customizing(false);
-    root.setAttribute('aria-hidden', 'true'); root.inert = true;
-    if (noFocus) root.remove(); else Motion.leave(root, function () { root.remove(); });
+    root.remove();
+    if (openRoot === root) openRoot = null;
+  }
+  function close(noFocus) {
+    if (closed) return;
+    closed = true;
+    var closing = ++visit;
+    stopDemo(); endPreview(); tokEndPreview();
+    if (openRoot === root) openRoot = null;
+    // Focus returns before the exit's writes. Toggling inert on the ancestor
+    // invalidates all 1,900 descendants; park individual tab stops instead.
     if (!noFocus) { try { (anchor && anchor.isConnected ? anchor : null) ? anchor.focus({ preventScroll: true }) : inst.focus(); } catch (_) {} }
+    root.setAttribute('aria-hidden', 'true'); focusStopsOn(false);
+    // Keep the whole sheet through its exit and reuse it on the next visit.
+    // Neither teardown nor a fresh 37-tile build belongs inside an animation.
+    function park() {
+      if (closing !== visit || disposed) return;
+      root.classList.add('pmed-prepared');
+      if (inst.customizing) inst.customizing(false);
+      warmMeasurementsSoon();
+    }
+    if (noFocus) park(); else Motion.leave(root, park);
     if (typeof opts.onClose === 'function') { try { opts.onClose(); } catch (_) {} }
   }
   root._pmedClose = close;
@@ -196218,22 +197114,58 @@ function open(opts) {
   syncPreview();
   paint();
   filter('');
-  /* the entrance plays once the screen has been drawn: its first style, layout and paint (37 code tiles, the live
-     preview) are the costly frame, and taken during the entrance they made it skip (a GPU film showed the scrim pop
-     in after five frozen frames). The screen is drawn first almost clear, and the entrance starts two frames later */
-  root.classList.add('pmed-prime');
-  requestAnimationFrame(function () { requestAnimationFrame(function () {
-    if (!root.isConnected) return;
-    root.classList.remove('pmed-prime');
+  focusStopsOn(false);
+  var handle = { el: root, inst: inst, dispose: dispose, show: show, close: function () { close(); }, refresh: function () { if (!closed) { syncPreview(); paint(); } }, preview: preview };
+  function show(next) {
+    if (next.prepare) return handle;
+    cancelWarmMeasurements();
+    opts = next; anchor = opts.anchor || null;
+    scope = opts.scope === 'app' ? 'app' : v._apScope || 'tab';
+    closed = false; ++visit; openRoot = root;
+    root._pmedGen = (root._pmedGen || 0) + 1;
+    root.classList.remove('pmt-in', 'pmt-out');
+    wantDock = false; dockTo(false); body.scrollTop = 0;
+    root.querySelector('.pmt-cz-search').value = ''; filter('');
+    if (inst.customizing) inst.customizing(true);
+    syncPreview(); paint(); place(); focusStopsOn(true);
+    root.removeAttribute('aria-hidden');
+    root.classList.remove('pmed-prepared');
     Motion.play(root);
-  }); });
-  var first = root.querySelector('[data-seg="scope"] [aria-checked="true"]') || dialog;
-  first.focus({ preventScroll: true });
-  /* opened for one group (the editor menu's Indentation row): that group's heading at the top, and the focus on it */
-  var goTo = opts.group && root.querySelector('[data-group="' + opts.group + '"]' + (opts.at ? ' [data-at="' + opts.at + '"]' : ''));
-  if (goTo) { goTo.scrollIntoView({ block: 'start' }); var gh = goTo.querySelector('h3, h4'); if (gh) { gh.tabIndex = -1; gh.focus({ preventScroll: true }); } }
-  return { el: root, close: function () { close(); }, refresh: function () { if (!closed) { syncPreview(); paint(); } }, preview: preview };
+    var first = root.querySelector('[data-seg="scope"] [aria-checked="true"]') || dialog;
+    // Let the entrance paint before focus asks the browser for geometry. A
+    // newer visit invalidates this job, so a quick close cannot reclaim focus.
+    var showing = visit;
+    requestAnimationFrame(function () { setTimeout(function () {
+      if (!closed && showing === visit && !opts.group) first.focus({ preventScroll: true });
+    }, 0); });
+    var goTo = opts.group && root.querySelector('[data-group="' + opts.group + '"]' + (opts.at ? ' [data-at="' + opts.at + '"]' : ''));
+    if (goTo) { goTo.scrollIntoView({ block: 'start' }); var gh = goTo.querySelector('h3, h4'); if (gh) { gh.tabIndex = -1; gh.focus({ preventScroll: true }); } }
+    return handle;
+  }
+  prepared = handle;
+  return opts.prepare ? handle : show(opts);
 }
+
+// Prepare one editor sheet while the app is idle. The preview and static palette
+// survive its visits; another editor replaces this bounded cache. Never build
+// underneath onboarding or while a page/Usage transition is playing.
+function prepareSoon() {
+  if (prepared || openRoot) return;
+  var de = document.documentElement;
+  if (de.hasAttribute('data-o55-open') || de.hasAttribute('data-pm-page-transition') || de.hasAttribute('data-pmu-moment')) { setTimeout(prepareSoon, 1500); return; }
+  var inst = PMW.editorInView && PMW.editorInView(true);
+  if (!inst) { setTimeout(prepareSoon, 1500); return; }
+  var build = function () {
+    if (!prepared && !openRoot) {
+      if (de.hasAttribute('data-o55-open') || de.hasAttribute('data-pm-page-transition') || de.hasAttribute('data-pmu-moment')) { setTimeout(prepareSoon, 1500); return; }
+      // Settings is the app-level entry. Prepare its actual width and scope,
+      // not the narrower editor cutout, which would reflow every tile on open.
+      open({ view: inst.view, scope: 'app', from: 'settings', prepare: true });
+    }
+  };
+  if (window.requestIdleCallback) requestIdleCallback(build); else setTimeout(build, 500);
+}
+window.addEventListener('load', function () { setTimeout(prepareSoon, 1500); }, { once: true });
 
 /* the editor's More menu opens it on this editor (10-editor.js openCustomize); Settings' Editor look group opens it on
    the editor in view, for All editors, opening the project's entry file first when Home shows no editor */
@@ -196241,13 +197173,13 @@ PMW.edCustomize = { open: open };
 window.PM_EDITOR_CUSTOMIZE = Object.freeze({
   open: function (o) {
     o = o || {};
-    var inst = PMW.editorInView ? PMW.editorInView() : null;
-    if (inst) return open({ view: inst.view, scope: o.scope || 'app' });
+    var inst = PMW.editorInView ? PMW.editorInView(o.from === 'settings') : null;
+    if (inst) return open(Object.assign({}, o, { view: inst.view, scope: o.scope || 'app' }));
     try { PM_HOME.open({ kind: 'editor', path: 'src/main.rs' }); } catch (_) {}
     var tries = 0;
     (function wait() {
-      var e2 = PMW.editorInView ? PMW.editorInView() : null;
-      if (e2) { open({ view: e2.view, scope: o.scope || 'app' }); return; }
+      var e2 = PMW.editorInView ? PMW.editorInView(o.from === 'settings') : null;
+      if (e2) { open(Object.assign({}, o, { view: e2.view, scope: o.scope || 'app' })); return; }
       if (++tries < 30) setTimeout(wait, 100);
     })();
     return null;
@@ -200431,7 +201363,11 @@ function mountPlan(host, state, api) {
         run: function () { if (v === viewing) return; remember(); viewing = v; paint(); if (frame) frame._scroll.scrollTop = 0; api.announce('Showing version ' + v); api.saveSoon(); } };
     }) };
   }
-  function remember() { if (frame) scrolls[view] = frame._scroll.scrollTop; }
+  function remember() {
+    // A tab hidden with display:none has no scroll box and reports zero. A hidden Home page can keep its boxes,
+    // so use the host's hidden flag, not the kind's onHide state, to avoid only the known-zero layout read.
+    if (frame) scrolls[view] = host.hidden ? 0 : frame._scroll.scrollTop;
+  }
 
   /* ---- body ---- */
   function blocksNow() { return plan.revisions[viewing]; }
@@ -200724,7 +201660,8 @@ function mountPlan(host, state, api) {
     next._scroll.setAttribute('data-pmh', 'off');
     if (frame) frame.replaceWith(next); else stage.appendChild(next);
     frame = next;
-    frame._scroll.scrollTop = keepScroll;
+    // This is a new scroller, already at zero. Even assigning zero forces layout of the freshly mounted document.
+    if (keepScroll) frame._scroll.scrollTop = keepScroll;
     frame._scroll.addEventListener('scroll', function () { scrolls[view] = frame._scroll.scrollTop; }, { passive: true });
     if (key) {
       var el = host.querySelector('[data-k="' + key.replace(/"/g, '\\"') + '"]');
@@ -200760,7 +201697,7 @@ function mountPlan(host, state, api) {
     onResize: function (s) {
       width = s.w;
       root.classList.toggle('is-narrow', s.w < NARROW_FOOT);
-      if (!restored && frame) { restored = true; frame._scroll.scrollTop = scrolls[view] || 0; }
+      if (!restored && frame) { restored = true; if (scrolls[view]) frame._scroll.scrollTop = scrolls[view]; }
       syncMax();
     },
     focus: function () { var t = frame && frame._scroll; if (t) { t.setAttribute('tabindex', '-1'); try { t.focus({ preventScroll: true }); } catch (_) {} } },
@@ -228108,7 +229045,12 @@ try { if (window.PM_HOME && typeof window.PM_HOME.boot === 'function') window.PM
      item moved (a lens in Settings rested 8 px under its tab otherwise). */
   function settleCheck(L) {
     clearTimeout(L.settleT);
-    L.settleT = setTimeout(function () { L.settleT = 0; if (lenses.get(L.strip) === L && L.strip.isConnected && !L.dragging && !L.pending && switchOn()) syncStrip(L.cfg, L.strip); }, 480);
+    /* measured after that frame's layout, not in the timer (where it forced what the page had pending) */
+    L.settleT = setTimeout(function () {
+      L.settleT = 0;
+      var now = function () { if (lenses.get(L.strip) === L && L.strip.isConnected && !L.dragging && !L.pending && switchOn()) syncStrip(L.cfg, L.strip); };
+      if (!afterLayout(now)) now();
+    }, 480);
   }
   function stopRide(L) { if (L.ride) { var r = L.ride; L.ride = null; r.forEach(function (m) { m.cancel(); }); } }
   function stopLensTravel(L) {
@@ -228271,8 +229213,19 @@ try { if (window.PM_HOME && typeof window.PM_HOME.boot === 'function') window.PM
     hiddenLenses.set(L, cfg);
     if (!showT) showT = setTimeout(checkShown, 400);
   }
+  /* onLayout(fn): fn runs once after the frame's own style and layout, before paint, so every read in it is free (Q16).
+     It is afterLayout(fn): one probe and one ResizeObserver for all of Glass. Work that a timer would otherwise run in the
+     middle of an app's rebuild waits there instead: */
+  function onLayout(fn) { if (!afterLayout(fn)) fn(); }
+  /* - the hidden-lens check, whose tick landing on a Settings chapter change forced the half-built page through 242 ms
+       of layout in Basic Dark */
   function checkShown() {
     showT = 0;
+    if (!switchOn()) { hiddenLenses.clear(); return; }
+    onLayout(checkShownNow);
+  }
+  function checkShownNow() {
+    if (showT) return;
     if (!switchOn()) { hiddenLenses.clear(); return; }
     hiddenLenses.forEach(function (cfg, L) {
       if (!L.strip.isConnected || (cfg.kind === 'lensIcon' && !isGlass())) { hiddenLenses.delete(L); return; }
@@ -228713,7 +229666,13 @@ try { if (window.PM_HOME && typeof window.PM_HOME.boot === 'function') window.PM
     if (typeof pruneLenses === 'function') pruneLenses();
   }
   function syncAll() { dirtyAll = true; syncPending(); }
+  /* a look or NieR Mode changed: its switcher tokens are read by the next sync, after the frame's own layout. Read from the
+     root observer, getComputedStyle(<html>) forced the whole page through the new look's style while the app was still
+     writing it, and the sync then forced it again (NieR Mode on under Reduce Motion: 760 + 741 ms on the P1000,
+     pm7-motion-settings 2026-10-16) */
+  var switchStale = false;
   function syncPending() {
+    if (switchStale) { switchStale = false; readSwitch(); }
     /* an immediate hot/API sync covers queued work; keep no second callback that can remount it next frame */
     if (syncQ) { cancelAnimationFrame(syncQ); syncQ = 0; }
     if (lazyT) { clearTimeout(lazyT); lazyT = 0; }
@@ -228790,7 +229749,7 @@ try { if (window.PM_HOME && typeof window.PM_HOME.boot === 'function') window.PM
     if (!lazyT) lazyT = setTimeout(function () { lazyT = 0; queueSync(); }, 140);
   }
   var HOT = '[data-lg-surface], .page-tab, #pmuRange > button, .pmu-navbtn, .pm-segtab-item, #activityBar .icon, .side-panel-view, .pmu-pop, .pmr-menu-list, .pmr-menu-group, .pm6-tb-menu, .o55-railitem, .o55-seg button, .o55-win, .o55t-callout, .o55t-bar';
-  var GENERATED = '#lg-optics, #lg-lenses, .lg-lenses-local, .lg-lenses-under, #lg-shine, .lg-press, .pm-segtab-track, #lg-post';
+  var GENERATED = '#lg-optics, #lg-lenses, .lg-lenses-local, .lg-lenses-under, #lg-shine, .lg-press, .pm-segtab-track, #lg-post, #lg-shown';
   var MENU_HOT = '[data-lg-surface], .pmu-pop, .pmr-menu-list, .pm6-tb-menu, .o55-win, .o55t-callout, .o55t-bar';
   function generatedMutation(rec) {
     var t = rec.target;
@@ -228866,9 +229825,9 @@ try { if (window.PM_HOME && typeof window.PM_HOME.boot === 'function') window.PM
     var o55 = root.hasAttribute('data-o55-open');
     if (o55 !== lastO55) { lastO55 = o55; dirtyAll = true; queueSync(); }
     /* NieR Mode paints over a Basic look without changing data-theme: a look's switcher tokens may differ with it on
-       (Q16), so they are read again and every strip synced */
+       (Q16), so they are read again and every strip synced, by the next sync after the frame's own layout (switchStale) */
     var nier = root.getAttribute('data-o55-nier');
-    if (nier !== lastNier) { lastNier = nier; readSwitch(); lenses.forEach(function (L) { L.rect = null; }); syncAll(); }
+    if (nier !== lastNier) { lastNier = nier; switchStale = true; lenses.forEach(function (L) { L.rect = null; }); dirtyAll = true; queueSync(); }
     if (th === lastTheme && lg === lastLg && tier === lastTier && wall === lastWall && motion === lastMotion) return;
     /* the print is about to change under glass that stays glass: hold the one the current frost was made from */
     var wasGlass = lastLg === 'on' && /^glass/.test(lastTheme || '');
@@ -228881,7 +229840,7 @@ try { if (window.PM_HOME && typeof window.PM_HOME.boot === 'function') window.PM
     if (motion !== lastMotion && reduced() && typeof suspendLensMotion === 'function') suspendLensMotion();
     lastTier = tier; lastWall = wall; lastMotion = motion;
     if (th !== lastTheme || lg !== lastLg) {
-      readSwitch();
+      switchStale = true;
       /* the hover bead is Glass's alone: a look that leaves Glass drops it (a look that adopts the switcher paints every
          .lg-lens as its chip, so a bead left behind stood on the title bar as a block until a reload; Q16 review F1) */
       if (!isGlass() && bead) { resetBead(); removeLensElement(bead); bead = null; }
@@ -228891,7 +229850,7 @@ try { if (window.PM_HOME && typeof window.PM_HOME.boot === 'function') window.PM
       /* after the new look's own style and layout, not forcing them here (then the entrance, on the sheets just mounted).
          Its wallpaper is chosen now, so the look's first style pass already has it. */
       applyWall(); dirtyAll = true;
-      if (!afterLayout(function () { if (enter && isGlass()) materialize(Array.from(glassSet)); })) { syncAll(); if (enter) materialize(Array.from(glassSet)); }
+      if (!afterLayout(function () { if (enter && isGlass()) materialize(Array.from(glassSet)); })) { readSwitch(); switchStale = false; syncAll(); if (enter) materialize(Array.from(glassSet)); }
       else afterLayout();
       lastWall = root.getAttribute('data-lg-wall');
     } else { dirtyAll = true; queueSync(); }

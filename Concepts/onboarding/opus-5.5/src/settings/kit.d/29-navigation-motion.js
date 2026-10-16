@@ -21,7 +21,7 @@ function o55NavAck(selector) {
     }
   });
 }
-function o55NavRun(work, selector, chapter) {
+function o55NavRun(work, selector, chapter, prepare) {
   if (o55NavRunning || !o55NavVisible()) return work();
   const ticket = ++o55NavTicket;
   o55NavAck(selector);
@@ -36,7 +36,7 @@ function o55NavRun(work, selector, chapter) {
   if (moving) o55NavLeaving = stage.animate([
     { opacity: 1, transform: 'none' }, { opacity: .55, transform: 'translateY(-4px)' }
   ], { duration: 260, easing: 'ease-out', fill: 'forwards' });
-  o55AfterPaint(() => {
+  const complete = () => {
     if (ticket !== o55NavTicket) return;
     commit();
     const next = root.querySelector('#workspace-stage');
@@ -52,6 +52,20 @@ function o55NavRun(work, selector, chapter) {
     if (moving && next && typeof ResizeObserver === 'function') {
       const ready = new ResizeObserver(() => { ready.disconnect(); arrive(); }); ready.observe(next);
     } else arrive();
+  };
+  o55AfterPaint(() => {
+    if (ticket !== o55NavTicket) return;
+    if (!prepare || !prepare() || typeof ResizeObserver !== 'function') { complete(); return; }
+    /* A cold workspace hydrates its preceding blocks for an exact landing. Let their first layout finish before
+       the existing landing path reads its offset; measuring immediately forced that layout in the input follow-up
+       (48 ms M3 / 222 ms P1000). The destination ink is already travelling during this work. */
+    const scroller = root.querySelector('#settings-document');
+    if (!scroller) { complete(); return; }
+    const ready = new ResizeObserver(() => {
+      ready.disconnect();
+      if (scroller.isConnected && scroller === root.querySelector('#settings-document')) complete();
+    });
+    ready.observe(scroller);
   });
 }
 const o55NavNavigate = navigate;
@@ -90,5 +104,13 @@ dispatchAction = function (action, el) {
     return;
   }
   if (action !== 'jump-workspace') return o55NavDispatch.apply(this, args);
-  return o55NavRun(() => o55NavDispatch.apply(this, args), `.workspace-tab[data-workspace="${cssEscape(ds(el, 'workspace'))}"]`, false);
+  const ws = ds(el, 'workspace');
+  const prepare = () => {
+    const ids = getDomain().workspaces.map(w => w.id), to = ids.indexOf(ws);
+    const cold = ids.slice(0, to + 1).some(id => root.querySelector(`[data-continuous-workspace-body="${cssEscape(id)}"][data-workspace-mounted="false"]`));
+    if (!cold) return false;
+    PLACE.nav(); pm51MountPreceding(ws); mountContinuousWorkspace(ws);
+    return true;
+  };
+  return o55NavRun(() => o55NavDispatch.apply(this, args), `.workspace-tab[data-workspace="${cssEscape(ws)}"]`, false, prepare);
 };

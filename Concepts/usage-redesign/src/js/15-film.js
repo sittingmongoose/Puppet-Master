@@ -747,6 +747,9 @@
      finishes it at once), holds the light budget and the reveal timeline, and ends when its signature beat is over ---- */
   var moment = null, inBeat = 0, momentListeners = [];
   function emitMoment(what, m) { momentListeners.slice().forEach(function (fn) { try { fn(what, m); } catch (error) { console.error('[pm-usage] moment', error); } }); }
+  /* at the end of the current task: a reversal's 'finish' is heard once the board has retired the room that was arriving
+     (a listener's fit pass would otherwise measure that room's bodies) */
+  emitMoment.later = function (what, m) { Promise.resolve().then(function () { emitMoment(what, m); }); };
   function begin(kind, room) {
     var prev = moment, now0 = performance.now(), quick = kind === 'room' && !!prev && prev.kind === 'room' && now0 - prev.start < 900;
     finishMoment('next', kind === 'room' ? room : null);
@@ -1025,6 +1028,7 @@
     var g = o.ghost;
     if (g) {
       /* the old board element itself (40-board.js swapped in a new one): nothing is moved */
+      g._pmuRevived = false;
       g.classList.add('pmu-ghostboard');
       Array.prototype.forEach.call(g.querySelectorAll(':scope > :not(.pmu-card)'), function (n) { n.remove(); });
       cards.forEach(function (c) { c._pmuLeaving = true; });
@@ -1037,13 +1041,18 @@
       cards.forEach(function (c) { c._pmuLeaving = true; c.removeAttribute('data-hero'); g.appendChild(c); });
       scroll.appendChild(g);
     }
+    /* this ghost's life: a reversal (reverse) or a newer ghost of the same element makes this one's end a no-op */
+    var gen = g._pmuGen = (g._pmuGen || 0) + 1;
     var f = fam(), dir = o.dir || 1, base = o.sTop ? 'translateY(' + (-o.sTop) + 'px)' : '', a, gAnims = [];
     if (soft()) a = anim(g, [{ opacity: 1, transform: base || 'none' }, { opacity: 0, transform: base || 'none' }], { dur: T3.ghostFade, easing: E.exit, fill: 'forwards' });
     else if (f === 'retro' || f === 'nier') {
       var n = f === 'nier' ? 8 : 8, ms = f === 'nier' ? 200 : 180;
       a = anim(g, [{ clipPath: 'inset(0 0 0 0)', transform: base || 'none' }, { clipPath: 'inset(100% 0 0 0)', transform: base || 'none' }], { dur: ms, easing: 'steps(' + n + ',jump-end)', fill: 'forwards' });
       var line = H('i', f === 'nier' ? 'pmu-film-scan pmu-ghostscan' : 'pmu-film-scanbar pmu-ghostscan', g);
-      gone(anim(line, [{ transform: 'translateY(0%)', opacity: 1 }, { transform: 'translateY(100%)', opacity: 1, offset: 0.97 }, { transform: 'translateY(100%)', opacity: 0 }], { dur: ms, easing: 'steps(' + n + ',jump-end)', fill: 'both' }), line);
+      var lineA = anim(line, [{ transform: 'translateY(0%)', opacity: 1 }, { transform: 'translateY(100%)', opacity: 1, offset: 0.97 }, { transform: 'translateY(100%)', opacity: 0 }], { dur: ms, easing: 'steps(' + n + ',jump-end)', fill: 'both' });
+      gone(lineA, line);
+      /* what a click back to this room steps back (reverse; motion QA A13, Jared 2026-10-16) */
+      g._pmuRev = { erase: a, lineA: lineA, ms: ms, n: n };
     } else {
       /* MOTION-4 RC1 / RC2 and 4.2: the camera's first half. The old room moves from the click (this task) on its voice's
          path, at full opacity: Basic pans P up the rail (-P x dir, scale .985, 360 SLIDE); Friendly steps back and tilts
@@ -1069,7 +1078,8 @@
     }
     gAnims.push(a);
     var done = function () {
-      if (done.ran) return; done.ran = true;
+      if (done.ran || g._pmuGen !== gen || g._pmuRevived) return; done.ran = true;
+      g._pmuRev = null;
       if (mg) mg.gone = true;
       drop(Array.prototype.slice.call(g.querySelectorAll(':scope > .pmu-card')));
       /* the old board element empties into the hidden spare (40-board.js), never leaves the scroll pane, and carries no
@@ -1113,7 +1123,7 @@
        whole screen when you change tabs can go away").
      - Retro keeps its phosphor wipe and NieR its scanline, and NieR adds a signal glitch (three ink lines in steps).
      Without a GPU the old room goes in the new chrome's frame and the board rises as one (6.2). Reduce Motion: nothing
-     travels; the new room dissolves in (dissolve(), 46-shell.js). */
+     travels; the new room dissolves in (dissolve(), from 40-board.js calmSwap). */
   /* both start at 80 on the click's clock: 40-board.js lays no new plate before 90 */
   var WIPE = { basic: { at: 80, ms: 300, ease: 'cubic-bezier(.45,0,.25,1)' }, friendly: { at: 80, ms: 340, ease: 'cubic-bezier(.4,0,.3,1)' } },
     IRIS = { at: 80, ms: 420, ease: 'cubic-bezier(.4,.1,.2,1)', n: 48 },
@@ -1279,8 +1289,12 @@
     var at = whole || !G.fade || G.fade === true ? 0 : cutAt(G);
     [G.fade, G.fadeA].concat(G.anims || []).forEach(function (a) { if (a && a !== true && a !== G.move) { try { a.cancel(); } catch (error) {} } });
     G.fadeA = null; G.from = 0; G.q = 0;
-    /* the camera's drift goes back the way it came; the cut or lens closes from where it stands (140 OUT) */
-    if (G.move && G.move.playState !== 'idle') { try { G.move.playbackRate = -2; G.move.play(); } catch (error) {} }
+    /* the camera's drift goes back the way it came; the cut or lens closes from where it stands (140 OUT). Basic, Friendly
+       and Glass drift back on an even ease from where they stand (settleBack: played backwards at twice its speed, the
+       ease-out drift landed its last 20-37 px in one frame, motion QA A12); Retro and NieR step back as they stepped out */
+    var stepped0 = fam() === 'retro' || fam() === 'nier';
+    if (G.move && G.move.playState !== 'idle' && !stepped0) { var back0 = readBack(G.el); try { G.move.cancel(); } catch (error) {} G.move = writeBack(G.el, back0, { transformOnly: true, rest: G.sTop ? 'translateY(' + (-G.sTop) + 'px)' : null }).move; }
+    else if (G.move && G.move.playState !== 'idle') { try { G.move.playbackRate = -2; G.move.play(); } catch (error) {} }
     var k = null;
     if (at > 0 && G.cut === 'iris' && G.iris) {
       var b = G.blur && !soft() ? G.blur * Math.min(1, at / 0.55) : 0;
@@ -1311,6 +1325,125 @@
     if (G && G.sTop && scroll) scroll.scrollTop = G.sTop;
     dropKept();
     endMoment(m);
+  }
+  /* ======== a click back to the room still leaving (motion QA A12, 2026-10-16) ========
+     Overview -> Costs -> Overview inside the hand-off kept the old room over a copy of itself that the change built under
+     it: the old room's drift played backwards at twice its speed on its ease-out curve, so its last 20-37 px landed in one
+     frame (Mac films: a 37 px snap), and the Costs room that had started to arrive showed through the part of the board
+     the cut had uncovered. The change is reversed instead. The room the user goes back to is the room still on screen, so
+     it becomes the live board again as it stands (40-board.js; nothing is built again); it drifts back from where it
+     stands to rest on an even ease, about 12.5 ms per pixel its corners travel (240-720 ms: Glass's pull-back is the
+     longest, about 70 px at its corners; no frame moves it much more than 2 px), its cut or lens closes from where it
+     stands (180 OUT), its defocus and fade with it; the room that was arriving
+     goes in the click's own frame. Retro and NieR step their erase back up the same way (A13, Jared 2026-10-16: the
+     board the user never left just returns, with no erase and rebuild). */
+  function stepped3(f) { return f === 'retro' || f === 'nier'; }
+  function reversible(el) {
+    var m = moment, G = m && m.ghost, f = fam();
+    if (!el || !el.isConnected || el._pmuRevived || reduced() || soft() || M.paused() || kept) return false;
+    if (carryQ.some(function (c) { return !c.G.gone && c.G.el.isConnected; })) return false;
+    /* Retro and NieR: the old room is being erased from its top (its erase and scanline, no camera); it reverses while
+       its cards are still there, its erase finished or not (they go a beat later, with the batch of finished layers) */
+    if (stepped3(f)) return !!el._pmuRev && el.classList.contains('pmu-ghostboard') && !!el.querySelector(':scope > .pmu-card') && (!m || m.kind === 'room') && !(G && G.el === el);
+    if (!m || m.kind !== 'room' || !G || G.el !== el || G.gone || G.leaving || G.carried) return false;
+    if (G.fade && G.fade !== true && (G.fade.playState === 'finished' || G.fade.playState === 'idle')) return false;
+    if ((m.carried || []).some(function (C) { return liveGhost(C); })) return false;
+    return true;
+  }
+  /* where the old room stands now: one style read of its one element, before its animations go */
+  function readBack(el) {
+    var cs = getComputedStyle(el);
+    return { tf: cs.transform, org: cs.transformOrigin, cp: cs.clipPath, fl: cs.filter, op: parseFloat(cs.opacity) };
+  }
+  /* how far the board's visible corners stand from rest under the transform s.tf (board pixels; no layout read) */
+  function travelOf(s) {
+    var m = /^matrix\(([^)]+)\)$/.exec(s.tf || ''); if (!m) return 0;
+    var v = m[1].split(',').map(Number), o = String(s.org || '0 0').split(' ').map(parseFloat), W = boardW(), H = Math.max(200, (window.innerHeight || 900) - 170), d = 0;
+    [[0, 0], [W, 0], [0, H], [W, H]].forEach(function (p) {
+      var x = p[0] - (o[0] || 0), y = p[1] - (o[1] || 0);
+      d = Math.max(d, Math.hypot(v[0] * x + v[2] * y + v[4] - x, v[1] * x + v[3] * y + v[5] - y));
+    });
+    return d;
+  }
+  /* the old room back to rest from s (readBack): the drift on an even ease (EXIT) for 12.5 ms per pixel of travel, 240-720;
+     the cut, lens, defocus and fade in 180 OUT. o.shift: px the board moves down when the scroll it kept is given back
+     (its keyframes start that much lower, so nothing moves on screen); o.iris: the lens it closes; o.transformOnly: the
+     drift alone (keepRoom closes the cut itself); o.rest: the transform it rests at, held (a kept room keeps the scroll
+     offset it left with until swapKept gives the scroll back) */
+  function writeBack(el, s, o) {
+    o = o || {};
+    var out = { move: null, close: null, ms: 0 }, shift = o.shift ? 'translateY(' + o.shift + 'px) ' : '';
+    var tf0 = (s.tf && s.tf !== 'none') ? s.tf : '';
+    if (tf0 || shift) {
+      var ms = Math.round(Math.max(240, Math.min(720, travelOf(s) * 12.5)));
+      out.move = anim(el, [{ transform: (shift + tf0).trim() || 'none', transformOrigin: s.org }, { transform: o.rest || 'none', transformOrigin: s.org }], { dur: ms, easing: E.exit, fill: o.rest ? 'forwards' : 'none' });
+      out.ms = ms;
+    }
+    if (o.transformOnly) return out;
+    var k0 = {}, k1 = {}, any = false;
+    if (s.cp && s.cp !== 'none') {
+      any = true; k0.clipPath = s.cp;
+      k1.clipPath = /^polygon/.test(s.cp) && o.iris ? irisClip(o.iris.x, o.iris.cy, 0) : 'inset(0px 0px 0px 0px)';
+    }
+    if (s.fl && s.fl !== 'none') { any = true; k0.filter = s.fl; k1.filter = 'blur(0px)'; }
+    if (s.op < 0.999) { any = true; k0.opacity = s.op; k1.opacity = 1; }
+    if (any) { out.close = anim(el, [k0, k1], { dur: 180, easing: E.out, fill: 'none' }); out.ms = Math.max(out.ms, 180); }
+    return out;
+  }
+  /* the reversal itself (the board has made el its live board again): the hand-off on the old room stops where it stands
+     and nothing of it may empty the board now (its done), the lens rim fades where it stands, the moment ends without
+     finishing what it made (the arriving room went with its board), and the old room goes back to rest */
+  /* the moment ends without finishing what it made: the arriving room went with its board */
+  function dropMoment(m) {
+    if (!m || moment !== m) return;
+    moment = null; M.track(null);
+    m.timers.forEach(clearTimeout); m.timers = []; m.queue = [];
+    root.removeAttribute('data-pmu-moment');
+    if (hold) hold = null;
+    releaseBeatHold();
+  }
+  /* Retro and NieR step back as they stepped out: the erase runs back up from where it stands, in as many of its eight
+     steps as it had taken and at its own pace (180 / 200 ms for the whole board), its phosphor bar or ink scanline
+     climbing with it */
+  function reverseStepped(el, m, o) {
+    var R = el._pmuRev, f = fam(), cs = getComputedStyle(el), hit = /inset\(\s*([\d.]+)%/.exec(cs.clipPath || '');
+    var p = hit ? Math.min(1, +hit[1] / 100) : (R.erase && R.erase.playState === 'finished' ? 1 : 0);
+    el._pmuRevived = true; el._pmuRev = null;
+    [R.erase, R.lineA].forEach(function (x) { if (x && x.cancel) { try { x.cancel(); } catch (error) {} } });
+    Array.prototype.forEach.call(el.querySelectorAll(':scope > .pmu-ghostscan'), function (n) { n.remove(); });
+    dropMoment(m);
+    /* (the erase kept the old scroll as a base transform; with it cancelled and the scroll given back, nothing moves) */
+    var out = { move: null, close: null, ms: 0 };
+    if (p > 0.001) {
+      var n = Math.max(1, Math.round(p * R.n)), ms = Math.max(60, Math.round(p * R.ms)), ease = 'steps(' + n + ',jump-end)';
+      out.close = anim(el, [{ clipPath: 'inset(' + (p * 100).toFixed(2) + '% 0 0 0)' }, { clipPath: 'inset(0% 0 0 0)' }], { dur: ms, easing: ease, fill: 'none' });
+      var line = H('i', f === 'nier' ? 'pmu-film-scan pmu-ghostscan' : 'pmu-film-scanbar pmu-ghostscan', el);
+      gone(anim(line, [{ transform: 'translateY(' + (p * 100).toFixed(2) + '%)', opacity: 1 }, { transform: 'translateY(0%)', opacity: 1, offset: 0.97 }, { transform: 'translateY(0%)', opacity: 0 }], { dur: ms, easing: ease, fill: 'both' }), line);
+      out.ms = ms;
+    }
+    emitMoment.later('finish', m || { kind: 'room' });
+    return out;
+  }
+  function reverse(el, o) {
+    var m = moment, G = m && m.ghost;
+    if (!reversible(el)) return null;
+    o = o || {};
+    if (stepped3(fam())) return reverseStepped(el, m, o);
+    el._pmuRevived = true;
+    var s = readBack(el), iris = G.cut === 'iris' ? G.iris : null;
+    var list = [G.move, G.fade, G.fadeA].concat(G.anims || []);
+    G.gone = true; G.done = null; G.fade = null; G.fadeA = null; G.move = null; G.anims = [];
+    list.forEach(function (x) { if (x && x !== true && x.cancel) { try { x.cancel(); } catch (error) {} } });
+    var rim = iris && el.parentNode ? liveRim(el.parentNode) : null;
+    if (rim && rim._pmuA) {
+      freeze(rim._pmuA);
+      rim.classList.add('pmu-iris-out');
+      rimTrack(rim, anim(rim, [{ opacity: 1 }, { opacity: 0 }], { dur: 140, easing: E.out, fill: 'forwards' }));
+    }
+    dropMoment(m);
+    var back = writeBack(el, s, { shift: o.shift || 0, iris: iris });
+    emitMoment.later('finish', m);
+    return back;
   }
   /* finishMoment('next'): the elements whose animations play on (the room carried into the next change, the board that
      becomes the next ghost, a lens rim fading where it stands), or null for none */
@@ -1644,7 +1777,15 @@
     o = o || {};
     var app = document.getElementById('pmuApp'), board = document.getElementById('pmuBoard');
     if (!app || !board || !PMU.board) return;
-    if (reduced() || M.paused()) { finishMoment('instant'); hold = null; PMU.board.mount(st.room, {}); return; }
+    if (M.paused()) { finishMoment('instant'); hold = null; PMU.board.mount(st.room, {}); return; }
+    /* Reduce Motion: no arrival; the board is built behind what the board area shows and swapped in whole (40-board.js
+       calmSwap), from the frame after the page click (motion QA A14: built inside the click it held the old page for
+       200 ms, M3 film, Glass Light) */
+    if (reduced()) {
+      finishMoment('instant'); hold = null;
+      requestAnimationFrame(function () { requestAnimationFrame(function () { if (!moment && !hold) PMU.board.mount(st.room, { calmEntry: true }); }); });
+      return;
+    }
     var m = begin('arrive', st.room);
     var h = { board: board, room: st.room, start: performance.now(), built: false, hero: false, m: m };
     hold = h;
@@ -1654,8 +1795,17 @@
     try { if (window.PM7_SHELL_ADJUSTMENTS && typeof window.PM7_SHELL_ADJUSTMENTS.seatChat === 'function') window.PM7_SHELL_ADJUSTMENTS.seatChat(); } catch (error) {}
     shellIntro(app);
     board.setAttribute('data-pm-hover-exempt', 'entering');
-    PMU.board.mount(st.room, { held: true, onBuilt: function (cards) { if (hold === h) h.built = true; else if (moment === m && m.released) allBuilt(h.room, cards || []); } });
-    watch(h);
+    /* the board is built in the frame after the click (motion QA A14): the click's frame lays out and paints the page the
+       app just switched to, and the held mount's width read inside it forced that whole layout into the click task, then
+       built every frame on top of it (Mac: the Usage tab's click frame 132-143 ms, about 30 ms over any other page's).
+       Nothing shows a frame later than before: the shell's power-on and the frames all start from opacity 0 on delays of
+       40 ms and more. Until then the last visit's board is held hidden (data-held). */
+    board.setAttribute('data-held', '');
+    requestAnimationFrame(function () { requestAnimationFrame(function () {
+      if (hold !== h || moment !== m) return;
+      PMU.board.mount(st.room, { held: true, onBuilt: function (cards) { if (hold === h) h.built = true; else if (moment === m && m.released) allBuilt(h.room, cards || []); } });
+      watch(h);
+    }); });
   }
   /* a board class change while held rebuilds the board held under the same arrival (never the instant remount) */
   function rehold(onBuilt) {
@@ -1678,7 +1828,7 @@
     soft: soft, innerOn: innerOn, glint: glint, combo: combo,
     /* round 3 */
     begin: begin, finish: finishMoment, moment: function () { return moment; }, onMoment: function (fn) { momentListeners.push(fn); },
-    frames: frames, reveal: reveal, bodyBuilt: bodyBuilt, allBuilt: allBuilt, ghost: ghost,
+    frames: frames, reveal: reveal, bodyBuilt: bodyBuilt, allBuilt: allBuilt, ghost: ghost, reversible: reversible, reverse: reverse,
     lit: lit, isQuiet: quietEl, lightBudget: lightBudget, flag: flag,
     budget: function (card, on) { if (card) card._pmuBudget = on !== false; }, lightAt: lightAt, rectIn: rectIn,
     snapShares: noop, flight: noop, pairFlights: noop, flightCards: function () { return []; }, irisAt: irisAt, glitch: glitch, dissolve: dissolve,
