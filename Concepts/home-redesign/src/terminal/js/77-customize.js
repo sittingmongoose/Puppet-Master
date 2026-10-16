@@ -426,6 +426,10 @@
      again for the next visit. Opened on another terminal it moves there (one is kept); when its terminal goes it is kept
      for the next one. The editor's screen does the same (11-editor-customize.js, .pmed-prepared) */
   var prepared = null, asked = null;
+  /* the person's last input (pointer, key, wheel): unseen warm work waits INPUT_QUIET_MS after it */
+  var INPUT_QUIET_MS = 600, lastInput = 0;
+  ['pointerdown', 'keydown', 'wheel'].forEach(function (t) { window.addEventListener(t, function () { lastInput = T.util.now(); }, { capture: true, passive: true }); });
+  function inputRecent() { return T.util.now() - lastInput < INPUT_QUIET_MS; }
   /* fn runs in the task after the coming frame has painted */
   function afterPaint(fn) { requestAnimationFrame(function () { setTimeout(fn, 0); }); }
   function open(v, opts) {
@@ -1218,9 +1222,10 @@
        470 ms before the screen appeared in Friendly). Once built, and again for each look it has not been drawn in, it
        is drawn at idle for two frames, unseen (opacity 0.004, as the shell warms its theme covers; 0.002 rounds to
        nothing on the P1000), then clipped away again */
-    var rastered = {}, rasterJob = 0, rasterSince = 0;
+    var rastered = {}, rasterJob = 0, rasterSince = 0, rasterFrames = false, rasterOn = false;
+    function rasterEnd() { if (rasterOn) { rasterOn = false; root.classList.remove('pmt-cz-rasterwarm'); root.inert = false; } }
     function rasterSoon() {
-      if (rasterJob || !closed || disposed) return;
+      if (rasterJob || rasterFrames || !closed || disposed) return;
       var key = (root.getAttribute('data-pmt-look') || '') + '|' + (root.getAttribute('data-pmt-mode') || '');
       if (rastered[key]) return;
       if (!rasterSince) rasterSince = T.util.now();
@@ -1230,10 +1235,21 @@
         /* a really idle moment where there is one; past WARM_LATEST_MS the next idle slice (a page whose own motion never
            rests gives only short ones), never under a cover or a switch */
         var late = T.util.now() - rasterSince >= WARM_LATEST_MS;
-        if (settling() || (!late && deadline && typeof deadline.timeRemaining === 'function' && !deadline.didTimeout && deadline.timeRemaining() < WARM_IDLE_MS)) { rasterSoon(); return; }
-        rasterSince = 0; rastered[key] = 1;
-        root.classList.add('pmt-cz-rasterwarm');
-        requestAnimationFrame(function () { requestAnimationFrame(function () { requestAnimationFrame(function () { root.classList.remove('pmt-cz-rasterwarm'); }); }); });
+        /* never within INPUT_QUIET_MS of the person's own input, backstop or not (review RW-1: on a page that is never
+           idle its ~470 ms of GPU work could land while they type) */
+        if (settling() || inputRecent() || (!late && deadline && typeof deadline.timeRemaining === 'function' && !deadline.didTimeout && deadline.timeRemaining() < WARM_IDLE_MS)) { rasterSoon(); return; }
+        /* and only after two frames that came on time, so it never lands on a frame the page is already late with */
+        rasterFrames = true;
+        requestAnimationFrame(function (t1) { requestAnimationFrame(function (t2) {
+          if (!rasterFrames) return;
+          rasterFrames = false;
+          if (!closed || disposed || rastered[key]) return;
+          if (t2 - t1 > 25 || settling() || inputRecent()) { rasterSoon(); return; }
+          rasterSince = 0; rastered[key] = 1; rasterOn = true;
+          /* inert for its three frames: drawn, its controls could otherwise take the focus (review RW-2) */
+          root.inert = true; root.classList.add('pmt-cz-rasterwarm');
+          requestAnimationFrame(function () { requestAnimationFrame(function () { requestAnimationFrame(rasterEnd); }); });
+        }); });
       };
       rasterJob = window.requestIdleCallback ? requestIdleCallback(run, { timeout: Math.max(1000, WARM_LATEST_MS - (T.util.now() - rasterSince)) }) : setTimeout(run, 300);
     }
@@ -1369,7 +1385,7 @@
          (P2-02, F1A on the P1000) */
       var owed = changed || !!(warmWait || warmJob);
       if (rasterJob) { if (window.cancelIdleCallback) cancelIdleCallback(rasterJob); clearTimeout(rasterJob); rasterJob = 0; }
-      root.classList.remove('pmt-cz-rasterwarm');
+      rasterFrames = false; rasterEnd();
       parkedWatch(false);
       var showing = ++visit;
       gcat = null; wantDock = false; dockTo(false); body.scrollTop = 0;
