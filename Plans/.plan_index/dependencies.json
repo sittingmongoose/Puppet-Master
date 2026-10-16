@@ -352,6 +352,7 @@
     "DL-214",
     "DL-215",
     "DL-216",
+    "DL-217",
     "DP-001",
     "DP-002",
     "DPP-001",
@@ -111410,7 +111411,7 @@
       "to": "PWIZ-035"
     }
   ],
-  "generated_at_utc": "2026-10-16T13:11:57Z",
+  "generated_at_utc": "2026-10-16T13:20:54Z",
   "nodes": [
     {
       "context_scope": "residual_plan_standardization",
@@ -144506,6 +144507,23 @@
         "heading_level": 3,
         "heading_line": 15923,
         "line": 15925,
+        "path": "Plans/Decision_Log.md"
+      },
+      "status": "accepted",
+      "unit_type": "decision"
+    },
+    {
+      "context_scope": "contracts_added_by_the_motion_fix_lanes",
+      "gui_related": true,
+      "owner_doc": "Plans/Decision_Log.md",
+      "plan_unit_id": "DL-217",
+      "reasoning_tier": "high",
+      "risk_class": "owner_drift",
+      "source_location": {
+        "heading": "DL-217 - Contracts Added By The Motion Fix Lanes",
+        "heading_level": 3,
+        "heading_line": 15984,
+        "line": 15986,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -232853,7 +232871,7 @@
     "depends_on_edge_count": 17633,
     "downstream_blocked_node_count": 0,
     "edge_count": 20852,
-    "node_count": 7143,
+    "node_count": 7144,
     "true_cycle_component_count": 0,
     "unblocks_edge_count": 3219,
     "unresolved_reference_count": 0

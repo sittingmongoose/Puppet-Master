@@ -7,14 +7,14 @@
     "depends_on_edge_count": 17633,
     "downstream_blocked_node_count": 0,
     "edge_count": 20852,
-    "node_count": 7143,
+    "node_count": 7144,
     "true_cycle_component_count": 0,
     "unblocks_edge_count": 3219,
     "unresolved_reference_count": 0
   },
-  "generated_at_utc": "2026-10-16T13:11:59Z",
+  "generated_at_utc": "2026-10-16T13:20:55Z",
   "gui_related_units": {
-    "count": 3581,
+    "count": 3582,
     "units": [
       {
         "owner_doc": "Plans/00-plans-index.md",
@@ -11310,6 +11310,17 @@
           "heading_level": 3,
           "heading_line": 15923,
           "line": 15925,
+          "path": "Plans/Decision_Log.md"
+        }
+      },
+      {
+        "owner_doc": "Plans/Decision_Log.md",
+        "plan_unit_id": "DL-217",
+        "source_location": {
+          "heading": "DL-217 - Contracts Added By The Motion Fix Lanes",
+          "heading_level": 3,
+          "heading_line": 15984,
+          "line": 15986,
           "path": "Plans/Decision_Log.md"
         }
       },
@@ -39415,10 +39426,10 @@
   "no_final_node_queues_created": true,
   "no_worknodes_created": true,
   "nodeseed_candidates_created": false,
-  "plan_unit_count": 7143,
+  "plan_unit_count": 7144,
   "risk_and_reasoning_summary": {
     "reasoning_tier_counts": {
-      "high": 2479,
+      "high": 2480,
       "low": 6,
       "medium": 29,
       "standard": 4629
@@ -41625,7 +41636,7 @@
       "owner_contract_bridge": 1,
       "owner_decision_drift": 1,
       "owner_demotion_drift": 1,
-      "owner_drift": 97,
+      "owner_drift": 98,
       "owner_first_consumer_drift_blocking": 1,
       "owner_hint_effective_trigger_drift": 1,
       "owner_identity_drift": 2,
@@ -43482,7 +43493,7 @@
     "source_preserving_unit_count": 0,
     "source_preserving_units": [],
     "status_counts": {
-      "accepted": 6938,
+      "accepted": 6939,
       "retired": 182,
       "superseded": 23
     },
@@ -43515,7 +43526,7 @@
       "contract": 5,
       "contract_requirement": 2,
       "data_contract": 8,
-      "decision": 129,
+      "decision": 130,
       "deferred_enhancement": 8,
       "delta_contract": 1,
       "derived_control_policy": 1,

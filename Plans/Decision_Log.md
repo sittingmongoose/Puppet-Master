@@ -15980,3 +15980,51 @@ owner_hints:
 ```
 
 ContractRef: ContractName:Plans/assistant-chat-design.md#ACD-475, ContractName:Plans/FinalGUISpec.md#F3-077, ContractName:Plans/FinalGUISpec.md#F3-598, ContractName:Plans/FinalGUISpec.md#F3-643, ContractName:Plans/FinalGUISpec.md#F3-653
+
+### DL-217 - Contracts Added By The Motion Fix Lanes
+
+```yaml
+plan_unit_id: DL-217
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: >-
+  Recorded 2026-10-16. Contracts the motion fix lanes add, recorded as each lands on main. The terminal
+  lane (main 89d1a6c057) makes the wallpaper owner's synchronous, cache-only source query the one way a
+  consumer finds the selected print (DR-073); its other changes (the Customize screen kept ready, Flicker
+  on the compositor, nothing drawn for a terminal off screen, idle and busy waits) change no product
+  contract. The Usage lane (main d2e038618b) implements F3-628's cancel and reversal rules (DL-215) and
+  adds no contract. The shell, editor, Settings and Glass lanes and Q13 are added here when they land.
+  Concept evidence is not native certification.
+gui_related: true
+gui_classification_reason: Contracts Added By The Motion Fix Lanes.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- The linked owners and finite companions agree with this decision; source publication is not native certification.
+validation_surfaces:
+- python3 scripts/pm-shard-plans.py --check
+- python3 scripts/pm-plan-index.py validate
+- python3 scripts/pm-plans-verify.py run-gates
+risk_class: owner_drift
+reasoning_tier: high
+context_scope: contracts_added_by_the_motion_fix_lanes
+implementation_surfaces:
+- Plans/Decision_Log.md
+node_compile_hint:
+  mode: owner_decision_record
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- /mnt/Cursor/share/puppet-master/2026-10-16-plans-topup/sources/Concepts--home-redesign--src--terminal--js--44-grounds-glass.js,
+  SHA-256 029716017b916a8c93c6817a458ba7d17c56dae295462655c31bb69dfe2c2392 (main 89d1a6c057, the terminal lane, the consumer of the wallpaper source query; source lineage; not native certification)
+- /mnt/Cursor/share/puppet-master/2026-10-16-plans-topup/sources/2026-10-16-motion-fixes--LANDING-REVIEW.md,
+  SHA-256 b1ca802f406fa585b3be8d1096e8aefada4bac0c94ef81a3ee93f3be3611918e (cross-lane contract check; source lineage)
+preserved_exact_tokens: []
+negative_constraints: []
+owner_hints:
+- Plans/Decision_Log.md
+```
+
+ContractRef: ContractName:Plans/DRY_Rules.md#DR-073, ContractName:Plans/FinalGUISpec.md#F3-628, ContractName:Plans/FinalGUISpec.md#F3-653

@@ -2,9 +2,9 @@
 
 Source: `Plans/DRY_Rules.md`
 
-Source lines: L3448-L4085
+Source lines: L3448-L4099
 
-Source SHA256: `6b3770ac4ae8188c7ed835f0fe6c358bb93eb5d6693dec5fddce06da60ab278f`
+Source SHA256: `36af6093784b754e93cc127ba6bb0afaa40d10b726ae0281b59fde142111bb1d`
 
 ---
 
@@ -605,6 +605,12 @@ canonical_text: >-
   command. The terminal Lens consumes the same selected print and catalog as Glass; it never derives
   another wallpaper from computed page styling or stores a second choice. The six NieR prints derive
   from the original scene drawings, while their native packaged assets are registered here.
+  Amended 2026-10-16 (DL-217, the motion lanes): every consumer of the selected print, the terminal Lens
+  and Glass's optics included, asks the one wallpaper owner for it through a synchronous, cache-only query
+  by print id and mode. The query answers the print's prepared source, not cached yet, or no image, and it
+  reads no page style. A consumer told not cached yet keeps its fallback until the owner announces the
+  print, and a watch on the selected print never forces a style recalculation. In the concept this is
+  PM_WALLPAPERS.sourceUrl(id, mode), returning a URL, undefined or null.
 gui_related: true
 gui_classification_reason: One wallpaper catalog and one writer.
 split_recommended: false
@@ -613,6 +619,8 @@ unblocks: []
 acceptance_criteria:
 - Every wallpaper id/default/asset resolves from the registry and every committed choice uses the same Project transaction.
 - A consumer references the owner and cannot silently add a private wallpaper or background mode.
+- The selected print reaches every consumer through the owner's one synchronous, cache-only query (its
+  source, not cached yet, or no image); no consumer or wallpaper watch reads page styles to find it.
 validation_surfaces:
 - python3 scripts/pm-shard-plans.py --check
 - python3 scripts/pm-plan-index.py validate
@@ -639,6 +647,12 @@ source_lineage:
 - /mnt/Cursor/share/puppet-master/2026-10-16-plans-pass2/sources/2026-10-14-terminal-round3--CANON-PROPOSALS.md,
   SHA-256 4a4b91f257467e76ec6d43e37a04a81cf5f9dee515242177f0d08db04483700d (source lineage; not native
   certification)
+- '/mnt/Cursor/share/puppet-master/2026-10-16-plans-topup/sources/Concepts--home-redesign--src--terminal--js--44-grounds-glass.js,
+  SHA-256 029716017b916a8c93c6817a458ba7d17c56dae295462655c31bb69dfe2c2392 (main 89d1a6c057, the terminal
+  lane: the consumer of the wallpaper source query; source lineage; not native certification)'
+- /mnt/Cursor/share/puppet-master/2026-10-16-plans-topup/sources/2026-10-16-motion-fixes--LANDING-REVIEW.md,
+  SHA-256 b1ca802f406fa585b3be8d1096e8aefada4bac0c94ef81a3ee93f3be3611918e (cross-lane contract check;
+  source lineage)
 preserved_exact_tokens: []
 negative_constraints: []
 owner_hints:
