@@ -194785,7 +194785,10 @@ function open(opts) {
     // The look tokens are inherited from the editor root; the contrast floor is
     // applied on its code surfaces. Changing the floor needs no new art reading.
     var lkKey = lk + '|' + R.look.mode + '|' + (inst.root && inst.root.getAttribute('data-phosphor') || '');
-    var sv = inst.schemeVarsNow ? inst.schemeVarsNow() : null, lt = lookTokens(lkKey);
+    // The preview has this scope's current choice. A hidden real editor keeps
+    // its last drawn scheme until shown, so its colours can be stale here.
+    var artSource = preview || inst;
+    var sv = artSource.schemeVarsNow ? artSource.schemeVarsNow() : null, lt = lookTokens(lkKey);
     var tok = function (n) { return (sv && sv[n]) || (lt && lt[n]) || ''; };
     setVar('--pmt-cz-sfg', tok('--pmw-ed-fg') || '#ccc');
     setVar('--pmt-cz-sbg', tok('--pmw-ed-gutbg') || '#111');
