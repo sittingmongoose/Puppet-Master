@@ -185,8 +185,26 @@ PAGES = [
      "        [oldP, newP].forEach(function (p) { p.getAnimations().forEach(function (a) { if (a.animationName === 'pm8-page-in' || a.animationName === 'pm8-page-out') out.push(a); }); });\n"
      "        return out;\n"
      "      };\n"
-     "      if (window.PM_START_ON_SHOWN) window.PM_START_ON_SHOWN(pageMoves);\n",
+     "      /* O55: the click's fade (goSoon) keeps running, on the compositor, through this change's long frame; the\n"
+     "         exit takes over from the opacity it has reached in the frame the moves start */\n"
+     "      var lift = window.PM_PAGES.__lift; window.PM_PAGES.__lift = null;\n"
+     "      var handoff = function () {\n"
+     "        if (!lift || lift.el !== oldP) { if (lift) try { lift.anim.cancel(); } catch (e) {} return; }\n"
+     "        try {\n"
+     "          /* still pending here, it reads as its start while the compositor has been running it since its first frame */\n"
+     "          var a = lift.anim, ran = document.timeline.currentTime - lift.at;\n"
+     "          if ((a.pending || !(a.currentTime > 0)) && ran > 0) a.currentTime = Math.min(ran, 140);\n"
+     "          oldP.style.setProperty('--pm8-out-from', getComputedStyle(oldP).opacity); a.cancel();\n"
+     "        } catch (e) {}\n"
+     "      };\n"
+     "      if (window.PM_START_ON_SHOWN) window.PM_START_ON_SHOWN(pageMoves, { release: handoff }); else handoff();\n",
      'page switch: moves start on a shown frame'),
+    ("      function cleanupOut() {\n"
+     "        oldP.classList.remove('pm8-page-out');\n",
+     "      function cleanupOut() {\n"
+     "        oldP.classList.remove('pm8-page-out');\n"
+     "        oldP.style.removeProperty('--pm8-out-from');   /* O55: the answered fade's start is this exit's only */\n",
+     'page exit: forget the answered start'),
     # A3, A5: the edge-dissolve header offsets (PM_EDGE) measured each newly shown page's head synchronously inside the
     # page change, forcing the arriving page's style and layout there (~100 ms on the P1000) before the rest of the
     # change wrote to it again. Its ResizeObserver delivers the first measure itself, after the frame's layout and before
@@ -297,11 +315,13 @@ ANSWER_FIRST = [
      "      /* NieR answers with its wipe and the ink; the other looks start the leaving page's fade (Retro in steps) */\n"
      "      var lift = !nier && !reduced() && oldP && oldP.animate && !oldP.classList.contains('pm8-page-out') ? oldP.animate([{ opacity: 1 }, { opacity: 0.86 }], { duration: 140, easing: retro ? 'steps(2, end)' : 'cubic-bezier(.2, 0, 0, 1)', fill: 'forwards' }) : null;\n"
      "      soon = { page: pageId };\n"
-     "      requestAnimationFrame(function () { setTimeout(function () {\n"
+     "      requestAnimationFrame(function (shown) { setTimeout(function () {\n"
      "        var to = soon.page; soon = null;\n"
-     "        if (lift) { try { oldP.style.setProperty('--pm8-out-from', getComputedStyle(oldP).opacity); lift.cancel(); } catch (e) {} setTimeout(function () { oldP.style.removeProperty('--pm8-out-from'); }, 1500); }\n"
+     "        /* the fade is not read here: a move begun a frame ago still reads as its start on this thread */\n"
+     "        P.__lift = lift ? { el: oldP, anim: lift, at: shown } : null;\n"
      "        if (P.__answered !== to) P.__answered = null;\n"
      "        P.go(to);\n"
+     "        if (P.__lift) { try { P.__lift.anim.cancel(); } catch (e) {} P.__lift = null; }   /* no exit took it over */\n"
      "      }, 0); });\n"
      "    };\n"
      "    function resync() {\n"
