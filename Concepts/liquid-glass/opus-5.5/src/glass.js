@@ -2220,8 +2220,18 @@
   window.PM_LG = { version: 'v3-2026-10-13', sync: syncAll, materialize: function () { materialize(Array.from(glassSet)); }, kinds: KINDS, count: function () { return glassSet.size; },
     set: function (o) { for (var k in o) { if (o[k] == null) root.removeAttribute(k); else root.setAttribute(k, o[k]); } syncAll(); },
     /* Decode and bake through the same bounded caches as visible sheets. Preparation changes no visible pixels. */
-    prepareWallpaper: function (url) { return new Promise(function (resolve) {
-      withWall(function (im) { if (!im) { resolve(false); return; } if (isGlass()) makeFrosts(im, resolve, true); else resolve(true); }, url);
+    /* opts.canRun (optional): asked again once the print is decoded, before its frost is encoded; false resolves false
+       and the caller tries again later (the gallery warms nearby prints only while the page is idle; Settings, B3) */
+    prepareWallpaper: function (url, opts) { return new Promise(function (resolve) {
+      var canRun = opts && typeof opts.canRun === 'function' ? opts.canRun : null;
+      /* a print whose frost pair is still kept is ready to commit without decoding it again (raw prints are kept for 2,
+         frost pairs for FROST_PAIRS); its rims rebake after the commit, as for any print */
+      if (isGlass() && frostCache.has(url + ':' + innerWidth + 'x' + innerHeight)) { resolve(true); return; }
+      withWall(function (im) {
+        if (!im) { resolve(false); return; }
+        if (canRun && !canRun()) { resolve(false); return; }
+        if (isGlass()) makeFrosts(im, resolve, true); else resolve(true);
+      }, url);
     }); },
     commitWallpaper: function (id, url, viewport) {
       if (!isGlass() || root.getAttribute('data-lg-wall') !== id) return false;
