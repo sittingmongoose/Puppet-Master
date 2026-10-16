@@ -33496,7 +33496,12 @@ html[data-o55-nier="on"][data-o55-nier-parts~="cursor"]:not(#lgz):not(#lgy) #pm-
 }
 /* Settings' section and manager tabs brighten under the pointer as every other strip does (and as they did in these looks
    before the switcher): Glass's resting ink for them outranks its own hover rule, so they stayed in resting ink */
-html[data-pm-switch="lens"]:not(#lgz):not(#lgy) #pm-settings-root :is(.workspace-tab:not(.is-current), .manager-tab:not([aria-selected="true"])):hover { color: var(--pm-switch-ink-hover, var(--pm-switch-ink-on)) !important; }
+html[data-pm-switch="lens"]:not(#lgz):not(#lgy) #pm-settings-root :is(.workspace-tab:not(.is-current), .manager-tab:not([aria-selected="true"])):hover:not([data-lg-press]) { color: var(--pm-switch-ink-hover, var(--pm-switch-ink-on)) !important; }
+/* an icon on an opaque chip takes its item's ink, as the words do, with the pointer on it too. The glyphs' hover ignite
+   (pm7-hover-bridge.css) inks a hovered icon in the screen's --text, and on the chip (a chosen or pressed item under the
+   pointer) or on NieR's hover bar that is the chip's own colour (Q16 review, resting-pointer press check) */
+html[data-pm-switch-layer="under"]:not(#lgz) :is(.page-tab, #pmuRange > button, .pm-segtab-item, .orch-tab, .pmu-navbtn, .domain-link, .side-link, .index-link, .workspace-tab, .manager-tab, .pm6-tt-mode):is(.active, .is-active, .is-current, [aria-selected="true"], [aria-checked="true"], [data-lg-press="on"]) svg.nx,
+html[data-o55-nier="on"][data-o55-nier-parts~="cursor"]:not(#lgz) :is(.page-tab, #pmuRange > button, .pm-segtab-item, .orch-tab, .pmu-navbtn, .domain-link, .side-link, .index-link, .workspace-tab, .manager-tab):hover svg.nx { --nx-ink: currentColor; }
 
 /* None of these looks lights its chip with Glass's glint (--pm-switch-glint is transparent in each), so the glint's band,
    an empty layer that the no-pills gate read as a capsule, is not drawn. */
@@ -48727,8 +48732,8 @@ html[data-pm-switch="lens"][data-pm-switch-layer="under"]:not(#lgz) :is(#themeMe
    and the parts that colour themselves (icons, Settings' second lines, Usage's room names), each anchored on its item's
    class so the browser's ancestor filter rejects every other element at once (a descendant *, or a part keyed only by the
    attribute, was tested against every element or every icon on every restyle). The inks change in the press's own frame,
-   with no colour transition: the app's click can hold the page for a third of a second while the chip glides on, and a
-   transition left frozen part-way kept the old ink on the landed chip (Q16 review F3). */
+   with no transition and no delay (Retro's icons strike 33 ms late): the app's click can hold the page for a third of a
+   second while the chip glides on, and a change left waiting kept the old ink on the landed chip (Q16 review F3). */
 html[data-pm-switch="lens"][data-pm-switch-layer="under"]:not(#lgz):not(#lgy):not(#lgx) [data-lg-press="on"],
 html[data-pm-switch="lens"][data-pm-switch-layer="under"]:not(#lgz):not(#lgy):not(#lgx) .pmu-navbtn[data-lg-press="on"] .pmu-navtext,
 html[data-pm-switch="lens"][data-pm-switch-layer="under"]:not(#lgz):not(#lgy):not(#lgx) .pmu-navbtn[data-lg-press="on"] svg,
@@ -48743,7 +48748,7 @@ html[data-pm-switch="lens"][data-pm-switch-layer="under"]:not(#lgz):not(#lgy):no
 html[data-pm-switch="lens"][data-pm-switch-layer="under"]:not(#lgz):not(#lgy):not(#lgx) .pm-segtab-item[data-lg-press="on"] svg,
 html[data-pm-switch="lens"][data-pm-switch-layer="under"]:not(#lgz):not(#lgy):not(#lgx) .pm-segtab-item[data-lg-press="on"] path,
 html[data-pm-switch="lens"][data-pm-switch-layer="under"]:not(#lgz):not(#lgy):not(#lgx) .pm6-tt-mode[data-lg-press="on"] svg,
-html[data-pm-switch="lens"][data-pm-switch-layer="under"]:not(#lgz):not(#lgy):not(#lgx) .pm6-tt-mode[data-lg-press="on"] path { color: var(--pm-switch-ink-on) !important; transition-duration: 0s !important; }
+html[data-pm-switch="lens"][data-pm-switch-layer="under"]:not(#lgz):not(#lgy):not(#lgx) .pm6-tt-mode[data-lg-press="on"] path { color: var(--pm-switch-ink-on) !important; transition: none !important; }
 html[data-pm-switch="lens"][data-pm-switch-layer="under"]:not(#lgz):not(#lgy):not(#lgx) [data-lg-press="off"],
 html[data-pm-switch="lens"][data-pm-switch-layer="under"]:not(#lgz):not(#lgy):not(#lgx) .pmu-navbtn[data-lg-press="off"] .pmu-navtext,
 html[data-pm-switch="lens"][data-pm-switch-layer="under"]:not(#lgz):not(#lgy):not(#lgx) .pmu-navbtn[data-lg-press="off"] svg,
@@ -48758,7 +48763,7 @@ html[data-pm-switch="lens"][data-pm-switch-layer="under"]:not(#lgz):not(#lgy):no
 html[data-pm-switch="lens"][data-pm-switch-layer="under"]:not(#lgz):not(#lgy):not(#lgx) .pm-segtab-item[data-lg-press="off"] svg,
 html[data-pm-switch="lens"][data-pm-switch-layer="under"]:not(#lgz):not(#lgy):not(#lgx) .pm-segtab-item[data-lg-press="off"] path,
 html[data-pm-switch="lens"][data-pm-switch-layer="under"]:not(#lgz):not(#lgy):not(#lgx) .pm6-tt-mode[data-lg-press="off"] svg,
-html[data-pm-switch="lens"][data-pm-switch-layer="under"]:not(#lgz):not(#lgy):not(#lgx) .pm6-tt-mode[data-lg-press="off"] path { color: var(--pm-switch-ink) !important; transition-duration: 0s !important; }
+html[data-pm-switch="lens"][data-pm-switch-layer="under"]:not(#lgz):not(#lgy):not(#lgx) .pm6-tt-mode[data-lg-press="off"] path { color: var(--pm-switch-ink) !important; transition: none !important; }
 
 /* Settings' chapter header is a bar sheet under Liquid Glass (glass.js SURFACES): on the bare wallpaper its line, a 62 %
    tint, read 4.2:1 over Ribbons and 1.9-2.9:1 over Prism or Pool in Glass Dark (2026-10-14). The line takes the look's

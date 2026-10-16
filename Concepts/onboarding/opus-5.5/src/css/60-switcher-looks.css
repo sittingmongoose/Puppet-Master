@@ -123,7 +123,12 @@ html[data-o55-nier="on"][data-o55-nier-parts~="cursor"]:not(#lgz):not(#lgy) #pm-
 }
 /* Settings' section and manager tabs brighten under the pointer as every other strip does (and as they did in these looks
    before the switcher): Glass's resting ink for them outranks its own hover rule, so they stayed in resting ink */
-html[data-pm-switch="lens"]:not(#lgz):not(#lgy) #pm-settings-root :is(.workspace-tab:not(.is-current), .manager-tab:not([aria-selected="true"])):hover { color: var(--pm-switch-ink-hover, var(--pm-switch-ink-on)) !important; }
+html[data-pm-switch="lens"]:not(#lgz):not(#lgy) #pm-settings-root :is(.workspace-tab:not(.is-current), .manager-tab:not([aria-selected="true"])):hover:not([data-lg-press]) { color: var(--pm-switch-ink-hover, var(--pm-switch-ink-on)) !important; }
+/* an icon on an opaque chip takes its item's ink, as the words do, with the pointer on it too. The glyphs' hover ignite
+   (pm7-hover-bridge.css) inks a hovered icon in the screen's --text, and on the chip (a chosen or pressed item under the
+   pointer) or on NieR's hover bar that is the chip's own colour (Q16 review, resting-pointer press check) */
+html[data-pm-switch-layer="under"]:not(#lgz) :is(.page-tab, #pmuRange > button, .pm-segtab-item, .orch-tab, .pmu-navbtn, .domain-link, .side-link, .index-link, .workspace-tab, .manager-tab, .pm6-tt-mode):is(.active, .is-active, .is-current, [aria-selected="true"], [aria-checked="true"], [data-lg-press="on"]) svg.nx,
+html[data-o55-nier="on"][data-o55-nier-parts~="cursor"]:not(#lgz) :is(.page-tab, #pmuRange > button, .pm-segtab-item, .orch-tab, .pmu-navbtn, .domain-link, .side-link, .index-link, .workspace-tab, .manager-tab):hover svg.nx { --nx-ink: currentColor; }
 
 /* None of these looks lights its chip with Glass's glint (--pm-switch-glint is transparent in each), so the glint's band,
    an empty layer that the no-pills gate read as a capsule, is not drawn. */
