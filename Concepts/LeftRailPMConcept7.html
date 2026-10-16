@@ -54688,11 +54688,20 @@ body.pmu-page-active #panel-dashboard.pm-home-owned.pm8-page-out { position: abs
    no room, no pointer and no paint, and the film makes it inert and aria-hidden. It stays laid out there, styled, until
    the arrival (fix cycle 2: going back to display: none made the arrival's show frame restyle and lay out the whole
    board, a 99 ms task in the entry's frames on the P1000). At the arrival the board waits one frame in its scroll pane
-   (data-pmu-warm-wait), out of the click's frame, and shows in the frame after it by visibility alone. ---- */
+   (data-pmu-warm-wait), out of the click's frame, and shows in the frame after it by opacity alone. ---- */
 .primary-content > #panel-usage.page[data-pmu-warm]:not(.active):not(.pm8-page-out) { display: flex; position: absolute;
   left: var(--pmu-warm-x, 0px); top: var(--pmu-warm-y, 0px); width: var(--pmu-warm-w, 100%); height: var(--pmu-warm-h, 100%);
   visibility: hidden; pointer-events: none; z-index: -1; content-visibility: visible; }
-:is(#panel-usage,[data-pmu-host]) .pmu-scroll[data-pmu-warm-wait] { visibility: hidden; }
+:is(#panel-usage,[data-pmu-host]) .pmu-scroll[data-pmu-warm-wait] { opacity: 0; }
+/* fix cycle 2, measured (RTX 3090 and Nas1 traces of the entry): what the waiting board keeps must stay what it shows
+   with, or the entry's frames restyle or lay out the whole board again. The page keeps its warm box through the
+   arrival (data-pmu-warm-pin: the same width and height as a fixed size; as a flex item sized by flex: 1 its 1,700
+   elements were laid out again in the click's frame, 103 ms on the 3090), until the box it shows in changes size. The
+   wait in the scroll pane and the held plates hide by opacity, which is not inherited: hidden by visibility, the show
+   frame walked every element of the board twice (59 ms of style on the 3090, 76 ms on Nas1). Opacity 0 is not
+   painted, and the waiting page is inert. */
+.primary-content > #panel-usage.page.active[data-pmu-warm-pin] { flex: none; width: var(--pmu-warm-w); height: var(--pmu-warm-h); }
+:is(#panel-usage,[data-pmu-host]) .pmu-board[data-held][data-pmu-warm-held] > .pmu-card { visibility: inherit; }
 /* ---- the warm board's raster (P2-03; 15-film.js raster): a built board that was never painted made the first visible
    Usage entry compile every GPU program its cards and charts draw with (P1000 F3 cold: 47 program links, ~1.4 s of GPU
    main thread, an 834 ms gap with an empty board on screen). So once per look and board class, with a GPU, in idle
@@ -61909,6 +61918,7 @@ var PMU_SERIES = {
     if (document.hidden || root.hasAttribute('data-o55-open') || root.hasAttribute('data-o55-tour') || root.hasAttribute('data-pm-page-transition')) { warmSoon(1200); return; }
     if (typeof softwareRendered === 'function' && softwareRendered()) { rasterLog.skipped = 'software'; return; }
     var box = warmBox(panel); if (!box) { warmSoon(2000); return; }
+    warmUnpin();   /* the last arrival's pin (the page hidden: nothing to lay out) */
     var w = warm = { room: st.room, key: null, built: false, box: box, shares: {}, at: performance.now() };
     panel.style.setProperty('--pmu-warm-x', box.x + 'px'); panel.style.setProperty('--pmu-warm-y', box.y + 'px');
     panel.style.setProperty('--pmu-warm-w', box.w + 'px'); panel.style.setProperty('--pmu-warm-h', box.h + 'px');
@@ -61929,7 +61939,34 @@ var PMU_SERIES = {
   }
   /* the built board waits for the arrival where it was built: laid out and styled in the warm box, hidden and inert
      (after its raster, or at once without one); nothing changes here, so a park or the end of a pass lays nothing out */
-  function warmPark(w) { if (warm === w) w.parked = true; }
+  function warmPark(w) {
+    if (warm !== w) return;
+    w.parked = true;
+    /* its plates hidden by opacity alone from here (05-film.css data-pmu-warm-held), so the show changes 13 plates'
+       opacity, not the visibility every element inherits */
+    var board = document.getElementById('pmuBoard'); if (board) board.setAttribute('data-pmu-warm-held', '');
+  }
+  /* the page keeps its warm box through the arrival and the visit (05-film.css data-pmu-warm-pin) until the box it
+     shows in changes size; the next warm build takes the pin off while the page is hidden (taken off as the page
+     leaves, it laid the leaving board out again) */
+  var pinRO = null;
+  function warmPin(panel) {
+    warmUnpin();
+    panel.setAttribute('data-pmu-warm-pin', '');
+    var pc = panel.parentNode; if (!pc || !window.ResizeObserver) return;
+    var size = null;
+    pinRO = new ResizeObserver(function (entries) {
+      var b = entries[0] && entries[0].contentRect; if (!b) return;
+      var now = Math.round(b.width) + 'x' + Math.round(b.height);
+      if (size == null) { size = now; return; }
+      if (now !== size) warmUnpin();
+    });
+    pinRO.observe(pc);
+  }
+  function warmUnpin() {
+    if (pinRO) { pinRO.disconnect(); pinRO = null; }
+    var panel = document.getElementById('panel-usage'); if (panel) panel.removeAttribute('data-pmu-warm-pin');
+  }
 
   /* ---- the warm board's raster (P2-03; 05-film.css data-pmu-raster). The warm build laid the board out but never
      painted it, so the first visible entry paid for every GPU program its cards and charts draw with (P1000 F3 cold: 47
@@ -62405,6 +62442,7 @@ var PMU_SERIES = {
     warmLast = { why: why, built: w.built, at: Math.round(performance.now()) };
     var board = document.getElementById('pmuBoard'), panel = document.getElementById('panel-usage');
     if (panel) panel.removeAttribute('data-pmu-warm');
+    if (board) board.removeAttribute('data-pmu-warm-held');
     if (board && board.parentNode) board.parentNode.removeAttribute('data-pmu-warm-wait');
     warmUnhide();
     if (!pageShown() && PMU.board && PMU.board.unmount) PMU.board.unmount();
@@ -62479,7 +62517,7 @@ var PMU_SERIES = {
     warm = null;
     var panel = document.getElementById('panel-usage'), board = document.getElementById('pmuBoard');
     if (board && board.parentNode) board.parentNode.setAttribute('data-pmu-warm-wait', '');
-    if (panel) panel.removeAttribute('data-pmu-warm');
+    if (panel) { warmPin(panel); panel.removeAttribute('data-pmu-warm'); }
     warmUnhide();
     return w;
   }
@@ -62503,12 +62541,12 @@ var PMU_SERIES = {
     var check = function () { if (pageHeld() && ++n < 10) { requestAnimationFrame(function () { after(check); }); return; } requestAnimationFrame(fn); };
     requestAnimationFrame(function () { after(check); });
   }
-  /* the board shows: three attributes, no read (the board is styled and laid out already; the release reads its view
+  /* the board shows: four attributes, no read (the board is styled and laid out already; the release reads its view
      after this frame's lifecycle) */
   function warmShow(w, board) {
     var scroll = board.parentNode;
     if (scroll) scroll.removeAttribute('data-pmu-warm-wait');
-    board.removeAttribute('data-held'); board.removeAttribute('data-hold-bodies');
+    board.removeAttribute('data-held'); board.removeAttribute('data-hold-bodies'); board.removeAttribute('data-pmu-warm-held');
   }
   function warmArrive(w, m, board) {
     afterPage(function () {
