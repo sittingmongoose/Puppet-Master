@@ -1,0 +1,596 @@
+{
+  "changed_since_previous_seal": 18,
+  "files": [
+    {
+      "commits": [
+        {
+          "commit": "4c5b905030720bae8bf057a19faa9f8fc52ea29a",
+          "date": "2026-10-16",
+          "subject": "plans: apply the final review's six low items (N1-N6)"
+        },
+        {
+          "commit": "18a6e1a1e1fccbda8d883fc0bf482cfde9060702",
+          "date": "2026-10-16",
+          "subject": "plans: cite trains L1 (a0f844455c) and L2 (2b5ed6092d) as landed"
+        },
+        {
+          "commit": "a738c6ac021077c9b107f5fd28b2102202b709e9",
+          "date": "2026-10-16",
+          "subject": "plans: draft the approved L1 and L2 trains from their pinned heads (DL-217)"
+        },
+        {
+          "commit": "6c95cd1a6fa3c0caa02ad9ef95d0aaee8ed81486",
+          "date": "2026-10-16",
+          "subject": "plans: record Q13 (a2c537cb61) in DL-217"
+        },
+        {
+          "commit": "9ba9a3d683e051aea5259e487b77043684136674",
+          "date": "2026-10-16",
+          "subject": "plans: cite the shell lane as landed (b9a08db90f)"
+        },
+        {
+          "commit": "1e7178d87de84ac7dc41c31835b2faaf5563580d",
+          "date": "2026-10-16",
+          "subject": "plans: draft the shell, Glass and Settings lane contracts from their heads"
+        },
+        {
+          "commit": "57abe2dc39c486204c22e79ace0b8fda6acf46ea",
+          "date": "2026-10-16",
+          "subject": "plans: record the landed terminal lane's wallpaper source query (DL-217)"
+        },
+        {
+          "commit": "d3a3a585c2c14adf4098b47f9b6fd796d1074ff3",
+          "date": "2026-10-16",
+          "subject": "plans: apply the pre-review of ce1126761c and the coordinator's rulings"
+        },
+        {
+          "commit": "2a65cae7975b33f9f7b3571be0f4227c574042bc",
+          "date": "2026-10-16",
+          "subject": "plans: record Jared's P1000 reading, animated covers, silent bell and frost crossfade"
+        },
+        {
+          "commit": "75fb0335a45443a3e2e18f1301cd8ba7010c3c88",
+          "date": "2026-10-16",
+          "subject": "plans: record the consistency pass, Friendly lavender and Jared's motion calls"
+        },
+        {
+          "commit": "5a79e590502bd621faec4492024aaa16614b49ee",
+          "date": "2026-10-15",
+          "subject": "plans: reconcile landed PM7 Glass, terminal and shell canon"
+        },
+        {
+          "commit": "8c923b496253ba7026fdbbeb9204fe2e02a6cd9f",
+          "date": "2026-10-14",
+          "subject": "plans: record settled Glass, onboarding and font decisions and retire Usage flights"
+        },
+        {
+          "commit": "e8c2e98b6991e305728cfb864cd23e3f045cf23a",
+          "date": "2026-10-14",
+          "subject": "plans: reconcile PM7 review findings and latest owner decisions"
+        },
+        {
+          "commit": "8ccbfe180403d108ca36a6b6fb9f54acae91e0b8",
+          "date": "2026-10-14",
+          "subject": "plans: compile PM7 settings registries command schema and control wiring"
+        }
+      ],
+      "hash_at_previous_seal": "39ce002a1651efc7c59fced4c9b6486b1e00d27a4d38ff73783d09751dd69089",
+      "hash_at_reseal": "ada7e7f512381b48643f91836298dfa8ed8771d2d103bc05a05df2a66c11e90d",
+      "path": "Plans/00-plans-index.md"
+    },
+    {
+      "commits": [
+        {
+          "commit": "75fb0335a45443a3e2e18f1301cd8ba7010c3c88",
+          "date": "2026-10-16",
+          "subject": "plans: record the consistency pass, Friendly lavender and Jared's motion calls"
+        },
+        {
+          "commit": "5a79e590502bd621faec4492024aaa16614b49ee",
+          "date": "2026-10-15",
+          "subject": "plans: reconcile landed PM7 Glass, terminal and shell canon"
+        },
+        {
+          "commit": "8c923b496253ba7026fdbbeb9204fe2e02a6cd9f",
+          "date": "2026-10-14",
+          "subject": "plans: record settled Glass, onboarding and font decisions and retire Usage flights"
+        },
+        {
+          "commit": "e087f9147557e8ad4e1756f5adbea9e1d1d1acdb",
+          "date": "2026-10-14",
+          "subject": "plans: resolve confirmation census and presentation owner findings"
+        },
+        {
+          "commit": "e8c2e98b6991e305728cfb864cd23e3f045cf23a",
+          "date": "2026-10-14",
+          "subject": "plans: reconcile PM7 review findings and latest owner decisions"
+        },
+        {
+          "commit": "c5db487fd494fba27df7c5e6c9903ad91f50a9e9",
+          "date": "2026-10-14",
+          "subject": "plans: reconcile legacy contrast and customizer acceptance clauses"
+        },
+        {
+          "commit": "8ccbfe180403d108ca36a6b6fb9f54acae91e0b8",
+          "date": "2026-10-14",
+          "subject": "plans: compile PM7 settings registries command schema and control wiring"
+        },
+        {
+          "commit": "4f6b63a6e3b6376a9d932c7674e972c5324ffc7e",
+          "date": "2026-10-14",
+          "subject": "plans: compile PM7 campaign owner requirements and decisions"
+        }
+      ],
+      "hash_at_previous_seal": "3b3e6cc928463874d31448ebb06530e55e68c5de446e8fd52ab25240f837f3b6",
+      "hash_at_reseal": "2f0795d59a9a2a7eecb7db53cd0fea89027939f2f7c86740608e288167b952a3",
+      "path": "Plans/Automated_Testing_System.md"
+    },
+    {
+      "commits": [
+        {
+          "commit": "18a6e1a1e1fccbda8d883fc0bf482cfde9060702",
+          "date": "2026-10-16",
+          "subject": "plans: cite trains L1 (a0f844455c) and L2 (2b5ed6092d) as landed"
+        },
+        {
+          "commit": "a738c6ac021077c9b107f5fd28b2102202b709e9",
+          "date": "2026-10-16",
+          "subject": "plans: draft the approved L1 and L2 trains from their pinned heads (DL-217)"
+        },
+        {
+          "commit": "1e7178d87de84ac7dc41c31835b2faaf5563580d",
+          "date": "2026-10-16",
+          "subject": "plans: draft the shell, Glass and Settings lane contracts from their heads"
+        },
+        {
+          "commit": "57abe2dc39c486204c22e79ace0b8fda6acf46ea",
+          "date": "2026-10-16",
+          "subject": "plans: record the landed terminal lane's wallpaper source query (DL-217)"
+        },
+        {
+          "commit": "5a79e590502bd621faec4492024aaa16614b49ee",
+          "date": "2026-10-15",
+          "subject": "plans: reconcile landed PM7 Glass, terminal and shell canon"
+        },
+        {
+          "commit": "e8c2e98b6991e305728cfb864cd23e3f045cf23a",
+          "date": "2026-10-14",
+          "subject": "plans: reconcile PM7 review findings and latest owner decisions"
+        },
+        {
+          "commit": "8ccbfe180403d108ca36a6b6fb9f54acae91e0b8",
+          "date": "2026-10-14",
+          "subject": "plans: compile PM7 settings registries command schema and control wiring"
+        },
+        {
+          "commit": "4f6b63a6e3b6376a9d932c7674e972c5324ffc7e",
+          "date": "2026-10-14",
+          "subject": "plans: compile PM7 campaign owner requirements and decisions"
+        }
+      ],
+      "hash_at_previous_seal": "efd34682599b091234e39de5b537db698e789ea036af983ee23ef4a396e4ae2a",
+      "hash_at_reseal": "7553c468db9b04e3bc5e4d5b3305aa47f2e9428b32952f32d0b2c64201c67b88",
+      "path": "Plans/DRY_Rules.md"
+    },
+    {
+      "commits": [
+        {
+          "commit": "c50326ceec6802ab25dfe5f746b8d1b97c59086f",
+          "date": "2026-10-15",
+          "subject": "plans: fix PM7 review contracts and preserve sealed shard path"
+        }
+      ],
+      "hash_at_previous_seal": "0fb4eb885849baad1d5b229b6f0e82faec4c5b39e7207de14e355ac81f7e444d",
+      "hash_at_reseal": "cad0445fd6c87122b67ad570e132f94a9d8375ea9b076720d2762687e9efa403",
+      "path": "Plans/sharding_config.json"
+    },
+    {
+      "commits": [
+        {
+          "commit": "c50326ceec6802ab25dfe5f746b8d1b97c59086f",
+          "date": "2026-10-15",
+          "subject": "plans: fix PM7 review contracts and preserve sealed shard path"
+        },
+        {
+          "commit": "5a79e590502bd621faec4492024aaa16614b49ee",
+          "date": "2026-10-15",
+          "subject": "plans: reconcile landed PM7 Glass, terminal and shell canon"
+        },
+        {
+          "commit": "e087f9147557e8ad4e1756f5adbea9e1d1d1acdb",
+          "date": "2026-10-14",
+          "subject": "plans: resolve confirmation census and presentation owner findings"
+        },
+        {
+          "commit": "616189aa0049facf4d368b8cd0b77d2e7e196f76",
+          "date": "2026-10-14",
+          "subject": "plans: compile exact Customize patches and retire theme preview companions"
+        },
+        {
+          "commit": "e8c2e98b6991e305728cfb864cd23e3f045cf23a",
+          "date": "2026-10-14",
+          "subject": "plans: reconcile PM7 review findings and latest owner decisions"
+        },
+        {
+          "commit": "4f6b63a6e3b6376a9d932c7674e972c5324ffc7e",
+          "date": "2026-10-14",
+          "subject": "plans: compile PM7 campaign owner requirements and decisions"
+        }
+      ],
+      "hash_at_previous_seal": "8069feae09a9e9acf0c51d927c4cff994861865b5c03a2bef574e2bea6ce253b",
+      "hash_at_reseal": "a73d1353dd61dcd51375eabb573495c0a9437bf2f3dffb86e0b8b7240046102a",
+      "path": "Plans/UI_Command_Catalog.md"
+    },
+    {
+      "commits": [
+        {
+          "commit": "c50326ceec6802ab25dfe5f746b8d1b97c59086f",
+          "date": "2026-10-15",
+          "subject": "plans: fix PM7 review contracts and preserve sealed shard path"
+        }
+      ],
+      "hash_at_previous_seal": "6ef337bcd00802c0ad39c78cdc8ed410ab35726c738a680b4b07d6f4c7fa51dd",
+      "hash_at_reseal": "34a0d52a0d22962cbb5df19547ed93b32dcc7ba0e4ef13c18407e9149b631de4",
+      "path": "scripts/pm-shard-plans.py"
+    },
+    {
+      "commits": [
+        {
+          "commit": "c50326ceec6802ab25dfe5f746b8d1b97c59086f",
+          "date": "2026-10-15",
+          "subject": "plans: fix PM7 review contracts and preserve sealed shard path"
+        },
+        {
+          "commit": "5a79e590502bd621faec4492024aaa16614b49ee",
+          "date": "2026-10-15",
+          "subject": "plans: reconcile landed PM7 Glass, terminal and shell canon"
+        },
+        {
+          "commit": "4f6b63a6e3b6376a9d932c7674e972c5324ffc7e",
+          "date": "2026-10-14",
+          "subject": "plans: compile PM7 campaign owner requirements and decisions"
+        }
+      ],
+      "hash_at_previous_seal": "9408fbc6093882f07c12e9e188d76530bbb93adb5d3c31b74b76e5b6b0e518f0",
+      "hash_at_reseal": "5bcfdfe2d87332d6a3479f8df7acdb3a953084a6ff4ce0df690813e0c668715d",
+      "path": "Plans/Planning_Wizard.md"
+    },
+    {
+      "commits": [
+        {
+          "commit": "4c5b905030720bae8bf057a19faa9f8fc52ea29a",
+          "date": "2026-10-16",
+          "subject": "plans: apply the final review's six low items (N1-N6)"
+        },
+        {
+          "commit": "18a6e1a1e1fccbda8d883fc0bf482cfde9060702",
+          "date": "2026-10-16",
+          "subject": "plans: cite trains L1 (a0f844455c) and L2 (2b5ed6092d) as landed"
+        },
+        {
+          "commit": "a738c6ac021077c9b107f5fd28b2102202b709e9",
+          "date": "2026-10-16",
+          "subject": "plans: draft the approved L1 and L2 trains from their pinned heads (DL-217)"
+        },
+        {
+          "commit": "9ba9a3d683e051aea5259e487b77043684136674",
+          "date": "2026-10-16",
+          "subject": "plans: cite the shell lane as landed (b9a08db90f)"
+        },
+        {
+          "commit": "1e7178d87de84ac7dc41c31835b2faaf5563580d",
+          "date": "2026-10-16",
+          "subject": "plans: draft the shell, Glass and Settings lane contracts from their heads"
+        },
+        {
+          "commit": "2ca221362d18e5b013b27bbd6f87927d8f929280",
+          "date": "2026-10-16",
+          "subject": "plans: cite the consistency pass as landed (aec2916c94)"
+        },
+        {
+          "commit": "d3a3a585c2c14adf4098b47f9b6fd796d1074ff3",
+          "date": "2026-10-16",
+          "subject": "plans: apply the pre-review of ce1126761c and the coordinator's rulings"
+        },
+        {
+          "commit": "2a65cae7975b33f9f7b3571be0f4227c574042bc",
+          "date": "2026-10-16",
+          "subject": "plans: record Jared's P1000 reading, animated covers, silent bell and frost crossfade"
+        },
+        {
+          "commit": "2e6bfa35abcc834dfc9ac2e4ac547d8d7c63fe1a",
+          "date": "2026-10-16",
+          "subject": "plans: keep Retro and NieR switcher chips stepped, per Jared"
+        },
+        {
+          "commit": "75fb0335a45443a3e2e18f1301cd8ba7010c3c88",
+          "date": "2026-10-16",
+          "subject": "plans: record the consistency pass, Friendly lavender and Jared's motion calls"
+        },
+        {
+          "commit": "f1c3dad6b78dc2cff016af3d1ed78db3cabb8c38",
+          "date": "2026-10-16",
+          "subject": "plans: record terminal rounds 4 and 5 with Flicker on/off and Bell Follow look/Off"
+        },
+        {
+          "commit": "c50326ceec6802ab25dfe5f746b8d1b97c59086f",
+          "date": "2026-10-15",
+          "subject": "plans: fix PM7 review contracts and preserve sealed shard path"
+        },
+        {
+          "commit": "5a79e590502bd621faec4492024aaa16614b49ee",
+          "date": "2026-10-15",
+          "subject": "plans: reconcile landed PM7 Glass, terminal and shell canon"
+        },
+        {
+          "commit": "386c792b2c9cd2ab06d0d5782b07bee3323af19c",
+          "date": "2026-10-14",
+          "subject": "plans: reconcile landing source clarifications after M4"
+        },
+        {
+          "commit": "8c923b496253ba7026fdbbeb9204fe2e02a6cd9f",
+          "date": "2026-10-14",
+          "subject": "plans: record settled Glass, onboarding and font decisions and retire Usage flights"
+        },
+        {
+          "commit": "e087f9147557e8ad4e1756f5adbea9e1d1d1acdb",
+          "date": "2026-10-14",
+          "subject": "plans: resolve confirmation census and presentation owner findings"
+        },
+        {
+          "commit": "616189aa0049facf4d368b8cd0b77d2e7e196f76",
+          "date": "2026-10-14",
+          "subject": "plans: compile exact Customize patches and retire theme preview companions"
+        },
+        {
+          "commit": "e8c2e98b6991e305728cfb864cd23e3f045cf23a",
+          "date": "2026-10-14",
+          "subject": "plans: reconcile PM7 review findings and latest owner decisions"
+        },
+        {
+          "commit": "c5db487fd494fba27df7c5e6c9903ad91f50a9e9",
+          "date": "2026-10-14",
+          "subject": "plans: reconcile legacy contrast and customizer acceptance clauses"
+        },
+        {
+          "commit": "8ccbfe180403d108ca36a6b6fb9f54acae91e0b8",
+          "date": "2026-10-14",
+          "subject": "plans: compile PM7 settings registries command schema and control wiring"
+        },
+        {
+          "commit": "4f6b63a6e3b6376a9d932c7674e972c5324ffc7e",
+          "date": "2026-10-14",
+          "subject": "plans: compile PM7 campaign owner requirements and decisions"
+        },
+        {
+          "commit": "f8a9f64e604886147eeb8f6dce724fceabc1afdf",
+          "date": "2026-10-11",
+          "subject": "plans: no pills in Settings - F3-438's status pills become status marks and its toggle draws the look's rectangle; Settings rule 11 drops the switch and bar exemption (DL-184, F3-648; Jared 2026-10-10)"
+        }
+      ],
+      "hash_at_previous_seal": "3b92db6358fe8c3a4d9cab44dbfd8d0ed98036cfb44ec29c2c5097cd36771b1a",
+      "hash_at_reseal": "b775ea74b55d4a585a6fbcc3a86089ccd634ebac202e16a10e985b4e8ac9ae04",
+      "path": "Plans/FinalGUISpec.md"
+    },
+    {
+      "commits": [
+        {
+          "commit": "044d8b189da5074613d32d24fe7adaed4ca6f265",
+          "date": "2026-10-15",
+          "subject": "plans(MA-073): restoring a level to its default is refused, not moved, when it would cross (a default is not a level the user chose)"
+        },
+        {
+          "commit": "ea97babc2c4ae4539c15b3c56aa26c8fd4fe2784",
+          "date": "2026-10-15",
+          "subject": "plans(MA-073): the Settings owner holds every switch/warn write, a warn level above the accounts that follow it (2026-10-15)"
+        }
+      ],
+      "hash_at_previous_seal": "ea963f5bde327df3fdffb268efe8ebeb01c6813b9a918ef9a1b96af1208ae907",
+      "hash_at_reseal": "181b1cea7944f86544de9675e1c5d25d6becae40f626900d1f8a64f82be2240e",
+      "path": "Plans/Multi-Account.md"
+    },
+    {
+      "commits": [
+        {
+          "commit": "9ba9a3d683e051aea5259e487b77043684136674",
+          "date": "2026-10-16",
+          "subject": "plans: cite the shell lane as landed (b9a08db90f)"
+        },
+        {
+          "commit": "1e7178d87de84ac7dc41c31835b2faaf5563580d",
+          "date": "2026-10-16",
+          "subject": "plans: draft the shell, Glass and Settings lane contracts from their heads"
+        },
+        {
+          "commit": "d3a3a585c2c14adf4098b47f9b6fd796d1074ff3",
+          "date": "2026-10-16",
+          "subject": "plans: apply the pre-review of ce1126761c and the coordinator's rulings"
+        },
+        {
+          "commit": "2a65cae7975b33f9f7b3571be0f4227c574042bc",
+          "date": "2026-10-16",
+          "subject": "plans: record Jared's P1000 reading, animated covers, silent bell and frost crossfade"
+        },
+        {
+          "commit": "75fb0335a45443a3e2e18f1301cd8ba7010c3c88",
+          "date": "2026-10-16",
+          "subject": "plans: record the consistency pass, Friendly lavender and Jared's motion calls"
+        }
+      ],
+      "hash_at_previous_seal": "3bf53e12d0403499c595a2ea0e57c310aed62a695b0e88457bc1a16546b43fdb",
+      "hash_at_reseal": "6440418217af1df2cb863efd2bf7e998c79caaee5dc9ee8bab31dd099b4259d8",
+      "path": "Plans/assistant-chat-design.md"
+    },
+    {
+      "commits": [
+        {
+          "commit": "5a79e590502bd621faec4492024aaa16614b49ee",
+          "date": "2026-10-15",
+          "subject": "plans: reconcile landed PM7 Glass, terminal and shell canon"
+        },
+        {
+          "commit": "e087f9147557e8ad4e1756f5adbea9e1d1d1acdb",
+          "date": "2026-10-14",
+          "subject": "plans: resolve confirmation census and presentation owner findings"
+        },
+        {
+          "commit": "616189aa0049facf4d368b8cd0b77d2e7e196f76",
+          "date": "2026-10-14",
+          "subject": "plans: compile exact Customize patches and retire theme preview companions"
+        },
+        {
+          "commit": "e8c2e98b6991e305728cfb864cd23e3f045cf23a",
+          "date": "2026-10-14",
+          "subject": "plans: reconcile PM7 review findings and latest owner decisions"
+        },
+        {
+          "commit": "4f6b63a6e3b6376a9d932c7674e972c5324ffc7e",
+          "date": "2026-10-14",
+          "subject": "plans: compile PM7 campaign owner requirements and decisions"
+        }
+      ],
+      "hash_at_previous_seal": "61c71646b3f539b9430096057d89f9902cbd7417cf196b138c1d88bd76cc2bd7",
+      "hash_at_reseal": "33869503c5b445a82ed081f336f0f5b614b2c8d74163b224c64d19c79960cc25",
+      "path": "Plans/Wiring_Matrix.md"
+    },
+    {
+      "commits": [
+        {
+          "commit": "5a79e590502bd621faec4492024aaa16614b49ee",
+          "date": "2026-10-15",
+          "subject": "plans: reconcile landed PM7 Glass, terminal and shell canon"
+        }
+      ],
+      "hash_at_previous_seal": "daff8f137e2041d74281143be2d5b9598619d87b9a2f0aa333e44c243cda5618",
+      "hash_at_reseal": "ad11d46667704000711dc5a6fb387b7ea52dc7bf0bb70ec702ef275282953245",
+      "path": "scripts/pm-implementation-readiness.py"
+    },
+    {
+      "commits": [],
+      "hash_at_previous_seal": "5d389f9e810170ab957b29bd6370a7451d412f6b8c5fe2ef7935f8ba557c4514",
+      "hash_at_reseal": "0434880b53b571cf52b1664fb9c85ef469e6017295c89a91c26f313c003bcb76",
+      "note": "Regenerated by this assigned reseal; retained first-generation bytes through final node readiness.",
+      "path": "Plans/.implementation_readiness/buildability_gate_report.json"
+    },
+    {
+      "commits": [
+        {
+          "commit": "5a79e590502bd621faec4492024aaa16614b49ee",
+          "date": "2026-10-15",
+          "subject": "plans: reconcile landed PM7 Glass, terminal and shell canon"
+        }
+      ],
+      "hash_at_previous_seal": "ec4c65c0e74243127a58cbdb671340b487bc6dee7795325f3c24150de9e7877e",
+      "hash_at_reseal": "b775b9d8fc3ea3c62d99e9093fe4811fa6db4fca7aa578b2d4a274285fa39913",
+      "path": "Plans/storage_value_registry.json"
+    },
+    {
+      "commits": [
+        {
+          "commit": "5a79e590502bd621faec4492024aaa16614b49ee",
+          "date": "2026-10-15",
+          "subject": "plans: reconcile landed PM7 Glass, terminal and shell canon"
+        },
+        {
+          "commit": "8ccbfe180403d108ca36a6b6fb9f54acae91e0b8",
+          "date": "2026-10-14",
+          "subject": "plans: compile PM7 settings registries command schema and control wiring"
+        }
+      ],
+      "hash_at_previous_seal": "bec43c18313870739e4570ebce77cfe5ce82e0671caf50d48c587c4c9a37f824",
+      "hash_at_reseal": "c73cc20e3661130efe3d7ba66353104dfec3da22f5338248620ec6f20112a134",
+      "path": "Plans/usage-feature.md"
+    },
+    {
+      "commits": [
+        {
+          "commit": "5a79e590502bd621faec4492024aaa16614b49ee",
+          "date": "2026-10-15",
+          "subject": "plans: reconcile landed PM7 Glass, terminal and shell canon"
+        },
+        {
+          "commit": "e8c2e98b6991e305728cfb864cd23e3f045cf23a",
+          "date": "2026-10-14",
+          "subject": "plans: reconcile PM7 review findings and latest owner decisions"
+        },
+        {
+          "commit": "4f6b63a6e3b6376a9d932c7674e972c5324ffc7e",
+          "date": "2026-10-14",
+          "subject": "plans: compile PM7 campaign owner requirements and decisions"
+        }
+      ],
+      "hash_at_previous_seal": "83ef7894d34fc118940e34a528bb950fab9a6f7cfd82e8d982ed8e454ebe2ed6",
+      "hash_at_reseal": "862b0061fefa862a165dcfe8b163811cf2dae11f60d01ee9bc44f8a9c077b873",
+      "path": "Plans/storage-plan.md"
+    },
+    {
+      "commits": [
+        {
+          "commit": "5a79e590502bd621faec4492024aaa16614b49ee",
+          "date": "2026-10-15",
+          "subject": "plans: reconcile landed PM7 Glass, terminal and shell canon"
+        },
+        {
+          "commit": "616189aa0049facf4d368b8cd0b77d2e7e196f76",
+          "date": "2026-10-14",
+          "subject": "plans: compile exact Customize patches and retire theme preview companions"
+        },
+        {
+          "commit": "e8c2e98b6991e305728cfb864cd23e3f045cf23a",
+          "date": "2026-10-14",
+          "subject": "plans: reconcile PM7 review findings and latest owner decisions"
+        },
+        {
+          "commit": "8ccbfe180403d108ca36a6b6fb9f54acae91e0b8",
+          "date": "2026-10-14",
+          "subject": "plans: compile PM7 settings registries command schema and control wiring"
+        },
+        {
+          "commit": "4f6b63a6e3b6376a9d932c7674e972c5324ffc7e",
+          "date": "2026-10-14",
+          "subject": "plans: compile PM7 campaign owner requirements and decisions"
+        }
+      ],
+      "hash_at_previous_seal": "64e3a6837c32d862a1ed226b2d798873e26c28a9fb2ccbdf6b6113c1a9d08161",
+      "hash_at_reseal": "58974ba2d88de4f2b6bf1193005a54961a122fc830ae44cf01570c7d7228a7a5",
+      "path": "Plans/Commands_System.md"
+    },
+    {
+      "commits": [
+        {
+          "commit": "75fb0335a45443a3e2e18f1301cd8ba7010c3c88",
+          "date": "2026-10-16",
+          "subject": "plans: record the consistency pass, Friendly lavender and Jared's motion calls"
+        },
+        {
+          "commit": "c50326ceec6802ab25dfe5f746b8d1b97c59086f",
+          "date": "2026-10-15",
+          "subject": "plans: fix PM7 review contracts and preserve sealed shard path"
+        },
+        {
+          "commit": "5a79e590502bd621faec4492024aaa16614b49ee",
+          "date": "2026-10-15",
+          "subject": "plans: reconcile landed PM7 Glass, terminal and shell canon"
+        },
+        {
+          "commit": "e8c2e98b6991e305728cfb864cd23e3f045cf23a",
+          "date": "2026-10-14",
+          "subject": "plans: reconcile PM7 review findings and latest owner decisions"
+        },
+        {
+          "commit": "4f6b63a6e3b6376a9d932c7674e972c5324ffc7e",
+          "date": "2026-10-14",
+          "subject": "plans: compile PM7 campaign owner requirements and decisions"
+        }
+      ],
+      "hash_at_previous_seal": "0da34925513f3023b2a7db422a241cfe95aed1e5ef18b1a21fd5ab2aefa721cf",
+      "hash_at_reseal": "1a338eb5882b76b436f4ab5857d026d7b64a61918ed6ffe9f54cce1891827b1d",
+      "path": "Plans/UI_Wiring_Rules.md"
+    }
+  ],
+  "locked_file_count": 94,
+  "mode": "real",
+  "previous_seal_commit": "f2f61a803a92b76878e94c23cf9c04668390f27f",
+  "reseal_base_commit": "3d37380471304a2b8c328256b89e748d0de86536",
+  "schema_id": "pm.governance.reseal_attestation.v1"
+}

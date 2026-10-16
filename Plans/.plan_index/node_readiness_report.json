@@ -12,7 +12,7 @@
     "unblocks_edge_count": 3219,
     "unresolved_reference_count": 0
   },
-  "generated_at_utc": "2026-10-16T20:04:38Z",
+  "generated_at_utc": "2026-10-16T21:12:04Z",
   "gui_related_units": {
     "count": 3582,
     "units": [
@@ -43715,108 +43715,8 @@
       {
         "actual": null,
         "error": "pnc019_source_hash_stale",
-        "expected": "7d049f67cc566eea6775657897da092287802ee5ab706a5ac24ed5a02534fa49",
+        "expected": "ac0c68e7da5ece3b147de75868665dc14242cc58037d4aeb9d60e12987222ae5",
         "source_path": "Plans/.audits/event-authority-2026-08-13-currentness/VALIDATOR_RECEIPT.json"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/00-plans-index.md"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/Automated_Testing_System.md"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/Commands_System.md"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/DRY_Rules.md"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/Decision_Log.md"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/FinalGUISpec.md"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/GUI_Rebuild_Requirements_Checklist.md"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/Multi-Account.md"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/Orchestrator_Page.md"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/Planning_Wizard.md"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/Settings_System.md"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/Test_Capture_and_Motion_Evidence.md"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/UI_Command_Catalog.md"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/UI_Wiring_Rules.md"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/Wiring_Matrix.md"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/Wiring_Matrix.production.exclusions.json"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/Wiring_Matrix.production.json"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/assistant-chat-design.md"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/settings_inventory.json"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/sharding_config.json"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/storage-plan.md"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/storage_value_registry.json"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/touch_closure.json"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/usage-feature.md"
       },
       {
         "bulk_registration_allowed": false,
