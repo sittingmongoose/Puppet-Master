@@ -118077,6 +118077,10 @@ html[data-theme^="retro"] #panel-settings .o55-goals-phase-n { border-radius: 0;
   (function () {
     var strip = document.querySelector('.title-bar .page-tabs');
     var ink = strip && strip.querySelector('.page-tab-ink');
+    var inkShown = true;   /* O55 (B1): drawn? read after layout, at load and on each look change */
+    function readInkShown() { try { inkShown = !!ink && getComputedStyle(ink).opacity !== '0'; } catch (eI) { inkShown = true; } }
+    function inkSoon() { if (typeof window.PM_AFTER_LAYOUT === 'function') window.PM_AFTER_LAYOUT(readInkShown); else requestAnimationFrame(readInkShown); }
+    if (ink) { inkSoon(); try { new MutationObserver(inkSoon).observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme', 'data-lg', 'data-o55-nier'] }); } catch (eM) {} }
     if (!strip || !ink || !window.PM_PAGES || !window.PM_PAGES.go) return;
 
     var SPRING = { stiffness: 500, damping: 35 };
@@ -118202,7 +118206,7 @@ html[data-theme^="retro"] #panel-settings .o55-goals-phase-n { border-radius: 0;
     function springTo(tab, metrics) {
       var geometry = metrics || measureTab(tab), tx = geometry.x, tw = geometry.w;
       ink.style.height = geometry.h + 'px';
-      if (pos.x === null || reduced()) { snap(tab, geometry); return; }
+      if (pos.x === null || reduced() || !inkShown) { snap(tab, geometry); return; }   /* O55 (B1): a hidden ink is placed at once */
       cancelAnimationFrame(pos.raf);
       pos._tx = tx; pos._tw = tw;
       pos.travelOriginX = pos.x;
