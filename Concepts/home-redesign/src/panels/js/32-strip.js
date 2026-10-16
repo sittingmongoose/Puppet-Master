@@ -44,7 +44,7 @@ function stripFont(stripEl) {
   return fontCache.value;
 }
 // a look change (theme, NieR and its parts, motion) can change every label's width: measure again and refit
-bus.on('look', function () { measureCache = {}; fontCache.value = ''; render.schedule({ animate: false }); });
+bus.on('look', function () { measureCache = {}; fontCache.value = ''; render.schedule({ animate: false, afterLayout: true }); });
 // Tab Sizing changed in Settings: every strip fits again
 PMW.settings.on('panels.tabs.sizing', function () { render.schedule({ animate: false }); });
 

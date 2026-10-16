@@ -182444,16 +182444,22 @@ var paintQueued = false, paintAnimate = false;
 var settleTimer = 0;
 var render = PMW.render = {};
 
+/* opts.afterLayout: the paint reads its boxes after the coming frame's own style and layout (the shell's PM_AFTER_LAYOUT,
+   before that frame's paint) rather than in an animation frame before them. A look change asks it this way: read in the
+   frame callback, the strips' measuring paid the whole page's pending restyle (B5, the NieR switch, frame queue census
+   2026-10-16). Without the shell's helper it is the next frame, as before */
 render.schedule = function (opts) {
   if (opts && opts.animate) paintAnimate = true;
   if (paintQueued) return;
   paintQueued = true;
-  nextFrame(function () {
+  var run = function () {
     if (!paintQueued) return;   // a synchronous paint already consumed this request
     paintQueued = false;
     var anim = paintAnimate; paintAnimate = false;
     try { render.paint({ animate: anim }); } catch (err) { try { console.error('[pm-home] paint failed', err); } catch (_) {} }
-  });
+  };
+  if (opts && opts.afterLayout && typeof window.PM_AFTER_LAYOUT === 'function') window.PM_AFTER_LAYOUT(run);
+  else nextFrame(run);
 };
 render.now = function (opts) { paintQueued = false; paintAnimate = false; render.paint(opts || {}); };
 
@@ -182492,6 +182498,16 @@ function viewOf(l) {
 }
 render.view = function () { return viewOf(state.layout); };
 
+/* Home is plainly not on screen: another page is in front and no page change is playing (Home leaving still shows).
+   Asked of a class and an attribute, never of a box: in a look switch a box read pays the whole page's pending restyle
+   (B5, the NieR switch from Settings) only to learn that Home is hidden. Home shown again repaints (90-boot.js
+   onPageChange) and its hosts report their sizes then (bodyObserver) */
+function homeHidden() {
+  var p = qs('#panel-dashboard');
+  return !!p && !p.classList.contains('active') && !root.hasAttribute('data-pm-page-transition');
+}
+render.homeHidden = homeHidden;
+
 render.paint = function (opts) {
   opts = opts || {};
   var c = state.centre, l = state.layout;
@@ -182499,7 +182515,8 @@ render.paint = function (opts) {
   // retire tab instances whose tabs are gone, even while Home is hidden: a tab closed from the chat or by an agent on
   // another page must release its session and timers now (CONTRACT section 3), not when Home is next shown
   for (var tid in instances) if (!l.tabs[tid]) unmountTab(tid);
-  if (!opts.centreRect && c.offsetParent === null && !c.getClientRects().length) return;   // Home not shown: paint when it is
+  if (!opts.centreRect && homeHidden()) return;   // Home not shown: paint when it is
+  if (!opts.centreRect && c.offsetParent === null && !c.getClientRects().length) return;
   l = viewOf(l);
   var narrow = PMW.narrow && PMW.narrow.singleColumn();
   var rects = geom.layout(l, opts.centreRect || centreRect(), {
@@ -182733,20 +182750,26 @@ var bodyObserver = typeof ResizeObserver === 'function' ? new ResizeObserver(fun
 }) : null;
 function observeBody(entry) { if (bodyObserver) bodyObserver.observe(entry.host); }
 var resizePending = {}, resizeQueued = false, resizeAll = false;
+/* the sizes are read after the coming frame's own style and layout (the shell's PM_AFTER_LAYOUT, before that frame's
+   paint), not in a frame callback before them, where a pending whole-page restyle (a look change) was paid by the first
+   host read (B5 frame queue census, 2026-10-16). Without the shell's helper: the next frame, as before */
 function queueResize(tid) {
   if (tid) resizePending[tid] = true;
   if (resizeQueued) return;
   resizeQueued = true;
-  nextFrame(function () {
+  var run = function () {
     resizeQueued = false;
     var all = resizeAll; resizeAll = false;
     flushResizes(all);
-  });
+  };
+  if (typeof window.PM_AFTER_LAYOUT === 'function') window.PM_AFTER_LAYOUT(run); else nextFrame(run);
 }
 render.flushResizesSoon = function () { resizeAll = true; queueResize(); };
 function flushResizes(forceFinal) {
   var ids = forceFinal ? Object.keys(instances) : Object.keys(resizePending);
   resizePending = {};
+  /* Home hidden: its hosts measure 0 and are passed over, so nothing is read for them (homeHidden) */
+  if (homeHidden()) return;
   var final = !state.moving && !state.dragging && !state.resizing;
   var sized = [];
   for (var i = 0; i < ids.length; i++) {
@@ -185937,7 +185960,7 @@ function stripFont(stripEl) {
   return fontCache.value;
 }
 // a look change (theme, NieR and its parts, motion) can change every label's width: measure again and refit
-bus.on('look', function () { measureCache = {}; fontCache.value = ''; render.schedule({ animate: false }); });
+bus.on('look', function () { measureCache = {}; fontCache.value = ''; render.schedule({ animate: false, afterLayout: true }); });
 // Tab Sizing changed in Settings: every strip fits again
 PMW.settings.on('panels.tabs.sizing', function () { render.schedule({ animate: false }); });
 
@@ -187160,7 +187183,7 @@ shape.snap = function (host) {
 };
 bus.on('look', function () {
   qsa('.pmw-strip').forEach(function (host) { if (host._pmw) { host._pmw.geo = null; if (host._pmw.sh) host._pmw.sh.lastActive = undefined; } });
-  render.schedule({ animate: false });
+  render.schedule({ animate: false, afterLayout: true });   /* read after layout (22-render.js render.schedule) */
 });
 /* ---- panels/js/35-retro.js ---- */
 /* Retro's tab effects (RETROMOTION, ported from PMConcept7 78025-78154 and re-authored for D23's reverse video).
@@ -207126,11 +207149,22 @@ function mountTranscript(host, state, api) {
 
   var restoredScroll = state.scrollTop;
   var firstResize = true;
+  /* the host's look changed: the Jump button asks the feed where it is (atBottom reads its scroll box). Hidden, that
+     waits for the tab to show; shown, it is read after the coming frame's layout (the shell's PM_AFTER_LAYOUT), not in
+     the look's own frame, where it paid the whole page's pending restyle (B5, the NieR switch). At once without it */
+  var lookStale = false;
+  function lookJump() { if (gone) return; if (!visible) { lookStale = true; return; } paintJump(); }
+  function onLook() {
+    if (!visible) { lookStale = true; return; }
+    if (typeof window.PM_AFTER_LAYOUT === 'function') window.PM_AFTER_LAYOUT(lookJump);
+    else paintJump();
+  }
   return {
     onShow: function () {
       visible = true;
       paintHead(); paintTicker();
       schedule();
+      if (lookStale) { lookStale = false; onLook(); }
     },
     onHide: function () {
       visible = false;
@@ -207144,7 +207178,7 @@ function mountTranscript(host, state, api) {
         paintJump();
       } else if (follow) toBottom(false);
     },
-    onLook: function () { paintJump(); },
+    onLook: onLook,
     focus: function () { try { scroll.focus({ preventScroll: true }); } catch (_) {} },
     serialize: function () { return { agentId: agentId, follow: follow, open: Object.keys(open), scrollTop: Math.round(scroll.scrollTop) }; },
     unmount: function () { gone = true; clearTimeout(timer); clearInterval(tick); if (revealing) clearInterval(revealing); }

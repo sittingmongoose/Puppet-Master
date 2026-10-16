@@ -257,5 +257,5 @@ shape.snap = function (host) {
 };
 bus.on('look', function () {
   qsa('.pmw-strip').forEach(function (host) { if (host._pmw) { host._pmw.geo = null; if (host._pmw.sh) host._pmw.sh.lastActive = undefined; } });
-  render.schedule({ animate: false });
+  render.schedule({ animate: false, afterLayout: true });   /* read after layout (22-render.js render.schedule) */
 });
