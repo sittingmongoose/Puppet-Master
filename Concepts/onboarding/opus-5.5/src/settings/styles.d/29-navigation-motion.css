@@ -4,15 +4,6 @@
   background-color: color-mix(in srgb, var(--k3-accent) 20%, var(--k3-surface-0));
   box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--k3-accent) 55%, transparent);
 }
-html.o55-settings-transition { view-transition-name: none; }
-html.o55-settings-transition #workspace-stage { view-transition-name: o55-settings-page; }
-::view-transition-group(o55-settings-page) { animation-duration: 220ms; }
-::view-transition-old(o55-settings-page) { animation: o55-settings-leave 180ms ease-out both; }
-::view-transition-new(o55-settings-page) { animation: o55-settings-arrive 220ms cubic-bezier(.22,.8,.24,1) both; }
-@keyframes o55-settings-leave { to { opacity: 0; transform: translateY(-4px); } }
-@keyframes o55-settings-arrive { from { opacity: 0; transform: translateY(4px); } }
-html:is([data-theme^="retro"], [data-o55-nier="on"])::view-transition-old(o55-settings-page),
-html:is([data-theme^="retro"], [data-o55-nier="on"])::view-transition-new(o55-settings-page) { animation-timing-function: steps(4, end); }
 /* Layout and paint of distant settings sections need not join the chapter's first frame. Auto size remembers their
    measured height, so returning to a section keeps its scroll geometry and the place holder can retain its anchor. */
 #panel-settings .workspace-block-body > .settings-section:nth-child(n+3) {

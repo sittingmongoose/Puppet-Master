@@ -25731,15 +25731,6 @@ html[data-motion="reduced"] #panel-settings .pm51-mgr > .pm51-tabs .tab-ink { tr
   background-color: color-mix(in srgb, var(--k3-accent) 20%, var(--k3-surface-0));
   box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--k3-accent) 55%, transparent);
 }
-html.o55-settings-transition { view-transition-name: none; }
-html.o55-settings-transition #workspace-stage { view-transition-name: o55-settings-page; }
-::view-transition-group(o55-settings-page) { animation-duration: 220ms; }
-::view-transition-old(o55-settings-page) { animation: o55-settings-leave 180ms ease-out both; }
-::view-transition-new(o55-settings-page) { animation: o55-settings-arrive 220ms cubic-bezier(.22,.8,.24,1) both; }
-@keyframes o55-settings-leave { to { opacity: 0; transform: translateY(-4px); } }
-@keyframes o55-settings-arrive { from { opacity: 0; transform: translateY(4px); } }
-html:is([data-theme^="retro"], [data-o55-nier="on"])::view-transition-old(o55-settings-page),
-html:is([data-theme^="retro"], [data-o55-nier="on"])::view-transition-new(o55-settings-page) { animation-timing-function: steps(4, end); }
 /* Layout and paint of distant settings sections need not join the chapter's first frame. Auto size remembers their
    measured height, so returning to a section keeps its scroll geometry and the place holder can retain its anchor. */
 #panel-settings .workspace-block-body > .settings-section:nth-child(n+3) {
@@ -26499,6 +26490,125 @@ html:is([data-theme^="retro"], [data-o55-nier="on"]) #panel-settings .toggle.pm-
 html:is([data-theme^="retro"], [data-o55-nier="on"]) #panel-settings .toggle.pm-switch-from.on::after { background-color: var(--k3-text-1) !important; }
 
 </style>
+<script id="pm7-motion-finish">
+/* Completion for finite CSS motion. End events retain their original timing;
+   disabled motion completes next frame, cancellation immediately, and a lost
+   event has a computed-duration deadline. A new wait retires the previous wait. */
+(function () {
+  var waits = new WeakMap();
+  window.PM7_MOTION_FINISH = function (el, kind, name, done, endHold) {
+    var key = kind + ':' + name, active = waits.get(el);
+    if (!active) { active = new Map(); waits.set(el, active); }
+    if (active.has(key)) active.get(key)();
+    var ended = false, eventEnded = false, frame = 0, deadlineFrame = 0, timer = 0, hold = 0, budget = 0;
+    var end = kind + 'end', cancel = kind + 'cancel', start = kind + 'start';
+    function stop() {
+      if (ended) return;
+      ended = true;
+      cancelAnimationFrame(frame); cancelAnimationFrame(deadlineFrame); clearTimeout(timer); clearTimeout(hold);
+      el.removeEventListener(end, onEnd); el.removeEventListener(cancel, onCancel); el.removeEventListener(start, onStart);
+      if (active.get(key) === stop) active.delete(key);
+    }
+    function finish() { if (ended) return; stop(); done(el); }
+    function matches(ev) {
+      return ev.target === el && !ev.pseudoElement &&
+        (kind === 'animation' ? ev.animationName === name : ev.propertyName === name);
+    }
+    function onEnd(ev) {
+      if (!matches(ev)) return;
+      clearTimeout(timer); eventEnded = true;
+      el.removeEventListener(end, onEnd); el.removeEventListener(cancel, onCancel); el.removeEventListener(start, onStart);
+      if (endHold) hold = setTimeout(finish, endHold); else finish();
+    }
+    function onCancel(ev) { if (matches(ev)) finish(); }
+    function motionState() {
+      var state = { remaining: 0, pending: false, motions: [] };
+      if (!el.getAnimations) return state;
+      el.getAnimations().forEach(function (motion) {
+        if (!motion.effect || motion.effect.target !== el ||
+            (kind === 'animation' ? motion.animationName !== name : motion.transitionProperty !== name)) return;
+        var timing = motion.effect.getComputedTiming();
+        if (!Number.isFinite(timing.endTime)) return;
+        state.motions.push(motion);
+        if (motion.pending) state.pending = true;
+        else if (motion.playState === 'running' && motion.playbackRate > 0 && motion.currentTime !== null) {
+          state.remaining = Math.max(state.remaining, (timing.endTime - motion.currentTime) / motion.playbackRate);
+        }
+      });
+      return state;
+    }
+    function armDeadline(remaining, margin) {
+      if (ended || eventEnded) return;
+      clearTimeout(timer); cancelAnimationFrame(deadlineFrame);
+      timer = setTimeout(function () {
+        if (document.hidden) { finish(); return; }
+        // Native events precede rAF. A pending CSS play can start well after
+        // the first style read, so its own finite timeline also gets priority.
+        deadlineFrame = requestAnimationFrame(function () {
+          deadlineFrame = 0;
+          if (ended || eventEnded) return;
+          var state = motionState();
+          if (state.remaining > 0) { armDeadline(state.remaining); return; }
+          finish();
+        });
+      }, Math.max(0, remaining) + (endHold || 0) + (margin || 100));
+    }
+    function onStart(ev) {
+      if (!matches(ev) || !budget) return;
+      var state = motionState();
+      armDeadline(state.motions.length ? state.remaining : budget);
+    }
+    function ms(value) {
+      return (parseFloat(value) || 0) * (value.trim().endsWith('ms') ? 1 : 1000);
+    }
+    active.set(key, stop);
+    el.addEventListener(end, onEnd); el.addEventListener(cancel, onCancel); el.addEventListener(start, onStart);
+    frame = requestAnimationFrame(function () {
+      if (ended) return;
+      var css = getComputedStyle(el), animation = kind === 'animation';
+      var names = (animation ? css.animationName : css.transitionProperty).split(',').map(function (s) { return s.trim(); });
+      var durations = (animation ? css.animationDuration : css.transitionDuration).split(',');
+      var delays = (animation ? css.animationDelay : css.transitionDelay).split(',');
+      var iterations = animation ? css.animationIterationCount.split(',') : ['1'];
+      var duration = 0;
+      names.forEach(function (n, i) {
+        if (n === 'none' || (n !== name && (animation || n !== 'all'))) return;
+        var d = ms(durations[i % durations.length]);
+        var count = parseFloat(iterations[i % iterations.length]);
+        // Infinite loops are decoration, not finite entrance work. A finite
+        // zero-duration entry can still be pending through a positive delay.
+        if (!Number.isFinite(count)) return;
+        duration = Math.max(duration, d * count + ms(delays[i % delays.length]));
+      });
+      if (duration <= 0) { finish(); return; }
+      // A zero-duration animation may dispatch its end before this frame.
+      // Keep this check alive through an end hold; running motion keeps the
+      // original end-event deadline, without starting another safety timer.
+      if (eventEnded) return;
+      budget = duration;
+      var state = motionState();
+      // Bound a genuinely missing start too, while allowing a slow first
+      // layout to commit the CSS animation's pending play. Once it starts,
+      // use its remaining native time rather than the registration clock.
+      armDeadline(state.remaining || budget, state.pending ? 1000 : 100);
+      state.motions.forEach(function (motion) {
+        motion.ready.then(function () {
+          var live = motionState();
+          armDeadline(live.remaining);
+        }, function () {});
+      });
+    });
+    return stop;
+  };
+  // Retire a previous FLIP wait before its replacement changes styles. Its
+  // cancellation event must not clean the replacement's initial geometry.
+  window.PM7_MOTION_FINISH.cancel = function (el, kind, name) {
+    var active = waits.get(el), stop = active && active.get(kind + ':' + name);
+    if (stop) stop();
+  };
+})();
+
+</script>
 <!-- O55:CSS:START -->
 <style id="pm-o55-css">
 /* ---- css/00-tokens.css ---- */
@@ -82433,6 +82543,8 @@ status: completed with warnings</pre>
                         sTab = sibs[si];
                         if (sTab === g.tab || sTab.style.display === 'none') continue;
                         firsts.push([sTab, sTab.getBoundingClientRect().left]);
+                        window.PM7_MOTION_FINISH.cancel(sTab, 'transition', 'transform');
+                        cancelAnimationFrame(sTab.__pmTabSlideFrame);
                     }
                     g.strip.insertBefore(g.tab, ref);
                     var newMids = [];
@@ -82446,14 +82558,18 @@ status: completed with warnings</pre>
                         if (dx >= 1 || dx <= -1) {
                             sTab.style.transform = 'translateX(' + dx + 'px)';
                             void sTab.offsetWidth; /* commit the offset frame */
-                            sTab.style.transition = 'transform 250ms cubic-bezier(.22,1,.36,1)';
-                            sTab.style.transform = '';
-                            sTab.addEventListener('transitionend', function onSlid(te) {
-                                if (te.propertyName !== 'transform') return;
-                                te.target.style.transition = '';
-                                te.target.style.transform = '';
-                                te.target.removeEventListener('transitionend', onSlid);
-                            });
+                            (function (tab) {
+                                // Old cancellation dispatches before this replacement frame.
+                                tab.__pmTabSlideFrame = requestAnimationFrame(function () {
+                                    tab.__pmTabSlideFrame = 0;
+                                    tab.style.transition = 'transform 250ms cubic-bezier(.22,1,.36,1)';
+                                    tab.style.transform = '';
+                                    window.PM7_MOTION_FINISH(tab, 'transition', 'transform', function () {
+                                        tab.style.transition = '';
+                                        tab.style.transform = '';
+                                    });
+                                });
+                            })(sTab);
                         } else {
                             sTab.style.transition = '';
                             sTab.style.transform = '';
@@ -89258,8 +89374,7 @@ function restoreProjectDefaults(request) {
 
   function onDetailOpenSettled(e) {
     const { inspector } = getDetailNodes();
-    if (!inspector || e.target !== inspector || e.propertyName !== 'transform') return;
-    inspector.removeEventListener('transitionend', onDetailOpenSettled);
+    if (!inspector) return;
     if (detailInspectorVisible) inspector.classList.add('is-settled');
   }
 
@@ -89277,14 +89392,14 @@ function restoreProjectDefaults(request) {
     // Force layout so translate3d(102%) is the real transition start (W1 pattern)
     void inspector.offsetWidth;
     document.removeEventListener('keydown', onDetailEsc, true);
-    inspector.removeEventListener('transitionend', onDetailOpenSettled);
+    if (inspector.__pmDetailFinish) inspector.__pmDetailFinish();
     requestAnimationFrame(() => {
       requestAnimationFrame(() => {
         if (!detailInspectorVisible) return;
         scrim?.classList.add('is-open');
         inspector.classList.add('is-open');
         if (motionReduced()) inspector.classList.add('is-settled');
-        else inspector.addEventListener('transitionend', onDetailOpenSettled);
+        else inspector.__pmDetailFinish = window.PM7_MOTION_FINISH(inspector, 'transition', 'transform', onDetailOpenSettled);
       });
     });
     document.addEventListener('keydown', onDetailEsc, true);
@@ -89298,7 +89413,7 @@ function restoreProjectDefaults(request) {
     }
     detailInspectorVisible = false;
     document.removeEventListener('keydown', onDetailEsc, true);
-    inspector?.removeEventListener('transitionend', onDetailOpenSettled);
+    if (inspector?.__pmDetailFinish) inspector.__pmDetailFinish();
     if (inspector) {
       inspector.classList.remove('is-settled');
       inspector.classList.add('is-closing');
@@ -89611,7 +89726,7 @@ function restoreProjectDefaults(request) {
     const cleanup=()=>{document.removeEventListener('keydown',onEsc,true);wrap._pmCleanup=null;};wrap._pmCleanup=cleanup;
     wrap.addEventListener('mousedown',e=>{if(e.target===wrap)closeDrawerWrap(wrap);});
     portalRoot().append(wrap);document.addEventListener('keydown',onEsc,true);void wrap.offsetWidth;
-    requestAnimationFrame(()=>requestAnimationFrame(()=>{if(!wrap.isConnected)return;wrap.classList.add('is-open');if(motionReduced())wrap.classList.add('is-settled');else{const onSettled=e=>{if(e.target!==drawer||e.propertyName!=='transform')return;drawer.removeEventListener('transitionend',onSettled);if(wrap.isConnected&&wrap.classList.contains('is-open'))wrap.classList.add('is-settled');};drawer.addEventListener('transitionend',onSettled);}wrap.querySelector('button')?.focus();}));
+    requestAnimationFrame(()=>requestAnimationFrame(()=>{if(!wrap.isConnected)return;wrap.classList.add('is-open');if(motionReduced())wrap.classList.add('is-settled');else{window.PM7_MOTION_FINISH(drawer,'transition','transform',()=>{if(wrap.isConnected&&wrap.classList.contains('is-open'))wrap.classList.add('is-settled');});}wrap.querySelector('button')?.focus();}));
     return wrap;
   }
 
@@ -94239,7 +94354,7 @@ openDrawer = function ({ title, subtitle = '', pill = '', status = null, eyebrow
   requestAnimationFrame(() => requestAnimationFrame(() => {
     if (!wrap.isConnected) return; wrap.classList.add('is-open');
     if (motionReduced()) wrap.classList.add('is-settled');
-    else { const onSettled = e => { if (e.target !== drawer || e.propertyName !== 'transform') return; drawer.removeEventListener('transitionend', onSettled); if (wrap.isConnected && wrap.classList.contains('is-open')) wrap.classList.add('is-settled'); }; drawer.addEventListener('transitionend', onSettled); }
+    else { window.PM7_MOTION_FINISH(drawer, 'transition', 'transform', () => { if (wrap.isConnected && wrap.classList.contains('is-open')) wrap.classList.add('is-settled'); }); }
     const first = wrap.querySelector('[data-autofocus], .pm51-panel-body input:not(.pm51-dd-native), .pm51-panel-body .pm51-dd-trigger, .pm51-panel-body textarea, .pm51-panel-body button:not(.pm51-panel-close)') || wrap.querySelector('.pm51-panel-body') || wrap;
     if (!first.matches('input, textarea, button, select, [tabindex]')) first.tabIndex = -1;
     try { first.focus({ preventScroll: true }); } catch (e) { first.focus(); }
@@ -100639,10 +100754,10 @@ boot = function () {
 })();
 
 /* ---- kit.d/29-navigation-motion.js ---- */
-/* Navigation acknowledges the destination before building it. Keep the current chapter readable while its successor
-   is prepared; a scoped snapshot crossfade retains its pixels through the handoff, without duplicate live IDs, rows,
-   or observers. Ordinary row edits still use the in-place renderer. Rapid requests coalesce to the latest destination. */
-let o55NavTicket = 0, o55NavRunning = false, o55NavTransition = null;
+/* Navigation acknowledges the destination before building it. The outgoing chapter starts moving on the compositor
+   before the build task, then the incoming chapter arrives after its first layout. No snapshot capture pauses the
+   compositor, and no duplicate live IDs or rows are introduced. Rapid requests coalesce to the latest destination. */
+let o55NavTicket = 0, o55NavRunning = false, o55NavLeaving = null;
 function o55NavVisible() {
   const panel = document.getElementById('panel-settings');
   return !!(panel && panel.classList.contains('active') && root.querySelector('#workspace-stage'));
@@ -100660,23 +100775,26 @@ function o55NavRun(work, selector, chapter) {
     o55NavRunning = true;
     try { work(); } finally { o55NavRunning = false; o55NavAck(null); }
   };
+  if (o55NavLeaving) { o55NavLeaving.cancel(); o55NavLeaving = null; }
+  const stage = root.querySelector('#workspace-stage');
+  const moving = chapter && !o55Still() && stage;
+  if (moving) o55NavLeaving = stage.animate([
+    { opacity: 1, transform: 'none' }, { opacity: .55, transform: 'translateY(-4px)' }
+  ], { duration: 260, easing: 'ease-out', fill: 'forwards' });
   o55AfterPaint(() => {
     if (ticket !== o55NavTicket) return;
-    if (!chapter || o55Still() || typeof document.startViewTransition !== 'function') { commit(); return; }
-    if (o55NavTransition) o55NavTransition.skipTransition();
-    const html = document.documentElement;
-    html.classList.add('o55-settings-transition');
-    const transition = document.startViewTransition(() => {
-      commit();
-      /* afterRender is already queued; let it place the first viewport before the incoming picture is taken. */
-      return new Promise(resolve => requestAnimationFrame(resolve));
-    });
-    o55NavTransition = transition;
-    const done = () => {
-      if (o55NavTransition !== transition) return;
-      o55NavTransition = null; html.classList.remove('o55-settings-transition');
+    commit();
+    const next = root.querySelector('#workspace-stage');
+    const arrive = () => {
+      if (ticket !== o55NavTicket) return;
+      if (o55NavLeaving) { o55NavLeaving.cancel(); o55NavLeaving = null; }
+      if (!next || !next.isConnected || !moving || next === stage) return;
+      next.animate([{ opacity: .55, transform: 'translateY(4px)' }, { opacity: 1, transform: 'none' }],
+        { duration: 180, easing: 'cubic-bezier(.22,.8,.24,1)' });
     };
-    transition.finished.then(done, done);
+    if (moving && next && typeof ResizeObserver === 'function') {
+      const ready = new ResizeObserver(() => { ready.disconnect(); arrive(); }); ready.observe(next);
+    } else arrive();
   });
 }
 const o55NavNavigate = navigate;
@@ -114640,31 +114758,26 @@ html[data-theme^="retro"] #panel-settings .o55-goals-phase-n { border-radius: 0;
       newP.style.setProperty('--pm-dir', String(dir));
       oldP.classList.add('pm8-page-out');
       newP.classList.add('pm8-page-in');
-      var cleanupTimer = 0;
+      var stopEntrance = null, finished = false;
       function cleanupOut() {
         oldP.classList.remove('pm8-page-out');
         oldP.style.top = oldP.style.left = oldP.style.width = oldP.style.height = '';
         if (oldP.__pm8PageCleanup === cleanupOut) oldP.__pm8PageCleanup = null;
       }
       function cleanupIn() {
-        clearTimeout(cleanupTimer);cleanupTimer=0;
+        if (finished) return;
+        finished = true;
+        if (stopEntrance) stopEntrance();
         newP.classList.remove('pm8-page-in');
-        newP.removeEventListener('animationend', onIn);
         if (newP.__pm8PageCleanup === cleanupIn) newP.__pm8PageCleanup = null;
         cleanupOut();
         document.documentElement.removeAttribute('data-pm-page-transition');
         requestAnimationFrame(function () { cachePanelRect(newP); cacheTabMetrics(); });
       }
-      function onIn(ev) {
-        if (ev.animationName !== 'pm8-page-in') return;
-        newP.removeEventListener('animationend', onIn);
-        /* Keep the fully faded outgoing page inert through Settings' own
-           340 ms entrance. Hiding its large subtree at 150 ms forced a
-           main-thread restyle through the middle of the visible animation. */
-        cleanupTimer=setTimeout(cleanupIn,80);
-      }
       oldP.__pm8PageCleanup = cleanupOut; newP.__pm8PageCleanup = cleanupIn;
-      newP.addEventListener('animationend', onIn);
+      /* Keep the existing 80 ms post-end hold: Settings still enters for
+         340 ms while the faded outgoing subtree stays inert. */
+      stopEntrance = window.PM7_MOTION_FINISH(newP, 'animation', 'pm8-page-in', cleanupIn, 80);
     }
     var origGo = window.PM_PAGES.go;
     window.PM_PAGES.go = function (pageId, subTab) {
@@ -123051,18 +123164,17 @@ html[data-theme^="retro"] #panel-settings .o55-goals-phase-n { border-radius: 0;
       var now = el.getBoundingClientRect();
       var dx = entry.rect.left - now.left, dy = entry.rect.top - now.top;
       if (!dx && !dy) return;
+      window.PM7_MOTION_FINISH.cancel(el, 'transition', 'transform');
       el.style.transition = 'none';
       el.style.transform = 'translate(' + dx + 'px,' + dy + 'px)';
-      var settle = function (ev) {
-        if (ev.target !== el || ev.propertyName !== 'transform') return;
-        el.removeEventListener('transitionend', settle);
+      var settle = function () {
         el.style.removeProperty('transition');
         el.style.removeProperty('transform');
       };
-      el.addEventListener('transitionend', settle);
       requestAnimationFrame(function () {
         el.style.transition = 'transform var(--mo-widget-reflow-dur, 240ms) var(--mo-widget-reflow-ease, cubic-bezier(.45,0,.4,1))';
         el.style.removeProperty('transform');
+        window.PM7_MOTION_FINISH(el, 'transition', 'transform', settle);
       });
     });
   }
@@ -126324,6 +126436,7 @@ html[data-theme^="retro"] #panel-settings .o55-goals-phase-n { border-radius: 0;
     moved.sort(function (a, b) { return a.order - b.order; });
     moved.forEach(function (entry, index) {
       var element = entry.element;
+      window.PM7_MOTION_FINISH.cancel(element, 'transition', 'transform');
       element.style.transition = "none";
       element.style.transform = "translate(" + entry.dx + "px," + entry.dy + "px)";
       /* Mid-flight marker for hit-testing: the inline transform is EMPTY
@@ -126332,9 +126445,7 @@ html[data-theme^="retro"] #panel-settings .o55-goals-phase-n { border-radius: 0;
          is the only reliable marker. Removed on settle and by
          clearFlipResidue. */
       element.setAttribute("data-pm-home-flip", "");
-      var settle = function (event) {
-        if (event.target !== element || event.propertyName !== "transform") return;
-        element.removeEventListener("transitionend", settle);
+      var settle = function () {
         element.removeAttribute("data-pm-home-flip");
         if (!element.style.transform) {
           element.style.removeProperty("transition");
@@ -126342,11 +126453,11 @@ html[data-theme^="retro"] #panel-settings .o55-goals-phase-n { border-radius: 0;
           element.style.removeProperty("transform");
         }
       };
-      element.addEventListener("transitionend", settle);
       requestAnimationFrame(function () {
         element.style.transition = "transform var(--pm-home-reflow-dur) var(--pm-home-reflow-ease)";
         element.style.transitionDelay = (index * 16) + "ms";
         element.style.removeProperty("transform");
+        window.PM7_MOTION_FINISH(element, 'transition', 'transform', settle);
       });
     });
   }
@@ -137892,7 +138003,7 @@ policies for tenant isolation, and add migration script.</textarea>
           v._pmCozeEntered = true;
           if (!reduce()) {
             v.classList.add('pm-panel-enter');
-            v.addEventListener('animationend', function h() { v.classList.remove('pm-panel-enter'); v.removeEventListener('animationend', h); });
+            window.PM7_MOTION_FINISH(v, 'animation', 'railPanelIn', function () { v.classList.remove('pm-panel-enter'); });
           }
           schedule(v);
         } else if (!v.classList.contains('active')) {

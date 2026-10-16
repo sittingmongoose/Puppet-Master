@@ -1,7 +1,7 @@
-/* Navigation acknowledges the destination before building it. Keep the current chapter readable while its successor
-   is prepared; a scoped snapshot crossfade retains its pixels through the handoff, without duplicate live IDs, rows,
-   or observers. Ordinary row edits still use the in-place renderer. Rapid requests coalesce to the latest destination. */
-let o55NavTicket = 0, o55NavRunning = false, o55NavTransition = null;
+/* Navigation acknowledges the destination before building it. The outgoing chapter starts moving on the compositor
+   before the build task, then the incoming chapter arrives after its first layout. No snapshot capture pauses the
+   compositor, and no duplicate live IDs or rows are introduced. Rapid requests coalesce to the latest destination. */
+let o55NavTicket = 0, o55NavRunning = false, o55NavLeaving = null;
 function o55NavVisible() {
   const panel = document.getElementById('panel-settings');
   return !!(panel && panel.classList.contains('active') && root.querySelector('#workspace-stage'));
@@ -19,23 +19,26 @@ function o55NavRun(work, selector, chapter) {
     o55NavRunning = true;
     try { work(); } finally { o55NavRunning = false; o55NavAck(null); }
   };
+  if (o55NavLeaving) { o55NavLeaving.cancel(); o55NavLeaving = null; }
+  const stage = root.querySelector('#workspace-stage');
+  const moving = chapter && !o55Still() && stage;
+  if (moving) o55NavLeaving = stage.animate([
+    { opacity: 1, transform: 'none' }, { opacity: .55, transform: 'translateY(-4px)' }
+  ], { duration: 260, easing: 'ease-out', fill: 'forwards' });
   o55AfterPaint(() => {
     if (ticket !== o55NavTicket) return;
-    if (!chapter || o55Still() || typeof document.startViewTransition !== 'function') { commit(); return; }
-    if (o55NavTransition) o55NavTransition.skipTransition();
-    const html = document.documentElement;
-    html.classList.add('o55-settings-transition');
-    const transition = document.startViewTransition(() => {
-      commit();
-      /* afterRender is already queued; let it place the first viewport before the incoming picture is taken. */
-      return new Promise(resolve => requestAnimationFrame(resolve));
-    });
-    o55NavTransition = transition;
-    const done = () => {
-      if (o55NavTransition !== transition) return;
-      o55NavTransition = null; html.classList.remove('o55-settings-transition');
+    commit();
+    const next = root.querySelector('#workspace-stage');
+    const arrive = () => {
+      if (ticket !== o55NavTicket) return;
+      if (o55NavLeaving) { o55NavLeaving.cancel(); o55NavLeaving = null; }
+      if (!next || !next.isConnected || !moving || next === stage) return;
+      next.animate([{ opacity: .55, transform: 'translateY(4px)' }, { opacity: 1, transform: 'none' }],
+        { duration: 180, easing: 'cubic-bezier(.22,.8,.24,1)' });
     };
-    transition.finished.then(done, done);
+    if (moving && next && typeof ResizeObserver === 'function') {
+      const ready = new ResizeObserver(() => { ready.disconnect(); arrive(); }); ready.observe(next);
+    } else arrive();
   });
 }
 const o55NavNavigate = navigate;

@@ -555,7 +555,7 @@ openDrawer = function ({ title, subtitle = '', pill = '', status = null, eyebrow
   requestAnimationFrame(() => requestAnimationFrame(() => {
     if (!wrap.isConnected) return; wrap.classList.add('is-open');
     if (motionReduced()) wrap.classList.add('is-settled');
-    else { const onSettled = e => { if (e.target !== drawer || e.propertyName !== 'transform') return; drawer.removeEventListener('transitionend', onSettled); if (wrap.isConnected && wrap.classList.contains('is-open')) wrap.classList.add('is-settled'); }; drawer.addEventListener('transitionend', onSettled); }
+    else { window.PM7_MOTION_FINISH(drawer, 'transition', 'transform', () => { if (wrap.isConnected && wrap.classList.contains('is-open')) wrap.classList.add('is-settled'); }); }
     const first = wrap.querySelector('[data-autofocus], .pm51-panel-body input:not(.pm51-dd-native), .pm51-panel-body .pm51-dd-trigger, .pm51-panel-body textarea, .pm51-panel-body button:not(.pm51-panel-close)') || wrap.querySelector('.pm51-panel-body') || wrap;
     if (!first.matches('input, textarea, button, select, [tabindex]')) first.tabIndex = -1;
     try { first.focus({ preventScroll: true }); } catch (e) { first.focus(); }
