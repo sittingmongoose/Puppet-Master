@@ -219939,7 +219939,7 @@ try { if (window.PM_HOME && typeof window.PM_HOME.boot === 'function') window.PM
     if (own && own.parentElement === strip) return own;
     /* data-o55-foreign: Settings' in-place patch (kit.d/28-in-place.js) keeps it through a re-render of the strip */
     own = el('lg-under', { class: 'lg-lenses-under', 'aria-hidden': 'true', 'data-o55-foreign': '' });
-    if (getComputedStyle(strip).position === 'static') { strip.style.position = 'relative'; strip.__lgPos = true; }
+    if (preread(strip) ? preread(strip).isStatic : getComputedStyle(strip).position === 'static') { strip.style.position = 'relative'; strip.__lgPos = true; }
     strip.appendChild(own); strip.__lgUnder = own; return own;
   }
   function dropUnderLayer(strip, own) {
@@ -220002,7 +220002,7 @@ try { if (window.PM_HOME && typeof window.PM_HOME.boot === 'function') window.PM
     if (parked) { parked.cfg = cfg; lenses.set(strip, parked); if (cfg.mark && !strip.hasAttribute('data-lg-lensed')) strip.setAttribute('data-lg-lensed', ''); return parked; }
     var lens = el('i', { class: 'lg-lens', 'aria-hidden': 'true', 'data-lg-lens': cfg.kind }), own = lensLayer(strip);
     own.appendChild(lens);
-    L = { strip: strip, lens: lens, layer: own, under: own.classList.contains('lg-lenses-under'), rect: null, anim: null, glintAnim: null, magAnims: null, scrubCleanup: null, cfg: cfg, warm: '', scroller: scrollerOf(strip) }; lenses.set(strip, L);
+    L = { strip: strip, lens: lens, layer: own, under: own.classList.contains('lg-lenses-under'), rect: null, anim: null, glintAnim: null, magAnims: null, scrubCleanup: null, cfg: cfg, warm: '', scroller: preread(strip) ? preread(strip).scroller : scrollerOf(strip) }; lenses.set(strip, L); strip.__lgPre = null;
     /* an under-layer lens lost with its layer while its strip stays (the app redrew the strip's rows: Settings' left bar
        on a chapter change) comes back where the old chip was drawn, so it glides on to the new choice instead of
        appearing there */
@@ -220019,6 +220019,9 @@ try { if (window.PM_HOME && typeof window.PM_HOME.boot === 'function') window.PM
   }
   /* the nearest ancestor that scrolls this strip: its lens follows it at once while it scrolls, and steps out of
      sight when its target leaves the visible part (the lens layer is not clipped by the strip's container) */
+  var preSerial = 0;
+  function prereadStrip(s) { s.__lgPre = { n: preSerial, scroller: scrollerOf(s), isStatic: getComputedStyle(s).position === 'static' }; }
+  function preread(s) { return s.__lgPre && s.__lgPre.n === preSerial ? s.__lgPre : null; }
   function scrollerOf(e) {
     for (var a = e.parentElement; a && a !== document.body; a = a.parentElement) {
       var cs = getComputedStyle(a);
@@ -220857,7 +220860,7 @@ try { if (window.PM_HOME && typeof window.PM_HOME.boot === 'function') window.PM
     applyWall();
     if (!isGlass()) { unmountAll(switchLook); if (!switchLook) return; }
     else syncSurfaces(scopes, sheets);
-    var covered = pageCovered();
+    var covered = pageCovered(), todo = [];
     STRIPS.forEach(function (cfg) {
       var found = cfg.many ? scopedNodes(cfg.sel, scopes) : [document.querySelector(cfg.sel)].filter(function (s) {
         return s && (!scopes || scopes.some(function (p) { return p.contains(s) || s.contains(p); }));
@@ -220869,9 +220872,15 @@ try { if (window.PM_HOME && typeof window.PM_HOME.boot === 'function') window.PM
         if (stripParked(s)) { var P = lenses.get(s); if (P && P.rect) { stopLensTravel(P); P.lens.style.opacity = '0'; P.rect = null; } return; }
         /* under a look's cover, a strip whose lens is not on screen yet waits for the lift; a shown lens follows now */
         if (covered && !(lenses.get(s) && lenses.get(s).rect) && !s.closest('#pm-o55-onboarding')) { deferStrip(s); return; }
-        syncStrip(cfg, s);
+        todo.push([cfg, s]);
       });
     });
+    /* a strip that gets a new lens has its scroller and its position read here, every one before any lens is made: made
+       one by one, each new under-layer changed the page before the next strip's reads (the first NieR Mode on, at the calm
+       cover's lift: about 35 forced style and layout passes, 48 ms on Nas1, F2) */
+    var park = parkedLenses[switchUnder ? 'under' : 'over']; preSerial++;
+    todo.forEach(function (t) { var s = t[1], L = lenses.get(s); if ((!L || !L.lens.isConnected) && !park.has(s)) prereadStrip(s); });
+    todo.forEach(function (t) { syncStrip(t[0], t[1]); });
     if (isGlass()) scanMenus(scopes);
   }
   /* strips Glass leaves alone for now (pm7-motion-editor, 2026-10-16: during Settings' calm cover, 47 style reads hit the
