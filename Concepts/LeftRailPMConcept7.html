@@ -11043,7 +11043,7 @@ html[data-theme^="glass"] #panel-settings :is(.rail-search,.hero-search) input {
     will-change: transform, opacity;
   }
   @keyframes pm8-page-out {
-    from { opacity: 1; transform: translateX(0); }
+    from { opacity: var(--pm8-out-from, 1); transform: translateX(0); }   /* O55: continues an answered fade */
     to   { opacity: 0; transform: translateX(calc(var(--pm-dir, 1) * -50px)); }
   }
   /* Retire the legacy per-page `animation: fadeIn 0.3s` (wizard +
@@ -28695,11 +28695,16 @@ html[data-motion="reduced"] #pm-o55-onboarding.o55-accept .o55-win { transform: 
    are skipped now; the box keeps its place in the column (final motion QA B4, 2026-10-16). */
 html:not([data-o55-tour]) #chatPanel[data-pmw-sc="on"] > .float-content.pm6-chat-root { content-visibility: hidden; }
 
-/* A page change stamps its direction (--pm-dir) on both pages, read only by those pages' own pm8 keyframes.
-   Unregistered, a custom property is inherited, so each write that changed it restyled every element of the page it
-   was set on (a custom property on Home's 2,500 elements: 92-221 ms on Nas1), inside the change's long frame, against
-   1-5 ms registered as not inherited (final motion QA B1 seam, 2026-10-16). */
+/* A page change stamps its direction (--pm-dir) on both pages and the answered fade's start (--pm8-out-from) on the
+   leaving one, read only by those pages' own pm8 keyframes. Unregistered, a custom property is inherited, so each
+   write restyled every element of the page it was set on: 92-221 ms for Home's 2,500 elements on Nas1, inside the
+   change's long frame, against 1-5 ms registered as not inherited (final motion QA B1 seam, 2026-10-16). */
 @property --pm-dir { syntax: '<number>'; inherits: false; initial-value: 1; }
+@property --pm8-out-from { syntax: '<number>'; inherits: false; initial-value: 1; }
+
+/* The page in front, while a page tab is pointed at or focused (src/js/13-page-layer.js): a layer of its own, rastered
+   before the click, so the click's fade of the leaving page runs on the compositor alone. */
+.primary-content > .page.active.pm-page-layer { will-change: opacity; }
 
 /* ---- css/22-hover.css ---- */
 /* PMH: the merged hover system (engine: src/js/18-hover.js, which documents the whole contract). This file has two
@@ -114672,10 +114677,24 @@ html[data-theme^="retro"] #panel-settings .o55-goals-phase-n { border-radius: 0;
         [oldP, newP].forEach(function (p) { p.getAnimations().forEach(function (a) { if (a.animationName === 'pm8-page-in' || a.animationName === 'pm8-page-out') out.push(a); }); });
         return out;
       };
-      if (window.PM_START_ON_SHOWN) window.PM_START_ON_SHOWN(pageMoves);
+      /* O55: the click's fade (goSoon) keeps running, on the compositor, through this change's long frame; the
+         exit takes over from the opacity it has reached in the frame the moves start */
+      var lift = window.PM_PAGES.__lift; window.PM_PAGES.__lift = null;
+      var handoff = function () {
+        if (!lift || lift.el !== oldP || !oldP.classList.contains('pm8-page-out')) { if (lift) try { lift.anim.cancel(); } catch (e) {} return; }   /* a change made over it has cleaned up */
+        try {
+          /* still pending here, it reads as its start while the compositor has been running it since its first frame */
+          var a = lift.anim, ran = document.timeline.currentTime - lift.at;
+          if ((a.pending || !(a.currentTime > 0)) && ran > 0) a.currentTime = Math.min(ran, 140);
+          oldP.style.setProperty('--pm8-out-from', getComputedStyle(oldP).opacity); a.cancel();
+        } catch (e) {}
+      };
+      if (window.PM_START_ON_SHOWN) window.PM_START_ON_SHOWN(pageMoves, { release: handoff }); else handoff();
       var stopEntrance = null, finished = false;
       function cleanupOut() {
         oldP.classList.remove('pm8-page-out');
+        oldP.style.removeProperty('--pm8-out-from');   /* O55: the answered fade's start is this exit's only */
+        oldP.classList.remove('pm-page-layer');   /* O55: its layer for the answer (src/js/13-page-layer.js) */
         oldP.style.top = oldP.style.left = oldP.style.width = oldP.style.height = '';
         if (oldP.__pm8PageCleanup === cleanupOut) oldP.__pm8PageCleanup = null;
       }
@@ -114728,19 +114747,21 @@ html[data-theme^="retro"] #panel-settings .o55-goals-phase-n { border-radius: 0;
       var P = window.PM_PAGES, prev = P.current;
       if (soon) { soon.page = pageId; }
       else if (!pageId || pageId === prev || !bootPaintDone || document.hidden || !panelFor(pageId)) { P.go(pageId); return; }
-      var tab = tabFor(pageId);
+      var tab = tabFor(pageId), oldP = prev ? panelFor(prev) : null;
       document.querySelectorAll('.page-tab').forEach(function (t) { var on = t.getAttribute('data-page') === pageId; t.classList.toggle('active', on); t.setAttribute('aria-selected', on ? 'true' : 'false'); });
       if (tab) { springTo(tab, measureTab(tab)); P.__answered = pageId; }
       if (soon) return;
-      /* the tabs and the ink are the answer, drawn on the click's own frame. A fade of the leaving page from the
-         click (0.86 over 140 ms, tried 2026-10-16) made that page a new compositor layer there: the P1000 rastered
-         the whole page before the click's frame could show (a Settings entry's first paint 280 ms after the click,
-         nothing moving for 770 ms) and drew the Wizard empty for frames when it changed under the fade */
+      var html = document.documentElement, nier = html.getAttribute('data-o55-nier') === 'on', retro = /^retro/.test(html.getAttribute('data-theme') || '');
+      /* NieR answers with its wipe and the ink; the other looks start the leaving page's fade (Retro in steps) */
+      var lift = !nier && !reduced() && oldP && oldP.animate && !oldP.classList.contains('pm8-page-out') ? oldP.animate([{ opacity: 1 }, { opacity: 0.86 }], { duration: 140, easing: retro ? 'steps(2, end)' : 'cubic-bezier(.2, 0, 0, 1)', fill: 'forwards' }) : null;
       soon = { page: pageId };
-      requestAnimationFrame(function () { setTimeout(function () {
+      requestAnimationFrame(function (shown) { setTimeout(function () {
         var to = soon.page; soon = null;
+        /* the fade is not read here: a move begun a frame ago still reads as its start on this thread */
+        P.__lift = lift ? { el: oldP, anim: lift, at: shown } : null;
         if (P.__answered !== to) P.__answered = null;
         P.go(to);
+        if (P.__lift) { try { P.__lift.anim.cancel(); } catch (e) {} P.__lift = null; }   /* no exit took it over */
       }, 0); });
     };
     function resync() {
@@ -140510,7 +140531,8 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
    before was a long one (more than 40 ms after the one before it), then plays them from their start: they begin once
    frames come on time (two in a row after a long one), at most `frames` (6) frames later (a page that never draws
    on time, such as software rendering, still moves after that). `anims` is an array of Animations or a function
-   returning one (read again each frame). `o.release`, if given, runs once in the frame the moves start, just before they play. */
+   returning one (read again each frame). `o.release`, if given, runs once in the frame the moves start, just before they play:
+   a page change hands the click's fade over to its exit there (tools/shell_motion.py, ANSWER_FIRST). */
 (function () {
   'use strict';
   /* PM_AFTER_LAYOUT(fn): fn runs in the coming frame after its style and layout, before its paint (a ResizeObserver
@@ -140794,6 +140816,47 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
     if (phase === 'covering' || phase === 'covered') return;   /* the latest pick applies under the cover */
     cover(hint);
   };
+})();
+
+/* ---- js/13-page-layer.js ---- */
+/* The page in front becomes a compositor layer of its own when the pointer reaches the title bar or the keyboard a
+   page tab, so the click's answer (the leaving page's fade to 0.86, tools/shell_motion.py ANSWER_FIRST) runs on a
+   layer that is already rastered. Made at the click, that layer had to be rastered first: on the P1000 the click's
+   frame came 280 ms late and the fade was never seen, and a page changing under it (the Wizard's stages) was drawn
+   empty while it rastered again (round 4 films). The layer is kept only while the title bar is pointed at or a page
+   tab focused, and a little after: a layer is a stacking context, and the pages hold modals and toasts meant to sit
+   above the whole app, so a page showing one of those is not promoted. It is dropped when the page leaves (its exit's
+   cleanup) and when the pointer moves on. Promoted or not, every look draws the same pixels (Nas1 screenshots, five
+   looks by four pages). */
+(function () {
+  'use strict';
+  const OVER = '#pm6-proj-sheet, #projectSettingsModal, #pm6WizDocOverlay, #pm6OrchSpModal, [aria-modal="true"]';
+  let dropTimer = 0;
+  const pageInFront = () => document.querySelector('.primary-content > .page.active');
+  /* the title bar is crossed on the way to any page tab: promoting there gives the raster a little more time */
+  const tabOf = (n) => (n && n.nodeType === 1 && n.closest ? n.closest('.page-tab[data-page], .title-bar') : null);
+  function overlayShown(page) {
+    for (const el of page.querySelectorAll(OVER)) if (el.getClientRects().length) return true;
+    const toasts = page.querySelector('.toast-stack');
+    return !!(toasts && toasts.childElementCount && toasts.getClientRects().length);
+  }
+  function promote() {
+    clearTimeout(dropTimer);
+    const page = pageInFront();
+    if (!page || page.classList.contains('pm-page-layer') || page.classList.contains('pm8-page-in') || overlayShown(page)) return;
+    page.classList.add('pm-page-layer');
+  }
+  function drop() {
+    document.querySelectorAll('.primary-content > .page.pm-page-layer').forEach((p) => {
+      if (!p.classList.contains('pm8-page-out')) p.classList.remove('pm-page-layer');
+    });
+  }
+  const dropSoon = () => { clearTimeout(dropTimer); dropTimer = setTimeout(drop, 900); };
+  document.addEventListener('pointerover', (e) => { if (tabOf(e.target)) promote(); }, true);
+  document.addEventListener('pointerout', (e) => { if (tabOf(e.target) && !tabOf(e.relatedTarget)) dropSoon(); }, true);
+  document.addEventListener('focusin', (e) => { if (tabOf(e.target)) promote(); }, true);
+  document.addEventListener('focusout', (e) => { if (tabOf(e.target) && !tabOf(e.relatedTarget)) dropSoon(); }, true);
+  window.PM_PAGE_LAYER = { promote, drop };
 })();
 
 /* ---- js/15-sound.js ---- */
