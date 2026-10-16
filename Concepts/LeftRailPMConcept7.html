@@ -114777,6 +114777,7 @@ html[data-theme^="retro"] #panel-settings .o55-goals-phase-n { border-radius: 0;
     var resyncFrame = 0;
     function resyncNextFrame() {
       if (resyncFrame) return;
+      if (typeof window.PM_AFTER_LAYOUT === 'function') { resyncFrame = 1; window.PM_AFTER_LAYOUT(function () { resyncFrame = 0; resync(); }); return; }   /* O55: after layout (B5) */
       resyncFrame = requestAnimationFrame(function () { resyncFrame = 0; resync(); });
     }
     try {
