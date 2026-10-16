@@ -27,6 +27,23 @@ function reducedNow() { return PMW.reduced ? PMW.reduced() : false; }
 /* motion: the terminal's one-shot classes (.pmt-in, .pmt-out; 60-motion.css gives them each look's voice) */
 var Motion = {
   finished: function (node, fn) {
+    if (node.classList.contains('pmed-cz')) {
+      // The sheet has one entrance/exit on its dialog. Waiting for its event
+      // avoids getAnimations(subtree), which flushes style for every tile in the
+      // input handler just after adding the animation class.
+      if (node._pmedFinish) node._pmedFinish();
+      var target = node.querySelector('.pmt-cz-dialog'), timer, ended = false;
+      var de = document.documentElement;
+      // NieR without Slice has no dialog animation. Its scrim still owns the
+      // short fade, including the stationary Reduced Motion version.
+      if (de.getAttribute('data-o55-nier') === 'on' && (reducedNow() || !/(^|\s)slice(\s|$)/.test(de.getAttribute('data-o55-nier-parts') || ''))) target = node.querySelector('.pmt-cz-scrim > i');
+      var clean = function () { clearTimeout(timer); target.removeEventListener('animationend', end); node._pmedFinish = null; };
+      var end = function (e) { if (e && e.target !== target) return; if (ended) return; ended = true; clean(); fn(); };
+      node._pmedFinish = clean;
+      target.addEventListener('animationend', end);
+      timer = setTimeout(end, 900);
+      return;
+    }
     var list = node.isConnected && node.getAnimations ? node.getAnimations({ subtree: true }).filter(function (a) {
       var t = a.effect && a.effect.getComputedTiming ? a.effect.getComputedTiming() : null;
       return !t || t.endTime !== Infinity;
@@ -38,6 +55,7 @@ var Motion = {
   },
   play: function (node, cls) {
     cls = cls || 'pmt-in';
+    if (node.classList.contains('pmed-cz')) { Motion.sheet(node, false, function () {}); return; }
     var gen = node._pmedGen = (node._pmedGen || 0) + 1;
     node.classList.remove('pmt-out');
     if (node.classList.contains(cls)) { node.classList.remove(cls); void node.offsetWidth; }
@@ -45,10 +63,32 @@ var Motion = {
     Motion.finished(node, function () { if (node._pmedGen === gen) node.classList.remove(cls); });
   },
   leave: function (node, done) {
+    if (node.classList.contains('pmed-cz')) { Motion.sheet(node, true, done); return; }
     var gen = node._pmedGen = (node._pmedGen || 0) + 1;
     node.classList.remove('pmt-in');
     node.classList.add('pmt-out');
     Motion.finished(node, function () { if (node._pmedGen === gen) { node.classList.remove('pmt-out'); done(); } });
+  },
+  sheet: function (node, leaving, done) {
+    if (node._pmedFinish) node._pmedFinish();
+    var gen = node._pmedGen = (node._pmedGen || 0) + 1;
+    var parts = node.querySelectorAll('.pmt-cz-scrim > i, .pmt-cz-frame, .pmt-cz-dialog');
+    var clear = function (p) { p.classList.remove('pmed-sheet-in', 'pmed-sheet-out', 'pmed-shade-in', 'pmed-shade-out'); };
+    [].forEach.call(parts, function (p) { clear(p); p.classList.add((p.classList.contains('pmt-cz-dialog') ? 'pmed-sheet-' : 'pmed-shade-') + (leaving ? 'out' : 'in')); });
+    // Keep the full family motion when the opening/closing frame is expensive.
+    // The shared helper reads these six moving plates on a later frame, never
+    // the sheet's subtree in the input handler. A newer visit owns its moves.
+    if (!reducedNow() && window.PM_START_ON_SHOWN) window.PM_START_ON_SHOWN(function () {
+      if (!node.isConnected || node._pmedGen !== gen) return [];
+      var moves = [];
+      [].forEach.call(parts, function (p) {
+        if (p.getAnimations) p.getAnimations().forEach(function (a) {
+          if (a.effect && a.effect.target === p && /^pmt-m-/.test(a.animationName || '')) moves.push(a);
+        });
+      });
+      return moves;
+    });
+    Motion.finished(node, function () { if (node._pmedGen !== gen) return; [].forEach.call(parts, clear); done(); });
   }
 };
 
@@ -189,9 +229,26 @@ PMW.czFit = function (root) {
   var segs = [].slice.call(root.querySelectorAll('.pmt-cz-seg')).filter(function (s) { return !s.closest('[hidden]'); });
   var shown = segs.map(function (s) { return s.getAttribute('data-seg') + ':' + s.querySelectorAll('.pmt-cz-segopt:not([hidden])').length; }).join(',');
   var de = document.documentElement;
-  var key = [dialog.style.width, root.getAttribute('data-pmt-look'), root.getAttribute('data-pmt-mode'), de.getAttribute('data-o55-nier-parts') || '', czFitEpoch, shown].join('|');
+  var base = [dialog.style.width, root.getAttribute('data-pmt-look'), root.getAttribute('data-pmt-mode'), de.getAttribute('data-o55-nier-parts') || '', czFitEpoch].join('|');
+  var key = base + '|' + shown;
   if (root._czFit === key) return;
   root._czFit = key;
+  // Editor face choices change the available weights. Reuse the exact fit of
+  // each offered set; the terminal keeps the existing fitting path.
+  var fits = null;
+  if (root.classList.contains('pmed-cz')) {
+    if (root._pmedFitBase !== base) { root._pmedFitBase = base; root._pmedFits = Object.create(null); }
+    fits = root._pmedFits;
+    if (fits[shown]) {
+      fits[shown].forEach(function (r) {
+        ['data-cols', 'data-fit'].forEach(function (a, i) {
+          if (r[0].getAttribute(a) === r[i + 1]) return;
+          if (r[i + 1] === null) r[0].removeAttribute(a); else r[0].setAttribute(a, r[i + 1]);
+        });
+      });
+      return;
+    }
+  }
   var gridOf = function (s) { var f = s.closest('.pmt-cz-field'), g = f && f.parentElement; return g && (g.classList.contains('pmt-cz-grid2') || g.classList.contains('pmt-cz-row')) ? g : null; };
   [].forEach.call(root.querySelectorAll('.pmt-cz-grid2[data-cols], .pmt-cz-row[data-cols]'), function (g) { g.removeAttribute('data-cols'); });
   [].forEach.call(root.querySelectorAll('.pmt-cz-seg[data-fit]'), function (s) { s.removeAttribute('data-fit'); });
@@ -205,6 +262,7 @@ PMW.czFit = function (root) {
   short.forEach(function (s) { s.setAttribute('data-fit', 'short'); });
   if (short.length) left = left.filter(over);
   left.forEach(function (s) { s.setAttribute('data-fit', 'stack'); });
+  if (fits) fits[shown] = [].map.call(root.querySelectorAll('.pmt-cz-grid2, .pmt-cz-row, .pmt-cz-seg'), function (e) { return [e, e.getAttribute('data-cols'), e.getAttribute('data-fit')]; });
 };
 if (document.fonts && document.fonts.addEventListener) document.fonts.addEventListener('loadingdone', function () {
   czFitEpoch += 1;
@@ -381,23 +439,25 @@ function skeleton(name) {
 }
 
 /* ---------------- the screen ---------------- */
-var openRoot = null;
+var openRoot = null, prepared = null;
 function open(opts) {
   opts = opts || {};
   if (!EL()) return null;
   var inst = opts.view && opts.view.editor ? opts.view.editor() : (PMW.editorInView ? PMW.editorInView() : null);
   if (!inst || !inst.view) return null;
   var v = inst.view;
+  if (prepared && prepared.inst === inst && prepared.el.isConnected) return prepared.show(opts);
+  if (prepared) { prepared.dispose(); prepared = null; }
   if (openRoot && openRoot._pmedClose) openRoot._pmedClose(true);
   // the editor beside the screen draws its caret and current line while the screen is open (10-editor.js, customizing)
-  if (inst.customizing) inst.customizing(true);
+  if (!opts.prepare && inst.customizing) inst.customizing(true);
   var overlay = PMW.overlay ? PMW.overlay() : document.body;
-  var root = el('div', 'pmt-cz pmed-cz pmt-calm');
+  var root = el('div', 'pmt-cz pmed-cz pmt-calm pmed-prepared');
+  root.setAttribute('aria-hidden', 'true');
   root.setAttribute('data-pmw-overlay', 'editor-appearance');
   var label = (inst.root && inst.root.querySelector('.pmw-ed-seg.is-file') || {}).textContent || 'Editor';
   root.innerHTML = skeleton(label);
   overlay.appendChild(root);
-  openRoot = root;
   var dialog = root.querySelector('.pmt-cz-dialog'), body = root.querySelector('.pmt-cz-body');
   /* the scope, as the terminal's screen keeps it: All editors when Settings opens it, for that visit only; otherwise
      the one last picked on this editor's screen (remembered while the tab lives), This editor at first */
@@ -419,17 +479,31 @@ function open(opts) {
 
   function scopeView() { return scope === 'tab' ? v : { tabAppearance: {}, previewAppearance: v.previewAppearance }; }
   function eff() { return EL().resolve(scopeView()); }
-  function val(key) { var o = EL().own(scope, v, key); return o !== undefined ? o : EL().get(scopeView(), key); }
+  var paintRead = null;
+  function ownValue(key) {
+    if (paintRead && Object.prototype.hasOwnProperty.call(paintRead.own, key)) return paintRead.own[key];
+    var o = EL().own(scope, v, key);
+    if (paintRead) paintRead.own[key] = o;
+    return o;
+  }
+  function val(key) {
+    if (paintRead && Object.prototype.hasOwnProperty.call(paintRead.values, key)) return paintRead.values[key];
+    var o = ownValue(key), value = o !== undefined ? o : EL().get(scopeView(), key);
+    if (paintRead) paintRead.values[key] = value;
+    return value;
+  }
   function mine(key) {
     if (key === 'lineNumberMode') return mine('lineNumbers') || mine('relativeNumbers');
-    return EL().own(scope, v, key) !== undefined;
+    return ownValue(key) !== undefined;
   }
   function syncPreview() {
     pvView.tabAppearance = scope === 'tab' ? v.tabAppearance || {} : {};
     pvView.previewAppearance = v.previewAppearance || null;
     if (pvView.applyLook) pvView.applyLook(EL().resolve(pvView));
   }
-  function write(patch) { EL().setMany(scope, patch, v); syncPreview(); paint(); }
+  // setMany emits one change after updating the editors. That notification owns the
+  // controls and preview too; doing them again here forced a second layout per pick.
+  function write(patch) { EL().setMany(scope, patch, v); }
   function put(key, value) { var p = {}; p[key] = value; write(p); }
 
   /* ---- painting: every control shows this scope's value ---- */
@@ -464,7 +538,7 @@ function open(opts) {
     return name + ' has no indentation to follow yet, so Tab puts in ' + (I.tabs ? 'a tab, ' + I.unit + ' columns wide.' : I.unit + ' spaces.');
   }
   function note(sel, text) { var e = root.querySelector(sel); if (!e) return; e.hidden = !text; if (e.textContent !== text) e.textContent = text; }
-  /* the look's own code colours (Follow look), read off the editor once per look, colour mode, contrast and phosphor,
+  /* the look's own code colours (Follow look), read off the editor once per look, colour mode and phosphor,
      in a frame of its own; until it lands the screen keeps what it drew */
   var LOOK_TOKENS = ['--pmw-ed-fg', '--pmw-ed-bg', '--pmw-ed-gutbg', '--pmw-ed-s-kw', '--pmw-ed-s-fn', '--pmw-ed-s-str', '--pmw-ed-s-com', '--pmw-ed-bp-0', '--pmw-ed-bp-1', '--pmw-ed-bp-2'];
   var lookRead = { key: null, v: null }, lookRaf = 0;
@@ -480,18 +554,77 @@ function open(opts) {
     });
     return lookRead.v;
   }
-  var varsSet = {};
-  function setVar(n, val) { if (varsSet[n] === val) return; varsSet[n] = val; root.style.setProperty(n, val); }
+  var varsSet = {}, artHosts = [].map.call(root.querySelectorAll('.pmt-cz-art'), function (a) { return a.parentElement; });
+  // Only these small pictures use the chosen scheme. Putting their colours on
+  // the sheet restyled every control and scheme tile for each colour pick.
+  function setVar(n, val) { if (varsSet[n] === val) return; varsSet[n] = val; [].forEach.call(artHosts, function (a) { a.style.setProperty(n, val); }); }
+  var warmMeasureJob = 0, warmMeasureStamp = '', warmMeasureQueue = [];
+  function measurementStamp() {
+    return [dialog.style.width, root.getAttribute('data-pmt-look'), root.getAttribute('data-pmt-mode'), czFitEpoch,
+      document.documentElement.getAttribute('data-o55-nier-parts') || '', scope, JSON.stringify(eff().font)].join('|');
+  }
+  function cancelWarmMeasurements() {
+    if (warmMeasureJob) {
+      if (window.cancelIdleCallback) cancelIdleCallback(warmMeasureJob); else clearTimeout(warmMeasureJob);
+    }
+    warmMeasureJob = 0; warmMeasureQueue = [];
+  }
+  function warmMeasurementsSoon() {
+    if (disposed || !closed || warmMeasureJob || !root.classList.contains('pmed-prepared')) return;
+    var stamp = measurementStamp();
+    if (warmMeasureStamp === stamp) return;
+    var faces = EL().FACES || {}, base = scope === 'tab' ? v.tabAppearance || {} : {};
+    var patches = Object.keys(faces).map(function (id) { return { font: id }; });
+    SETS.forEach(function (s) { if (s.patch && s.patch.font) patches.push(s.patch); });
+    warmMeasureQueue = patches.map(function (patch) { return function () {
+      if (preview && preview.primeFont) preview.primeFont(EL().resolve({ tabAppearance: Object.assign({}, base, patch) }).font);
+    }; });
+    var weights = [].slice.call(root.querySelectorAll('[data-seg="fontWeight"] [data-value]'));
+    var seen = {};
+    Object.keys(faces).forEach(function (id) {
+      var range = faces[id].weights, key = range && range.join('|');
+      if (!range || seen[key]) return; seen[key] = true;
+      warmMeasureQueue.push(function () {
+        var hidden = weights.map(function (b) { return b.hidden; });
+        weights.forEach(function (b) { var n = Number(b.getAttribute('data-value')), hide = n < range[0] || n > range[1]; if (b.hidden !== hide) b.hidden = hide; });
+        PMW.czFit(root);
+        weights.forEach(function (b, i) { if (b.hidden !== hidden[i]) b.hidden = hidden[i]; });
+        PMW.czFit(root);
+      });
+    });
+    function next() {
+      warmMeasureJob = window.requestIdleCallback ? requestIdleCallback(run) : setTimeout(run, 50);
+    }
+    function run() {
+      warmMeasureJob = 0;
+      if (disposed || !closed || !root.classList.contains('pmed-prepared')) { warmMeasureQueue = []; return; }
+      if (measurementStamp() !== stamp) { warmMeasureQueue = []; warmMeasurementsSoon(); return; }
+      var work = warmMeasureQueue.shift(); if (work) work();
+      if (warmMeasureQueue.length) next(); else warmMeasureStamp = stamp;
+    }
+    next();
+  }
+  if (document.fonts && document.fonts.addEventListener) document.fonts.addEventListener('loadingdone', warmMeasurementsSoon);
   function paint() {
+    // The tile, Changed mark, group count and footer all read the same fields.
+    // Resolve each layer once for this paint, without caching across edits.
+    if (paintRead) return;
+    paintRead = { own: Object.create(null), values: Object.create(null) };
+    try { paintControls(); } finally { paintRead = null; }
+    if (closed) warmMeasurementsSoon();
+  }
+  function paintControls() {
     var R = eff(), lk = R.lookKey, isNier = lk === 'nier';
-    root.setAttribute('data-pmt-look', lk);
-    root.setAttribute('data-pmt-mode', R.look.mode === 'light' ? 'light' : 'dark');
-    root.setAttribute('data-scope', scope);
+    setA(root, 'data-pmt-look', lk);
+    setA(root, 'data-pmt-mode', R.look.mode === 'light' ? 'light' : 'dark');
+    setA(root, 'data-scope', scope);
     root.classList.toggle('pmt-cz-reduced', !!R.look.reduced);
     /* the effect pictures are drawn in this scope's own colours (the terminal's art reads these): a scheme's from the
        editor's own variables, the look's from a reading taken once per look (lookTokens); never a computed-style read
        inside a choice, which made the page restyle everything at once and froze the sweep (a GPU film) */
-    var lkKey = lk + '|' + R.look.mode + '|' + R.colors.contrast + '|' + (inst.root && inst.root.getAttribute('data-phosphor') || '');
+    // The look tokens are inherited from the editor root; the contrast floor is
+    // applied on its code surfaces. Changing the floor needs no new art reading.
+    var lkKey = lk + '|' + R.look.mode + '|' + (inst.root && inst.root.getAttribute('data-phosphor') || '');
     var sv = inst.schemeVarsNow ? inst.schemeVarsNow() : null, lt = lookTokens(lkKey);
     var tok = function (n) { return (sv && sv[n]) || (lt && lt[n]) || ''; };
     setVar('--pmt-cz-sfg', tok('--pmw-ed-fg') || '#ccc');
@@ -559,7 +692,7 @@ function open(opts) {
     /* the preview's caption, also its text alternative */
     var desc = R.schemeName + ', ' + R.font.label + ' ' + (Math.round(R.font.size * 10) / 10) + ' px, ' + R.caret.shape + ' caret' + (R.lines.wrap ? ', wraps' : '') + (R.lines.guides !== 'off' ? ', guides' : '');
     var pd = root.querySelector('[data-pv-desc]'); if (pd.textContent !== desc) pd.textContent = desc;
-    homeBox.setAttribute('aria-label', 'Preview: ' + desc);
+    setA(homeBox, 'aria-label', 'Preview: ' + desc);
     /* counts */
     var mineKeys = COUNTED.filter(mine), n = mineKeys.length;
     [].forEach.call(root.querySelectorAll('.pmt-cz-cells > i'), function (c, i) { c.classList.toggle('pmt-cz-on', mine(COUNTED[i])); });
@@ -591,9 +724,14 @@ function open(opts) {
 
   /* ---- placement: beside the editor when there is room, otherwise over the middle; the scrim leaves the editor
      itself uncovered ---- */
+  var placed = '';
   function place() {
     var de = document.documentElement, W = de.clientWidth || 1024, H = de.clientHeight || 768;
-    var r = inst.root && inst.root.isConnected ? inst.root.getBoundingClientRect() : { left: 0, top: 0, right: 0, bottom: 0, width: 0, height: 0 };
+    var homeVisible = opts.from !== 'settings' && document.getElementById('panel-dashboard').classList.contains('active');
+    var r = homeVisible && inst.root && inst.root.isConnected ? inst.root.getBoundingClientRect() : { left: 0, top: 0, right: 0, bottom: 0, width: 0, height: 0 };
+    var placement = [W, H, r.left, r.top, r.right, r.bottom].join('|');
+    if (placed === placement) return;
+    placed = placement;
     var hole = r.width > 0 && r.height > 0;
     var M = 12, want = Math.min(920, W - 2 * M), narrow = W < 720, left, width = want;
     if (narrow) { left = 8; width = W - 16; }
@@ -669,6 +807,7 @@ function open(opts) {
     if (key === 'inactiveDim' && next) tryDim();
   }
   root.addEventListener('click', function (e) {
+    if (closed) return;
     var t = e.target;
     if (t.closest('.pmt-cz-scrim, .pmt-cz-frame')) { close(); return; }
     var b = t.closest('button, [role="radio"], [role="switch"]'); if (!b || !root.contains(b)) return;
@@ -682,7 +821,7 @@ function open(opts) {
     if (b.hasAttribute('data-jump')) { var g = root.querySelector('[data-group="' + b.getAttribute('data-jump') + '"]'); if (g) { g.scrollIntoView({ block: 'start', behavior: reducedNow() ? 'auto' : 'smooth' }); var hd = g.querySelector('h3'); if (hd) { hd.tabIndex = -1; hd.focus({ preventScroll: true }); } } return; }
     var act = b.getAttribute('data-act');
     if (act === 'close') close();
-    else if (act === 'reset') { EL().reset(scope, v); syncPreview(); paint(); PMW.announce(scope === 'tab' ? 'This editor follows All editors again' : 'All editors follow the look again'); }
+    else if (act === 'reset') { EL().reset(scope, v); PMW.announce(scope === 'tab' ? 'This editor follows All editors again' : 'All editors follow the look again'); }
     else if (act === 'group-reset') { var gpatch = {}; GROUP_KEYS[b.getAttribute('data-group')].forEach(function (k) { if (EL().own(scope, v, k) !== undefined) gpatch[k] = null; }); write(gpatch); }
     else if (act === 'default') put(b.getAttribute('data-key'), null);
     else if (act === 'try-move') tryMove();
@@ -700,7 +839,7 @@ function open(opts) {
   });
   function quickSet(id) {
     var s = SETS.filter(function (x) { return x.id === id; })[0]; if (!s) return;
-    if (!s.patch) { EL().reset(scope, v); syncPreview(); paint(); return; }
+    if (!s.patch) { EL().reset(scope, v); return; }
     /* a set changes its own fields and leaves the rest of this scope's choices (the scheme you picked stays) */
     write(Object.assign({}, s.patch));
   }
@@ -779,21 +918,42 @@ function open(opts) {
   /* a scheme previews when the pointer rests on it (160 ms, so crossing the grid previews nothing on the way) or the
      arrow keys reach it, on the preview and on the editor, at once and without the sweep (the sweep is for keeping
      one); leaving the list or Escape puts the chosen one back */
-  var INTENT_MS = 160, intent = 0, previewing = null;
+  var INTENT_MS = 160, intent = 0, previewing = null, intentTile = null, scrollUntil = 0, pointerX = null, pointerY = null;
+  function cancelIntent() { clearTimeout(intent); intent = 0; intentTile = null; }
   function previewSoon(tileEl, ms) {
-    clearTimeout(intent);
+    cancelIntent();
+    intentTile = tileEl;
     var id = tileEl.getAttribute('data-value');
     if (previewing === id) return;
     intent = setTimeout(function () {
-      if (!root.isConnected || openRoot !== root) return;
+      intent = 0;
+      if (!root.isConnected || openRoot !== root || intentTile !== tileEl) return;
       previewing = id;
       EL().preview(v, { scheme: id }); syncPreview();
     }, ms);
   }
-  function endPreview() { clearTimeout(intent); if (previewing === null) return; previewing = null; EL().endPreview(v); syncPreview(); }
+  function endPreview() { cancelIntent(); if (previewing === null) return; previewing = null; EL().endPreview(v); syncPreview(); }
   var schemesEl = root.querySelector('.pmt-cz-schemes');
-  schemesEl.addEventListener('mouseover', function (e) { var o = e.target.closest('.pmt-cz-scheme'); if (o) previewSoon(o, INTENT_MS); });
-  schemesEl.addEventListener('mouseleave', function () { endPreview(); });
+  // A scroll moves tiles under a stationary pointer. Only genuine pointer travel
+  // can start hover intent, after scrolling has been quiet for 200 ms. Gaps and
+  // departures cancel the pending tile even when the pointer stays in the grid.
+  schemesEl.addEventListener('pointermove', function (e) {
+    var moved = e.clientX !== pointerX || e.clientY !== pointerY;
+    pointerX = e.clientX; pointerY = e.clientY;
+    if (!moved) return;
+    var o = e.target.closest('.pmt-cz-scheme');
+    if (!o || e.buttons || performance.now() < scrollUntil) { cancelIntent(); return; }
+    if (o !== intentTile) previewSoon(o, INTENT_MS);
+  }, { passive: true });
+  schemesEl.addEventListener('pointerout', function (e) {
+    var next = e.relatedTarget && e.relatedTarget.closest ? e.relatedTarget.closest('.pmt-cz-scheme') : null;
+    if (next !== intentTile) cancelIntent();
+  }, { passive: true });
+  schemesEl.addEventListener('pointerleave', function () { pointerX = pointerY = null; endPreview(); });
+  function scrollPreview() { scrollUntil = performance.now() + 200; endPreview(); }
+  body.addEventListener('wheel', scrollPreview, { passive: true });
+  body.addEventListener('scroll', scrollPreview, { passive: true });
+  schemesEl.addEventListener('pointerdown', cancelIntent, { passive: true });
   /* ---- Token colours: one kind of word in the scheme this scope draws, picked from the scheme's own colours or by
      hue, saturation and lightness; shown on the preview and on the editor as it changes, and held to the text floor
      there like every scheme colour (the picker says when a colour is drawn lighter or darker to read) ---- */
@@ -847,10 +1007,14 @@ function open(opts) {
     var m = /^look:([a-z]+)-(light|dark)$/.exec(I.key);
     return m ? { name: (LOOK_NAME[m[1]] || m[1]) + ' ' + m[2], own: 'The look’s own', lead: (LOOK_NAME[m[1]] || m[1]) + ' ' + m[2] + '’s own colours' } : { name: I.scheme, own: 'The scheme’s own', lead: I.scheme };
   }
+  var paintedTokens = '';
   function paintTokens() {
     if (!tokList) return;
     var I = tokInfo(); if (!I) return;
     var mine = tokMap(), held = 0, who = tokOwner(I);
+    var signature = JSON.stringify([I, mine, tokOpen, tokLive]);
+    if (paintedTokens === signature) return;
+    paintedTokens = signature;
     var lead = root.querySelector('[data-tok-lead]'), ltxt = 'Change one kind of word in ' + who.lead +
       '. A colour that would read under ' + I.floor + ':1 on this ground is drawn a little lighter or darker, its hue kept.';
     if (lead.textContent !== ltxt) lead.textContent = ltxt;
@@ -904,6 +1068,7 @@ function open(opts) {
   /* keyboard: Escape closes, Tab stays inside, arrows move within a group of tiles or a segment (choosing, as radios
      do; in the schemes they preview, and Enter or Space keeps one) */
   root.addEventListener('keydown', function (e) {
+    if (closed) return;
     if (e.key === 'Escape') {
       e.preventDefault(); e.stopPropagation();
       if (previewing !== null) { endPreview(); return; }
@@ -950,7 +1115,7 @@ function open(opts) {
   function roving() {
     [].forEach.call(root.querySelectorAll('[role="radiogroup"]'), function (g) {
       var opts2 = g.querySelectorAll('[role="radio"]'), chosen = g.querySelector('[role="radio"][aria-checked="true"]:not([hidden])') || [].filter.call(opts2, function (o) { return !o.hidden; })[0];
-      [].forEach.call(opts2, function (o) { var t = o === chosen ? 0 : -1; if (o.tabIndex !== t) o.tabIndex = t; });   // a write only where it changes: each one restyles
+      [].forEach.call(opts2, function (o) { var t = !closed && o === chosen ? 0 : -1; if (o.tabIndex !== t) o.tabIndex = t; });   // a write only where it changes: each one restyles
     });
   }
   function importScheme() {
@@ -967,11 +1132,26 @@ function open(opts) {
   }
 
   /* ---- open, refresh, close ---- */
-  var offChange = EL().onChange(function () { if (root.isConnected) paint(); });
-  var onResize = function () { place(); if (preview && preview.demo) preview.demo.relayout(); };
+  var warmPaint = 0;
+  var offChange = EL().onChange(function () {
+    if (!root.isConnected) return;
+    if (!closed) { syncPreview(); paint(); return; }
+    if (!warmPaint) warmPaint = setTimeout(function () { warmPaint = 0; if (!disposed && closed) { syncPreview(); paint(); } }, 250);
+  });
+  var onResize = function () { if (closed) return; place(); if (preview && preview.demo) preview.demo.relayout(); };
   window.addEventListener('resize', onResize);
+  var resizeRaf = 0, placeAfterResize = false;
   var ro = typeof ResizeObserver === 'function' ? new ResizeObserver(function (list) {
-    list.forEach(function (en) { if (en.target === inst.root) place(); else if (preview && preview.demo) preview.demo.relayout(); });
+    if (closed) return;
+    list.forEach(function (en) { if (en.target === inst.root) placeAfterResize = true; });
+    // Relayout writes the preview's geometry. Keep that out of the observer's
+    // delivery loop and combine the home and dock notifications into one pass.
+    if (!resizeRaf) resizeRaf = requestAnimationFrame(function () {
+      resizeRaf = 0;
+      if (closed) return;
+      if (placeAfterResize) { placeAfterResize = false; place(); }
+      if (preview && preview.demo) preview.demo.relayout();
+    });
   }) : null;
   if (ro) { if (inst.root) ro.observe(inst.root); ro.observe(homeBox); ro.observe(dockBox); }
   /* the preview follows you down the screen only where the real editor is not beside it (the one rule of both
@@ -1004,24 +1184,55 @@ function open(opts) {
   body.addEventListener('scroll', function () { if (asideAt) asideSoon(asideAt); }, { passive: true });
   root.addEventListener('focusin', function (e) { if (body.contains(e.target) && !dock.contains(e.target)) asideSoon({ el: e.target }); });
   if (preview && typeof IntersectionObserver === 'function') {
-    io = new IntersectionObserver(function (list) { var en = list[list.length - 1]; wantDock = en.intersectionRatio < 0.4; syncDock(); }, { root: body, threshold: [0, 0.4, 1] });
+    io = new IntersectionObserver(function (list) { if (closed) return; var en = list[list.length - 1]; wantDock = en.intersectionRatio < 0.4; syncDock(); }, { root: body, threshold: [0, 0.4, 1] });
     io.observe(root.querySelector('.pmt-cz-preview'));
   }
-  var closed = false;
-  function close(noFocus) {
-    if (closed) return;
-    closed = true;
+  var closed = true, disposed = false, visit = 0;
+  var focusStops = new WeakMap();
+  function focusStopsOn(on) {
+    [].forEach.call(root.querySelectorAll('button, input, select, textarea, [tabindex]'), function (e) {
+      if (!focusStops.has(e)) focusStops.set(e, e.tabIndex);
+      var t = on ? focusStops.get(e) : -1;
+      if (e.tabIndex !== t) e.tabIndex = t;
+    });
+    if (on) roving();
+  }
+  function dispose() {
+    disposed = true;
     stopDemo(); endPreview(); tokEndPreview();
     if (offChange) offChange();
     window.removeEventListener('resize', onResize);
     if (ro) ro.disconnect();
     if (io) io.disconnect();
+    if (root._pmedFinish) root._pmedFinish();
+    cancelWarmMeasurements();
+    if (document.fonts && document.fonts.removeEventListener) document.fonts.removeEventListener('loadingdone', warmMeasurementsSoon);
+    cancelAnimationFrame(lookRaf); cancelAnimationFrame(asideRaf); cancelAnimationFrame(resizeRaf);
+    clearTimeout(warmPaint);
     if (preview) { try { preview.unmount(); } catch (_) {} preview = null; }
-    if (openRoot === root) openRoot = null;
     if (inst.customizing) inst.customizing(false);
-    root.setAttribute('aria-hidden', 'true'); root.inert = true;
-    if (noFocus) root.remove(); else Motion.leave(root, function () { root.remove(); });
+    root.remove();
+    if (openRoot === root) openRoot = null;
+  }
+  function close(noFocus) {
+    if (closed) return;
+    closed = true;
+    var closing = ++visit;
+    stopDemo(); endPreview(); tokEndPreview();
+    if (openRoot === root) openRoot = null;
+    // Focus returns before the exit's writes. Toggling inert on the ancestor
+    // invalidates all 1,900 descendants; park individual tab stops instead.
     if (!noFocus) { try { (anchor && anchor.isConnected ? anchor : null) ? anchor.focus({ preventScroll: true }) : inst.focus(); } catch (_) {} }
+    root.setAttribute('aria-hidden', 'true'); focusStopsOn(false);
+    // Keep the whole sheet through its exit and reuse it on the next visit.
+    // Neither teardown nor a fresh 37-tile build belongs inside an animation.
+    function park() {
+      if (closing !== visit || disposed) return;
+      root.classList.add('pmed-prepared');
+      if (inst.customizing) inst.customizing(false);
+      warmMeasurementsSoon();
+    }
+    if (noFocus) park(); else Motion.leave(root, park);
     if (typeof opts.onClose === 'function') { try { opts.onClose(); } catch (_) {} }
   }
   root._pmedClose = close;
@@ -1031,22 +1242,58 @@ function open(opts) {
   syncPreview();
   paint();
   filter('');
-  /* the entrance plays once the screen has been drawn: its first style, layout and paint (37 code tiles, the live
-     preview) are the costly frame, and taken during the entrance they made it skip (a GPU film showed the scrim pop
-     in after five frozen frames). The screen is drawn first almost clear, and the entrance starts two frames later */
-  root.classList.add('pmed-prime');
-  requestAnimationFrame(function () { requestAnimationFrame(function () {
-    if (!root.isConnected) return;
-    root.classList.remove('pmed-prime');
+  focusStopsOn(false);
+  var handle = { el: root, inst: inst, dispose: dispose, show: show, close: function () { close(); }, refresh: function () { if (!closed) { syncPreview(); paint(); } }, preview: preview };
+  function show(next) {
+    if (next.prepare) return handle;
+    cancelWarmMeasurements();
+    opts = next; anchor = opts.anchor || null;
+    scope = opts.scope === 'app' ? 'app' : v._apScope || 'tab';
+    closed = false; ++visit; openRoot = root;
+    root._pmedGen = (root._pmedGen || 0) + 1;
+    root.classList.remove('pmt-in', 'pmt-out');
+    wantDock = false; dockTo(false); body.scrollTop = 0;
+    root.querySelector('.pmt-cz-search').value = ''; filter('');
+    if (inst.customizing) inst.customizing(true);
+    syncPreview(); paint(); place(); focusStopsOn(true);
+    root.removeAttribute('aria-hidden');
+    root.classList.remove('pmed-prepared');
     Motion.play(root);
-  }); });
-  var first = root.querySelector('[data-seg="scope"] [aria-checked="true"]') || dialog;
-  first.focus({ preventScroll: true });
-  /* opened for one group (the editor menu's Indentation row): that group's heading at the top, and the focus on it */
-  var goTo = opts.group && root.querySelector('[data-group="' + opts.group + '"]' + (opts.at ? ' [data-at="' + opts.at + '"]' : ''));
-  if (goTo) { goTo.scrollIntoView({ block: 'start' }); var gh = goTo.querySelector('h3, h4'); if (gh) { gh.tabIndex = -1; gh.focus({ preventScroll: true }); } }
-  return { el: root, close: function () { close(); }, refresh: function () { if (!closed) { syncPreview(); paint(); } }, preview: preview };
+    var first = root.querySelector('[data-seg="scope"] [aria-checked="true"]') || dialog;
+    // Let the entrance paint before focus asks the browser for geometry. A
+    // newer visit invalidates this job, so a quick close cannot reclaim focus.
+    var showing = visit;
+    requestAnimationFrame(function () { setTimeout(function () {
+      if (!closed && showing === visit && !opts.group) first.focus({ preventScroll: true });
+    }, 0); });
+    var goTo = opts.group && root.querySelector('[data-group="' + opts.group + '"]' + (opts.at ? ' [data-at="' + opts.at + '"]' : ''));
+    if (goTo) { goTo.scrollIntoView({ block: 'start' }); var gh = goTo.querySelector('h3, h4'); if (gh) { gh.tabIndex = -1; gh.focus({ preventScroll: true }); } }
+    return handle;
+  }
+  prepared = handle;
+  return opts.prepare ? handle : show(opts);
 }
+
+// Prepare one editor sheet while the app is idle. The preview and static palette
+// survive its visits; another editor replaces this bounded cache. Never build
+// underneath onboarding or while a page/Usage transition is playing.
+function prepareSoon() {
+  if (prepared || openRoot) return;
+  var de = document.documentElement;
+  if (de.hasAttribute('data-o55-open') || de.hasAttribute('data-pm-page-transition') || de.hasAttribute('data-pmu-moment')) { setTimeout(prepareSoon, 1500); return; }
+  var inst = PMW.editorInView && PMW.editorInView(true);
+  if (!inst) { setTimeout(prepareSoon, 1500); return; }
+  var build = function () {
+    if (!prepared && !openRoot) {
+      if (de.hasAttribute('data-o55-open') || de.hasAttribute('data-pm-page-transition') || de.hasAttribute('data-pmu-moment')) { setTimeout(prepareSoon, 1500); return; }
+      // Settings is the app-level entry. Prepare its actual width and scope,
+      // not the narrower editor cutout, which would reflow every tile on open.
+      open({ view: inst.view, scope: 'app', from: 'settings', prepare: true });
+    }
+  };
+  if (window.requestIdleCallback) requestIdleCallback(build); else setTimeout(build, 500);
+}
+window.addEventListener('load', function () { setTimeout(prepareSoon, 1500); }, { once: true });
 
 /* the editor's More menu opens it on this editor (10-editor.js openCustomize); Settings' Editor look group opens it on
    the editor in view, for All editors, opening the project's entry file first when Home shows no editor */
@@ -1054,13 +1301,13 @@ PMW.edCustomize = { open: open };
 window.PM_EDITOR_CUSTOMIZE = Object.freeze({
   open: function (o) {
     o = o || {};
-    var inst = PMW.editorInView ? PMW.editorInView() : null;
-    if (inst) return open({ view: inst.view, scope: o.scope || 'app' });
+    var inst = PMW.editorInView ? PMW.editorInView(o.from === 'settings') : null;
+    if (inst) return open(Object.assign({}, o, { view: inst.view, scope: o.scope || 'app' }));
     try { PM_HOME.open({ kind: 'editor', path: 'src/main.rs' }); } catch (_) {}
     var tries = 0;
     (function wait() {
-      var e2 = PMW.editorInView ? PMW.editorInView() : null;
-      if (e2) { open({ view: e2.view, scope: o.scope || 'app' }); return; }
+      var e2 = PMW.editorInView ? PMW.editorInView(o.from === 'settings') : null;
+      if (e2) { open(Object.assign({}, o, { view: e2.view, scope: o.scope || 'app' })); return; }
       if (++tries < 30) setTimeout(wait, 100);
     })();
     return null;
