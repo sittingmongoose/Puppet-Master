@@ -226709,7 +226709,12 @@ try { if (window.PM_HOME && typeof window.PM_HOME.boot === 'function') window.PM
      item moved (a lens in Settings rested 8 px under its tab otherwise). */
   function settleCheck(L) {
     clearTimeout(L.settleT);
-    L.settleT = setTimeout(function () { L.settleT = 0; if (lenses.get(L.strip) === L && L.strip.isConnected && !L.dragging && !L.pending && switchOn()) syncStrip(L.cfg, L.strip); }, 480);
+    /* measured after that frame's layout, not in the timer (where it forced what the page had pending) */
+    L.settleT = setTimeout(function () {
+      L.settleT = 0;
+      var now = function () { if (lenses.get(L.strip) === L && L.strip.isConnected && !L.dragging && !L.pending && switchOn()) syncStrip(L.cfg, L.strip); };
+      if (!afterLayout(now)) now();
+    }, 480);
   }
   function stopRide(L) { if (L.ride) { var r = L.ride; L.ride = null; r.forEach(function (m) { m.cancel(); }); } }
   function stopLensTravel(L) {
@@ -226867,10 +226872,13 @@ try { if (window.PM_HOME && typeof window.PM_HOME.boot === 'function') window.PM
      mutation reports: an inline style, inert, an attribute on <html> such as the onboarding window's data-o55-open. Such
      lenses are checked every 400 ms, and only while there are any. */
   var hiddenLenses = new Map(), showT = 0;
+  /* the check itself runs after the frame's layout: run from its timer, reading whether a strip shows forced whatever the
+     page had pending (a Settings chapter change mid-render: 242 ms of forced layout on the P1000, 2026-10-16) */
+  function showSoon() { if (!showT) showT = setTimeout(function () { showT = -1; if (!afterLayout(checkShown)) checkShown(); }, 400); }
   function awaitShow(L, cfg) {
     if (!L.strip.isConnected) { hiddenLenses.delete(L); return; }
     hiddenLenses.set(L, cfg);
-    if (!showT) showT = setTimeout(checkShown, 400);
+    showSoon();
   }
   function checkShown() {
     showT = 0;
@@ -226881,7 +226889,7 @@ try { if (window.PM_HOME && typeof window.PM_HOME.boot === 'function') window.PM
       var t = cfg.pick ? cfg.pick(L.strip) : L.strip.querySelector(cfg.items + (cfg.active || '.active'));
       if (t && visible(t)) { hiddenLenses.delete(L); syncStrip(cfg, L.strip); }
     });
-    if (hiddenLenses.size) showT = setTimeout(checkShown, 400);
+    if (hiddenLenses.size) showSoon();
   }
   function syncStrip(cfg, strip) {
     var L = lensFor(strip, cfg), P0 = L.pending;
