@@ -1367,21 +1367,16 @@
     hiddenLenses.set(L, cfg);
     if (!showT) showT = setTimeout(checkShown, 400);
   }
-  /* the check reads after the frame's own layout (a ResizeObserver delivery, as afterLayout does), never from the timer
-     itself: a tick that landed while an app was rebuilding a page forced the half-built page through layout (a Settings
-     chapter in Basic Dark: 242 ms, P1000, pm7-motion-settings 2026-10-16) */
-  var shownRO = null, shownEl = null;
+  /* onLayout(fn): fn runs once after the frame's own style and layout, before paint, so every read in it is free (Q16).
+     It is afterLayout(fn): one probe and one ResizeObserver for all of Glass. Work that a timer would otherwise run in the
+     middle of an app's rebuild waits there instead: */
+  function onLayout(fn) { if (!afterLayout(fn)) fn(); }
+  /* - the hidden-lens check, whose tick landing on a Settings chapter change forced the half-built page through 242 ms
+       of layout in Basic Dark */
   function checkShown() {
     showT = 0;
     if (!switchOn()) { hiddenLenses.clear(); return; }
-    if (!window.ResizeObserver || !document.body) { checkShownNow(); return; }
-    if (!shownRO) shownRO = new ResizeObserver(function () { shownRO.unobserve(shownEl); checkShownNow(); });
-    if (!shownEl || !shownEl.isConnected) {
-      shownEl = el('i', { id: 'lg-shown', 'aria-hidden': 'true' });
-      shownEl.style.cssText = 'position:fixed;left:-8px;top:-8px;width:2px;height:2px;pointer-events:none;visibility:hidden';
-      document.body.appendChild(shownEl);
-    }
-    shownRO.observe(shownEl);
+    onLayout(checkShownNow);
   }
   function checkShownNow() {
     if (showT) return;
@@ -1984,7 +1979,7 @@
     var o55 = root.hasAttribute('data-o55-open');
     if (o55 !== lastO55) { lastO55 = o55; dirtyAll = true; queueSync(); }
     /* NieR Mode paints over a Basic look without changing data-theme: a look's switcher tokens may differ with it on
-       (Q16), so they are read again and every strip synced */
+       (Q16), so they are read again and every strip synced, by the next sync after the frame's own layout (switchStale) */
     var nier = root.getAttribute('data-o55-nier');
     if (nier !== lastNier) { lastNier = nier; switchStale = true; lenses.forEach(function (L) { L.rect = null; }); dirtyAll = true; queueSync(); }
     if (th === lastTheme && lg === lastLg && tier === lastTier && wall === lastWall && motion === lastMotion) return;
