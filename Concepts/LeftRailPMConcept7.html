@@ -18841,7 +18841,7 @@ body > .pm6-tb-menu .pm6-tb-menu-item-label,
   pointer-events: none !important;
   z-index: -1;
 }
-.side-panel-slot.pill-fit-measure .side-panel-view:not(.active) > *,
+.side-panel-slot.pill-fit-measure .side-panel-view:not(.active) > :where(.d-jj,.fm-docktabs,.fm-filter,.fm-selbar,.fm-toolbar-wrap,.pm-segtab,.pm7-automation-context,.pm7-automation-provider-view,.pm7-scm-context,.pm7-scm-git-footer,.sh-banner,.sh-foot,.sh-idxpanel,.sh-idxstate,.sh-scroll),
 .side-panel-slot.pill-fit-measure [data-pane].pm-hidden > * {
   animation: none !important;
 }
@@ -24316,15 +24316,9 @@ html[data-o55-nier-parts~="cursor"] :is(.pm6-tb-menu-item.is-selected, .pm6-tt-m
    hovered item only: a :hover followed by a descendant makes Blink restyle the whole subtree of every element whose
    hover changes. The item's own ink (the rule above) stays on :hover, which invalidates just that element. Chosen
    items keep their own branches. A badge inside the bar turns over again. */
-html[data-o55-nier-parts~="cursor"] :is(.page-tab:not(.active), .pm6-tb-menu-item, .pm6-tt-mode, .pm6-tb-pages-more-item, .activity-bar .icon,
-  .domain-link, .side-link, .index-link, .page-index-title, .workspace-tab, .manager-tab, .resource-row, .pm51-popout-item:not([aria-disabled="true"]), .pm51-menu-item,
-  .pm7u-navbtn, .pm7u-poprow, .orch-tab, .pm-segtab-item:not(.active), .fm-row, .fm-ctx-item, .ctx-item, .menu-item, .chat-dropdown-item,
-  .pm6-chat-more-item, .cl-mode-item, .pm-home-menu-row, .palette-item, .search-result-item, .slash-cmd-item, .pm6-chat-slash-item,
-  .pm6-fab-item, .chat-thread-item, .pm6-dash-catalog-item, [role="menuitem"], [role="option"]:not([aria-disabled="true"])).o55np-cur-over :where(*),
-html[data-o55-nier-parts~="cursor"] :is(.pm6-tb-menu-item.is-selected, .pm6-tt-mode[aria-checked="true"], .activity-bar .icon.active, .domain-link.active,
-  .side-link.active, .index-link.is-active, .page-index-title.is-current, .workspace-tab.active, .manager-tab.active, .resource-row.active,
-  .pm51-popout-item.is-active, .pm51-popout-item[aria-selected="true"], .pm7u-navbtn.active, .pm7u-poprow.active, .orch-tab.active, .fm-row.selected,
-  .chat-dropdown-item.active, .chat-thread-item.active, [role="option"][aria-selected="true"], [role="menuitemradio"][aria-checked="true"]) :where(*) {
+/* T2 build step: the .active-keyed '*' / ':where(*)' descendants below are rewritten at build time from onboarding/opus-5.5/tools/active_descendant_rules.json; a new descendant class or tag under these carriers needs an entry there (check: tools/active_descendant_guard.mjs). */
+html[data-o55-nier-parts~="cursor"] :is(.page-tab:not(.active), .pm6-tb-menu-item, .pm6-tt-mode, .pm6-tb-pages-more-item, .activity-bar .icon, .domain-link, .side-link, .index-link, .page-index-title, .workspace-tab, .manager-tab, .resource-row, .pm51-popout-item:not([aria-disabled="true"]), .pm51-menu-item, .pm7u-navbtn, .pm7u-poprow, .orch-tab, .pm-segtab-item:not(.active), .fm-row, .fm-ctx-item, .ctx-item, .menu-item, .chat-dropdown-item, .pm6-chat-more-item, .cl-mode-item, .pm-home-menu-row, .palette-item, .search-result-item, .slash-cmd-item, .pm6-chat-slash-item, .pm6-fab-item, .chat-thread-item, .pm6-dash-catalog-item, [role="menuitem"], [role="option"]:not([aria-disabled="true"])).o55np-cur-over :where(.A,.M,.cl-mode-desc,.cl-mode-info,.cl-mode-name,.d-na,.d-word,.docker,.domain-copy,.eq-abbr,.eq-full,.fm-chevron,.fm-count,.fm-ctx-caret,.fm-ctx-key,.fm-ctx-label,.fm-ficon,.fm-markers,.fm-name,.fm-quick,.fm-trail,.folder,.icon,.icon-inline,.icon-label,.md,.mono,.nx-a-drop,.nx-a-swap,.nx-a-wave,.nx-c,.nx-h,.nx-p0,.nx-p1,.nx-r-concept,.o55-nier-tt-box,.o55-nier-tt-mark,.o55-nier-tt-sliders,.o55-nier-tt-swatch,.orch-tab-badge,.orch-tab-badge-dot,.pm-ico,.pm-minibtn,.pm6-dash-size-chip,.pm6-ico,.pm6-tb-menu-item-label,.pm6-tb-menu-meta,.pm6-tt-chip,.pm6-tt-chips,.pm6-tt-name,.pmr-key,.rs,.sh-sdot,.slash-cmd-desc,.slash-cmd-name,.sm,.sql,.svelte,.symbol,.thread-action-btn,.thread-bottom-row,.thread-status-col,.thread-status-draft,.thread-status-read,.thread-status-unread,.thread-summary,.thread-timestamp,.thread-title,.thread-top-row,.thread-working-pulse,.toml,.wt-clean,.wt-dirty,.xml,.yml,b,br,circle,div,ellipse,i,line,path,polygon,polyline,rect,small,span,strong,svg),
+html[data-o55-nier-parts~="cursor"] :is(.pm6-tb-menu-item.is-selected, .pm6-tt-mode[aria-checked="true"], .activity-bar .icon.active, .domain-link.active, .side-link.active, .index-link.is-active, .page-index-title.is-current, .workspace-tab.active, .manager-tab.active, .resource-row.active, .pm51-popout-item.is-active, .pm51-popout-item[aria-selected="true"], .pm7u-navbtn.active, .pm7u-poprow.active, .orch-tab.active, .fm-row.selected, .chat-dropdown-item.active, .chat-thread-item.active, [role="option"][aria-selected="true"], [role="menuitemradio"][aria-checked="true"]) :where(.A,.M,.d-word,.docker,.domain-copy,.fm-chevron,.fm-count,.fm-ficon,.fm-markers,.fm-name,.fm-quick,.fm-trail,.folder,.icon,.icon-label,.md,.mono,.nx-p,.o55-nier-tt-box,.o55-nier-tt-mark,.o55-nier-tt-swatch,.orch-tab-badge,.orch-tab-badge-dot,.pm-ico,.pm-minibtn,.pm6-tb-menu-item-label,.pm6-tb-menu-meta,.pm6-tt-chip,.pm6-tt-chips,.pm6-tt-name,.pmr-key,.rs,.sh-sdot,.sm,.sql,.svelte,.symbol,.thread-action-btn,.thread-bottom-row,.thread-status-col,.thread-status-draft,.thread-status-read,.thread-status-unread,.thread-summary,.thread-timestamp,.thread-title,.thread-top-row,.thread-working-pulse,.toml,.wt-clean,.wt-dirty,.xml,.yml,b,br,circle,div,i,line,path,polygon,polyline,rect,small,span,strong,svg){
   color: inherit !important; -webkit-text-fill-color: currentColor;
 }
 html[data-o55-nier-parts~="cursor"] :is(.orch-tab, .pm7u-navbtn, .resource-row, .chat-thread-item, .fm-row, .index-link).o55np-cur-over :is([class*="badge"], [class*="count"], kbd),
@@ -29766,8 +29760,8 @@ html[data-o55-nier][data-o55-nier-parts~="cursor"]:not(#pmhz):not(#pmhz):not(#pm
   background: var(--o55-nier-ink) !important; color: var(--o55-nier-on-ink) !important; border-color: var(--o55-nier-ink) !important;
   box-shadow: none !important; text-shadow: none !important; transition-duration: 0s !important;
 }
-html[data-o55-nier][data-o55-nier-parts~="cursor"]:not(#pmhz):not(#pmhz):not(#pmhz)
-  :is([data-pmh-kind="icon"]:not(.activity-bar .icon), .pmw-tab, .pmw-sc-btn, #projectMenuBtn, #themeSelect):not(.pmw-cur, .pmr-cur, .active, .selected, [aria-selected="true"]).pmh-on :where(*) {
+/* T2 build step: the .active-keyed '*' / ':where(*)' descendants below are rewritten at build time from onboarding/opus-5.5/tools/active_descendant_rules.json; a new descendant class or tag under these carriers needs an entry there (check: tools/active_descendant_guard.mjs). */
+html[data-o55-nier][data-o55-nier-parts~="cursor"]:not(#pmhz):not(#pmhz):not(#pmhz) :is([data-pmh-kind="icon"]:not(.activity-bar .icon), .pmw-tab, .pmw-sc-btn, #projectMenuBtn, #themeSelect):not(.pmw-cur, .pmr-cur, .active, .selected, [aria-selected="true"]).pmh-on :where(.fm-selchip-lbl,.icon-label,.nx-a-drop,.nx-a-seq,.nx-a-spin,.nx-c,.nx-h,.nx-p0,.nx-pc,.pm-ico,.pm6-tb-project-chevron,.pm6-tb-project-ico,.pm6-tb-theme-ico,.pm6-tt-bite,.pm6-tt-core,.pm6-tt-rays,.pmt-card-chev,.pmt-card-tg-text,.pmw-exit,.pmw-hbtn-label,.pmw-ico,.pmw-kglyph,.pmw-kico,.pmw-sc-ring,.pmw-sc-ring-bg,.pmw-sc-ring-fg,.pmw-sc-ringn,.pmw-tattn,.pmw-tclose,.pmw-tdot,.pmw-tico,.pmw-tlabel,.pmw-tmark,.sm,.symbol,b,circle,line,mask,path,polygon,polyline,rect,span,svg){
   color: inherit !important; -webkit-text-fill-color: currentColor;
 }
 html[data-o55-nier][data-o55-nier-parts~="cursor"]:not(#pmhz):not(#pmhz):not(#pmhz)
@@ -33764,15 +33758,14 @@ html:not([data-theme^="glass"]):not([data-o55-nier="on"]) .pm6-tb-menu-item.is-s
    their token blocks above do) rather than <html data-pm-switch-layer>: glass.js sets that attribute after the look's own
    restyle, and a bare * keyed on it restyled the whole page a second time on every NieR toggle, 266 -> 58 ms of the
    flip on Nas1; keyed on the look, it rides the look's own restyle) */
-:is(html[data-theme^="retro"], html[data-o55-nier="on"]):not(#lgz) #pm-settings-root .rail-scroll > .side-link.active *,
-:is(html[data-theme^="retro"], html[data-o55-nier="on"]):not(#lgz) #pm-settings-root .domain-link.active *,
+/* T2 build step: the .active-keyed '*' / ':where(*)' descendants below are rewritten at build time from onboarding/opus-5.5/tools/active_descendant_rules.json; a new descendant class or tag under these carriers needs an entry there (check: tools/active_descendant_guard.mjs). */
+:is(html[data-theme^="retro"], html[data-o55-nier="on"]):not(#lgz) #pm-settings-root .rail-scroll > .side-link.active :where(.icon,path,span,svg),
+:is(html[data-theme^="retro"], html[data-o55-nier="on"]):not(#lgz) #pm-settings-root .domain-link.active :where(.domain-copy,.icon,circle,path,rect,small,strong,svg),
 :is(html[data-theme^="retro"], html[data-o55-nier="on"]):not(#lgz) #pm-settings-root .pm51-index-group > .index-link.is-active *,
 :is(html[data-theme^="retro"], html[data-o55-nier="on"]):not(#lgz) #pm-settings-root .resource-row[aria-current="true"] *,
 :is(html[data-theme^="retro"], html[data-o55-nier="on"]):not(#lgz) #pm-settings-root .workspace-tab.is-current *,
 :is(html[data-theme^="retro"], html[data-o55-nier="on"]):not(#lgz) #pm-settings-root .manager-tab[aria-selected="true"] *,
-:is(html[data-theme^="retro"], html[data-o55-nier="on"]):not(#lgz) #pmuRange > button.active *,
-:is(html[data-theme^="retro"], html[data-o55-nier="on"]):not(#lgz) nav.page-tabs .page-tab.active *,
-:is(html[data-theme^="retro"], html[data-o55-nier="on"]):not(#lgz) .orch-tabs .orch-tab.active *,
+:is(html[data-theme^="retro"], html[data-o55-nier="on"]):not(#lgz) .orch-tabs .orch-tab.active :where(.orch-tab-badge,.orch-tab-badge-dot),
 :is(html[data-theme^="retro"], html[data-o55-nier="on"]):not(#lgz) #themeMenu .pm6-tt-mode[aria-checked="true"] *,
 :is(html[data-theme^="retro"], html[data-o55-nier="on"]):not(#lgz) #panel-wizard .pm6-wiz-intent-chip.sel *,
 :is(html[data-theme^="retro"], html[data-o55-nier="on"]):not(#lgz) .pm6-tb-menu-item.is-selected * {
@@ -34060,7 +34053,8 @@ html[data-o55-nier-parts~="slice"]:not([data-motion="reduced"]) .pmr-menu {
   --pm6-sprout-sx: 1 !important; --pm6-sprout-sy: 1 !important;
 }
 html[data-o55-nier-parts~="cursor"] .pmr-menu .pmr-mi:is(:hover, :focus-visible, .active) { background: var(--o55-nier-ink) !important; color: var(--o55-nier-on-ink) !important; box-shadow: none !important; }
-html[data-o55-nier-parts~="cursor"] .pmr-menu .pmr-mi:is(:hover, :focus-visible, .active) :where(*) { color: inherit !important; }
+/* T2 build step: the .active-keyed '*' / ':where(*)' descendants below are rewritten at build time from onboarding/opus-5.5/tools/active_descendant_rules.json; a new descendant class or tag under these carriers needs an entry there (check: tools/active_descendant_guard.mjs). */
+html[data-o55-nier-parts~="cursor"] .pmr-menu .pmr-mi:is(:hover, :focus-visible, .active) :where(.pm6-chat-modelcheck,.pm6-chat-modeleffort,.pm6-chat-modelname,.pmr-key,.pmr-mi-ico,.pmr-mi-sub,circle,defs,desc,ellipse,feComposite,feDisplacementMap,feGaussianBlur,feImage,filter,g,line,linearGradient,mask,path,polygon,polyline,rect,stop,svg,text,title,use){ color: inherit !important; }
 
 /* the trigger: the chat selector button's look (surface-elevated, hairline, radius-sm, 26px) at rail text size */
 .pmr-trigger {
@@ -36814,8 +36808,9 @@ html[data-o55-nier="on"] .pmr-view { --pmr-st-ok: var(--o55-nier-ink); --pmr-st-
   background: var(--o55-nier-ink) !important; color: var(--o55-nier-on-ink) !important; border-color: var(--o55-nier-ink) !important;
   box-shadow: none !important; text-shadow: none !important;
 }
-[data-rail-skin="d"][data-o55-nier-parts~="cursor"] #sidePanelSlot :is(.pmr-cur, .fm-row, .pm-segtab-item).o55np-cur-over:not(.active):not([aria-disabled="true"]) :where(*),
-[data-rail-skin="d"][data-o55-nier-parts~="cursor"] #sidePanelSlot .fm-row.selected:not(.active):not([aria-disabled="true"]) :where(*) {
+/* T2 build step: the .active-keyed '*' / ':where(*)' descendants below are rewritten at build time from onboarding/opus-5.5/tools/active_descendant_rules.json; a new descendant class or tag under these carriers needs an entry there (check: tools/active_descendant_guard.mjs). */
+[data-rail-skin="d"][data-o55-nier-parts~="cursor"] #sidePanelSlot :is(.pmr-cur, .fm-row, .pm-segtab-item).o55np-cur-over:not(.active):not([aria-disabled="true"]) :where(.A,.M,.Q,.add,.c,.chev,.chip-abbr,.chip-full,.d-dir,.d-dir-t,.d-fdir,.d-gl,.d-gs-conflict,.d-hasdir,.d-jbm,.d-jdir,.d-jid,.d-jm,.d-jmeta,.d-jr-aside,.d-jr-l1,.d-jr-l2,.d-jr-quiet,.d-jst,.d-jst-w,.d-own,.d-sessst,.d-str,.d-stw,.d-word,.del,.dirty,.docker,.dot-err,.dot-run,.dot-warn,.eq-abbr,.eq-full,.fm-cchev,.fm-cdir,.fm-cfile,.fm-chevron,.fm-count,.fm-dirty,.fm-ficon,.fm-markers,.fm-name,.fm-path,.fm-quick,.fm-trail,.folder,.hc-abbr,.hc-full,.lf-lead,.lf-state,.md,.mono,.nx-a-drop,.nx-a-seq,.nx-a-swap,.nx-a-wave,.nx-c,.nx-dim,.nx-f,.nx-h,.nx-p0,.nx-p1,.nx-pc,.nx-r-concept,.nx-st-base,.nx-st-blocked,.nx-st-change-conflict,.nx-st-change-modified,.nx-st-complete,.nx-st-failed,.nx-st-idle,.nx-st-info,.nx-st-move,.nx-st-paused,.nx-st-pending,.nx-st-skipped,.nx-st-warning,.nx-st-working,.nx-t-attention,.nx-t-blocked,.nx-t-changed,.nx-t-done,.nx-t-idle,.nx-t-paused,.nx-t-working,.nx-z0,.orphan,.pm-chip,.pm-chip-err,.pm-chip-errored,.pm-chip-ok,.pm-chip-warn,.pm-gs-mod,.pm-gs-staged,.pm-ico,.pm-minibtn,.pm-rmetric,.pmx-g-dot,.rs,.sh-accchev,.sh-age,.sh-agtime,.sh-bploc,.sh-bptog,.sh-branch,.sh-chgdot,.sh-chip,.sh-commit-t,.sh-dot,.sh-ds,.sh-elapsed,.sh-fam,.sh-floc,.sh-fname,.sh-fp,.sh-grpbadge,.sh-hacts,.sh-hacts-wide,.sh-hcount,.sh-hico,.sh-hlabel,.sh-htrail,.sh-imgsz,.sh-imgtag,.sh-jdur,.sh-jname,.sh-k,.sh-ln,.sh-main,.sh-meta,.sh-msg,.sh-name,.sh-nm-txt,.sh-owner,.sh-pill,.sh-rlabel,.sh-rowbtns,.sh-runmeta,.sh-sdot,.sh-sessline,.sh-sessmeta,.sh-sessname,.sh-sha,.sh-stage-l,.sh-stgnum,.sh-vname,.sh-vval,.sh-wexpr,.sh-wval,.sm,.sql,.svelte,.toml,.xml,.yml,b,circle,code,ellipse,em,input,line,path,polygon,polyline,rect,span,svg),
+[data-rail-skin="d"][data-o55-nier-parts~="cursor"] #sidePanelSlot .fm-row.selected:not(.active):not([aria-disabled="true"]) :where(.A,.M,.d-word,.docker,.fm-chevron,.fm-count,.fm-ficon,.fm-markers,.fm-name,.fm-quick,.fm-trail,.folder,.md,.mono,.pm-ico,.pm-minibtn,.rs,.sm,.sql,.svelte,.toml,.xml,.yml,circle,line,path,polyline,rect,svg){
   color: inherit !important; -webkit-text-fill-color: currentColor;
 }
 [data-rail-skin="d"][data-o55-nier-parts~="cursor"] #sidePanelSlot :is(.pmr-cur, .fm-row).o55np-cur-over:not(.active) :is([class*="badge"], [class*="count"], kbd),
@@ -50243,7 +50238,8 @@ html[data-lg="on"][data-theme^="glass"]:not(#lgz) #pmuExport { border-radius: 0 
 }
 :is(html[data-lg="on"][data-theme^="glass"], html:not([data-theme^="glass"])):not(#lgz) .pmu-navbtn::before, :is(html[data-lg="on"][data-theme^="glass"], html:not([data-theme^="glass"])):not(#lgz) .pmu-navbtn::after { opacity: 0 !important; }
 :is(html[data-lg="on"][data-theme^="glass"], html:not([data-theme^="glass"])):not(#lgz) .pmu-navbtn:hover:not(.active) { background: var(--pm-switch-hover, var(--lg-fill-hover)) !important; color: var(--pm-switch-ink-hover, var(--pm-switch-ink-on, var(--text-primary))) !important; }
-:is(html[data-lg="on"][data-theme^="glass"], html:not([data-theme^="glass"])):not(#lgz) .pmu-navbtn.active, :is(html[data-lg="on"][data-theme^="glass"], html:not([data-theme^="glass"])):not(#lgz) .pmu-navbtn.active * { color: var(--pm-switch-ink-on, var(--text-primary)) !important; }
+/* T2 build step: the .active-keyed '*' / ':where(*)' descendants below are rewritten at build time from onboarding/opus-5.5/tools/active_descendant_rules.json; a new descendant class or tag under these carriers needs an entry there (check: tools/active_descendant_guard.mjs). */
+:is(html[data-lg="on"][data-theme^="glass"], html:not([data-theme^="glass"])):not(#lgz) .pmu-navbtn.active, :is(html[data-lg="on"][data-theme^="glass"], html:not([data-theme^="glass"])):not(#lgz) .pmu-navbtn.active :where(.nx-a-fill,.nx-a-seq,.nx-a-wave,.nx-c,.nx-f,.nx-h,.nx-p0,.nx-p1,.nx-p2,.nx-pc,.nx-r-concept,.pmu-navcount,.pmu-navicon,.pmu-navtext) { color: var(--pm-switch-ink-on, var(--text-primary)) !important; }
 :is(html[data-lg="on"][data-theme^="glass"], html:not([data-theme^="glass"])):not(#lgz) .pmu-navbtn.active .pmu-navicon { color: var(--pm-switch-mark-on, var(--pm-switch-mark, var(--accent-blue))) !important; }
 :is(html[data-lg="on"][data-theme^="glass"], html:not([data-theme^="glass"])):not(#lgz) .pmu-navbtn.active { font-weight: 650; }
 /* (Glass only: a look that adopts the switcher keeps Usage's own contrast-tuned count ink; Basic Light's warning colour read

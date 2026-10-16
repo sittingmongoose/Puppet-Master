@@ -49,6 +49,7 @@
   background: var(--o55-nier-ink) !important; color: var(--o55-nier-on-ink) !important; border-color: var(--o55-nier-ink) !important;
   box-shadow: none !important; text-shadow: none !important;
 }
+/* T2 build step: the .active-keyed '*' / ':where(*)' descendants below are rewritten at build time from onboarding/opus-5.5/tools/active_descendant_rules.json; a new descendant class or tag under these carriers needs an entry there (check: tools/active_descendant_guard.mjs). */
 §R[data-o55-nier-parts~="cursor"] #sidePanelSlot :is(.pmr-cur, .fm-row, .pm-segtab-item).o55np-cur-over:not(.active):not([aria-disabled="true"]) :where(*),
 §R[data-o55-nier-parts~="cursor"] #sidePanelSlot .fm-row.selected:not(.active):not([aria-disabled="true"]) :where(*) {
   color: inherit !important; -webkit-text-fill-color: currentColor;

@@ -31,6 +31,7 @@ import nier_palette
 import nier_scene_art
 import nier_scenes
 import settings_layer
+import active_descendant_rewrite
 
 TOOLS = Path(__file__).resolve().parent
 PKG = TOOLS.parent
@@ -1404,6 +1405,10 @@ def build_text(usage: bool = True, home: bool = True) -> str:
         text = injected[0] if isinstance(injected, tuple) else injected
     note = ('<!-- TestOpus5.5PmConcept (Opus 5.5): TestPMConcept.html with a rebuilt Product Onboarding and Guided Tour. '
             'Built by Concepts/onboarding/opus-5.5/tools/build.py; never hand-edit. -->\n')
+    # 7. T2 (P1000 speed team): the 13 '<compound with .active> *' rules made every .active toggle restyle the toggled
+    #    element's whole subtree, so a page switch restyled the outgoing Home inside its layout. active_descendant_rewrite
+    #    gives each a featured descendant (same matches today, same specificity) in the finished page.
+    text, SETTINGS_NOTES['active_descendants'] = active_descendant_rewrite.apply(text, usage and home, need)
     return note + text
 
 

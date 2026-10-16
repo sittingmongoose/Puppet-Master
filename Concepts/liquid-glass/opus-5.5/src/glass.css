@@ -384,6 +384,7 @@ html[data-lg="on"][data-theme^="glass"]:not(#lgz) #pmuExport { border-radius: 0 
 }
 :is(html[data-lg="on"][data-theme^="glass"], html:not([data-theme^="glass"])):not(#lgz) .pmu-navbtn::before, :is(html[data-lg="on"][data-theme^="glass"], html:not([data-theme^="glass"])):not(#lgz) .pmu-navbtn::after { opacity: 0 !important; }
 :is(html[data-lg="on"][data-theme^="glass"], html:not([data-theme^="glass"])):not(#lgz) .pmu-navbtn:hover:not(.active) { background: var(--pm-switch-hover, var(--lg-fill-hover)) !important; color: var(--pm-switch-ink-hover, var(--pm-switch-ink-on, var(--text-primary))) !important; }
+/* T2 build step: the .active-keyed '*' / ':where(*)' descendants below are rewritten at build time from onboarding/opus-5.5/tools/active_descendant_rules.json; a new descendant class or tag under these carriers needs an entry there (check: tools/active_descendant_guard.mjs). */
 :is(html[data-lg="on"][data-theme^="glass"], html:not([data-theme^="glass"])):not(#lgz) .pmu-navbtn.active, :is(html[data-lg="on"][data-theme^="glass"], html:not([data-theme^="glass"])):not(#lgz) .pmu-navbtn.active * { color: var(--pm-switch-ink-on, var(--text-primary)) !important; }
 :is(html[data-lg="on"][data-theme^="glass"], html:not([data-theme^="glass"])):not(#lgz) .pmu-navbtn.active .pmu-navicon { color: var(--pm-switch-mark-on, var(--pm-switch-mark, var(--accent-blue))) !important; }
 :is(html[data-lg="on"][data-theme^="glass"], html:not([data-theme^="glass"])):not(#lgz) .pmu-navbtn.active { font-weight: 650; }
