@@ -400,6 +400,16 @@ CHAT = [
      'chat header: height only when it changes'),
 ]
 
+CHAT.append(
+    # B5 (Settings lane read probe on b8bb: page-tab resync offsetLeft 908.7 ms on Nas1): the page-tab ink resynced
+    # after a theme or motion change in an animation frame callback, before that frame's style, so it was the first
+    # reader of the look's pending whole-page restyle. It resyncs after the frame's layout instead (PM_AFTER_LAYOUT,
+    # before its paint), where the restyle is already done; the ink is in place in the same frame.
+    ("      resyncFrame = requestAnimationFrame(function () { resyncFrame = 0; resync(); });\n",
+     "      if (typeof window.PM_AFTER_LAYOUT === 'function') { resyncFrame = 1; window.PM_AFTER_LAYOUT(function () { resyncFrame = 0; resync(); }); return; }   /* O55: after layout (B5) */\n"
+     "      resyncFrame = requestAnimationFrame(function () { resyncFrame = 0; resync(); });\n",
+     'page-tab ink: theme resync after layout'))
+
 PATCHES = STATUS_BAR + HOVER_TAGS + THEME + PAGES + CENSUS + ANSWER_FIRST + CHAT
 
 # The census's own frame requests, between scheduleScan and refresh (scan, delayed scan, live, delayed live, and their
