@@ -142,12 +142,48 @@ function o55Inherited(setting, value) {
 /* A fine-tuning number the theme decides (Border width, Corner roundness, Scrollbar width; rows.d `themeOwn`) reads
    as the theme's own value until a number is set, and "Use the theme's" hands it back. The inventory default is
    the Retro value, which was shown as if it were in use on every theme. */
+const o55ThemeNumbers = new Map();
+let o55ThemeNumbersKey = '', o55ThemeNumbersPending = false;
+const o55ThemeNumberRows = () => Object.entries(O55R).filter(([, row]) => row.themeOwn && row.themeToken);
+const o55ThemeNumberKey = () => JSON.stringify([
+  ...['data-theme', 'data-o55-nier', 'data-contrast'].map(name => document.documentElement.getAttribute(name)),
+  ...o55ThemeNumberRows().map(([id]) => typeof o55LookChosen === 'function' ? o55LookChosen(id) : state.settings && state.settings[id])
+]);
+function o55ReadThemeNumbers() {
+  if (o55ThemeNumbersPending) return;
+  o55ThemeNumbersPending = true;
+  const read = () => {
+    o55ThemeNumbersPending = false;
+    const style = getComputedStyle(document.documentElement);
+    /* Read all three tokens before touching their labels. A manager's string renderer must never force style
+       just to reproduce these unchanged numbers (85 ms on the P1000 after a tab selection). */
+    const values = o55ThemeNumberRows().map(([, row]) => [row.themeToken, style.getPropertyValue(row.themeToken).trim()]);
+    o55ThemeNumbersKey = o55ThemeNumberKey();
+    values.forEach(([token, value]) => o55ThemeNumbers.set(token, value));
+    root.querySelectorAll('[data-o55-theme-token]').forEach(label => {
+      const value = o55ThemeNumbers.get(label.dataset.o55ThemeToken) || '';
+      const text = "The theme's own" + (value ? ' · ' + value : '');
+      if (label.textContent !== text) label.textContent = text;
+    });
+  };
+  if (typeof ResizeObserver === 'function') {
+    const ready = new ResizeObserver(() => { ready.disconnect(); read(); }); ready.observe(document.documentElement);
+  } else requestAnimationFrame(read);
+}
+function o55ThemeNumber(token) {
+  const key = o55ThemeNumberKey();
+  if (key !== o55ThemeNumbersKey) { o55ThemeNumbers.clear(); o55ThemeNumbersKey = key; }
+  if (!o55ThemeNumbers.has(token)) o55ReadThemeNumbers();
+  return o55ThemeNumbers.get(token) || '';
+}
+new MutationObserver(() => { o55ThemeNumbers.clear(); o55ReadThemeNumbers(); }).observe(document.documentElement,
+  { attributes: true, attributeFilter: ['data-theme', 'data-o55-nier', 'data-contrast'] });
 function o55ThemeOwn(setting, value) {
   const row = O55R[setting.id] || {};
   const chosen = typeof o55LookChosen === 'function' ? o55LookChosen(setting.id) : value;
   if (chosen == null) {
-    let now = ''; try { now = row.themeToken ? getComputedStyle(document.documentElement).getPropertyValue(row.themeToken).trim() : ''; } catch (e) { now = ''; }
-    return `<span class="o55-inherit"><span class="o55-auto">${icon('spark')}<span>${h("The theme's own")}${now ? ` · ${h(now)}` : ''}</span></span><button type="button" class="o55-textbtn" data-action="set-slider-override" data-setting="${a(setting.id)}">Set a number</button></span>`;
+    const now = row.themeToken ? o55ThemeNumber(row.themeToken) : '';
+    return `<span class="o55-inherit"><span class="o55-auto">${icon('spark')}<span${row.themeToken ? ` data-o55-theme-token="${a(row.themeToken)}"` : ''}>${h("The theme's own")}${now ? ` · ${h(now)}` : ''}</span></span><button type="button" class="o55-textbtn" data-action="set-slider-override" data-setting="${a(setting.id)}">Set a number</button></span>`;
   }
   return `<span class="o55-inherit">${o55Number(setting, chosen)}<button type="button" class="o55-textbtn" data-action="o55-auto-number" data-setting="${a(setting.id)}">Use the theme's</button></span>`;
 }

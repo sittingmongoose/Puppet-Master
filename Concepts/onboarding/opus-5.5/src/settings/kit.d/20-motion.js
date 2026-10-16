@@ -119,7 +119,8 @@ let o55InkFrame = 0;
 measureTabInks = function () { return null; };
 moveTabInks = function () {
   if (o55InkFrame) return;
-  o55InkFrame = requestAnimationFrame(() => {
+  o55InkFrame = 1;
+  const fit = () => {
     o55InkFrame = 0;
     const panel = document.getElementById('panel-settings');
     if (panel && !panel.classList.contains('active')) return;
@@ -168,7 +169,13 @@ moveTabInks = function () {
       }
       if (row.manager) nav.classList.toggle('is-stuck', row.stuck);
     });
-  });
+  };
+  /* Selection and mounting have changed the strip. The first layout delivery supplies its final geometry; a
+     pre-layout rAF read forced the just-mounted workspace (81 ms on the P1000). All strip reads still precede
+     every ink write, and the existing transform animation retains its duration, curve and retargeting. */
+  if (typeof ResizeObserver === 'function') {
+    const ready = new ResizeObserver(() => { ready.disconnect(); fit(); }); ready.observe(root);
+  } else requestAnimationFrame(fit);
 };
 
 /* Arrow keys, Home and End move along the strip and choose the tab they land on, as in any tab list. */
