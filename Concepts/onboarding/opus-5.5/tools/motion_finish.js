@@ -54,7 +54,13 @@
       // Keep this check alive through an end hold; running motion keeps the
       // original end-event deadline, without starting another safety timer.
       if (eventEnded) return;
-      timer = setTimeout(finish, duration + (endHold || 0) + 100);
+      timer = setTimeout(function () {
+        if (document.hidden) { finish(); return; }
+        // A long task can delay both the deadline and a queued end event.
+        // Animation events dispatch before rAF: let that event keep its
+        // original end hold before using the fallback on this render.
+        frame = requestAnimationFrame(function () { if (!eventEnded) finish(); });
+      }, duration + (endHold || 0) + 100);
     });
     return stop;
   };
