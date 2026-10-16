@@ -1253,9 +1253,11 @@
      meanwhile. One that is visible applies it in the coming frame after that frame's style and layout (the shell's
      PM_AFTER_LAYOUT), where reading the page costs nothing and the new colours still reach the frame's paint. Without
      the shell's helper it applies at once, as before. A kept change is applied as the terminal shows, before the
-     layout that showing does anyway, so it never shows a frame of the old look */
+     layout that showing does anyway, so it never shows a frame of the old look. Its parked Customize screen still
+     hears the change at once (_czLook is then only its catch-up's quiet timer), or a catch-up already waiting for idle
+     would measure in the switch's gaps */
   View.prototype.onLook = function () {
-    if (!this.visible) { this._lookStale = true; return; }
+    if (!this.visible) { this._lookStale = true; if (this._czLook) this._czLook(); return; }
     var self = this;
     if (typeof window.PM_AFTER_LAYOUT === 'function') {
       window.PM_AFTER_LAYOUT(this._lookRun || (this._lookRun = function () { if (self.visible) self._applyLook(); else self._lookStale = true; }));
