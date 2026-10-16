@@ -229254,7 +229254,15 @@ try { if (window.PM_HOME && typeof window.PM_HOME.boot === 'function') window.PM
   }
   /* where an element is laid out on screen, without its own transform or those of its transformed ancestors (the
      first untransformed ancestor's real box anchors it, so scrolling and ordinary layout still count) */
-  function moved(n) { var cs = getComputedStyle(n); return cs.transform !== 'none' || cs.scale !== 'none' || cs.translate !== 'none' || cs.rotate !== 'none'; }
+  /* within one sync the app's transforms do not change (Glass writes none), so each ancestor is asked once (movedIn, set for
+     the length of syncPending: boxRect asked every strip's offset parents again, B6) */
+  var movedIn = null;
+  function moved(n) {
+    if (movedIn && movedIn.has(n)) return movedIn.get(n);
+    var cs = getComputedStyle(n), m = cs.transform !== 'none' || cs.scale !== 'none' || cs.translate !== 'none' || cs.rotate !== 'none';
+    if (movedIn) movedIn.set(n, m);
+    return m;
+  }
   function boxRect(e) {
     var w = e.offsetWidth, h = e.offsetHeight;
     if (w == null || !e.offsetParent || (!w && !h)) return e.getBoundingClientRect();
@@ -229334,7 +229342,21 @@ try { if (window.PM_HOME && typeof window.PM_HOME.boot === 'function') window.PM
     if (!A || A.w !== R.w) s.width = R.w + 'px'; if (!A || A.h !== R.h) s.height = R.h + 'px'; L.rect = R;
     if (isGlass()) mount(L.lens, L.cfg.kind);   /* the refracting optics are Glass's; an adopting look draws the lens from its tokens */
   }
-  /* every item size of a strip gets its lens filter while nothing moves, so a move never waits for a map to decode */
+  /* every item size of a strip gets its lens filter while nothing moves, so a move never waits for a map to decode. It is
+     asked for in idle time (prewarmSoon): run inside the sync, it measured every item of every strip again and built maps
+     in the frame of the change that brought them (4 ms of the editor's Customize open, Nas1, B6). The lens's own size is
+     built when the lens is shown, as before. */
+  var prewarmQ = new Map(), prewarmIdle = 0;
+  function prewarmSoon(L, cfg, strip) {
+    if (!gpu() || !isGlass()) return;
+    prewarmQ.set(strip, [L, cfg]);
+    if (prewarmIdle) return;
+    var run = function () {
+      prewarmIdle = 0; var q = Array.from(prewarmQ); prewarmQ.clear();
+      q.forEach(function (e) { var L = e[1][0]; if (L.lens.isConnected && lenses.get(e[0]) === L) prewarm(L, e[1][1], e[0]); });
+    };
+    prewarmIdle = window.requestIdleCallback ? requestIdleCallback(run, { timeout: 500 }) : setTimeout(run, 100);
+  }
   function prewarm(L, cfg, strip) {
     if (!gpu() || !isGlass()) return;
     var pad = cfg.pad == null ? 2 : cfg.pad, sizes = [];
@@ -229632,7 +229654,7 @@ try { if (window.PM_HOME && typeof window.PM_HOME.boot === 'function') window.PM
       }
     }
     if (L.lens.style.opacity) L.lens.style.opacity = '';
-    prewarm(L, cfg, strip);
+    prewarmSoon(L, cfg, strip);
     var R = rectIn(strip, cfg.box ? cfg.box(target) : target, cfg.pad == null ? 2 : cfg.pad), A = L.rect;
     if (L.dragging) return;
     if (L.snap) { L.snap = false; stopLensTravel(L); setLensBox(L, R); return; }
@@ -230145,6 +230167,10 @@ try { if (window.PM_HOME && typeof window.PM_HOME.boot === 'function') window.PM
      pm7-motion-settings 2026-10-16) */
   var switchStale = false;
   function syncPending() {
+    movedIn = new Map();
+    try { syncPendingNow(); } finally { movedIn = null; }
+  }
+  function syncPendingNow() {
     if (switchStale) { switchStale = false; readSwitch(); }
     /* an immediate hot/API sync covers queued work; keep no second callback that can remount it next frame */
     if (syncQ) { cancelAnimationFrame(syncQ); syncQ = 0; }
@@ -230196,10 +230222,16 @@ try { if (window.PM_HOME && typeof window.PM_HOME.boot === 'function') window.PM
   function pageBusy() { try { return typeof window.PM_BUSY === 'function' && !!window.PM_BUSY(); } catch (e) { return false; } }
   /* the covers are read from their own markers, not from PM_BUSY(), which names only the first of several reasons (an open
      onboarding window or a page change is named before the boot; landing review GD-1) */
-  var tourCovers = document.getElementsByClassName('o55t-bootcover');
+  /* the tour's boot cover is a child of <body> (85-tour-nier.js coverBoot): its children are looked at, not the document (a
+     live getElementsByClassName's length walked the whole document again after every change: 4 ms of each sync while
+     the editor's Customize screen opened, Nas1, B6) */
+  function tourCovered() {
+    for (var c = document.body && document.body.lastElementChild; c; c = c.previousElementSibling) if (c.classList.contains('o55t-bootcover')) return true;
+    return false;
+  }
   function pageCovered() {
     try {
-      if (root.hasAttribute('data-o55-boot-wait') || document.getElementById('o55nw-boot') || tourCovers.length) return true;
+      if (root.hasAttribute('data-o55-boot-wait') || document.getElementById('o55nw-boot') || tourCovered()) return true;
       if (typeof window.PM_LOOK_COVERED === 'function') return !!window.PM_LOOK_COVERED();
       var t = window.PM_THEME_TRANSITION;
       return !!(document.getElementById('o55np-reboot') || document.getElementById('o55np-calm') || (t && typeof t.busy === 'function' && t.busy()));
