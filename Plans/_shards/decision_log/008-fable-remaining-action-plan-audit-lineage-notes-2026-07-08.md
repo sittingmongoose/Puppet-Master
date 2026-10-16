@@ -2,9 +2,9 @@
 
 Source: `Plans/Decision_Log.md`
 
-Source lines: L14489-L16051
+Source lines: L14489-L16060
 
-Source SHA256: `cb61bff04149f02312f3c8eb9ac7e2bbfab04977f1e69256d8ce59466acdceb1`
+Source SHA256: `8b057e4b6fb937f09041db338d47cbf07a2999d965e3e5f89aae768af4892c90`
 
 ---
 
@@ -1519,11 +1519,14 @@ canonical_text: >-
   as it shows and to a visible one after the frame's layout, inside F3-642's live-apply rule. The Usage
   lane (main d2e038618b) implements F3-628's cancel and reversal rules (DL-215) and adds no contract. The
   shell lane (main b9a08db90f) adds ACD-475's one shared busy signal, look-cover answer and on-time start,
-  and F3-077's look-cover sequence. Drafted from branch heads, to be confirmed at their main commits when
-  they land together: the Glass lane (90565f62ea) adds F3-652's worker bakes, idle shader warm-up and
-  cover-only strip deferral; the Settings lane (0d510df290) adds DR-073's wallpaper preparation, F3-598's
-  Reduced Motion calm cover and SSYS-053's acknowledged, coalesced navigation. The editor lane and Q13 are
-  added when they land. Concept evidence is not native certification.
+  and F3-077's look-cover sequence. Q13 (main a2c537cb61) removes redundant forced layout from panel drops
+  and adds no contract: drops are judged by ACD-475's bar, the concept's own 50 ms worst-frame target
+  stays open and is not a canon requirement, and the Plan tab's first resize now keeps a nonzero scroll
+  when nothing was saved. Drafted from branch heads, to be confirmed at their main commits when they land
+  together: the Glass lane (90565f62ea) adds F3-652's worker bakes, idle shader warm-up and cover-only
+  strip deferral; the Settings lane (0d510df290) adds DR-073's wallpaper preparation, F3-598's Reduced
+  Motion calm cover and SSYS-053's acknowledged, coalesced navigation. The editor lane is added when it
+  lands. Concept evidence is not native certification.
 gui_related: true
 gui_classification_reason: Contracts Added By The Motion Fix Lanes.
 split_recommended: false
@@ -1564,6 +1567,12 @@ source_lineage:
 - /mnt/Cursor/share/puppet-master/2026-10-16-plans-topup/sources/2026-10-16-motion-fixes--pm7-motion-settings--NOTES.md,
   SHA-256 969a47e289d72c048f7f44b94488b1953a2edeba0fa28c41b72bdc5d4ca5e094 (Settings lane notes, B1, B3
   and B5; source lineage)
+- /mnt/Cursor/share/puppet-master/2026-10-16-plans-topup/sources/2026-10-16-motion-fixes--LANDING-q13.md,
+  SHA-256 9e8c04cb464d074a83bed4db27e3ec3af9ccfbc2bab5c8a93276ff452d04056a (Q13 landing note, main
+  a2c537cb61; source lineage)
+- /mnt/Cursor/share/puppet-master/2026-10-16-plans-topup/sources/2026-10-16-q13-blind-review--REVIEW.md,
+  SHA-256 125025f8c54f6d4e44d0444f0bffc7d18ca762e6e4d0b5a91ab31baf3986eb38 (Q13 blind review, LAND with
+  qualifications; source lineage)
 preserved_exact_tokens: []
 negative_constraints: []
 owner_hints:
