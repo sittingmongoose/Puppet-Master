@@ -1322,13 +1322,15 @@
   /* one screen ready while the app is idle, for the terminal in view (the one you are in, else the first on the page);
      never underneath onboarding or while a page or Usage transition plays, and not again while one is kept. Opened on
      another terminal, the kept screen moves there (open) */
-  /* the page is in a moment the kept screen must not draw or measure during: a page or Usage transition, onboarding, the
-     NieR Mode reboot's cover (kit.d/19-nier-parts.js #o55np-reboot, also while Reduced Motion fades it), a NieR switch
-     asked for but not painted yet, or the tour's boot cover */
+  /* the page is in a moment the kept screen must not draw or measure during: the shared signal when the page has one
+     (window.PM_BUSY, the coordinator's ask of the shell, 2026-10-16), and until then the moments themselves: a page or
+     Usage transition, onboarding, the NieR Mode reboot's cover and its Reduce Animations cover (kit.d/19-nier-parts.js
+     #o55np-reboot, #o55np-calm), a NieR switch asked for but not painted yet, or the tour's boot cover */
   function pageSettling() {
     var de = document.documentElement, N = window.PM_NIER;
+    if (typeof window.PM_BUSY === 'function') { try { if (window.PM_BUSY()) return true; } catch (e) {} }
     if (de.hasAttribute('data-pm-page-transition') || de.hasAttribute('data-pmu-moment') || de.hasAttribute('data-o55-open')) return true;
-    if (document.getElementById('o55np-reboot') || document.querySelector('.o55t-bootcover')) return true;
+    if (document.getElementById('o55np-reboot') || document.getElementById('o55np-calm') || document.querySelector('.o55t-bootcover')) return true;
     try { if (N && typeof N.wanted === 'function' && N.ready && N.ready() && !!N.wanted() !== !!N.on()) return true; } catch (e) {}
     return false;
   }
