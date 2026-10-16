@@ -100362,15 +100362,63 @@ function o55NavReleaseStage() {
   const held = o55NavStage; o55NavStage = null;
   if (o55NavLeaving) { o55NavLeaving.cancel(); o55NavLeaving = null; }
   if (!held) return;
+  if (held.rasterRestore) held.rasterRestore();
   if (held.arrival) { try { held.arrival.finish(); } catch (_) {} }
-  if (held.next) { held.next.style.removeProperty('opacity'); held.next.style.removeProperty('z-index'); }
+  if (held.next) { held.next.style.removeProperty('opacity'); held.next.style.removeProperty('z-index'); held.next.inert = held.nextInert; }
   if (held.tabs) held.tabs.style.zIndex = held.tabZ;
   if (held.retained) held.old.remove();
+}
+/* A single incoming chapter raster can monopolise the P1000's GPU thread while its compositor is trying to draw
+   the outgoing animation. Prepare the visible content in three paint deliveries. Visibility preserves every
+   box and scroll offset; the old stage remains the readable surface until all three batches are ready. */
+function o55NavPrepareRaster(next, held, done) {
+  const scroller = root.querySelector('#settings-document');
+  if (!scroller || !next.isConnected) { done(); return; }
+  const clip = scroller.getBoundingClientRect(), band = Math.max(1, clip.height / 3), batches = [[], [], []];
+  const visit = node => {
+    const r = node.getBoundingClientRect();
+    if (!r.width || !r.height || r.bottom <= clip.top || r.top >= clip.bottom || r.right <= clip.left || r.left >= clip.right) return;
+    /* Divide large containers, not vector paths or a text field's internal decoration. No node is measured after
+       the visibility writes below; content-visibility outside the viewport remains asleep. */
+    const children = node.children;
+    if (r.height > band && children.length && !/^(SVG|CANVAS|IMG|TEXTAREA|INPUT|SELECT)$/.test(node.tagName.toUpperCase())) {
+      Array.from(children).forEach(visit);
+      return;
+    }
+    const centre = Math.min(clip.bottom - 1, Math.max(clip.top, (r.top + r.bottom) / 2));
+    batches[Math.min(2, Math.floor((centre - clip.top) / band))].push(node);
+  };
+  Array.from(next.children).forEach(visit);
+  const paints = batches.filter(nodes => nodes.length);
+  const pending = new Map();
+  paints.slice(1).flat().forEach(node => {
+    pending.set(node, { value: node.style.getPropertyValue('visibility'), priority: node.style.getPropertyPriority('visibility') });
+  });
+  const restore = node => {
+    const old = pending.get(node); if (!old) return;
+    if (old.value) node.style.setProperty('visibility', old.value, old.priority); else node.style.removeProperty('visibility');
+    pending.delete(node);
+  };
+  held.rasterRestore = () => { Array.from(pending.keys()).forEach(restore); held.rasterRestore = null; };
+  pending.forEach((_, node) => node.style.setProperty('visibility', 'hidden'));
+  let batch = 1;
+  const show = () => {
+    if (o55NavStage !== held || held.ticket !== o55NavTicket || !next.isConnected) return;
+    if (batch < paints.length) {
+      paints[batch++].forEach(restore);
+      o55AfterPaint(show);
+    } else {
+      held.rasterRestore();
+      done();
+    }
+  };
+  o55AfterPaint(show);
 }
 function o55NavRetainStage(old, next) {
   const held = o55NavStage;
   if (!held || held.old !== old || held.ticket !== o55NavTicket || !held.height || next.id !== 'workspace-stage') return false;
   held.retained = true; held.next = next;
+  held.nextInert = next.inert; next.inert = true;
   held.tabs = old.parentNode.querySelector(':scope > .workspace-tabs');
   if (held.tabs) { held.tabZ = held.tabs.style.zIndex; held.tabs.style.zIndex = '2'; }
   old.classList.add('o55-leaving'); old.setAttribute('aria-hidden', 'true'); old.inert = true;
@@ -100429,11 +100477,12 @@ function o55NavRun(work, selector, chapter, prepare) {
       if (ticket !== o55NavTicket) return;
       const held = o55NavStage;
       if (held && held.retained && next && next.isConnected) {
-        o55AfterPaint(() => {
+        o55NavPrepareRaster(next, held, () => {
           if (ticket !== o55NavTicket || o55NavStage !== held || !next.isConnected) return;
           const cs = getComputedStyle(held.old), from = { opacity: cs.opacity, transform: cs.transform };
           if (o55NavLeaving) { o55NavLeaving.cancel(); o55NavLeaving = null; }
           (held.onShown || []).splice(0).forEach(run => run());
+          next.inert = held.nextInert;
           next.style.removeProperty('opacity');
           held.arrival = next.animate([{ opacity: .01, transform: 'translateY(4px)' }, { opacity: 1, transform: 'none' }],
             { duration: 180, easing: 'cubic-bezier(.22,.8,.24,1)' });
