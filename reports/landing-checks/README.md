@@ -523,6 +523,27 @@ someone names it. The seventh, the
 tree that records a baseline; the runbook below does that. The baseline records what it was taken
 with, in `untracked_inputs`.
 
+The `Plans/.audits` inputs need copying too, and the recipe above does not cover them. Most of that
+directory is tracked; these inputs are gitignored and exist only in the shared checkout. A fresh
+worktree without them records four phantom rows the shared checkout never has: `stale_audit_status_index`
+in each aggregate, because the tracked `_audit_status_index.json` names `FINAL_REPORT.md` files the tree
+does not have, and `missing_ref` on `Plans/00-plans-index.md` line 135 in each aggregate, because that
+line names the widget-followup `audit_report.json`. A phantom row in a baseline excuses a later real
+failure of the same key as pre-existing. Copy from the shared checkout:
+
+    Plans/.audits/audit-20260827-001-pmconcept7-usage-recovery/FINAL_REPORT.md
+    Plans/.audits/audit-20260828-001-pmconcept7-usage-successor/FINAL_REPORT.md
+    Plans/.audits/audit-20260828-002-settings-tome-tabs-preport/        (whole dir)
+    Plans/.audits/audit-20260828-003-chat-56-fast-lane/                 (whole dir)
+    Plans/.audits/audit-20260829-001-pmconcept7-widget-followup/FINAL_REPORT.md
+    Plans/.audits/audit-20260829-001-pmconcept7-widget-followup/audit_report.json
+    Plans/.audits/audit-20260830-001-pmconcept7-live-resize-preview/    (whole dir)
+    Plans/.audits/event-authority-2026-08-12/NEXT_STEPS_20260910.md
+    Plans/.audits/event-authority-2026-08-12/OWNER_DECISION_SHEET_ANSWERS_20260910.json
+    Plans/.audits/event-authority-2026-08-12/OWNER_DECISION_SHEET_PLAIN_20260909.md
+
+Copy only these, not the whole .audits folder (about 30 GB).
+
 ## Refreshing it after a Plans landing
 
 After a landing that changes any `Plans/` path passes its landing check and pushes `main`, the
