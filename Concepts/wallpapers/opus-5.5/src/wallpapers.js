@@ -84,7 +84,7 @@
   /* Prepare only choices in and immediately around the gallery's viewport. Glass owns the byte budget and both
      caches; this queue stores no images. One idle job at a time leaves the input path independent of warming. */
   var warmObserver = null, warmTargets = new Map(), warmDone = new Map(), warmEpoch = 0;
-  var warmTimer = 0, warmIdle = 0, warmRunning = false, warmInput = 0, warmPointer = null;
+  var warmTimer = 0, warmIdle = 0, warmRunning = false, warmInput = 0, warmPointer = null, warmHover = null;
   function warmBusy() {
     if (document.hidden) return true;
     if (window.PM51 && PM51.place && PM51.place.mode === 'nav') return true;
@@ -113,7 +113,7 @@
       }
       /* IntersectionObserver supplies geometry without a new layout read. Glass bounds frost by encoded bytes,
          so every visible choice can be prepared; opaque looks retain only two decoded images. */
-      var glass = look() === 'glass' && !inNier(), limit = glass ? order.length : 2, viewport = innerWidth + 'x' + innerHeight;
+      var glass = look() === 'glass' && root.getAttribute('data-lg') === 'on' && !inNier(), limit = glass ? order.length : 2, viewport = innerWidth + 'x' + innerHeight;
       var candidates = Array.from(warmTargets.entries()).filter(function (item) { return item[0].isConnected; });
       function pointerDistance(entry) {
         if (!warmPointer) return 0;
@@ -122,7 +122,7 @@
         return dx * dx + dy * dy;
       }
       candidates.sort(function (a, b) {
-        return pointerDistance(a[1]) - pointerDistance(b[1]) || b[1].intersectionRatio - a[1].intersectionRatio ||
+        return Number(b[0] === warmHover) - Number(a[0] === warmHover) || pointerDistance(a[1]) - pointerDistance(b[1]) || b[1].intersectionRatio - a[1].intersectionRatio ||
           a[1].boundingClientRect.top - b[1].boundingClientRect.top || a[1].boundingClientRect.left - b[1].boundingClientRect.left;
       });
       var ids = [];
@@ -150,7 +150,7 @@
   function watchWarm(r) {
     if (!window.IntersectionObserver) return;
     if (warmObserver) warmObserver.disconnect();
-    warmTargets.clear(); resetWarm();
+    warmTargets.clear(); warmHover = null; resetWarm();
     warmObserver = new IntersectionObserver(function (entries) {
       entries.forEach(function (entry) {
         if (entry.isIntersecting) warmTargets.set(entry.target, entry); else warmTargets.delete(entry.target);
@@ -163,6 +163,7 @@
     document.addEventListener(type, function () { warmInput = performance.now(); }, { capture: true, passive: true });
   });
   document.addEventListener('pointermove', function (e) {
+    warmInput = performance.now();
     warmPointer = { x: e.clientX, y: e.clientY };
     queueWarm();
   }, { passive: true });
@@ -273,9 +274,13 @@
   document.addEventListener('pointerover', function (e) {
     var t = e.target.closest && e.target.closest('.wpk-row .wpk-tile');
     if (!t || t.contains(e.relatedTarget)) return;
-    var id = t.getAttribute('data-wpk-pick'); if (id === 'look') id = lookDefault(look());
-    if (id) prepare(imageUrl(id));
-  });
+    /* Hover is a priority hint for the same guarded, serial idle queue. A moving pointer must not launch a bake
+       for each tile it crosses, and a late decode must still pass the queue's input/busy/epoch guard. */
+    warmHover = t; warmInput = performance.now(); queueWarm();
+  }, { passive: true });
+  document.addEventListener('pointerout', function (e) {
+    if (warmHover && warmHover.contains(e.target) && !warmHover.contains(e.relatedTarget)) warmHover = null;
+  }, { passive: true });
 
   /* clicks and keys: one radiogroup across the families */
   document.addEventListener('click', function (e) {

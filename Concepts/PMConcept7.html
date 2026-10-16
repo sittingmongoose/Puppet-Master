@@ -96525,18 +96525,21 @@ window.PM_NIER = Object.freeze({
     log.style.display = 'none';
     cover.style.pointerEvents = 'none'; if (ctx.unhold) ctx.unhold();
     ctx.cue('reveal');
-    /* The same plate returns to the same control, continuously. The old step-end path moved its left edge in
-       six jumps while the inverse ground transform disagreed between steps. Sample the geometric fold densely
-       and interpolate, so the ground stays registered and the decorative brackets follow one smooth contour. */
-    const TOTAL = 450, frames = Array.from({ length: 31 }, (_, i) => {
-      const t = i / 30, f = 1 - Math.pow(1 - t, 3), rect = lerpRect(full, to, f);
-      return { offset: t, rect, clip: clipOf(rect, box), pose: rbPose(rect, -14 + 21 * f, box), opacity: t < .8 ? 1 : (1 - t) / .2 };
+    /* Keep the six held poses and the separate bracket let-go beat. Ground and inverse share each step clock. */
+    const G = [0.1, 0.25, 0.45, 0.7, 0.9, 1], rects = G.map(f => lerpRect(full, to, f)), off = G.map(f => -14 + 17 * f), TOTAL = 450;
+    const clips = rects.map(r => clipOf(r, box)), idle = clipOf(full, box), last = clipOf(to, box);
+    const fold = ground.animate(walk([{ t: 0, v: { transform: idle[0], opacity: 1 } }, ...clips.map((c, k) => ({ t: 60 * (k + 1), v: { transform: c[0], opacity: 1 } })),
+      { t: 390, v: { transform: last[0], opacity: 0 } }, { t: TOTAL, v: { transform: last[0], opacity: 0 } }], TOTAL), { duration: TOTAL, fill: 'forwards' });
+    inner.animate(walk([{ t: 0, v: { transform: idle[1] } }, ...clips.map((c, k) => ({ t: 60 * (k + 1), v: { transform: c[1] } })), { t: TOTAL, v: { transform: last[1] } }], TOTAL),
+      { duration: TOTAL, fill: 'forwards' });
+    const poses = [rbPose(full, -14, box), ...rects.map((r, k) => rbPose(r, off[k], box))], let1 = rbPose(to, 7, box);
+    deco.forEach((el, j) => {
+      const fr = poses.map((p, k) => ({ t: 60 * k, v: { transform: p[j], opacity: 1 } }));
+      if (j < 4) fr.push({ t: 390, v: { transform: poses[6][j], opacity: 0 } });
+      else fr.push({ t: 420, v: { transform: let1[j], opacity: 1 } }, { t: 450, v: { transform: let1[j], opacity: 0 } });
+      fr.push({ t: TOTAL, v: { transform: j < 4 ? poses[6][j] : let1[j], opacity: 0 } });
+      el.animate(walk(fr, TOTAL), { duration: TOTAL, fill: 'forwards' });
     });
-    const fold = ground.animate(frames.map(f => ({ offset: f.offset, transform: f.clip[0], opacity: f.opacity })),
-      { duration: TOTAL, easing: 'linear', fill: 'forwards' });
-    inner.animate(frames.map(f => ({ offset: f.offset, transform: f.clip[1] })), { duration: TOTAL, easing: 'linear', fill: 'forwards' });
-    deco.forEach((el, j) => el.animate(frames.map(f => ({ offset: f.offset, transform: f.pose[j], opacity: f.opacity })),
-      { duration: TOTAL, easing: 'linear', fill: 'forwards' }));
     await ctx.wait(settled(fold));
     rbRelease(ctx);
   }
@@ -99442,6 +99445,7 @@ boot = function () {
    before the build task, then the incoming chapter arrives after its first layout. No snapshot capture pauses the
    compositor, and no duplicate live IDs or rows are introduced. Rapid requests coalesce to the latest destination. */
 let o55NavTicket = 0, o55NavRunning = false, o55NavLeaving = null;
+const o55NavWaits = new Set();
 function o55NavVisible() {
   const panel = document.getElementById('panel-settings');
   return !!(panel && panel.classList.contains('active') && root.querySelector('#workspace-stage'));
@@ -99461,16 +99465,38 @@ function o55NavAck(selector) {
     }
   });
 }
+function o55NavCancel() {
+  ++o55NavTicket;
+  o55NavWaits.forEach(cancel => cancel());
+  if (o55NavLeaving) { o55NavLeaving.cancel(); o55NavLeaving = null; }
+  o55NavAck(null);
+}
+/* ResizeObserver can skip a delivery, or the tab can hide before its queued frame. Bound both waits, disconnect
+   superseded observers, and run each continuation at most once. Normal visible navigation still waits for layout. */
+function o55NavWait(ticket, node, next) {
+  let done = false, ready = null;
+  const cancel = () => {
+    if (done) return;
+    done = true; clearTimeout(timer); if (ready) ready.disconnect(); o55NavWaits.delete(cancel);
+  };
+  const finish = () => { if (done) return; cancel(); if (ticket === o55NavTicket) next(); };
+  const timer = setTimeout(finish, 120);
+  o55NavWaits.add(cancel);
+  if (node && typeof ResizeObserver === 'function') {
+    ready = new ResizeObserver(finish); ready.observe(node);
+  } else o55AfterPaint(finish);
+}
 function o55NavRun(work, selector, chapter, prepare) {
-  if (o55NavRunning || !o55NavVisible()) return work();
-  const ticket = ++o55NavTicket;
+  if (o55NavRunning) return work();
+  o55NavCancel();
+  if (!o55NavVisible()) return work();
+  const ticket = o55NavTicket;
   o55NavAck(selector);
   const commit = () => {
     if (ticket !== o55NavTicket) return;
     o55NavRunning = true;
     try { work(); } finally { o55NavRunning = false; o55NavAck(null); }
   };
-  if (o55NavLeaving) { o55NavLeaving.cancel(); o55NavLeaving = null; }
   const stage = root.querySelector('#workspace-stage');
   const moving = chapter && !o55Still() && stage;
   if (moving) o55NavLeaving = stage.animate([
@@ -99478,7 +99504,7 @@ function o55NavRun(work, selector, chapter, prepare) {
   ], { duration: 260, easing: 'ease-out', fill: 'forwards' });
   const complete = () => {
     if (ticket !== o55NavTicket) return;
-    commit();
+    try { commit(); } catch (error) { o55NavCancel(); throw error; }
     const next = root.querySelector('#workspace-stage');
     const arrive = () => {
       if (ticket !== o55NavTicket) return;
@@ -99490,10 +99516,10 @@ function o55NavRun(work, selector, chapter, prepare) {
         { duration: 180, easing: 'cubic-bezier(.22,.8,.24,1)' });
     };
     if (moving && next && typeof ResizeObserver === 'function') {
-      const ready = new ResizeObserver(() => { ready.disconnect(); arrive(); }); ready.observe(next);
+      o55NavWait(ticket, next, arrive);
     } else arrive();
   };
-  o55AfterPaint(() => {
+  o55NavWait(ticket, null, () => {
     if (ticket !== o55NavTicket) return;
     if (!prepare || !prepare() || typeof ResizeObserver !== 'function') { complete(); return; }
     /* A cold workspace hydrates its preceding blocks for an exact landing. Let their first layout finish before
@@ -99501,27 +99527,30 @@ function o55NavRun(work, selector, chapter, prepare) {
        (48 ms M3 / 222 ms P1000). The destination ink is already travelling during this work. */
     const scroller = root.querySelector('#settings-document');
     if (!scroller) { complete(); return; }
-    const ready = new ResizeObserver(() => {
-      ready.disconnect();
-      if (scroller.isConnected && scroller === root.querySelector('#settings-document')) complete();
-    });
-    ready.observe(scroller);
+    o55NavWait(ticket, scroller, complete);
   });
 }
 const o55NavNavigate = navigate;
 navigate = function (domainId, workspaceId, options) {
-  const args = arguments, domain = getDomain(domainId), chapter = state.home || state.domain !== domain.id;
-  return o55NavRun(() => o55NavNavigate.apply(this, args), `.domain-link[data-domain="${cssEscape(domain.id)}"]`, chapter);
+  /* Programmatic callers synchronously refresh or open the destination (provider/history search, deep links).
+     Keep that contract and its return value. Only the navigation action below defers its visual work. */
+  if (!o55NavRunning) o55NavCancel();
+  return o55NavNavigate.apply(this, arguments);
 };
 const o55NavHome = goHome;
 goHome = function () {
-  const args = arguments;
-  return o55NavRun(() => o55NavHome.apply(this, args), '[data-action="home"]', !state.home);
+  if (!o55NavRunning) o55NavCancel();
+  return o55NavHome.apply(this, arguments);
 };
 const o55NavDispatch = dispatchAction;
 let o55NierAckTicket = 0, o55NierAckDesired = null;
 dispatchAction = function (action, el) {
   const args = arguments;
+  if (action === 'home') return o55NavRun(() => o55NavDispatch.apply(this, args), '[data-action="home"]', !state.home);
+  if (action === 'navigate-domain' || action === 'navigate') {
+    const domain = getDomain(ds(el, 'domain'));
+    return o55NavRun(() => o55NavDispatch.apply(this, args), `.domain-link[data-domain="${cssEscape(domain.id)}"]`, state.home || state.domain !== domain.id);
+  }
   /* A reduced-motion NieR click still saved and rebuilt its row before the calm cover could paint (166–236 ms
      in the P1000 click handler). Paint the switch's existing selected style first, then perform that same write.
      Coalesce repeated input to the latest desired value; a refused write restores the owner's actual row. */
@@ -218672,7 +218701,7 @@ window.PM_WALLPAPERS_CATALOG = {"version":1,"families":[{"family":"glass","label
   /* Prepare only choices in and immediately around the gallery's viewport. Glass owns the byte budget and both
      caches; this queue stores no images. One idle job at a time leaves the input path independent of warming. */
   var warmObserver = null, warmTargets = new Map(), warmDone = new Map(), warmEpoch = 0;
-  var warmTimer = 0, warmIdle = 0, warmRunning = false, warmInput = 0, warmPointer = null;
+  var warmTimer = 0, warmIdle = 0, warmRunning = false, warmInput = 0, warmPointer = null, warmHover = null;
   function warmBusy() {
     if (document.hidden) return true;
     if (window.PM51 && PM51.place && PM51.place.mode === 'nav') return true;
@@ -218701,7 +218730,7 @@ window.PM_WALLPAPERS_CATALOG = {"version":1,"families":[{"family":"glass","label
       }
       /* IntersectionObserver supplies geometry without a new layout read. Glass bounds frost by encoded bytes,
          so every visible choice can be prepared; opaque looks retain only two decoded images. */
-      var glass = look() === 'glass' && !inNier(), limit = glass ? order.length : 2, viewport = innerWidth + 'x' + innerHeight;
+      var glass = look() === 'glass' && root.getAttribute('data-lg') === 'on' && !inNier(), limit = glass ? order.length : 2, viewport = innerWidth + 'x' + innerHeight;
       var candidates = Array.from(warmTargets.entries()).filter(function (item) { return item[0].isConnected; });
       function pointerDistance(entry) {
         if (!warmPointer) return 0;
@@ -218710,7 +218739,7 @@ window.PM_WALLPAPERS_CATALOG = {"version":1,"families":[{"family":"glass","label
         return dx * dx + dy * dy;
       }
       candidates.sort(function (a, b) {
-        return pointerDistance(a[1]) - pointerDistance(b[1]) || b[1].intersectionRatio - a[1].intersectionRatio ||
+        return Number(b[0] === warmHover) - Number(a[0] === warmHover) || pointerDistance(a[1]) - pointerDistance(b[1]) || b[1].intersectionRatio - a[1].intersectionRatio ||
           a[1].boundingClientRect.top - b[1].boundingClientRect.top || a[1].boundingClientRect.left - b[1].boundingClientRect.left;
       });
       var ids = [];
@@ -218738,7 +218767,7 @@ window.PM_WALLPAPERS_CATALOG = {"version":1,"families":[{"family":"glass","label
   function watchWarm(r) {
     if (!window.IntersectionObserver) return;
     if (warmObserver) warmObserver.disconnect();
-    warmTargets.clear(); resetWarm();
+    warmTargets.clear(); warmHover = null; resetWarm();
     warmObserver = new IntersectionObserver(function (entries) {
       entries.forEach(function (entry) {
         if (entry.isIntersecting) warmTargets.set(entry.target, entry); else warmTargets.delete(entry.target);
@@ -218751,6 +218780,7 @@ window.PM_WALLPAPERS_CATALOG = {"version":1,"families":[{"family":"glass","label
     document.addEventListener(type, function () { warmInput = performance.now(); }, { capture: true, passive: true });
   });
   document.addEventListener('pointermove', function (e) {
+    warmInput = performance.now();
     warmPointer = { x: e.clientX, y: e.clientY };
     queueWarm();
   }, { passive: true });
@@ -218861,9 +218891,13 @@ window.PM_WALLPAPERS_CATALOG = {"version":1,"families":[{"family":"glass","label
   document.addEventListener('pointerover', function (e) {
     var t = e.target.closest && e.target.closest('.wpk-row .wpk-tile');
     if (!t || t.contains(e.relatedTarget)) return;
-    var id = t.getAttribute('data-wpk-pick'); if (id === 'look') id = lookDefault(look());
-    if (id) prepare(imageUrl(id));
-  });
+    /* Hover is a priority hint for the same guarded, serial idle queue. A moving pointer must not launch a bake
+       for each tile it crosses, and a late decode must still pass the queue's input/busy/epoch guard. */
+    warmHover = t; warmInput = performance.now(); queueWarm();
+  }, { passive: true });
+  document.addEventListener('pointerout', function (e) {
+    if (warmHover && warmHover.contains(e.target) && !warmHover.contains(e.relatedTarget)) warmHover = null;
+  }, { passive: true });
 
   /* clicks and keys: one radiogroup across the families */
   document.addEventListener('click', function (e) {
