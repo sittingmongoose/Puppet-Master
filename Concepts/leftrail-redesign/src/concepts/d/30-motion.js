@@ -43,9 +43,11 @@ function stopEnter(el) { el.getAnimations().forEach(a => { if (a.id === 'd-enter
    next frame: the first frame shows the start, then everything runs from one start time. */
 function startTogether(anims) {
   if (!anims || !anims.length) return;
-  /* ...and once more on the frame after that one: that frame can itself be the long one (the fit pass and the new
-     view's first layout), and the time it draws at is from before its work, so a move started in it was over before it
-     showed (P1000 films, final motion QA A8: the held panel gone and the new one still empty for ~100 ms) */
+  /* ...and again at every frame that follows a long one: such a frame (the fit pass, the new view's first layout and
+     paint) draws at the time from before its work, so a move started in it was over before it showed (P1000 films,
+     final motion QA A8: the held panel gone and the new one still empty for ~100 ms). The page's PM_START_ON_SHOWN
+     does this; the double reset below is the fallback for the review copy without it. */
+  if (window.PM_START_ON_SHOWN) { window.PM_START_ON_SHOWN(anims); return; }   /* opus-5.5 src/js/11-motion-start.js */
   const restart = () => {
     const t = document.timeline.currentTime;
     if (t == null) return;

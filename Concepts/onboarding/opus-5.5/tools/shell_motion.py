@@ -174,19 +174,18 @@ PAGES = [
     # A3, A5: a page change's first frame can be long (the arriving page is styled and laid out, first visits build
     # their content), and the exit and entrance were spent unseen: the timeline that frame draws at is the one from
     # before the long work, so on the P1000 the Wizard sat still ~470-600 ms and then vanished in one frame. Both moves
-    # are put back to their start in that first frame (it draws the old page whole) and again in the next one, after
-    # the long frame, so the whole exit and entrance play on frames that are shown.
+    # are put back to their start at every frame that follows a long one (PM_START_ON_SHOWN), so the whole exit and
+    # entrance play on frames that are shown.
     ("      oldP.classList.add('pm8-page-out');\n"
      "      newP.classList.add('pm8-page-in');\n",
      "      oldP.classList.add('pm8-page-out');\n"
      "      newP.classList.add('pm8-page-in');\n"
-     "      var restartMoves = function () {   /* O55: the moves start on a shown frame */\n"
-     "        var t = document.timeline.currentTime; if (t == null) return;\n"
-     "        [oldP, newP].forEach(function (p) { p.getAnimations().forEach(function (a) {\n"
-     "          if (a.animationName === 'pm8-page-in' || a.animationName === 'pm8-page-out') { try { if (a.playState !== 'idle') a.startTime = t; } catch (e) {} }\n"
-     "        }); });\n"
+     "      var pageMoves = function () {   /* O55: the moves play on frames that are shown (src/js/11-motion-start.js) */\n"
+     "        var out = [];\n"
+     "        [oldP, newP].forEach(function (p) { p.getAnimations().forEach(function (a) { if (a.animationName === 'pm8-page-in' || a.animationName === 'pm8-page-out') out.push(a); }); });\n"
+     "        return out;\n"
      "      };\n"
-     "      requestAnimationFrame(function () { restartMoves(); requestAnimationFrame(restartMoves); });\n",
+     "      if (window.PM_START_ON_SHOWN) window.PM_START_ON_SHOWN(pageMoves);\n",
      'page switch: moves start on a shown frame'),
     # A3, A5: the edge-dissolve header offsets (PM_EDGE) measured each newly shown page's head synchronously inside the
     # page change, forcing the arriving page's style and layout there (~100 ms on the P1000) before the rest of the

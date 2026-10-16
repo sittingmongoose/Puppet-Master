@@ -951,11 +951,11 @@
     sound('open', 0.4);
     if (!still()) {
       const m = motion(), L = look(), chrome = panelEl.querySelector('.pmn-chrome');
-      /* every entrance below starts again, together, on the first frame after the open (final motion QA B10): a first
-         frame that is long (Glass rastering its blur on first show, about half a second on the P1000) otherwise ran the
-         whole entrance behind it, and the panel appeared already open */
+      /* every entrance below plays on the frames that are shown (11-motion-start.js; final motion QA B10): a first frame
+         that is long (Glass rastering its blur on first show, about half a second on the P1000) otherwise ran the whole
+         entrance behind it, and the panel appeared already open */
       const opening = [], play = (el, frames, o) => { const a = playNow(el, frames, o); if (a) opening.push(a); return a; };
-      requestAnimationFrame(() => { const t = document.timeline.currentTime; if (t == null || !open) return; opening.forEach((a) => { try { if (a.playState !== 'idle') a.startTime = t; } catch (_) { /* gone */ } }); });
+      if (window.PM_START_ON_SHOWN) window.PM_START_ON_SHOWN(() => (open ? opening : []));
       if (L === 'retro') {
         play(chrome, [{ transform: 'scale(1, .01)', filter: 'brightness(3)' }, { transform: 'scale(1, .01)', filter: 'brightness(2)', offset: 0.35 }, { transform: 'none', filter: 'none' }], { duration: 260, easing: 'steps(6, end)' });
       } else if (L === 'nier') {
