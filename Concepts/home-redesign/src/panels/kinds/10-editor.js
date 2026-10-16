@@ -1632,7 +1632,9 @@ function mountEditor(host, st, api) {
       old = {}; floorOn = null;
       var names = SYN_KEYS.map(function (k) { return '--pmw-ed-s-' + k; }).concat(['--pmw-ed-fg', '--pmw-ed-ln', '--pmw-ed-ln-cur', '--pmw-ed-add-fg', '--pmw-ed-mod-fg', '--pmw-ed-del-fg', '--pmw-ed-conf-fg',
         '--pmw-ed-bp-0', '--pmw-ed-bp-1', '--pmw-ed-bp-2', '--pmw-ed-bp-3', '--pmw-ed-bp-4', '--pmw-ed-bp-5']);
-      var colors = tokenColors(names.concat(['--pmw-ed-gutbg', '--pmw-ed-sel', '--pmw-ed-sel-blur', '--pmw-ed-line', '--pmw-ed-add-bg', '--pmw-ed-mod-bg', '--pmw-ed-del-bg', '--pmw-ed-conf-bg']));
+      // Token controls also need the fallback ground. Read it in this batch:
+      // adding a new probe later in paintTokens forced a second page restyle.
+      var colors = tokenColors(names.concat(['--pmw-ed-gutbg', '--pmw-ed-bg', '--pmw-ed-sel', '--pmw-ed-sel-blur', '--pmw-ed-line', '--pmw-ed-add-bg', '--pmw-ed-mod-bg', '--pmw-ed-del-bg', '--pmw-ed-conf-bg']));
       var color = function (n) { return colors[n]; };
       var bgc = color('--pmw-ed-gutbg'), base = [16, 16, 20];
       if (!bgc) { floorRead = { key: '' }; return; }

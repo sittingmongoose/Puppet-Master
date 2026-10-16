@@ -23,6 +23,10 @@ function el(tag, cls, html) { var e = document.createElement(tag); if (cls) e.cl
 var NOTAG = ' data-pm-hover-visual-suppressed="true"';
 function tagged(label, detail) { return ' data-pm-hover-label="' + esc(label) + '"' + (detail ? ' data-pm-hover-detail="' + esc(detail) + '"' : ''); }
 function reducedNow() { return PMW.reduced ? PMW.reduced() : false; }
+function sheetBusy() {
+  var de = document.documentElement;
+  return document.hidden || de.hasAttribute('data-o55-open') || de.hasAttribute('data-pm-page-transition') || de.hasAttribute('data-pmu-moment') || !!document.querySelector('#o55np-reboot,.o55nw-boot');
+}
 
 /* motion: the terminal's one-shot classes (.pmt-in, .pmt-out; 60-motion.css gives them each look's voice) */
 var Motion = {
@@ -541,16 +545,22 @@ function open(opts) {
   /* the look's own code colours (Follow look), read off the editor once per look, colour mode and phosphor,
      in a frame of its own; until it lands the screen keeps what it drew */
   var LOOK_TOKENS = ['--pmw-ed-fg', '--pmw-ed-bg', '--pmw-ed-gutbg', '--pmw-ed-s-kw', '--pmw-ed-s-fn', '--pmw-ed-s-str', '--pmw-ed-s-com', '--pmw-ed-bp-0', '--pmw-ed-bp-1', '--pmw-ed-bp-2'];
-  var lookRead = { key: null, v: null }, lookRaf = 0;
+  var lookRead = { key: null, v: null }, lookRaf = 0, lookPending = null;
   function lookTokens(key) {
     if (lookRead.key === key) return lookRead.v;
+    lookPending = key;
     if (!lookRaf) lookRaf = requestAnimationFrame(function () {
-      lookRaf = 0;
-      if (!root.isConnected || !inst.root) return;
-      var rs = getComputedStyle(inst.root), v = {};
-      LOOK_TOKENS.forEach(function (n) { v[n] = rs.getPropertyValue(n).trim(); });
-      lookRead = { key: key, v: v };
-      paint();
+      var read = function () {
+        lookRaf = 0;
+        if (!root.isConnected || !inst.root) return;
+        var rs = getComputedStyle(inst.root), v = {};
+        LOOK_TOKENS.forEach(function (n) { v[n] = rs.getPropertyValue(n).trim(); });
+        lookRead = { key: lookPending, v: v };
+        paint();
+      };
+      // These small control pictures can read the look after the frame's
+      // layout, instead of forcing the whole page to restyle inside rAF.
+      if (window.PM_AFTER_LAYOUT) window.PM_AFTER_LAYOUT(read); else setTimeout(read, 0);
     });
     return lookRead.v;
   }
@@ -559,6 +569,24 @@ function open(opts) {
   // the sheet restyled every control and scheme tile for each colour pick.
   function setVar(n, val) { if (varsSet[n] === val) return; varsSet[n] = val; [].forEach.call(artHosts, function (a) { a.style.setProperty(n, val); }); }
   var warmMeasureJob = 0, warmMeasureStamp = '', warmMeasureQueue = [];
+  function containSchemeTiles() {
+    // Seed the static pictures from their actual idle layout. Dynamic groups
+    // keep normal layout so a choice changing a note cannot shift scrolling.
+    root.classList.remove('pmed-contained');
+    var tiles = [].slice.call(root.querySelectorAll('.pmt-cz-scheme'));
+    var heights = tiles.map(function (g) {
+      var css = getComputedStyle(g), height = parseFloat(css.height);
+      if (g.hidden || css.display === 'none' || !isFinite(height)) return null;
+      if (css.boxSizing === 'border-box') height -= parseFloat(css.paddingTop) + parseFloat(css.paddingBottom) + parseFloat(css.borderTopWidth) + parseFloat(css.borderBottomWidth);
+      return Math.max(0, height);
+    });
+    tiles.forEach(function (g, i) {
+      if (heights[i] === null) { g.removeAttribute('data-pmed-sized'); return; }
+      g.style.containIntrinsicBlockSize = 'auto ' + heights[i] + 'px';
+      g.setAttribute('data-pmed-sized', '');
+    });
+    root.classList.add('pmed-contained');
+  }
   function measurementStamp() {
     return [dialog.style.width, root.getAttribute('data-pmt-look'), root.getAttribute('data-pmt-mode'), czFitEpoch,
       document.documentElement.getAttribute('data-o55-nier-parts') || '', scope, JSON.stringify(eff().font)].join('|');
@@ -570,7 +598,7 @@ function open(opts) {
     warmMeasureJob = 0; warmMeasureQueue = [];
   }
   function warmMeasurementsSoon() {
-    if (disposed || !closed || warmMeasureJob || !root.classList.contains('pmed-prepared')) return;
+    if (disposed || !closed || warmMeasureJob || warmPaint || warmPaintIdle || !root.classList.contains('pmed-prepared')) return;
     var stamp = measurementStamp();
     if (warmMeasureStamp === stamp) return;
     var faces = EL().FACES || {}, base = scope === 'tab' ? v.tabAppearance || {} : {};
@@ -600,7 +628,7 @@ function open(opts) {
       if (disposed || !closed || !root.classList.contains('pmed-prepared')) { warmMeasureQueue = []; return; }
       if (measurementStamp() !== stamp) { warmMeasureQueue = []; warmMeasurementsSoon(); return; }
       var work = warmMeasureQueue.shift(); if (work) work();
-      if (warmMeasureQueue.length) next(); else warmMeasureStamp = stamp;
+      if (warmMeasureQueue.length) next(); else { warmMeasureStamp = stamp; containSchemeTiles(); }
     }
     next();
   }
@@ -738,6 +766,9 @@ function open(opts) {
     else if (hole && W - r.right - M * 2 >= 560) { left = r.right + M; width = Math.min(want, W - r.right - M * 2); }
     else if (hole && r.left - M * 2 >= 560) { width = Math.min(want, r.left - M * 2); left = r.left - M - width; }
     else left = Math.round((W - width) / 2);
+    // A new width can wrap a tile's name. Use normal layout until its next
+    // idle measurement instead of reusing an intrinsic height at the old width.
+    if (dialog.style.width !== width + 'px') root.classList.remove('pmed-contained');
     dialog.style.left = left + 'px'; dialog.style.width = width + 'px';
     var top = narrow ? 8 : Math.max(M, Math.min(56, H * 0.06));
     dialog.style.top = top + 'px'; dialog.style.maxHeight = (H - top - 30) + 'px';
@@ -1137,11 +1168,33 @@ function open(opts) {
   }
 
   /* ---- open, refresh, close ---- */
-  var warmPaint = 0;
+  var warmPaint = 0, warmPaintIdle = 0;
+  function cancelWarmPaint() {
+    clearTimeout(warmPaint); warmPaint = 0;
+    if (warmPaintIdle && window.cancelIdleCallback) cancelIdleCallback(warmPaintIdle);
+    warmPaintIdle = 0;
+  }
+  function warmPaintSoon() {
+    cancelWarmPaint();
+    cancelWarmMeasurements();
+    warmPaint = setTimeout(function wait() {
+      warmPaint = 0;
+      if (disposed || !closed) return;
+      if (sheetBusy()) {
+        warmPaint = setTimeout(wait, 500); return;
+      }
+      var refresh = function () {
+        warmPaintIdle = 0;
+        if (sheetBusy()) { warmPaint = setTimeout(wait, 500); return; }
+        if (!disposed && closed) { syncPreview(); paint(); }
+      };
+      if (window.requestIdleCallback) warmPaintIdle = requestIdleCallback(refresh); else refresh();
+    }, 2000);
+  }
   var offChange = EL().onChange(function () {
     if (!root.isConnected) return;
     if (!closed) { syncPreview(); paint(); return; }
-    if (!warmPaint) warmPaint = setTimeout(function () { warmPaint = 0; if (!disposed && closed) { syncPreview(); paint(); } }, 250);
+    warmPaintSoon();
   });
   var onResize = function () { if (closed) return; place(); if (preview && preview.demo) preview.demo.relayout(); };
   window.addEventListener('resize', onResize);
@@ -1213,7 +1266,7 @@ function open(opts) {
     cancelWarmMeasurements();
     if (document.fonts && document.fonts.removeEventListener) document.fonts.removeEventListener('loadingdone', warmMeasurementsSoon);
     cancelAnimationFrame(lookRaf); cancelAnimationFrame(asideRaf); cancelAnimationFrame(resizeRaf);
-    clearTimeout(warmPaint);
+    cancelWarmPaint();
     if (preview) { try { preview.unmount(); } catch (_) {} preview = null; }
     if (inst.customizing) inst.customizing(false);
     root.remove();
@@ -1251,7 +1304,7 @@ function open(opts) {
   var handle = { el: root, inst: inst, dispose: dispose, show: show, close: function () { close(); }, refresh: function () { if (!closed) { syncPreview(); paint(); } }, preview: preview };
   function show(next) {
     if (next.prepare) return handle;
-    cancelWarmMeasurements();
+    cancelWarmMeasurements(); cancelWarmPaint();
     opts = next; anchor = opts.anchor || null;
     scope = opts.scope === 'app' ? 'app' : v._apScope || 'tab';
     closed = false; ++visit; openRoot = root;
@@ -1284,13 +1337,12 @@ function open(opts) {
 // underneath onboarding or while a page/Usage transition is playing.
 function prepareSoon() {
   if (prepared || openRoot) return;
-  var de = document.documentElement;
-  if (de.hasAttribute('data-o55-open') || de.hasAttribute('data-pm-page-transition') || de.hasAttribute('data-pmu-moment')) { setTimeout(prepareSoon, 1500); return; }
+  if (sheetBusy()) { setTimeout(prepareSoon, 1500); return; }
   var inst = PMW.editorInView && PMW.editorInView(true);
   if (!inst) { setTimeout(prepareSoon, 1500); return; }
   var build = function () {
     if (!prepared && !openRoot) {
-      if (de.hasAttribute('data-o55-open') || de.hasAttribute('data-pm-page-transition') || de.hasAttribute('data-pmu-moment')) { setTimeout(prepareSoon, 1500); return; }
+      if (sheetBusy()) { setTimeout(prepareSoon, 1500); return; }
       // Settings is the app-level entry. Prepare its actual width and scope,
       // not the narrower editor cutout, which would reflow every tile on open.
       open({ view: inst.view, scope: 'app', from: 'settings', prepare: true });
