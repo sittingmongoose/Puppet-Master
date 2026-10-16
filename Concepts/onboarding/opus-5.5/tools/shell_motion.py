@@ -95,13 +95,14 @@ STATUS_BAR.append(
      "    }\n",
      'status bar tag: host'))
 THEME = [
-    # B4: the theme menu answers first (its radio or row paints on the next frame) and the repaint follows in the next
-    # task, once (src/js/12-theme-transition.js).
+    # B4: the theme menu answers first (its radio or row paints on the next frame); the new look's cover washes over
+    # the app from that frame and the repaint runs under it, once (src/js/12-theme-transition.js). The hint names the
+    # look the pick goes to, for the cover's colours.
     ("        window.PM7_SETTINGS_TOME.setChromeThemeMode(seg.getAttribute('data-mode-value'));\n"
      "        return; /* mode is a filter, not a final pick: menu stays open */\n",
      "        var modeValue = seg.getAttribute('data-mode-value');   /* O55: the radio answers first (B4) */\n"
      "        menu.querySelectorAll('.pm6-tt-mode').forEach(function (b) { b.setAttribute('aria-checked', b === seg ? 'true' : 'false'); });\n"
-     "        if (window.PM_THEME_TRANSITION) window.PM_THEME_TRANSITION(function () { window.PM7_SETTINGS_TOME.setChromeThemeMode(modeValue); });\n"
+     "        if (window.PM_THEME_TRANSITION) window.PM_THEME_TRANSITION(function () { window.PM7_SETTINGS_TOME.setChromeThemeMode(modeValue); }, { mode: modeValue });\n"
      "        else window.PM7_SETTINGS_TOME.setChromeThemeMode(modeValue);\n"
      "        return; /* mode is a filter, not a final pick: menu stays open */\n",
      'theme menu: mode answers first'),
@@ -109,7 +110,7 @@ THEME = [
      "      tbMenuClose(menu);\n",
      "      var familyValue = row.getAttribute('data-family');   /* O55: the row answers first (B4) */\n"
      "      menu.querySelectorAll('.pm6-tt-family').forEach(function (r) { var on = r === row; r.classList.toggle('is-selected', on); r.setAttribute('aria-checked', on ? 'true' : 'false'); });\n"
-     "      if (window.PM_THEME_TRANSITION) window.PM_THEME_TRANSITION(function () { window.PM7_SETTINGS_TOME.setChromeThemeFamily(familyValue); });\n"
+     "      if (window.PM_THEME_TRANSITION) window.PM_THEME_TRANSITION(function () { window.PM7_SETTINGS_TOME.setChromeThemeFamily(familyValue); }, { family: familyValue });\n"
      "      else window.PM7_SETTINGS_TOME.setChromeThemeFamily(familyValue);\n"
      "      tbMenuClose(menu);\n",
      'theme menu: family answers first'),
