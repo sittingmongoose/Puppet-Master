@@ -1309,6 +1309,7 @@ function mountEditor(host, st, api) {
   var focused = !!preview, visible = true, alive = true, dimmed = false;
   var pageHost = preview ? null : host.closest('#panel-dashboard'), pendingLayout = false;
   function isShown() { return visible && (!pageHost || pageHost.classList.contains('active')); }
+  function paintDeferred() { return !!(preview && preview.paintDeferred && preview.paintDeferred()); }
   /* while a Customize screen is open on this editor, it draws what it draws when focused (the caret, the current line's
      band), though the screen has the focus: it is the preview beside the screen, and a blurred editor showed none of
      the caret's or the current line's choices */
@@ -2524,7 +2525,11 @@ function mountEditor(host, st, api) {
   function queueDraw() {
     if (timers.drawQueued || !isShown()) return;
     timers.drawQueued = true;
-    requestAnimationFrame(function () { timers.drawQueued = false; if (alive && isShown()) drawTrack(); });
+    requestAnimationFrame(function () {
+      timers.drawQueued = false;
+      if (paintDeferred()) { pendingLayout = true; return; }
+      if (alive && isShown()) drawTrack();
+    });
   }
 
   /* track pointer: grab keeps its offset, a track press centres the thumb and keeps dragging, Escape cancels */
@@ -3660,7 +3665,7 @@ function mountEditor(host, st, api) {
   function onResize(sz) {
     if (!alive) return;
     layoutBox = null;
-    if (!isShown()) { pendingLayout = true; return; }
+    if (!isShown() || paintDeferred()) { pendingLayout = true; return; }
     if (!firstDone) { pendingLayout = false; firstPaint(); return; }
     if (pendingLayout) { pendingLayout = false; resolveLayout(false); relayoutAll(); return; }
     if (sz && sz.final === false && mode === 'diff') { layout(); renderRows(true); renderOverlays(); updateThumb(); return; }
@@ -3672,7 +3677,8 @@ function mountEditor(host, st, api) {
     if (!firstDone) return;
     // Settings can change a mounted editor while Home is hidden. Measure it
     // when it is shown, at its real size; the Customize preview stays live.
-    if (!isShown()) { pendingLayout = true; return; }
+    if (!isShown() || paintDeferred()) { pendingLayout = true; return; }
+    pendingLayout = false;
     var top = topRow();
     measure();
     layout(box);
@@ -3750,8 +3756,12 @@ function mountEditor(host, st, api) {
   function rowLookKey() { return JSON.stringify([colorSig(), R.lines, R.behavior.diagnostics, IND.unit, IND.tabs]); }
   var appliedLook = '';
   function onLook(R2) {
+    // The owner of a parked preview resumes its latest look after a cover.
+    // Model broadcasts and late font arrivals must honor the same guard as
+    // that owner's idle preparation, before any style or geometry is read.
+    if (paintDeferred()) return;
     var applied = JSON.stringify(R2);
-    if (applied === appliedLook) return;
+    if (applied === appliedLook) { if (preview && pendingLayout && isShown()) relayoutAll(); return; }
     appliedLook = applied;
     var prev = R; R = R2;
     if (!alive) return;

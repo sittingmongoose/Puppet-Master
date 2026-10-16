@@ -24,8 +24,11 @@ var NOTAG = ' data-pm-hover-visual-suppressed="true"';
 function tagged(label, detail) { return ' data-pm-hover-label="' + esc(label) + '"' + (detail ? ' data-pm-hover-detail="' + esc(detail) + '"' : ''); }
 function reducedNow() { return PMW.reduced ? PMW.reduced() : false; }
 function sheetBusy() {
+  if (document.hidden) return true;
+  if (typeof window.PM_BUSY === 'function') return !!window.PM_BUSY();
   var de = document.documentElement;
-  return document.hidden || de.hasAttribute('data-o55-open') || de.hasAttribute('data-pm-page-transition') || de.hasAttribute('data-pmu-moment') || !!document.querySelector('#o55np-reboot,.o55nw-boot');
+  var nier = window.PM_NIER;
+  return de.hasAttribute('data-o55-open') || de.hasAttribute('data-o55-boot-wait') || de.hasAttribute('data-pm-page-transition') || de.hasAttribute('data-pmu-moment') || !!document.querySelector('#o55np-reboot,#o55np-calm,#o55nw-boot,.o55nw-boot') || !!(nier && nier.wanted && nier.on && nier.wanted() !== nier.on());
 }
 
 /* motion: the terminal's one-shot classes (.pmt-in, .pmt-out; 60-motion.css gives them each look's voice) */
@@ -270,7 +273,10 @@ PMW.czFit = function (root) {
 };
 if (document.fonts && document.fonts.addEventListener) document.fonts.addEventListener('loadingdone', function () {
   czFitEpoch += 1;
-  [].forEach.call(document.querySelectorAll('.pmt-cz'), function (r) { PMW.czFit(r); });
+  [].forEach.call(document.querySelectorAll('.pmt-cz'), function (r) {
+    if (r.classList.contains('pmed-cz') && r.hasAttribute('aria-hidden') && sheetBusy()) return;
+    PMW.czFit(r);
+  });
 });
 function field(label, ctl, help, attrs) {
   return '<div class="pmt-cz-field"' + (attrs || '') + '><span class="pmt-cz-flabel">' + esc(label) + '</span>' + ctl + (help != null ? '<span class="pmt-cz-fhelp"' + (help === '' ? '' : '') + '>' + esc(help) + '</span>' : '') + '</div>';
@@ -478,6 +484,7 @@ function open(opts) {
   var preview = null;
   try {
     preview = PMW.editorPreview(pvHost, { text: PREVIEW, base: BASE, language: 'rust', title: 'recipe.rs', problems: previewProblems(), view: pvView,
+      paintDeferred: function () { return closed && sheetBusy(); },
       caret: { r: PV_SEL.r, c: PV_SEL.b, ar: PV_SEL.r, ac: PV_SEL.a } });
   } catch (err) { try { console.error('[pm-home] the editor preview could not start', err); } catch (_) {} }
 
@@ -553,6 +560,7 @@ function open(opts) {
       var read = function () {
         lookRaf = 0;
         if (!root.isConnected || !inst.root) return;
+        if (closed && sheetBusy()) { warmPaintSoon(); return; }
         var rs = getComputedStyle(inst.root), v = {};
         LOOK_TOKENS.forEach(function (n) { v[n] = rs.getPropertyValue(n).trim(); });
         lookRead = { key: lookPending, v: v };
@@ -599,6 +607,7 @@ function open(opts) {
   }
   function warmMeasurementsSoon() {
     if (disposed || !closed || warmMeasureJob || warmPaint || warmPaintIdle || !root.classList.contains('pmed-prepared')) return;
+    if (sheetBusy()) { warmPaintSoon(); return; }
     var stamp = measurementStamp();
     if (warmMeasureStamp === stamp) return;
     var faces = EL().FACES || {}, base = scope === 'tab' ? v.tabAppearance || {} : {};
@@ -626,6 +635,10 @@ function open(opts) {
     function run() {
       warmMeasureJob = 0;
       if (disposed || !closed || !root.classList.contains('pmed-prepared')) { warmMeasureQueue = []; return; }
+      // A cover or page move can start after this idle job was queued. Resume
+      // from the quiet refresh after it leaves, without reading hidden layout
+      // or competing with the transition's raster work.
+      if (sheetBusy()) { warmPaintSoon(); return; }
       if (measurementStamp() !== stamp) { warmMeasureQueue = []; warmMeasurementsSoon(); return; }
       var work = warmMeasureQueue.shift(); if (work) work();
       if (warmMeasureQueue.length) next(); else { warmMeasureStamp = stamp; containSchemeTiles(); }
@@ -1174,7 +1187,7 @@ function open(opts) {
     if (warmPaintIdle && window.cancelIdleCallback) cancelIdleCallback(warmPaintIdle);
     warmPaintIdle = 0;
   }
-  function warmPaintSoon() {
+  function warmPaintSoon(delay) {
     cancelWarmPaint();
     cancelWarmMeasurements();
     warmPaint = setTimeout(function wait() {
@@ -1189,8 +1202,10 @@ function open(opts) {
         if (!disposed && closed) { syncPreview(); paint(); }
       };
       if (window.requestIdleCallback) warmPaintIdle = requestIdleCallback(refresh); else refresh();
-    }, 2000);
+    }, typeof delay === 'number' ? delay : 2000);
   }
+  function onIdle() { if (!disposed && closed && root.isConnected && root.classList.contains('pmed-prepared')) warmPaintSoon(0); }
+  window.addEventListener('pm-idle', onIdle);
   var offChange = EL().onChange(function () {
     if (!root.isConnected) return;
     if (!closed) { syncPreview(); paint(); return; }
@@ -1259,6 +1274,7 @@ function open(opts) {
     disposed = true;
     stopDemo(); endPreview(); tokEndPreview();
     if (offChange) offChange();
+    window.removeEventListener('pm-idle', onIdle);
     window.removeEventListener('resize', onResize);
     if (ro) ro.disconnect();
     if (io) io.disconnect();
