@@ -2039,6 +2039,22 @@ function mountEditor(host, st, api) {
     el.setAttribute('data-r', r);
     return el;
   }
+  function positionRows() {
+    // A face/size change does not change unwrapped token text. Keep those
+    // shaped spans and move the existing rows instead of replacing every
+    // descendant; guides still use the new glyph width.
+    rowEls.forEach(function (el, r) {
+      el.style.top = yRow(r) + 'px';
+      var guide = el.querySelector('.pmw-ed-ig');
+      if (guide) {
+        var lv = mode === 'file' ? guideLevel(d.lines, r, IND.unit) : Math.floor(indentCols(rowText(r) || '') / IND.unit);
+        guide.style.left = textX + 'px';
+        guide.style.width = Math.ceil(lv * IND.unit * cw) + 'px';
+        guide.style.background = guideImage(lv, R.lines.guides === 'rainbow', cw, IND.unit);
+      }
+    });
+    renderRows(false);
+  }
   /* the number a row's gutter shows: none with Line numbers off; with Count from the caret, the distance from the
      caret's line (which keeps its own number) */
   function lineLabel(r) {
@@ -3652,7 +3668,7 @@ function mountEditor(host, st, api) {
     if (!changed) { layout(); renderRows(true); renderOverlays(); updateThumb(); updateHbar(); sticky._key = null; updateSticky(); }
     queueDraw();
   }
-  function relayoutAll(box) {
+  function relayoutAll(box, keepRows) {
     if (!firstDone) return;
     // Settings can change a mounted editor while Home is hidden. Measure it
     // when it is shown, at its real size; the Customize preview stays live.
@@ -3660,7 +3676,7 @@ function mountEditor(host, st, api) {
     var top = topRow();
     measure();
     layout(box);
-    renderRows(true);
+    if (keepRows && !WR) positionRows(); else renderRows(true);
     var nextTop = clamp(yRow(top) - headH, 0, Math.max(0, geo.sh - geo.ch));
     if (nextTop !== geo.st) setTop(nextTop);
     sticky._key = null;
@@ -3756,7 +3772,7 @@ function mountEditor(host, st, api) {
     // the whole page to restyle and lay out at once, so it is read only when the look itself changed
     else if (reopened || g !== geoSig || ((R.lookKey !== prev.lookKey || R.look.mode !== prev.look.mode) && head.offsetHeight !== headH)) {
       var sameBox = !special && !reopened && R.lookKey === prev.lookKey && R.look.mode === prev.look.mode && R.behavior.diffLayout === prev.behavior.diffLayout;
-      relayoutAll(sameBox ? layoutBox : null);
+      relayoutAll(sameBox ? layoutBox : null, sameBox && !R.lines.wrap && !prev.lines.wrap && l === lookSig);
     }
     else if (l !== lookSig) { renderRows(true); sticky._key = null; updateSticky(); renderOverlays(); }
     else if (JSON.stringify(R.caret) !== JSON.stringify(prev.caret)) renderOverlays();
