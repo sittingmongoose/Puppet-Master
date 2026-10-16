@@ -167,7 +167,10 @@
     r.querySelectorAll('.wpk-tile').forEach(function (t) {
       var on = t.getAttribute('data-wpk-pick') === c;
       if (t.getAttribute('aria-checked') !== String(on)) t.setAttribute('aria-checked', String(on));
-      t.tabIndex = on ? 0 : -1;
+      /* The tabIndex property can ask whether a button is focusable, flushing the pending wallpaper restyle.
+         Its reflected attribute carries the same keyboard state without a synchronous style read. */
+      var tabIndex = on ? '0' : '-1';
+      if (t.getAttribute('tabindex') !== tabIndex) t.setAttribute('tabindex', tabIndex);
     });
     r.classList.toggle('is-changed', c !== 'look'); r.querySelector('.o55-changed').hidden = c === 'look';
     var own = r.querySelector('[data-wpk-own]');

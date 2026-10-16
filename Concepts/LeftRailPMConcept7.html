@@ -49394,15 +49394,18 @@ html[data-lg="on"][data-theme="glass-light"]:not(#lgz) #panel-settings { --k3-te
    sheet; what they hold takes the plain inner fill. The old stage's thinner tint (.55 and .38) let the wallpaper's bright
    ribbons through to 3.2-4.2:1 under muted words (pm7-contrast-opus, 2026-10-15: Settings Home's chapter cards at
    4.10-4.41). Words that sat straight on the wallpaper (the managers' footer links, Memory's toolbar) get the same
-   ground. Controls keep their own fills. */
-html[data-lg="on"][data-theme^="glass"]:not(#lgz) #panel-settings :is(.domain-card, .panel-card, .pm51-stats, .pm51-panel-card, .pm51-advanced, .pm51-note, .pm51-example, .pm51-hero-facts, .pm51-settings-inline .settings-section, .o55-notif-master, .setting-list):not(:is(.domain-card, .panel-card, .pm51-stats, .pm51-panel-card, .pm51-advanced, .pm51-note, .pm51-example, .pm51-hero-facts, .settings-section, .drawer, .detail-inspector, .o55-notif-master, .setting-list, [data-lg-kind]) *) { background: var(--lg-tint-card) !important; }
+   ground. Controls keep their own fills. "Inside a sheet" names Settings' sheets by the selectors glass.js mounts them
+   by (SURFACES and the data-lg-surface opt-ins), not by [data-lg-kind]: inside :not(), the attribute glass.js adds
+   made every mark restyle all the sheet holds (155-165 ms for one 704-element section; a chapter change marks a dozen,
+   2026-10-16). Keep the two lists in step. */
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) #panel-settings :is(.domain-card, .panel-card, .pm51-stats, .pm51-panel-card, .pm51-advanced, .pm51-note, .pm51-example, .pm51-hero-facts, .pm51-settings-inline .settings-section, .o55-notif-master, .setting-list):not(:is(.domain-card, .panel-card, .pm51-stats, .pm51-panel-card, .pm51-advanced, .pm51-note, .pm51-example, .pm51-hero-facts, .settings-section, .drawer, .detail-inspector, .o55-notif-master, .setting-list, aside.domain-rail, .document-layout > :is(nav, aside):not(.document-main), header.workspace-separator, .home-page > section.home-hero, .home-page .home-panel, [data-lg-surface="menu"], [data-lg-surface="card"], [data-lg-surface="bar"], [data-lg-surface="panel"]) *) { background: var(--lg-tint-card) !important; }
 /* a list of settings straight on the wallpaper (Notifications' master switch read 1.0:1 over a bright ribbon) is a card */
-html[data-lg="on"][data-theme^="glass"]:not(#lgz) #panel-settings :is(.o55-notif-master, .setting-list):not(:is(.domain-card, .panel-card, .pm51-stats, .pm51-panel-card, .pm51-advanced, .pm51-note, .pm51-example, .pm51-hero-facts, .settings-section, .drawer, .detail-inspector, .o55-notif-master, .setting-list, [data-lg-kind]) *) { border-radius: var(--lg-r-card) !important; }
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) #panel-settings :is(.o55-notif-master, .setting-list):not(:is(.domain-card, .panel-card, .pm51-stats, .pm51-panel-card, .pm51-advanced, .pm51-note, .pm51-example, .pm51-hero-facts, .settings-section, .drawer, .detail-inspector, .o55-notif-master, .setting-list, aside.domain-rail, .document-layout > :is(nav, aside):not(.document-main), header.workspace-separator, .home-page > section.home-hero, .home-page .home-panel, [data-lg-surface="menu"], [data-lg-surface="card"], [data-lg-surface="bar"], [data-lg-surface="panel"]) *) { border-radius: var(--lg-r-card) !important; }
 html[data-lg="on"][data-theme^="glass"]:not(#lgz) #panel-settings :is(.panel-card, .pm51-stats, .pm51-panel-card, .pm51-advanced, .pm51-hero-facts, .settings-section) :is(.panel-card, .pm51-stat, .pm51-panel-card, .pm51-advanced, .pm51-note, .pm51-example, .pm51-hero-facts, .settings-section) { background: var(--lg-fill) !important; }
-html[data-lg="on"][data-theme^="glass"]:not(#lgz) #panel-settings :is(.o55-toolbar, .pm51-quiet, .o55-quiet-line, .o55-mgp-lead):not(:is(.domain-card, .panel-card, .pm51-stats, .pm51-panel-card, .pm51-advanced, .pm51-hero-facts, .settings-section, .drawer, .detail-inspector, [data-lg-kind]) *) {
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) #panel-settings :is(.o55-toolbar, .pm51-quiet, .o55-quiet-line, .o55-mgp-lead):not(:is(.domain-card, .panel-card, .pm51-stats, .pm51-panel-card, .pm51-advanced, .pm51-hero-facts, .settings-section, .drawer, .detail-inspector, aside.domain-rail, .document-layout > :is(nav, aside):not(.document-main), header.workspace-separator, .home-page > section.home-hero, .home-page .home-panel, [data-lg-surface="menu"], [data-lg-surface="card"], [data-lg-surface="bar"], [data-lg-surface="panel"]) *) {
   background: var(--lg-tint-card) !important; border-color: transparent !important; border-radius: var(--lg-r-bar) !important;
 }
-html[data-lg="on"][data-theme^="glass"]:not(#lgz) #panel-settings :is(.pm51-quiet, .o55-quiet-line, .o55-mgp-lead):not(:is(.domain-card, .panel-card, .pm51-stats, .pm51-panel-card, .pm51-advanced, .pm51-hero-facts, .settings-section, .drawer, .detail-inspector, [data-lg-kind]) *) { padding: 8px 12px !important; }
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) #panel-settings :is(.pm51-quiet, .o55-quiet-line, .o55-mgp-lead):not(:is(.domain-card, .panel-card, .pm51-stats, .pm51-panel-card, .pm51-advanced, .pm51-hero-facts, .settings-section, .drawer, .detail-inspector, aside.domain-rail, .document-layout > :is(nav, aside):not(.document-main), header.workspace-separator, .home-page > section.home-hero, .home-page .home-panel, [data-lg-surface="menu"], [data-lg-surface="card"], [data-lg-surface="bar"], [data-lg-surface="panel"]) *) { padding: 8px 12px !important; }
 /* the section tabs stand on the wallpaper too: their track is the bar's glass, not a control fill */
 html[data-lg="on"][data-theme^="glass"]:not(#lgz) #pm-settings-root nav.workspace-tabs.workspace-tabs { background: var(--lg-tint-bar) !important; }
 /* the chapter rail's descriptions sit on its frosted sheet: muted ink read 4.08:1 over a bright patch in Dark */
@@ -212682,34 +212685,60 @@ var T = {};
 
   /* ---- the wallpaper behind the terminal, for the lens: the print the app paints (wallpapers.js's contract: the id on
      html[data-lg-wall], its image in --lg-wall-<id>-<mode>), loaded once per print; never body's computed image, which can
-     hold the previous print for a moment while a choice is in flight ---- */
+     hold the previous print for a moment while a choice is in flight.
+     Where it comes from: the app's cache first (PM_WALLPAPERS.sourceUrl(id, mode): the URL, undefined while not cached,
+     null for no image), which reads no style. Only when that does not know ('' is taken as not known too, and so is a
+     host without it) is the print's custom property read, and only by a lens that is drawing, never by the watch on the
+     root: that read is a whole-app style recalc (about 98 ms on every wallpaper pick, pm7-motion-settings' trace) ---- */
   var wall = { key: '', img: null, loading: '' };
-  function wallNow() {
-    var root = document.documentElement, theme = root.getAttribute('data-theme') || '', glass = /^glass/.test(theme);
-    if (root.getAttribute('data-o55-nier') === 'on') return null;
+  /* the print a lens would show now, from the root's attributes alone: '<id>-<light|dark>', or '' for none */
+  function wallKey() {
+    var root = document.documentElement, theme = root.getAttribute('data-theme') || '';
+    if (root.getAttribute('data-o55-nier') === 'on') return '';
     var id = root.getAttribute('data-lg-wall') || '';
-    if (!id || (!glass && !root.hasAttribute('data-lg-wall-any'))) return null;
-    var key = id + '-' + (/-light$/.test(theme) ? 'light' : 'dark');
+    if (!id || (!/^glass/.test(theme) && !root.hasAttribute('data-lg-wall-any'))) return '';
+    return id + '-' + (/-light$/.test(theme) ? 'light' : 'dark');
+  }
+  function wallCached(key) {
+    var W = window.PM_WALLPAPERS, i = key.lastIndexOf('-'), u;
+    if (W && typeof W.sourceUrl === 'function') { try { u = W.sourceUrl(key.slice(0, i), key.slice(i + 1)); } catch (e) { u = undefined; } }
+    return u === null || (typeof u === 'string' && u) ? u : undefined;
+  }
+  function wallLoad(key, url) {
+    wall.loading = key;
+    if (!url) { wall.key = key; wall.img = null; return; }
+    var img = new Image();
+    img.onload = function () { if (wall.loading !== key) return; wall.key = key; wall.img = img; shownSig = key; window.dispatchEvent(new CustomEvent('pmt-wall')); };
+    img.onerror = function () { if (wall.loading === key) { wall.key = key; wall.img = null; } };
+    img.src = url;
+  }
+  /* for a lens that is drawing: the print, once loaded (null until then, and for none) */
+  function wallNow() {
+    var key = wallKey();
+    if (!key) return null;
     if (wall.key === key) return wall.img ? wall : null;
     if (wall.loading !== key) {
-      wall.loading = key;
-      var v = '';
-      try { v = getComputedStyle(root).getPropertyValue('--lg-wall-' + key).trim(); } catch (e) {}
-      var m = /url\(\s*["']?([^"')]+)["']?\s*\)/.exec(v);
-      if (!m) { wall.key = key; wall.img = null; return null; }
-      var img = new Image();
-      img.onload = function () { if (wall.loading !== key) return; wall.key = key; wall.img = img; shownSig = key; window.dispatchEvent(new CustomEvent('pmt-wall')); };
-      img.onerror = function () { if (wall.loading === key) { wall.key = key; wall.img = null; } };
-      img.src = m[1];
+      var url = wallCached(key);
+      if (url === undefined) {
+        var v = '';
+        try { v = getComputedStyle(document.documentElement).getPropertyValue('--lg-wall-' + key).trim(); } catch (e) {}
+        var m = /url\(\s*["']?([^"')]+)["']?\s*\)/.exec(v);
+        url = m ? m[1] : null;
+      }
+      wallLoad(key, url);
     }
     return null;
   }
-  /* a new print, a print that settled, or a look that shows another: load it, and the lenses repaint when it arrives */
+  /* a new print, a print that settled, or a look that shows another: the lenses repaint (and read the print as they
+     draw). A print the cache already knows starts loading here, so a lens that appears later has it; nothing here reads
+     style */
   var shownSig = '';
-  function wallSig() { var w = wallNow(); return w ? w.key : 'none:' + wall.loading; }
   try {
-    new MutationObserver(function () { var s = wallSig(); if (s !== shownSig) { shownSig = s; window.dispatchEvent(new CustomEvent('pmt-wall')); } })
-      .observe(document.documentElement, { attributes: true, attributeFilter: ['data-lg-wall', 'data-lg-wall-hold', 'data-lg-wall-any', 'data-theme', 'data-o55-nier'] });
+    new MutationObserver(function () {
+      var key = wallKey();
+      if (key && wall.key !== key && wall.loading !== key) { var url = wallCached(key); if (url !== undefined) wallLoad(key, url); }
+      if (key !== shownSig) { shownSig = key; window.dispatchEvent(new CustomEvent('pmt-wall')); }
+    }).observe(document.documentElement, { attributes: true, attributeFilter: ['data-lg-wall', 'data-lg-wall-hold', 'data-lg-wall-any', 'data-theme', 'data-o55-nier'] });
   } catch (e) {}
 
   /* the band the text allows, as relative luminance: on a dark ground [a little under it, the brightest the text allows];
@@ -226282,7 +226311,8 @@ try { if (window.PM_HOME && typeof window.PM_HOME.boot === 'function') window.PM
       if (m.type === 'wall') walls.set(m.id, m.bm);
       else if (m.type === 'unwall') { var old = walls.get(m.id); if (old) { old.close(); walls.delete(m.id); } }
       else if (m.type === 'epoch') { epoch = m.epoch; pump(); }
-      else { queue.push(m); pump(); }
+      else if (m.type === 'prio') { var first = queue.filter(function (j) { return m.ids.indexOf(j.id) >= 0; }); queue = first.concat(queue.filter(function (j) { return m.ids.indexOf(j.id) < 0; })); }
+      else { if (m.urgent) queue.unshift(m); else queue.push(m); pump(); }
     };
   }
   var bakeW = null, bakeWOn = 0, bakeWJobs = new Map(), bakeWIds = 0, bakeWWalls = new Map(), bakeWWallId = 0, bakeWReady = [], bakeWErrors = 0;
@@ -226322,7 +226352,7 @@ try { if (window.PM_HOME && typeof window.PM_HOME.boot === 'function') window.PM
     var G = bakeGeometry(job.e, job.kind); if (!G) return;
     job.geo = G; job.id = ++bakeWIds; bakeWJobs.set(job.id, job);
     bakeW.postMessage({ id: job.id, epoch: bakeEpoch, wall: wall, key: G.key, W: G.W, H: G.H, R: G.R, B: G.B, T: G.T, light: G.k.light, ring: G.k.ring,
-      sat: G.k.sat, ca: G.k.ca || 0, left: G.left, top: G.top, c: cover(im), needSpec: !specUrls.has(G.key) });
+      sat: G.k.sat, ca: G.k.ca || 0, left: G.left, top: G.top, c: cover(im), needSpec: !specUrls.has(G.key), urgent: !!job.urgent });
   }
   function keepSpec(key, url) {
     specUrls.delete(key); specUrls.set(key, url);
@@ -226382,7 +226412,7 @@ try { if (window.PM_HOME && typeof window.PM_HOME.boot === 'function') window.PM
         var list = Array.from(bakeQ.values()), next = 0; bakeQ.clear();
         /* the size each sheet was mounted at (no layout read: in a room change's timer task the board may be mid-build) */
         list.forEach(function (j) { var z = String(j.e.__lgSize || '0x0').split('x'); j.area = (+z[0] || 0) * (+z[1] || 0); });
-        list.sort(function (a, b) { return b.area - a.area; });
+        list.sort(function (a, b) { return (b.urgent ? 1 : 0) - (a.urgent ? 1 : 0) || b.area - a.area; });
         /* in a frame, 12 ms at a time; during a Usage room change, in the main thread's idle time only, so a rim never
            lengthens a frame of the room's build or forces its layout (idle time follows a drawn frame) */
         function step(deadline) {
@@ -226421,6 +226451,7 @@ try { if (window.PM_HOME && typeof window.PM_HOME.boot === 'function') window.PM
   }
   function queueBake(e, kind) {
     var job = { e: e, kind: kind, sig: e.__lgSig, epoch: bakeEpoch, wall: wallSourceId, theme: root.getAttribute('data-theme'), vw: innerWidth, vh: innerHeight };
+    if (soonIn && performance.now() < soonUntil && soonIn.contains(e)) job.urgent = true;
     e.__lgBake = job; bakeQ.set(e, job); scheduleBakes();
   }
 
@@ -226465,10 +226496,47 @@ try { if (window.PM_HOME && typeof window.PM_HOME.boot === 'function') window.PM
   /* Read every candidate before committing its optics. New kind attributes are a single preliminary style change:
      dimensions retain the mount's original pre-kind measurement, radius/position use the resulting Glass style.
      Connected, already-mounted sheets need only one geometry and computed-radius snapshot. */
+  /* inside a closed <details> (and not in its summary), so not drawn: asked of the DOM alone, as reading such a sheet's
+     box makes the browser style and lay out the closed content (Settings, 2026-10-16: 479 and 287 elements in a chapter
+     change). Those sheets are mounted when the main thread is idle instead (mountHidden), so they are glass already
+     when their <details> opens, as before; opening one syncs in that frame (the observer watches 'open'). */
+  function inClosedDetails(e) {
+    for (var n = e.parentElement; n; n = n.parentElement) {
+      if (n.tagName === 'SUMMARY' && n.parentElement && n.parentElement.tagName === 'DETAILS') { n = n.parentElement; continue; }
+      if (n.tagName === 'DETAILS' && !n.open) return true;
+    }
+    return false;
+  }
+  var hiddenQ = new Map(), hiddenT = 0;
+  function mountHidden() {
+    hiddenT = 0; if (!isGlass()) { hiddenQ.clear(); return; }
+    var targets = new Map(); hiddenQ.forEach(function (kind, e) { if (e.isConnected && inClosedDetails(e)) targets.set(e, kind); }); hiddenQ.clear();
+    /* marked first, so the size read is the sheet's glass size (marking drops its 1 px border) and the rim baked now is
+       the one it shows when its <details> opens */
+    targets.forEach(function (kind, e) { if (e.getAttribute('data-lg-kind') !== kind) e.setAttribute('data-lg-kind', kind); });
+    if (targets.size) mountMeasured(targets, false);
+  }
+  /* a <details> has opened: the rims of its sheets still being baked go first, and so do those queued in the next second
+     (a sheet that was not mounted yet, the idle pass not having run) */
+  var soonIn = null, soonUntil = 0;
+  function bakeSoon(d) {
+    soonIn = d; soonUntil = performance.now() + 1000;
+    var ids = [];
+    glassSet.forEach(function (e) {
+      var j = e.__lgBake; if (!j || !d.contains(e)) return;
+      if (j.id && bakeW && bakeWJobs.get(j.id) === j) ids.push(j.id); else j.urgent = true;
+    });
+    if (ids.length) bakeW.postMessage({ type: 'prio', ids: ids });
+  }
   function mountMeasured(targets, requireVisible) {
     var measured = new Map(), offsets = new Map();
     targets.forEach(function (kind, e) {
       if (!e.isConnected) return;
+      if (requireVisible && inClosedDetails(e)) {
+        hiddenQ.set(e, kind);
+        if (!hiddenT) hiddenT = window.requestIdleCallback ? requestIdleCallback(mountHidden, { timeout: 1500 }) : setTimeout(mountHidden, 400);
+        return;
+      }
       var r = e.getBoundingClientRect(), W = Math.round(e.offsetWidth || r.width), H = Math.round(e.offsetHeight || r.height);
       if (W < 4 || H < 4 || (requireVisible && (r.width <= 1 || r.height <= 1))) return;
       var cs = getComputedStyle(e), shown = cs.visibility !== 'hidden';
@@ -227075,7 +227143,8 @@ try { if (window.PM_HOME && typeof window.PM_HOME.boot === 'function') window.PM
     ['.title-bar', 'bar'], ['.left-panel', 'panel'], ['#chatPanel', 'panel'], ['#panel-usage .pmu-rail', 'panel'],
     ['#panel-usage .pmu-stagehead', 'bar'], ['#panel-usage .pmu-board > .pmu-card', 'card'],
     ['#pm7GlobalStatusBar', 'bar'], ['.pmu-pop.open', 'menu'], ['.pmr-menu-list', 'menu'], ['#lg-demo-pop[data-open]', 'menu'],
-    /* Settings: its domain rail and section index are sheets, every section is a card */
+    /* Settings: its domain rail and section index are sheets, every section is a card (glass.css names the same sheets
+       in its Settings "inside a sheet" rules: keep the two lists in step) */
     ['#pm-settings-root aside.domain-rail', 'panel'], ['#pm-settings-root .document-layout > :is(nav, aside):not(.document-main)', 'panel'],
     ['#pm-settings-root section.settings-section', 'card'],
     /* a chapter's header (its name and line) is a bar, and Settings Home's intro a panel over its two cards: on the bare
@@ -227380,34 +227449,41 @@ try { if (window.PM_HOME && typeof window.PM_HOME.boot === 'function') window.PM
   }
   function queueSync(scope) {
     if (scope && scope.nodeType === 1) dirtyScope(scope);
-    if (boardMoment() && afterLayout()) return;
+    if (afterLayout()) return;
     if (!syncQ) syncQ = requestAnimationFrame(function () { syncQ = 0; syncPending(); });
   }
-  /* During a Usage room change, a sync waits for the frame's own layout: a ResizeObserver's first report of a fresh
-     observation comes after layout, where every read is free. Synced in the click task or a frame callback, it forced
-     the room's layout (up to 137 ms) and Usage's next callbacks dirtied it again, so the frame laid out a second time
-     (125 ms more: one 312 ms task in r64's trace). afterLayout(fn) runs fn there too (a rim bake's step). */
-  var postEl = null, postRO = null, postQ = false, postOn = false, postFns = [];
+  /* A sync waits for the frame's own layout: a ResizeObserver's first report of a fresh observation comes after layout
+     and before paint, where every read is free and what the sync writes is still drawn in that frame. Synced in the
+     click task or a frame callback, its first read forced the page's pending style and layout: a Usage room's (up to
+     137 ms, and then a second layout: one 312 ms task in r64's trace), and a Settings chapter's (about 300 ms on the
+     P1000, 2026-10-16). Only an opening menu syncs at once (hotSync). afterLayout(fn) runs fn there too (a rim bake's
+     step). A request made inside that delivery waits for the next frame's layout, as a fresh observation made there
+     would be skipped and reported as a ResizeObserver loop error. */
+  var postEl = null, postRO = null, postQ = false, postOn = false, postFns = [], postRunning = false;
   function afterLayout(fn) {
     if (!window.ResizeObserver || !document.body) return false;
     if (fn) postFns.push(fn); else postQ = true;
     if (postOn) return true;
     if (!postRO) postRO = new ResizeObserver(function () {
       if (!postOn) return;
-      postOn = false; postRO.unobserve(postEl);
-      if (postQ) {
-        postQ = false;
-        if (syncQ) { cancelAnimationFrame(syncQ); syncQ = 0; }
-        syncPending();
-      }
-      var fns = postFns; postFns = []; fns.forEach(function (f) { f(); });
+      postOn = false; postRO.unobserve(postEl); postRunning = true;
+      try {
+        if (postQ) {
+          postQ = false;
+          if (syncQ) { cancelAnimationFrame(syncQ); syncQ = 0; }
+          syncPending();
+        }
+        var fns = postFns; postFns = []; fns.forEach(function (f) { f(); });
+      } finally { postRunning = false; }
     });
     if (!postEl || !postEl.isConnected) {
       postEl = el('i', { id: 'lg-post', 'aria-hidden': 'true' });
       postEl.style.cssText = 'position:fixed;left:-8px;top:-8px;width:2px;height:2px;pointer-events:none;visibility:hidden';
       document.body.appendChild(postEl);
     }
-    postOn = true; postRO.observe(postEl);
+    postOn = true;
+    if (postRunning) requestAnimationFrame(function () { if (postOn) postRO.observe(postEl); });
+    else postRO.observe(postEl);
     return true;
   }
   /* One immediate input sync per actual frame; later genuine changes share the next before-paint pass. A newly
@@ -227460,15 +227536,18 @@ try { if (window.PM_HOME && typeof window.PM_HOME.boot === 'function') window.PM
       relevant = true;
       var t = recs[i].target; if (t.nodeType !== 1) continue;
       dirtyScope(recs[i].type === 'attributes' ? t.parentElement || t : t);
-      if (t.matches(HOT)) { hot = true; if (area && t.matches(MENU_HOT)) menuHot = true; }
+      /* a <details> opening shows sheets that were not drawn: they are mounted in this frame (inClosedDetails) */
+      if (recs[i].attributeName === 'open' && t.tagName === 'DETAILS') { hot = true; dirtyScope(t); if (t.open) bakeSoon(t); }
+      if (t.matches(HOT)) { hot = true; if (t.matches(MENU_HOT)) menuHot = true; }
       else for (var j = 0; j < recs[i].addedNodes.length; j++) { var nd = recs[i].addedNodes[j]; if (nd.nodeType === 1 && (nd.matches(HOT) || nd.matches('.pmu-card') || (nd.querySelector && nd.querySelector('.pmr-menu-list, .pmu-card')))) { hot = true; if (area && (nd.matches(MENU_HOT) || (nd.querySelector && nd.querySelector('.pmr-menu-list')))) menuHot = true; break; } }
     }
     if (!relevant) return;
     var page = document.querySelector('.page-tabs .page-tab.active'); page = page && page.id;
     var changed = Array.from(dirtyRoots), full = dirtyAll;
-    /* a Usage room change syncs after layout (afterLayout); a menu opening still gets its first keyframe at once */
+    /* a change syncs after layout (afterLayout); a menu opening still gets its first keyframe at once */
     if (area && !menuHot) afterLayout();
-    else if (hot && switchOn()) hotSync(); else lazySync(false);
+    else if (hot && switchOn()) { if (menuHot || !afterLayout()) hotSync(); }
+    else lazySync(false);
     if (page !== lastPage) {
       var first = lastPage === null; lastPage = page;
       if (pageT) { clearTimeout(pageT); pageT = 0; }
@@ -227504,8 +227583,12 @@ try { if (window.PM_HOME && typeof window.PM_HOME.boot === 'function') window.PM
       var enter = isGlass() && (!/^glass/.test(lastTheme || '') || lastLg !== 'on');
       lastTheme = th; lastLg = lg; lenses.forEach(function (L) { L.rect = null; });
       glassSet.forEach(function (e) { e.__lgSig = null; });
-      syncAll(); lastWall = root.getAttribute('data-lg-wall');
-      if (enter) materialize(Array.from(glassSet));
+      /* after the new look's own style and layout, not forcing them here (then the entrance, on the sheets just mounted).
+         Its wallpaper is chosen now, so the look's first style pass already has it. */
+      applyWall(); dirtyAll = true;
+      if (!afterLayout(function () { if (enter && isGlass()) materialize(Array.from(glassSet)); })) { syncAll(); if (enter) materialize(Array.from(glassSet)); }
+      else afterLayout();
+      lastWall = root.getAttribute('data-lg-wall');
     } else { dirtyAll = true; queueSync(); }
   }).observe(root, { attributes: true, attributeFilter: ['data-theme', 'data-lg', 'data-lg-tier', 'data-lg-wall', 'data-motion', 'data-o55-open', 'data-pmu-moment'] });
   applyWall();
@@ -227519,7 +227602,7 @@ try { if (window.PM_HOME && typeof window.PM_HOME.boot === 'function') window.PM
   function start() {
     ensureDefs(); viewportVars(); knobFilter(); readSwitch();
     window.addEventListener('resize', viewportVars);
-    mo.observe(document.body, { subtree: true, childList: true, attributes: true, attributeOldValue: true, attributeFilter: ['class', 'hidden', 'data-open', 'data-lg-surface'] });
+    mo.observe(document.body, { subtree: true, childList: true, attributes: true, attributeOldValue: true, attributeFilter: ['class', 'hidden', 'data-open', 'data-lg-surface', 'open'] });
     if (window.ResizeObserver) { var ro = new ResizeObserver(function (entries) { entries.forEach(function (en) { dirtyScope(en.target); }); lazySync(false); }); ['.app-shell', '.left-panel', '#sidePanelSlot', '#chatPanel', '#pmuBoard', '#pmuApp'].forEach(function (s) { var e = document.querySelector(s); if (e) ro.observe(e); }); }
     window.addEventListener('resize', lazySync);
     demo();
@@ -227791,7 +227874,10 @@ window.PM_WALLPAPERS_CATALOG = {"version":1,"families":[{"family":"glass","label
     r.querySelectorAll('.wpk-tile').forEach(function (t) {
       var on = t.getAttribute('data-wpk-pick') === c;
       if (t.getAttribute('aria-checked') !== String(on)) t.setAttribute('aria-checked', String(on));
-      t.tabIndex = on ? 0 : -1;
+      /* The tabIndex property can ask whether a button is focusable, flushing the pending wallpaper restyle.
+         Its reflected attribute carries the same keyboard state without a synchronous style read. */
+      var tabIndex = on ? '0' : '-1';
+      if (t.getAttribute('tabindex') !== tabIndex) t.setAttribute('tabindex', tabIndex);
     });
     r.classList.toggle('is-changed', c !== 'look'); r.querySelector('.o55-changed').hidden = c === 'look';
     var own = r.querySelector('[data-wpk-own]');
