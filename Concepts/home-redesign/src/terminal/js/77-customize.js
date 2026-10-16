@@ -1200,14 +1200,24 @@
         warmJob = window.requestIdleCallback ? requestIdleCallback(warm, { timeout: WARM_LATEST_MS }) : setTimeout(warm, 300);
       }, WARM_SETTLE_MS);
     }
+    /* the page's shared 'pm-idle' (every cover and transition has cleared, window.PM_BUSY's event): a catch-up still
+       sitting out its quiet time goes on to the idle wait at once */
+    function warmOnIdle() {
+      if (!warmWait || !closed || disposed || settling()) return;
+      clearTimeout(warmWait); warmWait = 0;
+      warmSince = T.util.now();
+      warmJob = window.requestIdleCallback ? requestIdleCallback(warm, { timeout: WARM_LATEST_MS }) : setTimeout(warm, 300);
+    }
     function parkedWatch(on) {
       if (!on) warmCancel();
       if (offWarm) { offWarm(); offWarm = null; }
       window.removeEventListener('resize', warmSoon);
+      window.removeEventListener('pm-idle', warmOnIdle);
       if (v._czLook === warmSoon) v._czLook = null;
       if (!on) return;
       offWarm = A().onChange(warmSoon);
       window.addEventListener('resize', warmSoon);
+      window.addEventListener('pm-idle', warmOnIdle);
       v._czLook = warmSoon;
     }
     function close(noFocus) {
