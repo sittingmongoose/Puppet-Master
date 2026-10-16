@@ -1124,13 +1124,13 @@
     if (!scrollQ) { scrollQ = true; requestAnimationFrame(function () {
       scrollQ = false; var boxes = Array.from(scrollBoxes); scrollBoxes.clear();
       if (!switchOn()) return;
-      /* under a look's cover nothing that scrolled is measured: its strips wait for the lift with the rest (deferStrip)
-         and its sheets for their settle (pm7-f5-nier, Reduce Animations NieR on: an anchoring scroll at the cover's frame
-         forced 22 + 41 ms of style and 10 ms of layout here, under the opaque cover, just before the reveal) */
+      /* under a look's cover nothing that scrolled is measured: its strips and its sheets wait for the lift (deferStrip,
+         deferSheet; pm7-f5-nier, Reduce Animations NieR on: an anchoring scroll at the cover's frame forced 22 + 41 ms
+         of style and 10 ms of layout here, under the opaque cover, just before the reveal) */
       if (pageCovered()) {
         boxes.forEach(function (b) {
           var ss = scrollSheets.get(b), ls = scrollStrips.get(b);
-          if (ss && isGlass()) ss.forEach(function (e) { if (e.isConnected) settleSheets.add(e); });
+          if (ss && isGlass()) ss.forEach(function (e) { if (e.isConnected) deferSheet(e); });
           if (ls) ls.forEach(function (s) { if (s.isConnected) deferStrip(s); });
         });
         return;
@@ -2334,7 +2334,7 @@
      is synced in the frame the cover starts to lift, so the chips are there for the whole reveal (landing review GL-2).
      Other busy spells (a page slide, a Usage room change, the open onboarding window) defer nothing, and a strip inside
      the onboarding window never waits (GL-1). Nothing here is read from style or layout. */
-  var STRIP_PARKED = '.pmed-prepared, [hidden]', busyStrips = new Set(), busyWait = false;
+  var STRIP_PARKED = '.pmed-prepared, [hidden]', busyStrips = new Set(), busySheets = new Set(), busyWait = false;
   function stripParked(s) { try { return !!s.closest(STRIP_PARKED); } catch (e) { return false; } }
   function pageBusy() { try { return typeof window.PM_BUSY === 'function' && !!window.PM_BUSY(); } catch (e) { return false; } }
   /* the covers are read from their own markers, not from PM_BUSY(), which names only the first of several reasons (an open
@@ -2354,14 +2354,17 @@
       return !!(document.getElementById('o55np-reboot') || document.getElementById('o55np-calm') || (t && typeof t.busy === 'function' && t.busy()));
     } catch (e) { return false; }
   }
-  function deferStrip(s) {
-    busyStrips.add(s);
+  function deferStrip(s) { busyStrips.add(s); waitUncovered(); }
+  /* a sheet that scrolled under a cover: measured with the rest once the cover lifts (review GF5-1) */
+  function deferSheet(e) { busySheets.add(e); waitUncovered(); }
+  function waitUncovered() {
     if (busyWait) return;
     busyWait = true;
     (function uncovered() {
       if (pageCovered()) { requestAnimationFrame(uncovered); return; }
       busyWait = false;
       busyStrips.forEach(function (x) { if (x.isConnected) settleStrips.add(x); }); busyStrips.clear();
+      busySheets.forEach(function (x) { if (x.isConnected) settleSheets.add(x); }); busySheets.clear();
       queueSync();
     })();
   }
