@@ -1276,13 +1276,22 @@ function mountEditor(host, st, api) {
      file's own when it has one; IND.tabs says the file's indentation is tabs, which Show spaces marks as such. A tabbed
      file, still as it was opened, takes a new Tab size by opening its tabs again at the new width ---- */
   var IND = { unit: 4, tabs: false, own: 0 };
-  function resolveIndent(look) {
+  function readIndent(look) {
     var I = (look || R).indent || FALLBACK_LOOK.indent;
+    var guess = d.indentGuess;
+    if (guess == null || (!guess && d.indentGuessAt !== d.version)) guess = guessIndent(d.lines);
+    var own = I.detect && !d.tabbed ? guess : 0, unit = own || I.size || 4;
+    // Reading the note must not unfold tabs or consume the next draw's relayout.
+    // An edited tabbed file keeps the width it opened with until it reopens.
+    if (d.tabbed && !(d.src != null && d.version === d.savedVersion && !(d.undo && d.undo.length))) unit = d.tabUnit;
+    return { unit: unit, tabs: I.detect && d.tabbed ? true : I.detect && own ? false : !I.spaces, own: own, tabbed: !!d.tabbed };
+  }
+  function resolveIndent() {
     if (d.indentGuess == null || (!d.indentGuess && d.indentGuessAt !== d.version)) { d.indentGuess = guessIndent(d.lines); d.indentGuessAt = d.version; }
-    var own = I.detect && !d.tabbed ? d.indentGuess : 0;
-    IND.own = own;
-    IND.unit = own || I.size || 4;
-    IND.tabs = I.detect && d.tabbed ? true : I.detect && own ? false : !I.spaces;
+    var next = readIndent(R);
+    IND.own = next.own;
+    IND.unit = next.unit;
+    IND.tabs = next.tabs;
     if (d.tabbed && d.tabUnit !== IND.unit) {
       if (d.src != null && d.version === d.savedVersion && !(d.undo && d.undo.length)) {
         d.lines = splitLines(d.src, IND.unit); d.tabUnit = IND.unit;
@@ -4066,7 +4075,7 @@ function mountEditor(host, st, api) {
     path: path,
     // A covered editor defers drawing its new look, but its file details
     // already follow that pending choice when the customizer asks for them.
-    indent: function () { resolveIndent(pendingLook); return { unit: IND.unit, tabs: IND.tabs, own: IND.own, tabbed: !!d.tabbed }; },
+    indent: function () { return readIndent(pendingLook); },
     focus: function () { if (special) { root.setAttribute('tabindex', '-1'); root.focus({ preventScroll: true }); return; } scroller.focus({ preventScroll: true }); },
     reveal: function (s) { reveal(s || {}); },     // focus is the host's call (D8: an agent's open never takes it)
     wantsKey: function (e) {
