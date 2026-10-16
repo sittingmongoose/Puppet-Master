@@ -1209,6 +1209,31 @@
       changed = false;
       /* the preview draws what changed now, unseen, so the click has nothing left to draw */
       if (pv && pv.fullPending) pv.frame();
+      rasterSoon();
+    }
+    /* parked, the screen is clipped away, so the GPU had never drawn it: its first showing compiled the GPU programs its
+       surfaces need and rastered every tile in the click's frames (P2-02, F3 on the P1000: the compositor held about
+       470 ms before the screen appeared in Friendly). Once built, and again for each look it has not been drawn in, it
+       is drawn at idle for two frames, unseen (opacity 0.004, as the shell warms its theme covers; 0.002 rounds to
+       nothing on the P1000), then clipped away again */
+    var rastered = {}, rasterJob = 0, rasterSince = 0;
+    function rasterSoon() {
+      if (rasterJob || !closed || disposed) return;
+      var key = (root.getAttribute('data-pmt-look') || '') + '|' + (root.getAttribute('data-pmt-mode') || '');
+      if (rastered[key]) return;
+      if (!rasterSince) rasterSince = T.util.now();
+      var run = function (deadline) {
+        rasterJob = 0;
+        if (!closed || disposed || rastered[key]) { rasterSince = 0; return; }
+        /* a really idle moment where there is one; past WARM_LATEST_MS the next idle slice (a page whose own motion never
+           rests gives only short ones), never under a cover or a switch */
+        var late = T.util.now() - rasterSince >= WARM_LATEST_MS;
+        if (settling() || (!late && deadline && typeof deadline.timeRemaining === 'function' && !deadline.didTimeout && deadline.timeRemaining() < WARM_IDLE_MS)) { rasterSoon(); return; }
+        rasterSince = 0; rastered[key] = 1;
+        root.classList.add('pmt-cz-rasterwarm');
+        requestAnimationFrame(function () { requestAnimationFrame(function () { requestAnimationFrame(function () { root.classList.remove('pmt-cz-rasterwarm'); }); }); });
+      };
+      rasterJob = window.requestIdleCallback ? requestIdleCallback(run, { timeout: Math.max(1000, WARM_LATEST_MS - (T.util.now() - rasterSince)) }) : setTimeout(run, 300);
     }
     function warmCancel() {
       clearTimeout(warmWait); warmWait = 0;
@@ -1341,6 +1366,8 @@
          terminal that went): drawn in the click, the browser would style and lay it out there, holding the menu
          (P2-02, F1A on the P1000) */
       var owed = changed || !!(warmWait || warmJob);
+      if (rasterJob) { if (window.cancelIdleCallback) cancelIdleCallback(rasterJob); clearTimeout(rasterJob); rasterJob = 0; }
+      root.classList.remove('pmt-cz-rasterwarm');
       parkedWatch(false);
       var showing = ++visit;
       gcat = null; wantDock = false; dockTo(false); body.scrollTop = 0;
@@ -1387,6 +1414,7 @@
     parkedWatch(true);
     own(v);
     prepared = handle;
+    if (opts.prepare) rasterSoon();
     return opts.prepare ? handle : show(opts);
   }
 
