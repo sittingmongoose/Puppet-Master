@@ -45,22 +45,27 @@ def apply(text: str, strict: bool, need) -> tuple[str, dict]:
     rules = json.loads(RULES_FILE.read_text(encoding='utf-8'))['rules']
     notes = {'replaced': 0, 'omitted': 0, 'missing': []}
     for r in rules:
-        body = _pattern(r['original'])
-        if r['omit']:
-            # one arm of a selector list: take it with the comma after it, else the comma before it
-            m = list(re.finditer(body + r'\s*,\s*', text)) or list(re.finditer(r'\s*,\s*' + body + r'(?=\s*\{)', text))
-        else:
-            m = list(re.finditer(body + r'(?=\s*[,{])', text))
-        if not m:
+        variants = r.get('variants') or [{'original': r['original'], 'replacement': r.get('replacement', '')}]
+        found = []
+        for v in variants:
+            body = _pattern(v['original'])
+            if r['omit']:
+                # one arm of a selector list: take it with the comma after it, else the comma before it
+                m = list(re.finditer(body + r'\s*,\s*', text)) or list(re.finditer(r'\s*,\s*' + body + r'(?=\s*\{)', text))
+            else:
+                m = list(re.finditer(body + r'(?=\s*[,{])', text))
+            found += [(x, v) for x in m]
+        if not found:
             notes['missing'].append(r['rule'])
             need(not strict, f"T2 active rewrite: rule {r['rule']} ({r['source']}) not found in the composed page")
             continue
-        need(len(m) == 1, f"T2 active rewrite: rule {r['rule']} found {len(m)} times (need exactly 1)")
-        a, b = m[0].span()
+        need(len(found) == 1, f"T2 active rewrite: rule {r['rule']} found {len(found)} times across its variants (need exactly 1)")
+        (m, v), = found
+        a, b = m.span()
         if r['omit']:
             text = text[:a] + text[b:]
             notes['omitted'] += 1
         else:
-            text = text[:a] + r['replacement'] + text[b:]
+            text = text[:a] + v['replacement'] + text[b:]
             notes['replaced'] += 1
     return text, notes
