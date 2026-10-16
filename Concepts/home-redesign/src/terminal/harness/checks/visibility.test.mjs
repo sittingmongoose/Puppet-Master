@@ -9,8 +9,10 @@ import { loadT } from './load.mjs';
 globalThis.getComputedStyle = () => ({ getPropertyValue: () => '' });
 let rafs = 0;
 globalThis.requestAnimationFrame = () => ++rafs;
-const T = loadT(['00-core.js', '70-view.js'], { window: {}, document: { documentElement: { getAttribute: () => null }, createElement: () => ({ getContext: () => null, style: {}, classList: { add() {}, toggle() {} }, appendChild() {} }) } });
+const win = {};
+const T = loadT(['00-core.js', '70-view.js'], { window: win, document: { documentElement: { getAttribute: () => null }, createElement: () => ({ getContext: () => null, style: {}, classList: { add() {}, toggle() {} }, appendChild() {} }) } });
 const P = T.View.prototype;
+T._win = win;
 
 /* a view as the constructor leaves it, with the parts _visibility talks to */
 function view() {
@@ -84,6 +86,46 @@ test('shown by the host while off screen: stays hidden until it is on screen', (
   offScreen(v, false);
   assert.equal(v.visible, true);
   assert.equal(rafs, 1);
+});
+
+/* the host's look (B5): a terminal not visible keeps the change for when it shows; a visible one applies it after the
+   coming frame's layout when the shell offers that (PM_AFTER_LAYOUT), at once otherwise */
+function lookView() {
+  const { v, log } = view();
+  v._applyLook = function () { this._lookStale = false; log.push('look applied'); };
+  return { v, log };
+}
+test('a hidden terminal keeps a look change for when it shows again, and applies it then', () => {
+  const { v, log } = lookView();
+  offScreen(v, true); log.length = 0;
+  let heard = 0; v._czLook = () => { heard++; };
+  v.onLook();
+  assert.equal(v._lookStale, true);
+  assert.ok(!log.includes('look applied'));
+  assert.equal(heard, 1, 'its parked Customize screen hears the change at once');
+  offScreen(v, false);
+  assert.ok(log.includes('look applied'));
+  assert.ok(log.indexOf('look applied') < log.indexOf('layout'), 'the look before the layout that follows it');
+  assert.equal(v._lookStale, false);
+});
+test('a visible terminal applies a look change after the coming layout when the shell offers it, at once otherwise', () => {
+  const { v, log } = lookView();
+  v.onLook();
+  assert.deepEqual(log, ['look applied']);                    /* no PM_AFTER_LAYOUT: at once */
+  const queued = [];
+  T._win.PM_AFTER_LAYOUT = fn => { if (!queued.includes(fn)) queued.push(fn); };
+  try {
+    log.length = 0;
+    v.onLook(); v.onLook();
+    assert.deepEqual(log, []);
+    assert.equal(queued.length, 1);                           /* one run per frame, however often it is asked */
+    queued[0]();
+    assert.deepEqual(log, ['look applied']);
+    log.length = 0; queued.length = 0;
+    v.onLook(); offScreen(v, true); queued[0]();             /* hidden before the frame came: kept for later */
+    assert.ok(!log.includes('look applied'));
+    assert.equal(v._lookStale, true);
+  } finally { delete T._win.PM_AFTER_LAYOUT; }
 });
 
 console.log(`visibility.test: ${passed} passed`);

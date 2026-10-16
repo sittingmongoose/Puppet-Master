@@ -1243,11 +1243,30 @@
     var on = !!(this.hostVisible && this.onScreen), was = this.visible;
     this.visible = on;
     if (on !== was) { if (this.term.images) this.term.images.pause(!on); if (this.fx) this.fx.visible(on); }
-    if (on && (on !== was || show)) { this.layout(); this._groundSoon(); this.schedule(true); }
+    if (on && (on !== was || show)) { if (this._lookStale) this._applyLook(); this.layout(); this._groundSoon(); this.schedule(true); }
   };
   View.prototype.onShow = function () { this.hostVisible = true; this._visibility(true); };
   View.prototype.onHide = function () { this.hostVisible = false; this._visibility(); if (this.pop && this.closeAppearance) this.closeAppearance(true); };
+  /* the host's look changed (theme, mode, NieR Mode, Reduced Motion). B5 (pm7-liquid-glass, P1000): applied at once
+     inside the look's own switch, the terminal was the first to read the restyled page, about 930 ms of forced style and
+     layout there. A terminal that is not visible keeps the change for when it shows again and measures nothing
+     meanwhile. One that is visible applies it in the coming frame after that frame's style and layout (the shell's
+     PM_AFTER_LAYOUT), where reading the page costs nothing and the new colours still reach the frame's paint. Without
+     the shell's helper it applies at once, as before. A kept change is applied as the terminal shows, before the
+     layout that showing does anyway, so it never shows a frame of the old look. Its parked Customize screen still
+     hears the change at once (_czLook is then only its catch-up's quiet timer), or a catch-up already waiting for idle
+     would measure in the switch's gaps */
   View.prototype.onLook = function () {
+    if (!this.visible) { this._lookStale = true; if (this._czLook) this._czLook(); return; }
+    var self = this;
+    if (typeof window.PM_AFTER_LAYOUT === 'function') {
+      window.PM_AFTER_LAYOUT(this._lookRun || (this._lookRun = function () { if (self.visible) self._applyLook(); else self._lookStale = true; }));
+      return;
+    }
+    this._applyLook();
+  };
+  View.prototype._applyLook = function () {
+    this._lookStale = false;
     var h = document.documentElement;
     /* the resolved Reduced Motion flag too: the system setting can change with no attribute changing */
     var lk = this.api && this.api.look ? Object.assign(T.look(), this.api.look()) : T.look();

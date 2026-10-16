@@ -156,12 +156,18 @@ assert.equal(run.q('pmt-card-time').textContent, '0:12');
 assert.match(run.q('pmt-card-time').getAttribute('aria-label'), /^Running for 12 seconds$/);
 C.update(run, { lines: ['Compiling'] });
 assert.equal(run.q('pmt-card-out').hidden, false);
-/* the timer wakes on the elapsed second's boundary, so 0:13 shows within a few ms of 13 s, not up to a second late */
-const t0 = Date.now(), started = Date.now() - 12000;
+/* the timer wakes on the elapsed second's boundary, so 0:13 shows within a few ms of 13 s, not up to a second late.
+   Judged by a control timer due 60 ms after that boundary, not by the clock: on a loaded machine both wake late (Nas1,
+   2026-10-16), but timers still fire in the order they are due, so the text has changed when the control fires only if
+   the card's timer was due first. Started 12.5 s ago, the next second is half a second away, where a timer running on
+   its own one-second beat would be half a second late */
+const started = Date.now() - 12500;
 C.update(run, { startedAt: started });
-while (run.q('pmt-card-time').textContent === '0:12' && Date.now() - t0 < 1500) await new Promise(r => setTimeout(r, 5));
-assert.equal(run.q('pmt-card-time').textContent, '0:13', 'the shared timer advanced the elapsed text');
-assert.ok(Date.now() - started - 13000 < 60, 'the second changed on time (' + (Date.now() - started - 13000) + ' ms late)');
+/* whole seconds: 12.5 s reads 0:12, so the check below waits for the timer (were it rounded, 0:13 would show at once
+   and pass it untested; review TT-2) */
+assert.equal(run.q('pmt-card-time').textContent, '0:12', 'at 12.5 s it reads 0:12 until the next second');
+const atControl = await new Promise(r => setTimeout(() => r({ text: run.q('pmt-card-time').textContent, late: Date.now() - started - 13060 }), started + 13060 - Date.now()));
+assert.equal(atControl.text, '0:13', 'the second changed on time: before a timer due 60 ms after it (which fired ' + atControl.late + ' ms late)');
 C.update(run, { status: 'ok', exitCode: 0, elapsedMs: 13400 });
 assert.equal(act(run, 'rerun').hidden, false); assert.equal(run.q('pmt-card-time').textContent, '0:13');
 assert.match(run.q('pmt-card-time').getAttribute('aria-label'), /^Took 13 seconds$/);
