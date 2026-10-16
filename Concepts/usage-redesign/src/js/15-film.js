@@ -747,6 +747,9 @@
      finishes it at once), holds the light budget and the reveal timeline, and ends when its signature beat is over ---- */
   var moment = null, inBeat = 0, momentListeners = [];
   function emitMoment(what, m) { momentListeners.slice().forEach(function (fn) { try { fn(what, m); } catch (error) { console.error('[pm-usage] moment', error); } }); }
+  /* at the end of the current task: a reversal's 'finish' is heard once the board has retired the room that was arriving
+     (a listener's fit pass would otherwise measure that room's bodies) */
+  emitMoment.later = function (what, m) { Promise.resolve().then(function () { emitMoment(what, m); }); };
   function begin(kind, room) {
     var prev = moment, now0 = performance.now(), quick = kind === 'room' && !!prev && prev.kind === 'room' && now0 - prev.start < 900;
     finishMoment('next', kind === 'room' ? room : null);
@@ -1418,7 +1421,7 @@
       gone(anim(line, [{ transform: 'translateY(' + (p * 100).toFixed(2) + '%)', opacity: 1 }, { transform: 'translateY(0%)', opacity: 1, offset: 0.97 }, { transform: 'translateY(0%)', opacity: 0 }], { dur: ms, easing: ease, fill: 'both' }), line);
       out.ms = ms;
     }
-    emitMoment('finish', m || { kind: 'room' });
+    emitMoment.later('finish', m || { kind: 'room' });
     return out;
   }
   function reverse(el, o) {
@@ -1439,7 +1442,7 @@
     }
     dropMoment(m);
     var back = writeBack(el, s, { shift: o.shift || 0, iris: iris });
-    emitMoment('finish', m);
+    emitMoment.later('finish', m);
     return back;
   }
   /* finishMoment('next'): the elements whose animations play on (the room carried into the next change, the board that
