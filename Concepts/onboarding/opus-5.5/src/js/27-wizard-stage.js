@@ -1,6 +1,11 @@
 /* A stage's CSS entrance can spend several frames pending at opacity 0 while Chrome prepares its layers. Keep the
    outgoing stage underneath it until that entrance finishes. The existing entrance still owns its duration,
    easing and movement (including Reduced Motion); its actual ready/start time also drives the outgoing fade. */
+/* The page's own exit (.pm8-page-out) paints the page that was on screen while the next page enters over it. A stage
+   switch made then (Orchestrator's first entry backfills the demo story, and the Wizard resyncs into its workspace)
+   must not paint during that exit: the stage that was on screen stays drawn (.wo-stage-hold) and the stage switched
+   to stays undisplayed (.wo-stage-defer) until the exit has finished. The page exit then fades only what was on
+   screen before the click, and its centre never goes empty under the arriving page. */
 (function () {
   'use strict';
   function boot() {
@@ -13,6 +18,24 @@
     let watching = null;
     const leaving = new Map();
     const scrollOrigins = new Map();
+    const held = new Set(), deferred = new Set();
+    const exiting = () => root.classList.contains('pm8-page-out');
+    function releaseExit() {
+      for (const stage of held) stage.classList.remove('wo-stage-hold');
+      for (const stage of deferred) stage.classList.remove('wo-stage-defer');
+      held.clear(); deferred.clear();
+    }
+    function holdThroughExit(outgoing, incoming) {
+      if (held.has(incoming)) {
+        // Switched back to the stage still on screen: it is simply the stage again.
+        releaseExit();
+        return;
+      }
+      if (!held.size && !deferred.has(outgoing)) { outgoing.classList.add('wo-stage-hold'); held.add(outgoing); }
+      for (const stage of deferred) if (stage !== incoming) stage.classList.remove('wo-stage-defer');
+      deferred.clear();
+      incoming.classList.add('wo-stage-defer'); deferred.add(incoming);
+    }
 
     function release(stage) {
       const exit = leaving.get(stage);
@@ -81,6 +104,9 @@
       watching = null;
       release(incoming);
       if (!outgoing || !pageShown || !root.classList.contains('active')) {
+        // pageShown still reads true when the page was hidden earlier in this task: its exit class is added after the
+        // page write that runs this switch (the observer then keeps or drops the hold).
+        if (outgoing && (exiting() || pageShown)) holdThroughExit(outgoing, incoming);
         finish(token, incoming);
         return;
       }
@@ -116,6 +142,9 @@
     window.PM_WIZARD_STAGES = { prepare };
     const observer = new MutationObserver(() => {
       pageShown = root.classList.contains('active');
+      // While the page exit still paints, a stage switch in progress keeps its outgoing stage too.
+      if (exiting()) return;
+      if (held.size || deferred.size) releaseExit();
       if (!pageShown) finish(serial, current);
     });
     observer.observe(root, { attributes: true, attributeFilter: ['class'] });

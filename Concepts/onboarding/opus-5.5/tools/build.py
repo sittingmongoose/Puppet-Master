@@ -1349,6 +1349,11 @@ def build_text(usage: bool = True, home: bool = True) -> str:
 
     for old, new, label in CUSTOM_TEXT_PATCHES:
         text = replace_once(text, old, new, label)
+    # 2a. The shell's motion fixes from the final motion QA (tools/shell_motion.py): the status bar's hover tags and
+    #     the page switch. They anchor on the text the lists above leave.
+    import shell_motion  # noqa: E402
+    for old, new, label in shell_motion.PATCHES:
+        text = replace_once(text, old, new, label)
 
     # 2b. Usage: replace the Prism Usage page with the redesign in Concepts/usage-redesign. This runs after the
     # PATCHES loop because the 'usage card cta :has restyle' patch needs the old rule present, and before the O55

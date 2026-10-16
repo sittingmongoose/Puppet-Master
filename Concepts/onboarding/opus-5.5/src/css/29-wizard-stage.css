@@ -13,3 +13,7 @@ html:is([data-motion="reduced"], [data-o55-still]) #panel-wizard > .pm6-wiz-stag
 @media (prefers-reduced-motion: reduce) {
   #panel-wizard > .pm6-wiz-stage.wo-stage-out { animation: wo-fade 140ms ease-out both; }
 }
+/* Through the page's exit the stage that was on screen stays drawn as it was, and a stage switched to meanwhile is not
+   displayed until the exit has finished (27-wizard-stage.js). */
+#panel-wizard > .pm6-wiz-stage.wo-stage-hold { display: flex; animation: none; }
+#panel-wizard > .pm6-wiz-stage.active.wo-stage-defer { display: none; }
