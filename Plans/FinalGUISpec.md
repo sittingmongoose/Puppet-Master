@@ -31840,8 +31840,8 @@ canonical_text: >-
   consumers. Choices never wrap while sharing a sliding highlight. First stack neighbouring fields,
   then shorten visible choices while retaining full accessible names; if the choices still cannot
   fit, use a one-choice-per-line list with instant highlight placement. A highlight never spans
-  wrapped lines. Joined highlights glide in every look, Retro and NieR rigidly with no stretch or
-  swell (F3-652, DL-214), and place immediately under Reduced Motion. Keyboard activation and an in-place Settings update retain
+  wrapped lines. Joined highlights glide in Basic, Friendly and Glass, step in Retro and NieR, and
+  place immediately under Reduced Motion. Keyboard activation and an in-place Settings update retain
   focus on the operated control. Current/default values in rows, Details, search and result toasts
   consume SSYS-006's one formatter and effective display floor; percentage representation never
   changes the stored fractional value.
@@ -31910,9 +31910,7 @@ negative_constraints:
 - "Renderer selection must consume the inventory type field only; renderers must not be inferred from labels, descriptions, or id patterns."
 compatibility_only_notes:
 - "Slint portability: control renderers map to native widget composition and expandable editors to conditional in-place composition over opaque precomputed surfaces; no arbitrary-content backdrop blur, no SVG filters, and color math is precomputed rather than runtime-mixed."
-stale_retired_dispositions:
-- 'Amended 2026-10-16 (DL-214): Retro and NieR joined highlights glide rigidly with F3-652''s switcher; it
-  read: step in Retro and NieR.'
+stale_retired_dispositions: []
 owner_boundary_notes:
 - "Scope semantics and concrete Project-value source disclosure remain carried by F3-510/F3-442; badge semantics route to their owner contracts (restart rules and adjudication ownership); this unit owns the visible row presentation vocabulary."
 owner_hints:
@@ -43637,9 +43635,9 @@ canonical_text: >-
   its fitting follows the overlay's width; when the side panel eases or folds, and Pin, belong to the home layer,
   and the fold is view-local, never saved, with no command or wiring row.
   Amended 2026-10-16 (DL-214, DL-215): the rail strips' ink and the activity bar's tile are F3-652's
-  switcher in each look's material; in Retro and NieR the chip glides rigidly instead of hopping tick by
-  tick or cutting, and a pressed tab's words take the chip's ink in the press's own frame. NieR's hover
-  inks and Target brackets stay as above. NieR's rail wipe, with its brief empty outline of about 83 ms,
+  switcher in each look's material: Retro's block still hops tab by tab and NieR's ink bar still cuts
+  straight to the tab, as above (Jared, 2026-10-16), and a pressed tab's words take the chip's ink in the
+  press's own frame. NieR's hover inks and Target brackets stay as above. NieR's rail wipe, with its brief empty outline of about 83 ms,
   is kept as NieR's identity (Jared, 2026-10-16).
 gui_related: true
 gui_classification_reason: Defines the left rail's dropdown look and its motion in each theme family.
@@ -48050,8 +48048,10 @@ canonical_text: >-
   capsule is gone. Retro draws reverse video: an opaque square phosphor block under the labels, every
   word, icon and count on it inverted to the screen colour, blooming on Retro dark and a step deeper with
   a printed hard shadow on Retro light. NieR Mode draws its ink bar: opaque ink under the labels, paper
-  words, square, its hover ink bars, cursor square and brackets unchanged. Retro and NieR glide rigidly,
-  with no stretch, wobble or label swell. Reduced Motion places the chip at once. The same material serves
+  words, square, its hover ink bars, cursor square and brackets unchanged. Retro and NieR keep their
+  stepped motion (Jared, 2026-10-16): Retro's block steps from tab to tab and NieR's ink bar cuts
+  straight to the chosen item, as F3-438 and F3-621 say, with no glide, stretch, wobble or label swell.
+  Reduced Motion places the chip at once. The same material serves
   the activity bar's tile, the theme menu's family rows and the project picker's chosen row, in place. A
   pressed item's words, icons and counts take the chip's ink in the press's own frame, and the item it
   leaves takes its resting ink in that frame, so no label lags the chip; a hovered resting label stays at
@@ -48078,7 +48078,8 @@ acceptance_criteria:
 - Both Customize screens use dense Glass material and keep scrolling lenses below the sticky section bar.
 - In every look every tab, segment and list selection is the one switcher in that look's material (Basic
   tinted chip, Friendly mint plate, Retro reverse-video block, NieR ink bar, Glass lens unchanged); Retro
-  and NieR glide rigidly; a pressed label changes ink with the chip; hovered resting labels keep 4.5:1.
+  steps and NieR cuts, never gliding; a pressed label changes ink with the chip; hovered resting labels keep
+  4.5:1.
 validation_surfaces:
 - python3 scripts/pm-shard-plans.py --check
 - python3 scripts/pm-plan-index.py validate
@@ -48123,6 +48124,9 @@ source_lineage:
 - /mnt/Cursor/share/puppet-master/2026-10-16-plans-topup/sources/Concepts--onboarding--opus-5.5--src--css--60-switcher-looks.css,
   SHA-256 803ee5c952cfbe9ba69108bc6b8fefbcaaaa06b8ff65647ffa9a25a606cc4de7 (Q16 head f9925db90b; source
   lineage; not native certification)
+- /mnt/Cursor/share/puppet-master/2026-10-16-plans-topup/sources/pm-mail-1016075014-d904.txt, SHA-256
+  c47ba9668ab4537387f255ce3c05384c84c114d4f27eb04a1572a1adf337dcf6 (Jared's 2026-10-16 stepped-motion
+  ruling; decision lineage)
 preserved_exact_tokens:
 - Liquid Glass
 negative_constraints: []

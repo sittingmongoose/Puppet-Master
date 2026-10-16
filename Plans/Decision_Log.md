@@ -15816,15 +15816,15 @@ owner_doc: Plans/Decision_Log.md
 canonical_text: >-
   Recorded 2026-10-16. The consistency pass Q16 (head f9925db90b on main 5b43e73891, Glass owner approved,
   review fixes made) adopts F3-652's one switcher in every look, each in its own material: Basic's tinted
-  chip, Friendly's mint plate, Retro's reverse-video block and NieR's ink bar, Glass's lens unchanged,
-  Retro and NieR gliding rigidly. F3-438, F3-463, F3-464 and F3-621 read their selection marks through
-  F3-652. Jared's 2026-10-15 panel items: a Home board opens pinned from every path (F3-638); the
+  chip, Friendly's mint plate, Retro's reverse-video block and NieR's ink bar, Glass's lens unchanged.
+  Jared decided on 2026-10-16 that Retro and NieR chips keep their stepped motion, Retro stepping and NieR
+  cutting as F3-438 and F3-621 say, not the concept's glide, whose tokens Q16 changes. F3-463, F3-464 and
+  F3-621 read their selection marks through F3-652. Jared's 2026-10-15 panel items: a Home board opens pinned from every path (F3-638); the
   add-a-tab picker's search is the look's own search field, seamless in Glass (F3-647); the active Home
   tab is the look's chip standing on the panel's rule (F3-631), and Retro's chip replaces the notch, his
   'new draft design'. Every control draws only its own look's palette (F3-647). Jared approved Friendly's
   lavender for the Usage key light, Live dot and Home Live mark (F3-628, F3-638; landed c0305227f7).
-  Picker Back stays DL-211's. Retro and NieR's rigid glide is a reviewed concept choice; DL-152's stepped
-  NieR motion still governs every other NieR surface. Concept measurements are not native certification.
+  Picker Back stays DL-211's. Concept measurements are not native certification.
 gui_related: true
 gui_classification_reason: One Switcher Per Look, Seated Home Tabs And Friendly Lavender.
 split_recommended: false
@@ -15858,6 +15858,9 @@ source_lineage:
   SHA-256 fb6f7127bfa67d809d9fdfef3b44da8603511e24c4782b1f24627376566a3b77 (landed c0305227f7; source lineage)
 - /mnt/Cursor/share/puppet-master/2026-10-16-plans-topup/sources/2026-10-13-pm7-coordinator-handoff--COORDINATOR-LOG-20261016.md,
   SHA-256 d52085df3ab4a82f323d1fd2ed0a846b8e858fcaf7ec746a2ff79cc9cf2a97ba (Jared's rulings of 2026-10-15 (~19:20, ~19:30 ET) and 2026-10-16 (~09:05 ET); decision lineage)
+- /mnt/Cursor/share/puppet-master/2026-10-16-plans-topup/sources/pm-mail-1016075014-d904.txt, SHA-256
+  c47ba9668ab4537387f255ce3c05384c84c114d4f27eb04a1572a1adf337dcf6 (coordinator mail relaying Jared's
+  2026-10-16 ruling that Retro and NieR chips step or cut; decision lineage)
 preserved_exact_tokens: []
 negative_constraints: []
 owner_hints:

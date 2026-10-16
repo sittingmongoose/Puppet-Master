@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L43366-L43820
+Source lines: L43364-L43818
 
-Source SHA256: `39ead3da53e7659467ebf5d6a5143f3ab02502e95505f86a58d634bb18f2bf0c`
+Source SHA256: `0c97cd6f5b6224997d7d5c5cdc61575c613b3bfdf6e8648ba20d182b5059e1c3`
 
 ---
 
@@ -282,9 +282,9 @@ canonical_text: >-
   its fitting follows the overlay's width; when the side panel eases or folds, and Pin, belong to the home layer,
   and the fold is view-local, never saved, with no command or wiring row.
   Amended 2026-10-16 (DL-214, DL-215): the rail strips' ink and the activity bar's tile are F3-652's
-  switcher in each look's material; in Retro and NieR the chip glides rigidly instead of hopping tick by
-  tick or cutting, and a pressed tab's words take the chip's ink in the press's own frame. NieR's hover
-  inks and Target brackets stay as above. NieR's rail wipe, with its brief empty outline of about 83 ms,
+  switcher in each look's material: Retro's block still hops tab by tab and NieR's ink bar still cuts
+  straight to the tab, as above (Jared, 2026-10-16), and a pressed tab's words take the chip's ink in the
+  press's own frame. NieR's hover inks and Target brackets stay as above. NieR's rail wipe, with its brief empty outline of about 83 ms,
   is kept as NieR's identity (Jared, 2026-10-16).
 gui_related: true
 gui_classification_reason: Defines the left rail's dropdown look and its motion in each theme family.

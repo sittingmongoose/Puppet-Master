@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L31417-L32366
+Source lines: L31417-L32364
 
-Source SHA256: `39ead3da53e7659467ebf5d6a5143f3ab02502e95505f86a58d634bb18f2bf0c`
+Source SHA256: `0c97cd6f5b6224997d7d5c5cdc61575c613b3bfdf6e8648ba20d182b5059e1c3`
 
 ---
 
@@ -434,8 +434,8 @@ canonical_text: >-
   consumers. Choices never wrap while sharing a sliding highlight. First stack neighbouring fields,
   then shorten visible choices while retaining full accessible names; if the choices still cannot
   fit, use a one-choice-per-line list with instant highlight placement. A highlight never spans
-  wrapped lines. Joined highlights glide in every look, Retro and NieR rigidly with no stretch or
-  swell (F3-652, DL-214), and place immediately under Reduced Motion. Keyboard activation and an in-place Settings update retain
+  wrapped lines. Joined highlights glide in Basic, Friendly and Glass, step in Retro and NieR, and
+  place immediately under Reduced Motion. Keyboard activation and an in-place Settings update retain
   focus on the operated control. Current/default values in rows, Details, search and result toasts
   consume SSYS-006's one formatter and effective display floor; percentage representation never
   changes the stored fractional value.
@@ -504,9 +504,7 @@ negative_constraints:
 - "Renderer selection must consume the inventory type field only; renderers must not be inferred from labels, descriptions, or id patterns."
 compatibility_only_notes:
 - "Slint portability: control renderers map to native widget composition and expandable editors to conditional in-place composition over opaque precomputed surfaces; no arbitrary-content backdrop blur, no SVG filters, and color math is precomputed rather than runtime-mixed."
-stale_retired_dispositions:
-- 'Amended 2026-10-16 (DL-214): Retro and NieR joined highlights glide rigidly with F3-652''s switcher; it
-  read: step in Retro and NieR.'
+stale_retired_dispositions: []
 owner_boundary_notes:
 - "Scope semantics and concrete Project-value source disclosure remain carried by F3-510/F3-442; badge semantics route to their owner contracts (restart rules and adjudication ownership); this unit owns the visible row presentation vocabulary."
 owner_hints:
