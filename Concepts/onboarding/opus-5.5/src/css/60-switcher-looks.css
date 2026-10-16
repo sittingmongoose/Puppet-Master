@@ -148,6 +148,26 @@ html[data-o55-nier="on"][data-o55-nier-parts~="cursor"]:not(#lgz) :is(.page-tab,
    an empty layer that the no-pills gate read as a capsule, is not drawn. */
 html:not([data-theme^="glass"]):not(#lgz):not(#lgy) .lg-lens::after { content: none; }
 
+/* Reverse video is on or off: in the looks whose chip steps or cuts, a switcher's words and marks change ink at once, never
+   fading, so the tab under the chip is the one in the chip's ink in every frame (Q16 delta review: a 140-200 ms colour
+   fade left a tab the chip had left still inked, and a tab it had reached not yet). One plain selector per kind of item
+   and part, so the browser's ancestor filter rejects every other element. */
+:is(html[data-theme^="retro"], html[data-o55-nier="on"]):not(#lgz) nav.page-tabs .page-tab,
+:is(html[data-theme^="retro"], html[data-o55-nier="on"]):not(#lgz) #pmuRange > button,
+:is(html[data-theme^="retro"], html[data-o55-nier="on"]):not(#lgz) #sidePanelSlot .pm-segtab-item,
+:is(html[data-theme^="retro"], html[data-o55-nier="on"]):not(#lgz) .orch-tabs .orch-tab,
+:is(html[data-theme^="retro"], html[data-o55-nier="on"]):not(#lgz) #pmuNav .pmu-navbtn,
+:is(html[data-theme^="retro"], html[data-o55-nier="on"]):not(#lgz) #pmuNav .pmu-navbtn .pmu-navicon,
+:is(html[data-theme^="retro"], html[data-o55-nier="on"]):not(#lgz) #pmuNav .pmu-navbtn .pmu-navtext,
+:is(html[data-theme^="retro"], html[data-o55-nier="on"]):not(#lgz) #pm-settings-root .rail-scroll > .side-link,
+:is(html[data-theme^="retro"], html[data-o55-nier="on"]):not(#lgz) #pm-settings-root .domain-link,
+:is(html[data-theme^="retro"], html[data-o55-nier="on"]):not(#lgz) #pm-settings-root .domain-link small,
+:is(html[data-theme^="retro"], html[data-o55-nier="on"]):not(#lgz) #pm-settings-root .workspace-tab,
+:is(html[data-theme^="retro"], html[data-o55-nier="on"]):not(#lgz) #pm-settings-root .manager-tab,
+:is(html[data-theme^="retro"], html[data-o55-nier="on"]):not(#lgz) #pm-settings-root .pm51-index-group > .index-link,
+:is(html[data-theme^="retro"], html[data-o55-nier="on"]):not(#lgz) #themeMenu .pm6-tt-mode,
+:is(html[data-theme^="retro"], html[data-o55-nier="on"]):not(#lgz) #panel-wizard .pm6-wiz-intent-chip { transition-property: none; }
+
 /* ---- What the component does not draw, in the same material ----------------------------------------------------------
    The title bar's one-of-several menus (the look family, the project) are lists that live in a menu, not strips: the
    chosen row wears the switcher's material in place, as Settings' service list does (glass.css section 6). NieR keeps

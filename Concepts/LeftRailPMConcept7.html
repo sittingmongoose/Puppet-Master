@@ -33522,6 +33522,26 @@ html[data-o55-nier="on"][data-o55-nier-parts~="cursor"]:not(#lgz) :is(.page-tab,
    an empty layer that the no-pills gate read as a capsule, is not drawn. */
 html:not([data-theme^="glass"]):not(#lgz):not(#lgy) .lg-lens::after { content: none; }
 
+/* Reverse video is on or off: in the looks whose chip steps or cuts, a switcher's words and marks change ink at once, never
+   fading, so the tab under the chip is the one in the chip's ink in every frame (Q16 delta review: a 140-200 ms colour
+   fade left a tab the chip had left still inked, and a tab it had reached not yet). One plain selector per kind of item
+   and part, so the browser's ancestor filter rejects every other element. */
+:is(html[data-theme^="retro"], html[data-o55-nier="on"]):not(#lgz) nav.page-tabs .page-tab,
+:is(html[data-theme^="retro"], html[data-o55-nier="on"]):not(#lgz) #pmuRange > button,
+:is(html[data-theme^="retro"], html[data-o55-nier="on"]):not(#lgz) #sidePanelSlot .pm-segtab-item,
+:is(html[data-theme^="retro"], html[data-o55-nier="on"]):not(#lgz) .orch-tabs .orch-tab,
+:is(html[data-theme^="retro"], html[data-o55-nier="on"]):not(#lgz) #pmuNav .pmu-navbtn,
+:is(html[data-theme^="retro"], html[data-o55-nier="on"]):not(#lgz) #pmuNav .pmu-navbtn .pmu-navicon,
+:is(html[data-theme^="retro"], html[data-o55-nier="on"]):not(#lgz) #pmuNav .pmu-navbtn .pmu-navtext,
+:is(html[data-theme^="retro"], html[data-o55-nier="on"]):not(#lgz) #pm-settings-root .rail-scroll > .side-link,
+:is(html[data-theme^="retro"], html[data-o55-nier="on"]):not(#lgz) #pm-settings-root .domain-link,
+:is(html[data-theme^="retro"], html[data-o55-nier="on"]):not(#lgz) #pm-settings-root .domain-link small,
+:is(html[data-theme^="retro"], html[data-o55-nier="on"]):not(#lgz) #pm-settings-root .workspace-tab,
+:is(html[data-theme^="retro"], html[data-o55-nier="on"]):not(#lgz) #pm-settings-root .manager-tab,
+:is(html[data-theme^="retro"], html[data-o55-nier="on"]):not(#lgz) #pm-settings-root .pm51-index-group > .index-link,
+:is(html[data-theme^="retro"], html[data-o55-nier="on"]):not(#lgz) #themeMenu .pm6-tt-mode,
+:is(html[data-theme^="retro"], html[data-o55-nier="on"]):not(#lgz) #panel-wizard .pm6-wiz-intent-chip { transition-property: none; }
+
 /* ---- What the component does not draw, in the same material ----------------------------------------------------------
    The title bar's one-of-several menus (the look family, the project) are lists that live in a menu, not strips: the
    chosen row wears the switcher's material in place, as Settings' service list does (glass.css section 6). NieR keeps
@@ -226508,7 +226528,7 @@ try { if (window.PM_HOME && typeof window.PM_HOME.boot === 'function') window.PM
   }
   function stopRide(L) { if (L.ride) { var r = L.ride; L.ride = null; r.forEach(function (m) { m.cancel(); }); } }
   function stopLensTravel(L) {
-    stopMagnify(L); stopRide(L);
+    stopMagnify(L); stopRide(L); stopHop(L);
     if (L.glintAnim) { var g = L.glintAnim; L.glintAnim = null; g.cancel(); }
     if (L.anim) { var an = L.anim; L.anim = null; an.onfinish = null; an.cancel(); } L.reducedAnim = false;
   }
@@ -226549,7 +226569,7 @@ try { if (window.PM_HOME && typeof window.PM_HOME.boot === 'function') window.PM
     pruneLensFilters();
   }
   function suspendLensMotion() {
-    lenses.forEach(function (L) { stopLensTravel(L); L.pending = null; if (L.scrubCleanup) L.scrubCleanup(); });
+    lenses.forEach(function (L) { if (L.pending) pressMark(L.pending, false); L.pending = null; stopLensTravel(L); if (L.scrubCleanup) L.scrubCleanup(); });
     if (isGlass() && beadOn && beadOn.isConnected) { clearTimeout(beadHide); beadHide = 0; stopBeadAnimation(); } else resetBead();
     menuMotions.forEach(function (M, menu) { resetMenuMorph(menu); });
   }
@@ -226761,40 +226781,55 @@ try { if (window.PM_HOME && typeof window.PM_HOME.boot === 'function') window.PM
     if (switchMotion !== 'glide' && !isGlass()) { hop(L, from, R, strip, cfg, target, vertical); return; }
     travel(L, from, R, vertical, { labels: labelsOf(cfg, strip, vertical), mags: magsOf(cfg), vertical: vertical });
   }
-  /* Retro's step and NieR's cut. A step shows the chip on up to two tabs between (or, next door, half way) for one 33 ms
-     tick each, then on its tab: hard jumps, nothing eased or stretched. The press marks follow the chip: the tab it
-     leaves drops its chosen ink at once, and the tab it lands on takes it with the landing, or when the pointer lifts if
-     that is sooner, so the app's click can never hold a landed chip under the old ink (F3-621: only the tab under the
+  /* Retro's step and NieR's cut. A step moves the chip tab by tab, up to two tabs between (picked evenly) and then its own,
+     one 33 ms tick each: a tab next door is one hop, at once. Each tick moves the chip and the inks in the same callback,
+     on the main thread: the tab under the chip reads as chosen (data-lg-press="on"), the tab it is headed for reads as not
+     chosen until it lands ("off", or no mark while a press holds it), and the tab it left as not chosen. If the app holds
+     the page (its click), chip and inks wait together, so a landed chip never sits under an old ink (Q16 delta review:
+     the compositor-run step landed the chip 120-350 ms before a timer could ink its label; F3-621: only the tab under the
      ink looks chosen). */
   var HOP_MS = 33;
   function hopStops(A, B, strip, cfg, target, vertical) {
     var c = function (r) { return vertical ? r.y + r.h / 2 : r.x + r.w / 2; }, a = c(A), b = c(B), lo = Math.min(a, b), hi = Math.max(a, b), pad = cfg.pad == null ? 2 : cfg.pad;
     var mids = Array.prototype.slice.call(strip.querySelectorAll(cfg.items)).filter(function (it) { return it !== target && visible(it); })
-      .map(function (it) { return rectIn(strip, cfg.box ? cfg.box(it) : it, pad); })
-      .filter(function (r) { var m = c(r); return m > lo + 1 && m < hi - 1; })
-      .sort(function (p, q) { return Math.abs(c(p) - a) - Math.abs(c(q) - a); });
-    if (!mids.length) return [{ x: (A.x + B.x) / 2, y: (A.y + B.y) / 2, w: (A.w + B.w) / 2, h: (A.h + B.h) / 2 }];
-    if (mids.length <= 2) return mids;
-    return [mids[Math.round(mids.length / 3) - 1], mids[Math.round(mids.length * 2 / 3) - 1]];
+      .map(function (it) { return { it: it, r: rectIn(strip, cfg.box ? cfg.box(it) : it, pad) }; })
+      .filter(function (s) { var m = c(s.r); return m > lo + 1 && m < hi - 1; })
+      .sort(function (p, q) { return Math.abs(c(p.r) - a) - Math.abs(c(q.r) - a); });
+    if (mids.length > 2) mids = [mids[Math.round(mids.length / 3) - 1], mids[Math.round(mids.length * 2 / 3) - 1]];
+    return mids.concat([{ it: target, r: B }]);
+  }
+  var hopOwned = new WeakMap();   /* an item whose ink a hop holds: a press settling under it leaves the hop's mark */
+  function hopMark(L, el, v) {
+    if (!el || !el.isConnected) return;
+    if (v) { if (el.getAttribute('data-lg-press') !== v) el.setAttribute('data-lg-press', v); L.hopMarks.set(el, v); hopOwned.set(el, v); }
+    else { if (L.hopMarks.get(el) === el.getAttribute('data-lg-press')) el.removeAttribute('data-lg-press'); L.hopMarks.delete(el); hopOwned.delete(el); }
+  }
+  function stopHop(L) {
+    if (L.hopT) { clearTimeout(L.hopT); L.hopT = 0; }
+    if (L.hopMarks) { L.hopMarks.forEach(function (v, el) { hopOwned.delete(el); if (el.getAttribute('data-lg-press') === v) el.removeAttribute('data-lg-press'); }); L.hopMarks.clear(); }
+    var P = L.hopPress; L.hopPress = null;
+    if (P && L.pending === P && P.el.isConnected) P.el.setAttribute('data-lg-press', 'on');
   }
   function hop(L, A, B, strip, cfg, target, vertical) {
     stopLensTravel(L);
-    setLensBox(L, B);
+    if (switchMotion === 'cut' || !A) { setLensBox(L, B); return; }
+    var stops = hopStops(A, B, strip, cfg, target, vertical), k = 0;
     var P = L.pending && L.pending.el === target ? L.pending : null;
-    if (switchMotion === 'cut' || !A) return;
-    var stops = hopStops(A, B, strip, cfg, target, vertical), n = stops.length, dur = n * HOP_MS, frames = [], rects = [{ t: 0, x: A.x, y: A.y, w: A.w, h: A.h }];
-    var bx = B.x + B.w / 2, by = B.y + B.h / 2;
-    stops.forEach(function (S, k) {
-      frames.push({ offset: k / n, easing: 'step-end', transform: 'translate3d(' + (S.x + S.w / 2 - bx).toFixed(2) + 'px,' + (S.y + S.h / 2 - by).toFixed(2) + 'px,0) scale(' + (S.w / B.w).toFixed(4) + ',' + (S.h / B.h).toFixed(4) + ')' });
-      rects.push({ t: (k + 1) * HOP_MS - 0.01, x: S.x, y: S.y, w: S.w, h: S.h });
-    });
-    frames.push({ offset: 1, transform: 'none' }); rects.push({ t: dur, x: B.x, y: B.y, w: B.w, h: B.h });
-    var an = L.lens.animate(frames, { duration: dur, easing: 'linear' }); L.anim = an; L.path = { t0: performance.now(), dur: dur, rects: rects };
-    an.onfinish = function () { if (L.anim === an) L.anim = null; };
-    if (P && switchUnder && P.el.getAttribute('data-lg-press') === 'on') {
-      P.el.removeAttribute('data-lg-press');
-      clearTimeout(P.landT); P.landT = setTimeout(function () { P.landT = 0; if (L.pending === P && P.el.isConnected) P.el.setAttribute('data-lg-press', 'on'); }, dur);
-    }
+    if (!L.hopMarks) L.hopMarks = new Map();
+    if (switchUnder && stops.length > 1) { if (P) L.hopPress = P; hopMark(L, target, 'off'); }
+    var tick = function () {
+      L.hopT = 0;
+      var s = stops[k], prev = k > 0 ? stops[k - 1].it : null;
+      if (switchUnder && prev && prev !== target) hopMark(L, prev, null);
+      setLensBox(L, s.r);
+      if (s.it === target) {
+        if (switchUnder) { hopMark(L, target, null); var Q = L.hopPress; L.hopPress = null; if (Q && L.pending === Q && Q.el.isConnected) Q.el.setAttribute('data-lg-press', 'on'); }
+        return;
+      }
+      if (switchUnder) hopMark(L, s.it, 'on');
+      k++; L.hopT = setTimeout(tick, HOP_MS);
+    };
+    tick();
   }
   /* the press: the lens leaves for the pressed item at once; the app's choice (or its absence) settles it. Only for
      items the app can choose: a disabled or inert item, or a strip that takes no press (a progress rail), keeps the lens
@@ -226805,11 +226840,11 @@ try { if (window.PM_HOME && typeof window.PM_HOME.boot === 'function') window.PM
      chosen ink after the chip had gone (Friendly's mint words, Q16 review). Every look that adopts the switcher; never
      Glass, whose clear lens needs no second ink */
   function pressMark(P, on) {
-    if (P && !on && P.landT) { clearTimeout(P.landT); P.landT = 0; }
     if (!P || (on && !switchLook)) return;
     [[P.el, 'on'], [P.from, 'off']].forEach(function (x) {
       var e = x[0]; if (!e) return;
-      if (on) { if (e.getAttribute('data-lg-press') !== x[1]) e.setAttribute('data-lg-press', x[1]); }
+      if (on) { if (!hopOwned.has(e) && e.getAttribute('data-lg-press') !== x[1]) e.setAttribute('data-lg-press', x[1]); }
+      else if (hopOwned.has(e)) e.setAttribute('data-lg-press', hopOwned.get(e));
       else if (e.hasAttribute('data-lg-press')) e.removeAttribute('data-lg-press');
     });
   }
@@ -226837,7 +226872,6 @@ try { if (window.PM_HOME && typeof window.PM_HOME.boot === 'function') window.PM
   document.addEventListener('pointerup', function (e) {
     lenses.forEach(function (L) {
       var P = L.pending; if (!P || P.up) return;
-      if (P.landT) { clearTimeout(P.landT); P.landT = 0; if (P.el.isConnected) P.el.setAttribute('data-lg-press', 'on'); }
       P.up = performance.now(); P.away = !(e.target && P.el.contains(e.target));
       if (P.away) queueSync(L.strip); else setTimeout(function () { queueSync(L.strip); }, 2550);
     });
