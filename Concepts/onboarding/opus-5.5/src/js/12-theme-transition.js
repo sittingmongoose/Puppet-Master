@@ -6,9 +6,10 @@
    look's own background washes over the app, with a soft glow of its accent spreading from the theme control; the
    theme is written as the cover comes in, its first frame drawn under the full cover, and the cover lifts once
    frames come on time again, with the colour transitions the new look started finished under it, so the new look is
-   shown whole (about half a second in all on the M3). The cover and its glow run on the
-   compositor, so they keep moving while the main thread restyles. The cover stops just short of opaque: content
-   beneath an opaque layer is not rastered, and would then be drawn as it rasters while the cover lifts.
+   shown whole (about half a second in all on the M3). The cover and its glow run on the compositor, so they keep
+   moving while the main thread restyles. The cover is opaque: the page beneath it is then not rastered while it is
+   covered, which halved the time the P1000's GPU spent rastering the new page with nothing drawn (400 to 200 ms in a
+   trace). That raster, after the restyle, still holds every frame there, the cover's included, for a few hundred ms.
    A View Transition (snapshot crossfade, then a circular reveal from the control) was tried first and dropped:
    starting one restyles the whole page by itself in Chrome (230-300 ms on the P1000 before its callback runs).
 
@@ -17,7 +18,7 @@
 (function () {
   'use strict';
   const html = document.documentElement;
-  const COVER = 0.995;
+  const COVER = 1;
   let job = null, phase = 'idle', veil = null, probe = null, coverAnim = null, glowAnims = [], ticket = 0;
   const veils = {};   /* one cover per mode, painted ahead in the current family's colours for that mode */
 
