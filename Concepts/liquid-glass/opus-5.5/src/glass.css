@@ -774,6 +774,13 @@ html[data-lg="on"][data-theme^="glass"]:not(#lgz) .o55t-ring { box-shadow: 0 0 0
    a layer too); its travel animates on the compositor as any transform animation does */
 :is(html[data-theme^="retro"], html[data-o55-nier="on"]):not([data-theme^="glass"]):not(#lgz) lg-under.lg-lenses-under .lg-lens { will-change: auto; }
 :is(html[data-theme^="retro"], html[data-o55-nier="on"]):not([data-theme^="glass"]):not(#lgz) :is(#themeMenu .pm6-tt-mode, #panel-wizard .pm6-wiz-intent-chip, #pm-o55-onboarding .o55-seg button, #pm-o55-onboarding .o55-railitem) { position: relative; z-index: 1; }
+/* a Retro step's blocks (glass.js hop): above the labels, in the chip's material, each holding an inverted copy of its
+   tab's label clipped to the block; they show and hide on the compositor and go once the app has chosen the tab */
+lg-over { display: none; }
+html:not([data-theme^="glass"]):not(#lgz) lg-over.lg-hops { display: block; position: absolute; inset: 0; z-index: 2; pointer-events: none; }
+html:not([data-theme^="glass"]):not(#lgz):not(#lgy) lg-over.lg-hops .lg-hop { overflow: hidden; z-index: auto; will-change: opacity; }
+html:not(#lgz):not(#lgy):not(#lgx) .lg-hop .lg-twin,
+html:not(#lgz):not(#lgy):not(#lgx) .lg-hop .lg-twin * { color: var(--pm-switch-ink-on); -webkit-text-fill-color: currentColor; --nx-ink: currentColor; background: transparent; border-color: transparent; box-shadow: none; text-shadow: none; transition: none; animation: none; }
 /* while a press moves the chip ahead of the app's choice (glass.js pressMark), the pressed item reads as chosen and the
    one it leaves as not, so neither label sits in its old colour on the wrong ground (three ids: above the chosen ink). The
    item's own ink follows in every look that adopts the switcher (every look but Glass); under an opaque chip so do
