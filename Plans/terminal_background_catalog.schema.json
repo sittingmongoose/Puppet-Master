@@ -1,0 +1,193 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "pm.terminal_background_catalog.v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_id",
+    "owner_ref",
+    "categories",
+    "defaults",
+    "compatibility",
+    "plain_choices",
+    "source_refs",
+    "designs"
+  ],
+  "properties": {
+    "schema_id": {
+      "const": "pm.terminal_background_catalog.v1"
+    },
+    "owner_ref": {
+      "const": "Plans/FinalGUISpec.md#F3-642"
+    },
+    "categories": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {
+        "enum": [
+          "tonal",
+          "wash",
+          "pattern",
+          "scene",
+          "glass",
+          "retro",
+          "mark",
+          "moving"
+        ]
+      }
+    },
+    "defaults": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "gradient",
+        "image"
+      ],
+      "properties": {
+        "gradient": {
+          "type": "string"
+        },
+        "image": {
+          "type": "string"
+        }
+      }
+    },
+    "compatibility": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "gradient",
+        "image"
+      ],
+      "properties": {
+        "gradient": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          }
+        },
+        "image": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "plain_choices": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "always",
+        "theme_surface"
+      ],
+      "properties": {
+        "always": {
+          "const": [
+            "Follow look",
+            "Solid color"
+          ]
+        },
+        "theme_surface": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "source_refs": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "path",
+          "sha256",
+          "revision"
+        ],
+        "properties": {
+          "path": {
+            "type": "string"
+          },
+          "sha256": {
+            "type": "string",
+            "pattern": "^[a-f0-9]{64}$"
+          },
+          "revision": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "designs": {
+      "type": "array",
+      "minItems": 64,
+      "maxItems": 64,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "name",
+          "category",
+          "field",
+          "settings_value",
+          "suggested_looks",
+          "moving",
+          "available_in_all_looks"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "name": {
+            "type": "string",
+            "minLength": 1
+          },
+          "category": {
+            "enum": [
+              "tonal",
+              "wash",
+              "pattern",
+              "scene",
+              "glass",
+              "retro",
+              "mark",
+              "moving"
+            ]
+          },
+          "field": {
+            "enum": [
+              "code.terminal.background-gradient",
+              "code.terminal.background-image"
+            ]
+          },
+          "settings_value": {
+            "type": "string",
+            "minLength": 1
+          },
+          "suggested_looks": {
+            "type": "array",
+            "uniqueItems": true,
+            "items": {
+              "enum": [
+                "basic",
+                "friendly",
+                "glass",
+                "retro",
+                "nier"
+              ]
+            }
+          },
+          "moving": {
+            "type": "boolean"
+          },
+          "available_in_all_looks": {
+            "const": true
+          }
+        }
+      }
+    }
+  }
+}

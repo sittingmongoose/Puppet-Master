@@ -27,6 +27,7 @@ def check():
         ("Wiring_Matrix.production.json", "Wiring_Matrix.schema.json"),
         ("pm7_control_bindings.json", "pm7_control_bindings.schema.json"),
         ("appearance_quick_sets.json", "appearance_quick_sets.schema.json"),
+        ("terminal_background_catalog.json", "terminal_background_catalog.schema.json"),
     ]:
         validator = jsonschema.Draft202012Validator(read(schema))
         for error in validator.iter_errors(read(instance)):
@@ -140,9 +141,11 @@ def check():
     wallpapers = wallpaper_catalog["wallpapers"]
     require(len({row['id'] for row in wallpapers}) == len(wallpapers), "Duplicate wallpaper id")
     require(not ({row['id'] for row in wallpapers} & set(wallpaper_catalog['withdrawn_ids'])), 'Withdrawn NieR print remains selectable')
-    pending = wallpaper_catalog['pending_families'][0]
-    require(pending['family'] == 'nier' and pending['default_for'] is None, 'Held NieR family changed the look default')
-    require([row['id'] for row in pending['scene_choices']] == ['city', 'bunker', 'desert', 'forest', 'park', 'flooded'], 'Approved NieR scene identities differ')
+    require(not wallpaper_catalog['pending_families'], 'Published wallpaper family is still held')
+    require(len(wallpapers) == 29, 'Published wallpaper census differs')
+    nier = [row for row in wallpapers if row['family'] == 'nier']
+    require([row['id'] for row in nier] == ['city', 'bunker', 'desert', 'forest', 'park', 'flooded'], 'Approved NieR scene identities differ')
+    require(all(row['default_for'] is None for row in nier), 'A gallery print replaced the NieR look default')
     wallpaper_cases = read('pm7_canon.fixtures.json')['wallpaper_order_cases']
     for case in wallpaper_cases:
         state = {'wallpaper': 'look', 'nier_background': 'city'}
@@ -155,11 +158,71 @@ def check():
         require(set(wallpaper['assets']) == {'light', 'dark'}, f"Missing wallpaper mode: {wallpaper['id']}")
         for path in wallpaper["assets"].values():
             require((ROOT / path).is_file(), f"Missing wallpaper asset: {path}")
+
+    backgrounds = read('terminal_background_catalog.json')
+    designs = backgrounds['designs']
+    require(len(designs) == len({row['id'] for row in designs}) == 64, 'Terminal design census or identity differs')
+    require(all(row['category'] in backgrounds['categories'] and row['available_in_all_looks'] for row in designs), 'A terminal design is unavailable across looks or has an unknown category')
+    for field, extra in [('code.terminal.background-gradient', []), ('code.terminal.background-image', ['Custom'])]:
+        require(settings[field]['options'] == [row['settings_value'] for row in designs if row['field'] == field] + extra, f'{field}: choices differ from the design catalog')
+    design_ids = {row['id'] for row in designs}
+    require(set(backgrounds['defaults'].values()) <= design_ids, 'A terminal catalog default does not exist')
+    require(all(target in design_ids for mapping in backgrounds['compatibility'].values() for target in mapping.values()), 'A terminal compatibility mapping has no target')
+    require('default' not in settings['general.visual.glass-background-mode'] and 'Superseded' in settings['general.visual.glass-background-mode']['desc'], 'Legacy Glass background selector is not retired')
+
+    preset_schema = read('terminal_appearance_presets.schema.json')
+    jsonschema.Draft202012Validator.check_schema(preset_schema)
+    preset_validator = jsonschema.Draft202012Validator(preset_schema, format_checker=jsonschema.FormatChecker())
+    terminal_ids = quick_sets['terminal']['reset_ids']
+    require(set(preset_schema['$defs']['fields']['properties']) == set(terminal_ids), 'Preset fields and terminal appearance ownership differ')
+    require(not read('pm7_control_bindings.json')['held_controls'], 'Resolved PM7 controls remain held')
+    for field in terminal_ids:
+        for scope in ['this', 'all']:
+            require(any(row['control_id'] == f"terminal.{scope}.{field.split('.')[-1]}" and row['setting_ids'] == [field] for row in census), f'Missing {scope} terminal binding: {field}')
+    for scope in ['this', 'all']:
+        binding = next(row for row in census if row['control_id'] == f'terminal.{scope}.preset.apply')
+        require(binding['setting_ids'] == terminal_ids, f'{scope}: preset apply is not a complete appearance replacement')
+        expected_actions = ['cmd.terminal.appearance.set'] if scope == 'this' else ['cmd.settings.transaction.preview', 'cmd.settings.transaction.apply']
+        require(binding['action_ids'] == expected_actions, f'{scope}: preset apply bypasses the existing writer')
+    local_ids = {f'terminal.preset.{action}' for action in ['save', 'rename', 'delete', 'undo']}
+    local_ids.update(row['control_id'] for row in census if row['control_id'].startswith('panel.picker.back.'))
+    require(len(local_ids) == 13, 'Preset/picker local control census differs')
+    for control_id in local_ids:
+        row = next(row for row in census if row['control_id'] == control_id)
+        require(row['disposition'] == 'local' and not row['production_entries'] and not row['setting_ids'], f'{control_id}: local action acquired a command or Settings write')
+    bell_continue = next(row for row in census if row['control_id'] == 'notifications.setup.continue')
+    require(bell_continue['action_ids'] == ['ui.onboarding.start'] and bell_continue['disposition'] == 'local' and not bell_continue['production_entries'], 'Bell Continue does not reuse the typed onboarding resume route')
+
+    preset_cases = read('pm7_canon.fixtures.json')['terminal_preset_cases']
+    for case in preset_cases:
+        value = case['value']
+        valid = preset_validator.is_valid(value)
+        if valid:
+            records = value['presets']
+            names = [record['name'] for record in records]
+            valid = (len({record['id'] for record in records}) == len(records)
+                     and len({name.lower() for name in names}) == len(names)
+                     and all(name == ' '.join(name.split()) for name in names))
+        require(valid == case['valid'], f"Preset fixture result differs: {case['name']}")
+    preset_apply_cases = read('pm7_canon.fixtures.json')['terminal_preset_apply_cases']
+    for case in preset_apply_cases:
+        require(set(case['saved_fields']) <= set(terminal_ids), f"{case['name']}: saved patch escapes appearance")
+        patch = {key: case['saved_fields'].get(key, settings[key].get('default') if case['scope'] == 'all' else None) for key in terminal_ids}
+        after = {**case['before'], **patch}
+        if case['scope'] == 'this':
+            after = {key: value for key, value in after.items() if value is not None}
+            require(case['expected_cleared'] not in after, f"{case['name']}: stale tab override survived")
+        else:
+            key = case['expected_default']
+            require(after[key] == settings[key].get('default'), f"{case['name']}: omitted Project field did not use its default")
+        require(all(after.get(key) == value for key, value in case['saved_fields'].items()), f"{case['name']}: saved choice lost")
+        require(all(after.get(key) == value for key, value in case['unchanged'].items()), f"{case['name']}: unrelated setting changed")
+
     glyphs = read("glyph_catalog.json")['status_marks']
     require(len({row['key'] for row in glyphs}) == 22, 'Shared status vocabulary differs')
     require(all(row['meaning'] and row['tone'] for row in glyphs), 'Missing glyph semantics')
     require(next(row for row in glyphs if row['key'] == 'warning')['glyph_id'] != next(row for row in glyphs if row['key'] == 'failed')['glyph_id'], 'Failed and warning share a glyph')
-    result = {"status": "fail" if failures else "pass", "scope": "Static canon companions; native handler/rendering evidence remains required", "control_bindings": len(census), "editor_fields": len(fields), "schema_fixtures": len(fixtures), "quick_set_fixtures": len(quick_cases), "group_reset_fixtures": len(group_cases), "wallpaper_order_fixtures": len(wallpaper_cases), "failures": failures}
+    result = {"status": "fail" if failures else "pass", "scope": "Static canon companions; native handler/rendering evidence remains required", "control_bindings": len(census), "editor_fields": len(fields), "schema_fixtures": len(fixtures), "quick_set_fixtures": len(quick_cases), "group_reset_fixtures": len(group_cases), "wallpaper_order_fixtures": len(wallpaper_cases), "wallpapers": len(wallpapers), "terminal_designs": len(designs), "terminal_preset_fixtures": len(preset_cases), "terminal_preset_apply_fixtures": len(preset_apply_cases), "failures": failures}
     print(json.dumps(result, indent=2))
     return bool(failures)
 

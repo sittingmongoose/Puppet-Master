@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L30307-L31388
+Source lines: L30312-L31412
 
-Source SHA256: `a7b6f2c562f2ed1728f99ded5da071b1ae82ca324d50ee32f0e274aa0d0c8f37`
+Source SHA256: `0fe3f5d31ad816457e489d5066aa86cce3a2e4dc879b1a8b07f98b28db9b889f`
 
 ---
 
@@ -184,19 +184,19 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
-  Glass material is owned by F3-652, which replaces the earlier one-shell-blur slab and cloudscape requirements
-  at the coordinated Glass/wallpaper publication. The preceding PMConcept7 appearance remains historical
-  comparison evidence, not an alternative native material contract. F3-653 owns the wallpaper; F3-654 owns
-  readability.
+  Glass material is owned by F3-652, which replaces the earlier one-shell-blur slab and cloudscape
+  requirements since the coordinated 2026-10-15 Glass/wallpaper publication. The preceding
+  PMConcept7 appearance remains historical comparison evidence, not an alternative native material
+  contract. F3-653 owns the wallpaper; F3-654 owns readability.
 gui_related: true
 gui_classification_reason: This unit defines the visible glass slab composition, blur budget, and transparency structure of glass themes.
 split_recommended: false
 depends_on: [F3-425]
 unblocks: []
 acceptance_criteria:
-- The replacement consumes F3-652/F3-653 and SSYS-054 at the combined publication; obsolete Glass blur/background
-  checks are not alternative requirements.
-- Publication remains pending Jared; source availability alone is not implementation proof.
+- The replacement consumes F3-652/F3-653 and SSYS-054 since the combined 2026-10-15 publication; obsolete
+  Glass blur/background checks are not alternative requirements.
+- Concept publication is complete at ad37be9a23; source availability is not native implementation proof.
 validation_surfaces:
 - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
 - "python3 scripts/pm-plan-index.py validate"
@@ -216,6 +216,9 @@ source_lineage:
   (approved campaign source lineage; not native implementation evidence)
 - /mnt/Cursor/share/puppet-master/2026-10-11-liquid-glass-v2/README.md, SHA-256 ed0f7ebed280627aba47197a0c8a9273bb4b17373f79cd3fcb6c0b44344f6fb9
   (approved campaign source lineage; not native implementation evidence)
+- /mnt/Cursor/share/puppet-master/2026-10-16-plans-pass2/sources/2026-10-14-glass-review--LANDING.md,
+  SHA-256 4585c89ab98c4ee6c88f0683ac8d00244725047fe2637fe657371ec42cff17bd (source lineage; not native
+  certification)
 preserved_exact_tokens: []
 negative_constraints:
 - "No nested backdrop-filter; no runtime wallpaper blur."
@@ -241,18 +244,18 @@ status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
   The Glass Mesh, Depth and Minimal background modes and glass_background_mode:v1 are compatibility
-  lineage. F3-653 and SSYS-054 replace them with one Project Wallpaper choice at the combined
-  Glass/wallpaper publication. They are historical lineage, not extra native choices or an alternative
-  material contract. SP-333 owns migration and cleanup.
+  lineage. F3-653 and SSYS-054 replace them with one Project Wallpaper choice since the combined
+  2026-10-15 Glass/wallpaper publication. They are historical lineage, not extra native choices or
+  an alternative material contract. SP-333 owns migration and cleanup.
 gui_related: true
 gui_classification_reason: This unit defines the visible glass wallpaper modes, their layer inventory, and their motion behavior.
 split_recommended: false
 depends_on: [F3-427, F3-444]
 unblocks: []
 acceptance_criteria:
-- The replacement consumes F3-652/F3-653 and SSYS-054 at the combined publication; obsolete Glass blur/background
-  checks are not alternative requirements.
-- Publication remains pending Jared; source availability alone is not implementation proof.
+- The replacement consumes F3-652/F3-653 and SSYS-054 since the combined 2026-10-15 publication; obsolete
+  Glass blur/background checks are not alternative requirements.
+- Concept publication is complete at ad37be9a23; source availability is not native implementation proof.
 validation_surfaces:
 - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
 - "python3 scripts/pm-plan-index.py validate"
@@ -272,6 +275,9 @@ source_lineage:
   (approved campaign source lineage; not native implementation evidence)
 - /mnt/Cursor/share/puppet-master/2026-10-14-plans-canon/sources/COORDINATOR-LOG.md, SHA-256 82267ce22bcc9c7d17d9f19ad806902718e1978555ada3559d24558baabbdd4f
   (approved campaign source lineage; not native implementation evidence)
+- /mnt/Cursor/share/puppet-master/2026-10-16-plans-pass2/sources/2026-10-14-glass-review--LANDING.md,
+  SHA-256 4585c89ab98c4ee6c88f0683ac8d00244725047fe2637fe657371ec42cff17bd (source lineage; not native
+  certification)
 preserved_exact_tokens: []
 negative_constraints:
 - "Do not run drift or parallax animation under reduced motion."
@@ -356,41 +362,47 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
-  The theme families ship Inter for Basic and Glass, Poppins for Friendly with Nunito fallback,
-  and IBM Plex Mono for Retro only, bundled locally with the application; no runtime font CDN is used
-  (DL-138). The Friendly ground is a
-  warm paper texture with an 18px dot grid and static pastel corner glows. Frosted chrome
-  backdrop blur of 14px is limited to the title bar, status bar, and bottom panel. Five
-  category pastels (mint, sky, coral, lavender, butter) tint category surfaces through the
-  cozy hook tokens. The theme-switching restart rules extend to cross-family switches
-  involving Friendly or Retro fonts: same-family switches stay live; cross-family switches
-  that change font families between Retro (IBM Plex Mono) and Friendly (Poppins, Nunito) require restart; and switches between the Inter Glass and Basic
-  families stay live.
-  NieR Mode overrides body and display with PM NieR Sans, the M PLUS 1 variable face at weights
-  100-900 in mplus1-latin-var.woff2, a free stand-in for the commercial Fontworks FOT-Rodin, and mono
-  with PM NieR Mono, the JetBrains Mono variable face at weights 100-800 in jetbrains-mono-latin-var.woff2.
-  Both are bundled under SIL OFL with their licences; the regular theme faces and Nunito fallback are
-  bundled too. The source font declarations are Concepts/onboarding/opus-5.5/src/settings/styles.d/13-nier.css
-  and its nier/fonts/OFL-*.txt licences. The concepts carry the theme faces the same way (DL-161): PMConcept7
-  embeds Inter (variable, upright and italic), Poppins 400-800 with italic 400 and 600, Nunito (variable) and
-  IBM Plex Mono 400-700 with italic 400 and 600 as Latin woff2 data: URIs, declared in
-  Concepts/onboarding/opus-5.5/src/css/01-webfonts.css from its src/fonts files and OFL-*.txt licences, and
-  Gelasio, an SIL OFL face drawn to Georgia's metrics, stands in under the family name Georgia for the
-  info-badge glyph because Georgia cannot be embedded. Its Inter, Poppins and IBM Plex Mono files are the
-  bytes the 5.6 Pro chat concept embeds (DR-050). Since 2026-10-09 (DL-161 amended) each embedded family also
-  carries the other scripts it supports, as unicode-range slices declared before its unchanged Latin file: Inter
-  Latin Extended, Vietnamese, Cyrillic and Greek with their extended blocks; Poppins Latin Extended and Devanagari;
-  Nunito and IBM Plex Mono Latin Extended, Vietnamese and Cyrillic; PM NieR Sans Latin Extended and Vietnamese; PM
-  NieR Mono those and Cyrillic and Greek. Scripts no family carries use the computer's fonts. Code text follows the
-  look's code face, the --mono-font token: JetBrains Mono, embedded under that name with PM NieR Mono's files and
-  slices and, in PMConcept7, JetBrains Mono's own italic with the same slices, in Basic, Glass and Friendly (the home redesign's D17), IBM Plex Mono in Retro, its whole face (owner,
-  2026-10-10), and PM NieR Mono in NieR Mode; both concepts set their code blocks, inline code, file paths and logs
-  through that token. The home redesign's editor and terminal faces are decided separately (its D17, which its Plans thread records). The page's symbol characters (arrows, check and cross marks,
-  triangles, the warning sign, dots, math signs, the command key and box lines) are PM Symbols, drawn as SVG in
-  src/fonts/symbols/svg and built into a proportional and a monospace variable font that are attached to every
-  embedded text face for those characters only, with each face's own family, style and weight
-  (src/css/03-symbols.css); form controls take the look's face (src/css/02-control-fonts.css). While on, NieR Mode owns general.visual.accent-color and
-  general.visual.app-font (F3-441); turning it off restores the chosen theme. It is an overlay, not a ninth theme.
+  The theme families ship Inter for Basic and Glass, Poppins for Friendly with Nunito fallback, and
+  IBM Plex Mono for Retro only, bundled locally with the application; no runtime font CDN is used
+  (DL-138). The Friendly ground is a warm paper texture with an 18px dot grid and static pastel
+  corner glows. Frosted chrome backdrop blur of 14px is limited to the title bar, status bar, and
+  bottom panel. Five category pastels (mint, sky, coral, lavender, butter) tint category surfaces
+  through the cozy hook tokens. The theme-switching restart rules extend to cross-family switches
+  involving Friendly or Retro fonts: same-family switches stay live; cross-family switches that
+  change font families between Retro (IBM Plex Mono) and Friendly (Poppins, Nunito) require restart;
+  and switches between the Inter Glass and Basic families stay live. NieR Mode overrides body and
+  display with PM NieR Sans, the M PLUS 1 variable face at weights 100-900 in
+  mplus1-latin-var.woff2, a free stand-in for the commercial Fontworks FOT-Rodin, and mono with PM
+  NieR Mono, the JetBrains Mono variable face at weights 100-800 in jetbrains-mono-latin-var.woff2.
+  Both are bundled under SIL OFL with their licences; the regular theme faces and Nunito fallback
+  are bundled too. The source font declarations are
+  Concepts/onboarding/opus-5.5/src/settings/styles.d/13-nier.css and its nier/fonts/OFL-*.txt
+  licences. The concepts carry the theme faces the same way (DL-161): PMConcept7 embeds Inter
+  (variable, upright and italic), Poppins 400-800 with italic 400 and 600, Nunito (variable) and IBM
+  Plex Mono 400-700 with italic 400 and 600 as Latin woff2 data: URIs, declared in
+  Concepts/onboarding/opus-5.5/src/css/01-webfonts.css from its src/fonts files and OFL-*.txt
+  licences, and Gelasio, an SIL OFL face drawn to Georgia's metrics, stands in under the family name
+  Georgia for the info-badge glyph because Georgia cannot be embedded. Its Inter, Poppins and IBM
+  Plex Mono files are the bytes the 5.6 Pro chat concept embeds (DR-050). Since 2026-10-09 (DL-161
+  amended) each embedded family also carries the other scripts it supports, as unicode-range slices
+  declared before its unchanged Latin file: Inter Latin Extended, Vietnamese, Cyrillic and Greek
+  with their extended blocks; Poppins Latin Extended and Devanagari; Nunito and IBM Plex Mono Latin
+  Extended, Vietnamese and Cyrillic; PM NieR Sans Latin Extended and Vietnamese; PM NieR Mono those
+  and Cyrillic and Greek. Scripts no family carries use the computer's fonts. Code text follows the
+  look's code face, the --mono-font token: JetBrains Mono, embedded under that name with the shared
+  non-Latin PM NieR Mono slices and, in PMConcept7, the full-axis Latin upright and own italic
+  governed by F3-644 (DR-050 records the dated shared-file exception), in Basic, Glass and Friendly
+  (the home redesign's D17), IBM Plex Mono in Retro, its whole face (owner, 2026-10-10), and PM NieR
+  Mono in NieR Mode; both concepts set their code blocks, inline code, file paths and logs through
+  that token. The home redesign's editor and terminal faces are decided separately (its D17, which
+  its Plans thread records). The page's symbol characters (arrows, check and cross marks, triangles,
+  the warning sign, dots, math signs, the command key and box lines) are PM Symbols, drawn as SVG in
+  src/fonts/symbols/svg and built into a proportional and a monospace variable font that are
+  attached to every embedded text face for those characters only, with each face's own family, style
+  and weight (src/css/03-symbols.css); form controls take the look's face
+  (src/css/02-control-fonts.css). While on, NieR Mode owns general.visual.accent-color and
+  general.visual.app-font (F3-441); turning it off restores the chosen theme. It is an overlay, not
+  a ninth theme.
 gui_related: true
 gui_classification_reason: This unit defines the visible Friendly theme fonts, ground texture, frosted chrome, pastels, and switch behavior.
 split_recommended: false
@@ -418,12 +430,15 @@ node_compile_hint:
   mode: friendly_family_ingredients_and_font_rules
   create_worknodes: false
 source_lineage:
-  - "Plans/Decision_Log.md#DL-138 (owner answers, 2026-09-29)"
-  - "Plans/Decision_Log.md#DL-161 (owner request, 2026-10-09)"
-  - "Plans/Decision_Log.md#DL-161 (owner follow-ups, 2026-10-09 and 2026-10-10: scripts and the code face)"
-  - "Plans/FinalGUISpec.md:964"
-  - "Plans/FinalGUISpec.md:7647"
-  - "Concepts/pm6-build (PMConcept6 demo; source-lineage-only per Plans/usage-feature.md)"
+- Plans/Decision_Log.md#DL-138 (owner answers, 2026-09-29)
+- Plans/Decision_Log.md#DL-161 (owner request, 2026-10-09)
+- 'Plans/Decision_Log.md#DL-161 (owner follow-ups, 2026-10-09 and 2026-10-10: scripts and the code face)'
+- Plans/FinalGUISpec.md:964
+- Plans/FinalGUISpec.md:7647
+- Concepts/pm6-build (PMConcept6 demo; source-lineage-only per Plans/usage-feature.md)
+- /mnt/Cursor/share/puppet-master/2026-10-16-plans-pass2/sources/Concepts--onboarding--opus-5.5--src--fonts--SOURCE.md,
+  SHA-256 76985bc806939e214326c3bfd498e377cb868bfda68ed4b641b24599e57cf97b (source lineage; not native
+  certification)
 preserved_exact_tokens:
   - "100-900"
   - "100-800"
@@ -472,15 +487,16 @@ unit_type: constraint
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
-  Slint theme hazard remediation retains bundled local fonts, build-time per-variant color derivation, and
-  native or precomputed equivalents for effects unsupported by the toolkit. F3-652 owns the replacement Glass
-  material's optics budget and F3-653 its wallpaper assets; the earlier closed shell-only blur count,
-  cloudscapes and Mesh/Depth parallax are superseded at that publication. Friendly retains its title-bar,
-  status-bar and bottom-panel blur surfaces, Settings its bloom scrim, and F3-566 its admitted setup-popup sheet
-  on the Skia GPU path. The terminal adds no independent backdrop blur: its scheme shows the existing material
-  beneath, and a terminal background image's blur is prepared on image change. Effects cannot silently create an
-  unbounded nested live-blur workload; static-capability fallbacks preserve readability and selection. Other
-  themes' portability constraints stay in force.
+  Slint theme hazard remediation retains bundled local fonts, build-time per-variant color
+  derivation, and native or precomputed equivalents for effects unsupported by the toolkit. F3-652
+  owns the replacement Glass material's optics budget and F3-653 its wallpaper assets; the earlier
+  closed shell-only blur count, cloudscapes and Mesh/Depth parallax were superseded by the
+  2026-10-15 publication. Friendly retains its title-bar, status-bar and bottom-panel blur surfaces,
+  Settings its bloom scrim, and F3-566 its admitted setup-popup sheet on the Skia GPU path. The
+  terminal adds no independent backdrop blur: its scheme shows the existing material beneath, and a
+  terminal background image's blur is prepared on image change. Effects cannot silently create an
+  unbounded nested live-blur workload; static-capability fallbacks preserve readability and
+  selection. Other themes' portability constraints stay in force.
 gui_related: true
 gui_classification_reason: This unit constrains how visible theme effects are produced so every variant renders on the Slint toolkit.
 split_recommended: false
@@ -510,6 +526,9 @@ source_lineage:
   (approved campaign source lineage; not native implementation evidence)
 - /mnt/Cursor/share/puppet-master/2026-10-13-glass-v3/README.md, SHA-256 0e424cba2f2d03932159b6e25977959f23d8f65cbcca57ca1d067b505f61db54
   (approved campaign source lineage; not native implementation evidence)
+- /mnt/Cursor/share/puppet-master/2026-10-16-plans-pass2/sources/2026-10-14-glass-review--LANDING.md,
+  SHA-256 4585c89ab98c4ee6c88f0683ac8d00244725047fe2637fe657371ec42cff17bd (source lineage; not native
+  certification)
 preserved_exact_tokens: []
 negative_constraints:
 - "No arbitrary-content backdrop blur except the setup-popup sheet blur that DL-139 admits on the Skia GPU path only (F3-566); no SVG filters; no runtime color math."
