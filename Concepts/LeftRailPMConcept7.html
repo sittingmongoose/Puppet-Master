@@ -230731,14 +230731,26 @@ var T = {};
     /* the pick shows on its tile in the click's own frame, and the ground is drawn in the task after it: a scene is
        drawn on a canvas at the terminal's size (43-grounds.js), and drawn in the click it held the click's paint
        (part2's F3.1 M3 pass: Scene, Hills, 128 ms to the next paint, 77 ms of it in this handler). A later pick in the
-       meantime wins. Your own picture still asks for the file in the click, which the file chooser needs */
-    var groundPick = 0;
+       meantime wins. Your own picture still asks for the file in the click, which the file chooser needs.
+       A ground the pointer rested on is already shown as a preview: it stays through the click's frame and goes in the
+       same task as the write, after it, so the old ground is never drawn in the click nor shown for a frame between the
+       preview and the pick (review TG-1: new, old, new); a pointer leaving meanwhile does not end it early (endPreview) */
+    var groundPick = 0, pickPending = false;
     function chooseGround(gv) {
-      clearTimeout(intent); if (previewing !== null) { previewing = null; A().endPreview(v); }
-      if (gv === 'custom' && !String(val('bgImageData') || '').match(/^img:/)) { gcat = 'yours'; paint(); uploadImage(); return; }
+      clearTimeout(intent);
+      if (gv === 'custom' && !String(val('bgImageData') || '').match(/^img:/)) {
+        if (previewing !== null) { previewing = null; A().endPreview(v); }
+        gcat = 'yours'; paint(); uploadImage(); return;
+      }
       [].forEach.call(root.querySelectorAll('[data-key="ground"]'), function (b) { setA(b, 'aria-checked', String(b.getAttribute('data-value') === gv)); });
       var pick = ++groundPick;
-      afterPaint(function () { if (pick !== groundPick || disposed) return; write(groundPatch(gv)); });
+      pickPending = true;
+      afterPaint(function () {
+        if (pick !== groundPick || disposed) return;
+        pickPending = false;
+        write(groundPatch(gv));
+        if (previewing !== null) { previewing = null; A().endPreview(v); syncPreview(); }
+      });
     }
     /* a tile's picture: the design as this scheme draws it, the look's own ground, or your picture */
     function groundArt(gv, th) {
@@ -231247,7 +231259,7 @@ var T = {};
         A().preview(v, isGround ? groundPatch(id) : { scheme: id }); syncPreview();
       }, ms);
     }
-    function endPreview() { clearTimeout(intent); if (previewing === null) return; previewing = null; A().endPreview(v); syncPreview(); }
+    function endPreview() { clearTimeout(intent); if (previewing === null || pickPending) return; previewing = null; A().endPreview(v); syncPreview(); }
     var schemesEl = root.querySelector('.pmt-cz-schemes');
     schemesEl.addEventListener('mouseover', function (e) { var o = e.target.closest('.pmt-cz-scheme'); if (o) previewSoon(o, INTENT_MS); });
     schemesEl.addEventListener('mouseleave', function () { endPreview(); });
