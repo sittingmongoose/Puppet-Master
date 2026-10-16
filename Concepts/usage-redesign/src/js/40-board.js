@@ -1304,6 +1304,7 @@
     function mount(room, opts) {
       ensure();
       prewarmEnd();
+      rasterClear();   /* the spare is always empty for a mount (its ghost, calmSwap, reverseTo) */
       opts = opts || {};
       if (!bo.rooms) room = st.room;   /* rooms off: the board's one room */
       if (dead) return;
@@ -2008,6 +2009,69 @@
     }
     /* a gesture, a mount or a teardown that comes first ends it at once */
     var prewarmEnd = function () {};
+    /* ---- the raster room (P2-03; PMU.film's warm raster, 05-film.css data-pmu-raster): while the Usage page is laid out
+       unseen for the warm build, the first screen of another room (Costs, Accounts) is built in the hidden spare board
+       element, drawn once by the film at opacity .004 so the GPU compiles what that room draws, and torn down. Its chrome in
+       one idle task (one child-list change), then its bodies final (no entrance, nothing cued: tierPass mode false) in idle
+       slices of at most 8 ms. The spare keeps its hidden attribute: it is laid out only while the panel carries the film's
+       "spare" token (data-pmu-raster-room). It never touches the shown or warm board, emits nothing (no 'mount' or 'built':
+       no warm drop, no pre-warm), and any mount clears it first, so a room change always finds the spare empty. The Usage
+       board only. ---- */
+    var rasterJob = null;
+    function rasterRoom(room, onBuilt) {
+      if (hosted || dead || !bo.rooms || !current.cls || !scroll || !boardEl || rasterJob || calm || streaming || gesture) return null;
+      var sp = spareBoard();
+      if (sp.firstChild || sp === boardEl) return null;
+      var rects = layoutFor(room), all = visibleIds(room), byId = {};
+      rects.forEach(function (r) { byId[r.id] = r; });
+      /* what the room's first screen shows (the board scrolls to its top on a room change); only viewport tiles are rastered */
+      var top = padCache ? padCache.t : 0, vh = view.h || (window.innerHeight || 900);
+      var ids = all.filter(function (id) { return byId[id] && top + byId[id].y * ROW < vh + 24; });
+      if (!ids.length) return null;
+      Array.prototype.slice.call(boardEl.attributes).forEach(function (at) { if (at.name !== 'id' && at.name !== 'class' && at.name !== 'hidden' && at.name !== 'style' && !/^data-(film|op|held|hold-bodies|pm-hover-exempt)$/.test(at.name)) sp.setAttribute(at.name, at.value); });
+      /* (no class or hidden write: Glass's and the hover controller's observers watch those) */
+      if (sp.className !== 'pmu-board') sp.className = 'pmu-board';
+      sp.style.gridTemplateColumns = 'repeat(' + current.cls.tracks + ', minmax(0px, 1fr))';
+      sp.setAttribute('data-cls', current.cls.name);
+      sp.setAttribute('data-room', room);
+      sp.setAttribute('aria-hidden', 'true');
+      sp.setAttribute('data-pmu-raster-room', '');
+      var job = rasterJob = { room: room, el: sp, cards: [], queue: [], built: false, at: performance.now() };
+      var idle = window.requestIdleCallback || function (fn) { return setTimeout(function () { fn({ timeRemaining: function () { return 8; }, didTimeout: false }); }, 40); };
+      var heroId = heroOf(rects, ids, room);
+      idle(function () {
+        if (rasterJob !== job) return;
+        var frag = document.createDocumentFragment();
+        job.cards = ids.map(function (id) { var c = buildCard(id, room, byId[id]); markHero(c, heroId); frag.appendChild(c); return c; });
+        sp.appendChild(frag);
+        job.queue = readingOrder(job.cards);
+        idle(slice, { timeout: 2000 });
+      }, { timeout: 2000 });
+      function slice(deadline) {
+        if (rasterJob !== job) return;
+        var t0 = performance.now(), n = 0, budget = deadline && deadline.timeRemaining ? Math.min(8, Math.max(1, deadline.timeRemaining())) : 8;
+        fitSliced(function () {
+          while (job.queue.length && (!n || performance.now() - t0 < budget)) { var c = job.queue.shift(); if (c.isConnected) { tierPass([c], false); n++; } }
+        });
+        if (job.queue.length) { idle(slice, { timeout: 2000 }); return; }
+        job.built = true;
+        job.ms = Math.round(performance.now() - job.at);
+        if (onBuilt) { try { onBuilt({ room: room, cards: job.cards.length, ms: job.ms }); } catch (error) { console.error('[pm-usage] raster room', error); } }
+      }
+      return { room: room, cards: ids.length };
+    }
+    /* the spare goes back to empty and hidden: it stops being laid out the moment its attribute goes (display: none), so
+       emptying it lays nothing out */
+    function rasterClear() {
+      rasterJob = null;
+      var sp = scroll && scroll.querySelector(':scope > .pmu-board[data-pmu-raster-room]');
+      if (!sp) return;
+      sp.removeAttribute('data-pmu-raster-room');
+      sp.removeAttribute('aria-hidden');
+      Array.prototype.forEach.call(sp.querySelectorAll(':scope > .pmu-card'), destroyCard);
+      sp.textContent = '';
+      if (sp !== boardEl) sp.removeAttribute('style');
+    }
     function cardTitle(id) { var d = PMU.widgets.get(id) || {}; try { return typeof d.title === 'function' ? d.title({ id: id, room: current.room, state: st }) : (d.title || id); } catch (e) { return id; } }
     /* release: commit (one command) or settle / glide back */
     function endGesture(g, how, instant) {
@@ -3094,7 +3158,9 @@
       cancel: function () { if (gesture) endGesture(gesture, 'cancel'); },
       /* a dropped warm board (PMU.film.warmDrop): its build stops and the board counts as never mounted, as a hidden Usage
          board was before the warm build; the next arrival or width pass mounts it */
-      unmount: function () { if (hosted || dead) return; buildToken++; current.mounted = false; current.pending = true; },
+      unmount: function () { if (hosted || dead) return; rasterClear(); buildToken++; current.mounted = false; current.pending = true; },
+      /* the warm raster's other rooms (P2-03, PMU.film raster) */
+      rasterRoom: rasterRoom, rasterClear: rasterClear,
       holdSoon: function (ms) { scheduleHold(ms); },
       card: cardOf, inView: inView, viewNow: viewNow, isLeaving: isLeaving, cardsNow: cardsNow, refreshing: function () { return !!refreshQ; }, fitSliced: fitSliced,
       on: function (evt, fn) { (listeners[evt] = listeners[evt] || []).push(fn); return function () { listeners[evt] = (listeners[evt] || []).filter(function (f) { return f !== fn; }); }; },
