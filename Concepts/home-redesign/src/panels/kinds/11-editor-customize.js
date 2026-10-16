@@ -495,6 +495,7 @@ function open(opts) {
   try {
     preview = PMW.editorPreview(pvHost, { text: PREVIEW, base: BASE, language: 'rust', title: 'recipe.rs', problems: previewProblems(), view: pvView,
       paintDeferred: function () { return closed && sheetBusy(); },
+      lookDeferred: function () { return closed; },
       caret: { r: PV_SEL.r, c: PV_SEL.b, ar: PV_SEL.r, ac: PV_SEL.a } });
   } catch (err) { try { console.error('[pm-home] the editor preview could not start', err); } catch (_) {} }
 
@@ -520,7 +521,9 @@ function open(opts) {
   function syncPreview() {
     pvView.tabAppearance = scope === 'tab' ? v.tabAppearance || {} : {};
     pvView.previewAppearance = v.previewAppearance || null;
-    if (pvView.applyLook) pvView.applyLook(EL().resolve(pvView));
+    // This is the owner's explicit refresh: either a live choice or an idle
+    // phase already guarded against covers and input. Model broadcasts wait.
+    if (pvView.applyLook) pvView.applyLook(EL().resolve(pvView), true);
   }
   // setMany emits one change after updating the editors. That notification owns the
   // controls and preview too; doing them again here forced a second layout per pick.
@@ -998,12 +1001,14 @@ function open(opts) {
      arrow keys reach it, on the preview and on the editor, at once and without the sweep (the sweep is for keeping
      one); leaving the list or Escape puts the chosen one back */
   var INTENT_MS = 160, intent = 0, intentFrame = 0, previewing = null, intentTile = null, scrollUntil = 0, pointerX = null, pointerY = null;
-  function cancelIntent() { clearTimeout(intent); cancelAnimationFrame(intentFrame); intent = intentFrame = 0; intentTile = null; }
+  var intentPointer = false, previewPointer = false;
+  function cancelIntent() { clearTimeout(intent); cancelAnimationFrame(intentFrame); intent = intentFrame = 0; intentTile = null; intentPointer = false; }
   function previewSoon(tileEl, ms, pointerIntent) {
     cancelIntent();
     intentTile = tileEl;
+    intentPointer = !!pointerIntent;
     var id = tileEl.getAttribute('data-value');
-    if (previewing === id) return;
+    if (previewing === id) { previewPointer = !!pointerIntent; return; }
     intent = setTimeout(function () {
       intent = 0;
       // Passive wheel input can already be queued while this timer runs. The
@@ -1012,11 +1017,12 @@ function open(opts) {
         intentFrame = 0;
         if (!root.isConnected || openRoot !== root || intentTile !== tileEl || (pointerIntent && performance.now() < scrollUntil)) return;
         previewing = id;
+        previewPointer = !!pointerIntent;
         EL().preview(v, { scheme: id }); syncPreview();
       });
     }, ms);
   }
-  function endPreview() { cancelIntent(); if (previewing === null) return; previewing = null; EL().endPreview(v); syncPreview(); }
+  function endPreview() { cancelIntent(); previewPointer = false; if (previewing === null) return; previewing = null; EL().endPreview(v); syncPreview(); }
   var schemesEl = root.querySelector('.pmt-cz-schemes');
   // A scroll moves tiles under a stationary pointer. Only genuine pointer travel
   // can start hover intent, after scrolling has been quiet for 200 ms. Gaps and
@@ -1031,10 +1037,13 @@ function open(opts) {
   }, { passive: true });
   schemesEl.addEventListener('pointerout', function (e) {
     var next = e.relatedTarget && e.relatedTarget.closest ? e.relatedTarget.closest('.pmt-cz-scheme') : null;
-    if (next !== intentTile) cancelIntent();
+    if (intentPointer && next !== intentTile) cancelIntent();
   }, { passive: true });
-  schemesEl.addEventListener('pointerleave', function () { pointerX = pointerY = null; endPreview(); });
-  function scrollPreview() { scrollUntil = performance.now() + 200; endPreview(); }
+  function endPointerPreview() { if (previewPointer) endPreview(); else if (intentPointer) cancelIntent(); }
+  schemesEl.addEventListener('pointerleave', function () { pointerX = pointerY = null; endPointerPreview(); });
+  // Keyboard focus can scroll its tile into view. Preserve that preview while
+  // still cancelling intent caused by tiles scrolling beneath the pointer.
+  function scrollPreview() { scrollUntil = performance.now() + 200; endPointerPreview(); }
   body.addEventListener('wheel', scrollPreview, { passive: true });
   body.addEventListener('scroll', scrollPreview, { passive: true });
   schemesEl.addEventListener('pointerdown', cancelIntent, { passive: true });
@@ -1306,13 +1315,11 @@ function open(opts) {
     io.observe(root.querySelector('.pmt-cz-preview'));
   }
   var closed = true, disposed = false, visit = 0;
-  var focusStops = new WeakMap();
   function focusStopsOn(on) {
-    [].forEach.call(root.querySelectorAll('button, input, select, textarea, [tabindex]'), function (e) {
-      if (!focusStops.has(e)) focusStops.set(e, e.tabIndex);
-      var t = on ? focusStops.get(e) : -1;
-      if (e.tabIndex !== t) e.tabIndex = t;
-    });
+    // Keep layout available to idle preparation while excluding the entire
+    // parked subtree from focus, selection and find-in-page, including the
+    // browser's automatic focus stop on the overflow scroller.
+    root.inert = !on;
     if (on) roving();
   }
   function dispose() {
@@ -1340,8 +1347,8 @@ function open(opts) {
     var closing = ++visit;
     stopDemo(); endPreview(); tokEndPreview();
     if (openRoot === root) openRoot = null;
-    // Focus returns before the exit's writes. Toggling inert on the ancestor
-    // invalidates all 1,900 descendants; park individual tab stops instead.
+    // Return focus before making the sheet inert. Its measured contents and
+    // all exit effects stay mounted through the family animation.
     if (!noFocus) { try { (anchor && anchor.isConnected ? anchor : null) ? anchor.focus({ preventScroll: true }) : inst.focus(); } catch (_) {} }
     root.setAttribute('aria-hidden', 'true'); focusStopsOn(false);
     // Keep the whole sheet through its exit and reuse it on the next visit.
@@ -1370,6 +1377,7 @@ function open(opts) {
     opts = next; anchor = opts.anchor || null;
     scope = opts.scope === 'app' ? 'app' : v._apScope || 'tab';
     closed = false; ++visit; openRoot = root;
+    root.inert = false;
     root._pmedGen = (root._pmedGen || 0) + 1;
     root.classList.remove('pmt-in', 'pmt-out');
     wantDock = false; dockTo(false); body.scrollTop = 0;

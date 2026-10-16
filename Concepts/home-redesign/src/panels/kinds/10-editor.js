@@ -1268,7 +1268,7 @@ function mountEditor(host, st, api) {
     previewAppearance: null
   };
   view.saveLook = function () { if (!preview && api.saveSoon) api.saveSoon(); };
-  view.applyLook = function (R2) { onLook(R2); };
+  view.applyLook = function (R2, immediate) { requestLook(R2, immediate); };
   view.editor = function () { return instance; };
   var R = EL ? EL.resolve(view) : FALLBACK_LOOK;
 
@@ -1310,6 +1310,28 @@ function mountEditor(host, st, api) {
   var pageHost = preview ? null : host.closest('#panel-dashboard'), pendingLayout = false;
   function isShown() { return visible && (!pageHost || pageHost.classList.contains('active')); }
   function paintDeferred() { return !!(preview && preview.paintDeferred && preview.paintDeferred()); }
+  var pendingLook = null, lookQueued = false, lookGeneration = 0;
+  function lookDeferred() { return !isShown() || paintDeferred() || !!(preview && preview.lookDeferred && preview.lookDeferred()); }
+  function applyPendingLook(immediate) {
+    if (!alive || !pendingLook || (!immediate && lookDeferred()) || paintDeferred()) return;
+    var next = pendingLook; pendingLook = null;
+    onLook(next);
+  }
+  function requestLook(next, immediate) {
+    if (!alive) return;
+    pendingLook = next;
+    if (immediate) { ++lookGeneration; lookQueued = false; applyPendingLook(true); return; }
+    // A look broadcast dirties the whole page. Hidden editors keep only the
+    // latest model; visible editors read after the browser's layout, once.
+    if (lookDeferred() || lookQueued) return;
+    if (!window.PM_AFTER_LAYOUT) { applyPendingLook(false); return; }
+    lookQueued = true;
+    var generation = lookGeneration;
+    window.PM_AFTER_LAYOUT(function () {
+      if (generation !== lookGeneration) return;
+      lookQueued = false; applyPendingLook(false);
+    });
+  }
   /* while a Customize screen is open on this editor, it draws what it draws when focused (the caret, the current line's
      band), though the screen has the focus: it is the preview beside the screen, and a blurred editor showed none of
      the caret's or the current line's choices */
@@ -3695,6 +3717,7 @@ function mountEditor(host, st, api) {
     if (!alive) return;
     layoutBox = null;
     if (!isShown() || paintDeferred()) { pendingLayout = true; return; }
+    applyPendingLook(true);
     if (!firstDone) { pendingLayout = false; firstPaint(); return; }
     if (pendingLayout) { pendingLayout = false; resolveLayout(false); relayoutAll(); return; }
     if (sz && sz.final === false && mode === 'diff') { layout(); renderRows(true); renderOverlays(); updateThumb(); return; }
@@ -3899,6 +3922,7 @@ function mountEditor(host, st, api) {
   var instance = {
     unmount: function () {
       alive = false;
+      ++lookGeneration; pendingLook = null; lookQueued = false;
       Object.keys(timers).forEach(function (k) { if (typeof timers[k] === 'number') { clearTimeout(timers[k]); } });
       clearTimeout(focusTimer); clearTimeout(fadeTimer); clearTimeout(scrollIdle);
       offs.forEach(function (f) { try { f(); } catch (_) {} });
@@ -3930,6 +3954,7 @@ function mountEditor(host, st, api) {
     onShow: function () {
       visible = true;
       if (!isShown()) return;
+      applyPendingLook(true);
       if (!firstDone) { pendingLayout = false; firstPaint(); return; }
       if (pendingLayout) { pendingLayout = false; resolveLayout(false); relayoutAll(); return; }
       queueDraw();
