@@ -822,6 +822,12 @@
     r.classList.remove('o55-scrim-lit'); clearOpenScrim(); /* the close plays its own scrim */
     setSolid(false); /* the app is back under the scrim before the window leaves */
     r.classList.remove('o55-opening'); r.classList.add('o55-closing'); r.classList.toggle('o55-handoff', handoff); r.setAttribute('data-o55-ambient', 'off');
+    /* the exit plays on frames that are shown: the close's own task (Enter puts the Wizard in place first) can hold the
+       first frame for half a second on the P1000, and the timeline that frame draws at is from before that work, so the
+       window and its scrim were already gone when it was drawn. They play on the frames that are shown
+       (11-motion-start.js; final motion QA A1). */
+    if (!handoff && !O55.motion.reduced() && window.PM_START_ON_SHOWN) window.PM_START_ON_SHOWN(() => (S.open ? [] :
+      [r.querySelector('.o55-win'), r.querySelector('.o55-scrim')].flatMap((el) => (el ? el.getAnimations().filter((a) => Number.isFinite(a.effect.getComputedTiming().endTime)) : []))));
     if (!handoff) O55.sound.play(reason === 'done' ? 'finish' : 'close');
     /* the skin may keep the root (and its scrim) a while: NieR folds the window to a line that carries on into the
        Guided Tour, and the scrim stays until the tour's own has taken over, so the app never comes up lit between */
@@ -831,16 +837,21 @@
     if (reason !== 'done' && O55.shell && O55.shell.flushLook) O55.shell.flushLook(400);
     const finish = () => {
       if (S.open) return; /* opened again before this close had finished (Run Onboarding Again): it stays */
-      r.hidden = true; r.setAttribute('data-open', 'false'); r.classList.remove('o55-closing', 'o55-handoff');
+      r.hidden = true; r.setAttribute('data-open', 'false'); r.classList.remove('o55-closing', 'o55-handoff', 'o55-accept');
       document.documentElement.removeAttribute('data-o55-open');
       setInert(false);
       if (S.pausedClock && window.PM_DEMO && window.PM_DEMO.clock && window.PM_DEMO.clock.resume) { try { window.PM_DEMO.clock.resume(); } catch (_) {} }
       if (reason !== 'done' && returnFocus && document.contains(returnFocus)) { try { returnFocus.focus(); } catch (_) {} }
       O55.boot && O55.boot.chip && O55.boot.chip();
       if (heldResize) { heldResize = false; window.dispatchEvent(new Event('resize')); }
+      window.dispatchEvent(new CustomEvent('o55:onboarding-gone', { detail: { reason } }));
     };
     if (typeof hold === 'number' && hold > 0) O55.motion.after(hold, finish);
-    else if (O55.motion.reduced()) finish(); else O55.motion.settled(r.querySelector('.o55-win'), { subtree: false, fallback: 700 }).then(finish);
+    /* the app wakes (inert off, its paused loops resumed: a restyle of the whole page) only once both the window and
+       its scrim have finished leaving, and a frame later, so that restyle never holds a frame of the exit itself */
+    else if (O55.motion.reduced()) finish();
+    else Promise.all([O55.motion.settled(r.querySelector('.o55-win'), { subtree: false, fallback: 700 }), O55.motion.settled(r.querySelector('.o55-scrim'), { subtree: false, fallback: 700 })])
+      .then(() => requestAnimationFrame(() => window.setTimeout(finish, 0)));
     window.dispatchEvent(new CustomEvent('o55:onboarding', { detail: { type: reason === 'skip' ? 'skipped' : reason === 'done' ? 'finished' : 'closed', screen: S.sess.screen } }));
   }
 

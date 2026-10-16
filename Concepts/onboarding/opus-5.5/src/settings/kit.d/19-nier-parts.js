@@ -431,7 +431,7 @@
     later(() => {
       if (!live.has('decode')) return;
       [...document.querySelectorAll(sel)].filter(e => e.getClientRects().length).slice(0, 4).forEach(decode);
-    }, live.has('wipe') ? 110 : 0);
+    }, live.has('wipe') ? 60 : 0);
   }
   PARTS.decode = { on() {}, off() {} };
 
@@ -443,8 +443,13 @@
     const z = zoom();
     wipe.style.cssText = `left:${r.left / z}px;top:${r.top / z}px;width:${r.width / z}px;height:${r.height / z}px;display:block`;
     if (wipeAnim) wipeAnim.cancel();
-    const a = wipeAnim = wipe.firstChild.animate([{ transform: 'translateX(0)' }, { transform: 'translateX(0)', offset: 0.2 }, { transform: 'translateX(101%)' }],
-      { duration: 400, easing: 'cubic-bezier(.65, 0, .3, 1)', fill: 'both' });
+    /* the band leaves as soon as the new page is drawn under it (final motion QA A4, Jared 2026-10-16: the empty beat
+       at most 50 ms): no held keyframe (under the old ease-in-out it held the bare band for ~150 ms), a curve that is
+       moving from its first frames, and a start that waits for the frames after the page change to come on time
+       (src/js/11-motion-start.js), so a long first frame never eats the slide */
+    const a = wipeAnim = wipe.firstChild.animate([{ transform: 'translateX(0)' }, { transform: 'translateX(101%)' }],
+      { duration: 380, easing: 'cubic-bezier(.3, .15, .2, 1)', fill: 'both' });
+    if (window.PM_START_ON_SHOWN) window.PM_START_ON_SHOWN(() => (wipeAnim === a ? [a] : []));
     a.onfinish = () => { if (wipeAnim !== a) return; wipeAnim = null; if (wipe) wipe.style.display = 'none'; a.cancel(); };
   }
   PARTS.wipe = { on() {}, off() { if (wipeAnim) wipeAnim.cancel(); wipeAnim = null; if (wipe) wipe.remove(); wipe = null; } };

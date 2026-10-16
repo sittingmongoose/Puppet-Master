@@ -123,3 +123,9 @@ html[data-motion="reduced"] #pm-o55-onboarding * { transition: none !important; 
 html, [data-theme], [data-o55-nier-preview] {
   --o55-tokpack: var(--background, #121212) | var(--surface, #1e1e1e) | var(--text-primary, #e8e8e8) | var(--text-secondary, #aaa) | var(--text-muted, #888) | var(--border, #333) | var(--accent-blue, #64b5f6) | var(--accent-magenta, #ff69b4) | var(--accent-lime, #3dd68c) | var(--accent-orange, #ffa347) | var(--accent-warning, #f5c542) | var(--accent-error, #ef5350) | var(--accent-primary, var(--accent-blue, #64b5f6)) | var(--surface-elevated, var(--surface, #1e1e1e)) | var(--o55-nier-on-ink, var(--background, #121212));
 }
+/* Enter's answer (74-screens-ready.js O55.finish): the window settles back on the click's own frame, before the
+   Wizard is put in place under it; its exit then starts from there. At 0.994 it was not seen on the P1000 films, where
+   the window then stood half a second while the Wizard was built; Retro settles in two steps. */
+#pm-o55-onboarding.o55-accept .o55-win { transform: scale(0.986); transition: transform 200ms cubic-bezier(0.2, 0, 0, 1); }
+#pm-o55-onboarding[data-family="retro"].o55-accept .o55-win { transform: scale(0.986); transition: transform 160ms steps(2, end); }
+html[data-motion="reduced"] #pm-o55-onboarding.o55-accept .o55-win { transform: none; transition: none; }

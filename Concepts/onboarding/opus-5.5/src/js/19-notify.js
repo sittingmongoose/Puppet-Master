@@ -131,7 +131,8 @@
   };
   const motion = () => MOTION[look()]();
   /* Web Animations (Animation speed scales them through kit.d/17-look.js); real() keeps reading time unscaled */
-  function play(el, frames, o) {
+  function play(el, frames, o) { return playNow(el, frames, o); }
+  function playNow(el, frames, o) {
     if (!el || typeof el.animate !== 'function') return null;
     try { return el.animate(frames, Object.assign({ fill: 'none' }, o)); } catch (_) { return null; }
   }
@@ -950,6 +951,11 @@
     sound('open', 0.4);
     if (!still()) {
       const m = motion(), L = look(), chrome = panelEl.querySelector('.pmn-chrome');
+      /* every entrance below plays on the frames that are shown (11-motion-start.js; final motion QA B10): a first frame
+         that is long (Glass rastering its blur on first show, about half a second on the P1000) otherwise ran the whole
+         entrance behind it, and the panel appeared already open */
+      const opening = [], play = (el, frames, o) => { const a = playNow(el, frames, o); if (a) opening.push(a); return a; };
+      if (window.PM_START_ON_SHOWN) window.PM_START_ON_SHOWN(() => (open ? opening : []));
       if (L === 'retro') {
         play(chrome, [{ transform: 'scale(1, .01)', filter: 'brightness(3)' }, { transform: 'scale(1, .01)', filter: 'brightness(2)', offset: 0.35 }, { transform: 'none', filter: 'none' }], { duration: 260, easing: 'steps(6, end)' });
       } else if (L === 'nier') {

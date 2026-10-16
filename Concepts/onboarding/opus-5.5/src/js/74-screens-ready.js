@@ -45,7 +45,16 @@
       lookTimer = O55.motion.after(ms, () => { lookTimer = null; writeLook(); });
       return true;
     },
-    openWizard() { const t = document.getElementById('tab-wizard') || document.querySelector('[data-page="wizard"]'); if (t) { t.click(); return true; } return false; }
+    /* o.under: the window still covers the app, so the page changes at once with no page transition of its own and
+       the Wizard is drawn whole beneath the window, whose exit is then the only move (final motion QA A1) */
+    openWizard(o) {
+      const t = document.getElementById('tab-wizard') || document.querySelector('[data-page="wizard"]');
+      if (!t) return false;
+      const P = window.PM_PAGES, under = !!(o && o.under);
+      if (under && P) P.instant = true;
+      try { t.click(); } finally { if (P) P.instant = false; }
+      return true;
+    }
   };
 
   let look = null, lookTimer = null, lookWritten = '';
@@ -68,6 +77,16 @@
   /* finish(S, {tour, project}) — close onboarding as done and land in the app. */
   O55.finish = function finish(S, o) {
     o = o || {};
+    /* Enter answers on the click's own frame (final motion QA A1: the click's task, which selects the Project, reloads
+       its settings and puts the Wizard in place, held the first frame 0.5-1.2 s on the P1000): the window settles a
+       touch on the compositor, and the work and the window's exit follow in the task after that frame */
+    if (!o.tour && !o.answered) {
+      if (S.finishing) return;
+      S.finishing = true;
+      if (S.root) S.root.classList.add('o55-accept');
+      requestAnimationFrame(() => window.setTimeout(() => { S.finishing = false; finish(S, Object.assign({}, o, { answered: true })); }, 0));
+      return;
+    }
     O55.shell.commitLook(S, { defer: true });
     const cm = S.sess.commit || {}, d = md(S);
     const projectId = o.project || cm.projectId, name = o.projectName || (cm.projectId === projectId ? d.project_name : null) || projectId;
@@ -79,12 +98,22 @@
        the tour itself ends on the Planning Wizard, so the page is not switched here */
     const win = S.root && S.root.querySelector('.o55-win'), from = tour && win ? win.getBoundingClientRect() : null;
     const handoff = tour && from && O55.nierWindow && O55.nierWindow.handoff ? O55.nierWindow.handoff() : null;
+    /* Enter: the Wizard is put in place under the window first, so the window's exit reveals it (one move, never Home) */
+    if (!tour) O55.shell.openWizard({ under: true });
     O55.ui.close('done', { handoff: tour && !!from });
     /* a tour taken at the end of an onboarding run always starts at its first step (only the resume chip continues one) */
     if (tour) O55.tour.start({ source: 'onboarding', fresh: true, project: projectId, from: from ? { left: from.left, top: from.top, width: from.width, height: from.height } : null, handoff });
-    else O55.shell.openWizard();
-    /* the theme is written once the window has handed over (the line has reached the tour), or has gone */
-    O55.shell.flushLook(handoff ? 1600 : 400);
+    /* the theme is written once the window has handed over (the line has reached the tour), or has gone: its repaint
+       restyles the whole app, so it waits for the first quiet moment after the window has left rather than landing in
+       the middle of its exit */
+    if (handoff) O55.shell.flushLook(1600);
+    else {
+      let done = false;
+      const flush = () => { if (done) return; done = true; window.removeEventListener('o55:onboarding-gone', gone); O55.shell.flushLook(0); };
+      const gone = () => (window.requestIdleCallback ? window.requestIdleCallback(flush, { timeout: 500 }) : O55.motion.after(120, flush));
+      window.addEventListener('o55:onboarding-gone', gone);
+      O55.motion.after(2500, flush);
+    }
   };
 
   function summary(S) {
