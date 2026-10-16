@@ -26452,6 +26452,125 @@ html:is([data-theme^="retro"], [data-o55-nier="on"]) #panel-settings .toggle.pm-
 html:is([data-theme^="retro"], [data-o55-nier="on"]) #panel-settings .toggle.pm-switch-from.on::after { background-color: var(--k3-text-1) !important; }
 
 </style>
+<script id="pm7-motion-finish">
+/* Completion for finite CSS motion. End events retain their original timing;
+   disabled motion completes next frame, cancellation immediately, and a lost
+   event has a computed-duration deadline. A new wait retires the previous wait. */
+(function () {
+  var waits = new WeakMap();
+  window.PM7_MOTION_FINISH = function (el, kind, name, done, endHold) {
+    var key = kind + ':' + name, active = waits.get(el);
+    if (!active) { active = new Map(); waits.set(el, active); }
+    if (active.has(key)) active.get(key)();
+    var ended = false, eventEnded = false, frame = 0, deadlineFrame = 0, timer = 0, hold = 0, budget = 0;
+    var end = kind + 'end', cancel = kind + 'cancel', start = kind + 'start';
+    function stop() {
+      if (ended) return;
+      ended = true;
+      cancelAnimationFrame(frame); cancelAnimationFrame(deadlineFrame); clearTimeout(timer); clearTimeout(hold);
+      el.removeEventListener(end, onEnd); el.removeEventListener(cancel, onCancel); el.removeEventListener(start, onStart);
+      if (active.get(key) === stop) active.delete(key);
+    }
+    function finish() { if (ended) return; stop(); done(el); }
+    function matches(ev) {
+      return ev.target === el && !ev.pseudoElement &&
+        (kind === 'animation' ? ev.animationName === name : ev.propertyName === name);
+    }
+    function onEnd(ev) {
+      if (!matches(ev)) return;
+      clearTimeout(timer); eventEnded = true;
+      el.removeEventListener(end, onEnd); el.removeEventListener(cancel, onCancel); el.removeEventListener(start, onStart);
+      if (endHold) hold = setTimeout(finish, endHold); else finish();
+    }
+    function onCancel(ev) { if (matches(ev)) finish(); }
+    function motionState() {
+      var state = { remaining: 0, pending: false, motions: [] };
+      if (!el.getAnimations) return state;
+      el.getAnimations().forEach(function (motion) {
+        if (!motion.effect || motion.effect.target !== el ||
+            (kind === 'animation' ? motion.animationName !== name : motion.transitionProperty !== name)) return;
+        var timing = motion.effect.getComputedTiming();
+        if (!Number.isFinite(timing.endTime)) return;
+        state.motions.push(motion);
+        if (motion.pending) state.pending = true;
+        else if (motion.playState === 'running' && motion.playbackRate > 0 && motion.currentTime !== null) {
+          state.remaining = Math.max(state.remaining, (timing.endTime - motion.currentTime) / motion.playbackRate);
+        }
+      });
+      return state;
+    }
+    function armDeadline(remaining, margin) {
+      if (ended || eventEnded) return;
+      clearTimeout(timer); cancelAnimationFrame(deadlineFrame);
+      timer = setTimeout(function () {
+        if (document.hidden) { finish(); return; }
+        // Native events precede rAF. A pending CSS play can start well after
+        // the first style read, so its own finite timeline also gets priority.
+        deadlineFrame = requestAnimationFrame(function () {
+          deadlineFrame = 0;
+          if (ended || eventEnded) return;
+          var state = motionState();
+          if (state.remaining > 0) { armDeadline(state.remaining); return; }
+          finish();
+        });
+      }, Math.max(0, remaining) + (endHold || 0) + (margin || 100));
+    }
+    function onStart(ev) {
+      if (!matches(ev) || !budget) return;
+      var state = motionState();
+      armDeadline(state.motions.length ? state.remaining : budget);
+    }
+    function ms(value) {
+      return (parseFloat(value) || 0) * (value.trim().endsWith('ms') ? 1 : 1000);
+    }
+    active.set(key, stop);
+    el.addEventListener(end, onEnd); el.addEventListener(cancel, onCancel); el.addEventListener(start, onStart);
+    frame = requestAnimationFrame(function () {
+      if (ended) return;
+      var css = getComputedStyle(el), animation = kind === 'animation';
+      var names = (animation ? css.animationName : css.transitionProperty).split(',').map(function (s) { return s.trim(); });
+      var durations = (animation ? css.animationDuration : css.transitionDuration).split(',');
+      var delays = (animation ? css.animationDelay : css.transitionDelay).split(',');
+      var iterations = animation ? css.animationIterationCount.split(',') : ['1'];
+      var duration = 0;
+      names.forEach(function (n, i) {
+        if (n === 'none' || (n !== name && (animation || n !== 'all'))) return;
+        var d = ms(durations[i % durations.length]);
+        var count = parseFloat(iterations[i % iterations.length]);
+        // Infinite loops are decoration, not finite entrance work. A finite
+        // zero-duration entry can still be pending through a positive delay.
+        if (!Number.isFinite(count)) return;
+        duration = Math.max(duration, d * count + ms(delays[i % delays.length]));
+      });
+      if (duration <= 0) { finish(); return; }
+      // A zero-duration animation may dispatch its end before this frame.
+      // Keep this check alive through an end hold; running motion keeps the
+      // original end-event deadline, without starting another safety timer.
+      if (eventEnded) return;
+      budget = duration;
+      var state = motionState();
+      // Bound a genuinely missing start too, while allowing a slow first
+      // layout to commit the CSS animation's pending play. Once it starts,
+      // use its remaining native time rather than the registration clock.
+      armDeadline(state.remaining || budget, state.pending ? 1000 : 100);
+      state.motions.forEach(function (motion) {
+        motion.ready.then(function () {
+          var live = motionState();
+          armDeadline(live.remaining);
+        }, function () {});
+      });
+    });
+    return stop;
+  };
+  // Retire a previous FLIP wait before its replacement changes styles. Its
+  // cancellation event must not clean the replacement's initial geometry.
+  window.PM7_MOTION_FINISH.cancel = function (el, kind, name) {
+    var active = waits.get(el), stop = active && active.get(kind + ':' + name);
+    if (stop) stop();
+  };
+})();
+
+</script>
 <!-- O55:CSS:START -->
 <style id="pm-o55-css">
 /* ---- css/00-tokens.css ---- */
@@ -29422,7 +29541,9 @@ html[data-theme="glass-light"] .o55-demo[data-o55-narrow] .o55-demopill > svg.nx
   content: ""; position: absolute; inset: 2px; pointer-events: none; background: var(--pmc-bar); opacity: 0;
 }
 #pmh-frame[data-pmh-family="retro"][data-pmh-kind="ctl"].pmh-frame-press::after { opacity: 1; }
-:root[data-theme^="retro"]:not([data-o55-nier]):not(#pmhz):not(#pmhz):not(#pmhz) :is(.page-tab, .pmw-tab, .pm-segtab-item, .pmw-sc-btn:not([class*="primary"]), #projectMenuBtn, #themeSelect).pmh-on:not(.active, .selected, [aria-selected="true"]) {
+/* a pressed tab is the chip's from the press on (data-lg-press, glass.js): the phosphor ink would sit on the arriving
+   chip, lime on lime, until the app's click lands (Q16 review F3) */
+:root[data-theme^="retro"]:not([data-o55-nier]):not(#pmhz):not(#pmhz):not(#pmhz) :is(.page-tab, .pmw-tab, .pm-segtab-item, .pmw-sc-btn:not([class*="primary"]), #projectMenuBtn, #themeSelect).pmh-on:not(.active, .selected, [aria-selected="true"], [data-lg-press]) {
   color: var(--accent-primary) !important; transition-duration: 0s !important;
 }
 /* the commander's bar on a rail row */
@@ -33338,6 +33459,9 @@ html[data-theme^="retro"]:not([data-o55-nier="on"]) {
   --pm-switch-glint: transparent; --pm-switch-glint-blend: normal;
   --pm-switch-r: 0px; --pm-switch-r-in: 0px;
   --pm-switch-ink: var(--text-secondary); --pm-switch-ink-on: var(--surface);
+  /* a hovered word is on the screen, not on the chip: it brightens to the screen's own ink (the chip's ink, the screen
+     colour, left it at 1.0-1.6:1; Q16 review F2) */
+  --pm-switch-ink-hover: var(--text-primary);
   --pm-switch-mark: var(--accent-lime); --pm-switch-mark-on: var(--surface);
   --pm-switch-swell: 0; --pm-switch-liquid: 0;
 }
@@ -33358,9 +33482,22 @@ html[data-o55-nier="on"] {
   --pm-switch-shadow: 0 0 0 0 transparent;
   --pm-switch-r: 0px; --pm-switch-r-in: 0px;
   --pm-switch-ink: color-mix(in srgb, var(--text-primary) 60%, var(--text-secondary)); --pm-switch-ink-on: var(--o55-nier-on-ink);
+  --pm-switch-ink-hover: var(--text-primary);
   --pm-switch-mark: var(--o55-nier-ink); --pm-switch-mark-on: var(--o55-nier-on-ink);
   --pm-switch-swell: 0; --pm-switch-liquid: 0;
 }
+/* NieR's cursor owns hover, as it did before the switcher (14-nier-parts.css): the item under the pointer is an ink bar
+   with paper words. Glass's step-asides and hover rules (glass.css sections 6 and 12) outrank that cursor in every look
+   that adopts the switcher, and turned the bar into a faint tint with paper words or the words into ink on ink
+   (1.03-1.46:1; Q16 review F2), so its bar and words are restated here for the switcher's own items. A chosen item
+   keeps the chip; with the cursor part off a hovered word takes --pm-switch-ink-hover. */
+html[data-o55-nier="on"][data-o55-nier-parts~="cursor"]:not(#lgz):not(#lgy) :is(.page-tab, #pmuRange > button, .pm-segtab-item, .orch-tab, .pmu-navbtn):hover:not(.active, [aria-pressed="true"], [aria-selected="true"], [aria-checked="true"]),
+html[data-o55-nier="on"][data-o55-nier-parts~="cursor"]:not(#lgz):not(#lgy) #pm-settings-root :is(.workspace-tab:not(.is-current), .manager-tab:not([aria-selected="true"]), .domain-link:not(.active), .rail-scroll > .side-link:not(.active), .pm51-index-group > .index-link:not(.is-active)):hover {
+  background: var(--o55-nier-ink) !important; color: var(--o55-nier-on-ink) !important;
+}
+/* Settings' section and manager tabs brighten under the pointer as every other strip does (and as they did in these looks
+   before the switcher): Glass's resting ink for them outranks its own hover rule, so they stayed in resting ink */
+html[data-pm-switch="lens"]:not(#lgz):not(#lgy) #pm-settings-root :is(.workspace-tab:not(.is-current), .manager-tab:not([aria-selected="true"])):hover { color: var(--pm-switch-ink-hover, var(--pm-switch-ink-on)) !important; }
 
 /* None of these looks lights its chip with Glass's glint (--pm-switch-glint is transparent in each), so the glint's band,
    an empty layer that the no-pills gate read as a capsule, is not drawn. */
@@ -33430,6 +33567,11 @@ html[data-pm-switch-layer="under"]:not(#lgz):not(#lgy):not(#lgx) #panel-orchestr
 html[data-pm-switch="lens"]:not(#lgz):not(#lgy) .pmw-plate::before { top: 0; bottom: 2px; }
 /* the chosen tab's words are the switcher's chosen ink, as on every other chip of the look */
 html[data-pm-switch="lens"]:not(#lgz) :is(#pm-home-centre, .pmw-scope) { --pmw-tab-active: var(--pm-switch-ink-on); }
+/* and its close x (and the unsaved dot in it) is part of the chip too: the chip's ink, with a square of that ink under the
+   pointer (the resting grey read 1.2-1.4:1 on Retro Light's and NieR's chips and 3.6 on the light looks' tints, and its
+   hover ink 1.4 on Retro's lime; Q16 review F4) */
+html[data-pm-switch="lens"]:not(#lgz) .pmw-tab[data-active] .pmw-tclose { color: var(--pm-switch-ink-on); }
+html[data-pm-switch="lens"]:not(#lgz) .pmw-tab[data-active] .pmw-tclose:hover { color: var(--pm-switch-ink-on); background: color-mix(in srgb, var(--pm-switch-ink-on) 16%, transparent); }
 html[data-pm-switch="lens"] .pmw-plate { --pm-switch-shadow: 0 0 0 0 transparent; }
 html[data-theme="retro-dark"][data-pm-switch="lens"] .pmw-plate { --pm-switch-shadow: 0 0 7px color-mix(in srgb, var(--accent-lime) 24%, transparent); }
 html[data-theme="friendly-dark"][data-pm-switch="lens"] .pmw-plate { --pm-switch-shadow: 0 0 14px color-mix(in srgb, var(--pm6-cozy-mint) 28%, transparent); }
@@ -46544,7 +46686,9 @@ html[data-theme^="retro"]:not([data-o55-nier="on"]) .pmw-chip { border-radius: 0
 .pmw-tab.pmw-rfx-glow { box-shadow: 0 0 14px color-mix(in srgb, var(--accent-lime) 35%, transparent); animation: pmw-rfx-glow 650ms ease-out forwards; }
 @keyframes pmw-rfx-glow { to { box-shadow: 0 0 14px transparent; } }
 .pmw-tab.pmw-rfx-crt { color: var(--accent-lime); background: repeating-linear-gradient(transparent 0 2px, color-mix(in srgb, var(--accent-lime) 70%, transparent) 2px 3px) 0 0 / 100% 0% no-repeat; animation: pmw-rfx-crt 300ms steps(6, end) forwards; }
-@keyframes pmw-rfx-crt { 0% { background-size: 100% 0%; } 90% { background-size: 100% 100%; color: var(--accent-lime); } 100% { background: var(--accent-lime); background-size: 100% 100%; color: var(--surface); } }
+/* the block and its dark words land in one step: the block used to fade in from the start under the still-phosphor
+   label (1.0-1.9:1 for about 90 ms, a blank tab in the films; Q16 review F3) */
+@keyframes pmw-rfx-crt { 0% { background-size: 100% 0%; background-color: transparent; } 90% { background-size: 100% 100%; background-color: transparent; color: var(--accent-lime); animation-timing-function: steps(1, end); } 100% { background: var(--accent-lime); background-size: 100% 100%; color: var(--surface); } }
 .pmw-tab.pmw-rfx-dos { animation: pmw-rfx-dos 600ms steps(1, end) forwards; }
 @keyframes pmw-rfx-dos {
   0% { background: transparent; color: var(--accent-lime); }
@@ -49751,7 +49895,7 @@ html[data-lg="on"][data-theme^="glass"]:not(#lgz) #pmuExport { border-radius: 0 
   background: transparent !important; box-shadow: none !important; border-radius: var(--pm-switch-r-in, var(--pm-ctl-r-in)) !important;
   color: var(--pm-switch-ink, var(--text-secondary)) !important; position: relative; z-index: 1;
 }
-:is(html[data-lg="on"][data-theme^="glass"], html[data-pm-switch="lens"]):not(#lgz) :is(.page-tab, #pmuRange > button, .pm-segtab-item, .orch-tab):hover { color: var(--pm-switch-ink-on, var(--text-primary)) !important; }
+:is(html[data-lg="on"][data-theme^="glass"], html[data-pm-switch="lens"]):not(#lgz) :is(.page-tab, #pmuRange > button, .pm-segtab-item, .orch-tab):hover { color: var(--pm-switch-ink-hover, var(--pm-switch-ink-on, var(--text-primary))) !important; }
 :is(html[data-lg="on"][data-theme^="glass"], html[data-pm-switch="lens"]):not(#lgz) :is(.page-tab, #pmuRange > button, .pm-segtab-item, .orch-tab).active { color: var(--pm-switch-ink-on, var(--text-primary)) !important; font-weight: 600; }
 :is(html[data-lg="on"][data-theme^="glass"], html[data-pm-switch="lens"]):not(#lgz) #sidePanelSlot .pm-segtab { position: relative; }
 :is(html[data-lg="on"][data-theme^="glass"], html[data-pm-switch="lens"]):not(#lgz) #sidePanelSlot .pm-segtab > .pm-segtab-track {
@@ -49764,7 +49908,7 @@ html[data-lg="on"][data-theme^="glass"]:not(#lgz) #pmuExport { border-radius: 0 
   background: transparent !important; box-shadow: none !important; border-radius: var(--pm-switch-r, var(--pm-ctl-r)) !important; color: var(--pm-switch-ink, var(--text-secondary)) !important; position: relative; z-index: 1;
 }
 :is(html[data-lg="on"][data-theme^="glass"], html[data-pm-switch="lens"]):not(#lgz) .pmu-navbtn::before, :is(html[data-lg="on"][data-theme^="glass"], html[data-pm-switch="lens"]):not(#lgz) .pmu-navbtn::after { opacity: 0 !important; }
-:is(html[data-lg="on"][data-theme^="glass"], html[data-pm-switch="lens"]):not(#lgz) .pmu-navbtn:hover:not(.active) { background: var(--pm-switch-hover, var(--lg-fill-hover)) !important; color: var(--pm-switch-ink-on, var(--text-primary)) !important; }
+:is(html[data-lg="on"][data-theme^="glass"], html[data-pm-switch="lens"]):not(#lgz) .pmu-navbtn:hover:not(.active) { background: var(--pm-switch-hover, var(--lg-fill-hover)) !important; color: var(--pm-switch-ink-hover, var(--pm-switch-ink-on, var(--text-primary))) !important; }
 :is(html[data-lg="on"][data-theme^="glass"], html[data-pm-switch="lens"]):not(#lgz) .pmu-navbtn.active, :is(html[data-lg="on"][data-theme^="glass"], html[data-pm-switch="lens"]):not(#lgz) .pmu-navbtn.active * { color: var(--pm-switch-ink-on, var(--text-primary)) !important; }
 :is(html[data-lg="on"][data-theme^="glass"], html[data-pm-switch="lens"]):not(#lgz) .pmu-navbtn.active .pmu-navicon { color: var(--pm-switch-mark-on, var(--pm-switch-mark, var(--accent-blue))) !important; }
 :is(html[data-lg="on"][data-theme^="glass"], html[data-pm-switch="lens"]):not(#lgz) .pmu-navbtn.active { font-weight: 650; }
@@ -49895,6 +50039,9 @@ html[data-lg="on"][data-theme^="glass"]:not(#lgz) #activityBar .icon[data-lg-cur
 html[data-lg="on"][data-theme^="glass"]:not(#lgz) .lg-bead { opacity: 0; box-shadow: inset 0 0 0 .5px var(--lg-lens-hair), inset 0 1px 0 var(--lg-edge-top), inset 0 -1px 1px var(--lg-edge-bot), 0 0 0 .5px var(--lg-lens-edge), 0 3px 8px -3px var(--lg-shadow); }
 html[data-lg="on"][data-theme^="glass"]:not(#lgz) .lg-bead.on { opacity: 1; }
 html[data-lg="on"][data-theme^="glass"]:not(#lgz) .lg-bead.lg-under { opacity: 0 !important; }
+/* the bead is Glass's alone: a look that adopts the switcher would paint it as its chip (glass.js drops it on leaving
+   Glass; this keeps any bead from showing outside Glass) */
+html[data-pm-switch="lens"]:not(#lgz):not(#lgy) .lg-bead { display: none; }
 :is(html[data-lg="on"][data-theme^="glass"], html[data-pm-switch="lens"]):not(#lgz) .lg-lens[data-lg-lifted] { box-shadow: inset 0 0 0 .5px var(--pm-switch-line, var(--lg-lens-hair)), inset 0 1px 0 var(--pm-switch-top, var(--lg-edge-top)), 0 0 0 .5px var(--pm-switch-edge, var(--lg-lens-edge)), 0 10px 24px -6px var(--lg-shadow, rgba(0, 0, 0, .28)), 0 2px 4px var(--lg-shadow-near, rgba(0, 0, 0, .16)); transition: none; }
 :is(html[data-lg="on"][data-theme^="glass"], html[data-pm-switch="lens"]):not(#lgz) .lg-lens[data-lg-lifted]::after { opacity: 1; }
 /* The Orchestrator's views ride the same lens (a theme match, not its redesign): its capsule fill steps aside. */
@@ -49942,7 +50089,7 @@ html[data-lg="on"][data-theme="glass-light"]:not(#lgz) { --lg-lens-body: rgba(25
 :is(html[data-lg="on"][data-theme^="glass"], html[data-pm-switch="lens"]):not(#lgz) #pm-settings-root :is(.rail-scroll > .side-link.active, .domain-link.active, .workspace-tab.is-current, .pm51-index-group > .index-link.is-active, .manager-tab[aria-selected="true"])::after,
 :is(html[data-lg="on"][data-theme^="glass"], html[data-pm-switch="lens"]):not(#lgz) #pm-settings-root :is(nav.workspace-tabs, nav.manager-tabs) > .tab-ink { opacity: 0 !important; }
 :is(html[data-lg="on"][data-theme^="glass"], html[data-pm-switch="lens"]):not(#lgz) #pm-settings-root :is(.workspace-tab, .manager-tab):not(.is-current):not([aria-selected="true"]) { color: var(--pm-switch-ink, var(--text-secondary)) !important; }
-:is(html[data-lg="on"][data-theme^="glass"], html[data-pm-switch="lens"]):not(#lgz) #pm-settings-root :is(.workspace-tab, .manager-tab):is(:hover, :focus-visible) { color: var(--pm-switch-ink-on, var(--text-primary)) !important; }
+:is(html[data-lg="on"][data-theme^="glass"], html[data-pm-switch="lens"]):not(#lgz) #pm-settings-root :is(.workspace-tab, .manager-tab):is(:hover, :focus-visible) { color: var(--pm-switch-ink-hover, var(--pm-switch-ink-on, var(--text-primary))) !important; }
 :is(html[data-lg="on"][data-theme^="glass"], html[data-pm-switch="lens"]):not(#lgz) #pm-settings-root :is(.workspace-tab.is-current, .manager-tab[aria-selected="true"]) { font-weight: 600; }
 :is(html[data-lg="on"][data-theme^="glass"], html[data-pm-switch="lens"]):not(#lgz) #pm-settings-root nav.workspace-tabs {
   background: var(--pm-switch-track, var(--lg-fill)) !important; border: 0 !important; border-radius: var(--pm-switch-r, var(--pm-ctl-r)) !important; box-shadow: none !important; position: relative;
@@ -49976,7 +50123,7 @@ html[data-lg="on"][data-theme^="glass"]:not(#lgz) #pm-settings-root :is(input, t
   background: var(--pm-switch-track, var(--lg-fill)) !important; border-color: transparent !important; border-radius: var(--pm-switch-r, var(--pm-ctl-r)) !important; box-shadow: none !important;
 }
 :is(html[data-lg="on"][data-theme^="glass"], html[data-pm-switch="lens"]):not(#lgz) #pm-settings-root .segmented > button { color: var(--pm-switch-ink, var(--text-secondary)) !important; }
-:is(html[data-lg="on"][data-theme^="glass"], html[data-pm-switch="lens"]):not(#lgz) #pm-settings-root .segmented > button:is(:hover, :focus-visible) { color: var(--pm-switch-ink-on, var(--text-primary)) !important; }
+:is(html[data-lg="on"][data-theme^="glass"], html[data-pm-switch="lens"]):not(#lgz) #pm-settings-root .segmented > button:is(:hover, :focus-visible) { color: var(--pm-switch-ink-hover, var(--pm-switch-ink-on, var(--text-primary))) !important; }
 :is(html[data-lg="on"][data-theme^="glass"], html[data-pm-switch="lens"]):not(#lgz) #pm-settings-root .segmented > button:is([aria-checked="true"], [aria-pressed="true"]) { color: var(--pm-switch-ink-on, var(--text-primary)) !important; font-weight: 600; }
 :is(html[data-lg="on"][data-theme^="glass"], html[data-pm-switch="lens"]):not(#lgz) #pm-settings-root .resource-row[aria-current="true"] { border-color: transparent !important; }
 :is(html[data-lg="on"][data-theme^="glass"], html[data-pm-switch="lens"]):not(#lgz) #pm-settings-root .resource-row[aria-current="true"] .resource-row-name { color: var(--pm-switch-ink-on, var(--text-primary)) !important; }
@@ -50156,7 +50303,9 @@ html[data-pm-switch="lens"][data-pm-switch-layer="under"]:not(#lgz) :is(#themeMe
    one it leaves as not, so neither label sits in its old colour on the wrong ground (three ids: above the chosen ink). The item
    and the parts that colour themselves (icons, Settings' second lines, Usage's room names), each anchored on its item's
    class so the browser's ancestor filter rejects every other element at once (a descendant *, or a part keyed only by the
-   attribute, was tested against every element or every icon on every restyle). */
+   attribute, was tested against every element or every icon on every restyle). The inks change in the press's own frame,
+   with no colour transition: the app's click can hold the page for a third of a second while the chip glides on, and a
+   transition left frozen part-way kept the old ink on the landed chip (Q16 review F3). */
 html[data-pm-switch="lens"][data-pm-switch-layer="under"]:not(#lgz):not(#lgy):not(#lgx) [data-lg-press="on"],
 html[data-pm-switch="lens"][data-pm-switch-layer="under"]:not(#lgz):not(#lgy):not(#lgx) .pmu-navbtn[data-lg-press="on"] .pmu-navtext,
 html[data-pm-switch="lens"][data-pm-switch-layer="under"]:not(#lgz):not(#lgy):not(#lgx) .pmu-navbtn[data-lg-press="on"] svg,
@@ -50171,7 +50320,7 @@ html[data-pm-switch="lens"][data-pm-switch-layer="under"]:not(#lgz):not(#lgy):no
 html[data-pm-switch="lens"][data-pm-switch-layer="under"]:not(#lgz):not(#lgy):not(#lgx) .pm-segtab-item[data-lg-press="on"] svg,
 html[data-pm-switch="lens"][data-pm-switch-layer="under"]:not(#lgz):not(#lgy):not(#lgx) .pm-segtab-item[data-lg-press="on"] path,
 html[data-pm-switch="lens"][data-pm-switch-layer="under"]:not(#lgz):not(#lgy):not(#lgx) .pm6-tt-mode[data-lg-press="on"] svg,
-html[data-pm-switch="lens"][data-pm-switch-layer="under"]:not(#lgz):not(#lgy):not(#lgx) .pm6-tt-mode[data-lg-press="on"] path { color: var(--pm-switch-ink-on) !important; }
+html[data-pm-switch="lens"][data-pm-switch-layer="under"]:not(#lgz):not(#lgy):not(#lgx) .pm6-tt-mode[data-lg-press="on"] path { color: var(--pm-switch-ink-on) !important; transition-duration: 0s !important; }
 html[data-pm-switch="lens"][data-pm-switch-layer="under"]:not(#lgz):not(#lgy):not(#lgx) [data-lg-press="off"],
 html[data-pm-switch="lens"][data-pm-switch-layer="under"]:not(#lgz):not(#lgy):not(#lgx) .pmu-navbtn[data-lg-press="off"] .pmu-navtext,
 html[data-pm-switch="lens"][data-pm-switch-layer="under"]:not(#lgz):not(#lgy):not(#lgx) .pmu-navbtn[data-lg-press="off"] svg,
@@ -50186,7 +50335,7 @@ html[data-pm-switch="lens"][data-pm-switch-layer="under"]:not(#lgz):not(#lgy):no
 html[data-pm-switch="lens"][data-pm-switch-layer="under"]:not(#lgz):not(#lgy):not(#lgx) .pm-segtab-item[data-lg-press="off"] svg,
 html[data-pm-switch="lens"][data-pm-switch-layer="under"]:not(#lgz):not(#lgy):not(#lgx) .pm-segtab-item[data-lg-press="off"] path,
 html[data-pm-switch="lens"][data-pm-switch-layer="under"]:not(#lgz):not(#lgy):not(#lgx) .pm6-tt-mode[data-lg-press="off"] svg,
-html[data-pm-switch="lens"][data-pm-switch-layer="under"]:not(#lgz):not(#lgy):not(#lgx) .pm6-tt-mode[data-lg-press="off"] path { color: var(--pm-switch-ink) !important; }
+html[data-pm-switch="lens"][data-pm-switch-layer="under"]:not(#lgz):not(#lgy):not(#lgx) .pm6-tt-mode[data-lg-press="off"] path { color: var(--pm-switch-ink) !important; transition-duration: 0s !important; }
 
 /* Settings' chapter header is a bar sheet under Liquid Glass (glass.js SURFACES): on the bare wallpaper its line, a 62 %
    tint, read 4.2:1 over Ribbons and 1.9-2.9:1 over Prism or Pool in Glass Dark (2026-10-14). The line takes the look's
@@ -82709,6 +82858,8 @@ status: completed with warnings</pre>
                         sTab = sibs[si];
                         if (sTab === g.tab || sTab.style.display === 'none') continue;
                         firsts.push([sTab, sTab.getBoundingClientRect().left]);
+                        window.PM7_MOTION_FINISH.cancel(sTab, 'transition', 'transform');
+                        cancelAnimationFrame(sTab.__pmTabSlideFrame);
                     }
                     g.strip.insertBefore(g.tab, ref);
                     var newMids = [];
@@ -82722,14 +82873,18 @@ status: completed with warnings</pre>
                         if (dx >= 1 || dx <= -1) {
                             sTab.style.transform = 'translateX(' + dx + 'px)';
                             void sTab.offsetWidth; /* commit the offset frame */
-                            sTab.style.transition = 'transform 250ms cubic-bezier(.22,1,.36,1)';
-                            sTab.style.transform = '';
-                            sTab.addEventListener('transitionend', function onSlid(te) {
-                                if (te.propertyName !== 'transform') return;
-                                te.target.style.transition = '';
-                                te.target.style.transform = '';
-                                te.target.removeEventListener('transitionend', onSlid);
-                            });
+                            (function (tab) {
+                                // Old cancellation dispatches before this replacement frame.
+                                tab.__pmTabSlideFrame = requestAnimationFrame(function () {
+                                    tab.__pmTabSlideFrame = 0;
+                                    tab.style.transition = 'transform 250ms cubic-bezier(.22,1,.36,1)';
+                                    tab.style.transform = '';
+                                    window.PM7_MOTION_FINISH(tab, 'transition', 'transform', function () {
+                                        tab.style.transition = '';
+                                        tab.style.transform = '';
+                                    });
+                                });
+                            })(sTab);
                         } else {
                             sTab.style.transition = '';
                             sTab.style.transform = '';
@@ -89507,8 +89662,7 @@ window.PM12_REFERENCE = {"version":"1.0.0","total":990,"inventory_sha256":"be85c
 
   function onDetailOpenSettled(e) {
     const { inspector } = getDetailNodes();
-    if (!inspector || e.target !== inspector || e.propertyName !== 'transform') return;
-    inspector.removeEventListener('transitionend', onDetailOpenSettled);
+    if (!inspector) return;
     if (detailInspectorVisible) inspector.classList.add('is-settled');
   }
 
@@ -89526,14 +89680,14 @@ window.PM12_REFERENCE = {"version":"1.0.0","total":990,"inventory_sha256":"be85c
     // Force layout so translate3d(102%) is the real transition start (W1 pattern)
     void inspector.offsetWidth;
     document.removeEventListener('keydown', onDetailEsc, true);
-    inspector.removeEventListener('transitionend', onDetailOpenSettled);
+    if (inspector.__pmDetailFinish) inspector.__pmDetailFinish();
     requestAnimationFrame(() => {
       requestAnimationFrame(() => {
         if (!detailInspectorVisible) return;
         scrim?.classList.add('is-open');
         inspector.classList.add('is-open');
         if (motionReduced()) inspector.classList.add('is-settled');
-        else inspector.addEventListener('transitionend', onDetailOpenSettled);
+        else inspector.__pmDetailFinish = window.PM7_MOTION_FINISH(inspector, 'transition', 'transform', onDetailOpenSettled);
       });
     });
     document.addEventListener('keydown', onDetailEsc, true);
@@ -89547,7 +89701,7 @@ window.PM12_REFERENCE = {"version":"1.0.0","total":990,"inventory_sha256":"be85c
     }
     detailInspectorVisible = false;
     document.removeEventListener('keydown', onDetailEsc, true);
-    inspector?.removeEventListener('transitionend', onDetailOpenSettled);
+    if (inspector?.__pmDetailFinish) inspector.__pmDetailFinish();
     if (inspector) {
       inspector.classList.remove('is-settled');
       inspector.classList.add('is-closing');
@@ -89860,7 +90014,7 @@ window.PM12_REFERENCE = {"version":"1.0.0","total":990,"inventory_sha256":"be85c
     const cleanup=()=>{document.removeEventListener('keydown',onEsc,true);wrap._pmCleanup=null;};wrap._pmCleanup=cleanup;
     wrap.addEventListener('mousedown',e=>{if(e.target===wrap)closeDrawerWrap(wrap);});
     portalRoot().append(wrap);document.addEventListener('keydown',onEsc,true);void wrap.offsetWidth;
-    requestAnimationFrame(()=>requestAnimationFrame(()=>{if(!wrap.isConnected)return;wrap.classList.add('is-open');if(motionReduced())wrap.classList.add('is-settled');else{const onSettled=e=>{if(e.target!==drawer||e.propertyName!=='transform')return;drawer.removeEventListener('transitionend',onSettled);if(wrap.isConnected&&wrap.classList.contains('is-open'))wrap.classList.add('is-settled');};drawer.addEventListener('transitionend',onSettled);}wrap.querySelector('button')?.focus();}));
+    requestAnimationFrame(()=>requestAnimationFrame(()=>{if(!wrap.isConnected)return;wrap.classList.add('is-open');if(motionReduced())wrap.classList.add('is-settled');else{window.PM7_MOTION_FINISH(drawer,'transition','transform',()=>{if(wrap.isConnected&&wrap.classList.contains('is-open'))wrap.classList.add('is-settled');});}wrap.querySelector('button')?.focus();}));
     return wrap;
   }
 
@@ -94488,7 +94642,7 @@ openDrawer = function ({ title, subtitle = '', pill = '', status = null, eyebrow
   requestAnimationFrame(() => requestAnimationFrame(() => {
     if (!wrap.isConnected) return; wrap.classList.add('is-open');
     if (motionReduced()) wrap.classList.add('is-settled');
-    else { const onSettled = e => { if (e.target !== drawer || e.propertyName !== 'transform') return; drawer.removeEventListener('transitionend', onSettled); if (wrap.isConnected && wrap.classList.contains('is-open')) wrap.classList.add('is-settled'); }; drawer.addEventListener('transitionend', onSettled); }
+    else { window.PM7_MOTION_FINISH(drawer, 'transition', 'transform', () => { if (wrap.isConnected && wrap.classList.contains('is-open')) wrap.classList.add('is-settled'); }); }
     const first = wrap.querySelector('[data-autofocus], .pm51-panel-body input:not(.pm51-dd-native), .pm51-panel-body .pm51-dd-trigger, .pm51-panel-body textarea, .pm51-panel-body button:not(.pm51-panel-close)') || wrap.querySelector('.pm51-panel-body') || wrap;
     if (!first.matches('input, textarea, button, select, [tabindex]')) first.tabIndex = -1;
     try { first.focus({ preventScroll: true }); } catch (e) { first.focus(); }
@@ -114771,31 +114925,26 @@ html[data-theme^="retro"] #panel-settings .o55-goals-phase-n { border-radius: 0;
       newP.style.setProperty('--pm-dir', String(dir));
       oldP.classList.add('pm8-page-out');
       newP.classList.add('pm8-page-in');
-      var cleanupTimer = 0;
+      var stopEntrance = null, finished = false;
       function cleanupOut() {
         oldP.classList.remove('pm8-page-out');
         oldP.style.top = oldP.style.left = oldP.style.width = oldP.style.height = '';
         if (oldP.__pm8PageCleanup === cleanupOut) oldP.__pm8PageCleanup = null;
       }
       function cleanupIn() {
-        clearTimeout(cleanupTimer);cleanupTimer=0;
+        if (finished) return;
+        finished = true;
+        if (stopEntrance) stopEntrance();
         newP.classList.remove('pm8-page-in');
-        newP.removeEventListener('animationend', onIn);
         if (newP.__pm8PageCleanup === cleanupIn) newP.__pm8PageCleanup = null;
         cleanupOut();
         document.documentElement.removeAttribute('data-pm-page-transition');
         requestAnimationFrame(function () { cachePanelRect(newP); cacheTabMetrics(); });
       }
-      function onIn(ev) {
-        if (ev.animationName !== 'pm8-page-in') return;
-        newP.removeEventListener('animationend', onIn);
-        /* Keep the fully faded outgoing page inert through Settings' own
-           340 ms entrance. Hiding its large subtree at 150 ms forced a
-           main-thread restyle through the middle of the visible animation. */
-        cleanupTimer=setTimeout(cleanupIn,80);
-      }
       oldP.__pm8PageCleanup = cleanupOut; newP.__pm8PageCleanup = cleanupIn;
-      newP.addEventListener('animationend', onIn);
+      /* Keep the existing 80 ms post-end hold: Settings still enters for
+         340 ms while the faded outgoing subtree stays inert. */
+      stopEntrance = window.PM7_MOTION_FINISH(newP, 'animation', 'pm8-page-in', cleanupIn, 80);
     }
     var origGo = window.PM_PAGES.go;
     window.PM_PAGES.go = function (pageId, subTab) {
@@ -123182,18 +123331,17 @@ html[data-theme^="retro"] #panel-settings .o55-goals-phase-n { border-radius: 0;
       var now = el.getBoundingClientRect();
       var dx = entry.rect.left - now.left, dy = entry.rect.top - now.top;
       if (!dx && !dy) return;
+      window.PM7_MOTION_FINISH.cancel(el, 'transition', 'transform');
       el.style.transition = 'none';
       el.style.transform = 'translate(' + dx + 'px,' + dy + 'px)';
-      var settle = function (ev) {
-        if (ev.target !== el || ev.propertyName !== 'transform') return;
-        el.removeEventListener('transitionend', settle);
+      var settle = function () {
         el.style.removeProperty('transition');
         el.style.removeProperty('transform');
       };
-      el.addEventListener('transitionend', settle);
       requestAnimationFrame(function () {
         el.style.transition = 'transform var(--mo-widget-reflow-dur, 240ms) var(--mo-widget-reflow-ease, cubic-bezier(.45,0,.4,1))';
         el.style.removeProperty('transform');
+        window.PM7_MOTION_FINISH(el, 'transition', 'transform', settle);
       });
     });
   }
@@ -126455,6 +126603,7 @@ html[data-theme^="retro"] #panel-settings .o55-goals-phase-n { border-radius: 0;
     moved.sort(function (a, b) { return a.order - b.order; });
     moved.forEach(function (entry, index) {
       var element = entry.element;
+      window.PM7_MOTION_FINISH.cancel(element, 'transition', 'transform');
       element.style.transition = "none";
       element.style.transform = "translate(" + entry.dx + "px," + entry.dy + "px)";
       /* Mid-flight marker for hit-testing: the inline transform is EMPTY
@@ -126463,9 +126612,7 @@ html[data-theme^="retro"] #panel-settings .o55-goals-phase-n { border-radius: 0;
          is the only reliable marker. Removed on settle and by
          clearFlipResidue. */
       element.setAttribute("data-pm-home-flip", "");
-      var settle = function (event) {
-        if (event.target !== element || event.propertyName !== "transform") return;
-        element.removeEventListener("transitionend", settle);
+      var settle = function () {
         element.removeAttribute("data-pm-home-flip");
         if (!element.style.transform) {
           element.style.removeProperty("transition");
@@ -126473,11 +126620,11 @@ html[data-theme^="retro"] #panel-settings .o55-goals-phase-n { border-radius: 0;
           element.style.removeProperty("transform");
         }
       };
-      element.addEventListener("transitionend", settle);
       requestAnimationFrame(function () {
         element.style.transition = "transform var(--pm-home-reflow-dur) var(--pm-home-reflow-ease)";
         element.style.transitionDelay = (index * 16) + "ms";
         element.style.removeProperty("transform");
+        window.PM7_MOTION_FINISH(element, 'transition', 'transform', settle);
       });
     });
   }
@@ -138023,7 +138170,7 @@ policies for tenant isolation, and add migration script.</textarea>
           v._pmCozeEntered = true;
           if (!reduce()) {
             v.classList.add('pm-panel-enter');
-            v.addEventListener('animationend', function h() { v.classList.remove('pm-panel-enter'); v.removeEventListener('animationend', h); });
+            window.PM7_MOTION_FINISH(v, 'animation', 'railPanelIn', function () { v.classList.remove('pm-panel-enter'); });
           }
           schedule(v);
         } else if (!v.classList.contains('active')) {
@@ -227076,6 +227223,9 @@ try { if (window.PM_HOME && typeof window.PM_HOME.boot === 'function') window.PM
     lastTier = tier; lastWall = wall; lastMotion = motion;
     if (th !== lastTheme || lg !== lastLg) {
       readSwitch();
+      /* the hover bead is Glass's alone: a look that leaves Glass drops it (a look that adopts the switcher paints every
+         .lg-lens as its chip, so a bead left behind stood on the title bar as a block until a reload; Q16 review F1) */
+      if (!isGlass() && bead) { resetBead(); removeLensElement(bead); bead = null; }
       var enter = isGlass() && (!/^glass/.test(lastTheme || '') || lastLg !== 'on');
       lastTheme = th; lastLg = lg; lenses.forEach(function (L) { L.rect = null; });
       glassSet.forEach(function (e) { e.__lgSig = null; });

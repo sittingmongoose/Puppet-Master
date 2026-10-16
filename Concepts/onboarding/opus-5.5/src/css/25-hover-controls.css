@@ -182,7 +182,9 @@
   content: ""; position: absolute; inset: 2px; pointer-events: none; background: var(--pmc-bar); opacity: 0;
 }
 #pmh-frame[data-pmh-family="retro"][data-pmh-kind="ctl"].pmh-frame-press::after { opacity: 1; }
-:root[data-theme^="retro"]:not([data-o55-nier]):not(#pmhz):not(#pmhz):not(#pmhz) :is(.page-tab, .pmw-tab, .pm-segtab-item, .pmw-sc-btn:not([class*="primary"]), #projectMenuBtn, #themeSelect).pmh-on:not(.active, .selected, [aria-selected="true"]) {
+/* a pressed tab is the chip's from the press on (data-lg-press, glass.js): the phosphor ink would sit on the arriving
+   chip, lime on lime, until the app's click lands (Q16 review F3) */
+:root[data-theme^="retro"]:not([data-o55-nier]):not(#pmhz):not(#pmhz):not(#pmhz) :is(.page-tab, .pmw-tab, .pm-segtab-item, .pmw-sc-btn:not([class*="primary"]), #projectMenuBtn, #themeSelect).pmh-on:not(.active, .selected, [aria-selected="true"], [data-lg-press]) {
   color: var(--accent-primary) !important; transition-duration: 0s !important;
 }
 /* the commander's bar on a rail row */
