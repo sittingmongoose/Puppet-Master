@@ -11,6 +11,8 @@ selector whose descendant names the classes and element types it reaches today (
 `*` and `:where(...)` have specificity 0), or drops the arm for the two carriers that hold text only. Declarations,
 rule order and every other selector are untouched. Only CSS inside real <style> elements is searched (never a script).
 In the published page every original must be found exactly once.
+The lane check is active_descendant_guard.mjs (README beside it): run it before landing any change to the lists or
+to the markup under these carriers. Each rule's source carries a comment pointing at the lists.
 """
 from __future__ import annotations
 

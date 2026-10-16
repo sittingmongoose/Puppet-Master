@@ -39,6 +39,7 @@ html[data-o55-nier-parts~="cursor"] :is(.pm6-tb-menu-item.is-selected, .pm6-tt-m
    hovered item only: a :hover followed by a descendant makes Blink restyle the whole subtree of every element whose
    hover changes. The item's own ink (the rule above) stays on :hover, which invalidates just that element. Chosen
    items keep their own branches. A badge inside the bar turns over again. */
+/* T2 build step: the .active-keyed '*' / ':where(*)' descendants below are rewritten at build time from onboarding/opus-5.5/tools/active_descendant_rules.json; a new descendant class or tag under these carriers needs an entry there (check: tools/active_descendant_guard.mjs). */
 html[data-o55-nier-parts~="cursor"] :is(.page-tab:not(.active), .pm6-tb-menu-item, .pm6-tt-mode, .pm6-tb-pages-more-item, .activity-bar .icon,
   .domain-link, .side-link, .index-link, .page-index-title, .workspace-tab, .manager-tab, .resource-row, .pm51-popout-item:not([aria-disabled="true"]), .pm51-menu-item,
   .pm7u-navbtn, .pm7u-poprow, .orch-tab, .pm-segtab-item:not(.active), .fm-row, .fm-ctx-item, .ctx-item, .menu-item, .chat-dropdown-item,

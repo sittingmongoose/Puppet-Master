@@ -1,5 +1,5 @@
 {
- "_about": "T2 (P1000 speed team, ASTRA-REWRITES.json at cd34, rule 5 updated to main b9a08db90f). Each original is one complex selector of the composed page; it is replaced by the same selector whose descendant * / :where(*) names the descendant classes and types it reaches (specificity unchanged, both 0), or, for the two text-only carriers, the arm is dropped from its list. A rule may list variants (the same rule as different branches write it); exactly one variant must match, once. Lists extended by the dynamic-state guard (lead/tools/t2dynamic.mjs, 2026-10-16): rule 0 + .pmr-key; rule 6 + .nx-p, .pmr-key.",
+ "_about": "T2 (P1000 speed team, ASTRA-REWRITES.json at cd34, rule 5 updated to main b9a08db90f). Each original is one complex selector of the composed page; it is replaced by the same selector whose descendant * / :where(*) names the descendant classes and types it reaches (specificity unchanged, both 0), or, for the two text-only carriers, the arm is dropped from its list. A rule may list variants (the same rule as different branches write it); exactly one variant must match, once. Lists extended by the dynamic-state guard (lead/tools/t2dynamic.mjs, 2026-10-16): rule 0 + .pmr-key; rule 6 + .nx-p, .pmr-key. Lane check: tools/active_descendant_guard.mjs (README beside it).",
  "rules": [
   {
    "rule": 0,
@@ -97,7 +97,8 @@
    "source": "Concepts/pm6-build/parts/10x-pm6-css-cozy-shelves.part.html",
    "original": ".side-panel-slot.pill-fit-measure .side-panel-view:not(.active) > *",
    "replacement": ".side-panel-slot.pill-fit-measure .side-panel-view:not(.active) > :where(.d-jj,.fm-docktabs,.fm-filter,.fm-selbar,.fm-toolbar-wrap,.pm-segtab,.pm7-automation-context,.pm7-automation-provider-view,.pm7-scm-context,.pm7-scm-git-footer,.sh-banner,.sh-foot,.sh-idxpanel,.sh-idxstate,.sh-scroll)",
-   "omit": false
+   "omit": false,
+   "note": "Its live text is the pinned base (Onboarding concepts/TestPMConcept.html); pm6-build/parts is an inert frozen copy, so this rule has no source comment. Base edits go through build.py patches, and a patch that changes this text fails the exactly-once match here."
   },
   {
    "rule": 11,

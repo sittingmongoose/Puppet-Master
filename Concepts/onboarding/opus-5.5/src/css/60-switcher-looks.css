@@ -195,6 +195,7 @@ html:not([data-theme^="glass"]):not([data-o55-nier="on"]) .pm6-tb-menu-item.is-s
    their token blocks above do) rather than <html data-pm-switch-layer>: glass.js sets that attribute after the look's own
    restyle, and a bare * keyed on it restyled the whole page a second time on every NieR toggle, 266 -> 58 ms of the
    flip on Nas1; keyed on the look, it rides the look's own restyle) */
+/* T2 build step: the .active-keyed '*' / ':where(*)' descendants below are rewritten at build time from onboarding/opus-5.5/tools/active_descendant_rules.json; a new descendant class or tag under these carriers needs an entry there (check: tools/active_descendant_guard.mjs). */
 :is(html[data-theme^="retro"], html[data-o55-nier="on"]):not(#lgz) #pm-settings-root .rail-scroll > .side-link.active *,
 :is(html[data-theme^="retro"], html[data-o55-nier="on"]):not(#lgz) #pm-settings-root .domain-link.active *,
 :is(html[data-theme^="retro"], html[data-o55-nier="on"]):not(#lgz) #pm-settings-root .pm51-index-group > .index-link.is-active *,
