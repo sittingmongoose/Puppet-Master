@@ -26515,9 +26515,10 @@ html:is([data-theme^="retro"], [data-o55-nier="on"]) #panel-settings .toggle.pm-
       names.forEach(function (n, i) {
         if (n === 'none' || (n !== name && (animation || n !== 'all'))) return;
         var d = ms(durations[i % durations.length]);
-        if (d <= 0) return;
         var count = parseFloat(iterations[i % iterations.length]);
-        if (!Number.isFinite(count)) count = 1;
+        // Infinite loops are decoration, not finite entrance work. A finite
+        // zero-duration entry can still be pending through a positive delay.
+        if (!Number.isFinite(count)) return;
         duration = Math.max(duration, d * count + ms(delays[i % delays.length]));
       });
       if (duration <= 0) { finish(); return; }
@@ -80887,6 +80888,8 @@ status: completed with warnings</pre>
                         sTab = sibs[si];
                         if (sTab === g.tab || sTab.style.display === 'none') continue;
                         firsts.push([sTab, sTab.getBoundingClientRect().left]);
+                        window.PM7_MOTION_FINISH.cancel(sTab, 'transition', 'transform');
+                        cancelAnimationFrame(sTab.__pmTabSlideFrame);
                     }
                     g.strip.insertBefore(g.tab, ref);
                     var newMids = [];
@@ -80900,12 +80903,18 @@ status: completed with warnings</pre>
                         if (dx >= 1 || dx <= -1) {
                             sTab.style.transform = 'translateX(' + dx + 'px)';
                             void sTab.offsetWidth; /* commit the offset frame */
-                            sTab.style.transition = 'transform 250ms cubic-bezier(.22,1,.36,1)';
-                            sTab.style.transform = '';
-                            window.PM7_MOTION_FINISH(sTab, 'transition', 'transform', function (tab) {
-                                tab.style.transition = '';
-                                tab.style.transform = '';
-                            });
+                            (function (tab) {
+                                // Old cancellation dispatches before this replacement frame.
+                                tab.__pmTabSlideFrame = requestAnimationFrame(function () {
+                                    tab.__pmTabSlideFrame = 0;
+                                    tab.style.transition = 'transform 250ms cubic-bezier(.22,1,.36,1)';
+                                    tab.style.transform = '';
+                                    window.PM7_MOTION_FINISH(tab, 'transition', 'transform', function () {
+                                        tab.style.transition = '';
+                                        tab.style.transform = '';
+                                    });
+                                });
+                            })(sTab);
                         } else {
                             sTab.style.transition = '';
                             sTab.style.transform = '';

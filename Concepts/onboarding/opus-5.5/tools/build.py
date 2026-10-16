@@ -519,16 +519,31 @@ PATCHES = [
          340 ms while the faded outgoing subtree stays inert. */
       stopEntrance = window.PM7_MOTION_FINISH(newP, 'animation', 'pm8-page-in', cleanupIn, 80);''',
      'motion completion: page entrance always releases the hover rest'),
-    (r'''                            sTab.addEventListener('transitionend', function onSlid(te) {
+    (r'''                        firsts.push([sTab, sTab.getBoundingClientRect().left]);''',
+     r'''                        firsts.push([sTab, sTab.getBoundingClientRect().left]);
+                        window.PM7_MOTION_FINISH.cancel(sTab, 'transition', 'transform');
+                        cancelAnimationFrame(sTab.__pmTabSlideFrame);''',
+     'motion completion: retire terminal reflow before replacing its geometry'),
+    (r'''                            sTab.style.transition = 'transform 250ms cubic-bezier(.22,1,.36,1)';
+                            sTab.style.transform = '';
+                            sTab.addEventListener('transitionend', function onSlid(te) {
                                 if (te.propertyName !== 'transform') return;
                                 te.target.style.transition = '';
                                 te.target.style.transform = '';
                                 te.target.removeEventListener('transitionend', onSlid);
                             });''',
-     r'''                            window.PM7_MOTION_FINISH(sTab, 'transition', 'transform', function (tab) {
-                                tab.style.transition = '';
-                                tab.style.transform = '';
-                            });''',
+     r'''                            (function (tab) {
+                                // Old cancellation dispatches before this replacement frame.
+                                tab.__pmTabSlideFrame = requestAnimationFrame(function () {
+                                    tab.__pmTabSlideFrame = 0;
+                                    tab.style.transition = 'transform 250ms cubic-bezier(.22,1,.36,1)';
+                                    tab.style.transform = '';
+                                    window.PM7_MOTION_FINISH(tab, 'transition', 'transform', function () {
+                                        tab.style.transition = '';
+                                        tab.style.transform = '';
+                                    });
+                                });
+                            })(sTab);''',
      'motion completion: terminal neighbour tab reflow'),
     (r'''    if (!inspector || e.target !== inspector || e.propertyName !== 'transform') return;
     inspector.removeEventListener('transitionend', onDetailOpenSettled);''',
