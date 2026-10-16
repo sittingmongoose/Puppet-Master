@@ -817,8 +817,16 @@ var SHADOW_CSS = [
   ':host([data-blink="smooth"]) .pmw-ed-caret.is-blink { animation: pmw-ed-fade 1.06s ease-in-out .5s infinite; }',
   ':host([data-blink="expand"]) .pmw-ed-caret.is-blink::before { animation: pmw-ed-expand 1.06s ease-in-out .5s infinite; }',
   ':host([data-blink="expand"]) .pmw-ed-caret.is-blink::after { animation: pmw-ed-fade 1.06s ease-in-out .5s infinite; }',
+  /* Alternate identical names to restart a blink in the next style pass. This
+     preserves its full pause and curve without forcing layout after a move. */
+  ':host([data-blink="blink"]) .pmw-ed-caret.is-blink:where(.is-blink-alt) { animation-name: pmw-ed-blink-alt; }',
+  ':host([data-blink="smooth"]) .pmw-ed-caret.is-blink:where(.is-blink-alt) { animation-name: pmw-ed-fade-alt; }',
+  ':host([data-blink="expand"]) .pmw-ed-caret.is-blink:where(.is-blink-alt)::before { animation-name: pmw-ed-expand-alt; }',
+  ':host([data-blink="expand"]) .pmw-ed-caret.is-blink:where(.is-blink-alt)::after { animation-name: pmw-ed-fade-alt; }',
   '@keyframes pmw-ed-fade { 0%, 22% { opacity: 1; } 50%, 72% { opacity: 0; } 100% { opacity: 1; } }',
   '@keyframes pmw-ed-expand { 0%, 22% { transform: scaleY(1); } 50%, 72% { transform: scaleY(0); } 100% { transform: scaleY(1); } }',
+  '@keyframes pmw-ed-fade-alt { 0%, 22% { opacity: 1; } 50%, 72% { opacity: 0; } 100% { opacity: 1; } }',
+  '@keyframes pmw-ed-expand-alt { 0%, 22% { transform: scaleY(1); } 50%, 72% { transform: scaleY(0); } 100% { transform: scaleY(1); } }',
   /* Caret movement: Snappy and Gliding ease the caret to where it goes (Retro and NieR step there); typing never waits */
   ':host([data-motion="snappy"]) .pmw-ed-caret { transition: transform 80ms cubic-bezier(.2, .8, .2, 1); }',
   ':host([data-motion="glide"]) .pmw-ed-caret { transition: transform 150ms cubic-bezier(.2, .75, .25, 1); }',
@@ -840,6 +848,7 @@ var SHADOW_CSS = [
   '.pmw-ed-ime { position: absolute; left: 0; top: 0; z-index: 3; width: 1px; height: var(--pmw-ed-lh); margin: 0; padding: 0; border: 0; outline: none; resize: none; overflow: hidden; white-space: pre; opacity: 0; color: transparent; caret-color: transparent; background: transparent; font: inherit; line-height: var(--pmw-ed-lh); -webkit-user-select: text; user-select: text; pointer-events: none; }',
   '.pmw-ed-ime.is-composing { opacity: 1; color: var(--pmw-ed-fg); background: var(--pmw-ed-gutbg); text-decoration: underline; text-underline-offset: 3px; box-shadow: 0 0 0 1px var(--pmw-ed-caret-mark); }',
   '@keyframes pmw-ed-blink { 50% { opacity: 0; } }',
+  '@keyframes pmw-ed-blink-alt { 50% { opacity: 0; } }',
   /* diff mode */
   '.pmw-ed-row.is-meta { color: var(--pmw-text-3); }',
   '.pmw-ed-mt { flex: none; padding-left: 10px; display: flex; align-items: center; gap: 12px; }',
@@ -1045,6 +1054,9 @@ function wrapPieces(text, cols) {
 /* ======================================================================================================== */
 
 var SYN_KEYS = ['kw', 'str', 'num', 'com', 'fn', 'ty', 'var', 'prop', 'op', 'pun', 'tag', 'attr', 'esc', 'mac', 'link', 'head', 'code'];
+// The parked Customize preview can measure its offered faces before a pick.
+// Keep exact DOM measurements, shared by the live editor and its preview.
+var primedFontWidths = new Map();
 function edAppearance() {
   try {
     var A = window.PMT && window.PMT.Appearance;
@@ -1256,7 +1268,7 @@ function mountEditor(host, st, api) {
     previewAppearance: null
   };
   view.saveLook = function () { if (!preview && api.saveSoon) api.saveSoon(); };
-  view.applyLook = function (R2) { onLook(R2); };
+  view.applyLook = function (R2, immediate) { requestLook(R2, immediate); };
   view.editor = function () { return instance; };
   var R = EL ? EL.resolve(view) : FALLBACK_LOOK;
 
@@ -1264,13 +1276,22 @@ function mountEditor(host, st, api) {
      file's own when it has one; IND.tabs says the file's indentation is tabs, which Show spaces marks as such. A tabbed
      file, still as it was opened, takes a new Tab size by opening its tabs again at the new width ---- */
   var IND = { unit: 4, tabs: false, own: 0 };
+  function readIndent(look) {
+    var I = (look || R).indent || FALLBACK_LOOK.indent;
+    var guess = d.indentGuess;
+    if (guess == null || (!guess && d.indentGuessAt !== d.version)) guess = guessIndent(d.lines);
+    var own = I.detect && !d.tabbed ? guess : 0, unit = own || I.size || 4;
+    // Reading the note must not unfold tabs or consume the next draw's relayout.
+    // An edited tabbed file keeps the width it opened with until it reopens.
+    if (d.tabbed && !(d.src != null && d.version === d.savedVersion && !(d.undo && d.undo.length))) unit = d.tabUnit;
+    return { unit: unit, tabs: I.detect && d.tabbed ? true : I.detect && own ? false : !I.spaces, own: own, tabbed: !!d.tabbed };
+  }
   function resolveIndent() {
-    var I = R.indent || FALLBACK_LOOK.indent;
     if (d.indentGuess == null || (!d.indentGuess && d.indentGuessAt !== d.version)) { d.indentGuess = guessIndent(d.lines); d.indentGuessAt = d.version; }
-    var own = I.detect && !d.tabbed ? d.indentGuess : 0;
-    IND.own = own;
-    IND.unit = own || I.size || 4;
-    IND.tabs = I.detect && d.tabbed ? true : I.detect && own ? false : !I.spaces;
+    var next = readIndent(R);
+    IND.own = next.own;
+    IND.unit = next.unit;
+    IND.tabs = next.tabs;
     if (d.tabbed && d.tabUnit !== IND.unit) {
       if (d.src != null && d.version === d.savedVersion && !(d.undo && d.undo.length)) {
         d.lines = splitLines(d.src, IND.unit); d.tabUnit = IND.unit;
@@ -1295,6 +1316,31 @@ function mountEditor(host, st, api) {
   var V = null;                                     // the row model for the current mode
   var caret = { r: 0, c: 0 }, anchor = null, side = 'r', goalCol = -1;
   var focused = !!preview, visible = true, alive = true, dimmed = false;
+  var pageHost = preview ? null : host.closest('#panel-dashboard'), pendingLayout = false;
+  function isShown() { return visible && (!pageHost || pageHost.classList.contains('active')); }
+  function paintDeferred() { return !!(preview && preview.paintDeferred && preview.paintDeferred()); }
+  var pendingLook = null, lookQueued = false, lookGeneration = 0;
+  function lookDeferred() { return !isShown() || paintDeferred() || !!(preview && preview.lookDeferred && preview.lookDeferred()); }
+  function applyPendingLook(immediate) {
+    if (!alive || !pendingLook || (!immediate && lookDeferred()) || paintDeferred()) return;
+    var next = pendingLook; pendingLook = null;
+    onLook(next);
+  }
+  function requestLook(next, immediate) {
+    if (!alive) return;
+    pendingLook = next;
+    if (immediate) { ++lookGeneration; lookQueued = false; applyPendingLook(true); return; }
+    // A look broadcast dirties the whole page. Hidden editors keep only the
+    // latest model; visible editors read after the browser's layout, once.
+    if (lookDeferred() || lookQueued) return;
+    if (!window.PM_AFTER_LAYOUT) { applyPendingLook(false); return; }
+    lookQueued = true;
+    var generation = lookGeneration;
+    window.PM_AFTER_LAYOUT(function () {
+      if (generation !== lookGeneration) return;
+      lookQueued = false; applyPendingLook(false);
+    });
+  }
   /* while a Customize screen is open on this editor, it draws what it draws when focused (the caret, the current line's
      band), though the screen has the focus: it is the preview beside the screen, and a blurred editor showed none of
      the caret's or the current line's choices */
@@ -1517,13 +1563,13 @@ function mountEditor(host, st, api) {
   var schemeOn = null, floorOn = null;
   function applyScheme() {
     hookPmt();
-    if (retroPhosphor() === 'amber') root.setAttribute('data-phosphor', 'amber'); else root.removeAttribute('data-phosphor');
+    setAttr(root, 'data-phosphor', retroPhosphor() === 'amber' ? 'amber' : null);
     var id = R.scheme;                     // already the light or dark sibling when Switch with light and dark is on
     var vars = special ? null : schemeVars(id, R.colors.contrast);
     var old = schemeOn || {};
     Object.keys(old).forEach(function (n) { if (!vars || !(n in vars)) codeEls.forEach(function (el) { el.style.removeProperty(n); }); });
     if (vars) Object.keys(vars).forEach(function (n) { if (old[n] !== vars[n]) codeEls.forEach(function (el) { el.style.setProperty(n, vars[n]); }); });
-    if (vars) root.setAttribute('data-scheme', id); else root.removeAttribute('data-scheme');
+    setAttr(root, 'data-scheme', vars ? id : null);
     schemeOn = vars;
     applyFloor(!vars && !special ? (R.colors.contrast === 7 ? 7 : 4.5) : 0);
     applyTokens();
@@ -1533,14 +1579,13 @@ function mountEditor(host, st, api) {
      the text floor with its hue kept like every scheme colour. Set after the scheme and the floor, every time, so
      neither leaves its own value over a chosen one; a colour no longer chosen gets the scheme's (or floor's) back */
   var tokOn = null, lookRead = { key: '', ground: null, tokens: null };
-  var lookProbe = null;
   function lookTokens() {
     // the look's own token table (Follow look), read through a probe on the editor's root, which no scheme or choice
     // writes on (the code elements carry those); once per look, colour mode and phosphor
     var key = R.lookKey + '|' + R.look.mode + '|' + (root.getAttribute('data-phosphor') || '');
     if (lookRead.key !== key) {
-      if (!lookProbe) { lookProbe = h('i', { class: 'pmw-ed-probe', 'aria-hidden': 'true' }); root.appendChild(lookProbe); }
-      var read = function (n) { lookProbe.style.color = 'var(' + n + ')'; var c = cssRgb(getComputedStyle(lookProbe).color); return c ? hexOf(c.slice(0, 3)) : ''; };
+      var colors = tokenColors(SYN_KEYS.map(function (k) { return '--pmw-ed-s-' + k; }).concat(['--pmw-ed-gutbg', '--pmw-ed-bg']));
+      var read = function (n) { var c = colors[n]; return c ? hexOf(c.slice(0, 3)) : ''; };
       var t = {};
       SYN_KEYS.forEach(function (k) { t['--pmw-ed-s-' + k] = read('--pmw-ed-s-' + k); });
       var g = read('--pmw-ed-gutbg') || read('--pmw-ed-bg');
@@ -1581,7 +1626,33 @@ function mountEditor(host, st, api) {
     return null;
   }
   function tokenColor(name) { probe.style.color = 'var(' + name + ')'; return cssRgb(getComputedStyle(probe).color); }
-  var floorRead = { key: '' };
+  // Resolve the complete palette with one style flush. Reusing a single probe
+  // and changing its color between reads forced a document restyle per token.
+  var colorProbes = {}, paletteProbe = null, colorRead = { key: '', values: {}, blend: '' };
+  function paletteKey(look) { return [look.lookKey, look.look.mode, retroPhosphor() === 'amber' ? 'amber' : ''].join('|'); }
+  function ensurePaletteProbes(names) {
+    if (!paletteProbe) { paletteProbe = h('i', { class: 'pmw-ed-probe', 'aria-hidden': 'true' }); root.appendChild(paletteProbe); }
+    var fragment = document.createDocumentFragment();
+    names.forEach(function (n) {
+      if (colorProbes[n]) return;
+      var p = document.createElement('i'); p.style.color = 'var(' + n + ')';
+      colorProbes[n] = p; fragment.appendChild(p);
+    });
+    if (fragment.childNodes.length) paletteProbe.appendChild(fragment);
+  }
+  function tokenColors(names) {
+    // Contrast changes the floor, not the look's underlying palette. Read that
+    // palette once, outside the track that carries scheme and floor overrides.
+    var key = [R.lookKey, R.look.mode, root.getAttribute('data-phosphor') || ''].join('|');
+    if (colorRead.key !== key) colorRead = { key: key, values: {}, blend: '' };
+    var missing = names.filter(function (n) { return !Object.prototype.hasOwnProperty.call(colorRead.values, n); });
+    if (!missing.length) return colorRead.values;
+    ensurePaletteProbes(missing);
+    colorRead.blend = getComputedStyle(root).getPropertyValue('--pmw-ed-sel-blend').trim();
+    missing.forEach(function (n) { colorRead.values[n] = cssRgb(getComputedStyle(colorProbes[n]).color); });
+    return colorRead.values;
+  }
+  var floorRead = { key: '' }, floorReads = Object.create(null);
   function textGrounds() {
     if (schemeOn) return schemeOn._onText || [groundNow()];
     return floorOn && floorRead.on ? floorRead.on : [groundNow()];
@@ -1589,31 +1660,40 @@ function mountEditor(host, st, api) {
   function applyFloor(F) {
     var key = F ? [R.lookKey, R.look.mode, root.getAttribute('data-phosphor') || '', F].join('|') : '';
     var old = floorOn || {};
+    // Quick sets commonly alternate 4.5 and 7. Keep both proven palettes so
+    // Reset can restore the same floored colours without another style read.
+    if (F && floorReads[key]) floorRead = floorReads[key];
     if (F && floorRead.key !== key) {
       Object.keys(old).forEach(function (n) { codeEls.forEach(function (el) { el.style.removeProperty(n); }); });
       old = {}; floorOn = null;
-      var bgc = tokenColor('--pmw-ed-gutbg'), base = [16, 16, 20];
+      var names = SYN_KEYS.map(function (k) { return '--pmw-ed-s-' + k; }).concat(['--pmw-ed-fg', '--pmw-ed-ln', '--pmw-ed-ln-cur', '--pmw-ed-add-fg', '--pmw-ed-mod-fg', '--pmw-ed-del-fg', '--pmw-ed-conf-fg',
+        '--pmw-ed-bp-0', '--pmw-ed-bp-1', '--pmw-ed-bp-2', '--pmw-ed-bp-3', '--pmw-ed-bp-4', '--pmw-ed-bp-5']);
+      // Token controls also need the fallback ground. Read it in this batch:
+      // adding a new probe later in paintTokens forced a second page restyle.
+      var colors = tokenColors(names.concat(['--pmw-ed-gutbg', '--pmw-ed-bg', '--pmw-ed-sel', '--pmw-ed-sel-blur', '--pmw-ed-line', '--pmw-ed-add-bg', '--pmw-ed-mod-bg', '--pmw-ed-del-bg', '--pmw-ed-conf-bg']));
+      var color = function (n) { return colors[n]; };
+      var bgc = color('--pmw-ed-gutbg'), base = [16, 16, 20];
       if (!bgc) { floorRead = { key: '' }; return; }
       var bg = bgc[3] < 1 ? mixRgb(base, bgc, bgc[3]) : bgc.slice(0, 3);
       var on = function (base, c) { return c[3] < 1 ? mixRgb(base, c, c[3]) : c.slice(0, 3); };
-      var blend = getComputedStyle(root).getPropertyValue('--pmw-ed-sel-blend').trim() === 'difference';
-      var layers = (blend ? ['--pmw-ed-line'] : ['--pmw-ed-sel', '--pmw-ed-sel-blur', '--pmw-ed-line']).map(tokenColor).filter(Boolean);
-      var tints = ['--pmw-ed-add-bg', '--pmw-ed-mod-bg', '--pmw-ed-del-bg', '--pmw-ed-conf-bg'].map(tokenColor).filter(Boolean);
+      var blend = colorRead.blend === 'difference';
+      var layers = (blend ? ['--pmw-ed-line'] : ['--pmw-ed-sel', '--pmw-ed-sel-blur', '--pmw-ed-line']).map(color).filter(Boolean);
+      var tints = ['--pmw-ed-add-bg', '--pmw-ed-mod-bg', '--pmw-ed-del-bg', '--pmw-ed-conf-bg'].map(color).filter(Boolean);
       // a changed row's tint under a selection is a ground too (the landing sweep found words there at 3.4:1)
       var grounds = [bg].concat(tints.map(function (t) { return on(bg, t); }));
       var onText = [], onGutter = grounds.slice();
       grounds.forEach(function (g) { onText.push(g); layers.forEach(function (l) { onText.push(on(g, l)); }); });
       var out = {};
       var GUTTER = /^--pmw-ed-(ln|ln-cur|add-fg|mod-fg|del-fg|conf-fg)$/;
-      SYN_KEYS.map(function (k) { return '--pmw-ed-s-' + k; }).concat(['--pmw-ed-fg', '--pmw-ed-ln', '--pmw-ed-ln-cur', '--pmw-ed-add-fg', '--pmw-ed-mod-fg', '--pmw-ed-del-fg', '--pmw-ed-conf-fg',
-        '--pmw-ed-bp-0', '--pmw-ed-bp-1', '--pmw-ed-bp-2', '--pmw-ed-bp-3', '--pmw-ed-bp-4', '--pmw-ed-bp-5']).forEach(function (n) {
-        var c = tokenColor(n); if (!c) return;
+      names.forEach(function (n) {
+        var c = color(n); if (!c) return;
         var flat = c[3] < 1 ? mixRgb(bg, c, c[3]) : c.slice(0, 3);
         var to = legibleOn(flat, GUTTER.test(n) ? onGutter : onText, F);
         // a see-through colour is written flat and floored: over a selection it would blend darker than it measured here
         if (to !== flat || c[3] < 1) out[n] = hexOf(to);
       });
       floorRead = { key: key, out: out, on: onText };
+      floorReads[key] = floorRead;
     }
     var next = F ? floorRead.out : {};
     Object.keys(old).forEach(function (n) { if (!(n in next)) codeEls.forEach(function (el) { el.style.removeProperty(n); }); });
@@ -1645,6 +1725,14 @@ function mountEditor(host, st, api) {
     geo.trackH = track.clientHeight;
     geo.st = scroller.scrollTop; geo.sl = scroller.scrollLeft;
   }
+  function glyphWidth(p) {
+    // An entrance can scale the dialog while a font is measured. Geometry is
+    // in layout pixels, so remove that scale from the text's painted width.
+    // These are one read batch, after the font writes have already settled.
+    var width = p.getBoundingClientRect().width;
+    var shown = root.getBoundingClientRect().width, layoutWidth = parseFloat(getComputedStyle(root).width);
+    return width / 100 * (shown > 0 && layoutWidth > 0 ? layoutWidth / shown : 1);
+  }
   function measure() {
     var F = R.font;
     fs = clamp(+F.size || 13, 10, 24);
@@ -1656,13 +1744,73 @@ function mountEditor(host, st, api) {
     setVar('--pmw-ed-wt', F.weight === 400 ? null : String(F.weight));
     setVar('--pmw-ed-ls', F.letterSpacing ? F.letterSpacing + 'px' : null);
     if (F.ligatures) root.setAttribute('data-lig', ''); else root.removeAttribute('data-lig');
-    var w = measureEl.getBoundingClientRect().width / 100;
+    var known = primedFontWidths.get(fontWidthKey(F));
+    var w = known || glyphWidth(measureEl);
     if (w > 2) cw = w; else cw = fs * 0.6 + (+F.letterSpacing || 0);
     setVar('--pmw-ed-cw', cw + 'px');
   }
-  function layout() {
-    headH = head.offsetHeight;
-    var bodyW = host.clientWidth, bodyH = host.clientHeight;
+  function fontWidthKey(F, look) {
+    look = look || R;
+    return [look.lookKey, look.look.mode, F.id, F.stack, F.size, F.weight, F.letterSpacing, window.devicePixelRatio || 1].join('|');
+  }
+  function primeFont(F, enqueue, look) {
+    var key = fontWidthKey(F, look), p = null;
+    if (primedFontWidths.has(key)) return;
+    // Called on the parked preview; normalize any container transform so the
+    // cache stores the same layout-pixel width the live editor uses.
+    function writeProbe() {
+      p = measureEl.cloneNode(true);
+      p.style.fontFamily = F.id === 'jetbrains-mono' ? 'var(--pm-font-code)' : F.stack;
+      p.style.fontSize = clamp(+F.size || 13, 10, 24) + 'px';
+      p.style.fontWeight = String(F.weight || 400);
+      p.style.letterSpacing = (+F.letterSpacing || 0) + 'px';
+      root.appendChild(p);
+    }
+    function cleanProbe() { if (p) { p.remove(); p = null; } }
+    // Code can use the italic face on the first pick too. Load it here, so its
+    // arrival does not invalidate the measurements in that input's frame.
+    function readProbe() {
+      if (!p) return;
+      if (document.fonts && document.fonts.load) {
+        document.fonts.load('italic ' + (F.weight || 400) + ' ' + (clamp(+F.size || 13, 10, 24)) + 'px ' + getComputedStyle(p).fontFamily, '0').catch(function () {});
+      }
+      var w = glyphWidth(p);
+      cleanProbe();
+      if (w > 2) {
+        if (primedFontWidths.size >= 64) primedFontWidths.delete(primedFontWidths.keys().next().value);
+        primedFontWidths.set(key, w);
+      }
+    }
+    // Parked preparation yields a browser layout between writing and reading.
+    // The owner also owns cancellation, including an appended probe.
+    if (enqueue) { enqueue(writeProbe); enqueue(readProbe); return cleanProbe; }
+    writeProbe(); readProbe();
+  }
+  function primeLook(look, enqueue) {
+    var key = paletteKey(look);
+    var names = SYN_KEYS.map(function (k) { return '--pmw-ed-s-' + k; }).concat(['--pmw-ed-fg', '--pmw-ed-ln', '--pmw-ed-ln-cur', '--pmw-ed-add-fg', '--pmw-ed-mod-fg', '--pmw-ed-del-fg', '--pmw-ed-conf-fg',
+      '--pmw-ed-bp-0', '--pmw-ed-bp-1', '--pmw-ed-bp-2', '--pmw-ed-bp-3', '--pmw-ed-bp-4', '--pmw-ed-bp-5', '--pmw-ed-gutbg', '--pmw-ed-bg', '--pmw-ed-sel', '--pmw-ed-sel-blur', '--pmw-ed-line', '--pmw-ed-add-bg', '--pmw-ed-mod-bg', '--pmw-ed-del-bg', '--pmw-ed-conf-bg']);
+    if (colorRead.key !== key || names.some(function (n) { return !Object.prototype.hasOwnProperty.call(colorRead.values, n); })) {
+      enqueue(function () { setAttr(root, 'data-phosphor', retroPhosphor() === 'amber' ? 'amber' : null); ensurePaletteProbes(names); });
+      enqueue(function () {
+        var values = {}, blend = getComputedStyle(root).getPropertyValue('--pmw-ed-sel-blend').trim();
+        names.forEach(function (n) { values[n] = cssRgb(getComputedStyle(colorProbes[n]).color); });
+        colorRead = { key: key, values: values, blend: blend };
+      });
+    }
+    return primeFont(look.font, enqueue, look);
+  }
+  var layoutBox = null;
+  function layout(box) {
+    // A font/line-option change cannot resize this absolute viewport or its UI
+    // header. Reuse its last measured box for that pass, then derive the new
+    // scroll extent from the same sizer dimensions we write below. Resize and
+    // look changes still take the browser's actual geometry.
+    headH = box ? box.head : head.offsetHeight;
+    var bodyW = box ? box.width : host.clientWidth, bodyH = box ? box.height : host.clientHeight;
+    // A hidden/collapsed viewport can have its scroll offset reset by the
+    // browser without a scroll event. Sample it with the resize read batch.
+    if (!box) { geo.st = scroller.scrollTop; geo.sl = scroller.scrollLeft; }
     var mm = R.lines.minimap && bodyW >= NARROW_TRACK_W;
     trackW = special ? 0 : (mm ? 22 : 10);
     setVar('--pmw-ed-head', headH + 'px');
@@ -1694,10 +1842,23 @@ function mountEditor(host, st, api) {
     setVar('--pmw-ed-tx', textX + 'px');
     setVar('--pmw-ed-half', half + 'px');
     sizer.style.width = contentW + 'px';
-    sizer.style.height = (padT + vCount() * lh + padB) + 'px';
+    var contentH = padT + vCount() * lh + padB;
+    sizer.style.height = contentH + 'px';
     track.setAttribute('aria-valuemax', String(Math.max(1, n)));
     layoutRulers();
-    readGeo();
+    if (!special) {
+      // The old rows can still overflow until renderRows patches their positions.
+      // Reading scrollHeight here captured that transient extent. The sizer is
+      // the text model's exact extent, and the viewport has absolute insets.
+      var oldLeft = geo.sl;
+      geo.ch = bodyH; geo.cwid = sw;
+      geo.sh = Math.max(contentH, bodyH); geo.sw = Math.max(contentW, sw);
+      geo.trackH = Math.max(0, bodyH - headH);
+      geo.st = clamp(geo.st, 0, Math.max(0, geo.sh - geo.ch));
+      geo.sl = clamp(geo.sl, 0, Math.max(0, geo.sw - geo.cwid));
+      if (geo.sl !== oldLeft) scroller.scrollLeft = geo.sl;
+    } else readGeo();
+    layoutBox = { head: headH, width: bodyW, height: bodyH };
   }
   /* ==== wrapping (Wrap long lines, code.editing.word-wrap): one row per line stays the model (the caret, selection,
      find and undo keep line and column), and a map gives each line its visual rows. Off, the map is null and every
@@ -1938,6 +2099,22 @@ function mountEditor(host, st, api) {
     if (ns > 1) el.style.height = (ns * lh) + 'px';
     el.setAttribute('data-r', r);
     return el;
+  }
+  function positionRows() {
+    // A face/size change does not change unwrapped token text. Keep those
+    // shaped spans and move the existing rows instead of replacing every
+    // descendant; guides still use the new glyph width.
+    rowEls.forEach(function (el, r) {
+      el.style.top = yRow(r) + 'px';
+      var guide = el.querySelector('.pmw-ed-ig');
+      if (guide) {
+        var lv = mode === 'file' ? guideLevel(d.lines, r, IND.unit) : Math.floor(indentCols(rowText(r) || '') / IND.unit);
+        guide.style.left = textX + 'px';
+        guide.style.width = Math.ceil(lv * IND.unit * cw) + 'px';
+        guide.style.background = guideImage(lv, R.lines.guides === 'rainbow', cw, IND.unit);
+      }
+    });
+    renderRows(false);
   }
   /* the number a row's gutter shows: none with Line numbers off; with Count from the caret, the distance from the
      caret's line (which keeps its own number) */
@@ -2216,7 +2393,7 @@ function mountEditor(host, st, api) {
       // typing never waits for a glide: a move made by an edit lands at once
       if (typingMove) { caretEl.classList.add('no-glide'); caretEl.style.transform = tf; void caretEl.offsetWidth; caretEl.classList.remove('no-glide'); }
       else caretEl.style.transform = tf;
-      caretEl.classList.remove('is-blink'); void caretEl.offsetWidth; caretEl.classList.add('is-blink');
+      caretEl.classList.toggle('is-blink-alt'); caretEl.classList.add('is-blink');
       caretPx = { x: x, y: y, st: geo.st };
       if (pendingTrail && from) spawnTrail(pendingTrail.from || from, caretPx);
     }
@@ -2406,9 +2583,13 @@ function mountEditor(host, st, api) {
     }
   }
   function queueDraw() {
-    if (timers.drawQueued) return;
+    if (timers.drawQueued || !isShown()) return;
     timers.drawQueued = true;
-    requestAnimationFrame(function () { if (alive) drawTrack(); });
+    requestAnimationFrame(function () {
+      timers.drawQueued = false;
+      if (paintDeferred()) { pendingLayout = true; return; }
+      if (alive && isShown()) drawTrack();
+    });
   }
 
   /* track pointer: grab keeps its offset, a track press centres the thumb and keeps dragging, Escape cancels */
@@ -3543,19 +3724,28 @@ function mountEditor(host, st, api) {
   }
   function onResize(sz) {
     if (!alive) return;
-    if (!firstDone) { firstPaint(); return; }
+    layoutBox = null;
+    if (!isShown() || paintDeferred()) { pendingLayout = true; return; }
+    applyPendingLook(true);
+    if (!firstDone) { pendingLayout = false; firstPaint(); return; }
+    if (pendingLayout) { pendingLayout = false; resolveLayout(false); relayoutAll(); return; }
     if (sz && sz.final === false && mode === 'diff') { layout(); renderRows(true); renderOverlays(); updateThumb(); return; }
     var changed = resolveLayout(false);
     if (!changed) { layout(); renderRows(true); renderOverlays(); updateThumb(); updateHbar(); sticky._key = null; updateSticky(); }
     queueDraw();
   }
-  function relayoutAll() {
+  function relayoutAll(box, keepRows) {
     if (!firstDone) return;
+    // Settings can change a mounted editor while Home is hidden. Measure it
+    // when it is shown, at its real size; the Customize preview stays live.
+    if (!isShown() || paintDeferred()) { pendingLayout = true; return; }
+    pendingLayout = false;
     var top = topRow();
     measure();
-    layout();
-    renderRows(true);
-    setTop(yRow(top) - headH);
+    layout(box);
+    if (keepRows && !WR) positionRows(); else renderRows(true);
+    var nextTop = clamp(yRow(top) - headH, 0, Math.max(0, geo.sh - geo.ch));
+    if (nextTop !== geo.st) setTop(nextTop);
     sticky._key = null;
     updateSticky(); renderOverlays(); updateThumb(); updateHbar(); queueDraw();
   }
@@ -3623,8 +3813,17 @@ function mountEditor(host, st, api) {
   function applyDim() { setAttr(root, 'data-dim', R.motion.inactiveDim && (preview ? demoDim : dimmed) ? '' : null); }
   /* what of the colours needs the rows drawn again: token colours are CSS variables only (applyTokens), so a colour
      slider being dragged repaints without rebuilding a row */
-  function colorSig() { var c = R.colors; return [c.syntax, c.bracketPairs, c.contrast, c.italicComments, c.boldKeywords]; }
+  function colorSig() { var c = R.colors; return [c.syntax, c.bracketPairs]; }
+  function rowLookKey() { return JSON.stringify([colorSig(), R.lines, R.behavior.diagnostics, IND.unit, IND.tabs]); }
+  var appliedLook = '';
   function onLook(R2) {
+    // The owner of a parked preview resumes its latest look after a cover.
+    // Model broadcasts and late font arrivals must honor the same guard as
+    // that owner's idle preparation, before any style or geometry is read.
+    if (paintDeferred()) return;
+    var applied = JSON.stringify(R2);
+    if (applied === appliedLook) { if (preview && pendingLayout && isShown()) relayoutAll(); return; }
+    appliedLook = applied;
     var prev = R; R = R2;
     if (!alive) return;
     var reopened = resolveIndent();
@@ -3637,19 +3836,25 @@ function mountEditor(host, st, api) {
     drawKey = dk;
     if (!firstDone || (same && !reopened)) return;
     var g = JSON.stringify([R.font, R.lines.numbers, R.lines.wrap, R.lines.wrapColumn, R.lines.minimap, R.motion.pastEnd, R.lines.rulers]);
-    var l = JSON.stringify([colorSig(), R.lines, R.caret, R.scheme, R.lookKey, R.look.mode, R.behavior.diagnostics, IND.unit, IND.tabs]);
+    var l = rowLookKey();
+    if (!isShown()) { pendingLayout = true; geoSig = g; lookSig = l; colorCache = null; return; }
     if (prev.behavior.diffLayout !== R.behavior.diffLayout && mode === 'diff' && !diffLayoutPick) resolveLayout(true);
     // the header's height can only change with the look (its face and spacing), never with colours: reading it forces
     // the whole page to restyle and lay out at once, so it is read only when the look itself changed
-    else if (reopened || g !== geoSig || ((R.lookKey !== prev.lookKey || R.look.mode !== prev.look.mode) && head.offsetHeight !== headH)) relayoutAll();
+    else if (reopened || g !== geoSig || ((R.lookKey !== prev.lookKey || R.look.mode !== prev.look.mode) && head.offsetHeight !== headH)) {
+      var sameBox = !special && !reopened && R.lookKey === prev.lookKey && R.look.mode === prev.look.mode && R.behavior.diffLayout === prev.behavior.diffLayout;
+      relayoutAll(sameBox ? layoutBox : null, sameBox && !R.lines.wrap && !prev.lines.wrap && l === lookSig);
+    }
     else if (l !== lookSig) { renderRows(true); sticky._key = null; updateSticky(); renderOverlays(); }
+    else if (JSON.stringify(R.caret) !== JSON.stringify(prev.caret)) renderOverlays();
     geoSig = g; lookSig = l;
     if (R.lines.relative !== prev.lines.relative) markCurrentRow();
     colorCache = null;
     queueDraw();
   }
   geoSig = JSON.stringify([R.font, R.lines.numbers, R.lines.wrap, R.lines.wrapColumn, R.lines.minimap, R.motion.pastEnd, R.lines.rulers]);
-  lookSig = JSON.stringify([colorSig(), R.lines, R.caret, R.scheme, R.lookKey, R.look.mode, R.behavior.diagnostics, IND.unit, IND.tabs]);
+  lookSig = rowLookKey();
+  appliedLook = JSON.stringify(R);
   function noTokens(k, x) { return k === 'tokens' ? undefined : x; }
   var drawKey = JSON.stringify(R, noTokens);
   applyAttrs();
@@ -3716,7 +3921,7 @@ function mountEditor(host, st, api) {
       if (usedGuess && (done || rendered.b < d.tokFrom)) { usedGuess = false; renderRows(true); renderOverlays(); }
       if (done) { sticky._key = null; updateSticky(); updateSymbol(); }
     },
-    relayout: relayoutAll,
+    relayout: function () { relayoutAll(); },
     scheme: function () { if (!alive) return; if (EL) onLook(EL.resolve(view)); else { applyScheme(); if (firstDone) queueDraw(); } },
     savedNow: function () { if (alive) setDirty(isDirty()); }
   };
@@ -3726,6 +3931,7 @@ function mountEditor(host, st, api) {
   var instance = {
     unmount: function () {
       alive = false;
+      ++lookGeneration; pendingLook = null; lookQueued = false;
       Object.keys(timers).forEach(function (k) { if (typeof timers[k] === 'number') { clearTimeout(timers[k]); } });
       clearTimeout(focusTimer); clearTimeout(fadeTimer); clearTimeout(scrollIdle);
       offs.forEach(function (f) { try { f(); } catch (_) {} });
@@ -3754,8 +3960,15 @@ function mountEditor(host, st, api) {
       return out;
     },
     onResize: onResize,
-    onShow: function () { visible = true; if (!firstDone) { firstPaint(); return; } queueDraw(); },
-    onHide: function () { visible = false; clearTimeout(scrollIdle); if (R.behavior.autosave === 'focus') autoSave(); },
+    onShow: function () {
+      visible = true;
+      if (!isShown()) return;
+      applyPendingLook(true);
+      if (!firstDone) { pendingLayout = false; firstPaint(); return; }
+      if (pendingLayout) { pendingLayout = false; resolveLayout(false); relayoutAll(); return; }
+      queueDraw();
+    },
+    onHide: function () { visible = false; layoutBox = null; clearTimeout(scrollIdle); if (R.behavior.autosave === 'focus') autoSave(); },
     // the host's focus lifecycle (CONTRACT section 3): Fade editors I'm not in steps this editor back while another
     // panel has the focus
     onFocus: function () { dimmed = false; applyDim(); },
@@ -3764,6 +3977,8 @@ function mountEditor(host, st, api) {
     view: view,
     root: root,
     look: function () { return R; },
+    primeFont: primeFont,
+    primeLook: primeLook,
     /* the colours change under a sweep in the look's own motion, from the point of the choice (a scheme tile): a plate
        of the old ground lifts away (Basic fades, Friendly blooms from the point, Glass glides across, Retro steps,
        NieR wipes in its eight steps); Reduced Motion changes at once */
@@ -3858,7 +4073,9 @@ function mountEditor(host, st, api) {
     },
     // the file's indentation as this editor reads it (the Customize screen's Indentation note)
     path: path,
-    indent: function () { resolveIndent(); return { unit: IND.unit, tabs: IND.tabs, own: IND.own, tabbed: !!d.tabbed }; },
+    // A covered editor defers drawing its new look, but its file details
+    // already follow that pending choice when the customizer asks for them.
+    indent: function () { return readIndent(pendingLook); },
     focus: function () { if (special) { root.setAttribute('tabindex', '-1'); root.focus({ preventScroll: true }); return; } scroller.focus({ preventScroll: true }); },
     reveal: function (s) { reveal(s || {}); },     // focus is the host's call (D8: an agent's open never takes it)
     wantsKey: function (e) {
@@ -3898,7 +4115,7 @@ function mountEditor(host, st, api) {
       });
     },
     _debug: function () { return { mode: mode, side: !!(V && V.side), caret: caret, anchor: anchor, n: V ? V.n : 0, lh: lh, cw: cw, headH: headH, padT: padT, padB: padB, trackW: trackW, gutW: gutW, lnW: lnW, textX: textX, stickyH: stickyH, find: { q: find.q, n: find.hits.length, cur: find.cur }, dirty: isDirty(), rendered: rowEls.size, lang: d.lang,
-      wrap: WR ? { cols: WR.cols, rows: WR.total } : null, contentW: contentW, dimmed: dimmed, problems: diagRects.length, look: JSON.parse(JSON.stringify(R, function (k, v) { return k === 'schemeObj' || k === 'followScheme' ? undefined : v; })) }; }
+      wrap: WR ? { cols: WR.cols, rows: WR.total } : null, contentW: contentW, geo: Object.assign({}, geo), dimmed: dimmed, problems: diagRects.length, look: JSON.parse(JSON.stringify(R, function (k, v) { return k === 'schemeObj' || k === 'followScheme' ? undefined : v; })) }; }
   };
   if (preview && preview.caret) instance.demo.place(preview.caret.r, preview.caret.c, preview.caret.ar, preview.caret.ac);
   host._pmwEditor = instance;
@@ -4062,7 +4279,7 @@ function setup() {
 
   /* re-measure every open editor when a font arrives (JetBrains Mono loads on first use) */
   try {
-    if (doc.fonts && doc.fonts.addEventListener) doc.fonts.addEventListener('loadingdone', function () { EDITORS.forEach(function (v) { v.relayout(); }); });
+    if (doc.fonts && doc.fonts.addEventListener) doc.fonts.addEventListener('loadingdone', function () { primedFontWidths.clear(); EDITORS.forEach(function (v) { v.relayout(); }); });
   } catch (_) {}
   /* PMW.editorPreview(host, { text, base, language, problems, view, caret }): a live editor that draws the given text the
      way an editor tab with that view's look would, as the Customize screen's preview; it takes no input */
@@ -4078,7 +4295,7 @@ function setup() {
     return inst;
   };
   /* the editor a person is working in: the last one used, while it is still on screen; else the widest one shown */
-  PMW.editorInView = function () {
+  PMW.editorInView = function (includeHidden) {
     var shown = function (inst) { return inst && inst.root && inst.root.isConnected && inst.root.getBoundingClientRect().width > 0; };
     if (shown(lastUsed)) return lastUsed;
     var best = null, bw = 0;
@@ -4086,7 +4303,12 @@ function setup() {
       var e = b._pmwEditor; if (!shown(e)) return;
       var w = e.root.getBoundingClientRect().width; if (w > bw) { bw = w; best = e; }
     });
-    return best;
+    if (best || !includeHidden) return best;
+    // Settings can customize a mounted editor without navigating through Home.
+    if (lastUsed && lastUsed.root && lastUsed.root.isConnected) return lastUsed;
+    var bodies = doc.querySelectorAll('.pmw-tabbody');
+    for (var i = 0; i < bodies.length; i++) if (bodies[i]._pmwEditor) return bodies[i]._pmwEditor;
+    return null;
   };
   PMW.editorOf = function (tabId) {
     var body = doc.querySelector('.pmw-tabbody[data-pmw-tab="' + String(tabId).replace(/"/g, '\\"') + '"]');

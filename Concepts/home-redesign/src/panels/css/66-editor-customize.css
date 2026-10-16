@@ -8,6 +8,13 @@
 .pmed-cz .pmt-cz-pvbox { height: 262px; min-height: 200px; }
 .pmed-pvhost { position: absolute; inset: 0; container-type: size; container-name: pmw-body; overflow: hidden; }
 .pmed-cz .pmt-cz-dockbox .pmed-pvhost { inset: 0; }
+.pmed-cz .pmt-cz-dialog { contain: layout style; }
+/* Reserve Reset's existing 24 px row before a group has changes. Its count and
+   button must not move every option below; each look keeps its border/padding. */
+.pmed-cz .pmt-cz-ghead { box-sizing: content-box; min-height: 24px; align-items: center; }
+/* The hover material's absolute shine belongs to its quick-set button. Without
+   this containing block it covers and repaints the entire dialog. */
+.pmed-cz .pmt-cz-set { position: relative; }
 .pmed-cz .pmt-cz-dock { height: 176px; width: min(44%, 400px); transition: opacity 160ms ease; }
 /* it steps aside while the pointer or the focus is on what it floats over (11-editor-customize.js dockAside) */
 .pmed-cz .pmt-cz-dock.is-aside { opacity: .1; }
@@ -142,8 +149,19 @@ html[data-o55-nier="on"] .pmed-cz .pmed-art-syntax { background:
 /* a slider under its own heading: no label in front of it */
 .pmed-cz .pmed-slider-bare { grid-template-columns: minmax(0, 1fr) 54px; }
 .pmed-cz .pmed-slider-bare .pmt-cz-slabel { display: none; }
-/* drawn once almost clear before the entrance (11-editor-customize.js: the costly first paint happens before it plays) */
-.pmed-cz.pmed-prime { opacity: .001; }
+/* Retain the measured sheet between visits, outside hit testing and accessibility. */
+.pmed-cz { contain: layout style; }
+.pmed-cz.pmed-prepared { opacity: 0; clip-path: inset(100%); }
+/* Static scheme pictures keep their measured size while the browser skips
+   drawing them below the scrollport. Their original contents appear before
+   they enter view; no tile or effect is replaced by a placeholder. */
+.pmed-cz.pmed-contained .pmt-cz-scheme[data-pmed-sized] { content-visibility: auto; }
+/* Apply the same family keyframes directly to the six moving plates. Changing
+   an ancestor's generic pmt-in/out class invalidated every code tile and control. */
+.pmed-cz .pmed-sheet-in { transform-origin: 50% 0; animation: var(--pmt-a-pop-in, pmt-m-fade-in) var(--pmt-t-in, 120ms) var(--pmt-ease-move, linear) both; }
+.pmed-cz .pmed-sheet-out { transform-origin: 50% 0; animation: var(--pmt-a-pop-out, pmt-m-fade-out) var(--pmt-t-out, 100ms) var(--pmt-ease-exit, linear) both; }
+.pmed-cz .pmed-shade-in { animation: pmt-m-fade-in var(--pmt-t-in, 120ms) linear both; }
+.pmed-cz .pmed-shade-out { animation: pmt-m-fade-out var(--pmt-t-out, 100ms) linear both; }
 
 /* ---- Token colours (11-editor-customize.js: tokenRows, tokenPicker, paintTokens) ----
    Each kind of word is shown by a word in its colour on the code's own ground; the picker opens under the list: the
