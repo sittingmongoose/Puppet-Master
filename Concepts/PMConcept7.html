@@ -22028,9 +22028,13 @@ html[data-theme^="basic"] :is(.editor-pane, .dashboard-view):has(.ed-shape-on) {
     } catch (e) {}
   }
   if (typeof MutationObserver === 'function') {
+    var kickPending = false;   /* O55: once, after the new look's frame (B4) */
     new MutationObserver(function (muts) {
       for (var i = 0; i < muts.length; i++) {
-        if (muts[i].attributeName === 'data-theme') { kickSearchDensity(); break; }
+        if (muts[i].attributeName === 'data-theme') {
+          if (!kickPending) { kickPending = true; requestAnimationFrame(function () { setTimeout(function () { kickPending = false; kickSearchDensity(); }, 0); }); }
+          break;
+        }
       }
     }).observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
   }
@@ -28519,6 +28523,13 @@ html, [data-theme], [data-o55-nier-preview] {
   --o55-tokpack: var(--background, #121212) | var(--surface, #1e1e1e) | var(--text-primary, #e8e8e8) | var(--text-secondary, #aaa) | var(--text-muted, #888) | var(--border, #333) | var(--accent-blue, #64b5f6) | var(--accent-magenta, #ff69b4) | var(--accent-lime, #3dd68c) | var(--accent-orange, #ffa347) | var(--accent-warning, #f5c542) | var(--accent-error, #ef5350) | var(--accent-primary, var(--accent-blue, #64b5f6)) | var(--surface-elevated, var(--surface, #1e1e1e)) | var(--o55-nier-on-ink, var(--background, #121212));
 }
 
+/* ---- css/21-shell-perf.css ---- */
+/* Chat's own panel (pmw-chat) covers the shell's original chat, which stays in the page only for the Guided Tour and is
+   hidden meanwhile. Hidden, it was still styled and laid out: about 600 elements of every whole-page restyle (a look
+   change, a page switch; 20 % of a theme change on the P1000) and two resize observers that measured it. Its contents
+   are skipped now; the box keeps its place in the column (final motion QA B4, 2026-10-16). */
+html:not([data-o55-tour]) #chatPanel[data-pmw-sc="on"] > .float-content.pm6-chat-root { content-visibility: hidden; }
+
 /* ---- css/22-hover.css ---- */
 /* PMH: the merged hover system (engine: src/js/18-hover.js, which documents the whole contract). This file has two
    parts. The ENGINE PART (registrations, pseudo plumbing, proxy bases, the PM8-parity resets, Reduced Motion and the
@@ -31140,6 +31151,10 @@ html:is([data-motion="reduced"], [data-o55-still]) #panel-wizard > .pm6-wiz-stag
 @media (prefers-reduced-motion: reduce) {
   #panel-wizard > .pm6-wiz-stage.wo-stage-out { animation: wo-fade 140ms ease-out both; }
 }
+/* Through the page's exit the stage that was on screen stays drawn as it was, and a stage switched to meanwhile is not
+   displayed until the exit has finished (27-wizard-stage.js). */
+#panel-wizard > .pm6-wiz-stage.wo-stage-hold { display: flex; animation: none; }
+#panel-wizard > .pm6-wiz-stage.active.wo-stage-defer { display: none; }
 
 /* ---- css/30-art.css ---- */
 /* ---- O55 art: scene layers, family choreography, ambient loops -------------------------------------------------
@@ -33855,6 +33870,13 @@ html[data-o55-nier="on"] .pmr-view { --pmr-st-ok: var(--o55-nier-ink); --pmr-st-
 @keyframes d-fold-ink { from { clip-path: inset(0 100% 0 0); } to { clip-path: inset(0 0 0 0); } }
 [data-rail-skin="d"][data-motion="reduced"] #sidePanelSlot[data-pm-rail-fold], [data-rail-skin="d"][data-reduced-motion="1"] #sidePanelSlot[data-pm-rail-fold] { animation: none !important; }
 @media (prefers-reduced-motion: reduce) { [data-rail-skin="d"] #sidePanelSlot[data-pm-rail-fold] { animation: none !important; } }
+
+/* A view that is leaving (30-motion.js holdLeaving, final motion QA A8): drawn where it was, above the view coming in,
+   without input, until its fade ends. A panel covers the panel slot; a tab pane keeps its own place in its scroller
+   (its display, top, left and width are written inline from the box read before the shell hid it). */
+[data-rail-skin="d"] #sidePanelSlot.d-has-leaving { position: relative; }
+[data-rail-skin="d"] #sidePanelSlot > .side-panel-view.d-leaving { display: flex; position: absolute; inset: 0; z-index: 3; pointer-events: none; }
+[data-rail-skin="d"] :is(#panel-files,#panel-search,#panel-source,#panel-git,#panel-docker,#panel-testing,#panel-run,#panel-agents,#panel-artifacts) .sh-scroll > [data-pane].d-leaving { position: absolute; z-index: 3; pointer-events: none; }
 
 /* ---- 3. Shelves: the coloured boxes that group the rail -------------------------------------------------------------
    The shelf is the only box. Its head is a band flush with the shelf's top (the shelf clips, so the band always has
@@ -95665,7 +95687,7 @@ window.PM_NIER = Object.freeze({
     later(() => {
       if (!live.has('decode')) return;
       [...document.querySelectorAll(sel)].filter(e => e.getClientRects().length).slice(0, 4).forEach(decode);
-    }, live.has('wipe') ? 110 : 0);
+    }, live.has('wipe') ? 60 : 0);
   }
   PARTS.decode = { on() {}, off() {} };
 
@@ -95677,8 +95699,13 @@ window.PM_NIER = Object.freeze({
     const z = zoom();
     wipe.style.cssText = `left:${r.left / z}px;top:${r.top / z}px;width:${r.width / z}px;height:${r.height / z}px;display:block`;
     if (wipeAnim) wipeAnim.cancel();
-    const a = wipeAnim = wipe.firstChild.animate([{ transform: 'translateX(0)' }, { transform: 'translateX(0)', offset: 0.2 }, { transform: 'translateX(101%)' }],
-      { duration: 400, easing: 'cubic-bezier(.65, 0, .3, 1)', fill: 'both' });
+    /* the band leaves as soon as the new page is drawn under it (final motion QA A4, Jared 2026-10-16: the empty beat
+       at most 50 ms): no held keyframe (under the old ease-in-out it held the bare band for ~150 ms), a curve that is
+       moving from its first frames, and a start reset to the first frame after the page change, so a long first frame
+       never eats the slide */
+    const a = wipeAnim = wipe.firstChild.animate([{ transform: 'translateX(0)' }, { transform: 'translateX(101%)' }],
+      { duration: 380, easing: 'cubic-bezier(.3, .15, .2, 1)', fill: 'both' });
+    requestAnimationFrame(() => { if (wipeAnim === a && a.playState === 'running') { try { a.startTime = document.timeline.currentTime; } catch (_) { /* gone */ } } });
     a.onfinish = () => { if (wipeAnim !== a) return; wipeAnim = null; if (wipe) wipe.style.display = 'none'; a.cancel(); };
   }
   PARTS.wipe = { on() {}, off() { if (wipeAnim) wipeAnim.cancel(); wipeAnim = null; if (wipe) wipe.remove(); wipe = null; } };
@@ -112899,6 +112926,13 @@ html[data-theme^="retro"] #panel-settings .o55-goals-phase-n { border-radius: 0;
       oldP.__pm8PageCleanup = cleanupOut; newP.__pm8PageCleanup = cleanupIn;
       newP.addEventListener('animationend', onIn);
     }
+    /* O55 (motion QA A1, A2): a page that arrives at once shows its end state on its first frame */
+    function finishEntrances(panel) {
+      if (!panel || !panel.classList.contains('active') || !panel.getAnimations) return;
+      panel.getAnimations({ subtree: true }).forEach(function (a) {
+        try { var t = a.effect && a.effect.getComputedTiming(); if (t && isFinite(t.endTime) && a.playState !== 'finished') a.finish(); } catch (e) {}
+      });
+    }
     var origGo = window.PM_PAGES.go;
     window.PM_PAGES.go = function (pageId, subTab) {
       var prev = window.PM_PAGES.current;
@@ -112906,12 +112940,14 @@ html[data-theme^="retro"] #panel-settings .o55-goals-phase-n { border-radius: 0;
       var oldP = changed ? panelFor(prev) : null;
       var newP = changed ? panelFor(pageId) : null;
       var rect = null;
-      if (changed && bootPaintDone && !reduced() && oldP && newP && oldP !== newP) {
+      if (changed && bootPaintDone && !reduced() && !window.PM_PAGES.instant && oldP && newP && oldP !== newP) {   /* O55: instant under a cover */
         rect = measureActive(oldP);
       }
       var tab = tabFor(pageId);
       var tabMetrics = tab ? measureTab(tab) : null;
+      var whole = changed && newP && oldP !== newP && (reduced() || window.PM_PAGES.instant) && /^(wizard|orchestrator)$/.test(pageId);   /* O55 */
       origGo.call(window.PM_PAGES, pageId, subTab);
+      if (whole) requestAnimationFrame(function () { finishEntrances(newP); });
       if (tab) (changed ? springTo : snap)(tab, tabMetrics);
       if (!rect) { requestAnimationFrame(cacheActiveRect); return; }
       animatePages(oldP, newP, tabIndex(pageId) >= tabIndex(prev) ? 1 : -1, rect);
@@ -134839,13 +134875,19 @@ policies for tenant isolation, and add migration script.</textarea>
       var seg = ev.target && ev.target.closest ? ev.target.closest('.pm6-tt-mode[data-mode-value]') : null;
       if (seg) {
         ev.preventDefault();
-        window.PM7_SETTINGS_TOME.setChromeThemeMode(seg.getAttribute('data-mode-value'));
+        var modeValue = seg.getAttribute('data-mode-value');   /* O55: the radio answers first (B4) */
+        menu.querySelectorAll('.pm6-tt-mode').forEach(function (b) { b.setAttribute('aria-checked', b === seg ? 'true' : 'false'); });
+        if (window.PM_THEME_TRANSITION) window.PM_THEME_TRANSITION(function () { window.PM7_SETTINGS_TOME.setChromeThemeMode(modeValue); });
+        else window.PM7_SETTINGS_TOME.setChromeThemeMode(modeValue);
         return; /* mode is a filter, not a final pick: menu stays open */
       }
       var row = ev.target && ev.target.closest ? ev.target.closest('.pm6-tt-family[data-family]') : null;
       if (!row) return;
       ev.preventDefault();
-      window.PM7_SETTINGS_TOME.setChromeThemeFamily(row.getAttribute('data-family'));
+      var familyValue = row.getAttribute('data-family');   /* O55: the row answers first (B4) */
+      menu.querySelectorAll('.pm6-tt-family').forEach(function (r) { var on = r === row; r.classList.toggle('is-selected', on); r.setAttribute('aria-checked', on ? 'true' : 'false'); });
+      if (window.PM_THEME_TRANSITION) window.PM_THEME_TRANSITION(function () { window.PM7_SETTINGS_TOME.setChromeThemeFamily(familyValue); });
+      else window.PM7_SETTINGS_TOME.setChromeThemeFamily(familyValue);
       tbMenuClose(menu);
       btn.setAttribute('aria-expanded', 'false');
     });
@@ -138140,22 +138182,27 @@ policies for tenant isolation, and add migration script.</textarea>
       bar.setAttribute('aria-label','Workspace status');
       bar.innerHTML =
         '<div class="pm7-statusbar-group">' +
-          '<button type="button" class="pm7-statusitem" data-status-action="system" title="Open system status"><span class="pm7-status-dot"></span><strong>Ready</strong></button>' +
-          '<span class="pm7-statusitem" title="Project root"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2.5 5.5h5l1.6 1.8h8.4v8.2h-15z"/></svg>~/Puppet-Master</span>' +
+          '<button type="button" class="pm7-statusitem" data-status-action="system" title="Open system status" data-pm-hover-label="System status" data-pm-hover-detail="Everything Puppet Master needs is running. Click to see each service."><span class="pm7-status-dot"></span><strong>Ready</strong></button>' +
+          '<span class="pm7-statusitem" title="Project root" data-pm-hover-label="Project folder" data-pm-hover-detail="Where this Project\'s files are kept on this computer."><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2.5 5.5h5l1.6 1.8h8.4v8.2h-15z"/></svg>~/Puppet-Master</span>' +
         '</div>' +
         '<div class="pm7-statusbar-group">' +
-          '<button type="button" class="pm7-statusitem" data-status-action="source" title="Source control"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="5" cy="4.5" r="2"/><circle cx="5" cy="15.5" r="2"/><circle cx="15" cy="10" r="2"/><path d="M5 6.5v7M7 6c4.5 0 3 4 6 4"/></svg>main</button>' +
-          '<span class="pm7-statusitem" data-status-priority="medium">Up to date · <strong>7048acf</strong></span>' +
+          '<button type="button" class="pm7-statusitem" data-status-action="source" title="Source control" data-pm-hover-label="Source control" data-pm-hover-detail="The branch you are working on. Click to see its state."><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="5" cy="4.5" r="2"/><circle cx="5" cy="15.5" r="2"/><circle cx="15" cy="10" r="2"/><path d="M5 6.5v7M7 6c4.5 0 3 4 6 4"/></svg>main</button>' +
+          '<span class="pm7-statusitem" data-status-priority="medium" data-pm-hover-label="Up to date" data-pm-hover-detail="Your work matches its online copy. 7048acf names the latest saved version.">Up to date · <strong>7048acf</strong></span>' +
         '</div>' +
         '<span class="pm7-statusbar-grow"></span>' +
         '<div class="pm7-statusbar-group">' +
-          '<span class="pm7-statusitem" data-status-priority="low">Plan index <strong>current</strong></span>' +
+          '<span class="pm7-statusitem" data-status-priority="low" data-pm-hover-label="Plan index" data-pm-hover-detail="The plan\'s index matches its documents.">Plan index <strong>current</strong></span>' +
           '<span class="pm7-statusitem" data-status-priority="low" data-status-item="host">Runs on <strong>this computer</strong> · 2ms</span>' +
-          '<button type="button" class="pm7-statusitem" data-status-action="snapshot" data-status-priority="medium">Snapshot <strong>10m ago</strong></button>' +
-          '<span class="pm7-statusitem" data-status-page><strong>Home</strong></span>' +
+          '<button type="button" class="pm7-statusitem" data-status-action="snapshot" data-status-priority="medium" data-pm-hover-label="Snapshot" data-pm-hover-detail="When your work was last kept as a safe point. Click to see it.">Snapshot <strong>10m ago</strong></button>' +
+          '<span class="pm7-statusitem" data-status-page data-pm-hover-detail="The page you are on."><strong>Home</strong></span>' +
         '</div>';
       shell.appendChild(bar);
     } else if (bar.parentNode !== shell) shell.appendChild(bar);
+    var hostItem = bar.querySelector('[data-status-item="host"]');   /* O55: the host item's tag (A16) */
+    if (hostItem && !hostItem.hasAttribute('data-pm-hover-label')) {
+      hostItem.setAttribute('data-pm-hover-label', 'Where it runs');
+      hostItem.setAttribute('data-pm-hover-detail', 'The computer Puppet Master runs on, and how quickly it answers.');
+    }
     function updatePage() {
       var page = document.querySelector('.page.active'), tab = page && document.querySelector('[data-page="' + page.id.replace(/^panel-/,'') + '"]');
       var name = tab ? tab.textContent.trim() : (page ? page.id.replace(/^panel-/,'') : 'Home');
@@ -138659,6 +138706,30 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
     M.lowResource = !!on; M.lowResourceReason = reason || null;
     document.documentElement.toggleAttribute('data-o55-lowres', M.lowResource);
     window.dispatchEvent(new CustomEvent('o55:lowresource', { detail: { on: M.lowResource, reason } }));
+  };
+})();
+
+/* ---- js/12-theme-transition.js ---- */
+/* A look change answers at once (final motion QA B4, 2026-10-16). Repainting the whole app for a new theme restyles
+   every drawn element in one pass (about 250 ms on the P1000, a fraction of that on the M3), and the old menu ran that
+   pass, and two or three more forced by the theme's listeners, inside the click: nothing moved for most of a second.
+   Now the control pressed shows its new state on the next frame, and the repaint runs in the task after that frame,
+   once. A View Transition was tried for a crossfade and dropped: starting one restyles the whole page by itself in
+   Chrome (measured 230-300 ms on the P1000 before its callback runs), which doubled the wait.
+
+   window.PM_THEME_TRANSITION(apply)  — apply() writes the theme; picks made before it runs keep only the latest. */
+(function () {
+  'use strict';
+  let job = null;
+  function run() {
+    const apply = job; job = null;
+    if (!apply) return;
+    try { apply(); } catch (e) { try { console.error('[PM_THEME_TRANSITION]', e); } catch (_) {} }
+  }
+  window.PM_THEME_TRANSITION = function themeTransition(apply) {
+    const queued = !!job;
+    job = apply;
+    if (!queued) requestAnimationFrame(() => window.setTimeout(run, 0));
   };
 })();
 
@@ -140074,14 +140145,34 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
   }
   S.unlock = function unlock() { const c = ensureContext(); return !!c; };
   /* The shell may stay silent until a usage warning. Warm its context and takes in idle time after the first
-     gesture, so that warning's flush does not also open the audio device. Onboarding keeps its immediate unlock. */
-  let warmingContext = false;
+     gesture, so that warning's flush does not also open the audio device. Onboarding keeps its immediate unlock.
+     Opening the device holds the main thread (about 160 ms on the M3, for the first context only), and the first idle
+     gap after a click falls in the middle of whatever that click animates: the warm waits for a quiet moment instead,
+     1.2 s after the last input with no page change, window, tour or Usage moment running. */
+  let warmingContext = false, lastInput = 0;
+  const QUIET_MS = 1200;
+  const busy = () => {
+    const h = document.documentElement;
+    return h.hasAttribute('data-pm-page-transition') || h.hasAttribute('data-o55-open') || h.hasAttribute('data-o55-tour')
+      || h.hasAttribute('data-pmu-moment') || document.visibilityState !== 'visible';
+  };
+  function warmWhenQuiet() {
+    if (S.ctx) { warmingContext = false; return; }
+    const wait = lastInput + QUIET_MS - performance.now();
+    if (wait > 0 || busy()) { window.setTimeout(warmWhenQuiet, Math.max(wait, 300)); return; }
+    idle(() => {
+      if (S.ctx) { warmingContext = false; return; }
+      if (performance.now() - lastInput < QUIET_MS || busy()) { warmWhenQuiet(); return; }
+      warmingContext = false; ensureContext();
+    });
+  }
   ['pointerdown', 'keydown'].forEach((ev) => document.addEventListener(ev, (e) => {
     if (!e.isTrusted) return;
+    lastInput = performance.now();
     if (document.documentElement.hasAttribute('data-o55-open') || document.documentElement.hasAttribute('data-o55-tour')) ensureContext();
     else if (!S.ctx && !warmingContext) {
       warmingContext = true;
-      idle(() => { warmingContext = false; ensureContext(); });
+      warmWhenQuiet();
     }
   }, true));
 
@@ -143839,7 +143930,8 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
   };
   const motion = () => MOTION[look()]();
   /* Web Animations (Animation speed scales them through kit.d/17-look.js); real() keeps reading time unscaled */
-  function play(el, frames, o) {
+  function play(el, frames, o) { return playNow(el, frames, o); }
+  function playNow(el, frames, o) {
     if (!el || typeof el.animate !== 'function') return null;
     try { return el.animate(frames, Object.assign({ fill: 'none' }, o)); } catch (_) { return null; }
   }
@@ -144658,6 +144750,11 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
     sound('open', 0.4);
     if (!still()) {
       const m = motion(), L = look(), chrome = panelEl.querySelector('.pmn-chrome');
+      /* every entrance below starts again, together, on the first frame after the open (final motion QA B10): a first
+         frame that is long (Glass rastering its blur on first show, about half a second on the P1000) otherwise ran the
+         whole entrance behind it, and the panel appeared already open */
+      const opening = [], play = (el, frames, o) => { const a = playNow(el, frames, o); if (a) opening.push(a); return a; };
+      requestAnimationFrame(() => { const t = document.timeline.currentTime; if (t == null || !open) return; opening.forEach((a) => { try { if (a.playState !== 'idle') a.startTime = t; } catch (_) { /* gone */ } }); });
       if (L === 'retro') {
         play(chrome, [{ transform: 'scale(1, .01)', filter: 'brightness(3)' }, { transform: 'scale(1, .01)', filter: 'brightness(2)', offset: 0.35 }, { transform: 'none', filter: 'none' }], { duration: 260, easing: 'steps(6, end)' });
       } else if (L === 'nier') {
@@ -145212,6 +145309,11 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
 /* A stage's CSS entrance can spend several frames pending at opacity 0 while Chrome prepares its layers. Keep the
    outgoing stage underneath it until that entrance finishes. The existing entrance still owns its duration,
    easing and movement (including Reduced Motion); its actual ready/start time also drives the outgoing fade. */
+/* The page's own exit (.pm8-page-out) paints the page that was on screen while the next page enters over it. A stage
+   switch made then (Orchestrator's first entry backfills the demo story, and the Wizard resyncs into its workspace)
+   must not paint during that exit: the stage that was on screen stays drawn (.wo-stage-hold) and the stage switched
+   to stays undisplayed (.wo-stage-defer) until the exit has finished. The page exit then fades only what was on
+   screen before the click, and its centre never goes empty under the arriving page. */
 (function () {
   'use strict';
   function boot() {
@@ -145224,6 +145326,24 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
     let watching = null;
     const leaving = new Map();
     const scrollOrigins = new Map();
+    const held = new Set(), deferred = new Set();
+    const exiting = () => root.classList.contains('pm8-page-out');
+    function releaseExit() {
+      for (const stage of held) stage.classList.remove('wo-stage-hold');
+      for (const stage of deferred) stage.classList.remove('wo-stage-defer');
+      held.clear(); deferred.clear();
+    }
+    function holdThroughExit(outgoing, incoming) {
+      if (held.has(incoming)) {
+        // Switched back to the stage still on screen: it is simply the stage again.
+        releaseExit();
+        return;
+      }
+      if (!held.size && !deferred.has(outgoing)) { outgoing.classList.add('wo-stage-hold'); held.add(outgoing); }
+      for (const stage of deferred) if (stage !== incoming) stage.classList.remove('wo-stage-defer');
+      deferred.clear();
+      incoming.classList.add('wo-stage-defer'); deferred.add(incoming);
+    }
 
     function release(stage) {
       const exit = leaving.get(stage);
@@ -145292,6 +145412,9 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
       watching = null;
       release(incoming);
       if (!outgoing || !pageShown || !root.classList.contains('active')) {
+        // pageShown still reads true when the page was hidden earlier in this task: its exit class is added after the
+        // page write that runs this switch (the observer then keeps or drops the hold).
+        if (outgoing && (exiting() || pageShown)) holdThroughExit(outgoing, incoming);
         finish(token, incoming);
         return;
       }
@@ -145327,6 +145450,9 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
     window.PM_WIZARD_STAGES = { prepare };
     const observer = new MutationObserver(() => {
       pageShown = root.classList.contains('active');
+      // While the page exit still paints, a stage switch in progress keeps its outgoing stage too.
+      if (exiting()) return;
+      if (held.size || deferred.size) releaseExit();
       if (!pageShown) finish(serial, current);
     });
     observer.observe(root, { attributes: true, attributeFilter: ['class'] });
@@ -151073,9 +151199,14 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
       if (reason !== 'done' && returnFocus && document.contains(returnFocus)) { try { returnFocus.focus(); } catch (_) {} }
       O55.boot && O55.boot.chip && O55.boot.chip();
       if (heldResize) { heldResize = false; window.dispatchEvent(new Event('resize')); }
+      window.dispatchEvent(new CustomEvent('o55:onboarding-gone', { detail: { reason } }));
     };
     if (typeof hold === 'number' && hold > 0) O55.motion.after(hold, finish);
-    else if (O55.motion.reduced()) finish(); else O55.motion.settled(r.querySelector('.o55-win'), { subtree: false, fallback: 700 }).then(finish);
+    /* the app wakes (inert off, its paused loops resumed: a restyle of the whole page) only once both the window and
+       its scrim have finished leaving, and a frame later, so that restyle never holds a frame of the exit itself */
+    else if (O55.motion.reduced()) finish();
+    else Promise.all([O55.motion.settled(r.querySelector('.o55-win'), { subtree: false, fallback: 700 }), O55.motion.settled(r.querySelector('.o55-scrim'), { subtree: false, fallback: 700 })])
+      .then(() => requestAnimationFrame(() => window.setTimeout(finish, 0)));
     window.dispatchEvent(new CustomEvent('o55:onboarding', { detail: { type: reason === 'skip' ? 'skipped' : reason === 'done' ? 'finished' : 'closed', screen: S.sess.screen } }));
   }
 
@@ -157667,7 +157798,16 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
       lookTimer = O55.motion.after(ms, () => { lookTimer = null; writeLook(); });
       return true;
     },
-    openWizard() { const t = document.getElementById('tab-wizard') || document.querySelector('[data-page="wizard"]'); if (t) { t.click(); return true; } return false; }
+    /* o.under: the window still covers the app, so the page changes at once with no page transition of its own and
+       the Wizard is drawn whole beneath the window, whose exit is then the only move (final motion QA A1) */
+    openWizard(o) {
+      const t = document.getElementById('tab-wizard') || document.querySelector('[data-page="wizard"]');
+      if (!t) return false;
+      const P = window.PM_PAGES, under = !!(o && o.under);
+      if (under && P) P.instant = true;
+      try { t.click(); } finally { if (P) P.instant = false; }
+      return true;
+    }
   };
 
   let look = null, lookTimer = null, lookWritten = '';
@@ -157701,12 +157841,22 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
        the tour itself ends on the Planning Wizard, so the page is not switched here */
     const win = S.root && S.root.querySelector('.o55-win'), from = tour && win ? win.getBoundingClientRect() : null;
     const handoff = tour && from && O55.nierWindow && O55.nierWindow.handoff ? O55.nierWindow.handoff() : null;
+    /* Enter: the Wizard is put in place under the window first, so the window's exit reveals it (one move, never Home) */
+    if (!tour) O55.shell.openWizard({ under: true });
     O55.ui.close('done', { handoff: tour && !!from });
     /* a tour taken at the end of an onboarding run always starts at its first step (only the resume chip continues one) */
     if (tour) O55.tour.start({ source: 'onboarding', fresh: true, project: projectId, from: from ? { left: from.left, top: from.top, width: from.width, height: from.height } : null, handoff });
-    else O55.shell.openWizard();
-    /* the theme is written once the window has handed over (the line has reached the tour), or has gone */
-    O55.shell.flushLook(handoff ? 1600 : 400);
+    /* the theme is written once the window has handed over (the line has reached the tour), or has gone: its repaint
+       restyles the whole app, so it waits for the first quiet moment after the window has left rather than landing in
+       the middle of its exit */
+    if (handoff) O55.shell.flushLook(1600);
+    else {
+      let done = false;
+      const flush = () => { if (done) return; done = true; window.removeEventListener('o55:onboarding-gone', gone); O55.shell.flushLook(0); };
+      const gone = () => (window.requestIdleCallback ? window.requestIdleCallback(flush, { timeout: 500 }) : O55.motion.after(120, flush));
+      window.addEventListener('o55:onboarding-gone', gone);
+      O55.motion.after(2500, flush);
+    }
   };
 
   function summary(S) {
@@ -162576,6 +162726,7 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
     if(/save|apply|confirm/.test(signal))return ['Save changes','Keep the choices you made.'];
     if(attr(el,'aria-expanded'))return ['',attr(el,'aria-expanded')==='true'?'Hide the related choices.':'Show the related choices.'];
     if(attr(el,'aria-pressed'))return ['',attr(el,'aria-pressed')==='true'?'Turn this choice off.':'Turn this choice on.'];
+    if(el&&el.closest&&el.closest('#pm7GlobalStatusBar'))return ['',el.matches('button,[role="button"]')?'Click to see the details.':'Shows the latest known state.'];   /* O55 */
     if(el&&el.matches&&el.matches('[role="tab"],[data-page]'))return ['', 'Show this page.'];
     if(el&&el.matches&&el.matches('a[href]'))return ['', 'Open the linked page.'];
     if(el&&el.matches&&el.matches('input,select,textarea,[role="checkbox"],[role="radio"],[role="switch"],[role="slider"]'))return ['', 'Change this setting.'];
@@ -162777,17 +162928,24 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
     if(a===b||a.contains(b))return a;if(b.contains(a))return b;
     var node=a.parentElement;while(node&&!node.contains(b))node=node.parentElement;return node||document;
   }
+  var censusDeadline=null;   /* O55: the census runs in idle time (motion QA, 2026-10-16) */
+  function censusFrame(fn){
+    if(typeof requestIdleCallback!=='function')return requestAnimationFrame(fn);
+    return requestIdleCallback(function(deadline){censusDeadline=deadline;try{fn();}finally{censusDeadline=null;}},{timeout:900});
+  }
+  function cancelCensusFrame(id){if(!id)return;if(typeof cancelIdleCallback==='function')cancelIdleCallback(id);else cancelAnimationFrame(id);}
+  function censusTime(started,ms){if(performance.now()-started>=ms)return false;return !censusDeadline||censusDeadline.didTimeout||censusDeadline.timeRemaining()>1;}
   HoverTagController.prototype.scheduleScan=function(scope){
     var self=this,next=scope&&scope.isConnected?scope:document;
     this.pendingScanScope=this.pendingScanScope?commonScanScope(this.pendingScanScope,next):next;
     this.scanComplete=false;if(this.scanFrame||this.scanning)return;
-    this.scanFrame=requestAnimationFrame(function(){var pending=self.pendingScanScope||document;self.pendingScanScope=null;self.scanFrame=0;self.beginScan(pending);});
+    this.scanFrame=censusFrame(function(){var pending=self.pendingScanScope||document;self.pendingScanScope=null;self.scanFrame=0;self.beginScan(pending);});
   };
   HoverTagController.prototype.pruneKeyOwners=function(){
     var self=this;this.keyOwners.forEach(function(el,key){if(el&&el.isConnected)return;self.keyOwners.delete(key);var desc=document.getElementById(descriptionId(key));if(desc)desc.remove();});
   };
   HoverTagController.prototype.beginScan=function(scope){
-    if(this.liveRunning){var delayed=this;this.scanFrame=requestAnimationFrame(function(){delayed.scanFrame=0;delayed.beginScan(scope);});return;}
+    if(this.liveRunning){var delayed=this;this.scanFrame=censusFrame(function(){delayed.scanFrame=0;delayed.beginScan(scope);});return;}
     this.ensureRoot();this.syncVisualSetting();this.preparedByElement=new WeakMap();
     this.scanStartedAt=performance.now();this.scanNodes=this.collect(scope);this.scanPrepareCursor=0;this.scanPhase='prepare';this.scanQueue=[];this.scanCursor=0;this.scanning=true;this.scanComplete=false;this.scanBound=0;this.scanCandidates=0;this.scanBatches=0;this.processScanBatch();
   };
@@ -162800,16 +162958,16 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
          descriptions unsettled for many seconds. Keep a generous count guard
          for pathological clocks while consuming cheap rows until 3 ms. */
       limit=Math.min(this.scanNodes.length,this.scanPrepareCursor+384);
-      while(this.scanPrepareCursor<limit&&performance.now()-started<3){var candidate=this.prepare(this.scanNodes[this.scanPrepareCursor++]);if(candidate){this.scanQueue.push(candidate);this.preparedByElement.set(candidate.el,candidate);}}
+      while(this.scanPrepareCursor<limit&&censusTime(started,3)){var candidate=this.prepare(this.scanNodes[this.scanPrepareCursor++]);if(candidate){this.scanQueue.push(candidate);this.preparedByElement.set(candidate.el,candidate);}}
       this.scanBatches++;
-      if(this.scanPrepareCursor<this.scanNodes.length){this.scanFrame=requestAnimationFrame(function(){self.scanFrame=0;self.processScanBatch();});return;}
+      if(this.scanPrepareCursor<this.scanNodes.length){this.scanFrame=censusFrame(function(){self.scanFrame=0;self.processScanBatch();});return;}
       this.scanCandidates=this.scanQueue.length;this.scanNodes=[];this.scanPhase='bind';
-      this.scanFrame=requestAnimationFrame(function(){self.scanFrame=0;self.processScanBatch();});return;
+      this.scanFrame=censusFrame(function(){self.scanFrame=0;self.processScanBatch();});return;
     }
     limit=Math.min(this.scanQueue.length,this.scanCursor+192);
-    while(this.scanCursor<limit&&performance.now()-started<4){var row=this.scanQueue[this.scanCursor++];if(this.bind(row.el,row))this.scanBound++;}
+    while(this.scanCursor<limit&&censusTime(started,4)){var row=this.scanQueue[this.scanCursor++];if(this.bind(row.el,row))this.scanBound++;}
     this.scanBatches++;
-    if(this.scanCursor<this.scanQueue.length){this.scanFrame=requestAnimationFrame(function(){self.scanFrame=0;self.processScanBatch();});return;}
+    if(this.scanCursor<this.scanQueue.length){this.scanFrame=censusFrame(function(){self.scanFrame=0;self.processScanBatch();});return;}
     this.scanning=false;this.scanPhase='idle';this.scanQueue=[];this.preparedByElement=new WeakMap();this.pruneKeyOwners();this.lastScan={candidates:this.scanCandidates,bound:this.scanBound,duration_ms:performance.now()-this.scanStartedAt,batches:this.scanBatches};
     if(this.pendingScanScope){var pending=this.pendingScanScope;this.pendingScanScope=null;this.scheduleScan(pending);return;}
     this.scanComplete=true;
@@ -162838,7 +162996,7 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
       this.liveDeep.forEach(function(root){if(root===el||root.contains(el))covered=true;});if(!covered)this.liveShallow.add(el);
     }
     this.pruneLiveScopes();
-    if(!this.liveFrame&&!this.liveRunning){this.liveFrame=requestAnimationFrame(function(){self.liveFrame=0;self.beginLive();});}
+    if(!this.liveFrame&&!this.liveRunning){this.liveFrame=censusFrame(function(){self.liveFrame=0;self.beginLive();});}
   };
   HoverTagController.prototype.deferLiveScope=function(el){
     if(this.pageSettling||this.overlaySettling||!el||el.nodeType!==1)return;var self=this,covered=false,remove=[];
@@ -162855,24 +163013,26 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
     nodes.forEach(function(node){self.release(node);});if(this.active&&(this.active===root||root.contains(this.active)))this.close(true);
   };
   HoverTagController.prototype.beginLive=function(){
-    var self=this;if(this.pageSettling||this.overlaySettling){this.liveShallow.clear();this.liveDeep.clear();return;}if(this.scanning||this.scanFrame){this.liveFrame=requestAnimationFrame(function(){self.liveFrame=0;self.beginLive();});return;}this.pruneLiveScopes();
+    var self=this;if(this.pageSettling||this.overlaySettling){this.liveShallow.clear();this.liveDeep.clear();return;}if(this.scanning||this.scanFrame){this.liveFrame=censusFrame(function(){self.liveFrame=0;self.beginLive();});return;}this.pruneLiveScopes();
     var nodes=[],seen=new Set();function add(node){if(!node||node.nodeType!==1||!node.isConnected||inOwner(node)||seen.has(node))return;seen.add(node);nodes.push(node);}
     this.liveShallow.forEach(add);this.liveDeep.forEach(function(root){
       add(root);var descendants=root.querySelectorAll?root.querySelectorAll(ACTION_SELECTOR+','+SEMANTIC_SELECTOR+',[data-pm-hover-bound="true"]'):[];
       for(var i=0;i<descendants.length;i++)add(descendants[i]);
     });
     this.liveShallow.clear();this.liveDeep.clear();var queue=[];
-    for(var i=0;i<nodes.length;i++){var prepared=this.prepare(nodes[i]);if(prepared||attr(nodes[i],'data-pm-hover-bound')==='true')queue.push({el:nodes[i],prepared:prepared});}
+    for(var i=0;i<nodes.length;i++)queue.push({el:nodes[i],prepared:undefined});   /* O55: prepared in the batches */
     if(!queue.length){this.lastLive={candidates:0,bound:0,released:0,duration_ms:0,batches:0};return;}
     this.liveQueue=queue;this.liveCursor=0;this.liveRunning=true;this.liveStartedAt=performance.now();this.liveBound=0;this.liveReleased=0;this.liveBatches=0;this.processLiveBatch();
   };
   HoverTagController.prototype.processLiveBatch=function(){
     if(!this.liveRunning)return;var self=this,started=performance.now(),limit=Math.min(this.liveQueue.length,this.liveCursor+72);
-    while(this.liveCursor<limit&&performance.now()-started<4){var row=this.liveQueue[this.liveCursor++];if(!row.el.isConnected||!row.prepared){if(this.release(row.el))this.liveReleased++;}else{var model=this.bind(row.el,row.prepared);if(model){this.liveBound++;if(this.active===row.el){this.activeModel=model;this.render(model);this.position();}}}}
+    while(this.liveCursor<limit&&censusTime(started,4)){var row=this.liveQueue[this.liveCursor++];
+      if(row.prepared===undefined){row.prepared=row.el.isConnected?this.prepare(row.el):null;if(!row.prepared&&attr(row.el,'data-pm-hover-bound')!=='true')continue;}
+      if(!row.el.isConnected||!row.prepared){if(this.release(row.el))this.liveReleased++;}else{var model=this.bind(row.el,row.prepared);if(model){this.liveBound++;if(this.active===row.el){this.activeModel=model;this.render(model);this.position();}}}}
     this.liveBatches++;
-    if(this.liveCursor<this.liveQueue.length){this.liveFrame=requestAnimationFrame(function(){self.liveFrame=0;self.processLiveBatch();});return;}
+    if(this.liveCursor<this.liveQueue.length){this.liveFrame=censusFrame(function(){self.liveFrame=0;self.processLiveBatch();});return;}
     this.liveRunning=false;this.liveQueue=[];this.lastLive={candidates:this.liveCursor,bound:this.liveBound,released:this.liveReleased,duration_ms:performance.now()-this.liveStartedAt,batches:this.liveBatches};
-    if(this.liveShallow.size||this.liveDeep.size)this.liveFrame=requestAnimationFrame(function(){self.liveFrame=0;self.beginLive();});
+    if(this.liveShallow.size||this.liveDeep.size)this.liveFrame=censusFrame(function(){self.liveFrame=0;self.beginLive();});
   };
   HoverTagController.prototype.refresh=function(el){
     if(!el||!el.isConnected)return null;var model=this.bind(el);
@@ -162971,6 +163131,24 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
       if(!focused&&!hovered)self.close(false);
     },DEPARTURE_GRACE_MS);
   };
+  var PRIMARY_ACTIONS='.pm6-chat-send,.pmw-sc-send,.pm6-wiz-send,[data-pm-hover-avoid]';
+  function avoidPrimary(active,tagRoot,left,top,rect,anchor,viewport,marginX,marginY){
+    var nodes=document.querySelectorAll(PRIMARY_ACTIONS),boxes=[];
+    for(var i=0;i<nodes.length;i++){var n=nodes[i];if(n===active||n.contains(active)||active.contains(n))continue;var b=n.getBoundingClientRect();if(!(b.width>0&&b.height>0))continue;
+      var stack=document.elementsFromPoint(b.left+b.width/2,b.top+b.height/2),front=null;
+      for(var s=0;s<stack.length;s++)if(!(tagRoot&&tagRoot.contains(stack[s]))){front=stack[s];break;}
+      if(front&&(front===n||n.contains(front)))boxes.push(b);}   /* only an action on screen (under the tag itself or not), not one under the composer */
+    if(!boxes.length)return null;
+    var PAD=6,w=rect.width,h=rect.height,minX=viewport.left+marginX,maxX=viewport.left+viewport.width-marginX-w,minY=viewport.top+marginY,maxY=viewport.top+viewport.height-marginY-h;
+    function hit(l,t){for(var j=0;j<boxes.length;j++){var b=boxes[j];if(l<b.right+PAD&&l+w>b.left-PAD&&t<b.bottom+PAD&&t+h>b.top-PAD)return b;}return null;}
+    if(!hit(left,top))return null;
+    function slide(dir){var l=left;for(var k=0;k<boxes.length+1;k++){var b=hit(l,top);if(!b)return l;l=dir<0?b.left-PAD-w:b.right+PAD;}return NaN;}
+    var other=anchor.top-h-GAP>=minY&&top>anchor.top?{top:anchor.top-h-GAP,placement:'above'}:{top:anchor.bottom+GAP,placement:'below'};
+    var tries=[{left:slide(-1),top:top},{left:slide(1),top:top},{left:left,top:other.top,placement:other.placement}];
+    tries=tries.filter(function(c){return c.left===c.left&&c.left>=minX-0.5&&c.left<=maxX+0.5&&c.top>=minY-0.5&&c.top<=maxY+0.5&&!hit(c.left,c.top);});
+    tries.sort(function(a,b){return Math.abs(a.left-left)+Math.abs(a.top-top)-Math.abs(b.left-left)-Math.abs(b.top-top);});
+    return tries.length?tries[0]:{left:left,top:top,shut:true};
+  }
   HoverTagController.prototype.position=function(){
     if(this.dropStaleTargets()||!this.active||!this.tag||this.tag.hidden)return null;
     var anchor=this.active.getBoundingClientRect(),viewport=viewportGeometry(),marginX=feasibleMargin(viewport.width),marginY=feasibleMargin(viewport.height);
@@ -162996,6 +163174,9 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
     ].filter(function(row){return row.left>=viewport.left+marginX&&row.top>=viewport.top+marginY&&row.left+rect.width<=viewportRight-marginX&&row.top+rect.height<=viewportBottom-marginY;});if(outside.length){outside.sort(function(a,b){var ah=Math.abs(a.left-(anchor.left+anchor.width/2))+Math.abs(a.top-(anchor.top+anchor.height/2)),bh=Math.abs(b.left-(anchor.left+anchor.width/2))+Math.abs(b.top-(anchor.top+anchor.height/2));return ah-bh;});left=outside[0].left;top=outside[0].top;placement=outside[0].placement;}}
     left=clamp(left,viewport.left+marginX,viewportRight-marginX-rect.width);
     top=clamp(top,viewport.top+marginY,viewportBottom-marginY-rect.height);
+    var avoided=avoidPrimary(this.active,this.root||this.tag,left,top,rect,anchor,viewport,marginX,marginY);   /* O55: never over Send */
+    if(avoided){left=avoided.left;top=avoided.top;if(avoided.placement)placement=avoided.placement;}
+    this.tag.style.visibility=avoided&&avoided.shut?'hidden':'';
     this.tag.style.left=Math.round(left)+'px';this.tag.style.top=Math.round(top)+'px';this.tag.setAttribute('data-placement',placement);
     return {left:left,top:top,width:rect.width,height:rect.height,placement:placement,gap:GAP,margin_x:marginX,margin_y:marginY};
   };
@@ -163022,7 +163203,7 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
     return this.visualEnabled;
   };
   HoverTagController.prototype.pauseBackgroundCensus=function(){
-    cancelAnimationFrame(this.scanFrame);cancelAnimationFrame(this.liveFrame);this.scanFrame=0;this.liveFrame=0;
+    cancelCensusFrame(this.scanFrame);cancelCensusFrame(this.liveFrame);this.scanFrame=0;this.liveFrame=0;
     clearTimeout(this.deferredLiveTimer);this.deferredLiveTimer=0;this.deferredLiveScopes.clear();
     this.pendingScanScope=null;this.scanNodes=[];this.scanPrepareCursor=0;this.scanPhase='idle';this.scanQueue=[];this.scanCursor=0;
     this.liveQueue=[];this.liveCursor=0;this.liveShallow.clear();this.liveDeep.clear();this.scanning=false;this.liveRunning=false;this.scanComplete=true;
@@ -165911,10 +166092,60 @@ function viewInOff() {
   if (slot) slot.removeAttribute('data-d-viewin');
 }
 
+/* What was on screen stays until the new view's first frame has been shown (final motion QA A8, 2026-10-16). The
+   panel or tab pane that is leaving keeps its place above the one coming in, takes no input, and fades out while the
+   new one deals in, started with the rest of the change (startTogether): the change's first frame, which the shell's
+   fit pass can hold for a sixth of a second, shows the old view instead of an empty pane. NieR keeps its own erase
+   (the wipe is its look) and Reduced Motion swaps at once. */
+const LEAVE = { basic: .45, friendly: .3, glass: .25, retro: .5 };
+const leaving = new Set();
+function releaseLeaving(el) {
+  if (!el._dLeave) return;
+  const keep = el._dLeave; el._dLeave = null; leaving.delete(el);
+  if (keep.anim) { try { keep.anim.cancel(); } catch (e) { /* gone */ } }
+  el.classList.remove('d-leaving');
+  if (keep.inline) ['display', 'top', 'left', 'width'].forEach(k => el.style.removeProperty(k));
+  const slot = document.getElementById('sidePanelSlot');
+  if (slot && ![...leaving].some(x => x.classList.contains('side-panel-view'))) slot.classList.remove('d-has-leaving');
+}
+function releaseAllLeaving() { [...leaving].forEach(releaseLeaving); }
+/* keep el drawn where it was; box: a pane's place inside its scroller, read before the shell hid it */
+function holdLeaving(el, box) {
+  if (!el || reduced() || fam() === 'nier' || !D.on) return null;
+  releaseAllLeaving();
+  el._dLeave = { inline: !!box, anim: null };
+  leaving.add(el);
+  if (box) {
+    el.style.setProperty('display', box.display, 'important');
+    el.style.setProperty('top', box.top + 'px'); el.style.setProperty('left', box.left + 'px'); el.style.setProperty('width', box.width + 'px');
+  } else {
+    const slot = document.getElementById('sidePanelSlot');
+    if (slot) slot.classList.add('d-has-leaving');
+  }
+  el.classList.add('d-leaving');
+  return el;
+}
+/* the held view fades out with the change's own start */
+function fadeLeaving(el, anims) {
+  if (!el || !el._dLeave) return;
+  const f = spec(), k = LEAVE[fam()] || .5, retro = fam() === 'retro';
+  const a = el.animate([{ opacity: 1 }, { opacity: 0 }], { duration: Math.max(retro ? 3 * TICK : 90, Math.round(f.dur * k)), easing: retro ? 'steps(3, end)' : 'cubic-bezier(.4, 0, 1, 1)', fill: 'forwards' });
+  a.id = 'd-leave';
+  el._dLeave.anim = a;
+  a.finished.then(() => releaseLeaving(el), () => {});
+  if (anims) anims.push(a);
+}
+/* a pane's place inside its scroller, before the shell hides it */
+function paneBox(pane) {
+  if (!pane || !pane.getClientRects().length) return null;
+  return { top: pane.offsetTop, left: pane.offsetLeft, width: pane.offsetWidth, display: getComputedStyle(pane).display };
+}
+
 /* the panel comes in: its chrome settles first, the content deals in right behind it. The content is the shown tab's
-   pane; a panel without tab panes (Testing, Debug & Run, Agents, Runtime artifacts) deals its scroller's own list. */
-function enterPanel(panel) {
-  if (reduced() || !panel) return;
+   pane; a panel without tab panes (Testing, Debug & Run, Agents, Runtime artifacts) deals its scroller's own list.
+   left: the panel that was shown, held by holdLeaving until this entrance starts */
+function enterPanel(panel, left) {
+  if (reduced() || !panel) { if (left) releaseLeaving(left); return; }
   const chrome = [':scope > .sh-banner', ':scope > .pm7-scm-context', ':scope > .pm7-automation-context', ':scope > .pm-segtab', ':scope > .fm-toolbar-wrap']
     .map(s => panel.querySelector(s)).filter(visible);
   const f = spec(), anims = [];
@@ -165931,6 +166162,7 @@ function enterPanel(panel) {
     const k = fam() === 'retro' ? 'steps(4, end)' : 'cubic-bezier(.3, 1.6, .5, 1)';
     anims.push(ico.animate([{ transform: 'scale(.7) rotate(-12deg)' }, { transform: 'none' }], { duration: Math.round(f.dur * 1.2), easing: k }));
   }
+  if (left) fadeLeaving(left, anims);
   startTogether(anims);
 }
 
@@ -166162,6 +166394,9 @@ function onTabCapture(ev) {
   const st = tab.parentElement;
   if (!st || !st.classList.contains('pm-segtab') || !st.offsetWidth) return;
   st._dFrom = snapStrip(st, tab);
+  /* the view on screen, and its place, before the shell switches it (held while the new one comes in: holdLeaving) */
+  const panel = tab.closest('.side-panel-view'), pane = panel && activePane(panel);
+  if (panel) panel._dFromPane = pane ? { pane, box: paneBox(pane) } : null;
 }
 
 /* bubble phase (onClickMotion, after the shell switched): refit now, move on the next frame */
@@ -166174,21 +166409,25 @@ function tabChanged(tab) {
   const st = tab.parentElement && tab.parentElement.classList.contains('pm-segtab') ? tab.parentElement : null;
   const from = st && st._dFrom;
   if (st) delete st._dFrom;
+  const fromPane = panel._dFromPane; panel._dFromPane = null;
   if (now === was) return;
   /* the label shows in this same task, so the target brackets (placed on the next frame) measure the final box */
   if (st) fitTabs(st);
-  playTabs(st, from, now > was ? 1 : -1, () => activePane(panel));
+  const shown = activePane(panel);
+  const left = fromPane && fromPane.box && fromPane.pane !== shown && fromPane.pane.isConnected ? holdLeaving(fromPane.pane, fromPane.box) : null;
+  playTabs(st, from, now > was ? 1 : -1, () => activePane(panel), null, left);
 }
 /* one frame callback makes every animation of a change, and startTogether starts them all on the next frame: the ink,
    the icons, the inverse tick and the rows share one clock, whatever the shell's fit pass costs this frame. paneOf: the
    view that comes in (read in that frame); after(pane): a strip's own fitting of that view */
-function playTabs(st, from, dir, paneOf, after) {
+function playTabs(st, from, dir, paneOf, after, left) {
   requestAnimationFrame(() => {
-    if (!D.on) return;
+    if (!D.on) { if (left) releaseLeaving(left); return; }
     const anims = [];
     if (st) moveTabs(st, from, dir, anims);
     const pane = paneOf();
     if (pane) { stackHeads(pane); stackRows(pane); midFitAll(pane); if (after) after(pane); enterPane(pane, dir, anims); }
+    if (left) fadeLeaving(left, anims);
     /* NieR: the target brackets made their lock-on in this same frame (their frame callback runs first); it starts
        with the rest of the change, or the shell's fit pass would eat it and the brackets would just appear */
     const ret = document.getElementById('o55np-reticle');
@@ -168009,6 +168248,8 @@ function unmountSkin() {
   });
   clearFit();
   viewInOff();
+  releaseAllLeaving();
+  D.shown = null;
   panelEls().forEach(p => hooksFor(p, 'unmount').forEach(h => h.unmount(p)));
   undoAll();
 }
@@ -168022,9 +168263,14 @@ PMR.concepts.register('d', {
         const p = document.getElementById(info && info.target);
         if (!p) return;
         if (info.reason === 'switch' && D.on) viewIn();
+        /* the panel that was on screen stays until this one's entrance starts (30-motion.js holdLeaving) */
+        const was = D.shown && D.shown !== p && D.shown.isConnected && info.reason === 'switch' ? D.shown : null;
+        D.shown = p;
+        const left = was ? holdLeaving(was) : null;
         requestAnimationFrame(() => {
           fitAll(p);
-          if (info.reason === 'switch' || info.reason === 'concept') enterPanel(p);
+          if (info.reason === 'switch' || info.reason === 'concept') enterPanel(p, left);
+          else if (left) releaseLeaving(left);
           hooksFor(p, 'show').forEach(h => h.show(p, info));
         });
       },
