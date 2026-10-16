@@ -227954,7 +227954,7 @@ window.PM_WALLPAPERS_CATALOG = {"version":1,"families":[{"family":"glass","label
   /* Prepare only choices in and immediately around the gallery's viewport. Glass owns the byte budget and both
      caches; this queue stores no images. One idle job at a time leaves the input path independent of warming. */
   var warmObserver = null, warmTargets = new Map(), warmDone = new Map(), warmEpoch = 0;
-  var warmTimer = 0, warmIdle = 0, warmRunning = false, warmInput = 0;
+  var warmTimer = 0, warmIdle = 0, warmRunning = false, warmInput = 0, warmPointer = null;
   function warmBusy() {
     if (document.hidden) return true;
     if (window.PM51 && PM51.place && PM51.place.mode === 'nav') return true;
@@ -227981,11 +227981,20 @@ window.PM_WALLPAPERS_CATALOG = {"version":1,"families":[{"family":"glass","label
         warmTimer = setTimeout(function () { warmTimer = 0; queueWarm(); }, 200);
         return;
       }
-      /* IntersectionObserver supplies geometry without a new layout read. Keep two spare frost slots for the
-         current print and an explicit hover/click; opaque looks use only the two-image decoded cache. */
-      var glass = look() === 'glass' && !inNier(), limit = glass ? 6 : 2, viewport = innerWidth + 'x' + innerHeight;
+      /* IntersectionObserver supplies geometry without a new layout read. Glass bounds frost by encoded bytes,
+         so every visible choice can be prepared; opaque looks retain only two decoded images. */
+      var glass = look() === 'glass' && !inNier(), limit = glass ? order.length : 2, viewport = innerWidth + 'x' + innerHeight;
       var candidates = Array.from(warmTargets.entries()).filter(function (item) { return item[0].isConnected; });
-      candidates.sort(function (a, b) { return b[1].intersectionRatio - a[1].intersectionRatio || a[1].boundingClientRect.top - b[1].boundingClientRect.top; });
+      function pointerDistance(entry) {
+        if (!warmPointer) return 0;
+        var r = entry.boundingClientRect, dx = Math.max(r.left - warmPointer.x, 0, warmPointer.x - r.right);
+        var dy = Math.max(r.top - warmPointer.y, 0, warmPointer.y - r.bottom);
+        return dx * dx + dy * dy;
+      }
+      candidates.sort(function (a, b) {
+        return pointerDistance(a[1]) - pointerDistance(b[1]) || b[1].intersectionRatio - a[1].intersectionRatio ||
+          a[1].boundingClientRect.top - b[1].boundingClientRect.top || a[1].boundingClientRect.left - b[1].boundingClientRect.left;
+      });
       var ids = [];
       candidates.some(function (item) {
         var id = item[0].getAttribute('data-wpk-pick'); if (id === 'look') id = lookDefault(look());
@@ -228002,7 +228011,7 @@ window.PM_WALLPAPERS_CATALOG = {"version":1,"families":[{"family":"glass","label
            the explicit choice path can still retry it without a background error spinning an idle loop. */
         if (epoch === warmEpoch && (ok || warmAllowed(epoch))) {
           warmDone.delete(key); warmDone.set(key, !!ok);
-          while (warmDone.size > (glass ? 8 : 2)) warmDone.delete(warmDone.keys().next().value);
+          while (warmDone.size > (glass ? order.length : 2)) warmDone.delete(warmDone.keys().next().value);
         }
       }).then(function () { warmRunning = false; queueWarm(); });
     });
@@ -228023,6 +228032,10 @@ window.PM_WALLPAPERS_CATALOG = {"version":1,"families":[{"family":"glass","label
   ['pointerdown', 'keydown', 'wheel', 'touchstart'].forEach(function (type) {
     document.addEventListener(type, function () { warmInput = performance.now(); }, { capture: true, passive: true });
   });
+  document.addEventListener('pointermove', function (e) {
+    warmPointer = { x: e.clientX, y: e.clientY };
+    queueWarm();
+  }, { passive: true });
   window.addEventListener('pm-idle', queueWarm);
   window.addEventListener('resize', resetWarm, { passive: true });
   function apply(animate) {
