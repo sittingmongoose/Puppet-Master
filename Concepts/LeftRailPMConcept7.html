@@ -132960,23 +132960,23 @@ policies for tenant isolation, and add migration script.</textarea>
     if (footer && active && footer.style.display !== 'none') {
       fh = footer.offsetHeight || 0;
     }
-    wrap.style.setProperty('--chat-footer-stack-height', fh + 'px');
+    if (wrap.style.getPropertyValue('--chat-footer-stack-height') !== fh + 'px') wrap.style.setProperty('--chat-footer-stack-height', fh + 'px');   /* O55: only a change (B5) */
     if (active && stream && footer && footer.style.display !== 'none') {
       var footerBottom = parseFloat(getComputedStyle(footer).bottom) || 4;
       var clearance = 8;
       var inset = fh + footerBottom + clearance;
-      wrap.style.setProperty('--chat-footer-inset', inset + 'px');
+      if (wrap.style.getPropertyValue('--chat-footer-inset') !== inset + 'px') wrap.style.setProperty('--chat-footer-inset', inset + 'px');
       /* Content inset, not scrollport shrink: the stream extends behind the
          floating pill (see-through around it); the bottom padding keeps the
          newest row clear of the pill when pinned to bottom. */
-      stream.style.paddingBottom = inset + 'px';
+      if (stream.style.paddingBottom !== inset + 'px') stream.style.paddingBottom = inset + 'px';
       stream.style.marginBottom = '';
       if (!jumpIsAway(stream)) {
         requestAnimationFrame(function () { stream.scrollTop = stream.scrollHeight; });
       }
     } else {
-      wrap.style.removeProperty('--chat-footer-inset');
-      wrap.style.setProperty('--chat-footer-stack-height', '0px');
+      if (wrap.style.getPropertyValue('--chat-footer-inset')) wrap.style.removeProperty('--chat-footer-inset');
+      if (wrap.style.getPropertyValue('--chat-footer-stack-height') !== '0px') wrap.style.setProperty('--chat-footer-stack-height', '0px');
       if (stream) {
         stream.style.marginBottom = '';
         stream.style.paddingBottom = '';
@@ -133822,7 +133822,7 @@ policies for tenant isolation, and add migration script.</textarea>
       if (!header) return;
       var set = function () {
         var h = Math.ceil(header.getBoundingClientRect().height);
-        if (h > 0) root.style.setProperty('--pm-chat-head-h', h + 'px');
+        if (h > 0 && root.style.getPropertyValue('--pm-chat-head-h') !== h + 'px') root.style.setProperty('--pm-chat-head-h', h + 'px');   /* O55: only a change (B5) */
       };
       var ro = new ResizeObserver(set);
       root._pm6HeadObs = ro;
@@ -140819,15 +140819,15 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
 })();
 
 /* ---- js/13-page-layer.js ---- */
-/* The page in front becomes a compositor layer of its own when the pointer reaches the title bar or the keyboard a
-   page tab, so the click's answer (the leaving page's fade to 0.86, tools/shell_motion.py ANSWER_FIRST) runs on a
-   layer that is already rastered. Made at the click, that layer had to be rastered first: on the P1000 the click's
-   frame came 280 ms late and the fade was never seen, and a page changing under it (the Wizard's stages) was drawn
-   empty while it rastered again (round 4 films). The layer is kept only while the title bar is pointed at or a page
-   tab focused, and a little after: a layer is a stacking context, and the pages hold modals and toasts meant to sit
-   above the whole app, so a page showing one of those is not promoted. It is dropped when the page leaves (its exit's
-   cleanup) and when the pointer moves on. Promoted or not, every look draws the same pixels (Nas1 screenshots, five
-   looks by four pages). */
+/* The page in front becomes a compositor layer of its own when the pointer comes near the title bar (or onto it), or
+   the keyboard to a page tab, so the click's answer (the leaving page's fade to 0.86, tools/shell_motion.py
+   ANSWER_FIRST) runs on a layer that is already rastered. Made at the click, that layer had to be rastered first: on
+   the P1000 the click's frame came 280 ms late and the fade was never seen, and a page changing under it (the
+   Wizard's stages) was drawn empty while it rastered again (round 4 films). The layer is kept only while the pointer is
+   near the title bar or a page tab is focused, and a little after: a layer is a stacking context, and the pages hold
+   modals and toasts meant to sit above the whole app, so a page showing one of those is not promoted. It is dropped
+   when the page leaves (its exit's cleanup) and when the pointer moves on. Promoted or not, every look draws the same
+   pixels (Nas1 screenshots, five looks by four pages); its GPU memory is within the noise (P1000, nvidia-smi). */
 (function () {
   'use strict';
   const OVER = '#pm6-proj-sheet, #projectSettingsModal, #pm6WizDocOverlay, #pm6OrchSpModal, [aria-modal="true"]';
@@ -140852,8 +140852,22 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
     });
   }
   const dropSoon = () => { clearTimeout(dropTimer); dropTimer = setTimeout(drop, 900); };
+  /* the band under the title bar counts as on the way (a quick move to a tab gives the raster too little time: the
+     film harness reaches the tab 60 ms before its press, and the page's raster then fell on the press, P1000 round 5).
+     Its edge is read once and again after a resize, from the title bar's box. */
+  const NEAR = 72;
+  let edge = -1, near = false;
+  const readEdge = () => { const bar = document.querySelector('.title-bar'); const r = bar && bar.getBoundingClientRect(); edge = r && r.height ? r.bottom + NEAR : 0; };
+  window.addEventListener('resize', () => { edge = -1; }, { passive: true });
+  document.addEventListener('pointermove', (e) => {
+    if (e.pointerType === 'touch') return;
+    if (edge < 0) readEdge();
+    const inBand = e.clientY <= edge;
+    if (inBand && !near) { near = true; promote(); }
+    else if (!inBand && near && e.clientY > edge + 40) { near = false; dropSoon(); }
+  }, { capture: true, passive: true });
   document.addEventListener('pointerover', (e) => { if (tabOf(e.target)) promote(); }, true);
-  document.addEventListener('pointerout', (e) => { if (tabOf(e.target) && !tabOf(e.relatedTarget)) dropSoon(); }, true);
+  document.addEventListener('pointerout', (e) => { if (tabOf(e.target) && !tabOf(e.relatedTarget) && !near) dropSoon(); }, true);
   document.addEventListener('focusin', (e) => { if (tabOf(e.target)) promote(); }, true);
   document.addEventListener('focusout', (e) => { if (tabOf(e.target) && !tabOf(e.relatedTarget)) dropSoon(); }, true);
   window.PM_PAGE_LAYER = { promote, drop };
@@ -146430,20 +146444,28 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
        stack now, and it is placed again; still crowded, a lasting card joins the stack too (the badge counts it) and a
        quick note shows for a shorter time. */
     const place = () => typeof window.PM_NOTICE_PLACE === 'function' && window.PM_NOTICE_PLACE() === true;
-    if (place()) {
-      let joined = false;
-      staged.forEach((r) => { if (r !== rec && !r.leaving && r.it.durable) { finishStaged(r, 'join'); joined = true; } });
-      if (!joined || place()) {
-        if (it.durable && method() !== 'Banner') { finishStaged(rec, 'join'); sound('callout', 0.4); return; }
-        it.stageMs = Math.min(it.stageMs, Math.max(1800, Math.round(it.stageMs * 0.5)));
+    /* placed after the coming frame's layout and before its paint (B5: placed at once, a toast staged inside a look
+       change's commit measured the whole page while that restyle was pending); the card's first frame is already
+       in its place */
+    const settle = (crowded) => {
+      if (!staged.has(it.id) || staged.get(it.id) !== rec || rec.leaving) return;
+      if (crowded) {
+        let joined = false;
+        staged.forEach((r) => { if (r !== rec && !r.leaving && r.it.durable) { finishStaged(r, 'join'); joined = true; } });
+        if (!joined || place()) {
+          if (it.durable && method() !== 'Banner') { finishStaged(rec, 'join'); sound('callout', 0.4); return; }
+          it.stageMs = Math.min(it.stageMs, Math.max(1800, Math.round(it.stageMs * 0.5)));
+        }
       }
-    }
-    flip(before, c);
-    /* the cards already showing slide down first; the new one arrives into the slot they open, so two titles never
-       show through each other (frame review, 2026-10-13) */
-    if (still()) { /* Reduced Motion: it is simply there */ }
-    else enter(c, it, before.size ? Math.round(motion().move.duration * (look() === 'retro' || look() === 'nier' ? 0.5 : 0.32)) : 0);
-    startTimer(rec);
+      flip(before, c);
+      /* the cards already showing slide down first; the new one arrives into the slot they open, so two titles never
+         show through each other (frame review, 2026-10-13) */
+      if (still()) { /* Reduced Motion: it is simply there */ }
+      else enter(c, it, before.size ? Math.round(motion().move.duration * (look() === 'retro' || look() === 'nier' ? 0.5 : 0.32)) : 0);
+      startTimer(rec);
+    };
+    if (typeof window.PM_NOTICE_PLACE === 'function' && window.PM_NOTICE_PLACE.length >= 1) window.PM_NOTICE_PLACE(settle);
+    else settle(place());
     sound(it.level === 'blocking' ? (it.severity === 'error' ? 'error' : 'callout') : it.level === 'attention' ? 'warn' : it.level === 'notice' ? 'callout' : null, it.level === 'quiet' ? 0.3 : 0.55);
   }
   function enter(c, it, delay) {
@@ -187670,11 +187692,17 @@ var SPOT_DOWN = 320, SPOT_SIDE = 280, SPOT_STEP = 12, SPOT_PAD = 4;
 function controlsIn(x0, x1, y0, y1, stage) {
   /* the page that shows (the others keep their layout while hidden), the chat, the left column and the title bar */
   var out = [], roots = [doc.querySelector('.primary-content > .page.active'), doc.getElementById('chatPanel'), doc.querySelector('.left-panel'), doc.querySelector('.title-bar')];
+  /* only what can be in reach: a root that does not overlap the area is passed over, and so is a control that is not
+     drawn (hidden, or inside a content-visibility section the browser has skipped): measuring one forced its skipped
+     subtree's layout, once per control (B5, Settings lane read probe) */
+  var seen = function (e) { try { return !e.checkVisibility || e.checkVisibility({ contentVisibilityAuto: true, visibilityProperty: true }); } catch (_) { return true; } };
   for (var r = 0; r < roots.length; r++) {
     if (!roots[r]) continue;
+    var rr = roots[r].getBoundingClientRect();
+    if (!rr.width || rr.right < x0 || rr.left > x1 || rr.bottom < y0 || rr.top > y1) continue;
     var list = roots[r].querySelectorAll(CONTROL_SEL);
     for (var i = 0; i < list.length; i++) {
-      var e = list[i]; if (stage.contains(e) || e.closest('#notifySlot')) continue;
+      var e = list[i]; if (stage.contains(e) || e.closest('#notifySlot') || !seen(e)) continue;
       var b = e.getBoundingClientRect();
       if (b.width < 2 || b.height < 2 || b.right < x0 || b.left > x1 || b.bottom < y0 || b.top > y1) continue;
       out.push(b);
@@ -187720,8 +187748,14 @@ function applyDrop() {
   if (stage.hasAttribute('data-pmn-crowded') !== spot.crowded) stage.toggleAttribute('data-pmn-crowded', spot.crowded);
   return spot.crowded;
 }
-/* the notices ask before a toast's time starts (19-notify.js stage()) */
-window.PM_NOTICE_PLACE = applyDrop;
+/* the notices ask before a toast's time starts (19-notify.js stage()). Asked with a callback, the stage is placed after
+   the coming frame's layout, before its paint, and the callback hears whether it is crowded: asked at once, a toast
+   staged inside a look change's commit measured the page while that restyle was pending (B5). Asked without one, it is
+   placed now. */
+window.PM_NOTICE_PLACE = function (done) {
+  if (typeof done !== 'function') return applyDrop();
+  afterLayout(function () { var crowded = false; try { crowded = applyDrop(); } catch (e) { /* placed by the next ask */ } done(crowded === true); });
+};
 /* A placement asked for by a frame (a scroll, an overlay opening, a page change) reads its boxes once that frame's own
    style and layout are done, from the first ResizeObserver delivery after them, not in an animation frame callback
    before them: there the read pulled a pending whole-page restyle (a look change, NieR Mode under its calm cover)
