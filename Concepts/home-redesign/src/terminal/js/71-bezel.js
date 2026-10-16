@@ -52,11 +52,14 @@
   /* a near-black screen (Retro's phosphor ground) has little light to give a dark case, so its steps are lifted up to
      a third, and read as far apart as on a grey one (round 5, Q15: Graphite and Gunmetal's Low and Medium, 4.2) */
   function dimScreen(bg) { return 1 + 0.3 * Math.max(0, Math.min(1, (0.016 - C.lum(bg)) / 0.012)); }
+  /* SSYS-051's one stored scale for the Reflection level: Off, Low, Medium and High are 0, 0.25, 0.5 and 1. A level
+     stored as a number (round 3's slider) is the nearest on it; how strongly a level draws is the renderer's own, per
+     screen (STRENGTH, GLASS), never read from the stored number (Plans top-up L3, F3-643) */
+  var SCALE = [0, 0.25, 0.5, 1];
   function levelOf(r, mat, light) {
     if (typeof r === 'number' && isFinite(r)) {
-      /* a level stored as a number (round 3's slider): the nearest */
-      var t = STRENGTH[light ? 'light' : 'dark'], best = 0;
-      for (var i = 1; i < t.length; i++) if (Math.abs(t[i] - r) < Math.abs(t[best] - r)) best = i;
+      var best = 0;
+      for (var i = 1; i < SCALE.length; i++) if (Math.abs(SCALE[i] - r) < Math.abs(SCALE[best] - r)) best = i;
       return LEVELS[best];
     }
     if (LEVELS.indexOf(r) >= 0) return r;
