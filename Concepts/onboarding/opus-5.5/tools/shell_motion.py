@@ -152,4 +152,58 @@ PAGES = [
      'page switch: whole arrival when instant'),
 ]
 
-PATCHES = STATUS_BAR + HOVER_TAGS + THEME + PAGES
+CENSUS = [
+    # B1, B4, B6 (shared): the hover-tag census (binding descriptions to new controls) ran its batches in animation
+    # frames, before each frame's paint, and a live batch first prepared every queued control at once: a Settings
+    # chapter, a customizer or a theme change paid it inside the very frames that should show the change. The batches
+    # now run in idle time after a frame is shown, each within the idle deadline (a 900 ms timeout keeps them going on
+    # a busy page), and a live batch prepares each control as it reaches it. Pointer and focus still bind their target
+    # at once. censusFrame/cancelCensusFrame replace the rAF calls of the census (see apply()).
+    ("  HoverTagController.prototype.scheduleScan=function(scope){\n",
+     "  var censusDeadline=null;   /* O55: the census runs in idle time (motion QA, 2026-10-16) */\n"
+     "  function censusFrame(fn){\n"
+     "    if(typeof requestIdleCallback!=='function')return requestAnimationFrame(fn);\n"
+     "    return requestIdleCallback(function(deadline){censusDeadline=deadline;try{fn();}finally{censusDeadline=null;}},{timeout:900});\n"
+     "  }\n"
+     "  function cancelCensusFrame(id){if(!id)return;if(typeof cancelIdleCallback==='function')cancelIdleCallback(id);else cancelAnimationFrame(id);}\n"
+     "  function censusTime(started,ms){if(performance.now()-started>=ms)return false;return !censusDeadline||censusDeadline.didTimeout||censusDeadline.timeRemaining()>1;}\n"
+     "  HoverTagController.prototype.scheduleScan=function(scope){\n",
+     'hover census: idle scheduler'),
+    ("    for(var i=0;i<nodes.length;i++){var prepared=this.prepare(nodes[i]);if(prepared||attr(nodes[i],'data-pm-hover-bound')==='true')queue.push({el:nodes[i],prepared:prepared});}\n",
+     "    for(var i=0;i<nodes.length;i++)queue.push({el:nodes[i],prepared:undefined});   /* O55: prepared in the batches */\n",
+     'hover census: live prepare in batches'),
+    ("    while(this.liveCursor<limit&&performance.now()-started<4){var row=this.liveQueue[this.liveCursor++];if(!row.el.isConnected||!row.prepared){",
+     "    while(this.liveCursor<limit&&censusTime(started,4)){var row=this.liveQueue[this.liveCursor++];\n"
+     "      if(row.prepared===undefined){row.prepared=row.el.isConnected?this.prepare(row.el):null;if(!row.prepared&&attr(row.el,'data-pm-hover-bound')!=='true')continue;}\n"
+     "      if(!row.el.isConnected||!row.prepared){",
+     'hover census: live batch budget'),
+    ("      while(this.scanPrepareCursor<limit&&performance.now()-started<3){",
+     "      while(this.scanPrepareCursor<limit&&censusTime(started,3)){",
+     'hover census: scan prepare budget'),
+    ("    while(this.scanCursor<limit&&performance.now()-started<4){",
+     "    while(this.scanCursor<limit&&censusTime(started,4)){",
+     'hover census: scan bind budget'),
+    ("    cancelAnimationFrame(this.scanFrame);cancelAnimationFrame(this.liveFrame);this.scanFrame=0;this.liveFrame=0;\n",
+     "    cancelCensusFrame(this.scanFrame);cancelCensusFrame(this.liveFrame);this.scanFrame=0;this.liveFrame=0;\n",
+     'hover census: cancel'),
+]
+
+PATCHES = STATUS_BAR + HOVER_TAGS + THEME + PAGES + CENSUS
+
+# The census's own frame requests, between scheduleScan and refresh (scan, delayed scan, live, delayed live, and their
+# continuations): every one becomes censusFrame.
+CENSUS_FROM = '  HoverTagController.prototype.scheduleScan=function(scope){\n'
+CENSUS_TO = '  HoverTagController.prototype.refresh=function(el){\n'
+CENSUS_FRAMES = 9
+
+
+def apply(text: str, replace_once) -> str:
+    for old, new, label in PATCHES:
+        text = replace_once(text, old, new, label)
+    a = text.index(CENSUS_FROM)
+    b = text.index(CENSUS_TO, a)
+    region = text[a:b]
+    n = region.count('Frame=requestAnimationFrame(')
+    if n != CENSUS_FRAMES:
+        raise RuntimeError(f'hover census: expected {CENSUS_FRAMES} frame requests, found {n}')
+    return text[:a] + region.replace('Frame=requestAnimationFrame(', 'Frame=censusFrame(') + text[b:]
