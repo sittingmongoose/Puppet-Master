@@ -23443,7 +23443,9 @@ html[data-theme="friendly-light"] #panel-settings { --k3-text-3: #6e6874; --k3-a
   --k3-accent-ink: color-mix(in srgb, var(--k3-accent) 46%, var(--k3-text-1)); --k3-red: color-mix(in srgb, #e8654c 64%, var(--k3-text-1)); --k3-green: color-mix(in srgb, #2fa183 62%, var(--k3-text-1)); }
 html[data-theme="retro-dark"] #panel-settings { --k3-text-3: #9aa489; --k3-red: #e27860; --k3-on-accent: #0a0c08; }
 html[data-theme="retro-light"] #panel-settings { --k3-amber: #9c5000; --k3-red: #bd2c2c; }
-html[data-theme="glass-dark"] #panel-settings { --k3-text-2: rgba(240, 234, 253, .92); --k3-text-3: rgba(236, 228, 252, .86); --k3-on-accent: #1d1430;
+/* Glass Dark's quieter words are Glass's own cool white (Q16, 2026-10-15: they were a lavender, rgba(240, 234, 253) and
+   rgba(236, 228, 252), left from old Glass's violet; the same luminance, so every contrast stays where it was) */
+html[data-theme="glass-dark"] #panel-settings { --k3-text-2: rgba(236, 241, 250, .92); --k3-text-3: rgba(230, 236, 248, .86); --k3-on-accent: #0b1224;
   --k3-accent-ink: color-mix(in srgb, var(--k3-accent) 50%, var(--k3-text-1)); --k3-red: color-mix(in srgb, #ff7893 80%, var(--k3-text-1)); }
 /* Glass Light's sheets are frosted over the wallpaper, a mid-tone ground (luminance down to about .3), where only an
    ink close to the label's reads 4.5 to 1. Its words take the label ink, a little lighter for the quieter ones, and
@@ -24834,10 +24836,6 @@ html[data-o55-nier-parts~="blocks"] :is(.pm6-dash-bar-fill.is-warn, #panel-setti
   background: repeating-linear-gradient(90deg, var(--o55-nier-warn-text) 0 4px, transparent 4px 6px) !important; }
 html[data-o55-nier-parts~="blocks"] :is(#panel-settings .pm51-meter.tone-blocked .pm51-meter-fill, .pm6-wiz-topic-card[data-tstate="blocked"] .pm6-wiz-topic-prog-fill, .pm6-orch-bar > i[data-state="blocked"]) {
   background: repeating-linear-gradient(90deg, var(--o55-nier-error) 0 4px, transparent 4px 6px) !important; }
-/* Usage's meters hold their numbers inside the track: the fill is a faint row of cells behind the text */
-html[data-o55-nier-parts~="blocks"] .pm7u-metertrack { border-radius: 0 !important; border-color: rgba(var(--o55-nier-ink-rgb), .5) !important; background: transparent !important; }
-html[data-o55-nier-parts~="blocks"] .pm7u-meterfill { border-radius: 0 !important; opacity: 1 !important;
-  background: repeating-linear-gradient(90deg, rgba(var(--o55-nier-ink-rgb), .26) 0 6px, transparent 6px 8px) !important; }
 
 /* ================================================================================ Ink charts [charts] */
 /* Charts in monochrome ink: a series is told apart by its pattern (solid, hatch, cross-hatch, dots, rules), never by
@@ -24849,25 +24847,9 @@ html[data-o55-nier-parts~="charts"] {
   --o55nw-dots: radial-gradient(circle at 2px 2px, var(--o55-nier-ink) 1.1px, transparent 1.4px) 0 0 / 4px 4px;
   --o55nw-rules: repeating-linear-gradient(0deg, var(--o55-nier-ink) 0 1px, transparent 1px 3.5px);
 }
-/* Usage bar charts: older buckets hatched, the recent ones solid */
-html[data-o55-nier-parts~="charts"] .pm7u-barfill { background: var(--o55nw-hatch) !important; opacity: 1 !important; border: 1px solid var(--o55-nier-ink) !important; border-bottom: 0 !important;
-  border-radius: 0 !important; box-sizing: border-box !important; box-shadow: none !important; }
-html[data-o55-nier-parts~="charts"] .pm7u-barcol.is-recent .pm7u-barfill { background: var(--o55nw-solid) !important; }
-/* the context donut: what is used in solid ink, what is free in dots */
-html[data-o55-nier-parts~="charts"] .pm7u-donut { background: conic-gradient(var(--o55-nier-ink) calc(var(--pct, 0) * 1%), transparent 0), var(--o55nw-dots) !important; }
-/* legends and series marks: one pattern per place in the list */
-html[data-o55-nier-parts~="charts"] :is(.pm7u-legend, .pm7u-segs, .pm7u-seglegend, .pm7u-stack) > :nth-child(5n + 1) :is(i, .pm7u-swatch, .pm7u-segdot),
-html[data-o55-nier-parts~="charts"] :is(.pm7u-segs, .pm7u-stack) > :nth-child(5n + 1):is(i, span) { background: var(--o55nw-solid) !important; }
-html[data-o55-nier-parts~="charts"] :is(.pm7u-legend, .pm7u-segs, .pm7u-seglegend, .pm7u-stack) > :nth-child(5n + 2) :is(i, .pm7u-swatch, .pm7u-segdot),
-html[data-o55-nier-parts~="charts"] :is(.pm7u-segs, .pm7u-stack) > :nth-child(5n + 2):is(i, span) { background: var(--o55nw-hatch) !important; }
-html[data-o55-nier-parts~="charts"] :is(.pm7u-legend, .pm7u-segs, .pm7u-seglegend, .pm7u-stack) > :nth-child(5n + 3) :is(i, .pm7u-swatch, .pm7u-segdot),
-html[data-o55-nier-parts~="charts"] :is(.pm7u-segs, .pm7u-stack) > :nth-child(5n + 3):is(i, span) { background: var(--o55nw-cross) !important; }
-html[data-o55-nier-parts~="charts"] :is(.pm7u-legend, .pm7u-segs, .pm7u-seglegend, .pm7u-stack) > :nth-child(5n + 4) :is(i, .pm7u-swatch, .pm7u-segdot),
-html[data-o55-nier-parts~="charts"] :is(.pm7u-segs, .pm7u-stack) > :nth-child(5n + 4):is(i, span) { background: var(--o55nw-dots) !important; }
-html[data-o55-nier-parts~="charts"] :is(.pm7u-legend, .pm7u-segs, .pm7u-seglegend, .pm7u-stack) > :nth-child(5n) :is(i, .pm7u-swatch, .pm7u-segdot),
-html[data-o55-nier-parts~="charts"] :is(.pm7u-segs, .pm7u-stack) > :nth-child(5n):is(i, span) { background: var(--o55nw-rules) !important; }
-/* the card's own series dot is a solid square of ink */
-html[data-o55-nier-parts~="charts"] .pm7u-carddot { background: var(--o55-nier-ink) !important; box-shadow: none !important; border-radius: 0 !important; }
+/* (Q16, 2026-10-15: the meters, bar charts, donut, legends and card dots of the retired Prism Usage page, .pm7u-*, were
+   removed from here; that page is gone from PMConcept7 and its redesign draws NieR's ink charts itself,
+   Concepts/usage-redesign/src/css/90-nier-shell.css) */
 /* dashboard: sparkline in ink over a faint area, the ring's track dotted, the lane bars by state (when Block progress
    is removed; with it, the bars are ink cells) */
 html[data-o55-nier-parts~="charts"] .pm6-dash-spark-line { stroke: var(--o55-nier-ink) !important; stroke-width: 1.5px; }
@@ -26372,9 +26354,10 @@ html[data-theme^="friendly"] #panel-settings .toggle::after { box-shadow: 0 2px 
 html[data-theme^="glass"] #panel-settings .toggle { background-color: rgba(var(--glass-tint-rgb, 255,255,255), .22); box-shadow: inset 0 1px 0 rgba(255,255,255,.22), inset 0 0 0 1px rgba(255,255,255,.10); }
 html[data-theme^="glass"] #panel-settings .toggle::after {
   background-color: transparent;
-  background-image: linear-gradient(90deg, transparent 5.5px, rgba(0,0,0,.16) 5.5px 6.5px, transparent 6.5px 9.5px, rgba(0,0,0,.16) 9.5px 10.5px, transparent 10.5px), linear-gradient(180deg, rgba(255,255,255,.98), rgba(236,234,250,.80));
+  background-image: linear-gradient(90deg, transparent 5.5px, rgba(0,0,0,.16) 5.5px 6.5px, transparent 6.5px 9.5px, rgba(0,0,0,.16) 9.5px 10.5px, transparent 10.5px), linear-gradient(180deg, rgba(255,255,255,.98), rgba(230,237,250,.80));
   background-size: 16px 7px, 100% 100%;
-  box-shadow: inset 0 1px 0 #fff, 0 0 0 .5px rgba(255,255,255,.7), 0 3px 8px rgba(20,10,60,.28);
+  /* the key's cool white and its navy shadow are Glass's (Q16: they were old Glass's lavender and violet) */
+  box-shadow: inset 0 1px 0 #fff, 0 0 0 .5px rgba(255,255,255,.7), 0 3px 8px rgba(8,14,40,.28);
 }
 /* Retro: hard edges and a 2px drop; on is reverse video; the key moves in four steps */
 html[data-theme^="retro"] #panel-settings .toggle { border-width: 2px; border-color: var(--k3-text-1); box-shadow: 2px 2px 0 var(--k3-text-1); background-color: var(--k3-surface-3); }
@@ -28669,6 +28652,11 @@ html[data-motion="reduced"] #pm-o55-onboarding * { transition: none !important; 
 html, [data-theme], [data-o55-nier-preview] {
   --o55-tokpack: var(--background, #121212) | var(--surface, #1e1e1e) | var(--text-primary, #e8e8e8) | var(--text-secondary, #aaa) | var(--text-muted, #888) | var(--border, #333) | var(--accent-blue, #64b5f6) | var(--accent-magenta, #ff69b4) | var(--accent-lime, #3dd68c) | var(--accent-orange, #ffa347) | var(--accent-warning, #f5c542) | var(--accent-error, #ef5350) | var(--accent-primary, var(--accent-blue, #64b5f6)) | var(--surface-elevated, var(--surface, #1e1e1e)) | var(--o55-nier-on-ink, var(--background, #121212));
 }
+/* Enter's answer (74-screens-ready.js O55.finish): the window settles a touch on the click's own frame, before the
+   Wizard is put in place under it; its exit then starts from there. Retro does not scale: its window just holds. */
+#pm-o55-onboarding.o55-accept .o55-win { transform: scale(0.994); transition: transform 160ms cubic-bezier(0.2, 0, 0, 1); }
+#pm-o55-onboarding[data-family="retro"].o55-accept .o55-win { transform: none; transition: none; }
+html[data-motion="reduced"] #pm-o55-onboarding.o55-accept .o55-win { transform: none; transition: none; }
 
 /* ---- css/21-shell-perf.css ---- */
 /* Chat's own panel (pmw-chat) covers the shell's original chat, which stays in the page only for the Guided Tour and is
@@ -29596,7 +29584,9 @@ html[data-theme="glass-light"] .o55-demo[data-o55-narrow] .o55-demopill > svg.nx
   content: ""; position: absolute; inset: 2px; pointer-events: none; background: var(--pmc-bar); opacity: 0;
 }
 #pmh-frame[data-pmh-family="retro"][data-pmh-kind="ctl"].pmh-frame-press::after { opacity: 1; }
-:root[data-theme^="retro"]:not([data-o55-nier]):not(#pmhz):not(#pmhz):not(#pmhz) :is(.page-tab, .pmw-tab, .pm-segtab-item, .pmw-sc-btn:not([class*="primary"]), #projectMenuBtn, #themeSelect).pmh-on:not(.active, .selected, [aria-selected="true"]) {
+/* a pressed tab is the chip's from the press on (data-lg-press, glass.js): the phosphor ink would sit on the arriving
+   chip, lime on lime, until the app's click lands (Q16 review F3) */
+:root[data-theme^="retro"]:not([data-o55-nier]):not(#pmhz):not(#pmhz):not(#pmhz) :is(.page-tab, .pmw-tab, .pm-segtab-item, .pmw-sc-btn:not([class*="primary"]), #projectMenuBtn, #themeSelect).pmh-on:not(.active, .selected, [aria-selected="true"], [data-lg-press]) {
   color: var(--accent-primary) !important; transition-duration: 0s !important;
 }
 /* the commander's bar on a rail row */
@@ -30942,7 +30932,8 @@ html:is([data-theme^="basic"], [data-theme^="friendly"]):not([data-o55-nier="on"
   transition: background var(--motion-fast, 120ms) var(--ease-default, ease), color var(--motion-fast, 120ms) var(--ease-default, ease), border-color var(--motion-fast, 120ms) var(--ease-default, ease);
 }
 #panel-wizard .pm6-wiz-intent-chip:first-child { border-radius: var(--pm-ctl-r) 0 0 var(--pm-ctl-r); }
-#panel-wizard .pm6-wiz-intent-chip:last-child { border-radius: 0 var(--pm-ctl-r) var(--pm-ctl-r) 0; }
+/* :last-of-type: a look whose switcher is drawn under its labels appends its layer (<lg-under>) to the row (Q16) */
+#panel-wizard .pm6-wiz-intent-chip:last-of-type { border-radius: 0 var(--pm-ctl-r) var(--pm-ctl-r) 0; }
 #panel-wizard .pm6-wiz-intent-chip:hover:not(.sel) { z-index: 1; color: var(--text-primary); border-color: var(--border); background: linear-gradient(var(--wo-hover-fill), var(--wo-hover-fill)), color-mix(in srgb, var(--surface-elevated) 60%, transparent); }
 #panel-wizard .pm6-wiz-intent-chip.sel { z-index: 2; color: var(--wo-sel-ink); font-weight: 700; border-color: var(--wo-sel-line); background: var(--wo-sel-fill), color-mix(in srgb, var(--surface-elevated) 60%, transparent); }
 #panel-wizard .pm6-wiz-intent-chip:focus-visible { z-index: 3; outline: 2px solid var(--accent-primary); outline-offset: 1px; }
@@ -33427,6 +33418,322 @@ html #o55-demo.pmds[data-pmds-look] .pmds-sheet .pmds-unavail .pmds-swart { opac
   #o55-demo.pmds .pmds-kicker::after { animation: none; }
 }
 
+/* ---- css/60-switcher-looks.css ---- */
+/* O55 · The switcher in every look (Q16 consistency pass, pm7-q16-consistency, 2026-10-15).
+   Jared #22: "There are many different tab selectors too, the left bar, the center left bar, the tabs in managers ...
+   Frankly we should do that for all the themes (including nier mode) too."
+   Every tab, segment and list selection is one component: Liquid Glass's switcher (Concepts/liquid-glass/opus-5.5:
+   glass.js STRIPS and glass.css sections 6 and 12; CONTRACT.md, "The switcher"). Glass draws it as the clear lens Jared
+   approved and sets none of these tokens. Each other look adopts it here, by tokens only, so it stays itself and is
+   the same everywhere inside itself:
+   - Basic: a precise tinted chip with a crisp accent hairline, gliding with a little give;
+   - Friendly: a soft mint pebble with a glow, the page tabs' own plate (in place it keeps the plate's card body), gliding like
+     Glass's drop;
+   - Retro: a reverse-video phosphor block (opaque, square, the label inverted), gliding rigidly;
+   - NieR Mode: the game's ink bar (opaque ink, paper words, square), gliding rigidly; its hover ink bars stay as they are.
+   An opaque chip needs the lens under its labels (--pm-switch-layer: under). Labels: --pm-switch-ink at rest,
+   --pm-switch-ink-on when chosen; inside an opaque chip every line and icon reads in that one ink, as reverse video and
+   NieR's ink bar do. Reduce Motion: the chip jumps (glass.js). */
+
+/* ---- Basic --------------------------------------------------------------------------------------------------------- */
+html[data-theme="basic-dark"]:not([data-o55-nier="on"]) {
+  --pm-switch: lens;
+  --pm-switch-track: color-mix(in srgb, var(--text-primary) 5%, transparent);
+  --pm-switch-hover: color-mix(in srgb, var(--text-primary) 7%, transparent);
+  --pm-switch-fill: color-mix(in srgb, var(--accent-primary) 17%, transparent); --pm-switch-body: transparent;
+  --pm-switch-line: color-mix(in srgb, var(--accent-primary) 80%, transparent); --pm-switch-edge: transparent;
+  --pm-switch-top: rgba(255, 255, 255, .07); --pm-switch-bottom: transparent;
+  --pm-switch-glint: transparent; --pm-switch-glint-blend: normal;
+  --pm-switch-shadow: 0 1px 2px rgba(0, 0, 0, .45);
+  --pm-switch-r: 6px; --pm-switch-r-in: 4px;
+  --pm-switch-ink: color-mix(in srgb, var(--text-primary) 72%, var(--text-secondary)); --pm-switch-ink-on: var(--text-primary);
+  --pm-switch-mark: var(--accent-primary);
+  --pm-switch-swell: .5; --pm-switch-liquid: .35;
+}
+html[data-theme="basic-light"]:not([data-o55-nier="on"]) {
+  --pm-switch: lens;
+  --pm-switch-track: color-mix(in srgb, var(--text-primary) 5%, transparent);
+  --pm-switch-hover: color-mix(in srgb, var(--text-primary) 6%, transparent);
+  --pm-switch-fill: color-mix(in srgb, var(--accent-primary) 11%, transparent); --pm-switch-body: transparent;
+  --pm-switch-line: color-mix(in srgb, var(--accent-primary) 70%, transparent); --pm-switch-edge: transparent;
+  --pm-switch-top: rgba(255, 255, 255, .55); --pm-switch-bottom: transparent;
+  --pm-switch-glint: transparent; --pm-switch-glint-blend: normal;
+  --pm-switch-shadow: 0 1px 2px rgba(16, 24, 40, .10);
+  --pm-switch-r: 6px; --pm-switch-r-in: 4px;
+  --pm-switch-ink: var(--text-secondary); --pm-switch-ink-on: var(--text-primary);
+  --pm-switch-mark: var(--accent-primary);
+  --pm-switch-swell: .5; --pm-switch-liquid: .35;
+}
+
+/* ---- Friendly: the page tabs' mint plate and glow, everywhere ------------------------------------------------------ */
+html[data-theme="friendly-dark"]:not([data-o55-nier="on"]) {
+  --pm-switch: lens;
+  --pm-switch-track: color-mix(in srgb, var(--text-primary) 5%, transparent);
+  --pm-switch-hover: color-mix(in srgb, var(--pm6-cozy-mint) 9%, transparent);
+  --pm-switch-fill: color-mix(in srgb, var(--pm6-cozy-mint) 17%, transparent); --pm-switch-body: color-mix(in srgb, var(--pm6-cozy-card-base) 55%, transparent);
+  --pm-switch-line: color-mix(in srgb, var(--pm6-cozy-mint) 42%, transparent); --pm-switch-edge: transparent;
+  --pm-switch-top: rgba(255, 255, 255, .08); --pm-switch-bottom: transparent;
+  --pm-switch-glint: transparent; --pm-switch-glint-blend: normal;
+  --pm-switch-shadow: 0 0 14px color-mix(in srgb, var(--pm6-cozy-mint) 28%, transparent), 0 2px 6px -2px rgba(0, 0, 0, .4);
+  --pm-switch-r: 10px; --pm-switch-r-in: 7px;
+  --pm-switch-ink: var(--text-secondary); --pm-switch-ink-on: color-mix(in srgb, var(--pm6-cozy-mint) 72%, #fff);
+  --pm-switch-mark: var(--pm6-cozy-mint);
+  --pm-switch-swell: .75; --pm-switch-liquid: .85;
+}
+html[data-theme="friendly-light"]:not([data-o55-nier="on"]) {
+  --pm-switch: lens;
+  --pm-switch-track: color-mix(in srgb, var(--text-primary) 5%, transparent);
+  --pm-switch-hover: color-mix(in srgb, var(--pm6-cozy-mint) 10%, transparent);
+  --pm-switch-fill: color-mix(in srgb, var(--pm6-cozy-mint) 20%, transparent); --pm-switch-body: color-mix(in srgb, var(--pm6-cozy-card-base) 72%, transparent);
+  --pm-switch-line: color-mix(in srgb, var(--pm6-cozy-mint) 55%, transparent); --pm-switch-edge: transparent;
+  --pm-switch-top: rgba(255, 255, 255, .8); --pm-switch-bottom: transparent;
+  --pm-switch-glint: transparent; --pm-switch-glint-blend: normal;
+  --pm-switch-shadow: 0 0 12px color-mix(in srgb, var(--pm6-cozy-mint) 30%, transparent), 0 2px 6px -3px rgba(74, 69, 80, .25);
+  --pm-switch-r: 10px; --pm-switch-r-in: 7px;
+  --pm-switch-ink: color-mix(in srgb, var(--text-primary) 70%, var(--text-secondary)); --pm-switch-ink-on: color-mix(in srgb, var(--accent-lime) 42%, #000);
+  --pm-switch-mark: var(--accent-lime);
+  --pm-switch-swell: .75; --pm-switch-liquid: .85;
+}
+
+/* ---- Retro: reverse video ------------------------------------------------------------------------------------------- */
+html[data-theme^="retro"]:not([data-o55-nier="on"]) {
+  --pm-switch: lens; --pm-switch-layer: under;
+  --pm-switch-track: color-mix(in srgb, var(--accent-lime) 6%, transparent);
+  --pm-switch-hover: color-mix(in srgb, var(--accent-lime) 13%, transparent);
+  --pm-switch-fill: var(--accent-lime); --pm-switch-body: transparent;
+  --pm-switch-line: transparent; --pm-switch-edge: transparent;
+  --pm-switch-top: transparent; --pm-switch-bottom: transparent;
+  --pm-switch-glint: transparent; --pm-switch-glint-blend: normal;
+  --pm-switch-r: 0px; --pm-switch-r-in: 0px;
+  --pm-switch-ink: var(--text-secondary); --pm-switch-ink-on: var(--surface);
+  /* a hovered word is on the screen, not on the chip: it brightens to the screen's own ink (the chip's ink, the screen
+     colour, left it at 1.0-1.6:1; Q16 review F2) */
+  --pm-switch-ink-hover: var(--text-primary);
+  --pm-switch-mark: var(--accent-lime); --pm-switch-mark-on: var(--surface);
+  --pm-switch-swell: 0; --pm-switch-liquid: 0;
+}
+/* the phosphor's bloom on the dark screen, a printed key's hard shadow on the light one */
+html[data-theme="retro-dark"]:not([data-o55-nier="on"]) { --pm-switch-shadow: 0 0 7px color-mix(in srgb, var(--accent-lime) 24%, transparent); }
+/* Retro Light's chip is its lime a step deeper: the cream words read 5.7:1 on it (4.65 on #2F7A3D itself) */
+html[data-theme="retro-light"]:not([data-o55-nier="on"]) { --pm-switch-fill: color-mix(in srgb, var(--accent-lime) 86%, #000); --pm-switch-shadow: 2px 2px 0 color-mix(in srgb, var(--text-primary) 70%, transparent); }
+
+/* ---- NieR Mode: the ink bar ----------------------------------------------------------------------------------------- */
+html[data-o55-nier="on"] {
+  --pm-switch: lens; --pm-switch-layer: under;
+  --pm-switch-track: transparent;
+  --pm-switch-hover: var(--o55-nier-hover, rgba(var(--o55-nier-ink-rgb), .10));
+  --pm-switch-fill: var(--o55-nier-ink); --pm-switch-body: transparent;
+  --pm-switch-line: transparent; --pm-switch-edge: transparent;
+  --pm-switch-top: transparent; --pm-switch-bottom: transparent;
+  --pm-switch-glint: transparent; --pm-switch-glint-blend: normal;
+  --pm-switch-shadow: 0 0 0 0 transparent;
+  --pm-switch-r: 0px; --pm-switch-r-in: 0px;
+  --pm-switch-ink: color-mix(in srgb, var(--text-primary) 60%, var(--text-secondary)); --pm-switch-ink-on: var(--o55-nier-on-ink);
+  --pm-switch-ink-hover: var(--text-primary);
+  --pm-switch-mark: var(--o55-nier-ink); --pm-switch-mark-on: var(--o55-nier-on-ink);
+  --pm-switch-swell: 0; --pm-switch-liquid: 0;
+}
+/* NieR's cursor owns hover, as it did before the switcher (14-nier-parts.css): the item under the pointer is an ink bar
+   with paper words. Glass's step-asides and hover rules (glass.css sections 6 and 12) outrank that cursor in every look
+   that adopts the switcher, and turned the bar into a faint tint with paper words or the words into ink on ink
+   (1.03-1.46:1; Q16 review F2), so its bar and words are restated here for the switcher's own items. A chosen item
+   keeps the chip; with the cursor part off a hovered word takes --pm-switch-ink-hover. */
+html[data-o55-nier="on"][data-o55-nier-parts~="cursor"]:not(#lgz):not(#lgy) :is(.page-tab, #pmuRange > button, .pm-segtab-item, .orch-tab, .pmu-navbtn):hover:not(.active, [aria-pressed="true"], [aria-selected="true"], [aria-checked="true"]),
+html[data-o55-nier="on"][data-o55-nier-parts~="cursor"]:not(#lgz):not(#lgy) #pm-settings-root :is(.workspace-tab:not(.is-current), .manager-tab:not([aria-selected="true"]), .domain-link:not(.active), .rail-scroll > .side-link:not(.active), .pm51-index-group > .index-link:not(.is-active)):hover {
+  background: var(--o55-nier-ink) !important; color: var(--o55-nier-on-ink) !important;
+}
+/* Settings' section and manager tabs brighten under the pointer as every other strip does (and as they did in these looks
+   before the switcher): Glass's resting ink for them outranks its own hover rule, so they stayed in resting ink */
+html[data-pm-switch="lens"]:not(#lgz):not(#lgy) #pm-settings-root :is(.workspace-tab:not(.is-current), .manager-tab:not([aria-selected="true"])):hover:not([data-lg-press]) { color: var(--pm-switch-ink-hover, var(--pm-switch-ink-on)) !important; }
+/* the page index's rows rest in Settings' own second ink (.pm51-index-tab), not the switcher's resting ink: the row a press
+   leaves takes that ink, so it does not step twice (switcher ink, then its own once the click lands; resting-pointer press
+   check) */
+html[data-pm-switch="lens"]:not(#lgz):not(#lgy):not(#lgx) #pm-settings-root .pm51-index-group > .index-link[data-lg-press="off"] { color: var(--k3-text-2) !important; }
+/* an icon on an opaque chip takes its item's ink, as the words do, with the pointer on it too. The glyphs' hover ignite
+   (pm7-hover-bridge.css) inks a hovered icon in the screen's --text, and on the chip (a chosen or pressed item under the
+   pointer) or on NieR's hover bar that is the chip's own colour (Q16 review, resting-pointer press check) */
+html[data-pm-switch-layer="under"]:not(#lgz) :is(.page-tab, #pmuRange > button, .pm-segtab-item, .orch-tab, .pmu-navbtn, .domain-link, .side-link, .index-link, .workspace-tab, .manager-tab, .pm6-tt-mode):is(.active, .is-active, .is-current, [aria-selected="true"], [aria-checked="true"], [data-lg-press="on"]) svg.nx,
+html[data-o55-nier="on"][data-o55-nier-parts~="cursor"]:not(#lgz) :is(.page-tab, #pmuRange > button, .pm-segtab-item, .orch-tab, .pmu-navbtn, .domain-link, .side-link, .index-link, .workspace-tab, .manager-tab):hover svg.nx { --nx-ink: currentColor; }
+
+/* None of these looks lights its chip with Glass's glint (--pm-switch-glint is transparent in each), so the glint's band,
+   an empty layer that the no-pills gate read as a capsule, is not drawn. */
+html[data-pm-switch="lens"]:not(#lgz):not(#lgy) .lg-lens::after { content: none; }
+
+/* ---- What the component does not draw, in the same material ----------------------------------------------------------
+   The title bar's one-of-several menus (the look family, the project) are lists that live in a menu, not strips: the
+   chosen row wears the switcher's material in place, as Settings' service list does (glass.css section 6). NieR keeps
+   its ink bar there (14-nier-parts.css), which is the same chip. */
+html[data-pm-switch="lens"]:not([data-o55-nier="on"]) .pm6-tb-menu-item.is-selected {
+  background: linear-gradient(var(--pm-switch-fill), var(--pm-switch-fill)), linear-gradient(var(--pm-switch-body), var(--pm-switch-body));
+  box-shadow: inset 0 0 0 .5px var(--pm-switch-line), inset 0 1px 0 var(--pm-switch-top), 0 0 0 .5px var(--pm-switch-edge), var(--pm-switch-shadow);
+  border-radius: var(--pm-switch-r); color: var(--pm-switch-ink-on);
+}
+
+/* ---- Inside an opaque chip (--pm-switch-layer: under) -------------------------------------------------------------
+   Every word, icon and count of the chosen item takes the chip's ink (the item's own colour, set by glass.css), so a
+   chapter's line, a service's state, a tab's icon and a view's count never sit in their resting colours on the chip. A
+   service's status dot keeps its colour inside a ring of that ink. The press marks (glass.css section 12) carry the same
+   inks while the chip moves ahead of the app's choice. NieR's own rules (14-nier-parts.css) say the same for its list. */
+/* (one plain selector per kind of item, so the browser's ancestor filter rejects every other element at once: a single
+   :is() list of these items in front of a bare * was tested against every element on every restyle, about 18 ms more
+   style and layout in each page switch in Retro, measured) */
+html[data-pm-switch-layer="under"]:not(#lgz) #pm-settings-root .rail-scroll > .side-link.active *,
+html[data-pm-switch-layer="under"]:not(#lgz) #pm-settings-root .domain-link.active *,
+html[data-pm-switch-layer="under"]:not(#lgz) #pm-settings-root .pm51-index-group > .index-link.is-active *,
+html[data-pm-switch-layer="under"]:not(#lgz) #pm-settings-root .resource-row[aria-current="true"] *,
+html[data-pm-switch-layer="under"]:not(#lgz) #pm-settings-root .workspace-tab.is-current *,
+html[data-pm-switch-layer="under"]:not(#lgz) #pm-settings-root .manager-tab[aria-selected="true"] *,
+html[data-pm-switch-layer="under"]:not(#lgz) #pmuRange > button.active *,
+html[data-pm-switch-layer="under"]:not(#lgz) nav.page-tabs .page-tab.active *,
+html[data-pm-switch-layer="under"]:not(#lgz) .orch-tabs .orch-tab.active *,
+html[data-pm-switch-layer="under"]:not(#lgz) #themeMenu .pm6-tt-mode[aria-checked="true"] *,
+html[data-pm-switch-layer="under"]:not(#lgz) #panel-wizard .pm6-wiz-intent-chip.sel *,
+html[data-pm-switch-layer="under"]:not(#lgz) .pm6-tb-menu-item.is-selected * {
+  color: inherit; -webkit-text-fill-color: currentColor;
+}
+/* the items whose own words glass.css does not colour (it colours a service's name, not its row) */
+html[data-pm-switch-layer="under"]:not(#lgz) :is(#pm-settings-root .resource-row[aria-current="true"], #panel-wizard .pm6-wiz-intent-chip.sel) { color: var(--pm-switch-ink-on); }
+html[data-pm-switch-layer="under"]:not(#lgz) #pm-settings-root .resource-row[aria-current="true"] .status-dot { box-shadow: 0 0 0 1.5px var(--pm-switch-ink-on); }
+
+/* ---- The look's own marks that the component does not already set aside ----------------------------------------------
+   The Orchestrator's views kept their 3 px underline under the chip (Basic's blue, Retro's green). */
+html[data-pm-switch="lens"] .orch-tabs .orch-tab.active { border-bottom-color: transparent; }
+/* The onboarding window's segments (Light / Dark, and every one-of-several in its screens) kept their own raised chip,
+   and Retro its accent block, over or instead of the switcher's (Retro Light showed cobalt over its lime chip). */
+html[data-pm-switch="lens"]:not(#lgz) #pm-o55-onboarding .o55-seg { background: var(--pm-switch-track); }
+html[data-pm-switch="lens"]:not(#lgz) #pm-o55-onboarding .o55-seg button.o55-on { background: transparent; box-shadow: none; color: var(--pm-switch-ink-on); }
+/* Usage's range sits on the stage head, which Usage lights with each look's key light (Basic's blue, Friendly's coral):
+   the switcher's faint track let the resting words fall to 2.4-3.3:1 there. It is a recessed well of the look's surface
+   instead, so every word sits on a calm ground. (Glass sets no tokens and keeps its own track.) */
+html[data-pm-switch="lens"] #pmuRange { --pm-switch-track: color-mix(in srgb, var(--surface) 72%, transparent); }
+/* a count on a chosen view reads in the chip's full ink (it was at 78 % opacity: 3.5:1 on Retro Light's chip) */
+html[data-pm-switch="lens"] #panel-orchestrator .orch-tabs .orch-tab.active .orch-tab-badge { opacity: 1; }
+/* an opaque chip reaches a pressed view before its click lands: the view's count takes the chip's ink with it, as it will
+   once chosen (it kept the resting muted ink, 1.6:1 on NieR's ink bar and on Retro's lime, for the length of the press).
+   Glass's own press-mark arms (glass.css) cover the other strips; this one count colours itself. */
+html[data-pm-switch-layer="under"]:not(#lgz):not(#lgy):not(#lgx) #panel-orchestrator .orch-tab[data-lg-press="on"] .orch-tab-badge { color: inherit; opacity: 1; }
+
+/* ---- Home panels: the chosen tab is seated on the panel's edge (Jared, 2026-10-15: "the tabs ... doesnt look like it is
+   sitting well", on Retro's ":: Agents") ----------------------------------------------------------------------------------
+   The chip glass.css draws in the plate (section 6) floated: 7 px under the strip's top, 4 px over the panel's edge, so
+   the label row read as sinking toward the panel. In a look that adopts the switcher the chip is now exactly the tab's
+   own box (the plate's top is the tab's top) and ends 1 px over the strip's foot, so it stands on the panel's rule (Retro's
+   phosphor line, NieR's ink line) without covering it, at every tab size and panel width. A seated tab casts no drop
+   shadow onto that rule (Retro Light's printed shadow stays on its other chips). Glass keeps its approved lens drop. */
+html[data-pm-switch="lens"]:not(#lgz):not(#lgy) .pmw-plate::before { top: 0; bottom: 2px; }
+/* the chosen tab's words are the switcher's chosen ink, as on every other chip of the look */
+html[data-pm-switch="lens"]:not(#lgz) :is(#pm-home-centre, .pmw-scope) { --pmw-tab-active: var(--pm-switch-ink-on); }
+/* and its close x (and the unsaved dot in it) is part of the chip too: the chip's ink, with a square of that ink under the
+   pointer (the resting grey read 1.2-1.4:1 on Retro Light's and NieR's chips and 3.6 on the light looks' tints, and its
+   hover ink 1.4 on Retro's lime; Q16 review F4) */
+html[data-pm-switch="lens"]:not(#lgz) .pmw-tab[data-active] .pmw-tclose { color: var(--pm-switch-ink-on); }
+html[data-pm-switch="lens"]:not(#lgz) .pmw-tab[data-active] .pmw-tclose:hover { color: var(--pm-switch-ink-on); background: color-mix(in srgb, var(--pm-switch-ink-on) 16%, transparent); }
+/* so is a chosen terminal tab's exit status ("exited 101"): a tinted chip keeps its red, deepened toward the chip's ink;
+   an opaque chip (the monochrome looks, where NieR already prints it in ink) gives it the chip's ink (it read 3.3-3.9:1 on
+   the light looks' chips) */
+html[data-pm-switch="lens"]:not(#lgz) .pmw-tab[data-active] .pmw-exit { color: color-mix(in srgb, var(--pmw-bad) 62%, var(--pm-switch-ink-on)); }
+html[data-pm-switch-layer="under"]:not(#lgz) .pmw-tab[data-active] .pmw-exit { color: var(--pm-switch-ink-on); }
+html[data-pm-switch="lens"] .pmw-plate { --pm-switch-shadow: 0 0 0 0 transparent; }
+html[data-theme="retro-dark"][data-pm-switch="lens"] .pmw-plate { --pm-switch-shadow: 0 0 7px color-mix(in srgb, var(--accent-lime) 24%, transparent); }
+html[data-theme="friendly-dark"][data-pm-switch="lens"] .pmw-plate { --pm-switch-shadow: 0 0 14px color-mix(in srgb, var(--pm6-cozy-mint) 28%, transparent); }
+html[data-theme="friendly-light"][data-pm-switch="lens"] .pmw-plate { --pm-switch-shadow: 0 0 12px color-mix(in srgb, var(--pm6-cozy-mint) 30%, transparent); }
+/* a panel folded to a column of icon tabs: its chosen tab is the same chip, in place (it was the neutral press fill) */
+html[data-pm-switch="lens"]:not(#lgz) .pmw-strip[data-column] .pmw-tab[data-active] {
+  background: linear-gradient(var(--pm-switch-fill), var(--pm-switch-fill)), linear-gradient(var(--pm-switch-body), var(--pm-switch-body));
+  box-shadow: inset 0 0 0 .5px var(--pm-switch-line), inset 0 1px 0 var(--pm-switch-top), 0 0 0 .5px var(--pm-switch-edge), var(--pm-switch-shadow);
+  border-radius: var(--pm-switch-r); color: var(--pm-switch-ink-on);
+}
+
+/* ---- css/61-look-palette.css ---- */
+/* O55 · Each look in its own colours (Q16 consistency pass, pm7-q16-consistency, 2026-10-15).
+   Jared #22: "there are still things that are purple ... Same for the home page with the colors." A sweep of every
+   page and every Settings chapter and section in all ten looks (Basic, Friendly, Glass, Retro, light and dark, and
+   NieR Mode) found colours that belong to no palette of the look they sat in. Each is replaced by that look's own hue
+   at a step that keeps text at 4.5:1 or more on its ground (measured; NOTES.md in the Q16 share folder):
+   - Settings' primary buttons (Back Up Now, Send test, Install & restart) were a fixed purple gradient in Basic,
+     Friendly and Retro: they take the look's accent with its on-accent ink, and Retro its reverse-video key, as the
+     chat's own primary buttons do. Glass and NieR keep theirs.
+   - Settings' danger buttons (Remove, Reset...) had a fixed pink line and maroon fill in every look: they take the
+     look's own red (--k3-red).
+   - The base's component contrast repair (PM7 T37) gave Projects, the Planning Wizard and the Orchestrator one shared
+     set of inks: Friendly's mint and a pink in Basic Dark and Retro Dark, a purple accent in Friendly Light, a forest
+     green and a wine red in Basic Light and Retro Light. Each look gets its own hues back, at the same contrast.
+   - Basic's "added" file names were Material green (--graph-passed, 2.6:1 on Basic Light): Basic's lime.
+   Glass's own tokens are its owner's; the Usage page's inks are in Concepts/usage-redesign. */
+
+/* ---- Settings' primary and danger buttons --------------------------------------------------------------------------- */
+html:is([data-theme^="basic"], [data-theme^="friendly"]):not([data-o55-nier]) #panel-settings .btn.primary {
+  color: var(--k3-on-accent); border-color: color-mix(in srgb, var(--k3-accent) 72%, #000);
+  background: linear-gradient(135deg, var(--k3-accent), color-mix(in srgb, var(--k3-accent) 86%, #000));
+  box-shadow: 0 6px 16px color-mix(in srgb, var(--k3-accent) 24%, transparent), inset 0 1px rgba(255, 255, 255, .16);
+}
+html:is([data-theme^="basic"], [data-theme^="friendly"]):not([data-o55-nier]) #panel-settings .btn.primary:hover {
+  background: linear-gradient(135deg, color-mix(in srgb, var(--k3-accent) 88%, #fff), var(--k3-accent));
+}
+/* Retro: the chat's primary key, reverse video in the text ink */
+html[data-theme^="retro"]:not([data-o55-nier]) #panel-settings .btn.primary,
+html[data-theme^="retro"]:not([data-o55-nier]) #panel-settings .btn.primary:hover { color: var(--surface); border-color: var(--text-primary); background: var(--text-primary); }
+html #panel-settings .btn.danger {
+  border-color: color-mix(in srgb, var(--k3-red) 36%, transparent); background: color-mix(in srgb, var(--k3-red) 10%, transparent);
+}
+
+/* ---- Projects, the Planning Wizard and the Orchestrator: each look's own inks (the T37 scope) ----------------------- */
+html[data-theme="basic-dark"] :is(.page-wizard, .page-orchestrator, .page-projects > .projects-header-bento, .page-projects > .projects-toolbar,
+  .page-projects > .projects-grid-bento, .page-projects > .pm6-proj-empty, .page-projects > .pm6-proj-sheet-backdrop) {
+  --accent-lime: #3DD68C; --graph-passed: #3DD68C; --accent-error: #F2716D; --graph-failed: #F2716D; --accent-warning: #FFB74D; --accent-orange: #FFA347;
+}
+html[data-theme="retro-dark"] :is(.page-wizard, .page-orchestrator, .page-projects > .projects-header-bento, .page-projects > .projects-toolbar,
+  .page-projects > .projects-grid-bento, .page-projects > .pm6-proj-empty, .page-projects > .pm6-proj-sheet-backdrop) {
+  --accent-lime: #86c46a; --graph-passed: #86c46a; --accent-error: #e27860; --graph-failed: #e27860; --accent-warning: #d8b93c; --accent-orange: #e9853f;
+}
+html[data-theme="basic-light"] :is(.page-wizard, .page-orchestrator, .page-projects > .projects-header-bento, .page-projects > .projects-toolbar,
+  .page-projects > .projects-grid-bento, .page-projects > .pm6-proj-empty, .page-projects > .pm6-proj-sheet-backdrop) {
+  --accent-lime: #0B6B38; --graph-passed: #0B6B38; --accent-error: #B3261E; --graph-failed: #B3261E; --accent-warning: #8A3A00; --accent-orange: #8A3A00;
+  --accent-magenta: #9C1C3C;
+}
+html[data-theme="retro-light"] :is(.page-wizard, .page-orchestrator, .page-projects > .projects-header-bento, .page-projects > .projects-toolbar,
+  .page-projects > .projects-grid-bento, .page-projects > .pm6-proj-empty, .page-projects > .pm6-proj-sheet-backdrop) {
+  --accent-primary: #00439E; --accent-blue: #00439E; --accent-lime: #2A6E37; --graph-passed: #2A6E37; --accent-error: #A82424; --graph-failed: #A82424;
+  --accent-warning: #8A4A00; --accent-orange: #9A4300; --accent-magenta: #A0105E;
+}
+html[data-theme="friendly-light"] :is(.page-wizard, .page-orchestrator, .page-projects > .projects-header-bento, .page-projects > .projects-toolbar,
+  .page-projects > .projects-grid-bento, .page-projects > .pm6-proj-empty, .page-projects > .pm6-proj-sheet-backdrop) {
+  --accent-primary: #2A6F8F; --accent-blue: #2A6F8F; --accent-lime: #1D6E58; --graph-passed: #1D6E58; --accent-error: #A53A26; --graph-failed: #A53A26;
+  --accent-warning: #7A5A00; --accent-orange: #9A3F22; --accent-magenta: #5E4A8C;
+}
+html[data-theme="friendly-dark"] :is(.page-wizard, .page-orchestrator, .page-projects > .projects-header-bento, .page-projects > .projects-toolbar,
+  .page-projects > .projects-grid-bento, .page-projects > .pm6-proj-empty, .page-projects > .pm6-proj-sheet-backdrop) {
+  --accent-lime: #6FDABC; --graph-passed: #6FDABC; --accent-error: #FF8A73; --graph-failed: #FF8A73; --accent-warning: #FFD97F; --accent-orange: #FFAD93;
+}
+/* Retro Light's New Project key: the base pins a forest green (#17613f, !important); Retro Light's own lime keeps its
+   white words at 5.3:1 */
+html[data-theme="retro-light"]:not([data-o55-nier]) .page-projects > .projects-header-bento .projects-actions > button.primary {
+  background: var(--accent-lime) !important; border-color: var(--accent-lime) !important;
+}
+
+/* ---- Basic's "added" files and graph passes: Basic's lime, not Material green ------------------------------------------ */
+html[data-theme="basic-dark"]:not([data-o55-nier]) { --graph-passed: #3DD68C; }
+html[data-theme="basic-light"]:not([data-o55-nier]) { --graph-passed: #0B6B38; }
+
+/* ---- The panels' add-a-tab pickers: their search is the look's search field (Jared, 2026-10-15: "the search bars in those
+   sections are not uniform") -----------------------------------------------------------------------------------------------
+   It was a bare outline. Like Settings' search and the title bar's, it is now one filled field of the look: the raised
+   surface, the look's hairline and corner, the input clear inside it, the accent edge on focus (30-menu.css). Glass's is
+   glass.css's field rule (one surface: the control fill and hairline). No positional selector, so the picker's level
+   ghost (.pmw-mghost, pm7-panels-picker) wears the same. */
+html:not([data-theme^="glass"]) .pmw-menu .pmw-msearch, html[data-o55-nier] .pmw-menu .pmw-msearch {
+  background: var(--surface-elevated); border-color: var(--border); border-radius: 8px;
+}
+html[data-theme^="friendly"]:not([data-o55-nier]) .pmw-menu .pmw-msearch { border-radius: 10px; }
+html:is([data-theme^="retro"], [data-o55-nier]) .pmw-menu .pmw-msearch { border-radius: 0; }
+html:not([data-theme^="glass"]) .pmw-menu .pmw-msearch:focus-within, html[data-o55-nier] .pmw-menu .pmw-msearch:focus-within { border-color: color-mix(in srgb, var(--pmw-accent) 60%, transparent); }
+
+/* ---- Settings' attention notes and sections: the look's own amber (--k3-amber), not a fixed one (Basic Light's warning
+   is a deep orange; the note's line and wash were Basic Dark's amber, rgba(247,189,99) and rgba(212,157,68)). Glass keeps
+   its own. */
+html:not([data-theme^="glass"]) #panel-settings .pm51-note.tone-attention { border-color: color-mix(in srgb, var(--k3-amber) 32%, transparent); background: color-mix(in srgb, var(--k3-amber) 9%, transparent); }
+html:not([data-theme^="glass"]) #panel-settings .pm51-section.tone-attention { border-color: color-mix(in srgb, var(--k3-amber) 35%, transparent); }
+
 </style>
 <!-- O55:CSS:END -->
 <!-- RAIL:CSS:START -->
@@ -33945,7 +34252,8 @@ html[data-o55-nier="on"] .pmr-view { --pmr-st-ok: var(--o55-nier-ink); --pmr-st-
 [data-rail-skin="d"][data-o55-nier="on"] :is(#panel-files,#panel-search,#panel-source,#panel-git,#panel-docker,#panel-testing,#panel-run,#panel-agents,#panel-artifacts) .pm-segtab > .pm-segtab-item.o55np-cur-over:not(.active) :is(svg, .pm-ico, span, .eq-full) { color: inherit !important; }
 [data-rail-skin="d"] :is(#panel-files,#panel-search,#panel-source,#panel-git,#panel-docker,#panel-testing,#panel-run,#panel-agents,#panel-artifacts) .pm-segtab-item.active { color: var(--d-tab-fg, var(--d-text)) !important; }
 [data-rail-skin="d"] :is(#panel-files,#panel-search,#panel-source,#panel-git,#panel-docker,#panel-testing,#panel-run,#panel-agents,#panel-artifacts) .pm-segtab-item svg, [data-rail-skin="d"] :is(#panel-files,#panel-search,#panel-source,#panel-git,#panel-docker,#panel-testing,#panel-run,#panel-agents,#panel-artifacts) .pm-segtab-item .pm-ico { width: 15px !important; height: 15px !important; flex: none; transform: none !important; transition-property: none !important; }
-[data-rail-skin="d"] :is(#panel-files,#panel-search,#panel-source,#panel-git,#panel-docker,#panel-testing,#panel-run,#panel-agents,#panel-artifacts) .pm-segtab-item.active svg { color: var(--d-tab-fg, var(--accent-primary)); }
+/* the chosen tab's icon: the switcher's mark in a look that adopts it (Q16), its chip's ink when the chip is opaque */
+[data-rail-skin="d"] :is(#panel-files,#panel-search,#panel-source,#panel-git,#panel-docker,#panel-testing,#panel-run,#panel-agents,#panel-artifacts) .pm-segtab-item.active svg { color: var(--d-tab-fg, var(--pm-switch-mark-on, var(--pm-switch-mark, var(--accent-primary)))); }
 /* labels: shown for every tab when they all fit, for the chosen tab only when only that fits, never abbreviated; a
    change shows or hides them in one step. The label clips its width (it hides by max-width), and its line box is the
    item's 1.0 line height, so it keeps 3 px above and below inside the clip (taken back by the margins) for the
@@ -36130,11 +36438,15 @@ html[data-o55-nier="on"] .pmr-view { --pmr-st-ok: var(--o55-nier-ink); --pmr-st-
 /* square corners in Retro, and in NieR only with its "Square hairlines" part, as the rest of D's NieR corners */
 [data-rail-skin="d"][data-theme^="retro"], [data-rail-skin="d"][data-o55-nier-parts~="square"] { --d-Rbar: 0px; }
 [data-rail-skin="d"] #activityBar { position: relative; }
+/* A look that adopts the shared switcher (Q16: Concepts/onboarding/opus-5.5/src/css/60-switcher-looks.css, glass.css
+   section 12) paints the tile as its switcher's chip: the same fill, hairline, catch light, shadow and corner as every
+   tab and list selection in that look, and the lit icon in the chip's mark. Glass, and any look without the tokens,
+   keeps the tile below. */
 [data-rail-skin="d"] #activityBar > .d-abind {
   position: absolute; left: 0; top: 0; width: 28px; height: 28px; z-index: 0; pointer-events: none;
-  border-radius: var(--d-Rbar); opacity: 0;
-  background: color-mix(in srgb, var(--accent-primary) 17%, transparent);
-  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--accent-primary) 30%, transparent);
+  border-radius: var(--pm-switch-r, var(--d-Rbar)); opacity: 0;
+  background: var(--pm-switch-fill, color-mix(in srgb, var(--accent-primary) 17%, transparent));
+  box-shadow: inset 0 0 0 1px var(--pm-switch-line, color-mix(in srgb, var(--accent-primary) 30%, transparent)), inset 0 1px 0 var(--pm-switch-top, transparent), var(--pm-switch-shadow, 0 0 0 0 transparent);
   transition: opacity var(--d-t2) var(--d-ease);
 }
 [data-rail-skin="d"] #activityBar > .d-abind.is-on { opacity: 1; }
@@ -36142,8 +36454,6 @@ html[data-o55-nier="on"] .pmr-view { --pmr-st-ok: var(--o55-nier-ink); --pmr-st-
   background: linear-gradient(180deg, color-mix(in srgb, var(--accent-primary) 30%, transparent), color-mix(in srgb, var(--accent-primary) 14%, transparent));
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, .22), inset 0 0 0 1px color-mix(in srgb, var(--accent-primary) 36%, transparent), 0 2px 10px color-mix(in srgb, var(--accent-primary) 22%, transparent);
 }
-[data-rail-skin="d"][data-theme^="retro"] #activityBar > .d-abind { box-shadow: inset 0 0 0 1px var(--accent-primary), 2px 2px 0 color-mix(in srgb, var(--accent-primary) 40%, transparent); }
-[data-rail-skin="d"][data-o55-nier="on"] #activityBar > .d-abind { background: var(--o55-nier-ink); box-shadow: none; }
 [data-rail-skin="d"] #activityBar .icon { z-index: 1; }
 [data-rail-skin="d"] #activityBar .icon .symbol { border-radius: var(--d-Rbar) !important; transition: background-color var(--d-t1) var(--d-ease), color var(--d-t1) var(--d-ease), transform var(--d-t2) var(--d-spring) !important; }
 [data-rail-skin="d"] #activityBar .icon:is([data-target], [data-ab-id="chat"]) .symbol { width: 28px !important; height: 28px !important; }
@@ -36151,7 +36461,7 @@ html[data-o55-nier="on"] .pmr-view { --pmr-st-ok: var(--o55-nier-ink); --pmr-st-
    and glow) would grow the symbol out from under its tile */
 [data-rail-skin="d"] #activityBar .icon:is([data-target], [data-ab-id="chat"]):hover .symbol { background: var(--d-hover) !important; transform: none !important; box-shadow: none !important; }
 [data-rail-skin="d"] #activityBar .icon:is([data-target], [data-ab-id="chat"]).active .symbol { background: none !important; box-shadow: none !important; }
-[data-rail-skin="d"] #activityBar .icon:is([data-target], [data-ab-id="chat"]).active { color: var(--accent-primary) !important; }
+[data-rail-skin="d"] #activityBar .icon:is([data-target], [data-ab-id="chat"]).active { color: var(--pm-switch-mark-on, var(--pm-switch-mark, var(--accent-primary))) !important; }
 [data-rail-skin="d"][data-o55-nier="on"] #activityBar .icon:is([data-target], [data-ab-id="chat"]).active { color: var(--o55-nier-on-ink) !important; }
 [data-rail-skin="d"] #activityBar .icon:is([data-target], [data-ab-id="chat"]).d-bump .symbol svg { animation: d-bump var(--d-t3) var(--d-spring); }
 @keyframes d-bump { 0% { transform: scale(.82); } 60% { transform: scale(1.08); } 100% { transform: none; } }
@@ -44863,7 +45173,9 @@ html[data-theme^="retro"]:not([data-o55-nier="on"]) .pmw-chip { border-radius: 0
 .pmw-tab.pmw-rfx-glow { box-shadow: 0 0 14px color-mix(in srgb, var(--accent-lime) 35%, transparent); animation: pmw-rfx-glow 650ms ease-out forwards; }
 @keyframes pmw-rfx-glow { to { box-shadow: 0 0 14px transparent; } }
 .pmw-tab.pmw-rfx-crt { color: var(--accent-lime); background: repeating-linear-gradient(transparent 0 2px, color-mix(in srgb, var(--accent-lime) 70%, transparent) 2px 3px) 0 0 / 100% 0% no-repeat; animation: pmw-rfx-crt 300ms steps(6, end) forwards; }
-@keyframes pmw-rfx-crt { 0% { background-size: 100% 0%; } 90% { background-size: 100% 100%; color: var(--accent-lime); } 100% { background: var(--accent-lime); background-size: 100% 100%; color: var(--surface); } }
+/* the block and its dark words land in one step: the block used to fade in from the start under the still-phosphor
+   label (1.0-1.9:1 for about 90 ms, a blank tab in the films; Q16 review F3) */
+@keyframes pmw-rfx-crt { 0% { background-size: 100% 0%; background-color: transparent; } 90% { background-size: 100% 100%; background-color: transparent; color: var(--accent-lime); animation-timing-function: steps(1, end); } 100% { background: var(--accent-lime); background-size: 100% 100%; color: var(--surface); } }
 .pmw-tab.pmw-rfx-dos { animation: pmw-rfx-dos 600ms steps(1, end) forwards; }
 @keyframes pmw-rfx-dos {
   0% { background: transparent; color: var(--accent-lime); }
@@ -48104,7 +48416,7 @@ html[data-lg="on"][data-theme^="glass"]:not(#lgz) #pmuExport { border-radius: 0 
   background: transparent !important; box-shadow: none !important; border-radius: var(--pm-switch-r-in, var(--pm-ctl-r-in)) !important;
   color: var(--pm-switch-ink, var(--text-secondary)) !important; position: relative; z-index: 1;
 }
-:is(html[data-lg="on"][data-theme^="glass"], html[data-pm-switch="lens"]):not(#lgz) :is(.page-tab, #pmuRange > button, .pm-segtab-item, .orch-tab):hover { color: var(--pm-switch-ink-on, var(--text-primary)) !important; }
+:is(html[data-lg="on"][data-theme^="glass"], html[data-pm-switch="lens"]):not(#lgz) :is(.page-tab, #pmuRange > button, .pm-segtab-item, .orch-tab):hover { color: var(--pm-switch-ink-hover, var(--pm-switch-ink-on, var(--text-primary))) !important; }
 :is(html[data-lg="on"][data-theme^="glass"], html[data-pm-switch="lens"]):not(#lgz) :is(.page-tab, #pmuRange > button, .pm-segtab-item, .orch-tab).active { color: var(--pm-switch-ink-on, var(--text-primary)) !important; font-weight: 600; }
 :is(html[data-lg="on"][data-theme^="glass"], html[data-pm-switch="lens"]):not(#lgz) #sidePanelSlot .pm-segtab { position: relative; }
 :is(html[data-lg="on"][data-theme^="glass"], html[data-pm-switch="lens"]):not(#lgz) #sidePanelSlot .pm-segtab > .pm-segtab-track {
@@ -48117,11 +48429,13 @@ html[data-lg="on"][data-theme^="glass"]:not(#lgz) #pmuExport { border-radius: 0 
   background: transparent !important; box-shadow: none !important; border-radius: var(--pm-switch-r, var(--pm-ctl-r)) !important; color: var(--pm-switch-ink, var(--text-secondary)) !important; position: relative; z-index: 1;
 }
 :is(html[data-lg="on"][data-theme^="glass"], html[data-pm-switch="lens"]):not(#lgz) .pmu-navbtn::before, :is(html[data-lg="on"][data-theme^="glass"], html[data-pm-switch="lens"]):not(#lgz) .pmu-navbtn::after { opacity: 0 !important; }
-:is(html[data-lg="on"][data-theme^="glass"], html[data-pm-switch="lens"]):not(#lgz) .pmu-navbtn:hover:not(.active) { background: var(--pm-switch-hover, var(--lg-fill-hover)) !important; color: var(--pm-switch-ink-on, var(--text-primary)) !important; }
+:is(html[data-lg="on"][data-theme^="glass"], html[data-pm-switch="lens"]):not(#lgz) .pmu-navbtn:hover:not(.active) { background: var(--pm-switch-hover, var(--lg-fill-hover)) !important; color: var(--pm-switch-ink-hover, var(--pm-switch-ink-on, var(--text-primary))) !important; }
 :is(html[data-lg="on"][data-theme^="glass"], html[data-pm-switch="lens"]):not(#lgz) .pmu-navbtn.active, :is(html[data-lg="on"][data-theme^="glass"], html[data-pm-switch="lens"]):not(#lgz) .pmu-navbtn.active * { color: var(--pm-switch-ink-on, var(--text-primary)) !important; }
-:is(html[data-lg="on"][data-theme^="glass"], html[data-pm-switch="lens"]):not(#lgz) .pmu-navbtn.active .pmu-navicon { color: var(--pm-switch-mark, var(--accent-blue)) !important; }
+:is(html[data-lg="on"][data-theme^="glass"], html[data-pm-switch="lens"]):not(#lgz) .pmu-navbtn.active .pmu-navicon { color: var(--pm-switch-mark-on, var(--pm-switch-mark, var(--accent-blue))) !important; }
 :is(html[data-lg="on"][data-theme^="glass"], html[data-pm-switch="lens"]):not(#lgz) .pmu-navbtn.active { font-weight: 650; }
-:is(html[data-lg="on"][data-theme^="glass"], html[data-pm-switch="lens"]):not(#lgz) .pmu-navbtn:not(.active) .pmu-navcount { color: var(--accent-warning) !important; }
+/* (Glass only: a look that adopts the switcher keeps Usage's own contrast-tuned count ink; Basic Light's warning colour read
+   3.8:1 there, Q16) */
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) .pmu-navbtn:not(.active) .pmu-navcount { color: var(--accent-warning) !important; }
 html[data-lg="on"][data-theme^="glass"]:not(#lgz) #sidePanelSlot :is(.fm-row, .sh-row, .tree-item, .pmr-row) { border-radius: var(--pm-ctl-r) !important; }
 html[data-lg="on"][data-theme^="glass"]:not(#lgz) #sidePanelSlot :is(.fm-row, .sh-row, .tree-item, .pmr-row):hover { background: var(--lg-fill-hover) !important; }
 html[data-lg="on"][data-theme^="glass"]:not(#lgz) #sidePanelSlot :is(.fm-row, .sh-row, .tree-item, .pmr-row):is(.selected, .active, [aria-selected="true"]) { background: var(--lg-fill-press) !important; box-shadow: none !important; }
@@ -48185,6 +48499,9 @@ html[data-lg="on"][data-theme^="glass"]:not(#lgz) #themeMenu .pm6-tt-divider { m
 /* Jared #14 (2026-10-14): Light / Dark / Auto is a Glass tab switcher, the lens drawn inside the menu (glass.js); the
    plain chosen fill above stays only for the moment before the lens lands */
 html[data-lg="on"][data-theme^="glass"]:not(#lgz) #themeMenu .pm6-tt-modes[data-lg-lensed] .pm6-tt-mode:is(.is-selected, [aria-pressed="true"], [aria-checked="true"], .active) { background: transparent !important; }
+/* Q16: a look that adopts the switcher hands it the same lens; the chosen mode's own fill and edge step aside there too, and
+   its words take the switcher's chosen ink (Glass keeps the rule above) */
+html[data-pm-switch="lens"]:not(#lgz) #themeMenu .pm6-tt-modes[data-lg-lensed] .pm6-tt-mode:is(.is-selected, [aria-pressed="true"], [aria-checked="true"], .active) { background: transparent !important; box-shadow: none !important; border-color: transparent !important; color: var(--pm-switch-ink-on) !important; }
 html[data-lg="on"][data-theme^="glass"]:not(#lgz) #themeMenu .pm6-tb-menu-item {
   min-height: 34px; margin: 1px 0 !important; padding: 8px 10px !important; border: 0 !important; border-radius: var(--pm-ctl-r) !important;
   background: transparent !important; box-shadow: none !important; display: flex; align-items: center; gap: 10px;
@@ -48237,12 +48554,15 @@ html[data-lg="on"][data-theme="glass-light"]:not(#lgz) .lg-lens::after { height:
 
 /* the chosen label rests a little larger under its lens (glass.js keyframes the swell while the lens moves; these match
    KINDS.lens.magRest and KINDS.lensIcon.magRest) */
-:is(html[data-lg="on"][data-theme^="glass"], html[data-pm-switch="lens"]):not(#lgz) :is(nav.page-tabs .page-tab, #pmuRange > button, #sidePanelSlot .pm-segtab-item, .orch-tabs .orch-tab).active { scale: 1.04; }
+:is(html[data-lg="on"][data-theme^="glass"], html[data-pm-switch="lens"]):not(#lgz) :is(nav.page-tabs .page-tab, #pmuRange > button, #sidePanelSlot .pm-segtab-item, .orch-tabs .orch-tab).active { scale: calc(1 + .04 * var(--pm-switch-swell, 1)); }
 html[data-lg="on"][data-theme^="glass"]:not(#lgz) #activityBar .icon[data-lg-current] .symbol { scale: 1.08; }
 /* the hover bead: lighter than a lens, gone the moment a press lands or a menu opens */
 html[data-lg="on"][data-theme^="glass"]:not(#lgz) .lg-bead { opacity: 0; box-shadow: inset 0 0 0 .5px var(--lg-lens-hair), inset 0 1px 0 var(--lg-edge-top), inset 0 -1px 1px var(--lg-edge-bot), 0 0 0 .5px var(--lg-lens-edge), 0 3px 8px -3px var(--lg-shadow); }
 html[data-lg="on"][data-theme^="glass"]:not(#lgz) .lg-bead.on { opacity: 1; }
 html[data-lg="on"][data-theme^="glass"]:not(#lgz) .lg-bead.lg-under { opacity: 0 !important; }
+/* the bead is Glass's alone: a look that adopts the switcher would paint it as its chip (glass.js drops it on leaving
+   Glass; this keeps any bead from showing outside Glass) */
+html[data-pm-switch="lens"]:not(#lgz):not(#lgy) .lg-bead { display: none; }
 :is(html[data-lg="on"][data-theme^="glass"], html[data-pm-switch="lens"]):not(#lgz) .lg-lens[data-lg-lifted] { box-shadow: inset 0 0 0 .5px var(--pm-switch-line, var(--lg-lens-hair)), inset 0 1px 0 var(--pm-switch-top, var(--lg-edge-top)), 0 0 0 .5px var(--pm-switch-edge, var(--lg-lens-edge)), 0 10px 24px -6px var(--lg-shadow, rgba(0, 0, 0, .28)), 0 2px 4px var(--lg-shadow-near, rgba(0, 0, 0, .16)); transition: none; }
 :is(html[data-lg="on"][data-theme^="glass"], html[data-pm-switch="lens"]):not(#lgz) .lg-lens[data-lg-lifted]::after { opacity: 1; }
 /* The Orchestrator's views ride the same lens (a theme match, not its redesign): its capsule fill steps aside. */
@@ -48290,7 +48610,7 @@ html[data-lg="on"][data-theme="glass-light"]:not(#lgz) { --lg-lens-body: rgba(25
 :is(html[data-lg="on"][data-theme^="glass"], html[data-pm-switch="lens"]):not(#lgz) #pm-settings-root :is(.rail-scroll > .side-link.active, .domain-link.active, .workspace-tab.is-current, .pm51-index-group > .index-link.is-active, .manager-tab[aria-selected="true"])::after,
 :is(html[data-lg="on"][data-theme^="glass"], html[data-pm-switch="lens"]):not(#lgz) #pm-settings-root :is(nav.workspace-tabs, nav.manager-tabs) > .tab-ink { opacity: 0 !important; }
 :is(html[data-lg="on"][data-theme^="glass"], html[data-pm-switch="lens"]):not(#lgz) #pm-settings-root :is(.workspace-tab, .manager-tab):not(.is-current):not([aria-selected="true"]) { color: var(--pm-switch-ink, var(--text-secondary)) !important; }
-:is(html[data-lg="on"][data-theme^="glass"], html[data-pm-switch="lens"]):not(#lgz) #pm-settings-root :is(.workspace-tab, .manager-tab):is(:hover, :focus-visible) { color: var(--pm-switch-ink-on, var(--text-primary)) !important; }
+:is(html[data-lg="on"][data-theme^="glass"], html[data-pm-switch="lens"]):not(#lgz) #pm-settings-root :is(.workspace-tab, .manager-tab):is(:hover, :focus-visible) { color: var(--pm-switch-ink-hover, var(--pm-switch-ink-on, var(--text-primary))) !important; }
 :is(html[data-lg="on"][data-theme^="glass"], html[data-pm-switch="lens"]):not(#lgz) #pm-settings-root :is(.workspace-tab.is-current, .manager-tab[aria-selected="true"]) { font-weight: 600; }
 :is(html[data-lg="on"][data-theme^="glass"], html[data-pm-switch="lens"]):not(#lgz) #pm-settings-root nav.workspace-tabs {
   background: var(--pm-switch-track, var(--lg-fill)) !important; border: 0 !important; border-radius: var(--pm-switch-r, var(--pm-ctl-r)) !important; box-shadow: none !important; position: relative;
@@ -48324,17 +48644,18 @@ html[data-lg="on"][data-theme^="glass"]:not(#lgz) #pm-settings-root :is(input, t
   background: var(--pm-switch-track, var(--lg-fill)) !important; border-color: transparent !important; border-radius: var(--pm-switch-r, var(--pm-ctl-r)) !important; box-shadow: none !important;
 }
 :is(html[data-lg="on"][data-theme^="glass"], html[data-pm-switch="lens"]):not(#lgz) #pm-settings-root .segmented > button { color: var(--pm-switch-ink, var(--text-secondary)) !important; }
-:is(html[data-lg="on"][data-theme^="glass"], html[data-pm-switch="lens"]):not(#lgz) #pm-settings-root .segmented > button:is(:hover, :focus-visible) { color: var(--pm-switch-ink-on, var(--text-primary)) !important; }
+:is(html[data-lg="on"][data-theme^="glass"], html[data-pm-switch="lens"]):not(#lgz) #pm-settings-root .segmented > button:is(:hover, :focus-visible) { color: var(--pm-switch-ink-hover, var(--pm-switch-ink-on, var(--text-primary))) !important; }
 :is(html[data-lg="on"][data-theme^="glass"], html[data-pm-switch="lens"]):not(#lgz) #pm-settings-root .segmented > button:is([aria-checked="true"], [aria-pressed="true"]) { color: var(--pm-switch-ink-on, var(--text-primary)) !important; font-weight: 600; }
 :is(html[data-lg="on"][data-theme^="glass"], html[data-pm-switch="lens"]):not(#lgz) #pm-settings-root .resource-row[aria-current="true"] { border-color: transparent !important; }
 :is(html[data-lg="on"][data-theme^="glass"], html[data-pm-switch="lens"]):not(#lgz) #pm-settings-root .resource-row[aria-current="true"] .resource-row-name { color: var(--pm-switch-ink-on, var(--text-primary)) !important; }
 /* Jared #17 (2026-10-14): a field is one surface. A bar that wraps its input (Settings' rail and main searches, the
    number steppers, the chat composer, the title-bar search's popover) wears the control fill and hairline, and the
    input inside it is clear. A lone input wears them itself. Old Glass gave both layers its purple fill, so the input
-   showed as a darker box inside its bar. (Onboarding's and Usage's fields keep their own rules above.) */
+   showed as a darker box inside its bar. (Onboarding's and Usage's fields keep their own rules above.) The panels' add-a-tab
+   pickers' search (.pmw-msearch) joined the list in Q16 (Jared, 2026-10-15: "the area where you type should blend in"). */
 html[data-lg="on"][data-theme^="glass"]:not(#lgz) :is(input:not([type=checkbox]):not([type=radio]):not([type=range]):not([type=color]), textarea, select) { background-color: var(--lg-fill) !important; border-color: var(--lg-line) !important; }
-html[data-lg="on"][data-theme^="glass"]:not(#lgz) :is(.rail-search, .hero-search, .o55-num, .pm6-tb-search-pop, .pmw-sc-box) { background-color: var(--lg-fill) !important; border-color: var(--lg-line) !important; }
-html[data-lg="on"][data-theme^="glass"]:not(#lgz) :is(.rail-search, .hero-search, .o55-num, .pm6-tb-search-pop, .pmw-sc-box) :is(input:not([type=checkbox]):not([type=radio]):not([type=range]):not([type=color]), textarea) { background: transparent !important; border-color: transparent !important; box-shadow: none !important; }
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) :is(.rail-search, .hero-search, .o55-num, .pm6-tb-search-pop, .pmw-sc-box, .pmw-msearch) { background-color: var(--lg-fill) !important; border-color: var(--lg-line) !important; }
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) :is(.rail-search, .hero-search, .o55-num, .pm6-tb-search-pop, .pmw-sc-box, .pmw-msearch) :is(input:not([type=checkbox]):not([type=radio]):not([type=range]):not([type=color]), textarea) { background: transparent !important; border-color: transparent !important; box-shadow: none !important; }
 html[data-lg="on"][data-theme^="glass"]:not(#lgz) .lg-press {
   display: block; position: fixed; width: 36px; height: 36px; border-radius: 50%; pointer-events: none; z-index: 2147483000;
   background: radial-gradient(closest-side, rgba(255, 255, 255, .6), rgba(255, 255, 255, .16) 55%, transparent); mix-blend-mode: plus-lighter;
@@ -48490,8 +48811,53 @@ html[data-lg="on"][data-theme^="glass"][data-lg-tier="gpu"]:not(#lgz) #pm-o55-on
 /* the tour: callout and bar are live glass over the app; its spotlight ring is a lit glass edge */
 html[data-lg="on"][data-theme^="glass"]:not(#lgz) :is(.o55t-callout, .o55t-bar) { border: 0 !important; border-radius: 16px !important; }
 html[data-lg="on"][data-theme^="glass"]:not(#lgz) .o55t-ring { box-shadow: 0 0 0 1.5px rgba(255, 255, 255, .85), 0 0 0 5px rgba(var(--accent-primary-rgb), .35), 0 0 30px 6px rgba(var(--accent-primary-rgb), .3) !important; border-radius: 12px !important; }
-.lg-lenses-local { display: none; }
+.lg-lenses-local, lg-under { display: none; }
 :is(html[data-lg="on"][data-theme^="glass"], html[data-pm-switch="lens"]):not(#lgz) .lg-lenses-local { display: block; position: absolute; inset: 0; z-index: 30; pointer-events: none; border-radius: inherit; }
+/* --pm-switch-layer: under (Q16; never in Glass): each lens is inside its own strip, over the strip's track and under its
+   items, which are lifted to z-index 1 here where the rules above do not already */
+html[data-pm-switch="lens"][data-pm-switch-layer="under"]:not(#lgz) lg-under.lg-lenses-under { display: block; position: absolute; inset: 0; z-index: 0; pointer-events: none; }
+/* a chip under its labels is not kept on a compositor layer of its own while it rests (that pulled every label above it onto
+   a layer too); its travel animates on the compositor as any transform animation does */
+html[data-pm-switch="lens"][data-pm-switch-layer="under"]:not(#lgz) lg-under.lg-lenses-under .lg-lens { will-change: auto; }
+html[data-pm-switch="lens"][data-pm-switch-layer="under"]:not(#lgz) :is(#themeMenu .pm6-tt-mode, #panel-wizard .pm6-wiz-intent-chip, #pm-o55-onboarding .o55-seg button, #pm-o55-onboarding .o55-railitem) { position: relative; z-index: 1; }
+/* while a press moves the chip ahead of the app's choice (glass.js pressMark), the pressed item reads as chosen and the
+   one it leaves as not, so neither label sits in its old colour on the wrong ground (three ids: above the chosen ink). The
+   item's own ink follows in every look that adopts the switcher (Glass sets no data-pm-switch); under an opaque chip so do
+   the parts that colour themselves (icons, Settings' second lines, Usage's room names), each arm anchored on its item's
+   class so the browser's ancestor filter rejects every other element at once (a descendant *, or a part keyed only by the
+   attribute, was tested against every element or every icon on every restyle). The inks change in the press's own frame,
+   with no transition and no delay (Retro's icons strike 33 ms late): the app's click can hold the page for a third of a
+   second while the chip glides on, and a change left waiting kept the old ink on the landed chip (Q16 review F3). */
+html[data-pm-switch="lens"]:not(#lgz):not(#lgy):not(#lgx) [data-lg-press="on"],
+html[data-pm-switch="lens"][data-pm-switch-layer="under"]:not(#lgz):not(#lgy):not(#lgx) .pmu-navbtn[data-lg-press="on"] .pmu-navtext,
+html[data-pm-switch="lens"][data-pm-switch-layer="under"]:not(#lgz):not(#lgy):not(#lgx) .pmu-navbtn[data-lg-press="on"] svg,
+html[data-pm-switch="lens"][data-pm-switch-layer="under"]:not(#lgz):not(#lgy):not(#lgx) .pmu-navbtn[data-lg-press="on"] path,
+html[data-pm-switch="lens"][data-pm-switch-layer="under"]:not(#lgz):not(#lgy):not(#lgx) .pmu-navbtn[data-lg-press="on"] circle,
+html[data-pm-switch="lens"][data-pm-switch-layer="under"]:not(#lgz):not(#lgy):not(#lgx) .pmu-navbtn[data-lg-press="on"] rect,
+html[data-pm-switch="lens"][data-pm-switch-layer="under"]:not(#lgz):not(#lgy):not(#lgx) .domain-link[data-lg-press="on"] small,
+html[data-pm-switch="lens"][data-pm-switch-layer="under"]:not(#lgz):not(#lgy):not(#lgx) .domain-link[data-lg-press="on"] svg,
+html[data-pm-switch="lens"][data-pm-switch-layer="under"]:not(#lgz):not(#lgy):not(#lgx) .domain-link[data-lg-press="on"] path,
+html[data-pm-switch="lens"][data-pm-switch-layer="under"]:not(#lgz):not(#lgy):not(#lgx) .side-link[data-lg-press="on"] svg,
+html[data-pm-switch="lens"][data-pm-switch-layer="under"]:not(#lgz):not(#lgy):not(#lgx) .side-link[data-lg-press="on"] path,
+html[data-pm-switch="lens"][data-pm-switch-layer="under"]:not(#lgz):not(#lgy):not(#lgx) .pm-segtab-item[data-lg-press="on"] svg,
+html[data-pm-switch="lens"][data-pm-switch-layer="under"]:not(#lgz):not(#lgy):not(#lgx) .pm-segtab-item[data-lg-press="on"] path,
+html[data-pm-switch="lens"][data-pm-switch-layer="under"]:not(#lgz):not(#lgy):not(#lgx) .pm6-tt-mode[data-lg-press="on"] svg,
+html[data-pm-switch="lens"][data-pm-switch-layer="under"]:not(#lgz):not(#lgy):not(#lgx) .pm6-tt-mode[data-lg-press="on"] path { color: var(--pm-switch-ink-on) !important; transition: none !important; }
+html[data-pm-switch="lens"]:not(#lgz):not(#lgy):not(#lgx) [data-lg-press="off"],
+html[data-pm-switch="lens"][data-pm-switch-layer="under"]:not(#lgz):not(#lgy):not(#lgx) .pmu-navbtn[data-lg-press="off"] .pmu-navtext,
+html[data-pm-switch="lens"][data-pm-switch-layer="under"]:not(#lgz):not(#lgy):not(#lgx) .pmu-navbtn[data-lg-press="off"] svg,
+html[data-pm-switch="lens"][data-pm-switch-layer="under"]:not(#lgz):not(#lgy):not(#lgx) .pmu-navbtn[data-lg-press="off"] path,
+html[data-pm-switch="lens"][data-pm-switch-layer="under"]:not(#lgz):not(#lgy):not(#lgx) .pmu-navbtn[data-lg-press="off"] circle,
+html[data-pm-switch="lens"][data-pm-switch-layer="under"]:not(#lgz):not(#lgy):not(#lgx) .pmu-navbtn[data-lg-press="off"] rect,
+html[data-pm-switch="lens"][data-pm-switch-layer="under"]:not(#lgz):not(#lgy):not(#lgx) .domain-link[data-lg-press="off"] small,
+html[data-pm-switch="lens"][data-pm-switch-layer="under"]:not(#lgz):not(#lgy):not(#lgx) .domain-link[data-lg-press="off"] svg,
+html[data-pm-switch="lens"][data-pm-switch-layer="under"]:not(#lgz):not(#lgy):not(#lgx) .domain-link[data-lg-press="off"] path,
+html[data-pm-switch="lens"][data-pm-switch-layer="under"]:not(#lgz):not(#lgy):not(#lgx) .side-link[data-lg-press="off"] svg,
+html[data-pm-switch="lens"][data-pm-switch-layer="under"]:not(#lgz):not(#lgy):not(#lgx) .side-link[data-lg-press="off"] path,
+html[data-pm-switch="lens"][data-pm-switch-layer="under"]:not(#lgz):not(#lgy):not(#lgx) .pm-segtab-item[data-lg-press="off"] svg,
+html[data-pm-switch="lens"][data-pm-switch-layer="under"]:not(#lgz):not(#lgy):not(#lgx) .pm-segtab-item[data-lg-press="off"] path,
+html[data-pm-switch="lens"][data-pm-switch-layer="under"]:not(#lgz):not(#lgy):not(#lgx) .pm6-tt-mode[data-lg-press="off"] svg,
+html[data-pm-switch="lens"][data-pm-switch-layer="under"]:not(#lgz):not(#lgy):not(#lgx) .pm6-tt-mode[data-lg-press="off"] path { color: var(--pm-switch-ink) !important; transition: none !important; }
 
 /* Settings' chapter header is a bar sheet under Liquid Glass (glass.js SURFACES): on the bare wallpaper its line, a 62 %
    tint, read 4.2:1 over Ribbons and 1.9-2.9:1 over Prism or Pool in Glass Dark (2026-10-14). The line takes the look's
@@ -81440,12 +81806,17 @@ status: completed with warnings</pre>
                 } else {
                     iconBtn.classList.add('active');
                     const targetId = iconBtn.getAttribute('data-target');
-                    if (targetId) {
+                    const showTarget = () => {
                         document.querySelectorAll('.side-panel-view').forEach(v => v.classList.remove('active'));
                         const targetView = document.getElementById(targetId);
                         if (targetView) targetView.classList.add('active');
                         if (sidePanelSlot) sidePanelSlot.classList.remove('hidden');
-                    }
+                    };
+                    /* O55: a click on another section answers first (its icon), the section follows a frame later */
+                    if (targetId && e.isTrusted && sidePanelSlot && !sidePanelSlot.classList.contains('hidden') && !window.__pmRailSoon) {
+                        window.__pmRailSoon = true;
+                        requestAnimationFrame(() => setTimeout(() => { window.__pmRailSoon = false; if (iconBtn.classList.contains('active')) showTarget(); }, 0));
+                    } else if (targetId) showTarget();
                 }
             }
         }
@@ -95964,11 +96335,11 @@ window.PM_NIER = Object.freeze({
     if (wipeAnim) wipeAnim.cancel();
     /* the band leaves as soon as the new page is drawn under it (final motion QA A4, Jared 2026-10-16: the empty beat
        at most 50 ms): no held keyframe (under the old ease-in-out it held the bare band for ~150 ms), a curve that is
-       moving from its first frames, and a start reset to the first frame after the page change, so a long first frame
-       never eats the slide */
+       moving from its first frames, and a start that waits for the frames after the page change to come on time
+       (src/js/11-motion-start.js), so a long first frame never eats the slide */
     const a = wipeAnim = wipe.firstChild.animate([{ transform: 'translateX(0)' }, { transform: 'translateX(101%)' }],
       { duration: 380, easing: 'cubic-bezier(.3, .15, .2, 1)', fill: 'both' });
-    requestAnimationFrame(() => { if (wipeAnim === a && a.playState === 'running') { try { a.startTime = document.timeline.currentTime; } catch (_) { /* gone */ } } });
+    if (window.PM_START_ON_SHOWN) window.PM_START_ON_SHOWN(() => (wipeAnim === a ? [a] : []));
     a.onfinish = () => { if (wipeAnim !== a) return; wipeAnim = null; if (wipe) wipe.style.display = 'none'; a.cancel(); };
   }
   PARTS.wipe = { on() {}, off() { if (wipeAnim) wipeAnim.cancel(); wipeAnim = null; if (wipe) wipe.remove(); wipe = null; } };
@@ -113399,13 +113770,12 @@ html[data-theme^="retro"] #panel-settings .o55-goals-phase-n { border-radius: 0;
       newP.style.setProperty('--pm-dir', String(dir));
       oldP.classList.add('pm8-page-out');
       newP.classList.add('pm8-page-in');
-      var restartMoves = function () {   /* O55: the moves start on a shown frame */
-        var t = document.timeline.currentTime; if (t == null) return;
-        [oldP, newP].forEach(function (p) { p.getAnimations().forEach(function (a) {
-          if (a.animationName === 'pm8-page-in' || a.animationName === 'pm8-page-out') { try { if (a.playState !== 'idle') a.startTime = t; } catch (e) {} }
-        }); });
+      var pageMoves = function () {   /* O55: the moves play on frames that are shown (src/js/11-motion-start.js) */
+        var out = [];
+        [oldP, newP].forEach(function (p) { p.getAnimations().forEach(function (a) { if (a.animationName === 'pm8-page-in' || a.animationName === 'pm8-page-out') out.push(a); }); });
+        return out;
       };
-      requestAnimationFrame(function () { restartMoves(); requestAnimationFrame(restartMoves); });
+      if (window.PM_START_ON_SHOWN) window.PM_START_ON_SHOWN(pageMoves);
       var stopEntrance = null, finished = false;
       function cleanupOut() {
         oldP.classList.remove('pm8-page-out');
@@ -113460,14 +113830,14 @@ html[data-theme^="retro"] #panel-settings .o55-goals-phase-n { border-radius: 0;
     window.PM_PAGES.goSoon = function (pageId) {
       var P = window.PM_PAGES, prev = P.current;
       if (soon) { soon.page = pageId; }
-      else if (!pageId || pageId === prev || !bootPaintDone || reduced() || document.hidden || !panelFor(pageId)) { P.go(pageId); return; }
+      else if (!pageId || pageId === prev || !bootPaintDone || document.hidden || !panelFor(pageId)) { P.go(pageId); return; }
       var tab = tabFor(pageId), oldP = prev ? panelFor(prev) : null;
       document.querySelectorAll('.page-tab').forEach(function (t) { var on = t.getAttribute('data-page') === pageId; t.classList.toggle('active', on); t.setAttribute('aria-selected', on ? 'true' : 'false'); });
       if (tab) { springTo(tab, measureTab(tab)); P.__answered = pageId; }
       if (soon) return;
       var html = document.documentElement, nier = html.getAttribute('data-o55-nier') === 'on', retro = /^retro/.test(html.getAttribute('data-theme') || '');
       /* NieR answers with its wipe and the ink; the other looks start the leaving page's fade (Retro in steps) */
-      var lift = !nier && oldP && oldP.animate && !oldP.classList.contains('pm8-page-out') ? oldP.animate([{ opacity: 1 }, { opacity: 0.86 }], { duration: 140, easing: retro ? 'steps(2, end)' : 'cubic-bezier(.2, 0, 0, 1)', fill: 'forwards' }) : null;
+      var lift = !nier && !reduced() && oldP && oldP.animate && !oldP.classList.contains('pm8-page-out') ? oldP.animate([{ opacity: 1 }, { opacity: 0.86 }], { duration: 140, easing: retro ? 'steps(2, end)' : 'cubic-bezier(.2, 0, 0, 1)', fill: 'forwards' }) : null;
       soon = { page: pageId };
       requestAnimationFrame(function () { setTimeout(function () {
         var to = soon.page; soon = null;
@@ -139231,6 +139601,33 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
   };
 })();
 
+/* ---- js/11-motion-start.js ---- */
+/* Moves begun in a long frame play on the frames that are shown (final motion QA, 2026-10-16). A click's first frame
+   can take a third of a second or more (the arriving page or panel is styled and laid out, a first visit builds its
+   content), and so can the frame after it (its first paint, Glass's first blur). The time a frame draws at is the one
+   from before its work, so a move started in it was over before it was seen: the page exit vanished in one frame, the
+   onboarding window's exit was lost, the rail's held panel went before the new one dealt in.
+   PM_START_ON_SHOWN(anims) puts the moves back to their start at every frame that follows a long one (more than 40 ms
+   after the previous), so they begin from the first frame after which frames come on time; at most `frames` frames
+   (8). `anims` is an array of Animations or a function returning one (read again each frame). */
+(function () {
+  'use strict';
+  window.PM_START_ON_SHOWN = function startOnShown(anims, o) {
+    const max = (o && o.frames) || 8, list = () => { try { return (typeof anims === 'function' ? anims() : anims) || []; } catch (_) { return []; } };
+    let last = null, n = 0;
+    const tick = () => {
+      const now = document.timeline.currentTime;
+      if (now == null) return;
+      const gap = last == null ? Infinity : now - last;
+      last = now;
+      if (gap <= 40) return; /* the frame before this one was on time: the moves run from their last start */
+      list().forEach((a) => { try { if (a && a.playState !== 'idle') a.startTime = now; } catch (_) { /* gone */ } });
+      if (++n < max) requestAnimationFrame(tick);
+    };
+    requestAnimationFrame(tick);
+  };
+})();
+
 /* ---- js/12-theme-transition.js ---- */
 /* A look change answers at once (final motion QA B4, 2026-10-16). Repainting the whole app for a new theme restyles
    every drawn element in one pass (about 250 ms on the P1000, a fraction of that on the M3), and the old menu ran that
@@ -145272,11 +145669,11 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
     sound('open', 0.4);
     if (!still()) {
       const m = motion(), L = look(), chrome = panelEl.querySelector('.pmn-chrome');
-      /* every entrance below starts again, together, on the first frame after the open (final motion QA B10): a first
-         frame that is long (Glass rastering its blur on first show, about half a second on the P1000) otherwise ran the
-         whole entrance behind it, and the panel appeared already open */
+      /* every entrance below plays on the frames that are shown (11-motion-start.js; final motion QA B10): a first frame
+         that is long (Glass rastering its blur on first show, about half a second on the P1000) otherwise ran the whole
+         entrance behind it, and the panel appeared already open */
       const opening = [], play = (el, frames, o) => { const a = playNow(el, frames, o); if (a) opening.push(a); return a; };
-      requestAnimationFrame(() => { const t = document.timeline.currentTime; if (t == null || !open) return; opening.forEach((a) => { try { if (a.playState !== 'idle') a.startTime = t; } catch (_) { /* gone */ } }); });
+      if (window.PM_START_ON_SHOWN) window.PM_START_ON_SHOWN(() => (open ? opening : []));
       if (L === 'retro') {
         play(chrome, [{ transform: 'scale(1, .01)', filter: 'brightness(3)' }, { transform: 'scale(1, .01)', filter: 'brightness(2)', offset: 0.35 }, { transform: 'none', filter: 'none' }], { duration: 260, easing: 'steps(6, end)' });
       } else if (L === 'nier') {
@@ -151707,13 +152104,10 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
     r.classList.remove('o55-opening'); r.classList.add('o55-closing'); r.classList.toggle('o55-handoff', handoff); r.setAttribute('data-o55-ambient', 'off');
     /* the exit plays on frames that are shown: the close's own task (Enter puts the Wizard in place first) can hold the
        first frame for half a second on the P1000, and the timeline that frame draws at is from before that work, so the
-       window and its scrim were already gone when it was drawn. They are put back to their start in that frame and
-       again in the next one (final motion QA A1). */
-    if (!handoff && !O55.motion.reduced()) {
-      const restart = () => { const t = document.timeline.currentTime; if (t == null || S.open) return;
-        [r.querySelector('.o55-win'), r.querySelector('.o55-scrim')].forEach((el) => { if (el) el.getAnimations().forEach((a) => { try { if (a.playState !== 'idle' && Number.isFinite(a.effect.getComputedTiming().endTime)) a.startTime = t; } catch (_) { /* gone */ } }); }); };
-      requestAnimationFrame(() => { restart(); requestAnimationFrame(restart); });
-    }
+       window and its scrim were already gone when it was drawn. They play on the frames that are shown
+       (11-motion-start.js; final motion QA A1). */
+    if (!handoff && !O55.motion.reduced() && window.PM_START_ON_SHOWN) window.PM_START_ON_SHOWN(() => (S.open ? [] :
+      [r.querySelector('.o55-win'), r.querySelector('.o55-scrim')].flatMap((el) => (el ? el.getAnimations().filter((a) => Number.isFinite(a.effect.getComputedTiming().endTime)) : []))));
     if (!handoff) O55.sound.play(reason === 'done' ? 'finish' : 'close');
     /* the skin may keep the root (and its scrim) a while: NieR folds the window to a line that carries on into the
        Guided Tour, and the scrim stays until the tour's own has taken over, so the app never comes up lit between */
@@ -151723,7 +152117,7 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
     if (reason !== 'done' && O55.shell && O55.shell.flushLook) O55.shell.flushLook(400);
     const finish = () => {
       if (S.open) return; /* opened again before this close had finished (Run Onboarding Again): it stays */
-      r.hidden = true; r.setAttribute('data-open', 'false'); r.classList.remove('o55-closing', 'o55-handoff');
+      r.hidden = true; r.setAttribute('data-open', 'false'); r.classList.remove('o55-closing', 'o55-handoff', 'o55-accept');
       document.documentElement.removeAttribute('data-o55-open');
       setInert(false);
       if (S.pausedClock && window.PM_DEMO && window.PM_DEMO.clock && window.PM_DEMO.clock.resume) { try { window.PM_DEMO.clock.resume(); } catch (_) {} }
@@ -158361,6 +158755,16 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
   /* finish(S, {tour, project}) — close onboarding as done and land in the app. */
   O55.finish = function finish(S, o) {
     o = o || {};
+    /* Enter answers on the click's own frame (final motion QA A1: the click's task, which selects the Project, reloads
+       its settings and puts the Wizard in place, held the first frame 0.5-1.2 s on the P1000): the window settles a
+       touch on the compositor, and the work and the window's exit follow in the task after that frame */
+    if (!o.tour && !o.answered) {
+      if (S.finishing) return;
+      S.finishing = true;
+      if (S.root) S.root.classList.add('o55-accept');
+      requestAnimationFrame(() => window.setTimeout(() => { S.finishing = false; finish(S, Object.assign({}, o, { answered: true })); }, 0));
+      return;
+    }
     O55.shell.commitLook(S, { defer: true });
     const cm = S.sess.commit || {}, d = md(S);
     const projectId = o.project || cm.projectId, name = o.projectName || (cm.projectId === projectId ? d.project_name : null) || projectId;
@@ -166207,24 +166611,39 @@ function fitAll(only) {
 }
 /* a cut name is checked once more after things settle (a face that finished loading, an entrance that ended between
    the measurement and the paint): any middle-truncated name that still overflows its box is fitted again */
-let recheckTimer = 0;
+let recheckTimer = 0, recheckReady = null;
 function recheckSoon() {
-  if (recheckTimer) return;
+  if (recheckTimer || recheckReady) return;
   recheckTimer = setTimeout(() => {
     recheckTimer = 0;
     if (!D.on) return;
-    panelEls().forEach(p => {
-      if (!p.offsetWidth) return;
-      const over = Array.from(p.querySelectorAll(MID_SEL)).filter(el => el._dFull != null && el.offsetParent && overflows(el));
-      if (!over.length) return;
-      over.forEach(el => { delete el._dFitKey; });
-      midFitAll(p);
-    });
+    const recheck = () => {
+      if (recheckReady) { recheckReady.disconnect(); recheckReady = null; }
+      if (!D.on) return;
+      /* A 450 ms timer can still meet the theme's pending style writes. Read after ordinary layout (170 ms of
+         forced style on an M3 NieR toggle before this change), and read every panel before any fitting writes. */
+      const rows = panelEls().filter(p => p.isConnected && p.offsetWidth).map(p => ({
+        panel: p,
+        over: Array.from(p.querySelectorAll(MID_SEL)).filter(el => el._dFull != null && el.offsetParent && overflows(el))
+      }));
+      rows.forEach(({ panel, over }) => {
+        if (!over.length) return;
+        over.forEach(el => { delete el._dFitKey; });
+        midFitAll(panel);
+      });
+    };
+    const slot = document.getElementById('sidePanelSlot');
+    if (window.ResizeObserver && slot) { recheckReady = new ResizeObserver(recheck); recheckReady.observe(slot); }
+    else requestAnimationFrame(recheck);
   }, 450);
 }
 let fitTimer = 0;
 function fitSoon() { clearTimeout(fitTimer); fitTimer = setTimeout(() => { if (D.on) fitAll(); }, 60); }
 function watchFit() {
+  remember(() => {
+    clearTimeout(recheckTimer); recheckTimer = 0;
+    if (recheckReady) { recheckReady.disconnect(); recheckReady = null; }
+  });
   const slot = document.getElementById('sidePanelSlot');
   if (window.ResizeObserver && slot) {
     const ro = new ResizeObserver(fitSoon);
@@ -166467,9 +166886,11 @@ function stopEnter(el) { el.getAnimations().forEach(a => { if (a.id === 'd-enter
    next frame: the first frame shows the start, then everything runs from one start time. */
 function startTogether(anims) {
   if (!anims || !anims.length) return;
-  /* ...and once more on the frame after that one: that frame can itself be the long one (the fit pass and the new
-     view's first layout), and the time it draws at is from before its work, so a move started in it was over before it
-     showed (P1000 films, final motion QA A8: the held panel gone and the new one still empty for ~100 ms) */
+  /* ...and again at every frame that follows a long one: such a frame (the fit pass, the new view's first layout and
+     paint) draws at the time from before its work, so a move started in it was over before it showed (P1000 films,
+     final motion QA A8: the held panel gone and the new one still empty for ~100 ms). The page's PM_START_ON_SHOWN
+     does this; the double reset below is the fallback for the review copy without it. */
+  if (window.PM_START_ON_SHOWN) { window.PM_START_ON_SHOWN(anims); return; }   /* opus-5.5 src/js/11-motion-start.js */
   const restart = () => {
     const t = document.timeline.currentTime;
     if (t == null) return;
@@ -188827,6 +189248,11 @@ function mintId() {
   return max >= 9999 ? 'dashboard:home' : 'dashboard:dash-' + (max + 1);
 }
 
+/* the Home board opens as the pinned Home tab from every path (the "+" menu, the Board menu, a page's subtab), so a Home
+   tab opened anywhere is the same compact tab the layouts make (14-layouts.js 'dashboard:home'; Jared, 2026-10-15: "you
+   can add another home but its not small like the first one is") */
+function homePinned(b) { return b === 'home'; }
+
 /* ---- tabs of this kind ---- */
 var recs = {};          // tabId -> rec
 var curProject = null;  // the project the mounted boards are keyed to
@@ -189602,7 +190028,7 @@ function enterEmpty(E) {
 function openBoard(rec, b) {
   if (b === 'new') { rec.api.open({ kind: 'dashboard', board: 'new' }); return; }
   if (b === rec.board) return;
-  rec.api.open({ kind: 'dashboard', id: 'dashboard:' + b, board: b, label: labelOf(b) });
+  rec.api.open({ kind: 'dashboard', id: 'dashboard:' + b, board: b, label: labelOf(b), pinned: homePinned(b) });
 }
 /* a custom dashboard's second line: how many widgets it holds (a board not open is read from its key) */
 function storedCount(b) {
@@ -189782,7 +190208,7 @@ PM_HOME.registerKind('dashboard', {
     spec: function (sub) {
       if (sub === 'new') return { kind: 'dashboard', board: 'new' };
       var b = isBoard(sub) ? sub : 'home';
-      return { kind: 'dashboard', board: b, id: 'dashboard:' + b, label: labelOf(b) };
+      return { kind: 'dashboard', board: b, id: 'dashboard:' + b, label: labelOf(b), pinned: homePinned(b) };
     }
   },
   mount: function (host, st, api) {
@@ -189862,7 +190288,7 @@ PM_HOME.registerKind('dashboard', {
    when one is made, renamed or the project changes) */
 PM_HOME.catalog.add('dashboard', FIXED_IDS.map(function (b) {
   return { id: 'dashboard:' + b, label: FIXED[b].label, sub: FIXED[b].sub, icon: 'dashboard', keywords: 'dashboard board widgets ' + b,
-    spec: { kind: 'dashboard', board: b, id: 'dashboard:' + b, label: FIXED[b].label } };
+    spec: { kind: 'dashboard', board: b, id: 'dashboard:' + b, label: FIXED[b].label, pinned: homePinned(b) } };
 }).concat([{ id: 'dashboard:new', label: 'New dashboard', sub: NEW_SUB, icon: 'dashboard', keywords: 'dashboard board widgets new empty',
   spec: { kind: 'dashboard', board: 'new' } }]));
 function refreshCatalog() {
@@ -189881,7 +190307,7 @@ function refreshCatalog() {
 function reveal(board) {
   if (board === 'new') return PM_HOME.open({ kind: 'dashboard', board: 'new' });
   if (!isBoard(board)) board = 'home';
-  return PM_HOME.open({ kind: 'dashboard', id: 'dashboard:' + board, board: board, label: labelOf(board) });
+  return PM_HOME.open({ kind: 'dashboard', id: 'dashboard:' + board, board: board, label: labelOf(board), pinned: homePinned(board) });
 }
 /* the stored dashboards of this project: every key of an engine board id, plus the live boards' (a board not written
    yet reads null) */
@@ -217086,14 +217512,35 @@ try { if (window.PM_HOME && typeof window.PM_HOME.boot === 'function') window.PM
   /* the switcher in another look (Jared #22, 2026-10-15): Glass's tabs, segments and list selections are one component
      (the strips below and their lenses), drawn from --pm-switch-* tokens (glass.css section 12). A look that sets
      --pm-switch: lens adopts it; its strips and lenses then run here, without Glass's sheets, frost or refraction.
-     Read when the look changes (one style read), and mirrored on <html data-pm-switch> for the CSS. */
-  var switchLook = false;
+     Read when the look changes (one style read), and mirrored on <html data-pm-switch> for the CSS.
+     Q16 (2026-10-15), three more tokens, read in the same style read and never in Glass:
+     - --pm-switch-layer: under draws each lens inside its strip, over the track and under the labels, so a look whose
+       chosen item is an opaque chip with its label inverted (Retro's reverse video, NieR's ink bar) can adopt the
+       component; mirrored on <html data-pm-switch-layer>.
+     - --pm-switch-swell (0..1): how much of Glass's label swell the look keeps (the chosen label's resting size and its
+       size under a moving lens). Unset is 1.
+     - --pm-switch-liquid (0..1): how much of the drop's stretch, lift and landing wobble the look keeps. Unset is 1. */
+  var switchLook = false, switchUnder = false, switchSwell = 1, switchLiquid = 1;
+  function tokenNumber(v, dflt) { var n = parseFloat(v); return isFinite(n) ? Math.max(0, Math.min(1, n)) : dflt; }
   function readSwitch() {
-    var on = false;
-    if (!isGlass()) { try { on = getComputedStyle(root).getPropertyValue('--pm-switch').trim() === 'lens'; } catch (e) {} }
-    switchLook = on;
+    var on = false, under = false, swell = 1, liquid = 1;
+    if (!isGlass()) {
+      try {
+        var cs = getComputedStyle(root); on = cs.getPropertyValue('--pm-switch').trim() === 'lens';
+        if (on) {
+          under = cs.getPropertyValue('--pm-switch-layer').trim() === 'under';
+          swell = tokenNumber(cs.getPropertyValue('--pm-switch-swell'), 1); liquid = tokenNumber(cs.getPropertyValue('--pm-switch-liquid'), 1);
+        }
+      } catch (e) {}
+    }
+    var relayer = under !== switchUnder;
+    switchLook = on; switchUnder = under; switchSwell = swell; switchLiquid = liquid;
     if (on) { if (root.getAttribute('data-pm-switch') !== 'lens') root.setAttribute('data-pm-switch', 'lens'); }
     else if (root.hasAttribute('data-pm-switch')) root.removeAttribute('data-pm-switch');
+    if (under) { if (root.getAttribute('data-pm-switch-layer') !== 'under') root.setAttribute('data-pm-switch-layer', 'under'); }
+    else if (root.hasAttribute('data-pm-switch-layer')) root.removeAttribute('data-pm-switch-layer');
+    /* every lens lives in the layer of the mode it was made in: a change of mode makes them again in the other */
+    if (relayer && typeof relayerLenses === 'function') relayerLenses();
   }
   function switchOn() { return isGlass() || switchLook; }
   function gpu() { return root.getAttribute('data-lg-tier') !== 'cpu'; }
@@ -218095,6 +218542,7 @@ try { if (window.PM_HOME && typeof window.PM_HOME.boot === 'function') window.PM
   var LENS_HOSTS = '#pm-o55-onboarding .o55-win, #pmw-overlay .pmt-cz-dialog, #pmw-overlay [role="dialog"], #themeMenu, [data-lg-lens-host], .primary-content > .page';
   var lenses = new Map(), layer = null, localLayers = new WeakMap();
   function lensLayer(strip) {
+    if (switchUnder && strip) return underLayer(strip);
     var host = strip && strip.closest && strip.closest(LENS_HOSTS);
     if (host) {
       var own = localLayers.get(host);
@@ -218106,6 +218554,24 @@ try { if (window.PM_HOME && typeof window.PM_HOME.boot === 'function') window.PM
     if (layer && layer.isConnected) return layer;
     layer = el('div', { id: 'lg-lenses', 'aria-hidden': 'true' });
     (document.querySelector('.app-shell') || document.body).appendChild(layer); return layer;
+  }
+  /* --pm-switch-layer: under. The strip's own layer, added once as the strip's last child (no :first-child or :nth-child
+     rule of its items changes; an item's :last-child does, so strips use :last-of-type, which the layer's own tag never
+     takes; a custom tag matches no item selector) and positioned over the strip's padding box, so its
+     lens paints over the strip's track and under its items (z-index 1). A static strip is made relative while it holds
+     the layer. The layer goes when its lens does (the strip is redrawn or the look leaves this mode). */
+  function underLayer(strip) {
+    var own = strip.__lgUnder;
+    if (own && own.parentElement === strip) return own;
+    /* data-o55-foreign: Settings' in-place patch (kit.d/28-in-place.js) keeps it through a re-render of the strip */
+    own = el('lg-under', { class: 'lg-lenses-under', 'aria-hidden': 'true', 'data-o55-foreign': '' });
+    if (getComputedStyle(strip).position === 'static') { strip.style.position = 'relative'; strip.__lgPos = true; }
+    strip.appendChild(own); strip.__lgUnder = own; return own;
+  }
+  function dropUnderLayer(strip, own) {
+    if (own && own.parentElement) own.remove();
+    if (strip.__lgUnder === own) strip.__lgUnder = null;
+    if (strip.__lgPos && !strip.__lgUnder) { strip.style.removeProperty('position'); strip.__lgPos = false; }
   }
   /* the lens is 2 px larger than the item on every side, so the label never reaches into its bevel at rest */
   function unionRect(list) {
@@ -218160,7 +218626,18 @@ try { if (window.PM_HOME && typeof window.PM_HOME.boot === 'function') window.PM
     indexAncestors(strip, scrollStrips, stripAncestors);
     var lens = el('i', { class: 'lg-lens', 'aria-hidden': 'true', 'data-lg-lens': cfg.kind }), own = lensLayer(strip);
     own.appendChild(lens);
-    L = { strip: strip, lens: lens, layer: own, rect: null, anim: null, glintAnim: null, magAnims: null, scrubCleanup: null, cfg: cfg, warm: '', scroller: scrollerOf(strip) }; lenses.set(strip, L);
+    L = { strip: strip, lens: lens, layer: own, under: own.classList.contains('lg-lenses-under'), rect: null, anim: null, glintAnim: null, magAnims: null, scrubCleanup: null, cfg: cfg, warm: '', scroller: scrollerOf(strip) }; lenses.set(strip, L);
+    /* an under-layer lens lost with its layer while its strip stays (the app redrew the strip's rows: Settings' left bar
+       on a chapter change) comes back where the old chip was drawn, so it glides on to the new choice instead of
+       appearing there */
+    var last = L.under && strip.__lgLast;
+    if (last) {
+      strip.__lgLast = null;
+      if (performance.now() - last.t < 1200) {
+        var s = lens.style; s.left = last.rect.x + 'px'; s.top = last.rect.y + 'px'; s.width = last.rect.w + 'px'; s.height = last.rect.h + 'px';
+        L.rect = last.rect; L.tgt = null; L.pending = last.pending;   /* no target yet: the next sync travels from here */
+      } else if (last.pending) pressMark(last.pending, false);
+    }
     if (cfg.mark && !strip.hasAttribute('data-lg-lensed')) strip.setAttribute('data-lg-lensed', '');
     return L;
   }
@@ -218239,12 +218716,26 @@ try { if (window.PM_HOME && typeof window.PM_HOME.boot === 'function') window.PM
     e.remove();
   }
   function disposeLens(L) {
+    if (L.under && L.rect && L.strip.isConnected && !L.lens.isConnected) {
+      var carry = L.strip.__lgLast = { rect: visualRect(L) || L.rect, pending: L.pending, t: performance.now() }, cs = L.strip;
+      /* a carry nobody takes up in time lets its press marks go (Glass owner's review) */
+      if (carry.pending) setTimeout(function () { if (cs.__lgLast === carry) { cs.__lgLast = null; pressMark(carry.pending, false); } }, 1300);
+    }
+    else if (L.pending) pressMark(L.pending, false);
+    L.pending = null;
     forgetAncestors(L.strip, scrollStrips, stripAncestors);
     stopLensTravel(L); if (L.scrubCleanup) L.scrubCleanup();
     removeLensElement(L.lens); L.rect = null;
     if (L.layer && L.layer.classList.contains('lg-lenses-local') && !L.layer.children.length) {
       if (L.layer.parentElement) localLayers.delete(L.layer.parentElement); L.layer.remove();
     }
+    if (L.under && !L.layer.children.length) dropUnderLayer(L.strip, L.layer);
+  }
+  /* the switcher's layer mode changed (a look with --pm-switch-layer: under came or went): every lens is made again on
+     the next sync, in the layer of the new mode */
+  function relayerLenses() {
+    lenses.forEach(function (L) { disposeLens(L); }); lenses.clear();
+    if (typeof hiddenLenses !== 'undefined') hiddenLenses.clear();
   }
   function pruneLenses() {
     lenses.forEach(function (L, strip) { if (!strip.isConnected || !L.lens.isConnected) { disposeLens(L); lenses.delete(strip); } });
@@ -218279,7 +218770,11 @@ try { if (window.PM_HOME && typeof window.PM_HOME.boot === 'function') window.PM
       var r = boxRect(e); return { el: e, c: vertical ? r.top + r.height / 2 : r.left + r.width / 2, half: (vertical ? r.height : r.width) / 2 };
     }).filter(Boolean);
   }
-  function magsOf(cfg) { var k = KINDS[cfg.kind] || {}; return { rest: cfg.magRest != null ? cfg.magRest : k.magRest || 1, lift: cfg.magLift != null ? cfg.magLift : k.magLift || 1 }; }
+  function magsOf(cfg) {
+    var k = KINDS[cfg.kind] || {}, rest = cfg.magRest != null ? cfg.magRest : k.magRest || 1, lift = cfg.magLift != null ? cfg.magLift : k.magLift || 1;
+    if (switchSwell !== 1) { rest = 1 + (rest - 1) * switchSwell; lift = 1 + (lift - 1) * switchSwell; }   /* --pm-switch-swell (never in Glass) */
+    return { rest: rest, lift: lift };
+  }
   /* how much of a label the lens covers: 1 while the label's centre is well inside it, easing to 0 as it leaves */
   function coverage(c, half, lab) {
     var d = Math.abs(lab.c - c), a = half - lab.half * 0.55, b = half + lab.half * 0.35;
@@ -218310,16 +218805,16 @@ try { if (window.PM_HOME && typeof window.PM_HOME.boot === 'function') window.PM
     setLensBox(L, B);
     var S = spring.apply(null, GLIDE), dur = S[S.length - 1].t, frames = [], glint = [], track = [];
     var dist = vertical ? (B.y + B.h / 2) - (A.y + A.h / 2) : (B.x + B.w / 2) - (A.x + A.w / 2), ad = Math.abs(dist), dir = dist < 0 ? -1 : 1;
-    var sw = A.w / B.w, shh = A.h / B.h, land = -1, lr = L.layer.getBoundingClientRect();
+    var sw = A.w / B.w, shh = A.h / B.h, land = -1, lr = L.layer.getBoundingClientRect(), liq = switchLiquid;   /* --pm-switch-liquid (never in Glass) */
     var cB = vertical ? lr.top + B.y + B.h / 2 : lr.left + B.x + B.w / 2, rects = [];
     for (var i = 0; i < S.length; i++) {
       var t = S[i].t, p = S[i].x, v = S[i].v, over = (p - 1) * ad;
       if (over > 0) p = 1 + 3 * Math.tanh(over / 3) / Math.max(1, ad);
       if (land < 0 && p >= 0.985) land = t;
       var off = (1 - p) * -dist, lift = Math.max(0, Math.sin(Math.PI * Math.min(1, t / (dur * 0.62))));
-      var sp = Math.min(1, Math.abs(v) * ad / 2400), along = 1 + Math.min(0.24, sp * 0.3), across = 1 - (along - 1) * 0.4;
-      var wob = land < 0 ? 0 : 0.05 * Math.min(1, ad / 120) * Math.exp(-(t - land) / 110) * Math.sin(2 * Math.PI * (t - land) / 190);
-      var q = Math.min(1, Math.max(0, p)), grow = 1 + 0.07 * lift, w = (sw + (1 - sw) * q) * grow, h = (shh + (1 - shh) * q) * grow;
+      var sp = Math.min(1, Math.abs(v) * ad / 2400), along = 1 + Math.min(0.24, sp * 0.3) * liq, across = 1 - (along - 1) * 0.4;
+      var wob = land < 0 ? 0 : liq * 0.05 * Math.min(1, ad / 120) * Math.exp(-(t - land) / 110) * Math.sin(2 * Math.PI * (t - land) / 190);
+      var q = Math.min(1, Math.max(0, p)), grow = 1 + 0.07 * lift * liq, w = (sw + (1 - sw) * q) * grow, h = (shh + (1 - shh) * q) * grow;
       var sx = vertical ? w * across * (1 - wob * 0.6) : w * along * (1 + wob), sy = vertical ? h * along * (1 + wob) : h * across * (1 - wob * 0.6);
       var at = t / dur;
       frames.push({ offset: at, transform: (vertical ? 'translate3d(0,' + off.toFixed(2) + 'px,0)' : 'translate3d(' + off.toFixed(2) + 'px,0,0)') + ' scale(' + sx.toFixed(4) + ',' + sy.toFixed(4) + ')' });
@@ -218382,16 +218877,18 @@ try { if (window.PM_HOME && typeof window.PM_HOME.boot === 'function') window.PM
     if (hiddenLenses.size) showT = setTimeout(checkShown, 400);
   }
   function syncStrip(cfg, strip) {
-    var L = lensFor(strip, cfg);
+    var L = lensFor(strip, cfg), P0 = L.pending;
     var target = cfg.pick ? cfg.pick(strip) : strip.querySelector(cfg.items + (cfg.active || '.active'));
     if (L.pending) {
       /* pressed, not yet chosen by the app: hold the lens there until the app makes any choice. This app switches on
          the release, after up to a few hundred ms of work, and its click comes later still; a release elsewhere
          abandons the press. */
       var now = performance.now(), P = L.pending;
-      if (!P.el.isConnected || target !== P.from || P.away || (P.up && now - P.up > 2500)) L.pending = null;
+      if (!P.el.isConnected || target !== P.from || P.away || (P.up && now - P.up > 2500)) { pressMark(P, false); L.pending = null; }
       else target = P.el;
     }
+    if (L.pending && !L.pending.el.isConnected) { pressMark(L.pending, false); L.pending = null; }
+    if (P0 && P0 !== L.pending) pressMark(P0, false);
     if (!target || !visible(target) || !visible(strip)) { stopLensTravel(L); if (L.scrubCleanup) L.scrubCleanup(); if (L.lens.style.opacity !== '0') L.lens.style.opacity = '0'; L.rect = null; awaitShow(L, cfg); return; }
     hiddenLenses.delete(L);
     if (L.scroller && L.scroller.isConnected) {
@@ -218435,6 +218932,19 @@ try { if (window.PM_HOME && typeof window.PM_HOME.boot === 'function') window.PM
   /* the press: the lens leaves for the pressed item at once; the app's choice (or its absence) settles it. Only for
      items the app can choose: a disabled or inert item, or a strip that takes no press (a progress rail), keeps the lens
      where it is (it used to sit on the pressed step for the 2.5 s hold, then slide back). */
+  /* while a press moves the chip ahead of the app's choice, the pressed item reads as chosen and the one it leaves as not
+     (data-lg-press on / off, glass.css section 12), so neither label sits in its old colour on the wrong ground: under an
+     opaque chip (--pm-switch-layer: under) the chosen label is inverted, and on a tinted one the label it left kept its
+     chosen ink after the chip had gone (Friendly's mint words, Q16 review). Every look that adopts the switcher; never
+     Glass, whose clear lens needs no second ink */
+  function pressMark(P, on) {
+    if (!P || (on && !switchLook)) return;
+    [[P.el, 'on'], [P.from, 'off']].forEach(function (x) {
+      var e = x[0]; if (!e) return;
+      if (on) { if (e.getAttribute('data-lg-press') !== x[1]) e.setAttribute('data-lg-press', x[1]); }
+      else if (e.hasAttribute('data-lg-press')) e.removeAttribute('data-lg-press');
+    });
+  }
   function choosable(item, cfg) {
     return cfg.press !== false && !item.disabled && item.getAttribute('aria-disabled') !== 'true' && !item.closest('[inert]');
   }
@@ -218452,7 +218962,8 @@ try { if (window.PM_HOME && typeof window.PM_HOME.boot === 'function') window.PM
     var L = lenses.get(hit.strip); if (!L || !L.rect || L.dragging) return;
     var cur = hit.cfg.pick ? hit.cfg.pick(hit.strip) : hit.strip.querySelector(hit.cfg.items + (hit.cfg.active || '.active'));
     if (hit.item === cur) return;
-    L.pending = { el: hit.item, from: cur, up: 0, away: false };
+    if (L.pending) pressMark(L.pending, false);
+    L.pending = { el: hit.item, from: cur, up: 0, away: false }; pressMark(L.pending, true);
     syncStrip(hit.cfg, hit.strip);
   }, true);
   document.addEventListener('pointerup', function (e) {
@@ -218462,11 +218973,11 @@ try { if (window.PM_HOME && typeof window.PM_HOME.boot === 'function') window.PM
       if (P.away) queueSync(L.strip); else setTimeout(function () { queueSync(L.strip); }, 2550);
     });
   }, true);
-  document.addEventListener('pointercancel', function () { lenses.forEach(function (L) { if (L.pending) { L.pending = null; queueSync(L.strip); } }); }, true);
+  document.addEventListener('pointercancel', function () { lenses.forEach(function (L) { if (L.pending) { pressMark(L.pending, false); L.pending = null; queueSync(L.strip); } }); }, true);
   /* scrubbing: press on a tab strip and slide; the lens lifts and follows the pointer like a drop of water, magnifying
      each tab it passes, and drops into the nearest tab on release (which then becomes the chosen one) */
   function scrubbing(e) {
-    if (!switchOn() || e.button !== 0 || reduced()) return;
+    if (!switchOn() || e.button !== 0 || reduced() || switchUnder) return;
     for (var i = 0; i < STRIPS.length; i++) {
       var cfg = STRIPS[i]; if (!cfg.scrub || cfg.press === false) continue;
       var strip = e.target.closest && e.target.closest(cfg.sel); if (!strip) continue;
@@ -218480,7 +218991,7 @@ try { if (window.PM_HOME && typeof window.PM_HOME.boot === 'function') window.PM
         if (!moved2) { moved2 = true; L.dragging = true; L.pending = null; stopLensTravel(L); L.lens.setAttribute('data-lg-lifted', ''); labs = labelsOf(cfg, strip, false); try { getSelection().removeAllRanges(); } catch (e2) {} }
         var sr = strip.getBoundingClientRect(), lr = L.layer.getBoundingClientRect(), x = ev.clientX - sr.left - L.rect.w / 2;
         var lo = 0, hi = strip.clientWidth - L.rect.w; if (x < lo) x = lo - Math.sqrt(lo - x) * 2; if (x > hi) x = hi + Math.sqrt(x - hi) * 2;
-        L.lens.style.transform = 'translate3d(' + (sr.left - lr.left + x - L.rect.x).toFixed(1) + 'px,0,0) scale(1.1,1.12)';
+        L.lens.style.transform = 'translate3d(' + (sr.left - lr.left + x - L.rect.x).toFixed(1) + 'px,0,0) scale(' + (1 + 0.1 * switchLiquid).toFixed(3) + ',' + (1 + 0.12 * switchLiquid).toFixed(3) + ')';
         var c = sr.left + x + L.rect.w / 2, half = L.rect.w * 1.1 / 2;
         labs.forEach(function (lab) { var g = magnified(lab, c, half, 1, mags); lab.el.style.scale = g.m.toFixed(4); lab.el.style.translate = g.d.toFixed(2) + 'px 0px'; });
         ev.preventDefault();
@@ -218732,7 +219243,7 @@ try { if (window.PM_HOME && typeof window.PM_HOME.boot === 'function') window.PM
   }
   function lensesUnder(menus) {
     lenses.forEach(function (L) {
-      if (!L.rect) return;
+      if (!L.rect || L.under) return;   /* a lens under its labels is under every menu already */
       if (!menus.length) { if (L.lens.classList.contains('lg-under')) L.lens.classList.remove('lg-under'); return; }
       /* a lens drawn inside a menu (the theme menu's Light / Dark / Auto) is on that menu, not under it */
       var r = L.lens.getBoundingClientRect(), hit = menus.some(function (o) { var m = o.r; return !o.el.contains(L.lens) && r.right > m.left && r.left < m.right && r.bottom > m.top && r.top < m.bottom; });
@@ -218873,7 +219384,7 @@ try { if (window.PM_HOME && typeof window.PM_HOME.boot === 'function') window.PM
     if (!lazyT) lazyT = setTimeout(function () { lazyT = 0; queueSync(); }, 140);
   }
   var HOT = '[data-lg-surface], .page-tab, #pmuRange > button, .pmu-navbtn, .pm-segtab-item, #activityBar .icon, .side-panel-view, .pmu-pop, .pmr-menu-list, .pmr-menu-group, .pm6-tb-menu, .o55-railitem, .o55-seg button, .o55-win, .o55t-callout, .o55t-bar';
-  var GENERATED = '#lg-optics, #lg-lenses, .lg-lenses-local, #lg-shine, .lg-press, .pm-segtab-track, #lg-post';
+  var GENERATED = '#lg-optics, #lg-lenses, .lg-lenses-local, .lg-lenses-under, #lg-shine, .lg-press, .pm-segtab-track, #lg-post';
   var MENU_HOT = '[data-lg-surface], .pmu-pop, .pmr-menu-list, .pm6-tb-menu, .o55-win, .o55t-callout, .o55t-bar';
   function generatedMutation(rec) {
     var t = rec.target;
@@ -218888,7 +219399,7 @@ try { if (window.PM_HOME && typeof window.PM_HOME.boot === 'function') window.PM
   }
   var lastPage = null, lastTheme = root.getAttribute('data-theme'), lastLg = root.getAttribute('data-lg');
   var lastTier = root.getAttribute('data-lg-tier'), lastWall = root.getAttribute('data-lg-wall'), lastMotion = root.getAttribute('data-motion');
-  var lastO55 = root.hasAttribute('data-o55-open');
+  var lastO55 = root.hasAttribute('data-o55-open'), lastNier = root.getAttribute('data-o55-nier');
   /* a card inserted into the board during a room change: marked now, mounted by sizeWatch after the next layout */
   function premark(nodes) {
     for (var i = 0; i < nodes.length; i++) {
@@ -218903,6 +219414,9 @@ try { if (window.PM_HOME && typeof window.PM_HOME.boot === 'function') window.PM
   var mo = new MutationObserver(function (recs) {
     var hot = false, menuHot = false, relevant = false, area = boardMoment() ? document.querySelector(BOARD_AREA) : null;
     for (var i = 0; i < recs.length; i++) {
+      /* an app redrew a strip and dropped its under-layer with the chip in it: the chip comes back in this frame, not after
+         the lazy sync (an opaque chip gone for 140 ms left its inverted label on bare ground) */
+      if (switchUnder && recs[i].type === 'childList') for (var u = 0; u < recs[i].removedNodes.length; u++) { var rn = recs[i].removedNodes[u]; if (rn.nodeType === 1 && rn.matches('.lg-lenses-under')) hot = true; }
       /* optics, lenses and light are outputs of sync, never inputs that should schedule it again */
       if (generatedMutation(recs[i])) continue;
       if (recs[i].type === 'attributes' && recs[i].oldValue === recs[i].target.getAttribute(recs[i].attributeName)) continue;
@@ -218918,9 +219432,13 @@ try { if (window.PM_HOME && typeof window.PM_HOME.boot === 'function') window.PM
     if (!relevant) return;
     var page = document.querySelector('.page-tabs .page-tab.active'); page = page && page.id;
     var changed = Array.from(dirtyRoots), full = dirtyAll;
-    /* a change syncs after layout (afterLayout); a menu opening still gets its first keyframe at once */
+    /* a change syncs after the frame's own layout (afterLayout), where every read is free, instead of forcing the app's
+       half-built page through style and layout inside its click; a menu opening in Glass still gets its first keyframe at
+       once. A look that adopts the switcher has no glass to keep in step: its strips sync after the frame's own layout,
+       where every read is free, instead of forcing the app's half-built page through style and layout inside its click
+       (Q16). A press still moves the lens at once (pointerdown). */
     if (area && !menuHot) afterLayout();
-    else if (hot && switchOn()) { if (menuHot || !afterLayout()) hotSync(); }
+    else if (hot && switchOn()) { if ((menuHot && isGlass()) || !afterLayout()) hotSync(); }
     else lazySync(false);
     if (page !== lastPage) {
       var first = lastPage === null; lastPage = page;
@@ -218941,6 +219459,10 @@ try { if (window.PM_HOME && typeof window.PM_HOME.boot === 'function') window.PM
     /* the onboarding window opening or closing hides or shows the app's strips: every lens is checked again */
     var o55 = root.hasAttribute('data-o55-open');
     if (o55 !== lastO55) { lastO55 = o55; dirtyAll = true; queueSync(); }
+    /* NieR Mode paints over a Basic look without changing data-theme: a look's switcher tokens may differ with it on
+       (Q16), so they are read again and every strip synced */
+    var nier = root.getAttribute('data-o55-nier');
+    if (nier !== lastNier) { lastNier = nier; readSwitch(); lenses.forEach(function (L) { L.rect = null; }); syncAll(); }
     if (th === lastTheme && lg === lastLg && tier === lastTier && wall === lastWall && motion === lastMotion) return;
     /* the print is about to change under glass that stays glass: hold the one the current frost was made from */
     var wasGlass = lastLg === 'on' && /^glass/.test(lastTheme || '');
@@ -218954,6 +219476,9 @@ try { if (window.PM_HOME && typeof window.PM_HOME.boot === 'function') window.PM
     lastTier = tier; lastWall = wall; lastMotion = motion;
     if (th !== lastTheme || lg !== lastLg) {
       readSwitch();
+      /* the hover bead is Glass's alone: a look that leaves Glass drops it (a look that adopts the switcher paints every
+         .lg-lens as its chip, so a bead left behind stood on the title bar as a block until a reload; Q16 review F1) */
+      if (!isGlass() && bead) { resetBead(); removeLensElement(bead); bead = null; }
       var enter = isGlass() && (!/^glass/.test(lastTheme || '') || lastLg !== 'on');
       lastTheme = th; lastLg = lg; lenses.forEach(function (L) { L.rect = null; });
       glassSet.forEach(function (e) { e.__lgSig = null; });
@@ -218964,7 +219489,7 @@ try { if (window.PM_HOME && typeof window.PM_HOME.boot === 'function') window.PM
       else afterLayout();
       lastWall = root.getAttribute('data-lg-wall');
     } else { dirtyAll = true; queueSync(); }
-  }).observe(root, { attributes: true, attributeFilter: ['data-theme', 'data-lg', 'data-lg-tier', 'data-lg-wall', 'data-motion', 'data-o55-open', 'data-pmu-moment'] });
+  }).observe(root, { attributes: true, attributeFilter: ['data-theme', 'data-lg', 'data-lg-tier', 'data-lg-wall', 'data-motion', 'data-o55-open', 'data-pmu-moment', 'data-o55-nier'] });
   applyWall();
   window.addEventListener('blur', function () { root.setAttribute('data-lg-inactive', ''); });
   window.addEventListener('focus', function () { root.removeAttribute('data-lg-inactive'); });

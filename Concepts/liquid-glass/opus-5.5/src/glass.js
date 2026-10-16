@@ -31,14 +31,35 @@
   /* the switcher in another look (Jared #22, 2026-10-15): Glass's tabs, segments and list selections are one component
      (the strips below and their lenses), drawn from --pm-switch-* tokens (glass.css section 12). A look that sets
      --pm-switch: lens adopts it; its strips and lenses then run here, without Glass's sheets, frost or refraction.
-     Read when the look changes (one style read), and mirrored on <html data-pm-switch> for the CSS. */
-  var switchLook = false;
+     Read when the look changes (one style read), and mirrored on <html data-pm-switch> for the CSS.
+     Q16 (2026-10-15), three more tokens, read in the same style read and never in Glass:
+     - --pm-switch-layer: under draws each lens inside its strip, over the track and under the labels, so a look whose
+       chosen item is an opaque chip with its label inverted (Retro's reverse video, NieR's ink bar) can adopt the
+       component; mirrored on <html data-pm-switch-layer>.
+     - --pm-switch-swell (0..1): how much of Glass's label swell the look keeps (the chosen label's resting size and its
+       size under a moving lens). Unset is 1.
+     - --pm-switch-liquid (0..1): how much of the drop's stretch, lift and landing wobble the look keeps. Unset is 1. */
+  var switchLook = false, switchUnder = false, switchSwell = 1, switchLiquid = 1;
+  function tokenNumber(v, dflt) { var n = parseFloat(v); return isFinite(n) ? Math.max(0, Math.min(1, n)) : dflt; }
   function readSwitch() {
-    var on = false;
-    if (!isGlass()) { try { on = getComputedStyle(root).getPropertyValue('--pm-switch').trim() === 'lens'; } catch (e) {} }
-    switchLook = on;
+    var on = false, under = false, swell = 1, liquid = 1;
+    if (!isGlass()) {
+      try {
+        var cs = getComputedStyle(root); on = cs.getPropertyValue('--pm-switch').trim() === 'lens';
+        if (on) {
+          under = cs.getPropertyValue('--pm-switch-layer').trim() === 'under';
+          swell = tokenNumber(cs.getPropertyValue('--pm-switch-swell'), 1); liquid = tokenNumber(cs.getPropertyValue('--pm-switch-liquid'), 1);
+        }
+      } catch (e) {}
+    }
+    var relayer = under !== switchUnder;
+    switchLook = on; switchUnder = under; switchSwell = swell; switchLiquid = liquid;
     if (on) { if (root.getAttribute('data-pm-switch') !== 'lens') root.setAttribute('data-pm-switch', 'lens'); }
     else if (root.hasAttribute('data-pm-switch')) root.removeAttribute('data-pm-switch');
+    if (under) { if (root.getAttribute('data-pm-switch-layer') !== 'under') root.setAttribute('data-pm-switch-layer', 'under'); }
+    else if (root.hasAttribute('data-pm-switch-layer')) root.removeAttribute('data-pm-switch-layer');
+    /* every lens lives in the layer of the mode it was made in: a change of mode makes them again in the other */
+    if (relayer && typeof relayerLenses === 'function') relayerLenses();
   }
   function switchOn() { return isGlass() || switchLook; }
   function gpu() { return root.getAttribute('data-lg-tier') !== 'cpu'; }
@@ -1040,6 +1061,7 @@
   var LENS_HOSTS = '#pm-o55-onboarding .o55-win, #pmw-overlay .pmt-cz-dialog, #pmw-overlay [role="dialog"], #themeMenu, [data-lg-lens-host], .primary-content > .page';
   var lenses = new Map(), layer = null, localLayers = new WeakMap();
   function lensLayer(strip) {
+    if (switchUnder && strip) return underLayer(strip);
     var host = strip && strip.closest && strip.closest(LENS_HOSTS);
     if (host) {
       var own = localLayers.get(host);
@@ -1051,6 +1073,24 @@
     if (layer && layer.isConnected) return layer;
     layer = el('div', { id: 'lg-lenses', 'aria-hidden': 'true' });
     (document.querySelector('.app-shell') || document.body).appendChild(layer); return layer;
+  }
+  /* --pm-switch-layer: under. The strip's own layer, added once as the strip's last child (no :first-child or :nth-child
+     rule of its items changes; an item's :last-child does, so strips use :last-of-type, which the layer's own tag never
+     takes; a custom tag matches no item selector) and positioned over the strip's padding box, so its
+     lens paints over the strip's track and under its items (z-index 1). A static strip is made relative while it holds
+     the layer. The layer goes when its lens does (the strip is redrawn or the look leaves this mode). */
+  function underLayer(strip) {
+    var own = strip.__lgUnder;
+    if (own && own.parentElement === strip) return own;
+    /* data-o55-foreign: Settings' in-place patch (kit.d/28-in-place.js) keeps it through a re-render of the strip */
+    own = el('lg-under', { class: 'lg-lenses-under', 'aria-hidden': 'true', 'data-o55-foreign': '' });
+    if (getComputedStyle(strip).position === 'static') { strip.style.position = 'relative'; strip.__lgPos = true; }
+    strip.appendChild(own); strip.__lgUnder = own; return own;
+  }
+  function dropUnderLayer(strip, own) {
+    if (own && own.parentElement) own.remove();
+    if (strip.__lgUnder === own) strip.__lgUnder = null;
+    if (strip.__lgPos && !strip.__lgUnder) { strip.style.removeProperty('position'); strip.__lgPos = false; }
   }
   /* the lens is 2 px larger than the item on every side, so the label never reaches into its bevel at rest */
   function unionRect(list) {
@@ -1105,7 +1145,18 @@
     indexAncestors(strip, scrollStrips, stripAncestors);
     var lens = el('i', { class: 'lg-lens', 'aria-hidden': 'true', 'data-lg-lens': cfg.kind }), own = lensLayer(strip);
     own.appendChild(lens);
-    L = { strip: strip, lens: lens, layer: own, rect: null, anim: null, glintAnim: null, magAnims: null, scrubCleanup: null, cfg: cfg, warm: '', scroller: scrollerOf(strip) }; lenses.set(strip, L);
+    L = { strip: strip, lens: lens, layer: own, under: own.classList.contains('lg-lenses-under'), rect: null, anim: null, glintAnim: null, magAnims: null, scrubCleanup: null, cfg: cfg, warm: '', scroller: scrollerOf(strip) }; lenses.set(strip, L);
+    /* an under-layer lens lost with its layer while its strip stays (the app redrew the strip's rows: Settings' left bar
+       on a chapter change) comes back where the old chip was drawn, so it glides on to the new choice instead of
+       appearing there */
+    var last = L.under && strip.__lgLast;
+    if (last) {
+      strip.__lgLast = null;
+      if (performance.now() - last.t < 1200) {
+        var s = lens.style; s.left = last.rect.x + 'px'; s.top = last.rect.y + 'px'; s.width = last.rect.w + 'px'; s.height = last.rect.h + 'px';
+        L.rect = last.rect; L.tgt = null; L.pending = last.pending;   /* no target yet: the next sync travels from here */
+      } else if (last.pending) pressMark(last.pending, false);
+    }
     if (cfg.mark && !strip.hasAttribute('data-lg-lensed')) strip.setAttribute('data-lg-lensed', '');
     return L;
   }
@@ -1184,12 +1235,26 @@
     e.remove();
   }
   function disposeLens(L) {
+    if (L.under && L.rect && L.strip.isConnected && !L.lens.isConnected) {
+      var carry = L.strip.__lgLast = { rect: visualRect(L) || L.rect, pending: L.pending, t: performance.now() }, cs = L.strip;
+      /* a carry nobody takes up in time lets its press marks go (Glass owner's review) */
+      if (carry.pending) setTimeout(function () { if (cs.__lgLast === carry) { cs.__lgLast = null; pressMark(carry.pending, false); } }, 1300);
+    }
+    else if (L.pending) pressMark(L.pending, false);
+    L.pending = null;
     forgetAncestors(L.strip, scrollStrips, stripAncestors);
     stopLensTravel(L); if (L.scrubCleanup) L.scrubCleanup();
     removeLensElement(L.lens); L.rect = null;
     if (L.layer && L.layer.classList.contains('lg-lenses-local') && !L.layer.children.length) {
       if (L.layer.parentElement) localLayers.delete(L.layer.parentElement); L.layer.remove();
     }
+    if (L.under && !L.layer.children.length) dropUnderLayer(L.strip, L.layer);
+  }
+  /* the switcher's layer mode changed (a look with --pm-switch-layer: under came or went): every lens is made again on
+     the next sync, in the layer of the new mode */
+  function relayerLenses() {
+    lenses.forEach(function (L) { disposeLens(L); }); lenses.clear();
+    if (typeof hiddenLenses !== 'undefined') hiddenLenses.clear();
   }
   function pruneLenses() {
     lenses.forEach(function (L, strip) { if (!strip.isConnected || !L.lens.isConnected) { disposeLens(L); lenses.delete(strip); } });
@@ -1224,7 +1289,11 @@
       var r = boxRect(e); return { el: e, c: vertical ? r.top + r.height / 2 : r.left + r.width / 2, half: (vertical ? r.height : r.width) / 2 };
     }).filter(Boolean);
   }
-  function magsOf(cfg) { var k = KINDS[cfg.kind] || {}; return { rest: cfg.magRest != null ? cfg.magRest : k.magRest || 1, lift: cfg.magLift != null ? cfg.magLift : k.magLift || 1 }; }
+  function magsOf(cfg) {
+    var k = KINDS[cfg.kind] || {}, rest = cfg.magRest != null ? cfg.magRest : k.magRest || 1, lift = cfg.magLift != null ? cfg.magLift : k.magLift || 1;
+    if (switchSwell !== 1) { rest = 1 + (rest - 1) * switchSwell; lift = 1 + (lift - 1) * switchSwell; }   /* --pm-switch-swell (never in Glass) */
+    return { rest: rest, lift: lift };
+  }
   /* how much of a label the lens covers: 1 while the label's centre is well inside it, easing to 0 as it leaves */
   function coverage(c, half, lab) {
     var d = Math.abs(lab.c - c), a = half - lab.half * 0.55, b = half + lab.half * 0.35;
@@ -1255,16 +1324,16 @@
     setLensBox(L, B);
     var S = spring.apply(null, GLIDE), dur = S[S.length - 1].t, frames = [], glint = [], track = [];
     var dist = vertical ? (B.y + B.h / 2) - (A.y + A.h / 2) : (B.x + B.w / 2) - (A.x + A.w / 2), ad = Math.abs(dist), dir = dist < 0 ? -1 : 1;
-    var sw = A.w / B.w, shh = A.h / B.h, land = -1, lr = L.layer.getBoundingClientRect();
+    var sw = A.w / B.w, shh = A.h / B.h, land = -1, lr = L.layer.getBoundingClientRect(), liq = switchLiquid;   /* --pm-switch-liquid (never in Glass) */
     var cB = vertical ? lr.top + B.y + B.h / 2 : lr.left + B.x + B.w / 2, rects = [];
     for (var i = 0; i < S.length; i++) {
       var t = S[i].t, p = S[i].x, v = S[i].v, over = (p - 1) * ad;
       if (over > 0) p = 1 + 3 * Math.tanh(over / 3) / Math.max(1, ad);
       if (land < 0 && p >= 0.985) land = t;
       var off = (1 - p) * -dist, lift = Math.max(0, Math.sin(Math.PI * Math.min(1, t / (dur * 0.62))));
-      var sp = Math.min(1, Math.abs(v) * ad / 2400), along = 1 + Math.min(0.24, sp * 0.3), across = 1 - (along - 1) * 0.4;
-      var wob = land < 0 ? 0 : 0.05 * Math.min(1, ad / 120) * Math.exp(-(t - land) / 110) * Math.sin(2 * Math.PI * (t - land) / 190);
-      var q = Math.min(1, Math.max(0, p)), grow = 1 + 0.07 * lift, w = (sw + (1 - sw) * q) * grow, h = (shh + (1 - shh) * q) * grow;
+      var sp = Math.min(1, Math.abs(v) * ad / 2400), along = 1 + Math.min(0.24, sp * 0.3) * liq, across = 1 - (along - 1) * 0.4;
+      var wob = land < 0 ? 0 : liq * 0.05 * Math.min(1, ad / 120) * Math.exp(-(t - land) / 110) * Math.sin(2 * Math.PI * (t - land) / 190);
+      var q = Math.min(1, Math.max(0, p)), grow = 1 + 0.07 * lift * liq, w = (sw + (1 - sw) * q) * grow, h = (shh + (1 - shh) * q) * grow;
       var sx = vertical ? w * across * (1 - wob * 0.6) : w * along * (1 + wob), sy = vertical ? h * along * (1 + wob) : h * across * (1 - wob * 0.6);
       var at = t / dur;
       frames.push({ offset: at, transform: (vertical ? 'translate3d(0,' + off.toFixed(2) + 'px,0)' : 'translate3d(' + off.toFixed(2) + 'px,0,0)') + ' scale(' + sx.toFixed(4) + ',' + sy.toFixed(4) + ')' });
@@ -1327,16 +1396,18 @@
     if (hiddenLenses.size) showT = setTimeout(checkShown, 400);
   }
   function syncStrip(cfg, strip) {
-    var L = lensFor(strip, cfg);
+    var L = lensFor(strip, cfg), P0 = L.pending;
     var target = cfg.pick ? cfg.pick(strip) : strip.querySelector(cfg.items + (cfg.active || '.active'));
     if (L.pending) {
       /* pressed, not yet chosen by the app: hold the lens there until the app makes any choice. This app switches on
          the release, after up to a few hundred ms of work, and its click comes later still; a release elsewhere
          abandons the press. */
       var now = performance.now(), P = L.pending;
-      if (!P.el.isConnected || target !== P.from || P.away || (P.up && now - P.up > 2500)) L.pending = null;
+      if (!P.el.isConnected || target !== P.from || P.away || (P.up && now - P.up > 2500)) { pressMark(P, false); L.pending = null; }
       else target = P.el;
     }
+    if (L.pending && !L.pending.el.isConnected) { pressMark(L.pending, false); L.pending = null; }
+    if (P0 && P0 !== L.pending) pressMark(P0, false);
     if (!target || !visible(target) || !visible(strip)) { stopLensTravel(L); if (L.scrubCleanup) L.scrubCleanup(); if (L.lens.style.opacity !== '0') L.lens.style.opacity = '0'; L.rect = null; awaitShow(L, cfg); return; }
     hiddenLenses.delete(L);
     if (L.scroller && L.scroller.isConnected) {
@@ -1380,6 +1451,19 @@
   /* the press: the lens leaves for the pressed item at once; the app's choice (or its absence) settles it. Only for
      items the app can choose: a disabled or inert item, or a strip that takes no press (a progress rail), keeps the lens
      where it is (it used to sit on the pressed step for the 2.5 s hold, then slide back). */
+  /* while a press moves the chip ahead of the app's choice, the pressed item reads as chosen and the one it leaves as not
+     (data-lg-press on / off, glass.css section 12), so neither label sits in its old colour on the wrong ground: under an
+     opaque chip (--pm-switch-layer: under) the chosen label is inverted, and on a tinted one the label it left kept its
+     chosen ink after the chip had gone (Friendly's mint words, Q16 review). Every look that adopts the switcher; never
+     Glass, whose clear lens needs no second ink */
+  function pressMark(P, on) {
+    if (!P || (on && !switchLook)) return;
+    [[P.el, 'on'], [P.from, 'off']].forEach(function (x) {
+      var e = x[0]; if (!e) return;
+      if (on) { if (e.getAttribute('data-lg-press') !== x[1]) e.setAttribute('data-lg-press', x[1]); }
+      else if (e.hasAttribute('data-lg-press')) e.removeAttribute('data-lg-press');
+    });
+  }
   function choosable(item, cfg) {
     return cfg.press !== false && !item.disabled && item.getAttribute('aria-disabled') !== 'true' && !item.closest('[inert]');
   }
@@ -1397,7 +1481,8 @@
     var L = lenses.get(hit.strip); if (!L || !L.rect || L.dragging) return;
     var cur = hit.cfg.pick ? hit.cfg.pick(hit.strip) : hit.strip.querySelector(hit.cfg.items + (hit.cfg.active || '.active'));
     if (hit.item === cur) return;
-    L.pending = { el: hit.item, from: cur, up: 0, away: false };
+    if (L.pending) pressMark(L.pending, false);
+    L.pending = { el: hit.item, from: cur, up: 0, away: false }; pressMark(L.pending, true);
     syncStrip(hit.cfg, hit.strip);
   }, true);
   document.addEventListener('pointerup', function (e) {
@@ -1407,11 +1492,11 @@
       if (P.away) queueSync(L.strip); else setTimeout(function () { queueSync(L.strip); }, 2550);
     });
   }, true);
-  document.addEventListener('pointercancel', function () { lenses.forEach(function (L) { if (L.pending) { L.pending = null; queueSync(L.strip); } }); }, true);
+  document.addEventListener('pointercancel', function () { lenses.forEach(function (L) { if (L.pending) { pressMark(L.pending, false); L.pending = null; queueSync(L.strip); } }); }, true);
   /* scrubbing: press on a tab strip and slide; the lens lifts and follows the pointer like a drop of water, magnifying
      each tab it passes, and drops into the nearest tab on release (which then becomes the chosen one) */
   function scrubbing(e) {
-    if (!switchOn() || e.button !== 0 || reduced()) return;
+    if (!switchOn() || e.button !== 0 || reduced() || switchUnder) return;
     for (var i = 0; i < STRIPS.length; i++) {
       var cfg = STRIPS[i]; if (!cfg.scrub || cfg.press === false) continue;
       var strip = e.target.closest && e.target.closest(cfg.sel); if (!strip) continue;
@@ -1425,7 +1510,7 @@
         if (!moved2) { moved2 = true; L.dragging = true; L.pending = null; stopLensTravel(L); L.lens.setAttribute('data-lg-lifted', ''); labs = labelsOf(cfg, strip, false); try { getSelection().removeAllRanges(); } catch (e2) {} }
         var sr = strip.getBoundingClientRect(), lr = L.layer.getBoundingClientRect(), x = ev.clientX - sr.left - L.rect.w / 2;
         var lo = 0, hi = strip.clientWidth - L.rect.w; if (x < lo) x = lo - Math.sqrt(lo - x) * 2; if (x > hi) x = hi + Math.sqrt(x - hi) * 2;
-        L.lens.style.transform = 'translate3d(' + (sr.left - lr.left + x - L.rect.x).toFixed(1) + 'px,0,0) scale(1.1,1.12)';
+        L.lens.style.transform = 'translate3d(' + (sr.left - lr.left + x - L.rect.x).toFixed(1) + 'px,0,0) scale(' + (1 + 0.1 * switchLiquid).toFixed(3) + ',' + (1 + 0.12 * switchLiquid).toFixed(3) + ')';
         var c = sr.left + x + L.rect.w / 2, half = L.rect.w * 1.1 / 2;
         labs.forEach(function (lab) { var g = magnified(lab, c, half, 1, mags); lab.el.style.scale = g.m.toFixed(4); lab.el.style.translate = g.d.toFixed(2) + 'px 0px'; });
         ev.preventDefault();
@@ -1677,7 +1762,7 @@
   }
   function lensesUnder(menus) {
     lenses.forEach(function (L) {
-      if (!L.rect) return;
+      if (!L.rect || L.under) return;   /* a lens under its labels is under every menu already */
       if (!menus.length) { if (L.lens.classList.contains('lg-under')) L.lens.classList.remove('lg-under'); return; }
       /* a lens drawn inside a menu (the theme menu's Light / Dark / Auto) is on that menu, not under it */
       var r = L.lens.getBoundingClientRect(), hit = menus.some(function (o) { var m = o.r; return !o.el.contains(L.lens) && r.right > m.left && r.left < m.right && r.bottom > m.top && r.top < m.bottom; });
@@ -1818,7 +1903,7 @@
     if (!lazyT) lazyT = setTimeout(function () { lazyT = 0; queueSync(); }, 140);
   }
   var HOT = '[data-lg-surface], .page-tab, #pmuRange > button, .pmu-navbtn, .pm-segtab-item, #activityBar .icon, .side-panel-view, .pmu-pop, .pmr-menu-list, .pmr-menu-group, .pm6-tb-menu, .o55-railitem, .o55-seg button, .o55-win, .o55t-callout, .o55t-bar';
-  var GENERATED = '#lg-optics, #lg-lenses, .lg-lenses-local, #lg-shine, .lg-press, .pm-segtab-track, #lg-post';
+  var GENERATED = '#lg-optics, #lg-lenses, .lg-lenses-local, .lg-lenses-under, #lg-shine, .lg-press, .pm-segtab-track, #lg-post';
   var MENU_HOT = '[data-lg-surface], .pmu-pop, .pmr-menu-list, .pm6-tb-menu, .o55-win, .o55t-callout, .o55t-bar';
   function generatedMutation(rec) {
     var t = rec.target;
@@ -1833,7 +1918,7 @@
   }
   var lastPage = null, lastTheme = root.getAttribute('data-theme'), lastLg = root.getAttribute('data-lg');
   var lastTier = root.getAttribute('data-lg-tier'), lastWall = root.getAttribute('data-lg-wall'), lastMotion = root.getAttribute('data-motion');
-  var lastO55 = root.hasAttribute('data-o55-open');
+  var lastO55 = root.hasAttribute('data-o55-open'), lastNier = root.getAttribute('data-o55-nier');
   /* a card inserted into the board during a room change: marked now, mounted by sizeWatch after the next layout */
   function premark(nodes) {
     for (var i = 0; i < nodes.length; i++) {
@@ -1848,6 +1933,9 @@
   var mo = new MutationObserver(function (recs) {
     var hot = false, menuHot = false, relevant = false, area = boardMoment() ? document.querySelector(BOARD_AREA) : null;
     for (var i = 0; i < recs.length; i++) {
+      /* an app redrew a strip and dropped its under-layer with the chip in it: the chip comes back in this frame, not after
+         the lazy sync (an opaque chip gone for 140 ms left its inverted label on bare ground) */
+      if (switchUnder && recs[i].type === 'childList') for (var u = 0; u < recs[i].removedNodes.length; u++) { var rn = recs[i].removedNodes[u]; if (rn.nodeType === 1 && rn.matches('.lg-lenses-under')) hot = true; }
       /* optics, lenses and light are outputs of sync, never inputs that should schedule it again */
       if (generatedMutation(recs[i])) continue;
       if (recs[i].type === 'attributes' && recs[i].oldValue === recs[i].target.getAttribute(recs[i].attributeName)) continue;
@@ -1863,9 +1951,13 @@
     if (!relevant) return;
     var page = document.querySelector('.page-tabs .page-tab.active'); page = page && page.id;
     var changed = Array.from(dirtyRoots), full = dirtyAll;
-    /* a change syncs after layout (afterLayout); a menu opening still gets its first keyframe at once */
+    /* a change syncs after the frame's own layout (afterLayout), where every read is free, instead of forcing the app's
+       half-built page through style and layout inside its click; a menu opening in Glass still gets its first keyframe at
+       once. A look that adopts the switcher has no glass to keep in step: its strips sync after the frame's own layout,
+       where every read is free, instead of forcing the app's half-built page through style and layout inside its click
+       (Q16). A press still moves the lens at once (pointerdown). */
     if (area && !menuHot) afterLayout();
-    else if (hot && switchOn()) { if (menuHot || !afterLayout()) hotSync(); }
+    else if (hot && switchOn()) { if ((menuHot && isGlass()) || !afterLayout()) hotSync(); }
     else lazySync(false);
     if (page !== lastPage) {
       var first = lastPage === null; lastPage = page;
@@ -1886,6 +1978,10 @@
     /* the onboarding window opening or closing hides or shows the app's strips: every lens is checked again */
     var o55 = root.hasAttribute('data-o55-open');
     if (o55 !== lastO55) { lastO55 = o55; dirtyAll = true; queueSync(); }
+    /* NieR Mode paints over a Basic look without changing data-theme: a look's switcher tokens may differ with it on
+       (Q16), so they are read again and every strip synced */
+    var nier = root.getAttribute('data-o55-nier');
+    if (nier !== lastNier) { lastNier = nier; readSwitch(); lenses.forEach(function (L) { L.rect = null; }); syncAll(); }
     if (th === lastTheme && lg === lastLg && tier === lastTier && wall === lastWall && motion === lastMotion) return;
     /* the print is about to change under glass that stays glass: hold the one the current frost was made from */
     var wasGlass = lastLg === 'on' && /^glass/.test(lastTheme || '');
@@ -1899,6 +1995,9 @@
     lastTier = tier; lastWall = wall; lastMotion = motion;
     if (th !== lastTheme || lg !== lastLg) {
       readSwitch();
+      /* the hover bead is Glass's alone: a look that leaves Glass drops it (a look that adopts the switcher paints every
+         .lg-lens as its chip, so a bead left behind stood on the title bar as a block until a reload; Q16 review F1) */
+      if (!isGlass() && bead) { resetBead(); removeLensElement(bead); bead = null; }
       var enter = isGlass() && (!/^glass/.test(lastTheme || '') || lastLg !== 'on');
       lastTheme = th; lastLg = lg; lenses.forEach(function (L) { L.rect = null; });
       glassSet.forEach(function (e) { e.__lgSig = null; });
@@ -1909,7 +2008,7 @@
       else afterLayout();
       lastWall = root.getAttribute('data-lg-wall');
     } else { dirtyAll = true; queueSync(); }
-  }).observe(root, { attributes: true, attributeFilter: ['data-theme', 'data-lg', 'data-lg-tier', 'data-lg-wall', 'data-motion', 'data-o55-open', 'data-pmu-moment'] });
+  }).observe(root, { attributes: true, attributeFilter: ['data-theme', 'data-lg', 'data-lg-tier', 'data-lg-wall', 'data-motion', 'data-o55-open', 'data-pmu-moment', 'data-o55-nier'] });
   applyWall();
   window.addEventListener('blur', function () { root.setAttribute('data-lg-inactive', ''); });
   window.addEventListener('focus', function () { root.removeAttribute('data-lg-inactive'); });

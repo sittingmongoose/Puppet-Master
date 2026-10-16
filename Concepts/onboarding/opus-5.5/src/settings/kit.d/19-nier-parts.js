@@ -464,11 +464,11 @@
     if (wipeAnim) wipeAnim.cancel();
     /* the band leaves as soon as the new page is drawn under it (final motion QA A4, Jared 2026-10-16: the empty beat
        at most 50 ms): no held keyframe (under the old ease-in-out it held the bare band for ~150 ms), a curve that is
-       moving from its first frames, and a start reset to the first frame after the page change, so a long first frame
-       never eats the slide */
+       moving from its first frames, and a start that waits for the frames after the page change to come on time
+       (src/js/11-motion-start.js), so a long first frame never eats the slide */
     const a = wipeAnim = wipe.firstChild.animate([{ transform: 'translateX(0)' }, { transform: 'translateX(101%)' }],
       { duration: 380, easing: 'cubic-bezier(.3, .15, .2, 1)', fill: 'both' });
-    requestAnimationFrame(() => { if (wipeAnim === a && a.playState === 'running') { try { a.startTime = document.timeline.currentTime; } catch (_) { /* gone */ } } });
+    if (window.PM_START_ON_SHOWN) window.PM_START_ON_SHOWN(() => (wipeAnim === a ? [a] : []));
     a.onfinish = () => { if (wipeAnim !== a) return; wipeAnim = null; if (wipe) wipe.style.display = 'none'; a.cancel(); };
   }
   PARTS.wipe = { on() {}, off() { if (wipeAnim) wipeAnim.cancel(); wipeAnim = null; if (wipe) wipe.remove(); wipe = null; } };

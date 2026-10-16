@@ -173,24 +173,39 @@ function fitAll(only) {
 }
 /* a cut name is checked once more after things settle (a face that finished loading, an entrance that ended between
    the measurement and the paint): any middle-truncated name that still overflows its box is fitted again */
-let recheckTimer = 0;
+let recheckTimer = 0, recheckReady = null;
 function recheckSoon() {
-  if (recheckTimer) return;
+  if (recheckTimer || recheckReady) return;
   recheckTimer = setTimeout(() => {
     recheckTimer = 0;
     if (!D.on) return;
-    panelEls().forEach(p => {
-      if (!p.offsetWidth) return;
-      const over = Array.from(p.querySelectorAll(MID_SEL)).filter(el => el._dFull != null && el.offsetParent && overflows(el));
-      if (!over.length) return;
-      over.forEach(el => { delete el._dFitKey; });
-      midFitAll(p);
-    });
+    const recheck = () => {
+      if (recheckReady) { recheckReady.disconnect(); recheckReady = null; }
+      if (!D.on) return;
+      /* A 450 ms timer can still meet the theme's pending style writes. Read after ordinary layout (170 ms of
+         forced style on an M3 NieR toggle before this change), and read every panel before any fitting writes. */
+      const rows = panelEls().filter(p => p.isConnected && p.offsetWidth).map(p => ({
+        panel: p,
+        over: Array.from(p.querySelectorAll(MID_SEL)).filter(el => el._dFull != null && el.offsetParent && overflows(el))
+      }));
+      rows.forEach(({ panel, over }) => {
+        if (!over.length) return;
+        over.forEach(el => { delete el._dFitKey; });
+        midFitAll(panel);
+      });
+    };
+    const slot = document.getElementById('sidePanelSlot');
+    if (window.ResizeObserver && slot) { recheckReady = new ResizeObserver(recheck); recheckReady.observe(slot); }
+    else requestAnimationFrame(recheck);
   }, 450);
 }
 let fitTimer = 0;
 function fitSoon() { clearTimeout(fitTimer); fitTimer = setTimeout(() => { if (D.on) fitAll(); }, 60); }
 function watchFit() {
+  remember(() => {
+    clearTimeout(recheckTimer); recheckTimer = 0;
+    if (recheckReady) { recheckReady.disconnect(); recheckReady = null; }
+  });
   const slot = document.getElementById('sidePanelSlot');
   if (window.ResizeObserver && slot) {
     const ro = new ResizeObserver(fitSoon);

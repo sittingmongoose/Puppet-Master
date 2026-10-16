@@ -99,10 +99,6 @@ html[data-o55-nier-parts~="blocks"] :is(.pm6-dash-bar-fill.is-warn, #panel-setti
   background: repeating-linear-gradient(90deg, var(--o55-nier-warn-text) 0 4px, transparent 4px 6px) !important; }
 html[data-o55-nier-parts~="blocks"] :is(#panel-settings .pm51-meter.tone-blocked .pm51-meter-fill, .pm6-wiz-topic-card[data-tstate="blocked"] .pm6-wiz-topic-prog-fill, .pm6-orch-bar > i[data-state="blocked"]) {
   background: repeating-linear-gradient(90deg, var(--o55-nier-error) 0 4px, transparent 4px 6px) !important; }
-/* Usage's meters hold their numbers inside the track: the fill is a faint row of cells behind the text */
-html[data-o55-nier-parts~="blocks"] .pm7u-metertrack { border-radius: 0 !important; border-color: rgba(var(--o55-nier-ink-rgb), .5) !important; background: transparent !important; }
-html[data-o55-nier-parts~="blocks"] .pm7u-meterfill { border-radius: 0 !important; opacity: 1 !important;
-  background: repeating-linear-gradient(90deg, rgba(var(--o55-nier-ink-rgb), .26) 0 6px, transparent 6px 8px) !important; }
 
 /* ================================================================================ Ink charts [charts] */
 /* Charts in monochrome ink: a series is told apart by its pattern (solid, hatch, cross-hatch, dots, rules), never by
@@ -114,25 +110,9 @@ html[data-o55-nier-parts~="charts"] {
   --o55nw-dots: radial-gradient(circle at 2px 2px, var(--o55-nier-ink) 1.1px, transparent 1.4px) 0 0 / 4px 4px;
   --o55nw-rules: repeating-linear-gradient(0deg, var(--o55-nier-ink) 0 1px, transparent 1px 3.5px);
 }
-/* Usage bar charts: older buckets hatched, the recent ones solid */
-html[data-o55-nier-parts~="charts"] .pm7u-barfill { background: var(--o55nw-hatch) !important; opacity: 1 !important; border: 1px solid var(--o55-nier-ink) !important; border-bottom: 0 !important;
-  border-radius: 0 !important; box-sizing: border-box !important; box-shadow: none !important; }
-html[data-o55-nier-parts~="charts"] .pm7u-barcol.is-recent .pm7u-barfill { background: var(--o55nw-solid) !important; }
-/* the context donut: what is used in solid ink, what is free in dots */
-html[data-o55-nier-parts~="charts"] .pm7u-donut { background: conic-gradient(var(--o55-nier-ink) calc(var(--pct, 0) * 1%), transparent 0), var(--o55nw-dots) !important; }
-/* legends and series marks: one pattern per place in the list */
-html[data-o55-nier-parts~="charts"] :is(.pm7u-legend, .pm7u-segs, .pm7u-seglegend, .pm7u-stack) > :nth-child(5n + 1) :is(i, .pm7u-swatch, .pm7u-segdot),
-html[data-o55-nier-parts~="charts"] :is(.pm7u-segs, .pm7u-stack) > :nth-child(5n + 1):is(i, span) { background: var(--o55nw-solid) !important; }
-html[data-o55-nier-parts~="charts"] :is(.pm7u-legend, .pm7u-segs, .pm7u-seglegend, .pm7u-stack) > :nth-child(5n + 2) :is(i, .pm7u-swatch, .pm7u-segdot),
-html[data-o55-nier-parts~="charts"] :is(.pm7u-segs, .pm7u-stack) > :nth-child(5n + 2):is(i, span) { background: var(--o55nw-hatch) !important; }
-html[data-o55-nier-parts~="charts"] :is(.pm7u-legend, .pm7u-segs, .pm7u-seglegend, .pm7u-stack) > :nth-child(5n + 3) :is(i, .pm7u-swatch, .pm7u-segdot),
-html[data-o55-nier-parts~="charts"] :is(.pm7u-segs, .pm7u-stack) > :nth-child(5n + 3):is(i, span) { background: var(--o55nw-cross) !important; }
-html[data-o55-nier-parts~="charts"] :is(.pm7u-legend, .pm7u-segs, .pm7u-seglegend, .pm7u-stack) > :nth-child(5n + 4) :is(i, .pm7u-swatch, .pm7u-segdot),
-html[data-o55-nier-parts~="charts"] :is(.pm7u-segs, .pm7u-stack) > :nth-child(5n + 4):is(i, span) { background: var(--o55nw-dots) !important; }
-html[data-o55-nier-parts~="charts"] :is(.pm7u-legend, .pm7u-segs, .pm7u-seglegend, .pm7u-stack) > :nth-child(5n) :is(i, .pm7u-swatch, .pm7u-segdot),
-html[data-o55-nier-parts~="charts"] :is(.pm7u-segs, .pm7u-stack) > :nth-child(5n):is(i, span) { background: var(--o55nw-rules) !important; }
-/* the card's own series dot is a solid square of ink */
-html[data-o55-nier-parts~="charts"] .pm7u-carddot { background: var(--o55-nier-ink) !important; box-shadow: none !important; border-radius: 0 !important; }
+/* (Q16, 2026-10-15: the meters, bar charts, donut, legends and card dots of the retired Prism Usage page, .pm7u-*, were
+   removed from here; that page is gone from PMConcept7 and its redesign draws NieR's ink charts itself,
+   Concepts/usage-redesign/src/css/90-nier-shell.css) */
 /* dashboard: sparkline in ink over a faint area, the ring's track dotted, the lane bars by state (when Block progress
    is removed; with it, the bars are ink cells) */
 html[data-o55-nier-parts~="charts"] .pm6-dash-spark-line { stroke: var(--o55-nier-ink) !important; stroke-width: 1.5px; }

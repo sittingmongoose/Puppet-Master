@@ -77,6 +77,16 @@
   /* finish(S, {tour, project}) — close onboarding as done and land in the app. */
   O55.finish = function finish(S, o) {
     o = o || {};
+    /* Enter answers on the click's own frame (final motion QA A1: the click's task, which selects the Project, reloads
+       its settings and puts the Wizard in place, held the first frame 0.5-1.2 s on the P1000): the window settles a
+       touch on the compositor, and the work and the window's exit follow in the task after that frame */
+    if (!o.tour && !o.answered) {
+      if (S.finishing) return;
+      S.finishing = true;
+      if (S.root) S.root.classList.add('o55-accept');
+      requestAnimationFrame(() => window.setTimeout(() => { S.finishing = false; finish(S, Object.assign({}, o, { answered: true })); }, 0));
+      return;
+    }
     O55.shell.commitLook(S, { defer: true });
     const cm = S.sess.commit || {}, d = md(S);
     const projectId = o.project || cm.projectId, name = o.projectName || (cm.projectId === projectId ? d.project_name : null) || projectId;

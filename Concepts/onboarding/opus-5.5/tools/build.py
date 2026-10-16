@@ -130,6 +130,8 @@ PAGE_STATE_OK = {
     'data-o55-nier-mode': 'NieR Mode switches light/dark: the whole page is restyled anyway',
     'data-o55-nier-parts': 'a NieR part is installed or removed: the NieR repaint restyles the whole page anyway',
     'data-focus': 'the focus ring style is changed in Settings: a look change',
+    'data-pm-switch': 'glass.js readSwitch() writes it only when the look, Liquid Glass or NieR Mode changes: a look change',
+    'data-pm-switch-layer': 'glass.js readSwitch() writes it only when the look, Liquid Glass or NieR Mode changes: a look change',
 }
 # Runtime switches that already have such a rule, named exactly (file, selector) so that no new one gets in. Each is a
 # NOTE in every build until its owner gives it a class tail; the rule is then simply gone from here. Measured
