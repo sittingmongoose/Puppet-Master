@@ -324,17 +324,23 @@
          sharp, with a slight red-blue split; a ring image, transparent inside.
      Both are redrawn only when the sheet moves or resizes, or the look or wallpaper changes. They cost nothing per frame
      and draw the same with or without a GPU. */
-  var wallUrl = '', wallSources = new Map(), wallSourceKey = null, wallSourceUrl = '', wallSourceId = 0;
+  var wallUrl = '', wallSources = new Map(), wallSourceUrls = new Map(), wallSourceKey = null, wallSourceUrl = '', wallSourceId = 0;
   var frosts = {}, frostKey = '', frostWallUrl = '', frostCache = new Map(), frostBytes = 0, frostJobs = new Map(), FROST_BYTES = 32 * 1024 * 1024;
   var bakeQ = new Map(), bakeT = 0, bakeFrame = 0, bakeIdle = 0, bakeFlight = null, bakeEpoch = 0, bakeAvg = 8;
   function currentWallUrl(refresh) {
-    /* The source's wallpaper variables are selected only by these attributes. Keep the large data URL out of each
-       surface signature and resolve the computed variable once per choice: reading it serialises a print of several MB
-       (100-165 ms on a P1000 or an M3, 2026-10-16). An empty read is read again, as a host may add the sheet later. */
-    var key = [root.getAttribute('data-theme'), root.getAttribute('data-lg-wall'), root.style.getPropertyValue('--lg-wall')].join('|');
+    /* The body's selected image is deliberately not on html. Resolve an immutable catalog source once per id/mode,
+       using the gallery's prepared cache when present. Empty misses are retried because a lab host can add its sheet
+       after startup. No computed-style read or large URL serialization occurs on a prepared wallpaper commit. */
+    var id = root.getAttribute('data-lg-wall') || 'ribbons';
+    var mode = /-light$/.test(root.getAttribute('data-theme') || '') ? 'light' : 'dark', key = id + '-' + mode;
     if (!refresh && key === wallSourceKey && wallSourceUrl) return wallSourceUrl;
-    var v = getComputedStyle(root).getPropertyValue('--lg-wall') || ''; var m = v.match(/url\(["']?(.*?)["']?\)\s*$/);
-    var u = m ? m[1] : '';
+    var u = !refresh && wallSourceUrls.get(key);
+    if (!u && window.PM_WALLPAPERS && PM_WALLPAPERS.sourceUrl) u = PM_WALLPAPERS.sourceUrl(id, mode);
+    if (!u) {
+      var v = getComputedStyle(root).getPropertyValue('--lg-wall-' + key) || '', m = v.match(/url\(["']?(.*?)["']?\)\s*$/);
+      u = m ? m[1] : '';
+    }
+    if (u) wallSourceUrls.set(key, u);
     if (u !== wallSourceUrl) { wallSourceUrl = u; wallSourceId++; }
     wallSourceKey = key; return u;
   }
