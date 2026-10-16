@@ -4,7 +4,7 @@ Source: `Plans/FinalGUISpec.md`
 
 Source lines: L5592-L27127
 
-Source SHA256: `d40c6881c955912298ed6098e9fc9a11519a353dc2048eb3e61c43e91c948193`
+Source SHA256: `69171808f4f19d31de2ee03a7826c3664b1378aa101e9bd874f6e261eb9505f7`
 
 ---
 
@@ -4269,7 +4269,7 @@ source_lineage:
     SHA-256 3d5a20ca7293c065906642c09ebd322a08129931636b943eafc3570b5bf8898c (P2-01 theme switch, P2-05
     NieR cover, P2-S6 bell; source lineage)
   - /mnt/Cursor/share/puppet-master/2026-10-16-plans-topup/sources/1d44afa8ce--Concepts--onboarding--opus-5.5--src--js--12-theme-transition.js,
-    SHA-256 643b432a82dff4d71c037f175a7afca0c336e053d30f8724ce389504ab051787 (shell lane head 1d44afa8ce,
+    SHA-256 643b432a82dff4d71c037f175a7afca0c336e053d30f8724ce389504ab051787 (shell lane head 1d44afa8ce, landed unchanged on main b9a08db90f,
     the look cover; source lineage; not native certification)
 preserved_exact_tokens:
   - "Poppins"

@@ -4,12 +4,12 @@ Source: `Plans/00-plans-index.md`
 
 Source lines: L6083-L6087
 
-Source SHA256: `70beaa4f41b32ede13ea41ad0e5aa78b04bac8eaa0366d9bb260b5a9dedebe55`
+Source SHA256: `dda1eaa4f21ff5b907b1202eaf9ad7631f95689cacb587b9ec44521b2438bab3`
 
 ---
 
 ## PMConcept7 top-up owner reconciliation — 2026-10-16
 
-DL-213 through DL-217 record the top-up. Terminal rounds 4 and 5 settle in F3-642, F3-643, F3-644, F3-650 and SSYS-051, with Flicker on or off and Bell Follow look or Off (Jared's P10 and P14) and the ten round-3 rows live. The consistency pass adopts F3-652's switcher in every look, seats the Home tab chip on its panel (F3-631, F3-647) and opens Home pinned from every path (F3-638); Friendly's Usage key light and Live marks are lavender (F3-628, F3-638). ACD-475 holds Jared's motion acceptance bar and its P1000 reading, and his motion calls land in F3-077, F3-464, F3-598, F3-621, F3-628, F3-643, F3-653 and SSYS-009. DL-217 collects the motion fix lanes' contracts: the terminal lane's wallpaper source query (DR-073), with the shell, Glass and Settings lanes drafted from their branch heads for confirmation at landing; the editor lane and Q13 are added as they land. No governance reseal or native certification is claimed.
+DL-213 through DL-217 record the top-up. Terminal rounds 4 and 5 settle in F3-642, F3-643, F3-644, F3-650 and SSYS-051, with Flicker on or off and Bell Follow look or Off (Jared's P10 and P14) and the ten round-3 rows live. The consistency pass adopts F3-652's switcher in every look, seats the Home tab chip on its panel (F3-631, F3-647) and opens Home pinned from every path (F3-638); Friendly's Usage key light and Live marks are lavender (F3-628, F3-638). ACD-475 holds Jared's motion acceptance bar and its P1000 reading, and his motion calls land in F3-077, F3-464, F3-598, F3-621, F3-628, F3-643, F3-653 and SSYS-009. DL-217 collects the motion fix lanes' contracts: the terminal lane's wallpaper source query (DR-073) and the shell lane's busy signal and look cover (ACD-475, F3-077), with the Glass and Settings lanes drafted from their branch heads for confirmation at landing; the editor lane and Q13 are added as they land. No governance reseal or native certification is claimed.
 
 ContractRef: ContractName:Plans/Decision_Log.md#DL-213, ContractName:Plans/Decision_Log.md#DL-214, ContractName:Plans/Decision_Log.md#DL-215, ContractName:Plans/Decision_Log.md#DL-216, ContractName:Plans/Decision_Log.md#DL-217, ContractName:Plans/FinalGUISpec.md#F3-652, ContractName:Plans/assistant-chat-design.md#ACD-475

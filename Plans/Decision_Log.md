@@ -15994,13 +15994,13 @@ canonical_text: >-
   consumer finds the selected print (DR-073); its other changes (the Customize screen kept ready, Flicker
   on the compositor, nothing drawn for a terminal off screen, idle and busy waits) change no product
   contract. The Usage lane (main d2e038618b) implements F3-628's cancel and reversal rules (DL-215) and
-  adds no contract. Drafted from branch heads, to be confirmed at their main commits when they land: the
-  shell lane (1d44afa8ce) adds ACD-475's one shared busy signal, look-cover answer and on-time start, and
-  F3-077's look-cover sequence; the Glass lane (90565f62ea) adds F3-652's worker bakes, idle shader
-  warm-up and cover-only strip deferral; the Settings lane (0d510df290) adds DR-073's wallpaper
-  preparation, F3-598's Reduced Motion calm cover and SSYS-053's acknowledged, coalesced navigation. Glass
-  and Settings land together. The editor lane and Q13 are added when they land. Concept evidence is not
-  native certification.
+  adds no contract. The shell lane (main b9a08db90f) adds ACD-475's one shared busy signal, look-cover
+  answer and on-time start, and F3-077's look-cover sequence. Drafted from branch heads, to be confirmed
+  at their main commits when they land together: the Glass lane (90565f62ea) adds F3-652's worker bakes,
+  idle shader warm-up and cover-only strip deferral; the Settings lane (0d510df290) adds DR-073's
+  wallpaper preparation, F3-598's Reduced Motion calm cover and SSYS-053's acknowledged, coalesced
+  navigation. The editor lane and Q13 are added when they land. Concept evidence is not native
+  certification.
 gui_related: true
 gui_classification_reason: Contracts Added By The Motion Fix Lanes.
 split_recommended: false
@@ -16027,10 +16027,10 @@ source_lineage:
 - /mnt/Cursor/share/puppet-master/2026-10-16-plans-topup/sources/2026-10-16-motion-fixes--LANDING-REVIEW.md,
   SHA-256 b1ca802f406fa585b3be8d1096e8aefada4bac0c94ef81a3ee93f3be3611918e (cross-lane contract check; source lineage)
 - /mnt/Cursor/share/puppet-master/2026-10-16-plans-topup/sources/1d44afa8ce--Concepts--onboarding--opus-5.5--src--js--11-motion-start.js,
-  SHA-256 b042bcd35aab9cd50ba71fcfd8b2330015b12e07cadff7886c2647e4648e84bf (shell lane head 1d44afa8ce,
+  SHA-256 b042bcd35aab9cd50ba71fcfd8b2330015b12e07cadff7886c2647e4648e84bf (shell lane head 1d44afa8ce, landed unchanged on main b9a08db90f,
   the shared busy signal and on-time start; source lineage; not native certification)
 - /mnt/Cursor/share/puppet-master/2026-10-16-plans-topup/sources/1d44afa8ce--Concepts--onboarding--opus-5.5--src--js--12-theme-transition.js,
-  SHA-256 643b432a82dff4d71c037f175a7afca0c336e053d30f8724ce389504ab051787 (shell lane head 1d44afa8ce,
+  SHA-256 643b432a82dff4d71c037f175a7afca0c336e053d30f8724ce389504ab051787 (shell lane head 1d44afa8ce, landed unchanged on main b9a08db90f,
   the look cover; source lineage; not native certification)
 - /mnt/Cursor/share/puppet-master/2026-10-16-plans-topup/sources/90565f62ea--Concepts--liquid-glass--opus-5.5--CONTRACT.md,
   SHA-256 8c4dcd540ee6fa4129c7a9286e679c8ac70519f9a56804e7f16a9afcced349c9 (Glass lane head 90565f62ea,
