@@ -1774,7 +1774,15 @@
     o = o || {};
     var app = document.getElementById('pmuApp'), board = document.getElementById('pmuBoard');
     if (!app || !board || !PMU.board) return;
-    if (reduced() || M.paused()) { finishMoment('instant'); hold = null; PMU.board.mount(st.room, {}); return; }
+    if (M.paused()) { finishMoment('instant'); hold = null; PMU.board.mount(st.room, {}); return; }
+    /* Reduce Motion: no arrival; the board is built behind what the board area shows and swapped in whole (40-board.js
+       calmSwap), from the frame after the page click (motion QA A14: built inside the click it held the old page for
+       200 ms, M3 film, Glass Light) */
+    if (reduced()) {
+      finishMoment('instant'); hold = null;
+      requestAnimationFrame(function () { requestAnimationFrame(function () { if (!moment && !hold) PMU.board.mount(st.room, { calmEntry: true }); }); });
+      return;
+    }
     var m = begin('arrive', st.room);
     var h = { board: board, room: st.room, start: performance.now(), built: false, hero: false, m: m };
     hold = h;
