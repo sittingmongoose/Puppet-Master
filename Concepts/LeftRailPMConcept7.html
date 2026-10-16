@@ -228143,10 +228143,10 @@ try { if (window.PM_HOME && typeof window.PM_HOME.boot === 'function') window.PM
   function lensFor(strip, cfg) {
     var L = lenses.get(strip);
     if (L && L.lens.isConnected) { indexAncestors(strip, scrollStrips, stripAncestors); return L; }
-    if (L) disposeLens(L);
+    if (L) disposeLens(L, true);
     indexAncestors(strip, scrollStrips, stripAncestors);
     var parked = unparkLens(strip);
-    if (parked) { parked.cfg = cfg; lenses.set(strip, parked); return parked; }
+    if (parked) { parked.cfg = cfg; lenses.set(strip, parked); if (cfg.mark && !strip.hasAttribute('data-lg-lensed')) strip.setAttribute('data-lg-lensed', ''); return parked; }
     var lens = el('i', { class: 'lg-lens', 'aria-hidden': 'true', 'data-lg-lens': cfg.kind }), own = lensLayer(strip);
     own.appendChild(lens);
     L = { strip: strip, lens: lens, layer: own, under: own.classList.contains('lg-lenses-under'), rect: null, anim: null, glintAnim: null, magAnims: null, scrubCleanup: null, cfg: cfg, warm: '', scroller: scrollerOf(strip) }; lenses.set(strip, L);
@@ -228243,11 +228243,19 @@ try { if (window.PM_HOME && typeof window.PM_HOME.boot === 'function') window.PM
     else { glassSet.delete(e); if (sizeWatch) sizeWatch.unobserve(e); e.__lgF = null; e.__lgSig = null; }
     e.remove();
   }
-  function disposeLens(L) {
+  function disposeLens(L, keepMark) {
+    var carried = false;
     if (L.under && L.rect && L.strip.isConnected && !L.lens.isConnected) {
-      var carry = L.strip.__lgLast = { rect: visualRect(L) || L.rect, pending: L.pending, t: performance.now() }, cs = L.strip;
-      /* a carry nobody takes up in time lets its press marks go (Glass owner's review) */
-      if (carry.pending) setTimeout(function () { if (cs.__lgLast === carry) { cs.__lgLast = null; pressMark(carry.pending, false); } }, 1300);
+      carried = true;
+      var carry = L.strip.__lgLast = { rect: visualRect(L) || L.rect, pending: L.pending, t: performance.now() }, cs = L.strip, mark = !!(L.cfg && L.cfg.mark);
+      /* a carry nobody takes up in time lets its press marks go (Glass owner's review), and its strip's mark if no lens of
+         the strip's is live (GD-2) */
+      if (carry.pending || mark) setTimeout(function () {
+        if (cs.__lgLast !== carry) return;
+        cs.__lgLast = null;
+        if (carry.pending) pressMark(carry.pending, false);
+        if (mark && !lenses.has(cs) && cs.hasAttribute('data-lg-lensed')) cs.removeAttribute('data-lg-lensed');
+      }, 1300);
     }
     else if (L.pending) pressMark(L.pending, false);
     L.pending = null;
@@ -228258,6 +228266,11 @@ try { if (window.PM_HOME && typeof window.PM_HOME.boot === 'function') window.PM
       if (L.layer.parentElement) localLayers.delete(L.layer.parentElement); L.layer.remove();
     }
     if (L.under && !L.layer.children.length) dropUnderLayer(L.strip, L.layer);
+    /* a marked strip's own fill steps aside only under its chip (data-lg-lensed): a strip left without a lens takes it back
+       (landing review GD-2). A lens made again at once (lensFor) or carried on after the app redrew the strip keeps it,
+       and so does a parked lens's strip while another lens of its is live. */
+    if (!keepMark && !carried && L.cfg && L.cfg.mark && L.strip.isConnected && (!lenses.has(L.strip) || lenses.get(L.strip) === L) &&
+        L.strip.hasAttribute('data-lg-lensed')) L.strip.removeAttribute('data-lg-lensed');
   }
   /* the switcher's layer mode changed (a look with --pm-switch-layer: under came or went): every strip's lens moves to the
      layer of the new mode on the next sync. The other mode's lenses are parked, hidden where they are (visibility, so they
@@ -228280,7 +228293,7 @@ try { if (window.PM_HOME && typeof window.PM_HOME.boot === 'function') window.PM
     if (!P) return null;
     park.delete(strip);
     var home = P.lens.isConnected && P.layer.isConnected && (P.under ? P.layer.parentElement === strip : P.layer === lensLayer(strip));
-    if (!home) { disposeLens(P); return null; }
+    if (!home) { disposeLens(P, true); return null; }
     if (P.under && strip.__lgPos) strip.style.position = 'relative';
     P.lens.style.removeProperty('visibility'); P.warm = '';
     return P;
@@ -229020,10 +229033,15 @@ try { if (window.PM_HOME && typeof window.PM_HOME.boot === 'function') window.PM
   var STRIP_PARKED = '.pmed-prepared, [hidden]', busyStrips = new Set(), busyWait = false;
   function stripParked(s) { try { return !!s.closest(STRIP_PARKED); } catch (e) { return false; } }
   function pageBusy() { try { return typeof window.PM_BUSY === 'function' && !!window.PM_BUSY(); } catch (e) { return false; } }
+  /* the covers are read from their own markers, not from PM_BUSY(), which names only the first of several reasons (an open
+     onboarding window or a page change is named before the boot; landing review GD-1) */
+  var tourCovers = document.getElementsByClassName('o55t-bootcover');
   function pageCovered() {
     try {
-      if (typeof window.PM_LOOK_COVERED === 'function') return !!window.PM_LOOK_COVERED() || (typeof window.PM_BUSY === 'function' && window.PM_BUSY() === 'boot');
-      return typeof window.PM_BUSY === 'function' && /^(theme|reboot|calm|boot|nier)$/.test(window.PM_BUSY() || '');
+      if (root.hasAttribute('data-o55-boot-wait') || document.getElementById('o55nw-boot') || tourCovers.length) return true;
+      if (typeof window.PM_LOOK_COVERED === 'function') return !!window.PM_LOOK_COVERED();
+      var t = window.PM_THEME_TRANSITION;
+      return !!(document.getElementById('o55np-reboot') || document.getElementById('o55np-calm') || (t && typeof t.busy === 'function' && t.busy()));
     } catch (e) { return false; }
   }
   function deferStrip(s) {
