@@ -487,9 +487,9 @@ const pm51OriginalRefreshSettingRow = refreshSettingRow;
 let pm51SavedRowProjection = 0;
 /* A bridge that already committed and saved a transaction only needs to draw its rows. Saving again for each row
    cloned the entire project repeatedly underneath Customize. The normal row path still persists, and this narrow
-   synchronous scope cannot swallow a later input or an asynchronous save. Missing rows wait for their next mount. */
+   synchronous scope cannot swallow a later input or an asynchronous save. Missing rows wait for their next mount;
+   their open Details panel still refreshes, and manager presentation overrides keep their normal row path. */
 PM51.refreshSavedRow = id => {
-  if (!root.querySelector(`#setting-${cssEscape(id)}`) || !findSettingGlobal(id)) return;
   pm51SavedRowProjection++;
   try { return refreshSettingRow(id); } finally { pm51SavedRowProjection--; }
 };
@@ -506,7 +506,10 @@ refreshSettingRow = function (id) {
   const el = root.querySelector(`#setting-${cssEscape(id)}`);
   const inspecting = state.detailSetting === id || detailInspectorVisible;
   const own = !!(override && el && el.closest('.pm51-setting-rows'));
-  if (!own && !inspecting && !(el && findSettingGlobal(id))) return pm51OriginalRefreshSettingRow.apply(this, arguments);
+  if (!own && !inspecting && !(el && findSettingGlobal(id))) {
+    if (pm51SavedRowProjection) return;
+    return pm51OriginalRefreshSettingRow.apply(this, arguments);
+  }
   if (!pm51SavedRowProjection) saveState();
   if (el) {
     const found = own ? null : findSettingGlobal(id);
