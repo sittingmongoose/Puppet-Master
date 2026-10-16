@@ -1025,6 +1025,7 @@
     var g = o.ghost;
     if (g) {
       /* the old board element itself (40-board.js swapped in a new one): nothing is moved */
+      g._pmuRevived = false;
       g.classList.add('pmu-ghostboard');
       Array.prototype.forEach.call(g.querySelectorAll(':scope > :not(.pmu-card)'), function (n) { n.remove(); });
       cards.forEach(function (c) { c._pmuLeaving = true; });
@@ -1037,13 +1038,18 @@
       cards.forEach(function (c) { c._pmuLeaving = true; c.removeAttribute('data-hero'); g.appendChild(c); });
       scroll.appendChild(g);
     }
+    /* this ghost's life: a reversal (reverse) or a newer ghost of the same element makes this one's end a no-op */
+    var gen = g._pmuGen = (g._pmuGen || 0) + 1;
     var f = fam(), dir = o.dir || 1, base = o.sTop ? 'translateY(' + (-o.sTop) + 'px)' : '', a, gAnims = [];
     if (soft()) a = anim(g, [{ opacity: 1, transform: base || 'none' }, { opacity: 0, transform: base || 'none' }], { dur: T3.ghostFade, easing: E.exit, fill: 'forwards' });
     else if (f === 'retro' || f === 'nier') {
       var n = f === 'nier' ? 8 : 8, ms = f === 'nier' ? 200 : 180;
       a = anim(g, [{ clipPath: 'inset(0 0 0 0)', transform: base || 'none' }, { clipPath: 'inset(100% 0 0 0)', transform: base || 'none' }], { dur: ms, easing: 'steps(' + n + ',jump-end)', fill: 'forwards' });
       var line = H('i', f === 'nier' ? 'pmu-film-scan pmu-ghostscan' : 'pmu-film-scanbar pmu-ghostscan', g);
-      gone(anim(line, [{ transform: 'translateY(0%)', opacity: 1 }, { transform: 'translateY(100%)', opacity: 1, offset: 0.97 }, { transform: 'translateY(100%)', opacity: 0 }], { dur: ms, easing: 'steps(' + n + ',jump-end)', fill: 'both' }), line);
+      var lineA = anim(line, [{ transform: 'translateY(0%)', opacity: 1 }, { transform: 'translateY(100%)', opacity: 1, offset: 0.97 }, { transform: 'translateY(100%)', opacity: 0 }], { dur: ms, easing: 'steps(' + n + ',jump-end)', fill: 'both' });
+      gone(lineA, line);
+      /* what a click back to this room steps back (reverse; motion QA A13, Jared 2026-10-16) */
+      g._pmuRev = { erase: a, lineA: lineA, ms: ms, n: n };
     } else {
       /* MOTION-4 RC1 / RC2 and 4.2: the camera's first half. The old room moves from the click (this task) on its voice's
          path, at full opacity: Basic pans P up the rail (-P x dir, scale .985, 360 SLIDE); Friendly steps back and tilts
@@ -1069,7 +1075,8 @@
     }
     gAnims.push(a);
     var done = function () {
-      if (done.ran) return; done.ran = true;
+      if (done.ran || g._pmuGen !== gen || g._pmuRevived) return; done.ran = true;
+      g._pmuRev = null;
       if (mg) mg.gone = true;
       drop(Array.prototype.slice.call(g.querySelectorAll(':scope > .pmu-card')));
       /* the old board element empties into the hidden spare (40-board.js), never leaves the scroll pane, and carries no
@@ -1325,13 +1332,18 @@
      stands to rest on an even ease, about 12.5 ms per pixel its corners travel (240-720 ms: Glass's pull-back is the
      longest, about 70 px at its corners; no frame moves it much more than 2 px), its cut or lens closes from where it
      stands (180 OUT), its defocus and fade with it; the room that was arriving
-     goes in the click's own frame. Retro and NieR keep their erase and rebuild until Jared rules on it (A13). */
+     goes in the click's own frame. Retro and NieR step their erase back up the same way (A13, Jared 2026-10-16: the
+     board the user never left just returns, with no erase and rebuild). */
+  function stepped3(f) { return f === 'retro' || f === 'nier'; }
   function reversible(el) {
     var m = moment, G = m && m.ghost, f = fam();
-    if (!m || m.kind !== 'room' || !G || G.el !== el || G.gone || G.leaving || G.carried || !el || !el.isConnected) return false;
-    if (reduced() || soft() || M.paused() || f === 'retro' || f === 'nier' || kept) return false;
-    if (G.fade && G.fade !== true && (G.fade.playState === 'finished' || G.fade.playState === 'idle')) return false;
+    if (!el || !el.isConnected || el._pmuRevived || reduced() || soft() || M.paused() || kept) return false;
     if (carryQ.some(function (c) { return !c.G.gone && c.G.el.isConnected; })) return false;
+    /* Retro and NieR: the old room is being erased from its top (its erase and scanline, no camera); it reverses while
+       its cards are still there, its erase finished or not (they go a beat later, with the batch of finished layers) */
+    if (stepped3(f)) return !!el._pmuRev && el.classList.contains('pmu-ghostboard') && !!el.querySelector(':scope > .pmu-card') && (!m || m.kind === 'room') && !(G && G.el === el);
+    if (!m || m.kind !== 'room' || !G || G.el !== el || G.gone || G.leaving || G.carried) return false;
+    if (G.fade && G.fade !== true && (G.fade.playState === 'finished' || G.fade.playState === 'idle')) return false;
     if ((m.carried || []).some(function (C) { return liveGhost(C); })) return false;
     return true;
   }
@@ -1378,10 +1390,43 @@
   /* the reversal itself (the board has made el its live board again): the hand-off on the old room stops where it stands
      and nothing of it may empty the board now (its done), the lens rim fades where it stands, the moment ends without
      finishing what it made (the arriving room went with its board), and the old room goes back to rest */
+  /* the moment ends without finishing what it made: the arriving room went with its board */
+  function dropMoment(m) {
+    if (!m || moment !== m) return;
+    moment = null; M.track(null);
+    m.timers.forEach(clearTimeout); m.timers = []; m.queue = [];
+    root.removeAttribute('data-pmu-moment');
+    if (hold) hold = null;
+    releaseBeatHold();
+  }
+  /* Retro and NieR step back as they stepped out: the erase runs back up from where it stands, in as many of its eight
+     steps as it had taken and at its own pace (180 / 200 ms for the whole board), its phosphor bar or ink scanline
+     climbing with it */
+  function reverseStepped(el, m, o) {
+    var R = el._pmuRev, f = fam(), cs = getComputedStyle(el), hit = /inset\(\s*([\d.]+)%/.exec(cs.clipPath || '');
+    var p = hit ? Math.min(1, +hit[1] / 100) : (R.erase && R.erase.playState === 'finished' ? 1 : 0);
+    el._pmuRevived = true; el._pmuRev = null;
+    [R.erase, R.lineA].forEach(function (x) { if (x && x.cancel) { try { x.cancel(); } catch (error) {} } });
+    Array.prototype.forEach.call(el.querySelectorAll(':scope > .pmu-ghostscan'), function (n) { n.remove(); });
+    dropMoment(m);
+    /* (the erase kept the old scroll as a base transform; with it cancelled and the scroll given back, nothing moves) */
+    var out = { move: null, close: null, ms: 0 };
+    if (p > 0.001) {
+      var n = Math.max(1, Math.round(p * R.n)), ms = Math.max(60, Math.round(p * R.ms)), ease = 'steps(' + n + ',jump-end)';
+      out.close = anim(el, [{ clipPath: 'inset(' + (p * 100).toFixed(2) + '% 0 0 0)' }, { clipPath: 'inset(0% 0 0 0)' }], { dur: ms, easing: ease, fill: 'none' });
+      var line = H('i', f === 'nier' ? 'pmu-film-scan pmu-ghostscan' : 'pmu-film-scanbar pmu-ghostscan', el);
+      gone(anim(line, [{ transform: 'translateY(' + (p * 100).toFixed(2) + '%)', opacity: 1 }, { transform: 'translateY(0%)', opacity: 1, offset: 0.97 }, { transform: 'translateY(0%)', opacity: 0 }], { dur: ms, easing: ease, fill: 'both' }), line);
+      out.ms = ms;
+    }
+    emitMoment('finish', m || { kind: 'room' });
+    return out;
+  }
   function reverse(el, o) {
     var m = moment, G = m && m.ghost;
     if (!reversible(el)) return null;
     o = o || {};
+    if (stepped3(fam())) return reverseStepped(el, m, o);
+    el._pmuRevived = true;
     var s = readBack(el), iris = G.cut === 'iris' ? G.iris : null;
     var list = [G.move, G.fade, G.fadeA].concat(G.anims || []);
     G.gone = true; G.done = null; G.fade = null; G.fadeA = null; G.move = null; G.anims = [];
@@ -1392,11 +1437,7 @@
       rim.classList.add('pmu-iris-out');
       rimTrack(rim, anim(rim, [{ opacity: 1 }, { opacity: 0 }], { dur: 140, easing: E.out, fill: 'forwards' }));
     }
-    moment = null; M.track(null);
-    m.timers.forEach(clearTimeout); m.timers = []; m.queue = [];
-    root.removeAttribute('data-pmu-moment');
-    if (hold) hold = null;
-    releaseBeatHold();
+    dropMoment(m);
     var back = writeBack(el, s, { shift: o.shift || 0, iris: iris });
     emitMoment('finish', m);
     return back;
