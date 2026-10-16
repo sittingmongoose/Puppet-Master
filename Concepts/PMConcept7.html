@@ -216394,10 +216394,17 @@ var T = {};
       var id = gv.slice(2);
       return gv.charAt(0) === 'g' ? { background: 'gradient', bgGradient: id } : { background: 'image', bgImage: id === 'fibre' ? 'paper' : id };
     }
+    /* the pick shows on its tile in the click's own frame, and the ground is drawn in the task after it: a scene is
+       drawn on a canvas at the terminal's size (43-grounds.js), and drawn in the click it held the click's paint
+       (part2's F3.1 M3 pass: Scene, Hills, 128 ms to the next paint, 77 ms of it in this handler). A later pick in the
+       meantime wins. Your own picture still asks for the file in the click, which the file chooser needs */
+    var groundPick = 0;
     function chooseGround(gv) {
       clearTimeout(intent); if (previewing !== null) { previewing = null; A().endPreview(v); }
       if (gv === 'custom' && !String(val('bgImageData') || '').match(/^img:/)) { gcat = 'yours'; paint(); uploadImage(); return; }
-      write(groundPatch(gv));
+      [].forEach.call(root.querySelectorAll('[data-key="ground"]'), function (b) { setA(b, 'aria-checked', String(b.getAttribute('data-value') === gv)); });
+      var pick = ++groundPick;
+      afterPaint(function () { if (pick !== groundPick || disposed) return; write(groundPatch(gv)); });
     }
     /* a tile's picture: the design as this scheme draws it, the look's own ground, or your picture */
     function groundArt(gv, th) {
