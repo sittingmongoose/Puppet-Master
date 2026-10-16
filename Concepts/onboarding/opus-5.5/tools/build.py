@@ -470,6 +470,124 @@ def shared_fitting_patch(text: str) -> str:
 
 
 PATCHES = [
+    # Missing motion events must never hold interaction or leave transient styles behind.
+    ('</head>', '<script id="pm7-motion-finish">\n' + (TOOLS / 'motion_finish.js').read_text(encoding='utf-8') + '\n</script>\n</head>',
+     'motion completion: early shared finite-motion owner'),
+    (r'''      var cleanupTimer = 0;
+      function cleanupOut() {
+        oldP.classList.remove('pm8-page-out');
+        oldP.style.top = oldP.style.left = oldP.style.width = oldP.style.height = '';
+        if (oldP.__pm8PageCleanup === cleanupOut) oldP.__pm8PageCleanup = null;
+      }
+      function cleanupIn() {
+        clearTimeout(cleanupTimer);cleanupTimer=0;
+        newP.classList.remove('pm8-page-in');
+        newP.removeEventListener('animationend', onIn);
+        if (newP.__pm8PageCleanup === cleanupIn) newP.__pm8PageCleanup = null;
+        cleanupOut();
+        document.documentElement.removeAttribute('data-pm-page-transition');
+        requestAnimationFrame(function () { cachePanelRect(newP); cacheTabMetrics(); });
+      }
+      function onIn(ev) {
+        if (ev.animationName !== 'pm8-page-in') return;
+        newP.removeEventListener('animationend', onIn);
+        /* Keep the fully faded outgoing page inert through Settings' own
+           340 ms entrance. Hiding its large subtree at 150 ms forced a
+           main-thread restyle through the middle of the visible animation. */
+        cleanupTimer=setTimeout(cleanupIn,80);
+      }
+      oldP.__pm8PageCleanup = cleanupOut; newP.__pm8PageCleanup = cleanupIn;
+      newP.addEventListener('animationend', onIn);''',
+     r'''      var stopEntrance = null, finished = false;
+      function cleanupOut() {
+        oldP.classList.remove('pm8-page-out');
+        oldP.style.top = oldP.style.left = oldP.style.width = oldP.style.height = '';
+        if (oldP.__pm8PageCleanup === cleanupOut) oldP.__pm8PageCleanup = null;
+      }
+      function cleanupIn() {
+        if (finished) return;
+        finished = true;
+        if (stopEntrance) stopEntrance();
+        newP.classList.remove('pm8-page-in');
+        if (newP.__pm8PageCleanup === cleanupIn) newP.__pm8PageCleanup = null;
+        cleanupOut();
+        document.documentElement.removeAttribute('data-pm-page-transition');
+        requestAnimationFrame(function () { cachePanelRect(newP); cacheTabMetrics(); });
+      }
+      oldP.__pm8PageCleanup = cleanupOut; newP.__pm8PageCleanup = cleanupIn;
+      /* Keep the existing 80 ms post-end hold: Settings still enters for
+         340 ms while the faded outgoing subtree stays inert. */
+      stopEntrance = window.PM7_MOTION_FINISH(newP, 'animation', 'pm8-page-in', cleanupIn, 80);''',
+     'motion completion: page entrance always releases the hover rest'),
+    (r'''                            sTab.addEventListener('transitionend', function onSlid(te) {
+                                if (te.propertyName !== 'transform') return;
+                                te.target.style.transition = '';
+                                te.target.style.transform = '';
+                                te.target.removeEventListener('transitionend', onSlid);
+                            });''',
+     r'''                            window.PM7_MOTION_FINISH(sTab, 'transition', 'transform', function (tab) {
+                                tab.style.transition = '';
+                                tab.style.transform = '';
+                            });''',
+     'motion completion: terminal neighbour tab reflow'),
+    (r'''    if (!inspector || e.target !== inspector || e.propertyName !== 'transform') return;
+    inspector.removeEventListener('transitionend', onDetailOpenSettled);''',
+     r'''    if (!inspector) return;''',
+     'motion completion: Settings inspector completion callback'),
+    (r'''        else inspector.addEventListener('transitionend', onDetailOpenSettled);''',
+     r'''        else inspector.__pmDetailFinish = window.PM7_MOTION_FINISH(inspector, 'transition', 'transform', onDetailOpenSettled);''',
+     'motion completion: Settings inspector entrance'),
+    (r"    inspector.removeEventListener('transitionend', onDetailOpenSettled);",
+     r"    if (inspector.__pmDetailFinish) inspector.__pmDetailFinish();",
+     'motion completion: retire inspector opening before reopening'),
+    (r"    inspector?.removeEventListener('transitionend', onDetailOpenSettled);",
+     r"    if (inspector?.__pmDetailFinish) inspector.__pmDetailFinish();",
+     'motion completion: retire inspector opening on close'),
+    (r'''else{const onSettled=e=>{if(e.target!==drawer||e.propertyName!=='transform')return;drawer.removeEventListener('transitionend',onSettled);if(wrap.isConnected&&wrap.classList.contains('is-open'))wrap.classList.add('is-settled');};drawer.addEventListener('transitionend',onSettled);}''',
+     r'''else{window.PM7_MOTION_FINISH(drawer,'transition','transform',()=>{if(wrap.isConnected&&wrap.classList.contains('is-open'))wrap.classList.add('is-settled');});}''',
+     'motion completion: Settings base drawer entrance'),
+    (r'''      var settle = function (ev) {
+        if (ev.target !== el || ev.propertyName !== 'transform') return;
+        el.removeEventListener('transitionend', settle);
+        el.style.removeProperty('transition');
+        el.style.removeProperty('transform');
+      };
+      el.addEventListener('transitionend', settle);
+      requestAnimationFrame(function () {
+        el.style.transition = 'transform var(--mo-widget-reflow-dur, 240ms) var(--mo-widget-reflow-ease, cubic-bezier(.45,0,.4,1))';
+        el.style.removeProperty('transform');
+      });''',
+     r'''      var settle = function () {
+        el.style.removeProperty('transition');
+        el.style.removeProperty('transform');
+      };
+      requestAnimationFrame(function () {
+        el.style.transition = 'transform var(--mo-widget-reflow-dur, 240ms) var(--mo-widget-reflow-ease, cubic-bezier(.45,0,.4,1))';
+        el.style.removeProperty('transform');
+        window.PM7_MOTION_FINISH(el, 'transition', 'transform', settle);
+      });''',
+     'motion completion: dashboard FLIP cleanup'),
+    (r'''      var settle = function (event) {
+        if (event.target !== element || event.propertyName !== "transform") return;
+        element.removeEventListener("transitionend", settle);''',
+     r'''      var settle = function () {''',
+     'motion completion: Home FLIP completion callback'),
+    (r'''      element.addEventListener("transitionend", settle);
+      requestAnimationFrame(function () {
+        element.style.transition = "transform var(--pm-home-reflow-dur) var(--pm-home-reflow-ease)";
+        element.style.transitionDelay = (index * 16) + "ms";
+        element.style.removeProperty("transform");
+      });''',
+     r'''      requestAnimationFrame(function () {
+        element.style.transition = "transform var(--pm-home-reflow-dur) var(--pm-home-reflow-ease)";
+        element.style.transitionDelay = (index * 16) + "ms";
+        element.style.removeProperty("transform");
+        window.PM7_MOTION_FINISH(element, 'transition', 'transform', settle);
+      });''',
+     'motion completion: Home FLIP marker cleanup'),
+    (r'''            v.addEventListener('animationend', function h() { v.classList.remove('pm-panel-enter'); v.removeEventListener('animationend', h); });''',
+     r'''            window.PM7_MOTION_FINISH(v, 'animation', 'railPanelIn', function () { v.classList.remove('pm-panel-enter'); });''',
+     'motion completion: side-panel entrance cleanup'),
     # Wizard continuity retains the outgoing stage through the incoming entrance. Rebuilding its PRD while
     # entering the workspace needlessly lays out that retained stage again. Replay similarly leaves the workspace.
     # Each stage entry renders its current content; requirement events also refresh PRD directly while it is hidden.
