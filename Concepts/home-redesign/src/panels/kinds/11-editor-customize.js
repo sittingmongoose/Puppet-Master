@@ -230,7 +230,7 @@ function seg(key, opts, label) {
    once. Measured when the screen opens or is placed again (a resize), when the look or the shown choices change and
    when a face finishes loading; the key below is read from attributes only, so an unchanged screen costs no layout. */
 var czFitEpoch = 0;
-PMW.czFit = function (root) {
+PMW.czFit = function (root, later) {
   var dialog = root && root.querySelector('.pmt-cz-dialog');
   if (!dialog || !dialog.style.width) return;               // placed first: the width decides
   var segs = [].slice.call(root.querySelectorAll('.pmt-cz-seg')).filter(function (s) { return !s.closest('[hidden]'); });
@@ -239,7 +239,6 @@ PMW.czFit = function (root) {
   var base = [dialog.style.width, root.getAttribute('data-pmt-look'), root.getAttribute('data-pmt-mode'), de.getAttribute('data-o55-nier-parts') || '', czFitEpoch].join('|');
   var key = base + '|' + shown;
   if (root._czFit === key) return;
-  root._czFit = key;
   // Editor face choices change the available weights. Reuse the exact fit of
   // each offered set; the terminal keeps the existing fitting path.
   var fits = null;
@@ -253,28 +252,39 @@ PMW.czFit = function (root) {
           if (r[i + 1] === null) r[0].removeAttribute(a); else r[0].setAttribute(a, r[i + 1]);
         });
       });
+      root._czFit = key;
       return;
     }
   }
+  root._czFit = null;
   var gridOf = function (s) { var f = s.closest('.pmt-cz-field'), g = f && f.parentElement; return g && (g.classList.contains('pmt-cz-grid2') || g.classList.contains('pmt-cz-row')) ? g : null; };
   [].forEach.call(root.querySelectorAll('.pmt-cz-grid2[data-cols], .pmt-cz-row[data-cols]'), function (g) { g.removeAttribute('data-cols'); });
   [].forEach.call(root.querySelectorAll('.pmt-cz-seg[data-fit]'), function (s) { s.removeAttribute('data-fit'); });
   var over = function (s) { return s.scrollWidth > s.clientWidth + 1; };
-  var left = segs.filter(over);
-  var grids = [];
-  left.forEach(function (s) { var g = gridOf(s); if (g && grids.indexOf(g) < 0) grids.push(g); });
-  grids.forEach(function (g) { g.setAttribute('data-cols', '1'); });
-  if (grids.length) left = left.filter(over);
-  var short = left.filter(function (s) { return s.querySelector('.pmt-cz-ss'); });
-  short.forEach(function (s) { s.setAttribute('data-fit', 'short'); });
-  if (short.length) left = left.filter(over);
-  left.forEach(function (s) { s.setAttribute('data-fit', 'stack'); });
-  if (fits) fits[shown] = [].map.call(root.querySelectorAll('.pmt-cz-grid2, .pmt-cz-row, .pmt-cz-seg'), function (e) { return [e, e.getAttribute('data-cols'), e.getAttribute('data-fit')]; });
+  var left, grids = [], short;
+  var next = later || function (fn) { fn(); };
+  next(function fitColumns() {
+    left = segs.filter(over);
+    left.forEach(function (s) { var g = gridOf(s); if (g && grids.indexOf(g) < 0) grids.push(g); });
+    grids.forEach(function (g) { g.setAttribute('data-cols', '1'); });
+    next(function fitLabels() {
+      if (grids.length) left = left.filter(over);
+      short = left.filter(function (s) { return s.querySelector('.pmt-cz-ss'); });
+      short.forEach(function (s) { s.setAttribute('data-fit', 'short'); });
+      next(function fitStack() {
+        if (short.length) left = left.filter(over);
+        left.forEach(function (s) { s.setAttribute('data-fit', 'stack'); });
+        if (fits) fits[shown] = [].map.call(root.querySelectorAll('.pmt-cz-grid2, .pmt-cz-row, .pmt-cz-seg'), function (e) { return [e, e.getAttribute('data-cols'), e.getAttribute('data-fit')]; });
+        root._czFit = key;
+      });
+    });
+  });
 };
 if (document.fonts && document.fonts.addEventListener) document.fonts.addEventListener('loadingdone', function () {
   czFitEpoch += 1;
   [].forEach.call(document.querySelectorAll('.pmt-cz'), function (r) {
-    if (r.classList.contains('pmed-cz') && r.hasAttribute('aria-hidden') && sheetBusy()) return;
+    // Its owner schedules parked fitting in small, cancellable phases.
+    if (r.classList.contains('pmed-cz') && r.hasAttribute('aria-hidden')) return;
     PMW.czFit(r);
   });
 });
@@ -576,74 +586,99 @@ function open(opts) {
   // Only these small pictures use the chosen scheme. Putting their colours on
   // the sheet restyled every control and scheme tile for each colour pick.
   function setVar(n, val) { if (varsSet[n] === val) return; varsSet[n] = val; [].forEach.call(artHosts, function (a) { a.style.setProperty(n, val); }); }
-  var warmMeasureJob = 0, warmMeasureStamp = '', warmMeasureQueue = [];
-  function containSchemeTiles() {
-    // Seed the static pictures from their actual idle layout. Dynamic groups
-    // keep normal layout so a choice changing a note cannot shift scrolling.
-    root.classList.remove('pmed-contained');
-    var tiles = [].slice.call(root.querySelectorAll('.pmt-cz-scheme'));
-    var heights = tiles.map(function (g) {
-      var css = getComputedStyle(g), height = parseFloat(css.height);
-      if (g.hidden || css.display === 'none' || !isFinite(height)) return null;
-      if (css.boxSizing === 'border-box') height -= parseFloat(css.paddingTop) + parseFloat(css.paddingBottom) + parseFloat(css.borderTopWidth) + parseFloat(css.borderBottomWidth);
-      return Math.max(0, height);
-    });
-    tiles.forEach(function (g, i) {
-      if (heights[i] === null) { g.removeAttribute('data-pmed-sized'); return; }
-      g.style.containIntrinsicBlockSize = 'auto ' + heights[i] + 'px';
-      g.setAttribute('data-pmed-sized', '');
-    });
-    root.classList.add('pmed-contained');
+  var warmMeasureJob = 0, warmMeasureStamp = '', warmMeasureQueue = [], warmGeneration = 0, warmWaiting = false;
+  var warmCleanups = [], warmComplete = null, warmInputAt = 0;
+  function warmInterrupted() {
+    var pending = navigator.scheduling && navigator.scheduling.isInputPending;
+    return performance.now() - warmInputAt < 250 || !!(pending && pending.call(navigator.scheduling, { includeContinuous: true }));
   }
   function measurementStamp() {
     return [dialog.style.width, root.getAttribute('data-pmt-look'), root.getAttribute('data-pmt-mode'), czFitEpoch,
       document.documentElement.getAttribute('data-o55-nier-parts') || '', scope, JSON.stringify(eff().font)].join('|');
   }
   function cancelWarmMeasurements() {
+    ++warmGeneration;
     if (warmMeasureJob) {
       if (window.cancelIdleCallback) cancelIdleCallback(warmMeasureJob); else clearTimeout(warmMeasureJob);
     }
-    warmMeasureJob = 0; warmMeasureQueue = [];
+    warmMeasureJob = 0; warmWaiting = false; warmMeasureQueue = []; warmComplete = null;
+    var cleanups = warmCleanups; warmCleanups = [];
+    cleanups.forEach(function (clean) { clean(); });
   }
+  function keepWarmCleanup(clean) { if (typeof clean === 'function') warmCleanups.push(clean); }
+  function nextWarmPhase() {
+    if (warmMeasureJob || warmWaiting || !warmMeasureQueue.length) return;
+    var generation = warmGeneration;
+    function idle() {
+      warmMeasureJob = 0;
+      if (generation !== warmGeneration || disposed || !closed) return;
+      if (sheetBusy() || warmInterrupted() || !root.classList.contains('pmed-prepared')) { warmPaintSoon(300); return; }
+      warmWaiting = true;
+      function runWarmPhase() {
+        if (generation !== warmGeneration) return;
+        warmWaiting = false;
+        if (disposed || !closed) return;
+        if (sheetBusy() || warmInterrupted() || !root.classList.contains('pmed-prepared')) { warmPaintSoon(300); return; }
+        var work = warmMeasureQueue.shift(); if (work) work();
+        if (generation !== warmGeneration) return;
+        if (warmMeasureQueue.length) nextWarmPhase();
+        else { var done = warmComplete; warmComplete = null; warmCleanups = []; if (done) done(); }
+      }
+      // A separate layout pass follows each phase's writes. Idle alone does
+      // not guarantee clean layout when another idle callback wrote before us.
+      if (window.PM_AFTER_LAYOUT) window.PM_AFTER_LAYOUT(runWarmPhase);
+      else requestAnimationFrame(function () { setTimeout(runWarmPhase, 0); });
+    }
+    warmMeasureJob = window.requestIdleCallback ? requestIdleCallback(idle) : setTimeout(idle, 50);
+  }
+  function fitWarm() { PMW.czFit(root, function (phase) { warmMeasureQueue.unshift(phase); }); }
   function warmMeasurementsSoon() {
-    if (disposed || !closed || warmMeasureJob || warmPaint || warmPaintIdle || !root.classList.contains('pmed-prepared')) return;
-    if (sheetBusy()) { warmPaintSoon(); return; }
+    if (disposed || !closed || warmMeasureJob || warmWaiting || warmMeasureQueue.length || warmPaint || warmPaintIdle || !root.classList.contains('pmed-prepared')) return;
+    if (sheetBusy() || warmInterrupted()) { warmPaintSoon(300); return; }
     var stamp = measurementStamp();
     if (warmMeasureStamp === stamp) return;
     var faces = EL().FACES || {}, base = scope === 'tab' ? v.tabAppearance || {} : {};
     var patches = Object.keys(faces).map(function (id) { return { font: id }; });
     SETS.forEach(function (s) { if (s.patch && s.patch.font) patches.push(s.patch); });
-    warmMeasureQueue = patches.map(function (patch) { return function () {
-      if (preview && preview.primeFont) preview.primeFont(EL().resolve({ tabAppearance: Object.assign({}, base, patch) }).font);
-    }; });
+    var append = function (phase) { warmMeasureQueue.push(phase); };
+    append(fitWarm);
+    patches.forEach(function (patch) {
+      if (preview && preview.primeFont) keepWarmCleanup(preview.primeFont(EL().resolve({ tabAppearance: Object.assign({}, base, patch) }).font, append));
+    });
     var weights = [].slice.call(root.querySelectorAll('[data-seg="fontWeight"] [data-value]'));
     var seen = {};
     Object.keys(faces).forEach(function (id) {
       var range = faces[id].weights, key = range && range.join('|');
       if (!range || seen[key]) return; seen[key] = true;
-      warmMeasureQueue.push(function () {
-        var hidden = weights.map(function (b) { return b.hidden; });
+      var hidden = null;
+      var restore = function () { if (!hidden) return; weights.forEach(function (b, i) { if (b.hidden !== hidden[i]) b.hidden = hidden[i]; }); hidden = null; root._czFit = null; };
+      keepWarmCleanup(restore);
+      append(function () {
+        hidden = weights.map(function (b) { return b.hidden; });
         weights.forEach(function (b) { var n = Number(b.getAttribute('data-value')), hide = n < range[0] || n > range[1]; if (b.hidden !== hide) b.hidden = hide; });
-        PMW.czFit(root);
-        weights.forEach(function (b, i) { if (b.hidden !== hidden[i]) b.hidden = hidden[i]; });
-        PMW.czFit(root);
+      });
+      append(fitWarm); append(restore); append(fitWarm);
+    });
+    var tiles = [], heights = [], sizing = false, contained = false;
+    keepWarmCleanup(function () { if (sizing && !contained) root.classList.remove('pmed-contained'); });
+    append(function () { sizing = true; root.classList.remove('pmed-contained'); tiles = [].slice.call(root.querySelectorAll('.pmt-cz-scheme')); });
+    append(function () {
+      heights = tiles.map(function (tile) {
+        var css = getComputedStyle(tile), height = parseFloat(css.height);
+        if (tile.hidden || css.display === 'none' || !isFinite(height)) return null;
+        if (css.boxSizing === 'border-box') height -= parseFloat(css.paddingTop) + parseFloat(css.paddingBottom) + parseFloat(css.borderTopWidth) + parseFloat(css.borderBottomWidth);
+        return Math.max(0, height);
       });
     });
-    function next() {
-      warmMeasureJob = window.requestIdleCallback ? requestIdleCallback(run) : setTimeout(run, 50);
-    }
-    function run() {
-      warmMeasureJob = 0;
-      if (disposed || !closed || !root.classList.contains('pmed-prepared')) { warmMeasureQueue = []; return; }
-      // A cover or page move can start after this idle job was queued. Resume
-      // from the quiet refresh after it leaves, without reading hidden layout
-      // or competing with the transition's raster work.
-      if (sheetBusy()) { warmPaintSoon(); return; }
-      if (measurementStamp() !== stamp) { warmMeasureQueue = []; warmMeasurementsSoon(); return; }
-      var work = warmMeasureQueue.shift(); if (work) work();
-      if (warmMeasureQueue.length) next(); else { warmMeasureStamp = stamp; containSchemeTiles(); }
-    }
-    next();
+    append(function () {
+      tiles.forEach(function (tile, i) {
+        if (heights[i] === null) { tile.removeAttribute('data-pmed-sized'); return; }
+        tile.style.containIntrinsicBlockSize = 'auto ' + heights[i] + 'px'; tile.setAttribute('data-pmed-sized', '');
+      });
+      root.classList.add('pmed-contained'); contained = true;
+    });
+    warmComplete = function () { if (measurementStamp() === stamp) warmMeasureStamp = stamp; else warmPaintSoon(300); };
+    nextWarmPhase();
   }
   if (document.fonts && document.fonts.addEventListener) document.fonts.addEventListener('loadingdone', warmMeasurementsSoon);
   function paint() {
@@ -755,7 +790,7 @@ function open(opts) {
     setT(root.querySelector('.pmt-cz-framelabel'), scope === 'tab' ? 'This editor' : 'This editor, like all editors');
     paintTokens();
     roving();
-    PMW.czFit(root);
+    if (!closed) PMW.czFit(root);
   }
   function setPressed(id, mineKeys) {
     var s = SETS.filter(function (x) { return x.id === id; })[0]; if (!s) return false;
@@ -793,7 +828,7 @@ function open(opts) {
     if (hole) fr.style.cssText = 'left:' + x0 + 'px;top:' + y0 + 'px;width:' + (x1 - x0) + 'px;height:' + (y1 - y0) + 'px';
     root.classList.toggle('pmt-cz-narrow', narrow);
     syncDock();
-    PMW.czFit(root);
+    if (!closed) PMW.czFit(root);
   }
 
   /* ---- events ---- */
@@ -1198,14 +1233,24 @@ function open(opts) {
       }
       var refresh = function () {
         warmPaintIdle = 0;
-        if (sheetBusy()) { warmPaint = setTimeout(wait, 500); return; }
-        if (!disposed && closed) { syncPreview(); paint(); }
+        if (disposed || !closed) return;
+        if (sheetBusy() || warmInterrupted() || !root.classList.contains('pmed-prepared')) { warmPaint = setTimeout(wait, 300); return; }
+        var append = function (phase) { warmMeasureQueue.push(phase); };
+        pvView.tabAppearance = scope === 'tab' ? v.tabAppearance || {} : {};
+        pvView.previewAppearance = v.previewAppearance || null;
+        if (preview && preview.primeLook) keepWarmCleanup(preview.primeLook(EL().resolve(pvView), append));
+        append(syncPreview); append(paint);
+        warmComplete = warmMeasurementsSoon;
+        nextWarmPhase();
       };
       if (window.requestIdleCallback) warmPaintIdle = requestIdleCallback(refresh); else refresh();
     }, typeof delay === 'number' ? delay : 2000);
   }
   function onIdle() { if (!disposed && closed && root.isConnected && root.classList.contains('pmed-prepared')) warmPaintSoon(0); }
   window.addEventListener('pm-idle', onIdle);
+  function warmInput() { if (!closed || disposed) return; warmInputAt = performance.now(); warmPaintSoon(300); }
+  var warmInputTypes = ['pointerdown', 'pointermove', 'wheel', 'keydown'];
+  warmInputTypes.forEach(function (type) { window.addEventListener(type, warmInput, { capture: true, passive: true }); });
   var offChange = EL().onChange(function () {
     if (!root.isConnected) return;
     if (!closed) { syncPreview(); paint(); return; }
@@ -1275,6 +1320,7 @@ function open(opts) {
     stopDemo(); endPreview(); tokEndPreview();
     if (offChange) offChange();
     window.removeEventListener('pm-idle', onIdle);
+    warmInputTypes.forEach(function (type) { window.removeEventListener(type, warmInput, true); });
     window.removeEventListener('resize', onResize);
     if (ro) ro.disconnect();
     if (io) io.disconnect();

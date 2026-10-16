@@ -1598,6 +1598,17 @@ function mountEditor(host, st, api) {
   // Resolve the complete palette with one style flush. Reusing a single probe
   // and changing its color between reads forced a document restyle per token.
   var colorProbes = {}, paletteProbe = null, colorRead = { key: '', values: {}, blend: '' };
+  function paletteKey(look) { return [look.lookKey, look.look.mode, retroPhosphor() === 'amber' ? 'amber' : ''].join('|'); }
+  function ensurePaletteProbes(names) {
+    if (!paletteProbe) { paletteProbe = h('i', { class: 'pmw-ed-probe', 'aria-hidden': 'true' }); root.appendChild(paletteProbe); }
+    var fragment = document.createDocumentFragment();
+    names.forEach(function (n) {
+      if (colorProbes[n]) return;
+      var p = document.createElement('i'); p.style.color = 'var(' + n + ')';
+      colorProbes[n] = p; fragment.appendChild(p);
+    });
+    if (fragment.childNodes.length) paletteProbe.appendChild(fragment);
+  }
   function tokenColors(names) {
     // Contrast changes the floor, not the look's underlying palette. Read that
     // palette once, outside the track that carries scheme and floor overrides.
@@ -1605,14 +1616,7 @@ function mountEditor(host, st, api) {
     if (colorRead.key !== key) colorRead = { key: key, values: {}, blend: '' };
     var missing = names.filter(function (n) { return !Object.prototype.hasOwnProperty.call(colorRead.values, n); });
     if (!missing.length) return colorRead.values;
-    if (!paletteProbe) { paletteProbe = h('i', { class: 'pmw-ed-probe', 'aria-hidden': 'true' }); root.appendChild(paletteProbe); }
-    var fragment = document.createDocumentFragment();
-    missing.forEach(function (n) {
-      if (colorProbes[n]) return;
-      var p = document.createElement('i'); p.style.color = 'var(' + n + ')';
-      colorProbes[n] = p; fragment.appendChild(p);
-    });
-    if (fragment.childNodes.length) paletteProbe.appendChild(fragment);
+    ensurePaletteProbes(missing);
     colorRead.blend = getComputedStyle(root).getPropertyValue('--pmw-ed-sel-blend').trim();
     missing.forEach(function (n) { colorRead.values[n] = cssRgb(getComputedStyle(colorProbes[n]).color); });
     return colorRead.values;
@@ -1714,31 +1718,56 @@ function mountEditor(host, st, api) {
     if (w > 2) cw = w; else cw = fs * 0.6 + (+F.letterSpacing || 0);
     setVar('--pmw-ed-cw', cw + 'px');
   }
-  function fontWidthKey(F) {
-    return [R.lookKey, R.look.mode, F.id, F.stack, F.size, F.weight, F.letterSpacing, window.devicePixelRatio || 1].join('|');
+  function fontWidthKey(F, look) {
+    look = look || R;
+    return [look.lookKey, look.look.mode, F.id, F.stack, F.size, F.weight, F.letterSpacing, window.devicePixelRatio || 1].join('|');
   }
-  function primeFont(F) {
-    var key = fontWidthKey(F);
+  function primeFont(F, enqueue, look) {
+    var key = fontWidthKey(F, look), p = null;
     if (primedFontWidths.has(key)) return;
     // Called on the parked preview; normalize any container transform so the
     // cache stores the same layout-pixel width the live editor uses.
-    var p = measureEl.cloneNode(true);
-    p.style.fontFamily = F.id === 'jetbrains-mono' ? 'var(--pm-font-code)' : F.stack;
-    p.style.fontSize = clamp(+F.size || 13, 10, 24) + 'px';
-    p.style.fontWeight = String(F.weight || 400);
-    p.style.letterSpacing = (+F.letterSpacing || 0) + 'px';
-    root.appendChild(p);
+    function writeProbe() {
+      p = measureEl.cloneNode(true);
+      p.style.fontFamily = F.id === 'jetbrains-mono' ? 'var(--pm-font-code)' : F.stack;
+      p.style.fontSize = clamp(+F.size || 13, 10, 24) + 'px';
+      p.style.fontWeight = String(F.weight || 400);
+      p.style.letterSpacing = (+F.letterSpacing || 0) + 'px';
+      root.appendChild(p);
+    }
+    function cleanProbe() { if (p) { p.remove(); p = null; } }
     // Code can use the italic face on the first pick too. Load it here, so its
     // arrival does not invalidate the measurements in that input's frame.
-    if (document.fonts && document.fonts.load) {
-      document.fonts.load('italic ' + (F.weight || 400) + ' ' + (clamp(+F.size || 13, 10, 24)) + 'px ' + getComputedStyle(p).fontFamily, '0').catch(function () {});
+    function readProbe() {
+      if (!p) return;
+      if (document.fonts && document.fonts.load) {
+        document.fonts.load('italic ' + (F.weight || 400) + ' ' + (clamp(+F.size || 13, 10, 24)) + 'px ' + getComputedStyle(p).fontFamily, '0').catch(function () {});
+      }
+      var w = glyphWidth(p);
+      cleanProbe();
+      if (w > 2) {
+        if (primedFontWidths.size >= 64) primedFontWidths.delete(primedFontWidths.keys().next().value);
+        primedFontWidths.set(key, w);
+      }
     }
-    var w = glyphWidth(p);
-    p.remove();
-    if (w > 2) {
-      if (primedFontWidths.size >= 64) primedFontWidths.delete(primedFontWidths.keys().next().value);
-      primedFontWidths.set(key, w);
+    // Parked preparation yields a browser layout between writing and reading.
+    // The owner also owns cancellation, including an appended probe.
+    if (enqueue) { enqueue(writeProbe); enqueue(readProbe); return cleanProbe; }
+    writeProbe(); readProbe();
+  }
+  function primeLook(look, enqueue) {
+    var key = paletteKey(look);
+    var names = SYN_KEYS.map(function (k) { return '--pmw-ed-s-' + k; }).concat(['--pmw-ed-fg', '--pmw-ed-ln', '--pmw-ed-ln-cur', '--pmw-ed-add-fg', '--pmw-ed-mod-fg', '--pmw-ed-del-fg', '--pmw-ed-conf-fg',
+      '--pmw-ed-bp-0', '--pmw-ed-bp-1', '--pmw-ed-bp-2', '--pmw-ed-bp-3', '--pmw-ed-bp-4', '--pmw-ed-bp-5', '--pmw-ed-gutbg', '--pmw-ed-bg', '--pmw-ed-sel', '--pmw-ed-sel-blur', '--pmw-ed-line', '--pmw-ed-add-bg', '--pmw-ed-mod-bg', '--pmw-ed-del-bg', '--pmw-ed-conf-bg']);
+    if (colorRead.key !== key || names.some(function (n) { return !Object.prototype.hasOwnProperty.call(colorRead.values, n); })) {
+      enqueue(function () { setAttr(root, 'data-phosphor', retroPhosphor() === 'amber' ? 'amber' : null); ensurePaletteProbes(names); });
+      enqueue(function () {
+        var values = {}, blend = getComputedStyle(root).getPropertyValue('--pmw-ed-sel-blend').trim();
+        names.forEach(function (n) { values[n] = cssRgb(getComputedStyle(colorProbes[n]).color); });
+        colorRead = { key: key, values: values, blend: blend };
+      });
     }
+    return primeFont(look.font, enqueue, look);
   }
   var layoutBox = null;
   function layout(box) {
@@ -3915,6 +3944,7 @@ function mountEditor(host, st, api) {
     root: root,
     look: function () { return R; },
     primeFont: primeFont,
+    primeLook: primeLook,
     /* the colours change under a sweep in the look's own motion, from the point of the choice (a scheme tile): a plate
        of the old ground lifts away (Basic fades, Friendly blooms from the point, Glass glides across, Retro steps,
        NieR wipes in its eight steps); Reduced Motion changes at once */
