@@ -892,14 +892,19 @@
       if (hover || lit.size) { moved = true; start(); }
     }, { passive: true });
     if (typeof MutationObserver === 'function') {
+      /* every record in a batch counts: a look attribute written in the same task as a page change ending (or a Usage
+         moment) once returned before the rest's end was seen, so the card under a resting pointer was never looked
+         at again after the page came back (hover14 bug 1, intermittent: F1-cover on the M3, Nas1 under load) */
       new MutationObserver(function (muts) {
+        var look = false, rest = false;
         for (var i = 0; i < muts.length; i++) {
           var an = muts[i].attributeName;
-          if (an === 'data-pmu-moment' || an === 'data-pm-page-transition') {
-            if (!gestureRest()) restEnded();
-            else if (hover || springs.size || lit.size) { moved = true; start(); }
-          }
-          else { retokenNextFrame(); return; }
+          if (an === 'data-pmu-moment' || an === 'data-pm-page-transition') rest = true; else look = true;
+        }
+        if (look) retokenNextFrame();
+        if (rest) {
+          if (!gestureRest()) restEnded();
+          else if (hover || springs.size || lit.size) { moved = true; start(); }
         }
       }).observe(root, { attributes: true, attributeFilter: ['data-theme', 'data-motion', 'data-o55-nier', 'data-o55-nier-parts', 'data-pmh-soft', 'data-pmu-moment', 'data-pm-page-transition'] });
       if (document.body) {
