@@ -142292,10 +142292,18 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
       warmingContext = false; ensureContext();
     });
   }
+  /* A press NieR Mode's parts will voice on its click (their menu sounds, settings kit 19-nier-parts.js), before any
+     context exists: the first sound of the session opened the device inside that click (soundClick 61.8 ms of a
+     104 ms Settings entry on the M3, Settings lane trace). The device opens in the task after the press instead, while
+     the button is still held, so the click plays at once; a press that will not sound waits for the quiet window. */
+  const VOICED = '.page-tab, .pm-segtab-item, button, a[href], input, select, [role="button"], [role="tab"], [role="switch"], [role="checkbox"], [role="radio"], .toggle, .switch';
+  const voicedPress = (e) => e.type === 'pointerdown' && !S.muted && document.documentElement.hasAttribute('data-o55-nier') &&
+    nierSounds() && !!(e.target && e.target.closest && e.target.closest(VOICED));
   ['pointerdown', 'keydown'].forEach((ev) => document.addEventListener(ev, (e) => {
     if (!e.isTrusted) return;
     lastInput = performance.now();
     if (document.documentElement.hasAttribute('data-o55-open') || document.documentElement.hasAttribute('data-o55-tour')) ensureContext();
+    else if (!S.ctx && voicedPress(e)) window.setTimeout(() => { if (!S.ctx) ensureContext(); }, 0);
     else if (!S.ctx && !warmingContext) {
       warmingContext = true;
       warmWhenQuiet();
