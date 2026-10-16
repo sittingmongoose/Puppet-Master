@@ -28661,6 +28661,13 @@ html[data-motion="reduced"] #pm-o55-onboarding.o55-accept .o55-win { transform: 
    are skipped now; the box keeps its place in the column (final motion QA B4, 2026-10-16). */
 html:not([data-o55-tour]) #chatPanel[data-pmw-sc="on"] > .float-content.pm6-chat-root { content-visibility: hidden; }
 
+/* A page change stamps its direction (--pm-dir) on both pages and the answered fade's start (--pm8-out-from) on the
+   leaving one, read only by those pages' own pm8 keyframes. Unregistered, a custom property is inherited, so each
+   write restyled every element of the page it was set on: 92-221 ms for Home's 2,500 elements on Nas1, inside the
+   change's long frame, against 1-5 ms registered as not inherited (final motion QA B1 seam, 2026-10-16). */
+@property --pm-dir { syntax: '<number>'; inherits: false; initial-value: 1; }
+@property --pm8-out-from { syntax: '<number>'; inherits: false; initial-value: 1; }
+
 /* ---- css/22-hover.css ---- */
 /* PMH: the merged hover system (engine: src/js/18-hover.js, which documents the whole contract). This file has two
    parts. The ENGINE PART (registrations, pseudo plumbing, proxy bases, the PM8-parity resets, Reduced Motion and the
@@ -113048,10 +113055,23 @@ html[data-theme^="retro"] #panel-settings .o55-goals-phase-n { border-radius: 0;
         [oldP, newP].forEach(function (p) { p.getAnimations().forEach(function (a) { if (a.animationName === 'pm8-page-in' || a.animationName === 'pm8-page-out') out.push(a); }); });
         return out;
       };
-      if (window.PM_START_ON_SHOWN) window.PM_START_ON_SHOWN(pageMoves);
+      /* O55: the click's fade (goSoon) keeps running, on the compositor, through this change's long frame; the
+         exit takes over from the opacity it has reached in the frame the moves start */
+      var lift = window.PM_PAGES.__lift; window.PM_PAGES.__lift = null;
+      var handoff = function () {
+        if (!lift || lift.el !== oldP) { if (lift) try { lift.anim.cancel(); } catch (e) {} return; }
+        try {
+          /* still pending here, it reads as its start while the compositor has been running it since its first frame */
+          var a = lift.anim, ran = document.timeline.currentTime - lift.at;
+          if ((a.pending || !(a.currentTime > 0)) && ran > 0) a.currentTime = Math.min(ran, 140);
+          oldP.style.setProperty('--pm8-out-from', getComputedStyle(oldP).opacity); a.cancel();
+        } catch (e) {}
+      };
+      if (window.PM_START_ON_SHOWN) window.PM_START_ON_SHOWN(pageMoves, { release: handoff }); else handoff();
       var stopEntrance = null, finished = false;
       function cleanupOut() {
         oldP.classList.remove('pm8-page-out');
+        oldP.style.removeProperty('--pm8-out-from');   /* O55: the answered fade's start is this exit's only */
         oldP.style.top = oldP.style.left = oldP.style.width = oldP.style.height = '';
         if (oldP.__pm8PageCleanup === cleanupOut) oldP.__pm8PageCleanup = null;
       }
@@ -113112,11 +113132,13 @@ html[data-theme^="retro"] #panel-settings .o55-goals-phase-n { border-radius: 0;
       /* NieR answers with its wipe and the ink; the other looks start the leaving page's fade (Retro in steps) */
       var lift = !nier && !reduced() && oldP && oldP.animate && !oldP.classList.contains('pm8-page-out') ? oldP.animate([{ opacity: 1 }, { opacity: 0.86 }], { duration: 140, easing: retro ? 'steps(2, end)' : 'cubic-bezier(.2, 0, 0, 1)', fill: 'forwards' }) : null;
       soon = { page: pageId };
-      requestAnimationFrame(function () { setTimeout(function () {
+      requestAnimationFrame(function (shown) { setTimeout(function () {
         var to = soon.page; soon = null;
-        if (lift) { try { oldP.style.setProperty('--pm8-out-from', getComputedStyle(oldP).opacity); lift.cancel(); } catch (e) {} setTimeout(function () { oldP.style.removeProperty('--pm8-out-from'); }, 1500); }
+        /* the fade is not read here: a move begun a frame ago still reads as its start on this thread */
+        P.__lift = lift ? { el: oldP, anim: lift, at: shown } : null;
         if (P.__answered !== to) P.__answered = null;
         P.go(to);
+        if (P.__lift) { try { P.__lift.anim.cancel(); } catch (e) {} P.__lift = null; }   /* no exit took it over */
       }, 0); });
     };
     function resync() {
@@ -138886,17 +138908,23 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
    before was a long one (more than 40 ms after the one before it), then plays them from their start: they begin once
    frames come on time, at most `frames` (3) frames later (a page that never draws on time, such as
    software rendering, still moves after that). `anims` is an array of Animations or a function returning
-   one (read again each frame). */
+   one (read again each frame). `o.release`, if given, runs once in the frame the moves start, just before they play:
+   a page change hands the click's fade over to its exit there (tools/shell_motion.py, ANSWER_FIRST). */
 (function () {
   'use strict';
   window.PM_START_ON_SHOWN = function startOnShown(anims, o) {
-    const max = (o && o.frames) || 3, held = new Set();
+    const max = (o && o.frames) || 3, held = new Set(), before = o && typeof o.release === 'function' ? o.release : null;
     const list = () => { try { return (typeof anims === 'function' ? anims() : anims) || []; } catch (_) { return []; } };
     const hold = () => list().forEach((a) => {
       try { if (a && a.playState !== 'idle' && !held.has(a)) { a.pause(); a.currentTime = 0; held.add(a); } } catch (_) { /* gone */ }
     });
-    const release = () => held.forEach((a) => { try { if (a.playState === 'paused') a.play(); } catch (_) { /* gone */ } });
-    let last = null, n = 0;
+    const release = () => {
+      if (before) { try { before(); } catch (_) { /* decoration only */ } }
+      held.forEach((a) => { try { if (a.playState === 'paused') a.play(); } catch (_) { /* gone */ } });
+    };
+    /* the frame the moves were begun after: a first frame on time (the task that began them was short) leaves them as
+       they are, with no pause and restart, so a fast computer sees nothing of this */
+    let last = document.timeline.currentTime, n = 0;
     const tick = () => {
       const now = document.timeline.currentTime;
       if (now == null) { release(); return; }
