@@ -206,7 +206,9 @@ let fitTimer = 0;
 function fitSoon() {
   clearTimeout(fitTimer);
   fitTimer = setTimeout(() => {
-    const go = () => { if (D.on) fitAll(); };
+    /* a panel shown by a path that told no show() (10-skin.js keeps a hidden panel's redraws for when it is shown):
+       its scroller's resize brings it here, and it is skinned then */
+    const go = () => { if (!D.on) return; fitAll(); panelEls().forEach(p => { if (p._dSkinStale && p.getClientRects().length) schedule(p); }); };
     if (typeof window.PM_AFTER_LAYOUT === 'function') window.PM_AFTER_LAYOUT(go); else go();
   }, 60);
 }
