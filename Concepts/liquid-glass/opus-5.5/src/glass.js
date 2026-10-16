@@ -1124,6 +1124,17 @@
     if (!scrollQ) { scrollQ = true; requestAnimationFrame(function () {
       scrollQ = false; var boxes = Array.from(scrollBoxes); scrollBoxes.clear();
       if (!switchOn()) return;
+      /* under a look's cover nothing that scrolled is measured: its strips wait for the lift with the rest (deferStrip)
+         and its sheets for their settle (pm7-f5-nier, Reduce Animations NieR on: an anchoring scroll at the cover's frame
+         forced 22 + 41 ms of style and 10 ms of layout here, under the opaque cover, just before the reveal) */
+      if (pageCovered()) {
+        boxes.forEach(function (b) {
+          var ss = scrollSheets.get(b), ls = scrollStrips.get(b);
+          if (ss && isGlass()) ss.forEach(function (e) { if (e.isConnected) settleSheets.add(e); });
+          if (ls) ls.forEach(function (s) { if (s.isConnected) deferStrip(s); });
+        });
+        return;
+      }
       var glass = isGlass();
       var sheets = new Set(), strips = new Set(), positions = new Map(), offsets = new Map();
       /* a room change scrolls Usage's board to its top while the old room leaves in place: neither is anchored before the
