@@ -219,7 +219,13 @@ function watchFit() {
   });
   const slot = document.getElementById('sidePanelSlot');
   if (window.ResizeObserver && slot) {
-    const ro = new ResizeObserver(fitSoon);
+    /* a stale panel (10-skin.js) that a resize brings on screen with no show() (a narrow window's peek of the active
+       icon, widening back to docked) is skinned here, after layout and before paint, so it never shows unskinned
+       (landing review SF6-1); the fit follows as before */
+    const ro = new ResizeObserver(() => {
+      if (D.on) panelEls().forEach(p => { if (p._dSkinStale && p.getClientRects().length) { p._dSkinStale = false; applyPanel(p, false); } });
+      fitSoon();
+    });
     ro.observe(slot);
     /* a panel's scroller loses its scrollbar's width when opening a row makes it overflow (the content box shrinks,
        the slot does not): names measured on the wider box would be cut by the narrower one */

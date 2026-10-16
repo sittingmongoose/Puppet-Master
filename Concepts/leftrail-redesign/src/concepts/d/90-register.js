@@ -33,7 +33,7 @@ function unmountSkin() {
   D.listeners = [];
   panelEls().forEach(p => {
     p.querySelectorAll('*').forEach(el => { if (el.getAnimations) el.getAnimations().forEach(a => { if (a.id === 'd-enter') a.cancel(); }); });
-    delete p._dTab;
+    delete p._dTab; delete p._dSkinStale;
     p.querySelectorAll(COUNT_SEL).forEach(el => { delete el._dCount; delete el._dCountN; });
     p.querySelectorAll(STATUS_SEL).forEach(el => { delete el._dSeen; });
   });
