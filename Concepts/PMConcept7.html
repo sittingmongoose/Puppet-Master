@@ -136206,7 +136206,7 @@ policies for tenant isolation, and add migration script.</textarea>
       if (tbMenuIsOpen(m)) tbMenuClose(m);
       var wrap = m.closest('.pm6-tb-menu-wrap');
       var btn = wrap && wrap.querySelector('.pm6-tb-menu-trigger');
-      if (btn) btn.setAttribute('aria-expanded', 'false');
+      if (btn && btn.getAttribute('aria-expanded') !== 'false') btn.setAttribute('aria-expanded', 'false');   /* O55: only a change (T8) */
     });
   }
 
@@ -144974,10 +144974,21 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
     var hover = null, springs = new Set(), lit = new Set();
     var running = false, lastT = 0, wasRest = false, bodyRest = false, visCache = null;
     var recheck = false, popupOpen = false;
+    /* A popup open anywhere holds the hover. The class-named ones are live collections (no search); the [role="menu"]
+       elements are found again only when the document's elements or roles changed since the last look: searched on
+       every click and key, the whole ~21k-element document cost 3.2 ms per look on Nas1 (8-40 ms with the forced
+       reads, T8 speed team). The same popups answer, in the same frame. */
+    var popByClass = [document.getElementsByClassName('pmu-menu'), document.getElementsByClassName('pmu-pop')];
+    var roleMenus = null, roleWatch = false;
+    try {
+      new MutationObserver(function () { roleMenus = null; }).observe(document, { childList: true, subtree: true, attributes: true, attributeFilter: ['role'] });
+      roleWatch = true;
+    } catch (_) { roleWatch = false; }
+    function shownIn(l) { for (var i = 0; i < l.length; i++) { if (l[i].getClientRects().length) return true; } return false; }
     function anyPopup() {
-      var l = document.querySelectorAll(POPUP);
-      for (var i = 0; i < l.length; i++) { if (l[i].getClientRects().length) return true; }
-      return false;
+      if (shownIn(popByClass[0]) || shownIn(popByClass[1])) return true;
+      if (!roleMenus || !roleWatch) roleMenus = document.querySelectorAll('[role="menu"]');
+      return shownIn(roleMenus);
     }
     /* after a click, a key or a pointerdown the page may have changed under a resting pointer (a menu opened, a page
        switched): the next frame looks again at what is under the pointer. The loop is started even when nothing hovers:
