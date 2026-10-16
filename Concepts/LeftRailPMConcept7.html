@@ -226295,6 +226295,15 @@ var T = {};
     /* changed: something it shows may have changed while nothing watched it (kept from a terminal that went), so it
        draws again before it shows */
     var changed = false;
+    /* parked, the screen is left out of the page's style and layout (the panels' PMW.park: [data-pmw-parked] is
+       content-visibility: hidden, rendering state kept), so a page-wide restyle such as the NieR switch passes it by (B5:
+       1,346 of that Layout's style resolves were this screen). It is lifted before anything inside is measured (a show,
+       the idle catch-up) and set again once the catch-up has measured: the restyle it skipped is paid there, in idle time,
+       or after the click's frame when a show finds a catch-up owed */
+    function lock(on) {
+      if (window.PMW && typeof window.PMW.park === 'function') window.PMW.park(root, on);
+      else if (on) root.setAttribute('data-pmw-parked', ''); else root.removeAttribute('data-pmw-parked');
+    }
     function settling() { return pageSettling(); }
     function warm(deadline) {
       warmJob = 0;
@@ -226304,10 +226313,12 @@ var T = {};
         warmJob = requestIdleCallback(warm, { timeout: Math.max(1000, WARM_LATEST_MS - (T.util.now() - warmSince)) });
         return;
       }
+      lock(false);
       place(); syncPreview(); paint();
       changed = false;
       /* the preview draws what changed now, unseen, so the click has nothing left to draw */
       if (pv && pv.fullPending) pv.frame();
+      lock(true);
     }
     function warmCancel() {
       clearTimeout(warmWait); warmWait = 0;
@@ -226357,7 +226368,7 @@ var T = {};
       if (renaming) presetRenameEnd(false, false);
       if (preview) { preview.stopDemo(); if (pv) pv.onHide(); }
       root.setAttribute('aria-hidden', 'true');
-      function park() { if (closing === visit && !disposed) { root.classList.add('pmt-cz-parked'); parkedWatch(true); } }
+      function park() { if (closing === visit && !disposed) { root.classList.add('pmt-cz-parked'); lock(true); parkedWatch(true); } }
       if (noFocus) park(); else T.Motion.leave(root, park);
     };
     function dispose() {
@@ -226430,11 +226441,15 @@ var T = {};
       var owed = changed || !!(warmWait || warmJob);
       parkedWatch(false);
       var showing = ++visit;
-      gcat = null; wantDock = false; dockTo(false); body.scrollTop = 0;
+      gcat = null; wantDock = false;
       var q = root.querySelector('.pmt-cz-search'); if (q) q.value = '';
       presetSaveClose(false);
-      attach();
       function draw() {
+        /* lifted before anything inside is moved or measured (the dock's return lays the preview out, the size watch's
+           first delivery places the screen) */
+        lock(false);
+        attach();
+        dockTo(false); body.scrollTop = 0;
         /* the preview's canvas still holds what it drew: only rows that changed are drawn again (the renderer redraws in
            full by itself when its frame or images changed) */
         if (pv) { var pend = pv.fullPending; pv.onShow(); if (!pend) pv.fullPending = false; }
@@ -226471,6 +226486,7 @@ var T = {};
     paint();
     filter('');
     if (pv) pv.onHide();
+    lock(true);
     parkedWatch(true);
     own(v);
     prepared = handle;
