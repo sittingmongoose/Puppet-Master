@@ -145796,7 +145796,9 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
    frames come on time (two in a row after a long one), at most `frames` (6) frames later (a page that never draws
    on time, such as software rendering, still moves after that). `anims` is an array of Animations or a function
    returning one (read again each frame). `o.release`, if given, runs once in the frame the moves start, just before they play:
-   a page change hands the click's fade over to its exit there (tools/shell_motion.py, ANSWER_FIRST). */
+   a page change hands the click's fade over to its exit there (tools/shell_motion.py, ANSWER_FIRST). `o.start: 'commit'`
+   is for entrances that start from nothing: they go on the first frame on time after a long one, so what they bring is
+   not held invisible through the GPU's first draw; other moves still wait for the second. */
 (function () {
   'use strict';
   /* PM_AFTER_LAYOUT(fn): fn runs in the coming frame after its style and layout, before its paint (a ResizeObserver
@@ -145836,6 +145838,12 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
   };
   window.PM_START_ON_SHOWN = function startOnShown(anims, o) {
     const max = (o && o.frames) || 6, held = new Set(), before = o && typeof o.release === 'function' ? o.release : null;
+    /* o.start === 'commit': the caller's moves are entrances that start from nothing (opacity 0, or clipped to a line),
+       so they go on the first frame on time after a long one rather than waiting for the second. Held at their start
+       until then, they kept what they bring invisible through the GPU's first draw of it (the editor's customizer sheet:
+       commit +213 ms, title +456 ms on the P1000, F5 editor lane). Without it (an exit, a page's crossfade, a slide that
+       starts visible) the moves still wait for the second, so the raster after a long frame does not eat their start. */
+    const atCommit = !!(o && o.start === 'commit');
     const list = () => { try { return (typeof anims === 'function' ? anims() : anims) || []; } catch (_) { return []; } };
     const hold = () => list().forEach((a) => {
       try { if (a && a.playState !== 'idle' && !held.has(a)) { a.pause(); a.currentTime = 0; held.add(a); } } catch (_) { /* gone */ }
@@ -145861,7 +145869,7 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
          frame's time, was over by its first draw */
       const gap = last == null ? Infinity : now - last, late = performance.now() - now;
       last = now;
-      if (gap <= 40 && late <= 40) { onTime++; if (!long || onTime >= 2) { release(); return; } }
+      if (gap <= 40 && late <= 40) { onTime++; if (!long || onTime >= 2 || atCommit) { release(); return; } }
       else { long = true; onTime = 0; }
       if (++n >= max) { release(); return; }
       hold();
