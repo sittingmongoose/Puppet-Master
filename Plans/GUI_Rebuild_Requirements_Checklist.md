@@ -2221,14 +2221,17 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/GUI_Rebuild_Requirements_Checklist.md
 canonical_text: >-
-  Appearance and shell requirements are covered through FinalGUISpec F3-650 through F3-658 and the amended
-  notification, hover and panel owners; Settings_System SSYS-052 through SSYS-054; storage-plan SP-333;
-  UI_Command_Catalog UCC-204; Commands_System CS-102; Wiring_Matrix WM-093; UI_Wiring_Rules UIW-043; and
-  Automated_Testing_System ATS-077. The linked registry/census/schema companions must agree before
-  implementation certification. Decision_Log DL-189 through DL-202 records the decisions and
-  supersessions. Glass publication remains pending Jared's review; F3-652, F3-644 and F3-656 own
-  the settled hover-light, font-range and GLY-4 decisions. No concept-only demo or harness becomes a
-  product surface. An approved packet is specification
+  Appearance and shell requirements are covered through FinalGUISpec F3-650 through F3-658 and the
+  amended notification, hover and panel owners; Settings_System SSYS-052 through SSYS-054;
+  storage-plan SP-333; UI_Command_Catalog UCC-204; Commands_System CS-102; Wiring_Matrix WM-093;
+  UI_Wiring_Rules UIW-043; and Automated_Testing_System ATS-077. The linked registry/census/schema
+  companions must agree before implementation certification. Decision_Log DL-189 through DL-212
+  records the decisions and supersessions. The Glass/wallpaper concept publication is complete;
+  F3-652, F3-644 and F3-656 own the settled hover-light, delivered font range and GLY-4 boundaries.
+  F3-642/F3-643/F3-650 and SP-331 own round-3 terminal controls/presets, F3-632 owns picker levels,
+  and SSYS-044 consumes MA-073. The consistency pass, Q13, terminal round 5 and Friendly lavender
+  remain pending top-up; Home/Settings content glyph adoption is not falsely marked complete. No
+  concept-only demo or harness becomes a product surface. An approved packet is specification
   evidence, never native implementation proof.
 gui_related: true
 gui_classification_reason: Appearance And Shell Owner Closure.
@@ -2251,12 +2254,20 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
-- "/mnt/Cursor/share/puppet-master/2026-10-14-plans-canon/sources/COORDINATOR-LOG-20261014-LATE-DECISIONS.md, SHA-256 126ae52840c8e5a30d2c1788b5427e6dc219cd2804d7cbd43f94d25aa0de2d07 (Jared decisions at lines 296 and 306; not implementation evidence)"
+- /mnt/Cursor/share/puppet-master/2026-10-14-plans-canon/sources/COORDINATOR-LOG-20261014-LATE-DECISIONS.md,
+  SHA-256 126ae52840c8e5a30d2c1788b5427e6dc219cd2804d7cbd43f94d25aa0de2d07 (Jared decisions at lines 296
+  and 306; not implementation evidence)
 - /mnt/Cursor/share/puppet-master/2026-10-14-plans-canon/sources/COORDINATOR-LOG.md, SHA-256 82267ce22bcc9c7d17d9f19ad806902718e1978555ada3559d24558baabbdd4f
   (approved campaign source lineage; not native implementation evidence)
 - Plans/Automated_Testing_System.md#ATS-077
 - Plans/UI_Wiring_Rules.md#UIW-043
 - Plans/Decision_Log.md#DL-201
+- /mnt/Cursor/share/puppet-master/2026-10-16-plans-pass2/sources/2026-10-14-terminal-round3--LANDING.md,
+  SHA-256 4d6556ff98168f22719c5d401c4e677d5d380d2ef370b67a838cb3aa45301c2d (source lineage; not native
+  certification)
+- /mnt/Cursor/share/puppet-master/2026-10-16-plans-pass2/sources/2026-10-15-panels-picker-back--NOTES.md,
+  SHA-256 29bac44f166cb8e0e67f4f00634cb15d0a3be576eb2f68e7e19606f3a4a1a71c (source lineage; not native
+  certification)
 preserved_exact_tokens: []
 negative_constraints: []
 owner_hints:

@@ -97,7 +97,10 @@ function mountBar(barEl) {
   if (ro) ro.observe(barEl);
   const onResize = () => place(false);
   window.addEventListener('resize', onResize);
-  barEl.addEventListener('transitionend', onResize);
+  /* only the bar's own box: every icon's colour transition ends here too (a look change ends dozens at once), and each
+     one re-measured the bar after the page had been restyled (35-75 ms a time on the P1000, final motion QA B4) */
+  const onBarEnd = ev => { if (ev.target === barEl) place(false); };
+  barEl.addEventListener('transitionend', onBarEnd);
   /* the bar widens or narrows (names shown or hidden): the tile rides along every frame of the width transition
      instead of waiting at the old place and jumping when it ends */
   let follow = 0;
@@ -127,7 +130,7 @@ function mountBar(barEl) {
       barEl.removeEventListener('transitionend', onWidthEnd);
       barEl.removeEventListener('transitioncancel', onWidthEnd);
       more.destroy();
-      window.removeEventListener('resize', onResize); barEl.removeEventListener('transitionend', onResize);
+      window.removeEventListener('resize', onResize); barEl.removeEventListener('transitionend', onBarEnd);
       barEl.querySelectorAll('.d-bump').forEach(i => i.classList.remove('d-bump'));
       tile.remove(); chatTile.remove();
     },

@@ -35,7 +35,20 @@ STYLE_OPEN = '<style id="pm51-settings-refresh">\n'
 # Coordinator direction: pm-mail 1015011245-ba7b, 2026-10-15 UTC.
 # general.visual.wallpaper left with Glass's publish (pm-mail 1015131953-255d): build.py step 6 now carries the
 # wallpapers package, whose Settings gallery takes the row's place (wallpapers.js, setting-general.visual.wallpaper).
-CONCEPT_PENDING_ROWS: set[str] = set()
+# Terminal round-3 fields are canonical but still LOCAL_FIELDS in the concept adapter.
+# Publish their Settings controls only after that owner integrates the canonical ids.
+CONCEPT_PENDING_ROWS: set[str] = {
+    'code.terminal.background-strength',
+    'code.terminal.background-scale',
+    'code.terminal.background-motion',
+    'code.terminal.background-fit',
+    'code.terminal.background-desaturate',
+    'code.terminal.bezel',
+    'code.terminal.bezel-width',
+    'code.terminal.bezel-material',
+    'code.terminal.bezel-reflection',
+    'code.terminal.phosphor-mask',
+}
 
 
 def _t50():
