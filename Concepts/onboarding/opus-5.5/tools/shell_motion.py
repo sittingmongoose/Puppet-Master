@@ -551,13 +551,30 @@ INK = [
     ("    var ink = strip && strip.querySelector('.page-tab-ink');\n",
      "    var ink = strip && strip.querySelector('.page-tab-ink');\n"
      "    var inkShown = true;   /* O55 (B1): drawn? read after layout, at load and on each look change */\n"
-     "    function readInkShown() { try { inkShown = !!ink && getComputedStyle(ink).opacity !== '0'; } catch (eI) { inkShown = true; } }\n"
+     "    function readInkShown() { var was = inkShown; try { inkShown = !!ink && getComputedStyle(ink).opacity !== '0'; } catch (eI) { inkShown = true; }\n"
+     "      if (inkShown && !was) { var at = strip.querySelector('.page-tab.active'); if (at) snap(at); } }   /* shown again: on the tab exactly */\n"
      "    function inkSoon() { if (typeof window.PM_AFTER_LAYOUT === 'function') window.PM_AFTER_LAYOUT(readInkShown); else requestAnimationFrame(readInkShown); }\n"
      "    if (ink) { inkSoon(); try { new MutationObserver(inkSoon).observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme', 'data-lg', 'data-o55-nier'] }); } catch (eM) {} }\n",
      'page-tab ink: drawn flag'),
     ("      if (pos.x === null || reduced()) { snap(tab, geometry); return; }\n",
      "      if (pos.x === null || reduced() || !inkShown) { snap(tab, geometry); return; }   /* O55 (B1): a hidden ink is placed at once */\n",
      'page-tab ink: hidden ink snaps'),
+    # The same for the shared liquid ink (PM6_LIQUID_INK: the rail side panels' segment tabs and Files' #fmTabInk), which the
+    # same glass.css rule hides (.pm-segtab-ink): each attached ink keeps its own drawn flag. A hidden ink snapped at the
+    # click can be a pixel or two off the item (the active item's width settles after it; the spring measured every frame),
+    # so an ink that is shown again is placed on its active item then, exactly. Both inks do that.
+    ("      if (!strip || !ink || typeof getActive !== 'function') return null;\n",
+     "      if (!strip || !ink || typeof getActive !== 'function') return null;\n"
+     "      var inkShown = true;   /* O55 (B1): drawn? read after layout, at load and on each look change; hidden, it snaps */\n"
+     "      var readShown = function () { var was = inkShown; try { inkShown = getComputedStyle(ink).opacity !== '0'; } catch (eI) { inkShown = true; }\n"
+     "        if (inkShown && !was) { var at = getActive(); if (at) snap(at); } };   /* shown again: on the active item exactly */\n"
+     "      var shownSoon = function () { if (!ink.isConnected) return; if (typeof window.PM_AFTER_LAYOUT === 'function') window.PM_AFTER_LAYOUT(readShown); else requestAnimationFrame(readShown); };\n"
+     "      shownSoon();\n"
+     "      try { new MutationObserver(shownSoon).observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme', 'data-lg', 'data-o55-nier'] }); } catch (eM) {}\n",
+     'liquid ink: drawn flag'),
+    ("        if (pos.a === null || reduced()) { snap(el); return; }\n",
+     "        if (pos.a === null || reduced() || !inkShown) { snap(el); return; }   /* O55 (B1): a hidden ink is placed at once */\n",
+     'liquid ink: hidden ink snaps'),
 ]
 
 PATCHES = STATUS_BAR + HOVER_TAGS + THEME + PAGES + CENSUS + ANSWER_FIRST + CHAT + EDGES + FIELD + TITLE_MENUS + INK
