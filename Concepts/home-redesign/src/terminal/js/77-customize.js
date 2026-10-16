@@ -1196,11 +1196,14 @@
     /* changed: something it shows may have changed while nothing watched it (kept from a terminal that went), so it
        draws again before it shows */
     var changed = false;
-    /* parked, the screen is left out of the page's style and layout (the panels' PMW.park: [data-pmw-parked] is
-       content-visibility: hidden, rendering state kept), so a page-wide restyle such as the NieR switch passes it by (B5:
-       1,346 of that Layout's style resolves were this screen). It is lifted before anything inside is measured (a show,
-       the idle catch-up) and set again once the catch-up has measured: the restyle it skipped is paid there, in idle time,
-       or after the click's frame when a show finds a catch-up owed */
+    /* while parked and a look change is pending, the screen is left out of the page's style and layout (the panels'
+       PMW.park: [data-pmw-parked] is content-visibility: hidden), so the switch's own restyle passes it by (B5: 1,346 of
+       the NieR switch's Layout style resolves were this screen). It is set in the same task as the look's attribute
+       write (lookMo), before that frame styles anything, and lifted by the idle catch-up, which pays the restyle in idle
+       time, or by a show that finds the catch-up still owed, after the click's frame. It is not set again after the
+       catch-up: lifting it lays the whole screen out once more (a warm open with it set on every park took 616 ms to its
+       first paint on Nas1 against 256 without), so between look changes the screen stays as it was */
+    var lookMo = null;
     function lock(on) {
       if (window.PMW && typeof window.PMW.park === 'function') window.PMW.park(root, on);
       else if (on) root.setAttribute('data-pmw-parked', ''); else root.removeAttribute('data-pmw-parked');
@@ -1219,7 +1222,6 @@
       changed = false;
       /* the preview draws what changed now, unseen, so the click has nothing left to draw */
       if (pv && pv.fullPending) pv.frame();
-      lock(true);
     }
     function warmCancel() {
       clearTimeout(warmWait); warmWait = 0;
@@ -1250,7 +1252,12 @@
       window.removeEventListener('resize', warmSoon);
       window.removeEventListener('pm-idle', warmOnIdle);
       if (v._czLook === warmSoon) v._czLook = null;
+      if (lookMo) { lookMo.disconnect(); lookMo = null; }
       if (!on || handle.kept) return;
+      if (typeof MutationObserver === 'function') {
+        lookMo = new MutationObserver(function () { lock(true); warmSoon(); });
+        lookMo.observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme', 'data-o55-nier', 'data-o55-nier-parts', 'data-motion'] });
+      }
       offWarm = A().onChange(warmSoon);
       window.addEventListener('resize', warmSoon);
       window.addEventListener('pm-idle', warmOnIdle);
@@ -1269,7 +1276,7 @@
       if (renaming) presetRenameEnd(false, false);
       if (preview) { preview.stopDemo(); if (pv) pv.onHide(); }
       root.setAttribute('aria-hidden', 'true');
-      function park() { if (closing === visit && !disposed) { root.classList.add('pmt-cz-parked'); lock(true); parkedWatch(true); } }
+      function park() { if (closing === visit && !disposed) { root.classList.add('pmt-cz-parked'); parkedWatch(true); } }
       if (noFocus) park(); else T.Motion.leave(root, park);
     };
     function dispose() {
@@ -1387,7 +1394,6 @@
     paint();
     filter('');
     if (pv) pv.onHide();
-    lock(true);
     parkedWatch(true);
     own(v);
     prepared = handle;
