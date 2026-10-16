@@ -15,7 +15,8 @@ parts. The result is the same selector, part by part:
     whose argument is less specific is written `:where(arg)` plus an always-matching pad worth the maximum
     (`:not(.t7.t7:not(*))` is (0,2,0) and matches every element), so every part keeps the original specificity;
   * forgiving parsing: every part keeps its argument inside `:is()`/`:where()`, so an argument the browser does not
-    support still drops only that part;
+    support still drops only that part; an argument no browser accepts there (a pseudo-element) is dropped before the
+    specificity is taken, as the browser drops it;
   * cascade order: the rule keeps its place and its declarations; only its prelude changes.
 Rules with nested rules inside, and anything inside @keyframes/@font-face/@property/@page, are left alone.
 """
@@ -237,6 +238,13 @@ def pad(S) -> str:
     return out
 
 
+PSEUDO_ELEMENT = re.compile(r'::[\w-]|:(?:before|after|first-line|first-letter)(?![\w-])', re.I)
+
+
+def _no_strings(s: str) -> str:
+    return re.sub(r'"(?:\\.|[^"\\])*"|\'(?:\\.|[^\'\\])*\'', '""', s)
+
+
 def _multi(x) -> bool:
     return (x['kind'] == 'pseudo-class' and x['name'] in ('is', 'where') and x['args'] is not None
             and len([a for a in split_top(x['args']) if a]) > 1)
@@ -270,7 +278,13 @@ def rewrite_complex(cx: str, stats: dict, ancestors: bool = True):
     if not target:
         return None
     head, tail = cx[:at + target['start']], cx[at + target['end']:]
-    args = [a for a in split_top(target['args']) if a]
+    # an argument :is()/:where() cannot hold (a pseudo-element) is dropped by the browser: it matches nothing and does
+    # not count toward the specificity, so it is dropped here too
+    args = [a for a in split_top(target['args']) if a and not PSEUDO_ELEMENT.search(_no_strings(a))]
+    if len(args) < len([a for a in split_top(target['args']) if a]):
+        stats['dropped_invalid'] += 1
+    if not args:
+        return None
     if target['name'] == 'is':
         specs = [spec_complex(a) for a in args]
         if any(s is None for s in specs):
@@ -299,7 +313,7 @@ def norm(sel: str) -> str:
 def rewrite_css(css: str, ancestors: bool = True, exclude: frozenset = frozenset()) -> tuple[str, dict]:
     """Rewrite every eligible style rule prelude in a stylesheet. Returns (css, stats)."""
     stats = {'rules': 0, 'changed': 0, 'selectors_in': 0, 'selectors_out': 0, 'unparsed': 0, 'spec_unknown': 0,
-             'padded': 0, 'ancestor': 0, 'skipped_nested': 0, 'skipped_comment': 0, 'excluded': 0}
+             'padded': 0, 'ancestor': 0, 'skipped_nested': 0, 'skipped_comment': 0, 'excluded': 0, 'dropped_invalid': 0}
     out, stack, start, i, n = [], [], 0, 0, len(css)
     last = 0
     # stack entries: 'group' (@media and the like: holds rules), 'rule' (a style rule body), 'block' (anything else)

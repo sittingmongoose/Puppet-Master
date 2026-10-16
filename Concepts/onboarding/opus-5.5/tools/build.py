@@ -1530,7 +1530,11 @@ def check(built: str) -> list[str]:
         problems.append('Concepts/PMConcept7.html is missing; run build.py --publish-pm7')
     elif PM7_TARGET.read_bytes() != expected:
         problems.append('Concepts/PMConcept7.html differs from a fresh build; run build.py --publish-pm7')
-    problems.extend(page_lint_ratchet(UNSPLIT.get(built, built)))
+    unsplit = UNSPLIT.get(built)
+    if unsplit is None:
+        problems.append('page lint ratchet: no page from before step 7 for this build (build_text() must run first)')
+    else:
+        problems.extend(page_lint_ratchet(unsplit))
     return problems
 
 
