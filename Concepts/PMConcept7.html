@@ -11042,7 +11042,7 @@ html[data-theme^="glass"] #panel-settings :is(.rail-search,.hero-search) input {
     will-change: transform, opacity;
   }
   @keyframes pm8-page-out {
-    from { opacity: 1; transform: translateX(0); }
+    from { opacity: var(--pm8-out-from, 1); transform: translateX(0); }   /* O55: continues an answered fade */
     to   { opacity: 0; transform: translateX(calc(var(--pm-dir, 1) * -50px)); }
   }
   /* Retire the legacy per-page `animation: fadeIn 0.3s` (wizard +
@@ -47899,6 +47899,11 @@ html[data-theme^="glass"]:not(#lgz) .main-area { flex: 1 1 0% !important; }
 @property --lg-px { syntax: '*'; inherits: false; }
 @property --lg-py { syntax: '*'; inherits: false; }
 @property --lg-glow { syntax: '*'; inherits: false; }
+/* Frost belongs to the sheet's own background and the onboarding scrim. The painter supplies it through a rule
+   scoped to those readers, so changing an image neither inherits through every row nor mutates html's inline style. */
+@property --lg-frost-heavy { syntax: '*'; inherits: false; }
+@property --lg-frost-light { syntax: '*'; inherits: false; }
+@property --lg-wall-hold { syntax: '*'; inherits: false; }
 /* how see-through the sheets are. Settings' panel transparency (public --glass-alpha, from its floor, .35 dark and .45
    light, to 1) moves each sheet's tint around today's look, which is the setting's default .55: up to a near-opaque .94
    at 100 %, and down by at most a quarter of the tint at the floor, so the frost keeps text readable. --lg-ga is
@@ -80148,7 +80153,8 @@ status: completed with warnings</pre>
         if (!window.PM_PAGES || !window.PM_PAGES.go) return;
         var tab = e.target && e.target.closest ? e.target.closest('.page-tab[data-page]') : null;
         if (!tab) return;
-        window.PM_PAGES.go(tab.getAttribute('data-page'));
+        if (e.isTrusted && typeof window.PM_PAGES.goSoon === 'function') window.PM_PAGES.goSoon(tab.getAttribute('data-page'));   /* O55: answer first */
+        else window.PM_PAGES.go(tab.getAttribute('data-page'));
       }, true);
       /* ── pm6 W2 (js-integration): theme persistence shim ────────────
          Title-bar theme is a sprout menu (#themeSelect trigger). PM_THEME
@@ -81649,6 +81655,7 @@ status: completed with warnings</pre>
         tab.addEventListener('click', function() {
           const pageId = this.getAttribute('data-page');
           if (!pageId) return;
+          if (window.PM_PAGES && typeof window.PM_PAGES.go === 'function') return;   /* O55: PM_PAGES switches */
           document.querySelectorAll('.page-tab').forEach(function(t) { t.classList.remove('active'); });
           this.classList.add('active');
           document.querySelectorAll('.primary-content > .page').forEach(function(p) {
@@ -95500,18 +95507,22 @@ window.PM_NIER = Object.freeze({
   const later = (fn, ms) => window.setTimeout(fn, Math.round(ms * speed()));
   const onboarding = () => html.hasAttribute('data-o55-open');
   const tone = () => (/-light$/.test(html.getAttribute('data-theme') || '') ? 'light' : 'dark');
-  /* Keep the last painted ground for the reduced-motion cover. Reading computed style after the switch's row
-     changes used to flush layout in the click task. This read follows paint, once per look/contrast change. */
+  /* Keep the last laid-out ground for the reduced-motion cover. A timer after paint can still meet another pending
+     theme write (190 ms forced style on M3). Read in the first layout delivery, once per look/contrast change. */
   let calmColors = { background: '#111111', ink: '#ffffff' }, calmReadQueued = false;
   function cacheCalmColors() {
     if (calmReadQueued) return;
     calmReadQueued = true;
-    requestAnimationFrame(() => setTimeout(() => {
+    const read = () => {
       calmReadQueued = false;
       if (!document.body) return;
       const cs = getComputedStyle(document.body);
       calmColors = { background: cs.backgroundColor, ink: cs.color };
-    }, 0));
+    };
+    if (typeof ResizeObserver === 'function') {
+      const ready = new ResizeObserver(() => { ready.disconnect(); read(); });
+      ready.observe(document.body || html);
+    } else requestAnimationFrame(() => setTimeout(read, 0));
   }
   new MutationObserver(cacheCalmColors).observe(html, { attributes: true, attributeFilter: ['data-theme', 'data-o55-nier', 'data-contrast'] });
   cacheCalmColors();
@@ -99340,8 +99351,30 @@ goHome = function () {
   return o55NavRun(() => o55NavHome.apply(this, args), '[data-action="home"]', !state.home);
 };
 const o55NavDispatch = dispatchAction;
+let o55NierAckTicket = 0, o55NierAckDesired = null;
 dispatchAction = function (action, el) {
   const args = arguments;
+  /* A reduced-motion NieR click still saved and rebuilt its row before the calm cover could paint (166–236 ms
+     in the P1000 click handler). Paint the switch's existing selected style first, then perform that same write.
+     Coalesce repeated input to the latest desired value; a refused write restores the owner's actual row. */
+  if (action === 'toggle-setting' && ds(el, 'setting') === 'general.visual.nier-mode' &&
+      args[2] && args[2].isTrusted && o55Still() && !state.settingsProjectionReadOnly &&
+      !el.disabled && el.getAttribute('aria-disabled') !== 'true') {
+    const id = 'general.visual.nier-mode', ticket = ++o55NierAckTicket;
+    o55NierAckDesired = o55NierAckDesired === null ? !o55On(PM51.value(id)) : !o55NierAckDesired;
+    el.classList.toggle('on', o55NierAckDesired); el.setAttribute('aria-checked', String(o55NierAckDesired));
+    if (el.hasAttribute('aria-pressed')) el.setAttribute('aria-pressed', String(o55NierAckDesired));
+    o55AfterPaint(() => {
+      if (ticket !== o55NierAckTicket) return;
+      const desired = o55NierAckDesired; o55NierAckDesired = null;
+      try { if (o55On(PM51.value(id)) !== desired) o55NavDispatch.apply(this, args); }
+      finally {
+        const actual = o55On(PM51.value(id));
+        if (el.isConnected && (el.classList.contains('on') !== actual || el.getAttribute('aria-checked') !== String(actual))) refreshSettingRow(id);
+      }
+    });
+    return;
+  }
   if (action !== 'jump-workspace') return o55NavDispatch.apply(this, args);
   return o55NavRun(() => o55NavDispatch.apply(this, args), `.workspace-tab[data-workspace="${cssEscape(ds(el, 'workspace'))}"]`, false);
 };
@@ -113290,12 +113323,13 @@ html[data-theme^="retro"] #panel-settings .o55-goals-phase-n { border-radius: 0;
       newP.style.setProperty('--pm-dir', String(dir));
       oldP.classList.add('pm8-page-out');
       newP.classList.add('pm8-page-in');
-      requestAnimationFrame(function () { requestAnimationFrame(function () {   /* O55: start on a shown frame */
+      var restartMoves = function () {   /* O55: the moves start on a shown frame */
         var t = document.timeline.currentTime; if (t == null) return;
         [oldP, newP].forEach(function (p) { p.getAnimations().forEach(function (a) {
           if (a.animationName === 'pm8-page-in' || a.animationName === 'pm8-page-out') { try { if (a.playState !== 'idle') a.startTime = t; } catch (e) {} }
         }); });
-      }); });
+      };
+      requestAnimationFrame(function () { restartMoves(); requestAnimationFrame(restartMoves); });
       var stopEntrance = null, finished = false;
       function cleanupOut() {
         oldP.classList.remove('pm8-page-out');
@@ -113339,11 +113373,33 @@ html[data-theme^="retro"] #panel-settings .o55-goals-phase-n { border-radius: 0;
       var whole = changed && newP && oldP !== newP && (reduced() || window.PM_PAGES.instant) && /^(wizard|orchestrator)$/.test(pageId);   /* O55 */
       origGo.call(window.PM_PAGES, pageId, subTab);
       if (whole) requestAnimationFrame(function () { finishEntrances(newP); });
-      if (tab) (changed ? springTo : snap)(tab, tabMetrics);
+      if (tab && window.PM_PAGES.__answered !== pageId) (changed ? springTo : snap)(tab, tabMetrics);   /* O55: the answer already started it */
+      window.PM_PAGES.__answered = null;
       if (!rect) { requestAnimationFrame(cacheActiveRect); return; }
       animatePages(oldP, newP, tabIndex(pageId) >= tabIndex(prev) ? 1 : -1, rect);
     };
 
+    /* O55: the answer on the click's own frame (see ANSWER_FIRST in tools/shell_motion.py) */
+    var soon = null;
+    window.PM_PAGES.goSoon = function (pageId) {
+      var P = window.PM_PAGES, prev = P.current;
+      if (soon) { soon.page = pageId; }
+      else if (!pageId || pageId === prev || !bootPaintDone || reduced() || document.hidden || !panelFor(pageId)) { P.go(pageId); return; }
+      var tab = tabFor(pageId), oldP = prev ? panelFor(prev) : null;
+      document.querySelectorAll('.page-tab').forEach(function (t) { var on = t.getAttribute('data-page') === pageId; t.classList.toggle('active', on); t.setAttribute('aria-selected', on ? 'true' : 'false'); });
+      if (tab) { springTo(tab, measureTab(tab)); P.__answered = pageId; }
+      if (soon) return;
+      var html = document.documentElement, nier = html.getAttribute('data-o55-nier') === 'on', retro = /^retro/.test(html.getAttribute('data-theme') || '');
+      /* NieR answers with its wipe and the ink; the other looks start the leaving page's fade (Retro in steps) */
+      var lift = !nier && oldP && oldP.animate && !oldP.classList.contains('pm8-page-out') ? oldP.animate([{ opacity: 1 }, { opacity: 0.86 }], { duration: 140, easing: retro ? 'steps(2, end)' : 'cubic-bezier(.2, 0, 0, 1)', fill: 'forwards' }) : null;
+      soon = { page: pageId };
+      requestAnimationFrame(function () { setTimeout(function () {
+        var to = soon.page; soon = null;
+        if (lift) { try { oldP.style.setProperty('--pm8-out-from', getComputedStyle(oldP).opacity); lift.cancel(); } catch (e) {} setTimeout(function () { oldP.style.removeProperty('--pm8-out-from'); }, 1500); }
+        if (P.__answered !== to) P.__answered = null;
+        P.go(to);
+      }, 0); });
+    };
     function resync() {
       cacheTabMetrics();
       cacheActiveRect();
@@ -151573,6 +151629,15 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
     r.classList.remove('o55-scrim-lit'); clearOpenScrim(); /* the close plays its own scrim */
     setSolid(false); /* the app is back under the scrim before the window leaves */
     r.classList.remove('o55-opening'); r.classList.add('o55-closing'); r.classList.toggle('o55-handoff', handoff); r.setAttribute('data-o55-ambient', 'off');
+    /* the exit plays on frames that are shown: the close's own task (Enter puts the Wizard in place first) can hold the
+       first frame for half a second on the P1000, and the timeline that frame draws at is from before that work, so the
+       window and its scrim were already gone when it was drawn. They are put back to their start in that frame and
+       again in the next one (final motion QA A1). */
+    if (!handoff && !O55.motion.reduced()) {
+      const restart = () => { const t = document.timeline.currentTime; if (t == null || S.open) return;
+        [r.querySelector('.o55-win'), r.querySelector('.o55-scrim')].forEach((el) => { if (el) el.getAnimations().forEach((a) => { try { if (a.playState !== 'idle' && Number.isFinite(a.effect.getComputedTiming().endTime)) a.startTime = t; } catch (_) { /* gone */ } }); }); };
+      requestAnimationFrame(() => { restart(); requestAnimationFrame(restart); });
+    }
     if (!handoff) O55.sound.play(reason === 'done' ? 'finish' : 'close');
     /* the skin may keep the root (and its scrim) a while: NieR folds the window to a line that carries on into the
        Guided Tour, and the scrim stays until the tour's own has taken over, so the app never comes up lit between */
@@ -166326,11 +166391,15 @@ function stopEnter(el) { el.getAnimations().forEach(a => { if (a.id === 'd-enter
    next frame: the first frame shows the start, then everything runs from one start time. */
 function startTogether(anims) {
   if (!anims || !anims.length) return;
-  requestAnimationFrame(() => {
+  /* ...and once more on the frame after that one: that frame can itself be the long one (the fit pass and the new
+     view's first layout), and the time it draws at is from before its work, so a move started in it was over before it
+     showed (P1000 films, final motion QA A8: the held panel gone and the new one still empty for ~100 ms) */
+  const restart = () => {
     const t = document.timeline.currentTime;
     if (t == null) return;
     anims.forEach(a => { try { if (a.playState !== 'idle') a.startTime = t; } catch (e) { /* gone */ } });
-  });
+  };
+  requestAnimationFrame(() => { restart(); requestAnimationFrame(restart); });
 }
 /* stagger a list in; runs once per call, never on scroll */
 function cascade(list, opts) {
@@ -216800,11 +216869,23 @@ try { if (window.PM_HOME && typeof window.PM_HOME.boot === 'function') window.PM
   function viewportVars() { root.style.setProperty('--lg-vw', innerWidth + 'px'); root.style.setProperty('--lg-vh', innerHeight + 'px'); }
   function cover(im) { var vw = innerWidth, vh = innerHeight, sc = Math.max(vw / im.naturalWidth, vh / im.naturalHeight); return { s: sc, ox: (vw - im.naturalWidth * sc) / 2, oy: (vh - im.naturalHeight * sc) / 2, vw: vw, vh: vh }; }
   var FROST = { heavy: { blur: 26, sat: 1.65 }, light: { blur: 14, sat: 1.6 } }, FROST_SCALE = 1 / 3;
+  var wallpaperPaintStyle = null;
+  function wallpaperPaintRule(index) {
+    if (!wallpaperPaintStyle || !wallpaperPaintStyle.isConnected) {
+      wallpaperPaintStyle = document.createElement('style'); wallpaperPaintStyle.id = 'lg-frost';
+      wallpaperPaintStyle.textContent = 'html[data-lg="on"] :is([data-lg-kind], #pm-o55-onboarding .o55-scrim) {}\nhtml[data-lg="on"] body {}';
+      document.head.appendChild(wallpaperPaintStyle);
+    }
+    return wallpaperPaintStyle.sheet.cssRules[index].style;
+  }
   function dropFrost(rec) { Object.keys(rec.urls).forEach(function (name) { URL.revokeObjectURL(rec.urls[name]); }); }
   function applyFrost(rec) {
     if (frostKey === rec.key) return;
     frosts = rec.urls; frostKey = rec.key; frostWallUrl = rec.wall;
-    Object.keys(frosts).forEach(function (name) { root.style.setProperty('--lg-frost-' + name, 'url(' + frosts[name] + ')'); });
+    /* Even a non-inherited custom property on html's inline style invalidates the whole app in Chromium. A rule
+       scoped to the actual painters changes the same pixels in this commit without restyling their contents. */
+    var paint = wallpaperPaintRule(0);
+    Object.keys(frosts).forEach(function (name) { paint.setProperty('--lg-frost-' + name, 'url(' + JSON.stringify(frosts[name]) + ')'); });
     releaseWallHold();
   }
   /* A wallpaper or mode change shows the new print at once, but the sheets' frost is encoded from it a few hundred ms
@@ -216813,12 +216894,12 @@ try { if (window.PM_HOME && typeof window.PM_HOME.boot === 'function') window.PM
   var wallHoldT = 0;
   function holdWall(url) {
     if (!url) return;
-    root.style.setProperty('--lg-wall-hold', 'url("' + url + '")'); root.setAttribute('data-lg-wall-hold', '');
+    wallpaperPaintRule(1).setProperty('--lg-wall-hold', 'url(' + JSON.stringify(url) + ')'); root.setAttribute('data-lg-wall-hold', '');
     clearTimeout(wallHoldT); wallHoldT = setTimeout(releaseWallHold, 2000);
   }
   function releaseWallHold() {
     clearTimeout(wallHoldT); wallHoldT = 0;
-    if (root.hasAttribute('data-lg-wall-hold')) { root.removeAttribute('data-lg-wall-hold'); root.style.removeProperty('--lg-wall-hold'); }
+    if (root.hasAttribute('data-lg-wall-hold')) { root.removeAttribute('data-lg-wall-hold'); wallpaperPaintRule(1).removeProperty('--lg-wall-hold'); }
   }
   /* a canvas as a PNG blob, now. canvas.toBlob encodes in the main thread's idle time, so while a Glass entry or a room
      change kept it busy a frost or a ring came back up to a second later (P1000 trace: the frosts drawn at +1.2 s, their

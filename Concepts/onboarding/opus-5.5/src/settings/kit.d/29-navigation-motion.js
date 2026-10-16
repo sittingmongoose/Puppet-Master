@@ -52,8 +52,30 @@ goHome = function () {
   return o55NavRun(() => o55NavHome.apply(this, args), '[data-action="home"]', !state.home);
 };
 const o55NavDispatch = dispatchAction;
+let o55NierAckTicket = 0, o55NierAckDesired = null;
 dispatchAction = function (action, el) {
   const args = arguments;
+  /* A reduced-motion NieR click still saved and rebuilt its row before the calm cover could paint (166–236 ms
+     in the P1000 click handler). Paint the switch's existing selected style first, then perform that same write.
+     Coalesce repeated input to the latest desired value; a refused write restores the owner's actual row. */
+  if (action === 'toggle-setting' && ds(el, 'setting') === 'general.visual.nier-mode' &&
+      args[2] && args[2].isTrusted && o55Still() && !state.settingsProjectionReadOnly &&
+      !el.disabled && el.getAttribute('aria-disabled') !== 'true') {
+    const id = 'general.visual.nier-mode', ticket = ++o55NierAckTicket;
+    o55NierAckDesired = o55NierAckDesired === null ? !o55On(PM51.value(id)) : !o55NierAckDesired;
+    el.classList.toggle('on', o55NierAckDesired); el.setAttribute('aria-checked', String(o55NierAckDesired));
+    if (el.hasAttribute('aria-pressed')) el.setAttribute('aria-pressed', String(o55NierAckDesired));
+    o55AfterPaint(() => {
+      if (ticket !== o55NierAckTicket) return;
+      const desired = o55NierAckDesired; o55NierAckDesired = null;
+      try { if (o55On(PM51.value(id)) !== desired) o55NavDispatch.apply(this, args); }
+      finally {
+        const actual = o55On(PM51.value(id));
+        if (el.isConnected && (el.classList.contains('on') !== actual || el.getAttribute('aria-checked') !== String(actual))) refreshSettingRow(id);
+      }
+    });
+    return;
+  }
   if (action !== 'jump-workspace') return o55NavDispatch.apply(this, args);
   return o55NavRun(() => o55NavDispatch.apply(this, args), `.workspace-tab[data-workspace="${cssEscape(ds(el, 'workspace'))}"]`, false);
 };

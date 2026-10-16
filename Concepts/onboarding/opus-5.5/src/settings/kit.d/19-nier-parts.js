@@ -38,18 +38,22 @@
   const later = (fn, ms) => window.setTimeout(fn, Math.round(ms * speed()));
   const onboarding = () => html.hasAttribute('data-o55-open');
   const tone = () => (/-light$/.test(html.getAttribute('data-theme') || '') ? 'light' : 'dark');
-  /* Keep the last painted ground for the reduced-motion cover. Reading computed style after the switch's row
-     changes used to flush layout in the click task. This read follows paint, once per look/contrast change. */
+  /* Keep the last laid-out ground for the reduced-motion cover. A timer after paint can still meet another pending
+     theme write (190 ms forced style on M3). Read in the first layout delivery, once per look/contrast change. */
   let calmColors = { background: '#111111', ink: '#ffffff' }, calmReadQueued = false;
   function cacheCalmColors() {
     if (calmReadQueued) return;
     calmReadQueued = true;
-    requestAnimationFrame(() => setTimeout(() => {
+    const read = () => {
       calmReadQueued = false;
       if (!document.body) return;
       const cs = getComputedStyle(document.body);
       calmColors = { background: cs.backgroundColor, ink: cs.color };
-    }, 0));
+    };
+    if (typeof ResizeObserver === 'function') {
+      const ready = new ResizeObserver(() => { ready.disconnect(); read(); });
+      ready.observe(document.body || html);
+    } else requestAnimationFrame(() => setTimeout(read, 0));
   }
   new MutationObserver(cacheCalmColors).observe(html, { attributes: true, attributeFilter: ['data-theme', 'data-o55-nier', 'data-contrast'] });
   cacheCalmColors();

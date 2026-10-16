@@ -397,11 +397,23 @@
   function viewportVars() { root.style.setProperty('--lg-vw', innerWidth + 'px'); root.style.setProperty('--lg-vh', innerHeight + 'px'); }
   function cover(im) { var vw = innerWidth, vh = innerHeight, sc = Math.max(vw / im.naturalWidth, vh / im.naturalHeight); return { s: sc, ox: (vw - im.naturalWidth * sc) / 2, oy: (vh - im.naturalHeight * sc) / 2, vw: vw, vh: vh }; }
   var FROST = { heavy: { blur: 26, sat: 1.65 }, light: { blur: 14, sat: 1.6 } }, FROST_SCALE = 1 / 3;
+  var wallpaperPaintStyle = null;
+  function wallpaperPaintRule(index) {
+    if (!wallpaperPaintStyle || !wallpaperPaintStyle.isConnected) {
+      wallpaperPaintStyle = document.createElement('style'); wallpaperPaintStyle.id = 'lg-frost';
+      wallpaperPaintStyle.textContent = 'html[data-lg="on"] :is([data-lg-kind], #pm-o55-onboarding .o55-scrim) {}\nhtml[data-lg="on"] body {}';
+      document.head.appendChild(wallpaperPaintStyle);
+    }
+    return wallpaperPaintStyle.sheet.cssRules[index].style;
+  }
   function dropFrost(rec) { Object.keys(rec.urls).forEach(function (name) { URL.revokeObjectURL(rec.urls[name]); }); }
   function applyFrost(rec) {
     if (frostKey === rec.key) return;
     frosts = rec.urls; frostKey = rec.key; frostWallUrl = rec.wall;
-    Object.keys(frosts).forEach(function (name) { root.style.setProperty('--lg-frost-' + name, 'url(' + frosts[name] + ')'); });
+    /* Even a non-inherited custom property on html's inline style invalidates the whole app in Chromium. A rule
+       scoped to the actual painters changes the same pixels in this commit without restyling their contents. */
+    var paint = wallpaperPaintRule(0);
+    Object.keys(frosts).forEach(function (name) { paint.setProperty('--lg-frost-' + name, 'url(' + JSON.stringify(frosts[name]) + ')'); });
     releaseWallHold();
   }
   /* A wallpaper or mode change shows the new print at once, but the sheets' frost is encoded from it a few hundred ms
@@ -410,12 +422,12 @@
   var wallHoldT = 0;
   function holdWall(url) {
     if (!url) return;
-    root.style.setProperty('--lg-wall-hold', 'url("' + url + '")'); root.setAttribute('data-lg-wall-hold', '');
+    wallpaperPaintRule(1).setProperty('--lg-wall-hold', 'url(' + JSON.stringify(url) + ')'); root.setAttribute('data-lg-wall-hold', '');
     clearTimeout(wallHoldT); wallHoldT = setTimeout(releaseWallHold, 2000);
   }
   function releaseWallHold() {
     clearTimeout(wallHoldT); wallHoldT = 0;
-    if (root.hasAttribute('data-lg-wall-hold')) { root.removeAttribute('data-lg-wall-hold'); root.style.removeProperty('--lg-wall-hold'); }
+    if (root.hasAttribute('data-lg-wall-hold')) { root.removeAttribute('data-lg-wall-hold'); wallpaperPaintRule(1).removeProperty('--lg-wall-hold'); }
   }
   /* a canvas as a PNG blob, now. canvas.toBlob encodes in the main thread's idle time, so while a Glass entry or a room
      change kept it busy a frost or a ring came back up to a second later (P1000 trace: the frosts drawn at +1.2 s, their

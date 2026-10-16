@@ -184,6 +184,11 @@ html[data-theme^="glass"]:not(#lgz) .main-area { flex: 1 1 0% !important; }
 @property --lg-px { syntax: '*'; inherits: false; }
 @property --lg-py { syntax: '*'; inherits: false; }
 @property --lg-glow { syntax: '*'; inherits: false; }
+/* Frost belongs to the sheet's own background and the onboarding scrim. The painter supplies it through a rule
+   scoped to those readers, so changing an image neither inherits through every row nor mutates html's inline style. */
+@property --lg-frost-heavy { syntax: '*'; inherits: false; }
+@property --lg-frost-light { syntax: '*'; inherits: false; }
+@property --lg-wall-hold { syntax: '*'; inherits: false; }
 /* how see-through the sheets are. Settings' panel transparency (public --glass-alpha, from its floor, .35 dark and .45
    light, to 1) moves each sheet's tint around today's look, which is the setting's default .55: up to a near-opaque .94
    at 100 %, and down by at most a quarter of the tint at the floor, so the frost keeps text readable. --lg-ga is
