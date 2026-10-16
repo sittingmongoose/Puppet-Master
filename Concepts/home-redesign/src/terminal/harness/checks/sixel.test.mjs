@@ -14,10 +14,25 @@ const S = T.Sixel;
    core for most of a wall-clock measurement (Nas1 at a load of 25-30 on 5 cores, 2026-10-16: a 1000x600 decode took
    58 ms by the clock and 8.6 ms of CPU; the fuzz's worst case 50-96 ms by the clock, 12.5 ms of CPU), while a slower
    decoder still costs more CPU. Wall times are still reported. A Node without threadCpuUsage falls back to the
-   process's CPU time, then to the clock */
-const work = typeof process.threadCpuUsage === 'function' ? { name: 'CPU', now: () => { const u = process.threadCpuUsage(); return (u.user + u.system) / 1000; } }
+   process's CPU time, then to the clock. Where CPU time moves in coarse steps (Windows: about 15.6 ms ticks, so a
+   50 ms budget would be judged within a tick either way; review TT-1) the clock is used too: the step is measured at
+   start, reading the CPU time until it moves. Linux moves it in its scheduler tick (1 ms on Nas1, 4 ms at 250 Hz),
+   which judges 50 ms within a tenth; anything over 5 ms counts as coarse */
+const cpuWork = typeof process.threadCpuUsage === 'function' ? { name: 'CPU', now: () => { const u = process.threadCpuUsage(); return (u.user + u.system) / 1000; } }
   : typeof process.cpuUsage === 'function' ? { name: 'process CPU', now: () => { const u = process.cpuUsage(); return (u.user + u.system) / 1000; } }
-  : { name: 'wall', now: () => performance.now() };
+  : null;
+function stepOf(now) {
+  let step = 0;
+  for (let k = 0; k < 5; k++) {
+    const a = now(), t = performance.now();
+    let b = a;
+    while ((b = now()) === a && performance.now() - t < 100) {}
+    step = Math.max(step, b === a ? Infinity : b - a);
+  }
+  return step;
+}
+const cpuStep = cpuWork ? stepOf(cpuWork.now) : Infinity;
+const work = cpuWork && cpuStep <= 5 ? cpuWork : { name: 'wall', now: () => performance.now() };
 
 let failed = 0, passed = 0;
 const timings = {};
@@ -387,6 +402,7 @@ test('encode never throws on odd input', () => {
   assert.equal(S.encode(new Uint8ClampedArray(36), 3, 3, { colors: 99999, transparent: true }), '\x1bP0;1;0q"1;1;3;3\x1b\\');
 });
 
+timings['budgets judged by'] = work.name + (cpuWork ? ' (CPU time steps ' + (isFinite(cpuStep) ? cpuStep.toFixed(3) + ' ms' : 'not at all') + ' here' + (work === cpuWork ? ')' : ', too coarse)') : '');
 console.log('\nTimings (node ' + process.version + '):');
 for (const [k, v] of Object.entries(timings)) console.log('  ' + k + ': ' + v);
 console.log('\n' + passed + ' passed, ' + failed + ' failed');

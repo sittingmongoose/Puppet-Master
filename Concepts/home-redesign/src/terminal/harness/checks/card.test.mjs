@@ -163,6 +163,9 @@ assert.equal(run.q('pmt-card-out').hidden, false);
    its own one-second beat would be half a second late */
 const started = Date.now() - 12500;
 C.update(run, { startedAt: started });
+/* whole seconds: 12.5 s reads 0:12, so the check below waits for the timer (were it rounded, 0:13 would show at once
+   and pass it untested; review TT-2) */
+assert.equal(run.q('pmt-card-time').textContent, '0:12', 'at 12.5 s it reads 0:12 until the next second');
 const atControl = await new Promise(r => setTimeout(() => r({ text: run.q('pmt-card-time').textContent, late: Date.now() - started - 13060 }), started + 13060 - Date.now()));
 assert.equal(atControl.text, '0:13', 'the second changed on time: before a timer due 60 ms after it (which fired ' + atControl.late + ' ms late)');
 C.update(run, { status: 'ok', exitCode: 0, elapsedMs: 13400 });
