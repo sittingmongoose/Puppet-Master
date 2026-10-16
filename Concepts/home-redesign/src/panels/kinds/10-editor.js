@@ -1594,7 +1594,7 @@ function mountEditor(host, st, api) {
     names.forEach(function (n) { out[n] = cssRgb(getComputedStyle(colorProbes[n]).color); });
     return out;
   }
-  var floorRead = { key: '' };
+  var floorRead = { key: '' }, floorReads = Object.create(null);
   function textGrounds() {
     if (schemeOn) return schemeOn._onText || [groundNow()];
     return floorOn && floorRead.on ? floorRead.on : [groundNow()];
@@ -1602,6 +1602,9 @@ function mountEditor(host, st, api) {
   function applyFloor(F) {
     var key = F ? [R.lookKey, R.look.mode, root.getAttribute('data-phosphor') || '', F].join('|') : '';
     var old = floorOn || {};
+    // Quick sets commonly alternate 4.5 and 7. Keep both proven palettes so
+    // Reset can restore the same floored colours without another style read.
+    if (F && floorReads[key]) floorRead = floorReads[key];
     if (F && floorRead.key !== key) {
       Object.keys(old).forEach(function (n) { codeEls.forEach(function (el) { el.style.removeProperty(n); }); });
       old = {}; floorOn = null;
@@ -1630,6 +1633,7 @@ function mountEditor(host, st, api) {
         if (to !== flat || c[3] < 1) out[n] = hexOf(to);
       });
       floorRead = { key: key, out: out, on: onText };
+      floorReads[key] = floorRead;
     }
     var next = F ? floorRead.out : {};
     Object.keys(old).forEach(function (n) { if (!(n in next)) codeEls.forEach(function (el) { el.style.removeProperty(n); }); });

@@ -8,9 +8,6 @@
 .pmed-cz .pmt-cz-pvbox { height: 262px; min-height: 200px; }
 .pmed-pvhost { position: absolute; inset: 0; container-type: size; container-name: pmw-body; overflow: hidden; }
 .pmed-cz .pmt-cz-dockbox .pmed-pvhost { inset: 0; }
-/* The palette pictures below the viewport keep their exact boxes, but need no
-   paint until they approach the scrollport. The artwork and hover remain intact. */
-.pmed-cz .pmt-cz-scheme { content-visibility: auto; contain-intrinsic-block-size: auto 110px; }
 .pmed-cz .pmt-cz-dialog { contain: layout style; }
 .pmed-cz .pmt-cz-dock { height: 176px; width: min(44%, 400px); transition: opacity 160ms ease; }
 /* it steps aside while the pointer or the focus is on what it floats over (11-editor-customize.js dockAside) */

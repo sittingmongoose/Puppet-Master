@@ -448,10 +448,22 @@ function open(opts) {
 
   function scopeView() { return scope === 'tab' ? v : { tabAppearance: {}, previewAppearance: v.previewAppearance }; }
   function eff() { return EL().resolve(scopeView()); }
-  function val(key) { var o = EL().own(scope, v, key); return o !== undefined ? o : EL().get(scopeView(), key); }
+  var paintRead = null;
+  function ownValue(key) {
+    if (paintRead && Object.prototype.hasOwnProperty.call(paintRead.own, key)) return paintRead.own[key];
+    var o = EL().own(scope, v, key);
+    if (paintRead) paintRead.own[key] = o;
+    return o;
+  }
+  function val(key) {
+    if (paintRead && Object.prototype.hasOwnProperty.call(paintRead.values, key)) return paintRead.values[key];
+    var o = ownValue(key), value = o !== undefined ? o : EL().get(scopeView(), key);
+    if (paintRead) paintRead.values[key] = value;
+    return value;
+  }
   function mine(key) {
     if (key === 'lineNumberMode') return mine('lineNumbers') || mine('relativeNumbers');
-    return EL().own(scope, v, key) !== undefined;
+    return ownValue(key) !== undefined;
   }
   function syncPreview() {
     pvView.tabAppearance = scope === 'tab' ? v.tabAppearance || {} : {};
@@ -516,6 +528,13 @@ function open(opts) {
   // the sheet restyled every control and scheme tile for each colour pick.
   function setVar(n, val) { if (varsSet[n] === val) return; varsSet[n] = val; [].forEach.call(artHosts, function (a) { a.style.setProperty(n, val); }); }
   function paint() {
+    // The tile, Changed mark, group count and footer all read the same fields.
+    // Resolve each layer once for this paint, without caching across edits.
+    if (paintRead) return;
+    paintRead = { own: Object.create(null), values: Object.create(null) };
+    try { paintControls(); } finally { paintRead = null; }
+  }
+  function paintControls() {
     var R = eff(), lk = R.lookKey, isNier = lk === 'nier';
     setA(root, 'data-pmt-look', lk);
     setA(root, 'data-pmt-mode', R.look.mode === 'light' ? 'light' : 'dark');

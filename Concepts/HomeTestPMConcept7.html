@@ -44419,9 +44419,6 @@ html[data-motion="reduced"] :is(.pmw-tx, .pmw-ctx, .pmw-rec) *, html[data-motion
 .pmed-cz .pmt-cz-pvbox { height: 262px; min-height: 200px; }
 .pmed-pvhost { position: absolute; inset: 0; container-type: size; container-name: pmw-body; overflow: hidden; }
 .pmed-cz .pmt-cz-dockbox .pmed-pvhost { inset: 0; }
-/* The palette pictures below the viewport keep their exact boxes, but need no
-   paint until they approach the scrollport. The artwork and hover remain intact. */
-.pmed-cz .pmt-cz-scheme { content-visibility: auto; contain-intrinsic-block-size: auto 110px; }
 .pmed-cz .pmt-cz-dialog { contain: layout style; }
 .pmed-cz .pmt-cz-dock { height: 176px; width: min(44%, 400px); transition: opacity 160ms ease; }
 /* it steps aside while the pointer or the focus is on what it floats over (11-editor-customize.js dockAside) */
@@ -180294,7 +180291,7 @@ function mountEditor(host, st, api) {
     names.forEach(function (n) { out[n] = cssRgb(getComputedStyle(colorProbes[n]).color); });
     return out;
   }
-  var floorRead = { key: '' };
+  var floorRead = { key: '' }, floorReads = Object.create(null);
   function textGrounds() {
     if (schemeOn) return schemeOn._onText || [groundNow()];
     return floorOn && floorRead.on ? floorRead.on : [groundNow()];
@@ -180302,6 +180299,9 @@ function mountEditor(host, st, api) {
   function applyFloor(F) {
     var key = F ? [R.lookKey, R.look.mode, root.getAttribute('data-phosphor') || '', F].join('|') : '';
     var old = floorOn || {};
+    // Quick sets commonly alternate 4.5 and 7. Keep both proven palettes so
+    // Reset can restore the same floored colours without another style read.
+    if (F && floorReads[key]) floorRead = floorReads[key];
     if (F && floorRead.key !== key) {
       Object.keys(old).forEach(function (n) { codeEls.forEach(function (el) { el.style.removeProperty(n); }); });
       old = {}; floorOn = null;
@@ -180330,6 +180330,7 @@ function mountEditor(host, st, api) {
         if (to !== flat || c[3] < 1) out[n] = hexOf(to);
       });
       floorRead = { key: key, out: out, on: onText };
+      floorReads[key] = floorRead;
     }
     var next = F ? floorRead.out : {};
     Object.keys(old).forEach(function (n) { if (!(n in next)) codeEls.forEach(function (el) { el.style.removeProperty(n); }); });
@@ -185019,10 +185020,22 @@ function open(opts) {
 
   function scopeView() { return scope === 'tab' ? v : { tabAppearance: {}, previewAppearance: v.previewAppearance }; }
   function eff() { return EL().resolve(scopeView()); }
-  function val(key) { var o = EL().own(scope, v, key); return o !== undefined ? o : EL().get(scopeView(), key); }
+  var paintRead = null;
+  function ownValue(key) {
+    if (paintRead && Object.prototype.hasOwnProperty.call(paintRead.own, key)) return paintRead.own[key];
+    var o = EL().own(scope, v, key);
+    if (paintRead) paintRead.own[key] = o;
+    return o;
+  }
+  function val(key) {
+    if (paintRead && Object.prototype.hasOwnProperty.call(paintRead.values, key)) return paintRead.values[key];
+    var o = ownValue(key), value = o !== undefined ? o : EL().get(scopeView(), key);
+    if (paintRead) paintRead.values[key] = value;
+    return value;
+  }
   function mine(key) {
     if (key === 'lineNumberMode') return mine('lineNumbers') || mine('relativeNumbers');
-    return EL().own(scope, v, key) !== undefined;
+    return ownValue(key) !== undefined;
   }
   function syncPreview() {
     pvView.tabAppearance = scope === 'tab' ? v.tabAppearance || {} : {};
@@ -185087,6 +185100,13 @@ function open(opts) {
   // the sheet restyled every control and scheme tile for each colour pick.
   function setVar(n, val) { if (varsSet[n] === val) return; varsSet[n] = val; [].forEach.call(artHosts, function (a) { a.style.setProperty(n, val); }); }
   function paint() {
+    // The tile, Changed mark, group count and footer all read the same fields.
+    // Resolve each layer once for this paint, without caching across edits.
+    if (paintRead) return;
+    paintRead = { own: Object.create(null), values: Object.create(null) };
+    try { paintControls(); } finally { paintRead = null; }
+  }
+  function paintControls() {
     var R = eff(), lk = R.lookKey, isNier = lk === 'nier';
     setA(root, 'data-pmt-look', lk);
     setA(root, 'data-pmt-mode', R.look.mode === 'light' ? 'light' : 'dark');
