@@ -318,15 +318,19 @@ var bodyObserver = typeof ResizeObserver === 'function' ? new ResizeObserver(fun
 }) : null;
 function observeBody(entry) { if (bodyObserver) bodyObserver.observe(entry.host); }
 var resizePending = {}, resizeQueued = false, resizeAll = false;
+/* the sizes are read after the coming frame's own style and layout (the shell's PM_AFTER_LAYOUT, before that frame's
+   paint), not in a frame callback before them, where a pending whole-page restyle (a look change) was paid by the first
+   host read (B5 frame queue census, 2026-10-16). Without the shell's helper: the next frame, as before */
 function queueResize(tid) {
   if (tid) resizePending[tid] = true;
   if (resizeQueued) return;
   resizeQueued = true;
-  nextFrame(function () {
+  var run = function () {
     resizeQueued = false;
     var all = resizeAll; resizeAll = false;
     flushResizes(all);
-  });
+  };
+  if (typeof window.PM_AFTER_LAYOUT === 'function') window.PM_AFTER_LAYOUT(run); else nextFrame(run);
 }
 render.flushResizesSoon = function () { resizeAll = true; queueResize(); };
 function flushResizes(forceFinal) {
