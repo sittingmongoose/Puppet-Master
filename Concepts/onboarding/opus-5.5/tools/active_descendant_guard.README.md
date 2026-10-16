@@ -24,10 +24,20 @@ A list names today's descendants. A new class or element type added under one of
 
 ## How
 
-Start the browser yourself; this file only attaches over CDP. Playwright is `PM7_PLAYWRIGHT`, or `/home/sittingmongoose/pmt-dev/pw/node_modules/playwright-core` when that is unset. On Nas1, use `agent-browser start --url about:blank` and pass its `cdp_endpoint`: one browser, and stop it when the run ends. Serve `Concepts/` and pass `.../PMConcept7.html`; the script adds `?o55=off`. A run takes about 9 minutes on Nas1.
+Start the browser yourself; this file only attaches over CDP. Set `PM7_PLAYWRIGHT` to the directory of a `playwright-core` package (the script `require()`s it); when it is unset the script uses `/home/sittingmongoose/pmt-dev/pw/node_modules/playwright-core`, which exists on Nas1 only. On Nas1, use `agent-browser start --url about:blank` and pass its `cdp_endpoint`: one browser, and stop it when the run ends. Serve `Concepts/` and pass `.../PMConcept7.html`; the script adds `?o55=off`. A run takes about 11 minutes on Nas1.
 
 ## What pass means
 
-The guard visits four looks (NieR Dark, Retro Dark, Glass Light, Basic Dark). In each it visits six pages, every Settings chapter, every rail panel and file view, fixture PMR menus (every item kind and every icon the rail draws), a submenu and the More tray. In every state it compares `querySelectorAll(original)` with `querySelectorAll(replacement)` for every rule and every variant: first as the page is, then with each rule's dynamic state forced on all of its carriers at once (cursor-over, hover-on, active, selected, aria-checked, aria-selected and so on).
+The guard visits five looks (NieR Dark, Retro Dark, Glass Light, Friendly Light, Basic Dark). In each it visits six pages, every Settings chapter, every rail panel and file view, fixture PMR menus (every item kind and every icon the rail draws), a submenu and the More tray. In every state it compares `querySelectorAll(original)` with `querySelectorAll(replacement)` for every rule and every variant: first as the page is, then with each rule's dynamic state forced on all of its carriers at once (cursor-over, hover-on, active, selected, aria-checked, aria-selected and so on).
 
 The process exits 0 when nothing differs, every dropped arm matched nothing, every rewritten rule matched at least once and the page reported no error. `missingFeatures` in the output names the class or tag a list lacks.
+
+## Not covered: carriers this page never builds
+
+Rules 0 and 6 also name `.palette-item`, `.chat-dropdown-item` and `.search-result-item`. PMConcept7 never creates any of them, so no state can exercise them, and their arms match nothing here:
+
+- `.palette-item`: only Settings CSS styles it; no markup or script builds one.
+- `.chat-dropdown-item`: the chat code keeps the name only in `PM6_LEGACY_MODE_CLASSES`, so the HOOKS.md presence probes still find it; no dropdown renders one.
+- `.search-result-item`: `filterSearchResults` queries `#panel-search .search-result-item`, but no markup or script creates one.
+
+The guard records `neverBuiltSeen`, the most of them found in any state; it must stay 0. If a future change starts building one of them, rule 0's and rule 6's forcing already covers it, and its open state belongs in this guard.

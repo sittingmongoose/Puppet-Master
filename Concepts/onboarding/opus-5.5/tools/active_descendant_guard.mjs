@@ -3,7 +3,7 @@
 //   node Concepts/onboarding/opus-5.5/tools/active_descendant_guard.mjs <cdp-endpoint> <page-url> <output.json> [rules.json]
 // The rewrite changes CSS only, so it is exact when every rewritten selector matches the same elements as its original in
 // every DOM state. In many DOM states (six pages, every Settings chapter, every rail panel and file view, fixture PMR menus
-// holding every item kind and every icon the rail draws, a submenu, the More tray) and four looks, the guard compares
+// holding every item kind and every icon the rail draws, a submenu, the More tray) and five looks, the guard compares
 // querySelectorAll(original) with querySelectorAll(replacement) for every rule and every variant, first as the page is,
 // then with each rule's dynamic state forced on all of its carriers at once. A dropped arm must match nothing. Exit 0 only
 // when nothing differs and every rewritten rule matched at least once.
@@ -72,6 +72,9 @@ async function check(label) {
     return res;
   }, [RULES, FORCE]);
   result.states++;
+  // the carriers the README lists as never built by this page: record whether any state ever has one
+  const never = await page.evaluate(() => document.querySelectorAll('.palette-item, .chat-dropdown-item, .search-result-item').length);
+  result.neverBuiltSeen = Math.max(result.neverBuiltSeen || 0, never);
   for (const x of r) {
     result.checks++; result.maxMatches[x.rule] = Math.max(result.maxMatches[x.rule] || 0, x.a);
     if (!x.ok) { const { missing, ...rest } = x; result.mismatches.push({ state: label, ...rest });
@@ -85,7 +88,7 @@ try {
   await page.goto(url + (url.includes('?') ? '&' : '?') + 'o55=off', { waitUntil: 'load', timeout: 240000 });
   await page.waitForFunction(() => window.PM7_SETTINGS_TOME && window.PM12_KIMI && window.PM_NIER && window.PMR && window.PMR.menu, null, { timeout: 240000 });
   await W(3000);
-  for (const [family, mode] of [['nier', 'dark'], ['retro', 'dark'], ['glass', 'light'], ['basic', 'dark']]) {
+  for (const [family, mode] of [['nier', 'dark'], ['retro', 'dark'], ['glass', 'light'], ['friendly', 'light'], ['basic', 'dark']]) {
     const look = family + '-' + mode;
     await page.evaluate(() => { if (PM_NIER.on() || PM_NIER.wanted()) PM_NIER.set(false, { sound: false }); });
     await page.waitForFunction(() => !PM_NIER.on() && !PM_NIER.wanted(), null, { timeout: 15000 }).catch(() => {});
@@ -125,5 +128,5 @@ try {
   fs.writeFileSync(out, JSON.stringify(result, null, 1));
   await ctx.close().catch(() => {}); await browser.close().catch(() => {});
 }
-console.log('\n' + JSON.stringify({ pass: result.pass, states: result.states, checks: result.checks, mismatches: result.mismatches.length, missingFeatures: result.missingFeatures, notExercised: result.notExercised, errors: result.errors.length }));
+console.log('\n' + JSON.stringify({ pass: result.pass, states: result.states, checks: result.checks, neverBuiltSeen: result.neverBuiltSeen || 0, mismatches: result.mismatches.length, missingFeatures: result.missingFeatures, notExercised: result.notExercised, errors: result.errors.length }));
 process.exit(result.pass ? 0 : 1);
