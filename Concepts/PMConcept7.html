@@ -53120,8 +53120,10 @@ body.pmu-page-active #panel-dashboard.pm-home-owned.pm8-page-out { position: abs
    first step ("layer") draws one small box, so the layer's own programs link alone. Then one element of each kind
    draws by itself (data-pmu-raster-self: the element, not its children), then the rail, the stage's head and the page
    chrome whole ("chrome": the panel shown, the held plates still hidden), then each card the same way: one element of
-   each kind it brings, then the card whole (data-pmu-raster-on). A card being drawn takes the layers the arrival gives
-   it (its plate the film's will-change, its body its reveal's), so each draws with the programs the arrival will use.
+   each kind it brings, a large card kind by kind, then the card whole (data-pmu-raster-on). A card being drawn
+   takes the layers the arrival gives it (its plate the film's will-change, its body its reveal's), so each draws with
+   the programs the arrival will use, and its held opacity 0 (20-board.css) is lifted while it draws (an element drawn
+   by itself inside it showed nothing).
    The same pass builds the first screen of Costs and Accounts in the spare board element ("spare") and draws its
    cards the same way. Taking the tokens and marks off leaves every held rule as it was (the arrival's entrance still
    plays from its first keyframe). Usage-only. ---- */
@@ -53130,14 +53132,15 @@ body.pmu-page-active #panel-dashboard.pm-home-owned.pm8-page-out { position: abs
 .primary-content > #panel-usage.page[data-pmu-warm][data-pmu-raster~="layer"]:not(.active):not(.pm8-page-out)::after { content: '';
   position: absolute; left: 0; top: 0; width: 16px; height: 16px; background: #7f7f7f; visibility: visible; pointer-events: none; }
 .primary-content > #panel-usage.page[data-pmu-warm][data-pmu-raster~="chrome"]:not(.active):not(.pm8-page-out) { visibility: visible; }
-#panel-usage[data-pmu-raster~="paint"] :is(.pmu-rail, .pmu-stagehead)[data-pmu-raster-on] { visibility: visible; }
-#panel-usage[data-pmu-raster~="paint"] .pmu-board > .pmu-card[data-pmu-raster-on] { visibility: visible; opacity: 1; }
-#panel-usage[data-pmu-raster~="paint"] .pmu-board > .pmu-card:is([data-pmu-raster-on], [data-pmu-raster-pieces]) { will-change: transform, opacity; }
+#panel-usage[data-pmu-raster~="paint"] .pmu-board > .pmu-card:is([data-pmu-raster-on], [data-pmu-raster-pieces]) { opacity: 1; will-change: transform, opacity; }
 #panel-usage[data-pmu-raster~="paint"] .pmu-board > .pmu-card:is([data-pmu-raster-on], [data-pmu-raster-pieces]) > .pmu-cardbody { opacity: 1; will-change: opacity; }
-/* one element by itself: its children stay hidden, and a marked element shows over its own hiding rules (the held
-   plate's among them: :not(#pmu-raster-none) gives the rule an id's weight; a marked child of a marked element too) */
+/* one element by itself (data-pmu-raster-self: its children stay hidden) or a part whole (data-pmu-raster-on: the rail,
+   the stage's head, a card); a marked element shows over its own hiding rules (the held plate's
+   among them: :not(#pmu-raster-none) gives the rule an id's weight), a marked child of an element by itself too */
 #panel-usage[data-pmu-raster~="paint"] [data-pmu-raster-self] > * { visibility: hidden; }
-#panel-usage[data-pmu-raster~="paint"] [data-pmu-raster-self]:not(#pmu-raster-none) { visibility: visible; }
+#panel-usage[data-pmu-raster~="paint"] :is([data-pmu-raster-self], [data-pmu-raster-on]):not(#pmu-raster-none) { visibility: visible; }
+/* one at opacity 0 (an entrance the arrival plays, a control shown on hover) draws at 1, as it will show */
+#panel-usage[data-pmu-raster~="paint"] [data-pmu-raster-self="lit"]:not(#pmu-raster-none) { opacity: 1; }
 #panel-usage[data-pmu-raster~="spare"] .pmu-scroll > .pmu-board[data-pmu-raster-room] { display: grid; }
 
 /* ---- the held board (3.1 Phase A): held cards are laid out (the build measures every body) but not painted, so the
@@ -60378,7 +60381,7 @@ var PMU_SERIES = {
      PMU.film.warmState().raster says what ran. ---- */
   var RASTER = (function () { var m = /[?&]pmu-raster=([01])(?:&|#|$)/.exec(location.search); return m ? m[1] : null; })();
   var RASTER_MARKS = /[?&]pmu-raster-marks=1(?:&|#|$)/.test(location.search);
-  var RASTER_ROOMS = ['overview', 'costs', 'accounts'], RASTER_QUIET = 600, RASTER_PARK = 1500, RASTER_FRAMES = 3, RASTER_MSAA = 6;
+  var RASTER_ROOMS = ['overview', 'costs', 'accounts'], RASTER_QUIET = 600, RASTER_PARK = 1500, RASTER_FRAMES = 3, RASTER_MSAA = 6, RASTER_CHUNK = 5, RASTER_BATCH = 4;
   var rast = null, rasterDone = {}, rasterSeen = {}, rasterLog = { rooms: [], at: null, ms: null, skipped: WARM_OFF ? 'warm-off' : null };
   function rasterKey(room, cls) {
     var look = (root.getAttribute('data-theme') || '') + (root.getAttribute('data-o55-nier') === 'on' ? '+nier' : '');
@@ -60529,20 +60532,54 @@ var PMU_SERIES = {
   var RASTER_SLOW = /^(path|polyline|polygon|line)$/;
   function rpx(v) { return parseFloat(v) || 0; }
   function ralpha(c) { if (!c || c === 'transparent') return 0; var m = /rgba?\([^)]*?,\s*([\d.]+)\)$/.exec(c) || /\/\s*([\d.]+%?)\)$/.exec(c); if (!m) return 1; var a = m[1].slice(-1) === '%' ? rpx(m[1]) / 100 : rpx(m[1]); return a; }
+  /* split at the commas outside parentheses */
+  function rsplit(v) {
+    var out = [], d = 0, at = 0;
+    for (var i = 0; i < v.length; i++) { var ch = v.charAt(i); if (ch === '(') d++; else if (ch === ')') d--; else if (ch === ',' && !d) { out.push(v.slice(at, i).trim()); at = i + 1; } }
+    out.push(v.slice(at).trim());
+    return out;
+  }
+  var RCOLOR = /(rgba?|hsla?|color|okl(ab|ch)|lab|lch|hwb)\(|#[0-9a-f]{3,8}\b|\btransparent\b|currentcolor/i;
+  /* a colour outside sRGB (a colour mix that overshoots, another colour space): the GPU draws it with float colours,
+     its own programs ('W') */
+  function rwide(v) {
+    if (!v || v.indexOf('(') < 0) return false;
+    if (/\b(okl(ab|ch)|lab|lch)\(|color\((display-p3|rec2020|a98-rgb|prophoto-rgb|xyz)/.test(v)) return true;
+    var re = /color\(srgb(?:-linear)? ([-\d.e]+) ([-\d.e]+) ([-\d.e]+)/g, m;
+    while ((m = re.exec(v))) { for (var i = 1; i <= 3; i++) { var x = +m[i]; if (x < -0.0005 || x > 1.0005) return true; } }
+    return false;
+  }
+  /* a background image as the GPU sees it: each layer's kind, its stop count and whether it has a hard stop (both pick
+     the gradient's program; colours, angles and positions are only its numbers), a wide colour, an image */
+  /* an image by its source: each one is its own texture, and a texture's format and sampling pick its programs (the first
+     provider logo drawn whole linked 13 after an image of another kind was drawn alone) */
+  function rhash(v) { var h = 0; v = String(v || ''); for (var i = 0; i < v.length; i += Math.max(1, v.length >> 8)) h = (h * 31 + v.charCodeAt(i)) | 0; return (h >>> 0).toString(36) + v.length; }
   function rimage(v) {
     if (!v || v === 'none') return '';
-    var kinds = (v.match(/(repeating-)?(linear|radial|conic)-gradient|url\(/g) || []).join('+'), stops = (v.match(/rgba?\(|color\(|okl(ab|ch)\(|lab\(|lch\(|hsla?\(|#[0-9a-f]{3,8}\b/gi) || []).length;
-    return 'i' + kinds + (stops <= 2 ? '2' : stops <= 4 ? '4' : '5');
+    var keys = rsplit(v).map(function (layer) {
+      var m = /^((?:repeating-)?(?:linear|radial|conic)-gradient)\((.*)\)$/.exec(layer);
+      if (!m) return /^url\(/.test(layer) ? 'url' + rhash(layer) : layer.replace(/\(.*$/, '');
+      var args = rsplit(m[2]), stops = args.filter(function (a) { return RCOLOR.test(a); }), hard = false, lastPos = null;
+      stops.forEach(function (a) {
+        var pos = a.replace(/(rgba?|hsla?|color|okl(ab|ch)|lab|lch|hwb)\([^()]*\)/gi, ' ').replace(/#[0-9a-f]{3,8}\b|\b(transparent|currentcolor)\b/gi, ' ')
+          .match(/calc\((?:[^()]|\([^()]*\))*\)|-?[\d.]+(%|px)?/g) || [];
+        if (pos.length > 1) hard = true;
+        if (pos.length && lastPos != null && pos[0] === lastPos) hard = true;
+        if (pos.length) lastPos = pos[pos.length - 1];
+      });
+      return m[1].replace('-gradient', '') + stops.length + (hard ? 'h' : '') + (rwide(m[2]) ? 'W' : '');
+    });
+    return 'i' + keys.join('+');
   }
   function rbox(cs, r) {
     var f = [], bg = ralpha(cs.backgroundColor), img = rimage(cs.backgroundImage);
-    if (bg > 0) f.push(bg < 1 ? 'ba' : 'b');
+    if (bg > 0) f.push((bg < 1 ? 'ba' : 'b') + (rwide(cs.backgroundColor) ? 'W' : ''));
     if (img) f.push(img);
     var bw = [cs.borderTopWidth, cs.borderRightWidth, cs.borderBottomWidth, cs.borderLeftWidth].map(rpx), bs = cs.borderTopStyle;
-    if (bw.some(function (x) { return x > 0; }) && bs !== 'none' && bs !== 'hidden') f.push('B' + (bs === 'solid' ? '' : bs) + (bw[0] === bw[1] && bw[1] === bw[2] && bw[2] === bw[3] ? '' : 'n') + (ralpha(cs.borderTopColor) < 1 ? 'a' : ''));
+    if (bw.some(function (x) { return x > 0; }) && bs !== 'none' && bs !== 'hidden') f.push('B' + (bs === 'solid' ? '' : bs) + (bw[0] === bw[1] && bw[1] === bw[2] && bw[2] === bw[3] ? '' : 'n') + (ralpha(cs.borderTopColor) < 1 ? 'a' : '') + (rwide(cs.borderTopColor) ? 'W' : ''));
     if (cs.boxShadow && cs.boxShadow !== 'none') {
-      var n = cs.boxShadow.split(/,(?![^(]*\))/).length;
-      f.push('S' + Math.min(n, 3) + (/inset/.test(cs.boxShadow) ? 'i' : '') + (/(\s|^)0px\s+0px\s+0px/.test(cs.boxShadow) ? '' : 'b'));
+      var n = rsplit(cs.boxShadow).length;
+      f.push('S' + Math.min(n, 3) + (/inset/.test(cs.boxShadow) ? 'i' : '') + (/(\s|^)0px\s+0px\s+0px/.test(cs.boxShadow) ? '' : 'b') + (rwide(cs.boxShadow) ? 'W' : ''));
     }
     if (cs.outlineStyle && cs.outlineStyle !== 'none' && rpx(cs.outlineWidth) > 0) f.push('O');
     if (!f.length) return '';
@@ -60559,19 +60596,21 @@ var PMU_SERIES = {
       if (!RASTER_SHAPES.test(tag)) return '';
       var fill = cs.fill && cs.fill !== 'none', stroke = cs.stroke && cs.stroke !== 'none' && rpx(cs.strokeWidth) > 0;
       if (!fill && !stroke && tag !== 'image' && tag !== 'use') return '';
+      if (tag === 'image') f.push(rhash(el.getAttribute('href') || el.getAttribute('xlink:href')));
       var area = r.width * r.height;
-      f.push(tag, fill ? 'f' + (/url\(/.test(cs.fill) ? 'u' : '') + (rpx(cs.fillOpacity) < 1 ? 'a' : '') : '',
-        stroke ? 's' + (cs.strokeDasharray && cs.strokeDasharray !== 'none' ? 'd' : '') + cs.strokeLinecap.charAt(0) + cs.strokeLinejoin.charAt(0) + (/url\(/.test(cs.stroke) ? 'u' : '') : '',
+      f.push(tag, fill ? 'f' + (/url\(/.test(cs.fill) ? 'u' : '') + (rpx(cs.fillOpacity) < 1 ? 'a' : '') + (rwide(cs.fill) ? 'W' : '') : '',
+        stroke ? 's' + (cs.strokeDasharray && cs.strokeDasharray !== 'none' ? 'd' : '') + cs.strokeLinecap.charAt(0) + cs.strokeLinejoin.charAt(0) + (/url\(/.test(cs.stroke) ? 'u' : '') + (rwide(cs.stroke) ? 'W' : '') : '',
         cs.shapeRendering === 'crispEdges' ? 'c' : '', area > 65536 ? 'L' : area > 1024 ? 'M' : 'S');
     } else {
       var box = rbox(cs, r); if (box) f.push(box);
-      if (tag === 'img' || tag === 'canvas' || tag === 'video') f.push(tag);
+      if (tag === 'img') f.push('img' + rhash(el.currentSrc || el.src));
+      else if (tag === 'canvas' || tag === 'video') f.push(tag);
       var text = false;
       for (var n = el.firstChild; n; n = n.nextSibling) if (n.nodeType === 3 && /\S/.test(n.nodeValue)) { text = true; break; }
       if (text) {
         var fs = rpx(cs.fontSize);
         f.push('x' + (fs <= 20 ? 'a' : fs <= 64 ? 'b' : 'c') + (cs.webkitBackgroundClip === 'text' || cs.backgroundClip === 'text' ? 'g' : '') + (cs.textShadow && cs.textShadow !== 'none' ? 't' : '') +
-          (rpx(cs.webkitTextStrokeWidth) > 0 ? 'k' : '') + (ralpha(cs.color) < 1 ? 'a' : ''));
+          (rpx(cs.webkitTextStrokeWidth) > 0 ? 'k' : '') + (ralpha(cs.color) < 1 ? 'a' : '') + (rwide(cs.color) ? 'W' : ''));
       }
       if (!svg) ['::before', '::after'].forEach(function (p) {
         var ps = getComputedStyle(el, p); if (!ps.content || ps.content === 'none' || ps.content === 'normal' || ps.display === 'none') return;
@@ -60590,18 +60629,29 @@ var PMU_SERIES = {
   }
   /* one root's steps: [{ self: [elements], sig: [keys] } ..., then its whole steps]. Each kind no step drew yet, by one
      element of it in the window (an element outside it is never rastered); a layer of six paths or more first draws
-     six of them alone. ctxOf(el) names the layer of an element, skip(el) leaves a subtree out. */
-  function rasterPlan(root0, ctxOf, skip, wholes) {
+     six of them alone, of one kind where it can. ctxOf(el) names the layer of an element, skip(el) leaves a subtree
+     out. With chunk, a root of more than twice that many elements is then drawn kind by kind, every element of a
+     kind at once, before it is drawn whole: drawn together, elements of kinds already drawn still made new programs
+     (the GPU batches neighbouring draws of one kind into one, and a batch links its own program; the hero drawn whole
+     linked 14 after its kinds, a 208 ms freeze on the RTX 3090) */
+  function rasterPlan(root0, ctxOf, skip, wholes, chunk) {
     var vw = window.innerWidth || 1, vh = window.innerHeight || 1;
-    var items = [], slow = {};
+    var items = [], slow = {}, info = new Map();
+    var seen = function (r) { return r.width > 0 && r.height > 0 && r.right > 0 && r.bottom > 0 && r.left < vw && r.top < vh; };
     var walk = function (el, clip) {
       if (skip && skip(el)) return;
       var cs = getComputedStyle(el); if (cs.display === 'none') return;
-      var ctx = ctxOf(el), r = el.getBoundingClientRect();
-      var inView = r.width > 0 && r.height > 0 && r.right > 0 && r.bottom > 0 && r.left < vw && r.top < vh;
-      var shape = el.namespaceURI === SVGNS && RASTER_SLOW.test(el.localName);
-      if (shape) (slow[ctx] = slow[ctx] || []).push({ el: el, inView: inView });
-      items.push({ el: el, cs: cs, r: r, ctx: ctx, clip: clip, inView: inView });
+      var ctx = ctxOf(el), r = el.getBoundingClientRect(), inView = seen(r);
+      /* a slow path as Chrome counts them for multisampling (cc DrawPathOp::CountSlowPaths): an anti-aliased path that is
+         not a line, not a hairline, and not a fill under 64 x 64 */
+      if (el.namespaceURI === SVGNS && RASTER_SLOW.test(el.localName) && el.localName !== 'line' && cs.shapeRendering !== 'crispEdges') {
+        var stroked = cs.stroke !== 'none' && rpx(cs.strokeWidth) > 0, bigFill = cs.fill !== 'none' && (r.width >= 64 || r.height >= 64);
+        if (stroked || bigFill) (slow[ctx] = slow[ctx] || []).push({ el: el, inView: inView, kind: el.localName + (bigFill ? 'f' : '') + (stroked ? 's' + (cs.strokeDasharray !== 'none' ? 'd' : '') : '') });
+      }
+      /* an image starts decoding now, so it draws in its own step (decoded late, it drew, and linked, in a later one) */
+      if (el.localName === 'img' && el.decode && !el._pmuDecoding) { el._pmuDecoding = true; el.decode().catch(function () {}); }
+      var it = { el: el, cs: cs, r: r, ctx: ctx, clip: clip, inView: inView };
+      items.push(it); info.set(el, it);
       var rad = rpx(cs.borderTopLeftRadius) + rpx(cs.borderBottomRightRadius);
       var clips = clip || (rad > 0 && cs.overflowX !== 'visible' && el.namespaceURI !== SVGNS);
       for (var k = el.firstElementChild; k; k = k.nextElementSibling) walk(k, clips);
@@ -60609,18 +60659,44 @@ var PMU_SERIES = {
     walk(root0, false);
     var steps = [], local = {}, msaa = {};
     Object.keys(slow).forEach(function (ctx) {
-      if (slow[ctx].length < RASTER_MSAA) return;
+      var all = slow[ctx]; if (all.length < RASTER_MSAA) return;
       msaa[ctx] = true;
-      var pick = slow[ctx].filter(function (x) { return x.inView; }).concat(slow[ctx].filter(function (x) { return !x.inView; })).slice(0, RASTER_MSAA);
+      var by = {}; all.forEach(function (x) { (by[x.kind] = by[x.kind] || []).push(x); });
+      var big = Object.keys(by).sort(function (a, b) { return by[b].length - by[a].length; })[0];
+      var order = function (list) { return list.filter(function (x) { return x.inView; }).concat(list.filter(function (x) { return !x.inView; })); };
+      var pick = order(by[big]).concat(order(all.filter(function (x) { return x.kind !== big; }))).slice(0, RASTER_MSAA + 2);
       steps.push({ self: pick.map(function (x) { return x.el; }), sig: [], label: 'msaa-' + ctx });
     });
     items.forEach(function (it) {
-      if (!it.inView) return;
-      var sig = rasterSig(it.el, it.cs, it.r, (msaa[it.ctx] ? it.ctx : it.ctx.toLowerCase()) + (it.clip ? 'C' : ''));
-      if (!sig || rasterSeen[sig] || local[sig]) return;
-      local[sig] = true;
-      steps.push({ self: [it.el], sig: [sig], label: sig });
+      /* an element at opacity 0 (an entrance the arrival plays, a control shown on hover) draws at 1, as it will */
+      it.lit = it.cs.opacity === '0';
+      it.sig = rasterSig(it.el, it.cs, it.r, (msaa[it.ctx] ? it.ctx : it.ctx.toLowerCase()) + (it.clip ? 'C' : ''));
+      if (it.lit && it.sig) it.sig = it.sig.replace(/\.o$|\.o(?=\.)/, '');
+      if (!it.inView || !it.sig || rasterSeen[it.sig] || local[it.sig]) return;
+      local[it.sig] = true;
+      steps.push({ self: [it.el], sig: [it.sig], label: it.sig, lit: it.lit });
     });
+    if (chunk && items.length > chunk * 2) {
+      /* then every element of a kind at once, kind after kind, each by itself: neighbouring draws of one kind are what
+         the GPU batches together (the batch links a program of its own), so each kind's batches link in their own step;
+         kinds whose batches a step drew already, of about the same count, go together, a few a step */
+      var groups = {}, order = [];
+      items.forEach(function (it) { if (!it.inView || !it.sig) return; if (!groups[it.sig]) { groups[it.sig] = []; order.push(it.sig); } groups[it.sig].push(it); });
+      var batch = null, flushB = function () { if (batch) steps.push(batch); batch = null; };
+      order.forEach(function (sig) {
+        var g = groups[sig], n = g.length, key = 'many:' + sig + ':' + (n < 2 ? 1 : n < 4 ? 3 : n < 8 ? 7 : 8);
+        var els = g.map(function (it) { return it.el; }), lits = g.map(function (it) { return it.lit; });
+        if (rasterSeen[key] || local[key]) {
+          if (!batch || batch.kinds >= RASTER_BATCH) { flushB(); batch = { self: [], lits: [], kinds: 0, label: 'kinds+' }; }
+          batch.self = batch.self.concat(els); batch.lits = batch.lits.concat(lits); batch.label = 'kinds+' + (++batch.kinds);
+          return;
+        }
+        flushB();
+        local[key] = true;
+        steps.push({ self: els, lits: lits, sig: [key], label: 'all' + n + ':' + sig });
+      });
+      flushB();
+    }
     return steps.concat(wholes || []);
   }
   /* the roots of a room: the board room starts with the layer and the page chrome; then its cards in order */
@@ -60640,7 +60716,7 @@ var PMU_SERIES = {
     var card = rt.el;
     if (!card || !card.isConnected) return [];
     var body = card.querySelector(':scope > .pmu-cardbody');
-    return rasterPlan(card, function (el) { return body && body.contains(el) ? 'Y' : 'K'; }, null, [{ whole: card, card: true, label: 'card' }]);
+    return rasterPlan(card, function (el) { return body && body.contains(el) ? 'Y' : 'K'; }, null, [{ whole: card, card: true, label: 'card' }], RASTER_CHUNK);
   }
   /* one step: its marks made and flushed here (an idle callback), held RASTER_FRAMES frames, then the next through the gates */
   function rasterBatch(r, kind, cur) {
@@ -60661,13 +60737,15 @@ var PMU_SERIES = {
     if (!s) { cur.ri++; cur.plan = null; rasterWait(r, rasterStep); return; }
     var card = rt.t === 'card' ? rt.el : null;
     if (card && !card.isConnected) { cur.ri++; cur.plan = null; rasterWait(r, rasterStep); return; }
+    /* a body rendered again since the plan (a live beat, warmLive): planned again, its new elements */
+    if (s.self && !s.self.some(function (x) { return x.isConnected; })) { cur.plan = null; rasterWait(r, rasterStep); return; }
     var chromeOn = kind === 'board' && cur.ri > 1 || /\bchrome\b/.test(panel.getAttribute('data-pmu-raster') || '');
     if (s.self) {
       if (card) card.setAttribute('data-pmu-raster-pieces', '');
-      s.self.forEach(function (x) { if (x.isConnected) x.setAttribute('data-pmu-raster-self', ''); });
+      s.self.forEach(function (x, i) { if (x.isConnected) x.setAttribute('data-pmu-raster-self', (s.lits ? s.lits[i] : s.lit) ? 'lit' : ''); });
     } else if (s.whole) {
       /* drawn whole: the pieces' marks inside it go (a piece hides its children) */
-      Array.prototype.forEach.call(s.whole.querySelectorAll('[data-pmu-raster-self]'), function (x) { x.removeAttribute('data-pmu-raster-self'); });
+      Array.prototype.forEach.call(s.whole.querySelectorAll('[data-pmu-raster-self], [data-pmu-raster-on]'), function (x) { x.removeAttribute('data-pmu-raster-self'); x.removeAttribute('data-pmu-raster-on'); });
       s.whole.removeAttribute('data-pmu-raster-self'); s.whole.removeAttribute('data-pmu-raster-pieces');
       s.whole.setAttribute('data-pmu-raster-on', '');
     } else if (s.chrome) {
