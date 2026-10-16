@@ -138986,8 +138986,9 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
    while it ran: the app froze, then cut to the new look through a frame where the editor and terminal were still in
    the old one. The control pressed still shows its new state on the next frame. From that frame a cover in the new
    look's own background washes over the app, with a soft glow of its accent spreading from the theme control; the
-   theme is written under the opaque cover, and the cover lifts once frames come on time again and the colour
-   transitions the new look started have finished, so the new look is shown whole. The cover and its glow run on the
+   theme is written as the cover comes in, its first frame drawn under the full cover, and the cover lifts once
+   frames come on time again, with the colour transitions the new look started finished under it, so the new look is
+   shown whole (about half a second in all on the M3). The cover and its glow run on the
    compositor, so they keep moving while the main thread restyles. The cover stops just short of opaque: content
    beneath an opaque layer is not rastered, and would then be drawn as it rasters while the cover lifts.
    A View Transition (snapshot crossfade, then a circular reveal from the control) was tried first and dropped:
@@ -139083,7 +139084,7 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
     phase = 'lifting';
     const still = reduced();
     const out = veil.animate([{ opacity: COVER }, { opacity: 0 }], {
-      duration: still ? 140 : 300, easing: to.retro ? 'steps(3, end)' : 'cubic-bezier(.3, 0, .2, 1)', fill: 'forwards'
+      duration: still ? 140 : 240, easing: to.retro ? 'steps(3, end)' : 'cubic-bezier(.3, 0, .2, 1)', fill: 'forwards'
     });
     if (coverAnim) { try { coverAnim.cancel(); } catch (_) { /* gone */ } }
     coverAnim = out;
@@ -139110,8 +139111,9 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
     phase = 'covering';
     if (coverAnim) { try { coverAnim.cancel(); } catch (_) { /* gone */ } }
     stopGlow();
+    const inMs = still ? 90 : 130;
     coverAnim = v.animate([{ opacity: from }, { opacity: COVER }], {
-      duration: still ? 90 : 150, easing: to.retro ? 'steps(3, end)' : 'cubic-bezier(.2, 0, 0, 1)', fill: 'forwards'
+      duration: inMs, easing: to.retro ? 'steps(3, end)' : 'cubic-bezier(.2, 0, 0, 1)', fill: 'forwards'
     });
     const anims = [coverAnim];
     /* the glow spreads from the control that was pressed and breathes while the new look is drawn (not in Retro's
@@ -139133,16 +139135,23 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
       anims.push(spread, breathe);
     }
     startOnShown(anims);
-    const covering = coverAnim;
-    covering.finished.then(() => {
+    /* The theme is written once the cover has been shown most of its way in (it is over 0.9 by then): the compositor
+       carries it the rest of the way while the main thread restyles, so the new look's first frame is drawn under the
+       full cover and a fast computer does not wait out the whole fade first. Retro's steps wait for the last one. */
+    const covering = coverAnim, at = to.retro ? inMs : inMs * 0.62;
+    const ready = () => {
       if (t !== ticket || coverAnim !== covering) return;
+      let ct = 0;
+      try { ct = covering.playState === 'finished' ? inMs : Number(covering.currentTime) || 0; } catch (_) { ct = inMs; }
+      if (ct < at) { requestAnimationFrame(ready); return; }
       phase = 'covered';
       setTimeout(() => {
         if (t !== ticket) return;
         runJob();
         whenDrawn(t, () => lift(t, to));
       }, 0);
-    }, () => null);
+    };
+    requestAnimationFrame(ready);
   }
 
   window.PM_THEME_TRANSITION = function themeTransition(apply, hint) {
