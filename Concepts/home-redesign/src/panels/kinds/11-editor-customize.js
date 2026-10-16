@@ -627,7 +627,7 @@ function open(opts) {
   var placed = '';
   function place() {
     var de = document.documentElement, W = de.clientWidth || 1024, H = de.clientHeight || 768;
-    var homeVisible = document.getElementById('panel-dashboard').classList.contains('active');
+    var homeVisible = opts.from !== 'settings' && document.getElementById('panel-dashboard').classList.contains('active');
     var r = homeVisible && inst.root && inst.root.isConnected ? inst.root.getBoundingClientRect() : { left: 0, top: 0, right: 0, bottom: 0, width: 0, height: 0 };
     var placement = [W, H, r.left, r.top, r.right, r.bottom].join('|');
     if (placed === placement) return;
@@ -1040,9 +1040,18 @@ function open(opts) {
   });
   var onResize = function () { if (closed) return; place(); if (preview && preview.demo) preview.demo.relayout(); };
   window.addEventListener('resize', onResize);
+  var resizeRaf = 0, placeAfterResize = false;
   var ro = typeof ResizeObserver === 'function' ? new ResizeObserver(function (list) {
     if (closed) return;
-    list.forEach(function (en) { if (en.target === inst.root) place(); else if (preview && preview.demo) preview.demo.relayout(); });
+    list.forEach(function (en) { if (en.target === inst.root) placeAfterResize = true; });
+    // Relayout writes the preview's geometry. Keep that out of the observer's
+    // delivery loop and combine the home and dock notifications into one pass.
+    if (!resizeRaf) resizeRaf = requestAnimationFrame(function () {
+      resizeRaf = 0;
+      if (closed) return;
+      if (placeAfterResize) { placeAfterResize = false; place(); }
+      if (preview && preview.demo) preview.demo.relayout();
+    });
   }) : null;
   if (ro) { if (inst.root) ro.observe(inst.root); ro.observe(homeBox); ro.observe(dockBox); }
   /* the preview follows you down the screen only where the real editor is not beside it (the one rule of both
@@ -1096,7 +1105,7 @@ function open(opts) {
     if (ro) ro.disconnect();
     if (io) io.disconnect();
     if (root._pmedFinish) root._pmedFinish();
-    cancelAnimationFrame(lookRaf); cancelAnimationFrame(asideRaf);
+    cancelAnimationFrame(lookRaf); cancelAnimationFrame(asideRaf); cancelAnimationFrame(resizeRaf);
     clearTimeout(warmPaint);
     if (preview) { try { preview.unmount(); } catch (_) {} preview = null; }
     if (inst.customizing) inst.customizing(false);
@@ -1147,7 +1156,12 @@ function open(opts) {
     root.classList.remove('pmed-prepared');
     Motion.play(root);
     var first = root.querySelector('[data-seg="scope"] [aria-checked="true"]') || dialog;
-    first.focus({ preventScroll: true });
+    // Let the entrance paint before focus asks the browser for geometry. A
+    // newer visit invalidates this job, so a quick close cannot reclaim focus.
+    var showing = visit;
+    requestAnimationFrame(function () { setTimeout(function () {
+      if (!closed && showing === visit && !opts.group) first.focus({ preventScroll: true });
+    }, 0); });
     var goTo = opts.group && root.querySelector('[data-group="' + opts.group + '"]' + (opts.at ? ' [data-at="' + opts.at + '"]' : ''));
     if (goTo) { goTo.scrollIntoView({ block: 'start' }); var gh = goTo.querySelector('h3, h4'); if (gh) { gh.tabIndex = -1; gh.focus({ preventScroll: true }); } }
     return handle;
@@ -1168,7 +1182,9 @@ function prepareSoon() {
   var build = function () {
     if (!prepared && !openRoot) {
       if (de.hasAttribute('data-o55-open') || de.hasAttribute('data-pm-page-transition') || de.hasAttribute('data-pmu-moment')) { setTimeout(prepareSoon, 1500); return; }
-      open({ view: inst.view, prepare: true });
+      // Settings is the app-level entry. Prepare its actual width and scope,
+      // not the narrower editor cutout, which would reflow every tile on open.
+      open({ view: inst.view, scope: 'app', from: 'settings', prepare: true });
     }
   };
   if (window.requestIdleCallback) requestIdleCallback(build); else setTimeout(build, 500);
@@ -1186,7 +1202,7 @@ window.PM_EDITOR_CUSTOMIZE = Object.freeze({
     try { PM_HOME.open({ kind: 'editor', path: 'src/main.rs' }); } catch (_) {}
     var tries = 0;
     (function wait() {
-      var e2 = PMW.editorInView ? PMW.editorInView() : null;
+      var e2 = PMW.editorInView ? PMW.editorInView(o.from === 'settings') : null;
       if (e2) { open(Object.assign({}, o, { view: e2.view, scope: o.scope || 'app' })); return; }
       if (++tries < 30) setTimeout(wait, 100);
     })();
