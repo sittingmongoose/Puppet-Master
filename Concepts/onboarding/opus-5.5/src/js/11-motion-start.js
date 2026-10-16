@@ -102,12 +102,15 @@
   const busyRoot = document.documentElement;
   const BUSY_ATTRS = [['data-pm-page-transition', 'page'], ['data-pmu-moment', 'usage'], ['data-o55-open', 'onboarding'], ['data-o55-boot-wait', 'boot']];
   const BUSY_IDS = [['o55np-reboot', 'reboot'], ['o55np-calm', 'calm'], ['o55nw-boot', 'boot']];
-  const tourCovers = document.getElementsByClassName('o55t-bootcover');
+  /* the tour's boot cover is always a child of the body (85-tour-nier.js coverBoot): its ~30 children are looked at,
+     never a live collection, whose length walks the whole document again after any DOM change (4.3 ms a call on
+     Nas1 during an editor open, Glass lane) */
+  const tourCovered = () => { for (let c = document.body && document.body.lastElementChild; c; c = c.previousElementSibling) if (c.classList.contains('o55t-bootcover')) return true; return false; };
   let busyFrame = 0, busyTimer = 0;
   const busyNow = () => {
     for (const [a, why] of BUSY_ATTRS) if (busyRoot.hasAttribute(a)) return why;
     for (const [id, why] of BUSY_IDS) if (document.getElementById(id)) return why;
-    if (tourCovers.length) return 'boot';
+    if (tourCovered()) return 'boot';
     try { const t = window.PM_THEME_TRANSITION; if (t && typeof t.busy === 'function' && t.busy()) return 'theme'; } catch (_) { /* none */ }
     try { const n = window.PM_NIER; if (n && typeof n.wanted === 'function' && typeof n.on === 'function' && !!n.wanted() !== !!n.on()) return 'nier'; } catch (_) { /* none */ }
     return '';

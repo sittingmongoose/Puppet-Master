@@ -208,21 +208,36 @@
     var hover = null, springs = new Set(), lit = new Set();
     var running = false, lastT = 0, wasRest = false, bodyRest = false, visCache = null;
     var recheck = false, popupOpen = false;
-    /* A popup open anywhere holds the hover. The class-named ones are live collections (no search); the [role="menu"]
-       elements are found again only when the document's elements or roles changed since the last look: searched on
-       every click and key, the whole ~21k-element document cost 3.2 ms per look on Nas1 (8-40 ms with the forced
-       reads, T8 speed team). The same popups answer, in the same frame. */
-    var popByClass = [document.getElementsByClassName('pmu-menu'), document.getElementsByClassName('pmu-pop')];
-    var roleMenus = null, roleWatch = false;
+    /* A popup open anywhere holds the hover. The popups are kept as a set: found once, then from the elements the
+       document gains and the role attributes it changes (the popup classes are only ever given at creation), so a look
+       after a click or key never walks the page: a search of the whole ~21k-element document cost 3.2 ms per look on
+       Nas1 (8-40 ms with its forced reads, T8 speed team), and a live collection's length walks it again after any DOM
+       change (Glass lane). The same popups answer, in the same frame. */
+    var popups = new Set(), popWatch = false;
+    function addPopups(n) {
+      if (!n || n.nodeType !== 1) return;
+      if (n.matches(POPUP)) popups.add(n);
+      if (n.firstElementChild) { var l = n.querySelectorAll(POPUP); for (var i = 0; i < l.length; i++) popups.add(l[i]); }
+    }
     try {
-      new MutationObserver(function () { roleMenus = null; }).observe(document, { childList: true, subtree: true, attributes: true, attributeFilter: ['role'] });
-      roleWatch = true;
-    } catch (_) { roleWatch = false; }
-    function shownIn(l) { for (var i = 0; i < l.length; i++) { if (l[i].getClientRects().length) return true; } return false; }
+      Array.prototype.forEach.call(document.querySelectorAll(POPUP), function (e) { popups.add(e); });
+      new MutationObserver(function (muts) {
+        for (var i = 0; i < muts.length; i++) {
+          var m = muts[i];
+          if (m.type === 'attributes') { if (m.target.matches(POPUP)) popups.add(m.target); else popups.delete(m.target); }
+          else for (var j = 0; j < m.addedNodes.length; j++) addPopups(m.addedNodes[j]);
+        }
+      }).observe(document, { childList: true, subtree: true, attributes: true, attributeFilter: ['role'] });
+      popWatch = true;
+    } catch (_) { popWatch = false; }
     function anyPopup() {
-      if (shownIn(popByClass[0]) || shownIn(popByClass[1])) return true;
-      if (!roleMenus || !roleWatch) roleMenus = document.querySelectorAll('[role="menu"]');
-      return shownIn(roleMenus);
+      var open = false;
+      if (!popWatch) { var l = document.querySelectorAll(POPUP); for (var i = 0; i < l.length && !open; i++) open = !!l[i].getClientRects().length; return open; }
+      popups.forEach(function (e) {
+        if (!e.isConnected) { popups.delete(e); return; }   /* gone (put back, it is found again as an added node) */
+        if (!open && e.getClientRects().length) open = true;
+      });
+      return open;
     }
     /* after a click, a key or a pointerdown the page may have changed under a resting pointer (a menu opened, a page
        switched): the next frame looks again at what is under the pointer. The loop is started even when nothing hovers:
@@ -1015,6 +1030,7 @@
       kindOf: function (el) { return el ? kindOf(el) : null; },
       retoken: function () { readTokens(); return JSON.parse(JSON.stringify(T)); },
       stamp: function () { return { busy: stampBusy, timer: !!stampTimer, stamped: stats.stamped || 0 }; },
+      popups: function () { return { open: anyPopup(), kept: popups.size, watched: popWatch }; },
       stats: function () { var o = {}; for (var k in stats) o[k] = stats[k]; o.slow = stats.slow.slice(); o.hist = Object.assign({}, stats.hist); o.enters = Object.assign({}, stats.enters); o.totalMs = Math.round(stats.totalMs * 100) / 100; o.running = running; o.springs = springs.size; o.lit = lit.size; return o; },
       state: function () {
         var hs = hover ? ST.get(hover) : null;
