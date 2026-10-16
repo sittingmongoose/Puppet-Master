@@ -99,7 +99,7 @@
   background: var(--pm-veil-ink, var(--pm-veil-glow, #b4ae96));
 }
 
-/* the warm (src/js/12-theme-transition.js): for a few frames after each paint, at the cover's opacity of 0.002, every
+/* the warm (src/js/12-theme-transition.js): for a few frames after each paint, at the cover's opacity of 0.004, every
    part is shown, and the sweeping bands are brought on screen, so the compositor has their tiles before a pick */
 .pm-look-veil[data-warm] > b > i { opacity: 1; }
 .pm-look-veil[data-warm][data-fx="basic"] > b > i, .pm-look-veil[data-warm][data-fx="glass"] > b > i:nth-child(3) { translate: 50vw 0; }
