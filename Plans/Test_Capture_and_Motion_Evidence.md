@@ -418,7 +418,7 @@ plan_unit_id: TCME-007
 unit_type: acceptance_gate
 status: accepted
 owner_doc: Plans/Test_Capture_and_Motion_Evidence.md
-canonical_text: The final PMConcept7 integration campaign binds one exact generated artifact to complete system and animation scenarios, actual delivered-frame cadence, lossless frame and FFV1 evidence, independent full-resolution frame review, defect repair and replacement capture, separate system-Chrome/Chrome-extension/in-app-browser receipts, and user-approval-gated cleanup followed by fresh gates; browser evidence never becomes native Slint or production-runtime certification. Amended 2026-10-16 (DL-217, the coordinator's ruling on Win's trace) - concept acceptance films and timing runs from integration F3 onward launch Chrome with its autofill and password-manager form extraction off, and each film receipt records that launch setting; F2 numbers keep their note. Chrome's form extraction measures every form control at a cover lift, a cost the HTML concept pays only because it runs in Chrome. The product is native Rust plus Slint (AI-045) and has no such cost, so the setting is a concept harness rule, never a product requirement.
+canonical_text: The final PMConcept7 integration campaign binds one exact generated artifact to complete system and animation scenarios, actual delivered-frame cadence, lossless frame and FFV1 evidence, independent full-resolution frame review, defect repair and replacement capture, separate system-Chrome/Chrome-extension/in-app-browser receipts, and user-approval-gated cleanup followed by fresh gates; browser evidence never becomes native Slint or production-runtime certification. Amended 2026-10-16 (DL-217, the coordinator's ruling on Win's trace) - concept acceptance films keep running on the default browser, and each film receipt records 'autofill default'. Chrome's autofill and password-manager form extraction measures every form control at a cover lift; that cost is a measured artifact of the HTML concept running in Chrome, reported separately and never subtracted from a result. An autofill-off configuration may be used only once a harness can apply it, and then only for both arms of an A/B. The product is native Rust plus Slint (AI-045) and has no such cost, so this is a concept harness rule, never a product requirement.
 gui_related: true
 gui_classification_reason: This unit governs visual, motion, interaction, accessibility, and browser review evidence for every touched PMConcept7 surface.
 depends_on: [TCME-001, TCME-002, TCME-003, TCME-004]
@@ -431,8 +431,9 @@ acceptance_criteria:
   - Every full-resolution frame receives one reviewer, high-risk spans receive two independent reviewers, and the primary integrator reviews every contact sheet and defect candidate.
   - Unresolved findings, missing replacement capture, incomplete review, missing interactive-browser receipts, stale/mixed hashes, or a false native/runtime claim fail the aggregate gate.
   - Evidence remains until explicit user approval; enumerated cleanup writes a receipt and is followed by reproducibility and governance gates.
-  - Concept acceptance film receipts from F3 onward record that Chrome ran with autofill and
-    password-manager form extraction off; product acceptance never depends on that setting.
+  - Concept acceptance films run on the default browser with receipts recording 'autofill default'; Chrome's
+    form-extraction cost is reported separately and never subtracted, and an autofill-off run is used only for
+    both arms of an A/B that a harness can apply it to.
 validation_surfaces: [Concepts/pm7-tools/verify/final_campaign_capture.mjs, Concepts/pm7-tools/verify/review_capture_frames.py, Concepts/pm7-tools/verify/final_evidence_gate.py, final campaign and interactive-browser receipts]
 risk_class: motion_evidence_gap_or_false_certification
 reasoning_tier: high

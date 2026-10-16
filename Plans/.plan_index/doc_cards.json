@@ -5757,7 +5757,7 @@
         "scripts/pm_pnc019_currentness.py",
         "tests/test_pm_wiring_vocabulary.py"
       ],
-      "line_count": 16069,
+      "line_count": 16073,
       "path": "Plans/Decision_Log.md",
       "plan_unit_count": 196,
       "plan_unit_ids": [
@@ -6118,7 +6118,7 @@
         "workflow_verification_exception_route_drift",
         "working_activity_behaviour_drift"
       ],
-      "sha256": "df04473d98a58efb0ebdeaadbed1374104cd6c6716b49aab1f02f765b6688778",
+      "sha256": "0dafa63f0013c7f9e427a295f51380ab1904def95a718ab25bdbc00ddf4c3ed3",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 196
@@ -18989,7 +18989,7 @@
         "Plans/test_capture_motion_evidence_contracts.schema.json",
         "Plans/touch_closure.json"
       ],
-      "line_count": 524,
+      "line_count": 525,
       "path": "Plans/Test_Capture_and_Motion_Evidence.md",
       "plan_unit_count": 8,
       "plan_unit_ids": [
@@ -19015,7 +19015,7 @@
         "motion_evidence_gap_or_false_certification",
         "raw_derived_identity_or_provenance_fabrication"
       ],
-      "sha256": "6fcac72e3b79f70f1ffd70385075aa8c9e3d0bb3515528bf13e0261c7810c905",
+      "sha256": "b84b5d978a5e0b0c7a48224e0f244e85b81ad954b1f7d7ab867dee5e66af6c6d",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 8
@@ -20934,7 +20934,7 @@
       ]
     }
   ],
-  "generated_at_utc": "2026-10-16T16:14:30Z",
+  "generated_at_utc": "2026-10-16T16:18:22Z",
   "schema_id": "pm.plan_index.doc_cards.v1",
   "source_scope": "top-level live Plans/*.md; excludes ledgers, generated shards, evidence, and pipeline artifacts",
   "summary": {

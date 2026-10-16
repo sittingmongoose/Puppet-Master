@@ -2,9 +2,9 @@
 
 Source: `Plans/Decision_Log.md`
 
-Source lines: L14489-L16069
+Source lines: L14489-L16073
 
-Source SHA256: `df04473d98a58efb0ebdeaadbed1374104cd6c6716b49aab1f02f765b6688778`
+Source SHA256: `0dafa63f0013c7f9e427a295f51380ab1904def95a718ab25bdbc00ddf4c3ed3`
 
 ---
 
@@ -1527,9 +1527,10 @@ canonical_text: >-
   strip deferral; the Settings lane (0d510df290) adds DR-073's wallpaper preparation, F3-598's Reduced
   Motion calm cover and SSYS-053's acknowledged, coalesced navigation. The editor lane is added when it
   lands. Win's trace attributes the B5 fade delay to Chrome's own autofill form extraction, which no page
-  code causes; the coordinator ruled it a concept harness matter, so concept acceptance films from F3
-  onward run Chrome with autofill and password-manager extraction off (TCME-007) and product canon is
-  unchanged (AI-045). Concept evidence is not native certification.
+  code causes; the coordinator ruled it a concept harness matter: films stay on the default browser and
+  record it, the cost is reported separately and never subtracted, and an autofill-off run is allowed only
+  for both arms of an A/B (TCME-007); product canon is unchanged (AI-045). Concept evidence is not native
+  certification.
 gui_related: true
 gui_classification_reason: Contracts Added By The Motion Fix Lanes.
 split_recommended: false
@@ -1582,6 +1583,9 @@ source_lineage:
 - /mnt/Cursor/share/puppet-master/2026-10-16-plans-topup/sources/pm-mail-1016161110-3341.txt, SHA-256
   7e7e95064e16d0c15274b2521afc6c62d05ae8da7a6d55fc2401a563b64a78ca (coordinator choice of option A,
   concept harness rule only; decision lineage)
+- /mnt/Cursor/share/puppet-master/2026-10-16-plans-topup/sources/pm-mail-1016161708-f80e.txt, SHA-256
+  b4a25d5f50b882188b35a9da348972d7471030edff0dd86bc1a2f3303c9880a8 (coordinator correction, films stay on
+  the default browser; decision lineage)
 preserved_exact_tokens: []
 negative_constraints: []
 owner_hints:
