@@ -97,7 +97,7 @@ def main():
     new, n = re.subn(r'(/\* WARM-CATALOG:START[^*]*\*/\n).*?(\n\s*/\* WARM-CATALOG:END \*/)', lambda m: m.group(1) + '  ' + body + m.group(2), src, flags=re.S)
     if n != 1:
         sys.exit('WARM-CATALOG markers not found in glass.js')
-    SRC.write_text(new, encoding='utf-8')
+    SRC.write_text(new, encoding='utf-8', newline='\n')
     print('%d entries, %d bytes' % (len(rows), len(body)))
 
 

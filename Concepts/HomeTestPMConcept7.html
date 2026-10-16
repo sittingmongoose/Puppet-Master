@@ -216638,7 +216638,14 @@ try { if (window.PM_HOME && typeof window.PM_HOME.boot === 'function') window.PM
     }));
     return rec.decoded;
   }
-  function whenDecoded(rec, fn) { if (rec && rec.decoded) rec.decoded.then(fn, fn); else fn(); }
+  function whenDecoded(rec, fn) { if (!rec || !rec.urls) { fn(); return; } (rec.decoded || decodeFrost(rec)).then(fn, fn); }
+  /* decoded pairs cost about 1.8 MB each at 1080p: only the FROST_DECODED most recent keep theirs (the rest decode again,
+     about 5 ms, when they are used: landing review GL-4) */
+  var FROST_DECODED = 8;
+  function trimDecoded() {
+    var keys = Array.from(frostCache.keys());
+    for (var i = 0; i < keys.length - FROST_DECODED; i++) { var r = frostCache.get(keys[i]); if (r.urls !== frosts) { r.imgs = null; r.decoded = null; } }
+  }
   var bakeQ = new Map(), bakeT = 0, bakeFrame = 0, bakeIdle = 0, bakeFlight = null, bakeEpoch = 0, bakeAvg = 8;
   function currentWallUrl(refresh) {
     /* The body's selected image is deliberately not on html. Resolve an immutable catalog source once per id/mode,
@@ -216673,8 +216680,9 @@ try { if (window.PM_HOME && typeof window.PM_HOME.boot === 'function') window.PM
       else {
         if (u === currentWallUrl()) wallUrl = u;
         /* Two decoded stills are enough for returning to the previous look; pending loads stay single-flight. */
-        var ready = Array.from(wallSources.keys()).filter(function (key) { return wallSources.get(key).ready; });
-        while (ready.length > 2) wallSources.delete(ready.shift());
+        /* the print on screen stays among them (landing review GL-4) */
+        var ready = Array.from(wallSources.keys()).filter(function (key) { return wallSources.get(key).ready && key !== wallSourceUrl; });
+        while (ready.length > (wallSources.has(wallSourceUrl) ? 1 : 2)) wallSources.delete(ready.shift());
       }
       var waiters = rec.waiters; rec.waiters = []; waiters.forEach(function (done) { done(ok ? im : null); });
     }
@@ -216792,7 +216800,7 @@ try { if (window.PM_HOME && typeof window.PM_HOME.boot === 'function') window.PM
           var old = frostCache.get(oldest);
           frostBytes -= old.bytes; frostCache.delete(oldest); dropFrost(old);
         }
-        if (frostBytes + rec.bytes <= FROST_BYTES) { frostCache.set(key, rec); frostBytes += rec.bytes; }
+        if (frostBytes + rec.bytes <= FROST_BYTES) { frostCache.set(key, rec); frostBytes += rec.bytes; trimDecoded(); }
         else if (prepare) { dropFrost(rec); valid = false; }
         /* An unusually large active pair is kept only while displayed, rather than exceeding the cache budget. */
         if (!prepare && previous !== rec.urls && previousUncached) {
@@ -216964,7 +216972,8 @@ try { if (window.PM_HOME && typeof window.PM_HOME.boot === 'function') window.PM
       if (!window.Worker || !window.OffscreenCanvas || !window.createImageBitmap) return null;
       var src = [sdf, profile, mapsCore, compactMaps, specPixels, sampleRing].map(function (f) { return 'var ' + f.name + ' = ' + f.toString() + ';\n'; }).join('') +
         '(' + bakeWorkerMain.toString() + ')();\n';
-      bakeW = new Worker(URL.createObjectURL(new Blob([src], { type: 'text/javascript' })));
+      var wUrl = URL.createObjectURL(new Blob([src], { type: 'text/javascript' }));
+      bakeW = new Worker(wUrl); setTimeout(function () { URL.revokeObjectURL(wUrl); }, 5000);
       bakeW.onmessage = bakeWMessage; bakeW.onerror = function () { bakeWFail(); };
       bakeWOn = 1; return bakeW;
     } catch (e) { bakeW = null; return null; }
@@ -217320,7 +217329,7 @@ try { if (window.PM_HOME && typeof window.PM_HOME.boot === 'function') window.PM
     /* press: false - a progress rail, not a choice: its steps have no click, so the lens moves only when the step does */
     { sel: '#pm-o55-onboarding .o55-raillist', items: '.o55-railitem', kind: 'lens', active: '[data-state="current"]', pad: 6, magRest: 1, magLift: 1, press: false,
       box: function (i) { var u = unionRect([i.querySelector('.o55-railnode'), i.querySelector('.o55-raillabel')]); return u || i; } },
-    { sel: '#pm-o55-onboarding .o55-seg', items: 'button', many: true, kind: 'lens', active: '.o55-on', magRest: 1 },
+    { sel: '#pm-o55-onboarding .o55-seg', items: 'button', many: true, kind: 'lens', active: '.o55-on', magRest: 1, mark: true },
     /* 2026-10-13: every Glass tab indicator (Jared): the Orchestrator's views, and the terminal Customize screen's
        choices (pm7-terminal-customizer). In-flow indicators that slide with their own content (the home panels'
        plate, every other .pmw-ink-row) take the lens's material in glass.css instead, so they stay right through
@@ -218289,7 +218298,7 @@ try { if (window.PM_HOME && typeof window.PM_HOME.boot === 'function') window.PM
     applyWall();
     if (!isGlass()) { unmountAll(switchLook); if (!switchLook) return; }
     else syncSurfaces(scopes, sheets);
-    var busy = pageBusy();
+    var covered = pageCovered();
     STRIPS.forEach(function (cfg) {
       var found = cfg.many ? scopedNodes(cfg.sel, scopes) : [document.querySelector(cfg.sel)].filter(function (s) {
         return s && (!scopes || scopes.some(function (p) { return p.contains(s) || s.contains(p); }));
@@ -218299,8 +218308,8 @@ try { if (window.PM_HOME && typeof window.PM_HOME.boot === 'function') window.PM
       if (cfg.kind === 'lensIcon' && !isGlass()) { found.forEach(function (s) { var L = lenses.get(s); if (L) { disposeLens(L); lenses.delete(s); } }); return; }
       found.forEach(function (s) {
         if (stripParked(s)) { var P = lenses.get(s); if (P && P.rect) { stopLensTravel(P); P.lens.style.opacity = '0'; P.rect = null; } return; }
-        /* while the page is busy, a strip whose lens is not on screen yet waits for 'pm-idle'; a shown lens follows now */
-        if (busy && !(lenses.get(s) && lenses.get(s).rect)) { deferStrip(s); return; }
+        /* under a look's cover, a strip whose lens is not on screen yet waits for the lift; a shown lens follows now */
+        if (covered && !(lenses.get(s) && lenses.get(s).rect) && !s.closest('#pm-o55-onboarding')) { deferStrip(s); return; }
         syncStrip(cfg, s);
       });
     });
@@ -218309,20 +218318,31 @@ try { if (window.PM_HOME && typeof window.PM_HOME.boot === 'function') window.PM
   /* strips Glass leaves alone for now (pm7-motion-editor, 2026-10-16: during Settings' calm cover, 47 style reads hit the
      editor's parked Customize screen within 2.8 s). A strip inside a parked or hidden subtree (the prepared Customize
      screen, a [hidden] window) is not measured, and a lens it showed is put out; it is synced when that subtree shows,
-     which the root observer reports. An inert subtree is not skipped: the page behind a dialog stays on screen. While window.PM_BUSY() reports a cover or transition, a strip whose lens is not on screen waits for the
-     page's 'pm-idle'. Nothing here is read from style or layout. */
+     which the root observer reports. An inert subtree is not skipped: the page behind a dialog stays on screen.
+     While a look's cover hides the page (window.PM_LOOK_COVERED(): a look change until its cover starts to lift, the NieR
+     reboot plate, the calm cover; or the boot cover), a strip whose lens is not on screen waits, and every waiting strip
+     is synced in the frame the cover starts to lift, so the chips are there for the whole reveal (landing review GL-2).
+     Other busy spells (a page slide, a Usage room change, the open onboarding window) defer nothing, and a strip inside
+     the onboarding window never waits (GL-1). Nothing here is read from style or layout. */
   var STRIP_PARKED = '.pmed-prepared, [hidden]', busyStrips = new Set(), busyWait = false;
   function stripParked(s) { try { return !!s.closest(STRIP_PARKED); } catch (e) { return false; } }
   function pageBusy() { try { return typeof window.PM_BUSY === 'function' && !!window.PM_BUSY(); } catch (e) { return false; } }
+  function pageCovered() {
+    try {
+      if (typeof window.PM_LOOK_COVERED === 'function') return !!window.PM_LOOK_COVERED() || (typeof window.PM_BUSY === 'function' && window.PM_BUSY() === 'boot');
+      return typeof window.PM_BUSY === 'function' && /^(theme|reboot|calm|boot|nier)$/.test(window.PM_BUSY() || '');
+    } catch (e) { return false; }
+  }
   function deferStrip(s) {
     busyStrips.add(s);
     if (busyWait) return;
     busyWait = true;
-    window.addEventListener('pm-idle', function onIdle() {
-      window.removeEventListener('pm-idle', onIdle); busyWait = false;
+    (function uncovered() {
+      if (pageCovered()) { requestAnimationFrame(uncovered); return; }
+      busyWait = false;
       busyStrips.forEach(function (x) { if (x.isConnected) settleStrips.add(x); }); busyStrips.clear();
       queueSync();
-    });
+    })();
   }
   function queueSync(scope) {
     if (scope && scope.nodeType === 1) dirtyScope(scope);
@@ -218345,12 +218365,15 @@ try { if (window.PM_HOME && typeof window.PM_HOME.boot === 'function') window.PM
       if (!postOn) return;
       postOn = false; postRO.unobserve(postEl); postRunning = true;
       try {
+        /* the queue is taken before the sync: a callback the sync itself queues waits for the next delivery instead of
+           reading what the sync has just written (landing review GL-5) */
+        var fns = postFns; postFns = [];
         if (postQ) {
           postQ = false;
           if (syncQ) { cancelAnimationFrame(syncQ); syncQ = 0; }
           syncPending();
         }
-        var fns = postFns; postFns = []; fns.forEach(function (f) { f(); });
+        fns.forEach(function (f) { f(); });
       } finally { postRunning = false; }
     });
     if (!postEl || !postEl.isConnected) {
@@ -218522,7 +218545,7 @@ try { if (window.PM_HOME && typeof window.PM_HOME.boot === 'function') window.PM
   /* WARM-CATALOG:END */
   var warmStarted = false;
   function warmUp() {
-    if (warmStarted || !document.body || !window.requestAnimationFrame) return;
+    if (warmStarted || !document.body || !window.requestAnimationFrame || !gpu()) return;
     warmStarted = true;
     var host = el('lg-warm', { 'aria-hidden': 'true' }), lastInput = 0, queue = [];
     host.style.cssText = 'position:fixed;right:0;bottom:0;width:48px;height:48px;overflow:hidden;opacity:0.004;pointer-events:none;' +
@@ -218576,7 +218599,8 @@ try { if (window.PM_HOME && typeof window.PM_HOME.boot === 'function') window.PM
     WARM_CATALOG.forEach(function (e) { queue.push(function () { return crowded(e, false); }); });
     WARM_CATALOG.forEach(function (e) { queue.push(function () { return crowded(e, true); }); });
     var seen = {};
-    Array.prototype.slice.call(document.querySelectorAll('svg')).forEach(function (svg) {
+    queue.push(function () { Array.prototype.slice.call(document.querySelectorAll('svg')).forEach(addIcon); return null; });
+    function addIcon(svg) {
       var sh = svg.querySelector('path, circle, rect, line, polyline, polygon, ellipse'); if (!sh) return;
       queue.push(function () {
         if (!svg.isConnected) return null;
@@ -218590,7 +218614,7 @@ try { if (window.PM_HOME && typeof window.PM_HOME.boot === 'function') window.PM
         });
         return g;
       });
-    });
+    }
     function done() { INPUT.forEach(function (t) { removeEventListener(t, onInput, { capture: true, passive: true }); }); host.remove(); }
     function later(fn) { if (window.requestIdleCallback) requestIdleCallback(fn, { timeout: 1000 }); else setTimeout(fn, 50); }
     function step() {
@@ -218688,8 +218712,8 @@ try { if (window.PM_HOME && typeof window.PM_HOME.boot === 'function') window.PM
       /* a print whose frost pair is still kept is ready to commit without decoding the print again (raw prints are kept
          for 2, frost pairs within FROST_BYTES); it resolves once that pair's images are decoded; its rims rebake after
          the commit, as for any print */
-      var kept = isGlass() && frostCache.get(url + ':' + innerWidth + 'x' + innerHeight);
-      if (kept) { whenDecoded(kept, function () { resolve(true); }); return; }
+      var keptKey = url + ':' + innerWidth + 'x' + innerHeight, kept = isGlass() && frostCache.get(keptKey);
+      if (kept) { frostCache.delete(keptKey); frostCache.set(keptKey, kept); trimDecoded(); whenDecoded(kept, function () { resolve(true); }); return; }
       withWall(function (im) {
         if (!im) { resolve(false); return; }
         if (canRun && !canRun()) { resolve(false); return; }
