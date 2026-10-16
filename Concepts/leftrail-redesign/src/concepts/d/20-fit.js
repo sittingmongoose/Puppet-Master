@@ -189,7 +189,16 @@ function recheckSoon() {
   }, 450);
 }
 let fitTimer = 0;
-function fitSoon() { clearTimeout(fitTimer); fitTimer = setTimeout(() => { if (D.on) fitAll(); }, 60); }
+/* the fit 60 ms after a resize or a look change measures after a frame's layout (the shell's PM_AFTER_LAYOUT): a timer
+   can land before the frame that restyles the page for the look, and its first width read paid that restyle (the
+   rail's own reader on a NieR switch once the skin pass read after layout, speed team's B5 trace) */
+function fitSoon() {
+  clearTimeout(fitTimer);
+  fitTimer = setTimeout(() => {
+    const go = () => { if (D.on) fitAll(); };
+    if (typeof window.PM_AFTER_LAYOUT === 'function') window.PM_AFTER_LAYOUT(go); else go();
+  }, 60);
+}
 function watchFit() {
   const slot = document.getElementById('sidePanelSlot');
   if (window.ResizeObserver && slot) {
