@@ -139038,7 +139038,9 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
    starting one restyles the whole page by itself in Chrome (230-300 ms on the P1000 before its callback runs).
 
    window.PM_THEME_TRANSITION(apply, hint)  — apply() writes the theme; hint { mode } or { family } names the look
-   it goes to (for the cover's colours). Picks made before it runs keep only the latest. */
+   it goes to (for the cover's colours). Picks made before it runs keep only the latest.
+   window.PM_LOOK_COVERED()  — true while a look is changed under a cover: this one until it starts to lift, or the
+   NieR reboot plate (settings/kit.d/19-nier-parts.js) until its reveal. */
 (function () {
   'use strict';
   const html = document.documentElement;
@@ -139234,6 +139236,14 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
     if (document.hidden || !document.body) { requestAnimationFrame(() => window.setTimeout(runJob, 0)); return; }
     if (phase === 'covering' || phase === 'covered') return;   /* the latest pick applies under the cover */
     cover(hint);
+  };
+  /* What only the covered page shows can wait for the cover to go (the hover material's tokens and moves,
+     js/18-hover.js): read under it, in an animation frame, it was the first reader of the look's whole-page restyle.
+     The plate leaves the pointer to the page at its reveal, the moment the page shows again. */
+  window.PM_LOOK_COVERED = function lookCovered() {
+    if (phase === 'covering' || phase === 'covered') return true;
+    const plate = document.getElementById('o55np-reboot');
+    return !!(plate && plate.style.pointerEvents !== 'none');
   };
 })();
 
@@ -143810,22 +143820,34 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
       if (frameEl) frameEl.setAttribute('data-pmh-family', fam);
     }
     function tk(kind) { return T[kind] || T.card; }
+    /* The look's tokens are read after the frame's layout (the shell's PM_AFTER_LAYOUT, before its paint), where its
+       style is already computed, and once the look's cover has gone (PM_LOOK_COVERED, js/12-theme-transition.js):
+       read in an animation frame callback, before that frame's style, the probe was the first reader of a look
+       change's whole-page restyle (880 ms forced on a Glass Light NieR switch, P1000, Settings lane B5 trace). Under
+       the cover nothing of the hover shows; its moves wait there too (tick). */
+    function covered() { var f = window.PM_LOOK_COVERED; try { return typeof f === 'function' && !!f(); } catch (_) { return false; } }
     function retokenNextFrame() {
       tokensDirty = true; rectsDirty = geomDirty = true;   /* a look change can change every box's size */
       if (tokenFrame) return;
-      tokenFrame = raf(function retokenFrame() {
+      var retokenFrame = function () {
+        if (covered()) { raf(function () { window.PM_AFTER_LAYOUT(retokenFrame); }); return; }
         tokenFrame = 0;
         if (tokensDirty) readTokens();
         if (isReduced()) snapMagnets();
         stampSoon(300);
         if (hover || springs.size || lit.size) { moved = true; start(); }
-      });
+      };
+      if (typeof window.PM_AFTER_LAYOUT === 'function') { tokenFrame = 1; window.PM_AFTER_LAYOUT(retokenFrame); }
+      else tokenFrame = raf(retokenFrame);
     }
 
     /* ---- the loop ---- */
     function start() { if (!running) { running = true; lastT = performance.now(); raf(tick); } }
 
     function tick(now) {
+      /* under a look's cover the moves hold where they are and read nothing (the page's style is the look's restyle,
+         still pending); they go on from there once it starts to go */
+      if (covered()) { lastT = now; raf(tick); return; }
       var t0 = performance.now();
       phase.tokens = phase.scope = false; phase.rects = stats.rects;
       try { frame(now); } catch (err) {
