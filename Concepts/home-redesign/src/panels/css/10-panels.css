@@ -344,6 +344,8 @@ body.pm-resizing:not(.pmw-dragging) #pm-hover-tag-root { display: none !importan
 .pmw-landing-label[hidden] { display: none; }
 /* above the page's status bar (2147481700), below the demo pill (2147482600), hover tags and the tour (2147483000) */
 #pmw-overlay { position: fixed; inset: 0 auto auto 0; width: 0; height: 0; z-index: 2147481800; }
+/* a kept screen parked here is skipped by style and layout until its owner lifts it (00-core.js PMW.park, B5) */
+#pmw-overlay [data-pmw-parked] { content-visibility: hidden; }
 
 /* toasts and the MRU switcher */
 .pmw-toast {

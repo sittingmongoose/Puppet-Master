@@ -167,6 +167,15 @@ function overlay() {
   return el;
 }
 PMW.overlay = overlay;
+/* a kept screen parked in the overlay (the terminal's and the editor's Customize, both built ahead and parked between
+   visits) is left out of style and layout while it waits: [data-pmw-parked] is content-visibility: hidden, which keeps
+   its rendering state. A page-wide restyle then passes it by (B5: in the NieR switch's Layout, 2,553 of 5,176 style
+   resolves were those two sheets, sol's F2 trace). Its owner lifts it before reading any box inside (a show, an idle
+   catch-up) and sets it again once that has measured; the restyle it skipped is paid where it is lifted */
+PMW.park = function (el, on) {
+  if (!el) return;
+  if (on) el.setAttribute('data-pmw-parked', ''); else el.removeAttribute('data-pmw-parked');
+};
 
 /* ---- id helpers ---- */
 var uidSeq = 0;
