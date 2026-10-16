@@ -122,7 +122,8 @@ html[data-o55-nier="on"] #panel-usage .pmu-toggle::after { transition: transform
 #panel-usage .pmu-stepper button:hover { background: var(--pmu-row-hover); color: var(--pmu-ink); }
 #panel-usage .pmu-stepper button svg { width: 12px; height: 12px; }
 #panel-usage .pmu-stepper output, #panel-usage .pmu-stepper .pmu-stepval { min-width: 40px; padding: 0 4px; text-align: center; font-size: 13px; font-weight: 600; font-variant-numeric: tabular-nums; }
-html[data-theme^="retro"] #panel-usage :is(.pmu-toggle, .pmu-toggle::after, .pmu-stepper) { border-radius: 0; }
+/* a pseudo-element is dropped inside :is(), so the knob is its own selector-list entry */
+html[data-theme^="retro"] #panel-usage :is(.pmu-toggle, .pmu-stepper), html[data-theme^="retro"] #panel-usage .pmu-toggle::after { border-radius: 0; }
 html[data-theme^="retro"] #panel-usage .pmu-toggle::after { transition-timing-function: steps(2, jump-start); }
 /* the value-change underline (B v2 8.5) */
 #panel-usage .pmu-pulse-ul { position: relative; }
@@ -171,7 +172,7 @@ body.pmu-page-active #o55-demo { transform-origin: 0 100%; scale: .8; }
 html[data-theme^="retro"] #panel-usage .pmu-toast { border-radius: 0; }
 /* during a gesture: nothing restyles the application. user-select on body would restyle all ~15k nodes (98 ms on the VM),
    so text selection is blocked by a selectstart listener instead; the grabbing cursor lives on the lifted card. */
-html[data-motion="reduced"] #panel-usage :is(.pmu-seg-ink, .pmu-toggle, .pmu-toggle::after, .pmu-ctlchev, .pmu-navicon) { transition: none !important; }
+html[data-motion="reduced"] #panel-usage :is(.pmu-seg-ink, .pmu-toggle, .pmu-ctlchev, .pmu-navicon), html[data-motion="reduced"] #panel-usage .pmu-toggle::after { transition: none !important; }
 
 /* narrow heads (DESIGN-SPEC 2.1: nothing overlaps the title): below 1000 px of panel the subtitle goes to the title's
    hover tag, the range strip collapses into its menu and the scope label shortens; below 860 px the scope button keeps

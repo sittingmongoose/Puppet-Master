@@ -571,7 +571,7 @@ html[data-pmu-soft] #panel-usage .pmu-skyswitch { filter: none; }
    (moved by translateX; opacity 0 at rest) */
 #panel-usage .pmu-skyfront { position: absolute; left: -4px; width: 34px; height: 12px; margin-bottom: -7px; opacity: 0; pointer-events: none; border-radius: 6px;
   background: radial-gradient(50% 50% at 70% 50%, color-mix(in srgb, #fff 55%, var(--pmu-warn)), color-mix(in srgb, var(--pmu-warn) 55%, transparent) 45%, transparent 100%); }
-html[data-theme^="retro"] #panel-usage :is(.pmu-skytrack, .pmu-skyfill, .pmu-skyfill::before, .pmu-skyflare, .pmu-skyfront) { border-radius: 0; }
+html[data-theme^="retro"] #panel-usage :is(.pmu-skytrack, .pmu-skyfill, .pmu-skyflare, .pmu-skyfront), html[data-theme^="retro"] #panel-usage .pmu-skyfill::before { border-radius: 0; }
 html[data-theme^="retro"] #panel-usage .pmu-skyfill { background: color-mix(in srgb, var(--c) 78%, transparent); }
 html[data-o55-nier="on"] #panel-usage .pmu-skyfill { background: repeating-linear-gradient(to top, var(--o55-nier-ink) 0 5px, transparent 5px 7px); }
 html[data-o55-nier="on"] #panel-usage .pmu-skyfill::before { background: var(--o55-nier-ink); box-shadow: none; border-radius: 0; }

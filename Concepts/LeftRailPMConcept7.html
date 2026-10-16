@@ -58314,8 +58314,10 @@ html[data-o55-nier="on"] :is(#panel-usage,[data-pmu-host]) .pmu-toggle::after { 
 :is(#panel-usage,[data-pmu-host]) .pmu-stepper button:hover { background: var(--pmu-row-hover); color: var(--pmu-ink); }
 :is(#panel-usage,[data-pmu-host]) .pmu-stepper button svg { width: 12px; height: 12px; }
 :is(#panel-usage,[data-pmu-host]) .pmu-stepper output, :is(#panel-usage,[data-pmu-host]) .pmu-stepper .pmu-stepval { min-width: 40px; padding: 0 4px; text-align: center; font-size: 13px; font-weight: 600; font-variant-numeric: tabular-nums; }
+/* a pseudo-element is dropped inside :is(), so the knob is its own selector-list entry */
 html[data-theme^="retro"] :is(#panel-usage,[data-pmu-host]) :is(.pmu-toggle),
-html[data-theme^="retro"] :is(#panel-usage,[data-pmu-host]) :is(.pmu-stepper) { border-radius: 0; }
+html[data-theme^="retro"] :is(#panel-usage,[data-pmu-host]) :is(.pmu-stepper),
+html[data-theme^="retro"] :is(#panel-usage,[data-pmu-host]) .pmu-toggle::after { border-radius: 0; }
 html[data-theme^="retro"] :is(#panel-usage,[data-pmu-host]) .pmu-toggle::after { transition-timing-function: steps(2, jump-start); }
 /* the value-change underline (B v2 8.5) */
 :is(#panel-usage,[data-pmu-host]) .pmu-pulse-ul { position: relative; }
@@ -58367,7 +58369,8 @@ html[data-theme^="retro"] :is(#panel-usage,[data-pmu-host]) .pmu-toast { border-
 html[data-motion="reduced"] :is(#panel-usage,[data-pmu-host]) :is(.pmu-seg-ink),
 html[data-motion="reduced"] :is(#panel-usage,[data-pmu-host]) :is(.pmu-toggle),
 html[data-motion="reduced"] :is(#panel-usage,[data-pmu-host]) :is(.pmu-ctlchev),
-html[data-motion="reduced"] :is(#panel-usage,[data-pmu-host]) :is(.pmu-navicon) { transition: none !important; }
+html[data-motion="reduced"] :is(#panel-usage,[data-pmu-host]) :is(.pmu-navicon),
+html[data-motion="reduced"] :is(#panel-usage,[data-pmu-host]) .pmu-toggle::after { transition: none !important; }
 
 /* narrow heads (DESIGN-SPEC 2.1: nothing overlaps the title): below 1000 px of panel the subtitle goes to the title's
    hover tag, the range strip collapses into its menu and the scope label shortens; below 860 px the scope button keeps
@@ -60443,7 +60446,8 @@ html[data-pmu-soft] :is(#panel-usage,[data-pmu-host]) .pmu-skyswitch { filter: n
 html[data-theme^="retro"] :is(#panel-usage,[data-pmu-host]) :is(.pmu-skytrack),
 html[data-theme^="retro"] :is(#panel-usage,[data-pmu-host]) :is(.pmu-skyfill),
 html[data-theme^="retro"] :is(#panel-usage,[data-pmu-host]) :is(.pmu-skyflare),
-html[data-theme^="retro"] :is(#panel-usage,[data-pmu-host]) :is(.pmu-skyfront) { border-radius: 0; }
+html[data-theme^="retro"] :is(#panel-usage,[data-pmu-host]) :is(.pmu-skyfront),
+html[data-theme^="retro"] :is(#panel-usage,[data-pmu-host]) .pmu-skyfill::before { border-radius: 0; }
 html[data-theme^="retro"] :is(#panel-usage,[data-pmu-host]) .pmu-skyfill { background: color-mix(in srgb, var(--c) 78%, transparent); }
 html[data-o55-nier="on"] :is(#panel-usage,[data-pmu-host]) .pmu-skyfill { background: repeating-linear-gradient(to top, var(--o55-nier-ink) 0 5px, transparent 5px 7px); }
 html[data-o55-nier="on"] :is(#panel-usage,[data-pmu-host]) .pmu-skyfill::before { background: var(--o55-nier-ink); box-shadow: none; border-radius: 0; }
@@ -61331,7 +61335,8 @@ html[data-o55-nier-parts~="square"] :is(#panel-usage,[data-pmu-host]) :is(.pmu-t
 html[data-o55-nier-parts~="square"] :is(#panel-usage,[data-pmu-host]) :is(.pmu-stepper),
 html[data-o55-nier-parts~="square"] :is(#panel-usage,[data-pmu-host]) :is(.pmu-irow),
 html[data-o55-nier-parts~="square"] :is(#panel-usage,[data-pmu-host]) :is(.pmu-inspact),
-html[data-o55-nier-parts~="square"] :is(#panel-usage,[data-pmu-host]) :is(.pmu-seg-ink) { border-radius: 0; }
+html[data-o55-nier-parts~="square"] :is(#panel-usage,[data-pmu-host]) :is(.pmu-seg-ink),
+html[data-o55-nier-parts~="square"] :is(#panel-usage,[data-pmu-host]) .pmu-toggle::after { border-radius: 0; }
 
 /* ticks: corner ticks and the U-nn coordinate on every card (account and group cards count like every widget) */
 html[data-o55-nier-parts~="ticks"] :is(#panel-usage,[data-pmu-host]) .pmu-board { counter-reset: pmu-nier-usage; }
