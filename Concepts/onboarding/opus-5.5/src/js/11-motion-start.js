@@ -34,9 +34,13 @@
     const tick = () => {
       const now = document.timeline.currentTime;
       if (now == null) { release(); return; }
-      const gap = last == null ? Infinity : now - last;
+      /* a frame is long when it began late, or when its own style and layout have already run long (this check runs
+         after them): the Wizard built under the onboarding window is styled inside the frame that begins right after
+         Enter, so the frames began on time while that one ran 300 ms, and the window's exit, started from that
+         frame's time, was over by its first draw */
+      const gap = last == null ? Infinity : now - last, late = performance.now() - now;
       last = now;
-      if (gap <= 40) { onTime++; if (!long || onTime >= 2) { release(); return; } }
+      if (gap <= 40 && late <= 40) { onTime++; if (!long || onTime >= 2) { release(); return; } }
       else { long = true; onTime = 0; }
       if (++n >= max) { release(); return; }
       hold();

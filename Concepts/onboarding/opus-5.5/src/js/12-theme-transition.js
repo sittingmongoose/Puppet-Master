@@ -19,6 +19,7 @@
   const html = document.documentElement;
   const COVER = 0.995;
   let job = null, phase = 'idle', veil = null, probe = null, coverAnim = null, glowAnims = [], ticket = 0;
+  const veils = {};   /* one cover per mode, painted ahead in the current family's colours for that mode */
 
   const reduced = () => {
     try { if (window.O55 && O55.motion && typeof O55.motion.reduced === 'function') return !!O55.motion.reduced(); } catch (_) { /* below */ }
@@ -52,27 +53,46 @@
       return { bg: cs.getPropertyValue('--background').trim(), glow: cs.getPropertyValue('--accent-blue').trim() };
     } catch (_) { return {}; }
   }
-  function ensureVeil() {
-    if (veil && veil.isConnected) return veil;
-    veil = document.createElement('div');
-    veil.id = 'pm-look-veil';
-    veil.setAttribute('aria-hidden', 'true');
-    veil.appendChild(document.createElement('i'));
-    document.body.appendChild(veil);
-    return veil;
+  function veilFor(mode) {
+    let v = veils[mode];
+    if (v && v.isConnected) return v;
+    v = veils[mode] = document.createElement('div');
+    v.className = 'pm-look-veil';
+    v.setAttribute('aria-hidden', 'true');
+    v.setAttribute('data-mode', mode);
+    v.appendChild(document.createElement('i'));
+    document.body.appendChild(v);
+    return v;
   }
-  /* Built once the page is idle and kept laid out at opacity 0 (will-change keeps its layers and their raster), so a
-     pick only starts compositor moves: made at the first pick, its new layers were painted and rastered in the very
-     frame that should show the cover (it came in at +200 ms on the P1000, in three jumps). */
-  function prepare() {
-    if (!document.body) return;
-    const v = ensureVeil();
+  /* Both covers are built once the page is idle, painted in the light and dark colours of the family on screen, and
+     kept laid out at opacity 0 (will-change keeps their layers and raster). A pick then only starts compositor
+     moves: made, or painted in its colours, at the pick, a cover's new paint had to be rastered before the
+     compositor would start its fade, in the very frames that should show it (it came in at +190-200 ms on the P1000,
+     in three jumps). A family pick crosses through the cover of the family it leaves, in the new mode's tone; the
+     lift then dissolves into the new family. They are painted again, at idle, after every look change. */
+  function paint(mode) {
+    const v = veilFor(mode);
+    try {
+      const c = coloursOf(lookAfter({ mode })), key = (c.bg || '') + '|' + (c.glow || '');
+      if (v.__key !== key) {
+        v.__key = key;
+        if (c.bg) v.style.setProperty('--pm-veil-bg', c.bg); else v.style.removeProperty('--pm-veil-bg');
+        if (c.glow) v.style.setProperty('--pm-veil-glow', c.glow); else v.style.removeProperty('--pm-veil-glow');
+      }
+    } catch (_) { /* the fallbacks */ }
     v.setAttribute('data-ready', '');
-    try { const c = coloursOf(lookAfter(null)); if (c.glow) v.style.setProperty('--pm-veil-glow', c.glow); } catch (_) { /* default */ }
+    return v;
   }
   const whenIdle = (fn) => (typeof requestIdleCallback === 'function' ? requestIdleCallback(fn, { timeout: 4000 }) : setTimeout(fn, 1500));
-  if (document.readyState === 'complete') whenIdle(prepare);
-  else window.addEventListener('load', () => whenIdle(prepare), { once: true });
+  let painting = false;
+  const paintSoon = () => {
+    if (painting) return;
+    painting = true;
+    whenIdle(() => { painting = false; if (!document.body) return; if (phase !== 'idle') { paintSoon(); return; } paint('light'); paint('dark'); });
+  };
+  if (document.readyState === 'complete') paintSoon();
+  else window.addEventListener('load', paintSoon, { once: true });
+  try { new MutationObserver(paintSoon).observe(html, { attributes: true, attributeFilter: ['data-theme', 'data-o55-nier'] }); } catch (_) { /* none */ }
   const startOnShown = (anims) => { if (window.PM_START_ON_SHOWN) window.PM_START_ON_SHOWN(anims); };
   const stopGlow = () => { glowAnims.forEach((a) => { try { a.cancel(); } catch (_) { /* gone */ } }); glowAnims = []; };
 
@@ -123,6 +143,7 @@
       if (t !== ticket) return;
       phase = 'idle';
       veil.removeAttribute('data-on');   /* it stays ready (laid out, opacity 0) for the next pick */
+      paintSoon();
       stopGlow();
       try { out.cancel(); } catch (_) { /* gone */ }
       coverAnim = null;
@@ -130,13 +151,12 @@
   }
 
   function cover(hint) {
-    const t = ++ticket, to = lookAfter(hint), c = coloursOf(to), still = reduced();
-    const v = ensureVeil();
+    const t = ++ticket, to = lookAfter(hint), still = reduced();
+    const v = veils[to.mode] && veils[to.mode].__key ? veils[to.mode] : paint(to.mode);   /* painted ahead: no paint now */
     let from = 0;
-    if (phase === 'lifting') { try { from = parseFloat(getComputedStyle(v).opacity) || 0; } catch (_) { from = 0; } }
-    if (c.bg) v.style.setProperty('--pm-veil-bg', c.bg); else v.style.removeProperty('--pm-veil-bg');
-    if (c.glow) v.style.setProperty('--pm-veil-glow', c.glow); else v.style.removeProperty('--pm-veil-glow');
-    v.setAttribute('data-mode', to.mode);
+    if (phase === 'lifting' && veil === v) { try { from = parseFloat(getComputedStyle(v).opacity) || 0; } catch (_) { from = 0; } }
+    else if (veil && veil !== v) { veil.removeAttribute('data-on'); }
+    veil = v;
     v.setAttribute('data-on', '');
     phase = 'covering';
     if (coverAnim) { try { coverAnim.cancel(); } catch (_) { /* gone */ } }

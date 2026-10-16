@@ -2,7 +2,7 @@
    new look's own background over the whole window, above every layer, never taking input, with a soft glow of the new
    accent. Its colours come from the look it goes to; the fallbacks are the plain light and dark backgrounds. Both
    parts move on the compositor only (opacity, transform); the glow rests at the centre and moves by offsets. */
-#pm-look-veil {
+.pm-look-veil {
   position: fixed;
   inset: 0;
   z-index: 2147483600;
@@ -14,9 +14,9 @@
   background: var(--pm-veil-bg, #12141a);
   will-change: opacity;
 }
-#pm-look-veil[data-mode="light"] { background: var(--pm-veil-bg, #eaecef); }
-#pm-look-veil:is([data-ready], [data-on]) { display: block; }   /* ready: laid out and rastered, at opacity 0 */
-#pm-look-veil > i {
+.pm-look-veil[data-mode="light"] { background: var(--pm-veil-bg, #eaecef); }
+.pm-look-veil:is([data-ready], [data-on]) { display: block; }   /* ready: laid out and rastered, at opacity 0 */
+.pm-look-veil > i {
   position: absolute;
   left: 50%;
   top: 50%;
