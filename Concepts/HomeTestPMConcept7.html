@@ -170340,6 +170340,9 @@ PMR.concepts.register('d', {
       show(info) {
         const p = document.getElementById(info && info.target);
         if (!p) return;
+        /* the panel shown is never still held from an earlier switch (held panels are inert, SH-4): a rail closed
+           and reopened onto it before its fade ended takes no hold to release it */
+        if (p._dLeave) releaseLeaving(p);
         if (info.reason === 'switch' && D.on) viewIn();
         /* the panel that was on screen stays until this one's entrance starts (30-motion.js holdLeaving); a rail opened
            from closed had none on screen, so the panel shown before it closed is never held over the new one */
