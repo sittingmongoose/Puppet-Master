@@ -191,11 +191,12 @@
          goes to the end of its owner's line once, and late twice it is dropped (onLate with dropped: true). The wait
          after a late step is 1 s, doubling to 8 s; 3 clean steps reset it. 3 late in a row stop the queue until
          'pm-idle' or 30 s; the second stop is for the session: the rest is dropped, its owners told, 'pm-warm-done' sent.
-       order: near steps first, then round-robin across owners, FIFO within an owner; until() false skips a step.
+       order: near steps first, then round-robin across owners, FIFO within an owner; a later step (never near) only when
+         no other step is queued, round-robin among later steps then (v3.7); until() false skips a step.
        off: ?pm-warm=0, and the no-GPU profile once O55.motion knows it (?pm-warm=force runs it there, for checks); an
          add is then logged 'skipped' (state().off says so before adding), and steps queued before it was known are let
          go with onLate({ dropped: true }), as at the session stop.
-     add({ owner, name, run, near, light, cpu, until, onLate }) -> id; cancel(id), cancelOwner(owner), state(owner?)
+     add({ owner, name, run, near, later, light, cpu, until, onLate }) -> id; cancel(id), cancelOwner(owner), state(owner?)
      { queued, dropped, backoffMs, lateRun, stopped, session, off, running, lateCount, waiting: the gate that held the
      last try ('idle', 'frames', 'input', 'animation', ...) }; window.__pmWarmLog (also PM_WARM.log): the last 200
      { owner, name, t, at (the step's frame), cpuMs, frameMs, late, outcome }. 'pm-warm-done' on window when the queue
@@ -350,11 +351,13 @@
     for (;;) {
       let i = warmQ.findIndex((st) => st.near);
       if (i < 0) {
+        /* later steps only when nothing else is queued (v3.7 item 1) */
+        const now = warmQ.some((st) => !st.later), pool = (st) => !now || !st.later;
         const owners = [];
-        warmQ.forEach((st) => { if (owners.indexOf(st.owner) < 0) owners.push(st.owner); });
+        warmQ.forEach((st) => { if (pool(st) && owners.indexOf(st.owner) < 0) owners.push(st.owner); });
         if (!owners.length) return null;
         const next = owners[(owners.indexOf(warmLastOwner) + 1) % owners.length];
-        i = warmQ.findIndex((st) => st.owner === next);
+        i = warmQ.findIndex((st) => st.owner === next && pool(st));
       }
       const st = warmQ[i];
       let want = true;
@@ -441,7 +444,7 @@
     if (warmQ.some((x) => x.near)) return null;
     for (;;) {
       const i = warmQ.findIndex((x) => x.owner === owner);
-      if (i < 0 || !warmQ[i].light || warmQ[i].cpu) return null;
+      if (i < 0 || !warmQ[i].light || warmQ[i].cpu || (warmQ[i].later && warmQ.some((x) => !x.later))) return null;
       const x = warmQ[i];
       let want = true;
       if (typeof x.until === 'function') { try { want = x.until() !== false; } catch (_) { want = false; } }
@@ -569,8 +572,9 @@
   window.PM_WARM = {
     add(o) {
       if (!o || typeof o.run !== 'function') return 0;
-      const st = { id: ++warmSeq, owner: String(o.owner || 'page'), name: String(o.name || 'step'), run: o.run, near: !!o.near,
-        light: !!o.light, cpu: !!o.cpu, until: o.until, onLate: o.onLate };
+      /* a later step is never near (v3.7) */
+      const st = { id: ++warmSeq, owner: String(o.owner || 'page'), name: String(o.name || 'step'), run: o.run, near: !!o.near && !o.later,
+        later: !!o.later, light: !!o.light, cpu: !!o.cpu, until: o.until, onLate: o.onLate };
       if (warmSession) {
         logStep(st, 0, null, false, 'dropped'); dropped(st);
         Promise.resolve().then(() => tell(st, 0, true)); done();
@@ -600,7 +604,7 @@
       return { queued: warmQ.filter(mine).length, dropped: warmDropped.filter((d) => !owner || d.indexOf(owner + ':') === 0),
         backoffMs: warmBackoff, lateRun: warmLateRun, stopped: warmStopped, session: warmSession, off: warmOff || warmSoft === true,
         running: warmRunning && mine(warmRunning) ? warmRunning.owner + ':' + warmRunning.name : null, lateCount: warmLateCount,
-        waiting: warmQ.length && !warmBusy ? warmWhy : '' };
+        waiting: warmQ.length && !warmBusy ? warmWhy : '', later: warmQ.filter((st) => st.later && mine(st)).length };
     },
     log: warmLog
   };
