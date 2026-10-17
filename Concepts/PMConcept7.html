@@ -64885,12 +64885,30 @@ var PMU_SERIES = {
     cards.forEach(function (c) {
       list.push(c);
       /* the hero (its body holds most of the first screen's programs) comes in parts: its plate, then each part of its
-         body in a frame of its own */
+         body in a frame of its own (arriveParts) */
       var body = c.hasAttribute('data-hero') ? c.querySelector(':scope > .pmu-cardbody') : null;
-      if (body) Array.prototype.forEach.call(body.children, function (k) { list.push(k); });
+      if (body) arriveParts(body).forEach(function (k) { list.push(k); });
     });
     list.forEach(function (x) { x.setAttribute('data-pmu-arrive-wait', ''); });
     return list;
+  }
+  /* the hero's parts: a part of more than ARRIVE_PART elements is split into its children, in document order, until the
+     parts are small (a few programs each when cold: P1000 links are 22-71 ms each) or there are ARRIVE_PARTS of them */
+  var ARRIVE_PARTS = 20, ARRIVE_PART = 12;
+  function arriveParts(body) {
+    var parts = [body], changed = true;
+    while (changed && parts.length < ARRIVE_PARTS) {
+      changed = false;
+      for (var i = 0; i < parts.length; i++) {
+        var el = parts[i], kids = el.children;
+        if (!kids.length || el.getElementsByTagName('*').length <= ARRIVE_PART) continue;
+        if (parts.length - 1 + kids.length > ARRIVE_PARTS && parts.length > 1) continue;
+        parts.splice.apply(parts, [i, 1].concat(Array.prototype.slice.call(kids)));
+        changed = true;
+        break;
+      }
+    }
+    return parts.filter(function (x) { return x !== body; });
   }
   /* every card still waiting comes in now (the release, a moment that ended), and the page's wait comes off */
   function arriveUnslice(w) {
