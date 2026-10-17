@@ -182,6 +182,8 @@ html[data-theme^="glass"]:not(#lgz) .main-area { flex: 1 1 0% !important; }
 @property --lg-fy { syntax: '*'; inherits: false; }
 @property --lg-ring { syntax: '*'; inherits: false; }
 @property --lg-spec { syntax: '*'; inherits: false; }
+/* a menu's light map in nine parts, laid out as background layers (glass.js lightSlices, B6 packets 3/4) */
+@property --lg-spec9 { syntax: '*'; inherits: false; }
 @property --lg-px { syntax: '*'; inherits: false; }
 @property --lg-py { syntax: '*'; inherits: false; }
 @property --lg-glow { syntax: '*'; inherits: false; }
@@ -284,7 +286,7 @@ html[data-lg="on"][data-theme^="glass"]:not(#lgz):not(#lgy) :is([data-lg-kind="p
    frost element-relative; a running entrance still gets its own layer without it */
 html[data-lg="on"][data-theme^="glass"]:not(#lgz) .primary-content > .page.pm8-page-in { will-change: opacity !important; }
 html[data-lg="on"][data-theme^="glass"]:not(#lgz) [data-lg-kind="menu"] {
-  background: var(--lg-spec, none) 0 0 / 100% 100% no-repeat, linear-gradient(var(--lg-tint-menu), var(--lg-tint-menu)) !important; border-radius: var(--lg-r-card) !important;
+  background: var(--lg-spec9, var(--lg-spec, none) 0 0 / 100% 100% no-repeat), linear-gradient(var(--lg-tint-menu), var(--lg-tint-menu)) !important; border-radius: var(--lg-r-card) !important;
   box-shadow: inset 0 1px 0 var(--lg-edge-top), inset 0 -1px 1px var(--lg-edge-bot), 0 30px 60px -20px var(--lg-shadow), 0 4px 14px var(--lg-shadow-near) !important;
 }
 /* A large floating dialog of dense text (a Customize screen) opts into data-lg-dense: on the GPU tier its live blur
