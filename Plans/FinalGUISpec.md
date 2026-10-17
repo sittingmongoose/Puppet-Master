@@ -2254,7 +2254,7 @@ if Theme.retro-effects-enabled && Theme.paper-texture-enabled: PaperTextureOverl
 - **Live switch** for colors, spacing, borders, overlays: Slint's reactive property system propagates changes instantly
 - **Restart required** for font family change: retired 2026-10-17 (DL-230, Jared). The earlier rule that cross-family switches that change loaded fonts (Retro's IBM Plex Mono, Friendly's Poppins/Nunito, or Basic/Glass Inter) require app restart because Slint loads fonts at initialization is kept here only as lineage. A family switch is live under the look's cover (DL-216, DL-217, F3-077); every look's fonts are loaded before the switch is written.
 - **Within same family is live:** Switching between the dark and light variants of one family (for example Retro Dark to Retro Light, or Friendly Dark to Friendly Light) is instant (same fonts)
-- **Glass/Basic note:** Glass and Basic share Inter, so switches between them MAY be live when no other loaded-font change occurs.
+- **Glass/Basic note:** Glass and Basic share Inter; like every family switch, a switch between them is live under the look's cover (F3-077, amended 2026-10-17, DL-230). It read that such switches "MAY be live when no other loaded-font change occurs".
 
 ### 6.5 Slint Implementation
 
@@ -10084,8 +10084,10 @@ status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
   Theme loading scans custom theme TOML files on startup, validates token schema, skips invalid
-  files with warning/toast disclosure, and hot-reloads modified active themes while prompting for
-  restart on font changes.
+  files with warning/toast disclosure, and hot-reloads modified active themes; a font change in a
+  hot-reloaded active theme applies live under the look's cover (F3-077).
+  Amended 2026-10-17 (DL-230, Jared): the restart prompt is retired. Superseded lineage (kept findable): it
+  read "hot-reloads modified active themes while prompting for restart on font changes".
 gui_related: true
 gui_classification_reason: >-
   This unit defines visible theme loading, validation, toast, and live theme update behavior.
@@ -10117,10 +10119,10 @@ preserved_exact_tokens:
 - "Hot reload"
 - "re-scan"
 - "font changes"
-- "prompt for restart"
 negative_constraints: []
 compatibility_only_notes: []
-stale_retired_dispositions: []
+stale_retired_dispositions:
+- "Retired 2026-10-17 (DL-230, Jared): \"prompt for restart\" on font changes is withdrawn; a font change in a hot-reloaded active theme applies live under the look's cover (F3-077)."
 owner_boundary_notes: []
 owner_hints:
 - "Plans/FinalGUISpec.md"
@@ -47312,7 +47314,7 @@ canonical_text: >-
   project default (written through Settings transactions, in the Project's settings) under this
   tab's override; a field left unset falls through to the layer below. Every field applies live, and
   no terminal appearance setting carries a restart badge; the terminal draws its own glyphs
-  (DL-035), so section 6.4's restart rule for the app's font families does not reach it. "Follow
+  (DL-035), and section 6.4's restart rule for the app's font families is retired (DL-230). "Follow
   look" resolves per look, light and dark: Friendly Catppuccin Latte and Mocha; Glass Tokyo Night
   Day and Storm, drawn at 70 % (light) and 74 % (dark) opacity over the shell's existing glass blur,
   the terminal adding no backdrop blur of its own (F3-431); Retro PM Paper Teletype and PM Phosphor
