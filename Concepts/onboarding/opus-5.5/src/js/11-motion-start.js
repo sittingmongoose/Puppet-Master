@@ -152,16 +152,18 @@
     if (document.body) watchBody(); else document.addEventListener('DOMContentLoaded', watchBody, { once: true });
   } catch (_) { /* calls still arm it */ }
 
-  /* PM_WARM: the one page-wide queue for idle warm drawing (the lead's IDLE-WARM-RULE.md v3.5, 2026-10-17). A lane hands
+  /* PM_WARM: the one page-wide queue for idle warm drawing (the lead's IDLE-WARM-RULE.md v3.6, 2026-10-17). A lane hands
      it small steps that draw something unseen, so the GPU compiles its programs or rasters a surface before first use.
      On a cold P1000 a step that was short on the main thread still held the compositor 100-1,000 ms when it made the
      GPU compile several programs (part2's F5b idle trace), so a step goes only when the page is still, and is judged by
      the frames presented after it.
        when: an idle callback (no timeout) with 45 ms or more left, so nothing is drawing frames; or, once every other
-         gate has held for 1 s (the quiet clock: from the batch queued, the last gate that failed, and the last input +
+         gate has held for 1 s (the quiet clock: from the batch queued, the last lasting state, and the last input +
          600 ms, whichever is latest), any idle callback, since the page is drawing frames only for an ambient loop
          (Home's: on the 3090 the flat 10 s backstop of v3.3 put the first step at +15 s). The gates are looked at before
-         the slot, so a gate that fails starts the clock again, and so do 'pm-idle' and the page becoming visible. While
+         the slot. A lasting state starts the clock again (hidden, busy, input, pending, 'pm-idle', the page shown);
+         frames, animation and the back-off hold admission only while they fail (v3.6: on the P1000, restarting the
+         clock on each momentary one starved the queue). While
          a gate that holds a state fails (busy, input, animation, hidden) the wait grows from 400 ms to 2 s (back to 400
          once a step goes); a frame off time retries after 250 ms; 'pm-idle' tries again at once.
        gates: the page visible, PM_BUSY() empty, no pointer, key, wheel or touch input for 600 ms, none pending, any
@@ -179,13 +181,12 @@
          frame, and any later interval over 100 ms is its late too, since on the P1000 its programs link 100-350 ms after
          its frame, when the tiles raster (frameMs [d1, d2, worst later]); the next admission waits for the watch, so links
          never stack across steps. A cpu step (it makes no GPU work) keeps two intervals: in a long slot the two
-         after the frame that follows it; in a short one (the quiet clock) it runs in the idle time of the third watched
-         frame and is judged from that frame, so its overrun of the ambient loop's next frame counts, and an idle callback
-         that comes only after a later frame puts it back at the head of the line. A cleanup run() returns runs in the
-         first frame after the step.
-       light (one kind, <= 2 ms of JS): judged by the one interval after it; the next step, if light, may go in that
-         same frame (one per frame) while every gate holds and no frame was late in the last 2 s; the chain's last step
-         gets the 300 ms watch.
+         after the frame that follows it; in a short one (the quiet clock) it is judged from the last frame before it ran
+         (v3.6), so its overrun of the ambient loop's next frame counts, and only when no idle callback comes within 1 s
+         does it go back to the head of the line. A cleanup run() returns runs in the first frame after the step.
+       light (one kind, <= 2 ms of JS): judged by the one interval after it; the owner's next step, if light, may go in
+         the next frame (one per frame) while every gate holds, no frame was late in the last 2 s and the chain is under
+         100 ms (its owner's turn, v3.6 item 3); the chain's last step gets the 300 ms watch.
        late: onLate({ name, late, dropped: false }); true means the owner handled it (split it, moved it), otherwise it
          goes to the end of its owner's line once, and late twice it is dropped (onLate with dropped: true). The wait
          after a late step is 1 s, doubling to 8 s; 3 clean steps reset it. 3 late in a row stop the queue until
@@ -236,7 +237,9 @@
     let m = warmAnims.get(el);
     if (!m) warmAnims.set(el, (m = new Map()));
     const now = performance.now();
-    m.set(animKey(k, e), { at: now, seen: now, fin: k === 't' ? true : undefined });
+    /* looked up on the next PM_AFTER_LAYOUT (classify), a transition as an animation: one over 1.5 s is ambient (review
+       WQ6-4: counted running from its event, a long creep held the gate a second each time it restarted) */
+    m.set(animKey(k, e), { at: now, seen: now, fin: undefined });
     /* elements taken out of the page while nothing is queued are let go here */
     if (warmAnims.size > 50) animState();
   };
@@ -313,8 +316,10 @@
     const a = animState();
     return a === 'run' ? 'animation' : a === 'ask' ? 'animation?' : '';
   };
-  /* a gate that fails starts the quiet clock again */
-  const quiet = () => { warmWhy = blocked(); if (warmWhy) warmQuietSince = performance.now(); return !warmWhy; };
+  /* a lasting state starts the quiet clock again (v3.6 item 1): hidden, busy, input, pending; frames, animation and the
+     back-off only hold admission while they fail */
+  const LASTING = { hidden: 1, busy: 1, input: 1, pending: 1 };
+  const quiet = () => { warmWhy = blocked(); if (LASTING[warmWhy]) warmQuietSince = performance.now(); return !warmWhy; };
   const logStep = (st, cpuMs, frameMs, late, outcome) => {
     warmLog.push({ owner: st.owner, name: st.name, t: Math.round(performance.now()), at: st.at ? Math.round(st.at) : null, cpuMs: Math.round(cpuMs * 10) / 10, frameMs: frameMs, late: late, outcome: outcome });
     if (warmLog.length > 200) warmLog.shift();
@@ -393,7 +398,7 @@
       if (vis !== warmVis) { warmBusy = false; retry(); return; }
       note(tB - tA); note(tC - tB);
       /* a frame off time is momentary: tried again in 250 ms, the wait not grown (v3.5 item 3) */
-      if (!onTime(tB - tA) || !onTime(tC - tB)) { warmWhy = 'frames'; warmQuietSince = performance.now(); warmBusy = false; warmWake(250); return; }
+      if (!onTime(tB - tA) || !onTime(tC - tB)) { warmWhy = 'frames'; warmBusy = false; warmWake(250); return; }
       if (!quiet()) { warmBusy = false; retry(); return; }
       const st = pick(true);
       if (!st) { warmBusy = false; done(); return; }
@@ -422,6 +427,20 @@
     };
     if (from - t >= WATCH_MS) done(0); else requestAnimationFrame(tick);
   };
+  /* the owner's next step if it is light (FIFO within the owner; one whose until() says no is skipped), taken off */
+  const LIGHT_TURN_MS = 100;
+  const nextLight = (owner) => {
+    for (;;) {
+      const i = warmQ.findIndex((x) => x.owner === owner);
+      if (i < 0 || !warmQ[i].light || warmQ[i].cpu) return null;
+      const x = warmQ[i];
+      let want = true;
+      if (typeof x.until === 'function') { try { want = x.until() !== false; } catch (_) { want = false; } }
+      warmQ.splice(i, 1);
+      if (want) return x;
+      logStep(x, 0, null, false, 'skipped');
+    }
+  };
   /* a GPU step, in the frame at t */
   const runStep = (st, t) => {
     const vis = warmVis, limit = lateMs(), r = run(st);
@@ -432,11 +451,13 @@
       if (vis !== warmVis) { judge(st, r.cpu, null, false, limit); after(); return; }
       note(d1);
       if (st.light) {
-        /* the next light step in this same frame, while everything holds */
-        const nx = d1 <= limit && !warmStopped && performance.now() - warmLateAt > 2000 && onTime(warmD1) && onTime(d1) && quiet() ? pick(false) : null;
-        if (nx && nx.light && !nx.cpu) {
+        /* the owner's next light step (FIFO) in this frame, while everything holds and the chain is under its 100 ms
+           turn (v3.6 item 3); then the turn passes on */
+        const c0 = st.chain0 || t;
+        const nx = d1 <= limit && a - c0 < LIGHT_TURN_MS && !warmStopped && performance.now() - warmLateAt > 2000 && onTime(warmD1) && onTime(d1) && quiet() ? nextLight(st.owner) : null;
+        if (nx) {
           if (judge(st, r.cpu, [Math.round(d1)], false, limit)) return;
-          pick(true); runStep(nx, a); return;
+          nx.chain0 = c0; runStep(nx, a); return;
         }
         if (d1 > limit) { if (!judge(st, r.cpu, [Math.round(d1)], true, limit)) after(); return; }
         /* the chain's last step: the watch */
@@ -458,19 +479,25 @@
     });
   };
   /* a cpu step, inside an idle callback, given its deadline. In a long slot it is judged by the two intervals after the
-     next frame; in a short one it must come in the idle time of tC, the admission frame, and is judged by tC -> a and
-     a -> b, so an overrun of the ambient loop's frame counts (v3.4); one that comes after a later frame goes back to the
-     head of the line */
+     next frame. In a short one it is judged from the last frame before it ran (v3.6 item 2): while its idle callback is
+     pending a frame loop (1 s at most) keeps tLast, and it is judged by tLast -> a and a -> b, so its overrun of the
+     ambient loop's frame counts; it goes back to the head of the line only when no idle callback comes within 1 s */
   const cpuStep = (st, tC) => {
     warmRunning = st; st.at = tC;
     const vis = warmVis, limit = lateMs();
-    let next = 0, r = null, kind = '';
-    requestAnimationFrame((a) => {
-      next = a;
-      if (!r || kind !== 'short') return;
+    let tLast = tC, waiting = true;
+    const loop = (t) => { if (!waiting) return; tLast = t; if (t - tC < 1000) requestAnimationFrame(loop); };
+    requestAnimationFrame(loop);
+    const back = () => { waiting = false; clearTimeout(giveUp); warmRunning = null; warmQ.unshift(st); warmBusy = false; retry(); };
+    const giveUp = setTimeout(() => {
+      if (!waiting) return;
+      if (warmIdle && window.cancelIdleCallback) cancelIdleCallback(warmIdle);
+      warmIdle = 0; warmWhy = 'idle'; back();
+    }, 1000);
+    const judged = (r, from, a) => {
       clean(r);
       if (vis !== warmVis) { judge(st, r.cpu, null, false, limit); after(); return; }
-      const d1 = a - tC;
+      const d1 = a - from;
       note(d1);
       requestAnimationFrame((b) => {
         const d2 = b - a;
@@ -478,25 +505,18 @@
         note(d2);
         if (!judge(st, r.cpu, [Math.round(d1), Math.round(d2)], Math.max(d1, d2) > limit, limit)) after();
       });
-    });
-    const back = () => { warmRunning = null; warmQ.unshift(st); warmBusy = false; retry(); };
+    };
     const go = (d) => {
       warmIdle = 0;
-      if (st.cancelled) { warmRunning = null; warmBusy = false; warmWake(0); return; }
+      if (!waiting) return;
+      if (st.cancelled) { waiting = false; clearTimeout(giveUp); warmRunning = null; warmBusy = false; warmWake(0); return; }
       if (!quiet()) { back(); return; }
-      kind = slot(d);
-      if (!kind || (kind === 'short' && next)) { warmWhy = 'idle'; back(); return; }
-      r = run(st, d);
-      if (kind === 'short') return;
-      requestAnimationFrame((a) => {
-        clean(r);
-        requestAnimationFrame((b) => requestAnimationFrame((c) => {
-          const d1 = b - a, d2 = c - b;
-          if (vis !== warmVis) { judge(st, r.cpu, null, false, limit); after(); return; }
-          note(d1); note(d2);
-          if (!judge(st, r.cpu, [Math.round(d1), Math.round(d2)], Math.max(d1, d2) > limit, limit)) after();
-        }));
-      });
+      const kind = slot(d);
+      if (!kind) { warmWhy = 'idle'; back(); return; }
+      waiting = false; clearTimeout(giveUp);
+      const from = tLast, r = run(st, d);
+      if (kind === 'short') { st.at = from; requestAnimationFrame((a) => judged(r, from, a)); return; }
+      requestAnimationFrame((a) => { clean(r); requestAnimationFrame((b) => judged({ cpu: r.cpu, cleanup: null }, a, b)); });
     };
     if (window.requestIdleCallback) warmIdle = requestIdleCallback(go); else go({ timeRemaining: () => 50 });
   };
