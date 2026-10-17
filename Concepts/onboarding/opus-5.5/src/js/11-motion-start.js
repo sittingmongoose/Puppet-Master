@@ -191,8 +191,9 @@
          goes to the end of its owner's line once, and late twice it is dropped (onLate with dropped: true). The wait
          after a late step is 1 s, doubling to 8 s; 3 clean steps reset it. 3 late in a row stop the queue until
          'pm-idle' or 30 s; the second stop is for the session: the rest is dropped, its owners told, 'pm-warm-done' sent.
-       order: near steps first, then round-robin across owners, FIFO within an owner; a later step (never near) only when
-         no other step is queued, round-robin among later steps then (v3.7); until() false skips a step.
+       order: near steps first, then round-robin across owners, FIFO within an owner, among the steps of the lowest later
+         level queued: a step without later is level 0, later: true is 1, later: n is n, and a later step is never near
+         (v3.7, v3.8); until() false skips a step.
        off: ?pm-warm=0, and the no-GPU profile once O55.motion knows it (?pm-warm=force runs it there, for checks); an
          add is then logged 'skipped' (state().off says so before adding), and steps queued before it was known are let
          go with onLate({ dropped: true }), as at the session stop.
@@ -351,8 +352,8 @@
     for (;;) {
       let i = warmQ.findIndex((st) => st.near);
       if (i < 0) {
-        /* later steps only when nothing else is queued (v3.7 item 1) */
-        const now = warmQ.some((st) => !st.later), pool = (st) => !now || !st.later;
+        /* the lowest later level queued goes first; steps without later are level 0 (v3.8: Glass's warm 1, Usage's 2) */
+        const lv = Math.min.apply(null, warmQ.map((st) => st.later)), pool = (st) => st.later === lv;
         const owners = [];
         warmQ.forEach((st) => { if (pool(st) && owners.indexOf(st.owner) < 0) owners.push(st.owner); });
         if (!owners.length) return null;
@@ -444,7 +445,7 @@
     if (warmQ.some((x) => x.near)) return null;
     for (;;) {
       const i = warmQ.findIndex((x) => x.owner === owner);
-      if (i < 0 || !warmQ[i].light || warmQ[i].cpu || (warmQ[i].later && warmQ.some((x) => !x.later))) return null;
+      if (i < 0 || !warmQ[i].light || warmQ[i].cpu || warmQ.some((x) => x.later < warmQ[i].later)) return null;
       const x = warmQ[i];
       let want = true;
       if (typeof x.until === 'function') { try { want = x.until() !== false; } catch (_) { want = false; } }
@@ -572,9 +573,10 @@
   window.PM_WARM = {
     add(o) {
       if (!o || typeof o.run !== 'function') return 0;
-      /* a later step is never near (v3.7) */
-      const st = { id: ++warmSeq, owner: String(o.owner || 'page'), name: String(o.name || 'step'), run: o.run, near: !!o.near && !o.later,
-        later: !!o.later, light: !!o.light, cpu: !!o.cpu, until: o.until, onLate: o.onLate };
+      /* later: a level, true counting as 1; a later step is never near (v3.7, v3.8) */
+      const later = o.later === true ? 1 : Math.max(0, Math.floor(+o.later || 0));
+      const st = { id: ++warmSeq, owner: String(o.owner || 'page'), name: String(o.name || 'step'), run: o.run, near: !!o.near && !later,
+        later: later, light: !!o.light, cpu: !!o.cpu, until: o.until, onLate: o.onLate };
       if (warmSession) {
         logStep(st, 0, null, false, 'dropped'); dropped(st);
         Promise.resolve().then(() => tell(st, 0, true)); done();
