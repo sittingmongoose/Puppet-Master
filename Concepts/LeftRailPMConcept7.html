@@ -145956,7 +145956,7 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
     if (document.body) watchBody(); else document.addEventListener('DOMContentLoaded', watchBody, { once: true });
   } catch (_) { /* calls still arm it */ }
 
-  /* PM_WARM: the one page-wide queue for idle warm drawing (the lead's IDLE-WARM-RULE.md v3.6, 2026-10-17). A lane hands
+  /* PM_WARM: the one page-wide queue for idle warm drawing (the lead's IDLE-WARM-RULE.md v3.9, 2026-10-17). A lane hands
      it small steps that draw something unseen, so the GPU compiles its programs or rasters a surface before first use.
      On a cold P1000 a step that was short on the main thread still held the compositor 100-1,000 ms when it made the
      GPU compile several programs (part2's F5b idle trace), so a step goes only when the page is still, and is judged by
@@ -145980,16 +145980,19 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
        where: a GPU step at the start of a frame (rAF), the third of three watched; a cpu step (no GPU work: canvas
          draws, blurs, encodes on the CPU) inside an idle callback after those frames, given its deadline. In the rAF
          only the frames, hidden, PM_BUSY, input and the count are looked at, never style.
-       judged: late when either of the two rAF intervals after the step's frame is over max(40 ms, 3x the median
-         refresh): the first is where a GPU compile holds the next frame. A GPU step is then watched until 300 ms after its
-         frame, and any later interval over 100 ms is its late too, since on the P1000 its programs link 100-350 ms after
-         its frame, when the tiles raster (frameMs [d1, d2, worst later]); the next admission waits for the watch, so links
-         never stack across steps. A cpu step (it makes no GPU work) keeps two intervals: in a long slot the two
+       judged: by the two rAF intervals after the step's frame (the first is where a GPU compile holds the next frame)
+         and, for a GPU step, every interval of its watch, until 300 ms after its frame, since on the P1000 its programs
+         link 100-350 ms after its frame, when the tiles raster (frameMs [d1, d2, worst later]); the next admission waits
+         for the watch, so links never stack across steps. Late (v3.9) is any of them over 100 ms, the acceptance bar;
+         slow is one over max(40 ms, 3x the median refresh) but not over 100 ms, logged 'slow': one program linked (45-84
+         ms on the P1000) is warm then, so a slow step takes the clean path, and only ends a light chain and holds light
+         steps to one a frame pair for 2 s. A cpu step (it makes no GPU work) keeps two intervals: in a long slot the two
          after the frame that follows it; in a short one (the quiet clock) it is judged from the last frame before it ran
          (v3.6), so its overrun of the ambient loop's next frame counts, and only when no idle callback comes within 1 s
          does it go back to the head of the line. A cleanup run() returns runs in the first frame after the step.
        light (one kind, <= 2 ms of JS): judged by the one interval after it; the owner's next step, if light, may go in
-         the next frame (one per frame) while every gate holds, no frame was late in the last 2 s and the chain is under
+         the next frame (one per frame) while that interval is under the slow bar, every gate holds, no frame was slow or
+         late in the last 2 s and the chain is under
          100 ms (its owner's turn, v3.6 item 3); the chain's last step gets the 300 ms watch.
        late: onLate({ name, late, dropped: false }); true means the owner handled it (split it, moved it), otherwise it
          goes to the end of its owner's line once, and late twice it is dropped (onLate with dropped: true). The wait
@@ -146231,7 +146234,7 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
   const clean = (r) => { if (r.cleanup) { try { r.cleanup(); } catch (_) { /* none */ } } };
   /* the watch after a GPU step (v3.5 item 1): the frames from the one at 'from' until 300 ms after the step's frame t;
      done(the worst of those intervals), or done(-1) when the page was hidden meanwhile */
-  const WATCH_MS = 300, WATCH_LATE = 100;
+  const WATCH_MS = 300, LATE_MS = 100;
   const warmWatch = (t, from, vis, done) => {
     let prev = from, worst = 0;
     const tick = (x) => {
@@ -146265,7 +146268,7 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
     requestAnimationFrame((a) => {
       clean(r);
       const d1 = a - t;
-      if (vis !== warmVis) { judge(st, r.cpu, null, false, limit); after(); return; }
+      if (vis !== warmVis) { judge(st, r.cpu, null, limit); after(); return; }
       note(d1);
       if (st.light) {
         /* the owner's next light step (FIFO) in this frame, while everything holds and the chain is under its 100 ms
@@ -146273,24 +146276,23 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
         const c0 = st.chain0 || t;
         const nx = d1 <= limit && a - c0 < LIGHT_TURN_MS && !warmStopped && performance.now() - warmLateAt > 2000 && onTime(warmD1) && onTime(d1) && quiet() ? nextLight(st.owner) : null;
         if (nx) {
-          if (judge(st, r.cpu, [Math.round(d1)], false, limit)) return;
+          if (judge(st, r.cpu, [Math.round(d1)], limit)) return;
           nx.chain0 = c0; runStep(nx, a); return;
         }
-        if (d1 > limit) { if (!judge(st, r.cpu, [Math.round(d1)], true, limit)) after(); return; }
         /* the chain's last step: the watch */
         warmWatch(t, a, vis, (w) => {
-          if (w < 0) { judge(st, r.cpu, null, false, limit); after(); return; }
-          if (!judge(st, r.cpu, [Math.round(d1), Math.round(w)], w > WATCH_LATE, limit)) after();
+          if (w < 0) { judge(st, r.cpu, null, limit); after(); return; }
+          if (!judge(st, r.cpu, [Math.round(d1), Math.round(w)], limit)) after();
         });
         return;
       }
       requestAnimationFrame((b) => {
         const d2 = b - a;
-        if (vis !== warmVis) { judge(st, r.cpu, null, false, limit); after(); return; }
+        if (vis !== warmVis) { judge(st, r.cpu, null, limit); after(); return; }
         note(d2);
         warmWatch(t, b, vis, (w) => {
-          if (w < 0) { judge(st, r.cpu, null, false, limit); after(); return; }
-          if (!judge(st, r.cpu, [Math.round(d1), Math.round(d2), Math.round(w)], Math.max(d1, d2) > limit || w > WATCH_LATE, limit)) after();
+          if (w < 0) { judge(st, r.cpu, null, limit); after(); return; }
+          if (!judge(st, r.cpu, [Math.round(d1), Math.round(d2), Math.round(w)], limit)) after();
         });
       });
     });
@@ -146313,14 +146315,14 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
     }, 1000);
     const judged = (r, from, a) => {
       clean(r);
-      if (vis !== warmVis) { judge(st, r.cpu, null, false, limit); after(); return; }
+      if (vis !== warmVis) { judge(st, r.cpu, null, limit); after(); return; }
       const d1 = a - from;
       note(d1);
       requestAnimationFrame((b) => {
         const d2 = b - a;
-        if (vis !== warmVis) { judge(st, r.cpu, null, false, limit); after(); return; }
+        if (vis !== warmVis) { judge(st, r.cpu, null, limit); after(); return; }
         note(d2);
-        if (!judge(st, r.cpu, [Math.round(d1), Math.round(d2)], Math.max(d1, d2) > limit, limit)) after();
+        if (!judge(st, r.cpu, [Math.round(d1), Math.round(d2)], limit)) after();
       });
     };
     const go = (d) => {
@@ -146338,11 +146340,17 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
     if (window.requestIdleCallback) warmIdle = requestIdleCallback(go); else go({ timeRemaining: () => 50 });
   };
   /* -> true when the queue stopped */
-  const judge = (st, cpuMs, frameMs, late, limit) => {
+  /* v3.9: late is any judged interval over 100 ms, the acceptance bar: only that is re-queued or dropped, backs off and
+     counts toward the stops. Slow is one over max(40 ms, 3x refresh) but not over 100: its program is linked, so it
+     takes the clean path, logged 'slow'; it ends a light chain and holds light steps to one a frame pair for 2 s */
+  const judge = (st, cpuMs, frameMs, limit) => {
     warmRunning = null;
+    const worst = frameMs ? Math.max.apply(null, frameMs) : 0, late = worst > LATE_MS;
     if (!late) {
-      logStep(st, cpuMs, frameMs, false, frameMs ? 'ran' : 'unjudged');
+      const slow = worst > limit;
+      logStep(st, cpuMs, frameMs, false, !frameMs ? 'unjudged' : slow ? 'slow' : 'ran');
       if (!frameMs) return false;
+      if (slow) warmLateAt = performance.now();
       warmLateRun = 0;
       if (++warmClean >= 3) { warmBackoff = 0; warmClean = 0; }
       return false;
@@ -146350,7 +146358,6 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
     warmLateCount++; warmLateRun++; warmClean = 0;
     warmBackoff = warmBackoff ? Math.min(8000, warmBackoff * 2) : 1000;
     warmUntil = performance.now() + warmBackoff;
-    const worst = Math.max.apply(null, frameMs);
     st.lates = (st.lates || 0) + 1;
     if (st.lates >= 2) { logStep(st, cpuMs, frameMs, true, 'dropped'); dropped(st); tell(st, worst, true); }
     else if (st.cancelled || tell(st, worst, false)) logStep(st, cpuMs, frameMs, true, 'late-handled');
