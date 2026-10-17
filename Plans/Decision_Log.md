@@ -16759,9 +16759,8 @@ canonical_text: >-
   more-contrast requests, and the proposed reading is withdrawn (F3-652). The focus rule for a surface drawn
   unseen (ACD-475) was put to Jared as the coordinator's default and drew no objection; it stands as that default,
   not as his words. The writer chose, and these are not Jared's words: the tour contracts' 40 percent floor for
-  about half; App font losing its restart badge with the restart rule; numbering the later of two saved layouts
-  that share a name when they are gathered; and save_named leaving the v2 record's revision unchanged while
-  keeping its receipt and event.
+  about half; App font losing its restart badge with the restart rule; and numbering the later of two saved
+  layouts that share a name when they are gathered.
 gui_related: true
 gui_classification_reason: Jared's Answers To The Week's Open Questions.
 split_recommended: false

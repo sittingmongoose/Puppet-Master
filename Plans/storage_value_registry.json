@@ -30993,7 +30993,7 @@
       ],
       "optional_fields": [],
       "nullable_fields": [],
-      "replay_behavior": "One record per person, shown in Home's Layouts menu in every project. Each saved named layout is home_workspace_layout_v2's named_layout: its name, its slot tree with sizes, the kinds and tabs each slot holds and their locks and collapse, and the boards of its dashboard tabs (each board's envelope, which names its project, or boards_skipped_bytes past 64 KB). Applying it in another project applies the layout and skips the boards that belong to a different project.",
+      "replay_behavior": "One record per person, shown in Home's Layouts menu in every project. Each saved named layout is home_workspace_layout_v2's named_layout: its name, its slot tree with sizes, the kinds and tabs each slot holds and their locks and collapse, the boards of its dashboard tabs (each board's envelope or null, or boards_skipped_bytes past 64 KB), and the project it was saved in. Applying it in another project applies the layout and skips its boards, a null board included.",
       "migration": "New family (DL-230). On the first read, the named layouts held by every project's home_workspace_layout.v2 records are copied in once; when two share a name both are kept, the later one numbered, and none is dropped. The v2 records keep their old named_layouts read-only and no longer write them.",
       "retention_compaction": "RP-CONFIG-CURRENT; a saved layout lasts until the person deletes it.",
       "retention_policy_ref": "RP-CONFIG-CURRENT",

@@ -23777,9 +23777,8 @@ canonical_text: >-
   production entry tour.layout_restore declares this event. A project switch loads that project's own record
   and appends nothing.
   Amended 2026-10-17 (DL-230, Jared): saved named layouts belong to the person in home_named_layouts:v1
-  (SP-330), so cmd.workspace_layout.save_named leaves the v2 record unchanged; it still appends its one
-  named_layout_saved, after the per-person record is read back, with prior_layout_revision and
-  new_layout_revision both the v2 record's current revision.
+  (SP-330); cmd.workspace_layout.save_named writes the layout there and, as before, advances the v2 record's
+  revision by one with its receipt and its one named_layout_saved, appended after both records are read back.
 gui_related: true
 gui_classification_reason: The event is how every visible layout change is recorded, replayed and audited.
 split_recommended: false
