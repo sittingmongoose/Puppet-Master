@@ -435,12 +435,11 @@
 
   /* A case style's first showing compiled the GPU programs it draws with (the shadow-blurred rounded frames, the
      strokes, the reflection's blurs) in the frames after the click (part2's F3.1 trace on the P1000: Monitor linked 14
-     programs, 445 ms, and no new frame came for 567 ms). warm(view): each style is drawn once, at that terminal's size
-     and with its own settings, on a stand-in view in an unseen layer inside the viewport, one style per painted frame,
-     then all of it is removed. Liquid Glass's lg-warm recipe: an ancestor at opacity 0.004 (at 0.001 the alpha rounds
-     to nothing and nothing compiles), only on the GPU tier, never in a hidden tab, while the page is busy (it goes on at
-     'pm-idle') or within 600 ms of any input */
-  var warmedBezel = {}, lastInput = 0, inputWatch = false;
+     programs, 445 ms, and no new frame came for 567 ms). warm(views): each style is drawn once per view's size, with its
+     own settings, on a stand-in view in an unseen layer inside the viewport (Liquid Glass's lg-warm recipe: an ancestor
+     at opacity 0.004; at 0.001 the alpha rounds to nothing and nothing compiles), only on the GPU tier, as steps on the
+     page's idle-warm queue (PM_WARM), which admits them and backs off by the frames presented after each */
+  var warmedBezel = {};
   function gpuTier() {
     var tier = document.documentElement.getAttribute('data-lg-tier');
     if (tier) return tier === 'gpu';
@@ -449,10 +448,6 @@
   Bezel.warm = function (views) {
     views = [].concat(views || []).filter(function (view) { return view && view.root && view.root.isConnected; });
     if (!views.length || !T.Appearance || !gpuTier()) return;
-    if (!inputWatch) {
-      inputWatch = true;
-      ['pointerdown', 'keydown', 'wheel'].forEach(function (t) { window.addEventListener(t, function () { lastInput = T.util.now(); }, { capture: true, passive: true }); });
-    }
     /* each view at its own size: a terminal and the Customize screen's preview of it draw the same case at different
        sizes, and picking Monitor draws both (part2's F4 trace: with only the terminal's size warmed, a canvas stroke and
        rounded-rectangle program still linked at the click, 87-90 ms) */
@@ -469,48 +464,31 @@
         todo.push({ view: view, ap: ap, w: w, h: h, dpr: dpr });
       });
     });
-    if (!todo.length) return;
-    var host = null, bz = null;
-    function done() { if (bz) bz.dispose(); if (host) host.remove(); host = bz = null; }
-    function ready() {
-      if (document.hidden) return false;
-      try { if (typeof window.PM_BUSY === 'function' && window.PM_BUSY()) return false; } catch (e) {}
-      return T.util.now() - lastInput >= 600;
-    }
-    function step() {
-      if (!todo.length) { done(); return; }
-      if (!todo[0].view.root.isConnected) { todo.shift(); idle(step); return; }
-      if (!ready()) { setTimeout(function () { idle(step); }, 400); return; }
-      /* and only after two frames that came on time, as the Customize screen's raster warm waits (review RW-4) */
-      requestAnimationFrame(function (t1) { requestAnimationFrame(function (t2) {
-        if (!todo.length) { done(); return; }
-        if (t2 - t1 > 25 || !ready()) { setTimeout(function () { idle(step); }, 400); return; }
-        draw();
-      }); });
-    }
-    function draw() {
-      var it = todo.shift(), view = it.view, ap = it.ap, b = ap.bezel, w = it.w, h = it.h, inset = (b.width || 0) + (b.gap || 0);
-      /* one unseen layer per size: a new one for each view's own size */
-      if (!host || host._w !== w || host._h !== h) {
-        done();
-        host = document.createElement('div');
-        host.setAttribute('aria-hidden', 'true'); host.inert = true; host._w = w; host._h = h;
-        host.style.cssText = 'position:fixed;left:0;top:0;width:' + w + 'px;height:' + h + 'px;opacity:.004;will-change:opacity;pointer-events:none;z-index:2147483000;contain:strict';
-        document.body.appendChild(host);
-        bz = new Bezel({ root: document.createElement('div'), canvas: view.canvas, visible: true, fx: null, renderer: null });
-        bz.el.style.cssText = 'position:absolute;inset:0';
-        bz.housing.style.cssText = 'position:absolute;left:0;top:0;width:100%;height:100%;display:block';
-        host.appendChild(bz.el);
-      }
-      bz.view.canvas = view.canvas;
-      bz.configure(b, ap);
-      bz.g = { w: w, h: h, gx: inset, gy: inset, gw: Math.max(20, w - inset * 2), gh: Math.max(20, h - inset * 2), dpr: it.dpr };
-      try { bz._paint(); } catch (e) { done(); return; }
-      /* kept for one painted frame, then the next style at the next idle moment */
-      requestAnimationFrame(function () { requestAnimationFrame(function () { if (todo.length) idle(step); else done(); }); });
-    }
-    function idle(fn) { if (window.requestIdleCallback) requestIdleCallback(fn, { timeout: 4000 }); else setTimeout(fn, 200); }
-    idle(step);
+    if (!todo.length || !window.PM_WARM) return;
+    /* each style at each size is two steps on the page's idle-warm queue (PM_WARM; the lead's IDLE-WARM-RULE.md), so a
+       step compiles few programs (part2's F5b cold P1000 trace: a whole case in one frame froze idle Home 300-450 ms):
+       the case with no reflection, then the whole case with its reflection and masks. Each step draws in its own unseen
+       layer and the queue removes it in the frame after (the step's cleanup) */
+    todo.forEach(function (it) {
+      ['case', 'light'].forEach(function (part) {
+        window.PM_WARM.add({ owner: 'terminal', name: 'bezel:' + it.ap.bezel.style + ':' + part + '@' + it.w + 'x' + it.h, run: function () {
+          if (!it.view.root.isConnected) return null;
+          var b = it.ap.bezel, w = it.w, h = it.h, inset = (b.width || 0) + (b.gap || 0);
+          var host = document.createElement('div');
+          host.setAttribute('aria-hidden', 'true'); host.inert = true;
+          host.style.cssText = 'position:fixed;left:0;top:0;width:' + w + 'px;height:' + h + 'px;opacity:.004;will-change:opacity;pointer-events:none;z-index:2147483000;contain:strict';
+          var bz = new Bezel({ root: document.createElement('div'), canvas: it.view.canvas, visible: true, fx: null, renderer: null });
+          bz.el.style.cssText = 'position:absolute;inset:0';
+          bz.housing.style.cssText = 'position:absolute;left:0;top:0;width:100%;height:100%;display:block';
+          host.appendChild(bz.el); document.body.appendChild(host);
+          bz.configure(b, it.ap);
+          if (part === 'case') bz.spec.strength = 0;
+          bz.g = { w: w, h: h, gx: inset, gy: inset, gw: Math.max(20, w - inset * 2), gh: Math.max(20, h - inset * 2), dpr: it.dpr };
+          try { bz._paint(); } catch (e) { /* drawn as far as it went */ }
+          return function () { bz.dispose(); host.remove(); };
+        } });
+      });
+    });
   };
   T.Bezel = Bezel;
   T.Bezel.MATERIALS = Object.keys(MATERIALS);

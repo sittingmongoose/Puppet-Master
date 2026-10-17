@@ -139,4 +139,143 @@
     const watchBody = () => { if (document.body) seen.observe(document.body, { childList: true }); };
     if (document.body) watchBody(); else document.addEventListener('DOMContentLoaded', watchBody, { once: true });
   } catch (_) { /* calls still arm it */ }
+
+  /* PM_WARM: the one page-wide queue for idle warm drawing (the lead's IDLE-WARM-RULE.md, 2026-10-17). A lane hands it
+     small steps that draw something unseen so the GPU compiles its programs, or rasters a surface, before first use;
+     the queue runs one step per idle period across all lanes. On a cold P1000 a step that is small on the main thread
+     still blocked the compositor for 100-1,000 ms when it made the GPU compile several programs (part2's F5b idle
+     trace), so each step is admitted only when the page is still and is judged by the frames presented after it:
+       admission: PM_BUSY() empty, no input for 600 ms, the page visible, no finite animation or transition running
+         (ambient infinite loops excepted), no input pending, and any back-off run out;
+       after a step: the next two rAF intervals; late is over max(40 ms, 3x the median refresh). A late step is told to
+         its owner (onLate); unless the owner handles it (onLate returns true) it goes to the end of its owner's line
+         once, and a step late twice is dropped. Back-off starts at 1 s and doubles to 8 s; 3 clean steps reset it.
+         3 late steps in a row stop the queue until the next 'pm-idle' or 30 s.
+       fairness: near steps first, then round-robin across owners, FIFO within an owner.
+       off: ?pm-warm=0, and the no-GPU profile (O55.motion.softwareRendered()).
+     add({ owner, name, run, near, onLate }) -> id. run() draws one kind, synchronously; it may return a function that
+     the queue calls in the first frame after the step's frame (to hide what it showed). cancel(id), cancelOwner(owner),
+     state(owner?), window.__pmWarmLog (the last 200 steps), and 'pm-warm-done' on window when the queue empties */
+  const warmOff = (() => { try { return /(?:^|[?&])pm-warm=0(?:&|$)/.test(location.search); } catch (_) { return false; } })();
+  /* ?pm-warm=force runs it on the no-GPU profile too, for checks on a software-rendered machine */
+  const warmForce = (() => { try { return /(?:^|[?&])pm-warm=force(?:&|$)/.test(location.search); } catch (_) { return false; } })();
+  let warmSoft = warmForce ? false : null;
+  const isSoft = () => {
+    if (warmSoft === null) { try { const M = window.O55 && window.O55.motion; warmSoft = !!(M && typeof M.softwareRendered === 'function' && M.softwareRendered()); } catch (_) { warmSoft = false; } }
+    return warmSoft;
+  };
+  const warmQ = [], warmLog = window.__pmWarmLog = [], warmDropped = [];
+  let warmSeq = 0, warmLastOwner = '', warmTimer = 0, warmRunning = null, warmBackoff = 0, warmUntil = 0, warmClean = 0, warmLateRun = 0,
+    warmStopped = false, warmStopTimer = 0, warmLateCount = 0, warmInput = 0;
+  const intervals = [];
+  ['pointermove', 'pointerdown', 'keydown', 'wheel', 'touchstart'].forEach((t) => window.addEventListener(t, () => { warmInput = performance.now(); }, { capture: true, passive: true }));
+  const refresh = () => {
+    if (intervals.length < 5) return 16.7;
+    const s = intervals.slice().sort((a, b) => a - b);
+    return s[Math.floor(s.length / 2)];
+  };
+  const animating = () => {
+    try {
+      const all = document.getAnimations ? document.getAnimations() : [];
+      for (let i = 0; i < all.length; i++) {
+        const a = all[i];
+        if (a.playState !== 'running') continue;
+        const t = a.effect && a.effect.getTiming ? a.effect.getTiming() : null;
+        if (t && t.iterations !== Infinity) return true;
+      }
+    } catch (_) { /* none */ }
+    return false;
+  };
+  const admit = () => {
+    if (document.hidden || window.PM_BUSY()) return false;
+    if (performance.now() - warmInput < 600 || performance.now() < warmUntil) return false;
+    try { if (navigator.scheduling && navigator.scheduling.isInputPending && navigator.scheduling.isInputPending()) return false; } catch (_) { /* none */ }
+    return !animating();
+  };
+  const pick = () => {
+    for (let i = 0; i < warmQ.length; i++) if (warmQ[i].near) return i;
+    const owners = [];
+    warmQ.forEach((st) => { if (owners.indexOf(st.owner) < 0) owners.push(st.owner); });
+    if (!owners.length) return -1;
+    const next = owners[(owners.indexOf(warmLastOwner) + 1) % owners.length] || owners[0];
+    for (let i = 0; i < warmQ.length; i++) if (warmQ[i].owner === next) return i;
+    return 0;
+  };
+  const logStep = (st, cpuMs, frameMs, late, outcome) => {
+    warmLog.push({ owner: st.owner, name: st.name, t: Math.round(performance.now()), cpuMs: Math.round(cpuMs * 10) / 10, frameMs: frameMs, late: late, outcome: outcome });
+    if (warmLog.length > 200) warmLog.shift();
+  };
+  const schedule = (ms) => {
+    if (warmTimer || warmRunning || warmStopped || warmOff || !warmQ.length) return;
+    warmTimer = setTimeout(() => {
+      warmTimer = 0;
+      const go = () => { if (!warmRunning) step(); };
+      if (window.requestIdleCallback) requestIdleCallback((d) => { if (d && !d.didTimeout && d.timeRemaining() < 8) { schedule(100); return; } go(); }, { timeout: 2000 });
+      else go();
+    }, Math.max(0, ms || 0));
+  };
+  const step = () => {
+    if (warmStopped || !warmQ.length) return;
+    if (!admit()) { schedule(400); return; }
+    /* the last frames before it on time too: one interval measured right before the step */
+    requestAnimationFrame((t0) => requestAnimationFrame((t1) => {
+      intervals.push(t1 - t0); if (intervals.length > 30) intervals.shift();
+      const limit = Math.max(40, 3 * refresh());
+      if (t1 - t0 > limit || !admit()) { schedule(400); return; }
+      const i = pick(); if (i < 0) return;
+      const st = warmQ.splice(i, 1)[0];
+      warmRunning = st; warmLastOwner = st.owner;
+      let cleanup = null, c0 = performance.now();
+      try { cleanup = st.run(); } catch (e) { try { console.error('[PM_WARM] ' + st.owner + ':' + st.name, e); } catch (_) { /* none */ } }
+      const cpu = performance.now() - c0;
+      requestAnimationFrame((a) => {
+        if (typeof cleanup === 'function') { try { cleanup(); } catch (_) { /* none */ } }
+        requestAnimationFrame((b) => requestAnimationFrame((c) => {
+          const d1 = Math.round(b - a), d2 = Math.round(c - b), late = Math.max(d1, d2) > limit;
+          warmRunning = null;
+          if (late) {
+            warmLateCount++; warmLateRun++; warmClean = 0;
+            warmBackoff = warmBackoff ? Math.min(8000, warmBackoff * 2) : 1000;
+            warmUntil = performance.now() + warmBackoff;
+            let handled = false;
+            if (typeof st.onLate === 'function') { try { handled = st.onLate(st) === true; } catch (_) { /* none */ } }
+            if (!handled) {
+              st.lates = (st.lates || 0) + 1;
+              if (st.lates >= 2) { warmDropped.push(st.owner + ':' + st.name); logStep(st, cpu, [d1, d2], true, 'dropped'); }
+              else { warmQ.push(st); logStep(st, cpu, [d1, d2], true, 'late'); }
+            } else logStep(st, cpu, [d1, d2], true, 'late-handled');
+            if (warmLateRun >= 3) {
+              warmStopped = true;
+              const resume = () => { if (!warmStopped) return; warmStopped = false; warmLateRun = 0; clearTimeout(warmStopTimer); window.removeEventListener('pm-idle', resume); schedule(0); };
+              window.addEventListener('pm-idle', resume);
+              warmStopTimer = setTimeout(resume, 30000);
+              return;
+            }
+          } else {
+            logStep(st, cpu, [d1, d2], false, 'ran');
+            warmLateRun = 0;
+            if (++warmClean >= 3) { warmBackoff = 0; warmClean = 0; }
+          }
+          if (!warmQ.length) { try { window.dispatchEvent(new Event('pm-warm-done')); } catch (_) { /* none */ } return; }
+          schedule(warmBackoff ? Math.max(0, warmUntil - performance.now()) : 0);
+        }));
+      });
+    }));
+  };
+  window.PM_WARM = {
+    add(o) {
+      if (!o || typeof o.run !== 'function') return 0;
+      const st = { id: ++warmSeq, owner: String(o.owner || 'page'), name: String(o.name || 'step'), run: o.run, near: !!o.near, onLate: o.onLate };
+      if (warmOff || isSoft()) { logStep(st, 0, [0, 0], false, 'skipped'); return st.id; }
+      warmQ.push(st); schedule(0);
+      return st.id;
+    },
+    cancel(id) { for (let i = warmQ.length - 1; i >= 0; i--) if (warmQ[i].id === id) warmQ.splice(i, 1); },
+    cancelOwner(owner) { for (let i = warmQ.length - 1; i >= 0; i--) if (warmQ[i].owner === owner) warmQ.splice(i, 1); },
+    state(owner) {
+      const mine = (st) => !owner || st.owner === owner;
+      return { queued: warmQ.filter(mine).length, running: warmRunning && mine(warmRunning) ? warmRunning.owner + ':' + warmRunning.name : null, backoffMs: warmBackoff,
+        stopped: warmStopped, off: warmOff || !!warmSoft, dropped: warmDropped.filter((d) => !owner || d.indexOf(owner + ':') === 0), lateCount: warmLateCount };
+    }
+  };
 })();

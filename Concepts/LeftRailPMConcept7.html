@@ -50738,6 +50738,10 @@ html[data-o55-nier="on"] .pmt-cz .pmt-cz-dock { box-shadow: 0 3px 10px rgba(var(
 /* drawn once at idle, unseen, so its GPU programs and tiles exist before the first click (77-customize.js rasterSoon) */
 .pmt-cz.pmt-cz-parked.pmt-cz-rasterwarm { clip-path: none; opacity: .004; }
 .pmt-cz.pmt-cz-parked.pmt-cz-rasterwarm > :not(.pmt-cz-dialog), .pmt-cz.pmt-cz-parked.pmt-cz-rasterwarm .pmt-cz-dialog > * { visibility: visible; }
+/* one part per step (PM_WARM): the top with every group hidden, or one group with the top and the other groups hidden */
+.pmt-cz.pmt-cz-parked.pmt-cz-rasterwarm[data-rw="top"] .pmt-cz-group,
+.pmt-cz.pmt-cz-parked.pmt-cz-rasterwarm[data-rw="group"] .pmt-cz-top,
+.pmt-cz.pmt-cz-parked.pmt-cz-rasterwarm[data-rw="group"] .pmt-cz-group:not([data-rw-on]) { visibility: hidden; }
 .pmt-cz.pmt-out .pmt-cz-scrim > i, .pmt-cz.pmt-out .pmt-cz-frame { animation: pmt-m-fade-out var(--pmt-t-out, 100ms) linear both; }
 .pmt-cz.pmt-out .pmt-cz-dialog { transform-origin: 50% 0; animation: var(--pmt-a-pop-out, pmt-m-fade-out) var(--pmt-t-out, 100ms) var(--pmt-ease-exit, linear) both; }
 .pmt-cz-body.pmt-rescope { animation: var(--pmt-a-rescope, pmt-m-dim-in) calc(var(--pmt-t-swap, 120ms) * 1.1) var(--pmt-ease-fade, linear) both; }
@@ -145914,6 +145918,145 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
     const watchBody = () => { if (document.body) seen.observe(document.body, { childList: true }); };
     if (document.body) watchBody(); else document.addEventListener('DOMContentLoaded', watchBody, { once: true });
   } catch (_) { /* calls still arm it */ }
+
+  /* PM_WARM: the one page-wide queue for idle warm drawing (the lead's IDLE-WARM-RULE.md, 2026-10-17). A lane hands it
+     small steps that draw something unseen so the GPU compiles its programs, or rasters a surface, before first use;
+     the queue runs one step per idle period across all lanes. On a cold P1000 a step that is small on the main thread
+     still blocked the compositor for 100-1,000 ms when it made the GPU compile several programs (part2's F5b idle
+     trace), so each step is admitted only when the page is still and is judged by the frames presented after it:
+       admission: PM_BUSY() empty, no input for 600 ms, the page visible, no finite animation or transition running
+         (ambient infinite loops excepted), no input pending, and any back-off run out;
+       after a step: the next two rAF intervals; late is over max(40 ms, 3x the median refresh). A late step is told to
+         its owner (onLate); unless the owner handles it (onLate returns true) it goes to the end of its owner's line
+         once, and a step late twice is dropped. Back-off starts at 1 s and doubles to 8 s; 3 clean steps reset it.
+         3 late steps in a row stop the queue until the next 'pm-idle' or 30 s.
+       fairness: near steps first, then round-robin across owners, FIFO within an owner.
+       off: ?pm-warm=0, and the no-GPU profile (O55.motion.softwareRendered()).
+     add({ owner, name, run, near, onLate }) -> id. run() draws one kind, synchronously; it may return a function that
+     the queue calls in the first frame after the step's frame (to hide what it showed). cancel(id), cancelOwner(owner),
+     state(owner?), window.__pmWarmLog (the last 200 steps), and 'pm-warm-done' on window when the queue empties */
+  const warmOff = (() => { try { return /(?:^|[?&])pm-warm=0(?:&|$)/.test(location.search); } catch (_) { return false; } })();
+  /* ?pm-warm=force runs it on the no-GPU profile too, for checks on a software-rendered machine */
+  const warmForce = (() => { try { return /(?:^|[?&])pm-warm=force(?:&|$)/.test(location.search); } catch (_) { return false; } })();
+  let warmSoft = warmForce ? false : null;
+  const isSoft = () => {
+    if (warmSoft === null) { try { const M = window.O55 && window.O55.motion; warmSoft = !!(M && typeof M.softwareRendered === 'function' && M.softwareRendered()); } catch (_) { warmSoft = false; } }
+    return warmSoft;
+  };
+  const warmQ = [], warmLog = window.__pmWarmLog = [], warmDropped = [];
+  let warmSeq = 0, warmLastOwner = '', warmTimer = 0, warmRunning = null, warmBackoff = 0, warmUntil = 0, warmClean = 0, warmLateRun = 0,
+    warmStopped = false, warmStopTimer = 0, warmLateCount = 0, warmInput = 0;
+  const intervals = [];
+  ['pointermove', 'pointerdown', 'keydown', 'wheel', 'touchstart'].forEach((t) => window.addEventListener(t, () => { warmInput = performance.now(); }, { capture: true, passive: true }));
+  const refresh = () => {
+    if (intervals.length < 5) return 16.7;
+    const s = intervals.slice().sort((a, b) => a - b);
+    return s[Math.floor(s.length / 2)];
+  };
+  const animating = () => {
+    try {
+      const all = document.getAnimations ? document.getAnimations() : [];
+      for (let i = 0; i < all.length; i++) {
+        const a = all[i];
+        if (a.playState !== 'running') continue;
+        const t = a.effect && a.effect.getTiming ? a.effect.getTiming() : null;
+        if (t && t.iterations !== Infinity) return true;
+      }
+    } catch (_) { /* none */ }
+    return false;
+  };
+  const admit = () => {
+    if (document.hidden || window.PM_BUSY()) return false;
+    if (performance.now() - warmInput < 600 || performance.now() < warmUntil) return false;
+    try { if (navigator.scheduling && navigator.scheduling.isInputPending && navigator.scheduling.isInputPending()) return false; } catch (_) { /* none */ }
+    return !animating();
+  };
+  const pick = () => {
+    for (let i = 0; i < warmQ.length; i++) if (warmQ[i].near) return i;
+    const owners = [];
+    warmQ.forEach((st) => { if (owners.indexOf(st.owner) < 0) owners.push(st.owner); });
+    if (!owners.length) return -1;
+    const next = owners[(owners.indexOf(warmLastOwner) + 1) % owners.length] || owners[0];
+    for (let i = 0; i < warmQ.length; i++) if (warmQ[i].owner === next) return i;
+    return 0;
+  };
+  const logStep = (st, cpuMs, frameMs, late, outcome) => {
+    warmLog.push({ owner: st.owner, name: st.name, t: Math.round(performance.now()), cpuMs: Math.round(cpuMs * 10) / 10, frameMs: frameMs, late: late, outcome: outcome });
+    if (warmLog.length > 200) warmLog.shift();
+  };
+  const schedule = (ms) => {
+    if (warmTimer || warmRunning || warmStopped || warmOff || !warmQ.length) return;
+    warmTimer = setTimeout(() => {
+      warmTimer = 0;
+      const go = () => { if (!warmRunning) step(); };
+      if (window.requestIdleCallback) requestIdleCallback((d) => { if (d && !d.didTimeout && d.timeRemaining() < 8) { schedule(100); return; } go(); }, { timeout: 2000 });
+      else go();
+    }, Math.max(0, ms || 0));
+  };
+  const step = () => {
+    if (warmStopped || !warmQ.length) return;
+    if (!admit()) { schedule(400); return; }
+    /* the last frames before it on time too: one interval measured right before the step */
+    requestAnimationFrame((t0) => requestAnimationFrame((t1) => {
+      intervals.push(t1 - t0); if (intervals.length > 30) intervals.shift();
+      const limit = Math.max(40, 3 * refresh());
+      if (t1 - t0 > limit || !admit()) { schedule(400); return; }
+      const i = pick(); if (i < 0) return;
+      const st = warmQ.splice(i, 1)[0];
+      warmRunning = st; warmLastOwner = st.owner;
+      let cleanup = null, c0 = performance.now();
+      try { cleanup = st.run(); } catch (e) { try { console.error('[PM_WARM] ' + st.owner + ':' + st.name, e); } catch (_) { /* none */ } }
+      const cpu = performance.now() - c0;
+      requestAnimationFrame((a) => {
+        if (typeof cleanup === 'function') { try { cleanup(); } catch (_) { /* none */ } }
+        requestAnimationFrame((b) => requestAnimationFrame((c) => {
+          const d1 = Math.round(b - a), d2 = Math.round(c - b), late = Math.max(d1, d2) > limit;
+          warmRunning = null;
+          if (late) {
+            warmLateCount++; warmLateRun++; warmClean = 0;
+            warmBackoff = warmBackoff ? Math.min(8000, warmBackoff * 2) : 1000;
+            warmUntil = performance.now() + warmBackoff;
+            let handled = false;
+            if (typeof st.onLate === 'function') { try { handled = st.onLate(st) === true; } catch (_) { /* none */ } }
+            if (!handled) {
+              st.lates = (st.lates || 0) + 1;
+              if (st.lates >= 2) { warmDropped.push(st.owner + ':' + st.name); logStep(st, cpu, [d1, d2], true, 'dropped'); }
+              else { warmQ.push(st); logStep(st, cpu, [d1, d2], true, 'late'); }
+            } else logStep(st, cpu, [d1, d2], true, 'late-handled');
+            if (warmLateRun >= 3) {
+              warmStopped = true;
+              const resume = () => { if (!warmStopped) return; warmStopped = false; warmLateRun = 0; clearTimeout(warmStopTimer); window.removeEventListener('pm-idle', resume); schedule(0); };
+              window.addEventListener('pm-idle', resume);
+              warmStopTimer = setTimeout(resume, 30000);
+              return;
+            }
+          } else {
+            logStep(st, cpu, [d1, d2], false, 'ran');
+            warmLateRun = 0;
+            if (++warmClean >= 3) { warmBackoff = 0; warmClean = 0; }
+          }
+          if (!warmQ.length) { try { window.dispatchEvent(new Event('pm-warm-done')); } catch (_) { /* none */ } return; }
+          schedule(warmBackoff ? Math.max(0, warmUntil - performance.now()) : 0);
+        }));
+      });
+    }));
+  };
+  window.PM_WARM = {
+    add(o) {
+      if (!o || typeof o.run !== 'function') return 0;
+      const st = { id: ++warmSeq, owner: String(o.owner || 'page'), name: String(o.name || 'step'), run: o.run, near: !!o.near, onLate: o.onLate };
+      if (warmOff || isSoft()) { logStep(st, 0, [0, 0], false, 'skipped'); return st.id; }
+      warmQ.push(st); schedule(0);
+      return st.id;
+    },
+    cancel(id) { for (let i = warmQ.length - 1; i >= 0; i--) if (warmQ[i].id === id) warmQ.splice(i, 1); },
+    cancelOwner(owner) { for (let i = warmQ.length - 1; i >= 0; i--) if (warmQ[i].owner === owner) warmQ.splice(i, 1); },
+    state(owner) {
+      const mine = (st) => !owner || st.owner === owner;
+      return { queued: warmQ.filter(mine).length, running: warmRunning && mine(warmRunning) ? warmRunning.owner + ':' + warmRunning.name : null, backoffMs: warmBackoff,
+        stopped: warmStopped, off: warmOff || !!warmSoft, dropped: warmDropped.filter((d) => !owner || d.indexOf(owner + ':') === 0), lateCount: warmLateCount };
+    }
+  };
 })();
 
 /* ---- js/12-theme-transition.js ---- */
@@ -229189,12 +229332,11 @@ var T = {};
 
   /* A case style's first showing compiled the GPU programs it draws with (the shadow-blurred rounded frames, the
      strokes, the reflection's blurs) in the frames after the click (part2's F3.1 trace on the P1000: Monitor linked 14
-     programs, 445 ms, and no new frame came for 567 ms). warm(view): each style is drawn once, at that terminal's size
-     and with its own settings, on a stand-in view in an unseen layer inside the viewport, one style per painted frame,
-     then all of it is removed. Liquid Glass's lg-warm recipe: an ancestor at opacity 0.004 (at 0.001 the alpha rounds
-     to nothing and nothing compiles), only on the GPU tier, never in a hidden tab, while the page is busy (it goes on at
-     'pm-idle') or within 600 ms of any input */
-  var warmedBezel = {}, lastInput = 0, inputWatch = false;
+     programs, 445 ms, and no new frame came for 567 ms). warm(views): each style is drawn once per view's size, with its
+     own settings, on a stand-in view in an unseen layer inside the viewport (Liquid Glass's lg-warm recipe: an ancestor
+     at opacity 0.004; at 0.001 the alpha rounds to nothing and nothing compiles), only on the GPU tier, as steps on the
+     page's idle-warm queue (PM_WARM), which admits them and backs off by the frames presented after each */
+  var warmedBezel = {};
   function gpuTier() {
     var tier = document.documentElement.getAttribute('data-lg-tier');
     if (tier) return tier === 'gpu';
@@ -229203,10 +229345,6 @@ var T = {};
   Bezel.warm = function (views) {
     views = [].concat(views || []).filter(function (view) { return view && view.root && view.root.isConnected; });
     if (!views.length || !T.Appearance || !gpuTier()) return;
-    if (!inputWatch) {
-      inputWatch = true;
-      ['pointerdown', 'keydown', 'wheel'].forEach(function (t) { window.addEventListener(t, function () { lastInput = T.util.now(); }, { capture: true, passive: true }); });
-    }
     /* each view at its own size: a terminal and the Customize screen's preview of it draw the same case at different
        sizes, and picking Monitor draws both (part2's F4 trace: with only the terminal's size warmed, a canvas stroke and
        rounded-rectangle program still linked at the click, 87-90 ms) */
@@ -229223,48 +229361,31 @@ var T = {};
         todo.push({ view: view, ap: ap, w: w, h: h, dpr: dpr });
       });
     });
-    if (!todo.length) return;
-    var host = null, bz = null;
-    function done() { if (bz) bz.dispose(); if (host) host.remove(); host = bz = null; }
-    function ready() {
-      if (document.hidden) return false;
-      try { if (typeof window.PM_BUSY === 'function' && window.PM_BUSY()) return false; } catch (e) {}
-      return T.util.now() - lastInput >= 600;
-    }
-    function step() {
-      if (!todo.length) { done(); return; }
-      if (!todo[0].view.root.isConnected) { todo.shift(); idle(step); return; }
-      if (!ready()) { setTimeout(function () { idle(step); }, 400); return; }
-      /* and only after two frames that came on time, as the Customize screen's raster warm waits (review RW-4) */
-      requestAnimationFrame(function (t1) { requestAnimationFrame(function (t2) {
-        if (!todo.length) { done(); return; }
-        if (t2 - t1 > 25 || !ready()) { setTimeout(function () { idle(step); }, 400); return; }
-        draw();
-      }); });
-    }
-    function draw() {
-      var it = todo.shift(), view = it.view, ap = it.ap, b = ap.bezel, w = it.w, h = it.h, inset = (b.width || 0) + (b.gap || 0);
-      /* one unseen layer per size: a new one for each view's own size */
-      if (!host || host._w !== w || host._h !== h) {
-        done();
-        host = document.createElement('div');
-        host.setAttribute('aria-hidden', 'true'); host.inert = true; host._w = w; host._h = h;
-        host.style.cssText = 'position:fixed;left:0;top:0;width:' + w + 'px;height:' + h + 'px;opacity:.004;will-change:opacity;pointer-events:none;z-index:2147483000;contain:strict';
-        document.body.appendChild(host);
-        bz = new Bezel({ root: document.createElement('div'), canvas: view.canvas, visible: true, fx: null, renderer: null });
-        bz.el.style.cssText = 'position:absolute;inset:0';
-        bz.housing.style.cssText = 'position:absolute;left:0;top:0;width:100%;height:100%;display:block';
-        host.appendChild(bz.el);
-      }
-      bz.view.canvas = view.canvas;
-      bz.configure(b, ap);
-      bz.g = { w: w, h: h, gx: inset, gy: inset, gw: Math.max(20, w - inset * 2), gh: Math.max(20, h - inset * 2), dpr: it.dpr };
-      try { bz._paint(); } catch (e) { done(); return; }
-      /* kept for one painted frame, then the next style at the next idle moment */
-      requestAnimationFrame(function () { requestAnimationFrame(function () { if (todo.length) idle(step); else done(); }); });
-    }
-    function idle(fn) { if (window.requestIdleCallback) requestIdleCallback(fn, { timeout: 4000 }); else setTimeout(fn, 200); }
-    idle(step);
+    if (!todo.length || !window.PM_WARM) return;
+    /* each style at each size is two steps on the page's idle-warm queue (PM_WARM; the lead's IDLE-WARM-RULE.md), so a
+       step compiles few programs (part2's F5b cold P1000 trace: a whole case in one frame froze idle Home 300-450 ms):
+       the case with no reflection, then the whole case with its reflection and masks. Each step draws in its own unseen
+       layer and the queue removes it in the frame after (the step's cleanup) */
+    todo.forEach(function (it) {
+      ['case', 'light'].forEach(function (part) {
+        window.PM_WARM.add({ owner: 'terminal', name: 'bezel:' + it.ap.bezel.style + ':' + part + '@' + it.w + 'x' + it.h, run: function () {
+          if (!it.view.root.isConnected) return null;
+          var b = it.ap.bezel, w = it.w, h = it.h, inset = (b.width || 0) + (b.gap || 0);
+          var host = document.createElement('div');
+          host.setAttribute('aria-hidden', 'true'); host.inert = true;
+          host.style.cssText = 'position:fixed;left:0;top:0;width:' + w + 'px;height:' + h + 'px;opacity:.004;will-change:opacity;pointer-events:none;z-index:2147483000;contain:strict';
+          var bz = new Bezel({ root: document.createElement('div'), canvas: it.view.canvas, visible: true, fx: null, renderer: null });
+          bz.el.style.cssText = 'position:absolute;inset:0';
+          bz.housing.style.cssText = 'position:absolute;left:0;top:0;width:100%;height:100%;display:block';
+          host.appendChild(bz.el); document.body.appendChild(host);
+          bz.configure(b, it.ap);
+          if (part === 'case') bz.spec.strength = 0;
+          bz.g = { w: w, h: h, gx: inset, gy: inset, gw: Math.max(20, w - inset * 2), gh: Math.max(20, h - inset * 2), dpr: it.dpr };
+          try { bz._paint(); } catch (e) { /* drawn as far as it went */ }
+          return function () { bz.dispose(); host.remove(); };
+        } });
+      });
+    });
   };
   T.Bezel = Bezel;
   T.Bezel.MATERIALS = Object.keys(MATERIALS);
@@ -230655,10 +230776,6 @@ var T = {};
      again for the next visit. Opened on another terminal it moves there (one is kept); when its terminal goes it is kept
      for the next one. The editor's screen does the same (11-editor-customize.js, .pmed-prepared) */
   var prepared = null, asked = null;
-  /* the person's last input (pointer, key, wheel): unseen warm work waits INPUT_QUIET_MS after it */
-  var INPUT_QUIET_MS = 600, lastInput = 0;
-  ['pointerdown', 'keydown', 'wheel'].forEach(function (t) { window.addEventListener(t, function () { lastInput = T.util.now(); }, { capture: true, passive: true }); });
-  function inputRecent() { return T.util.now() - lastInput < INPUT_QUIET_MS; }
   /* fn runs in the task after the coming frame has painted */
   function afterPaint(fn) { requestAnimationFrame(function () { setTimeout(fn, 0); }); }
   function open(v, opts) {
@@ -231481,7 +231598,7 @@ var T = {};
        470 ms before the screen appeared in Friendly). Once built, and again for each look it has not been drawn in, it
        is drawn at idle for two frames, unseen (opacity 0.004, as the shell warms its theme covers; 0.002 rounds to
        nothing on the P1000), then clipped away again */
-    var rastered = {}, rasterJob = 0, rasterSince = 0, rasterFrames = false, rasterOn = false;
+    var rastered = {}, rasterOn = false;
     /* nothing inside takes the focus while it is drawn: a focus that lands inside is let go at once. inert did the same,
        but setting and clearing it restyled the whole screen twice per warm (review RW-4) */
     function rasterGuard(e) {
@@ -231493,7 +231610,8 @@ var T = {};
     }
     function rasterEnd() {
       if (rasterSample) { rasterSample.remove(); rasterSample = null; }
-      if (rasterOn) { rasterOn = false; root.classList.remove('pmt-cz-rasterwarm'); root.removeEventListener('focusin', rasterGuard, true); }
+      if (rasterEl) { rasterEl.removeAttribute('data-rw-on'); rasterEl = null; }
+      if (rasterOn) { rasterOn = false; root.classList.remove('pmt-cz-rasterwarm'); root.removeAttribute('data-rw'); root.removeEventListener('focusin', rasterGuard, true); }
     }
     /* the background tiles' kinds it has not drawn in this look: their rounded picture, gradient and pattern fills
        linked their GPU programs when a category first showed them (part2's F5a P1000 trace: the Scene tiles, 5 to 7
@@ -231514,51 +231632,51 @@ var T = {};
       if (!sampled[lookKey + '|solid']) out.push({ kind: 'solid', gv: 'theme', name: 'Scheme' });
       return out;
     }
+    /* the steps go on the page's one idle-warm queue (PM_WARM, 11-motion-start.js; the lead's IDLE-WARM-RULE.md): it
+       admits one step per idle period, judges each by the frames presented after it and backs off when one is late
+       (part2's F5b cold P1000 trace: drawing the whole screen in one frame froze idle Home for up to a second). Each
+       step draws one part of the unseen screen: its top, then one group at a time, then one sample tile; the queue
+       hides it again in the frame after (the step's cleanup). Without the queue nothing is warmed */
+    var rasterIds = [];
+    function rasterCancel() {
+      if (window.PM_WARM) rasterIds.forEach(function (id) { window.PM_WARM.cancel(id); });
+      rasterIds = []; rasterEnd();
+    }
+    function rasterShow(part, el) {
+      if (!closed || disposed) return false;
+      rasterEnd();
+      rasterOn = true;
+      root.addEventListener('focusin', rasterGuard, true);
+      root.setAttribute('data-rw', part);
+      if (el) { el.setAttribute('data-rw-on', ''); rasterEl = el; }
+      root.classList.add('pmt-cz-rasterwarm');
+      return true;
+    }
+    var rasterEl = null;
     function rasterSoon() {
-      if (rasterJob || rasterFrames || !closed || disposed) return;
+      if (!closed || disposed || !window.PM_WARM) return;
       var key = (root.getAttribute('data-pmt-look') || '') + '|' + (root.getAttribute('data-pmt-mode') || '');
       if (rastered[key]) return;
-      if (!rasterSince) rasterSince = T.util.now();
-      var run = function (deadline) {
-        rasterJob = 0;
-        if (!closed || disposed || rastered[key]) { rasterSince = 0; return; }
-        /* a really idle moment where there is one; past WARM_LATEST_MS the next idle slice (a page whose own motion never
-           rests gives only short ones), never under a cover or a switch */
-        var late = T.util.now() - rasterSince >= WARM_LATEST_MS;
-        /* never within INPUT_QUIET_MS of the person's own input, backstop or not (review RW-1: on a page that is never
-           idle its ~470 ms of GPU work could land while they type) */
-        if (settling() || inputRecent() || (!late && deadline && typeof deadline.timeRemaining === 'function' && !deadline.didTimeout && deadline.timeRemaining() < WARM_IDLE_MS)) { rasterSoon(); return; }
-        /* and only after two frames that came on time, so it never lands on a frame the page is already late with */
-        rasterFrames = true;
-        requestAnimationFrame(function (t1) { requestAnimationFrame(function (t2) {
-          if (!rasterFrames) return;
-          rasterFrames = false;
-          if (!closed || disposed || rastered[key]) return;
-          if (t2 - t1 > 25 || settling() || inputRecent()) { rasterSoon(); return; }
-          rasterSince = 0; rastered[key] = 1; rasterOn = true;
-          /* its controls must not take the focus for its three frames (review RW-2; rasterGuard) */
-          root.addEventListener('focusin', rasterGuard, true); root.classList.add('pmt-cz-rasterwarm');
-          var samples = sampleTiles(key), host = root.querySelector('[data-gtiles]');
-          var nextSample = function () {
-            if (!rasterOn) return;
-            if (rasterSample) { rasterSample.remove(); rasterSample = null; }
-            /* only while the person stays away and the page is not in a change; what is left waits for the next look */
-            if (!samples.length || !host || inputRecent() || settling()) { rasterEnd(); return; }
-            /* each sample is drawn in its own frame, its picture too (a painted design is a canvas and a PNG; review
-               TF5b-1: built all at once, every one of them ran in the frame the warm began) */
-            var sm = samples.shift(), R = eff(), th = R && R.theme, tmp = document.createElement('div');
-            if (!th) { rasterEnd(); return; }
-            tmp.innerHTML = groundTile(sm.gv, sm.name, th); rasterSample = tmp.firstChild;
-            if (!rasterSample) { nextSample(); return; }
-            rasterSample.setAttribute('aria-hidden', 'true'); rasterSample.tabIndex = -1;
-            host.appendChild(rasterSample);
-            sampled[key + '|' + sm.kind] = 1;
-            requestAnimationFrame(function () { requestAnimationFrame(nextSample); });
-          };
-          requestAnimationFrame(function () { requestAnimationFrame(function () { requestAnimationFrame(nextSample); }); });
-        }); });
-      };
-      rasterJob = window.requestIdleCallback ? requestIdleCallback(run, { timeout: Math.max(1000, WARM_LATEST_MS - (T.util.now() - rasterSince)) }) : setTimeout(run, 300);
+      rastered[key] = 1;
+      var W = window.PM_WARM, add = function (name, run) { rasterIds.push(W.add({ owner: 'terminal', name: 'customize:' + name, run: run })); };
+      add('top', function () { return rasterShow('top') ? rasterEnd : null; });
+      [].forEach.call(root.querySelectorAll('.pmt-cz-group[data-group]'), function (g) {
+        add('group:' + g.getAttribute('data-group'), function () { return rasterShow('group', g) ? rasterEnd : null; });
+      });
+      /* one sample of each background kind, each in its own step, its picture drawn in that step (review TF5b-1) */
+      sampleTiles(key).forEach(function (sm) {
+        add('tile:' + sm.kind, function () {
+          var host = root.querySelector('[data-gtiles]'), grp = host && host.closest('.pmt-cz-group'), R = eff(), th = R && R.theme;
+          if (!host || !th || !rasterShow('group', grp)) return null;
+          var tmp = document.createElement('div');
+          tmp.innerHTML = groundTile(sm.gv, sm.name, th); rasterSample = tmp.firstChild;
+          if (!rasterSample) { rasterEnd(); return null; }
+          rasterSample.setAttribute('aria-hidden', 'true'); rasterSample.tabIndex = -1;
+          host.appendChild(rasterSample);
+          sampled[key + '|' + sm.kind] = 1;
+          return rasterEnd;
+        });
+      });
     }
     function warmCancel() {
       clearTimeout(warmWait); warmWait = 0;
@@ -231691,8 +231809,7 @@ var T = {};
          terminal that went): drawn in the click, the browser would style and lay it out there, holding the menu
          (P2-02, F1A on the P1000) */
       var owed = changed || !!(warmWait || warmJob);
-      if (rasterJob) { if (window.cancelIdleCallback) cancelIdleCallback(rasterJob); clearTimeout(rasterJob); rasterJob = 0; }
-      rasterFrames = false; rasterEnd();
+      rasterCancel();
       parkedWatch(false);
       var showing = ++visit;
       gcat = null; wantDock = false; dockTo(false); body.scrollTop = 0;
