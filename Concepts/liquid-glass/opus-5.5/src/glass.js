@@ -1776,7 +1776,9 @@
     try {
       hiddenLenses.forEach(function (cfg, L) {
         if (!L.strip.isConnected || (cfg.kind === 'lensIcon' && !isGlass())) { hiddenLenses.delete(L); return; }
-        if (stripParked(L.strip) || cvSkipped(L.strip) || !visible(L.strip)) return;
+        if (stripParked(L.strip)) return;
+        if (cvSkipped(L.strip)) { hiddenLenses.delete(L); cvSkip(L.strip); return; }
+        if (!visible(L.strip)) return;
         var t = cfg.pick ? cfg.pick(L.strip) : L.strip.querySelector(cfg.items + (cfg.active || '.active'));
         if (t && visible(t)) { hiddenLenses.delete(L); shown.push([cfg, L.strip]); }
       });
@@ -2432,6 +2434,7 @@
        one by one, each new under-layer changed the page before the next strip's reads (the first NieR Mode on, at the calm
        cover's lift: about 35 forced style and layout passes, 48 ms on Nas1, F2) */
     var park = parkedLenses[switchUnder ? 'under' : 'over']; preSerial++;
+    cvWait.forEach(function (x) { if (!x.isConnected) cvWait.delete(x); });
     todo.forEach(function (t) { var s = t[1], L = lenses.get(s); if ((!L || !L.lens.isConnected) && !park.has(s)) prereadStrip(s); });
     syncStrips(todo);
     if (isGlass()) scanMenus(scopes);
