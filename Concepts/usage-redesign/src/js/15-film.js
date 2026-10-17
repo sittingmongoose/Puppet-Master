@@ -1978,6 +1978,7 @@
     if (warm !== w) return;
     w.parked = true;
     var board = document.getElementById('pmuBoard'), panel = document.getElementById('panel-usage');
+    if (board) Array.prototype.forEach.call(board.querySelectorAll(':scope > [data-pmu-unpark-wait]'), unparkShow);
     if (board && board.parentNode) board.parentNode.setAttribute('data-pmu-warm-wait', '');
     if (panel) panel.removeAttribute('data-pmu-warm');
     warmUnhide();
@@ -2027,8 +2028,10 @@
   var RASTER = (function () { var m = /[?&]pmu-raster=([01])(?:&|#|$)/.exec(location.search); return m ? m[1] : null; })();
   var RASTER_MARKS = /[?&]pmu-raster-marks=1(?:&|#|$)/.test(location.search);
   /* RASTER_CPU: the most ms of a cpu step's work when its idle period gives no deadline; RASTER_WAIT: a queued step not
-     run in this long parks the pass; RASTER_MSAA: the paths that make a layer raster multisampled */
-  var RASTER_ROOMS = ['overview', 'costs', 'accounts'], RASTER_CPU = 6, RASTER_WAIT = 3000, RASTER_MSAA = 6, RASTER_QUIET = 600, RASTER_FIRST = 50;
+     run in this long parks the pass; RASTER_MSAA: the paths that make a layer raster multisampled; RASTER_FIRST: a guard
+     on the level-0 draws (the whole first screen runs at level 0: Overview's took 106-109 draws on the 3090,
+     warmState().raster.running.firstDraws) */
+  var RASTER_ROOMS = ['overview', 'costs', 'accounts'], RASTER_CPU = 6, RASTER_WAIT = 3000, RASTER_MSAA = 6, RASTER_QUIET = 600, RASTER_FIRST = 200;
   /* RASTER_PREFIX: the most painting elements a part's draw adds (?pmu-raster-prefix=N for measurements): 4, since a
      prefix of 8 elements of kinds already drawn still linked 3-7 programs at once in new batches (RTX 3090), more than a
      P1000 draws in 100 ms */
@@ -2160,9 +2163,9 @@
     /* later: 2 (IDLE-WARM-RULE v3.8, 'later' as a level: Glass's lg-warm is 1): every step of the pass runs only when no
        step of a lower level is queued; the arrival does not depend on it (a queue without 'later' ignores the flag) */
     /* the arrival room's first screen (its layer, its hero, then its other cards in the window, rasterRoots) goes first and
-       at level 0 (the lead's ruling, 2026-10-17: at most RASTER_FIRST draws, their cpu plan steps along), so a click
-       from about +20 s on the P1000 finds the first screen's programs linked and the arrival's slices raster only; the
-       rest of the pass stays 'later' at level 2 */
+       at level 0, the whole of it (the lead's ruling, 2026-10-17: every new kind of every card in the window, their cpu
+       plan steps along; RASTER_FIRST only a guard), so a drained warm leaves every first-screen slice pre-linked and the
+       arrival's slices raster only; the rest of the pass stays 'later' at level 2 */
     var first = !!r.cur && r.cur.room === r.w.room && r.firstDraws < RASTER_FIRST && !!(r.cur.roots && r.cur.roots[r.cur.ri] && r.cur.roots[r.cur.ri].first);
     var o = { owner: 'usage', name: (r.cur ? r.cur.room : '') + ':' + (cpu ? need : pk.name), near: false, later: first ? 0 : 2, cpu: cpu, light: !cpu && pk.light,
       until: function () { return rast === r && warm === r.w && !pageShown(); },
@@ -2228,7 +2231,7 @@
     var left = d && typeof d.timeRemaining === 'function' ? d.timeRemaining() - 1 : RASTER_CPU;
     var end = performance.now() + Math.max(2, Math.min(RASTER_CPU, left)), until = function () { return performance.now() < end; };
     rasterLog.cpu[need] = (rasterLog.cpu[need] || 0) + 1;
-    if (need === 'unpark') { if (r.parked) rasterUnpark(r); return; }
+    if (need === 'unpark') { if (r.parked) rasterUnpark(r, until); return; }
     if (need === 'build') { rasterBuild(r, d); return; }
     if (need === 'plan') {
       var cur = r.cur, rt = cur && cur.roots ? cur.roots[cur.ri] : null, panel = document.getElementById('panel-usage');
@@ -2285,7 +2288,8 @@
   /* the page parks as it would after a pass (display: none, the panel as it was); a spare room built and not drawn is
      torn down and built again at the resume */
   function rasterPark(r) {
-    if (r.parked) return;
+    if (r.parked && !r.unpark) return;
+    r.unpark = null;
     rasterQuiet(r);
     if (PMU.board && PMU.board.rasterClear) PMU.board.rasterClear();
     r.spare = false; r.building = null;
@@ -2294,18 +2298,35 @@
     r.parked = true;
     rasterLog.parks = (rasterLog.parks || 0) + 1;
   }
-  /* laid out unseen in the warm box once more (read again: the window may have changed); what that costs is logged
+  /* laid out unseen in the warm box once more (read again: the window may have changed), a few cards a cpu step: the
+     page comes back with its cards display: none, then each step shows cards until its time is used (P2-03 F6b, P1000
+     cold idle: the whole board laid out in one step was one 84-86 ms task); what the resume costs in all is logged
      (rasterLog.resumeMs) */
-  function rasterUnpark(r) {
+  function rasterUnpark(r, until) {
     var panel = document.getElementById('panel-usage');
-    r.parked = false; r.resumes++; r.w.parked = false;
-    if (!panel) return;
-    var t0 = performance.now(), box = warmBox(panel);
-    if (box) r.w.box = box;
-    warmIn(panel, r.w.box);
-    void panel.offsetHeight;
-    (rasterLog.resumeMs = rasterLog.resumeMs || []).push(Math.round(performance.now() - t0));
+    if (!panel) { r.unpark = null; r.parked = false; r.resumes++; r.w.parked = false; return; }
+    var t0 = performance.now(), u = r.unpark;
+    if (!u) {
+      u = r.unpark = { cards: PMU.board && PMU.board.cardsNow ? PMU.board.cardsNow().filter(function (c) { return c.isConnected; }) : [], ms: 0 };
+      u.cards.forEach(unparkWait);
+      var box = warmBox(panel);
+      if (box) r.w.box = box;
+      warmIn(panel, r.w.box);
+      void panel.offsetHeight;
+      u.ms += performance.now() - t0;
+      return;
+    }
+    do {
+      var c = u.cards.shift();
+      if (c && c.isConnected) { unparkShow(c); void panel.offsetHeight; }
+    } while (u.cards.length && until());
+    u.ms += performance.now() - t0;
+    if (u.cards.length) return;
+    r.unpark = null; r.parked = false; r.resumes++; r.w.parked = false;
+    (rasterLog.resumeMs = rasterLog.resumeMs || []).push(Math.round(u.ms));
   }
+  function unparkWait(c) { c.setAttribute('data-pmu-unpark-wait', ''); c.style.display = 'none'; }
+  function unparkShow(c) { if (c.hasAttribute('data-pmu-unpark-wait')) { c.removeAttribute('data-pmu-unpark-wait'); c.style.removeProperty('display'); } }
   /* an element in a draw's label (warmState().raster.steps, ?pmu-raster-marks=1) */
   function rasterName(el) {
     if (!el) return '';
@@ -2512,7 +2533,7 @@
       }
       p.units.push({ self: [it.el], lits: [it.lit], sig: fresh ? [it.sig] : [], unit: true, fresh: fresh, label: fresh ? it.sig : '' });
     }
-    /* a first-screen root (its programs linked early, at level 0, within RASTER_FIRST draws) draws only its new kinds:
+    /* a first-screen root (its programs linked early, at level 0) draws only its new kinds:
        the multisample step, each new kind's parts and the element itself; the elements of kinds already drawn link
        nothing new and wait for the arrival */
     var units = p.freshOnly ? p.units.filter(function (u) { return u.fresh; }) : p.units;
@@ -2525,12 +2546,13 @@
     var cards = rasterCards(kind), roots = [];
     if (kind !== 'board') { cards.forEach(function (c) { roots.push({ t: 'card', el: c }); }); return roots; }
     /* the arrival room: its first screen first (the layer, the hero, the other cards in the window: first, which the
-       pass runs at level 0 up to RASTER_FIRST draws, new kinds only), the dearest first-use links first (the lead's
-       ruling, 2026-10-17): the hero, its chart's kinds leading (rasterPlanFor: the hero's skyplot, some 40 layers of
-       held marks, linked eight programs in one 87-105 ms GPU flush at the arrival on the 3090 cold, logged two slices
-       late against the month card; 48-67 ms once the pass has drawn the chart's 25 steps, from about +25 s, the five
-       path-atlas links left being the arrival's own layers, which no draw of the pass makes), then the other cards
-       the most paths first; then the page chrome, then the cards below the window */
+       pass runs at level 0, new kinds only), the dearest first-use links first (the lead's
+       ruling, 2026-10-17): the hero, its chart's kinds leading (rasterPlanFor: the hero's skyplot linked eight
+       programs in one 87-105 ms GPU flush at the arrival on the 3090 cold, logged two slices late against the month
+       card; 48-67 ms once the pass has drawn the chart's 25 steps, from about +25 s; the six or seven links left, five
+       of them path-atlas kinds, are its feet's provider marks, vector images the pass leaves to the arrival
+       (rasterPlanRun), found by hiding parts at the arrival), then the other cards the most paths first; then the page
+       chrome, then the cards below the window */
     var shown = cards.filter(function (c) { return PMU.boards ? inView(c) : true; }), below = cards.filter(function (c) { return shown.indexOf(c) < 0; });
     var cost = function (c) { return (c.hasAttribute('data-hero') ? 1e6 : 0) + c.querySelectorAll('path, polyline, polygon').length + 0.01 * c.getElementsByTagName('*').length; };
     shown = shown.map(function (c) { return { c: c, k: cost(c) }; }).sort(function (a, b) { return b.k - a.k; }).map(function (x) { return x.c; });
@@ -2772,7 +2794,7 @@
   function rasterState() {
     var r = rast, qs = null;
     if (r) { try { qs = r.q.state('usage'); } catch (error) { qs = null; } }
-    return { running: r ? { rooms: r.rooms.slice(), gate: rasterLog.gate, parked: r.parked, resumes: r.resumes, queued: !!r.queued,
+    return { running: r ? { rooms: r.rooms.slice(), gate: rasterLog.gate, parked: r.parked, resumes: r.resumes, queued: !!r.queued, firstDraws: r.firstDraws,
         step: r.cur ? { room: r.cur.room, root: r.cur.ri, piece: r.cur.pi, spare: r.spare } : null } : null,
       ran: rasterLog.ran || 0, late: rasterLog.late || 0, split: rasterLog.split || 0, moved: rasterLog.moved || 0, dropped: (rasterLog.dropped || []).slice(),
       cpu: Object.assign({}, rasterLog.cpu || {}), queue: qs, rooms: rasterLog.rooms.slice(), at: rasterLog.at, ms: rasterLog.ms, parks: rasterLog.parks || 0, waits: rasterLog.waits || 0,
