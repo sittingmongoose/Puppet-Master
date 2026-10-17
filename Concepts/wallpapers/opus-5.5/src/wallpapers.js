@@ -55,7 +55,7 @@
   /* A selected radio paints before decoding or restyling. Two permanent background layers carry the print fade;
      the cached frost joins when the fade starts. No snapshots or nodes are added to the live sheets on a choice. */
   var paintedChoice = choice(), paintKey = '', paintedUrl = '', paintSerial = 0, commitT = 0, commitFrame = 0;
-  var printLayers = [], printAnimations = [], printFinish = null, imageUrls = new Map();
+  var printLayers = [], printAnimations = [], printFinish = null, printTop = '', imageUrls = new Map();
   function mountPrints() {
     if (printLayers.length || !document.body) return;
     for (var i = 0; i < 2; i++) {
@@ -85,7 +85,11 @@
      caches; this queue stores no images. Hover/focus intent can advance one job outside idle, sharing the same flight. */
   var warmObserver = null, warmRow = null, warmTargets = new Map(), warmDone = new Map(), warmEpoch = 0;
   var warmTimer = 0, warmIdle = 0, warmRunning = false, warmInput = 0, warmPointer = null, warmHover = null, warmRefusals = 0;
-  var warmIntent = null, intentTimer = 0, warmScroll = 0;
+  /* B3 (F5, pm7-liquid-glass for Settings): a hover or focus intent starts once the pointer has been still for
+     INTENT_QUIET ms (a sweep never settles, so it starts none), and an intent has its own flight, so it never waits for
+     a background job on another print (F4 P1000: Forest was pressed while the gallery baked another print for 228 ms).
+     Glass bakes a print once however many prepares ask for it. */
+  var warmIntent = null, intentTimer = 0, warmScroll = 0, intentRunning = false, INTENT_QUIET = 50;
   var retainTimer = 0, retainQueued = false, retainedUrls = new Set(), retainedViewport = '', retainedBy = null, retainedPanel = null;
   function retainActive() {
     var panel = document.getElementById('panel-settings');
@@ -145,16 +149,16 @@
     var n = window.PM_NIER;
     return !!(n && n.wanted && n.on && n.wanted() !== n.on());
   }
-  function warmAllowed(epoch, pressed) {
+  function warmAllowed(epoch, pressed, quiet) {
     var panel = document.getElementById('panel-settings');
     return epoch === warmEpoch && panel && panel.classList.contains('active') && !warmBusy() &&
-      performance.now() - warmScroll >= 120 && (pressed || performance.now() - warmInput >= 120) &&
+      performance.now() - warmScroll >= 120 && (pressed || performance.now() - warmInput >= (quiet == null ? 120 : quiet)) &&
       !(navigator.scheduling && navigator.scheduling.isInputPending && navigator.scheduling.isInputPending());
   }
   function clearIntent() { clearTimeout(intentTimer); intentTimer = 0; warmIntent = null; }
   function intentAllowed(intent) {
     return intent === warmIntent && intent.tile.isConnected && warmRow && warmRow.contains(intent.tile) &&
-      warmTargets.has(intent.tile) && warmAllowed(intent.epoch, intent.kind === 'press');
+      warmTargets.has(intent.tile) && warmAllowed(intent.epoch, intent.kind === 'press', INTENT_QUIET);
   }
   function queueIntent(delay) {
     if (!warmIntent || intentTimer || warmIntent.reading) return;
@@ -162,14 +166,15 @@
       intentTimer = 0;
       var intent = warmIntent; if (!intent) return;
       if (!intent.tile.isConnected || intent.epoch !== warmEpoch) { clearIntent(); return; }
-      if (warmRunning || !intentAllowed(intent)) { queueIntent(120); return; }
+      /* still settling, or another intent running: look again shortly (the quiet period is measured from the last input) */
+      if (intentRunning || !intentAllowed(intent)) { queueIntent(intentRunning ? INTENT_QUIET : 20); return; }
       runWarm(intent.epoch, intent);
-    }, delay == null ? 120 : delay);
+    }, delay == null ? INTENT_QUIET : delay);
   }
   function requestIntent(tile, kind) {
     if (!window.PM_LG || !PM_LG.prepareWallpaper) return;
     clearIntent(); warmIntent = { tile: tile, kind: kind, epoch: warmEpoch, reading: false };
-    queueIntent(kind === 'press' ? 0 : 120);
+    queueIntent(kind === 'press' ? 0 : INTENT_QUIET + 5);
   }
   /* A newly exposed tile may not have its immutable URL cached yet. Fill it after layout, not by forcing style in
      pointerdown or the following choice task. The current request and all guards are checked again before baking. */
@@ -189,7 +194,7 @@
   }
   function runWarm(epoch, intent) {
   var allowed = function () { return intent ? intentAllowed(intent) : !warmIntent && warmAllowed(epoch); };
-  if (warmRunning || !allowed()) { if (intent) queueIntent(); else queueWarm(); return; }
+  if ((intent ? intentRunning : warmRunning || intentRunning) || !allowed()) { if (intent) queueIntent(); else queueWarm(); return; }
   /* IntersectionObserver supplies geometry without a new layout read. Glass bounds frost by encoded bytes,
      so every visible choice can be prepared; opaque looks retain only two decoded images. */
   var glass = look() === 'glass' && root.getAttribute('data-lg') === 'on' && !inNier(), limit = glass ? order.length : 2, viewport = innerWidth + 'x' + innerHeight;
@@ -218,8 +223,9 @@
   /* Glass is authoritative about readiness: an earlier idle success may since have left its byte-bounded cache.
      A kept pair resolves immediately; an evicted one is prepared again only for this deliberate intent. */
   if (intent && !imageUrls.has(id + '-' + mode)) { readIntentUrl(intent, id); return; }
-  warmRunning = true;
-  prepare(imageUrl(id), { canRun: allowed }).catch(function () { return false; }).then(function (ok) {
+  if (intent) intentRunning = true; else warmRunning = true;
+  /* idle: a background preparation, whose frost Glass makes in the page's warm queue (PM_WARM, F6); an intent's is made at once */
+  prepare(imageUrl(id), { canRun: allowed, idle: !intent }).catch(function () { return false; }).then(function (ok) {
     /* Retry a cover/input cancellation when idle again. A failed image gets one attempt per viewport/epoch;
        the explicit choice path can still retry it without a background error spinning an idle loop. */
     if (epoch === warmEpoch && (ok || allowed())) {
@@ -227,11 +233,14 @@
       while (warmDone.size > (glass ? order.length : 2)) warmDone.delete(warmDone.keys().next().value);
     }
     if (intent === warmIntent && (ok || allowed())) clearIntent();
-  }).then(function () { warmRunning = false; if (warmIntent) queueIntent(0); else queueWarm(); });
+  }).then(function () {
+    if (intent) intentRunning = false; else warmRunning = false;
+    if (warmIntent) { clearTimeout(intentTimer); intentTimer = 0; queueIntent(0); } else queueWarm();
+  });
   }
   function queueWarm() {
     if (warmIntent) { queueIntent(); return; }
-    if (warmTimer || warmIdle || warmRunning || !warmTargets.size || !window.requestIdleCallback ||
+    if (warmTimer || warmIdle || warmRunning || intentRunning || !warmTargets.size || !window.requestIdleCallback ||
         !window.PM_LG || !PM_LG.prepareWallpaper) return;
     warmIdle = requestIdleCallback(function (deadline) {
       warmIdle = 0;
@@ -287,27 +296,29 @@
   function apply(animate) {
     var id = shown(), selected = choice(), theme = root.getAttribute('data-theme'), key = theme + '|' + id;
     if (key === paintKey) { paintedChoice = selected; return; }
-    var serial = ++paintSerial, url = imageUrl(id);
-    /* A viewport/Glass epoch change or failed bake can invalidate preparation without invalidating the choice.
-       Keep the current choice authoritative and let the normal image/frost fallback commit it. Superseded choices
-       and modes still never commit. The same print fade remains available when the prepared frost was unavailable. */
-    prepare(url).catch(function () { return false; }).then(function () {
-      if (serial !== paintSerial || theme !== root.getAttribute('data-theme')) return;
-      var viewport = { width: innerWidth, height: innerHeight };
-      var commit = function (fade) {
-        if (serial !== paintSerial) return;
-        paintedChoice = selected; paintKey = key; paintedUrl = url;
-        attr('data-lg-wall', id || null); attr('data-lg-wall-any', id && look() !== 'glass' ? '' : null);
-        if (url && window.PM_LG && PM_LG.commitWallpaper) PM_LG.commitWallpaper(id, url, viewport, fade);
-      };
+    var serial = ++paintSerial, url = imageUrl(id), early = null;
+    /* a look change ends at once a fade whose print was never committed (fade-first, below) when it is not the print this
+       look shows (the old mode's); one that is (Liquid Glass switched, say) keeps fading until this apply commits it */
+    if (!animate && printFinish && printTop !== paintedUrl && printTop !== url) printFinish();
+    function live() { return serial === paintSerial && theme === root.getAttribute('data-theme'); }
+    var commit = function (viewport, fade) {
+      if (serial !== paintSerial) return;
+      paintedChoice = selected; paintKey = key; paintedUrl = url;
+      attr('data-lg-wall', id || null); attr('data-lg-wall-any', id && look() !== 'glass' ? '' : null);
+      if (url && window.PM_LG && PM_LG.commitWallpaper) PM_LG.commitWallpaper(id, url, viewport, fade);
+    };
+    /* The two planes start fading the print over the one on show (the planes' own top print while an earlier fade still
+       shows it, else the committed one). Returns the fade, or null when the choice swaps at once. */
+    function fadePrint() {
+      var base = printFinish && printTop ? printTop : paintedUrl;
       if (printFinish) printFinish();
       mountPrints();
-      if (!animate || still() || printLayers.length !== 2) { commit(); return; }
+      if (!animate || still() || printLayers.length !== 2) return null;
       printLayers.forEach(function (e, i) {
         /* Both planes are direct body children: inherit the exact computed ground without flushing the newly
            selected gallery's style. A look change also updates this ground without a stale color-cache window. */
         e.style.backgroundColor = 'inherit';
-        e.style.backgroundImage = (i ? url : paintedUrl) ? 'url(' + JSON.stringify(i ? url : paintedUrl) + ')' : 'none';
+        e.style.backgroundImage = (i ? url : base) ? 'url(' + JSON.stringify(i ? url : base) + ')' : 'none';
       });
       printLayers[0].style.opacity = '1'; printLayers[1].style.opacity = '0';
       var done = false;
@@ -317,13 +328,41 @@
           e.style.opacity = '0'; e.style.backgroundImage = 'none'; e.style.backgroundColor = '';
         });
         printAnimations.forEach(function (a) { a.cancel(); }); printAnimations = [];
-        if (printFinish === finish) printFinish = null;
+        if (printFinish === finish) { printFinish = null; printTop = ''; }
       }
-      printFinish = finish;
+      printFinish = finish; printTop = url;
+      var fade = printLayers[1].animate([{ opacity: 0 }, { opacity: 1 }], { duration: 240, easing: 'linear', fill: 'forwards' });
+      printAnimations = [fade];
+      return fade;
+    }
+    /* B3 fade-first (F6, Jared 2026-10-16: "fade is fine"). A print whose frost is not ready starts fading as soon as Glass
+       has decoded it (PM_LG.prepareWallpaper's printed), instead of waiting for the frost's bake; the sheets keep their
+       frost until the new one is ready (about 200 ms later on a P1000), then crossfade to it over the print fade's 240 ms
+       through the same commit. A prepared print still fades and commits in one task, the sheets in step with the print. */
+    var options = animate && !still() ? { printed: function () { if (live() && !early) early = fadePrint(); } } : undefined;
+    /* A viewport/Glass epoch change or failed bake can invalidate preparation without invalidating the choice.
+       Keep the current choice authoritative and let the normal image/frost fallback commit it. Superseded choices
+       and modes still never commit. The same print fade remains available when the prepared frost was unavailable. */
+    prepare(url, options).catch(function () { return false; }).then(function () {
+      if (!live()) return;
+      var viewport = { width: innerWidth, height: innerHeight };
+      if (early) {
+        if (printFinish && printTop === url) {
+          /* the frost's crossfade is timed by a clock of its own (an Animation with no target): the print may still be
+             fading, and an opacity animation on its plane would take that plane over. The planes clear once both end;
+             by then the body has carried the new print for 240 ms. */
+          var clock = new Animation(new KeyframeEffect(null, null, { duration: 240, easing: 'linear', fill: 'forwards' }), document.timeline);
+          clock.play(); printAnimations.push(clock); commit(viewport, clock);
+          var end = printFinish;
+          Promise.all([early.finished, clock.finished]).then(end, end);
+        } else commit(viewport);
+        return;
+      }
+      var fade = fadePrint(), finish = printFinish;
+      if (!fade) { commit(viewport); return; }
       /* Start the prepared frost with the body fade. Waiting for the midpoint left the sheets showing the old
          print for another 120 ms, followed by their raster cost, even when preparation was a cache hit. */
-      var fade = printLayers[1].animate([{ opacity: 0 }, { opacity: 1 }], { duration: 240, easing: 'linear', fill: 'forwards' });
-      printAnimations = [fade]; commit(fade);
+      commit(viewport, fade);
       fade.finished.then(finish, finish);
     });
   }

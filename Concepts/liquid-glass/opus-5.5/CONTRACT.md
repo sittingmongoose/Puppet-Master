@@ -178,6 +178,23 @@ page or chapter change instead of during it. The kinds come from `WARM_CATALOG`,
 `tools/warm_catalog.py` from a harvest of the built page; regenerate it when a change adds a new kind of painted box
 (a new shadow structure, border, clip or blend), then rebuild the pages.
 
+With the page's idle-warm queue (`window.PM_WARM`, shell's `11-motion-start.js`, `IDLE-WARM-RULE.md`; F6) the warm-up
+runs through that queue, as owner `glass`: each kind is a `light` step (drawn at the start of a frame, taken out in the
+first frame after it), and the scans of the page's svgs and each chart's and icon's style reads are `cpu` steps. Glass
+keeps one step queued at a time, each `later: 1` (rule v3.8: after terminal's steps, before Usage's raster pass). It ends
+after the last kind, when the queue drops its step (the queue's session stop, or warming found off), or on `pm-warm-done`
+with no Glass step left (idempotent). With `PM_WARM.state().off` it does not start. Without `PM_WARM` it runs as above.
+
+The catalog keeps only the draws that link a GPU program (F6 census on the P1000 and the RTX 3090: 329 of 4,572 draws;
+`tools/warm_catalog.py --passes ... --split tools/warm_splits.json`). Its entries carry the passes that draw them. A split
+draws the kind first without its box-shadow (or gradient), then whole; a staged one adds one declaration a step (its
+box-shadow last, a layer at a time), then whole, so each step links about one program. Draws whose links held the P1000's GPU over 83 ms by the census maximum and did not split are dropped, and
+their first use pays as before (IDLE-WARM-RULE v3.9 item 4). Four draws the closure run found missing are added back.
+With a cut catalog every draw links a program, so with `PM_WARM` the draws are GPU steps (the queue's 300 ms watch keeps
+their links apart), and without it they are 300 ms apart. The crowded passes' crowd is ten filled outlines from a
+100-unit viewBox, which make the tile multisampled without strokes: the page's stroked icons it used before linked
+StrokeTessellateOp (over 100 ms a link on the P1000), which is not warmed.
+
 ## Wallpapers
 
 The wallpaper choice, its catalog and the Settings gallery belong to the wallpapers package and follow
@@ -192,3 +209,15 @@ outgoing background (frost, rim, tint and light) over the new one and fades from
 fade's duration and easing, starting on the same frame. The overlay is transient. It goes when that fade finishes or is
 cancelled; a new commit replaces it at once, and a look, tier or motion change, a resize or leaving Glass clears it.
 Without `fade` (a look change, Reduce Animations, the CPU path) the frost changes at once.
+
+Fade-first (B3, F6, Jared 2026-10-16): `PM_LG.prepareWallpaper(url, { printed })` calls `printed` once, when the print is
+decoded but its frost still has to be made, so the package can start the print's fade at once; Glass then makes that
+frost after the next presented frame, so the fade's first frame is not held by the bake. The package commits once the
+frost is ready, with a target-less 240 ms `Animation` as `fade`: the sheets keep their frost until then and crossfade to
+the new one from that commit. A pair that is still kept, and every prepare without `printed`, resolve as before.
+
+`PM_LG.prepareWallpaper(url, { idle: true })` marks a preparation made only because the page is idle (the gallery's
+background warming). With `PM_WARM` its frost is made in that queue's `cpu` steps: the print scaled once, then each frost
+level, more than one in a step while the idle deadline has room (F6). `canRun` is asked before each part; a dropped step
+gives the bake up (resolves `false`). Any other request for that print (a pick, a hover or press intent, the shown
+wallpaper's own bake) runs what is left at once, so it never waits on the queue.
