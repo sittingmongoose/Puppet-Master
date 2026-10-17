@@ -2242,8 +2242,7 @@ canonical_text: >-
   Amended 2026-10-17 (DL-228, DL-230, Jared): a Usage widget is a card everywhere, on the Usage page, on its
   boards and on a dashboard tab inside a Home panel: Hide card, Cards in <Room>, "N cards", Move card. The
   concept's Usage copy is the reference wording with its "panel" read as "card", so a Usage card never reads as
-  a Home panel or the Home panel's Move panel. Superseded lineage (kept findable): the proposal of 2026-10-17
-  kept the Usage page's own word "panel" (Hide panel, Panels in <Room>, "N panels").
+  a Home panel or the Home panel's Move panel.
 gui_related: true
 gui_classification_reason: This unit defines the user-visible words for panels, tabs and the home centre and the words they retire.
 split_recommended: false

@@ -13177,8 +13177,7 @@ negative_constraints:
   - "Do not add a command, an action or a wiring row through this decision."
   - "Do not reintroduce pills, coloured side bars or abbreviated labels in the left rail."
 stale_retired_dispositions:
-  - 'Amended 2026-10-17 (DL-228): after D44 (DL-201) F3-619 names no separate errored glyph; Testing''s errored mapping is proposed, pending Jared, in F3-619. The 2026-10-10 frost on the rail''s header and tab plates is owned by F3-618.'
-  - 'Amended 2026-10-17 (DL-230, Jared): Testing''s errored state uses the shared failed mark with the word Errored in the failed tone (F3-619); this answers the Errored-word colour question queued on 2026-10-11.'
+  - 'Amended 2026-10-17 (DL-228, DL-230): after D44 (DL-201) F3-619 names no separate errored glyph; Jared chose on 2026-10-17 (DL-230) that Testing''s errored state uses the shared failed mark with the word Errored in the failed tone (F3-619), which answers the Errored-word colour question queued on 2026-10-11. The 2026-10-10 frost on the rail''s header and tab plates is owned by F3-618.'
 owner_hints:
   - Plans/FinalGUISpec.md
   - Plans/DRY_Rules.md
