@@ -1963,9 +1963,13 @@
      painted it, so the first visible entry paid for every GPU program its cards and charts draw with (P1000 F3 cold: 47
      program links, ~1.4 s of GPU main thread, an 834 ms gap). Right after the warm build, in idle periods, the REAL board
      is drawn in place at opacity .004 on a will-change: opacity layer above the page that shows, a little at a time:
-     each step makes its marks and flushes them in an idle callback, holds them for three animation frames (the frame
-     that paints them, the one whose commit waits for their activation, and one more), and the next step waits for the
-     gates and an idle callback. Marks stay until the room is done, so each step rasters only what it adds.
+     each step makes its marks and flushes them in an idle callback, holds them for RASTER_FRAMES animation frames (one:
+     the frame that paints them), and the next step runs in the next idle period that has RASTER_SLICE ms left, once the
+     gates are open: steps run back to back, one a frame, while the page is idle. The next step's commit waits for the
+     activation of the one before (its tiles rastered), so each step still rasters by itself (P2-03 final: three frames
+     and a fresh idle wait a step, and a card's plan in an idle callback of its own, made the pass 21.6 s in Basic Dark
+     on the RTX 3090; one frame a step measured the same per-step frame gaps and main-thread tasks as two, and the pass
+     4.4 s). Marks stay until the room is done, so each step rasters only what it adds.
      The steps (fix cycle 2: each may link at most a program or two, about 30 ms a link on the P1000; the RTX 3090
      linked 9 in the rail step, a 137-158 ms freeze of Home's frames): the layer alone with one small box (its own
      compositor programs); then one element of each kind the page chrome draws, by itself (rasterSig: what it paints,
@@ -1979,8 +1983,9 @@
      changes: no animation, no inline style, the cues, data-held and data-body-wait stay, so the arrival (warmArrive)
      and the Reduce Motion dissolve (warmCalm) play as before.
      Gates, before every step: a GPU (Glass's html[data-lg-tier="gpu"], set at boot in every look; never on the no-GPU
-     profile), the tab shown, the app idle (window.PM_BUSY, then its 'pm-idle'), no page change, no finite animation
-     running anywhere on the page (an ambient loop does not count), 600 ms after any input, not on Settings or under
+     profile), the tab shown, the app idle (window.PM_BUSY, then its 'pm-idle'), no page change, no move on screen
+     (rasterMoving: a short finite animation on a shown element in the window; it only waits, the board stays on its
+     layer), 600 ms after any input, not on Settings or under
      onboarding, and the warm board still current (warmKey: a look or Settings change drops it, and the next warm build
      starts the pass again). A gate that closes takes the board off the screen's layers at once (rasterQuiet: no paint
      token, no mark); one that stays closed for 1.5 s, or a hidden tab, Settings or the tour at once, parks the pass
@@ -1992,7 +1997,12 @@
      PMU.film.warmState().raster says what ran. ---- */
   var RASTER = (function () { var m = /[?&]pmu-raster=([01])(?:&|#|$)/.exec(location.search); return m ? m[1] : null; })();
   var RASTER_MARKS = /[?&]pmu-raster-marks=1(?:&|#|$)/.test(location.search);
-  var RASTER_ROOMS = ['overview', 'costs', 'accounts'], RASTER_QUIET = 600, RASTER_PARK = 1500, RASTER_FRAMES = 3, RASTER_MSAA = 6, RASTER_CHUNK = 5, RASTER_BATCH = 4;
+  /* RASTER_FRAMES: the frames a step is held before the next (?pmu-raster-frames=N for measurements); RASTER_SLICE: the
+     idle time a step needs left in its idle period, else it waits for the next one; RASTER_AMBIENT: a finite animation
+     longer than this is ambient, not a move to wait for */
+  var RASTER_FRAMES = (function () { var m = /[?&]pmu-raster-frames=([1-6])(?:&|#|$)/.exec(location.search); return m ? +m[1] : 1; })();
+  var RASTER_ROOMS = ['overview', 'costs', 'accounts'], RASTER_QUIET = 600, RASTER_PARK = 1500, RASTER_MSAA = 6, RASTER_CHUNK = 5, RASTER_BATCH = 4,
+    RASTER_SLICE = 2, RASTER_AMBIENT = 2000;
   var rast = null, rasterDone = {}, rasterSeen = {}, rasterLog = { rooms: [], at: null, ms: null, skipped: WARM_OFF ? 'warm-off' : null };
   function rasterKey(room, cls) {
     var look = (root.getAttribute('data-theme') || '') + (root.getAttribute('data-o55-nier') === 'on' ? '+nier' : '');
@@ -2022,15 +2032,30 @@
     RASTER_INPUTS.forEach(function (t) { window.addEventListener(t, r.onInput, { capture: true, passive: true }); });
     rasterWait(r, rasterStep);
   }
-  /* a finite animation running anywhere on the page (an ambient loop, infinite, does not count) */
-  function rasterAnimating() {
-    if (!document.getAnimations) return false;
-    var list = document.getAnimations();
+  /* a move on screen that a raster step must not drop a frame of, as a short name ('' when none): a finite animation or
+     transition, running, no longer than RASTER_AMBIENT, on an element that is rendered, in the window and not hidden.
+     Not counted (P2-03 final, 2026-10-17: the RTX 3090 found the overview pass at root 2-8 eight seconds after load in
+     Glass, Friendly and NieR, held by moves nobody saw): an infinite loop or a long finite one (the looks' scenery and
+     ambient light), an element that is display: none, outside the window or under visibility: hidden or opacity 0, and
+     anything inside the Usage page while it is hidden (the pass's own work, the warm board's queued entrances) */
+  function rasterMoving() {
+    if (!document.getAnimations) return '';
+    var list = document.getAnimations(), panel = document.getElementById('panel-usage'), mine = panel && !pageShown() ? panel : null;
+    var vw = window.innerWidth || 1, vh = window.innerHeight || 1;
     for (var i = 0; i < list.length; i++) {
       var a = list[i]; if (a.playState !== 'running' || !a.effect || !a.effect.getComputedTiming) continue;
-      if (isFinite(a.effect.getComputedTiming().endTime)) return true;
+      var t = a.effect.getComputedTiming();
+      if (!isFinite(t.endTime) || t.activeDuration > RASTER_AMBIENT) continue;
+      var el = a.effect.target; if (!el || !el.isConnected || (mine && mine.contains(el))) continue;
+      var pseudo = !!a.effect.pseudoElement;
+      if (!el.getClientRects().length && !pseudo) continue;
+      if (!pseudo) { var r = el.getBoundingClientRect(); if (r.bottom <= 0 || r.right <= 0 || r.top >= vh || r.left >= vw) continue; }
+      if (el.checkVisibility && !el.checkVisibility({ visibilityProperty: true })) continue;
+      if (el.parentElement && el.parentElement.checkVisibility && !el.parentElement.checkVisibility({ opacityProperty: true })) continue;
+      var cl = el.className && el.className.baseVal != null ? el.className.baseVal : el.className;
+      return (a.animationName || a.transitionProperty || 'js') + '@' + (el.id ? '#' + el.id : String(cl || el.localName).split(' ')[0]) + (a.effect.pseudoElement || '');
     }
-    return false;
+    return '';
   }
   /* what holds the pass now ('' when nothing) */
   function rasterHeld(r) {
@@ -2043,7 +2068,8 @@
     if (root.hasAttribute('data-o55-open')) return 'onboarding';
     if (root.hasAttribute('data-pm-page-transition')) return 'page';
     if (performance.now() - r.lastInput < RASTER_QUIET) return 'input';
-    if (rasterAnimating()) return 'animation';
+    var mv = rasterMoving();
+    if (mv) { var h = rasterLog.holds = rasterLog.holds || {}; if (h[mv] || Object.keys(h).length < 40) h[mv] = (h[mv] || 0) + 1; return 'animation'; }
     return '';
   }
   /* the wait's own timer and listeners (one of each at a time) */
@@ -2069,21 +2095,28 @@
     if (rasterStale(r)) return;
     var why = rasterHeld(r), now = performance.now();
     rasterLog.gate = why || null;
+    /* how long each gate held the pass (warmState().raster.gateMs) */
+    if (r.gw) { var gm = rasterLog.gateMs = rasterLog.gateMs || {}, gk = r.gw.why; gm[gk] = Math.round((gm[gk] || 0) + now - r.gw.t); }
+    r.gw = why ? { why: why, t: now } : null;
     if (why) {
       if (!r.gatedAt) r.gatedAt = now;
-      rasterQuiet(r);
+      /* a move on screen only waits (the board stays on its layer: taking it off and back is work of its own); anything
+         else takes it off at once */
+      if (why !== 'animation') rasterQuiet(r);
       if (!r.parked && (why === 'hidden' || why === 'settings' || why === 'tour' || why === 'onboarding' || now - r.gatedAt >= RASTER_PARK)) rasterPark(r);
       if (r.parked) fn = rasterStep;
       var toPark = r.parked ? Infinity : Math.max(20, RASTER_PARK - (now - r.gatedAt) + 10);
       if (why === 'hidden') { r.visFn = go; document.addEventListener('visibilitychange', go); return; }
       if (why.indexOf('busy') === 0) { r.idleFn = go; window.addEventListener('pm-idle', go); r.timer = setTimeout(go, Math.min(1500, toPark)); return; }
       if (why === 'input') { r.timer = setTimeout(go, Math.max(60, Math.min(RASTER_QUIET - (now - r.lastInput) + 20, toPark))); return; }
-      r.timer = setTimeout(go, Math.min(why === 'animation' || why === 'page' ? 250 : 1000, toPark));
+      r.timer = setTimeout(go, Math.min(why === 'animation' ? 100 : why === 'page' ? 250 : 1000, toPark));
       return;
     }
     r.gatedAt = 0;
-    rasterIdle(function () {
+    /* the next idle period with RASTER_SLICE ms left in it (a step's marks, style and layout fit in that) */
+    var idle = function (dl) {
       if (rast !== r || r.seq !== seq) return;
+      if (dl && !dl.didTimeout && dl.timeRemaining && dl.timeRemaining() < RASTER_SLICE) { rasterIdle(idle); return; }
       if (warm !== r.w || pageShown() || moment || hold || rasterHeld(r)) { rasterWait(r, fn); return; }
       if (rasterStale(r)) return;
       if (r.parked) {
@@ -2092,8 +2125,9 @@
         rasterWait(r, rasterStep);
         return;
       }
-      fn(r);
-    });
+      fn(r, dl);
+    };
+    rasterIdle(idle);
   }
   function rasterTok(r, tok) {
     var panel = document.getElementById('panel-usage'); if (!panel) return null;
@@ -2101,11 +2135,13 @@
     return panel;
   }
   var RASTER_ATTRS = ['data-pmu-raster-on', 'data-pmu-raster-self', 'data-pmu-raster-pieces'];
+  /* the marks off the scope and everything in it (the panel itself is the chrome plan's first element) */
   function rasterUnmark(scope) {
     if (!scope) return;
-    Array.prototype.forEach.call(scope.querySelectorAll('[data-pmu-raster-on], [data-pmu-raster-self], [data-pmu-raster-pieces]'), function (c) { RASTER_ATTRS.forEach(function (a) { c.removeAttribute(a); }); });
+    var all = Array.prototype.slice.call(scope.querySelectorAll('[data-pmu-raster-on], [data-pmu-raster-self], [data-pmu-raster-pieces]'));
+    all.push(scope);
+    all.forEach(function (c) { RASTER_ATTRS.forEach(function (a) { c.removeAttribute(a); }); });
   }
-
   /* nothing drawn: the paint token off (the spare stays laid out while it holds a built room) and no mark */
   function rasterQuiet(r) {
     var panel = document.getElementById('panel-usage'); if (!panel) return;
@@ -2349,22 +2385,23 @@
     return rasterPlan(card, function (el) { return body && body.contains(el) ? 'Y' : 'K'; }, null, [{ whole: card, card: true, label: 'card' }], RASTER_CHUNK);
   }
   /* one step: its marks made and flushed here (an idle callback), held RASTER_FRAMES frames, then the next through the gates */
-  function rasterBatch(r, kind, cur) {
+  function rasterBatch(r, kind, cur, dl) {
     var panel = document.getElementById('panel-usage');
     if (!panel) { rasterEnd('no-panel'); return; }
     if (!cur.roots) { cur.roots = rasterRoots(kind); cur.ri = 0; cur.plan = null; }
     var rt = cur.roots[cur.ri];
     if (!rt) { rasterRoomDone(r, cur, cur.roots.filter(function (x) { return x.t === 'card'; }).length, kind); return; }
-    /* planning reads styles and boxes: its own idle callback, nothing drawn in it */
+    /* planning reads styles and boxes, nothing drawn in it: the step goes on in the same idle callback when the period
+       has RASTER_SLICE ms left after it, else in the next */
+    var left = function () { return !dl || dl.didTimeout || !dl.timeRemaining || dl.timeRemaining() >= RASTER_SLICE; };
     if (!cur.plan) {
       var t1 = performance.now();
       cur.plan = rasterPlanFor(panel, rt); cur.pi = 0;
       cur.planMs = (cur.planMs || 0) + performance.now() - t1;
-      rasterWait(r, rasterStep);
-      return;
+      if (!dl || !left()) { rasterWait(r, rasterStep); return; }
     }
     var s = cur.plan[cur.pi];
-    if (!s) { cur.ri++; cur.plan = null; rasterWait(r, rasterStep); return; }
+    if (!s) { cur.ri++; cur.plan = null; if (dl && left()) rasterBatch(r, kind, cur, dl); else rasterWait(r, rasterStep); return; }
     var card = rt.t === 'card' ? rt.el : null;
     if (card && !card.isConnected) { cur.ri++; cur.plan = null; rasterWait(r, rasterStep); return; }
     /* a body rendered again since the plan (a tier pass): planned again, its new elements */
@@ -2380,6 +2417,7 @@
       s.whole.setAttribute('data-pmu-raster-on', '');
     } else if (s.chrome) {
       Array.prototype.forEach.call(panel.querySelectorAll('[data-pmu-raster-self]'), function (x) { if (!x.closest('.pmu-board > .pmu-card')) x.removeAttribute('data-pmu-raster-self'); });
+      panel.removeAttribute('data-pmu-raster-self');
       chromeOn = true;
     }
     (s.sig || []).forEach(function (k) { rasterSeen[k] = true; });
@@ -2410,16 +2448,16 @@
     r.rooms.shift(); r.cur = null;
     rasterWait(r, rasterStep);
   }
-  function rasterStep(r) {
+  function rasterStep(r, dl) {
     var room = r.rooms[0];
     if (!room) { rasterEnd(null); return; }
     if (!r.cur || r.cur.room !== room) r.cur = { room: room, key: rasterKey(room), t0: performance.now(), roots: null, ri: 0, plan: null, pi: 0, steps: 0, paint: 0, build: 0 };
     var cur = r.cur;
-    if (room === r.w.room) { rasterBatch(r, 'board', cur); return; }
+    if (room === r.w.room) { rasterBatch(r, 'board', cur, dl); return; }
     /* another room: built unseen in the spare (laid out under the 'spare' token, the page still hidden), then drawn step
        by step; a park tears it down, and the resume builds it again and goes on from the card it had reached (its plan
        made again: the cards are new elements) */
-    if (r.spare) { rasterBatch(r, 'spare', cur); return; }
+    if (r.spare) { rasterBatch(r, 'spare', cur, dl); return; }
     var panel = rasterTok(r, 'spare');
     var job = panel && PMU.board.rasterRoom ? PMU.board.rasterRoom(room, function (b) {
       if (rast !== r || r.cur !== cur) return;
@@ -2647,7 +2685,7 @@
       return { warm: warm ? { room: warm.room, built: warm.built, ms: warm.ms || null, box: warm.box, parked: !!warm.parked, hidden: !!warmA11y } : null, last: warmLast,
         raster: { running: rast ? { rooms: rast.rooms.slice(), gate: rasterLog.gate, parked: rast.parked, resumes: rast.resumes,
             step: rast.cur ? { room: rast.cur.room, root: rast.cur.ri, piece: rast.cur.pi, spare: rast.spare } : null } : null,
-          rooms: rasterLog.rooms.slice(), at: rasterLog.at, ms: rasterLog.ms, parks: rasterLog.parks || 0, resumeMs: (rasterLog.resumeMs || []).slice(), skipped: rasterLog.skipped, done: Object.keys(rasterDone),
+          rooms: rasterLog.rooms.slice(), at: rasterLog.at, ms: rasterLog.ms, parks: rasterLog.parks || 0, resumeMs: (rasterLog.resumeMs || []).slice(), holds: Object.assign({}, rasterLog.holds || {}), gateMs: Object.assign({}, rasterLog.gateMs || {}), frames: RASTER_FRAMES, skipped: rasterLog.skipped, done: Object.keys(rasterDone),
           kinds: Object.keys(rasterSeen).length, steps: (rasterLog.steps || []).slice() } };
     },
     deferHoverTags: deferHoverTags, last: function () { return last; }, off: off, parsePath: parsePath, yAt: yAt,
