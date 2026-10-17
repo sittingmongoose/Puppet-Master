@@ -51,9 +51,9 @@ def parts():
 def build() -> str:
     css, js, data = parts()
     shell = read(SRC / 'catalog' / 'shell.html')
-    style = '\n'.join(f'/* ==== {p.relative_to(CONCEPTS)} ==== */\n' + guard(read(p), str(p)) for p in css)
+    style = '\n'.join(f'/* ==== {p.relative_to(CONCEPTS).as_posix()} ==== */\n' + guard(read(p), str(p)) for p in css)
     data_js = 'window.PMG_DATA = ' + json.dumps(data, separators=(',', ':')).replace('</', '<\\/') + ';'
-    scripts = [data_js] + [f'/* ==== {p.relative_to(CONCEPTS)} ==== */\n' + guard(read(p), str(p)) for p in js]
+    scripts = [data_js] + [f'/* ==== {p.relative_to(CONCEPTS).as_posix()} ==== */\n' + guard(read(p), str(p)) for p in js]
     body = '\n'.join(f'<script>\n{s}\n</script>' for s in scripts)
     src_hash = hashlib.sha256((style + ''.join(scripts) + shell).encode()).hexdigest()[:12]
     return (shell.replace('/*PMG:CSS*/', style)

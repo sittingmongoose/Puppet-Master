@@ -69,7 +69,7 @@ def main() -> int:
             return 1
         print('build_d_css: check ok')
         return 0
-    OUT.write_text(generate(), encoding='utf-8')
+    OUT.write_bytes(generate().encode('utf-8'))
     print(f'build_d_css: wrote {OUT.relative_to(PKG)} ({OUT.stat().st_size} bytes)')
     return 0
 
