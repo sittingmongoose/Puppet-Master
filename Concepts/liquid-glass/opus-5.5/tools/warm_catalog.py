@@ -13,7 +13,12 @@ entries whose draw linked at least one program there. A draw that linked nothing
 had already linked, so dropping it leaves the set the warm-up links unchanged, in any order. Each kept entry gets a sixth
 field, the bits of the passes that keep it (1, 2, 4, 8, ORed over the census files given); an entry no pass keeps is
 dropped. Run it right after regenerating the catalog from a harvest: each census file carries the sha256 of the full
-catalog it was made from, which must match."""
+catalog it was made from, which must match.
+
+--split <splits.json> (with --passes): {"catalog_sha256": ..., "split": {"<entry>": [bits, "property", ...]}} gives
+those entries a seventh field: in the passes named by bits glass.js draws the kind first without those properties, then
+whole, so a kind whose draw links two programs links one per step (tools/warm_splits.json: the P1000 draws whose two
+FillRRectOp links held its GPU over 100 ms)."""
 import hashlib, json, pathlib, re, sys
 
 SRC = pathlib.Path(__file__).resolve().parents[1] / 'src' / 'glass.js'
@@ -108,6 +113,10 @@ def catalog_sha(rows):
 
 
 def passes(files):
+    split = {}
+    if '--split' in files:
+        k = files.index('--split'); split_file = files[k + 1]; files = files[:k] + files[k + 2:]
+        split = json.loads(pathlib.Path(split_file).read_text(encoding='utf-8'))
     src = SRC.read_text(encoding='utf-8')
     rows = json.loads(re.search(r'var WARM_CATALOG = (\[.*?\]);\n', src, re.S).group(1))
     if any(len(r) > 5 for r in rows):
@@ -120,10 +129,16 @@ def passes(files):
         for p, idx in c['linked'].items():
             for i in idx:
                 mask[i] |= 1 << (int(p) - 1)
-    kept = [r[:5] + [m] for r, m in zip(rows, mask) if m]
+    if split and split.get('catalog_sha256') != sha:
+        sys.exit('the split file was made for another catalog')
+    for i, sp in (split.get('split') or {}).items():
+        if not mask[int(i)] & sp[0]:
+            sys.exit('split entry %s: its passes %d are not kept' % (i, sp[0]))
+    kept = [r[:5] + [m] + ([split['split'][str(i)]] if str(i) in (split.get('split') or {}) else []) for i, (r, m) in enumerate(zip(rows, mask)) if m]
     body = write(kept)
     draws = sum(bin(m).count('1') for m in mask)
-    print('%d of %d entries kept, %d of %d draws, %d bytes' % (len(kept), len(rows), draws, 4 * len(rows), len(body)))
+    pre = sum(bin(sp[0]).count('1') for sp in (split.get('split') or {}).values())
+    print('%d of %d entries kept, %d of %d draws (+%d split first parts), %d bytes' % (len(kept), len(rows), draws, 4 * len(rows), pre, len(body)))
 
 
 def main():

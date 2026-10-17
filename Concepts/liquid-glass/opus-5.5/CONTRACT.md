@@ -185,6 +185,14 @@ keeps one step queued at a time. It ends after the last kind, when the queue dro
 or warming found off), or on `pm-warm-done` with no Glass step left (idempotent). With `PM_WARM.state().off` it does not
 start. Without `PM_WARM` it runs as above.
 
+The catalog keeps only the draws that link a GPU program (F6 census, both GPUs: 337 of 4,572 draws;
+`tools/warm_catalog.py --passes`). Its entries carry the passes that draw them, and seven carry a split
+(`tools/warm_splits.json`): the kind is drawn first without its box-shadow (or gradient), then whole, so each step links
+one FillRRectOp. With a cut catalog every draw links a program, so with `PM_WARM` the draws are GPU steps (the queue's
+300 ms watch keeps their links apart) and without it they are 300 ms apart. The crowded passes' crowd is ten filled
+outlines from a 100-unit viewBox, which make the tile multisampled without strokes: the page's stroked icons it used before
+linked StrokeTessellateOp (over 100 ms a link on the P1000), which is not warmed.
+
 ## Wallpapers
 
 The wallpaper choice, its catalog and the Settings gallery belong to the wallpapers package and follow
