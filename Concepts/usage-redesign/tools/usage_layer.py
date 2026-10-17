@@ -304,13 +304,15 @@ HOST_SCOPE = ':is(#panel-usage,[data-pmu-host])'
 # warm wait in the scroll pane changes from display to opacity, the same rule). The arrival's pinned warm box and the
 # waiting plates hidden by opacity alone (2026-10-16, P2-03 fix cycle 2, 05-film.css: data-pmu-warm-pin on the panel
 # itself, Usage-only; data-pmu-warm-held on the board, which a hosted board never takes) add one compound use and one
-# anchor: 'compound' 12, 'rewritten' 2,681.
+# anchor: 'compound' 12, 'rewritten' 2,681. The waiting board back to display: none (2026-10-17, P2-03 final,
+# 05-film.css: the pinned warm box on the panel itself and the held plates' opacity hold out) takes both away again:
+# 'compound' 11, 'rewritten' 2,680.
 # A Usage CSS
 # edit that adds or removes an anchored rule moves 'rewritten': look at what the new rules style (a hosted board gets
 # them too), then re-pin the number here. Any other use of #panel-usage (a child or sibling combinator, a rule for the
 # panel itself, an anchor outside a selector) stops the build: it would be Usage-only, or not a selector, without
 # saying so.
-HOST_SCOPE_EXPECT = {'rewritten': 2681, 'compound': 12}
+HOST_SCOPE_EXPECT = {'rewritten': 2680, 'compound': 11}
 HOST_AT_GROUPS = ('@media', '@supports', '@container', '@layer')
 _ANCHOR_RX = re.compile(re.escape(HOST_ANCHOR) + r'(?![\w-])')
 
