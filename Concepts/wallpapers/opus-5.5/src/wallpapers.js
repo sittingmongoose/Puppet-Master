@@ -224,7 +224,8 @@
      A kept pair resolves immediately; an evicted one is prepared again only for this deliberate intent. */
   if (intent && !imageUrls.has(id + '-' + mode)) { readIntentUrl(intent, id); return; }
   if (intent) intentRunning = true; else warmRunning = true;
-  prepare(imageUrl(id), { canRun: allowed }).catch(function () { return false; }).then(function (ok) {
+  /* idle: a background preparation, whose frost Glass makes in the page's warm queue (PM_WARM, F6); an intent's is made at once */
+  prepare(imageUrl(id), { canRun: allowed, idle: !intent }).catch(function () { return false; }).then(function (ok) {
     /* Retry a cover/input cancellation when idle again. A failed image gets one attempt per viewport/epoch;
        the explicit choice path can still retry it without a background error spinning an idle loop. */
     if (epoch === warmEpoch && (ok || allowed())) {

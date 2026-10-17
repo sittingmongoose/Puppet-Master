@@ -178,6 +178,13 @@ page or chapter change instead of during it. The kinds come from `WARM_CATALOG`,
 `tools/warm_catalog.py` from a harvest of the built page; regenerate it when a change adds a new kind of painted box
 (a new shadow structure, border, clip or blend), then rebuild the pages.
 
+With the page's idle-warm queue (`window.PM_WARM`, shell's `11-motion-start.js`, `IDLE-WARM-RULE.md`; F6) the warm-up
+runs through that queue, as owner `glass`: each kind is a `light` step (drawn at the start of a frame, taken out in the
+first frame after it), and the scans of the page's svgs and each chart's and icon's style reads are `cpu` steps. Glass
+keeps one step queued at a time. It ends after the last kind, when the queue drops its step (the queue's session stop,
+or warming found off), or on `pm-warm-done` with no Glass step left (idempotent). With `PM_WARM.state().off` it does not
+start. Without `PM_WARM` it runs as above.
+
 ## Wallpapers
 
 The wallpaper choice, its catalog and the Settings gallery belong to the wallpapers package and follow
@@ -198,3 +205,9 @@ decoded but its frost still has to be made, so the package can start the print's
 frost after the next presented frame, so the fade's first frame is not held by the bake. The package commits once the
 frost is ready, with a target-less 240 ms `Animation` as `fade`: the sheets keep their frost until then and crossfade to
 the new one from that commit. A pair that is still kept, and every prepare without `printed`, resolve as before.
+
+`PM_LG.prepareWallpaper(url, { idle: true })` marks a preparation made only because the page is idle (the gallery's
+background warming). With `PM_WARM` its frost is made in that queue's `cpu` steps: the print scaled once, then each frost
+level, more than one in a step while the idle deadline has room (F6). `canRun` is asked before each part; a dropped step
+gives the bake up (resolves `false`). Any other request for that print (a pick, a hover or press intent, the shown
+wallpaper's own bake) runs what is left at once, so it never waits on the queue.
