@@ -231,7 +231,9 @@
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
     this._housing(ctx, g, s, this.geo);
     this.housing.width = W; this.housing.height = H;
-    this._masks(g, s, this.geo);
+    /* the idle warm's case sections leave the light's masks to a step of their own (warmMasks): drawn with the outline
+       clip, the rim's first section linked 4 programs in one frame on the 3090 (the lead's split, 2026-10-17) */
+    if (this.warmStage === undefined || this.warmMasks) this._masks(g, s, this.geo); else this.masks = null;
     this._reflect(true);
   };
 
@@ -430,10 +432,12 @@
       return side === 'top' || side === 'bottom' ? [RS, 0, 0, -RS / f, 0, RS * (e + e / f)] : [-RS / f, 0, 0, RS, RS * (e + e / f), 0];
     };
     var areas = { face: geo.faceParts, all: parts([0, 0, g.w, g.h], bb) };
+    /* warmSides (the idle warm only): the passes mirror only these sides */
+    var sides = this.warmSides || SIDES;
     var pass = function (blur, mask, alpha, f, area) {
       tc.save(); tc.setTransform(1, 0, 0, 1, 0, 0); tc.globalCompositeOperation = 'source-over'; tc.globalAlpha = 1; tc.clearRect(0, 0, w, h);
       tc.filter = blur > 0 ? 'blur(' + (blur * RS).toFixed(2) + 'px)' : 'none';
-      SIDES.forEach(function (side) {
+      sides.forEach(function (side) {
         tc.save(); tc.setTransform(RS, 0, 0, RS, 0, 0); tc.clip(polyPath(areas[area][side]));
         var t = mirror(side, f); tc.setTransform(t[0], t[1], t[2], t[3], t[4], t[5]);
         tc.drawImage(snap, g.gx, g.gy, g.gw, g.gh);
@@ -448,8 +452,8 @@
       for (var a = alpha; a > 0.004; a -= 1) { rc.globalAlpha = Math.min(1, a); rc.drawImage(T2, 0, 0); }
       rc.globalAlpha = 1; rc.globalCompositeOperation = 'source-over';
     };
-    /* warmLight (the idle warm only): 1 the three masks alone, 2 the first pass unblurred, 3 the first pass, 4 and 5 the
-       other two passes in turn; undefined draws all */
+    /* warmLight (the idle warm only): 1 the three masks alone, 2 the first pass unblurred, 3 the first pass (light3a: its
+       top side alone, warmSides), 4 and 5 the other two passes in turn; undefined draws all */
     var upto = this.warmLight === undefined ? LIGHT_STAGES : this.warmLight;
     if (upto === 1) {
       tc.clearRect(0, 0, w, h);
@@ -513,10 +517,18 @@
       probe.configure(it.ap.bezel, it.ap);
       var ink = probe.spec.material === 'ink', fine = n === 0, k;
       if (ink || !fine) steps.push({ name: 'case', stage: undefined, light: 0 });
-      else for (k = 1; k <= HOUSING_STAGES; k++) steps.push({ name: 'case' + k, stage: k, light: 0 });
+      else {
+        /* the sections, then the light's masks on the outline clip alone (the lead's split of case1, 2026-10-17) */
+        for (k = 1; k <= HOUSING_STAGES; k++) steps.push({ name: 'case' + k, stage: k, light: 0 });
+        steps.push({ name: 'masks', stage: 1, light: 0, masks: true });
+      }
       if (!ink && probe.spec.strength > 0) {
         if (!fine) steps.push({ name: 'light', stage: undefined, light: LIGHT_STAGES });
-        else for (k = 1; k <= LIGHT_STAGES; k++) steps.push({ name: 'light' + k, stage: undefined, light: k });
+        else for (k = 1; k <= LIGHT_STAGES; k++) {
+          /* the first blurred pass mirrored on its top side alone, then on all four (the lead's split of light3) */
+          if (k === 3) steps.push({ name: 'light3a', stage: undefined, light: 3, sides: ['top'] });
+          steps.push({ name: 'light' + k, stage: undefined, light: k });
+        }
       }
       steps.forEach(function (pt) {
         var id = window.PM_WARM.add({ owner: 'terminal', name: 'bezel:' + it.ap.bezel.style + ':' + pt.name + '@' + it.w + 'x' + it.h,
@@ -533,7 +545,7 @@
               bz.housing.style.cssText = 'position:absolute;left:0;top:0;width:100%;height:100%;display:block';
               host.appendChild(bz.el);
               bz.configure(b, it.ap);
-              bz.warmStage = pt.stage;
+              bz.warmStage = pt.stage; bz.warmMasks = !!pt.masks; bz.warmSides = pt.sides || null;
               if (pt.light) bz.warmLight = pt.light; else bz.spec.strength = 0;
               bz.g = { w: w, h: h, gx: inset, gy: inset, gw: Math.max(20, w - inset * 2), gh: Math.max(20, h - inset * 2), dpr: it.dpr };
               document.body.appendChild(host);

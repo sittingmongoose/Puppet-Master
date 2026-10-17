@@ -261,6 +261,20 @@
         return tile('font', id, F[id].label, '<span class="pmt-cz-face" style="font-family:' + esc(F[id].stack) + '">Ab 0O {}</span>', FACE_TAGS[id] || '');
       })).join('') + '<span class="pmt-cz-localface" data-local-face hidden></span>';
   }
+  /* the faces those tiles are drawn in, asked for now, while the page is still being built, so they arrive with the
+     page's own faces. Asked for by the screen built at idle, their arrival made Chrome lay out every line of text on the
+     page again (7,761 of 8,584 layout objects, 23 ms on the RTX 3090 and about three times that on the P1000; this lane's
+     traces, 2026-10-17), in a frame of the warm-up */
+  (function () {
+    try {
+      var F = A().FONTS;
+      if (!F || !document.fonts || !document.fonts.load) return;
+      Object.keys(F).forEach(function (id) {
+        var fam = /^'([^']+)'/.exec(F[id].stack || '');
+        if (fam) document.fonts.load('16px "' + fam[1] + '"', 'Ab 0O {}').catch(function () {});
+      });
+    } catch (e) {}
+  })();
   function cursorArt(shape) { return '<span class="pmt-cz-cur pmt-cz-cur-' + shape + '"><span>$ ls</span><i></i></span>'; }
   function trailArt(kind) { return '<span class="pmt-cz-trail pmt-cz-trail-' + kind + '"><i></i><b></b></span>'; }
 
@@ -282,7 +296,8 @@
   }
 
   function termLabel(v) { var label = 'Terminal'; try { label = JSON.parse(v._lsig || '{}').label || label; } catch (e) {} return label; }
-  function skeleton(v) {
+  /* later: each group is left out of the layout (data-cz-later) until its own build step (open, staged) */
+  function skeleton(v, later) {
     var label = termLabel(v);
     var F = A().FIELDS;
     var html = '';
@@ -415,8 +430,31 @@
     html += '<footer class="pmt-cz-foot"><button type="button" class="pmt-textbtn" data-act="reset"' + NOTAG + '>Reset this terminal</button><span class="pmt-cz-footn" data-foot-n></span>' +
       '<span class="pmt-pop-spacer"></span><button type="button" class="pmt-textbtn pmt-textbtn-primary pmt-cz-done" data-act="close"' + tagged('Done', 'Every change is already applied and saved') + '>Done</button></footer>';
     html += '</section>';
-    return html;
+    return later ? html.replace(/<section class="pmt-cz-group" /g, '<section class="pmt-cz-group" data-cz-later ') : html;
   }
+
+  /* the parts the parked screen is drawn in at idle, one a step (rasterSoon): each draws what its first selector names and
+     nothing else of the screen (data-rw-on), less what its second names (data-rw-off). The lead's split for the P1000
+     (2026-10-17): drawn as the top and six groups, the top linked 12-15 programs there (95-425 ms) and the colours 3-9,
+     against 1-2 on the RTX 3090. The preview goes last, after the bezel's steps at its size (rasterSoon) */
+  var CG = '.pmt-cz-group[data-group="colors"]';
+  var RASTER_PARTS = [
+    ['top:chrome', '.pmt-cz-scrim, .pmt-cz-frame'],
+    ['top:head', '.pmt-cz-head'],
+    ['top:meter', '.pmt-cz-meter'],
+    ['top:side', '.pmt-cz-presets, .pmt-cz-try'],
+    ['top:index', '.pmt-cz-nav, .pmt-cz-foot'],
+    ['colors:head', CG, CG + ' > :not(.pmt-cz-ghead):not(.pmt-cz-glead):not(.pmt-cz-findrow)'],
+    ['colors:tiles', CG + ' .pmt-cz-schemes', CG + ' .pmt-cz-sw'],
+    ['colors:art', CG + ' .pmt-cz-sw'],
+    ['colors:controls', CG + ' .pmt-cz-row, ' + CG + ' .pmt-cz-import'],
+    ['group:text', '.pmt-cz-group[data-group="text"]'],
+    ['group:cursor', '.pmt-cz-group[data-group="cursor"]'],
+    ['group:ground', '.pmt-cz-group[data-group="ground"]'],
+    ['group:effects', '.pmt-cz-group[data-group="effects"]'],
+    ['group:behavior', '.pmt-cz-group[data-group="behavior"]'],
+    ['top:preview', '.pmt-cz-preview']
+  ];
 
   /* ---------------- the screen ----------------
      One screen is kept ready (P2-02, pm7-motion-part2: built on the click it held the More menu about 470 ms on the
@@ -456,20 +494,31 @@
       return null;
     }
     if (v.pop) v.closeAppearance(true);
+    /* prepared at idle on the page's idle-warm queue, the screen is built in steps (staged; the lead's IDLE-WARM-RULE v3.4):
+       this first one, the shell, makes the whole screen's markup, every group left out of the layout, still out of the
+       page. Then its place and its controls' values, after which it goes in the page and its frame lays out the head and
+       the top alone; then the preview, each group, the measures and each phase of the fit, each a step of its own whose
+       frame lays out only what it added (buildSlices). Built in one step and measured at once, it held one task 180-260
+       ms on the P1000, 100-115 ms of it forced layout (part2's trace of 77d3befc8c) */
+    var staged = !!opts.staged, building = staged;
     var overlay = document.getElementById('pmw-overlay') || document.body;
     var root = el('div', 'pmt-cz pmt-calm pmt-cz-parked');
     root.setAttribute('aria-hidden', 'true');
     root.setAttribute('data-pmw-overlay', 'terminal-appearance');
-    root.innerHTML = skeleton(v);
-    overlay.appendChild(root);
+    root.innerHTML = skeleton(v, staged);
+    if (!staged) overlay.appendChild(root);
     var dialog = root.querySelector('.pmt-cz-dialog'), body = root.querySelector('.pmt-cz-body');
     /* the scope: All terminals when Settings opens it, for that visit only; otherwise the one last picked on this
        terminal's screen (remembered while the tab lives), This terminal at first. The editor's screen does the same */
     var scope = opts.scope === 'app' ? 'app' : v._apScope || 'tab';
     var closed = true, visit = 0, disposed = false;
-    var preview = null;
-    try { preview = new Preview(root.querySelector('[data-pv-box]'), v); } catch (e) { console.error('[pmt] the preview could not start', e); }
-    var pv = preview && preview.view;
+    var preview = null, pv = null;
+    function makePreview() {
+      try { preview = new Preview(root.querySelector('[data-pv-box]'), v); } catch (e) { console.error('[pmt] the preview could not start', e); }
+      pv = preview && preview.view;
+      root._pmtPreview = preview; /* the preview, for checks that read what it draws */
+    }
+    if (!staged) makePreview();
     var inks = {};
     [].forEach.call(root.querySelectorAll('.pmw-ink-row'), function (row) { try { if (window.PMW && PMW.frames && PMW.frames.ink) inks[row.getAttribute('data-seg')] = PMW.frames.ink(row); } catch (e) {} });
 
@@ -891,7 +940,7 @@
       root.querySelector('.pmt-cz-framelabel').textContent = scope === 'tab' ? 'This terminal' : 'This terminal, like all terminals';
       paintPresets();
       roving();
-      fit(root);
+      fitNow();
     }
     function lookEffects(R) {
       var fx = R.effects, l = [];
@@ -909,7 +958,7 @@
        itself uncovered ---- */
     function place() {
       var de = document.documentElement, W = de.clientWidth || 1024, H = de.clientHeight || 768;
-      var r = v.root.isConnected ? v.root.getBoundingClientRect() : { left: 0, top: 0, right: 0, bottom: 0, width: 0, height: 0 };
+      var r = v.root && v.root.isConnected ? v.root.getBoundingClientRect() : { left: 0, top: 0, right: 0, bottom: 0, width: 0, height: 0 };
       var hole = r.width > 0 && r.height > 0;
       var M = 12, want = Math.min(900, W - 2 * M), narrow = W < 720, left, width = want;
       if (narrow) { left = 8; width = W - 16; }
@@ -929,7 +978,31 @@
       if (hole) fr.style.cssText = 'left:' + x0 + 'px;top:' + y0 + 'px;width:' + (x1 - x0) + 'px;height:' + (y1 - y0) + 'px';
       root.classList.toggle('pmt-cz-narrow', narrow);
       syncDock();
-      fit(root);
+      fitNow();
+    }
+    /* the fits read the layout (PMW.czFit): while the screen is built, or caught up at idle (warmDraw), they wait for
+       steps of their own, a phase a step, each reading a layout the frame before has made clean (fitStart) */
+    var fitLater = false, fitQ = [], fitIds = [], fitDone = null;
+    function fitNow() { if (!building && !fitLater) fit(root); }
+    function fitStart(then) {
+      fitCancel();
+      fitDone = then;
+      if (window.PMW && PMW.czFit) PMW.czFit(root, function (phase) { fitQ.push(phase); });
+      fitNext();
+    }
+    function fitNext() {
+      if (!fitQ.length) { var then = fitDone; fitDone = null; if (then) then(); return; }
+      if (!window.PM_WARM || window.PM_WARM.state().off) { while (fitQ.length) fitQ.shift()(); fitNext(); return; }
+      var id = window.PM_WARM.add({ owner: 'terminal', name: 'customize:fit',
+        until: function () { return closed && !disposed; },
+        run: function () { fitIds = fitIds.filter(function (x) { return x !== id; }); var phase = fitQ.shift(); if (phase) phase(); fitNext(); return null; },
+        /* a late phase has done its work; one let go is done at once (the queue's session stop) */
+        onLate: function (i) { if (i.dropped && fitIds.indexOf(id) >= 0) { fitIds = fitIds.filter(function (x) { return x !== id; }); while (fitQ.length) fitQ.shift()(); fitNext(); } return true; } });
+      fitIds.push(id);
+    }
+    function fitCancel() {
+      if (window.PM_WARM) fitIds.forEach(function (id) { window.PM_WARM.cancel(id); });
+      fitIds = []; fitQ = []; fitDone = null;
     }
 
     /* ---- events ---- */
@@ -1240,21 +1313,22 @@
       warmDraw();
     }
     function warmDraw() {
+      /* its values drawn, the fits after them a step a phase; while it is still being built only the values (the build's
+         own measure and fits follow) */
+      fitLater = true;
       place(); syncPreview(); paint();
+      fitLater = false;
       changed = false;
       /* the preview draws what changed now, unseen, so the click has nothing left to draw */
       if (pv && pv.fullPending) pv.frame();
-      rasterSoon();
-      /* the case styles this screen offers, drawn once unseen in the look now in force, at the terminal's size and at its
-         preview's (71-bezel.js Bezel.warm) */
-      if (T.Bezel && T.Bezel.warm) T.Bezel.warm([v, pv]);
+      if (!building) fitStart(rasterSoon);
     }
     /* parked, the screen is clipped away, so the GPU had never drawn it: its first showing compiled the GPU programs its
        surfaces need and rastered every tile in the click's frames (P2-02, F3 on the P1000: the compositor held about
        470 ms before the screen appeared in Friendly). Once built, and again for each look it has not been drawn in, it
        is drawn at idle a part at a time, each for one frame, unseen (opacity 0.004, as the shell warms its theme covers;
        0.002 rounds to nothing on the P1000), then clipped away again */
-    var rastered = {}, rasterOn = false;
+    var rastered = {}, rasterOn = false, rasterEls = [], rasterOff = [];
     /* nothing inside takes the focus while it is drawn: a focus that lands inside is let go at once. inert did the same,
        but setting and clearing it restyled the whole screen twice per warm (review RW-4) */
     function rasterGuard(e) {
@@ -1265,41 +1339,51 @@
       if (e.target && e.target.blur) e.target.blur();
     }
     function rasterEnd() {
-      if (rasterEl) { rasterEl.removeAttribute('data-rw-on'); rasterEl = null; }
+      rasterEls.forEach(function (e) { e.removeAttribute('data-rw-on'); });
+      rasterOff.forEach(function (e) { e.removeAttribute('data-rw-off'); });
+      rasterEls = []; rasterOff = [];
       if (rasterOn) { rasterOn = false; root.classList.remove('pmt-cz-rasterwarm'); root.removeAttribute('data-rw'); root.removeEventListener('focusin', rasterGuard, true); }
     }
     /* the steps go on the page's one idle-warm queue (PM_WARM, 11-motion-start.js; the lead's IDLE-WARM-RULE.md): it
        admits one step per idle period, judges each by the frames presented after it and backs off when one is late
        (part2's F5b cold P1000 trace: drawing the whole screen in one frame froze idle Home for up to a second). Each
-       step draws one part of the unseen screen: its top, then one group at a time; the queue hides it again in the frame
-       after (the step's cleanup). Without the queue nothing is warmed. The background tiles' samples are gone: on the
-       P1000 the Hills pick still linked the same 5 programs after them (part2, F5b), so they cost idle time for nothing */
+       step draws one part of the unseen screen (RASTER_PARTS); the queue hides it again in the frame after (the step's
+       cleanup). Without the queue nothing is warmed. The background tiles' samples are gone: on the P1000 the Hills pick
+       still linked the same 5 programs after them (part2, F5b), so they cost idle time for nothing */
     var rasterIds = [];
     function rasterCancel() {
       if (window.PM_WARM) rasterIds.forEach(function (id) { window.PM_WARM.cancel(id); });
       rasterIds = []; rasterEnd();
     }
-    function rasterShow(part, el) {
+    function rasterShow(part) {
       if (!closed || disposed) return false;
+      var spec = RASTER_PARTS.filter(function (p) { return p[0] === part; })[0];
+      if (!spec) return false;
       rasterEnd();
       rasterOn = true;
       root.addEventListener('focusin', rasterGuard, true);
       root.setAttribute('data-rw', part);
-      if (el) { el.setAttribute('data-rw-on', ''); rasterEl = el; }
+      rasterEls = [].slice.call(root.querySelectorAll(spec[1]));
+      rasterOff = spec[2] ? [].slice.call(root.querySelectorAll(spec[2])) : [];
+      rasterEls.forEach(function (e) { e.setAttribute('data-rw-on', ''); });
+      rasterOff.forEach(function (e) { e.setAttribute('data-rw-off', ''); });
       root.classList.add('pmt-cz-rasterwarm');
       return true;
     }
-    var rasterEl = null;
+    /* the parts, once a look, then the case styles this screen offers, drawn once unseen in the look now in force, at
+       the terminal's size and at its preview's (71-bezel.js Bezel.warm), then the preview itself, whose case those steps
+       have compiled by then (the lead's split, 2026-10-17) */
     function rasterSoon() {
-      if (!closed || disposed || !window.PM_WARM) return;
+      if (!closed || disposed || building || !window.PM_WARM) return;
       var key = (root.getAttribute('data-pmt-look') || '') + '|' + (root.getAttribute('data-pmt-mode') || '');
-      if (rastered[key]) return;
+      var fresh = !rastered[key];
       rastered[key] = 1;
-      var W = window.PM_WARM, add = function (name, run) { rasterIds.push(W.add({ owner: 'terminal', name: 'customize:' + name, run: run })); };
-      add('top', function () { return rasterShow('top') ? rasterEnd : null; });
-      [].forEach.call(root.querySelectorAll('.pmt-cz-group[data-group]'), function (g) {
-        add('group:' + g.getAttribute('data-group'), function () { return rasterShow('group', g) ? rasterEnd : null; });
-      });
+      var W = window.PM_WARM, add = function (name) {
+        rasterIds.push(W.add({ owner: 'terminal', name: 'customize:' + name, run: function () { return rasterShow(name) ? rasterEnd : null; } }));
+      };
+      if (fresh) RASTER_PARTS.forEach(function (p) { if (p[0] !== 'top:preview') add(p[0]); });
+      if (T.Bezel && T.Bezel.warm) T.Bezel.warm([v, pv]);
+      if (fresh) add('top:preview');
     }
     function warmCancel() {
       clearTimeout(warmWait); warmWait = 0;
@@ -1373,7 +1457,7 @@
       parkedWatch(false); detach();
       /* its steps still queued on PM_WARM go with it (landing review IW-2; its preview's case steps go with the preview's
          view, 70-view.js dispose) */
-      rasterCancel();
+      rasterCancel(); buildCancel(); fitCancel();
       if (preview) preview.dispose();
       root.remove();
       clearTimeout(keptTimer);
@@ -1392,9 +1476,12 @@
       if (on) T.Motion.play(dock);
       pv.layout(true); preview.select();
     }
-    if (pv && typeof IntersectionObserver === 'function') {
+    /* once the preview is made (at once, or in its own build step) */
+    function watchDock() {
+      if (io || !pv || typeof IntersectionObserver !== 'function') return;
       io = new IntersectionObserver(function (list) { if (v.pop !== root) return; var en = list[list.length - 1]; wantDock = en.intersectionRatio < 0.4; syncDock(); }, { root: body, threshold: [0, 0.4, 1] });
     }
+    watchDock();
     /* the host's look or mode changed while the screen is open (View.onLook): the preview resolves again, so a scheme
        that switches with light and dark switches in the preview too (Q15 #7) */
     var onLook = function () { if (v.pop === root) { syncPreview(); paint(); } };
@@ -1434,6 +1521,8 @@
       var k = root.querySelector('.pmt-cz-kicker span'); if (k) k.textContent = 'Customize · ' + termLabel(nv);
       if (preview) preview.retarget(nv);
       parkedWatch(true);
+      /* kept while it was being built: its steps let go, so they go on the queue again for this terminal */
+      if (building) queueBuild();
     }
     /* the visit: this terminal's scope (or All terminals from Settings), from the top, with an empty search; what changed
        while it was parked is drawn now, and what was measured before (the place, the fit, the tiles) is kept when
@@ -1448,8 +1537,8 @@
       /* something changed while it was parked and its catch-up has not run yet (a look just switched, a screen kept from a
          terminal that went): drawn in the click, the browser would style and lay it out there, holding the menu
          (P2-02, F1A on the P1000) */
-      var owed = changed || !!(warmWait || warmJob || warmStep);
-      rasterCancel();
+      var owed = changed || !!(warmWait || warmJob || warmStep) || building || fitIds.length > 0;
+      rasterCancel(); fitCancel();
       parkedWatch(false);
       var showing = ++visit;
       gcat = null; wantDock = false; dockTo(false); body.scrollTop = 0;
@@ -1481,12 +1570,78 @@
           }, 0);
         }); });
       }
-      if (owed) afterPaint(function () { if (closed || showing !== visit) return; draw(); reveal(); });
+      /* a screen whose build steps have not all run is finished here, after the click's frame, where the rest of what it
+         owes is drawn (the slices left, then a fit in one go in draw) */
+      if (owed) afterPaint(function () { if (closed || showing !== visit) return; finishBuild(); draw(); reveal(); });
       else { draw(); reveal(); }
       return handle;
     }
-    root._pmtPreview = preview; /* the preview, for checks that read what it draws */
-    /* built parked: laid out, fitted and drawn once here, and the preview drawn once, then still until the screen shows */
+
+    /* ---- the build in steps (staged): the values, the preview, each group, the measures, then the fit's phases (fitStart);
+       each step only writes, so the frame after it lays out what it added. A step skipped (the screen kept for the next
+       terminal, or gone) stops the rest; retarget queues them again. A late step has done its work all the same; one let
+       go (the queue's session stop) leaves the rest to this screen's own idle wait. The click finishes what is left
+       (show, finishBuild) ---- */
+    var slices = [], buildIds = [], buildJob = 0;
+    function buildSlices() {
+      /* placed and its controls' values drawn while it is still out of the page, then put in it, so no style is computed
+         before its values are (a value drawn after started its transitions, which held the queue's animation gate), then
+         the preview */
+      var out = [{ name: 'values', run: function () { place(); syncPreview(); paint(); filter(''); overlay.appendChild(root); parkedWatch(true); } }, { name: 'preview', run: function () {
+        makePreview();
+        if (pv) { watchDock(); pv.layout(true); preview.select(); }
+        syncPreview();
+        if (pv && closed) pv.onHide();
+      } }];
+      [].forEach.call(root.querySelectorAll('.pmt-cz-group[data-cz-later]'), function (g) {
+        out.push({ name: 'group:' + g.getAttribute('data-group'), run: function () { g.removeAttribute('data-cz-later'); } });
+      });
+      out.push({ name: 'measure', run: function () { place(); syncPreview(); fitStart(built); } });
+      return out;
+    }
+    function buildCancel() {
+      if (window.PM_WARM) buildIds.forEach(function (id) { window.PM_WARM.cancel(id); });
+      buildIds = [];
+      if (buildJob) { if (window.cancelIdleCallback) cancelIdleCallback(buildJob); clearTimeout(buildJob); buildJob = 0; }
+    }
+    function queueBuild() {
+      buildCancel();
+      if (!window.PM_WARM || window.PM_WARM.state().off) { buildIdle(); return; }
+      slices.forEach(function (s) {
+        buildIds.push(window.PM_WARM.add({ owner: 'terminal', name: 'customize:build:' + s.name,
+          until: function () { return !disposed && !handle.kept && slices[0] === s; },
+          run: function () { if (slices[0] === s) { slices.shift(); s.run(); } return null; },
+          onLate: function (i) { if (i.dropped) buildIdle(); return true; } }));
+      });
+    }
+    /* what is left, in one go, in this screen's own idle wait (as before the queue) */
+    function buildIdle() {
+      if (buildJob || !building) return;
+      var go = function () { buildJob = 0; if (!building || disposed || !closed) return; finishBuild(); fit(root); };
+      buildJob = window.requestIdleCallback ? requestIdleCallback(go, { timeout: 4000 }) : setTimeout(go, 500);
+    }
+    function finishBuild() {
+      if (!building) return;
+      buildCancel();
+      while (slices.length) slices.shift().run();
+      fitCancel();
+      built();
+    }
+    function built() {
+      if (!building) return;
+      building = false;
+      /* parked: its parts and the case styles warmed; finished by a click, the case styles only */
+      if (closed) rasterSoon(); else if (T.Bezel && T.Bezel.warm) T.Bezel.warm([v, pv]);
+    }
+    /* built parked: the shell (staged), or laid out, fitted and drawn once here, the preview drawn once, then still until
+       the screen shows */
+    if (staged) {
+      own(v);
+      prepared = handle;
+      slices = buildSlices();
+      queueBuild();
+      return handle;
+    }
     place();
     if (pv) { pv.layout(true); preview.select(); }
     syncPreview();
@@ -1496,7 +1651,7 @@
     parkedWatch(true);
     own(v);
     prepared = handle;
-    if (opts.prepare) { rasterSoon(); if (T.Bezel && T.Bezel.warm) T.Bezel.warm([v, pv]); }
+    if (opts.prepare) rasterSoon();
     return opts.prepare ? handle : show(opts);
   }
 
@@ -1535,23 +1690,25 @@
        a cover or a switch; after 4 s it takes the next idle moment, since a page with motion of its own never fully rests
        and a screen built late only makes the first click pay for it */
     var since = T.util.now();
-    var build = function (deadline) {
+    var build = function (deadline, staged) {
       prepStep = 0;
       if ((prepared && !prepared.kept) || v.pop || !v.root.isConnected) { if (!prepared || prepared.kept) prepareLater(1500); return; }
       if (pageSettling()) { prepareLater(1500); return; }
       if (deadline && typeof deadline.timeRemaining === 'function' && !deadline.didTimeout && deadline.timeRemaining() < 45 && T.util.now() - since < 4000) {
         requestIdleCallback(build, { timeout: Math.max(500, 4000 - (T.util.now() - since)) }); return;
       }
-      try { open(v, { prepare: true }); } catch (e) { console.error('[pmt] the Customize screen could not be prepared', e); }
+      try { open(v, { prepare: true, staged: !!staged }); } catch (e) { console.error('[pmt] the Customize screen could not be prepared', e); }
     };
-    /* where the page has its idle-warm queue the build is a step on it, admitted and judged as every warm step is (part2's
-       F5b cold P1000 trace: built in this screen's own idle wait, it and its first drawing froze idle Home for a second);
-       a late frame after it is no reason to build it again. */
+    /* where the page has its idle-warm queue the build is steps on it, admitted and judged as every warm step is (part2's
+       F5b cold P1000 trace: built in this screen's own idle wait, it and its first drawing froze idle Home for a second),
+       this first one the screen's shell (open, staged); a late frame after one is no reason to build it again. The step
+       goes with the terminal it was asked for (review WQ-4) */
     var idleBuild = function () { if (window.requestIdleCallback) requestIdleCallback(build, { timeout: 4000 }); else setTimeout(build, 500); };
     /* where the queue is off or lets the step go (the no-GPU profile, its session stop) it is built in its own idle
        wait, as before: the screen is needed either way */
     if (window.PM_WARM && !window.PM_WARM.state().off) {
-      if (!prepStep) prepStep = window.PM_WARM.add({ owner: 'terminal', name: 'customize:build', run: function () { build(null); return null; },
+      if (!prepStep) prepStep = window.PM_WARM.add({ owner: 'terminal', name: 'customize:build:shell', run: function () { build(null, true); return null; },
+        until: function () { if (v.root.isConnected) return true; prepStep = 0; prepareLater(1500); return false; },
         onLate: function (i) { if (i.dropped) { prepStep = 0; idleBuild(); } return true; } });
       return;
     }
