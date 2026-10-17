@@ -199,9 +199,10 @@ PAGES = [
      "        } catch (e) {}\n"
      "      };\n"
      "      /* O55: an arriving page still drawing its content in slices says so (data-pm-entrance-wait): the moves stay held\n"
-     "         until it is drawn (1.5 s at most), the click's fade still going meanwhile (F6 Usage entry freeze) */\n"
+     "         until it is drawn (1.5 s from the click at most), the click's fade still going meanwhile (F6 Usage entry freeze) */\n"
      "      var stillDrawing = function () { return newP.hasAttribute('data-pm-entrance-wait'); };\n"
-     "      if (window.PM_START_ON_SHOWN) window.PM_START_ON_SHOWN(pageMoves, { release: handoff, wait: stillDrawing, waitCap: 1500 }); else handoff();\n",
+     "      var waitFrom = lift && lift.el === oldP ? lift.at : undefined;   /* 1.5 s from the click's frame, inside its fade */\n"
+     "      if (window.PM_START_ON_SHOWN) window.PM_START_ON_SHOWN(pageMoves, { release: handoff, wait: stillDrawing, waitCap: 1500, waitFrom: waitFrom }); else handoff();\n",
      'page switch: moves start on a shown frame'),
     ("      function cleanupOut() {\n"
      "        oldP.classList.remove('pm8-page-out');\n",
@@ -340,12 +341,13 @@ ANSWER_FIRST = [
      "         two to 0.86). The fade keeps going while the change's long frames run (0.86 at 140 ms, then on to\n"
      "         0.72 by 740 ms, on the compositor), so a wait for the arriving page (the P1000's Settings entry: Home sat at\n"
      "         0.86 to ~583 ms) reads as the page leaving; the exit takes over from wherever it has reached. It goes on, slower,\n"
-     "         to 0.6 by 1.5 s, the longest an arriving page may hold its entrance while it draws (data-pm-entrance-wait), so a\n"
-     "         long hold never stands on a still frame; Retro keeps its 70 ms step through the same segments */\n"
-     "      var LIFT_MS = 1500;\n"
+     "         to 0.6 by 1.6 s, past the longest an arriving page may hold its entrance while it draws (data-pm-entrance-wait:\n"
+     "         1.5 s from this frame), so a long hold never stands on a still frame; Retro keeps its 70 ms step through the\n"
+     "         same segments */\n"
+     "      var LIFT_MS = 1600;\n"
      "      var lift = !nier && !reduced() && oldP && oldP.animate && !oldP.classList.contains('pm8-page-out') ? oldP.animate(retro\n"
-     "        ? [{ opacity: 1, easing: 'steps(2, end)' }, { opacity: 0.86, offset: 140 / 1500, easing: 'steps(8, end)' }, { opacity: 0.72, offset: 740 / 1500, easing: 'steps(11, end)' }, { opacity: 0.6 }]\n"
-     "        : [{ opacity: 1, easing: 'cubic-bezier(.2, 0, 0, 1)' }, { opacity: 0.86, offset: 140 / 1500, easing: 'cubic-bezier(.3, 0, .3, 1)' }, { opacity: 0.72, offset: 740 / 1500, easing: 'cubic-bezier(.4, 0, .6, 1)' }, { opacity: 0.6 }],\n"
+     "        ? [{ opacity: 1, easing: 'steps(2, end)' }, { opacity: 0.86, offset: 140 / 1600, easing: 'steps(8, end)' }, { opacity: 0.72, offset: 740 / 1600, easing: 'steps(12, end)' }, { opacity: 0.6 }]\n"
+     "        : [{ opacity: 1, easing: 'cubic-bezier(.2, 0, 0, 1)' }, { opacity: 0.86, offset: 140 / 1600, easing: 'cubic-bezier(.3, 0, .3, 1)' }, { opacity: 0.72, offset: 740 / 1600, easing: 'cubic-bezier(.4, 0, .6, 1)' }, { opacity: 0.6 }],\n"
      "        { duration: LIFT_MS, easing: 'linear', fill: 'forwards' }) : null;\n"
      "      if (lift) lift.__pmLiftMs = LIFT_MS;\n"
      "      soon = { page: pageId };\n"
