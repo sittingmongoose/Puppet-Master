@@ -902,7 +902,7 @@
           "description": "DL-186 (lead ruling F3): written instead of boards when the snapshot would pass 64 KB; the size in bytes of what was left out, which the save's announcement reports."
         }
       },
-      "description": "A saved layout keeps shape, sizes and the kinds each slot holds, never tabs, sessions or buffers. Amended 2026-10-10 (DL-186): it may also keep a snapshot of the boards of its dashboard tabs (boards), or, when that would pass 64 KB, only the size it left out (boards_skipped_bytes); a layout saved before holds neither and applies as before.",
+      "description": "A saved layout keeps shape, sizes, the kinds each slot holds, its tab identifiers and its slot state (active tab, lock, collapse), never tab payloads, sessions or buffers (amended 2026-10-17, DL-228, DL-230; retired lineage: it read \"never tabs, sessions or buffers\"). Amended 2026-10-10 (DL-186): it may also keep a snapshot of the boards of its dashboard tabs (boards), or, when that would pass 64 KB, only the size it left out (boards_skipped_bytes); a layout saved before holds neither and applies as before.",
       "not": {
         "required": [
           "boards",
