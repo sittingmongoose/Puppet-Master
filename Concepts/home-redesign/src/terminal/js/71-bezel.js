@@ -445,8 +445,20 @@
      the rest (29 ms against 12-19 ms on the P1000: the grain tiles and the code's first run). warm(views): one style at
      one size, drawn once off the page in two cpu steps on the page's idle-warm queue (PM_WARM), the case and then its
      light; a second style or size would draw nothing new. Its ids are kept per view, so a view that goes takes them with
-     it (unwarm) */
-  var warmedBezel = {}, warmIds = new WeakMap();
+     it (unwarm). The light is drawn from a stand-in picture on a CPU canvas, not from the terminal's own canvas: read
+     from that GPU canvas, the CPU snapshot made Chrome raster the light's passes on the GPU (RTX 3090: 11 GPU canvas
+     commands, 10 FillRRect programs linked; the F6b idle on the P1000: 3-6 links, 147-287 ms), and from the stand-in
+     it draws nothing on the GPU */
+  var warmedBezel = {}, warmIds = new WeakMap(), standIn = null;
+  function warmSource() {
+    if (standIn) return standIn;
+    standIn = document.createElement('canvas'); standIn.width = 480; standIn.height = 160;
+    var c = ctx2d(standIn);
+    c.fillStyle = '#0b0c0f'; c.fillRect(0, 0, 480, 160);
+    c.fillStyle = '#d6d6d6'; c.font = '14px monospace';
+    for (var y = 22; y < 160; y += 20) c.fillText('~/api $ ls -la  src  tests  README.md', 10, y);
+    return standIn;
+  }
   function gpuTier() {
     var tier = document.documentElement.getAttribute('data-lg-tier');
     if (tier) return tier === 'gpu';
@@ -475,7 +487,7 @@
         run: function () {
           var b = it.ap.bezel, w = it.w, h = it.h, inset = (b.width || 0) + (b.gap || 0), bz = null;
           try {
-            bz = new Bezel({ root: document.createElement('div'), canvas: it.view.canvas, visible: true, fx: null, renderer: null });
+            bz = new Bezel({ root: document.createElement('div'), canvas: warmSource(), visible: true, fx: null, renderer: null });
             bz.configure(b, it.ap);
             if (!pt.light) bz.spec.strength = 0;
             bz.g = { w: w, h: h, gx: inset, gy: inset, gw: Math.max(20, w - inset * 2), gh: Math.max(20, h - inset * 2), dpr: it.dpr };
