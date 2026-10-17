@@ -1289,6 +1289,8 @@
     if (this._dprOff) this._dprOff();
     if (this.raf) cancelAnimationFrame(this.raf);
     if (this.fx) { this.fx.dispose(); this.fx = null; }
+    /* its case steps still queued on the page's idle-warm queue go too, so nothing holds the view (landing review IW-2) */
+    if (T.Bezel && T.Bezel.unwarm) T.Bezel.unwarm(this);
     if (this.bezel) this.bezel.dispose();
     this.root.remove();
   };

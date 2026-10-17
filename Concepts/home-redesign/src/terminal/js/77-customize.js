@@ -1220,20 +1220,26 @@
        changed for WARM_SETTLE_MS and no page, Usage or onboarding transition runs, and then for the page to be really
        idle: an idle period of WARM_IDLE_MS or more, which the browser gives only when nothing is drawing frames (a switch
        still playing leaves only slivers between its frames). WARM_LATEST_MS is the backstop for a page whose own motion
-       never rests (no cover or switch is up by then). A click before that draws what changed itself */
-    var WARM_SETTLE_MS = 3000, WARM_IDLE_MS = 45, WARM_LATEST_MS = 10000, warmJob = 0, warmWait = 0, warmSince = 0, offWarm = null;
+       never rests (no cover or switch is up by then). A click before that draws what changed itself. Where the page has
+       its idle-warm queue (PM_WARM, 11-motion-start.js) the drawing is a step on it after the quiet time, admitted and
+       judged as every warm step is, instead of this screen's own idle wait */
+    var WARM_SETTLE_MS = 3000, WARM_IDLE_MS = 45, WARM_LATEST_MS = 10000, warmJob = 0, warmStep = 0, warmWait = 0, warmSince = 0, offWarm = null;
     /* changed: something it shows may have changed while nothing watched it (kept from a terminal that went), so it
        draws again before it shows */
     var changed = false;
     function settling() { return pageSettling(); }
     function warm(deadline) {
-      warmJob = 0;
+      if (deadline === 'queue') warmStep = 0; else warmJob = 0;
       if (!closed || disposed) return;
       if (settling()) { warmSoon(); return; }
+      if (deadline === 'queue') { warmDraw(); return; }
       if (deadline && typeof deadline.timeRemaining === 'function' && !deadline.didTimeout && deadline.timeRemaining() < WARM_IDLE_MS && T.util.now() - warmSince < WARM_LATEST_MS) {
         warmJob = requestIdleCallback(warm, { timeout: Math.max(1000, WARM_LATEST_MS - (T.util.now() - warmSince)) });
         return;
       }
+      warmDraw();
+    }
+    function warmDraw() {
       place(); syncPreview(); paint();
       changed = false;
       /* the preview draws what changed now, unseen, so the click has nothing left to draw */
@@ -1246,8 +1252,8 @@
     /* parked, the screen is clipped away, so the GPU had never drawn it: its first showing compiled the GPU programs its
        surfaces need and rastered every tile in the click's frames (P2-02, F3 on the P1000: the compositor held about
        470 ms before the screen appeared in Friendly). Once built, and again for each look it has not been drawn in, it
-       is drawn at idle for two frames, unseen (opacity 0.004, as the shell warms its theme covers; 0.002 rounds to
-       nothing on the P1000), then clipped away again */
+       is drawn at idle a part at a time, each for one frame, unseen (opacity 0.004, as the shell warms its theme covers;
+       0.002 rounds to nothing on the P1000), then clipped away again */
     var rastered = {}, rasterOn = false;
     /* nothing inside takes the focus while it is drawn: a focus that lands inside is let go at once. inert did the same,
        but setting and clearing it restyled the whole screen twice per warm (review RW-4) */
@@ -1259,34 +1265,15 @@
       if (e.target && e.target.blur) e.target.blur();
     }
     function rasterEnd() {
-      if (rasterSample) { rasterSample.remove(); rasterSample = null; }
       if (rasterEl) { rasterEl.removeAttribute('data-rw-on'); rasterEl = null; }
       if (rasterOn) { rasterOn = false; root.classList.remove('pmt-cz-rasterwarm'); root.removeAttribute('data-rw'); root.removeEventListener('focusin', rasterGuard, true); }
-    }
-    /* the background tiles' kinds it has not drawn in this look: their rounded picture, gradient and pattern fills
-       linked their GPU programs when a category first showed them (part2's F5a P1000 trace: the Scene tiles, 5 to 7
-       programs, about 195 ms, just after the Hills pick). One sample of each kind is laid among the tiles of the unseen
-       screen, one per painted frame so no frame compiles more than one kind's programs, then removed. Tiles are buttons,
-       which never start the browser's form scan (the rule on inputs in a look switch) */
-    var sampled = {}, rasterSample = null;
-    function sampleTiles(lookKey) {
-      var G = T.Grounds, R = eff(), th = R && R.theme, out = [];
-      if (!G || !th) return out;
-      var seen = {};
-      G.list().forEach(function (d) {
-        var kind = d.cat === 'tonal' || d.cat === 'wash' ? 'gradient' : d.cat;
-        if (seen[kind] || sampled[lookKey + '|' + kind]) return;
-        seen[kind] = 1;
-        out.push({ kind: kind, gv: (G.isGradient(d.id) ? 'g:' : 'i:') + d.id, name: d.name });
-      });
-      if (!sampled[lookKey + '|solid']) out.push({ kind: 'solid', gv: 'theme', name: 'Scheme' });
-      return out;
     }
     /* the steps go on the page's one idle-warm queue (PM_WARM, 11-motion-start.js; the lead's IDLE-WARM-RULE.md): it
        admits one step per idle period, judges each by the frames presented after it and backs off when one is late
        (part2's F5b cold P1000 trace: drawing the whole screen in one frame froze idle Home for up to a second). Each
-       step draws one part of the unseen screen: its top, then one group at a time, then one sample tile; the queue
-       hides it again in the frame after (the step's cleanup). Without the queue nothing is warmed */
+       step draws one part of the unseen screen: its top, then one group at a time; the queue hides it again in the frame
+       after (the step's cleanup). Without the queue nothing is warmed. The background tiles' samples are gone: on the
+       P1000 the Hills pick still linked the same 5 programs after them (part2, F5b), so they cost idle time for nothing */
     var rasterIds = [];
     function rasterCancel() {
       if (window.PM_WARM) rasterIds.forEach(function (id) { window.PM_WARM.cancel(id); });
@@ -1313,24 +1300,26 @@
       [].forEach.call(root.querySelectorAll('.pmt-cz-group[data-group]'), function (g) {
         add('group:' + g.getAttribute('data-group'), function () { return rasterShow('group', g) ? rasterEnd : null; });
       });
-      /* one sample of each background kind, each in its own step, its picture drawn in that step (review TF5b-1) */
-      sampleTiles(key).forEach(function (sm) {
-        add('tile:' + sm.kind, function () {
-          var host = root.querySelector('[data-gtiles]'), grp = host && host.closest('.pmt-cz-group'), R = eff(), th = R && R.theme;
-          if (!host || !th || !rasterShow('group', grp)) return null;
-          var tmp = document.createElement('div');
-          tmp.innerHTML = groundTile(sm.gv, sm.name, th); rasterSample = tmp.firstChild;
-          if (!rasterSample) { rasterEnd(); return null; }
-          rasterSample.setAttribute('aria-hidden', 'true'); rasterSample.tabIndex = -1;
-          host.appendChild(rasterSample);
-          sampled[key + '|' + sm.kind] = 1;
-          return rasterEnd;
-        });
-      });
     }
     function warmCancel() {
       clearTimeout(warmWait); warmWait = 0;
-      if (warmJob) { if (window.cancelIdleCallback) cancelIdleCallback(warmJob); clearTimeout(warmJob); warmJob = 0; }
+      if (warmStep && window.PM_WARM) window.PM_WARM.cancel(warmStep);
+      if (warmJob) { if (window.cancelIdleCallback) cancelIdleCallback(warmJob); clearTimeout(warmJob); }
+      warmJob = warmStep = 0;
+    }
+    /* the drawing, once the quiet time is over: a step on the page's queue, done when it is (a late frame after it is
+       not a reason to draw it again), or this screen's own idle wait where the queue is off or lets it go (the no-GPU
+       profile, the queue's session stop): the screen still has to be up to date when it shows */
+    function warmIdle() { warmJob = window.requestIdleCallback ? requestIdleCallback(warm, { timeout: WARM_LATEST_MS }) : setTimeout(warm, 300); }
+    function warmQueue() {
+      warmSince = T.util.now();
+      if (window.PM_WARM && !window.PM_WARM.state().off) {
+        var id = warmStep = window.PM_WARM.add({ owner: 'terminal', name: 'customize:catch-up', run: function () { warm('queue'); return null; },
+          until: function () { return closed && !disposed; },
+          onLate: function (i) { if (i.dropped && warmStep === id) { warmStep = 0; warmIdle(); } return true; } });
+        return;
+      }
+      warmIdle();
     }
     function warmSoon() {
       if (!closed || disposed) return;
@@ -1339,8 +1328,7 @@
         warmWait = 0;
         if (!closed || disposed) return;
         if (settling()) { warmSoon(); return; }
-        warmSince = T.util.now();
-        warmJob = window.requestIdleCallback ? requestIdleCallback(warm, { timeout: WARM_LATEST_MS }) : setTimeout(warm, 300);
+        warmQueue();
       }, WARM_SETTLE_MS);
     }
     /* the page's shared 'pm-idle' (every cover and transition has cleared, window.PM_BUSY's event): a catch-up still
@@ -1348,8 +1336,7 @@
     function warmOnIdle() {
       if (!warmWait || !closed || disposed || settling()) return;
       clearTimeout(warmWait); warmWait = 0;
-      warmSince = T.util.now();
-      warmJob = window.requestIdleCallback ? requestIdleCallback(warm, { timeout: WARM_LATEST_MS }) : setTimeout(warm, 300);
+      warmQueue();
     }
     function parkedWatch(on) {
       if (!on) warmCancel();
@@ -1384,6 +1371,9 @@
       disposed = true;
       if (v.pop === root) v.closeAppearance(true);
       parkedWatch(false); detach();
+      /* its steps still queued on PM_WARM go with it (landing review IW-2; its preview's case steps go with the preview's
+         view, 70-view.js dispose) */
+      rasterCancel();
       if (preview) preview.dispose();
       root.remove();
       clearTimeout(keptTimer);
@@ -1458,7 +1448,7 @@
       /* something changed while it was parked and its catch-up has not run yet (a look just switched, a screen kept from a
          terminal that went): drawn in the click, the browser would style and lay it out there, holding the menu
          (P2-02, F1A on the P1000) */
-      var owed = changed || !!(warmWait || warmJob);
+      var owed = changed || !!(warmWait || warmJob || warmStep);
       rasterCancel();
       parkedWatch(false);
       var showing = ++visit;
@@ -1527,7 +1517,7 @@
   }
   /* one poll pending at a time; with no terminal session at all it stops, and the next terminal to mount wakes it
      (90-kind.js mountView, T.Customize.wake; review TP-1: it polled every 1.5 s for the rest of the session) */
-  var prepTimer = 0;
+  var prepTimer = 0, prepStep = 0;
   function prepareLater(ms) {
     if (prepTimer) return;
     prepTimer = setTimeout(function () { prepTimer = 0; prepareSoon(); }, ms);
@@ -1546,6 +1536,7 @@
        and a screen built late only makes the first click pay for it */
     var since = T.util.now();
     var build = function (deadline) {
+      prepStep = 0;
       if ((prepared && !prepared.kept) || v.pop || !v.root.isConnected) { if (!prepared || prepared.kept) prepareLater(1500); return; }
       if (pageSettling()) { prepareLater(1500); return; }
       if (deadline && typeof deadline.timeRemaining === 'function' && !deadline.didTimeout && deadline.timeRemaining() < 45 && T.util.now() - since < 4000) {
@@ -1553,7 +1544,18 @@
       }
       try { open(v, { prepare: true }); } catch (e) { console.error('[pmt] the Customize screen could not be prepared', e); }
     };
-    if (window.requestIdleCallback) requestIdleCallback(build, { timeout: 4000 }); else setTimeout(build, 500);
+    /* where the page has its idle-warm queue the build is a step on it, admitted and judged as every warm step is (part2's
+       F5b cold P1000 trace: built in this screen's own idle wait, it and its first drawing froze idle Home for a second);
+       a late frame after it is no reason to build it again. */
+    var idleBuild = function () { if (window.requestIdleCallback) requestIdleCallback(build, { timeout: 4000 }); else setTimeout(build, 500); };
+    /* where the queue is off or lets the step go (the no-GPU profile, its session stop) it is built in its own idle
+       wait, as before: the screen is needed either way */
+    if (window.PM_WARM && !window.PM_WARM.state().off) {
+      if (!prepStep) prepStep = window.PM_WARM.add({ owner: 'terminal', name: 'customize:build', run: function () { build(null); return null; },
+        onLate: function (i) { if (i.dropped) { prepStep = 0; idleBuild(); } return true; } });
+      return;
+    }
+    idleBuild();
   }
   if (document.readyState === 'complete') prepareLater(1500);
   else window.addEventListener('load', function () { prepareLater(1500); }, { once: true });

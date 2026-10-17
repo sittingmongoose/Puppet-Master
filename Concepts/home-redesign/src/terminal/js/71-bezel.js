@@ -249,8 +249,13 @@
       if (s.light) return k >= 1 ? rgba(0xffffff, Math.min(0.85, 0.35 * k)) : rgba(C.hex('#1e2d5a'), 0.16 * (1 - k) + 0.04);
       return rgba(lit(c, k, true), a === undefined ? ga : a);
     };
+    /* warmStage (the idle warm only, Bezel.warm): the sections up to that one are drawn, so each warm step compiles the
+       programs of one more section; undefined draws all. Stage 1 is the case's outline clip alone, filled once, since
+       every section draws through it */
+    var stage = this.warmStage, go = function (n) { return stage === undefined || n <= stage; };
     ctx.clearRect(0, 0, g.w, g.h);
     ctx.save(); ctx.clip(ring, 'evenodd');
+    if (stage === 1 && !ink) { ctx.fillStyle = col(base, 1); ctx.fillRect(0, 0, g.w, g.h); }
     if (ink) {
       ctx.fillStyle = hex(base); ctx.fillRect(0, 0, g.w, g.h);
       ctx.restore();
@@ -258,59 +263,75 @@
       return;
     }
     /* the flat frame: each side a shade of the same light, a touch lighter along the top */
-    ctx.save(); ctx.clip(frameRing, 'evenodd');
-    SIDES.forEach(function (side) { ctx.save(); ctx.clip(polyPath(geo.frameParts[side])); ctx.fillStyle = col(base, FRAME[side]); ctx.fillRect(0, 0, g.w, g.h); ctx.restore(); });
-    ctx.restore();
-    /* the sloped face: four parts meeting in crisp creases, each lit by where it faces, a little darker toward the glass */
-    ctx.save(); ctx.clip(faceRing, 'evenodd');
-    var fb = geo.frameIn, bb = geo.bb;
-    SIDES.forEach(function (side) {
-      ctx.save(); ctx.clip(polyPath(geo.faceParts[side]));
-      var k = FACE[side], gr = side === 'top' ? ctx.createLinearGradient(0, fb[1], 0, bb[1]) : side === 'bottom' ? ctx.createLinearGradient(0, fb[3], 0, bb[3])
-        : side === 'left' ? ctx.createLinearGradient(fb[0], 0, bb[0], 0) : ctx.createLinearGradient(fb[2], 0, bb[2], 0);
-      gr.addColorStop(0, col(face, k * 1.08)); gr.addColorStop(1, col(face, k * 0.9));
-      ctx.fillStyle = gr; ctx.fillRect(0, 0, g.w, g.h);
+    if (go(2)) {
+      ctx.save(); ctx.clip(frameRing, 'evenodd');
+      SIDES.forEach(function (side) { ctx.save(); ctx.clip(polyPath(geo.frameParts[side])); ctx.fillStyle = col(base, FRAME[side]); ctx.fillRect(0, 0, g.w, g.h); ctx.restore(); });
       ctx.restore();
-    });
-    /* the creases: a hairline of light along each diagonal where two parts of the face meet */
-    ctx.lineWidth = 1; ctx.strokeStyle = glass ? 'rgba(255,255,255,' + (s.light ? 0.5 : 0.16) + ')' : rgba(lit(face, 2.2, light), 0.35);
-    [[fb[0], fb[1], bb[0], bb[1]], [fb[2], fb[1], bb[2], bb[1]], [fb[2], fb[3], bb[2], bb[3]], [fb[0], fb[3], bb[0], bb[3]]].forEach(function (q) { ctx.beginPath(); ctx.moveTo(q[0], q[1]); ctx.lineTo(q[2], q[3]); ctx.stroke(); });
-    ctx.restore();
-    /* the grain: speckle in plastic, streaks along each side in metal, frost in glass */
-    var tl = tile(M.grain === 'brushed' ? 'brushed' : M.grain === 'frost' ? 'frost' : 'plastic');
-    ctx.globalCompositeOperation = glass ? 'source-over' : 'overlay'; ctx.globalAlpha = M.grain === 'gloss' ? 0.45 : glass ? 0.6 : 1;
-    if (M.grain === 'brushed') {
-      ['top', 'bottom'].forEach(function (side) { ctx.save(); ctx.clip(polyPath(geo.frameParts[side])); ctx.fillStyle = ctx.createPattern(tl, 'repeat'); ctx.fillRect(0, 0, g.w, g.h); ctx.restore(); });
-      ['left', 'right'].forEach(function (side) {
-        ctx.save(); ctx.clip(polyPath(geo.frameParts[side])); ctx.translate(g.w / 2, g.h / 2); ctx.rotate(Math.PI / 2); ctx.translate(-g.h / 2, -g.w / 2);
-        ctx.fillStyle = ctx.createPattern(tl, 'repeat'); ctx.fillRect(0, 0, g.h, g.w); ctx.restore();
+    }
+    /* the sloped face: four parts meeting in crisp creases, each lit by where it faces, a little darker toward the glass */
+    var fb = geo.frameIn, bb = geo.bb;
+    if (go(3)) {
+      ctx.save(); ctx.clip(faceRing, 'evenodd');
+      SIDES.forEach(function (side) {
+        ctx.save(); ctx.clip(polyPath(geo.faceParts[side]));
+        var k = FACE[side], gr = side === 'top' ? ctx.createLinearGradient(0, fb[1], 0, bb[1]) : side === 'bottom' ? ctx.createLinearGradient(0, fb[3], 0, bb[3])
+          : side === 'left' ? ctx.createLinearGradient(fb[0], 0, bb[0], 0) : ctx.createLinearGradient(fb[2], 0, bb[2], 0);
+        gr.addColorStop(0, col(face, k * 1.08)); gr.addColorStop(1, col(face, k * 0.9));
+        ctx.fillStyle = gr; ctx.fillRect(0, 0, g.w, g.h);
+        ctx.restore();
       });
-    } else { ctx.fillStyle = ctx.createPattern(tl, 'repeat'); ctx.fillRect(0, 0, g.w, g.h); }
-    ctx.globalCompositeOperation = 'source-over'; ctx.globalAlpha = 1;
+      /* the creases: a hairline of light along each diagonal where two parts of the face meet */
+      if (go(4)) {
+        ctx.lineWidth = 1; ctx.strokeStyle = glass ? 'rgba(255,255,255,' + (s.light ? 0.5 : 0.16) + ')' : rgba(lit(face, 2.2, light), 0.35);
+        [[fb[0], fb[1], bb[0], bb[1]], [fb[2], fb[1], bb[2], bb[1]], [fb[2], fb[3], bb[2], bb[3]], [fb[0], fb[3], bb[0], bb[3]]].forEach(function (q) { ctx.beginPath(); ctx.moveTo(q[0], q[1]); ctx.lineTo(q[2], q[3]); ctx.stroke(); });
+      }
+      ctx.restore();
+    }
+    /* the grain: speckle in plastic, streaks along each side in metal, frost in glass */
+    if (go(5)) {
+      var tl = tile(M.grain === 'brushed' ? 'brushed' : M.grain === 'frost' ? 'frost' : 'plastic');
+      ctx.globalCompositeOperation = glass ? 'source-over' : 'overlay'; ctx.globalAlpha = M.grain === 'gloss' ? 0.45 : glass ? 0.6 : 1;
+      if (M.grain === 'brushed') {
+        ['top', 'bottom'].forEach(function (side) { ctx.save(); ctx.clip(polyPath(geo.frameParts[side])); ctx.fillStyle = ctx.createPattern(tl, 'repeat'); ctx.fillRect(0, 0, g.w, g.h); ctx.restore(); });
+        ['left', 'right'].forEach(function (side) {
+          ctx.save(); ctx.clip(polyPath(geo.frameParts[side])); ctx.translate(g.w / 2, g.h / 2); ctx.rotate(Math.PI / 2); ctx.translate(-g.h / 2, -g.w / 2);
+          ctx.fillStyle = ctx.createPattern(tl, 'repeat'); ctx.fillRect(0, 0, g.h, g.w); ctx.restore();
+        });
+      } else { ctx.fillStyle = ctx.createPattern(tl, 'repeat'); ctx.fillRect(0, 0, g.w, g.h); }
+      ctx.globalCompositeOperation = 'source-over'; ctx.globalAlpha = 1;
+    }
     /* where frame turns into face: a lit edge on the lower half, a shaded one on the upper */
-    ctx.lineWidth = 1;
-    ctx.save(); ctx.beginPath(); ctx.rect(0, g.h / 2, g.w, g.h); ctx.clip(); ctx.strokeStyle = glass ? 'rgba(255,255,255,.3)' : rgba(lit(base, 2.4, light), 0.6); ctx.stroke(geo.inner); ctx.restore();
-    ctx.save(); ctx.beginPath(); ctx.rect(0, 0, g.w, g.h / 2); ctx.clip(); ctx.strokeStyle = glass ? 'rgba(0,0,0,.18)' : rgba(lit(base, 0.4, light), 0.8); ctx.stroke(geo.inner); ctx.restore();
+    if (go(6)) {
+      ctx.lineWidth = 1;
+      ctx.save(); ctx.beginPath(); ctx.rect(0, g.h / 2, g.w, g.h); ctx.clip(); ctx.strokeStyle = glass ? 'rgba(255,255,255,.3)' : rgba(lit(base, 2.4, light), 0.6); ctx.stroke(geo.inner); ctx.restore();
+      ctx.save(); ctx.beginPath(); ctx.rect(0, 0, g.w, g.h / 2); ctx.clip(); ctx.strokeStyle = glass ? 'rgba(0,0,0,.18)' : rgba(lit(base, 0.4, light), 0.8); ctx.stroke(geo.inner); ctx.restore();
+    }
     /* the outer edge: darkened, with a hairline of light along its top and left */
-    ctx.lineWidth = 2; ctx.strokeStyle = glass ? (cssVar('--lg-edge-bot') || 'rgba(0,0,0,.28)') : rgba(lit(base, 0.45, light), 0.9); ctx.stroke(geo.outer);
-    ctx.save(); ctx.clip(polyPath([[0, 0], [g.w, 0], [0, g.h]])); ctx.lineWidth = 1;
-    ctx.strokeStyle = glass ? (cssVar('--lg-edge-top') || 'rgba(255,255,255,.3)') : rgba(lit(base, 2.2, light), 0.55);
-    ctx.stroke(roundRect(1.5, 1.5, g.w - 3, g.h - 3, Math.max(0, (Math.min(16, (s.style === 'rim' ? 4 : 7) + s.width)) - 1.5))); ctx.restore();
+    if (go(7)) {
+      ctx.lineWidth = 2; ctx.strokeStyle = glass ? (cssVar('--lg-edge-bot') || 'rgba(0,0,0,.28)') : rgba(lit(base, 0.45, light), 0.9); ctx.stroke(geo.outer);
+      ctx.save(); ctx.clip(polyPath([[0, 0], [g.w, 0], [0, g.h]])); ctx.lineWidth = 1;
+      ctx.strokeStyle = glass ? (cssVar('--lg-edge-top') || 'rgba(255,255,255,.3)') : rgba(lit(base, 2.2, light), 0.55);
+      ctx.stroke(roundRect(1.5, 1.5, g.w - 3, g.h - 3, Math.max(0, (Math.min(16, (s.style === 'rim' ? 4 : 7) + s.width)) - 1.5))); ctx.restore();
+    }
     ctx.restore();
     /* at the glass: a thin bright lip that never goes fully dark, then a near-black unlit ring; the case's shadow under
        the top lip falls a few pixels onto the glass */
+    if (!go(8)) return;
     ctx.save(); ctx.lineJoin = 'round';
     ctx.save(); ctx.clip(ring, 'evenodd'); ctx.lineWidth = 4.4;
     ctx.strokeStyle = glass ? (cssVar('--lg-lens-hair') || 'rgba(255,255,255,' + (s.light ? 0.9 : 0.5) + ')') : hex(lit(face, light ? 1.35 : 3.2, light));
     ctx.stroke(geo.opening); ctx.restore();
     ctx.lineWidth = 2.4; ctx.strokeStyle = glass ? 'rgba(0,0,0,.3)' : 'rgba(0,0,0,.82)'; ctx.stroke(geo.opening);
     if (glass) { ctx.save(); ctx.clip(polyPath([[0, 0], [g.w, 0], [bb[2], bb[1] + 6], [bb[0], bb[1] + 6]])); ctx.lineWidth = 2; ctx.strokeStyle = cssVar('--lg-lens-glint') || 'rgba(255,255,255,.55)'; ctx.stroke(geo.opening); ctx.restore(); }
-    ctx.clip(geo.opening);
-    ctx.shadowColor = 'rgba(0,0,0,' + (glass ? 0.22 : s.light ? 0.3 : 0.55) + ')'; ctx.shadowBlur = (s.style === 'case' ? 8 : 4) * g.dpr; ctx.shadowOffsetY = 2 * g.dpr;
-    var around = new Path2D(); around.rect(-40, -40, g.w + 80, g.h + 80); around.addPath(geo.opening);
-    ctx.fillStyle = '#000'; ctx.fill(around, 'evenodd');
+    if (go(9)) {
+      ctx.clip(geo.opening);
+      ctx.shadowColor = 'rgba(0,0,0,' + (glass ? 0.22 : s.light ? 0.3 : 0.55) + ')'; ctx.shadowBlur = (s.style === 'case' ? 8 : 4) * g.dpr; ctx.shadowOffsetY = 2 * g.dpr;
+      var around = new Path2D(); around.rect(-40, -40, g.w + 80, g.h + 80); around.addPath(geo.opening);
+      ctx.fillStyle = '#000'; ctx.fill(around, 'evenodd');
+    }
     ctx.restore();
   };
+  var HOUSING_STAGES = 9, LIGHT_STAGES = 5;
 
   /* where the screen's light falls, at 0.4 of CSS size: the direct reflection and its diffused copy on the face, faded by
      Mega Bezel's (1 - sqrt(d/D))^2 from the glass outward and toward the corners; and the glow over face and frame */
@@ -427,9 +448,18 @@
       for (var a = alpha; a > 0.004; a -= 1) { rc.globalAlpha = Math.min(1, a); rc.drawImage(T2, 0, 0); }
       rc.globalAlpha = 1; rc.globalCompositeOperation = 'source-over';
     };
-    pass(M.blur, m.direct, strength * 1.25, FOLD, 'face');
-    pass(M.blur * 4 + 3, m.diffused, strength * 0.55, FOLD, 'face');
-    pass(16, m.glow, strength * (s.glow ? 0.75 : 0.45), 1, 'all');
+    /* warmLight (the idle warm only): 1 the three masks alone, 2 the first pass unblurred, 3 the first pass, 4 and 5 the
+       other two passes in turn; undefined draws all */
+    var upto = this.warmLight === undefined ? LIGHT_STAGES : this.warmLight;
+    if (upto === 1) {
+      tc.clearRect(0, 0, w, h);
+      [m.direct, m.diffused, m.glow].forEach(function (k) { tc.drawImage(k, 0, 0); });
+      rc.drawImage(T2, 0, 0);
+      return R;
+    }
+    pass(upto === 2 ? 0 : M.blur, m.direct, strength * 1.25, FOLD, 'face');
+    if (upto >= 4) pass(M.blur * 4 + 3, m.diffused, strength * 0.55, FOLD, 'face');
+    if (upto >= 5) pass(16, m.glow, strength * (s.glow ? 0.75 : 0.45), 1, 'all');
     return R;
   };
 
@@ -439,7 +469,7 @@
      own settings, on a stand-in view in an unseen layer inside the viewport (Liquid Glass's lg-warm recipe: an ancestor
      at opacity 0.004; at 0.001 the alpha rounds to nothing and nothing compiles), only on the GPU tier, as steps on the
      page's idle-warm queue (PM_WARM), which admits them and backs off by the frames presented after each */
-  var warmedBezel = {};
+  var warmedBezel = {}, warmIds = new WeakMap();
   function gpuTier() {
     var tier = document.documentElement.getAttribute('data-lg-tier');
     if (tier) return tier === 'gpu';
@@ -461,34 +491,67 @@
         var b = ap.bezel, key = [b.style, b.width, b.color, b.reflect, ap.theme && ap.theme.appearance, ap.effects && ap.effects.look, Math.round(w / 64), Math.round(h / 64), dpr].join('|');
         if (warmedBezel[key]) return;
         warmedBezel[key] = 1;
-        todo.push({ view: view, ap: ap, w: w, h: h, dpr: dpr });
+        todo.push({ view: view, ap: ap, w: w, h: h, dpr: dpr, key: key });
       });
     });
     if (!todo.length || !window.PM_WARM) return;
-    /* each style at each size is two steps on the page's idle-warm queue (PM_WARM; the lead's IDLE-WARM-RULE.md), so a
-       step compiles few programs (part2's F5b cold P1000 trace: a whole case in one frame froze idle Home 300-450 ms):
-       the case with no reflection, then the whole case with its reflection and masks. Each step draws in its own unseen
-       layer and the queue removes it in the frame after (the step's cleanup) */
-    todo.forEach(function (it) {
-      ['case', 'light'].forEach(function (part) {
-        window.PM_WARM.add({ owner: 'terminal', name: 'bezel:' + it.ap.bezel.style + ':' + part + '@' + it.w + 'x' + it.h, run: function () {
-          if (!it.view.root.isConnected) return null;
-          var b = it.ap.bezel, w = it.w, h = it.h, inset = (b.width || 0) + (b.gap || 0);
-          var host = document.createElement('div');
-          host.setAttribute('aria-hidden', 'true'); host.inert = true;
-          host.style.cssText = 'position:fixed;left:0;top:0;width:' + w + 'px;height:' + h + 'px;opacity:.004;will-change:opacity;pointer-events:none;z-index:2147483000;contain:strict';
-          var bz = new Bezel({ root: document.createElement('div'), canvas: it.view.canvas, visible: true, fx: null, renderer: null });
-          bz.el.style.cssText = 'position:absolute;inset:0';
-          bz.housing.style.cssText = 'position:absolute;left:0;top:0;width:100%;height:100%;display:block';
-          host.appendChild(bz.el); document.body.appendChild(host);
-          bz.configure(b, it.ap);
-          if (part === 'case') bz.spec.strength = 0;
-          bz.g = { w: w, h: h, gx: inset, gy: inset, gw: Math.max(20, w - inset * 2), gh: Math.max(20, h - inset * 2), dpr: it.dpr };
-          try { bz._paint(); } catch (e) { /* drawn as far as it went */ }
-          return function () { bz.dispose(); host.remove(); };
-        } });
+    /* each style at each size is drawn on the page's idle-warm queue (PM_WARM; the lead's IDLE-WARM-RULE.md) in steps
+       small enough that each compiles few programs. Drawn whole in one step, the rim's case linked 13 programs in one
+       frame on a cold RTX 3090 (FillRRectOp 5, AAHairlineOp 4, FillRectOp 2, AAFlatteningConvexPathOp, DrawAtlasPathOp;
+       this lane's trace, 2026-10-17), the burst seen just after the Customize screen's build, which called this. The first
+       style of a call is drawn a section more each step (warmStage: the outline clip, the frame, the face, its creases,
+       the grain, the inner edge, the outer edge, the lip, the shadow), then, where the case has a reflection, its light a
+       part more each step (warmLight: the masks, the first pass unblurred, then blurred, the second, the third). The
+       others reuse nearly all of those programs (0 or 1 link a section on the 3090), so each is two steps: the case, then
+       its light. Each step draws in its own unseen layer and the queue removes it in the frame after (the step's
+       cleanup); a step that throws removes it at once (landing review IW-3). The ids are kept per view, so a view that
+       goes takes its steps with it (unwarm) */
+    todo.forEach(function (it, n) {
+      var ids = warmIds.get(it.view);
+      if (!ids) warmIds.set(it.view, (ids = []));
+      var probe = new Bezel({ root: document.createElement('div') }), steps = [];
+      probe.configure(it.ap.bezel, it.ap);
+      var ink = probe.spec.material === 'ink', fine = n === 0, k;
+      if (ink || !fine) steps.push({ name: 'case', stage: undefined, light: 0 });
+      else for (k = 1; k <= HOUSING_STAGES; k++) steps.push({ name: 'case' + k, stage: k, light: 0 });
+      if (!ink && probe.spec.strength > 0) {
+        if (!fine) steps.push({ name: 'light', stage: undefined, light: LIGHT_STAGES });
+        else for (k = 1; k <= LIGHT_STAGES; k++) steps.push({ name: 'light' + k, stage: undefined, light: k });
+      }
+      steps.forEach(function (pt) {
+        var id = window.PM_WARM.add({ owner: 'terminal', name: 'bezel:' + it.ap.bezel.style + ':' + pt.name + '@' + it.w + 'x' + it.h,
+          until: function () { return !!(it.view.root && it.view.root.isConnected); },
+          run: function () {
+            var b = it.ap.bezel, w = it.w, h = it.h, inset = (b.width || 0) + (b.gap || 0), host = null, bz = null;
+            var gone = function () { if (bz) bz.dispose(); if (host) host.remove(); bz = host = null; };
+            try {
+              host = document.createElement('div');
+              host.setAttribute('aria-hidden', 'true'); host.inert = true;
+              host.style.cssText = 'position:fixed;left:0;top:0;width:' + w + 'px;height:' + h + 'px;opacity:.004;will-change:opacity;pointer-events:none;z-index:2147483000;contain:strict';
+              bz = new Bezel({ root: document.createElement('div'), canvas: it.view.canvas, visible: true, fx: null, renderer: null });
+              bz.el.style.cssText = 'position:absolute;inset:0';
+              bz.housing.style.cssText = 'position:absolute;left:0;top:0;width:100%;height:100%;display:block';
+              host.appendChild(bz.el);
+              bz.configure(b, it.ap);
+              bz.warmStage = pt.stage;
+              if (pt.light) bz.warmLight = pt.light; else bz.spec.strength = 0;
+              bz.g = { w: w, h: h, gx: inset, gy: inset, gw: Math.max(20, w - inset * 2), gh: Math.max(20, h - inset * 2), dpr: it.dpr };
+              document.body.appendChild(host);
+              bz._paint();
+            } catch (e) { gone(); return null; }
+            return gone;
+          } });
+        ids.push({ id: id, key: it.key });
       });
     });
+  };
+  /* a view that goes: its case steps still queued are cancelled, and what they would have drawn may be warmed again for
+     another view */
+  Bezel.unwarm = function (view) {
+    var ids = warmIds.get(view);
+    if (!ids) return;
+    warmIds.delete(view);
+    ids.forEach(function (x) { if (window.PM_WARM) window.PM_WARM.cancel(x.id); delete warmedBezel[x.key]; });
   };
   T.Bezel = Bezel;
   T.Bezel.MATERIALS = Object.keys(MATERIALS);
