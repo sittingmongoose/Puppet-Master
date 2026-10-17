@@ -4056,6 +4056,13 @@ canonical_text: >-
   commits; a pick whose preparation fails still commits through the ordinary print and frost fallback, so
   no pick is lost. Glass alone keeps the decoded prints, the visible gallery choices among them within a
   bounded budget, and a byte-bounded frost cache; the gallery keeps no image cache of its own.
+  Amended 2026-10-17 (DL-221, DL-222): preparing prints at idle follows ACD-475 and does not restate
+  that rule. The owner prepares a print and its frost before the choice commits. The print may start
+  fading before the frost is ready (F3-653); the setting still writes at the pick. An intent, hover or
+  keyboard focus after a short quiet pause, or a press, never waits behind background preparation of
+  another print. A pick or intent for a print runs whatever bake is left at once, and a print is baked
+  once however many preparations ask for it. This unit still owns the cache-only query and the rule
+  that a failed preparation still commits.
 gui_related: true
 gui_classification_reason: One wallpaper catalog and one writer.
 split_recommended: false
@@ -4066,6 +4073,9 @@ acceptance_criteria:
 - A consumer references the owner and cannot silently add a private wallpaper or background mode.
 - The selected print reaches every consumer through the owner's one synchronous, cache-only query (its
   source, not cached yet, or no image); no consumer or wallpaper watch reads page styles to find it.
+- Preparing a print at idle follows ACD-475. An intent never waits behind another print's background
+  preparation, a pick runs the remaining bake at once, and the print may fade before its frost commits
+  (F3-653).
 validation_surfaces:
 - python3 scripts/pm-shard-plans.py --check
 - python3 scripts/pm-plan-index.py validate
@@ -4101,8 +4111,18 @@ source_lineage:
 - /mnt/Cursor/share/puppet-master/2026-10-16-plans-topup/sources/d02f2ac26b--Concepts--wallpapers--opus-5.5--CONTRACT.md, SHA-256
   1687dac3d7dc7905598780595e7df743255edaf6619f038c97d5bfcaa043d544 (Settings lane head d02f2ac26b, landed unchanged on main
   a0f844455c (L1), wallpaper preparation and source cache; source lineage; not native certification)
+- /mnt/Cursor/share/puppet-master/2026-10-17-plans-f6/sources/BRIEF.md,
+  SHA-256 a6c5152164942a26cba5b0216a339578ee13c47a3ba39ffbeced793203c2dece (idle preparation is one rule;
+  decision lineage)
+- /mnt/Cursor/share/puppet-master/2026-10-16-motion-fixes/pm7-liquid-glass/F6-NOTES.md,
+  SHA-256 86b0f12a17d3eab6becf2410e1c5950a6c619066c8a6d683ba57328a9fef7899 (fade-first, option (c);
+  decision lineage)
 preserved_exact_tokens: []
 negative_constraints: []
+stale_retired_dispositions:
+- 'Amended 2026-10-17 (DL-222): the print may fade before the frost is ready, and the choice commits
+  when the frost follows. It read: the owner prepares a print and its frost before the choice is
+  published.'
 owner_hints:
 - Plans/DRY_Rules.md
 ```

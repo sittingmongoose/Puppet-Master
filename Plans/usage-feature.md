@@ -7397,6 +7397,9 @@ canonical_text: >-
   the authoritative reading and shows the named reason, with no Usage-local threshold copy or
   adjustment algorithm. F3-628/F3-658 own the published Usage glyph consumer, including Current's
   check and Export's outbox; this projection adds no status or export command.
+  Amended 2026-10-17 (DL-221): readings a Live beat changed while Usage was hidden are drawn during the
+  unseen arrival, so the first board shows the latest values and does not jump from a stale board.
+  Paused still holds display updates only.
 gui_related: true
 gui_classification_reason: "The unit defines what the redesigned Usage page shows and does: the provider catalog, every account, the Accounts room's in-place actions, pace, Live readings, and the board actions."
 depends_on: [DL-173, DL-174, DL-175, DL-176, DL-177, UF-045, UF-089, UF-092, UF-093, UF-095, UF-096, MA-049, MA-073, WS-019, WS-020, DR-038, ACD-474, SSYS-009, SSYS-018, SSYS-044, UCC-116, DL-186]
@@ -7410,6 +7413,7 @@ acceptance_criteria:
   - A provider's Auto-switch toggle and switch level, and each of its accounts' own switch level, show the same value on the card and in Settings; changing the provider's dispatches cmd.settings.transaction.preview then cmd.settings.transaction.apply with scope=provider and changing an account's the same pair with scope=account (D43, 2026-10-10); a provider with one account shows no switch controls, its account's included; an account's control says whether its level is its own or follows its provider, in words under the value in a column of their own and in every form by its mark (the provider's mark when it follows, the notch when it is its own); and every meter of a provider carries that provider's switch-point notch.
   - No clock to running out appears anywhere on the page; pace reads in points against the norm, headroom in percent, and month-end spend only as a labelled estimate.
   - The page is Live by default; Paused holds display updates without stopping collection, refresh, alerts or accounting; the choice survives reload and dispatches no command.
+  - Readings changed while Usage was hidden are on the first board anyone sees, with no stale-then-jump frame.
   - No command, setting, wiring row, persisted key or test gate exists for Play the next hour, Back to now, Demo time or the concept's feature switches.
   - Tidy and board gravity each produce one settled layout transaction with one receipt and no per-card move command; no new Usage, export or alert command is registered.
   - No WorkNodes, NodeSeeds, executable queues, implementation files, or production build tasks are created by this unit.

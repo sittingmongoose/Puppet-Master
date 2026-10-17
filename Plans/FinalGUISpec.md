@@ -33313,6 +33313,13 @@ canonical_text: >-
   tinted chip. In NieR Mode a page change erases the leaving page and wipes the entering one in; the empty
   beat between the erase and the wipe-in is at most 50 ms, and the wipe-in may start as the erase ends
   (Jared, 2026-10-16). Reduced Motion still skips the page animation.
+  Amended 2026-10-17 (DL-221): the page-change hold is ACD-475's, and this unit does not keep a second
+  one. While a hold waits, in Basic, Friendly and Glass the leaving page's click fade keeps moving and
+  never stands on a still frame; the exit fade starts from the opacity that fade has reached, not from
+  full opacity. Retro steps through the same shape. NieR and Reduce Animations make no fade. NieR's
+  acknowledgement during a hold is the tab ink, and NieR's page-wipe band goes up at the release, never
+  during the hold, so the leaving page stays whole until then. The empty beat of at most 50 ms is
+  measured from the erase to the wipe-in, not from the click, and the hold does not relax it.
 gui_related: true
 gui_classification_reason: This unit defines visible page-tab active chrome motion and directional page transitions.
 split_recommended: false
@@ -33325,6 +33332,10 @@ acceptance_criteria:
 - "First paint never runs an enter animation and transitions gate until after boot."
 - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
 - In NieR Mode no page change shows more than 50 ms of empty ground between the erase and the wipe-in.
+- In NieR Mode a held page change keeps the leaving page until release, the tab ink answers the click,
+  and the wipe band covers at that release. The 50 ms empty beat is erase to wipe-in.
+- While a page change is held, the leaving page's fade keeps moving, and the exit starts from the opacity
+  that fade has reached.
 validation_surfaces:
 - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
 - "python3 scripts/pm-plan-index.py validate"
@@ -33339,6 +33350,12 @@ node_compile_hint:
 source_lineage:
 - "Concepts/PMConcept7.html (PMConcept7 demo rev 9.2; source-lineage-only per Plans/usage-feature.md)"
 - "Concepts/ChatGuiUpdates2.md (PM8 workstream and rev 4-9.2 ship notes; source-lineage-only)"
+- /mnt/Cursor/share/puppet-master/2026-10-17-plans-f6/sources/Concepts--onboarding--opus-5.5--tools--shell_motion.py,
+  SHA-256 e245b03ddc951281dc20463422fc9dddf3c5299c7f3ca3421f41b9da399ab625 (main 6a3ee2fe90; NieR's wipe
+  is held with the page change and covers at the release; source lineage; not native certification)
+- /mnt/Cursor/share/puppet-master/2026-10-17-plans-f6/sources/2026-10-16-motion-pass--PART2.md,
+  SHA-256 1a61d195f6542a182596e531781b696927b2900248e5155b9abe134786bc0f3f (Q22 report; source lineage;
+  not native certification)
 preserved_exact_tokens:
 - "500"
 - "35"
@@ -33348,6 +33365,7 @@ preserved_exact_tokens:
 - "cubic-bezier(.25,1,.5,1)"
 negative_constraints:
 - "Do not insert a blank gap between the leaving and entering pages and do not blur the full page during transitions."
+- "Do not cover with NieR's page-wipe band while a page change is still held."
 compatibility_only_notes:
 - "Slint portability: the ink and page panels render as opaque precomputed surfaces with translate/opacity/width animations via Slint property animations; no arbitrary-content backdrop blur, no SVG filters, and color math is precomputed rather than runtime-mixed."
 stale_retired_dispositions:
@@ -44182,6 +44200,19 @@ canonical_text: >-
   with no snap-back and no glimpse of the cancelled room; in NieR and Retro, whose handover erases the
   board, the cancel reverses the wipe instead of erasing the board to empty ground and rebuilding it
   (Jared, 2026-10-16).
+  Amended 2026-10-17 (DL-221): entering Usage never shows a blank or empty board, empty plates, or
+  Home's panels blanked. The page change uses ACD-475's hold until the board is drawn; the entrance
+  then plays from the start with plates and bodies together. Whatever is not drawn by the cap shows at
+  once. Idle preparation of the first screen, then of Costs and Accounts, is ACD-475's and best effort;
+  the arrival does not depend on it, and with no prepared board the board is built whole. Under Reduce
+  Animations there is no hold and no sliced arrival: the board is whole in the page's first frame. If
+  the page entrance ends while the board's entrance is still held, the board continues from where it is
+  and never replays from a blank frame. A room change's hand-off starts at the new room's first drawn
+  frame, not when its chrome is inserted; the old room stands whole until then, and Retro and NieR erase
+  at that hand-off. A rapid click, leaving the page, Reduce Motion or no GPU hands off at once. The
+  hero's about 200 ms landing stays the room-change floor, counted from the new room's first drawn
+  frame when a hand-off waited for that frame. A cold first entry's longer hold is parked (DL-220),
+  not a pass of that floor.
 gui_related: true
 gui_classification_reason: Defines the look, menus, marks, heroes, charts, previews, hover and motion of the redesigned Usage page.
 split_recommended: false
@@ -44241,6 +44272,11 @@ acceptance_criteria:
 - 'Friendly''s key light and Live dot are lavender (#6F55A8 light, #D2C4EE dark); a cancel back to the
   visible room never snaps, shows the cancelled room or rebuilds the board, and NieR and Retro reverse
   their wipe.'
+- Entering Usage never shows a blank or empty board; the leaving page holds until the board is drawn,
+  plates and bodies arrive together, and under Reduce Animations the board is whole in the first frame.
+- A room change hands off at the new room's first drawn frame; Retro and NieR erase then. A rapid click,
+  leaving the page, Reduce Motion or no GPU hands off at once. A held board entrance never replays from
+  a blank frame.
 validation_surfaces:
   - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
   - python3 scripts/pm-plan-index.py validate
@@ -44295,6 +44331,12 @@ source_lineage:
 - /mnt/Cursor/share/puppet-master/2026-10-16-plans-topup/sources/2026-10-16-motion-pass--JUDGEMENT.md,
   SHA-256 8a3291ea2558da05d40c5a051a958f378802ec9c36454b83dbaf5ffc7efe8cf9 (the global acceptance bar and
   the A4, A11, A13 and B9 findings; source lineage)
+- /mnt/Cursor/share/puppet-master/2026-10-17-plans-f6/sources/2026-10-16-motion-pass--INTEGRATION.md,
+  SHA-256 b821fd283ce457433e82e62885ddf0bf480272c3a5531340144fedf87532b262 (F6 on main 6a3ee2fe90;
+  source lineage; not native certification)
+- /mnt/Cursor/share/puppet-master/2026-10-17-plans-f6/sources/BRIEF.md,
+  SHA-256 a6c5152164942a26cba5b0216a339578ee13c47a3ba39ffbeced793203c2dece (Usage entry never blank;
+  decision lineage)
 preserved_exact_tokens:
   - "N more"
   - "16%"
@@ -44312,6 +44354,7 @@ negative_constraints:
   - "Do not play the onboarding window's NieR effects or the reboot plate on Usage, or decode any text there but the room title."
   - "Do not animate a mark that sits on a line apart from that line's path tween."
   - "Do not scale a hovered plate or keep a compositing layer on it after its entrance."
+  - "Do not show a blank or empty board while Usage is opening."
 compatibility_only_notes: []
 stale_retired_dispositions:
 - The two-letter monogram system of the earlier Atlas design notes is retired wherever an official mark
@@ -47041,6 +47084,9 @@ canonical_text: >-
   lowest text contrast 4.78:1 in the concept); that is concept evidence, not native certification.
   Plans/terminal_background_catalog.schema.json validates the catalog's closed finite-data shape;
   scripts/pm7-canon-check.py checks unique ids, choices and defaults against the Settings rows.
+  Amended 2026-10-17 (DL-221): a design or scheme already previewed by hover stays shown through the
+  pick's frame, and the preview ends only with the write, so the old ground is never drawn between the
+  preview and the pick.
 gui_related: true
 gui_classification_reason: >-
   Defines the terminal's visible schemes, contrast floor, import, appearance fields, cell geometry and
@@ -47195,6 +47241,8 @@ stale_retired_dispositions:
   badges on the old terminal theme and font rows (DL-183).
 - 'Amended 2026-10-11 (wave 2, terminal SPEC dbffa7a1b2): Scheme hover previews wait 110 ms, with immediate
   arrow-key previews and delayed repeats.'
+- A scheme or design already shown by hover stays through the pick, so the old ground is not drawn between
+  the preview and the pick.
 - 'Amended 2026-10-14: The compact editor popover retires; F3-650 owns both Customize screens. Off and
   3:1 remain program-output choices (DL-197).'
 - 'Amended 2026-10-16 (PM7 pass 2): The old small background list and final-catalog hold are superseded
@@ -47290,6 +47338,8 @@ canonical_text: >-
   phosphor trail and no smooth scrolling; NieR ink line with blink, Trace only with its Scan sweep
   part and no smooth scrolling. F3-651 owns editor-specific jump motion and trail triggers; this
   shared voice never forces terminal output to animate.
+  Amended 2026-10-17 (DL-221): idle preparation of Terminal Customize (ACD-475) does not change this
+  bezel's look.
 gui_related: true
 gui_classification_reason: Defines the terminal's visible effects, their defaults and the policy that limits when they run.
 split_recommended: false
@@ -47324,6 +47374,7 @@ acceptance_criteria:
 - Reflection offers Off, Low, Medium and High from each material's own level, every pair visibly apart; NieR's
   own ink frame offers no reflection and a material chosen in NieR draws as itself; Width offers the twelve
   listed stops; the phosphor mask shows at 1x and at 2x.
+- Idle preparation of Customize does not change the bezel's look.
 validation_surfaces:
   - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
   - python3 scripts/pm-plan-index.py validate
@@ -47847,6 +47898,18 @@ canonical_text: >-
   own ranges (SSYS-051). Ligatures is not offered while letters are spaced: it shows Needs letter
   spacing 0 and returns at spacing 0. A field shows only where it draws (SSYS-051's visibility
   amendment lists the Settings side).
+  Amended 2026-10-17 (DL-221): Terminal Customize, and the editor's Customize sheet, are prepared at idle
+  under ACD-475 so a click is answered by the frame it paints and the screen comes in on the next frame
+  already drawn. If preparation is not finished, what remains is finished after the click's frame and
+  before the screen is revealed. Preparation does not change the screen's or the bezel's look (F3-643).
+  A pick on either screen shows its new state on the control in the click's frame; the write follows
+  (ACD-475). An open that fails or shows nothing is reported as an error, not only a toast. Toast words
+  are unchanged and no new command is added.
+  Proposed, pending Jared: while the editor's Customize sheet is opening under a resting pointer, a press
+  or wheel that arrives before the pointer has moved reaches neither the sheet nor the page beneath, so
+  the second press of a double-click on the opener is not taken as a choice in the sheet. The sheet is
+  live once the pointer moves, the entrance ends, or about 500 ms after it opens. Keyboard and
+  assistive-technology use is unaffected.
 gui_related: true
 gui_classification_reason: The editor and terminal Customize screens.
 split_recommended: false
@@ -47868,6 +47931,9 @@ acceptance_criteria:
   normal inheritance and every unrelated setting.
 - Rename/Delete/Undo preserve identity, ordering and the 40-entry bound; cancellation, unavailable assets
   or a rejected apply never partially change a terminal.
+- Terminal Customize is prepared at idle so the screen comes in already drawn, and that preparation does
+  not change the bezel's look. A pick shows on its control in the click's frame.
+- A Customize open that fails or shows nothing is reported as an error, not only a toast.
 validation_surfaces:
 - python3 scripts/pm-shard-plans.py --check
 - python3 scripts/pm-plan-index.py validate
@@ -47913,6 +47979,12 @@ source_lineage:
 - /mnt/Cursor/share/puppet-master/2026-10-16-plans-topup/sources/2026-10-16-motion-fixes--pm7-motion-editor--NOTES.md,
   SHA-256 a9d113635287031b45c99d01df04710b80b6812f2a6f00838ec57462b3f448e5 (editor lane, head d6647a2fc1
   landed unchanged on main a0f844455c (L1), B6; source lineage)
+- /mnt/Cursor/share/puppet-master/2026-10-17-plans-f6/sources/Concepts--home-redesign--src--panels--kinds--11-editor-customize.js,
+  SHA-256 7bd2cb58747e1d064ae91a82763d76d948262c64bc1a939a1123efce27ab7701 (main 6a3ee2fe90; a failed
+  Customize open is reported, and the opening pass-through is proposed pending Jared; source lineage; not native certification)
+- /mnt/Cursor/share/puppet-master/2026-10-17-plans-f6/sources/BRIEF.md,
+  SHA-256 a6c5152164942a26cba5b0216a339578ee13c47a3ba39ffbeced793203c2dece (editor reopen and Terminal
+  Customize prepared at idle; decision lineage)
 preserved_exact_tokens:
 - This editor
 - All editors
@@ -48128,6 +48200,10 @@ canonical_text: >-
   input and while the page is hidden, Glass draws each kind of box once, nearly invisibly, so first-use
   GPU programs are compiled before the first page or chapter change rather than during it. A switcher
   strip defers its sync only under a look's cover and resyncs as the cover begins to lift.
+  Amended 2026-10-17 (DL-221): Glass's warm-up is best effort under ACD-475, not a promise that every
+  box kind is compiled before the first page or chapter change. It prepares the kinds that compile a
+  program and leaves the rest to first use. It changes no Glass look. The idle gates are ACD-475's;
+  this unit keeps the sheet-rim bake and the cover-only strip deferral.
 gui_related: true
 gui_classification_reason: Liquid Glass material and motion.
 split_recommended: false
@@ -48152,6 +48228,7 @@ acceptance_criteria:
   tinted chip, Friendly mint plate, Retro reverse-video block, NieR ink bar, Glass lens unchanged); Retro
   steps and NieR cuts, never gliding; a pressed label changes ink with the chip; hovered resting labels keep
   4.5:1.
+- Glass's warm-up is best effort under ACD-475 and changes no Glass look.
 validation_surfaces:
 - python3 scripts/pm-shard-plans.py --check
 - python3 scripts/pm-plan-index.py validate
@@ -48210,6 +48287,9 @@ source_lineage:
 - /mnt/Cursor/share/puppet-master/2026-10-16-plans-topup/sources/2b5ed6092d--Concepts--liquid-glass--opus-5.5--CONTRACT.md,
   SHA-256 eccaf9ec55718c72256e45a0b92575688f7305b6b79c1dd954868de05f095d24 (main 2b5ed6092d after L2, the
   seg plate and frost overlay; source lineage; not native certification)
+- /mnt/Cursor/share/puppet-master/2026-10-17-plans-f6/sources/BRIEF.md,
+  SHA-256 a6c5152164942a26cba5b0216a339578ee13c47a3ba39ffbeced793203c2dece (Glass warm-up changes no
+  look; decision lineage)
 preserved_exact_tokens:
 - Liquid Glass
 negative_constraints: []
@@ -48222,6 +48302,8 @@ stale_retired_dispositions:
   consistency pass remains a separate adoption decision.'
 - 'Amended 2026-10-16 (DL-217): Settings'' segmented choices slide their chip; it read: Settings segmented
   choices use the material in place without a travelling lens.'
+- 'Amended 2026-10-17 (DL-221): Glass warm-up is best effort. It read: first-use GPU programs are compiled
+  before the first page or chapter change rather than during it.'
 ```
 
 ContractRef: ContractName:Plans/FinalGUISpec.md#F3-427, ContractName:Plans/FinalGUISpec.md#F3-431, ContractName:Plans/FinalGUISpec.md#F3-653, ContractName:Plans/FinalGUISpec.md#F3-654
@@ -48272,6 +48354,15 @@ canonical_text: >-
   Amended 2026-10-16 (DL-217, the frost crossfade lane): every shown frosted sheet crossfades its frost
   from the old print to the new one in step with the print's fade, under the sheet's content; under
   Reduced Motion, on a look change and without a GPU the print and its frost swap at once.
+  Amended 2026-10-17 (DL-222): Jared's later choice, option (c), "fade is fine" (2026-10-16), replaces
+  the together-only crossfade when the new frost is not ready. A prepared pick still fades the print and
+  its frost together in one step. A pick whose frost is not ready starts the print's fade as soon as the
+  print is decoded; the sheets keep the old frost during that fade, then crossfade to the new frost once
+  it is ready. No frame is blank. While that fade has not committed, a newer choice fades from the print
+  currently fading. A look or mode change that changes the print ends it at once; one that keeps the same
+  print lets it finish. Reduced Motion, a look change and no GPU keep the immediate swap. The setting
+  still writes at the pick (SSYS-009, SSYS-054); only the frost drawing lags. Consumers of the selected
+  print, the terminal Lens included, follow when the frost commits (DR-073).
 gui_related: true
 gui_classification_reason: One wallpaper gallery for every look.
 split_recommended: false
@@ -48281,10 +48372,11 @@ acceptance_criteria:
 - Every catalog wallpaper works in every look and both modes; Look's own restores the correct default
   and NieR preference.
 - Keyboard selection, reload, Project switching and unknown stored ids preserve the one-setting contract.
-- A wallpaper swap never paints new wallpaper behind old frost, and gallery loading never shifts a reader's
-  anchor.
-- A wallpaper change crossfades print and full frost together; no frame shows a print under another print's
-  frost.
+- Gallery loading never shifts a reader's anchor. A prepared wallpaper change fades print and frost
+  together. A pick whose frost is not ready fades the print first under the old frost, then crossfades
+  the frost, and never shows a blank frame.
+- Reduced Motion, a look change and no GPU swap print and frost at once. A newer choice during an
+  uncommitted fade starts from the print currently fading.
 - The five withdrawn prints are not offered; the six packaged replacement scenes and both selection orders
   follow SSYS-054. Concept publication is complete; native asset/rendering verification remains required.
 - All 29 catalog ids have packaged Dark/Light assets, including the six NieR scenes, and no withdrawn
@@ -48336,13 +48428,20 @@ source_lineage:
 - /mnt/Cursor/share/puppet-master/2026-10-16-plans-topup/sources/2b5ed6092d--Concepts--liquid-glass--opus-5.5--CONTRACT.md,
   SHA-256 eccaf9ec55718c72256e45a0b92575688f7305b6b79c1dd954868de05f095d24 (main 2b5ed6092d after L2, the
   frost crossfade; source lineage; not native certification)
+- /mnt/Cursor/share/puppet-master/2026-10-16-motion-fixes/pm7-liquid-glass/F6-NOTES.md,
+  SHA-256 86b0f12a17d3eab6becf2410e1c5950a6c619066c8a6d683ba57328a9fef7899 (Jared approved option (c),
+  fade is fine, 2026-10-16; decision lineage)
 preserved_exact_tokens:
 - Look's own
 - Ribbons
+- fade is fine
 negative_constraints: []
 stale_retired_dispositions:
 - 'Amended 2026-10-16 (DL-216): a wallpaper change crossfades print and frost together; it read: Glass
   optics swap in the same painted frame.'
+- 'Amended 2026-10-17 (DL-222): a pick whose frost is not ready may fade the print first, under the old
+  frost, then crossfade the frost. It read: never showing a print under another print''s frost, and
+  crossfading print and frost together in every case.'
 owner_hints:
 - Plans/FinalGUISpec.md
 

@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L33006-L33806
+Source lines: L33006-L33824
 
-Source SHA256: `b775ea74b55d4a585a6fbcc3a86089ccd634ebac202e16a10e985b4e8ac9ae04`
+Source SHA256: `9c372c7e6ac9f213f61440d36a389f2a0dbfda51831d50b70dbe8b99fde71af1`
 
 ---
 
@@ -318,6 +318,13 @@ canonical_text: >-
   tinted chip. In NieR Mode a page change erases the leaving page and wipes the entering one in; the empty
   beat between the erase and the wipe-in is at most 50 ms, and the wipe-in may start as the erase ends
   (Jared, 2026-10-16). Reduced Motion still skips the page animation.
+  Amended 2026-10-17 (DL-221): the page-change hold is ACD-475's, and this unit does not keep a second
+  one. While a hold waits, in Basic, Friendly and Glass the leaving page's click fade keeps moving and
+  never stands on a still frame; the exit fade starts from the opacity that fade has reached, not from
+  full opacity. Retro steps through the same shape. NieR and Reduce Animations make no fade. NieR's
+  acknowledgement during a hold is the tab ink, and NieR's page-wipe band goes up at the release, never
+  during the hold, so the leaving page stays whole until then. The empty beat of at most 50 ms is
+  measured from the erase to the wipe-in, not from the click, and the hold does not relax it.
 gui_related: true
 gui_classification_reason: This unit defines visible page-tab active chrome motion and directional page transitions.
 split_recommended: false
@@ -330,6 +337,10 @@ acceptance_criteria:
 - "First paint never runs an enter animation and transitions gate until after boot."
 - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
 - In NieR Mode no page change shows more than 50 ms of empty ground between the erase and the wipe-in.
+- In NieR Mode a held page change keeps the leaving page until release, the tab ink answers the click,
+  and the wipe band covers at that release. The 50 ms empty beat is erase to wipe-in.
+- While a page change is held, the leaving page's fade keeps moving, and the exit starts from the opacity
+  that fade has reached.
 validation_surfaces:
 - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
 - "python3 scripts/pm-plan-index.py validate"
@@ -344,6 +355,12 @@ node_compile_hint:
 source_lineage:
 - "Concepts/PMConcept7.html (PMConcept7 demo rev 9.2; source-lineage-only per Plans/usage-feature.md)"
 - "Concepts/ChatGuiUpdates2.md (PM8 workstream and rev 4-9.2 ship notes; source-lineage-only)"
+- /mnt/Cursor/share/puppet-master/2026-10-17-plans-f6/sources/Concepts--onboarding--opus-5.5--tools--shell_motion.py,
+  SHA-256 e245b03ddc951281dc20463422fc9dddf3c5299c7f3ca3421f41b9da399ab625 (main 6a3ee2fe90; NieR's wipe
+  is held with the page change and covers at the release; source lineage; not native certification)
+- /mnt/Cursor/share/puppet-master/2026-10-17-plans-f6/sources/2026-10-16-motion-pass--PART2.md,
+  SHA-256 1a61d195f6542a182596e531781b696927b2900248e5155b9abe134786bc0f3f (Q22 report; source lineage;
+  not native certification)
 preserved_exact_tokens:
 - "500"
 - "35"
@@ -353,6 +370,7 @@ preserved_exact_tokens:
 - "cubic-bezier(.25,1,.5,1)"
 negative_constraints:
 - "Do not insert a blank gap between the leaving and entering pages and do not blur the full page during transitions."
+- "Do not cover with NieR's page-wipe band while a page change is still held."
 compatibility_only_notes:
 - "Slint portability: the ink and page panels render as opaque precomputed surfaces with translate/opacity/width animations via Slint property animations; no arbitrary-content backdrop blur, no SVG filters, and color math is precomputed rather than runtime-mixed."
 stale_retired_dispositions:

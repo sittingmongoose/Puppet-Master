@@ -6513,6 +6513,12 @@ canonical_text: >-
   Deferred glyph surfaces, Q13 and the motion fix lanes remain explicitly unverified. Picker accessibility checks require New tab or panel at the + root, Back to
   <level>, Filter: <title>, and Esc or Backspace (Esc or Delete on Mac), with prior
   query/scroll/focus restored in each F3-632 context.
+  Amended 2026-10-17 (DL-220, DL-221, DL-222): F6's motion behaviours are judged through the owners
+  DL-221 and DL-222 name. Native cases still owed, and not passed by a concept film: Usage entry with
+  no blank or empty-plate frame and the hold's cap from the click; NieR's band at the release; a room
+  change from the first drawn frame; idle preparation with no hitch tied to a preparation step; and a
+  wallpaper pick that fades the print first when the frost is not ready, never blank. The five Q22
+  moments DL-220 parks are not a new scheduled gate. Concept films remain evidence, never a native pass.
 gui_related: true
 gui_classification_reason: Appearance And Shell Acceptance.
 split_recommended: false
@@ -6535,6 +6541,8 @@ acceptance_criteria:
 - Terminal cases cover DL-213's retired values (a stored Flicker amount, a stored Bell Visual) and every
   offered choice drawing apart; switcher cases cover DL-214's per-look chips, press inks and the seated
   Home tab.
+- F6's motion behaviours are judged through ACD-475, F3-628, F3-464, F3-650 and F3-653. The five
+  moments DL-220 parks are not a new scheduled gate.
 validation_surfaces:
 - python3 scripts/pm7-canon-check.py
 - python3 scripts/pm-shard-plans.py --check
@@ -6573,8 +6581,17 @@ source_lineage:
 - /mnt/Cursor/share/puppet-master/2026-10-16-plans-pass2/sources/2026-10-15-usage-warn-hold--LANDING.md,
   SHA-256 5357dc0dd60b0e08548f4dab5d5359662ee0ea0f159f7201a25577067372c238 (source lineage; not native
   certification)
+- /mnt/Cursor/share/puppet-master/2026-10-17-plans-f6/sources/2026-10-16-motion-pass--PART2.md,
+  SHA-256 1a61d195f6542a182596e531781b696927b2900248e5155b9abe134786bc0f3f (Q22 closed as best effort;
+  source lineage; not native certification)
+- /mnt/Cursor/share/puppet-master/2026-10-17-plans-f6/sources/BRIEF.md,
+  SHA-256 a6c5152164942a26cba5b0216a339578ee13c47a3ba39ffbeced793203c2dece (parked moments; decision lineage)
 preserved_exact_tokens: []
 negative_constraints: []
+stale_retired_dispositions:
+- 'Amended 2026-10-17 (DL-217, DL-220, DL-221): Q13 and the earlier motion fix lanes are recorded as
+  landed in DL-217, and F6 in DL-221. Native verification is still owed. The five Q22 moments are parked
+  (DL-220), not a new scheduled gate. Deferred glyph surfaces stay unverified.'
 owner_hints:
 - Plans/Automated_Testing_System.md
 

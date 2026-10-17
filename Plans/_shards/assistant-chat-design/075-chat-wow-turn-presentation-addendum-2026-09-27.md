@@ -2,9 +2,9 @@
 
 Source: `Plans/assistant-chat-design.md`
 
-Source lines: L26060-L26660
+Source lines: L26060-L26701
 
-Source SHA256: `6440418217af1df2cb863efd2bf7e998c79caaee5dc9ee8bab31dd099b4259d8`
+Source SHA256: `abf696e5c1cf3140745486c0b2855b9f892979eb203c6ee33c7a890c49597830`
 
 ---
 
@@ -526,9 +526,30 @@ canonical_text: >-
   wait on it, and no surface keeps an idle detector of its own. A second shared answer says whether a
   look's cover hides the page; a surface it hides draws nothing new until the cover lifts, and a selection
   chip waits only for a real cover, never for a merely busy page. A move begun in a frame that was drawn
-  late starts from its beginning once frames come on time again, at most six frames later, so no move is
-  spent before it is seen. In the concept these are PM_BUSY, the pm-idle event, PM_LOOK_COVERED and
+  late starts from its beginning once frames come on time again, at most six frames later or until a
+  page-change hold ends, so no move is spent before it is seen. In the concept these are PM_BUSY, the pm-idle event, PM_LOOK_COVERED and
   PM_START_ON_SHOWN.
+  Amended 2026-10-17 (DL-218, DL-221): a page change may hold while the arriving page is still drawing
+  its first screen. The leaving page stays, with the click's motion still running, until the arrival is
+  ready or about 1.5 s from the click's own frame, whichever is first; then the exit and the entrance
+  play from the start. That hold is the covering transition this bar allows, and the bar itself is
+  unchanged. NieR still holds and makes no fade. Under Reduce Animations, and under a cover, the page
+  swaps at once, arrives whole, and is not held. A move held at its start, or released but not yet on
+  its first frame, still counts as running: nothing finishes, cleans up or cancels it as it starts, and
+  a held page is never shown at once with no entrance. Where the work behind a pick is heavy, the
+  control shows its new state in the input's own frame and the write or redraw follows that frame; the
+  latest pick wins, and a waiting write is applied before another input, a paint or a close. Idle
+  preparation is this one rule for every surface. It never causes a visible hitch. It runs only while
+  the page is visible, the shared busy signal is empty, the user is not interacting and nothing is
+  animating, and frames are on time. A step that makes a frame late backs off and is dropped rather
+  than hitching again; repeated late steps stop it for the session. It is best effort: dropping it
+  never loses the screen. Preparation for a surface's next first use comes before speculative warm-up.
+  Queued preparation is dropped when its surface goes away. The rule is the same on every machine
+  (DL-218). Having no GPU is the existing capability path, not a lower-spec tier. Concept performance
+  work stops at "not horribly slow" (DL-219); that bound does not replace this bar.
+  Proposed, pending Jared: a surface drawn unseen for preparation stays out of the focus order and the
+  accessibility tree until it is shown, and focus that lands in it returns where it came from. During
+  a page-change hold the leaving page stays the interactive page until release.
 gui_related: true
 gui_classification_reason: "Defines per-theme motion and the chat's sound cues."
 split_recommended: false
@@ -549,6 +570,14 @@ acceptance_criteria:
     failed, only when its moment started within 100 ms and showed no blank frame.
   - Deferred work on every surface waits on the one shared busy signal; nothing draws new content under a
     look cover; a move begun in a late frame is seen from its start.
+  - A page change holds the leaving page while the arrival is still drawing, for at most about 1.5 s from
+    the click's own frame, and the entrance then plays from the start. The hold is a covering transition;
+    the bar is unchanged. NieR holds and makes no fade. Under Reduce Animations, and under a cover, the
+    page arrives whole and is not held. A held or not-yet-shown move is not finished, cleaned up or
+    cancelled as it starts.
+  - A heavy pick shows its new state on the control in the input's own frame; the write or redraw follows,
+    the latest pick wins, and a waiting write is applied before another input, a paint or a close.
+  - "Idle preparation is one rule. It causes no visible hitch, runs only while the page is visible, the busy signal is empty, the user is idle and nothing is animating, backs off and drops a late step, is best effort, puts first use before speculative warm-up, and is the same on every machine. No GPU is a capability path, not a lower-spec tier."
 validation_surfaces:
   - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
   - python3 scripts/pm-plan-index.py validate
@@ -585,6 +614,17 @@ source_lineage:
   - /mnt/Cursor/share/puppet-master/2026-10-16-plans-topup/sources/1d44afa8ce--Concepts--onboarding--opus-5.5--src--js--11-motion-start.js,
     SHA-256 b042bcd35aab9cd50ba71fcfd8b2330015b12e07cadff7886c2647e4648e84bf (shell lane head 1d44afa8ce, landed unchanged on main b9a08db90f,
     the shared busy signal and on-time start; source lineage; not native certification)
+  - /mnt/Cursor/share/puppet-master/2026-10-17-plans-f6/sources/BRIEF.md,
+    SHA-256 a6c5152164942a26cba5b0216a339578ee13c47a3ba39ffbeced793203c2dece (Jared, 2026-10-17; decision lineage)
+  - /mnt/Cursor/share/puppet-master/2026-10-17-plans-f6/sources/Concepts--onboarding--opus-5.5--tools--shell_motion.py,
+    SHA-256 e245b03ddc951281dc20463422fc9dddf3c5299c7f3ca3421f41b9da399ab625 (main 6a3ee2fe90, the entrance
+    wait and the NieR wipe held until release; source lineage; not native certification)
+  - /mnt/Cursor/share/puppet-master/2026-10-17-plans-f6/sources/Concepts--onboarding--opus-5.5--tools--motion_finish.js,
+    SHA-256 a7a522fa4a1984cafddc45b315d23b4b7792fbab0a6e1a9069c448a6095476a4 (main 6a3ee2fe90, a held move
+    finishes; source lineage; not native certification)
+  - /mnt/Cursor/share/puppet-master/2026-10-16-p1000-speed/IDLE-WARM-RULE.md,
+    SHA-256 9a79df01751fbd98f1b4d597d40e520e662b5d584e97ef9094c27dd8aa55736d (Jared, 2026-10-17 10:27Z,
+    no platform-specific acceptance; source lineage)
 preserved_exact_tokens:
   - "DL-138"
   - "Basic"
@@ -603,6 +643,7 @@ negative_constraints:
   - "Do not add a chat-local sound setting, volume or registry."
   - "Do not let a sound carry information alone."
   - "Do not offer a per-theme voice override as a product setting."
+  - "Do not give a lower-spec machine a different page-hold or idle-preparation rule."
 owner_hints:
   - Plans/assistant-chat-design.md
   - Plans/Settings_System.md

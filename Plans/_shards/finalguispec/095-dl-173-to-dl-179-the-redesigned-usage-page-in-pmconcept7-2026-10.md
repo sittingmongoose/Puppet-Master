@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L44052-L44326
+Source lines: L44070-L44369
 
-Source SHA256: `b775ea74b55d4a585a6fbcc3a86089ccd634ebac202e16a10e985b4e8ac9ae04`
+Source SHA256: `9c372c7e6ac9f213f61440d36a389f2a0dbfda51831d50b70dbe8b99fde71af1`
 
 ---
 
@@ -141,6 +141,19 @@ canonical_text: >-
   with no snap-back and no glimpse of the cancelled room; in NieR and Retro, whose handover erases the
   board, the cancel reverses the wipe instead of erasing the board to empty ground and rebuilding it
   (Jared, 2026-10-16).
+  Amended 2026-10-17 (DL-221): entering Usage never shows a blank or empty board, empty plates, or
+  Home's panels blanked. The page change uses ACD-475's hold until the board is drawn; the entrance
+  then plays from the start with plates and bodies together. Whatever is not drawn by the cap shows at
+  once. Idle preparation of the first screen, then of Costs and Accounts, is ACD-475's and best effort;
+  the arrival does not depend on it, and with no prepared board the board is built whole. Under Reduce
+  Animations there is no hold and no sliced arrival: the board is whole in the page's first frame. If
+  the page entrance ends while the board's entrance is still held, the board continues from where it is
+  and never replays from a blank frame. A room change's hand-off starts at the new room's first drawn
+  frame, not when its chrome is inserted; the old room stands whole until then, and Retro and NieR erase
+  at that hand-off. A rapid click, leaving the page, Reduce Motion or no GPU hands off at once. The
+  hero's about 200 ms landing stays the room-change floor, counted from the new room's first drawn
+  frame when a hand-off waited for that frame. A cold first entry's longer hold is parked (DL-220),
+  not a pass of that floor.
 gui_related: true
 gui_classification_reason: Defines the look, menus, marks, heroes, charts, previews, hover and motion of the redesigned Usage page.
 split_recommended: false
@@ -200,6 +213,11 @@ acceptance_criteria:
 - 'Friendly''s key light and Live dot are lavender (#6F55A8 light, #D2C4EE dark); a cancel back to the
   visible room never snaps, shows the cancelled room or rebuilds the board, and NieR and Retro reverse
   their wipe.'
+- Entering Usage never shows a blank or empty board; the leaving page holds until the board is drawn,
+  plates and bodies arrive together, and under Reduce Animations the board is whole in the first frame.
+- A room change hands off at the new room's first drawn frame; Retro and NieR erase then. A rapid click,
+  leaving the page, Reduce Motion or no GPU hands off at once. A held board entrance never replays from
+  a blank frame.
 validation_surfaces:
   - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
   - python3 scripts/pm-plan-index.py validate
@@ -254,6 +272,12 @@ source_lineage:
 - /mnt/Cursor/share/puppet-master/2026-10-16-plans-topup/sources/2026-10-16-motion-pass--JUDGEMENT.md,
   SHA-256 8a3291ea2558da05d40c5a051a958f378802ec9c36454b83dbaf5ffc7efe8cf9 (the global acceptance bar and
   the A4, A11, A13 and B9 findings; source lineage)
+- /mnt/Cursor/share/puppet-master/2026-10-17-plans-f6/sources/2026-10-16-motion-pass--INTEGRATION.md,
+  SHA-256 b821fd283ce457433e82e62885ddf0bf480272c3a5531340144fedf87532b262 (F6 on main 6a3ee2fe90;
+  source lineage; not native certification)
+- /mnt/Cursor/share/puppet-master/2026-10-17-plans-f6/sources/BRIEF.md,
+  SHA-256 a6c5152164942a26cba5b0216a339578ee13c47a3ba39ffbeced793203c2dece (Usage entry never blank;
+  decision lineage)
 preserved_exact_tokens:
   - "N more"
   - "16%"
@@ -271,6 +295,7 @@ negative_constraints:
   - "Do not play the onboarding window's NieR effects or the reboot plate on Usage, or decode any text there but the room title."
   - "Do not animate a mark that sits on a line apart from that line's path tween."
   - "Do not scale a hovered plate or keep a compositing layer on it after its entrance."
+  - "Do not show a blank or empty board while Usage is opening."
 compatibility_only_notes: []
 stale_retired_dispositions:
 - The two-letter monogram system of the earlier Atlas design notes is retired wherever an official mark

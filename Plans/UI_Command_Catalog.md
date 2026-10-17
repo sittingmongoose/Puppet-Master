@@ -15973,7 +15973,9 @@ canonical_text: >-
   never runs reset and apply as two commits. Save, Rename, Delete and Undo are
   ui.terminal.preset.save, ui.terminal.preset.rename, ui.terminal.preset.delete and
   ui.terminal.preset.undo, local library actions owned by F3-650/SP-331. There is no cmd.* preset
-  family, per-preset command, new event or shortcut. Picker Back remains CS-100's local navigation.
+  family, per-preset command, new event or shortcut.   Picker Back remains CS-100's local navigation.
+  Amended 2026-10-17 (DL-221): a Customize pick shows its new state in the click's frame; the one atomic
+  patch follows that frame (ACD-475). F6 adds no command.
 gui_related: true
 gui_classification_reason: Editor appearance and shared control dispatch.
 split_recommended: false
@@ -15984,6 +15986,8 @@ acceptance_criteria:
 - Each durable producer maps to the one writer for its selected scope; no local action also has a catalog command
   row.
 - Clear all cannot resolve a domain condition, clear new arrivals or hide a refused dismissal.
+- A Customize pick's acknowledgement shows in the click's frame and the atomic patch follows it; F6 adds
+  no command.
 validation_surfaces:
 - python3 scripts/pm-shard-plans.py --check
 - python3 scripts/pm-plan-index.py validate

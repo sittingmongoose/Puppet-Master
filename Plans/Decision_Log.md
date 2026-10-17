@@ -15914,6 +15914,9 @@ source_lineage:
   SHA-256 d52085df3ab4a82f323d1fd2ed0a846b8e858fcaf7ec746a2ff79cc9cf2a97ba (Jared's rulings of 2026-10-15 (~19:20, ~19:30 ET) and 2026-10-16 (~09:05 ET); decision lineage)
 preserved_exact_tokens: []
 negative_constraints: []
+stale_retired_dispositions:
+- 'Amended 2026-10-17 (DL-221): the motion fix lanes that landed after this entry, F6 included, are
+  recorded in DL-217 and DL-221.'
 owner_hints:
 - Plans/Decision_Log.md
 ```
@@ -15975,6 +15978,12 @@ source_lineage:
   reflection scale; decision lineage)
 preserved_exact_tokens: []
 negative_constraints: []
+stale_retired_dispositions:
+- 'Amended 2026-10-17 (DL-218, DL-219): no lower-spec tier is added, and concept performance work stops
+  at not horribly slow. The P1000 reading in ACD-475 stands. It read: the P1000 speed-up work continues
+  separately.'
+- 'Amended 2026-10-17 (DL-222): fade-first is the later landing of the frost crossfade. It read: its
+  implementation lands in a later lane.'
 owner_hints:
 - Plans/Decision_Log.md
 ```
@@ -16096,8 +16105,286 @@ source_lineage:
   seam with the print fade; source lineage)
 preserved_exact_tokens: []
 negative_constraints: []
+stale_retired_dispositions:
+- 'Amended 2026-10-17 (DL-221, DL-222): F6, landed on main at 6a3ee2fe90, is recorded in DL-221, and
+  fade-first in DL-222. This entry stays the record of the lanes through L2.'
 owner_hints:
 - Plans/Decision_Log.md
 ```
 
 ContractRef: ContractName:Plans/DRY_Rules.md#DR-073, ContractName:Plans/FinalGUISpec.md#F3-628, ContractName:Plans/FinalGUISpec.md#F3-653, ContractName:Plans/assistant-chat-design.md#ACD-475, ContractName:Plans/FinalGUISpec.md#F3-077, ContractName:Plans/FinalGUISpec.md#F3-598, ContractName:Plans/FinalGUISpec.md#F3-650, ContractName:Plans/FinalGUISpec.md#F3-652, ContractName:Plans/Settings_System.md#SSYS-053, ContractName:Plans/Test_Capture_and_Motion_Evidence.md#TCME-007
+
+### DL-218 - No Platform-Specific Solutions
+
+```yaml
+plan_unit_id: DL-218
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: >-
+  Recorded 2026-10-17. Jared, 2026-10-17 10:27Z: "I don't want a solution that varies based on the
+  platform. So no special treatment for lower spec machines. Just do the best you can and move on
+  from the issue." Idle preparation and the page-change hold are the same on every machine. No
+  platform-specific rule, no per-machine acceptance and no lower-spec tier are added. P1000-class
+  and M3-class hardware stay measurement hardware. This generalizes DL-216's refusal of a
+  low-end-GPU tier. ACD-475 owns the rule. Existing capability fallbacks that an owner already
+  states, such as no blur without a GPU and no idle preparation when there is no GPU, are unchanged.
+  Concept films are evidence, not native certification.
+gui_related: true
+gui_classification_reason: No Platform-Specific Solutions.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- The linked owners agree with this decision; source publication is not native certification.
+validation_surfaces:
+- python3 scripts/pm-shard-plans.py --check
+- python3 scripts/pm-plan-index.py validate
+- python3 scripts/pm-plans-verify.py run-gates
+risk_class: owner_drift
+reasoning_tier: high
+context_scope: no_platform_specific_solutions
+implementation_surfaces:
+- Plans/Decision_Log.md
+node_compile_hint:
+  mode: owner_decision_record
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- /mnt/Cursor/share/puppet-master/2026-10-17-plans-f6/sources/BRIEF.md,
+  SHA-256 a6c5152164942a26cba5b0216a339578ee13c47a3ba39ffbeced793203c2dece (Jared, 2026-10-17, as
+  relayed by the coordinator; no special treatment for lower-spec machines; decision lineage)
+- /mnt/Cursor/share/puppet-master/2026-10-16-p1000-speed/IDLE-WARM-RULE.md,
+  SHA-256 9a79df01751fbd98f1b4d597d40e520e662b5d584e97ef9094c27dd8aa55736d (Jared, 2026-10-17 10:27Z;
+  decision lineage)
+preserved_exact_tokens:
+- no special treatment for lower spec machines
+negative_constraints: []
+owner_hints:
+- Plans/Decision_Log.md
+```
+
+ContractRef: ContractName:Plans/assistant-chat-design.md#ACD-475
+
+### DL-219 - The Concept Is Not Production
+
+```yaml
+plan_unit_id: DL-219
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: >-
+  Recorded 2026-10-17. Jared: this concept is not production. It will be rebuilt in Slint and custom
+  Skia, so concept performance work stops at "not horribly slow". That bound ends further
+  concept-only performance campaigns. It does not replace ACD-475's acceptance bar, which the rebuild
+  honours, and it does not certify the concept. DL-216's separate P1000 speed-up campaign is closed
+  by this decision.
+gui_related: true
+gui_classification_reason: The Concept Is Not Production.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- The linked owners agree with this decision; source publication is not native certification.
+validation_surfaces:
+- python3 scripts/pm-shard-plans.py --check
+- python3 scripts/pm-plan-index.py validate
+- python3 scripts/pm-plans-verify.py run-gates
+risk_class: owner_drift
+reasoning_tier: high
+context_scope: the_concept_is_not_production
+implementation_surfaces:
+- Plans/Decision_Log.md
+node_compile_hint:
+  mode: owner_decision_record
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- /mnt/Cursor/share/puppet-master/2026-10-17-plans-f6/sources/BRIEF.md,
+  SHA-256 a6c5152164942a26cba5b0216a339578ee13c47a3ba39ffbeced793203c2dece (Jared, 2026-10-17; the
+  concept is not production and will be rebuilt in Slint and custom Skia; decision lineage)
+preserved_exact_tokens:
+- not horribly slow
+- Slint
+owner_hints:
+- Plans/Decision_Log.md
+```
+
+ContractRef: ContractName:Plans/assistant-chat-design.md#ACD-475
+
+### DL-220 - Q22 Closed As Best Effort
+
+```yaml
+plan_unit_id: DL-220
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: >-
+  Recorded 2026-10-17. The Q22 final motion QA pass is closed as best effort. These open items are
+  parked, not scheduled, and each requirement still stands: the Usage cold-entry hold (F3-628,
+  ACD-475), Settings entry and chapter switch (SSYS-053, ACD-475), the NieR toggle under Reduce
+  Animations (F3-598), onboarding Ready to Enter under Reduce Animations (F3-520), and the Glass
+  Light Forest wallpaper hold (F3-653, DR-073). The report is the motion pass part 2. Parking does
+  not waive ACD-475's bar or the behaviours F6 recorded. It ends the concept campaign on those
+  moments. Concept evidence is not native certification.
+gui_related: true
+gui_classification_reason: Q22 Closed As Best Effort.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- The five parked moments are named here and are not a scheduled concept gate.
+- The linked owners agree; source publication is not native certification.
+validation_surfaces:
+- python3 scripts/pm-shard-plans.py --check
+- python3 scripts/pm-plan-index.py validate
+- python3 scripts/pm-plans-verify.py run-gates
+risk_class: owner_drift
+reasoning_tier: high
+context_scope: q22_closed_as_best_effort
+implementation_surfaces:
+- Plans/Decision_Log.md
+node_compile_hint:
+  mode: owner_decision_record
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- /mnt/Cursor/share/puppet-master/2026-10-17-plans-f6/sources/BRIEF.md,
+  SHA-256 a6c5152164942a26cba5b0216a339578ee13c47a3ba39ffbeced793203c2dece (Jared, via the coordinator;
+  Q22 closed as best effort; the five items parked; decision lineage)
+- /mnt/Cursor/share/puppet-master/2026-10-17-plans-f6/sources/2026-10-16-motion-pass--PART2.md,
+  SHA-256 1a61d195f6542a182596e531781b696927b2900248e5155b9abe134786bc0f3f (the Q22 report, including
+  the F6c update; source lineage; not native certification)
+preserved_exact_tokens: []
+negative_constraints: []
+owner_hints:
+- Plans/Decision_Log.md
+```
+
+ContractRef: ContractName:Plans/assistant-chat-design.md#ACD-475, ContractName:Plans/Automated_Testing_System.md#ATS-077
+
+### DL-221 - F6 Landed
+
+```yaml
+plan_unit_id: DL-221
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: >-
+  Recorded 2026-10-17. F6 landed on main at 6a3ee2fe90, from 1b092d0b0e. Behaviours the Slint and
+  custom Skia rebuild honours, each in one owner: a page change may hold the leaving page, the
+  click's motion still running, while the arriving page is still drawing, for about 1.5 s counted
+  from the click, and the entrance then plays from the start. Under Reduce Animations the page
+  arrives whole and is not held. A move that was held, or released but not yet shown, still counts as
+  running (ACD-475). The click fade keeps moving through a hold and the exit continues from the
+  opacity it has reached (F3-464). Entering Usage never shows a blank or empty board; plates and
+  bodies arrive together, and a room change hands off at the new room's first drawn frame (F3-628).
+  NieR's page-wipe band covers at the release of the hold, not during it (F3-464). Idle preparation
+  is the one rule in ACD-475, the same on every machine (DL-218). Terminal Customize is prepared
+  under that rule so it opens already drawn, and the bezel's look is unchanged (F3-650, F3-643).
+  A pick shows on its control before the write (ACD-475, F3-650). Glass's warm-up follows the same
+  rule and changes no Glass look (F3-652). Wallpaper fade-first is DL-222 (F3-653, DR-073).
+  Reopening Customize reports a failed or empty open as an error, not only a toast (F3-650). The
+  editor sheet's opening pass-through, and focus while a surface is drawn unseen, are proposed
+  pending Jared in F3-650 and ACD-475. F6 brings the concept's Bell help and bezel reflection scale
+  into line with the inventory and SSYS-051; those owners are unchanged. Lead B6 / T2-4
+  (c145df3233) changes no behaviour. Settings place (67afa7e2a9) and the generator fix (881a6130ff)
+  change no product contract; the generator writes LF and slash paths on Windows, which is tooling.
+  F6 adds no binding, command or stored state. Concept evidence is not native certification.
+gui_related: true
+gui_classification_reason: F6 Landed.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- The linked owners agree with this decision; source publication is not native certification.
+validation_surfaces:
+- python3 scripts/pm-shard-plans.py --check
+- python3 scripts/pm-plan-index.py validate
+- python3 scripts/pm-plans-verify.py run-gates
+risk_class: owner_drift
+reasoning_tier: high
+context_scope: f6_landed
+implementation_surfaces:
+- Plans/Decision_Log.md
+node_compile_hint:
+  mode: owner_decision_record
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- /mnt/Cursor/share/puppet-master/2026-10-17-plans-f6/sources/BRIEF.md,
+  SHA-256 a6c5152164942a26cba5b0216a339578ee13c47a3ba39ffbeced793203c2dece (the F6 lanes as behaviour;
+  decision lineage)
+- /mnt/Cursor/share/puppet-master/2026-10-17-plans-f6/sources/2026-10-16-motion-pass--INTEGRATION.md,
+  SHA-256 b821fd283ce457433e82e62885ddf0bf480272c3a5531340144fedf87532b262 (F6c final, main
+  6a3ee2fe90, and the lane heads; source lineage; not native certification)
+- /mnt/Cursor/share/puppet-master/2026-10-17-plans-f6/sources/Concepts--onboarding--opus-5.5--tools--shell_motion.py,
+  SHA-256 e245b03ddc951281dc20463422fc9dddf3c5299c7f3ca3421f41b9da399ab625 (main 6a3ee2fe90; the
+  entrance wait, cap about 1.5 s from the click; source lineage; not native certification)
+- /mnt/Cursor/share/puppet-master/2026-10-17-plans-f6/sources/Concepts--onboarding--opus-5.5--tools--motion_finish.js,
+  SHA-256 a7a522fa4a1984cafddc45b315d23b4b7792fbab0a6e1a9069c448a6095476a4 (main 6a3ee2fe90; a held
+  page move finishes; source lineage; not native certification)
+- /mnt/Cursor/share/puppet-master/2026-10-17-plans-f6/sources/Concepts--home-redesign--src--panels--kinds--11-editor-customize.js,
+  SHA-256 7bd2cb58747e1d064ae91a82763d76d948262c64bc1a939a1123efce27ab7701 (main 6a3ee2fe90; a failed
+  Customize open is reported; the opening pass-through is proposed pending Jared; source lineage; not native
+  certification)
+preserved_exact_tokens: []
+negative_constraints: []
+owner_hints:
+- Plans/Decision_Log.md
+```
+
+ContractRef: ContractName:Plans/assistant-chat-design.md#ACD-475, ContractName:Plans/FinalGUISpec.md#F3-628, ContractName:Plans/FinalGUISpec.md#F3-464, ContractName:Plans/FinalGUISpec.md#F3-650, ContractName:Plans/FinalGUISpec.md#F3-643, ContractName:Plans/FinalGUISpec.md#F3-652, ContractName:Plans/FinalGUISpec.md#F3-653, ContractName:Plans/DRY_Rules.md#DR-073, ContractName:Plans/UI_Wiring_Rules.md#UIW-043
+
+### DL-222 - Wallpaper Fade-First
+
+```yaml
+plan_unit_id: DL-222
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: >-
+  Recorded 2026-10-17. Jared approved option (c) on 2026-10-16, in the words "fade is fine". A
+  wallpaper pick whose frost is not ready starts the print's fade as soon as the print is decoded.
+  The sheets keep the old frost during that fade, then crossfade to the new frost once it is ready.
+  A prepared pick still fades the print and its frost together. No frame is blank. While a fade has
+  not committed, a newer choice fades from the print currently fading. A look or mode change that
+  changes the print ends that fade at once; one that keeps the same print lets it finish. Reduced
+  Motion, a look change and no GPU keep the immediate swap. The setting still writes at the pick.
+  F3-653 owns the crossfade. DR-073 owns preparation and the source query. This supersedes DL-216's
+  "lands in a later lane" for the frost crossfade. Concept evidence is not native certification.
+gui_related: true
+gui_classification_reason: Wallpaper Fade-First.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- The linked owners agree with this decision; source publication is not native certification.
+validation_surfaces:
+- python3 scripts/pm-shard-plans.py --check
+- python3 scripts/pm-plan-index.py validate
+- python3 scripts/pm-plans-verify.py run-gates
+risk_class: owner_drift
+reasoning_tier: high
+context_scope: wallpaper_fade_first
+implementation_surfaces:
+- Plans/Decision_Log.md
+node_compile_hint:
+  mode: owner_decision_record
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- /mnt/Cursor/share/puppet-master/2026-10-16-motion-fixes/pm7-liquid-glass/F6-NOTES.md,
+  SHA-256 86b0f12a17d3eab6becf2410e1c5950a6c619066c8a6d683ba57328a9fef7899 (Jared approved option (c),
+  fade is fine; decision lineage)
+- /mnt/Cursor/share/puppet-master/2026-10-17-plans-f6/sources/2026-10-16-motion-pass--INTEGRATION.md,
+  SHA-256 b821fd283ce457433e82e62885ddf0bf480272c3a5531340144fedf87532b262 (F6c final; source lineage;
+  not native certification)
+preserved_exact_tokens:
+- fade is fine
+negative_constraints: []
+owner_hints:
+- Plans/Decision_Log.md
+```
+
+ContractRef: ContractName:Plans/FinalGUISpec.md#F3-653, ContractName:Plans/DRY_Rules.md#DR-073, ContractName:Plans/Decision_Log.md#DL-216
