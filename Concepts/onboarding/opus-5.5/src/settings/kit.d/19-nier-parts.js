@@ -1066,6 +1066,30 @@
     };
   }
 
+  /* The calm cover comes and goes inside a host kept in the body (display: contents, so the cover still inherits from
+     the body and stacks as before). Added to or taken from the body itself, it changed the body's child list, and the
+     page's :nth-child rules (any parent's children) then restyled every other body child's whole subtree: the app,
+     the scene and the wallpaper, 107 ms as the cover came in and 152 ms in the first frame after it lifted on the
+     P1000 (F5 B5 trace). The host is added once, when the page is built, before anything is drawn on a switch. */
+  let calmHost = null;
+  function calmParent() {
+    if (calmHost && calmHost.isConnected) return calmHost;
+    if (!document.body) return null;
+    calmHost = document.createElement('div');
+    calmHost.id = 'o55np-calm-host';
+    calmHost.style.display = 'contents';
+    document.body.appendChild(calmHost);
+    return calmHost;
+  }
+  if (document.body) calmParent(); else document.addEventListener('DOMContentLoaded', calmParent, { once: true });
+  /* PM_BUSY (js/11-motion-start.js) sees covers come and go on the body's own child list; this one is in its host */
+  const busyNote = ended => {
+    try {
+      if (typeof window.PM_BUSY !== 'function') return;
+      if (ended) { if (typeof window.PM_BUSY.ended === 'function') window.PM_BUSY.ended(); } else window.PM_BUSY();
+    } catch (e) { /* its slow check still finds the change */ }
+  };
+
   let rebooting = false;
   async function reboot(repaint, info) {
     info = info || {};
@@ -1097,7 +1121,8 @@
       plate.id = 'o55np-calm'; plate.setAttribute('role', 'status');
       plate.style.backgroundColor = calmColors.background;
       plate.style.color = calmColors.ink;
-      document.body.appendChild(plate);
+      calmParent().appendChild(plate);
+      busyNote(false);
       cue('start');
       let finishFrame = null, fade = null;
       const hidden = () => {
@@ -1134,7 +1159,7 @@
         document.removeEventListener('visibilitychange', hidden);
         if (finishFrame) finishFrame();
         if (fade) fade.cancel();
-        try { paint(); } finally { plate.remove(); rebooting = false; cue('gone'); }
+        try { paint(); } finally { plate.remove(); busyNote(true); rebooting = false; cue('gone'); }
       }
       return;
     }
