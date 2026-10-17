@@ -15,10 +15,12 @@ field, the bits of the passes that keep it (1, 2, 4, 8, ORed over the census fil
 dropped. Run it right after regenerating the catalog from a harvest: each census file carries the sha256 of the full
 catalog it was made from, which must match.
 
---split <splits.json> (with --passes): {"catalog_sha256": ..., "split": {"<entry>": [bits, "property", ...]}} gives
-those entries a seventh field: in the passes named by bits glass.js draws the kind first without those properties, then
-whole, so a kind whose draw links two programs links one per step (tools/warm_splits.json: the P1000 draws whose two
-FillRRectOp links held its GPU over 100 ms)."""
+--split <splits.json> (with --passes): {"catalog_sha256": ..., "split": {"<entry>": [bits, "property", ...]},
+"drop": {"<entry>": bits}}. A split gives the entry a seventh field: in the passes named by bits glass.js draws the kind
+first without those properties, then whole, so a kind whose draw links two programs links one per step. A drop takes
+those passes' draws out of the warm-up: draws that link two or three programs at once whatever is stripped (their
+variants come from the box's fill and clips), which held the P1000's GPU over 100 ms; their first use pays as before
+(tools/warm_splits.json, from the F6 P1000 census and closure runs)."""
 import hashlib, json, pathlib, re, sys
 
 SRC = pathlib.Path(__file__).resolve().parents[1] / 'src' / 'glass.js'
@@ -131,6 +133,8 @@ def passes(files):
                 mask[i] |= 1 << (int(p) - 1)
     if split and split.get('catalog_sha256') != sha:
         sys.exit('the split file was made for another catalog')
+    for i, bits in (split.get('drop') or {}).items():
+        mask[int(i)] &= ~bits
     for i, sp in (split.get('split') or {}).items():
         if not mask[int(i)] & sp[0]:
             sys.exit('split entry %s: its passes %d are not kept' % (i, sp[0]))
