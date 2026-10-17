@@ -4,7 +4,7 @@ Source: `Plans/FinalGUISpec.md`
 
 Source lines: L36025-L36504
 
-Source SHA256: `a6685adb04f014c83cb7f5f7e9a832955e33e2c91c64c32e606dd597d310df4d`
+Source SHA256: `46e4f7e518b4eee59e453c5fc1fcf5e43e6c43f0db5648ab420f21f97a89a63b`
 
 ---
 
@@ -127,7 +127,7 @@ split_recommended: false
 depends_on: [F3-513, UF-093, UF-094, UF-096, WS-017, WS-018, WS-020]
 unblocks: [F3-515, F3-518, ATS-036, ATS-038]
 acceptance_criteria:
-  - "Overview, Plans & limits, Costs, Accounts, Free models, Context, Analytics, Ledger, Attention, Prompt cache, Tools, Signals, and Source authority are all addressable, in that order and at every supported physical width, with only At a glance, Detailed, and Diagnostics as user-facing disclosure labels; Source authority mounts 7/8/9 panels (amended 2026-10-17, review r1, earlier exactly 4/6/8), and provider setup absence renders exact Provider Setup Required copy, explicit Host/Environment, preserved operation/continuation identity, and a cmd.settings.open CTA with target_type setting and setting_id ai.accounts.provider-connections."
+  - "Overview, Plans & limits, Costs, Accounts, Free models, Context, Analytics, Ledger, Attention, Prompt cache, Tools, Signals, and Source authority are all addressable, in that order and at every supported physical width, with only At a glance, Detailed, and Diagnostics as user-facing disclosure labels; Source authority mounts 7/8/9 cards (amended 2026-10-17, review r1, earlier exactly 4/6/8; DL-230, a Usage widget is a card), and provider setup absence renders exact Provider Setup Required copy, explicit Host/Environment, preserved operation/continuation identity, and a cmd.settings.open CTA with target_type setting and setting_id ai.accounts.provider-connections."
   - "Every room has a non-empty curated default; partial final rows retain intentional widths and provider-heavy boards prefer narrower, taller, information-dense cards."
   - "The board's track count follows its measured width on the 12, 20, 24 and 30 track ladder; every size preset of every widget kind shows a complete content tier, and facts a size cannot show fold behind N more with hover and Details."
   - "Each semantic size presents a complete tier or hides the tier entirely, chooses that tier from measured rendered width, and larger sizes reveal additional useful facts, rows, columns, or plots rather than blank area; reorder placeholders use measured rendered width and height rather than stale nominal spans, preview spans do not become settled layout fields, and supported curated sizes have no routine widget-body scrolling, clipped corners, value collisions, partial bars, bottom-content peeking, or partially exposed next-tier content."
