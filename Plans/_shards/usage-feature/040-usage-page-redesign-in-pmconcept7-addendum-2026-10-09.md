@@ -4,7 +4,7 @@ Source: `Plans/usage-feature.md`
 
 Source lines: L7315-L7535
 
-Source SHA256: `96ba2a90432f6e2bd6f370e8ef5f835fe1998457e394933ac084327cc0ad78b9`
+Source SHA256: `325b80093ce7379a3218fa19592809eea166f4d84d83715004b26f184430a418`
 
 ---
 
@@ -127,12 +127,12 @@ canonical_text: >-
   account (MA-073), its hover adds "· next run", and Usage writes no second Settings value for it. It shows
   only with two or more accounts; the account in use shows Current instead; its other disabled states read
   through UCC-116's closed reasons: signed out as auth_missing or auth_expired, a cooldown or a window used up
-  until a time as provider_unavailable with that time, and needs a seat or manual choice not supported as
-  policy_denied. While auto-switch waits for a tool to go idle, the status line offers Use <account> now, an
+  until a time as provider_unavailable with that time, and needs a seat as policy_denied; where the provider does not
+  support a manual choice the control is absent, not disabled (amended 2026-10-17, review r1). While auto-switch waits for a tool to go idle, the status line offers Use <account> now, an
   override through the same command and the same past-switch-point question, shown only while that account is
   eligible for a manual choice. Attention alert rows offer Acknowledge and Snooze 1h (F3-453's actions),
-  Switch route on a warning (UCC-116's cmd.provider.switch_route with the provider, the reason and its
-  retry_after_ms), and on an anomaly alert Keep guard, which acknowledges it; Allow once has no admitted
+  Switch route on a warning (UCC-116's cmd.provider.switch_route with provider_id and its retry_after_ms;
+  amended 2026-10-17, review r1, it read: with the provider, the reason and its retry_after_ms), and on an anomaly alert Keep guard, which acknowledges it; Allow once has no admitted
   command, so it is not offered until UF-083's owner admits one. Usage's own notices name the window by its
   own label and show no internal id: a threshold reads "<window> is at N% used." with "Usage · another
   signed-in account can take the work", and an automatic switch "Work moved to another account because of rate

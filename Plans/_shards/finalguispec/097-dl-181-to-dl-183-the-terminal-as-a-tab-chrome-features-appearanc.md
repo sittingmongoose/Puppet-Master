@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L46926-L49286
+Source lines: L46931-L49291
 
-Source SHA256: `8b46b2f543663a9fdbf5170fad337bc776064dc6ab9115e9beea4413d8154e4d`
+Source SHA256: `4980ff8a2865a116ca808d84229b656dc16f8d1e2357642fc795f3bf350ba362`
 
 ---
 
@@ -1680,15 +1680,15 @@ canonical_text: >-
   input and while the page is hidden, Glass draws each kind of box once, nearly invisibly, so first-use
   GPU programs are compiled before the first page or chapter change rather than during it. A switcher
   strip defers its sync only under a look's cover and resyncs as the cover begins to lift.
-  Amended 2026-10-17 (DL-222): Glass's warm-up is best effort under ACD-475, not a promise that every
-  box kind is compiled before the first page or chapter change. It prepares the kinds that compile a
-  program and leaves the rest to first use. It changes no Glass look. The idle gates are ACD-475's;
-  this unit keeps the sheet-rim bake and the cover-only strip deferral.
+  Amended 2026-10-17 (DL-222): Glass's warm-up is best effort under ACD-475 and changes no Glass look.
+  The idle gates are ACD-475's, and a switcher strip waits only under a look's cover (amended 2026-10-17, review r1; it read:
+  not a promise that every box kind is compiled first, preparing the kinds that compile a program, and this
+  unit keeps the sheet-rim bake and the cover-only strip deferral).
   Amended 2026-10-17 (DL-226): while a widget plate is carried on a board in Glass, the resting plates
   hold a pre-painted frost instead of live blur. At rest that frost looks the same.
   Amended 2026-10-17 (DL-228): Glass condenses into place only when Glass is switched on, never on a page, tab
-  or room change, and moving items never turn opaque and then clear as they settle (DL-229, Jared,
-  2026-10-11). Tab strip items, segmented choices and rail icons get no press bloom or flex: the lens moving
+  or room change, and moving items never turn opaque and then clear as they settle (DL-229: Jared's words
+  are about Usage's tab changes, and the concept applies the rule on every page). Tab strip items, segmented choices and rail icons get no press bloom or flex: the lens moving
   to the pressed item is their press feedback. Settings' floating search results use the dense menu material,
   near opaque without live optics, so page words never read through them. The terminal Customize screen's
   choice rows take the travelling lens; the editor Customize screen's in-flow choices take the material in
@@ -1863,7 +1863,7 @@ canonical_text: >-
   print is decoded; the sheets keep the old frost during that fade, then crossfade to the new frost once
   it is ready. No frame is blank. While that fade has not committed, a newer choice fades from the print
   currently fading. A look or mode change that changes the print ends it at once; one that keeps the same
-  print lets it finish. Reduced Motion, a look change and no GPU keep the immediate swap. The setting
+  print lets it finish. Reduced Motion, a print change that a look change causes, and no GPU keep the immediate swap (amended 2026-10-17, review r1). The setting
   still writes at the pick (SSYS-009, SSYS-054); only the frost drawing lags. Consumers of the selected
   print, the terminal Lens included, follow when the frost commits (DR-073).
   Amended 2026-10-17 (DL-228): Look's own carries a one-line note saying what the current look shows ("<Look>

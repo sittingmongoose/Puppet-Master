@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L40188-L41408
+Source lines: L40193-L41413
 
-Source SHA256: `8b46b2f543663a9fdbf5170fad337bc776064dc6ab9115e9beea4413d8154e4d`
+Source SHA256: `4980ff8a2865a116ca808d84229b656dc16f8d1e2357642fc795f3bf350ba362`
 
 ---
 
@@ -180,8 +180,8 @@ canonical_text: >-
   The ELI5 quick dot is the ELI5 kind mark among these glyphs, present lit or muted (F3-581, DL-126).
   The dock and the per-reply files row replace the stream footer pill's helpers and files chips
   (ACD-482, DL-129); no summary of helpers or file changes stacks above the composer beside the dock.
-  Amended 2026-10-17 (DL-228): while a decision host (a Plan or questionnaire host) is open it sits directly
-  above the composer and lifts the floating Activity bar pill and the follow-up queue, which float together as
+  Amended 2026-10-17 (DL-228): while a decision host (a Plan or questionnaire host) is open it sits above the
+  dock and the quota-wait strip (amended 2026-10-17, review r1, it read: directly above the composer) and lifts the floating Activity bar pill and the follow-up queue, which float together as
   one stack, with the scroll-to-bottom control; the transcript keeps its bottom padding for that floating
   stack. The quota-wait strip and the dock stay in flow beneath the decision host, so bottom to top the order
   is composer, dock, quota-wait strip, decision host, then the floating pill and queue.

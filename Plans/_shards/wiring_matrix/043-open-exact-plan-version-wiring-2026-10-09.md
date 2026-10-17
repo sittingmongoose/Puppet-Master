@@ -2,15 +2,15 @@
 
 Source: `Plans/Wiring_Matrix.md`
 
-Source lines: L5493-L5554
+Source lines: L5495-L5556
 
-Source SHA256: `d46e67f2238bf93357fac446a71f185ffb5d2f9cd51f91c1feec146c03415b3b`
+Source SHA256: `fc3bc49cae7d5d6ed4fc1212b6cff2f4d4e5e3d29264b9c2380cc2a07f993e2f`
 
 ---
 
 ## Open Exact Plan Version Wiring (2026-10-09)
 
-The owner's decision DL-157 gives a bound Goal's Open exact Plan · Vn, and every Open plan button, the command `cmd.chat.plan.open_version` (UI_Command_Catalog UCC-176, Commands_System CS-088). This addendum adds its one production wiring entry, `assistant.redesign.cmd.chat_plan_open_version`, to `Plans/Wiring_Matrix.production.json`. It keeps `handler_unavailable` and `expected_event_types=[]`; nothing here claims a native dispatcher, handler or event.
+The owner's decision DL-157 gives a bound Goal's Open exact Plan · Vn, and every Open plan button, the command `cmd.chat.plan.open_version` (UI_Command_Catalog UCC-176, Commands_System CS-088). This addendum adds its one production wiring entry, `assistant.redesign.cmd.chat_plan_open_version`, to `Plans/Wiring_Matrix.production.json`. It keeps `handler_unavailable` and declares one `workspace.layout_changed` when the route adds a tab and none for a reveal (DL-188; amended 2026-10-17, review r1, it read: `expected_event_types=[]`); nothing here claims a native dispatcher, handler or event.
 
 ### WM-065 - Open Exact Plan · Vn Raises The Open Plan Version Entry
 

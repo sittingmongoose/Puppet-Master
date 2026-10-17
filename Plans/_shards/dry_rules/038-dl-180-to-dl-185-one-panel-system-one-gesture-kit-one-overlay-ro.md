@@ -2,9 +2,9 @@
 
 Source: `Plans/DRY_Rules.md`
 
-Source lines: L3453-L4205
+Source lines: L3453-L4204
 
-Source SHA256: `6ca512b39f80c074cd132e18c12b336a7f97648581e48bda882e5ecc7cfed24f`
+Source SHA256: `7d5029a05c8706e06e859aa015173724cf9f3b586a0489a1bb64e78fca3ea6d9`
 
 ---
 
@@ -636,16 +636,15 @@ canonical_text: >-
   that rule. The owner prepares a print and its frost before the choice commits. The print may start
   fading before the frost is ready (F3-653); the setting still writes at the pick. An intent, hover or
   keyboard focus after a short quiet pause, or a press, never waits behind background preparation of
-  another print. A pick or intent for a print runs whatever bake is left at once, and a print is baked
-  once however many preparations ask for it. This unit still owns the cache-only query and the rule
+  another print. A pick or intent for a print runs whatever preparation is left at once (review r1, it read: whatever
+  bake is left, a print baked once however many preparations ask). This unit still owns the cache-only query and the rule
   that a failed preparation still commits.
   Amended 2026-10-17 (DL-228): the requirement is one synchronous, cache-only print query; the concept's
-  PM_WALLPAPERS.sourceUrl is its lineage name, not an interface the rebuild keeps. A wallpaper joins the
+  page API for it is lineage, not an interface the rebuild keeps. A wallpaper joins the
   catalog only with a Dark and a Light print, each composed with a quiet middle and its detail toward the
   edges (opaque looks cover the middle with panels and Glass frosts what sits behind a sheet) and drawn at the
   contrast its mode's text needs; its thumbnails are made from the same print, and the gallery never decodes a
-  full print. Byte and pixel budgets are the packager's. The catalog holds 29 entries today; the withdrawn
-  five stay files with no catalog entry.
+  full print. Byte and pixel budgets are the packager's.
 gui_related: true
 gui_classification_reason: One wallpaper catalog and one writer.
 split_recommended: false
@@ -723,10 +722,10 @@ canonical_text: >-
   Added 2026-10-17 (DL-228). Two rules are restated in many owners and have drifted. Widget_System WS-019
   alone owns how a board commits: gravity inside the one move, resize, add or remove that caused it, and Tidy as
   one cmd.widget.move with its arrange field, one receipt, the repack computed by the owner. Settings_System
-  SSYS-044 alone owns hosted Settings controls: which surface may host which row, the bound value, the
-  preview-then-apply transaction and its hold rules. usage-feature UF-092, UF-093 and UF-107, UI_Command_Catalog
-  UCC-147, UI_Wiring_Rules UIW-012, Wiring_Matrix WM-043 and WM-045, Commands_System CS-067, Multi-Account
-  MA-073 and FinalGUISpec F3-515 and F3-628 consume them; where a consumer's wording differs from its owner, the
+  SSYS-044 owns which surface may host which row, the bound value and the preview-then-apply transaction;
+  Multi-Account MA-073 owns the switch and warning hold rules, and SSYS-044 consumes them (review r1).
+  usage-feature UF-092, UF-093 and UF-107, UI_Command_Catalog UCC-147, UI_Wiring_Rules UIW-012, Wiring_Matrix
+  WM-043 and WM-045, Commands_System CS-067 and FinalGUISpec F3-514, F3-515 and F3-628 consume them; where a consumer's wording differs from its owner, the
   owner wins, and a later edit cites the owner by id instead of restating it.
 gui_related: true
 gui_classification_reason: One owner for the board commit shape and for hosted Settings controls.
@@ -734,7 +733,7 @@ split_recommended: false
 depends_on: []
 unblocks: []
 acceptance_criteria:
-- A board commit or a hosted Settings control is judged by WS-019 or SSYS-044; a differing consumer sentence does not create a second rule.
+- A board commit or a hosted Settings control is judged by WS-019 or SSYS-044, and a switch or warning hold by MA-073; a differing consumer sentence does not create a second rule.
 validation_surfaces:
 - python3 scripts/pm-shard-plans.py --check
 - python3 scripts/pm-plan-index.py validate

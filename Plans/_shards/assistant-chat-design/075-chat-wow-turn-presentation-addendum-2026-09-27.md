@@ -2,9 +2,9 @@
 
 Source: `Plans/assistant-chat-design.md`
 
-Source lines: L26060-L26710
+Source lines: L26060-L26711
 
-Source SHA256: `b9ae6f9d9ccbc0d060e74b5ad28d1daef3682ffc97321c48fc7e6bcffa64a4a1`
+Source SHA256: `e1616a982f06cd6837b3d20df9776a223ac4f236a497a09497099cfbf3986564`
 
 ---
 
@@ -531,8 +531,9 @@ canonical_text: >-
   PM_START_ON_SHOWN.
   Amended 2026-10-17 (DL-219, DL-222): a page change may hold while the arriving page is still drawing
   its first screen. The leaving page stays, with the click's motion still running, until the arrival is
-  ready or about 1.5 s from the click's own frame, whichever is first; then the exit and the entrance
-  play from the start. That hold is the covering transition this bar allows, and the bar itself is
+  ready or about 1.5 s from the click's own frame, whichever is first; then the entrance plays from the
+  start, and the exit takes over from the opacity the click's fade has reached (F3-464; amended 2026-10-17, review r1, it read:
+  then the exit and the entrance play from the start). That hold is the covering transition this bar allows, and the bar itself is
   unchanged. NieR still holds and makes no fade. Under Reduce Animations, and under a cover, the page
   swaps at once, arrives whole, and is not held. A move held at its start, or released but not yet on
   its first frame, still counts as running: nothing finishes, cleans up or cancels it as it starts, and
@@ -548,7 +549,7 @@ canonical_text: >-
   (DL-219). Having no GPU is the existing capability path, not a lower-spec tier. Concept performance
   work stops at "not horribly slow" (DL-220); that bound does not replace this bar.
   During a page-change hold the leaving page stays the interactive page until release.
-  The quality bar is DL-224. Polish, effects and scope are not cut to save a budget.
+  The quality bar is DL-224.
   Proposed, pending Jared: a surface drawn unseen for preparation stays out of the focus order and the
   accessibility tree until it is shown, and focus that lands in it returns where it came from.
   Amended 2026-10-17 (DL-228): the page-change hold's rule holds inside a surface too: a leaving panel or pane

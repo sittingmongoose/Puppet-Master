@@ -4,7 +4,7 @@ Source: `Plans/usage-feature.md`
 
 Source lines: L6182-L6261
 
-Source SHA256: `96ba2a90432f6e2bd6f370e8ef5f835fe1998457e394933ac084327cc0ad78b9`
+Source SHA256: `325b80093ce7379a3218fa19592809eea166f4d84d83715004b26f184430a418`
 
 ---
 
@@ -44,7 +44,7 @@ acceptance_criteria:
 - "The Usage head renders one line: the room title with one description line under it, and the scope, range, disclosure, panel, Refresh and Export controls on that line; no second head line exists."
 - "The Live / Paused control sits in the rail head beside the page name Usage, not in the room head and not on a second head line."
 - "Any refresh-cadence or history-retention figure the page shows reflects the configured value; changed defaults surface the configured values rather than stale copy."
-- "Refresh and Export render as icon-only buttons with inline SVG glyphs, each carrying title and aria-label accessible names; Refresh dispatches cmd.usage.refresh, and Export's Snapshot and Ledger rows each dispatch cmd.usage.export with scope snapshot or ledger."
+- "Refresh and Export render as icon-only buttons with inline SVG glyphs, each named by the shared hover tag and its aria-label, never a native title (amended 2026-10-17, review r1); Refresh dispatches cmd.usage.refresh, and Export's Snapshot and Ledger rows each dispatch cmd.usage.export with scope snapshot or ledger."
 - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
 validation_surfaces:
 - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
@@ -79,7 +79,7 @@ negative_constraints:
 compatibility_only_notes:
 - "Slint portability: the Usage page head and its icon-only controls render as opaque precomputed surfaces with translate/opacity/height animations via Slint property animations; no arbitrary-content backdrop blur, no SVG filters, and color math is precomputed rather than runtime-mixed. This note does not bind the redesigned concept's look (DL-173): the Slint limits were lifted for the concept, and framework version pins are untouched."
 stale_retired_dispositions:
-- "The 'prominent Refresh action' presentation is retired per PMConcept7 rev 9 Usage head; Refresh remains an explicit user action rendered icon-only with title and aria-label accessible names so the head stays one line."
+- "The 'prominent Refresh action' presentation is retired per PMConcept7 rev 9 Usage head; Refresh remains an explicit user action rendered icon-only, named by the shared hover tag and aria-label (amended 2026-10-17, review r1, it read: title and aria-label), so the head stays one line."
 - "The page-level subtitle 'AI Cost/usage for <project> — quotas, cost, cache savings and safety guards. Refreshes every 5 minutes; history kept for 90 days.' (concept fixture project Tastebook) is retired by DL-173: the room description line replaces it, and the rule that cadence and retention figures mirror configured values is kept."
 - "The single-action Export button is retired: Export is an icon-only button that opens the Snapshot and Ledger menu, dispatching the same cmd.usage.export scopes."
 owner_boundary_notes:

@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L43534-L44019
+Source lines: L43539-L44024
 
-Source SHA256: `8b46b2f543663a9fdbf5170fad337bc776064dc6ab9115e9beea4413d8154e4d`
+Source SHA256: `4980ff8a2865a116ca808d84229b656dc16f8d1e2357642fc795f3bf350ba362`
 
 ---
 
@@ -387,7 +387,7 @@ canonical_text: >-
   and the fold is panel state.
   Amended 2026-10-17 (DL-228): the Owner dropdown uses F3-621's pick-several mode. The Jujutsu Workspaces
   view's Owner filter is the same filter state as the Worktrees view's, kept with W-075's persistence, not a
-  separate view-local filter.
+  separate view-local filter; this is a deliberate change from the concept, which keeps it view-local (amended 2026-10-17, review r1).
 gui_related: true
 gui_classification_reason: Defines two visible Source Control behaviours the Polish design adds.
 split_recommended: false

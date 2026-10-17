@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L5593-L27138
+Source lines: L5593-L27141
 
-Source SHA256: `8b46b2f543663a9fdbf5170fad337bc776064dc6ab9115e9beea4413d8154e4d`
+Source SHA256: `4980ff8a2865a116ca808d84229b656dc16f8d1e2357642fc795f3bf350ba362`
 
 ---
 
@@ -2969,9 +2969,12 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
-  Ctrl+K or Ctrl+P opens a 500-600px centered top-third command palette with fuzzy project
+  Ctrl+K opens a 500-600px centered top-third command palette with fuzzy project
   navigation, commands, recent items, files, explicit open targets, and prefix modes for commands,
   file/symbol mention, and slash commands.
+  Amended 2026-10-17 (review r1, DL-228): the second chord this unit gave the palette now belongs to the
+  panels' Open a file picker, the same picker as the "+" menu's File... (F3-632, F3-634); the palette keeps
+  Ctrl+K.
 gui_related: true
 gui_classification_reason: >-
   This unit defines user-visible GUI surface, shell, copy, control, or projection behavior.
@@ -2998,7 +3001,6 @@ source_lineage:
 - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0041"
 preserved_exact_tokens:
 - "Ctrl+K"
-- "Ctrl+P"
 - "500-600px"
 - ">"
 - "@"
@@ -3006,7 +3008,8 @@ preserved_exact_tokens:
 - "fuzzy search"
 negative_constraints: []
 compatibility_only_notes: []
-stale_retired_dispositions: []
+stale_retired_dispositions:
+- 'Amended 2026-10-17 (review r1, DL-228): Ctrl+P is the panels'' Open a file picker (F3-632, F3-634), not the palette; it read: Ctrl+K or Ctrl+P opens the command palette, with Ctrl+P a preserved token.'
 owner_boundary_notes:
 - "ContractRef: ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/FileManager.md, ContractName:Plans/assistant-chat-design.md"
 owner_hints:

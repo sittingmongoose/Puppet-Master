@@ -2,9 +2,9 @@
 
 Source: `Plans/Decision_Log.md`
 
-Source lines: L4302-L14476
+Source lines: L4302-L14479
 
-Source SHA256: `d895814b629b5eb2c9e3302278346a5de1c253c493ac4990cd8069b7f3f4c2fd`
+Source SHA256: `922fe8ee47b4c1c611a994d61a3aed96edd674fb393b9d5a801b58d0484349b9`
 
 ---
 
@@ -9323,6 +9323,7 @@ negative_constraints:
   - "Do not tint any Usage surface other than the hero plate's key light."
 stale_retired_dispositions:
   - 'Amended 2026-10-17 (DL-228): shared-element flights between rooms are retired by DL-191; F3-628 owns the handover that replaced them. The key light is one static light beneath the board, strongest on the hero plate, and stays the one tint the negative constraint allows (F3-628).'
+  - 'Amended 2026-10-17 (review r1): a room names its hero on one plate, or in Free models and Prompt cache on a hero group of four equal plates (F3-628).'
 owner_hints:
   - Plans/FinalGUISpec.md
   - Plans/DRY_Rules.md
@@ -9383,6 +9384,8 @@ negative_constraints:
   - "Do not create a Usage-only motion voice or a per-view motion setting."
   - "Do not recolour, filter, tint or redraw a provider's official logo."
   - "Do not fork the chat assistant's menus for Usage."
+stale_retired_dispositions:
+  - 'Amended 2026-10-17 (review r1): the frame and task targets read through ACD-475''s P1000 reading (DL-216, DL-219); having no GPU is a capability path, not a lower-spec tier.'
 owner_hints:
   - Plans/FinalGUISpec.md
   - Plans/DRY_Rules.md

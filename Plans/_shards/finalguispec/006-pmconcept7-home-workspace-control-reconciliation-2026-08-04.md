@@ -4,7 +4,7 @@ Source: `Plans/FinalGUISpec.md`
 
 Source lines: L276-L1406
 
-Source SHA256: `8b46b2f543663a9fdbf5170fad337bc776064dc6ab9115e9beea4413d8154e4d`
+Source SHA256: `4980ff8a2865a116ca808d84229b656dc16f8d1e2357642fc795f3bf350ba362`
 
 ---
 
@@ -1079,8 +1079,8 @@ canonical_text: >-
   Amended 2026-10-09 (DL-180): this silhouette becomes the one tab silhouette of every panel and every tab kind; F3-631
   consumes it and F3-647 draws it in each look. The strip is 35 px in every panel with 31 px tabs whose plate overlaps
   the body by 1 px, 8 px apart (Retro 2 px); contact is measured to the neighbour's content inset by 8 px within the 20
-  px morph window; the crown, shoulder and flare radii per look are F3-631's. The fused shape is the only active-tab
-  marker: Basic's 2 px accent-blue crown strip is retired, and no look gives the active tab a separately coloured plate,
+  px morph window; the crown, shoulder and flare radii per look are F3-631's. The fused shape was the only active-tab
+  marker until DL-214 made it the seated chip of F3-631 (amended 2026-10-17, review r1): Basic's 2 px accent-blue crown strip is retired, and no look gives the active tab a separately coloured plate,
   Glass dark included (Jared, 2026-10-10); the per-theme skins above yield to F3-631 and F3-647 where they differ. The
   dashboard's own Main, Metrics and Monitoring strip retires: a dashboard is a tab in a panel's strip (F3-638). The
   rotating Retro trio, the pointer-capture reorder, the snap-while-dragging contract and the minimap as the code pane's

@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L44207-L44540
+Source lines: L44212-L44545
 
-Source SHA256: `8b46b2f543663a9fdbf5170fad337bc776064dc6ab9115e9beea4413d8154e4d`
+Source SHA256: `4980ff8a2865a116ca808d84229b656dc16f8d1e2357642fc795f3bf350ba362`
 
 ---
 
@@ -200,7 +200,7 @@ acceptance_criteria:
   to 14 px, no tick, legend or caption is below 11 px, and rows and buttons are 28 to 32 px tall.
 - Fits are measured again after the fonts finish loading, and no label is truncated or overflows once
   they have.
-- Each room has one hero plate with the top-left key light at 16% in dark themes and 9% in light themes;
+- Each room has one hero, or a hero group of four equal plates in Free models and Prompt cache (amended 2026-10-17, review r1), with the top-left key light at 16% in dark themes and 9% in light themes;
   on arrival and on a room change only the hero number rolls.
 - Below the warn line, meters and skyline towers shade from indigo through cyan to mint; at and above
   it the Settings threshold tones apply, and every meter of a provider shows that provider's switch-point

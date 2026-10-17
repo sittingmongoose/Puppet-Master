@@ -1,48 +1,48 @@
 # Shard Index: Plans/DRY_Rules.md
 
-Generated: 2026-10-17T19:20:18Z
+Generated: 2026-10-17T20:22:31Z
 
-Source SHA256: `6ca512b39f80c074cd132e18c12b336a7f97648581e48bda882e5ecc7cfed24f`
+Source SHA256: `7d5029a05c8706e06e859aa015173724cf9f3b586a0489a1bb64e78fca3ea6d9`
 
 Manifest: [`manifest.json`](manifest.json)
 
 ## Shards
 
-- [001 - Preamble](001-preamble.md) L1-L13 `44300cc8cf13f4d47ad82fde0efd8dc9567356310c96a7b7ac3374f908628a6f`
-- [002 - 0. Scope](002-0.-scope.md) L15-L22 `b44c07adcaf0b0db25c7beae49b37353a78fe330ff7e4be0c199eb28f0dbcc76`
-- [003 - 1. SSOT precedence (global)](003-1.-ssot-precedence-global.md) L24-L34 `612777e2ca10ea7f36cf7160b827f93a17a26f07a99e29b4368b1570677c70a1`
-- [004 - 2. Don't duplicate canonical contracts](004-2.-don-t-duplicate-canonical-contracts.md) L36-L98 `7a20ae0022148814fcd343cc3bf2db3d60d2f23288922ee36d277885d157051c`
-- [005 - 3. "Index-only" guidance](005-3.-index-only-guidance.md) L100-L133 `969923066c62d2e7b7f1c27a98bfbb2ba56eebe217f6cf405ea9794a163fb6e0`
-- [006 - 4. Forbidden patterns (drift accelerators)](006-4.-forbidden-patterns-drift-accelerators.md) L135-L142 `9c885e6f525fa4c1b881c276497449c9e08b92c86cbf1088a05921db8c0f1204`
-- [007 - 5. MUST/SHALL/REQUIRED implies ContractRef](007-5.-must-shall-required-implies-contractref.md) L144-L149 `e59c3c92c6e2b740bf40d5cca9fa81c124c829ccdf104797151e7473e0f58301`
-- [008 - 6. ContractRef taxonomy (allowed categories)](008-6.-contractref-taxonomy-allowed-categories.md) L151-L172 `59458ee2a8e57442b4261cdde0a62495a7f2611ae3e71b3532aff5f25556044e`
-- [009 - 7. ContractRef annotation rule (canonical)](009-7.-contractref-annotation-rule-canonical.md) L173-L191 `e8e92c0158a67eeb0267aec7366520265c04d16ae8034eb5e04ad1a57d49b9a8`
-- [010 - 7.1 Packet-fidelity semantic matching](010-7.1-packet-fidelity-semantic-matching.md) L193-L208 `c432cb6ef87b6f96faab432e601a7b5cdb7a4257128915ba0ad5b51e7a0c989d`
-- [011 - 8. Reference style](011-8.-reference-style.md) L210-L218 `17db91a6f16afbdc2aa2b7e508e688719211300a75f7d760a74b0cefa634bd4e`
-- [012 - 9. No unreferenced operational text](012-9.-no-unreferenced-operational-text.md) L219-L228 `8b258899e083dbe49dc3d0f334ad63be7f31c51cdb79c96396c0d38ea32c42d2`
-- [013 - 10. Inline requirement tag convention (readability only)](013-10.-inline-requirement-tag-convention-readability-only.md) L229-L250 `f05f1062ad49cf73ed50972149417e106a44de86db9a79eeaf4f2c1e286b3973`
-- [014 - References](014-references.md) L252-L257 `fb7d4bb490e0b58b0201b6a0d1c3a3cc8b6b6da68465d1dcf53fe001d6a3ea94`
-- [015 - Owner / Consumer Map](015-owner-consumer-map.md) L259-L263 `d4c12d7f369469afccde437a5516a448003179670ca1155d6e90f73c5e82c54d`
-- [016 - PlanUnits](016-planunits.md) L265-L1968 `da75e51430ff181fdc8d9c7507dcec4a9d419869cc8266342cc8a2dacc2ffb3f`
-- [017 - Migration Coverage](017-migration-coverage.md) L1969-L1981 `70da7ef19b23977e280ebbb66edab34b5f86539c8d1a31ffee36700140245a20`
-- [018 - Ledger Compile Addendum - pldg-20260627-001-feature-intake](018-ledger-compile-addendum-pldg-20260627-001-feature-intake.md) L1983-L2044 `ecfbcdada96aa5e32b9ae22e42beef9e57107742d6f45beef2925e7aeb79af6d`
-- [019 - FABLE Deferred Action Concrete Repair Addendum - 2026-07-08](019-fable-deferred-action-concrete-repair-addendum-2026-07-08.md) L2046-L2050 `c8012c213ea78bc3fd88c8473319350cecd940e78c9c5581fc56fbb90b2a2b1e`
-- [020 - PMConcept7 Home Workspace owner boundary — 2026-08-04](020-pmconcept7-home-workspace-owner-boundary-2026-08-04.md) L2052-L2098 `d8741b07b240bafe907f17d94fe81682a666ecef2d17952daf4581d938619b67`
-- [021 - Shared Integration Runtime DRY service registry — 2026-08-13](021-shared-integration-runtime-dry-service-registry-2026-08-13.md) L2099-L2224 `0cb0d79b05cbbe8c93e78fc7bcfc117e66e00008891821d9fffdf269859dd9f9`
-- [022 - u11 Prism II Usage candidate-role dispositions - 2026-08-18](022-u11-prism-ii-usage-candidate-role-dispositions-2026-08-18.md) L2225-L2341 `ee9854a5f0fde66bf83747e8f375eb23c0947c95af8f796a0b42ec92cfc77d33`
-- [023 - PMConcept7 Usage, command, and shared Assistant SSOT addendum - 2026-08-27](023-pmconcept7-usage-command-and-shared-assistant-ssot-addendum-2026.md) L2343-L2463 `7ee87d36daa6a0fde47b05487fe28c1992ba44e62083bcf599db6968e47f3871`
-- [024 - Universal touch-closure and projection-owner addendum - 2026-08-31](024-universal-touch-closure-and-projection-owner-addendum-2026-08-31.md) L2465-L2522 `63d6c6e84987e29543b45559ed6c6804f0fc77427d9df9a23fa264c2446d809c`
-- [025 - Touch Closure Exact-Key Addendum - 2026-09-01](025-touch-closure-exact-key-addendum-2026-09-01.md) L2524-L2581 `5071a677c108d91ef467881a10b68aff933f0d56e3224cd47c9a41c099eea1fb`
-- [026 - Project recovery and Forge delete/CI central companion boundary — 2026-09-26](026-project-recovery-and-forge-delete-ci-central-companion-boundary-.md) L2583-L2589 `f5dfa34a9419227ce7dc3b1ba208f05aca91f12e69430678009c90097a48e22c`
-- [027 - Commands Shortcuts local-action namespace ownership — 2026-09-26](027-commands-shortcuts-local-action-namespace-ownership-2026-09-26.md) L2591-L2655 `4c46bf2acecfeb26f8bf0de85096a1231bf85183fd6d4005f9ea6e04dfbff14f`
-- [028 - Chat transcript presentation single owners — 2026-09-27](028-chat-transcript-presentation-single-owners-2026-09-27.md) L2657-L2718 `b5a610699658dad85fc0f4ef347eb3a6db2953ddd3c27dff6eb988893cdd850c`
-- [029 - Wand module presentation grammar single owner — 2026-09-27](029-wand-module-presentation-grammar-single-owner-2026-09-27.md) L2720-L2788 `b2764bbca6ab0db8b929e14208285b229d04ad704279b0630b3365d5f0b034f6`
-- [030 - Concept web fonts share one set of files — 2026-10-09](030-concept-web-fonts-share-one-set-of-files-2026-10-09.md) L2790-L2917 `ecbad167b91c8a03de32e524fed955049c7eef4a7de5361ced8e9fb7228e8a5c`
-- [031 - Plan action row single shared row — 2026-10-09](031-plan-action-row-single-shared-row-2026-10-09.md) L2919-L2976 `bd7d740a92d282ee9adcde47888a2967410f1439fa67a7c0f20194d22615f3ef`
-- [032 - 5.6 Pro chat round single owners — 2026-10-09](032-5.6-pro-chat-round-single-owners-2026-10-09.md) L2978-L3093 `6867e56b95886e5aebb5c0333a338ee26a182fd8f6297bcc3e82eaa1b5d1d9ec`
-- [033 - NieR Mode editor, reboot plate, look store and onboarding hero moments single owners — 2026-10-09](033-nier-mode-editor-reboot-plate-look-store-and-onboarding-hero-mom.md) L3095-L3171 `6b95f617fcd169ba1378d590df5705e6a2eede8b3316060ae0381c2b88755d68`
-- [034 - First paint single reader per page — 2026-10-09](034-first-paint-single-reader-per-page-2026-10-09.md) L3173-L3225 `34a734331304beb50d6cd0d4f971829d1e5edacb2e92835333e363647a93e64a`
-- [035 - Left rail presentation single owner — 2026-10-09](035-left-rail-presentation-single-owner-2026-10-09.md) L3227-L3294 `583390fbe6c168388f9ea9395e1fd7fe1f0d5452e4ef7624f730f83c674167bd`
-- [036 - Usage presentation grammar single owner — 2026-10-09](036-usage-presentation-grammar-single-owner-2026-10-09.md) L3296-L3372 `423d82127ef60179a782240a48703cb2c6ceb358947116e42f93a238b26fbca5`
-- [037 - PMConcept7 hover grammar single owner — 2026-10-10](037-pmconcept7-hover-grammar-single-owner-2026-10-10.md) L3374-L3450 `9e468794a7f1610b315d026aef345ad848e6d7158e113b36522fd55d0dc785b0`
-- [038 - DL-180 to DL-185 — One Panel System, One Gesture Kit, One Overlay Root, One Terminal Appearance Model, Shell-Wide Bans, One Demo Studio And One Opening Module (2026-10-09)](038-dl-180-to-dl-185-one-panel-system-one-gesture-kit-one-overlay-ro.md) L3453-L4205 `1195fa2b55005ab4188e5ea9f874b00037647d0114a53a6e0d9c6210b41bf0b1`
+- [001 - Preamble](001-preamble.md) L1-L13 `b18ae999f0fb684e9a1acb9539a23103a657554d203cf8f35021d7af18c51340`
+- [002 - 0. Scope](002-0.-scope.md) L15-L22 `6f8f3bbed192ba93aaae0e0b8589d729524d7b2296a4c07eb037fad338265692`
+- [003 - 1. SSOT precedence (global)](003-1.-ssot-precedence-global.md) L24-L34 `249b2b98ef1ad764eeb7fc54470b496ac85f42d95fb7ac888b724d578147e541`
+- [004 - 2. Don't duplicate canonical contracts](004-2.-don-t-duplicate-canonical-contracts.md) L36-L98 `a66eda2563c6c16bcf97875a1b958505829864027da242c9f512d5f4b73112d3`
+- [005 - 3. "Index-only" guidance](005-3.-index-only-guidance.md) L100-L133 `2bc8867939524cb7642fb0f18fa04c6199aeb25abe821c8cf26c5d0cff276fdc`
+- [006 - 4. Forbidden patterns (drift accelerators)](006-4.-forbidden-patterns-drift-accelerators.md) L135-L142 `3af7cfd6e1e6d53b3292fce0bae66edcc7b2f70f185924f85423c5e13c50e0af`
+- [007 - 5. MUST/SHALL/REQUIRED implies ContractRef](007-5.-must-shall-required-implies-contractref.md) L144-L149 `aed23662ceabeffb314d565af8528a32de329050ba71acf85aeca01e24c52301`
+- [008 - 6. ContractRef taxonomy (allowed categories)](008-6.-contractref-taxonomy-allowed-categories.md) L151-L172 `4df96174af09c37e2a1e35b98d032b1d8e6dd214e733a651f9ada6fd5343638e`
+- [009 - 7. ContractRef annotation rule (canonical)](009-7.-contractref-annotation-rule-canonical.md) L173-L191 `10e803861d292e50b835659f0f700eecb150a88490daf1ab68c0bb5dfdaab193`
+- [010 - 7.1 Packet-fidelity semantic matching](010-7.1-packet-fidelity-semantic-matching.md) L193-L208 `eb15b60340a4f9ae9384cca45d31a279ef0a21203bd7b51c1f7d2a9a641986cb`
+- [011 - 8. Reference style](011-8.-reference-style.md) L210-L218 `705ed4b70c78917cc4f02a3ca3df7aec9326a82e306cf315917ddafc45422b62`
+- [012 - 9. No unreferenced operational text](012-9.-no-unreferenced-operational-text.md) L219-L228 `49c4c4a95712c3165d73dab561e37c13e51839b1e65703dbf9b694c90a96b9a5`
+- [013 - 10. Inline requirement tag convention (readability only)](013-10.-inline-requirement-tag-convention-readability-only.md) L229-L250 `298c05a2e7f5e9976a632f783210fec175dc31f801cc10a95e39a303a1ac197f`
+- [014 - References](014-references.md) L252-L257 `37f2c124947790207f437f270d97d2a6700becdab938e716a929a3cf13693488`
+- [015 - Owner / Consumer Map](015-owner-consumer-map.md) L259-L263 `947f66141c9d202609350fe1585d933996344ebc1129f2e1af6084b75c9ea573`
+- [016 - PlanUnits](016-planunits.md) L265-L1968 `c5b66a935477fa615682c43c977ea4147a76e57839856861c5a4ee3c42d09d23`
+- [017 - Migration Coverage](017-migration-coverage.md) L1969-L1981 `1c6dda2c9d44b19a21fb9b11afcdf3b55abbfd7af5c8c1f4b036188bbc000516`
+- [018 - Ledger Compile Addendum - pldg-20260627-001-feature-intake](018-ledger-compile-addendum-pldg-20260627-001-feature-intake.md) L1983-L2044 `76914e687e747abe7083a85e81352eb9c090c417f0af216facbabff2cb5ddd54`
+- [019 - FABLE Deferred Action Concrete Repair Addendum - 2026-07-08](019-fable-deferred-action-concrete-repair-addendum-2026-07-08.md) L2046-L2050 `c386a4baf18ce316c4e9296c2214d2eeadf256fd35a8ab036b3d65a4691732d6`
+- [020 - PMConcept7 Home Workspace owner boundary — 2026-08-04](020-pmconcept7-home-workspace-owner-boundary-2026-08-04.md) L2052-L2098 `0851ae6ae82bd528d3a1cc445ff1c6a837ea91b64c4de9fc6437ca3f9bc43260`
+- [021 - Shared Integration Runtime DRY service registry — 2026-08-13](021-shared-integration-runtime-dry-service-registry-2026-08-13.md) L2099-L2224 `4082a0a6f180ed7c80c847cf6aff6e50d2f32eebf5dab1f41f74f9a625d1a6a2`
+- [022 - u11 Prism II Usage candidate-role dispositions - 2026-08-18](022-u11-prism-ii-usage-candidate-role-dispositions-2026-08-18.md) L2225-L2341 `571d1cc4cd10326e922eae51447089b0435f1b37ed43993d1aa6fd5e88b1564c`
+- [023 - PMConcept7 Usage, command, and shared Assistant SSOT addendum - 2026-08-27](023-pmconcept7-usage-command-and-shared-assistant-ssot-addendum-2026.md) L2343-L2463 `ec84c42f8374d85b5781e1ae81d2aacf14e8fd84c8a774be6baec051d7f968db`
+- [024 - Universal touch-closure and projection-owner addendum - 2026-08-31](024-universal-touch-closure-and-projection-owner-addendum-2026-08-31.md) L2465-L2522 `fcd4f93c150806695f9066771281f799e86ed3f937901653faeeed0df7cb7968`
+- [025 - Touch Closure Exact-Key Addendum - 2026-09-01](025-touch-closure-exact-key-addendum-2026-09-01.md) L2524-L2581 `acb6159b58764c2656eee116bebdbee0f64bd2cf5058f903895ef13a98a3cf82`
+- [026 - Project recovery and Forge delete/CI central companion boundary — 2026-09-26](026-project-recovery-and-forge-delete-ci-central-companion-boundary-.md) L2583-L2589 `5a2b6a3c01cdd6948cfe0653717b948c96b91f005e083c634fdeba00c8399a50`
+- [027 - Commands Shortcuts local-action namespace ownership — 2026-09-26](027-commands-shortcuts-local-action-namespace-ownership-2026-09-26.md) L2591-L2655 `c8454be041799e03fa964351e26061f8363950963d3565173fbf210e0487a21e`
+- [028 - Chat transcript presentation single owners — 2026-09-27](028-chat-transcript-presentation-single-owners-2026-09-27.md) L2657-L2718 `fa9c97fdd6409dd54909f6f161f944b973f9c9bfc235f3517816c1d60bc04671`
+- [029 - Wand module presentation grammar single owner — 2026-09-27](029-wand-module-presentation-grammar-single-owner-2026-09-27.md) L2720-L2788 `6ad815b7329fe0cf3756f5d06597d3a6dd2d911744631cb4854a0e9d0f6dbe58`
+- [030 - Concept web fonts share one set of files — 2026-10-09](030-concept-web-fonts-share-one-set-of-files-2026-10-09.md) L2790-L2917 `0c8d3bae1171b1fa754a8e6820dd5854519e466f0966b6c03a80530fea54adc2`
+- [031 - Plan action row single shared row — 2026-10-09](031-plan-action-row-single-shared-row-2026-10-09.md) L2919-L2976 `440d24da993cc48508a3cbb9d4c7c6a6da8b6a2182db74496bfa5d2dcbc6530c`
+- [032 - 5.6 Pro chat round single owners — 2026-10-09](032-5.6-pro-chat-round-single-owners-2026-10-09.md) L2978-L3093 `8b56658e7f8e627cbab1a305b8b0af77b5e86e663de8d58df9c4037590c3c0e4`
+- [033 - NieR Mode editor, reboot plate, look store and onboarding hero moments single owners — 2026-10-09](033-nier-mode-editor-reboot-plate-look-store-and-onboarding-hero-mom.md) L3095-L3171 `04f2c6433a0eddddc6ab8038cee427f026f8d1508bcb606a9387dc2c1abbe502`
+- [034 - First paint single reader per page — 2026-10-09](034-first-paint-single-reader-per-page-2026-10-09.md) L3173-L3225 `b3c2cd3a41f54e672f602f111717bf6252d282c1cadf3924b497c60dff10592c`
+- [035 - Left rail presentation single owner — 2026-10-09](035-left-rail-presentation-single-owner-2026-10-09.md) L3227-L3294 `a9ef7e4831a18774bc121518b90d8c5484261497e0fc82736c819b227620cc82`
+- [036 - Usage presentation grammar single owner — 2026-10-09](036-usage-presentation-grammar-single-owner-2026-10-09.md) L3296-L3372 `69074e2632716dc9377aa966a46bad0590c749531919797bb3122aeab4bd3ccf`
+- [037 - PMConcept7 hover grammar single owner — 2026-10-10](037-pmconcept7-hover-grammar-single-owner-2026-10-10.md) L3374-L3450 `7469b3f68aad13d3d4902e8c4b2ac4d880c108358d1b4dda06371f8b22a52351`
+- [038 - DL-180 to DL-185 — One Panel System, One Gesture Kit, One Overlay Root, One Terminal Appearance Model, Shell-Wide Bans, One Demo Studio And One Opening Module (2026-10-09)](038-dl-180-to-dl-185-one-panel-system-one-gesture-kit-one-overlay-ro.md) L3453-L4204 `6b68dc8417f947ca43b043bb5710c84cfab065e1fb9e61965609a108c0090142`

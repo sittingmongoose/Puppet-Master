@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L30350-L31464
+Source lines: L30353-L31469
 
-Source SHA256: `8b46b2f543663a9fdbf5170fad337bc776064dc6ab9115e9beea4413d8154e4d`
+Source SHA256: `4980ff8a2865a116ca808d84229b656dc16f8d1e2357642fc795f3bf350ba362`
 
 ---
 
@@ -507,6 +507,8 @@ canonical_text: >-
   terminal background image's blur is prepared on image change. Effects cannot silently create an
   unbounded nested live-blur workload; static-capability fallbacks preserve readability and
   selection. Other themes' portability constraints stay in force.
+  Amended 2026-10-17 (review r1, DL-228): the left rail's chrome plates keep a frosted scroll-under outside
+  Glass (F3-618, Jared's RAIL-5 answer under DL-162); this unit admits it beside its listed effects.
 gui_related: true
 gui_classification_reason: This unit constrains how visible theme effects are produced so every variant renders on the Slint toolkit.
 split_recommended: false
