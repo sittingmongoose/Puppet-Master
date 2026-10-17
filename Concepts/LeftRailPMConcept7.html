@@ -234010,8 +234010,8 @@ try { if (window.PM_HOME && typeof window.PM_HOME.boot === 'function') window.PM
     G.key = [W, H, G.R, G.B, G.T, 1, k.light, k.ring, true].join('|');
     return G;
   }
-  function sameGeometry(e, G) {
-    var lp = layoutPos(e);
+  function sameGeometry(e, G, cache) {
+    var lp = layoutPos(e, cache);
     return Math.round(e.offsetWidth) === G.W && Math.round(e.offsetHeight) === G.H && Math.round(lp.x) === Math.round(G.left) && Math.round(lp.y) === Math.round(G.top);
   }
   /* the page's own rim bake: the fallback when the bake worker cannot run (no Worker, OffscreenCanvas or canvas filter) */
@@ -234155,11 +234155,14 @@ try { if (window.PM_HOME && typeof window.PM_HOME.boot === 'function') window.PM
   }
   /* finished rims are applied after a layout, where checking that the sheet has not moved since is free */
   function applyBakes() {
-    var list = bakeWReady; bakeWReady = [];
+    var list = bakeWReady, offsets = new Map(); bakeWReady = [];
+    /* every finished rim's sheet is checked before any rim is shown: showing one restyled its sheet, and the next sheet's
+       check paid a style pass of its own (B6 packet 1's rule; a rim moves nothing) */
+    list.forEach(function (x) { var job = x.job; x.state = !currentBake(job, null) ? 0 : specUrls.get(job.geo.key) && sameGeometry(job.e, job.geo, offsets) ? 1 : 2; });
     list.forEach(function (x) {
       var job = x.job, e = job.e, G = job.geo, spec = specUrls.get(G.key);
-      if (!currentBake(job, null)) return;
-      if (!spec || !sameGeometry(e, G)) { e.__lgSig = null; mount(e, job.kind); return; }
+      if (!x.state) return;
+      if (x.state === 2) { e.__lgSig = null; mount(e, job.kind); return; }
       e.__lgSpec = spec; e.style.setProperty('--lg-spec', 'url(' + spec + ')');
       var url = URL.createObjectURL(x.ring); keepRing(job.sig, url, spec);
       if (e.__lgRing !== url) { releaseRing(e); e.__lgRing = url; }
@@ -234427,7 +234430,11 @@ try { if (window.PM_HOME && typeof window.PM_HOME.boot === 'function') window.PM
         positions.set(e, layoutPos(e, offsets));
       });
       positions.forEach(function (lp, e) { anchor(e, lp); });
-      strips.forEach(function (s) { var L = lenses.get(s); if (L && !L.dragging) { L.snap = true; syncStrip(L.cfg, s); } });
+      var moving = []; cvSeen = new Map();
+      try {
+        strips.forEach(function (s) { var L = lenses.get(s); if (L && !L.dragging) { if (cvSkipped(s)) { cvSkip(s); return; } L.snap = true; moving.push([L.cfg, s]); } });
+        syncStrips(moving);
+      } finally { cvSeen = null; }
     }); }
     /* the settle (un-pin, re-bake rims, re-sync strips) runs once the scroll has been still for 160 ms; it used to run
        140 ms after the scroll began, so a long scroll re-baked every moving card's rims several times on the way */
@@ -234541,6 +234548,20 @@ try { if (window.PM_HOME && typeof window.PM_HOME.boot === 'function') window.PM
     layer = el('div', { id: 'lg-lenses', 'aria-hidden': 'true' });
     (document.querySelector('.app-shell') || document.body).appendChild(layer); return layer;
   }
+  /* the layer lensLayer(strip) gives a new lens of this strip, without making it: el is that layer if it exists (else
+     null), parent the element it is (or will be) the child of; app: the app-wide layer */
+  function layerOf(strip, cfg) {
+    var ownU = !!cfg.under || ownUnder.has(strip);
+    if (switchUnder || ownU) { var u = strip.__lgUnder; return { el: u && u.parentElement === strip ? u : null, parent: strip, app: false, ownUnder: ownU }; }
+    var host = strip.closest && strip.closest(LENS_HOSTS);
+    if (host) {
+      var own = localLayers.get(host);
+      if (!(own && own.isConnected && own.parentElement === host)) own = host.querySelector(':scope > .lg-lenses-local');
+      return { el: own || null, parent: host, app: false, ownUnder: false };
+    }
+    var on = layer && layer.isConnected ? layer : null;
+    return { el: on, parent: on ? on.parentElement : null, app: true, ownUnder: false };
+  }
   /* --pm-switch-layer: under. The strip's own layer, added once as the strip's last child (no :first-child or :nth-child
      rule of its items changes; an item's :last-child does, so strips use :last-of-type, which the layer's own tag never
      takes; a custom tag matches no item selector) and positioned over the strip's padding box, so its
@@ -234604,23 +234625,28 @@ try { if (window.PM_HOME && typeof window.PM_HOME.boot === 'function') window.PM
     }
     return n === host ? { left: x, top: y, width: e.offsetWidth, height: e.offsetHeight } : null;
   }
-  function rectIn(strip, t, pad) {
-    var L = lensLayer(strip); pad = pad || 0;
+  /* lay (optional, the read phase of a sync: layerOf): the layer the lens is or will be in, which is not made here; when
+     its box would be needed and it does not exist yet, rectIn returns null and the write measures it */
+  function rectIn(strip, t, pad, lay) {
+    var L = lay ? lay.el : lensLayer(strip), parent = lay ? lay.parent : L.parentElement, app = lay ? lay.app : L === layer;
+    pad = pad || 0;
     /* a chip that is always under its labels (ownUnder) replaces the fill the chosen item wore in place, so at rest it has
        to sit on that fill's exact box: the offset chain rounds to whole pixels and left a one-pixel seam at each edge.
        The item's own box, fractions kept, in the strip's padding box (an untransformed item; a transformed one is
        placed by the offset chain as before) */
-    if (ownUnder.has(strip) && t.getBoundingClientRect && L.parentElement === strip) {
+    if ((lay ? lay.ownUnder : ownUnder.has(strip)) && t.getBoundingClientRect && parent === strip) {
       var ts = getComputedStyle(t);
       if (ts.transform === 'none' && ts.scale === 'none' && ts.translate === 'none') {
         var tr = t.getBoundingClientRect(), sr = strip.getBoundingClientRect(), k = stripScale(strip, sr);
         return { x: (tr.left - sr.left) / k - strip.clientLeft - pad, y: (tr.top - sr.top) / k - strip.clientTop - pad, w: tr.width / k + 2 * pad, h: tr.height / k + 2 * pad };
       }
     }
-    if (t.getBoundingClientRect && L !== layer && L.parentElement) {
-      var h = hostRect(t, L.parentElement);
+    if (t.getBoundingClientRect && !app && parent) {
+      var h = hostRect(t, parent);
       if (h) return { x: h.left - pad, y: h.top - pad, w: h.width + 2 * pad, h: h.height + 2 * pad };
     }
+    if (!L) return null;
+    if (lay) lay.usedEl = true;
     var r = t.getBoundingClientRect ? boxRect(t) : t, lr = L.getBoundingClientRect();
     return { x: r.left - lr.left - pad, y: r.top - lr.top - pad, w: r.width + 2 * pad, h: r.height + 2 * pad };
   }
@@ -234700,7 +234726,7 @@ try { if (window.PM_HOME && typeof window.PM_HOME.boot === 'function') window.PM
     /* the refracting optics are Glass's; an adopting look draws the lens from its tokens, and a lens that is always under
        its labels (ownUnder) wears the in-place material with no live filter: under the labels it would only bend the
        track, at the price of a render pass per control */
-    if (isGlass() && !ownUnder.has(L.strip)) mount(L.lens, L.cfg.kind);
+    if (isGlass() && !ownUnder.has(L.strip)) { if (lensMounts) lensMounts.set(L.lens, L.cfg.kind); else mount(L.lens, L.cfg.kind); }
   }
   /* every item size of a strip gets its lens filter while nothing moves, so a move never waits for a map to decode. It is
      asked for in idle time (prewarmSoon): run inside the sync, it measured every item of every strip again and built maps
@@ -234732,42 +234758,66 @@ try { if (window.PM_HOME && typeof window.PM_HOME.boot === 'function') window.PM
      with the item: the running transform and opacity animations of the item and of its ancestors up to the lens's host
      are mirrored onto the lens on the same clock, so the item never slides into a lens already in place (Jared #21) */
   var RIDE_MOVE = ['transform', 'translate', 'scale', 'rotate'];
-  function ride(L, target) {
-    stopRide(L);
+  function ride(L, target) { rideApply(L, rideRead(L, target)); }
+  /* what a ride mirrors, read (the animations, their keyframes and clocks) before anything is written, so a sync that shows
+     many new lenses reads them all in one style pass (B6 packet 1); rideApply writes the mirrors */
+  function rideRead(L, target) {
     var stop = L.layer.parentElement, out = [];
-    function mirror(a, props, composite) {
+    function mirror(a, kfs, t, props, composite) {
       var kf = [], any = false;
-      a.effect.getKeyframes().forEach(function (k) {
+      kfs.forEach(function (k) {
         var o = { offset: k.computedOffset, easing: k.easing || 'linear' };
         props.forEach(function (p) { if (k[p] != null && k[p] !== '') { o[p] = k[p]; any = true; } });
         kf.push(o);
       });
       if (!any || kf.length < 2) return;
-      var t = a.effect.getTiming(), m;
-      try { m = L.lens.animate(kf, { duration: t.duration, delay: t.delay, easing: t.easing, fill: 'backwards', iterations: 1, composite: composite }); } catch (e) { return; }
-      if (a.startTime != null) m.startTime = a.startTime; else if (a.currentTime != null) m.currentTime = a.currentTime;
-      out.push(m);
+      out.push({ kf: kf, opts: { duration: t.duration, delay: t.delay, easing: t.easing, fill: 'backwards', iterations: 1, composite: composite }, startTime: a.startTime, currentTime: a.currentTime });
     }
     for (var n = target; n && n !== stop && n !== document.documentElement; n = n.parentElement) {
       n.getAnimations().forEach(function (a) {
         if (!a.effect || (a.playState !== 'running' && a.playState !== 'pending')) return;
-        mirror(a, RIDE_MOVE, 'add'); mirror(a, ['opacity'], 'replace');
+        var kfs = a.effect.getKeyframes(), t = a.effect.getTiming();
+        mirror(a, kfs, t, RIDE_MOVE, 'add'); mirror(a, kfs, t, ['opacity'], 'replace');
       });
     }
+    return out;
+  }
+  function rideApply(L, specs) {
+    stopRide(L);
+    var out = [];
+    specs.forEach(function (sp) {
+      var m;
+      try { m = L.lens.animate(sp.kf, sp.opts); } catch (e) { return; }
+      if (sp.startTime != null) m.startTime = sp.startTime; else if (sp.currentTime != null) m.currentTime = sp.currentTime;
+      out.push(m);
+    });
     L.ride = out.length ? out : null;
   }
   /* a lens first shown in a page or window is measured while that page is still coming in, and content above a strip can
      still grow by a layout animation (a Settings manager page eases its height as its tab changes, moving every strip
      below it; no mutation or event says so). It is measured once more when entrances are over, and follows if its
      item moved (a lens in Settings rested 8 px under its tab otherwise). */
+  /* the lenses whose checks fall before the same frame's layout are measured together there (B6 packet 1: a sheet that
+     shows many new lenses checks them all about 480 ms later, and one by one each paid a style and layout pass) */
+  var settleDue = [];
   function settleCheck(L) {
     clearTimeout(L.settleT);
     /* measured after that frame's layout, not in the timer (where it forced what the page had pending) */
     L.settleT = setTimeout(function () {
       L.settleT = 0;
-      var now = function () { if (lenses.get(L.strip) === L && L.strip.isConnected && !L.dragging && !L.pending && switchOn()) syncStrip(L.cfg, L.strip); };
-      if (!afterLayout(now)) now();
+      settleDue.push(L);
+      if (settleDue.length === 1 && !afterLayout(settleNow)) settleNow();
     }, 480);
+  }
+  function settleNow() {
+    var due = settleDue, list = []; settleDue = []; cvSeen = new Map();
+    try {
+      due.forEach(function (L) {
+        if (lenses.get(L.strip) !== L || !L.strip.isConnected || L.dragging || L.pending || !switchOn()) return;
+        if (cvSkipped(L.strip)) cvSkip(L.strip); else list.push([L.cfg, L.strip]);
+      });
+      syncStrips(list);
+    } finally { cvSeen = null; }
   }
   function stopRide(L) { if (L.ride) { var r = L.ride; L.ride = null; r.forEach(function (m) { m.cancel(); }); } }
   function stopLensTravel(L) {
@@ -234965,8 +235015,9 @@ try { if (window.PM_HOME && typeof window.PM_HOME.boot === 'function') window.PM
     }
     return left;
   }
-  function arrive(L, target) {
-    var left = arrivalLeft(target); if (left < 40) return;
+  function arrive(L, target) { arriveIn(L, arrivalLeft(target)); }
+  function arriveIn(L, left) {
+    if (left < 40) return;
     try { L.lens.animate([{ opacity: 0 }, { opacity: 1 }], { duration: 160, delay: Math.max(0, left - 160), fill: 'backwards', easing: 'ease-out' }); } catch (e) {}
   }
   /* a lens hidden because its strip or item stopped showing comes back when they show again (Jared #23: "the page
@@ -234993,12 +235044,17 @@ try { if (window.PM_HOME && typeof window.PM_HOME.boot === 'function') window.PM
   function checkShownNow() {
     if (showT) return;
     if (!switchOn()) { hiddenLenses.clear(); return; }
-    hiddenLenses.forEach(function (cfg, L) {
-      if (!L.strip.isConnected || (cfg.kind === 'lensIcon' && !isGlass())) { hiddenLenses.delete(L); return; }
-      if (stripParked(L.strip) || !visible(L.strip)) return;
-      var t = cfg.pick ? cfg.pick(L.strip) : L.strip.querySelector(cfg.items + (cfg.active || '.active'));
-      if (t && visible(t)) { hiddenLenses.delete(L); syncStrip(cfg, L.strip); }
-    });
+    /* every hidden lens is looked at before any shown one is synced, and those are synced together (B6 packet 1) */
+    var shown = []; cvSeen = new Map();
+    try {
+      hiddenLenses.forEach(function (cfg, L) {
+        if (!L.strip.isConnected || (cfg.kind === 'lensIcon' && !isGlass())) { hiddenLenses.delete(L); return; }
+        if (stripParked(L.strip) || cvSkipped(L.strip) || !visible(L.strip)) return;
+        var t = cfg.pick ? cfg.pick(L.strip) : L.strip.querySelector(cfg.items + (cfg.active || '.active'));
+        if (t && visible(t)) { hiddenLenses.delete(L); shown.push([cfg, L.strip]); }
+      });
+      syncStrips(shown);
+    } finally { cvSeen = null; }
     if (hiddenLenses.size) showT = setTimeout(checkShown, 400);
   }
   /* A strip whose chip is its own (ownUnder, Settings' segmented choices) shows that chip only while it moves: at rest the
@@ -235014,11 +235070,54 @@ try { if (window.PM_HOME && typeof window.PM_HOME.boot === 'function') window.PM
     var moving = !!(L.pending || L.anim || L.hopFrames || (L.rect && chosen && L.tgt && L.tgt !== chosen));
     if (moving !== strip.hasAttribute('data-lg-moving')) { if (moving) strip.setAttribute('data-lg-moving', ''); else strip.removeAttribute('data-lg-moving'); }
   }
-  function syncStrip(cfg, strip) {
-    syncStripNow(cfg, strip);
+  function syncStrip(cfg, strip, m) {
+    syncStripNow(cfg, strip, m);
     if (cfg.under) { var L = lenses.get(strip); if (L) ownRest(L); }
   }
-  function syncStripNow(cfg, strip) {
+  /* B6 packet 1 (2026-10-16): a sync of many strips read each one after the previous one's lens writes (a new lens, its
+     strip's mark, its box, its optics), so every strip paid a style and a layout pass of its own: 23 style + 22 layout
+     passes, 48 ms of the editor's Customize open on a P1000 (17 + 16 on the 3090, each forced by the next strip's
+     visible()). syncStrips reads every strip first (readStrip: its target, whether it and its target are drawn, its
+     scroller's clip, its lens's box), then writes them all (syncStripNow with what was read), as mountMeasured does for
+     sheets; the new lenses' optics and their entrance mirrors are read and written together after that. Exact: a lens,
+     its layer and its strip's mark move no strip. What the read could not know is read at the write, as before: a lens
+     a write brings back from the park or the carry, a target the write's press logic changes, a layer not made yet whose
+     own box the lens is placed in. */
+  var lensMounts = null, lensRides = null;
+  function syncStrips(list) {
+    if (!list.length) return;
+    var reads = list.map(function (t) { return readStrip(t[0], t[1]); });
+    var mounts = lensMounts = new Map(), rides = lensRides = [];
+    try { list.forEach(function (t, i) { syncStrip(t[0], t[1], reads[i]); }); }
+    finally { lensMounts = null; lensRides = null; }
+    if (mounts.size) mountMeasured(mounts, false);
+    if (!rides.length) return;
+    rides.forEach(function (r) { if (r.L.lens.isConnected) { r.specs = rideRead(r.L, r.target); r.left = r.arrive ? arrivalLeft(r.target) : 0; } });
+    rides.forEach(function (r) { if (r.specs) { if (r.arrive) arriveIn(r.L, r.left); rideApply(r.L, r.specs); } });
+  }
+  function readStrip(cfg, strip) {
+    cvWait.delete(strip);
+    var L = lenses.get(strip); if (L && !L.lens.isConnected) L = null;
+    var P = L && L.pending, target = cfg.pick ? cfg.pick(strip) : strip.querySelector(cfg.items + (cfg.active || '.active'));
+    if (P && P.el.isConnected && target === P.from && !P.away && !(P.up && performance.now() - P.up > 2500)) target = P.el;
+    var m = { target: target, shown: !!target && visible(target) && visible(strip) };
+    if (!m.shown) return m;
+    var parked = !L && parkedLenses[switchUnder ? 'under' : 'over'].get(strip), pre = preread(strip);
+    m.scroller = L ? L.scroller : parked ? parked.scroller : pre ? pre.scroller : undefined;
+    if (m.scroller && m.scroller.isConnected) {
+      var sr = m.scroller.getBoundingClientRect(), tr = boxRect(cfg.box ? (cfg.box(target).getBoundingClientRect ? cfg.box(target) : target) : target);
+      m.out = tr.left < sr.left - 1 || tr.left + tr.width > sr.right + 1 || tr.top < sr.top - 1 || tr.top + tr.height > sr.bottom + 1;
+      if (m.out) return m;
+    }
+    /* a parked lens's strip is made relative again only when it is brought back: its box is read then */
+    if (parked) return m;
+    var lay = layerOf(strip, cfg);
+    m.R = rectIn(strip, cfg.box ? cfg.box(target) : target, cfg.pad == null ? 2 : cfg.pad, lay);
+    m.lay = lay;
+    return m;
+  }
+  function syncStripNow(cfg, strip, m) {
+    if (!m && cvSkipped(strip)) { cvSkip(strip); return; }
     var L = lensFor(strip, cfg), P0 = L.pending;
     var target = cfg.pick ? cfg.pick(strip) : strip.querySelector(cfg.items + (cfg.active || '.active'));
     if (L.pending) {
@@ -235031,17 +235130,23 @@ try { if (window.PM_HOME && typeof window.PM_HOME.boot === 'function') window.PM
     }
     if (L.pending && !L.pending.el.isConnected) { pressMark(L.pending, false); L.pending = null; }
     if (P0 && P0 !== L.pending) pressMark(P0, false);
-    if (!target || !visible(target) || !visible(strip)) { stopLensTravel(L); if (L.scrubCleanup) L.scrubCleanup(); if (L.lens.style.opacity !== '0') L.lens.style.opacity = '0'; L.rect = null; awaitShow(L, cfg); return; }
+    var pre = m && m.target === target ? m : null;
+    if (!target || !(pre ? pre.shown : visible(target) && visible(strip))) { stopLensTravel(L); if (L.scrubCleanup) L.scrubCleanup(); if (L.lens.style.opacity !== '0') L.lens.style.opacity = '0'; L.rect = null; awaitShow(L, cfg); return; }
     hiddenLenses.delete(L);
     if (L.scroller && L.scroller.isConnected) {
-      var sr = L.scroller.getBoundingClientRect(), tr = boxRect(cfg.box ? (cfg.box(target).getBoundingClientRect ? cfg.box(target) : target) : target);
-      if (tr.left < sr.left - 1 || tr.left + tr.width > sr.right + 1 || tr.top < sr.top - 1 || tr.top + tr.height > sr.bottom + 1) {
-        stopLensTravel(L); if (L.lens.style.opacity !== '0') L.lens.style.opacity = '0'; L.rect = null; return;
+      var out;
+      if (pre && pre.scroller === L.scroller && pre.out !== undefined) out = pre.out;
+      else {
+        var sr = L.scroller.getBoundingClientRect(), tr = boxRect(cfg.box ? (cfg.box(target).getBoundingClientRect ? cfg.box(target) : target) : target);
+        out = tr.left < sr.left - 1 || tr.left + tr.width > sr.right + 1 || tr.top < sr.top - 1 || tr.top + tr.height > sr.bottom + 1;
       }
+      if (out) { stopLensTravel(L); if (L.lens.style.opacity !== '0') L.lens.style.opacity = '0'; L.rect = null; return; }
     }
     if (L.lens.style.opacity) L.lens.style.opacity = '';
     prewarmSoon(L, cfg, strip);
-    var R = rectIn(strip, cfg.box ? cfg.box(target) : target, cfg.pad == null ? 2 : cfg.pad), A = L.rect;
+    var lay = pre && pre.R && pre.lay, R = lay && L.layer.parentElement === lay.parent && (!lay.usedEl || L.layer === lay.el) ? pre.R : null;
+    if (!R) R = rectIn(strip, cfg.box ? cfg.box(target) : target, cfg.pad == null ? 2 : cfg.pad);
+    var A = L.rect;
     if (L.dragging) return;
     if (L.snap) { L.snap = false; stopLensTravel(L); setLensBox(L, R); return; }
     var quiet = reduced();
@@ -235056,7 +235161,11 @@ try { if (window.PM_HOME && typeof window.PM_HOME.boot === 'function') window.PM
       setLensBox(L, R); L.tgt = target;
       /* a lens in the app-wide layer waits for its strip's entrance; one in its host's own layer (a page, a menu, a
          dialog) is part of that entrance already */
-      if (!A && !quiet && switchOn()) { if (L.layer === layer) arrive(L, target); ride(L, target); settleCheck(L); }
+      if (!A && !quiet && switchOn()) {
+        if (lensRides) { stopRide(L); lensRides.push({ L: L, target: target, arrive: L.layer === layer }); }
+        else { if (L.layer === layer) arrive(L, target); ride(L, target); }
+        settleCheck(L);
+      }
       return;
     }
     /* the destination moved by a pixel or two (the chosen label turned bold): a move in flight carries on, re-based;
@@ -235558,8 +235667,8 @@ try { if (window.PM_HOME && typeof window.PM_HOME.boot === 'function') window.PM
      pm7-motion-settings 2026-10-16) */
   var switchStale = false;
   function syncPending() {
-    movedIn = new Map();
-    try { syncPendingNow(); } finally { movedIn = null; }
+    movedIn = new Map(); cvSeen = new Map();
+    try { syncPendingNow(); } finally { movedIn = null; cvSeen = null; }
   }
   function syncPendingNow() {
     if (switchStale) { switchStale = false; readSwitch(); }
@@ -235588,6 +235697,7 @@ try { if (window.PM_HOME && typeof window.PM_HOME.boot === 'function') window.PM
         if (stripParked(s)) { var P = lenses.get(s); if (P && P.rect) { stopLensTravel(P); P.lens.style.opacity = '0'; P.rect = null; } return; }
         /* under a look's cover, a strip whose lens is not on screen yet waits for the lift; a shown lens follows now */
         if (covered && !(lenses.get(s) && lenses.get(s).rect) && !s.closest('#pm-o55-onboarding')) { deferStrip(s); return; }
+        if (cvSkipped(s)) { cvSkip(s); return; }
         todo.push([cfg, s]);
       });
     });
@@ -235596,7 +235706,7 @@ try { if (window.PM_HOME && typeof window.PM_HOME.boot === 'function') window.PM
        cover's lift: about 35 forced style and layout passes, 48 ms on Nas1, F2) */
     var park = parkedLenses[switchUnder ? 'under' : 'over']; preSerial++;
     todo.forEach(function (t) { var s = t[1], L = lenses.get(s); if ((!L || !L.lens.isConnected) && !park.has(s)) prereadStrip(s); });
-    todo.forEach(function (t) { syncStrip(t[0], t[1]); });
+    syncStrips(todo);
     if (isGlass()) scanMenus(scopes);
   }
   /* strips Glass leaves alone for now (pm7-motion-editor, 2026-10-16: during Settings' calm cover, 47 style reads hit the
@@ -235610,6 +235720,50 @@ try { if (window.PM_HOME && typeof window.PM_HOME.boot === 'function') window.PM
      the onboarding window never waits (GL-1). Nothing here is read from style or layout. */
   var STRIP_PARKED = '.pmed-prepared, [hidden]', busyStrips = new Set(), busySheets = new Set(), busyWait = false;
   function stripParked(s) { try { return !!s.closest(STRIP_PARKED); } catch (e) { return false; } }
+  /* B6 packet 1, the Basic path (2026-10-16): a strip inside a content-visibility: auto section the browser is skipping
+     (the editor's Customize groups out of view) is not drawn, and any read of it (its scroller walk, its box, even
+     checkVisibility) made the browser style and lay out that whole section first: one forced pass per section, 4 or 5 in
+     each sync of the Customize open (the P1000's 320/100/173/94/105-element restyles, about 15-19 ms a sync, twice per
+     open). Such a strip is not read at all: a lens it shows steps out, as a scrolled-away one does, and it is synced when
+     its section becomes relevant (contentvisibilityautostatechange, skipped false). Nothing inside a skipped section is
+     asked: its section is found by walking the strip's ancestors from the top down and stopping at the first
+     content-visibility: auto one, whose own style and box sit outside what it skips. A section is taken as skipped until
+     its event says it is relevant (a section starts out skipped; each change of that fires the event), unless its box is
+     on screen, so a section in view is synced at once, as before. Off where the event does not exist. */
+  var CV_ON = typeof window.ContentVisibilityAutoStateChangeEvent === 'function', cvRelevant = new WeakSet(), cvWait = new Set(), cvSeen = null;
+  /* a strip inside a closed <details> (not its summary) is not drawn either: the browser locks that content the same way,
+     and is asked nothing about it; opening the <details> syncs its strips (the page observer watches 'open') */
+  function cvSkipped(s) {
+    if (inClosedDetails(s)) return true;
+    if (!CV_ON) return false;
+    var up = [];
+    for (var a = s.parentElement; a && a !== document.documentElement; a = a.parentElement) up.push(a);
+    for (var i = up.length - 1; i >= 0; i--) {
+      var c = up[i], cv = cvSeen && cvSeen.get(c);
+      if (cv === undefined) { cv = getComputedStyle(c).contentVisibility; if (cvSeen) cvSeen.set(c, cv); }
+      if (cv === 'visible' || (cv === 'auto' && cvRelevant.has(c))) continue;
+      /* a section that is neither relevant yet nor out of view, or a hidden one, is left to the strip's own reads, as before:
+         nothing below it is asked here */
+      if (cv !== 'auto') return false;
+      var r = c.getBoundingClientRect();
+      return !(r.width > 0 && r.height > 0 && r.bottom > 0 && r.right > 0 && r.top < innerHeight && r.left < innerWidth);
+    }
+    return false;
+  }
+  function cvSkip(s) {
+    var L = lenses.get(s);
+    if (L && L.lens.isConnected && L.rect) { stopLensTravel(L); if (L.lens.style.opacity !== '0') L.lens.style.opacity = '0'; L.rect = null; }
+    cvWait.add(s);
+  }
+  if (CV_ON) document.addEventListener('contentvisibilityautostatechange', function (e) {
+    var t = e.target; if (!t || t.nodeType !== 1) return;
+    if (e.skipped) { cvRelevant.delete(t); return; }
+    cvRelevant.add(t);
+    if (!cvWait.size) return;
+    var any = false;
+    cvWait.forEach(function (x) { if (!x.isConnected) cvWait.delete(x); else if (t.contains(x)) { cvWait.delete(x); settleStrips.add(x); any = true; } });
+    if (any && switchOn()) queueSync();
+  }, true);
   function pageBusy() { try { return typeof window.PM_BUSY === 'function' && !!window.PM_BUSY(); } catch (e) { return false; } }
   /* the covers are read from their own markers, not from PM_BUSY(), which names only the first of several reasons (an open
      onboarding window or a page change is named before the boot; landing review GD-1) */
