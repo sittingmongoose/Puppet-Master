@@ -59,12 +59,16 @@
        starts visible) the moves still wait for the second, so the raster after a long frame does not eat their start. */
     const atCommit = !!(o && o.start === 'commit');
     const list = () => { try { return (typeof anims === 'function' ? anims() : anims) || []; } catch (_) { return []; } };
+    /* a held move is marked (__pmHeld) while it is held, so PM7_MOTION_FINISH (tools/motion_finish.js) waits for it as
+       a move still to come: counted only when running, a hold longer than its deadline (about the move's length plus
+       100 ms; 340-425 ms holds are common on the P1000) let the page-in's cleanup take pm8-page-in off while it was held,
+       and the page came in at once with no fade (Usage lane, P2-03) */
     const hold = () => list().forEach((a) => {
-      try { if (a && a.playState !== 'idle' && !held.has(a)) { a.pause(); a.currentTime = 0; held.add(a); } } catch (_) { /* gone */ }
+      try { if (a && a.playState !== 'idle' && !held.has(a)) { a.pause(); a.currentTime = 0; a.__pmHeld = true; held.add(a); } } catch (_) { /* gone */ }
     });
     const release = () => {
       if (before) { try { before(); } catch (_) { /* decoration only */ } }
-      held.forEach((a) => { try { if (a.playState === 'paused') a.play(); } catch (_) { /* gone */ } });
+      held.forEach((a) => { try { a.__pmHeld = false; if (a.playState === 'paused') a.play(); } catch (_) { /* gone */ } });
     };
     /* the frame the moves were begun after: a first frame on time (the task that began them was short) leaves them as
        they are, with no pause and restart, so a fast computer sees nothing of this */
