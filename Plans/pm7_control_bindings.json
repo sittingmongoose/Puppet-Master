@@ -6456,6 +6456,25 @@
       "no_production_reason": ""
     },
     {
+      "control_id": "nier.editor.turn_on",
+      "surface": "NieR Mode editor (from Adjust NieR look, while NieR Mode is off) > Turn on NieR Mode",
+      "owner_ref": "Plans/Settings_System.md#SSYS-043",
+      "disposition": "command",
+      "action_ids": [
+        "cmd.settings.transaction.preview",
+        "cmd.settings.transaction.apply"
+      ],
+      "production_entries": [
+        "catalog.settings_transaction_preview",
+        "catalog.settings_transaction_apply"
+      ],
+      "setting_ids": [
+        "general.visual.nier-mode"
+      ],
+      "payload": "Preview then apply general.visual.nier-mode true under the verified current Project binding; the chosen family and mode are untouched (SSYS-043, DL-153; review r2)",
+      "no_production_reason": ""
+    },
+    {
       "control_id": "nier.editor.open",
       "surface": "NieR Mode editor > Adjust NieR look (title bar, Tour bar)",
       "owner_ref": "Plans/Settings_System.md#SSYS-043",

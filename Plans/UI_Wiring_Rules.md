@@ -2468,7 +2468,9 @@ canonical_text: >-
   Amended 2026-10-17 (review r1): SSYS-043's hosted NieR controls now have rows: the NieR Mode checkbox in the
   title-bar theme selector and the Guided Tour bar's Look menu (the Settings transaction pair), the same
   checkbox inside the onboarding window (ui.onboarding.choose_look), the NieR Mode editor's parts edit (the
-  pair), and the editor's open, close and Play reboot moment (ui.settings.nier_editor.*).
+  pair), the editor's Turn on NieR Mode button, offered while NieR Mode is off (nier.editor.turn_on, the pair
+  over general.visual.nier-mode; review r2), and the editor's open, close and Play reboot moment
+  (ui.settings.nier_editor.*).
 gui_related: true
 gui_classification_reason: Appearance And Shell Control Census.
 split_recommended: false
