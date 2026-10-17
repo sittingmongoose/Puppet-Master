@@ -179,6 +179,33 @@ def stats0() -> dict:
     return {'kept_rules': 0, 'rewritten_rules': 0, 'dropped_rules': 0, 'dropped_keyframes': 0, 'dropped_at': 0}
 
 
+# The chat context's legend and source dots took their colour from seven rules of the form
+# '.pm7ctx-leg:nth-child(N) i' (T21). A descendant part after :nth-child() puts its subject's feature (the tag i) into
+# the page's one nth-sibling invalidation set, so every child inserted into or removed from any parent with positional
+# rules (the Usage board's cards, at every build slice and room change) restyled every <i> after it: 341 elements and
+# 10.7-13.7 ms per insert at the head of the Usage board on Nas1, against 45 elements and 1.4-4.5 ms with the nth part as
+# the subject (P2-03 analysis C, 2026-10-16). Same colours: the nth rule sets --pm7ctx-c on the row and the dot reads it.
+CTX_NTH_RX = re.compile(r'\.pm7ctx-(leg|source):nth-child\((\d+)\) i\{background:([^;{}]+)\}')
+# Each row sets the property, so a dot never reads one inherited from further up: a legend row past the fourth gets none
+# (no dot colour, as before), a source row the blue it had, and a colour token that is not defined leaves the dot
+# transparent, as the old rule did.
+CTX_NTH_BASES = (('.pm7ctx-leg i{width:6px;height:6px;border-radius:2px}',
+                  '.pm7ctx-leg{--pm7ctx-c:initial}.pm7ctx-leg i{width:6px;height:6px;border-radius:2px;background:var(--pm7ctx-c)}'),
+                 ('.pm7ctx-source i{width:7px;height:7px;border-radius:2px;background:var(--accent-blue)}',
+                  '.pm7ctx-source{--pm7ctx-c:var(--accent-blue)}.pm7ctx-source i{width:7px;height:7px;border-radius:2px;background:var(--pm7ctx-c)}'))
+CTX_NTH_COUNT = 7
+
+
+def ctx_nth_subject(need, css: str) -> str:
+    """The seven context dot colour rules with the :nth-child() compound as the subject (CTX_NTH_RX above)."""
+    css, n = CTX_NTH_RX.subn(lambda m: f'.pm7ctx-{m.group(1)}:nth-child({m.group(2)}){{--pm7ctx-c:{m.group(3)}}}', css)
+    need(n == CTX_NTH_COUNT, f'usage layer: {n} chat context nth-child dot rules found, {CTX_NTH_COUNT} expected (T21 changed?)')
+    for old, new in CTX_NTH_BASES:
+        need(css.count(old) == 1, f'usage layer: chat context dot rule {old!r} found {css.count(old)} times, 1 expected')
+        css = css.replace(old, new)
+    return css
+
+
 def filter_css(css: str, stats: dict, keep_ctx_only: bool = False) -> str:
     """Drop Usage-only rules and the Usage parts of mixed selector lists, drop @keyframes pm7u-*, recurse into
     @media/@supports/@container/@layer. keep_ctx_only additionally drops every rule with no context-module part (to
@@ -260,12 +287,43 @@ HOST_SCOPE = ':is(#panel-usage,[data-pmu-host])'
 # = 2,674; the warm page's own rule (.primary-content > #panel-usage.page[data-pmu-warm], the panel itself) is the second
 # compound use, Usage-only as it should be. The four pseudo-elements moved out of :is() into their own selector-list
 # entries (2026-10-16, T7-2: the browser drops a pseudo-element inside :is(); the Retro and NieR square toggle knob, the
-# Retro skyfill top bar, the Reduce Animations toggle knob) bring 'rewritten' to 2,678. A Usage CSS
+# Retro skyfill top bar, the Reduce Animations toggle knob) bring 'rewritten' to 2,678. The warm board's one raster
+# (2026-10-16, P2-03 item 1, 05-film.css: the panel's own raster rule and four rules keyed on the panel's
+# data-pmu-raster token, the held plates and bodies drawn, the plates' film layers and the spare room laid out) adds five
+# compound uses, Usage-only as they should be (a hosted board never takes data-pmu-raster): 'compound' 7. The room
+# change's hold for its first painted frame (2026-10-16, P2-03 item 2, 05-film.css: the held plates at .004 and the
+# bodies built in the hold drawn inside them; a hosted board never takes data-plate-hold) brings 'rewritten' to 2,680.
+# The raster drawn a part at a time (2026-10-16, P2-03 review cycle 1, 05-film.css: the plates' film-layer rule and the
+# two held-plate rules out; the page chrome's panel rule, the marked rail and stage head, and the marked card and its
+# body in, and the hero's two piece rules: its children hidden, its marked pieces shown) adds three compound uses,
+# Usage-only (a hosted board never takes data-pmu-raster): 'compound' 10, 'rewritten' still 2,680. The raster drawn one
+# element of each kind at a time (2026-10-16, P2-03 fix cycle 2, 05-film.css: the hero's two piece rules and the
+# marked rail, stage head and card rules out; the layer's first box, the drawn card's film layers, and the three
+# element-by-itself rules in: its children hidden, a marked element or part shown, one at opacity 0 drawn at 1) adds
+# one compound use, Usage-only (a hosted board never takes data-pmu-raster): 'compound' 11, 'rewritten' still 2,680 (the
+# warm wait in the scroll pane changes from display to opacity, the same rule). The arrival's pinned warm box and the
+# waiting plates hidden by opacity alone (2026-10-16, P2-03 fix cycle 2, 05-film.css: data-pmu-warm-pin on the panel
+# itself, Usage-only; data-pmu-warm-held on the board, which a hosted board never takes) add one compound use and one
+# anchor: 'compound' 12, 'rewritten' 2,681. The waiting board back to display: none (2026-10-17, P2-03 final,
+# 05-film.css: the pinned warm box on the panel itself and the held plates' opacity hold out) takes both away again:
+# 'compound' 11, 'rewritten' 2,680. The raster's slices as steps of the page-wide idle-warm queue and its heavy elements
+# drawn in parts (2026-10-17, P2-03 final, 05-film.css: the marked element's children rule keyed on the panel's
+# data-pmu-warm instead of its paint token, the same compound count; the four part selectors, a marked element's
+# pseudo-elements hidden or drawn without their glow, keyed on data-pmu-warm, which a hosted board never takes) add four
+# compound uses, Usage-only: 'compound' 15, 'rewritten' still 2,680. The arrival's unseen first draw while the shell
+# holds the page (2026-10-17, P2-03 final, 05-film.css data-pmu-arrive on the panel itself: the page at .004 over the
+# held entrance, and its bodies on layers of their own) adds two compound uses, Usage-only: 'compound' 17, 'rewritten'
+# still 2,680. No transition in the page while it is laid out unseen (2026-10-17, P2-03 final, 05-film.css: a rule for
+# every element under the panel's data-pmu-warm, which a hosted board never takes) adds one compound use, Usage-only:
+# 'compound' 18, 'rewritten' still 2,680. The arrival's draw one card a frame (2026-10-17, P2-03 final, 05-film.css: a
+# waiting card unpainted under the panel's data-pmu-arrive; the hero's plate first without its shadow) adds two compound
+# uses, Usage-only: 'compound' 20.
+# A Usage CSS
 # edit that adds or removes an anchored rule moves 'rewritten': look at what the new rules style (a hosted board gets
 # them too), then re-pin the number here. Any other use of #panel-usage (a child or sibling combinator, a rule for the
 # panel itself, an anchor outside a selector) stops the build: it would be Usage-only, or not a selector, without
 # saying so.
-HOST_SCOPE_EXPECT = {'rewritten': 2678, 'compound': 2}
+HOST_SCOPE_EXPECT = {'rewritten': 2680, 'compound': 20}
 HOST_AT_GROUPS = ('@media', '@supports', '@container', '@layer')
 _ANCHOR_RX = re.compile(re.escape(HOST_ANCHOR) + r'(?![\w-])')
 
@@ -571,6 +629,7 @@ def apply(text: str, need) -> tuple[str, dict]:
     ctx_css = filter_css(t21[0].group(1), st, keep_ctx_only=True)
     expect(need, 't21 context rules', st)
     notes['t21 context rules'] = st
+    ctx_css = ctx_nth_subject(need, ctx_css)
     kept_styles = []
     for sid in ('pm7-t29-usage-final', 'pm7-t32-final'):
         m = style_body(need, band, sid, '#panel-usage')

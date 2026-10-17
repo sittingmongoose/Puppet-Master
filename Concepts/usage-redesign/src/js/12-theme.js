@@ -28,13 +28,18 @@
     return value;
   }
 
-  var pending = 0;
+  /* the observer compares against the last key it told its listeners about, never against the cache: any look() call
+     between the change and this frame (a ResizeObserver fitting the Usage page's description in the frame a NieR flip
+     lays out, 46-shell.js fitDesc) refreshes the cache, and the change was then never announced (P2-03 review,
+     2026-10-16: the warm board kept a stale look, the cards, marks and controls missed it) */
+  var pending = 0, told = keyNow();
   new MutationObserver(function () {
     if (pending) return;
     pending = requestAnimationFrame(function () {
       pending = 0;
-      var before = cache.key;
-      if (keyNow() === before) return;
+      var now = keyNow();
+      if (now === told) return;
+      told = now;
       var next = look();
       listeners.slice().forEach(function (fn) { try { fn(next); } catch (error) { console.error('[pm-usage] look listener', error); } });
     });
