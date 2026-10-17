@@ -62,8 +62,8 @@ def js_parts():
 
 
 def block() -> str:
-    css = '\n'.join(f'/* {p.relative_to(CONCEPTS)} */\n' + html_theme(_read(p)) for p in css_parts())
-    js = '\n'.join(f'/* {p.relative_to(CONCEPTS)} */\n' + _read(p) for p in js_parts())
+    css = '\n'.join(f'/* {p.relative_to(CONCEPTS).as_posix()} */\n' + html_theme(_read(p)) for p in css_parts())
+    js = '\n'.join(f'/* {p.relative_to(CONCEPTS).as_posix()} */\n' + _read(p) for p in js_parts())
     return (f'{START}\n<style id="pm-glyph-css">\n{css}\n</style>\n'
             f'<script id="pm-glyph-js">\n{js}\n</script>\n{END}\n')
 

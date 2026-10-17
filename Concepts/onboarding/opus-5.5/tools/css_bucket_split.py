@@ -447,5 +447,5 @@ if __name__ == '__main__':
     import sys
     src, dst = sys.argv[1], sys.argv[2]
     new, st = apply(Path(src).read_text(encoding='utf-8'))
-    Path(dst).write_text(new, encoding='utf-8')
+    Path(dst).write_bytes(new.encode('utf-8'))
     print(json.dumps(st))
