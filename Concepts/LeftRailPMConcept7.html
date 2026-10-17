@@ -58094,6 +58094,8 @@ body.pmu-page-active #panel-dashboard.pm-home-owned.pm8-page-out { position: abs
 /* a card, or a part of the hero's body, still waiting for its own frame of that draw (15-film.js arriveSlices: one a
    frame, so no frame's raster holds the compositor) is not painted yet */
 #panel-usage[data-pmu-arrive] [data-pmu-arrive-wait] { visibility: hidden !important; }
+/* the hero's plate drawn first without its shadow (the shadow's blur is a raster of its own), the next frame with it */
+#panel-usage[data-pmu-arrive] [data-pmu-arrive-bare] { box-shadow: none !important; }
 /* while a film moment runs (data-film, set at the release and removed once at its end) each plate keeps its layer until
    its own entrance has ended (data-film-rest, 15-film.js plateLayer): a plate at rest never draws its text from a layer
    that kept the raster scale of a scaled entrance (Jared's note 5, 2026-10-09) */
@@ -65614,7 +65616,7 @@ var PMU_SERIES = {
   var RASTER_MARKS = /[?&]pmu-raster-marks=1(?:&|#|$)/.test(location.search);
   /* RASTER_CPU: the most ms of a cpu step's work when its idle period gives no deadline; RASTER_WAIT: a queued step not
      run in this long parks the pass; RASTER_MSAA: the paths that make a layer raster multisampled */
-  var RASTER_ROOMS = ['overview', 'costs', 'accounts'], RASTER_CPU = 6, RASTER_WAIT = 3000, RASTER_MSAA = 6, RASTER_QUIET = 600;
+  var RASTER_ROOMS = ['overview', 'costs', 'accounts'], RASTER_CPU = 6, RASTER_WAIT = 3000, RASTER_MSAA = 6, RASTER_QUIET = 600, RASTER_FIRST = 20;
   /* RASTER_PREFIX: the most painting elements a part's draw adds (?pmu-raster-prefix=N for measurements): 4, since a
      prefix of 8 elements of kinds already drawn still linked 3-7 programs at once in new batches (RTX 3090), more than a
      P1000 draws in 100 ms */
@@ -65648,7 +65650,7 @@ var PMU_SERIES = {
     var rooms = [w.room].concat(RASTER_ROOMS.filter(function (r) { return r !== w.room; })).filter(function (r) { return !rasterDone[rasterKey(r)]; });
     if (!rooms.length) { rasterLog.skipped = 'done'; warmPark(w); return; }
     var r = rast = { w: w, q: window.PM_WARM, rooms: rooms, t0: performance.now(), cur: null, spare: false, building: null, parked: false,
-      queued: 0, queuedAt: 0, waitT: 0, holdT: 0, holdFn: null, visFn: null, resizeAt: 0, prev: null, redo: [], resumes: 0 };
+      queued: 0, queuedAt: 0, waitT: 0, holdT: 0, holdFn: null, visFn: null, resizeAt: 0, prev: null, redo: [], resumes: 0, firstDraws: 0 };
     rasterLog = { rooms: [], at: Math.round(r.t0), ms: null, skipped: null, gate: null, parks: 0, steps: [], ran: 0, late: 0, split: 0, moved: 0,
       dropped: [], cpu: { plan: 0, build: 0, unpark: 0 } };
     r.onResize = function () { r.resizeAt = performance.now(); if (!r.parked) { rasterUnqueue(r); rasterPark(r); rasterNext(r); } };
@@ -65745,7 +65747,12 @@ var PMU_SERIES = {
     var cpu = need !== 'draw', pk = cpu ? null : rasterPeek(r), step = null;
     /* later: 2 (IDLE-WARM-RULE v3.8, 'later' as a level: Glass's lg-warm is 1): every step of the pass runs only when no
        step of a lower level is queued; the arrival does not depend on it (a queue without 'later' ignores the flag) */
-    var o = { owner: 'usage', name: (r.cur ? r.cur.room : '') + ':' + (cpu ? need : pk.name), near: false, later: 2, cpu: cpu, light: !cpu && pk.light,
+    /* the arrival room's first screen (its layer, its hero, then its other cards in the window, rasterRoots) goes first and
+       at level 0 (the lead's ruling, 2026-10-17: at most RASTER_FIRST draws, their cpu plan steps along), so a click
+       from about +20 s on the P1000 finds the first screen's programs linked and the arrival's slices raster only; the
+       rest of the pass stays 'later' at level 2 */
+    var first = !!r.cur && r.cur.room === r.w.room && r.firstDraws < RASTER_FIRST && !!(r.cur.roots && r.cur.roots[r.cur.ri] && r.cur.roots[r.cur.ri].first);
+    var o = { owner: 'usage', name: (r.cur ? r.cur.room : '') + ':' + (cpu ? need : pk.name), near: false, later: first ? 0 : 2, cpu: cpu, light: !cpu && pk.light,
       until: function () { return rast === r && warm === r.w && !pageShown(); },
       run: function (d) {
         if (r.queued === o.id) { r.queued = 0; clearTimeout(r.waitT); r.waitT = 0; }
@@ -65758,6 +65765,7 @@ var PMU_SERIES = {
         if (!step) step = rasterTake(r);
         if (!step) { rasterNext(r); return null; }
         r.prev = step;
+        if (first) r.firstDraws++;
         rasterLog.ran++;
         if (rasterLog.steps.length < 800) { step.row = rasterLog.steps.length; rasterLog.steps.push([step.label, Math.round(performance.now()), 0]); }
         var undo = rasterRun(r, step);
@@ -66092,13 +66100,24 @@ var PMU_SERIES = {
       }
       p.units.push({ self: [it.el], lits: [it.lit], sig: fresh ? [it.sig] : [], unit: true, fresh: fresh, label: fresh ? it.sig : '' });
     }
-    p.steps = p.pre.concat(p.units, p.wholes); p.phase = 2; p.items = null; p.stack = null;
+    /* a first-screen root (its programs linked early, at level 0, within RASTER_FIRST draws) draws only its new kinds:
+       the multisample step, each new kind's parts and the element itself; the elements of kinds already drawn link
+       nothing new and wait for the arrival */
+    var units = p.freshOnly ? p.units.filter(function (u) { return u.fresh; }) : p.units;
+    p.steps = p.pre.concat(units, p.wholes); p.phase = 2; p.items = null; p.stack = null;
     return true;
   }
   /* the roots of a room: the board room starts with the layer and the page chrome; then its cards in order */
   function rasterRoots(kind) {
-    var roots = kind === 'board' ? [{ t: 'layer' }, { t: 'chrome' }] : [];
-    rasterCards(kind).forEach(function (c) { roots.push({ t: 'card', el: c }); });
+    var cards = rasterCards(kind), roots = [];
+    if (kind !== 'board') { cards.forEach(function (c) { roots.push({ t: 'card', el: c }); }); return roots; }
+    /* the arrival room: its first screen first (the layer, the hero, the other cards in the window: first, which the
+       pass runs at level 0 up to RASTER_FIRST draws), then the page chrome, then the cards below the window */
+    var shown = cards.filter(function (c) { return PMU.boards ? inView(c) : true; }), below = cards.filter(function (c) { return shown.indexOf(c) < 0; });
+    roots.push({ t: 'layer', first: true });
+    shown.forEach(function (c) { roots.push({ t: 'card', el: c, first: true }); });
+    roots.push({ t: 'chrome' });
+    below.forEach(function (c) { roots.push({ t: 'card', el: c }); });
     return roots;
   }
   function rasterPlanFor(panel, rt) {
@@ -66111,12 +66130,15 @@ var PMU_SERIES = {
       return rasterPlanStart(panel, function () { return 'P'; }, function (el) { return el.classList && el.classList.contains('pmu-card') && el.parentNode && el.parentNode.classList.contains('pmu-board'); }, []);
     }
     var card = rt.el, body = card.querySelector(':scope > .pmu-cardbody');
-    return rasterPlanStart(card, function (el) { return body && body.contains(el) ? 'Y' : 'K'; }, null, []);
+    var p1 = rasterPlanStart(card, function (el) { return body && body.contains(el) ? 'Y' : 'K'; }, null, []);
+    p1.freshOnly = !!rt.first;
+    return p1;
   }
   /* the next root: the one done loses its marks (each draw's cleanup took the paint token off, so its layer is gone and
      nothing of it stays drawn) */
   function rasterAdvance(cur) {
     var rt = cur.roots[cur.ri];
+    if (rt && rt.t === 'card' && rt.el && cur.plan && cur.pi >= cur.plan.length) rt.el._pmuPrelinked = true;
     if (rt) rasterUnmark(rt.t === 'card' ? rt.el : document.getElementById('panel-usage'));
     cur.ri++; cur.pi = 0; cur.plan = null; cur.planning = null;
     rasterGrow = 1;
@@ -66466,25 +66488,28 @@ var PMU_SERIES = {
     cards.sort(function (a, b) { return (b.hasAttribute('data-hero') - a.hasAttribute('data-hero')) || (+a.dataset.y - +b.dataset.y) || (+a.dataset.x - +b.dataset.x); });
     cards.forEach(function (c) {
       list.push(c);
-      /* the hero (its body holds most of the first screen's programs) comes in parts: its plate, then each part of its
-         body in a frame of its own (arriveParts) */
-      var body = c.hasAttribute('data-hero') ? c.querySelector(':scope > .pmu-cardbody') : null;
-      if (body) arriveParts(body).forEach(function (k) { list.push(k); });
+      /* the hero (its body holds most of the first screen's programs) comes in parts: its plate without its shadow,
+         the shadow, then each part of its body in a frame of its own (arriveParts) */
+      var hero = c.hasAttribute('data-hero'), body = c.querySelector(':scope > .pmu-cardbody');
+      if (hero && body) { c.setAttribute('data-pmu-arrive-bare', ''); list.push({ bare: c }); arriveParts(body, ARRIVE_PARTS).forEach(function (k) { list.push(k); }); }
+      /* another card with a large body (a chart of many marks: the month card held a frame 91-201 ms on the 3090 cold)
+         comes in a few parts too */
+      else if (body && body.getElementsByTagName('*').length > ARRIVE_BIG) arriveParts(body, ARRIVE_SOME).forEach(function (k) { list.push(k); });
     });
-    list.forEach(function (x) { x.setAttribute('data-pmu-arrive-wait', ''); });
+    list.forEach(function (x) { if (!x.bare) x.setAttribute('data-pmu-arrive-wait', ''); });
     return list;
   }
   /* the hero's parts: a part of more than ARRIVE_PART elements is split into its children, in document order, until the
      parts are small (a few programs each when cold: P1000 links are 22-71 ms each) or there are ARRIVE_PARTS of them */
-  var ARRIVE_PARTS = 20, ARRIVE_PART = 12;
-  function arriveParts(body) {
+  var ARRIVE_PARTS = 8, ARRIVE_SOME = 4, ARRIVE_BIG = 40, ARRIVE_PART = 16, ARRIVE_GROW = 3, ARRIVE_FAST = 50, ARRIVE_SLOW = 90, ARRIVE_DUE = 1300;
+  function arriveParts(body, most) {
     var parts = [body], changed = true;
-    while (changed && parts.length < ARRIVE_PARTS) {
+    while (changed && parts.length < most) {
       changed = false;
       for (var i = 0; i < parts.length; i++) {
         var el = parts[i], kids = el.children;
         if (!kids.length || el.getElementsByTagName('*').length <= ARRIVE_PART) continue;
-        if (parts.length - 1 + kids.length > ARRIVE_PARTS && parts.length > 1) continue;
+        if (parts.length - 1 + kids.length > most && parts.length > 1) continue;
         parts.splice.apply(parts, [i, 1].concat(Array.prototype.slice.call(kids)));
         changed = true;
         break;
@@ -66494,11 +66519,12 @@ var PMU_SERIES = {
   }
   /* every card still waiting comes in now (the release, a moment that ended), and the page's wait comes off */
   function arriveUnslice(w) {
-    if (!w || !w.slices) return;
-    w.slices.forEach(function (c) { c.removeAttribute('data-pmu-arrive-wait'); });
+    if (!w) return;
     w.slices = [];
     var panel = document.getElementById('panel-usage');
-    if (panel) panel.removeAttribute('data-pm-entrance-wait');
+    if (!panel) return;
+    Array.prototype.forEach.call(panel.querySelectorAll('[data-pmu-arrive-wait], [data-pmu-arrive-bare]'), function (x) { x.removeAttribute('data-pmu-arrive-wait'); x.removeAttribute('data-pmu-arrive-bare'); });
+    panel.removeAttribute('data-pm-entrance-wait');
   }
   /* the board out of its wait: three attributes, no read */
   function warmShow(w, board) {
@@ -66511,26 +66537,98 @@ var PMU_SERIES = {
      would run anyway): a tile one tier off renders again, its entrance queued; the cards that show a reading a live beat
      changed while the page was hidden render again too. A board built in this arrival's own task (w.sync) was measured
      where it shows */
-  function warmMeasure(w, board) {
-    if (w.sync) return;
+  function warmMeasure(w, board, later) {
+    if (w.sync) return [];
     var cards = PMU.board.cardsNow().filter(function (c) { return c.isConnected; });
     var keys = Object.keys(w.shares || {}), live = keys.length && PMU.boards && PMU.boards.live ? cards.filter(function (c) { return PMU.boards.live.hit(c, keys); }) : [];
     w.live = live.length;
     if (PMU.board.tierPass) PMU.board.tierPass(cards.filter(function (c) { var b = c.querySelector(':scope > .pmu-cardbody'); return b && b._pmuKind && live.indexOf(c) < 0; }), 'held');
-    if (live.length) PMU.board.fitSliced(function () { PMU.board.tierPass(live, 'enter'); });
     if (PMU.board.viewNow) PMU.board.viewNow(true);
+    /* later: the live cards are rendered again by the caller, one a frame */
+    if (later) return live;
+    if (live.length) PMU.board.fitSliced(function () { PMU.board.tierPass(live, 'enter'); });
+    return [];
   }
   function warmArrive(w, m, board, app) {
-    var t0 = performance.now();
+    var t0 = performance.now(), panel = document.getElementById('panel-usage');
     warmShow(w, board);
     board.setAttribute('data-film', '');
-    try { warmMeasure(w, board); } catch (error) { console.error('[pm-usage] warm re-measure', error); }
-    var c1 = performance.now();
-    /* the whole entrance is made here, held at its start (moment.wait): its animations paused at 0, its tweens and timers
-       waiting, so the page's first frame styles, lays out and paints it as its first frame will show it, and the GPU
-       rasters it, and links what it needs, under the shell's hold */
-    m.wait = { at: [], timers: [], anims: [], t0: t0 };
+    if (panel) panel.setAttribute('data-pmu-arrive', '');
+    m.wait = { at: [], timers: [], anims: [], t0: t0, slices: [], sliced: 0, sliceAt: [], sliceLog: [], made: false, measured: false, live: [], w: w, board: board, app: app };
     M.hold(true);
+    var W = m.wait;
+    if (!arriveSliced()) {
+      /* drawn whole: measured, made and held at its middle in this task, as in F6-pre */
+      try { warmMeasure(w, board); } catch (error) { console.error('[pm-usage] warm re-measure', error); }
+      W.measured = true;
+      arriveMake(w, m, board, app);
+      arriveHold(m, function (ok, n) { arriveGo(m, n); });
+      return;
+    }
+    /* in slices (F6 P1000: the arrival task was 160-280 ms): this task only shows the board with its cards in the window
+       waiting unpainted; each of the hold's frames does one piece after its layout (where the reads cost nothing): the
+       re-measure, then each card a live beat changed while the page was hidden (rendered again, one a frame), then the
+       entrance made and held at its middle with the hero's parts marked, then the slices (arriveSlices) */
+    PMU.board.cardsNow().forEach(function (c) { if (c.isConnected && inView(c)) c.setAttribute('data-pmu-arrive-wait', ''); });
+    if (panel) panel.setAttribute('data-pm-entrance-wait', '');
+    var lastAt = 0, grow = 1;
+    arriveHold(m, function (ok, n) { arriveGo(m, n); }, function () {
+      if (m.wait !== W) return;
+      var now = performance.now();
+      if (!W.measured) {
+        W.measured = true;
+        try { W.live = warmMeasure(w, board, true); } catch (error) { console.error('[pm-usage] warm re-measure', error); }
+        return;
+      }
+      if (W.live.length) {
+        var c0 = W.live.shift();
+        try { if (c0.isConnected) PMU.board.fitSliced(function () { PMU.board.tierPass([c0], 'enter'); }); } catch (error) { console.error('[pm-usage] live re-render', error); }
+        return;
+      }
+      if (!W.made) {
+        arriveMake(w, m, board, app);
+        W.slices = arriveSlices(board); W.sliced = W.slices.length;
+        lastAt = 0;
+      }
+      /* the frame's interval since the last slice is what that slice cost (its raster, and its links when they were not
+         pre-linked): recorded per slice (last.slices: [label, ms, pre-linked by the pass]); a slice frame of under
+         ARRIVE_FAST ms lets the next frame take more (up to ARRIVE_GROW), one over ARRIVE_SLOW goes back to one, so
+         cheap slices fit in the shell's cap and dear ones stay one a frame */
+      var dt = lastAt ? now - lastAt : 0;
+      if (lastAt) {
+        (W.sliceLog[W.sliceLog.length - 1] || [])[1] = Math.round(dt);
+        grow = dt < ARRIVE_FAST ? Math.min(ARRIVE_GROW, grow + 1) : dt > ARRIVE_SLOW ? 1 : grow;
+      }
+      lastAt = now;
+      /* the shell releases the page 1.5 s after the click whatever is left (and what is left would show at once, one
+         raster burst): from ARRIVE_DUE ms after the arrival began, what remains is spread over the frames left at the
+         pace the last frame went */
+      var due = W.t0 + ARRIVE_DUE - now, need = 0;
+      if (W.slices.length && dt > 0) need = due <= dt ? W.slices.length : Math.ceil(W.slices.length / Math.max(1, Math.floor(due / dt)));
+      var hurry = need > grow;
+      if (W.slices.length) {
+        var names = [], pre = true;
+        var cardOf = function (x) { return x.classList && x.classList.contains('pmu-card') ? x : x.closest('.pmu-card'); };
+        for (var k = 0; k < Math.max(grow, need) && W.slices.length; k++) {
+          var x0 = W.slices[0], x = x0.bare || x0, cd = cardOf(x), linked = !!(cd && cd._pmuPrelinked);
+          /* only slices whose card the pass has linked go several a frame; a cold one goes alone (unless the release is due) */
+          if (k > 0 && !hurry && (!linked || !pre)) break;
+          W.slices.shift();
+          if (x0.bare) x.removeAttribute('data-pmu-arrive-bare'); else x.removeAttribute('data-pmu-arrive-wait');
+          names.push(cd ? (cd.getAttribute('data-widget') || 'card') + (x0.bare ? ':shadow' : x === cd ? '' : '>' + rasterName(x)) : rasterName(x));
+          pre = pre && linked;
+        }
+        W.sliceAt.push(Math.round(now - t0));
+        if (W.sliceLog.length < 60) W.sliceLog.push([names.join('+'), null, pre]);
+        return;
+      }
+      if (panel && panel.hasAttribute('data-pm-entrance-wait')) panel.removeAttribute('data-pm-entrance-wait');
+    }, ARRIVE_FRAMES + 60);
+  }
+  /* the whole entrance made, held at its start (moment.wait): its animations paused, its tweens and timers waiting */
+  function arriveMake(w, m, board, app) {
+    var c0 = performance.now();
+    m.wait.made = true;
     m.t0 = performance.now();
     /* a room the page shows compiles what it draws: the raster leaves it out from here */
     rasterDone[rasterKey(m.room)] = true;
@@ -66554,22 +66652,20 @@ var PMU_SERIES = {
         m.wait.anims.push(a);
       } catch (error) {}
     });
-    var panel = document.getElementById('panel-usage');
-    if (panel) panel.setAttribute('data-pmu-arrive', '');
-    var W = m.wait;
-    W.slices = arriveSliced() ? arriveSlices(board) : []; W.sliced = W.slices.length; W.sliceAt = [];
-    if (W.slices.length && panel) panel.setAttribute('data-pm-entrance-wait', '');
-    if (last) last.goMs = [Math.round((c1 - t0) * 10) / 10, Math.round((performance.now() - c1) * 10) / 10];
-    arriveHold(m, function (ok, n) { arriveGo(m, n); }, function () {
-      if (m.wait !== W || !W.slices) return;
-      var c = W.slices.shift();
-      if (c) { c.removeAttribute('data-pmu-arrive-wait'); W.sliceAt.push(Math.round(performance.now() - t0)); return; }
-      if (panel && panel.hasAttribute('data-pm-entrance-wait')) panel.removeAttribute('data-pm-entrance-wait');
-    }, ARRIVE_FRAMES + W.sliced + 2);
+    if (last) last.makeMs = Math.round((performance.now() - c0) * 10) / 10;
   }
   /* the page's entrance starts: the board's starts with it, from its first frame */
   function arriveGo(m, n) {
     var w = m.wait; if (!w) return;   /* the moment ended meanwhile (unwait wrote its end states) */
+    /* released before every piece was done (the shell's cap, a short hold): the rest now, in this frame */
+    if (moment === m && !w.made) {
+      try {
+        if (!w.measured) { w.measured = true; w.live = warmMeasure(w.w, w.board, true) || []; }
+        if (w.live.length) { var lv = w.live; w.live = []; PMU.board.fitSliced(function () { PMU.board.tierPass(lv, 'enter'); }); }
+        arriveMake(w.w, m, w.board, w.app);
+      } catch (error) { console.error('[pm-usage] arrival', error); }
+    }
+    var left = w.slices ? w.slices.length : 0;
     arriveUnslice(w);
     m.wait = null; M.hold(false);
     var panel = document.getElementById('panel-usage');
@@ -66604,7 +66700,7 @@ var PMU_SERIES = {
     w.at.forEach(function (t) { setTimeout(t.fn, Math.max(0, t.ms) * M.speed()); });
     /* the preset hold a mount schedules (40-board.js holdPass) waited for the arrival */
     if (PMU.board.holdSoon) PMU.board.holdSoon(500);
-    if (last) { last.holdMs = m.holdMs; last.holdFrames = n; last.anims = w.anims.length; last.cut = cut; last.sliced = w.sliced || 0; last.sliceAt = w.sliceAt || []; }
+    if (last) { last.holdMs = m.holdMs; last.holdFrames = n; last.anims = w.anims.length; last.cut = cut; last.sliced = w.sliced || 0; last.sliceAt = w.sliceAt || []; last.slices = w.sliceLog || []; last.unsliced = left; }
   }
   /* the bodies come in with their plates (P2-03 final): each supporting body's quiet reveal starts with its own plate's
      rise, the hero's body with its plate and its instruments and light at T3.heroAt as before; a plate never stands

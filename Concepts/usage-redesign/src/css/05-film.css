@@ -97,6 +97,8 @@ body.pmu-page-active #panel-dashboard.pm-home-owned.pm8-page-out { position: abs
 /* a card, or a part of the hero's body, still waiting for its own frame of that draw (15-film.js arriveSlices: one a
    frame, so no frame's raster holds the compositor) is not painted yet */
 #panel-usage[data-pmu-arrive] [data-pmu-arrive-wait] { visibility: hidden !important; }
+/* the hero's plate drawn first without its shadow (the shadow's blur is a raster of its own), the next frame with it */
+#panel-usage[data-pmu-arrive] [data-pmu-arrive-bare] { box-shadow: none !important; }
 /* while a film moment runs (data-film, set at the release and removed once at its end) each plate keeps its layer until
    its own entrance has ended (data-film-rest, 15-film.js plateLayer): a plate at rest never draws its text from a layer
    that kept the raster scale of a scaled entrance (Jared's note 5, 2026-10-09) */
