@@ -12,7 +12,7 @@
     "unblocks_edge_count": 3219,
     "unresolved_reference_count": 0
   },
-  "generated_at_utc": "2026-10-17T21:21:33Z",
+  "generated_at_utc": "2026-10-17T21:41:43Z",
   "gui_related_units": {
     "count": 3595,
     "units": [
@@ -43964,6 +43964,10 @@
       {
         "error": "event_authority_currentness_source_drift",
         "source_path": "Plans/settings_inventory.schema.json"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/sharding_config.json"
       },
       {
         "error": "event_authority_currentness_source_drift",
