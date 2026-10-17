@@ -83,13 +83,16 @@
     return fn;
   }
 
-  /* one shared rAF queue, alive only while a tween runs */
-  var queue = [], raf = 0;
+  /* one shared rAF queue, alive only while a tween runs. hold(true): a tween not started yet waits at its start (the
+     first arrival's entrance is made held at its start while the page it shows in is not seen yet, PMU.film arriveHold;
+     hold(false) lets them start with the next frame) */
+  var queue = [], raf = 0, holdTw = false;
+  function hold(on) { holdTw = !!on; }
   function frame(now) {
     raf = 0;
     queue = queue.filter(function (tw) {
       if (tw.cancelled) return false;
-      if (tw.start === null) tw.start = now + tw.delay;
+      if (tw.start === null) { if (holdTw) return true; tw.start = now + tw.delay; }
       if (now < tw.start) return true;
       var t = tw.total ? Math.min(1, Math.max(0, (now - tw.start) / tw.total)) : 1;
       try { tw.step(tw.from + (tw.to - tw.from) * tw.curve(t), t); } catch (error) { console.error('[pm-usage] tween', error); return false; }
@@ -224,5 +227,5 @@
 
   PMU.motion = { reduced: reduced, paused: paused, speed: speed, dur: dur, ease: ease, family: family, animate: animate, tween: tween,
     countUp: countUp, enter: enter, reveal: reveal, flash: flash, clipReveal: clipReveal, flip: flip, pulse: pulse, release: release,
-    after: after, curve: curveFor, BASE: BASE, track: track };
+    after: after, curve: curveFor, BASE: BASE, track: track, hold: hold };
 })();
