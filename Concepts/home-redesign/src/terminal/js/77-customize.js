@@ -301,7 +301,7 @@
     var label = termLabel(v);
     var F = A().FIELDS;
     var html = '';
-    html += '<div class="pmt-cz-scrim" data-act="scrim" aria-hidden="true"><i></i><i></i><i></i><i></i></div><div class="pmt-cz-frame" aria-hidden="true"><span class="pmt-cz-framelabel">This terminal</span></div>';
+    html += '<div class="pmt-cz-scrim" data-act="scrim" aria-hidden="true"><i class="pmt-cz-sh"></i><i class="pmt-cz-sh"></i><i class="pmt-cz-sh"></i><i class="pmt-cz-sh"></i></div><div class="pmt-cz-frame" aria-hidden="true"><span class="pmt-cz-framelabel">This terminal</span></div>';
     /* data-lg-surface="menu": the Liquid Glass layer's opt-in for a floating sheet (its CONTRACT.md); data-lg-dense: a
        large dialog full of text takes its heavier tint (both inert without Liquid Glass) */
     html += '<section class="pmt-cz-dialog" role="dialog" aria-modal="true" aria-labelledby="pmt-cz-title" aria-describedby="pmt-cz-lead" tabindex="-1" data-lg-surface="menu" data-lg-dense>';
@@ -458,6 +458,12 @@
     ['group:ground', '.pmt-cz-group[data-group="ground"]'],
     ['group:effects', '.pmt-cz-group[data-group="effects"]'],
     ['group:behavior', '.pmt-cz-group[data-group="behavior"]'],
+    /* the entrance (rasterShow): the screen moving as a click shows it, whose moving dialog the compositor drew with a
+       program of its own in the first open (RTX 3090: 2 programs linked in the open with the entrance, 1 without). It
+       moves as one layer only with what is in it, so what a click first shows is shown: the groups below the fold are
+       left out, which would only restyle (2 of 2 opens linked nothing more for it; with the dialog's parts empty, or
+       its groups all left out, the program was still linked) */
+    ['top:entrance', '.pmt-cz-scrim, .pmt-cz-frame, .pmt-cz-dialog, .pmt-cz-head, .pmt-cz-body, .pmt-cz-foot', '.pmt-cz-group:not([data-group="colors"])'],
     ['top:preview', '.pmt-cz-preview']
   ];
 
@@ -1334,7 +1340,7 @@
        470 ms before the screen appeared in Friendly). Once built, and again for each look it has not been drawn in, it
        is drawn at idle a part at a time, each for one frame, unseen (opacity 0.004, as the shell warms its theme covers;
        0.002 rounds to nothing on the P1000), then clipped away again */
-    var rastered = {}, rasterOn = false, rasterEls = [], rasterOff = [], rasterShift = null;
+    var rastered = {}, rasterOn = false, rasterEls = [], rasterOff = [], rasterShift = null, rasterIn = false;
     /* nothing inside takes the focus while it is drawn: a focus that lands inside is let go at once. inert did the same,
        but setting and clearing it restyled the whole screen twice per warm (review RW-4) */
     function rasterGuard(e) {
@@ -1349,6 +1355,7 @@
       rasterOff.forEach(function (e) { e.removeAttribute('data-rw-off'); });
       rasterEls = []; rasterOff = [];
       if (rasterShift) { rasterShift.style.transform = ''; rasterShift = null; }
+      if (rasterIn) { rasterIn = false; root.classList.remove('pmt-cz-in'); }
       if (rasterOn) { rasterOn = false; root.classList.remove('pmt-cz-rasterwarm'); root.removeAttribute('data-rw'); root.removeEventListener('focusin', rasterGuard, true); }
     }
     /* the steps go on the page's one idle-warm queue (PM_WARM, 11-motion-start.js; the lead's IDLE-WARM-RULE.md): it
@@ -1384,6 +1391,18 @@
       rasterEls.forEach(function (e) { e.setAttribute('data-rw-on', ''); });
       rasterOff.forEach(function (e) { e.setAttribute('data-rw-off', ''); });
       root.classList.add('pmt-cz-rasterwarm');
+      /* the entrance is played on the unseen screen and held at its middle for the frame, so its moving layers draw
+         with their alpha and scale: at its start they are transparent, and a transparent layer is not drawn. The
+         look's own entrance, under the class a click plays (reveal); the cleanup takes it off */
+      if (part === 'top:entrance') {
+        rasterIn = true;
+        root.classList.add('pmt-cz-in');
+        root.getAnimations({ subtree: true }).forEach(function (a) {
+          var t = a.effect && a.effect.target, d = t && a.effect.getComputedTiming().activeDuration;
+          if (!t || !t.matches || !t.matches('.pmt-cz-dialog, .pmt-cz-frame, .pmt-cz-sh') || !(d > 0) || d === Infinity) return;
+          a.pause(); a.currentTime = d / 2;
+        });
+      }
       return true;
     }
     /* the parts, once a look, then the case styles this screen offers, drawn once unseen in the look now in force, at
@@ -1463,6 +1482,7 @@
       if (renaming) presetRenameEnd(false, false);
       if (preview) { preview.stopDemo(); if (pv) pv.onHide(); }
       root.setAttribute('aria-hidden', 'true');
+      root.classList.remove('pmt-cz-in', 'pmt-cz-unveil');
       function park() { if (closing === visit && !disposed) { root.classList.add('pmt-cz-parked'); parkedWatch(true); } }
       if (noFocus) park(); else T.Motion.leave(root, park);
     };
@@ -1573,18 +1593,25 @@
       /* the click is answered by the frame it paints (the menu goes, a press shows), and the screen comes in on the next
          one, already drawn and measured: revealed in the click, the browser would style and lay it out there, under the
          menu's focus return (P2-02). The focus starts on the scope switch, the first thing to decide (the dialog's name
-         and lead are its context), once the screen has painted */
+         and lead are its context), once the screen has painted. Its contents are shown a frame before it is, still
+         clipped away (pmt-cz-unveil): visibility is inherited, so showing them restyles every element in the screen
+         (9 ms on the RTX 3090), and the frame that reveals it then restyles only the parts it names and starts the
+         entrance, under the screen's own class (pmt-cz-in: the shared pmt-in restyled the whole screen as well, 9 ms) */
       function reveal() {
-        requestAnimationFrame(function () { requestAnimationFrame(function () {
+        requestAnimationFrame(function () {
           if (closed || showing !== visit) return;
-          root.removeAttribute('aria-hidden');
-          root.classList.remove('pmt-cz-parked');
-          T.Motion.play(root);
-          setTimeout(function () {
+          root.classList.add('pmt-cz-unveil');
+          requestAnimationFrame(function () {
             if (closed || showing !== visit) return;
-            (root.querySelector('[data-seg="scope"] [aria-checked="true"]') || dialog).focus({ preventScroll: true });
-          }, 0);
-        }); });
+            root.removeAttribute('aria-hidden');
+            root.classList.remove('pmt-cz-parked', 'pmt-cz-unveil');
+            T.Motion.play(root, 'pmt-cz-in');
+            setTimeout(function () {
+              if (closed || showing !== visit) return;
+              (root.querySelector('[data-seg="scope"] [aria-checked="true"]') || dialog).focus({ preventScroll: true });
+            }, 0);
+          });
+        });
       }
       /* a screen whose build steps have not all run is finished here, after the click's frame, where the rest of what it
          owes is drawn (the slices left, then a fit in one go in draw) */
