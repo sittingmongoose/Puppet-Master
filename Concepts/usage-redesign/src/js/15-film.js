@@ -783,6 +783,7 @@
      its timers write (a bar's tone, a layer it removes) are written now; its own timers (the beat, its end) are dropped */
   function unwait(m) {
     var w = m && m.wait; if (!w) return;
+    arriveUnslice(w);
     m.wait = null; M.hold(false);
     var panel = document.getElementById('panel-usage');
     if (panel) panel.removeAttribute('data-pmu-arrive');
@@ -1997,9 +1998,9 @@
      at the idle period's deadline, or after RASTER_CPU ms (the rule assumes no 45 ms slot): a root's plan, read element
      by element and resumed in the next step; another room's first screen built in the spare board (40-board.js
      rasterRoom, one slice a step); the page laid out in its warm box again after a park. Only one Usage step is queued at
-     a time; each step queues the next as it runs, so a light chain can continue. Every step is 'later' (IDLE-WARM-RULE
-     v3.7): the queue runs it only when no other owner has a step queued, so terminal's and Glass's warm-ups keep their
-     pace and the pass takes what is left (P1000: each GPU step costs about 0.4 s of the queue's time).
+     a time; each step queues the next as it runs, so a light chain can continue. Every step is 'later' at level 2
+     (IDLE-WARM-RULE v3.8): the queue runs it only when no step of a lower level is queued, so terminal's and Glass's
+     warm-ups keep their pace and the pass takes what is left (P1000: each GPU step costs about 0.4 s of the queue).
      The slices (fix cycle 2: each may link at most a program or two, about 30 ms a link on the P1000; P1000 part2,
      1994fee11d: a step with 12-15 links made a 234 ms gap, so one new kind a step): the layer alone with one small box
      (its own compositor programs); then the page chrome and each card of the room, the hero first, as a growing prefix
@@ -2156,9 +2157,9 @@
   /* one step handed to the queue: a draw (GPU) or a cpu step of the given kind */
   function rasterAdd(r, need) {
     var cpu = need !== 'draw', pk = cpu ? null : rasterPeek(r), step = null;
-    /* later (IDLE-WARM-RULE v3.7): every step of the pass runs only when no other owner has a step queued; the arrival
-       does not depend on it (a queue without 'later' ignores the flag) */
-    var o = { owner: 'usage', name: (r.cur ? r.cur.room : '') + ':' + (cpu ? need : pk.name), near: false, later: true, cpu: cpu, light: !cpu && pk.light,
+    /* later: 2 (IDLE-WARM-RULE v3.8, 'later' as a level: Glass's lg-warm is 1): every step of the pass runs only when no
+       step of a lower level is queued; the arrival does not depend on it (a queue without 'later' ignores the flag) */
+    var o = { owner: 'usage', name: (r.cur ? r.cur.room : '') + ':' + (cpu ? need : pk.name), near: false, later: 2, cpu: cpu, light: !cpu && pk.light,
       until: function () { return rast === r && warm === r.w && !pageShown(); },
       run: function (d) {
         if (r.queued === o.id) { r.queued = 0; clearTimeout(r.waitT); r.waitT = 0; }
@@ -2848,14 +2849,52 @@
      Without the shell's hold (a page that changed in a short frame, Reduce Motion, no shell) go runs in the page's first
      frame. A moment that ends meanwhile (a rapid click, leaving the page) runs go at once. ---- */
   var ARRIVE_FRAMES = 12;
-  function arriveHold(m, go) {
-    var after = window.PM_AFTER_LAYOUT, n = 0;
+  function arriveHold(m, go, step, frames) {
+    var after = window.PM_AFTER_LAYOUT, n = 0, cap = frames || ARRIVE_FRAMES;
     var check = function () {
       if (m && moment !== m) { go(false, n); return; }
-      if (after && pageHeld() && ++n < ARRIVE_FRAMES) { requestAnimationFrame(function () { after(check); }); return; }
+      if (step) step();
+      if (after && pageHeld() && ++n < cap) { requestAnimationFrame(function () { after(check); }); return; }
       go(true, n);
     };
     requestAnimationFrame(function () { if (typeof after === 'function') after(check); else { after = null; check(); } });
+  }
+  /* ---- the unseen raster in slices (P2-03 final, F6-pre P1000 films, 2026-10-17): drawn whole under the hold, the board
+     rastered in one frame and the GPU held the compositor 0.56-1.06 s (part2's LoAF: the frame after the arrival task
+     waited that long to render with no script), so Home's lift stood still. With the shell's support (its hold lasts
+     while the arriving page carries data-pm-entrance-wait: PM_START_ON_SHOWN.entranceWait) the cards in the window
+     wait hidden (data-pmu-arrive-wait, 05-film.css) and come into the unseen draw one a frame, the hero first and in
+     parts (its plate, then each part of its body), each frame's check after its layout: a frame's raster is one card, the compositor keeps presenting the lift, and the
+     next card waits for the frame after (its commit waits for the last one's raster). The frame after the last card,
+     the wait comes off the page and the shell releases it as before. Without the shell's support (or ?pmu-slices=0)
+     the board is drawn whole as before; ?pmu-slices=1 slices without it (measurements). ---- */
+  var SLICES = (function () { var mm = /[?&]pmu-slices=([01])(?:&|#|$)/.exec(location.search); return mm ? mm[1] : null; })();
+  function arriveSliced() {
+    if (SLICES === '0') return false;
+    if (SLICES === '1') return true;
+    var s = window.PM_START_ON_SHOWN;
+    return !!(s && s.entranceWait);
+  }
+  function arriveSlices(board) {
+    var cards = PMU.board.cardsNow().filter(function (c) { return c.isConnected && inView(c); }), list = [];
+    cards.sort(function (a, b) { return (b.hasAttribute('data-hero') - a.hasAttribute('data-hero')) || (+a.dataset.y - +b.dataset.y) || (+a.dataset.x - +b.dataset.x); });
+    cards.forEach(function (c) {
+      list.push(c);
+      /* the hero (its body holds most of the first screen's programs) comes in parts: its plate, then each part of its
+         body in a frame of its own */
+      var body = c.hasAttribute('data-hero') ? c.querySelector(':scope > .pmu-cardbody') : null;
+      if (body) Array.prototype.forEach.call(body.children, function (k) { list.push(k); });
+    });
+    list.forEach(function (x) { x.setAttribute('data-pmu-arrive-wait', ''); });
+    return list;
+  }
+  /* every card still waiting comes in now (the release, a moment that ended), and the page's wait comes off */
+  function arriveUnslice(w) {
+    if (!w || !w.slices) return;
+    w.slices.forEach(function (c) { c.removeAttribute('data-pmu-arrive-wait'); });
+    w.slices = [];
+    var panel = document.getElementById('panel-usage');
+    if (panel) panel.removeAttribute('data-pm-entrance-wait');
   }
   /* the board out of its wait: three attributes, no read */
   function warmShow(w, board) {
@@ -2913,12 +2952,21 @@
     });
     var panel = document.getElementById('panel-usage');
     if (panel) panel.setAttribute('data-pmu-arrive', '');
+    var W = m.wait;
+    W.slices = arriveSliced() ? arriveSlices(board) : []; W.sliced = W.slices.length; W.sliceAt = [];
+    if (W.slices.length && panel) panel.setAttribute('data-pm-entrance-wait', '');
     if (last) last.goMs = [Math.round((c1 - t0) * 10) / 10, Math.round((performance.now() - c1) * 10) / 10];
-    arriveHold(m, function (ok, n) { arriveGo(m, n); });
+    arriveHold(m, function (ok, n) { arriveGo(m, n); }, function () {
+      if (m.wait !== W || !W.slices) return;
+      var c = W.slices.shift();
+      if (c) { c.removeAttribute('data-pmu-arrive-wait'); W.sliceAt.push(Math.round(performance.now() - t0)); return; }
+      if (panel && panel.hasAttribute('data-pm-entrance-wait')) panel.removeAttribute('data-pm-entrance-wait');
+    }, ARRIVE_FRAMES + W.sliced + 2);
   }
   /* the page's entrance starts: the board's starts with it, from its first frame */
   function arriveGo(m, n) {
     var w = m.wait; if (!w) return;   /* the moment ended meanwhile (unwait wrote its end states) */
+    arriveUnslice(w);
     m.wait = null; M.hold(false);
     var panel = document.getElementById('panel-usage');
     if (panel) panel.removeAttribute('data-pmu-arrive');
@@ -2952,7 +3000,7 @@
     w.at.forEach(function (t) { setTimeout(t.fn, Math.max(0, t.ms) * M.speed()); });
     /* the preset hold a mount schedules (40-board.js holdPass) waited for the arrival */
     if (PMU.board.holdSoon) PMU.board.holdSoon(500);
-    if (last) { last.holdMs = m.holdMs; last.holdFrames = n; last.anims = w.anims.length; last.cut = cut; }
+    if (last) { last.holdMs = m.holdMs; last.holdFrames = n; last.anims = w.anims.length; last.cut = cut; last.sliced = w.sliced || 0; last.sliceAt = w.sliceAt || []; }
   }
   /* the bodies come in with their plates (P2-03 final): each supporting body's quiet reveal starts with its own plate's
      rise, the hero's body with its plate and its instruments and light at T3.heroAt as before; a plate never stands
