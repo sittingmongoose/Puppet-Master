@@ -33,7 +33,7 @@ function unmountSkin() {
   D.listeners = [];
   panelEls().forEach(p => {
     p.querySelectorAll('*').forEach(el => { if (el.getAnimations) el.getAnimations().forEach(a => { if (a.id === 'd-enter') a.cancel(); }); });
-    delete p._dTab;
+    delete p._dTab; delete p._dSkinStale;
     p.querySelectorAll(COUNT_SEL).forEach(el => { delete el._dCount; delete el._dCountN; });
     p.querySelectorAll(STATUS_SEL).forEach(el => { delete el._dSeen; });
   });
@@ -56,6 +56,8 @@ PMR.concepts.register('d', {
         /* the panel shown is never still held from an earlier switch (held panels are inert, SH-4): a rail closed
            and reopened onto it before its fade ended takes no hold to release it */
         if (p._dLeave) releaseLeaving(p);
+        /* redrawn while hidden (10-skin.js schedule skips a panel not on screen): skinned now, before its first frame */
+        if (p._dSkinStale && D.on) { p._dSkinStale = false; applyPanel(p, false); }
         if (info.reason === 'switch' && D.on) viewIn();
         /* the panel that was on screen stays until this one's entrance starts (30-motion.js holdLeaving); a rail opened
            from closed had none on screen, so the panel shown before it closed is never held over the new one */
