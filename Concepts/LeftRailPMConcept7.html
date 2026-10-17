@@ -229783,9 +229783,8 @@ var T = {};
     /* the live reflection: read from the terminal's own GPU canvas, the light's passes run on the GPU, and its first draw
        linked 7 programs on the P1000 (part2's F6b typing trace, Monitor + Reflection High: PathTessellate 55 ms, FillRRect
        49 and 52, FillRect 26-34, AAConvexPath 17). It is drawn once at idle as it is, unseen (a case off the page), one
-       pass a step (the direct and diffused passes a draw a step, the direct pass's clipped draw first unblurred: whole,
-       the direct pass linked 3 programs on the RTX 3090, its sides 2; the diffused sides are not warmed, below),
-       then laid on the case: GPU steps, watched (the lead's ruling, 2026-10-17). Not for a material that
+       draw a step (its clipped draw first unblurred: whole, the direct pass linked 3 programs on the RTX 3090, its sides
+       2), the direct pass only (below): GPU steps, watched (the lead's ruling, 2026-10-17). Not for a material that
        reflects nothing (NieR's ink) */
     var lap = A.peek({ api: it.view.api, tabAppearance: Object.assign({}, it.view.tabAppearance || {}, { bezel: it.ap.bezel.style, bezelReflect: 'high' }), previewAppearance: null, state: {} });
     if (!lap || !lap.bezel) return;
@@ -229800,14 +229799,11 @@ var T = {};
     };
     var liveEnd = function () { if (live) { live.dispose(); live = null; } };
     var plan = [];
-    /* the diffused pass's blurred sides are left to the live first draw: their two programs, from its large blur alone,
-       linked 52 + 86 ms in one step on the P1000, over the 90 ms a step that cannot be split may take (the lead's ruling,
-       2026-10-17); its mask and add are warmed on what the direct pass left */
-    [['direct', 0], ['diffused', 1]].forEach(function (ps, j) {
-      if (!j) plan.push([ps[0], ps[1], 'sharp'], [ps[0], ps[1], 'sides']);
-      plan.push([ps[0], ps[1], 'mask'], [ps[0], ps[1], 'add']);
-    });
-    plan.push(['glow', 2], ['lay']);
+    /* the direct pass only: the large blur of the diffused and glow passes links two programs in one draw (P1000: 52 + 86
+       ms in the diffused sides, 58 + 78 in the glow once those were left out; laying the light on the case runs both
+       passes again), over the 90 ms a step may take, so their first draw is left to first use, as before the warm
+       (the coordinator's ruling on review WT7-1, 2026-10-17); the rest of the light linked nothing more */
+    plan.push(['direct', 0, 'sharp'], ['direct', 0, 'sides'], ['direct', 0, 'mask'], ['direct', 0, 'add']);
     plan.forEach(function (pt, i, all) {
       var name = pt[0] + (pt[2] ? '-' + pt[2] : '');
       var id = window.PM_WARM.add({ owner: 'terminal', name: 'bezel:' + it.ap.bezel.style + ':reflect-' + name + '@' + it.w + 'x' + it.h,
