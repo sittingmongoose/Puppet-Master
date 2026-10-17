@@ -1930,6 +1930,13 @@ def verify() -> tuple[list[str], dict[str, Any]]:
     # (1257 -> 1258). This is the typed This editor writer; All editors reuses
     # the Settings transaction pair. No Touch row/profile, alias, native handler
     # evidence or closure promotion is added.
+    # 2026-10-17 PM7 week sweep (DL-228, UCC-200, CV-361, PWIZ-035): +1
+    # production-intent entry, tour.layout_restore for the newly registered
+    # cmd.workspace_layout.restore (the Guided Tour's Back, Skip and Finish put the
+    # captured layout back in one command) (1257 -> 1258; the 2026-10-14 editor
+    # row above had already been netted against the retired theme-preview
+    # producer). No Touch row/profile, alias, exclusion, native handler or proof
+    # is added.
     exact_resolved_denominators = {
         "row_count": 681,
         # ATS-048 / RAP-056 split seven existing consumers out of capture's
@@ -1937,7 +1944,7 @@ def verify() -> tuple[list[str], dict[str, Any]]:
         "profile_count": 134,
         "excluded_token_count": 59,
         "alias_binding_count": 65,
-        "production_wiring_entry_count": 1257,
+        "production_wiring_entry_count": 1258,
     }
     observed_resolved_denominators = {
         "row_count": len(rows),
