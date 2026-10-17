@@ -86,8 +86,14 @@
     a.finished.then(function () { later(function () { el.remove(); }); }, function () { el.remove(); });
   }
   function H(tag, cls, parent) { var el = document.createElement(tag); if (cls) el.className = cls; if (parent) parent.appendChild(el); return el; }
-  /* a speed-scaled timer, skipped under Reduce Motion (the caller writes the end state itself) */
-  function at(ms, fn) { if (reduced()) return 0; return setTimeout(fn, Math.max(0, ms) * M.speed()); }
+  /* a speed-scaled timer, skipped under Reduce Motion (the caller writes the end state itself). While the running moment
+     is held at its start (the first arrival before its page is seen: moment.wait, arriveHold) it starts with the moment */
+  function at(ms, fn) {
+    if (reduced()) return 0;
+    var w = moment && moment.wait;
+    if (w) { var t = { ms: ms, fn: fn }; w.at.push(t); return t; }
+    return setTimeout(fn, Math.max(0, ms) * M.speed());
+  }
   function sequence(steps) { (steps || []).forEach(function (s) { if (s.at <= 0) s.run(); else at(s.at, s.run); }); }
   function stagger(list, o) {
     o = o || {};
@@ -769,9 +775,23 @@
     return m;
   }
   function since(m) { return (performance.now() - m.t0) / M.speed(); }
-  function mtimer(m, ms, fn) { var id = setTimeout(fn, Math.max(0, ms) * M.speed()); m.timers.push(id); return id; }
+  function mtimer(m, ms, fn) {
+    if (m.wait) { var t = { ms: ms, fn: fn }; m.wait.timers.push(t); return t; }
+    var id = setTimeout(fn, Math.max(0, ms) * M.speed()); m.timers.push(id); return id;
+  }
+  /* a moment held at its start (moment.wait) that ends before it starts: the tweens may start again, and the end states
+     its timers write (a bar's tone, a layer it removes) are written now; its own timers (the beat, its end) are dropped */
+  function unwait(m) {
+    var w = m && m.wait; if (!w) return;
+    arriveUnslice(w);
+    m.wait = null; M.hold(false);
+    var panel = document.getElementById('panel-usage');
+    if (panel) panel.removeAttribute('data-pmu-arrive');
+    w.at.forEach(function (t) { try { t.fn(); } catch (error) {} });
+  }
   function endMoment(m) {
     if (moment !== m) return;
+    unwait(m);
     moment = null; M.track(null);
     /* a timer of this moment never acts in the next one (a hold release fired into the next room's entrance) */
     m.timers.forEach(clearTimeout); m.timers = [];
@@ -786,6 +806,11 @@
      waiting bodies show as built) and the next moment starts from there. Nothing stacks. */
   function finishMoment(why, next) {
     var m = moment; if (!m) return;
+    /* a hand-off still waiting for its painted frame plays now (and is finished below like everything else), as it did
+       when it started with the chrome; a Retro or NieR erase not yet started too */
+    if (m.holding) { try { handOff(m); } catch (error) { console.error('[pm-usage] hand-off', error); } }
+    if (m.stepErase) { var se0 = m.stepErase; m.stepErase = null; try { se0(); } catch (error) { console.error('[pm-usage] step erase', error); } }
+    var held = m.wait;
     moment = null; M.track(null);
     root.removeAttribute('data-pmu-moment');
     m.timers.forEach(clearTimeout);
@@ -795,6 +820,7 @@
     m.anims.forEach(function (a) { try {
       if (keep && a.effect && keep.some(function (el) { return el.contains(a.effect.target); })) return;
       if (a.finish && a.playState !== 'finished' && a.playState !== 'idle') a.finish(); } catch (error) {} });
+    if (held) { m.wait = held; unwait(m); }
     /* the old room's ghost: a fade not started yet (the new chrome never came) ends now too, so no still, blurred old room
        stays over the next one */
     /* only a fade that is still playing is finished: a ghost that is gone had its fade cancelled, and finish() on that
@@ -848,9 +874,52 @@
      520 HOP, Glass scale(1.02) 520 DEPTH (no blur on an arriving plate), Retro STEP(4) 240 with rows 60 apart, NieR boots the
      frame first. Without a GPU: the fade only (o.from lets a room change start part-way). Cards outside the viewport get
      no entrance. o.wave === false keeps the cards' own _pmuEnterDelay. ---- */
+  /* ---- never an empty board (P2-03 item 2): a room change's hand-off (the old room's cut, lens, fade or erase, and the new
+     plates' rise) starts at the new room's first painted frame, not when its chrome is inserted. The chrome and the first
+     build slice (the hero's body first) go in under data-plate-hold: the plates at opacity .004 on their film layers, the
+     bodies built in the hold drawn inside them (05-film.css), so the GPU rasters the new room unseen while the old room
+     stands. Two animation frames later (the second runs only once the frame that drew them is activated: the compositor
+     sends no main frame before that) or at HOLD_CAP ms, whichever is first, the hold lifts and the hand-off plays in the
+     look's own voice on the moment's clock (the plates' delays less the time held; a late hand-off moves the clock as
+     before). A body built in the hold is revealed at the hand-off at its slot. Retro and NieR erase the old room at the
+     hand-off too (their erase ran on the click's clock: on a slow first slice the board stood empty). Anything that ends
+     the moment first (a rapid click, leaving the page, Reduce Motion) hands off at once, so what follows is unchanged.
+     Not on the no-GPU profile (no ghost: the old room goes with the new chrome in one batch) and not under Reduce Motion
+     (calmSwap swaps whole rooms). ?pmu-hold=0 leaves it out (A/B). ---- */
+  var HOLD_CAP = 300, HOLD_OFF = /[?&]pmu-hold=0(?:&|#|$)/.test(location.search);
+  function painted(m, fn, cap) {
+    if (document.hidden || M.paused()) { fn(); return; }
+    var ran = false, go = function () { if (ran) return; ran = true; fn(); };
+    requestAnimationFrame(function () { requestAnimationFrame(go); });
+    mtimer(m, cap, go);
+  }
+  function holdOn(m, cards, o) {
+    if (!m || m.kind !== 'room' || !o.dir || o.handoff || m.handed || HOLD_OFF || kept || soft() || reduced() || M.paused() || !cards || !cards.length) return false;
+    return !!m.stepErase || !!(m.ghost && !m.ghost.gone && !m.ghost.fade);
+  }
+  function handOff(m) {
+    var h = m && m.holding; if (!h) return;
+    m.holding = null; m.handed = true;
+    var cards = h.cards.filter(function (c) { return c.isConnected; });
+    if (moment !== m) { cards.forEach(function (c) { c.removeAttribute('data-plate-hold'); }); return; }
+    var held = (performance.now() - h.at) / M.speed();
+    m.holdMs = Math.round(held);
+    cards.forEach(function (c) { c.removeAttribute('data-plate-hold'); c._pmuEnterDelay = Math.max(0, (c._pmuEnterDelay || 0) - held); });
+    frames(cards, Object.assign({}, h.o, { handoff: true }));
+    var built = m.heldBodies || []; m.heldBodies = null;
+    built.forEach(function (c) { if (c.isConnected) bodyBuilt(c); });
+  }
   function frames(cards, o) {
     var m = moment;
     o = o || {};
+    if (holdOn(m, cards, o)) {
+      m.holding = { cards: cards.slice(), o: o, at: performance.now() }; m.heldBodies = [];
+      cards.forEach(function (c) { c.setAttribute('data-plate-hold', ''); });
+      painted(m, function () { handOff(m); }, HOLD_CAP);
+      return;
+    }
+    /* Retro and NieR: the old room's erase starts here (ghost) */
+    if (m && m.stepErase) { var se = m.stepErase; m.stepErase = null; se(); }
     /* the new chrome is in: the old room leaves now (MOTION-4 RC2: never earlier, so no empty board), wiped away at the
        hand-off's edge where the voice has one (Jared #3: a fade let the new headings draw over a dimmed old room for up to
        650 ms on a slow frame), else faded */
@@ -949,7 +1018,9 @@
   /* ---- film.reveal (5 Phases B and C): a held body appears. The hero: opacity 160 OUT, then its queued instruments with
      all the light (its number 40 later). A supporting body {quiet: true}: one animation (opacity 200 OUT + 6 px 280
      SETTLE; the fade only without a GPU), its values final, its charts drawn quietly. The hold is the card's
-     data-body-wait (an opacity hold, never visibility: PERF-3 rule 3); it is lifted in the same task the reveal is made. */
+     data-body-wait (an opacity hold, never visibility: PERF-3 rule 3); it is lifted in the same task the reveal is made.
+     o.bodyAt: the body's own entrance starts then instead of at o.delay (the warm arrival's hero: its body comes in with
+     its plate, its instruments and light at their time; P2-03 final). */
   function takeCue(card) {
     var m = moment, hit = null;
     if (m) m.queue = m.queue.filter(function (q) { if (q.card === card) { hit = q; return false; } return true; });
@@ -962,22 +1033,22 @@
     if (!card) return;
     var entry = takeCue(card);
     card.removeAttribute('data-body-wait');
-    var d = Math.max(0, o.delay || 0);
+    var d = Math.max(0, o.delay || 0), bd = o.bodyAt != null ? Math.max(0, Math.min(d, o.bodyAt)) : d;
     card._pmuEnterDelay = d;
     if (reduced() || M.paused() || !inView(card)) return;   /* final as rendered (outside the viewport: PERF-3 rule 9) */
     var body = card.querySelector(':scope > .pmu-cardbody'), f = fam(), stepped = f === 'retro' || f === 'nier';
     if (body) {
       if (f === 'nier' && !o.quiet && !soft()) {
-        anim(body, [{ clipPath: 'inset(0 0 100% 0)' }, { clipPath: 'inset(0 0 0% 0)' }], { dur: 300, delay: d, easing: 'steps(5,jump-start)' });
+        anim(body, [{ clipPath: 'inset(0 0 100% 0)' }, { clipPath: 'inset(0 0 0% 0)' }], { dur: 300, delay: bd, easing: 'steps(5,jump-start)' });
         var scan = H('i', 'pmu-film-scan', card);
         gone(anim(scan, [{ transform: 'translateY(0%)', opacity: 1 }, { transform: 'translateY(100%)', opacity: 1, offset: 0.98 }, { transform: 'translateY(100%)', opacity: 0 }],
-          { dur: 300, delay: d, easing: 'steps(5,jump-start)', fill: 'both' }), scan);
+          { dur: 300, delay: bd, easing: 'steps(5,jump-start)', fill: 'both' }), scan);
       } else if (o.quiet && !soft() && !stepped) {
         /* a supporting body in its voice (MOTION-4 4.2): Basic 6 px, Friendly 10 px (settles, no overshoot), Glass from .985 */
         var bv = camVoice(f).body || CAMV.basic.body;
-        anim(body, combo(bv.ms, { ms: bv.fade, ease: E.out }, { ms: bv.ms, ease: bv.ease }, bv.sc ? { sc: bv.sc } : { y: bv.y }, 8), { dur: bv.ms, delay: d, easing: 'linear' });
+        anim(body, combo(bv.ms, { ms: bv.fade, ease: E.out }, { ms: bv.ms, ease: bv.ease }, bv.sc ? { sc: bv.sc } : { y: bv.y }, 8), { dur: bv.ms, delay: bd, easing: 'linear' });
       } else {
-        anim(body, [{ opacity: 0 }, { opacity: 1 }], { dur: stepped ? 120 : o.quiet ? T3.quietFade : 160, delay: d, easing: stepped ? 'steps(' + (o.quiet ? 2 : 3) + ',jump-start)' : E.out });
+        anim(body, [{ opacity: 0 }, { opacity: 1 }], { dur: stepped ? 120 : o.quiet ? T3.quietFade : 160, delay: bd, easing: stepped ? 'steps(' + (o.quiet ? 2 : 3) + ',jump-start)' : E.out });
       }
     }
     if (entry && innerOn(card)) {
@@ -996,6 +1067,8 @@
     if (!card || !card.isConnected) return;
     if (!m) { reveal(card, { quiet: true, delay: 0 }); return; }
     var hero = card.hasAttribute('data-hero');
+    /* a room change still holding for its first painted frame: revealed at the hand-off */
+    if (m.holding && m.heldBodies) { if (m.heldBodies.indexOf(card) < 0) m.heldBodies.push(card); return; }
     if (!m.released) { if (hero && hold) hold.hero = true; return; }
     var slot = hero ? m.heroAt
       : !flag('heroRoll') ? m.heroAt + Math.min(T3.quietCap, T3.quietStep * (m.rank++)) : m.quietAt + Math.min(T3.quietCap, T3.quietStep * (m.rank++));
@@ -1046,16 +1119,37 @@
     }
     /* this ghost's life: a reversal (reverse) or a newer ghost of the same element makes this one's end a no-op */
     var gen = g._pmuGen = (g._pmuGen || 0) + 1;
-    var f = fam(), dir = o.dir || 1, base = o.sTop ? 'translateY(' + (-o.sTop) + 'px)' : '', a, gAnims = [];
+    var f = fam(), dir = o.dir || 1, base = o.sTop ? 'translateY(' + (-o.sTop) + 'px)' : '', a, gAnims = [], deferred = null;
     if (soft()) a = anim(g, [{ opacity: 1, transform: base || 'none' }, { opacity: 0, transform: base || 'none' }], { dur: T3.ghostFade, easing: E.exit, fill: 'forwards' });
     else if (f === 'retro' || f === 'nier') {
       var n = f === 'nier' ? 8 : 8, ms = f === 'nier' ? 200 : 180;
-      a = anim(g, [{ clipPath: 'inset(0 0 0 0)', transform: base || 'none' }, { clipPath: 'inset(100% 0 0 0)', transform: base || 'none' }], { dur: ms, easing: 'steps(' + n + ',jump-end)', fill: 'forwards' });
-      var line = H('i', f === 'nier' ? 'pmu-film-scan pmu-ghostscan' : 'pmu-film-scanbar pmu-ghostscan', g);
-      var lineA = anim(line, [{ transform: 'translateY(0%)', opacity: 1 }, { transform: 'translateY(100%)', opacity: 1, offset: 0.97 }, { transform: 'translateY(100%)', opacity: 0 }], { dur: ms, easing: 'steps(' + n + ',jump-end)', fill: 'both' });
-      gone(lineA, line);
-      /* what a click back to this room steps back (reverse; motion QA A13, Jared 2026-10-16) */
-      g._pmuRev = { erase: a, lineA: lineA, ms: ms, n: n };
+      var erase = function () {
+        var e = anim(g, [{ clipPath: 'inset(0 0 0 0)', transform: base || 'none' }, { clipPath: 'inset(100% 0 0 0)', transform: base || 'none' }], { dur: ms, easing: 'steps(' + n + ',jump-end)', fill: 'forwards' });
+        var line = H('i', f === 'nier' ? 'pmu-film-scan pmu-ghostscan' : 'pmu-film-scanbar pmu-ghostscan', g);
+        var lineA = anim(line, [{ transform: 'translateY(0%)', opacity: 1 }, { transform: 'translateY(100%)', opacity: 1, offset: 0.97 }, { transform: 'translateY(100%)', opacity: 0 }], { dur: ms, easing: 'steps(' + n + ',jump-end)', fill: 'both' });
+        gone(lineA, line);
+        return { erase: e, lineA: lineA };
+      };
+      var ms0 = moment;
+      if (ms0 && ms0.kind === 'room' && !HOLD_OFF) {
+        /* never an empty board (P2-03 item 2): the erase starts at the room change's hand-off (frames), not on the click's
+           clock; the old room stands whole until then. What a click back to this room steps back stays in _pmuRev (an
+           erase not started reverses from 0). The new chrome never came (an empty room): it starts on its own at 600 ms. */
+        var R = g._pmuRev = { erase: null, lineA: null, ms: ms, n: n };
+        deferred = function () {
+          if (R.erase || g._pmuRev !== R || g._pmuRevived || g._pmuGen !== gen || !g.isConnected) return;
+          /* an erase that fails still ends the ghost (only its finished promise would) */
+          var x; try { x = erase(); } catch (error) { console.error('[pm-usage] step erase', error); done(); return; }
+          R.erase = x.erase; R.lineA = x.lineA;
+          if (x.erase) { gAnims.push(x.erase); x.erase.finished.then(function () { later(done); }, done); } else done();
+        };
+        ms0.stepErase = deferred;
+        mtimer(ms0, 600, function () { if (!ms0.holding) deferred(); });
+      } else {
+        var x0 = erase(); a = x0.erase;
+        /* what a click back to this room steps back (reverse; motion QA A13, Jared 2026-10-16) */
+        g._pmuRev = { erase: a, lineA: x0.lineA, ms: ms, n: n };
+      }
     } else {
       /* MOTION-4 RC1 / RC2 and 4.2: the camera's first half. The old room moves from the click (this task) on its voice's
          path, at full opacity: Basic pans P up the rail (-P x dir, scale .985, 360 SLIDE); Friendly steps back and tilts
@@ -1076,10 +1170,10 @@
       if (mm && a) {
         mm.ghost = { el: g, fade: null, fadeMs: CV.fade, done: null, move: a, anims: gAnims, sTop: o.sTop || 0, blur: gv.blur && !soft() && irisOn(f) ? gv.blur : 0 };
         /* the new chrome never came (an empty room): the old room fades on its own */
-        mtimer(mm, 600, function () { fadeGhost(mm); });
+        mtimer(mm, 600, function () { if (!mm.holding) fadeGhost(mm); });
       } else if (a) gAnims.push(anim(g, [{ opacity: 1 }, { opacity: 0 }], { dur: CV.fade, delay: 100, easing: E.exit, fill: 'forwards' }));
     }
-    gAnims.push(a);
+    if (a) gAnims.push(a);
     var done = function () {
       if (done.ran || g._pmuGen !== gen || g._pmuRevived) return; done.ran = true;
       g._pmuRev = null;
@@ -1092,6 +1186,7 @@
     };
     var mg = moment && moment.ghost && moment.ghost.el === g ? moment.ghost : null;
     if (mg) mg.done = done;
+    else if (deferred) { /* its erase hooks done when it starts */ }
     else if (a) a.finished.then(function () { later(done); }, done); else done();
     return g;
   }
@@ -1780,14 +1875,19 @@
      (P1000: 250-400 ms of empty board, drawn at 0.8-1.3 s; M3: a 15-30 ms frame per slice for ~150 ms). Now the next
      arrival's board is built before it: in an idle period while another page shows, the Usage page is laid out unseen in
      the box it shows in (#panel-usage[data-pmu-warm], 05-film.css) and the board is mounted held in idle slices
-     (40-board.js mount opts.warm), every body's entrance queued on its card; then the page goes back to display: none
-     and the board waits in its scroll pane (data-pmu-warm-wait). The arrival plays the same entrance on it: the click's
-     frame changes the page and powers the shell on; the next frame shows the board (restyling it is that frame's only
-     work) and its plates rise in the structure wave; the bodies come alive on the room change's clock (the hero at
-     T3.heroAt, the supporting bodies quietly after it). A warm board is used only while nothing it shows has changed
-     (warmKey: the look, Reduce Motion, the room, its view and layout, the data epoch, Settings); a stale one is dropped
-     and the arrival builds as before. Without a GPU nothing is warmed: that profile is set when Usage first shows. ---- */
-  var warm = null, warmT = 0, warmRev = 0, warmLast = null;
+     (40-board.js mount opts.warm), every body's entrance queued on its card; then it is drawn once unseen (the raster,
+     below), and the page goes back to display: none, the board waiting in its scroll pane (data-pmu-warm-wait). The page
+     is laid out in its warm box (inert and aria-hidden) only while the build or a raster step runs (P2-03 final,
+     2026-10-17: kept laid out and styled until the arrival, the waiting board made Home's look changes and resizes cost
+     40-54 % more on Nas1, moved the show's cost into the click's frame instead of saving it, since other lanes' '.active'
+     rules restyle the whole styled board when the shell marks the page active, and its pinned box clipped the board
+     under the side panel). The arrival shows it whole (arriveHold, below): the board comes out of its wait in the task
+     that changes the page, so the page's first frame lays it out with the rest of the page, and it is drawn unseen while
+     the shell holds the page's own entrance; the entrance starts in the frame the page's does, plates and bodies
+     together. A warm board is used only while nothing it shows has changed (warmKey: the look, Reduce Motion, the room,
+     its view and layout, the data epoch, Settings); a stale one is dropped and the arrival builds the board whole in its
+     own task. Without a GPU nothing is warmed: that profile is set when Usage first shows. ---- */
+  var warm = null, warmT = 0, warmRev = 0, warmLast = null, warmA11y = null;
   /* ?pmu-warm=0 leaves it out (A/B measurements) */
   var WARM_OFF = /[?&]pmu-warm=0(?:&|#|$)/.test(location.search);
   function pageShown() { var p = document.getElementById('panel-usage'); return !!p && p.classList.contains('active'); }
@@ -1798,6 +1898,20 @@
       B && B.cls ? B.cls().name : '', B ? JSON.stringify(B.layout(room)) + JSON.stringify(B.visible(room)) : ''].join('|');
   }
   function warming() { return !!warm; }
+  /* the page laid out in its warm box, out of the focus order and the accessibility tree (inert also covers a descendant
+     that would show itself by its own visibility, as a raster step's marks do); as it was again once the page is back to
+     display: none, at the arrival, a drop and an unmount */
+  function warmHide(panel) {
+    if (!panel || warmA11y) return;
+    warmA11y = { inert: panel.inert, aria: panel.getAttribute('aria-hidden') };
+    panel.inert = true; panel.setAttribute('aria-hidden', 'true');
+  }
+  function warmUnhide() {
+    var panel = document.getElementById('panel-usage'), a = warmA11y; if (!panel || !a) return;
+    warmA11y = null;
+    panel.inert = !!a.inert;
+    if (a.aria == null) panel.removeAttribute('aria-hidden'); else panel.setAttribute('aria-hidden', a.aria);
+  }
   /* the box the page shows in: .primary-content's content box on every page but Home. Home turns that padding off with a
      rule of its own (:has its page), so on Home the padding is read from a stand-in of the same class, matched by every
      other rule (the density, Glass and short-window paddings) */
@@ -1832,12 +1946,11 @@
     var sp = document.getElementById('panel-settings');
     if (sp && sp.classList.contains('active')) return;
     if (document.hidden || root.hasAttribute('data-o55-open') || root.hasAttribute('data-o55-tour') || root.hasAttribute('data-pm-page-transition')) { warmSoon(1200); return; }
-    if (typeof softwareRendered === 'function' && softwareRendered()) return;
+    /* no GPU, or the no-GPU profile forced (?pmu-soft=1): nothing is warmed */
+    if (typeof softwareRendered === 'function' && softwareRendered()) { rasterLog.skipped = /[?&]pmu-soft=1\b/.test(location.search) ? 'soft' : 'software'; return; }
     var box = warmBox(panel); if (!box) { warmSoon(2000); return; }
     var w = warm = { room: st.room, key: null, built: false, box: box, shares: {}, at: performance.now() };
-    panel.style.setProperty('--pmu-warm-x', box.x + 'px'); panel.style.setProperty('--pmu-warm-y', box.y + 'px');
-    panel.style.setProperty('--pmu-warm-w', box.w + 'px'); panel.style.setProperty('--pmu-warm-h', box.h + 'px');
-    panel.setAttribute('data-pmu-warm', '');
+    warmIn(panel, box);
     PMU.board.mount(st.room, { warm: true, onBuilt: function () { warmBuilt(w); } });
     if (warm !== w) return;
     if (!w.mounted) { warmDrop('unmounted'); warmSoon(3000); return; }
@@ -1848,21 +1961,839 @@
     if (warm !== w) return;
     if (w.key !== warmKey()) { warmDrop('stale'); warmSoon(1200); return; }
     w.built = true; w.ms = Math.round(performance.now() - w.at);
+    rasterSoon(w);
+  }
+  /* the page laid out unseen in its warm box (05-film.css #panel-usage[data-pmu-warm]), the board out of its wait */
+  function warmIn(panel, box) {
+    panel.style.setProperty('--pmu-warm-x', box.x + 'px'); panel.style.setProperty('--pmu-warm-y', box.y + 'px');
+    panel.style.setProperty('--pmu-warm-w', box.w + 'px'); panel.style.setProperty('--pmu-warm-h', box.h + 'px');
+    panel.setAttribute('data-pmu-warm', '');
+    var board = document.getElementById('pmuBoard');
+    if (board && board.parentNode) board.parentNode.removeAttribute('data-pmu-warm-wait');
+    warmHide(panel);
+  }
+  /* the built board waits in its scroll pane for the arrival, display: none (after its raster, at a park, or at once
+     without one): the page leaves its warm box and is as it was for the focus order and assistive tech */
+  function warmPark(w) {
+    if (warm !== w) return;
+    w.parked = true;
     var board = document.getElementById('pmuBoard'), panel = document.getElementById('panel-usage');
     if (board && board.parentNode) board.parentNode.setAttribute('data-pmu-warm-wait', '');
     if (panel) panel.removeAttribute('data-pmu-warm');
+    warmUnhide();
+  }
+
+  /* ---- the warm board's raster (P2-03; 05-film.css data-pmu-raster). The warm build laid the board out but never
+     painted it, so the first visible entry paid for every GPU program its cards and charts draw with (P1000 F3 cold: 47
+     program links, ~1.4 s of GPU main thread, an 834 ms gap). After the warm build, in idle time, the REAL board is drawn
+     in place at opacity .004 on a will-change: opacity layer above the page that shows, one slice at a time, so the GPU
+     links its programs before an arrival needs them. The arrival does not depend on it (arriveHold draws the board
+     unseen itself, under the shell's hold); the pass only makes that hold shorter.
+     Every slice is one step of the page-wide idle-warm queue (window.PM_WARM, IDLE-WARM-RULE.md v3.4; P2-03 final,
+     2026-10-17): the queue admits it when the page is still and judges it by the frames after it (late, back-off, drop,
+     stop). Without PM_WARM (or with it off: ?pm-warm=0, the no-GPU profile) nothing is drawn ahead. Usage's work comes
+     as two kinds of step. A draw (a GPU step) marks what its slice adds and turns the paint token on; the cleanup it
+     returns, which the queue runs in the next frame, turns the token off, so nothing of Usage is drawn between two steps
+     (a card's prefix marks stay, unseen, until the card is done). Work that draws nothing comes as cpu steps that stop
+     at the idle period's deadline, or after RASTER_CPU ms (the rule assumes no 45 ms slot): a root's plan, read element
+     by element and resumed in the next step; another room's first screen built in the spare board (40-board.js
+     rasterRoom, one slice a step); the page laid out in its warm box again after a park. Only one Usage step is queued at
+     a time; each step queues the next as it runs, so a light chain can continue. Every step is 'later' at level 2
+     (IDLE-WARM-RULE v3.8): the queue runs it only when no step of a lower level is queued, so terminal's and Glass's
+     warm-ups keep their pace and the pass takes what is left (P1000: each GPU step costs about 0.4 s of the queue).
+     The slices (fix cycle 2: each may link at most a program or two, about 30 ms a link on the P1000; P1000 part2,
+     1994fee11d: a step with 12-15 links made a 234 ms gap, so one new kind a step): the layer alone with one small box
+     (its own compositor programs); then the page chrome and each card of the room, the hero first, as a growing prefix
+     of its paint order (rasterPlan): a layer that will hold six paths or more (Chrome rasters such a layer
+     multisampled) first draws six of them alone, so everything after them draws, and links, in its multisampled form;
+     then each step adds the next painting elements, one of a kind no step drew yet alone (a heavy one in parts first:
+     rasterParts), else up to rasterGrow of them (doubled after a step the queue did not report late, back to one after
+     one it did), an image once it is decoded; then the part whole, which adds nothing new. Then the first screen of each
+     other room the rail leads with (Overview, Costs, Accounts, less the arrival's room) is built in the spare board and
+     drawn the same way, its cards alone, then torn down. Once per look, board class and room per page load; a room the
+     page has shown is done. Nothing of the held state changes: no animation, the cues, data-held and data-body-wait
+     stay, so the arrival plays as before.
+     A late step (Usage's onLate) is split in two when it drew more than one element, else moved to the end of its room;
+     late a second time it is dropped and recorded. The queue's session stop ends the pass.
+     Usage's own holds, before every step: the tab shown, no page change, not on Settings, under the tour or onboarding,
+     and the warm board still current (warmKey: a look or Settings change drops it and the next warm build starts the
+     pass again). A hidden tab, Settings, the tour or onboarding park the pass at once (rasterPark: a spare room is torn
+     down and the page goes back to display: none as after a pass), and so do a window resize and a step that has waited
+     RASTER_WAIT ms while the queue is stopped, other owners' steps are ahead of it, the page is busy or the queue is in
+     a long back-off, so the page is not kept laid out unseen while Home is used. A parked pass resumes at the slice it was on: the page is laid out again in a cpu step of
+     its own (rasterUnpark, the box read again). The arrival (warmTake) or a drop stops it at once. ?pmu-raster=0 leaves
+     it out, ?pmu-raster=1 skips Usage's own no-GPU checks (PM_WARM's ?pm-warm=force runs the queue on a CPU-only VM),
+     ?pmu-raster-marks=1 adds a performance mark per draw. PMU.film.warmState().raster says what ran. ---- */
+  var RASTER = (function () { var m = /[?&]pmu-raster=([01])(?:&|#|$)/.exec(location.search); return m ? m[1] : null; })();
+  var RASTER_MARKS = /[?&]pmu-raster-marks=1(?:&|#|$)/.test(location.search);
+  /* RASTER_CPU: the most ms of a cpu step's work when its idle period gives no deadline; RASTER_WAIT: a queued step not
+     run in this long parks the pass; RASTER_MSAA: the paths that make a layer raster multisampled */
+  var RASTER_ROOMS = ['overview', 'costs', 'accounts'], RASTER_CPU = 6, RASTER_WAIT = 3000, RASTER_MSAA = 6, RASTER_QUIET = 600, RASTER_FIRST = 50;
+  /* RASTER_PREFIX: the most painting elements a part's draw adds (?pmu-raster-prefix=N for measurements): 4, since a
+     prefix of 8 elements of kinds already drawn still linked 3-7 programs at once in new batches (RTX 3090), more than a
+     P1000 draws in 100 ms */
+  var RASTER_PREFIX = (function () { var m = /[?&]pmu-raster-prefix=(\d{1,3})(?:&|#|$)/.exec(location.search); return m ? Math.max(1, +m[1]) : 4; })();
+  var rast = null, rasterDone = {}, rasterSeen = {}, rasterLog = { rooms: [], at: null, ms: null, skipped: WARM_OFF ? 'warm-off' : null };
+  function rasterKey(room, cls) {
+    var look = (root.getAttribute('data-theme') || '') + (root.getAttribute('data-o55-nier') === 'on' ? '+nier' : '');
+    return look + '|' + (cls || (PMU.board && PMU.board.cls && PMU.board.cls() ? PMU.board.cls().name : '')) + '|' + room;
+  }
+  /* the shared queue, or why there is none to use */
+  function rasterQueue() {
+    var q = window.PM_WARM;
+    if (!q || typeof q.add !== 'function') return 'no-pm-warm';
+    try { var qs = typeof q.state === 'function' ? q.state('usage') || {} : {}; if (qs.off) return 'pm-warm-off'; if (qs.session) return 'pm-warm-stopped'; } catch (error) { return 'no-pm-warm'; }
+    return q;
+  }
+  /* true, or why not */
+  function rasterGpu() {
+    if (RASTER === '0') return 'off';
+    var q = rasterQueue(); if (typeof q === 'string') return q;
+    if (RASTER === '1') return true;
+    if (soft() || root.hasAttribute('data-pmh-soft') || /[?&]pmu-soft=1\b/.test(location.search)) return 'soft';
+    var tier = root.getAttribute('data-lg-tier');
+    if (tier !== 'gpu') return tier === 'cpu' ? 'cpu' : 'no-tier';
+    if (typeof softwareRendered === 'function' && softwareRendered()) return 'software';
+    return true;
+  }
+  function rasterSoon(w) {
+    var g = rasterGpu();
+    if (g !== true) { rasterLog.skipped = g; warmPark(w); return; }
+    var rooms = [w.room].concat(RASTER_ROOMS.filter(function (r) { return r !== w.room; })).filter(function (r) { return !rasterDone[rasterKey(r)]; });
+    if (!rooms.length) { rasterLog.skipped = 'done'; warmPark(w); return; }
+    var r = rast = { w: w, q: window.PM_WARM, rooms: rooms, t0: performance.now(), cur: null, spare: false, building: null, parked: false,
+      queued: 0, queuedAt: 0, waitT: 0, holdT: 0, holdFn: null, visFn: null, resizeAt: 0, prev: null, redo: [], resumes: 0, firstDraws: 0 };
+    rasterLog = { rooms: [], at: Math.round(r.t0), ms: null, skipped: null, gate: null, parks: 0, steps: [], ran: 0, late: 0, split: 0, moved: 0,
+      dropped: [], cpu: { plan: 0, build: 0, unpark: 0 } };
+    r.onResize = function () { r.resizeAt = performance.now(); if (!r.parked) { rasterUnqueue(r); rasterPark(r); rasterNext(r); } };
+    window.addEventListener('resize', r.onResize, { passive: true });
+    rasterNext(r);
+  }
+  /* what holds the pass now that the queue does not see ('' when nothing) */
+  function rasterHeld(r) {
+    if (document.hidden) return 'hidden';
+    var sp = document.getElementById('panel-settings');
+    if (sp && sp.classList.contains('active')) return 'settings';
+    if (root.hasAttribute('data-o55-tour')) return 'tour';
+    if (root.hasAttribute('data-o55-open')) return 'onboarding';
+    if (root.hasAttribute('data-pm-page-transition')) return 'page';
+    return '';
+  }
+  /* the warm board no longer shows what the arrival would (a look, Settings, the room's layout): dropped, and the next
+     warm build starts the pass again (the look listeners would do the same; this does not depend on them) */
+  function rasterStale(r) {
+    if (!r.w.key || r.w.key === warmKey()) return false;
+    warmDrop('stale'); warmSoon(1200);
+    return true;
+  }
+  function rasterUnlisten(r) {
+    clearTimeout(r.holdT); r.holdT = 0;
+    if (r.holdFn) { window.removeEventListener('pm-idle', r.holdFn); r.holdFn = null; }
+    if (r.visFn) { document.removeEventListener('visibilitychange', r.visFn); r.visFn = null; }
+  }
+  /* the queued step taken back (a park, the end) */
+  function rasterUnqueue(r) {
+    clearTimeout(r.waitT); r.waitT = 0;
+    if (r.queued) { try { r.q.cancel(r.queued); } catch (error) {} r.queued = 0; }
+  }
+  /* the next step, queued (one at a time): what the cursor needs next decides its kind */
+  function rasterNext(r) {
+    if (rast !== r || r.queued) return;
+    rasterUnlisten(r);
+    if (warm !== r.w || pageShown() || moment || hold) { rasterStop('page'); return; }
+    if (rasterStale(r)) return;
+    var why = rasterHeld(r);
+    rasterLog.gate = why || null;
+    if (why) {
+      /* a page change only waits; the rest park the page at once and come back when they end */
+      if (why !== 'page' && !r.parked) rasterPark(r);
+      var go = function () { if (rast === r && !r.queued) rasterNext(r); };
+      if (why === 'hidden') { r.visFn = go; document.addEventListener('visibilitychange', go); return; }
+      r.holdFn = go; window.addEventListener('pm-idle', go);
+      r.holdT = setTimeout(go, why === 'page' ? 250 : 1000);
+      return;
+    }
+    var need = rasterNeed(r);
+    if (need === 'end' || need === 'wait') return;
+    /* a window still being resized: laid out again once it has settled */
+    var settle = need === 'unpark' ? RASTER_QUIET - (performance.now() - r.resizeAt) : 0;
+    if (settle > 0) { r.holdT = setTimeout(function () { if (rast === r && !r.queued) rasterNext(r); }, settle + 20); return; }
+    if (need === 'decode') { r.holdT = setTimeout(function () { if (rast === r && !r.queued) rasterNext(r); }, 50); return; }
+    rasterAdd(r, need);
+  }
+  /* what comes next: 'unpark', 'build' (the spare room's next slice), 'plan' (the root's plan, resumed), 'draw', 'decode'
+     (an image of the next slice still decoding), 'wait' (a spare slice is queued by the board) or 'end' */
+  function rasterNeed(r) {
+    if (r.parked) return 'unpark';
+    for (var guard = 0; guard < 400; guard++) {
+      var room = r.rooms[0];
+      if (!room) { rasterEnd(null); return 'end'; }
+      if (!r.cur || r.cur.room !== room) r.cur = { room: room, key: rasterKey(room), t0: performance.now(), roots: null, ri: 0, plan: null, planning: null, pi: 0, steps: 0, build: 0, planMs: 0 };
+      var cur = r.cur, kind = room === r.w.room ? 'board' : 'spare';
+      if (kind === 'spare' && !r.spare) return r.building && r.building.slice ? 'build' : r.building ? 'wait' : 'build';
+      if (!cur.roots) { cur.roots = rasterRoots(kind); cur.ri = 0; cur.plan = null; cur.planning = null; }
+      var rt = cur.roots[cur.ri];
+      if (!rt) {
+        r.redo = r.redo.filter(function (x) { return x.room === room && (x.els ? x.els.some(rasterLive) : rasterLive(x.whole) || !x.whole); });
+        if (r.redo.length) return 'draw';
+        rasterRoomDone(r, cur, cur.roots.filter(function (x) { return x.t === 'card'; }).length, kind);
+        continue;
+      }
+      if (rt.t === 'card' && !rasterLive(rt.el)) { rasterAdvance(cur); continue; }
+      if (!cur.plan) return 'plan';
+      var s = cur.plan[cur.pi];
+      if (!s) { rasterAdvance(cur); continue; }
+      /* a body rendered again since the plan (a tier pass): planned again, its new elements */
+      if (s.self && !s.self.some(rasterLive)) { cur.plan = null; cur.planning = null; continue; }
+      /* an image not decoded yet waits for it (up to a second): decoded in the step's own raster, the 109 KB provider
+         mark held a frame 92 ms on the RTX 3090 with nothing linked */
+      if (rasterDecoding(s)) return 'decode';
+      return 'draw';
+    }
+    return 'wait';
+  }
+  function rasterLive(x) { return !!x && x.isConnected; }
+  function rasterDecoding(s) { return !!s.self && s.self.some(function (x) { return x._pmuDecoding && !x._pmuDecoded && performance.now() - x._pmuDecoding < 1000; }); }
+  /* one step handed to the queue: a draw (GPU) or a cpu step of the given kind */
+  function rasterAdd(r, need) {
+    var cpu = need !== 'draw', pk = cpu ? null : rasterPeek(r), step = null;
+    /* later: 2 (IDLE-WARM-RULE v3.8, 'later' as a level: Glass's lg-warm is 1): every step of the pass runs only when no
+       step of a lower level is queued; the arrival does not depend on it (a queue without 'later' ignores the flag) */
+    /* the arrival room's first screen (its layer, its hero, then its other cards in the window, rasterRoots) goes first and
+       at level 0 (the lead's ruling, 2026-10-17: at most RASTER_FIRST draws, their cpu plan steps along), so a click
+       from about +20 s on the P1000 finds the first screen's programs linked and the arrival's slices raster only; the
+       rest of the pass stays 'later' at level 2 */
+    var first = !!r.cur && r.cur.room === r.w.room && r.firstDraws < RASTER_FIRST && !!(r.cur.roots && r.cur.roots[r.cur.ri] && r.cur.roots[r.cur.ri].first);
+    var o = { owner: 'usage', name: (r.cur ? r.cur.room : '') + ':' + (cpu ? need : pk.name), near: false, later: first ? 0 : 2, cpu: cpu, light: !cpu && pk.light,
+      until: function () { return rast === r && warm === r.w && !pageShown(); },
+      run: function (d) {
+        if (r.queued === o.id) { r.queued = 0; clearTimeout(r.waitT); r.waitT = 0; }
+        if (rast !== r || warm !== r.w || pageShown() || moment || hold) return null;
+        if (rasterHeld(r)) { rasterNext(r); return null; }
+        if (cpu) { rasterCpu(r, need, d); rasterNext(r); return null; }
+        if (r.parked) { rasterNext(r); return null; }
+        /* a part's next prefix doubles after a draw no onLate came for */
+        if (r.prev && r.prev.els && !r.prev.late) rasterPace(false);
+        if (!step) step = rasterTake(r);
+        if (!step) { rasterNext(r); return null; }
+        r.prev = step;
+        if (first) r.firstDraws++;
+        rasterLog.ran++;
+        if (rasterLog.steps.length < 800) { step.row = rasterLog.steps.length; rasterLog.steps.push([step.label, Math.round(performance.now()), 0]); }
+        var undo = rasterRun(r, step);
+        rasterNext(r);
+        return undo;
+      },
+      onLate: function (info) {
+        if (rast !== r) return true;
+        /* dropped by the queue (its session stop, or warming known to be off): the pass ends, first use pays as without it */
+        if (info && info.dropped) { rasterLog.dropped.push(o.name); rasterEnd('stopped:pm-warm'); return true; }
+        if (!step) return true;
+        step.late = true;
+        var row = rasterLog.steps[step.row]; if (row && row[0] === step.label) row[2] = 1;
+        rasterLate(r, step);
+        if (!r.queued && rast === r) rasterNext(r);
+        return true;
+      } };
+    var id = 0;
+    try { id = r.q.add(o); } catch (error) { id = 0; }
+    if (!id) { rasterEnd('stopped:pm-warm-add'); return; }
+    o.id = id;
+    r.queued = id; r.queuedAt = performance.now();
+    clearTimeout(r.waitT);
+    r.waitT = setTimeout(function () { rasterWaited(r, id); }, RASTER_WAIT);
+  }
+  /* a queued step that has waited RASTER_WAIT ms: when the queue is stopped, other owners' steps are ahead of it, the
+     page busy (a page change, a cover) or the queue in a long back-off, the page is parked meanwhile and the step queued again behind an unpark (a wait for the
+     queue's quiet clock or for frames on time only goes on: each resume lays the page out again); a queue stopped for
+     the session ends the pass */
+  function rasterWaited(r, id) {
+    r.waitT = 0;
+    if (rast !== r || r.queued !== id) return;
+    var qs = {}; try { qs = r.q.state('usage') || {}; } catch (error) {}
+    if (qs.session || qs.off) { rasterEnd(qs.off ? 'pm-warm-off' : 'stopped:pm-warm'); return; }
+    /* behind other owners' steps (a 'later' step waits for them all: on the P1000 Glass's warm-up alone is about two
+       minutes) the page is not kept laid out meanwhile either; it is laid out again in its own cpu step at its turn */
+    var all = {}; try { all = r.q.state() || {}; } catch (error) {}
+    var behind = (all.queued || 0) > (qs.queued || 0);
+    var long = qs.stopped || behind || qs.waiting === 'busy' || qs.waiting === 'backoff' && qs.backoffMs >= 4000;
+    if (r.parked || !long) { r.waitT = setTimeout(function () { rasterWaited(r, id); }, RASTER_WAIT); return; }
+    rasterLog.waits = (rasterLog.waits || 0) + 1;
+    rasterUnqueue(r);
+    rasterPark(r);
+    rasterNext(r);
+  }
+  /* a cpu step's work, up to the idle period's deadline or RASTER_CPU ms */
+  function rasterCpu(r, need, d) {
+    var left = d && typeof d.timeRemaining === 'function' ? d.timeRemaining() - 1 : RASTER_CPU;
+    var end = performance.now() + Math.max(2, Math.min(RASTER_CPU, left)), until = function () { return performance.now() < end; };
+    rasterLog.cpu[need] = (rasterLog.cpu[need] || 0) + 1;
+    if (need === 'unpark') { if (r.parked) rasterUnpark(r); return; }
+    if (need === 'build') { rasterBuild(r, d); return; }
+    if (need === 'plan') {
+      var cur = r.cur, rt = cur && cur.roots ? cur.roots[cur.ri] : null, panel = document.getElementById('panel-usage');
+      if (!rt || !panel || cur.plan) return;
+      var t1 = performance.now();
+      if (!cur.planning) cur.planning = rasterPlanFor(panel, rt);
+      if (rasterPlanRun(cur.planning, until)) { cur.plan = cur.planning.steps; cur.planning = null; cur.pi = 0; }
+      cur.planMs += performance.now() - t1;
+    }
+  }
+  /* the spare room: built by the board one slice a cpu step (40-board.js rasterRoom's step hook), then drawn */
+  function rasterBuild(r, d) {
+    var cur = r.cur;
+    if (r.building && r.building.slice) { var fn = r.building.slice; r.building.slice = null; fn(d); return; }
+    if (r.building) return;
+    var panel = rasterTok(r, 'spare');
+    var b = r.building = { room: cur.room, slice: null };
+    var job = panel && PMU.board.rasterRoom ? PMU.board.rasterRoom(cur.room, function (res) {
+      if (r.building !== b) return;
+      r.building = null;
+      if (rast !== r || r.cur !== cur) return;
+      if (!res) { rasterSkip(r, cur.room, 'failed'); return; }
+      r.spare = true; cur.build += res.ms || 0;
+      if (cur.roots) { var at = cur.roots[cur.ri] && cur.roots[cur.ri].t === 'card' ? cur.ri : 0; cur.roots = rasterRoots('spare'); cur.ri = Math.min(at, cur.roots.length); cur.plan = null; cur.planning = null; }
+      if (!r.queued) rasterNext(r);
+    }, function (slice) {
+      /* the board's next slice: run by the next cpu step */
+      if (r.building !== b || rast !== r) return;
+      b.slice = slice;
+      if (!r.queued) rasterNext(r);
+    }) : null;
+    if (!job) { r.building = null; rasterSkip(r, cur.room, 'board-busy'); }
+  }
+  function rasterTok(r, tok) {
+    var panel = document.getElementById('panel-usage'); if (!panel) return null;
+    if (tok) panel.setAttribute('data-pmu-raster', tok); else panel.removeAttribute('data-pmu-raster');
+    return panel;
+  }
+  var RASTER_ATTRS = ['data-pmu-raster-on', 'data-pmu-raster-self', 'data-pmu-raster-pieces', 'data-pmu-raster-part'];
+  /* the marks off the scope and everything in it (the panel itself is the chrome plan's first element) */
+  function rasterUnmark(scope) {
+    if (!scope) return;
+    var all = Array.prototype.slice.call(scope.querySelectorAll('[data-pmu-raster-on], [data-pmu-raster-self], [data-pmu-raster-pieces], [data-pmu-raster-part]'));
+    all.push(scope);
+    all.forEach(function (c) { RASTER_ATTRS.forEach(function (a) { c.removeAttribute(a); }); });
+  }
+  /* nothing drawn: the paint token off (the spare stays laid out while it holds a built room) and no mark */
+  function rasterQuiet(r) {
+    var panel = document.getElementById('panel-usage'); if (!panel) return;
+    var tok = panel.getAttribute('data-pmu-raster') || '';
+    if (/\bpaint\b/.test(tok)) rasterTok(r, r.spare ? 'spare' : null);
+    rasterUnmark(panel);
+  }
+  /* the page parks as it would after a pass (display: none, the panel as it was); a spare room built and not drawn is
+     torn down and built again at the resume */
+  function rasterPark(r) {
+    if (r.parked) return;
+    rasterQuiet(r);
+    if (PMU.board && PMU.board.rasterClear) PMU.board.rasterClear();
+    r.spare = false; r.building = null;
+    rasterTok(r, null);
+    warmPark(r.w);
+    r.parked = true;
+    rasterLog.parks = (rasterLog.parks || 0) + 1;
+  }
+  /* laid out unseen in the warm box once more (read again: the window may have changed); what that costs is logged
+     (rasterLog.resumeMs) */
+  function rasterUnpark(r) {
+    var panel = document.getElementById('panel-usage');
+    r.parked = false; r.resumes++; r.w.parked = false;
+    if (!panel) return;
+    var t0 = performance.now(), box = warmBox(panel);
+    if (box) r.w.box = box;
+    warmIn(panel, r.w.box);
+    void panel.offsetHeight;
+    (rasterLog.resumeMs = rasterLog.resumeMs || []).push(Math.round(performance.now() - t0));
+  }
+  /* an element in a draw's label (warmState().raster.steps, ?pmu-raster-marks=1) */
+  function rasterName(el) {
+    if (!el) return '';
+    var cl = el.className && el.className.baseVal != null ? el.className.baseVal : el.className;
+    return el.localName + (cl ? '.' + String(cl).trim().split(/\s+/)[0] : '');
+  }
+  /* how many elements a part's next draw may add (RASTER_PREFIX at most): doubled after a draw the queue did not report
+     late, back to one after one it did (a GPU program link: about 19 ms each on the RTX 3090) */
+  var rasterGrow = 1;
+  function rasterPace(late) { rasterGrow = late ? 1 : Math.min(RASTER_PREFIX, rasterGrow * 2); }
+  /* the hero first (it holds the most charts), then reading order */
+  function rasterOrder(list) {
+    return Array.prototype.slice.call(list).sort(function (a, b) {
+      return (b.hasAttribute('data-hero') - a.hasAttribute('data-hero')) || ((+a.dataset.y || 0) - (+b.dataset.y || 0)) || ((+a.dataset.x || 0) - (+b.dataset.x || 0));
+    });
+  }
+  function rasterCards(kind) {
+    if (kind === 'board') return rasterOrder(PMU.board.cardsNow());
+    var panel = document.getElementById('panel-usage');
+    return rasterOrder(panel ? panel.querySelectorAll('.pmu-scroll > .pmu-board[data-pmu-raster-room] > .pmu-card') : []);
+  }
+  /* ---- what an element paints by itself, as a key: the GPU links one program per kind of draw (its geometry, its
+     paint, its anti-aliasing, the clip it is drawn under), so one element of each kind is drawn alone. '' when it paints
+     nothing of its own. ctx: its layer ('P' the page, 'K' a card's plate, 'Y' a card's body, upper case when that layer
+     rasters multisampled) and 'C' under a rounded clip ---- */
+  var SVGNS = 'http://www.w3.org/2000/svg', RASTER_SHAPES = /^(path|polyline|polygon|line|rect|circle|ellipse|text|tspan|textPath|image|use)$/;
+  var RASTER_SLOW = /^(path|polyline|polygon|line)$/;
+  function rpx(v) { return parseFloat(v) || 0; }
+  function ralpha(c) { if (!c || c === 'transparent') return 0; var m = /rgba?\([^)]*?,\s*([\d.]+)\)$/.exec(c) || /\/\s*([\d.]+%?)\)$/.exec(c); if (!m) return 1; var a = m[1].slice(-1) === '%' ? rpx(m[1]) / 100 : rpx(m[1]); return a; }
+  /* split at the commas outside parentheses */
+  function rsplit(v) {
+    var out = [], d = 0, at = 0;
+    for (var i = 0; i < v.length; i++) { var ch = v.charAt(i); if (ch === '(') d++; else if (ch === ')') d--; else if (ch === ',' && !d) { out.push(v.slice(at, i).trim()); at = i + 1; } }
+    out.push(v.slice(at).trim());
+    return out;
+  }
+  var RCOLOR = /(rgba?|hsla?|color|okl(ab|ch)|lab|lch|hwb)\(|#[0-9a-f]{3,8}\b|\btransparent\b|currentcolor/i;
+  /* a colour outside sRGB (a colour mix that overshoots, another colour space): the GPU draws it with float colours,
+     its own programs ('W') */
+  function rwide(v) {
+    if (!v || v.indexOf('(') < 0) return false;
+    if (/\b(okl(ab|ch)|lab|lch)\(|color\((display-p3|rec2020|a98-rgb|prophoto-rgb|xyz)/.test(v)) return true;
+    var re = /color\(srgb(?:-linear)? ([-\d.e]+) ([-\d.e]+) ([-\d.e]+)/g, m;
+    while ((m = re.exec(v))) { for (var i = 1; i <= 3; i++) { var x = +m[i]; if (x < -0.0005 || x > 1.0005) return true; } }
+    return false;
+  }
+  /* a background image as the GPU sees it: each layer's kind, its stop count and whether it has a hard stop (both pick
+     the gradient's program; colours, angles and positions are only its numbers), a wide colour, an image */
+  /* an image by its source: each one is its own texture, and a texture's format and sampling pick its programs (the first
+     provider logo drawn whole linked 13 after an image of another kind was drawn alone) */
+  function rhash(v) { var h = 0; v = String(v || ''); for (var i = 0; i < v.length; i += Math.max(1, v.length >> 8)) h = (h * 31 + v.charCodeAt(i)) | 0; return (h >>> 0).toString(36) + v.length; }
+  function rimage(v) {
+    if (!v || v === 'none') return '';
+    var keys = rsplit(v).map(function (layer) {
+      var m = /^((?:repeating-)?(?:linear|radial|conic)-gradient)\((.*)\)$/.exec(layer);
+      if (!m) return /^url\(/.test(layer) ? 'url' + rhash(layer) : layer.replace(/\(.*$/, '');
+      var args = rsplit(m[2]), stops = args.filter(function (a) { return RCOLOR.test(a); }), hard = false, lastPos = null;
+      stops.forEach(function (a) {
+        var pos = a.replace(/(rgba?|hsla?|color|okl(ab|ch)|lab|lch|hwb)\([^()]*\)/gi, ' ').replace(/#[0-9a-f]{3,8}\b|\b(transparent|currentcolor)\b/gi, ' ')
+          .match(/calc\((?:[^()]|\([^()]*\))*\)|-?[\d.]+(%|px)?/g) || [];
+        if (pos.length > 1) hard = true;
+        if (pos.length && lastPos != null && pos[0] === lastPos) hard = true;
+        if (pos.length) lastPos = pos[pos.length - 1];
+      });
+      return m[1].replace('-gradient', '') + stops.length + (hard ? 'h' : '') + (rwide(m[2]) ? 'W' : '');
+    });
+    return 'i' + keys.join('+');
+  }
+  function rbox(cs, r) {
+    var f = [], bg = ralpha(cs.backgroundColor), img = rimage(cs.backgroundImage);
+    if (bg > 0) f.push((bg < 1 ? 'ba' : 'b') + (rwide(cs.backgroundColor) ? 'W' : ''));
+    if (img) f.push(img);
+    var bw = [cs.borderTopWidth, cs.borderRightWidth, cs.borderBottomWidth, cs.borderLeftWidth].map(rpx), bs = cs.borderTopStyle;
+    if (bw.some(function (x) { return x > 0; }) && bs !== 'none' && bs !== 'hidden') f.push('B' + (bs === 'solid' ? '' : bs) + (bw[0] === bw[1] && bw[1] === bw[2] && bw[2] === bw[3] ? '' : 'n') + (ralpha(cs.borderTopColor) < 1 ? 'a' : '') + (rwide(cs.borderTopColor) ? 'W' : ''));
+    if (cs.boxShadow && cs.boxShadow !== 'none') {
+      var n = rsplit(cs.boxShadow).length;
+      f.push('S' + Math.min(n, 3) + (/inset/.test(cs.boxShadow) ? 'i' : '') + (/(\s|^)0px\s+0px\s+0px/.test(cs.boxShadow) ? '' : 'b') + (rwide(cs.boxShadow) ? 'W' : ''));
+    }
+    if (cs.outlineStyle && cs.outlineStyle !== 'none' && rpx(cs.outlineWidth) > 0) f.push('O');
+    if (!f.length) return '';
+    var rad = [cs.borderTopLeftRadius, cs.borderTopRightRadius, cs.borderBottomRightRadius, cs.borderBottomLeftRadius].map(rpx);
+    if (rad.some(function (x) { return x > 0; })) {
+      var even = rad[0] === rad[1] && rad[1] === rad[2] && rad[2] === rad[3];
+      f.push('r' + (even ? '' : 'n') + (r && rad[0] * 2 >= Math.min(r.width, r.height) - 0.5 ? 'p' : ''));
+    }
+    return f.join('');
+  }
+  function rasterSig(el, cs, r, ctx) {
+    var f = [], svg = el.namespaceURI === SVGNS, tag = el.localName;
+    if (svg && tag !== 'svg') {
+      if (!RASTER_SHAPES.test(tag)) return '';
+      var fill = cs.fill && cs.fill !== 'none', stroke = cs.stroke && cs.stroke !== 'none' && rpx(cs.strokeWidth) > 0;
+      if (!fill && !stroke && tag !== 'image' && tag !== 'use') return '';
+      if (tag === 'image') f.push(rhash(el.getAttribute('href') || el.getAttribute('xlink:href')));
+      var area = r.width * r.height;
+      f.push(tag, fill ? 'f' + (/url\(/.test(cs.fill) ? 'u' : '') + (rpx(cs.fillOpacity) < 1 ? 'a' : '') + (rwide(cs.fill) ? 'W' : '') : '',
+        stroke ? 's' + (cs.strokeDasharray && cs.strokeDasharray !== 'none' ? 'd' : '') + cs.strokeLinecap.charAt(0) + cs.strokeLinejoin.charAt(0) + (/url\(/.test(cs.stroke) ? 'u' : '') + (rwide(cs.stroke) ? 'W' : '') : '',
+        cs.shapeRendering === 'crispEdges' ? 'c' : '', area > 65536 ? 'L' : area > 1024 ? 'M' : 'S');
+    } else {
+      var box = rbox(cs, r); if (box) f.push(box);
+      if (tag === 'img') f.push('img' + rhash(el.currentSrc || el.src));
+      else if (tag === 'canvas' || tag === 'video') f.push(tag);
+      var text = false;
+      for (var n = el.firstChild; n; n = n.nextSibling) if (n.nodeType === 3 && /\S/.test(n.nodeValue)) { text = true; break; }
+      if (text) {
+        var fs = rpx(cs.fontSize);
+        f.push('x' + (fs <= 20 ? 'a' : fs <= 64 ? 'b' : 'c') + (cs.webkitBackgroundClip === 'text' || cs.backgroundClip === 'text' ? 'g' : '') + (cs.textShadow && cs.textShadow !== 'none' ? 't' : '') +
+          (rpx(cs.webkitTextStrokeWidth) > 0 ? 'k' : '') + (ralpha(cs.color) < 1 ? 'a' : '') + (rwide(cs.color) ? 'W' : ''));
+      }
+      if (!svg) ['::before', '::after'].forEach(function (p) {
+        var ps = getComputedStyle(el, p); if (!ps.content || ps.content === 'none' || ps.content === 'normal' || ps.display === 'none') return;
+        var pb = rbox(ps, null); if (pb) f.push(p.charAt(2) + pb + (rimage(ps.maskImage || ps.webkitMaskImage) ? 'm' : ''));
+      });
+    }
+    if (!f.length) return '';
+    if (cs.filter && cs.filter !== 'none') f.push('F' + (cs.filter.match(/\b(blur|brightness|contrast|drop-shadow|grayscale|hue-rotate|invert|opacity|saturate|sepia|url)\(/g) || []).join(''));
+    if (cs.backdropFilter && cs.backdropFilter !== 'none') f.push('D');
+    if (cs.mixBlendMode && cs.mixBlendMode !== 'normal') f.push('X' + cs.mixBlendMode);
+    if (rpx(cs.opacity) < 1) f.push('o');
+    if (cs.clipPath && cs.clipPath !== 'none') f.push('Q');
+    if (rimage(cs.maskImage || cs.webkitMaskImage)) f.push('m');
+    if (cs.transform && cs.transform !== 'none' && !/^matrix\(1, 0, 0, 1,/.test(cs.transform)) f.push('T');
+    return ctx + '|' + f.join('.');
+  }
+  /* one root's plan, made a little at a time (rasterPlanRun, in cpu steps): [{ self: [elements], sig: [keys] } ..., then
+     its whole steps]. A layer of six paths or more first draws six of them alone, of one kind where it can. ctxOf(el)
+     names the layer of an element, skip(el) leaves a subtree out. A part (the page chrome, a card) is drawn as a growing
+     prefix of its paint order: each draw adds the next painting elements in the window, at most RASTER_PREFIX of them
+     and at most one of a kind no draw had yet (a heavy one after its parts), and the elements drawn stay drawn. The GPU
+     batches neighbouring draws of one kind into one and links a program for the batch's mix of features, so what links
+     is decided by which draws sit next to each other: drawn kind by kind, the part's whole draw then batched them
+     differently again (P2-03 final, RTX 3090: the hero's whole step linked 4-7 FillRRectOp programs in Glass and
+     Friendly, and a provider logo drawn with the other logos of its kind linked 4-6 in Basic Dark, 75-150 ms frames). A
+     prefix of the paint order batches as the whole draw will, so each draw meets at most its own few new batches, and
+     the whole draw after the last one meets none */
+  function rasterPlanStart(root0, ctxOf, skip, wholes) {
+    return { stack: [[root0, false]], ctxOf: ctxOf, skip: skip, wholes: wholes || [], items: [], slow: {}, msaa: {}, pre: [], units: [], local: {}, i: 0, phase: 0, steps: null,
+      vw: window.innerWidth || 1, vh: window.innerHeight || 1 };
+  }
+  /* until(): true while the step has time left; true when the plan is done (p.steps) */
+  function rasterPlanRun(p, until) {
+    var seen = function (r) { return r.width > 0 && r.height > 0 && r.right > 0 && r.bottom > 0 && r.left < p.vw && r.top < p.vh; };
+    while (p.phase === 0 && p.stack.length) {
+      if (!until()) return false;
+      var top = p.stack.pop(), el = top[0], clip = top[1];
+      if (!el.isConnected || p.skip && p.skip(el)) continue;
+      var cs = getComputedStyle(el); if (cs.display === 'none') continue;
+      var ctx = p.ctxOf(el), r = el.getBoundingClientRect(), inView = seen(r);
+      /* a slow path as Chrome counts them for multisampling (cc DrawPathOp::CountSlowPaths: an anti-aliased path that is
+         not a line, not a hairline, and not a concave fill under 64 x 64; ClipPathOp: an anti-aliased clip path). Whether a
+         small fill is convex is not known here, so every filled SVG path counts (P2-03 final: counted only from 64 px,
+         a card's layer went multisampled in the middle of its prefix and its next step linked 20 programs, a 242 ms
+         frame on the RTX 3090); so do an HTML element's clip path and a dashed or dotted border (drawn as paths). Too
+         many counted only draws a few paths early. */
+      if (el.namespaceURI === SVGNS ? RASTER_SLOW.test(el.localName) && el.localName !== 'line' && cs.shapeRendering !== 'crispEdges' : true) {
+        var sv = el.namespaceURI === SVGNS, stroked = sv && cs.stroke !== 'none' && rpx(cs.strokeWidth) > 0, filled = sv && cs.fill !== 'none';
+        var clipP = !sv && cs.clipPath && cs.clipPath !== 'none' && !/^(inset|rect|xywh)\(|^(border|padding|content|margin|fill|stroke|view)-box$/.test(cs.clipPath);
+        var dash = !sv && /^(dashed|dotted)$/.test(cs.borderTopStyle) && rpx(cs.borderTopWidth) > 0;
+        if (stroked || filled || clipP || dash) (p.slow[ctx] = p.slow[ctx] || []).push({ el: el, inView: inView, kind: sv ? el.localName + (filled ? 'f' : '') + (stroked ? 's' + (cs.strokeDasharray !== 'none' ? 'd' : '') : '') : clipP ? 'clip' : 'dash' });
+      }
+      /* an image starts decoding now, so it draws in its own step (decoded late, it drew, and linked, in a later one) */
+      if (el.localName === 'img' && el.decode && !el._pmuDecoding) {
+        el._pmuDecoding = performance.now();
+        el.decode().then(function () { this._pmuDecoded = true; }.bind(el), function () { this._pmuDecoded = true; }.bind(el));
+      }
+      p.items.push({ el: el, cs: cs, r: r, ctx: ctx, clip: clip, inView: inView });
+      var rad = rpx(cs.borderTopLeftRadius) + rpx(cs.borderBottomRightRadius);
+      var clips = clip || (rad > 0 && cs.overflowX !== 'visible' && el.namespaceURI !== SVGNS);
+      var kids = [];
+      for (var k = el.firstElementChild; k; k = k.nextElementSibling) kids.push(k);
+      for (var j = kids.length - 1; j >= 0; j--) p.stack.push([kids[j], clips]);
+    }
+    if (p.phase === 0) {
+      Object.keys(p.slow).forEach(function (ctx) {
+        var all = p.slow[ctx]; if (all.length < RASTER_MSAA) return;
+        p.msaa[ctx] = true;
+        var by = {}; all.forEach(function (x) { (by[x.kind] = by[x.kind] || []).push(x); });
+        var big = Object.keys(by).sort(function (a, b) { return by[b].length - by[a].length; })[0];
+        var order = function (list) { return list.filter(function (x) { return x.inView; }).concat(list.filter(function (x) { return !x.inView; })); };
+        var pick = order(by[big]).concat(order(all.filter(function (x) { return x.kind !== big; }))).slice(0, RASTER_MSAA + 2);
+        p.pre.push({ self: pick.map(function (x) { return x.el; }), sig: [], label: 'msaa-' + ctx });
+      });
+      p.phase = 1;
+    }
+    while (p.phase === 1 && p.i < p.items.length) {
+      if (!until()) return false;
+      var it = p.items[p.i++];
+      if (!it.el.isConnected) continue;
+      /* an element at opacity 0 (an entrance the arrival plays, a control shown on hover) draws at 1, as it will */
+      it.lit = it.cs.opacity === '0';
+      it.sig = rasterSig(it.el, it.cs, it.r, (p.msaa[it.ctx] ? it.ctx : it.ctx.toLowerCase()) + (it.clip ? 'C' : ''));
+      if (it.lit && it.sig) it.sig = it.sig.replace(/\.o$|\.o(?=\.)/, '');
+      if (!it.inView || !it.sig) continue;
+      /* a vector image (the provider marks are SVG data URLs, some with blurs inside) rasters its own paths and filters
+         in one draw that no style can split (RTX 3090: 4-15 programs a mark, four FillRRectOp at once, which a P1000
+         holds 220-280 ms): left to the arrival, which links it unseen under the shell's hold */
+      if (it.el.localName === 'img' && /^data:image\/svg|\.svg(?:[?#]|$)/i.test(it.el.currentSrc || it.el.getAttribute('src') || '')) continue;
+      var fresh = !rasterSeen[it.sig] && !p.local[it.sig];
+      /* one unit an element; rasterTake takes up to rasterGrow of them a draw, an element of a new kind alone, a heavy
+         one after its parts (rasterParts) */
+      if (fresh) {
+        p.local[it.sig] = true;
+        rasterParts(it).forEach(function (pt) { p.units.push({ self: [it.el], lits: [it.lit], sig: [], unit: true, fresh: true, part: pt, label: 'part' }); });
+      }
+      p.units.push({ self: [it.el], lits: [it.lit], sig: fresh ? [it.sig] : [], unit: true, fresh: fresh, label: fresh ? it.sig : '' });
+    }
+    /* a first-screen root (its programs linked early, at level 0, within RASTER_FIRST draws) draws only its new kinds:
+       the multisample step, each new kind's parts and the element itself; the elements of kinds already drawn link
+       nothing new and wait for the arrival */
+    var units = p.freshOnly ? p.units.filter(function (u) { return u.fresh; }) : p.units;
+    if (p.dear) units = units.filter(function (u) { return p.dear.contains(u.self[0]); }).concat(units.filter(function (u) { return !p.dear.contains(u.self[0]); }));
+    p.steps = p.pre.concat(units, p.wholes); p.phase = 2; p.items = null; p.stack = null;
+    return true;
+  }
+  /* the roots of a room: the board room starts with the layer and the page chrome; then its cards in order */
+  function rasterRoots(kind) {
+    var cards = rasterCards(kind), roots = [];
+    if (kind !== 'board') { cards.forEach(function (c) { roots.push({ t: 'card', el: c }); }); return roots; }
+    /* the arrival room: its first screen first (the layer, the hero, the other cards in the window: first, which the
+       pass runs at level 0 up to RASTER_FIRST draws, new kinds only), the dearest first-use links first (the lead's
+       ruling, 2026-10-17): the hero, its chart's kinds leading (rasterPlanFor: the hero's skyplot, some 40 layers of
+       held marks, linked eight programs in one 87-105 ms GPU flush at the arrival on the 3090 cold, logged two slices
+       late against the month card; 48-67 ms once the pass has drawn the chart's 25 steps, from about +25 s, the five
+       path-atlas links left being the arrival's own layers, which no draw of the pass makes), then the other cards
+       the most paths first; then the page chrome, then the cards below the window */
+    var shown = cards.filter(function (c) { return PMU.boards ? inView(c) : true; }), below = cards.filter(function (c) { return shown.indexOf(c) < 0; });
+    var cost = function (c) { return (c.hasAttribute('data-hero') ? 1e6 : 0) + c.querySelectorAll('path, polyline, polygon').length + 0.01 * c.getElementsByTagName('*').length; };
+    shown = shown.map(function (c) { return { c: c, k: cost(c) }; }).sort(function (a, b) { return b.k - a.k; }).map(function (x) { return x.c; });
+    roots.push({ t: 'layer', first: true });
+    shown.forEach(function (c) { roots.push({ t: 'card', el: c, first: true }); });
+    roots.push({ t: 'chrome' });
+    below.forEach(function (c) { roots.push({ t: 'card', el: c }); });
+    return roots;
+  }
+  function rasterPlanFor(panel, rt) {
+    if (rt.t === 'layer') { var p0 = rasterPlanStart(panel, null, null, [{ layer: true, label: 'layer' }]); p0.stack = []; p0.phase = 1; return p0; }
+    /* no whole draw after a part's prefix (P2-03 final, 2026-10-17): the prefix draws every painting element in the
+       window, and what the whole draw still linked (RTX 3090: the chrome whole 8 programs, one of them 72 ms; a card
+       whole 3-4) is the batching of the whole, which a P1000 holds well over 100 ms; the arrival, drawn unseen under the
+       shell's hold, links that instead */
+    if (rt.t === 'chrome') {
+      return rasterPlanStart(panel, function () { return 'P'; }, function (el) { return el.classList && el.classList.contains('pmu-card') && el.parentNode && el.parentNode.classList.contains('pmu-board'); }, []);
+    }
+    var card = rt.el, body = card.querySelector(':scope > .pmu-cardbody');
+    var p1 = rasterPlanStart(card, function (el) { return body && body.contains(el) ? 'Y' : 'K'; }, null, []);
+    p1.freshOnly = !!rt.first;
+    /* the hero's largest body part (its chart: down from the body while one child holds most of the elements) draws its
+       new kinds first */
+    if (rt.first && body && card.hasAttribute('data-hero')) {
+      for (var k = body, big = null; k; k = big) {
+        var all = k.getElementsByTagName('*').length, most = 0; big = null;
+        Array.prototype.forEach.call(k.children, function (x) { var n = x.getElementsByTagName('*').length + 1; if (n > most) { most = n; big = x; } });
+        if (!big || most * 2 < all) break;
+      }
+      if (k !== body) p1.dear = k;
+    }
+    return p1;
+  }
+  /* the next root: the one done loses its marks (each draw's cleanup took the paint token off, so its layer is gone and
+     nothing of it stays drawn) */
+  function rasterAdvance(cur) {
+    var rt = cur.roots[cur.ri];
+    if (rt && rt.t === 'card' && rt.el && cur.plan && cur.pi >= cur.plan.length) rt.el._pmuPrelinked = true;
+    if (rt) rasterUnmark(rt.t === 'card' ? rt.el : document.getElementById('panel-usage'));
+    cur.ri++; cur.pi = 0; cur.plan = null; cur.planning = null;
+    rasterGrow = 1;
+  }
+  /* the next draw's name and pace without taking it (PM_WARM's add): light when it adds only elements of kinds already
+     drawn, or is a card's whole draw (0-1 links measured) */
+  function rasterPeek(r) {
+    var cur = r.cur, rt = cur && cur.roots && cur.roots[cur.ri], s = rt && cur.plan ? cur.plan[cur.pi] : null;
+    if (!rt) return { name: 'again', light: false };
+    return { name: (rt.t === 'card' ? 'card' + cur.ri : rt.t) + ':' + (s ? (s.part ? 'part' : s.label) || (s.unit ? 'pre' : '') : ''),
+      light: !!s && !s.part && (s.unit && !s.fresh || !!(s.whole && s.card)) };
+  }
+  /* the next draw (rasterNeed said 'draw'): the cursor moves past it now */
+  function rasterTake(r) {
+    if (rasterNeed(r) !== 'draw') return null;
+    var cur = r.cur, kind = cur.room === r.w.room ? 'board' : 'spare', rt = cur.roots[cur.ri];
+    if (!rt) {
+      for (var i = 0; i < r.redo.length; i++) if (r.redo[i].room === cur.room) return r.redo.splice(i, 1)[0];
+      return null;
+    }
+    var s = cur.plan[cur.pi], card = rt.t === 'card' ? rt.el : null, take = 1;
+    var out = { room: cur.room, kind: kind, card: card, root: cur.ri, chromeOn: false };
+    /* a part's prefix: the next units that bring no new kind, up to rasterGrow of them (one of a new kind alone) */
+    if (s.unit && !s.fresh) {
+      var els = s.self.slice(), lits = s.lits.slice();
+      while (take < rasterGrow) { var nx = cur.plan[cur.pi + take]; if (!nx || !nx.unit || nx.fresh) break; els.push(nx.self[0]); lits.push(nx.lits[0]); take++; }
+      out.els = els; out.lits = lits; out.label = 'pre' + take + ':' + rasterName(els[0]);
+    } else if (s.unit) {
+      out.els = s.self; out.lits = s.lits; out.part = s.part || null;
+      out.label = s.part ? 'part:' + s.part.name + ':' + rasterName(s.self[0]) : 'new:' + rasterName(s.self[0]) + ':' + s.label;
+    } else if (s.self) { out.els = s.self; out.lits = s.self.map(function () { return false; }); out.label = s.label; }
+    else if (s.whole) { out.whole = s.whole; out.label = s.label; }
+    else if (s.chrome) { out.chrome = true; out.chromeOn = true; out.label = s.label; }
+    else { out.layer = true; out.label = s.label; }
+    (s.sig || []).forEach(function (k) { rasterSeen[k] = true; });
+    out.label = cur.room + ':' + (card ? 'card' + cur.ri + ':' : '') + out.label;
+    cur.pi += take; cur.steps++;
+    return out;
+  }
+  /* one draw (a frame callback): its marks and the paint token on, and a part's overrides. It returns the cleanup: the
+     paint token off (the layer and what it drew go; a part's prefix marks stay, unseen, for its next draw), the
+     overrides off, and a moved draw's own marks off */
+  function rasterRun(r, s) {
+    var panel = document.getElementById('panel-usage'); if (!panel) return null;
+    var own = [], set = function (x, a, v) { if (s.again && !x.hasAttribute(a)) own.push(x); x.setAttribute(a, v); };
+    if (s.els) {
+      if (s.card && s.card.isConnected) set(s.card, 'data-pmu-raster-pieces', '');
+      s.els.forEach(function (x, i) { if (x.isConnected) set(x, 'data-pmu-raster-self', s.lits && s.lits[i] ? 'lit' : ''); });
+    } else if (s.whole) {
+      /* drawn whole: the pieces' marks inside it go (a piece hides its children) */
+      Array.prototype.forEach.call(s.whole.querySelectorAll('[data-pmu-raster-self], [data-pmu-raster-on]'), function (x) { x.removeAttribute('data-pmu-raster-self'); x.removeAttribute('data-pmu-raster-on'); });
+      s.whole.removeAttribute('data-pmu-raster-self'); s.whole.removeAttribute('data-pmu-raster-pieces');
+      set(s.whole, 'data-pmu-raster-on', '');
+    } else if (s.chrome) {
+      Array.prototype.forEach.call(panel.querySelectorAll('[data-pmu-raster-self]'), function (x) { if (!x.closest('.pmu-board > .pmu-card')) x.removeAttribute('data-pmu-raster-self'); });
+      panel.removeAttribute('data-pmu-raster-self');
+    }
+    var off = s.part && s.els && s.els[0] && s.els[0].isConnected ? rasterPartOn(s.els[0], s.part) : null;
+    rasterTok(r, (s.kind !== 'board' ? 'spare paint' : 'board paint') + (s.layer ? ' layer' : '') + (s.chromeOn ? ' chrome' : ''));
+    if (RASTER_MARKS) { try { performance.mark('pmu-raster:' + s.label); } catch (error) {} }
+    return function () {
+      if (rast === r) rasterTok(r, r.spare ? 'spare' : null);
+      if (off) off();
+      own.forEach(function (x) { RASTER_ATTRS.forEach(function (a) { x.removeAttribute(a); }); });
+    };
+  }
+  /* a late draw (Usage's onLate): split in two when it drew more than one element, else moved to the end of its room;
+     late a second time it is dropped and recorded (warmState().raster.dropped) */
+  function rasterLate(r, s) {
+    rasterLog.late++;
+    if (s.els) rasterPace(true);
+    var n = (s.lates || 0) + 1;
+    if (n >= 2) { if (rasterLog.dropped.length < 60) rasterLog.dropped.push(s.label); return; }
+    var k = s.els ? s.els.length : 0;
+    if (k > 1) { var h = Math.ceil(k / 2); r.redo.unshift(rasterAgain(s, 0, h, n), rasterAgain(s, h, k, n)); rasterLog.split++; }
+    else { r.redo.push(rasterAgain(s, 0, k, n)); rasterLog.moved++; }
+  }
+  function rasterAgain(s, i, j, n) {
+    return { room: s.room, kind: s.kind, card: s.card, root: s.root, layer: s.layer, whole: s.whole, chrome: s.chrome, chromeOn: s.chromeOn, part: s.part,
+      els: s.els ? s.els.slice(i, j) : null, lits: s.lits ? s.lits.slice(i, j) : null, again: true, lates: n,
+      label: 'again:' + s.label.replace(/^again:/, '') + (s.els && j - i < s.els.length ? '#' + i + '-' + j : '') };
+  }
+  /* ---- a heavy element drawn in parts (P2-03 final, coordinator's step-size split, 2026-10-17). An element whose own
+     draw needs four or more GPU programs linked them all in its one draw (RTX 3090: the hero's two-gradient wide-colour
+     plate i.pmu-skyfill and its cap, 4 FillRRectOp links, 100 ms; the 48 px gradient-clipped number, 4-5 links; the
+     label's two text shadows). The raster is unseen (.004), so a draw may show such an element for one frame with part
+     of its style overridden: each background layer alone, then its pseudo-element cap without and with its glow; the
+     plain text, then the gradient box, then the clip; the text without its shadows, then one; a dashed border solid; an
+     image or icon without its filter. Each part links a program or two, and the element's own draw after its parts
+     links nothing new. The overrides are inline !important declarations on that element alone (data-pmu-raster-part
+     for its pseudo-elements, 05-film.css), and the draw's cleanup restores what was there. ---- */
+  function rasterText(el) { for (var n = el.firstChild; n; n = n.nextSibling) if (n.nodeType === 3 && /\S/.test(n.nodeValue)) return true; return false; }
+  function rasterParts(it) {
+    var el = it.el, cs = it.cs, out = [];
+    if (el.namespaceURI === SVGNS) return out;
+    var text = rasterText(el);
+    /* the background clipped to the text of the element and its descendants (the hero's <b class="pmu-heronum">: its
+       digits are in its children, their own ink transparent): the text drawn solid, then the gradient box, each with the
+       text's elements shown for that frame */
+    if (cs.webkitBackgroundClip === 'text' || cs.backgroundClip === 'text') {
+      var kids = Array.prototype.filter.call(el.querySelectorAll('*'), rasterText);
+      if (text) kids.unshift(el);
+      if (!kids.length) return out;
+      var flat = { '-webkit-background-clip': 'border-box', 'background-clip': 'border-box' };
+      out.push({ name: 'text', css: Object.assign({ 'background-image': 'none', 'background-color': 'transparent' }, flat), tok: 'bare',
+        kids: kids, kidCss: { color: '#808080', '-webkit-text-fill-color': '#808080' } });
+      out.push({ name: 'box', css: flat, tok: 'bare', kids: kids, kidCss: { color: 'transparent', '-webkit-text-fill-color': 'transparent' } });
+      return out;
+    }
+    var layers = cs.backgroundImage && cs.backgroundImage !== 'none' ? rsplit(cs.backgroundImage) : [];
+    var caps = ['::before', '::after'].map(function (pe) { return getComputedStyle(el, pe); }).filter(function (ps) {
+      return ps.content && ps.content !== 'none' && ps.content !== 'normal' && ps.display !== 'none' && !!rbox(ps, null);
+    });
+    if (layers.length > 1 || layers.length && caps.length) {
+      if (layers.length > 1) layers.forEach(function (l, i) { out.push({ name: 'layer' + i, css: { 'background-image': l, 'background-color': 'transparent', 'box-shadow': 'none' }, tok: 'bare' }); });
+      if (caps.length) {
+        var none = { 'background-image': 'none', 'background-color': 'transparent', 'box-shadow': 'none' };
+        if (caps.some(function (ps) { return ps.boxShadow && ps.boxShadow !== 'none'; })) out.push({ name: 'cap', css: none, tok: 'flat' });
+        out.push({ name: 'glow', css: none });
+      }
+    }
+    if (text && cs.textShadow && cs.textShadow !== 'none') {
+      var sh = rsplit(cs.textShadow);
+      out.push({ name: 'text', css: { 'text-shadow': 'none' } });
+      if (sh.length > 1) out.push({ name: 'shadow', css: { 'text-shadow': sh[0] } });
+    }
+    if (/^(dashed|dotted)$/.test(cs.borderTopStyle) && rpx(cs.borderTopWidth) > 0) out.push({ name: 'solid', css: { 'border-style': 'solid' } });
+    /* a box with more than one paint of its own (its fill, its border, its shadow): the fill alone, then the border alone,
+       then the box whole (each a program of its own: a rounded box with a border and a shadow linked 3-4 at once) */
+    var bgOn = ralpha(cs.backgroundColor) > 0 || layers.length > 0, shOn = !!cs.boxShadow && cs.boxShadow !== 'none';
+    var bdOn = cs.borderTopStyle !== 'none' && cs.borderTopStyle !== 'hidden' && rpx(cs.borderTopWidth) + rpx(cs.borderRightWidth) + rpx(cs.borderBottomWidth) + rpx(cs.borderLeftWidth) > 0;
+    if ((bgOn ? 1 : 0) + (bdOn ? 1 : 0) + (shOn ? 1 : 0) >= 2) {
+      if (bgOn) out.push({ name: 'fill', css: { 'border-color': 'transparent', 'box-shadow': 'none', 'outline-style': 'none' } });
+      if (bdOn) out.push({ name: 'edge', css: { 'background-color': 'transparent', 'background-image': 'none', 'box-shadow': 'none', 'outline-style': 'none' } });
+    }
+    /* an image with rounded corners: square first (the texture alone), then rounded */
+    if ((el.localName === 'img' || el.localName === 'video') && rpx(cs.borderTopLeftRadius) + rpx(cs.borderBottomRightRadius) > 0) out.push({ name: 'square', css: { 'border-radius': '0' } });
+    /* a provider mark or icon under a filter (Friendly's marks): the image alone first, then with its filter */
+    if (cs.filter && cs.filter !== 'none' && (el.localName === 'img' || el.localName === 'svg' || el.localName === 'canvas')) out.push({ name: 'plain', css: { filter: 'none' } });
+    return out;
+  }
+  function rasterOverride(el, css) {
+    var had = el.hasAttribute('style'), saved = [];
+    Object.keys(css).forEach(function (k) { saved.push([k, el.style.getPropertyValue(k), el.style.getPropertyPriority(k)]); el.style.setProperty(k, css[k], 'important'); });
+    return function () {
+      saved.forEach(function (x) { if (x[1]) el.style.setProperty(x[0], x[1], x[2]); else el.style.removeProperty(x[0]); });
+      if (!had && !el.style.length) el.removeAttribute('style');
+    };
+  }
+  function rasterPartOn(el, pt) {
+    var undo = [rasterOverride(el, pt.css || {})], shown = [];
+    if (pt.tok) el.setAttribute('data-pmu-raster-part', pt.tok);
+    (pt.kids || []).forEach(function (k) {
+      if (!k.isConnected) return;
+      if (k !== el && !k.hasAttribute('data-pmu-raster-self')) { shown.push(k); k.setAttribute('data-pmu-raster-self', ''); }
+      undo.push(rasterOverride(k, pt.kidCss || {}));
+    });
+    return function () {
+      undo.forEach(function (f) { f(); });
+      shown.forEach(function (k) { k.removeAttribute('data-pmu-raster-self'); });
+      if (pt.tok) el.removeAttribute('data-pmu-raster-part');
+    };
+  }
+  function rasterRoomDone(r, cur, cards, how) {
+    rasterQuiet(r);
+    if (how === 'spare') { if (PMU.board.rasterClear) PMU.board.rasterClear(); r.spare = false; rasterTok(r, null); }
+    /* done only for the look and board class it was drawn in from its first draw */
+    if (cur.key === rasterKey(cur.room)) rasterDone[cur.key] = true;
+    rasterLog.rooms.push({ room: cur.room, at: Math.round(performance.now()), ms: Math.round(performance.now() - cur.t0), build: cur.build ? Math.round(cur.build) : 0,
+      cards: cards, steps: cur.steps, plan: Math.round(cur.planMs || 0), how: how });
+    r.redo = r.redo.filter(function (x) { return x.room !== cur.room; });
+    r.rooms.shift(); r.cur = null;
+  }
+  function rasterSkip(r, room, why) {
+    rasterLog.rooms.push({ room: room, skipped: why });
+    if (PMU.board.rasterClear) PMU.board.rasterClear();
+    r.spare = false; r.building = null; rasterTok(r, null);
+    r.rooms.shift(); r.cur = null;
+    if (!r.queued) rasterNext(r);
+  }
+  /* the pass is over: the panel as it was (its token and marks off, a queued step taken back), the board waiting where it
+     was built */
+  function rasterEnd(why) {
+    var r = rast; if (!r) return;
+    rasterUnqueue(r);
+    rasterUnlisten(r);
+    window.removeEventListener('resize', r.onResize);
+    rasterQuiet(r);
+    rast = null;
+    if (PMU.board && PMU.board.rasterClear) PMU.board.rasterClear();
+    rasterTok(r, null);
+    rasterLog.ms = Math.round(performance.now() - r.t0);
+    if (why) rasterLog.skipped = why;
+    rasterLog.gate = null;
+    warmPark(r.w);
+  }
+  /* stopped from outside (the arrival, a drop): the same, at once */
+  function rasterStop(why) { if (rast) rasterEnd('stopped:' + (why || '')); }
+  /* warmState().raster: what ran (the steps run, late, split, moved and dropped; the cpu steps by kind; the parks and
+     their resume costs). steps: [label, at, late] */
+  function rasterState() {
+    var r = rast, qs = null;
+    if (r) { try { qs = r.q.state('usage'); } catch (error) { qs = null; } }
+    return { running: r ? { rooms: r.rooms.slice(), gate: rasterLog.gate, parked: r.parked, resumes: r.resumes, queued: !!r.queued,
+        step: r.cur ? { room: r.cur.room, root: r.cur.ri, piece: r.cur.pi, spare: r.spare } : null } : null,
+      ran: rasterLog.ran || 0, late: rasterLog.late || 0, split: rasterLog.split || 0, moved: rasterLog.moved || 0, dropped: (rasterLog.dropped || []).slice(),
+      cpu: Object.assign({}, rasterLog.cpu || {}), queue: qs, rooms: rasterLog.rooms.slice(), at: rasterLog.at, ms: rasterLog.ms, parks: rasterLog.parks || 0, waits: rasterLog.waits || 0,
+      resumeMs: (rasterLog.resumeMs || []).slice(), prefix: RASTER_PREFIX, skipped: rasterLog.skipped, done: Object.keys(rasterDone),
+      kinds: Object.keys(rasterSeen).length, steps: (rasterLog.steps || []).slice() };
   }
   function warmDrop(why) {
     var w = warm; if (!w) return;
+    rasterStop('drop');
     warm = null;
     warmLast = { why: why, built: w.built, at: Math.round(performance.now()) };
     var board = document.getElementById('pmuBoard'), panel = document.getElementById('panel-usage');
     if (panel) panel.removeAttribute('data-pmu-warm');
     if (board && board.parentNode) board.parentNode.removeAttribute('data-pmu-warm-wait');
+    warmUnhide();
     if (!pageShown() && PMU.board && PMU.board.unmount) PMU.board.unmount();
   }
   /* a live beat while the page is hidden (the dashboards' beat, PMU.live): the warm board's cards that show its readings
-     are rendered again at the arrival */
+     are rendered again at the arrival (warmRelease). Not in idle time: the board waits display: none, and laying it out
+     again for a beat costs as much as a raster resume (rasterLog.resumeMs) on every beat, while the release renders
+     only the cards the beats hit */
   function warmBeat(keys) { if (warm && keys) keys.forEach(function (k) { warm.shares[k] = true; }); }
   function warmCheck() {
     if (pageShown()) return;
@@ -1877,7 +2808,11 @@
     warmWatch.on = true;
     if (PMU.settings && PMU.settings.onChange) PMU.settings.onChange(function (why) { if (why === 'page') return; warmRev++; warmCheck(); });
     if (PMU.theme && PMU.theme.onChange) PMU.theme.onChange(function () { warmCheck(); });
-    if (PMU.board.on) PMU.board.on('mount', function (d) { if (!warm) return; if (d && d.warm) warm.mounted = true; else warmDrop('mount'); });
+    if (PMU.board.on) PMU.board.on('mount', function (d) {
+      /* a room the page has shown compiled what it draws: the raster leaves it out */
+      if (d && !d.warm && d.room && d.cls && pageShown()) rasterDone[rasterKey(d.room, d.cls)] = true;
+      if (!warm) return; if (d && d.warm) warm.mounted = true; else warmDrop('mount');
+    });
     if (!window.MutationObserver) return;
     var sp = document.getElementById('panel-settings'), was = !!sp && sp.classList.contains('active');
     if (sp) new MutationObserver(function () { var on = sp.classList.contains('active'); if (on === was) return; was = on; warmRev++; if (!on) warmCheck(); })
@@ -1886,95 +2821,349 @@
     new MutationObserver(function () { var on = root.hasAttribute('data-o55-open'); if (on === open) return; open = on; if (!on) { warmRev++; warmCheck(); } })
       .observe(root, { attributes: true, attributeFilter: ['data-o55-open'] });
   }
-  /* at the arrival: the warm board if it is built and still shows what a build would; anything else is dropped */
+  /* at the arrival: the warm board if it is built and still shows what a build would; anything else is dropped. A raster
+     still running stops and the board parks first (its marks off, its wait on); the arrival takes it out of the wait in
+     the same task (warmArrive), in the box the page really shows in (the Assistant seated beside it or not) */
   function warmTake() {
     clearTimeout(warmT); warmT = 0;
     var w = warm; if (!w) return null;
     if (!w.built || w.room !== st.room || w.key !== warmKey()) { warmDrop(w.built ? 'stale' : 'building'); return null; }
+    rasterStop('arrival');
+    warmPark(w);
     warm = null;
-    var panel = document.getElementById('panel-usage'); if (panel) panel.removeAttribute('data-pmu-warm');
     return w;
   }
-  /* the frame after the click's (two rAFs: the first one's callbacks run before the click's own frame is drawn): the board
-     shows (data-pmu-warm-wait off) and its plates rise; the bodies' entrances are made in the next task, after this
-     frame's layout and paint */
+  /* no warm board (the arrival came before the warm build, or a look or Settings change dropped it): the board is built
+     now, whole, in the task that changes the page (40-board.js mount opts.warm + opts.sync: every body measured in one
+     read and rendered, each body's entrance queued on its card), so no frame shows its plates empty while slices build
+     it. The click's answer (the shell's tab spring and Home's fade, on the compositor) is already running; the page's
+     first frame waits for this task. Returned as a warm board built here (w.sync), or null when the board could not be
+     built (no width: the page is not laid out) */
+  function arriveWhole() {
+    var t0 = performance.now(), built = false;
+    try { PMU.board.mount(st.room, { warm: true, sync: true, onBuilt: function () { built = true; } }); } catch (error) { console.error('[pm-usage] arrival build', error); }
+    if (!built) return null;
+    return { room: st.room, built: true, shares: {}, ms: Math.round(performance.now() - t0), sync: true };
+  }
+  /* the held fallback's frame after the click (two rAFs: the first one's callbacks run before the click's own frame is
+     drawn) */
   function nextFrame(fn) { requestAnimationFrame(function () { requestAnimationFrame(fn); }); }
   /* the page's own entrance (pm8-page-in) held by the shell: after a long frame the shell keeps a page's moves at their
-     start until two frames in a row come on time (PM_START_ON_SHOWN, at most 6 frames). The board's first frame waits
-     for that, then comes in the frame after it: a board shown into those frames kept them late, and the page stood at
-     opacity 0 for all six (P1000 film, NieR Dark: 570 ms of blank page after Home left). Read after the frame's layout
-     (PM_AFTER_LAYOUT, the shell's), so the check forces no style; without the shell's hold, two frames as before. */
+     start until two frames in a row come on time (PM_START_ON_SHOWN, at most 6 frames). Read after the frame's layout
+     (PM_AFTER_LAYOUT, the shell's), so the check forces no style */
   function pageHeld() {
     var p = document.getElementById('panel-usage');
     if (!p || !p.getAnimations) return false;
     return p.getAnimations().some(function (a) { return a.animationName === 'pm8-page-in' && a.playState === 'paused'; });
   }
+  /* the page's own entrance is still to play or playing (not ended, not cut short) */
+  function pageEntering() {
+    var p = document.getElementById('panel-usage');
+    if (!p || !p.getAnimations || !p.classList.contains('pm8-page-in')) return false;
+    return p.getAnimations().some(function (a) { return a.animationName === 'pm8-page-in' && a.playState !== 'finished' && a.playState !== 'idle'; });
+  }
+  /* the held fallback waits for that hold to end, then builds in the frame after it */
   function afterPage(fn) {
     var n = 0, after = window.PM_AFTER_LAYOUT;
     if (typeof after !== 'function' || typeof window.PM_START_ON_SHOWN !== 'function') { nextFrame(fn); return; }
     var check = function () { if (pageHeld() && ++n < 10) { requestAnimationFrame(function () { after(check); }); return; } requestAnimationFrame(fn); };
     requestAnimationFrame(function () { after(check); });
   }
+  /* ---- the arrival's unseen first draw (P2-03 final, 2026-10-17). The warm arrival showed its board a frame after the
+     page (display: none through the click's frame), and the bodies' reveals were made in a task after that frame, after
+     a re-measure: on the P1000 the page stood with an empty board area for ~100 ms, then with empty plates while the
+     bodies waited (Basic warm 0.15-0.2 s, Friendly 0.45 s), and the first visible draw of the bodies linked the GPU
+     programs the raster had not reached with those empty plates frozen on screen (Basic cold 1.1 s). Now everything is
+     made in the task that changes the page (warmArrive): the board out of its wait and measured where it shows, then the
+     whole entrance (the shell's power-on, the plates' rise, every body's reveal, the hero's instruments and light) with
+     its animations paused at their start and its tweens and timers waiting (moment.wait). The page's own first frame
+     (the long one, where the shell restyles the page) styles, lays out and paints the board as the entrance's first
+     frame will show it; the shell holds the page's entrance at opacity 0 while its frames are late (PM_START_ON_SHOWN),
+     and the GPU rasters what comes after a long frame (the entrance's layers included: an animation held at its start
+     is a current one) before the frames come on time again, so the board is drawn, and any program it needs linked,
+     while Home is still on screen. go runs in the frame the page's entrance starts, after its layout (this check is
+     queued after the shell's own in the same delivery, so the two see the same frame) and plays the entrance from its
+     first frame: the first frame anyone sees of the page has the whole board entering, plates and bodies together.
+     Without the shell's hold (a page that changed in a short frame, Reduce Motion, no shell) go runs in the page's first
+     frame. A moment that ends meanwhile (a rapid click, leaving the page) runs go at once. ---- */
+  var ARRIVE_FRAMES = 12;
+  function arriveHold(m, go, step, frames) {
+    var after = window.PM_AFTER_LAYOUT, n = 0, cap = frames || ARRIVE_FRAMES;
+    var check = function () {
+      if (m && moment !== m) { go(false, n); return; }
+      if (step) step();
+      if (after && pageHeld() && ++n < cap) { requestAnimationFrame(function () { after(check); }); return; }
+      go(true, n);
+    };
+    requestAnimationFrame(function () { if (typeof after === 'function') after(check); else { after = null; check(); } });
+  }
+  /* ---- the unseen raster in slices (P2-03 final, F6-pre P1000 films, 2026-10-17): drawn whole under the hold, the board
+     rastered in one frame and the GPU held the compositor 0.56-1.06 s (part2's LoAF: the frame after the arrival task
+     waited that long to render with no script), so Home's lift stood still. With the shell's support (its hold lasts
+     while the arriving page carries data-pm-entrance-wait: PM_START_ON_SHOWN.entranceWait) the cards in the window
+     wait hidden (data-pmu-arrive-wait, 05-film.css) and come into the unseen draw one a frame, the hero first and in
+     parts (its plate, then each part of its body), each frame's check after its layout: a frame's raster is one card, the compositor keeps presenting the lift, and the
+     next card waits for the frame after (its commit waits for the last one's raster). The frame after the last card,
+     the wait comes off the page and the shell releases it as before. Without the shell's support (or ?pmu-slices=0)
+     the board is drawn whole as before; ?pmu-slices=1 slices without it (measurements). ---- */
+  var SLICES = (function () { var mm = /[?&]pmu-slices=([01])(?:&|#|$)/.exec(location.search); return mm ? mm[1] : null; })();
+  function arriveSliced() {
+    if (SLICES === '0') return false;
+    if (SLICES === '1') return true;
+    var s = window.PM_START_ON_SHOWN;
+    return !!(s && s.entranceWait);
+  }
+  function arriveSlices(board) {
+    var cards = PMU.board.cardsNow().filter(function (c) { return c.isConnected && inView(c); }), list = [];
+    cards.sort(function (a, b) { return (b.hasAttribute('data-hero') - a.hasAttribute('data-hero')) || (+a.dataset.y - +b.dataset.y) || (+a.dataset.x - +b.dataset.x); });
+    cards.forEach(function (c) {
+      list.push(c);
+      /* the hero (its body holds most of the first screen's programs) comes in parts: its plate without its shadow,
+         the shadow, then each part of its body in a frame of its own (arriveParts) */
+      var hero = c.hasAttribute('data-hero'), body = c.querySelector(':scope > .pmu-cardbody');
+      if (hero && body) { c.setAttribute('data-pmu-arrive-bare', ''); list.push({ bare: c }); arriveParts(body, ARRIVE_PARTS).forEach(function (k) { list.push(k); }); }
+      /* another card with a large body comes in a few parts too */
+      else if (body && body.getElementsByTagName('*').length > ARRIVE_BIG) arriveParts(body, ARRIVE_SOME).forEach(function (k) { list.push(k); });
+    });
+    list.forEach(function (x) { if (!x.bare) x.setAttribute('data-pmu-arrive-wait', ''); });
+    return list;
+  }
+  /* the hero's parts: a part of more than ARRIVE_PART elements is split into its children, in document order, until the
+     parts are small (a few programs each when cold: P1000 links are 22-71 ms each) or there are ARRIVE_PARTS of them */
+  var ARRIVE_PARTS = 8, ARRIVE_SOME = 4, ARRIVE_BIG = 40, ARRIVE_PART = 16, ARRIVE_GROW = 3, ARRIVE_FAST = 50, ARRIVE_SLOW = 90, ARRIVE_DUE = 1300;
+  function arriveParts(body, most) {
+    var parts = [body], changed = true;
+    while (changed && parts.length < most) {
+      changed = false;
+      for (var i = 0; i < parts.length; i++) {
+        var el = parts[i], kids = el.children;
+        if (!kids.length || el.getElementsByTagName('*').length <= ARRIVE_PART) continue;
+        if (parts.length - 1 + kids.length > most && parts.length > 1) continue;
+        parts.splice.apply(parts, [i, 1].concat(Array.prototype.slice.call(kids)));
+        changed = true;
+        break;
+      }
+    }
+    return parts.filter(function (x) { return x !== body; });
+  }
+  /* every card still waiting comes in now (the release, a moment that ended), and the page's wait comes off */
+  function arriveUnslice(w) {
+    if (!w) return;
+    w.slices = [];
+    var panel = document.getElementById('panel-usage');
+    if (!panel) return;
+    Array.prototype.forEach.call(panel.querySelectorAll('[data-pmu-arrive-wait], [data-pmu-arrive-bare]'), function (x) { x.removeAttribute('data-pmu-arrive-wait'); x.removeAttribute('data-pmu-arrive-bare'); });
+    panel.removeAttribute('data-pm-entrance-wait');
+  }
+  /* the board out of its wait: three attributes, no read */
   function warmShow(w, board) {
     var scroll = board.parentNode;
     if (scroll) scroll.removeAttribute('data-pmu-warm-wait');
     board.removeAttribute('data-held'); board.removeAttribute('data-hold-bodies');
-    if (PMU.board.viewNow) PMU.board.viewNow(true);
   }
-  function warmArrive(w, m, board) {
-    afterPage(function () {
-      if (moment !== m) { warmShow(w, board); Array.prototype.forEach.call(board.querySelectorAll(':scope > .pmu-card[data-body-wait]'), function (c) { c.removeAttribute('data-body-wait'); }); return; }
-      warmShow(w, board);
-      var cards = PMU.board.cardsNow();
-      /* the plates rise as in the held arrival, about 72 ms into the moment (its frames started 40 ms after a build two
-         frames into the page); a board shown later (a slow machine, the page's entrance held) moves the moment's clock
-         on, so the wave, the hero's light and the bodies play in full from here */
-      var late = since(m) - 72;
-      if (late > 0) { m.t0 += late * M.speed(); m.lag = late; }
-      w.framedAt = since(m);
-      frames(cards, { dir: 0, base: Math.max(0, 72 - w.framedAt), board: board });
-      board.setAttribute('data-film', '');
-      setTimeout(function () { warmRelease(w, m, board, cards); }, 0);
-    });
-  }
-  function warmRelease(w, m, board, cards) {
-    if (moment !== m) return;
-    cards = cards.filter(function (c) { return c.isConnected; });
-    /* measured once more where it shows (a tile one tier off renders again, entrance queued); the cards that show a
-       reading a live beat changed while the page was hidden render again too */
+  function unwaitBodies(board) { Array.prototype.forEach.call(board.querySelectorAll(':scope > .pmu-card[data-body-wait]'), function (c) { c.removeAttribute('data-body-wait'); }); }
+  /* the re-measure where the board shows (in the arrival's task: its reads lay the page out, the layout its first frame
+     would run anyway): a tile one tier off renders again, its entrance queued; the cards that show a reading a live beat
+     changed while the page was hidden render again too. A board built in this arrival's own task (w.sync) was measured
+     where it shows */
+  function warmMeasure(w, board, later) {
+    if (w.sync) return [];
+    var cards = PMU.board.cardsNow().filter(function (c) { return c.isConnected; });
     var keys = Object.keys(w.shares || {}), live = keys.length && PMU.boards && PMU.boards.live ? cards.filter(function (c) { return PMU.boards.live.hit(c, keys); }) : [];
-    try {
-      if (PMU.board.tierPass) PMU.board.tierPass(cards.filter(function (c) { var b = c.querySelector(':scope > .pmu-cardbody'); return b && b._pmuKind && live.indexOf(c) < 0; }), 'held');
-      if (live.length) PMU.board.fitSliced(function () { PMU.board.tierPass(live, 'enter'); });
-    } catch (error) { console.error('[pm-usage] warm re-measure', error); }
+    w.live = live.length;
+    if (PMU.board.tierPass) PMU.board.tierPass(cards.filter(function (c) { var b = c.querySelector(':scope > .pmu-cardbody'); return b && b._pmuKind && live.indexOf(c) < 0; }), 'held');
     if (PMU.board.viewNow) PMU.board.viewNow(true);
+    /* later: the live cards are rendered again by the caller, one a frame */
+    if (later) return live;
+    if (live.length) PMU.board.fitSliced(function () { PMU.board.tierPass(live, 'enter'); });
+    return [];
+  }
+  function warmArrive(w, m, board, app) {
+    var t0 = performance.now(), panel = document.getElementById('panel-usage');
+    warmShow(w, board);
+    board.setAttribute('data-film', '');
+    if (panel) panel.setAttribute('data-pmu-arrive', '');
+    m.wait = { at: [], timers: [], anims: [], t0: t0, slices: [], sliced: 0, sliceAt: [], sliceLog: [], made: false, measured: false, live: [], w: w, board: board, app: app };
+    M.hold(true);
+    var W = m.wait;
+    if (!arriveSliced()) {
+      /* drawn whole: measured, made and held at its middle in this task, as in F6-pre */
+      try { warmMeasure(w, board); } catch (error) { console.error('[pm-usage] warm re-measure', error); }
+      W.measured = true;
+      arriveMake(w, m, board, app);
+      arriveHold(m, function (ok, n) { arriveGo(m, n); });
+      return;
+    }
+    /* in slices (F6 P1000: the arrival task was 160-280 ms): this task only shows the board with its cards in the window
+       waiting unpainted; each of the hold's frames does one piece after its layout (where the reads cost nothing): the
+       re-measure, then each card a live beat changed while the page was hidden (rendered again, one a frame), then the
+       entrance made and held at its middle with the hero's parts marked, then the slices (arriveSlices) */
+    PMU.board.cardsNow().forEach(function (c) { if (c.isConnected && inView(c)) c.setAttribute('data-pmu-arrive-wait', ''); });
+    if (panel) panel.setAttribute('data-pm-entrance-wait', '');
+    var lastAt = 0, grow = 1;
+    arriveHold(m, function (ok, n) { arriveGo(m, n); }, function () {
+      if (m.wait !== W) return;
+      var now = performance.now();
+      if (!W.measured) {
+        W.measured = true;
+        try { W.live = warmMeasure(w, board, true); } catch (error) { console.error('[pm-usage] warm re-measure', error); }
+        return;
+      }
+      if (W.live.length) {
+        var c0 = W.live.shift();
+        try { if (c0.isConnected) PMU.board.fitSliced(function () { PMU.board.tierPass([c0], 'enter'); }); } catch (error) { console.error('[pm-usage] live re-render', error); }
+        return;
+      }
+      if (!W.made) {
+        arriveMake(w, m, board, app);
+        W.slices = arriveSlices(board); W.sliced = W.slices.length;
+        lastAt = 0;
+      }
+      /* the frame's interval since the last slice is what that slice cost (its raster, and its links when they were not
+         pre-linked): recorded per slice (last.slices: [label, ms, pre-linked by the pass]); a slice frame of under
+         ARRIVE_FAST ms lets the next frame take more (up to ARRIVE_GROW), one over ARRIVE_SLOW goes back to one, so
+         cheap slices fit in the shell's cap and dear ones stay one a frame */
+      var dt = lastAt ? now - lastAt : 0;
+      if (lastAt) {
+        (W.sliceLog[W.sliceLog.length - 1] || [])[1] = Math.round(dt);
+        grow = dt < ARRIVE_FAST ? Math.min(ARRIVE_GROW, grow + 1) : dt > ARRIVE_SLOW ? 1 : grow;
+      }
+      lastAt = now;
+      /* the shell releases the page 1.5 s after the click whatever is left (and what is left would show at once, one
+         raster burst): every frame, what remains is spread over the frames left before ARRIVE_DUE ms after the arrival
+         began, at the pace the last frame went, so a slow (cold) pass takes a few more a frame from early on instead of
+         all at once at the end */
+      var due = W.t0 + ARRIVE_DUE - now, need = 0;
+      if (W.slices.length && dt > 0) need = due <= dt ? W.slices.length : Math.ceil(W.slices.length / Math.max(1, Math.floor(due / dt)));
+      var hurry = need > grow;
+      if (W.slices.length) {
+        var names = [], pre = true;
+        var cardOf = function (x) { return x.classList && x.classList.contains('pmu-card') ? x : x.closest('.pmu-card'); };
+        for (var k = 0; k < Math.max(grow, need) && W.slices.length; k++) {
+          var x0 = W.slices[0], x = x0.bare || x0, cd = cardOf(x), linked = !!(cd && cd._pmuPrelinked);
+          /* only slices whose card the pass has linked go several a frame; a cold one goes alone (unless the release is due) */
+          if (k > 0 && !hurry && (!linked || !pre)) break;
+          W.slices.shift();
+          if (x0.bare) x.removeAttribute('data-pmu-arrive-bare'); else x.removeAttribute('data-pmu-arrive-wait');
+          names.push(cd ? (cd.getAttribute('data-widget') || 'card') + (x0.bare ? ':shadow' : x === cd ? '' : '>' + rasterName(x)) : rasterName(x));
+          pre = pre && linked;
+        }
+        W.sliceAt.push(Math.round(now - t0));
+        if (W.sliceLog.length < 60) W.sliceLog.push([names.join('+'), null, pre]);
+        return;
+      }
+      if (panel && panel.hasAttribute('data-pm-entrance-wait')) panel.removeAttribute('data-pm-entrance-wait');
+    }, ARRIVE_FRAMES + 60);
+  }
+  /* the whole entrance made, held at its start (moment.wait): its animations paused, its tweens and timers waiting */
+  function arriveMake(w, m, board, app) {
+    var c0 = performance.now();
+    m.wait.made = true;
+    m.t0 = performance.now();
+    /* a room the page shows compiles what it draws: the raster leaves it out from here */
+    rasterDone[rasterKey(m.room)] = true;
+    shellIntro(app);
+    var cards = PMU.board.cardsNow();
+    w.framedAt = 0;
+    frames(cards, { dir: 0, base: 0, board: board });
+    warmRelease(w, m, board, cards);
+    /* held at the middle of each move, not its first frame: a first frame at opacity 0 is not rastered (RTX 3090, the
+       first try: 19 links after the hold, a 225 ms frame with the page at .21 and no plate on it), so the hold shows
+       every plate, body, roll and light half way, which the GPU rasters (and links) unseen, the page at .004 over the
+       shell's held 0 and the bodies on their own layers, the ones their reveals animate (the panel's data-pmu-arrive,
+       05-film.css). arriveGo rewinds each to 0 */
+    m.anims.forEach(function (a) {
+      if (!a || !a.effect || typeof a.pause !== 'function') return;
+      try {
+        if (a.playState === 'finished' || a.playState === 'idle') return;
+        a.pause();
+        var tm = a.effect.getTiming(), ct = a.effect.getComputedTiming();
+        a.currentTime = (+tm.delay || 0) + (isFinite(ct.activeDuration) ? ct.activeDuration / 2 : 0);
+        m.wait.anims.push(a);
+      } catch (error) {}
+    });
+    if (last) last.makeMs = Math.round((performance.now() - c0) * 10) / 10;
+  }
+  /* the page's entrance starts: the board's starts with it, from its first frame */
+  function arriveGo(m, n) {
+    var w = m.wait; if (!w) return;   /* the moment ended meanwhile (unwait wrote its end states) */
+    /* released before every piece was done (the shell's cap, a short hold): the rest now, in this frame */
+    if (moment === m && !w.made) {
+      try {
+        if (!w.measured) { w.measured = true; w.live = warmMeasure(w.w, w.board, true) || []; }
+        if (w.live.length) { var lv = w.live; w.live = []; PMU.board.fitSliced(function () { PMU.board.tierPass(lv, 'enter'); }); }
+        arriveMake(w.w, m, w.board, w.app);
+      } catch (error) { console.error('[pm-usage] arrival', error); }
+    }
+    var left = w.slices ? w.slices.length : 0;
+    arriveUnslice(w);
+    m.wait = null; M.hold(false);
+    var panel = document.getElementById('panel-usage');
+    if (panel) panel.removeAttribute('data-pmu-arrive');
+    if (moment !== m) return;
+    var now = performance.now();
+    /* a page whose entrance the shell ended while it was held (its completion fallback, PM7_MOTION_FINISH, counts only
+       running moves: a hold over ~380 ms ends it and the page shows at once, RTX 3090 a5) shows now at full opacity: the
+       board goes on from half way instead of starting again from an empty frame */
+    var cut = n > 0 && !pageEntering();
+    m.holdMs = Math.round(now - w.t0); m.holdFrames = n; m.t0 = now; m.cut = cut;
+    w.anims.forEach(function (a) { try { if (a.playState === 'paused') { if (!cut) a.currentTime = 0; a.play(); } } catch (error) {} });
+    /* the same cut a frame later (the shell's fallback firing just after the release, RTX 3090 final runs: one frame
+       of a full page over plates that had only just started): checked after each layout for the entrance's first
+       250 ms, and the board's moves still short of half way jump there in that same frame */
+    if (!cut && n > 0 && typeof window.PM_AFTER_LAYOUT === 'function') {
+      var k = 0, watchCut = function () {
+        if (moment !== m || since(m) > 250 || ++k > 20) return;
+        if (pageEntering()) { requestAnimationFrame(function () { window.PM_AFTER_LAYOUT(watchCut); }); return; }
+        w.anims.forEach(function (a) {
+          try {
+            if (a.playState !== 'running') return;
+            var tm = a.effect.getTiming(), ct = a.effect.getComputedTiming(), mid = (+tm.delay || 0) + (isFinite(ct.activeDuration) ? ct.activeDuration / 2 : 0);
+            if (a.currentTime < mid) a.currentTime = mid;
+          } catch (error) {}
+        });
+        m.cut = 'late'; if (last) last.cut = 'late';
+      };
+      requestAnimationFrame(function () { window.PM_AFTER_LAYOUT(watchCut); });
+    }
+    w.timers.forEach(function (t) { m.timers.push(setTimeout(t.fn, Math.max(0, t.ms) * M.speed())); });
+    w.at.forEach(function (t) { setTimeout(t.fn, Math.max(0, t.ms) * M.speed()); });
+    /* the preset hold a mount schedules (40-board.js holdPass) waited for the arrival */
+    if (PMU.board.holdSoon) PMU.board.holdSoon(500);
+    if (last) { last.holdMs = m.holdMs; last.holdFrames = n; last.anims = w.anims.length; last.cut = cut; last.sliced = w.sliced || 0; last.sliceAt = w.sliceAt || []; last.slices = w.sliceLog || []; last.unsliced = left; }
+  }
+  /* the bodies come in with their plates (P2-03 final): each supporting body's quiet reveal starts with its own plate's
+     rise, the hero's body with its plate and its instruments and light at T3.heroAt as before; a plate never stands
+     empty, and nothing waits for a task after the first frame */
+  function warmRelease(w, m, board, cards) {
+    cards = cards.filter(function (c) { return c.isConnected; });
     m.released = true; m.heroAt = T3.heroAt; m.quietAt = m.heroAt + T3.quietGap;
     board.removeAttribute('data-pm-hover-exempt');
+    var el = since(m);
     var built = cards.filter(function (c) { var b = c.querySelector(':scope > .pmu-cardbody'); return b && b._pmuKind && c.hasAttribute('data-body-wait'); });
     built.sort(function (a, b) { return (b.hasAttribute('data-hero') - a.hasAttribute('data-hero')) || (+a.dataset.y - +b.dataset.y) || (+a.dataset.x - +b.dataset.x); });
-    /* the hero at its time with all the light; each supporting body quietly, warmLead after its plate starts to rise */
     built.forEach(function (c) {
-      if (c.hasAttribute('data-hero') || c._pmuFrameAt == null || !flag('heroRoll')) { bodyBuilt(c); return; }
-      var slot = Math.max(m.heroAt + T3.warmAfter, w.framedAt + c._pmuFrameAt + T3.warmLead);
-      c._pmuRevealAt = Math.max(slot, since(m));
-      reveal(c, { quiet: true, delay: Math.max(0, slot - since(m)) });
+      var at = c._pmuFrameAt == null ? 0 : c._pmuFrameAt;
+      if (c.hasAttribute('data-hero')) { c._pmuRevealAt = Math.max(m.heroAt, el); reveal(c, { delay: Math.max(0, m.heroAt - el), bodyAt: Math.max(0, at - el) }); return; }
+      if (!flag('heroRoll')) { bodyBuilt(c); return; }
+      c._pmuRevealAt = Math.max(at, el);
+      reveal(c, { quiet: true, delay: Math.max(0, at - el) });
     });
     deferHoverTags(T3.heroNum + T3.heroInstr + 1500);
     allBuilt(m.room, cards);
-    /* the preset hold a mount schedules (40-board.js holdPass) waited for the arrival */
-    if (PMU.board.holdSoon) PMU.board.holdSoon(500);
-    last = { room: m.room, at: Math.round(since(m)), why: 'warm', cards: cards.length, warmMs: w.ms, live: live.length };
+    last = { room: m.room, why: w.sync ? 'whole' : 'warm', cards: cards.length, warmMs: w.ms, live: w.live || 0 };
   }
-  /* Reduce Motion: the warm board shows in the frame after the click, whole, and dissolves in as the calm entry does */
+  /* Reduce Motion: the warm board shows with the page, whole, and dissolves in as the calm entry does */
   function warmCalm(w, board) {
-    afterPage(function () {
-      warmShow(w, board);
-      Array.prototype.forEach.call(board.querySelectorAll(':scope > .pmu-card[data-body-wait]'), function (c) { c.removeAttribute('data-body-wait'); });
+    var t0 = performance.now();
+    warmShow(w, board);
+    unwaitBodies(board);
+    arriveHold(null, function () {
       var keys = Object.keys(w.shares || {});
       if (keys.length && PMU.boards && PMU.boards.live) { try { PMU.board.cardsNow().forEach(function (c) { if (PMU.boards.live.hit(c, keys)) PMU.cards.update(c, 'live'); }); } catch (error) {} }
       dissolve(board);
       if (PMU.board.holdSoon) PMU.board.holdSoon(500);
-      last = { room: st.room, at: 0, why: 'warm-calm', cards: PMU.board.cardsNow().length, warmMs: w.ms };
+      last = { room: st.room, at: 0, why: w.sync ? 'whole-calm' : 'warm-calm', cards: PMU.board.cardsNow().length, warmMs: w.ms, holdMs: Math.round(performance.now() - t0) };
     });
   }
 
@@ -1985,31 +3174,27 @@
     if (!app || !board || !PMU.board) return;
     if (M.paused()) { warmDrop('paused'); finishMoment('instant'); hold = null; PMU.board.mount(st.room, {}); return; }
     var w = warmTake();
-    /* Reduce Motion: no arrival; the board is built behind what the board area shows and swapped in whole (40-board.js
-       calmSwap), from the frame after the page click (motion QA A14: built inside the click it held the old page for
-       200 ms, M3 film, Glass Light) */
+    /* the app seats the Assistant beside every non-Home page in its first frame after the page change; seating it now
+       gives the board its final width before anything is measured or built */
+    try { if (window.PM7_SHELL_ADJUSTMENTS && typeof window.PM7_SHELL_ADJUSTMENTS.seatChat === 'function') window.PM7_SHELL_ADJUSTMENTS.seatChat(); } catch (error) {}
+    /* Reduce Motion: no arrival; the board shows whole with the page and dissolves in */
     if (reduced()) {
       finishMoment('instant'); hold = null;
+      if (!w) w = arriveWhole();
       if (w) { warmCalm(w, board); return; }
       requestAnimationFrame(function () { requestAnimationFrame(function () { if (!moment && !hold) PMU.board.mount(st.room, { calmEntry: true }); }); });
       return;
     }
     var m = begin('arrive', st.room);
     deferHoverTags(4000);
-    /* the app seats the Assistant beside every non-Home page in its first frame after the page change; seating it now
-       gives the board its final width before the first slice, so the build never has to start over at a new board class */
-    try { if (window.PM7_SHELL_ADJUSTMENTS && typeof window.PM7_SHELL_ADJUSTMENTS.seatChat === 'function') window.PM7_SHELL_ADJUSTMENTS.seatChat(); } catch (error) {}
-    shellIntro(app);
     board.setAttribute('data-pm-hover-exempt', 'entering');
-    if (w) { hold = null; warmArrive(w, m, board); return; }
+    if (!w) w = arriveWhole();
+    if (w) { hold = null; warmArrive(w, m, board, app); return; }
+    /* the board could not be built here: the held build of old, in the frame after the page's entrance starts (the
+       plates enter from its first slice, each body revealed as it is built) */
+    shellIntro(app);
     var h = { board: board, room: st.room, start: performance.now(), built: false, hero: false, m: m };
     hold = h;
-    /* the board is built in the frame after the click (motion QA A14): the click's frame lays out and paints the page the
-       app just switched to, and the held mount's width read inside it forced that whole layout into the click task, then
-       built every frame on top of it (Mac: the Usage tab's click frame 132-143 ms, about 30 ms over any other page's).
-       Nothing shows a frame later than before: the shell's power-on and the frames all start from opacity 0 on delays of
-       40 ms and more. Until then the last visit's board is held hidden (data-held). The build also waits for the shell
-       to start the page's own entrance (afterPage, motion QA P2-03). */
     board.setAttribute('data-held', '');
     afterPage(function () {
       if (hold !== h || moment !== m) return;
@@ -2035,8 +3220,11 @@
     odometer: odometer, decode: decode, comet: comet, headGlow: headGlow, drop: drop, sweep: sweep, flash: flash, ring: ring, halo: halo, spring: spring,
     key: key, keyPan: keyPan, edgeAt: edgeAt, cue: cue, holding: holding, rehold: rehold, cancelHold: cancelHold, beat: beat, playBeat: playBeat, arrive: arrive,
     /* the warm arrival (motion QA P2-03) */
-    warmSoon: warmSoon, warming: warming, warmDrop: warmDrop, warmBeat: warmBeat,
-    warmState: function () { return { warm: warm ? { room: warm.room, built: warm.built, ms: warm.ms || null, box: warm.box } : null, last: warmLast }; },
+    warmSoon: warmSoon, warming: warming, warmDrop: warmDrop, warmBeat: warmBeat, warmUnhide: warmUnhide,
+    warmState: function () {
+      return { warm: warm ? { room: warm.room, built: warm.built, ms: warm.ms || null, box: warm.box, parked: !!warm.parked, hidden: !!warmA11y } : null, last: warmLast,
+        raster: rasterState() };
+    },
     deferHoverTags: deferHoverTags, last: function () { return last; }, off: off, parsePath: parsePath, yAt: yAt,
     soft: soft, innerOn: innerOn, glint: glint, combo: combo,
     /* round 3 */
