@@ -52,11 +52,14 @@
   /* a near-black screen (Retro's phosphor ground) has little light to give a dark case, so its steps are lifted up to
      a third, and read as far apart as on a grey one (round 5, Q15: Graphite and Gunmetal's Low and Medium, 4.2) */
   function dimScreen(bg) { return 1 + 0.3 * Math.max(0, Math.min(1, (0.016 - C.lum(bg)) / 0.012)); }
+  /* SSYS-051's one stored scale for the Reflection level: Off, Low, Medium and High are 0, 0.25, 0.5 and 1. A level
+     stored as a number (round 3's slider) is the nearest on it; how strongly a level draws is the renderer's own, per
+     screen (STRENGTH, GLASS), never read from the stored number (Plans top-up L3, F3-643) */
+  var SCALE = [0, 0.25, 0.5, 1];
   function levelOf(r, mat, light) {
     if (typeof r === 'number' && isFinite(r)) {
-      /* a level stored as a number (round 3's slider): the nearest */
-      var t = STRENGTH[light ? 'light' : 'dark'], best = 0;
-      for (var i = 1; i < t.length; i++) if (Math.abs(t[i] - r) < Math.abs(t[best] - r)) best = i;
+      var best = 0;
+      for (var i = 1; i < SCALE.length; i++) if (Math.abs(SCALE[i] - r) < Math.abs(SCALE[best] - r)) best = i;
       return LEVELS[best];
     }
     if (LEVELS.indexOf(r) >= 0) return r;
@@ -84,13 +87,18 @@
   function rgba(c, a) { return 'rgba(' + C.r(c) + ',' + C.g(c) + ',' + C.b(c) + ',' + a + ')'; }
   function cssVar(name) { try { return getComputedStyle(document.documentElement).getPropertyValue(name).trim(); } catch (e) { return ''; } }
 
+  /* every canvas of the case is CPU-backed (the lead's IDLE-WARM-RULE v3.5 item 2): drawn on the GPU, the rim's strokes
+     linked a StrokeTessellateOp of 127 ms on the P1000 and its rounded fills 55-71 ms each, which no warm step could
+     split; a CPU canvas is composited as a texture, a program the page has already linked */
+  function ctx2d(cv) { return cv.getContext('2d', { willReadFrequently: true }); }
+
   /* grain tiles, made once */
   var tiles = {};
   function tile(kind) {
     if (tiles[kind]) return tiles[kind];
     var cv = document.createElement('canvas'), n = kind === 'brushed' ? 256 : 96;
     cv.width = n; cv.height = kind === 'brushed' ? 32 : n;
-    var g = cv.getContext('2d'), seed = 7, rnd = function () { seed = (seed * 16807) % 2147483647; return seed / 2147483647; };
+    var g = ctx2d(cv), seed = 7, rnd = function () { seed = (seed * 16807) % 2147483647; return seed / 2147483647; };
     if (kind === 'brushed') {
       for (var y = 0; y < cv.height; y++) for (var k = 0; k < 6; k++) {
         var x = rnd() * n, l = 20 + rnd() * 120, v = rnd() < 0.5 ? 255 : 0;
@@ -224,7 +232,7 @@
       faceParts: parts(frameIn, bb), frameParts: parts([0, 0, g.w, g.h], frameIn) };
     var cv = this.cache || (this.cache = document.createElement('canvas'));
     cv.width = W; cv.height = H;
-    var ctx = cv.getContext('2d');
+    var ctx = ctx2d(cv);
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
     this._housing(ctx, g, s, this.geo);
     this.housing.width = W; this.housing.height = H;
@@ -320,7 +328,7 @@
     var bb = geo.bb;
     var make = function (region, reach, peak, corners) {
       var cv = document.createElement('canvas'); cv.width = w; cv.height = h;
-      var c = cv.getContext('2d'); c.setTransform(RS, 0, 0, RS, 0, 0); c.clip(region, 'evenodd'); c.lineJoin = 'round'; c.strokeStyle = '#fff';
+      var c = ctx2d(cv); c.setTransform(RS, 0, 0, RS, 0, 0); c.clip(region, 'evenodd'); c.lineJoin = 'round'; c.strokeStyle = '#fff';
       /* bands from the far edge inward, each adding just enough that the band ends at the curve's value */
       var N = 10, prev = 0;
       for (var i = N; i >= 1; i--) {
@@ -353,7 +361,7 @@
     var sw = 200, sh = Math.max(24, Math.round(sw * g.gh / Math.max(1, g.gw)));
     var cv = this.snap || (this.snap = document.createElement('canvas'));
     if (cv.width !== sw || cv.height !== sh) { cv.width = sw; cv.height = sh; }
-    var c = cv.getContext('2d');
+    var c = ctx2d(cv);
     c.globalCompositeOperation = 'source-over'; c.globalAlpha = 1;
     c.fillStyle = hex(this.spec.bg); c.fillRect(0, 0, sw, sh);
     try { c.drawImage(src, 0, 0, sw, sh); } catch (e) { return null; }
@@ -366,7 +374,7 @@
     var geo = this.geo, s = this.spec;
     if (!geo || !this.cache) return;
     if (!this.view.visible && !force) { this.dirty = true; return; }
-    var out = this.housing, oc = out.getContext('2d');
+    var out = this.housing, oc = ctx2d(out);
     if (out.width !== geo.W || out.height !== geo.H) { out.width = geo.W; out.height = geo.H; }
     var M = MATERIALS[s.material], strength = s.strength || 0;
     var R = M && strength > 0 && this.masks ? this._light(strength) : null;
@@ -398,7 +406,7 @@
     var w = m.direct.width, h = m.direct.height;
     var R = this.reflectCv || (this.reflectCv = document.createElement('canvas')), T2 = this.tmpCv || (this.tmpCv = document.createElement('canvas'));
     [R, T2].forEach(function (c) { if (c.width !== w || c.height !== h) { c.width = w; c.height = h; } });
-    var rc = R.getContext('2d'), tc = T2.getContext('2d');
+    var rc = ctx2d(R), tc = ctx2d(T2);
     rc.clearRect(0, 0, w, h);
     /* the mirror about each edge, folded by f: a point d inside the glass lands d/f outside it */
     var mirror = function (side, f) {
@@ -430,64 +438,62 @@
     return R;
   };
 
-  /* A case style's first showing compiled the GPU programs it draws with (the shadow-blurred rounded frames, the
-     strokes, the reflection's blurs) in the frames after the click (part2's F3.1 trace on the P1000: Monitor linked 14
-     programs, 445 ms, and no new frame came for 567 ms). warm(view): each style is drawn once, at that terminal's size
-     and with its own settings, on a stand-in view in an unseen layer inside the viewport, one style per painted frame,
-     then all of it is removed. Liquid Glass's lg-warm recipe: an ancestor at opacity 0.004 (at 0.001 the alpha rounds
-     to nothing and nothing compiles), only on the GPU tier, never in a hidden tab, while the page is busy (it goes on at
-     'pm-idle') or within 600 ms of any input */
-  var warmedBezel = {}, lastInput = 0, inputWatch = false;
+  /* A case style's first showing compiled the GPU programs it draws with in the frames after the click (part2's F3.1
+     trace on the P1000: Monitor linked 14 programs, 445 ms), and warming them at idle cost as much: one StrokeTessellateOp
+     linked in 127 ms there, which no step could split (the lead's IDLE-WARM-RULE v3.5 item 2). So the case is drawn on
+     CPU-backed canvases (ctx2d) and compiles nothing; what is left to do at idle is the first draw, which is colder than
+     the rest (29 ms against 12-19 ms on the P1000: the grain tiles and the code's first run). warm(views): one style at
+     one size, drawn once off the page in two cpu steps on the page's idle-warm queue (PM_WARM), the case and then its
+     light; a second style or size would draw nothing new. Its ids are kept per view, so a view that goes takes them with
+     it (unwarm) */
+  var warmedBezel = {}, warmIds = new WeakMap();
   function gpuTier() {
     var tier = document.documentElement.getAttribute('data-lg-tier');
     if (tier) return tier === 'gpu';
     return !!(T.FXGL && T.FXGL.probe && T.FXGL.probe());
   }
-  Bezel.warm = function (view) {
-    if (!view || !view.root || !view.root.isConnected || !T.Appearance || !gpuTier()) return;
-    if (!inputWatch) {
-      inputWatch = true;
-      ['pointerdown', 'keydown', 'wheel'].forEach(function (t) { window.addEventListener(t, function () { lastInput = T.util.now(); }, { capture: true, passive: true }); });
-    }
-    var A = T.Appearance, todo = ['rim', 'case'].map(function (style) {
-      var ap = A.peek({ api: view.api, tabAppearance: Object.assign({}, view.tabAppearance || {}, { bezel: style }), previewAppearance: null, state: {} });
-      return ap && ap.bezel && ap.bezel.style === style ? ap : null;
-    }).filter(function (ap) {
-      var b = ap.bezel, key = [b.style, b.width, b.color, b.reflect, ap.theme && ap.theme.appearance, ap.effects && ap.effects.look].join('|');
-      if (warmedBezel[key]) return false;
-      warmedBezel[key] = 1; return true;
+  Bezel.warm = function (views) {
+    views = [].concat(views || []).filter(function (view) { return view && view.root && view.root.isConnected; });
+    if (!views.length || !T.Appearance || !gpuTier() || !window.PM_WARM || warmedBezel.cold) return;
+    var A = T.Appearance, it = null;
+    views.some(function (view) {
+      return ['case', 'rim'].some(function (style) {
+        var ap = A.peek({ api: view.api, tabAppearance: Object.assign({}, view.tabAppearance || {}, { bezel: style }), previewAppearance: null, state: {} });
+        if (!ap || !ap.bezel || ap.bezel.style !== style) return false;
+        var w = Math.max(80, view.screen ? view.screen.clientWidth : 0), h = Math.max(60, view.screen ? view.screen.clientHeight : 0);
+        it = { view: view, ap: ap, w: w, h: h, dpr: (view.metrics && view.metrics.dpr) || window.devicePixelRatio || 1 };
+        return true;
+      });
     });
-    if (!todo.length) return;
-    var host = null, bz = null;
-    function done() { if (bz) bz.dispose(); if (host) host.remove(); host = bz = null; }
-    function ready() {
-      if (document.hidden) return false;
-      try { if (typeof window.PM_BUSY === 'function' && window.PM_BUSY()) return false; } catch (e) {}
-      return T.util.now() - lastInput >= 600;
-    }
-    function step() {
-      if (!view.root.isConnected) { done(); return; }
-      if (!ready()) { setTimeout(function () { idle(step); }, 400); return; }
-      var ap = todo.shift(), b = ap.bezel, w = Math.max(80, view.screen ? view.screen.clientWidth : 0), h = Math.max(60, view.screen ? view.screen.clientHeight : 0);
-      var dpr = (view.metrics && view.metrics.dpr) || window.devicePixelRatio || 1, inset = (b.width || 0) + (b.gap || 0);
-      if (!host) {
-        host = document.createElement('div');
-        host.setAttribute('aria-hidden', 'true'); host.inert = true;
-        host.style.cssText = 'position:fixed;left:0;top:0;width:' + w + 'px;height:' + h + 'px;opacity:.004;will-change:opacity;pointer-events:none;z-index:2147483000;contain:strict';
-        document.body.appendChild(host);
-        bz = new Bezel({ root: document.createElement('div'), canvas: view.canvas, visible: true, fx: null, renderer: null });
-        bz.el.style.cssText = 'position:absolute;inset:0';
-        bz.housing.style.cssText = 'position:absolute;left:0;top:0;width:100%;height:100%;display:block';
-        host.appendChild(bz.el);
-      }
-      bz.configure(b, ap);
-      bz.g = { w: w, h: h, gx: inset, gy: inset, gw: Math.max(20, w - inset * 2), gh: Math.max(20, h - inset * 2), dpr: dpr };
-      try { bz._paint(); } catch (e) { done(); return; }
-      /* kept for one painted frame, then the next style at the next idle moment */
-      requestAnimationFrame(function () { requestAnimationFrame(function () { if (todo.length) idle(step); else done(); }); });
-    }
-    function idle(fn) { if (window.requestIdleCallback) requestIdleCallback(fn, { timeout: 4000 }); else setTimeout(fn, 200); }
-    idle(step);
+    if (!it) return;
+    warmedBezel.cold = 1;
+    var ids = warmIds.get(it.view);
+    if (!ids) warmIds.set(it.view, (ids = []));
+    [{ name: 'case', light: false }, { name: 'light', light: true }].forEach(function (pt) {
+      var id = window.PM_WARM.add({ owner: 'terminal', name: 'bezel:' + it.ap.bezel.style + ':' + pt.name + '@' + it.w + 'x' + it.h, cpu: true,
+        until: function () { return !!(it.view.root && it.view.root.isConnected); },
+        run: function () {
+          var b = it.ap.bezel, w = it.w, h = it.h, inset = (b.width || 0) + (b.gap || 0), bz = null;
+          try {
+            bz = new Bezel({ root: document.createElement('div'), canvas: it.view.canvas, visible: true, fx: null, renderer: null });
+            bz.configure(b, it.ap);
+            if (!pt.light) bz.spec.strength = 0;
+            bz.g = { w: w, h: h, gx: inset, gy: inset, gw: Math.max(20, w - inset * 2), gh: Math.max(20, h - inset * 2), dpr: it.dpr };
+            bz._paint();
+          } catch (e) { /* the real draw will do it */ }
+          if (bz) bz.dispose();
+          return null;
+        } });
+      ids.push({ id: id, key: 'cold' });
+    });
+  };
+  /* a view that goes: its case steps still queued are cancelled, and what they would have drawn may be warmed again for
+     another view */
+  Bezel.unwarm = function (view) {
+    var ids = warmIds.get(view);
+    if (!ids) return;
+    warmIds.delete(view);
+    ids.forEach(function (x) { if (window.PM_WARM) window.PM_WARM.cancel(x.id); delete warmedBezel[x.key]; });
   };
   T.Bezel = Bezel;
   T.Bezel.MATERIALS = Object.keys(MATERIALS);

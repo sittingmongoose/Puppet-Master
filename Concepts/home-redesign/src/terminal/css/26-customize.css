@@ -372,9 +372,14 @@ html[data-o55-nier="on"] .pmt-cz .pmt-cz-dock { box-shadow: 0 3px 10px rgba(var(
 .pmt-cz.pmt-cz-parked { clip-path: inset(100%); pointer-events: none; }
 .pmt-cz.pmt-cz-parked > :not(.pmt-cz-dialog), .pmt-cz.pmt-cz-parked .pmt-cz-dialog > * { visibility: hidden; }
 .pmt-cz.pmt-cz-parked .pmt-bgmove { animation-play-state: paused; }
-/* drawn once at idle, unseen, so its GPU programs and tiles exist before the first click (77-customize.js rasterSoon) */
+/* built at idle a step at a time (77-customize.js, staged): a group whose step has not run yet is out of the layout */
+.pmt-cz.pmt-cz-parked .pmt-cz-group[data-cz-later] { display: none; }
+/* drawn once at idle, unseen, so its GPU programs and tiles exist before the first click (77-customize.js rasterSoon),
+   one part per step (PM_WARM): only what the part names draws (data-rw-on), less what it keeps out (data-rw-off); the
+   dialog's own surface draws in each */
 .pmt-cz.pmt-cz-parked.pmt-cz-rasterwarm { clip-path: none; opacity: .004; }
-.pmt-cz.pmt-cz-parked.pmt-cz-rasterwarm > :not(.pmt-cz-dialog), .pmt-cz.pmt-cz-parked.pmt-cz-rasterwarm .pmt-cz-dialog > * { visibility: visible; }
+.pmt-cz.pmt-cz-parked.pmt-cz-rasterwarm[data-rw] [data-rw-on] { visibility: visible; }
+.pmt-cz.pmt-cz-parked.pmt-cz-rasterwarm[data-rw] [data-rw-off] { visibility: hidden; }
 .pmt-cz.pmt-out .pmt-cz-scrim > i, .pmt-cz.pmt-out .pmt-cz-frame { animation: pmt-m-fade-out var(--pmt-t-out, 100ms) linear both; }
 .pmt-cz.pmt-out .pmt-cz-dialog { transform-origin: 50% 0; animation: var(--pmt-a-pop-out, pmt-m-fade-out) var(--pmt-t-out, 100ms) var(--pmt-ease-exit, linear) both; }
 .pmt-cz-body.pmt-rescope { animation: var(--pmt-a-rescope, pmt-m-dim-in) calc(var(--pmt-t-swap, 120ms) * 1.1) var(--pmt-ease-fade, linear) both; }
