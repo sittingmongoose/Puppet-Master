@@ -2790,6 +2790,12 @@
     if (!p || !p.getAnimations) return false;
     return p.getAnimations().some(function (a) { return a.animationName === 'pm8-page-in' && a.playState === 'paused'; });
   }
+  /* the page's own entrance is still to play or playing (not ended, not cut short) */
+  function pageEntering() {
+    var p = document.getElementById('panel-usage');
+    if (!p || !p.getAnimations || !p.classList.contains('pm8-page-in')) return false;
+    return p.getAnimations().some(function (a) { return a.animationName === 'pm8-page-in' && a.playState !== 'finished' && a.playState !== 'idle'; });
+  }
   /* the held fallback waits for that hold to end, then builds in the frame after it */
   function afterPage(fn) {
     var n = 0, after = window.PM_AFTER_LAYOUT;
@@ -2891,13 +2897,17 @@
     if (panel) panel.removeAttribute('data-pmu-arrive');
     if (moment !== m) return;
     var now = performance.now();
-    m.holdMs = Math.round(now - w.t0); m.holdFrames = n; m.t0 = now;
-    w.anims.forEach(function (a) { try { if (a.playState === 'paused') { a.currentTime = 0; a.play(); } } catch (error) {} });
+    /* a page whose entrance the shell ended while it was held (its completion fallback, PM7_MOTION_FINISH, counts only
+       running moves: a hold over ~380 ms ends it and the page shows at once, RTX 3090 a5) shows now at full opacity: the
+       board goes on from half way instead of starting again from an empty frame */
+    var cut = n > 0 && !pageEntering();
+    m.holdMs = Math.round(now - w.t0); m.holdFrames = n; m.t0 = now; m.cut = cut;
+    w.anims.forEach(function (a) { try { if (a.playState === 'paused') { if (!cut) a.currentTime = 0; a.play(); } } catch (error) {} });
     w.timers.forEach(function (t) { m.timers.push(setTimeout(t.fn, Math.max(0, t.ms) * M.speed())); });
     w.at.forEach(function (t) { setTimeout(t.fn, Math.max(0, t.ms) * M.speed()); });
     /* the preset hold a mount schedules (40-board.js holdPass) waited for the arrival */
     if (PMU.board.holdSoon) PMU.board.holdSoon(500);
-    if (last) { last.holdMs = m.holdMs; last.holdFrames = n; last.anims = w.anims.length; }
+    if (last) { last.holdMs = m.holdMs; last.holdFrames = n; last.anims = w.anims.length; last.cut = cut; }
   }
   /* the bodies come in with their plates (P2-03 final): each supporting body's quiet reveal starts with its own plate's
      rise, the hero's body with its plate and its instruments and light at T3.heroAt as before; a plate never stands
