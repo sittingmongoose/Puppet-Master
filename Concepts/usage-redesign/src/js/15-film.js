@@ -2922,6 +2922,24 @@
     var cut = n > 0 && !pageEntering();
     m.holdMs = Math.round(now - w.t0); m.holdFrames = n; m.t0 = now; m.cut = cut;
     w.anims.forEach(function (a) { try { if (a.playState === 'paused') { if (!cut) a.currentTime = 0; a.play(); } } catch (error) {} });
+    /* the same cut a frame later (the shell's fallback firing just after the release, RTX 3090 final runs: one frame
+       of a full page over plates that had only just started): checked after each layout for the entrance's first
+       250 ms, and the board's moves still short of half way jump there in that same frame */
+    if (!cut && n > 0 && typeof window.PM_AFTER_LAYOUT === 'function') {
+      var k = 0, watchCut = function () {
+        if (moment !== m || since(m) > 250 || ++k > 20) return;
+        if (pageEntering()) { requestAnimationFrame(function () { window.PM_AFTER_LAYOUT(watchCut); }); return; }
+        w.anims.forEach(function (a) {
+          try {
+            if (a.playState !== 'running') return;
+            var tm = a.effect.getTiming(), ct = a.effect.getComputedTiming(), mid = (+tm.delay || 0) + (isFinite(ct.activeDuration) ? ct.activeDuration / 2 : 0);
+            if (a.currentTime < mid) a.currentTime = mid;
+          } catch (error) {}
+        });
+        m.cut = 'late'; if (last) last.cut = 'late';
+      };
+      requestAnimationFrame(function () { window.PM_AFTER_LAYOUT(watchCut); });
+    }
     w.timers.forEach(function (t) { m.timers.push(setTimeout(t.fn, Math.max(0, t.ms) * M.speed())); });
     w.at.forEach(function (t) { setTimeout(t.fn, Math.max(0, t.ms) * M.speed()); });
     /* the preset hold a mount schedules (40-board.js holdPass) waited for the arrival */
