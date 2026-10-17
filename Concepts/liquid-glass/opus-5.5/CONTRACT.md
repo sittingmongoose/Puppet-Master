@@ -181,9 +181,9 @@ page or chapter change instead of during it. The kinds come from `WARM_CATALOG`,
 With the page's idle-warm queue (`window.PM_WARM`, shell's `11-motion-start.js`, `IDLE-WARM-RULE.md`; F6) the warm-up
 runs through that queue, as owner `glass`: each kind is a `light` step (drawn at the start of a frame, taken out in the
 first frame after it), and the scans of the page's svgs and each chart's and icon's style reads are `cpu` steps. Glass
-keeps one step queued at a time. It ends after the last kind, when the queue drops its step (the queue's session stop,
-or warming found off), or on `pm-warm-done` with no Glass step left (idempotent). With `PM_WARM.state().off` it does not
-start. Without `PM_WARM` it runs as above.
+keeps one step queued at a time, each `later: 1` (rule v3.8: after terminal's steps, before Usage's raster pass). It ends
+after the last kind, when the queue drops its step (the queue's session stop, or warming found off), or on `pm-warm-done`
+with no Glass step left (idempotent). With `PM_WARM.state().off` it does not start. Without `PM_WARM` it runs as above.
 
 The catalog keeps only the draws that link a GPU program (F6 census, both GPUs: 337 of 4,572 draws;
 `tools/warm_catalog.py --passes`). Its entries carry the passes that draw them, and seven carry a split

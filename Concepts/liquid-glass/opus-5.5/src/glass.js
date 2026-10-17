@@ -3047,7 +3047,9 @@
         if (ended) return;
         if (!queue.length) { end(); return; }
         var reads = !!queue[0].reads;
-        W.add({ owner: 'glass', name: 'lg-warm:' + (queue[0].tag || 'kind'), light: !reads && !cut, cpu: reads, run: reads ? read : draw, onLate: late });
+        /* later: 1 (IDLE-WARM-RULE v3.8): lg-warm runs when no step of a lower level is queued, so terminal's first-use
+           preparation goes first and Usage's raster pass (later: 2) after it */
+        W.add({ owner: 'glass', name: 'lg-warm:' + (queue[0].tag || 'kind'), light: !reads && !cut, cpu: reads, later: 1, run: reads ? read : draw, onLate: late });
       }
       /* a light step, at the start of a frame */
       function draw() {
