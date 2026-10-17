@@ -98,7 +98,7 @@
   /* Terminal Bell: Follow look or Off (Jared, 2026-10-16, P14); a stored Visual is Follow look (retired words below) */
   const bell = rowOf('code.terminal.bell');
   bell.choices = ['Follow look', 'Off'];
-  bell.help = 'What happens when a program rings the bell: Follow look flashes the terminal in the look’s own way, Off does nothing.';
+  bell.help = 'What happens when a program rings the bell: Follow look rings the look’s own bell, Off does nothing.';
   const font = rowOf('code.terminal.font-family');
   font.choices = FACES.map(f => f[0]);
   font.options = Object.assign({}, font.options || {}, Object.fromEntries(FACES));

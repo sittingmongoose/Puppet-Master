@@ -113,6 +113,9 @@ html[data-motion="reduced"] .pmt-bgmove, .pmt-bgmove[data-anim="still"] { animat
    adds its width to the padding, 70-view.js centres the grid in the glass), so nothing is scaled. ---- */
 .pmt-bezel { position: absolute; inset: 0; z-index: 2; pointer-events: none; }
 .pmt-bezel > canvas { position: absolute; left: 0; top: 0; width: 100%; height: 100%; display: block; }
+/* drawn on the CPU (71-bezel.js ctx2d), the case keeps the layer of its own it had on the GPU, so the text over it (the
+   sticky header) keeps the same antialiasing (the coordinator's parity bar, 2026-10-17) */
+.pmt-bezel > .pmt-bezel-housing { will-change: transform; }
 /* inside the bezel the sticky header starts at the glass, not across the frame (_placeSticky moves it under curvature) */
 .pmt-root:is([data-pmt-bezel="rim"], [data-pmt-bezel="case"]) .pmt-sticky {
   left: var(--pmt-bezel-w); right: var(--pmt-bezel-w); top: var(--pmt-bezel-w); padding-left: calc(var(--pmt-pad-x) - var(--pmt-bezel-w));

@@ -370,4 +370,18 @@ await (async () => {
   } catch (e) { console.error('FAIL a Settings amount is written back once as Flicker itself'); throw e; }
 })();
 
+/* the Reflection level stored as a number is read on SSYS-051's one scale (0, 0.25, 0.5, 1), the same on a dark or a
+   light screen; how strongly a level draws is the renderer's own (Plans top-up L3, F3-643) */
+test('a Reflection number is the nearest level on SSYS-051\'s scale, on dark and light screens alike', () => {
+  const TB = loadT(['00-core.js', '71-bezel.js'], { window: {}, document });
+  const L = (r, light) => TB.Bezel.levelOf(r, 'charcoal', 'basic', light);
+  for (const light of [false, true]) {
+    assert.equal(L(0, light), 'off'); assert.equal(L(0.1, light), 'off');
+    assert.equal(L(0.25, light), 'low'); assert.equal(L(0.3, light), 'low');
+    assert.equal(L(0.5, light), 'medium'); assert.equal(L(0.6, light), 'medium');
+    assert.equal(L(0.8, light), 'high'); assert.equal(L(1, light), 'high'); assert.equal(L(1.3, light), 'high');
+    assert.equal(L('medium', light), 'medium');
+  }
+});
+
 console.log(`customize.test: ${passed} passed`);

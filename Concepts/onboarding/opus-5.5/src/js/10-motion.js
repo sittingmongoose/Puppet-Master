@@ -105,6 +105,9 @@
     if (swAsking) return false;
     return (sw = probeHere());
   };
+  /* softwareKnown(): false while the worker has not answered, when softwareRendered()'s false means "not known yet"
+     (PM_WARM keeps only a known answer: landing review IW-1) */
+  M.softwareKnown = function softwareKnown() { return sw !== null || !swAsking; };
 
   /* sampleFrames(ms) -> Promise<{median, p90, n}>: the intervals between painted frames over a short window (it asks
      for a frame each time, so it is used once, briefly). A computer that cannot draw this page at 60 fps without a GPU
