@@ -2160,8 +2160,8 @@
         if (rasterHeld(r)) { rasterNext(r); return null; }
         if (cpu) { rasterCpu(r, need, d); rasterNext(r); return null; }
         if (r.parked) { rasterNext(r); return null; }
-        /* a card's next prefix doubles after a draw no onLate came for */
-        if (r.prev && r.prev.card && !r.prev.late) rasterPace(false);
+        /* a part's next prefix doubles after a draw no onLate came for */
+        if (r.prev && r.prev.els && !r.prev.late) rasterPace(false);
         if (!step) step = rasterTake(r);
         if (!step) { rasterNext(r); return null; }
         r.prev = step;
@@ -2583,7 +2583,7 @@
      late a second time it is dropped and recorded (warmState().raster.dropped) */
   function rasterLate(r, s) {
     rasterLog.late++;
-    if (s.card) rasterPace(true);
+    if (s.els) rasterPace(true);
     var n = (s.lates || 0) + 1;
     if (n >= 2) { if (rasterLog.dropped.length < 60) rasterLog.dropped.push(s.label); return; }
     var k = s.els ? s.els.length : 0;
