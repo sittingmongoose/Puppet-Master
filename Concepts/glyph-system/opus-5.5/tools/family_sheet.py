@@ -73,7 +73,7 @@ def main() -> int:
     data_js = 'window.PMG_DATA = ' + json.dumps(data, separators=(',', ':')).replace('</', '<\\/') + ';'
     body = '\n'.join(f'<script>\n{s}\n</script>' for s in [data_js] + [bc.guard(bc.read(p), str(p)) for p in js])
     out.parent.mkdir(parents=True, exist_ok=True)
-    out.write_text(PAGE % {'family': family, 'css': style, 'js': body}, encoding='utf-8')
+    out.write_bytes((PAGE % {'family': family, 'css': style, 'js': body}).encode('utf-8'))
     print(f'wrote {out}')
     return 0
 

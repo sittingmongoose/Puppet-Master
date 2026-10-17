@@ -1603,18 +1603,18 @@ def main() -> int:
             return 2
         out.parent.mkdir(parents=True, exist_ok=True)
         tmp = out.with_name(out.name + '.tmp')
-        tmp.write_text(built, encoding='utf-8')
-        tmp.replace(out)
         data = built.encode('utf-8')
+        tmp.write_bytes(data)
+        tmp.replace(out)
         print(json.dumps({'output': str(out), 'bytes': len(data), 'sha256': hashlib.sha256(data).hexdigest()[:16]}))
         return 0
-    TARGET.write_text(built, encoding='utf-8')
     data = built.encode('utf-8')
+    TARGET.write_bytes(data)
     summary = {'output': str(TARGET.relative_to(CONCEPTS.parent)), 'bytes': len(data),
                'sha256': hashlib.sha256(data).hexdigest()[:16],
                'base_sha256': BASE_SHA256[:16]}
     if '--publish-pm7' in sys.argv:
-        PM7_TARGET.write_text(built, encoding='utf-8')
+        PM7_TARGET.write_bytes(data)
         summary['pm7_output'] = str(PM7_TARGET.relative_to(CONCEPTS.parent))
         summary['pm7_bytes'] = len(data)
         summary['pm7_sha256'] = hashlib.sha256(data).hexdigest()
