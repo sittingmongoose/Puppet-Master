@@ -4,7 +4,7 @@ Source: `Plans/usage-feature.md`
 
 Source lines: L7298-L7468
 
-Source SHA256: `5ba340b464d4e647c2b96b714d6196494fe45c15661b49052c473df5e34442ea`
+Source SHA256: `0d73fa84016d2daedc24d761ef3151daa5f72b98e51d0aa518e6704feb7bb7e1`
 
 ---
 
@@ -110,7 +110,7 @@ canonical_text: >-
   the authoritative reading and shows the named reason, with no Usage-local threshold copy or
   adjustment algorithm. F3-628/F3-658 own the published Usage glyph consumer, including Current's
   check and Export's outbox; this projection adds no status or export command.
-  Amended 2026-10-17 (DL-221): readings a Live beat changed while Usage was hidden are drawn during the
+  Amended 2026-10-17 (DL-222): readings a Live beat changed while Usage was hidden are drawn during the
   unseen arrival, so the first board shows the latest values and does not jump from a stale board.
   Paused still holds display updates only.
 gui_related: true

@@ -4,7 +4,7 @@ Source: `Plans/UI_Command_Catalog.md`
 
 Source lines: L13685-L14783
 
-Source SHA256: `b4f438480219ca77a2a8294c40503847f21018c35902e8b30664cf66e6520abc`
+Source SHA256: `465c76a83e4aa0c324520f23d0db9eef5ae70b1cdbedd802972cb3ca753810bb`
 
 ---
 

@@ -2,9 +2,9 @@
 
 Source: `Plans/Decision_Log.md`
 
-Source lines: L14489-L16390
+Source lines: L14491-L16582
 
-Source SHA256: `713bb1f479a5d0353a527a4330b99bbad24573ab01f901bf3f4ef832ccbd8f80`
+Source SHA256: `e7f567e2c705d16048848f5f87c8ddd3e2db6ec7c2776f5e3061b3e7325e645d`
 
 ---
 
@@ -741,7 +741,7 @@ split_recommended: false
 depends_on: []
 unblocks: []
 acceptance_criteria:
-- The current consumers reference F3-658 and historical separate-set assertions are superseded.
+- "F3-630 puts the panel grip's narrow end at the top-right. F3-042 keeps the rail Chat state visible and removes the Dashboard button. F3-637, through DL-209, closes the spacing hold."
 validation_surfaces:
 - python3 scripts/pm-shard-plans.py --check
 - python3 scripts/pm-plan-index.py validate
@@ -1437,8 +1437,8 @@ source_lineage:
 preserved_exact_tokens: []
 negative_constraints: []
 stale_retired_dispositions:
-- 'Amended 2026-10-17 (DL-221): the motion fix lanes that landed after this entry, F6 included, are
-  recorded in DL-217 and DL-221.'
+- 'Amended 2026-10-17 (DL-222): the motion fix lanes that landed after this entry, F6 included, are
+  recorded in DL-217 and DL-222.'
 owner_hints:
 - Plans/Decision_Log.md
 ```
@@ -1501,10 +1501,10 @@ source_lineage:
 preserved_exact_tokens: []
 negative_constraints: []
 stale_retired_dispositions:
-- 'Amended 2026-10-17 (DL-218, DL-219): no lower-spec tier is added, and concept performance work stops
+- 'Amended 2026-10-17 (DL-219, DL-220): no lower-spec tier is added, and concept performance work stops
   at not horribly slow. The P1000 reading in ACD-475 stands. It read: the P1000 speed-up work continues
   separately.'
-- 'Amended 2026-10-17 (DL-222): fade-first is the later landing of the frost crossfade. It read: its
+- 'Amended 2026-10-17 (DL-223): fade-first is the later landing of the frost crossfade. It read: its
   implementation lands in a later lane.'
 owner_hints:
 - Plans/Decision_Log.md
@@ -1628,18 +1628,18 @@ source_lineage:
 preserved_exact_tokens: []
 negative_constraints: []
 stale_retired_dispositions:
-- 'Amended 2026-10-17 (DL-221, DL-222): F6, landed on main at 6a3ee2fe90, is recorded in DL-221, and
-  fade-first in DL-222. This entry stays the record of the lanes through L2.'
+- 'Amended 2026-10-17 (DL-222, DL-223): F6, landed on main at 6a3ee2fe90, is recorded in DL-222, and
+  fade-first in DL-223. This entry stays the record of the lanes through L2.'
 owner_hints:
 - Plans/Decision_Log.md
 ```
 
 ContractRef: ContractName:Plans/DRY_Rules.md#DR-073, ContractName:Plans/FinalGUISpec.md#F3-628, ContractName:Plans/FinalGUISpec.md#F3-653, ContractName:Plans/assistant-chat-design.md#ACD-475, ContractName:Plans/FinalGUISpec.md#F3-077, ContractName:Plans/FinalGUISpec.md#F3-598, ContractName:Plans/FinalGUISpec.md#F3-650, ContractName:Plans/FinalGUISpec.md#F3-652, ContractName:Plans/Settings_System.md#SSYS-053, ContractName:Plans/Test_Capture_and_Motion_Evidence.md#TCME-007
 
-### DL-218 - No Platform-Specific Solutions
+### DL-219 - No Platform-Specific Solutions
 
 ```yaml
-plan_unit_id: DL-218
+plan_unit_id: DL-219
 unit_type: decision
 status: accepted
 owner_doc: Plans/Decision_Log.md
@@ -1688,10 +1688,10 @@ owner_hints:
 
 ContractRef: ContractName:Plans/assistant-chat-design.md#ACD-475
 
-### DL-219 - The Concept Is Not Production
+### DL-220 - The Concept Is Not Production
 
 ```yaml
-plan_unit_id: DL-219
+plan_unit_id: DL-220
 unit_type: decision
 status: accepted
 owner_doc: Plans/Decision_Log.md
@@ -1734,10 +1734,10 @@ owner_hints:
 
 ContractRef: ContractName:Plans/assistant-chat-design.md#ACD-475
 
-### DL-220 - Q22 Closed As Best Effort
+### DL-221 - Q22 Closed As Best Effort
 
 ```yaml
-plan_unit_id: DL-220
+plan_unit_id: DL-221
 unit_type: decision
 status: accepted
 owner_doc: Plans/Decision_Log.md
@@ -1785,10 +1785,10 @@ owner_hints:
 
 ContractRef: ContractName:Plans/assistant-chat-design.md#ACD-475, ContractName:Plans/Automated_Testing_System.md#ATS-077
 
-### DL-221 - F6 Landed
+### DL-222 - F6 Landed
 
 ```yaml
-plan_unit_id: DL-221
+plan_unit_id: DL-222
 unit_type: decision
 status: accepted
 owner_doc: Plans/Decision_Log.md
@@ -1802,10 +1802,10 @@ canonical_text: >-
   opacity it has reached (F3-464). Entering Usage never shows a blank or empty board; plates and
   bodies arrive together, and a room change hands off at the new room's first drawn frame (F3-628).
   NieR's page-wipe band covers at the release of the hold, not during it (F3-464). Idle preparation
-  is the one rule in ACD-475, the same on every machine (DL-218). Terminal Customize is prepared
+  is the one rule in ACD-475, the same on every machine (DL-219). Terminal Customize is prepared
   under that rule so it opens already drawn, and the bezel's look is unchanged (F3-650, F3-643).
   A pick shows on its control before the write (ACD-475, F3-650). Glass's warm-up follows the same
-  rule and changes no Glass look (F3-652). Wallpaper fade-first is DL-222 (F3-653, DR-073).
+  rule and changes no Glass look (F3-652). Wallpaper fade-first is DL-223 (F3-653, DR-073).
   Reopening Customize reports a failed or empty open as an error, not only a toast (F3-650). The
   editor sheet's opening pass-through, and focus while a surface is drawn unseen, are proposed
   pending Jared in F3-650 and ACD-475. F6 brings the concept's Bell help and bezel reflection scale
@@ -1858,10 +1858,10 @@ owner_hints:
 
 ContractRef: ContractName:Plans/assistant-chat-design.md#ACD-475, ContractName:Plans/FinalGUISpec.md#F3-628, ContractName:Plans/FinalGUISpec.md#F3-464, ContractName:Plans/FinalGUISpec.md#F3-650, ContractName:Plans/FinalGUISpec.md#F3-643, ContractName:Plans/FinalGUISpec.md#F3-652, ContractName:Plans/FinalGUISpec.md#F3-653, ContractName:Plans/DRY_Rules.md#DR-073, ContractName:Plans/UI_Wiring_Rules.md#UIW-043
 
-### DL-222 - Wallpaper Fade-First
+### DL-223 - Wallpaper Fade-First
 
 ```yaml
-plan_unit_id: DL-222
+plan_unit_id: DL-223
 unit_type: decision
 status: accepted
 owner_doc: Plans/Decision_Log.md
@@ -1910,3 +1910,193 @@ owner_hints:
 ```
 
 ContractRef: ContractName:Plans/FinalGUISpec.md#F3-653, ContractName:Plans/DRY_Rules.md#DR-073, ContractName:Plans/Decision_Log.md#DL-216
+
+
+### DL-224 - The Whole System Should Wow People
+
+```yaml
+plan_unit_id: DL-224
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: >-
+  Recorded 2026-10-17. Jared, 2026-10-10: "this whole system should WOW people. The glyphs, the
+  glass, the hover effects, the animations and motion everywhere, the widgets, dragging and dropping
+  effects, the terminal, themes, everything. This should look like a polished high budget production
+  software." The same note says never cut polish, effects or scope to save a budget. ACD-475's motion
+  bar is unchanged and is not a licence to drop an effect. This is not a per-machine rule. DL-219
+  still refuses a platform-specific tier. Concept evidence is not native certification.
+gui_related: true
+gui_classification_reason: The Whole System Should Wow People.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- The linked owners agree with this decision; source publication is not native certification.
+validation_surfaces:
+- python3 scripts/pm-shard-plans.py --check
+- python3 scripts/pm-plan-index.py validate
+- python3 scripts/pm-plans-verify.py run-gates
+risk_class: owner_drift
+reasoning_tier: high
+context_scope: product_quality_bar
+implementation_surfaces:
+- Plans/Decision_Log.md
+node_compile_hint:
+  mode: owner_decision_record
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- /mnt/Cursor/share/puppet-master/2026-10-10-design-consistency-threads/README.md,
+  SHA-256 8fa64025997bb65cbd95f0ebebca59984d882aa097fdd6f550ffa126618e4c1b (Jared, 2026-10-10, the
+  quality bar; decision lineage)
+preserved_exact_tokens:
+- "this whole system should WOW people"
+negative_constraints: []
+owner_hints:
+- Plans/Decision_Log.md
+```
+
+ContractRef: ContractName:Plans/assistant-chat-design.md#ACD-475, ContractName:Plans/GUI_Rebuild_Requirements_Checklist.md#GRRC-041, ContractName:Plans/Decision_Log.md#DL-219
+
+### DL-225 - Friendly Takes Its Cues From Handheld And Console Menus
+
+```yaml
+plan_unit_id: DL-225
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: >-
+  Recorded 2026-10-17. Jared, 2026-10-11: "keep in mind the friendly theme is based on the original
+  DS, 3DS, wii, Wiiu menu styles and feel. Also the cocoon shell front end. and https://iisu.network/."
+  Every new Friendly surface takes its cues from that direction. F3-647's Friendly row records it.
+  Friendly wallpapers and Usage keep their own owners. Concept evidence is not native certification.
+gui_related: true
+gui_classification_reason: Friendly Takes Its Cues From Handheld And Console Menus.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- The linked owners agree with this decision; source publication is not native certification.
+validation_surfaces:
+- python3 scripts/pm-shard-plans.py --check
+- python3 scripts/pm-plan-index.py validate
+- python3 scripts/pm-plans-verify.py run-gates
+risk_class: owner_drift
+reasoning_tier: high
+context_scope: friendly_design_direction
+implementation_surfaces:
+- Plans/Decision_Log.md
+node_compile_hint:
+  mode: owner_decision_record
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- /mnt/Cursor/share/puppet-master/2026-10-13-glass-review-feedback/PARTY-ONBOARDING-ART-GLASS-GO.md,
+  SHA-256 27c060986ce65fee12cf0eac1e6d7365f487300b8a06cee9c374b22316f1eefa (Jared, 2026-10-11,
+  Friendly design direction; decision lineage)
+preserved_exact_tokens:
+- "the friendly theme is based on the original DS, 3DS, wii, Wiiu menu styles and feel"
+negative_constraints: []
+owner_hints:
+- Plans/Decision_Log.md
+```
+
+ContractRef: ContractName:Plans/FinalGUISpec.md#F3-647
+
+### DL-226 - Glass Carry Holds A Pre-Painted Frost
+
+```yaml
+plan_unit_id: DL-226
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: >-
+  Recorded 2026-10-17. On 2026-10-11 Jared chose Glass carry A, frost while carrying, rather than
+  accepting about 30 fps. While a widget plate is carried on a board, on the Usage page or a Home
+  dashboard tab, in Glass, the resting plates hold a pre-painted frost instead of live blur. At rest
+  the frost looks the same. The concept narrowed the choice to those plates and reported that
+  narrowing. F3-652 owns the one line. This is not a platform threshold and adds no setting.
+  Concept evidence is not native certification.
+gui_related: true
+gui_classification_reason: Glass Carry Holds A Pre-Painted Frost.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- The linked owners agree with this decision; source publication is not native certification.
+validation_surfaces:
+- python3 scripts/pm-shard-plans.py --check
+- python3 scripts/pm-plan-index.py validate
+- python3 scripts/pm-plans-verify.py run-gates
+risk_class: owner_drift
+reasoning_tier: high
+context_scope: glass_carry_frost
+implementation_surfaces:
+- Plans/Decision_Log.md
+node_compile_hint:
+  mode: owner_decision_record
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- /mnt/Cursor/share/puppet-master/2026-10-09-home-panels-terminal/STATUS-planner.md,
+  SHA-256 7d367d3e117bc2bed033890abd6598bc28a7f9b82d528fd768ea10fd1d8bb1a8 (Jared chose Glass carry
+  A, frost while carrying, 2026-10-11 05:47 UTC; decision lineage)
+preserved_exact_tokens:
+- "frost while carrying"
+negative_constraints: []
+owner_hints:
+- Plans/Decision_Log.md
+```
+
+ContractRef: ContractName:Plans/FinalGUISpec.md#F3-652
+
+### DL-227 - Ctrl+Shift+D Is Reserved For Readiness And Doctor
+
+```yaml
+plan_unit_id: DL-227
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: >-
+  Recorded 2026-10-17. Jared, 2026-10-14: Ctrl+Shift+D is left to Readiness & Doctor. No shortcut
+  opens Demo Studio (DL-185). The chord is not the Home dashboard reveal. That earlier use, the
+  FinalGUISpec shortcut table under DL-180, is retired. The dashboard still opens from the plus
+  menu (F3-634, F3-638). The chord stays unbound until Readiness & Doctor's owner registers the
+  command. This adds no command id. Concept evidence is not native certification.
+gui_related: true
+gui_classification_reason: Ctrl+Shift+D Is Reserved For Readiness And Doctor.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- "The shortcut table reserves Ctrl+Shift+D for Readiness & Doctor and does not bind it to the dashboard reveal or to Demo Studio."
+validation_surfaces:
+- python3 scripts/pm-shard-plans.py --check
+- python3 scripts/pm-plan-index.py validate
+- python3 scripts/pm-plans-verify.py run-gates
+risk_class: owner_drift
+reasoning_tier: high
+context_scope: readiness_doctor_shortcut
+implementation_surfaces:
+- Plans/Decision_Log.md
+node_compile_hint:
+  mode: owner_decision_record
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Concepts/onboarding/opus-5.5/DEMO_STUDIO.md, SHA-256
+  538efe846c8bcb29a397a7f692166119cf2aa80ca6bbeff407688fc947babc29 (Jared, 2026-10-14, Ctrl+Shift+D
+  is left to Readiness & Doctor; decision lineage)
+- /mnt/Cursor/share/puppet-master/2026-10-14-demo-studio-follow-ups/NOTES.md, SHA-256
+  abefcca89c23094da8cd7fb31f8454dbb2e5c5bf96666f88611b652f079a0073 (nothing yet binds Doctor's
+  chord; source lineage)
+preserved_exact_tokens:
+- "Ctrl+Shift+D is left to Readiness & Doctor"
+negative_constraints:
+- "Do not open Demo Studio with Ctrl+Shift+D."
+owner_hints:
+- Plans/Decision_Log.md
+```
+
+ContractRef: ContractName:Plans/FinalGUISpec.md#F3-634, ContractName:Plans/Decision_Log.md#DL-180, ContractName:Plans/Decision_Log.md#DL-185

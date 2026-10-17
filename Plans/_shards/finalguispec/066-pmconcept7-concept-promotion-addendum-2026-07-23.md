@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L33006-L33824
+Source lines: L33008-L33826
 
-Source SHA256: `9c372c7e6ac9f213f61440d36a389f2a0dbfda51831d50b70dbe8b99fde71af1`
+Source SHA256: `7447a70c27f340391d4bbf7f970101f60e40edebe03c9791cb81804ba977eebf`
 
 ---
 
@@ -318,7 +318,7 @@ canonical_text: >-
   tinted chip. In NieR Mode a page change erases the leaving page and wipes the entering one in; the empty
   beat between the erase and the wipe-in is at most 50 ms, and the wipe-in may start as the erase ends
   (Jared, 2026-10-16). Reduced Motion still skips the page animation.
-  Amended 2026-10-17 (DL-221): the page-change hold is ACD-475's, and this unit does not keep a second
+  Amended 2026-10-17 (DL-222): the page-change hold is ACD-475's, and this unit does not keep a second
   one. While a hold waits, in Basic, Friendly and Glass the leaving page's click fade keeps moving and
   never stands on a still frame; the exit fade starts from the opacity that fade has reached, not from
   full opacity. Retro steps through the same shape. NieR and Reduce Animations make no fade. NieR's

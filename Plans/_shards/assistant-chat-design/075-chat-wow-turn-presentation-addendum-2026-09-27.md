@@ -2,9 +2,9 @@
 
 Source: `Plans/assistant-chat-design.md`
 
-Source lines: L26060-L26701
+Source lines: L26060-L26702
 
-Source SHA256: `abf696e5c1cf3140745486c0b2855b9f892979eb203c6ee33c7a890c49597830`
+Source SHA256: `61d2994663577ecce10c470a704bacfaa3f5a9fc1d6ef3017f8837150b232036`
 
 ---
 
@@ -529,7 +529,7 @@ canonical_text: >-
   late starts from its beginning once frames come on time again, at most six frames later or until a
   page-change hold ends, so no move is spent before it is seen. In the concept these are PM_BUSY, the pm-idle event, PM_LOOK_COVERED and
   PM_START_ON_SHOWN.
-  Amended 2026-10-17 (DL-218, DL-221): a page change may hold while the arriving page is still drawing
+  Amended 2026-10-17 (DL-219, DL-222): a page change may hold while the arriving page is still drawing
   its first screen. The leaving page stays, with the click's motion still running, until the arrival is
   ready or about 1.5 s from the click's own frame, whichever is first; then the exit and the entrance
   play from the start. That hold is the covering transition this bar allows, and the bar itself is
@@ -545,11 +545,12 @@ canonical_text: >-
   than hitching again; repeated late steps stop it for the session. It is best effort: dropping it
   never loses the screen. Preparation for a surface's next first use comes before speculative warm-up.
   Queued preparation is dropped when its surface goes away. The rule is the same on every machine
-  (DL-218). Having no GPU is the existing capability path, not a lower-spec tier. Concept performance
-  work stops at "not horribly slow" (DL-219); that bound does not replace this bar.
+  (DL-219). Having no GPU is the existing capability path, not a lower-spec tier. Concept performance
+  work stops at "not horribly slow" (DL-220); that bound does not replace this bar.
+  During a page-change hold the leaving page stays the interactive page until release.
+  The quality bar is DL-224. Polish, effects and scope are not cut to save a budget.
   Proposed, pending Jared: a surface drawn unseen for preparation stays out of the focus order and the
-  accessibility tree until it is shown, and focus that lands in it returns where it came from. During
-  a page-change hold the leaving page stays the interactive page until release.
+  accessibility tree until it is shown, and focus that lands in it returns where it came from.
 gui_related: true
 gui_classification_reason: "Defines per-theme motion and the chat's sound cues."
 split_recommended: false
@@ -574,7 +575,7 @@ acceptance_criteria:
     the click's own frame, and the entrance then plays from the start. The hold is a covering transition;
     the bar is unchanged. NieR holds and makes no fade. Under Reduce Animations, and under a cover, the
     page arrives whole and is not held. A held or not-yet-shown move is not finished, cleaned up or
-    cancelled as it starts.
+    cancelled as it starts. During the hold the leaving page stays the interactive page until release.
   - A heavy pick shows its new state on the control in the input's own frame; the write or redraw follows,
     the latest pick wins, and a waiting write is applied before another input, a paint or a close.
   - "Idle preparation is one rule. It causes no visible hitch, runs only while the page is visible, the busy signal is empty, the user is idle and nothing is animating, backs off and drops a late step, is best effort, puts first use before speculative warm-up, and is the same on every machine. No GPU is a capability path, not a lower-spec tier."

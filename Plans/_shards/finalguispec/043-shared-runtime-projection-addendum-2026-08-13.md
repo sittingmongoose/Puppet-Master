@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L5592-L27127
+Source lines: L5592-L27129
 
-Source SHA256: `9c372c7e6ac9f213f61440d36a389f2a0dbfda51831d50b70dbe8b99fde71af1`
+Source SHA256: `7447a70c27f340391d4bbf7f970101f60e40edebe03c9791cb81804ba977eebf`
 
 ---
 
@@ -4221,6 +4221,8 @@ canonical_text: >-
   and Basic share Inter so switches between them may be live. Auto presentation mode
   follows the same within-family live rule: when the OS appearance (prefers-color-scheme)
   changes, the selected family resolves to its other variant instantly with no restart.
+  Proposed, pending Jared: a family switch is live under that look's cover (DL-216), and the restart
+  sentence above is the leftover. The cover is not limited to same-family and Auto switches.
   Superseded lineage
   (2026-07-16, kept findable): the prior rule named restart for font family changes between
   Retro and Basic and kept Basic one built-in theme family.

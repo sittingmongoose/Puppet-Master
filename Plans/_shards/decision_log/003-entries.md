@@ -2,9 +2,9 @@
 
 Source: `Plans/Decision_Log.md`
 
-Source lines: L13-L4289
+Source lines: L13-L4291
 
-Source SHA256: `713bb1f479a5d0353a527a4330b99bbad24573ab01f901bf3f4ef832ccbd8f80`
+Source SHA256: `e7f567e2c705d16048848f5f87c8ddd3e2db6ec7c2776f5e3061b3e7325e645d`
 
 ---
 
@@ -3719,6 +3719,8 @@ ContractRef: ContractName:Plans/usage-feature.md#UF-107, ContractName:Plans/Fina
 - Plans & limits grows longer for someone with many accounts.
 
 **Options considered:** For the room's actions: a read-only room with links to Settings, or acting in place; Jared chose acting in place, wired to Settings. For auto-switch: one global policy with a project override, the spec's earlier state, or one policy per provider; Jared chose per provider. The coordinator ruled the details: the provider scope covers the toggle, the switch level, the warning level and the cooldown; the global value is the default for all four, so the cooldown, which had only a per-account value, gains a global one; the Usage card hosts the toggle and the switch level, as the AI Account Center's provider sections do, while all four stay editable in Settings; and the Usage card and Settings edit one value through the Settings owner. These are the coordinator's rulings on Jared's request, not his own answers.
+
+**Follow-up 2026-10-17 (D43):** Jared, 2026-10-10, "account cards get switches". Each account card also carries that account's switch level, the same value as the Settings account-level row. SSYS-044 and UF-107 already own the behaviour. Source `/mnt/Cursor/share/puppet-master/2026-10-09-home-panels-terminal/DECISIONS-ADDENDUM-3.md`, SHA-256 `ecd18c2f2d8ac8f714f9578170d321584fb871e3d19601a68061898ffd6759a9`.
 
 **What Jared asked (2026-10-01 and 2026-10-09):** on 2026-10-01, answering the open question on what the Accounts room can do: act in place, wired to Settings, with Use this account as a labelled override and the auto-switch toggle and threshold as the same live controls as in Settings. Also on 2026-10-01: every provider name on the Usage page comes from the provider catalog of Settings, and the Accounts room reads the same roster as Settings so that both pages always agree. His demo roster (four Claude accounts, three Codex accounts and the other providers he uses, with made-up identities) is concept fixture data only. On 2026-10-09: auto-switch settings per provider, and every account of a provider shown in Plans & limits.
 

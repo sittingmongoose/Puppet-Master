@@ -1995,7 +1995,7 @@ ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Fin
 
 | Shortcut | Action |
 |----------|--------|
-| `Ctrl+Shift+D` | Reveal the Home dashboard tab (`dashboard:home`) where it is (F3-634, F3-638; amended 2026-10-09, DL-180: the Dashboard is a tab, not a toggled surface) |
+| `Ctrl+Shift+D` | Reserved for Readiness & Doctor (Jared, 2026-10-14, DL-227). Not Demo Studio's, and no longer the Home dashboard reveal. Unbound until that owner registers it. The dashboard still opens from the plus menu (F3-634, F3-638). |
 | `Ctrl+Shift+\` | Detach/re-dock the active detachable side panel; while focus is in the home centre, split the focused panel down (F3-635; terminal sections are retired, amended 2026-10-09, DL-180) |
 | `Alt+Up/Down` | Cycle through chat threads |
 | `Ctrl+Shift+C` | Compact current session |
@@ -2189,7 +2189,7 @@ Amended 2026-10-09 (DL-180): Home's panels, tabs and chat column persist in the 
 
 | Theme Family | Variants | Signature Effects | Target Audience |
 |-------|--------|--------------|----------------|
-| **Friendly** | 2 (Friendly Dark, Friendly Light) | Cozy: Poppins/Nunito, paper ground + 18px dot grid, category pastel tints, frosted chrome blur limited to title/status/bottom bars | Warm, approachable experience |
+| **Friendly** | 2 (Friendly Dark, Friendly Light) | Cozy: Poppins/Nunito, paper ground + 18px dot grid, category pastel tints, frosted chrome blur limited to title/status/bottom bars. Design cues, Jared 2026-10-11 (DL-225): original DS, 3DS, Wii and Wii U menus, the Cocoon shell, and iisu.network | Warm, approachable experience |
 | **Glass** | 2 (Glass Dark, Glass Light) | One-pane glass slab: single backdrop blur over a pre-blurred wallpaper asset, alpha-derived transparency steps, glass-alpha slider, background modes mesh/depth/minimal | Users who want the translucent composition |
 | **Retro** | 2 (Retro Dark, Retro Light) | Full: pixel grid, paper texture, scanlines (dark) or reduced opacity (light), hard shadows, sharp corners, IBM Plex Mono | Users who love the original aesthetic |
 | **Basic** (factory seed: Basic Dark) | 2 (Basic Dark, Basic Light) | None: flat colors, subtle borders, rounded corners, Inter | Accessibility, readability, reduced visual noise |
@@ -9802,6 +9802,8 @@ canonical_text: >-
   and Basic share Inter so switches between them may be live. Auto presentation mode
   follows the same within-family live rule: when the OS appearance (prefers-color-scheme)
   changes, the selected family resolves to its other variant instantly with no restart.
+  Proposed, pending Jared: a family switch is live under that look's cover (DL-216), and the restart
+  sentence above is the leftover. The cover is not limited to same-family and Auto switches.
   Superseded lineage
   (2026-07-16, kept findable): the prior rule named restart for font family changes between
   Retro and Basic and kept Basic one built-in theme family.
@@ -33313,7 +33315,7 @@ canonical_text: >-
   tinted chip. In NieR Mode a page change erases the leaving page and wipes the entering one in; the empty
   beat between the erase and the wipe-in is at most 50 ms, and the wipe-in may start as the erase ends
   (Jared, 2026-10-16). Reduced Motion still skips the page animation.
-  Amended 2026-10-17 (DL-221): the page-change hold is ACD-475's, and this unit does not keep a second
+  Amended 2026-10-17 (DL-222): the page-change hold is ACD-475's, and this unit does not keep a second
   one. While a hold waits, in Basic, Friendly and Glass the leaving page's click fade keeps moving and
   never stands on a still frame; the exit fade starts from the opacity that fade has reached, not from
   full opacity. Retro steps through the same shape. NieR and Reduce Animations make no fade. NieR's
@@ -36690,11 +36692,11 @@ canonical_text: >-
   (`cmd.chat.eli5.explain_reply`), which adds one extra, simpler reply after the example answer and never rewrites or
   regenerates the original; the callout then points to the quick dot by the message box, which makes later replies
   simple, and names the ELI5 popup behind the wand's ELI5 row (the ELI5 sheet, F3-581), where the chat's choice is set
-  (DL-126, ACD-484). Workspace practice explains navigation and panels, asks the
-  learner to move/dock Chat and use a real widget, and shares state across docked/undocked views. Every important
+  (DL-126, ACD-484). Workspace practice explains navigation and panels and follows the
+  workspace chapter named in the 2026-10-09 amendment below (PWIZ-035). Every important
   action offers Try it and Show Me; both invoke the same mounted owner handler and satisfy the same observed success
   predicate. Show Me uses interruptible pre-cue, visible travel, destination reaction, and settle, never teleportation
-  or a second implementation. Planning Wizard owns at least half of meaningful actions and dwell time: a book-club
+  or a second implementation. Planning Wizard owns at least half of meaningful actions and dwell time. Proposed, pending Jared: the accepted 20-step tour measures Planning at 44 percent of actions and 49 percent of dwell, so this half bar is not met and is not waived. A book-club
   goal becomes three outcomes, the learner answers who may edit, sees why it matters, reviews decisions/assumptions/
   unresolved choices, edits one answer, and watches only the affected shared-access consequence change before the
   approval boundary. Teacher retains a broad discoverable beginner question library. ELI5 remains beside Pause and Skip and is called
@@ -41634,8 +41636,9 @@ canonical_text: >-
   dark themes and a dark puck on light themes, rimmed in the current phase's hue, with the subject's glyph lit in that
   hue (DL-142). The live glyph plays its act while the run runs, and the node keeps its pop and pulse ring. Finished
   subjects are lit green (positive ink with a faint done halo on a neutral tile) and never act; pending subjects sit
-  at rest; only the live node and the current strip or rail disc ever act. A failed subject's flag is the warning
-  triangle, and a subject waiting for the reader shows the needs-you mark as its flag and in the centre disc (F3-585).
+  at rest; only the live node and the current strip or rail disc ever act. A failed subject's flag is the failed
+  mark, the shared ring with a cross; the triangle means warning (F3-585, F3-658, D44). A subject waiting for the
+  reader shows the needs-you mark as its flag and in the centre disc (F3-585).
   The compact strip and the Step Rail follow the same rule: the current disc is a dark disc with its glyph lit, and
   finished discs are lit green. Under NieR Mode the disc is ink with a paper glyph and its pulse steps.
 gui_related: true
@@ -41669,7 +41672,8 @@ negative_constraints:
   - "Do not draw the live node as a filled accent disc with a dark glyph."
   - "Do not give a finished or pending node an act."
 compatibility_only_notes: []
-stale_retired_dispositions: []
+stale_retired_dispositions:
+  - "Amended 2026-10-17 (D44, F3-658): a failed subject's flag is the failed mark, the shared ring with a cross. It read: the warning triangle."
 owner_hints:
   - Plans/FinalGUISpec.md
 ```
@@ -44200,7 +44204,7 @@ canonical_text: >-
   with no snap-back and no glimpse of the cancelled room; in NieR and Retro, whose handover erases the
   board, the cancel reverses the wipe instead of erasing the board to empty ground and rebuilding it
   (Jared, 2026-10-16).
-  Amended 2026-10-17 (DL-221): entering Usage never shows a blank or empty board, empty plates, or
+  Amended 2026-10-17 (DL-222): entering Usage never shows a blank or empty board, empty plates, or
   Home's panels blanked. The page change uses ACD-475's hold until the board is drawn; the entrance
   then plays from the start with plates and bodies together. Whatever is not drawn by the cap shows at
   once. Idle preparation of the first screen, then of Costs and Accounts, is ACD-475's and best effort;
@@ -44211,7 +44215,7 @@ canonical_text: >-
   frame, not when its chrome is inserted; the old room stands whole until then, and Retro and NieR erase
   at that hand-off. A rapid click, leaving the page, Reduce Motion or no GPU hands off at once. The
   hero's about 200 ms landing stays the room-change floor, counted from the new room's first drawn
-  frame when a hand-off waited for that frame. A cold first entry's longer hold is parked (DL-220),
+  frame when a hand-off waited for that frame. A cold first entry's longer hold is parked (DL-221),
   not a pass of that floor.
 gui_related: true
 gui_classification_reason: Defines the look, menus, marks, heroes, charts, previews, hover and motion of the redesigned Usage page.
@@ -47084,7 +47088,7 @@ canonical_text: >-
   lowest text contrast 4.78:1 in the concept); that is concept evidence, not native certification.
   Plans/terminal_background_catalog.schema.json validates the catalog's closed finite-data shape;
   scripts/pm7-canon-check.py checks unique ids, choices and defaults against the Settings rows.
-  Amended 2026-10-17 (DL-221): a design or scheme already previewed by hover stays shown through the
+  Amended 2026-10-17 (DL-222): a design or scheme already previewed by hover stays shown through the
   pick's frame, and the preview ends only with the write, so the old ground is never drawn between the
   preview and the pick.
 gui_related: true
@@ -47338,7 +47342,7 @@ canonical_text: >-
   phosphor trail and no smooth scrolling; NieR ink line with blink, Trace only with its Scan sweep
   part and no smooth scrolling. F3-651 owns editor-specific jump motion and trail triggers; this
   shared voice never forces terminal output to animate.
-  Amended 2026-10-17 (DL-221): idle preparation of Terminal Customize (ACD-475) does not change this
+  Amended 2026-10-17 (DL-222): idle preparation of Terminal Customize (ACD-475) does not change this
   bezel's look.
 gui_related: true
 gui_classification_reason: Defines the terminal's visible effects, their defaults and the policy that limits when they run.
@@ -47898,7 +47902,7 @@ canonical_text: >-
   own ranges (SSYS-051). Ligatures is not offered while letters are spaced: it shows Needs letter
   spacing 0 and returns at spacing 0. A field shows only where it draws (SSYS-051's visibility
   amendment lists the Settings side).
-  Amended 2026-10-17 (DL-221): Terminal Customize, and the editor's Customize sheet, are prepared at idle
+  Amended 2026-10-17 (DL-222): Terminal Customize, and the editor's Customize sheet, are prepared at idle
   under ACD-475 so a click is answered by the frame it paints and the screen comes in on the next frame
   already drawn. If preparation is not finished, what remains is finished after the click's frame and
   before the screen is revealed. Preparation does not change the screen's or the bezel's look (F3-643).
@@ -48200,10 +48204,12 @@ canonical_text: >-
   input and while the page is hidden, Glass draws each kind of box once, nearly invisibly, so first-use
   GPU programs are compiled before the first page or chapter change rather than during it. A switcher
   strip defers its sync only under a look's cover and resyncs as the cover begins to lift.
-  Amended 2026-10-17 (DL-221): Glass's warm-up is best effort under ACD-475, not a promise that every
+  Amended 2026-10-17 (DL-222): Glass's warm-up is best effort under ACD-475, not a promise that every
   box kind is compiled before the first page or chapter change. It prepares the kinds that compile a
   program and leaves the rest to first use. It changes no Glass look. The idle gates are ACD-475's;
   this unit keeps the sheet-rim bake and the cover-only strip deferral.
+  Amended 2026-10-17 (DL-226): while a widget plate is carried on a board in Glass, the resting plates
+  hold a pre-painted frost instead of live blur. At rest that frost looks the same.
 gui_related: true
 gui_classification_reason: Liquid Glass material and motion.
 split_recommended: false
@@ -48302,7 +48308,7 @@ stale_retired_dispositions:
   consistency pass remains a separate adoption decision.'
 - 'Amended 2026-10-16 (DL-217): Settings'' segmented choices slide their chip; it read: Settings segmented
   choices use the material in place without a travelling lens.'
-- 'Amended 2026-10-17 (DL-221): Glass warm-up is best effort. It read: first-use GPU programs are compiled
+- 'Amended 2026-10-17 (DL-222): Glass warm-up is best effort. It read: first-use GPU programs are compiled
   before the first page or chapter change rather than during it.'
 ```
 
@@ -48320,7 +48326,9 @@ canonical_text: >-
   Input > Theme & colors places its gallery immediately after Light or dark. Look's own comes first,
   followed by families in the shared catalog's order; thumbnails have names, checked state and full
   accessible names. It is one radiogroup: arrows move among choices, Home and End reach the ends,
-  Space selects; pointer and keyboard write the same value. Five columns reduce to two where needed,
+  Space selects; pointer and keyboard write the same value. Proposed, pending Jared: that contract
+  stands. Arrows only move, and Space selects. The concept's arrows-choose-as-they-move is not adopted.
+  Five columns reduce to two where needed,
   with the look's control corners and no animated tiles. Basic offers Blueprint, Contour, Folds,
   Sheets and Arcs; Friendly offers Dot Wave, Channels, Bubbles, Hills and Soft Stripes, each with
   its dot pattern; Retro offers Horizon, Peaks, Circuit, Dither and Stars; Jared withdrew NieR’s
@@ -48336,7 +48344,9 @@ canonical_text: >-
   gallery choice replaces the currently displayed background without erasing the NieR background
   preference. Jared’s same-day follow-up requires the most recent accepted change to win from either
   control: selecting a gallery wallpaper sets general.visual.wallpaper; selecting a NieR background
-  resets that shared choice to look so the chosen NieR scene shows. SSYS-054 owns the one-writer
+  resets that shared choice to look so the chosen NieR scene shows. A committed choice of Follow the
+  page or Parchment is a NieR background change and resets the shared wallpaper the same way. A preview
+  does not. SSYS-054 owns the one-writer
   transaction; SP-333 owns persistence. Wallpapers show around opaque panels in the other looks;
   Usage and Settings Home may use the approved light veil. Glass optics derive from the same chosen
   print and change with it: a wallpaper change crossfades the old print and its full frost into the
@@ -48354,7 +48364,7 @@ canonical_text: >-
   Amended 2026-10-16 (DL-217, the frost crossfade lane): every shown frosted sheet crossfades its frost
   from the old print to the new one in step with the print's fade, under the sheet's content; under
   Reduced Motion, on a look change and without a GPU the print and its frost swap at once.
-  Amended 2026-10-17 (DL-222): Jared's later choice, option (c), "fade is fine" (2026-10-16), replaces
+  Amended 2026-10-17 (DL-223): Jared's later choice, option (c), "fade is fine" (2026-10-16), replaces
   the together-only crossfade when the new frost is not ready. A prepared pick still fades the print and
   its frost together in one step. A pick whose frost is not ready starts the print's fade as soon as the
   print is decoded; the sheets keep the old frost during that fade, then crossfade to the new frost once
@@ -48439,7 +48449,7 @@ negative_constraints: []
 stale_retired_dispositions:
 - 'Amended 2026-10-16 (DL-216): a wallpaper change crossfades print and frost together; it read: Glass
   optics swap in the same painted frame.'
-- 'Amended 2026-10-17 (DL-222): a pick whose frost is not ready may fade the print first, under the old
+- 'Amended 2026-10-17 (DL-223): a pick whose frost is not ready may fade the print first, under the old
   frost, then crossfade the frost. It read: never showing a print under another print''s frost, and
   crossfading print and frost together in every case.'
 owner_hints:

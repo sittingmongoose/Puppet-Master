@@ -4056,7 +4056,7 @@ canonical_text: >-
   commits; a pick whose preparation fails still commits through the ordinary print and frost fallback, so
   no pick is lost. Glass alone keeps the decoded prints, the visible gallery choices among them within a
   bounded budget, and a byte-bounded frost cache; the gallery keeps no image cache of its own.
-  Amended 2026-10-17 (DL-221, DL-222): preparing prints at idle follows ACD-475 and does not restate
+  Amended 2026-10-17 (DL-222, DL-223): preparing prints at idle follows ACD-475 and does not restate
   that rule. The owner prepares a print and its frost before the choice commits. The print may start
   fading before the frost is ready (F3-653); the setting still writes at the pick. An intent, hover or
   keyboard focus after a short quiet pause, or a press, never waits behind background preparation of
@@ -4120,7 +4120,7 @@ source_lineage:
 preserved_exact_tokens: []
 negative_constraints: []
 stale_retired_dispositions:
-- 'Amended 2026-10-17 (DL-222): the print may fade before the frost is ready, and the choice commits
+- 'Amended 2026-10-17 (DL-223): the print may fade before the frost is ready, and the choice commits
   when the frost follows. It read: the owner prepares a print and its frost before the choice is
   published.'
 owner_hints:

@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L44070-L44369
+Source lines: L44074-L44373
 
-Source SHA256: `9c372c7e6ac9f213f61440d36a389f2a0dbfda51831d50b70dbe8b99fde71af1`
+Source SHA256: `7447a70c27f340391d4bbf7f970101f60e40edebe03c9791cb81804ba977eebf`
 
 ---
 
@@ -141,7 +141,7 @@ canonical_text: >-
   with no snap-back and no glimpse of the cancelled room; in NieR and Retro, whose handover erases the
   board, the cancel reverses the wipe instead of erasing the board to empty ground and rebuilding it
   (Jared, 2026-10-16).
-  Amended 2026-10-17 (DL-221): entering Usage never shows a blank or empty board, empty plates, or
+  Amended 2026-10-17 (DL-222): entering Usage never shows a blank or empty board, empty plates, or
   Home's panels blanked. The page change uses ACD-475's hold until the board is drawn; the entrance
   then plays from the start with plates and bodies together. Whatever is not drawn by the cap shows at
   once. Idle preparation of the first screen, then of Costs and Accounts, is ACD-475's and best effort;
@@ -152,7 +152,7 @@ canonical_text: >-
   frame, not when its chrome is inserted; the old room stands whole until then, and Retro and NieR erase
   at that hand-off. A rapid click, leaving the page, Reduce Motion or no GPU hands off at once. The
   hero's about 200 ms landing stays the room-change floor, counted from the new room's first drawn
-  frame when a hand-off waited for that frame. A cold first entry's longer hold is parked (DL-220),
+  frame when a hand-off waited for that frame. A cold first entry's longer hold is parked (DL-221),
   not a pass of that floor.
 gui_related: true
 gui_classification_reason: Defines the look, menus, marks, heroes, charts, previews, hover and motion of the redesigned Usage page.

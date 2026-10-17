@@ -4,7 +4,7 @@ Source: `Plans/UI_Wiring_Rules.md`
 
 Source lines: L2096-L2511
 
-Source SHA256: `30d28b77d9f30c24fb4779c8a45c45fa3ff080601cfcd729abaaa21bc6783bf6`
+Source SHA256: `e9e4528671e9dc721863896a39397125aa2b517cb4b736840de25ea337a72449`
 
 ---
 
@@ -369,7 +369,7 @@ canonical_text: >-
   round-3 bezel/background/mask fields and saved terminal preset controls are now enumerated. Local library
   actions explicitly declare their SP-331-only persistence; picker Back explicitly declares no persistence.
   Terminal round 5 (DL-213) retires the Flicker Amount bindings and narrows Bell to Follow look and Off; the
-  consistency pass (DL-214) adds no binding, command or stored state. F6 (DL-221) adds no binding, command, production entry or stored state. The page-change hold and a Customize pick's acknowledgement order are ACD-475's; this census adds no row for them. The two bell Continue controls are separate local census rows forwarding the original prompt's
+  consistency pass (DL-214) adds no binding, command or stored state. F6 (DL-222) adds no binding, command, production entry or stored state. The page-change hold and a Customize pick's acknowledgement order are ACD-475's; this census adds no row for them. The two bell Continue controls are separate local census rows forwarding the original prompt's
   own typed action. Setup retains PWIZ-021/UCC-106's ui.onboarding.start and closed
   pm.product_onboarding.action_request.v2 resume context; Guided Tour retains PWIZ-023's
   ui.guided_tour.resume and pm.guided_tour.action_request.v3 session/checkpoint/currentness context. They

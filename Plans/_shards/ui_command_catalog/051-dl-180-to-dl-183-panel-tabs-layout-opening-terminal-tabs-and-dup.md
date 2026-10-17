@@ -4,7 +4,7 @@ Source: `Plans/UI_Command_Catalog.md`
 
 Source lines: L14969-L16032
 
-Source SHA256: `b4f438480219ca77a2a8294c40503847f21018c35902e8b30664cf66e6520abc`
+Source SHA256: `465c76a83e4aa0c324520f23d0db9eef5ae70b1cdbedd802972cb3ca753810bb`
 
 ---
 
@@ -1016,7 +1016,7 @@ canonical_text: >-
   ui.terminal.preset.save, ui.terminal.preset.rename, ui.terminal.preset.delete and
   ui.terminal.preset.undo, local library actions owned by F3-650/SP-331. There is no cmd.* preset
   family, per-preset command, new event or shortcut.   Picker Back remains CS-100's local navigation.
-  Amended 2026-10-17 (DL-221): a Customize pick shows its new state in the click's frame; the one atomic
+  Amended 2026-10-17 (DL-222): a Customize pick shows its new state in the click's frame; the one atomic
   patch follows that frame (ACD-475). F6 adds no command.
 gui_related: true
 gui_classification_reason: Editor appearance and shared control dispatch.

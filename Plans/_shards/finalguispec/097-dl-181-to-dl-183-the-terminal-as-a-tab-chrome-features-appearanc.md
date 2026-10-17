@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L46638-L48825
+Source lines: L46642-L48835
 
-Source SHA256: `9c372c7e6ac9f213f61440d36a389f2a0dbfda51831d50b70dbe8b99fde71af1`
+Source SHA256: `7447a70c27f340391d4bbf7f970101f60e40edebe03c9791cb81804ba977eebf`
 
 ---
 
@@ -457,7 +457,7 @@ canonical_text: >-
   lowest text contrast 4.78:1 in the concept); that is concept evidence, not native certification.
   Plans/terminal_background_catalog.schema.json validates the catalog's closed finite-data shape;
   scripts/pm7-canon-check.py checks unique ids, choices and defaults against the Settings rows.
-  Amended 2026-10-17 (DL-221): a design or scheme already previewed by hover stays shown through the
+  Amended 2026-10-17 (DL-222): a design or scheme already previewed by hover stays shown through the
   pick's frame, and the preview ends only with the write, so the old ground is never drawn between the
   preview and the pick.
 gui_related: true
@@ -711,7 +711,7 @@ canonical_text: >-
   phosphor trail and no smooth scrolling; NieR ink line with blink, Trace only with its Scan sweep
   part and no smooth scrolling. F3-651 owns editor-specific jump motion and trail triggers; this
   shared voice never forces terminal output to animate.
-  Amended 2026-10-17 (DL-221): idle preparation of Terminal Customize (ACD-475) does not change this
+  Amended 2026-10-17 (DL-222): idle preparation of Terminal Customize (ACD-475) does not change this
   bezel's look.
 gui_related: true
 gui_classification_reason: Defines the terminal's visible effects, their defaults and the policy that limits when they run.
@@ -1271,7 +1271,7 @@ canonical_text: >-
   own ranges (SSYS-051). Ligatures is not offered while letters are spaced: it shows Needs letter
   spacing 0 and returns at spacing 0. A field shows only where it draws (SSYS-051's visibility
   amendment lists the Settings side).
-  Amended 2026-10-17 (DL-221): Terminal Customize, and the editor's Customize sheet, are prepared at idle
+  Amended 2026-10-17 (DL-222): Terminal Customize, and the editor's Customize sheet, are prepared at idle
   under ACD-475 so a click is answered by the frame it paints and the screen comes in on the next frame
   already drawn. If preparation is not finished, what remains is finished after the click's frame and
   before the screen is revealed. Preparation does not change the screen's or the bezel's look (F3-643).
@@ -1573,10 +1573,12 @@ canonical_text: >-
   input and while the page is hidden, Glass draws each kind of box once, nearly invisibly, so first-use
   GPU programs are compiled before the first page or chapter change rather than during it. A switcher
   strip defers its sync only under a look's cover and resyncs as the cover begins to lift.
-  Amended 2026-10-17 (DL-221): Glass's warm-up is best effort under ACD-475, not a promise that every
+  Amended 2026-10-17 (DL-222): Glass's warm-up is best effort under ACD-475, not a promise that every
   box kind is compiled before the first page or chapter change. It prepares the kinds that compile a
   program and leaves the rest to first use. It changes no Glass look. The idle gates are ACD-475's;
   this unit keeps the sheet-rim bake and the cover-only strip deferral.
+  Amended 2026-10-17 (DL-226): while a widget plate is carried on a board in Glass, the resting plates
+  hold a pre-painted frost instead of live blur. At rest that frost looks the same.
 gui_related: true
 gui_classification_reason: Liquid Glass material and motion.
 split_recommended: false
@@ -1675,7 +1677,7 @@ stale_retired_dispositions:
   consistency pass remains a separate adoption decision.'
 - 'Amended 2026-10-16 (DL-217): Settings'' segmented choices slide their chip; it read: Settings segmented
   choices use the material in place without a travelling lens.'
-- 'Amended 2026-10-17 (DL-221): Glass warm-up is best effort. It read: first-use GPU programs are compiled
+- 'Amended 2026-10-17 (DL-222): Glass warm-up is best effort. It read: first-use GPU programs are compiled
   before the first page or chapter change rather than during it.'
 ```
 
@@ -1693,7 +1695,9 @@ canonical_text: >-
   Input > Theme & colors places its gallery immediately after Light or dark. Look's own comes first,
   followed by families in the shared catalog's order; thumbnails have names, checked state and full
   accessible names. It is one radiogroup: arrows move among choices, Home and End reach the ends,
-  Space selects; pointer and keyboard write the same value. Five columns reduce to two where needed,
+  Space selects; pointer and keyboard write the same value. Proposed, pending Jared: that contract
+  stands. Arrows only move, and Space selects. The concept's arrows-choose-as-they-move is not adopted.
+  Five columns reduce to two where needed,
   with the look's control corners and no animated tiles. Basic offers Blueprint, Contour, Folds,
   Sheets and Arcs; Friendly offers Dot Wave, Channels, Bubbles, Hills and Soft Stripes, each with
   its dot pattern; Retro offers Horizon, Peaks, Circuit, Dither and Stars; Jared withdrew NieR’s
@@ -1709,7 +1713,9 @@ canonical_text: >-
   gallery choice replaces the currently displayed background without erasing the NieR background
   preference. Jared’s same-day follow-up requires the most recent accepted change to win from either
   control: selecting a gallery wallpaper sets general.visual.wallpaper; selecting a NieR background
-  resets that shared choice to look so the chosen NieR scene shows. SSYS-054 owns the one-writer
+  resets that shared choice to look so the chosen NieR scene shows. A committed choice of Follow the
+  page or Parchment is a NieR background change and resets the shared wallpaper the same way. A preview
+  does not. SSYS-054 owns the one-writer
   transaction; SP-333 owns persistence. Wallpapers show around opaque panels in the other looks;
   Usage and Settings Home may use the approved light veil. Glass optics derive from the same chosen
   print and change with it: a wallpaper change crossfades the old print and its full frost into the
@@ -1727,7 +1733,7 @@ canonical_text: >-
   Amended 2026-10-16 (DL-217, the frost crossfade lane): every shown frosted sheet crossfades its frost
   from the old print to the new one in step with the print's fade, under the sheet's content; under
   Reduced Motion, on a look change and without a GPU the print and its frost swap at once.
-  Amended 2026-10-17 (DL-222): Jared's later choice, option (c), "fade is fine" (2026-10-16), replaces
+  Amended 2026-10-17 (DL-223): Jared's later choice, option (c), "fade is fine" (2026-10-16), replaces
   the together-only crossfade when the new frost is not ready. A prepared pick still fades the print and
   its frost together in one step. A pick whose frost is not ready starts the print's fade as soon as the
   print is decoded; the sheets keep the old frost during that fade, then crossfade to the new frost once
@@ -1812,7 +1818,7 @@ negative_constraints: []
 stale_retired_dispositions:
 - 'Amended 2026-10-16 (DL-216): a wallpaper change crossfades print and frost together; it read: Glass
   optics swap in the same painted frame.'
-- 'Amended 2026-10-17 (DL-222): a pick whose frost is not ready may fade the print first, under the old
+- 'Amended 2026-10-17 (DL-223): a pick whose frost is not ready may fade the print first, under the old
   frost, then crossfade the frost. It read: never showing a print under another print''s frost, and
   crossfading print and frost together in every case.'
 owner_hints:

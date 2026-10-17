@@ -2225,12 +2225,12 @@ canonical_text: >-
   amended notification, hover and panel owners; Settings_System SSYS-052 through SSYS-054;
   storage-plan SP-333; UI_Command_Catalog UCC-204; Commands_System CS-102; Wiring_Matrix WM-093;
   UI_Wiring_Rules UIW-043; and Automated_Testing_System ATS-077. The linked registry/census/schema
-  companions must agree before implementation certification. Decision_Log DL-189 through DL-222
-  records the decisions and supersessions. The Glass/wallpaper concept publication is complete;
+  companions must agree before implementation certification. Decision_Log DL-189 through DL-227
+  records the decisions and supersessions. DL-218 is not this branch's row. The Glass/wallpaper concept publication is complete;
   F3-652, F3-644 and F3-656 own the settled hover-light, delivered font range and GLY-4 boundaries.
   F3-642/F3-643/F3-650 and SP-331 own round-3 terminal controls/presets, F3-632 owns picker levels,
   and SSYS-044 consumes MA-073. Terminal round 5 (DL-213), the consistency pass and Friendly
-  lavender (DL-214), the motion bar and calls (DL-215) and the P1000 reading and covers (DL-216) and the landed lanes' contracts (DL-217) are recorded, with Q13 and every motion fix lane recorded as landed in DL-217. F6 is recorded by DL-218 through DL-222 (no platform-specific tier, concept performance work stops at not horribly slow, Q22 closed as best effort, the landed behaviours, and wallpaper fade-first); Home/Settings content glyph adoption is not falsely marked complete. No
+  lavender (DL-214), the motion bar and calls (DL-215) and the P1000 reading and covers (DL-216) and the landed lanes' contracts (DL-217) are recorded, with Q13 and every motion fix lane recorded as landed in DL-217. F6 is recorded by DL-219 through DL-223 (no platform-specific tier, concept performance work stops at not horribly slow, Q22 closed as best effort, the landed behaviours, and wallpaper fade-first). The week sweep adds DL-224 through DL-227 (the quality bar, Friendly's design cues, Glass carry frost, and Ctrl+Shift+D reserved for Readiness and Doctor). Home/Settings content glyph adoption is not falsely marked complete. No
   concept-only demo or harness becomes a product surface. An approved packet is specification
   evidence, never native implementation proof.
 gui_related: true

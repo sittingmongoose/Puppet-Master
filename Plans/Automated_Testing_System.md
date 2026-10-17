@@ -6513,12 +6513,12 @@ canonical_text: >-
   Deferred glyph surfaces, Q13 and the motion fix lanes remain explicitly unverified. Picker accessibility checks require New tab or panel at the + root, Back to
   <level>, Filter: <title>, and Esc or Backspace (Esc or Delete on Mac), with prior
   query/scroll/focus restored in each F3-632 context.
-  Amended 2026-10-17 (DL-220, DL-221, DL-222): F6's motion behaviours are judged through the owners
-  DL-221 and DL-222 name. Native cases still owed, and not passed by a concept film: Usage entry with
+  Amended 2026-10-17 (DL-221, DL-222, DL-223): F6's motion behaviours are judged through the owners
+  DL-222 and DL-223 name. Native cases still owed, and not passed by a concept film: Usage entry with
   no blank or empty-plate frame and the hold's cap from the click; NieR's band at the release; a room
   change from the first drawn frame; idle preparation with no hitch tied to a preparation step; and a
   wallpaper pick that fades the print first when the frost is not ready, never blank. The five Q22
-  moments DL-220 parks are not a new scheduled gate. Concept films remain evidence, never a native pass.
+  moments DL-221 parks are not a new scheduled gate. Concept films remain evidence, never a native pass.
 gui_related: true
 gui_classification_reason: Appearance And Shell Acceptance.
 split_recommended: false
@@ -6542,7 +6542,7 @@ acceptance_criteria:
   offered choice drawing apart; switcher cases cover DL-214's per-look chips, press inks and the seated
   Home tab.
 - F6's motion behaviours are judged through ACD-475, F3-628, F3-464, F3-650 and F3-653. The five
-  moments DL-220 parks are not a new scheduled gate.
+  moments DL-221 parks are not a new scheduled gate.
 validation_surfaces:
 - python3 scripts/pm7-canon-check.py
 - python3 scripts/pm-shard-plans.py --check
@@ -6589,9 +6589,9 @@ source_lineage:
 preserved_exact_tokens: []
 negative_constraints: []
 stale_retired_dispositions:
-- 'Amended 2026-10-17 (DL-217, DL-220, DL-221): Q13 and the earlier motion fix lanes are recorded as
-  landed in DL-217, and F6 in DL-221. Native verification is still owed. The five Q22 moments are parked
-  (DL-220), not a new scheduled gate. Deferred glyph surfaces stay unverified.'
+- 'Amended 2026-10-17 (DL-217, DL-221, DL-222): Q13 and the earlier motion fix lanes are recorded as
+  landed in DL-217, and F6 in DL-222. Native verification is still owed. The five Q22 moments are parked
+  (DL-221), not a new scheduled gate. Deferred glyph surfaces stay unverified.'
 owner_hints:
 - Plans/Automated_Testing_System.md
 

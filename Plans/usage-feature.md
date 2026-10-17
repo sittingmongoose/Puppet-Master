@@ -7397,7 +7397,7 @@ canonical_text: >-
   the authoritative reading and shows the named reason, with no Usage-local threshold copy or
   adjustment algorithm. F3-628/F3-658 own the published Usage glyph consumer, including Current's
   check and Export's outbox; this projection adds no status or export command.
-  Amended 2026-10-17 (DL-221): readings a Live beat changed while Usage was hidden are drawn during the
+  Amended 2026-10-17 (DL-222): readings a Live beat changed while Usage was hidden are drawn during the
   unseen arrival, so the first board shows the latest values and does not jump from a stale board.
   Paused still holds display updates only.
 gui_related: true

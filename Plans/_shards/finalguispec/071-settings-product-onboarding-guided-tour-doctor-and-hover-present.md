@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L36398-L37198
+Source lines: L36400-L37200
 
-Source SHA256: `9c372c7e6ac9f213f61440d36a389f2a0dbfda51831d50b70dbe8b99fde71af1`
+Source SHA256: `7447a70c27f340391d4bbf7f970101f60e40edebe03c9791cb81804ba977eebf`
 
 ---
 
@@ -303,11 +303,11 @@ canonical_text: >-
   (`cmd.chat.eli5.explain_reply`), which adds one extra, simpler reply after the example answer and never rewrites or
   regenerates the original; the callout then points to the quick dot by the message box, which makes later replies
   simple, and names the ELI5 popup behind the wand's ELI5 row (the ELI5 sheet, F3-581), where the chat's choice is set
-  (DL-126, ACD-484). Workspace practice explains navigation and panels, asks the
-  learner to move/dock Chat and use a real widget, and shares state across docked/undocked views. Every important
+  (DL-126, ACD-484). Workspace practice explains navigation and panels and follows the
+  workspace chapter named in the 2026-10-09 amendment below (PWIZ-035). Every important
   action offers Try it and Show Me; both invoke the same mounted owner handler and satisfy the same observed success
   predicate. Show Me uses interruptible pre-cue, visible travel, destination reaction, and settle, never teleportation
-  or a second implementation. Planning Wizard owns at least half of meaningful actions and dwell time: a book-club
+  or a second implementation. Planning Wizard owns at least half of meaningful actions and dwell time. Proposed, pending Jared: the accepted 20-step tour measures Planning at 44 percent of actions and 49 percent of dwell, so this half bar is not met and is not waived. A book-club
   goal becomes three outcomes, the learner answers who may edit, sees why it matters, reviews decisions/assumptions/
   unresolved choices, edits one answer, and watches only the affected shared-access consequence change before the
   approval boundary. Teacher retains a broad discoverable beginner question library. ELI5 remains beside Pause and Skip and is called

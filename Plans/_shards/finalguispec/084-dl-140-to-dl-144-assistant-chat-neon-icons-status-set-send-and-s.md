@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L41479-L41890
+Source lines: L41481-L41894
 
-Source SHA256: `9c372c7e6ac9f213f61440d36a389f2a0dbfda51831d50b70dbe8b99fde71af1`
+Source SHA256: `7447a70c27f340391d4bbf7f970101f60e40edebe03c9791cb81804ba977eebf`
 
 ---
 
@@ -166,8 +166,9 @@ canonical_text: >-
   dark themes and a dark puck on light themes, rimmed in the current phase's hue, with the subject's glyph lit in that
   hue (DL-142). The live glyph plays its act while the run runs, and the node keeps its pop and pulse ring. Finished
   subjects are lit green (positive ink with a faint done halo on a neutral tile) and never act; pending subjects sit
-  at rest; only the live node and the current strip or rail disc ever act. A failed subject's flag is the warning
-  triangle, and a subject waiting for the reader shows the needs-you mark as its flag and in the centre disc (F3-585).
+  at rest; only the live node and the current strip or rail disc ever act. A failed subject's flag is the failed
+  mark, the shared ring with a cross; the triangle means warning (F3-585, F3-658, D44). A subject waiting for the
+  reader shows the needs-you mark as its flag and in the centre disc (F3-585).
   The compact strip and the Step Rail follow the same rule: the current disc is a dark disc with its glyph lit, and
   finished discs are lit green. Under NieR Mode the disc is ink with a paper glyph and its pulse steps.
 gui_related: true
@@ -201,7 +202,8 @@ negative_constraints:
   - "Do not draw the live node as a filled accent disc with a dark glyph."
   - "Do not give a finished or pending node an act."
 compatibility_only_notes: []
-stale_retired_dispositions: []
+stale_retired_dispositions:
+  - "Amended 2026-10-17 (D44, F3-658): a failed subject's flag is the failed mark, the shared ring with a cross. It read: the warning triangle."
 owner_hints:
   - Plans/FinalGUISpec.md
 ```
