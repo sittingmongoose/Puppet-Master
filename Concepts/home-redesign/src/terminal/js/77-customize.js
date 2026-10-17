@@ -500,7 +500,7 @@
        the top alone; then the preview, each group, the measures and each phase of the fit, each a step of its own whose
        frame lays out only what it added (buildSlices). Built in one step and measured at once, it held one task 180-260
        ms on the P1000, 100-115 ms of it forced layout (part2's trace of 77d3befc8c) */
-    var staged = !!opts.staged, building = staged;
+    var staged = !!opts.staged, building = staged, groundLater = staged;
     var overlay = document.getElementById('pmw-overlay') || document.body;
     var root = el('div', 'pmt-cz pmt-calm pmt-cz-parked');
     root.setAttribute('aria-hidden', 'true');
@@ -868,7 +868,8 @@
       var bo = root.querySelector('[data-out="bgColor"]'); if (bo) bo.textContent = bgc;
       /* what shows when (SSYS-051's visibility rule, kept for the person's sake: a hidden part keeps its value) */
       var ground = val('background');
-      paintGround(R);
+      /* the background group's tiles wait for its own build step while it is out of the layout (buildSlices) */
+      if (!groundLater) paintGround(R);
       root.querySelector('[data-slider="opacity"]').hidden = look !== 'glass' || opacityOff;
       root.querySelector('[data-axes]').hidden = R.font.id !== 'sixtyfour';
       /* weights the face has */
@@ -993,7 +994,7 @@
     function fitNext() {
       if (!fitQ.length) { var then = fitDone; fitDone = null; if (then) then(); return; }
       if (!window.PM_WARM || window.PM_WARM.state().off) { while (fitQ.length) fitQ.shift()(); fitNext(); return; }
-      var id = window.PM_WARM.add({ owner: 'terminal', name: 'customize:fit',
+      var id = window.PM_WARM.add({ owner: 'terminal', name: 'customize:fit', cpu: true,
         until: function () { return closed && !disposed; },
         run: function () { fitIds = fitIds.filter(function (x) { return x !== id; }); var phase = fitQ.shift(); if (phase) phase(); fitNext(); return null; },
         /* a late phase has done its work; one let go is done at once (the queue's session stop) */
@@ -1578,7 +1579,9 @@
     }
 
     /* ---- the build in steps (staged): the values, the preview, each group, the measures, then the fit's phases (fitStart);
-       each step only writes, so the frame after it lays out what it added. A step skipped (the screen kept for the next
+       each step only writes, so the frame after it lays out what it added. They paint nothing (the screen is parked:
+       clipped away, its parts hidden), so they are cpu steps (IDLE-WARM-RULE v3.5 item 4), judged by the two frames
+       after them, which hold the new DOM's style and layout. A step skipped (the screen kept for the next
        terminal, or gone) stops the rest; retarget queues them again. A late step has done its work all the same; one let
        go (the queue's session stop) leaves the rest to this screen's own idle wait. The click finishes what is left
        (show, finishBuild) ---- */
@@ -1594,7 +1597,11 @@
         if (pv && closed) pv.onHide();
       } }];
       [].forEach.call(root.querySelectorAll('.pmt-cz-group[data-cz-later]'), function (g) {
-        out.push({ name: 'group:' + g.getAttribute('data-group'), run: function () { g.removeAttribute('data-cz-later'); } });
+        var ground = g.getAttribute('data-group') === 'ground';
+        out.push({ name: 'group:' + g.getAttribute('data-group'), run: function () {
+          if (ground && groundLater) { groundLater = false; paintGround(eff()); }
+          g.removeAttribute('data-cz-later');
+        } });
       });
       out.push({ name: 'measure', run: function () { place(); syncPreview(); fitStart(built); } });
       return out;
@@ -1608,7 +1615,7 @@
       buildCancel();
       if (!window.PM_WARM || window.PM_WARM.state().off) { buildIdle(); return; }
       slices.forEach(function (s) {
-        buildIds.push(window.PM_WARM.add({ owner: 'terminal', name: 'customize:build:' + s.name,
+        buildIds.push(window.PM_WARM.add({ owner: 'terminal', name: 'customize:build:' + s.name, cpu: true,
           until: function () { return !disposed && !handle.kept && slices[0] === s; },
           run: function () { if (slices[0] === s) { slices.shift(); s.run(); } return null; },
           onLate: function (i) { if (i.dropped) buildIdle(); return true; } }));
@@ -1707,7 +1714,7 @@
     /* where the queue is off or lets the step go (the no-GPU profile, its session stop) it is built in its own idle
        wait, as before: the screen is needed either way */
     if (window.PM_WARM && !window.PM_WARM.state().off) {
-      if (!prepStep) prepStep = window.PM_WARM.add({ owner: 'terminal', name: 'customize:build:shell', run: function () { build(null, true); return null; },
+      if (!prepStep) prepStep = window.PM_WARM.add({ owner: 'terminal', name: 'customize:build:shell', cpu: true, run: function () { build(null, true); return null; },
         until: function () { if (v.root.isConnected) return true; prepStep = 0; prepareLater(1500); return false; },
         onLate: function (i) { if (i.dropped) { prepStep = 0; idleBuild(); } return true; } });
       return;

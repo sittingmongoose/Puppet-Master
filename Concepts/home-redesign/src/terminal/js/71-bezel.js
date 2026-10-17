@@ -87,13 +87,18 @@
   function rgba(c, a) { return 'rgba(' + C.r(c) + ',' + C.g(c) + ',' + C.b(c) + ',' + a + ')'; }
   function cssVar(name) { try { return getComputedStyle(document.documentElement).getPropertyValue(name).trim(); } catch (e) { return ''; } }
 
+  /* every canvas of the case is CPU-backed (the lead's IDLE-WARM-RULE v3.5 item 2): drawn on the GPU, the rim's strokes
+     linked a StrokeTessellateOp of 127 ms on the P1000 and its rounded fills 55-71 ms each, which no warm step could
+     split; a CPU canvas is composited as a texture, a program the page has already linked */
+  function ctx2d(cv) { return cv.getContext('2d', { willReadFrequently: true }); }
+
   /* grain tiles, made once */
   var tiles = {};
   function tile(kind) {
     if (tiles[kind]) return tiles[kind];
     var cv = document.createElement('canvas'), n = kind === 'brushed' ? 256 : 96;
     cv.width = n; cv.height = kind === 'brushed' ? 32 : n;
-    var g = cv.getContext('2d'), seed = 7, rnd = function () { seed = (seed * 16807) % 2147483647; return seed / 2147483647; };
+    var g = ctx2d(cv), seed = 7, rnd = function () { seed = (seed * 16807) % 2147483647; return seed / 2147483647; };
     if (kind === 'brushed') {
       for (var y = 0; y < cv.height; y++) for (var k = 0; k < 6; k++) {
         var x = rnd() * n, l = 20 + rnd() * 120, v = rnd() < 0.5 ? 255 : 0;
@@ -227,13 +232,11 @@
       faceParts: parts(frameIn, bb), frameParts: parts([0, 0, g.w, g.h], frameIn) };
     var cv = this.cache || (this.cache = document.createElement('canvas'));
     cv.width = W; cv.height = H;
-    var ctx = cv.getContext('2d');
+    var ctx = ctx2d(cv);
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
     this._housing(ctx, g, s, this.geo);
     this.housing.width = W; this.housing.height = H;
-    /* the idle warm's case sections leave the light's masks to a step of their own (warmMasks): drawn with the outline
-       clip, the rim's first section linked 4 programs in one frame on the 3090 (the lead's split, 2026-10-17) */
-    if (this.warmStage === undefined || this.warmMasks) this._masks(g, s, this.geo); else this.masks = null;
+    this._masks(g, s, this.geo);
     this._reflect(true);
   };
 
@@ -346,7 +349,7 @@
     var bb = geo.bb;
     var make = function (region, reach, peak, corners) {
       var cv = document.createElement('canvas'); cv.width = w; cv.height = h;
-      var c = cv.getContext('2d'); c.setTransform(RS, 0, 0, RS, 0, 0); c.clip(region, 'evenodd'); c.lineJoin = 'round'; c.strokeStyle = '#fff';
+      var c = ctx2d(cv); c.setTransform(RS, 0, 0, RS, 0, 0); c.clip(region, 'evenodd'); c.lineJoin = 'round'; c.strokeStyle = '#fff';
       /* bands from the far edge inward, each adding just enough that the band ends at the curve's value */
       var N = 10, prev = 0;
       for (var i = N; i >= 1; i--) {
@@ -379,7 +382,7 @@
     var sw = 200, sh = Math.max(24, Math.round(sw * g.gh / Math.max(1, g.gw)));
     var cv = this.snap || (this.snap = document.createElement('canvas'));
     if (cv.width !== sw || cv.height !== sh) { cv.width = sw; cv.height = sh; }
-    var c = cv.getContext('2d');
+    var c = ctx2d(cv);
     c.globalCompositeOperation = 'source-over'; c.globalAlpha = 1;
     c.fillStyle = hex(this.spec.bg); c.fillRect(0, 0, sw, sh);
     try { c.drawImage(src, 0, 0, sw, sh); } catch (e) { return null; }
@@ -392,7 +395,7 @@
     var geo = this.geo, s = this.spec;
     if (!geo || !this.cache) return;
     if (!this.view.visible && !force) { this.dirty = true; return; }
-    var out = this.housing, oc = out.getContext('2d');
+    var out = this.housing, oc = ctx2d(out);
     if (out.width !== geo.W || out.height !== geo.H) { out.width = geo.W; out.height = geo.H; }
     var M = MATERIALS[s.material], strength = s.strength || 0;
     var R = M && strength > 0 && this.masks ? this._light(strength) : null;
@@ -424,7 +427,7 @@
     var w = m.direct.width, h = m.direct.height;
     var R = this.reflectCv || (this.reflectCv = document.createElement('canvas')), T2 = this.tmpCv || (this.tmpCv = document.createElement('canvas'));
     [R, T2].forEach(function (c) { if (c.width !== w || c.height !== h) { c.width = w; c.height = h; } });
-    var rc = R.getContext('2d'), tc = T2.getContext('2d');
+    var rc = ctx2d(R), tc = ctx2d(T2);
     rc.clearRect(0, 0, w, h);
     /* the mirror about each edge, folded by f: a point d inside the glass lands d/f outside it */
     var mirror = function (side, f) {
@@ -432,12 +435,10 @@
       return side === 'top' || side === 'bottom' ? [RS, 0, 0, -RS / f, 0, RS * (e + e / f)] : [-RS / f, 0, 0, RS, RS * (e + e / f), 0];
     };
     var areas = { face: geo.faceParts, all: parts([0, 0, g.w, g.h], bb) };
-    /* warmSides (the idle warm only): the passes mirror only these sides */
-    var sides = this.warmSides || SIDES;
     var pass = function (blur, mask, alpha, f, area) {
       tc.save(); tc.setTransform(1, 0, 0, 1, 0, 0); tc.globalCompositeOperation = 'source-over'; tc.globalAlpha = 1; tc.clearRect(0, 0, w, h);
       tc.filter = blur > 0 ? 'blur(' + (blur * RS).toFixed(2) + 'px)' : 'none';
-      sides.forEach(function (side) {
+      SIDES.forEach(function (side) {
         tc.save(); tc.setTransform(RS, 0, 0, RS, 0, 0); tc.clip(polyPath(areas[area][side]));
         var t = mirror(side, f); tc.setTransform(t[0], t[1], t[2], t[3], t[4], t[5]);
         tc.drawImage(snap, g.gx, g.gy, g.gw, g.gh);
@@ -452,8 +453,8 @@
       for (var a = alpha; a > 0.004; a -= 1) { rc.globalAlpha = Math.min(1, a); rc.drawImage(T2, 0, 0); }
       rc.globalAlpha = 1; rc.globalCompositeOperation = 'source-over';
     };
-    /* warmLight (the idle warm only): 1 the three masks alone, 2 the first pass unblurred, 3 the first pass (light3a: its
-       top side alone, warmSides), 4 and 5 the other two passes in turn; undefined draws all */
+    /* warmLight (the idle warm only): 1 the three masks alone, 2 the first pass unblurred, 3 the first pass, 4 and 5 the
+       other two passes in turn; undefined draws all */
     var upto = this.warmLight === undefined ? LIGHT_STAGES : this.warmLight;
     if (upto === 1) {
       tc.clearRect(0, 0, w, h);
@@ -467,12 +468,14 @@
     return R;
   };
 
-  /* A case style's first showing compiled the GPU programs it draws with (the shadow-blurred rounded frames, the
-     strokes, the reflection's blurs) in the frames after the click (part2's F3.1 trace on the P1000: Monitor linked 14
-     programs, 445 ms, and no new frame came for 567 ms). warm(views): each style is drawn once per view's size, with its
-     own settings, on a stand-in view in an unseen layer inside the viewport (Liquid Glass's lg-warm recipe: an ancestor
-     at opacity 0.004; at 0.001 the alpha rounds to nothing and nothing compiles), only on the GPU tier, as steps on the
-     page's idle-warm queue (PM_WARM), which admits them and backs off by the frames presented after each */
+  /* A case style's first showing compiled the GPU programs it draws with in the frames after the click (part2's F3.1
+     trace on the P1000: Monitor linked 14 programs, 445 ms), and warming them at idle cost as much: one StrokeTessellateOp
+     linked in 127 ms there, which no step could split (the lead's IDLE-WARM-RULE v3.5 item 2). So the case is drawn on
+     CPU-backed canvases (ctx2d) and compiles nothing; what is left to do at idle is the first draw, which is colder than
+     the rest (29 ms against 12-19 ms on the P1000: the grain tiles and the code's first run). warm(views): one style at
+     one size, drawn once off the page in two cpu steps on the page's idle-warm queue (PM_WARM), the case and then its
+     light; a second style or size would draw nothing new. Its ids are kept per view, so a view that goes takes them with
+     it (unwarm) */
   var warmedBezel = {}, warmIds = new WeakMap();
   function gpuTier() {
     var tier = document.documentElement.getAttribute('data-lg-tier');
@@ -481,80 +484,37 @@
   }
   Bezel.warm = function (views) {
     views = [].concat(views || []).filter(function (view) { return view && view.root && view.root.isConnected; });
-    if (!views.length || !T.Appearance || !gpuTier()) return;
-    /* each view at its own size: a terminal and the Customize screen's preview of it draw the same case at different
-       sizes, and picking Monitor draws both (part2's F4 trace: with only the terminal's size warmed, a canvas stroke and
-       rounded-rectangle program still linked at the click, 87-90 ms) */
-    var A = T.Appearance, todo = [];
-    views.forEach(function (view) {
-      var w = Math.max(80, view.screen ? view.screen.clientWidth : 0), h = Math.max(60, view.screen ? view.screen.clientHeight : 0);
-      var dpr = (view.metrics && view.metrics.dpr) || window.devicePixelRatio || 1;
-      ['rim', 'case'].forEach(function (style) {
+    if (!views.length || !T.Appearance || !gpuTier() || !window.PM_WARM || warmedBezel.cold) return;
+    var A = T.Appearance, it = null;
+    views.some(function (view) {
+      return ['case', 'rim'].some(function (style) {
         var ap = A.peek({ api: view.api, tabAppearance: Object.assign({}, view.tabAppearance || {}, { bezel: style }), previewAppearance: null, state: {} });
-        if (!ap || !ap.bezel || ap.bezel.style !== style) return;
-        var b = ap.bezel, key = [b.style, b.width, b.color, b.reflect, ap.theme && ap.theme.appearance, ap.effects && ap.effects.look, Math.round(w / 64), Math.round(h / 64), dpr].join('|');
-        if (warmedBezel[key]) return;
-        warmedBezel[key] = 1;
-        todo.push({ view: view, ap: ap, w: w, h: h, dpr: dpr, key: key });
+        if (!ap || !ap.bezel || ap.bezel.style !== style) return false;
+        var w = Math.max(80, view.screen ? view.screen.clientWidth : 0), h = Math.max(60, view.screen ? view.screen.clientHeight : 0);
+        it = { view: view, ap: ap, w: w, h: h, dpr: (view.metrics && view.metrics.dpr) || window.devicePixelRatio || 1 };
+        return true;
       });
     });
-    if (!todo.length || !window.PM_WARM) return;
-    /* each style at each size is drawn on the page's idle-warm queue (PM_WARM; the lead's IDLE-WARM-RULE.md) in steps
-       small enough that each compiles few programs. Drawn whole in one step, the rim's case linked 13 programs in one
-       frame on a cold RTX 3090 (FillRRectOp 5, AAHairlineOp 4, FillRectOp 2, AAFlatteningConvexPathOp, DrawAtlasPathOp;
-       this lane's trace, 2026-10-17), the burst seen just after the Customize screen's build, which called this. The first
-       style of a call is drawn a section more each step (warmStage: the outline clip, the frame, the face, its creases,
-       the grain, the inner edge, the outer edge, the lip, the shadow), then, where the case has a reflection, its light a
-       part more each step (warmLight: the masks, the first pass unblurred, then blurred, the second, the third). The
-       others reuse nearly all of those programs (0 or 1 link a section on the 3090), so each is two steps: the case, then
-       its light. Each step draws in its own unseen layer and the queue removes it in the frame after (the step's
-       cleanup); a step that throws removes it at once (landing review IW-3). The ids are kept per view, so a view that
-       goes takes its steps with it (unwarm) */
-    todo.forEach(function (it, n) {
-      var ids = warmIds.get(it.view);
-      if (!ids) warmIds.set(it.view, (ids = []));
-      var probe = new Bezel({ root: document.createElement('div') }), steps = [];
-      probe.configure(it.ap.bezel, it.ap);
-      var ink = probe.spec.material === 'ink', fine = n === 0, k;
-      if (ink || !fine) steps.push({ name: 'case', stage: undefined, light: 0 });
-      else {
-        /* the sections, then the light's masks on the outline clip alone (the lead's split of case1, 2026-10-17) */
-        for (k = 1; k <= HOUSING_STAGES; k++) steps.push({ name: 'case' + k, stage: k, light: 0 });
-        steps.push({ name: 'masks', stage: 1, light: 0, masks: true });
-      }
-      if (!ink && probe.spec.strength > 0) {
-        if (!fine) steps.push({ name: 'light', stage: undefined, light: LIGHT_STAGES });
-        else for (k = 1; k <= LIGHT_STAGES; k++) {
-          /* the first blurred pass mirrored on its top side alone, then on all four (the lead's split of light3) */
-          if (k === 3) steps.push({ name: 'light3a', stage: undefined, light: 3, sides: ['top'] });
-          steps.push({ name: 'light' + k, stage: undefined, light: k });
-        }
-      }
-      steps.forEach(function (pt) {
-        var id = window.PM_WARM.add({ owner: 'terminal', name: 'bezel:' + it.ap.bezel.style + ':' + pt.name + '@' + it.w + 'x' + it.h,
-          until: function () { return !!(it.view.root && it.view.root.isConnected); },
-          run: function () {
-            var b = it.ap.bezel, w = it.w, h = it.h, inset = (b.width || 0) + (b.gap || 0), host = null, bz = null;
-            var gone = function () { if (bz) bz.dispose(); if (host) host.remove(); bz = host = null; };
-            try {
-              host = document.createElement('div');
-              host.setAttribute('aria-hidden', 'true'); host.inert = true;
-              host.style.cssText = 'position:fixed;left:0;top:0;width:' + w + 'px;height:' + h + 'px;opacity:.004;will-change:opacity;pointer-events:none;z-index:2147483000;contain:strict';
-              bz = new Bezel({ root: document.createElement('div'), canvas: it.view.canvas, visible: true, fx: null, renderer: null });
-              bz.el.style.cssText = 'position:absolute;inset:0';
-              bz.housing.style.cssText = 'position:absolute;left:0;top:0;width:100%;height:100%;display:block';
-              host.appendChild(bz.el);
-              bz.configure(b, it.ap);
-              bz.warmStage = pt.stage; bz.warmMasks = !!pt.masks; bz.warmSides = pt.sides || null;
-              if (pt.light) bz.warmLight = pt.light; else bz.spec.strength = 0;
-              bz.g = { w: w, h: h, gx: inset, gy: inset, gw: Math.max(20, w - inset * 2), gh: Math.max(20, h - inset * 2), dpr: it.dpr };
-              document.body.appendChild(host);
-              bz._paint();
-            } catch (e) { gone(); return null; }
-            return gone;
-          } });
-        ids.push({ id: id, key: it.key });
-      });
+    if (!it) return;
+    warmedBezel.cold = 1;
+    var ids = warmIds.get(it.view);
+    if (!ids) warmIds.set(it.view, (ids = []));
+    [{ name: 'case', light: false }, { name: 'light', light: true }].forEach(function (pt) {
+      var id = window.PM_WARM.add({ owner: 'terminal', name: 'bezel:' + it.ap.bezel.style + ':' + pt.name + '@' + it.w + 'x' + it.h, cpu: true,
+        until: function () { return !!(it.view.root && it.view.root.isConnected); },
+        run: function () {
+          var b = it.ap.bezel, w = it.w, h = it.h, inset = (b.width || 0) + (b.gap || 0), bz = null;
+          try {
+            bz = new Bezel({ root: document.createElement('div'), canvas: it.view.canvas, visible: true, fx: null, renderer: null });
+            bz.configure(b, it.ap);
+            if (!pt.light) bz.spec.strength = 0;
+            bz.g = { w: w, h: h, gx: inset, gy: inset, gw: Math.max(20, w - inset * 2), gh: Math.max(20, h - inset * 2), dpr: it.dpr };
+            bz._paint();
+          } catch (e) { /* the real draw will do it */ }
+          if (bz) bz.dispose();
+          return null;
+        } });
+      ids.push({ id: id, key: 'cold' });
     });
   };
   /* a view that goes: its case steps still queued are cancelled, and what they would have drawn may be warmed again for
