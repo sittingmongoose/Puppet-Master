@@ -28,13 +28,15 @@ body.pmu-page-active #panel-dashboard.pm-home-owned.pm8-page-out { position: abs
    periods after the warm build, the real board is drawn in its warm box at opacity .004 (.001 is culled) on a
    will-change: opacity layer of its own, above the page that shows (tiles under opaque layers are never rastered), a
    little at a time so no step links more than a program or two (fix cycle 2: about 30 ms a link on the P1000). The
-   first step ("layer") draws one small box, so the layer's own programs link alone. Then one element of each kind
-   draws by itself (data-pmu-raster-self: the element, not its children), then the rail, the stage's head and the page
-   chrome whole ("chrome": the panel shown, the held plates still hidden), then each card as a growing prefix of its
-   paint order, a few elements a step (data-pmu-raster-self, which stay), then the card whole (data-pmu-raster-on). A card being drawn
+   first step ("layer") draws one small box, so the layer's own programs link alone. Then the page chrome and each
+   card as a growing prefix of its paint order, a few elements a step, each element by itself (data-pmu-raster-self: the
+   element, not its children; the marks stay), then the part whole (the chrome: "chrome", the panel shown, the held
+   plates still hidden; a card: data-pmu-raster-on). A card being drawn
    takes the layers the arrival gives it (its plate the film's will-change, its body its reveal's), so each draws with
    the programs the arrival will use, and its held opacity 0 (20-board.css) is lifted while it draws (an element drawn
-   by itself inside it showed nothing).
+   by itself inside it showed nothing). Each slice is one step of the page-wide idle-warm queue (PM_WARM; P2-03 final,
+   2026-10-17): its cleanup takes the paint token off in the frame after it, so nothing is drawn between two steps, and
+   a heavy element is drawn in parts first (data-pmu-raster-part, below).
    The same pass builds the first screen of Costs and Accounts in the spare board element ("spare") and draws its
    cards the same way. Taking the tokens and marks off leaves every held rule as it was (the arrival's entrance still
    plays from its first keyframe). Usage-only. ---- */
@@ -45,14 +47,21 @@ body.pmu-page-active #panel-dashboard.pm-home-owned.pm8-page-out { position: abs
 .primary-content > #panel-usage.page[data-pmu-warm][data-pmu-raster~="chrome"]:not(.active):not(.pm8-page-out) { visibility: visible; }
 #panel-usage[data-pmu-raster~="paint"] .pmu-board > .pmu-card:is([data-pmu-raster-on], [data-pmu-raster-pieces]) { opacity: 1; will-change: transform, opacity; }
 #panel-usage[data-pmu-raster~="paint"] .pmu-board > .pmu-card:is([data-pmu-raster-on], [data-pmu-raster-pieces]) > .pmu-cardbody { opacity: 1; will-change: opacity; }
-/* one element by itself (data-pmu-raster-self: its children stay hidden) or a part whole (data-pmu-raster-on: the rail,
-   the stage's head, a card); a marked element shows over its own hiding rules (the held plate's
-   among them: :not(#pmu-raster-none) gives the rule an id's weight), a marked child of an element by itself too */
-#panel-usage[data-pmu-raster~="paint"] [data-pmu-raster-self] > * { visibility: hidden; }
+/* one element by itself (data-pmu-raster-self: its children stay hidden) or a part whole (data-pmu-raster-on: a
+   card); a marked element shows over its own hiding rules (the held plate's among them: :not(#pmu-raster-none) gives
+   the rule an id's weight), a marked child of an element by itself too. The children's rule is keyed on the warm box,
+   not on the paint token (P2-03 final, 2026-10-17): each step's cleanup takes the token off again, and a rule under
+   the token whose subject is any element made every toggle restyle the whole page (17-29 ms of style a step on the
+   RTX 3090) */
+#panel-usage[data-pmu-warm] [data-pmu-raster-self] > * { visibility: hidden; }
 #panel-usage[data-pmu-raster~="paint"] :is([data-pmu-raster-self], [data-pmu-raster-on]):not(#pmu-raster-none) { visibility: visible; }
 /* one at opacity 0 (an entrance the arrival plays, a control shown on hover) draws at 1, as it will show */
 #panel-usage[data-pmu-raster~="paint"] [data-pmu-raster-self="lit"]:not(#pmu-raster-none) { opacity: 1; }
 #panel-usage[data-pmu-raster~="spare"] .pmu-scroll > .pmu-board[data-pmu-raster-room] { display: grid; }
+/* a heavy element drawn in parts for one frame each (15-film.js rasterParts; P2-03 final, 2026-10-17): its pseudo-
+   elements hidden ("bare") or drawn without their glow ("flat"), over their own rules */
+#panel-usage[data-pmu-warm] [data-pmu-raster-part~="bare"]::before, #panel-usage[data-pmu-warm] [data-pmu-raster-part~="bare"]::after { visibility: hidden !important; }
+#panel-usage[data-pmu-warm] [data-pmu-raster-part~="flat"]::before, #panel-usage[data-pmu-warm] [data-pmu-raster-part~="flat"]::after { box-shadow: none !important; }
 
 /* ---- the held board (3.1 Phase A): held cards are laid out (the build measures every body) but not painted, so the
    slices cost the frame no paint and no layerization; the release animates them in from their first keyframe ---- */

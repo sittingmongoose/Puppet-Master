@@ -812,8 +812,9 @@
        queued by PMU.film.cue and released with the wave. A newer mount supersedes a running build. */
     var buildToken = 0, lateHeld = null;
     /* warm (the warm build, mount opts.warm): slices in idle periods instead of frames, every body built (no data-late)
-       and none revealed: they wait under data-body-wait for the arrival */
-    function buildSliced(cards, onBuilt, warm) {
+       and none revealed: they wait under data-body-wait for the arrival. sync (the arrival's own build when no warm board
+       is waiting, PMU.film arriveWhole): every body now, in this task, measured in one read (tierPass) */
+    function buildSliced(cards, onBuilt, warm, sync) {
       /* reading order, the hero first (WOW-SPEC-3 5); without a GPU the bodies outside the viewport wait until the moment
          is over (data-late: never measured or entered by the release; PERF-3) */
       var token = ++buildToken, all = readingOrder(cards).sort(function (a, b) { return b.hasAttribute('data-hero') - a.hasAttribute('data-hero'); });
@@ -827,6 +828,7 @@
         if (token !== buildToken) return;
         var t0 = performance.now(), builtNow = [], budget = warm && deadline && deadline.timeRemaining ? Math.min(8, Math.max(1, deadline.timeRemaining())) : 8;
         fitSliced(function () {
+          if (sync) { builtNow = queue.splice(0).filter(function (c) { return c.isConnected; }); tierPass(builtNow, 'enter'); return; }
           while (queue.length && (!builtNow.length || performance.now() - t0 < budget)) {
             var c = queue.shift();
             if (c.isConnected) { tierPass([c], 'enter'); builtNow.push(c); }
@@ -853,7 +855,7 @@
           };
         }
       }
-      next();
+      if (sync) slice(null); else next();
     }
 
     /* ---- the room change (WOW-SPEC 3.2, WOW-TASKS E-1, coordinator decision 5: no main-thread task over ~50 ms on a
@@ -1458,8 +1460,8 @@
         buildToken++;
         current.mounted = true;
         viewNow(true);
-        buildSliced(cards, opts.onBuilt, opts.warm);
-        emit('mount', { room: room, cls: current.cls.name, widgets: ids, warm: true });
+        buildSliced(cards, opts.onBuilt, opts.warm, !!opts.sync);
+        emit('mount', { room: room, cls: current.cls.name, widgets: ids, warm: true, sync: !!opts.sync });
         return;
       }
       if (held) {
@@ -2018,7 +2020,9 @@
        no warm drop, no pre-warm), and any mount clears it first, so a room change always finds the spare empty. The Usage
        board only. ---- */
     var rasterJob = null;
-    function rasterRoom(room, onBuilt) {
+    /* step(fn), when given, runs each slice instead of an idle callback (the film's cpu steps on the page-wide idle-warm
+       queue, PM_WARM; fn takes the step's idle deadline) */
+    function rasterRoom(room, onBuilt, step) {
       if (hosted || dead || !bo.rooms || !current.cls || !scroll || !boardEl || rasterJob || calm || streaming || gesture) return null;
       var sp = spareBoard();
       if (sp.firstChild || sp === boardEl) return null;
@@ -2037,7 +2041,7 @@
       sp.setAttribute('aria-hidden', 'true');
       sp.setAttribute('data-pmu-raster-room', '');
       var job = rasterJob = { room: room, el: sp, cards: [], queue: [], built: false, at: performance.now() };
-      var idle = window.requestIdleCallback || function (fn) { return setTimeout(function () { fn({ timeRemaining: function () { return 8; }, didTimeout: false }); }, 40); };
+      var idle = step ? function (fn) { step(fn); } : window.requestIdleCallback || function (fn) { return setTimeout(function () { fn({ timeRemaining: function () { return 8; }, didTimeout: false }); }, 40); };
       var heroId = heroOf(rects, ids, room);
       /* a build that throws tears the spare down and tells the film (onBuilt(null)), which goes on to its next room: the
          panel is never left laid out and inert waiting for a room that will not come */
