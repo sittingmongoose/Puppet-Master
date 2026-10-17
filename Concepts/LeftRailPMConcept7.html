@@ -27690,7 +27690,10 @@ html:is([data-theme^="retro"], [data-o55-nier="on"]) #panel-settings .toggle.pm-
         if (!Number.isFinite(timing.endTime)) return;
         state.motions.push(motion);
         if (motion.pending) state.pending = true;
-        else if (motion.playState === 'running' && motion.playbackRate > 0 && motion.currentTime !== null) {
+        // A play still pending runs from where it stands too: a move PM_START_ON_SHOWN released waits a frame or two
+        // for its start, and counted as none then, a deadline landing there finished the page-in as it began (the
+        // P1000's Usage entry, F6: the page shown at once, no fade).
+        if (motion.playState === 'running' && motion.playbackRate > 0 && motion.currentTime !== null) {
           state.remaining = Math.max(state.remaining, (timing.endTime - motion.currentTime) / motion.playbackRate);
         } else if (motion.__pmHeld && motion.playState === 'paused') {
           // Held at its start until frames come on time (PM_START_ON_SHOWN, at most 6 frames): still to run, so
@@ -119927,9 +119930,10 @@ html[data-theme^="retro"] #panel-settings .o55-goals-phase-n { border-radius: 0;
         } catch (e) {}
       };
       /* O55: an arriving page still drawing its content in slices says so (data-pm-entrance-wait): the moves stay held
-         until it is drawn (1.5 s at most), the click's fade still going meanwhile (F6 Usage entry freeze) */
+         until it is drawn (1.5 s from the click at most), the click's fade still going meanwhile (F6 Usage entry freeze) */
       var stillDrawing = function () { return newP.hasAttribute('data-pm-entrance-wait'); };
-      if (window.PM_START_ON_SHOWN) window.PM_START_ON_SHOWN(pageMoves, { release: handoff, wait: stillDrawing, waitCap: 1500 }); else handoff();
+      var waitFrom = lift && lift.el === oldP ? lift.at : undefined;   /* 1.5 s from the click's frame, inside its fade */
+      if (window.PM_START_ON_SHOWN) window.PM_START_ON_SHOWN(pageMoves, { release: handoff, wait: stillDrawing, waitCap: 1500, waitFrom: waitFrom }); else handoff();
       var stopEntrance = null, finished = false;
       function cleanupOut() {
         oldP.classList.remove('pm8-page-out');
@@ -119996,12 +120000,13 @@ html[data-theme^="retro"] #panel-settings .o55-goals-phase-n { border-radius: 0;
          two to 0.86). The fade keeps going while the change's long frames run (0.86 at 140 ms, then on to
          0.72 by 740 ms, on the compositor), so a wait for the arriving page (the P1000's Settings entry: Home sat at
          0.86 to ~583 ms) reads as the page leaving; the exit takes over from wherever it has reached. It goes on, slower,
-         to 0.6 by 1.5 s, the longest an arriving page may hold its entrance while it draws (data-pm-entrance-wait), so a
-         long hold never stands on a still frame; Retro keeps its 70 ms step through the same segments */
-      var LIFT_MS = 1500;
+         to 0.6 by 1.6 s, past the longest an arriving page may hold its entrance while it draws (data-pm-entrance-wait:
+         1.5 s from this frame), so a long hold never stands on a still frame; it passes 0.72 at about the speed it goes on
+         at (0.15 a second), with no stop there. Retro keeps its 70 ms step through the same segments */
+      var LIFT_MS = 1600;
       var lift = !nier && !reduced() && oldP && oldP.animate && !oldP.classList.contains('pm8-page-out') ? oldP.animate(retro
-        ? [{ opacity: 1, easing: 'steps(2, end)' }, { opacity: 0.86, offset: 140 / 1500, easing: 'steps(8, end)' }, { opacity: 0.72, offset: 740 / 1500, easing: 'steps(11, end)' }, { opacity: 0.6 }]
-        : [{ opacity: 1, easing: 'cubic-bezier(.2, 0, 0, 1)' }, { opacity: 0.86, offset: 140 / 1500, easing: 'cubic-bezier(.3, 0, .3, 1)' }, { opacity: 0.72, offset: 740 / 1500, easing: 'cubic-bezier(.4, 0, .6, 1)' }, { opacity: 0.6 }],
+        ? [{ opacity: 1, easing: 'steps(2, end)' }, { opacity: 0.86, offset: 140 / 1600, easing: 'steps(8, end)' }, { opacity: 0.72, offset: 740 / 1600, easing: 'steps(12, end)' }, { opacity: 0.6 }]
+        : [{ opacity: 1, easing: 'cubic-bezier(.2, 0, 0, 1)' }, { opacity: 0.86, offset: 140 / 1600, easing: 'cubic-bezier(.3, 0, .45, .65)' }, { opacity: 0.72, offset: 740 / 1600, easing: 'cubic-bezier(.3, .32, .5, 1)' }, { opacity: 0.6 }],
         { duration: LIFT_MS, easing: 'linear', fill: 'forwards' }) : null;
       if (lift) lift.__pmLiftMs = LIFT_MS;
       soon = { page: pageId };
@@ -145855,11 +145860,13 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
   window.PM_START_ON_SHOWN = function startOnShown(anims, o) {
     const max = (o && o.frames) || 6, held = new Set(), before = o && typeof o.release === 'function' ? o.release : null;
     /* o.wait: () => bool. While it says true the moves stay held, even when the frames are on time, for at most o.waitCap
-       ms (1.5 s) from the first check: an arriving page that draws its content in slices first says so (a page change
-       holds while its page carries data-pm-entrance-wait: Usage's board, rastered a card a frame so the compositor never
-       waits on the whole board, F6 entry freeze) */
+       ms (1.5 s) from o.waitFrom (a performance.now() time: the click's frame), or from the first check without it: an
+       arriving page that draws its content in slices first says so (a page change holds while its page carries
+       data-pm-entrance-wait: Usage's board, rastered a card a frame so the compositor never waits on the whole board,
+       F6 entry freeze). Counted from the first check, which comes after the change's long first frame, the hold ran to
+       1.9 s from the click on the P1000 and outlasted the click's fade */
     const waitFor = o && typeof o.wait === 'function' ? o.wait : null, waitCap = (o && o.waitCap) || 1500;
-    let firstCheck = null;
+    let firstCheck = o && typeof o.waitFrom === 'number' && isFinite(o.waitFrom) ? o.waitFrom : null;
     const waiting = () => {
       if (!waitFor) return false;
       const t = performance.now();
