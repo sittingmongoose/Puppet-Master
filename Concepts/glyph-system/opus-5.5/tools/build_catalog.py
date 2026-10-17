@@ -76,7 +76,7 @@ def main() -> int:
     out = TARGET
     if '--out' in sys.argv:
         out = Path(sys.argv[sys.argv.index('--out') + 1]).resolve()
-    out.write_text(text, encoding='utf-8')
+    out.write_bytes(text.encode('utf-8'))
     print(f'wrote {out} ({len(text):,} bytes)')
     return 0
 

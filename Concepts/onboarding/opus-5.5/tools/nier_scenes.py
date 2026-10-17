@@ -102,7 +102,7 @@ def main(argv=None) -> int:
             return 1
         print(f'nier_scenes: ok ({len(text.encode()) / 1024:.1f} KB)')
         return 0
-    OUT.write_text(text, encoding='utf-8')
+    OUT.write_bytes(text.encode('utf-8'))
     print(f'nier_scenes: wrote {OUT.relative_to(PKG)} ({len(text.encode()) / 1024:.1f} KB)')
     return 0
 
