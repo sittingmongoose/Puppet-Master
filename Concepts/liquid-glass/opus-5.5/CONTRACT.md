@@ -185,10 +185,10 @@ keeps one step queued at a time, each `later: 1` (rule v3.8: after terminal's st
 after the last kind, when the queue drops its step (the queue's session stop, or warming found off), or on `pm-warm-done`
 with no Glass step left (idempotent). With `PM_WARM.state().off` it does not start. Without `PM_WARM` it runs as above.
 
-The catalog keeps only the draws that link a GPU program (F6 census on the P1000 and the RTX 3090: 331 of 4,572 draws,
-plus 12 split first parts; `tools/warm_catalog.py --passes ... --split tools/warm_splits.json`). Its entries carry the
-passes that draw them. A split draws the kind first without its box-shadow (or gradient), then whole, so each step links
-one program. Draws whose links held the P1000's GPU over 83 ms by the census maximum and did not split are dropped, and
+The catalog keeps only the draws that link a GPU program (F6 census on the P1000 and the RTX 3090: 329 of 4,572 draws;
+`tools/warm_catalog.py --passes ... --split tools/warm_splits.json`). Its entries carry the passes that draw them. A split
+draws the kind first without its box-shadow (or gradient), then whole; a staged one adds one declaration a step (its
+box-shadow last, a layer at a time), then whole, so each step links about one program. Draws whose links held the P1000's GPU over 83 ms by the census maximum and did not split are dropped, and
 their first use pays as before (IDLE-WARM-RULE v3.9 item 4). Four draws the closure run found missing are added back.
 With a cut catalog every draw links a program, so with `PM_WARM` the draws are GPU steps (the queue's 300 ms watch keeps
 their links apart), and without it they are 300 ms apart. The crowded passes' crowd is ten filled outlines from a

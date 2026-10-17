@@ -20,7 +20,9 @@ catalog it was made from, which must match.
 - add keeps those passes' draws whatever the census says: the closure run (the cut, then the full catalog in one page)
   found them linking a program the cut had not.
 - split gives the entry a seventh field: in the passes named by bits glass.js draws the kind first without those
-  properties, then whole, so a kind whose draw links two programs links one per step.
+  properties, then whole, so a kind whose draw links two programs links one per step; with "*" instead of properties it
+  draws the kind in stages, one more declaration (its box-shadow last, one layer at a time) a step, then whole: the first
+  kind to need several programs (often after a drop moved them there) links about one a step.
 - drop takes those passes' draws out of the warm-up: draws whose links held the P1000's GPU over 83 ms by the census
   maximum (any back-to-back stall over 83.4 ms ends in a 6-vsync gap of 100.1 ms; IDLE-WARM-RULE v3.9 item 4), where
   no split separated them (their variants come from the box's fill and clips) or a single program's link was that long.
@@ -147,8 +149,9 @@ def passes(files):
     kept = [r[:5] + [m] + ([split['split'][str(i)]] if str(i) in (split.get('split') or {}) else []) for i, (r, m) in enumerate(zip(rows, mask)) if m]
     body = write(kept)
     draws = sum(bin(m).count('1') for m in mask)
-    pre = sum(bin(sp[0] & mask[int(i)]).count('1') for i, sp in (split.get('split') or {}).items())
-    print('%d of %d entries kept, %d of %d draws (+%d split first parts), %d bytes' % (len(kept), len(rows), draws, 4 * len(rows), pre, len(body)))
+    pre = sum(bin(sp[0] & mask[int(i)]).count('1') for i, sp in (split.get('split') or {}).items() if sp[1] != '*')
+    staged = sum(bin(sp[0] & mask[int(i)]).count('1') for i, sp in (split.get('split') or {}).items() if sp[1] == '*')
+    print('%d of %d entries kept, %d of %d draws (+%d split first parts, %d drawn in stages), %d bytes' % (len(kept), len(rows), draws, 4 * len(rows), pre, staged, len(body)))
 
 
 def main():
