@@ -94,7 +94,9 @@ var Motion = {
         });
       });
       return moves;
-    });
+    // An entrance starts from nothing (a fade from zero, a 2 px slice): after a long opening frame it starts on the
+    // first frame on time, so the sheet shows through the GPU's first draw of it; exits keep the default.
+    }, leaving ? undefined : { start: 'commit' });
     Motion.finished(node, function () { if (node._pmedGen !== gen) return; [].forEach.call(parts, clear); done(); });
   }
 };
@@ -664,7 +666,7 @@ function open(opts) {
     });
     var tiles = [], heights = [], sizing = false, contained = false;
     keepWarmCleanup(function () { if (sizing && !contained) root.classList.remove('pmed-contained'); });
-    append(function () { sizing = true; root.classList.remove('pmed-contained'); tiles = [].slice.call(root.querySelectorAll('.pmt-cz-scheme')); });
+    append(function () { sizing = true; root.classList.remove('pmed-contained'); tiles = [].slice.call(root.querySelectorAll('.pmt-cz-scheme, .pmt-cz-group')); });
     append(function () {
       heights = tiles.map(function (tile) {
         var css = getComputedStyle(tile), height = parseFloat(css.height);
@@ -692,6 +694,9 @@ function open(opts) {
   function paint() {
     // The tile, Changed mark, group count and footer all read the same fields.
     // Resolve each layer once for this paint, without caching across edits.
+    // A pick still waiting for its write is applied first: painting the old
+    // model would take back the state its control already shows.
+    if (pendingWrite && !paintRead) flushWrite();
     if (paintRead) return;
     paintRead = { own: Object.create(null), values: Object.create(null) };
     try {
@@ -804,12 +809,48 @@ function open(opts) {
     setT(root.querySelector('.pmt-cz-framelabel'), scope === 'tab' ? 'This editor' : 'This editor, like all editors');
     paintTokens();
     roving();
-    if (!closed) PMW.czFit(root);
+    if (!closed) PMW.czFit(root, fitLater || undefined);
   }
   function setPressed(id, mineKeys) {
     var s = SETS.filter(function (x) { return x.id === id; })[0]; if (!s) return false;
     if (!s.patch) return mineKeys.length === 0;
-    return Object.keys(s.patch).every(function (k) { return String(EL().own(scope, v, k)) === String(s.patch[k]); });
+    return Object.keys(s.patch).every(function (k) { return String(ownValue(k)) === String(s.patch[k]); });
+  }
+
+  /* ---- a pick answers on its own control first; the write follows the frame that shows it ----
+     A quick set, a scheme, a face or a switch saves Settings and gives the live preview its new look, whose first
+     raster is large (a new face's text, a new scheme on every line). Drawn in the same frame, the pressed control
+     waited for that raster too: Reading's tile changed 267 ms (Basic) and 283 ms (Glass) after the click on the
+     P1000 (B7). The control's own state is painted from the patch at once and gets a frame of its own; the write runs
+     once that frame is committed, and paints everything else exactly as before. A newer pick, any other input in the
+     screen, a paint, close and dispose run a waiting write first, so writes keep their order and none is lost. */
+  var pendingWrite = null, pendingFrame = 0, pendingTimer = 0, pendingGuard = 0;
+  function flushWrite() {
+    var w = pendingWrite; pendingWrite = null;
+    if (pendingFrame) cancelAnimationFrame(pendingFrame);
+    clearTimeout(pendingTimer); clearTimeout(pendingGuard);
+    pendingFrame = pendingTimer = pendingGuard = 0;
+    if (w) w();
+  }
+  function afterAck(w) {
+    flushWrite();
+    pendingWrite = w;
+    pendingFrame = requestAnimationFrame(function () { pendingFrame = 0; pendingTimer = setTimeout(flushWrite, 0); });
+    // A hidden tab has no frames; the write never waits on one for long.
+    pendingGuard = setTimeout(flushWrite, 120);
+  }
+  function ackRadio(b) {
+    var key = b.getAttribute('data-key');
+    [].forEach.call(root.querySelectorAll('[role="radio"][data-key="' + key + '"]'), function (x) { setA(x, 'aria-checked', String(x === b)); });
+  }
+  function ackSets(patch) {
+    // the quick sets' pressed states as this patch will leave them, through the same reads paint() makes
+    paintRead = { own: Object.create(null), values: Object.create(null) };
+    try {
+      Object.keys(patch).forEach(function (k) { paintRead.own[k] = patch[k] === null ? undefined : patch[k]; });
+      var mineKeys = COUNTED.filter(mine);
+      [].forEach.call(root.querySelectorAll('[data-set]'), function (b) { setA(b, 'aria-pressed', String(setPressed(b.getAttribute('data-set'), mineKeys))); });
+    } finally { paintRead = null; }
   }
 
   /* ---- placement: beside the editor when there is room, otherwise over the middle; the scrim leaves the editor
@@ -856,6 +897,7 @@ function open(opts) {
     if (preview && preview.recolorFrom) preview.recolorFrom(c[0], c[1]);
   }
   function choose(b) {
+    flushWrite();
     var key = b.getAttribute('data-key'), raw = b.getAttribute('data-value');
     var before = prevChosen(b.closest('.pmw-ink-row'));
     if (key === 'scope') {
@@ -865,43 +907,60 @@ function open(opts) {
       return;
     }
     pairNote = '';
-    if (key === 'lineNumberMode') { write({ lineNumbers: raw !== 'off', relativeNumbers: raw === 'relative' }); moveInk(key, before); return; }
+    if (b.getAttribute('aria-checked') !== 'true') { ackRadio(b); moveInk(key, before); }
+    if (key === 'lineNumberMode') { afterAck(function () { write({ lineNumbers: raw !== 'off', relativeNumbers: raw === 'relative' }); }); return; }
     if (key === 'italicComments' || key === 'boldKeywords' || key === 'smoothScroll') {
-      put(key, raw === 'follow' ? null : raw === 'on'); moveInk(key, before);
-      if (key === 'smoothScroll') tryScroll();
+      afterAck(function () {
+        put(key, raw === 'follow' ? null : raw === 'on');
+        if (key === 'smoothScroll') tryScroll();
+      });
       return;
     }
     var value = raw;
     if (key === 'contrast' || key === 'fontWeight' || key === 'wrapColumn' || key === 'tabSize') value = Number(raw);
     if (key === 'insertSpaces') value = raw === 'true';
     if (key === 'scheme') {
-      clearTimeout(intent); endPreview(); recolor(b);
-      /* a scheme of the other appearance (a light one while the app is dark) is shown as picked: Switch with light and
-         dark would show its sibling instead, so it turns off for this scope, and the screen says so */
-      var pick = value !== 'follow' ? EL().scheme(value) : null, mode = eff().look.mode;
-      if (pick && val('schemePair') && pick.mode !== mode && EL().pairOf(pick, mode) !== pick) {
-        write({ scheme: value, schemePair: false });
-        pairNote = 'Switch with light and dark is now off, so ' + pick.name + ' stays while the app is ' + mode + '.';
-        paint();
-      } else put('scheme', value);
-      PMW.announce('Code colours: ' + b.querySelector('.pmt-cz-tname').textContent);
+      // the hover preview's pending start is cancelled now; the preview itself ends with the write
+      cancelIntent();
+      var name = b.querySelector('.pmt-cz-tname').textContent;
+      afterAck(function () {
+        endPreview(); recolor(b);
+        /* a scheme of the other appearance (a light one while the app is dark) is shown as picked: Switch with light and
+           dark would show its sibling instead, so it turns off for this scope, and the screen says so */
+        var pick = value !== 'follow' ? EL().scheme(value) : null, mode = eff().look.mode;
+        if (pick && val('schemePair') && pick.mode !== mode && EL().pairOf(pick, mode) !== pick) {
+          write({ scheme: value, schemePair: false });
+          pairNote = 'Switch with light and dark is now off, so ' + pick.name + ' stays while the app is ' + mode + '.';
+          paint();
+        } else put('scheme', value);
+      });
+      PMW.announce('Code colours: ' + name);
       return;
     }
-    put(key, value);
-    moveInk(key, before);
-    if ((key === 'caretShape' || key === 'caretMotion' || key === 'caretTrail' || key === 'caretBlink') && preview) tryMove();
-    /* the current line's band shows on a caret, not under a selection: the preview drops its selection to show the choice
-       (Sol's review of the customizer audit: the selection hid the difference) */
-    if (key === 'lineHighlight' && preview && preview.demo) { stopDemo(); preview.demo.place(PV_SEL.r, PV_SEL.b); }
+    afterAck(function () {
+      put(key, value);
+      if ((key === 'caretShape' || key === 'caretMotion' || key === 'caretTrail' || key === 'caretBlink') && preview) tryMove();
+      /* the current line's band shows on a caret, not under a selection: the preview drops its selection to show the
+         choice (Sol's review of the customizer audit: the selection hid the difference) */
+      if (key === 'lineHighlight' && preview && preview.demo) { stopDemo(); preview.demo.place(PV_SEL.r, PV_SEL.b); }
+    });
   }
   function toggle(c) {
+    flushWrite();
     var key = c.getAttribute('data-key'), next = c.getAttribute('aria-checked') !== 'true';
-    put(key, next);
-    if (key === 'inactiveDim' && next) tryDim();
+    setA(c, 'aria-checked', String(next));
+    c.parentNode.classList.toggle('pmt-cz-lit', next);
+    // the plain word; the two qualified ones (Reduce motion, a face without ligatures) come with the write's paint
+    if (key !== 'reveal' && key !== 'ligatures') setT(c.querySelector('.pmt-cz-chipstate'), next ? 'On' : 'Off');
+    afterAck(function () {
+      put(key, next);
+      if (key === 'inactiveDim' && next) tryDim();
+    });
   }
   root.addEventListener('click', function (e) {
     if (closed) return;
     var t = e.target;
+    flushWrite();
     if (t.closest('.pmt-cz-scrim, .pmt-cz-frame')) { close(); return; }
     var b = t.closest('button, [role="radio"], [role="switch"]'); if (!b || !root.contains(b)) return;
     if (b.getAttribute('aria-disabled') === 'true') return;
@@ -931,10 +990,19 @@ function open(opts) {
     }
   });
   function quickSet(id) {
+    flushWrite();
     var s = SETS.filter(function (x) { return x.id === id; })[0]; if (!s) return;
-    if (!s.patch) { EL().reset(scope, v); return; }
+    if (!s.patch) {
+      var clear = {};
+      Object.keys(EL().FIELDS).forEach(function (k) { if (EL().own(scope, v, k) !== undefined) clear[k] = null; });
+      ackSets(clear);
+      afterAck(function () { EL().reset(scope, v); });
+      return;
+    }
     /* a set changes its own fields and leaves the rest of this scope's choices (the scheme you picked stays) */
-    write(Object.assign({}, s.patch));
+    var patch = Object.assign({}, s.patch);
+    ackSets(patch);
+    afterAck(function () { write(patch); });
   }
   /* Try it: the preview plays a move, some typing, a jump to a problem and how an editor you are not in looks */
   var demoTimers = [];
@@ -977,6 +1045,7 @@ function open(opts) {
   }
   /* sliders: shown while they move, written when let go */
   root.addEventListener('input', function (e) {
+    flushWrite();
     var t = e.target, key = t.getAttribute('data-key');
     if (t.classList.contains('pmt-cz-search')) { filter(t.value); return; }
     if (t.hasAttribute('data-hsl-in') && tokOpen) { tokSet(tokOpen, tokFromSliders(), 'live'); return; }
@@ -992,6 +1061,7 @@ function open(opts) {
     setT(t.parentNode.querySelector('output'), fmt(key, x));
   });
   root.addEventListener('change', function (e) {
+    flushWrite();
     var t = e.target, key = t.getAttribute('data-key');
     if (t.hasAttribute('data-hsl-in') && tokOpen) { EL().commit(scope, 'tokenColors', v); syncPreview(); paint(); return; }
     if (t.hasAttribute('data-pick-hex') && tokOpen) { var hx = normHex(t.value); if (hx) tokSet(tokOpen, hx, 'keep'); else tokEndPreview(); return; }
@@ -1027,6 +1097,7 @@ function open(opts) {
       intentFrame = requestAnimationFrame(function () {
         intentFrame = 0;
         if (!root.isConnected || openRoot !== root || intentTile !== tileEl || (pointerIntent && performance.now() < scrollUntil)) return;
+        flushWrite();
         previewing = id;
         previewPointer = !!pointerIntent;
         EL().preview(v, { scheme: id }); syncPreview();
@@ -1073,6 +1144,7 @@ function open(opts) {
   }
   /* how: 'live' while a slider moves (shown, not written), 'keep' (written), 'preview' (a swatch the pointer rests on) */
   function tokSet(tok, hex, how) {
+    flushWrite();
     if (how === 'preview') {
       var I = tokInfo(); if (!I) return;
       var pv = {}; pv[I.key + '/' + tok] = hex;
@@ -1173,6 +1245,7 @@ function open(opts) {
      do; in the schemes they preview, and Enter or Space keeps one) */
   root.addEventListener('keydown', function (e) {
     if (closed) return;
+    flushWrite();
     if (e.key === 'Escape') {
       e.preventDefault(); e.stopPropagation();
       if (previewing !== null) { endPreview(); return; }
@@ -1326,8 +1399,50 @@ function open(opts) {
     io = new IntersectionObserver(function (list) { if (closed) return; var en = list[list.length - 1]; wantDock = en.intersectionRatio < 0.4; syncDock(); }, { root: body, threshold: [0, 0.4, 1] });
     io.observe(root.querySelector('.pmt-cz-preview'));
   }
-  var closed = true, disposed = false, visit = 0;
+  var closed = true, disposed = false, visit = 0, parkedAtTop = true;
   var importError = root.querySelector('[data-import-error]');
+  /* An open whose fit is not cached (the editor's own entry places the sheet at a new width) measured its rows right
+     after its writes, so the first read paid a forced layout of the menu's close, the click and the whole sheet (P1000
+     54.5 ms, Glass open-from-editor). The open's fit starts in its frame's own layout instead (PM_AFTER_LAYOUT, before
+     paint) and finishes in that same delivery, so no unfitted row is ever drawn. */
+  var fitLater = null;
+  function fitInFrame(fn) {
+    if (fitLater !== fitInFrame || !window.PM_AFTER_LAYOUT) { fn(); return; }
+    var at = visit;
+    fitLater = null;
+    window.PM_AFTER_LAYOUT(function () { if (!closed && at === visit && root._czFit === null) fn(); });
+  }
+  /* The sheet appears under a pointer that rests on Settings. Hit at once, the pointer's hover left Settings' column in
+     the opening frame, and the page's :hover rules restyled that whole column (about 1100 icons and labels: 120 ms on
+     Nas1, 29 ms on the P1000) before the sheet's first frame. Until the pointer next moves, presses or scrolls, or the
+     entrance ends, the sheet's plates let it through, so that hover changes later, while the entrance plays on the
+     compositor. A press or a wheel that comes first is kept from the page under the sheet and does nothing else: it
+     comes before the pointer has moved, within the entrance, which in practice is the second press of a double click
+     on the button that opened the sheet. The longest entrance (260 ms) with the six frames it can be held at its start
+     (PM_START_ON_SHOWN) ends within PASS_MAX: pass-through never outlasts that, so a sheet whose entrance end is not
+     heard (a newer move on its plates, a lost animationend) is still hit without the pointer moving, by a keyboard or
+     assistive-technology user and a resting pointer alike. */
+  var passing = false, passTimer = 0, PASS_MAX = 500, PASS = ['pointermove', 'pointerdown', 'wheel'], passOpts = { capture: true, passive: false };
+  function passThrough(on) {
+    if (passing === on) return;
+    passing = on;
+    root.classList.toggle('pmed-pass', on);
+    clearTimeout(passTimer); passTimer = on ? setTimeout(function () { passThrough(false); }, PASS_MAX) : 0;
+    PASS.forEach(function (t) { if (on) window.addEventListener(t, endPass, passOpts); else window.removeEventListener(t, endPass, passOpts); });
+  }
+  function keepFromPage(e) { if (!root.contains(e.target)) { e.preventDefault(); e.stopPropagation(); } }
+  function endPass(e) {
+    if (!passing) return;
+    passThrough(false);
+    if (e.type === 'pointermove' || closed || root.contains(e.target)) return;
+    keepFromPage(e);
+    if (e.type !== 'pointerdown') return;
+    // its mouse events and click would reach the page too
+    var types = ['mousedown', 'mouseup', 'click'], done = function () { types.forEach(function (t) { window.removeEventListener(t, keepFromPage, true); }); };
+    types.forEach(function (t) { window.addEventListener(t, keepFromPage, true); });
+    window.addEventListener('pointerup', function () { setTimeout(done, 0); }, { capture: true, once: true });
+    setTimeout(done, 1500);
+  }
   function focusStopsOn(on) {
     // Keep layout available to idle preparation while excluding the entire
     // parked subtree from focus, selection and find-in-page, including the
@@ -1336,6 +1451,8 @@ function open(opts) {
     if (on) roving();
   }
   function dispose() {
+    flushWrite();
+    passThrough(false);
     disposed = true;
     stopDemo(); endPreview(); tokEndPreview();
     if (offChange) offChange();
@@ -1356,6 +1473,8 @@ function open(opts) {
   }
   function close(noFocus) {
     if (closed) return;
+    flushWrite();
+    passThrough(false);
     closed = true;
     var closing = ++visit;
     stopDemo(); endPreview(); tokEndPreview();
@@ -1369,6 +1488,10 @@ function open(opts) {
     function park() {
       if (closing !== visit || disposed) return;
       root.classList.add('pmed-prepared');
+      // Back to the top while nothing shows, so the next visit's handler need
+      // not write the scroller and force the page's layout before its frame.
+      if (body.scrollTop) body.scrollTop = 0;
+      parkedAtTop = true;
       if (inst.customizing) inst.customizing(false);
       warmMeasurementsSoon();
     }
@@ -1386,6 +1509,7 @@ function open(opts) {
   var handle = { el: root, inst: inst, dispose: dispose, show: show, close: function () { close(); }, refresh: function () { if (!closed) { syncPreview(); paint(); } }, preview: preview };
   function show(next) {
     if (next.prepare) return handle;
+    flushWrite();
     cancelWarmMeasurements(); cancelWarmPaint();
     opts = next; anchor = opts.anchor || null;
     scope = opts.scope === 'app' ? 'app' : v._apScope || 'tab';
@@ -1403,16 +1527,22 @@ function open(opts) {
     root.inert = false;
     root._pmedGen = (root._pmedGen || 0) + 1;
     if (root.classList.contains('pmt-in') || root.classList.contains('pmt-out')) root.classList.remove('pmt-in', 'pmt-out');
-    wantDock = false; dockTo(false); body.scrollTop = 0;
+    wantDock = false; dockTo(false);
+    if (!parkedAtTop) body.scrollTop = 0;
+    parkedAtTop = false;
     var search = root.querySelector('.pmt-cz-search');
     if (search.value) { search.value = ''; filter(''); }
     if (inst.customizing) inst.customizing(true);
     syncPreview();
-    if (needsPaint) paint(); else PMW.czFit(root);
+    fitLater = fitInFrame;
+    if (needsPaint) paint(); else PMW.czFit(root, fitInFrame);
+    fitLater = null;
     focusStopsOn(true);
     root.removeAttribute('aria-hidden');
+    passThrough(true);
     root.classList.remove('pmed-prepared');
-    Motion.play(root);
+    // the entrance's end lets the pointer hit the sheet too, for a pointer that has not moved
+    Motion.sheet(root, false, function () { passThrough(false); });
     var first = root.querySelector('[data-seg="scope"] [aria-checked="true"]') || dialog;
     // Let the entrance paint before focus asks the browser for geometry. A
     // newer visit invalidates this job, so a quick close cannot reclaim focus.
@@ -1454,14 +1584,16 @@ PMW.edCustomize = { open: open };
 window.PM_EDITOR_CUSTOMIZE = Object.freeze({
   open: function (o) {
     o = o || {};
+    // A click that opens nothing says why in the console, where page-error checks and films see it.
+    var said = function (why) { try { console.error('[pm-editor] Customize did not open: ' + why); } catch (_) {} };
     var inst = PMW.editorInView ? PMW.editorInView(o.from === 'settings') : null;
-    if (inst) return open(Object.assign({}, o, { view: inst.view, scope: o.scope || 'app' }));
+    if (inst) { var h = open(Object.assign({}, o, { view: inst.view, scope: o.scope || 'app' })); if (!h) said('the editor found has no view or look'); return h; }
     try { PM_HOME.open({ kind: 'editor', path: 'src/main.rs' }); } catch (_) {}
     var tries = 0;
     (function wait() {
       var e2 = PMW.editorInView ? PMW.editorInView(o.from === 'settings') : null;
-      if (e2) { open(Object.assign({}, o, { view: e2.view, scope: o.scope || 'app' })); return; }
-      if (++tries < 30) setTimeout(wait, 100);
+      if (e2) { if (!open(Object.assign({}, o, { view: e2.view, scope: o.scope || 'app' }))) said('the editor opened for it has no view or look'); return; }
+      if (++tries < 30) setTimeout(wait, 100); else said('no editor was mounted within 3 s');
     })();
     return null;
   }
