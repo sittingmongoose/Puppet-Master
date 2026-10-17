@@ -53,11 +53,13 @@
   window.PM_START_ON_SHOWN = function startOnShown(anims, o) {
     const max = (o && o.frames) || 6, held = new Set(), before = o && typeof o.release === 'function' ? o.release : null;
     /* o.wait: () => bool. While it says true the moves stay held, even when the frames are on time, for at most o.waitCap
-       ms (1.5 s) from the first check: an arriving page that draws its content in slices first says so (a page change
-       holds while its page carries data-pm-entrance-wait: Usage's board, rastered a card a frame so the compositor never
-       waits on the whole board, F6 entry freeze) */
+       ms (1.5 s) from o.waitFrom (a performance.now() time: the click's frame), or from the first check without it: an
+       arriving page that draws its content in slices first says so (a page change holds while its page carries
+       data-pm-entrance-wait: Usage's board, rastered a card a frame so the compositor never waits on the whole board,
+       F6 entry freeze). Counted from the first check, which comes after the change's long first frame, the hold ran to
+       1.9 s from the click on the P1000 and outlasted the click's fade */
     const waitFor = o && typeof o.wait === 'function' ? o.wait : null, waitCap = (o && o.waitCap) || 1500;
-    let firstCheck = null;
+    let firstCheck = o && typeof o.waitFrom === 'number' && isFinite(o.waitFrom) ? o.waitFrom : null;
     const waiting = () => {
       if (!waitFor) return false;
       const t = performance.now();
