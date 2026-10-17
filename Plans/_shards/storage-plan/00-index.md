@@ -1,97 +1,97 @@
 # Shard Index: Plans/storage-plan.md
 
-Generated: 2026-10-17T21:21:05Z
+Generated: 2026-10-17T21:55:58Z
 
-Source SHA256: `04430bb31d59540a1566ba4ff875193bc1b491317c735d5ac41688756556a83f`
+Source SHA256: `082af0f739b10d86a02d4fbb43fe67a64348788d21baed2acfd0a7635b31f689`
 
 Manifest: [`manifest.json`](manifest.json)
 
 ## Shards
 
-- [001 - Preamble](001-preamble.md) L1-L1 `866b4af03e0134627f7fb0ff7b24d45fd415df0b2bc7b58913191ef113d866b1`
-- [002 - Canonical owner-section requirements](002-canonical-owner-section-requirements.md) L4-L169 `27d3402be5dc325b07b6c6901121af87ab076c8dd35f937445ffdb67185133da`
-- [003 - Summary](003-summary.md) L171-L175 `9b1977d3c3917bc9e77db8bb752771c10085b37431d3ffa2efa7c196039bbad4`
-- [004 - Table of Contents](004-table-of-contents.md) L177-L188 `8a7dfc4661ed19a9c0b1c4dfc0b74c250dbf6742206c4f2b74ecc43a748a8dd4`
-- [005 - 1. Definitions and concepts](005-1.-definitions-and-concepts.md) L190-L230 `b4be6615711f17c9dc06d5a35c9ac6fcbd4897caf86e7114ef28f1fa56181941`
-- [006 - 2. How we're going to do it](006-2.-how-we-re-going-to-do-it.md) L231-L1650 `d1dbef078a531f4716296d630131253dd4d19128f5cfbfbb47746957303fdaad`
-- [007 - 3. Implementation checklist](007-3.-implementation-checklist.md) L1652-L1667 `827bda94dedbd09ee796e80079695378059a0e71b302e5dd67161371202a7a1a`
-- [008 - 4. Impact on chat (Assistant / Interview)](008-4.-impact-on-chat-assistant-interview.md) L1669-L1897 `18667df47298dd7b944a1bdef35d294dad49809ce1e1ea31f6a24c30a199ddfa`
-- [009 - 5. Gaps and how we address them](009-5.-gaps-and-how-we-address-them.md) L1898-L1984 `347d39ae451f7563ed371a93cddd5c2f2b0c56982656ed6a5cc8fbcaecdd0b18`
-- [010 - 6. Potential problems and solutions](010-6.-potential-problems-and-solutions.md) L1986-L2009 `a6e381327f56b16d9968b7b5ca7f07be55555c8cc6a383cf18d0e9ca4530c7a0`
-- [011 - 7. Backup, restore, compaction, and optional storage enhancements](011-7.-backup-restore-compaction-and-optional-storage-enhancements.md) L2011-L2021 `b6d3087b2faf7c11edcd9440ccc3195cc097cff657dcfd23c4c5692a748be836`
-- [012 - 8. Implementation order and testing](012-8.-implementation-order-and-testing.md) L2023-L2146 `adca8de759e9c296cf8f8a28b5a9499d5cee40e22101c06d39131bbaf5da3d82`
-- [013 - Version history](013-version-history.md) L2148-L2155 `c1843bccafcb04ba52f6d2b9319f26001394b279276cd0192f9c0e02810eb99d`
-- [014 - Scheduler Runtime, Safe-Point, and Remediation Storage Addendum (2026-03-08)](014-scheduler-runtime-safe-point-and-remediation-storage-addendum-20.md) L2157-L2194 `5600dbbf873411fc2d2213c2377f07a7f8eb59b771cdfa521462c6fdea887541`
-- [015 - Runtime Attempt / Safe Point / Queue Analysis Storage Addendum (2026-03-09)](015-runtime-attempt-safe-point-queue-analysis-storage-addendum-2026-.md) L2195-L2209 `926cdd22fab400f04aeee14d5e4c54324d9e107e6673c98fb808e5df5ccd9dc7`
-- [016 - Runtime Attempt / Safe Point / Queue Analysis Canonical Alignment (2026-03-09)](016-runtime-attempt-safe-point-queue-analysis-canonical-alignment-20.md) L2210-L2264 `9361643e28558b9617f810fb20d5200361240c44c99ea58247c21867cfef314c`
-- [017 - Runtime Recovery Persistence and Restart Canonical Alignment (2026-03-09)](017-runtime-recovery-persistence-and-restart-canonical-alignment-202.md) L2265-L2285 `c0c2da3d9021c8211736ca92ea0635dc78407a9f96cb9e34770b5355f9dc291d`
-- [018 - Permission Snapshot Storage and Safe-Point Namespace Addendum](018-permission-snapshot-storage-and-safe-point-namespace-addendum.md) L2286-L2317 `057f607ff916254ab4bc669eb013de0f39701673df695ace328e4ba6427b5a96`
-- [019 - Assistant Worktree Binding Storage Addendum](019-assistant-worktree-binding-storage-addendum.md) L2319-L2324 `7f815a3fc6e011d23f48225bf004002c0069b8cc216dbebad355efaa97c50c54`
-- [020 - 8. Web content caching persistence](020-8.-web-content-caching-persistence.md) L2325-L2379 `7545d569431d1b89ed04598c81be20bb3760b1d29ea4c06eca434688d4612433`
-- [021 - Owner / Consumer Map](021-owner-consumer-map.md) L2381-L2385 `fa67b3cd275cee605be18c6a7aba9afe14c61dcb85159f64426399a3e7d91626`
-- [022 - PlanUnits](022-planunits.md) L2387-L15092 `24d21e471aa0a9a309e521ba2b202e7b616850cd112c6d6e96ead40bca38316d`
-- [023 - Migration Coverage](023-migration-coverage.md) L15094-L15104 `f2c7860fc5bdca1c9322319064a99860f2a9ead21d32ebd79123dc7c2b5c1c76`
-- [024 - Ledger Compile Addendum - pldg-20260614-001](024-ledger-compile-addendum-pldg-20260614-001.md) L15106-L15146 `6af0d9f93f71c7306b985e7e3d35a5a2fca810185eb2eda4815d2ce9b15fa089`
-- [025 - Ledger Compile Addendum - pldg-20260616-001](025-ledger-compile-addendum-pldg-20260616-001.md) L15148-L15312 `6c4597d7aa0053368ba7bdc2d20cd37f5ff2494904d05075b3820168ac3cf124`
-- [026 - Ledger Compile Addendum - pldg-20260616-002](026-ledger-compile-addendum-pldg-20260616-002.md) L15314-L15433 `0e96fef996378f1d6d6fcf52720d85ed814295d0086d31ea26722c186cff7b29`
-- [027 - Ledger Compile Addendum - pldg-20260618-001-prd-planning-wizard](027-ledger-compile-addendum-pldg-20260618-001-prd-planning-wizard.md) L15436-L15531 `e3d7b946e45d3f533699a977b2c9c04e5291c089e01e5e0fa844c3a9169fb2df`
-- [028 - Ledger Compile Addendum - pldg-20260622-001-fff](028-ledger-compile-addendum-pldg-20260622-001-fff.md) L15533-L15628 `7e256f54f9f7f39075057ac4953374d4252e10e9690b237fb037fb4f6a072a57`
-- [029 - Ledger Compile Addendum - pldg-20260626-001-feature-name](029-ledger-compile-addendum-pldg-20260626-001-feature-name.md) L15631-L15950 `efac05fdb58bf8d75adaf91b02267bd66ad4f801a5024b949b4a9924ff05fd98`
-- [030 - Ledger Compile Addendum - pldg-20260627-001-feature-intake](030-ledger-compile-addendum-pldg-20260627-001-feature-intake.md) L15952-L16169 `bc47fbdacd1620772a3095f58524843bd5fffa010676b2ca9e34f069a94e9ffd`
-- [031 - Ledger Compile Addendum - pldg-20260629-001-feature-name](031-ledger-compile-addendum-pldg-20260629-001-feature-name.md) L16171-L16280 `04654965618f152106a22ffb9ff3188d43945c2772837801140049fad7ef20ab`
-- [032 - Ledger Compile Addendum - pldg-20260630-001-feature-intake](032-ledger-compile-addendum-pldg-20260630-001-feature-intake.md) L16282-L16371 `9d79fc5622821e74b8822f9c0ac974de42b02c823049f68cfa37fc01f53a21bf`
-- [033 - Ledger Compile Addendum - pldg-20260703-001-feature-intake](033-ledger-compile-addendum-pldg-20260703-001-feature-intake.md) L16373-L16852 `9c04fe7686d2594906ceffcc68880bf5d7bf6031d3856ec1daa35cbd74a525ad`
-- [034 - FABLE Deferred Action Concrete Repair Addendum - 2026-07-08](034-fable-deferred-action-concrete-repair-addendum-2026-07-08.md) L16854-L16967 `6523f6f251fa2ae46362cea1f64a35974fc520ef902d051918a0bd48853467ca`
-- [035 - FABLE Remaining Action Plan Audit-Lineage Notes (2026-07-08)](035-fable-remaining-action-plan-audit-lineage-notes-2026-07-08.md) L16968-L16974 `33920905618abc85f04857ad0645a7f719ac864dec29c27d51dc52609b76d009`
-- [036 - Usage GUI Propagation Addendum - 2026-07-09](036-usage-gui-propagation-addendum-2026-07-09.md) L16976-L17040 `a226959229b734ac5769bd9be679fc5cd3d558af2555226a343f4ca8ace52f38`
-- [037 - Case L durable-state owner canon - 2026-07-17](037-case-l-durable-state-owner-canon-2026-07-17.md) L17042-L18002 `dd9fc2d58a390b2e43f9c95dfea735df7e36a83f9d6cd487c7888c7404b7816e`
-- [038 - Known-37 Case L owner materialization](038-known-37-case-l-owner-materialization.md) L18005-L18090 `25d908158928ef09950edadfbc4e62f6bc163ccc78580fc5da32f9d0ad691498`
-- [039 - PMConcept7 Home Workspace layout — 2026-08-04](039-pmconcept7-home-workspace-layout-2026-08-04.md) L18092-L18179 `2281d1794a09a034ca1e2193cf2c3ea08494410a0b821a9c98f16a929927d608`
-- [040 - Run & Debug Revival Addendum - 2026-07-27](040-run-debug-revival-addendum-2026-07-27.md) L18181-L18237 `493365a89668e1ec240d2d13c7f95bfb2b79373d0dcfda854dd3a6d578eb35cb`
-- [041 - Shared Integration Runtime persistence and migration addendum (2026-08-13)](041-shared-integration-runtime-persistence-and-migration-addendum-20.md) L18239-L18413 `dab9d8f99cdd8b302f3c62391476319c158c2f4c598330fcfbf1f171e022873b`
-- [042 - u11 Prism II Usage View-State Addendum - 2026-08-18](042-u11-prism-ii-usage-view-state-addendum-2026-08-18.md) L18415-L18526 `eb9a41fa60484d049f7688edbacbe764b9a342c13263eb015bfc31854ee10a5a`
-- [043 - PMConcept7 Recovery Settled Layout Addendum - 2026-08-27](043-pmconcept7-recovery-settled-layout-addendum-2026-08-27.md) L18528-L18729 `1d19e5d5600a2f59342da15d5e66ea676de5c0ec554432c8c9bfd83969d54341`
-- [044 - Packet-Authoritative Storage Disposition And Redaction Addendum - 2026-08-31](044-packet-authoritative-storage-disposition-and-redaction-addendum-.md) L18731-L18983 `8f2c0d1edb85d0ace1a54774494ae56ed0f20b24d6329a5398e4ee47e86b758e`
-- [045 - Back Seat Driver Contract-Family Persistence Disposition Addendum - 2026-09-23](045-back-seat-driver-contract-family-persistence-disposition-addendu.md) L18985-L19063 `099efb3a276731065c6f084a3828e5a1ff11476fa793843fa452c480524a8655`
-- [046 - Forge, Backup v2, And Go tsnet Storage/Redaction Transaction - 2026-09-01](046-forge-backup-v2-and-go-tsnet-storage-redaction-transaction-2026-.md) L19065-L19158 `fd1954def919d63cd17afe988f20a36c834cca78acc2fb0b046f6dd62c6efd89`
-- [047 - Additive Correction v4 — Records, Replay, And Migration Matrix (2026-09-03)](047-additive-correction-v4-records-replay-and-migration-matrix-2026-.md) L19160-L19238 `c46c1cd38897f10d42553c597d187b0d54c2c8c441d14478acb12b01941c2dee`
-- [048 - Working Notebook And Context Transition Storage Addendum (2026-09-05)](048-working-notebook-and-context-transition-storage-addendum-2026-09.md) L19240-L19362 `892e1fa5a6c7bb2b1ea670262914c11a4a2439e278c29ab30af9736a258cde32`
-- [049 - Research decision disposition persistence](049-research-decision-disposition-persistence.md) L19365-L19450 `92b7eaa1a5a87e31455b2bd67afd690c511c7ab8ec34a477e0a4877b0fa5f933`
-- [050 - Compaction completion persistence contract (DL-039 and DL-040)](050-compaction-completion-persistence-contract-dl-039-and-dl-040.md) L19452-L19509 `1c93899ce01ea33724d03664836744b62637054210219ab6a54558b60bb51e13`
-- [051 - DL-042 — Historical TODO Event Migration Consumer Boundary (2026-09-11)](051-dl-042-historical-todo-event-migration-consumer-boundary-2026-09.md) L19512-L19516 `642d15d81da3c5bf7ac4bb3971d229ff1694912c68a27e18db23f4660262a237`
-- [052 - Scoped Browser Event Persistence — 2026-09-10](052-scoped-browser-event-persistence-2026-09-10.md) L19518-L19573 `919313aa5bc05c489e8161a83151f12f5f48c96637e54a8c30c52730bf959a46`
-- [053 - Jujutsu D5 Owner Requirements (2026-09-11)](053-jujutsu-d5-owner-requirements-2026-09-11.md) L19575-L19716 `688c3cc70e4660d3780a549dfc94db7cab3dc2ec9423dd64c941eb829d9f2aff`
-- [054 - Run-start index consumers and checkpoint - 2026-09-11](054-run-start-index-consumers-and-checkpoint-2026-09-11.md) L19718-L19862 `65df9cc1e8ed63d6c23a8d4eb90724c261d6a1f58bef2e18c48e4fab3582ec7a`
-- [055 - Browser workspace-created index and checkpoint — 2026-09-11](055-browser-workspace-created-index-and-checkpoint-2026-09-11.md) L19864-L20214 `8170e0ac29f2cce6a1a33dd2ffe4a149a5b5b20404a8ad4284ce6d042677c6eb`
-- [056 - Restore-point created consumer checkpoint contract](056-restore-point-created-consumer-checkpoint-contract.md) L20217-L20395 `523959f829912753485f42ca2b57d3fc9b4cd34c4296c5fc14f57fc9db639717`
-- [057 - Restore-point retention summary contract](057-restore-point-retention-summary-contract.md) L20397-L21259 `2273c7a0260ecf5f54b6e53aff0c1b43ebfe60fea9143cc2ed430e24a3af6e77`
-- [058 - Run-start and restore-created versioned index adoption](058-run-start-and-restore-created-versioned-index-adoption.md) L21261-L21321 `a89104781629066b84ef863de76bb5569b5e0fa0beecc23eb30d662d6bc401ef`
-- [059 - Browser workspace-reset filtered checkpoint — 2026-09-11](059-browser-workspace-reset-filtered-checkpoint-2026-09-11.md) L21323-L22104 `9ac65722affa12c00dc1f3670ab870a0eeffca9d8d87854cc07b6407e0149b0a`
-- [060 - First append receipt custody](060-first-append-receipt-custody.md) L22107-L22282 `4cae3f59bfb92e7de96924401b2c913cba17501276e9c8f1fdcccc7d757918de`
-- [061 - Goal body storage custody](061-goal-body-storage-custody.md) L22284-L22401 `f30a6da44f50462fabf0be91e63f175f00ae856a95cdc79d77d4a18a9c6c5d77`
-- [062 - Restore-point deletion custody and checkpoint](062-restore-point-deletion-custody-and-checkpoint.md) L22403-L22546 `5f7bce4bcbf38591141924a12ce6b6f8f2aac36475494a5ed3c84e45db02d5a8`
-- [063 - Restore-point delete original-result custody](063-restore-point-delete-original-result-custody.md) L22549-L22639 `02896adc890daf721bb6f4f36cef0661a5bc5f4a0f1b7cf362e19aadfeb8c9d9`
-- [064 - Restore Point Expired Custody And Checkpoint](064-restore-point-expired-custody-and-checkpoint.md) L22644-L22845 `809d389bc0da231756d73e0930d819beeccc88b9dfdef0115179ccf922c35009`
-- [065 - Restore-point original admission and retained-custody read phases](065-restore-point-original-admission-and-retained-custody-read-phase.md) L22847-L23028 `8d60b03da8bba09ff16cdcdb60d70eb5ec5e24a712bc6d04ce3944004eceaead`
-- [066 - Legal-hold transition custody and passive history](066-legal-hold-transition-custody-and-passive-history.md) L23030-L23242 `d6bce49ad64bb9005dcfbda4c9a3ee20821e8757edbb361ea6de6dde53443295`
-- [067 - Original Standard certification receipt custody](067-original-standard-certification-receipt-custody.md) L23244-L23332 `af646b949e047e16c118b7a915b46be69756918b13b7117b8bccbd6180f56b3a`
-- [068 - Storage integrity finding custody and read contract](068-storage-integrity-finding-custody-and-read-contract.md) L23334-L23610 `295c7f4d6a40a4b4bedb4beb599ef907fa7e4754c515a988c448c193d2a91766`
-- [069 - Platform capability decision custody](069-platform-capability-decision-custody.md) L23611-L23741 `9b8fe798db88a0288d93ca95eca03107213c188a9c118b782809589a09515265`
-- [070 - Boot recovery aggregate and original producer custody](070-boot-recovery-aggregate-and-original-producer-custody.md) L23743-L23829 `45d8d2db83396162fb9e51aabbc776d4f4cc87233926115ed225e319f6accec0`
-- [071 - Boot earliest receipt continuity and activation](071-boot-earliest-receipt-continuity-and-activation.md) L23831-L23932 `023356eb96b9fbe348898fc5a81c1346738bf7fcf09d0fa276229e1faa2232e6`
-- [072 - Recovery original action custody and publication](072-recovery-original-action-custody-and-publication.md) L23934-L24023 `7fd8109e5f04f8165417ad4f27334c7f64f5a66a201433dfc05644a228194889`
-- [073 - Goal start original command custody and publication](073-goal-start-original-command-custody-and-publication.md) L24025-L24056 `53edd657c37c898bf38eb7b49e9106375fe7b70a3c4e1b219a1efa8907003583`
-- [074 - SP-294 - Goal start original command custody and publication](074-sp-294-goal-start-original-command-custody-and-publication.md) L24058-L24120 `83a91a451e0c9eb2bca1f17a437c6c221d4050709bc1a85de20a3b4c74ae7978`
-- [075 - Compaction original native source, phase custody and detail retirement](075-compaction-original-native-source-phase-custody-and-detail-retir.md) L24122-L24329 `9db4369f26b7773ff2c428cb282e97eff3ba2e77212d2e02240454e2a31a7bfe`
-- [076 - Goal-created passive current reader and original command members](076-goal-created-passive-current-reader-and-original-command-members.md) L24330-L24461 `5a46944f29348c7828593b1d20c0e5128ca1148450f4558749aeddc9efddc43a`
-- [077 - Original Goal update source, physical custody and publication](077-original-goal-update-source-physical-custody-and-publication.md) L24462-L26551 `ff75a2bbcf750175a6c4ab1fb0bab7dc4e509c35282beb6dd220679e46b7ac82`
-- [078 - SP-314 — Original Standard authority families and fresh whole stored profiles (2026-09-20)](078-sp-314-original-standard-authority-families-and-fresh-whole-stor.md) L26554-L26649 `0deb212e0277a88b79f2ca363e03fa90e35580f801495dd59a744ba5794a9ef0`
-- [079 - SP-315 — Certified producer current and retained source disclosure (2026-09-21)](079-sp-315-certified-producer-current-and-retained-source-disclosure.md) L26652-L26709 `eee16488668c7da9df891af88fba7f0f7d5a0b6af301359c2fe1b7bbe74f977c`
-- [080 - SP-316 — Seven compact authority families, eleven v7 profile-qualified wrapper routes and atomic native/Event release (2026-09-21)](080-sp-316-seven-compact-authority-families-eleven-v7-profile-qualif.md) L26712-L26782 `fd6a6ae6ecd0fee10b88903262aa313243ca4e286a1cfdc772e66e311ad44ea4`
-- [081 - SP-317 — Two projection/checkpoint families and exact RP-PROJECTION-3GEN transaction/generation/cutover obligations (2026-09-21)](081-sp-317-two-projection-checkpoint-families-and-exact-rp-projectio.md) L26785-L26856 `a9db7b29835283fcaccd9b50c1d07fa44d95ab497d5e0c955f9a34c5b0640287`
-- [082 - Terminal workgroup moved — exact passive source read](082-terminal-workgroup-moved-exact-passive-source-read.md) L26858-L27055 `22feec7d3f1fbe6afb12e7f8c74812c247e8b000f4b179cd2e82df9fdd6067ec`
-- [083 - Coordination event persistence binding (DL-045, 2026-09-25)](083-coordination-event-persistence-binding-dl-045-2026-09-25.md) L27056-L27278 `59b261add8f78bf763577eefd682b37099e3d6628751ddd313520b8f55bbb882`
-- [084 - Project Creation-Recovery Context Custody Addendum - 2026-09-26](084-project-creation-recovery-context-custody-addendum-2026-09-26.md) L27280-L27354 `7b02636f96d6ee2ecb000eb8261ddbc261b2f5ba1418596cca255c7dec851cea`
-- [085 - Application update check schedule persistence — 2026-09-27](085-application-update-check-schedule-persistence-2026-09-27.md) L27356-L27397 `76f4830684321b6ca41b470095900b86a0782685014fcd25367c536995673229`
-- [086 - Project automation pause custody — 2026-09-29](086-project-automation-pause-custody-2026-09-29.md) L27399-L27470 `e059a87e794c21b8cd041b42810f5262707d243875cac273e411caeb4459b5ad`
-- [087 - DL-180 to DL-185 — The v2 Home layout record, terminal appearance and terminal records (2026-10-09)](087-dl-180-to-dl-185-the-v2-home-layout-record-terminal-appearance-a.md) L27472-L28102 `33f93227fd44f3d27e107ae6fe8960263a956526036f9abfdad3f9ab3b99c623`
+- [001 - Preamble](001-preamble.md) L1-L1 `3ec85c0f575fde90d98e5793ea3bbc9d747c7fc3f2142e82a3de6a35ee5fb984`
+- [002 - Canonical owner-section requirements](002-canonical-owner-section-requirements.md) L4-L169 `94d13f87a927a447790c7679fa95e6a15a82e21bd4272dcf69061eda0df72d69`
+- [003 - Summary](003-summary.md) L171-L175 `be51051af895ad903741cb4bcef037a8abc658e5e92edd5e9727e19d6eade695`
+- [004 - Table of Contents](004-table-of-contents.md) L177-L188 `54c02d5d728e6897d94bebeb6e2bb2c60a9e4f38509179dc476910b810260e5f`
+- [005 - 1. Definitions and concepts](005-1.-definitions-and-concepts.md) L190-L230 `697f25d8101eca736d8f57f32902c865d9211401199f740b00df364af9fa2efe`
+- [006 - 2. How we're going to do it](006-2.-how-we-re-going-to-do-it.md) L231-L1650 `dc242dff648fb9c04d1ab9894817d1c42165e98e97dc43154b163555f94d8885`
+- [007 - 3. Implementation checklist](007-3.-implementation-checklist.md) L1652-L1667 `717b099b1dd09f91f053f9ae5d3d2e4ce5145c37f59b241621c7162ad697cde6`
+- [008 - 4. Impact on chat (Assistant / Interview)](008-4.-impact-on-chat-assistant-interview.md) L1669-L1897 `39ac223c356481600ac93176227b3aeac585c1d824ee4e7b06eaa6f50944d9a8`
+- [009 - 5. Gaps and how we address them](009-5.-gaps-and-how-we-address-them.md) L1898-L1984 `bb6e79a19151baf6fe6f4484e4ddd8df6b20f526f92d9e372abeb5d810c04699`
+- [010 - 6. Potential problems and solutions](010-6.-potential-problems-and-solutions.md) L1986-L2009 `6d2d02b7acf97e60b509d4ca9c46dd7ef98ca412bd4a55da03b87f11a8ea2163`
+- [011 - 7. Backup, restore, compaction, and optional storage enhancements](011-7.-backup-restore-compaction-and-optional-storage-enhancements.md) L2011-L2021 `e7ac85faa52f9b94269b4082a6fcf8cc5e52918cd8e3dc8cdeddb4b280602e4b`
+- [012 - 8. Implementation order and testing](012-8.-implementation-order-and-testing.md) L2023-L2146 `fd7ac4aec7de052824f973c251e1a5a58a75302b2aab1e15280223949e8f6618`
+- [013 - Version history](013-version-history.md) L2148-L2155 `b8fe2d6f6340331f0a9bb0e940b83f77299dfd455f7b14bb2e68796c3d0164c6`
+- [014 - Scheduler Runtime, Safe-Point, and Remediation Storage Addendum (2026-03-08)](014-scheduler-runtime-safe-point-and-remediation-storage-addendum-20.md) L2157-L2194 `9c5f1b50243ae50a1dc4f42f14b3834df84953da522651d61cc087194886808f`
+- [015 - Runtime Attempt / Safe Point / Queue Analysis Storage Addendum (2026-03-09)](015-runtime-attempt-safe-point-queue-analysis-storage-addendum-2026-.md) L2195-L2209 `398f2065d0483c032e5a760410c4c8424574cecbc7fe34f01d7358b2fa3c1a25`
+- [016 - Runtime Attempt / Safe Point / Queue Analysis Canonical Alignment (2026-03-09)](016-runtime-attempt-safe-point-queue-analysis-canonical-alignment-20.md) L2210-L2264 `4f5f54bd24046529c19d844db824ecd1bd4c039639e24f5c84e912943c28cd57`
+- [017 - Runtime Recovery Persistence and Restart Canonical Alignment (2026-03-09)](017-runtime-recovery-persistence-and-restart-canonical-alignment-202.md) L2265-L2285 `eacfc2c5c9999835b0f47ffe59acabc2877194080b97af81dfaffd01a35afc8a`
+- [018 - Permission Snapshot Storage and Safe-Point Namespace Addendum](018-permission-snapshot-storage-and-safe-point-namespace-addendum.md) L2286-L2317 `d399c07b271909a6a860a2b43d4121a33439d2e2d1ced54b90474f1a06d216a9`
+- [019 - Assistant Worktree Binding Storage Addendum](019-assistant-worktree-binding-storage-addendum.md) L2319-L2324 `7c7b18f30f65ab32bd4d01d3a414106183eb895ab774fefffbaa754312e2172c`
+- [020 - 8. Web content caching persistence](020-8.-web-content-caching-persistence.md) L2325-L2379 `69297deba7c0fef1a1d4cdd0037f4694aadf8cd41c6d27c001e42b9d28a8914a`
+- [021 - Owner / Consumer Map](021-owner-consumer-map.md) L2381-L2385 `25756798f87b7fe9d90c1ccedf5fff1a80a3deb03f6d7f9c7f4133c8a348fb94`
+- [022 - PlanUnits](022-planunits.md) L2387-L15092 `454671df02167b7aaa694b2d13e1c54bde3286ffa3f91eb706f61a337a43db57`
+- [023 - Migration Coverage](023-migration-coverage.md) L15094-L15104 `e6cee22f87e8af84efc4b255dda77bf091452e6891ca6992ded59323ea0881a4`
+- [024 - Ledger Compile Addendum - pldg-20260614-001](024-ledger-compile-addendum-pldg-20260614-001.md) L15106-L15146 `ea21f11469832545afc5832a7738f8510af28d203104258c0c7f4a4f5e7bfadf`
+- [025 - Ledger Compile Addendum - pldg-20260616-001](025-ledger-compile-addendum-pldg-20260616-001.md) L15148-L15312 `2b8b8130e6c39d67fbd4e32e946017dab3066db56c9a675931187e8cc7582594`
+- [026 - Ledger Compile Addendum - pldg-20260616-002](026-ledger-compile-addendum-pldg-20260616-002.md) L15314-L15433 `b69324386575d755a2393d018fd8a2385636ad5a88ebe7a82c9154d8cc5e9a86`
+- [027 - Ledger Compile Addendum - pldg-20260618-001-prd-planning-wizard](027-ledger-compile-addendum-pldg-20260618-001-prd-planning-wizard.md) L15436-L15531 `9ae46b61a540f05e896199ed1bbe338c73fd0dd138eea2b6cfe1845edb6fc309`
+- [028 - Ledger Compile Addendum - pldg-20260622-001-fff](028-ledger-compile-addendum-pldg-20260622-001-fff.md) L15533-L15628 `8900fec06892166c03cd68e009abe65b5731e9ef4cef9e34a2ca21894257f37a`
+- [029 - Ledger Compile Addendum - pldg-20260626-001-feature-name](029-ledger-compile-addendum-pldg-20260626-001-feature-name.md) L15631-L15950 `62d2eee0e52319442d2f5033a24a5cb0eb90a16b68867299ce85a18b0f04935a`
+- [030 - Ledger Compile Addendum - pldg-20260627-001-feature-intake](030-ledger-compile-addendum-pldg-20260627-001-feature-intake.md) L15952-L16169 `70abf08e6c1b4213127bd2cbb89d31ce734e262aaaba73a4abbb5808409840de`
+- [031 - Ledger Compile Addendum - pldg-20260629-001-feature-name](031-ledger-compile-addendum-pldg-20260629-001-feature-name.md) L16171-L16280 `ef349eaf8643f910e001e234a753d2aa4bee7a59f90cfb44c27e023c0076ad4d`
+- [032 - Ledger Compile Addendum - pldg-20260630-001-feature-intake](032-ledger-compile-addendum-pldg-20260630-001-feature-intake.md) L16282-L16371 `983fab666eb90181cda3a39686d6978c62e16e0f2b6d4704ee9f927272d0143e`
+- [033 - Ledger Compile Addendum - pldg-20260703-001-feature-intake](033-ledger-compile-addendum-pldg-20260703-001-feature-intake.md) L16373-L16852 `40b04036fbcc6b41c5eafc0e043f783371d4b8a8db7067304358efffb620de04`
+- [034 - FABLE Deferred Action Concrete Repair Addendum - 2026-07-08](034-fable-deferred-action-concrete-repair-addendum-2026-07-08.md) L16854-L16967 `b9af1a2cb401dc2e5c960ec81b15c0f03ca9196b95d580f9cd2a8f8f64bdb0b0`
+- [035 - FABLE Remaining Action Plan Audit-Lineage Notes (2026-07-08)](035-fable-remaining-action-plan-audit-lineage-notes-2026-07-08.md) L16968-L16974 `1d1c4e912e1a45ccb4bb12c53437ce16a4e524969e39e9cac597c8d631bd8410`
+- [036 - Usage GUI Propagation Addendum - 2026-07-09](036-usage-gui-propagation-addendum-2026-07-09.md) L16976-L17040 `be61fc8cad672330d80e4c43038eb051b2badc95bed8a276a5434e3d2556c77e`
+- [037 - Case L durable-state owner canon - 2026-07-17](037-case-l-durable-state-owner-canon-2026-07-17.md) L17042-L18002 `fdf4268040513f9264b366de2a433118252fb9dbf31e4f9a4d9a87b960947117`
+- [038 - Known-37 Case L owner materialization](038-known-37-case-l-owner-materialization.md) L18005-L18090 `5e98c43e8848cc328cdf4c81e9318c1e760e22b7338fb62902dbea4ec5bac384`
+- [039 - PMConcept7 Home Workspace layout — 2026-08-04](039-pmconcept7-home-workspace-layout-2026-08-04.md) L18092-L18179 `feefb9d917e236eaa9e1d7c7ee8bd59e7a13bbf60a11c3321c13ddc4773fad9e`
+- [040 - Run & Debug Revival Addendum - 2026-07-27](040-run-debug-revival-addendum-2026-07-27.md) L18181-L18237 `c3b4d884095ab3afcdd3184debf5ee9fa80caae2c49acac3641b2be8cec3aaff`
+- [041 - Shared Integration Runtime persistence and migration addendum (2026-08-13)](041-shared-integration-runtime-persistence-and-migration-addendum-20.md) L18239-L18413 `a73b78bce7bd492942a9a5c0952d11264680c5500dd66b1450e35ba5a6534016`
+- [042 - u11 Prism II Usage View-State Addendum - 2026-08-18](042-u11-prism-ii-usage-view-state-addendum-2026-08-18.md) L18415-L18526 `302a1f51ad6031544ea27d6c4ba9410799edf037be46e59fd2d47019e6a5f550`
+- [043 - PMConcept7 Recovery Settled Layout Addendum - 2026-08-27](043-pmconcept7-recovery-settled-layout-addendum-2026-08-27.md) L18528-L18729 `b87be80515f04a4bf29ae0cbcb5c508c2eddb7795a1d68badc1c90e1a623541f`
+- [044 - Packet-Authoritative Storage Disposition And Redaction Addendum - 2026-08-31](044-packet-authoritative-storage-disposition-and-redaction-addendum-.md) L18731-L18983 `294c38571650264399fc1ecefaa5422a64d901ab5dab131df22296e2f8c371e2`
+- [045 - Back Seat Driver Contract-Family Persistence Disposition Addendum - 2026-09-23](045-back-seat-driver-contract-family-persistence-disposition-addendu.md) L18985-L19063 `87e91dd33e29b109fac04b420896ae50360345d1dec0fe41520c41bb804f52ed`
+- [046 - Forge, Backup v2, And Go tsnet Storage/Redaction Transaction - 2026-09-01](046-forge-backup-v2-and-go-tsnet-storage-redaction-transaction-2026-.md) L19065-L19158 `ffdf5f1b47b51b28962cb39d5c8c1625d955f32371a5a3c6ed5ea0ab55586f3d`
+- [047 - Additive Correction v4 — Records, Replay, And Migration Matrix (2026-09-03)](047-additive-correction-v4-records-replay-and-migration-matrix-2026-.md) L19160-L19238 `3b732328e6023c2306be35544c8620b3dc55fed20c1f80cd80ec55b5b12e0d5d`
+- [048 - Working Notebook And Context Transition Storage Addendum (2026-09-05)](048-working-notebook-and-context-transition-storage-addendum-2026-09.md) L19240-L19362 `55a4cbd48cad20f84a442ce552d7ad646ccb831cba81a6ff96ff12bd8c51a25c`
+- [049 - Research decision disposition persistence](049-research-decision-disposition-persistence.md) L19365-L19450 `2bfe161fa4c482d97911955b8744eca656dd7e18768de3b8d930194471e75261`
+- [050 - Compaction completion persistence contract (DL-039 and DL-040)](050-compaction-completion-persistence-contract-dl-039-and-dl-040.md) L19452-L19509 `385f6b2c46a65eeaab35e05626cd982bab6dfc983e492a0c929a3d15b015fb05`
+- [051 - DL-042 — Historical TODO Event Migration Consumer Boundary (2026-09-11)](051-dl-042-historical-todo-event-migration-consumer-boundary-2026-09.md) L19512-L19516 `f2c652ea903c1419726d56d6876eb3cfad17a1d4e70731474331821858b30d6b`
+- [052 - Scoped Browser Event Persistence — 2026-09-10](052-scoped-browser-event-persistence-2026-09-10.md) L19518-L19573 `3352d6d84d5184980ec9428076cdf5334f68dadb3460f1a0280ce30ec862bc71`
+- [053 - Jujutsu D5 Owner Requirements (2026-09-11)](053-jujutsu-d5-owner-requirements-2026-09-11.md) L19575-L19716 `b9703923594cf2d2bcee8eb4bc6bf3a4e93ddb7e11a2b4abc53b0366b9f92daa`
+- [054 - Run-start index consumers and checkpoint - 2026-09-11](054-run-start-index-consumers-and-checkpoint-2026-09-11.md) L19718-L19862 `b445cd50ae58c60ade4e0fa4b4eb78f3bcb7194aed7584605aa3166f39cd3231`
+- [055 - Browser workspace-created index and checkpoint — 2026-09-11](055-browser-workspace-created-index-and-checkpoint-2026-09-11.md) L19864-L20214 `e4e91a3ef247ea8e307d4a4960d03401792e5fa74dbcbb49f2413beaaa901272`
+- [056 - Restore-point created consumer checkpoint contract](056-restore-point-created-consumer-checkpoint-contract.md) L20217-L20395 `f3f4dd9cff2de608f84811540d577f642adef1bbe737977f65baeaa8924f88f1`
+- [057 - Restore-point retention summary contract](057-restore-point-retention-summary-contract.md) L20397-L21259 `64d33635906f64580a3c814754cda4ef4801917585967dc9adc8d01dff137948`
+- [058 - Run-start and restore-created versioned index adoption](058-run-start-and-restore-created-versioned-index-adoption.md) L21261-L21321 `146546811128280855b1b5b2db2f667155ab5c45244beee7dc35b89c601d7f84`
+- [059 - Browser workspace-reset filtered checkpoint — 2026-09-11](059-browser-workspace-reset-filtered-checkpoint-2026-09-11.md) L21323-L22104 `9ec0333b69150f11c6ba54e51f9cdb74eb287585dd2c975a3b662f50dec7e409`
+- [060 - First append receipt custody](060-first-append-receipt-custody.md) L22107-L22282 `59fdd71eb3aff80b4370d9d954a3f86c6e1fb0aa464a777929ba634692e691b4`
+- [061 - Goal body storage custody](061-goal-body-storage-custody.md) L22284-L22401 `0347125a72f50057abd5ed2adeb9fe1efde0b805828cabbc5639f67ffd380395`
+- [062 - Restore-point deletion custody and checkpoint](062-restore-point-deletion-custody-and-checkpoint.md) L22403-L22546 `f3164dd836894ef17f6d24ac6b087ca21e0ca315263225393aa2a7a2ef2f79c6`
+- [063 - Restore-point delete original-result custody](063-restore-point-delete-original-result-custody.md) L22549-L22639 `7e5b860d9f179451b7264ebf8980155715e5c9efdbfc4e739059608ba2212e63`
+- [064 - Restore Point Expired Custody And Checkpoint](064-restore-point-expired-custody-and-checkpoint.md) L22644-L22845 `a4a96111148e7525d6451bf50429b52ba81925376cc9db0a531b0a376dbbc47e`
+- [065 - Restore-point original admission and retained-custody read phases](065-restore-point-original-admission-and-retained-custody-read-phase.md) L22847-L23028 `934621edc76d2c7d33599e818406525483f9a830081b1af321a22df1aa859d03`
+- [066 - Legal-hold transition custody and passive history](066-legal-hold-transition-custody-and-passive-history.md) L23030-L23242 `a3a4355f01b2211882c51f5c219629f6efa598a3a472bd081f2d263727e8f2e1`
+- [067 - Original Standard certification receipt custody](067-original-standard-certification-receipt-custody.md) L23244-L23332 `75eff24322be33e70cf02a4cfefb6922b3ed9f4698b264a2b9179ba10b9364e6`
+- [068 - Storage integrity finding custody and read contract](068-storage-integrity-finding-custody-and-read-contract.md) L23334-L23610 `6e34df6610c603cc6d605ff1817a7ce922f1fa84c1c0f9d028665bdfac70c761`
+- [069 - Platform capability decision custody](069-platform-capability-decision-custody.md) L23611-L23741 `9cb126ca6a3099649eb7010b23f8c71cc0183bad850ae9ab13eba765cfb77a47`
+- [070 - Boot recovery aggregate and original producer custody](070-boot-recovery-aggregate-and-original-producer-custody.md) L23743-L23829 `025c029673891b33a49e4a82dc400eff909c9b3049b5a2afb305dd02a7a39406`
+- [071 - Boot earliest receipt continuity and activation](071-boot-earliest-receipt-continuity-and-activation.md) L23831-L23932 `3c3d6bb2422cbbbd9ea79e9baae6e60ae571225145c45d9e17c0f6c0b289e637`
+- [072 - Recovery original action custody and publication](072-recovery-original-action-custody-and-publication.md) L23934-L24023 `856d48ec91c99f51b8e78555adb981709f4669821f139e63934e383b88e8381f`
+- [073 - Goal start original command custody and publication](073-goal-start-original-command-custody-and-publication.md) L24025-L24056 `cbe85ad32405d38edccd850afc4b549548131a8bbd0f7753088743bca23cf384`
+- [074 - SP-294 - Goal start original command custody and publication](074-sp-294-goal-start-original-command-custody-and-publication.md) L24058-L24120 `9ff87233a90184e24e9be7bf94c99cb7c2ebf675e8f70d9ae368959acf7baa3a`
+- [075 - Compaction original native source, phase custody and detail retirement](075-compaction-original-native-source-phase-custody-and-detail-retir.md) L24122-L24329 `14d4d877c89b11e821fc8100ebe3bcbee2d659845bfca5cfd9e0687949b65ca9`
+- [076 - Goal-created passive current reader and original command members](076-goal-created-passive-current-reader-and-original-command-members.md) L24330-L24461 `b0909d2ff734e0db966e41581b8db13ff768d4f3080f8ec4446d1ae92333b50f`
+- [077 - Original Goal update source, physical custody and publication](077-original-goal-update-source-physical-custody-and-publication.md) L24462-L26551 `ac04c6c85ba4ecd91da93f86b436d0416aeb3490f2e59602d28bd270398ac5e1`
+- [078 - SP-314 — Original Standard authority families and fresh whole stored profiles (2026-09-20)](078-sp-314-original-standard-authority-families-and-fresh-whole-stor.md) L26554-L26649 `1d29c08c403f6cb5cb86bc7a933a4d700377add85c8b7a549d392c783ffda1bd`
+- [079 - SP-315 — Certified producer current and retained source disclosure (2026-09-21)](079-sp-315-certified-producer-current-and-retained-source-disclosure.md) L26652-L26709 `72e5f7b8ab0760db58e43f37ce9504c6021e703741d3919c9196744d59bd28df`
+- [080 - SP-316 — Seven compact authority families, eleven v7 profile-qualified wrapper routes and atomic native/Event release (2026-09-21)](080-sp-316-seven-compact-authority-families-eleven-v7-profile-qualif.md) L26712-L26782 `414cb563d3eca3b9af53c6fd6004a62ec2df40628ee95eb3f84cbb3aa4483706`
+- [081 - SP-317 — Two projection/checkpoint families and exact RP-PROJECTION-3GEN transaction/generation/cutover obligations (2026-09-21)](081-sp-317-two-projection-checkpoint-families-and-exact-rp-projectio.md) L26785-L26856 `12db9a72b50e07adef539c3c0072ead970a6d69bfda28521464bd1455fbaa547`
+- [082 - Terminal workgroup moved — exact passive source read](082-terminal-workgroup-moved-exact-passive-source-read.md) L26858-L27055 `32b7f855fb1330c0667a3e13197f1434306a551f8f87801576c96f5669facc51`
+- [083 - Coordination event persistence binding (DL-045, 2026-09-25)](083-coordination-event-persistence-binding-dl-045-2026-09-25.md) L27056-L27278 `729228ad15a918b499d5b5eeb3c8f113ac65bd62244b029fcf28f2ac6452651a`
+- [084 - Project Creation-Recovery Context Custody Addendum - 2026-09-26](084-project-creation-recovery-context-custody-addendum-2026-09-26.md) L27280-L27354 `cc11468f2189eb77354796dd86dce255ec04294ee86f4dfaf244971912d0d175`
+- [085 - Application update check schedule persistence — 2026-09-27](085-application-update-check-schedule-persistence-2026-09-27.md) L27356-L27397 `8ffb24be7c282ad8f3a9c7977e8a741259aca62f61eccd00b4c2961cbc195721`
+- [086 - Project automation pause custody — 2026-09-29](086-project-automation-pause-custody-2026-09-29.md) L27399-L27470 `669aca5fdcf3f6b5630ff3f7741f87a32874675b4311d2d543b46b9159966f9a`
+- [087 - DL-180 to DL-185 — The v2 Home layout record, terminal appearance and terminal records (2026-10-09)](087-dl-180-to-dl-185-the-v2-home-layout-record-terminal-appearance-a.md) L27472-L28102 `2fca56fd63b37a6abbbc7cb8834311ffd81e480bc4e11b050a62ff5a7b3244c4`

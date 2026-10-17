@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L46953-L49318
+Source lines: L46955-L49320
 
-Source SHA256: `77c9c8ef32040f59a2cf766f0978babb35df42b2aeecef76e01819c9b732c2ec`
+Source SHA256: `a6685adb04f014c83cb7f5f7e9a832955e33e2c91c64c32e606dd597d310df4d`
 
 ---
 
@@ -370,7 +370,7 @@ canonical_text: >-
   project default (written through Settings transactions, in the Project's settings) under this
   tab's override; a field left unset falls through to the layer below. Every field applies live, and
   no terminal appearance setting carries a restart badge; the terminal draws its own glyphs
-  (DL-035), so section 6.4's restart rule for the app's font families does not reach it. "Follow
+  (DL-035), and section 6.4's restart rule for the app's font families is retired (DL-230). "Follow
   look" resolves per look, light and dark: Friendly Catppuccin Latte and Mocha; Glass Tokyo Night
   Day and Storm, drawn at 70 % (light) and 74 % (dark) opacity over the shell's existing glass blur,
   the terminal adding no backdrop blur of its own (F3-431); Retro PM Paper Teletype and PM Phosphor

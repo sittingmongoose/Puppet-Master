@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L5594-L27155
+Source lines: L5594-L27157
 
-Source SHA256: `77c9c8ef32040f59a2cf766f0978babb35df42b2aeecef76e01819c9b732c2ec`
+Source SHA256: `a6685adb04f014c83cb7f5f7e9a832955e33e2c91c64c32e606dd597d310df4d`
 
 ---
 
@@ -4501,8 +4501,10 @@ status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
   Theme loading scans custom theme TOML files on startup, validates token schema, skips invalid
-  files with warning/toast disclosure, and hot-reloads modified active themes while prompting for
-  restart on font changes.
+  files with warning/toast disclosure, and hot-reloads modified active themes; a font change in a
+  hot-reloaded active theme applies live under the look's cover (F3-077).
+  Amended 2026-10-17 (DL-230, Jared): the restart prompt is retired. Superseded lineage (kept findable): it
+  read "hot-reloads modified active themes while prompting for restart on font changes".
 gui_related: true
 gui_classification_reason: >-
   This unit defines visible theme loading, validation, toast, and live theme update behavior.
@@ -4534,10 +4536,10 @@ preserved_exact_tokens:
 - "Hot reload"
 - "re-scan"
 - "font changes"
-- "prompt for restart"
 negative_constraints: []
 compatibility_only_notes: []
-stale_retired_dispositions: []
+stale_retired_dispositions:
+- "Retired 2026-10-17 (DL-230, Jared): \"prompt for restart\" on font changes is withdrawn; a font change in a hot-reloaded active theme applies live under the look's cover (F3-077)."
 owner_boundary_notes: []
 owner_hints:
 - "Plans/FinalGUISpec.md"

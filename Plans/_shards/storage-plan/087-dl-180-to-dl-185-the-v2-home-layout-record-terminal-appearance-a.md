@@ -4,7 +4,7 @@ Source: `Plans/storage-plan.md`
 
 Source lines: L27472-L28102
 
-Source SHA256: `04430bb31d59540a1566ba4ff875193bc1b491317c735d5ac41688756556a83f`
+Source SHA256: `082af0f739b10d86a02d4fbb43fe67a64348788d21baed2acfd0a7635b31f689`
 
 ---
 
@@ -50,7 +50,7 @@ The conversion table:
 
 **Concept lineage.** The panels concept saves its layout under `pm.home.panels:v1:<project>` and sets unreadable records aside under a quarantine key. Both are concept lineage only, never product keys.
 
-**Saved named layouts belong to the person (amended 2026-10-17, DL-230, Jared).** A saved named layout belongs to the person across projects: it lives in one per-person record, `home_named_layouts:v1` (family `home_named_layouts`, registered like `widget_presets`), not in the per-project v2 record, and Home's Layouts menu offers it in every project. The dashboard boards inside it stay per project: applying it in another project applies the layout and skips the boards whose envelope belongs to a different project. On the first read the named layouts of every project's v2 records are copied in once, two with one name both kept and the later one numbered; the v2 field `named_layouts` stays a read-only legacy input. Saving writes the per-person record and leaves the v2 record unchanged, and `cmd.workspace_layout.save_named` keeps its receipt and its one `workspace.layout_changed` (`named_layout_saved`), whose prior and new layout revisions are both the v2 record's current revision (`Plans/Contracts_V0.md#CV-361`). The rest of this section's board rules stand.
+**Saved named layouts belong to the person (amended 2026-10-17, DL-230, Jared).** A saved named layout belongs to the person across projects: it lives in one per-person record, `home_named_layouts:v1` (family `home_named_layouts`, registered like `widget_presets`), not in the per-project v2 record, and Home's Layouts menu offers it in every project. The dashboard boards inside it stay per project: each saved layout records the project it was saved in, and applying it in another project applies the layout and skips its boards, a board saved as null included, so a null removes a board's stored layout only in the project the layout was saved in. On the first read the named layouts of every project's v2 records are copied in once, two with one name both kept and the later one numbered; the v2 field `named_layouts` stays a read-only legacy input. Saving writes the layout to the per-person record, and `cmd.workspace_layout.save_named` still advances the v2 record's revision by one, as before, with its receipt and its one `workspace.layout_changed` (`named_layout_saved`, `Plans/Contracts_V0.md#CV-361`); the v2 record keeps no copy of the layout. The rest of this section's board rules stand.
 
 **Named layouts keep their dashboards' boards (amended 2026-10-10, DL-186, D10 P6, lead ruling F3).** Saving a named layout (`cmd.workspace_layout.save_named`) also keeps a snapshot of the boards of the dashboard tabs open in the layout: `boards`, keyed by board id, each the board's stored envelope (SP-249) or null when the board had nothing stored. The snapshot is capped at 64 KB per named layout: when the canonical JSON of `boards` would pass 65,536 bytes, the save keeps the layout without them and writes `boards_skipped_bytes`, the size it left out, and the save's announcement says the dashboards were not saved with it (`Plans/FinalGUISpec.md#F3-638` owns the words). Applying the layout (`cmd.workspace_layout.apply_named`) writes each saved board back to that board's own key in the current project, a null removes what the board had stored, and shown boards reload; these board writes belong to the apply and append no event of their own (`Plans/Contracts_V0.md#CV-361`). A named layout saved before 2026-10-10 has neither field and applies as it did. The schema's invariant S13 holds the cap. The Agents board is drawn by the dashboard kind and stores nothing (SP-249, lead ruling F7), so `boards` never names `agents`; the schema accepts only `home`, `metrics`, `monitoring` and `dash-<n>` keys.
 
@@ -91,12 +91,12 @@ canonical_text: >-
   The chat column's popped_out is current-run state; after a restart the chat starts in its column (F3-504, F3-637).
   Amended 2026-10-17 (DL-230, Jared): the user's saved named layouts belong to the person across projects and
   live in one per-person record, home_named_layouts:v1 in family home_named_layouts, not in this record; the
-  dashboard boards inside a layout stay per project and are skipped when it is applied in another project. The
+  dashboard boards inside a layout stay per project: each saved layout records the project it was saved in, and
+  outside that project its boards, a null board included, are skipped. The
   first read copies every project's v2 named_layouts in once, two layouts with one name both kept and the later
   one numbered, and named_layouts becomes a read-only legacy field. cmd.workspace_layout.save_named writes the
-  per-person record, leaves this record and its revision unchanged, and keeps its receipt and its one
-  workspace.layout_changed (named_layout_saved) with both revisions the record's current one (CV-361); this is
-  the one structural commit that does not advance the revision.
+  layout to the per-person record and, as before, advances this record's revision by one with its receipt and
+  its one workspace.layout_changed (named_layout_saved, CV-361); this record keeps no copy of the layout.
   Amended 2026-10-10 (DL-186, DL-187): the pop-out is never saved, so the chat column holds width_px, history_pinned, shown and keep_open (D32). A saved named layout also keeps the boards of its dashboard tabs (boards: board id to the
   board's envelope or null), capped at 64 KB (65,536 bytes) of canonical JSON; a bigger save keeps the layout,
   writes boards_skipped_bytes instead and says so; applying it writes each included board back to its key only when the saved envelope belongs to
@@ -140,7 +140,7 @@ acceptance_criteria:
   - "No WorkNodes, NodeSeeds, executable queues, implementation files, runtime launches, or production build tasks are created by this unit."
   - "A popped-out chat comes back in its fixed column after restart; retained legacy pop-out geometry does not reopen a separate chat window."
   - "No v2 record holds the chat's pop-out: Plans/home_workspace_layout_v2.schema.json rejects popped_out (fixture chat_popped_out_saved)."
-  - "A named layout saved with dashboard tabs keeps boards (each board's envelope or null) when their canonical JSON is at most 65,536 bytes, and otherwise keeps only boards_skipped_bytes with the save's announcement saying so; never both; applying it restores each included board's key only for the project the envelope was saved in, a null removing it, skips another project's envelope and leaves a custom board not held by the layout unchanged, with no event of its own; a named layout saved before 2026-10-10 applies unchanged."
+  - "A named layout saved with dashboard tabs keeps boards (each board's envelope or null) when their canonical JSON is at most 65,536 bytes, and otherwise keeps only boards_skipped_bytes with the save's announcement saying so; never both; applying it restores each included board's key only for the project the envelope was saved in, a null removing it only in the project the layout was saved in (DL-230), skips another project's envelope and leaves a custom board not held by the layout unchanged, with no event of its own; a named layout saved before 2026-10-10 applies unchanged."
   - "A Debug Console tab is the one tab debug-console with an empty domain reference, its chosen session sub-tab in its state; an older debug-console:<session> id folds into it and is never written; a terminal tab's notification mute is in its state; neither write advances revision, takes a receipt or appends an event."
   - "The old Dashboard layout widget_layout:v1:dashboard converts into no board and is never written."
   - "A named layout's boards never name agents (fixture named_layout_boards_names_agents), and the chat column's keep_open, set by ui.chat_column.keep_open, is written like view state with no revision advance, receipt or event."
