@@ -227158,9 +227158,10 @@ window.PM_WALLPAPERS_CATALOG = {"version":1,"families":[{"family":"glass","label
   function apply(animate) {
     var id = shown(), selected = choice(), theme = root.getAttribute('data-theme'), key = theme + '|' + id;
     if (key === paintKey) { paintedChoice = selected; return; }
-    /* a look change ends at once a fade whose print was never committed (fade-first, below): it is the old mode's print */
-    if (!animate && printFinish && printTop !== paintedUrl) printFinish();
     var serial = ++paintSerial, url = imageUrl(id), early = null;
+    /* a look change ends at once a fade whose print was never committed (fade-first, below) when it is not the print this
+       look shows (the old mode's); one that is (Liquid Glass switched, say) keeps fading until this apply commits it */
+    if (!animate && printFinish && printTop !== paintedUrl && printTop !== url) printFinish();
     function live() { return serial === paintSerial && theme === root.getAttribute('data-theme'); }
     var commit = function (viewport, fade) {
       if (serial !== paintSerial) return;
