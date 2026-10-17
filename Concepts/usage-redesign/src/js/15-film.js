@@ -2482,6 +2482,10 @@
       it.sig = rasterSig(it.el, it.cs, it.r, (p.msaa[it.ctx] ? it.ctx : it.ctx.toLowerCase()) + (it.clip ? 'C' : ''));
       if (it.lit && it.sig) it.sig = it.sig.replace(/\.o$|\.o(?=\.)/, '');
       if (!it.inView || !it.sig) continue;
+      /* a vector image (the provider marks are SVG data URLs, some with blurs inside) rasters its own paths and filters
+         in one draw that no style can split (RTX 3090: 4-15 programs a mark, four FillRRectOp at once, which a P1000
+         holds 220-280 ms): left to the arrival, which links it unseen under the shell's hold */
+      if (it.el.localName === 'img' && /^data:image\/svg|\.svg(?:[?#]|$)/i.test(it.el.currentSrc || it.el.getAttribute('src') || '')) continue;
       var fresh = !rasterSeen[it.sig] && !p.local[it.sig];
       /* one unit an element; rasterTake takes up to rasterGrow of them a draw, an element of a new kind alone, a heavy
          one after its parts (rasterParts) */
