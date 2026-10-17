@@ -65616,7 +65616,7 @@ var PMU_SERIES = {
   var RASTER_MARKS = /[?&]pmu-raster-marks=1(?:&|#|$)/.test(location.search);
   /* RASTER_CPU: the most ms of a cpu step's work when its idle period gives no deadline; RASTER_WAIT: a queued step not
      run in this long parks the pass; RASTER_MSAA: the paths that make a layer raster multisampled */
-  var RASTER_ROOMS = ['overview', 'costs', 'accounts'], RASTER_CPU = 6, RASTER_WAIT = 3000, RASTER_MSAA = 6, RASTER_QUIET = 600, RASTER_FIRST = 20;
+  var RASTER_ROOMS = ['overview', 'costs', 'accounts'], RASTER_CPU = 6, RASTER_WAIT = 3000, RASTER_MSAA = 6, RASTER_QUIET = 600, RASTER_FIRST = 50;
   /* RASTER_PREFIX: the most painting elements a part's draw adds (?pmu-raster-prefix=N for measurements): 4, since a
      prefix of 8 elements of kinds already drawn still linked 3-7 programs at once in new batches (RTX 3090), more than a
      P1000 draws in 100 ms */
@@ -66104,6 +66104,7 @@ var PMU_SERIES = {
        the multisample step, each new kind's parts and the element itself; the elements of kinds already drawn link
        nothing new and wait for the arrival */
     var units = p.freshOnly ? p.units.filter(function (u) { return u.fresh; }) : p.units;
+    if (p.dear) units = units.filter(function (u) { return p.dear.contains(u.self[0]); }).concat(units.filter(function (u) { return !p.dear.contains(u.self[0]); }));
     p.steps = p.pre.concat(units, p.wholes); p.phase = 2; p.items = null; p.stack = null;
     return true;
   }
@@ -66112,8 +66113,15 @@ var PMU_SERIES = {
     var cards = rasterCards(kind), roots = [];
     if (kind !== 'board') { cards.forEach(function (c) { roots.push({ t: 'card', el: c }); }); return roots; }
     /* the arrival room: its first screen first (the layer, the hero, the other cards in the window: first, which the
-       pass runs at level 0 up to RASTER_FIRST draws), then the page chrome, then the cards below the window */
+       pass runs at level 0 up to RASTER_FIRST draws, new kinds only), the dearest first-use links first (the lead's
+       ruling, 2026-10-17): the hero, its chart's kinds leading (rasterPlanFor: the hero's skyplot, some 40 layers of
+       held marks, linked eight programs in one 87-105 ms GPU flush at the arrival on the 3090 cold, logged two slices
+       late against the month card; 48-67 ms once the pass has drawn the chart's 25 steps, from about +25 s, the five
+       path-atlas links left being the arrival's own layers, which no draw of the pass makes), then the other cards
+       the most paths first; then the page chrome, then the cards below the window */
     var shown = cards.filter(function (c) { return PMU.boards ? inView(c) : true; }), below = cards.filter(function (c) { return shown.indexOf(c) < 0; });
+    var cost = function (c) { return (c.hasAttribute('data-hero') ? 1e6 : 0) + c.querySelectorAll('path, polyline, polygon').length + 0.01 * c.getElementsByTagName('*').length; };
+    shown = shown.map(function (c) { return { c: c, k: cost(c) }; }).sort(function (a, b) { return b.k - a.k; }).map(function (x) { return x.c; });
     roots.push({ t: 'layer', first: true });
     shown.forEach(function (c) { roots.push({ t: 'card', el: c, first: true }); });
     roots.push({ t: 'chrome' });
@@ -66132,6 +66140,16 @@ var PMU_SERIES = {
     var card = rt.el, body = card.querySelector(':scope > .pmu-cardbody');
     var p1 = rasterPlanStart(card, function (el) { return body && body.contains(el) ? 'Y' : 'K'; }, null, []);
     p1.freshOnly = !!rt.first;
+    /* the hero's largest body part (its chart: down from the body while one child holds most of the elements) draws its
+       new kinds first */
+    if (rt.first && body && card.hasAttribute('data-hero')) {
+      for (var k = body, big = null; k; k = big) {
+        var all = k.getElementsByTagName('*').length, most = 0; big = null;
+        Array.prototype.forEach.call(k.children, function (x) { var n = x.getElementsByTagName('*').length + 1; if (n > most) { most = n; big = x; } });
+        if (!big || most * 2 < all) break;
+      }
+      if (k !== body) p1.dear = k;
+    }
     return p1;
   }
   /* the next root: the one done loses its marks (each draw's cleanup took the paint token off, so its layer is gone and
@@ -66492,8 +66510,7 @@ var PMU_SERIES = {
          the shadow, then each part of its body in a frame of its own (arriveParts) */
       var hero = c.hasAttribute('data-hero'), body = c.querySelector(':scope > .pmu-cardbody');
       if (hero && body) { c.setAttribute('data-pmu-arrive-bare', ''); list.push({ bare: c }); arriveParts(body, ARRIVE_PARTS).forEach(function (k) { list.push(k); }); }
-      /* another card with a large body (a chart of many marks: the month card held a frame 91-201 ms on the 3090 cold)
-         comes in a few parts too */
+      /* another card with a large body comes in a few parts too */
       else if (body && body.getElementsByTagName('*').length > ARRIVE_BIG) arriveParts(body, ARRIVE_SOME).forEach(function (k) { list.push(k); });
     });
     list.forEach(function (x) { if (!x.bare) x.setAttribute('data-pmu-arrive-wait', ''); });
@@ -66601,8 +66618,9 @@ var PMU_SERIES = {
       }
       lastAt = now;
       /* the shell releases the page 1.5 s after the click whatever is left (and what is left would show at once, one
-         raster burst): from ARRIVE_DUE ms after the arrival began, what remains is spread over the frames left at the
-         pace the last frame went */
+         raster burst): every frame, what remains is spread over the frames left before ARRIVE_DUE ms after the arrival
+         began, at the pace the last frame went, so a slow (cold) pass takes a few more a frame from early on instead of
+         all at once at the end */
       var due = W.t0 + ARRIVE_DUE - now, need = 0;
       if (W.slices.length && dt > 0) need = due <= dt ? W.slices.length : Math.ceil(W.slices.length / Math.max(1, Math.floor(due / dt)));
       var hurry = need > grow;
