@@ -53039,6 +53039,8 @@ html[data-theme^="glass"]:not(#lgz) .main-area { flex: 1 1 0% !important; }
 @property --lg-fy { syntax: '*'; inherits: false; }
 @property --lg-ring { syntax: '*'; inherits: false; }
 @property --lg-spec { syntax: '*'; inherits: false; }
+/* a menu's light map in nine parts, laid out as background layers (glass.js lightSlices, B6 packets 3/4) */
+@property --lg-spec9 { syntax: '*'; inherits: false; }
 @property --lg-px { syntax: '*'; inherits: false; }
 @property --lg-py { syntax: '*'; inherits: false; }
 @property --lg-glow { syntax: '*'; inherits: false; }
@@ -53147,7 +53149,7 @@ html[data-lg="on"][data-theme^="glass"]:not(#lgz):not(#lgy) :is([data-lg-kind="p
    frost element-relative; a running entrance still gets its own layer without it */
 html[data-lg="on"][data-theme^="glass"]:not(#lgz) .primary-content > .page.pm8-page-in { will-change: opacity !important; }
 html[data-lg="on"][data-theme^="glass"]:not(#lgz) [data-lg-kind="menu"] {
-  background: var(--lg-spec, none) 0 0 / 100% 100% no-repeat, linear-gradient(var(--lg-tint-menu), var(--lg-tint-menu)) !important; border-radius: var(--lg-r-card) !important;
+  background: var(--lg-spec9, var(--lg-spec, none) 0 0 / 100% 100% no-repeat), linear-gradient(var(--lg-tint-menu), var(--lg-tint-menu)) !important; border-radius: var(--lg-r-card) !important;
   box-shadow: inset 0 1px 0 var(--lg-edge-top), inset 0 -1px 1px var(--lg-edge-bot), 0 30px 60px -20px var(--lg-shadow), 0 4px 14px var(--lg-shadow-near) !important;
 }
 /* A large floating dialog of dense text (a Customize screen) opts into data-lg-dense: on the GPU tier its live blur
@@ -234264,8 +234266,15 @@ try { if (window.PM_HOME && typeof window.PM_HOME.boot === 'function') window.PM
     if (e.__lgSig === sig2) return e.__lgF;
     var lf = k.lens ? lensFilterFor(kind, W, H, R) : null;
     /* only the light map is drawn (a menu blurs in CSS): its displacement map was encoded for nothing, on every new size */
-    var m = lf ? lf.m : buildMaps(W, H, Math.round(R), Math.round(B), Math.round(T), k.mag, k.light, null, true);
-    e.style.setProperty('--lg-spec', 'url(' + m.spec + ')');
+    var nine = !lf && lightSlices(W, H, Math.round(R), Math.round(B), Math.round(T), k);
+    if (nine) {
+      if (e.__lgSpec9 !== nine) { e.__lgSpec9 = nine; e.style.setProperty('--lg-spec9', nine); }
+      e.style.removeProperty('--lg-spec');
+    } else {
+      var m = lf ? lf.m : buildMaps(W, H, Math.round(R), Math.round(B), Math.round(T), k.mag, k.light, null, true);
+      e.style.setProperty('--lg-spec', 'url(' + m.spec + ')');
+      if (e.__lgSpec9) { e.__lgSpec9 = null; e.style.removeProperty('--lg-spec9'); }
+    }
     e.__lgSig = sig2; e.__lgF = null;
     var bf = null;
     if (gpu() && k.css) bf = 'blur(' + k.blur + 'px) saturate(' + k.sat + ')';
@@ -234273,6 +234282,36 @@ try { if (window.PM_HOME && typeof window.PM_HOME.boot === 'function') window.PM
     if (bf) { e.style.setProperty('backdrop-filter', bf, 'important'); e.style.setProperty('-webkit-backdrop-filter', bf, 'important'); }
     else { e.style.removeProperty('backdrop-filter'); e.style.removeProperty('-webkit-backdrop-filter'); }
     return e.__lgF;
+  }
+  /* B6 packets 3/4 (2026-10-16): a menu's light map was drawn for its size, so a sheet whose size changed (the editor's
+     Customize screen, parked at Settings' 920 px and shown at 593 beside the editor) drew a new one in that ResizeObserver
+     callback: 47.7 ms of the main thread on a P1000 (buildMaps), then an 11 ms restyle for the new map's long data: URL.
+     The map has nine parts: outside its four M x M corners (M = the bevel or the corner, whichever is larger, plus 2, as
+     mapsCore's band) a pixel's light depends only on its distance from the nearest edge. So the map of any size at least
+     2M + 1 each way is the same four corners and four edge profiles, laid out as background layers (glass.css
+     --lg-spec9): drawn once per corner, bevel and light from a (2M + 1)-square map by the same mapsCore, about a
+     millisecond, and the same pixels as the full map. A menu that changes size keeps them; nothing is redrawn or restyled.
+     A menu smaller than that takes the full map, as before. */
+  var lightCache = new Map(), LIGHT_RING = [3, 8];
+  function lightSlices(W, H, R, B, T, k) {
+    var M = Math.ceil(Math.max(B, R)) + 2, S = 2 * M + 1;
+    if (k.mag !== 1 || W < S || H < S) return null;
+    var key = [R, B, T, k.light].join('|'), hit = lightCache.get(key);
+    if (hit) return hit;
+    var core = mapsCore(S, S, R, B, T, 1, k.light, LIGHT_RING), sp = core.sp;
+    function png(x0, y0, w, h) {
+      var cv = document.createElement('canvas'); cv.width = w; cv.height = h;
+      var ctx = cv.getContext('2d', { willReadFrequently: true }), px = ctx.createImageData(w, h), D = px.data;
+      for (var y = 0; y < h; y++) for (var x = 0; x < w; x++) { var o = (y * w + x) * 4; D[o] = D[o + 1] = D[o + 2] = 255; D[o + 3] = Math.round(sp[(y0 + y) * S + x0 + x] * 255); }
+      ctx.putImageData(px, 0, 0); return 'url(' + cv.toDataURL('image/png') + ')';
+    }
+    var m = M + 'px', inner = 'calc(100% - ' + (2 * M) + 'px)';
+    var nine = [png(0, 0, M, M) + ' 0 0 / ' + m + ' ' + m, png(M + 1, 0, M, M) + ' 100% 0 / ' + m + ' ' + m,
+      png(0, M + 1, M, M) + ' 0 100% / ' + m + ' ' + m, png(M + 1, M + 1, M, M) + ' 100% 100% / ' + m + ' ' + m,
+      png(M, 0, 1, M) + ' ' + m + ' 0 / ' + inner + ' ' + m, png(M, M + 1, 1, M) + ' ' + m + ' 100% / ' + inner + ' ' + m,
+      png(0, M, M, 1) + ' 0 ' + m + ' / ' + m + ' ' + inner, png(M + 1, M, M, 1) + ' 100% ' + m + ' / ' + m + ' ' + inner].map(function (l) { return l + ' no-repeat'; }).join(', ');
+    if (lightCache.size >= 32) lightCache.delete(lightCache.keys().next().value);
+    lightCache.set(key, nine); return nine;
   }
   /* Read every candidate before committing its optics. New kind attributes are a single preliminary style change:
      dimensions retain the mount's original pre-kind measurement, radius/position use the resulting Glass style.
@@ -234346,7 +234385,7 @@ try { if (window.PM_HOME && typeof window.PM_HOME.boot === 'function') window.PM
     bakeQ.delete(e); e.__lgBake = null; e.__lgSig = null; e.__lgF = null;
     if (!bakeQ.size && !bakeFlight && bakeT) { clearTimeout(bakeT); bakeT = 0; }
     releaseRing(e);
-    ['backdrop-filter', '-webkit-backdrop-filter', '--lg-ring', '--lg-spec'].forEach(function (name) { e.style.removeProperty(name); });
+    ['backdrop-filter', '-webkit-backdrop-filter', '--lg-ring', '--lg-spec', '--lg-spec9'].forEach(function (name) { e.style.removeProperty(name); }); e.__lgSpec9 = null;
     if (sizeWatch) sizeWatch.unobserve(e); glassSet.delete(e);
   }
   function unmountAll(keepLenses) {
