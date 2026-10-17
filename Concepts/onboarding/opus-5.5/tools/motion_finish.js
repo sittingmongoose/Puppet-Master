@@ -40,6 +40,10 @@
         if (motion.pending) state.pending = true;
         else if (motion.playState === 'running' && motion.playbackRate > 0 && motion.currentTime !== null) {
           state.remaining = Math.max(state.remaining, (timing.endTime - motion.currentTime) / motion.playbackRate);
+        } else if (motion.__pmHeld && motion.playState === 'paused') {
+          // Held at its start until frames come on time (PM_START_ON_SHOWN, at most 6 frames): still to run, so
+          // the deadline waits for it rather than ending the motion it would then cancel.
+          state.remaining = Math.max(state.remaining, timing.endTime - (motion.currentTime || 0));
         }
       });
       return state;
