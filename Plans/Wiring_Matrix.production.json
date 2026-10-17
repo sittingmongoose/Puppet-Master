@@ -61432,7 +61432,7 @@
     },
     "catalog.theme_set_mode": {
       "ui_element_id": "catalog.theme_set_mode",
-      "ui_location": "Title bar theme selector menu (Light/Dark/Auto segmented control) and Settings > General > Theme Mode",
+      "ui_location": "No PM7 control dispatches it since 2026-10-14: the title bar's Light/Dark/Auto and Settings' Theme Mode commit the SSYS-009 pair through cmd.settings.transaction.preview then apply (SSYS-010, UCC-108 amended 2026-10-17, DL-228); it read: Title bar theme selector menu (Light/Dark/Auto segmented control) and Settings > General > Theme Mode",
       "ui_command_id": "cmd.theme.set_mode",
       "handler_location": "handlers::theme::set_mode",
       "expected_event_types": [
@@ -66199,6 +66199,72 @@
         "Assert cmd.workspace_layout.reset preserves command_id, correlation_id, the expected layout revision and idempotency.",
         "Assert exact effects for home.more_options.reset_layout: workspace.layout_changed; no unexpected event.",
         "Assert no effect is emitted during a preview, a menu opening or a cancel, and exactly one follows one changed owner-accepted commit."
+      ]
+    },
+    "tour.layout_restore": {
+      "ui_element_id": "tour.layout_restore",
+      "ui_location": "Guided Tour > Back, Skip, or Finish with Restore > the captured layout comes back",
+      "ui_command_id": "cmd.workspace_layout.restore",
+      "handler_location": "handlers::workspace_layout::restore",
+      "expected_event_types": [
+        "workspace.layout_changed"
+      ],
+      "acceptance_checks": [
+        "cmd.workspace_layout.restore is registered with typed arguments (UCC-200) and its owner revision and idempotency contract.",
+        "tour.layout_restore reads state.tour.layout_restore.availability and shows state.tour.layout_restore.disabled_reason before dispatch; while unavailable it dispatches nothing and announces the reason.",
+        "tour.layout_restore dispatches cmd.workspace_layout.restore exactly once per Back, Skip or Finish that restores, and preserves command_id, correlation_id and the receipt.",
+        "The payload names the captured snapshot and its source (guided_tour_restore or guided_tour_back); the snapshot carries the dashboard boards it held, so the Home board returns with the panels in one command (PWIZ-035).",
+        "A snapshot of another project or workspace is refused as stale; a failed write says \"Your layout could not be saved.\" and leaves the earlier layout.",
+        "A project switch loads that project's own record and dispatches nothing; Finish with Keep dispatches nothing.",
+        "A changed commit writes pm.home_workspace_layout.v2 once (SP-330) and emits exactly one workspace.layout_changed with change layout_restored (CV-361); nothing else is emitted."
+      ],
+      "evidence_required": "handler_status: planned. Required future evidence only; this row does not assert that the planned handler, dispatcher or runtime exists. owner_doc_ref: Plans/Planning_Wizard.md#PWIZ-035. Registration: Plans/UI_Command_Catalog.md#UCC-200 (DL-228). Wiring: Plans/Wiring_Matrix.md#WM-090. Production certification requires render/control evidence, a dispatcher fixture, the typed payload and result, the projected state selector and disabled reason, the receipt or event assertion, an accessibility check and a regression test.",
+      "state_selector": "state.tour.layout_restore.availability",
+      "disabled_reason_projection": "state.tour.layout_restore.disabled_reason",
+      "effect_contract": {
+        "effect_kind": "event",
+        "description": "A committed structural change of the Home layout record pm.home_workspace_layout.v2 (SP-330): one revision-checked commit, persisted once after owner acceptance, emitting the one existing workspace.layout_changed with the v2 payload that names the change (CV-361). Menus, lists, hovering and drag previews are local and emit nothing; a cancelled, unchanged or failed commit emits nothing.",
+        "receipt_or_event_refs": [
+          "workspace.layout_changed"
+        ]
+      },
+      "accessibility_contract": {
+        "role_or_semantics": "The tour bar's Back, Skip and Finish buttons; Finish's Restore choice",
+        "keyboard_access": "Tab reaches the tour bar's buttons; Enter or Space activates them",
+        "focus_management": "tour.layout_restore returns focus where the tour's owner contract says after an applied, no-change, failed or cancelled result.",
+        "disabled_announcement": "tour.layout_restore announces state.tour.layout_restore.disabled_reason and dispatches zero commands when unavailable."
+      },
+      "test_evidence": [
+        {
+          "test_id": "wiring.tour.layout_restore.dispatcher",
+          "evidence_kind": "dispatcher_fixture",
+          "requirement": "The visible tour.layout_restore control dispatches cmd.workspace_layout.restore exactly once with the typed payload and the handler handlers::workspace_layout::restore."
+        },
+        {
+          "test_id": "wiring.tour.layout_restore.state_projection",
+          "evidence_kind": "state_projection",
+          "requirement": "Availability reads state.tour.layout_restore.availability and the disabled copy reads state.tour.layout_restore.disabled_reason; a disabled control dispatches nothing."
+        },
+        {
+          "test_id": "wiring.tour.layout_restore.effect",
+          "evidence_kind": "receipt_or_event_assertion",
+          "requirement": "Assert the exact effect delta for tour.layout_restore: workspace.layout_changed."
+        },
+        {
+          "test_id": "wiring.tour.layout_restore.accessibility",
+          "evidence_kind": "accessibility_regression",
+          "requirement": "The rendered tour.layout_restore control has its accessible name and state, is reachable by keyboard (Tab reaches the tour bar's buttons; Enter or Space activates them) and returns focus as its owner says."
+        },
+        {
+          "test_id": "wiring.tour.layout_restore.transaction",
+          "evidence_kind": "event_test",
+          "requirement": "Menu opening, hovering, drag preview and cancel emit nothing; one changed commit emits exactly workspace.layout_changed; a reveal or a failed commit emits nothing."
+        }
+      ],
+      "event_test_requirements": [
+        "Assert cmd.workspace_layout.restore preserves command_id, correlation_id, the expected layout revision and idempotency.",
+        "Assert exact effects for tour.layout_restore: workspace.layout_changed with change layout_restored; no unexpected event.",
+        "Assert no effect is emitted for Finish with Keep, a project switch or a cancel, and exactly one follows one changed owner-accepted restore."
       ]
     },
     "home.more_options.save_layout": {

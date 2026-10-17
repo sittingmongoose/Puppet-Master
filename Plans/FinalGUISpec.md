@@ -895,14 +895,15 @@ canonical_text: >-
   in narrow windows (F3-637; amended 2026-10-10, lead ruling: the same check as the chat header's menu, both
   dispatching ui.chat_column.keep_open, saved in the v2 record's chat column, never a Settings row); Save this layout... (cmd.workspace_layout.save_named); Restore home layout, the former
   Reset Layout row, which still dispatches cmd.workspace_layout.reset as a dual surface with the Settings row
-  general.startup.reset-home-layout; and directly below it the Run setup wizard row of F3-520.
+  general.startup.reset-home-layout; and directly below it the Run Onboarding Again row of F3-520 (formerly Run setup
+  wizard; amended 2026-10-17, DL-228).
 gui_related: true
 gui_classification_reason: This unit owns the visible title-bar menu inventory, placement, keyboard behavior, and disabled treatment.
 split_recommended: false
 depends_on: [F3-501, UCC-144, UIW-010, DL-180]
 unblocks: []
 acceptance_criteria:
-- "The popup lists, in order, the named and saved layouts, the chat's Show or Hide, Pop out or Dock back and Keep the chat open in narrow windows rows, Save this layout..., Restore home layout and Run setup wizard, and no File Manager, Move/Dock, numbered panel, bottom terminal, close, count, recovery, revision, or debug row (amended 2026-10-09, DL-180)."
+- "The popup lists, in order, the named and saved layouts, the chat's Show or Hide, Pop out or Dock back and Keep the chat open in narrow windows rows, Save this layout..., Restore home layout and Run Onboarding Again, and no File Manager, Move/Dock, numbered panel, bottom terminal, close, count, recovery, revision, or debug row (amended 2026-10-09, DL-180)."
 - Flyouts support hover bridge, Enter/Right Arrow, Left Arrow, roving focus, Escape/outside dismissal, viewport flipping, reduced motion, and trigger focus restoration.
 - "No row opens a numbered panel or collapses a bottom terminal; collapsing is per panel (F3-630) (amended 2026-10-09, DL-180)."
 - "Restore home layout is dual-surface: the title-bar row and the Settings row general.startup.reset-home-layout both dispatch cmd.workspace_layout.reset, keep every open tab, and mint no new command ID; the concept demo's post-reset page reload is demo behavior only."
@@ -1802,7 +1803,7 @@ Amended 2026-10-09 (DL-180, DL-184): the default selection mark is no longer a c
 
 **Border widths:**
 - Primary panel borders: 2px (reduced from current 3px for density)
-- Active/selected indicator: a fill or an outline on the element's own box, the fused tab silhouette for tabs (F3-631), the NieR square cursor or Retro reverse video, never a coloured edge stripe (amended 2026-10-09, DL-184: the former default "3px left-edge accent stripe" is retired shell-wide, F3-648; the left rail had already dropped it under DL-162, F3-618 and F3-619)
+- Active/selected indicator: a fill or an outline on the element's own box, the seated tab chip for tabs (F3-631, DL-214; amended 2026-10-17, DL-228, it read: the fused tab silhouette), the NieR square cursor or Retro reverse video, never a coloured edge stripe (amended 2026-10-09, DL-184: the former default "3px left-edge accent stripe" is retired shell-wide, F3-648; the left rail had already dropped it under DL-162, F3-618 and F3-619)
 - Dividers within panels: 1px
 
 **Hard shadow:** Offset `(2, 2)` on major containers; `(4, 4)` on floating/detached windows. No blur (retro aesthetic).
@@ -1941,7 +1942,7 @@ Boundary rules:
 - File Manager search remains a local tree filter/type-ahead only.
 - LSP symbol, reference, and diagnostic surfaces retain semantic ownership even when the command palette hosts a launcher or quick-open affordance.
 - The broad `universal-search` surface is `Ctrl+K` / command-palette search over settings, pages, commands, files, symbols, recent items, runs, artifacts, and chat threads; `Open setting: {name}` remains settings deep-link copy. Dedicated editor `/code-intelligence` keeps `Ctrl+Shift+O`, symbol/ref navigation, and `/repair` flows separate; Assistant Chat owns `Chat History Search`, `chatsearch`, `codesearch`, and `logsearch` rather than turning the Search side panel into a chat-domain index.
-- The command palette quick-open file search (`Ctrl+K` / `Ctrl+P`) searches across the full project navigation targets, not scoped to the active worktree. This is distinct from File Manager search, which follows the current file manager root, and from chat `@file` resolution, which resolves relative to the thread's `working_directory` when a worktree is bound.
+- The command palette (`Ctrl+K`) may list files and searches across the full project navigation targets, not scoped to the active worktree. `Ctrl+P` is not the palette's key: it is the panels' Open a file picker, the same picker as the "+" menu's File..., which places through F3-634 into the panel it was opened from, Alt+Enter a new panel (F3-632; amended 2026-10-17, DL-228). This is distinct from File Manager search, which follows the current file manager root, and from chat `@file` resolution, which resolves relative to the thread's `working_directory` when a worktree is bound.
 - Auto-retrieval (Tantivy search, `@file` resolution) remains project-scoped, not worktree-scoped; GUI search surfaces may expose the results, but they must not imply that the retrieval corpus was narrowed to only the active worktree.
 - The Search command-family is canonical at the GUI shell boundary: `cmd.search.show { project_id, focus?: "query"|"results"|"replace", workspace_tab_id? }`; `cmd.search.find_in_files { project_id, query, include_globs?, exclude_globs?, regex?, case_sensitive?, whole_word? }`; `cmd.search.replace_in_files` as the `- canonical replace-in-files action -`; `cmd.search.open_result` with `result_ref` that `- opens the file/location through the canonical open-file contract -`; plus `cmd.search.next_result`, `cmd.search.prev_result`, `cmd.search.toggle_regex`, `cmd.search.toggle_case_sensitive`, `cmd.search.toggle_whole_word`, `cmd.search.clear_scope`, `cmd.search.expand_all`, `cmd.search.collapse_all`, `cmd.search.replace_one`, and `cmd.search.replace_all`.
 - Search-domain GUI taxonomy stays explicit: Command Palette owns project-scoped broad-search / universal navigation, including recent-file and quick-open targeting for `/commands/files`; Search side panel owns find-in-files, replace-in-files, regex/case/whole-word (`/case/whole-word`) toggles, include/exclude scope, persistent result trees, and replace preview/confirmation; File Manager search stays local type-ahead; LSP search owns semantic symbols/refs; Chat-domain search owns `/history/message` retrieval. These are all shell-wide discoverable surfaces, but they are not one vague search box.
@@ -2190,7 +2191,7 @@ Amended 2026-10-09 (DL-180): Home's panels, tabs and chat column persist in the 
 | Theme Family | Variants | Signature Effects | Target Audience |
 |-------|--------|--------------|----------------|
 | **Friendly** | 2 (Friendly Dark, Friendly Light) | Cozy: Poppins/Nunito, paper ground + 18px dot grid, category pastel tints, frosted chrome blur limited to title/status/bottom bars. Design cues, Jared 2026-10-11 (DL-225): original DS, 3DS, Wii and Wii U menus, the Cocoon shell, and iisu.network | Warm, approachable experience |
-| **Glass** | 2 (Glass Dark, Glass Light) | One-pane glass slab: single backdrop blur over a pre-blurred wallpaper asset, alpha-derived transparency steps, glass-alpha slider, background modes mesh/depth/minimal | Users who want the translucent composition |
+| **Glass** | 2 (Glass Dark, Glass Light) | Liquid Glass (F3-652): refracting sheets and selection lenses over the shared wallpaper (F3-653, Ribbons by default), one transparency setting (SSYS-010). Amended 2026-10-17 (DL-228); it read: one-pane glass slab, single backdrop blur, glass-alpha slider, background modes mesh/depth/minimal, retired with F3-428 and SSYS-054 | Users who want the translucent composition |
 | **Retro** | 2 (Retro Dark, Retro Light) | Full: pixel grid, paper texture, scanlines (dark) or reduced opacity (light), hard shadows, sharp corners, IBM Plex Mono | Users who love the original aesthetic |
 | **Basic** (factory seed: Basic Dark) | 2 (Basic Dark, Basic Light) | None: flat colors, subtle borders, rounded corners, Inter | Accessibility, readability, reduced visual noise |
 
@@ -2676,7 +2677,7 @@ Agent-Config is the visible provider/model/account/instruction management surfac
 
 #### 7.4.1 Terminal Settings Ownership
 
-Amended 2026-10-09 (DL-181, DL-183): the terminal's appearance is one live layered model (F3-642, DR-068). Settings binds its app and project layers (SSYS-051) and the terminal's Appearance popover writes the tab's own override; no terminal appearance row needs a restart. The groups follow SSYS-040 and SSYS-051, the quadrant layout behaviour retires with the Quadrant layout, and Explain What Commands Do leaves the terminal for the Teacher persona in the chat (D19). F3-120 and F3-121 carry the details.
+Amended 2026-10-09 (DL-181, DL-183): the terminal's appearance is one live layered model (F3-642, DR-068). Settings binds its app and project layers (SSYS-051) and the terminal's Customize screen, This terminal (F3-650; it replaced the Appearance popover on 2026-10-14, DL-228), writes the tab's own override; no terminal appearance row needs a restart. The groups follow SSYS-040 and SSYS-051, the quadrant layout behaviour retires with the Quadrant layout, and Explain What Commands Do leaves the terminal for the Teacher persona in the chat (D19). F3-120 and F3-121 carry the details.
 
 Settings > Terminal is the in-product cheat sheet and durable `/preferences` owner for terminal defaults. It groups high-frequency controls for preview and change ahead of dangerous `/rare` controls and daily-use settings, and it keeps `/shortcut` mappings plus conflict `/explanations` visible in-product rather than hiding discoverability in a secondary utility.
 
@@ -3566,7 +3567,7 @@ Amended 2026-10-09 (DL-180): the Home layout lives in the v2 Home layout record 
 | `activity_bar_order:v1` | Ordered list of activity bar item IDs + separator position | On change (debounced 300ms) |
 | `theme:v1` | Theme family + presentation mode (Light/Dark/Auto), with the resolved ThemeVariant enum value kept for readers | On change |
 | `glass_background_mode:v1` | Retired compatibility input since 2026-10-15; SSYS-054 owns shared Wallpaper and SP-333 owns migration of old mesh/depth/minimal values | No active writer |
-| `glass_alpha:v1` | Glass surface alpha within the per-theme clamps (Glass Dark 0.35-0.85, Glass Light 0.45-0.88) | On change (debounced 300ms) |
+| `glass_alpha:v1` | Glass surface alpha between its floor (Glass Dark 0.35, Glass Light 0.45) and 1, default 0.55 (SSYS-010; amended 2026-10-17, DL-228, it read: clamps 0.35-0.85 and 0.45-0.88) | On change (debounced 300ms) |
 | `editor_workspace_state.v1:{project_id}` | Canonical project-wide editor workspace state: open tabs, active tab, and per-tab scroll/cursor presentation; contains no unsaved buffer bytes | On change (debounced 500ms) |
 | `filetree_state:v1:{project_id}` | Expanded folder set, local filter text, and tree scroll position | On change (debounced 300ms) |
 | `search_panel_state.v1:{project_id}` | Search side-panel UI state: last query, replacement text, toggles, include/exclude globs, expanded groups, selected result ref, and active query session ref | On change (debounced 250ms) |
@@ -7703,8 +7704,8 @@ canonical_text: >-
   Global spacing, border, active indicator, divider, hard-shadow, and density metrics define
   compact shell layout and panel behavior at desktop and collapsed sizes.
   Amended 2026-10-09 (DL-184): the active indicator token is no longer a 3px left-edge accent stripe; selection is a
-  fill or an outline on the element's own box, the fused tab silhouette, the NieR square cursor or Retro reverse video
-  (F3-648). The density metric no longer assumes a bottom panel; Home's density follows F3-636 (DL-180).
+  fill or an outline on the element's own box, the seated tab chip (F3-631, DL-214; amended 2026-10-17, DL-228, it read:
+  the fused tab silhouette), the NieR square cursor or Retro reverse video (F3-648). The density metric no longer assumes a bottom panel; Home's density follows F3-636 (DL-180).
 gui_related: true
 gui_classification_reason: >-
   This unit defines user-visible GUI surface, shell, copy, control, or projection behavior.
@@ -9817,6 +9818,14 @@ canonical_text: >-
   theme is written under the full cover, and the cover lifts once frames come on time again, the new
   look's own colour transitions finished beneath it. Picks made before a pending switch runs keep only the
   latest.
+  Amended 2026-10-17 (DL-228): each look's cover moves in its own language. Basic: two accent sheens sweep
+  under the glow. Friendly: three soft lights, accent, warm and mint, drift and swell. Retro: scanlines crawl
+  in 2 px steps and a bright bar steps down, with no glow. Glass: two light pools drift past each other and a
+  specular streak crosses. NieR: a scan line sweeps over a drifting ink dot grid and a block cursor blinks.
+  Under Reduce Animations the cover's glow breathes, Retro's scanlines breathe in steps and NieR's dot grid
+  breathes, with no travel; that calm pulse is waiting feedback, which Reduced Motion keeps (ACD-475). The
+  cover's parts start with it, are never held, continue through a re-pick while it lifts, and end once it has
+  gone.
 gui_related: true
 gui_classification_reason: >-
   This unit defines user-visible GUI surface, shell, copy, control, or projection behavior.
@@ -28531,6 +28540,11 @@ canonical_text: >-
   The in-app toast/banner destination renders through the
   title-bar notification affordance per PMConcept7 (2026-07-23): ephemeral deliveries stage beneath the title-bar
   notification stack and durable deliveries join the stack and its count badge (F3-460, F3-461).
+  Amended 2026-10-17 (DL-228): every cue category, the chat's (F3-564), onboarding and the Guided Tour's
+  (F3-599) and the notifications' (F3-460), plays through this owner's one player: one kit per theme family
+  plus the NieR kit while NieR Mode is painted, nothing before the first trusted gesture, one mute bound to
+  general.interaction.sound-effects, one volume, and sound never the only signal. The consumers state their
+  own moments and keep no engine, gate or mute of their own.
 gui_related: true
 gui_classification_reason: Defines Settings GUI, notification destination controls, sound library controls, upload UI, preview, and test-send presentation.
 depends_on: [ACD-428, CV-298, SP-222, PS-124, UCC-103]
@@ -30632,6 +30646,11 @@ canonical_text: >-
   glass-dark and .45 through .88 for glass-light. Changes apply live to every alpha-driven
   glass fill and persist at glass_alpha:v1. The slider is a glass-only setting and renders
   only while a glass theme is active.
+  Amended 2026-10-17 (DL-228): this unit is superseded by SSYS-010 and the inventory row
+  general.visual.glass-transparency: one default of .55 in both modes, a floor of .35 in Dark and .45 in
+  Light, a ceiling of 1 (100 %), shown as a percentage with a typed number beside the stepper, applying to the
+  current Project only; F3-652 says what it does to the Liquid Glass sheets. The .60 default and the .85 and
+  .88 ceilings above are lineage.
 gui_related: true
 gui_classification_reason: This unit defines a user-facing transparency control and its visible effect on glass surfaces.
 split_recommended: false
@@ -30673,6 +30692,7 @@ compatibility_only_notes:
 - "Slint portability: alpha-driven fills resolve to a bounded set of precomputed fill values sampled across the clamp range or to a native alpha-composited constant tint; no arbitrary-content backdrop blur, no SVG filters, color math is precomputed rather than runtime-mixed, and any glass treatment uses a single blur over a known wallpaper as a pre-blurred asset."
 stale_retired_dispositions:
 - "The concept localStorage name pm.glassAlpha is a demo persistence shim; the canonical key is glass_alpha:v1."
+- 'Amended 2026-10-17 (DL-228): defaults, clamps and display follow SSYS-010 and general.visual.glass-transparency (one .55 default, floors .35 and .45, ceiling 1). It read: .60 for glass-dark, .55 for glass-light, ceilings .85 and .88.'
 owner_boundary_notes:
 - "Registration of glass_alpha:v1 in the section 15.1 storage tables is owned by F3-444; the locked non-glass presentation row is owned by F3-443."
 owner_hints:
@@ -30728,6 +30748,10 @@ canonical_text: >-
   (src/css/02-control-fonts.css). While on, NieR Mode owns general.visual.accent-color and
   general.visual.app-font (F3-441); turning it off restores the chosen theme. It is an overlay, not
   a ninth theme.
+  Amended 2026-10-17 (DL-228): Japanese is not embedded. M PLUS 1 carries it upstream, but PM NieR Sans ships
+  only its Latin, Latin Extended and Vietnamese slices, so Japanese text uses the computer's fonts, and
+  DL-161's "scripts it supports" does not require it. The cross-family restart rule above is F3-077's and
+  shares its question pending with Jared (proposed: a live switch under the look's cover).
 gui_related: true
 gui_classification_reason: This unit defines the visible Friendly theme fonts, ground texture, frosted chrome, pastels, and switch behavior.
 split_recommended: false
@@ -31363,6 +31387,8 @@ Companion editor treatments carried in the same span (04-css-glass-b.part.html:1
 
 #### Glass composition constants (03-css-glass-a.part.html:19-49; 04-css-glass-b.part.html:11-56; 29-js-settings-engine.part.html:60-63, 80-86)
 
+Lineage (amended 2026-10-17, DL-228): this table records the 2026-07 PM6 parts. F3-652 owns the current Glass material and SSYS-010 the transparency, so its alpha default, clamp and violet identity tokens are not current requirements.
+
 | Constant | glass-dark | glass-light |
 |---|---|---|
 | `--glass-tint-rgb` | `46, 34, 72` | `246, 240, 255` |
@@ -31871,6 +31897,10 @@ canonical_text: >-
   focus on the operated control. Current/default values in rows, Details, search and result toasts
   consume SSYS-006's one formatter and effective display floor; percentage representation never
   changes the stored fractional value.
+  Amended 2026-10-17 (DL-228): this switch grammar is the one for every switch on every surface, the
+  onboarding window and the Guided Tour included, not only Settings rows: the look's rectangle with a gripped
+  square key, never a radius of half its height, and Glass alone takes F3-652's curved lens variant. SSYS-029
+  and F3-656 consume it. The concept's capsule switches in Basic and Friendly onboarding are not adopted.
 gui_related: true
 gui_classification_reason: This unit defines visible setting row control renderers, badge and status mark vocabulary, scope tags, and the inherit-origin line.
 split_recommended: false
@@ -32089,6 +32119,13 @@ canonical_text: >-
   Settings surfaces, including search, category chips, bloom modals, shelves, row renderers,
   and the Project Settings Modal, bind to this registry rather than hardcoding inventory
   rows.
+  Amended 2026-10-17 (DL-228): each row's label, desc and option words in this inventory are the one wording
+  the product renders for it, on every surface that draws the row: Settings, hosted controls (SSYS-044) and
+  the Customize screens (DR-068). A concept's own row wording, such as the onboarding Settings kit's
+  plain-language rows.d labels and help, is a proposal until adopted here. Proposed, pending Jared: adopt the
+  concept's plain-language labels and help for the rows it rewrote (for example Theme Mode as "Light or dark",
+  UI Scale as "Size of everything", Reduce Animations as "Reduce motion"), in one wording pass with search
+  aliases for the old words.
 gui_related: true
 gui_classification_reason: This unit binds the visible settings surfaces to their canonical inventory registry.
 split_recommended: false
@@ -32571,6 +32608,15 @@ canonical_text: >-
   lasting cards join the bell; a crowded quiet note's reading interval is min(normal interval,
   max(1800 ms, half the normal interval rounded to ms)). This tuning never changes the owner
   operation.
+  Amended 2026-10-17 (DL-228): in Banner mode one banner shows under the title bar at a time and the rest wait
+  in arrival order. Its Show action opens the inbox at that notice. It keeps the staged reading time with the
+  same hover and focus hold; a Blocking banner is announced as an alert and the others as status. It enters in
+  the look's motion, Retro and NieR wiping in and the others sliding, and appears at once under Reduced
+  Motion. Closing a lasting banner files it in the inbox like a toast, so nothing is lost, and banners take
+  F3-460's arrival sounds; the concept's banner, which discards on close and plays no sound, is not adopted
+  there. A page's own quiet confirmation, Home's panel notes and Usage's notes included, is a Quiet notice
+  through this one staging under the bell (DL-193: Usage notices appear under the bell like every other page);
+  no page keeps a toast line of its own.
 gui_related: true
 gui_classification_reason: This unit defines visible ephemeral toast staging, lifetime, and dismissal behavior.
 split_recommended: false
@@ -32661,6 +32707,10 @@ canonical_text: >-
   platform, model, and mode with their applies-next-turn registration, the chat context
   ring owns context usage display, and the title-bar notification stack and count badge
   own the notification affordance.
+  Amended 2026-10-17 (DL-228): each status-bar item's hover tag (F3-523) names what the item shows or does,
+  with a plain detail, for example System status, "Everything Puppet Master needs is running. Click to see
+  each service." An item without words of its own takes the button default ("Click to see the details.") or
+  the readout default ("Shows the latest known state."), never the generic "Choose this option."
 gui_related: true
 gui_classification_reason: This unit defines visible status bar chips and their click behaviors.
 split_recommended: false
@@ -32717,7 +32767,9 @@ canonical_text: >-
   marks a tab only with its silhouette and the one mark set (F3-631, DL-141), and no colour is ever drawn on a tab as
   a coloured border or stripe (DR-069).
   Amended 2026-10-10 (DL-187, D34): Jared confirmed this: terminal tab colours and icons stay off the strip for now
-  ("redesign them"), and they will be redesigned as part of Puppet Master's neon glyph system.
+  ("redesign them"), and they will be redesigned as part of Puppet Master's neon glyph system. Amended 2026-10-17 (DL-228): that
+  redesign is F3-658's terminal family, an uncoloured terminal kind glyph lit on hover with state only through the
+  shared mark slot; no person-chosen tab colour or icon returns.
 gui_related: true
 gui_classification_reason: This unit defines visible terminal tab rename, color, and icon customization controls.
 split_recommended: false
@@ -32947,6 +32999,9 @@ canonical_text: >-
   pm.guided_tour.action_request.v3 (PWIZ-023). Each route retains its owner's validation and effects. The
   owner removing that prompt removes its inbox projection. Dismissal/read/placement never completes setup,
   skips the tour or resolves its underlying need.
+  Amended 2026-10-17 (DL-228): the inbox keeps a bounded number of items (the concept keeps 60). At the bound
+  the oldest item that is read and needs nothing leaves first; an unresolved Needs you item is never dropped
+  to make room.
 gui_related: true
 gui_classification_reason: This unit defines the shared alert store, alert lifecycle controls, and the unread indicator contract.
 split_recommended: false
@@ -33037,6 +33092,16 @@ canonical_text: >-
   Setup-prompt arrival and joining follow F3-447, and the resulting entry belongs to F3-453's shared
   inbox. The unread badge includes the owner-linked setup entry under F3-453; its Continue control
   reuses that original prompt's action.
+  Amended 2026-10-17 (DL-228): while a blocking item is unresolved the stack keeps F3-453's attention ring,
+  drawn in each look's own form with no pill and no stripe; reading or filing never clears it. The arrival,
+  join and inbox open and close sounds are the notification category of F3-405's routing matrix, not the
+  onboarding and Guided Tour cue category. The empty inbox shows the look's caught-up line ("You're all caught
+  up" in Basic and Glass, "All caught up!" in Friendly, "NO NEW MESSAGES" in Retro, "No new reports" in NieR)
+  over "Finished work, warnings and anything that needs you will land here." The bell's accessible name is
+  "Notifications: nothing new", "Notifications: N, all read" or "Notifications: N unread". Each card and inbox
+  row carries its kind's mark before its title, beside it and never in its place (success complete, warning
+  warning, error failed, info info; F3-658), lit and still; the dismiss is the close glyph in the same button
+  and keeps its name Dismiss; the empty stack shows the bell glyph; marks hold 3:1 on severity-tinted cards.
 gui_related: true
 gui_classification_reason: This unit defines the visible title-bar notification stack, staging, join, and count badge behavior.
 split_recommended: false
@@ -33130,6 +33195,15 @@ canonical_text: >-
   including toast. Dismissing a card never resolves the underlying blocker, and ephemeral
   cards are X-dismiss only. The inbox list bottom fade starts at 96% with bottom padding
   so card bottoms are not clipped.
+  Amended 2026-10-17 (DL-228): the inbox header shows "N new" and offers Mark all read beside Clear all: the
+  typed local read projection ui.notifications.mark_all_read (CS-102), which marks every retained item read
+  and never acknowledges or resolves its work. Opening the inbox still marks only the items shown (F3-453);
+  the concept's dwell, which marks everything read, is not adopted. Keyboard: ArrowDown on the bell opens the
+  inbox and focuses the first row; the rows are one tab stop, ArrowUp and ArrowDown move, Home and End reach
+  the ends, and ArrowUp on the first row returns to the bell; Delete or Backspace dismisses the row and moves
+  focus to the next; Enter activates the row's body (F3-447); Escape closes from anywhere and returns focus to
+  the bell. A timed item shows its countdown ("Expires in N s", FileSafe's 60 s hold), a folded group offers
+  "N more" and "Show less", and an action that opens a page reads "Open <page>".
 gui_related: true
 gui_classification_reason: This unit defines the visible sprout inbox panel, its dismiss and clear motions, and kind-specific compact action rows.
 split_recommended: false
@@ -33449,6 +33523,10 @@ canonical_text: >-
   direction reduces the central spotlight immediately beneath the pointer while retaining the approved
   surface-edge glow. This applies wherever that spotlight is drawn, including Glass; exact tuning remains
   with the hover owner, with settled readability governed by F3-654.
+  Amended 2026-10-17 (DL-228): that tuning landed on 2026-10-14: only the pool of light under the pointer is
+  turned down, to 0.6 of its earlier strength in Basic, Friendly and Glass, dark and light, with the edge
+  catch, size, falloff, lift and timings unchanged, and Glass Dark's own shine is lowered by the same ratio.
+  Retro, NieR and Reduced Motion are unaffected. The factor is a concept token, not an acceptance number.
 gui_related: true
 gui_classification_reason: This unit defines the visible magnet lean, pointer light, emitted glow and the Retro and NieR hover forms on PMConcept7's cards, rows, tiles and icons.
 split_recommended: false
@@ -36014,7 +36092,7 @@ canonical_text: >-
   display unit and formatter, including currency formatting for attempt-charge integer cents, and the chart title
   plus Latest and distinct peak facts remain complete in one row or a narrow two-row composition. An active
   reorder ghost stays visibly above the workspace until cleanup.
-  Every room remains reachable at every supported width, and Source authority mounts exactly 4/6/8 panels for
+  Every room remains reachable at every supported width, and Source authority mounts 7/8/9 panels (amended 2026-10-17, DL-228; earlier exactly 4/6/8) for
   At a glance/Detailed/Diagnostics. A route blocked on provider setup renders
   the exact `Provider Setup Required` state with explicit `Host/Environment`, preserves operation and continuation
   identity, and reuses `cmd.settings.open` with the typed Settings target
@@ -36569,6 +36647,12 @@ canonical_text: >-
   its hero moments, typed text and one-way large exits are F3-598's. Those moments do not hold input.
   A resumed onboarding repaints the session's stored look_choice, NieR Mode included, with null fields
   falling back to this unit's start rule (DL-153).
+  Amended 2026-10-17 (DL-228): in every look the application beneath stays still while the window is open:
+  nothing in it animates, takes focus or wakes until both the window and its exit have finished. Ready's Enter
+  answers on the click's frame; the Planning Wizard is drawn whole beneath the window, the window's exit is
+  the only move, and the hand-over never passes through Home (PWIZ-021 keeps the destination). F3-598 consumes
+  this rule. The Home options menu row is named Run Onboarding Again everywhere (DL-153, UCC-200); Run setup
+  wizard is its earlier name, and it sits directly below Restore home layout, the former Reset Layout.
 gui_related: true
 gui_classification_reason: This unit owns Onboarding's visible composition, copy density, hierarchy, and cinematic motion.
 split_recommended: false
@@ -36601,7 +36685,7 @@ acceptance_criteria:
   - "Server, Storage, Client, source location, local Safe History, online copy, and access choices remain independently editable; selecting an already-owned Server exposes the appropriate discovery and pairing presentation without silently forcing storage or Client placement."
   - "Paid-provider setup offers compact provider tiles and the selected provider's current owner-supported auth path; Free Models follows even after paid-provider Skip, groups underlying-provider setup through existing owners, and offers explicit Skip. Detection is an observation, not authorization or readiness. Close after commit preserves the existing Project, settled phases and exact continuation; resume never recreates it or replays settled setup."
   - "Ready presents one dominant enter action, a phase-safe Back action where reversible, and an optional Guided Tour without trapping the user. Back never undoes/repeats Project commit or returns to a fake uncreated draft; a deferred Project stays deferred. Starting the Tour transfers and clears saved focus ownership and releases inertness before the Tour starts, while an unavailable or throwing Tour start records no successful handoff and restores the saved workspace initiator/fallback."
-  - "The Home dropdown beside the theme selector contains exactly one `Run setup wizard` item directly below `Reset Layout` (amended 2026-10-09, DL-180: that row now reads Restore home layout, formerly Reset Layout, F3-502); it invokes typed local action `ui.onboarding.start` with source surface `home_menu`, reopens the same modal at Welcome, and does not create a second onboarding state machine or domain command."
+  - "The Home dropdown beside the theme selector contains exactly one Run Onboarding Again item (formerly `Run setup wizard`) directly below Restore home layout (formerly `Reset Layout`; amended 2026-10-09, DL-180, F3-502; amended 2026-10-17, DL-228, the one label); it invokes typed local action `ui.onboarding.start` with source surface `home_menu`, reopens the same modal at Welcome, and does not create a second onboarding state machine or domain command."
   - "Every visible sentence and disabled reason is understandable to a person who has never coded or used an IDE; `shell`, internal owner names, command IDs, schema IDs, route IDs, and unexplained implementation vocabulary never appear as product copy."
   - "Help uses one anchored explainer surface at a time: activating a typed SVG `?` opens a plain-language explanation attached to that exact option, replaces or closes any prior explanation, and never expands empty peer sections. The visible shared explainer is the control's actual `aria-controls` target and its active `aria-describedby` target; obsolete hidden per-card copies are absent. Primary and secondary card actions have visibly button-shaped treatment, consistent alignment and spacing, and recommended versus alternate choices differ through hierarchy, shape, iconography, and state rather than copy alone."
   - "All stages use one consistent grid, selection state, action hierarchy, explainer grammar, spacing rhythm, and in-flow footer model; specialized fields may vary by route, but controls do not change alignment or interaction rules from one setup screen to the next."
@@ -36899,6 +36983,15 @@ canonical_text: >-
   performs one startup pass, and ignores exact old/current attribute reassertions while retaining every real
   semantic change, so unrelated application reconciliation cannot create a perpetual tooltip invalidation loop or
   steal Onboarding or Guided Tour's animation budget.
+  Amended 2026-10-17 (DL-228): a tag never covers a primary action such as the chat's Send: it slides along
+  its side or flips, and with no clear place it stays shut while its accessible description is still read.
+  File references and tabs keep their path or name literally (a reference's tag is its path and line), the one
+  exception to replacing paths, file names and host:port text with generic words. Focus the application moves,
+  by an open, a reveal, a panel focus change or F6, opens no tag until the pointer reaches that control or
+  focus moves on; the 1000 ms keyboard-focus tag is for focus the person moves with Tab or the arrows.
+  Documented exemptions also include a picker plate (`menu`: its rows without their own label, Back and the
+  search field already show their names; a row given its own hover label keeps its tag) and a Settings field
+  whose label and help line sit beside it (`labelled-field`).
 gui_related: true
 gui_classification_reason: This unit owns the global tooltip overlay's paint, geometry, timing, and accessible attachment.
 split_recommended: false
@@ -40264,6 +40357,11 @@ canonical_text: >-
   The ELI5 quick dot is the ELI5 kind mark among these glyphs, present lit or muted (F3-581, DL-126).
   The dock and the per-reply files row replace the stream footer pill's helpers and files chips
   (ACD-482, DL-129); no summary of helpers or file changes stacks above the composer beside the dock.
+  Amended 2026-10-17 (DL-228): while a decision host (a Plan or questionnaire host) is open it sits directly
+  above the composer and lifts the floating Activity bar pill and the follow-up queue, which float together as
+  one stack, with the scroll-to-bottom control; the transcript keeps its bottom padding for that floating
+  stack. The quota-wait strip and the dock stay in flow beneath the decision host, so bottom to top the order
+  is composer, dock, quota-wait strip, decision host, then the floating pill and queue.
 gui_related: true
 gui_classification_reason: "Places the dock and the new capability glyphs in the composer stack."
 split_recommended: false
@@ -41518,7 +41616,7 @@ depends_on: [DL-140, DL-146, DL-149, F3-425, F3-426, F3-582, ACD-469]
 unblocks: []
 acceptance_criteria:
   - "An icon census of the chat finds every icon drawn from the registry, one drawing per concept."
-  - "Controls are unlit at rest and lit on hover and keyboard focus in every theme; status icons are lit and moving; concept icons are lit and still."
+  - "Controls are unlit at rest and lit on hover and keyboard focus in every theme; status icons in the chat's placements are lit and moving (F3-585), while elsewhere F3-658's still-status rule applies (amended 2026-10-17, DL-228); concept icons are lit and still."
   - "No icon glow uses an element blur or filter."
   - "Under reduced motion no icon act or loop runs, and every state still reads."
   - "No WorkNodes, NodeSeeds, executable queues, implementation files, runtime launches, or production build tasks are created by this unit."
@@ -41580,6 +41678,8 @@ canonical_text: >-
   positive, Blocked and Failed danger. In module cards the marks are lit and still (F3-584). F3-658 supersedes
   separate per-surface glyph sets and owns fitted glyph inks; F3-654 governs the status word. This unit retains
   the chat's placements and domain states.
+  Amended 2026-10-17 (DL-228): the 13 status marks are the chat's run-state subset of F3-658's one 22-key
+  vocabulary (17 states and 5 file-change marks), not a separate set; the count 13 names that subset only.
 gui_related: true
 gui_classification_reason: Defines the assistant chat's icon, status, Send and Stop, or NieR presentation.
 split_recommended: false
@@ -42588,7 +42688,7 @@ canonical_text: >-
   or a tick may flicker. Input never waits: a key or a press snaps a running performance to its end state. Every
   beat is gated by an existing part. Reduced Motion, the Still and Colors only presets and low resource show each
   moment's end state, and Quiet drops the Pod beats. A background change made from the editor cross-fades as F3-589
-  sets out. The application beneath the onboarding window stays still while the window is open. The four theme
+  sets out. The application beneath the onboarding window stays still while the window is open (F3-520 owns this in every look). The four theme
   families have hero moments of their own (F3-600); NieR's play whenever NieR Mode is painted, whatever family
   is chosen beneath it, and have no per-family variants (DL-153). No settings key,
   NieR part, theme family, theme variant, command id, route or `ui.guided_tour.*` action is added: inside the
@@ -42823,6 +42923,9 @@ canonical_text: >-
   below its field when the body has no room above it. Under NieR Mode a description on the menu cursor takes the
   cursor's paper colour like its label. A card whose content fits looks and measures exactly as F3-596 describes.
   This holds in every theme, at every width the chat supports and with reduced motion.
+  Amended 2026-10-17 (DL-228): the fitting invariant, actions always reachable and the body scrolling, applies
+  to whichever questionnaire surface ships; the eight other questionnaire takes are Demo Studio lab options
+  (DL-185) and leave with it.
 gui_related: true
 gui_classification_reason: Defines how the questions card sizes, scrolls and wraps long content.
 split_recommended: false
@@ -43451,7 +43554,8 @@ canonical_text: >-
   inset serves everything inside one (rows, the tab ink, buttons, inputs), so every hover, open and selection fill
   is drawn on its own row's box, concentric with its shelf; a control under 26 px high never rounds past 6 px.
   Basic has R 8 px and r 4 px, Friendly R 12 px and r 10 px with a 6 px text inset, Glass R 13 px and r 10 px, and
-  Retro and NieR Mode are square. The shelf is the only box: its head is a band flush with the shelf's top that
+  Retro is square, and NieR Mode is square while its Square hairlines part is installed, keeping Basic's radii
+  without it, as every other NieR surface does (amended 2026-10-17, DL-228; it read: Retro and NieR Mode are square). The shelf is the only box: its head is a band flush with the shelf's top that
   takes the shelf's own corners, a collapsed shelf is only its head with no strip under it, and the rows inside are
   flat, never a card inside a card. Heads are at least 34 px high and rows at least 28 px. Shelf tints are roles over
   the category colour of F3-474: fill 7%, head band 13%, edge hairline 22%, row hover 11% and open row 8%; Glass uses
@@ -43463,6 +43567,12 @@ canonical_text: >-
   filled rectangle 28 px high with the inner radius and a 12 px sentence-case label, the primary action has the
   accent fill, and icon buttons are 24 px squares. Selection and focus inside the rail are a fill or an outline on
   the element's own box, never section 3.5's 3 px left-edge stripe.
+  Amended 2026-10-17 (DL-228): Jared's RAIL-5 answer of 2026-10-10, to bring back some frost on the rail's
+  header and tab plates (DL-162; the Liquid Glass brief relays it), is owned here. In Basic, Friendly, Retro and NieR the rail's chrome plates
+  (the panel header, the tab strip, toolbars, Source Control's context and footer, the Search index strip and
+  the automation context) keep a frosted scroll-under, content blurring as it passes beneath them; in Glass
+  the panel is one sheet (F3-652), the sheet is the frosted material and the plates paint nothing of their
+  own. This plate blur is admitted beside F3-431's listed effects.
 gui_related: true
 gui_classification_reason: Defines the left rail's visible geometry, shelf treatment, type ladder and controls.
 split_recommended: false
@@ -43525,6 +43635,11 @@ canonical_text: >-
   chip, pill or badge for status/count consumes this mark-and-word or plain-number presentation; an action
   remains the owner's action with F3-618's control treatment and F3-648's action-button exception. No local
   status store or lifecycle rule is created.
+  Amended 2026-10-17 (DL-228): Proposed, pending Jared: Testing's errored state, a harness failure rather than
+  a failed assertion, uses the shared failed mark with the word Errored in the failed tone, so one shape keeps
+  one meaning; the concept's own orange word for it is not adopted until he answers the Errored-word colour
+  question queued on 2026-10-11. The rail's remaining solid tables in the concept are a no-glyph fallback, not
+  a second set of badges.
 gui_related: true
 gui_classification_reason: Defines how every status and count in the left rail is drawn.
 split_recommended: false
@@ -43569,7 +43684,7 @@ stale_retired_dispositions:
 - 'Amended 2026-10-14: D44 unifies glyphs; the independent rail silhouettes, lower status-word contrast and unanswered
   unification question are superseded.'
 owner_boundary_notes:
-  - "F3-585 owns the assistant chat's 13 status marks and this unit owns the rail's glyphs; neither restates the other. The two sets differ (the chat's failed is a triangle, the rail's warning is), and whether one set should serve both is an open owner question recorded in DL-162."
+  - "F3-585 owns the assistant chat's 13 status marks, the run-state subset of F3-658's one vocabulary, and this unit owns how the rail consumes that vocabulary; neither restates the other. Amended 2026-10-17 (DL-228): D44 (DL-201) settled the earlier open question, and the sets no longer differ."
 owner_hints:
   - Plans/FinalGUISpec.md
 
@@ -43607,6 +43722,9 @@ canonical_text: >-
   only (F3-498). Amended 2026-10-09 after the shared cleanup (DL-162): no abbreviation applies to ages either; ages
   and durations are spelled out in words ("4 minutes", "2 hours ago", "1 minute 48 seconds"), never cut to unit
   letters, while a decimal measurement keeps its unit symbol ("3.4s").
+  Amended 2026-10-17 (DL-228): two panels add their own fitting facts: a Search hit whose match lies past two
+  lines starts with an ellipsis just before the match, so the match always shows; and a Runtime Artifacts row
+  always shows its family word, which is never the part cut.
 gui_related: true
 gui_classification_reason: Defines how labels, names and tabs fit the narrow left rail.
 split_recommended: false
@@ -43705,6 +43823,18 @@ canonical_text: >-
   switcher in each look's material; Retro and NieR keep F3-438's stepped motion (Jared, 2026-10-16), and
   a pressed tab's words take the chip's ink in the press's own frame. NieR's hover inks and Target brackets stay as above. NieR's rail wipe, with its brief empty outline of about 83 ms,
   is kept as NieR's identity (Jared, 2026-10-16).
+  Amended 2026-10-17 (DL-228): on a panel switch or a tab change the leaving panel or pane stays drawn where
+  it was, above the incoming one, and fades out as the incoming entrance starts, so the first frame never
+  shows an empty pane; while held it is inert, out of the tab order and the accessibility tree, and a field
+  focused in it takes no keys (ACD-475). NieR keeps its own erase and Reduced Motion swaps at once; a rail
+  opened from closed never holds the panel shown before it closed, and a panel shown again is released from
+  any hold first. The rail picker has a pick-several mode, used by F3-622's Owner filter and by any later
+  multi-select dropdown: a pick checks or clears an item and keeps the plate open, All clears every item and
+  closes, choosing every item reads as All, each look draws its own checkbox fill, and the trigger names the
+  one item chosen, the items while they fit, else how many. The Chat entry's lit state is a tile of its own,
+  the open-panel tile's size and paint, faded in and out in place on the Chat icon while the chat column shows
+  (its folded strip included); it never glides, because it marks the chat column, not the open panel, and the
+  open-panel tile never travels to the Chat icon. The Dashboard activity item is gone (DL-202).
 gui_related: true
 gui_classification_reason: Defines the left rail's dropdown look and its motion in each theme family.
 split_recommended: false
@@ -43778,6 +43908,9 @@ canonical_text: >-
   the height moving in the family's voice; a button inside the card never folds it, and folded or open is one
   state for both engines, kept with the Source Control panel state (source_control_panel_state.v1, F3-475). Neither adds a command or an action: the filter is W-075's filter state
   and the fold is panel state.
+  Amended 2026-10-17 (DL-228): the Owner dropdown uses F3-621's pick-several mode. The Jujutsu Workspaces
+  view's Owner filter is the same filter state as the Worktrees view's, kept with W-075's persistence, not a
+  separate view-local filter.
 gui_related: true
 gui_classification_reason: Defines two visible Source Control behaviours the Polish design adds.
 split_recommended: false
@@ -44118,7 +44251,9 @@ canonical_text: >-
   official mark, never recoloured, filtered, tinted or redrawn and never set on a disc or plate
   other than a published app-icon plate, in its light or dark variant where the provider publishes
   one, contained in a square box at its own optical scale; Free Models and Local model server use
-  neutral interface icons, and a monogram is used only where no mark exists. Every dropdown on the
+  neutral interface icons, and a provider with no mark of its own shows its publisher's mark, or with neither its name in text, never a
+  monogram and never another provider's mark (amended 2026-10-17, DL-228; it read: a monogram is used only where no
+  mark exists). Every dropdown on the
   page (scope, disclosure, range overflow, the card menu, the size menu, chart type and options,
   thresholds, provider and account filters, Export and the Live menu) is a menu of the chat
   assistant's menu family (F3-531's menus, portaled as F3-424 sets out, opening with the
@@ -44140,8 +44275,9 @@ canonical_text: >-
   placeholder sits in the exact target slot and the peers in its way slide to make room; resizing
   shows a live outline of the snapped target size with its size name and its width by height while
   the peers in its way reflow; release morphs the card into place, after which board gravity floats
-  the other cards up into the holes above them, and Escape glides it back. Width resizes from the
-  right edge, the left edge and the corners at every board width. Tidy and board gravity (WS-019)
+  the other cards up into the holes above them, and Escape glides it back. A card resizes from its
+  right, left and bottom edges and from every corner at every board width, its top edge being its head (amended
+  2026-10-17, DL-228; it read: Width resizes from the right edge, the left edge and the corners). Tidy and board gravity (WS-019)
   each move the cards into place as one movement. The size menu previews each preset with its name
   before it is chosen. A card's head actions never cover its title or the head tools and always fit
   inside the card head at every width, taking the widest form that fits: all four tools, then the
@@ -44217,6 +44353,37 @@ canonical_text: >-
   hero's about 200 ms landing stays the room-change floor, counted from the new room's first drawn
   frame when a hand-off waited for that frame. A cold first entry's longer hold is parked (DL-221),
   not a pass of that floor.
+  Amended 2026-10-17 (DL-228): each room's hero: Overview the skyline, Plans & limits the 7-day reset line,
+  Costs the budget, Accounts the most-room ladder, Free models four availability rings, Context the ring,
+  Analytics the token trend, Ledger the attempt timeline, Attention the anomaly line, Prompt cache four split
+  rings, Tools the latency range bars, Signals the history line and Source authority the flow; Free models and
+  Prompt cache use a hero group of four equal plates. The key light is one static light beneath the board, a
+  top-left key and a low bottom-right bounce, seen in the gutters and behind the stage head and strongest on
+  the hero plate; it takes the room's tone (Costs warn, Attention hot, Accounts and Free models calm, the
+  accent elsewhere, Friendly's lavender in Friendly), blooms once on arrival, pans with a room change, never
+  moves at rest, and is the one tint DL-178 allows. Marks: a product without its own mark shows its
+  publisher's (Codex the OpenAI Blossom, Muse Code and Meta Model API Meta's, Qwen plans Qwen Cloud's); only
+  Kimi Code and xAI API use a published app-icon plate; NieR's ink rule never recolours a mark, and light
+  looks, NieR's parchment included, use the light artwork. Charts: a legend item isolates its series on click,
+  Enter or Space and dims the others; an Overview skyline tower opens that account's Details; a stacked-bar
+  row selects and opens its detail; each is view-local and dispatches nothing (UF-093). The word Live or
+  Paused toggles on click, and the chevron's Live readings menu offers Live readings on and Pause live
+  readings (Retro shows [LIVE] and [HOLD], NieR LIVE and STANDBY); the dot pulses once per beat, a two-step
+  blink in Retro and NieR. The Attention room button shows a warn-ink count of alerts that need attention ("N
+  alerts need attention now" in its hover tag and accessible name), which changes only with a live change.
+  Keys: the rail's Up, Down, Home and End move among the rooms and Enter or Space opens one; the range strip's
+  Left and Right change the range and move focus with it. The head's Panels button reads "N panels" and opens
+  Panels in <Room>: a check per widget, grouped by disclosure level, that shows or hides it (WS-019), then
+  Tidy this room, Reset this room and Reset every room, the last drawn as a danger row (WS-020). An empty
+  board says which case it is: "No panels at <level>. <Level> holds this room's panels." or "No panels are
+  shown in this room. Use Panels to show one again." The card menu also holds Fit rows ("Height that shows
+  every row"), one cmd.widget.resize to the kind's fit-all height carrying that preset's id where the kind has
+  one (WS-020). Under NieR Mode with Menu sounds installed, Use this account and the inspector's primary
+  action play NieR's confirm sound and the inspector's close its cancel sound, through F3-405's one player; no
+  other Usage control plays a sound. Card-head tools light only on their own hover, never with the card's
+  (F3-658). The 60-frames target and the 50 ms task bound above are judged by ACD-475's P1000 reading (DL-216,
+  DL-219): frames recorded on that hardware are evidence, not failures, no lower-spec tier applies, and the
+  solid Glass pane without a GPU is a capability path DL-219 keeps.
 gui_related: true
 gui_classification_reason: Defines the look, menus, marks, heroes, charts, previews, hover and motion of the redesigned Usage page.
 split_recommended: false
@@ -44250,7 +44417,7 @@ acceptance_criteria:
 - A card's head actions never overlap its title at any width, and showing or hiding them never reflows
   the head; a shortened title stays reachable in full in its hover tag, the card menu and Details.
 - A hovered plate lifts by whole pixels with no scale, and Retro and NieR plates do not lift.
-- A room change runs camera, frames, the hero with its number first, the supporting plates and the beat
+- A room change runs handover (amended 2026-10-17, DL-228, from camera), frames, the hero with its number first, the supporting plates and the beat
   in that order, shows no blank moment between rooms, and the first change after Usage opens meets the
   same floor as later ones.
 - Every mark on a line moves on that line's path tween; a mark with no earlier position appears when the
@@ -44446,8 +44613,9 @@ canonical_text: >-
   and shows the empty-panel launcher (F3-632). Closing a panel closes its tabs, each kind asking first where
   it asks (F3-635). Locking a panel keeps it in place when its last tab closes, and automatic placement
   skips it (F3-634). Split fit rule: offer a split whenever the complete resulting layout can meet each
-  panel's own minimum, borrowing available room from neighbours; drag, split menus, Move panel and
-  Alt+Shift+arrows use this one rule. For an unspecified side prefer right, then below, else refuse with a
+  panel's own minimum, borrowing available room from neighbours; drag, the tab menu's splits, Move panel and
+  Alt+Shift+arrows use this room rule, and a panel the application places uses the automatic rule of the 2026-10-17
+  amendment below (it read: drag, split menus, Move panel and Alt+Shift+arrows use this one rule). For an unspecified side prefer right, then below, else refuse with a
   reason. Panels are 6 px apart, the divider line in the middle of the gap, and the centre is inset 6 px
   from the rail, the chat and the bars; a divider's hit target is 8 px. Dragging a divider moves only the
   two neighbours it separates and commits once on release (cmd.workspace_layout.resize_surface); from the
@@ -44459,7 +44627,9 @@ canonical_text: >-
   the centre and the tree underneath does not change; Shift+Escape, the panel menu, or Escape while focus is
   in its strip restores it (ui.workspace_layout.maximize, view state with no receipt and no event). Each
   panel has a small corner grip and a panel menu (⋮) at the end of its strip: Split right, Split down,
-  Maximize or Restore, Collapse or Expand, Move panel, Lock panel or Unlock panel, Layouts, and Close panel.
+  Maximize or Restore panels, Collapse to tabs or Expand, a hairline, Move panel, Lock panel or Unlock panel, Show all
+  tabs in this panel, a hairline, Layouts, a hairline, Close other tabs and Close panel (amended 2026-10-17, DL-228:
+  this unit holds the rows and their order; UCC-200 maps their dispatch).
   A whole panel moves by its grip, or by Move panel from the menu or Enter on the grip
   (cmd.workspace_layout.move_surface): beside another panel on any edge, along the centre's outer edge, or
   into another panel as its tabs. A tab dragged into the diagonal region nearest a panel side splits on that
@@ -44471,8 +44641,10 @@ canonical_text: >-
   caption Join as tabs and reuses the existing join command and caption placement rule. A central guide
   shows the four sides around Join, and outer-side dock targets plus thin left/right/bottom edge bands
   create a full-height or full-width panel; a drag starts after 4 px of travel, a zone is adopted after 100
-  ms of dwell (skipped on release; retained under Reduced Motion, which removes travel), and an adopted zone
-  holds while the pointer stays within 12 px of it. Every drag runs the gesture transaction Home already
+  ms of dwell, scaled by Animation speed (skipped on release and under Reduced Motion, where the result appears in
+  place, fading only, once the zone has held briefly; amended 2026-10-17, DL-228, it read: retained under Reduced
+  Motion, which removes travel), and an adopted zone holds by the three hold rules of the 2026-10-17 amendment below
+  (it read: while the pointer stays within 12 px of it). Every drag runs the gesture transaction Home already
   uses and shares with the Usage board's gesture kit (F3-HOME-002, F3-503, DR-066): the preview is local,
   nothing dispatches while dragging, a changed release commits one command, an unchanged release, Escape, a
   pointer cancel, a lost pointer capture, a lost window or a drop past the workspace commits nothing and
@@ -44495,7 +44667,8 @@ canonical_text: >-
   (cmd.workspace_layout.apply_named). Restore home layout (cmd.workspace_layout.reset; the Settings row
   general.startup.reset-home-layout) applies Home the same way, keeping every tab. A user can save the
   current arrangement as a named layout (cmd.workspace_layout.save_named); a saved layout keeps its shape,
-  its sizes and the kinds each slot holds, never the tabs themselves. The named and saved layouts, Save this
+  its sizes, the kinds each slot holds and the tabs each slot held, and never recreates a closed tab (amended
+  2026-10-17, DL-228; it read: never the tabs themselves). The named and saved layouts, Save this
   layout... and Restore home layout sit in the panel menu's Layouts submenu and in the title bar's Home
   options menu (F3-502). The layout persists in the v2 Home layout record
   `home_workspace_layout.v2:{project_id}:{workspace_tab_id}`, the only Home layout authority
@@ -44530,6 +44703,39 @@ canonical_text: >-
   end in the panel’s top-right corner. Orientation changes no drag threshold, menu route or command. Move
   panel and Layouts levels consume the shared F3-632 level/Back rule and F3-647 material; navigating them
   dispatches nothing.
+  Amended 2026-10-17 (DL-228): applying a saved layout returns each tab still open to the slot it was saved
+  in, with that slot's active tab, and puts back each slot's lock and collapse (a locked slot survives empty);
+  tabs no longer open are not recreated, and the other open tabs go to a slot that accepts their kind
+  (Plans/home_workspace_layout_v2.schema.json $defs.slot). Proposed, pending Jared: saved named layouts belong
+  to the person across projects, as the concept keeps them, and the dashboard boards inside a layout stay per
+  project, skipped when it is applied elsewhere; SP-330 keeps them per workspace until he rules. Two fit
+  rules: the room rule above serves every move whose side the person chooses, offered when the result leaves
+  every panel it changes at its minimum, neighbours along the split giving up room, and a panel already under
+  its minimum failing only if the move shrinks it further; the automatic split rule serves a new panel the
+  application places (an open by the fit rule, Alt+click, the "+" and panel menus' Split right and Split down
+  with a new tab, Ctrl+\ and Ctrl+Shift+\): right when both halves of the source panel stay at least the
+  larger minimum, else down, else none. A panel cannot collapse while every other child of its split is
+  collapsed (last_open_in_split), so a split never leaves its room to nobody; the menu row and the refusal say
+  so. Maximize is unavailable with one panel and in the one-column narrow centre, each with its reason;
+  maximizing a collapsed panel expands it first and announces "<panel> maximized. Press Escape to restore."
+  Moving focus to another panel (Alt+arrows, Alt+Shift+N, a reveal or open that activates a tab elsewhere, the
+  narrow switcher) restores the panels in the same view action and announces it, so the focused panel is never
+  hidden; an agent's background open never restores them. A panel collapsed in a row split, side by side, is a
+  35 px column: pinned tabs first, then a window of 32 px icon tabs around the active tab, "+N" for the rest,
+  and its Expand control, "+" and panel menu kept at its foot; the active tab never hides, and Expand points
+  the way the panel will open. Drop zones: a side whose result does not fit shows its guide tile dimmed and
+  empty and gives its region to the nearest side that fits; with no side left the whole body joins, or offers
+  nothing over the carried tab's own panel, which never joins itself; the top dock sits just below the strips
+  so a strip's first slots stay strip slots; outer docks are offered only with two panels or more; zones are
+  measured on the committed layout, never on the live preview, so the preview never moves a zone under the
+  pointer. The three hold rules: a side holds until another side is nearer by about 5 % of the body, Join
+  until the pointer is 12 px past its slack, and a dock until it is 12 px past its band. The stable-intent
+  gate settles a zone once the pointer has held it and slowed, or held it longer, and the guide shrinks its
+  tiles in small bodies and below that shows Join alone; those values are tuning, not acceptance numbers. Zone
+  captions: Split left, Split right, Split up, Split down, Join as a tab (a carried tab) or Join as tabs (a
+  carried panel), New panel along the left, New panel along the right, New row across the top, New row across
+  the bottom, and To the end. The Lock row's second line says what locking does: "Files open in other panels"
+  or "Files can open here again", and locking announces "Panel locked: files open elsewhere".
 gui_related: true
 gui_classification_reason: Defines the home centre's panel model, its layout tree, its named layouts and how panels move, split, collapse and persist.
 split_recommended: false
@@ -44550,8 +44756,8 @@ acceptance_criteria:
   px, Home and End reach a neighbour's minimum, and Enter or a double click evens the sides.
 - A panel dragged below half its minimum collapses to its 35 px strip with every tab and its state kept, and any
   panel, the bottom row included, can collapse.
-- Maximize leaves the tree unchanged and restores with Shift+Escape, the panel menu or Escape in the strip; it
-  emits no event.
+- Maximize leaves the tree unchanged and restores with Shift+Escape, the panel menu, Escape in the strip or focus
+  moving to another panel (amended 2026-10-17, DL-228); it emits no event.
 - The default layout Home has a full-width bottom row of 0.4 that holds any tab kind, and Home, Build, Terminals
   2x2 and Focus build exactly the trees and proportions stated here.
 - Applying a named layout or Restore home layout ends no terminal session, drops no unsaved buffer and closes
@@ -44729,9 +44935,10 @@ canonical_text: >-
   plain text in the strip's own type ("+7"; Retro "[+7]"; NieR Mode small caps after a hairline),
   never a badge. The strip is an ARIA tablist: arrows move between tabs, Home and End go to the
   ends, Enter or Space activates, Delete closes, and Shift+F10 opens the tab menu. The tab menu
-  holds Close, Keep open (on a preview tab), Pin or Unpin, Rename..., Move to new panel, Move to
-  panel, and Split right or Split down with this tab, each one command (cmd.panel_tab.close, keep,
-  pin, unpin, rename, move). A kind may add rows of its own at the end of the tab menu, after a
+  holds, in order, Close, Close others, Close to the right, Keep open (on a preview tab), Pin or Unpin, Rename...,
+  Move to new panel, Move to panel, and Split right or Split down with this tab, each one command
+  (cmd.panel_tab.close, keep, pin, unpin, rename, move; amended 2026-10-17, DL-228: Close others and Close to the
+  right added, and this unit holds the rows and their order). A kind may add rows of its own at the end of the tab menu, after a
   hairline, through its registration (F3-635): the terminal adds Mute notifications (F3-641). A
   kind's rows do what that kind registers for them, which need not be a command: Mute notifications
   is the typed local action ui.terminal.mute_notifications (F3-640). Rename sets a user label that
@@ -44754,6 +44961,16 @@ canonical_text: >-
   and flare silhouette as the mark of the active tab; Retro's chip replaces its notched tab, as Jared
   chose over the notch. A chosen tab's close control and status read in the chip's ink, an exit status on
   a light look's tinted chip deepened toward that ink.
+  Amended 2026-10-17 (DL-228): a locked panel shows a small lock mark in its strip (hover tag "Locked", "Files
+  open in other panels"), and a collapsed panel shows an Expand control ("Show this panel at its size again").
+  The strip controls are named New tab or panel ("+", its detail naming Ctrl+Shift+Space for the menu and
+  Alt+T or Ctrl+T for a new tab of the panel's usual kind), Panel options, Move panel ("drag, or Enter then
+  arrows") and Expand panel; "+N" is named "N more tabs" with the detail "List the tabs that do not fit". A
+  tab's hover tag is the file's name, then "In <folder>" and its marks in words, or the tab's title, with the
+  agent's name while one drives it, and keeps paths literally (F3-523). Until the deferred Home glyph adoption
+  (DL-208) the marks above are the interim: the 7 px dirty dot, the 6 px hollow square and the 7 px square
+  agent mark then give way to F3-658's change-modified mark in the close slot, news and the agent-driving and
+  agent-cursor marks.
 gui_related: true
 gui_classification_reason: Defines the one tab strip every panel uses, its silhouette, widths, marks, reorder and keyboard.
 split_recommended: false
@@ -44761,15 +44978,15 @@ depends_on: [DL-180, DL-187, DL-141, F3-505, F3-421, F3-585, F3-630, F3-635]
 unblocks: [F3-633, F3-647, DR-065, UCC-200, ATS-075]
 acceptance_criteria:
   - "Every panel, the dashboard's included, renders the same 35 px strip with 31 px tabs, 8 px apart (2 px in Retro)."
-  - "The active tab and its body form one shape through the silhouette, and no underline, accent line, crown strip or pill marks the active tab in any look; in Friendly, Glass and Basic, light and dark, the plate has the body's fill."
-  - "Contact is measured to the neighbour's content inset by 8 px with a 20 px morph window, and each look uses the crown, shoulder and flare radii listed here."
+  - "The active tab is the look's seated chip (DL-214): exactly the tab's own box, standing on the panel's top rule without covering it, at every tab size and on a folded column, the chosen tab's close and status in the chip's ink; no underline, accent line, crown strip or pill marks the active tab in any look (amended 2026-10-17, DL-228; it read: the active tab and its body form one shape through the silhouette)."
+  - "The contact morph and the crown, shoulder and flare radii listed here no longer mark the active tab; the seated chip does (DL-214; amended 2026-10-17, DL-228)."
   - "Reorder starts after 4 px, the silhouette tracks the carried tab in the same frame, widths do not reflow while carrying, and a changed release commits one cmd.panel_tab.move in every strip."
   - "Under Retro the three effects rotate from a shuffle bag with no immediate repeat on selection and reorder in every strip, and Reduced Motion shows the end state at once."
   - "Tabs are 96-200 px, then 72 px, then 36 px icons; the active tab keeps at least 120 px and its label and never hides; a contiguous window around it stays visible; shrunk file names keep both ends."
   - "Pinned tabs are 36 px, icon only, leftmost and never hidden; pin and unpin are reachable only from the tab menu."
   - "The dirty dot, italic preview label, hollow square, exit code, agent mark and busy glyph render as stated, come from the one status set, and are announced in the tab's accessible name."
   - "Close targets are 24 x 24 px and hidden on inactive tabs under 96 px, where middle click and Delete still close."
-  - "The strip is an ARIA tablist with arrows, Home, End, Enter, Space, Delete and Shift+F10, and the tab menu's own rows (Close, Keep open, Pin or Unpin, Rename..., Move to new panel, Move to panel, Split right or Split down) each dispatch one command; a kind's rows after the hairline do what that kind registers, and the terminal's Mute notifications is the typed local action ui.terminal.mute_notifications, with no command (amended 2026-10-10, DL-187, D38: the criterion that every row of the tab menu dispatches one command now covers the menu's own rows only)."
+  - "The strip is an ARIA tablist with arrows, Home, End, Enter, Space, Delete and Shift+F10, and the tab menu's own rows (Close, Close others, Close to the right, Keep open, Pin or Unpin, Rename..., Move to new panel, Move to panel, Split right or Split down) each dispatch one command; a kind's rows after the hairline do what that kind registers, and the terminal's Mute notifications is the typed local action ui.terminal.mute_notifications, with no command (amended 2026-10-10, DL-187, D38: the criterion that every row of the tab menu dispatches one command now covers the menu's own rows only)."
   - "No terminal tab shows a colour or an icon the person chose; a kind's own tab-menu rows come last, after a hairline."
   - "No WorkNodes, NodeSeeds, executable queues, implementation files, runtime launches, or production build tasks are created by this unit."
 validation_surfaces:
@@ -44907,6 +45124,15 @@ canonical_text: >-
   the field Filter: <title>, and the Back hover detail Esc or Backspace (Esc or Delete on a Mac).
   This is view-local navigation with no saved level stack, command, receipt or event; only a final
   item choice uses the existing open command.
+  Amended 2026-10-17 (DL-228): the empty-panel launcher is titled "Open something here" and its hint reads
+  "Drop a tab here, or press Ctrl+Shift+Space for more." A panel too short for the list, below about 200 px of
+  body, shows one line instead: "Empty panel. Ctrl+Shift+Space opens the menu." Each launcher row's picker
+  opens with the launcher as its level before, so Back returns to the row. An empty panel's whole body is one
+  Join target for a carried tab. Reopen closed tab reopens the most recent entry whose tab is not open,
+  skipping and dropping stale entries; it returns into its own panel at its own position while that panel
+  exists, otherwise into the focused panel, as a kept tab with its live marks cleared, and announces "<label>
+  reopened" or "No closed tab to reopen"; a terminal comes back as a new session (SMPFS-180); opening a tab by
+  any route removes its entries from the stack.
 gui_related: true
 gui_classification_reason: Defines the plus menu after the last tab and the empty-panel launcher.
 split_recommended: false
@@ -45152,6 +45378,12 @@ canonical_text: >-
   Opening an Output channel from anywhere switches the `output` tab to that channel, or focuses a split-off tab
   already showing it. With no Output tab, the opening module opens `output` by the tools rule above, beside the
   terminals. The channel picker's "Open in new tab" alone splits off `output:<channel>` (F3-635).
+  Amended 2026-10-17 (DL-228): an open is never refused for lack of room. When the fit rule finds no side for
+  a new panel (Alt+click, or an open that asks for a panel), the tab opens in the largest unlocked panel and
+  says so; an explicit split (Split right or down, Move to new panel, a drop) is refused with its reason
+  instead (F3-630). Announcements: "<label> opened in a new panel", "<label> opened here: there is not room
+  for a new panel", "<label> opened in the next panel: the window is too narrow for a new panel", "Opened in
+  the background: <label>" and "<agent> opened <label>".
 gui_related: true
 gui_classification_reason: Defines the one set of rules that decides where anything opened in the home centre lands and whether it takes focus.
 split_recommended: false
@@ -45433,8 +45665,9 @@ canonical_text: >-
   Transcript 1100 px, Context 720 px, Record 600 px. Icon-only buttons are 24 px wide. File
   references are 32 px tall with a 6 px radius and 12 px code face, or 24 px inline with a 4 px
   radius and 11.5 px code face. Their 240 ms double-click window delays preview so double click can
-  keep the file open; their hover tag says Open file / Click previews it. Double-click keeps it
-  open., or No file to open / This reference names no file. without a path. In-tab view saves
+  keep the file open; their hover tag says the path and line the reference names (amended 2026-10-17,
+  DL-228; it read: Open file) / Click previews it. Double-click keeps it open., or No file to open / This reference
+  names no file. without a path. In-tab view saves
   coalesce at 250 ms. Document action radii are Friendly 8 px, Glass 8 px, Basic 6 px and Retro/NieR
   square 0. Metadata separator slots are 16 px with 3 px wrapped-line clipping slack. The Debug
   Console's chosen sub-tab and every segmented toggle are filled on their own box, never underlined,
@@ -45445,6 +45678,28 @@ canonical_text: >-
   from the field reaches Back; + toggles the whole menu closed. Back/search/rows remain in that
   arrow order, with Enter or Space activating Back. These are local navigation, with no structural
   command or event.
+  Amended 2026-10-17 (DL-228): wherever a panel must be named (the panel menu's title, Move panel and Move to
+  panel rows, the every-tab list's sections, the narrow switcher, announcements), it is named in words by its
+  active tab and its place in the layout (left, right, top, bottom or middle, combined down the tree, or "the
+  only panel"), never by an id or a number other than the switcher's ordinal. Tool tabs' header rows: Output
+  has Follow, Clear ("Clear this channel") and More with Wrap long lines, Copy all, Open as a document (a
+  read-only editor tab titled with the channel, through cmd.panel_tab.open, the route of the terminal's Open
+  output) and Open <channel> in new tab, or Show in the Output tab on a split-off tab; Problems has Filter
+  (errors, warnings or notes) and Check again; Ports has Forward a port; the Debug Console has Continue or
+  Pause, Restart, Stop and Clear ("Clear this session's console"), disabled once its session has ended.
+  Follow, Clear, Wrap, Copy all and Filter are view-local; Check again, Forward a port and the Debug Console's
+  session controls dispatch their owners' existing Problems, Ports and Run & Debug commands. Document kinds: a
+  plan's More holds Export as Markdown, Export as PDF, Send to Planning Wizard, Copy plan link
+  (pm://plans/<id>@v<n>) and Cancel build, which confirms ("Cancel this build?", "Steps already done stay
+  done.", Cancel the build or Keep building), with Revise moving into More in a narrow tab; an artifact has
+  Versions, Open in new panel and More with Copy link to this version, Copy source, Export as image, Export
+  the data and Open the source file; a run's More holds Cancel <run> with a yes or no submenu, Change setup...
+  (on a Crew disabled until it is cancelled: "This Crew builds one plan version. Cancel it first.") or Run
+  again with changes... once finished, Run another review (Review only), Download transcript and Open in new
+  panel; a transcript has Follow, Copy transcript, Show the parent thread and Context of <thread>; a context
+  tab has Preview compact and Redacted JSON; a record has Show in chat, which reveals and marks the work row
+  in its thread or says the message is not available, and Copy. Each row dispatches its content owner's
+  existing command or is view-local; none adds a command id here.
 gui_related: true
 gui_classification_reason: Defines the list of tab kinds, how a kind plugs into a panel, the shared header row, the overlay order and the panel keyboard.
 split_recommended: false
@@ -45584,7 +45839,10 @@ canonical_text: >-
   column, never on the window's width (DL-180, D4; Jared: "Rail, then chat"). C below 960 px: the rail's side panel
   eases to 240 px, F3-471's minimum. C below 760 px: the side panel folds to its icon bar and opens over the panels as
   an overlay when the user picks it, then the chat eases toward 400 px. C below 600 px: the centre shows one panel
-  column, with a panel switcher ("2/3") in the visible panel's strip that steps through the panels; the real split tree
+  column, with a panel switcher ("2/3", named "Panel 2 of 3: switch panel") in the visible panel's strip that opens the
+  list of panels, one row per panel ("N. <its active tab>", its tab count and place as the second line, the shown
+  one marked), and choosing a row shows and focuses that panel (ui.workspace_layout.focus_panel; amended 2026-10-17,
+  DL-228, it read: that steps through the panels); the real split tree
   is kept unchanged underneath, new panels are not created, and an open or a split that asks for one lands in the next
   panel of the switcher and says so (F3-634). C below 480 px: the chat folds to a 32 px edge strip that opens it again,
   unless the user turned on "Keep the chat open in narrow windows" (F3-637). Each step undoes itself only when C has
@@ -45607,6 +45865,9 @@ canonical_text: >-
   Amended 2026-10-10 (DL-187): the ladder acts only while Home is the page shown, since it measures Home's centre; on
   the Usage page the chat keeps the Usage board at least 400 px wide instead, and on other pages the chat column is the
   person's width (F3-637).
+  Amended 2026-10-17 (DL-228): when the centre drops to one panel column it announces "The window is narrow:
+  one panel at a time. Use the panel switcher in the tab strip.", and it announces the return when the panels
+  come back.
 gui_related: true
 gui_classification_reason: Defines what gives way, and in what order, when the room left for the panels gets narrow.
 split_recommended: false
@@ -46206,14 +46467,28 @@ canonical_text: >-
   .14, find-hit fills rgba(255,243,222,.18/.34) and ring #fff3de. The concept's measured 10,000-line scroll step
   about 1.2 ms, far jump about 8 ms and keystroke about 8 ms (about 120 ms before isolation) are source
   measurements, not native certification.
+  Amended 2026-10-17 (DL-228): the editor tab's header row holds the caret position ("Ln N, Col N"), which
+  opens Go to line; in diff mode Previous change and Next change and the diff layout menu (Automatic, "Side by
+  side from 900 px wide"; Side by side; Inline), whose pick is that tab's view state; a Changes toggle ("Show
+  what changed since the last commit" or "Back to the file"), disabled with nothing changed; Find; and More.
+  More holds, in order: Go to line, Find and replace, the Word wrap, Minimap and Sticky scroll checks
+  (F3-651), Appearance... with its scheme, face and size as the second line, Indentation... with its size and
+  source ("2 spaces · from the file"), Save while the buffer has changes, and Copy path ("Path copied").
+  Closing a tab with unsaved changes asks "Save changes to <name>?" with Save, Close without saving and
+  Cancel. Ctrl+P's Open a file lists Recent (five), Files and Changed in the chat with each file's chat
+  status, a chat-changed file opening at its changed line; its foot reads "Enter opens it here · Alt+Enter
+  opens it in a new panel". Save is FileManager's one save path, the editor's Ctrl+S; Copy path is
+  cmd.file.copy_path; Find, Find and replace, Go to line and next or previous change are view-local editor
+  actions with the keys above, so no command id is added for them. The side-by-side width is fixed at 900 px
+  with its 48 px return and is not a Settings row; the concept's registered width key is lineage.
 gui_related: true
 gui_classification_reason: Defines the code editor as a tab kind and the editing features it adds.
 split_recommended: false
 depends_on: [DL-180, DL-183, F3-505, F3-631, F3-635, F-073]
 unblocks: [SSYS-050, ATS-075]
 acceptance_criteria:
-- The editor's tabs use the one strip and silhouette, and the minimap is the only code-pane scrollbar with its change
-  marks.
+- The editor's tabs use the one strip and its seated chip (DL-214; amended 2026-10-17, DL-228, from silhouette),
+  and the minimap is the only code-pane scrollbar with its change marks.
 - Sticky scroll, find and replace, go to line and preview tabs work in every editor tab.
 - The diff mode shows side by side when the tab body is wide and inline when it is narrow, decided by the body's width,
   never the window's.
@@ -46307,19 +46582,21 @@ canonical_text: >-
   Every panel surface, the strip, the "+" menu, the "+N" list, the empty-panel launcher, the panel
   and tab menus, the dividers, drag ghosts and landing previews, is designed in Friendly, Glass,
   Retro and Basic, light and dark, and in NieR Mode and Reduced Motion, from the first build
-  (DL-180, D23). Friendly, Glass and Basic draw the fused silhouette with their own crown, shoulder
-  and flare (F3-631), the active tab one surface with its body; Glass keeps its 1 px glass rim on
+  (DL-180, D23). Friendly, Glass and Basic mark the active tab with F3-631's seated chip (DL-214; amended
+  2026-10-17, DL-228, it read: draw the fused silhouette with their own crown, shoulder and flare, the active tab one
+  surface with its body); Glass keeps its 1 px glass rim on
   the plate, goes to .92 opacity only while a tab is carried (F3-505), takes its replacement sheet
   and lens material from F3-652 since the 2026-10-15 publication; the old closed Glass blur count is
   superseded. Retro: reverse-video tabs (the active tab a phosphor-filled block with dark text),
-  bracket glyphs ("[+7]", "[+]"), stepped corners on the silhouette, kind icons as glyphs of at most
+  bracket glyphs ("[+7]", "[+]"), the reverse-video chip in place of the notch and its stepped corners (DL-214), kind icons as glyphs of at most
   two cells from the code face (never emoji), the dirty mark an asterisk after the label, box-drawn
   menus with a hard frame and reverse-video rows, dividers drawn as a single box-drawing line that
   doubles while hovered or dragged, and a dithered landing preview with a box-drawn outline; Retro
   motion snaps and never springs, and its three rotating effects play on selection and reorder
   (F3-631). NieR Mode paints only while NieR Mode is on, and each touch is gated by its own
   installed part, using the existing part keys only and never a new part (SSYS-043, F3-598, DL-152):
-  square gives the chamfered silhouette with a straight foot (crown 6, shoulder 0, flare 14 px), an
+  square gives the chip square corners (the chamfered silhouette with a straight foot it gave is superseded by
+  DL-214), an
   ink rule under each strip, square dirty and attention marks, hairline dividers with ticks and a
   hatched landing preview; cursor fills the active tab and hovered or chosen menu and launcher rows
   with ink, the YoRHa menu cursor, puts the square list cursor before the focused panel's active
@@ -46344,8 +46621,8 @@ canonical_text: >-
   monochrome: brightness and weight in dark, the black and red ribbon in light. Its colour follows
   the terminal's Retro scheme choice, Phosphor Green or Amber; choosing Amber turns Retro's editor
   syntax amber. That choice is stored once in F3-642's terminal appearance model; the editor reads
-  it and keeps no copy. The active tab and its panel are one shape in every look; the shape's fill
-  follows the look's selection grammar: the body's fill in Friendly, Glass and Basic, reverse video
+  it and keeps no copy. The active tab's chip follows the look's selection grammar (amended 2026-10-17, DL-228; it read:
+  the active tab and its panel are one shape in every look; the shape's fill follows it): the body's fill in Friendly, Glass and Basic, reverse video
   in Retro, ink in NieR. Glass's 1 px rim along the crown is material, not an accent. Text and state
   colours, including dim text, accent, ok, warn, bad and inactive tabs, reach at least 4.5:1 in
   every look and in NieR. They are mixed from the page's own colours so the Settings accent flows
@@ -46381,7 +46658,7 @@ unblocks: [ATS-075]
 acceptance_criteria:
 - Each panel surface listed here renders in the eight family variants, NieR Mode and Reduced Motion with
   the treatments stated.
-- Retro shows reverse-video tabs, bracket glyphs, stepped corners, box-drawn menus and dividers and kind
+- Retro shows reverse-video tabs, the seated reverse-video chip, bracket glyphs, box-drawn menus and dividers and kind
   glyphs of at most two cells, and its motion snaps.
 - With NieR Mode off no NieR touch draws; with it on each touch appears only when its part is installed,
   every colour resolves to NieR or repainted theme tokens, and no glow, filter or blur is used.
@@ -46489,7 +46766,8 @@ canonical_text: >-
   buttons such as Install and Sign in, and rounded Friendly/Glass action buttons, are allowed;
   keyboard key caps and non-label progress marks are not labels, and a program's own output in a
   terminal may contain emoji. This unit owns how the rule looks. Selection is shown by the surface
-  itself: the fused tab silhouette (F3-631), a filled or tinted row, the NieR square cursor, Retro
+  itself: the seated tab chip (F3-631, DL-214; amended 2026-10-17, DL-228, it read: the fused tab silhouette), a
+  filled or tinted row, the NieR square cursor, Retro
   reverse video, or a fill or outline on the element's own box; never an edge stripe. A status is a
   mark and a word from the one status set (F3-658, consumed by F3-585 and F3-619), a count is a
   plain number, and an icon is a bundled SVG icon_id (section 2.6). Where an owner unit says pill,
@@ -46515,6 +46793,12 @@ canonical_text: >-
   word, stack tags are words with a small square, and New Project templates are joined choice cells
   with a clear selected state. A running mark may breathe while its word stays at full readable ink;
   Reduced Motion keeps the mark still. Action-button rounding remains allowed.
+  Amended 2026-10-17 (DL-228): F3-619's pill detector measures the short side, not the height, so an upright
+  capsule counts too, and takes a shape for a pill only when it is elongated, never a round or square mark;
+  full-width top and bottom rules are dividers, not side stripes; a status or tag label draws no box at all
+  (no fill, border, shadow or padding), and a tag's mark is square. The detector's tolerances are calibration
+  of the check, not product numbers. A hover card and a labelled selector are controls, not label pills: they
+  keep their rounded shape under the action-button exception, and the chat's own wording follows this.
 gui_related: true
 gui_classification_reason: Owns how the shell-wide ban on side stripes, emoji and pills looks, and lists the retired defaults.
 split_recommended: false
@@ -46665,7 +46949,9 @@ canonical_text: >-
   hover tag is the label, plus "(ended)" once the session has ended and "· <agent> is driving" while an
   agent drives it. A label the user sets with `cmd.panel_tab.rename` replaces the label until it is
   cleared. No colour or icon of the person's choosing is drawn on a terminal tab (D34): terminal tab
-  colours and icons wait for their redesign within Puppet Master's neon glyph system (F3-449, F3-631).
+  colours and icons are redesigned as F3-658's terminal family: an uncoloured terminal kind glyph, lit on hover,
+  with state only through the shared mark slot (amended 2026-10-17, DL-228; it read: wait for their redesign within
+  Puppet Master's neon glyph system (F3-449, F3-631)).
   Under the strip the tab draws F3-635's shared header row with no terminal-specific thresholds: 30 px
   tall, 24 px targets, 12 px text and 11 px for secondary facts, labels when the tab body is at least 520
   px wide and icons with hover tags below that, and the row hidden when the body is under 150 px tall. Its
@@ -46748,6 +47034,22 @@ canonical_text: >-
   clipboard rules, and the screen is the terminal core's own grid (F3-193, F3-216). The header row's
   buttons use F3-465's small-control marker; the screen is never a hover target (DR-072, F3-465). Restoring a terminal tab whose profile is an SSH host asks first (Reconnect / Close
   tab), as privileged attachments do (F3-228); a restore never reconnects to a remote host by itself.
+  Amended 2026-10-17 (DL-228): pasting several lines into a program that has not turned on bracketed paste
+  asks first, in an inline warning row, "Paste N lines? Each line will run as a command.", with Paste, Paste
+  as one line (the lines joined with spaces) and Cancel; code.terminal.paste-protection turns the check off. A
+  notice takes keyboard focus only when the person's own action caused it (the paste check, closing a running
+  terminal); program, agent and restore notices never pull focus. A notice with the same purpose replaces the
+  earlier one in place; a warning is announced as an alert and an informational notice as status; restore and
+  agent notes carry OK, which dismisses them, view-local. Below 150 px of body height notices are 26 px tall.
+  A restored tab always says it is a new session: past its load budget, "This terminal was restored without
+  its scrollback, which took too long to load. Its earlier session ended when the page reloaded; this is a new
+  session.", and with nothing saved (Saved Terminal Output on Session Only), "This terminal was restored. Its
+  earlier session ended when the page reloaded; this is a new session.", each with OK and a reopened variant
+  ending "when the tab closed". Text size writes neither code.terminal.font-size nor the tab's appearance
+  override: it is a view zoom over the appearance size, and Reset returns the tab to following its layers
+  (UCC-201); the concept's write of the tab's font size is not adopted. Until the deferred Home glyph adoption
+  (DL-208) the square agent mark and static busy mark above are the interim; F3-658's agent-driving,
+  agent-cursor and working marks then replace them.
 gui_related: true
 gui_classification_reason: Defines the terminal tab's label, header row, notices, gutter, scrollbar, sticky header, menus and keys in the universal panels.
 split_recommended: false
@@ -46885,6 +47187,23 @@ canonical_text: >-
   (D19, SMPFS-180), and the terminal stays a user shell and agent surface, not Puppet Master's control plane (F3-413).
   Under Full CRT, a command mark sits beside its row as the tube shows it, inset by the case and bent by the
   curvature; a prompt the shell redraws (Ctrl+L or a completion list) keeps its mark (SMPFS-183).
+  Amended 2026-10-17 (DL-228): a failed command is announced politely with its exit code ("<command> failed
+  with exit code N"), and a command that ran over 10 s and finishes while its terminal is not focused is
+  announced ("<command> finished") and sets that tab's attention mark. Pointer selection: a double click
+  selects a word, a triple click a logical line with soft wraps joined, Shift+click extends, a drag past the
+  top or bottom edge scrolls, a plain drag stays linear and Alt+drag is the pointer's explicit block choice
+  (SMPFS-183), and Shift bypasses a program's mouse reporting for selection and the context menu; a link's
+  hover tag reads "Ctrl+click to open <target>", cut at 70 characters. Find matches logical lines, so a match
+  may span a soft wrap, across the whole scrollback; the count reads "N of M", capped at 10,000 and shown with
+  "+" past it; a pattern that does not parse reads "Invalid pattern" and none found "No results"; matches
+  refresh as output arrives while the bar is open. Command marks follow F3-658's terminal family: running is
+  working, exit 0 complete, exit N failed, a prompt awaiting input idle, and exit 130 (interrupted) or a
+  command that ended with the earlier session skipped, never failed, alike in the gutter, the chat's command
+  card and the sticky header. Authorship never hides state: a command an agent typed keeps its 12 px state
+  mark and adds the 8 px agent seat beside it; the agent's square mark above is the interim until the Home
+  adoption (DL-208). Gutter marks take the terminal scheme's inks and hold 3:1 on every scheme, Retro's
+  monochrome ones included; a mark's act plays once at its state change, never on scroll, and replaces the old
+  per-look gutter settle.
 gui_related: true
 gui_classification_reason: Defines the visible command marks, links, find, copy mode, quick select, progress, bell and accessible buffer of the terminal tab.
 split_recommended: false
@@ -47091,6 +47410,31 @@ canonical_text: >-
   Amended 2026-10-17 (DL-222): a design or scheme already previewed by hover stays shown through the
   pick's frame, and the preview ends only with the write, so the old ground is never drawn between the
   preview and the pick.
+  Amended 2026-10-17 (DL-228): Switch with light and dark swaps by an explicit pair: Catppuccin Frappé and
+  Macchiato go light to Latte, and Latte goes dark to Mocha; Tokyo Night Night and Storm go light to Day, and
+  Day goes dark to Storm; Rosé Pine Moon and Main go light to Dawn, and Dawn goes dark to Main; Kanagawa Wave
+  and Lotus pair; PM YoRHa Parchment and Ink pair, as do the PM High Contrast schemes; the other families swap
+  within the family; Phosphor Green and Amber go light to PM Paper Teletype, and going dark from Paper
+  Teletype returns to the phosphor last chosen, Green when none was (PM-ORIGINALS section 4; the concept
+  always returns Green, which is not adopted). Dracula, Nord, Ayu Mirage and every imported scheme have no
+  sibling and stay as chosen. With a PM High Contrast scheme the program-output floor is 7:1 unless the person
+  set a floor in some layer. The floor holds as drawn: the look's own ground (Friendly's stage) and Retro's
+  scanlines and glow raise each cell's target by what they take, so every word meets the chosen floor on
+  screen. PM YoRHa Parchment and Ink map colours outside their 16, and program-set colours, onto the
+  ink-parchment line by brightness, as the phosphor schemes do; in NieR Mode the YoRHa scheme of the current
+  mode takes its colours from NieR's token tables, its catalog values being the fallback. A scheme change,
+  previewed or chosen, crosses the terminal in the look's motion from the chosen tile (Basic fades, Friendly
+  and Glass grow, Retro steps, NieR wipes only with its part, and Glass changes the tint and lays only the
+  text over), the terminal's text never moving; under Reduced Motion it is a short cross-fade and on battery
+  saver it is immediate (ACD-475). Background designs preview on hover after the same 110 ms rest, in
+  Suggested and in Show, and revert on leaving or Escape, as schemes do (CS-102). Choose a picture takes PNG,
+  JPEG or WebP under 4 MB and says "Choose a picture under 4 MB", "There is no room to keep that picture on
+  this computer" or "That picture could not be read"; a picture is kept once by its content hash (SP-331). An
+  import needs a background and a foreground; missing ANSI 0-7 take the xterm defaults and missing 8-15 copy
+  the normal colours, with a warning; light or dark is read from the background; a Windows Terminal settings
+  file with several schemes imports the first and names the others in a warning; an import with the same name
+  replaces the earlier one; an imported scheme has no sibling and is then chosen in the current scope by a
+  separate write.
 gui_related: true
 gui_classification_reason: >-
   Defines the terminal's visible schemes, contrast floor, import, appearance fields, cell geometry and
@@ -47280,7 +47624,7 @@ canonical_text: >-
   and noise are not drawn, and the Customize screen (F3-650) says what it could not draw. Under
   Reduced Motion every moving part is off (cursor blink, cursor trail, smooth scrolling, burn-in,
   noise, flicker, degauss, bell flashes, progress sweeps and image animation) and the static looks
-  stay (scanlines, glow, curvature and the parchment grain). The catalogue: inactive dimming, the
+  stay (scanlines, glow, curvature and the parchment grid). The catalogue: inactive dimming, the
   focus ring, cursor blink and trail, smooth scrolling, backgrounds (F3-642), Glass's blur (the
   shell's existing blur; the terminal adds none, F3-431), Retro scanlines and phosphor glow, an
   opt-in Full CRT tier (curvature, burn-in and noise), flicker, the visual bell, progress (F3-546),
@@ -47299,9 +47643,10 @@ canonical_text: >-
   under Reduced Motion every look's bell is a still 1 px warn outline; these are deliberately
   near-invisible, and no flash, rim or inverse is added to them (Jared, 2026-10-16, DL-216). Off draws
   nothing in any look. There is no separate Visual choice. NieR
-  Mode's terminal has a parchment texture under the text and ink focus brackets, and no glow. By the
+  Mode's terminal has the page's parchment grid behind the text, never a texture, and ink focus brackets, and no
+  glow (amended 2026-10-17, DL-228; it read: a parchment texture under the text). By the
   NieR rule for new surfaces (DL-152, SSYS-043, F3-598, DR-056), NieR paints the terminal only while
-  NieR Mode is on and each touch only with its own installed part: the parchment with the `ground`
+  NieR Mode is on and each touch only with its own installed part: the parchment grid with the `ground`
   part and the focus brackets with the `brackets` part, never a new part; its colours come only from
   NieR's token tables or the theme tokens NieR repaints; its motion is stepped, with no glow, filter
   or blur, and loops only by transform or opacity; no surface larger than 340x256 px reverses its
@@ -47334,9 +47679,13 @@ canonical_text: >-
   Moving designs are opt-in and obey the same focus, visibility, activity, ten-second idle, battery
   and Reduced Motion policy; they stop under a full-screen terminal program too. This adopts the
   approved round-3 housing and plain-background direction and the landed round-4 and round-5
-  levels, stops and mask (DL-213). Degauss is the one-shot action in the
-  Customize screen's effects group (F3-650), with the same existing command and no stored setting.
-  The shared Follow look cursor/caret voices are Basic line with on/off blink, no trail and no
+  levels, stops and mask (DL-213). Degauss is the one-shot action among the
+  Customize screen's Try it actions beside the preview (F3-650; amended 2026-10-17, DL-228, it read: in the effects
+  group), offered only in Retro and not in NieR Mode; it runs once on the real terminal and the preview together, and
+  under Reduced Motion or without GPU effects it does nothing and says why, with the same existing command and no
+  stored setting.
+  The shared Follow look caret voices, the editor's (F3-651; amended 2026-10-17, DL-228: not the terminal's), are
+  Basic line with on/off blink, no trail and no
   smooth scrolling; Friendly line with smooth blink, soft trail and smooth scrolling; Glass line
   with smooth blink, glow trail and smooth scrolling; Retro reverse-video block with stepped blink,
   phosphor trail and no smooth scrolling; NieR ink line with blink, Trace only with its Scan sweep
@@ -47344,6 +47693,21 @@ canonical_text: >-
   shared voice never forces terminal output to animate.
   Amended 2026-10-17 (DL-222): idle preparation of Terminal Customize (ACD-475) does not change this
   bezel's look.
+  Amended 2026-10-17 (DL-228): the terminal's own Follow look per look is: Basic a block with stepped blink,
+  no trail, smooth scrolling and no inactive dimming (turned on, it dims as Friendly does); Friendly a block
+  with eased blink, soft trail, smooth scrolling and dimming; Glass a bar with eased blink, glow trail, smooth
+  scrolling and dimming; Retro a reverse-video block with stepped blink, phosphor trail, no smooth scrolling
+  and dimming; NieR a block with stepped blink, Trace only with its Scan sweep part, smooth scrolling and
+  dimming. The cursor blinks in phases of about half a second and rests solid after 15 s without input; an
+  unfocused terminal shows a hollow outline cursor; a program's own cursor shape and blink requests (DECSCUSR,
+  mode 12) win while it runs; Reduced Motion and battery saver keep it steady. The trail fires only when the
+  cursor jumps more than two cells on either axis after resting, so typing and redrawn progress lines never
+  trail. A terminal draws at most one bell a second (WCAG 2.3.1); with Bell Off it draws nothing, and a bell
+  in an unfocused terminal still sets that tab's attention mark. A terminal that is not on screen, its tab
+  hidden or another page covering Home, draws no frames at all, grid included; its session and output carry
+  on, and it repaints once, fully, when it shows again. NieR's terminal uses only installed parts: square,
+  cursor, headers, ground, brackets, icons and blocks, and glitch, sweep, decode, slice and wipe for motion,
+  each touch gated by its own part.
 gui_related: true
 gui_classification_reason: Defines the terminal's visible effects, their defaults and the policy that limits when they run.
 split_recommended: false
@@ -47543,6 +47907,8 @@ canonical_text: >-
   Semibold and Bold read apart as every other adjacent pair does; all eight weights remain, stored
   as 100–800. For the system face, Customize offers only the weights this computer's face actually
   draws differently.
+  Amended 2026-10-17 (DL-228): VT323, Sixtyfour, Sixtyfour Raster and Departure Mono have no bold weight
+  either; their bold is synthesised, so SGR bold still reads heavier in them.
 gui_related: true
 gui_classification_reason: Defines the built-in faces, defaults and licence rule of the editor's and the terminal's visible text.
 split_recommended: false
@@ -47763,6 +48129,13 @@ canonical_text: >-
   of a panel the person is typing in (F3-634). Agent reads return rendered text with a read state, never raw bytes and
   never images (SMPFS-182, F3-645). Input protection (F3-549) still blocks the person's and the agent's input alike.
   A control API for the user's own scripts comes later and is not part of this unit.
+  Amended 2026-10-17 (DL-228): the Permission row shows the whole command it approves, wrapped over as many
+  lines as it needs and never cut or ellipsized, so the person sees exactly what they allow. A secret prompt's
+  row shows the key concept glyph (F3-658), with the waiting mark when a state is shown; the lock shape is
+  blocked's and never means a secret. The padlock cursor while a program reads a secret is a cursor shape, not
+  a status mark, and stays. Until the deferred Home glyph adoption (DL-208) the 7 px square agent mark and the
+  6 px hollow square above are the interim marks; F3-658's agent-driving, agent-cursor and news marks then
+  replace them.
 gui_related: true
 gui_classification_reason: Defines the visible agent row, take-over, permission and secret-prompt states, attribution marks and background opens of a shared terminal.
 split_recommended: false
@@ -47859,16 +48232,20 @@ canonical_text: >-
   uses SSYS-009 restore_defaults over that same exact set. A set patch never resets an unmentioned
   token map, indentation, autosave or behavior value. The look's own is a reset, not a set patch.
   Old monitor remains an explicit opt-in to F3-643's CRT and housing. Try it moves the sample
-  cursor/caret, rings the sample bell or types and visits a sample problem; Step back restores the
-  sample, never the real buffer or session. The editor groups are Colors, Text, Caret, Lines &
+  cursor/caret, rings the sample bell or types and visits a sample problem; Step back shows, on the sample only, how
+  this terminal or editor looks when you are not in it (the scope's inactive dimming), held about 1.6 s, then returns,
+  and turning Dim terminals I'm not in on plays it once; it is not an undo and never touches the real buffer or session
+  (amended 2026-10-17, DL-228; it read: Step back restores the sample). The editor groups are Colors, Text, Caret, Lines &
   guides, Motion & effects and Behavior. Every selector consumes F3-438; neither Customize screen
   defines another fitting or highlight grammar. Scope, search, scrolling, sample trials and hover
   are view-local; committed fields and reset/quick sets use UCC-204's writers. Schemes and fonts
   have truthful names, Light/Dark hints and supported capabilities. Dense Glass controls use
   F3-652's readable menu material. Each look draws the screen with its own material and motion.
   Reduced Motion shows end states and explains which movement it calms. While the screen is open,
-  Tab and Shift+Tab wrap within it; arrows choose within one-of-several groups, and Escape closes it
-  and returns focus. Its layout remains usable down to 360 px, including beside-target and narrow
+  Tab and Shift+Tab wrap within it; arrows choose within one-of-several groups, except the scheme tiles, where arrows preview and Enter or Space
+  keeps the scheme; Up and Down move by a row of tiles; each tile group is one tab stop on its chosen tile; Escape
+  first ends an active preview and a second Escape closes the screen and returns focus, while naming a preset Escape
+  cancels only the name (amended 2026-10-17, DL-228). Its layout remains usable down to 360 px, including beside-target and narrow
   states. Scheme-hover intent is deliberately surface-specific: terminal F3-642 waits 110 ms and
   editor F3-651 waits 160 ms; keyboard and cancellation use those owners. Jared approved saving
   terminal looks as user presets on 2026-10-14. This is distinct from the shipped fixed quick sets.
@@ -47914,6 +48291,15 @@ canonical_text: >-
   the second press of a double-click on the opener is not taken as a choice in the sheet. The sheet is
   live once the pointer moves, the entrance ends, or about 500 ms after it opens. Keyboard and
   assistive-technology use is unaffected.
+  Amended 2026-10-17 (DL-228): the editor's screen also has Import a scheme... ("Adds a colour scheme from a
+  file to the catalog the editor and the terminal share"): it adds to F3-642's one shared catalog through the
+  existing cmd.terminal.appearance.import_scheme, so an imported scheme appears on both screens; it announces
+  "Imported <name>" and reports "Could not import that scheme: <reason>" in F3-642's fixed wording. A choice
+  whose meaning is motion (caret blink, caret movement, trail) shows it as a small moving picture on its tile,
+  playing only while that tile is hovered or focused, never at idle, in the look's own motion (stepped in
+  NieR) and still under Reduced Motion; each choice keeps its plain second line ("On and off", "A fade", "From
+  its middle", "Never blinks"; "Jumps", "A quick glide", "A slower glide"; "A short fade", "A bright streak",
+  "An afterglow", "A thin ink line").
 gui_related: true
 gui_classification_reason: The editor and terminal Customize screens.
 split_recommended: false
@@ -48057,6 +48443,11 @@ canonical_text: >-
   JavaScript samples visibly exercise Variables, Properties and Escapes, and copying sample tabs
   preserves tab characters. The live editor remains subject to its ordinary selection and focus
   ownership.
+  Amended 2026-10-17 (DL-228): the editor's More menu checks Word wrap, Minimap and Sticky scroll write the
+  scope their value comes from: this editor's override when the tab keeps its own choice
+  (cmd.editor.appearance.set), otherwise the All editors Project row through cmd.settings.transaction.preview
+  then apply, so a quick toggle never silently creates or overwrites a tab override
+  (Plans/pm7_control_bindings.json editor.more.*).
 gui_related: true
 gui_classification_reason: Editor appearance, token colors, caret and indentation.
 split_recommended: false
@@ -48210,6 +48601,23 @@ canonical_text: >-
   this unit keeps the sheet-rim bake and the cover-only strip deferral.
   Amended 2026-10-17 (DL-226): while a widget plate is carried on a board in Glass, the resting plates
   hold a pre-painted frost instead of live blur. At rest that frost looks the same.
+  Amended 2026-10-17 (DL-228): Glass condenses into place only when Glass is switched on, never on a page, tab
+  or room change, and moving items never turn opaque and then clear as they settle (DL-229, Jared,
+  2026-10-11). Tab strip items, segmented choices and rail icons get no press bloom or flex: the lens moving
+  to the pressed item is their press feedback. Settings' floating search results use the dense menu material,
+  near opaque without live optics, so page words never read through them. The terminal Customize screen's
+  choice rows take the travelling lens; the editor Customize screen's in-flow choices take the material in
+  place, without a lens. Glass Transparency (general.visual.glass-transparency, SSYS-010) moves the panel,
+  card and bar tints around the published look, which is its default .55: up to near opaque at 100 %, and down
+  to the mode's floor, where the frost still keeps text at F3-654's floor; menus and dense surfaces keep their
+  own tints, and without live optics the sheets are near opaque. The concept's pre-publication clarity slider
+  is not a product control. What the rebuild honours of the 2026-10-16 Glass-lane amendment is its outcome:
+  static optics are prepared off the input path, a sheet's rim is coherent on arrival (it may arrive a frame
+  later, never wrong), and a first page, chapter or wallpaper change never stalls on first-use drawing work;
+  the worker bake and the near-invisible warm draws are how the concept met it, lineage rather than
+  requirements. Proposed, pending Jared: when the operating system asks for reduced transparency Glass draws
+  its static near-opaque form, and when it asks for more contrast the sheets take near-opaque tints with
+  full-strength hairlines; no Settings row is added.
 gui_related: true
 gui_classification_reason: Liquid Glass material and motion.
 split_recommended: false
@@ -48373,6 +48781,14 @@ canonical_text: >-
   print lets it finish. Reduced Motion, a look change and no GPU keep the immediate swap. The setting
   still writes at the pick (SSYS-009, SSYS-054); only the frost drawing lags. Consumers of the selected
   print, the terminal Lens included, follow when the frost commits (DR-073).
+  Amended 2026-10-17 (DL-228): Look's own carries a one-line note saying what the current look shows ("<Look>
+  shows <default> until you choose another." or "<Look> keeps its own background until you choose one."), and
+  a chosen wallpaper's note says it shows in every look, in its light or dark print, Home and Usage showing
+  the most of it; Look's own's thumbnail is the look's default print or a picture of its own ground. Each tile
+  shows its description in its hover tag, and its accessible name adds its family. The row shows Settings'
+  Changed mark while a wallpaper is chosen, and choosing Look's own clears it. A NieR scene chosen here looks
+  exactly as NieR Mode's own background draws it, faint ink on parchment with the paper fade at the top, and
+  its thumbnail is drawn in full ink, like the customizer's tiles.
 gui_related: true
 gui_classification_reason: One wallpaper gallery for every look.
 split_recommended: false
@@ -48491,6 +48907,10 @@ canonical_text: >-
   dimmed background must not retain interactive focus or conceal a required enabled control. The
   reported five Glass Light Details words at 4.01–4.48 and unresolved editor-description findings
   remain failures against the settled floor, not new exemptions.
+  Amended 2026-10-17 (DL-228): where a state's hue cannot reach 4.5:1 for its word without coming too close to
+  the body text to read as that state (Glass Light's failure red over its darkest backdrop reads 3.9 to 4.3:1
+  in the concept), the word is drawn in the text ink at full contrast and the glyph carries the hue at its 3:1
+  non-text floor; the floor is not relaxed.
 gui_related: true
 gui_classification_reason: Settled text contrast.
 split_recommended: false
@@ -48767,7 +49187,8 @@ canonical_text: >-
   meaning. Planning Wizard and Orchestrator may consume the catalog but this approval does not
   require their full glyph adoption or redesign. Warning is the triangle; failed is a ring with a
   cross everywhere. The rail's solid badges become these shared tube marks. Changed is violet in
-  every look. Status glyph inks preserve each look's hue, moving lightness to meet at least 3:1
+  every look, NieR excepted: NieR keeps its near-monochrome ink tones, told apart by shape (GLY-2 option A, D44); the
+  concept's Retro Light magenta for changed is not adopted (amended 2026-10-17, DL-228). Status glyph inks preserve each look's hue, moving lightness to meet at least 3:1
   against their actual composited field in all ten looks; labels remain text governed by F3-654.
   Shape plus the accessible state name carries meaning without color. Working, reviewing, needs-you,
   dependency-wait, idle, complete, blocked, failed, paused, recovering, queued, skipped and mixed
@@ -48775,7 +49196,9 @@ canonical_text: >-
   vocabulary. Off is the power symbol for disabled/not configured, never the blocked mark;
   file-change marks describe changes, not execution state. Domains keep their status words and
   resolution authority and map them to the shared presentation. A busy tab uses working; competing
-  tab marks rank waiting, failed, agent driving, agent at the keyboard, working, info, preserving
+  tab marks rank waiting, failed, agent driving (the agent holds the keyboard), agent paused (an agent is at this
+  terminal but a person took over: the hollow agent-cursor mark), working, info (amended 2026-10-17, DL-228; it read:
+  agent at the keyboard), preserving
   the other states in the accessible description. The terminal agent cursor is a spark and cursor
   cell, solid while the agent types and hollow when a person takes over; terminal command marks use
   shared status marks. Glyph hover ignition follows F3-465's existing card/row/control target, with
@@ -48790,6 +49213,34 @@ canonical_text: >-
   vocabulary: the 2026-10-15 rollout covers chat, rail, Usage, notification and onboarding adoption;
   Home panel/tab/terminal and Settings content-icon adoption remain deferred. F3-656 continues to
   own scene illustrations.
+  Amended 2026-10-17 (DL-228): F3-584's anatomy, roles, acts, size gate, tones, per-look voices and Reduced
+  Motion rule govern every consumer of this vocabulary, not only the chat, with these rules applied
+  everywhere: colour is for status only, so concept and control glyphs take the host's ink; needs-you is the
+  loudest loop and no new loop out-moves it; file-change marks never glow like alarms; NieR draws ink with
+  square caps and no glow; a glyph on an inverted fill (Retro reverse video, NieR's ink bar or cursor) takes
+  the fill's paper ink. Status marks are lit and still in lists, rails, Settings rows, toasts and Usage, with
+  one act when they appear or change (none on Usage, whose room entrance owns arrival); only live states
+  (working's bead, needs-you) keep moving, and the chat's placements keep F3-585. Position markers (the rail's
+  current item, the current step in onboarding and backup lists, tour pips) are not states: they never take a
+  status mark and use the ring-dot marker, earlier steps reading complete and later ones pending. A secret
+  prompt's row shows the key concept glyph, since the lock is blocked's drawing. Usage card-head tools light
+  only on their own hover, never with the card's. The terminal family: running is working, exit 0 complete,
+  exit N failed, a prompt awaiting input idle, and exit 130 or a command that ended with the earlier session
+  skipped; an agent-typed command keeps its 12 px state mark with the 8 px agent seat beside it; gutter marks
+  take the scheme's inks and hold 3:1 on every scheme; a mark acts once at its change, never on scroll
+  (F3-641). The deferred Home adoption follows these panels-family rules: find toggles (match case, whole
+  word, regular expression, wrap) are glyphs, and a pressed toggle keeps its lit state; a breakpoint keeps one
+  shape, enabled in the blocked tone, disabled paused and unverified idle; a Debug Console session shows
+  running working, paused paused, ended complete, and failed or skipped when stopped, never idle; hovering a
+  tab plays only its kind glyph, never its state mark. The glyph artwork's source of truth is the concept's
+  two registries (the chat's neon icons and the shared PMG registry), ported once; the concept's neon grammar
+  (its stroke-weight ladder by size, its two-moving-part cap and its travel minimums) is the drawing
+  reference; fitted inks are re-derived per look by the 3:1 rule above, the concept's fitted values being
+  reference only.
+  Amended 2026-10-17 (DL-228): where one semantic name in Plans/glyph_catalog.json maps to two glyphs, each
+  mapping row names the surfaces it serves (the panels' browser tab is the globe, Settings' browser row the
+  browser window); a status meaning always maps to its status glyph, so failed is st-failed and a card's
+  waiting is st-waiting, never the close or terminal glyph.
 gui_related: true
 gui_classification_reason: Shared glyph vocabulary and presentation.
 split_recommended: false

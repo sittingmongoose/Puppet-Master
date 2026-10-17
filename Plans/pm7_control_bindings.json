@@ -4654,7 +4654,7 @@
     },
     {
       "control_id": "terminal.preview_scheme",
-      "surface": "terminal Customize > Hover/keyboard scheme preview",
+      "surface": "terminal Customize > Hover/keyboard scheme or background design preview",
       "owner_ref": "Plans/Commands_System.md#CS-102",
       "disposition": "local",
       "action_ids": [
@@ -4662,7 +4662,7 @@
       ],
       "production_entries": [],
       "setting_ids": [],
-      "payload": "kind, current target and view-local choice; scope remember only for menu entry",
+      "payload": "kind, current target and view-local choice; scheme tiles and background design tiles preview after the 110 ms rest and revert on leaving or Escape (F3-642, DL-228); scope remember only for menu entry",
       "no_production_reason": "View-local or sample-only; no durable appearance, real input or structural mutation."
     },
     {
@@ -4690,6 +4690,19 @@
       "setting_ids": [],
       "payload": "kind, current target and view-local choice; scope remember only for menu entry",
       "no_production_reason": "View-local or sample-only; no durable appearance, real input or structural mutation."
+    },
+    {
+      "control_id": "terminal.degauss",
+      "surface": "Terminal Customize > Try it > Degauss (Retro, not NieR Mode)",
+      "owner_ref": "Plans/FinalGUISpec.md#F3-643",
+      "disposition": "local",
+      "action_ids": [
+        "ui.terminal.degauss"
+      ],
+      "production_entries": [],
+      "setting_ids": [],
+      "payload": "One-shot effect on the real terminal and the preview; nothing under Reduced Motion or without GPU effects, which it announces; no stored setting (DL-228)",
+      "no_production_reason": "One-shot visual effect; no durable appearance or command receipt."
     },
     {
       "control_id": "terminal.this.reset",
@@ -5354,6 +5367,23 @@
       "no_production_reason": ""
     },
     {
+      "control_id": "editor.import",
+      "surface": "Editor Customize > Import a scheme...",
+      "owner_ref": "Plans/FinalGUISpec.md#F3-650",
+      "disposition": "command",
+      "action_ids": [
+        "cmd.terminal.appearance.import_scheme"
+      ],
+      "production_entries": [
+        "terminal.appearance.import_scheme"
+      ],
+      "setting_ids": [
+        "code.terminal.import-scheme"
+      ],
+      "payload": "The same import as the terminal screen into the one shared scheme catalog (F3-642); file_ref, supported format, at most 256 KB; parsed not executed (DL-228)",
+      "no_production_reason": ""
+    },
+    {
       "control_id": "terminal.background.pick",
       "surface": "Terminal Customize > Background image > Choose",
       "owner_ref": "Plans/FinalGUISpec.md#F3-642",
@@ -5380,7 +5410,7 @@
       "setting_ids": [
         "general.interaction.preview-tabs"
       ],
-      "payload": "Same setting id for every presentation; wallpaper: look or registry id, invalid request refused; transparency: slider and typed number share one bounded value",
+      "payload": "Same setting id for every presentation; preview then apply over the exact id (DL-228: the wallpaper and transparency text copied here earlier described other rows)",
       "no_production_reason": ""
     },
     {
@@ -5399,13 +5429,13 @@
       "setting_ids": [
         "general.interaction.tab-sizing"
       ],
-      "payload": "Same setting id for every presentation; wallpaper: look or registry id, invalid request refused; transparency: slider and typed number share one bounded value",
+      "payload": "Same setting id for every presentation; preview then apply over the exact id (DL-228: the wallpaper and transparency text copied here earlier described other rows)",
       "no_production_reason": ""
     },
     {
       "control_id": "settings.general.visual.glass-transparency",
       "surface": "Settings > App & Input > Theme & colors > Glass Transparency",
-      "owner_ref": "Plans/Settings_System.md#SSYS-053",
+      "owner_ref": "Plans/Settings_System.md#SSYS-010",
       "disposition": "command",
       "action_ids": [
         "cmd.settings.transaction.preview",
@@ -5418,7 +5448,7 @@
       "setting_ids": [
         "general.visual.glass-transparency"
       ],
-      "payload": "Same setting id for every presentation; wallpaper: look or registry id, invalid request refused; transparency: slider and typed number share one bounded value",
+      "payload": "Slider and typed number share one bounded value: floor .35 Dark or .45 Light, ceiling 1, default .55; shown as a percentage (SSYS-010, DL-228)",
       "no_production_reason": ""
     },
     {
@@ -5515,6 +5545,19 @@
       "setting_ids": [],
       "payload": "Exact visible notice ids; dismiss_toast includes close/swipe; mark_visible_read after dwell; no source-condition resolve",
       "no_production_reason": "Shared inbox presentation/read state; no domain mutation or command receipt."
+    },
+    {
+      "control_id": "notifications.mark_all_read",
+      "surface": "Shared inbox header > Mark all read",
+      "owner_ref": "Plans/FinalGUISpec.md#F3-461",
+      "disposition": "local",
+      "action_ids": [
+        "ui.notifications.mark_all_read"
+      ],
+      "production_entries": [],
+      "setting_ids": [],
+      "payload": "Every retained notice id is marked read; nothing is acknowledged, resolved or removed (CS-102, DL-228)",
+      "no_production_reason": "Shared inbox read projection; no domain mutation or command receipt."
     },
     {
       "control_id": "notifications.dismiss",
@@ -6332,6 +6375,97 @@
         "general.visual.theme-mode"
       ],
       "payload": "Preview and apply the SSYS-009 atomic theme-family/mode pair. The Glass lens consumes F3-652 without changing command, value, scope or transaction; no timed app-theme trial.",
+      "no_production_reason": ""
+    },
+    {
+      "control_id": "usage.provider.auto-switch",
+      "surface": "Usage > Accounts plate (and any auto-switch widget) > Auto-switch toggle",
+      "owner_ref": "Plans/Settings_System.md#SSYS-044",
+      "disposition": "command",
+      "action_ids": [
+        "cmd.settings.transaction.preview",
+        "cmd.settings.transaction.apply"
+      ],
+      "production_entries": [
+        "catalog.settings_transaction_preview",
+        "catalog.settings_transaction_apply"
+      ],
+      "setting_ids": [
+        "ai.accounts.multi-account-switching"
+      ],
+      "payload": "scope provider with the provider id; preview then apply (SSYS-044); shown for a provider with two or more accounts (DL-228)",
+      "no_production_reason": ""
+    },
+    {
+      "control_id": "usage.provider.switch-level",
+      "surface": "Usage > Accounts plate (and any auto-switch widget) > Switch level stepper and menu",
+      "owner_ref": "Plans/Settings_System.md#SSYS-044",
+      "disposition": "command",
+      "action_ids": [
+        "cmd.settings.transaction.preview",
+        "cmd.settings.transaction.apply"
+      ],
+      "production_entries": [
+        "catalog.settings_transaction_preview",
+        "catalog.settings_transaction_apply"
+      ],
+      "setting_ids": [
+        "ai.accounts.hard-switch-level"
+      ],
+      "payload": "scope provider with the provider id; the Shared setting choice clears the provider value; MA-073 holds a crossing write (SSYS-044) (DL-228)",
+      "no_production_reason": ""
+    },
+    {
+      "control_id": "usage.account.switch-level",
+      "surface": "Usage > account card and its Details > Switch at N% used",
+      "owner_ref": "Plans/Settings_System.md#SSYS-044",
+      "disposition": "command",
+      "action_ids": [
+        "cmd.settings.transaction.preview",
+        "cmd.settings.transaction.apply"
+      ],
+      "production_entries": [
+        "catalog.settings_transaction_preview",
+        "catalog.settings_transaction_apply"
+      ],
+      "setting_ids": [
+        "ai.accounts.hard-switch-level"
+      ],
+      "payload": "scope account with the provider and account ids; Follow clears the account value; MA-073 holds a crossing write (SSYS-044) (DL-228)",
+      "no_production_reason": ""
+    },
+    {
+      "control_id": "usage.costs.budget-alert",
+      "surface": "Usage > Costs budget card > Budget alert at",
+      "owner_ref": "Plans/Settings_System.md#SSYS-044",
+      "disposition": "command",
+      "action_ids": [
+        "cmd.settings.transaction.preview",
+        "cmd.settings.transaction.apply"
+      ],
+      "production_entries": [
+        "catalog.settings_transaction_preview",
+        "catalog.settings_transaction_apply"
+      ],
+      "setting_ids": [
+        "ai.usage.budget-warning-threshold"
+      ],
+      "payload": "the card's alert level is the bound Settings value, never widget configuration (SSYS-044, UF-107) (DL-228)",
+      "no_production_reason": ""
+    },
+    {
+      "control_id": "usage.open-in-settings",
+      "surface": "Usage > hosted control > Open in Settings",
+      "owner_ref": "Plans/Settings_System.md#SSYS-044",
+      "disposition": "command",
+      "action_ids": [
+        "cmd.settings.open"
+      ],
+      "production_entries": [
+        "catalog.settings_open"
+      ],
+      "setting_ids": [],
+      "payload": "target_type setting naming the provider and, for an account's level, the account (SSYS-019, DL-228)",
       "no_production_reason": ""
     },
     {
@@ -7642,6 +7776,69 @@
       "setting_ids": [],
       "payload": "Forward the original tour prompt’s ui.guided_tour.resume with its existing session, safe checkpoint, revision and currentness context under pm.guided_tour.action_request.v3; retain PWIZ-023 validation and effects.",
       "no_production_reason": "Existing typed owner-local Guided Tour action; bell entry is only the prompt projection, with no production UICommand receipt/event."
+    },
+    {
+      "control_id": "editor.more.word-wrap",
+      "surface": "Editor tab > More > Word wrap",
+      "owner_ref": "Plans/FinalGUISpec.md#F3-651",
+      "disposition": "command",
+      "action_ids": [
+        "cmd.editor.appearance.set",
+        "cmd.settings.transaction.preview",
+        "cmd.settings.transaction.apply"
+      ],
+      "production_entries": [
+        "editor.appearance.field",
+        "catalog.settings_transaction_preview",
+        "catalog.settings_transaction_apply"
+      ],
+      "setting_ids": [
+        "code.editing.word-wrap"
+      ],
+      "payload": "Writes the scope the value comes from: the tab override through cmd.editor.appearance.set when the tab keeps its own value, otherwise the Project row through preview then apply; never creates or overwrites a tab override silently (DL-228)",
+      "no_production_reason": ""
+    },
+    {
+      "control_id": "editor.more.minimap",
+      "surface": "Editor tab > More > Minimap",
+      "owner_ref": "Plans/FinalGUISpec.md#F3-651",
+      "disposition": "command",
+      "action_ids": [
+        "cmd.editor.appearance.set",
+        "cmd.settings.transaction.preview",
+        "cmd.settings.transaction.apply"
+      ],
+      "production_entries": [
+        "editor.appearance.field",
+        "catalog.settings_transaction_preview",
+        "catalog.settings_transaction_apply"
+      ],
+      "setting_ids": [
+        "code.editing.minimap"
+      ],
+      "payload": "Writes the scope the value comes from: the tab override through cmd.editor.appearance.set when the tab keeps its own value, otherwise the Project row through preview then apply; never creates or overwrites a tab override silently (DL-228)",
+      "no_production_reason": ""
+    },
+    {
+      "control_id": "editor.more.sticky-scroll",
+      "surface": "Editor tab > More > Sticky scroll",
+      "owner_ref": "Plans/FinalGUISpec.md#F3-651",
+      "disposition": "command",
+      "action_ids": [
+        "cmd.editor.appearance.set",
+        "cmd.settings.transaction.preview",
+        "cmd.settings.transaction.apply"
+      ],
+      "production_entries": [
+        "editor.appearance.field",
+        "catalog.settings_transaction_preview",
+        "catalog.settings_transaction_apply"
+      ],
+      "setting_ids": [
+        "code.editing.sticky-scroll"
+      ],
+      "payload": "Writes the scope the value comes from: the tab override through cmd.editor.appearance.set when the tab keeps its own value, otherwise the Project row through preview then apply; never creates or overwrites a tab override silently (DL-228)",
+      "no_production_reason": ""
     }
   ],
   "held_controls": []

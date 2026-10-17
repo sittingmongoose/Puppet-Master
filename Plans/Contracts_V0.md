@@ -23771,6 +23771,11 @@ canonical_text: >-
   never tab_opened; cmd.browser.focus_browser_tab stays layout-only, and a collapsed host panel expands through
   cmd.workspace_layout.set_collapsed. Renaming a dashboard is one tab_renamed and deleting one a tab_closed; widget commands, Start from and
   Reset, a board's view, presets, a board's stored contents and the Debug Console's session sub-tab append nothing.
+  Amended 2026-10-17 (DL-228): the change discriminator gains layout_restored, bound only to
+  cmd.workspace_layout.restore (UCC-200): the Guided Tour's Back, Skip or Finish putting a captured layout
+  back in one command, its dashboard boards included; the command_id list gains that command, and its
+  production entry tour.layout_restore declares this event. A project switch loads that project's own record
+  and appends nothing.
 gui_related: true
 gui_classification_reason: The event is how every visible layout change is recorded, replayed and audited.
 split_recommended: false

@@ -3605,8 +3605,8 @@ canonical_text: >-
   widgets, the shared Assistant/context surfaces, status, panels, menus, and relevant hover/open states at
   the exact 1440, 1180, 980, 860, and 680 CSS-pixel widths. Geometry, state, and DOM assertions are necessary but not
   sufficient: reviewers inspect actual pixels and contact sheets, including loaded-font and fallback-font states,
-  fresh persistence, and migrated persistence. The matrix also proves Source authority's exact 4/6/8 disclosure
-  counts, measured physical-width content tiers and reorder placeholder footprints, complete-series ARIA with
+  fresh persistence, and migrated persistence. The matrix also proves Source authority's 7/8/9 disclosure
+  counts (amended 2026-10-17, DL-228; earlier exact 4/6/8), measured physical-width content tiers and reorder placeholder footprints, complete-series ARIA with
   exactly one visible tiny-chart label for every painted bar including zero bars, measured collision-free
   in-plot placement horizontally associated with each bar, declared-unit value formatting, complete chart facts,
   Planning Wizard/Home/Orchestrator/Projects narrow composition, reorder-ghost visibility, and component-scoped
@@ -3620,7 +3620,7 @@ depends_on: [ATS-036, ATS-037, F3-518]
 unblocks: []
 acceptance_criteria:
   - "Every primary page is rendered in Basic Dark/Light, Friendly Dark/Light, Retro Dark/Light, and Glass Dark/Light."
-  - "Every Usage room, disclosure state, widget type, curated size, hidden/expanded state, and room-specific default board is represented or dynamically enumerated from the current fixture catalog; Source authority is exactly 4/6/8 and all thirteen rooms remain reachable at every matrix width."
+  - "Every Usage room, disclosure state, widget type, curated size, hidden/expanded state, and room-specific default board is represented or dynamically enumerated from the current fixture catalog; Source authority mounts 7/8/9 (amended 2026-10-17, DL-228; earlier 4/6/8) and all thirteen rooms remain reachable at every matrix width."
   - "Every required matrix slice runs at exactly 1440, 1180, 980, 860, and 680 CSS pixels; measured physical card width selects content tiers and reorder placeholder spans, preview spans do not become settled layout fields, Planning Wizard, Home, Orchestrator, and Projects have no empty-track or horizontal-overflow narrow failure, and font-ready, fallback-font, fresh-persistence, and migrated older-namespace runs complete without clipping, collisions, hidden required content, stale-layout override, underlaid reorder ghosts, or component-scoped contrast below the applicable threshold while Settings and Chat bytes remain protected; at every width that activates the title-bar page overflow picker, open/closing/closed screenshots and hit-test probes prove the picker is above underlying controls, its complete painted rectangle is interactive, the ancestor edge-fade mask is absent only during the visible lifecycle, and the same click cannot activate a page control beneath it."
   - "Tiny vertical charts retain the complete ordered accessible series while painting exactly one visible label for every painted bar, including zero bars; measured direct or vertical-lane placement keeps labels horizontally associated with their bars, inside the plot, and pairwise non-overlapping without suppression, attempt-charge integer cents render with exactly two currency decimals, and the title plus Latest and distinct peak remain complete."
   - "Review evidence includes actual screenshots/contact sheets and reviewer dispositions, not only overflow, bounding-box, or computed-style metrics."
@@ -5990,8 +5990,9 @@ canonical_text: >-
   share of a panel docked at the centre's edge, the 6 px gaps, the 8 px divider hit target and the divider keys,
   collapse below half a panel's minimum to its 35 px strip with its state kept, maximize and restore, locked
   panels, and closing the last tab (Plans/FinalGUISpec.md#F3-630); the tab strip's heights, gaps, widths and
-  shrink order, the active tab's 120 px minimum, pinned tabs, close targets and every mark, with the fused
-  silhouette as the only active-tab marker in every look (F3-631); the "+" menu's rows in their order, the row
+  shrink order, the active tab's 120 px minimum, pinned tabs, close targets and every mark, with the seated
+  chip as the only active-tab marker in every look (F3-631, DL-214; amended 2026-10-17, DL-228, it read: the fused
+  silhouette); the "+" menu's rows in their order, the row
   body, the trailing cell, Alt+click and Alt+Enter, Ctrl+T, and the empty-panel launcher (F3-632); the "+N"
   list, its search, its grouping by kind and its use as a drop target (F3-633); the opening rules from every
   caller, the file tree (Plans/FileManager.md#F-090), chat file references, diff views and Changes rows,

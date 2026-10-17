@@ -3895,6 +3895,9 @@ canonical_text: >-
   Authority admission of a named usage family with its own payload schema, retention policy reference, and
   existing owner anchor. No second primary row is created for this command, and the rejected candidate
   cmd.provider.usage.open_management is recorded as an excluded token rather than wired.
+  Amended 2026-10-17 (DL-228): the redesigned Usage page has no Request forecast control: month-end figures
+  are labelled estimates read from the projection (UF-107), so catalog.usage_forecast_request has no Usage
+  producer and its "Forecast module" location is lineage until an owner places one.
 gui_related: true
 gui_classification_reason: Wiring determines whether the visible Usage forecast control dispatches a canonical command and how its unavailability is announced.
 depends_on: [WM-034, WM-043, UCC-146, CS-067]
@@ -5507,8 +5510,9 @@ canonical_text: >-
   (goal_hover), each sending the GoalPlanBinding's assistant_plan_id, plan_version and plan_hash. The route result
   opens that version's document, the Plan's own tab while it is current and its retained read-only document once a
   later version exists, and never Plan Details or a newer version (UIW-026). The existing
-  assistant.redesign.cmd.chat_plan_open_details entry gains no Goal producer. The new entry keeps handler_unavailable
-  and expected_event_types=[].
+  assistant.redesign.cmd.chat_plan_open_details entry gains no Goal producer. The new entry keeps handler_unavailable;
+  it declares workspace.layout_changed for a route that adds a tab and nothing for a reveal (DL-188; amended
+  2026-10-17, DL-228, it read: expected_event_types=[]).
 gui_related: true
 gui_classification_reason: "Wires every Open plan button and the bound Goal's Open exact Plan · Vn to their own command entry."
 split_recommended: false
@@ -5517,7 +5521,7 @@ unblocks: []
 acceptance_criteria:
   - "Wiring_Matrix.production.json holds one entry assistant.redesign.cmd.chat_plan_open_version for cmd.chat.plan.open_version, raised from plan_card, schedule_manager, goal_activity and goal_hover only."
   - "assistant.redesign.cmd.chat_plan_open_details has no Goal producer."
-  - "The entry keeps handler_unavailable and expected_event_types=[]."
+  - "The entry keeps handler_unavailable and declares workspace.layout_changed only for a route that adds a tab (DL-188; amended 2026-10-17, DL-228)."
 validation_surfaces:
   - python3 scripts/pm-plans-verify.py validate-wiring-matrix
   - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
@@ -5701,7 +5705,7 @@ Every control below commits through the gesture transaction of `Plans/UI_Wiring_
 | Home options menu > Save this layout..., then Save | `cmd.workspace_layout.save_named` | `home.more_options.save_layout` | `workspace.layout_changed` |
 | Home options menu > Restore home layout | `cmd.workspace_layout.reset` | `home.more_options.reset_layout` | `workspace.layout_changed` |
 | Settings > General & Appearance > Startup & Recovery > Restore home layout | `cmd.workspace_layout.reset` after one confirmation (its row is `general.startup.reset-home-layout`, `Plans/Settings_System.md#SSYS-050`) | `home.settings.reset_layout` | `workspace.layout_changed` |
-| Home options menu > Run setup wizard | `ui.onboarding.start` (UCC-106, WM-041) | none | typed local action, no receipt, no event |
+| Home options menu > Run Onboarding Again (formerly Run setup wizard; amended 2026-10-17, DL-228) | `ui.onboarding.start` (UCC-106, WM-041) | none | typed local action, no receipt, no event |
 
 **The chat column** (`Plans/FinalGUISpec.md#F3-637`, `Plans/UI_Command_Catalog.md#UCC-203`)
 

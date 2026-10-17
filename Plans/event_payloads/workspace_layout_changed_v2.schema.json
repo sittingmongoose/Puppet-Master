@@ -69,6 +69,7 @@
         "named_layout_applied",
         "named_layout_saved",
         "layout_reset",
+        "layout_restored",
         "chat_column_changed",
         "migrated_from_v1"
       ]
@@ -118,6 +119,7 @@
             "cmd.workspace_layout.lock",
             "cmd.workspace_layout.move_surface",
             "cmd.workspace_layout.reset",
+            "cmd.workspace_layout.restore",
             "cmd.workspace_layout.resize_surface",
             "cmd.workspace_layout.save_named",
             "cmd.workspace_layout.set_collapsed",
@@ -724,6 +726,27 @@
           "command_id": {
             "enum": [
               "cmd.workspace_layout.reset"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "change": {
+            "const": "layout_restored"
+          }
+        },
+        "required": [
+          "change"
+        ]
+      },
+      "then": {
+        "properties": {
+          "command_id": {
+            "enum": [
+              "cmd.workspace_layout.restore"
             ]
           }
         }

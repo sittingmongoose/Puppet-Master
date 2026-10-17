@@ -26600,6 +26600,14 @@ canonical_text: >-
   The quality bar is DL-224. Polish, effects and scope are not cut to save a budget.
   Proposed, pending Jared: a surface drawn unseen for preparation stays out of the focus order and the
   accessibility tree until it is shown, and focus that lands in it returns where it came from.
+  Amended 2026-10-17 (DL-228): the page-change hold's rule holds inside a surface too: a leaving panel or pane
+  stays drawn where it was, inert (out of the tab order and the accessibility tree, taking no keys), until the
+  incoming view's first frame, then fades as the entrance starts; the left rail (F3-621) and the terminal card
+  consume it, NieR keeps its own erase and Reduced Motion swaps at once. Reduced Motion is instant (DL-115): a
+  room, page or tab change and an entrance land at their end state; where an owner allows a very short opacity
+  settle under Reduced Motion (F3-520's onboarding steps, F3-438's switch colour) it never moves or scales,
+  and a Usage room change takes none, so the concept's Usage dissolve under Reduced Motion is not adopted. A
+  waiting cover's calm, travel-free pulse is waiting feedback and stays (F3-077, DL-216).
 gui_related: true
 gui_classification_reason: "Defines per-theme motion and the chat's sound cues."
 split_recommended: false
@@ -27834,6 +27842,10 @@ canonical_text: >-
   text buttons: Open in Terminal only while the command's session is live, View output only when it has none, and
   Rerun in Terminal once the command has stopped; the card never shows an action its session cannot do (ACD-129,
   ACD-500).
+  Amended 2026-10-17 (DL-228): when the command's tab still exists but its session has ended, Rerun in
+  Terminal opens a new terminal tab in the command's folder and runs it there, as for a command with no
+  session; Restart in the old tab stays the terminal's own action. A Rerun while an agent drives that terminal
+  is a take-over by the person (F3-646), typed as the person.
 gui_related: true
 gui_classification_reason: Defines which terminal tab each chat card action opens or reveals, how agent-started terminals appear, and which terminal canon leaves the chat document.
 split_recommended: false

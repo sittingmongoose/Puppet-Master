@@ -407,10 +407,10 @@ These IDs are required by `Plans/Widget_System.md`.
 |---|---|---|---|
 | `cmd.widget.add` | `{ page, widget_id }` | no persisted domain event (UI layout state update) | Dashboard, Usage page, Orchestrator widget tabs |
 | `cmd.widget.remove` | `{ page, instance_id }` | no persisted domain event (UI layout state update) | Dashboard, Usage page, Orchestrator widget tabs |
-| `cmd.widget.resize` | `{ page, instance_id, col_span, row_span }` | no persisted domain event (UI layout state update) | Dashboard, Usage page, Orchestrator widget tabs |
+| `cmd.widget.resize` | `{ page, instance_id, col_span, row_span, preset_id?, room? }` (amended 2026-10-17, DL-228: `preset_id` per WS-020, `room` per DL-186) | no persisted domain event (UI layout state update) | Dashboard, Usage page, Orchestrator widget tabs |
 | `cmd.widget.configure` | `{ page, instance_id, config }` | no persisted domain event (UI layout state update) | Dashboard, Usage page, Orchestrator widget tabs |
 | `cmd.widget.move` | `{ page, instance_id, col, row, arrange? }` | no persisted domain event (UI layout state update) | Dashboard, Usage page, Orchestrator widget tabs |
-| `cmd.widget.reset_layout` | `{ page, set_id?, restore_revision? }` (amended 2026-10-10, lead ruling; it read: `{ page, set_id? }`) | no persisted domain event (UI layout state update) | Dashboard, Usage page, Orchestrator widget tabs |
+| `cmd.widget.reset_layout` | `{ page, set_id?, restore_revision?, scope?, room? }` (amended 2026-10-10, lead ruling; it read: `{ page, set_id? }`; amended 2026-10-17, DL-228: `scope` is `room` or `all`, Reset this room or Reset every room, WS-020) | no persisted domain event (UI layout state update) | Dashboard, Usage page, Orchestrator widget tabs |
 
 `arrange` on `cmd.widget.move` is optional and typed. It is absent for an ordinary move. Usage Tidy (`Plans/Widget_System.md#WS-019`) sets it to the closed object `{ mode: "tidy", detail }`, where `mode` has the single value `tidy` and `detail` is the Usage disclosure level whose shown cards go first (`glance`, `detailed` or `diagnostics` for At a glance, Detailed and Diagnostics, the values of the `detail` view family of `Plans/usage-feature.md#UF-095`); `instance_id` then names the card Tidy was chosen from, or the room's first card in reading order when Tidy is chosen from Customize, and `col` and `row` repeat that card's committed place. The owner computes the repack from the room's committed layout, so the request dictates no layout, and a request whose place differs from the committed one is rejected as stale. No other value of `arrange` exists, and no command is added for it.
 
@@ -8247,7 +8247,8 @@ canonical_text: >-
   Existing FileManager CRUD, launch-chain, and runtime allowed-action rows remain
   canonical and are strengthened by the shared UICommandResponse and no fabricated
   command_applied event rule. In the cmd.theme.* family the title bar's Light/Dark/Auto
-  segmented control dispatches cmd.theme.set_mode, while its family rows and NieR Mode
+  segmented control (amended 2026-10-17, DL-228, no longer dispatching cmd.theme.set_mode, as the census row
+  shell.theme.mode and SSYS-010 say), its family rows and NieR Mode
   checkbox, the Guided Tour bar's Look menu and the NieR Mode editor compose
   cmd.settings.transaction.preview then cmd.settings.transaction.apply as UCC-120's
   local affordances do; no theme family or NieR command is added. The application's start
@@ -8265,7 +8266,7 @@ acceptance_criteria:
   - Runtime allowed_action_ids map only to canonical `cmd.runtime.*` commands.
   - FileManager CRUD commands are not duplicated; existing rows remain canonical and gain the shared response/receipt acceptance bar.
   - No command in this addendum uses or authorizes fabricated `*.command_applied` events.
-  - Only the title bar's Light/Dark/Auto control dispatches a cmd.theme.* command for the look; family, NieR Mode and NieR editor changes use the Settings transaction pair, and the application's start and onboarding's look previews dispatch no cmd.theme.* and emit no settings.theme.updated (F3-468, DL-153).
+  - No PM7 look control dispatches a cmd.theme.* command (amended 2026-10-17, DL-228, from only the title bar's Light/Dark/Auto control); Light/Dark/Auto, family, NieR Mode and NieR editor changes use the Settings transaction pair, and the application's start and onboarding's look previews dispatch no cmd.theme.* and emit no settings.theme.updated (F3-468, DL-153).
 validation_surfaces:
   - python3 scripts/pm-plans-verify.py validate-wiring-matrix
   - python3 scripts/pm-plan-index.py validate
@@ -8529,8 +8530,8 @@ ContractRef: ContractName:Plans/Wiring_Matrix.md, ContractName:Plans/Section15_M
 |------------|-------|-------------|----------------|--------------|
 | `cmd.account.select_profile` | Select Account Profile | Switches the effective account/profile; rows support click and keyboard activation. | `profile_available` | `domain_action` |
 | `cmd.provider.switch_route` | Switch Provider Route | Accepts a provider re-route, preferring an alternate provider/plan until the quota window resets; carries `provider_id` and `retry_after_ms` context. | `alternate_route_available` | `domain_action` |
-| `cmd.usage.export` | Export Usage Projection | Exports the current usage projection as JSON with `scope` `snapshot` or `ledger`; ledger scope preserves `usage_event_refs` per row. The Usage page head affordance is an icon-only button carrying `title` and `aria-label` accessible names per the GATE-010 icon-only rules that opens the Snapshot and Ledger export menu (`Plans/usage-feature.md#UF-089`); each menu row dispatches this command with its scope, and behavior is otherwise unchanged. | `usage_projection_loaded` | `domain_action` |
-| `cmd.usage.refresh` | Refresh Usage Projections | Re-reads usage projections from provider routes on demand; background refresh continues independently and the UI never blocks. The Usage page head affordance is an icon-only button carrying `title` and `aria-label` accessible names per the GATE-010 icon-only rules; behavior unchanged. | `provider_routes_configured` | `domain_action` |
+| `cmd.usage.export` | Export Usage Projection | Exports the current usage projection as JSON with `scope` `snapshot` or `ledger`; ledger scope preserves `usage_event_refs` per row. The Usage page head affordance is an icon-only button named by the shared hover tag and `aria-label`, never a native `title` (amended 2026-10-17, DL-228; it read: carrying `title` and `aria-label`) accessible names per the GATE-010 icon-only rules that opens the Snapshot and Ledger export menu (`Plans/usage-feature.md#UF-089`); each menu row dispatches this command with its scope, and behavior is otherwise unchanged. | `usage_projection_loaded` | `domain_action` |
+| `cmd.usage.refresh` | Refresh Usage Projections | Re-reads usage projections from provider routes on demand; background refresh continues independently and the UI never blocks. The Usage page head affordance is an icon-only button named by the shared hover tag and `aria-label`, never a native `title` (amended 2026-10-17, DL-228; it read: carrying `title` and `aria-label`) accessible names per the GATE-010 icon-only rules; behavior unchanged. | `provider_routes_configured` | `domain_action` |
 
 ContractRef: ContractName:Plans/Multi-Account.md, ContractName:Plans/usage-feature.md, ContractName:Plans/FinalGUISpec.md
 
@@ -9089,6 +9090,9 @@ canonical_text: >-
   provider_id and retry_after_ms), `cmd.usage.export` (scope snapshot or ledger; ledger rows preserve
   usage_event_refs; view export output never becomes canonical record truth), and `cmd.usage.refresh` (on-demand
   provider-route projection re-read; background refresh continues independently).
+  Amended 2026-10-17 (DL-228): from Usage, cmd.account.select_profile carries the override and scope next_run:
+  the chosen account becomes the provider's active account for its next run, a run already working keeps its
+  account (MA-073), and no second Settings write follows (UF-107).
 gui_related: true
 gui_classification_reason: Registers user-visible account switching, provider re-route, and usage export/refresh commands.
 depends_on: [MA-069, UCC-109]
@@ -11862,6 +11866,14 @@ canonical_text: >-
   concept's demo controls take the lab-only disposition UF-107 owns.
   Amended 2026-10-09 (DL-180): Home commits now use the cmd.panel_tab.* and extended cmd.workspace_layout.* families of UCC-200 on the pm.home_workspace_layout.v2 record (SP-330), and Dashboard widget rows run inside dashboard tabs, each naming the board id in the existing room field (no board_id payload field; amended 2026-10-10, DL-186; it read: addressed by board_id).
   Amended 2026-10-10 (DL-186): those dashboard widget rows name their board in the payload's existing room field, not a board_id field, and run on the Usage board engine, so gravity and Tidy behave on every board as on the Usage page (WS-019); the dashboard tab's own controls are UCC-200's Dashboard tab controls table.
+  Amended 2026-10-17 (DL-228): Usage adds no command for these controls, each named by its owner: the head's
+  Panels menu (a check per widget through WS-019's hide and show, Tidy this room, and Reset this room or Reset
+  every room through cmd.widget.reset_layout with scope room or all, WS-020); the card menu's Fit rows, one
+  cmd.widget.resize to the fit-all height with its preset_id; Use <account> now while auto-switch waits, the
+  same cmd.account.select_profile override as Use this account (UF-107); and on Attention rows Switch route
+  through cmd.provider.switch_route and Keep guard through cmd.alert.acknowledge (Allow once is not offered
+  until UF-083's owner admits a command). Refresh and Export are named by the shared hover tag and aria-label,
+  never a native title (UF-089).
 gui_related: true
 gui_classification_reason: The catalog census binds visible PMConcept7 controls to canonical commands or explicit view-only behavior.
 split_recommended: false
@@ -14911,7 +14923,8 @@ canonical_text: >-
   Plan-revised receipt lines (plan_card), each with the version it names, and a build schedule's row in the
   Scheduled manager (schedule_manager), with the schedule's bound version. The Plan title, Expand and Details links
   keep their existing route. Plan Details stays cmd.chat.plan.open_details, which no Goal surface raises. The command
-  emits no event (expected_event_types=[]).
+  emits exactly one workspace.layout_changed when its route adds a tab and none when it reveals an open tab
+  (DL-188; amended 2026-10-17, DL-228, it read: emits no event, expected_event_types=[]).
 gui_related: true
 gui_classification_reason: "Gives every Open plan button and the bound Goal's Open exact Plan · Vn their own command, distinct from Plan Details."
 split_recommended: false
@@ -14996,12 +15009,13 @@ Metadata used in the tables. Every `cmd.panel_tab.*` and `cmd.workspace_layout.*
 | `cmd.workspace_layout.split` | Split right / Split down | `panel_id`, `direction` (`right`, `down`, or `auto` for the fit rule), `spec?` (the new panel's first tab; absent means a new tab of the panel's usual kind; a terminal's Split passes `{ kind: terminal, profile, cwd }`) | `always`; `blocked_state_required` with `narrow_centre` or `no_room` | `shell_view` | `workspace.layout_changed` | Ctrl+\\ split right; Ctrl+Shift+\\ split down |
 | `cmd.workspace_layout.move_surface` | Move panel | `panel_id`, `target: { panel_id, edge }` with `edge` one of `left`, `right`, `top`, `bottom` or `center` (`center` moves the panel's tabs into the target panel as tabs), or `target: { centre_edge }` for the centre's outer edge | `blocked_state_required` with `only_panel` | `shell_view` | `workspace.layout_changed` | Enter on a panel grip opens Move panel |
 | `cmd.workspace_layout.resize_surface` | Resize | `split_id` and `sizes` (proportions), or `{ surface: chat, width }` for the chat column (UCC-203) | `always` | `shell_view` | `workspace.layout_changed` | Tab to a divider, then arrows 8 px, Shift+arrows 48 px, Home or End to a neighbour's minimum, Enter evens; each changed key press is one commit, like one release |
-| `cmd.workspace_layout.set_collapsed` | Collapse to tabs / Expand | `panel_id`, `collapsed` | `blocked_state_required` with `only_panel`. A panel dragged below half its minimum commits `collapsed: true` on release | `shell_view` | `workspace.layout_changed` | none |
+| `cmd.workspace_layout.set_collapsed` | Collapse to tabs / Expand | `panel_id`, `collapsed` | `blocked_state_required` with `only_panel`, or `last_open_in_split` when every other child of its split is collapsed (amended 2026-10-17, DL-228). A panel dragged below half its minimum commits `collapsed: true` on release | `shell_view` | `workspace.layout_changed` | none |
 | `cmd.workspace_layout.close_panel` | Close panel | `panel_id` | `always`. Its tabs close with it, each kind's close check answering first; the only panel in the centre keeps its place and shows the empty-panel launcher (`Plans/FinalGUISpec.md#F3-630`) | `shell_view` | `workspace.layout_changed` | none |
 | `cmd.workspace_layout.lock` | Lock panel / Unlock panel | `panel_id`, `locked` | `always` | `shell_view` | `workspace.layout_changed` | none |
 | `cmd.workspace_layout.apply_named` | Apply a layout | `name` (Home, Build, Terminals 2x2, Focus, or a name the user saved) | `always`; the layout already applied returns `no_change`. Applying keeps every open tab, ends no terminal and drops no unsaved buffer (`Plans/FinalGUISpec.md#F3-630`) | `shell_view` | `workspace.layout_changed` | none |
 | `cmd.workspace_layout.save_named` | Save this layout... | `name` | `always`. Amended 2026-10-10 (DL-186, P6; lead ruling F3): the saved layout also keeps the boards of the dashboard tabs it holds, at most 64 KB of them per named layout; a larger save keeps the layout without its boards and says so; `cmd.workspace_layout.apply_named` puts back the boards a layout kept (`Plans/Widget_System.md#WS-030`, `Plans/storage-plan.md#SP-330`). No argument is added | `shell_view` | `workspace.layout_changed` | none |
 | `cmd.workspace_layout.reset` | Restore home layout | none | `always`; open tabs stay open | `shell_view` | `workspace.layout_changed` | none |
+| `cmd.workspace_layout.restore` | Restore a captured layout | `snapshot_ref` (a layout snapshot its caller captured, its dashboard boards included as a saved named layout keeps them, SP-330), `source` (`guided_tour_restore` or `guided_tour_back`) | `always`; a snapshot of another project or workspace is refused as `stale_projection`; a failed write says "Your layout could not be saved." and keeps the earlier layout | `shell_view` | `workspace.layout_changed` (change `layout_restored`, CV-361) | none: the Guided Tour's Back, Skip and Finish with Restore (PWIZ-035); a project switch loads that project's own record and dispatches nothing (added 2026-10-17, DL-228) |
 
 `cmd.workspace_layout.reset` keeps its two producers, the title-bar Home menu row and the Settings Startup & Recovery row `general.startup.reset-home-layout`, both dispatching the same command. The concept token `cmd.workspace_layout.size_surface` still normalizes to `cmd.workspace_layout.resize_surface` (CS-068) and is not a row.
 
@@ -15010,7 +15024,7 @@ Metadata used in the tables. Every `cmd.panel_tab.*` and `cmd.workspace_layout.*
 | Action id | Arguments | Effect | Producers and keys |
 |---|---|---|---|
 | `ui.panel_tab.activate` | `panel_tab_id`, `focus?` | Makes the tab its panel's active tab, pulls it out of "+N" when it was hidden there, and updates the recent-tab order; written with the layout's view state, never a receipt or event | A click on a tab; a row chosen in the "+N" list, the every-tab list or the recent-tab list; Ctrl+Tab / Ctrl+Shift+Tab (web client Alt+\` / Alt+Shift+\`); Ctrl+PgDn / Ctrl+PgUp; Alt+1..8 and Alt+9 for the last tab; the arrow keys, Home, End, Enter and Space in a focused strip |
-| `ui.workspace_layout.maximize` | `panel_id`, or none to restore | Sets or clears the maximized flag outside the split tree (`Plans/FinalGUISpec.md#F3-630`) | Shift+Escape; Escape while focus is in a strip restores; double click on a strip's empty space; panel menu Maximize or Restore panels; a terminal header row's Maximize or Restore |
+| `ui.workspace_layout.maximize` | `panel_id`, or none to restore | Sets or clears the maximized flag outside the split tree (`Plans/FinalGUISpec.md#F3-630`); unavailable with one panel or in the one-column narrow centre, expands a collapsed panel first, and moving focus to another panel restores (amended 2026-10-17, DL-228) | Shift+Escape; Escape while focus is in a strip restores; double click on a strip's empty space; panel menu Maximize or Restore panels; a terminal header row's Maximize or Restore |
 | `ui.workspace_layout.focus_panel` | `panel_id`, or `direction` | Moves focus to a panel | Alt+arrows; Alt+Shift+1..9; a panel chosen in the narrow panel switcher |
 | `ui.output.select_channel` | `channel` | Switches the channel shown in `output`; channel is view state, never part of its tab id, with no receipt or event | Output channel picker; channel opened from elsewhere follows F3-634 |
 | `ui.widget_board.set_view` | the board (`room`, its board id) and the changed `range` or `scope`, with the Usage page's own values (`Plans/FinalGUISpec.md#F3-638`) | Sets one dashboard's own range or scope, independent of the Usage page's and of every other board; view state kept in that board's record, with no receipt and no event (DL-186, P2; lead ruling F1) | A dashboard tab's Board menu > This dashboard > Range or Scope |
@@ -15312,6 +15326,9 @@ canonical_text: >-
   focus entering and click (WS-030, F3-638). Picker Back and its keyboard equivalents are
   ui.panel_tab.picker_back under CS-100, consuming F3-632; no Back cmd.* is minted. Restoring a
   level never opens an item or changes the layout.
+  Amended 2026-10-17 (DL-228): F3-630 holds the panel menu's rows and order and F3-631 the tab menu's; the
+  Panel menu and Tab menu tables here map dispatch only. cmd.workspace_layout.restore is registered in the
+  Layout commands table.
 gui_related: true
 gui_classification_reason: "Owns the command ids, arguments, availability, disabled reasons, events and keys of every control the universal panels add."
 split_recommended: false

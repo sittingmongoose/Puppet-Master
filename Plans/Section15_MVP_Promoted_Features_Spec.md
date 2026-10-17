@@ -12859,7 +12859,8 @@ canonical_text: >-
   SMPFS-032). This is the policy for other notification protocols that SMPFS-162 refers to. Find
   searches the retained scrollback with regular expressions, case, whole word and highlight-all, under SMPFS-020's
   search rules. Copy mode is keyboard selection over the grid, with character, line and block selection as
-  explicit choices (pointer selection stays linear, SMPFS-020); quick select labels the URLs, paths, hashes and IP
+  explicit choices (a plain pointer drag stays linear, SMPFS-020, and Alt+drag is the pointer's explicit block choice; amended
+  2026-10-17, DL-228); quick select labels the URLs, paths, hashes and IP
   addresses in view so one key copies, inserts at the prompt or opens. IME composition stays at the cursor cell
   (SMPFS-136, SMPFS-158). The accessible plain-text buffer is SMPFS-126's text mirror shown as plain text with each
   command as a heading and moved through command by command; images read as SMPFS-181 says. The sticky command
@@ -12881,6 +12882,13 @@ canonical_text: >-
   Under Full CRT a command mark sits beside its row as the tube shows it, inset by the case and bent by the
   curvature; when the shell redraws a prompt, including Ctrl+L or a completion list, the prompt keeps its
   mark (F3-641).
+  Amended 2026-10-17 (DL-228): OSC 52: a program may write the clipboard only while its terminal has focus,
+  never read it (a read request is not answered), and a write over 1 MiB is ignored; the P1 allow, ask and
+  deny policy then applies on top, a remote session or an agent-typed command asking first where that policy
+  says. What the terminal tells programs: TERM=xterm-256color, COLORTERM=truecolor and
+  TERM_PROGRAM=PuppetMaster, PM_AGENT=<name> on a command an agent ran (so programs such as git can turn their
+  pager off), XTVERSION answers "PuppetMaster <version>", and the dark or light report (CSI ? 996 n) follows
+  the drawn scheme's ground.
 gui_related: true
 gui_classification_reason: Owns the engine behaviour behind the terminal's visible marks, links, find, copy mode, bell and accessible buffer.
 split_recommended: false

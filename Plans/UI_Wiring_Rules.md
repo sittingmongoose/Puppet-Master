@@ -773,7 +773,7 @@ owner_hints: [Plans/UI_Wiring_Rules.md, Plans/Commands_System.md, Plans/UI_Comma
 The recovered PMConcept7 direct-manipulation controls use one transactional UI sequence:
 
 1. Snapshot the owner projection and acquire pointer capture or the equivalent keyboard transaction.
-2. Render fixed/portal preview geometry, ghost, placeholder, target, and motion state locally; Usage pointer resize advances its real target footprint and repacks only obstructed peers, Usage reorder displaces affected peers, and Dashboard resize keeps peers frozen; Usage board gravity is not previewed and is applied at settle inside the one commit of step 3 (`Plans/Widget_System.md#WS-019`).
+2. Render fixed/portal preview geometry, ghost, placeholder, target, and motion state locally; Usage pointer resize advances its real target footprint and repacks only obstructed peers, Usage reorder displaces affected peers, and a dashboard board resizes as the Usage board does (DL-186; amended 2026-10-17, DL-228, it read: Dashboard resize keeps peers frozen); Usage board gravity is not previewed and is applied at settle inside the one commit of step 3 (`Plans/Widget_System.md#WS-019`).
 3. Resolve the final pointer/keyboard coordinate and committed semantic target on release.
 4. Dispatch exactly one existing command only when the semantic result changed.
 5. Reconcile owner result/event/receipt, persist settled state once, then release capture and clear every preview class, portal, placeholder, ghost, pending animation frame, and transient listener.
@@ -840,7 +840,7 @@ canonical_text: >-
   Usage pointer-resize preview uses the shared target-first slot projection to advance the real placeholder
   footprint and visibly repack only occupied neighbors while retaining peer node identity, paint, DOM order, and
   effect-spy silence. An accepted release commits once: the last-painted topology with only Usage board gravity
-  applied at settle inside that one commit (WS-019), so the active card settles where the preview showed it; rollback restores the snapshot. Dashboard resize retains frozen peers. Usage Tidy runs
+  applied at settle inside that one commit (WS-019), so the active card settles where the preview showed it; rollback restores the snapshot. A dashboard board resizes as the Usage board does (DL-186; amended 2026-10-17, DL-228, it read: Dashboard resize retains frozen peers). Usage Tidy runs
   the same commit sequence once for the whole repacked room and dispatches exactly one existing cmd.widget.move with
   one receipt. On the Usage Accounts room the card body and Details stay local, while Use this account, the
   provider Auto-switch toggle and switch level and each account's own switch level dispatch their owner commands
@@ -851,7 +851,7 @@ split_recommended: false
 depends_on: [UIW-010, UIW-011, CS-068, UCC-147, WM-045]
 unblocks: [DR-039, ACD-448]
 acceptance_criteria:
-  - Pointer and keyboard preview state remains local; Usage pointer resize advances the target footprint and visibly repacks only obstructed peers, Usage reorder displaces affected peers, and Dashboard resize peers remain frozen. Every preview preserves mounted peer identity, paint, DOM order, and effect-spy silence; Usage move/resize acquisition is direct on the painted controls of plates that carry no magnet (F3-465), with no translation attenuation, acquisition lease, synthetic pointerdown, or second controller; it lets an intervening overlay receive its pointerdown and start no widget operation, excludes unrelated interactive targets, rejects every concurrent operation before mutation, and leaves no latent activation path after any activation or terminal path.
+  - Pointer and keyboard preview state remains local; Usage pointer resize advances the target footprint and visibly repacks only obstructed peers, Usage reorder displaces affected peers, and a dashboard board's resize peers reflow as the Usage board's do (DL-186; amended 2026-10-17, DL-228, from frozen peers). Every preview preserves mounted peer identity, paint, DOM order, and effect-spy silence; Usage move/resize acquisition is direct on the painted controls of plates that carry no magnet (F3-465), with no translation attenuation, acquisition lease, synthetic pointerdown, or second controller; it lets an intervening overlay receive its pointerdown and start no widget operation, excludes unrelated interactive targets, rejects every concurrent operation before mutation, and leaves no latent activation path after any activation or terminal path.
   - A changed pointer release dispatches exactly one canonical command after final-coordinate resolution, a changed keyboard reorder drop dispatches one move command for its selected insertion intent, and each supported keyboard-resize activation settles atomically through one resize command; no-change and cancel paths dispatch nothing. Event-primary Usage callers use usage_event/usage_event_ref, while a PMConcept7 Ledger attempt row uses cmd.nav.open_usage_subject with usage_attempt/attempt_id, retains usage_event_ref plus provider/account/runtime refs as correlation, and carries no OpenSubject. Current aggregate cards remain local with no command, receipt, event, or route identity.
   - Commit and cancel both release capture and remove ghost, placeholder, portal, preview, animation-frame, and transient-listener state.
   - "Usage board gravity is not previewed: the held preview moves only the obstructed peers the first criterion names, the accepted release commits that painted layout with gravity applied at settle inside the same single command, shown cards float up into holes in reading order only after release, and no extra command, receipt, or write follows; Usage Tidy dispatches exactly one cmd.widget.move for the whole repacked room."
@@ -904,7 +904,7 @@ owner_hints:
 
 Every actionable or focusable control on a touched surface carries exactly one canonical `data-command-id` or typed local `data-ui-action-id`. It also exposes current availability, a machine-readable disabled reason when unavailable, one owner/handler destination, and a deterministic result/error/return route. A command-required control cannot degrade into page-local mutation. A presentation-only control cannot manufacture a domain command. PMConcept7 controls remain simulation-marked until the native dispatcher and owner handler are observed.
 
-`PMHoverTag`/`HoverTagController` is one shared Final GUI overlay consumer. It binds actionable/focusable elements, truncated values, technical identifiers, statuses, badges, chart marks, disabled controls, and dynamic pin/unpin state; static body copy and purely decorative nodes are the default exemptions. It preserves the accessible name, supplies stable `aria-describedby` text and `role="tooltip"`, replaces user-facing native `title`, and makes disabled controls keyboard-reachable without allowing activation. One exception is documented (DL-157, FinalGUISpec F3-590): inside an open assistant-chat activity bar domain preview, which is itself a hover surface, a control opens no hover tag, because the chat shows one hover surface at a time and a tag would replace the preview card under the pointer; such a control names itself by its visible text or accessible name, and a native `title` it carries there is the only tooltip it has. F3-590 lists the controls this covers. `general.interaction.show-tooltips` hides visual paint only; accessibility descriptions remain. Positioning centers above, flips below, clamps to the viewport, and uses the shared overlay root without changing document layout.
+`PMHoverTag`/`HoverTagController` is one shared Final GUI overlay consumer. It binds actionable/focusable elements, truncated values, technical identifiers, statuses, badges, chart marks, disabled controls, and dynamic pin/unpin state; static body copy and purely decorative nodes are the default exemptions. It preserves the accessible name, supplies stable `aria-describedby` text and `role="tooltip"`, replaces user-facing native `title`, and makes disabled controls keyboard-reachable without allowing activation. Three exemption kinds are documented: a picker plate (`menu`) and a labelled Settings field (`labelled-field`), both in FinalGUISpec F3-523 (amended 2026-10-17, DL-228; it read: one exception), and this one (DL-157, FinalGUISpec F3-590): inside an open assistant-chat activity bar domain preview, which is itself a hover surface, a control opens no hover tag, because the chat shows one hover surface at a time and a tag would replace the preview card under the pointer; such a control names itself by its visible text or accessible name, and a native `title` it carries there is the only tooltip it has. F3-590 lists the controls this covers. `general.interaction.show-tooltips` hides visual paint only; accessibility descriptions remain. Positioning centers above, flips below, clamps to the viewport, never covers a primary action (F3-523, DL-228), and uses the shared overlay root without changing document layout.
 
 ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/touch_closure.json, ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/Wiring_Matrix.production.json
 
@@ -2129,7 +2129,7 @@ canonical_text: >-
   saved layouts, Save this layout... and Restore home layout, Close other tabs, Close panel). The
   title bar's Home options menu (F3-502: the named and saved layouts, Show or Hide the chat, Pop out
   the chat or Dock the chat back, Keep the chat open in narrow windows, Save this layout..., Restore
-  home layout, Run setup wizard) and Settings' Restore home layout row. The chat column: the
+  home layout, Run Onboarding Again, formerly Run setup wizard) and Settings' Restore home layout row. The chat column: the
   activity bar's Chat toggle, its inner edge (width), its header menu's Pop out, the popped-out
   window's Dock back and the 32 px edge strip of a narrow window. The narrow switcher. The Home keys
   of the keyboard map in `Plans/FinalGUISpec.md#F3-635` and `Plans/UI_Command_Catalog.md#UCC-200`
@@ -2459,6 +2459,12 @@ canonical_text: >-
   pm.product_onboarding.action_request.v2 resume context; Guided Tour retains PWIZ-023's
   ui.guided_tour.resume and pm.guided_tour.action_request.v3 session/checkpoint/currentness context. They
   create no command, event or new action id.
+  Amended 2026-10-17 (DL-228): the census classifies every PM7 appearance and shell control and every Settings
+  control another surface hosts (SSYS-043, SSYS-044, the Usage-hosted rows included). Usage page controls that
+  host no Settings row are classified by UCC-147's PM7 producer census, as view_only or their existing
+  command, and the left rail's local controls (the Owner dropdown, the publish fold, the More tray, the
+  Jujutsu head buttons, strip keys) by F3-618 to F3-625, which add no command, action or wiring row; neither
+  needs a row here. The earlier "every PM7 control" reads with those two owners.
 gui_related: true
 gui_classification_reason: Appearance And Shell Control Census.
 split_recommended: false

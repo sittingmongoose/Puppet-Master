@@ -1900,6 +1900,17 @@ canonical_text: >-
   before commit. The 2026-10-14 presentation updates consume FinalGUISpec F3-655 (Planning Wizard theme
   matching) and F3-656 (onboarding art and the chosen look through Create Project), with no new local action or
   commit authority.
+  Amended 2026-10-17 (DL-228): the onboarding concept's owner table marks eight command ids as not canonical;
+  none is catalogued, and onboarding ships none of them. Each routes as follows until its owner admits an id:
+  restoring a backup (cmd.restore.apply in the concept) dispatches the Backup owner's existing
+  cmd.restore.server_full or cmd.restore.project_as_new by the chosen scope, after cmd.restore.preview;
+  installing a tool product (cmd.tool_product.install) is the Installer owner's cmd.installation.install;
+  detecting installed provider tools (cmd.integration.connection.detect) is cmd.tool.discover; probing a
+  device (cmd.ssh_connection.device.probe) and checking a network share (cmd.storage.share.mount_check) are
+  the selected source's cmd.project.source_location.test; and discovering or installing an SSH key
+  (cmd.ssh_connection.keys.discover, cmd.ssh_connection.key.install) and enabling a free-model route
+  (cmd.free_models.route.enable) have no owner command yet, so onboarding offers those steps as their owners'
+  own screens, reached through cmd.settings.open, until the SSH and Models owners admit them.
 gui_related: true
 gui_classification_reason: Defines the complete visible first-run flow, branching, copy density, actions, and state
   presentation.
@@ -2819,6 +2830,19 @@ canonical_text: >-
   step-order stamp is read against the published 18-step order, then follows the same saved-id and
   retired-chapter resume rules; only when its step and chapter are both gone does it start fresh with the
   notice.
+  Amended 2026-10-17 (DL-228): the planning chapter has review_parts after review: the spotlight settles on
+  each part of the Live Plan in turn (outcomes, decisions, assumptions, the open choice) with a one-line
+  caption on the tour's own clock, so Pause and Reduced Motion hold it, then opens onto the whole plan; Next
+  waits until the parts have been read. With move_or_dock_chat retired that keeps the tour at 20 steps
+  (Plans/guided_tour_contracts.schema.json). While the learner carries a tab during split_by_drag, the tour
+  steps back: its scrim thins, its callout fades and the spotlight opens onto the whole panels centre so the
+  drop zones read, and all return on release. In narrow windows the tour bar wraps and drops no control, Open
+  Planning is reached through the pages menu when the page strip folds, the split step names the edge that
+  fits from its ready target, and in the narrowest windows the planning chapter tucks the chat away through
+  the chat's own command and brings it back. Back, Skip and Finish put the captured layout back with one
+  cmd.workspace_layout.restore (UCC-200) whose snapshot carries the dashboard boards it held, as a saved named
+  layout carries them (SP-330), so the Home board returns with the panels in one command; no separate
+  board-restore command is minted, and the concept's removal of added widgets is lineage.
 gui_related: true
 gui_classification_reason: Defines the workspace chapter's steps, copy, owner commands, completion observation, and saved-position and restore rules.
 split_recommended: false

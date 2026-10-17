@@ -3601,6 +3601,7 @@ ContractRef: ContractName:Plans/FinalGUISpec.md#F3-612, ContractName:Plans/Final
 - The rail's header and tab plates keep the frosted scroll-under they already had in Basic, Friendly and Retro, which F3-431's closed blur budget does not list; Glass turns it off. Whether the budget admits it, or the product draws those plates solid, is an open question for Jared.
 - The concept still has three issues Jared raised on the same day (Jujutsu sub-text alignment, Jujutsu tabs that do nothing, and Retro and NieR tab-switch motion); they are being fixed under this decision, and any canon they change is recorded with it.
 - Jared answered the two open questions above on 2026-10-10 (below): one set of status marks, and some frost back on the plates. The design threads that own them, the neon glyph system and the Liquid Glass restyle, carry them and record their own canon.
+- Amended 2026-10-17 (DL-228): the one set is F3-658's shared vocabulary (DL-201, D44), so the two sets above no longer differ; the plate frost is owned by F3-618; Testing's errored mark waits on Jared's answer to the Errored-word colour question (F3-619).
 
 **Options considered:** A "Ledger" (read in place: calm two-line rows, an overflow dropdown for tabs), B "Stack" (drill in: a summary page per panel and no tabs), C "Lens" (a detail sheet beside the rail and morphing icon tabs), D "Polish" (today's rail, polished), or keeping the current rail. Jared chose D. The rail's width envelope (240 px minimum, 280 px default, 480 px maximum, F3-471) and the 48 px icon-only activity bar (F3-198) are unchanged.
 
@@ -4096,6 +4097,7 @@ ContractRef: ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-18
 - Cursor shape, blink and trail; background (the theme's surface, a solid colour, a gradient, or an image with dim and blur); padding; line height; letter spacing; ligatures; weight. Everything applies at once; nothing says "restart required".
 - One catalog of code colour schemes serves the editor and the terminal (Jared, 2026-10-10). Each curated scheme carries the terminal's palette and the editor's syntax colours. The editor and the terminal each start on "Follow look" (the editor's syntax colours per look, the terminal's schemes per look above) and each has its own scheme choice. The editor's ⋮ menu gets the same Appearance popover as the terminal, and Settings > Editor and > Terminal bind the same catalog when Settings is ported.
 - Retro's editor syntax stays monochrome: brightness and weight in dark, a black and red ribbon in light. Its colour follows the terminal's Retro scheme choice, Phosphor Green or Amber; choosing Amber turns the Retro editor amber too. The choice is stored once, in the terminal's appearance model.
+- Amended 2026-10-17 (DL-228): the Appearance popover described in the next point was replaced on 2026-10-14 by the full Customize screen (DL-189, DL-190, F3-650), and its contrast choice settled by DL-197.
 - Settings come from layers: the look's defaults, then your app default, then a project default, then one terminal. In the concept you choose from an Appearance popover in the terminal's ⋮ menu with a live preview, for "This terminal" or "All terminals"; Settings > Terminal binds the same model when Settings is ported.
 - Effects that only run on the terminal you are in, stop when it is idle, turn off on battery saver and on computers drawing without a graphics card where they cost too much, and stop moving entirely under Reduced Motion: dimming of other terminals, a focus ring, cursor blink and trail, smooth scrolling, backgrounds, Glass blur, Retro scanlines and phosphor glow (on by default in Retro dark), a Full CRT tier (curvature, burn-in, noise) you turn on yourself, flicker off by default and kept below the flash limit of WCAG 2.3.1, the visual bell, progress and attention marks, and a Retro "degauss" you trigger. NieR Mode gives a parchment texture and ink focus brackets, with no glow.
 - Fonts for the editor and the terminal: the editor's code font is JetBrains Mono in every look, Retro included. The terminal uses JetBrains Mono too, except in Retro, where it starts in VT323, with Sixtyfour (whose scanline and bleed settings give a CRT look without motion), Sixtyfour Raster and Departure Mono as other Retro choices and JetBrains Mono still selectable. Atkinson Hyperlegible Mono is there for readability. JetBrains Mono is the page's own code face, the same file already built in for NieR Mode, under its own name; the terminal does not add it again.
@@ -4136,6 +4138,7 @@ ContractRef: ContractName:Plans/FinalGUISpec.md#F3-642, ContractName:Plans/Final
 **What you get:**
 - One rule for every surface in Puppet Master: no box with a coloured border or stripe on one side, no emoji, and no pills (fully rounded capsules used as tabs, tags, badges, buttons or status chips). Keyboard key caps are the one capsule-like shape allowed, as Settings already says.
 - Selection is shown by the surface itself: the fused tab silhouette, a filled or tinted row, a square cursor in NieR Mode, reverse video in Retro, never an edge stripe.
+- Amended 2026-10-17 (DL-228): the ban on pills concerns labels, with action buttons allowed (DL-196), and the active Home tab is now the seated chip, not the fused silhouette (DL-214, F3-631).
 - Status is a mark plus words, drawn from the one set of status marks.
 - A program's own output in the terminal may still contain emoji; the rule is about Puppet Master's chrome.
 
@@ -13173,6 +13176,8 @@ preserved_exact_tokens:
 negative_constraints:
   - "Do not add a command, an action or a wiring row through this decision."
   - "Do not reintroduce pills, coloured side bars or abbreviated labels in the left rail."
+stale_retired_dispositions:
+  - 'Amended 2026-10-17 (DL-228): after D44 (DL-201) F3-619 names no separate errored glyph; Testing''s errored mapping is proposed, pending Jared, in F3-619. The 2026-10-10 frost on the rail''s header and tab plates is owned by F3-618.'
 owner_hints:
   - Plans/FinalGUISpec.md
   - Plans/DRY_Rules.md
@@ -13607,6 +13612,8 @@ preserved_exact_tokens:
 negative_constraints:
   - "Do not drop a fact because it does not fit; fold it."
   - "Do not tint any Usage surface other than the hero plate's key light."
+stale_retired_dispositions:
+  - 'Amended 2026-10-17 (DL-228): shared-element flights between rooms are retired by DL-191; F3-628 owns the handover that replaced them. The key light is one static light beneath the board, strongest on the hero plate, and stays the one tint the negative constraint allows (F3-628).'
 owner_hints:
   - Plans/FinalGUISpec.md
   - Plans/DRY_Rules.md
@@ -15039,6 +15046,8 @@ source_lineage:
   (decision/source lineage; not native implementation evidence)
 preserved_exact_tokens: []
 negative_constraints: []
+stale_retired_dispositions:
+- 'Amended 2026-10-17 (DL-228): the central spotlight tuning landed on 2026-10-14 (F3-465): only the pool under the pointer was turned down, to 0.6 of its strength, the edge glow kept. It read: F3-465 owns that pending tuning.'
 owner_hints:
 - Plans/Decision_Log.md
 
@@ -16449,7 +16458,8 @@ owner_doc: Plans/Decision_Log.md
 canonical_text: >-
   Recorded 2026-10-17. Jared, 2026-10-11: "keep in mind the friendly theme is based on the original
   DS, 3DS, wii, Wiiu menu styles and feel. Also the cocoon shell front end. and https://iisu.network/."
-  Every new Friendly surface takes its cues from that direction. F3-647's Friendly row records it.
+  Every new Friendly surface takes its cues from that direction. The Friendly row of FinalGUISpec section 6.1's
+  theme-family table records it (amended 2026-10-17, DL-228; it read: F3-647's Friendly row).
   Friendly wallpapers and Usage keep their own owners. Concept evidence is not native certification.
 gui_related: true
 gui_classification_reason: Friendly Takes Its Cues From Handheld And Console Menus.
@@ -16580,3 +16590,119 @@ owner_hints:
 ```
 
 ContractRef: ContractName:Plans/FinalGUISpec.md#F3-634, ContractName:Plans/Decision_Log.md#DL-180, ContractName:Plans/Decision_Log.md#DL-185
+
+### DL-228 - The Week Sweep Records What The Concept Built
+
+```yaml
+plan_unit_id: DL-228
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: >-
+  Recorded 2026-10-17. Jared, 2026-10-17: "For sweeping for plan changes (which also includes wiring, dry,
+  commands), you need to have multiple models sweep so nothing is lost." Four independent sweeps of the PM7
+  week, by Opus 5.5 and Muse Wonder over two areas (Concepts 226e834893 to 1b092d0b0e and the top-ups DL-157
+  to DL-217), found behaviour, wiring, commands and settings the concept has and Plans lacked or stated
+  wrongly. The owner amendments dated 2026-10-17 that cite this row record them. They are behaviour the Slint
+  and custom Skia rebuild honours, not Jared decisions, except where an owner cites one. Wrong counts, event
+  lists, state names and mappings are corrected in place, each keeping what it read. This row registers
+  cmd.workspace_layout.restore (UCC-200, CV-361, production entry tour.layout_restore), the local read
+  projection ui.notifications.mark_all_read (CS-102) and the tour phase review_parts (PWIZ-035). Concept
+  internals (timings, CSS values, caches, warm queues, demo scaffolding) stay out. A question no Jared
+  decision answers is marked proposed, pending Jared in its owner. Concept evidence is not native
+  certification.
+gui_related: true
+gui_classification_reason: The Week Sweep Records What The Concept Built.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- The amended owners agree with the concept's built behaviour or say why not; source publication is not native certification.
+validation_surfaces:
+- python3 scripts/pm-shard-plans.py --check
+- python3 scripts/pm-plan-index.py validate
+- python3 scripts/pm-plans-verify.py run-gates
+risk_class: owner_drift
+reasoning_tier: high
+context_scope: pm7_week_sweep_reconciliation
+implementation_surfaces:
+- Plans/Decision_Log.md
+node_compile_hint:
+  mode: owner_decision_record
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- /mnt/Cursor/share/puppet-master/2026-10-17-plans-f6/WEEK-WRITER-BRIEF.md, SHA-256
+  2297493867dccad908210fc023b470eb41d964f6ebd23be0caae3045db349a84 (Jared's sweep rule, as relayed by the
+  coordinator; decision lineage)
+- /mnt/Cursor/share/puppet-master/2026-10-17-plans-f6/SWEEP-WEEK-BRIEF.md, SHA-256
+  642d804ebc361475da10d33056b55617b30cf673914229c452d35926e78fda1c (the sweep brief and range)
+- /mnt/Cursor/share/puppet-master/2026-10-17-plans-f6/SWEEP-WEEK-OPUS-A.md, SHA-256
+  df790ea1fcc4bd156f0dac2234551335364a0676a92b32e44e505f6a05bee432 (OA-1 to OA-95; source lineage)
+- /mnt/Cursor/share/puppet-master/2026-10-17-plans-f6/SWEEP-WEEK-MUSE-A.md, SHA-256
+  edd9dcae68bd56980e270e40f08309701b63a1cfd82858abb634b0695bd3a13d (MA-1 to MA-26; source lineage)
+- /mnt/Cursor/share/puppet-master/2026-10-17-plans-f6/SWEEP-WEEK-OPUS-B.md, SHA-256
+  a74054b4fea13526b56a1e0a395b6ad434d62828bb407cd1a79b228e8f2ef144 (OB-1 to OB-91; source lineage)
+- /mnt/Cursor/share/puppet-master/2026-10-17-plans-f6/SWEEP-WEEK-MUSE-B.md, SHA-256
+  64660f9cb17aeb5bd5c4f5c61aba78f006926e25286b6b93ebf1fc5b57006c7b (MB-1 to MB-48; source lineage)
+- /mnt/Cursor/share/puppet-master/2026-10-17-plans-f6/NOTES.md (the week reconciliation table, one outcome per
+  sweep row)
+preserved_exact_tokens:
+- "you need to have multiple models sweep so nothing is lost"
+negative_constraints:
+- "Do not read an amendment under this row as a Jared decision unless it cites one."
+owner_hints:
+- Plans/Decision_Log.md
+```
+
+ContractRef: ContractName:Plans/UI_Command_Catalog.md#UCC-200, ContractName:Plans/Contracts_V0.md#CV-361, ContractName:Plans/Commands_System.md#CS-102, ContractName:Plans/Planning_Wizard.md#PWIZ-035
+
+### DL-229 - Glass Keeps Usage Calm With No Sweep And No Opaque-Then-Clear
+
+```yaml
+plan_unit_id: DL-229
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: >-
+  Recorded 2026-10-17. Jared, 2026-10-11, reviewing Liquid Glass v2: "The usage page animations are too busy. I
+  think the side ways swipe across the whole screen when you change tabs can go away. Also, when you change tabs
+  in the usage area, it seems like the items that are moving are more opaque then once they settle they become
+  clear. It is really jarring." F3-652 owns the outcome: no full-board sweep on a Usage change, and Glass
+  condenses into place only when Glass is switched on, never on a page, tab or room change, so moving items
+  never turn opaque and then clear. Moving a widget by hand may still lift it (WS-019). DL-191's "calmer
+  transitions" is this answer, recorded until now only in the share notes. Concept evidence is not native
+  certification.
+gui_related: true
+gui_classification_reason: Glass Keeps Usage Calm.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- The linked owners agree with this decision; source publication is not native certification.
+validation_surfaces:
+- python3 scripts/pm-shard-plans.py --check
+- python3 scripts/pm-plan-index.py validate
+- python3 scripts/pm-plans-verify.py run-gates
+risk_class: owner_drift
+reasoning_tier: high
+context_scope: glass_usage_calm
+implementation_surfaces:
+- Plans/Decision_Log.md
+node_compile_hint:
+  mode: owner_decision_record
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- /mnt/Cursor/share/puppet-master/2026-10-13-glass-review-feedback/PARTY-WALLPAPERS-GO.md, SHA-256
+  2118d28c76c25e840487decba5d542c2092db7ad0635280055f1315ee9a4c86a (Jared's 2026-10-11 review, verbatim;
+  decision lineage)
+preserved_exact_tokens:
+- "The usage page animations are too busy."
+negative_constraints:
+- "Do not condense Glass on a page, tab or room change."
+owner_hints:
+- Plans/Decision_Log.md
+```
+
+ContractRef: ContractName:Plans/FinalGUISpec.md#F3-652, ContractName:Plans/Decision_Log.md#DL-191

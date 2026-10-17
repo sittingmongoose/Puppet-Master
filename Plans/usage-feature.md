@@ -86,7 +86,7 @@ Until this stack exists, any temporary compatibility path MUST still preserve th
 - `UI_Command_Catalog.md` and `UI_Command_Catalog` wrappers normalize event-backed Usage/Ledger drill-through through `route_target.object_kind = usage_event` and `object_id = usage_event_ref`; `attempt_id`, provider/account identity, and runtime refs remain correlation fields. `OpenSubject` remains document/artifact-only, and aggregate provider/account/panel cards stay in their local inspector because Contracts_V0 registers no route object kind for them.
 - `storage-plan.md` and `storage-plan` thread/run history export to JSONL/JSON is a coarse export enhancement only; Usage treats it as projection output over canonical records rather than a replacement for the record/bundle/view taxonomy.
 - Runtime recovery gate material with the `Runtime Recovery Canonicalization Gate Addendum` label, runtime-lineage checks, and free-floating notes must be integrated into numbered gate canon before Usage relies on it as a blocked/runtime authority.
-- Usage freshness is a user-trust requirement: stale values must be visibly marked with `Last updated` and an explicit `Refresh` action so old numbers are never presented as current. On the Usage page head, Refresh renders icon-only with `title` and `aria-label` accessible names per UF-089.
+- Usage freshness is a user-trust requirement: stale values must be visibly marked with `Last updated` and an explicit `Refresh` action so old numbers are never presented as current. On the Usage page head, Refresh renders icon-only with the shared hover tag and `aria-label` (amended 2026-10-17, DL-228; it read: `title` and `aria-label`) accessible names per UF-089.
 - Usage consumes `/package` and `/worktree` cleanup state only after owner records mark stale lanes or worktrees `cleanup_eligible`: lane/package completion, graph-patch supersession, revoked/reopened flow via `/reopened`, and completed recovery may make old backing removable only when no retention reason remains.
 - `Provider_OpenCode.md`, `Provider_OpenCode`, `CLI_Bridged_Providers.md`, and `CLI_Bridged_Providers` must carry account identity and execution-scope attribution before Usage projections consume provider events, so account identity is not silently lost before rollups see the data.
 - `cmd.nav.open_usage_subject` resolves only stable object-backed Usage/Ledger identity. Event-primary callers use `route_target.object_kind = usage_event` plus `object_id = usage_event_ref`. A PMConcept7 Ledger attempt row instead uses `route_target.object_kind = usage_attempt` plus `object_id = attempt_id`, repeats `attempt_id` at top level, and retains `usage_event_ref` plus provider/account/runtime refs as correlation. Neither object route carries `OpenSubject`. Aggregate provider/account/panel detail cards open local inspectors with no route command, receipt, or domain event.
@@ -629,7 +629,7 @@ ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0
 - **Impact**
   - Loss of trust in the Usage view; unnecessary failed runs.
 - **Mitigation**
-  - Show "Last updated: &lt;time&gt;" next to 5h/7d and provide an explicit "Refresh" action; on the Usage page head this renders as an icon-only button with `title` and `aria-label` accessible names (UF-089).
+  - Show "Last updated: &lt;time&gt;" next to 5h/7d and provide an explicit "Refresh" action; on the Usage page head this renders as an icon-only button named by the shared hover tag and `aria-label`, never a native `title` (UF-089; amended 2026-10-17, DL-228).
   - Optional: lightweight refresh when app gains focus or when starting a new run (with rate limiting to avoid thrash).
 
 ### Problem 7: Multi-project usage
@@ -6197,10 +6197,15 @@ canonical_text: >-
   rail head, and the Live / Paused control (UF-107) sits beside it there, never as a second head line. Wherever
   the head or a room states the refresh cadence or the history kept, the figures mirror the configured background
   refresh cadence and raw-event retention window rather than fixed copy. Refresh and Export render as icon-only
-  buttons (inline SVG glyphs), each carrying `title` and `aria-label` accessible names. Refresh dispatches
+  buttons (inline SVG glyphs), each named by the shared hover tag (F3-523) and its `aria-label`, never a native
+  `title` (amended 2026-10-17, DL-228; it read: each carrying `title` and `aria-label` accessible names). Refresh dispatches
   cmd.usage.refresh unchanged. Export opens a menu in the chat menu style (DR-058) with two rows, Snapshot and
   Ledger, and each row dispatches cmd.usage.export with scope snapshot or ledger; the menu adds no command and
   no export scope.
+  Amended 2026-10-17 (DL-228): the retention figure is ai.usage.usage-retention (the `usage.retention_days`
+  key named elsewhere reads as that row), and the background refresh cadence is the Usage service's own
+  configuration (`usage.refresh_interval_seconds`), not a Settings row; the concept's "Next refresh 40s" and
+  "retention 90d" are fixture text.
 gui_related: true
 gui_classification_reason: This unit defines the visible Usage page head, where its Live control sits, and the icon-only Refresh and Export presentation.
 split_recommended: false
@@ -6463,9 +6468,12 @@ canonical_text: >-
   `Costs`, `Accounts`, `Free models`, `Context`, `Analytics`, `Ledger`, `Attention`, `Prompt cache`, `Tools`,
   `Signals`, and `Source authority`. Its user-facing disclosure ladder is exactly `At a glance`, `Detailed`,
   and `Diagnostics`. Disclosure changes the mounted panel set and the useful facts inside eligible panels; it
-  is not decorative copy and it never deletes a widget instance or stored layout. Source authority mounts exactly
-  4, 6, and 8 panels at those three disclosure levels, and all thirteen rooms remain reachable at every supported
-  physical viewport width even when the secondary rail collapses into an overflow surface. Active room, scope, date
+  is not decorative copy and it never deletes a widget instance or stored layout. Source authority mounts 7, 8 and 9
+  panels at those three disclosure levels in the redesign's default boards, each deeper level mounting at least the
+  shallower set (amended 2026-10-17, DL-228; it read: exactly 4, 6, and 8, the replaced page's count), and all thirteen
+  rooms remain reachable at every supported physical viewport width by scrolling the rail of rooms, which keeps no
+  overflow surface (amended 2026-10-17, DL-228; it read: even when the secondary rail collapses into an overflow
+  surface). Active room, scope, date
   range, disclosure level, the expanded-room rail state, and the Live / Paused choice (UF-107) are local view
   projections unless an existing canonical command owner explicitly requires a command; changing them does not
   justify a new command family.
@@ -6486,14 +6494,20 @@ canonical_text: >-
   `target_type=setting` and `setting_id=ai.accounts.provider-connections`. UF-090, UF-092, and CBP-028 remain the policy
   owners: installation and authentication stay separate, and Usage neither starts an automatic acquisition nor
   silently reroutes the request.
+  Amended 2026-10-17 (DL-228): the expanded-room rail state is retired with the overflow surface: the
+  redesigned rail scrolls and nothing sets `more`, so a stored value is ignored on read (UF-095, SP-248).
+  Details opens Curated by default and Raw shows every field as recorded, credential handles masked ("Every
+  field as recorded. Credential handles are masked."; F3-514's Raw and Curated redaction); the choice is view
+  state; focus moves into Details on opening and returns to the opening control on Close details or Escape;
+  its Ledger attempt drill-through stays as above.
 gui_related: true
 gui_classification_reason: This unit defines the visible Usage room taxonomy, disclosure labels, and view-state behavior.
 depends_on: [CBP-028, UF-044, UF-055, UF-090, UF-092, WS-016]
 unblocks: [UF-094, UF-095, UF-096, UF-107]
 acceptance_criteria:
-  - All thirteen named rooms are addressable in the Usage workspace at every supported physical viewport width, including through the secondary-room overflow surface when required, and each renders its room-specific panel catalog at the current disclosure level.
+  - All thirteen named rooms are addressable in the Usage workspace at every supported physical viewport width by scrolling the rail of rooms (amended 2026-10-17, DL-228: no overflow surface), and each renders its room-specific panel catalog at the current disclosure level.
   - The only user-facing disclosure labels are At a glance, Detailed, and Diagnostics; Essen, Std, Adv, essentials, standard, and advanced are not disclosure labels.
-  - Switching disclosure materially changes mounted panel types or content facts, Source authority mounts exactly 4/6/8 panels for At a glance/Detailed/Diagnostics, and no disclosure switch deletes an existing widget instance or stored layout.
+  - Switching disclosure materially changes mounted panel types or content facts, Source authority mounts 7/8/9 panels for At a glance/Detailed/Diagnostics (amended 2026-10-17, DL-228; earlier 4/6/8), a room whose panels are all At a glance (Attention, Prompt cache, Signals) changes content facts rather than the mounted set, and no disclosure switch deletes an existing widget instance or stored layout.
   - Active room, scope, date range, disclosure, expanded-room rail state, and the Live / Paused choice remain local projection actions unless an existing owner requires otherwise; no duplicate command family is introduced, Usage refresh retains its authority, and a PMConcept7 Ledger attempt row dispatches cmd.nav.open_usage_subject as a usage_attempt/attempt_id object route without OpenSubject while retaining usage_event_ref as correlation; event-primary callers retain usage_event/usage_event_ref, and aggregate provider, account, and panel cards open local inspectors without a route command, command receipt, or domain event.
   - In the Accounts room, "Use this account" dispatches cmd.account.select_profile only where supports_manual_set_active is true, and a provider's Auto-switch toggle and switch level (scope=provider) and each account's own switch level (scope=account, D43 2026-10-10) dispatch cmd.settings.transaction.preview then cmd.settings.transaction.apply on the Settings rows, show the same value Settings shows, and keep no Usage copy; opening a card or its Details still dispatches no command.
   - Provider setup absence renders the exact `Provider Setup Required` state with explicit `Host/Environment` and preserved operation and continuation identity; its CTA reuses `cmd.settings.open` with `target_type=setting` and `setting_id=ai.accounts.provider-connections`, mints no new setup command, keeps installation and authentication separate, performs no automatic acquisition or silent reroute, and leaves UF-090, UF-092, and CBP-028 as the underlying policy owners.
@@ -6773,6 +6787,9 @@ canonical_text: >-
   operation; pointer-preview rectangles, ghosts, placeholders, animation state, and per-frame drafts never
   become durable state. Missing rooms, widgets, scopes, or unsupported geometry migrate or evict to the
   documented safe current default rather than leaving a dangling identity.
+  Amended 2026-10-17 (DL-228): the `more` family is retired: the redesigned rail of rooms scrolls and keeps no
+  overflow surface, so a stored `more` value is read once and ignored, and the remaining eight families are
+  restored as above.
 gui_related: true
 gui_classification_reason: These fields determine what Usage shows after reload and how committed widgets are restored.
 depends_on: [UF-060, UF-093, UF-094, WS-019, WS-020, SP-248]
@@ -7400,6 +7417,56 @@ canonical_text: >-
   Amended 2026-10-17 (DL-222): readings a Live beat changed while Usage was hidden are drawn during the
   unseen arrival, so the first board shows the latest values and does not jump from a stale board.
   Paused still holds display updates only.
+  Amended 2026-10-17 (DL-228): Scope values are All current usage, Work accounts (company and team
+  credentials), Personal accounts (personal plans and keys) and <Provider> only for each provider shown,
+  offered in a menu with a scope-group rail and Find a scope...; work and personal read each account's
+  ai.accounts.billing-entity and ai.accounts.account-roles. Range is 5h, 24h, 7d or 30d: a segment in the head
+  that folds to the one Range menu when the head is narrow, so the two never disagree. A widget follows the
+  head's range and scope by default (Follow the page, Follow the scope); its Configure can pin a fixed window
+  or providers, the pin is that widget's configuration (WS-004, UF-060), the card names what it is pinned to,
+  and a head change never rewrites a pinned widget. Live beats are also held while onboarding or the Guided
+  Tour is open, while a chart readout is up and during a room change's moment and its short tail, then
+  released as one change. Use this account makes that account the active one for the provider's next run: it
+  is one cmd.account.select_profile with its override and scope next_run, a run already working keeps its
+  account (MA-073), its hover adds "· next run", and Usage writes no second Settings value for it. It shows
+  only with two or more accounts; the account in use shows Current instead; its other disabled states read
+  through UCC-116's closed reasons: signed out as auth_missing or auth_expired, a cooldown or a window used up
+  until a time as provider_unavailable with that time, and needs a seat or manual choice not supported as
+  policy_denied. While auto-switch waits for a tool to go idle, the status line offers Use <account> now, an
+  override through the same command and the same past-switch-point question, shown only while that account is
+  eligible for a manual choice. Attention alert rows offer Acknowledge and Snooze 1h (F3-453's actions),
+  Switch route on a warning (UCC-116's cmd.provider.switch_route with the provider, the reason and its
+  retry_after_ms), and on an anomaly alert Keep guard, which acknowledges it; Allow once has no admitted
+  command, so it is not offered until UF-083's owner admits one. Usage's own notices name the window by its
+  own label and show no internal id: a threshold reads "<window> is at N% used." with "Usage · another
+  signed-in account can take the work", and an automatic switch "Work moved to another account because of rate
+  limits." with "Usage · the account you chose stays your choice". Refresh shows its turning glyph while a
+  re-read runs and is unavailable, with that reason, until it ends; its result shows on the page, not as a
+  toast. The concept's pm:* window events and its command and receipt logs are harness seams with no product
+  event family. Export writes JSON: the snapshot (puppet-master-usage.json: room, range, scope and attempts)
+  or the ledger (puppet-master-usage-ledger.json: the attempts in the range), credential handles masked as in
+  Details, and a failed export says so on the page. The redesigned page has no Request forecast control:
+  month-end figures are labelled estimates read from the projection, so cmd.usage.forecast.request has no
+  Usage producer and WM-044's location is lineage. The concept's chart gallery is a review aid, lab-only like
+  the demo controls above; every widget kind on a default board is built, and a kind not yet built shows its
+  name and size, never invented data. Current source lineage for every Usage and board unit is
+  Concepts/usage-redesign, built through the opus-5.5 build since 2026-10-15; the Concepts/pm7-tools usage and
+  widget sources and their T33 to T48 pipeline are historical wherever a Plans unit still names them.
+  Proposed, pending Jared (2026-10-17, DL-228): nine Usage Settings rows are read by no redesigned surface:
+  ai.usage.usage-windows, ai.usage.platform-filters (seven fixed options against the catalog's 22 providers),
+  ai.usage.chart-type, ai.usage.reset-countdown, ai.usage.cooldown-timers, ai.usage.pressure-visibility,
+  ai.usage.tool-usage-window, ai.usage.ledger-page-size and ai.usage.ledger-export (CSV, while exports are
+  JSON). The proposed reading keeps the rows that change what the page shows and binds them (windows shown
+  among those each provider declares, the providers on the board from the catalog, reset countdowns and
+  cooldown timers shown or hidden, pressure shown or hidden, Tools' default window), makes chart-type the
+  default for a new chart widget, and retires ledger-page-size (the Ledger pages by card height) and the CSV
+  choice of ledger-export.
+  Proposed, pending Jared (2026-10-17, DL-228): the Live menu's Play the next hour and Back to now and the
+  Demo time readout are demo controls, so under DR-070 they live only in the Demo Studio and the product's
+  Live menu holds Live readings on and Pause live readings alone; DL-177 records the lab-only classification
+  as the coordinator's recommendation, still undecided. Copy custody: the concept's Usage copy (src/copy.json
+  and src/copy.d) is the reference wording for the rebuild; the strings Plans quote are load-bearing and kept,
+  and the rest may be re-worded in the same plain voice without a new decision.
 gui_related: true
 gui_classification_reason: "The unit defines what the redesigned Usage page shows and does: the provider catalog, every account, the Accounts room's in-place actions, pace, Live readings, and the board actions."
 depends_on: [DL-173, DL-174, DL-175, DL-176, DL-177, UF-045, UF-089, UF-092, UF-093, UF-095, UF-096, MA-049, MA-073, WS-019, WS-020, DR-038, ACD-474, SSYS-009, SSYS-018, SSYS-044, UCC-116, DL-186]

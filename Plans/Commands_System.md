@@ -7589,7 +7589,9 @@ canonical_text: >-
   cmd.chat.plan.open_version is registered as a navigation_wrapper owned by Plans/Assistant_Plan_Runtime.md, with the
   sole future handler handlers::assistant_plan::plan_open_version and the typed pair AssistantPlanVersionRoute ->
   RouteResult in Plans/assistant_plan_runtime_contracts.schema.json, the same pending owner schema as its neighbour
-  cmd.chat.plan.open_details. It keeps handler_unavailable until native evidence exists and expected_event_types=[]:
+  cmd.chat.plan.open_details. It keeps handler_unavailable until native evidence exists; it emits exactly one workspace.layout_changed when its
+  route adds a tab and none when it reveals an open tab (DL-188; amended 2026-10-17, DL-228, it read:
+  expected_event_types=[]):
   opening a version's document is a route, never a Plan, run, Goal, To-Do or artifact mutation. Its source surfaces
   are plan_card and schedule_manager, for every Open plan button (the card's action row, its Build-started and
   Plan-revised receipts, a build schedule's row), and goal_activity and goal_hover, for the bound Goal's Open exact
@@ -7603,7 +7605,7 @@ depends_on: [UCC-176, DL-157, CS-079]
 unblocks: [WM-065]
 acceptance_criteria:
   - "The central contract records hold exactly one row for cmd.chat.plan.open_version, naming handlers::assistant_plan::plan_open_version and AssistantPlanVersionRoute -> RouteResult."
-  - "cmd.chat.plan.open_version keeps handler_unavailable and expected_event_types=[]."
+  - "cmd.chat.plan.open_version keeps handler_unavailable and emits workspace.layout_changed only when its route adds a tab (DL-188; amended 2026-10-17, DL-228)."
   - "No alias or peer command opens a Plan version from a Goal surface, and every Open plan button raises cmd.chat.plan.open_version."
 validation_surfaces:
   - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
@@ -7915,7 +7917,8 @@ canonical_text: >-
   try_sample are typed local actions, parameterized by editor/terminal and target tab where
   available; Indentation opens the same editor screen at its indentation group. Scope selection is
   saved tab view state only when invoked from that tab; Settings' All entry is temporary.
-  ui.notifications.open, close, expand_group, mark_visible_read, dismiss_toast and explain_state
+  ui.notifications.open, close, expand_group, mark_visible_read, mark_all_read (the inbox header's Mark all read,
+  marking every retained item read; added 2026-10-17, DL-228), dismiss_toast and explain_state
   operate the one shared inbox's presentation/read projection and never resolve its source.
   Mark_visible_read names only notices actually shown for the F3-453 dwell. No catalog row,
   dispatcher receipt or domain event belongs to these ui.* ids. Picker/menu openings, hover,
@@ -7934,6 +7937,12 @@ canonical_text: >-
   validation/readback and no dispatcher receipt or event. Naming/selection/search remain view-local.
   Applying a preset always uses UCC-204's existing This or All writer and never writes appearance
   through a local action.
+  Amended 2026-10-17 (DL-228): background design tiles preview through the same ui.appearance.preview_scheme
+  and cancel_preview as scheme tiles, after the same 110 ms rest (F3-642). ui.terminal.degauss is the Retro
+  Try it action, a local one-shot with no receipt (F3-643). Two concept review chords are not product
+  shortcuts: Alt+Shift+1..5, the left rail review copy's concept switcher, and Alt+Shift+L, the Liquid Glass
+  demonstration toggle; Alt+Shift+1..9 stays UCC-200's focus panel N, and no rebuild or fixture inherits the
+  collision.
 gui_related: true
 gui_classification_reason: Customize and notification local actions.
 split_recommended: false

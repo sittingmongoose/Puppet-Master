@@ -2239,6 +2239,9 @@ canonical_text: >-
   widget's size preset (WS-017) is always called a size preset where the two could be confused. A session sub-tab is
   the Debug Console's switch between debug sessions inside its one tab (D33): it is view state, never a panel tab,
   and it does not revive the retired terminal sub-tab.
+  Proposed, pending Jared (2026-10-17, DL-228): on the Usage page and its boards the page's own copy calls a
+  widget a panel (Hide panel, Panels in <Room>, "N panels"); on a dashboard tab, inside a Home panel, a
+  widget's own menu calls it a card (Move card, Hide card), so it never reads as the Home panel's Move panel.
 gui_related: true
 gui_classification_reason: This unit defines the user-visible words for panels, tabs and the home centre and the words they retire.
 split_recommended: false

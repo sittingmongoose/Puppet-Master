@@ -18453,6 +18453,9 @@ canonical_text: >-
   and it considers the v10 family only through the bounded legacy import when no valid envelope is admitted.
   None of these prototype keys, schema ids or prior envelopes becomes a canonical product store or continuing
   dual-read source.
+  Amended 2026-10-17 (DL-228): the `more` family is retired: the redesigned rail of rooms scrolls and keeps no
+  overflow surface (UF-093, UF-095), so a stored `more` value is read once and ignored, and the remaining
+  eight families persist as above.
 gui_related: true
 gui_classification_reason: These records decide what the Usage page shows on reopen, including disclosure level, scope, range, and widget layout.
 depends_on: [SP-222, UF-092, WS-016]
@@ -27748,6 +27751,9 @@ canonical_text: >-
   fields. Storage-full or write/readback failure reports failure and preserves the prior library.
   The 40-character base-name rule is deliberately terminal-specific; it does not change
   widget-preset naming.
+  Amended 2026-10-17 (DL-228): a custom background picture is PNG, JPEG or WebP under 4 MB (F3-642), kept once
+  by its content hash; besides the pictures a layer or a retained preset references, the four most recently
+  chosen stay so they can be picked again, and an older picture with no reference is deleted.
 gui_related: true
 gui_classification_reason: Decides where each terminal look choice is kept and what survives a move, a reopen and a restore.
 split_recommended: false
@@ -27922,6 +27928,10 @@ canonical_text: >-
   not held as a hard ceiling, and what a save does when running terminals' text alone passes it is open. The scrub
   question is answered; the physical registration, now with the total's index, stays open. A terminal tab's notification mute is its
   state in the v2 Home record (D38, SP-330).
+  Amended 2026-10-17 (DL-228): the scrub floor also covers AWS session keys (ASIA...), GitHub's gho_, ghu_,
+  ghs_ and ghr_ tokens, Anthropic and OpenAI project keys (sk-ant-..., sk-proj-...), Stripe test and
+  restricted keys (sk_test_..., rk_live_..., rk_test_...), "Token <value>" authorization headers and names
+  containing PASSWD; a secret split by a soft wrap is still found and replaced.
 gui_related: true
 gui_classification_reason: Decides what a terminal tab keeps across moves, restarts and reopen, and what its restored scrollback shows.
 split_recommended: false
