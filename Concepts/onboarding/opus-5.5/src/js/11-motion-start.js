@@ -152,14 +152,17 @@
     if (document.body) watchBody(); else document.addEventListener('DOMContentLoaded', watchBody, { once: true });
   } catch (_) { /* calls still arm it */ }
 
-  /* PM_WARM: the one page-wide queue for idle warm drawing (the lead's IDLE-WARM-RULE.md v3.3, 2026-10-17). A lane hands
+  /* PM_WARM: the one page-wide queue for idle warm drawing (the lead's IDLE-WARM-RULE.md v3.4, 2026-10-17). A lane hands
      it small steps that draw something unseen, so the GPU compiles its programs or rasters a surface before first use.
      On a cold P1000 a step that was short on the main thread still held the compositor 100-1,000 ms when it made the
      GPU compile several programs (part2's F5b idle trace), so a step goes only when the page is still, and is judged by
      the frames presented after it.
-       when: an idle callback (no timeout) with 45 ms or more left, so nothing is drawing frames; after 10 s without one,
-         the next idle callback whatever it has left. While a gate fails the wait grows from 400 ms to 2 s (back to 400
-         once a step goes), and 'pm-idle' tries again at once.
+       when: an idle callback (no timeout) with 45 ms or more left, so nothing is drawing frames; or, once every other
+         gate has held for 1 s (the quiet clock: from the batch queued, the last gate that failed, and the last input +
+         600 ms, whichever is latest), any idle callback, since the page is drawing frames only for an ambient loop
+         (Home's: on the 3090 the flat 10 s backstop of v3.3 put the first step at +15 s). The gates are looked at before
+         the slot, so a gate that fails starts the clock again. While a gate fails the wait grows from 400 ms to 2 s (back
+         to 400 once a step goes), and 'pm-idle' tries again at once.
        gates: the page visible, PM_BUSY() empty, no pointer, key, wheel or touch input for 600 ms, none pending, any
          back-off run out, no finite CSS animation or transition running, and the two frames before the step on time
          (1.5x the median refresh). Animations and transitions are counted from their events, so no style is read in a
@@ -170,8 +173,11 @@
          draws, blurs, encodes on the CPU) inside an idle callback after those frames, given its deadline. In the rAF
          only the frames, hidden, PM_BUSY, input and the count are looked at, never style.
        judged: late when either of the two rAF intervals after the step's frame is over max(40 ms, 3x the median
-         refresh): the first is where a GPU compile holds the next frame. A cpu step is judged by the two after the
-         frame that follows it. A cleanup run() returns runs in the first frame after the step.
+         refresh): the first is where a GPU compile holds the next frame. A cpu step in a long slot is judged by the two
+         after the frame that follows it; in a short one (the quiet clock) it runs in the idle time of the third watched
+         frame and is judged from that frame, so its overrun of the ambient loop's next frame counts, and an idle callback
+         that comes only after a later frame puts it back at the head of the line. A cleanup run() returns runs in the
+         first frame after the step.
        light (one kind, <= 2 ms of JS): judged by the one interval after it; the next step, if light, may go in that
          same frame (one per frame) while every gate holds and no frame was late in the last 2 s.
        late: onLate({ name, late, dropped: false }); true means the owner handled it (split it, moved it), otherwise it
@@ -206,7 +212,7 @@
   let warmSeq = 0, warmLastOwner = '', warmTimer = 0, warmIdle = 0, warmBusy = false, warmRunning = null,
     warmBackoff = 0, warmUntil = 0, warmClean = 0, warmLateRun = 0, warmLateCount = 0, warmLateAt = -1e9,
     warmStops = 0, warmStopped = false, warmSession = false, warmStopTimer = 0, warmDoneTimer = 0,
-    warmInput = -1e9, warmWaitMs = 0, warmIdleSince = 0, warmVis = 0, warmD1 = 0, warmD2 = 0, warmClassing = false, warmWhy = '';
+    warmInput = -1e9, warmWaitMs = 0, warmQuietSince = 0, warmVis = 0, warmD1 = 0, warmD2 = 0, warmClassing = false, warmWhy = '';
   const listen = (t, fn) => window.addEventListener(t, fn, { capture: true, passive: true });
   ['pointermove', 'pointerdown', 'keydown', 'wheel', 'touchstart'].forEach((t) => listen(t, () => { warmInput = performance.now(); }));
   document.addEventListener('visibilitychange', () => { warmVis++; });
@@ -250,7 +256,8 @@
     });
     return st;
   };
-  /* in PM_AFTER_LAYOUT: style is computed, so reading an element's animations forces nothing */
+  /* in PM_AFTER_LAYOUT: style is computed, so reading an element's animations forces nothing. Only an element counted for
+     a pseudo-element's animation is asked for its subtree, which walks every element under it (shell's review) */
   const classify = () => {
     warmClassing = false;
     const now = performance.now();
@@ -258,7 +265,11 @@
       let list = null;
       m.forEach((a, k) => {
         if (a.fin && now - a.seen <= 1000) return;
-        if (!list) { try { list = el.getAnimations({ subtree: true }); } catch (_) { list = []; } }
+        if (!list) {
+          let sub = false;
+          m.forEach((_, key) => { if (key.charAt(1) === ':') sub = true; });
+          try { list = sub ? el.getAnimations({ subtree: true }) : el.getAnimations(); } catch (_) { list = []; }
+        }
         const anim = list.find((x) => x.effect && x.effect.target === el && (k[0] === 'a' ? x.animationName != null && 'a' + (x.effect.pseudoElement || '') + '|' + x.animationName === k
           : x.transitionProperty != null && 't' + (x.effect.pseudoElement || '') + '|' + x.transitionProperty === k));
         let gone = true;
@@ -294,7 +305,8 @@
     const a = animState();
     return a === 'run' ? 'animation' : a === 'ask' ? 'animation?' : '';
   };
-  const quiet = () => !(warmWhy = blocked());
+  /* a gate that fails starts the quiet clock again */
+  const quiet = () => { warmWhy = blocked(); if (warmWhy) warmQuietSince = performance.now(); return !warmWhy; };
   const logStep = (st, cpuMs, frameMs, late, outcome) => {
     warmLog.push({ owner: st.owner, name: st.name, t: Math.round(performance.now()), cpuMs: Math.round(cpuMs * 10) / 10, frameMs: frameMs, late: late, outcome: outcome });
     if (warmLog.length > 200) warmLog.shift();
@@ -313,8 +325,10 @@
   };
   /* the steps still queued are let go (the session stop: 'dropped'; the no-GPU profile known only after they were
      queued: 'skipped'), and each owner is told, so work it needs anyway (a screen built ahead) goes its own way */
+  /* what was dropped, for state(): the last 200, as the log keeps (shell's review) */
+  const dropped = (st) => { warmDropped.push(st.owner + ':' + st.name); if (warmDropped.length > 200) warmDropped.shift(); };
   const dropAll = (outcome) => {
-    warmQ.splice(0).forEach((st) => { logStep(st, 0, null, false, outcome); if (outcome === 'dropped') warmDropped.push(st.owner + ':' + st.name); tell(st, 0, true); });
+    warmQ.splice(0).forEach((st) => { logStep(st, 0, null, false, outcome); if (outcome === 'dropped') dropped(st); tell(st, 0, true); });
     done();
   };
   /* the next step: near first, then the owner after the last one's, FIFO within an owner; a step whose until() says
@@ -340,41 +354,42 @@
   const warmWake = (ms, force) => {
     if (warmBusy || warmStopped || !warmQ.length) return;
     if (warmTimer || warmIdle) { if (!force) return; clearTimeout(warmTimer); if (warmIdle && window.cancelIdleCallback) cancelIdleCallback(warmIdle); warmTimer = warmIdle = 0; }
-    if (!warmIdleSince) warmIdleSince = performance.now();
     warmTimer = setTimeout(() => {
       warmTimer = 0;
       if (window.requestIdleCallback) warmIdle = requestIdleCallback(idle);
       else idle({ timeRemaining: () => 50 });
     }, Math.max(0, ms || 0));
   };
-  const retry = () => { warmWaitMs = warmWaitMs ? Math.min(2000, warmWaitMs * 2) : 400; warmWake(warmWaitMs); };
-  /* an idle callback with 45 ms or more left, or any once 10 s have gone by without one: the page's own motion never
-     rests, so the next steps take the next idle callback too, until a long one comes */
-  const roomy = (d) => {
-    if ((d && typeof d.timeRemaining === 'function' ? d.timeRemaining() : 50) >= 45) { warmIdleSince = 0; return true; }
-    return performance.now() - warmIdleSince >= 10000;
+  /* soonest: when only the quiet clock is short, the wait ends when it is due rather than past it */
+  const retry = (soonest) => { warmWaitMs = warmWaitMs ? Math.min(2000, warmWaitMs * 2) : 400; warmWake(soonest >= 0 ? Math.min(warmWaitMs, soonest) : warmWaitMs); };
+  /* the slot an idle callback gives: 'long' (45 ms or more left: nothing is drawing frames), 'short' (less, once the
+     quiet clock has run 1 s: the page's own motion never rests, so the next steps take short slots too while the gates
+     hold), or '' */
+  const slot = (d) => {
+    if ((d && typeof d.timeRemaining === 'function' ? d.timeRemaining() : 50) >= 45) return 'long';
+    return performance.now() - Math.max(warmQuietSince, warmInput + 600) >= 1000 ? 'short' : '';
   };
   const idle = (d) => {
     warmIdle = 0;
     if (warmBusy || warmStopped || !warmQ.length) return;
     if (!softKnown()) { warmWhy = 'profile'; retry(); return; }
     if (warmSoft) { dropAll('skipped'); return; }
-    if (!roomy(d)) { warmWhy = 'idle'; retry(); return; }
     const a = animState();
     if (a === 'ask' && !document.hidden) { warmWhy = 'animation?'; if (!warmClassing) { warmClassing = true; window.PM_AFTER_LAYOUT(classify); } return; }
     if (!quiet()) { retry(); return; }
+    if (!slot(d)) { warmWhy = 'idle'; retry(Math.max(16, 1000 - (performance.now() - Math.max(warmQuietSince, warmInput + 600)))); return; }
     /* admitted: two frames on time, then the step in the third */
     warmBusy = true;
     const vis = warmVis;
     requestAnimationFrame((tA) => requestAnimationFrame((tB) => requestAnimationFrame((tC) => {
       if (vis !== warmVis) { warmBusy = false; retry(); return; }
       note(tB - tA); note(tC - tB);
-      if (!onTime(tB - tA) || !onTime(tC - tB)) { warmWhy = 'frames'; warmBusy = false; retry(); return; }
+      if (!onTime(tB - tA) || !onTime(tC - tB)) { warmWhy = 'frames'; warmQuietSince = performance.now(); warmBusy = false; retry(); return; }
       if (!quiet()) { warmBusy = false; retry(); return; }
       const st = pick(true);
       if (!st) { warmBusy = false; done(); return; }
       warmWaitMs = 0; warmWhy = '';
-      if (st.cpu) cpuStep(st); else runStep(st, tC);
+      if (st.cpu) cpuStep(st, tC); else runStep(st, tC);
     })));
   };
   const run = (st, arg) => {
@@ -409,16 +424,37 @@
       });
     });
   };
-  /* a cpu step, inside an idle callback, given its deadline; judged by the two intervals after the next frame */
-  const cpuStep = (st) => {
+  /* a cpu step, inside an idle callback, given its deadline. In a long slot it is judged by the two intervals after the
+     next frame; in a short one it must come in the idle time of tC, the admission frame, and is judged by tC -> a and
+     a -> b, so an overrun of the ambient loop's frame counts (v3.4); one that comes after a later frame goes back to the
+     head of the line */
+  const cpuStep = (st, tC) => {
     warmRunning = st;
+    const vis = warmVis, limit = lateMs();
+    let next = 0, r = null, kind = '';
+    requestAnimationFrame((a) => {
+      next = a;
+      if (!r || kind !== 'short') return;
+      clean(r);
+      if (vis !== warmVis) { judge(st, r.cpu, null, false, limit); after(); return; }
+      const d1 = a - tC;
+      note(d1);
+      requestAnimationFrame((b) => {
+        const d2 = b - a;
+        if (vis !== warmVis) { judge(st, r.cpu, null, false, limit); after(); return; }
+        note(d2);
+        if (!judge(st, r.cpu, [Math.round(d1), Math.round(d2)], Math.max(d1, d2) > limit, limit)) after();
+      });
+    });
+    const back = () => { warmRunning = null; warmQ.unshift(st); warmBusy = false; retry(); };
     const go = (d) => {
       warmIdle = 0;
       if (st.cancelled) { warmRunning = null; warmBusy = false; warmWake(0); return; }
-      const room = roomy(d);
-      if (!room) warmWhy = 'idle';
-      if (!room || !quiet()) { warmRunning = null; warmQ.unshift(st); warmBusy = false; retry(); return; }
-      const vis = warmVis, limit = lateMs(), r = run(st, d);
+      if (!quiet()) { back(); return; }
+      kind = slot(d);
+      if (!kind || (kind === 'short' && next)) { warmWhy = 'idle'; back(); return; }
+      r = run(st, d);
+      if (kind === 'short') return;
       requestAnimationFrame((a) => {
         clean(r);
         requestAnimationFrame((b) => requestAnimationFrame((c) => {
@@ -446,7 +482,7 @@
     warmUntil = performance.now() + warmBackoff;
     const worst = Math.max.apply(null, frameMs);
     st.lates = (st.lates || 0) + 1;
-    if (st.lates >= 2) { logStep(st, cpuMs, frameMs, true, 'dropped'); warmDropped.push(st.owner + ':' + st.name); tell(st, worst, true); }
+    if (st.lates >= 2) { logStep(st, cpuMs, frameMs, true, 'dropped'); dropped(st); tell(st, worst, true); }
     else if (st.cancelled || tell(st, worst, false)) logStep(st, cpuMs, frameMs, true, 'late-handled');
     else { warmQ.push(st); logStep(st, cpuMs, frameMs, true, 'late'); }
     if (warmLateRun < 3) return false;
@@ -473,13 +509,13 @@
       const st = { id: ++warmSeq, owner: String(o.owner || 'page'), name: String(o.name || 'step'), run: o.run, near: !!o.near,
         light: !!o.light, cpu: !!o.cpu, until: o.until, onLate: o.onLate };
       if (warmSession) {
-        logStep(st, 0, null, false, 'dropped'); warmDropped.push(st.owner + ':' + st.name);
+        logStep(st, 0, null, false, 'dropped'); dropped(st);
         Promise.resolve().then(() => tell(st, 0, true)); done();
         return st.id;
       }
       if (warmOff || warmSoft === true) { logStep(st, 0, null, false, 'skipped'); if (!warmQ.length) done(); return st.id; }
-      /* a new batch: the waits start again */
-      if (!warmQ.length && !warmBusy) { warmWaitMs = 0; warmIdleSince = 0; }
+      /* a new batch: the waits and the quiet clock start again */
+      if (!warmQ.length && !warmBusy) { warmWaitMs = 0; warmQuietSince = performance.now(); }
       warmQ.push(st); warmWake(0);
       return st.id;
     },
