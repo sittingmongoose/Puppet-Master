@@ -463,7 +463,14 @@
     if (!document.body) return;
     if (!wipe) { wipe = layer('o55np-wipe'); wipe.innerHTML = '<i></i>'; }
     const z = zoom();
-    wipe.style.cssText = `left:${r.left / z}px;top:${r.top / z}px;width:${r.width / z}px;height:${r.height / z}px;display:block`;
+    /* the band goes up and slides when the page change's moves start, on the change's own hold (PM_PAGES.__entrance,
+       tools/shell_motion.py: its frames, and the arriving page's data-pm-entrance-wait with its cap from the click's
+       frame), so it always reveals the new page. Put up at once, it slid off over the old page while an arriving page
+       that draws in slices (Usage's board, which says so a frame after the change) was still held, and the page area
+       stood empty (F6b NieR cold, P1000: +429 to +700 ms). The tab's ink answers the click meanwhile */
+    const P = window.PM_PAGES, E = P && P.__entrance;
+    const held = !!(E && E.el && E.el === document.getElementById('panel-' + (P && P.current)));
+    wipe.style.cssText = `left:${r.left / z}px;top:${r.top / z}px;width:${r.width / z}px;height:${r.height / z}px;display:${held ? 'none' : 'block'}`;
     if (wipeAnim) wipeAnim.cancel();
     /* the band leaves as soon as the new page is drawn under it (final motion QA A4, Jared 2026-10-16: the empty beat
        at most 50 ms): no held keyframe (under the old ease-in-out it held the bare band for ~150 ms), a curve that is
@@ -471,7 +478,9 @@
        (src/js/11-motion-start.js), so a long first frame never eats the slide */
     const a = wipeAnim = wipe.firstChild.animate([{ transform: 'translateX(0)' }, { transform: 'translateX(101%)' }],
       { duration: 380, easing: 'cubic-bezier(.3, .15, .2, 1)', fill: 'both' });
-    if (window.PM_START_ON_SHOWN) window.PM_START_ON_SHOWN(() => (wipeAnim === a ? [a] : []));
+    const up = () => { if (wipeAnim === a && wipe) wipe.style.display = 'block'; };
+    if (window.PM_START_ON_SHOWN) window.PM_START_ON_SHOWN(() => (wipeAnim === a ? [a] : []), held ? { wait: E.wait, waitCap: E.waitCap, waitFrom: E.waitFrom, release: up } : undefined);
+    else up();
     a.onfinish = () => { if (wipeAnim !== a) return; wipeAnim = null; if (wipe) wipe.style.display = 'none'; a.cancel(); };
   }
   PARTS.wipe = { on() {}, off() { if (wipeAnim) wipeAnim.cancel(); wipeAnim = null; if (wipe) wipe.remove(); wipe = null; } };

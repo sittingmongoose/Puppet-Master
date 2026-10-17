@@ -203,6 +203,8 @@ PAGES = [
      "      var stillDrawing = function () { return newP.hasAttribute('data-pm-entrance-wait'); };\n"
      "      /* 1.5 s from the click's frame (goSoon's, every look: NieR and Reduce Animations make no fade), inside its fade */\n"
      "      var waitFrom = window.PM_PAGES.__clickAt; window.PM_PAGES.__clickAt = null;\n"
+     "      /* the hold, for the other moves of this change that should start with the page's (NieR's page wipe) */\n"
+     "      window.PM_PAGES.__entrance = { el: newP, wait: stillDrawing, waitCap: 1500, waitFrom: waitFrom };\n"
      "      if (window.PM_START_ON_SHOWN) window.PM_START_ON_SHOWN(pageMoves, { release: handoff, wait: stillDrawing, waitCap: 1500, waitFrom: waitFrom }); else handoff();\n",
      'page switch: moves start on a shown frame'),
     ("      function cleanupOut() {\n"
@@ -360,7 +362,7 @@ ANSWER_FIRST = [
      "        if (P.__answered !== to) P.__answered = null;\n"
      "        P.go(to);\n"
      "        if (P.__lift) { try { P.__lift.anim.cancel(); } catch (e) {} P.__lift = null; }   /* no exit took it over */\n"
-     "        P.__clickAt = null;\n"
+     "        P.__clickAt = null; P.__entrance = null;\n"
      "      }, 0); });\n"
      "    };\n"
      "    function resync() {\n"
