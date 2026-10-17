@@ -4852,7 +4852,7 @@
   {
    "id": "ai.usage.usage-windows",
    "label": "Time windows shown",
-   "desc": "The 5-hour and 7-day windows match most plans. The Usage page shows only the windows each provider declares; this picks which of them show, and a provider that declares none of the picked windows shows its own (UF-107).",
+   "desc": "The 5-hour and 7-day windows match most plans. Each service shows only the windows it has; this picks which of them show, and a service with none of the picked windows shows its own.",
    "type": "select",
    "options": [
     "5h and 7d",
@@ -4880,7 +4880,7 @@
   {
    "id": "ai.usage.platform-filters",
    "label": "Services on the Usage page",
-   "desc": "Hiding one does not stop tracking it. The choices are the Settings provider catalog's providers in its order (Settings > AI > Providers & Accounts); every provider shows until it is hidden here, and one added to the catalog later shows too (UF-107).",
+   "desc": "Hiding one does not stop tracking it. Every service you have set up shows until you hide it here, and one you set up later shows too.",
    "type": "multiselect",
    "scope": [
     "global"
@@ -4898,7 +4898,7 @@
   {
    "id": "ai.usage.reset-countdown",
    "label": "Show when limits reset",
-   "desc": "Like \"Resets in 2h 15m\". Shows or hides the reset countdowns on the Usage page (UF-107).",
+   "desc": "Like \"Resets in 2h 15m\". Shows or hides the reset countdowns on the Usage page.",
    "type": "toggle",
    "default": true,
    "scope": [
@@ -4917,7 +4917,7 @@
   {
    "id": "ai.usage.cooldown-timers",
    "label": "Show resting accounts",
-   "desc": "In pickers and on the Usage page. Shows or hides the cooldown timers next to resting accounts (UF-107).",
+   "desc": "In pickers and on the Usage page. Shows or hides the cooldown timers next to resting accounts.",
    "type": "toggle",
    "default": true,
    "scope": [
@@ -4937,7 +4937,7 @@
   {
    "id": "ai.usage.pressure-visibility",
    "label": "Warn before limits",
-   "desc": "Small warnings when accounts get close to a limit. Shows or hides pressure on the Usage page (UF-107).",
+   "desc": "Small warnings when accounts get close to a limit. Shows or hides them on the Usage page.",
    "type": "toggle",
    "default": true,
    "scope": [
@@ -4957,7 +4957,7 @@
   {
    "id": "ai.usage.chart-type",
    "label": "Chart style",
-   "desc": "Only changes the look. It is the starting style for each new chart widget on the Usage page and its boards; a chart already placed keeps its own style (UF-107).",
+   "desc": "Only changes the look. It is the starting style for each new chart card on the Usage page and its boards; a chart already placed keeps its own style.",
    "type": "select",
    "options": [
     "bar",
@@ -4981,7 +4981,7 @@
   {
    "id": "ai.usage.ledger-export",
    "label": "Export format",
-   "desc": "Exports are JSON, which suits other tools; the CSV choice is retired (UF-107, DL-230).",
+   "desc": "JSON suits other tools. Exports are JSON only; CSV is no longer offered.",
    "type": "select",
    "options": [
     "JSON"
@@ -5020,7 +5020,7 @@
   {
    "id": "ai.usage.tool-usage-window",
    "label": "Tool statistics window",
-   "desc": "For the tool statistics on the Usage page: the window the Tools room opens with (UF-107).",
+   "desc": "For the tool statistics on the Usage page: the window the Tools room opens with.",
    "type": "select",
    "options": [
     "1h",
