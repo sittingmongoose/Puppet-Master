@@ -2026,8 +2026,10 @@
   /* RASTER_CPU: the most ms of a cpu step's work when its idle period gives no deadline; RASTER_WAIT: a queued step not
      run in this long parks the pass; RASTER_MSAA: the paths that make a layer raster multisampled */
   var RASTER_ROOMS = ['overview', 'costs', 'accounts'], RASTER_CPU = 6, RASTER_WAIT = 3000, RASTER_MSAA = 6, RASTER_QUIET = 600;
-  /* RASTER_PREFIX: the most painting elements a card's draw adds (?pmu-raster-prefix=N for measurements) */
-  var RASTER_PREFIX = (function () { var m = /[?&]pmu-raster-prefix=(\d{1,3})(?:&|#|$)/.exec(location.search); return m ? Math.max(1, +m[1]) : 8; })();
+  /* RASTER_PREFIX: the most painting elements a part's draw adds (?pmu-raster-prefix=N for measurements): 4, since a
+     prefix of 8 elements of kinds already drawn still linked 3-7 programs at once in new batches (RTX 3090), more than a
+     P1000 draws in 100 ms */
+  var RASTER_PREFIX = (function () { var m = /[?&]pmu-raster-prefix=(\d{1,3})(?:&|#|$)/.exec(location.search); return m ? Math.max(1, +m[1]) : 4; })();
   var rast = null, rasterDone = {}, rasterSeen = {}, rasterLog = { rooms: [], at: null, ms: null, skipped: WARM_OFF ? 'warm-off' : null };
   function rasterKey(room, cls) {
     var look = (root.getAttribute('data-theme') || '') + (root.getAttribute('data-o55-nier') === 'on' ? '+nier' : '');
