@@ -4079,8 +4079,8 @@ canonical_text: >-
   that rule. The owner prepares a print and its frost before the choice commits. The print may start
   fading before the frost is ready (F3-653); the setting still writes at the pick. An intent, hover or
   keyboard focus after a short quiet pause, or a press, never waits behind background preparation of
-  another print. A pick or intent for a print runs whatever preparation is left at once (review r1, it read: whatever
-  bake is left, a print baked once however many preparations ask). This unit still owns the cache-only query and the rule
+  another print. A pick or intent for a print runs whatever preparation is left at once (review r1).
+  This unit still owns the cache-only query and the rule
   that a failed preparation still commits.
   Amended 2026-10-17 (DL-228): the requirement is one synchronous, cache-only print query; the concept's
   page API for it is lineage, not an interface the rebuild keeps. A wallpaper joins the

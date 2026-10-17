@@ -40384,7 +40384,7 @@ canonical_text: >-
   The dock and the per-reply files row replace the stream footer pill's helpers and files chips
   (ACD-482, DL-129); no summary of helpers or file changes stacks above the composer beside the dock.
   Amended 2026-10-17 (DL-228): while a decision host (a Plan or questionnaire host) is open it sits above the
-  dock and the quota-wait strip (amended 2026-10-17, review r1, it read: directly above the composer) and lifts the floating Activity bar pill and the follow-up queue, which float together as
+  dock and the quota-wait strip (amended 2026-10-17, review r1) and lifts the floating Activity bar pill and the follow-up queue, which float together as
   one stack, with the scroll-to-bottom control; the transcript keeps its bottom padding for that floating
   stack. The quota-wait strip and the dock stay in flow beneath the decision host, so bottom to top the order
   is composer, dock, quota-wait strip, decision host, then the floating pill and queue.
@@ -48623,9 +48623,7 @@ canonical_text: >-
   GPU programs are compiled before the first page or chapter change rather than during it. A switcher
   strip defers its sync only under a look's cover and resyncs as the cover begins to lift.
   Amended 2026-10-17 (DL-222): Glass's warm-up is best effort under ACD-475 and changes no Glass look.
-  The idle gates are ACD-475's, and a switcher strip waits only under a look's cover (amended 2026-10-17, review r1; it read:
-  not a promise that every box kind is compiled first, preparing the kinds that compile a program, and this
-  unit keeps the sheet-rim bake and the cover-only strip deferral).
+  The idle gates are ACD-475's, and a switcher strip waits only under a look's cover (amended 2026-10-17, review r1).
   Amended 2026-10-17 (DL-226): while a widget plate is carried on a board in Glass, the resting plates
   hold a pre-painted frost instead of live blur. At rest that frost looks the same.
   Amended 2026-10-17 (DL-228): Glass condenses into place only when Glass is switched on, never on a page, tab

@@ -7438,7 +7438,7 @@ canonical_text: >-
   override through the same command and the same past-switch-point question, shown only while that account is
   eligible for a manual choice. Attention alert rows offer Acknowledge and Snooze 1h (F3-453's actions),
   Switch route on a warning (UCC-116's cmd.provider.switch_route with provider_id and its retry_after_ms;
-  amended 2026-10-17, review r1, it read: with the provider, the reason and its retry_after_ms), and on an anomaly alert Keep guard, which acknowledges it; Allow once has no admitted
+  amended 2026-10-17, review r1), and on an anomaly alert Keep guard, which acknowledges it; Allow once has no admitted
   command, so it is not offered until UF-083's owner admits one. Usage's own notices name the window by its
   own label and show no internal id: a threshold reads "<window> is at N% used." with "Usage · another
   signed-in account can take the work", and an automatic switch "Work moved to another account because of rate

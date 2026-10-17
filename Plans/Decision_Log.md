@@ -16517,7 +16517,7 @@ canonical_text: >-
   accepting about 30 fps. While a widget plate is carried on a board, on the Usage page or a Home
   dashboard tab, in Glass, the resting plates hold a pre-painted frost instead of live blur. At rest
   the frost looks the same. The planner narrowed the choice to those plates and reported that narrowing to Jared
-  (STATUS-planner.md:128; amended 2026-10-17, review r1, it read: the concept narrowed it). F3-652 owns the one line. This is not a platform threshold and adds no setting.
+  (STATUS-planner.md:128; amended 2026-10-17, review r1). F3-652 owns the one line. This is not a platform threshold and adds no setting.
   Concept evidence is not native certification.
 gui_related: true
 gui_classification_reason: Glass Carry Holds A Pre-Painted Frost.

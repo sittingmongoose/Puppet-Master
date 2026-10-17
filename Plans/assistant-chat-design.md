@@ -26581,8 +26581,8 @@ canonical_text: >-
   Amended 2026-10-17 (DL-219, DL-222): a page change may hold while the arriving page is still drawing
   its first screen. The leaving page stays, with the click's motion still running, until the arrival is
   ready or about 1.5 s from the click's own frame, whichever is first; then the entrance plays from the
-  start, and the exit takes over from the opacity the click's fade has reached (F3-464; amended 2026-10-17, review r1, it read:
-  then the exit and the entrance play from the start). That hold is the covering transition this bar allows, and the bar itself is
+  start, and the exit takes over from the opacity the click's fade has reached (F3-464; amended 2026-10-17, review r1).
+  That hold is the covering transition this bar allows, and the bar itself is
   unchanged. NieR still holds and makes no fade. Under Reduce Animations, and under a cover, the page
   swaps at once, arrives whole, and is not held. A move held at its start, or released but not yet on
   its first frame, still counts as running: nothing finishes, cleans up or cancels it as it starts, and
