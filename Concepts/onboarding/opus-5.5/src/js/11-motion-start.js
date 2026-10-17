@@ -382,6 +382,13 @@
     if ((d && typeof d.timeRemaining === 'function' ? d.timeRemaining() : 50) >= 45) return 'long';
     return performance.now() - Math.max(warmQuietSince, warmInput + 600) >= 1000 ? 'short' : '';
   };
+  /* a lookup pending ('animation?') is no reason to wait longer: classify runs at the next PM_AFTER_LAYOUT and wakes the
+     queue on its result, as idle() asks it to (the lead's nit on 7da0909059: the growing retry cost up to 2 s) */
+  const lookUp = () => {
+    if (warmWhy !== 'animation?' || document.hidden) return false;
+    if (!warmClassing) { warmClassing = true; window.PM_AFTER_LAYOUT(classify); }
+    return true;
+  };
   const idle = (d) => {
     warmIdle = 0;
     if (warmBusy || warmStopped || !warmQ.length) return;
@@ -399,7 +406,7 @@
       note(tB - tA); note(tC - tB);
       /* a frame off time is momentary: tried again in 250 ms, the wait not grown (v3.5 item 3) */
       if (!onTime(tB - tA) || !onTime(tC - tB)) { warmWhy = 'frames'; warmBusy = false; warmWake(250); return; }
-      if (!quiet()) { warmBusy = false; retry(); return; }
+      if (!quiet()) { warmBusy = false; if (!lookUp()) retry(); return; }
       const st = pick(true);
       if (!st) { warmBusy = false; done(); return; }
       warmWaitMs = 0; warmWhy = '';
@@ -430,6 +437,8 @@
   /* the owner's next step if it is light (FIFO within the owner; one whose until() says no is skipped), taken off */
   const LIGHT_TURN_MS = 100;
   const nextLight = (owner) => {
+    /* a near step waiting anywhere ends the chain, since near goes first (the lead's nit on 7da0909059) */
+    if (warmQ.some((x) => x.near)) return null;
     for (;;) {
       const i = warmQ.findIndex((x) => x.owner === owner);
       if (i < 0 || !warmQ[i].light || warmQ[i].cpu) return null;
@@ -488,7 +497,7 @@
     let tLast = tC, waiting = true;
     const loop = (t) => { if (!waiting) return; tLast = t; if (t - tC < 1000) requestAnimationFrame(loop); };
     requestAnimationFrame(loop);
-    const back = () => { waiting = false; clearTimeout(giveUp); warmRunning = null; warmQ.unshift(st); warmBusy = false; retry(); };
+    const back = (gate) => { waiting = false; clearTimeout(giveUp); warmRunning = null; warmQ.unshift(st); warmBusy = false; if (!(gate && lookUp())) retry(); };
     const giveUp = setTimeout(() => {
       if (!waiting) return;
       if (warmIdle && window.cancelIdleCallback) cancelIdleCallback(warmIdle);
@@ -510,7 +519,7 @@
       warmIdle = 0;
       if (!waiting) return;
       if (st.cancelled) { waiting = false; clearTimeout(giveUp); warmRunning = null; warmBusy = false; warmWake(0); return; }
-      if (!quiet()) { back(); return; }
+      if (!quiet()) { back(true); return; }
       const kind = slot(d);
       if (!kind) { warmWhy = 'idle'; back(); return; }
       waiting = false; clearTimeout(giveUp);
