@@ -254,13 +254,8 @@
       if (s.light) return k >= 1 ? rgba(0xffffff, Math.min(0.85, 0.35 * k)) : rgba(C.hex('#1e2d5a'), 0.16 * (1 - k) + 0.04);
       return rgba(lit(c, k, true), a === undefined ? ga : a);
     };
-    /* warmStage (the idle warm only, Bezel.warm): the sections up to that one are drawn, so each warm step compiles the
-       programs of one more section; undefined draws all. Stage 1 is the case's outline clip alone, filled once, since
-       every section draws through it */
-    var stage = this.warmStage, go = function (n) { return stage === undefined || n <= stage; };
     ctx.clearRect(0, 0, g.w, g.h);
     ctx.save(); ctx.clip(ring, 'evenodd');
-    if (stage === 1 && !ink) { ctx.fillStyle = col(base, 1); ctx.fillRect(0, 0, g.w, g.h); }
     if (ink) {
       ctx.fillStyle = hex(base); ctx.fillRect(0, 0, g.w, g.h);
       ctx.restore();
@@ -268,75 +263,59 @@
       return;
     }
     /* the flat frame: each side a shade of the same light, a touch lighter along the top */
-    if (go(2)) {
-      ctx.save(); ctx.clip(frameRing, 'evenodd');
-      SIDES.forEach(function (side) { ctx.save(); ctx.clip(polyPath(geo.frameParts[side])); ctx.fillStyle = col(base, FRAME[side]); ctx.fillRect(0, 0, g.w, g.h); ctx.restore(); });
-      ctx.restore();
-    }
+    ctx.save(); ctx.clip(frameRing, 'evenodd');
+    SIDES.forEach(function (side) { ctx.save(); ctx.clip(polyPath(geo.frameParts[side])); ctx.fillStyle = col(base, FRAME[side]); ctx.fillRect(0, 0, g.w, g.h); ctx.restore(); });
+    ctx.restore();
     /* the sloped face: four parts meeting in crisp creases, each lit by where it faces, a little darker toward the glass */
+    ctx.save(); ctx.clip(faceRing, 'evenodd');
     var fb = geo.frameIn, bb = geo.bb;
-    if (go(3)) {
-      ctx.save(); ctx.clip(faceRing, 'evenodd');
-      SIDES.forEach(function (side) {
-        ctx.save(); ctx.clip(polyPath(geo.faceParts[side]));
-        var k = FACE[side], gr = side === 'top' ? ctx.createLinearGradient(0, fb[1], 0, bb[1]) : side === 'bottom' ? ctx.createLinearGradient(0, fb[3], 0, bb[3])
-          : side === 'left' ? ctx.createLinearGradient(fb[0], 0, bb[0], 0) : ctx.createLinearGradient(fb[2], 0, bb[2], 0);
-        gr.addColorStop(0, col(face, k * 1.08)); gr.addColorStop(1, col(face, k * 0.9));
-        ctx.fillStyle = gr; ctx.fillRect(0, 0, g.w, g.h);
-        ctx.restore();
-      });
-      /* the creases: a hairline of light along each diagonal where two parts of the face meet */
-      if (go(4)) {
-        ctx.lineWidth = 1; ctx.strokeStyle = glass ? 'rgba(255,255,255,' + (s.light ? 0.5 : 0.16) + ')' : rgba(lit(face, 2.2, light), 0.35);
-        [[fb[0], fb[1], bb[0], bb[1]], [fb[2], fb[1], bb[2], bb[1]], [fb[2], fb[3], bb[2], bb[3]], [fb[0], fb[3], bb[0], bb[3]]].forEach(function (q) { ctx.beginPath(); ctx.moveTo(q[0], q[1]); ctx.lineTo(q[2], q[3]); ctx.stroke(); });
-      }
+    SIDES.forEach(function (side) {
+      ctx.save(); ctx.clip(polyPath(geo.faceParts[side]));
+      var k = FACE[side], gr = side === 'top' ? ctx.createLinearGradient(0, fb[1], 0, bb[1]) : side === 'bottom' ? ctx.createLinearGradient(0, fb[3], 0, bb[3])
+        : side === 'left' ? ctx.createLinearGradient(fb[0], 0, bb[0], 0) : ctx.createLinearGradient(fb[2], 0, bb[2], 0);
+      gr.addColorStop(0, col(face, k * 1.08)); gr.addColorStop(1, col(face, k * 0.9));
+      ctx.fillStyle = gr; ctx.fillRect(0, 0, g.w, g.h);
       ctx.restore();
-    }
+    });
+    /* the creases: a hairline of light along each diagonal where two parts of the face meet */
+    ctx.lineWidth = 1; ctx.strokeStyle = glass ? 'rgba(255,255,255,' + (s.light ? 0.5 : 0.16) + ')' : rgba(lit(face, 2.2, light), 0.35);
+    [[fb[0], fb[1], bb[0], bb[1]], [fb[2], fb[1], bb[2], bb[1]], [fb[2], fb[3], bb[2], bb[3]], [fb[0], fb[3], bb[0], bb[3]]].forEach(function (q) { ctx.beginPath(); ctx.moveTo(q[0], q[1]); ctx.lineTo(q[2], q[3]); ctx.stroke(); });
+    ctx.restore();
     /* the grain: speckle in plastic, streaks along each side in metal, frost in glass */
-    if (go(5)) {
-      var tl = tile(M.grain === 'brushed' ? 'brushed' : M.grain === 'frost' ? 'frost' : 'plastic');
-      ctx.globalCompositeOperation = glass ? 'source-over' : 'overlay'; ctx.globalAlpha = M.grain === 'gloss' ? 0.45 : glass ? 0.6 : 1;
-      if (M.grain === 'brushed') {
-        ['top', 'bottom'].forEach(function (side) { ctx.save(); ctx.clip(polyPath(geo.frameParts[side])); ctx.fillStyle = ctx.createPattern(tl, 'repeat'); ctx.fillRect(0, 0, g.w, g.h); ctx.restore(); });
-        ['left', 'right'].forEach(function (side) {
-          ctx.save(); ctx.clip(polyPath(geo.frameParts[side])); ctx.translate(g.w / 2, g.h / 2); ctx.rotate(Math.PI / 2); ctx.translate(-g.h / 2, -g.w / 2);
-          ctx.fillStyle = ctx.createPattern(tl, 'repeat'); ctx.fillRect(0, 0, g.h, g.w); ctx.restore();
-        });
-      } else { ctx.fillStyle = ctx.createPattern(tl, 'repeat'); ctx.fillRect(0, 0, g.w, g.h); }
-      ctx.globalCompositeOperation = 'source-over'; ctx.globalAlpha = 1;
-    }
+    var tl = tile(M.grain === 'brushed' ? 'brushed' : M.grain === 'frost' ? 'frost' : 'plastic');
+    ctx.globalCompositeOperation = glass ? 'source-over' : 'overlay'; ctx.globalAlpha = M.grain === 'gloss' ? 0.45 : glass ? 0.6 : 1;
+    if (M.grain === 'brushed') {
+      ['top', 'bottom'].forEach(function (side) { ctx.save(); ctx.clip(polyPath(geo.frameParts[side])); ctx.fillStyle = ctx.createPattern(tl, 'repeat'); ctx.fillRect(0, 0, g.w, g.h); ctx.restore(); });
+      ['left', 'right'].forEach(function (side) {
+        ctx.save(); ctx.clip(polyPath(geo.frameParts[side])); ctx.translate(g.w / 2, g.h / 2); ctx.rotate(Math.PI / 2); ctx.translate(-g.h / 2, -g.w / 2);
+        ctx.fillStyle = ctx.createPattern(tl, 'repeat'); ctx.fillRect(0, 0, g.h, g.w); ctx.restore();
+      });
+    } else { ctx.fillStyle = ctx.createPattern(tl, 'repeat'); ctx.fillRect(0, 0, g.w, g.h); }
+    ctx.globalCompositeOperation = 'source-over'; ctx.globalAlpha = 1;
     /* where frame turns into face: a lit edge on the lower half, a shaded one on the upper */
-    if (go(6)) {
-      ctx.lineWidth = 1;
-      ctx.save(); ctx.beginPath(); ctx.rect(0, g.h / 2, g.w, g.h); ctx.clip(); ctx.strokeStyle = glass ? 'rgba(255,255,255,.3)' : rgba(lit(base, 2.4, light), 0.6); ctx.stroke(geo.inner); ctx.restore();
-      ctx.save(); ctx.beginPath(); ctx.rect(0, 0, g.w, g.h / 2); ctx.clip(); ctx.strokeStyle = glass ? 'rgba(0,0,0,.18)' : rgba(lit(base, 0.4, light), 0.8); ctx.stroke(geo.inner); ctx.restore();
-    }
+    ctx.lineWidth = 1;
+    ctx.save(); ctx.beginPath(); ctx.rect(0, g.h / 2, g.w, g.h); ctx.clip(); ctx.strokeStyle = glass ? 'rgba(255,255,255,.3)' : rgba(lit(base, 2.4, light), 0.6); ctx.stroke(geo.inner); ctx.restore();
+    ctx.save(); ctx.beginPath(); ctx.rect(0, 0, g.w, g.h / 2); ctx.clip(); ctx.strokeStyle = glass ? 'rgba(0,0,0,.18)' : rgba(lit(base, 0.4, light), 0.8); ctx.stroke(geo.inner); ctx.restore();
     /* the outer edge: darkened, with a hairline of light along its top and left */
-    if (go(7)) {
-      ctx.lineWidth = 2; ctx.strokeStyle = glass ? (cssVar('--lg-edge-bot') || 'rgba(0,0,0,.28)') : rgba(lit(base, 0.45, light), 0.9); ctx.stroke(geo.outer);
-      ctx.save(); ctx.clip(polyPath([[0, 0], [g.w, 0], [0, g.h]])); ctx.lineWidth = 1;
-      ctx.strokeStyle = glass ? (cssVar('--lg-edge-top') || 'rgba(255,255,255,.3)') : rgba(lit(base, 2.2, light), 0.55);
-      ctx.stroke(roundRect(1.5, 1.5, g.w - 3, g.h - 3, Math.max(0, (Math.min(16, (s.style === 'rim' ? 4 : 7) + s.width)) - 1.5))); ctx.restore();
-    }
+    ctx.lineWidth = 2; ctx.strokeStyle = glass ? (cssVar('--lg-edge-bot') || 'rgba(0,0,0,.28)') : rgba(lit(base, 0.45, light), 0.9); ctx.stroke(geo.outer);
+    ctx.save(); ctx.clip(polyPath([[0, 0], [g.w, 0], [0, g.h]])); ctx.lineWidth = 1;
+    ctx.strokeStyle = glass ? (cssVar('--lg-edge-top') || 'rgba(255,255,255,.3)') : rgba(lit(base, 2.2, light), 0.55);
+    ctx.stroke(roundRect(1.5, 1.5, g.w - 3, g.h - 3, Math.max(0, (Math.min(16, (s.style === 'rim' ? 4 : 7) + s.width)) - 1.5))); ctx.restore();
     ctx.restore();
     /* at the glass: a thin bright lip that never goes fully dark, then a near-black unlit ring; the case's shadow under
        the top lip falls a few pixels onto the glass */
-    if (!go(8)) return;
     ctx.save(); ctx.lineJoin = 'round';
     ctx.save(); ctx.clip(ring, 'evenodd'); ctx.lineWidth = 4.4;
     ctx.strokeStyle = glass ? (cssVar('--lg-lens-hair') || 'rgba(255,255,255,' + (s.light ? 0.9 : 0.5) + ')') : hex(lit(face, light ? 1.35 : 3.2, light));
     ctx.stroke(geo.opening); ctx.restore();
     ctx.lineWidth = 2.4; ctx.strokeStyle = glass ? 'rgba(0,0,0,.3)' : 'rgba(0,0,0,.82)'; ctx.stroke(geo.opening);
     if (glass) { ctx.save(); ctx.clip(polyPath([[0, 0], [g.w, 0], [bb[2], bb[1] + 6], [bb[0], bb[1] + 6]])); ctx.lineWidth = 2; ctx.strokeStyle = cssVar('--lg-lens-glint') || 'rgba(255,255,255,.55)'; ctx.stroke(geo.opening); ctx.restore(); }
-    if (go(9)) {
-      ctx.clip(geo.opening);
-      ctx.shadowColor = 'rgba(0,0,0,' + (glass ? 0.22 : s.light ? 0.3 : 0.55) + ')'; ctx.shadowBlur = (s.style === 'case' ? 8 : 4) * g.dpr; ctx.shadowOffsetY = 2 * g.dpr;
-      var around = new Path2D(); around.rect(-40, -40, g.w + 80, g.h + 80); around.addPath(geo.opening);
-      ctx.fillStyle = '#000'; ctx.fill(around, 'evenodd');
-    }
+    ctx.clip(geo.opening);
+    ctx.shadowColor = 'rgba(0,0,0,' + (glass ? 0.22 : s.light ? 0.3 : 0.55) + ')'; ctx.shadowBlur = (s.style === 'case' ? 8 : 4) * g.dpr; ctx.shadowOffsetY = 2 * g.dpr;
+    var around = new Path2D(); around.rect(-40, -40, g.w + 80, g.h + 80); around.addPath(geo.opening);
+    ctx.fillStyle = '#000'; ctx.fill(around, 'evenodd');
     ctx.restore();
   };
-  var HOUSING_STAGES = 9, LIGHT_STAGES = 5;
 
   /* where the screen's light falls, at 0.4 of CSS size: the direct reflection and its diffused copy on the face, faded by
      Mega Bezel's (1 - sqrt(d/D))^2 from the glass outward and toward the corners; and the glow over face and frame */
@@ -453,18 +432,9 @@
       for (var a = alpha; a > 0.004; a -= 1) { rc.globalAlpha = Math.min(1, a); rc.drawImage(T2, 0, 0); }
       rc.globalAlpha = 1; rc.globalCompositeOperation = 'source-over';
     };
-    /* warmLight (the idle warm only): 1 the three masks alone, 2 the first pass unblurred, 3 the first pass, 4 and 5 the
-       other two passes in turn; undefined draws all */
-    var upto = this.warmLight === undefined ? LIGHT_STAGES : this.warmLight;
-    if (upto === 1) {
-      tc.clearRect(0, 0, w, h);
-      [m.direct, m.diffused, m.glow].forEach(function (k) { tc.drawImage(k, 0, 0); });
-      rc.drawImage(T2, 0, 0);
-      return R;
-    }
-    pass(upto === 2 ? 0 : M.blur, m.direct, strength * 1.25, FOLD, 'face');
-    if (upto >= 4) pass(M.blur * 4 + 3, m.diffused, strength * 0.55, FOLD, 'face');
-    if (upto >= 5) pass(16, m.glow, strength * (s.glow ? 0.75 : 0.45), 1, 'all');
+    pass(M.blur, m.direct, strength * 1.25, FOLD, 'face');
+    pass(M.blur * 4 + 3, m.diffused, strength * 0.55, FOLD, 'face');
+    pass(16, m.glow, strength * (s.glow ? 0.75 : 0.45), 1, 'all');
     return R;
   };
 

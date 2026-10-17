@@ -1581,7 +1581,8 @@
     /* ---- the build in steps (staged): the values, the preview, each group, the measures, then the fit's phases (fitStart);
        each step only writes, so the frame after it lays out what it added. They paint nothing (the screen is parked:
        clipped away, its parts hidden), so they are cpu steps (IDLE-WARM-RULE v3.5 item 4), judged by the two frames
-       after them, which hold the new DOM's style and layout. A step skipped (the screen kept for the next
+       after them, which hold the new DOM's style and layout; the values step, which puts it in the page, is a GPU step
+       (queueBuild). A step skipped (the screen kept for the next
        terminal, or gone) stops the rest; retarget queues them again. A late step has done its work all the same; one let
        go (the queue's session stop) leaves the rest to this screen's own idle wait. The click finishes what is left
        (show, finishBuild) ---- */
@@ -1615,7 +1616,9 @@
       buildCancel();
       if (!window.PM_WARM || window.PM_WARM.state().off) { buildIdle(); return; }
       slices.forEach(function (s) {
-        buildIds.push(window.PM_WARM.add({ owner: 'terminal', name: 'customize:build:' + s.name, cpu: true,
+        /* the values step puts the screen in the page, and on the P1000 its window showed 6 links (part2, Friendly):
+           a GPU step, watched (IDLE-WARM-RULE v3.5 item 4's guard); the rest paint nothing */
+        buildIds.push(window.PM_WARM.add({ owner: 'terminal', name: 'customize:build:' + s.name, cpu: s.name !== 'values',
           until: function () { return !disposed && !handle.kept && slices[0] === s; },
           run: function () { if (slices[0] === s) { slices.shift(); s.run(); } return null; },
           onLate: function (i) { if (i.dropped) buildIdle(); return true; } }));
