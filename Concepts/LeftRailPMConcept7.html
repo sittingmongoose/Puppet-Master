@@ -232055,7 +232055,7 @@ var T = {};
        470 ms before the screen appeared in Friendly). Once built, and again for each look it has not been drawn in, it
        is drawn at idle a part at a time, each for one frame, unseen (opacity 0.004, as the shell warms its theme covers;
        0.002 rounds to nothing on the P1000), then clipped away again */
-    var rastered = {}, rasterOn = false, rasterEls = [], rasterOff = [];
+    var rastered = {}, rasterOn = false, rasterEls = [], rasterOff = [], rasterShift = null;
     /* nothing inside takes the focus while it is drawn: a focus that lands inside is let go at once. inert did the same,
        but setting and clearing it restyled the whole screen twice per warm (review RW-4) */
     function rasterGuard(e) {
@@ -232069,6 +232069,7 @@ var T = {};
       rasterEls.forEach(function (e) { e.removeAttribute('data-rw-on'); });
       rasterOff.forEach(function (e) { e.removeAttribute('data-rw-off'); });
       rasterEls = []; rasterOff = [];
+      if (rasterShift) { rasterShift.style.transform = ''; rasterShift = null; }
       if (rasterOn) { rasterOn = false; root.classList.remove('pmt-cz-rasterwarm'); root.removeAttribute('data-rw'); root.removeEventListener('focusin', rasterGuard, true); }
     }
     /* the steps go on the page's one idle-warm queue (PM_WARM, 11-motion-start.js; the lead's IDLE-WARM-RULE.md): it
@@ -232092,6 +232093,15 @@ var T = {};
       root.setAttribute('data-rw', part);
       rasterEls = [].slice.call(root.querySelectorAll(spec[1]));
       rasterOff = spec[2] ? [].slice.call(root.querySelectorAll(spec[2])) : [];
+      /* a part the scrolling body shows only in part, or not at all, is moved up to the body's top for its frame, or the
+         scroller's clip leaves it unpainted (the groups below the fold were never drawn by their own parts). A transform,
+         not a scroll: a scroll runs the page's scroll listeners, and NieR's brackets, cursor and Pod hide for 140 ms on
+         any scroll. Read at the step's start, on the frame's clean layout; the cleanup moves it back */
+      var first = rasterEls[0];
+      if (first && first !== body && body.contains(first)) {
+        var bb = body.getBoundingClientRect(), fb = first.getBoundingClientRect();
+        if (fb.height && (fb.top < bb.top || fb.bottom > bb.bottom)) { rasterShift = first; first.style.transform = 'translateY(' + Math.round(bb.top - fb.top) + 'px)'; }
+      }
       rasterEls.forEach(function (e) { e.setAttribute('data-rw-on', ''); });
       rasterOff.forEach(function (e) { e.setAttribute('data-rw-off', ''); });
       root.classList.add('pmt-cz-rasterwarm');
