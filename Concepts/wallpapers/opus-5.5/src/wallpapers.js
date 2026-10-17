@@ -55,7 +55,7 @@
   /* A selected radio paints before decoding or restyling. Two permanent background layers carry the print fade;
      the cached frost joins when the fade starts. No snapshots or nodes are added to the live sheets on a choice. */
   var paintedChoice = choice(), paintKey = '', paintedUrl = '', paintSerial = 0, commitT = 0, commitFrame = 0;
-  var printLayers = [], printAnimations = [], printFinish = null, imageUrls = new Map();
+  var printLayers = [], printAnimations = [], printFinish = null, printTop = '', imageUrls = new Map();
   function mountPrints() {
     if (printLayers.length || !document.body) return;
     for (var i = 0; i < 2; i++) {
@@ -295,27 +295,28 @@
   function apply(animate) {
     var id = shown(), selected = choice(), theme = root.getAttribute('data-theme'), key = theme + '|' + id;
     if (key === paintKey) { paintedChoice = selected; return; }
-    var serial = ++paintSerial, url = imageUrl(id);
-    /* A viewport/Glass epoch change or failed bake can invalidate preparation without invalidating the choice.
-       Keep the current choice authoritative and let the normal image/frost fallback commit it. Superseded choices
-       and modes still never commit. The same print fade remains available when the prepared frost was unavailable. */
-    prepare(url).catch(function () { return false; }).then(function () {
-      if (serial !== paintSerial || theme !== root.getAttribute('data-theme')) return;
-      var viewport = { width: innerWidth, height: innerHeight };
-      var commit = function (fade) {
-        if (serial !== paintSerial) return;
-        paintedChoice = selected; paintKey = key; paintedUrl = url;
-        attr('data-lg-wall', id || null); attr('data-lg-wall-any', id && look() !== 'glass' ? '' : null);
-        if (url && window.PM_LG && PM_LG.commitWallpaper) PM_LG.commitWallpaper(id, url, viewport, fade);
-      };
+    /* a look change ends at once a fade whose print was never committed (fade-first, below): it is the old mode's print */
+    if (!animate && printFinish && printTop !== paintedUrl) printFinish();
+    var serial = ++paintSerial, url = imageUrl(id), early = null;
+    function live() { return serial === paintSerial && theme === root.getAttribute('data-theme'); }
+    var commit = function (viewport, fade) {
+      if (serial !== paintSerial) return;
+      paintedChoice = selected; paintKey = key; paintedUrl = url;
+      attr('data-lg-wall', id || null); attr('data-lg-wall-any', id && look() !== 'glass' ? '' : null);
+      if (url && window.PM_LG && PM_LG.commitWallpaper) PM_LG.commitWallpaper(id, url, viewport, fade);
+    };
+    /* The two planes start fading the print over the one on show (the planes' own top print while an earlier fade still
+       shows it, else the committed one). Returns the fade, or null when the choice swaps at once. */
+    function fadePrint() {
+      var base = printFinish && printTop ? printTop : paintedUrl;
       if (printFinish) printFinish();
       mountPrints();
-      if (!animate || still() || printLayers.length !== 2) { commit(); return; }
+      if (!animate || still() || printLayers.length !== 2) return null;
       printLayers.forEach(function (e, i) {
         /* Both planes are direct body children: inherit the exact computed ground without flushing the newly
            selected gallery's style. A look change also updates this ground without a stale color-cache window. */
         e.style.backgroundColor = 'inherit';
-        e.style.backgroundImage = (i ? url : paintedUrl) ? 'url(' + JSON.stringify(i ? url : paintedUrl) + ')' : 'none';
+        e.style.backgroundImage = (i ? url : base) ? 'url(' + JSON.stringify(i ? url : base) + ')' : 'none';
       });
       printLayers[0].style.opacity = '1'; printLayers[1].style.opacity = '0';
       var done = false;
@@ -325,13 +326,41 @@
           e.style.opacity = '0'; e.style.backgroundImage = 'none'; e.style.backgroundColor = '';
         });
         printAnimations.forEach(function (a) { a.cancel(); }); printAnimations = [];
-        if (printFinish === finish) printFinish = null;
+        if (printFinish === finish) { printFinish = null; printTop = ''; }
       }
-      printFinish = finish;
+      printFinish = finish; printTop = url;
+      var fade = printLayers[1].animate([{ opacity: 0 }, { opacity: 1 }], { duration: 240, easing: 'linear', fill: 'forwards' });
+      printAnimations = [fade];
+      return fade;
+    }
+    /* B3 fade-first (F6, Jared 2026-10-16: "fade is fine"). A print whose frost is not ready starts fading as soon as Glass
+       has decoded it (PM_LG.prepareWallpaper's printed), instead of waiting for the frost's bake; the sheets keep their
+       frost until the new one is ready (about 200 ms later on a P1000), then crossfade to it over the print fade's 240 ms
+       through the same commit. A prepared print still fades and commits in one task, the sheets in step with the print. */
+    var options = animate && !still() ? { printed: function () { if (live() && !early) early = fadePrint(); } } : undefined;
+    /* A viewport/Glass epoch change or failed bake can invalidate preparation without invalidating the choice.
+       Keep the current choice authoritative and let the normal image/frost fallback commit it. Superseded choices
+       and modes still never commit. The same print fade remains available when the prepared frost was unavailable. */
+    prepare(url, options).catch(function () { return false; }).then(function () {
+      if (!live()) return;
+      var viewport = { width: innerWidth, height: innerHeight };
+      if (early) {
+        if (printFinish && printTop === url) {
+          /* the frost's crossfade is timed by a clock of its own (an Animation with no target): the print may still be
+             fading, and an opacity animation on its plane would take that plane over. The planes clear once both end;
+             by then the body has carried the new print for 240 ms. */
+          var clock = new Animation(new KeyframeEffect(null, null, { duration: 240, easing: 'linear', fill: 'forwards' }), document.timeline);
+          clock.play(); printAnimations.push(clock); commit(viewport, clock);
+          var end = printFinish;
+          Promise.all([early.finished, clock.finished]).then(end, end);
+        } else commit(viewport);
+        return;
+      }
+      var fade = fadePrint(), finish = printFinish;
+      if (!fade) { commit(viewport); return; }
       /* Start the prepared frost with the body fade. Waiting for the midpoint left the sheets showing the old
          print for another 120 ms, followed by their raster cost, even when preparation was a cache hit. */
-      var fade = printLayers[1].animate([{ opacity: 0 }, { opacity: 1 }], { duration: 240, easing: 'linear', fill: 'forwards' });
-      printAnimations = [fade]; commit(fade);
+      commit(viewport, fade);
       fade.finished.then(finish, finish);
     });
   }

@@ -192,3 +192,9 @@ outgoing background (frost, rim, tint and light) over the new one and fades from
 fade's duration and easing, starting on the same frame. The overlay is transient. It goes when that fade finishes or is
 cancelled; a new commit replaces it at once, and a look, tier or motion change, a resize or leaving Glass clears it.
 Without `fade` (a look change, Reduce Animations, the CPU path) the frost changes at once.
+
+Fade-first (B3, F6, Jared 2026-10-16): `PM_LG.prepareWallpaper(url, { printed })` calls `printed` once, when the print is
+decoded but its frost still has to be made, so the package can start the print's fade at once; Glass then makes that
+frost after the next presented frame, so the fade's first frame is not held by the bake. The package commits once the
+frost is ready, with a target-less 240 ms `Animation` as `fade`: the sheets keep their frost until then and crossfade to
+the new one from that commit. A pair that is still kept, and every prepare without `printed`, resolve as before.

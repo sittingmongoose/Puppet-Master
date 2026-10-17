@@ -403,8 +403,9 @@
   /* what each prepare and commit found (B3 attribution for films): a performance mark 'pm-lg-wall:<n>' per event, detail
      { what, wall, ms }, and the last 64 in PM_LG.frostLog(). what: kept (the pair was cached, decoded), kept-decode (cached,
      decoded again), joined (its bake was already running), baked (made now), refused (canRun said no), failed, evicted,
-     commit (the pair was there), commit-miss or retain (detail n: how many prints the gallery keeps decoded). wall names
-     the print by its id and mode where Glass knows it. */
+     printed (the print was decoded and the caller told before its frost is made: opts.printed, fade-first), commit (the
+     pair was there), commit-miss or retain (detail n: how many prints the gallery keeps decoded). wall names the print by
+     its id and mode where Glass knows it. */
   var frostLogBuf = [], markN = 0;
   function wallName(url) {
     var name = ''; wallSourceUrls.forEach(function (u, k) { if (u === url) name = k; });
@@ -2817,8 +2818,14 @@
     /* Decode and bake through the same bounded caches as visible sheets. Preparation changes no visible pixels. */
     /* opts.canRun (optional): asked again once the print is decoded, before its frost is encoded; false resolves false
        and the caller tries again later (the gallery warms nearby prints only while the page is idle; Settings, B3) */
+    /* opts.printed (optional): called once, when the print is decoded but its frost still has to be made, so the caller
+       can start showing the print before the frost is ready (B3 fade-first, F6, Jared 2026-10-16). Glass then makes that
+       frost after the next presented frame, so the caller's first frame of its fade is not held by the bake (about 40 ms
+       of the main thread a print on a P1000) and the fade runs on the compositor meanwhile. Never called for a pair that
+       is still kept, nor when Glass is off: those resolve as soon as they would have. */
     prepareWallpaper: function (url, opts) { return new Promise(function (resolve) {
       var canRun = opts && typeof opts.canRun === 'function' ? opts.canRun : null;
+      var printed = opts && typeof opts.printed === 'function' ? opts.printed : null;
       /* a print whose frost pair is still kept is ready to commit without decoding the print again (raw prints are kept
          for 2, frost pairs within FROST_BYTES); it resolves once that pair's images are decoded; its rims rebake after
          the commit, as for any print */
@@ -2833,8 +2840,13 @@
         if (canRun && !canRun()) { frostLog('refused', url, t0); resolve(false); return; }
         var printMs = Math.round(performance.now() - t0), k = url + ':' + innerWidth + 'x' + innerHeight;
         var how = frostCache.has(k) ? 'kept' : frostJobs.has(k) ? 'joined' : 'baked';
-        if (isGlass()) makeFrosts(im, function (ok) { frostLog(ok ? how : 'failed', url, t0, { printMs: printMs, gallery: !!canRun }); resolve(ok); }, true);
-        else resolve(true);
+        if (!isGlass()) { resolve(true); return; }
+        var bake = function () { makeFrosts(im, function (ok) { frostLog(ok ? how : 'failed', url, t0, { printMs: printMs, gallery: !!canRun, early: !!printed }); resolve(ok); }, true); };
+        if (!printed || how === 'kept') { bake(); return; }
+        frostLog('printed', url, t0, { printMs: printMs });
+        try { printed(); } catch (err) {}
+        /* after the frame that starts the caller's fade: a timeout set in a frame's rAF runs once that frame is done */
+        if (document.hidden) bake(); else requestAnimationFrame(function () { setTimeout(bake, 0); });
       }, url);
     }); },
     /* fade (optional): the body print's Animation, made in the same task just before this commit. With it, every shown
