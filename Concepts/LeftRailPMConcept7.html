@@ -100607,8 +100607,12 @@ function o55Land(el) {
   quit.forEach(n => root.addEventListener(n, job.stop, { capture: true, passive: true }));
   const step = () => {
     if (!el.isConnected || !scroller.isConnected) return job.stop();
-    const top = scroller.scrollTop, aim = o55LandAt(scroller, el), moved = Math.abs(top - last) >= 1;
+    const top = scroller.scrollTop, moved = Math.abs(top - last) >= 1;
     last = top; still = moved ? 0 : still + 1;
+    /* the target's position is read only once the scroll is at rest or has moved after rest, so the early frames of a
+       smooth scroll cost no forced layout */
+    let aim;
+    if ((moved && rested) || still >= 2) aim = o55LandAt(scroller, el);
     /* once at rest, a move that leaves the target behind is someone else's scroll */
     if (moved && rested && Math.abs(top - aim) > 1) return job.stop();
     if (still >= 2) {
