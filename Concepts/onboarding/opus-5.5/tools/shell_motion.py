@@ -201,7 +201,8 @@ PAGES = [
      "      /* O55: an arriving page still drawing its content in slices says so (data-pm-entrance-wait): the moves stay held\n"
      "         until it is drawn (1.5 s from the click at most), the click's fade still going meanwhile (F6 Usage entry freeze) */\n"
      "      var stillDrawing = function () { return newP.hasAttribute('data-pm-entrance-wait'); };\n"
-     "      var waitFrom = lift && lift.el === oldP ? lift.at : undefined;   /* 1.5 s from the click's frame, inside its fade */\n"
+     "      /* 1.5 s from the click's frame (goSoon's, every look: NieR and Reduce Animations make no fade), inside its fade */\n"
+     "      var waitFrom = window.PM_PAGES.__clickAt; window.PM_PAGES.__clickAt = null;\n"
      "      if (window.PM_START_ON_SHOWN) window.PM_START_ON_SHOWN(pageMoves, { release: handoff, wait: stillDrawing, waitCap: 1500, waitFrom: waitFrom }); else handoff();\n",
      'page switch: moves start on a shown frame'),
     ("      function cleanupOut() {\n"
@@ -355,9 +356,11 @@ ANSWER_FIRST = [
      "        var to = soon.page; soon = null;\n"
      "        /* the fade is not read here: a move begun a frame ago still reads as its start on this thread */\n"
      "        P.__lift = lift ? { el: oldP, anim: lift, at: shown } : null;\n"
+     "        P.__clickAt = shown;   /* the entrance wait's cap counts from here (PAGES) */\n"
      "        if (P.__answered !== to) P.__answered = null;\n"
      "        P.go(to);\n"
      "        if (P.__lift) { try { P.__lift.anim.cancel(); } catch (e) {} P.__lift = null; }   /* no exit took it over */\n"
+     "        P.__clickAt = null;\n"
      "      }, 0); });\n"
      "    };\n"
      "    function resync() {\n"
