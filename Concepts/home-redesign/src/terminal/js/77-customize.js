@@ -439,11 +439,16 @@
      against 1-2 on the RTX 3090. The preview goes last, after the bezel's steps at its size (rasterSoon) */
   var CG = '.pmt-cz-group[data-group="colors"]';
   var RASTER_PARTS = [
-    ['top:chrome', '.pmt-cz-scrim, .pmt-cz-frame'],
+    /* the dialog's own plate, the scrim and the frame round the terminal apart, and the index apart from the foot: drawn
+       together each linked 2-3 programs back to back on the P1000, a 100 ms gap (the lead's F6-pre attribution) */
+    ['top:plate', '.pmt-cz-dialog'],
+    ['top:scrim', '.pmt-cz-scrim'],
+    ['top:frame', '.pmt-cz-frame'],
     ['top:head', '.pmt-cz-head'],
     ['top:meter', '.pmt-cz-meter'],
     ['top:side', '.pmt-cz-presets, .pmt-cz-try'],
-    ['top:index', '.pmt-cz-nav, .pmt-cz-foot'],
+    ['top:nav', '.pmt-cz-nav'],
+    ['top:foot', '.pmt-cz-foot'],
     ['colors:head', CG, CG + ' > :not(.pmt-cz-ghead):not(.pmt-cz-glead):not(.pmt-cz-findrow)'],
     ['colors:tiles', CG + ' .pmt-cz-schemes', CG + ' .pmt-cz-sw'],
     ['colors:art', CG + ' .pmt-cz-sw'],
@@ -1581,8 +1586,8 @@
     /* ---- the build in steps (staged): the values, the preview, each group, the measures, then the fit's phases (fitStart);
        each step only writes, so the frame after it lays out what it added. They paint nothing (the screen is parked:
        clipped away, its parts hidden), so they are cpu steps (IDLE-WARM-RULE v3.5 item 4), judged by the two frames
-       after them, which hold the new DOM's style and layout; the values step, which puts it in the page, is a GPU step
-       (queueBuild). A step skipped (the screen kept for the next
+       after them, which hold the new DOM's style and layout; the values step, which puts it in the page, and the
+       preview's are GPU steps (queueBuild). A step skipped (the screen kept for the next
        terminal, or gone) stops the rest; retarget queues them again. A late step has done its work all the same; one let
        go (the queue's session stop) leaves the rest to this screen's own idle wait. The click finishes what is left
        (show, finishBuild) ---- */
@@ -1616,9 +1621,10 @@
       buildCancel();
       if (!window.PM_WARM || window.PM_WARM.state().off) { buildIdle(); return; }
       slices.forEach(function (s) {
-        /* the values step puts the screen in the page, and on the P1000 its window showed 6 links (part2, Friendly):
-           a GPU step, watched (IDLE-WARM-RULE v3.5 item 4's guard); the rest paint nothing */
-        buildIds.push(window.PM_WARM.add({ owner: 'terminal', name: 'customize:build:' + s.name, cpu: s.name !== 'values',
+        /* the values step puts the screen in the page and the preview step makes its live view: on the P1000 their
+           windows showed 6 and 5 links (part2; Friendly, Basic), so they are GPU steps, watched (IDLE-WARM-RULE v3.5 item
+           4's guard); the rest paint nothing */
+        buildIds.push(window.PM_WARM.add({ owner: 'terminal', name: 'customize:build:' + s.name, cpu: s.name !== 'values' && s.name !== 'preview',
           until: function () { return !disposed && !handle.kept && slices[0] === s; },
           run: function () { if (slices[0] === s) { slices.shift(); s.run(); } return null; },
           onLate: function (i) { if (i.dropped) buildIdle(); return true; } }));
