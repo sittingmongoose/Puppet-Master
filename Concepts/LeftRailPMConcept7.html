@@ -65580,7 +65580,9 @@ var PMU_SERIES = {
      at the idle period's deadline, or after RASTER_CPU ms (the rule assumes no 45 ms slot): a root's plan, read element
      by element and resumed in the next step; another room's first screen built in the spare board (40-board.js
      rasterRoom, one slice a step); the page laid out in its warm box again after a park. Only one Usage step is queued at
-     a time; each step queues the next as it runs, so a light chain can continue.
+     a time; each step queues the next as it runs, so a light chain can continue. Every step is 'later' (IDLE-WARM-RULE
+     v3.7): the queue runs it only when no other owner has a step queued, so terminal's and Glass's warm-ups keep their
+     pace and the pass takes what is left (P1000: each GPU step costs about 0.4 s of the queue's time).
      The slices (fix cycle 2: each may link at most a program or two, about 30 ms a link on the P1000; P1000 part2,
      1994fee11d: a step with 12-15 links made a 234 ms gap, so one new kind a step): the layer alone with one small box
      (its own compositor programs); then the page chrome and each card of the room, the hero first, as a growing prefix
@@ -65737,7 +65739,9 @@ var PMU_SERIES = {
   /* one step handed to the queue: a draw (GPU) or a cpu step of the given kind */
   function rasterAdd(r, need) {
     var cpu = need !== 'draw', pk = cpu ? null : rasterPeek(r), step = null;
-    var o = { owner: 'usage', name: (r.cur ? r.cur.room : '') + ':' + (cpu ? need : pk.name), near: false, cpu: cpu, light: !cpu && pk.light,
+    /* later (IDLE-WARM-RULE v3.7): every step of the pass runs only when no other owner has a step queued; the arrival
+       does not depend on it (a queue without 'later' ignores the flag) */
+    var o = { owner: 'usage', name: (r.cur ? r.cur.room : '') + ':' + (cpu ? need : pk.name), near: false, later: true, cpu: cpu, light: !cpu && pk.light,
       until: function () { return rast === r && warm === r.w && !pageShown(); },
       run: function (d) {
         if (r.queued === o.id) { r.queued = 0; clearTimeout(r.waitT); r.waitT = 0; }
