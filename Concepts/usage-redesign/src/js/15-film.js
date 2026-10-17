@@ -2014,8 +2014,8 @@
      and the warm board still current (warmKey: a look or Settings change drops it and the next warm build starts the
      pass again). A hidden tab, Settings, the tour or onboarding park the pass at once (rasterPark: a spare room is torn
      down and the page goes back to display: none as after a pass), and so do a window resize and a step that has waited
-     RASTER_WAIT ms in the queue (its gates closed: input, a busy page, a back-off), so the page is not kept laid out
-     unseen while Home is used. A parked pass resumes at the slice it was on: the page is laid out again in a cpu step of
+     RASTER_WAIT ms while the queue is stopped, the page busy or the queue in a long back-off, so the page is not kept
+     laid out unseen while Home is used. A parked pass resumes at the slice it was on: the page is laid out again in a cpu step of
      its own (rasterUnpark, the box read again). The arrival (warmTake) or a drop stops it at once. ?pmu-raster=0 leaves
      it out, ?pmu-raster=1 skips Usage's own no-GPU checks (PM_WARM's ?pm-warm=force runs the queue on a CPU-only VM),
      ?pmu-raster-marks=1 adds a performance mark per draw. PMU.film.warmState().raster says what ran. ---- */
@@ -2188,14 +2188,18 @@
     clearTimeout(r.waitT);
     r.waitT = setTimeout(function () { rasterWaited(r, id); }, RASTER_WAIT);
   }
-  /* a queued step that has waited RASTER_WAIT ms (its gates closed: input, a busy page, a back-off or a stop): the page is
-     parked meanwhile and the step queued again behind an unpark; a queue stopped for the session ends the pass */
+  /* a queued step that has waited RASTER_WAIT ms: when the queue is stopped, the page busy (a page change, a cover) or the
+     queue in a long back-off, the page is parked meanwhile and the step queued again behind an unpark (a wait for the
+     queue's quiet clock or for frames on time only goes on: each resume lays the page out again); a queue stopped for
+     the session ends the pass */
   function rasterWaited(r, id) {
     r.waitT = 0;
     if (rast !== r || r.queued !== id) return;
     var qs = {}; try { qs = r.q.state('usage') || {}; } catch (error) {}
     if (qs.session || qs.off) { rasterEnd(qs.off ? 'pm-warm-off' : 'stopped:pm-warm'); return; }
-    if (r.parked) { r.waitT = setTimeout(function () { rasterWaited(r, id); }, RASTER_WAIT); return; }
+    var long = qs.stopped || qs.waiting === 'busy' || qs.waiting === 'backoff' && qs.backoffMs >= 4000;
+    if (r.parked || !long) { r.waitT = setTimeout(function () { rasterWaited(r, id); }, RASTER_WAIT); return; }
+    rasterLog.waits = (rasterLog.waits || 0) + 1;
     rasterUnqueue(r);
     rasterPark(r);
     rasterNext(r);
