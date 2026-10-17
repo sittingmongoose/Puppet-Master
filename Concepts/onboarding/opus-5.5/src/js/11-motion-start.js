@@ -52,6 +52,19 @@
   };
   window.PM_START_ON_SHOWN = function startOnShown(anims, o) {
     const max = (o && o.frames) || 6, held = new Set(), before = o && typeof o.release === 'function' ? o.release : null;
+    /* o.wait: () => bool. While it says true the moves stay held, even when the frames are on time, for at most o.waitCap
+       ms (1.5 s) from the first check: an arriving page that draws its content in slices first says so (a page change
+       holds while its page carries data-pm-entrance-wait: Usage's board, rastered a card a frame so the compositor never
+       waits on the whole board, F6 entry freeze) */
+    const waitFor = o && typeof o.wait === 'function' ? o.wait : null, waitCap = (o && o.waitCap) || 1500;
+    let firstCheck = null;
+    const waiting = () => {
+      if (!waitFor) return false;
+      const t = performance.now();
+      if (firstCheck === null) firstCheck = t;
+      if (t - firstCheck >= waitCap) return false;
+      try { return !!waitFor(); } catch (_) { return false; }
+    };
     /* o.start === 'commit': the caller's moves are entrances that start from nothing (opacity 0, or clipped to a line),
        so they go on the first frame on time after a long one rather than waiting for the second. Held at their start
        until then, they kept what they bring invisible through the GPU's first draw of it (the editor's customizer sheet:
@@ -81,15 +94,16 @@
     const tick = () => {
       const now = document.timeline.currentTime;
       if (now == null) { release(); return; }
+      const keep = waiting();
       /* a frame is long when it began late, or when its own style and layout have already run long (this check runs
          after them): the Wizard built under the onboarding window is styled inside the frame that begins right after
          Enter, so the frames began on time while that one ran 300 ms, and the window's exit, started from that
          frame's time, was over by its first draw */
       const gap = last == null ? Infinity : now - last, late = performance.now() - now;
       last = now;
-      if (gap <= 40 && late <= 40) { onTime++; if (!long || onTime >= 2 || atCommit) { release(); return; } }
+      if (gap <= 40 && late <= 40) { onTime++; if (!keep && (!long || onTime >= 2 || atCommit)) { release(); return; } }
       else { long = true; onTime = 0; }
-      if (++n >= max) { release(); return; }
+      if (++n >= max && !keep) { release(); return; }
       hold();
       next();
     };
@@ -100,6 +114,9 @@
     const next = () => requestAnimationFrame(() => window.PM_AFTER_LAYOUT(tick));
     next();
   };
+
+  /* the arriving page may say it is still drawing (o.wait above): a page that sees this flag can slice its first draw */
+  window.PM_START_ON_SHOWN.entranceWait = true;
 
   /* PM_BUSY(): one answer for work parked until the app is still (the editor's and terminal's background refreshes,
      their measurement and token reads), so every caller waits for the same things. It returns what is up, as a short
