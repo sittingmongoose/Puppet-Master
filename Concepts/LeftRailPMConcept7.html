@@ -65617,8 +65617,8 @@ var PMU_SERIES = {
   var RASTER_MARKS = /[?&]pmu-raster-marks=1(?:&|#|$)/.test(location.search);
   /* RASTER_CPU: the most ms of a cpu step's work when its idle period gives no deadline; RASTER_WAIT: a queued step not
      run in this long parks the pass; RASTER_MSAA: the paths that make a layer raster multisampled; RASTER_FIRST: a guard
-     on the level-0 draws (the whole first screen runs at level 0: Overview's took 106-109 draws on the 3090,
-     warmState().raster.running.firstDraws) */
+     on the level-0 draws (the whole first screen runs at level 0, its marks first: Overview's took 134-141 draws on
+     the 3090, warmState().raster.running.firstDraws) */
   var RASTER_ROOMS = ['overview', 'costs', 'accounts'], RASTER_CPU = 6, RASTER_WAIT = 3000, RASTER_MSAA = 6, RASTER_QUIET = 600, RASTER_FIRST = 200;
   /* RASTER_PREFIX: the most painting elements a part's draw adds (?pmu-raster-prefix=N for measurements): 4, since a
      prefix of 8 elements of kinds already drawn still linked 3-7 programs at once in new batches (RTX 3090), more than a
@@ -66039,6 +66039,74 @@ var PMU_SERIES = {
     if (cs.transform && cs.transform !== 'none' && !/^matrix\(1, 0, 0, 1,/.test(cs.transform)) f.push('T');
     return ctx + '|' + f.join('.');
   }
+  /* ---- the provider marks (P2-03 F6c, the lead's ruling, 2026-10-17). A mark is an SVG data-URL image: Chrome
+     rasters the whole document as one picture in the tile it is drawn in, and no style splits it, so the cards' plans
+     leave marks out (rasterPlanRun) and the arrival linked their programs in one flush (the skyline's 13 feet, found by
+     hiding parts at the arrival: RTX 3090 6-7 links, 52 ms; P1000 F6b 17 links, 527 ms inside the hold, or 327 ms
+     after the release in NieR). Each distinct mark on the first screen is drawn first, inline: its markup as an <svg>
+     on a stage over the image's content box (ids and classes prefixed so nothing on the page matches them), shown,
+     with one more of its painting elements a step inside their groups (their masks, clips and filters apply), the
+     last step the svg whole, then the image itself in its card; then each card's marks where they are, their feet all
+     at once and the block that holds them. RTX 3090, a drained warm: the arrival's mark flush 2 links, 10 ms, no GPU
+     task over 25 ms (from 7, 52 ms). ---- */
+  var markStage = null, MARK_SHAPES = 'path, ellipse, circle, rect, polygon, polyline, line, text, image, use',
+    MARK_DEFS = 'defs, clipPath, mask, pattern, symbol, marker, linearGradient, radialGradient, filter';
+  function markSteps(panel, cards) {
+    var out = [], seen = {}, n = 0;
+    markUnstage();
+    cards.forEach(function (card) {
+      Array.prototype.forEach.call(card.querySelectorAll('img'), function (img) {
+        var src = img.currentSrc || img.getAttribute('src') || '';
+        if (!/^data:image\/svg\+xml/.test(src) || seen[src]) return;
+        var r = img.getBoundingClientRect(); if (!r.width || !r.height) return;
+        var svg = markInline(src, n); if (!svg) return;
+        seen[src] = true; n++;
+        if (!markStage) {
+          markStage = document.createElement('div'); markStage.className = 'pmu-mark-stage'; markStage.setAttribute('aria-hidden', 'true');
+          markStage.style.cssText = 'position:absolute;left:0;top:0;width:0;height:0;pointer-events:none';
+          panel.appendChild(markStage);
+        }
+        var o = markStage.getBoundingClientRect(), cs = getComputedStyle(img), pl = parseFloat(cs.paddingLeft) || 0, pt = parseFloat(cs.paddingTop) || 0;
+        svg.setAttribute('width', r.width - pl - (parseFloat(cs.paddingRight) || 0)); svg.setAttribute('height', r.height - pt - (parseFloat(cs.paddingBottom) || 0));
+        svg.style.cssText = 'position:absolute;left:' + (r.left - o.left + pl) + 'px;top:' + (r.top - o.top + pt) + 'px;overflow:hidden';
+        markStage.appendChild(svg);
+        /* the svg shown from the first step, its painting elements one more a step (the rest hidden): drawn inside a
+           hidden svg, even all 15 of the meta mark's paths linked none of the five path-atlas programs the svg shown
+           whole then linked at once (RTX 3090), so every step paints the way the whole does, a prefix of it */
+        var id = img.getAttribute('data-pmu-mark') || 'mark', shapes = Array.prototype.filter.call(svg.querySelectorAll(MARK_SHAPES), function (el) { return !el.closest(MARK_DEFS); });
+        shapes.forEach(function (el, i) { out.push({ mark: { svg: svg, shapes: shapes, k: i }, label: 'mark:' + id + ':' + el.localName + i }); });
+        out.push({ whole: img, card: card, label: 'mark:' + id + ':img' });
+      });
+      /* then the marks where they are: their feet whole, all at once, then the block that holds them all (the skyline's
+         plot), as the arrival draws them with their labels (the images alone still left three links to its flush) */
+      var imgs = Array.prototype.filter.call(card.querySelectorAll('img'), function (x) { return /^data:image\/svg\+xml/.test(x.currentSrc || x.getAttribute('src') || '') && x.getBoundingClientRect().width > 0; });
+      if (!imgs.length) return;
+      var feet = imgs.map(function (x) { return x.parentElement && x.parentElement.parentElement && x.parentElement.parentElement !== card ? x.parentElement.parentElement : x; });
+      out.push({ wholes: feet, card: card, label: 'mark:feet:' + (card.getAttribute('data-widget') || 'card') });
+      var block = imgs[0].parentElement;
+      while (block && block !== card && !imgs.every(function (x) { return block.contains(x); })) block = block.parentElement;
+      if (block && block !== card) out.push({ wholes: [block], card: card, label: 'mark:block:' + (card.getAttribute('data-widget') || 'card') });
+    });
+    return out;
+  }
+  /* the markup with its ids, references and classes prefixed (its style element's rules apply to the whole page
+     otherwise); the tag is spelt in parts so the built page holds no style tag outside a stylesheet (build.py's lint
+     reads one as a stylesheet up to the next close) */
+  var MARK_STYLE = new RegExp('(<' + 'style[^>]*>)([\\s\\S]*?)(</' + 'style>)', 'g');
+  function markInline(src, n) {
+    var m = /^data:image\/svg\+xml(;base64)?(?:;[^,]*)?,([\s\S]*)$/.exec(src); if (!m) return null;
+    var text; try { text = m[1] ? atob(m[2]) : decodeURIComponent(m[2]); } catch (error) { return null; }
+    var p = 'pmu-ms' + n + '-';
+    text = text.replace(/\bid="([^"]+)"/g, 'id="' + p + '$1"').replace(/url\(\s*['"]?#([^)'"]+)['"]?\s*\)/g, 'url(#' + p + '$1)')
+      .replace(/((?:xlink:)?href)="#([^"]+)"/g, '$1="#' + p + '$2"')
+      .replace(/\bclass="([^"]+)"/g, function (f, c) { return 'class="' + c.trim().split(/\s+/).map(function (x) { return p + x; }).join(' ') + '"'; })
+      .replace(MARK_STYLE, function (f, a, css, b) { return a + css.replace(/\.([A-Za-z_][\w-]*)/g, '.' + p + '$1') + b; });
+    var box = document.createElement('div');
+    box.innerHTML = text;
+    return box.querySelector('svg');
+  }
+  function markUnstage() { if (markStage) { markStage.remove(); markStage = null; } }
+
   /* one root's plan, made a little at a time (rasterPlanRun, in cpu steps): [{ self: [elements], sig: [keys] } ..., then
      its whole steps]. A layer of six paths or more first draws six of them alone, of one kind where it can. ctxOf(el)
      names the layer of an element, skip(el) leaves a subtree out. A part (the page chrome, a card) is drawn as a growing
@@ -66138,13 +66206,15 @@ var PMU_SERIES = {
        ruling, 2026-10-17): the hero, its chart's kinds leading (rasterPlanFor: the hero's skyplot linked eight
        programs in one 87-105 ms GPU flush at the arrival on the 3090 cold, logged two slices late against the month
        card; 48-67 ms once the pass has drawn the chart's 25 steps, from about +25 s; the six or seven links left, five
-       of them path-atlas kinds, are its feet's provider marks, vector images the pass leaves to the arrival
-       (rasterPlanRun), found by hiding parts at the arrival), then the other cards the most paths first; then the page
-       chrome, then the cards below the window */
+       of them path-atlas kinds, were its feet's provider marks, found by hiding parts at the arrival, and are drawn
+       before it, markSteps), then the other cards the most paths first; then the page chrome, then the cards below the
+       window */
     var shown = cards.filter(function (c) { return PMU.boards ? inView(c) : true; }), below = cards.filter(function (c) { return shown.indexOf(c) < 0; });
     var cost = function (c) { return (c.hasAttribute('data-hero') ? 1e6 : 0) + c.querySelectorAll('path, polyline, polygon').length + 0.01 * c.getElementsByTagName('*').length; };
     shown = shown.map(function (c) { return { c: c, k: cost(c) }; }).sort(function (a, b) { return b.k - a.k; }).map(function (x) { return x.c; });
     roots.push({ t: 'layer', first: true });
+    /* the provider marks first of all (markSteps): the dearest first use, and no card's draw makes it */
+    roots.push({ t: 'marks', cards: shown, first: true });
     shown.forEach(function (c) { roots.push({ t: 'card', el: c, first: true }); });
     roots.push({ t: 'chrome' });
     below.forEach(function (c) { roots.push({ t: 'card', el: c }); });
@@ -66152,6 +66222,7 @@ var PMU_SERIES = {
   }
   function rasterPlanFor(panel, rt) {
     if (rt.t === 'layer') { var p0 = rasterPlanStart(panel, null, null, [{ layer: true, label: 'layer' }]); p0.stack = []; p0.phase = 1; return p0; }
+    if (rt.t === 'marks') { var pm = rasterPlanStart(panel, null, null, markSteps(panel, rt.cards)); pm.stack = []; pm.phase = 1; return pm; }
     /* no whole draw after a part's prefix (P2-03 final, 2026-10-17): the prefix draws every painting element in the
        window, and what the whole draw still linked (RTX 3090: the chrome whole 8 programs, one of them 72 ms; a card
        whole 3-4) is the batching of the whole, which a P1000 holds well over 100 ms; the arrival, drawn unseen under the
@@ -66180,6 +66251,7 @@ var PMU_SERIES = {
     var rt = cur.roots[cur.ri];
     if (rt && rt.t === 'card' && rt.el && cur.plan && cur.pi >= cur.plan.length) rt.el._pmuPrelinked = true;
     if (rt) rasterUnmark(rt.t === 'card' ? rt.el : document.getElementById('panel-usage'));
+    if (rt && rt.t === 'marks') markUnstage();
     cur.ri++; cur.pi = 0; cur.plan = null; cur.planning = null;
     rasterGrow = 1;
   }
@@ -66210,7 +66282,9 @@ var PMU_SERIES = {
       out.els = s.self; out.lits = s.lits; out.part = s.part || null;
       out.label = s.part ? 'part:' + s.part.name + ':' + rasterName(s.self[0]) : 'new:' + rasterName(s.self[0]) + ':' + s.label;
     } else if (s.self) { out.els = s.self; out.lits = s.self.map(function () { return false; }); out.label = s.label; }
-    else if (s.whole) { out.whole = s.whole; out.label = s.label; }
+    else if (s.mark) { out.mark = s.mark; out.label = s.label; }
+    else if (s.wholes) { out.wholes = s.wholes; out.card = s.card; out.label = s.label; }
+    else if (s.whole) { out.whole = s.whole; out.label = s.label; if (s.card) out.card = s.card; }
     else if (s.chrome) { out.chrome = true; out.chromeOn = true; out.label = s.label; }
     else { out.layer = true; out.label = s.label; }
     (s.sig || []).forEach(function (k) { rasterSeen[k] = true; });
@@ -66232,6 +66306,14 @@ var PMU_SERIES = {
       Array.prototype.forEach.call(s.whole.querySelectorAll('[data-pmu-raster-self], [data-pmu-raster-on]'), function (x) { x.removeAttribute('data-pmu-raster-self'); x.removeAttribute('data-pmu-raster-on'); });
       s.whole.removeAttribute('data-pmu-raster-self'); s.whole.removeAttribute('data-pmu-raster-pieces');
       set(s.whole, 'data-pmu-raster-on', '');
+      if (s.card && s.card !== s.whole && s.card.isConnected) set(s.card, 'data-pmu-raster-pieces', '');
+    } else if (s.wholes) {
+      if (s.card && s.card.isConnected) set(s.card, 'data-pmu-raster-pieces', '');
+      s.wholes.forEach(function (x) { if (x.isConnected) set(x, 'data-pmu-raster-on', ''); });
+    } else if (s.mark) {
+      /* a mark's prefix: its svg shown, its first k + 1 painting elements in it */
+      set(s.mark.svg, 'data-pmu-raster-on', '');
+      s.mark.shapes.forEach(function (x, i) { x.style.visibility = i <= s.mark.k ? '' : 'hidden'; });
     } else if (s.chrome) {
       Array.prototype.forEach.call(panel.querySelectorAll('[data-pmu-raster-self]'), function (x) { if (!x.closest('.pmu-board > .pmu-card')) x.removeAttribute('data-pmu-raster-self'); });
       panel.removeAttribute('data-pmu-raster-self');
@@ -66363,6 +66445,7 @@ var PMU_SERIES = {
      was built */
   function rasterEnd(why) {
     var r = rast; if (!r) return;
+    markUnstage();
     rasterUnqueue(r);
     rasterUnlisten(r);
     window.removeEventListener('resize', r.onResize);
