@@ -229669,37 +229669,50 @@ var T = {};
   /* clear glass on a light screen lays the reflection on plainly (Liquid Glass's glint does so there); round 3's 0.6 made
      its Medium hard to tell from Off (Q15), so it is laid on whole */
   var GLASS_LIGHT = 1;
-  Bezel.prototype._light = function (strength) {
-    var snap = this._snapshot(); if (!snap) return null;
+  /* only: the one pass to draw (0 direct, 1 diffused, 2 glow) and phase: one of its three draws ('sides', 'mask',
+     'add'), or 'sharp' (one side unblurred), for the warm's staged steps (Bezel.warm); a phase works on what the one
+     before it left in the canvases */
+  Bezel.prototype._light = function (strength, only, phase) {
+    var sharp = phase === 'sharp', sides = sharp || phase === 'sides', one = sharp ? SIDES[0] : null;
+    var snap = phase && !sides ? this.snap : this._snapshot(); if (!snap) return null;
     var geo = this.geo, g = this.g, s = this.spec, M = MATERIALS[s.material], bb = geo.bb, m = this.masks;
     var w = m.direct.width, h = m.direct.height;
     var R = this.reflectCv || (this.reflectCv = document.createElement('canvas')), T2 = this.tmpCv || (this.tmpCv = document.createElement('canvas'));
     [R, T2].forEach(function (c) { if (c.width !== w || c.height !== h) { c.width = w; c.height = h; } });
     var rc = ctx2d(R), tc = ctx2d(T2);
-    rc.clearRect(0, 0, w, h);
+    if (!phase) rc.clearRect(0, 0, w, h);
     /* the mirror about each edge, folded by f: a point d inside the glass lands d/f outside it */
     var mirror = function (side, f) {
       var e = side === 'top' ? bb[1] : side === 'bottom' ? bb[3] : side === 'left' ? bb[0] : bb[2];
       return side === 'top' || side === 'bottom' ? [RS, 0, 0, -RS / f, 0, RS * (e + e / f)] : [-RS / f, 0, 0, RS, RS * (e + e / f), 0];
     };
-    var areas = { face: geo.faceParts, all: parts([0, 0, g.w, g.h], bb) };
+    var areas = { face: geo.faceParts, all: parts([0, 0, g.w, g.h], bb) }, k = -1;
     var pass = function (blur, mask, alpha, f, area) {
-      tc.save(); tc.setTransform(1, 0, 0, 1, 0, 0); tc.globalCompositeOperation = 'source-over'; tc.globalAlpha = 1; tc.clearRect(0, 0, w, h);
-      tc.filter = blur > 0 ? 'blur(' + (blur * RS).toFixed(2) + 'px)' : 'none';
-      SIDES.forEach(function (side) {
-        tc.save(); tc.setTransform(RS, 0, 0, RS, 0, 0); tc.clip(polyPath(areas[area][side]));
-        var t = mirror(side, f); tc.setTransform(t[0], t[1], t[2], t[3], t[4], t[5]);
-        tc.drawImage(snap, g.gx, g.gy, g.gw, g.gh);
+      k++; if (only !== undefined && k !== only) return;
+      if (!phase || sides) {
+        tc.save(); tc.setTransform(1, 0, 0, 1, 0, 0); tc.globalCompositeOperation = 'source-over'; tc.globalAlpha = 1; tc.clearRect(0, 0, w, h);
+        tc.filter = blur > 0 && !sharp ? 'blur(' + (blur * RS).toFixed(2) + 'px)' : 'none';
+        SIDES.forEach(function (side) {
+          if (one && side !== one) return;
+          tc.save(); tc.setTransform(RS, 0, 0, RS, 0, 0); tc.clip(polyPath(areas[area][side]));
+          var t = mirror(side, f); tc.setTransform(t[0], t[1], t[2], t[3], t[4], t[5]);
+          tc.drawImage(snap, g.gx, g.gy, g.gw, g.gh);
+          tc.restore();
+        });
+        tc.filter = 'none';
         tc.restore();
-      });
-      tc.filter = 'none';
-      tc.globalCompositeOperation = 'destination-in'; tc.drawImage(mask, 0, 0);
-      tc.restore();
+      }
+      if (!phase || phase === 'mask') {
+        tc.save(); tc.setTransform(1, 0, 0, 1, 0, 0); tc.globalCompositeOperation = 'destination-in'; tc.drawImage(mask, 0, 0);
+        tc.restore();
+      }
       /* added as light; past full strength (High) the same pass is added again, so the face keeps brightening instead of
          stopping at one copy */
-      rc.globalCompositeOperation = 'lighter';
-      for (var a = alpha; a > 0.004; a -= 1) { rc.globalAlpha = Math.min(1, a); rc.drawImage(T2, 0, 0); }
-      rc.globalAlpha = 1; rc.globalCompositeOperation = 'source-over';
+      if (!phase || phase === 'add') {
+        rc.globalCompositeOperation = 'lighter';
+        for (var a = alpha; a > 0.004; a -= 1) { rc.globalAlpha = Math.min(1, a); rc.drawImage(T2, 0, 0); }
+        rc.globalAlpha = 1; rc.globalCompositeOperation = 'source-over';
+      }
     };
     pass(M.blur, m.direct, strength * 1.25, FOLD, 'face');
     pass(M.blur * 4 + 3, m.diffused, strength * 0.55, FOLD, 'face');
@@ -229765,6 +229778,47 @@ var T = {};
           if (bz) bz.dispose();
           return null;
         } });
+      ids.push({ id: id, key: 'cold' });
+    });
+    /* the live reflection: read from the terminal's own GPU canvas, the light's passes run on the GPU, and its first draw
+       linked 7 programs on the P1000 (part2's F6b typing trace, Monitor + Reflection High: PathTessellate 55 ms, FillRRect
+       49 and 52, FillRect 26-34, AAConvexPath 17). It is drawn once at idle as it is, unseen (a case off the page), one
+       pass a step (the direct and diffused passes a draw a step, the direct pass's clipped draw first unblurred: whole,
+       the direct pass linked 3 programs on the RTX 3090, its sides 2; the diffused sides' 2 come from its blur alone),
+       then laid on the case: GPU steps, watched (the lead's ruling, 2026-10-17). Not for a material that
+       reflects nothing (NieR's ink) */
+    var lap = A.peek({ api: it.view.api, tabAppearance: Object.assign({}, it.view.tabAppearance || {}, { bezel: it.ap.bezel.style, bezelReflect: 'high' }), previewAppearance: null, state: {} });
+    if (!lap || !lap.bezel) return;
+    var live = null, liveOf = function () {
+      if (live) return live;
+      var b = lap.bezel, w = it.w, h = it.h, inset = (b.width || 0) + (b.gap || 0);
+      live = new Bezel({ root: document.createElement('div'), canvas: it.view.canvas, visible: true, fx: null, renderer: null });
+      live.configure(b, lap);
+      live.g = { w: w, h: h, gx: inset, gy: inset, gw: Math.max(20, w - inset * 2), gh: Math.max(20, h - inset * 2), dpr: it.dpr };
+      var st = live.spec.strength; live.spec.strength = 0; live._paint(); live.spec.strength = st;
+      return live;
+    };
+    var liveEnd = function () { if (live) { live.dispose(); live = null; } };
+    var plan = [];
+    [['direct', 0], ['diffused', 1]].forEach(function (ps, j) {
+      if (!j) plan.push([ps[0], ps[1], 'sharp']);
+      plan.push([ps[0], ps[1], 'sides'], [ps[0], ps[1], 'mask'], [ps[0], ps[1], 'add']);
+    });
+    plan.push(['glow', 2], ['lay']);
+    plan.forEach(function (pt, i, all) {
+      var name = pt[0] + (pt[2] ? '-' + pt[2] : '');
+      var id = window.PM_WARM.add({ owner: 'terminal', name: 'bezel:' + it.ap.bezel.style + ':reflect-' + name + '@' + it.w + 'x' + it.h,
+        until: function () { return !!(it.view.root && it.view.root.isConnected); },
+        run: function () {
+          try {
+            var bz = liveOf();
+            if (!bz.spec.strength || !bz.masks) { liveEnd(); return null; }
+            if (pt[0] === 'lay') bz._reflect(true); else bz._light(bz.spec.strength, pt[1], pt[2]);
+          } catch (e) { liveEnd(); }
+          if (i === all.length - 1) liveEnd();
+          return null;
+        },
+        onLate: function (x) { if (x.dropped) liveEnd(); return false; } });
       ids.push({ id: id, key: 'cold' });
     });
   };
