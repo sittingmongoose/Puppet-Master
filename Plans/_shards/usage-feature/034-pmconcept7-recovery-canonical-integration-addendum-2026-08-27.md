@@ -2,9 +2,9 @@
 
 Source: `Plans/usage-feature.md`
 
-Source lines: L6441-L6572
+Source lines: L6441-L6574
 
-Source SHA256: `325b80093ce7379a3218fa19592809eea166f4d84d83715004b26f184430a418`
+Source SHA256: `bbe0a2de3a014ce31764cb71c226ab9c513f203471d16a50e2d6a0bd5345cd33`
 
 ---
 
@@ -37,9 +37,9 @@ canonical_text: >-
   Usage is one widget-composed workspace with the exact user-facing rooms `Overview`, `Plans & limits`,
   `Costs`, `Accounts`, `Free models`, `Context`, `Analytics`, `Ledger`, `Attention`, `Prompt cache`, `Tools`,
   `Signals`, and `Source authority`. Its user-facing disclosure ladder is exactly `At a glance`, `Detailed`,
-  and `Diagnostics`. Disclosure changes the mounted panel set and the useful facts inside eligible panels; it
+  and `Diagnostics`. Disclosure changes the mounted card set and the useful facts inside eligible cards; it
   is not decorative copy and it never deletes a widget instance or stored layout. Source authority mounts 7, 8 and 9
-  panels at those three disclosure levels in the redesign's default boards, each deeper level mounting at least the
+  cards at those three disclosure levels in the redesign's default boards, each deeper level mounting at least the
   shallower set (amended 2026-10-17, DL-228; it read: exactly 4, 6, and 8, the replaced page's count), and all thirteen
   rooms remain reachable at every supported physical viewport width by scrolling the rail of rooms, which keeps no
   overflow surface (amended 2026-10-17, DL-228; it read: even when the secondary rail collapses into an overflow
@@ -70,14 +70,16 @@ canonical_text: >-
   field as recorded. Credential handles are masked."; F3-514's Raw and Curated redaction); the choice is view
   state; focus moves into Details on opening and returns to the opening control on Close details or Escape;
   its Ledger attempt drill-through stays as above.
+  Amended 2026-10-17 (DL-230, Jared): a Usage widget is a card everywhere, so this unit's mounted card set,
+  eligible cards and the cards each level mounts read "panel" before (G-030).
 gui_related: true
 gui_classification_reason: This unit defines the visible Usage room taxonomy, disclosure labels, and view-state behavior.
 depends_on: [CBP-028, UF-044, UF-055, UF-090, UF-092, WS-016]
 unblocks: [UF-094, UF-095, UF-096, UF-107]
 acceptance_criteria:
-  - All thirteen named rooms are addressable in the Usage workspace at every supported physical viewport width by scrolling the rail of rooms (amended 2026-10-17, DL-228: no overflow surface), and each renders its room-specific panel catalog at the current disclosure level.
+  - All thirteen named rooms are addressable in the Usage workspace at every supported physical viewport width by scrolling the rail of rooms (amended 2026-10-17, DL-228: no overflow surface), and each renders its room-specific card catalog at the current disclosure level (amended 2026-10-17, DL-230, a Usage widget is a card; earlier panel catalog).
   - The only user-facing disclosure labels are At a glance, Detailed, and Diagnostics; Essen, Std, Adv, essentials, standard, and advanced are not disclosure labels.
-  - Switching disclosure materially changes mounted panel types or content facts, Source authority mounts 7/8/9 panels for At a glance/Detailed/Diagnostics (amended 2026-10-17, DL-228; earlier 4/6/8), a room whose panels are all At a glance (Attention, Prompt cache, Signals) changes content facts rather than the mounted set, and no disclosure switch deletes an existing widget instance or stored layout.
+  - Switching disclosure materially changes mounted card types or content facts, Source authority mounts 7/8/9 cards for At a glance/Detailed/Diagnostics (amended 2026-10-17, DL-228; earlier 4/6/8; DL-230, earlier panels), a room whose cards are all At a glance (Attention, Prompt cache, Signals) changes content facts rather than the mounted set, and no disclosure switch deletes an existing widget instance or stored layout.
   - Active room, scope, date range, disclosure, expanded-room rail state, and the Live / Paused choice remain local projection actions unless an existing owner requires otherwise; no duplicate command family is introduced, Usage refresh retains its authority, and a PMConcept7 Ledger attempt row dispatches cmd.nav.open_usage_subject as a usage_attempt/attempt_id object route without OpenSubject while retaining usage_event_ref as correlation; event-primary callers retain usage_event/usage_event_ref, and aggregate provider, account, and panel cards open local inspectors without a route command, command receipt, or domain event.
   - In the Accounts room, "Use this account" dispatches cmd.account.select_profile only where supports_manual_set_active is true, and a provider's Auto-switch toggle and switch level (scope=provider) and each account's own switch level (scope=account, D43 2026-10-10) dispatch cmd.settings.transaction.preview then cmd.settings.transaction.apply on the Settings rows, show the same value Settings shows, and keep no Usage copy; opening a card or its Details still dispatches no command.
   - Provider setup absence renders the exact `Provider Setup Required` state with explicit `Host/Environment` and preserved operation and continuation identity; its CTA reuses `cmd.settings.open` with `target_type=setting` and `setting_id=ai.accounts.provider-connections`, mints no new setup command, keeps installation and authentication separate, performs no automatic acquisition or silent reroute, and leaves UF-090, UF-092, and CBP-028 as the underlying policy owners.

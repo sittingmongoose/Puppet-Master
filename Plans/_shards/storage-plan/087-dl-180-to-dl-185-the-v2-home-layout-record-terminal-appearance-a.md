@@ -2,9 +2,9 @@
 
 Source: `Plans/storage-plan.md`
 
-Source lines: L27472-L28092
+Source lines: L27472-L28102
 
-Source SHA256: `23c2814b738393ea2382c7de55e579330e318055abdd33aa7e08b105a33e87b6`
+Source SHA256: `04430bb31d59540a1566ba4ff875193bc1b491317c735d5ac41688756556a83f`
 
 ---
 
@@ -50,6 +50,8 @@ The conversion table:
 
 **Concept lineage.** The panels concept saves its layout under `pm.home.panels:v1:<project>` and sets unreadable records aside under a quarantine key. Both are concept lineage only, never product keys.
 
+**Saved named layouts belong to the person (amended 2026-10-17, DL-230, Jared).** A saved named layout belongs to the person across projects: it lives in one per-person record, `home_named_layouts:v1` (family `home_named_layouts`, registered like `widget_presets`), not in the per-project v2 record, and Home's Layouts menu offers it in every project. The dashboard boards inside it stay per project: applying it in another project applies the layout and skips the boards whose envelope belongs to a different project. On the first read the named layouts of every project's v2 records are copied in once, two with one name both kept and the later one numbered; the v2 field `named_layouts` stays a read-only legacy input. Saving writes the per-person record and leaves the v2 record unchanged, and `cmd.workspace_layout.save_named` keeps its receipt and its one `workspace.layout_changed` (`named_layout_saved`), whose prior and new layout revisions are both the v2 record's current revision (`Plans/Contracts_V0.md#CV-361`). The rest of this section's board rules stand.
+
 **Named layouts keep their dashboards' boards (amended 2026-10-10, DL-186, D10 P6, lead ruling F3).** Saving a named layout (`cmd.workspace_layout.save_named`) also keeps a snapshot of the boards of the dashboard tabs open in the layout: `boards`, keyed by board id, each the board's stored envelope (SP-249) or null when the board had nothing stored. The snapshot is capped at 64 KB per named layout: when the canonical JSON of `boards` would pass 65,536 bytes, the save keeps the layout without them and writes `boards_skipped_bytes`, the size it left out, and the save's announcement says the dashboards were not saved with it (`Plans/FinalGUISpec.md#F3-638` owns the words). Applying the layout (`cmd.workspace_layout.apply_named`) writes each saved board back to that board's own key in the current project, a null removes what the board had stored, and shown boards reload; these board writes belong to the apply and append no event of their own (`Plans/Contracts_V0.md#CV-361`). A named layout saved before 2026-10-10 has neither field and applies as it did. The schema's invariant S13 holds the cap. The Agents board is drawn by the dashboard kind and stores nothing (SP-249, lead ruling F7), so `boards` never names `agents`; the schema accepts only `home`, `metrics`, `monitoring` and `dash-<n>` keys.
 
 **The chat's pop-out is never saved (amended 2026-10-10, DL-187, D32).** Jared answered that a popped-out chat starts back in its column after a restart, so the v2 record has no `popped_out` field: a pop-out lasts while the app runs, its pop-out and return append only `panel.undocked` or `panel.redocked`, and nothing about it is written. The chat column keeps its width, History pinned and shown.
@@ -87,6 +89,14 @@ canonical_text: >-
   source stays read-only and is never reset; an unreadable source yields the default Home layout, the old record
   kept and a notice. The concept's pm.home.panels keys are lineage only.
   The chat column's popped_out is current-run state; after a restart the chat starts in its column (F3-504, F3-637).
+  Amended 2026-10-17 (DL-230, Jared): the user's saved named layouts belong to the person across projects and
+  live in one per-person record, home_named_layouts:v1 in family home_named_layouts, not in this record; the
+  dashboard boards inside a layout stay per project and are skipped when it is applied in another project. The
+  first read copies every project's v2 named_layouts in once, two layouts with one name both kept and the later
+  one numbered, and named_layouts becomes a read-only legacy field. cmd.workspace_layout.save_named writes the
+  per-person record, leaves this record and its revision unchanged, and keeps its receipt and its one
+  workspace.layout_changed (named_layout_saved) with both revisions the record's current one (CV-361); this is
+  the one structural commit that does not advance the revision.
   Amended 2026-10-10 (DL-186, DL-187): the pop-out is never saved, so the chat column holds width_px, history_pinned, shown and keep_open (D32). A saved named layout also keeps the boards of its dashboard tabs (boards: board id to the
   board's envelope or null), capped at 64 KB (65,536 bytes) of canonical JSON; a bigger save keeps the layout,
   writes boards_skipped_bytes instead and says so; applying it writes each included board back to its key only when the saved envelope belongs to

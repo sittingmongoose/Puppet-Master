@@ -1,12 +1,12 @@
 # Shard Index: Plans/settings_inventory.schema.json
 
-Generated: 2026-09-10T02:47:39Z
+Generated: 2026-10-17T21:21:05Z
 
-Source SHA256: `4f3ccd94ec6b6589471de728f318f70756ed6cddcb5e41aecd7060f07d3b8b59`
+Source SHA256: `27d70b47df9dec4cec2a00a495bf89947bb4563d7d9f5a2d738140a32c45cad7`
 
 Manifest: [`manifest.json`](manifest.json)
 
 ## Shards
 
-- [001 - Lines 1-200](001-lines-1-200.md) L1-L200 `6edb4a8166d5e6487b76da10159ff365758bfb6a650baef65efc791f8a8b6a09`
-- [002 - Lines 201-221](002-lines-201-221.md) L201-L221 `07db15523661edc2eba1e986f87f8e38a7506f4c80bf3f70969fee08a275840d`
+- [001 - Lines 1-200](001-lines-1-200.md) L1-L200 `311ed146eb2c784f1a3fbd71b23dae3629b08f8888f8254ce15d91dc3698eb21`
+- [002 - Lines 201-228](002-lines-201-228.md) L201-L228 `ab38f5e693f42694611c812d9210a751aed39e0abc7fc1ebab33f8fb255aca09`

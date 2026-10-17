@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L5593-L27141
+Source lines: L5594-L27155
 
-Source SHA256: `4980ff8a2865a116ca808d84229b656dc16f8d1e2357642fc795f3bf350ba362`
+Source SHA256: `77c9c8ef32040f59a2cf766f0978babb35df42b2aeecef76e01819c9b732c2ec`
 
 ---
 
@@ -4218,14 +4218,17 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
-  Theme switching is live for colors, spacing, borders, overlays, and same-family switches, and
-  requires restart for cross-family switches that change loaded font families (Retro's
-  IBM Plex Mono, Friendly's Poppins/Nunito, or Glass/Basic Inter); Glass
-  and Basic share Inter so switches between them may be live. Auto presentation mode
+  Theme switching is live for colors, spacing, borders, overlays, same-family switches and cross-family
+  switches that change loaded font families (Retro's IBM Plex Mono, Friendly's Poppins/Nunito, or
+  Glass/Basic Inter); every family switch is live under that look's cover (DL-216, DL-217), and no
+  switch asks for a restart. Auto presentation mode
   follows the same within-family live rule: when the OS appearance (prefers-color-scheme)
   changes, the selected family resolves to its other variant instantly with no restart.
-  Proposed, pending Jared: a family switch is live under that look's cover (DL-216), and the restart
-  sentence above is the leftover. The cover is not limited to same-family and Auto switches.
+  Amended 2026-10-17 (DL-230, Jared): the cross-family restart rule is retired; Jared chose on 2026-10-17
+  that a family switch is live under the look's cover. Superseded lineage (kept findable): until
+  2026-10-17 this unit read that theme switching "requires restart for cross-family switches that change
+  loaded font families", with restart required for font family changes, and that Glass and Basic share
+  Inter so switches between them may be live.
   Superseded lineage
   (2026-07-16, kept findable): the prior rule named restart for font family changes between
   Retro and Basic and kept Basic one built-in theme family.
@@ -4261,6 +4264,8 @@ acceptance_criteria:
   - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
   - Every live theme family or light/dark switch acknowledges within ACD-475's bar with a cover animated in the
     look's own language, shows no blank, frozen or half-old frame, and reveals the new look whole.
+  - A cross-family switch, including one between Retro, Friendly and the Inter families, is live under the look's
+    cover and shows no restart prompt (DL-230).
 validation_surfaces:
   - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
   - "python3 scripts/pm-plan-index.py validate"
@@ -4273,6 +4278,9 @@ node_compile_hint:
   mode: theme_switching_live_restart_rules
   create_worknodes: false
 source_lineage:
+  - /mnt/Cursor/share/puppet-master/2026-10-13-pm7-coordinator-handoff/COORDINATOR-LOG.md, SHA-256
+    74400578201cb0c797697791a7fb0d15ee37ab527c6f19c922ec758c203bbace (entry 2026-10-17 20:45Z, Jared's
+    answers; decision lineage)
   - "Plans/Decision_Log.md#DL-138 (owner answers, 2026-09-29)"
   - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0062"
   - /mnt/Cursor/share/puppet-master/2026-10-16-plans-topup/sources/2026-10-16-p1000-decision--JARED-DECISIONS.md,
@@ -4300,7 +4308,8 @@ preserved_exact_tokens:
   - "prefers-color-scheme"
 negative_constraints: []
 compatibility_only_notes: []
-stale_retired_dispositions: []
+stale_retired_dispositions:
+  - "Retired 2026-10-17 (DL-230, Jared): cross-family theme switches that change loaded font families no longer require restart; a family switch is live under the look's cover (DL-216). The restart rule and its restart prompt are lineage only."
 owner_boundary_notes: []
 owner_hints:
   - "Plans/FinalGUISpec.md"
@@ -13568,8 +13577,11 @@ unit_type: constraint
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
-  The `Font family change requires restart` risk is mitigated as follows: Font-family setting
-  changes show restart prompt and fonts preload at startup for instant within-family switches.
+  The `Font family change requires restart` risk is retired (2026-10-17, DL-230, Jared): a family switch
+  is live under the look's cover (DL-216, F3-077), so no font-family setting change shows a restart
+  prompt, and fonts preload at startup for every look so within-family and cross-family switches draw
+  without a restart. Superseded lineage (kept findable): the mitigation read "Font-family setting changes
+  show restart prompt and fonts preload at startup for instant within-family switches."
 gui_related: true
 gui_classification_reason: >-
   This unit preserves one row of the user-visible Slint migration risks and mitigations table.
@@ -13601,7 +13613,8 @@ preserved_exact_tokens:
 - "Dark <-> Light"
 negative_constraints: []
 compatibility_only_notes: []
-stale_retired_dispositions: []
+stale_retired_dispositions:
+- "Retired 2026-10-17 (DL-230, Jared): the restart prompt for font-family changes is withdrawn; a family switch is live under the look's cover (DL-216, F3-077). The row stays in the matrix as retired lineage."
 owner_boundary_notes:
 - "The row remains part of the FinalGUISpec risk/mitigation matrix."
 owner_hints:

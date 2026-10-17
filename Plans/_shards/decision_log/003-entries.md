@@ -4,7 +4,7 @@ Source: `Plans/Decision_Log.md`
 
 Source lines: L13-L4294
 
-Source SHA256: `922fe8ee47b4c1c611a994d61a3aed96edd674fb393b9d5a801b58d0484349b9`
+Source SHA256: `c8c86aaf7885aaf391771f37a29db51e170e5d9f598fc2c4bc39542f3ce69de0`
 
 ---
 
@@ -3834,7 +3834,7 @@ ContractRef: ContractName:Plans/Widget_System.md#WS-017, ContractName:Plans/Widg
 **What the spec now says:**
 1. **Live as a view preference** (`Plans/usage-feature.md#UF-095` and `Plans/storage-plan.md#SP-248`, both amended): live becomes the ninth view family, kept by the storage owner and view-only, with `pm7:usage:live:v1` as the concept's noncanonical prototype key.
 2. **Where the control sits and what it does** (`Plans/usage-feature.md#UF-089`, amended, and `#UF-107`): the head stays one line and the control sits in the rail head; Live applies arriving updates and Paused holds them; Usage never counts differently because of it.
-3. **Commands** (`Plans/UI_Command_Catalog.md#UCC-147`, dispositions): Live / Paused is `view_only`. Play the next hour, Back to now and the concept's feature switches take the lab-only disposition `Plans/usage-feature.md#UF-107` owns, on the coordinator's recommendation recorded under Options considered, which Jared has not yet decided.
+3. **Commands** (`Plans/UI_Command_Catalog.md#UCC-147`, dispositions): Live / Paused is `view_only`. Play the next hour, Back to now and the concept's feature switches take the lab-only disposition `Plans/usage-feature.md#UF-107` owns, on the coordinator's recommendation recorded under Options considered, which Jared has not yet decided. Amended 2026-10-17 (DL-230): Jared decided it; they live only in the Demo Studio, and the product's Live menu holds Live readings on and Pause live readings alone.
 4. **Counting honesty** (`Plans/usage-feature.md#UF-092`): the demo hour's readings are concept fixture data labelled as demo time, never product facts.
 
 SourceRef: `/mnt/Cursor/PuppetMaster-Evidence/scratch/usage-mockups-20261001/DECISIONS-20261009.md`, SHA-256 `fd8d2d8a092e97f2964331dfe3befea99f2aa66691b5021313bae2cad0a25008` (Jared's answers to the feature questions 1 and 2, and the coordinator's ruling 6); `/mnt/Cursor/PuppetMaster-Evidence/scratch/usage-mockups-20261001/HANDOFF-usage-upgrade-20261009.md`, SHA-256 `d009d908af6785fd19866b83821313d65165ed0169737ab72bcd70c04539fdd5` (section 6, the recommendation to treat the demo controls as lab-only).

@@ -4,7 +4,7 @@ Source: `Plans/UI_Command_Catalog.md`
 
 Source lines: L11791-L11936
 
-Source SHA256: `711b6b97df90aefc11f8a2f75b9d9d2c71a0ffadca757e82eb7bc5873a884f2e`
+Source SHA256: `644fa28c7a5aff898113b183d0a1a6f66a7523b6628caa78b6dd573dc4b5ecd2`
 
 ---
 
@@ -87,7 +87,7 @@ canonical_text: >-
   Amended 2026-10-09 (DL-180): Home commits now use the cmd.panel_tab.* and extended cmd.workspace_layout.* families of UCC-200 on the pm.home_workspace_layout.v2 record (SP-330), and Dashboard widget rows run inside dashboard tabs, each naming the board id in the existing room field (no board_id payload field; amended 2026-10-10, DL-186; it read: addressed by board_id).
   Amended 2026-10-10 (DL-186): those dashboard widget rows name their board in the payload's existing room field, not a board_id field, and run on the Usage board engine, so gravity and Tidy behave on every board as on the Usage page (WS-019); the dashboard tab's own controls are UCC-200's Dashboard tab controls table.
   Amended 2026-10-17 (DL-228): Usage adds no command for these controls, each named by its owner: the head's
-  Panels menu (a check per widget through WS-019's hide and show, Tidy this room, and Reset this room or Reset
+  Cards menu (DL-230; a check per widget through WS-019's hide and show, Tidy this room, and Reset this room or Reset
   every room through cmd.widget.reset_layout with scope room or all, WS-020); the card menu's Fit rows, one
   cmd.widget.resize to the fit-all height with its preset_id; Use <account> now while auto-switch waits, the
   same cmd.account.select_profile override as Use this account (UF-107); and on Attention rows Switch route

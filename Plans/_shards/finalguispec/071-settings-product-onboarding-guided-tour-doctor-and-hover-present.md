@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L36483-L37298
+Source lines: L36504-L37319
 
-Source SHA256: `4980ff8a2865a116ca808d84229b656dc16f8d1e2357642fc795f3bf350ba362`
+Source SHA256: `77c9c8ef32040f59a2cf766f0978babb35df42b2aeecef76e01819c9b732c2ec`
 
 ---
 
@@ -313,7 +313,7 @@ canonical_text: >-
   workspace chapter named in the 2026-10-09 amendment below (PWIZ-035). Every important
   action offers Try it and Show Me; both invoke the same mounted owner handler and satisfy the same observed success
   predicate. Show Me uses interruptible pre-cue, visible travel, destination reaction, and settle, never teleportation
-  or a second implementation. Planning Wizard owns at least half of meaningful actions and dwell time. Proposed, pending Jared: the accepted 20-step tour measures Planning at 44 percent of actions and 49 percent of dwell, so this half bar is not met and is not waived. A book-club
+  or a second implementation. Planning Wizard is about half of meaningful actions and dwell time. Amended 2026-10-17 (DL-230, Jared): the bar is that Planning is about half of the tour's actions and time (it read: at least half); the accepted 20-step tour, Planning at 44 percent of actions and 49 percent of dwell, meets it. Jared will redo the tour completely once chat is rolled in and the Planning Wizard is redesigned, so no other tour work is planned until then. A book-club
   goal becomes three outcomes, the learner answers who may edit, sees why it matters, reviews decisions/assumptions/
   unresolved choices, edits one answer, and watches only the affected shared-access consequence change before the
   approval boundary. Teacher retains a broad discoverable beginner question library. ELI5 remains beside Pause and Skip and is called
@@ -366,7 +366,7 @@ acceptance_criteria:
   - "The Tour bar keeps the persistent Look menu (`Change the look`: four families plus Light/Dark, then a NieR Mode checkbox with an Adjust NieR look button whose editor opens as a popup dialog above the Tour) and sound control reachable by keyboard on every step: Look choices apply through the Settings owner (`general.visual.theme`, `general.visual.theme-mode`, and for NieR Mode `general.visual.nier-mode`, `general.visual.nier-parts` and `general.visual.nier-background`) at once with presentation-only effect under the verified current Project binding and the Tour follows its effective theme; Project switching rebinds both controls, while no-Project state permits only ephemeral preview without durable writes. The sound control binds to the Settings-owned `general.interaction.sound-effects` effective pref with an explicit `Sound off — click to turn on` state; both are shared chrome controls with Project-scoped persistence and neither becomes a tour-specific preference toggle beside `ui.guided_tour.toggle_eli5`. Neither is a `ui.guided_tour.*` action: Look choices, the NieR Mode checkbox, live editor edits and the sound control dispatch cmd.settings.transaction.preview then cmd.settings.transaction.apply, and Adjust NieR look emits ui.settings.nier_editor.open (DL-153)."
   - "Workspace practice explains page navigation and panel purpose, then has the learner open a tab from the \"+\" menu, open a file from the rail into a panel, split a panel by dragging a tab to its edge and add a widget to the dashboard, and makes each destination and persisted owner result readable; the temporary layout is reversible and the chat is never moved (amended 2026-10-09, DL-180; PWIZ-035). The widget practice adds Upcoming resets to the Home dashboard and moves or resizes it there, finished only by the board's accepted add and then move or resize of that widget (amended 2026-10-10, DL-186; F3-638)."
   - "Every important action offers visible Try it and Show Me (`ui.guided_tour.show_me`) using the same owner handler and success predicate. Highlighting, narration, elapsed time, look-alike controls, generic Next, or unrelated changes never count as completion. Pre-cue, travel, arrival, and settle remain visible and interruptible."
-  - "Planning receives at least half of meaningful action count and meaningful dwell time, measured against a declared step census. The book-club goal becomes next-meeting/current-book/how-to-join outcomes, followed by who-can-edit, why, review, edit consequence, and the no-work-before-approval boundary using the real current Wizard names/modes."
+  - "Planning receives about half of meaningful action count and meaningful dwell time, measured against a declared step census; the accepted 20-step tour (44 percent of actions, 49 percent of dwell) meets it, and the tour contracts' floor is 40 percent (amended 2026-10-17, DL-230). The book-club goal becomes next-meeting/current-book/how-to-join outcomes, followed by who-can-edit, why, review, edit consequence, and the no-work-before-approval boundary using the real current Wizard names/modes."
   - "The learner changes an answer rather than an Edit button silently choosing for them; only the dependent shared-access consequence changes, unaffected outcomes retain object identity/position, and an unsure answer stays unresolved."
   - "Assistant Chat opens first through its real shell action and keeps the same conversation throughout; successful Finish lands on the real Planning Wizard, not Chat, without starting work (amended 2026-10-09, DL-180: the chat is not moved by the Tour)."
   - "Teacher's built-in example is deterministic and local, presents an ordinary-language question and answer in the real Chat surface, and uses no provider, model, network, token budget, protected browser content, or AI-plan execution."

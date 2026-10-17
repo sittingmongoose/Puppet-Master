@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L40193-L41413
+Source lines: L40214-L41434
 
-Source SHA256: `4980ff8a2865a116ca808d84229b656dc16f8d1e2357642fc795f3bf350ba362`
+Source SHA256: `77c9c8ef32040f59a2cf766f0978babb35df42b2aeecef76e01819c9b732c2ec`
 
 ---
 
@@ -181,7 +181,7 @@ canonical_text: >-
   The dock and the per-reply files row replace the stream footer pill's helpers and files chips
   (ACD-482, DL-129); no summary of helpers or file changes stacks above the composer beside the dock.
   Amended 2026-10-17 (DL-228): while a decision host (a Plan or questionnaire host) is open it sits above the
-  dock and the quota-wait strip (amended 2026-10-17, review r1, it read: directly above the composer) and lifts the floating Activity bar pill and the follow-up queue, which float together as
+  dock and the quota-wait strip (amended 2026-10-17, review r1) and lifts the floating Activity bar pill and the follow-up queue, which float together as
   one stack, with the scroll-to-bottom control; the transcript keeps its bottom padding for that floating
   stack. The quota-wait strip and the dock stay in flow beneath the decision host, so bottom to top the order
   is composer, dock, quota-wait strip, decision host, then the floating pill and queue.

@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L44212-L44545
+Source lines: L44233-L44567
 
-Source SHA256: `4980ff8a2865a116ca808d84229b656dc16f8d1e2357642fc795f3bf350ba362`
+Source SHA256: `77c9c8ef32040f59a2cf766f0978babb35df42b2aeecef76e01819c9b732c2ec`
 
 ---
 
@@ -176,11 +176,12 @@ canonical_text: >-
   blink in Retro and NieR. The Attention room button shows a warn-ink count of alerts that need attention ("N
   alerts need attention now" in its hover tag and accessible name), which changes only with a live change.
   Keys: the rail's Up, Down, Home and End move among the rooms and Enter or Space opens one; the range strip's
-  Left and Right change the range and move focus with it. The head's Panels button reads "N panels" and opens
-  Panels in <Room>: a check per widget, grouped by disclosure level, that shows or hides it (WS-019), then
+  Left and Right change the range and move focus with it. The head's Cards button reads "N cards" and opens
+  Cards in <Room>: a check per widget, grouped by disclosure level, that shows or hides it (WS-019), then
   Tidy this room, Reset this room and Reset every room, the last drawn as a danger row (WS-020). An empty
-  board says which case it is: "No panels at <level>. <Level> holds this room's panels." or "No panels are
-  shown in this room. Use Panels to show one again." The card menu also holds Fit rows ("Height that shows
+  board says which case it is: "No cards at <level>. <Level> holds this room's cards." or "No cards are
+  shown in this room. Use Cards to show one again." (Amended 2026-10-17, DL-230, Jared: a Usage widget is a
+  card everywhere, so the concept's "panel" in these strings and in Hide panel reads as "card".) The card menu also holds Fit rows ("Height that shows
   every row"), one cmd.widget.resize to the kind's fit-all height carrying that preset's id where the kind has
   one (WS-020). Under NieR Mode with Menu sounds installed, Use this account and the inspector's primary
   action play NieR's confirm sound and the inspector's close its cancel sound, through F3-405's one player; no

@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L44549-L46929
+Source lines: L44571-L46951
 
-Source SHA256: `4980ff8a2865a116ca808d84229b656dc16f8d1e2357642fc795f3bf350ba362`
+Source SHA256: `77c9c8ef32040f59a2cf766f0978babb35df42b2aeecef76e01819c9b732c2ec`
 
 ---
 
@@ -173,9 +173,9 @@ canonical_text: >-
   Amended 2026-10-17 (DL-228): applying a saved layout returns each tab still open to the slot it was saved
   in, with that slot's active tab, and puts back each slot's lock and collapse (a locked slot survives empty);
   tabs no longer open are not recreated, and the other open tabs go to a slot that accepts their kind
-  (Plans/home_workspace_layout_v2.schema.json $defs.slot). Proposed, pending Jared: saved named layouts belong
-  to the person across projects, as the concept keeps them, and the dashboard boards inside a layout stay per
-  project, skipped when it is applied elsewhere; SP-330 keeps them per workspace until he rules. Two fit
+  (Plans/home_workspace_layout_v2.schema.json $defs.slot). Amended 2026-10-17 (DL-230, Jared): a saved named
+  layout belongs to the person across projects, as the concept keeps it, in home_named_layouts:v1 (SP-330),
+  and the dashboard boards inside a layout stay per project, skipped when it is applied elsewhere. Two fit
   rules: the room rule above serves every move whose side the person chooses, offered when the result leaves
   every panel it changes at its minimum, neighbours along the split giving up room, and a panel already under
   its minimum failing only if the move shrinks it further; the automatic split rule serves a new panel the

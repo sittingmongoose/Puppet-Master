@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L43539-L44024
+Source lines: L43560-L44045
 
-Source SHA256: `4980ff8a2865a116ca808d84229b656dc16f8d1e2357642fc795f3bf350ba362`
+Source SHA256: `77c9c8ef32040f59a2cf766f0978babb35df42b2aeecef76e01819c9b732c2ec`
 
 ---
 
@@ -112,10 +112,10 @@ canonical_text: >-
   chip, pill or badge for status/count consumes this mark-and-word or plain-number presentation; an action
   remains the owner's action with F3-618's control treatment and F3-648's action-button exception. No local
   status store or lifecycle rule is created.
-  Amended 2026-10-17 (DL-228): Proposed, pending Jared: Testing's errored state, a harness failure rather than
-  a failed assertion, uses the shared failed mark with the word Errored in the failed tone, so one shape keeps
-  one meaning; the concept's own orange word for it is not adopted until he answers the Errored-word colour
-  question queued on 2026-10-11. The rail's remaining solid tables in the concept are a no-glyph fallback, not
+  Amended 2026-10-17 (DL-228, DL-230): Testing's errored state, a harness failure rather than a failed
+  assertion, uses the shared failed mark with the word Errored in the failed tone, so one shape keeps one
+  meaning; the concept's own orange word for it is not adopted. Jared chose this on 2026-10-17 (DL-230), which
+  answers the Errored-word colour question queued on 2026-10-11. The rail's remaining solid tables in the concept are a no-glyph fallback, not
   a second set of badges.
 gui_related: true
 gui_classification_reason: Defines how every status and count in the left rail is drawn.

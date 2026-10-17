@@ -2,9 +2,9 @@
 
 Source: `Plans/Contracts_V0.md`
 
-Source lines: L23585-L23947
+Source lines: L23585-L23951
 
-Source SHA256: `f2962be905a9b85b191097a4e5065e89ebb3962f1a0eccef9eff0cb125954135`
+Source SHA256: `6164333584d497ab68e17ad82642072e773d55f8724039fb52d35a9709c759c6`
 
 ---
 
@@ -202,6 +202,10 @@ canonical_text: >-
   back in one command, its dashboard boards included; the command_id list gains that command, and its
   production entry tour.layout_restore declares this event. A project switch loads that project's own record
   and appends nothing.
+  Amended 2026-10-17 (DL-230, Jared): saved named layouts belong to the person in home_named_layouts:v1
+  (SP-330), so cmd.workspace_layout.save_named leaves the v2 record unchanged; it still appends its one
+  named_layout_saved, after the per-person record is read back, with prior_layout_revision and
+  new_layout_revision both the v2 record's current revision.
 gui_related: true
 gui_classification_reason: The event is how every visible layout change is recorded, replayed and audited.
 split_recommended: false

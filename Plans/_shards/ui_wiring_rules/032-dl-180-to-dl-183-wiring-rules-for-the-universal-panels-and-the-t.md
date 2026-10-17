@@ -2,9 +2,9 @@
 
 Source: `Plans/UI_Wiring_Rules.md`
 
-Source lines: L2096-L2521
+Source lines: L2096-L2523
 
-Source SHA256: `124aebbfe2a3ab664c94e1b4a0c3599b3cf2da1d50ef58907311fcb8a58874a6`
+Source SHA256: `801fdc37504d2402de595ac24324f274994c7aca61a91b7d77096513431edcb0`
 
 ---
 
@@ -383,7 +383,9 @@ canonical_text: >-
   Amended 2026-10-17 (review r1): SSYS-043's hosted NieR controls now have rows: the NieR Mode checkbox in the
   title-bar theme selector and the Guided Tour bar's Look menu (the Settings transaction pair), the same
   checkbox inside the onboarding window (ui.onboarding.choose_look), the NieR Mode editor's parts edit (the
-  pair), and the editor's open, close and Play reboot moment (ui.settings.nier_editor.*).
+  pair), the editor's Turn on NieR Mode button, offered while NieR Mode is off (nier.editor.turn_on, the pair
+  over general.visual.nier-mode; review r2), and the editor's open, close and Play reboot moment
+  (ui.settings.nier_editor.*).
 gui_related: true
 gui_classification_reason: Appearance And Shell Control Census.
 split_recommended: false

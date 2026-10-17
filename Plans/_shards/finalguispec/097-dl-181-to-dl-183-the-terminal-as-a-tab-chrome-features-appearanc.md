@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L46931-L49291
+Source lines: L46953-L49318
 
-Source SHA256: `4980ff8a2865a116ca808d84229b656dc16f8d1e2357642fc795f3bf350ba362`
+Source SHA256: `77c9c8ef32040f59a2cf766f0978babb35df42b2aeecef76e01819c9b732c2ec`
 
 ---
 
@@ -1371,7 +1371,7 @@ canonical_text: >-
   A pick on either screen shows its new state on the control in the click's frame; the write follows
   (ACD-475). An open that fails or shows nothing is reported as an error, not only a toast. Toast words
   are unchanged and no new command is added.
-  Proposed, pending Jared: while the editor's Customize sheet is opening under a resting pointer, a press
+  Amended 2026-10-17 (DL-230, Jared): while the editor's Customize sheet is opening under a resting pointer, a press
   or wheel that arrives before the pointer has moved reaches neither the sheet nor the page beneath, so
   the second press of a double-click on the opener is not taken as a choice in the sheet. The sheet is
   live once the pointer moves, the entrance ends, or about 500 ms after it opens. Keyboard and
@@ -1456,7 +1456,7 @@ source_lineage:
   landed unchanged on main a0f844455c (L1), B6; source lineage)
 - /mnt/Cursor/share/puppet-master/2026-10-17-plans-f6/sources/Concepts--home-redesign--src--panels--kinds--11-editor-customize.js,
   SHA-256 7bd2cb58747e1d064ae91a82763d76d948262c64bc1a939a1123efce27ab7701 (main 6a3ee2fe90; a failed
-  Customize open is reported, and the opening pass-through is proposed pending Jared; source lineage; not native certification)
+  Customize open is reported, and the opening pass-through, proposed then and kept by Jared on 2026-10-17 (DL-230); source lineage; not native certification)
 - /mnt/Cursor/share/puppet-master/2026-10-17-plans-f6/sources/BRIEF.md,
   SHA-256 a6c5152164942a26cba5b0216a339578ee13c47a3ba39ffbeced793203c2dece (editor reopen and Terminal
   Customize prepared at idle; decision lineage)
@@ -1681,9 +1681,7 @@ canonical_text: >-
   GPU programs are compiled before the first page or chapter change rather than during it. A switcher
   strip defers its sync only under a look's cover and resyncs as the cover begins to lift.
   Amended 2026-10-17 (DL-222): Glass's warm-up is best effort under ACD-475 and changes no Glass look.
-  The idle gates are ACD-475's, and a switcher strip waits only under a look's cover (amended 2026-10-17, review r1; it read:
-  not a promise that every box kind is compiled first, preparing the kinds that compile a program, and this
-  unit keeps the sheet-rim bake and the cover-only strip deferral).
+  The idle gates are ACD-475's, and a switcher strip waits only under a look's cover (amended 2026-10-17, review r1).
   Amended 2026-10-17 (DL-226): while a widget plate is carried on a board in Glass, the resting plates
   hold a pre-painted frost instead of live blur. At rest that frost looks the same.
   Amended 2026-10-17 (DL-228): Glass condenses into place only when Glass is switched on, never on a page, tab
@@ -1700,9 +1698,9 @@ canonical_text: >-
   static optics are prepared off the input path, a sheet's rim is coherent on arrival (it may arrive a frame
   later, never wrong), and a first page, chapter or wallpaper change never stalls on first-use drawing work;
   the worker bake and the near-invisible warm draws are how the concept met it, lineage rather than
-  requirements. Proposed, pending Jared: when the operating system asks for reduced transparency Glass draws
-  its static near-opaque form, and when it asks for more contrast the sheets take near-opaque tints with
-  full-strength hairlines; no Settings row is added.
+  requirements. Amended 2026-10-17 (DL-230, Jared): no requirement is set for how Glass reads when the
+  operating system asks for reduced transparency or more contrast; the proposed static near-opaque form and
+  near-opaque tints were withdrawn when Jared answered "Don't worry about it", and no Settings row is added.
 gui_related: true
 gui_classification_reason: Liquid Glass material and motion.
 split_recommended: false
@@ -1818,9 +1816,14 @@ canonical_text: >-
   Wallpaper is one Project choice for every look, not one stored choice per theme. Settings > App &
   Input > Theme & colors places its gallery immediately after Light or dark. Look's own comes first,
   followed by families in the shared catalog's order; thumbnails have names, checked state and full
-  accessible names. It is one radiogroup: arrows move among choices, Home and End reach the ends,
-  Space selects; pointer and keyboard write the same value. Proposed, pending Jared: that contract
-  stands. Arrows only move, and Space selects. The concept's arrows-choose-as-they-move is not adopted.
+  accessible names. It is one radiogroup whose one tab stop is the chosen tile: Left and Right move through
+  every tile, Up and Down move to the nearest tile in the next row as drawn, Home and End reach the ends,
+  and the arrows choose as they move (selection follows focus); Space or Enter also chooses. The tile an
+  arrow reaches becomes the checked choice and is written through the same transaction as a pointer pick,
+  the most recent accepted change winning (SSYS-054); preparation of its print begins after the next frame
+  and a short pause after the last arrow step (the concept's 160 ms), so tiles passed over are not
+  prepared. Pointer and keyboard write the same value. Amended 2026-10-17 (DL-230, Jared): arrows choose
+  as they move; this replaces the earlier proposal that arrows only move and Space selects.
   Five columns reduce to two where needed,
   with the look's control corners and no animated tiles. Basic offers Blueprint, Contour, Folds,
   Sheets and Arcs; Friendly offers Dot Wave, Channels, Bubbles, Hills and Soft Stripes, each with
@@ -1883,6 +1886,8 @@ acceptance_criteria:
 - Every catalog wallpaper works in every look and both modes; Look's own restores the correct default
   and NieR preference.
 - Keyboard selection, reload, Project switching and unknown stored ids preserve the one-setting contract.
+- Each arrow step checks and writes the tile it reaches as a pointer pick would; preparation waits for the
+  next frame and the short pause after the last step, so a tile passed over is never prepared (DL-230).
 - Gallery loading never shifts a reader's anchor. A prepared wallpaper change fades print and frost
   together. A pick whose frost is not ready fades the print first under the old frost, then crossfades
   the frost, and never shows a blank frame.

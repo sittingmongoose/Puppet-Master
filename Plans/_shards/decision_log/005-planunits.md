@@ -2,9 +2,9 @@
 
 Source: `Plans/Decision_Log.md`
 
-Source lines: L4302-L14479
+Source lines: L4302-L14483
 
-Source SHA256: `922fe8ee47b4c1c611a994d61a3aed96edd674fb393b9d5a801b58d0484349b9`
+Source SHA256: `c8c86aaf7885aaf391771f37a29db51e170e5d9f598fc2c4bc39542f3ce69de0`
 
 ---
 
@@ -8887,6 +8887,7 @@ negative_constraints:
   - "Do not reintroduce pills, coloured side bars or abbreviated labels in the left rail."
 stale_retired_dispositions:
   - 'Amended 2026-10-17 (DL-228): after D44 (DL-201) F3-619 names no separate errored glyph; Testing''s errored mapping is proposed, pending Jared, in F3-619. The 2026-10-10 frost on the rail''s header and tab plates is owned by F3-618.'
+  - 'Amended 2026-10-17 (DL-230, Jared): Testing''s errored state uses the shared failed mark with the word Errored in the failed tone (F3-619); this answers the Errored-word colour question queued on 2026-10-11.'
 owner_hints:
   - Plans/FinalGUISpec.md
   - Plans/DRY_Rules.md
@@ -9233,6 +9234,9 @@ canonical_text: >-
   demonstrations labelled as demo time; on the coordinator's recommendation, not yet the owner's decision, they are
   treated as lab-only concept controls on the ACD-474 precedent and receive no command, setting, wiring row, persisted
   key or test gate (UCC-147, UF-092).
+  Amended 2026-10-17 (DL-230, Jared): the lab-only classification is the owner's decision now. Play the next
+  hour, Back to now and the Demo time readout live only in the Demo Studio (DR-070), and the product's Live menu
+  holds Live readings on and Pause live readings alone (UF-107).
 gui_related: true
 gui_classification_reason: Records an owner decision on live Usage readings and the place of the concept's demo hour.
 split_recommended: false

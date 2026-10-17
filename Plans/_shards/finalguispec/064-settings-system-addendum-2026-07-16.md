@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L31471-L32440
+Source lines: L31487-L32461
 
-Source SHA256: `4980ff8a2865a116ca808d84229b656dc16f8d1e2357642fc795f3bf350ba362`
+Source SHA256: `77c9c8ef32040f59a2cf766f0978babb35df42b2aeecef76e01819c9b732c2ec`
 
 ---
 
@@ -667,10 +667,15 @@ canonical_text: >-
   Amended 2026-10-17 (DL-228): each row's label, desc and option words in this inventory are the one wording
   the product renders for it, on every surface that draws the row: Settings, hosted controls (SSYS-044) and
   the Customize screens (DR-068). A concept's own row wording, such as the onboarding Settings kit's
-  plain-language rows.d labels and help, is a proposal until adopted here. Proposed, pending Jared: adopt the
-  concept's plain-language labels and help for the rows it rewrote (for example Theme Mode as "Light or dark",
-  UI Scale as "Size of everything", Reduce Animations as "Reduce motion"), in one wording pass with search
-  aliases for the old words.
+  plain-language rows.d labels and help, is a proposal until adopted here.
+  Amended 2026-10-17 (DL-230, Jared): the concept's plain-language labels and help are adopted for the rows it
+  rewrote (for example Theme Mode as "Light or dark", UI Scale as "Size of everything", Reduce Animations as
+  "Reduce motion") in one wording pass: a row's label and desc are its rows.d label and help, its old label
+  stays one of its search aliases, and its option words are option_labels, display words for stored option
+  values that never change what is stored (a value without an entry shows as stored). The Customize words
+  (Fill and Fit for Picture Fit, Still for Background Motion's Off, the materials' "plastic", "Less colour",
+  "Grain", "Text drawing") are adopted the same way (DR-068). Retired rows keep their words. The rows carry
+  option_labels beside options; the schema admits it.
 gui_related: true
 gui_classification_reason: This unit binds the visible settings surfaces to their canonical inventory registry.
 split_recommended: false

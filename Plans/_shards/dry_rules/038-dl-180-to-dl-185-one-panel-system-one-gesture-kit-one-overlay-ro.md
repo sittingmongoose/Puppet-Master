@@ -2,9 +2,9 @@
 
 Source: `Plans/DRY_Rules.md`
 
-Source lines: L3453-L4204
+Source lines: L3453-L4205
 
-Source SHA256: `7d5029a05c8706e06e859aa015173724cf9f3b586a0489a1bb64e78fca3ea6d9`
+Source SHA256: `e70b140f6d819e290bd8967fa441e611ee9762e7ddb3054f29598297b4a68e35`
 
 ---
 
@@ -306,8 +306,9 @@ canonical_text: >-
   Amended 2026-10-17 (DL-228): each field's choice words and help text have one owner, its inventory row
   (F3-441), which Settings and the Customize screens both read. The concept's Customize words that differ
   (Fill, Fit, Tile, Centre for Picture Fit; Still for Off in Background Motion; the materials' "plastic";
-  "Less colour"; "Grain"; "Text drawing") are proposals for the wording pass F3-441 holds pending Jared, and
-  its Bell help's "flash" is stale: Bell is Follow look or Off (DL-213, DL-216).
+  "Less colour"; "Grain"; "Text drawing") were adopted in F3-441's wording pass (2026-10-17, DL-230, Jared) as
+  those rows' labels and option_labels, and its Bell help's "flash" is stale: Bell is Follow look or Off
+  (DL-213, DL-216).
 gui_related: true
 gui_classification_reason: "Fixes one layered appearance model for every terminal."
 split_recommended: false
@@ -636,8 +637,8 @@ canonical_text: >-
   that rule. The owner prepares a print and its frost before the choice commits. The print may start
   fading before the frost is ready (F3-653); the setting still writes at the pick. An intent, hover or
   keyboard focus after a short quiet pause, or a press, never waits behind background preparation of
-  another print. A pick or intent for a print runs whatever preparation is left at once (review r1, it read: whatever
-  bake is left, a print baked once however many preparations ask). This unit still owns the cache-only query and the rule
+  another print. A pick or intent for a print runs whatever preparation is left at once (review r1).
+  This unit still owns the cache-only query and the rule
   that a failed preparation still commits.
   Amended 2026-10-17 (DL-228): the requirement is one synchronous, cache-only print query; the concept's
   page API for it is lineage, not an interface the rebuild keeps. A wallpaper joins the

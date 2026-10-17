@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L30353-L31469
+Source lines: L30367-L31485
 
-Source SHA256: `4980ff8a2865a116ca808d84229b656dc16f8d1e2357642fc795f3bf350ba362`
+Source SHA256: `77c9c8ef32040f59a2cf766f0978babb35df42b2aeecef76e01819c9b732c2ec`
 
 ---
 
@@ -373,10 +373,11 @@ canonical_text: >-
   (DL-138). The Friendly ground is a warm paper texture with an 18px dot grid and static pastel
   corner glows. Frosted chrome backdrop blur of 14px is limited to the title bar, status bar, and
   bottom panel. Five category pastels (mint, sky, coral, lavender, butter) tint category surfaces
-  through the cozy hook tokens. The theme-switching restart rules extend to cross-family switches
-  involving Friendly or Retro fonts: same-family switches stay live; cross-family switches that
-  change font families between Retro (IBM Plex Mono) and Friendly (Poppins, Nunito) require restart;
-  and switches between the Inter Glass and Basic families stay live. NieR Mode overrides body and
+  through the cozy hook tokens. Theme switches involving Friendly or Retro fonts are live: same-family
+  switches stay live; cross-family switches that change font families between Retro (IBM Plex Mono)
+  and Friendly (Poppins, Nunito) are live under the look's cover (F3-077, DL-230); and switches
+  between the Inter Glass and Basic families stay live. Superseded lineage (kept findable): until
+  2026-10-17 such cross-family switches required restart. NieR Mode overrides body and
   display with PM NieR Sans, the M PLUS 1 variable face at weights 100-900 in
   mplus1-latin-var.woff2, a free stand-in for the commercial Fontworks FOT-Rodin, and mono with PM
   NieR Mono, the JetBrains Mono variable face at weights 100-800 in jetbrains-mono-latin-var.woff2.
@@ -411,8 +412,8 @@ canonical_text: >-
   a ninth theme.
   Amended 2026-10-17 (DL-228): Japanese is not embedded. M PLUS 1 carries it upstream, but PM NieR Sans ships
   only its Latin, Latin Extended and Vietnamese slices, so Japanese text uses the computer's fonts, and
-  DL-161's "scripts it supports" does not require it. The cross-family restart rule above is F3-077's and
-  shares its question pending with Jared (proposed: a live switch under the look's cover).
+  DL-161's "scripts it supports" does not require it. The cross-family switching rule is F3-077's; Jared
+  chose on 2026-10-17 that a family switch is live under the look's cover (DL-230).
 gui_related: true
 gui_classification_reason: This unit defines the visible Friendly theme fonts, ground texture, frosted chrome, pastels, and switch behavior.
 split_recommended: false
@@ -426,7 +427,7 @@ acceptance_criteria:
   - "Both concepts draw every script an embedded family carries from embedded data on a machine with no fonts installed, and code text in Basic, Glass and Friendly in the embedded JetBrains Mono."
   - "The Friendly ground renders the paper texture with an 18px dot grid, and frosted 14px chrome blur is limited to the title bar, status bar, and bottom panel."
   - "The five category pastels (mint, sky, coral, lavender, butter) drive category surface tinting."
-  - "Cross-family theme switches that change Retro or Friendly font families require restart, while same-family and Glass/Basic Inter switches stay live."
+  - "Cross-family theme switches that change Retro or Friendly font families are live under the look's cover with no restart (DL-230), and same-family and Glass/Basic Inter switches stay live."
   - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
 validation_surfaces:
   - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
@@ -483,8 +484,9 @@ compatibility_only_notes:
   - "Slint portability: bundled font files register with the Slint font database; the paper texture, dot grid, and corner glows render as precomputed opaque or baked surfaces; the three chrome frosts render over known shell content; no arbitrary-content backdrop blur, no SVG filters, color math is precomputed rather than runtime-mixed, and any glass treatment uses a single blur over a known wallpaper as a pre-blurred asset."
 stale_retired_dispositions:
   - "DL-138 retires Cal Sans, Quicksand, Orbitron and Rajdhani as current theme faces; those names remain source lineage only. Runtime font CDN loading remains forbidden."
+  - "Retired 2026-10-17 (DL-230, Jared): the restart set for cross-family Friendly/Retro font changes is withdrawn; those switches are live under the look's cover (F3-077)."
 owner_boundary_notes:
-  - "The live/restart switching matrix remains owned by F3-077; this unit extends its restart set to cross-family Friendly/Retro font changes."
+  - "The live switching matrix remains owned by F3-077; cross-family Friendly/Retro font changes are live under the look's cover there (DL-230)."
 owner_hints:
   - "Plans/FinalGUISpec.md"
 ```

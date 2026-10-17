@@ -2,9 +2,9 @@
 
 Source: `Plans/Decision_Log.md`
 
-Source lines: L14501-L16715
+Source lines: L14505-L16811
 
-Source SHA256: `922fe8ee47b4c1c611a994d61a3aed96edd674fb393b9d5a801b58d0484349b9`
+Source SHA256: `c8c86aaf7885aaf391771f37a29db51e170e5d9f598fc2c4bc39542f3ce69de0`
 
 ---
 
@@ -1812,7 +1812,8 @@ canonical_text: >-
   rule and changes no Glass look (F3-652). Wallpaper fade-first is DL-223 (F3-653, DR-073).
   Reopening Customize reports a failed or empty open as an error, not only a toast (F3-650). The
   editor sheet's opening pass-through, and focus while a surface is drawn unseen, are proposed
-  pending Jared in F3-650 and ACD-475. F6 brings the concept's Bell help and bezel reflection scale
+  pending Jared in F3-650 and ACD-475. Amended 2026-10-17 (DL-230): Jared kept the opening pass-through
+  (F3-650), and the focus rule stands as the coordinator's default, not objected by him (ACD-475). F6 brings the concept's Bell help and bezel reflection scale
   into line with the inventory and SSYS-051; those owners are unchanged. Lead B6 / T2-4
   (c145df3233) changes no behaviour. Settings place (67afa7e2a9) and the generator fix (881a6130ff)
   change no product contract; the generator writes LF and slash paths on Windows, which is tooling.
@@ -1852,7 +1853,7 @@ source_lineage:
   page move finishes; source lineage; not native certification)
 - /mnt/Cursor/share/puppet-master/2026-10-17-plans-f6/sources/Concepts--home-redesign--src--panels--kinds--11-editor-customize.js,
   SHA-256 7bd2cb58747e1d064ae91a82763d76d948262c64bc1a939a1123efce27ab7701 (main 6a3ee2fe90; a failed
-  Customize open is reported; the opening pass-through is proposed pending Jared; source lineage; not native
+  Customize open is reported; the opening pass-through, proposed then and kept by Jared on 2026-10-17 (DL-230); source lineage; not native
   certification)
 preserved_exact_tokens: []
 negative_constraints: []
@@ -2022,7 +2023,7 @@ canonical_text: >-
   accepting about 30 fps. While a widget plate is carried on a board, on the Usage page or a Home
   dashboard tab, in Glass, the resting plates hold a pre-painted frost instead of live blur. At rest
   the frost looks the same. The planner narrowed the choice to those plates and reported that narrowing to Jared
-  (STATUS-planner.md:128; amended 2026-10-17, review r1, it read: the concept narrowed it). F3-652 owns the one line. This is not a platform threshold and adds no setting.
+  (STATUS-planner.md:128; amended 2026-10-17, review r1). F3-652 owns the one line. This is not a platform threshold and adds no setting.
   Concept evidence is not native certification.
 gui_related: true
 gui_classification_reason: Glass Carry Holds A Pre-Painted Frost.
@@ -2125,7 +2126,8 @@ canonical_text: >-
   cmd.workspace_layout.restore (UCC-200, CV-361, production entry tour.layout_restore), the local read
   projection ui.notifications.mark_all_read (CS-102) and the tour phase review_parts (PWIZ-035). Concept
   internals (timings, CSS values, caches, warm queues, demo scaffolding) stay out. A question no Jared
-  decision answers is marked proposed, pending Jared in its owner. The sizes, distances and times these
+  decision answers is marked proposed, pending Jared in its owner; Jared answered those questions on 2026-10-17
+  (DL-230). The sizes, distances and times these
   amendments quote from the concept are tokens, not acceptance numbers (review r1). Concept evidence is not native
   certification.
 gui_related: true
@@ -2223,3 +2225,93 @@ owner_hints:
 ```
 
 ContractRef: ContractName:Plans/FinalGUISpec.md#F3-652, ContractName:Plans/Decision_Log.md#DL-191
+
+### DL-230 - Jared's Answers To The Week's Open Questions
+
+```yaml
+plan_unit_id: DL-230
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: >-
+  Recorded 2026-10-17. Jared answered the week's open questions on 2026-10-17, about 20:45Z, numbered as the
+  coordinator's 20:20Z explanation put them: "1. A 2. A, don't waste too much time on the tour I'm going to need
+  to completely redo it when chat is rolled in and when I redesign the planning wizard. So I'm not going to fix
+  your until all that is done. 3. A 4. A 5. A 6. A 7. A 8. A 9. A 10. A 11. Don't worry about it". The coordinator
+  mapped each answer to the writer's open questions, and each owner records it. 1 (open question 3), A: a family
+  switch is live under the look's cover; the cross-family restart rule is retired with a dated disposition in
+  F3-077, FinalGUISpec section 6.4, the risks table, F3-244 and F3-430, and the theme hot-reload line no longer
+  prompts for a restart. 2 (open question 4), A: Planning is about half of the tour's actions and time, which the
+  accepted 20-step tour meets (PWIZ-023, F3-521, ATS-020, WM-041, and the guided-tour and interaction contracts);
+  Jared will redo the tour completely once chat is rolled in and the Planning Wizard is redesigned, so no other
+  tour work is planned until then. 3 (open question 5), A: in the wallpaper gallery the arrows choose as they
+  move, and the print's preparation waits for the next frame and a short pause after the last step (F3-653,
+  SSYS-054, the control binding wallpaper.keys). 4 (open question 1), A: the editor Customize sheet's opening
+  guard stands as proposed (F3-650, DL-222). 5 (open question 6), A: a saved named layout belongs to the person
+  across projects, in home_named_layouts:v1, and the dashboard boards inside it stay per project and are skipped
+  elsewhere (F3-630, SP-330, the v2 layout schema, the storage registry, UCC-200, CV-361). 6 (open question 7), A:
+  Testing's Errored uses the shared failed mark with the word Errored in the failed tone, which answers the
+  Errored-colour question of 2026-10-11 (F3-619, DL-162, the glyph catalog). 7 (open question 8), A: the concept's
+  plain-language Settings labels, help and option words are adopted in one wording pass, the old labels kept as
+  search aliases (F3-441, DR-068, Plans/settings_inventory.json and its schema's option_labels). 8 (open question
+  9), A: usage-windows, platform-filters, reset-countdown, cooldown-timers, pressure-visibility and
+  tool-usage-window are bound to what the Usage page shows, chart-type is the starting style of each new chart
+  widget, and ledger-page-size and ledger-export's CSV choice are retired (UF-107, the inventory). 9 (open
+  question 10), A: Usage's demo rows, Play the next hour, Back to now and Demo time, live only in the Demo Studio,
+  and the Live menu holds Live readings on and Pause live readings alone (UF-107, DL-177). 10 (open question 11),
+  A: a Usage widget is a card everywhere, and the concept's Usage copy is the reference wording with its "panel"
+  read as "card" (G-030, UF-093, UF-107, F3-514, F3-628, WS-019, WS-020, UCC-147). 11 (open question 12), "Don't
+  worry about it": no requirement is set for how Glass reads under the system's reduced-transparency or
+  more-contrast requests, and the proposed reading is withdrawn (F3-652). The focus rule for a surface drawn
+  unseen (ACD-475) was put to Jared as the coordinator's default and drew no objection; it stands as that default,
+  not as his words. The writer chose, and these are not Jared's words: the tour contracts' 40 percent floor for
+  about half; App font losing its restart badge with the restart rule; numbering the later of two saved layouts
+  that share a name when they are gathered; and save_named leaving the v2 record's revision unchanged while
+  keeping its receipt and event.
+gui_related: true
+gui_classification_reason: Jared's Answers To The Week's Open Questions.
+split_recommended: false
+depends_on: [DL-228]
+unblocks: []
+acceptance_criteria:
+- Each owner named here records its answer with a dated amendment citing DL-230, and no owner still marks these questions proposed, pending Jared.
+- The quote above is Jared's exact text; the writer's choices listed above are not read as his words.
+validation_surfaces:
+- python3 scripts/pm-shard-plans.py --check
+- python3 scripts/pm-plan-index.py validate
+- python3 scripts/pm-plans-verify.py run-gates
+risk_class: owner_drift
+reasoning_tier: high
+context_scope: jared_answers_week_open_questions
+implementation_surfaces:
+- Plans/Decision_Log.md
+- Plans/FinalGUISpec.md
+- Plans/Planning_Wizard.md
+- Plans/Settings_System.md
+- Plans/usage-feature.md
+- Plans/Glossary.md
+- Plans/storage-plan.md
+- Plans/settings_inventory.json
+- Plans/storage_value_registry.json
+- Plans/pm7_control_bindings.json
+node_compile_hint:
+  mode: owner_decision_record
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- /mnt/Cursor/share/puppet-master/2026-10-13-pm7-coordinator-handoff/COORDINATOR-LOG.md, SHA-256
+  74400578201cb0c797697791a7fb0d15ee37ab527c6f19c922ec758c203bbace as of 2026-10-17 (entry 20:45Z, Jared's
+  answers verbatim and the coordinator's mapping; decision lineage)
+- /mnt/Cursor/share/puppet-master/2026-10-17-plans-f6/NOTES.md (the open questions as put, now under Answered by
+  Jared 2026-10-17)
+preserved_exact_tokens:
+- "So I'm not going to fix your until all that is done."
+- "Don't worry about it"
+negative_constraints:
+- "Do not read the writer's choices listed in this row as Jared's words."
+- "Do not start other guided tour work before the chat port and the Planning Wizard redesign."
+owner_hints:
+- Plans/Decision_Log.md
+```
+
+ContractRef: ContractName:Plans/FinalGUISpec.md#F3-077, ContractName:Plans/FinalGUISpec.md#F3-244, ContractName:Plans/FinalGUISpec.md#F3-430, ContractName:Plans/Planning_Wizard.md#PWIZ-023, ContractName:Plans/FinalGUISpec.md#F3-521, ContractName:Plans/FinalGUISpec.md#F3-653, ContractName:Plans/Settings_System.md#SSYS-054, ContractName:Plans/FinalGUISpec.md#F3-650, ContractName:Plans/FinalGUISpec.md#F3-630, ContractName:Plans/storage-plan.md#SP-330, ContractName:Plans/UI_Command_Catalog.md#UCC-200, ContractName:Plans/Contracts_V0.md#CV-361, ContractName:Plans/FinalGUISpec.md#F3-619, ContractName:Plans/FinalGUISpec.md#F3-441, ContractName:Plans/DRY_Rules.md#DR-068, ContractName:Plans/usage-feature.md#UF-107, ContractName:Plans/Decision_Log.md#DL-177, ContractName:Plans/Glossary.md#G-030, ContractName:Plans/usage-feature.md#UF-093, ContractName:Plans/FinalGUISpec.md#F3-628, ContractName:Plans/FinalGUISpec.md#F3-652, ContractName:Plans/assistant-chat-design.md#ACD-475
