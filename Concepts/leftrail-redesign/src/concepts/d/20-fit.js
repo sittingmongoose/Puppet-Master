@@ -206,7 +206,9 @@ let fitTimer = 0;
 function fitSoon() {
   clearTimeout(fitTimer);
   fitTimer = setTimeout(() => {
-    const go = () => { if (D.on) fitAll(); };
+    /* a panel shown by a path that told no show() (10-skin.js keeps a hidden panel's redraws for when it is shown):
+       its scroller's resize brings it here, and it is skinned then */
+    const go = () => { if (!D.on) return; fitAll(); panelEls().forEach(p => { if (p._dSkinStale && p.getClientRects().length) schedule(p); }); };
     if (typeof window.PM_AFTER_LAYOUT === 'function') window.PM_AFTER_LAYOUT(go); else go();
   }, 60);
 }
@@ -217,7 +219,13 @@ function watchFit() {
   });
   const slot = document.getElementById('sidePanelSlot');
   if (window.ResizeObserver && slot) {
-    const ro = new ResizeObserver(fitSoon);
+    /* a stale panel (10-skin.js) that a resize brings on screen with no show() (a narrow window's peek of the active
+       icon, widening back to docked) is skinned here, after layout and before paint, so it never shows unskinned
+       (landing review SF6-1); the fit follows as before */
+    const ro = new ResizeObserver(() => {
+      if (D.on) panelEls().forEach(p => { if (p._dSkinStale && p.getClientRects().length) { p._dSkinStale = false; applyPanel(p, false); } });
+      fitSoon();
+    });
     ro.observe(slot);
     /* a panel's scroller loses its scrollbar's width when opening a row makes it overflow (the content box shrinks,
        the slot does not): names measured on the wider box would be cut by the narrower one */
