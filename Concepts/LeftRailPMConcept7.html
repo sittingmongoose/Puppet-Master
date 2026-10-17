@@ -231164,13 +231164,14 @@ var T = {};
      nothing else of the screen (data-rw-on), less what its second names (data-rw-off). The lead's split for the P1000
      (2026-10-17): drawn as the top and six groups, the top linked 12-15 programs there (95-425 ms) and the colours 3-9,
      against 1-2 on the RTX 3090. The preview goes last, after the bezel's steps at its size (rasterSoon) */
-  var CG = '.pmt-cz-group[data-group="colors"]';
+  var CG = '.pmt-cz-group[data-group="colors"]', GG = '.pmt-cz-group[data-group="ground"]', EG = '.pmt-cz-group[data-group="effects"]',
+    UG = '.pmt-cz-group[data-group="cursor"]';
   var RASTER_PARTS = [
     /* the dialog's own plate, the scrim and the frame round the terminal apart, and the index apart from the foot: drawn
        together each linked 2-3 programs back to back on the P1000, a 100 ms gap (the lead's F6-pre attribution) */
-    ['top:plate', '.pmt-cz-dialog'],
     ['top:scrim', '.pmt-cz-scrim'],
     ['top:frame', '.pmt-cz-frame'],
+    ['top:plate', '.pmt-cz-dialog'],
     ['top:head', '.pmt-cz-head'],
     ['top:meter', '.pmt-cz-meter'],
     ['top:side', '.pmt-cz-presets, .pmt-cz-try'],
@@ -231181,16 +231182,17 @@ var T = {};
     ['colors:art', CG + ' .pmt-cz-sw'],
     ['colors:controls', CG + ' .pmt-cz-row, ' + CG + ' .pmt-cz-import'],
     ['group:text', '.pmt-cz-group[data-group="text"]'],
-    ['group:cursor', '.pmt-cz-group[data-group="cursor"]'],
-    ['group:ground', '.pmt-cz-group[data-group="ground"]'],
-    ['group:effects', '.pmt-cz-group[data-group="effects"]'],
+    ['cursor:head', UG, UG + ' .pmt-cz-tiles'],
+    ['cursor:shapes', UG + ' [aria-label="Cursor shape"]'],
+    ['cursor:trails', UG + ' [aria-label="Cursor trail"]'],
+    /* the backgrounds and effects apart from their tiles and chips: whole, each was late cold on the P1000 once the parts
+       below the fold were really drawn (ground 200 ms, effects 233; r21) */
+    ['ground:head', GG, GG + ' [data-forlook], ' + GG + ' [data-gtiles]'],
+    ['ground:suggested', GG + ' [data-forlook]'],
+    ['ground:tiles', GG + ' [data-gtiles]'],
+    ['effects:head', EG, EG + ' .pmt-cz-fxchips'],
+    ['effects:chips', EG + ' .pmt-cz-fxchips'],
     ['group:behavior', '.pmt-cz-group[data-group="behavior"]'],
-    /* the entrance (rasterShow): the screen moving as a click shows it, whose moving dialog the compositor drew with a
-       program of its own in the first open (RTX 3090: 2 programs linked in the open with the entrance, 1 without). It
-       moves as one layer only with what is in it, so what a click first shows is shown: the groups below the fold are
-       left out, which would only restyle (2 of 2 opens linked nothing more for it; with the dialog's parts empty, or
-       its groups all left out, the program was still linked) */
-    ['top:entrance', '.pmt-cz-scrim, .pmt-cz-frame, .pmt-cz-dialog, .pmt-cz-head, .pmt-cz-body, .pmt-cz-foot', '.pmt-cz-group:not([data-group="colors"])'],
     ['top:preview', '.pmt-cz-preview']
   ];
 
@@ -231411,6 +231413,27 @@ var T = {};
       var rf = reflect(R), rtxt = rf.own ? rf.name + '’s own is ' + rf.own.charAt(0).toUpperCase() + rf.own.slice(1) + '.' : '';
       root.querySelector('[data-reflect-field]').hidden = !rf.own;
       var rw = root.querySelector('[data-reflect-why]'); if (rw.textContent !== rtxt) rw.textContent = rtxt;
+    }
+    /* the pictures paintGround puts in its tiles (the look's suggestions, then the category shown), painted ahead of
+       the ground group's build step a few at a time (43-grounds.js paint caches them): painted in that step they took
+       24-25 ms of it in Friendly on the RTX 3090, its scenes */
+    function groundArts(R) {
+      var G = T.Grounds; R = R || eff();
+      if (!G || !R || !R.theme) return [];
+      var cat = gcat || groundCat(groundNow()), ids = G.forLook(R.lookKey).slice(0, 5);
+      if (cat !== 'plain' && cat !== 'yours') ids = ids.concat(G.list().filter(function (d) { return cat === 'all' || (cat === 'moving' ? d.moving : d.cat === cat); }).map(function (d) { return d.id; }));
+      return ids.filter(function (id, i) { return ids.indexOf(id) === i && (G.painted(id) || !!G.motion(id)); });
+    }
+    var artsDone = {};
+    function groundArtStep() {
+      var R = eff(), t0 = performance.now();
+      if (!R || !R.theme) return;
+      groundArts(R).some(function (id) {
+        var k = id + '|' + R.theme.id + '|' + R.theme.bg;
+        if (artsDone[k]) return false;
+        artsDone[k] = 1; groundArt('i:' + id, R.theme);
+        return performance.now() - t0 > 4;
+      });
     }
     /* the case's Reflection now: its level, the material's own level and the material's name (Follow look: the look's own
        case), as the bezel resolves them (71-bezel.js) */
@@ -232067,7 +232090,7 @@ var T = {};
        470 ms before the screen appeared in Friendly). Once built, and again for each look it has not been drawn in, it
        is drawn at idle a part at a time, each for one frame, unseen (opacity 0.004, as the shell warms its theme covers;
        0.002 rounds to nothing on the P1000), then clipped away again */
-    var rastered = {}, rasterOn = false, rasterEls = [], rasterOff = [], rasterShift = null, rasterIn = false;
+    var rastered = {}, rasterOn = false, rasterEls = [], rasterOff = [], rasterShift = null;
     /* nothing inside takes the focus while it is drawn: a focus that lands inside is let go at once. inert did the same,
        but setting and clearing it restyled the whole screen twice per warm (review RW-4) */
     function rasterGuard(e) {
@@ -232082,7 +232105,6 @@ var T = {};
       rasterOff.forEach(function (e) { e.removeAttribute('data-rw-off'); });
       rasterEls = []; rasterOff = [];
       if (rasterShift) { rasterShift.style.transform = ''; rasterShift = null; }
-      if (rasterIn) { rasterIn = false; root.classList.remove('pmt-cz-in'); }
       if (rasterOn) { rasterOn = false; root.classList.remove('pmt-cz-rasterwarm'); root.removeAttribute('data-rw'); root.removeEventListener('focusin', rasterGuard, true); }
     }
     /* the steps go on the page's one idle-warm queue (PM_WARM, 11-motion-start.js; the lead's IDLE-WARM-RULE.md): it
@@ -232118,18 +232140,6 @@ var T = {};
       rasterEls.forEach(function (e) { e.setAttribute('data-rw-on', ''); });
       rasterOff.forEach(function (e) { e.setAttribute('data-rw-off', ''); });
       root.classList.add('pmt-cz-rasterwarm');
-      /* the entrance is played on the unseen screen and held at its middle for the frame, so its moving layers draw
-         with their alpha and scale: at its start they are transparent, and a transparent layer is not drawn. The
-         look's own entrance, under the class a click plays (reveal); the cleanup takes it off */
-      if (part === 'top:entrance') {
-        rasterIn = true;
-        root.classList.add('pmt-cz-in');
-        root.getAnimations({ subtree: true }).forEach(function (a) {
-          var t = a.effect && a.effect.target, d = t && a.effect.getComputedTiming().activeDuration;
-          if (!t || !t.matches || !t.matches('.pmt-cz-dialog, .pmt-cz-frame, .pmt-cz-sh') || !(d > 0) || d === Infinity) return;
-          a.pause(); a.currentTime = d / 2;
-        });
-      }
       return true;
     }
     /* the parts, once a look, then the case styles this screen offers, drawn once unseen in the look now in force, at
@@ -232368,6 +232378,7 @@ var T = {};
       } }];
       [].forEach.call(root.querySelectorAll('.pmt-cz-group[data-cz-later]'), function (g) {
         var ground = g.getAttribute('data-group') === 'ground';
+        if (ground && groundLater) groundArts().forEach(function () { out.push({ name: 'ground:art', run: groundArtStep }); });
         out.push({ name: 'group:' + g.getAttribute('data-group'), run: function () {
           if (ground && groundLater) { groundLater = false; paintGround(eff()); }
           g.removeAttribute('data-cz-later');
