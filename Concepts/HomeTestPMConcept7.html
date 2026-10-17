@@ -144374,16 +144374,18 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
     if (document.body) watchBody(); else document.addEventListener('DOMContentLoaded', watchBody, { once: true });
   } catch (_) { /* calls still arm it */ }
 
-  /* PM_WARM: the one page-wide queue for idle warm drawing (the lead's IDLE-WARM-RULE.md v3.5, 2026-10-17). A lane hands
+  /* PM_WARM: the one page-wide queue for idle warm drawing (the lead's IDLE-WARM-RULE.md v3.6, 2026-10-17). A lane hands
      it small steps that draw something unseen, so the GPU compiles its programs or rasters a surface before first use.
      On a cold P1000 a step that was short on the main thread still held the compositor 100-1,000 ms when it made the
      GPU compile several programs (part2's F5b idle trace), so a step goes only when the page is still, and is judged by
      the frames presented after it.
        when: an idle callback (no timeout) with 45 ms or more left, so nothing is drawing frames; or, once every other
-         gate has held for 1 s (the quiet clock: from the batch queued, the last gate that failed, and the last input +
+         gate has held for 1 s (the quiet clock: from the batch queued, the last lasting state, and the last input +
          600 ms, whichever is latest), any idle callback, since the page is drawing frames only for an ambient loop
          (Home's: on the 3090 the flat 10 s backstop of v3.3 put the first step at +15 s). The gates are looked at before
-         the slot, so a gate that fails starts the clock again, and so do 'pm-idle' and the page becoming visible. While
+         the slot. A lasting state starts the clock again (hidden, busy, input, pending, 'pm-idle', the page shown);
+         frames, animation and the back-off hold admission only while they fail (v3.6: on the P1000, restarting the
+         clock on each momentary one starved the queue). While
          a gate that holds a state fails (busy, input, animation, hidden) the wait grows from 400 ms to 2 s (back to 400
          once a step goes); a frame off time retries after 250 ms; 'pm-idle' tries again at once.
        gates: the page visible, PM_BUSY() empty, no pointer, key, wheel or touch input for 600 ms, none pending, any
@@ -144401,13 +144403,12 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
          frame, and any later interval over 100 ms is its late too, since on the P1000 its programs link 100-350 ms after
          its frame, when the tiles raster (frameMs [d1, d2, worst later]); the next admission waits for the watch, so links
          never stack across steps. A cpu step (it makes no GPU work) keeps two intervals: in a long slot the two
-         after the frame that follows it; in a short one (the quiet clock) it runs in the idle time of the third watched
-         frame and is judged from that frame, so its overrun of the ambient loop's next frame counts, and an idle callback
-         that comes only after a later frame puts it back at the head of the line. A cleanup run() returns runs in the
-         first frame after the step.
-       light (one kind, <= 2 ms of JS): judged by the one interval after it; the next step, if light, may go in that
-         same frame (one per frame) while every gate holds and no frame was late in the last 2 s; the chain's last step
-         gets the 300 ms watch.
+         after the frame that follows it; in a short one (the quiet clock) it is judged from the last frame before it ran
+         (v3.6), so its overrun of the ambient loop's next frame counts, and only when no idle callback comes within 1 s
+         does it go back to the head of the line. A cleanup run() returns runs in the first frame after the step.
+       light (one kind, <= 2 ms of JS): judged by the one interval after it; the owner's next step, if light, may go in
+         the next frame (one per frame) while every gate holds, no frame was late in the last 2 s and the chain is under
+         100 ms (its owner's turn, v3.6 item 3); the chain's last step gets the 300 ms watch.
        late: onLate({ name, late, dropped: false }); true means the owner handled it (split it, moved it), otherwise it
          goes to the end of its owner's line once, and late twice it is dropped (onLate with dropped: true). The wait
          after a late step is 1 s, doubling to 8 s; 3 clean steps reset it. 3 late in a row stop the queue until
@@ -144458,7 +144459,9 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
     let m = warmAnims.get(el);
     if (!m) warmAnims.set(el, (m = new Map()));
     const now = performance.now();
-    m.set(animKey(k, e), { at: now, seen: now, fin: k === 't' ? true : undefined });
+    /* looked up on the next PM_AFTER_LAYOUT (classify), a transition as an animation: one over 1.5 s is ambient (review
+       WQ6-4: counted running from its event, a long creep held the gate a second each time it restarted) */
+    m.set(animKey(k, e), { at: now, seen: now, fin: undefined });
     /* elements taken out of the page while nothing is queued are let go here */
     if (warmAnims.size > 50) animState();
   };
@@ -144535,8 +144538,10 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
     const a = animState();
     return a === 'run' ? 'animation' : a === 'ask' ? 'animation?' : '';
   };
-  /* a gate that fails starts the quiet clock again */
-  const quiet = () => { warmWhy = blocked(); if (warmWhy) warmQuietSince = performance.now(); return !warmWhy; };
+  /* a lasting state starts the quiet clock again (v3.6 item 1): hidden, busy, input, pending; frames, animation and the
+     back-off only hold admission while they fail */
+  const LASTING = { hidden: 1, busy: 1, input: 1, pending: 1 };
+  const quiet = () => { warmWhy = blocked(); if (LASTING[warmWhy]) warmQuietSince = performance.now(); return !warmWhy; };
   const logStep = (st, cpuMs, frameMs, late, outcome) => {
     warmLog.push({ owner: st.owner, name: st.name, t: Math.round(performance.now()), at: st.at ? Math.round(st.at) : null, cpuMs: Math.round(cpuMs * 10) / 10, frameMs: frameMs, late: late, outcome: outcome });
     if (warmLog.length > 200) warmLog.shift();
@@ -144615,7 +144620,7 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
       if (vis !== warmVis) { warmBusy = false; retry(); return; }
       note(tB - tA); note(tC - tB);
       /* a frame off time is momentary: tried again in 250 ms, the wait not grown (v3.5 item 3) */
-      if (!onTime(tB - tA) || !onTime(tC - tB)) { warmWhy = 'frames'; warmQuietSince = performance.now(); warmBusy = false; warmWake(250); return; }
+      if (!onTime(tB - tA) || !onTime(tC - tB)) { warmWhy = 'frames'; warmBusy = false; warmWake(250); return; }
       if (!quiet()) { warmBusy = false; retry(); return; }
       const st = pick(true);
       if (!st) { warmBusy = false; done(); return; }
@@ -144644,6 +144649,20 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
     };
     if (from - t >= WATCH_MS) done(0); else requestAnimationFrame(tick);
   };
+  /* the owner's next step if it is light (FIFO within the owner; one whose until() says no is skipped), taken off */
+  const LIGHT_TURN_MS = 100;
+  const nextLight = (owner) => {
+    for (;;) {
+      const i = warmQ.findIndex((x) => x.owner === owner);
+      if (i < 0 || !warmQ[i].light || warmQ[i].cpu) return null;
+      const x = warmQ[i];
+      let want = true;
+      if (typeof x.until === 'function') { try { want = x.until() !== false; } catch (_) { want = false; } }
+      warmQ.splice(i, 1);
+      if (want) return x;
+      logStep(x, 0, null, false, 'skipped');
+    }
+  };
   /* a GPU step, in the frame at t */
   const runStep = (st, t) => {
     const vis = warmVis, limit = lateMs(), r = run(st);
@@ -144654,11 +144673,13 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
       if (vis !== warmVis) { judge(st, r.cpu, null, false, limit); after(); return; }
       note(d1);
       if (st.light) {
-        /* the next light step in this same frame, while everything holds */
-        const nx = d1 <= limit && !warmStopped && performance.now() - warmLateAt > 2000 && onTime(warmD1) && onTime(d1) && quiet() ? pick(false) : null;
-        if (nx && nx.light && !nx.cpu) {
+        /* the owner's next light step (FIFO) in this frame, while everything holds and the chain is under its 100 ms
+           turn (v3.6 item 3); then the turn passes on */
+        const c0 = st.chain0 || t;
+        const nx = d1 <= limit && a - c0 < LIGHT_TURN_MS && !warmStopped && performance.now() - warmLateAt > 2000 && onTime(warmD1) && onTime(d1) && quiet() ? nextLight(st.owner) : null;
+        if (nx) {
           if (judge(st, r.cpu, [Math.round(d1)], false, limit)) return;
-          pick(true); runStep(nx, a); return;
+          nx.chain0 = c0; runStep(nx, a); return;
         }
         if (d1 > limit) { if (!judge(st, r.cpu, [Math.round(d1)], true, limit)) after(); return; }
         /* the chain's last step: the watch */
@@ -144680,19 +144701,25 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
     });
   };
   /* a cpu step, inside an idle callback, given its deadline. In a long slot it is judged by the two intervals after the
-     next frame; in a short one it must come in the idle time of tC, the admission frame, and is judged by tC -> a and
-     a -> b, so an overrun of the ambient loop's frame counts (v3.4); one that comes after a later frame goes back to the
-     head of the line */
+     next frame. In a short one it is judged from the last frame before it ran (v3.6 item 2): while its idle callback is
+     pending a frame loop (1 s at most) keeps tLast, and it is judged by tLast -> a and a -> b, so its overrun of the
+     ambient loop's frame counts; it goes back to the head of the line only when no idle callback comes within 1 s */
   const cpuStep = (st, tC) => {
     warmRunning = st; st.at = tC;
     const vis = warmVis, limit = lateMs();
-    let next = 0, r = null, kind = '';
-    requestAnimationFrame((a) => {
-      next = a;
-      if (!r || kind !== 'short') return;
+    let tLast = tC, waiting = true;
+    const loop = (t) => { if (!waiting) return; tLast = t; if (t - tC < 1000) requestAnimationFrame(loop); };
+    requestAnimationFrame(loop);
+    const back = () => { waiting = false; clearTimeout(giveUp); warmRunning = null; warmQ.unshift(st); warmBusy = false; retry(); };
+    const giveUp = setTimeout(() => {
+      if (!waiting) return;
+      if (warmIdle && window.cancelIdleCallback) cancelIdleCallback(warmIdle);
+      warmIdle = 0; warmWhy = 'idle'; back();
+    }, 1000);
+    const judged = (r, from, a) => {
       clean(r);
       if (vis !== warmVis) { judge(st, r.cpu, null, false, limit); after(); return; }
-      const d1 = a - tC;
+      const d1 = a - from;
       note(d1);
       requestAnimationFrame((b) => {
         const d2 = b - a;
@@ -144700,25 +144727,18 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
         note(d2);
         if (!judge(st, r.cpu, [Math.round(d1), Math.round(d2)], Math.max(d1, d2) > limit, limit)) after();
       });
-    });
-    const back = () => { warmRunning = null; warmQ.unshift(st); warmBusy = false; retry(); };
+    };
     const go = (d) => {
       warmIdle = 0;
-      if (st.cancelled) { warmRunning = null; warmBusy = false; warmWake(0); return; }
+      if (!waiting) return;
+      if (st.cancelled) { waiting = false; clearTimeout(giveUp); warmRunning = null; warmBusy = false; warmWake(0); return; }
       if (!quiet()) { back(); return; }
-      kind = slot(d);
-      if (!kind || (kind === 'short' && next)) { warmWhy = 'idle'; back(); return; }
-      r = run(st, d);
-      if (kind === 'short') return;
-      requestAnimationFrame((a) => {
-        clean(r);
-        requestAnimationFrame((b) => requestAnimationFrame((c) => {
-          const d1 = b - a, d2 = c - b;
-          if (vis !== warmVis) { judge(st, r.cpu, null, false, limit); after(); return; }
-          note(d1); note(d2);
-          if (!judge(st, r.cpu, [Math.round(d1), Math.round(d2)], Math.max(d1, d2) > limit, limit)) after();
-        }));
-      });
+      const kind = slot(d);
+      if (!kind) { warmWhy = 'idle'; back(); return; }
+      waiting = false; clearTimeout(giveUp);
+      const from = tLast, r = run(st, d);
+      if (kind === 'short') { st.at = from; requestAnimationFrame((a) => judged(r, from, a)); return; }
+      requestAnimationFrame((a) => { clean(r); requestAnimationFrame((b) => judged({ cpu: r.cpu, cleanup: null }, a, b)); });
     };
     if (window.requestIdleCallback) warmIdle = requestIdleCallback(go); else go({ timeRemaining: () => 50 });
   };
@@ -220179,13 +220199,8 @@ var T = {};
       if (s.light) return k >= 1 ? rgba(0xffffff, Math.min(0.85, 0.35 * k)) : rgba(C.hex('#1e2d5a'), 0.16 * (1 - k) + 0.04);
       return rgba(lit(c, k, true), a === undefined ? ga : a);
     };
-    /* warmStage (the idle warm only, Bezel.warm): the sections up to that one are drawn, so each warm step compiles the
-       programs of one more section; undefined draws all. Stage 1 is the case's outline clip alone, filled once, since
-       every section draws through it */
-    var stage = this.warmStage, go = function (n) { return stage === undefined || n <= stage; };
     ctx.clearRect(0, 0, g.w, g.h);
     ctx.save(); ctx.clip(ring, 'evenodd');
-    if (stage === 1 && !ink) { ctx.fillStyle = col(base, 1); ctx.fillRect(0, 0, g.w, g.h); }
     if (ink) {
       ctx.fillStyle = hex(base); ctx.fillRect(0, 0, g.w, g.h);
       ctx.restore();
@@ -220193,75 +220208,59 @@ var T = {};
       return;
     }
     /* the flat frame: each side a shade of the same light, a touch lighter along the top */
-    if (go(2)) {
-      ctx.save(); ctx.clip(frameRing, 'evenodd');
-      SIDES.forEach(function (side) { ctx.save(); ctx.clip(polyPath(geo.frameParts[side])); ctx.fillStyle = col(base, FRAME[side]); ctx.fillRect(0, 0, g.w, g.h); ctx.restore(); });
-      ctx.restore();
-    }
+    ctx.save(); ctx.clip(frameRing, 'evenodd');
+    SIDES.forEach(function (side) { ctx.save(); ctx.clip(polyPath(geo.frameParts[side])); ctx.fillStyle = col(base, FRAME[side]); ctx.fillRect(0, 0, g.w, g.h); ctx.restore(); });
+    ctx.restore();
     /* the sloped face: four parts meeting in crisp creases, each lit by where it faces, a little darker toward the glass */
+    ctx.save(); ctx.clip(faceRing, 'evenodd');
     var fb = geo.frameIn, bb = geo.bb;
-    if (go(3)) {
-      ctx.save(); ctx.clip(faceRing, 'evenodd');
-      SIDES.forEach(function (side) {
-        ctx.save(); ctx.clip(polyPath(geo.faceParts[side]));
-        var k = FACE[side], gr = side === 'top' ? ctx.createLinearGradient(0, fb[1], 0, bb[1]) : side === 'bottom' ? ctx.createLinearGradient(0, fb[3], 0, bb[3])
-          : side === 'left' ? ctx.createLinearGradient(fb[0], 0, bb[0], 0) : ctx.createLinearGradient(fb[2], 0, bb[2], 0);
-        gr.addColorStop(0, col(face, k * 1.08)); gr.addColorStop(1, col(face, k * 0.9));
-        ctx.fillStyle = gr; ctx.fillRect(0, 0, g.w, g.h);
-        ctx.restore();
-      });
-      /* the creases: a hairline of light along each diagonal where two parts of the face meet */
-      if (go(4)) {
-        ctx.lineWidth = 1; ctx.strokeStyle = glass ? 'rgba(255,255,255,' + (s.light ? 0.5 : 0.16) + ')' : rgba(lit(face, 2.2, light), 0.35);
-        [[fb[0], fb[1], bb[0], bb[1]], [fb[2], fb[1], bb[2], bb[1]], [fb[2], fb[3], bb[2], bb[3]], [fb[0], fb[3], bb[0], bb[3]]].forEach(function (q) { ctx.beginPath(); ctx.moveTo(q[0], q[1]); ctx.lineTo(q[2], q[3]); ctx.stroke(); });
-      }
+    SIDES.forEach(function (side) {
+      ctx.save(); ctx.clip(polyPath(geo.faceParts[side]));
+      var k = FACE[side], gr = side === 'top' ? ctx.createLinearGradient(0, fb[1], 0, bb[1]) : side === 'bottom' ? ctx.createLinearGradient(0, fb[3], 0, bb[3])
+        : side === 'left' ? ctx.createLinearGradient(fb[0], 0, bb[0], 0) : ctx.createLinearGradient(fb[2], 0, bb[2], 0);
+      gr.addColorStop(0, col(face, k * 1.08)); gr.addColorStop(1, col(face, k * 0.9));
+      ctx.fillStyle = gr; ctx.fillRect(0, 0, g.w, g.h);
       ctx.restore();
-    }
+    });
+    /* the creases: a hairline of light along each diagonal where two parts of the face meet */
+    ctx.lineWidth = 1; ctx.strokeStyle = glass ? 'rgba(255,255,255,' + (s.light ? 0.5 : 0.16) + ')' : rgba(lit(face, 2.2, light), 0.35);
+    [[fb[0], fb[1], bb[0], bb[1]], [fb[2], fb[1], bb[2], bb[1]], [fb[2], fb[3], bb[2], bb[3]], [fb[0], fb[3], bb[0], bb[3]]].forEach(function (q) { ctx.beginPath(); ctx.moveTo(q[0], q[1]); ctx.lineTo(q[2], q[3]); ctx.stroke(); });
+    ctx.restore();
     /* the grain: speckle in plastic, streaks along each side in metal, frost in glass */
-    if (go(5)) {
-      var tl = tile(M.grain === 'brushed' ? 'brushed' : M.grain === 'frost' ? 'frost' : 'plastic');
-      ctx.globalCompositeOperation = glass ? 'source-over' : 'overlay'; ctx.globalAlpha = M.grain === 'gloss' ? 0.45 : glass ? 0.6 : 1;
-      if (M.grain === 'brushed') {
-        ['top', 'bottom'].forEach(function (side) { ctx.save(); ctx.clip(polyPath(geo.frameParts[side])); ctx.fillStyle = ctx.createPattern(tl, 'repeat'); ctx.fillRect(0, 0, g.w, g.h); ctx.restore(); });
-        ['left', 'right'].forEach(function (side) {
-          ctx.save(); ctx.clip(polyPath(geo.frameParts[side])); ctx.translate(g.w / 2, g.h / 2); ctx.rotate(Math.PI / 2); ctx.translate(-g.h / 2, -g.w / 2);
-          ctx.fillStyle = ctx.createPattern(tl, 'repeat'); ctx.fillRect(0, 0, g.h, g.w); ctx.restore();
-        });
-      } else { ctx.fillStyle = ctx.createPattern(tl, 'repeat'); ctx.fillRect(0, 0, g.w, g.h); }
-      ctx.globalCompositeOperation = 'source-over'; ctx.globalAlpha = 1;
-    }
+    var tl = tile(M.grain === 'brushed' ? 'brushed' : M.grain === 'frost' ? 'frost' : 'plastic');
+    ctx.globalCompositeOperation = glass ? 'source-over' : 'overlay'; ctx.globalAlpha = M.grain === 'gloss' ? 0.45 : glass ? 0.6 : 1;
+    if (M.grain === 'brushed') {
+      ['top', 'bottom'].forEach(function (side) { ctx.save(); ctx.clip(polyPath(geo.frameParts[side])); ctx.fillStyle = ctx.createPattern(tl, 'repeat'); ctx.fillRect(0, 0, g.w, g.h); ctx.restore(); });
+      ['left', 'right'].forEach(function (side) {
+        ctx.save(); ctx.clip(polyPath(geo.frameParts[side])); ctx.translate(g.w / 2, g.h / 2); ctx.rotate(Math.PI / 2); ctx.translate(-g.h / 2, -g.w / 2);
+        ctx.fillStyle = ctx.createPattern(tl, 'repeat'); ctx.fillRect(0, 0, g.h, g.w); ctx.restore();
+      });
+    } else { ctx.fillStyle = ctx.createPattern(tl, 'repeat'); ctx.fillRect(0, 0, g.w, g.h); }
+    ctx.globalCompositeOperation = 'source-over'; ctx.globalAlpha = 1;
     /* where frame turns into face: a lit edge on the lower half, a shaded one on the upper */
-    if (go(6)) {
-      ctx.lineWidth = 1;
-      ctx.save(); ctx.beginPath(); ctx.rect(0, g.h / 2, g.w, g.h); ctx.clip(); ctx.strokeStyle = glass ? 'rgba(255,255,255,.3)' : rgba(lit(base, 2.4, light), 0.6); ctx.stroke(geo.inner); ctx.restore();
-      ctx.save(); ctx.beginPath(); ctx.rect(0, 0, g.w, g.h / 2); ctx.clip(); ctx.strokeStyle = glass ? 'rgba(0,0,0,.18)' : rgba(lit(base, 0.4, light), 0.8); ctx.stroke(geo.inner); ctx.restore();
-    }
+    ctx.lineWidth = 1;
+    ctx.save(); ctx.beginPath(); ctx.rect(0, g.h / 2, g.w, g.h); ctx.clip(); ctx.strokeStyle = glass ? 'rgba(255,255,255,.3)' : rgba(lit(base, 2.4, light), 0.6); ctx.stroke(geo.inner); ctx.restore();
+    ctx.save(); ctx.beginPath(); ctx.rect(0, 0, g.w, g.h / 2); ctx.clip(); ctx.strokeStyle = glass ? 'rgba(0,0,0,.18)' : rgba(lit(base, 0.4, light), 0.8); ctx.stroke(geo.inner); ctx.restore();
     /* the outer edge: darkened, with a hairline of light along its top and left */
-    if (go(7)) {
-      ctx.lineWidth = 2; ctx.strokeStyle = glass ? (cssVar('--lg-edge-bot') || 'rgba(0,0,0,.28)') : rgba(lit(base, 0.45, light), 0.9); ctx.stroke(geo.outer);
-      ctx.save(); ctx.clip(polyPath([[0, 0], [g.w, 0], [0, g.h]])); ctx.lineWidth = 1;
-      ctx.strokeStyle = glass ? (cssVar('--lg-edge-top') || 'rgba(255,255,255,.3)') : rgba(lit(base, 2.2, light), 0.55);
-      ctx.stroke(roundRect(1.5, 1.5, g.w - 3, g.h - 3, Math.max(0, (Math.min(16, (s.style === 'rim' ? 4 : 7) + s.width)) - 1.5))); ctx.restore();
-    }
+    ctx.lineWidth = 2; ctx.strokeStyle = glass ? (cssVar('--lg-edge-bot') || 'rgba(0,0,0,.28)') : rgba(lit(base, 0.45, light), 0.9); ctx.stroke(geo.outer);
+    ctx.save(); ctx.clip(polyPath([[0, 0], [g.w, 0], [0, g.h]])); ctx.lineWidth = 1;
+    ctx.strokeStyle = glass ? (cssVar('--lg-edge-top') || 'rgba(255,255,255,.3)') : rgba(lit(base, 2.2, light), 0.55);
+    ctx.stroke(roundRect(1.5, 1.5, g.w - 3, g.h - 3, Math.max(0, (Math.min(16, (s.style === 'rim' ? 4 : 7) + s.width)) - 1.5))); ctx.restore();
     ctx.restore();
     /* at the glass: a thin bright lip that never goes fully dark, then a near-black unlit ring; the case's shadow under
        the top lip falls a few pixels onto the glass */
-    if (!go(8)) return;
     ctx.save(); ctx.lineJoin = 'round';
     ctx.save(); ctx.clip(ring, 'evenodd'); ctx.lineWidth = 4.4;
     ctx.strokeStyle = glass ? (cssVar('--lg-lens-hair') || 'rgba(255,255,255,' + (s.light ? 0.9 : 0.5) + ')') : hex(lit(face, light ? 1.35 : 3.2, light));
     ctx.stroke(geo.opening); ctx.restore();
     ctx.lineWidth = 2.4; ctx.strokeStyle = glass ? 'rgba(0,0,0,.3)' : 'rgba(0,0,0,.82)'; ctx.stroke(geo.opening);
     if (glass) { ctx.save(); ctx.clip(polyPath([[0, 0], [g.w, 0], [bb[2], bb[1] + 6], [bb[0], bb[1] + 6]])); ctx.lineWidth = 2; ctx.strokeStyle = cssVar('--lg-lens-glint') || 'rgba(255,255,255,.55)'; ctx.stroke(geo.opening); ctx.restore(); }
-    if (go(9)) {
-      ctx.clip(geo.opening);
-      ctx.shadowColor = 'rgba(0,0,0,' + (glass ? 0.22 : s.light ? 0.3 : 0.55) + ')'; ctx.shadowBlur = (s.style === 'case' ? 8 : 4) * g.dpr; ctx.shadowOffsetY = 2 * g.dpr;
-      var around = new Path2D(); around.rect(-40, -40, g.w + 80, g.h + 80); around.addPath(geo.opening);
-      ctx.fillStyle = '#000'; ctx.fill(around, 'evenodd');
-    }
+    ctx.clip(geo.opening);
+    ctx.shadowColor = 'rgba(0,0,0,' + (glass ? 0.22 : s.light ? 0.3 : 0.55) + ')'; ctx.shadowBlur = (s.style === 'case' ? 8 : 4) * g.dpr; ctx.shadowOffsetY = 2 * g.dpr;
+    var around = new Path2D(); around.rect(-40, -40, g.w + 80, g.h + 80); around.addPath(geo.opening);
+    ctx.fillStyle = '#000'; ctx.fill(around, 'evenodd');
     ctx.restore();
   };
-  var HOUSING_STAGES = 9, LIGHT_STAGES = 5;
 
   /* where the screen's light falls, at 0.4 of CSS size: the direct reflection and its diffused copy on the face, faded by
      Mega Bezel's (1 - sqrt(d/D))^2 from the glass outward and toward the corners; and the glow over face and frame */
@@ -220378,18 +220377,9 @@ var T = {};
       for (var a = alpha; a > 0.004; a -= 1) { rc.globalAlpha = Math.min(1, a); rc.drawImage(T2, 0, 0); }
       rc.globalAlpha = 1; rc.globalCompositeOperation = 'source-over';
     };
-    /* warmLight (the idle warm only): 1 the three masks alone, 2 the first pass unblurred, 3 the first pass, 4 and 5 the
-       other two passes in turn; undefined draws all */
-    var upto = this.warmLight === undefined ? LIGHT_STAGES : this.warmLight;
-    if (upto === 1) {
-      tc.clearRect(0, 0, w, h);
-      [m.direct, m.diffused, m.glow].forEach(function (k) { tc.drawImage(k, 0, 0); });
-      rc.drawImage(T2, 0, 0);
-      return R;
-    }
-    pass(upto === 2 ? 0 : M.blur, m.direct, strength * 1.25, FOLD, 'face');
-    if (upto >= 4) pass(M.blur * 4 + 3, m.diffused, strength * 0.55, FOLD, 'face');
-    if (upto >= 5) pass(16, m.glow, strength * (s.glow ? 0.75 : 0.45), 1, 'all');
+    pass(M.blur, m.direct, strength * 1.25, FOLD, 'face');
+    pass(M.blur * 4 + 3, m.diffused, strength * 0.55, FOLD, 'face');
+    pass(16, m.glow, strength * (s.glow ? 0.75 : 0.45), 1, 'all');
     return R;
   };
 
@@ -222994,7 +222984,8 @@ var T = {};
     /* ---- the build in steps (staged): the values, the preview, each group, the measures, then the fit's phases (fitStart);
        each step only writes, so the frame after it lays out what it added. They paint nothing (the screen is parked:
        clipped away, its parts hidden), so they are cpu steps (IDLE-WARM-RULE v3.5 item 4), judged by the two frames
-       after them, which hold the new DOM's style and layout. A step skipped (the screen kept for the next
+       after them, which hold the new DOM's style and layout; the values step, which puts it in the page, is a GPU step
+       (queueBuild). A step skipped (the screen kept for the next
        terminal, or gone) stops the rest; retarget queues them again. A late step has done its work all the same; one let
        go (the queue's session stop) leaves the rest to this screen's own idle wait. The click finishes what is left
        (show, finishBuild) ---- */
@@ -223028,7 +223019,9 @@ var T = {};
       buildCancel();
       if (!window.PM_WARM || window.PM_WARM.state().off) { buildIdle(); return; }
       slices.forEach(function (s) {
-        buildIds.push(window.PM_WARM.add({ owner: 'terminal', name: 'customize:build:' + s.name, cpu: true,
+        /* the values step puts the screen in the page, and on the P1000 its window showed 6 links (part2, Friendly):
+           a GPU step, watched (IDLE-WARM-RULE v3.5 item 4's guard); the rest paint nothing */
+        buildIds.push(window.PM_WARM.add({ owner: 'terminal', name: 'customize:build:' + s.name, cpu: s.name !== 'values',
           until: function () { return !disposed && !handle.kept && slices[0] === s; },
           run: function () { if (slices[0] === s) { slices.shift(); s.run(); } return null; },
           onLate: function (i) { if (i.dropped) buildIdle(); return true; } }));
