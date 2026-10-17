@@ -310,13 +310,15 @@ HOST_SCOPE = ':is(#panel-usage,[data-pmu-host])'
 # drawn in parts (2026-10-17, P2-03 final, 05-film.css: the marked element's children rule keyed on the panel's
 # data-pmu-warm instead of its paint token, the same compound count; the four part selectors, a marked element's
 # pseudo-elements hidden or drawn without their glow, keyed on data-pmu-warm, which a hosted board never takes) add four
-# compound uses, Usage-only: 'compound' 15, 'rewritten' still 2,680.
+# compound uses, Usage-only: 'compound' 15, 'rewritten' still 2,680. The arrival's bodies on layers of their own while
+# the shell holds the page (2026-10-17, P2-03 final, 05-film.css data-pmu-arrive, keyed on the board, which a hosted
+# board never takes) add one anchor: 'rewritten' 2,681.
 # A Usage CSS
 # edit that adds or removes an anchored rule moves 'rewritten': look at what the new rules style (a hosted board gets
 # them too), then re-pin the number here. Any other use of #panel-usage (a child or sibling combinator, a rule for the
 # panel itself, an anchor outside a selector) stops the build: it would be Usage-only, or not a selector, without
 # saying so.
-HOST_SCOPE_EXPECT = {'rewritten': 2680, 'compound': 15}
+HOST_SCOPE_EXPECT = {'rewritten': 2681, 'compound': 15}
 HOST_AT_GROUPS = ('@media', '@supports', '@container', '@layer')
 _ANCHOR_RX = re.compile(re.escape(HOST_ANCHOR) + r'(?![\w-])')
 

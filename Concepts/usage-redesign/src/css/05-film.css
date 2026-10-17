@@ -79,6 +79,11 @@ body.pmu-page-active #panel-dashboard.pm-home-owned.pm8-page-out { position: abs
    the attribute. */
 #panel-usage .pmu-board > .pmu-card[data-plate-hold] { opacity: .004; }
 #panel-usage .pmu-board > .pmu-card[data-plate-hold][data-body-wait] > .pmu-cardbody { opacity: 1; }
+/* the arrival's unseen first draw (P2-03 final, 2026-10-17; 15-film.js warmArrive): while the shell holds the page's
+   entrance, each body is drawn on a layer of its own, the one its reveal will animate (opacity alone: a transform hint
+   would make it the containing block of its positioned parts), so what the GPU rasters under the hold is what the
+   entrance moves. A hosted board never takes the attribute. */
+#panel-usage .pmu-board[data-pmu-arrive] > .pmu-card > .pmu-cardbody { will-change: opacity; }
 /* while a film moment runs (data-film, set at the release and removed once at its end) each plate keeps its layer until
    its own entrance has ended (data-film-rest, 15-film.js plateLayer): a plate at rest never draws its text from a layer
    that kept the raster scale of a scaled entrance (Jared's note 5, 2026-10-09) */

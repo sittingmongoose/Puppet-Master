@@ -784,6 +784,8 @@
   function unwait(m) {
     var w = m && m.wait; if (!w) return;
     m.wait = null; M.hold(false);
+    var board = document.getElementById('pmuBoard');
+    if (board) board.removeAttribute('data-pmu-arrive');
     w.at.forEach(function (t) { try { t.fn(); } catch (error) {} });
   }
   function endMoment(m) {
@@ -2707,7 +2709,7 @@
     return { running: r ? { rooms: r.rooms.slice(), gate: rasterLog.gate, parked: r.parked, resumes: r.resumes, queued: !!r.queued,
         step: r.cur ? { room: r.cur.room, root: r.cur.ri, piece: r.cur.pi, spare: r.spare } : null } : null,
       ran: rasterLog.ran || 0, late: rasterLog.late || 0, split: rasterLog.split || 0, moved: rasterLog.moved || 0, dropped: (rasterLog.dropped || []).slice(),
-      cpu: Object.assign({}, rasterLog.cpu || {}), queue: qs, rooms: rasterLog.rooms.slice(), at: rasterLog.at, ms: rasterLog.ms, parks: rasterLog.parks || 0,
+      cpu: Object.assign({}, rasterLog.cpu || {}), queue: qs, rooms: rasterLog.rooms.slice(), at: rasterLog.at, ms: rasterLog.ms, parks: rasterLog.parks || 0, waits: rasterLog.waits || 0,
       resumeMs: (rasterLog.resumeMs || []).slice(), prefix: RASTER_PREFIX, skipped: rasterLog.skipped, done: Object.keys(rasterDone),
       kinds: Object.keys(rasterSeen).length, steps: (rasterLog.steps || []).slice() };
   }
@@ -2861,10 +2863,21 @@
     w.framedAt = 0;
     frames(cards, { dir: 0, base: 0, board: board });
     warmRelease(w, m, board, cards);
+    /* held at the middle of each move, not its first frame: a first frame at opacity 0 is not rastered (RTX 3090, the
+       first try: 19 links after the hold, a 225 ms frame with the page at .21 and no plate on it), so the hold shows
+       every plate, body, roll and light half way, which the GPU rasters (and links) unseen; the bodies keep their own
+       layers through the hold (data-pmu-arrive, 05-film.css), the ones their reveals animate. arriveGo rewinds each to 0 */
     m.anims.forEach(function (a) {
       if (!a || !a.effect || typeof a.pause !== 'function') return;
-      try { if (a.playState !== 'finished' && a.playState !== 'idle') { a.pause(); a.currentTime = 0; m.wait.anims.push(a); } } catch (error) {}
+      try {
+        if (a.playState === 'finished' || a.playState === 'idle') return;
+        a.pause();
+        var tm = a.effect.getTiming(), ct = a.effect.getComputedTiming();
+        a.currentTime = (+tm.delay || 0) + (isFinite(ct.activeDuration) ? ct.activeDuration / 2 : 0);
+        m.wait.anims.push(a);
+      } catch (error) {}
     });
+    board.setAttribute('data-pmu-arrive', '');
     if (last) last.goMs = [Math.round((c1 - t0) * 10) / 10, Math.round((performance.now() - c1) * 10) / 10];
     arriveHold(m, function (ok, n) { arriveGo(m, n); });
   }
@@ -2872,10 +2885,12 @@
   function arriveGo(m, n) {
     var w = m.wait; if (!w) return;   /* the moment ended meanwhile (unwait wrote its end states) */
     m.wait = null; M.hold(false);
+    var board = document.getElementById('pmuBoard');
+    if (board) board.removeAttribute('data-pmu-arrive');
     if (moment !== m) return;
     var now = performance.now();
     m.holdMs = Math.round(now - w.t0); m.holdFrames = n; m.t0 = now;
-    w.anims.forEach(function (a) { try { if (a.playState === 'paused') a.play(); } catch (error) {} });
+    w.anims.forEach(function (a) { try { if (a.playState === 'paused') { a.currentTime = 0; a.play(); } } catch (error) {} });
     w.timers.forEach(function (t) { m.timers.push(setTimeout(t.fn, Math.max(0, t.ms) * M.speed())); });
     w.at.forEach(function (t) { setTimeout(t.fn, Math.max(0, t.ms) * M.speed()); });
     /* the preset hold a mount schedules (40-board.js holdPass) waited for the arrival */
