@@ -540,7 +540,51 @@ TITLE_MENUS = [
      'title-bar menus: aria-expanded written only when it changes'),
 ]
 
-PATCHES = STATUS_BAR + HOVER_TAGS + THEME + PAGES + CENSUS + ANSWER_FIRST + CHAT + EDGES + FIELD + TITLE_MENUS
+INK = [
+    # The page-tab ink is drawn only in Glass with Liquid Glass off (liquid-glass/src/glass.css hides it in every other look,
+    # and with Liquid Glass on, which is how the app runs, the selection is drawn by Liquid Glass itself). Hidden, its spring
+    # still wrote the ink's width, height and transform on every frame for about 580 ms after each page switch, and each
+    # write re-layerized the whole page: Layerize was 116 ms of a switch's 243 ms of main-thread time on Nas1, and hiding
+    # the ink took it to 16 ms (B1, P1000 speed lead, share/2026-10-16-p1000-speed/B1-INK.md). A hidden ink now takes its
+    # place at once, as it does under Reduced Motion, so it is in place whenever it is shown. Whether it is drawn is read
+    # after layout (the shell's PM_AFTER_LAYOUT), at load and after each look change, never inside a click.
+    ("    var ink = strip && strip.querySelector('.page-tab-ink');\n",
+     "    var ink = strip && strip.querySelector('.page-tab-ink');\n"
+     "    var inkShown = true;   /* O55 (B1): drawn? read after layout, at load and on each look change */\n"
+     "    function readInkShown() { var was = inkShown; try { inkShown = !!ink && getComputedStyle(ink).opacity !== '0'; } catch (eI) { inkShown = true; }\n"
+     "      if (inkShown && !was) { var at = strip.querySelector('.page-tab.active'); if (at) snap(at); } }   /* shown again: on the tab exactly */\n"
+     "    function inkSoon() { if (typeof window.PM_AFTER_LAYOUT === 'function') window.PM_AFTER_LAYOUT(readInkShown); else requestAnimationFrame(readInkShown); }\n"
+     "    if (ink) { inkSoon(); try { new MutationObserver(inkSoon).observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme', 'data-lg', 'data-o55-nier'] }); } catch (eM) {} }\n",
+     'page-tab ink: drawn flag'),
+    ("      if (pos.x === null || reduced()) { snap(tab, geometry); return; }\n",
+     "      if (pos.x === null || reduced() || !inkShown) { snap(tab, geometry); return; }   /* O55 (B1): a hidden ink is placed at once */\n",
+     'page-tab ink: hidden ink snaps'),
+    # The same for the shared liquid ink (PM6_LIQUID_INK: the rail side panels' segment tabs and Files' #fmTabInk), which the
+    # same glass.css rule hides (.pm-segtab-ink): each attached ink keeps its own drawn flag. A hidden ink snapped at the
+    # click can be a pixel or two off the item (the active item's width settles after it; the spring measured every frame),
+    # so an ink that is shown again is placed on its active item then, exactly. Both inks do that.
+    ("      if (!strip || !ink || typeof getActive !== 'function') return null;\n",
+     "      if (!strip || !ink || typeof getActive !== 'function') return null;\n"
+     "      var inkShown = true;   /* O55 (B1): drawn? read after layout, at load and on each look change; hidden, it snaps */\n"
+     "      var readShown = function () { var was = inkShown; try { inkShown = getComputedStyle(ink).opacity !== '0'; } catch (eI) { inkShown = true; }\n"
+     "        if (inkShown && !was) { var at = getActive(); if (at) snap(at); } };   /* shown again: on the active item exactly */\n"
+     "      var shownSoon = function () { if (!ink.isConnected) return; if (typeof window.PM_AFTER_LAYOUT === 'function') window.PM_AFTER_LAYOUT(readShown); else requestAnimationFrame(readShown); };\n"
+     "      shownSoon();\n"
+     "      /* one observer for every attached ink (a segment strip made again attaches again): an ink no longer in the page\n"
+     "         is dropped from it at the next look change, so nothing keeps its closure alive (landing review SH8-1) */\n"
+     "      var shownReg = attach._o55Shown || (attach._o55Shown = { list: [], mo: null });\n"
+     "      shownReg.list.push({ ink: ink, soon: shownSoon });\n"
+     "      if (!shownReg.mo) try {\n"
+     "        shownReg.mo = new MutationObserver(function () { shownReg.list = shownReg.list.filter(function (r) { return r.ink.isConnected; }); for (var si = 0; si < shownReg.list.length; si++) shownReg.list[si].soon(); });\n"
+     "        shownReg.mo.observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme', 'data-lg', 'data-o55-nier'] });\n"
+     "      } catch (eM) {}\n",
+     'liquid ink: drawn flag'),
+    ("        if (pos.a === null || reduced()) { snap(el); return; }\n",
+     "        if (pos.a === null || reduced() || !inkShown) { snap(el); return; }   /* O55 (B1): a hidden ink is placed at once */\n",
+     'liquid ink: hidden ink snaps'),
+]
+
+PATCHES = STATUS_BAR + HOVER_TAGS + THEME + PAGES + CENSUS + ANSWER_FIRST + CHAT + EDGES + FIELD + TITLE_MENUS + INK
 
 # The census's own frame requests, between scheduleScan and refresh (scan, delayed scan, live, delayed live, and their
 # continuations): every one becomes censusFrame.
