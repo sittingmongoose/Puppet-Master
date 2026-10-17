@@ -22,6 +22,12 @@ body.pmu-page-active #panel-dashboard.pm-home-owned.pm8-page-out { position: abs
   left: var(--pmu-warm-x, 0px); top: var(--pmu-warm-y, 0px); width: var(--pmu-warm-w, 100%); height: var(--pmu-warm-h, 100%);
   visibility: hidden; pointer-events: none; z-index: -1; content-visibility: visible; }
 #panel-usage .pmu-scroll[data-pmu-warm-wait] { display: none; }
+/* nothing moves in the page while it is laid out unseen (P2-03 final, 2026-10-17): a raster step shows and hides
+   elements whose own transitions then ran unseen, and the page-wide idle-warm queue counts every finite transition as
+   motion on screen (PM_WARM's gate), so each step restarted its quiet clock and the next step waited a second (RTX 3090:
+   a 1,050 ms wait after every draw). Keyed on the warm box, which comes and goes with the page's display (the whole
+   page is styled then anyway) */
+#panel-usage[data-pmu-warm] * { transition: none !important; }
 /* ---- the warm board's raster (P2-03; 15-film.js raster): a built board that was never painted made the first visible
    Usage entry compile every GPU program its cards and charts draw with (P1000 F3 cold: 47 program links, ~1.4 s of GPU
    main thread, an 834 ms gap with an empty board on screen). So once per look and board class, with a GPU, in idle
