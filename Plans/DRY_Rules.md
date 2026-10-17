@@ -3748,8 +3748,9 @@ canonical_text: >-
   Amended 2026-10-17 (DL-228): each field's choice words and help text have one owner, its inventory row
   (F3-441), which Settings and the Customize screens both read. The concept's Customize words that differ
   (Fill, Fit, Tile, Centre for Picture Fit; Still for Off in Background Motion; the materials' "plastic";
-  "Less colour"; "Grain"; "Text drawing") are proposals for the wording pass F3-441 holds pending Jared, and
-  its Bell help's "flash" is stale: Bell is Follow look or Off (DL-213, DL-216).
+  "Less colour"; "Grain"; "Text drawing") were adopted in F3-441's wording pass (2026-10-17, DL-230, Jared) as
+  those rows' labels and option_labels, and its Bell help's "flash" is stale: Bell is Follow look or Off
+  (DL-213, DL-216).
 gui_related: true
 gui_classification_reason: "Fixes one layered appearance model for every terminal."
 split_recommended: false

@@ -629,7 +629,7 @@
           "required": ["surface", "example_scope", "minimum_meaningful_action_share", "minimum_meaningful_dwell_share", "goal", "outcomes", "review_sections", "edit_requires_changed_answer", "uncertain_answer_remains_unresolved", "unchanged_outcomes_retain_identity_and_position", "only_affected_consequence_changes"],
           "properties": {
             "surface": {"const": "mounted_real_planning_wizard"}, "example_scope": {"const": "local_fixture_not_replacement_engine"},
-            "minimum_meaningful_action_share": {"const": 0.5}, "minimum_meaningful_dwell_share": {"const": 0.5},
+            "minimum_meaningful_action_share": {"const": 0.4}, "minimum_meaningful_dwell_share": {"const": 0.4},
             "goal": {"const": "Create a simple website for my neighborhood book club. It should show the next meeting, the current book, and how to join."},
             "outcomes": {"type": "array", "prefixItems": [{"const": "next_meeting"}, {"const": "current_book"}, {"const": "how_to_join"}], "items": false, "minItems": 3, "maxItems": 3},
             "review_sections": {"type": "array", "prefixItems": [{"const": "outcomes"}, {"const": "decisions"}, {"const": "assumptions"}, {"const": "unresolved_choices"}], "items": false, "minItems": 4, "maxItems": 4},

@@ -160,6 +160,13 @@
               "type": "string"
             }
           },
+          "option_labels": {
+            "type": "object",
+            "description": "Display words for stored option values (F3-441, DL-230); a value without an entry shows as stored.",
+            "additionalProperties": {
+              "type": "string"
+            }
+          },
           "default": {},
           "scope": {
             "type": "array",

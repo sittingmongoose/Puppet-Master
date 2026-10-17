@@ -3958,6 +3958,9 @@ canonical_text: >-
   this exact two-setting patch before preview, so the preview hash binds both effects; apply cannot
   race a later gallery pick or leave half of the update committed. Both controls read the shared
   committed state. This adds no timestamp, second wallpaper value, independent writer or command.
+  Amended 2026-10-17 (DL-230, Jared): in the gallery the arrows choose as they move; every arrow step is a
+  gallery pick that supplies the reached id through the same SSYS-009 transaction, Space or Enter choose
+  too, and only the print's preparation waits for the short pause after the last step (F3-653).
   The six scene ids and names are approved in F3-653; their packaged editions are in the catalog.
   Withdrawn stored print ids use the existing disclosed stale-id fallback and are never silently
   mapped to a different scene. An uncommitted NieR preview changes neither committed setting and
@@ -3971,6 +3974,8 @@ unblocks: []
 acceptance_criteria:
 - The gallery and search resolve the exact inventory id and Settings transaction in every look.
 - Invalid requested ids refuse without mutation; stale saved ids have the documented fallback.
+- An arrow step in the gallery writes general.visual.wallpaper through the same transaction as a pointer pick,
+  and the latest step wins (DL-230).
 - Publication retires the old background row and preserves each Project's independent committed choice.
 - Gallery pick then NieR background change shows the NieR choice; NieR background change then gallery pick shows
   the gallery choice. Project reload preserves the latest accepted result and a refused/stale change commits

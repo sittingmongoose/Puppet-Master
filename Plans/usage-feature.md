@@ -6467,9 +6467,9 @@ canonical_text: >-
   Usage is one widget-composed workspace with the exact user-facing rooms `Overview`, `Plans & limits`,
   `Costs`, `Accounts`, `Free models`, `Context`, `Analytics`, `Ledger`, `Attention`, `Prompt cache`, `Tools`,
   `Signals`, and `Source authority`. Its user-facing disclosure ladder is exactly `At a glance`, `Detailed`,
-  and `Diagnostics`. Disclosure changes the mounted panel set and the useful facts inside eligible panels; it
+  and `Diagnostics`. Disclosure changes the mounted card set and the useful facts inside eligible cards; it
   is not decorative copy and it never deletes a widget instance or stored layout. Source authority mounts 7, 8 and 9
-  panels at those three disclosure levels in the redesign's default boards, each deeper level mounting at least the
+  cards at those three disclosure levels in the redesign's default boards, each deeper level mounting at least the
   shallower set (amended 2026-10-17, DL-228; it read: exactly 4, 6, and 8, the replaced page's count), and all thirteen
   rooms remain reachable at every supported physical viewport width by scrolling the rail of rooms, which keeps no
   overflow surface (amended 2026-10-17, DL-228; it read: even when the secondary rail collapses into an overflow
@@ -6500,14 +6500,16 @@ canonical_text: >-
   field as recorded. Credential handles are masked."; F3-514's Raw and Curated redaction); the choice is view
   state; focus moves into Details on opening and returns to the opening control on Close details or Escape;
   its Ledger attempt drill-through stays as above.
+  Amended 2026-10-17 (DL-230, Jared): a Usage widget is a card everywhere, so this unit's mounted card set,
+  eligible cards and the cards each level mounts read "panel" before (G-030).
 gui_related: true
 gui_classification_reason: This unit defines the visible Usage room taxonomy, disclosure labels, and view-state behavior.
 depends_on: [CBP-028, UF-044, UF-055, UF-090, UF-092, WS-016]
 unblocks: [UF-094, UF-095, UF-096, UF-107]
 acceptance_criteria:
-  - All thirteen named rooms are addressable in the Usage workspace at every supported physical viewport width by scrolling the rail of rooms (amended 2026-10-17, DL-228: no overflow surface), and each renders its room-specific panel catalog at the current disclosure level.
+  - All thirteen named rooms are addressable in the Usage workspace at every supported physical viewport width by scrolling the rail of rooms (amended 2026-10-17, DL-228: no overflow surface), and each renders its room-specific card catalog at the current disclosure level (amended 2026-10-17, DL-230, a Usage widget is a card; earlier panel catalog).
   - The only user-facing disclosure labels are At a glance, Detailed, and Diagnostics; Essen, Std, Adv, essentials, standard, and advanced are not disclosure labels.
-  - Switching disclosure materially changes mounted panel types or content facts, Source authority mounts 7/8/9 panels for At a glance/Detailed/Diagnostics (amended 2026-10-17, DL-228; earlier 4/6/8), a room whose panels are all At a glance (Attention, Prompt cache, Signals) changes content facts rather than the mounted set, and no disclosure switch deletes an existing widget instance or stored layout.
+  - Switching disclosure materially changes mounted card types or content facts, Source authority mounts 7/8/9 cards for At a glance/Detailed/Diagnostics (amended 2026-10-17, DL-228; earlier 4/6/8; DL-230, earlier panels), a room whose cards are all At a glance (Attention, Prompt cache, Signals) changes content facts rather than the mounted set, and no disclosure switch deletes an existing widget instance or stored layout.
   - Active room, scope, date range, disclosure, expanded-room rail state, and the Live / Paused choice remain local projection actions unless an existing owner requires otherwise; no duplicate command family is introduced, Usage refresh retains its authority, and a PMConcept7 Ledger attempt row dispatches cmd.nav.open_usage_subject as a usage_attempt/attempt_id object route without OpenSubject while retaining usage_event_ref as correlation; event-primary callers retain usage_event/usage_event_ref, and aggregate provider, account, and panel cards open local inspectors without a route command, command receipt, or domain event.
   - In the Accounts room, "Use this account" dispatches cmd.account.select_profile only where supports_manual_set_active is true, and a provider's Auto-switch toggle and switch level (scope=provider) and each account's own switch level (scope=account, D43 2026-10-10) dispatch cmd.settings.transaction.preview then cmd.settings.transaction.apply on the Settings rows, show the same value Settings shows, and keep no Usage copy; opening a card or its Details still dispatches no command.
   - Provider setup absence renders the exact `Provider Setup Required` state with explicit `Host/Environment` and preserved operation and continuation identity; its CTA reuses `cmd.settings.open` with `target_type=setting` and `setting_id=ai.accounts.provider-connections`, mints no new setup command, keeps installation and authentication separate, performs no automatic acquisition or silent reroute, and leaves UF-090, UF-092, and CBP-028 as the underlying policy owners.
@@ -7392,8 +7394,8 @@ canonical_text: >-
   readings and the lab-only Play the next hour run on dashboards too, per board
   (Plans/Widget_System.md#WS-030), under the same idle rule: nothing animates at idle except a live
   change while Live is on, and a board that is not shown does no beat work. The concept's demo
-  controls are lab-only (DL-177, on ACD-474's precedent; this classification is the coordinator's
-  recommendation recorded in DL-177, which the owner has not yet decided), and this unit is the one
+  controls are lab-only (DL-177, on ACD-474's precedent; the coordinator's recommendation recorded in
+  DL-177, which Jared decided on 2026-10-17, DL-230), and this unit is the one
   owner of that disposition, to which UCC-147, the wiring units and the test suite point: Play the
   next hour, Back to now, the Demo time label, the concept's feature switches and query flags, and
   its demo reading cadence receive no command, setting, wiring row, persisted key or test gate, and
@@ -7452,21 +7454,26 @@ canonical_text: >-
   name and size, never invented data. Current source lineage for every Usage and board unit is
   Concepts/usage-redesign, built through the opus-5.5 build since 2026-10-15; the Concepts/pm7-tools usage and
   widget sources and their T33 to T48 pipeline are historical wherever a Plans unit still names them.
-  Proposed, pending Jared (2026-10-17, DL-228): nine Usage Settings rows are read by no redesigned surface:
+  Amended 2026-10-17 (DL-228, DL-230, Jared): nine Usage Settings rows were read by no redesigned surface:
   ai.usage.usage-windows, ai.usage.platform-filters (seven fixed options against the catalog's 22 providers),
   ai.usage.chart-type, ai.usage.reset-countdown, ai.usage.cooldown-timers, ai.usage.pressure-visibility,
   ai.usage.tool-usage-window, ai.usage.ledger-page-size and ai.usage.ledger-export (CSV, while exports are
-  JSON). The proposed reading keeps the rows that change what the page shows and binds them (windows shown
-  among those each provider declares, the providers on the board from the catalog, reset countdowns and
-  cooldown timers shown or hidden, pressure shown or hidden, Tools' default window), makes chart-type the
-  default for a new chart widget, and retires ledger-page-size (the Ledger pages by card height) and the CSV
-  choice of ledger-export.
-  Proposed, pending Jared (2026-10-17, DL-228): the Live menu's Play the next hour and Back to now and the
-  Demo time readout are demo controls, so under DR-070 they live only in the Demo Studio and the product's
-  Live menu holds Live readings on and Pause live readings alone; DL-177 records the lab-only classification
-  as the coordinator's recommendation, still undecided. Copy custody: the concept's Usage copy (src/copy.json
-  and src/copy.d) is the reference wording for the rebuild; the strings Plans quote are load-bearing and kept,
-  and the rest may be re-worded in the same plain voice without a new decision.
+  JSON). Jared chose on 2026-10-17 to bind the six that change what the page shows: usage-windows picks
+  which of each provider's own declared windows show, and a provider that declares none of the picked
+  windows shows its own; platform-filters picks the providers on the board over the Settings provider
+  catalog, in its order, with every provider shown until hidden, not seven fixed options; reset-countdown
+  and cooldown-timers show or hide reset countdowns and cooldown timers; pressure-visibility shows or hides
+  pressure; and tool-usage-window is the window the Tools room opens with. chart-type is the starting style
+  of each new chart widget, and a chart already placed keeps its own. ledger-page-size is retired (the
+  Ledger pages by card height), and ledger-export keeps JSON alone, its CSV choice retired. Each row's
+  inventory text says so (F3-441).
+  Amended 2026-10-17 (DL-228, DL-230, Jared): the Live menu's Play the next hour and Back to now and the
+  Demo time readout are demo controls; Jared chose on 2026-10-17 that they live only in the Demo Studio
+  (DR-070), and the product's Live menu holds Live readings on and Pause live readings alone, which settles
+  DL-177's lab-only classification. Copy custody: the concept's Usage copy (src/copy.json and src/copy.d)
+  is the reference wording for the rebuild, with its "panel" read as "card", since a Usage widget is a card
+  everywhere (DL-230, G-030); the strings Plans quote are load-bearing and kept, and the rest may be
+  re-worded in the same plain voice without a new decision.
 gui_related: true
 gui_classification_reason: "The unit defines what the redesigned Usage page shows and does: the provider catalog, every account, the Accounts room's in-place actions, pace, Live readings, and the board actions."
 depends_on: [DL-173, DL-174, DL-175, DL-176, DL-177, UF-045, UF-089, UF-092, UF-093, UF-095, UF-096, MA-049, MA-073, WS-019, WS-020, DR-038, ACD-474, SSYS-009, SSYS-018, SSYS-044, UCC-116, DL-186]

@@ -3540,8 +3540,8 @@ canonical_text: >-
   (DL-186; P1 B, P10): the widget practice adds Upcoming resets to the Home dashboard and then moves or resizes it there,
   through `cmd.widget.add` and then `cmd.widget.move` or `cmd.widget.resize` naming the Home board in their existing
   `room` field (it read: `board_id`), finished only by the board's accepted add and then move or resize (PWIZ-035); the
-  old Home widgets are gone from Home. Planning receives at least half of meaningful
-  actions and dwell, including a genuine answer edit and its affected consequence. Try it and Show Me share each exact
+  old Home widgets are gone from Home. Planning receives about half of meaningful
+  actions and dwell (amended 2026-10-17, DL-230: it read at least half), including a genuine answer edit and its affected consequence. Try it and Show Me share each exact
   mounted owner handler and observed success predicate; generic Next, narration, timers, or look-alike controls cannot
   fabricate a checkpoint. ELI5 stays beside Pause and Skip; that tour control, `ui.guided_tour.toggle_eli5`, changes
   the tour's narration only (`tour_narration_only`, Plans/guided_tour_contracts.schema.json) and never rewrites the

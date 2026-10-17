@@ -1543,8 +1543,8 @@ canonical_text: >-
   and dispatch nothing until the drop. Each step and outcome is announced: "Picked up <name>. Arrows move it,
   Enter drops it, Escape puts it back.", "Resizing <name>. Arrows change the size, Shift steps through the
   presets, Enter keeps it, Escape cancels.", "Moved to column X, row Y", "Resized to <preset>, W by H",
-  "<name> is back where it was" and, on an owner rejection, "The layout change was not accepted, so the panel
-  went back".
+  "<name> is back where it was" and, on an owner rejection, "The layout change was not accepted, so the card
+  went back" (DL-230: a Usage widget is a card; the concept's copy says panel).
 gui_related: true
 gui_classification_reason: This unit defines the complete pointer and keyboard lifecycle for visible widget resize and reorder.
 depends_on: [WS-004, WS-005, WS-009, WS-017, WS-018, DL-186]
@@ -1692,7 +1692,7 @@ canonical_text: >-
   `project_id` is the board's real project, and each record's `room_id` is the board id. The 2026-10-09
   `widget_layout:v1:dashboard:<board_id>` with `host_id` `dashboard:<board_id>` was never written, and
   `widget_layout:v1:dashboard` is converted into no board (WS-030).
-  Amended 2026-10-17 (DL-228): Reset this room and Reset every room, from the head's Panels menu, put back the
+  Amended 2026-10-17 (DL-228): Reset this room and Reset every room, from the head's Cards menu (DL-230), put back the
   curated default set of that room or of every room: its positions, sizes and which cards show; a card's
   configuration stays as WS-004 keeps it. Each is one cmd.widget.reset_layout with scope room or all
   (UI_Command_Catalog section 2.3), writing every affected record of that board once under one receipt; on a

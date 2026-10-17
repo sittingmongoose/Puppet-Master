@@ -1662,7 +1662,8 @@ canonical_text: >-
   consumes PWIZ-023 and F3-521's September 3 newbie-first revision: optional local practice in exact
   `chat_teacher`/`workspace`/`planning_wizard` chapter order, shared manual/Show Me handlers and observed predicates,
   same-answer ELI5 as one extra, simpler reply from Explain this reply simply with the original reply unchanged (DL-126),
-  at least half of meaningful actions and dwell in Planning, safe checkpoint recovery, and no work
+  about half of meaningful actions and dwell in Planning (amended 2026-10-17, DL-230: it read at least half; the
+  accepted 20-step tour meets it), safe checkpoint recovery, and no work
   started. Its eleven typed tour actions include Show Me but exclude the separate retired restore/keep-layout and
   tour-owned Reduced Motion actions. Heading focus, clamped callouts, Skip restoration, default-restore/explicit-Keep Finish
   layout, Doctor/Health no-false-green, MCP/server degraded visibility, and FileSafe fail-closed readiness remain

@@ -26599,8 +26599,9 @@ canonical_text: >-
   work stops at "not horribly slow" (DL-220); that bound does not replace this bar.
   During a page-change hold the leaving page stays the interactive page until release.
   The quality bar is DL-224.
-  Proposed, pending Jared: a surface drawn unseen for preparation stays out of the focus order and the
-  accessibility tree until it is shown, and focus that lands in it returns where it came from.
+  Coordinator default, not objected by Jared (2026-10-17, DL-230): a surface drawn unseen for preparation
+  stays out of the focus order and the accessibility tree until it is shown, and focus that lands in it
+  returns where it came from.
   Amended 2026-10-17 (DL-228): the page-change hold's rule holds inside a surface too: a leaving panel or pane
   stays drawn where it was, inert (out of the tab order and the accessibility tree, taking no keys), until the
   incoming view's first frame, then fades as the entrance starts; the left rail (F3-621) and the terminal card

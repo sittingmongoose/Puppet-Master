@@ -2252,7 +2252,7 @@ if Theme.retro-effects-enabled && Theme.paper-texture-enabled: PaperTextureOverl
 ### 6.4 Theme Switching
 
 - **Live switch** for colors, spacing, borders, overlays: Slint's reactive property system propagates changes instantly
-- **Restart required** for font family change: Cross-family switches that change loaded fonts (Retro's IBM Plex Mono, Friendly's Poppins/Nunito, or Basic/Glass Inter) require app restart because Slint loads fonts at initialization
+- **Restart required** for font family change: retired 2026-10-17 (DL-230, Jared). The earlier rule that cross-family switches that change loaded fonts (Retro's IBM Plex Mono, Friendly's Poppins/Nunito, or Basic/Glass Inter) require app restart because Slint loads fonts at initialization is kept here only as lineage. A family switch is live under the look's cover (DL-216, DL-217, F3-077); every look's fonts are loaded before the switch is written.
 - **Within same family is live:** Switching between the dark and light variants of one family (for example Retro Dark to Retro Light, or Friendly Dark to Friendly Light) is instant (same fonts)
 - **Glass/Basic note:** Glass and Basic share Inter, so switches between them MAY be live when no other loaded-font change occurs.
 
@@ -2353,7 +2353,7 @@ border-radius = 4
 - On startup, scan `~/.puppet-master/themes/` for `.toml` files
 - Parse and validate each file against the token schema (§6.2). Invalid files log a warning and are skipped (not loaded); user sees a toast on Settings open: "Theme '{name}' has errors -- see log for details"
 - Valid custom themes appear in the theme selector (Settings > General and title bar theme selector) alongside built-in themes
-- **Hot reload:** Editing a theme TOML file while the app is running triggers a re-scan (via file watcher on the themes directory). If the currently active theme is modified, changes apply immediately (same as live theme switch within a family). If font changes are detected, prompt for restart.
+- **Hot reload:** Editing a theme TOML file while the app is running triggers a re-scan (via file watcher on the themes directory). If the currently active theme is modified, changes apply immediately (same as live theme switch within a family). If font changes are detected, the change applies live under the look's cover (F3-077); the earlier "prompt for restart" is retired (2026-10-17, DL-230).
 
 **Theme selector UI:**
 - The title-bar trigger is a morphing icon button: sun = manual Light mode, moon = manual Dark mode, continuous sun-to-moon morph = Auto mode (follows OS appearance)
@@ -3559,10 +3559,11 @@ Amended 2026-10-09 (DL-180): the Home layout lives in the v2 Home layout record 
 | Key | Content | Write Frequency |
 |-----|---------|----------------|
 | `layout:v1` | Side-panel and detached-window layout geometry only: side-panel dock state (docked side + width, or floating position/size) and the popped-out chat window's geometry. Amended 2026-10-09 (DL-180): its Home part (center splits, the bottom runtime-panel height, terminal section split ratios) is a read-only migration input to the v2 Home layout record (SP-330), converted on first read and never reset. It is not terminal topology or terminal session identity. Single JSON blob for atomic read/write. | On change (debounced 300ms) |
-| `home_workspace_layout.v2:{project_id}:{workspace_tab_id}` | The only Home layout authority, schema `pm.home_workspace_layout.v2`: the split tree, the tab records, the view state, the chat column, saved named layouts and the closed-tab stack; the fields are SP-330's (added 2026-10-09, DL-180) | On each committed change, written and read back before it commits (F3-HOME-004) |
+| `home_workspace_layout.v2:{project_id}:{workspace_tab_id}` | The only Home layout authority, schema `pm.home_workspace_layout.v2`: the split tree, the tab records, the view state, the chat column, saved named layouts and the closed-tab stack; the fields are SP-330's (added 2026-10-09, DL-180; amended 2026-10-17, DL-230: saved named layouts moved to `home_named_layouts:v1`) | On each committed change, written and read back before it commits (F3-HOME-004) |
 | `widget_layout:v1:dashboard` | Dashboard widget grid layout, positions, sizes, and widget IDs. Amended 2026-10-09 (DL-180): each dashboard board keeps `widget_layout:v1:dashboard:<board_id>` and this key moves into the Home dashboard's board as WS-030 says. Amended 2026-10-10 (DL-186): dashboard boards are kept per project under `widget_layout:v1:<project_id>:<board_id>`; the per-board key above was never written, and this key, the old Home widgets' grid, is no board's key (WS-030); no write goes to it now, and it stays only a read-only record and rollback backup (`Plans/Widget_System.md#WS-009`), so the write frequency in this row is lineage; what storage keeps of the key is `Plans/storage-plan.md`'s | On change (debounced 300ms); lineage, no write now (DL-186) |
 | `widget_layout:v1:<project_id>:<board_id>` | One dashboard board's widgets with their positions, sizes and settings, its own range and scope, and the set it started from; the record and its one-time adoption of an older unscoped key are WS-030's (added 2026-10-10, DL-186) | On each settled change of that board (WS-030) |
 | `widget_presets:v1` | The person's saved dashboard presets, shared by every project; the record is WS-030's (added 2026-10-10, DL-186) | On saving, renaming or deleting a preset |
+| `home_named_layouts:v1` | The person's saved named layouts, offered in Home's Layouts menu in every project; a layout's dashboard boards stay per project and are skipped elsewhere; the record is SP-330's (added 2026-10-17, DL-230) | On saving a layout (`cmd.workspace_layout.save_named`) |
 | `terminal_appearance_presets:v1` | Computer-local per-user terminal preset library; logical custody and deferred native physical storage are SP-331's (2026-10-16, DL-207) | Existing typed local Save/Rename/Delete/Undo actions; native persistence remains deferred |
 | `activity_bar_order:v1` | Ordered list of activity bar item IDs + separator position | On change (debounced 300ms) |
 | `theme:v1` | Theme family + presentation mode (Light/Dark/Auto), with the resolved ThemeVariant enum value kept for readers | On change |
@@ -4216,7 +4217,7 @@ cargo check
 | **Limited screen reader support** | Medium | Keyboard navigation is comprehensive (§13.3). Set `accessible-role` and `accessible-label` where Slint supports them. Document limitations. Basic theme provides maximum readability. |
 | **No built-in context menu** | Low | Custom `ContextMenu` widget using `TouchArea` pointer events. Positioned at mouse coordinates. Styled per theme. Clipboard operations (Copy/Paste/Select All) delegate to Slint's native `TextInput.copy()` / `.paste()` / `.select-all()` — no custom clipboard state management needed. |
 | **No built-in docking framework** | High | Custom `PanelRegistry` in Rust handles dock/undock state machine, snap detection, window lifecycle. This is the most complex custom component and should be implemented early. |
-| **Font family change requires restart** | Low | Detect font family change in settings. Show restart prompt. Pre-load fonts for all themes on startup so within-family switches (Dark <-> Light) are instant. Auto-mode transitions are equally instant: an OS appearance change resolves the selected family to its other variant with no restart. |
+| **Font family change requires restart** (retired 2026-10-17, DL-230) | Low | Retired: no restart prompt is shown, because a family switch is live under the look's cover (DL-216, F3-077); the earlier mitigation "Detect font family change in settings. Show restart prompt." is lineage only. Pre-load fonts for all themes on startup so within-family switches (Dark <-> Light) and cross-family switches are drawn without a restart. Auto-mode transitions are equally instant: an OS appearance change resolves the selected family to its other variant with no restart. |
 | **4-split terminal performance** (amended 2026-10-09, DL-181: now the performance of many visible terminal tabs, one session per tab) | Medium | Live terminal panes use native screen/buffer state, diff-based painting, and off-UI-thread PTY/buffer ingestion and processing per Section 15. Keep bounded ring buffers per pane (max 10k retained rows) and one PTY per pane. `VecModel`/`ListView` holds only bounded transcript/plain-log projection windows (~500 visible rows plus small overscan), not the terminal core. Batch/throttle projection updates (max 30fps). Since DL-181 each terminal tab holds one session with one PTY and one bounded ring buffer, several terminals show at once only as several panels, a hidden terminal tab stops its animation work, and there is no four-pane grid to budget for (F3-245). |
 | **Platform-specific window manager issues** | Medium | Test: macOS window snapping with floating panels, Linux compositing with overlay effects, Windows DPI scaling. Handle gracefully with fallback behaviors. |
 | **Large Settings page complexity** | Medium | The old tab counts and two-level-sidebar mandate are retired migration lineage. F3-432 owns one search-first Settings surface with category blooms, shelves, command-palette deep links, and real-data testing. |
@@ -9800,14 +9801,17 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
-  Theme switching is live for colors, spacing, borders, overlays, and same-family switches, and
-  requires restart for cross-family switches that change loaded font families (Retro's
-  IBM Plex Mono, Friendly's Poppins/Nunito, or Glass/Basic Inter); Glass
-  and Basic share Inter so switches between them may be live. Auto presentation mode
+  Theme switching is live for colors, spacing, borders, overlays, same-family switches and cross-family
+  switches that change loaded font families (Retro's IBM Plex Mono, Friendly's Poppins/Nunito, or
+  Glass/Basic Inter); every family switch is live under that look's cover (DL-216, DL-217), and no
+  switch asks for a restart. Auto presentation mode
   follows the same within-family live rule: when the OS appearance (prefers-color-scheme)
   changes, the selected family resolves to its other variant instantly with no restart.
-  Proposed, pending Jared: a family switch is live under that look's cover (DL-216), and the restart
-  sentence above is the leftover. The cover is not limited to same-family and Auto switches.
+  Amended 2026-10-17 (DL-230, Jared): the cross-family restart rule is retired; Jared chose on 2026-10-17
+  that a family switch is live under the look's cover. Superseded lineage (kept findable): until
+  2026-10-17 this unit read that theme switching "requires restart for cross-family switches that change
+  loaded font families", with restart required for font family changes, and that Glass and Basic share
+  Inter so switches between them may be live.
   Superseded lineage
   (2026-07-16, kept findable): the prior rule named restart for font family changes between
   Retro and Basic and kept Basic one built-in theme family.
@@ -9843,6 +9847,8 @@ acceptance_criteria:
   - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
   - Every live theme family or light/dark switch acknowledges within ACD-475's bar with a cover animated in the
     look's own language, shows no blank, frozen or half-old frame, and reveals the new look whole.
+  - A cross-family switch, including one between Retro, Friendly and the Inter families, is live under the look's
+    cover and shows no restart prompt (DL-230).
 validation_surfaces:
   - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
   - "python3 scripts/pm-plan-index.py validate"
@@ -9855,6 +9861,9 @@ node_compile_hint:
   mode: theme_switching_live_restart_rules
   create_worknodes: false
 source_lineage:
+  - /mnt/Cursor/share/puppet-master/2026-10-13-pm7-coordinator-handoff/COORDINATOR-LOG.md, SHA-256
+    74400578201cb0c797697791a7fb0d15ee37ab527c6f19c922ec758c203bbace (entry 2026-10-17 20:45Z, Jared's
+    answers; decision lineage)
   - "Plans/Decision_Log.md#DL-138 (owner answers, 2026-09-29)"
   - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0062"
   - /mnt/Cursor/share/puppet-master/2026-10-16-plans-topup/sources/2026-10-16-p1000-decision--JARED-DECISIONS.md,
@@ -9882,7 +9891,8 @@ preserved_exact_tokens:
   - "prefers-color-scheme"
 negative_constraints: []
 compatibility_only_notes: []
-stale_retired_dispositions: []
+stale_retired_dispositions:
+  - "Retired 2026-10-17 (DL-230, Jared): cross-family theme switches that change loaded font families no longer require restart; a family switch is live under the look's cover (DL-216). The restart rule and its restart prompt are lineage only."
 owner_boundary_notes: []
 owner_hints:
   - "Plans/FinalGUISpec.md"
@@ -19150,8 +19160,11 @@ unit_type: constraint
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
-  The `Font family change requires restart` risk is mitigated as follows: Font-family setting
-  changes show restart prompt and fonts preload at startup for instant within-family switches.
+  The `Font family change requires restart` risk is retired (2026-10-17, DL-230, Jared): a family switch
+  is live under the look's cover (DL-216, F3-077), so no font-family setting change shows a restart
+  prompt, and fonts preload at startup for every look so within-family and cross-family switches draw
+  without a restart. Superseded lineage (kept findable): the mitigation read "Font-family setting changes
+  show restart prompt and fonts preload at startup for instant within-family switches."
 gui_related: true
 gui_classification_reason: >-
   This unit preserves one row of the user-visible Slint migration risks and mitigations table.
@@ -19183,7 +19196,8 @@ preserved_exact_tokens:
 - "Dark <-> Light"
 negative_constraints: []
 compatibility_only_notes: []
-stale_retired_dispositions: []
+stale_retired_dispositions:
+- "Retired 2026-10-17 (DL-230, Jared): the restart prompt for font-family changes is withdrawn; a family switch is live under the look's cover (DL-216, F3-077). The row stays in the matrix as retired lineage."
 owner_boundary_notes:
 - "The row remains part of the FinalGUISpec risk/mitigation matrix."
 owner_hints:
@@ -30715,10 +30729,11 @@ canonical_text: >-
   (DL-138). The Friendly ground is a warm paper texture with an 18px dot grid and static pastel
   corner glows. Frosted chrome backdrop blur of 14px is limited to the title bar, status bar, and
   bottom panel. Five category pastels (mint, sky, coral, lavender, butter) tint category surfaces
-  through the cozy hook tokens. The theme-switching restart rules extend to cross-family switches
-  involving Friendly or Retro fonts: same-family switches stay live; cross-family switches that
-  change font families between Retro (IBM Plex Mono) and Friendly (Poppins, Nunito) require restart;
-  and switches between the Inter Glass and Basic families stay live. NieR Mode overrides body and
+  through the cozy hook tokens. Theme switches involving Friendly or Retro fonts are live: same-family
+  switches stay live; cross-family switches that change font families between Retro (IBM Plex Mono)
+  and Friendly (Poppins, Nunito) are live under the look's cover (F3-077, DL-230); and switches
+  between the Inter Glass and Basic families stay live. Superseded lineage (kept findable): until
+  2026-10-17 such cross-family switches required restart. NieR Mode overrides body and
   display with PM NieR Sans, the M PLUS 1 variable face at weights 100-900 in
   mplus1-latin-var.woff2, a free stand-in for the commercial Fontworks FOT-Rodin, and mono with PM
   NieR Mono, the JetBrains Mono variable face at weights 100-800 in jetbrains-mono-latin-var.woff2.
@@ -30753,8 +30768,8 @@ canonical_text: >-
   a ninth theme.
   Amended 2026-10-17 (DL-228): Japanese is not embedded. M PLUS 1 carries it upstream, but PM NieR Sans ships
   only its Latin, Latin Extended and Vietnamese slices, so Japanese text uses the computer's fonts, and
-  DL-161's "scripts it supports" does not require it. The cross-family restart rule above is F3-077's and
-  shares its question pending with Jared (proposed: a live switch under the look's cover).
+  DL-161's "scripts it supports" does not require it. The cross-family switching rule is F3-077's; Jared
+  chose on 2026-10-17 that a family switch is live under the look's cover (DL-230).
 gui_related: true
 gui_classification_reason: This unit defines the visible Friendly theme fonts, ground texture, frosted chrome, pastels, and switch behavior.
 split_recommended: false
@@ -30768,7 +30783,7 @@ acceptance_criteria:
   - "Both concepts draw every script an embedded family carries from embedded data on a machine with no fonts installed, and code text in Basic, Glass and Friendly in the embedded JetBrains Mono."
   - "The Friendly ground renders the paper texture with an 18px dot grid, and frosted 14px chrome blur is limited to the title bar, status bar, and bottom panel."
   - "The five category pastels (mint, sky, coral, lavender, butter) drive category surface tinting."
-  - "Cross-family theme switches that change Retro or Friendly font families require restart, while same-family and Glass/Basic Inter switches stay live."
+  - "Cross-family theme switches that change Retro or Friendly font families are live under the look's cover with no restart (DL-230), and same-family and Glass/Basic Inter switches stay live."
   - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
 validation_surfaces:
   - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
@@ -30825,8 +30840,9 @@ compatibility_only_notes:
   - "Slint portability: bundled font files register with the Slint font database; the paper texture, dot grid, and corner glows render as precomputed opaque or baked surfaces; the three chrome frosts render over known shell content; no arbitrary-content backdrop blur, no SVG filters, color math is precomputed rather than runtime-mixed, and any glass treatment uses a single blur over a known wallpaper as a pre-blurred asset."
 stale_retired_dispositions:
   - "DL-138 retires Cal Sans, Quicksand, Orbitron and Rajdhani as current theme faces; those names remain source lineage only. Runtime font CDN loading remains forbidden."
+  - "Retired 2026-10-17 (DL-230, Jared): the restart set for cross-family Friendly/Retro font changes is withdrawn; those switches are live under the look's cover (F3-077)."
 owner_boundary_notes:
-  - "The live/restart switching matrix remains owned by F3-077; this unit extends its restart set to cross-family Friendly/Retro font changes."
+  - "The live switching matrix remains owned by F3-077; cross-family Friendly/Retro font changes are live under the look's cover there (DL-230)."
 owner_hints:
   - "Plans/FinalGUISpec.md"
 ```
@@ -32127,10 +32143,15 @@ canonical_text: >-
   Amended 2026-10-17 (DL-228): each row's label, desc and option words in this inventory are the one wording
   the product renders for it, on every surface that draws the row: Settings, hosted controls (SSYS-044) and
   the Customize screens (DR-068). A concept's own row wording, such as the onboarding Settings kit's
-  plain-language rows.d labels and help, is a proposal until adopted here. Proposed, pending Jared: adopt the
-  concept's plain-language labels and help for the rows it rewrote (for example Theme Mode as "Light or dark",
-  UI Scale as "Size of everything", Reduce Animations as "Reduce motion"), in one wording pass with search
-  aliases for the old words.
+  plain-language rows.d labels and help, is a proposal until adopted here.
+  Amended 2026-10-17 (DL-230, Jared): the concept's plain-language labels and help are adopted for the rows it
+  rewrote (for example Theme Mode as "Light or dark", UI Scale as "Size of everything", Reduce Animations as
+  "Reduce motion") in one wording pass: a row's label and desc are its rows.d label and help, its old label
+  stays one of its search aliases, and its option words are option_labels, display words for stored option
+  values that never change what is stored (a value without an entry shows as stored). The Customize words
+  (Fill and Fit for Picture Fit, Still for Background Motion's Off, the materials' "plastic", "Less colour",
+  "Grain", "Text drawing") are adopted the same way (DR-068). Retired rows keep their words. The rows carry
+  option_labels beside options; the schema admits it.
 gui_related: true
 gui_classification_reason: This unit binds the visible settings surfaces to their canonical inventory registry.
 split_recommended: false
@@ -36097,7 +36118,7 @@ canonical_text: >-
   display unit and formatter, including currency formatting for attempt-charge integer cents, and the chart title
   plus Latest and distinct peak facts remain complete in one row or a narrow two-row composition. An active
   reorder ghost stays visibly above the workspace until cleanup.
-  Every room remains reachable at every supported width, and Source authority mounts 7/8/9 panels (amended 2026-10-17, DL-228; earlier exactly 4/6/8) for
+  Every room remains reachable at every supported width, and Source authority mounts 7/8/9 cards (amended 2026-10-17, DL-228; earlier exactly 4/6/8; DL-230: a Usage widget is a card) for
   At a glance/Detailed/Diagnostics. A route blocked on provider setup renders
   the exact `Provider Setup Required` state with explicit `Host/Environment`, preserves operation and continuation
   identity, and reuses `cmd.settings.open` with the typed Settings target
@@ -36785,7 +36806,7 @@ canonical_text: >-
   workspace chapter named in the 2026-10-09 amendment below (PWIZ-035). Every important
   action offers Try it and Show Me; both invoke the same mounted owner handler and satisfy the same observed success
   predicate. Show Me uses interruptible pre-cue, visible travel, destination reaction, and settle, never teleportation
-  or a second implementation. Planning Wizard owns at least half of meaningful actions and dwell time. Proposed, pending Jared: the accepted 20-step tour measures Planning at 44 percent of actions and 49 percent of dwell, so this half bar is not met and is not waived. A book-club
+  or a second implementation. Planning Wizard is about half of meaningful actions and dwell time. Amended 2026-10-17 (DL-230, Jared): the bar is that Planning is about half of the tour's actions and time (it read: at least half); the accepted 20-step tour, Planning at 44 percent of actions and 49 percent of dwell, meets it. Jared will redo the tour completely once chat is rolled in and the Planning Wizard is redesigned, so no other tour work is planned until then. A book-club
   goal becomes three outcomes, the learner answers who may edit, sees why it matters, reviews decisions/assumptions/
   unresolved choices, edits one answer, and watches only the affected shared-access consequence change before the
   approval boundary. Teacher retains a broad discoverable beginner question library. ELI5 remains beside Pause and Skip and is called
@@ -36838,7 +36859,7 @@ acceptance_criteria:
   - "The Tour bar keeps the persistent Look menu (`Change the look`: four families plus Light/Dark, then a NieR Mode checkbox with an Adjust NieR look button whose editor opens as a popup dialog above the Tour) and sound control reachable by keyboard on every step: Look choices apply through the Settings owner (`general.visual.theme`, `general.visual.theme-mode`, and for NieR Mode `general.visual.nier-mode`, `general.visual.nier-parts` and `general.visual.nier-background`) at once with presentation-only effect under the verified current Project binding and the Tour follows its effective theme; Project switching rebinds both controls, while no-Project state permits only ephemeral preview without durable writes. The sound control binds to the Settings-owned `general.interaction.sound-effects` effective pref with an explicit `Sound off — click to turn on` state; both are shared chrome controls with Project-scoped persistence and neither becomes a tour-specific preference toggle beside `ui.guided_tour.toggle_eli5`. Neither is a `ui.guided_tour.*` action: Look choices, the NieR Mode checkbox, live editor edits and the sound control dispatch cmd.settings.transaction.preview then cmd.settings.transaction.apply, and Adjust NieR look emits ui.settings.nier_editor.open (DL-153)."
   - "Workspace practice explains page navigation and panel purpose, then has the learner open a tab from the \"+\" menu, open a file from the rail into a panel, split a panel by dragging a tab to its edge and add a widget to the dashboard, and makes each destination and persisted owner result readable; the temporary layout is reversible and the chat is never moved (amended 2026-10-09, DL-180; PWIZ-035). The widget practice adds Upcoming resets to the Home dashboard and moves or resizes it there, finished only by the board's accepted add and then move or resize of that widget (amended 2026-10-10, DL-186; F3-638)."
   - "Every important action offers visible Try it and Show Me (`ui.guided_tour.show_me`) using the same owner handler and success predicate. Highlighting, narration, elapsed time, look-alike controls, generic Next, or unrelated changes never count as completion. Pre-cue, travel, arrival, and settle remain visible and interruptible."
-  - "Planning receives at least half of meaningful action count and meaningful dwell time, measured against a declared step census. The book-club goal becomes next-meeting/current-book/how-to-join outcomes, followed by who-can-edit, why, review, edit consequence, and the no-work-before-approval boundary using the real current Wizard names/modes."
+  - "Planning receives about half of meaningful action count and meaningful dwell time, measured against a declared step census; the accepted 20-step tour (44 percent of actions, 49 percent of dwell) meets it, and the tour contracts' floor is 40 percent (amended 2026-10-17, DL-230). The book-club goal becomes next-meeting/current-book/how-to-join outcomes, followed by who-can-edit, why, review, edit consequence, and the no-work-before-approval boundary using the real current Wizard names/modes."
   - "The learner changes an answer rather than an Edit button silently choosing for them; only the dependent shared-access consequence changes, unaffected outcomes retain object identity/position, and an unsure answer stays unresolved."
   - "Assistant Chat opens first through its real shell action and keeps the same conversation throughout; successful Finish lands on the real Planning Wizard, not Chat, without starting work (amended 2026-10-09, DL-180: the chat is not moved by the Tour)."
   - "Teacher's built-in example is deterministic and local, presents an ordinary-language question and answer in the real Chat surface, and uses no provider, model, network, token budget, protected browser content, or AI-plan execution."
@@ -43640,10 +43661,10 @@ canonical_text: >-
   chip, pill or badge for status/count consumes this mark-and-word or plain-number presentation; an action
   remains the owner's action with F3-618's control treatment and F3-648's action-button exception. No local
   status store or lifecycle rule is created.
-  Amended 2026-10-17 (DL-228): Proposed, pending Jared: Testing's errored state, a harness failure rather than
-  a failed assertion, uses the shared failed mark with the word Errored in the failed tone, so one shape keeps
-  one meaning; the concept's own orange word for it is not adopted until he answers the Errored-word colour
-  question queued on 2026-10-11. The rail's remaining solid tables in the concept are a no-glyph fallback, not
+  Amended 2026-10-17 (DL-228, DL-230): Testing's errored state, a harness failure rather than a failed
+  assertion, uses the shared failed mark with the word Errored in the failed tone, so one shape keeps one
+  meaning; the concept's own orange word for it is not adopted. Jared chose this on 2026-10-17 (DL-230), which
+  answers the Errored-word colour question queued on 2026-10-11. The rail's remaining solid tables in the concept are a no-glyph fallback, not
   a second set of badges.
 gui_related: true
 gui_classification_reason: Defines how every status and count in the left rail is drawn.
@@ -44377,11 +44398,12 @@ canonical_text: >-
   blink in Retro and NieR. The Attention room button shows a warn-ink count of alerts that need attention ("N
   alerts need attention now" in its hover tag and accessible name), which changes only with a live change.
   Keys: the rail's Up, Down, Home and End move among the rooms and Enter or Space opens one; the range strip's
-  Left and Right change the range and move focus with it. The head's Panels button reads "N panels" and opens
-  Panels in <Room>: a check per widget, grouped by disclosure level, that shows or hides it (WS-019), then
+  Left and Right change the range and move focus with it. The head's Cards button reads "N cards" and opens
+  Cards in <Room>: a check per widget, grouped by disclosure level, that shows or hides it (WS-019), then
   Tidy this room, Reset this room and Reset every room, the last drawn as a danger row (WS-020). An empty
-  board says which case it is: "No panels at <level>. <Level> holds this room's panels." or "No panels are
-  shown in this room. Use Panels to show one again." The card menu also holds Fit rows ("Height that shows
+  board says which case it is: "No cards at <level>. <Level> holds this room's cards." or "No cards are
+  shown in this room. Use Cards to show one again." (Amended 2026-10-17, DL-230, Jared: a Usage widget is a
+  card everywhere, so the concept's "panel" in these strings and in Hide panel reads as "card".) The card menu also holds Fit rows ("Height that shows
   every row"), one cmd.widget.resize to the kind's fit-all height carrying that preset's id where the kind has
   one (WS-020). Under NieR Mode with Menu sounds installed, Use this account and the inspector's primary
   action play NieR's confirm sound and the inspector's close its cancel sound, through F3-405's one player; no
@@ -44711,9 +44733,9 @@ canonical_text: >-
   Amended 2026-10-17 (DL-228): applying a saved layout returns each tab still open to the slot it was saved
   in, with that slot's active tab, and puts back each slot's lock and collapse (a locked slot survives empty);
   tabs no longer open are not recreated, and the other open tabs go to a slot that accepts their kind
-  (Plans/home_workspace_layout_v2.schema.json $defs.slot). Proposed, pending Jared: saved named layouts belong
-  to the person across projects, as the concept keeps them, and the dashboard boards inside a layout stay per
-  project, skipped when it is applied elsewhere; SP-330 keeps them per workspace until he rules. Two fit
+  (Plans/home_workspace_layout_v2.schema.json $defs.slot). Amended 2026-10-17 (DL-230, Jared): a saved named
+  layout belongs to the person across projects, as the concept keeps it, in home_named_layouts:v1 (SP-330),
+  and the dashboard boards inside a layout stay per project, skipped when it is applied elsewhere. Two fit
   rules: the room rule above serves every move whose side the person chooses, offered when the result leaves
   every panel it changes at its minimum, neighbours along the split giving up room, and a panel already under
   its minimum failing only if the move shrinks it further; the automatic split rule serves a new panel the
@@ -48291,7 +48313,7 @@ canonical_text: >-
   A pick on either screen shows its new state on the control in the click's frame; the write follows
   (ACD-475). An open that fails or shows nothing is reported as an error, not only a toast. Toast words
   are unchanged and no new command is added.
-  Proposed, pending Jared: while the editor's Customize sheet is opening under a resting pointer, a press
+  Amended 2026-10-17 (DL-230, Jared): while the editor's Customize sheet is opening under a resting pointer, a press
   or wheel that arrives before the pointer has moved reaches neither the sheet nor the page beneath, so
   the second press of a double-click on the opener is not taken as a choice in the sheet. The sheet is
   live once the pointer moves, the entrance ends, or about 500 ms after it opens. Keyboard and
@@ -48376,7 +48398,7 @@ source_lineage:
   landed unchanged on main a0f844455c (L1), B6; source lineage)
 - /mnt/Cursor/share/puppet-master/2026-10-17-plans-f6/sources/Concepts--home-redesign--src--panels--kinds--11-editor-customize.js,
   SHA-256 7bd2cb58747e1d064ae91a82763d76d948262c64bc1a939a1123efce27ab7701 (main 6a3ee2fe90; a failed
-  Customize open is reported, and the opening pass-through is proposed pending Jared; source lineage; not native certification)
+  Customize open is reported, and the opening pass-through, proposed then and kept by Jared on 2026-10-17 (DL-230); source lineage; not native certification)
 - /mnt/Cursor/share/puppet-master/2026-10-17-plans-f6/sources/BRIEF.md,
   SHA-256 a6c5152164942a26cba5b0216a339578ee13c47a3ba39ffbeced793203c2dece (editor reopen and Terminal
   Customize prepared at idle; decision lineage)
@@ -48620,9 +48642,9 @@ canonical_text: >-
   static optics are prepared off the input path, a sheet's rim is coherent on arrival (it may arrive a frame
   later, never wrong), and a first page, chapter or wallpaper change never stalls on first-use drawing work;
   the worker bake and the near-invisible warm draws are how the concept met it, lineage rather than
-  requirements. Proposed, pending Jared: when the operating system asks for reduced transparency Glass draws
-  its static near-opaque form, and when it asks for more contrast the sheets take near-opaque tints with
-  full-strength hairlines; no Settings row is added.
+  requirements. Amended 2026-10-17 (DL-230, Jared): no requirement is set for how Glass reads when the
+  operating system asks for reduced transparency or more contrast; the proposed static near-opaque form and
+  near-opaque tints were withdrawn when Jared answered "Don't worry about it", and no Settings row is added.
 gui_related: true
 gui_classification_reason: Liquid Glass material and motion.
 split_recommended: false
@@ -48738,9 +48760,14 @@ canonical_text: >-
   Wallpaper is one Project choice for every look, not one stored choice per theme. Settings > App &
   Input > Theme & colors places its gallery immediately after Light or dark. Look's own comes first,
   followed by families in the shared catalog's order; thumbnails have names, checked state and full
-  accessible names. It is one radiogroup: arrows move among choices, Home and End reach the ends,
-  Space selects; pointer and keyboard write the same value. Proposed, pending Jared: that contract
-  stands. Arrows only move, and Space selects. The concept's arrows-choose-as-they-move is not adopted.
+  accessible names. It is one radiogroup whose one tab stop is the chosen tile: Left and Right move through
+  every tile, Up and Down move to the nearest tile in the next row as drawn, Home and End reach the ends,
+  and the arrows choose as they move (selection follows focus); Space or Enter also chooses. The tile an
+  arrow reaches becomes the checked choice and is written through the same transaction as a pointer pick,
+  the most recent accepted change winning (SSYS-054); preparation of its print begins after the next frame
+  and a short pause after the last arrow step (the concept's 160 ms), so tiles passed over are not
+  prepared. Pointer and keyboard write the same value. Amended 2026-10-17 (DL-230, Jared): arrows choose
+  as they move; this replaces the earlier proposal that arrows only move and Space selects.
   Five columns reduce to two where needed,
   with the look's control corners and no animated tiles. Basic offers Blueprint, Contour, Folds,
   Sheets and Arcs; Friendly offers Dot Wave, Channels, Bubbles, Hills and Soft Stripes, each with
@@ -48803,6 +48830,8 @@ acceptance_criteria:
 - Every catalog wallpaper works in every look and both modes; Look's own restores the correct default
   and NieR preference.
 - Keyboard selection, reload, Project switching and unknown stored ids preserve the one-setting contract.
+- Each arrow step checks and writes the tile it reaches as a pointer pick would; preparation waits for the
+  next frame and the short pause after the last step, so a tile passed over is never prepared (DL-230).
 - Gallery loading never shifts a reader's anchor. A prepared wallpaper change fades print and frost
   together. A pick whose frost is not ready fades the print first under the old frost, then crossfades
   the frost, and never shows a blank frame.

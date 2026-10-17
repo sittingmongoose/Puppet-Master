@@ -29547,11 +29547,11 @@
         "tabs",
         "view_state",
         "chat_column",
-        "named_layouts",
         "closed_tabs",
         "migration"
       ],
       "optional_fields": [
+        "named_layouts",
         "root.panel.active_tab_id",
         "root.panel.preview_tab_id",
         "tabs.label",
@@ -29584,7 +29584,7 @@
         "migration.source_revision",
         "migration.migrated_at"
       ],
-      "replay_behavior": "Restore the last valid committed Home layout for the project and workspace tab: the panel tree, tab records, view state, chat column, saved named layouts and closed-tab stack. Restored background tabs mount when first shown. A terminal tab whose session did not survive starts a new session in the same folder and profile and says so. Narrow, overlay, menu, hover and drag states are never written.",
+      "replay_behavior": "Restore the last valid committed Home layout for the project and workspace tab: the panel tree, tab records, view state, chat column and closed-tab stack; saved named layouts are the person's, in home_named_layouts (DL-230). Restored background tabs mount when first shown. A terminal tab whose session did not survive starts a new session in the same folder and profile and says so. Narrow, overlay, menu, hover and drag states are never written.",
       "migration": "Created on first read from home_workspace_layout.v1 or, when no v1 record exists, the Home part of layout:v1, through StorageMigrationCoordinator (SP-330). The source is kept read-only and is never reset. An unreadable source yields the default Home layout, keeps the old record and shows a notice. Ambiguous project/workspace identity fails closed.",
       "migration_disposition": {
         "mode": "current_schema",
@@ -29628,7 +29628,7 @@
         "$schema": "https://json-schema.org/draft/2020-12/schema",
         "$id": "https://puppetmaster.local/schemas/home_workspace_layout/2.0.0/home_workspace_layout_v2.schema.json",
         "title": "Puppet Master Home Workspace Layout V2",
-        "description": "The sole Home layout record (DL-180, Plans/storage-plan.md#SP-330), stored per project and workspace tab under home_workspace_layout.v2:{project_id}:{workspace_tab_id}. It holds the panel split tree, the tab records, the view-state block, the chat column, the user's saved named layouts, the closed-tab stack and the migration stamp. It stores stable references only: it never owns editor buffers, terminal sessions, PTYs or scrollback, browser sessions, chat messages, or a dashboard's widget layout (each board keeps its own per project under widget_layout:v1:<project_id>:<board_id>, Plans/Widget_System.md#WS-030 and Plans/storage-plan.md#SP-330; amended 2026-10-10, DL-186, from the never-written widget_layout:v1:dashboard:<board_id>). Narrow-window states, overlays, open menus, hover and drag state are never saved. The chat's pop-out is never saved (DL-187, D32). A saved named layout may keep a snapshot of the boards of its dashboard tabs, at most 64 KB (DL-186). Invariants JSON Schema cannot express are listed in $comment and are checked by the owner before a write.",
+        "description": "The sole Home layout record (DL-180, Plans/storage-plan.md#SP-330), stored per project and workspace tab under home_workspace_layout.v2:{project_id}:{workspace_tab_id}. It holds the panel split tree, the tab records, the view-state block, the chat column, the closed-tab stack and the migration stamp; the user's saved named layouts belong to the person in home_named_layouts:v1 since DL-230 (2026-10-17), and named_layouts is a legacy field read once into that store. It stores stable references only: it never owns editor buffers, terminal sessions, PTYs or scrollback, browser sessions, chat messages, or a dashboard's widget layout (each board keeps its own per project under widget_layout:v1:<project_id>:<board_id>, Plans/Widget_System.md#WS-030 and Plans/storage-plan.md#SP-330; amended 2026-10-10, DL-186, from the never-written widget_layout:v1:dashboard:<board_id>). Narrow-window states, overlays, open menus, hover and drag state are never saved. The chat's pop-out is never saved (DL-187, D32). A saved named layout may keep a snapshot of the boards of its dashboard tabs, at most 64 KB (DL-186). Invariants JSON Schema cannot express are listed in $comment and are checked by the owner before a write.",
         "$comment": "Semantic invariants (Plans/storage-plan.md#SP-330, Plans/FinalGUISpec.md#F3-630): S1 each split has as many sizes as children and the sizes sum to 1, each above 0.02; S2 split, panel and tab ids are unique in the record; S3 every tab id placed in a panel has a record in tabs, every record in tabs is placed in exactly one panel, and no tab id is in two panels; S4 a panel's first pinned_count tab ids are exactly its pinned tabs (pinned tabs first); S5 at most one preview tab per panel: preview_tab_id is null or one of the panel's tab ids whose record has mode preview, and every tab with mode preview is its panel's preview_tab_id; S6 active_tab_id is null only for a panel with no tabs and otherwise one of its tab ids; S7 a panel with no tabs is either the only panel in the tree or locked; S8 no two open terminal tabs name the same ref.terminal_session_id (one session per tab); a terminal tab's id is terminal:<the session it was first opened with> and never changes, while ref.terminal_session_id is the session it shows now, which differs from the id's suffix after Restart or a restore whose session did not survive (Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-180); S9 view_state.focused_panel_id and maximized_panel_id are null or ids of panels in the tree, and recent_tab_ids are open tab ids; S10 the canonical JSON encoding of a tab's state is at most 16 KB (16,384 bytes); S11 closed_tabs entries hold tab ids that are not open; S12 a named layout's slot tree follows S1 and the never-the-parent's-axis rule. S13 (DL-186) a named layout holds boards or boards_skipped_bytes, never both; the canonical JSON encoding of its boards map is at most 64 KB (65,536 bytes), and boards_skipped_bytes, when present, is the size of the boards map that save left out, so it is above 65,536; boards names only boards of dashboard tabs that were open when the layout was saved, and never agents, which stores nothing (lead ruling F7). S14 (DL-187, D33) at most one tab has kind debug_console, and its id is debug-console.",
         "type": "object",
         "additionalProperties": false,
@@ -29643,7 +29643,6 @@
           "tabs",
           "view_state",
           "chat_column",
-          "named_layouts",
           "closed_tabs",
           "migration"
         ],
@@ -29694,7 +29693,7 @@
             "items": {
               "$ref": "#/$defs/named_layout"
             },
-            "description": "Only layouts the user saved. The shipped layouts (Home, Build, Terminals 2x2, Focus) are canon in Plans/FinalGUISpec.md#F3-630 and are not stored here."
+            "description": "Legacy (DL-230, 2026-10-17): saved named layouts belong to the person and live in home_named_layouts:v1 (Plans/storage-plan.md#SP-330). A record written before then may still hold the layouts the user saved here; they are read once into that store and the field is not written again. The shipped layouts (Home, Build, Terminals 2x2, Focus) are canon in Plans/FinalGUISpec.md#F3-630 and are not stored."
           },
           "closed_tabs": {
             "type": "array",
@@ -30968,6 +30967,74 @@
           "Plans/storage-plan.md#SP-249",
           "Plans/Widget_System.md#WS-030",
           "Plans/Decision_Log.md#DL-186"
+        ]
+      }
+    },
+    {
+      "family_id": "home_named_layouts",
+      "storage_kind": "redb",
+      "status": "deferred_not_build_blocking",
+      "tier": "later_gui_or_feature_projection",
+      "key_shape": "home_named_layouts:v1",
+      "compatibility_key_shapes": [],
+      "value_schema_id": "pm.storage_value.home_named_layouts.v1",
+      "value_schema_ref": "deferred:Plans/storage_value_registry.json#/families/home_named_layouts",
+      "owner_doc": "Plans/storage-plan.md#SP-330",
+      "producer": [
+        "cmd.workspace_layout.save_named (UCC-200), with Storage performing its canonical writes (SP-330, SP-273)"
+      ],
+      "consumers": [
+        "Home's Layouts menu and cmd.workspace_layout.apply_named in every project (F3-630)"
+      ],
+      "schema_version": "1.0.0",
+      "encoding": "json_canonical",
+      "required_fields": [
+        "schema_version"
+      ],
+      "optional_fields": [],
+      "nullable_fields": [],
+      "replay_behavior": "One record per person, shown in Home's Layouts menu in every project. Each saved named layout is home_workspace_layout_v2's named_layout: its name, its slot tree with sizes, the kinds and tabs each slot holds and their locks and collapse, and the boards of its dashboard tabs (each board's envelope, which names its project, or boards_skipped_bytes past 64 KB). Applying it in another project applies the layout and skips the boards that belong to a different project.",
+      "migration": "New family (DL-230). On the first read, the named layouts held by every project's home_workspace_layout.v2 records are copied in once; when two share a name both are kept, the later one numbered, and none is dropped. The v2 records keep their old named_layouts read-only and no longer write them.",
+      "retention_compaction": "RP-CONFIG-CURRENT; a saved layout lasts until the person deletes it.",
+      "retention_policy_ref": "RP-CONFIG-CURRENT",
+      "redaction_no_secret_rule": "Store layout names, slot trees, sizes, tab kinds and ids, lock and collapse flags, and the board snapshots a named layout keeps (at most 64 KB a layout, SP-330) only. Never store file contents, terminal scrollback, browser history, chat messages, credentials or usage data rows.",
+      "legacy_canonical_crosswalk_status": "First registration of per-person saved named layouts (DL-230, Jared 2026-10-17); successor of home_workspace_layout_v2's named_layouts, which stays a read-only migration input.",
+      "deferred_owner": "Plans/storage-plan.md",
+      "deferred_reason": "A saved layout's board snapshots are the widget-layout envelope (SP-249), which has no physical value schema file yet; the key, scope and field list are registered so that saved named layouts are never kept per project.",
+      "reopen_condition": "Reopen when the widget-layout envelope (UsageWidgetLayoutRecord, SP-249) gets its physical value schema, or when the native Home Layouts menu is built.",
+      "recovery_disposition": {
+        "authority_class": "compatibility_or_deferred",
+        "strategy": "deferred_owner_contract",
+        "source_family_ids": [],
+        "source_refs": [
+          "Plans/storage-plan.md#SP-330",
+          "Plans/FinalGUISpec.md#F3-630",
+          "Plans/Decision_Log.md#DL-230"
+        ],
+        "backup_required": false,
+        "data_loss_if_unavailable": true,
+        "user_disclosure_required": true
+      },
+      "migration_disposition": {
+        "mode": "deferred_owner_contract",
+        "canonical_write_key_only": true,
+        "compatibility_keys_read_only": false,
+        "ambiguity_policy": "not_applicable",
+        "source_refs": [
+          "Plans/storage-plan.md#SP-330",
+          "Plans/FinalGUISpec.md#F3-630",
+          "Plans/Decision_Log.md#DL-230"
+        ]
+      },
+      "restore_disposition": {
+        "mode": "deferred_owner_contract",
+        "transaction_family_id": null,
+        "outcome_owner_ref": "Plans/storage-plan.md#SP-330",
+        "mutation_fence_on_unresolved": false,
+        "source_refs": [
+          "Plans/storage-plan.md#SP-330",
+          "Plans/FinalGUISpec.md#F3-630",
+          "Plans/Decision_Log.md#DL-230"
         ]
       }
     },

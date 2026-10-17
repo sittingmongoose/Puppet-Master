@@ -11867,7 +11867,7 @@ canonical_text: >-
   Amended 2026-10-09 (DL-180): Home commits now use the cmd.panel_tab.* and extended cmd.workspace_layout.* families of UCC-200 on the pm.home_workspace_layout.v2 record (SP-330), and Dashboard widget rows run inside dashboard tabs, each naming the board id in the existing room field (no board_id payload field; amended 2026-10-10, DL-186; it read: addressed by board_id).
   Amended 2026-10-10 (DL-186): those dashboard widget rows name their board in the payload's existing room field, not a board_id field, and run on the Usage board engine, so gravity and Tidy behave on every board as on the Usage page (WS-019); the dashboard tab's own controls are UCC-200's Dashboard tab controls table.
   Amended 2026-10-17 (DL-228): Usage adds no command for these controls, each named by its owner: the head's
-  Panels menu (a check per widget through WS-019's hide and show, Tidy this room, and Reset this room or Reset
+  Cards menu (DL-230; a check per widget through WS-019's hide and show, Tidy this room, and Reset this room or Reset
   every room through cmd.widget.reset_layout with scope room or all, WS-020); the card menu's Fit rows, one
   cmd.widget.resize to the fit-all height with its preset_id; Use <account> now while auto-switch waits, the
   same cmd.account.select_profile override as Use this account (UF-107); and on Attention rows Switch route
@@ -15013,7 +15013,7 @@ Metadata used in the tables. Every `cmd.panel_tab.*` and `cmd.workspace_layout.*
 | `cmd.workspace_layout.close_panel` | Close panel | `panel_id` | `always`. Its tabs close with it, each kind's close check answering first; the only panel in the centre keeps its place and shows the empty-panel launcher (`Plans/FinalGUISpec.md#F3-630`) | `shell_view` | `workspace.layout_changed` | none |
 | `cmd.workspace_layout.lock` | Lock panel / Unlock panel | `panel_id`, `locked` | `always` | `shell_view` | `workspace.layout_changed` | none |
 | `cmd.workspace_layout.apply_named` | Apply a layout | `name` (Home, Build, Terminals 2x2, Focus, or a name the user saved) | `always`; the layout already applied returns `no_change`. Applying keeps every open tab, ends no terminal and drops no unsaved buffer (`Plans/FinalGUISpec.md#F3-630`) | `shell_view` | `workspace.layout_changed` | none |
-| `cmd.workspace_layout.save_named` | Save this layout... | `name` | `always`. Amended 2026-10-10 (DL-186, P6; lead ruling F3): the saved layout also keeps the boards of the dashboard tabs it holds, at most 64 KB of them per named layout; a larger save keeps the layout without its boards and says so; `cmd.workspace_layout.apply_named` puts back the boards a layout kept (`Plans/Widget_System.md#WS-030`, `Plans/storage-plan.md#SP-330`). No argument is added | `shell_view` | `workspace.layout_changed` | none |
+| `cmd.workspace_layout.save_named` | Save this layout... | `name` | `always`. Amended 2026-10-10 (DL-186, P6; lead ruling F3): the saved layout also keeps the boards of the dashboard tabs it holds, at most 64 KB of them per named layout; a larger save keeps the layout without its boards and says so; `cmd.workspace_layout.apply_named` puts back the boards a layout kept (`Plans/Widget_System.md#WS-030`, `Plans/storage-plan.md#SP-330`). No argument is added. Amended 2026-10-17 (DL-230, Jared): the saved layout belongs to the person and is written to `home_named_layouts:v1`, offered in every project; the v2 record and its revision are unchanged, and the command keeps its receipt and its one `workspace.layout_changed` (`named_layout_saved`, `Plans/Contracts_V0.md#CV-361`); boards of another project are skipped when it is applied elsewhere | `shell_view` | `workspace.layout_changed` | none |
 | `cmd.workspace_layout.reset` | Restore home layout | none | `always`; open tabs stay open | `shell_view` | `workspace.layout_changed` | none |
 | `cmd.workspace_layout.restore` | Restore a captured layout | `snapshot_ref` (a layout snapshot its caller captured, its dashboard boards included as a saved named layout keeps them, SP-330), `source` (`guided_tour_restore` or `guided_tour_back`) | `always`; a snapshot of another project or workspace is refused as `stale_projection`; a failed write says "Your layout could not be saved." and keeps the earlier layout | `shell_view` | `workspace.layout_changed` (change `layout_restored`, CV-361) | none: the Guided Tour's Back, Skip and Finish with Restore (PWIZ-035); a project switch loads that project's own record and dispatches nothing (added 2026-10-17, DL-228) |
 
@@ -15329,6 +15329,10 @@ canonical_text: >-
   Amended 2026-10-17 (DL-228): F3-630 holds the panel menu's rows and order and F3-631 the tab menu's; the
   Panel menu and Tab menu tables here map dispatch only. cmd.workspace_layout.restore is registered in the
   Layout commands table.
+  Amended 2026-10-17 (DL-230, Jared): a saved named layout belongs to the person across projects, so save_named
+  writes home_named_layouts:v1 (SP-330) and leaves the v2 record and its revision unchanged; it keeps its
+  receipt and its one workspace.layout_changed (named_layout_saved, CV-361). apply_named offers the person's
+  saved layouts in every project and skips the boards of another project.
 gui_related: true
 gui_classification_reason: "Owns the command ids, arguments, availability, disabled reasons, events and keys of every control the universal panels add."
 split_recommended: false

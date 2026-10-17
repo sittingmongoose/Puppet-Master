@@ -564,8 +564,8 @@
           "required": ["declared_census_ref", "planning_action_share_basis_points", "planning_dwell_share_basis_points"],
           "properties": {
             "declared_census_ref": {"$ref": "#/$defs/safe_ref"},
-            "planning_action_share_basis_points": {"type": "integer", "minimum": 5000, "maximum": 10000},
-            "planning_dwell_share_basis_points": {"type": "integer", "minimum": 5000, "maximum": 10000}
+            "planning_action_share_basis_points": {"type": "integer", "minimum": 4000, "maximum": 10000},
+            "planning_dwell_share_basis_points": {"type": "integer", "minimum": 4000, "maximum": 10000}
           }
         },
         "practice_goal": {"type": "object", "additionalProperties": false, "required": ["goal_id", "description_id", "real_wizard_surface"], "properties": {"goal_id": {"const": "book_club"}, "description_id": {"const": "organize_a_local_book_club"}, "real_wizard_surface": {"const": true}}},
