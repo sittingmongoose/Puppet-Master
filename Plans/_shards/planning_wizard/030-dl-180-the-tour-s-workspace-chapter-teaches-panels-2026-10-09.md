@@ -2,9 +2,9 @@
 
 Source: `Plans/Planning_Wizard.md`
 
-Source lines: L2757-L2915
+Source lines: L2768-L2939
 
-Source SHA256: `37d3796342a9925e288001e5a54c28342335db9a15b554faf57efac20550c5fe`
+Source SHA256: `4023dfdc1fabfea3bdc240a4d27a04640fb013280350c75cb560c9e0934fb776`
 
 ---
 
@@ -73,6 +73,19 @@ canonical_text: >-
   step-order stamp is read against the published 18-step order, then follows the same saved-id and
   retired-chapter resume rules; only when its step and chapter are both gone does it start fresh with the
   notice.
+  Amended 2026-10-17 (DL-228): the planning chapter has review_parts after review: the spotlight settles on
+  each part of the Live Plan in turn (outcomes, decisions, assumptions, the open choice) with a one-line
+  caption on the tour's own clock, so Pause and Reduced Motion hold it, then opens onto the whole plan; Next
+  waits until the parts have been read. With move_or_dock_chat retired that keeps the tour at 20 steps
+  (Plans/guided_tour_contracts.schema.json). While the learner carries a tab during split_by_drag, the tour
+  steps back: its scrim thins, its callout fades and the spotlight opens onto the whole panels centre so the
+  drop zones read, and all return on release. In narrow windows the tour bar wraps and drops no control, Open
+  Planning is reached through the pages menu when the page strip folds, the split step names the edge that
+  fits from its ready target, and in the narrowest windows the planning chapter tucks the chat away through
+  the chat's own command and brings it back. Back, Skip and Finish put the captured layout back with one
+  cmd.workspace_layout.restore (UCC-200) whose snapshot carries the dashboard boards it held, as a saved named
+  layout carries them (SP-330), so the Home board returns with the panels in one command; no separate
+  board-restore command is minted, and the concept's removal of added widgets is lineage.
 gui_related: true
 gui_classification_reason: Defines the workspace chapter's steps, copy, owner commands, completion observation, and saved-position and restore rules.
 split_recommended: false

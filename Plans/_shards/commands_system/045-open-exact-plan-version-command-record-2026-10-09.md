@@ -2,9 +2,9 @@
 
 Source: `Plans/Commands_System.md`
 
-Source lines: L7577-L7636
+Source lines: L7577-L7638
 
-Source SHA256: `58974ba2d88de4f2b6bf1193005a54961a122fc830ae44cf01570c7d7228a7a5`
+Source SHA256: `5a927859ed2b5c6e160f3aadd094f8ce247bfb0311e3d1e54de2d51f36465f22`
 
 ---
 
@@ -23,7 +23,9 @@ canonical_text: >-
   cmd.chat.plan.open_version is registered as a navigation_wrapper owned by Plans/Assistant_Plan_Runtime.md, with the
   sole future handler handlers::assistant_plan::plan_open_version and the typed pair AssistantPlanVersionRoute ->
   RouteResult in Plans/assistant_plan_runtime_contracts.schema.json, the same pending owner schema as its neighbour
-  cmd.chat.plan.open_details. It keeps handler_unavailable until native evidence exists and expected_event_types=[]:
+  cmd.chat.plan.open_details. It keeps handler_unavailable until native evidence exists; it emits exactly one workspace.layout_changed when its
+  route adds a tab and none when it reveals an open tab (DL-188; amended 2026-10-17, DL-228, it read:
+  expected_event_types=[]):
   opening a version's document is a route, never a Plan, run, Goal, To-Do or artifact mutation. Its source surfaces
   are plan_card and schedule_manager, for every Open plan button (the card's action row, its Build-started and
   Plan-revised receipts, a build schedule's row), and goal_activity and goal_hover, for the bound Goal's Open exact
@@ -37,7 +39,7 @@ depends_on: [UCC-176, DL-157, CS-079]
 unblocks: [WM-065]
 acceptance_criteria:
   - "The central contract records hold exactly one row for cmd.chat.plan.open_version, naming handlers::assistant_plan::plan_open_version and AssistantPlanVersionRoute -> RouteResult."
-  - "cmd.chat.plan.open_version keeps handler_unavailable and expected_event_types=[]."
+  - "cmd.chat.plan.open_version keeps handler_unavailable and emits workspace.layout_changed only when its route adds a tab (DL-188; amended 2026-10-17, DL-228)."
   - "No alias or peer command opens a Plan version from a Goal surface, and every Open plan button raises cmd.chat.plan.open_version."
 validation_surfaces:
   - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json

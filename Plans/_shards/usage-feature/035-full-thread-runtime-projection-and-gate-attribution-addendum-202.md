@@ -2,9 +2,9 @@
 
 Source: `Plans/usage-feature.md`
 
-Source lines: L6560-L6940
+Source lines: L6574-L6957
 
-Source SHA256: `0d73fa84016d2daedc24d761ef3151daa5f72b98e51d0aa518e6704feb7bb7e1`
+Source SHA256: `96ba2a90432f6e2bd6f370e8ef5f835fe1998457e394933ac084327cc0ad78b9`
 
 ---
 
@@ -224,6 +224,9 @@ canonical_text: >-
   operation; pointer-preview rectangles, ghosts, placeholders, animation state, and per-frame drafts never
   become durable state. Missing rooms, widgets, scopes, or unsupported geometry migrate or evict to the
   documented safe current default rather than leaving a dangling identity.
+  Amended 2026-10-17 (DL-228): the `more` family is retired: the redesigned rail of rooms scrolls and keeps no
+  overflow surface, so a stored `more` value is read once and ignored, and the remaining eight families are
+  restored as above.
 gui_related: true
 gui_classification_reason: These fields determine what Usage shows after reload and how committed widgets are restored.
 depends_on: [UF-060, UF-093, UF-094, WS-019, WS-020, SP-248]

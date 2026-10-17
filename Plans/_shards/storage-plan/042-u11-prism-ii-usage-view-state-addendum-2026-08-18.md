@@ -2,9 +2,9 @@
 
 Source: `Plans/storage-plan.md`
 
-Source lines: L18415-L18523
+Source lines: L18415-L18526
 
-Source SHA256: `862b0061fefa862a165dcfe8b163811cf2dae11f60d01ee9bc44f8a9c077b873`
+Source SHA256: `23c2814b738393ea2382c7de55e579330e318055abdd33aa7e08b105a33e87b6`
 
 ---
 
@@ -49,6 +49,9 @@ canonical_text: >-
   and it considers the v10 family only through the bounded legacy import when no valid envelope is admitted.
   None of these prototype keys, schema ids or prior envelopes becomes a canonical product store or continuing
   dual-read source.
+  Amended 2026-10-17 (DL-228): the `more` family is retired: the redesigned rail of rooms scrolls and keeps no
+  overflow surface (UF-093, UF-095), so a stored `more` value is read once and ignored, and the remaining
+  eight families persist as above.
 gui_related: true
 gui_classification_reason: These records decide what the Usage page shows on reopen, including disclosure level, scope, range, and widget layout.
 depends_on: [SP-222, UF-092, WS-016]

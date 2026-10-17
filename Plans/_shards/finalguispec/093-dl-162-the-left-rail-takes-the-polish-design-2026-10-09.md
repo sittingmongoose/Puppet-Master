@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L43431-L43886
+Source lines: L43534-L44019
 
-Source SHA256: `7447a70c27f340391d4bbf7f970101f60e40edebe03c9791cb81804ba977eebf`
+Source SHA256: `8b46b2f543663a9fdbf5170fad337bc776064dc6ab9115e9beea4413d8154e4d`
 
 ---
 
@@ -31,7 +31,8 @@ canonical_text: >-
   inset serves everything inside one (rows, the tab ink, buttons, inputs), so every hover, open and selection fill
   is drawn on its own row's box, concentric with its shelf; a control under 26 px high never rounds past 6 px.
   Basic has R 8 px and r 4 px, Friendly R 12 px and r 10 px with a 6 px text inset, Glass R 13 px and r 10 px, and
-  Retro and NieR Mode are square. The shelf is the only box: its head is a band flush with the shelf's top that
+  Retro is square, and NieR Mode is square while its Square hairlines part is installed, keeping Basic's radii
+  without it, as every other NieR surface does (amended 2026-10-17, DL-228; it read: Retro and NieR Mode are square). The shelf is the only box: its head is a band flush with the shelf's top that
   takes the shelf's own corners, a collapsed shelf is only its head with no strip under it, and the rows inside are
   flat, never a card inside a card. Heads are at least 34 px high and rows at least 28 px. Shelf tints are roles over
   the category colour of F3-474: fill 7%, head band 13%, edge hairline 22%, row hover 11% and open row 8%; Glass uses
@@ -43,6 +44,12 @@ canonical_text: >-
   filled rectangle 28 px high with the inner radius and a 12 px sentence-case label, the primary action has the
   accent fill, and icon buttons are 24 px squares. Selection and focus inside the rail are a fill or an outline on
   the element's own box, never section 3.5's 3 px left-edge stripe.
+  Amended 2026-10-17 (DL-228): Jared's RAIL-5 answer of 2026-10-10, to bring back some frost on the rail's
+  header and tab plates (DL-162; the Liquid Glass brief relays it), is owned here. In Basic, Friendly, Retro and NieR the rail's chrome plates
+  (the panel header, the tab strip, toolbars, Source Control's context and footer, the Search index strip and
+  the automation context) keep a frosted scroll-under, content blurring as it passes beneath them; in Glass
+  the panel is one sheet (F3-652), the sheet is the frosted material and the plates paint nothing of their
+  own. This plate blur is admitted beside F3-431's listed effects.
 gui_related: true
 gui_classification_reason: Defines the left rail's visible geometry, shelf treatment, type ladder and controls.
 split_recommended: false
@@ -105,6 +112,11 @@ canonical_text: >-
   chip, pill or badge for status/count consumes this mark-and-word or plain-number presentation; an action
   remains the owner's action with F3-618's control treatment and F3-648's action-button exception. No local
   status store or lifecycle rule is created.
+  Amended 2026-10-17 (DL-228): Proposed, pending Jared: Testing's errored state, a harness failure rather than
+  a failed assertion, uses the shared failed mark with the word Errored in the failed tone, so one shape keeps
+  one meaning; the concept's own orange word for it is not adopted until he answers the Errored-word colour
+  question queued on 2026-10-11. The rail's remaining solid tables in the concept are a no-glyph fallback, not
+  a second set of badges.
 gui_related: true
 gui_classification_reason: Defines how every status and count in the left rail is drawn.
 split_recommended: false
@@ -149,7 +161,7 @@ stale_retired_dispositions:
 - 'Amended 2026-10-14: D44 unifies glyphs; the independent rail silhouettes, lower status-word contrast and unanswered
   unification question are superseded.'
 owner_boundary_notes:
-  - "F3-585 owns the assistant chat's 13 status marks and this unit owns the rail's glyphs; neither restates the other. The two sets differ (the chat's failed is a triangle, the rail's warning is), and whether one set should serve both is an open owner question recorded in DL-162."
+  - "F3-585 owns the assistant chat's 13 status marks, the run-state subset of F3-658's one vocabulary, and this unit owns how the rail consumes that vocabulary; neither restates the other. Amended 2026-10-17 (DL-228): D44 (DL-201) settled the earlier open question, and the sets no longer differ."
 owner_hints:
   - Plans/FinalGUISpec.md
 
@@ -187,6 +199,9 @@ canonical_text: >-
   only (F3-498). Amended 2026-10-09 after the shared cleanup (DL-162): no abbreviation applies to ages either; ages
   and durations are spelled out in words ("4 minutes", "2 hours ago", "1 minute 48 seconds"), never cut to unit
   letters, while a decimal measurement keeps its unit symbol ("3.4s").
+  Amended 2026-10-17 (DL-228): two panels add their own fitting facts: a Search hit whose match lies past two
+  lines starts with an ellipsis just before the match, so the match always shows; and a Runtime Artifacts row
+  always shows its family word, which is never the part cut.
 gui_related: true
 gui_classification_reason: Defines how labels, names and tabs fit the narrow left rail.
 split_recommended: false
@@ -285,6 +300,18 @@ canonical_text: >-
   switcher in each look's material; Retro and NieR keep F3-438's stepped motion (Jared, 2026-10-16), and
   a pressed tab's words take the chip's ink in the press's own frame. NieR's hover inks and Target brackets stay as above. NieR's rail wipe, with its brief empty outline of about 83 ms,
   is kept as NieR's identity (Jared, 2026-10-16).
+  Amended 2026-10-17 (DL-228): on a panel switch or a tab change the leaving panel or pane stays drawn where
+  it was, above the incoming one, and fades out as the incoming entrance starts, so the first frame never
+  shows an empty pane; while held it is inert, out of the tab order and the accessibility tree, and a field
+  focused in it takes no keys (ACD-475). NieR keeps its own erase and Reduced Motion swaps at once; a rail
+  opened from closed never holds the panel shown before it closed, and a panel shown again is released from
+  any hold first. The rail picker has a pick-several mode, used by F3-622's Owner filter and by any later
+  multi-select dropdown: a pick checks or clears an item and keeps the plate open, All clears every item and
+  closes, choosing every item reads as All, each look draws its own checkbox fill, and the trigger names the
+  one item chosen, the items while they fit, else how many. The Chat entry's lit state is a tile of its own,
+  the open-panel tile's size and paint, faded in and out in place on the Chat icon while the chat column shows
+  (its folded strip included); it never glides, because it marks the chat column, not the open panel, and the
+  open-panel tile never travels to the Chat icon. The Dashboard activity item is gone (DL-202).
 gui_related: true
 gui_classification_reason: Defines the left rail's dropdown look and its motion in each theme family.
 split_recommended: false
@@ -358,6 +385,9 @@ canonical_text: >-
   the height moving in the family's voice; a button inside the card never folds it, and folded or open is one
   state for both engines, kept with the Source Control panel state (source_control_panel_state.v1, F3-475). Neither adds a command or an action: the filter is W-075's filter state
   and the fold is panel state.
+  Amended 2026-10-17 (DL-228): the Owner dropdown uses F3-621's pick-several mode. The Jujutsu Workspaces
+  view's Owner filter is the same filter state as the Worktrees view's, kept with W-075's persistence, not a
+  separate view-local filter.
 gui_related: true
 gui_classification_reason: Defines two visible Source Control behaviours the Polish design adds.
 split_recommended: false

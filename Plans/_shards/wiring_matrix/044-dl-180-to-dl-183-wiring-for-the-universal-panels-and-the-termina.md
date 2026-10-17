@@ -2,9 +2,9 @@
 
 Source: `Plans/Wiring_Matrix.md`
 
-Source lines: L5553-L6334
+Source lines: L5557-L6338
 
-Source SHA256: `33869503c5b445a82ed081f336f0f5b614b2c8d74163b224c64d19c79960cc25`
+Source SHA256: `d46e67f2238bf93357fac446a71f185ffb5d2f9cd51f91c1feec146c03415b3b`
 
 ---
 
@@ -159,7 +159,7 @@ Every control below commits through the gesture transaction of `Plans/UI_Wiring_
 | Home options menu > Save this layout..., then Save | `cmd.workspace_layout.save_named` | `home.more_options.save_layout` | `workspace.layout_changed` |
 | Home options menu > Restore home layout | `cmd.workspace_layout.reset` | `home.more_options.reset_layout` | `workspace.layout_changed` |
 | Settings > General & Appearance > Startup & Recovery > Restore home layout | `cmd.workspace_layout.reset` after one confirmation (its row is `general.startup.reset-home-layout`, `Plans/Settings_System.md#SSYS-050`) | `home.settings.reset_layout` | `workspace.layout_changed` |
-| Home options menu > Run setup wizard | `ui.onboarding.start` (UCC-106, WM-041) | none | typed local action, no receipt, no event |
+| Home options menu > Run Onboarding Again (formerly Run setup wizard; amended 2026-10-17, DL-228) | `ui.onboarding.start` (UCC-106, WM-041) | none | typed local action, no receipt, no event |
 
 **The chat column** (`Plans/FinalGUISpec.md#F3-637`, `Plans/UI_Command_Catalog.md#UCC-203`)
 

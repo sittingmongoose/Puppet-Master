@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L42513-L42796
+Source lines: L42613-L42896
 
-Source SHA256: `7447a70c27f340391d4bbf7f970101f60e40edebe03c9791cb81804ba977eebf`
+Source SHA256: `8b46b2f543663a9fdbf5170fad337bc776064dc6ab9115e9beea4413d8154e4d`
 
 ---
 
@@ -86,7 +86,7 @@ canonical_text: >-
   or a tick may flicker. Input never waits: a key or a press snaps a running performance to its end state. Every
   beat is gated by an existing part. Reduced Motion, the Still and Colors only presets and low resource show each
   moment's end state, and Quiet drops the Pod beats. A background change made from the editor cross-fades as F3-589
-  sets out. The application beneath the onboarding window stays still while the window is open. The four theme
+  sets out. The application beneath the onboarding window stays still while the window is open (F3-520 owns this in every look). The four theme
   families have hero moments of their own (F3-600); NieR's play whenever NieR Mode is painted, whatever family
   is chosen beneath it, and have no per-family variants (DL-153). No settings key,
   NieR part, theme family, theme variant, command id, route or `ui.guided_tour.*` action is added: inside the

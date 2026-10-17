@@ -2,9 +2,9 @@
 
 Source: `Plans/usage-feature.md`
 
-Source lines: L6436-L6558
+Source lines: L6441-L6572
 
-Source SHA256: `0d73fa84016d2daedc24d761ef3151daa5f72b98e51d0aa518e6704feb7bb7e1`
+Source SHA256: `96ba2a90432f6e2bd6f370e8ef5f835fe1998457e394933ac084327cc0ad78b9`
 
 ---
 
@@ -38,9 +38,12 @@ canonical_text: >-
   `Costs`, `Accounts`, `Free models`, `Context`, `Analytics`, `Ledger`, `Attention`, `Prompt cache`, `Tools`,
   `Signals`, and `Source authority`. Its user-facing disclosure ladder is exactly `At a glance`, `Detailed`,
   and `Diagnostics`. Disclosure changes the mounted panel set and the useful facts inside eligible panels; it
-  is not decorative copy and it never deletes a widget instance or stored layout. Source authority mounts exactly
-  4, 6, and 8 panels at those three disclosure levels, and all thirteen rooms remain reachable at every supported
-  physical viewport width even when the secondary rail collapses into an overflow surface. Active room, scope, date
+  is not decorative copy and it never deletes a widget instance or stored layout. Source authority mounts 7, 8 and 9
+  panels at those three disclosure levels in the redesign's default boards, each deeper level mounting at least the
+  shallower set (amended 2026-10-17, DL-228; it read: exactly 4, 6, and 8, the replaced page's count), and all thirteen
+  rooms remain reachable at every supported physical viewport width by scrolling the rail of rooms, which keeps no
+  overflow surface (amended 2026-10-17, DL-228; it read: even when the secondary rail collapses into an overflow
+  surface). Active room, scope, date
   range, disclosure level, the expanded-room rail state, and the Live / Paused choice (UF-107) are local view
   projections unless an existing canonical command owner explicitly requires a command; changing them does not
   justify a new command family.
@@ -61,14 +64,20 @@ canonical_text: >-
   `target_type=setting` and `setting_id=ai.accounts.provider-connections`. UF-090, UF-092, and CBP-028 remain the policy
   owners: installation and authentication stay separate, and Usage neither starts an automatic acquisition nor
   silently reroutes the request.
+  Amended 2026-10-17 (DL-228): the expanded-room rail state is retired with the overflow surface: the
+  redesigned rail scrolls and nothing sets `more`, so a stored value is ignored on read (UF-095, SP-248).
+  Details opens Curated by default and Raw shows every field as recorded, credential handles masked ("Every
+  field as recorded. Credential handles are masked."; F3-514's Raw and Curated redaction); the choice is view
+  state; focus moves into Details on opening and returns to the opening control on Close details or Escape;
+  its Ledger attempt drill-through stays as above.
 gui_related: true
 gui_classification_reason: This unit defines the visible Usage room taxonomy, disclosure labels, and view-state behavior.
 depends_on: [CBP-028, UF-044, UF-055, UF-090, UF-092, WS-016]
 unblocks: [UF-094, UF-095, UF-096, UF-107]
 acceptance_criteria:
-  - All thirteen named rooms are addressable in the Usage workspace at every supported physical viewport width, including through the secondary-room overflow surface when required, and each renders its room-specific panel catalog at the current disclosure level.
+  - All thirteen named rooms are addressable in the Usage workspace at every supported physical viewport width by scrolling the rail of rooms (amended 2026-10-17, DL-228: no overflow surface), and each renders its room-specific panel catalog at the current disclosure level.
   - The only user-facing disclosure labels are At a glance, Detailed, and Diagnostics; Essen, Std, Adv, essentials, standard, and advanced are not disclosure labels.
-  - Switching disclosure materially changes mounted panel types or content facts, Source authority mounts exactly 4/6/8 panels for At a glance/Detailed/Diagnostics, and no disclosure switch deletes an existing widget instance or stored layout.
+  - Switching disclosure materially changes mounted panel types or content facts, Source authority mounts 7/8/9 panels for At a glance/Detailed/Diagnostics (amended 2026-10-17, DL-228; earlier 4/6/8), a room whose panels are all At a glance (Attention, Prompt cache, Signals) changes content facts rather than the mounted set, and no disclosure switch deletes an existing widget instance or stored layout.
   - Active room, scope, date range, disclosure, expanded-room rail state, and the Live / Paused choice remain local projection actions unless an existing owner requires otherwise; no duplicate command family is introduced, Usage refresh retains its authority, and a PMConcept7 Ledger attempt row dispatches cmd.nav.open_usage_subject as a usage_attempt/attempt_id object route without OpenSubject while retaining usage_event_ref as correlation; event-primary callers retain usage_event/usage_event_ref, and aggregate provider, account, and panel cards open local inspectors without a route command, command receipt, or domain event.
   - In the Accounts room, "Use this account" dispatches cmd.account.select_profile only where supports_manual_set_active is true, and a provider's Auto-switch toggle and switch level (scope=provider) and each account's own switch level (scope=account, D43 2026-10-10) dispatch cmd.settings.transaction.preview then cmd.settings.transaction.apply on the Settings rows, show the same value Settings shows, and keep no Usage copy; opening a card or its Details still dispatches no command.
   - Provider setup absence renders the exact `Provider Setup Required` state with explicit `Host/Environment` and preserved operation and continuation identity; its CTA reuses `cmd.settings.open` with `target_type=setting` and `setting_id=ai.accounts.provider-connections`, mints no new setup command, keeps installation and authentication separate, performs no automatic acquisition or silent reroute, and leaves UF-090, UF-092, and CBP-028 as the underlying policy owners.

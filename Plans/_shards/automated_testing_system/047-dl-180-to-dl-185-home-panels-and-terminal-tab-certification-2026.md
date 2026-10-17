@@ -2,9 +2,9 @@
 
 Source: `Plans/Automated_Testing_System.md`
 
-Source lines: L5955-L6600
+Source lines: L5955-L6601
 
-Source SHA256: `134b0a9ed57283a7cd240d6571ea7d0379868f93aa25326e71610ea69b0e850d`
+Source SHA256: `ab3cc199f015c060e6042eb65a5019f976e917c1c41bf79e6bbf66ead5a4e48b`
 
 ---
 
@@ -46,8 +46,9 @@ canonical_text: >-
   share of a panel docked at the centre's edge, the 6 px gaps, the 8 px divider hit target and the divider keys,
   collapse below half a panel's minimum to its 35 px strip with its state kept, maximize and restore, locked
   panels, and closing the last tab (Plans/FinalGUISpec.md#F3-630); the tab strip's heights, gaps, widths and
-  shrink order, the active tab's 120 px minimum, pinned tabs, close targets and every mark, with the fused
-  silhouette as the only active-tab marker in every look (F3-631); the "+" menu's rows in their order, the row
+  shrink order, the active tab's 120 px minimum, pinned tabs, close targets and every mark, with the seated
+  chip as the only active-tab marker in every look (F3-631, DL-214; amended 2026-10-17, DL-228, it read: the fused
+  silhouette); the "+" menu's rows in their order, the row
   body, the trailing cell, Alt+click and Alt+Enter, Ctrl+T, and the empty-panel launcher (F3-632); the "+N"
   list, its search, its grouping by kind and its use as a drop target (F3-633); the opening rules from every
   caller, the file tree (Plans/FileManager.md#F-090), chat file references, diff views and Changes rows,

@@ -2,9 +2,9 @@
 
 Source: `Plans/Wiring_Matrix.md`
 
-Source lines: L5490-L5550
+Source lines: L5493-L5554
 
-Source SHA256: `33869503c5b445a82ed081f336f0f5b614b2c8d74163b224c64d19c79960cc25`
+Source SHA256: `d46e67f2238bf93357fac446a71f185ffb5d2f9cd51f91c1feec146c03415b3b`
 
 ---
 
@@ -28,8 +28,9 @@ canonical_text: >-
   (goal_hover), each sending the GoalPlanBinding's assistant_plan_id, plan_version and plan_hash. The route result
   opens that version's document, the Plan's own tab while it is current and its retained read-only document once a
   later version exists, and never Plan Details or a newer version (UIW-026). The existing
-  assistant.redesign.cmd.chat_plan_open_details entry gains no Goal producer. The new entry keeps handler_unavailable
-  and expected_event_types=[].
+  assistant.redesign.cmd.chat_plan_open_details entry gains no Goal producer. The new entry keeps handler_unavailable;
+  it declares workspace.layout_changed for a route that adds a tab and nothing for a reveal (DL-188; amended
+  2026-10-17, DL-228, it read: expected_event_types=[]).
 gui_related: true
 gui_classification_reason: "Wires every Open plan button and the bound Goal's Open exact Plan · Vn to their own command entry."
 split_recommended: false
@@ -38,7 +39,7 @@ unblocks: []
 acceptance_criteria:
   - "Wiring_Matrix.production.json holds one entry assistant.redesign.cmd.chat_plan_open_version for cmd.chat.plan.open_version, raised from plan_card, schedule_manager, goal_activity and goal_hover only."
   - "assistant.redesign.cmd.chat_plan_open_details has no Goal producer."
-  - "The entry keeps handler_unavailable and expected_event_types=[]."
+  - "The entry keeps handler_unavailable and declares workspace.layout_changed only for a route that adds a tab (DL-188; amended 2026-10-17, DL-228)."
 validation_surfaces:
   - python3 scripts/pm-plans-verify.py validate-wiring-matrix
   - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json

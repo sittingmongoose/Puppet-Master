@@ -2,9 +2,9 @@
 
 Source: `Plans/Decision_Log.md`
 
-Source lines: L14491-L16582
+Source lines: L14498-L16708
 
-Source SHA256: `e7f567e2c705d16048848f5f87c8ddd3e2db6ec7c2776f5e3061b3e7325e645d`
+Source SHA256: `d895814b629b5eb2c9e3302278346a5de1c253c493ac4990cd8069b7f3f4c2fd`
 
 ---
 
@@ -559,6 +559,8 @@ source_lineage:
   (decision/source lineage; not native implementation evidence)
 preserved_exact_tokens: []
 negative_constraints: []
+stale_retired_dispositions:
+- 'Amended 2026-10-17 (DL-228): the central spotlight tuning landed on 2026-10-14 (F3-465): only the pool under the pointer was turned down, to 0.6 of its strength, the edge glow kept. It read: F3-465 owns that pending tuning.'
 owner_hints:
 - Plans/Decision_Log.md
 
@@ -1969,7 +1971,8 @@ owner_doc: Plans/Decision_Log.md
 canonical_text: >-
   Recorded 2026-10-17. Jared, 2026-10-11: "keep in mind the friendly theme is based on the original
   DS, 3DS, wii, Wiiu menu styles and feel. Also the cocoon shell front end. and https://iisu.network/."
-  Every new Friendly surface takes its cues from that direction. F3-647's Friendly row records it.
+  Every new Friendly surface takes its cues from that direction. The Friendly row of FinalGUISpec section 6.1's
+  theme-family table records it (amended 2026-10-17, DL-228; it read: F3-647's Friendly row).
   Friendly wallpapers and Usage keep their own owners. Concept evidence is not native certification.
 gui_related: true
 gui_classification_reason: Friendly Takes Its Cues From Handheld And Console Menus.
@@ -2100,3 +2103,119 @@ owner_hints:
 ```
 
 ContractRef: ContractName:Plans/FinalGUISpec.md#F3-634, ContractName:Plans/Decision_Log.md#DL-180, ContractName:Plans/Decision_Log.md#DL-185
+
+### DL-228 - The Week Sweep Records What The Concept Built
+
+```yaml
+plan_unit_id: DL-228
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: >-
+  Recorded 2026-10-17. Jared, 2026-10-17: "For sweeping for plan changes (which also includes wiring, dry,
+  commands), you need to have multiple models sweep so nothing is lost." Four independent sweeps of the PM7
+  week, by Opus 5.5 and Muse Wonder over two areas (Concepts 226e834893 to 1b092d0b0e and the top-ups DL-157
+  to DL-217), found behaviour, wiring, commands and settings the concept has and Plans lacked or stated
+  wrongly. The owner amendments dated 2026-10-17 that cite this row record them. They are behaviour the Slint
+  and custom Skia rebuild honours, not Jared decisions, except where an owner cites one. Wrong counts, event
+  lists, state names and mappings are corrected in place, each keeping what it read. This row registers
+  cmd.workspace_layout.restore (UCC-200, CV-361, production entry tour.layout_restore), the local read
+  projection ui.notifications.mark_all_read (CS-102) and the tour phase review_parts (PWIZ-035). Concept
+  internals (timings, CSS values, caches, warm queues, demo scaffolding) stay out. A question no Jared
+  decision answers is marked proposed, pending Jared in its owner. Concept evidence is not native
+  certification.
+gui_related: true
+gui_classification_reason: The Week Sweep Records What The Concept Built.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- The amended owners agree with the concept's built behaviour or say why not; source publication is not native certification.
+validation_surfaces:
+- python3 scripts/pm-shard-plans.py --check
+- python3 scripts/pm-plan-index.py validate
+- python3 scripts/pm-plans-verify.py run-gates
+risk_class: owner_drift
+reasoning_tier: high
+context_scope: pm7_week_sweep_reconciliation
+implementation_surfaces:
+- Plans/Decision_Log.md
+node_compile_hint:
+  mode: owner_decision_record
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- /mnt/Cursor/share/puppet-master/2026-10-17-plans-f6/WEEK-WRITER-BRIEF.md, SHA-256
+  2297493867dccad908210fc023b470eb41d964f6ebd23be0caae3045db349a84 (Jared's sweep rule, as relayed by the
+  coordinator; decision lineage)
+- /mnt/Cursor/share/puppet-master/2026-10-17-plans-f6/SWEEP-WEEK-BRIEF.md, SHA-256
+  642d804ebc361475da10d33056b55617b30cf673914229c452d35926e78fda1c (the sweep brief and range)
+- /mnt/Cursor/share/puppet-master/2026-10-17-plans-f6/SWEEP-WEEK-OPUS-A.md, SHA-256
+  df790ea1fcc4bd156f0dac2234551335364a0676a92b32e44e505f6a05bee432 (OA-1 to OA-95; source lineage)
+- /mnt/Cursor/share/puppet-master/2026-10-17-plans-f6/SWEEP-WEEK-MUSE-A.md, SHA-256
+  edd9dcae68bd56980e270e40f08309701b63a1cfd82858abb634b0695bd3a13d (MA-1 to MA-26; source lineage)
+- /mnt/Cursor/share/puppet-master/2026-10-17-plans-f6/SWEEP-WEEK-OPUS-B.md, SHA-256
+  a74054b4fea13526b56a1e0a395b6ad434d62828bb407cd1a79b228e8f2ef144 (OB-1 to OB-91; source lineage)
+- /mnt/Cursor/share/puppet-master/2026-10-17-plans-f6/SWEEP-WEEK-MUSE-B.md, SHA-256
+  64660f9cb17aeb5bd5c4f5c61aba78f006926e25286b6b93ebf1fc5b57006c7b (MB-1 to MB-48; source lineage)
+- /mnt/Cursor/share/puppet-master/2026-10-17-plans-f6/NOTES.md (the week reconciliation table, one outcome per
+  sweep row)
+preserved_exact_tokens:
+- "you need to have multiple models sweep so nothing is lost"
+negative_constraints:
+- "Do not read an amendment under this row as a Jared decision unless it cites one."
+owner_hints:
+- Plans/Decision_Log.md
+```
+
+ContractRef: ContractName:Plans/UI_Command_Catalog.md#UCC-200, ContractName:Plans/Contracts_V0.md#CV-361, ContractName:Plans/Commands_System.md#CS-102, ContractName:Plans/Planning_Wizard.md#PWIZ-035
+
+### DL-229 - Glass Keeps Usage Calm With No Sweep And No Opaque-Then-Clear
+
+```yaml
+plan_unit_id: DL-229
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: >-
+  Recorded 2026-10-17. Jared, 2026-10-11, reviewing Liquid Glass v2: "The usage page animations are too busy. I
+  think the side ways swipe across the whole screen when you change tabs can go away. Also, when you change tabs
+  in the usage area, it seems like the items that are moving are more opaque then once they settle they become
+  clear. It is really jarring." F3-652 owns the outcome: no full-board sweep on a Usage change, and Glass
+  condenses into place only when Glass is switched on, never on a page, tab or room change, so moving items
+  never turn opaque and then clear. Moving a widget by hand may still lift it (WS-019). DL-191's "calmer
+  transitions" is this answer, recorded until now only in the share notes. Concept evidence is not native
+  certification.
+gui_related: true
+gui_classification_reason: Glass Keeps Usage Calm.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- The linked owners agree with this decision; source publication is not native certification.
+validation_surfaces:
+- python3 scripts/pm-shard-plans.py --check
+- python3 scripts/pm-plan-index.py validate
+- python3 scripts/pm-plans-verify.py run-gates
+risk_class: owner_drift
+reasoning_tier: high
+context_scope: glass_usage_calm
+implementation_surfaces:
+- Plans/Decision_Log.md
+node_compile_hint:
+  mode: owner_decision_record
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- /mnt/Cursor/share/puppet-master/2026-10-13-glass-review-feedback/PARTY-WALLPAPERS-GO.md, SHA-256
+  2118d28c76c25e840487decba5d542c2092db7ad0635280055f1315ee9a4c86a (Jared's 2026-10-11 review, verbatim;
+  decision lineage)
+preserved_exact_tokens:
+- "The usage page animations are too busy."
+negative_constraints:
+- "Do not condense Glass on a page, tab or room change."
+owner_hints:
+- Plans/Decision_Log.md
+```
+
+ContractRef: ContractName:Plans/FinalGUISpec.md#F3-652, ContractName:Plans/Decision_Log.md#DL-191

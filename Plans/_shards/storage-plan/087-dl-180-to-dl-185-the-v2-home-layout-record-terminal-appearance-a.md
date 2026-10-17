@@ -2,9 +2,9 @@
 
 Source: `Plans/storage-plan.md`
 
-Source lines: L27469-L28082
+Source lines: L27472-L28092
 
-Source SHA256: `862b0061fefa862a165dcfe8b163811cf2dae11f60d01ee9bc44f8a9c077b873`
+Source SHA256: `23c2814b738393ea2382c7de55e579330e318055abdd33aa7e08b105a33e87b6`
 
 ---
 
@@ -290,6 +290,9 @@ canonical_text: >-
   fields. Storage-full or write/readback failure reports failure and preserves the prior library.
   The 40-character base-name rule is deliberately terminal-specific; it does not change
   widget-preset naming.
+  Amended 2026-10-17 (DL-228): a custom background picture is PNG, JPEG or WebP under 4 MB (F3-642), kept once
+  by its content hash; besides the pictures a layer or a retained preset references, the four most recently
+  chosen stay so they can be picked again, and an older picture with no reference is deleted.
 gui_related: true
 gui_classification_reason: Decides where each terminal look choice is kept and what survives a move, a reopen and a restore.
 split_recommended: false
@@ -464,6 +467,10 @@ canonical_text: >-
   not held as a hard ceiling, and what a save does when running terminals' text alone passes it is open. The scrub
   question is answered; the physical registration, now with the total's index, stays open. A terminal tab's notification mute is its
   state in the v2 Home record (D38, SP-330).
+  Amended 2026-10-17 (DL-228): the scrub floor also covers AWS session keys (ASIA...), GitHub's gho_, ghu_,
+  ghs_ and ghr_ tokens, Anthropic and OpenAI project keys (sk-ant-..., sk-proj-...), Stripe test and
+  restricted keys (sk_test_..., rk_live_..., rk_test_...), "Token <value>" authorization headers and names
+  containing PASSWD; a secret split by a soft wrap is still found and replaced.
 gui_related: true
 gui_classification_reason: Decides what a terminal tab keeps across moves, restarts and reopen, and what its restored scrollback shows.
 split_recommended: false

@@ -2,9 +2,9 @@
 
 Source: `Plans/usage-feature.md`
 
-Source lines: L7298-L7468
+Source lines: L7315-L7535
 
-Source SHA256: `0d73fa84016d2daedc24d761ef3151daa5f72b98e51d0aa518e6704feb7bb7e1`
+Source SHA256: `96ba2a90432f6e2bd6f370e8ef5f835fe1998457e394933ac084327cc0ad78b9`
 
 ---
 
@@ -113,6 +113,56 @@ canonical_text: >-
   Amended 2026-10-17 (DL-222): readings a Live beat changed while Usage was hidden are drawn during the
   unseen arrival, so the first board shows the latest values and does not jump from a stale board.
   Paused still holds display updates only.
+  Amended 2026-10-17 (DL-228): Scope values are All current usage, Work accounts (company and team
+  credentials), Personal accounts (personal plans and keys) and <Provider> only for each provider shown,
+  offered in a menu with a scope-group rail and Find a scope...; work and personal read each account's
+  ai.accounts.billing-entity and ai.accounts.account-roles. Range is 5h, 24h, 7d or 30d: a segment in the head
+  that folds to the one Range menu when the head is narrow, so the two never disagree. A widget follows the
+  head's range and scope by default (Follow the page, Follow the scope); its Configure can pin a fixed window
+  or providers, the pin is that widget's configuration (WS-004, UF-060), the card names what it is pinned to,
+  and a head change never rewrites a pinned widget. Live beats are also held while onboarding or the Guided
+  Tour is open, while a chart readout is up and during a room change's moment and its short tail, then
+  released as one change. Use this account makes that account the active one for the provider's next run: it
+  is one cmd.account.select_profile with its override and scope next_run, a run already working keeps its
+  account (MA-073), its hover adds "· next run", and Usage writes no second Settings value for it. It shows
+  only with two or more accounts; the account in use shows Current instead; its other disabled states read
+  through UCC-116's closed reasons: signed out as auth_missing or auth_expired, a cooldown or a window used up
+  until a time as provider_unavailable with that time, and needs a seat or manual choice not supported as
+  policy_denied. While auto-switch waits for a tool to go idle, the status line offers Use <account> now, an
+  override through the same command and the same past-switch-point question, shown only while that account is
+  eligible for a manual choice. Attention alert rows offer Acknowledge and Snooze 1h (F3-453's actions),
+  Switch route on a warning (UCC-116's cmd.provider.switch_route with the provider, the reason and its
+  retry_after_ms), and on an anomaly alert Keep guard, which acknowledges it; Allow once has no admitted
+  command, so it is not offered until UF-083's owner admits one. Usage's own notices name the window by its
+  own label and show no internal id: a threshold reads "<window> is at N% used." with "Usage · another
+  signed-in account can take the work", and an automatic switch "Work moved to another account because of rate
+  limits." with "Usage · the account you chose stays your choice". Refresh shows its turning glyph while a
+  re-read runs and is unavailable, with that reason, until it ends; its result shows on the page, not as a
+  toast. The concept's pm:* window events and its command and receipt logs are harness seams with no product
+  event family. Export writes JSON: the snapshot (puppet-master-usage.json: room, range, scope and attempts)
+  or the ledger (puppet-master-usage-ledger.json: the attempts in the range), credential handles masked as in
+  Details, and a failed export says so on the page. The redesigned page has no Request forecast control:
+  month-end figures are labelled estimates read from the projection, so cmd.usage.forecast.request has no
+  Usage producer and WM-044's location is lineage. The concept's chart gallery is a review aid, lab-only like
+  the demo controls above; every widget kind on a default board is built, and a kind not yet built shows its
+  name and size, never invented data. Current source lineage for every Usage and board unit is
+  Concepts/usage-redesign, built through the opus-5.5 build since 2026-10-15; the Concepts/pm7-tools usage and
+  widget sources and their T33 to T48 pipeline are historical wherever a Plans unit still names them.
+  Proposed, pending Jared (2026-10-17, DL-228): nine Usage Settings rows are read by no redesigned surface:
+  ai.usage.usage-windows, ai.usage.platform-filters (seven fixed options against the catalog's 22 providers),
+  ai.usage.chart-type, ai.usage.reset-countdown, ai.usage.cooldown-timers, ai.usage.pressure-visibility,
+  ai.usage.tool-usage-window, ai.usage.ledger-page-size and ai.usage.ledger-export (CSV, while exports are
+  JSON). The proposed reading keeps the rows that change what the page shows and binds them (windows shown
+  among those each provider declares, the providers on the board from the catalog, reset countdowns and
+  cooldown timers shown or hidden, pressure shown or hidden, Tools' default window), makes chart-type the
+  default for a new chart widget, and retires ledger-page-size (the Ledger pages by card height) and the CSV
+  choice of ledger-export.
+  Proposed, pending Jared (2026-10-17, DL-228): the Live menu's Play the next hour and Back to now and the
+  Demo time readout are demo controls, so under DR-070 they live only in the Demo Studio and the product's
+  Live menu holds Live readings on and Pause live readings alone; DL-177 records the lab-only classification
+  as the coordinator's recommendation, still undecided. Copy custody: the concept's Usage copy (src/copy.json
+  and src/copy.d) is the reference wording for the rebuild; the strings Plans quote are load-bearing and kept,
+  and the rest may be re-worded in the same plain voice without a new decision.
 gui_related: true
 gui_classification_reason: "The unit defines what the redesigned Usage page shows and does: the provider catalog, every account, the Accounts room's in-place actions, pace, Live readings, and the board actions."
 depends_on: [DL-173, DL-174, DL-175, DL-176, DL-177, UF-045, UF-089, UF-092, UF-093, UF-095, UF-096, MA-049, MA-073, WS-019, WS-020, DR-038, ACD-474, SSYS-009, SSYS-018, SSYS-044, UCC-116, DL-186]

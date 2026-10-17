@@ -2,9 +2,9 @@
 
 Source: `Plans/UI_Command_Catalog.md`
 
-Source lines: L8620-L9824
+Source lines: L8621-L9828
 
-Source SHA256: `465c76a83e4aa0c324520f23d0db9eef5ae70b1cdbedd802972cb3ca753810bb`
+Source SHA256: `2380cc6a920ee2411ca8df837046e8cd4ae793981467df8388bacb8e9711a5f2`
 
 ---
 
@@ -480,6 +480,9 @@ canonical_text: >-
   provider_id and retry_after_ms), `cmd.usage.export` (scope snapshot or ledger; ledger rows preserve
   usage_event_refs; view export output never becomes canonical record truth), and `cmd.usage.refresh` (on-demand
   provider-route projection re-read; background refresh continues independently).
+  Amended 2026-10-17 (DL-228): from Usage, cmd.account.select_profile carries the override and scope next_run:
+  the chosen account becomes the provider's active account for its next run, a run already working keeps its
+  account (MA-073), and no second Settings write follows (UF-107).
 gui_related: true
 gui_classification_reason: Registers user-visible account switching, provider re-route, and usage export/refresh commands.
 depends_on: [MA-069, UCC-109]

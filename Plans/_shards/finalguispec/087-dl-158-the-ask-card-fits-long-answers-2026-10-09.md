@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L42798-L42866
+Source lines: L42898-L42969
 
-Source SHA256: `7447a70c27f340391d4bbf7f970101f60e40edebe03c9791cb81804ba977eebf`
+Source SHA256: `8b46b2f543663a9fdbf5170fad337bc776064dc6ab9115e9beea4413d8154e4d`
 
 ---
 
@@ -36,6 +36,9 @@ canonical_text: >-
   below its field when the body has no room above it. Under NieR Mode a description on the menu cursor takes the
   cursor's paper colour like its label. A card whose content fits looks and measures exactly as F3-596 describes.
   This holds in every theme, at every width the chat supports and with reduced motion.
+  Amended 2026-10-17 (DL-228): the fitting invariant, actions always reachable and the body scrolling, applies
+  to whichever questionnaire surface ships; the eight other questionnaire takes are Demo Studio lab options
+  (DL-185) and leave with it.
 gui_related: true
 gui_classification_reason: Defines how the questions card sizes, scrolls and wraps long content.
 split_recommended: false

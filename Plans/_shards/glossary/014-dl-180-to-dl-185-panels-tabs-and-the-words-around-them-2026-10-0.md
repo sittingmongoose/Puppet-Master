@@ -2,9 +2,9 @@
 
 Source: `Plans/Glossary.md`
 
-Source lines: L2192-L2324
+Source lines: L2192-L2327
 
-Source SHA256: `2f6be6cf5b445e2aac60c849a1743094df24a462c8887e47021858638f408922`
+Source SHA256: `3fb28ef4fc351c656e2ba9d579216763fae69fc450da37a7b2dffa0ca9f989d0`
 
 ---
 
@@ -58,6 +58,9 @@ canonical_text: >-
   widget's size preset (WS-017) is always called a size preset where the two could be confused. A session sub-tab is
   the Debug Console's switch between debug sessions inside its one tab (D33): it is view state, never a panel tab,
   and it does not revive the retired terminal sub-tab.
+  Proposed, pending Jared (2026-10-17, DL-228): on the Usage page and its boards the page's own copy calls a
+  widget a panel (Hide panel, Panels in <Room>, "N panels"); on a dashboard tab, inside a Home panel, a
+  widget's own menu calls it a card (Move card, Hide card), so it never reads as the Home panel's Move panel.
 gui_related: true
 gui_classification_reason: This unit defines the user-visible words for panels, tabs and the home centre and the words they retire.
 split_recommended: false

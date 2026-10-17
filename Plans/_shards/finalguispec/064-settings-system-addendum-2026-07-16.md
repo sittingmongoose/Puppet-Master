@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L31440-L32398
+Source lines: L31466-L32435
 
-Source SHA256: `7447a70c27f340391d4bbf7f970101f60e40edebe03c9791cb81804ba977eebf`
+Source SHA256: `8b46b2f543663a9fdbf5170fad337bc776064dc6ab9115e9beea4413d8154e4d`
 
 ---
 
@@ -442,6 +442,10 @@ canonical_text: >-
   focus on the operated control. Current/default values in rows, Details, search and result toasts
   consume SSYS-006's one formatter and effective display floor; percentage representation never
   changes the stored fractional value.
+  Amended 2026-10-17 (DL-228): this switch grammar is the one for every switch on every surface, the
+  onboarding window and the Guided Tour included, not only Settings rows: the look's rectangle with a gripped
+  square key, never a radius of half its height, and Glass alone takes F3-652's curved lens variant. SSYS-029
+  and F3-656 consume it. The concept's capsule switches in Basic and Friendly onboarding are not adopted.
 gui_related: true
 gui_classification_reason: This unit defines visible setting row control renderers, badge and status mark vocabulary, scope tags, and the inherit-origin line.
 split_recommended: false
@@ -660,6 +664,13 @@ canonical_text: >-
   Settings surfaces, including search, category chips, bloom modals, shelves, row renderers,
   and the Project Settings Modal, bind to this registry rather than hardcoding inventory
   rows.
+  Amended 2026-10-17 (DL-228): each row's label, desc and option words in this inventory are the one wording
+  the product renders for it, on every surface that draws the row: Settings, hosted controls (SSYS-044) and
+  the Customize screens (DR-068). A concept's own row wording, such as the onboarding Settings kit's
+  plain-language rows.d labels and help, is a proposal until adopted here. Proposed, pending Jared: adopt the
+  concept's plain-language labels and help for the rows it rewrote (for example Theme Mode as "Light or dark",
+  UI Scale as "Size of everything", Reduce Animations as "Reduce motion"), in one wording pass with search
+  aliases for the old words.
 gui_related: true
 gui_classification_reason: This unit binds the visible settings surfaces to their canonical inventory registry.
 split_recommended: false

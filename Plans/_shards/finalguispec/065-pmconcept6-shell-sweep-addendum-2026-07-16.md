@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L32400-L33006
+Source lines: L32437-L33061
 
-Source SHA256: `7447a70c27f340391d4bbf7f970101f60e40edebe03c9791cb81804ba977eebf`
+Source SHA256: `8b46b2f543663a9fdbf5170fad337bc776064dc6ab9115e9beea4413d8154e4d`
 
 ---
 
@@ -182,6 +182,15 @@ canonical_text: >-
   lasting cards join the bell; a crowded quiet note's reading interval is min(normal interval,
   max(1800 ms, half the normal interval rounded to ms)). This tuning never changes the owner
   operation.
+  Amended 2026-10-17 (DL-228): in Banner mode one banner shows under the title bar at a time and the rest wait
+  in arrival order. Its Show action opens the inbox at that notice. It keeps the staged reading time with the
+  same hover and focus hold; a Blocking banner is announced as an alert and the others as status. It enters in
+  the look's motion, Retro and NieR wiping in and the others sliding, and appears at once under Reduced
+  Motion. Closing a lasting banner files it in the inbox like a toast, so nothing is lost, and banners take
+  F3-460's arrival sounds; the concept's banner, which discards on close and plays no sound, is not adopted
+  there. A page's own quiet confirmation, Home's panel notes and Usage's notes included, is a Quiet notice
+  through this one staging under the bell (DL-193: Usage notices appear under the bell like every other page);
+  no page keeps a toast line of its own.
 gui_related: true
 gui_classification_reason: This unit defines visible ephemeral toast staging, lifetime, and dismissal behavior.
 split_recommended: false
@@ -272,6 +281,10 @@ canonical_text: >-
   platform, model, and mode with their applies-next-turn registration, the chat context
   ring owns context usage display, and the title-bar notification stack and count badge
   own the notification affordance.
+  Amended 2026-10-17 (DL-228): each status-bar item's hover tag (F3-523) names what the item shows or does,
+  with a plain detail, for example System status, "Everything Puppet Master needs is running. Click to see
+  each service." An item without words of its own takes the button default ("Click to see the details.") or
+  the readout default ("Shows the latest known state."), never the generic "Choose this option."
 gui_related: true
 gui_classification_reason: This unit defines visible status bar chips and their click behaviors.
 split_recommended: false
@@ -328,7 +341,9 @@ canonical_text: >-
   marks a tab only with its silhouette and the one mark set (F3-631, DL-141), and no colour is ever drawn on a tab as
   a coloured border or stripe (DR-069).
   Amended 2026-10-10 (DL-187, D34): Jared confirmed this: terminal tab colours and icons stay off the strip for now
-  ("redesign them"), and they will be redesigned as part of Puppet Master's neon glyph system.
+  ("redesign them"), and they will be redesigned as part of Puppet Master's neon glyph system. Amended 2026-10-17 (DL-228): that
+  redesign is F3-658's terminal family, an uncoloured terminal kind glyph lit on hover with state only through the
+  shared mark slot; no person-chosen tab colour or icon returns.
 gui_related: true
 gui_classification_reason: This unit defines visible terminal tab rename, color, and icon customization controls.
 split_recommended: false
@@ -558,6 +573,9 @@ canonical_text: >-
   pm.guided_tour.action_request.v3 (PWIZ-023). Each route retains its owner's validation and effects. The
   owner removing that prompt removes its inbox projection. Dismissal/read/placement never completes setup,
   skips the tour or resolves its underlying need.
+  Amended 2026-10-17 (DL-228): the inbox keeps a bounded number of items (the concept keeps 60). At the bound
+  the oldest item that is read and needs nothing leaves first; an unresolved Needs you item is never dropped
+  to make room.
 gui_related: true
 gui_classification_reason: This unit defines the shared alert store, alert lifecycle controls, and the unread indicator contract.
 split_recommended: false

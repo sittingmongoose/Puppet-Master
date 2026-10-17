@@ -4,7 +4,7 @@ Source: `Plans/UI_Wiring_Rules.md`
 
 Source lines: L771-L901
 
-Source SHA256: `e9e4528671e9dc721863896a39397125aa2b517cb4b736840de25ea337a72449`
+Source SHA256: `bd28c89643f1a9d246e5175ff734a6e04b0cc95075f6fba92a8a88f2e1a9cc35`
 
 ---
 
@@ -13,7 +13,7 @@ Source SHA256: `e9e4528671e9dc721863896a39397125aa2b517cb4b736840de25ea337a72449
 The recovered PMConcept7 direct-manipulation controls use one transactional UI sequence:
 
 1. Snapshot the owner projection and acquire pointer capture or the equivalent keyboard transaction.
-2. Render fixed/portal preview geometry, ghost, placeholder, target, and motion state locally; Usage pointer resize advances its real target footprint and repacks only obstructed peers, Usage reorder displaces affected peers, and Dashboard resize keeps peers frozen; Usage board gravity is not previewed and is applied at settle inside the one commit of step 3 (`Plans/Widget_System.md#WS-019`).
+2. Render fixed/portal preview geometry, ghost, placeholder, target, and motion state locally; Usage pointer resize advances its real target footprint and repacks only obstructed peers, Usage reorder displaces affected peers, and a dashboard board resizes as the Usage board does (DL-186; amended 2026-10-17, DL-228, it read: Dashboard resize keeps peers frozen); Usage board gravity is not previewed and is applied at settle inside the one commit of step 3 (`Plans/Widget_System.md#WS-019`).
 3. Resolve the final pointer/keyboard coordinate and committed semantic target on release.
 4. Dispatch exactly one existing command only when the semantic result changed.
 5. Reconcile owner result/event/receipt, persist settled state once, then release capture and clear every preview class, portal, placeholder, ghost, pending animation frame, and transient listener.
@@ -80,7 +80,7 @@ canonical_text: >-
   Usage pointer-resize preview uses the shared target-first slot projection to advance the real placeholder
   footprint and visibly repack only occupied neighbors while retaining peer node identity, paint, DOM order, and
   effect-spy silence. An accepted release commits once: the last-painted topology with only Usage board gravity
-  applied at settle inside that one commit (WS-019), so the active card settles where the preview showed it; rollback restores the snapshot. Dashboard resize retains frozen peers. Usage Tidy runs
+  applied at settle inside that one commit (WS-019), so the active card settles where the preview showed it; rollback restores the snapshot. A dashboard board resizes as the Usage board does (DL-186; amended 2026-10-17, DL-228, it read: Dashboard resize retains frozen peers). Usage Tidy runs
   the same commit sequence once for the whole repacked room and dispatches exactly one existing cmd.widget.move with
   one receipt. On the Usage Accounts room the card body and Details stay local, while Use this account, the
   provider Auto-switch toggle and switch level and each account's own switch level dispatch their owner commands
@@ -91,7 +91,7 @@ split_recommended: false
 depends_on: [UIW-010, UIW-011, CS-068, UCC-147, WM-045]
 unblocks: [DR-039, ACD-448]
 acceptance_criteria:
-  - Pointer and keyboard preview state remains local; Usage pointer resize advances the target footprint and visibly repacks only obstructed peers, Usage reorder displaces affected peers, and Dashboard resize peers remain frozen. Every preview preserves mounted peer identity, paint, DOM order, and effect-spy silence; Usage move/resize acquisition is direct on the painted controls of plates that carry no magnet (F3-465), with no translation attenuation, acquisition lease, synthetic pointerdown, or second controller; it lets an intervening overlay receive its pointerdown and start no widget operation, excludes unrelated interactive targets, rejects every concurrent operation before mutation, and leaves no latent activation path after any activation or terminal path.
+  - Pointer and keyboard preview state remains local; Usage pointer resize advances the target footprint and visibly repacks only obstructed peers, Usage reorder displaces affected peers, and a dashboard board's resize peers reflow as the Usage board's do (DL-186; amended 2026-10-17, DL-228, from frozen peers). Every preview preserves mounted peer identity, paint, DOM order, and effect-spy silence; Usage move/resize acquisition is direct on the painted controls of plates that carry no magnet (F3-465), with no translation attenuation, acquisition lease, synthetic pointerdown, or second controller; it lets an intervening overlay receive its pointerdown and start no widget operation, excludes unrelated interactive targets, rejects every concurrent operation before mutation, and leaves no latent activation path after any activation or terminal path.
   - A changed pointer release dispatches exactly one canonical command after final-coordinate resolution, a changed keyboard reorder drop dispatches one move command for its selected insertion intent, and each supported keyboard-resize activation settles atomically through one resize command; no-change and cancel paths dispatch nothing. Event-primary Usage callers use usage_event/usage_event_ref, while a PMConcept7 Ledger attempt row uses cmd.nav.open_usage_subject with usage_attempt/attempt_id, retains usage_event_ref plus provider/account/runtime refs as correlation, and carries no OpenSubject. Current aggregate cards remain local with no command, receipt, event, or route identity.
   - Commit and cancel both release capture and remove ghost, placeholder, portal, preview, animation-frame, and transient-listener state.
   - "Usage board gravity is not previewed: the held preview moves only the obstructed peers the first criterion names, the accepted release commits that painted layout with gravity applied at settle inside the same single command, shown cards float up into holes in reading order only after release, and no extra command, receipt, or write follows; Usage Tidy dispatches exactly one cmd.widget.move for the whole repacked room."

@@ -2,9 +2,9 @@
 
 Source: `Plans/UI_Command_Catalog.md`
 
-Source lines: L11787-L11924
+Source lines: L11791-L11936
 
-Source SHA256: `465c76a83e4aa0c324520f23d0db9eef5ae70b1cdbedd802972cb3ca753810bb`
+Source SHA256: `2380cc6a920ee2411ca8df837046e8cd4ae793981467df8388bacb8e9711a5f2`
 
 ---
 
@@ -86,6 +86,14 @@ canonical_text: >-
   concept's demo controls take the lab-only disposition UF-107 owns.
   Amended 2026-10-09 (DL-180): Home commits now use the cmd.panel_tab.* and extended cmd.workspace_layout.* families of UCC-200 on the pm.home_workspace_layout.v2 record (SP-330), and Dashboard widget rows run inside dashboard tabs, each naming the board id in the existing room field (no board_id payload field; amended 2026-10-10, DL-186; it read: addressed by board_id).
   Amended 2026-10-10 (DL-186): those dashboard widget rows name their board in the payload's existing room field, not a board_id field, and run on the Usage board engine, so gravity and Tidy behave on every board as on the Usage page (WS-019); the dashboard tab's own controls are UCC-200's Dashboard tab controls table.
+  Amended 2026-10-17 (DL-228): Usage adds no command for these controls, each named by its owner: the head's
+  Panels menu (a check per widget through WS-019's hide and show, Tidy this room, and Reset this room or Reset
+  every room through cmd.widget.reset_layout with scope room or all, WS-020); the card menu's Fit rows, one
+  cmd.widget.resize to the fit-all height with its preset_id; Use <account> now while auto-switch waits, the
+  same cmd.account.select_profile override as Use this account (UF-107); and on Attention rows Switch route
+  through cmd.provider.switch_route and Keep guard through cmd.alert.acknowledge (Allow once is not offered
+  until UF-083's owner admits a command). Refresh and Export are named by the shared hover tag and aria-label,
+  never a native title (UF-089).
 gui_related: true
 gui_classification_reason: The catalog census binds visible PMConcept7 controls to canonical commands or explicit view-only behavior.
 split_recommended: false

@@ -2,9 +2,9 @@
 
 Source: `Plans/UI_Command_Catalog.md`
 
-Source lines: L8147-L8316
+Source lines: L8147-L8317
 
-Source SHA256: `465c76a83e4aa0c324520f23d0db9eef5ae70b1cdbedd802972cb3ca753810bb`
+Source SHA256: `2380cc6a920ee2411ca8df837046e8cd4ae793981467df8388bacb8e9711a5f2`
 
 ---
 
@@ -111,7 +111,8 @@ canonical_text: >-
   Existing FileManager CRUD, launch-chain, and runtime allowed-action rows remain
   canonical and are strengthened by the shared UICommandResponse and no fabricated
   command_applied event rule. In the cmd.theme.* family the title bar's Light/Dark/Auto
-  segmented control dispatches cmd.theme.set_mode, while its family rows and NieR Mode
+  segmented control (amended 2026-10-17, DL-228, no longer dispatching cmd.theme.set_mode, as the census row
+  shell.theme.mode and SSYS-010 say), its family rows and NieR Mode
   checkbox, the Guided Tour bar's Look menu and the NieR Mode editor compose
   cmd.settings.transaction.preview then cmd.settings.transaction.apply as UCC-120's
   local affordances do; no theme family or NieR command is added. The application's start
@@ -129,7 +130,7 @@ acceptance_criteria:
   - Runtime allowed_action_ids map only to canonical `cmd.runtime.*` commands.
   - FileManager CRUD commands are not duplicated; existing rows remain canonical and gain the shared response/receipt acceptance bar.
   - No command in this addendum uses or authorizes fabricated `*.command_applied` events.
-  - Only the title bar's Light/Dark/Auto control dispatches a cmd.theme.* command for the look; family, NieR Mode and NieR editor changes use the Settings transaction pair, and the application's start and onboarding's look previews dispatch no cmd.theme.* and emit no settings.theme.updated (F3-468, DL-153).
+  - No PM7 look control dispatches a cmd.theme.* command (amended 2026-10-17, DL-228, from only the title bar's Light/Dark/Auto control); Light/Dark/Auto, family, NieR Mode and NieR editor changes use the Settings transaction pair, and the application's start and onboarding's look previews dispatch no cmd.theme.* and emit no settings.theme.updated (F3-468, DL-153).
 validation_surfaces:
   - python3 scripts/pm-plans-verify.py validate-wiring-matrix
   - python3 scripts/pm-plan-index.py validate

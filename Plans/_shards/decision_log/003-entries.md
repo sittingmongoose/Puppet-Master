@@ -2,9 +2,9 @@
 
 Source: `Plans/Decision_Log.md`
 
-Source lines: L13-L4291
+Source lines: L13-L4294
 
-Source SHA256: `e7f567e2c705d16048848f5f87c8ddd3e2db6ec7c2776f5e3061b3e7325e645d`
+Source SHA256: `d895814b629b5eb2c9e3302278346a5de1c253c493ac4990cd8069b7f3f4c2fd`
 
 ---
 
@@ -3599,6 +3599,7 @@ ContractRef: ContractName:Plans/FinalGUISpec.md#F3-612, ContractName:Plans/Final
 - The rail's header and tab plates keep the frosted scroll-under they already had in Basic, Friendly and Retro, which F3-431's closed blur budget does not list; Glass turns it off. Whether the budget admits it, or the product draws those plates solid, is an open question for Jared.
 - The concept still has three issues Jared raised on the same day (Jujutsu sub-text alignment, Jujutsu tabs that do nothing, and Retro and NieR tab-switch motion); they are being fixed under this decision, and any canon they change is recorded with it.
 - Jared answered the two open questions above on 2026-10-10 (below): one set of status marks, and some frost back on the plates. The design threads that own them, the neon glyph system and the Liquid Glass restyle, carry them and record their own canon.
+- Amended 2026-10-17 (DL-228): the one set is F3-658's shared vocabulary (DL-201, D44), so the two sets above no longer differ; the plate frost is owned by F3-618; Testing's errored mark waits on Jared's answer to the Errored-word colour question (F3-619).
 
 **Options considered:** A "Ledger" (read in place: calm two-line rows, an overflow dropdown for tabs), B "Stack" (drill in: a summary page per panel and no tabs), C "Lens" (a detail sheet beside the rail and morphing icon tabs), D "Polish" (today's rail, polished), or keeping the current rail. Jared chose D. The rail's width envelope (240 px minimum, 280 px default, 480 px maximum, F3-471) and the 48 px icon-only activity bar (F3-198) are unchanged.
 
@@ -4094,6 +4095,7 @@ ContractRef: ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-18
 - Cursor shape, blink and trail; background (the theme's surface, a solid colour, a gradient, or an image with dim and blur); padding; line height; letter spacing; ligatures; weight. Everything applies at once; nothing says "restart required".
 - One catalog of code colour schemes serves the editor and the terminal (Jared, 2026-10-10). Each curated scheme carries the terminal's palette and the editor's syntax colours. The editor and the terminal each start on "Follow look" (the editor's syntax colours per look, the terminal's schemes per look above) and each has its own scheme choice. The editor's ⋮ menu gets the same Appearance popover as the terminal, and Settings > Editor and > Terminal bind the same catalog when Settings is ported.
 - Retro's editor syntax stays monochrome: brightness and weight in dark, a black and red ribbon in light. Its colour follows the terminal's Retro scheme choice, Phosphor Green or Amber; choosing Amber turns the Retro editor amber too. The choice is stored once, in the terminal's appearance model.
+- Amended 2026-10-17 (DL-228): the Appearance popover described in the next point was replaced on 2026-10-14 by the full Customize screen (DL-189, DL-190, F3-650), and its contrast choice settled by DL-197.
 - Settings come from layers: the look's defaults, then your app default, then a project default, then one terminal. In the concept you choose from an Appearance popover in the terminal's ⋮ menu with a live preview, for "This terminal" or "All terminals"; Settings > Terminal binds the same model when Settings is ported.
 - Effects that only run on the terminal you are in, stop when it is idle, turn off on battery saver and on computers drawing without a graphics card where they cost too much, and stop moving entirely under Reduced Motion: dimming of other terminals, a focus ring, cursor blink and trail, smooth scrolling, backgrounds, Glass blur, Retro scanlines and phosphor glow (on by default in Retro dark), a Full CRT tier (curvature, burn-in, noise) you turn on yourself, flicker off by default and kept below the flash limit of WCAG 2.3.1, the visual bell, progress and attention marks, and a Retro "degauss" you trigger. NieR Mode gives a parchment texture and ink focus brackets, with no glow.
 - Fonts for the editor and the terminal: the editor's code font is JetBrains Mono in every look, Retro included. The terminal uses JetBrains Mono too, except in Retro, where it starts in VT323, with Sixtyfour (whose scanline and bleed settings give a CRT look without motion), Sixtyfour Raster and Departure Mono as other Retro choices and JetBrains Mono still selectable. Atkinson Hyperlegible Mono is there for readability. JetBrains Mono is the page's own code face, the same file already built in for NieR Mode, under its own name; the terminal does not add it again.
@@ -4134,6 +4136,7 @@ ContractRef: ContractName:Plans/FinalGUISpec.md#F3-642, ContractName:Plans/Final
 **What you get:**
 - One rule for every surface in Puppet Master: no box with a coloured border or stripe on one side, no emoji, and no pills (fully rounded capsules used as tabs, tags, badges, buttons or status chips). Keyboard key caps are the one capsule-like shape allowed, as Settings already says.
 - Selection is shown by the surface itself: the fused tab silhouette, a filled or tinted row, a square cursor in NieR Mode, reverse video in Retro, never an edge stripe.
+- Amended 2026-10-17 (DL-228): the ban on pills concerns labels, with action buttons allowed (DL-196), and the active Home tab is now the seated chip, not the fused silhouette (DL-214, F3-631).
 - Status is a mark plus words, drawn from the one set of status marks.
 - A program's own output in the terminal may still contain emoji; the rule is about Puppet Master's chrome.
 

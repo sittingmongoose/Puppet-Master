@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L33008-L33826
+Source lines: L33063-L33904
 
-Source SHA256: `7447a70c27f340391d4bbf7f970101f60e40edebe03c9791cb81804ba977eebf`
+Source SHA256: `8b46b2f543663a9fdbf5170fad337bc776064dc6ab9115e9beea4413d8154e4d`
 
 ---
 
@@ -40,6 +40,16 @@ canonical_text: >-
   Setup-prompt arrival and joining follow F3-447, and the resulting entry belongs to F3-453's shared
   inbox. The unread badge includes the owner-linked setup entry under F3-453; its Continue control
   reuses that original prompt's action.
+  Amended 2026-10-17 (DL-228): while a blocking item is unresolved the stack keeps F3-453's attention ring,
+  drawn in each look's own form with no pill and no stripe; reading or filing never clears it. The arrival,
+  join and inbox open and close sounds are the notification category of F3-405's routing matrix, not the
+  onboarding and Guided Tour cue category. The empty inbox shows the look's caught-up line ("You're all caught
+  up" in Basic and Glass, "All caught up!" in Friendly, "NO NEW MESSAGES" in Retro, "No new reports" in NieR)
+  over "Finished work, warnings and anything that needs you will land here." The bell's accessible name is
+  "Notifications: nothing new", "Notifications: N, all read" or "Notifications: N unread". Each card and inbox
+  row carries its kind's mark before its title, beside it and never in its place (success complete, warning
+  warning, error failed, info info; F3-658), lit and still; the dismiss is the close glyph in the same button
+  and keeps its name Dismiss; the empty stack shows the bell glyph; marks hold 3:1 on severity-tinted cards.
 gui_related: true
 gui_classification_reason: This unit defines the visible title-bar notification stack, staging, join, and count badge behavior.
 split_recommended: false
@@ -133,6 +143,15 @@ canonical_text: >-
   including toast. Dismissing a card never resolves the underlying blocker, and ephemeral
   cards are X-dismiss only. The inbox list bottom fade starts at 96% with bottom padding
   so card bottoms are not clipped.
+  Amended 2026-10-17 (DL-228): the inbox header shows "N new" and offers Mark all read beside Clear all: the
+  typed local read projection ui.notifications.mark_all_read (CS-102), which marks every retained item read
+  and never acknowledges or resolves its work. Opening the inbox still marks only the items shown (F3-453);
+  the concept's dwell, which marks everything read, is not adopted. Keyboard: ArrowDown on the bell opens the
+  inbox and focuses the first row; the rows are one tab stop, ArrowUp and ArrowDown move, Home and End reach
+  the ends, and ArrowUp on the first row returns to the bell; Delete or Backspace dismisses the row and moves
+  focus to the next; Enter activates the row's body (F3-447); Escape closes from anywhere and returns focus to
+  the bell. A timed item shows its countdown ("Expires in N s", FileSafe's 60 s hold), a folded group offers
+  "N more" and "Show less", and an action that opens a page reads "Open <page>".
 gui_related: true
 gui_classification_reason: This unit defines the visible sprout inbox panel, its dismiss and clear motions, and kind-specific compact action rows.
 split_recommended: false
@@ -452,6 +471,10 @@ canonical_text: >-
   direction reduces the central spotlight immediately beneath the pointer while retaining the approved
   surface-edge glow. This applies wherever that spotlight is drawn, including Glass; exact tuning remains
   with the hover owner, with settled readability governed by F3-654.
+  Amended 2026-10-17 (DL-228): that tuning landed on 2026-10-14: only the pool of light under the pointer is
+  turned down, to 0.6 of its earlier strength in Basic, Friendly and Glass, dark and light, with the edge
+  catch, size, falloff, lift and timings unchanged, and Glass Dark's own shine is lowered by the same ratio.
+  Retro, NieR and Reduced Motion are unaffected. The factor is a concept token, not an acceptance number.
 gui_related: true
 gui_classification_reason: This unit defines the visible magnet lean, pointer light, emitted glow and the Retro and NieR hover forms on PMConcept7's cards, rows, tiles and icons.
 split_recommended: false

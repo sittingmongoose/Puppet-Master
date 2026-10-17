@@ -2,9 +2,9 @@
 
 Source: `Plans/Commands_System.md`
 
-Source lines: L7639-L7979
+Source lines: L7641-L7988
 
-Source SHA256: `58974ba2d88de4f2b6bf1193005a54961a122fc830ae44cf01570c7d7228a7a5`
+Source SHA256: `5a927859ed2b5c6e160f3aadd094f8ce247bfb0311e3d1e54de2d51f36465f22`
 
 ---
 
@@ -287,7 +287,8 @@ canonical_text: >-
   try_sample are typed local actions, parameterized by editor/terminal and target tab where
   available; Indentation opens the same editor screen at its indentation group. Scope selection is
   saved tab view state only when invoked from that tab; Settings' All entry is temporary.
-  ui.notifications.open, close, expand_group, mark_visible_read, dismiss_toast and explain_state
+  ui.notifications.open, close, expand_group, mark_visible_read, mark_all_read (the inbox header's Mark all read,
+  marking every retained item read; added 2026-10-17, DL-228), dismiss_toast and explain_state
   operate the one shared inbox's presentation/read projection and never resolve its source.
   Mark_visible_read names only notices actually shown for the F3-453 dwell. No catalog row,
   dispatcher receipt or domain event belongs to these ui.* ids. Picker/menu openings, hover,
@@ -306,6 +307,12 @@ canonical_text: >-
   validation/readback and no dispatcher receipt or event. Naming/selection/search remain view-local.
   Applying a preset always uses UCC-204's existing This or All writer and never writes appearance
   through a local action.
+  Amended 2026-10-17 (DL-228): background design tiles preview through the same ui.appearance.preview_scheme
+  and cancel_preview as scheme tiles, after the same 110 ms rest (F3-642). ui.terminal.degauss is the Retro
+  Try it action, a local one-shot with no receipt (F3-643). Two concept review chords are not product
+  shortcuts: Alt+Shift+1..5, the left rail review copy's concept switcher, and Alt+Shift+L, the Liquid Glass
+  demonstration toggle; Alt+Shift+1..9 stays UCC-200's focus panel N, and no rebuild or fixture inherits the
+  collision.
 gui_related: true
 gui_classification_reason: Customize and notification local actions.
 split_recommended: false

@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L46642-L48835
+Source lines: L46926-L49286
 
-Source SHA256: `7447a70c27f340391d4bbf7f970101f60e40edebe03c9791cb81804ba977eebf`
+Source SHA256: `8b46b2f543663a9fdbf5170fad337bc776064dc6ab9115e9beea4413d8154e4d`
 
 ---
 
@@ -34,7 +34,9 @@ canonical_text: >-
   hover tag is the label, plus "(ended)" once the session has ended and "· <agent> is driving" while an
   agent drives it. A label the user sets with `cmd.panel_tab.rename` replaces the label until it is
   cleared. No colour or icon of the person's choosing is drawn on a terminal tab (D34): terminal tab
-  colours and icons wait for their redesign within Puppet Master's neon glyph system (F3-449, F3-631).
+  colours and icons are redesigned as F3-658's terminal family: an uncoloured terminal kind glyph, lit on hover,
+  with state only through the shared mark slot (amended 2026-10-17, DL-228; it read: wait for their redesign within
+  Puppet Master's neon glyph system (F3-449, F3-631)).
   Under the strip the tab draws F3-635's shared header row with no terminal-specific thresholds: 30 px
   tall, 24 px targets, 12 px text and 11 px for secondary facts, labels when the tab body is at least 520
   px wide and icons with hover tags below that, and the row hidden when the body is under 150 px tall. Its
@@ -117,6 +119,22 @@ canonical_text: >-
   clipboard rules, and the screen is the terminal core's own grid (F3-193, F3-216). The header row's
   buttons use F3-465's small-control marker; the screen is never a hover target (DR-072, F3-465). Restoring a terminal tab whose profile is an SSH host asks first (Reconnect / Close
   tab), as privileged attachments do (F3-228); a restore never reconnects to a remote host by itself.
+  Amended 2026-10-17 (DL-228): pasting several lines into a program that has not turned on bracketed paste
+  asks first, in an inline warning row, "Paste N lines? Each line will run as a command.", with Paste, Paste
+  as one line (the lines joined with spaces) and Cancel; code.terminal.paste-protection turns the check off. A
+  notice takes keyboard focus only when the person's own action caused it (the paste check, closing a running
+  terminal); program, agent and restore notices never pull focus. A notice with the same purpose replaces the
+  earlier one in place; a warning is announced as an alert and an informational notice as status; restore and
+  agent notes carry OK, which dismisses them, view-local. Below 150 px of body height notices are 26 px tall.
+  A restored tab always says it is a new session: past its load budget, "This terminal was restored without
+  its scrollback, which took too long to load. Its earlier session ended when the page reloaded; this is a new
+  session.", and with nothing saved (Saved Terminal Output on Session Only), "This terminal was restored. Its
+  earlier session ended when the page reloaded; this is a new session.", each with OK and a reopened variant
+  ending "when the tab closed". Text size writes neither code.terminal.font-size nor the tab's appearance
+  override: it is a view zoom over the appearance size, and Reset returns the tab to following its layers
+  (UCC-201); the concept's write of the tab's font size is not adopted. Until the deferred Home glyph adoption
+  (DL-208) the square agent mark and static busy mark above are the interim; F3-658's agent-driving,
+  agent-cursor and working marks then replace them.
 gui_related: true
 gui_classification_reason: Defines the terminal tab's label, header row, notices, gutter, scrollbar, sticky header, menus and keys in the universal panels.
 split_recommended: false
@@ -254,6 +272,23 @@ canonical_text: >-
   (D19, SMPFS-180), and the terminal stays a user shell and agent surface, not Puppet Master's control plane (F3-413).
   Under Full CRT, a command mark sits beside its row as the tube shows it, inset by the case and bent by the
   curvature; a prompt the shell redraws (Ctrl+L or a completion list) keeps its mark (SMPFS-183).
+  Amended 2026-10-17 (DL-228): a failed command is announced politely with its exit code ("<command> failed
+  with exit code N"), and a command that ran over 10 s and finishes while its terminal is not focused is
+  announced ("<command> finished") and sets that tab's attention mark. Pointer selection: a double click
+  selects a word, a triple click a logical line with soft wraps joined, Shift+click extends, a drag past the
+  top or bottom edge scrolls, a plain drag stays linear and Alt+drag is the pointer's explicit block choice
+  (SMPFS-183), and Shift bypasses a program's mouse reporting for selection and the context menu; a link's
+  hover tag reads "Ctrl+click to open <target>", cut at 70 characters. Find matches logical lines, so a match
+  may span a soft wrap, across the whole scrollback; the count reads "N of M", capped at 10,000 and shown with
+  "+" past it; a pattern that does not parse reads "Invalid pattern" and none found "No results"; matches
+  refresh as output arrives while the bar is open. Command marks follow F3-658's terminal family: running is
+  working, exit 0 complete, exit N failed, a prompt awaiting input idle, and exit 130 (interrupted) or a
+  command that ended with the earlier session skipped, never failed, alike in the gutter, the chat's command
+  card and the sticky header. Authorship never hides state: a command an agent typed keeps its 12 px state
+  mark and adds the 8 px agent seat beside it; the agent's square mark above is the interim until the Home
+  adoption (DL-208). Gutter marks take the terminal scheme's inks and hold 3:1 on every scheme, Retro's
+  monochrome ones included; a mark's act plays once at its state change, never on scroll, and replaces the old
+  per-look gutter settle.
 gui_related: true
 gui_classification_reason: Defines the visible command marks, links, find, copy mode, quick select, progress, bell and accessible buffer of the terminal tab.
 split_recommended: false
@@ -460,6 +495,31 @@ canonical_text: >-
   Amended 2026-10-17 (DL-222): a design or scheme already previewed by hover stays shown through the
   pick's frame, and the preview ends only with the write, so the old ground is never drawn between the
   preview and the pick.
+  Amended 2026-10-17 (DL-228): Switch with light and dark swaps by an explicit pair: Catppuccin Frappé and
+  Macchiato go light to Latte, and Latte goes dark to Mocha; Tokyo Night Night and Storm go light to Day, and
+  Day goes dark to Storm; Rosé Pine Moon and Main go light to Dawn, and Dawn goes dark to Main; Kanagawa Wave
+  and Lotus pair; PM YoRHa Parchment and Ink pair, as do the PM High Contrast schemes; the other families swap
+  within the family; Phosphor Green and Amber go light to PM Paper Teletype, and going dark from Paper
+  Teletype returns to the phosphor last chosen, Green when none was (PM-ORIGINALS section 4; the concept
+  always returns Green, which is not adopted). Dracula, Nord, Ayu Mirage and every imported scheme have no
+  sibling and stay as chosen. With a PM High Contrast scheme the program-output floor is 7:1 unless the person
+  set a floor in some layer. The floor holds as drawn: the look's own ground (Friendly's stage) and Retro's
+  scanlines and glow raise each cell's target by what they take, so every word meets the chosen floor on
+  screen. PM YoRHa Parchment and Ink map colours outside their 16, and program-set colours, onto the
+  ink-parchment line by brightness, as the phosphor schemes do; in NieR Mode the YoRHa scheme of the current
+  mode takes its colours from NieR's token tables, its catalog values being the fallback. A scheme change,
+  previewed or chosen, crosses the terminal in the look's motion from the chosen tile (Basic fades, Friendly
+  and Glass grow, Retro steps, NieR wipes only with its part, and Glass changes the tint and lays only the
+  text over), the terminal's text never moving; under Reduced Motion it is a short cross-fade and on battery
+  saver it is immediate (ACD-475). Background designs preview on hover after the same 110 ms rest, in
+  Suggested and in Show, and revert on leaving or Escape, as schemes do (CS-102). Choose a picture takes PNG,
+  JPEG or WebP under 4 MB and says "Choose a picture under 4 MB", "There is no room to keep that picture on
+  this computer" or "That picture could not be read"; a picture is kept once by its content hash (SP-331). An
+  import needs a background and a foreground; missing ANSI 0-7 take the xterm defaults and missing 8-15 copy
+  the normal colours, with a warning; light or dark is read from the background; a Windows Terminal settings
+  file with several schemes imports the first and names the others in a warning; an import with the same name
+  replaces the earlier one; an imported scheme has no sibling and is then chosen in the current scope by a
+  separate write.
 gui_related: true
 gui_classification_reason: >-
   Defines the terminal's visible schemes, contrast floor, import, appearance fields, cell geometry and
@@ -649,7 +709,7 @@ canonical_text: >-
   and noise are not drawn, and the Customize screen (F3-650) says what it could not draw. Under
   Reduced Motion every moving part is off (cursor blink, cursor trail, smooth scrolling, burn-in,
   noise, flicker, degauss, bell flashes, progress sweeps and image animation) and the static looks
-  stay (scanlines, glow, curvature and the parchment grain). The catalogue: inactive dimming, the
+  stay (scanlines, glow, curvature and the parchment grid). The catalogue: inactive dimming, the
   focus ring, cursor blink and trail, smooth scrolling, backgrounds (F3-642), Glass's blur (the
   shell's existing blur; the terminal adds none, F3-431), Retro scanlines and phosphor glow, an
   opt-in Full CRT tier (curvature, burn-in and noise), flicker, the visual bell, progress (F3-546),
@@ -668,9 +728,10 @@ canonical_text: >-
   under Reduced Motion every look's bell is a still 1 px warn outline; these are deliberately
   near-invisible, and no flash, rim or inverse is added to them (Jared, 2026-10-16, DL-216). Off draws
   nothing in any look. There is no separate Visual choice. NieR
-  Mode's terminal has a parchment texture under the text and ink focus brackets, and no glow. By the
+  Mode's terminal has the page's parchment grid behind the text, never a texture, and ink focus brackets, and no
+  glow (amended 2026-10-17, DL-228; it read: a parchment texture under the text). By the
   NieR rule for new surfaces (DL-152, SSYS-043, F3-598, DR-056), NieR paints the terminal only while
-  NieR Mode is on and each touch only with its own installed part: the parchment with the `ground`
+  NieR Mode is on and each touch only with its own installed part: the parchment grid with the `ground`
   part and the focus brackets with the `brackets` part, never a new part; its colours come only from
   NieR's token tables or the theme tokens NieR repaints; its motion is stepped, with no glow, filter
   or blur, and loops only by transform or opacity; no surface larger than 340x256 px reverses its
@@ -703,9 +764,13 @@ canonical_text: >-
   Moving designs are opt-in and obey the same focus, visibility, activity, ten-second idle, battery
   and Reduced Motion policy; they stop under a full-screen terminal program too. This adopts the
   approved round-3 housing and plain-background direction and the landed round-4 and round-5
-  levels, stops and mask (DL-213). Degauss is the one-shot action in the
-  Customize screen's effects group (F3-650), with the same existing command and no stored setting.
-  The shared Follow look cursor/caret voices are Basic line with on/off blink, no trail and no
+  levels, stops and mask (DL-213). Degauss is the one-shot action among the
+  Customize screen's Try it actions beside the preview (F3-650; amended 2026-10-17, DL-228, it read: in the effects
+  group), offered only in Retro and not in NieR Mode; it runs once on the real terminal and the preview together, and
+  under Reduced Motion or without GPU effects it does nothing and says why, with the same existing command and no
+  stored setting.
+  The shared Follow look caret voices, the editor's (F3-651; amended 2026-10-17, DL-228: not the terminal's), are
+  Basic line with on/off blink, no trail and no
   smooth scrolling; Friendly line with smooth blink, soft trail and smooth scrolling; Glass line
   with smooth blink, glow trail and smooth scrolling; Retro reverse-video block with stepped blink,
   phosphor trail and no smooth scrolling; NieR ink line with blink, Trace only with its Scan sweep
@@ -713,6 +778,21 @@ canonical_text: >-
   shared voice never forces terminal output to animate.
   Amended 2026-10-17 (DL-222): idle preparation of Terminal Customize (ACD-475) does not change this
   bezel's look.
+  Amended 2026-10-17 (DL-228): the terminal's own Follow look per look is: Basic a block with stepped blink,
+  no trail, smooth scrolling and no inactive dimming (turned on, it dims as Friendly does); Friendly a block
+  with eased blink, soft trail, smooth scrolling and dimming; Glass a bar with eased blink, glow trail, smooth
+  scrolling and dimming; Retro a reverse-video block with stepped blink, phosphor trail, no smooth scrolling
+  and dimming; NieR a block with stepped blink, Trace only with its Scan sweep part, smooth scrolling and
+  dimming. The cursor blinks in phases of about half a second and rests solid after 15 s without input; an
+  unfocused terminal shows a hollow outline cursor; a program's own cursor shape and blink requests (DECSCUSR,
+  mode 12) win while it runs; Reduced Motion and battery saver keep it steady. The trail fires only when the
+  cursor jumps more than two cells on either axis after resting, so typing and redrawn progress lines never
+  trail. A terminal draws at most one bell a second (WCAG 2.3.1); with Bell Off it draws nothing, and a bell
+  in an unfocused terminal still sets that tab's attention mark. A terminal that is not on screen, its tab
+  hidden or another page covering Home, draws no frames at all, grid included; its session and output carry
+  on, and it repaints once, fully, when it shows again. NieR's terminal uses only installed parts: square,
+  cursor, headers, ground, brackets, icons and blocks, and glitch, sweep, decode, slice and wipe for motion,
+  each touch gated by its own part.
 gui_related: true
 gui_classification_reason: Defines the terminal's visible effects, their defaults and the policy that limits when they run.
 split_recommended: false
@@ -912,6 +992,8 @@ canonical_text: >-
   Semibold and Bold read apart as every other adjacent pair does; all eight weights remain, stored
   as 100–800. For the system face, Customize offers only the weights this computer's face actually
   draws differently.
+  Amended 2026-10-17 (DL-228): VT323, Sixtyfour, Sixtyfour Raster and Departure Mono have no bold weight
+  either; their bold is synthesised, so SGR bold still reads heavier in them.
 gui_related: true
 gui_classification_reason: Defines the built-in faces, defaults and licence rule of the editor's and the terminal's visible text.
 split_recommended: false
@@ -1132,6 +1214,13 @@ canonical_text: >-
   of a panel the person is typing in (F3-634). Agent reads return rendered text with a read state, never raw bytes and
   never images (SMPFS-182, F3-645). Input protection (F3-549) still blocks the person's and the agent's input alike.
   A control API for the user's own scripts comes later and is not part of this unit.
+  Amended 2026-10-17 (DL-228): the Permission row shows the whole command it approves, wrapped over as many
+  lines as it needs and never cut or ellipsized, so the person sees exactly what they allow. A secret prompt's
+  row shows the key concept glyph (F3-658), with the waiting mark when a state is shown; the lock shape is
+  blocked's and never means a secret. The padlock cursor while a program reads a secret is a cursor shape, not
+  a status mark, and stays. Until the deferred Home glyph adoption (DL-208) the 7 px square agent mark and the
+  6 px hollow square above are the interim marks; F3-658's agent-driving, agent-cursor and news marks then
+  replace them.
 gui_related: true
 gui_classification_reason: Defines the visible agent row, take-over, permission and secret-prompt states, attribution marks and background opens of a shared terminal.
 split_recommended: false
@@ -1228,16 +1317,20 @@ canonical_text: >-
   uses SSYS-009 restore_defaults over that same exact set. A set patch never resets an unmentioned
   token map, indentation, autosave or behavior value. The look's own is a reset, not a set patch.
   Old monitor remains an explicit opt-in to F3-643's CRT and housing. Try it moves the sample
-  cursor/caret, rings the sample bell or types and visits a sample problem; Step back restores the
-  sample, never the real buffer or session. The editor groups are Colors, Text, Caret, Lines &
+  cursor/caret, rings the sample bell or types and visits a sample problem; Step back shows, on the sample only, how
+  this terminal or editor looks when you are not in it (the scope's inactive dimming), held about 1.6 s, then returns,
+  and turning Dim terminals I'm not in on plays it once; it is not an undo and never touches the real buffer or session
+  (amended 2026-10-17, DL-228; it read: Step back restores the sample). The editor groups are Colors, Text, Caret, Lines &
   guides, Motion & effects and Behavior. Every selector consumes F3-438; neither Customize screen
   defines another fitting or highlight grammar. Scope, search, scrolling, sample trials and hover
   are view-local; committed fields and reset/quick sets use UCC-204's writers. Schemes and fonts
   have truthful names, Light/Dark hints and supported capabilities. Dense Glass controls use
   F3-652's readable menu material. Each look draws the screen with its own material and motion.
   Reduced Motion shows end states and explains which movement it calms. While the screen is open,
-  Tab and Shift+Tab wrap within it; arrows choose within one-of-several groups, and Escape closes it
-  and returns focus. Its layout remains usable down to 360 px, including beside-target and narrow
+  Tab and Shift+Tab wrap within it; arrows choose within one-of-several groups, except the scheme tiles, where arrows preview and Enter or Space
+  keeps the scheme; Up and Down move by a row of tiles; each tile group is one tab stop on its chosen tile; Escape
+  first ends an active preview and a second Escape closes the screen and returns focus, while naming a preset Escape
+  cancels only the name (amended 2026-10-17, DL-228). Its layout remains usable down to 360 px, including beside-target and narrow
   states. Scheme-hover intent is deliberately surface-specific: terminal F3-642 waits 110 ms and
   editor F3-651 waits 160 ms; keyboard and cancellation use those owners. Jared approved saving
   terminal looks as user presets on 2026-10-14. This is distinct from the shipped fixed quick sets.
@@ -1283,6 +1376,15 @@ canonical_text: >-
   the second press of a double-click on the opener is not taken as a choice in the sheet. The sheet is
   live once the pointer moves, the entrance ends, or about 500 ms after it opens. Keyboard and
   assistive-technology use is unaffected.
+  Amended 2026-10-17 (DL-228): the editor's screen also has Import a scheme... ("Adds a colour scheme from a
+  file to the catalog the editor and the terminal share"): it adds to F3-642's one shared catalog through the
+  existing cmd.terminal.appearance.import_scheme, so an imported scheme appears on both screens; it announces
+  "Imported <name>" and reports "Could not import that scheme: <reason>" in F3-642's fixed wording. A choice
+  whose meaning is motion (caret blink, caret movement, trail) shows it as a small moving picture on its tile,
+  playing only while that tile is hovered or focused, never at idle, in the look's own motion (stepped in
+  NieR) and still under Reduced Motion; each choice keeps its plain second line ("On and off", "A fade", "From
+  its middle", "Never blinks"; "Jumps", "A quick glide", "A slower glide"; "A short fade", "A bright streak",
+  "An afterglow", "A thin ink line").
 gui_related: true
 gui_classification_reason: The editor and terminal Customize screens.
 split_recommended: false
@@ -1426,6 +1528,11 @@ canonical_text: >-
   JavaScript samples visibly exercise Variables, Properties and Escapes, and copying sample tabs
   preserves tab characters. The live editor remains subject to its ordinary selection and focus
   ownership.
+  Amended 2026-10-17 (DL-228): the editor's More menu checks Word wrap, Minimap and Sticky scroll write the
+  scope their value comes from: this editor's override when the tab keeps its own choice
+  (cmd.editor.appearance.set), otherwise the All editors Project row through cmd.settings.transaction.preview
+  then apply, so a quick toggle never silently creates or overwrites a tab override
+  (Plans/pm7_control_bindings.json editor.more.*).
 gui_related: true
 gui_classification_reason: Editor appearance, token colors, caret and indentation.
 split_recommended: false
@@ -1579,6 +1686,23 @@ canonical_text: >-
   this unit keeps the sheet-rim bake and the cover-only strip deferral.
   Amended 2026-10-17 (DL-226): while a widget plate is carried on a board in Glass, the resting plates
   hold a pre-painted frost instead of live blur. At rest that frost looks the same.
+  Amended 2026-10-17 (DL-228): Glass condenses into place only when Glass is switched on, never on a page, tab
+  or room change, and moving items never turn opaque and then clear as they settle (DL-229, Jared,
+  2026-10-11). Tab strip items, segmented choices and rail icons get no press bloom or flex: the lens moving
+  to the pressed item is their press feedback. Settings' floating search results use the dense menu material,
+  near opaque without live optics, so page words never read through them. The terminal Customize screen's
+  choice rows take the travelling lens; the editor Customize screen's in-flow choices take the material in
+  place, without a lens. Glass Transparency (general.visual.glass-transparency, SSYS-010) moves the panel,
+  card and bar tints around the published look, which is its default .55: up to near opaque at 100 %, and down
+  to the mode's floor, where the frost still keeps text at F3-654's floor; menus and dense surfaces keep their
+  own tints, and without live optics the sheets are near opaque. The concept's pre-publication clarity slider
+  is not a product control. What the rebuild honours of the 2026-10-16 Glass-lane amendment is its outcome:
+  static optics are prepared off the input path, a sheet's rim is coherent on arrival (it may arrive a frame
+  later, never wrong), and a first page, chapter or wallpaper change never stalls on first-use drawing work;
+  the worker bake and the near-invisible warm draws are how the concept met it, lineage rather than
+  requirements. Proposed, pending Jared: when the operating system asks for reduced transparency Glass draws
+  its static near-opaque form, and when it asks for more contrast the sheets take near-opaque tints with
+  full-strength hairlines; no Settings row is added.
 gui_related: true
 gui_classification_reason: Liquid Glass material and motion.
 split_recommended: false
@@ -1742,6 +1866,14 @@ canonical_text: >-
   print lets it finish. Reduced Motion, a look change and no GPU keep the immediate swap. The setting
   still writes at the pick (SSYS-009, SSYS-054); only the frost drawing lags. Consumers of the selected
   print, the terminal Lens included, follow when the frost commits (DR-073).
+  Amended 2026-10-17 (DL-228): Look's own carries a one-line note saying what the current look shows ("<Look>
+  shows <default> until you choose another." or "<Look> keeps its own background until you choose one."), and
+  a chosen wallpaper's note says it shows in every look, in its light or dark print, Home and Usage showing
+  the most of it; Look's own's thumbnail is the look's default print or a picture of its own ground. Each tile
+  shows its description in its hover tag, and its accessible name adds its family. The row shows Settings'
+  Changed mark while a wallpaper is chosen, and choosing Look's own clears it. A NieR scene chosen here looks
+  exactly as NieR Mode's own background draws it, faint ink on parchment with the paper fade at the top, and
+  its thumbnail is drawn in full ink, like the customizer's tiles.
 gui_related: true
 gui_classification_reason: One wallpaper gallery for every look.
 split_recommended: false
@@ -1860,6 +1992,10 @@ canonical_text: >-
   dimmed background must not retain interactive focus or conceal a required enabled control. The
   reported five Glass Light Details words at 4.01–4.48 and unresolved editor-description findings
   remain failures against the settled floor, not new exemptions.
+  Amended 2026-10-17 (DL-228): where a state's hue cannot reach 4.5:1 for its word without coming too close to
+  the body text to read as that state (Glass Light's failure red over its darkest backdrop reads 3.9 to 4.3:1
+  in the concept), the word is drawn in the text ink at full contrast and the glyph carries the hue at its 3:1
+  non-text floor; the floor is not relaxed.
 gui_related: true
 gui_classification_reason: Settled text contrast.
 split_recommended: false
@@ -2136,7 +2272,8 @@ canonical_text: >-
   meaning. Planning Wizard and Orchestrator may consume the catalog but this approval does not
   require their full glyph adoption or redesign. Warning is the triangle; failed is a ring with a
   cross everywhere. The rail's solid badges become these shared tube marks. Changed is violet in
-  every look. Status glyph inks preserve each look's hue, moving lightness to meet at least 3:1
+  every look, NieR excepted: NieR keeps its near-monochrome ink tones, told apart by shape (GLY-2 option A, D44); the
+  concept's Retro Light magenta for changed is not adopted (amended 2026-10-17, DL-228). Status glyph inks preserve each look's hue, moving lightness to meet at least 3:1
   against their actual composited field in all ten looks; labels remain text governed by F3-654.
   Shape plus the accessible state name carries meaning without color. Working, reviewing, needs-you,
   dependency-wait, idle, complete, blocked, failed, paused, recovering, queued, skipped and mixed
@@ -2144,7 +2281,9 @@ canonical_text: >-
   vocabulary. Off is the power symbol for disabled/not configured, never the blocked mark;
   file-change marks describe changes, not execution state. Domains keep their status words and
   resolution authority and map them to the shared presentation. A busy tab uses working; competing
-  tab marks rank waiting, failed, agent driving, agent at the keyboard, working, info, preserving
+  tab marks rank waiting, failed, agent driving (the agent holds the keyboard), agent paused (an agent is at this
+  terminal but a person took over: the hollow agent-cursor mark), working, info (amended 2026-10-17, DL-228; it read:
+  agent at the keyboard), preserving
   the other states in the accessible description. The terminal agent cursor is a spark and cursor
   cell, solid while the agent types and hollow when a person takes over; terminal command marks use
   shared status marks. Glyph hover ignition follows F3-465's existing card/row/control target, with
@@ -2159,6 +2298,34 @@ canonical_text: >-
   vocabulary: the 2026-10-15 rollout covers chat, rail, Usage, notification and onboarding adoption;
   Home panel/tab/terminal and Settings content-icon adoption remain deferred. F3-656 continues to
   own scene illustrations.
+  Amended 2026-10-17 (DL-228): F3-584's anatomy, roles, acts, size gate, tones, per-look voices and Reduced
+  Motion rule govern every consumer of this vocabulary, not only the chat, with these rules applied
+  everywhere: colour is for status only, so concept and control glyphs take the host's ink; needs-you is the
+  loudest loop and no new loop out-moves it; file-change marks never glow like alarms; NieR draws ink with
+  square caps and no glow; a glyph on an inverted fill (Retro reverse video, NieR's ink bar or cursor) takes
+  the fill's paper ink. Status marks are lit and still in lists, rails, Settings rows, toasts and Usage, with
+  one act when they appear or change (none on Usage, whose room entrance owns arrival); only live states
+  (working's bead, needs-you) keep moving, and the chat's placements keep F3-585. Position markers (the rail's
+  current item, the current step in onboarding and backup lists, tour pips) are not states: they never take a
+  status mark and use the ring-dot marker, earlier steps reading complete and later ones pending. A secret
+  prompt's row shows the key concept glyph, since the lock is blocked's drawing. Usage card-head tools light
+  only on their own hover, never with the card's. The terminal family: running is working, exit 0 complete,
+  exit N failed, a prompt awaiting input idle, and exit 130 or a command that ended with the earlier session
+  skipped; an agent-typed command keeps its 12 px state mark with the 8 px agent seat beside it; gutter marks
+  take the scheme's inks and hold 3:1 on every scheme; a mark acts once at its change, never on scroll
+  (F3-641). The deferred Home adoption follows these panels-family rules: find toggles (match case, whole
+  word, regular expression, wrap) are glyphs, and a pressed toggle keeps its lit state; a breakpoint keeps one
+  shape, enabled in the blocked tone, disabled paused and unverified idle; a Debug Console session shows
+  running working, paused paused, ended complete, and failed or skipped when stopped, never idle; hovering a
+  tab plays only its kind glyph, never its state mark. The glyph artwork's source of truth is the concept's
+  two registries (the chat's neon icons and the shared PMG registry), ported once; the concept's neon grammar
+  (its stroke-weight ladder by size, its two-moving-part cap and its travel minimums) is the drawing
+  reference; fitted inks are re-derived per look by the 3:1 rule above, the concept's fitted values being
+  reference only.
+  Amended 2026-10-17 (DL-228): where one semantic name in Plans/glyph_catalog.json maps to two glyphs, each
+  mapping row names the surfaces it serves (the panels' browser tab is the globe, Settings' browser row the
+  browser window); a status meaning always maps to its status glyph, so failed is st-failed and a card's
+  waiting is st-waiting, never the close or terminal glyph.
 gui_related: true
 gui_classification_reason: Shared glyph vocabulary and presentation.
 split_recommended: false

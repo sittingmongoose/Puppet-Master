@@ -2,9 +2,9 @@
 
 Source: `Plans/Wiring_Matrix.md`
 
-Source lines: L3861-L3943
+Source lines: L3861-L3946
 
-Source SHA256: `33869503c5b445a82ed081f336f0f5b614b2c8d74163b224c64d19c79960cc25`
+Source SHA256: `d46e67f2238bf93357fac446a71f185ffb5d2f9cd51f91c1feec146c03415b3b`
 
 ---
 
@@ -45,6 +45,9 @@ canonical_text: >-
   Authority admission of a named usage family with its own payload schema, retention policy reference, and
   existing owner anchor. No second primary row is created for this command, and the rejected candidate
   cmd.provider.usage.open_management is recorded as an excluded token rather than wired.
+  Amended 2026-10-17 (DL-228): the redesigned Usage page has no Request forecast control: month-end figures
+  are labelled estimates read from the projection (UF-107), so catalog.usage_forecast_request has no Usage
+  producer and its "Forecast module" location is lineage until an owner places one.
 gui_related: true
 gui_classification_reason: Wiring determines whether the visible Usage forecast control dispatches a canonical command and how its unavailability is announced.
 depends_on: [WM-034, WM-043, UCC-146, CS-067]

@@ -2,9 +2,9 @@
 
 Source: `Plans/usage-feature.md`
 
-Source lines: L6182-L6256
+Source lines: L6182-L6261
 
-Source SHA256: `0d73fa84016d2daedc24d761ef3151daa5f72b98e51d0aa518e6704feb7bb7e1`
+Source SHA256: `96ba2a90432f6e2bd6f370e8ef5f835fe1998457e394933ac084327cc0ad78b9`
 
 ---
 
@@ -26,10 +26,15 @@ canonical_text: >-
   rail head, and the Live / Paused control (UF-107) sits beside it there, never as a second head line. Wherever
   the head or a room states the refresh cadence or the history kept, the figures mirror the configured background
   refresh cadence and raw-event retention window rather than fixed copy. Refresh and Export render as icon-only
-  buttons (inline SVG glyphs), each carrying `title` and `aria-label` accessible names. Refresh dispatches
+  buttons (inline SVG glyphs), each named by the shared hover tag (F3-523) and its `aria-label`, never a native
+  `title` (amended 2026-10-17, DL-228; it read: each carrying `title` and `aria-label` accessible names). Refresh dispatches
   cmd.usage.refresh unchanged. Export opens a menu in the chat menu style (DR-058) with two rows, Snapshot and
   Ledger, and each row dispatches cmd.usage.export with scope snapshot or ledger; the menu adds no command and
   no export scope.
+  Amended 2026-10-17 (DL-228): the retention figure is ai.usage.usage-retention (the `usage.retention_days`
+  key named elsewhere reads as that row), and the background refresh cadence is the Usage service's own
+  configuration (`usage.refresh_interval_seconds`), not a Settings row; the concept's "Next refresh 40s" and
+  "retention 90d" are fixture text.
 gui_related: true
 gui_classification_reason: This unit defines the visible Usage page head, where its Live control sits, and the icon-only Refresh and Export presentation.
 split_recommended: false

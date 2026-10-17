@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L44377-L46640
+Source lines: L44544-L46924
 
-Source SHA256: `7447a70c27f340391d4bbf7f970101f60e40edebe03c9791cb81804ba977eebf`
+Source SHA256: `8b46b2f543663a9fdbf5170fad337bc776064dc6ab9115e9beea4413d8154e4d`
 
 ---
 
@@ -80,8 +80,9 @@ canonical_text: >-
   and shows the empty-panel launcher (F3-632). Closing a panel closes its tabs, each kind asking first where
   it asks (F3-635). Locking a panel keeps it in place when its last tab closes, and automatic placement
   skips it (F3-634). Split fit rule: offer a split whenever the complete resulting layout can meet each
-  panel's own minimum, borrowing available room from neighbours; drag, split menus, Move panel and
-  Alt+Shift+arrows use this one rule. For an unspecified side prefer right, then below, else refuse with a
+  panel's own minimum, borrowing available room from neighbours; drag, the tab menu's splits, Move panel and
+  Alt+Shift+arrows use this room rule, and a panel the application places uses the automatic rule of the 2026-10-17
+  amendment below (it read: drag, split menus, Move panel and Alt+Shift+arrows use this one rule). For an unspecified side prefer right, then below, else refuse with a
   reason. Panels are 6 px apart, the divider line in the middle of the gap, and the centre is inset 6 px
   from the rail, the chat and the bars; a divider's hit target is 8 px. Dragging a divider moves only the
   two neighbours it separates and commits once on release (cmd.workspace_layout.resize_surface); from the
@@ -93,7 +94,9 @@ canonical_text: >-
   the centre and the tree underneath does not change; Shift+Escape, the panel menu, or Escape while focus is
   in its strip restores it (ui.workspace_layout.maximize, view state with no receipt and no event). Each
   panel has a small corner grip and a panel menu (⋮) at the end of its strip: Split right, Split down,
-  Maximize or Restore, Collapse or Expand, Move panel, Lock panel or Unlock panel, Layouts, and Close panel.
+  Maximize or Restore panels, Collapse to tabs or Expand, a hairline, Move panel, Lock panel or Unlock panel, Show all
+  tabs in this panel, a hairline, Layouts, a hairline, Close other tabs and Close panel (amended 2026-10-17, DL-228:
+  this unit holds the rows and their order; UCC-200 maps their dispatch).
   A whole panel moves by its grip, or by Move panel from the menu or Enter on the grip
   (cmd.workspace_layout.move_surface): beside another panel on any edge, along the centre's outer edge, or
   into another panel as its tabs. A tab dragged into the diagonal region nearest a panel side splits on that
@@ -105,8 +108,10 @@ canonical_text: >-
   caption Join as tabs and reuses the existing join command and caption placement rule. A central guide
   shows the four sides around Join, and outer-side dock targets plus thin left/right/bottom edge bands
   create a full-height or full-width panel; a drag starts after 4 px of travel, a zone is adopted after 100
-  ms of dwell (skipped on release; retained under Reduced Motion, which removes travel), and an adopted zone
-  holds while the pointer stays within 12 px of it. Every drag runs the gesture transaction Home already
+  ms of dwell, scaled by Animation speed (skipped on release and under Reduced Motion, where the result appears in
+  place, fading only, once the zone has held briefly; amended 2026-10-17, DL-228, it read: retained under Reduced
+  Motion, which removes travel), and an adopted zone holds by the three hold rules of the 2026-10-17 amendment below
+  (it read: while the pointer stays within 12 px of it). Every drag runs the gesture transaction Home already
   uses and shares with the Usage board's gesture kit (F3-HOME-002, F3-503, DR-066): the preview is local,
   nothing dispatches while dragging, a changed release commits one command, an unchanged release, Escape, a
   pointer cancel, a lost pointer capture, a lost window or a drop past the workspace commits nothing and
@@ -129,7 +134,8 @@ canonical_text: >-
   (cmd.workspace_layout.apply_named). Restore home layout (cmd.workspace_layout.reset; the Settings row
   general.startup.reset-home-layout) applies Home the same way, keeping every tab. A user can save the
   current arrangement as a named layout (cmd.workspace_layout.save_named); a saved layout keeps its shape,
-  its sizes and the kinds each slot holds, never the tabs themselves. The named and saved layouts, Save this
+  its sizes, the kinds each slot holds and the tabs each slot held, and never recreates a closed tab (amended
+  2026-10-17, DL-228; it read: never the tabs themselves). The named and saved layouts, Save this
   layout... and Restore home layout sit in the panel menu's Layouts submenu and in the title bar's Home
   options menu (F3-502). The layout persists in the v2 Home layout record
   `home_workspace_layout.v2:{project_id}:{workspace_tab_id}`, the only Home layout authority
@@ -164,6 +170,39 @@ canonical_text: >-
   end in the panel’s top-right corner. Orientation changes no drag threshold, menu route or command. Move
   panel and Layouts levels consume the shared F3-632 level/Back rule and F3-647 material; navigating them
   dispatches nothing.
+  Amended 2026-10-17 (DL-228): applying a saved layout returns each tab still open to the slot it was saved
+  in, with that slot's active tab, and puts back each slot's lock and collapse (a locked slot survives empty);
+  tabs no longer open are not recreated, and the other open tabs go to a slot that accepts their kind
+  (Plans/home_workspace_layout_v2.schema.json $defs.slot). Proposed, pending Jared: saved named layouts belong
+  to the person across projects, as the concept keeps them, and the dashboard boards inside a layout stay per
+  project, skipped when it is applied elsewhere; SP-330 keeps them per workspace until he rules. Two fit
+  rules: the room rule above serves every move whose side the person chooses, offered when the result leaves
+  every panel it changes at its minimum, neighbours along the split giving up room, and a panel already under
+  its minimum failing only if the move shrinks it further; the automatic split rule serves a new panel the
+  application places (an open by the fit rule, Alt+click, the "+" and panel menus' Split right and Split down
+  with a new tab, Ctrl+\ and Ctrl+Shift+\): right when both halves of the source panel stay at least the
+  larger minimum, else down, else none. A panel cannot collapse while every other child of its split is
+  collapsed (last_open_in_split), so a split never leaves its room to nobody; the menu row and the refusal say
+  so. Maximize is unavailable with one panel and in the one-column narrow centre, each with its reason;
+  maximizing a collapsed panel expands it first and announces "<panel> maximized. Press Escape to restore."
+  Moving focus to another panel (Alt+arrows, Alt+Shift+N, a reveal or open that activates a tab elsewhere, the
+  narrow switcher) restores the panels in the same view action and announces it, so the focused panel is never
+  hidden; an agent's background open never restores them. A panel collapsed in a row split, side by side, is a
+  35 px column: pinned tabs first, then a window of 32 px icon tabs around the active tab, "+N" for the rest,
+  and its Expand control, "+" and panel menu kept at its foot; the active tab never hides, and Expand points
+  the way the panel will open. Drop zones: a side whose result does not fit shows its guide tile dimmed and
+  empty and gives its region to the nearest side that fits; with no side left the whole body joins, or offers
+  nothing over the carried tab's own panel, which never joins itself; the top dock sits just below the strips
+  so a strip's first slots stay strip slots; outer docks are offered only with two panels or more; zones are
+  measured on the committed layout, never on the live preview, so the preview never moves a zone under the
+  pointer. The three hold rules: a side holds until another side is nearer by about 5 % of the body, Join
+  until the pointer is 12 px past its slack, and a dock until it is 12 px past its band. The stable-intent
+  gate settles a zone once the pointer has held it and slowed, or held it longer, and the guide shrinks its
+  tiles in small bodies and below that shows Join alone; those values are tuning, not acceptance numbers. Zone
+  captions: Split left, Split right, Split up, Split down, Join as a tab (a carried tab) or Join as tabs (a
+  carried panel), New panel along the left, New panel along the right, New row across the top, New row across
+  the bottom, and To the end. The Lock row's second line says what locking does: "Files open in other panels"
+  or "Files can open here again", and locking announces "Panel locked: files open elsewhere".
 gui_related: true
 gui_classification_reason: Defines the home centre's panel model, its layout tree, its named layouts and how panels move, split, collapse and persist.
 split_recommended: false
@@ -184,8 +223,8 @@ acceptance_criteria:
   px, Home and End reach a neighbour's minimum, and Enter or a double click evens the sides.
 - A panel dragged below half its minimum collapses to its 35 px strip with every tab and its state kept, and any
   panel, the bottom row included, can collapse.
-- Maximize leaves the tree unchanged and restores with Shift+Escape, the panel menu or Escape in the strip; it
-  emits no event.
+- Maximize leaves the tree unchanged and restores with Shift+Escape, the panel menu, Escape in the strip or focus
+  moving to another panel (amended 2026-10-17, DL-228); it emits no event.
 - The default layout Home has a full-width bottom row of 0.4 that holds any tab kind, and Home, Build, Terminals
   2x2 and Focus build exactly the trees and proportions stated here.
 - Applying a named layout or Restore home layout ends no terminal session, drops no unsaved buffer and closes
@@ -363,9 +402,10 @@ canonical_text: >-
   plain text in the strip's own type ("+7"; Retro "[+7]"; NieR Mode small caps after a hairline),
   never a badge. The strip is an ARIA tablist: arrows move between tabs, Home and End go to the
   ends, Enter or Space activates, Delete closes, and Shift+F10 opens the tab menu. The tab menu
-  holds Close, Keep open (on a preview tab), Pin or Unpin, Rename..., Move to new panel, Move to
-  panel, and Split right or Split down with this tab, each one command (cmd.panel_tab.close, keep,
-  pin, unpin, rename, move). A kind may add rows of its own at the end of the tab menu, after a
+  holds, in order, Close, Close others, Close to the right, Keep open (on a preview tab), Pin or Unpin, Rename...,
+  Move to new panel, Move to panel, and Split right or Split down with this tab, each one command
+  (cmd.panel_tab.close, keep, pin, unpin, rename, move; amended 2026-10-17, DL-228: Close others and Close to the
+  right added, and this unit holds the rows and their order). A kind may add rows of its own at the end of the tab menu, after a
   hairline, through its registration (F3-635): the terminal adds Mute notifications (F3-641). A
   kind's rows do what that kind registers for them, which need not be a command: Mute notifications
   is the typed local action ui.terminal.mute_notifications (F3-640). Rename sets a user label that
@@ -388,6 +428,16 @@ canonical_text: >-
   and flare silhouette as the mark of the active tab; Retro's chip replaces its notched tab, as Jared
   chose over the notch. A chosen tab's close control and status read in the chip's ink, an exit status on
   a light look's tinted chip deepened toward that ink.
+  Amended 2026-10-17 (DL-228): a locked panel shows a small lock mark in its strip (hover tag "Locked", "Files
+  open in other panels"), and a collapsed panel shows an Expand control ("Show this panel at its size again").
+  The strip controls are named New tab or panel ("+", its detail naming Ctrl+Shift+Space for the menu and
+  Alt+T or Ctrl+T for a new tab of the panel's usual kind), Panel options, Move panel ("drag, or Enter then
+  arrows") and Expand panel; "+N" is named "N more tabs" with the detail "List the tabs that do not fit". A
+  tab's hover tag is the file's name, then "In <folder>" and its marks in words, or the tab's title, with the
+  agent's name while one drives it, and keeps paths literally (F3-523). Until the deferred Home glyph adoption
+  (DL-208) the marks above are the interim: the 7 px dirty dot, the 6 px hollow square and the 7 px square
+  agent mark then give way to F3-658's change-modified mark in the close slot, news and the agent-driving and
+  agent-cursor marks.
 gui_related: true
 gui_classification_reason: Defines the one tab strip every panel uses, its silhouette, widths, marks, reorder and keyboard.
 split_recommended: false
@@ -395,15 +445,15 @@ depends_on: [DL-180, DL-187, DL-141, F3-505, F3-421, F3-585, F3-630, F3-635]
 unblocks: [F3-633, F3-647, DR-065, UCC-200, ATS-075]
 acceptance_criteria:
   - "Every panel, the dashboard's included, renders the same 35 px strip with 31 px tabs, 8 px apart (2 px in Retro)."
-  - "The active tab and its body form one shape through the silhouette, and no underline, accent line, crown strip or pill marks the active tab in any look; in Friendly, Glass and Basic, light and dark, the plate has the body's fill."
-  - "Contact is measured to the neighbour's content inset by 8 px with a 20 px morph window, and each look uses the crown, shoulder and flare radii listed here."
+  - "The active tab is the look's seated chip (DL-214): exactly the tab's own box, standing on the panel's top rule without covering it, at every tab size and on a folded column, the chosen tab's close and status in the chip's ink; no underline, accent line, crown strip or pill marks the active tab in any look (amended 2026-10-17, DL-228; it read: the active tab and its body form one shape through the silhouette)."
+  - "The contact morph and the crown, shoulder and flare radii listed here no longer mark the active tab; the seated chip does (DL-214; amended 2026-10-17, DL-228)."
   - "Reorder starts after 4 px, the silhouette tracks the carried tab in the same frame, widths do not reflow while carrying, and a changed release commits one cmd.panel_tab.move in every strip."
   - "Under Retro the three effects rotate from a shuffle bag with no immediate repeat on selection and reorder in every strip, and Reduced Motion shows the end state at once."
   - "Tabs are 96-200 px, then 72 px, then 36 px icons; the active tab keeps at least 120 px and its label and never hides; a contiguous window around it stays visible; shrunk file names keep both ends."
   - "Pinned tabs are 36 px, icon only, leftmost and never hidden; pin and unpin are reachable only from the tab menu."
   - "The dirty dot, italic preview label, hollow square, exit code, agent mark and busy glyph render as stated, come from the one status set, and are announced in the tab's accessible name."
   - "Close targets are 24 x 24 px and hidden on inactive tabs under 96 px, where middle click and Delete still close."
-  - "The strip is an ARIA tablist with arrows, Home, End, Enter, Space, Delete and Shift+F10, and the tab menu's own rows (Close, Keep open, Pin or Unpin, Rename..., Move to new panel, Move to panel, Split right or Split down) each dispatch one command; a kind's rows after the hairline do what that kind registers, and the terminal's Mute notifications is the typed local action ui.terminal.mute_notifications, with no command (amended 2026-10-10, DL-187, D38: the criterion that every row of the tab menu dispatches one command now covers the menu's own rows only)."
+  - "The strip is an ARIA tablist with arrows, Home, End, Enter, Space, Delete and Shift+F10, and the tab menu's own rows (Close, Close others, Close to the right, Keep open, Pin or Unpin, Rename..., Move to new panel, Move to panel, Split right or Split down) each dispatch one command; a kind's rows after the hairline do what that kind registers, and the terminal's Mute notifications is the typed local action ui.terminal.mute_notifications, with no command (amended 2026-10-10, DL-187, D38: the criterion that every row of the tab menu dispatches one command now covers the menu's own rows only)."
   - "No terminal tab shows a colour or an icon the person chose; a kind's own tab-menu rows come last, after a hairline."
   - "No WorkNodes, NodeSeeds, executable queues, implementation files, runtime launches, or production build tasks are created by this unit."
 validation_surfaces:
@@ -541,6 +591,15 @@ canonical_text: >-
   the field Filter: <title>, and the Back hover detail Esc or Backspace (Esc or Delete on a Mac).
   This is view-local navigation with no saved level stack, command, receipt or event; only a final
   item choice uses the existing open command.
+  Amended 2026-10-17 (DL-228): the empty-panel launcher is titled "Open something here" and its hint reads
+  "Drop a tab here, or press Ctrl+Shift+Space for more." A panel too short for the list, below about 200 px of
+  body, shows one line instead: "Empty panel. Ctrl+Shift+Space opens the menu." Each launcher row's picker
+  opens with the launcher as its level before, so Back returns to the row. An empty panel's whole body is one
+  Join target for a carried tab. Reopen closed tab reopens the most recent entry whose tab is not open,
+  skipping and dropping stale entries; it returns into its own panel at its own position while that panel
+  exists, otherwise into the focused panel, as a kept tab with its live marks cleared, and announces "<label>
+  reopened" or "No closed tab to reopen"; a terminal comes back as a new session (SMPFS-180); opening a tab by
+  any route removes its entries from the stack.
 gui_related: true
 gui_classification_reason: Defines the plus menu after the last tab and the empty-panel launcher.
 split_recommended: false
@@ -786,6 +845,12 @@ canonical_text: >-
   Opening an Output channel from anywhere switches the `output` tab to that channel, or focuses a split-off tab
   already showing it. With no Output tab, the opening module opens `output` by the tools rule above, beside the
   terminals. The channel picker's "Open in new tab" alone splits off `output:<channel>` (F3-635).
+  Amended 2026-10-17 (DL-228): an open is never refused for lack of room. When the fit rule finds no side for
+  a new panel (Alt+click, or an open that asks for a panel), the tab opens in the largest unlocked panel and
+  says so; an explicit split (Split right or down, Move to new panel, a drop) is refused with its reason
+  instead (F3-630). Announcements: "<label> opened in a new panel", "<label> opened here: there is not room
+  for a new panel", "<label> opened in the next panel: the window is too narrow for a new panel", "Opened in
+  the background: <label>" and "<agent> opened <label>".
 gui_related: true
 gui_classification_reason: Defines the one set of rules that decides where anything opened in the home centre lands and whether it takes focus.
 split_recommended: false
@@ -1067,8 +1132,9 @@ canonical_text: >-
   Transcript 1100 px, Context 720 px, Record 600 px. Icon-only buttons are 24 px wide. File
   references are 32 px tall with a 6 px radius and 12 px code face, or 24 px inline with a 4 px
   radius and 11.5 px code face. Their 240 ms double-click window delays preview so double click can
-  keep the file open; their hover tag says Open file / Click previews it. Double-click keeps it
-  open., or No file to open / This reference names no file. without a path. In-tab view saves
+  keep the file open; their hover tag says the path and line the reference names (amended 2026-10-17,
+  DL-228; it read: Open file) / Click previews it. Double-click keeps it open., or No file to open / This reference
+  names no file. without a path. In-tab view saves
   coalesce at 250 ms. Document action radii are Friendly 8 px, Glass 8 px, Basic 6 px and Retro/NieR
   square 0. Metadata separator slots are 16 px with 3 px wrapped-line clipping slack. The Debug
   Console's chosen sub-tab and every segmented toggle are filled on their own box, never underlined,
@@ -1079,6 +1145,28 @@ canonical_text: >-
   from the field reaches Back; + toggles the whole menu closed. Back/search/rows remain in that
   arrow order, with Enter or Space activating Back. These are local navigation, with no structural
   command or event.
+  Amended 2026-10-17 (DL-228): wherever a panel must be named (the panel menu's title, Move panel and Move to
+  panel rows, the every-tab list's sections, the narrow switcher, announcements), it is named in words by its
+  active tab and its place in the layout (left, right, top, bottom or middle, combined down the tree, or "the
+  only panel"), never by an id or a number other than the switcher's ordinal. Tool tabs' header rows: Output
+  has Follow, Clear ("Clear this channel") and More with Wrap long lines, Copy all, Open as a document (a
+  read-only editor tab titled with the channel, through cmd.panel_tab.open, the route of the terminal's Open
+  output) and Open <channel> in new tab, or Show in the Output tab on a split-off tab; Problems has Filter
+  (errors, warnings or notes) and Check again; Ports has Forward a port; the Debug Console has Continue or
+  Pause, Restart, Stop and Clear ("Clear this session's console"), disabled once its session has ended.
+  Follow, Clear, Wrap, Copy all and Filter are view-local; Check again, Forward a port and the Debug Console's
+  session controls dispatch their owners' existing Problems, Ports and Run & Debug commands. Document kinds: a
+  plan's More holds Export as Markdown, Export as PDF, Send to Planning Wizard, Copy plan link
+  (pm://plans/<id>@v<n>) and Cancel build, which confirms ("Cancel this build?", "Steps already done stay
+  done.", Cancel the build or Keep building), with Revise moving into More in a narrow tab; an artifact has
+  Versions, Open in new panel and More with Copy link to this version, Copy source, Export as image, Export
+  the data and Open the source file; a run's More holds Cancel <run> with a yes or no submenu, Change setup...
+  (on a Crew disabled until it is cancelled: "This Crew builds one plan version. Cancel it first.") or Run
+  again with changes... once finished, Run another review (Review only), Download transcript and Open in new
+  panel; a transcript has Follow, Copy transcript, Show the parent thread and Context of <thread>; a context
+  tab has Preview compact and Redacted JSON; a record has Show in chat, which reveals and marks the work row
+  in its thread or says the message is not available, and Copy. Each row dispatches its content owner's
+  existing command or is view-local; none adds a command id here.
 gui_related: true
 gui_classification_reason: Defines the list of tab kinds, how a kind plugs into a panel, the shared header row, the overlay order and the panel keyboard.
 split_recommended: false
@@ -1218,7 +1306,10 @@ canonical_text: >-
   column, never on the window's width (DL-180, D4; Jared: "Rail, then chat"). C below 960 px: the rail's side panel
   eases to 240 px, F3-471's minimum. C below 760 px: the side panel folds to its icon bar and opens over the panels as
   an overlay when the user picks it, then the chat eases toward 400 px. C below 600 px: the centre shows one panel
-  column, with a panel switcher ("2/3") in the visible panel's strip that steps through the panels; the real split tree
+  column, with a panel switcher ("2/3", named "Panel 2 of 3: switch panel") in the visible panel's strip that opens the
+  list of panels, one row per panel ("N. <its active tab>", its tab count and place as the second line, the shown
+  one marked), and choosing a row shows and focuses that panel (ui.workspace_layout.focus_panel; amended 2026-10-17,
+  DL-228, it read: that steps through the panels); the real split tree
   is kept unchanged underneath, new panels are not created, and an open or a split that asks for one lands in the next
   panel of the switcher and says so (F3-634). C below 480 px: the chat folds to a 32 px edge strip that opens it again,
   unless the user turned on "Keep the chat open in narrow windows" (F3-637). Each step undoes itself only when C has
@@ -1241,6 +1332,9 @@ canonical_text: >-
   Amended 2026-10-10 (DL-187): the ladder acts only while Home is the page shown, since it measures Home's centre; on
   the Usage page the chat keeps the Usage board at least 400 px wide instead, and on other pages the chat column is the
   person's width (F3-637).
+  Amended 2026-10-17 (DL-228): when the centre drops to one panel column it announces "The window is narrow:
+  one panel at a time. Use the panel switcher in the tab strip.", and it announces the return when the panels
+  come back.
 gui_related: true
 gui_classification_reason: Defines what gives way, and in what order, when the room left for the panels gets narrow.
 split_recommended: false
@@ -1840,14 +1934,28 @@ canonical_text: >-
   .14, find-hit fills rgba(255,243,222,.18/.34) and ring #fff3de. The concept's measured 10,000-line scroll step
   about 1.2 ms, far jump about 8 ms and keystroke about 8 ms (about 120 ms before isolation) are source
   measurements, not native certification.
+  Amended 2026-10-17 (DL-228): the editor tab's header row holds the caret position ("Ln N, Col N"), which
+  opens Go to line; in diff mode Previous change and Next change and the diff layout menu (Automatic, "Side by
+  side from 900 px wide"; Side by side; Inline), whose pick is that tab's view state; a Changes toggle ("Show
+  what changed since the last commit" or "Back to the file"), disabled with nothing changed; Find; and More.
+  More holds, in order: Go to line, Find and replace, the Word wrap, Minimap and Sticky scroll checks
+  (F3-651), Appearance... with its scheme, face and size as the second line, Indentation... with its size and
+  source ("2 spaces · from the file"), Save while the buffer has changes, and Copy path ("Path copied").
+  Closing a tab with unsaved changes asks "Save changes to <name>?" with Save, Close without saving and
+  Cancel. Ctrl+P's Open a file lists Recent (five), Files and Changed in the chat with each file's chat
+  status, a chat-changed file opening at its changed line; its foot reads "Enter opens it here · Alt+Enter
+  opens it in a new panel". Save is FileManager's one save path, the editor's Ctrl+S; Copy path is
+  cmd.file.copy_path; Find, Find and replace, Go to line and next or previous change are view-local editor
+  actions with the keys above, so no command id is added for them. The side-by-side width is fixed at 900 px
+  with its 48 px return and is not a Settings row; the concept's registered width key is lineage.
 gui_related: true
 gui_classification_reason: Defines the code editor as a tab kind and the editing features it adds.
 split_recommended: false
 depends_on: [DL-180, DL-183, F3-505, F3-631, F3-635, F-073]
 unblocks: [SSYS-050, ATS-075]
 acceptance_criteria:
-- The editor's tabs use the one strip and silhouette, and the minimap is the only code-pane scrollbar with its change
-  marks.
+- The editor's tabs use the one strip and its seated chip (DL-214; amended 2026-10-17, DL-228, from silhouette),
+  and the minimap is the only code-pane scrollbar with its change marks.
 - Sticky scroll, find and replace, go to line and preview tabs work in every editor tab.
 - The diff mode shows side by side when the tab body is wide and inline when it is narrow, decided by the body's width,
   never the window's.
@@ -1941,19 +2049,21 @@ canonical_text: >-
   Every panel surface, the strip, the "+" menu, the "+N" list, the empty-panel launcher, the panel
   and tab menus, the dividers, drag ghosts and landing previews, is designed in Friendly, Glass,
   Retro and Basic, light and dark, and in NieR Mode and Reduced Motion, from the first build
-  (DL-180, D23). Friendly, Glass and Basic draw the fused silhouette with their own crown, shoulder
-  and flare (F3-631), the active tab one surface with its body; Glass keeps its 1 px glass rim on
+  (DL-180, D23). Friendly, Glass and Basic mark the active tab with F3-631's seated chip (DL-214; amended
+  2026-10-17, DL-228, it read: draw the fused silhouette with their own crown, shoulder and flare, the active tab one
+  surface with its body); Glass keeps its 1 px glass rim on
   the plate, goes to .92 opacity only while a tab is carried (F3-505), takes its replacement sheet
   and lens material from F3-652 since the 2026-10-15 publication; the old closed Glass blur count is
   superseded. Retro: reverse-video tabs (the active tab a phosphor-filled block with dark text),
-  bracket glyphs ("[+7]", "[+]"), stepped corners on the silhouette, kind icons as glyphs of at most
+  bracket glyphs ("[+7]", "[+]"), the reverse-video chip in place of the notch and its stepped corners (DL-214), kind icons as glyphs of at most
   two cells from the code face (never emoji), the dirty mark an asterisk after the label, box-drawn
   menus with a hard frame and reverse-video rows, dividers drawn as a single box-drawing line that
   doubles while hovered or dragged, and a dithered landing preview with a box-drawn outline; Retro
   motion snaps and never springs, and its three rotating effects play on selection and reorder
   (F3-631). NieR Mode paints only while NieR Mode is on, and each touch is gated by its own
   installed part, using the existing part keys only and never a new part (SSYS-043, F3-598, DL-152):
-  square gives the chamfered silhouette with a straight foot (crown 6, shoulder 0, flare 14 px), an
+  square gives the chip square corners (the chamfered silhouette with a straight foot it gave is superseded by
+  DL-214), an
   ink rule under each strip, square dirty and attention marks, hairline dividers with ticks and a
   hatched landing preview; cursor fills the active tab and hovered or chosen menu and launcher rows
   with ink, the YoRHa menu cursor, puts the square list cursor before the focused panel's active
@@ -1978,8 +2088,8 @@ canonical_text: >-
   monochrome: brightness and weight in dark, the black and red ribbon in light. Its colour follows
   the terminal's Retro scheme choice, Phosphor Green or Amber; choosing Amber turns Retro's editor
   syntax amber. That choice is stored once in F3-642's terminal appearance model; the editor reads
-  it and keeps no copy. The active tab and its panel are one shape in every look; the shape's fill
-  follows the look's selection grammar: the body's fill in Friendly, Glass and Basic, reverse video
+  it and keeps no copy. The active tab's chip follows the look's selection grammar (amended 2026-10-17, DL-228; it read:
+  the active tab and its panel are one shape in every look; the shape's fill follows it): the body's fill in Friendly, Glass and Basic, reverse video
   in Retro, ink in NieR. Glass's 1 px rim along the crown is material, not an accent. Text and state
   colours, including dim text, accent, ok, warn, bad and inactive tabs, reach at least 4.5:1 in
   every look and in NieR. They are mixed from the page's own colours so the Settings accent flows
@@ -2015,7 +2125,7 @@ unblocks: [ATS-075]
 acceptance_criteria:
 - Each panel surface listed here renders in the eight family variants, NieR Mode and Reduced Motion with
   the treatments stated.
-- Retro shows reverse-video tabs, bracket glyphs, stepped corners, box-drawn menus and dividers and kind
+- Retro shows reverse-video tabs, the seated reverse-video chip, bracket glyphs, box-drawn menus and dividers and kind
   glyphs of at most two cells, and its motion snaps.
 - With NieR Mode off no NieR touch draws; with it on each touch appears only when its part is installed,
   every colour resolves to NieR or repainted theme tokens, and no glow, filter or blur is used.
@@ -2123,7 +2233,8 @@ canonical_text: >-
   buttons such as Install and Sign in, and rounded Friendly/Glass action buttons, are allowed;
   keyboard key caps and non-label progress marks are not labels, and a program's own output in a
   terminal may contain emoji. This unit owns how the rule looks. Selection is shown by the surface
-  itself: the fused tab silhouette (F3-631), a filled or tinted row, the NieR square cursor, Retro
+  itself: the seated tab chip (F3-631, DL-214; amended 2026-10-17, DL-228, it read: the fused tab silhouette), a
+  filled or tinted row, the NieR square cursor, Retro
   reverse video, or a fill or outline on the element's own box; never an edge stripe. A status is a
   mark and a word from the one status set (F3-658, consumed by F3-585 and F3-619), a count is a
   plain number, and an icon is a bundled SVG icon_id (section 2.6). Where an owner unit says pill,
@@ -2149,6 +2260,12 @@ canonical_text: >-
   word, stack tags are words with a small square, and New Project templates are joined choice cells
   with a clear selected state. A running mark may breathe while its word stays at full readable ink;
   Reduced Motion keeps the mark still. Action-button rounding remains allowed.
+  Amended 2026-10-17 (DL-228): F3-619's pill detector measures the short side, not the height, so an upright
+  capsule counts too, and takes a shape for a pill only when it is elongated, never a round or square mark;
+  full-width top and bottom rules are dividers, not side stripes; a status or tag label draws no box at all
+  (no fill, border, shadow or padding), and a tag's mark is square. The detector's tolerances are calibration
+  of the check, not product numbers. A hover card and a labelled selector are controls, not label pills: they
+  keep their rounded shape under the action-button exception, and the chat's own wording follows this.
 gui_related: true
 gui_classification_reason: Owns how the shell-wide ban on side stripes, emoji and pills looks, and lists the retired defaults.
 split_recommended: false

@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L41481-L41894
+Source lines: L41579-L41994
 
-Source SHA256: `7447a70c27f340391d4bbf7f970101f60e40edebe03c9791cb81804ba977eebf`
+Source SHA256: `8b46b2f543663a9fdbf5170fad337bc776064dc6ab9115e9beea4413d8154e4d`
 
 ---
 
@@ -48,7 +48,7 @@ depends_on: [DL-140, DL-146, DL-149, F3-425, F3-426, F3-582, ACD-469]
 unblocks: []
 acceptance_criteria:
   - "An icon census of the chat finds every icon drawn from the registry, one drawing per concept."
-  - "Controls are unlit at rest and lit on hover and keyboard focus in every theme; status icons are lit and moving; concept icons are lit and still."
+  - "Controls are unlit at rest and lit on hover and keyboard focus in every theme; status icons in the chat's placements are lit and moving (F3-585), while elsewhere F3-658's still-status rule applies (amended 2026-10-17, DL-228); concept icons are lit and still."
   - "No icon glow uses an element blur or filter."
   - "Under reduced motion no icon act or loop runs, and every state still reads."
   - "No WorkNodes, NodeSeeds, executable queues, implementation files, runtime launches, or production build tasks are created by this unit."
@@ -110,6 +110,8 @@ canonical_text: >-
   positive, Blocked and Failed danger. In module cards the marks are lit and still (F3-584). F3-658 supersedes
   separate per-surface glyph sets and owns fitted glyph inks; F3-654 governs the status word. This unit retains
   the chat's placements and domain states.
+  Amended 2026-10-17 (DL-228): the 13 status marks are the chat's run-state subset of F3-658's one 22-key
+  vocabulary (17 states and 5 file-change marks), not a separate set; the count 13 names that subset only.
 gui_related: true
 gui_classification_reason: Defines the assistant chat's icon, status, Send and Stop, or NieR presentation.
 split_recommended: false

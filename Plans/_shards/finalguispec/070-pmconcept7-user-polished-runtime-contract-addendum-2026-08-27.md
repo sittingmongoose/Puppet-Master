@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L35919-L36398
+Source lines: L35997-L36476
 
-Source SHA256: `7447a70c27f340391d4bbf7f970101f60e40edebe03c9791cb81804ba977eebf`
+Source SHA256: `8b46b2f543663a9fdbf5170fad337bc776064dc6ab9115e9beea4413d8154e4d`
 
 ---
 
@@ -106,7 +106,7 @@ canonical_text: >-
   display unit and formatter, including currency formatting for attempt-charge integer cents, and the chart title
   plus Latest and distinct peak facts remain complete in one row or a narrow two-row composition. An active
   reorder ghost stays visibly above the workspace until cleanup.
-  Every room remains reachable at every supported width, and Source authority mounts exactly 4/6/8 panels for
+  Every room remains reachable at every supported width, and Source authority mounts 7/8/9 panels (amended 2026-10-17, DL-228; earlier exactly 4/6/8) for
   At a glance/Detailed/Diagnostics. A route blocked on provider setup renders
   the exact `Provider Setup Required` state with explicit `Host/Environment`, preserves operation and continuation
   identity, and reuses `cmd.settings.open` with the typed Settings target

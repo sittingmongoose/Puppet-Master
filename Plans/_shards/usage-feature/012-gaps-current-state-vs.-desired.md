@@ -4,7 +4,7 @@ Source: `Plans/usage-feature.md`
 
 Source lines: L433-L645
 
-Source SHA256: `0d73fa84016d2daedc24d761ef3151daa5f72b98e51d0aa518e6704feb7bb7e1`
+Source SHA256: `96ba2a90432f6e2bd6f370e8ef5f835fe1998457e394933ac084327cc0ad78b9`
 
 ---
 
@@ -207,7 +207,7 @@ ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0
 - **Impact**
   - Loss of trust in the Usage view; unnecessary failed runs.
 - **Mitigation**
-  - Show "Last updated: &lt;time&gt;" next to 5h/7d and provide an explicit "Refresh" action; on the Usage page head this renders as an icon-only button with `title` and `aria-label` accessible names (UF-089).
+  - Show "Last updated: &lt;time&gt;" next to 5h/7d and provide an explicit "Refresh" action; on the Usage page head this renders as an icon-only button named by the shared hover tag and `aria-label`, never a native `title` (UF-089; amended 2026-10-17, DL-228).
   - Optional: lightweight refresh when app gains focus or when starting a new run (with rate limiting to avoid thrash).
 
 ### Problem 7: Multi-project usage

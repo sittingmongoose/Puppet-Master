@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L5592-L27129
+Source lines: L5593-L27138
 
-Source SHA256: `7447a70c27f340391d4bbf7f970101f60e40edebe03c9791cb81804ba977eebf`
+Source SHA256: `8b46b2f543663a9fdbf5170fad337bc776064dc6ab9115e9beea4413d8154e4d`
 
 ---
 
@@ -2122,8 +2122,8 @@ canonical_text: >-
   Global spacing, border, active indicator, divider, hard-shadow, and density metrics define
   compact shell layout and panel behavior at desktop and collapsed sizes.
   Amended 2026-10-09 (DL-184): the active indicator token is no longer a 3px left-edge accent stripe; selection is a
-  fill or an outline on the element's own box, the fused tab silhouette, the NieR square cursor or Retro reverse video
-  (F3-648). The density metric no longer assumes a bottom panel; Home's density follows F3-636 (DL-180).
+  fill or an outline on the element's own box, the seated tab chip (F3-631, DL-214; amended 2026-10-17, DL-228, it read:
+  the fused tab silhouette), the NieR square cursor or Retro reverse video (F3-648). The density metric no longer assumes a bottom panel; Home's density follows F3-636 (DL-180).
 gui_related: true
 gui_classification_reason: >-
   This unit defines user-visible GUI surface, shell, copy, control, or projection behavior.
@@ -4236,6 +4236,14 @@ canonical_text: >-
   theme is written under the full cover, and the cover lifts once frames come on time again, the new
   look's own colour transitions finished beneath it. Picks made before a pending switch runs keep only the
   latest.
+  Amended 2026-10-17 (DL-228): each look's cover moves in its own language. Basic: two accent sheens sweep
+  under the glow. Friendly: three soft lights, accent, warm and mint, drift and swell. Retro: scanlines crawl
+  in 2 px steps and a bright bar steps down, with no glow. Glass: two light pools drift past each other and a
+  specular streak crosses. NieR: a scan line sweeps over a drifting ink dot grid and a block cursor blinks.
+  Under Reduce Animations the cover's glow breathes, Retro's scanlines breathe in steps and NieR's dot grid
+  breathes, with no travel; that calm pulse is waiting feedback, which Reduced Motion keeps (ACD-475). The
+  cover's parts start with it, are never held, continue through a re-pick while it lifts, and end once it has
+  gone.
 gui_related: true
 gui_classification_reason: >-
   This unit defines user-visible GUI surface, shell, copy, control, or projection behavior.

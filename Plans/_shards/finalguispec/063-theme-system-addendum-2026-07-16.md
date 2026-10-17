@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L30336-L31438
+Source lines: L30350-L31464
 
-Source SHA256: `7447a70c27f340391d4bbf7f970101f60e40edebe03c9791cb81804ba977eebf`
+Source SHA256: `8b46b2f543663a9fdbf5170fad337bc776064dc6ab9115e9beea4413d8154e4d`
 
 ---
 
@@ -307,6 +307,11 @@ canonical_text: >-
   glass-dark and .45 through .88 for glass-light. Changes apply live to every alpha-driven
   glass fill and persist at glass_alpha:v1. The slider is a glass-only setting and renders
   only while a glass theme is active.
+  Amended 2026-10-17 (DL-228): this unit is superseded by SSYS-010 and the inventory row
+  general.visual.glass-transparency: one default of .55 in both modes, a floor of .35 in Dark and .45 in
+  Light, a ceiling of 1 (100 %), shown as a percentage with a typed number beside the stepper, applying to the
+  current Project only; F3-652 says what it does to the Liquid Glass sheets. The .60 default and the .85 and
+  .88 ceilings above are lineage.
 gui_related: true
 gui_classification_reason: This unit defines a user-facing transparency control and its visible effect on glass surfaces.
 split_recommended: false
@@ -348,6 +353,7 @@ compatibility_only_notes:
 - "Slint portability: alpha-driven fills resolve to a bounded set of precomputed fill values sampled across the clamp range or to a native alpha-composited constant tint; no arbitrary-content backdrop blur, no SVG filters, color math is precomputed rather than runtime-mixed, and any glass treatment uses a single blur over a known wallpaper as a pre-blurred asset."
 stale_retired_dispositions:
 - "The concept localStorage name pm.glassAlpha is a demo persistence shim; the canonical key is glass_alpha:v1."
+- 'Amended 2026-10-17 (DL-228): defaults, clamps and display follow SSYS-010 and general.visual.glass-transparency (one .55 default, floors .35 and .45, ceiling 1). It read: .60 for glass-dark, .55 for glass-light, ceilings .85 and .88.'
 owner_boundary_notes:
 - "Registration of glass_alpha:v1 in the section 15.1 storage tables is owned by F3-444; the locked non-glass presentation row is owned by F3-443."
 owner_hints:
@@ -403,6 +409,10 @@ canonical_text: >-
   (src/css/02-control-fonts.css). While on, NieR Mode owns general.visual.accent-color and
   general.visual.app-font (F3-441); turning it off restores the chosen theme. It is an overlay, not
   a ninth theme.
+  Amended 2026-10-17 (DL-228): Japanese is not embedded. M PLUS 1 carries it upstream, but PM NieR Sans ships
+  only its Latin, Latin Extended and Vietnamese slices, so Japanese text uses the computer's fonts, and
+  DL-161's "scripts it supports" does not require it. The cross-family restart rule above is F3-077's and
+  shares its question pending with Jared (proposed: a live switch under the look's cover).
 gui_related: true
 gui_classification_reason: This unit defines the visible Friendly theme fonts, ground texture, frosted chrome, pastels, and switch behavior.
 split_recommended: false
@@ -1037,6 +1047,8 @@ Companion editor treatments carried in the same span (04-css-glass-b.part.html:1
 | basic (both) | `.minimap-heat-strip` | `border-radius: 2px;` |
 
 #### Glass composition constants (03-css-glass-a.part.html:19-49; 04-css-glass-b.part.html:11-56; 29-js-settings-engine.part.html:60-63, 80-86)
+
+Lineage (amended 2026-10-17, DL-228): this table records the 2026-07 PM6 parts. F3-652 owns the current Glass material and SSYS-010 the transparency, so its alpha default, clamp and violet identity tokens are not current requirements.
 
 | Constant | glass-dark | glass-light |
 |---|---|---|

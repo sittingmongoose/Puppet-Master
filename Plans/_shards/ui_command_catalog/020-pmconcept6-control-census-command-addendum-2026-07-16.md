@@ -2,9 +2,9 @@
 
 Source: `Plans/UI_Command_Catalog.md`
 
-Source lines: L8428-L8618
+Source lines: L8429-L8619
 
-Source SHA256: `465c76a83e4aa0c324520f23d0db9eef5ae70b1cdbedd802972cb3ca753810bb`
+Source SHA256: `2380cc6a920ee2411ca8df837046e8cd4ae793981467df8388bacb8e9711a5f2`
 
 ---
 
@@ -112,8 +112,8 @@ ContractRef: ContractName:Plans/Wiring_Matrix.md, ContractName:Plans/Section15_M
 |------------|-------|-------------|----------------|--------------|
 | `cmd.account.select_profile` | Select Account Profile | Switches the effective account/profile; rows support click and keyboard activation. | `profile_available` | `domain_action` |
 | `cmd.provider.switch_route` | Switch Provider Route | Accepts a provider re-route, preferring an alternate provider/plan until the quota window resets; carries `provider_id` and `retry_after_ms` context. | `alternate_route_available` | `domain_action` |
-| `cmd.usage.export` | Export Usage Projection | Exports the current usage projection as JSON with `scope` `snapshot` or `ledger`; ledger scope preserves `usage_event_refs` per row. The Usage page head affordance is an icon-only button carrying `title` and `aria-label` accessible names per the GATE-010 icon-only rules that opens the Snapshot and Ledger export menu (`Plans/usage-feature.md#UF-089`); each menu row dispatches this command with its scope, and behavior is otherwise unchanged. | `usage_projection_loaded` | `domain_action` |
-| `cmd.usage.refresh` | Refresh Usage Projections | Re-reads usage projections from provider routes on demand; background refresh continues independently and the UI never blocks. The Usage page head affordance is an icon-only button carrying `title` and `aria-label` accessible names per the GATE-010 icon-only rules; behavior unchanged. | `provider_routes_configured` | `domain_action` |
+| `cmd.usage.export` | Export Usage Projection | Exports the current usage projection as JSON with `scope` `snapshot` or `ledger`; ledger scope preserves `usage_event_refs` per row. The Usage page head affordance is an icon-only button named by the shared hover tag and `aria-label`, never a native `title` (amended 2026-10-17, DL-228; it read: carrying `title` and `aria-label`) accessible names per the GATE-010 icon-only rules that opens the Snapshot and Ledger export menu (`Plans/usage-feature.md#UF-089`); each menu row dispatches this command with its scope, and behavior is otherwise unchanged. | `usage_projection_loaded` | `domain_action` |
+| `cmd.usage.refresh` | Refresh Usage Projections | Re-reads usage projections from provider routes on demand; background refresh continues independently and the UI never blocks. The Usage page head affordance is an icon-only button named by the shared hover tag and `aria-label`, never a native `title` (amended 2026-10-17, DL-228; it read: carrying `title` and `aria-label`) accessible names per the GATE-010 icon-only rules; behavior unchanged. | `provider_routes_configured` | `domain_action` |
 
 ContractRef: ContractName:Plans/Multi-Account.md, ContractName:Plans/usage-feature.md, ContractName:Plans/FinalGUISpec.md
 

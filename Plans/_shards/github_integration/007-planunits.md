@@ -2,9 +2,9 @@
 
 Source: `Plans/GitHub_Integration.md`
 
-Source lines: L235-L1794
+Source lines: L235-L1799
 
-Source SHA256: `924201ae5917470118eca679dbf546249dad0cd80de2f7b93d5e7b2fc9ac92ed`
+Source SHA256: `835e757b1488e0e0e083cae64d2081e41b92922a7ba91c9248dc668535339400`
 
 ---
 
@@ -490,7 +490,12 @@ plan_unit_id: GI-011
 unit_type: requirement
 status: accepted
 owner_doc: Plans/GitHub_Integration.md
-canonical_text: Current Branch shows active branch/worktree binding, background run status, Actions readiness, admin/runtime scopes, rate-limit/repo linkage, capability, environment-gated wait/blocked states, and recovery CTAs while live GitHub Actions Settings remains source of truth for hosted admin state.
+canonical_text: >-
+  Current Branch shows active branch/worktree binding, background run status, Actions readiness, admin/runtime scopes, rate-limit/repo linkage, capability, environment-gated wait/blocked states, and recovery CTAs while live GitHub Actions Settings remains source of truth for hosted admin state.
+  Amended 2026-10-17 (DL-228): Current Branch lists this branch's runs first, under a Current branch head
+  naming the branch and its worktree and counting readiness over its own runs, then the other branches' runs
+  in their own shelf below, still in view; a background run never takes focus. The branch is the one Source
+  Control's branch menu names (Jared's 2026-10-10 rail answer, DL-162).
 gui_related: true
 gui_classification_reason: This unit defines user-visible Source Control, GitHub Actions, readiness, workflow, routing, or remote-disclosure behavior.
 split_recommended: true

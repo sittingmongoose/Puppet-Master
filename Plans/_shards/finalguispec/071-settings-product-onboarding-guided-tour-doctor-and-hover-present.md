@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L36400-L37200
+Source lines: L36478-L37293
 
-Source SHA256: `7447a70c27f340391d4bbf7f970101f60e40edebe03c9791cb81804ba977eebf`
+Source SHA256: `8b46b2f543663a9fdbf5170fad337bc776064dc6ab9115e9beea4413d8154e4d`
 
 ---
 
@@ -180,6 +180,12 @@ canonical_text: >-
   its hero moments, typed text and one-way large exits are F3-598's. Those moments do not hold input.
   A resumed onboarding repaints the session's stored look_choice, NieR Mode included, with null fields
   falling back to this unit's start rule (DL-153).
+  Amended 2026-10-17 (DL-228): in every look the application beneath stays still while the window is open:
+  nothing in it animates, takes focus or wakes until both the window and its exit have finished. Ready's Enter
+  answers on the click's frame; the Planning Wizard is drawn whole beneath the window, the window's exit is
+  the only move, and the hand-over never passes through Home (PWIZ-021 keeps the destination). F3-598 consumes
+  this rule. The Home options menu row is named Run Onboarding Again everywhere (DL-153, UCC-200); Run setup
+  wizard is its earlier name, and it sits directly below Restore home layout, the former Reset Layout.
 gui_related: true
 gui_classification_reason: This unit owns Onboarding's visible composition, copy density, hierarchy, and cinematic motion.
 split_recommended: false
@@ -212,7 +218,7 @@ acceptance_criteria:
   - "Server, Storage, Client, source location, local Safe History, online copy, and access choices remain independently editable; selecting an already-owned Server exposes the appropriate discovery and pairing presentation without silently forcing storage or Client placement."
   - "Paid-provider setup offers compact provider tiles and the selected provider's current owner-supported auth path; Free Models follows even after paid-provider Skip, groups underlying-provider setup through existing owners, and offers explicit Skip. Detection is an observation, not authorization or readiness. Close after commit preserves the existing Project, settled phases and exact continuation; resume never recreates it or replays settled setup."
   - "Ready presents one dominant enter action, a phase-safe Back action where reversible, and an optional Guided Tour without trapping the user. Back never undoes/repeats Project commit or returns to a fake uncreated draft; a deferred Project stays deferred. Starting the Tour transfers and clears saved focus ownership and releases inertness before the Tour starts, while an unavailable or throwing Tour start records no successful handoff and restores the saved workspace initiator/fallback."
-  - "The Home dropdown beside the theme selector contains exactly one `Run setup wizard` item directly below `Reset Layout` (amended 2026-10-09, DL-180: that row now reads Restore home layout, formerly Reset Layout, F3-502); it invokes typed local action `ui.onboarding.start` with source surface `home_menu`, reopens the same modal at Welcome, and does not create a second onboarding state machine or domain command."
+  - "The Home dropdown beside the theme selector contains exactly one Run Onboarding Again item (formerly `Run setup wizard`) directly below Restore home layout (formerly `Reset Layout`; amended 2026-10-09, DL-180, F3-502; amended 2026-10-17, DL-228, the one label); it invokes typed local action `ui.onboarding.start` with source surface `home_menu`, reopens the same modal at Welcome, and does not create a second onboarding state machine or domain command."
   - "Every visible sentence and disabled reason is understandable to a person who has never coded or used an IDE; `shell`, internal owner names, command IDs, schema IDs, route IDs, and unexplained implementation vocabulary never appear as product copy."
   - "Help uses one anchored explainer surface at a time: activating a typed SVG `?` opens a plain-language explanation attached to that exact option, replaces or closes any prior explanation, and never expands empty peer sections. The visible shared explainer is the control's actual `aria-controls` target and its active `aria-describedby` target; obsolete hidden per-card copies are absent. Primary and secondary card actions have visibly button-shaped treatment, consistent alignment and spacing, and recommended versus alternate choices differ through hierarchy, shape, iconography, and state rather than copy alone."
   - "All stages use one consistent grid, selection state, action hierarchy, explainer grammar, spacing rhythm, and in-flow footer model; specialized fields may vary by route, but controls do not change alignment or interaction rules from one setup screen to the next."
@@ -510,6 +516,15 @@ canonical_text: >-
   performs one startup pass, and ignores exact old/current attribute reassertions while retaining every real
   semantic change, so unrelated application reconciliation cannot create a perpetual tooltip invalidation loop or
   steal Onboarding or Guided Tour's animation budget.
+  Amended 2026-10-17 (DL-228): a tag never covers a primary action such as the chat's Send: it slides along
+  its side or flips, and with no clear place it stays shut while its accessible description is still read.
+  File references and tabs keep their path or name literally (a reference's tag is its path and line), the one
+  exception to replacing paths, file names and host:port text with generic words. Focus the application moves,
+  by an open, a reveal, a panel focus change or F6, opens no tag until the pointer reaches that control or
+  focus moves on; the 1000 ms keyboard-focus tag is for focus the person moves with Tab or the arrows.
+  Documented exemptions also include a picker plate (`menu`: its rows without their own label, Back and the
+  search field already show their names; a row given its own hover label keeps its tag) and a Settings field
+  whose label and help line sit beside it (`labelled-field`).
 gui_related: true
 gui_classification_reason: This unit owns the global tooltip overlay's paint, geometry, timing, and accessible attachment.
 split_recommended: false

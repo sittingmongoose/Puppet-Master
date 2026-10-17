@@ -2,9 +2,9 @@
 
 Source: `Plans/Decision_Log.md`
 
-Source lines: L4299-L14469
+Source lines: L4302-L14476
 
-Source SHA256: `e7f567e2c705d16048848f5f87c8ddd3e2db6ec7c2776f5e3061b3e7325e645d`
+Source SHA256: `d895814b629b5eb2c9e3302278346a5de1c253c493ac4990cd8069b7f3f4c2fd`
 
 ---
 
@@ -8885,6 +8885,8 @@ preserved_exact_tokens:
 negative_constraints:
   - "Do not add a command, an action or a wiring row through this decision."
   - "Do not reintroduce pills, coloured side bars or abbreviated labels in the left rail."
+stale_retired_dispositions:
+  - 'Amended 2026-10-17 (DL-228): after D44 (DL-201) F3-619 names no separate errored glyph; Testing''s errored mapping is proposed, pending Jared, in F3-619. The 2026-10-10 frost on the rail''s header and tab plates is owned by F3-618.'
 owner_hints:
   - Plans/FinalGUISpec.md
   - Plans/DRY_Rules.md
@@ -9319,6 +9321,8 @@ preserved_exact_tokens:
 negative_constraints:
   - "Do not drop a fact because it does not fit; fold it."
   - "Do not tint any Usage surface other than the hero plate's key light."
+stale_retired_dispositions:
+  - 'Amended 2026-10-17 (DL-228): shared-element flights between rooms are retired by DL-191; F3-628 owns the handover that replaced them. The key light is one static light beneath the board, strongest on the hero plate, and stays the one tint the negative constraint allows (F3-628).'
 owner_hints:
   - Plans/FinalGUISpec.md
   - Plans/DRY_Rules.md

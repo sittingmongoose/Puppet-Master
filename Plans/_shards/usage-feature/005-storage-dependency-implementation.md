@@ -4,7 +4,7 @@ Source: `Plans/usage-feature.md`
 
 Source lines: L35-L94
 
-Source SHA256: `0d73fa84016d2daedc24d761ef3151daa5f72b98e51d0aa518e6704feb7bb7e1`
+Source SHA256: `96ba2a90432f6e2bd6f370e8ef5f835fe1998457e394933ac084327cc0ad78b9`
 
 ---
 
@@ -62,7 +62,7 @@ Until this stack exists, any temporary compatibility path MUST still preserve th
 - `UI_Command_Catalog.md` and `UI_Command_Catalog` wrappers normalize event-backed Usage/Ledger drill-through through `route_target.object_kind = usage_event` and `object_id = usage_event_ref`; `attempt_id`, provider/account identity, and runtime refs remain correlation fields. `OpenSubject` remains document/artifact-only, and aggregate provider/account/panel cards stay in their local inspector because Contracts_V0 registers no route object kind for them.
 - `storage-plan.md` and `storage-plan` thread/run history export to JSONL/JSON is a coarse export enhancement only; Usage treats it as projection output over canonical records rather than a replacement for the record/bundle/view taxonomy.
 - Runtime recovery gate material with the `Runtime Recovery Canonicalization Gate Addendum` label, runtime-lineage checks, and free-floating notes must be integrated into numbered gate canon before Usage relies on it as a blocked/runtime authority.
-- Usage freshness is a user-trust requirement: stale values must be visibly marked with `Last updated` and an explicit `Refresh` action so old numbers are never presented as current. On the Usage page head, Refresh renders icon-only with `title` and `aria-label` accessible names per UF-089.
+- Usage freshness is a user-trust requirement: stale values must be visibly marked with `Last updated` and an explicit `Refresh` action so old numbers are never presented as current. On the Usage page head, Refresh renders icon-only with the shared hover tag and `aria-label` (amended 2026-10-17, DL-228; it read: `title` and `aria-label`) accessible names per UF-089.
 - Usage consumes `/package` and `/worktree` cleanup state only after owner records mark stale lanes or worktrees `cleanup_eligible`: lane/package completion, graph-patch supersession, revoked/reopened flow via `/reopened`, and completed recovery may make old backing removable only when no retention reason remains.
 - `Provider_OpenCode.md`, `Provider_OpenCode`, `CLI_Bridged_Providers.md`, and `CLI_Bridged_Providers` must carry account identity and execution-scope attribution before Usage projections consume provider events, so account identity is not silently lost before rollups see the data.
 - `cmd.nav.open_usage_subject` resolves only stable object-backed Usage/Ledger identity. Event-primary callers use `route_target.object_kind = usage_event` plus `object_id = usage_event_ref`. A PMConcept7 Ledger attempt row instead uses `route_target.object_kind = usage_attempt` plus `object_id = attempt_id`, repeats `attempt_id` at top level, and retains `usage_event_ref` plus provider/account/runtime refs as correlation. Neither object route carries `OpenSubject`. Aggregate provider/account/panel detail cards open local inspectors with no route command, receipt, or domain event.

@@ -2,9 +2,9 @@
 
 Source: `Plans/DRY_Rules.md`
 
-Source lines: L3448-L4130
+Source lines: L3453-L4205
 
-Source SHA256: `04c1b2af41f43b9180db7c1c41db7b8bffcaf8a29923e2c1351eead2e5a6915e`
+Source SHA256: `6ca512b39f80c074cd132e18c12b336a7f97648581e48bda882e5ecc7cfed24f`
 
 ---
 
@@ -21,7 +21,8 @@ status: accepted
 owner_doc: Plans/DRY_Rules.md
 canonical_text: >-
   Every panel in the home centre is drawn from one grammar, whatever tab kinds it holds (DL-180, D5, D6,
-  D12). There is one tab strip (FinalGUISpec F3-631, F3-505's contact-aware silhouette generalised) with
+  D12). There is one tab strip (FinalGUISpec F3-631, its active tab the seated chip of DL-214, which replaced F3-505's
+  contact-aware silhouette; amended 2026-10-17, DL-228) with
   one tab menu, one "+" button and its menu (F3-632), one empty-panel launcher showing that menu's rows
   (F3-632), one "+N" list of the tabs that do not fit (F3-633), one shared header row for every kind that
   needs controls above its content (F3-635), and one keyboard table with one web-client mapping rule
@@ -47,8 +48,10 @@ canonical_text: >-
   (D33), the way Output switches its channel inside its one tab: which session shows is view state, never
   a panel tab, never in the strip and never a second tab model, and the row that switches it is the kind's
   own row, recorded by its owner units (F3-635, F3-490). The terminal's sub-tabs stay retired. Terminal
-  tabs carry no colour or icon of the person's choosing on the strip until the neon glyph system redesigns
-  them (D34); every tab keeps its kind's bundled icon.
+  tabs carry no colour or icon of the person's choosing on the strip (D34): the neon glyph system's redesign is
+  F3-658's terminal family, an uncoloured kind glyph lit on hover with state only through the shared mark slot
+  (amended 2026-10-17, DL-228; it read: until the neon glyph system redesigns them); every tab keeps its kind's
+  bundled icon.
 gui_related: true
 gui_classification_reason: "Fixes one grammar for every panel and tab in the home centre."
 split_recommended: false
@@ -208,6 +211,11 @@ canonical_text: >-
   its body-portaled popouts (F3-424) and its menus open in the same root and order; the chat keeps no overlay layer
   and no stacking order of its own. A tab body never draws past its own box except through this root, and Escape
   closes only the innermost open thing (F3-568).
+  Amended 2026-10-17 (DL-228): above the overlay root the whole window has one order, bottom to top: the
+  notification stage and its inbox (F3-447), the setup resume prompt, the Guided Tour and its page note, the
+  onboarding window with its scrim and the NieR editor panel inside it, then the look cover and the NieR
+  reboot plate and calm cover (F3-077, F3-598), which cover everything. Escape closes only the innermost open
+  thing; the numbers are the rebuild's.
 gui_related: true
 gui_classification_reason: "Fixes one overlay root and one stacking order for the home centre and the ported chat."
 split_recommended: false
@@ -295,6 +303,11 @@ canonical_text: >-
   appearance layer; SP-331 owns its computer-local custody and the existing scope writers alone
   apply it. The extended bezel/background fields use the existing one model and shared
   reset/quick-set registry.
+  Amended 2026-10-17 (DL-228): each field's choice words and help text have one owner, its inventory row
+  (F3-441), which Settings and the Customize screens both read. The concept's Customize words that differ
+  (Fill, Fit, Tile, Centre for Picture Fit; Still for Off in Background Motion; the materials' "plastic";
+  "Less colour"; "Grain"; "Text drawing") are proposals for the wording pass F3-441 holds pending Jared, and
+  its Bell help's "flash" is stale: Bell is Follow look or Off (DL-213, DL-216).
 gui_related: true
 gui_classification_reason: "Fixes one layered appearance model for every terminal."
 split_recommended: false
@@ -384,8 +397,8 @@ canonical_text: >-
   pill-shaped label: status chips, tags, suggestion chips and state badges cannot be fully rounded capsules.
   Pill-shaped action buttons, including Install, Sign in and the rounded Friendly and Glass actions, are
   allowed; keyboard key caps and non-label progress marks are not labels. Joined selectors and tabs retain their
-  own specified geometry. Selection is shown by the surface itself: the fused tab silhouette, a filled or tinted
-  row, the NieR square cursor, Retro reverse video, never an edge stripe. A status is a mark and a word from the
+  own specified geometry. Selection is shown by the surface itself: the seated tab chip (F3-631, DL-214; amended 2026-10-17, DL-228, it
+  read: the fused tab silhouette), a filled or tinted row, the NieR square cursor, Retro reverse video, never an edge stripe. A status is a mark and a word from the
   shared F3-658 set consumed by F3-585 and F3-619 through DR-057, and a count is a plain number. How the rule
   looks, and the list of retired defaults it replaces, are F3-648's: section 3.5's 3 px left-edge accent stripe
   and F3-039's token, Appendix C's and F3-276's accent left border, F3-469's inset left accent bar, the
@@ -626,6 +639,13 @@ canonical_text: >-
   another print. A pick or intent for a print runs whatever bake is left at once, and a print is baked
   once however many preparations ask for it. This unit still owns the cache-only query and the rule
   that a failed preparation still commits.
+  Amended 2026-10-17 (DL-228): the requirement is one synchronous, cache-only print query; the concept's
+  PM_WALLPAPERS.sourceUrl is its lineage name, not an interface the rebuild keeps. A wallpaper joins the
+  catalog only with a Dark and a Light print, each composed with a quiet middle and its detail toward the
+  edges (opaque looks cover the middle with panels and Glass frosts what sits behind a sheet) and drawn at the
+  contrast its mode's text needs; its thumbnails are made from the same print, and the gallery never decodes a
+  full print. Byte and pixel budgets are the packager's. The catalog holds 29 entries today; the withdrawn
+  five stay files with no catalog entry.
 gui_related: true
 gui_classification_reason: One wallpaper catalog and one writer.
 split_recommended: false
@@ -691,3 +711,53 @@ owner_hints:
 ```
 
 ContractRef: ContractName:Plans/FinalGUISpec.md#F3-653, ContractName:Plans/Settings_System.md#SSYS-054, ContractName:Plans/storage-plan.md#SP-333, ContractName:Plans/FinalGUISpec.md#F3-650
+
+### DR-074 - One Owner For The Board Commit Shape And For Hosted Settings Controls
+
+```yaml
+plan_unit_id: DR-074
+unit_type: requirement
+status: accepted
+owner_doc: Plans/DRY_Rules.md
+canonical_text: >-
+  Added 2026-10-17 (DL-228). Two rules are restated in many owners and have drifted. Widget_System WS-019
+  alone owns how a board commits: gravity inside the one move, resize, add or remove that caused it, and Tidy as
+  one cmd.widget.move with its arrange field, one receipt, the repack computed by the owner. Settings_System
+  SSYS-044 alone owns hosted Settings controls: which surface may host which row, the bound value, the
+  preview-then-apply transaction and its hold rules. usage-feature UF-092, UF-093 and UF-107, UI_Command_Catalog
+  UCC-147, UI_Wiring_Rules UIW-012, Wiring_Matrix WM-043 and WM-045, Commands_System CS-067, Multi-Account
+  MA-073 and FinalGUISpec F3-515 and F3-628 consume them; where a consumer's wording differs from its owner, the
+  owner wins, and a later edit cites the owner by id instead of restating it.
+gui_related: true
+gui_classification_reason: One owner for the board commit shape and for hosted Settings controls.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- A board commit or a hosted Settings control is judged by WS-019 or SSYS-044; a differing consumer sentence does not create a second rule.
+validation_surfaces:
+- python3 scripts/pm-shard-plans.py --check
+- python3 scripts/pm-plan-index.py validate
+- python3 scripts/pm-plans-verify.py run-gates
+risk_class: owner_drift
+reasoning_tier: high
+context_scope: board_commit_and_hosted_controls_owners
+implementation_surfaces:
+- Plans/DRY_Rules.md
+node_compile_hint:
+  mode: doc_standardized_planunit
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Widget_System.md#WS-019
+- Plans/Settings_System.md#SSYS-044
+- /mnt/Cursor/share/puppet-master/2026-10-17-plans-f6/SWEEP-WEEK-OPUS-B.md, SHA-256
+  a74054b4fea13526b56a1e0a395b6ad434d62828bb407cd1a79b228e8f2ef144 (OB-47, OB-48, OB-30; source lineage)
+preserved_exact_tokens: []
+negative_constraints:
+- "Do not restate the board commit shape or the hosted-control rule in a consumer; cite WS-019 or SSYS-044."
+owner_hints:
+- Plans/DRY_Rules.md
+```
+
+ContractRef: ContractName:Plans/Widget_System.md#WS-019, ContractName:Plans/Settings_System.md#SSYS-044

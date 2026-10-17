@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L276-L1405
+Source lines: L276-L1406
 
-Source SHA256: `7447a70c27f340391d4bbf7f970101f60e40edebe03c9791cb81804ba977eebf`
+Source SHA256: `8b46b2f543663a9fdbf5170fad337bc776064dc6ab9115e9beea4413d8154e4d`
 
 ---
 
@@ -630,14 +630,15 @@ canonical_text: >-
   in narrow windows (F3-637; amended 2026-10-10, lead ruling: the same check as the chat header's menu, both
   dispatching ui.chat_column.keep_open, saved in the v2 record's chat column, never a Settings row); Save this layout... (cmd.workspace_layout.save_named); Restore home layout, the former
   Reset Layout row, which still dispatches cmd.workspace_layout.reset as a dual surface with the Settings row
-  general.startup.reset-home-layout; and directly below it the Run setup wizard row of F3-520.
+  general.startup.reset-home-layout; and directly below it the Run Onboarding Again row of F3-520 (formerly Run setup
+  wizard; amended 2026-10-17, DL-228).
 gui_related: true
 gui_classification_reason: This unit owns the visible title-bar menu inventory, placement, keyboard behavior, and disabled treatment.
 split_recommended: false
 depends_on: [F3-501, UCC-144, UIW-010, DL-180]
 unblocks: []
 acceptance_criteria:
-- "The popup lists, in order, the named and saved layouts, the chat's Show or Hide, Pop out or Dock back and Keep the chat open in narrow windows rows, Save this layout..., Restore home layout and Run setup wizard, and no File Manager, Move/Dock, numbered panel, bottom terminal, close, count, recovery, revision, or debug row (amended 2026-10-09, DL-180)."
+- "The popup lists, in order, the named and saved layouts, the chat's Show or Hide, Pop out or Dock back and Keep the chat open in narrow windows rows, Save this layout..., Restore home layout and Run Onboarding Again, and no File Manager, Move/Dock, numbered panel, bottom terminal, close, count, recovery, revision, or debug row (amended 2026-10-09, DL-180)."
 - Flyouts support hover bridge, Enter/Right Arrow, Left Arrow, roving focus, Escape/outside dismissal, viewport flipping, reduced motion, and trigger focus restoration.
 - "No row opens a numbered panel or collapses a bottom terminal; collapsing is per panel (F3-630) (amended 2026-10-09, DL-180)."
 - "Restore home layout is dual-surface: the title-bar row and the Settings row general.startup.reset-home-layout both dispatch cmd.workspace_layout.reset, keep every open tab, and mint no new command ID; the concept demo's post-reset page reload is demo behavior only."

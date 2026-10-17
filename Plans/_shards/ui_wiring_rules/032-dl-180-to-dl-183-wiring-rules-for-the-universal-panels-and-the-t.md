@@ -2,9 +2,9 @@
 
 Source: `Plans/UI_Wiring_Rules.md`
 
-Source lines: L2096-L2511
+Source lines: L2096-L2517
 
-Source SHA256: `e9e4528671e9dc721863896a39397125aa2b517cb4b736840de25ea337a72449`
+Source SHA256: `bd28c89643f1a9d246e5175ff734a6e04b0cc95075f6fba92a8a88f2e1a9cc35`
 
 ---
 
@@ -44,7 +44,7 @@ canonical_text: >-
   saved layouts, Save this layout... and Restore home layout, Close other tabs, Close panel). The
   title bar's Home options menu (F3-502: the named and saved layouts, Show or Hide the chat, Pop out
   the chat or Dock the chat back, Keep the chat open in narrow windows, Save this layout..., Restore
-  home layout, Run setup wizard) and Settings' Restore home layout row. The chat column: the
+  home layout, Run Onboarding Again, formerly Run setup wizard) and Settings' Restore home layout row. The chat column: the
   activity bar's Chat toggle, its inner edge (width), its header menu's Pop out, the popped-out
   window's Dock back and the 32 px edge strip of a narrow window. The narrow switcher. The Home keys
   of the keyboard map in `Plans/FinalGUISpec.md#F3-635` and `Plans/UI_Command_Catalog.md#UCC-200`
@@ -374,6 +374,12 @@ canonical_text: >-
   pm.product_onboarding.action_request.v2 resume context; Guided Tour retains PWIZ-023's
   ui.guided_tour.resume and pm.guided_tour.action_request.v3 session/checkpoint/currentness context. They
   create no command, event or new action id.
+  Amended 2026-10-17 (DL-228): the census classifies every PM7 appearance and shell control and every Settings
+  control another surface hosts (SSYS-043, SSYS-044, the Usage-hosted rows included). Usage page controls that
+  host no Settings row are classified by UCC-147's PM7 producer census, as view_only or their existing
+  command, and the left rail's local controls (the Owner dropdown, the publish fold, the More tray, the
+  Jujutsu head buttons, strip keys) by F3-618 to F3-625, which add no command, action or wiring row; neither
+  needs a row here. The earlier "every PM7 control" reads with those two owners.
 gui_related: true
 gui_classification_reason: Appearance And Shell Control Census.
 split_recommended: false

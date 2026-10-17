@@ -2,9 +2,9 @@
 
 Source: `Plans/UI_Command_Catalog.md`
 
-Source lines: L14969-L16032
+Source lines: L14982-L16049
 
-Source SHA256: `465c76a83e4aa0c324520f23d0db9eef5ae70b1cdbedd802972cb3ca753810bb`
+Source SHA256: `2380cc6a920ee2411ca8df837046e8cd4ae793981467df8388bacb8e9711a5f2`
 
 ---
 
@@ -38,12 +38,13 @@ Metadata used in the tables. Every `cmd.panel_tab.*` and `cmd.workspace_layout.*
 | `cmd.workspace_layout.split` | Split right / Split down | `panel_id`, `direction` (`right`, `down`, or `auto` for the fit rule), `spec?` (the new panel's first tab; absent means a new tab of the panel's usual kind; a terminal's Split passes `{ kind: terminal, profile, cwd }`) | `always`; `blocked_state_required` with `narrow_centre` or `no_room` | `shell_view` | `workspace.layout_changed` | Ctrl+\\ split right; Ctrl+Shift+\\ split down |
 | `cmd.workspace_layout.move_surface` | Move panel | `panel_id`, `target: { panel_id, edge }` with `edge` one of `left`, `right`, `top`, `bottom` or `center` (`center` moves the panel's tabs into the target panel as tabs), or `target: { centre_edge }` for the centre's outer edge | `blocked_state_required` with `only_panel` | `shell_view` | `workspace.layout_changed` | Enter on a panel grip opens Move panel |
 | `cmd.workspace_layout.resize_surface` | Resize | `split_id` and `sizes` (proportions), or `{ surface: chat, width }` for the chat column (UCC-203) | `always` | `shell_view` | `workspace.layout_changed` | Tab to a divider, then arrows 8 px, Shift+arrows 48 px, Home or End to a neighbour's minimum, Enter evens; each changed key press is one commit, like one release |
-| `cmd.workspace_layout.set_collapsed` | Collapse to tabs / Expand | `panel_id`, `collapsed` | `blocked_state_required` with `only_panel`. A panel dragged below half its minimum commits `collapsed: true` on release | `shell_view` | `workspace.layout_changed` | none |
+| `cmd.workspace_layout.set_collapsed` | Collapse to tabs / Expand | `panel_id`, `collapsed` | `blocked_state_required` with `only_panel`, or `last_open_in_split` when every other child of its split is collapsed (amended 2026-10-17, DL-228). A panel dragged below half its minimum commits `collapsed: true` on release | `shell_view` | `workspace.layout_changed` | none |
 | `cmd.workspace_layout.close_panel` | Close panel | `panel_id` | `always`. Its tabs close with it, each kind's close check answering first; the only panel in the centre keeps its place and shows the empty-panel launcher (`Plans/FinalGUISpec.md#F3-630`) | `shell_view` | `workspace.layout_changed` | none |
 | `cmd.workspace_layout.lock` | Lock panel / Unlock panel | `panel_id`, `locked` | `always` | `shell_view` | `workspace.layout_changed` | none |
 | `cmd.workspace_layout.apply_named` | Apply a layout | `name` (Home, Build, Terminals 2x2, Focus, or a name the user saved) | `always`; the layout already applied returns `no_change`. Applying keeps every open tab, ends no terminal and drops no unsaved buffer (`Plans/FinalGUISpec.md#F3-630`) | `shell_view` | `workspace.layout_changed` | none |
 | `cmd.workspace_layout.save_named` | Save this layout... | `name` | `always`. Amended 2026-10-10 (DL-186, P6; lead ruling F3): the saved layout also keeps the boards of the dashboard tabs it holds, at most 64 KB of them per named layout; a larger save keeps the layout without its boards and says so; `cmd.workspace_layout.apply_named` puts back the boards a layout kept (`Plans/Widget_System.md#WS-030`, `Plans/storage-plan.md#SP-330`). No argument is added | `shell_view` | `workspace.layout_changed` | none |
 | `cmd.workspace_layout.reset` | Restore home layout | none | `always`; open tabs stay open | `shell_view` | `workspace.layout_changed` | none |
+| `cmd.workspace_layout.restore` | Restore a captured layout | `snapshot_ref` (a layout snapshot its caller captured, its dashboard boards included as a saved named layout keeps them, SP-330), `source` (`guided_tour_restore` or `guided_tour_back`) | `always`; a snapshot of another project or workspace is refused as `stale_projection`; a failed write says "Your layout could not be saved." and keeps the earlier layout | `shell_view` | `workspace.layout_changed` (change `layout_restored`, CV-361) | none: the Guided Tour's Back, Skip and Finish with Restore (PWIZ-035); a project switch loads that project's own record and dispatches nothing (added 2026-10-17, DL-228) |
 
 `cmd.workspace_layout.reset` keeps its two producers, the title-bar Home menu row and the Settings Startup & Recovery row `general.startup.reset-home-layout`, both dispatching the same command. The concept token `cmd.workspace_layout.size_surface` still normalizes to `cmd.workspace_layout.resize_surface` (CS-068) and is not a row.
 
@@ -52,7 +53,7 @@ Metadata used in the tables. Every `cmd.panel_tab.*` and `cmd.workspace_layout.*
 | Action id | Arguments | Effect | Producers and keys |
 |---|---|---|---|
 | `ui.panel_tab.activate` | `panel_tab_id`, `focus?` | Makes the tab its panel's active tab, pulls it out of "+N" when it was hidden there, and updates the recent-tab order; written with the layout's view state, never a receipt or event | A click on a tab; a row chosen in the "+N" list, the every-tab list or the recent-tab list; Ctrl+Tab / Ctrl+Shift+Tab (web client Alt+\` / Alt+Shift+\`); Ctrl+PgDn / Ctrl+PgUp; Alt+1..8 and Alt+9 for the last tab; the arrow keys, Home, End, Enter and Space in a focused strip |
-| `ui.workspace_layout.maximize` | `panel_id`, or none to restore | Sets or clears the maximized flag outside the split tree (`Plans/FinalGUISpec.md#F3-630`) | Shift+Escape; Escape while focus is in a strip restores; double click on a strip's empty space; panel menu Maximize or Restore panels; a terminal header row's Maximize or Restore |
+| `ui.workspace_layout.maximize` | `panel_id`, or none to restore | Sets or clears the maximized flag outside the split tree (`Plans/FinalGUISpec.md#F3-630`); unavailable with one panel or in the one-column narrow centre, expands a collapsed panel first, and moving focus to another panel restores (amended 2026-10-17, DL-228) | Shift+Escape; Escape while focus is in a strip restores; double click on a strip's empty space; panel menu Maximize or Restore panels; a terminal header row's Maximize or Restore |
 | `ui.workspace_layout.focus_panel` | `panel_id`, or `direction` | Moves focus to a panel | Alt+arrows; Alt+Shift+1..9; a panel chosen in the narrow panel switcher |
 | `ui.output.select_channel` | `channel` | Switches the channel shown in `output`; channel is view state, never part of its tab id, with no receipt or event | Output channel picker; channel opened from elsewhere follows F3-634 |
 | `ui.widget_board.set_view` | the board (`room`, its board id) and the changed `range` or `scope`, with the Usage page's own values (`Plans/FinalGUISpec.md#F3-638`) | Sets one dashboard's own range or scope, independent of the Usage page's and of every other board; view state kept in that board's record, with no receipt and no event (DL-186, P2; lead ruling F1) | A dashboard tab's Board menu > This dashboard > Range or Scope |
@@ -354,6 +355,9 @@ canonical_text: >-
   focus entering and click (WS-030, F3-638). Picker Back and its keyboard equivalents are
   ui.panel_tab.picker_back under CS-100, consuming F3-632; no Back cmd.* is minted. Restoring a
   level never opens an item or changes the layout.
+  Amended 2026-10-17 (DL-228): F3-630 holds the panel menu's rows and order and F3-631 the tab menu's; the
+  Panel menu and Tab menu tables here map dispatch only. cmd.workspace_layout.restore is registered in the
+  Layout commands table.
 gui_related: true
 gui_classification_reason: "Owns the command ids, arguments, availability, disabled reasons, events and keys of every control the universal panels add."
 split_recommended: false

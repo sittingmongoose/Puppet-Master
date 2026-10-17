@@ -2,9 +2,9 @@
 
 Source: `Plans/UI_Command_Catalog.md`
 
-Source lines: L14889-L14966
+Source lines: L14901-L14979
 
-Source SHA256: `465c76a83e4aa0c324520f23d0db9eef5ae70b1cdbedd802972cb3ca753810bb`
+Source SHA256: `2380cc6a920ee2411ca8df837046e8cd4ae793981467df8388bacb8e9711a5f2`
 
 ---
 
@@ -33,7 +33,8 @@ canonical_text: >-
   Plan-revised receipt lines (plan_card), each with the version it names, and a build schedule's row in the
   Scheduled manager (schedule_manager), with the schedule's bound version. The Plan title, Expand and Details links
   keep their existing route. Plan Details stays cmd.chat.plan.open_details, which no Goal surface raises. The command
-  emits no event (expected_event_types=[]).
+  emits exactly one workspace.layout_changed when its route adds a tab and none when it reveals an open tab
+  (DL-188; amended 2026-10-17, DL-228, it read: emits no event, expected_event_types=[]).
 gui_related: true
 gui_classification_reason: "Gives every Open plan button and the bound Goal's Open exact Plan · Vn their own command, distinct from Plan Details."
 split_recommended: false

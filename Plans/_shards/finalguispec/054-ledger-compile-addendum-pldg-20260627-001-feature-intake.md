@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L28424-L28905
+Source lines: L28433-L28919
 
-Source SHA256: `7447a70c27f340391d4bbf7f970101f60e40edebe03c9791cb81804ba977eebf`
+Source SHA256: `8b46b2f543663a9fdbf5170fad337bc776064dc6ab9115e9beea4413d8154e4d`
 
 ---
 
@@ -118,6 +118,11 @@ canonical_text: >-
   The in-app toast/banner destination renders through the
   title-bar notification affordance per PMConcept7 (2026-07-23): ephemeral deliveries stage beneath the title-bar
   notification stack and durable deliveries join the stack and its count badge (F3-460, F3-461).
+  Amended 2026-10-17 (DL-228): every cue category, the chat's (F3-564), onboarding and the Guided Tour's
+  (F3-599) and the notifications' (F3-460), plays through this owner's one player: one kit per theme family
+  plus the NieR kit while NieR Mode is painted, nothing before the first trusted gesture, one mute bound to
+  general.interaction.sound-effects, one volume, and sound never the only signal. The consumers state their
+  own moments and keep no engine, gate or mute of their own.
 gui_related: true
 gui_classification_reason: Defines Settings GUI, notification destination controls, sound library controls, upload UI, preview, and test-send presentation.
 depends_on: [ACD-428, CV-298, SP-222, PS-124, UCC-103]

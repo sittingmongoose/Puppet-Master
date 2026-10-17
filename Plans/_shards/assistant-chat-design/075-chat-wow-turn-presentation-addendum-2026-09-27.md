@@ -2,9 +2,9 @@
 
 Source: `Plans/assistant-chat-design.md`
 
-Source lines: L26060-L26702
+Source lines: L26060-L26710
 
-Source SHA256: `61d2994663577ecce10c470a704bacfaa3f5a9fc1d6ef3017f8837150b232036`
+Source SHA256: `b9ae6f9d9ccbc0d060e74b5ad28d1daef3682ffc97321c48fc7e6bcffa64a4a1`
 
 ---
 
@@ -551,6 +551,14 @@ canonical_text: >-
   The quality bar is DL-224. Polish, effects and scope are not cut to save a budget.
   Proposed, pending Jared: a surface drawn unseen for preparation stays out of the focus order and the
   accessibility tree until it is shown, and focus that lands in it returns where it came from.
+  Amended 2026-10-17 (DL-228): the page-change hold's rule holds inside a surface too: a leaving panel or pane
+  stays drawn where it was, inert (out of the tab order and the accessibility tree, taking no keys), until the
+  incoming view's first frame, then fades as the entrance starts; the left rail (F3-621) and the terminal card
+  consume it, NieR keeps its own erase and Reduced Motion swaps at once. Reduced Motion is instant (DL-115): a
+  room, page or tab change and an entrance land at their end state; where an owner allows a very short opacity
+  settle under Reduced Motion (F3-520's onboarding steps, F3-438's switch colour) it never moves or scales,
+  and a Usage room change takes none, so the concept's Usage dissolve under Reduced Motion is not adopted. A
+  waiting cover's calm, travel-free pulse is waiting feedback and stays (F3-077, DL-216).
 gui_related: true
 gui_classification_reason: "Defines per-theme motion and the chat's sound cues."
 split_recommended: false

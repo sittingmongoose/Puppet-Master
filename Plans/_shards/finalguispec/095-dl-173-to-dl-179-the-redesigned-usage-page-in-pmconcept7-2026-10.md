@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L44074-L44373
+Source lines: L44207-L44540
 
-Source SHA256: `7447a70c27f340391d4bbf7f970101f60e40edebe03c9791cb81804ba977eebf`
+Source SHA256: `8b46b2f543663a9fdbf5170fad337bc776064dc6ab9115e9beea4413d8154e4d`
 
 ---
 
@@ -55,7 +55,9 @@ canonical_text: >-
   official mark, never recoloured, filtered, tinted or redrawn and never set on a disc or plate
   other than a published app-icon plate, in its light or dark variant where the provider publishes
   one, contained in a square box at its own optical scale; Free Models and Local model server use
-  neutral interface icons, and a monogram is used only where no mark exists. Every dropdown on the
+  neutral interface icons, and a provider with no mark of its own shows its publisher's mark, or with neither its name in text, never a
+  monogram and never another provider's mark (amended 2026-10-17, DL-228; it read: a monogram is used only where no
+  mark exists). Every dropdown on the
   page (scope, disclosure, range overflow, the card menu, the size menu, chart type and options,
   thresholds, provider and account filters, Export and the Live menu) is a menu of the chat
   assistant's menu family (F3-531's menus, portaled as F3-424 sets out, opening with the
@@ -77,8 +79,9 @@ canonical_text: >-
   placeholder sits in the exact target slot and the peers in its way slide to make room; resizing
   shows a live outline of the snapped target size with its size name and its width by height while
   the peers in its way reflow; release morphs the card into place, after which board gravity floats
-  the other cards up into the holes above them, and Escape glides it back. Width resizes from the
-  right edge, the left edge and the corners at every board width. Tidy and board gravity (WS-019)
+  the other cards up into the holes above them, and Escape glides it back. A card resizes from its
+  right, left and bottom edges and from every corner at every board width, its top edge being its head (amended
+  2026-10-17, DL-228; it read: Width resizes from the right edge, the left edge and the corners). Tidy and board gravity (WS-019)
   each move the cards into place as one movement. The size menu previews each preset with its name
   before it is chosen. A card's head actions never cover its title or the head tools and always fit
   inside the card head at every width, taking the widest form that fits: all four tools, then the
@@ -154,6 +157,37 @@ canonical_text: >-
   hero's about 200 ms landing stays the room-change floor, counted from the new room's first drawn
   frame when a hand-off waited for that frame. A cold first entry's longer hold is parked (DL-221),
   not a pass of that floor.
+  Amended 2026-10-17 (DL-228): each room's hero: Overview the skyline, Plans & limits the 7-day reset line,
+  Costs the budget, Accounts the most-room ladder, Free models four availability rings, Context the ring,
+  Analytics the token trend, Ledger the attempt timeline, Attention the anomaly line, Prompt cache four split
+  rings, Tools the latency range bars, Signals the history line and Source authority the flow; Free models and
+  Prompt cache use a hero group of four equal plates. The key light is one static light beneath the board, a
+  top-left key and a low bottom-right bounce, seen in the gutters and behind the stage head and strongest on
+  the hero plate; it takes the room's tone (Costs warn, Attention hot, Accounts and Free models calm, the
+  accent elsewhere, Friendly's lavender in Friendly), blooms once on arrival, pans with a room change, never
+  moves at rest, and is the one tint DL-178 allows. Marks: a product without its own mark shows its
+  publisher's (Codex the OpenAI Blossom, Muse Code and Meta Model API Meta's, Qwen plans Qwen Cloud's); only
+  Kimi Code and xAI API use a published app-icon plate; NieR's ink rule never recolours a mark, and light
+  looks, NieR's parchment included, use the light artwork. Charts: a legend item isolates its series on click,
+  Enter or Space and dims the others; an Overview skyline tower opens that account's Details; a stacked-bar
+  row selects and opens its detail; each is view-local and dispatches nothing (UF-093). The word Live or
+  Paused toggles on click, and the chevron's Live readings menu offers Live readings on and Pause live
+  readings (Retro shows [LIVE] and [HOLD], NieR LIVE and STANDBY); the dot pulses once per beat, a two-step
+  blink in Retro and NieR. The Attention room button shows a warn-ink count of alerts that need attention ("N
+  alerts need attention now" in its hover tag and accessible name), which changes only with a live change.
+  Keys: the rail's Up, Down, Home and End move among the rooms and Enter or Space opens one; the range strip's
+  Left and Right change the range and move focus with it. The head's Panels button reads "N panels" and opens
+  Panels in <Room>: a check per widget, grouped by disclosure level, that shows or hides it (WS-019), then
+  Tidy this room, Reset this room and Reset every room, the last drawn as a danger row (WS-020). An empty
+  board says which case it is: "No panels at <level>. <Level> holds this room's panels." or "No panels are
+  shown in this room. Use Panels to show one again." The card menu also holds Fit rows ("Height that shows
+  every row"), one cmd.widget.resize to the kind's fit-all height carrying that preset's id where the kind has
+  one (WS-020). Under NieR Mode with Menu sounds installed, Use this account and the inspector's primary
+  action play NieR's confirm sound and the inspector's close its cancel sound, through F3-405's one player; no
+  other Usage control plays a sound. Card-head tools light only on their own hover, never with the card's
+  (F3-658). The 60-frames target and the 50 ms task bound above are judged by ACD-475's P1000 reading (DL-216,
+  DL-219): frames recorded on that hardware are evidence, not failures, no lower-spec tier applies, and the
+  solid Glass pane without a GPU is a capability path DL-219 keeps.
 gui_related: true
 gui_classification_reason: Defines the look, menus, marks, heroes, charts, previews, hover and motion of the redesigned Usage page.
 split_recommended: false
@@ -187,7 +221,7 @@ acceptance_criteria:
 - A card's head actions never overlap its title at any width, and showing or hiding them never reflows
   the head; a shortened title stays reachable in full in its hover tag, the card menu and Details.
 - A hovered plate lifts by whole pixels with no scale, and Retro and NieR plates do not lift.
-- A room change runs camera, frames, the hero with its number first, the supporting plates and the beat
+- A room change runs handover (amended 2026-10-17, DL-228, from camera), frames, the hero with its number first, the supporting plates and the beat
   in that order, shows no blank moment between rooms, and the first change after Usage opens meets the
   same floor as later ones.
 - Every mark on a line moves on that line's path tween; a mark with no earlier position appears when the
