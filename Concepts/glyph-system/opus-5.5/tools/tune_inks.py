@@ -239,9 +239,9 @@ def main() -> int:
                     (notes if look in DE_EXEMPT else failed).append(f'{look} {x}~{y} dE {d:.0f}')
         sel = f'html[data-o55-nier][data-theme="basic-{look[5:]}"]' if look.startswith('nier') else f'html[data-theme="{look}"]'
         css.append(f'{sel} {{ ' + ' '.join(decl) + ' }')
-    OUT.write_text('\n'.join(css) + '\n')
+    OUT.write_bytes(('\n'.join(css) + '\n').encode('utf-8'))
     REPORT.parent.mkdir(parents=True, exist_ok=True)
-    REPORT.write_text(json.dumps({'target': TARGET, 'min_de': MIN_DE, 'looks': report}, indent=1) + '\n')
+    REPORT.write_bytes((json.dumps({'target': TARGET, 'min_de': MIN_DE, 'looks': report}, indent=1) + '\n').encode('utf-8'))
     print('look'.ljust(15) + ''.join(t[:9].rjust(16) for t in TONES))
     for look, rows in report.items():
         print(look.ljust(15) + ''.join(f"{r['before']:.2f}>{r['after']:.2f}{' ' if not r['moved'] else '*'}".rjust(16) for r in rows.values()))

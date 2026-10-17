@@ -229,7 +229,7 @@ def write() -> None:
     if css.count(BEGIN) != 1 or css.count(END) != 1:
         raise SystemExit('13-nier.css needs exactly one pair of generated-table markers')
     i, j = css.index(BEGIN), css.index(END) + len(END)
-    CSS_PATH.write_text(css[:i] + generate() + css[j:], encoding='utf-8')
+    CSS_PATH.write_bytes((css[:i] + generate() + css[j:]).encode('utf-8'))
 
 
 def main() -> int:
