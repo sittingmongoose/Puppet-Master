@@ -49156,6 +49156,10 @@ html[data-o55-nier="on"] .pmt-cz .pmt-cz-dock { box-shadow: 0 3px 10px rgba(var(
 /* drawn once at idle, unseen, so its GPU programs and tiles exist before the first click (77-customize.js rasterSoon) */
 .pmt-cz.pmt-cz-parked.pmt-cz-rasterwarm { clip-path: none; opacity: .004; }
 .pmt-cz.pmt-cz-parked.pmt-cz-rasterwarm > :not(.pmt-cz-dialog), .pmt-cz.pmt-cz-parked.pmt-cz-rasterwarm .pmt-cz-dialog > * { visibility: visible; }
+/* one part per step (PM_WARM): the top with every group hidden, or one group with the top and the other groups hidden */
+.pmt-cz.pmt-cz-parked.pmt-cz-rasterwarm[data-rw="top"] .pmt-cz-group,
+.pmt-cz.pmt-cz-parked.pmt-cz-rasterwarm[data-rw="group"] .pmt-cz-top,
+.pmt-cz.pmt-cz-parked.pmt-cz-rasterwarm[data-rw="group"] .pmt-cz-group:not([data-rw-on]) { visibility: hidden; }
 .pmt-cz.pmt-out .pmt-cz-scrim > i, .pmt-cz.pmt-out .pmt-cz-frame { animation: pmt-m-fade-out var(--pmt-t-out, 100ms) linear both; }
 .pmt-cz.pmt-out .pmt-cz-dialog { transform-origin: 50% 0; animation: var(--pmt-a-pop-out, pmt-m-fade-out) var(--pmt-t-out, 100ms) var(--pmt-ease-exit, linear) both; }
 .pmt-cz-body.pmt-rescope { animation: var(--pmt-a-rescope, pmt-m-dim-in) calc(var(--pmt-t-swap, 120ms) * 1.1) var(--pmt-ease-fade, linear) both; }
@@ -103114,7 +103118,7 @@ afterRender = function () {
   /* Terminal Bell: Follow look or Off (Jared, 2026-10-16, P14); a stored Visual is Follow look (retired words below) */
   const bell = rowOf('code.terminal.bell');
   bell.choices = ['Follow look', 'Off'];
-  bell.help = 'What happens when a program rings the bell: Follow look flashes the terminal in the look’s own way, Off does nothing.';
+  bell.help = 'What happens when a program rings the bell: Follow look rings the look’s own bell, Off does nothing.';
   const font = rowOf('code.terminal.font-family');
   font.choices = FACES.map(f => f[0]);
   font.options = Object.assign({}, font.options || {}, Object.fromEntries(FACES));
@@ -144067,6 +144071,9 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
     if (swAsking) return false;
     return (sw = probeHere());
   };
+  /* softwareKnown(): false while the worker has not answered, when softwareRendered()'s false means "not known yet"
+     (PM_WARM keeps only a known answer: landing review IW-1) */
+  M.softwareKnown = function softwareKnown() { return sw !== null || !swAsking; };
 
   /* sampleFrames(ms) -> Promise<{median, p90, n}>: the intervals between painted frames over a short window (it asks
      for a frame each time, so it is used once, briefly). A computer that cannot draw this page at 60 fps without a GPU
@@ -144362,6 +144369,360 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
     const watchBody = () => { if (document.body) seen.observe(document.body, { childList: true }); };
     if (document.body) watchBody(); else document.addEventListener('DOMContentLoaded', watchBody, { once: true });
   } catch (_) { /* calls still arm it */ }
+
+  /* PM_WARM: the one page-wide queue for idle warm drawing (the lead's IDLE-WARM-RULE.md v3.3, 2026-10-17). A lane hands
+     it small steps that draw something unseen, so the GPU compiles its programs or rasters a surface before first use.
+     On a cold P1000 a step that was short on the main thread still held the compositor 100-1,000 ms when it made the
+     GPU compile several programs (part2's F5b idle trace), so a step goes only when the page is still, and is judged by
+     the frames presented after it.
+       when: an idle callback (no timeout) with 45 ms or more left, so nothing is drawing frames; after 10 s without one,
+         the next idle callback whatever it has left. While a gate fails the wait grows from 400 ms to 2 s (back to 400
+         once a step goes), and 'pm-idle' tries again at once.
+       gates: the page visible, PM_BUSY() empty, no pointer, key, wheel or touch input for 600 ms, none pending, any
+         back-off run out, no finite CSS animation or transition running, and the two frames before the step on time
+         (1.5x the median refresh). Animations and transitions are counted from their events, so no style is read in a
+         timer or a frame; what is counted is looked up in PM_AFTER_LAYOUT, where style is already computed, when it is
+         new and once a second after: one that ended without an event reaching window, or an infinite one (an ambient
+         loop), is let go, and so is an element no longer connected and anything counted for 30 s.
+       where: a GPU step at the start of a frame (rAF), the third of three watched; a cpu step (no GPU work: canvas
+         draws, blurs, encodes on the CPU) inside an idle callback after those frames, given its deadline. In the rAF
+         only the frames, hidden, PM_BUSY, input and the count are looked at, never style.
+       judged: late when either of the two rAF intervals after the step's frame is over max(40 ms, 3x the median
+         refresh): the first is where a GPU compile holds the next frame. A cpu step is judged by the two after the
+         frame that follows it. A cleanup run() returns runs in the first frame after the step.
+       light (one kind, <= 2 ms of JS): judged by the one interval after it; the next step, if light, may go in that
+         same frame (one per frame) while every gate holds and no frame was late in the last 2 s.
+       late: onLate({ name, late, dropped: false }); true means the owner handled it (split it, moved it), otherwise it
+         goes to the end of its owner's line once, and late twice it is dropped (onLate with dropped: true). The wait
+         after a late step is 1 s, doubling to 8 s; 3 clean steps reset it. 3 late in a row stop the queue until
+         'pm-idle' or 30 s; the second stop is for the session: the rest is dropped, its owners told, 'pm-warm-done' sent.
+       order: near steps first, then round-robin across owners, FIFO within an owner; until() false skips a step.
+       off: ?pm-warm=0, and the no-GPU profile once O55.motion knows it (?pm-warm=force runs it there, for checks); an
+         add is then logged 'skipped' (state().off says so before adding), and steps queued before it was known are let
+         go with onLate({ dropped: true }), as at the session stop.
+     add({ owner, name, run, near, light, cpu, until, onLate }) -> id; cancel(id), cancelOwner(owner), state(owner?)
+     { queued, dropped, backoffMs, lateRun, stopped, session, off, running, lateCount, waiting: the gate that held the
+     last try ('idle', 'frames', 'input', 'animation', ...) }; window.__pmWarmLog (also
+     PM_WARM.log): the last 200 { owner, name, t, cpuMs, frameMs, late, outcome }. 'pm-warm-done' on window when the
+     queue empties, at the session stop, and after an add skipped with nothing queued (warming off), so an owner that
+     waits for it never waits on a software-rendered computer */
+  const warmFlag = (v) => { try { return new RegExp('(?:^|[?&])pm-warm=' + v + '(?:&|$)').test(location.search); } catch (_) { return false; } };
+  const warmOff = warmFlag('0'), warmForce = warmFlag('force');
+  /* softwareRendered() says false until its worker has answered, so only a known answer is kept (landing review IW-1) */
+  let warmSoft = warmForce ? false : null;
+  const softKnown = () => {
+    if (warmSoft !== null) return true;
+    try {
+      const M = window.O55 && window.O55.motion;
+      if (!M || typeof M.softwareRendered !== 'function') { warmSoft = false; return true; }
+      if (typeof M.softwareKnown === 'function' && !M.softwareKnown()) return false;
+      warmSoft = !!M.softwareRendered();
+    } catch (_) { warmSoft = false; }
+    return true;
+  };
+  const warmQ = [], warmLog = window.__pmWarmLog = [], warmDropped = [], warmDeltas = [];
+  let warmSeq = 0, warmLastOwner = '', warmTimer = 0, warmIdle = 0, warmBusy = false, warmRunning = null,
+    warmBackoff = 0, warmUntil = 0, warmClean = 0, warmLateRun = 0, warmLateCount = 0, warmLateAt = -1e9,
+    warmStops = 0, warmStopped = false, warmSession = false, warmStopTimer = 0, warmDoneTimer = 0,
+    warmInput = -1e9, warmWaitMs = 0, warmIdleSince = 0, warmVis = 0, warmD1 = 0, warmD2 = 0, warmClassing = false, warmWhy = '';
+  const listen = (t, fn) => window.addEventListener(t, fn, { capture: true, passive: true });
+  ['pointermove', 'pointerdown', 'keydown', 'wheel', 'touchstart'].forEach((t) => listen(t, () => { warmInput = performance.now(); }));
+  document.addEventListener('visibilitychange', () => { warmVis++; });
+  /* finite animations and transitions running: Element -> Map('a'|'t' + pseudo + '|' + name -> { at, seen, fin }).
+     An event says when one starts and ends, not always: one that the page stops by hiding its element (the chat bar's
+     buttons, at load on Nas1) sent no cancel that reached window and held the queue 30 s. So what is counted is looked
+     up in PM_AFTER_LAYOUT (classify), when it is new (an animation's iteration count is not in its event) and again once
+     it has been counted a second: one no longer there, or an infinite one (an ambient loop), is let go */
+  const warmAnims = new Map();
+  const animKey = (k, e) => k + (e.pseudoElement || '') + '|' + (k === 'a' ? e.animationName : e.propertyName);
+  const animOn = (k) => (e) => {
+    const el = e.target;
+    if (!el || el.nodeType !== 1) return;
+    let m = warmAnims.get(el);
+    if (!m) warmAnims.set(el, (m = new Map()));
+    const now = performance.now();
+    m.set(animKey(k, e), { at: now, seen: now, fin: k === 't' ? true : undefined });
+    /* elements taken out of the page while nothing is queued are let go here */
+    if (warmAnims.size > 50) animState();
+  };
+  const animOff = (k) => (e) => {
+    const m = warmAnims.get(e.target);
+    if (!m) return;
+    m.delete(animKey(k, e));
+    if (!m.size) warmAnims.delete(e.target);
+  };
+  listen('animationstart', animOn('a')); listen('animationend', animOff('a')); listen('animationcancel', animOff('a'));
+  listen('transitionrun', animOn('t')); listen('transitionend', animOff('t')); listen('transitioncancel', animOff('t'));
+  /* '' none finite running, 'run' one is (looked up within the last second), 'ask' only ones to look up */
+  const animState = () => {
+    const now = performance.now();
+    let st = '';
+    warmAnims.forEach((m, el) => {
+      if (!el.isConnected) { warmAnims.delete(el); return; }
+      m.forEach((a, k) => {
+        if (now - a.at > 30000) m.delete(k);
+        else if (a.fin && now - a.seen <= 1000) st = 'run';
+        else if (!st) st = 'ask';
+      });
+      if (!m.size) warmAnims.delete(el);
+    });
+    return st;
+  };
+  /* in PM_AFTER_LAYOUT: style is computed, so reading an element's animations forces nothing */
+  const classify = () => {
+    warmClassing = false;
+    const now = performance.now();
+    warmAnims.forEach((m, el) => {
+      let list = null;
+      m.forEach((a, k) => {
+        if (a.fin && now - a.seen <= 1000) return;
+        if (!list) { try { list = el.getAnimations({ subtree: true }); } catch (_) { list = []; } }
+        const anim = list.find((x) => x.effect && x.effect.target === el && (k[0] === 'a' ? x.animationName != null && 'a' + (x.effect.pseudoElement || '') + '|' + x.animationName === k
+          : x.transitionProperty != null && 't' + (x.effect.pseudoElement || '') + '|' + x.transitionProperty === k));
+        let gone = true;
+        try { gone = !anim || anim.playState === 'finished' || anim.playState === 'idle' || anim.effect.getTiming().iterations === Infinity; } catch (_) { /* gone */ }
+        if (gone) m.delete(k); else { a.fin = true; a.seen = now; }
+      });
+      if (!m.size) warmAnims.delete(el);
+    });
+    warmWake(0, true);
+  };
+  const median = () => {
+    if (warmDeltas.length < 5) return 1000 / 60;
+    const s = warmDeltas.slice().sort((a, b) => a - b);
+    return s[Math.floor(s.length / 2)];
+  };
+  const lateMs = () => Math.max(40, 3 * median());
+  const onTime = (d) => d <= 1.5 * median();
+  const note = (d) => {
+    if (d > lateMs()) warmLateAt = performance.now();
+    warmD1 = warmD2; warmD2 = d;
+    warmDeltas.push(d); if (warmDeltas.length > 30) warmDeltas.shift();
+  };
+  const pending = () => { try { const s = navigator.scheduling; return !!(s && s.isInputPending && s.isInputPending()); } catch (_) { return false; } };
+  /* the gates that read nothing of style or layout, so they may be looked at inside a frame: '' when all hold, else
+     the first that does not (state().waiting) */
+  const blocked = () => {
+    const now = performance.now();
+    if (document.hidden) return 'hidden';
+    if (window.PM_BUSY()) return 'busy';
+    if (now - warmInput < 600) return 'input';
+    if (pending()) return 'pending';
+    if (now < warmUntil) return 'backoff';
+    const a = animState();
+    return a === 'run' ? 'animation' : a === 'ask' ? 'animation?' : '';
+  };
+  const quiet = () => !(warmWhy = blocked());
+  const logStep = (st, cpuMs, frameMs, late, outcome) => {
+    warmLog.push({ owner: st.owner, name: st.name, t: Math.round(performance.now()), cpuMs: Math.round(cpuMs * 10) / 10, frameMs: frameMs, late: late, outcome: outcome });
+    if (warmLog.length > 200) warmLog.shift();
+  };
+  const tell = (st, late, dropped) => {
+    if (typeof st.onLate !== 'function') return false;
+    try { return st.onLate({ name: st.name, late: late, dropped: dropped }) === true; } catch (_) { return false; }
+  };
+  const done = () => {
+    if (warmDoneTimer) return;
+    warmDoneTimer = setTimeout(() => {
+      warmDoneTimer = 0;
+      if ((warmQ.length || warmBusy) && !warmSession) return;
+      try { window.dispatchEvent(new Event('pm-warm-done')); } catch (_) { /* none */ }
+    }, 0);
+  };
+  /* the steps still queued are let go (the session stop: 'dropped'; the no-GPU profile known only after they were
+     queued: 'skipped'), and each owner is told, so work it needs anyway (a screen built ahead) goes its own way */
+  const dropAll = (outcome) => {
+    warmQ.splice(0).forEach((st) => { logStep(st, 0, null, false, outcome); if (outcome === 'dropped') warmDropped.push(st.owner + ':' + st.name); tell(st, 0, true); });
+    done();
+  };
+  /* the next step: near first, then the owner after the last one's, FIFO within an owner; a step whose until() says
+     it is no longer wanted is skipped. take: false only looks */
+  const pick = (take) => {
+    for (;;) {
+      let i = warmQ.findIndex((st) => st.near);
+      if (i < 0) {
+        const owners = [];
+        warmQ.forEach((st) => { if (owners.indexOf(st.owner) < 0) owners.push(st.owner); });
+        if (!owners.length) return null;
+        const next = owners[(owners.indexOf(warmLastOwner) + 1) % owners.length];
+        i = warmQ.findIndex((st) => st.owner === next);
+      }
+      const st = warmQ[i];
+      let want = true;
+      if (typeof st.until === 'function') { try { want = st.until() !== false; } catch (_) { want = false; } }
+      if (want) { if (take) warmQ.splice(i, 1); return st; }
+      warmQ.splice(i, 1); logStep(st, 0, null, false, 'skipped');
+    }
+  };
+  /* wait ms, then for an idle callback. force: replace a wait already set (pm-idle, a classification) */
+  const warmWake = (ms, force) => {
+    if (warmBusy || warmStopped || !warmQ.length) return;
+    if (warmTimer || warmIdle) { if (!force) return; clearTimeout(warmTimer); if (warmIdle && window.cancelIdleCallback) cancelIdleCallback(warmIdle); warmTimer = warmIdle = 0; }
+    if (!warmIdleSince) warmIdleSince = performance.now();
+    warmTimer = setTimeout(() => {
+      warmTimer = 0;
+      if (window.requestIdleCallback) warmIdle = requestIdleCallback(idle);
+      else idle({ timeRemaining: () => 50 });
+    }, Math.max(0, ms || 0));
+  };
+  const retry = () => { warmWaitMs = warmWaitMs ? Math.min(2000, warmWaitMs * 2) : 400; warmWake(warmWaitMs); };
+  /* an idle callback with 45 ms or more left, or any once 10 s have gone by without one: the page's own motion never
+     rests, so the next steps take the next idle callback too, until a long one comes */
+  const roomy = (d) => {
+    if ((d && typeof d.timeRemaining === 'function' ? d.timeRemaining() : 50) >= 45) { warmIdleSince = 0; return true; }
+    return performance.now() - warmIdleSince >= 10000;
+  };
+  const idle = (d) => {
+    warmIdle = 0;
+    if (warmBusy || warmStopped || !warmQ.length) return;
+    if (!softKnown()) { warmWhy = 'profile'; retry(); return; }
+    if (warmSoft) { dropAll('skipped'); return; }
+    if (!roomy(d)) { warmWhy = 'idle'; retry(); return; }
+    const a = animState();
+    if (a === 'ask' && !document.hidden) { warmWhy = 'animation?'; if (!warmClassing) { warmClassing = true; window.PM_AFTER_LAYOUT(classify); } return; }
+    if (!quiet()) { retry(); return; }
+    /* admitted: two frames on time, then the step in the third */
+    warmBusy = true;
+    const vis = warmVis;
+    requestAnimationFrame((tA) => requestAnimationFrame((tB) => requestAnimationFrame((tC) => {
+      if (vis !== warmVis) { warmBusy = false; retry(); return; }
+      note(tB - tA); note(tC - tB);
+      if (!onTime(tB - tA) || !onTime(tC - tB)) { warmWhy = 'frames'; warmBusy = false; retry(); return; }
+      if (!quiet()) { warmBusy = false; retry(); return; }
+      const st = pick(true);
+      if (!st) { warmBusy = false; done(); return; }
+      warmWaitMs = 0; warmWhy = '';
+      if (st.cpu) cpuStep(st); else runStep(st, tC);
+    })));
+  };
+  const run = (st, arg) => {
+    warmRunning = st; warmLastOwner = st.owner;
+    const c0 = performance.now();
+    let cleanup = null;
+    try { cleanup = st.run(arg); } catch (e) { try { console.error('[PM_WARM] ' + st.owner + ':' + st.name, e); } catch (_) { /* none */ } }
+    return { cpu: performance.now() - c0, cleanup: typeof cleanup === 'function' ? cleanup : null };
+  };
+  const clean = (r) => { if (r.cleanup) { try { r.cleanup(); } catch (_) { /* none */ } } };
+  /* a GPU step, in the frame at t */
+  const runStep = (st, t) => {
+    const vis = warmVis, limit = lateMs(), r = run(st);
+    requestAnimationFrame((a) => {
+      clean(r);
+      const d1 = a - t;
+      if (vis !== warmVis) { judge(st, r.cpu, null, false, limit); after(); return; }
+      note(d1);
+      if (st.light) {
+        if (judge(st, r.cpu, [Math.round(d1)], d1 > limit, limit)) return;
+        /* the next light step in this same frame, while everything holds */
+        const nx = !warmStopped && performance.now() - warmLateAt > 2000 && onTime(warmD1) && onTime(d1) && quiet() ? pick(false) : null;
+        if (nx && nx.light && !nx.cpu) { pick(true); runStep(nx, a); return; }
+        after();
+        return;
+      }
+      requestAnimationFrame((b) => {
+        const d2 = b - a;
+        if (vis !== warmVis) { judge(st, r.cpu, null, false, limit); after(); return; }
+        note(d2);
+        if (!judge(st, r.cpu, [Math.round(d1), Math.round(d2)], Math.max(d1, d2) > limit, limit)) after();
+      });
+    });
+  };
+  /* a cpu step, inside an idle callback, given its deadline; judged by the two intervals after the next frame */
+  const cpuStep = (st) => {
+    warmRunning = st;
+    const go = (d) => {
+      warmIdle = 0;
+      if (st.cancelled) { warmRunning = null; warmBusy = false; warmWake(0); return; }
+      const room = roomy(d);
+      if (!room) warmWhy = 'idle';
+      if (!room || !quiet()) { warmRunning = null; warmQ.unshift(st); warmBusy = false; retry(); return; }
+      const vis = warmVis, limit = lateMs(), r = run(st, d);
+      requestAnimationFrame((a) => {
+        clean(r);
+        requestAnimationFrame((b) => requestAnimationFrame((c) => {
+          const d1 = b - a, d2 = c - b;
+          if (vis !== warmVis) { judge(st, r.cpu, null, false, limit); after(); return; }
+          note(d1); note(d2);
+          if (!judge(st, r.cpu, [Math.round(d1), Math.round(d2)], Math.max(d1, d2) > limit, limit)) after();
+        }));
+      });
+    };
+    if (window.requestIdleCallback) warmIdle = requestIdleCallback(go); else go({ timeRemaining: () => 50 });
+  };
+  /* -> true when the queue stopped */
+  const judge = (st, cpuMs, frameMs, late, limit) => {
+    warmRunning = null;
+    if (!late) {
+      logStep(st, cpuMs, frameMs, false, frameMs ? 'ran' : 'unjudged');
+      if (!frameMs) return false;
+      warmLateRun = 0;
+      if (++warmClean >= 3) { warmBackoff = 0; warmClean = 0; }
+      return false;
+    }
+    warmLateCount++; warmLateRun++; warmClean = 0;
+    warmBackoff = warmBackoff ? Math.min(8000, warmBackoff * 2) : 1000;
+    warmUntil = performance.now() + warmBackoff;
+    const worst = Math.max.apply(null, frameMs);
+    st.lates = (st.lates || 0) + 1;
+    if (st.lates >= 2) { logStep(st, cpuMs, frameMs, true, 'dropped'); warmDropped.push(st.owner + ':' + st.name); tell(st, worst, true); }
+    else if (st.cancelled || tell(st, worst, false)) logStep(st, cpuMs, frameMs, true, 'late-handled');
+    else { warmQ.push(st); logStep(st, cpuMs, frameMs, true, 'late'); }
+    if (warmLateRun < 3) return false;
+    /* 3 late in a row: stopped until 'pm-idle' or 30 s; the second time for the session */
+    warmBusy = false; warmStopped = true;
+    if (++warmStops >= 2) { warmSession = true; dropAll('dropped'); return true; }
+    warmStopTimer = setTimeout(resume, 30000);
+    return true;
+  };
+  const after = () => {
+    warmBusy = false;
+    if (!warmQ.length) { done(); return; }
+    warmWake(warmBackoff ? Math.max(0, warmUntil - performance.now()) : 0);
+  };
+  const resume = () => {
+    if (!warmStopped || warmSession) return;
+    warmStopped = false; warmLateRun = 0; clearTimeout(warmStopTimer); warmStopTimer = 0;
+    warmWake(0, true);
+  };
+  window.addEventListener('pm-idle', () => { if (warmStopped) resume(); else { warmWaitMs = 0; warmWake(0, true); } });
+  window.PM_WARM = {
+    add(o) {
+      if (!o || typeof o.run !== 'function') return 0;
+      const st = { id: ++warmSeq, owner: String(o.owner || 'page'), name: String(o.name || 'step'), run: o.run, near: !!o.near,
+        light: !!o.light, cpu: !!o.cpu, until: o.until, onLate: o.onLate };
+      if (warmSession) {
+        logStep(st, 0, null, false, 'dropped'); warmDropped.push(st.owner + ':' + st.name);
+        Promise.resolve().then(() => tell(st, 0, true)); done();
+        return st.id;
+      }
+      if (warmOff || warmSoft === true) { logStep(st, 0, null, false, 'skipped'); if (!warmQ.length) done(); return st.id; }
+      /* a new batch: the waits start again */
+      if (!warmQ.length && !warmBusy) { warmWaitMs = 0; warmIdleSince = 0; }
+      warmQ.push(st); warmWake(0);
+      return st.id;
+    },
+    /* a cancel that empties the queue sends 'pm-warm-done' too; one that took nothing out sends nothing */
+    cancel(id) {
+      const n = warmQ.length;
+      for (let i = warmQ.length - 1; i >= 0; i--) if (warmQ[i].id === id) warmQ.splice(i, 1);
+      if (warmRunning && warmRunning.id === id) warmRunning.cancelled = true;
+      if (n && !warmQ.length && !warmBusy) done();
+    },
+    cancelOwner(owner) {
+      const n = warmQ.length;
+      for (let i = warmQ.length - 1; i >= 0; i--) if (warmQ[i].owner === owner) warmQ.splice(i, 1);
+      if (warmRunning && warmRunning.owner === owner) warmRunning.cancelled = true;
+      if (n && !warmQ.length && !warmBusy) done();
+    },
+    state(owner) {
+      const mine = (st) => !owner || st.owner === owner;
+      return { queued: warmQ.filter(mine).length, dropped: warmDropped.filter((d) => !owner || d.indexOf(owner + ':') === 0),
+        backoffMs: warmBackoff, lateRun: warmLateRun, stopped: warmStopped, session: warmSession, off: warmOff || warmSoft === true,
+        running: warmRunning && mine(warmRunning) ? warmRunning.owner + ':' + warmRunning.name : null, lateCount: warmLateCount,
+        waiting: warmQ.length && !warmBusy ? warmWhy : '' };
+    },
+    log: warmLog
+  };
 })();
 
 /* ---- js/12-theme-transition.js ---- */
@@ -176943,11 +177304,18 @@ render.remountKind = function (kindId) {
 };
 
 /* ---- resize delivery: once per frame per tab, final when nothing is moving ---- */
+/* a host's own size change is delivered here, already after the frame's layout, so its tab hears it now. Asking
+   PM_AFTER_LAYOUT from inside this delivery (queueResize) made an observation that could not be delivered in the same
+   frame: Chrome reported 'ResizeObserver loop completed with undelivered notifications' and the delivery slipped a
+   frame (pm7-motion-shell's bisect, 2026-10-16: 6 asks, 6 errors, only on this lane). A delivery already queued for
+   another reason takes these tabs with it */
 var bodyObserver = typeof ResizeObserver === 'function' ? new ResizeObserver(function (entries) {
+  var any = false;
   for (var i = 0; i < entries.length; i++) {
     var tid = entries[i].target.getAttribute('data-pmw-tab');
-    if (tid) queueResize(tid);
+    if (tid) { resizePending[tid] = true; any = true; }
   }
+  if (any && !resizeQueued) { var all = resizeAll; resizeAll = false; flushResizes(all); }
 }) : null;
 function observeBody(entry) { if (bodyObserver) bodyObserver.observe(entry.host); }
 var resizePending = {}, resizeQueued = false, resizeAll = false;
@@ -219474,6 +219842,8 @@ var T = {};
     if (this._dprOff) this._dprOff();
     if (this.raf) cancelAnimationFrame(this.raf);
     if (this.fx) { this.fx.dispose(); this.fx = null; }
+    /* its case steps still queued on the page's idle-warm queue go too, so nothing holds the view (landing review IW-2) */
+    if (T.Bezel && T.Bezel.unwarm) T.Bezel.unwarm(this);
     if (this.bezel) this.bezel.dispose();
     this.root.remove();
   };
@@ -219533,11 +219903,14 @@ var T = {};
   /* a near-black screen (Retro's phosphor ground) has little light to give a dark case, so its steps are lifted up to
      a third, and read as far apart as on a grey one (round 5, Q15: Graphite and Gunmetal's Low and Medium, 4.2) */
   function dimScreen(bg) { return 1 + 0.3 * Math.max(0, Math.min(1, (0.016 - C.lum(bg)) / 0.012)); }
+  /* SSYS-051's one stored scale for the Reflection level: Off, Low, Medium and High are 0, 0.25, 0.5 and 1. A level
+     stored as a number (round 3's slider) is the nearest on it; how strongly a level draws is the renderer's own, per
+     screen (STRENGTH, GLASS), never read from the stored number (Plans top-up L3, F3-643) */
+  var SCALE = [0, 0.25, 0.5, 1];
   function levelOf(r, mat, light) {
     if (typeof r === 'number' && isFinite(r)) {
-      /* a level stored as a number (round 3's slider): the nearest */
-      var t = STRENGTH[light ? 'light' : 'dark'], best = 0;
-      for (var i = 1; i < t.length; i++) if (Math.abs(t[i] - r) < Math.abs(t[best] - r)) best = i;
+      var best = 0;
+      for (var i = 1; i < SCALE.length; i++) if (Math.abs(SCALE[i] - r) < Math.abs(SCALE[best] - r)) best = i;
       return LEVELS[best];
     }
     if (LEVELS.indexOf(r) >= 0) return r;
@@ -219727,8 +220100,13 @@ var T = {};
       if (s.light) return k >= 1 ? rgba(0xffffff, Math.min(0.85, 0.35 * k)) : rgba(C.hex('#1e2d5a'), 0.16 * (1 - k) + 0.04);
       return rgba(lit(c, k, true), a === undefined ? ga : a);
     };
+    /* warmStage (the idle warm only, Bezel.warm): the sections up to that one are drawn, so each warm step compiles the
+       programs of one more section; undefined draws all. Stage 1 is the case's outline clip alone, filled once, since
+       every section draws through it */
+    var stage = this.warmStage, go = function (n) { return stage === undefined || n <= stage; };
     ctx.clearRect(0, 0, g.w, g.h);
     ctx.save(); ctx.clip(ring, 'evenodd');
+    if (stage === 1 && !ink) { ctx.fillStyle = col(base, 1); ctx.fillRect(0, 0, g.w, g.h); }
     if (ink) {
       ctx.fillStyle = hex(base); ctx.fillRect(0, 0, g.w, g.h);
       ctx.restore();
@@ -219736,59 +220114,75 @@ var T = {};
       return;
     }
     /* the flat frame: each side a shade of the same light, a touch lighter along the top */
-    ctx.save(); ctx.clip(frameRing, 'evenodd');
-    SIDES.forEach(function (side) { ctx.save(); ctx.clip(polyPath(geo.frameParts[side])); ctx.fillStyle = col(base, FRAME[side]); ctx.fillRect(0, 0, g.w, g.h); ctx.restore(); });
-    ctx.restore();
-    /* the sloped face: four parts meeting in crisp creases, each lit by where it faces, a little darker toward the glass */
-    ctx.save(); ctx.clip(faceRing, 'evenodd');
-    var fb = geo.frameIn, bb = geo.bb;
-    SIDES.forEach(function (side) {
-      ctx.save(); ctx.clip(polyPath(geo.faceParts[side]));
-      var k = FACE[side], gr = side === 'top' ? ctx.createLinearGradient(0, fb[1], 0, bb[1]) : side === 'bottom' ? ctx.createLinearGradient(0, fb[3], 0, bb[3])
-        : side === 'left' ? ctx.createLinearGradient(fb[0], 0, bb[0], 0) : ctx.createLinearGradient(fb[2], 0, bb[2], 0);
-      gr.addColorStop(0, col(face, k * 1.08)); gr.addColorStop(1, col(face, k * 0.9));
-      ctx.fillStyle = gr; ctx.fillRect(0, 0, g.w, g.h);
+    if (go(2)) {
+      ctx.save(); ctx.clip(frameRing, 'evenodd');
+      SIDES.forEach(function (side) { ctx.save(); ctx.clip(polyPath(geo.frameParts[side])); ctx.fillStyle = col(base, FRAME[side]); ctx.fillRect(0, 0, g.w, g.h); ctx.restore(); });
       ctx.restore();
-    });
-    /* the creases: a hairline of light along each diagonal where two parts of the face meet */
-    ctx.lineWidth = 1; ctx.strokeStyle = glass ? 'rgba(255,255,255,' + (s.light ? 0.5 : 0.16) + ')' : rgba(lit(face, 2.2, light), 0.35);
-    [[fb[0], fb[1], bb[0], bb[1]], [fb[2], fb[1], bb[2], bb[1]], [fb[2], fb[3], bb[2], bb[3]], [fb[0], fb[3], bb[0], bb[3]]].forEach(function (q) { ctx.beginPath(); ctx.moveTo(q[0], q[1]); ctx.lineTo(q[2], q[3]); ctx.stroke(); });
-    ctx.restore();
-    /* the grain: speckle in plastic, streaks along each side in metal, frost in glass */
-    var tl = tile(M.grain === 'brushed' ? 'brushed' : M.grain === 'frost' ? 'frost' : 'plastic');
-    ctx.globalCompositeOperation = glass ? 'source-over' : 'overlay'; ctx.globalAlpha = M.grain === 'gloss' ? 0.45 : glass ? 0.6 : 1;
-    if (M.grain === 'brushed') {
-      ['top', 'bottom'].forEach(function (side) { ctx.save(); ctx.clip(polyPath(geo.frameParts[side])); ctx.fillStyle = ctx.createPattern(tl, 'repeat'); ctx.fillRect(0, 0, g.w, g.h); ctx.restore(); });
-      ['left', 'right'].forEach(function (side) {
-        ctx.save(); ctx.clip(polyPath(geo.frameParts[side])); ctx.translate(g.w / 2, g.h / 2); ctx.rotate(Math.PI / 2); ctx.translate(-g.h / 2, -g.w / 2);
-        ctx.fillStyle = ctx.createPattern(tl, 'repeat'); ctx.fillRect(0, 0, g.h, g.w); ctx.restore();
+    }
+    /* the sloped face: four parts meeting in crisp creases, each lit by where it faces, a little darker toward the glass */
+    var fb = geo.frameIn, bb = geo.bb;
+    if (go(3)) {
+      ctx.save(); ctx.clip(faceRing, 'evenodd');
+      SIDES.forEach(function (side) {
+        ctx.save(); ctx.clip(polyPath(geo.faceParts[side]));
+        var k = FACE[side], gr = side === 'top' ? ctx.createLinearGradient(0, fb[1], 0, bb[1]) : side === 'bottom' ? ctx.createLinearGradient(0, fb[3], 0, bb[3])
+          : side === 'left' ? ctx.createLinearGradient(fb[0], 0, bb[0], 0) : ctx.createLinearGradient(fb[2], 0, bb[2], 0);
+        gr.addColorStop(0, col(face, k * 1.08)); gr.addColorStop(1, col(face, k * 0.9));
+        ctx.fillStyle = gr; ctx.fillRect(0, 0, g.w, g.h);
+        ctx.restore();
       });
-    } else { ctx.fillStyle = ctx.createPattern(tl, 'repeat'); ctx.fillRect(0, 0, g.w, g.h); }
-    ctx.globalCompositeOperation = 'source-over'; ctx.globalAlpha = 1;
+      /* the creases: a hairline of light along each diagonal where two parts of the face meet */
+      if (go(4)) {
+        ctx.lineWidth = 1; ctx.strokeStyle = glass ? 'rgba(255,255,255,' + (s.light ? 0.5 : 0.16) + ')' : rgba(lit(face, 2.2, light), 0.35);
+        [[fb[0], fb[1], bb[0], bb[1]], [fb[2], fb[1], bb[2], bb[1]], [fb[2], fb[3], bb[2], bb[3]], [fb[0], fb[3], bb[0], bb[3]]].forEach(function (q) { ctx.beginPath(); ctx.moveTo(q[0], q[1]); ctx.lineTo(q[2], q[3]); ctx.stroke(); });
+      }
+      ctx.restore();
+    }
+    /* the grain: speckle in plastic, streaks along each side in metal, frost in glass */
+    if (go(5)) {
+      var tl = tile(M.grain === 'brushed' ? 'brushed' : M.grain === 'frost' ? 'frost' : 'plastic');
+      ctx.globalCompositeOperation = glass ? 'source-over' : 'overlay'; ctx.globalAlpha = M.grain === 'gloss' ? 0.45 : glass ? 0.6 : 1;
+      if (M.grain === 'brushed') {
+        ['top', 'bottom'].forEach(function (side) { ctx.save(); ctx.clip(polyPath(geo.frameParts[side])); ctx.fillStyle = ctx.createPattern(tl, 'repeat'); ctx.fillRect(0, 0, g.w, g.h); ctx.restore(); });
+        ['left', 'right'].forEach(function (side) {
+          ctx.save(); ctx.clip(polyPath(geo.frameParts[side])); ctx.translate(g.w / 2, g.h / 2); ctx.rotate(Math.PI / 2); ctx.translate(-g.h / 2, -g.w / 2);
+          ctx.fillStyle = ctx.createPattern(tl, 'repeat'); ctx.fillRect(0, 0, g.h, g.w); ctx.restore();
+        });
+      } else { ctx.fillStyle = ctx.createPattern(tl, 'repeat'); ctx.fillRect(0, 0, g.w, g.h); }
+      ctx.globalCompositeOperation = 'source-over'; ctx.globalAlpha = 1;
+    }
     /* where frame turns into face: a lit edge on the lower half, a shaded one on the upper */
-    ctx.lineWidth = 1;
-    ctx.save(); ctx.beginPath(); ctx.rect(0, g.h / 2, g.w, g.h); ctx.clip(); ctx.strokeStyle = glass ? 'rgba(255,255,255,.3)' : rgba(lit(base, 2.4, light), 0.6); ctx.stroke(geo.inner); ctx.restore();
-    ctx.save(); ctx.beginPath(); ctx.rect(0, 0, g.w, g.h / 2); ctx.clip(); ctx.strokeStyle = glass ? 'rgba(0,0,0,.18)' : rgba(lit(base, 0.4, light), 0.8); ctx.stroke(geo.inner); ctx.restore();
+    if (go(6)) {
+      ctx.lineWidth = 1;
+      ctx.save(); ctx.beginPath(); ctx.rect(0, g.h / 2, g.w, g.h); ctx.clip(); ctx.strokeStyle = glass ? 'rgba(255,255,255,.3)' : rgba(lit(base, 2.4, light), 0.6); ctx.stroke(geo.inner); ctx.restore();
+      ctx.save(); ctx.beginPath(); ctx.rect(0, 0, g.w, g.h / 2); ctx.clip(); ctx.strokeStyle = glass ? 'rgba(0,0,0,.18)' : rgba(lit(base, 0.4, light), 0.8); ctx.stroke(geo.inner); ctx.restore();
+    }
     /* the outer edge: darkened, with a hairline of light along its top and left */
-    ctx.lineWidth = 2; ctx.strokeStyle = glass ? (cssVar('--lg-edge-bot') || 'rgba(0,0,0,.28)') : rgba(lit(base, 0.45, light), 0.9); ctx.stroke(geo.outer);
-    ctx.save(); ctx.clip(polyPath([[0, 0], [g.w, 0], [0, g.h]])); ctx.lineWidth = 1;
-    ctx.strokeStyle = glass ? (cssVar('--lg-edge-top') || 'rgba(255,255,255,.3)') : rgba(lit(base, 2.2, light), 0.55);
-    ctx.stroke(roundRect(1.5, 1.5, g.w - 3, g.h - 3, Math.max(0, (Math.min(16, (s.style === 'rim' ? 4 : 7) + s.width)) - 1.5))); ctx.restore();
+    if (go(7)) {
+      ctx.lineWidth = 2; ctx.strokeStyle = glass ? (cssVar('--lg-edge-bot') || 'rgba(0,0,0,.28)') : rgba(lit(base, 0.45, light), 0.9); ctx.stroke(geo.outer);
+      ctx.save(); ctx.clip(polyPath([[0, 0], [g.w, 0], [0, g.h]])); ctx.lineWidth = 1;
+      ctx.strokeStyle = glass ? (cssVar('--lg-edge-top') || 'rgba(255,255,255,.3)') : rgba(lit(base, 2.2, light), 0.55);
+      ctx.stroke(roundRect(1.5, 1.5, g.w - 3, g.h - 3, Math.max(0, (Math.min(16, (s.style === 'rim' ? 4 : 7) + s.width)) - 1.5))); ctx.restore();
+    }
     ctx.restore();
     /* at the glass: a thin bright lip that never goes fully dark, then a near-black unlit ring; the case's shadow under
        the top lip falls a few pixels onto the glass */
+    if (!go(8)) return;
     ctx.save(); ctx.lineJoin = 'round';
     ctx.save(); ctx.clip(ring, 'evenodd'); ctx.lineWidth = 4.4;
     ctx.strokeStyle = glass ? (cssVar('--lg-lens-hair') || 'rgba(255,255,255,' + (s.light ? 0.9 : 0.5) + ')') : hex(lit(face, light ? 1.35 : 3.2, light));
     ctx.stroke(geo.opening); ctx.restore();
     ctx.lineWidth = 2.4; ctx.strokeStyle = glass ? 'rgba(0,0,0,.3)' : 'rgba(0,0,0,.82)'; ctx.stroke(geo.opening);
     if (glass) { ctx.save(); ctx.clip(polyPath([[0, 0], [g.w, 0], [bb[2], bb[1] + 6], [bb[0], bb[1] + 6]])); ctx.lineWidth = 2; ctx.strokeStyle = cssVar('--lg-lens-glint') || 'rgba(255,255,255,.55)'; ctx.stroke(geo.opening); ctx.restore(); }
-    ctx.clip(geo.opening);
-    ctx.shadowColor = 'rgba(0,0,0,' + (glass ? 0.22 : s.light ? 0.3 : 0.55) + ')'; ctx.shadowBlur = (s.style === 'case' ? 8 : 4) * g.dpr; ctx.shadowOffsetY = 2 * g.dpr;
-    var around = new Path2D(); around.rect(-40, -40, g.w + 80, g.h + 80); around.addPath(geo.opening);
-    ctx.fillStyle = '#000'; ctx.fill(around, 'evenodd');
+    if (go(9)) {
+      ctx.clip(geo.opening);
+      ctx.shadowColor = 'rgba(0,0,0,' + (glass ? 0.22 : s.light ? 0.3 : 0.55) + ')'; ctx.shadowBlur = (s.style === 'case' ? 8 : 4) * g.dpr; ctx.shadowOffsetY = 2 * g.dpr;
+      var around = new Path2D(); around.rect(-40, -40, g.w + 80, g.h + 80); around.addPath(geo.opening);
+      ctx.fillStyle = '#000'; ctx.fill(around, 'evenodd');
+    }
     ctx.restore();
   };
+  var HOUSING_STAGES = 9, LIGHT_STAGES = 5;
 
   /* where the screen's light falls, at 0.4 of CSS size: the direct reflection and its diffused copy on the face, faded by
      Mega Bezel's (1 - sqrt(d/D))^2 from the glass outward and toward the corners; and the glow over face and frame */
@@ -219905,70 +220299,110 @@ var T = {};
       for (var a = alpha; a > 0.004; a -= 1) { rc.globalAlpha = Math.min(1, a); rc.drawImage(T2, 0, 0); }
       rc.globalAlpha = 1; rc.globalCompositeOperation = 'source-over';
     };
-    pass(M.blur, m.direct, strength * 1.25, FOLD, 'face');
-    pass(M.blur * 4 + 3, m.diffused, strength * 0.55, FOLD, 'face');
-    pass(16, m.glow, strength * (s.glow ? 0.75 : 0.45), 1, 'all');
+    /* warmLight (the idle warm only): 1 the three masks alone, 2 the first pass unblurred, 3 the first pass, 4 and 5 the
+       other two passes in turn; undefined draws all */
+    var upto = this.warmLight === undefined ? LIGHT_STAGES : this.warmLight;
+    if (upto === 1) {
+      tc.clearRect(0, 0, w, h);
+      [m.direct, m.diffused, m.glow].forEach(function (k) { tc.drawImage(k, 0, 0); });
+      rc.drawImage(T2, 0, 0);
+      return R;
+    }
+    pass(upto === 2 ? 0 : M.blur, m.direct, strength * 1.25, FOLD, 'face');
+    if (upto >= 4) pass(M.blur * 4 + 3, m.diffused, strength * 0.55, FOLD, 'face');
+    if (upto >= 5) pass(16, m.glow, strength * (s.glow ? 0.75 : 0.45), 1, 'all');
     return R;
   };
 
   /* A case style's first showing compiled the GPU programs it draws with (the shadow-blurred rounded frames, the
      strokes, the reflection's blurs) in the frames after the click (part2's F3.1 trace on the P1000: Monitor linked 14
-     programs, 445 ms, and no new frame came for 567 ms). warm(view): each style is drawn once, at that terminal's size
-     and with its own settings, on a stand-in view in an unseen layer inside the viewport, one style per painted frame,
-     then all of it is removed. Liquid Glass's lg-warm recipe: an ancestor at opacity 0.004 (at 0.001 the alpha rounds
-     to nothing and nothing compiles), only on the GPU tier, never in a hidden tab, while the page is busy (it goes on at
-     'pm-idle') or within 600 ms of any input */
-  var warmedBezel = {}, lastInput = 0, inputWatch = false;
+     programs, 445 ms, and no new frame came for 567 ms). warm(views): each style is drawn once per view's size, with its
+     own settings, on a stand-in view in an unseen layer inside the viewport (Liquid Glass's lg-warm recipe: an ancestor
+     at opacity 0.004; at 0.001 the alpha rounds to nothing and nothing compiles), only on the GPU tier, as steps on the
+     page's idle-warm queue (PM_WARM), which admits them and backs off by the frames presented after each */
+  var warmedBezel = {}, warmIds = new WeakMap();
   function gpuTier() {
     var tier = document.documentElement.getAttribute('data-lg-tier');
     if (tier) return tier === 'gpu';
     return !!(T.FXGL && T.FXGL.probe && T.FXGL.probe());
   }
-  Bezel.warm = function (view) {
-    if (!view || !view.root || !view.root.isConnected || !T.Appearance || !gpuTier()) return;
-    if (!inputWatch) {
-      inputWatch = true;
-      ['pointerdown', 'keydown', 'wheel'].forEach(function (t) { window.addEventListener(t, function () { lastInput = T.util.now(); }, { capture: true, passive: true }); });
-    }
-    var A = T.Appearance, todo = ['rim', 'case'].map(function (style) {
-      var ap = A.peek({ api: view.api, tabAppearance: Object.assign({}, view.tabAppearance || {}, { bezel: style }), previewAppearance: null, state: {} });
-      return ap && ap.bezel && ap.bezel.style === style ? ap : null;
-    }).filter(function (ap) {
-      var b = ap.bezel, key = [b.style, b.width, b.color, b.reflect, ap.theme && ap.theme.appearance, ap.effects && ap.effects.look].join('|');
-      if (warmedBezel[key]) return false;
-      warmedBezel[key] = 1; return true;
+  Bezel.warm = function (views) {
+    views = [].concat(views || []).filter(function (view) { return view && view.root && view.root.isConnected; });
+    if (!views.length || !T.Appearance || !gpuTier()) return;
+    /* each view at its own size: a terminal and the Customize screen's preview of it draw the same case at different
+       sizes, and picking Monitor draws both (part2's F4 trace: with only the terminal's size warmed, a canvas stroke and
+       rounded-rectangle program still linked at the click, 87-90 ms) */
+    var A = T.Appearance, todo = [];
+    views.forEach(function (view) {
+      var w = Math.max(80, view.screen ? view.screen.clientWidth : 0), h = Math.max(60, view.screen ? view.screen.clientHeight : 0);
+      var dpr = (view.metrics && view.metrics.dpr) || window.devicePixelRatio || 1;
+      ['rim', 'case'].forEach(function (style) {
+        var ap = A.peek({ api: view.api, tabAppearance: Object.assign({}, view.tabAppearance || {}, { bezel: style }), previewAppearance: null, state: {} });
+        if (!ap || !ap.bezel || ap.bezel.style !== style) return;
+        var b = ap.bezel, key = [b.style, b.width, b.color, b.reflect, ap.theme && ap.theme.appearance, ap.effects && ap.effects.look, Math.round(w / 64), Math.round(h / 64), dpr].join('|');
+        if (warmedBezel[key]) return;
+        warmedBezel[key] = 1;
+        todo.push({ view: view, ap: ap, w: w, h: h, dpr: dpr, key: key });
+      });
     });
-    if (!todo.length) return;
-    var host = null, bz = null;
-    function done() { if (bz) bz.dispose(); if (host) host.remove(); host = bz = null; }
-    function ready() {
-      if (document.hidden) return false;
-      try { if (typeof window.PM_BUSY === 'function' && window.PM_BUSY()) return false; } catch (e) {}
-      return T.util.now() - lastInput >= 600;
-    }
-    function step() {
-      if (!view.root.isConnected) { done(); return; }
-      if (!ready()) { setTimeout(function () { idle(step); }, 400); return; }
-      var ap = todo.shift(), b = ap.bezel, w = Math.max(80, view.screen ? view.screen.clientWidth : 0), h = Math.max(60, view.screen ? view.screen.clientHeight : 0);
-      var dpr = (view.metrics && view.metrics.dpr) || window.devicePixelRatio || 1, inset = (b.width || 0) + (b.gap || 0);
-      if (!host) {
-        host = document.createElement('div');
-        host.setAttribute('aria-hidden', 'true'); host.inert = true;
-        host.style.cssText = 'position:fixed;left:0;top:0;width:' + w + 'px;height:' + h + 'px;opacity:.004;will-change:opacity;pointer-events:none;z-index:2147483000;contain:strict';
-        document.body.appendChild(host);
-        bz = new Bezel({ root: document.createElement('div'), canvas: view.canvas, visible: true, fx: null, renderer: null });
-        bz.el.style.cssText = 'position:absolute;inset:0';
-        bz.housing.style.cssText = 'position:absolute;left:0;top:0;width:100%;height:100%;display:block';
-        host.appendChild(bz.el);
+    if (!todo.length || !window.PM_WARM) return;
+    /* each style at each size is drawn on the page's idle-warm queue (PM_WARM; the lead's IDLE-WARM-RULE.md) in steps
+       small enough that each compiles few programs. Drawn whole in one step, the rim's case linked 13 programs in one
+       frame on a cold RTX 3090 (FillRRectOp 5, AAHairlineOp 4, FillRectOp 2, AAFlatteningConvexPathOp, DrawAtlasPathOp;
+       this lane's trace, 2026-10-17), the burst seen just after the Customize screen's build, which called this. The first
+       style of a call is drawn a section more each step (warmStage: the outline clip, the frame, the face, its creases,
+       the grain, the inner edge, the outer edge, the lip, the shadow), then, where the case has a reflection, its light a
+       part more each step (warmLight: the masks, the first pass unblurred, then blurred, the second, the third). The
+       others reuse nearly all of those programs (0 or 1 link a section on the 3090), so each is two steps: the case, then
+       its light. Each step draws in its own unseen layer and the queue removes it in the frame after (the step's
+       cleanup); a step that throws removes it at once (landing review IW-3). The ids are kept per view, so a view that
+       goes takes its steps with it (unwarm) */
+    todo.forEach(function (it, n) {
+      var ids = warmIds.get(it.view);
+      if (!ids) warmIds.set(it.view, (ids = []));
+      var probe = new Bezel({ root: document.createElement('div') }), steps = [];
+      probe.configure(it.ap.bezel, it.ap);
+      var ink = probe.spec.material === 'ink', fine = n === 0, k;
+      if (ink || !fine) steps.push({ name: 'case', stage: undefined, light: 0 });
+      else for (k = 1; k <= HOUSING_STAGES; k++) steps.push({ name: 'case' + k, stage: k, light: 0 });
+      if (!ink && probe.spec.strength > 0) {
+        if (!fine) steps.push({ name: 'light', stage: undefined, light: LIGHT_STAGES });
+        else for (k = 1; k <= LIGHT_STAGES; k++) steps.push({ name: 'light' + k, stage: undefined, light: k });
       }
-      bz.configure(b, ap);
-      bz.g = { w: w, h: h, gx: inset, gy: inset, gw: Math.max(20, w - inset * 2), gh: Math.max(20, h - inset * 2), dpr: dpr };
-      try { bz._paint(); } catch (e) { done(); return; }
-      /* kept for one painted frame, then the next style at the next idle moment */
-      requestAnimationFrame(function () { requestAnimationFrame(function () { if (todo.length) idle(step); else done(); }); });
-    }
-    function idle(fn) { if (window.requestIdleCallback) requestIdleCallback(fn, { timeout: 4000 }); else setTimeout(fn, 200); }
-    idle(step);
+      steps.forEach(function (pt) {
+        var id = window.PM_WARM.add({ owner: 'terminal', name: 'bezel:' + it.ap.bezel.style + ':' + pt.name + '@' + it.w + 'x' + it.h,
+          until: function () { return !!(it.view.root && it.view.root.isConnected); },
+          run: function () {
+            var b = it.ap.bezel, w = it.w, h = it.h, inset = (b.width || 0) + (b.gap || 0), host = null, bz = null;
+            var gone = function () { if (bz) bz.dispose(); if (host) host.remove(); bz = host = null; };
+            try {
+              host = document.createElement('div');
+              host.setAttribute('aria-hidden', 'true'); host.inert = true;
+              host.style.cssText = 'position:fixed;left:0;top:0;width:' + w + 'px;height:' + h + 'px;opacity:.004;will-change:opacity;pointer-events:none;z-index:2147483000;contain:strict';
+              bz = new Bezel({ root: document.createElement('div'), canvas: it.view.canvas, visible: true, fx: null, renderer: null });
+              bz.el.style.cssText = 'position:absolute;inset:0';
+              bz.housing.style.cssText = 'position:absolute;left:0;top:0;width:100%;height:100%;display:block';
+              host.appendChild(bz.el);
+              bz.configure(b, it.ap);
+              bz.warmStage = pt.stage;
+              if (pt.light) bz.warmLight = pt.light; else bz.spec.strength = 0;
+              bz.g = { w: w, h: h, gx: inset, gy: inset, gw: Math.max(20, w - inset * 2), gh: Math.max(20, h - inset * 2), dpr: it.dpr };
+              document.body.appendChild(host);
+              bz._paint();
+            } catch (e) { gone(); return null; }
+            return gone;
+          } });
+        ids.push({ id: id, key: it.key });
+      });
+    });
+  };
+  /* a view that goes: its case steps still queued are cancelled, and what they would have drawn may be warmed again for
+     another view */
+  Bezel.unwarm = function (view) {
+    var ids = warmIds.get(view);
+    if (!ids) return;
+    warmIds.delete(view);
+    ids.forEach(function (x) { if (window.PM_WARM) window.PM_WARM.cancel(x.id); delete warmedBezel[x.key]; });
   };
   T.Bezel = Bezel;
   T.Bezel.MATERIALS = Object.keys(MATERIALS);
@@ -221359,10 +221793,6 @@ var T = {};
      again for the next visit. Opened on another terminal it moves there (one is kept); when its terminal goes it is kept
      for the next one. The editor's screen does the same (11-editor-customize.js, .pmed-prepared) */
   var prepared = null, asked = null;
-  /* the person's last input (pointer, key, wheel): unseen warm work waits INPUT_QUIET_MS after it */
-  var INPUT_QUIET_MS = 600, lastInput = 0;
-  ['pointerdown', 'keydown', 'wheel'].forEach(function (t) { window.addEventListener(t, function () { lastInput = T.util.now(); }, { capture: true, passive: true }); });
-  function inputRecent() { return T.util.now() - lastInput < INPUT_QUIET_MS; }
   /* fn runs in the task after the coming frame has painted */
   function afterPaint(fn) { requestAnimationFrame(function () { setTimeout(fn, 0); }); }
   function open(v, opts) {
@@ -221462,10 +221892,39 @@ var T = {};
       var id = gv.slice(2);
       return gv.charAt(0) === 'g' ? { background: 'gradient', bgGradient: id } : { background: 'image', bgImage: id === 'fibre' ? 'paper' : id };
     }
+    /* the pick shows on its tile in the click's own frame, and the ground is drawn in the task after it: a scene is
+       drawn on a canvas at the terminal's size (43-grounds.js), and drawn in the click it held the click's paint
+       (part2's F3.1 M3 pass: Scene, Hills, 128 ms to the next paint, 77 ms of it in this handler). A later pick in the
+       meantime wins. Your own picture still asks for the file in the click, which the file chooser needs.
+       A ground the pointer rested on is already shown as a preview: it stays through the click's frame and goes in the
+       same task as the write, after it, so the old ground is never drawn in the click nor shown for a frame between the
+       preview and the pick (review TG-1: new, old, new); a pointer leaving meanwhile does not end it early (endPreview) */
+    var groundPick = 0, pickPending = false, catPick = 0;
+    /* a background category: its tab shows as chosen in the click's frame, and its tiles (each design drawn on a canvas
+       in this scheme, 43-grounds.js) are built in the task after it, as a pick is (part2's F4 M3 pass: NieR Dark, Scene,
+       112 ms to the next paint, 80 ms in this handler). A later choice in the meantime wins */
+    function chooseCat(b) {
+      var pick = ++catPick;
+      /* the choice itself is made in the click, so any paint before the deferred one keeps the new tab (review TC-1) */
+      gcat = b.getAttribute('data-gcat'); gSig = '';
+      [].forEach.call(root.querySelectorAll('[data-gcat]'), function (x) { setA(x, 'aria-selected', String(x === b)); });
+      afterPaint(function () { if (pick !== catPick || disposed) return; paint(); });
+    }
     function chooseGround(gv) {
-      clearTimeout(intent); if (previewing !== null) { previewing = null; A().endPreview(v); }
-      if (gv === 'custom' && !String(val('bgImageData') || '').match(/^img:/)) { gcat = 'yours'; paint(); uploadImage(); return; }
-      write(groundPatch(gv));
+      clearTimeout(intent);
+      if (gv === 'custom' && !String(val('bgImageData') || '').match(/^img:/)) {
+        if (previewing !== null) { previewing = null; A().endPreview(v); }
+        gcat = 'yours'; paint(); uploadImage(); return;
+      }
+      [].forEach.call(root.querySelectorAll('[data-key="ground"]'), function (b) { setA(b, 'aria-checked', String(b.getAttribute('data-value') === gv)); });
+      var pick = ++groundPick;
+      pickPending = true;
+      afterPaint(function () {
+        if (pick !== groundPick || disposed) return;
+        pickPending = false;
+        write(groundPatch(gv));
+        if (previewing !== null) { previewing = null; A().endPreview(v); syncPreview(); }
+      });
     }
     /* a tile's picture: the design as this scheme draws it, the look's own ground, or your picture */
     function groundArt(gv, th) {
@@ -221891,7 +222350,7 @@ var T = {};
       if (b.getAttribute('role') === 'switch') { toggle(b); return; }
       if (b.hasAttribute('data-step')) { var ns = nextSize(eff(), parseFloat(b.getAttribute('data-step')) < 0 ? -1 : 1); if (ns !== null) put('fontSize', ns); return; }
       if (b.hasAttribute('data-set')) { quickSet(b.getAttribute('data-set')); return; }
-      if (b.hasAttribute('data-gcat')) { gcat = b.getAttribute('data-gcat'); gSig = ''; paint(); return; }
+      if (b.hasAttribute('data-gcat')) { chooseCat(b); return; }
       if (b.hasAttribute('data-solid-color')) { write({ background: 'solid', bgColor: b.getAttribute('data-solid-color') }); return; }
       if (b.getAttribute('data-key') === 'ground') { chooseGround(b.getAttribute('data-value')); return; }
       if (b.hasAttribute('data-preset')) {
@@ -221974,7 +222433,7 @@ var T = {};
         A().preview(v, isGround ? groundPatch(id) : { scheme: id }); syncPreview();
       }, ms);
     }
-    function endPreview() { clearTimeout(intent); if (previewing === null) return; previewing = null; A().endPreview(v); syncPreview(); }
+    function endPreview() { clearTimeout(intent); if (previewing === null || pickPending) return; previewing = null; A().endPreview(v); syncPreview(); }
     var schemesEl = root.querySelector('.pmt-cz-schemes');
     schemesEl.addEventListener('mouseover', function (e) { var o = e.target.closest('.pmt-cz-scheme'); if (o) previewSoon(o, INTENT_MS); });
     schemesEl.addEventListener('mouseleave', function () { endPreview(); });
@@ -222128,67 +222587,106 @@ var T = {};
        changed for WARM_SETTLE_MS and no page, Usage or onboarding transition runs, and then for the page to be really
        idle: an idle period of WARM_IDLE_MS or more, which the browser gives only when nothing is drawing frames (a switch
        still playing leaves only slivers between its frames). WARM_LATEST_MS is the backstop for a page whose own motion
-       never rests (no cover or switch is up by then). A click before that draws what changed itself */
-    var WARM_SETTLE_MS = 3000, WARM_IDLE_MS = 45, WARM_LATEST_MS = 10000, warmJob = 0, warmWait = 0, warmSince = 0, offWarm = null;
+       never rests (no cover or switch is up by then). A click before that draws what changed itself. Where the page has
+       its idle-warm queue (PM_WARM, 11-motion-start.js) the drawing is a step on it after the quiet time, admitted and
+       judged as every warm step is, instead of this screen's own idle wait */
+    var WARM_SETTLE_MS = 3000, WARM_IDLE_MS = 45, WARM_LATEST_MS = 10000, warmJob = 0, warmStep = 0, warmWait = 0, warmSince = 0, offWarm = null;
     /* changed: something it shows may have changed while nothing watched it (kept from a terminal that went), so it
        draws again before it shows */
     var changed = false;
     function settling() { return pageSettling(); }
     function warm(deadline) {
-      warmJob = 0;
+      if (deadline === 'queue') warmStep = 0; else warmJob = 0;
       if (!closed || disposed) return;
       if (settling()) { warmSoon(); return; }
+      if (deadline === 'queue') { warmDraw(); return; }
       if (deadline && typeof deadline.timeRemaining === 'function' && !deadline.didTimeout && deadline.timeRemaining() < WARM_IDLE_MS && T.util.now() - warmSince < WARM_LATEST_MS) {
         warmJob = requestIdleCallback(warm, { timeout: Math.max(1000, WARM_LATEST_MS - (T.util.now() - warmSince)) });
         return;
       }
+      warmDraw();
+    }
+    function warmDraw() {
       place(); syncPreview(); paint();
       changed = false;
       /* the preview draws what changed now, unseen, so the click has nothing left to draw */
       if (pv && pv.fullPending) pv.frame();
       rasterSoon();
-      /* the case styles this screen offers, drawn once unseen in the look now in force (71-bezel.js Bezel.warm) */
-      if (T.Bezel && T.Bezel.warm) T.Bezel.warm(v);
+      /* the case styles this screen offers, drawn once unseen in the look now in force, at the terminal's size and at its
+         preview's (71-bezel.js Bezel.warm) */
+      if (T.Bezel && T.Bezel.warm) T.Bezel.warm([v, pv]);
     }
     /* parked, the screen is clipped away, so the GPU had never drawn it: its first showing compiled the GPU programs its
        surfaces need and rastered every tile in the click's frames (P2-02, F3 on the P1000: the compositor held about
        470 ms before the screen appeared in Friendly). Once built, and again for each look it has not been drawn in, it
-       is drawn at idle for two frames, unseen (opacity 0.004, as the shell warms its theme covers; 0.002 rounds to
-       nothing on the P1000), then clipped away again */
-    var rastered = {}, rasterJob = 0, rasterSince = 0, rasterFrames = false, rasterOn = false;
-    function rasterEnd() { if (rasterOn) { rasterOn = false; root.classList.remove('pmt-cz-rasterwarm'); root.inert = false; } }
+       is drawn at idle a part at a time, each for one frame, unseen (opacity 0.004, as the shell warms its theme covers;
+       0.002 rounds to nothing on the P1000), then clipped away again */
+    var rastered = {}, rasterOn = false;
+    /* nothing inside takes the focus while it is drawn: a focus that lands inside is let go at once. inert did the same,
+       but setting and clearing it restyled the whole screen twice per warm (review RW-4) */
+    function rasterGuard(e) {
+      if (!rasterOn) return;
+      /* the focus goes back where it came from rather than to the page (review TF5-1) */
+      var back = e.relatedTarget;
+      if (back && back.focus && !root.contains(back)) { try { back.focus({ preventScroll: true }); return; } catch (x) {} }
+      if (e.target && e.target.blur) e.target.blur();
+    }
+    function rasterEnd() {
+      if (rasterEl) { rasterEl.removeAttribute('data-rw-on'); rasterEl = null; }
+      if (rasterOn) { rasterOn = false; root.classList.remove('pmt-cz-rasterwarm'); root.removeAttribute('data-rw'); root.removeEventListener('focusin', rasterGuard, true); }
+    }
+    /* the steps go on the page's one idle-warm queue (PM_WARM, 11-motion-start.js; the lead's IDLE-WARM-RULE.md): it
+       admits one step per idle period, judges each by the frames presented after it and backs off when one is late
+       (part2's F5b cold P1000 trace: drawing the whole screen in one frame froze idle Home for up to a second). Each
+       step draws one part of the unseen screen: its top, then one group at a time; the queue hides it again in the frame
+       after (the step's cleanup). Without the queue nothing is warmed. The background tiles' samples are gone: on the
+       P1000 the Hills pick still linked the same 5 programs after them (part2, F5b), so they cost idle time for nothing */
+    var rasterIds = [];
+    function rasterCancel() {
+      if (window.PM_WARM) rasterIds.forEach(function (id) { window.PM_WARM.cancel(id); });
+      rasterIds = []; rasterEnd();
+    }
+    function rasterShow(part, el) {
+      if (!closed || disposed) return false;
+      rasterEnd();
+      rasterOn = true;
+      root.addEventListener('focusin', rasterGuard, true);
+      root.setAttribute('data-rw', part);
+      if (el) { el.setAttribute('data-rw-on', ''); rasterEl = el; }
+      root.classList.add('pmt-cz-rasterwarm');
+      return true;
+    }
+    var rasterEl = null;
     function rasterSoon() {
-      if (rasterJob || rasterFrames || !closed || disposed) return;
+      if (!closed || disposed || !window.PM_WARM) return;
       var key = (root.getAttribute('data-pmt-look') || '') + '|' + (root.getAttribute('data-pmt-mode') || '');
       if (rastered[key]) return;
-      if (!rasterSince) rasterSince = T.util.now();
-      var run = function (deadline) {
-        rasterJob = 0;
-        if (!closed || disposed || rastered[key]) { rasterSince = 0; return; }
-        /* a really idle moment where there is one; past WARM_LATEST_MS the next idle slice (a page whose own motion never
-           rests gives only short ones), never under a cover or a switch */
-        var late = T.util.now() - rasterSince >= WARM_LATEST_MS;
-        /* never within INPUT_QUIET_MS of the person's own input, backstop or not (review RW-1: on a page that is never
-           idle its ~470 ms of GPU work could land while they type) */
-        if (settling() || inputRecent() || (!late && deadline && typeof deadline.timeRemaining === 'function' && !deadline.didTimeout && deadline.timeRemaining() < WARM_IDLE_MS)) { rasterSoon(); return; }
-        /* and only after two frames that came on time, so it never lands on a frame the page is already late with */
-        rasterFrames = true;
-        requestAnimationFrame(function (t1) { requestAnimationFrame(function (t2) {
-          if (!rasterFrames) return;
-          rasterFrames = false;
-          if (!closed || disposed || rastered[key]) return;
-          if (t2 - t1 > 25 || settling() || inputRecent()) { rasterSoon(); return; }
-          rasterSince = 0; rastered[key] = 1; rasterOn = true;
-          /* inert for its three frames: drawn, its controls could otherwise take the focus (review RW-2) */
-          root.inert = true; root.classList.add('pmt-cz-rasterwarm');
-          requestAnimationFrame(function () { requestAnimationFrame(function () { requestAnimationFrame(rasterEnd); }); });
-        }); });
-      };
-      rasterJob = window.requestIdleCallback ? requestIdleCallback(run, { timeout: Math.max(1000, WARM_LATEST_MS - (T.util.now() - rasterSince)) }) : setTimeout(run, 300);
+      rastered[key] = 1;
+      var W = window.PM_WARM, add = function (name, run) { rasterIds.push(W.add({ owner: 'terminal', name: 'customize:' + name, run: run })); };
+      add('top', function () { return rasterShow('top') ? rasterEnd : null; });
+      [].forEach.call(root.querySelectorAll('.pmt-cz-group[data-group]'), function (g) {
+        add('group:' + g.getAttribute('data-group'), function () { return rasterShow('group', g) ? rasterEnd : null; });
+      });
     }
     function warmCancel() {
       clearTimeout(warmWait); warmWait = 0;
-      if (warmJob) { if (window.cancelIdleCallback) cancelIdleCallback(warmJob); clearTimeout(warmJob); warmJob = 0; }
+      if (warmStep && window.PM_WARM) window.PM_WARM.cancel(warmStep);
+      if (warmJob) { if (window.cancelIdleCallback) cancelIdleCallback(warmJob); clearTimeout(warmJob); }
+      warmJob = warmStep = 0;
+    }
+    /* the drawing, once the quiet time is over: a step on the page's queue, done when it is (a late frame after it is
+       not a reason to draw it again), or this screen's own idle wait where the queue is off or lets it go (the no-GPU
+       profile, the queue's session stop): the screen still has to be up to date when it shows */
+    function warmIdle() { warmJob = window.requestIdleCallback ? requestIdleCallback(warm, { timeout: WARM_LATEST_MS }) : setTimeout(warm, 300); }
+    function warmQueue() {
+      warmSince = T.util.now();
+      if (window.PM_WARM && !window.PM_WARM.state().off) {
+        var id = warmStep = window.PM_WARM.add({ owner: 'terminal', name: 'customize:catch-up', run: function () { warm('queue'); return null; },
+          until: function () { return closed && !disposed; },
+          onLate: function (i) { if (i.dropped && warmStep === id) { warmStep = 0; warmIdle(); } return true; } });
+        return;
+      }
+      warmIdle();
     }
     function warmSoon() {
       if (!closed || disposed) return;
@@ -222197,8 +222695,7 @@ var T = {};
         warmWait = 0;
         if (!closed || disposed) return;
         if (settling()) { warmSoon(); return; }
-        warmSince = T.util.now();
-        warmJob = window.requestIdleCallback ? requestIdleCallback(warm, { timeout: WARM_LATEST_MS }) : setTimeout(warm, 300);
+        warmQueue();
       }, WARM_SETTLE_MS);
     }
     /* the page's shared 'pm-idle' (every cover and transition has cleared, window.PM_BUSY's event): a catch-up still
@@ -222206,8 +222703,7 @@ var T = {};
     function warmOnIdle() {
       if (!warmWait || !closed || disposed || settling()) return;
       clearTimeout(warmWait); warmWait = 0;
-      warmSince = T.util.now();
-      warmJob = window.requestIdleCallback ? requestIdleCallback(warm, { timeout: WARM_LATEST_MS }) : setTimeout(warm, 300);
+      warmQueue();
     }
     function parkedWatch(on) {
       if (!on) warmCancel();
@@ -222242,6 +222738,9 @@ var T = {};
       disposed = true;
       if (v.pop === root) v.closeAppearance(true);
       parkedWatch(false); detach();
+      /* its steps still queued on PM_WARM go with it (landing review IW-2; its preview's case steps go with the preview's
+         view, 70-view.js dispose) */
+      rasterCancel();
       if (preview) preview.dispose();
       root.remove();
       clearTimeout(keptTimer);
@@ -222316,9 +222815,8 @@ var T = {};
       /* something changed while it was parked and its catch-up has not run yet (a look just switched, a screen kept from a
          terminal that went): drawn in the click, the browser would style and lay it out there, holding the menu
          (P2-02, F1A on the P1000) */
-      var owed = changed || !!(warmWait || warmJob);
-      if (rasterJob) { if (window.cancelIdleCallback) cancelIdleCallback(rasterJob); clearTimeout(rasterJob); rasterJob = 0; }
-      rasterFrames = false; rasterEnd();
+      var owed = changed || !!(warmWait || warmJob || warmStep);
+      rasterCancel();
       parkedWatch(false);
       var showing = ++visit;
       gcat = null; wantDock = false; dockTo(false); body.scrollTop = 0;
@@ -222365,7 +222863,7 @@ var T = {};
     parkedWatch(true);
     own(v);
     prepared = handle;
-    if (opts.prepare) { rasterSoon(); if (T.Bezel && T.Bezel.warm) T.Bezel.warm(v); }
+    if (opts.prepare) { rasterSoon(); if (T.Bezel && T.Bezel.warm) T.Bezel.warm([v, pv]); }
     return opts.prepare ? handle : show(opts);
   }
 
@@ -222386,7 +222884,7 @@ var T = {};
   }
   /* one poll pending at a time; with no terminal session at all it stops, and the next terminal to mount wakes it
      (90-kind.js mountView, T.Customize.wake; review TP-1: it polled every 1.5 s for the rest of the session) */
-  var prepTimer = 0;
+  var prepTimer = 0, prepStep = 0;
   function prepareLater(ms) {
     if (prepTimer) return;
     prepTimer = setTimeout(function () { prepTimer = 0; prepareSoon(); }, ms);
@@ -222405,6 +222903,7 @@ var T = {};
        and a screen built late only makes the first click pay for it */
     var since = T.util.now();
     var build = function (deadline) {
+      prepStep = 0;
       if ((prepared && !prepared.kept) || v.pop || !v.root.isConnected) { if (!prepared || prepared.kept) prepareLater(1500); return; }
       if (pageSettling()) { prepareLater(1500); return; }
       if (deadline && typeof deadline.timeRemaining === 'function' && !deadline.didTimeout && deadline.timeRemaining() < 45 && T.util.now() - since < 4000) {
@@ -222412,7 +222911,18 @@ var T = {};
       }
       try { open(v, { prepare: true }); } catch (e) { console.error('[pmt] the Customize screen could not be prepared', e); }
     };
-    if (window.requestIdleCallback) requestIdleCallback(build, { timeout: 4000 }); else setTimeout(build, 500);
+    /* where the page has its idle-warm queue the build is a step on it, admitted and judged as every warm step is (part2's
+       F5b cold P1000 trace: built in this screen's own idle wait, it and its first drawing froze idle Home for a second);
+       a late frame after it is no reason to build it again. */
+    var idleBuild = function () { if (window.requestIdleCallback) requestIdleCallback(build, { timeout: 4000 }); else setTimeout(build, 500); };
+    /* where the queue is off or lets the step go (the no-GPU profile, its session stop) it is built in its own idle
+       wait, as before: the screen is needed either way */
+    if (window.PM_WARM && !window.PM_WARM.state().off) {
+      if (!prepStep) prepStep = window.PM_WARM.add({ owner: 'terminal', name: 'customize:build', run: function () { build(null); return null; },
+        onLate: function (i) { if (i.dropped) { prepStep = 0; idleBuild(); } return true; } });
+      return;
+    }
+    idleBuild();
   }
   if (document.readyState === 'complete') prepareLater(1500);
   else window.addEventListener('load', function () { prepareLater(1500); }, { once: true });
