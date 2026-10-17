@@ -2502,12 +2502,15 @@
   }
   function rasterPlanFor(panel, rt) {
     if (rt.t === 'layer') { var p0 = rasterPlanStart(panel, null, null, [{ layer: true, label: 'layer' }]); p0.stack = []; p0.phase = 1; return p0; }
+    /* no whole draw after a part's prefix (P2-03 final, 2026-10-17): the prefix draws every painting element in the
+       window, and what the whole draw still linked (RTX 3090: the chrome whole 8 programs, one of them 72 ms; a card
+       whole 3-4) is the batching of the whole, which a P1000 holds well over 100 ms; the arrival, drawn unseen under the
+       shell's hold, links that instead */
     if (rt.t === 'chrome') {
-      return rasterPlanStart(panel, function () { return 'P'; }, function (el) { return el.classList && el.classList.contains('pmu-card') && el.parentNode && el.parentNode.classList.contains('pmu-board'); },
-        [{ chrome: true, label: 'chrome' }]);
+      return rasterPlanStart(panel, function () { return 'P'; }, function (el) { return el.classList && el.classList.contains('pmu-card') && el.parentNode && el.parentNode.classList.contains('pmu-board'); }, []);
     }
     var card = rt.el, body = card.querySelector(':scope > .pmu-cardbody');
-    return rasterPlanStart(card, function (el) { return body && body.contains(el) ? 'Y' : 'K'; }, null, [{ whole: card, card: true, label: 'card' }]);
+    return rasterPlanStart(card, function (el) { return body && body.contains(el) ? 'Y' : 'K'; }, null, []);
   }
   /* the next root: the one done loses its marks (each draw's cleanup took the paint token off, so its layer is gone and
      nothing of it stays drawn) */
@@ -2640,6 +2643,16 @@
       if (sh.length > 1) out.push({ name: 'shadow', css: { 'text-shadow': sh[0] } });
     }
     if (/^(dashed|dotted)$/.test(cs.borderTopStyle) && rpx(cs.borderTopWidth) > 0) out.push({ name: 'solid', css: { 'border-style': 'solid' } });
+    /* a box with more than one paint of its own (its fill, its border, its shadow): the fill alone, then the border alone,
+       then the box whole (each a program of its own: a rounded box with a border and a shadow linked 3-4 at once) */
+    var bgOn = ralpha(cs.backgroundColor) > 0 || layers.length > 0, shOn = !!cs.boxShadow && cs.boxShadow !== 'none';
+    var bdOn = cs.borderTopStyle !== 'none' && cs.borderTopStyle !== 'hidden' && rpx(cs.borderTopWidth) + rpx(cs.borderRightWidth) + rpx(cs.borderBottomWidth) + rpx(cs.borderLeftWidth) > 0;
+    if ((bgOn ? 1 : 0) + (bdOn ? 1 : 0) + (shOn ? 1 : 0) >= 2) {
+      if (bgOn) out.push({ name: 'fill', css: { 'border-color': 'transparent', 'box-shadow': 'none', 'outline-style': 'none' } });
+      if (bdOn) out.push({ name: 'edge', css: { 'background-color': 'transparent', 'background-image': 'none', 'box-shadow': 'none', 'outline-style': 'none' } });
+    }
+    /* an image with rounded corners: square first (the texture alone), then rounded */
+    if ((el.localName === 'img' || el.localName === 'video') && rpx(cs.borderTopLeftRadius) + rpx(cs.borderBottomRightRadius) > 0) out.push({ name: 'square', css: { 'border-radius': '0' } });
     /* a provider mark or icon under a filter (Friendly's marks): the image alone first, then with its filter */
     if (cs.filter && cs.filter !== 'none' && (el.localName === 'img' || el.localName === 'svg' || el.localName === 'canvas')) out.push({ name: 'plain', css: { filter: 'none' } });
     return out;
