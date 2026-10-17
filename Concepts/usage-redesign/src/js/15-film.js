@@ -784,8 +784,8 @@
   function unwait(m) {
     var w = m && m.wait; if (!w) return;
     m.wait = null; M.hold(false);
-    var board = document.getElementById('pmuBoard');
-    if (board) board.removeAttribute('data-pmu-arrive');
+    var panel = document.getElementById('panel-usage');
+    if (panel) panel.removeAttribute('data-pmu-arrive');
     w.at.forEach(function (t) { try { t.fn(); } catch (error) {} });
   }
   function endMoment(m) {
@@ -2865,8 +2865,9 @@
     warmRelease(w, m, board, cards);
     /* held at the middle of each move, not its first frame: a first frame at opacity 0 is not rastered (RTX 3090, the
        first try: 19 links after the hold, a 225 ms frame with the page at .21 and no plate on it), so the hold shows
-       every plate, body, roll and light half way, which the GPU rasters (and links) unseen; the bodies keep their own
-       layers through the hold (data-pmu-arrive, 05-film.css), the ones their reveals animate. arriveGo rewinds each to 0 */
+       every plate, body, roll and light half way, which the GPU rasters (and links) unseen, the page at .004 over the
+       shell's held 0 and the bodies on their own layers, the ones their reveals animate (the panel's data-pmu-arrive,
+       05-film.css). arriveGo rewinds each to 0 */
     m.anims.forEach(function (a) {
       if (!a || !a.effect || typeof a.pause !== 'function') return;
       try {
@@ -2877,7 +2878,8 @@
         m.wait.anims.push(a);
       } catch (error) {}
     });
-    board.setAttribute('data-pmu-arrive', '');
+    var panel = document.getElementById('panel-usage');
+    if (panel) panel.setAttribute('data-pmu-arrive', '');
     if (last) last.goMs = [Math.round((c1 - t0) * 10) / 10, Math.round((performance.now() - c1) * 10) / 10];
     arriveHold(m, function (ok, n) { arriveGo(m, n); });
   }
@@ -2885,8 +2887,8 @@
   function arriveGo(m, n) {
     var w = m.wait; if (!w) return;   /* the moment ended meanwhile (unwait wrote its end states) */
     m.wait = null; M.hold(false);
-    var board = document.getElementById('pmuBoard');
-    if (board) board.removeAttribute('data-pmu-arrive');
+    var panel = document.getElementById('panel-usage');
+    if (panel) panel.removeAttribute('data-pmu-arrive');
     if (moment !== m) return;
     var now = performance.now();
     m.holdMs = Math.round(now - w.t0); m.holdFrames = n; m.t0 = now;
