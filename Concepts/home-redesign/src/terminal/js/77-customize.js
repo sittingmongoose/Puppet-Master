@@ -426,10 +426,6 @@
      again for the next visit. Opened on another terminal it moves there (one is kept); when its terminal goes it is kept
      for the next one. The editor's screen does the same (11-editor-customize.js, .pmed-prepared) */
   var prepared = null, asked = null;
-  /* the person's last input (pointer, key, wheel): unseen warm work waits INPUT_QUIET_MS after it */
-  var INPUT_QUIET_MS = 600, lastInput = 0;
-  ['pointerdown', 'keydown', 'wheel'].forEach(function (t) { window.addEventListener(t, function () { lastInput = T.util.now(); }, { capture: true, passive: true }); });
-  function inputRecent() { return T.util.now() - lastInput < INPUT_QUIET_MS; }
   /* fn runs in the task after the coming frame has painted */
   function afterPaint(fn) { requestAnimationFrame(function () { setTimeout(fn, 0); }); }
   function open(v, opts) {
@@ -1252,7 +1248,7 @@
        470 ms before the screen appeared in Friendly). Once built, and again for each look it has not been drawn in, it
        is drawn at idle for two frames, unseen (opacity 0.004, as the shell warms its theme covers; 0.002 rounds to
        nothing on the P1000), then clipped away again */
-    var rastered = {}, rasterJob = 0, rasterSince = 0, rasterFrames = false, rasterOn = false;
+    var rastered = {}, rasterOn = false;
     /* nothing inside takes the focus while it is drawn: a focus that lands inside is let go at once. inert did the same,
        but setting and clearing it restyled the whole screen twice per warm (review RW-4) */
     function rasterGuard(e) {
@@ -1264,7 +1260,8 @@
     }
     function rasterEnd() {
       if (rasterSample) { rasterSample.remove(); rasterSample = null; }
-      if (rasterOn) { rasterOn = false; root.classList.remove('pmt-cz-rasterwarm'); root.removeEventListener('focusin', rasterGuard, true); }
+      if (rasterEl) { rasterEl.removeAttribute('data-rw-on'); rasterEl = null; }
+      if (rasterOn) { rasterOn = false; root.classList.remove('pmt-cz-rasterwarm'); root.removeAttribute('data-rw'); root.removeEventListener('focusin', rasterGuard, true); }
     }
     /* the background tiles' kinds it has not drawn in this look: their rounded picture, gradient and pattern fills
        linked their GPU programs when a category first showed them (part2's F5a P1000 trace: the Scene tiles, 5 to 7
@@ -1285,51 +1282,51 @@
       if (!sampled[lookKey + '|solid']) out.push({ kind: 'solid', gv: 'theme', name: 'Scheme' });
       return out;
     }
+    /* the steps go on the page's one idle-warm queue (PM_WARM, 11-motion-start.js; the lead's IDLE-WARM-RULE.md): it
+       admits one step per idle period, judges each by the frames presented after it and backs off when one is late
+       (part2's F5b cold P1000 trace: drawing the whole screen in one frame froze idle Home for up to a second). Each
+       step draws one part of the unseen screen: its top, then one group at a time, then one sample tile; the queue
+       hides it again in the frame after (the step's cleanup). Without the queue nothing is warmed */
+    var rasterIds = [];
+    function rasterCancel() {
+      if (window.PM_WARM) rasterIds.forEach(function (id) { window.PM_WARM.cancel(id); });
+      rasterIds = []; rasterEnd();
+    }
+    function rasterShow(part, el) {
+      if (!closed || disposed) return false;
+      rasterEnd();
+      rasterOn = true;
+      root.addEventListener('focusin', rasterGuard, true);
+      root.setAttribute('data-rw', part);
+      if (el) { el.setAttribute('data-rw-on', ''); rasterEl = el; }
+      root.classList.add('pmt-cz-rasterwarm');
+      return true;
+    }
+    var rasterEl = null;
     function rasterSoon() {
-      if (rasterJob || rasterFrames || !closed || disposed) return;
+      if (!closed || disposed || !window.PM_WARM) return;
       var key = (root.getAttribute('data-pmt-look') || '') + '|' + (root.getAttribute('data-pmt-mode') || '');
       if (rastered[key]) return;
-      if (!rasterSince) rasterSince = T.util.now();
-      var run = function (deadline) {
-        rasterJob = 0;
-        if (!closed || disposed || rastered[key]) { rasterSince = 0; return; }
-        /* a really idle moment where there is one; past WARM_LATEST_MS the next idle slice (a page whose own motion never
-           rests gives only short ones), never under a cover or a switch */
-        var late = T.util.now() - rasterSince >= WARM_LATEST_MS;
-        /* never within INPUT_QUIET_MS of the person's own input, backstop or not (review RW-1: on a page that is never
-           idle its ~470 ms of GPU work could land while they type) */
-        if (settling() || inputRecent() || (!late && deadline && typeof deadline.timeRemaining === 'function' && !deadline.didTimeout && deadline.timeRemaining() < WARM_IDLE_MS)) { rasterSoon(); return; }
-        /* and only after two frames that came on time, so it never lands on a frame the page is already late with */
-        rasterFrames = true;
-        requestAnimationFrame(function (t1) { requestAnimationFrame(function (t2) {
-          if (!rasterFrames) return;
-          rasterFrames = false;
-          if (!closed || disposed || rastered[key]) return;
-          if (t2 - t1 > 25 || settling() || inputRecent()) { rasterSoon(); return; }
-          rasterSince = 0; rastered[key] = 1; rasterOn = true;
-          /* its controls must not take the focus for its three frames (review RW-2; rasterGuard) */
-          root.addEventListener('focusin', rasterGuard, true); root.classList.add('pmt-cz-rasterwarm');
-          var samples = sampleTiles(key), host = root.querySelector('[data-gtiles]');
-          var nextSample = function () {
-            if (!rasterOn) return;
-            if (rasterSample) { rasterSample.remove(); rasterSample = null; }
-            /* only while the person stays away and the page is not in a change; what is left waits for the next look */
-            if (!samples.length || !host || inputRecent() || settling()) { rasterEnd(); return; }
-            /* each sample is drawn in its own frame, its picture too (a painted design is a canvas and a PNG; review
-               TF5b-1: built all at once, every one of them ran in the frame the warm began) */
-            var sm = samples.shift(), R = eff(), th = R && R.theme, tmp = document.createElement('div');
-            if (!th) { rasterEnd(); return; }
-            tmp.innerHTML = groundTile(sm.gv, sm.name, th); rasterSample = tmp.firstChild;
-            if (!rasterSample) { nextSample(); return; }
-            rasterSample.setAttribute('aria-hidden', 'true'); rasterSample.tabIndex = -1;
-            host.appendChild(rasterSample);
-            sampled[key + '|' + sm.kind] = 1;
-            requestAnimationFrame(function () { requestAnimationFrame(nextSample); });
-          };
-          requestAnimationFrame(function () { requestAnimationFrame(function () { requestAnimationFrame(nextSample); }); });
-        }); });
-      };
-      rasterJob = window.requestIdleCallback ? requestIdleCallback(run, { timeout: Math.max(1000, WARM_LATEST_MS - (T.util.now() - rasterSince)) }) : setTimeout(run, 300);
+      rastered[key] = 1;
+      var W = window.PM_WARM, add = function (name, run) { rasterIds.push(W.add({ owner: 'terminal', name: 'customize:' + name, run: run })); };
+      add('top', function () { return rasterShow('top') ? rasterEnd : null; });
+      [].forEach.call(root.querySelectorAll('.pmt-cz-group[data-group]'), function (g) {
+        add('group:' + g.getAttribute('data-group'), function () { return rasterShow('group', g) ? rasterEnd : null; });
+      });
+      /* one sample of each background kind, each in its own step, its picture drawn in that step (review TF5b-1) */
+      sampleTiles(key).forEach(function (sm) {
+        add('tile:' + sm.kind, function () {
+          var host = root.querySelector('[data-gtiles]'), grp = host && host.closest('.pmt-cz-group'), R = eff(), th = R && R.theme;
+          if (!host || !th || !rasterShow('group', grp)) return null;
+          var tmp = document.createElement('div');
+          tmp.innerHTML = groundTile(sm.gv, sm.name, th); rasterSample = tmp.firstChild;
+          if (!rasterSample) { rasterEnd(); return null; }
+          rasterSample.setAttribute('aria-hidden', 'true'); rasterSample.tabIndex = -1;
+          host.appendChild(rasterSample);
+          sampled[key + '|' + sm.kind] = 1;
+          return rasterEnd;
+        });
+      });
     }
     function warmCancel() {
       clearTimeout(warmWait); warmWait = 0;
@@ -1462,8 +1459,7 @@
          terminal that went): drawn in the click, the browser would style and lay it out there, holding the menu
          (P2-02, F1A on the P1000) */
       var owed = changed || !!(warmWait || warmJob);
-      if (rasterJob) { if (window.cancelIdleCallback) cancelIdleCallback(rasterJob); clearTimeout(rasterJob); rasterJob = 0; }
-      rasterFrames = false; rasterEnd();
+      rasterCancel();
       parkedWatch(false);
       var showing = ++visit;
       gcat = null; wantDock = false; dockTo(false); body.scrollTop = 0;

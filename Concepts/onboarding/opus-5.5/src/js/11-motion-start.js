@@ -151,4 +151,358 @@
     const watchBody = () => { if (document.body) seen.observe(document.body, { childList: true }); };
     if (document.body) watchBody(); else document.addEventListener('DOMContentLoaded', watchBody, { once: true });
   } catch (_) { /* calls still arm it */ }
+
+  /* PM_WARM: the one page-wide queue for idle warm drawing (the lead's IDLE-WARM-RULE.md v3.3, 2026-10-17). A lane hands
+     it small steps that draw something unseen, so the GPU compiles its programs or rasters a surface before first use.
+     On a cold P1000 a step that was short on the main thread still held the compositor 100-1,000 ms when it made the
+     GPU compile several programs (part2's F5b idle trace), so a step goes only when the page is still, and is judged by
+     the frames presented after it.
+       when: an idle callback (no timeout) with 45 ms or more left, so nothing is drawing frames; after 10 s without one,
+         the next idle callback whatever it has left. While a gate fails the wait grows from 400 ms to 2 s (back to 400
+         once a step goes), and 'pm-idle' tries again at once.
+       gates: the page visible, PM_BUSY() empty, no pointer, key, wheel or touch input for 600 ms, none pending, any
+         back-off run out, no finite CSS animation or transition running, and the two frames before the step on time
+         (1.5x the median refresh). Animations and transitions are counted from their events, so no style is read in a
+         timer or a frame; what is counted is looked up in PM_AFTER_LAYOUT, where style is already computed, when it is
+         new and once a second after: one that ended without an event reaching window, or an infinite one (an ambient
+         loop), is let go, and so is an element no longer connected and anything counted for 30 s.
+       where: a GPU step at the start of a frame (rAF), the third of three watched; a cpu step (no GPU work: canvas
+         draws, blurs, encodes on the CPU) inside an idle callback after those frames, given its deadline. In the rAF
+         only the frames, hidden, PM_BUSY, input and the count are looked at, never style.
+       judged: late when either of the two rAF intervals after the step's frame is over max(40 ms, 3x the median
+         refresh): the first is where a GPU compile holds the next frame. A cpu step is judged by the two after the
+         frame that follows it. A cleanup run() returns runs in the first frame after the step.
+       light (one kind, <= 2 ms of JS): judged by the one interval after it; the next step, if light, may go in that
+         same frame (one per frame) while every gate holds and no frame was late in the last 2 s.
+       late: onLate({ name, late, dropped: false }); true means the owner handled it (split it, moved it), otherwise it
+         goes to the end of its owner's line once, and late twice it is dropped (onLate with dropped: true). The wait
+         after a late step is 1 s, doubling to 8 s; 3 clean steps reset it. 3 late in a row stop the queue until
+         'pm-idle' or 30 s; the second stop is for the session: the rest is dropped, its owners told, 'pm-warm-done' sent.
+       order: near steps first, then round-robin across owners, FIFO within an owner; until() false skips a step.
+       off: ?pm-warm=0, and the no-GPU profile once O55.motion knows it (?pm-warm=force runs it there, for checks); an
+         add is then logged 'skipped' (state().off says so before adding), and steps queued before it was known are let
+         go with onLate({ dropped: true }), as at the session stop.
+     add({ owner, name, run, near, light, cpu, until, onLate }) -> id; cancel(id), cancelOwner(owner), state(owner?)
+     { queued, dropped, backoffMs, lateRun, stopped, session, off, running, lateCount, waiting: the gate that held the
+     last try ('idle', 'frames', 'input', 'animation', ...) }; window.__pmWarmLog (also
+     PM_WARM.log): the last 200 { owner, name, t, cpuMs, frameMs, late, outcome }. 'pm-warm-done' on window when the
+     queue empties, at the session stop, and after an add skipped with nothing queued (warming off), so an owner that
+     waits for it never waits on a software-rendered computer */
+  const warmFlag = (v) => { try { return new RegExp('(?:^|[?&])pm-warm=' + v + '(?:&|$)').test(location.search); } catch (_) { return false; } };
+  const warmOff = warmFlag('0'), warmForce = warmFlag('force');
+  /* softwareRendered() says false until its worker has answered, so only a known answer is kept (landing review IW-1) */
+  let warmSoft = warmForce ? false : null;
+  const softKnown = () => {
+    if (warmSoft !== null) return true;
+    try {
+      const M = window.O55 && window.O55.motion;
+      if (!M || typeof M.softwareRendered !== 'function') { warmSoft = false; return true; }
+      if (typeof M.softwareKnown === 'function' && !M.softwareKnown()) return false;
+      warmSoft = !!M.softwareRendered();
+    } catch (_) { warmSoft = false; }
+    return true;
+  };
+  const warmQ = [], warmLog = window.__pmWarmLog = [], warmDropped = [], warmDeltas = [];
+  let warmSeq = 0, warmLastOwner = '', warmTimer = 0, warmIdle = 0, warmBusy = false, warmRunning = null,
+    warmBackoff = 0, warmUntil = 0, warmClean = 0, warmLateRun = 0, warmLateCount = 0, warmLateAt = -1e9,
+    warmStops = 0, warmStopped = false, warmSession = false, warmStopTimer = 0, warmDoneTimer = 0,
+    warmInput = -1e9, warmWaitMs = 0, warmIdleSince = 0, warmVis = 0, warmD1 = 0, warmD2 = 0, warmClassing = false, warmWhy = '';
+  const listen = (t, fn) => window.addEventListener(t, fn, { capture: true, passive: true });
+  ['pointermove', 'pointerdown', 'keydown', 'wheel', 'touchstart'].forEach((t) => listen(t, () => { warmInput = performance.now(); }));
+  document.addEventListener('visibilitychange', () => { warmVis++; });
+  /* finite animations and transitions running: Element -> Map('a'|'t' + pseudo + '|' + name -> { at, seen, fin }).
+     An event says when one starts and ends, not always: one that the page stops by hiding its element (the chat bar's
+     buttons, at load on Nas1) sent no cancel that reached window and held the queue 30 s. So what is counted is looked
+     up in PM_AFTER_LAYOUT (classify), when it is new (an animation's iteration count is not in its event) and again once
+     it has been counted a second: one no longer there, or an infinite one (an ambient loop), is let go */
+  const warmAnims = new Map();
+  const animKey = (k, e) => k + (e.pseudoElement || '') + '|' + (k === 'a' ? e.animationName : e.propertyName);
+  const animOn = (k) => (e) => {
+    const el = e.target;
+    if (!el || el.nodeType !== 1) return;
+    let m = warmAnims.get(el);
+    if (!m) warmAnims.set(el, (m = new Map()));
+    const now = performance.now();
+    m.set(animKey(k, e), { at: now, seen: now, fin: k === 't' ? true : undefined });
+    /* elements taken out of the page while nothing is queued are let go here */
+    if (warmAnims.size > 50) animState();
+  };
+  const animOff = (k) => (e) => {
+    const m = warmAnims.get(e.target);
+    if (!m) return;
+    m.delete(animKey(k, e));
+    if (!m.size) warmAnims.delete(e.target);
+  };
+  listen('animationstart', animOn('a')); listen('animationend', animOff('a')); listen('animationcancel', animOff('a'));
+  listen('transitionrun', animOn('t')); listen('transitionend', animOff('t')); listen('transitioncancel', animOff('t'));
+  /* '' none finite running, 'run' one is (looked up within the last second), 'ask' only ones to look up */
+  const animState = () => {
+    const now = performance.now();
+    let st = '';
+    warmAnims.forEach((m, el) => {
+      if (!el.isConnected) { warmAnims.delete(el); return; }
+      m.forEach((a, k) => {
+        if (now - a.at > 30000) m.delete(k);
+        else if (a.fin && now - a.seen <= 1000) st = 'run';
+        else if (!st) st = 'ask';
+      });
+      if (!m.size) warmAnims.delete(el);
+    });
+    return st;
+  };
+  /* in PM_AFTER_LAYOUT: style is computed, so reading an element's animations forces nothing */
+  const classify = () => {
+    warmClassing = false;
+    const now = performance.now();
+    warmAnims.forEach((m, el) => {
+      let list = null;
+      m.forEach((a, k) => {
+        if (a.fin && now - a.seen <= 1000) return;
+        if (!list) { try { list = el.getAnimations({ subtree: true }); } catch (_) { list = []; } }
+        const anim = list.find((x) => x.effect && x.effect.target === el && (k[0] === 'a' ? x.animationName != null && 'a' + (x.effect.pseudoElement || '') + '|' + x.animationName === k
+          : x.transitionProperty != null && 't' + (x.effect.pseudoElement || '') + '|' + x.transitionProperty === k));
+        let gone = true;
+        try { gone = !anim || anim.playState === 'finished' || anim.playState === 'idle' || anim.effect.getTiming().iterations === Infinity; } catch (_) { /* gone */ }
+        if (gone) m.delete(k); else { a.fin = true; a.seen = now; }
+      });
+      if (!m.size) warmAnims.delete(el);
+    });
+    warmWake(0, true);
+  };
+  const median = () => {
+    if (warmDeltas.length < 5) return 1000 / 60;
+    const s = warmDeltas.slice().sort((a, b) => a - b);
+    return s[Math.floor(s.length / 2)];
+  };
+  const lateMs = () => Math.max(40, 3 * median());
+  const onTime = (d) => d <= 1.5 * median();
+  const note = (d) => {
+    if (d > lateMs()) warmLateAt = performance.now();
+    warmD1 = warmD2; warmD2 = d;
+    warmDeltas.push(d); if (warmDeltas.length > 30) warmDeltas.shift();
+  };
+  const pending = () => { try { const s = navigator.scheduling; return !!(s && s.isInputPending && s.isInputPending()); } catch (_) { return false; } };
+  /* the gates that read nothing of style or layout, so they may be looked at inside a frame: '' when all hold, else
+     the first that does not (state().waiting) */
+  const blocked = () => {
+    const now = performance.now();
+    if (document.hidden) return 'hidden';
+    if (window.PM_BUSY()) return 'busy';
+    if (now - warmInput < 600) return 'input';
+    if (pending()) return 'pending';
+    if (now < warmUntil) return 'backoff';
+    const a = animState();
+    return a === 'run' ? 'animation' : a === 'ask' ? 'animation?' : '';
+  };
+  const quiet = () => !(warmWhy = blocked());
+  const logStep = (st, cpuMs, frameMs, late, outcome) => {
+    warmLog.push({ owner: st.owner, name: st.name, t: Math.round(performance.now()), cpuMs: Math.round(cpuMs * 10) / 10, frameMs: frameMs, late: late, outcome: outcome });
+    if (warmLog.length > 200) warmLog.shift();
+  };
+  const tell = (st, late, dropped) => {
+    if (typeof st.onLate !== 'function') return false;
+    try { return st.onLate({ name: st.name, late: late, dropped: dropped }) === true; } catch (_) { return false; }
+  };
+  const done = () => {
+    if (warmDoneTimer) return;
+    warmDoneTimer = setTimeout(() => {
+      warmDoneTimer = 0;
+      if ((warmQ.length || warmBusy) && !warmSession) return;
+      try { window.dispatchEvent(new Event('pm-warm-done')); } catch (_) { /* none */ }
+    }, 0);
+  };
+  /* the steps still queued are let go (the session stop: 'dropped'; the no-GPU profile known only after they were
+     queued: 'skipped'), and each owner is told, so work it needs anyway (a screen built ahead) goes its own way */
+  const dropAll = (outcome) => {
+    warmQ.splice(0).forEach((st) => { logStep(st, 0, null, false, outcome); if (outcome === 'dropped') warmDropped.push(st.owner + ':' + st.name); tell(st, 0, true); });
+    done();
+  };
+  /* the next step: near first, then the owner after the last one's, FIFO within an owner; a step whose until() says
+     it is no longer wanted is skipped. take: false only looks */
+  const pick = (take) => {
+    for (;;) {
+      let i = warmQ.findIndex((st) => st.near);
+      if (i < 0) {
+        const owners = [];
+        warmQ.forEach((st) => { if (owners.indexOf(st.owner) < 0) owners.push(st.owner); });
+        if (!owners.length) return null;
+        const next = owners[(owners.indexOf(warmLastOwner) + 1) % owners.length];
+        i = warmQ.findIndex((st) => st.owner === next);
+      }
+      const st = warmQ[i];
+      let want = true;
+      if (typeof st.until === 'function') { try { want = st.until() !== false; } catch (_) { want = false; } }
+      if (want) { if (take) warmQ.splice(i, 1); return st; }
+      warmQ.splice(i, 1); logStep(st, 0, null, false, 'skipped');
+    }
+  };
+  /* wait ms, then for an idle callback. force: replace a wait already set (pm-idle, a classification) */
+  const warmWake = (ms, force) => {
+    if (warmBusy || warmStopped || !warmQ.length) return;
+    if (warmTimer || warmIdle) { if (!force) return; clearTimeout(warmTimer); if (warmIdle && window.cancelIdleCallback) cancelIdleCallback(warmIdle); warmTimer = warmIdle = 0; }
+    if (!warmIdleSince) warmIdleSince = performance.now();
+    warmTimer = setTimeout(() => {
+      warmTimer = 0;
+      if (window.requestIdleCallback) warmIdle = requestIdleCallback(idle);
+      else idle({ timeRemaining: () => 50 });
+    }, Math.max(0, ms || 0));
+  };
+  const retry = () => { warmWaitMs = warmWaitMs ? Math.min(2000, warmWaitMs * 2) : 400; warmWake(warmWaitMs); };
+  /* an idle callback with 45 ms or more left, or any once 10 s have gone by without one: the page's own motion never
+     rests, so the next steps take the next idle callback too, until a long one comes */
+  const roomy = (d) => {
+    if ((d && typeof d.timeRemaining === 'function' ? d.timeRemaining() : 50) >= 45) { warmIdleSince = 0; return true; }
+    return performance.now() - warmIdleSince >= 10000;
+  };
+  const idle = (d) => {
+    warmIdle = 0;
+    if (warmBusy || warmStopped || !warmQ.length) return;
+    if (!softKnown()) { warmWhy = 'profile'; retry(); return; }
+    if (warmSoft) { dropAll('skipped'); return; }
+    if (!roomy(d)) { warmWhy = 'idle'; retry(); return; }
+    const a = animState();
+    if (a === 'ask' && !document.hidden) { warmWhy = 'animation?'; if (!warmClassing) { warmClassing = true; window.PM_AFTER_LAYOUT(classify); } return; }
+    if (!quiet()) { retry(); return; }
+    /* admitted: two frames on time, then the step in the third */
+    warmBusy = true;
+    const vis = warmVis;
+    requestAnimationFrame((tA) => requestAnimationFrame((tB) => requestAnimationFrame((tC) => {
+      if (vis !== warmVis) { warmBusy = false; retry(); return; }
+      note(tB - tA); note(tC - tB);
+      if (!onTime(tB - tA) || !onTime(tC - tB)) { warmWhy = 'frames'; warmBusy = false; retry(); return; }
+      if (!quiet()) { warmBusy = false; retry(); return; }
+      const st = pick(true);
+      if (!st) { warmBusy = false; done(); return; }
+      warmWaitMs = 0; warmWhy = '';
+      if (st.cpu) cpuStep(st); else runStep(st, tC);
+    })));
+  };
+  const run = (st, arg) => {
+    warmRunning = st; warmLastOwner = st.owner;
+    const c0 = performance.now();
+    let cleanup = null;
+    try { cleanup = st.run(arg); } catch (e) { try { console.error('[PM_WARM] ' + st.owner + ':' + st.name, e); } catch (_) { /* none */ } }
+    return { cpu: performance.now() - c0, cleanup: typeof cleanup === 'function' ? cleanup : null };
+  };
+  const clean = (r) => { if (r.cleanup) { try { r.cleanup(); } catch (_) { /* none */ } } };
+  /* a GPU step, in the frame at t */
+  const runStep = (st, t) => {
+    const vis = warmVis, limit = lateMs(), r = run(st);
+    requestAnimationFrame((a) => {
+      clean(r);
+      const d1 = a - t;
+      if (vis !== warmVis) { judge(st, r.cpu, null, false, limit); after(); return; }
+      note(d1);
+      if (st.light) {
+        if (judge(st, r.cpu, [Math.round(d1)], d1 > limit, limit)) return;
+        /* the next light step in this same frame, while everything holds */
+        const nx = !warmStopped && performance.now() - warmLateAt > 2000 && onTime(warmD1) && onTime(d1) && quiet() ? pick(false) : null;
+        if (nx && nx.light && !nx.cpu) { pick(true); runStep(nx, a); return; }
+        after();
+        return;
+      }
+      requestAnimationFrame((b) => {
+        const d2 = b - a;
+        if (vis !== warmVis) { judge(st, r.cpu, null, false, limit); after(); return; }
+        note(d2);
+        if (!judge(st, r.cpu, [Math.round(d1), Math.round(d2)], Math.max(d1, d2) > limit, limit)) after();
+      });
+    });
+  };
+  /* a cpu step, inside an idle callback, given its deadline; judged by the two intervals after the next frame */
+  const cpuStep = (st) => {
+    warmRunning = st;
+    const go = (d) => {
+      warmIdle = 0;
+      if (st.cancelled) { warmRunning = null; warmBusy = false; warmWake(0); return; }
+      const room = roomy(d);
+      if (!room) warmWhy = 'idle';
+      if (!room || !quiet()) { warmRunning = null; warmQ.unshift(st); warmBusy = false; retry(); return; }
+      const vis = warmVis, limit = lateMs(), r = run(st, d);
+      requestAnimationFrame((a) => {
+        clean(r);
+        requestAnimationFrame((b) => requestAnimationFrame((c) => {
+          const d1 = b - a, d2 = c - b;
+          if (vis !== warmVis) { judge(st, r.cpu, null, false, limit); after(); return; }
+          note(d1); note(d2);
+          if (!judge(st, r.cpu, [Math.round(d1), Math.round(d2)], Math.max(d1, d2) > limit, limit)) after();
+        }));
+      });
+    };
+    if (window.requestIdleCallback) warmIdle = requestIdleCallback(go); else go({ timeRemaining: () => 50 });
+  };
+  /* -> true when the queue stopped */
+  const judge = (st, cpuMs, frameMs, late, limit) => {
+    warmRunning = null;
+    if (!late) {
+      logStep(st, cpuMs, frameMs, false, frameMs ? 'ran' : 'unjudged');
+      if (!frameMs) return false;
+      warmLateRun = 0;
+      if (++warmClean >= 3) { warmBackoff = 0; warmClean = 0; }
+      return false;
+    }
+    warmLateCount++; warmLateRun++; warmClean = 0;
+    warmBackoff = warmBackoff ? Math.min(8000, warmBackoff * 2) : 1000;
+    warmUntil = performance.now() + warmBackoff;
+    const worst = Math.max.apply(null, frameMs);
+    st.lates = (st.lates || 0) + 1;
+    if (st.lates >= 2) { logStep(st, cpuMs, frameMs, true, 'dropped'); warmDropped.push(st.owner + ':' + st.name); tell(st, worst, true); }
+    else if (st.cancelled || tell(st, worst, false)) logStep(st, cpuMs, frameMs, true, 'late-handled');
+    else { warmQ.push(st); logStep(st, cpuMs, frameMs, true, 'late'); }
+    if (warmLateRun < 3) return false;
+    /* 3 late in a row: stopped until 'pm-idle' or 30 s; the second time for the session */
+    warmBusy = false; warmStopped = true;
+    if (++warmStops >= 2) { warmSession = true; dropAll('dropped'); return true; }
+    warmStopTimer = setTimeout(resume, 30000);
+    return true;
+  };
+  const after = () => {
+    warmBusy = false;
+    if (!warmQ.length) { done(); return; }
+    warmWake(warmBackoff ? Math.max(0, warmUntil - performance.now()) : 0);
+  };
+  const resume = () => {
+    if (!warmStopped || warmSession) return;
+    warmStopped = false; warmLateRun = 0; clearTimeout(warmStopTimer); warmStopTimer = 0;
+    warmWake(0, true);
+  };
+  window.addEventListener('pm-idle', () => { if (warmStopped) resume(); else { warmWaitMs = 0; warmWake(0, true); } });
+  window.PM_WARM = {
+    add(o) {
+      if (!o || typeof o.run !== 'function') return 0;
+      const st = { id: ++warmSeq, owner: String(o.owner || 'page'), name: String(o.name || 'step'), run: o.run, near: !!o.near,
+        light: !!o.light, cpu: !!o.cpu, until: o.until, onLate: o.onLate };
+      if (warmSession) {
+        logStep(st, 0, null, false, 'dropped'); warmDropped.push(st.owner + ':' + st.name);
+        Promise.resolve().then(() => tell(st, 0, true)); done();
+        return st.id;
+      }
+      if (warmOff || warmSoft === true) { logStep(st, 0, null, false, 'skipped'); if (!warmQ.length) done(); return st.id; }
+      /* a new batch: the waits start again */
+      if (!warmQ.length && !warmBusy) { warmWaitMs = 0; warmIdleSince = 0; }
+      warmQ.push(st); warmWake(0);
+      return st.id;
+    },
+    /* a cancel that empties the queue sends 'pm-warm-done' too; one that took nothing out sends nothing */
+    cancel(id) {
+      const n = warmQ.length;
+      for (let i = warmQ.length - 1; i >= 0; i--) if (warmQ[i].id === id) warmQ.splice(i, 1);
+      if (warmRunning && warmRunning.id === id) warmRunning.cancelled = true;
+      if (n && !warmQ.length && !warmBusy) done();
+    },
+    cancelOwner(owner) {
+      const n = warmQ.length;
+      for (let i = warmQ.length - 1; i >= 0; i--) if (warmQ[i].owner === owner) warmQ.splice(i, 1);
+      if (warmRunning && warmRunning.owner === owner) warmRunning.cancelled = true;
+      if (n && !warmQ.length && !warmBusy) done();
+    },
+    state(owner) {
+      const mine = (st) => !owner || st.owner === owner;
+      return { queued: warmQ.filter(mine).length, dropped: warmDropped.filter((d) => !owner || d.indexOf(owner + ':') === 0),
+        backoffMs: warmBackoff, lateRun: warmLateRun, stopped: warmStopped, session: warmSession, off: warmOff || warmSoft === true,
+        running: warmRunning && mine(warmRunning) ? warmRunning.owner + ':' + warmRunning.name : null, lateCount: warmLateCount,
+        waiting: warmQ.length && !warmBusy ? warmWhy : '' };
+    },
+    log: warmLog
+  };
 })();
