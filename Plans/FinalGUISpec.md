@@ -1344,8 +1344,8 @@ canonical_text: >-
   Amended 2026-10-09 (DL-180): this silhouette becomes the one tab silhouette of every panel and every tab kind; F3-631
   consumes it and F3-647 draws it in each look. The strip is 35 px in every panel with 31 px tabs whose plate overlaps
   the body by 1 px, 8 px apart (Retro 2 px); contact is measured to the neighbour's content inset by 8 px within the 20
-  px morph window; the crown, shoulder and flare radii per look are F3-631's. The fused shape is the only active-tab
-  marker: Basic's 2 px accent-blue crown strip is retired, and no look gives the active tab a separately coloured plate,
+  px morph window; the crown, shoulder and flare radii per look are F3-631's. The fused shape was the only active-tab
+  marker until DL-214 made it the seated chip of F3-631 (amended 2026-10-17, review r1): Basic's 2 px accent-blue crown strip is retired, and no look gives the active tab a separately coloured plate,
   Glass dark included (Jared, 2026-10-10); the per-theme skins above yield to F3-631 and F3-647 where they differ. The
   dashboard's own Main, Metrics and Monitoring strip retires: a dashboard is a tab in a panel's strip (F3-638). The
   rotating Retro trio, the pointer-capture reorder, the snap-while-dragging contract and the minimap as the code pane's
@@ -1923,7 +1923,7 @@ ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/UI_Command_C
 
 ### 4.2 Command Palette
 
-`Ctrl+K` (primary) or `Ctrl+P` (alternative) opens a centered overlay (~500-600px wide, top third of window) with fuzzy search across project navigation targets, commands, recent items, and explicit open targets.
+`Ctrl+K` opens a centered overlay (amended 2026-10-17, review r1: `Ctrl+P` is no longer an alternative palette key; it is the panels' Open a file picker, F3-632, F3-634) (~500-600px wide, top third of window) with fuzzy search across project navigation targets, commands, recent items, and explicit open targets.
 
 ContractRef: ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/FileManager.md, ContractName:Plans/assistant-chat-design.md
 
@@ -8551,9 +8551,12 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
-  Ctrl+K or Ctrl+P opens a 500-600px centered top-third command palette with fuzzy project
+  Ctrl+K opens a 500-600px centered top-third command palette with fuzzy project
   navigation, commands, recent items, files, explicit open targets, and prefix modes for commands,
   file/symbol mention, and slash commands.
+  Amended 2026-10-17 (review r1, DL-228): the second chord this unit gave the palette now belongs to the
+  panels' Open a file picker, the same picker as the "+" menu's File... (F3-632, F3-634); the palette keeps
+  Ctrl+K.
 gui_related: true
 gui_classification_reason: >-
   This unit defines user-visible GUI surface, shell, copy, control, or projection behavior.
@@ -8580,7 +8583,6 @@ source_lineage:
 - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0041"
 preserved_exact_tokens:
 - "Ctrl+K"
-- "Ctrl+P"
 - "500-600px"
 - ">"
 - "@"
@@ -8588,7 +8590,8 @@ preserved_exact_tokens:
 - "fuzzy search"
 negative_constraints: []
 compatibility_only_notes: []
-stale_retired_dispositions: []
+stale_retired_dispositions:
+- 'Amended 2026-10-17 (review r1, DL-228): Ctrl+P is the panels'' Open a file picker (F3-632, F3-634), not the palette; it read: Ctrl+K or Ctrl+P opens the command palette, with Ctrl+P a preserved token.'
 owner_boundary_notes:
 - "ContractRef: ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/FileManager.md, ContractName:Plans/assistant-chat-design.md"
 owner_hints:
@@ -30846,6 +30849,8 @@ canonical_text: >-
   terminal background image's blur is prepared on image change. Effects cannot silently create an
   unbounded nested live-blur workload; static-capability fallbacks preserve readability and
   selection. Other themes' portability constraints stay in force.
+  Amended 2026-10-17 (review r1, DL-228): the left rail's chrome plates keep a frosted scroll-under outside
+  Glass (F3-618, Jared's RAIL-5 answer under DL-162); this unit admits it beside its listed effects.
 gui_related: true
 gui_classification_reason: This unit constrains how visible theme effects are produced so every variant renders on the Slint toolkit.
 split_recommended: false
@@ -36113,7 +36118,7 @@ split_recommended: false
 depends_on: [F3-513, UF-093, UF-094, UF-096, WS-017, WS-018, WS-020]
 unblocks: [F3-515, F3-518, ATS-036, ATS-038]
 acceptance_criteria:
-  - "Overview, Plans & limits, Costs, Accounts, Free models, Context, Analytics, Ledger, Attention, Prompt cache, Tools, Signals, and Source authority are all addressable, in that order and at every supported physical width, with only At a glance, Detailed, and Diagnostics as user-facing disclosure labels; Source authority mounts exactly 4/6/8 panels, and provider setup absence renders exact Provider Setup Required copy, explicit Host/Environment, preserved operation/continuation identity, and a cmd.settings.open CTA with target_type setting and setting_id ai.accounts.provider-connections."
+  - "Overview, Plans & limits, Costs, Accounts, Free models, Context, Analytics, Ledger, Attention, Prompt cache, Tools, Signals, and Source authority are all addressable, in that order and at every supported physical width, with only At a glance, Detailed, and Diagnostics as user-facing disclosure labels; Source authority mounts 7/8/9 panels (amended 2026-10-17, review r1, earlier exactly 4/6/8), and provider setup absence renders exact Provider Setup Required copy, explicit Host/Environment, preserved operation/continuation identity, and a cmd.settings.open CTA with target_type setting and setting_id ai.accounts.provider-connections."
   - "Every room has a non-empty curated default; partial final rows retain intentional widths and provider-heavy boards prefer narrower, taller, information-dense cards."
   - "The board's track count follows its measured width on the 12, 20, 24 and 30 track ladder; every size preset of every widget kind shows a complete content tier, and facts a size cannot show fold behind N more with hover and Details."
   - "Each semantic size presents a complete tier or hides the tier entirely, chooses that tier from measured rendered width, and larger sizes reveal additional useful facts, rows, columns, or plots rather than blank area; reorder placeholders use measured rendered width and height rather than stale nominal spans, preview spans do not become settled layout fields, and supported curated sizes have no routine widget-body scrolling, clipped corners, value collisions, partial bars, bottom-content peeking, or partially exposed next-tier content."
@@ -40357,8 +40362,8 @@ canonical_text: >-
   The ELI5 quick dot is the ELI5 kind mark among these glyphs, present lit or muted (F3-581, DL-126).
   The dock and the per-reply files row replace the stream footer pill's helpers and files chips
   (ACD-482, DL-129); no summary of helpers or file changes stacks above the composer beside the dock.
-  Amended 2026-10-17 (DL-228): while a decision host (a Plan or questionnaire host) is open it sits directly
-  above the composer and lifts the floating Activity bar pill and the follow-up queue, which float together as
+  Amended 2026-10-17 (DL-228): while a decision host (a Plan or questionnaire host) is open it sits above the
+  dock and the quota-wait strip (amended 2026-10-17, review r1, it read: directly above the composer) and lifts the floating Activity bar pill and the follow-up queue, which float together as
   one stack, with the scroll-to-bottom control; the transcript keeps its bottom padding for that floating
   stack. The quota-wait strip and the dock stay in flow beneath the decision host, so bottom to top the order
   is composer, dock, quota-wait strip, decision host, then the floating pill and queue.
@@ -43910,7 +43915,7 @@ canonical_text: >-
   and the fold is panel state.
   Amended 2026-10-17 (DL-228): the Owner dropdown uses F3-621's pick-several mode. The Jujutsu Workspaces
   view's Owner filter is the same filter state as the Worktrees view's, kept with W-075's persistence, not a
-  separate view-local filter.
+  separate view-local filter; this is a deliberate change from the concept, which keeps it view-local (amended 2026-10-17, review r1).
 gui_related: true
 gui_classification_reason: Defines two visible Source Control behaviours the Polish design adds.
 split_recommended: false
@@ -44396,7 +44401,7 @@ acceptance_criteria:
   to 14 px, no tick, legend or caption is below 11 px, and rows and buttons are 28 to 32 px tall.
 - Fits are measured again after the fonts finish loading, and no label is truncated or overflows once
   they have.
-- Each room has one hero plate with the top-left key light at 16% in dark themes and 9% in light themes;
+- Each room has one hero, or a hero group of four equal plates in Free models and Prompt cache (amended 2026-10-17, review r1), with the top-left key light at 16% in dark themes and 9% in light themes;
   on arrival and on a room change only the hero number rolls.
 - Below the warn line, meters and skyline towers shade from indigo through cyan to mint; at and above
   it the Settings threshold tones apply, and every meter of a provider shows that provider's switch-point
@@ -48595,15 +48600,15 @@ canonical_text: >-
   input and while the page is hidden, Glass draws each kind of box once, nearly invisibly, so first-use
   GPU programs are compiled before the first page or chapter change rather than during it. A switcher
   strip defers its sync only under a look's cover and resyncs as the cover begins to lift.
-  Amended 2026-10-17 (DL-222): Glass's warm-up is best effort under ACD-475, not a promise that every
-  box kind is compiled before the first page or chapter change. It prepares the kinds that compile a
-  program and leaves the rest to first use. It changes no Glass look. The idle gates are ACD-475's;
-  this unit keeps the sheet-rim bake and the cover-only strip deferral.
+  Amended 2026-10-17 (DL-222): Glass's warm-up is best effort under ACD-475 and changes no Glass look.
+  The idle gates are ACD-475's, and a switcher strip waits only under a look's cover (amended 2026-10-17, review r1; it read:
+  not a promise that every box kind is compiled first, preparing the kinds that compile a program, and this
+  unit keeps the sheet-rim bake and the cover-only strip deferral).
   Amended 2026-10-17 (DL-226): while a widget plate is carried on a board in Glass, the resting plates
   hold a pre-painted frost instead of live blur. At rest that frost looks the same.
   Amended 2026-10-17 (DL-228): Glass condenses into place only when Glass is switched on, never on a page, tab
-  or room change, and moving items never turn opaque and then clear as they settle (DL-229, Jared,
-  2026-10-11). Tab strip items, segmented choices and rail icons get no press bloom or flex: the lens moving
+  or room change, and moving items never turn opaque and then clear as they settle (DL-229: Jared's words
+  are about Usage's tab changes, and the concept applies the rule on every page). Tab strip items, segmented choices and rail icons get no press bloom or flex: the lens moving
   to the pressed item is their press feedback. Settings' floating search results use the dense menu material,
   near opaque without live optics, so page words never read through them. The terminal Customize screen's
   choice rows take the travelling lens; the editor Customize screen's in-flow choices take the material in
@@ -48778,7 +48783,7 @@ canonical_text: >-
   print is decoded; the sheets keep the old frost during that fade, then crossfade to the new frost once
   it is ready. No frame is blank. While that fade has not committed, a newer choice fades from the print
   currently fading. A look or mode change that changes the print ends it at once; one that keeps the same
-  print lets it finish. Reduced Motion, a look change and no GPU keep the immediate swap. The setting
+  print lets it finish. Reduced Motion, a print change that a look change causes, and no GPU keep the immediate swap (amended 2026-10-17, review r1). The setting
   still writes at the pick (SSYS-009, SSYS-054); only the frost drawing lags. Consumers of the selected
   print, the terminal Lens included, follow when the frost commits (DR-073).
   Amended 2026-10-17 (DL-228): Look's own carries a one-line note saying what the current look shows ("<Look>

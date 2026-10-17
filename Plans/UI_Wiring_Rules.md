@@ -2465,6 +2465,10 @@ canonical_text: >-
   command, and the left rail's local controls (the Owner dropdown, the publish fold, the More tray, the
   Jujutsu head buttons, strip keys) by F3-618 to F3-625, which add no command, action or wiring row; neither
   needs a row here. The earlier "every PM7 control" reads with those two owners.
+  Amended 2026-10-17 (review r1): SSYS-043's hosted NieR controls now have rows: the NieR Mode checkbox in the
+  title-bar theme selector and the Guided Tour bar's Look menu (the Settings transaction pair), the same
+  checkbox inside the onboarding window (ui.onboarding.choose_look), the NieR Mode editor's parts edit (the
+  pair), and the editor's open, close and Play reboot moment (ui.settings.nier_editor.*).
 gui_related: true
 gui_classification_reason: Appearance And Shell Control Census.
 split_recommended: false

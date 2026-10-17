@@ -3550,7 +3550,9 @@ canonical_text: >-
   synthesized. Reduced Motion remains Settings-owned. Skip reverse-routes
   restoration of the captured layout, Chat state, composer placeholder, and focus. The captured layout is the v2 Home
   layout record (`pm.home_workspace_layout.v2`, SP-330): the tour captures it when it starts and restores it through
-  `cmd.workspace_layout.*` and `cmd.panel_tab.*` commits, putting every panel, tab and size back; terminal sessions and
+  one `cmd.workspace_layout.restore` commit from the production entry `tour.layout_restore`, its dashboard boards
+  included (UCC-200, PWIZ-035; amended 2026-10-17, review r1, it read: through `cmd.workspace_layout.*` and `cmd.panel_tab.*`
+  commits), putting every panel, tab and size back; terminal sessions and
   unsaved buffers of tabs the learner opened are never ended or dropped silently (amended 2026-10-09, DL-180). While any restore runs, the
   application's own notices about it (a widget removed, a persona applied from the next turn) stay quiet in every look,
   and the Tour's closing note says what was put back (F3-521, DL-153). Finish restores by default or keeps
@@ -3603,7 +3605,7 @@ acceptance_criteria:
   - ELI5 is at the top beside Pause and Skip; `ui.guided_tour.toggle_eli5` changes the tour's narration only and never rewrites the Teacher example answer. The same-answer ELI5 checkpoint is never satisfied while `cmd.chat.eli5.explain_reply` is not admitted. Effective Reduced Motion is a Settings-owned projection/change route; Guided Tour has no Reduced Motion setting or action.
   - "While a Skip or Finish restore runs, the application's own notices about it stay quiet in every look, and the Tour's closing note says what was put back (F3-521, DL-153)."
   - "The Tour bar's Look menu and sound control are not `ui.guided_tour.*` actions: their writes compose `cmd.settings.transaction.preview` then `cmd.settings.transaction.apply`, Adjust NieR look is `ui.settings.nier_editor.open`, and the Tour's census stays its eleven actions (DL-153)."
-  - Skip and Finish restore the captured v2 Home layout record (`pm.home_workspace_layout.v2`) through `cmd.workspace_layout.*` and `cmd.panel_tab.*` commits, and the restore stays quiet (DL-153) (amended 2026-10-09, DL-180).
+  - Skip and Finish restore the captured v2 Home layout record (`pm.home_workspace_layout.v2`) through one `cmd.workspace_layout.restore` commit (`tour.layout_restore`; amended 2026-10-17, review r1, replacing the `cmd.workspace_layout.*` and `cmd.panel_tab.*` commits), and the restore stays quiet (DL-153) (amended 2026-10-09, DL-180).
   - Skip restores captured layout, Chat state, placeholder, and focus through existing owners; Finish restores by default or keeps layout only on explicit selection through `ui.guided_tour.finish`, then removes practice content and focuses the real Planning Wizard with the committed Project and no auto-started work. No `ui.guided_tour.restore_layout`, `ui.guided_tour.keep_layout`, or generic owner mutation is introduced.
   - Close/reload revalidates the last safe checkpoint and original restoration references against current owners before resume; missing or stale state restores what still resolves and starts a fresh session with a notice, failed restoration exposes recovery, and neither reports completion or captures the temporary arrangement as the original.
   - Run Onboarding Again discards the tour checkpoint, snapshot ref, resume affordance, and any restoration-pending notice; Settings Resume Guided Tour (`settings.guided_tour.resume`) is disabled unless a checkpoint can resume.
@@ -5492,7 +5494,7 @@ ContractRef: ContractName:Plans/UI_Command_Catalog.md#UCC-188, ContractName:Plan
 
 ## Open Exact Plan Version Wiring (2026-10-09)
 
-The owner's decision DL-157 gives a bound Goal's Open exact Plan · Vn, and every Open plan button, the command `cmd.chat.plan.open_version` (UI_Command_Catalog UCC-176, Commands_System CS-088). This addendum adds its one production wiring entry, `assistant.redesign.cmd.chat_plan_open_version`, to `Plans/Wiring_Matrix.production.json`. It keeps `handler_unavailable` and `expected_event_types=[]`; nothing here claims a native dispatcher, handler or event.
+The owner's decision DL-157 gives a bound Goal's Open exact Plan · Vn, and every Open plan button, the command `cmd.chat.plan.open_version` (UI_Command_Catalog UCC-176, Commands_System CS-088). This addendum adds its one production wiring entry, `assistant.redesign.cmd.chat_plan_open_version`, to `Plans/Wiring_Matrix.production.json`. It keeps `handler_unavailable` and declares one `workspace.layout_changed` when the route adds a tab and none for a reveal (DL-188; amended 2026-10-17, review r1, it read: `expected_event_types=[]`); nothing here claims a native dispatcher, handler or event.
 
 ### WM-065 - Open Exact Plan · Vn Raises The Open Plan Version Entry
 

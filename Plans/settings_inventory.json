@@ -3138,7 +3138,7 @@
   {
    "id": "ai.accounts.soft-warning-level",
    "label": "Low-Quota Warning Level",
-   "desc": "Warn when an account has less than this much quota left, so switches don't surprise you. Each choice reads \"<n>% left \u00b7 <100-n>% used\"; a choice at or below the switch level is shown disabled with the reason.",
+   "desc": "Warn when an account has less than this much quota left, so switches don't surprise you. Each choice shows how much is left and how much is used; a choice at or below the switch level is shown disabled with the reason.",
    "type": "select",
    "options": [
     "10",
@@ -3168,7 +3168,7 @@
   {
    "id": "ai.accounts.hard-switch-level",
    "label": "Auto-Switch Trigger Level",
-   "desc": "Switch accounts when remaining quota drops below this; each choice reads \"<n>% left · <100-n>% used\" (80% used is the same idea from the other side). A choice at or past the warning level is shown disabled with the reason.",
+   "desc": "Switch accounts when remaining quota drops below this; each choice shows how much is left and how much is used (80% used is the same idea from the other side). A choice at or past the warning level is shown disabled with the reason.",
    "type": "select",
    "options": [
     "5",
@@ -7819,7 +7819,7 @@
   {
     "id": "code.terminal.padding",
     "label": "Terminal Padding",
-    "desc": "Space around the text, in pixels across; the space above and below is 60 % of it. Starts at zero (Jared, 2026-10-14).",
+    "desc": "Space around the text, in pixels across; the space above and below is 60 % of it. Starts at zero.",
     "type": "number",
     "default": 0,
     "scope": [
@@ -21048,7 +21048,7 @@
   {
    "id": "system.advanced.request-storage-compaction",
    "label": "Request Storage Compaction",
-   "desc": "When available, routes an owner-admitted maintenance request through cmd.storage.compaction.request. The storage owner still evaluates eligibility, holds, anchors, references, gates, and the maintenance lease; this request cannot force compaction or bypass any of them.",
+   "desc": "When available, asks the storage owner for maintenance. The owner still checks eligibility, holds, anchors, references, gates and the maintenance lease; this request cannot force compaction or bypass any of them.",
    "type": "action",
    "default": "Request compaction",
    "scope": [
@@ -21068,7 +21068,7 @@
   {
    "id": "system.advanced.inspect-holds-quarantine",
    "label": "Inspect Legal Holds & Quarantine",
-   "desc": "Opens the read-only legal-hold and invalid-value quarantine view with effective scope, reasons, custody state, and recovery status. It never sets or clears a hold and never exports, purges, or resets quarantined bytes; hold mutation remains the protected cmd.storage.legal_hold.manage action authorized by storage.legal_hold.manage.",
+   "desc": "Opens the read-only legal-hold and invalid-value quarantine view with effective scope, reasons, custody state and recovery status. It never sets or clears a hold and never exports, purges or resets quarantined bytes; changing a hold stays a separate protected action.",
    "type": "action",
    "default": "Inspect",
    "scope": [

@@ -62626,7 +62626,7 @@
         ]
       },
       "accessibility_contract": {
-        "role_or_semantics": "catalog.usage_export exposes a stable role/name/description matching cmd.usage.export; the Usage page head control renders icon-only and carries title and aria-label accessible names (PMConcept7 reconciliation 2026-07-23).",
+        "role_or_semantics": "catalog.usage_export exposes a stable role/name/description matching cmd.usage.export; the Usage page head control renders icon-only and is named by the shared hover tag (F3-523) and its aria-label, never a native title (PMConcept7 reconciliation 2026-07-23; amended 2026-10-17, review r1, UF-089).",
         "keyboard_access": "catalog.usage_export is reachable and activatable by keyboard where the control is visible.",
         "focus_management": "catalog.usage_export preserves visible focus and returns focus deterministically after dispatch or error.",
         "disabled_announcement": "catalog.usage_export surfaces state.commands.usage_export.disabled_reason to assistive technology when unavailable."
@@ -62739,7 +62739,7 @@
         ]
       },
       "accessibility_contract": {
-        "role_or_semantics": "catalog.usage_refresh exposes a stable role/name/description matching cmd.usage.refresh; the Usage page head control renders icon-only and carries title and aria-label accessible names (PMConcept7 reconciliation 2026-07-23).",
+        "role_or_semantics": "catalog.usage_refresh exposes a stable role/name/description matching cmd.usage.refresh; the Usage page head control renders icon-only and is named by the shared hover tag (F3-523) and its aria-label, never a native title (PMConcept7 reconciliation 2026-07-23; amended 2026-10-17, review r1, UF-089).",
         "keyboard_access": "catalog.usage_refresh is reachable and activatable by keyboard where the control is visible.",
         "focus_management": "catalog.usage_refresh preserves visible focus and returns focus deterministically after dispatch or error.",
         "disabled_announcement": "catalog.usage_refresh surfaces state.commands.usage_refresh.disabled_reason to assistive technology when unavailable."
@@ -66218,7 +66218,7 @@
         "A project switch loads that project's own record and dispatches nothing; Finish with Keep dispatches nothing.",
         "A changed commit writes pm.home_workspace_layout.v2 once (SP-330) and emits exactly one workspace.layout_changed with change layout_restored (CV-361); nothing else is emitted."
       ],
-      "evidence_required": "handler_status: planned. Required future evidence only; this row does not assert that the planned handler, dispatcher or runtime exists. owner_doc_ref: Plans/Planning_Wizard.md#PWIZ-035. Registration: Plans/UI_Command_Catalog.md#UCC-200 (DL-228). Wiring: Plans/Wiring_Matrix.md#WM-090. Production certification requires render/control evidence, a dispatcher fixture, the typed payload and result, the projected state selector and disabled reason, the receipt or event assertion, an accessibility check and a regression test.",
+      "evidence_required": "handler_status: planned. Required future evidence only; this row does not assert that the planned handler, dispatcher or runtime exists. owner_doc_ref: Plans/Planning_Wizard.md#PWIZ-035. Registration: Plans/UI_Command_Catalog.md#UCC-200 (DL-228). Wiring: Plans/Wiring_Matrix.md#WM-041. Production certification requires render/control evidence, a dispatcher fixture, the typed payload and result, the projected state selector and disabled reason, the receipt or event assertion, an accessibility check and a regression test.",
       "state_selector": "state.tour.layout_restore.availability",
       "disabled_reason_projection": "state.tour.layout_restore.disabled_reason",
       "effect_contract": {
@@ -66874,7 +66874,7 @@
         "cmd.workspace_layout.set_collapsed is registered with typed arguments (UCC-200) and its owner revision and idempotency contract.",
         "home.panel_menu.collapse reads state.home_workspace.home_panel_menu_collapse.availability and shows state.home_workspace.home_panel_menu_collapse.disabled_reason before dispatch; while unavailable it dispatches nothing and announces the reason.",
         "home.panel_menu.collapse dispatches cmd.workspace_layout.set_collapsed exactly once per activation and preserves command_id, correlation_id and the receipt.",
-        "The payload is panel_id and collapsed; disabled with only_panel for Collapse to tabs on the only panel.",
+        "The payload is panel_id and collapsed; disabled with only_panel for Collapse to tabs on the only panel, and with last_open_in_split when every other child of its split is already collapsed (F3-630, UCC-200; amended 2026-10-17, review r1).",
         "Opening a menu, a list, a picker or a prompt, hovering and every drag preview dispatch nothing; an unchanged or cancelled gesture dispatches nothing and restores the earlier picture, and a failed commit rolls back and emits nothing (F3-630, UIW-012).",
         "A changed commit writes pm.home_workspace_layout.v2 once (SP-330) and emits exactly one workspace.layout_changed with the v2 payload naming the change (CV-361); nothing else is emitted."
       ],

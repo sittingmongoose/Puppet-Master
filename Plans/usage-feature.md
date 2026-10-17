@@ -6215,7 +6215,7 @@ acceptance_criteria:
 - "The Usage head renders one line: the room title with one description line under it, and the scope, range, disclosure, panel, Refresh and Export controls on that line; no second head line exists."
 - "The Live / Paused control sits in the rail head beside the page name Usage, not in the room head and not on a second head line."
 - "Any refresh-cadence or history-retention figure the page shows reflects the configured value; changed defaults surface the configured values rather than stale copy."
-- "Refresh and Export render as icon-only buttons with inline SVG glyphs, each carrying title and aria-label accessible names; Refresh dispatches cmd.usage.refresh, and Export's Snapshot and Ledger rows each dispatch cmd.usage.export with scope snapshot or ledger."
+- "Refresh and Export render as icon-only buttons with inline SVG glyphs, each named by the shared hover tag and its aria-label, never a native title (amended 2026-10-17, review r1); Refresh dispatches cmd.usage.refresh, and Export's Snapshot and Ledger rows each dispatch cmd.usage.export with scope snapshot or ledger."
 - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
 validation_surfaces:
 - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
@@ -6250,7 +6250,7 @@ negative_constraints:
 compatibility_only_notes:
 - "Slint portability: the Usage page head and its icon-only controls render as opaque precomputed surfaces with translate/opacity/height animations via Slint property animations; no arbitrary-content backdrop blur, no SVG filters, and color math is precomputed rather than runtime-mixed. This note does not bind the redesigned concept's look (DL-173): the Slint limits were lifted for the concept, and framework version pins are untouched."
 stale_retired_dispositions:
-- "The 'prominent Refresh action' presentation is retired per PMConcept7 rev 9 Usage head; Refresh remains an explicit user action rendered icon-only with title and aria-label accessible names so the head stays one line."
+- "The 'prominent Refresh action' presentation is retired per PMConcept7 rev 9 Usage head; Refresh remains an explicit user action rendered icon-only, named by the shared hover tag and aria-label (amended 2026-10-17, review r1, it read: title and aria-label), so the head stays one line."
 - "The page-level subtitle 'AI Cost/usage for <project> — quotas, cost, cache savings and safety guards. Refreshes every 5 minutes; history kept for 90 days.' (concept fixture project Tastebook) is retired by DL-173: the room description line replaces it, and the rule that cadence and retention figures mirror configured values is kept."
 - "The single-action Export button is retired: Export is an icon-only button that opens the Snapshot and Ledger menu, dispatching the same cmd.usage.export scopes."
 owner_boundary_notes:
@@ -7431,12 +7431,12 @@ canonical_text: >-
   account (MA-073), its hover adds "· next run", and Usage writes no second Settings value for it. It shows
   only with two or more accounts; the account in use shows Current instead; its other disabled states read
   through UCC-116's closed reasons: signed out as auth_missing or auth_expired, a cooldown or a window used up
-  until a time as provider_unavailable with that time, and needs a seat or manual choice not supported as
-  policy_denied. While auto-switch waits for a tool to go idle, the status line offers Use <account> now, an
+  until a time as provider_unavailable with that time, and needs a seat as policy_denied; where the provider does not
+  support a manual choice the control is absent, not disabled (amended 2026-10-17, review r1). While auto-switch waits for a tool to go idle, the status line offers Use <account> now, an
   override through the same command and the same past-switch-point question, shown only while that account is
   eligible for a manual choice. Attention alert rows offer Acknowledge and Snooze 1h (F3-453's actions),
-  Switch route on a warning (UCC-116's cmd.provider.switch_route with the provider, the reason and its
-  retry_after_ms), and on an anomaly alert Keep guard, which acknowledges it; Allow once has no admitted
+  Switch route on a warning (UCC-116's cmd.provider.switch_route with provider_id and its retry_after_ms;
+  amended 2026-10-17, review r1, it read: with the provider, the reason and its retry_after_ms), and on an anomaly alert Keep guard, which acknowledges it; Allow once has no admitted
   command, so it is not offered until UF-083's owner admits one. Usage's own notices name the window by its
   own label and show no internal id: a threshold reads "<window> is at N% used." with "Usage · another
   signed-in account can take the work", and an automatic switch "Work moved to another account because of rate

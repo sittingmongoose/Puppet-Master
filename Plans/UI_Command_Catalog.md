@@ -11815,7 +11815,7 @@ census, not a new command family.
 | Usage head Export menu (Snapshot or Ledger) and the Ledger table's export | `cmd.usage.export` with `scope` `snapshot` or `ledger` | One export per choice; opening the menu is `view_only`; no other export command. |
 | Usage alert Acknowledge and Snooze 1 hour | `cmd.alert.acknowledge`, `cmd.alert.snooze` | The shared alert store owns the lifecycle (`Plans/FinalGUISpec.md#F3-453`); Usage keeps no alert state of its own. |
 | Provider setup or management | `cmd.settings.open` | Open the typed setting target `ai.accounts.provider-connections`; do not alias the rejected provider-management token. |
-| Usage room/scope/range/disclosure/filter/More-menu selection | `view_only` local projection | No command; settled preference persistence remains storage-owned. |
+| Usage room/scope/range/disclosure/filter selection (the rail's More overflow is retired, UF-093; amended 2026-10-17, review r1) | `view_only` local projection | No command; settled preference persistence remains storage-owned. |
 | Usage Live / Paused (rail head, beside Usage) | `view_only` local projection | No command; holding or applying arriving Usage projection updates is a view choice, and the remembered choice is the storage-owned Usage view preference `live` (`Plans/usage-feature.md#UF-095`). |
 | Usage Play the next hour, Back to now, and the concept feature switches | the lab-only disposition of `Plans/usage-feature.md#UF-107` | No command; UF-107 owns the exclusion. |
 | Context ring popup/hover | `view_only` local projection | No compaction and no detail-open dispatch. |

@@ -13614,6 +13614,7 @@ negative_constraints:
   - "Do not tint any Usage surface other than the hero plate's key light."
 stale_retired_dispositions:
   - 'Amended 2026-10-17 (DL-228): shared-element flights between rooms are retired by DL-191; F3-628 owns the handover that replaced them. The key light is one static light beneath the board, strongest on the hero plate, and stays the one tint the negative constraint allows (F3-628).'
+  - 'Amended 2026-10-17 (review r1): a room names its hero on one plate, or in Free models and Prompt cache on a hero group of four equal plates (F3-628).'
 owner_hints:
   - Plans/FinalGUISpec.md
   - Plans/DRY_Rules.md
@@ -13674,6 +13675,8 @@ negative_constraints:
   - "Do not create a Usage-only motion voice or a per-view motion setting."
   - "Do not recolour, filter, tint or redraw a provider's official logo."
   - "Do not fork the chat assistant's menus for Usage."
+stale_retired_dispositions:
+  - 'Amended 2026-10-17 (review r1): the frame and task targets read through ACD-475''s P1000 reading (DL-216, DL-219); having no GPU is a capability path, not a lower-spec tier.'
 owner_hints:
   - Plans/FinalGUISpec.md
   - Plans/DRY_Rules.md
@@ -16214,6 +16217,7 @@ source_lineage:
 - /mnt/Cursor/share/puppet-master/2026-10-17-plans-f6/sources/BRIEF.md,
   SHA-256 a6c5152164942a26cba5b0216a339578ee13c47a3ba39ffbeced793203c2dece (Jared, 2026-10-17; the
   concept is not production and will be rebuilt in Slint and custom Skia; decision lineage)
+- '/mnt/Cursor/share/puppet-master/2026-10-13-pm7-coordinator-handoff/COORDINATOR-LOG.md, SHA-256 c84372326c5e04124e0fec8580fa2b9ea8d576c03815396a0380cda39ddbb5ad as of 2026-10-17 (the log keeps growing; Jared''s words at 16:00Z, "Do B. ... As long as its not horribly slow.", the options at 15:52Z; decision lineage)'
 preserved_exact_tokens:
 - not horribly slow
 - Slint
@@ -16266,6 +16270,7 @@ source_lineage:
 - /mnt/Cursor/share/puppet-master/2026-10-17-plans-f6/sources/2026-10-16-motion-pass--PART2.md,
   SHA-256 1a61d195f6542a182596e531781b696927b2900248e5155b9abe134786bc0f3f (the Q22 report, including
   the F6c update; source lineage; not native certification)
+- '/mnt/Cursor/share/puppet-master/2026-10-13-pm7-coordinator-handoff/COORDINATOR-LOG.md, SHA-256 c84372326c5e04124e0fec8580fa2b9ea8d576c03815396a0380cda39ddbb5ad as of 2026-10-17 (the log keeps growing; Jared''s words at 16:00Z, "Do B. ... As long as its not horribly slow.", the options at 15:52Z; decision lineage)'
 preserved_exact_tokens: []
 negative_constraints: []
 owner_hints:
@@ -16361,7 +16366,7 @@ canonical_text: >-
   A prepared pick still fades the print and its frost together. No frame is blank. While a fade has
   not committed, a newer choice fades from the print currently fading. A look or mode change that
   changes the print ends that fade at once; one that keeps the same print lets it finish. Reduced
-  Motion, a look change and no GPU keep the immediate swap. The setting still writes at the pick.
+  Motion, a print change that a look change causes, and no GPU keep the immediate swap (amended 2026-10-17, review r1). The setting still writes at the pick.
   F3-653 owns the crossfade. DR-073 owns preparation and the source query. This supersedes DL-216's
   "lands in a later lane" for the frost crossfade. Concept evidence is not native certification.
 gui_related: true
@@ -16412,7 +16417,8 @@ canonical_text: >-
   Recorded 2026-10-17. Jared, 2026-10-10: "this whole system should WOW people. The glyphs, the
   glass, the hover effects, the animations and motion everywhere, the widgets, dragging and dropping
   effects, the terminal, themes, everything. This should look like a polished high budget production
-  software." The same note says never cut polish, effects or scope to save a budget. ACD-475's motion
+  software." The coordinator's note under it adds never to cut polish, effects or scope to save an AI-account budget;
+  that is a working rule for the campaign, not Jared's words (amended 2026-10-17, review r1). ACD-475's motion
   bar is unchanged and is not a licence to drop an effect. This is not a per-machine rule. DL-219
   still refuses a platform-specific tier. Concept evidence is not native certification.
 gui_related: true
@@ -16505,8 +16511,8 @@ canonical_text: >-
   Recorded 2026-10-17. On 2026-10-11 Jared chose Glass carry A, frost while carrying, rather than
   accepting about 30 fps. While a widget plate is carried on a board, on the Usage page or a Home
   dashboard tab, in Glass, the resting plates hold a pre-painted frost instead of live blur. At rest
-  the frost looks the same. The concept narrowed the choice to those plates and reported that
-  narrowing. F3-652 owns the one line. This is not a platform threshold and adds no setting.
+  the frost looks the same. The planner narrowed the choice to those plates and reported that narrowing to Jared
+  (STATUS-planner.md:128; amended 2026-10-17, review r1, it read: the concept narrowed it). F3-652 owns the one line. This is not a platform threshold and adds no setting.
   Concept evidence is not native certification.
 gui_related: true
 gui_classification_reason: Glass Carry Holds A Pre-Painted Frost.
@@ -16609,7 +16615,8 @@ canonical_text: >-
   cmd.workspace_layout.restore (UCC-200, CV-361, production entry tour.layout_restore), the local read
   projection ui.notifications.mark_all_read (CS-102) and the tour phase review_parts (PWIZ-035). Concept
   internals (timings, CSS values, caches, warm queues, demo scaffolding) stay out. A question no Jared
-  decision answers is marked proposed, pending Jared in its owner. Concept evidence is not native
+  decision answers is marked proposed, pending Jared in its owner. The sizes, distances and times these
+  amendments quote from the concept are tokens, not acceptance numbers (review r1). Concept evidence is not native
   certification.
 gui_related: true
 gui_classification_reason: The Week Sweep Records What The Concept Built.

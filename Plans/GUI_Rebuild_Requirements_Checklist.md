@@ -2226,7 +2226,7 @@ canonical_text: >-
   storage-plan SP-333; UI_Command_Catalog UCC-204; Commands_System CS-102; Wiring_Matrix WM-093;
   UI_Wiring_Rules UIW-043; and Automated_Testing_System ATS-077. The linked registry/census/schema
   companions must agree before implementation certification. Decision_Log DL-189 through DL-229
-  records the decisions and supersessions. DL-218 is not this branch's row. The Glass/wallpaper concept publication is complete;
+  records the decisions and supersessions. DL-218 is recorded separately. The Glass/wallpaper concept publication is complete;
   F3-652, F3-644 and F3-656 own the settled hover-light, delivered font range and GLY-4 boundaries.
   F3-642/F3-643/F3-650 and SP-331 own round-3 terminal controls/presets, F3-632 owns picker levels,
   and SSYS-044 consumes MA-073. Terminal round 5 (DL-213), the consistency pass and Friendly
