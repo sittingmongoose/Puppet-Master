@@ -461,12 +461,23 @@
     /* the backgrounds and effects apart from their tiles and chips: whole, each was late cold on the P1000 once the parts
        below the fold were really drawn (ground 200 ms, effects 233; r21) */
     ['ground:head', GG, GG + ' [data-forlook], ' + GG + ' [data-gtiles]'],
-    ['ground:suggested', GG + ' [data-forlook]'],
+    /* the suggested pictures and the effect chips two at a time: four or six at once were late cold on the P1000 (r25a:
+       117-167 and 150-200 ms) */
+    ['ground:suggested', GG + ' [data-forlook] > :nth-child(-n+2)'],
+    ['ground:suggested2', GG + ' [data-forlook] > :nth-child(n+3):nth-child(-n+4)'],
+    ['ground:suggested3', GG + ' [data-forlook] > :nth-child(n+5)'],
     ['ground:tiles', GG + ' [data-gtiles]'],
     ['effects:head', EG, EG + ' .pmt-cz-fxchips'],
-    ['effects:chips', EG + ' .pmt-cz-fxchips'],
+    ['effects:chips', EG + ' .pmt-cz-fxchips > :nth-child(-n+2)'],
+    ['effects:chips2', EG + ' .pmt-cz-fxchips > :nth-child(n+3):nth-child(-n+4)'],
+    ['effects:chips3', EG + ' .pmt-cz-fxchips > :nth-child(n+5)'],
     ['group:behavior', '.pmt-cz-group[data-group="behavior"]'],
-    ['top:preview', '.pmt-cz-preview']
+    /* the preview last, after the case styles (rasterSoon), in four parts: drawn whole it linked 5 programs back to back
+       on the P1000, a 234 ms gap (the lead's F6b idle attribution) */
+    ['preview:frame', '.pmt-cz-preview', '.pmt-cz-preview .pmt-body > *'],
+    ['preview:ground', '.pmt-cz-preview .pmt-bglayer'],
+    ['preview:gutter', '.pmt-cz-preview .pmt-gutter, .pmt-cz-preview .pmt-scrollbar'],
+    ['top:preview', '.pmt-cz-preview .pmt-screen']
   ];
 
   /* ---------------- the screen ----------------
@@ -1426,9 +1437,10 @@
       var W = window.PM_WARM, add = function (name) {
         rasterIds.push(W.add({ owner: 'terminal', name: 'customize:' + name, run: function () { return rasterShow(name) ? rasterEnd : null; } }));
       };
-      if (fresh) RASTER_PARTS.forEach(function (p) { if (p[0] !== 'top:preview') add(p[0]); });
+      var late = function (p) { return p[0] === 'top:preview' || p[0].indexOf('preview:') === 0; };
+      if (fresh) RASTER_PARTS.forEach(function (p) { if (!late(p)) add(p[0]); });
       if (T.Bezel && T.Bezel.warm) T.Bezel.warm([v, pv]);
-      if (fresh) add('top:preview');
+      if (fresh) RASTER_PARTS.forEach(function (p) { if (late(p)) add(p[0]); });
     }
     function warmCancel() {
       clearTimeout(warmWait); warmWait = 0;
