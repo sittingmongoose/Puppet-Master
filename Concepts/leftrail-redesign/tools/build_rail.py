@@ -134,7 +134,7 @@ def main() -> int:
             print('LINT:', p)
         return 1
     target.parent.mkdir(parents=True, exist_ok=True)
-    target.write_text(text, encoding='utf-8')
+    target.write_bytes(text.encode('utf-8'))
     print(json.dumps(report(text, notes, target)))
     return 0
 
