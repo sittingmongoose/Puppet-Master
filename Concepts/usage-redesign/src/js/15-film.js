@@ -1974,9 +1974,12 @@
      linked 9 in the rail step, a 137-158 ms freeze of Home's frames): the layer alone with one small box (its own
      compositor programs); then one element of each kind the page chrome draws, by itself (rasterSig: what it paints,
      in which layer, under a rounded clip or not); then the rail, the stage's head and the page chrome whole; then each
-     card of the room in reading order, the hero first: one element of each kind it brings that no step drew yet, then
-     the card whole. A layer that will hold six paths or more (Chrome rasters such a layer multisampled) first draws six
-     of them alone, so every kind after them draws, and links, in its multisampled form. Then the first screen of each
+     card of the room in reading order, the hero first, as a growing prefix of its paint order (rasterPlan): a layer
+     that will hold six paths or more (Chrome rasters such a layer multisampled) first draws six of them alone, so
+     everything after them draws, and links, in its multisampled form; then each step adds the next painting elements,
+     one of a kind no step drew yet alone, else up to rasterGrow of them (doubled while the frames come on time, back
+     to one after a step that held them), an image once it is decoded; then the card whole, which adds nothing new
+     (P2-03 final). Then the first screen of each
      other room the rail leads with (Overview, Costs, Accounts, less the arrival's room) is built in the spare board
      element (40-board.js rasterRoom) and drawn the same way, its cards alone (the chrome is drawn), then torn down. Once
      per look, board class and room per page load; a room the page has shown is done. Nothing of the held state
@@ -2001,8 +2004,10 @@
      idle time a step needs left in its idle period, else it waits for the next one; RASTER_AMBIENT: a finite animation
      longer than this is ambient, not a move to wait for */
   var RASTER_FRAMES = (function () { var m = /[?&]pmu-raster-frames=([1-6])(?:&|#|$)/.exec(location.search); return m ? +m[1] : 1; })();
-  var RASTER_ROOMS = ['overview', 'costs', 'accounts'], RASTER_QUIET = 600, RASTER_PARK = 1500, RASTER_MSAA = 6, RASTER_CHUNK = 5, RASTER_BATCH = 4,
+  var RASTER_ROOMS = ['overview', 'costs', 'accounts'], RASTER_QUIET = 600, RASTER_PARK = 1500, RASTER_MSAA = 6,
     RASTER_SLICE = 2, RASTER_AMBIENT = 2000;
+  /* RASTER_PREFIX: the most painting elements a card's step adds (?pmu-raster-prefix=N for measurements) */
+  var RASTER_PREFIX = (function () { var m = /[?&]pmu-raster-prefix=(\d{1,3})(?:&|#|$)/.exec(location.search); return m ? Math.max(1, +m[1]) : 8; })();
   var rast = null, rasterDone = {}, rasterSeen = {}, rasterLog = { rooms: [], at: null, ms: null, skipped: WARM_OFF ? 'warm-off' : null };
   function rasterKey(room, cls) {
     var look = (root.getAttribute('data-theme') || '') + (root.getAttribute('data-o55-nier') === 'on' ? '+nier' : '');
@@ -2175,9 +2180,29 @@
   }
   /* n animation frames after the change (flushed in idle, so the first one only paints it) */
   function rasterFrames(r, n, fn) {
-    var seq = r.seq;
-    var step = function () { if (rast !== r || r.seq !== seq) return; if (--n <= 0) { fn(); return; } requestAnimationFrame(step); };
+    var seq = r.seq, last = 0;
+    var step = function (ts) {
+      if (rast !== r || r.seq !== seq) return;
+      /* the frame interval (the shortest seen between two of these frames) */
+      if (last && ts - last > 3) rasterVsync = Math.min(rasterVsync, ts - last);
+      last = ts;
+      if (--n <= 0) { fn(); return; }
+      requestAnimationFrame(step);
+    };
     requestAnimationFrame(step);
+  }
+  /* an element in a step's label (warmState().raster.steps, ?pmu-raster-marks=1) */
+  function rasterName(el) {
+    if (!el) return '';
+    var cl = el.className && el.className.baseVal != null ? el.className.baseVal : el.className;
+    return el.localName + (cl ? '.' + String(cl).trim().split(/\s+/)[0] : '');
+  }
+  /* how many elements a card's next step may add (RASTER_PREFIX at most): doubled after a step whose frames came on
+     time, back to one after a step that held them (a GPU program link: about 19 ms each on the RTX 3090) */
+  var rasterVsync = 16.7, rasterGrow = 2;
+  function rasterPace(held) {
+    if (held > (RASTER_FRAMES + 1.5) * rasterVsync) rasterGrow = 1;
+    else if (held <= (RASTER_FRAMES + 0.5) * rasterVsync) rasterGrow = Math.min(RASTER_PREFIX, rasterGrow * 2);
   }
   /* the hero first (it holds the most charts), then reading order */
   function rasterOrder(list) {
@@ -2293,14 +2318,18 @@
     if (cs.transform && cs.transform !== 'none' && !/^matrix\(1, 0, 0, 1,/.test(cs.transform)) f.push('T');
     return ctx + '|' + f.join('.');
   }
-  /* one root's steps: [{ self: [elements], sig: [keys] } ..., then its whole steps]. Each kind no step drew yet, by one
-     element of it in the window (an element outside it is never rastered); a layer of six paths or more first draws
-     six of them alone, of one kind where it can. ctxOf(el) names the layer of an element, skip(el) leaves a subtree
-     out. With chunk, a root of more than twice that many elements is then drawn kind by kind, every element of a
-     kind at once, before it is drawn whole: drawn together, elements of kinds already drawn still made new programs
-     (the GPU batches neighbouring draws of one kind into one, and a batch links its own program; the hero drawn whole
-     linked 14 after its kinds, a 208 ms freeze on the RTX 3090) */
-  function rasterPlan(root0, ctxOf, skip, wholes, chunk) {
+  /* one root's steps: [{ self: [elements], sig: [keys] } ..., then its whole steps]. A layer of six paths or more first
+     draws six of them alone, of one kind where it can. ctxOf(el) names the layer of an element, skip(el) leaves a
+     subtree out. Then, for the page chrome, each kind no step drew yet, by one element of it in the window (an element
+     outside it is never rastered). A card (prefix) is drawn instead as a growing prefix in paint order: each step adds
+     the next painting elements in the window, at most RASTER_PREFIX of them and at most one of a kind no step drew
+     yet, and the elements drawn stay drawn. The GPU batches neighbouring draws of one kind into one and links a program
+     for the batch's mix of features, so what links is decided by which draws sit next to each other: drawn kind by
+     kind, the card's whole draw then batched them differently again (P2-03 final, RTX 3090: the hero's whole step
+     linked 4-7 FillRRectOp programs in Glass and Friendly, and a provider logo drawn with the other logos of its kind
+     linked 4-6 in Basic Dark, 75-150 ms frames). A prefix of the paint order batches as the whole draw will, so each
+     step meets at most its own few new batches, and the whole draw after the last one meets none */
+  function rasterPlan(root0, ctxOf, skip, wholes, prefix) {
     var vw = window.innerWidth || 1, vh = window.innerHeight || 1;
     var items = [], slow = {}, info = new Map();
     var seen = function (r) { return r.width > 0 && r.height > 0 && r.right > 0 && r.bottom > 0 && r.left < vw && r.top < vh; };
@@ -2308,14 +2337,23 @@
       if (skip && skip(el)) return;
       var cs = getComputedStyle(el); if (cs.display === 'none') return;
       var ctx = ctxOf(el), r = el.getBoundingClientRect(), inView = seen(r);
-      /* a slow path as Chrome counts them for multisampling (cc DrawPathOp::CountSlowPaths): an anti-aliased path that is
-         not a line, not a hairline, and not a fill under 64 x 64 */
-      if (el.namespaceURI === SVGNS && RASTER_SLOW.test(el.localName) && el.localName !== 'line' && cs.shapeRendering !== 'crispEdges') {
-        var stroked = cs.stroke !== 'none' && rpx(cs.strokeWidth) > 0, bigFill = cs.fill !== 'none' && (r.width >= 64 || r.height >= 64);
-        if (stroked || bigFill) (slow[ctx] = slow[ctx] || []).push({ el: el, inView: inView, kind: el.localName + (bigFill ? 'f' : '') + (stroked ? 's' + (cs.strokeDasharray !== 'none' ? 'd' : '') : '') });
+      /* a slow path as Chrome counts them for multisampling (cc DrawPathOp::CountSlowPaths: an anti-aliased path that is
+         not a line, not a hairline, and not a concave fill under 64 x 64; ClipPathOp: an anti-aliased clip path). Whether a
+         small fill is convex is not known here, so every filled SVG path counts (P2-03 final: counted only from 64 px,
+         a card's layer went multisampled in the middle of its prefix and its next step linked 20 programs, a 242 ms
+         frame on the RTX 3090); so do an HTML element's clip path and a dashed or dotted border (drawn as paths). Too
+         many counted only draws a few paths early. */
+      if (el.namespaceURI === SVGNS ? RASTER_SLOW.test(el.localName) && el.localName !== 'line' && cs.shapeRendering !== 'crispEdges' : true) {
+        var sv = el.namespaceURI === SVGNS, stroked = sv && cs.stroke !== 'none' && rpx(cs.strokeWidth) > 0, filled = sv && cs.fill !== 'none';
+        var clipP = !sv && cs.clipPath && cs.clipPath !== 'none' && !/^(inset|rect|xywh)\(|^(border|padding|content|margin|fill|stroke|view)-box$/.test(cs.clipPath);
+        var dash = !sv && /^(dashed|dotted)$/.test(cs.borderTopStyle) && rpx(cs.borderTopWidth) > 0;
+        if (stroked || filled || clipP || dash) (slow[ctx] = slow[ctx] || []).push({ el: el, inView: inView, kind: sv ? el.localName + (filled ? 'f' : '') + (stroked ? 's' + (cs.strokeDasharray !== 'none' ? 'd' : '') : '') : clipP ? 'clip' : 'dash' });
       }
       /* an image starts decoding now, so it draws in its own step (decoded late, it drew, and linked, in a later one) */
-      if (el.localName === 'img' && el.decode && !el._pmuDecoding) { el._pmuDecoding = true; el.decode().catch(function () {}); }
+      if (el.localName === 'img' && el.decode && !el._pmuDecoding) {
+        el._pmuDecoding = performance.now();
+        el.decode().then(function () { el._pmuDecoded = true; }, function () { el._pmuDecoded = true; });
+      }
       var it = { el: el, cs: cs, r: r, ctx: ctx, clip: clip, inView: inView };
       items.push(it); info.set(el, it);
       var rad = rpx(cs.borderTopLeftRadius) + rpx(cs.borderBottomRightRadius);
@@ -2338,31 +2376,18 @@
       it.lit = it.cs.opacity === '0';
       it.sig = rasterSig(it.el, it.cs, it.r, (msaa[it.ctx] ? it.ctx : it.ctx.toLowerCase()) + (it.clip ? 'C' : ''));
       if (it.lit && it.sig) it.sig = it.sig.replace(/\.o$|\.o(?=\.)/, '');
-      if (!it.inView || !it.sig || rasterSeen[it.sig] || local[it.sig]) return;
-      local[it.sig] = true;
-      steps.push({ self: [it.el], sig: [it.sig], label: it.sig, lit: it.lit });
+      if (!it.inView || !it.sig) return;
+      var fresh = !rasterSeen[it.sig] && !local[it.sig];
+      if (!prefix) {
+        if (!fresh) return;
+        local[it.sig] = true;
+        steps.push({ self: [it.el], sig: [it.sig], label: it.sig, lit: it.lit });
+        return;
+      }
+      /* one unit an element; rasterBatch takes up to rasterGrow of them a step, an element of a new kind alone */
+      if (fresh) local[it.sig] = true;
+      steps.push({ self: [it.el], lits: [it.lit], sig: fresh ? [it.sig] : [], unit: true, fresh: fresh, label: fresh ? it.sig : '' });
     });
-    if (chunk && items.length > chunk * 2) {
-      /* then every element of a kind at once, kind after kind, each by itself: neighbouring draws of one kind are what
-         the GPU batches together (the batch links a program of its own), so each kind's batches link in their own step;
-         kinds whose batches a step drew already, of about the same count, go together, a few a step */
-      var groups = {}, order = [];
-      items.forEach(function (it) { if (!it.inView || !it.sig) return; if (!groups[it.sig]) { groups[it.sig] = []; order.push(it.sig); } groups[it.sig].push(it); });
-      var batch = null, flushB = function () { if (batch) steps.push(batch); batch = null; };
-      order.forEach(function (sig) {
-        var g = groups[sig], n = g.length, key = 'many:' + sig + ':' + (n < 2 ? 1 : n < 4 ? 3 : n < 8 ? 7 : 8);
-        var els = g.map(function (it) { return it.el; }), lits = g.map(function (it) { return it.lit; });
-        if (rasterSeen[key] || local[key]) {
-          if (!batch || batch.kinds >= RASTER_BATCH) { flushB(); batch = { self: [], lits: [], kinds: 0, label: 'kinds+' }; }
-          batch.self = batch.self.concat(els); batch.lits = batch.lits.concat(lits); batch.label = 'kinds+' + (++batch.kinds);
-          return;
-        }
-        flushB();
-        local[key] = true;
-        steps.push({ self: els, lits: lits, sig: [key], label: 'all' + n + ':' + sig });
-      });
-      flushB();
-    }
     return steps.concat(wholes || []);
   }
   /* the roots of a room: the board room starts with the layer and the page chrome; then its cards in order */
@@ -2382,7 +2407,7 @@
     var card = rt.el;
     if (!card || !card.isConnected) return [];
     var body = card.querySelector(':scope > .pmu-cardbody');
-    return rasterPlan(card, function (el) { return body && body.contains(el) ? 'Y' : 'K'; }, null, [{ whole: card, card: true, label: 'card' }], RASTER_CHUNK);
+    return rasterPlan(card, function (el) { return body && body.contains(el) ? 'Y' : 'K'; }, null, [{ whole: card, card: true, label: 'card' }], true);
   }
   /* one step: its marks made and flushed here (an idle callback), held RASTER_FRAMES frames, then the next through the gates */
   function rasterBatch(r, kind, cur, dl) {
@@ -2407,6 +2432,20 @@
     /* a body rendered again since the plan (a tier pass): planned again, its new elements */
     if (s.self && !s.self.some(function (x) { return x.isConnected; })) { cur.plan = null; rasterWait(r, rasterStep); return; }
     var chromeOn = kind === 'board' && cur.ri > 1 || /\bchrome\b/.test(panel.getAttribute('data-pmu-raster') || '');
+    /* a card's prefix: the next units that bring no new kind, up to rasterGrow of them (one of a new kind alone) */
+    var take = 1;
+    if (cur.pi === 0) rasterGrow = 1;
+    if (s.unit && !s.fresh) {
+      var self = s.self.slice(), lits = s.lits.slice();
+      while (take < rasterGrow) { var nx = cur.plan[cur.pi + take]; if (!nx || !nx.unit || nx.fresh) break; self.push(nx.self[0]); lits.push(nx.lits[0]); take++; }
+      s = { self: self, lits: lits, sig: [], label: 'pre' + take + ':' + rasterName(self[0]) };
+    } else if (s.unit) s = { self: s.self, lits: s.lits, sig: s.sig, label: 'new:' + rasterName(s.self[0]) + ':' + s.label };
+    /* an image not decoded yet waits for it (up to a second): decoded in the step's own raster, the 109 KB provider
+       mark held a frame 92 ms on the RTX 3090 with nothing linked */
+    if (s.self && s.self.some(function (x) { return x._pmuDecoding && !x._pmuDecoded && performance.now() - x._pmuDecoding < 1000; })) {
+      var seqD = r.seq; setTimeout(function () { if (rast === r && r.seq === seqD) rasterWait(r, rasterStep); }, 50);
+      return;
+    }
     if (s.self) {
       if (card) card.setAttribute('data-pmu-raster-pieces', '');
       s.self.forEach(function (x, i) { if (x.isConnected) x.setAttribute('data-pmu-raster-self', (s.lits ? s.lits[i] : s.lit) ? 'lit' : ''); });
@@ -2426,8 +2465,10 @@
     var t0 = performance.now(), label = cur.room + ':' + (card ? 'card' + cur.ri + ':' : '') + s.label;
     if (RASTER_MARKS) { try { performance.mark('pmu-raster:' + label); } catch (error) {} }
     rasterFrames(r, RASTER_FRAMES, function () {
-      cur.pi++; cur.steps++; cur.paint += performance.now() - t0;
-      if (rasterLog.steps.length < 600) rasterLog.steps.push([label, Math.round(t0), Math.round(performance.now() - t0)]);
+      var held = performance.now() - t0;
+      cur.pi += take; cur.steps++; cur.paint += held;
+      if (card) rasterPace(held);
+      if (rasterLog.steps.length < 600) rasterLog.steps.push([label, Math.round(t0), Math.round(held)]);
       rasterWait(r, rasterStep);
     });
   }
@@ -2685,7 +2726,7 @@
       return { warm: warm ? { room: warm.room, built: warm.built, ms: warm.ms || null, box: warm.box, parked: !!warm.parked, hidden: !!warmA11y } : null, last: warmLast,
         raster: { running: rast ? { rooms: rast.rooms.slice(), gate: rasterLog.gate, parked: rast.parked, resumes: rast.resumes,
             step: rast.cur ? { room: rast.cur.room, root: rast.cur.ri, piece: rast.cur.pi, spare: rast.spare } : null } : null,
-          rooms: rasterLog.rooms.slice(), at: rasterLog.at, ms: rasterLog.ms, parks: rasterLog.parks || 0, resumeMs: (rasterLog.resumeMs || []).slice(), holds: Object.assign({}, rasterLog.holds || {}), gateMs: Object.assign({}, rasterLog.gateMs || {}), frames: RASTER_FRAMES, skipped: rasterLog.skipped, done: Object.keys(rasterDone),
+          rooms: rasterLog.rooms.slice(), at: rasterLog.at, ms: rasterLog.ms, parks: rasterLog.parks || 0, resumeMs: (rasterLog.resumeMs || []).slice(), holds: Object.assign({}, rasterLog.holds || {}), gateMs: Object.assign({}, rasterLog.gateMs || {}), frames: RASTER_FRAMES, prefix: RASTER_PREFIX, skipped: rasterLog.skipped, done: Object.keys(rasterDone),
           kinds: Object.keys(rasterSeen).length, steps: (rasterLog.steps || []).slice() } };
     },
     deferHoverTags: deferHoverTags, last: function () { return last; }, off: off, parsePath: parsePath, yAt: yAt,
