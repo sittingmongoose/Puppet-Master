@@ -10,12 +10,12 @@ from __future__ import annotations
 
 import json
 import sys
+import base_source
 from pathlib import Path
 
 TOOLS = Path(__file__).resolve().parent
 PKG = TOOLS.parent
 SRC = PKG / 'src'
-BASE = PKG.parents[1] / 'Onboarding concepts' / 'TestPMConcept.html'
 
 DEFAULT_ROWS = ['hero:default', 'route:default', 'nas:find', 'nas:identity', 'nas:keys', 'nas:install', 'nas:verified', 'nas:folder']
 ART_JS = ['00-namespace.js', '05-util.js', '10-motion.js', '50-art-core.js', '51-art-basic.js', '52-art-friendly.js',
@@ -23,7 +23,7 @@ ART_JS = ['00-namespace.js', '05-util.js', '10-motion.js', '50-art-core.js', '51
 
 
 def theme_css() -> str:
-    lines = BASE.read_text(encoding='utf-8').split('\n')
+    lines = base_source.assemble().decode('utf-8').split('\n')
     start = next(i for i, l in enumerate(lines) if l.strip() == ':root {')
     end = next(i for i, l in enumerate(lines) if l.strip().startswith('[data-theme="friendly-light"]'))
     depth, j = 0, end

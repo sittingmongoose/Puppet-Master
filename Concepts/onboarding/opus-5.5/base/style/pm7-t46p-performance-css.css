@@ -1,0 +1,37 @@
+
+/* PM7 T46P: deterministic full-thread performance projection */
+.pm7-perf-contract { display:grid; gap:10px; }
+.pm7-perf-boundary { margin:0; color:var(--text-secondary); font-size:var(--fs-sm); line-height:1.45; }
+.pm7-perf-axes { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:8px; }
+.pm7-perf-axis { min-width:0; padding:10px; border:1px solid var(--border); border-radius:var(--radius-sm); background:var(--background); }
+.pm7-perf-axis h4 { margin:0 0 6px; color:var(--text-primary); font-size:var(--fs-sm); }
+.pm7-perf-vocab { display:flex; flex-wrap:wrap; gap:4px; }
+.pm7-perf-vocab code { display:inline-flex; min-height:22px; align-items:center; padding:2px 6px; border:1px solid var(--border-light);
+  border-radius:var(--radius-pill); color:var(--text-secondary); background:var(--surface); font-size:10px; overflow-wrap:anywhere; }
+.pm7-perf-fixtures { margin-top:8px; border:1px solid var(--border-light); border-radius:var(--radius-sm); background:var(--background); }
+.pm7-perf-fixtures > summary { padding:7px 9px; color:var(--text-secondary); font-size:11px; font-weight:600; cursor:pointer; }
+.pm7-perf-fixture-groups { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:6px; padding:0 7px 7px; }
+.pm7-perf-fixture-group { min-width:0; padding:6px; border:1px solid var(--border-light); border-radius:var(--radius-sm); }
+.pm7-perf-fixture-group h5 { margin:0 0 5px; color:var(--text-primary); font-size:10px; }
+.pm7-perf-fixture-row { display:flex; min-width:0; justify-content:space-between; gap:6px; padding:3px 0; color:var(--text-muted); font-size:10px; }
+.pm7-perf-fixture-row + .pm7-perf-fixture-row { border-top:1px solid var(--border-light); }
+.pm7-perf-fixture-row strong { min-width:0; color:var(--text-secondary); font-weight:600; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+.pm7-perf-fixture-row span { flex:0 0 auto; }
+.pm7-perf-installations { display:grid; gap:7px; margin-top:10px; }
+.pm7-perf-installation-window { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:6px; }
+.pm7-perf-installation-card { min-width:0; min-height:44px; max-height:96px; padding:7px 8px; overflow:hidden;
+  border:1px solid var(--border); border-radius:var(--radius-sm); background:var(--background); }
+.pm7-perf-installation-card strong, .pm7-perf-installation-card span { display:block; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+.pm7-perf-installation-card strong { color:var(--text-primary); font-size:11px; }
+.pm7-perf-installation-card span { margin-top:3px; color:var(--text-muted); font-size:10px; }
+html[data-theme^="retro"] .pm7-perf-axis,
+html[data-theme^="retro"] .pm7-perf-vocab code,
+html[data-theme^="retro"] .pm7-perf-fixtures,
+html[data-theme^="retro"] .pm7-perf-fixture-group,
+html[data-theme^="retro"] .pm7-perf-installation-card { border-radius:0; }
+@media (max-width:760px) {
+  .pm7-perf-axes, .pm7-perf-fixture-groups, .pm7-perf-installation-window { grid-template-columns:minmax(0,1fr); }
+}
+@media (prefers-reduced-motion:reduce) {
+  .pm7-perf-contract, .pm7-perf-contract * { animation:none!important; transition:none!important; }
+}

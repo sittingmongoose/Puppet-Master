@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Build Concepts/Onboarding concepts/TestOpus5.5PmConcept.html from the pinned TestPMConcept.html beside it plus ./src (onboarding, tour, Settings).
+"""Build Concepts/Onboarding concepts/TestOpus5.5PmConcept.html from the live ../base shell sources plus ./src (onboarding, tour, Settings).
 
 Usage:
   python3 Concepts/onboarding/opus-5.5/tools/build.py          # build TestOpus only
@@ -9,7 +9,8 @@ Usage:
   python3 Concepts/onboarding/opus-5.5/tools/build.py --out /tmp/ref.html --no-home   # private build without the Home layer (today's Home)
   python3 Concepts/onboarding/opus-5.5/tools/build.py --check  # verify the built file is current, every guard holds, and PMConcept7.html is byte-identical
 
-The base file is read-only. The legacy Product Onboarding and Guided Tour blocks are removed, the O55 modules are
+The live base is assembled by tools/base_source.py from ../base/manifest.json and its source files.
+The old TestPMConcept.html is history. During Phase 1 the assembled bytes retain its one-time split pin. The legacy Product Onboarding and Guided Tour blocks are removed, the O55 modules are
 spliced between <!-- O55:*:START/END --> markers, and a short list of guarded, exactly-once patches re-point the shell's
 few remaining references (hover-tag overlay ids, labels, Doctor quiet actions, Teacher persona, owner exposures).
 The Usage page is the redesign in Concepts/usage-redesign: its usage_layer replaces the base's Prism Usage page at step 2b.
@@ -32,13 +33,14 @@ import nier_palette
 import nier_scene_art
 import nier_scenes
 import settings_layer
+import base_source
 import active_descendant_rewrite
 import css_bucket_split
 
 TOOLS = Path(__file__).resolve().parent
 PKG = TOOLS.parent
 CONCEPTS = PKG.parents[1]
-SOURCE = CONCEPTS / 'Onboarding concepts' / 'TestPMConcept.html'
+SOURCE = base_source.BASE  # live shell sources; the former page is history
 TARGET = CONCEPTS / 'Onboarding concepts' / 'TestOpus5.5PmConcept.html'
 PM7_TARGET = CONCEPTS / 'PMConcept7.html'
 SRC = PKG / 'src'
@@ -1374,9 +1376,9 @@ def _layer(folder: str, module: str):
 def build_text(usage: bool = True, home: bool = True) -> str:
     """The built page. usage=False leaves the base's Prism Usage page in place, and home=False today's Home: private
     reference builds only (build.py --out PATH --no-usage / --no-home; usage_boot.mjs), never published."""
-    original = SOURCE.read_bytes()
+    original = base_source.assemble()
     need(hashlib.sha256(original).hexdigest() == BASE_SHA256,
-         'TestPMConcept.html changed since the pin; review the strip boundaries and patches, then re-pin BASE_SHA256.')
+         'Phase 1: assembled base differs from the one-time split proof.')
     text = original.decode('utf-8')
 
     # 0. Settings: swap the base's T50 managers layer for the Opus 5.5 fork in src/settings. The proposed Editor look

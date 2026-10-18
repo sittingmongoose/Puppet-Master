@@ -17,22 +17,22 @@ stage that contains the snippet:
   6. settings_layer: Concepts/onboarding/opus-5.5/tools/settings_layer.py
   7. PATCHES, NIER_PATCHES, first_paint_patches, THEME_PREVIEW_PATCHES and
      CUSTOM_TEXT_PATCHES in Concepts/onboarding/opus-5.5/tools/build.py
-  8. the pinned base, Concepts/Onboarding concepts/TestPMConcept.html
+  8. the live base sources, Concepts/onboarding/opus-5.5/base
 
-Every match is printed as file:line. When the only match is the pinned base,
-the snippet is frozen there: edit via a build.py patch, not the base.
+Every match is printed as file:line. Base hits name editable source files.
 """
 from __future__ import annotations
 
 import argparse
 import ast
 import importlib.util
+import json
 import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 PAGE = ROOT / "Concepts" / "PMConcept7.html"
-BASE = ROOT / "Concepts" / "Onboarding concepts" / "TestPMConcept.html"
+BASE = ROOT / "Concepts" / "onboarding" / "opus-5.5" / "base"
 BUILD_PY = ROOT / "Concepts" / "onboarding" / "opus-5.5" / "tools" / "build.py"
 O55_SRC = ROOT / "Concepts" / "onboarding" / "opus-5.5" / "src"
 RAIL = ROOT / "Concepts" / "leftrail-redesign"
@@ -65,7 +65,7 @@ SKIP_NAMES = {
     "UsageTestPMConcept7.html",
 }
 
-BASE_NOTE = "edit via a build.py patch, not the base"
+BASE_NOTE = "edit the live base source; rebuild with tools/build.py"
 
 
 def rel(path: Path) -> str:
@@ -261,7 +261,7 @@ def load_patch_entries() -> list[tuple[str, str, str]]:
     for name in PATCH_LISTS:
         entries.extend(getattr(build, name))
     try:
-        base = build.SOURCE.read_text(encoding="utf-8")
+        base = build.base_source.assemble().decode("utf-8")
         entries.extend(build.first_paint_patches(base))
     except Exception as exc:  # noqa: BLE001 - a drifted pin still leaves the static lists searchable
         print(f"pm7-where: first_paint_patches could not be built ({exc})", file=sys.stderr)
@@ -310,7 +310,7 @@ STAGES: list[tuple[str, str]] = [
     ("wizorch layer", "wizorch"),
     ("settings layer", "settings"),
     ("build.py patch", "patch"),
-    ("pinned base", "base"),
+    ("live base source", "base"),
 ]
 
 
@@ -332,7 +332,8 @@ def stage_hits(kind: str, snippet: str) -> list[tuple[Path, int]]:
     if kind == "patch":
         return search_patches(snippet)
     if kind == "base":
-        return search_paths([BASE], snippet)
+        manifest = json.loads((BASE / 'manifest.json').read_bytes())
+        return search_paths([BASE / manifest['skeleton']] + [BASE / b['file'] for b in manifest['blocks']], snippet)
     return []
 
 
@@ -343,11 +344,11 @@ def build_parser() -> argparse.ArgumentParser:
         epilog=(
             "Search order: O55 src (copy.json and copy.d included), then the rail, home, usage, "
             "wizorch and settings layers, then the PATCHES / NIER_PATCHES / first_paint_patches / "
-            "THEME_PREVIEW_PATCHES / CUSTOM_TEXT_PATCHES entries in build.py, then the pinned base. "
+            "THEME_PREVIEW_PATCHES / CUSTOM_TEXT_PATCHES entries in build.py, then the live base sources. "
             "The first stage that contains the snippet wins, and every match in that stage is printed. "
             "A rail snippet that exists only in generated d.css is answered from the .src.css line "
             "build_d_css.py expands, and d.css is named afterwards as a generated intermediate. "
-            f"When that stage is the pinned base, the tool adds: {BASE_NOTE}"
+            f"When that stage is the live base, the tool adds: {BASE_NOTE}"
         ),
         formatter_class=argparse.RawDescriptionHelpFormatter,
     )

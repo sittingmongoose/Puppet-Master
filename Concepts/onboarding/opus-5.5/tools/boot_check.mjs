@@ -1,4 +1,6 @@
-/* Boot check: load the base and the built concept, compare console errors and load timing, and confirm the
+/* Historical comparison: the base intentionally remains the frozen pre-O55 page, so old-vs-new error and timing
+ * comparisons keep their original control. Live shell sources are ../base (tools/base_source.py assembles them).
+ * Boot check: load the historical base and the built concept, compare console errors and load timing, and confirm the
  * strip/patch results live in the page.  Usage: node tools/boot_check.mjs <out-dir> [themes=basic-dark,...] [--page <path>]
  * Writes boot.json and a screenshot per page/theme into <out-dir> (never into the repository). */
 import { launch, sleep } from './chrome.mjs';

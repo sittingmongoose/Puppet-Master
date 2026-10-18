@@ -1,0 +1,1048 @@
+
+/* pm6-js-panels -- shell chrome wiring: activity-bar page navigation +
+   Ctrl+1..9, activity-bar customization (reorder / hide / More tray),
+   theme + project title-bar sprout menus, the title-bar density ladder,
+   and the depth-background pointer parallax. The legacy side-panel render
+   JS (git / docker / artifacts / notifications / agents mirror / worktree
+   row expansion / file filter) was removed in the 2026-07-29 deferred-
+   cleanup wave: the PM6 panels it served were replaced by the Cozy Shelves
+   panels, whose behavior lives in pm6-js-cozy-shelves. */
+(function () {
+  'use strict';
+  function $all(sel, root) { return Array.prototype.slice.call((root || document).querySelectorAll(sel)); }
+  function byId(id) { return document.getElementById(id); }
+  function demo() { return window.PM_DEMO || null; }
+
+  /* ================= activity bar: page icons + Ctrl+1..8 ================= */
+  function wireActivityBar() {
+    var bar = byId('activityBar');
+    if (!bar) return;
+    /* capture stage: page-nav icons must not fall through to the legacy
+       data-target toggle (which would hide the side panel on second click). */
+    document.addEventListener('click', function (e) {
+      var icon = e.target && e.target.closest ? e.target.closest('.activity-bar .icon[data-demo-action="page.go"]') : null;
+      if (!icon) return;
+      e.stopPropagation();
+      e.preventDefault();
+      var D = demo();
+      var arg = icon.dataset.demoArg || '';
+      var a = arg.split(':');
+      try {
+        if (D && D.guard && D.guard.attempt) D.guard.attempt('page.go', { el: icon, arg: arg });
+        else if (window.PM_PAGES) window.PM_PAGES.go(a[0], a[1]);
+      } catch (err) {}
+    }, true);
+
+    document.addEventListener('keydown', function (e) {
+      if (!e.ctrlKey || e.shiftKey || e.altKey || e.metaKey) return;
+      var n = parseInt(e.key, 10);
+      if (!(n >= 1 && n <= 9)) return;
+      var icons = $all('.activity-bar .icon[data-target]');
+      var icon = icons[n - 1];
+      if (icon) { e.preventDefault(); icon.click(); }
+    });
+  }
+
+  /* ================= activity bar customization (reorder / hide / More tray) =================
+     Persistence: single key pm.activity_bar_order:v2 — one JSON array of
+     data-ab-id strings containing the "__more__" sentinel; ids after the
+     sentinel are the hidden (tray) set. This is FinalGUISpec's
+     "ordered list of activity bar item IDs + separator position" contract.
+     Hotkeys: the Ctrl+1..8 handler in wireActivityBar live-queries
+     '.activity-bar .icon[data-target]' per keydown, so DOM order == hotkey
+     order — hotkeys follow the VISUAL order automatically and hidden icons
+     drop out of the numbering; zero code needed here.
+     Boot flattens the decorative .pm6-ab-group wrappers (any future
+     group-scoped CSS goes inert — the separator rules in pm6-css-panels
+     already are). Icon nodes are MOVED, never cloned: the delegated
+     Chat/Dashboard title-matched handlers (js-terminal-demo) keep working. */
+  function initActivityBarCustomization() {
+    var LS_KEY = 'pm.activity_bar_order:v2';
+    var SENTINEL = '__more__';
+    var bar = byId('activityBar');
+    var moreBtn = byId('abMoreBtn');
+    if (!bar || !moreBtn) return;
+
+    function lsGet(k) { try { return window.localStorage.getItem(k); } catch (e) { return null; } }
+    function lsSet(k, v) { try { window.localStorage.setItem(k, v); } catch (e) {} }
+
+    var hidden = [];   /* [{ id, node }] — detached icon nodes, in tray order */
+    var drag = null;   /* active gesture state */
+
+    function visibleIcons() {
+      return $all('#activityBar > .icon[data-ab-id]').filter(function (i) { return i !== moreBtn; });
+    }
+    function syncMore() { moreBtn.setAttribute('data-empty', hidden.length ? '0' : '1'); }
+    function persist() {
+      var order = visibleIcons().map(function (i) { return i.getAttribute('data-ab-id'); });
+      order.push(SENTINEL);
+      hidden.forEach(function (h) { order.push(h.id); });
+      lsSet(LS_KEY, JSON.stringify(order));
+    }
+    function killTray() {
+      var t = document.querySelector('.pm-ab-tray');
+      if (t && t.parentNode) t.parentNode.removeChild(t);
+    }
+
+    /* ---- boot: flatten groups, apply persisted order, detach hidden ---- */
+    (function bootOrder() {
+      var domIcons = $all('.icon[data-ab-id]', bar).filter(function (i) { return i !== moreBtn; });
+      var map = {};
+      domIcons.forEach(function (i) { map[i.getAttribute('data-ab-id')] = i; });
+      var saved = null;
+      try { saved = JSON.parse(lsGet(LS_KEY) || 'null'); } catch (e) { saved = null; }
+      if (!saved || Object.prototype.toString.call(saved) !== '[object Array]') saved = null;
+      var migratedLegacyActivityOrder = false;
+      if (saved) saved = saved.map(function (id) { var canonical = id === 'gh-actions' || id === 'github_actions' || id === 'git' ? 'repository_automation' : id; if (canonical !== id) migratedLegacyActivityOrder = true; return canonical; });
+      var visIds = [], hidIds = [], seen = {}, past = false;
+      (saved || []).forEach(function (id) {
+        if (id === SENTINEL) { past = true; return; }
+        if (!map[id] || seen[id]) return;          /* persisted id missing from DOM: dropped */
+        seen[id] = true;
+        (past ? hidIds : visIds).push(id);
+      });
+      domIcons.forEach(function (i) {              /* unknown new ids: visible, at the end */
+        var id = i.getAttribute('data-ab-id');
+        if (!seen[id]) { seen[id] = true; visIds.push(id); }
+      });
+      visIds.forEach(function (id) { bar.insertBefore(map[id], moreBtn); });   /* moved, not cloned */
+      hidIds.forEach(function (id) {
+        var n = map[id];
+        if (n.parentNode) n.parentNode.removeChild(n);
+        hidden.push({ id: id, node: n });
+      });
+      $all('.pm6-ab-group', bar).forEach(function (g) {                        /* remove emptied wrappers */
+        if (!g.querySelector('.icon') && g.parentNode) g.parentNode.removeChild(g);
+      });
+      syncMore();
+      if (migratedLegacyActivityOrder) persist();
+    })();
+
+    /* ---- shared pointer-drag engine (bar icons + tray rows) ---- */
+    function suppressNextClick() {
+      /* one-shot window-CAPTURE suppressor: it runs before the document
+         capture-stage page.go handler in wireActivityBar AND before the
+         legacy body-level bubble handler (js-terminal-demo), so a drop
+         never doubles as a click on either path. */
+      var fn = function (e) {
+        e.stopPropagation();
+        e.preventDefault();
+        window.removeEventListener('click', fn, true);
+      };
+      window.addEventListener('click', fn, true);
+      setTimeout(function () { window.removeEventListener('click', fn, true); }, 0);
+    }
+    function computeSlots() {
+      /* midpoints of the visible icons — pure vertical-list math, identical
+         at 36px collapsed and 72px expanded */
+      return visibleIcons().map(function (i) {
+        var r = i.getBoundingClientRect();
+        return { top: r.top, bottom: r.bottom, mid: r.top + r.height / 2 };
+      });
+    }
+    function armGesture(e, node, id, fromTray, captureEl) {
+      if (e.button !== 0) return;
+      drag = { node: node, id: id, fromTray: !!fromTray, started: false, sx: e.clientX, sy: e.clientY, pid: e.pointerId };
+      try { captureEl.setPointerCapture(e.pointerId); } catch (err) {}
+      window.addEventListener('pointermove', onPointerMove);
+      window.addEventListener('pointerup', onPointerUp);
+      window.addEventListener('pointercancel', onPointerCancel);
+    }
+    function beginDrag() {
+      drag.started = true;
+      document.body.classList.add('pm-ab-dragging');   /* shows the More target + disables jiggle/hover-scale */
+      killTray();
+      var g = drag.node.cloneNode(true);               /* ghost is a throwaway clone; the real node moves at drop */
+      g.classList.add('pm-ab-ghost');
+      g.classList.remove('active');
+      var w = drag.fromTray ? moreBtn.getBoundingClientRect().width : drag.node.getBoundingClientRect().width;
+      g.style.width = Math.max(32, Math.round(w)) + 'px';
+      document.body.appendChild(g);
+      drag.ghost = g;
+      if (!drag.fromTray) drag.node.classList.add('pm-ab-drag-src');
+      var ind = document.createElement('div');
+      ind.className = 'pm-ab-drop-indicator';
+      var br = bar.getBoundingClientRect();
+      ind.style.left = (br.left + 4) + 'px';
+      ind.style.width = (br.width - 8) + 'px';
+      ind.style.display = 'none';
+      document.body.appendChild(ind);
+      drag.indicator = ind;
+      drag.moreRect = moreBtn.getBoundingClientRect(); /* after the body class: More is visible now */
+      drag.slots = computeSlots();
+    }
+    function onPointerMove(e) {
+      if (!drag || e.pointerId !== drag.pid) return;
+      if (!drag.started) {
+        if (Math.abs(e.clientX - drag.sx) < 4 && Math.abs(e.clientY - drag.sy) < 4) return;   /* 4px threshold */
+        beginDrag();
+      }
+      drag.ghost.style.left = (e.clientX + 6) + 'px';
+      drag.ghost.style.top = (e.clientY - 12) + 'px';
+      var mr = drag.moreRect;
+      drag.overMore = !drag.fromTray &&
+        e.clientX >= mr.left && e.clientX <= mr.right && e.clientY >= mr.top && e.clientY <= mr.bottom;
+      moreBtn.classList.toggle('pm-ab-drop-hot', !!drag.overMore);
+      if (drag.overMore) { drag.indicator.style.display = 'none'; drag.insertAt = -1; return; }
+      var idx = drag.slots.length;
+      for (var i = 0; i < drag.slots.length; i++) {
+        if (e.clientY < drag.slots[i].mid) { idx = i; break; }
+      }
+      drag.insertAt = idx;
+      var y = idx < drag.slots.length
+        ? drag.slots[idx].top - 1
+        : (drag.slots.length ? drag.slots[drag.slots.length - 1].bottom + 1 : mr.top - 4);
+      drag.indicator.style.top = y + 'px';
+      drag.indicator.style.display = 'block';
+    }
+    function onPointerUp(e) { if (drag && e.pointerId === drag.pid) endDrag(false); }
+    function onPointerCancel(e) { if (drag && e.pointerId === drag.pid) endDrag(true); }
+    function endDrag(cancelled) {
+      var d = drag;
+      drag = null;
+      window.removeEventListener('pointermove', onPointerMove);
+      window.removeEventListener('pointerup', onPointerUp);
+      window.removeEventListener('pointercancel', onPointerCancel);
+      if (!d || !d.started) return;                    /* below threshold: plain click proceeds */
+      document.body.classList.remove('pm-ab-dragging');
+      moreBtn.classList.remove('pm-ab-drop-hot');
+      if (d.ghost && d.ghost.parentNode) d.ghost.parentNode.removeChild(d.ghost);
+      if (d.indicator && d.indicator.parentNode) d.indicator.parentNode.removeChild(d.indicator);
+      d.node.classList.remove('pm-ab-drag-src');
+      if (!cancelled) applyDrop(d);
+      suppressNextClick();
+    }
+    function applyDrop(d) {
+      if (!d.fromTray && d.overMore) {                 /* drop-to-hide */
+        if (d.node.parentNode) d.node.parentNode.removeChild(d.node);
+        hidden.push({ id: d.id, node: d.node });
+        syncMore();
+        persist();
+        return;
+      }
+      if (d.insertAt == null || d.insertAt < 0) return;
+      var vis = visibleIcons();
+      var ref = d.insertAt < vis.length ? vis[d.insertAt] : moreBtn;
+      if (ref === d.node) return;
+      if (d.fromTray) {
+        for (var i = 0; i < hidden.length; i++) {
+          if (hidden[i].id === d.id) { hidden.splice(i, 1); break; }
+        }
+        syncMore();
+      }
+      bar.insertBefore(d.node, ref);                   /* positioned restore / reorder */
+      persist();
+    }
+
+    bar.addEventListener('pointerdown', function (e) {
+      var icon = e.target && e.target.closest ? e.target.closest('#activityBar > .icon[data-ab-id]') : null;
+      if (!icon || icon === moreBtn) return;
+      armGesture(e, icon, icon.getAttribute('data-ab-id'), false, icon);
+    });
+
+    /* ---- More tray popover (cloned from the terminal overflow-menu
+       pattern: body-appended, outside-click close) ---- */
+    function restoreHidden(id, beforeNode) {
+      for (var i = 0; i < hidden.length; i++) {
+        if (hidden[i].id !== id) continue;
+        var h = hidden.splice(i, 1)[0];
+        bar.insertBefore(h.node, beforeNode || moreBtn);   /* default: end of the visible list */
+        syncMore();
+        persist();
+        return h;
+      }
+      return null;
+    }
+    function buildTrayRow(h) {
+      var row = document.createElement('button');
+      row.type = 'button';
+      row.className = 'pm-ab-tray-row';
+      row.setAttribute('data-ab-id', h.id);
+      var ico = document.createElement('span');
+      ico.className = 'pm-ab-tray-ico';
+      var svg = h.node.querySelector('svg');
+      if (svg) ico.appendChild(svg.cloneNode(true));   /* display clone only; the real node stays in the map */
+      row.appendChild(ico);
+      var label = document.createElement('span');
+      label.textContent = h.node.getAttribute('title') || h.id;
+      row.appendChild(label);
+      row.addEventListener('click', function (ev) {    /* click = restore to end of visible */
+        ev.stopPropagation();
+        restoreHidden(h.id, null);
+        refreshTray();
+      });
+      row.addEventListener('pointerdown', function (ev) {   /* drag back onto the bar = positioned restore */
+        armGesture(ev, h.node, h.id, true, row);
+      });
+      return row;
+    }
+    function refreshTray() {
+      var tray = document.querySelector('.pm-ab-tray');
+      if (!tray) return;
+      if (!hidden.length) { killTray(); return; }
+      while (tray.firstChild) tray.removeChild(tray.firstChild);
+      hidden.forEach(function (h) { tray.appendChild(buildTrayRow(h)); });
+    }
+    document.addEventListener('click', function (e) {
+      var btn = e.target && e.target.closest ? e.target.closest('#abMoreBtn') : null;
+      if (!btn) return;
+      e.stopPropagation();       /* keep the legacy .icon body handler from claiming More */
+      e.preventDefault();
+      var existing = document.querySelector('.pm-ab-tray');
+      if (existing) { killTray(); return; }
+      if (!hidden.length) return;
+      var m = document.createElement('div');
+      m.className = 'pm-ab-tray';
+      hidden.forEach(function (h) { m.appendChild(buildTrayRow(h)); });
+      document.body.appendChild(m);
+      var r = moreBtn.getBoundingClientRect();
+      m.style.left = (r.right + 8) + 'px';
+      m.style.top = Math.min(r.top, Math.max(8, window.innerHeight - m.offsetHeight - 8)) + 'px';
+      setTimeout(function () {
+        function close(ev) {
+          if (m.contains(ev.target)) return;
+          if (m.parentNode) m.parentNode.removeChild(m);
+          document.removeEventListener('click', close);
+        }
+        document.addEventListener('click', close);
+      }, 0);
+    }, true);
+  }
+
+  /* ================= theme + project title-bar sprout menus =================
+     Theme model: family (friendly|glass|retro|basic) x mode (light|dark|auto).
+     Persistence: pm.themeFamily + pm.themeMode, plus the resolved slug kept in
+     the legacy pm.theme key for older readers. Auto follows the OS via
+     prefers-color-scheme and re-resolves live on scheme change.
+     data-theme on <html> ALWAYS carries one of the 8 resolved slugs, so every
+     [data-theme…] CSS block and the /-light$/ glass-alpha clamps keep working. */
+  var PM_THEME_FAMILIES = { friendly: 'Friendly', glass: 'Glass', retro: 'Retro', basic: 'Basic' };
+  var PM_THEME_MODES = ['light', 'dark', 'auto'];
+  var PM_THEME_SLUGS = {
+    'friendly-dark': 'Friendly Dark',
+    'friendly-light': 'Friendly Light',
+    'glass-dark': 'Glass Dark',
+    'glass-light': 'Glass Light',
+    'retro-dark': 'Retro Dark',
+    'retro-light': 'Retro Light',
+    'basic-dark': 'Basic Dark',
+    'basic-light': 'Basic Light'
+  };
+  var PM_THEME_SLUG_RE = /^(friendly|glass|retro|basic)-(light|dark)$/;
+  var themeState = { family: 'friendly', mode: 'dark' };
+
+  function themeLsGet(k) { try { return window.localStorage.getItem(k); } catch (e) { return null; } }
+  function themeLsSet(k, v) { try { window.localStorage.setItem(k, v); } catch (e) {} }
+
+  function themeResolveScheme(mode) {
+    if (mode === 'light') return 'light';
+    if (mode === 'dark') return 'dark';
+    try {
+      if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) return 'dark';
+    } catch (e) {}
+    return 'light';
+  }
+
+  function themeReadState() {
+    var fam = themeLsGet('pm.themeFamily');
+    var mode = themeLsGet('pm.themeMode');
+    var leg = PM_THEME_SLUG_RE.exec(themeLsGet('pm.theme') || '');
+    if (!PM_THEME_FAMILIES[fam]) fam = leg ? leg[1] : 'friendly';
+    if (PM_THEME_MODES.indexOf(mode) < 0) mode = leg ? leg[2] : 'dark';
+    return { family: fam, mode: mode };
+  }
+
+  function themeApply(family, mode, opts) {
+    opts = opts || {};
+    if (!PM_THEME_FAMILIES[family]) family = 'friendly';
+    if (PM_THEME_MODES.indexOf(mode) < 0) mode = 'dark';
+    themeState.family = family;
+    themeState.mode = mode;
+    var slug = family + '-' + themeResolveScheme(mode);
+    var prev = document.documentElement.getAttribute('data-theme');
+    document.documentElement.setAttribute('data-theme', slug);
+    if (opts.persist !== false) {
+      themeLsSet('pm.themeFamily', family);
+      themeLsSet('pm.themeMode', mode);
+      themeLsSet('pm.theme', slug);
+    }
+    themeSyncChrome();
+    if (opts.dispatch !== false && prev !== slug) {
+      var btn = byId('themeSelect');
+      if (btn) {
+        try { btn.dispatchEvent(new Event('change', { bubbles: true })); } catch (e0) {}
+      }
+    }
+    if (window.PM_GLASS_LOCK_REFRESH) {
+      try { window.PM_GLASS_LOCK_REFRESH(); } catch (e1) {}
+    }
+    return slug;
+  }
+
+  function themeSyncChrome() {
+    var family = themeState.family;
+    var mode = themeState.mode;
+    var scheme = themeResolveScheme(mode);
+    var slug = family + '-' + scheme;
+    var btn = byId('themeSelect');
+    var label = byId('themeMenuLabel');
+    var menu = byId('themeMenu');
+    if (btn) {
+      btn.setAttribute('data-value', slug);
+      btn.setAttribute('data-mode-icon', mode === 'light' ? 'sun' : (mode === 'dark' ? 'moon' : 'auto'));
+      var title = 'Theme: ' + PM_THEME_FAMILIES[family] +
+        (mode === 'auto' ? ' (Auto)' : ' (' + PM_THEME_SLUGS[slug] + ')');
+      btn.setAttribute('title', title);
+      if (btn.hasAttribute('aria-label')) btn.setAttribute('aria-label', title);
+      try { btn.value = slug; } catch (e0) {}
+    }
+    if (label) label.textContent = PM_THEME_FAMILIES[family] || family;
+    if (menu) {
+      menu.querySelectorAll('.pm6-tt-mode').forEach(function (b) {
+        b.setAttribute('aria-checked', b.getAttribute('data-mode-value') === mode ? 'true' : 'false');
+      });
+      menu.querySelectorAll('.pm6-tt-family').forEach(function (row) {
+        var on = row.getAttribute('data-family') === family;
+        row.classList.toggle('is-selected', on);
+        row.setAttribute('aria-checked', on ? 'true' : 'false');
+        row.querySelectorAll('.pm6-tt-chip').forEach(function (chip) {
+          chip.classList.toggle('is-active', chip.getAttribute('data-chip') === family + '-' + scheme);
+        });
+      });
+    }
+  }
+
+  function tbMenuIsOpen(menu) {
+    var sprout = window.PM6_SPROUT;
+    if (sprout && sprout.isOpen) return sprout.isOpen(menu);
+    return !!(menu && menu.classList.contains('is-open'));
+  }
+  function tbMenuOpen(menu, btn) {
+    var sprout = window.PM6_SPROUT;
+    if (sprout && sprout.open) sprout.open(menu, null, btn);
+    else if (menu) {
+      menu.classList.add('is-open');
+      menu.classList.remove('is-closing');
+      menu.style.display = 'block';
+    }
+  }
+  function tbMenuClose(menu) {
+    var sprout = window.PM6_SPROUT;
+    if (sprout && sprout.close) sprout.close(menu);
+    else if (menu) {
+      menu.classList.remove('is-open', 'is-closing', 'active');
+      menu.style.display = 'none';
+    }
+  }
+  function tbCloseAllMenus(except) {
+    document.querySelectorAll('.pm6-tb-menu').forEach(function (m) {
+      if (except && m === except) return;
+      if (tbMenuIsOpen(m)) tbMenuClose(m);
+      var wrap = m.closest('.pm6-tb-menu-wrap');
+      var btn = wrap && wrap.querySelector('.pm6-tb-menu-trigger');
+      if (btn) btn.setAttribute('aria-expanded', 'false');
+    });
+  }
+
+  window.PM_THEME = {
+    get: function () {
+      return document.documentElement.getAttribute('data-theme') ||
+        (themeState.family + '-' + themeResolveScheme(themeState.mode));
+    },
+    getFamily: function () { return themeState.family; },
+    getMode: function () { return themeState.mode; },
+    setFamily: function (f, opts) {
+      return themeApply(f, themeState.mode, opts || {});
+    },
+    setMode: function (m, opts) {
+      return themeApply(themeState.family, m, opts || {});
+    },
+    /* legacy/settings path: full slug ('retro-light') parses into
+       family + EXPLICIT mode (a slug pick can never mean auto) */
+    set: function (t, opts) {
+      var m = PM_THEME_SLUG_RE.exec(t || '');
+      if (!m) return themeApply(themeState.family, themeState.mode, opts || {});
+      return themeApply(m[1], m[2], opts || {});
+    },
+    syncChrome: function () { themeSyncChrome(); }
+  };
+
+  function wireTheme() {
+    var btn = byId('themeSelect');
+    var menu = byId('themeMenu');
+    if (!btn || !menu) return;
+
+    /* boot: adopt the head-snippet state (already migrated + resolved pre-paint);
+       re-persist so a legacy-only profile gains the family/mode keys. */
+    var st = { family: 'basic', mode: 'dark' };
+    themeApply(st.family, st.mode, { dispatch: false, persist: false });
+
+    btn.addEventListener('click', function (ev) {
+      ev.preventDefault();
+      ev.stopPropagation();
+      if (window.PM_TB_SEARCH && window.PM_TB_SEARCH.close) window.PM_TB_SEARCH.close();
+      var open = tbMenuIsOpen(menu);
+      tbCloseAllMenus(open ? null : menu);
+      if (open) {
+        tbMenuClose(menu);
+        btn.setAttribute('aria-expanded', 'false');
+      } else {
+        tbMenuOpen(menu, btn);
+        btn.setAttribute('aria-expanded', 'true');
+      }
+    });
+
+    menu.addEventListener('click', function (ev) {
+      var seg = ev.target && ev.target.closest ? ev.target.closest('.pm6-tt-mode[data-mode-value]') : null;
+      if (seg) {
+        ev.preventDefault();
+        window.PM7_SETTINGS_TOME.setChromeThemeMode(seg.getAttribute('data-mode-value'));
+        return; /* mode is a filter, not a final pick: menu stays open */
+      }
+      var row = ev.target && ev.target.closest ? ev.target.closest('.pm6-tt-family[data-family]') : null;
+      if (!row) return;
+      ev.preventDefault();
+      window.PM7_SETTINGS_TOME.setChromeThemeFamily(row.getAttribute('data-family'));
+      tbMenuClose(menu);
+      btn.setAttribute('aria-expanded', 'false');
+    });
+
+    /* auto mode: re-resolve + reapply when the OS color scheme flips */
+    try {
+      if (window.matchMedia) {
+        var mq = window.matchMedia('(prefers-color-scheme: dark)');
+        var onSchemeChange = function () {
+          if (themeState.mode !== 'auto') return;
+          themeApply(themeState.family, themeState.mode, {});
+        };
+        if (mq.addEventListener) mq.addEventListener('change', onSchemeChange);
+        else if (mq.addListener) mq.addListener(onSchemeChange);
+      }
+    } catch (e) {}
+  }
+
+  function wireProjectMenu() {
+    var btn = byId('projectMenuBtn');
+    var menu = byId('projectMenu');
+    var label = byId('projectMenuLabel');
+    if (!btn || !menu) return;
+
+    btn.addEventListener('click', function (ev) {
+      ev.preventDefault();
+      ev.stopPropagation();
+      if (window.PM_TB_SEARCH && window.PM_TB_SEARCH.close) window.PM_TB_SEARCH.close();
+      var open = tbMenuIsOpen(menu);
+      tbCloseAllMenus(open ? null : menu);
+      if (open) {
+        tbMenuClose(menu);
+        btn.setAttribute('aria-expanded', 'false');
+      } else {
+        tbMenuOpen(menu, btn);
+        btn.setAttribute('aria-expanded', 'true');
+      }
+    });
+
+    menu.addEventListener('click', function (ev) {
+      var item = ev.target && ev.target.closest ? ev.target.closest('.pm6-tb-menu-item[data-project]') : null;
+      if (!item) return;
+      ev.preventDefault();
+      var name = item.getAttribute('data-project') || '';
+      var title = item.getAttribute('data-project-title') || ('Active project: ' + name);
+      if (label) label.textContent = name;
+      btn.setAttribute('title', title);
+      menu.querySelectorAll('.pm6-tb-menu-item').forEach(function (el) {
+        el.classList.toggle('is-selected', el === item);
+      });
+      tbMenuClose(menu);
+      btn.setAttribute('aria-expanded', 'false');
+    });
+  }
+
+  function wireTitleBarMenusDismiss() {
+    document.addEventListener('click', function (ev) {
+      var t = ev.target;
+      if (t && t.closest && t.closest('.pm6-tb-menu-wrap')) return;
+      if (t && t.closest && t.closest('.pm6-tb-search-wrap')) return;
+      tbCloseAllMenus(null);
+      if (window.PM_TB_SEARCH && window.PM_TB_SEARCH.close) window.PM_TB_SEARCH.close();
+    });
+    document.addEventListener('keydown', function (ev) {
+      if (ev.key === 'Escape') {
+        tbCloseAllMenus(null);
+        if (window.PM_TB_SEARCH && window.PM_TB_SEARCH.close) window.PM_TB_SEARCH.close();
+      }
+    });
+  }
+
+  /* ================= title-bar density: theme → search → notify → project → page ▼ ===== */
+  function wireTitleBarDensity() {
+    var bar = document.querySelector('.title-bar');
+    var wrap = byId('tbSearchWrap');
+    var inline = byId('tbSearchInput');
+    var btn = byId('tbSearchBtn');
+    var pop = byId('tbSearchPop');
+    var popInput = byId('tbSearchPopInput');
+    var notify = byId('notifySlot');
+    var themeWrap = byId('themeMenuWrap');
+    var projectWrap = byId('projectMenuWrap');
+    if (!bar || !wrap || !inline || !btn || !pop || !notify || !themeWrap || !projectWrap) return;
+
+    function searchMaxPx() {
+      try {
+        wrap.style.removeProperty('--tb-search-w');
+        var raw = getComputedStyle(wrap).getPropertyValue('--tb-search-w').trim();
+        var n = parseFloat(raw);
+        if (isFinite(n) && n > 0) return n;
+      } catch (e) {}
+      return 170;
+    }
+    var SEARCH_MIN = 112;
+    var NOTIFY_MAX = 248;
+    var NOTIFY_MIN = 120;
+    var THEME_ICON = 32;
+    var PROJECT_ICON = 32;
+    var popOpen = false;
+    var closeTimer = null;
+    var raf = null;
+    var fullThemeW = 0;
+    var fullProjectW = 0;
+    /* T36: set after responsive title-bar geometry changes, or when
+       page.changed selects a tab currently in the overflow menu. Normal
+       wide-tab page-change spring motion stays intact. */
+    var pageInkResyncPending = false;
+
+    function reduced() {
+      try {
+        return document.documentElement.getAttribute('data-motion') === 'reduced' ||
+          (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches);
+      } catch (e) { return false; }
+    }
+
+    function openPop() {
+      if (closeTimer) { clearTimeout(closeTimer); closeTimer = null; }
+      popOpen = true;
+      pop.classList.remove('is-closing');
+      pop.classList.add('open', 'is-open');
+      btn.setAttribute('aria-expanded', 'true');
+      if (popInput) {
+        popInput.value = inline.value || '';
+        try { popInput.focus(); popInput.select(); } catch (e0) {}
+      }
+    }
+    function closePop() {
+      if (!popOpen && !pop.classList.contains('open') && !pop.classList.contains('is-open')) return;
+      popOpen = false;
+      btn.setAttribute('aria-expanded', 'false');
+      if (popInput && inline) inline.value = popInput.value || inline.value;
+      if (reduced()) {
+        pop.classList.remove('open', 'is-open', 'is-closing');
+        return;
+      }
+      pop.classList.add('is-closing');
+      pop.classList.remove('open', 'is-open');
+      closeTimer = setTimeout(function () {
+        pop.classList.remove('is-closing');
+        closeTimer = null;
+      }, 240);
+    }
+
+    window.PM_TB_SEARCH = {
+      open: openPop,
+      close: closePop,
+      isOpen: function () { return popOpen; }
+    };
+
+    btn.addEventListener('click', function (ev) {
+      ev.preventDefault();
+      ev.stopPropagation();
+      tbCloseAllMenus(null);
+      if (popOpen) closePop();
+      else openPop();
+    });
+
+    if (popInput) {
+      popInput.addEventListener('input', function () {
+        inline.value = popInput.value;
+      });
+      popInput.addEventListener('keydown', function (ev) {
+        if (ev.key === 'Escape') { ev.stopPropagation(); closePop(); }
+      });
+    }
+
+    function setSearchW(px) {
+      wrap.style.setProperty('--tb-search-w', px + 'px');
+    }
+    function setNotifyW(px) {
+      notify.style.setProperty('--rs-stack-w', px + 'px');
+      notify.style.width = px + 'px';
+    }
+    function setSearchMode(mode) {
+      wrap.setAttribute('data-mode', mode);
+      if (mode === 'icon') {
+        btn.hidden = false;
+        inline.setAttribute('aria-hidden', 'true');
+      } else {
+        btn.hidden = true;
+        inline.removeAttribute('aria-hidden');
+        closePop();
+      }
+    }
+    function setThemeMode(mode) {
+      themeWrap.setAttribute('data-mode', mode);
+      var trig = byId('themeSelect');
+      if (trig) {
+        if (mode === 'icon') trig.setAttribute('aria-label', 'Theme');
+        else trig.removeAttribute('aria-label');
+      }
+    }
+    function setProjectMode(mode) {
+      projectWrap.setAttribute('data-mode', mode);
+      var trig = byId('projectMenuBtn');
+      if (trig) {
+        if (mode === 'icon') trig.setAttribute('aria-label', 'Active project');
+        else trig.removeAttribute('aria-label');
+      }
+    }
+
+    var pageStrip = document.querySelector('.title-bar .page-tabs');
+    var moreWrap = byId('pageTabsMoreWrap');
+    var moreBtn = byId('pageTabsMoreBtn');
+    var moreMenu = byId('pageTabsMoreMenu');
+    var PAGE_ICONS = {
+      dashboard: 'home',
+      projects: 'folder',
+      wizard: 'wand',
+      orchestrator: 'layers',
+      usage: 'dial',
+      settings: 'gear'
+    };
+
+    function pageTabs() {
+      if (!pageStrip) return [];
+      return Array.prototype.slice.call(pageStrip.querySelectorAll('.page-tab[data-page]'));
+    }
+    function resetPageTabsOverflow() {
+      pageTabs().forEach(function (t) { t.classList.remove('is-overflow'); });
+      if (moreWrap) moreWrap.hidden = true;
+      if (moreMenu) moreMenu.innerHTML = '';
+      if (moreBtn) moreBtn.setAttribute('aria-expanded', 'false');
+      if (moreMenu && tbMenuIsOpen(moreMenu)) tbMenuClose(moreMenu);
+      bar.removeAttribute('data-tb-tabs');
+    }
+    function rebuildPageOverflowMenu(hiddenTabs) {
+      if (!moreMenu || !moreWrap) return;
+      moreMenu.innerHTML = '';
+      if (!hiddenTabs.length) {
+        moreWrap.hidden = true;
+        return;
+      }
+      moreWrap.hidden = false;
+      var icons = window.PM_ICONS || {};
+      hiddenTabs.forEach(function (t) {
+        var page = t.getAttribute('data-page') || '';
+        var label = (t.textContent || page).trim();
+        var btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'pm6-tb-menu-item pm6-tb-pages-more-item';
+        btn.setAttribute('role', 'menuitem');
+        btn.setAttribute('data-page', page);
+        if (t.classList.contains('active')) btn.classList.add('is-selected');
+        var icoKey = PAGE_ICONS[page];
+        var icoHtml = (icoKey && icons[icoKey]) ? icons[icoKey] : '';
+        btn.innerHTML = icoHtml + '<span></span>';
+        var span = btn.querySelector('span');
+        if (span) span.textContent = label;
+        moreMenu.appendChild(btn);
+      });
+    }
+    function fitPageTabsOverflow() {
+      if (!pageStrip || !moreWrap) return;
+      resetPageTabsOverflow();
+      void bar.offsetWidth;
+      if (naturalOverflow() <= 0) return;
+
+      moreWrap.hidden = false;
+      void moreWrap.offsetWidth;
+      var guard = 12;
+      while (naturalOverflow() > 0 && guard-- > 0) {
+        var tabs = pageTabs().filter(function (t) {
+          return !t.classList.contains('is-overflow');
+        });
+        var hide = null;
+        for (var i = tabs.length - 1; i >= 0; i--) {
+          if (!tabs[i].classList.contains('active')) { hide = tabs[i]; break; }
+        }
+        if (!hide && tabs.length > 1) hide = tabs[tabs.length - 1];
+        if (!hide) break;
+        hide.classList.add('is-overflow');
+      }
+      var hidden = pageTabs().filter(function (t) {
+        return t.classList.contains('is-overflow');
+      });
+      rebuildPageOverflowMenu(hidden);
+      if (hidden.length) bar.setAttribute('data-tb-tabs', 'overflow');
+    }
+
+    if (moreBtn && moreMenu) {
+      moreBtn.addEventListener('click', function (ev) {
+        ev.preventDefault();
+        ev.stopPropagation();
+        if (window.PM_TB_SEARCH && window.PM_TB_SEARCH.close) window.PM_TB_SEARCH.close();
+        var open = tbMenuIsOpen(moreMenu);
+        tbCloseAllMenus(open ? null : moreMenu);
+        if (open) {
+          tbMenuClose(moreMenu);
+          moreBtn.setAttribute('aria-expanded', 'false');
+        } else {
+          tbMenuOpen(moreMenu, moreBtn);
+          moreBtn.setAttribute('aria-expanded', 'true');
+        }
+      });
+      moreMenu.addEventListener('click', function (ev) {
+        var item = ev.target && ev.target.closest ? ev.target.closest('.pm6-tb-menu-item[data-page]') : null;
+        if (!item) return;
+        ev.preventDefault();
+        var page = item.getAttribute('data-page');
+        tbMenuClose(moreMenu);
+        moreBtn.setAttribute('aria-expanded', 'false');
+        try {
+          if (window.PM_PAGES && window.PM_PAGES.go) window.PM_PAGES.go(page);
+        } catch (e0) {}
+        schedule();
+      });
+    }
+
+    function measureThemeFull() {
+      setThemeMode('full');
+      void themeWrap.offsetWidth;
+      fullThemeW = Math.max(themeWrap.offsetWidth || 0, themeWrap.scrollWidth || 0, THEME_ICON + 40);
+      return fullThemeW;
+    }
+    function measureProjectFull() {
+      setProjectMode('full');
+      void projectWrap.offsetWidth;
+      fullProjectW = Math.max(projectWrap.offsetWidth || 0, projectWrap.scrollWidth || 0, PROJECT_ICON + 40);
+      return fullProjectW;
+    }
+
+    function naturalOverflow() {
+      var gap = 0;
+      var pad = 0;
+      try {
+        var cs = window.getComputedStyle(bar);
+        gap = parseFloat(cs.gap) || 0;
+        pad = (parseFloat(cs.paddingLeft) || 0) + (parseFloat(cs.paddingRight) || 0);
+      } catch (e1) {}
+      function hMargins(el) {
+        try {
+          var m = window.getComputedStyle(el);
+          /* auto margins (the notify slot's centering spacers) must not count
+             as needed width */
+          var ml = m.marginLeft;
+          var mr = m.marginRight;
+          var left = (ml === 'auto') ? 0 : (parseFloat(ml) || 0);
+          var right = (mr === 'auto') ? 0 : (parseFloat(mr) || 0);
+          return left + right;
+        } catch (e2) { return 0; }
+      }
+      var kids = Array.prototype.slice.call(bar.children);
+      var sum = 0;
+      kids.forEach(function (el, i) {
+        if (i) sum += gap;
+        var w = 0;
+        if (el === wrap) {
+          var mode = wrap.getAttribute('data-mode');
+          if (mode === 'icon') w = 32;
+          else w = parseFloat(wrap.style.getPropertyValue('--tb-search-w')) || searchMaxPx();
+          /* the wrap's own horizontal padding (min-gap guard against the
+             centered notify slot) is real width on top of --tb-search-w */
+          try {
+            var wcs = window.getComputedStyle(wrap);
+            w += (parseFloat(wcs.paddingLeft) || 0) + (parseFloat(wcs.paddingRight) || 0);
+          } catch (e3) {}
+        } else if (el === notify) {
+          w = parseFloat(notify.style.getPropertyValue('--rs-stack-w')) || NOTIFY_MAX;
+        } else if (el === themeWrap) {
+          if (themeWrap.getAttribute('data-mode') === 'icon') w = THEME_ICON;
+          else w = fullThemeW || Math.max(el.offsetWidth || 0, el.scrollWidth || 0);
+        } else if (el === projectWrap) {
+          if (projectWrap.getAttribute('data-mode') === 'icon') w = PROJECT_ICON;
+          else w = fullProjectW || Math.max(el.offsetWidth || 0, el.scrollWidth || 0);
+        } else if (el === pageStrip) {
+          /* Sum visible tabs + more chip so a constrained nav box cannot
+             under-count needed width (offsetWidth alone stalled density). */
+          var tw = 0;
+          pageTabs().forEach(function (t) {
+            if (t.classList.contains('is-overflow')) return;
+            tw += Math.max(t.offsetWidth || 0, t.scrollWidth || 0);
+          });
+          if (moreWrap && !moreWrap.hidden) {
+            tw += Math.max(moreWrap.offsetWidth || 0, moreWrap.scrollWidth || 0);
+          }
+          w = Math.max(tw, el.offsetWidth || 0, el.scrollWidth || 0);
+        } else {
+          w = Math.max(el.offsetWidth || 0, el.scrollWidth || 0);
+        }
+        sum += w;
+        /* the notify slot owns both auto margins (free-space absorbers for
+           centering); hMargins zeroes autos, so every child counts safely */
+        sum += hMargins(el);
+      });
+      /* clientWidth includes padding; flex kids live in content box */
+      return sum - (bar.clientWidth - pad);
+    }
+
+    function applyDensity() {
+      var SEARCH_MAX = searchMaxPx();
+      setSearchMode('full');
+      setThemeMode('icon');
+      setProjectMode('full');
+      setSearchW(SEARCH_MAX);
+      setNotifyW(NOTIFY_MAX);
+      resetPageTabsOverflow();
+      void bar.offsetWidth;
+      measureProjectFull();
+
+      var over = naturalOverflow();
+      if (over <= 0) return;
+
+      var need = over;
+
+      /* Theme trigger stays icon-only; family name lives in the menu/tooltip. */
+
+      /* 1) Compress search SEARCH_MAX → SEARCH_MIN */
+      var searchW = SEARCH_MAX;
+      if (need > 0) {
+        var cut = Math.min(need, SEARCH_MAX - SEARCH_MIN);
+        searchW = SEARCH_MAX - cut;
+        setSearchW(searchW);
+        need -= cut;
+      }
+      if (need <= 0) return;
+
+      /* 2) Search → icon */
+      setSearchMode('icon');
+      need -= (searchW - 32);
+      if (need <= 0) return;
+
+      /* 3) Shorten notify NOTIFY_MAX → NOTIFY_MIN */
+      if (need > 0) {
+        var ncut = Math.min(need, NOTIFY_MAX - NOTIFY_MIN);
+        setNotifyW(NOTIFY_MAX - ncut);
+        need -= ncut;
+      }
+      if (need <= 0) return;
+
+      /* 4) Project label → folder icon */
+      var pw = fullProjectW || measureProjectFull();
+      setProjectMode('icon');
+      need -= Math.max(0, pw - PROJECT_ICON);
+      if (need <= 0) return;
+
+      /* 5) Progressive page-tab overflow → ▼ sprout (last resort) */
+      if (naturalOverflow() > 0) fitPageTabsOverflow();
+    }
+
+    function schedule() {
+      if (raf) cancelAnimationFrame(raf);
+      raf = requestAnimationFrame(function () {
+        raf = null;
+        applyDensity();
+        if (pageInkResyncPending) {
+          pageInkResyncPending = false;
+          if (window.PM7_PAGE_TAB_INK && typeof window.PM7_PAGE_TAB_INK.resync === 'function') {
+            window.PM7_PAGE_TAB_INK.resync();
+          }
+        }
+      });
+    }
+
+    setSearchW(searchMaxPx());
+    setNotifyW(NOTIFY_MAX);
+    setSearchMode('full');
+    setThemeMode('icon');
+    setProjectMode('full');
+    resetPageTabsOverflow();
+    schedule();
+
+    if (typeof ResizeObserver !== 'undefined') {
+      var lastBarWidth = bar.getBoundingClientRect().width;
+      var ro = new ResizeObserver(function (entries) {
+        var width = entries.length ? entries[entries.length - 1].contentRect.width : lastBarWidth;
+        if (Math.abs(width - lastBarWidth) < .5) return;
+        lastBarWidth = width;
+        pageInkResyncPending = true;
+        schedule();
+      });
+      ro.observe(bar);
+    } else {
+      window.addEventListener('resize', function () {
+        pageInkResyncPending = true;
+        schedule();
+      });
+    }
+    try {
+      if (window.PM_DEMO && typeof window.PM_DEMO.on === 'function') {
+        window.PM_DEMO.on('page.changed', function (payload) {
+          var pageId = payload && payload.page;
+          var activeTab = pageId && pageStrip
+            ? pageStrip.querySelector('.page-tab[data-page="' + pageId + '"]')
+            : null;
+          if (activeTab && activeTab.classList.contains('is-overflow')) {
+            pageInkResyncPending = true;
+            schedule();
+          } else if (moreMenu) {
+            moreMenu.querySelectorAll('.pm6-tb-pages-more-item[data-page]').forEach(function (item) {
+              item.classList.toggle('is-selected', item.getAttribute('data-page') === pageId);
+            });
+          }
+        });
+      }
+    } catch (e3) {}
+  }
+
+  function wireParallax() {
+    var bg = byId('glass-bg');
+    if (!bg) return;
+    var reduced = false;
+    try {
+      reduced = (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) ||
+        document.documentElement.getAttribute('data-motion') === 'reduced';
+    } catch (e) {}
+    if (reduced) return;
+    var px = 0, py = 0, raf = null;
+    /* PM7 T07: routed through the shared PM7_PMOVE pointermove dispatcher
+       (pm6-js-globals) instead of a second document-level listener. Guarded
+       per event: inert unless a glass theme is active (only glass-depth
+       consumes --par-x/--par-y), and the guard re-evaluates on every event so
+       a live theme switch to glass behaves exactly like PM6. */
+    var pm7ParallaxHook = function (e) {
+      if ((document.documentElement.getAttribute('data-theme') || '').indexOf('glass') !== 0) return;
+      px = (e.clientX / Math.max(1, window.innerWidth)) * 2 - 1;
+      py = (e.clientY / Math.max(1, window.innerHeight)) * 2 - 1;
+      if (raf) return;
+      raf = requestAnimationFrame(function () {
+        raf = null;
+        try {
+          bg.style.setProperty('--par-x', px.toFixed(3));
+          bg.style.setProperty('--par-y', py.toFixed(3));
+        } catch (e2) {}
+      });
+    };
+    if (window.PM7_PMOVE && window.PM7_PMOVE.push) window.PM7_PMOVE.push(pm7ParallaxHook);
+    else document.addEventListener('pointermove', pm7ParallaxHook, { passive: true });
+  }
+
+  /* ================= boot ================= */
+  function boot() {
+    try { wireActivityBar(); } catch (e) { console.warn('[pm6] wireActivityBar', e); }
+    try { initActivityBarCustomization(); } catch (e) { console.warn('[pm6] initActivityBarCustomization', e); }
+    try { wireTheme(); } catch (e) {}
+    try { wireProjectMenu(); } catch (e) {}
+    try { wireTitleBarMenusDismiss(); } catch (e) {}
+    try { wireTitleBarDensity(); } catch (e) {}
+    try { wireParallax(); } catch (e) {}
+  }
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot);
+  else boot();
+})();

@@ -1,3 +1,8 @@
+> PM7 history (2026-10-18): this frozen build chain and `Onboarding concepts/TestPMConcept.html`
+> remain for lineage. Edit the live shell in `Concepts/onboarding/opus-5.5/base/` and the live layers
+> in `Concepts/onboarding/opus-5.5/src/`; publish with its `tools/build.py --publish-pm7`.
+> Do not regenerate the historical base to change PMConcept7.
+
 # PMConcept6 Source-Lineage Note
 
 `Concepts/pm6-build/**` is illustrative/source-lineage prototype material only. Usage data, dashboard counters, token fields, costs, provider rows, widget labels, events, commands, receipts, and manifests in this folder do not define active Puppet Master Usage UX, UsageRecord fields, source authority, accounting, quota truth, WorkNodes, NodeSeeds, executable queues, production wiring, or build tasks.

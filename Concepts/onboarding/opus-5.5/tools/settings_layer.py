@@ -19,6 +19,7 @@ import importlib.util
 import json
 import re
 import sys
+import base_source
 from pathlib import Path
 
 TOOLS = Path(__file__).resolve().parent
@@ -237,7 +238,7 @@ def web_font_checks(src: Path) -> list[str]:
     for path in sorted((src / 'fonts').glob('*.woff2')) + sorted(FONT_DIR.glob('*.woff2')):
         if path.name not in listed:
             problems.append(f'{path.name} is embedded but not listed in src/fonts/SOURCE.md')
-    base = (PKG.parents[1] / 'Onboarding concepts' / 'TestPMConcept.html').read_text(encoding='utf-8')
+    base = base_source.assemble().decode('utf-8')
     sym_css = (src / 'css' / '03-symbols.css').read_text(encoding='utf-8')
     for sel, prop, rest in re.findall(r"^([^@{}\n]+?)\s*\{\s*(font-family|--mono-font)\s*:\s*'PM Symbols Mono',\s*([^;]+);",
                                       sym_css, re.M):

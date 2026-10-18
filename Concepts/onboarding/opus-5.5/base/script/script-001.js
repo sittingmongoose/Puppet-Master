@@ -1,0 +1,58 @@
+
+    /* pm6 boot: apply persisted theme prefs BEFORE first CSS paint (defaults: friendly + dark / mesh).
+       Theme model: pm.themeFamily (friendly|glass|retro|basic) x pm.themeMode (light|dark|auto);
+       auto follows prefers-color-scheme. The legacy pm.theme slug migrates on first read and is
+       kept in sync (resolved slug) for older readers.
+       Also stamps a critical solid canvas color + color-scheme so the 2.5MB stylesheet
+       (and render-blocking webfonts) cannot flash the browser's default white twice. */
+    (function () {
+      'use strict';
+      var d = document.documentElement;
+      var BGS = {
+        'friendly-dark': '#211E26',
+        'friendly-light': '#FBF7F3',
+        'retro-dark': '#10120e',
+        'retro-light': '#F5F0E8',
+        'basic-dark': '#121212',
+        'basic-light': '#EAECEF',
+        'glass-dark': '#241B36',
+        'glass-light': '#E4CDE4'
+      };
+      try {
+        var fams = ['friendly', 'glass', 'retro', 'basic'];
+        var tmodes = ['light', 'dark', 'auto'];
+        var fam = 'basic';
+        var tmode = 'dark';
+        var leg = null;
+        if (fams.indexOf(fam) === -1) { fam = leg ? leg[1] : 'friendly'; }
+        if (tmodes.indexOf(tmode) === -1) { tmode = leg ? leg[2] : 'dark'; }
+        var scheme = tmode === 'light' ? 'light' : 'dark';
+        if (tmode === 'auto') {
+          try { scheme = (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) ? 'dark' : 'light'; }
+          catch (e2) { scheme = 'dark'; }
+        }
+        var t = fam + '-' + scheme;
+        /* T44: project-scoped Settings owns persistence; no global theme write. */
+        d.setAttribute('data-theme', t);
+        var modes = ['mesh', 'depth', 'minimal'];
+        var g = 'mesh';
+        if (modes.indexOf(g) === -1) { g = 'mesh'; }
+        d.setAttribute('data-glass-bg', g);
+        var a = NaN;
+        if (!isNaN(a)) {
+          var light = /-light$/.test(t);
+          var lo = light ? 0.45 : 0.35;
+          var hi = light ? 0.88 : 0.85;
+          d.style.setProperty('--glass-alpha', String(Math.min(hi, Math.max(lo, a))));
+        }
+        var bg = BGS[t] || '#211E26';
+        var isDark = /-dark$/.test(t);
+        d.style.background = bg;
+        d.style.colorScheme = isDark ? 'dark' : 'light';
+        var s = document.createElement('style');
+        s.id = 'pm-boot-paint';
+        s.textContent = 'html,body{background:' + bg + ';color-scheme:' + (isDark ? 'dark' : 'light') + ';}';
+        (document.head || d).appendChild(s);
+      } catch (e) { /* storage unavailable - keep markup defaults */ }
+    })();
+  

@@ -1,0 +1,46 @@
+
+/* Basic + Retro: slight host padding reductions only */
+:is(html[data-theme^="basic"], html[data-theme^="retro"]) .pm-home-host[data-pm-home-host="dock_right"] {
+  padding-left: 2px !important;
+  padding-right: 2px !important;
+}
+:is(html[data-theme^="basic"], html[data-theme^="retro"]) .pm-home-host[data-pm-home-host="dock_right"]:not(.pm-home-host-empty) {
+  margin-left: 2px !important;
+}
+:is(html[data-theme^="basic"], html[data-theme^="retro"]) .pm-home-host[data-pm-home-host="home_main"],
+:is(html[data-theme^="basic"], html[data-theme^="retro"]) .pm-home-host.pm-home-host-main {
+  padding: 2px 2px 1px !important;
+}
+:is(html[data-theme^="basic"], html[data-theme^="retro"]) .pm-home-host[data-pm-home-host="dock_bottom"] {
+  padding: 1px 2px 2px !important;
+}
+:is(html[data-theme^="basic"], html[data-theme^="retro"]) .pm-home-host[data-pm-home-host="dock_bottom"]:not(.pm-home-host-empty) {
+  margin-top: 2px !important;
+}
+/* Basic: editor strip + dashboard header share opaque rail plate */
+html[data-theme^="basic"] .editor-tabs.ed-shape-on,
+html[data-theme^="basic"] .page-dashboard .dashboard-header:has(> .dashboard-tabs.ed-shape-on),
+html[data-theme^="basic"] .page-dashboard .dashboard-tabs.ed-shape-on {
+  background: var(--ed-cap-bg) !important;
+  -webkit-backdrop-filter: none !important;
+  backdrop-filter: none !important;
+}
+html[data-theme^="basic"] .page-dashboard .dashboard-tabs.ed-shape-on .tab:not(.active) {
+  background: transparent !important;
+  box-shadow: none !important;
+}
+html[data-theme^="basic"] .page-dashboard .dashboard-tabs.ed-shape-on {
+  gap: 0 !important;
+}
+html[data-theme^="basic"] .editor-tabs.ed-shape-on {
+  gap: 0 !important;
+}
+/* No canvas corner morph under the rail — kill tab/panel join gap */
+html[data-theme^="basic"] :is(.editor-pane, .dashboard-view) {
+  --ed-canvas-rx-max: 0px !important;
+  --ed-corner-ry: 0px !important;
+}
+html[data-theme^="basic"] :is(.editor-pane, .dashboard-view):has(.ed-shape-on) {
+  border-top-left-radius: 0 !important;
+  border-top-right-radius: 0 !important;
+}

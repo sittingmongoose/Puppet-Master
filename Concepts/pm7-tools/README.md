@@ -1,3 +1,8 @@
+> PM7 history (2026-10-18): this frozen build chain and `Onboarding concepts/TestPMConcept.html`
+> remain for lineage. Edit the live shell in `Concepts/onboarding/opus-5.5/base/` and the live layers
+> in `Concepts/onboarding/opus-5.5/src/`; publish with its `tools/build.py --publish-pm7`.
+> Do not regenerate the historical base to change PMConcept7.
+
 # pm7-tools -- PMConcept7 refactor pipeline
 
 Toolchain that derives `Concepts/PMConcept7.html` from a pinned base by

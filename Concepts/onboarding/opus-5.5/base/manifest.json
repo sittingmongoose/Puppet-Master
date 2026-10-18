@@ -1,0 +1,383 @@
+{
+  "version": 1,
+  "skeleton": "shell.html",
+  "blocks": [
+    {
+      "tag": "script",
+      "id": null,
+      "file": "script/script-001.js",
+      "slot": "@@PM7_BASE_0001@@"
+    },
+    {
+      "tag": "style",
+      "id": null,
+      "file": "style/style-002.css",
+      "slot": "@@PM7_BASE_0002@@"
+    },
+    {
+      "tag": "style",
+      "id": "pm4-settings-css",
+      "file": "style/pm4-settings-css.css",
+      "slot": "@@PM7_BASE_0003@@"
+    },
+    {
+      "tag": "style",
+      "id": "pm6-css-global",
+      "file": "style/pm6-css-global.css",
+      "slot": "@@PM7_BASE_0004@@"
+    },
+    {
+      "tag": "style",
+      "id": "pm6-css-dashboard",
+      "file": "style/pm6-css-dashboard.css",
+      "slot": "@@PM7_BASE_0005@@"
+    },
+    {
+      "tag": "style",
+      "id": "pm6-css-projects",
+      "file": "style/pm6-css-projects.css",
+      "slot": "@@PM7_BASE_0006@@"
+    },
+    {
+      "tag": "style",
+      "id": "pm6-css-wizard",
+      "file": "style/pm6-css-wizard.css",
+      "slot": "@@PM7_BASE_0007@@"
+    },
+    {
+      "tag": "style",
+      "id": "pm6-css-orchestrator",
+      "file": "style/pm6-css-orchestrator.css",
+      "slot": "@@PM7_BASE_0008@@"
+    },
+    {
+      "tag": "style",
+      "id": "pm6-css-usage",
+      "file": "style/pm6-css-usage.css",
+      "slot": "@@PM7_BASE_0009@@"
+    },
+    {
+      "tag": "style",
+      "id": "pm6-css-chat",
+      "file": "style/pm6-css-chat.css",
+      "slot": "@@PM7_BASE_0010@@"
+    },
+    {
+      "tag": "style",
+      "id": "pm6-css-bottom",
+      "file": "style/pm6-css-bottom.css",
+      "slot": "@@PM7_BASE_0011@@"
+    },
+    {
+      "tag": "style",
+      "id": "pm6-css-panels",
+      "file": "style/pm6-css-panels.css",
+      "slot": "@@PM7_BASE_0012@@"
+    },
+    {
+      "tag": "style",
+      "id": "pm6-css-cozy-shelves",
+      "file": "style/pm6-css-cozy-shelves.css",
+      "slot": "@@PM7_BASE_0013@@"
+    },
+    {
+      "tag": "style",
+      "id": "pm7-t23-adjustments",
+      "file": "style/pm7-t23-adjustments.css",
+      "slot": "@@PM7_BASE_0014@@"
+    },
+    {
+      "tag": "style",
+      "id": "pm7-t24-usage-readability-and-fit",
+      "file": "style/pm7-t24-usage-readability-and-fit.css",
+      "slot": "@@PM7_BASE_0015@@"
+    },
+    {
+      "tag": "style",
+      "id": "pm7-architectural-glass-final",
+      "file": "style/pm7-architectural-glass-final.css",
+      "slot": "@@PM7_BASE_0016@@"
+    },
+    {
+      "tag": "style",
+      "id": "pm7-friendly-tweaks-f3",
+      "file": "style/pm7-friendly-tweaks-f3.css",
+      "slot": "@@PM7_BASE_0017@@"
+    },
+    {
+      "tag": "style",
+      "id": "pm7-glass-home-tweaks",
+      "file": "style/pm7-glass-home-tweaks.css",
+      "slot": "@@PM7_BASE_0018@@"
+    },
+    {
+      "tag": "style",
+      "id": "pm7-basic-retro-home-pads",
+      "file": "style/pm7-basic-retro-home-pads.css",
+      "slot": "@@PM7_BASE_0019@@"
+    },
+    {
+      "tag": "script",
+      "id": null,
+      "file": "script/script-020.js",
+      "slot": "@@PM7_BASE_0020@@"
+    },
+    {
+      "tag": "style",
+      "id": "pm7-t36-physical-layout",
+      "file": "style/pm7-t36-physical-layout.css",
+      "slot": "@@PM7_BASE_0021@@"
+    },
+    {
+      "tag": "style",
+      "id": "pm7-t37-contrast",
+      "file": "style/pm7-t37-contrast.css",
+      "slot": "@@PM7_BASE_0022@@"
+    },
+    {
+      "tag": "style",
+      "id": "pm7-onboarding-css",
+      "file": "style/pm7-onboarding-css.css",
+      "slot": "@@PM7_BASE_0023@@"
+    },
+    {
+      "tag": "style",
+      "id": "pm7-guided-tour-css",
+      "file": "style/pm7-guided-tour-css.css",
+      "slot": "@@PM7_BASE_0024@@"
+    },
+    {
+      "tag": "script",
+      "id": "pm7-guided-tour-js",
+      "file": "script/pm7-guided-tour-js.js",
+      "slot": "@@PM7_BASE_0025@@"
+    },
+    {
+      "tag": "style",
+      "id": "pm7-t46-systems-css",
+      "file": "style/pm7-t46-systems-css.css",
+      "slot": "@@PM7_BASE_0026@@"
+    },
+    {
+      "tag": "style",
+      "id": "pm7-t46f-forge-backup-css",
+      "file": "style/pm7-t46f-forge-backup-css.css",
+      "slot": "@@PM7_BASE_0027@@"
+    },
+    {
+      "tag": "style",
+      "id": "pm7-t46p-performance-css",
+      "file": "style/pm7-t46p-performance-css.css",
+      "slot": "@@PM7_BASE_0028@@"
+    },
+    {
+      "tag": "style",
+      "id": "pm-hover-tags-css",
+      "file": "style/pm-hover-tags-css.css",
+      "slot": "@@PM7_BASE_0029@@"
+    },
+    {
+      "tag": "style",
+      "id": "pm49-assistant-settings-css",
+      "file": "style/pm49-assistant-settings-css.css",
+      "slot": "@@PM7_BASE_0030@@"
+    },
+    {
+      "tag": "style",
+      "id": "pm50-manager-layout",
+      "file": "style/pm50-manager-layout.css",
+      "slot": "@@PM7_BASE_0031@@"
+    },
+    {
+      "tag": "style",
+      "id": "pm51-settings-refresh",
+      "file": "style/pm51-settings-refresh.css",
+      "slot": "@@PM7_BASE_0032@@"
+    },
+    {
+      "tag": "style",
+      "id": null,
+      "file": "style/style-033.css",
+      "slot": "@@PM7_BASE_0033@@"
+    },
+    {
+      "tag": "style",
+      "id": "pm7-t29-usage-final",
+      "file": "style/pm7-t29-usage-final.css",
+      "slot": "@@PM7_BASE_0034@@"
+    },
+    {
+      "tag": "style",
+      "id": "pm7-t31-usage-final",
+      "file": "style/pm7-t31-usage-final.css",
+      "slot": "@@PM7_BASE_0035@@"
+    },
+    {
+      "tag": "style",
+      "id": "pm7-t32-final",
+      "file": "style/pm7-t32-final.css",
+      "slot": "@@PM7_BASE_0036@@"
+    },
+    {
+      "tag": "script",
+      "id": null,
+      "file": "script/script-037.js",
+      "slot": "@@PM7_BASE_0037@@"
+    },
+    {
+      "tag": "script",
+      "id": null,
+      "file": "script/script-038.js",
+      "slot": "@@PM7_BASE_0038@@"
+    },
+    {
+      "tag": "script",
+      "id": null,
+      "file": "script/script-039.js",
+      "slot": "@@PM7_BASE_0039@@"
+    },
+    {
+      "tag": "script",
+      "id": "pm7-settings-data",
+      "file": "script/pm7-settings-data.js",
+      "slot": "@@PM7_BASE_0040@@"
+    },
+    {
+      "tag": "script",
+      "id": "pm4-settings-js",
+      "file": "script/pm4-settings-js.js",
+      "slot": "@@PM7_BASE_0041@@"
+    },
+    {
+      "tag": "script",
+      "id": "pm6-js-globals",
+      "file": "script/pm6-js-globals.js",
+      "slot": "@@PM7_BASE_0042@@"
+    },
+    {
+      "tag": "script",
+      "id": "pm6-js-demo-engine",
+      "file": "script/pm6-js-demo-engine.js",
+      "slot": "@@PM7_BASE_0043@@"
+    },
+    {
+      "tag": "script",
+      "id": "pm6-js-demo-files",
+      "file": "script/pm6-js-demo-files.js",
+      "slot": "@@PM7_BASE_0044@@"
+    },
+    {
+      "tag": "script",
+      "id": "pm6-js-dashboard",
+      "file": "script/pm6-js-dashboard.js",
+      "slot": "@@PM7_BASE_0045@@"
+    },
+    {
+      "tag": "script",
+      "id": "pm6-js-projects",
+      "file": "script/pm6-js-projects.js",
+      "slot": "@@PM7_BASE_0046@@"
+    },
+    {
+      "tag": "script",
+      "id": "pm6-js-wizard",
+      "file": "script/pm6-js-wizard.js",
+      "slot": "@@PM7_BASE_0047@@"
+    },
+    {
+      "tag": "script",
+      "id": "pm6-js-orchestrator",
+      "file": "script/pm6-js-orchestrator.js",
+      "slot": "@@PM7_BASE_0048@@"
+    },
+    {
+      "tag": "script",
+      "id": "pm6-js-usage",
+      "file": "script/pm6-js-usage.js",
+      "slot": "@@PM7_BASE_0049@@"
+    },
+    {
+      "tag": "script",
+      "id": "pm6-js-chat-data",
+      "file": "script/pm6-js-chat-data.js",
+      "slot": "@@PM7_BASE_0050@@"
+    },
+    {
+      "tag": "script",
+      "id": "pm6-js-chat",
+      "file": "script/pm6-js-chat.js",
+      "slot": "@@PM7_BASE_0051@@"
+    },
+    {
+      "tag": "script",
+      "id": "pm6-js-bottom",
+      "file": "script/pm6-js-bottom.js",
+      "slot": "@@PM7_BASE_0052@@"
+    },
+    {
+      "tag": "script",
+      "id": "pm6-js-panels",
+      "file": "script/pm6-js-panels.js",
+      "slot": "@@PM7_BASE_0053@@"
+    },
+    {
+      "tag": "script",
+      "id": "pm6-js-cozy-shelves",
+      "file": "script/pm6-js-cozy-shelves.js",
+      "slot": "@@PM7_BASE_0054@@"
+    },
+    {
+      "tag": "script",
+      "id": "pm7-t23-shell-adjustments",
+      "file": "script/pm7-t23-shell-adjustments.js",
+      "slot": "@@PM7_BASE_0055@@"
+    },
+    {
+      "tag": "script",
+      "id": "pm7-onboarding-js",
+      "file": "script/pm7-onboarding-js.js",
+      "slot": "@@PM7_BASE_0056@@"
+    },
+    {
+      "tag": "script",
+      "id": "pm7-t46-systems-js",
+      "file": "script/pm7-t46-systems-js.js",
+      "slot": "@@PM7_BASE_0057@@"
+    },
+    {
+      "tag": "script",
+      "id": "pm7-t48-egolite-retained-contracts",
+      "file": "script/pm7-t48-egolite-retained-contracts.js",
+      "slot": "@@PM7_BASE_0058@@"
+    },
+    {
+      "tag": "script",
+      "id": "pm7-t46f-forge-backup-js",
+      "file": "script/pm7-t46f-forge-backup-js.js",
+      "slot": "@@PM7_BASE_0059@@"
+    },
+    {
+      "tag": "script",
+      "id": "pm7-t46f-contracts",
+      "file": "script/pm7-t46f-contracts.js",
+      "slot": "@@PM7_BASE_0060@@"
+    },
+    {
+      "tag": "script",
+      "id": "pm7-t46p-performance-js",
+      "file": "script/pm7-t46p-performance-js.js",
+      "slot": "@@PM7_BASE_0061@@"
+    },
+    {
+      "tag": "script",
+      "id": "pm-hover-tags-js",
+      "file": "script/pm-hover-tags-js.js",
+      "slot": "@@PM7_BASE_0062@@"
+    }
+  ],
+  "split_proof": {
+    "history": "Concepts/Onboarding concepts/TestPMConcept.html",
+    "sha256": "b3888fad4993f484ab4548e9ff212ec0042fa0a912947a7f316514db939326be",
+    "bytes": 7444795
+  }
+}

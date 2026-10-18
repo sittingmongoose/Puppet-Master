@@ -1,0 +1,183 @@
+
+/* Friendly home tweaks — last-wins (kept; polished). */
+
+/* 1–2. Outer / inner gutters */
+html[data-theme^="friendly"] .title-bar {
+  margin: 4px 6px 2px !important;
+  padding: 0 10px !important;
+  max-width: calc(100% - 12px) !important;
+}
+html[data-theme^="friendly"] .main-area {
+  padding: 0 2px 2px !important;
+  box-sizing: border-box;
+}
+html[data-theme^="friendly"] {
+  --pm-home-gap: 2px;
+  --pm-home-pad-y: 1px;
+  --pm-home-gap-y: 1px;
+}
+html[data-theme^="friendly"] :is(.editor-pane, .dashboard-view, .pm-home-editor-shell) {
+  --ed-rail-alpha: 94% !important;
+}
+/* Friendly-light: deepen rail so editor/dashboard tab labels stay readable */
+html[data-theme="friendly-light"] :is(.editor-pane, .dashboard-view, .pm-home-editor-shell) {
+  --ed-rail-alpha: 78% !important;
+  --ed-rail-solid: color-mix(in srgb, var(--ed-canvas-bg) 70%, rgb(0, 0, 0));
+}
+html[data-theme="friendly-light"] :is(.editor-tabs, .dashboard-tabs).ed-shape-on .tab:not(.active) {
+  color: color-mix(in srgb, var(--text-primary) 72%, var(--text-secondary));
+}
+/* Dashboard inactive tabs merge into header rail (same as editor) */
+html[data-theme^="friendly"] .page-dashboard .dashboard-tabs.ed-shape-on .tab:not(.active) {
+  background: transparent !important;
+  box-shadow: none !important;
+}
+html[data-theme^="friendly"] .page-dashboard .dashboard-header:has(> .dashboard-tabs.ed-shape-on),
+html[data-theme^="friendly"] .page-dashboard .dashboard-tabs.ed-shape-on {
+  background: var(--ed-cap-bg) !important;
+  -webkit-backdrop-filter: none !important;
+  backdrop-filter: none !important;
+}
+html[data-theme^="friendly"] .page-dashboard .dashboard-tabs.ed-shape-on {
+  gap: 0 !important;
+}
+html[data-theme^="friendly"] .editor-tabs.ed-shape-on {
+  gap: 0 !important;
+}
+
+/* 3. Activity-rail resizer thinner (not home surface handles) */
+html[data-theme^="friendly"] #leftPanelResizer.resizer-col {
+  width: 5px !important;
+  margin: 0 -1.5px !important;
+  padding: 0 1.5px !important;
+}
+/* Home surface handles: slight pad bump */
+html[data-theme^="friendly"] .pm-home-resize-handle.resizer-col {
+  width: 7px !important;
+  padding: 0 2.5px !important;
+  box-sizing: border-box;
+}
+html[data-theme^="friendly"] .pm-home-resize-handle.resizer-row {
+  height: 11px !important;
+  padding: 2.5px 0 !important;
+  box-sizing: border-box;
+}
+html[data-theme^="friendly"] #pm-home-workspace {
+  padding-right: 3px !important;
+  box-sizing: border-box;
+}
+
+/* 4. Activity ↔ files gap */
+html[data-theme^="friendly"] .left-panel {
+  gap: 10px !important;
+}
+
+/* 5. Right dock tighter */
+html[data-theme^="friendly"] .pm-home-host[data-pm-home-host="dock_right"]:not(.pm-home-host-empty) {
+  margin-left: 1px !important;
+  padding: 0 !important;
+}
+
+/* 6. Chat header solid */
+html[data-theme^="friendly"] .chat-panel-header.pm6-chat-header {
+  background: color-mix(in srgb, var(--surface) 97%, transparent) !important;
+  -webkit-backdrop-filter: none !important;
+  backdrop-filter: none !important;
+}
+
+/* 7. Search pill — match Basic/Retro density width (no forced 260px) */
+html[data-theme^="friendly"] .title-bar .pm6-tb-search-wrap {
+  --tb-search-w: 170px !important;
+}
+html[data-theme^="friendly"] .title-bar .pm6-tb-search-wrap .search-bar {
+  width: var(--tb-search-w) !important;
+  max-width: 180px !important;
+  min-width: 0 !important;
+  flex: 0 0 auto !important;
+}
+
+/* 8. Kill dissolve */
+html[data-theme^="friendly"] .pm-home-host,
+html[data-theme^="friendly"] .pm-home-host.pm-edge-t,
+html[data-theme^="friendly"] .pm-home-host.pm-edge-b,
+html[data-theme^="friendly"] .pm-home-host.pm-edge-l,
+html[data-theme^="friendly"] .pm-home-host.pm-edge-r {
+  --pm-et-o: 0 !important;
+  --pm-et-s: 0px !important;
+  --pm-eb-o: 0 !important;
+  --pm-eb-s: 0px !important;
+  --pm-el-o: 0 !important;
+  --pm-el-s: 0px !important;
+  --pm-er-o: 0 !important;
+  --pm-er-s: 0px !important;
+  -webkit-mask-image: none !important;
+  mask-image: none !important;
+}
+html[data-theme^="friendly"] #pm-home-workspace .pm-edge-band,
+html[data-theme^="friendly"] .pm-home-host .pm-edge-band,
+html[data-theme^="friendly"] .pm-edge-band {
+  display: none !important;
+  opacity: 0 !important;
+  visibility: hidden !important;
+  pointer-events: none !important;
+}
+
+/* 9–10. Hosts: no shell scroll; round hosts; surfaces top-round / bottom-square for editors */
+html[data-theme^="friendly"] .pm-home-host.pm-home-host-main,
+html[data-theme^="friendly"] .pm-home-host[data-pm-home-host="home_main"],
+html[data-theme^="friendly"] .pm-home-host[data-pm-home-host="dock_bottom"] {
+  overflow: hidden !important;
+  overflow-x: hidden !important;
+  overflow-y: hidden !important;
+  padding: 0 !important;
+  border-radius: 16px !important;
+}
+html[data-theme^="friendly"] .pm-home-host[data-pm-home-host="dock_right"] {
+  border-radius: 16px !important;
+  overflow-x: clip !important;
+  overflow-y: auto !important;
+  padding: 0 !important;
+}
+html[data-theme^="friendly"] .pm-home-host[data-pm-home-host="home_main"] > .pm-home-surface,
+html[data-theme^="friendly"] .pm-home-host[data-pm-home-host="dock_bottom"] > .pm-home-surface,
+html[data-theme^="friendly"] .pm-home-host[data-pm-home-host="dock_right"] > .pm-home-surface {
+  border-radius: 16px !important;
+  min-height: 0 !important;
+  max-height: 100% !important;
+}
+/* Square bottom corners on editors + terminal panes; square tops under tab rail */
+html[data-theme^="friendly"] #editorPane1,
+html[data-theme^="friendly"] #editorPane2,
+html[data-theme^="friendly"] .pm-home-host[data-pm-home-host="home_main"] > .pm-home-surface.editor-pane,
+html[data-theme^="friendly"] .pm-home-host[data-pm-home-host="home_main"] > .dashboard-view.pm-home-surface,
+html[data-theme^="friendly"] #dashboardView {
+  border-radius: 0 0 16px 16px !important;
+}
+html[data-theme^="friendly"] #bottomPanel .terminal-pane {
+  border-radius: 12px 12px 0 0 !important;
+}
+/* No canvas corner morph under the rail — kill tab/panel join gap */
+html[data-theme^="friendly"] :is(.editor-pane, .dashboard-view) {
+  --ed-canvas-rx-max: 0px !important;
+  --ed-corner-ry: 0px !important;
+}
+html[data-theme^="friendly"] :is(.editor-pane, .dashboard-view):has(.ed-shape-on) {
+  border-top-left-radius: 0 !important;
+  border-top-right-radius: 0 !important;
+}
+
+/* 11. Editor tabs + dashboard header share the same opaque rail plate
+   (--ed-cap-bg = rail composited over canvas). Translucent --ed-rail-bg
+   looked different across panes because different content showed through. */
+html[data-theme^="friendly"] .editor-tabs.ed-shape-on,
+html[data-theme^="friendly"] .dashboard-tabs.ed-shape-on,
+html[data-theme^="friendly"] .dashboard-header:has(> .dashboard-tabs.ed-shape-on),
+html[data-theme^="friendly"] .page-dashboard .dashboard-header:has(> .dashboard-tabs.ed-shape-on),
+html[data-theme^="friendly"] #dashboardView .dashboard-header:has(> .dashboard-tabs.ed-shape-on) {
+  background: var(--ed-cap-bg) !important;
+  -webkit-backdrop-filter: none !important;
+  backdrop-filter: none !important;
+}
+html[data-theme="friendly-light"] :is(.editor-tabs, .dashboard-tabs).ed-shape-on .tab:not(.active) {
+  color: color-mix(in srgb, var(--text-primary) 78%, var(--text-muted)) !important;
+}

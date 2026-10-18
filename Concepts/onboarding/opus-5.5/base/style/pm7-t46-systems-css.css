@@ -1,0 +1,114 @@
+
+/* PM7 T46: operational systems integration and K3 host adaptation */
+.doctor-scope-bar { display:flex; flex-wrap:wrap; gap:7px; margin-bottom:10px; }
+.doctor-scope { min-height:34px; padding:7px 11px; border:1px solid var(--border); border-radius:var(--radius-pill);
+  color:var(--text-secondary); background:var(--surface); cursor:pointer; font:inherit; }
+.doctor-scope.is-active { color:var(--surface); background:var(--accent-primary); border-color:var(--accent-primary); }
+.doctor-summary-strip { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:8px; margin-bottom:10px; }
+.doctor-item-list { display:grid; gap:8px; }
+.doctor-item { display:grid; grid-template-columns:minmax(0,1fr) auto; gap:12px; align-items:center; padding:12px;
+  border:1px solid var(--border); border-radius:var(--radius-md); background:var(--surface); }
+.doctor-item-main { min-width:0; display:grid; gap:6px; }
+.doctor-item-title-row { display:flex; flex-wrap:wrap; align-items:center; gap:7px; }
+.doctor-item-title { color:var(--text-primary); font-weight:760; }
+.doctor-item-copy { color:var(--text-secondary); font-size:var(--fs-sm); line-height:1.45; }
+.doctor-item-meta { display:flex; flex-wrap:wrap; gap:5px 12px; color:var(--text-muted); font-size:11px; }
+.doctor-item-actions { display:flex; flex-wrap:wrap; justify-content:flex-end; gap:6px; }
+.doctor-state { display:inline-flex; align-items:center; min-height:24px; padding:3px 7px; border-radius:var(--radius-pill);
+  border:1px solid var(--border); font-size:11px; font-weight:760; }
+.doctor-evidence-view { display:grid; gap:8px; margin-top:12px; }
+.doctor-evidence-list { display:grid; gap:6px; margin:0; padding:0; list-style:none; }
+.doctor-evidence-row { padding:8px 10px; border:1px solid var(--border-light); border-radius:var(--radius-sm); background:var(--surface-alt); color:var(--text-secondary); font:11px/1.45 var(--mono-font); overflow-wrap:anywhere; }
+.doctor-state[data-state="ready"] { color:var(--success,#2f8f5b); }
+.doctor-state[data-state="limits"], .doctor-state[data-state="attention"], .doctor-state[data-state="waiting"] { color:var(--accent-warning); }
+.doctor-state[data-state="blocked"], .doctor-state[data-state="unavailable"], .doctor-state[data-state="interrupted"] { color:var(--accent-error); }
+.doctor-state[data-state="checking"] { color:var(--accent-primary); }
+.doctor-state[data-state="external"] { color:var(--text-secondary); background:var(--surface-alt); }
+.systems-contract-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:10px; }
+.systems-contract-card { min-width:0; padding:13px; border:1px solid var(--border); border-radius:var(--radius-md); background:var(--surface); }
+.systems-contract-card h3 { margin:0 0 6px; color:var(--text-primary); font-size:var(--fs-lg); }
+.systems-contract-card p { margin:0 0 10px; color:var(--text-secondary); line-height:1.45; }
+.systems-contract-card .table-actions { justify-content:flex-start; }
+.plugin-owner-banner { display:grid; grid-template-columns:minmax(0,1fr) auto; gap:12px; align-items:center; margin-bottom:10px;
+  padding:12px 13px; border:1px solid var(--border); border-radius:var(--radius-md); background:var(--surface-alt); }
+.plugin-owner-banner-copy { min-width:0; display:grid; gap:4px; }
+.plugin-owner-kicker { color:var(--accent-primary); font-size:10px; font-weight:820; letter-spacing:.08em; text-transform:uppercase; }
+.plugin-owner-title { color:var(--text-primary); font-weight:780; }
+.plugin-owner-note { color:var(--text-secondary); font-size:var(--fs-sm); line-height:1.4; }
+.plugin-fact-stack { display:grid; gap:8px; }
+.plugin-fact-card { min-width:0; padding:12px; border:1px solid var(--border); border-radius:var(--radius-md); background:var(--surface); }
+.plugin-fact-card .panel-title { margin-bottom:3px; }
+.plugin-fact-card .panel-subtitle { margin-bottom:9px; }
+.plugin-action-row { display:flex; flex-wrap:wrap; gap:7px; margin-top:10px; }
+.pm7-server-gap-panel { margin-top:10px; }
+.pm7-server-gap-consumer[data-consumer-kind="command"] { opacity:.78; cursor:help; }
+.pm7-server-gap-consumer[data-consumer-kind="command"]:focus-visible { opacity:1; }
+.plugin-command[aria-disabled="true"] { opacity:.72; cursor:help; }
+.plugin-command[aria-disabled="true"]:focus-visible { opacity:1; }
+.plugin-manifest-list { display:grid; gap:6px; }
+.plugin-manifest-row { display:grid; grid-template-columns:minmax(92px,.7fr) minmax(0,1.3fr); gap:8px; padding:8px 9px;
+  border:1px solid var(--border-light); border-radius:var(--radius-sm); background:var(--surface-alt); }
+.plugin-manifest-name { color:var(--text-primary); font:700 11px/1.35 var(--mono-font); }
+.plugin-manifest-ref { min-width:0; color:var(--text-muted); font:10px/1.4 var(--mono-font); overflow-wrap:anywhere; }
+.plugin-compact-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:8px; }
+.plugin-evidence-bound { color:var(--text-muted); font:10px/1.45 var(--mono-font); overflow-wrap:anywhere; }
+.capture-fixture-list { display:grid; gap:10px; margin-top:10px; }
+.capture-fixture { min-width:0; display:grid; gap:8px; padding:13px; border:1px solid var(--border); border-radius:var(--radius-md); background:var(--surface); }
+.capture-fixture-title-row { display:flex; flex-wrap:wrap; align-items:center; gap:7px; }
+.capture-fixture-kicker { color:var(--accent-primary); font-size:10px; font-weight:820; letter-spacing:.08em; text-transform:uppercase; }
+.capture-fixture-title { color:var(--text-primary); font-weight:760; }
+.capture-relation { min-width:0; color:var(--text-secondary); font:11px/1.5 var(--mono-font); overflow-wrap:anywhere; padding:8px 10px; border:1px solid var(--border-light); border-radius:var(--radius-sm); background:var(--surface-alt); }
+.capture-provenance-view { display:grid; gap:8px; margin-top:12px; }
+.pm7-settings-focus-host #chatPanel,
+.pm7-settings-focus-host #chatResizer,
+body.pm7-chat-global-owner.pm7-settings-focus-host #chatPanel.pm7-global-chat-panel,
+body.pm7-chat-global-owner.pm7-settings-focus-host #chatResizer.pm7-global-chat-resizer:not(.hidden) { display:none!important; }
+.pm7-settings-focus-host .app-shell,
+.pm7-settings-focus-host .main-area { min-width:0!important; max-width:100%!important; }
+.pm7-settings-focus-host .primary-content { min-width:0!important; width:auto!important; flex:1 1 auto!important; }
+.pm7-settings-focus-host #panel-settings { min-width:0!important; width:100%!important; max-width:100%!important; overflow:hidden!important; }
+.pm7-settings-focus-host #pm-settings-root { min-width:0!important; max-width:100%!important; }
+html[data-theme^="retro"] .doctor-scope,
+html[data-theme^="retro"] .doctor-item,
+html[data-theme^="retro"] .doctor-state,
+html[data-theme^="retro"] .systems-contract-card,
+html[data-theme^="retro"] .plugin-owner-banner,
+html[data-theme^="retro"] .plugin-fact-card,
+html[data-theme^="retro"] .plugin-manifest-row,
+html[data-theme^="retro"] .capture-fixture,
+html[data-theme^="retro"] .capture-relation { border-radius:0; }
+@media (max-width:760px) {
+  .doctor-summary-strip { grid-template-columns:repeat(2,minmax(0,1fr)); }
+  .doctor-item { grid-template-columns:minmax(0,1fr); }
+  .doctor-item-actions { justify-content:flex-start; }
+  .systems-contract-grid { grid-template-columns:minmax(0,1fr); }
+  .plugin-owner-banner { grid-template-columns:minmax(0,1fr); }
+  .plugin-compact-grid { grid-template-columns:minmax(0,1fr); }
+}
+/* T46 owns only the Settings host adaptation here. The shared title-bar
+   density controller continues to choose project/search/page modes; these
+   rules remove its two residual physical-width overflows without changing
+   K3 document/index/detail/manager geometry. */
+@media (max-width:1320px) {
+  body.pm7-settings-focus-host .title-bar .notify-slot {
+    width:min(var(--rs-stack-w),120px)!important; max-width:120px!important;
+  }
+}
+@media (max-width:560px) {
+  body.pm7-settings-focus-host .title-bar { padding-inline:6px!important; gap:6px!important; }
+  body.pm7-settings-focus-host .title-bar .app-name,
+  body.pm7-settings-focus-host .title-bar .notify-slot { display:none!important; }
+  body.pm7-settings-focus-host .title-bar .page-tabs {
+    min-width:0!important; flex:1 1 auto!important;
+    margin-left:0!important; margin-right:0!important;
+  }
+  body.pm7-settings-focus-host #pageTabsMoreMenu:not(.is-open):not(.is-closing) { display:none!important; }
+  body.pm7-settings-focus-host .title-bar .pm6-tb-search-wrap { padding-left:0!important; }
+}
+@media (max-width:420px) {
+  .doctor-summary-strip { grid-template-columns:minmax(0,1fr); }
+  .doctor-scope { flex:1 1 calc(50% - 7px); }
+}
+@media (prefers-reduced-motion:reduce) {
+  .doctor-item, .doctor-scope, .systems-contract-card, .capture-fixture { animation:none!important; transition:none!important; }
+}

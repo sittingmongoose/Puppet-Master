@@ -1,6 +1,7 @@
 # TestOpus5.5PmConcept — onboarding and guided tour (Opus 5.5)
 
-A copy of `Concepts/Onboarding concepts/TestPMConcept.html` whose onboarding window and guided tour were thrown away and rebuilt from
+Built from the live shell sources in `base/` and the layers in `src/`. The historical
+`Concepts/Onboarding concepts/TestPMConcept.html` was split losslessly; its onboarding and guided tour were rebuilt from
 scratch for a complete newbie: someone who has never used source control, a terminal or a server. Authority order
 for this work (2026-09-26 user direction): Jared's prompt, then the current canonical Plans documents; the packet
 `Concepts/PM_Onboarding_Tour_Newbie_First_Addendum_Packet_2026-09-03.zip` and its attached instructions/prompts are
@@ -28,7 +29,7 @@ python3 Concepts/onboarding/opus-5.5/tools/build.py --check  # markers, patches,
 `build.py --out <path> --no-usage` is the same private build without the Usage layer (the base's old Prism Usage page):
 a reference page for `Concepts/usage-redesign/tools/usage_boot.mjs`, never published.
 
-`build.py` reads the pinned base page (SHA-256 `b3888fad…`) and builds it in this order:
+`build.py` assembles the live `base/manifest.json` sources (Phase 1 split proof: SHA-256 `b3888fad…`) and builds it in this order:
 - 0: swaps the base's Settings managers for the fork in `src/settings` (see Settings below);
 - 1: strips the old onboarding and tour;
 - 2: applies a few guarded, exactly-once patches (hover-tag roots, labels, the Teacher persona, NieR Mode, the first

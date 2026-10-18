@@ -1,0 +1,505 @@
+
+/* =====================================================================
+   PM7 T22 — PRISM USAGE DENSITY + ADAPTIVE PANEL PASS
+   The U11 panel mechanics remain, but the visual defaults now follow the
+   supplied instrument-panel reference: narrower cards, taller information
+   stacks, more local comparisons, short meters, and no empty card middles.
+   ===================================================================== */
+.pm7u-shell{
+  --pm7u-row:88px;
+  --pm7u-gap:10px;
+  grid-template-columns:184px minmax(0,1fr);
+}
+.pm7u-rail{padding:12px 9px 10px}
+.pm7u-head{padding:11px 16px 9px}
+.pm7u-boardhead{padding-top:6px}
+.pm7u-boardscroll{padding-top:8px}
+.pm7u-board{min-width:780px}
+.pm7u-card{
+  border-radius:10px;
+  background:color-mix(in srgb,var(--surface-elevated) 91%,var(--surface) 9%);
+  box-shadow:0 1px 0 color-mix(in srgb,var(--text-primary) 4%,transparent),0 8px 20px color-mix(in srgb,#000 8%,transparent);
+}
+.pm7u-cardhead{min-height:31px;padding:0 8px 0 9px}
+.pm7u-cardtitle{font-size:10.5px;letter-spacing:.005em}
+.pm7u-cardmeta{font-size:8.5px}
+.pm7u-cardbody{padding:9px 10px 9px;overflow:hidden;align-items:stretch;justify-content:flex-start}
+.pm7u-card[data-shape="strip"] .pm7u-cardbody{padding-top:6px;padding-bottom:6px;justify-content:center}
+.pm7u-card[data-density="compact"] .pm7u-tier-standard,
+.pm7u-card[data-density="compact"] .pm7u-tier-expanded{display:none!important}
+.pm7u-card[data-density="standard"] .pm7u-tier-expanded{display:none!important}
+.pm7u-card[data-density="expanded"] .pm7u-tier-expanded{display:block}
+.pm7u-card[data-density="expanded"] .pm7u-tier-expanded.pm7u-grid,
+.pm7u-card[data-density="expanded"] .pm7u-tier-expanded.pm7u-flex{display:grid}
+/* Restore each component's real layout mode when its expanded tier is
+   disclosed; the generic tier switch otherwise turns flex/grid instruments
+   into block boxes and makes their children overflow invisibly. */
+.pm7u-card[data-density="expanded"] .pm7u-statrow.pm7u-tier-expanded,
+.pm7u-card[data-density="expanded"] .pm7u-meterline.pm7u-tier-expanded{display:grid}
+.pm7u-card[data-density="expanded"] .pm7u-mini-bars.pm7u-tier-expanded{display:flex}
+.pm7u-card[data-shape="strip"] .pm7u-tier-standard,
+.pm7u-card[data-shape="strip"] .pm7u-tier-expanded{display:none!important}
+.pm7u-card[data-shape="strip"] .pm7u-cardmeta{display:none}
+.pm7u-card[data-shape="strip"] .pm7u-drag{margin-left:auto}
+.pm7u-card[data-shape="strip"] .pm7u-cardbody{min-height:0}
+.pm7u-card[data-shape="tower"] .pm7u-cardbody{padding-left:9px;padding-right:9px}
+.pm7u-card[data-shape="canvas"] .pm7u-cardbody{padding:11px 12px}
+
+/* Calm, reference-style instrument stack. */
+.pm7u-instrument{display:flex;flex-direction:column;min-width:0;height:100%;gap:7px}
+.pm7u-instrument-top{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:8px;align-items:start;min-width:0}
+.pm7u-instrument-name{min-width:0}
+.pm7u-instrument-name b{display:block;font:700 13px/1.15 var(--display-font);color:var(--text-primary);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pm7u-instrument-name span{display:block;margin-top:3px;font-size:8.7px;line-height:1.2;color:var(--text-muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pm7u-instrument-value{text-align:right;white-space:nowrap}
+.pm7u-instrument-value b{display:block;font:750 24px/.9 var(--display-font);letter-spacing:-.035em;color:var(--text-primary);font-variant-numeric:tabular-nums}
+.pm7u-instrument-value span{display:block;margin-top:4px;font:650 8px/1 var(--mono-font);color:var(--text-muted);text-transform:uppercase;letter-spacing:.05em}
+.pm7u-instrument-value .ok{color:var(--accent-lime)}
+.pm7u-instrument-value .warn{color:var(--accent-orange)}
+.pm7u-card[data-cols="2"] .pm7u-instrument-value b,.pm7u-card[data-cols="3"] .pm7u-instrument-value b{font-size:21px}
+.pm7u-instrument-divider{height:1px;background:color-mix(in srgb,var(--border-light) 82%,transparent);margin:1px 0}
+.pm7u-statstack{display:flex;flex-direction:column;gap:0;min-width:0}
+.pm7u-statrow{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:8px;align-items:center;min-height:23px;border-top:1px solid color-mix(in srgb,var(--border-light) 62%,transparent);font-size:9px;color:var(--text-muted)}
+.pm7u-statrow:first-child{border-top:0}
+.pm7u-statrow span{min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pm7u-statrow b{font:700 9px/1 var(--mono-font);font-variant-numeric:tabular-nums;color:var(--text-secondary);white-space:nowrap}
+.pm7u-statrow b.ok{color:var(--accent-lime)}.pm7u-statrow b.warn{color:var(--accent-orange)}
+.pm7u-meters{display:flex;flex-direction:column;gap:7px;min-width:0}
+.pm7u-meterline{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:7px;align-items:center;min-width:0}
+.pm7u-metercopy{display:flex;align-items:baseline;gap:5px;min-width:0;font-size:8.4px;color:var(--text-muted)}
+.pm7u-metercopy span{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.pm7u-metercopy b{margin-left:auto;font:700 8px/1 var(--mono-font);color:var(--text-secondary);white-space:nowrap}
+.pm7u-meterbar{height:4px;border-radius:4px;background:color-mix(in srgb,var(--text-primary) 7%,transparent);overflow:hidden;min-width:58px;max-width:150px;width:100%}
+.pm7u-meterbar i{display:block;width:var(--fill,0%);height:100%;border-radius:inherit;background:var(--accent-primary);transition:width 480ms cubic-bezier(.2,.8,.2,1)}
+.pm7u-meterbar i.green{background:var(--accent-lime)}.pm7u-meterbar i.orange{background:var(--accent-orange)}.pm7u-meterbar i.purple{background:var(--pm7u-purple)}
+.pm7u-instrument-foot{display:flex;align-items:center;gap:7px;margin-top:auto;padding-top:7px;border-top:1px solid color-mix(in srgb,var(--border-light) 70%,transparent);font-size:8.5px;color:var(--text-muted);min-width:0}
+.pm7u-instrument-foot span{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.pm7u-instrument-foot b{font:700 8.5px/1 var(--mono-font);color:var(--text-secondary);white-space:nowrap}
+.pm7u-instrument-foot .push{margin-left:auto}
+.pm7u-viewlink{margin-left:auto;border:0;background:transparent;padding:0;color:var(--accent-primary);cursor:pointer;font:700 8.5px/1 var(--body-font);white-space:nowrap}
+.pm7u-viewlink:hover{text-decoration:underline}
+
+/* Compact strips use the card header as their label, then reserve the body
+   for the one value and one local rail that remain meaningful at one row. */
+.pm7u-card[data-shape="strip"] .pm7u-instrument{display:grid;grid-template-columns:auto minmax(48px,1fr);align-items:center;gap:9px;min-width:0}
+.pm7u-card[data-shape="strip"] .pm7u-instrument-top{display:contents}
+.pm7u-card[data-shape="strip"] .pm7u-instrument-name{display:none!important}
+.pm7u-card[data-shape="strip"] .pm7u-instrument-value{grid-column:1;grid-row:1;display:flex;align-items:baseline;gap:5px;min-width:0;text-align:left}
+.pm7u-card[data-shape="strip"] .pm7u-instrument-value b{font-size:18px}
+.pm7u-card[data-shape="strip"] .pm7u-instrument-value span{margin:0;max-width:58px;overflow:hidden;text-overflow:ellipsis}
+.pm7u-card[data-shape="strip"] .pm7u-meters{grid-column:2;grid-row:1;display:block;min-width:0}
+.pm7u-card[data-shape="strip"] .pm7u-meterline{display:block;min-width:0}
+.pm7u-card[data-shape="strip"] .pm7u-metercopy{display:none}
+.pm7u-card[data-shape="strip"] .pm7u-meterbar{display:block;min-width:0;max-width:none;width:100%;height:5px}
+.pm7u-card[data-shape="strip"] .pm7u-instrument-divider,
+.pm7u-card[data-shape="strip"] .pm7u-statstack,
+.pm7u-card[data-shape="strip"] .pm7u-instrument-foot{display:none!important}
+
+/* Wide/tall cards reflow instead of stretching one long meter through empty space. */
+.pm7u-card[data-shape="canvas"] .pm7u-instrument{display:grid;grid-template-columns:minmax(170px,.8fr) minmax(180px,1fr);grid-template-rows:auto minmax(0,1fr) auto;column-gap:18px;row-gap:7px}
+.pm7u-card[data-shape="canvas"] .pm7u-instrument-top{grid-column:1;grid-row:1}
+.pm7u-card[data-shape="canvas"] .pm7u-instrument-divider{display:none}
+.pm7u-card[data-shape="canvas"] .pm7u-statstack{grid-column:1;grid-row:2;border-top:1px solid var(--border-light);margin-top:3px;align-self:start}
+.pm7u-card[data-shape="canvas"] .pm7u-statrow{min-height:21px}
+.pm7u-card[data-shape="canvas"] .pm7u-meters{grid-column:2;grid-row:1/3;padding-left:16px;border-left:1px solid var(--border-light);justify-content:flex-start;align-self:stretch;gap:8px;min-height:0}
+.pm7u-card[data-shape="canvas"] .pm7u-meterbar{max-width:none}
+.pm7u-card[data-shape="canvas"] .pm7u-mini-bars{height:58px;min-height:48px;flex:none;padding-top:4px}
+.pm7u-card[data-shape="canvas"] .pm7u-instrument-foot{grid-column:1/-1;grid-row:3;padding-top:6px}
+
+/* Summary cards retain hierarchy as they grow. */
+.pm7u-summary{display:flex;flex-direction:column;height:100%;min-width:0;gap:7px}
+.pm7u-summary-main{display:flex;align-items:flex-end;gap:6px;min-width:0}
+.pm7u-summary-main b{font:750 24px/.95 var(--display-font);letter-spacing:-.035em;color:var(--text-primary);font-variant-numeric:tabular-nums;white-space:nowrap}
+.pm7u-summary-main em{margin-left:auto;padding-bottom:2px;font:700 8.5px/1 var(--mono-font);font-style:normal;color:var(--accent-lime);white-space:nowrap}
+.pm7u-summary-main em.warn{color:var(--accent-orange)}
+.pm7u-summary-label{font-size:8.8px;color:var(--text-muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pm7u-summary-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 10px;border-top:1px solid var(--border-light);margin-top:1px}
+.pm7u-summary-cell{padding:7px 0 5px;min-width:0;border-bottom:1px solid color-mix(in srgb,var(--border-light) 62%,transparent)}
+.pm7u-summary-cell span{display:block;font-size:8px;color:var(--text-muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pm7u-summary-cell b{display:block;margin-top:3px;font:700 9px/1 var(--mono-font);color:var(--text-secondary);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pm7u-summary-foot{display:flex;align-items:center;gap:7px;margin-top:auto;font-size:8.4px;color:var(--text-muted)}
+.pm7u-summary-foot b{font:700 8.4px/1 var(--mono-font);color:var(--text-secondary)}
+.pm7u-card[data-shape="strip"] .pm7u-summary{display:flex;flex-direction:row;align-items:center;gap:8px;min-width:0}
+.pm7u-card[data-shape="strip"] .pm7u-summary-main{display:flex;align-items:baseline;width:100%;min-width:0;gap:7px}
+.pm7u-card[data-shape="strip"] .pm7u-summary-main b{font-size:18px;min-width:0;overflow:hidden;text-overflow:ellipsis}
+.pm7u-card[data-shape="strip"] .pm7u-summary-main em{margin-left:auto;max-width:72px;overflow:hidden;text-overflow:ellipsis}
+.pm7u-card[data-shape="strip"] .pm7u-summary-label,
+.pm7u-card[data-shape="strip"] .pm7u-summary-grid,
+.pm7u-card[data-shape="strip"] .pm7u-summary-foot{display:none!important}
+
+/* Compact data rows and mini visualizations. */
+.pm7u-list.pm7u-rich-list{gap:0}
+.pm7u-rich-list .pm7u-row{min-height:28px}
+.pm7u-row[data-tier="standard"],.pm7u-row[data-tier="expanded"]{display:grid}
+.pm7u-card[data-density="compact"] .pm7u-row[data-tier="standard"],
+.pm7u-card[data-density="compact"] .pm7u-row[data-tier="expanded"],
+.pm7u-card[data-density="standard"] .pm7u-row[data-tier="expanded"]{display:none}
+.pm7u-mini-bars{display:flex;align-items:flex-end;gap:3px;min-height:54px;height:100%;padding-top:5px}
+.pm7u-mini-bars i{display:block;flex:1;min-width:3px;max-width:18px;height:var(--h,30%);border-radius:2px 2px 0 0;background:color-mix(in srgb,var(--accent-primary) 72%,var(--surface));opacity:.78}
+.pm7u-card[data-shape="canvas"] .pm7u-mini-bars i{max-width:none}
+.pm7u-splitview{display:grid;grid-template-columns:minmax(0,1fr) minmax(126px,.52fr);gap:14px;height:100%;min-width:0}
+.pm7u-sidefacts{display:flex;flex-direction:column;justify-content:center;border-left:1px solid var(--border-light);padding-left:12px}
+.pm7u-card[data-cols="3"] .pm7u-splitview,.pm7u-card[data-cols="4"] .pm7u-splitview{grid-template-columns:1fr}.pm7u-card[data-cols="3"] .pm7u-sidefacts,.pm7u-card[data-cols="4"] .pm7u-sidefacts{display:none}
+
+/* Context and cost instruments use short local bars rather than one giant rail. */
+.pm7u-context-v2{display:flex;flex-direction:column;height:100%;gap:8px}
+.pm7u-context-v2-top{display:flex;align-items:center;gap:11px}
+.pm7u-context-v2-copy{min-width:0;flex:1}.pm7u-context-v2-copy b{display:block;font:750 15px/1 var(--display-font);color:var(--text-primary)}.pm7u-context-v2-copy span{display:block;margin-top:3px;font-size:8.6px;color:var(--text-muted)}
+.pm7u-context-v2 .pm7u-donut{width:54px;height:54px}.pm7u-context-v2 .pm7u-donut:after{inset:6px}
+.pm7u-card[data-shape="strip"] .pm7u-context-v2{display:grid;grid-template-columns:auto minmax(48px,1fr);align-items:center;gap:9px;min-width:0}
+.pm7u-card[data-shape="strip"] .pm7u-context-v2-top{display:contents}
+.pm7u-card[data-shape="strip"] .pm7u-context-v2 .pm7u-donut{display:none}
+.pm7u-card[data-shape="strip"] .pm7u-context-v2-copy{grid-column:1;grid-row:1;min-width:0}
+.pm7u-card[data-shape="strip"] .pm7u-context-v2-copy b{font-size:13px;white-space:nowrap}
+.pm7u-card[data-shape="strip"] .pm7u-context-v2-copy span{display:none}
+.pm7u-card[data-shape="strip"] .pm7u-context-v2>.pm7u-meterline{grid-column:2;grid-row:1;display:block;min-width:0}
+.pm7u-card[data-shape="strip"] .pm7u-context-v2>.pm7u-meterline .pm7u-metercopy{display:none}
+.pm7u-card[data-shape="strip"] .pm7u-context-v2>.pm7u-meterline .pm7u-meterbar{display:block;min-width:0;max-width:none;width:100%;height:5px}
+.pm7u-segment-legend{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:5px 10px;border-top:1px solid var(--border-light);padding-top:8px}
+.pm7u-segment-legend span{display:flex;align-items:center;gap:5px;min-width:0;font-size:8px;color:var(--text-muted)}.pm7u-segment-legend i{width:5px;height:5px;border-radius:1px;background:var(--accent-primary);flex:none}.pm7u-segment-legend b{margin-left:auto;font:700 8px/1 var(--mono-font);color:var(--text-secondary)}
+.pm7u-segment-legend span:nth-child(2) i{background:var(--accent-orange)}.pm7u-segment-legend span:nth-child(3) i{background:var(--accent-lime)}.pm7u-segment-legend span:nth-child(4) i{background:var(--pm7u-purple)}
+
+/* More obvious but restrained interaction affordances. */
+.pm7u-resize{width:16px;height:16px;opacity:.42}
+.pm7u-card:hover .pm7u-resize,.pm7u-resize:focus-visible,.pm7u-card.is-resizing .pm7u-resize{opacity:1}
+.pm7u-resize:after{width:8px;height:8px;border-right:1.5px solid currentColor;border-bottom:1.5px solid currentColor;right:3px;bottom:3px}
+.pm7u-sizehud{padding:5px 8px;border-radius:7px;font-size:8.5px}
+.pm7u-card.is-density-changing .pm7u-cardbody{animation:pm7u-density-pop 180ms cubic-bezier(.2,.8,.2,1)}
+@keyframes pm7u-density-pop{from{opacity:.72;transform:translateY(2px)}to{opacity:1;transform:none}}
+
+/* Theme refinements for the denser cards. */
+[data-theme^="retro"] .pm7u-card{box-shadow:3px 3px 0 color-mix(in srgb,var(--text-primary) 21%,transparent)}
+[data-theme="retro-dark"] .pm7u-card{background:var(--surface-elevated)}
+[data-theme^="glass"] .pm7u-card{backdrop-filter:blur(16px) saturate(1.08)}
+
+@media(max-width:1180px){.pm7u-shell{grid-template-columns:164px minmax(0,1fr)}.pm7u-board{min-width:720px}}
+@media(max-width:860px){.pm7u-shell{grid-template-columns:1fr;grid-template-rows:auto minmax(0,1fr)}.pm7u-board{min-width:700px}}
+
+/* =====================================================================
+   PM7 T23 — CAPACITY-FITTED CONTENT + BALANCED DEFAULT ROWS
+   Every size now receives a deliberately different information budget.
+   The goal is not maximum density; it is complete use of the panel without
+   internal scrolling or a stranded right/bottom half.
+   ===================================================================== */
+.pm7u-shell{--pm7u-row:92px;--pm7u-gap:10px}
+.pm7u-cardbody{min-width:0;min-height:0}
+.pm7u-cardbody>*{width:100%;min-width:0}
+
+/* Four disclosure capacities: strip -> compact -> standard -> expanded. */
+.pm7u-card[data-density="strip"] :is(.pm7u-tier-compact,.pm7u-tier-standard,.pm7u-tier-expanded){display:none!important}
+.pm7u-card[data-density="compact"] :is(.pm7u-tier-standard,.pm7u-tier-expanded){display:none!important}
+.pm7u-card[data-density="standard"] .pm7u-tier-expanded{display:none!important}
+.pm7u-card[data-density="expanded"] :is(.pm7u-tier-compact,.pm7u-tier-standard,.pm7u-tier-expanded){display:revert}
+.pm7u-card[data-density="expanded"] :is(.pm7u-statrow,.pm7u-meterline).pm7u-tier-expanded{display:grid}
+.pm7u-card[data-density="expanded"] .pm7u-instrument-details.pm7u-tier-expanded{display:grid}
+.pm7u-card[data-density="expanded"] .pm7u-summary-signal.pm7u-tier-expanded{display:block}
+
+/* Instrument cards consume the complete body at each capacity. */
+.pm7u-instrument{width:100%;height:100%;gap:4px;justify-content:flex-start}
+.pm7u-instrument-top{min-height:29px}
+.pm7u-instrument-divider{margin:0}
+.pm7u-statrow{min-height:18px;font-size:8.7px}
+.pm7u-statrow b{font-size:8.7px}
+.pm7u-meters{gap:4px}
+.pm7u-meterline{min-height:17px;grid-template-columns:minmax(0,1fr) minmax(58px,38%)}
+.pm7u-meterbar{min-width:0;max-width:none;width:100%}
+.pm7u-instrument-foot{margin-top:0;min-height:18px;padding-top:5px}
+.pm7u-mini-signal{display:flex;flex:1 1 34px;min-height:32px;max-height:48px;flex-direction:column;gap:4px;border-top:1px solid color-mix(in srgb,var(--border-light) 62%,transparent);padding-top:5px;overflow:hidden}
+.pm7u-signal-label{display:flex;align-items:center;gap:8px;min-height:9px;font-size:7.8px;color:var(--text-muted)}
+.pm7u-signal-label b{margin-left:auto;font:700 7.8px/1 var(--mono-font);color:var(--text-secondary)}
+.pm7u-mini-signal .pm7u-mini-bars{flex:1;min-height:18px;height:auto;padding:0;gap:2px}
+.pm7u-mini-signal .pm7u-mini-bars i{max-width:none;min-width:2px}
+.pm7u-instrument-details{grid-template-columns:repeat(4,minmax(0,1fr));gap:5px;border-top:1px solid var(--border-light);padding-top:5px}
+.pm7u-instrument-details>div{min-width:0;padding-right:5px;border-right:1px solid color-mix(in srgb,var(--border-light) 60%,transparent)}
+.pm7u-instrument-details>div:last-child{border-right:0;padding-right:0}
+.pm7u-instrument-details span,.pm7u-instrument-details b{display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pm7u-instrument-details span{font-size:7.5px;color:var(--text-muted)}
+.pm7u-instrument-details b{margin-top:3px;font:700 7.8px/1 var(--mono-font);color:var(--text-secondary)}
+
+/* Two-row compact instruments retain two facts, two local rails and a footer. */
+.pm7u-card[data-density="compact"] .pm7u-instrument{gap:4px}
+.pm7u-card[data-density="compact"] .pm7u-instrument-name span{display:none}
+.pm7u-card[data-density="compact"] .pm7u-instrument-value b{font-size:20px}
+.pm7u-card[data-density="compact"] .pm7u-statrow{min-height:17px}
+.pm7u-card[data-density="compact"] .pm7u-meterline{min-height:16px}
+.pm7u-card[data-density="compact"] .pm7u-instrument-foot{padding-top:4px}
+
+/* Standard 3x3 cards: four facts, three rails, activity, and outcome footer. */
+.pm7u-card[data-density="standard"] .pm7u-mini-signal.pm7u-tier-standard{display:flex}
+.pm7u-card[data-density="standard"] .pm7u-instrument-foot{margin-top:auto}
+
+/* Expanded/wide instruments become a genuine two-column dashboard rather
+   than a stretched standard card. */
+.pm7u-card[data-shape="canvas"] .pm7u-instrument{
+  display:grid;
+  grid-template-columns:minmax(168px,.82fr) minmax(190px,1fr);
+  grid-template-rows:auto minmax(0,1fr) auto auto;
+  column-gap:16px;
+  row-gap:5px;
+}
+.pm7u-card[data-shape="canvas"] .pm7u-instrument-top{grid-column:1;grid-row:1}
+.pm7u-card[data-shape="canvas"] .pm7u-instrument-divider{display:none}
+.pm7u-card[data-shape="canvas"] .pm7u-statstack{grid-column:1;grid-row:2;align-self:stretch;border-top:1px solid var(--border-light);margin-top:1px}
+.pm7u-card[data-shape="canvas"] .pm7u-statrow{min-height:18px}
+.pm7u-card[data-shape="canvas"] .pm7u-meters{grid-column:2;grid-row:1;padding-left:14px;border-left:1px solid var(--border-light);align-self:start;gap:5px}
+.pm7u-card[data-shape="canvas"] .pm7u-mini-signal{grid-column:2;grid-row:2;margin-left:14px;padding-left:0;min-height:56px;max-height:none;align-self:stretch}
+.pm7u-card[data-shape="canvas"] .pm7u-instrument-details{grid-column:1/-1;grid-row:3}
+.pm7u-card[data-shape="canvas"] .pm7u-instrument-foot{grid-column:1/-1;grid-row:4}
+
+/* Summary cards use their vertical space instead of parking the footer at the
+   bottom of an otherwise empty body. */
+.pm7u-summary{width:100%;gap:5px}
+.pm7u-summary-grid{flex:1 1 auto;min-height:0}
+.pm7u-summary-cell{display:flex;flex-direction:column;justify-content:center;padding:5px 0 4px}
+.pm7u-summary-foot{margin-top:0;min-height:15px}
+.pm7u-summary-signal{flex:1 1 56px;min-height:42px;overflow:hidden}
+.pm7u-summary-signal .pm7u-mini-signal{height:100%;max-height:none;border-top:1px solid var(--border-light)}
+.pm7u-card[data-shape="horizontal"] .pm7u-summary{
+  display:grid;
+  grid-template-columns:minmax(150px,.78fr) minmax(220px,1.22fr);
+  grid-template-rows:auto 1fr auto;
+  column-gap:15px;
+  row-gap:4px;
+}
+.pm7u-card[data-shape="horizontal"] .pm7u-summary-main{grid-column:1;grid-row:1}
+.pm7u-card[data-shape="horizontal"] .pm7u-summary-label{grid-column:1;grid-row:2;align-self:start}
+.pm7u-card[data-shape="horizontal"] .pm7u-summary-grid{grid-column:2;grid-row:1/4;grid-template-columns:repeat(2,minmax(0,1fr));align-self:stretch;border-left:1px solid var(--border-light);border-top:0;padding-left:14px}
+.pm7u-card[data-shape="horizontal"] .pm7u-summary-foot{grid-column:1;grid-row:3}
+
+/* Lists grow their visible rows to the available body instead of leaving a
+   large blank region below the final row. Rows remain clipped—not scrolled. */
+.pm7u-list.pm7u-rich-list{display:flex;flex-direction:column;width:100%;height:100%;min-height:0;overflow:hidden}
+.pm7u-rich-list .pm7u-row{flex:1 1 0;min-height:27px;max-height:43px}
+.pm7u-card[data-density="compact"] .pm7u-rich-list .pm7u-row{max-height:none}
+
+/* Chart wrappers understand the new signal wrapper. */
+.pm7u-splitview>div:first-child,.pm7u-splitview>div:first-child>.pm7u-mini-signal{height:100%;max-height:none;min-height:0}
+.pm7u-splitview .pm7u-mini-bars{height:100%;min-height:48px}
+
+/* Context now has a complete standard hierarchy. */
+.pm7u-context-v2{gap:5px}
+.pm7u-context-v2 .pm7u-statrow{min-height:18px}
+.pm7u-context-v2 .pm7u-segment-legend{padding-top:5px;gap:4px 9px}
+.pm7u-context-v2>.pm7u-meterline{margin-top:auto}
+.pm7u-context-foot{grid-template-columns:auto minmax(0,1fr);gap:5px 10px;border-top:1px solid var(--border-light);padding-top:5px;font-size:7.8px;color:var(--text-muted)}
+.pm7u-context-foot b{font:700 7.8px/1 var(--mono-font);color:var(--text-secondary);text-align:right;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+
+/* A calm resize transition makes the content-budget change legible. */
+.pm7u-card.is-density-changing .pm7u-cardbody{animation:pm7u-density-pop 210ms cubic-bezier(.2,.8,.2,1)}
+
+/* T23.1: keep the expanded Context instrument within the curated 6x3 body
+   while retaining all four facts, source mix, meter, and route details. */
+.pm7u-card[data-shape="canvas"] .pm7u-context-v2{gap:4px}
+.pm7u-card[data-shape="canvas"] .pm7u-context-v2 .pm7u-donut{width:50px;height:50px}
+.pm7u-card[data-shape="canvas"] .pm7u-context-v2 .pm7u-statrow{min-height:17px}
+
+/* =====================================================================
+   PM7 T22 — Atlas retro theme, global Chat ownership, and Home systems
+   ===================================================================== */
+
+/* Opus 5 / Atlas palette. Retro Light keeps its existing paper palette but
+   now uses the same workmanlike mono typography as Retro Dark. */
+[data-theme="retro-dark"] {
+  --background:#10120e;
+  --surface:#171a14;
+  --surface-elevated:#1e2219;
+  --text-primary:#dfe6cf;
+  --text-secondary:#a8b394;
+  --text-muted:#7c866b;
+  --border:#4a533a;
+  --border-light:#333a28;
+  --accent-blue:#9db4d0;
+  --accent-magenta:#d8b93c;
+  --accent-lime:#86c46a;
+  --accent-orange:#e9853f;
+  --accent-warning:#d8b93c;
+  --accent-error:#e2694f;
+  --accent-primary:#b8d066;
+  --accent-primary-rgb:184,208,102;
+  --accent-soft:color-mix(in srgb,#b8d066 13%,transparent);
+  --accent-glow:color-mix(in srgb,#b8d066 24%,transparent);
+  --graph-pending:#78806a;
+  --graph-running:#e9853f;
+  --graph-passed:#86c46a;
+  --graph-failed:#e2694f;
+  --graph-planning:#9db4d0;
+  --graph-gating:#d8b93c;
+  --display-font:'IBM Plex Mono','JetBrains Mono',ui-monospace,Menlo,monospace;
+  --display-font-sm:'IBM Plex Mono','JetBrains Mono',ui-monospace,Menlo,monospace;
+  --body-font:'IBM Plex Mono','JetBrains Mono',ui-monospace,Menlo,monospace;
+  --mono-font:'IBM Plex Mono','JetBrains Mono',ui-monospace,Menlo,monospace;
+  --font-mono:var(--mono-font);
+  --shadow:3px 3px 0 rgba(107,118,84,.55);
+  --pm6-rb-shadow-hard:3px 3px 0 rgba(107,118,84,.55);
+  --elev-1:2px 2px 0 rgba(74,83,58,.68);
+  --elev-2:3px 3px 0 rgba(107,118,84,.56);
+  --elev-3:5px 5px 0 rgba(107,118,84,.5);
+}
+[data-theme="retro-light"] {
+  --display-font:'IBM Plex Mono','JetBrains Mono',ui-monospace,Menlo,monospace;
+  --display-font-sm:'IBM Plex Mono','JetBrains Mono',ui-monospace,Menlo,monospace;
+  --body-font:'IBM Plex Mono','JetBrains Mono',ui-monospace,Menlo,monospace;
+  --mono-font:'IBM Plex Mono','JetBrains Mono',ui-monospace,Menlo,monospace;
+  --font-mono:var(--mono-font);
+}
+[data-theme="retro-dark"] .pm6-tt-chip[data-chip="retro-dark"]{background:#10120e!important}
+[data-theme="retro-dark"] :is(.pm6-dash-card,.pm7u-card,.pm-home-surface,.s4-panel,.chat-panel,.side-panel-slot){
+  background-color:var(--surface);
+  border-color:var(--border);
+}
+[data-theme="retro-dark"] :is(.pm6-dash-card-head,.pm7u-cardhead,.chat-panel-header,.pane-tabbar,.bottom-tabs){
+  border-color:var(--border-light);
+}
+[data-theme="retro-dark"] :is(.status-badge,.pm6-dash-chip,.pm7u-chip).healthy,
+[data-theme="retro-dark"] .pm6-dash-chip--pass{color:#10120e}
+
+/* ---------------------------------------------------------------------
+   Global Chat: the same Assistant surface moves back to the app shell on
+   every non-Home page. Home retains its model-owned dock/float behavior.
+   --------------------------------------------------------------------- */
+body.pm7-chat-global-owner #chatPanel.pm7-global-chat-panel{
+  position:relative!important;
+  inset:auto!important;
+  left:auto!important;
+  top:auto!important;
+  right:auto!important;
+  bottom:auto!important;
+  order:30!important;
+  flex:0 0 clamp(380px,var(--chat-panel-w,550px),min(46vw,680px))!important;
+  width:clamp(380px,var(--chat-panel-w,550px),min(46vw,680px))!important;
+  min-width:360px!important;
+  max-width:min(680px,48vw)!important;
+  height:100%!important;
+  max-height:none!important;
+  margin:0!important;
+  transform:none!important;
+  transition:none!important;
+  z-index:40!important;
+  overflow:hidden!important;
+  border-top:0!important;
+  border-right:0!important;
+  border-bottom:0!important;
+  border-left:1px solid var(--border)!important;
+  box-shadow:-10px 0 26px color-mix(in srgb,#000 8%,transparent)!important;
+}
+body.pm7-chat-global-owner #chatPanel.pm7-global-chat-panel.hidden{display:none!important}
+body.pm7-chat-global-owner #chatPanel.pm7-global-chat-panel > :is(.pm-home-surface-grip,.pm-home-surface-options,.pm-home-resize-handle){display:none!important}
+body.pm7-chat-global-owner #chatResizer.pm7-global-chat-resizer:not(.hidden){
+  display:block!important;
+  flex:0 0 5px!important;
+  width:5px!important;
+  height:100%!important;
+  cursor:col-resize!important;
+  touch-action:none!important;
+  background:transparent!important;
+  order:29!important;
+  z-index:41!important;
+}
+body.pm7-chat-global-owner #chatResizer.pm7-global-chat-resizer:not(.hidden):hover,
+body.pm7-chat-global-owner #chatResizer.pm7-global-chat-resizer.resizing{
+  background:color-mix(in srgb,var(--accent-primary) 22%,transparent)!important;
+}
+
+/* ---------------------------------------------------------------------
+   Home surface system: explicit density, curated presets, clearer grips,
+   and a resize readout. Existing model persistence remains authoritative.
+   --------------------------------------------------------------------- */
+.pm-home-surface{transition:border-color var(--motion-fast) var(--ease-out),box-shadow var(--motion-fast) var(--ease-out)}
+.pm-home-surface:hover{border-color:color-mix(in srgb,var(--border) 76%,var(--accent-primary) 24%)}
+.pm-home-surface[data-pm-home-density="compact"]{--pm-home-density-label:'Compact'}
+.pm-home-surface[data-pm-home-density="standard"]{--pm-home-density-label:'Standard'}
+.pm-home-surface[data-pm-home-density="expanded"]{--pm-home-density-label:'Expanded'}
+.pm-home-surface[data-pm-home-density="compact"] .pm7-home-standard,
+.pm-home-surface[data-pm-home-density="compact"] .pm7-home-expanded,
+.pm-home-surface[data-pm-home-density="standard"] .pm7-home-expanded{display:none!important}
+.pm-home-surface[data-pm-home-density="compact"][data-pm-home-kind="editor_panel"] :is(.editor-breadcrumbs,.editor-minimap,.pm6-editor-minimap,.pane-tabbar-meta){display:none!important}
+.pm-home-surface[data-pm-home-density="compact"][data-pm-home-kind="terminal_section"] :is(.bottom-tabs-right .pm-tiny-btn:nth-child(n+3),.pm6-bottom-head-meta){display:none!important}
+.pm-home-surface[data-pm-home-density="compact"][data-pm-home-kind="chat"] :is(.chat-thread-sidebar,.pm6-thread-sidebar){display:none!important}
+.pm-home-surface-grip{
+  filter:drop-shadow(0 1px 0 color-mix(in srgb,#000 24%,transparent));
+  transition:color var(--motion-fast),filter var(--motion-fast),transform var(--motion-fast)!important;
+}
+.pm-home-surface:hover > .pm-home-surface-grip{color:var(--accent-primary);filter:drop-shadow(0 0 6px var(--accent-glow));transform:scale(1.06)}
+.pm-home-resize-handle::before{transition:opacity var(--motion-fast),background var(--motion-fast),box-shadow var(--motion-fast)}
+.pm-home-resize-handle:hover::before,.pm-home-resize-handle.resizing::before{background:var(--accent-primary)!important;box-shadow:0 0 0 3px var(--accent-soft),0 0 12px var(--accent-glow)}
+.pm-home-size-label{padding:7px 11px 4px;color:var(--text-muted);font:700 9px/1 var(--mono-font);letter-spacing:.08em;text-transform:uppercase}
+.pm-home-size-presets{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:5px;padding:3px 8px 8px}
+.pm-home-size-preset{
+  min-height:31px;padding:6px 8px;border:1px solid var(--border-light);border-radius:var(--radius-sm);background:var(--surface);color:var(--text-secondary);font:650 10px/1.1 var(--body-font);cursor:pointer;text-align:left
+}
+.pm-home-size-preset span{display:block;margin-top:3px;color:var(--text-muted);font:500 8px/1 var(--mono-font)}
+.pm-home-size-preset:hover,.pm-home-size-preset:focus-visible{outline:none;border-color:var(--accent-primary);color:var(--text-primary);background:var(--accent-soft)}
+.pm7-home-resize-hud{
+  position:fixed;z-index:10150;pointer-events:none;min-width:118px;padding:7px 9px;border:1px solid var(--border);border-radius:var(--radius-sm);background:var(--surface-elevated);box-shadow:var(--elev-2);color:var(--text-secondary);font:650 10px/1.25 var(--mono-font);opacity:0;transform:translateY(4px) scale(.97);transition:opacity 100ms,transform 120ms var(--ease-out)
+}
+.pm7-home-resize-hud.show{opacity:1;transform:none}
+.pm7-home-resize-hud b{display:block;color:var(--text-primary);font-size:11px}.pm7-home-resize-hud span{color:var(--accent-primary)}
+html.pm7-home-resizing,html.pm7-home-resizing *{cursor:col-resize!important;-webkit-user-select:none!important;user-select:none!important;overscroll-behavior:none!important}
+html.pm7-home-resizing body{touch-action:none!important}
+
+/* ---------------------------------------------------------------------
+   Home dashboard widgets: content disclosure follows actual grid size,
+   sizes persist, and a compact preset menu complements drag resizing.
+   --------------------------------------------------------------------- */
+.pm6-dash-card[data-pm7-density="compact"] .pm7-dash-standard,
+.pm6-dash-card[data-pm7-density="compact"] .pm7-dash-expanded,
+.pm6-dash-card[data-pm7-density="standard"] .pm7-dash-expanded{display:none!important}
+.pm6-dash-card[data-pm7-density="compact"] .pm6-dash-card-body{padding:8px 9px;gap:5px}
+.pm6-dash-card[data-pm7-density="compact"] .pm6-dash-card-title{font-size:10px}
+.pm6-dash-card[data-pm7-density="compact"] .pm6-dash-lane:nth-child(n+3),
+.pm6-dash-card[data-pm7-density="compact"] .pm6-dash-row:nth-child(n+3){display:none!important}
+.pm6-dash-card[data-pm7-density="standard"] .pm6-dash-lane:nth-child(n+5),
+.pm6-dash-card[data-pm7-density="standard"] .pm6-dash-row:nth-child(n+5){display:none!important}
+.pm6-dash-card[data-pm7-density="expanded"] .pm6-dash-card-body{padding-bottom:10px}
+.pm6-dash-card[data-pm7-shape="wide"] .pm6-dash-lane{display:grid;grid-template-columns:minmax(110px,.8fr) minmax(90px,170px) auto}
+.pm6-dash-card[data-pm7-shape="wide"] .pm6-dash-bar{width:100%;max-width:170px}
+.pm6-dash-card[data-pm7-shape="canvas"] [data-widget-body]{align-content:start}
+.pm7-dash-extra{
+  display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 12px;margin-top:auto;padding-top:7px;border-top:1px solid var(--border-light);min-width:0
+}
+.pm7-dash-extra div{display:flex;align-items:center;justify-content:space-between;gap:8px;min-width:0;min-height:22px;font-size:9px;color:var(--text-muted)}
+.pm7-dash-extra span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.pm7-dash-extra b{font:700 9px/1 var(--mono-font);color:var(--text-secondary);white-space:nowrap}
+.pm7-dash-size-btn{opacity:0;display:inline-grid;place-items:center;width:22px;height:22px;padding:0;border:0;border-radius:var(--radius-sm);background:transparent;color:var(--text-muted);cursor:pointer;transition:opacity var(--motion-fast),color var(--motion-fast),background var(--motion-fast)}
+.pm6-dash-card:hover .pm7-dash-size-btn,.pm7-dash-size-btn:focus-visible,.pm7-dash-size-btn[aria-expanded="true"]{opacity:1}
+.pm7-dash-size-btn:hover,.pm7-dash-size-btn[aria-expanded="true"]{color:var(--text-primary);background:var(--accent-soft)}
+.pm7-dash-size-btn svg{width:13px;height:13px}
+.pm7-dash-size-pop{
+  position:fixed;z-index:10130;width:236px;padding:7px;border:1px solid var(--border);border-radius:var(--radius-md);background:var(--surface-elevated);box-shadow:var(--elev-3);display:none;grid-template-columns:repeat(2,minmax(0,1fr));gap:5px
+}
+.pm7-dash-size-pop.open{display:grid;animation:pm7DashPop 180ms var(--ease-out)}
+@keyframes pm7DashPop{from{opacity:0;transform:translateY(-5px) scale(.97)}to{opacity:1;transform:none}}
+.pm7-dash-size-pop button{min-height:39px;padding:7px 8px;border:1px solid var(--border-light);border-radius:var(--radius-sm);background:var(--surface);color:var(--text-secondary);text-align:left;font:650 10px/1.1 var(--body-font);cursor:pointer}
+.pm7-dash-size-pop button span{display:block;margin-top:4px;color:var(--text-muted);font:500 8px/1 var(--mono-font)}
+.pm7-dash-size-pop button:hover{border-color:var(--accent-primary);background:var(--accent-soft);color:var(--text-primary)}
+.pm7-dash-resize-hud{
+  position:fixed;z-index:10140;pointer-events:none;padding:7px 9px;border:1px solid var(--border);border-radius:var(--radius-sm);background:var(--surface-elevated);box-shadow:var(--elev-2);color:var(--text-secondary);font:650 10px/1.2 var(--mono-font);display:none
+}
+.pm7-dash-resize-hud.show{display:block}.pm7-dash-resize-hud b{color:var(--text-primary)}
+html.pm7-dash-resizing,html.pm7-dash-resizing *{cursor:nwse-resize!important;-webkit-user-select:none!important;user-select:none!important;overscroll-behavior:none!important}
+html.pm7-dash-resizing body{touch-action:none!important}
+.pm6-dash-resize{width:17px;height:17px;opacity:.38}
+.pm6-dash-card:hover .pm6-dash-resize,.pm6-dash-resize.resizing{opacity:1}
+.pm6-dash-resize::after{content:'';position:absolute;right:3px;bottom:3px;width:8px;height:8px;border-right:2px solid var(--text-muted);border-bottom:2px solid var(--text-muted);border-radius:0 0 3px 0}
+.pm6-dash-resize:hover::after,.pm6-dash-resize.resizing::after{border-color:var(--accent-primary);filter:drop-shadow(0 0 4px var(--accent-glow))}
+
+@media(max-width:980px){
+  body.pm7-chat-global-owner #chatPanel.pm7-global-chat-panel{flex-basis:min(430px,46vw)!important;width:min(430px,46vw)!important;min-width:320px!important}
+}
+@media(prefers-reduced-motion:reduce){.pm7-dash-size-pop.open{animation:none}.pm-home-surface,.pm-home-surface-grip{transition:none!important}}
+
+/* T23 Home move feedback: one calm destination readout shared by editors,
+   terminal workgroups, dashboard and Chat. */
+.pm7-home-move-hud{
+  position:fixed;z-index:100005;display:flex;flex-direction:column;gap:3px;
+  min-width:205px;max-width:250px;padding:8px 10px;border:1px solid var(--accent-primary);
+  border-radius:8px;background:color-mix(in srgb,var(--surface-elevated) 94%,transparent);
+  box-shadow:0 10px 30px color-mix(in srgb,#000 28%,transparent),0 0 0 3px var(--accent-soft);
+  pointer-events:none;opacity:0;transform:translateY(4px) scale(.98);
+  transition:opacity 120ms var(--ease-out),transform 160ms var(--ease-out);
+}
+.pm7-home-move-hud.show{opacity:1;transform:none}
+.pm7-home-move-hud b{font:700 10px/1.15 var(--display-font);color:var(--text-primary);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pm7-home-move-hud span{font:600 8.5px/1.2 var(--mono-font);color:var(--text-muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+body.pm-home-dragging [data-pm-home-host].pm-home-drop-active{box-shadow:inset 0 0 0 2px var(--accent-primary),inset 0 0 24px var(--accent-soft)}
+@media(prefers-reduced-motion:reduce){.pm7-home-move-hud{transition:none}}
+  

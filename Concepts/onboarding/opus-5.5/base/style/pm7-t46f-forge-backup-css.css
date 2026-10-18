@@ -1,0 +1,82 @@
+
+/* PM7 T46F: Forge Backup tsnet post-integration GUI */
+.pm7-scm-context,
+.pm7-automation-context { position:relative; z-index:5; display:grid; gap:8px; padding:9px 10px; border-bottom:1px solid var(--border); background-color:color-mix(in srgb,var(--surface-elevated) 92%,transparent); }
+.pm7-scm-context-row,
+.pm7-automation-context-row { display:flex; align-items:center; gap:7px; min-width:0; }
+.pm7-scm-context-main,
+.pm7-automation-context-main { min-width:0; flex:1 1 auto; display:grid; gap:2px; }
+.pm7-context-title { color:var(--text-primary); font-size:12px; font-weight:780; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+.pm7-context-detail { color:var(--text-muted); font:10px/1.35 var(--mono-font); overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+.pm7-scm-engine-switch { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:5px; }
+.pm7-scm-engine-button { min-height:30px; border:1px solid var(--border); border-radius:var(--radius-sm); background:var(--surface); color:var(--text-secondary); font:700 11px/1.2 var(--body-font); cursor:pointer; }
+.pm7-scm-engine-button[aria-pressed="true"] { border-color:var(--accent-primary); color:var(--text-primary); background:color-mix(in srgb,var(--accent-primary) 12%,var(--surface)); box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--accent-primary) 30%,transparent); }
+.pm7-scm-engine-button:focus-visible,
+.pm7-automation-select:focus-visible { outline:2px solid var(--accent-primary); outline-offset:2px; }
+#panel-source[data-scm-engine="jj"] > .pm-segtab,
+#panel-source[data-scm-engine="jj"] > .sh-scroll,
+#panel-source[data-scm-engine="jj"] > .pm7-scm-git-footer { display:none!important; }
+#panel-source[data-scm-engine="git"] > .pm7-scm-jj-view { display:none!important; }
+.pm7-scm-jj-view { min-height:0; overflow:auto; padding:var(--md); display:grid; gap:var(--md); }
+.pm7-scm-git-footer { padding:0 var(--md) var(--md); }
+.pm7-post-card { padding:10px; border:1px solid var(--border); border-radius:var(--radius-md); background:var(--surface); min-width:0; }
+.pm7-post-card-head { display:flex; gap:8px; justify-content:space-between; align-items:flex-start; margin-bottom:8px; }
+.pm7-post-card-title { color:var(--text-primary); font-size:11px; font-weight:800; letter-spacing:.03em; text-transform:uppercase; }
+.pm7-post-card-subtitle { color:var(--text-muted); font-size:10px; line-height:1.35; margin-top:2px; }
+.pm7-post-actions { display:flex; flex-wrap:wrap; gap:5px; margin-top:9px; }
+.pm7-post-actions .pm-btn { min-height:28px; }
+.pm7-post-kv { display:grid; grid-template-columns:minmax(76px,.65fr) minmax(0,1.35fr); gap:5px 9px; font-size:10px; line-height:1.4; }
+.pm7-post-kv dt { color:var(--text-muted); }
+.pm7-post-kv dd { min-width:0; margin:0; color:var(--text-secondary); overflow-wrap:anywhere; }
+.pm7-post-state { display:inline-flex; align-items:center; min-height:22px; padding:2px 7px; border:1px solid var(--border); border-radius:var(--radius-pill); color:var(--text-secondary); font-size:10px; font-weight:760; }
+.pm7-post-state[data-state="ready"] { color:var(--success,var(--accent-lime)); }
+.pm7-post-state[data-state="pending"],
+.pm7-post-state[data-state="unknown"],
+.pm7-post-state[data-state="attention"] { color:var(--accent-warning); }
+.pm7-post-state[data-state="blocked"] { color:var(--accent-error); }
+.pm7-automation-select { width:100%; min-height:32px; padding:5px 28px 5px 9px; border:1px solid var(--border); border-radius:var(--radius-sm); background:var(--surface); color:var(--text-primary); font:700 11px/1.2 var(--body-font); }
+.pm7-automation-common { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:6px; }
+.pm7-automation-fact { min-width:0; padding:7px 8px; border:1px solid var(--border-light); border-radius:var(--radius-sm); background:var(--surface); }
+.pm7-automation-fact small { display:block; color:var(--text-muted); font-size:9px; text-transform:uppercase; letter-spacing:.05em; }
+.pm7-automation-fact strong { display:block; margin-top:2px; color:var(--text-primary); font-size:10px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+#panel-git:not([data-automation-service="github"]) > .pm-segtab,
+#panel-git:not([data-automation-service="github"]) > .sh-scroll { display:none!important; }
+#panel-git[data-automation-service="github"] > .pm7-automation-provider-view { display:none!important; }
+.pm7-automation-provider-view { min-height:0; overflow:auto; padding:var(--md); display:grid; gap:var(--md); }
+.pm7-automation-run { display:grid; grid-template-columns:auto minmax(0,1fr) auto; align-items:center; gap:7px; padding:7px 0; border-top:1px solid var(--border-light); }
+.pm7-automation-run:first-child { border-top:0; }
+.pm7-automation-run-copy { min-width:0; }
+.pm7-automation-run-copy strong,
+.pm7-automation-run-copy small { display:block; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+.pm7-automation-run-copy strong { color:var(--text-primary); font-size:10px; }
+.pm7-automation-run-copy small { color:var(--text-muted); font-size:9px; margin-top:2px; }
+.pm7-backup-status-strip { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:8px; margin-bottom:10px; }
+.pm7-backup-destination-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:10px; }
+.pm7-backup-destination { min-width:0; display:grid; gap:9px; padding:12px; border:1px solid var(--border); border-radius:var(--radius-md); background:var(--surface); }
+.pm7-backup-destination-head { display:flex; justify-content:space-between; gap:10px; align-items:flex-start; }
+.pm7-backup-destination-name { min-width:0; }
+.pm7-backup-destination-name strong,
+.pm7-backup-destination-name small { display:block; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+.pm7-backup-destination-name strong { color:var(--text-primary); }
+.pm7-backup-destination-name small { color:var(--text-muted); font-size:10px; margin-top:3px; }
+.pm7-backup-destination-detail { display:grid; gap:6px; padding-top:8px; border-top:1px solid var(--border-light); }
+.pm7-backup-safety-note { padding:10px 11px; border:1px solid var(--border); border-radius:var(--radius-md); background:var(--surface-alt); color:var(--text-secondary); font-size:11px; line-height:1.45; }
+html[data-theme^="retro"] .pm7-scm-engine-button,
+html[data-theme^="retro"] .pm7-post-card,
+html[data-theme^="retro"] .pm7-post-state,
+html[data-theme^="retro"] .pm7-automation-select,
+html[data-theme^="retro"] .pm7-automation-fact,
+html[data-theme^="retro"] .pm7-backup-destination,
+html[data-theme^="retro"] .pm7-backup-safety-note { border-radius:0; box-shadow:none; }
+[data-theme^="glass"] .pm7-scm-context,
+[data-theme^="glass"] .pm7-automation-context { background-color:color-mix(in srgb,var(--surface-elevated) 94%,transparent); }
+@media (max-width:520px) {
+  .pm7-backup-status-strip,
+  .pm7-backup-destination-grid { grid-template-columns:minmax(0,1fr); }
+  .pm7-post-kv { grid-template-columns:minmax(0,1fr); gap:1px; }
+}
+@media (prefers-reduced-motion:reduce) {
+  .pm7-scm-jj-view,
+  .pm7-automation-provider-view,
+  .pm7-backup-destination { animation:none!important; transition:none!important; }
+}

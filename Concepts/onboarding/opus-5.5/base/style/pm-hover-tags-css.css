@@ -1,0 +1,92 @@
+
+/* PM7 T47: global hover and focus tags */
+#pm-hover-tag-root {
+  position: fixed; inset: 0; z-index: 2147483000; pointer-events: none;
+  contain: layout style; color-scheme: light dark;
+}
+#pm-hover-tag-root .pm-hover-tag {
+  position: fixed; left: 0; top: 0; width: max-content;
+  max-width: min(280px, max(1px, calc(100vw - 16px)));
+  min-height: min(24px, max(1px, calc(100dvh - 16px)));
+  max-height: max(1px, calc(100dvh - 16px));
+  box-sizing: border-box; padding: 4px 8px;
+  overflow-x: hidden; overflow-y: auto; overscroll-behavior: contain;
+  border: 1px solid var(--border, rgba(255,255,255,.18));
+  border-radius: 8px; color: var(--text-primary, #f7f4fb);
+  background: var(--surface-elevated, #292431);
+  box-shadow: 0 7px 20px rgba(0,0,0,.24);
+  opacity: 0; visibility: hidden;
+  transform: translateY(4px) scale(.98);
+  transform-origin: 50% 100%;
+  transition: opacity 240ms var(--ease-out, cubic-bezier(.22,1,.36,1)),
+    transform 240ms var(--ease-out, cubic-bezier(.22,1,.36,1)),
+    visibility 0ms linear 240ms;
+}
+#pm-hover-tag-root .pm-hover-tag[data-placement="below"] {
+  transform: translateY(-4px) scale(.98); transform-origin: 50% 0%;
+}
+#pm-hover-tag-root .pm-hover-tag[data-open="true"] {
+  opacity: 1; visibility: visible; transform: translateY(0) scale(1);
+  transition-delay: 0ms;
+}
+#pm-hover-tag-root[data-visual-enabled="false"] .pm-hover-tag { display: none; }
+.pm-hover-tag strong {
+  display: block; max-width: 100%; margin: 0; color: inherit;
+  font: 650 12px/1.3 var(--body-font, Inter, system-ui, sans-serif);
+  overflow-wrap: anywhere;
+}
+.pm-hover-tag[data-detail="false"] strong { white-space: normal; }
+.pm-hover-tag p {
+  max-width: 100%; margin: 3px 0 0; color: var(--text-secondary, #c7bfce);
+  font: 500 11px/1.35 var(--body-font, Inter, system-ui, sans-serif);
+  overflow-wrap: anywhere;
+}
+.pm-hover-sr {
+  position: fixed !important; width: 1px !important; height: 1px !important;
+  padding: 0 !important; margin: -1px !important; overflow: hidden !important;
+  clip: rect(0 0 0 0) !important; clip-path: inset(50%) !important;
+  white-space: nowrap !important; border: 0 !important;
+}
+/* Thousands of persistent accessible descriptions must not form one enormous
+   inline formatting row. Keep every role=tooltip node in the accessibility
+   tree while giving the hidden owner a bounded, layout-inert paint footprint. */
+.pm-hover-sr > .pm-hover-description {
+  position: absolute !important; display: block !important;
+  inset: 0 auto auto 0 !important; width: 1px !important; height: 1px !important;
+  overflow: hidden !important;
+}
+[data-pm-hover-was-disabled="true"] {
+  cursor: not-allowed !important; opacity: .56;
+}
+html[data-theme^="basic"] #pm-hover-tag-root .pm-hover-tag {
+  border-radius: 6px; box-shadow: 0 6px 16px rgba(0,0,0,.22);
+}
+html[data-theme^="friendly"] #pm-hover-tag-root .pm-hover-tag {
+  border-radius: 10px; box-shadow: 0 8px 22px rgba(0,0,0,.22);
+}
+html[data-theme^="glass"] #pm-hover-tag-root .pm-hover-tag {
+  border-color: var(--glass-hairline, rgba(255,255,255,.24));
+  background: rgba(var(--glass-tint-rgb, 28,22,38), calc(.72 + var(--glass-alpha, .55) * .22));
+  box-shadow: inset 0 1px 0 var(--glass-edge, rgba(255,255,255,.16)), 0 8px 24px rgba(0,0,0,.28);
+}
+html[data-theme="glass-light"] #pm-hover-tag-root .pm-hover-tag {
+  color: #18131e;
+  background: rgba(var(--glass-tint-rgb, 247,243,250), calc(.78 + var(--glass-alpha, .55) * .18));
+}
+html[data-theme="glass-light"] #pm-hover-tag-root .pm-hover-tag p { color: #493f51; }
+html[data-theme^="retro"] #pm-hover-tag-root .pm-hover-tag {
+  border-radius: 0; box-shadow: 3px 3px 0 var(--border, #111);
+  transform: translateY(3px); transition: opacity 140ms steps(2,end),
+    transform 140ms steps(2,end), visibility 0ms linear 140ms;
+}
+html[data-theme^="retro"] #pm-hover-tag-root .pm-hover-tag[data-placement="below"] { transform: translateY(-3px); }
+html[data-theme^="retro"] #pm-hover-tag-root .pm-hover-tag[data-open="true"] { transform: translateY(0); transition-delay: 0ms; }
+html[data-theme$="-light"]:not([data-theme^="glass"]) #pm-hover-tag-root .pm-hover-tag {
+  color: var(--text-primary, #211b26); background: var(--surface-elevated, #fff);
+}
+@media (prefers-reduced-motion: reduce) {
+  #pm-hover-tag-root .pm-hover-tag,
+  #pm-hover-tag-root .pm-hover-tag[data-placement="below"] {
+    transition: none !important; transform: none !important;
+  }
+}

@@ -1,0 +1,466 @@
+
+/* Glass home tweaks — prior Friendly plan intents, glass tokens, last-wins. */
+
+/* 1–2. Outer fill — architectural glass uses position:fixed + inset.
+   Do NOT set height/margin (overconstrains and shoves UI off-screen).
+   Fill the viewport; status bar is an in-flow floating chrome pill below. */
+html[data-theme^="glass"] {
+  --pm6-glass-inset: 0px;
+  --pm-home-gap: 3px;
+  --pm-home-pad-y: 1.5px;
+  --pm-home-gap-y: 1.5px;
+}
+html[data-theme^="glass"] .app-shell {
+  inset: 0 !important;
+  margin: 0 !important;
+  width: auto !important;
+  height: auto !important;
+  border-radius: 0 !important;
+}
+/* Floating glass status — title-bar chrome recipe, 25px tall, in-flow so
+   .main-area rises. Gap above ≈ home panels; sides match title-bar. */
+html[data-theme^="glass"] #pm7GlobalStatusBar.pm7-statusbar,
+html[data-theme^="glass"] .pm7-statusbar {
+  position: relative !important;
+  left: auto !important;
+  right: auto !important;
+  bottom: auto !important;
+  top: auto !important;
+  width: auto !important;
+  align-self: stretch !important;
+  flex: 0 0 25px !important;
+  height: 25px !important;
+  min-height: 25px !important;
+  z-index: 2;
+  margin: 2.7px 6px 5.4px !important;
+  padding: 0 8px !important;
+  box-sizing: border-box !important;
+  border-radius: 10px !important;
+  border: 1px solid transparent !important;
+  border-top: none !important;
+  background:
+    linear-gradient(var(--rg-chrome), var(--rg-chrome)) padding-box,
+    linear-gradient(145deg, var(--rg-rim-soft), rgba(255,255,255,.04) 52%, var(--rg-rim-low)) border-box !important;
+  backdrop-filter: blur(24px) saturate(145%) !important;
+  -webkit-backdrop-filter: blur(24px) saturate(145%) !important;
+  box-shadow:
+    0 10px 22px var(--rg-shadow-soft),
+    inset 0 1px 0 var(--rg-rim),
+    inset 0 -1px 0 rgba(0,0,0,.10) !important;
+  overflow: hidden;
+}
+html[data-theme^="glass"] .pm7-statusbar-group + .pm7-statusbar-group {
+  border-left-color: var(--glass-hairline, rgba(255, 255, 255, .08)) !important;
+}
+html[data-theme^="glass"] .pm7-statusbar .pm7-statusitem:hover,
+html[data-theme^="glass"] .pm7-statusbar .pm7-statusitem:focus-visible {
+  background: color-mix(in srgb, var(--accent-primary) 12%, transparent) !important;
+}
+html[data-theme^="glass"] #pm-home-workspace {
+  padding-right: 3px !important;
+  box-sizing: border-box;
+}
+html[data-theme^="glass"] .pm-home-host-main,
+html[data-theme^="glass"] .pm-home-host:not(.pm-home-host-empty) {
+  gap: var(--pm-home-gap) !important;
+}
+html[data-theme^="glass"] .pm-home-host-main {
+  padding: 0 !important;
+}
+html[data-theme^="glass"] .pm-home-host[data-pm-home-host="dock_top"]:not(.pm-home-host-empty),
+html[data-theme^="glass"] .pm-home-host[data-pm-home-host="dock_left"]:not(.pm-home-host-empty) {
+  padding: 2px !important;
+}
+
+/* 3. Left activity resizer thinner; home handles slight bump */
+html[data-theme^="glass"] #leftPanelResizer.resizer-col {
+  width: 7px !important;
+  margin: 0 -2px !important;
+  padding: 0 2px !important;
+}
+html[data-theme^="glass"] .pm-home-resize-handle.resizer-col {
+  width: 7px !important;
+  padding: 0 2.5px !important;
+  box-sizing: border-box;
+}
+html[data-theme^="glass"] .pm-home-resize-handle.resizer-row {
+  height: 11px !important;
+  padding: 2.5px 0 !important;
+  box-sizing: border-box;
+}
+
+/* 4. Activity ↔ files gap */
+html[data-theme^="glass"] .left-panel {
+  gap: 8px !important;
+}
+
+/* 5. Right dock tighter — same top pad as home_main (0) so chat top
+   aligns with the file editors */
+html[data-theme^="glass"] .pm-home-host[data-pm-home-host="dock_right"]:not(.pm-home-host-empty) {
+  margin-left: 2px !important;
+  padding: 0 !important;
+}
+
+/* 6. Chat header more opaque */
+html[data-theme^="glass"] .chat-panel-header.pm6-chat-header {
+  background: color-mix(in srgb, var(--surface-elevated) 92%, transparent) !important;
+  -webkit-backdrop-filter: none !important;
+  backdrop-filter: none !important;
+}
+
+/* 7. Search pill — match Basic/Retro density width; pad text clear of pill ends */
+html[data-theme^="glass"] .title-bar .pm6-tb-search-wrap {
+  --tb-search-w: 170px !important;
+}
+html[data-theme^="glass"] .title-bar .pm6-tb-search-wrap .search-bar {
+  width: var(--tb-search-w) !important;
+  max-width: 180px !important;
+  min-width: 0 !important;
+  flex: 0 0 auto !important;
+  padding-inline: 12px !important;
+  box-sizing: border-box;
+}
+
+/* 8. Kill dissolve */
+html[data-theme^="glass"] .pm-home-host,
+html[data-theme^="glass"] .pm-home-host.pm-edge-t,
+html[data-theme^="glass"] .pm-home-host.pm-edge-b,
+html[data-theme^="glass"] .pm-home-host.pm-edge-l,
+html[data-theme^="glass"] .pm-home-host.pm-edge-r {
+  --pm-et-o: 0 !important;
+  --pm-et-s: 0px !important;
+  --pm-eb-o: 0 !important;
+  --pm-eb-s: 0px !important;
+  --pm-el-o: 0 !important;
+  --pm-el-s: 0px !important;
+  --pm-er-o: 0 !important;
+  --pm-er-s: 0px !important;
+  -webkit-mask-image: none !important;
+  mask-image: none !important;
+}
+html[data-theme^="glass"] #pm-home-workspace .pm-edge-band,
+html[data-theme^="glass"] .pm-home-host .pm-edge-band,
+html[data-theme^="glass"] .pm-edge-band {
+  display: none !important;
+  opacity: 0 !important;
+  visibility: hidden !important;
+  pointer-events: none !important;
+}
+
+/* 9–10. Hosts: no shell scroll; round hosts; surfaces top-round / bottom-square for editors */
+html[data-theme^="glass"] .pm-home-host.pm-home-host-main,
+html[data-theme^="glass"] .pm-home-host[data-pm-home-host="home_main"],
+html[data-theme^="glass"] .pm-home-host[data-pm-home-host="dock_bottom"],
+html[data-theme^="glass"] .pm-home-host[data-pm-home-host="dock_bottom"]:not(.pm-home-host-empty) {
+  overflow: hidden !important;
+  overflow-x: hidden !important;
+  overflow-y: hidden !important;
+  padding: 0 !important;
+  /* Match child surface radius (12px) so outer pane corners are not clipped */
+  border-radius: 12px !important;
+}
+html[data-theme^="glass"] .pm-home-host[data-pm-home-host="dock_right"] {
+  border-radius: 12px !important;
+  overflow-x: clip !important;
+  overflow-y: auto !important;
+  padding: 0 !important;
+}
+html[data-theme^="glass"] .pm-home-host[data-pm-home-host="home_main"] > .pm-home-surface,
+html[data-theme^="glass"] .pm-home-host[data-pm-home-host="dock_bottom"] > .pm-home-surface,
+html[data-theme^="glass"] .pm-home-host[data-pm-home-host="dock_right"] > .pm-home-surface {
+  border-radius: 12px !important;
+  min-height: 0 !important;
+  max-height: 100% !important;
+}
+/* Glass legacy `[data-theme^=glass] .editor-pane { margin: 5px }` is for
+   floating detach gaps — in home hosts it drops editors below the
+   dashboard. Zero only when docked so float/move still keeps the gap. */
+html[data-theme^="glass"] .pm-home-host > .editor-pane.pm-home-surface,
+html[data-theme^="glass"] .pm-home-host > .pm-home-editor-shell.pm-home-surface {
+  margin: 0 !important;
+}
+/* Same for assistant chat: legacy glass `.chat-panel { margin: 4px 0 4px 4px }`
+   drops it below the editor tops when docked in home. */
+html[data-theme^="glass"] .pm-home-host > #chatPanel.pm-home-surface,
+html[data-theme^="glass"] .pm-home-host > .chat-panel.pm-home-surface {
+  margin: 0 !important;
+}
+/* Square bottom corners on editors + terminal panes.
+   Tops stay square under the tab strip (no canvas/pane join gap). */
+html[data-theme^="glass"] #editorPane1,
+html[data-theme^="glass"] #editorPane2,
+html[data-theme^="glass"] .pm-home-host[data-pm-home-host="home_main"] > .pm-home-surface.editor-pane,
+html[data-theme^="glass"] .pm-home-host[data-pm-home-host="home_main"] > .dashboard-view.pm-home-surface,
+html[data-theme^="glass"] #dashboardView {
+  border-radius: 0 0 12px 12px !important;
+}
+html[data-theme^="glass"] #bottomPanel .terminal-pane {
+  border-radius: 10px 10px 0 0 !important;
+}
+
+/* 11. Tabs / dashboard — Friendly silhouette; square canvas join under rail */
+html[data-theme^="glass"] :is(.editor-pane, .dashboard-view, .pm-home-editor-shell) {
+  --ed-top-radius: 16px !important;
+  --ed-corner-ry: 0px !important;
+  --ed-canvas-rx-max: 0px !important;
+  --ed-shoulder-rx-max: 16px !important;
+  --ed-flare: 25px !important;
+  --ed-rail-alpha: 88% !important;
+  --ed-tab-inactive-ring: transparent !important;
+  --ed-tab-ring-radius: 0px !important;
+}
+html[data-theme^="glass"] :is(.editor-pane, .dashboard-view):has(.ed-shape-on) {
+  border-top-left-radius: 0 !important;
+  border-top-right-radius: 0 !important;
+}
+html[data-theme^="glass"] :is(.editor-tabs, .dashboard-tabs).ed-shape-on {
+  background: var(--ed-cap-bg) !important;
+  gap: 0 !important;
+}
+html[data-theme^="glass"] :is(.editor-tabs, .dashboard-tabs).ed-shape-on .tab.active {
+  color: var(--text-primary) !important;
+  font-weight: 650 !important;
+  opacity: 1 !important;
+  -webkit-text-fill-color: var(--text-primary) !important;
+}
+html[data-theme="glass-dark"] :is(.editor-tabs, .dashboard-tabs).ed-shape-on .tab:not(.active) {
+  border-radius: var(--ed-top-radius) var(--ed-top-radius) 0 0 !important;
+  background: rgba(255, 255, 255, .07) !important;
+  box-shadow: none !important;
+  color: #F8F4FF !important;
+  -webkit-text-fill-color: #F8F4FF !important;
+  font-weight: 650 !important;
+  font-size: 12px !important;
+  opacity: 1 !important;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, .55) !important;
+}
+html[data-theme="glass-dark"] :is(.editor-tabs, .dashboard-tabs).ed-shape-on .tab:not(.active):hover {
+  background: rgba(255, 255, 255, .12) !important;
+  color: #FFFFFF !important;
+  -webkit-text-fill-color: #FFFFFF !important;
+}
+html[data-theme="glass-dark"] :is(.editor-tabs, .dashboard-tabs).ed-shape-on .tab.active {
+  color: #FFFFFF !important;
+  -webkit-text-fill-color: #FFFFFF !important;
+  font-weight: 700 !important;
+  opacity: 1 !important;
+  text-shadow: 0 1px 12px rgba(106, 75, 229, .50) !important;
+}
+/* Beeper purple selected silhouette (#6A4BE5) — richer selected plate + crown,
+   still the same .ed-tab-shape (not a floating pill). */
+html[data-theme="glass-dark"] :is(.editor-tabs, .dashboard-tabs).ed-shape-on .ed-tab-shape {
+  background:
+    linear-gradient(#B5A4FF, #B5A4FF) 0 0 / 100% 2px no-repeat,
+    linear-gradient(
+      180deg,
+      color-mix(in srgb, #6A4BE5 78%, #3A2470) 0%,
+      color-mix(in srgb, #6A4BE5 58%, #241450) 55%,
+      color-mix(in srgb, #6A4BE5 42%, #1A1035) 100%
+    ),
+    #241450 !important;
+  filter:
+    drop-shadow(0 12px 22px rgba(106, 75, 229, .48))
+    drop-shadow(0 -1px 0 rgba(181, 164, 255, .70)) !important;
+  transition: none !important;
+}
+html[data-theme="glass-light"] :is(.editor-tabs, .dashboard-tabs).ed-shape-on .tab:not(.active) {
+  border-radius: var(--ed-top-radius) var(--ed-top-radius) 0 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  color: #2A3540 !important;
+  font-weight: 600 !important;
+  opacity: 1 !important;
+  text-shadow: none !important;
+  -webkit-text-fill-color: #2A3540 !important;
+}
+html[data-theme^="glass"] .dashboard-header,
+html[data-theme^="glass"] .page-dashboard .dashboard-header,
+html[data-theme^="glass"] #dashboardView .dashboard-header {
+  background: var(--ed-cap-bg) !important;
+  -webkit-backdrop-filter: none !important;
+  backdrop-filter: none !important;
+}
+html[data-theme^="glass"] .page-dashboard .dashboard-tabs.ed-shape-on {
+  background: var(--ed-cap-bg) !important;
+}
+
+/* Home pane edge: quiet hairline frame matching the file editors — keep the
+   glass fill/material; only soften the bright white --rg-rim stroke. */
+html[data-theme^="glass"] .pm-home-host[data-pm-home-host="home_main"] > :is(
+  #dashboardView, #editorPane1, #editorPane2, .dashboard-view, .editor-pane
+) {
+  border: 1px solid var(--glass-hairline, var(--border-light)) !important;
+  box-shadow:
+    0 22px 44px var(--rg-shadow-soft, transparent),
+    inset 0 1px 0 var(--rg-rim-soft, var(--glass-hairline)),
+    inset 1px 0 0 rgba(255,255,255,.06),
+    inset 0 -1px 0 rgba(0,0,0,.20) !important;
+  outline: none !important;
+  outline-offset: 0 !important;
+  /* Keep the dual-layer glass fill from earlier rules; do not flatten to solid. */
+  background-image:
+    linear-gradient(var(--rg-pane-strong), var(--rg-pane-strong)),
+    linear-gradient(145deg, var(--rg-rim-soft), rgba(255,255,255,.025) 66%, var(--rg-rim-low)) !important;
+  background-origin: padding-box, border-box !important;
+  background-clip: padding-box, border-box !important;
+}
+
+/* Notification titles: keep sharp (no soft GPU layer under glass shell) */
+html[data-theme^="glass"] .rs-card .n-title,
+html[data-theme^="glass"] .rs-item .t,
+html[data-theme^="glass"] .rs-badge {
+  font-family: var(--display-font);
+  -webkit-font-smoothing: subpixel-antialiased;
+  text-rendering: geometricPrecision;
+  transform: none !important;
+  filter: none !important;
+}
+html[data-theme^="glass"] .rs-stack,
+html[data-theme^="glass"] .rs-clip,
+html[data-theme^="glass"] .rs-clip .rs-card:first-child {
+  -webkit-mask-image: none !important;
+  mask-image: none !important;
+}
+html[data-theme^="glass"] .rs-clip .rs-card:first-child {
+  transform: none !important;
+}
+
+/* ---------- Activity rail: symbol-centered glass “lens” chips ----------
+   Glow/fill live on .symbol (glyph box), not the oversized .icon hit target.
+   Clears conflicting icon-level fills, left ticks, and early step-3 pills. */
+html[data-theme^="glass"] .activity-bar .icon,
+html[data-theme^="glass"] .activity-bar.collapsed .icon {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 3px !important;
+  width: 100% !important;
+  min-width: 0 !important;
+  height: auto !important;
+  min-height: 0 !important;
+  padding: 4px 0 !important;
+  margin: 0 !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  transform: none !important;
+  color: var(--text-secondary) !important;
+  transition: color var(--motion-fast) var(--ease-out) !important;
+}
+html[data-theme^="glass"] .activity-bar.collapsed .icon {
+  padding: 5px 0 !important;
+}
+html[data-theme^="glass"] .activity-bar .icon:hover {
+  background: transparent !important;
+  box-shadow: none !important;
+  transform: none !important;
+  color: var(--text-primary) !important;
+}
+html[data-theme^="glass"] .activity-bar .icon.active,
+html[data-theme^="glass"] .activity-bar .icon[aria-current="page"] {
+  background: transparent !important;
+  box-shadow: none !important;
+  color: #FFFFFF !important;
+}
+html[data-theme^="glass"] .activity-bar .icon.active::before,
+html[data-theme^="glass"] .activity-bar .icon[aria-current="page"]::before,
+html[data-theme^="glass"] .activity-bar .icon::after {
+  display: none !important;
+  content: none !important;
+}
+html[data-theme^="glass"] .activity-bar .icon .symbol {
+  width: 32px !important;
+  height: 32px !important;
+  min-width: 32px !important;
+  min-height: 32px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  border-radius: 11px !important;
+  box-sizing: border-box !important;
+  /* Glassneomorphism hybrid: frosted plate + soft dual-tone emboss */
+  background:
+    linear-gradient(155deg, rgba(255,255,255,.20), transparent 52%),
+    color-mix(in srgb, var(--rg-card, rgba(40,30,60,.62)) 82%, transparent) !important;
+  border: 1px solid color-mix(in srgb, rgba(255,255,255,.38) 65%, var(--rg-rim, rgba(255,255,255,.2))) !important;
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.38),
+    inset 0 -1px 0 rgba(40, 20, 80, .22),
+    inset 1px 0 0 rgba(255,255,255,.12),
+    0 1px 2px rgba(40, 20, 80, .12),
+    0 6px 14px rgba(60, 35, 120, .22) !important;
+  backdrop-filter: blur(18px) saturate(165%) !important;
+  -webkit-backdrop-filter: blur(18px) saturate(165%) !important;
+  transition:
+    transform var(--motion-fast) var(--ease-out),
+    background var(--motion-fast) var(--ease-out),
+    box-shadow var(--motion-fast) var(--ease-out),
+    border-color var(--motion-fast) var(--ease-out) !important;
+}
+html[data-theme^="glass"] .activity-bar.collapsed .icon .symbol {
+  width: 30px !important;
+  height: 30px !important;
+  min-width: 30px !important;
+  min-height: 30px !important;
+  border-radius: 10px !important;
+}
+html[data-theme^="glass"] .activity-bar .icon:hover .symbol {
+  transform: translateY(-1px) scale(1.04) !important;
+  border-color: color-mix(in srgb, #B5A4FF 48%, transparent) !important;
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.45),
+    inset 0 -1px 0 rgba(40, 20, 80, .18),
+    0 2px 4px rgba(40, 20, 80, .14),
+    0 8px 16px rgba(60, 35, 120, .26),
+    0 0 12px rgba(106, 75, 229, .16) !important;
+}
+/* Active lens — pressed/inset emboss + Beeper fill (no oversized outer glow cloud). */
+html[data-theme^="glass"] .activity-bar .icon.active .symbol,
+html[data-theme^="glass"] .activity-bar .icon[aria-current="page"] .symbol {
+  background:
+    linear-gradient(#B5A4FF, #B5A4FF) 0 0 / 100% 1.5px no-repeat,
+    linear-gradient(
+      165deg,
+      color-mix(in srgb, #6A4BE5 78%, #3A2470) 0%,
+      color-mix(in srgb, #6A4BE5 48%, #1A1035) 100%
+    ) !important;
+  border-color: color-mix(in srgb, #9B86F2 55%, transparent) !important;
+  box-shadow:
+    inset 0 2px 4px rgba(20, 8, 50, .35),
+    inset 0 1px 0 rgba(255,255,255,.28),
+    inset 0 -1px 0 rgba(255,255,255,.08),
+    0 0 0 1px rgba(106, 75, 229, .22),
+    0 4px 12px rgba(40, 20, 80, .28),
+    0 0 14px rgba(106, 75, 229, .28) !important;
+  color: #FFFFFF !important;
+  transform: translateY(0.5px) scale(0.98) !important;
+}
+html[data-theme="glass-light"] .activity-bar .icon.active .symbol,
+html[data-theme="glass-light"] .activity-bar .icon[aria-current="page"] .symbol {
+  background:
+    linear-gradient(#C9BCFF, #C9BCFF) 0 0 / 100% 1.5px no-repeat,
+    linear-gradient(
+      165deg,
+      color-mix(in srgb, #6A4BE5 42%, #F2EEFF) 0%,
+      color-mix(in srgb, #6A4BE5 28%, #E4DCF8) 100%
+    ) !important;
+  border-color: color-mix(in srgb, #6A4BE5 35%, transparent) !important;
+  box-shadow:
+    inset 0 2px 3px rgba(80, 50, 140, .18),
+    inset 0 1px 0 rgba(255,255,255,.55),
+    0 4px 10px rgba(80, 50, 140, .16),
+    0 0 12px rgba(106, 75, 229, .18) !important;
+  color: #2A1848 !important;
+}
+html[data-theme^="glass"] .activity-bar .icon .symbol svg,
+html[data-theme^="glass"] .activity-bar .icon .symbol .pm-ico {
+  width: 16px !important;
+  height: 16px !important;
+  display: block !important;
+}
+html[data-theme^="glass"] .activity-bar .icon-label {
+  margin: 0 !important;
+  line-height: 1.1 !important;
+  text-align: center !important;
+}
