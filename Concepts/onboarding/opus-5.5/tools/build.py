@@ -14,6 +14,7 @@ and tools/base_source.py inserts raw style/script bodies byte for byte. Edit tho
 TestPMConcept.html, shell_motion.py and wizorch_layer.py are history. The split proof lives in base/README.md.
 Unconditional shell edits are already in base/; the fork-owned Doctor edit is in src/settings/managers/55-doctor.js.
 Settings (step 0), Usage (2b), O55 (3), rail (4), glyphs (5), Home/Glass/wallpapers (6) remain authored layers.
+The NieR registry (src/settings/kit.d/nier_registry.py) emits their list contributions after composition.
 Step 7 applies active_descendant_rewrite and css_bucket_split over the finished page; page lint sees the unsplit CSS.
 Concepts/PMConcept7.html is published only from here (2026-09-26 user direction): --publish-pm7 writes the same built
 bytes to both outputs, and --check fails while PMConcept7.html is missing or differs by even one byte.
@@ -40,6 +41,9 @@ CONCEPTS = PKG.parents[1]
 TARGET = CONCEPTS / 'Onboarding concepts' / 'TestOpus5.5PmConcept.html'
 PM7_TARGET = CONCEPTS / 'PMConcept7.html'
 SRC = PKG / 'src'
+
+sys.path.insert(0, str(SRC / 'settings' / 'kit.d'))
+import nier_registry  # noqa: E402  (data and the one emitter, beside 19-nier-parts.js)
 
 sys.path.insert(0, str(CONCEPTS / 'usage-redesign' / 'tools'))
 import usage_layer  # noqa: E402  (the Usage page: Concepts/usage-redesign/tools/usage_layer.py)
@@ -376,6 +380,17 @@ def _layer(folder: str, module: str):
     return importlib.import_module(module)
 
 
+def emit_nier_lists(text: str, need) -> str:
+    """Register only layers actually in this page; also used after rail_layer.apply_review()."""
+    layers = {}
+    for name, marker, module in (('usage', usage_layer.BODY_START, usage_layer),
+                                 ('home', _home().JS_START, _home()),
+                                 ('rail', _rail().REVIEW_JS_START, _rail())):
+        if marker in text:
+            layers[name] = module.NIER_ENTRIES
+    return nier_registry.emit(text, need, layers)
+
+
 def build_text(usage: bool = True, home: bool = True) -> str:
     """The built page. usage=False leaves the base's Prism Usage page in place, and home=False today's Home: private
     reference builds only (build.py --out PATH --no-usage / --no-home; usage_boot.mjs), never published."""
@@ -412,8 +427,8 @@ def build_text(usage: bool = True, home: bool = True) -> str:
     text, SETTINGS_NOTES['glyphs'] = _glyphs().apply_published(text, need)
     # 6. Home: the universal panel system and the terminal tab kind from Concepts/home-redesign (D28: after Usage and the
     #    rail). home_layer.apply() adds the early script and its CSS between HOME:CSS markers before </head>, the panels
-    #    and the terminal between HOME:BODY markers before </body>, three NieR selector hooks and three guarded app JS
-    #    patches; it anchors after the O55 and rail blocks, so it runs after them.
+    #    and the terminal between HOME:BODY markers before </body>, plus guarded app JS patches. Its three NieR lists
+    #    are registry contributions, emitted below; it anchors after the O55 and rail blocks, so it runs after them.
     if home:
         text, SETTINGS_NOTES['home'] = _home().apply(text, need)
     else:
@@ -431,6 +446,7 @@ def build_text(usage: bool = True, home: bool = True) -> str:
         except layer.LayerError as exc:
             raise BuildError(f'{folder} layer: {exc}') from exc
         text = injected[0] if isinstance(injected, tuple) else injected
+    text = emit_nier_lists(text, need)
     # Preserve the historical publication note byte for byte. Live edit locations are documented above.
     note = ('<!-- TestOpus5.5PmConcept (Opus 5.5): TestPMConcept.html with a rebuilt Product Onboarding and Guided Tour. '
             'Built by Concepts/onboarding/opus-5.5/tools/build.py; never hand-edit. -->\n')

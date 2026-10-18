@@ -3,7 +3,7 @@
 
 Two profiles over the same sources (../src), so the D in the review copy is byte for byte the published D:
 
-  text, notes = rail_layer.apply_published(text, need)  # the last step of opus-5.5 build.build_text(): PMConcept7.html
+  text, notes = rail_layer.apply_published(text, need)  # step 4 of opus-5.5 build.build_text(): PMConcept7.html
   text, notes = rail_layer.apply_review(text, need)     # build_rail.py: the review copy, stacked on the published page
   problems = rail_layer.published_problems(built)       # build.py and build.py --check: lint, syntax, markers, absences
   problems = rail_layer.lint('published' | 'review')    # source rules for the files that profile carries
@@ -16,15 +16,16 @@ every DOM change it makes, so PMR.concepts.set('current') puts the shell's own r
      share one scope and publish window.PMR), src/concepts/d/*.js in a wrapper of its own, then PMR.boot().
   3. data-rail-concept="d" data-rail-skin="d" on the <html> tag: D's CSS holds from the first frame, and the boot's
      switch to D writes nothing (setting an attribute on <html> after load restyles the whole document).
-  It patches nothing in the Settings script: D's NieR hooks are kit source (opus-5.5 src/settings/kit.d/19-nier-parts.js:
-  .pmr-cur in the cursor list, .pmr-lock in the brackets' click handler).
+  D's NieR hooks are kit source: .pmr-cur in opus-5.5 src/settings/kit.d/nier_registry.py's cursor defaults,
+  .pmr-lock in 19-nier-parts.js's brackets click handler.
 apply_review (on a page apply_published made; concepts A, B and C and the switcher, review-copy only):
   1. <style id="pm-rail-review-css"> between RAIL-REVIEW:CSS markers, right after RAIL:CSS:END: the src/css files not
      in PUBLISHED_CSS (25-review, 30-kit), then the CSS of A, B and C.
   2. <script id="pm-rail-review-js"> between RAIL-REVIEW:BODY markers, right after RAIL:BODY:END: the src/js files not
      in PUBLISHED_JS (the fixture, 08-data, 10-glyphs, 12-rules, 40-switcher) in one wrapper over window.PMR, then A, B
      and C in a wrapper each. PMR.boot() (end of the published script) waits for load, so it finds them and the switcher.
-  3. The view concepts' NieR hooks .pmr-chosen and .pmr-strip in the Settings script's NieR selector lists.
+  3. NIER_ENTRIES contributes .pmr-chosen and .pmr-strip to named lists; the shared registry emits all lists again
+     for this profile. No retained NieR source-text patches remain. Edit the entries, not source anchors.
 Every step is guarded: each anchor must be found exactly once, the band and the nine panels must be where they were,
 and the layer markers must not be in the input already.
 """
@@ -75,22 +76,14 @@ REVIEW_CONCEPTS = ('a', 'b', 'c')
 PUBLISHED_ABSENT = ('pmr-switch', 'FILES_DATA', ".get('rail')", 'pmr.concept.v2', 'pm-rail-review', 'RAIL-REVIEW:')
 PUBLISHED_ABSENT_SETTINGS = ('.pmr-chosen', '.pmr-strip')
 
-# NieR Mode selector lists in the Settings script (opus-5.5 src/settings/kit.d/19-nier-parts.js). Each patch inserts the
-# rail's generic hook classes; concepts tag their elements with these classes instead of growing the lists.
+# NieR registry contributions: concepts tag their elements with these generic classes instead of growing the lists.
 # Review copy only (apply_review): .pmr-chosen and .pmr-strip serve concepts A, B and C. Concept D's two hooks, .pmr-cur
-# in the cursor list and the brackets locking after the click on .pmr-lock, are kit source since 2026-10-09 (published).
-# Entries are anchored on the current kit; append new ones, never reorder. The kit's cursor list also brings the Settings
-# script's o55np-cur-over class (put on the hovered cursor-list item, and once from :hover when the Menu cursor part turns
+# in the cursor list and the brackets locking after the click on .pmr-lock, are published defaults in the shared
+# kit.d/nier_registry.py and kit.d/19-nier-parts.js. Edit NIER_ENTRIES below, not source anchors. The cursor list brings
+# the Settings script's o55np-cur-over class (put on the hovered cursor-list item, and once from :hover when the Menu cursor part turns
 # on) to .pmr-cur rows: src/css/40-nier.css and concept D's 90-themes key the bar's paper text on that class, as the app
 # does (opus-5.5 kit.d/19-nier-parts.js, 2026-10-08).
-NIER_SELECTOR_PATCHES = [
-    ('.page-index-title, .pm-segtab-item, .activity-bar .icon,',
-     '.page-index-title, .pm-segtab-item, .pmr-chosen, .activity-bar .icon,',
-     'nier chosen list (rail)'),
-    ("const STRIP_SEL = '.page-tab, ",
-     "const STRIP_SEL = '.page-tab, .pmr-strip, ",
-     'nier strip list (rail)'),
-]
+NIER_ENTRIES = {'chosen': ['.pmr-chosen'], 'strip': ['.pmr-strip']}
 
 CONCEPT_IDS = REVIEW_CONCEPTS + PUBLISHED_CONCEPTS
 # Shell classes whose names contain "pill" and that a skin concept (D) must select to take the capsule away. The pill
@@ -195,7 +188,7 @@ def _build_d_css():
 
 
 def apply_published(text: str, need) -> tuple[str, dict]:
-    """Concept D, Polish, as the page's left rail (the last step of opus-5.5 build.build_text())."""
+    """Concept D, Polish, as the page's left rail (step 4 of opus-5.5 build.build_text())."""
     notes: dict = {'bytes_in': len(text.encode('utf-8'))}
     for marker in PUBLISHED_MARKERS + REVIEW_MARKERS:
         need(marker not in text, f'rail layer: {marker} already in the input (layer applied twice?)')
@@ -254,10 +247,14 @@ def apply_review(text: str, need) -> tuple[str, dict]:
     text = replace_once(need, text, JS_END + '\n',
                         JS_END + '\n' + REVIEW_JS_START + f'\n<script id="pm-rail-review-js">\n{script}</script>\n'
                         + REVIEW_JS_END + '\n', 'review js (after the published rail js)')
-    for old, new, label in NIER_SELECTOR_PATCHES:
-        text = replace_once(need, text, old, new, label)
+    # The review page changes the active contributions; use the same emitter as the published build.
+    if str(OPUS_TOOLS) not in sys.path:
+        sys.path.insert(0, str(OPUS_TOOLS))
+    import build
+    text = build.emit_nier_lists(text, need)
     notes['profile'] = 'review'
-    notes['nier selector patches'] = [label for _, _, label in NIER_SELECTOR_PATCHES]
+    notes['nier selector patches'] = []
+    notes['nier registry lists'] = list(NIER_ENTRIES)
     notes['concepts'] = [d.name for d in concept_dirs(REVIEW_CONCEPTS)]
     notes['review_css_bytes'] = len(css.encode('utf-8'))
     notes['review_js_bytes'] = len(script.encode('utf-8'))

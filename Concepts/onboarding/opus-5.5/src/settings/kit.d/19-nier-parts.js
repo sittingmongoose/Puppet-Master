@@ -192,18 +192,11 @@
 
   /* ---------- menu cursor ------------------------------------------------------------------------------------------ */
   /* the items that become an ink bar (the same list as the CSS in styles.d/14-nier-parts.css) */
-  const CURSOR_SEL = ['.page-tab:not(.active)', '.pm6-tb-menu-item', '.pm6-tt-mode', '.pm6-tb-pages-more-item', '.activity-bar .icon', '.domain-link',
-    '.side-link', '.index-link', '.page-index-title', '.workspace-tab', '.manager-tab', '.resource-row', '.pm51-popout-item:not([aria-disabled="true"])',
-    '.pm51-menu-item', '.orch-tab', '.pm-segtab-item:not(.active)', '.fm-row', '.fm-ctx-item', '.ctx-item', '.menu-item',
-    '.chat-dropdown-item', '.pm6-chat-more-item', '.cl-mode-item', '.pm-home-menu-row', '.palette-item', '.search-result-item', '.slash-cmd-item',
-    '.pm6-chat-slash-item', '.pm6-fab-item', '.chat-thread-item', '.pm6-dash-catalog-item', '[role="menuitem"]', '[role="option"]:not([aria-disabled="true"])',
-    /* the left rail (concept D, Polish, Concepts/leftrail-redesign): its rows and every PMR.menu item carry .pmr-cur;
-       their ink bar is the rail package's CSS (src/css/40-nier.css), the square cursor and its tick come from here */
-    '.pmr-cur:not(.active):not([aria-disabled="true"])'].join(',');
+  const CURSOR_SEL = __NIER_CURSOR__;
   /* tabs and places a click chooses, where the brackets lock on (menu items close with their menu) */
-  const CHOSEN_SEL = '.page-tab, .workspace-tab, .manager-tab, .orch-tab, .domain-link, .side-link, .index-link, .page-index-title, .pm-segtab-item, .activity-bar .icon, .resource-row';
+  const CHOSEN_SEL = __NIER_CHOSEN__;
   /* items in a horizontal strip: the cursor sits under them (a neighbour sits where the left side would be) */
-  const STRIP_SEL = '.page-tab, .workspace-tab, .manager-tab, .orch-tab, .pm-segtab-item, .pm6-tt-mode';
+  const STRIP_SEL = __NIER_STRIP__;
   /* the onboarding window and the tour draw their own cursor (O55.nierFx and their skins): the page's stays out of them,
      or one row of a look menu got a second square (it matched role=menuitem, its neighbours did not).
      The ink on the words is separate from that square. CSS :hover still paints those rows, so the class follows the
@@ -440,14 +433,7 @@
     timer = later(tick, dt);
     return true;
   }
-  const PAGE_TITLES = {
-    dashboard: '.page-dashboard .pm6-dash-card-title',
-    projects: '.page-projects .projects-title',
-    wizard: '.page-wizard .pm6-wiz-hero-title',
-    orchestrator: '.page-orchestrator .orch-title',
-    usage: '#pm7uRoomTitle, .pm7u-brand h1',
-    settings: '#panel-settings .rail-title, #panel-settings .workspace-separator h2'
-  };
+  const PAGE_TITLES = __NIER_TITLES__;
   function decodePage(page) {
     const sel = PAGE_TITLES[page]; if (!sel) return;
     later(() => {
@@ -601,8 +587,8 @@
   PARTS.voice = { on() {}, off() {} };
 
   /* ---------- menu sounds: select, confirm and cancel by delegation (ticks come with the cursor) -------------------- */
-  const CONFIRM_SEL = '.btn.primary, button[type="submit"], .n-btn.primary, .pm6-dash-btn:not(.pm6-dash-btn--ghost), .primary-button, .o55-btn-primary, [data-o55-preview="keep"]';
-  const CANCEL_SEL = '[data-action="close-overlay"], .n-x, [aria-label="Close"], [aria-label="Dismiss"], .n-btn.danger, [data-o55-preview="back"], [data-o55-nier-note="close"]';
+  const CONFIRM_SEL = __NIER_CONFIRM__;
+  const CANCEL_SEL = __NIER_CANCEL__;
   const TOGGLE_SEL = '[role="switch"], [role="checkbox"], input[type="checkbox"], input[type="radio"], .toggle, .switch';
   /* a click the person made, outside O55's own surfaces, while nothing holds the menu sounds */
   const menuSoundFor = e => {

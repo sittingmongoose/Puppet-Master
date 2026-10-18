@@ -141,9 +141,11 @@ keep its exact rule count, or the build stops.
    the same roster as the Accounts room, also in a browser with saved Settings. Every account's Settings usage windows (pct
    and reset words) are written from the roster facts (`align_usage`) and the seed re-aligns saved states, so Settings and
    Usage read the same resets.
-6. It adds the new page's class names to the NieR Mode selector lists in the Settings script: the menu cursor
-   (`.pmu-navbtn`, `.pmu-poprow`), the chosen brackets (`.pmu-navbtn`), the strip cursor (`.pmu-range button`,
-   `.pmu-seg button`) and the page-title decode (`#pmuRoomTitle`, `.pmu-brand h1`) (`NIER_NAMES`).
+6. Its `NIER_ENTRIES` dictionary contributes named lists to opus-5.5's `src/settings/kit.d/nier_registry.py`:
+   the menu cursor (`.pmu-navbtn`, `.pmu-poprow`, `.pmu-range button`), chosen brackets (`.pmu-navbtn`,
+   `.pmu-range button`), strip cursor (`.pmu-range button`, `.pmu-seg button`), page-title decode
+   (`#pmuRoomTitle`, `.pmu-brand h1`), and confirm/cancel sounds. `build.py` emits them after all layers;
+   edit the dictionary, never anchors in the Settings source. A private build without Usage contributes none.
 7. It writes `window.PM_USAGE_COPY` (copy.json + copy.d) and `window.PM_USAGE_ROSTER` (the roster facts) before the page script.
 
 `lint()` runs on every build. It refuses emoji glyphs, any `:has(` in Usage CSS, `border-left` or
@@ -196,6 +198,5 @@ The detail is in `understand/cur-xref.md` section 10 and `DESIGN-INPUTS.md` sect
   Home, Glass and wallpapers, then active-descendant and CSS-bucket rewrites.
 - `build_text(usage=False)` (`build.py --out <path> --no-usage`) leaves the old page in place. It is a private reference
   build for the boot check only, never published.
-- Possible later clean-ups: the NieR selector patches (`NIER_NAMES`) can become plain edits of opus-5.5
-  `src/settings/kit.d/19-nier-parts.js`, the page's NieR CSS can move to a `src/settings/styles.d/` file, and the old
-  `pm7u` NieR rules can then be pruned.
+- The NieR list registry replaces all six selector patches. The page's NieR CSS remains here; the old `pm7u`
+  names remain for the private reference build and can be pruned only when that build is retired.
