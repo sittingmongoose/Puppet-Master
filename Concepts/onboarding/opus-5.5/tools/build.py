@@ -480,7 +480,10 @@ def _layer(folder: str, module: str):
 def build_text(usage: bool = True, home: bool = True) -> str:
     """The built page. usage=False leaves the base's Prism Usage page in place, and home=False today's Home: private
     reference builds only (build.py --out PATH --no-usage / --no-home; usage_boot.mjs), never published."""
-    original = base_source.assemble()
+    try:
+        original = base_source.assemble()
+    except ValueError as exc:
+        raise BuildError(str(exc)) from exc
     text = original.decode('utf-8')
 
     # 0. Settings: swap the base's T50 managers layer for the Opus 5.5 fork in src/settings. The proposed Editor look

@@ -7,11 +7,25 @@ from pathlib import Path
 BASE = Path(__file__).resolve().parent.parent / 'base'
 
 
+def read_source(path: Path) -> bytes:
+    """Refuse checkout/editor corruption; never normalize bytes or EOF whitespace."""
+    data = path.read_bytes()
+    if b'\r' in data:
+        raise ValueError(f'{path}: literal CR; restore LF (core.autocrlf=input or false, then LF rematerialization)')
+    if data.startswith(b'\xef\xbb\xbf'):
+        raise ValueError(f'{path}: UTF-8 BOM; save as UTF-8 without a BOM and preserve LF/EOF whitespace')
+    try:
+        data.decode('utf-8')
+    except UnicodeDecodeError as exc:
+        raise ValueError(f'{path}: invalid UTF-8; restore UTF-8 without a BOM and preserve LF/EOF whitespace') from exc
+    return data
+
+
 def assemble(folder: Path = BASE) -> bytes:
-    manifest = json.loads((folder / 'manifest.json').read_bytes())
+    manifest = json.loads(read_source(folder / 'manifest.json'))
     if manifest['version'] != 1:
         raise ValueError('unsupported PM7 base manifest version')
-    text = (folder / manifest['skeleton']).read_bytes()
+    text = read_source(folder / manifest['skeleton'])
     slots = set()
     for block in manifest['blocks']:
         slot = block['slot'].encode('ascii')
@@ -21,7 +35,7 @@ def assemble(folder: Path = BASE) -> bytes:
         path = (folder / block['file']).resolve()
         if not path.is_relative_to(folder.parent.resolve()):
             raise ValueError(f'PM7 base source outside package: {path}')
-        body = path.read_bytes()
+        body = read_source(path)
         if b'@@PM7_BASE_' in body:
             raise ValueError(f'PM7 base slot token inside source: {path}')
         text = text.replace(slot, body, 1)

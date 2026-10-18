@@ -16,3 +16,14 @@ are not assembled. The four generator checks below are the ongoing publication g
 
 Verify edits with `build_d_css.py --check`, `build.py --check`, `build_home.py --check`,
 and `build_rail.py --check` in their respective tools folders. Never hand-edit generated pages.
+
+## Windows source bytes
+
+Use `git config --worktree core.autocrlf input` (or `false`; enable
+`extensions.worktreeConfig` first). Existing CRLF files must be rematerialized as LF;
+the approved helper is `python //TRUENAS/Cursor/share/puppet-master/2026-10-17-nas1-evacuation/lf-rematerialize.py`
+on a clean checkout. The assembler refuses a literal CR, invalid UTF-8, or a UTF-8 BOM,
+names the affected path, and never normalizes the input.
+
+Eight bodies deliberately have no final LF. Preserve their EOF exactly; disable editor
+"insert final newline" for those files. Neither the assembler nor the splitter adds one.
