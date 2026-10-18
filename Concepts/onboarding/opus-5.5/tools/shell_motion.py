@@ -1,3 +1,5 @@
+# History (Q18, 2026-10-18): these patches are folded into ../base/.
+# The live build no longer imports this module. Edit the base sources, not these lists.
 """Shell motion fixes (pm7-motion-shell, 2026-10-16): guarded, exactly-once patches on the pinned base page.
 
 They answer the final motion QA (share/puppet-master/2026-10-16-motion-pass/JUDGEMENT.md) for the shell's own code:

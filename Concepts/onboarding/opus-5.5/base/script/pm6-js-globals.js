@@ -744,6 +744,19 @@
       var strip = opts.strip, ink = opts.ink, getActive = opts.getActive;
       var axis = opts.axis === 'v' ? 'v' : 'h';
       if (!strip || !ink || typeof getActive !== 'function') return null;
+      var inkShown = true;   /* O55 (B1): drawn? read after layout, at load and on each look change; hidden, it snaps */
+      var readShown = function () { var was = inkShown; try { inkShown = getComputedStyle(ink).opacity !== '0'; } catch (eI) { inkShown = true; }
+        if (inkShown && !was) { var at = getActive(); if (at) snap(at); } };   /* shown again: on the active item exactly */
+      var shownSoon = function () { if (!ink.isConnected) return; if (typeof window.PM_AFTER_LAYOUT === 'function') window.PM_AFTER_LAYOUT(readShown); else requestAnimationFrame(readShown); };
+      shownSoon();
+      /* one observer for every attached ink (a segment strip made again attaches again): an ink no longer in the page
+         is dropped from it at the next look change, so nothing keeps its closure alive (landing review SH8-1) */
+      var shownReg = attach._o55Shown || (attach._o55Shown = { list: [], mo: null });
+      shownReg.list.push({ ink: ink, soon: shownSoon });
+      if (!shownReg.mo) try {
+        shownReg.mo = new MutationObserver(function () { shownReg.list = shownReg.list.filter(function (r) { return r.ink.isConnected; }); for (var si = 0; si < shownReg.list.length; si++) shownReg.list[si].soon(); });
+        shownReg.mo.observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme', 'data-lg', 'data-o55-nier'] });
+      } catch (eM) {}
       var pos = {
         a: null, s: null, va: 0, vs: 0, raf: 0,
         jiggleT: 0, blendT: 0, lastStretch: 0,
@@ -840,7 +853,7 @@
       }
       function springTo(el) {
         if (!el) return;
-        if (pos.a === null || reduced()) { snap(el); return; }
+        if (pos.a === null || reduced() || !inkShown) { snap(el); return; }   /* O55 (B1): a hidden ink is placed at once */
         cancelAnimationFrame(pos.raf);
         var m0 = metrics(el);
         var ta = m0.a, ts = m0.s;
@@ -932,6 +945,11 @@
   (function () {
     var strip = document.querySelector('.title-bar .page-tabs');
     var ink = strip && strip.querySelector('.page-tab-ink');
+    var inkShown = true;   /* O55 (B1): drawn? read after layout, at load and on each look change */
+    function readInkShown() { var was = inkShown; try { inkShown = !!ink && getComputedStyle(ink).opacity !== '0'; } catch (eI) { inkShown = true; }
+      if (inkShown && !was) { var at = strip.querySelector('.page-tab.active'); if (at) snap(at); } }   /* shown again: on the tab exactly */
+    function inkSoon() { if (typeof window.PM_AFTER_LAYOUT === 'function') window.PM_AFTER_LAYOUT(readInkShown); else requestAnimationFrame(readInkShown); }
+    if (ink) { inkSoon(); try { new MutationObserver(inkSoon).observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme', 'data-lg', 'data-o55-nier'] }); } catch (eM) {} }
     if (!strip || !ink || !window.PM_PAGES || !window.PM_PAGES.go) return;
 
     var SPRING = { stiffness: 500, damping: 35 };
@@ -1057,7 +1075,7 @@
     function springTo(tab, metrics) {
       var geometry = metrics || measureTab(tab), tx = geometry.x, tw = geometry.w;
       ink.style.height = geometry.h + 'px';
-      if (pos.x === null || reduced()) { snap(tab, geometry); return; }
+      if (pos.x === null || reduced() || !inkShown) { snap(tab, geometry); return; }   /* O55 (B1): a hidden ink is placed at once */
       cancelAnimationFrame(pos.raf);
       pos._tx = tx; pos._tw = tw;
       pos.travelOriginX = pos.x;
@@ -1160,9 +1178,36 @@
       newP.style.setProperty('--pm-dir', String(dir));
       oldP.classList.add('pm8-page-out');
       newP.classList.add('pm8-page-in');
+      var pageMoves = function () {   /* O55: the moves play on frames that are shown (src/js/11-motion-start.js) */
+        var out = [];
+        [oldP, newP].forEach(function (p) { p.getAnimations().forEach(function (a) { if (a.animationName === 'pm8-page-in' || a.animationName === 'pm8-page-out') out.push(a); }); });
+        return out;
+      };
+      /* O55: the click's fade (goSoon) keeps running, on the compositor, through this change's long frame; the
+         exit takes over from the opacity it has reached in the frame the moves start */
+      var lift = window.PM_PAGES.__lift; window.PM_PAGES.__lift = null;
+      var handoff = function () {
+        if (!lift || lift.el !== oldP || !oldP.classList.contains('pm8-page-out')) { if (lift) try { lift.anim.cancel(); } catch (e) {} return; }   /* a change made over it has cleaned up */
+        try {
+          /* still pending here, it reads as its start while the compositor has been running it since its first frame */
+          var a = lift.anim, ran = document.timeline.currentTime - lift.at;
+          if ((a.pending || !(a.currentTime > 0)) && ran > 0) a.currentTime = Math.min(ran, a.__pmLiftMs || 140);
+          oldP.style.setProperty('--pm8-out-from', getComputedStyle(oldP).opacity); a.cancel();
+        } catch (e) {}
+      };
+      /* O55: an arriving page still drawing its content in slices says so (data-pm-entrance-wait): the moves stay held
+         until it is drawn (1.5 s from the click at most), the click's fade still going meanwhile (F6 Usage entry freeze) */
+      var stillDrawing = function () { return newP.hasAttribute('data-pm-entrance-wait'); };
+      /* 1.5 s from the click's frame (goSoon's, every look: NieR and Reduce Animations make no fade), inside its fade */
+      var waitFrom = window.PM_PAGES.__clickAt; window.PM_PAGES.__clickAt = null;
+      /* the hold, for the other moves of this change that should start with the page's (NieR's page wipe) */
+      window.PM_PAGES.__entrance = { el: newP, wait: stillDrawing, waitCap: 1500, waitFrom: waitFrom };
+      if (window.PM_START_ON_SHOWN) window.PM_START_ON_SHOWN(pageMoves, { release: handoff, wait: stillDrawing, waitCap: 1500, waitFrom: waitFrom }); else handoff();
       var stopEntrance = null, finished = false;
       function cleanupOut() {
         oldP.classList.remove('pm8-page-out');
+        oldP.style.removeProperty('--pm8-out-from');   /* O55: the answered fade's start is this exit's only */
+        oldP.classList.remove('pm-page-layer');   /* O55: its layer for the answer (src/js/13-page-layer.js) */
         oldP.style.top = oldP.style.left = oldP.style.width = oldP.style.height = '';
         if (oldP.__pm8PageCleanup === cleanupOut) oldP.__pm8PageCleanup = null;
       }
@@ -1181,6 +1226,13 @@
          340 ms while the faded outgoing subtree stays inert. */
       stopEntrance = window.PM7_MOTION_FINISH(newP, 'animation', 'pm8-page-in', cleanupIn, 80);
     }
+    /* O55 (motion QA A1, A2): a page that arrives at once shows its end state on its first frame */
+    function finishEntrances(panel) {
+      if (!panel || !panel.classList.contains('active') || !panel.getAnimations) return;
+      panel.getAnimations({ subtree: true }).forEach(function (a) {
+        try { var t = a.effect && a.effect.getComputedTiming(); if (t && isFinite(t.endTime) && a.playState !== 'finished') a.finish(); } catch (e) {}
+      });
+    }
     var origGo = window.PM_PAGES.go;
     window.PM_PAGES.go = function (pageId, subTab) {
       var prev = window.PM_PAGES.current;
@@ -1188,17 +1240,56 @@
       var oldP = changed ? panelFor(prev) : null;
       var newP = changed ? panelFor(pageId) : null;
       var rect = null;
-      if (changed && bootPaintDone && !reduced() && oldP && newP && oldP !== newP) {
+      if (changed && bootPaintDone && !reduced() && !window.PM_PAGES.instant && oldP && newP && oldP !== newP) {   /* O55: instant under a cover */
         rect = measureActive(oldP);
       }
       var tab = tabFor(pageId);
       var tabMetrics = tab ? measureTab(tab) : null;
+      var whole = changed && newP && oldP !== newP && (reduced() || window.PM_PAGES.instant) && /^(wizard|orchestrator)$/.test(pageId);   /* O55 */
       origGo.call(window.PM_PAGES, pageId, subTab);
-      if (tab) (changed ? springTo : snap)(tab, tabMetrics);
+      if (whole) requestAnimationFrame(function () { finishEntrances(newP); });
+      if (tab && window.PM_PAGES.__answered !== pageId) (changed ? springTo : snap)(tab, tabMetrics);   /* O55: the answer already started it */
+      window.PM_PAGES.__answered = null;
       if (!rect) { requestAnimationFrame(cacheActiveRect); return; }
       animatePages(oldP, newP, tabIndex(pageId) >= tabIndex(prev) ? 1 : -1, rect);
     };
 
+    /* O55: the answer on the click's own frame (see ANSWER_FIRST in tools/shell_motion.py) */
+    var soon = null;
+    window.PM_PAGES.goSoon = function (pageId) {
+      var P = window.PM_PAGES, prev = P.current;
+      if (soon) { soon.page = pageId; }
+      else if (!pageId || pageId === prev || !bootPaintDone || document.hidden || !panelFor(pageId)) { P.go(pageId); return; }
+      var tab = tabFor(pageId), oldP = prev ? panelFor(prev) : null;
+      document.querySelectorAll('.page-tab').forEach(function (t) { var on = t.getAttribute('data-page') === pageId; t.classList.toggle('active', on); t.setAttribute('aria-selected', on ? 'true' : 'false'); });
+      if (tab) { springTo(tab, measureTab(tab)); P.__answered = pageId; }
+      if (soon) return;
+      var html = document.documentElement, nier = html.getAttribute('data-o55-nier') === 'on', retro = /^retro/.test(html.getAttribute('data-theme') || '');
+      /* NieR answers with its wipe and the ink; the other looks start the leaving page's fade (Retro in 70 ms steps,
+         two to 0.86). The fade keeps going while the change's long frames run (0.86 at 140 ms, then on to
+         0.72 by 740 ms, on the compositor), so a wait for the arriving page (the P1000's Settings entry: Home sat at
+         0.86 to ~583 ms) reads as the page leaving; the exit takes over from wherever it has reached. It goes on, slower,
+         to 0.6 by 1.6 s, past the longest an arriving page may hold its entrance while it draws (data-pm-entrance-wait:
+         1.5 s from this frame), so a long hold never stands on a still frame; it passes 0.72 at about the speed it goes on
+         at (0.15 a second), with no stop there. Retro keeps its 70 ms step through the same segments */
+      var LIFT_MS = 1600;
+      var lift = !nier && !reduced() && oldP && oldP.animate && !oldP.classList.contains('pm8-page-out') ? oldP.animate(retro
+        ? [{ opacity: 1, easing: 'steps(2, end)' }, { opacity: 0.86, offset: 140 / 1600, easing: 'steps(8, end)' }, { opacity: 0.72, offset: 740 / 1600, easing: 'steps(12, end)' }, { opacity: 0.6 }]
+        : [{ opacity: 1, easing: 'cubic-bezier(.2, 0, 0, 1)' }, { opacity: 0.86, offset: 140 / 1600, easing: 'cubic-bezier(.3, 0, .45, .65)' }, { opacity: 0.72, offset: 740 / 1600, easing: 'cubic-bezier(.3, .32, .5, 1)' }, { opacity: 0.6 }],
+        { duration: LIFT_MS, easing: 'linear', fill: 'forwards' }) : null;
+      if (lift) lift.__pmLiftMs = LIFT_MS;
+      soon = { page: pageId };
+      requestAnimationFrame(function (shown) { setTimeout(function () {
+        var to = soon.page; soon = null;
+        /* the fade is not read here: a move begun a frame ago still reads as its start on this thread */
+        P.__lift = lift ? { el: oldP, anim: lift, at: shown } : null;
+        P.__clickAt = shown;   /* the entrance wait's cap counts from here (PAGES) */
+        if (P.__answered !== to) P.__answered = null;
+        P.go(to);
+        if (P.__lift) { try { P.__lift.anim.cancel(); } catch (e) {} P.__lift = null; }   /* no exit took it over */
+        P.__clickAt = null; P.__entrance = null;
+      }, 0); });
+    };
     function resync() {
       cacheTabMetrics();
       cacheActiveRect();
@@ -1212,6 +1303,7 @@
     var resyncFrame = 0;
     function resyncNextFrame() {
       if (resyncFrame) return;
+      if (typeof window.PM_AFTER_LAYOUT === 'function') { resyncFrame = 1; window.PM_AFTER_LAYOUT(function () { resyncFrame = 0; resync(); }); return; }   /* O55: after layout (B5) */
       resyncFrame = requestAnimationFrame(function () { resyncFrame = 0; resync(); });
     }
     try {
@@ -1496,6 +1588,8 @@
         requestAnimationFrame(tick);
         return;
       }
+      /* O55: held under a look's cover (B5) */
+      if (typeof window.PM_LOOK_COVERED === 'function' && window.PM_LOOK_COVERED()) { baseDirty = true; requestAnimationFrame(tick); return; }
 
       if (reduced()) { killAll(); running = false; return; }
       if (elsDirty) {
@@ -1861,7 +1955,11 @@
       }).observe(document.body, { childList: true, subtree: true });
       var themeFrame = 0;
       new MutationObserver(function () {
-        if (!themeFrame) themeFrame = requestAnimationFrame(function () { themeFrame = 0; readTheme(); });
+        if (!themeFrame) themeFrame = requestAnimationFrame(function themeSoon() {   /* O55: after layout, once the cover has gone (B5) */
+          if (typeof window.PM_LOOK_COVERED === 'function' && window.PM_LOOK_COVERED()) { themeFrame = requestAnimationFrame(themeSoon); return; }
+          var go = function () { themeFrame = 0; readTheme(); };
+          if (typeof window.PM_AFTER_LAYOUT === 'function') window.PM_AFTER_LAYOUT(go); else go();
+        });
         bloomHost = null;   /* radius may change with the theme */
         if (reduced()) { killAll(); return; }
         if (havePointer) start();
@@ -2034,13 +2132,16 @@
       return null;
     }
 
-    function layoutBands(el, st) {
+    /* O55: a band's scroller geometry, read apart from its writes (B5) */
+    function bandGeom(el) {
+      var cs = window.getComputedStyle(el);
+      return { x: el.offsetLeft + (parseFloat(cs.borderLeftWidth) || 0), y: el.offsetTop + (parseFloat(cs.borderTopWidth) || 0), w: el.clientWidth, h: el.clientHeight };
+    }
+    function layoutBands(el, st, g) {
       if (!st.bands) return;
       try {
-        var cs = window.getComputedStyle(el);
-        var x = el.offsetLeft + (parseFloat(cs.borderLeftWidth) || 0);
-        var y = el.offsetTop + (parseFloat(cs.borderTopWidth) || 0);
-        var w = el.clientWidth, h = el.clientHeight, s;
+        if (!g) g = bandGeom(el);
+        var x = g.x, y = g.y, w = g.w, h = g.h, s;
         /* zero-extent scrollports (an EMPTY workspace dock is an 8px-or-less
            box on a 0px grid track) must not park 30px bands past their
            parent's edge -- those bands were 22px of phantom horizontal
@@ -2120,9 +2221,20 @@
       } catch (e) {}
     }
 
+    /* O55: the flush runs after the frame's layout; under a look's or the boot's cover it waits, a frame at a time,
+       with the dirty scrollers kept (B5) */
+    function edgesHeld() {
+      var f = window.PM_BUSY, why = '';
+      try { why = typeof f === 'function' ? f() : ''; } catch (e) { why = ''; }
+      return why === 'reboot' || why === 'calm' || why === 'theme' || why === 'boot' || why === 'nier';
+    }
+    function flushAfterLayout() {
+      if (!document.hidden && edgesHeld()) { rafId = window.requestAnimationFrame(flushAfterLayout); return; }
+      if (typeof window.PM_AFTER_LAYOUT === 'function') window.PM_AFTER_LAYOUT(flush); else flush();
+    }
     function schedule() {
       if (!rafId) {
-        try { rafId = window.requestAnimationFrame(flush); }
+        try { rafId = window.requestAnimationFrame(flushAfterLayout); }
         catch (e) { rafId = 0; flush(); }
       }
     }
@@ -2165,13 +2277,18 @@
       if (s.r !== st.r) { cls.toggle('pm-edge-r', s.r); st.r = s.r; if (st.bands && st.bands.right) st.bands.right.classList.toggle('pm-edge-band-on', s.r); }
     }
 
-    function relayoutVisible() {
-      var scope = geometryScope || pageScope();
+    /* O55: every visible band's geometry read first, then every band placed (B5) */
+    function readVisibleGeometry() {
+      var scope = geometryScope || pageScope(), out = [];
       enrolled.forEach(function (el) {
         var st = el.__pmEdge, page = el.closest && el.closest('.primary-content > .page');
         if (page && scope && !scope.contains(el)) return;
-        if (st && st.bands && isVisible(el)) layoutBands(el, st);
+        if (st && st.bands && isVisible(el)) { try { out.push({ el: el, st: st, g: bandGeom(el) }); } catch (e) {} }
       });
+      return out;
+    }
+    function relayoutVisible(geom) {
+      (geom || readVisibleGeometry()).forEach(function (o) { layoutBands(o.el, o.st, o.g); });
     }
 
     function flush() {
@@ -2186,9 +2303,13 @@
             ops.push({ el: el, st: st, s: readState(el, st) });
           } catch (e) {}
         });
+        /* O55: the bands' geometry is read with the scroll metrics, before any class is written (B5) */
+        var geom = null;
+        if (geomDirty && !document.body.classList.contains('pm-resizing')) { geomDirty = false; geom = readVisibleGeometry(); }
         for (var i = 0; i < ops.length; i++) {
           try { writeState(ops[i].el, ops[i].st, ops[i].s); } catch (e) {}
         }
+        if (geom) relayoutVisible(geom);
         /* Band geometry only. relayoutAll walks every enrolled scroller
            (~60), not just the dirty ones, with a getComputedStyle and four
            layout reads each — far too much for a drag frame. The edge
@@ -2482,6 +2603,7 @@
         if (entry.stack || entry.gap) {
           for (var s = head.previousElementSibling; s; s = s.previousElementSibling) ro.observe(s);
         }
+        return;   /* O55: the observer's first callback measures, after layout */
       } catch (e) {}
       measure(host, head, entry);
     }

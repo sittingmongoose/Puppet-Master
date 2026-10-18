@@ -1588,7 +1588,8 @@
         if (!window.PM_PAGES || !window.PM_PAGES.go) return;
         var tab = e.target && e.target.closest ? e.target.closest('.page-tab[data-page]') : null;
         if (!tab) return;
-        window.PM_PAGES.go(tab.getAttribute('data-page'));
+        if (e.isTrusted && typeof window.PM_PAGES.goSoon === 'function') window.PM_PAGES.goSoon(tab.getAttribute('data-page'));   /* O55: answer first */
+        else window.PM_PAGES.go(tab.getAttribute('data-page'));
       }, true);
       /* ── pm6 W2 (js-integration): theme persistence shim ────────────
          Title-bar theme is a sprout menu (#themeSelect trigger). PM_THEME
@@ -2854,12 +2855,17 @@
                 } else {
                     iconBtn.classList.add('active');
                     const targetId = iconBtn.getAttribute('data-target');
-                    if (targetId) {
+                    const showTarget = () => {
                         document.querySelectorAll('.side-panel-view').forEach(v => v.classList.remove('active'));
                         const targetView = document.getElementById(targetId);
                         if (targetView) targetView.classList.add('active');
                         if (sidePanelSlot) sidePanelSlot.classList.remove('hidden');
-                    }
+                    };
+                    /* O55: a click on another section answers first (its icon), the section follows a frame later */
+                    if (targetId && e.isTrusted && sidePanelSlot && !sidePanelSlot.classList.contains('hidden') && !window.__pmRailSoon) {
+                        window.__pmRailSoon = true;
+                        requestAnimationFrame(() => setTimeout(() => { window.__pmRailSoon = false; if (iconBtn.classList.contains('active')) showTarget(); }, 0));
+                    } else if (targetId) showTarget();
                 }
             }
         }
@@ -3089,6 +3095,7 @@
         tab.addEventListener('click', function() {
           const pageId = this.getAttribute('data-page');
           if (!pageId) return;
+          if (window.PM_PAGES && typeof window.PM_PAGES.go === 'function') return;   /* O55: PM_PAGES switches */
           document.querySelectorAll('.page-tab').forEach(function(t) { t.classList.remove('active'); });
           this.classList.add('active');
           document.querySelectorAll('.primary-content > .page').forEach(function(p) {

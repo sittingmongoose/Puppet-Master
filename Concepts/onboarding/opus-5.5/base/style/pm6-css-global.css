@@ -1804,7 +1804,7 @@
     will-change: transform, opacity;
   }
   @keyframes pm8-page-out {
-    from { opacity: 1; transform: translateX(0); }
+    from { opacity: var(--pm8-out-from, 1); transform: translateX(0); }   /* O55: continues an answered fade */
     to   { opacity: 0; transform: translateX(calc(var(--pm-dir, 1) * -50px)); }
   }
   /* Retire the legacy per-page `animation: fadeIn 0.3s` (wizard +

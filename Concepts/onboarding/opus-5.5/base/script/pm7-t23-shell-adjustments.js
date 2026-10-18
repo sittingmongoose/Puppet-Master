@@ -896,22 +896,27 @@
       bar.setAttribute('aria-label','Workspace status');
       bar.innerHTML =
         '<div class="pm7-statusbar-group">' +
-          '<button type="button" class="pm7-statusitem" data-status-action="system" title="Open system status"><span class="pm7-status-dot"></span><strong>Ready</strong></button>' +
-          '<span class="pm7-statusitem" title="Project root"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2.5 5.5h5l1.6 1.8h8.4v8.2h-15z"/></svg>~/Puppet-Master</span>' +
+          '<button type="button" class="pm7-statusitem" data-status-action="system" title="Open system status" data-pm-hover-label="System status" data-pm-hover-detail="Everything Puppet Master needs is running. Click to see each service."><span class="pm7-status-dot"></span><strong>Ready</strong></button>' +
+          '<span class="pm7-statusitem" title="Project root" data-pm-hover-label="Project folder" data-pm-hover-detail="Where this Project\'s files are kept on this computer."><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2.5 5.5h5l1.6 1.8h8.4v8.2h-15z"/></svg>~/Puppet-Master</span>' +
         '</div>' +
         '<div class="pm7-statusbar-group">' +
-          '<button type="button" class="pm7-statusitem" data-status-action="source" title="Source control"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="5" cy="4.5" r="2"/><circle cx="5" cy="15.5" r="2"/><circle cx="15" cy="10" r="2"/><path d="M5 6.5v7M7 6c4.5 0 3 4 6 4"/></svg>main</button>' +
-          '<span class="pm7-statusitem" data-status-priority="medium">Up to date · <strong>7048acf</strong></span>' +
+          '<button type="button" class="pm7-statusitem" data-status-action="source" title="Source control" data-pm-hover-label="Source control" data-pm-hover-detail="The branch you are working on. Click to see its state."><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="5" cy="4.5" r="2"/><circle cx="5" cy="15.5" r="2"/><circle cx="15" cy="10" r="2"/><path d="M5 6.5v7M7 6c4.5 0 3 4 6 4"/></svg>main</button>' +
+          '<span class="pm7-statusitem" data-status-priority="medium" data-pm-hover-label="Up to date" data-pm-hover-detail="Your work matches its online copy. 7048acf names the latest saved version.">Up to date · <strong>7048acf</strong></span>' +
         '</div>' +
         '<span class="pm7-statusbar-grow"></span>' +
         '<div class="pm7-statusbar-group">' +
-          '<span class="pm7-statusitem" data-status-priority="low">Plan index <strong>current</strong></span>' +
+          '<span class="pm7-statusitem" data-status-priority="low" data-pm-hover-label="Plan index" data-pm-hover-detail="The plan\'s index matches its documents.">Plan index <strong>current</strong></span>' +
           '<span class="pm7-statusitem" data-status-priority="low">Execution host <strong>local</strong> · 2ms</span>' +
-          '<button type="button" class="pm7-statusitem" data-status-action="snapshot" data-status-priority="medium">Snapshot <strong>10m ago</strong></button>' +
-          '<span class="pm7-statusitem" data-status-page><strong>Home</strong></span>' +
+          '<button type="button" class="pm7-statusitem" data-status-action="snapshot" data-status-priority="medium" data-pm-hover-label="Snapshot" data-pm-hover-detail="When your work was last kept as a safe point. Click to see it.">Snapshot <strong>10m ago</strong></button>' +
+          '<span class="pm7-statusitem" data-status-page data-pm-hover-detail="The page you are on."><strong>Home</strong></span>' +
         '</div>';
       shell.appendChild(bar);
     } else if (bar.parentNode !== shell) shell.appendChild(bar);
+    var hostItem = bar.querySelector('[data-status-item="host"]');   /* O55: the host item's tag (A16) */
+    if (hostItem && !hostItem.hasAttribute('data-pm-hover-label')) {
+      hostItem.setAttribute('data-pm-hover-label', 'Where it runs');
+      hostItem.setAttribute('data-pm-hover-detail', 'The computer Puppet Master runs on, and how quickly it answers.');
+    }
     function updatePage() {
       var page = document.querySelector('.page.active'), tab = page && document.querySelector('[data-page="' + page.id.replace(/^panel-/,'') + '"]');
       var name = tab ? tab.textContent.trim() : (page ? page.id.replace(/^panel-/,'') : 'Home');

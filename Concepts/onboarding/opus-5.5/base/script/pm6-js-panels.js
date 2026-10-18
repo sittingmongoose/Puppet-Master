@@ -442,7 +442,7 @@
       if (tbMenuIsOpen(m)) tbMenuClose(m);
       var wrap = m.closest('.pm6-tb-menu-wrap');
       var btn = wrap && wrap.querySelector('.pm6-tb-menu-trigger');
-      if (btn) btn.setAttribute('aria-expanded', 'false');
+      if (btn && btn.getAttribute('aria-expanded') !== 'false') btn.setAttribute('aria-expanded', 'false');   /* O55: only a change (T8) */
     });
   }
 
@@ -498,13 +498,19 @@
       var seg = ev.target && ev.target.closest ? ev.target.closest('.pm6-tt-mode[data-mode-value]') : null;
       if (seg) {
         ev.preventDefault();
-        window.PM7_SETTINGS_TOME.setChromeThemeMode(seg.getAttribute('data-mode-value'));
+        var modeValue = seg.getAttribute('data-mode-value');   /* O55: the radio answers first (B4) */
+        menu.querySelectorAll('.pm6-tt-mode').forEach(function (b) { b.setAttribute('aria-checked', b === seg ? 'true' : 'false'); });
+        if (window.PM_THEME_TRANSITION) window.PM_THEME_TRANSITION(function () { window.PM7_SETTINGS_TOME.setChromeThemeMode(modeValue); }, { mode: modeValue });
+        else window.PM7_SETTINGS_TOME.setChromeThemeMode(modeValue);
         return; /* mode is a filter, not a final pick: menu stays open */
       }
       var row = ev.target && ev.target.closest ? ev.target.closest('.pm6-tt-family[data-family]') : null;
       if (!row) return;
       ev.preventDefault();
-      window.PM7_SETTINGS_TOME.setChromeThemeFamily(row.getAttribute('data-family'));
+      var familyValue = row.getAttribute('data-family');   /* O55: the row answers first (B4) */
+      menu.querySelectorAll('.pm6-tt-family').forEach(function (r) { var on = r === row; r.classList.toggle('is-selected', on); r.setAttribute('aria-checked', on ? 'true' : 'false'); });
+      if (window.PM_THEME_TRANSITION) window.PM_THEME_TRANSITION(function () { window.PM7_SETTINGS_TOME.setChromeThemeFamily(familyValue); }, { family: familyValue });
+      else window.PM7_SETTINGS_TOME.setChromeThemeFamily(familyValue);
       tbMenuClose(menu);
       btn.setAttribute('aria-expanded', 'false');
     });

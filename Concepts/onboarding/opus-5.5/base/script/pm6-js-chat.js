@@ -166,23 +166,23 @@
     if (footer && active && footer.style.display !== 'none') {
       fh = footer.offsetHeight || 0;
     }
-    wrap.style.setProperty('--chat-footer-stack-height', fh + 'px');
+    if (wrap.style.getPropertyValue('--chat-footer-stack-height') !== fh + 'px') wrap.style.setProperty('--chat-footer-stack-height', fh + 'px');   /* O55: only a change (B5) */
     if (active && stream && footer && footer.style.display !== 'none') {
       var footerBottom = parseFloat(getComputedStyle(footer).bottom) || 4;
       var clearance = 8;
       var inset = fh + footerBottom + clearance;
-      wrap.style.setProperty('--chat-footer-inset', inset + 'px');
+      if (wrap.style.getPropertyValue('--chat-footer-inset') !== inset + 'px') wrap.style.setProperty('--chat-footer-inset', inset + 'px');
       /* Content inset, not scrollport shrink: the stream extends behind the
          floating pill (see-through around it); the bottom padding keeps the
          newest row clear of the pill when pinned to bottom. */
-      stream.style.paddingBottom = inset + 'px';
+      if (stream.style.paddingBottom !== inset + 'px') stream.style.paddingBottom = inset + 'px';
       stream.style.marginBottom = '';
       if (!jumpIsAway(stream)) {
         requestAnimationFrame(function () { stream.scrollTop = stream.scrollHeight; });
       }
     } else {
-      wrap.style.removeProperty('--chat-footer-inset');
-      wrap.style.setProperty('--chat-footer-stack-height', '0px');
+      if (wrap.style.getPropertyValue('--chat-footer-inset')) wrap.style.removeProperty('--chat-footer-inset');
+      if (wrap.style.getPropertyValue('--chat-footer-stack-height') !== '0px') wrap.style.setProperty('--chat-footer-stack-height', '0px');
       if (stream) {
         stream.style.marginBottom = '';
         stream.style.paddingBottom = '';
@@ -1028,7 +1028,7 @@
       if (!header) return;
       var set = function () {
         var h = Math.ceil(header.getBoundingClientRect().height);
-        if (h > 0) root.style.setProperty('--pm-chat-head-h', h + 'px');
+        if (h > 0 && root.style.getPropertyValue('--pm-chat-head-h') !== h + 'px') root.style.setProperty('--pm-chat-head-h', h + 'px');   /* O55: only a change (B5) */
       };
       var ro = new ResizeObserver(set);
       root._pm6HeadObs = ro;
