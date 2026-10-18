@@ -2176,11 +2176,11 @@ window.PM12_REFERENCE = {"version":"1.0.0","total":892,"inventory_sha256":"be85c
     var family=(selected.split('-')[0]||'basic'),explicitMode=(selected.split('-')[1]||'dark');
     var mode=p?String(settings['general.visual.theme-mode']||explicitMode).toLowerCase():'dark';
     if(['light','dark','auto'].indexOf(mode)<0)mode=explicitMode;
-    var slug=family+'-'+(mode==='auto'?(window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light'):mode);
+    var slug=(function(f){try{var p=typeof window.PM_THEME_PAINT_FAMILY==='function'?window.PM_THEME_PAINT_FAMILY(f):f;return /^(friendly|glass|retro|basic)$/.test(p)?p:f;}catch(e){return f;}})(family)+'-'+(mode==='auto'?(window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light'):mode);
     var themeKey=family+'|'+mode,currentSlug=document.documentElement.getAttribute('data-theme')||'';
     bridgeDepth++;
     try{
-      if(themeKey!==lastPaintThemeKey||currentSlug!==slug){
+      if(themeKey!==lastPaintThemeKey||currentSlug!==slug||(window.PM_THEME&&typeof window.PM_THEME.getFamily==='function'&&window.PM_THEME.getFamily()!==family)){
         if(window.PM_THEME&&typeof window.PM_THEME.setFamily==='function'&&typeof window.PM_THEME.setMode==='function'){
           window.PM_THEME.setFamily(family,{persist:false,dispatch:false});
           window.PM_THEME.setMode(mode,{persist:false,dispatch:false});

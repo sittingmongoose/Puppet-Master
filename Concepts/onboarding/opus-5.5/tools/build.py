@@ -512,11 +512,6 @@ def editor_look_rows(text: str) -> tuple[str, list]:
     return text, [r['id'] for r in added]
 
 
-def nier_paint(var: str) -> str:
-    """The family to paint for a chosen `var`: window.PM_THEME_PAINT_FAMILY(var) when the hook is present and answers a
-    real family, else `var` itself (the hook never decides alone: a throw or an unknown answer paints the choice)."""
-    return ("(function(f){try{var p=typeof window.PM_THEME_PAINT_FAMILY==='function'?window.PM_THEME_PAINT_FAMILY(f):f;"
-            "return /^(friendly|glass|retro|basic)$/.test(p)?p:f;}catch(e){return f;}})(" + var + ")")
 
 
 # NieR Mode (src/settings/kit.d/18-nier.js) is a hidden theme painted over the Basic family. The paint hook
@@ -530,37 +525,6 @@ def nier_paint(var: str) -> str:
 #     boot adoption; it now compares the painted slug and the chosen family.
 # The head boot script only ever writes basic-<scheme> (its family is the literal 'basic'), so it needs no hook.
 # PM_THEME_PAINT_LABEL() names the painted look in the title-bar menu ('' while NieR Mode is off).
-NIER_PATCHES = [
-    ("    var slug = family + '-' + themeResolveScheme(mode);\n    var prev = document.documentElement.getAttribute('data-theme');",
-     "    var slug = " + nier_paint('family') + " + '-' + themeResolveScheme(mode);\n"
-     "    var prev = document.documentElement.getAttribute('data-theme');",
-     'nier paint hook: themeApply'),
-    ("      var title = 'Theme: ' + PM_THEME_FAMILIES[family] +\n        (mode === 'auto' ? ' (Auto)' : ' (' + PM_THEME_SLUGS[slug] + ')');",
-     "      var paintLabel = typeof window.PM_THEME_PAINT_LABEL === 'function' ? window.PM_THEME_PAINT_LABEL() : '';\n"
-     "      var title = paintLabel ? 'Theme: ' + paintLabel + (mode === 'auto' ? ' (Auto)' : ' (' + (scheme === 'light' ? 'Light' : 'Dark') + ')') :\n"
-     "        'Theme: ' + PM_THEME_FAMILIES[family] +\n        (mode === 'auto' ? ' (Auto)' : ' (' + PM_THEME_SLUGS[slug] + ')');",
-     'nier paint hook: theme menu title'),
-    ("    if (label) label.textContent = PM_THEME_FAMILIES[family] || family;",
-     "    if (label) label.textContent = (typeof window.PM_THEME_PAINT_LABEL === 'function' && window.PM_THEME_PAINT_LABEL()) || PM_THEME_FAMILIES[family] || family;",
-     'nier paint hook: theme menu label'),
-    ("              if (v) document.documentElement.setAttribute('data-theme', v);",
-     "              var pm = /^([a-z]+)-(light|dark)$/.exec(v || '');\n"
-     "              if (pm) v = " + nier_paint('pm[1]') + " + '-' + pm[2];\n"
-     "              if (v) document.documentElement.setAttribute('data-theme', v);",
-     'nier paint hook: legacy themeSelect bridge'),
-    ("var slug=family+'-'+(mode==='auto'?(window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light'):mode);",
-     "var slug=" + nier_paint('family') + "+'-'+(mode==='auto'?(window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light'):mode);",
-     'nier paint hook: applyPaint slug'),
-    ("if(themeKey!==lastPaintThemeKey||currentSlug!==slug){",
-     "if(themeKey!==lastPaintThemeKey||currentSlug!==slug||(window.PM_THEME&&typeof window.PM_THEME.getFamily==='function'&&window.PM_THEME.getFamily()!==family)){",
-     'nier paint hook: applyPaint repaint test'),
-    # Pod 042 (the World part "Pod 042 in Chat", key pod042) joins the Assistant Chat persona picker after Teacher. It
-    # shows only while NieR Mode and that part are on (styles.d/15-nier-world.css hides it otherwise), and
-    # src/js/84-pod042-chat.js answers for it locally, as the Teacher adapter does, and hands the chat back.
-    ("var PERSONA_CATALOG = ['Product Manager', 'Architect Reviewer', 'Rust Engineer', 'Teacher'];",
-     "var PERSONA_CATALOG = ['Product Manager', 'Architect Reviewer', 'Rust Engineer', 'Teacher', 'Pod 042'];",
-     'pod 042 persona'),
-]
 
 # The onboarding window's look preview holds the page's theme (2026-10-13, Create Project's theme flicker). While the
 # window owns a preview, PM7_SETTINGS_TOME.applyPaint paints the pair the window names, src/js/60-ui-core.js
@@ -776,7 +740,7 @@ def build_text(usage: bool = True, home: bool = True) -> str:
     # Legacy onboarding/tour removal is authored in base/shell.html (Q18).
 
     # 2. Guarded patches.
-    for old, new, label in NIER_PATCHES + first_paint_patches(text):
+    for old, new, label in first_paint_patches(text):
         text = replace_once(text, old, new, label)
     text = shared_fitting_patch(text)
     for old, new, label in THEME_PREVIEW_PATCHES:

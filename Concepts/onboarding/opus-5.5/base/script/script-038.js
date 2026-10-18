@@ -3144,6 +3144,8 @@
       if (themeSelect) {
           themeSelect.addEventListener('change', function() {
               var v = this.getAttribute('data-value') || this.value;
+              var pm = /^([a-z]+)-(light|dark)$/.exec(v || '');
+              if (pm) v = (function(f){try{var p=typeof window.PM_THEME_PAINT_FAMILY==='function'?window.PM_THEME_PAINT_FAMILY(f):f;return /^(friendly|glass|retro|basic)$/.test(p)?p:f;}catch(e){return f;}})(pm[1]) + '-' + pm[2];
               if (v) document.documentElement.setAttribute('data-theme', v);
           });
       }

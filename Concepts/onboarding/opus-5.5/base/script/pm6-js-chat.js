@@ -1400,7 +1400,7 @@
     portalCloseAnim(ptPopout);
   }
 
-  var PERSONA_CATALOG = ['Product Manager', 'Architect Reviewer', 'Rust Engineer', 'Teacher'];
+  var PERSONA_CATALOG = ['Product Manager', 'Architect Reviewer', 'Rust Engineer', 'Teacher', 'Pod 042'];
   var PERSONA = 'Product Manager';
   function personaPopoutListHtml() {
     var body = PERSONA_CATALOG.map(function (name) {

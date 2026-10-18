@@ -358,7 +358,7 @@
     if (PM_THEME_MODES.indexOf(mode) < 0) mode = 'dark';
     themeState.family = family;
     themeState.mode = mode;
-    var slug = family + '-' + themeResolveScheme(mode);
+    var slug = (function(f){try{var p=typeof window.PM_THEME_PAINT_FAMILY==='function'?window.PM_THEME_PAINT_FAMILY(f):f;return /^(friendly|glass|retro|basic)$/.test(p)?p:f;}catch(e){return f;}})(family) + '-' + themeResolveScheme(mode);
     var prev = document.documentElement.getAttribute('data-theme');
     document.documentElement.setAttribute('data-theme', slug);
     if (opts.persist !== false) {
@@ -390,13 +390,15 @@
     if (btn) {
       btn.setAttribute('data-value', slug);
       btn.setAttribute('data-mode-icon', mode === 'light' ? 'sun' : (mode === 'dark' ? 'moon' : 'auto'));
-      var title = 'Theme: ' + PM_THEME_FAMILIES[family] +
+      var paintLabel = typeof window.PM_THEME_PAINT_LABEL === 'function' ? window.PM_THEME_PAINT_LABEL() : '';
+      var title = paintLabel ? 'Theme: ' + paintLabel + (mode === 'auto' ? ' (Auto)' : ' (' + (scheme === 'light' ? 'Light' : 'Dark') + ')') :
+        'Theme: ' + PM_THEME_FAMILIES[family] +
         (mode === 'auto' ? ' (Auto)' : ' (' + PM_THEME_SLUGS[slug] + ')');
       btn.setAttribute('title', title);
       if (btn.hasAttribute('aria-label')) btn.setAttribute('aria-label', title);
       try { btn.value = slug; } catch (e0) {}
     }
-    if (label) label.textContent = PM_THEME_FAMILIES[family] || family;
+    if (label) label.textContent = (typeof window.PM_THEME_PAINT_LABEL === 'function' && window.PM_THEME_PAINT_LABEL()) || PM_THEME_FAMILIES[family] || family;
     if (menu) {
       menu.querySelectorAll('.pm6-tt-mode').forEach(function (b) {
         b.setAttribute('aria-checked', b.getAttribute('data-mode-value') === mode ? 'true' : 'false');
