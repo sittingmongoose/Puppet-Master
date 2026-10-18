@@ -646,114 +646,16 @@ html[data-theme^="glass"] .pm6-dash-btn--primary {
 }
 
 /* ---------- Usage: a transparent instrument wall, no flat purple canvas ---------- */
-html[data-theme^="glass"] #panel-usage,
-html[data-theme^="glass"] .pm7u-shell {
+html[data-theme^="glass"] #panel-usage {
   background: transparent !important;
-}
-html[data-theme^="glass"] .pm7u-shell {
-  gap: 12px !important;
-  padding: 5px !important;
-  grid-template-columns: 206px minmax(0,1fr) !important;
-}
-html[data-theme^="glass"] .pm7u-rail {
-  margin: 0 !important;
-  padding: 14px 11px !important;
-  border-radius: 22px !important;
-  border: 1px solid transparent !important;
-  background:
-    linear-gradient(var(--rg-pane), var(--rg-pane)) padding-box,
-    linear-gradient(155deg, var(--rg-rim-soft), rgba(255,255,255,.035) 64%, var(--rg-rim-low)) border-box !important;
-  backdrop-filter: blur(26px) saturate(145%) !important;
-  -webkit-backdrop-filter: blur(26px) saturate(145%) !important;
-  box-shadow: 0 20px 40px var(--rg-shadow-soft), inset 0 1px 0 var(--rg-rim) !important;
-}
-html[data-theme^="glass"] .pm7u-stage {
-  border-radius: 22px !important;
-  overflow: hidden !important;
-  border: 1px solid transparent !important;
-  background:
-    linear-gradient(color-mix(in srgb, var(--rg-pane) 46%, transparent), color-mix(in srgb, var(--rg-pane) 30%, transparent)) padding-box,
-    linear-gradient(145deg, var(--rg-rim-soft), rgba(255,255,255,.025) 68%, var(--rg-rim-low)) border-box !important;
-  backdrop-filter: blur(15px) saturate(132%) !important;
-  -webkit-backdrop-filter: blur(15px) saturate(132%) !important;
-  box-shadow: 0 20px 42px var(--rg-shadow-soft), inset 0 1px 0 rgba(255,255,255,.16) !important;
-}
-html[data-theme^="glass"] .pm7u-head {
-  margin: 0 !important;
-  padding: 14px 17px !important;
-  background: color-mix(in srgb, var(--rg-chrome) 72%, transparent) !important;
-  border-bottom: 1px solid var(--rg-rim-soft) !important;
-  box-shadow: inset 0 1px 0 rgba(255,255,255,.13) !important;
-  backdrop-filter: blur(22px) saturate(140%) !important;
-  -webkit-backdrop-filter: blur(22px) saturate(140%) !important;
-}
-html[data-theme^="glass"] .pm7u-board,
-html[data-theme^="glass"] .pm7u-canvas,
-html[data-theme^="glass"] .pm7u-scroll {
-  background: transparent !important;
-}
-html[data-theme^="glass"] .pm7u-card {
-  border: 1px solid transparent !important;
-  border-radius: 18px !important;
-  background:
-    linear-gradient(150deg, rgba(255,255,255,.095), transparent 38%),
-    linear-gradient(var(--rg-card), var(--rg-card)) padding-box,
-    linear-gradient(145deg, var(--rg-rim-soft), rgba(255,255,255,.035) 62%, var(--rg-rim-low)) border-box !important;
-  backdrop-filter: blur(var(--rg-blur-card)) saturate(145%) !important;
-  -webkit-backdrop-filter: blur(var(--rg-blur-card)) saturate(145%) !important;
-  box-shadow:
-    inset 0 1px 0 rgba(255,255,255,.21),
-    inset 1px 0 0 rgba(255,255,255,.06),
-    0 18px 32px var(--rg-shadow-soft) !important;
-  transition: transform var(--motion-med) var(--ease-out), box-shadow var(--motion-med) var(--ease-out), background var(--motion-med) var(--ease-out) !important;
-}
-html[data-theme^="glass"] .pm7u-card:hover {
-  transform: translateY(-3px) scale(1.008);
-  background:
-    linear-gradient(150deg, rgba(255,255,255,.14), transparent 40%),
-    linear-gradient(var(--rg-card-hover), var(--rg-card-hover)) padding-box,
-    linear-gradient(145deg, var(--rg-rim), rgba(255,255,255,.055) 62%, var(--rg-rim-low)) border-box !important;
-  box-shadow: inset 0 1px 0 rgba(255,255,255,.29), 0 25px 44px var(--rg-shadow-soft), 0 0 24px color-mix(in srgb, var(--accent-blue) 8%, transparent) !important;
-}
-html[data-theme^="glass"] .pm7u-cardhead {
-  background: linear-gradient(180deg, rgba(255,255,255,.065), transparent) !important;
-  border-bottom: 1px solid rgba(255,255,255,.075) !important;
-}
-html[data-theme^="glass"] .pm7u-navitem,
-html[data-theme^="glass"] .pm7u-nav button,
-html[data-theme^="glass"] .pm7u-rail button {
-  border-radius: 11px !important;
-}
-html[data-theme^="glass"] .pm7u-navitem:hover,
-html[data-theme^="glass"] .pm7u-rail button:hover {
-  background: color-mix(in srgb, var(--rg-card-hover) 72%, transparent) !important;
-}
-html[data-theme^="glass"] .pm7u-navitem.is-active,
-html[data-theme^="glass"] .pm7u-navitem.active,
-html[data-theme^="glass"] .pm7u-rail [aria-current="page"] {
-  background:
-    linear-gradient(145deg, rgba(255,255,255,.13), transparent 55%),
-    color-mix(in srgb, var(--accent-blue) 16%, var(--rg-card)) !important;
-  box-shadow: inset 0 1px 0 rgba(255,255,255,.18), inset 3px 0 0 var(--accent-blue), 0 8px 18px var(--rg-shadow-soft) !important;
-}
-html[data-theme^="glass"] .pm7u-seg,
-html[data-theme^="glass"] .pm7u-range,
-html[data-theme^="glass"] .pm7u-head button,
-html[data-theme^="glass"] .pm7u-pill,
-html[data-theme^="glass"] .pm7u-chip {
-  border: 1px solid var(--rg-rim-soft) !important;
-  border-radius: 10px !important;
-  background: color-mix(in srgb, var(--rg-chrome-strong) 60%, transparent) !important;
-  box-shadow: inset 0 1px 0 rgba(255,255,255,.16) !important;
 }
 /* Pill progress bars only — do not match Usage .pm7u-meters / meterline chrome. */
-html[data-theme^="glass"] .pm7u-bar,
 html[data-theme^="glass"] [class*="progress"]:not([class*="pm7u-meter"]) {
   border-radius: 999px !important;
 }
 
 /* dark gets stronger luminous seams; light gets smoky neutral depth */
-html[data-theme="glass-dark"] :is(.pm7u-card,.pm6-dash-card,.pm6-dash-cta,.terminal-pane)::before {
+html[data-theme="glass-dark"] :is(.pm6-dash-card,.pm6-dash-cta,.terminal-pane)::before {
   content: "";
   position: absolute;
   inset: 0;
@@ -764,7 +666,7 @@ html[data-theme="glass-dark"] :is(.pm7u-card,.pm6-dash-card,.pm6-dash-cta,.termi
     radial-gradient(ellipse 28% 13% at 100% 100%, rgba(145, 94, 255, .13), transparent 72%);
   mix-blend-mode: screen;
 }
-html[data-theme="glass-light"] :is(.pm7u-card,.pm6-dash-card,.pm6-dash-cta,.terminal-pane)::before {
+html[data-theme="glass-light"] :is(.pm6-dash-card,.pm6-dash-cta,.terminal-pane)::before {
   content: "";
   position: absolute;
   inset: 0;
@@ -787,21 +689,21 @@ html[data-theme^="glass"] :is(.pm6-tb-menu,.pm-ctx-menu,.chat-dropdown-popover,.
 
 /* Reduced motion preserves material without the float responses. */
 @media (prefers-reduced-motion: reduce) {
-  html[data-theme^="glass"] :is(.pm7u-card,.pm6-dash-card,.activity-bar .icon) { transition: none !important; transform: none !important; }
+  html[data-theme^="glass"] :is(.pm6-dash-card,.activity-bar .icon) { transition: none !important; transform: none !important; }
 }
 
 /* v7 optical-thickness pass */
-html[data-theme^="glass"] :is(#sidePanelSlot,.activity-bar,.editor-pane,.dashboard-view,#bottomPanel,.pm7u-rail,.pm7u-stage,.pm7u-card,.pm6-dash-card,.pm6-dash-cta,.terminal-pane) {
+html[data-theme^="glass"] :is(#sidePanelSlot,.activity-bar,.editor-pane,.dashboard-view,#bottomPanel,.pm6-dash-card,.pm6-dash-cta,.terminal-pane) {
   background-blend-mode: screen, normal, normal !important;
 }
-html[data-theme^="glass"] :is(.editor-pane,.dashboard-view,#bottomPanel,.pm7u-rail,.pm7u-stage) {
+html[data-theme^="glass"] :is(.editor-pane,.dashboard-view,#bottomPanel) {
   outline: 1px solid color-mix(in srgb, var(--rg-rim) 20%, transparent);
   outline-offset: -3px;
 }
-html[data-theme="glass-light"] :is(.editor-pane,.dashboard-view,#bottomPanel,.pm7u-card,.pm6-dash-card,.pm6-dash-cta,.terminal-pane) {
+html[data-theme="glass-light"] :is(.editor-pane,.dashboard-view,#bottomPanel,.pm6-dash-card,.pm6-dash-cta,.terminal-pane) {
   box-shadow: inset 0 1px 0 rgba(255,255,255,.82), inset 1px 0 0 rgba(255,255,255,.28), inset 0 -1px 0 rgba(48,42,38,.16), 0 20px 38px rgba(48,45,42,.19) !important;
 }
-html[data-theme="glass-dark"] :is(.editor-pane,.dashboard-view,#bottomPanel,.pm7u-card,.pm6-dash-card,.pm6-dash-cta,.terminal-pane) {
+html[data-theme="glass-dark"] :is(.editor-pane,.dashboard-view,#bottomPanel,.pm6-dash-card,.pm6-dash-cta,.terminal-pane) {
   box-shadow: inset 0 1px 0 rgba(225,248,255,.48), inset 1px 0 0 rgba(145,222,250,.12), inset 0 -1px 0 rgba(0,0,0,.38), 0 22px 42px rgba(0,4,12,.34), 0 0 26px rgba(40,185,235,.045) !important;
 }
 
@@ -1002,8 +904,7 @@ html[data-theme^="glass"] .activity-bar .icon-label {
   font-size: 7.5px !important;
   letter-spacing: .045em !important;
 }
-html[data-theme^="glass"] .activity-bar :is(.icon.active,.icon[aria-current="page"])::before,
-html[data-theme^="glass"] .pm7u-navbtn.active::before { display: none !important; }
+html[data-theme^="glass"] .activity-bar :is(.icon.active,.icon[aria-current="page"])::before { display: none !important; }
 html[data-theme^="glass"] .activity-bar .icon.active {
   box-shadow: inset 0 1px 0 var(--rg-rim), 0 7px 17px var(--rg-shadow-soft), 0 0 18px color-mix(in srgb,var(--accent-blue) 18%,transparent) !important;
 }
@@ -1094,59 +995,6 @@ html[data-theme="glass-light"] .pm-segtab-item.active {
 }
 
 /* Usage left-nav sliding pill (fills behind active room; spring + glass liquid) */
-.pm7u-nav { position: relative !important; }
-.pm7u-nav-ink {
-  position: absolute !important;
-  left: 0 !important;
-  top: 0 !important;
-  z-index: 0 !important;
-  pointer-events: none !important;
-  border-radius: 8px !important;
-  background: var(--accent-soft) !important;
-  will-change: transform, width, height !important;
-  transform-origin: 50% 50% !important;
-}
-html[data-theme^="glass"] .pm7u-nav-ink {
-  background:
-    linear-gradient(#B5A4FF, #B5A4FF) 0 0 / 100% 1.5px no-repeat,
-    linear-gradient(
-      180deg,
-      color-mix(in srgb, #6A4BE5 72%, #3A2470) 0%,
-      color-mix(in srgb, #6A4BE5 48%, #241450) 100%
-    ) !important;
-  box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, .28),
-    0 6px 14px rgba(106, 75, 229, .30),
-    0 0 14px rgba(106, 75, 229, .20) !important;
-}
-html[data-theme="glass-light"] .pm7u-nav-ink {
-  background:
-    linear-gradient(#C9BCFF, #C9BCFF) 0 0 / 100% 1.5px no-repeat,
-    linear-gradient(
-      180deg,
-      color-mix(in srgb, #6A4BE5 42%, #F2EEFF) 0%,
-      color-mix(in srgb, #6A4BE5 28%, #E4DCF8) 100%
-    ) !important;
-  box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, .55),
-    0 5px 12px rgba(106, 75, 229, .20) !important;
-}
-html[data-theme^="glass"] .pm7u-navbtn {
-  z-index: 1 !important;
-  background: transparent !important;
-}
-html[data-theme^="glass"] .pm7u-navbtn.active {
-  background: transparent !important;
-  color: #FFFFFF !important;
-  box-shadow: none !important;
-}
-html[data-theme="glass-light"] .pm7u-navbtn.active {
-  color: #2A1848 !important;
-}
-html[data-theme^="glass"] .pm7u-navbtn.active .pm7u-navico {
-  background: color-mix(in srgb, #fff 18%, transparent) !important;
-  color: inherit !important;
-}
 
 /* --------------------------------------------------------------------------
    6. Home/editor/dashboard: smaller pane radii; original tab mechanics/shape
@@ -1201,75 +1049,12 @@ html[data-theme^="glass"] .terminal-pane {
   border-radius: 10px !important;
 }
 html[data-theme^="glass"] :is(.pm6-dash-card,.pm6-dash-cta) { border-radius: 12px !important; }
-html[data-theme^="glass"] :is(.pm6-dash-card,.pm7u-card):hover { transform: translateY(-1px) !important; }
+html[data-theme^="glass"] :is(.pm6-dash-card):hover { transform: translateY(-1px) !important; }
 
 /* --------------------------------------------------------------------------
    7. Usage: denser panes and the requested subtle dark widget color families
    -------------------------------------------------------------------------- */
-html[data-theme^="glass"] .pm7u-shell {
-  grid-template-columns: 196px minmax(0,1fr) !important;
-  gap: 6px !important;
-  padding: 2px !important;
-}
-html[data-theme^="glass"] .pm7u-rail {
-  padding: 10px 8px !important;
-  border-radius: 14px !important;
-}
-html[data-theme^="glass"] .pm7u-stage {
-  border-radius: 14px !important;
-}
-html[data-theme^="glass"] .pm7u-head {
-  padding: 10px 12px !important;
-}
-html[data-theme^="glass"] .pm7u-card {
-  border-radius: 12px !important;
-}
-html[data-theme^="glass"] .pm7u-navbtn.active,
-html[data-theme^="glass"] .pm7u-navitem.is-active,
-html[data-theme^="glass"] .pm7u-navitem.active,
-html[data-theme^="glass"] .pm7u-rail [aria-current="page"] {
-  /* Fill lives on .pm7u-nav-ink; keep button chrome flat. */
-  box-shadow: none !important;
-}
 
-html[data-theme="glass-dark"] .pm7u-card { --pm7-tone-rgb: 174, 158, 209; }
-html[data-theme="glass-dark"] .pm7u-card[data-tone="blue"],
-html[data-theme="glass-dark"] .pm7u-card[data-tone="run"] { --pm7-tone-rgb: 101, 217, 255; }
-html[data-theme="glass-dark"] .pm7u-card[data-tone="green"],
-html[data-theme="glass-dark"] .pm7u-card[data-tone="ok"] { --pm7-tone-rgb: 107, 227, 174; }
-html[data-theme="glass-dark"] .pm7u-card[data-tone="orange"],
-html[data-theme="glass-dark"] .pm7u-card[data-tone="warn"] { --pm7-tone-rgb: 255, 181, 110; }
-html[data-theme="glass-dark"] .pm7u-card[data-tone="purple"] { --pm7-tone-rgb: 170, 163, 255; }
-html[data-theme="glass-dark"] .pm7u-card[data-tone="err"] { --pm7-tone-rgb: 255, 113, 139; }
-html[data-theme="glass-dark"] .pm7u-card[data-tone="mut"] { --pm7-tone-rgb: 166, 177, 198; }
-html[data-theme="glass-dark"] .pm7u-card[data-tone] {
-  background:
-    linear-gradient(150deg, rgba(var(--pm7-tone-rgb), .105), transparent 39%),
-    linear-gradient(var(--rg-card), var(--rg-card)) padding-box,
-    linear-gradient(145deg, rgba(var(--pm7-tone-rgb), .28), rgba(255,255,255,.035) 58%, var(--rg-rim-low)) border-box !important;
-  box-shadow:
-    inset 0 1px 0 rgba(255,255,255,.22),
-    inset 1px 0 0 rgba(var(--pm7-tone-rgb),.08),
-    0 16px 30px var(--rg-shadow-soft),
-    0 0 22px rgba(var(--pm7-tone-rgb),.035) !important;
-}
-html[data-theme="glass-dark"] .pm7u-card[data-tone]::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  border-radius: inherit;
-  pointer-events: none;
-  background:
-    radial-gradient(ellipse 56% 15% at 18% 0%, rgba(var(--pm7-tone-rgb), .15), transparent 74%),
-    radial-gradient(ellipse 25% 18% at 100% 100%, rgba(var(--pm7-tone-rgb), .055), transparent 78%);
-  mix-blend-mode: screen;
-}
-html[data-theme="glass-dark"] .pm7u-card[data-tone]:hover {
-  background:
-    linear-gradient(150deg, rgba(var(--pm7-tone-rgb), .15), transparent 40%),
-    linear-gradient(var(--rg-card-hover), var(--rg-card-hover)) padding-box,
-    linear-gradient(145deg, rgba(var(--pm7-tone-rgb), .40), rgba(255,255,255,.05) 58%, var(--rg-rim-low)) border-box !important;
-}
 
 /* --------------------------------------------------------------------------
    8. Opaque-enough menus/popovers and correct stacking
@@ -1277,7 +1062,7 @@ html[data-theme="glass-dark"] .pm7u-card[data-tone]:hover {
 html[data-theme^="glass"] :is(
   #themeMenu,#projectMenu,#pageTabsMoreMenu,#fmRootMenu,
   .pm6-tb-menu,.pm6-tb-search-pop,.pm-ctx-menu,.chat-dropdown-popover,
-  .popover,.dropdown-menu,.rs-panel,.pm7u-pop,.pm7ctx-pop,.pm7ctx-drawer,
+  .popover,.dropdown-menu,.rs-panel,.pm7ctx-pop,.pm7ctx-drawer,
   .pm-home-portal,.pm-home-flyout-portal,.pm-home-surface-menu,
   .s4-bloom,.s4-panel,.s4-psm,.pm6-proj-sheet,.project-settings-modal,
   .pm6-wiz-doc-overlay-panel,.pm6-orch-modal
@@ -1350,7 +1135,7 @@ html[data-theme^="glass"] :is(
 
 /* Preserve popup legibility and keep text fields from becoming transparent
    holes in the material. */
-html[data-theme^="glass"] :is(input,textarea,select,.search-bar,.pm6-proj-search,.s4-input,.pm7u-scope) {
+html[data-theme^="glass"] :is(input,textarea,select,.search-bar,.pm6-proj-search,.s4-input) {
   background: color-mix(in srgb,var(--rg-reading-soft) 76%,transparent) !important;
   border-color: var(--rg-rim-soft) !important;
   color: var(--text-primary) !important;
@@ -1358,7 +1143,7 @@ html[data-theme^="glass"] :is(input,textarea,select,.search-bar,.pm6-proj-search
 
 /* No ornamental left-edge strips anywhere in the glass family. */
 html[data-theme^="glass"] :is(
-  .pm7u-navbtn,.pm7u-navitem,.activity-bar .icon,
+  .activity-bar .icon,
   #sidePanelSlot [class*="row"],#sidePanelSlot [class*="item"],
   .s4-chip,.orch-tab
 )::before {
@@ -1382,7 +1167,6 @@ html[data-theme^="glass"] :is(
   .title-bar,.activity-bar,#sidePanelSlot,
   .editor-pane,.dashboard-view,#bottomPanel,.editor-tabs,.dashboard-tabs,
   .terminal-pane,.pm6-dash-card,.pm6-dash-cta,
-  .pm7u-rail,.pm7u-stage,.pm7u-head,.pm7u-card,
   .projects-header-bento,.projects-toolbar,.project-card-bento,
   .pm6-wiz-hero,.pm6-wiz-imported,.pm6-wiz-attach-card,.pm6-wiz-choice-card,
   .pm6-wiz-prdrail,.pm6-wiz-prd-chat,.pm6-wiz-prdpreview,.pm6-wiz-doc,
@@ -1408,7 +1192,7 @@ html[data-theme^="glass"] #pixelGrid { opacity: .055 !important; }
 html[data-theme^="glass"] :is(
   .pm6-tb-menu.is-open,.pm6-chat-more-menu.is-open,
   .chat-dropdown-popover.active,.dropdown-menu.open,.popover.open,
-  .pm-ctx-menu.is-open,.pm7u-pop.is-open,.pm7ctx-pop.is-open,.rs-panel.open
+  .pm-ctx-menu.is-open,.pm7ctx-pop.is-open,.rs-panel.open
 ) {
   opacity: 1 !important;
   visibility: visible !important;
@@ -1558,7 +1342,6 @@ html[data-theme^="glass"] :is(
   .pm6-tb-menu.is-open,
   .pm6-chat-more-menu.is-open,
   .pm-ctx-menu.is-open,
-  .pm7u-pop.is-open,
   .pm7ctx-pop.is-open,
   .dropdown-menu.is-open,
   .popover.is-open,
@@ -1639,35 +1422,8 @@ html[data-theme^="glass"] .pm-segtab-item span {
 
 /* Soften Final Usage grid overrides that fight pm7-t29-usage-final.
    Prefer material tokens only -- restore newest column rhythm. */
-html[data-theme^="glass"] .pm7u-shell {
-  grid-template-columns: 184px minmax(0, 1fr) !important;
-  gap: var(--pm7u-gap, 10px) !important;
-  padding: 0 !important;
-}
-html[data-theme^="glass"] .pm7u-rail,
-html[data-theme^="glass"] .pm7u-stage,
-html[data-theme^="glass"] .pm7u-card {
-  /* Keep radius / material from arch glass; do not re-impose denser padding
-     that collapses T29 instrument rows. */
-  background-image:
-    linear-gradient(152deg, rgba(255, 255, 255, .055), transparent 42%),
-    linear-gradient(var(--rg-card), var(--rg-card)) !important;
-}
-html[data-theme^="glass"] .pm7u-rail {
-  padding: 10px 8px !important;
-}
-html[data-theme^="glass"] .pm7u-head {
-  padding: 10px 12px !important;
-}
 
 @media (max-width: 1180px) {
-  html[data-theme^="glass"] .pm7u-shell {
-    grid-template-columns: 164px minmax(0, 1fr) !important;
-  }
 }
 @media (max-width: 860px) {
-  html[data-theme^="glass"] .pm7u-shell {
-    grid-template-columns: 1fr !important;
-    grid-template-rows: auto minmax(0, 1fr) !important;
-  }
 }

@@ -124,8 +124,8 @@ html[data-pmu-soft][data-o55-nier-scene] body.pmu-page-active #o55-nier-scene { 
 
 /* ======================================================================================================================
    PMConcept7's game UI on Usage (lane f-nier, 2026-10-09, Jared's item 6a; lanes/f-nier/NIER-ADOPT.md). The app's NieR
-   parts (styles.d/14-nier-parts.css, 15-nier-world.css, src/css/11-window-nier.css) name the retired .pm7u- page; these
-   are the same rules, timings and helper tokens on the pmu- names. Colours are styles.d/13-nier.css helpers only.
+   parts (styles.d/14-nier-parts.css, 15-nier-world.css, src/css/11-window-nier.css) share their timings and helper
+   tokens with these pmu- rules. Colours are styles.d/13-nier.css helpers only.
    ====================================================================================================================== */
 
 /* ---- Menu cursor [cursor]: a hovered or chosen rail room, a hovered range and a hovered or chosen menu row are the ink

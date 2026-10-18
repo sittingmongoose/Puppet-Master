@@ -32,7 +32,7 @@ TITLES = {
     'projects': '.page-projects .projects-title',
     'wizard': '.page-wizard .pm6-wiz-hero-title',
     'orchestrator': '.page-orchestrator .orch-title',
-    'usage': '#pm7uRoomTitle, .pm7u-brand h1',
+    'usage': '',  # The Usage layer supplies this page's title selectors.
     'settings': '#panel-settings .rail-title, #panel-settings .workspace-separator h2',
 }
 CONFIRM = ('.btn.primary', 'button[type="submit"]', '.n-btn.primary', '.pm6-dash-btn:not(.pm6-dash-btn--ghost)',

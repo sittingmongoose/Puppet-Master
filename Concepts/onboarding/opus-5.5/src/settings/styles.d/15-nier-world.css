@@ -136,21 +136,18 @@ html[data-o55-nier-parts~="ticks"] {
   --o55nw-ticks-size: 8px 1px, 1px 8px, 8px 1px, 1px 8px, 8px 1px, 1px 8px, 8px 1px, 1px 8px;
   --o55nw-ticks-pos: left 3px top 3px, left 3px top 3px, right 3px top 3px, right 3px top 3px, left 3px bottom 3px, left 3px bottom 3px, right 3px bottom 3px, right 3px bottom 3px;
 }
-html[data-o55-nier-parts~="ticks"] :is(.pm6-dash-card, .pm7u-card) {
+html[data-o55-nier-parts~="ticks"] :is(.pm6-dash-card) {
   background-image: var(--o55nw-ticks) !important; background-size: var(--o55nw-ticks-size) !important;
   background-position: var(--o55nw-ticks-pos) !important; background-repeat: no-repeat !important;
 }
 html[data-o55-nier-parts~="ticks"] #pm6DashGrid { counter-reset: o55nw-dash; }
 html[data-o55-nier-parts~="ticks"] .pm6-dash-card { counter-increment: o55nw-dash; }
-html[data-o55-nier-parts~="ticks"] .pm7u-board { counter-reset: o55nw-usage; }
-html[data-o55-nier-parts~="ticks"] .pm7u-card { counter-increment: o55nw-usage; }
-html[data-o55-nier-parts~="ticks"] :is(.pm6-dash-card > .pm6-dash-card-head, .pm7u-card > .pm7u-cardhead) { --o55nw-glyph-x: 50px; }
-html[data-o55-nier-parts~="ticks"] :is(.pm6-dash-card > .pm6-dash-card-head, .pm7u-card > .pm7u-cardhead)::after {
+html[data-o55-nier-parts~="ticks"] :is(.pm6-dash-card > .pm6-dash-card-head) { --o55nw-glyph-x: 50px; }
+html[data-o55-nier-parts~="ticks"] :is(.pm6-dash-card > .pm6-dash-card-head)::after {
   position: absolute; right: 14px; bottom: 4px; z-index: 4; pointer-events: none;
   font: 500 8px/1 var(--mono-font); letter-spacing: .16em; color: var(--o55-nier-ink); opacity: .6;
 }
 html[data-o55-nier-parts~="ticks"] .pm6-dash-card > .pm6-dash-card-head::after { content: "A-" counter(o55nw-dash, decimal-leading-zero); }
-html[data-o55-nier-parts~="ticks"] .pm7u-card > .pm7u-cardhead::after { content: "U-" counter(o55nw-usage, decimal-leading-zero); }
 /* the workspace's panels: the ticks and the coordinate ride on a layer over the panel's frame */
 html[data-o55-nier-parts~="ticks"] #pm-home-workspace { counter-reset: o55nw-dock; }
 html[data-o55-nier-parts~="ticks"] .pm-home-surface { counter-increment: o55nw-dock; }
@@ -164,11 +161,11 @@ html[data-o55-nier-parts~="ticks"] .pm-home-surface::after {
 /* ================================================================================ Machine glyphs [glyphs] */
 /* A faint strip of drawn machine-script strokes under the YoRHa headers, right of the rule's middle (an original
    pattern, not a real script). With YoRHa headers installed it joins their rule's layers; without, it stands alone. */
-html[data-o55-nier-parts~="glyphs"]:not([data-o55-nier-parts~="headers"]) :is(.o55-group-head, .pm6-dash-card-head, .pm7u-cardhead, .pm6-orch-w-head, #panel-settings .workspace-separator, #panel-settings .pm51-section-copy, .roster-head) {
+html[data-o55-nier-parts~="glyphs"]:not([data-o55-nier-parts~="headers"]) :is(.o55-group-head, .pm6-dash-card-head, .pm6-orch-w-head, #panel-settings .workspace-separator, #panel-settings .pm51-section-copy, .roster-head) {
   background-image: var(--o55nw-art-glyphs) !important; background-size: 126px 5px !important; background-position: right var(--o55nw-glyph-x, 14px) bottom 3px !important;
   background-repeat: no-repeat !important; padding-bottom: 10px !important;
 }
-html[data-o55-nier-parts~="glyphs"][data-o55-nier-parts~="headers"] :is(.o55-group-head, .pm6-dash-card-head, .pm7u-cardhead, .pm6-orch-w-head, #panel-settings .workspace-separator, #panel-settings .pm51-section-copy, .roster-head) {
+html[data-o55-nier-parts~="glyphs"][data-o55-nier-parts~="headers"] :is(.o55-group-head, .pm6-dash-card-head, .pm6-orch-w-head, #panel-settings .workspace-separator, #panel-settings .pm51-section-copy, .roster-head) {
   background-image: linear-gradient(var(--o55-nier-ink), var(--o55-nier-ink)), linear-gradient(var(--o55-nier-ink), var(--o55-nier-ink)),
     linear-gradient(rgba(var(--o55-nier-ink-rgb), .45), rgba(var(--o55-nier-ink-rgb), .45)), var(--o55nw-art-glyphs) !important;
   background-size: 5px 5px, 5px 5px, calc(100% - 12px) 1px, 126px 5px !important;
@@ -239,12 +236,12 @@ html[data-o55-nier-parts~="pod042"] .pm6-chat-personaitem[data-persona="Pod 042"
 /* ================================================================================ Ink empty states [empty] */
 /* Empty states carry a small original ink drawing above their words: the Pod, a boxy machine lifeform or a flower. */
 html[data-o55-nier-parts~="empty"] :is(.editor-empty-state, .pm6-bottom-empty, .search-empty, #panel-settings .empty-state, #panel-settings .pm51-empty, .all-settings-empty) { --o55nw-art: var(--o55nw-art-pod); }
-html[data-o55-nier-parts~="empty"] :is(.pm6-dash-empty, .pm6-orch-empty, .pm7u-empty, .pm7-nplan-empty) { --o55nw-art: var(--o55nw-art-machine); }
+html[data-o55-nier-parts~="empty"] :is(.pm6-dash-empty, .pm6-orch-empty, .pm7-nplan-empty) { --o55nw-art: var(--o55nw-art-machine); }
 html[data-o55-nier-parts~="empty"] :is(.pm6-proj-empty, .s4-psm-empty) { --o55nw-art: var(--o55nw-art-flower); }
 html[data-o55-nier-parts~="empty"] .pm6-orch-empty:nth-of-type(3n + 2) { --o55nw-art: var(--o55nw-art-flower); }
 html[data-o55-nier-parts~="empty"] .pm6-orch-empty:nth-of-type(3n) { --o55nw-art: var(--o55nw-art-pod); }
 html[data-o55-nier-parts~="empty"] :is(.editor-empty-state, .pm6-bottom-empty, .search-empty, #panel-settings .empty-state, #panel-settings .pm51-empty, .all-settings-empty,
-  .pm6-dash-empty, .pm6-orch-empty, .pm7u-empty, .pm7-nplan-empty, .pm6-proj-empty, .s4-psm-empty)::before {
+  .pm6-dash-empty, .pm6-orch-empty, .pm7-nplan-empty, .pm6-proj-empty, .s4-psm-empty)::before {
   content: ""; display: block; flex: none; width: 44px; height: 44px; margin: 0 auto 8px; background: var(--o55nw-art) center / contain no-repeat; opacity: .82;
 }
 html[data-o55-nier-parts~="empty"] :is(.pm6-dash-empty, .pm6-orch-empty, .pm7-nplan-empty)::before { width: 30px; height: 30px; margin-bottom: 5px; }

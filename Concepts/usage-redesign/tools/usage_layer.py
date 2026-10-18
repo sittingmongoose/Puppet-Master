@@ -11,9 +11,9 @@ PMConcept7.html (build.md section 9, Proposal B):
 What apply() does, every step guarded so it happens exactly once or the build stops:
   1. Finds the #panel-usage band (`<div class="page page-usage" id="panel-usage">` .. `</div><!-- page-usage -->`).
   2. Keeps from it only what the rest of the concept needs: the chat context module's rules from the anonymous T21
-     stylesheet (63 rules plus the context halves of 6 shared rules), the two concept-wide Retro Light rules of
-     pm7-t29-usage-final, and the global status bar and Home dashboard rules of pm7-t32-final (61 rules plus 1
-     rewritten). Both filtered stylesheets keep their ids and their order, so the cascade outside Usage is unchanged.
+     stylesheet (69 rules), the two concept-wide Retro Light rules of pm7-t29-usage-final, and the global status bar
+     and Home dashboard rules of pm7-t32-final (62 rules). The dead Prism selector arms have been removed from these
+     sources. Both filtered stylesheets keep their ids and their order, so the cascade outside Usage is unchanged.
      pm7-t31-usage-final, the old markup and the old Usage script go with the band.
   3. Extracts the chat context module (window.PM7_CONTEXT) from the old Usage script, pinned by sha256, and runs it
      inside a shim that routes its Usage-side effects to the new page's window.PM7_USAGE.
@@ -22,8 +22,8 @@ What apply() does, every step guarded so it happens exactly once or the build st
      `:is(#panel-usage,[data-pmu-host])` for hosted boards by host_scope_css, its count checked), src/markup.html,
      <script id="pm-usage-js"> (window.PM_USAGE_COPY, src/js, the context module), <!-- USAGE:BODY:END -->, the close tag.
   5. Outside the band: removes pm7-t24-usage-readability-and-fit and filters the Usage rules out of
-     pm7-t23-adjustments (75 kept, 215 dropped). Shared blocks that merely name a pm7u- class are left alone: with the
-     new pmu- namespace those selectors match nothing.
+     pm7-t23-adjustments (75 kept; its dead Prism rules have been removed from source). Shared blocks retain only
+     their live selector arms.
   6. Merges the review roster (src/roster.json) into the Settings providers fixture and seeds saved Settings states once
      (roster_patch). NIER_ENTRIES contributes the page's selectors to the shared NieR registry, emitted by build.py
      after all layers (opus-5.5 src/settings/kit.d/nier_registry.py); no retained NieR source-text patches remain.
@@ -56,10 +56,10 @@ CTX_JS_SHA256 = '5fb115273b346fb26bf7ea81246caae88b57bdb5e17f5878f510563477480c1
 
 # Exact rule counts of each filtered stylesheet. Any drift in the base fails the build instead of passing silently.
 EXPECT = {
-    't21 context rules': {'kept_rules': 63, 'rewritten_rules': 6, 'dropped_rules': 248, 'dropped_keyframes': 1},
-    'pm7-t29-usage-final': {'kept_rules': 2, 'rewritten_rules': 0, 'dropped_rules': 277, 'dropped_keyframes': 0},
-    'pm7-t32-final': {'kept_rules': 61, 'rewritten_rules': 1, 'dropped_rules': 159, 'dropped_keyframes': 0},
-    'pm7-t23-adjustments': {'kept_rules': 75, 'rewritten_rules': 0, 'dropped_rules': 215, 'dropped_keyframes': 1},
+    't21 context rules': {'kept_rules': 69, 'rewritten_rules': 0, 'dropped_rules': 2, 'dropped_keyframes': 1},
+    'pm7-t29-usage-final': {'kept_rules': 2, 'rewritten_rules': 0, 'dropped_rules': 1, 'dropped_keyframes': 0},
+    'pm7-t32-final': {'kept_rules': 62, 'rewritten_rules': 0, 'dropped_rules': 0, 'dropped_keyframes': 0},
+    'pm7-t23-adjustments': {'kept_rules': 75, 'rewritten_rules': 0, 'dropped_rules': 0, 'dropped_keyframes': 1},
 }
 # Inside the band and removed with it (each must be there exactly once, so a moved block cannot survive unnoticed).
 BAND_ONLY = ['id="pm7UsageApp"', 'id="pm7uBoard"', '<style id="pm7-t29-usage-final">', '<style id="pm7-t31-usage-final">',
@@ -90,8 +90,8 @@ CTX_JS_EDITS = [
 
 # NieR registry contributions (ARCHITECTURE.md section 7.1). Edit these lists, not Settings source anchors.
 # An empty list contributes nothing. The CSS half of the cursor
-# (the ink bar and its paper text) is Usage's own src/css/90-nier-shell.css: the app's CSS lists name the retired .pm7u-
-# rows and Usage's rows need their own exceptions (disabled rows, icon boxes, the Attention count). Lane f-nier
+# (the ink bar and its paper text) is Usage's own src/css/90-nier-shell.css: its rows need their own exceptions
+# (disabled rows, icon boxes, the Attention count). Lane f-nier
 # (2026-10-09) added the range strip to the cursor and chosen lists and the confirm / cancel menu sounds.
 NIER_ENTRIES = {
     'cursor': ['.pmu-navbtn', '.pmu-poprow', '.pmu-range button'],   # items that become the NieR ink-bar menu cursor

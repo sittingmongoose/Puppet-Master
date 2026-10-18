@@ -30,7 +30,7 @@ html[data-lg-wall-any][data-o55-nier-scene]:not(#wpkz) #o55-nier-scene { display
 /* The page grounds that NieR's scenes already show through (the Usage board, Settings Home) show the wallpaper too,
    under a light veil of the look's ground, so the few words that sit between the cards keep their contrast. The cards,
    the board's header and its rail keep their own fills. */
-html[data-lg-wall-any]:not([data-theme^="glass"]):not(#wpkz) :is(#pmuStage.pmu-stage, #pm7UsageApp.pm7u-shell, #panel-settings[data-o55-home]) {
+html[data-lg-wall-any]:not([data-theme^="glass"]):not(#wpkz) :is(#pmuStage.pmu-stage, #panel-settings[data-o55-home]) {
   background: color-mix(in srgb, var(--background) 42%, transparent) !important;
 }
 
