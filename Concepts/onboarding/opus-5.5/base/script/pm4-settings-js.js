@@ -2354,7 +2354,7 @@ window.PM12_REFERENCE = {"version":"1.0.0","total":892,"inventory_sha256":"be85c
     document.addEventListener('page.changed',closeIfInactive);
     new MutationObserver(function(){closeIfInactive({page:panel.classList.contains('active')?'settings':'inactive'});}).observe(panel,{attributes:true,attributeFilter:['class']});
   }
-  window.PM7_SETTINGS_TOME={load:load,save:save,reset:reset,projectSnapshot:projectSnapshot,dispatch:dispatch,consumeCommandResult:consumeCommandResult,applyPaint:applyPaint,clampGlassAlpha:clampGlassAlpha,configuredThemeSlug:configuredThemeSlug,setChromeThemeFamily:setChromeThemeFamily,setChromeThemeMode:setChromeThemeMode,project:projectRecord,projectLabel:function(){var p=projectRecord();return p?p.label:'No project';},portal:function(){return document.getElementById('pm-settings-portals')||document.getElementById('panel-settings')||document.body;},ownsEvent:function(target){var root=document.getElementById('pm-settings-root'),portal=document.getElementById('pm-settings-portals');return !!(target&&((root&&root.contains(target))||(portal&&portal.contains(target))));},openBloom:openBloom};
+  window.PM7_SETTINGS_TOME={load:load,save:save,reset:reset,restoreProjectDefaults:restoreProjectDefaults,projectSnapshot:projectSnapshot,dispatch:dispatch,consumeCommandResult:consumeCommandResult,applyPaint:applyPaint,clampGlassAlpha:clampGlassAlpha,configuredThemeSlug:configuredThemeSlug,setChromeThemeFamily:setChromeThemeFamily,setChromeThemeMode:setChromeThemeMode,project:projectRecord,projectLabel:function(){var p=projectRecord();return p?p.label:'No project';},portal:function(){return document.getElementById('pm-settings-portals')||document.getElementById('panel-settings')||document.body;},ownsEvent:function(target){var root=document.getElementById('pm-settings-root'),portal=document.getElementById('pm-settings-portals');return !!(target&&((root&&root.contains(target))||(portal&&portal.contains(target))));},openBloom:openBloom};
   window.PM7_SETTINGS_OPEN_BLOOM=openBloom;
   document.addEventListener('DOMContentLoaded',function(){setTimeout(function(){redirectProjectModal();reloadOnProjectChange();installPanelLifecycle();window.addEventListener('pm7.settings.runtime-context.changed',function(){if(window.PM12_KIMI&&typeof window.PM12_KIMI.renderApp==='function')window.PM12_KIMI.renderApp({soft:true});});if(window.PM12_KIMI)applyPaint(window.PM12_KIMI.getState());},0);});
 })();
@@ -2726,14 +2726,14 @@ window.PM12_REFERENCE = {"version":"1.0.0","total":892,"inventory_sha256":"be85c
     delete state.settings[id];delete state.changed[id];return true;
   }
   function restoreAllProjectDefaults(){
-    const project=window.PM7_SETTINGS_TOME.project(),registry=window.PM_SETTINGS_REGISTRY,restore=registry&&registry.restoreProjectDefaults;
+    const project=window.PM7_SETTINGS_TOME.project(),registry=window.PM_SETTINGS_REGISTRY,restore=registry?registry.restoreProjectDefaults:window.PM7_SETTINGS_TOME.restoreProjectDefaults;
     if(!project){showToast('Select or create a project','No-project mode has no persisted Settings defaults to restore.','warning');return false;}
     if(state.settingsProjectionReadOnly===true){showToast('Defaults were not restored','The attached Settings owner has not supplied a current readable project projection.','error');return false;}
     if(typeof restore!=='function'){showToast('Defaults were not restored','The Settings owner does not expose the required atomic restore-all transaction.','warning');return false;}
     const result=restore({project_id:project.id,create_rollback:true,preserve_credential_references:true});
     if(result&&typeof result.then==='function'){showToast('Defaults were not restored','The concept requires an accepted owner receipt before updating its projection.','error');return false;}
     if(!result||result.ok===false){showToast('Defaults were not restored',result?.safe_user_message||result?.reason||'The Settings owner rejected restore-all.','error');return false;}
-    state=loadState();ensureStateShape();state.detailSetting=null;renderApp();window.PM7_SETTINGS_TOME.applyPaint(state);showToast('Project defaults restored','The owner restored ordinary project Settings atomically and preserved secure credential references.','warning');return true;
+    const restorePlace={home:state.home,domain:state.domain,workspace:state.workspace,activeSection:clone(state.activeSection||{})};state=loadState();ensureStateShape();Object.assign(state,restorePlace);state.detailSetting=null;renderApp();window.PM7_SETTINGS_TOME.applyPaint(state);showToast('Project defaults restored','Project settings are back to their defaults. Saved sign-ins and history were kept.','success');return true;
   }
   function portalFrame(){const portal=portalRoot(),rect=portal.getBoundingClientRect();return {portal,rect,width:portal.clientWidth||rect.width,height:portal.clientHeight||rect.height};}
   let hostWidth=0;

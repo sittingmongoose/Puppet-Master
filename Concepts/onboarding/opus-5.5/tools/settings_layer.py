@@ -437,20 +437,6 @@ def apply(doc: str, need) -> tuple[str, dict]:
     reset_anchor = '  function reset(){var k=key();if(k)try{localStorage.removeItem(k);}catch(_e){}}'
     need(js.count(reset_anchor) == 1, 'O55 settings: demo restore adapter anchor drift')
     js = js.replace(reset_anchor, (PKG / 'tools' / 'settings_restore.js').read_text(encoding='utf-8') + '\n' + reset_anchor, 1)
-    expose = 'window.PM7_SETTINGS_TOME={load:load,save:save,reset:reset,'
-    need(js.count(expose) == 1, 'O55 settings: demo restore exposure anchor drift')
-    js = js.replace(expose, expose + 'restoreProjectDefaults:restoreProjectDefaults,', 1)
-    restore = 'restore=registry&&registry.restoreProjectDefaults;'
-    need(js.count(restore) == 1, 'O55 settings: restore owner boundary anchor drift')
-    js = js.replace(restore, 'restore=registry?registry.restoreProjectDefaults:window.PM7_SETTINGS_TOME.restoreProjectDefaults;', 1)
-    outcome = "showToast('Project defaults restored','The owner restored ordinary project Settings atomically and preserved secure credential references.','warning');"
-    need(js.count(outcome) == 1, 'O55 settings: restore outcome anchor drift')
-    js = js.replace(outcome, "showToast('Project defaults restored','Project settings are back to their defaults. Saved sign-ins and history were kept.','success');", 1)
-    restored_state = 'state=loadState();ensureStateShape();state.detailSetting=null;renderApp();window.PM7_SETTINGS_TOME.applyPaint(state);'
-    need(js.count(restored_state) == 1, 'O55 settings: restore projection reload anchor drift')
-    js = js.replace(restored_state, 'const restorePlace={home:state.home,domain:state.domain,workspace:state.workspace,activeSection:clone(state.activeSection||{})};'
-                    'state=loadState();ensureStateShape();Object.assign(state,restorePlace);state.detailSetting=null;renderApp();window.PM7_SETTINGS_TOME.applyPaint(state);', 1)
-
     band_js = lambda value: json.dumps(value, ensure_ascii=False, indent=2)
     js = _band(js, '  const providers = [', '  const freeRoutes = [',
                '  const providers = ' + band_js(data['providers']) + ';\n\n', need, 'providers')
