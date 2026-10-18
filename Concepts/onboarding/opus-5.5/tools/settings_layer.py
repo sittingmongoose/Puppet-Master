@@ -1,6 +1,6 @@
-"""O55 Settings layer: swap the pinned base's T50 Settings refresh for the Opus 5.5 fork in ../src/settings.
+"""O55 Settings layer: swap the live shell's historical T50 Settings refresh for the Opus 5.5 fork in ../src/settings.
 
-The pinned base (Concepts/Onboarding concepts/TestPMConcept.html) is the T50 lane's output: its Settings engine carries the T50 fixture
+The assembled live input comes from ../base/. Its Settings engine retains the T50 fixture
 bands (providers, forges, events, sounds) and the appended pm51 kit + managers module, and its head carries
 <style id="pm51-settings-refresh">. This step replaces exactly those pieces with the fork, so the managers are
 authored as real source files here instead of as patches:
@@ -334,7 +334,7 @@ def _band(text: str, start: str, end: str, replacement: str, need, label: str) -
 
 
 def _canon_defaults(doc: str, need) -> tuple[str, list]:
-    """The pinned base page carries the inventory as it stood when it was pinned, twice (the page's settings data and
+    """The base sources carry the historical inventory twice (the page's settings data and
     the Settings engine's reference). Rows whose default Plans/settings_inventory.json has since changed by decision
     (DL-107 turned chat sounds on, DL-108 made Queue the busy-send default) take the canon default, recommendation and
     description, so the concept never shows a superseded default. Theme-owned defaults ("theme") are handled by the

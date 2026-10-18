@@ -9,15 +9,12 @@ Usage:
   python3 Concepts/onboarding/opus-5.5/tools/build.py --out /tmp/ref.html --no-home   # private build without the Home layer (today's Home)
   python3 Concepts/onboarding/opus-5.5/tools/build.py --check  # verify the built file is current, every guard holds, and PMConcept7.html is byte-identical
 
-The live base is assembled by tools/base_source.py from ../base/manifest.json and its source files.
-The old TestPMConcept.html is history. During Phase 1 the assembled bytes retain its one-time split pin. The legacy Product Onboarding and Guided Tour blocks are removed, the O55 modules are
-spliced between <!-- O55:*:START/END --> markers, and a short list of guarded, exactly-once patches re-point the shell's
-few remaining references (hover-tag overlay ids, labels, Doctor quiet actions, Teacher persona, owner exposures).
-The Usage page is the redesign in Concepts/usage-redesign: its usage_layer replaces the base's Prism Usage page at step 2b.
-Home is the universal panel system and the terminal in Concepts/home-redesign: its home_layer runs at step 5. Liquid
-Glass (Concepts/liquid-glass/opus-5.5) and then the wallpapers (Concepts/wallpapers/opus-5.5) go over the page last, at
-step 6. Step 7 (tools/css_bucket_split.py) rewrites the finished page's selectors so the browser can bucket them; the
-page lint reads the page from before that step.
+The live shell is ordinary source in ../base/: manifest.json fixes the block list, shell.html owns markup,
+and tools/base_source.py inserts raw style/script bodies byte for byte. Edit those files directly; the old
+TestPMConcept.html, shell_motion.py and wizorch_layer.py are history. The split proof lives in base/README.md.
+Unconditional shell edits are already in base/; the fork-owned Doctor edit is in src/settings/managers/55-doctor.js.
+Settings (step 0), Usage (2b), O55 (3), rail (4), glyphs (5), Home/Glass/wallpapers (6) remain authored layers.
+Step 7 applies active_descendant_rewrite and css_bucket_split over the finished page; page lint sees the unsplit CSS.
 Concepts/PMConcept7.html is published only from here (2026-09-26 user direction): --publish-pm7 writes the same built
 bytes to both outputs, and --check fails while PMConcept7.html is missing or differs by even one byte.
 """
@@ -40,7 +37,6 @@ import css_bucket_split
 TOOLS = Path(__file__).resolve().parent
 PKG = TOOLS.parent
 CONCEPTS = PKG.parents[1]
-SOURCE = base_source.BASE  # live shell sources; the former page is history
 TARGET = CONCEPTS / 'Onboarding concepts' / 'TestOpus5.5PmConcept.html'
 PM7_TARGET = CONCEPTS / 'PMConcept7.html'
 SRC = PKG / 'src'
@@ -60,10 +56,6 @@ class BuildError(RuntimeError):
 def need(cond: bool, message: str) -> None:
     if not cond:
         raise BuildError(message)
-
-
-
-
 
 
 def replace_once(text: str, old: str, new: str, label: str) -> str:
@@ -342,67 +334,6 @@ def duplicate_keys() -> list[str]:
     return out
 
 
-
-
-
-# Text typed under a Custom choice survives a reload (2026-10-13, pm7-terminal-options-audit-sol on frozen a1ca: Terminal
-# Colors and Terminal Font kept their typed names until a reload, then lost them while every other value came back).
-# The Settings kit keeps that text in state.pm51.o55Custom (src/settings/kit.d/16-pages.js), and the tome's save() wrote
-# only its listed keys. It now writes the typed strings too, never for a credential setting; load() needs nothing, since
-# it merges the saved projection over the defaults and the kit only fills what is missing.
-
-
-# EDITOR_LOOK_ROWS (pm7-editor-customizer, 2026-10-14): the Editor look rows the editor Customize proposal adds to
-# Plans/settings_inventory.json, kept in src/settings/proposed.d/*.json in the inventory's own shape. They join the
-# base page's two embedded inventories (the Settings engine's window.PM12_REFERENCE and #pm7-settings-data) before the
-# Settings layer reads them, exactly as settings_layer._canon_rows admits canon rows, so placement, search, Details,
-# transfer and the editor treat them as the rows they are proposed to become. A row whose id canon already holds is
-# skipped (the Settings layer admits canon's own), so this block retires itself row by row as canon admits them.
-
-
-
-
-
-
-# NieR Mode (src/settings/kit.d/18-nier.js) is a hidden theme painted over the Basic family. The paint hook
-# window.PM_THEME_PAINT_FAMILY(family) answers the family to paint: 'basic' while NieR Mode is on, the family itself
-# while it is off. PM_THEME's themeState keeps the chosen family and mode, so turning NieR Mode off paints exactly what
-# was chosen. Every writer of <html data-theme> that can run while NieR Mode is on goes through the hook:
-#   - PM_THEME.themeApply (setFamily / setMode / set, the Auto scheme listener, the boot adoption in wireTheme);
-#   - the legacy #themeSelect change bridge, which copies the menu's chosen slug back onto <html>;
-#   - PM7_SETTINGS_TOME.applyPaint (its slug and its no-PM_THEME fallback). Its repaint test compared <html> with the
-#     chosen slug, which under NieR Mode differs on every save, and never noticed a themeState left behind by the
-#     boot adoption; it now compares the painted slug and the chosen family.
-# The head boot script only ever writes basic-<scheme> (its family is the literal 'basic'), so it needs no hook.
-# PM_THEME_PAINT_LABEL() names the painted look in the title-bar menu ('' while NieR Mode is off).
-
-# The onboarding window's look preview holds the page's theme (2026-10-13, Create Project's theme flicker). While the
-# window owns a preview, PM7_SETTINGS_TOME.applyPaint paints the pair the window names, src/js/60-ui-core.js
-# window.O55_PAINT_PAIR() (the draft's family and Light or Dark, only while the window is open and shown), instead of
-# the selected Project's stored pair: selecting the new Project at Create Project reapplied its Settings and painted
-# the factory Basic Dark for a moment, and the look's save wrote its family before its mode. Loaded Settings, the seed,
-# the save and the NieR paint hook (which runs on the slug below) are unchanged; with no pair, applyPaint is as before.
-
-# First paint (2026-10-09). The head boot script painted Basic Dark on every open (T44 had replaced its pm.themeFamily
-# read with literals: project-scoped Settings owns persistence, so there is no global theme key), and the stored look
-# arrived only when Settings ran: a black frame, then Basic Dark for 0.35 s before NieR's boot log, and about 3 s of
-# Basic Dark before a Light family. T44's concern is that a theme is a Project's setting with one owner and one store.
-# So the head stores nothing: it reads the stored projection of the Project the page opens on, under the key the
-# Settings owner writes, and paints that look (data-theme, NieR Mode's attributes, glass, reduced motion and the
-# ground) before the first frame. The Project the page opens on is the one the title bar selects in the markup (the
-# Settings adapter's projectRecord(): PM_ACTIVE_PROJECT_ID when a host has set it, else that menu item); a reload
-# always opens it, whatever was selected before. A new install's onboarding always starts in Basic Dark (Jared,
-# 2026-10-09): with ?o55=fresh, or with no onboarding record yet (the window then opens by itself), the head paints
-# Basic Dark and leaves the store unread; window.PM_O55_BOOT tells Settings (kit.d/18-nier.js) and the onboarding the
-# same decision. While NieR's boot log will run, the page waits under a cover of the log's own paper until the log is
-# up (kit.d/20-nier-world.js removes data-o55-boot-wait), so the app never shows between the first frame and the log.
-
-
-
-
-# Owner exposures (Astra precedent): hand the real owners to onboarding/tour without a second implementation.
-
-
 SETTINGS_NOTES: dict = {}
 # the page as it was before step 7, keyed by the built text: the page lint ratchet counts what the sources wrote
 UNSPLIT: dict = {}
@@ -454,18 +385,10 @@ def build_text(usage: bool = True, home: bool = True) -> str:
         raise BuildError(str(exc)) from exc
     text = original.decode('utf-8')
 
-    # 0. Settings: swap the base's T50 managers layer for the Opus 5.5 fork in src/settings. The proposed Editor look
-    #    rows join the embedded inventories first (EDITOR_LOOK_ROWS), so the layer places and validates them.
+    # 0. The Settings fork replaces the historical T50 bands in the live shell sources.
     text, SETTINGS_NOTES['layer'] = settings_layer.apply(text, need)
 
-    # Legacy onboarding/tour removal is authored in base/shell.html (Q18).
-
-    # 2. Guarded patches.
-
-    # 2b. Usage: replace the Prism Usage page with the redesign in Concepts/usage-redesign. This runs after the
-    # PATCHES loop because the 'usage card cta :has restyle' patch needs the old rule present, and before the O55
-    # splice so the layer never sees the O55 modules (the left rail's layer, which anchors on <!-- O55:CSS:END -->,
-    # goes after the splice).
+    # 2b. Usage precedes the O55 splice, so its conditional layer never sees O55 modules.
     if usage:
         text, SETTINGS_NOTES['usage'] = usage_layer.apply(text, need)
     else:
@@ -490,7 +413,7 @@ def build_text(usage: bool = True, home: bool = True) -> str:
     # 6. Home: the universal panel system and the terminal tab kind from Concepts/home-redesign (D28: after Usage and the
     #    rail). home_layer.apply() adds the early script and its CSS between HOME:CSS markers before </head>, the panels
     #    and the terminal between HOME:BODY markers before </body>, three NieR selector hooks and three guarded app JS
-    #    patches; it anchors after the O55 and rail blocks, so it runs last.
+    #    patches; it anchors after the O55 and rail blocks, so it runs after them.
     if home:
         text, SETTINGS_NOTES['home'] = _home().apply(text, need)
     else:
@@ -508,6 +431,7 @@ def build_text(usage: bool = True, home: bool = True) -> str:
         except layer.LayerError as exc:
             raise BuildError(f'{folder} layer: {exc}') from exc
         text = injected[0] if isinstance(injected, tuple) else injected
+    # Preserve the historical publication note byte for byte. Live edit locations are documented above.
     note = ('<!-- TestOpus5.5PmConcept (Opus 5.5): TestPMConcept.html with a rebuilt Product Onboarding and Guided Tour. '
             'Built by Concepts/onboarding/opus-5.5/tools/build.py; never hand-edit. -->\n')
     # 7. T2 (P1000 speed team): the 13 '<compound with .active> *' rules made every .active toggle restyle the toggled
@@ -645,13 +569,13 @@ def check(built: str) -> list[str]:
 def syntax_check(built: str, usage: bool = True) -> list[str]:
     """node --check the scripts this package writes (the Settings engine with its managers, the O55 module, and the
     Usage page's pm-usage-js from Concepts/usage-redesign, which must be there exactly once unless usage=False), the
-    head boot script, and pm6-js-globals, which the base-engine PATCHES (the PMH switch-off, nier-next's next-frame
-    readers) rewrite: a broken patch there would otherwise pass the build and fail only in the browser."""
+    head boot script and pm6-js-globals, now authored in base/script/ along with the PMH switch-off and next-frame
+    readers: malformed source there must fail at build time."""
     import subprocess
     import tempfile
     out = []
     for sid in ('pm4-settings-js', 'pm-o55-js', 'pm6 boot', 'pm6-js-globals'):
-        if sid == 'pm6 boot':  # the head boot script (no id), which first_paint_patches() extends
+        if sid == 'pm6 boot':  # base/script/script-001.js (the head boot script without an id)
             m = re.search(r'<script>(\s*/\* pm6 boot: .*?)</script>', built, re.S)
         else:
             m = re.search(r'<script\b[^>]*\bid="' + sid + r'"[^>]*>(.*?)</script>', built, re.S)

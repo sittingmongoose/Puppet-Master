@@ -185,16 +185,15 @@ The detail is in `understand/cur-xref.md` section 10 and `DESIGN-INPUTS.md` sect
 ## How it is published
 
 `Concepts/onboarding/opus-5.5/tools/build.py` imports `usage_layer` from `tools/` here and, in `build_text()`, calls
-`text, SETTINGS_NOTES['usage'] = usage_layer.apply(text, need)` as step 2b: after the PATCHES loop and the owner
-exposures, before the O55 splice. It adds `usage_layer.lint()` to `lint_sources()` and `usage_layer.syntax_check()` to
+`text, SETTINGS_NOTES['usage'] = usage_layer.apply(text, need)` as step 2b: after assembling the live shell and Settings, before the O55 splice. It adds `usage_layer.lint()` to `lint_sources()` and `usage_layer.syntax_check()` to
 `syntax_check()`, and `check()` fails on any of `usage_layer.REMOVED`, a missing `usage_layer.KEPT` entry, or a
 `<!-- USAGE:BODY:START/END -->` marker that is not there exactly once.
 
-- Order matters. The layer runs after the PATCHES loop, because the patch "usage card cta :has restyle" needs the old
-  `.pm7u-card:has(.pm7u-setup-cta)` rule. It runs before the O55 splice, so it never sees the O55 modules; a later
-  layer that anchors on `<!-- O55:CSS:END -->` (the left rail's `rail_layer`) runs after the splice. The order in
-  `build_text()` is: settings layer, strip, PATCHES (+ NieR, first paint), owner exposures, usage (2b), O55 splice,
-  then such a layer.
+- Order matters. The layer runs before the O55 splice, so it never sees the O55 modules; a later
+  layer that anchors on `<!-- O55:CSS:END -->` (the left rail) runs after that splice. The old
+  "usage card cta :has restyle" fix is now ordinary `base/style/pm7-t32-final.css` source.
+  `build_text()` assembles the live shell, applies Settings, Usage, O55, rail, glyphs,
+  Home, Glass and wallpapers, then active-descendant and CSS-bucket rewrites.
 - `build_text(usage=False)` (`build.py --out <path> --no-usage`) leaves the old page in place. It is a private reference
   build for the boot check only, never published.
 - Possible later clean-ups: the NieR selector patches (`NIER_NAMES`) can become plain edits of opus-5.5

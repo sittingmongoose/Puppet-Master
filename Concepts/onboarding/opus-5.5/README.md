@@ -29,21 +29,26 @@ python3 Concepts/onboarding/opus-5.5/tools/build.py --check  # markers, patches,
 `build.py --out <path> --no-usage` is the same private build without the Usage layer (the base's old Prism Usage page):
 a reference page for `Concepts/usage-redesign/tools/usage_boot.mjs`, never published.
 
-`build.py` assembles the live `base/manifest.json` sources (Phase 1 split proof: SHA-256 `b3888fad…`) and builds it in this order:
-- 0: swaps the base's Settings managers for the fork in `src/settings` (see Settings below);
-- 1: strips the old onboarding and tour;
-- 2: applies a few guarded, exactly-once patches (hover-tag roots, labels, the Teacher persona, NieR Mode, the first
-  paint, and two owner exposures: Settings Transfer preview/apply and the layout restore);
-- 2b: replaces the base's Prism Usage page with the redesigned Usage page: `usage_layer.apply()` from
-  `Concepts/usage-redesign/tools` (sources and guide in `Concepts/usage-redesign/README.md`). It runs after the patches
-  because the patch "usage card cta :has restyle" needs the old rule present, and before the splice so it never sees
-  the O55 modules; it writes the band between `<!-- USAGE:BODY:START/END -->`;
-- 3: splices `src/` between `<!-- O55:… -->` markers (its embedded fonts inlined by `settings_layer.inline_fonts`) and
-  retitles the page;
-- 4: adds the left rail, concept D "Polish" (Jared's choice, 2026-10-09). It runs last because it anchors on
-  `<!-- O55:CSS:END -->` and the page end. `rail_layer.apply_published()` from
-  `Concepts/leftrail-redesign/tools/rail_layer.py` puts the rail core and D's skin between `RAIL:CSS` / `RAIL:BODY`
-  markers and `data-rail-concept="d" data-rail-skin="d"` on the `<html>` tag.
+`build.py` assembles the live `base/manifest.json` sources. Edit the shell in `base/` (markup in
+`shell.html`, block bodies in `style/` and `script/`); see `base/README.md` for source ownership.
+The one-time split reproduced the historical `b3888fad…` input. Its legacy strip, shell fixes,
+first paint, fitting, NieR hooks, owner exposures, motion and wizard fixes now live in those sources.
+The Doctor edit lives in `src/settings/managers/55-doctor.js`, which Settings splices over its historical band.
+`tools/shell_motion.py`, `tools/wizorch_layer.py`, and `src/settings/proposed.d/` are retained history.
+The proposed Editor rows are now canonical and are admitted by `settings_layer` from the inventory.
+
+Build order:
+
+- 0: assemble the shell, then replace Settings bands with the `src/settings` fork;
+- 2b: optionally replace Prism Usage with `Concepts/usage-redesign/tools/usage_layer.py`;
+- 3: splice O55 `src/` between `<!-- O55:… -->` markers and retitle the page;
+- 4: add the left rail, concept D, after O55's markers;
+- 5: add the glyph system;
+- 6: optionally add Home, then Liquid Glass and wallpapers;
+- 7: rewrite active descendants and split CSS selector buckets over the completed page.
+
+Usage and Home retain their own conditional app/context/NieR patches. Their private reference
+builds remain available through `--out <path> --no-usage` and `--out <path> --no-home`.
 
 Every build also lints the Usage sources (`usage_layer.lint()`, in `lint_sources()`) and runs `node --check` on
 `pm-usage-js`; `--check` also fails on an old Usage reference left in the page (`id="pm7UsageApp"`,
@@ -69,7 +74,7 @@ old `build_pm7.py --out Concepts/PMConcept7.html` promotion now refuses by defau
 | `src/copy.d/*.json` | Strings added by later work, merged into `copy.json` by the build in filename order; a leaf key may be defined once. |
 | `src/js/00–20` | Namespace, utilities, the motion clock (one time-scale for filming), synthesised sound kits, storage. |
 | `src/js/16-nier-fx.js` + `src/css/05-nier-fx.css` | `O55.nierFx`: the shared NieR effects for the onboarding window and the tour (see Settings below). |
-| `src/js/18-hover.js` + `src/css/22-hover.css` | PMH, the hover engine for every card, row, tile and icon in PMConcept7 (`window.PMH`): one hook on the shared pointermove dispatcher, state classes `.pmh-on/.pmh-near/.pmh-out`, registered non-inherited `--pmh-*` values, the magnet on `translate`, the `#pmh-glow` and `#pmh-frame` proxies, tokens per family and kind read from CSS. Five `pmh:` PATCHES in `tools/build.py` turn the PM8 engine, its ring and wash and the `.pm-sheen:hover` rules off. The contract is in the file headers. |
+| `src/js/18-hover.js` + `src/css/22-hover.css` | PMH, the hover engine for every card, row, tile and icon in PMConcept7 (`window.PMH`): one hook on the shared pointermove dispatcher, state classes `.pmh-on/.pmh-near/.pmh-out`, registered non-inherited `--pmh-*` values, the magnet on `translate`, the `#pmh-glow` and `#pmh-frame` proxies, tokens per family and kind read from CSS. The switch-off is authored in `base/script/pm6-js-globals.js` and `base/style/pm6-css-global.css`; the dead engine remains after its inserted `return;`. The contract is in the file headers. |
 | `src/js/25–35` | Fixture world and scenarios, the owner command table (pre-commit discipline), the canonical setup-plan draft. |
 | `src/js/50–59` | Art: scene system, five family prop libraries (Basic blueprint, Friendly paper theatre, Glass light lab, Retro arcade, and the NieR unit marionettes in `54-art-nier.js`), the marionette rig and the troupe's stage performances (`58-rig.js`, `59-cheer.js`), scene compositions. Every puppet's limbs share their joints (2026-10-13): Glass is a ball-jointed crystal marionette over layered glass waves (the Glass wallpaper's language), Friendly's felt puppets have sewn-on sleeves and legs under the hem, Basic draws every joint; a waving arm is an `.o55-arm` holding an `.o55-fore` that the rig bends at the elbow. Captions have no box and signs are cut glass or stitched paper (no pills). |
 | `src/js/60–62` | The window, components, flow helpers (phased owner operations, countdowns, QR drawing). |
@@ -171,7 +176,7 @@ it for someone who has never configured a developer tool. Rules the pages follow
 
 **NieR Mode** (Settings › App & Input › Theme & colors, off by default) is a hidden theme painted over the Basic family
 in light or dark, not a ninth theme: the chosen family stays in `PM_THEME`'s state and comes back when it is turned off.
-`build.py` routes every writer of `<html data-theme>` through `window.PM_THEME_PAINT_FAMILY`; `kit.d/18-nier.js` is the
+The live base sources route every writer of `<html data-theme>` through `window.PM_THEME_PAINT_FAMILY`; `kit.d/18-nier.js` is the
 engine and documents the contract the parts code against (`html[data-o55-nier="on"]`, `data-o55-nier-parts`,
 `window.PM_NIER`); `styles.d/13-nier.css` holds the palette and the embedded faces (M PLUS 1 and JetBrains Mono,
 inlined by `tools/settings_layer.py`; sources and licences in `src/settings/nier/`).

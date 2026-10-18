@@ -42,17 +42,16 @@ Read the next section before changing anything here.
 ## PM7 publication — 2026-09-26 (current)
 
 The checked-in `Concepts/PMConcept7.html` is published byte-identical from
-`Concepts/TestOpus5.5PmConcept.html` — the current leading GUI/interaction
+`Concepts/Onboarding concepts/TestOpus5.5PmConcept.html` — the current leading GUI/interaction
 reference — through its authored generator:
 
     python3 Concepts/onboarding/opus-5.5/tools/build.py --publish-pm7
     python3 Concepts/onboarding/opus-5.5/tools/build.py --check  # includes PM7 byte parity
 
-Source chain: pinned TestPM settings checkpoint →
-`build_testpm_settings_refresh.py` → `TestPMConcept.html` → opus-5.5
-`build.py` (+ `Concepts/usage-redesign` `usage_layer`: the Usage page; `Concepts/leftrail-redesign`
-`rail_layer`: the left rail; `Concepts/home-redesign` `home_layer`: the Home panels and the terminal) →
-`TestOpus5.5PmConcept.html` → `PMConcept7.html` (same bytes).
+Current source chain: `Concepts/onboarding/opus-5.5/base/` + its authored Settings/O55 sources
+and the Usage, rail, glyph, Home, Glass and wallpaper layers → opus-5.5 `tools/build.py` →
+`Concepts/Onboarding concepts/TestOpus5.5PmConcept.html` → `Concepts/PMConcept7.html` (same bytes).
+The frozen TestPM checkpoint chain below is historical lineage.
 
 The T33+ pipeline in this directory, including the old T44 Settings tome,
 T45 onboarding/tour, and T50 Settings refresh stages, is retained for

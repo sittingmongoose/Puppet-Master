@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Usage layer: replace the Prism Usage page of the built concept with the redesigned Usage page in ../src.
 
-opus-5.5 tools/build.py applies it at its step 2b (after the PATCHES loop, before the O55 splice), which publishes
+opus-5.5 tools/build.py applies it at its step 2b (after assembling the live shell and Settings, before the O55 splice), which publishes
 PMConcept7.html (build.md section 9, Proposal B):
 
   text, notes = usage_layer.apply(text, need)   # text = build_text() at step 2b; need = build.need

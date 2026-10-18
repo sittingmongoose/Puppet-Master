@@ -27,3 +27,20 @@ names the affected path, and never normalizes the input.
 
 Eight bodies deliberately have no final LF. Preserve their EOF exactly; disable editor
 "insert final newline" for those files. Neither the assembler nor the splitter adds one.
+
+## Edit locations after Q18
+
+- `shell.html`: shell markup, O55 body slot, wizard/orchestrator wrappers and surface attributes.
+- `script/script-001.js`: first paint. Its project selection, Settings key, onboarding key,
+  NieR parts and ground colors must agree with shell markup and `src/settings` when edited.
+- `script/pm4-settings-js.js`: Settings engine outside the replaceable T50 bands. The band after
+  `PM51_SETTINGS_REFRESH` and the provider/forge/event/sound fixture bands are replaced by the
+  Settings fork; edit `src/settings/` for their live implementation.
+- Other `script/` and `style/` files: the named shell blocks. The manifest also inserts the live
+  `tools/motion_finish.js` directly, without duplicating that authored source.
+- Doctor quiet actions: `src/settings/managers/55-doctor.js` (Settings step 0 owns this output).
+
+The unconditional patches from `build.py`, `shell_motion.py` and `wizorch_layer.py` are folded.
+The latter two tools and the four retired onboarding/tour block files remain historical only.
+Use `python scripts/pm7-where.py '<snippet>'` to find the live source, then the four checks above.
+Do not remove dead code as part of editing this split; the PM8 engine's early `return;` is intentional.

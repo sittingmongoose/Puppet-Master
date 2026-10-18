@@ -13,18 +13,14 @@ stage that contains the snippet:
      intermediate.
   3. home: Concepts/home-redesign
   4. usage: Concepts/usage-redesign
-  5. wizorch: Concepts/onboarding/opus-5.5/tools/wizorch_layer.py
-  6. settings_layer: Concepts/onboarding/opus-5.5/tools/settings_layer.py
-  7. PATCHES, NIER_PATCHES, first_paint_patches, THEME_PREVIEW_PATCHES and
-     CUSTOM_TEXT_PATCHES in Concepts/onboarding/opus-5.5/tools/build.py
-  8. the live base sources, Concepts/onboarding/opus-5.5/base
+  5. Settings generator: Concepts/onboarding/opus-5.5/tools/settings_layer.py
+  6. live shell: base/shell.html and the active sources named by base/manifest.json
 
 Every match is printed as file:line. Base hits name editable source files.
 """
 from __future__ import annotations
 
 import argparse
-import ast
 import importlib.util
 import json
 import sys
@@ -33,12 +29,10 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 PAGE = ROOT / "Concepts" / "PMConcept7.html"
 BASE = ROOT / "Concepts" / "onboarding" / "opus-5.5" / "base"
-BUILD_PY = ROOT / "Concepts" / "onboarding" / "opus-5.5" / "tools" / "build.py"
 O55_SRC = ROOT / "Concepts" / "onboarding" / "opus-5.5" / "src"
 RAIL = ROOT / "Concepts" / "leftrail-redesign"
 HOME = ROOT / "Concepts" / "home-redesign"
 USAGE = ROOT / "Concepts" / "usage-redesign"
-WIZORCH = ROOT / "Concepts" / "onboarding" / "opus-5.5" / "tools" / "wizorch_layer.py"
 SETTINGS_LAYER = ROOT / "Concepts" / "onboarding" / "opus-5.5" / "tools" / "settings_layer.py"
 D_CSS = RAIL / "src" / "concepts" / "d" / "d.css"
 BUILD_D_CSS = RAIL / "tools" / "build_d_css.py"
@@ -47,10 +41,8 @@ GENERATED_D_NOTE = (
     "(Concepts/leftrail-redesign/tools/build_d_css.py; edit the .src.css files, never d.css)"
 )
 
-PATCH_LISTS = ("PATCHES", "NIER_PATCHES", "THEME_PREVIEW_PATCHES", "CUSTOM_TEXT_PATCHES")
-PATCH_FUNCTION = "first_paint_patches"
 
-SKIP_DIRS = {".git", "node_modules", "__pycache__", ".pytest_cache"}
+SKIP_DIRS = {".git", "node_modules", "__pycache__", ".pytest_cache", "proposed.d"}
 SKIP_SUFFIXES = {
     ".woff", ".woff2", ".ttf", ".otf", ".png", ".jpg", ".jpeg", ".gif", ".webp",
     ".ico", ".mp3", ".wav", ".mp4", ".bin", ".zip", ".pdf",
@@ -230,86 +222,12 @@ def search_paths(paths: list[Path], snippet: str) -> list[tuple[Path, int]]:
     return found
 
 
-def patch_spans(source: str) -> list[tuple[int, int]]:
-    tree = ast.parse(source)
-    spans: list[tuple[int, int]] = []
-    for node in tree.body:
-        if isinstance(node, ast.Assign):
-            names = [t.id for t in node.targets if isinstance(t, ast.Name)]
-            if any(name in PATCH_LISTS for name in names) and node.end_lineno:
-                spans.append((node.lineno, node.end_lineno))
-        elif isinstance(node, ast.AnnAssign) and isinstance(node.target, ast.Name):
-            if node.target.id in PATCH_LISTS and node.end_lineno:
-                spans.append((node.lineno, node.end_lineno))
-        elif isinstance(node, ast.FunctionDef) and node.name == PATCH_FUNCTION and node.end_lineno:
-            spans.append((node.lineno, node.end_lineno))
-    return spans
-
-
-def in_spans(line: int, spans: list[tuple[int, int]]) -> bool:
-    return any(start <= line <= end for start, end in spans)
-
-
-def load_patch_entries() -> list[tuple[str, str, str]]:
-    """(old, new, label) for the patch lists build.py applies, including first paint."""
-    tools = BUILD_PY.parent
-    if str(tools) not in sys.path:
-        sys.path.insert(0, str(tools))
-    import build  # noqa: WPS433  (the publisher; imported only for its patch tables)
-
-    entries: list[tuple[str, str, str]] = []
-    for name in PATCH_LISTS:
-        entries.extend(getattr(build, name, []))
-    try:
-        base = build.base_source.assemble().decode("utf-8")
-        entries.extend(build.first_paint_patches(base))
-    except Exception as exc:  # noqa: BLE001 - a drifted pin still leaves the static lists searchable
-        print(f"pm7-where: first_paint_patches could not be built ({exc})", file=sys.stderr)
-    return entries
-
-
-def label_line(source: str, label: str) -> int | None:
-    needle = repr(label)
-    for line_no, line in enumerate(source.splitlines(), 1):
-        if needle in line or label in line:
-            return line_no
-    return None
-
-
-def search_patches(snippet: str) -> list[tuple[Path, int]]:
-    source = read_text(BUILD_PY)
-    if source is None:
-        return []
-    spans = patch_spans(source)
-    try:
-        entries = load_patch_entries()
-    except Exception as exc:  # noqa: BLE001
-        print(f"pm7-where: could not read build.py patches ({exc})", file=sys.stderr)
-        entries = []
-    producing = [label for _old, new, label in entries if snippet in new]
-    if not producing:
-        return []
-    literal = [line for line in unique(line_hits(source, snippet)) if in_spans(line, spans)]
-    if literal:
-        return [(BUILD_PY, line) for line in literal]
-    found: list[tuple[Path, int]] = []
-    seen: set[int] = set()
-    for label in producing:
-        line = label_line(source, label)
-        if line is not None and line not in seen:
-            seen.add(line)
-            found.append((BUILD_PY, line))
-    return found
-
-
 STAGES: list[tuple[str, str]] = [
     ("O55 source", "o55"),
     ("rail layer", "rail"),
     ("home layer", "home"),
     ("usage layer", "usage"),
-    ("wizorch layer", "wizorch"),
     ("settings layer", "settings"),
-    ("build.py patch", "patch"),
     ("live base source", "base"),
 ]
 
@@ -325,12 +243,8 @@ def stage_hits(kind: str, snippet: str) -> list[tuple[Path, int]]:
         return search_tree(HOME, snippet)
     if kind == "usage":
         return search_tree(USAGE, snippet)
-    if kind == "wizorch":
-        return search_paths([WIZORCH], snippet)
     if kind == "settings":
         return search_paths([SETTINGS_LAYER], snippet)
-    if kind == "patch":
-        return search_patches(snippet)
     if kind == "base":
         manifest = json.loads((BASE / 'manifest.json').read_bytes())
         return search_paths([BASE / manifest['skeleton']] + [BASE / b['file'] for b in manifest['blocks']], snippet)
@@ -343,8 +257,7 @@ def build_parser() -> argparse.ArgumentParser:
         description="Find a snippet of Concepts/PMConcept7.html and name the source that produced it.",
         epilog=(
             "Search order: O55 src (copy.json and copy.d included), then the rail, home, usage, "
-            "wizorch and settings layers, then the PATCHES / NIER_PATCHES / first_paint_patches / "
-            "THEME_PREVIEW_PATCHES / CUSTOM_TEXT_PATCHES entries in build.py, then the live base sources. "
+            "the Settings generator, then the active live base sources. "
             "The first stage that contains the snippet wins, and every match in that stage is printed. "
             "A rail snippet that exists only in generated d.css is answered from the .src.css line "
             "build_d_css.py expands, and d.css is named afterwards as a generated intermediate. "
