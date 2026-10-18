@@ -350,14 +350,6 @@ def duplicate_keys() -> list[str]:
 # The Settings kit keeps that text in state.pm51.o55Custom (src/settings/kit.d/16-pages.js), and the tome's save() wrote
 # only its listed keys. It now writes the typed strings too, never for a credential setting; load() needs nothing, since
 # it merges the saved projection over the defaults and the kit only fills what is missing.
-CUSTOM_TEXT_PATCHES = [
-    ("settingsSourceSnapshot:clone(snapshot&&snapshot.settingsSourceSnapshot||null)};",
-     "settingsSourceSnapshot:clone(snapshot&&snapshot.settingsSourceSnapshot||null)};"
-     "var o55Typed=snapshot&&snapshot.pm51&&snapshot.pm51.o55Custom;"
-     "if(o55Typed&&typeof o55Typed==='object'){owned.pm51={o55Custom:{}};Object.keys(o55Typed).forEach(function(id){"
-     "if(!credentialSettingIds.has(id)&&typeof o55Typed[id]==='string')owned.pm51.o55Custom[id]=o55Typed[id];});}",
-     'typed Custom text in the saved projection'),
-]
 
 
 # EDITOR_LOOK_ROWS (pm7-editor-customizer, 2026-10-14): the Editor look rows the editor Customize proposal adds to
@@ -500,8 +492,6 @@ def build_text(usage: bool = True, home: bool = True) -> str:
 
     # 2. Guarded patches.
 
-    for old, new, label in CUSTOM_TEXT_PATCHES:
-        text = replace_once(text, old, new, label)
     # 2a. The shell's motion fixes from the final motion QA (tools/shell_motion.py): the status bar's hover tags and
     #     the page switch. They anchor on the text the lists above leave.
     import shell_motion  # noqa: E402
