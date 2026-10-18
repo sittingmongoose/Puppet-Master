@@ -7353,6 +7353,7 @@
       next.layout_revision = committed.layout_revision;
       return commitLayout(next, "recovery", "cmd.workspace_layout.reset", { affected_surface_instance_ids: next.surfaces.map(function (surface) { return surface.surface_instance_id; }) });
     },
+    o55RestoreSnapshot: function (snapshot) { var problem = validateLayout(snapshot); if (problem) return { ok: false, reason: problem }; var result = commitLayout(JSON.parse(JSON.stringify(snapshot)), "restore", "cmd.workspace.layout.restore", { source: "guided_tour_restore" }); return { ok: result !== false, result: result }; },
     failNextPersistenceWrite: function () { faults.failNextWrite = true; },
     beginDrag: beginDrag,
     updateDrag: updateDrag,
