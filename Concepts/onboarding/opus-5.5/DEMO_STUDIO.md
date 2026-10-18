@@ -83,7 +83,6 @@ Source: `Concepts/home-redesign/src/panels/**`.
 | `?o55=tour` | Starts the Guided Tour |
 | `?o55=screen=<id>` | Opens onboarding at one screen (46 screens, e.g. `nas-key`, `online-signin`, `ready`) |
 | `?o55scenario=<id>[+<id>]` | Sets the situation, combinations allowed |
-| `?home=current` | Today's Home instead of the panels (A/B in the review copy) |
 | `?pmh=off` | Hover engine off |
 | `?pmu-live=off` | Usage demo readings start paused |
 | `?pmu-flags=live:0,hour:0,roll:0,light:0,ramp:0` | Usage's open questions to Jared, one switch each |

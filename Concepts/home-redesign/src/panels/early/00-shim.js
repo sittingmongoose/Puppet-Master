@@ -1,12 +1,10 @@
-/* Runs in <head>, before the page's old Home controller is parsed. It turns the home layer on (html[data-pmw-home]) and
-   defines window.PM_HOME_WORKSPACE as a compatibility shim, so the old controller's own guard returns and only one Home
-   model exists. Members the tour, the chat and the activity bar still call delegate lazily to PM_HOME; the rest answer
-   { ok: false, reason: 'retired' }. ?home=current leaves today's Home running for an A/B in the review copy. */
+/* Runs in <head>, turns the home layer on (html[data-pmw-home]) and defines window.PM_HOME_WORKSPACE as a compatibility
+   shim. Members the tour, the chat and the activity bar still call delegate lazily to PM_HOME; the rest answer
+   { ok: false, reason: 'retired' }. */
 
-if (/[?&]home=current\b/.test(location.search)) return;
-// The disabled legacy controller's global cursor/selection rules would still restyle every element when the tour
+// The legacy stylesheet's global cursor/selection rules would still restyle every element when the tour
 // compatibility flag changes. The panel kit uses pointer capture and selectstart instead. Remove only those two
-// rules before first paint; ?home=current keeps the original sheet and cascade order. The build guards the anchors.
+// rules before first paint. The build guards the anchors.
 var legacySheet = document.getElementById('pm6-css-dashboard').sheet;
 for (var ri = legacySheet.cssRules.length - 1; ri >= 0; ri--) {
   var rule = legacySheet.cssRules[ri];

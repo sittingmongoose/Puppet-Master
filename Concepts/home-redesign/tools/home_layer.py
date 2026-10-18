@@ -17,14 +17,14 @@ edits the page's own markup. apply() only adds:
   2. <script id="pm-home-js"> just before </body>: the panels core (src/panels/js/*.js in one strict scope that
      publishes window.PM_HOME and window.PMW), then the terminal (src/terminal/js/*.js in a scope of its own, given
      PM_HOME), then PM_HOME.boot(). Each part is guarded, so one failing part leaves the others running.
-  2b. <script id="pm-home-early"> in <head> (src/panels/early/*.js): the PM_HOME_WORKSPACE shim, so the old Home
-     controller's own guard skips it, and html[data-pmw-home="on"] (?home=current keeps today's Home for an A/B).
+  2b. <script id="pm-home-early"> in <head> (src/panels/early/*.js): the PM_HOME_WORKSPACE compatibility shim and
+     html[data-pmw-home="on"]. The retired Home controller is no longer assembled.
      Guarded app JS patches (APP_PATCHES): homeActive lets the chat stay one column on every page; the status bar's
      host item and NieR's readout of it; the left rail's Dashboard (HOME) toggle is removed.
   3. NIER_ENTRIES contributes the panels' NieR hook classes (.pmw-cur, .pmw-chosen, .pmw-strip) to the shared registry
      (opus-5.5 src/settings/kit.d/nier_registry.py). build.py emits the lists after all layers; edit data, not anchors.
-At run time the panels replace the Home centre (CONTRACT.md); the old Home model stays loaded for the pages and tour
-code that still call it, behind compatibility shims. Every step is guarded: each anchor must be found exactly once and
+At run time the panels replace the Home centre (CONTRACT.md); compatibility shims route the pages and tour code's
+remaining workspace calls to the panels. Every step is guarded: each anchor must be found exactly once and
 the layer markers must not be in the input already. The terminal thread owns src/terminal/**; this file is the panels
 thread's.
 """
@@ -50,9 +50,9 @@ JS_START, JS_END = '<!-- HOME:BODY:START -->', '<!-- HOME:BODY:END -->'
 HEAD_ANCHOR = '\n</head>'
 BODY_ANCHOR = '\n</body>'
 
-# The old Home controller changes the cursor on every descendant of body. The panel gesture already captures the
-# pointer; its capture element owns the cursor, and selectstart prevents selection. Keep the original stylesheet for
-# ?home=current; the early shim removes just these CSSOM rules for panels. An ancestor guard still invalidates the
+# The legacy Home stylesheet changes the cursor on every descendant of body. The panel gesture already captures the
+# pointer; its capture element owns the cursor, and selectstart prevents selection. The legacy stylesheet remains;
+# the early shim removes just these CSSOM rules for panels. An ancestor guard still invalidates the
 # whole document when the body class changes, even when that guard does not match.
 LEGACY_GESTURE_CSS = '''body.pm-home-dragging,
 body.pm-home-dragging * { cursor: grabbing !important; }
@@ -61,9 +61,6 @@ body.pm-home-dragging { -webkit-user-select: none; user-select: none; }'''
 # The page parts the panels take over or call. Each must exist exactly once in the input.
 REQUIRED = ['id="pm-home-workspace"', 'id="panel-dashboard"', 'id="chatPanel"', 'id="bottomPanel"',
             'class="center-column"', 'id="leftPanelResizer"', 'id="sidePanelSlot"',
-            "    failNextPersistenceWrite: function () { faults.failNextWrite = true; },",
-            # the old controller's own guard: the early shim makes it return (no second Home model)
-            '  "use strict";\n  if (window.PM_HOME_WORKSPACE) return;\n',
             '<div class="page page-dashboard active" id="panel-dashboard">',
             '<div class="resizer-col hidden" id="chatResizer"></div>\n<aside class="chat-panel hidden" id="chatPanel" data-pm6-chat-mount="docked">',
             'window.registerResizer(chatResizer, {',
@@ -109,7 +106,7 @@ APP_PATCHES = [
      "document.addEventListener('mouseup', function (ev) { if (window.PMW && PMW.gesture && PMW.gesture.releasedAt === ev.timeStamp) return; remeasureOpenAccordions(); });",
      'panel release skips unrelated rail accordion measure'),
     ("  function homeActive() { return activePage() === 'dashboard'; }",
-     "  function homeActive() { return activePage() === 'dashboard' && document.documentElement.getAttribute('data-pmw-home') !== 'on'; }"
+     "  function homeActive() { return false; }"
      " /* home layer: the chat is one column on every page */",
      'homeActive (home layer)'),
     # The status bar said "Execution host local · 2ms", banned wording (the cross-look review; the planner gave the page
@@ -211,9 +208,8 @@ def js_safe(js: str) -> str:
 
 
 def build_early() -> str:
-    """<script id="pm-home-early"> in <head>: src/panels/early/*.js. It runs before the old Home controller parses, sets
-    html[data-pmw-home="on"] and defines the PM_HOME_WORKSPACE compatibility shim, so the controller's own guard
-    ('if (window.PM_HOME_WORKSPACE) return;') skips it. ?home=current leaves today's Home running (review A/B)."""
+    """<script id="pm-home-early"> in <head>: src/panels/early/*.js. It sets html[data-pmw-home="on"] and defines the
+    PM_HOME_WORKSPACE compatibility shim for the tour, chat and activity bar."""
     body = read_parts(PANELS / 'early', '.js')
     return "try {\n(function () {\n'use strict';\n" + body + "})();\n} catch (error) { try { console.error('[pm-home] early failed', error); } catch (_) {} }\n"
 
@@ -382,8 +378,9 @@ def lint() -> list[str]:
 # what the published page must carry once the layer is in (build.py, build.py --check, build_home.py --check)
 MARKERS = [CSS_START, CSS_END, JS_START, JS_END, '<script id="pm-home-early">', '<style id="pm-home-css">',
            '<script id="pm-home-js">']
-# the tour's restore snapshot contract: the old controller's anchor stays exactly once (BRIEF 3.9)
-EXACTLY_ONCE = ['    failNextPersistenceWrite: function () { faults.failNextWrite = true; },']
+# The tour's restore snapshot contract is carried by the live compatibility shim.
+EXACTLY_ONCE = ['window.PM_HOME_WORKSPACE = shim;',
+                '  failNextPersistenceWrite: function () { var w = W(); if (w && w.faults) w.faults.failNextWrite = true; },']
 KEPT = ['id="pm-home-workspace"', 'id="chatPanel"', 'window.PM_HOME_WORKSPACE', 'o55RestoreSnapshot']
 
 

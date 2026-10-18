@@ -66,7 +66,7 @@
      dashboard (widget_action, D10 round two P10), each finished by what the panels report, never by a timer. What only
      the panels know (their buttons, menus, tabs, receipts, Back snapshots and dashboard boards) comes from their tour
      hooks, PMW.tour (home-redesign src/panels/js/52-tour.js), looked up as a step runs: the panels boot after this
-     script. Without the panels (?home=current, a build.py --no-home reference page) the chapter is the orientation. */
+     script. */
   const panels = document.documentElement.getAttribute('data-pmw-home') === 'on';
   const hk = (name, ...a) => { const h = window.PMW && window.PMW.tour; return h && typeof h[name] === 'function' ? h[name](...a) : null; };
   const stepDone = (id) => !!(TR.st.sess && TR.st.sess.done.includes(id));

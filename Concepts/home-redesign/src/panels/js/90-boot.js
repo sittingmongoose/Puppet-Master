@@ -1,7 +1,6 @@
 /* Boot. pm-home-js runs at the end of <body> (before DOMContentLoaded): the centre mounts at once, so the first frame
    already has it; the shims, the chat column and the ladder install after the page's own DOMContentLoaded boots (the
-   demo engine, the cozy shelves, the chat render), so the last registration (ours) wins. ?home=current leaves today's
-   Home untouched (html[data-pmw-home] is not set). */
+   demo engine, the cozy shelves, the chat render), so the last registration (ours) wins. */
 
 var DEAD_PORTALS = ['pm-home-more-menu', 'pm-home-open-panel-flyout', 'pm-home-open-browser-flyout', 'pm-home-surface-menu', 'pm-home-file-panel-menu'];
 var booted = false;
@@ -57,7 +56,6 @@ function onPageChange() {
 
 PM_HOME.boot = function () {
   if (booted) return;
-  if (root.getAttribute('data-pmw-home') !== 'on') return;
   booted = true;
   var page = qs('#panel-dashboard');
   if (!page) { try { console.error('[pm-home] #panel-dashboard is missing'); } catch (_) {} return; }

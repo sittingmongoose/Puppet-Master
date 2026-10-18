@@ -1388,8 +1388,6 @@ function guardFocus() {
 }
 
 function install() {
-  // ?home=current keeps today's Home: the page's own dashboard code runs as published
-  if (doc.documentElement.getAttribute('data-pmw-home') !== 'on') return;
   routeSubtabs();
   // a layout commit: a project switch re-keys the boards, a tab rename names its board, the facts follow
   PM_HOME.on('layout', function () { syncProject(); syncNames(); repaintAll(); });
