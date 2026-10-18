@@ -2659,18 +2659,17 @@
       var now = el.getBoundingClientRect();
       var dx = entry.rect.left - now.left, dy = entry.rect.top - now.top;
       if (!dx && !dy) return;
+      window.PM7_MOTION_FINISH.cancel(el, 'transition', 'transform');
       el.style.transition = 'none';
       el.style.transform = 'translate(' + dx + 'px,' + dy + 'px)';
-      var settle = function (ev) {
-        if (ev.target !== el || ev.propertyName !== 'transform') return;
-        el.removeEventListener('transitionend', settle);
+      var settle = function () {
         el.style.removeProperty('transition');
         el.style.removeProperty('transform');
       };
-      el.addEventListener('transitionend', settle);
       requestAnimationFrame(function () {
         el.style.transition = 'transform var(--mo-widget-reflow-dur, 240ms) var(--mo-widget-reflow-ease, cubic-bezier(.45,0,.4,1))';
         el.style.removeProperty('transform');
+        window.PM7_MOTION_FINISH(el, 'transition', 'transform', settle);
       });
     });
   }
@@ -5932,6 +5931,7 @@
     moved.sort(function (a, b) { return a.order - b.order; });
     moved.forEach(function (entry, index) {
       var element = entry.element;
+      window.PM7_MOTION_FINISH.cancel(element, 'transition', 'transform');
       element.style.transition = "none";
       element.style.transform = "translate(" + entry.dx + "px," + entry.dy + "px)";
       /* Mid-flight marker for hit-testing: the inline transform is EMPTY
@@ -5940,9 +5940,7 @@
          is the only reliable marker. Removed on settle and by
          clearFlipResidue. */
       element.setAttribute("data-pm-home-flip", "");
-      var settle = function (event) {
-        if (event.target !== element || event.propertyName !== "transform") return;
-        element.removeEventListener("transitionend", settle);
+      var settle = function () {
         element.removeAttribute("data-pm-home-flip");
         if (!element.style.transform) {
           element.style.removeProperty("transition");
@@ -5950,11 +5948,11 @@
           element.style.removeProperty("transform");
         }
       };
-      element.addEventListener("transitionend", settle);
       requestAnimationFrame(function () {
         element.style.transition = "transform var(--pm-home-reflow-dur) var(--pm-home-reflow-ease)";
         element.style.transitionDelay = (index * 16) + "ms";
         element.style.removeProperty("transform");
+        window.PM7_MOTION_FINISH(element, 'transition', 'transform', settle);
       });
     });
   }

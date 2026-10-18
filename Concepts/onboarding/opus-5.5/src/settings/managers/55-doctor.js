@@ -68,8 +68,6 @@
     const summary = `<div class="o55-toolbar o55-doctor-summary">${PM51.home('system.health.doctor-summary', `<span class="o55-doctor-last">${PM51.status(`Last checkup: ${c.Unavailable && !c.Ready ? 'Blocked' : c['Needs attention'] || c.Unavailable ? 'Ready with warnings' : 'Ready'}`, c['Needs attention'] || c.Unavailable ? 'attention' : 'ready')}<small>${h(S.doctorLastCheck || '2 min ago')}</small></span>`, 'span')}<span class="o55-toolbar-spacer"></span>${PM51.bound.action('system.health.run-doctor', { label: 'Check everything', icon: 'refresh' })}</div>`;
     scheduleReturn();
     return PM51.page({ id: ID, key: KEY, body: summary + stats + sections + advanced, quiet: [
-      { label: 'Replay setup', action: 'replay-onboarding', data: { 'ui-action-id': 'settings.onboarding.run_again', 'source-surface': 'settings_rerun' } },
-      { label: 'Guided Tour', action: 'start-guided-tour', data: { 'ui-action-id': 'settings.guided_tour.replay' } },
       { label: 'Export report', action: 'pm51-doctor-export' }
     ] });
   }

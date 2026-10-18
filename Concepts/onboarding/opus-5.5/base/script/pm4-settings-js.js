@@ -2204,8 +2204,7 @@ window.PM12_REFERENCE = {"version":"1.0.0","total":892,"inventory_sha256":"be85c
         else document.documentElement.removeAttribute('data-motion');
         lastMotionPaintKey=motionKey;
       }
-      var chat=String(settings['general.visual.chat-layout-mode']||'Docked').toLowerCase();
-      if(chat!==lastChatLayout&&window.PM_DEMO&&typeof window.PM_DEMO.emit==='function'){lastChatLayout=chat;window.PM_DEMO.emit('chat.layout',{mode:chat,origin:'settings'});}
+      /* Chat Layout (general.visual.chat-layout-mode) is retired (D3, D32): the paint sends no chat.layout */
       if(glassKey!==lastGlassPaintKey&&window.PM_GLASS_LOCK_REFRESH)try{window.PM_GLASS_LOCK_REFRESH();}catch(_e){}
       lastGlassPaintKey=glassKey;
     }finally{bridgeDepth--;}
@@ -2230,6 +2229,9 @@ window.PM12_REFERENCE = {"version":"1.0.0","total":892,"inventory_sha256":"be85c
       }
       var saved=merge(base,scrubCredentialSettings(projection||{}));saved.settingsProjectionSource=source;saved.settingsProjectionReadOnly=false;credentialSettingIds.forEach(function(id){delete saved.settings[id];});
       if(projection&&projection.settings&&projection.settings['general.visual.theme']&&!Object.prototype.hasOwnProperty.call(projection.settings,'general.visual.theme-mode')){var legacyMode=themeSlug(projection.settings['general.visual.theme']).split('-')[1];if(legacyMode==='light'||legacyMode==='dark')saved.settings['general.visual.theme-mode']=themeLabel(legacyMode);}
+      /* Chat Layout is retired (D3, D32): a stored value is ignored and cleared on first read */
+      var retiredChat='general.visual.chat-layout-mode';
+      if(projection&&projection.settings&&Object.prototype.hasOwnProperty.call(projection.settings,retiredChat)){delete projection.settings[retiredChat];if(projection.changed)delete projection.changed[retiredChat];if(Object.prototype.hasOwnProperty.call(base.settings,retiredChat))saved.settings[retiredChat]=base.settings[retiredChat];else delete saved.settings[retiredChat];if(saved.changed)delete saved.changed[retiredChat];if(source==='local_concept_fixture')try{localStorage.setItem(k,JSON.stringify(scrubCredentialSettings(projection)));}catch(_e){}}
       var priorAlpha=saved.settings['general.visual.glass-transparency'],alpha=clampGlassAlpha(saved.settings,priorAlpha);saved.settings['general.visual.glass-transparency']=alpha;
       if(source==='local_concept_fixture'&&projection&&projection.settings&&Number(priorAlpha)!==alpha){var repaired=scrubCredentialSettings(projection);repaired.settings['general.visual.glass-transparency']=alpha;try{localStorage.setItem(k,JSON.stringify(repaired));}catch(_e){}}
       return saved;
@@ -2389,6 +2391,7 @@ window.PM12_REFERENCE = {"version":"1.0.0","total":892,"inventory_sha256":"be85c
       return clamp((Number(match[1] || 0) * 60) + Number(match[2]), .45, 2.8);
     };
     const profileFor = sound => {
+      if (sound && Array.isArray(sound.tones) && sound.tones.length) return sound.tones;
       const key = `${sound && sound.id || ''} ${sound && sound.name || ''}`.toLowerCase();
       if (key.includes('failure') || key.includes('error')) return [
         [220, 0, .28, 'sawtooth'], [164.81, .30, .28, 'sawtooth'], [110, .62, .34, 'triangle']
@@ -2536,7 +2539,7 @@ window.PM12_REFERENCE = {"version":"1.0.0","total":892,"inventory_sha256":"be85c
           return { ok: true, state: 'playing', id, mode, volume: volume * 100 };
         }
 
-        for (const [frequency, offset, length, type] of profileFor(sound)) {
+        for (const [frequency, offset, length, type, glideTo, level] of profileFor(sound)) {
           const oscillator = context.createOscillator();
           const envelope = context.createGain();
           session.nodes.push(oscillator, envelope);
@@ -2544,8 +2547,9 @@ window.PM12_REFERENCE = {"version":"1.0.0","total":892,"inventory_sha256":"be85c
           const noteEnd = Math.min(startAt + duration, noteStart + (length * duration));
           oscillator.type = type;
           oscillator.frequency.setValueAtTime(frequency, noteStart);
+          if (glideTo) oscillator.frequency.exponentialRampToValueAtTime(glideTo, noteEnd);
           envelope.gain.setValueAtTime(.0001, noteStart);
-          envelope.gain.exponentialRampToValueAtTime(.42, noteStart + Math.min(.025, duration * .04));
+          envelope.gain.exponentialRampToValueAtTime(level || .42, noteStart + Math.min(.025, duration * .04));
           envelope.gain.exponentialRampToValueAtTime(.0001, noteEnd);
           oscillator.connect(envelope);
           envelope.connect(master);
@@ -2586,7 +2590,7 @@ window.PM12_REFERENCE = {"version":"1.0.0","total":892,"inventory_sha256":"be85c
         return true;
       },
       releaseFile: id => { if (active?.id === String(id)) stop('file-removed'); localFiles.delete(String(id)); },
-      clearFiles: () => { stop('project-changed'); localFiles.clear(); },
+      clearFiles: () => { stop('project-changed'); if(typeof window.PM51_NOTIF_APP_PREVIEW_STOP==='function')window.PM51_NOTIF_APP_PREVIEW_STOP(); localFiles.clear(); },
       getState: () => active ? { state: active.context && active.context.state === 'running' ? 'playing' : 'starting', id: active.id } : { state: disposed ? 'disposed' : 'idle', id: null },
       dispose: () => {
         if (disposed) return;
@@ -2630,6 +2634,12 @@ window.PM12_REFERENCE = {"version":"1.0.0","total":892,"inventory_sha256":"be85c
   let domainSectionMap = {};
   let pendingScroll = null;
   let softRemount = false;
+  let commitSettingsShell = markup => { root.innerHTML = markup; };
+  let sizeSettingsEndSpace = (scroller, end, sections) => {
+    if (!sections.length) return;
+    const last = sections[sections.length - 1];
+    end.style.height = `${Math.max(140, scroller.clientHeight - Math.min(last.offsetHeight, scroller.clientHeight * .62) + 48)}px`;
+  };
   let preservedScrollTop = null;
   let detailHideTimer = null;
   let detailInspectorVisible = false;
@@ -3160,7 +3170,7 @@ window.PM12_REFERENCE = {"version":"1.0.0","total":892,"inventory_sha256":"be85c
     }
     const domain = getDomain();
     const workspace = getWorkspace(domain);
-    root.innerHTML = `
+    commitSettingsShell(`
       <div class="pm-shell ${state.railOpen ? 'rail-open' : ''}">
         ${renderDomainRail(domain)}
         <section class="workspace-shell">
@@ -3172,7 +3182,7 @@ window.PM12_REFERENCE = {"version":"1.0.0","total":892,"inventory_sha256":"be85c
           </div>
         </section>
       </div>
-      <div class="toast-stack" id="toast-stack"></div>`;
+      <div class="toast-stack" id="toast-stack"></div>`);
     root.classList.add('is-ready');
     root.querySelectorAll('.manager-page').forEach(node=>node.classList.toggle('has-manager-tabs',!!node.querySelector(':scope > .manager-tabs')));
     requestAnimationFrame(afterRender);
@@ -3198,7 +3208,7 @@ window.PM12_REFERENCE = {"version":"1.0.0","total":892,"inventory_sha256":"be85c
         <nav class="domain-list">${domains}</nav>
         <div class="rail-heading">Essential setup</div>
         <div class="side-card">
-          <button type="button" class="side-link" data-action="navigate" data-domain="ai" data-workspace="providers">${icon('brain')}<span class="domain-copy"><strong>AI Providers</strong><small>7 ready · 2 need attention</small></span>${icon('chevron')}</button>
+          <button type="button" class="side-link" data-action="navigate" data-domain="ai" data-workspace="providers">${icon('brain')}<span class="domain-copy"><strong>AI Providers</strong><small>${window.O55ProviderSummary ? window.O55ProviderSummary() : ''}</small></span>${icon('chevron')}</button>
           <button type="button" class="side-link" data-action="navigate" data-domain="source" data-workspace="source-manager">${icon('branch')}<span class="domain-copy"><strong>Source Control</strong><small>GitHub connected · Git and Jujutsu ready</small></span>${icon('chevron')}</button>
           <button type="button" class="side-link" data-action="navigate" data-domain="system" data-workspace="backup">${icon('archive')}<span class="domain-copy"><strong>Backups</strong><small>Last verified today</small></span>${icon('chevron')}</button>
         </div>
@@ -3389,11 +3399,11 @@ window.PM12_REFERENCE = {"version":"1.0.0","total":892,"inventory_sha256":"be85c
       <section class="home-grid">
         <div class="home-panel">
           <div class="home-panel-header"><span class="home-panel-title">Essential setup</span><span class="home-panel-meta">Frequent destinations</span></div>
-          <button class="setup-row" data-action="navigate" data-domain="ai" data-workspace="providers"><span class="setup-icon">${icon('brain')}</span><span class="setup-copy"><span class="setup-label">AI Providers</span><span class="setup-meta">7 ready · 2 need attention · install, sign in, choose models</span></span>${icon('chevron')}</button>
+          <button class="setup-row" data-action="navigate" data-domain="ai" data-workspace="providers"><span class="setup-icon">${icon('brain')}</span><span class="setup-copy"><span class="setup-label">AI Providers</span><span class="setup-meta">${window.O55ProviderSummary ? window.O55ProviderSummary() + ' · ' : ''}install, sign in, choose models</span></span>${icon('chevron')}</button>
           <button class="setup-row" data-action="navigate" data-domain="source" data-workspace="source-manager"><span class="setup-icon">${icon('branch')}</span><span class="setup-copy"><span class="setup-label">Source Control</span><span class="setup-meta">GitHub connected · Git and Jujutsu ready</span></span>${icon('chevron')}</button>
           <button class="setup-row" data-action="navigate" data-domain="system" data-workspace="backup"><span class="setup-icon">${icon('archive')}</span><span class="setup-copy"><span class="setup-label">Backup & Restore</span><span class="setup-meta">Last backup verified today · 2 schedules enabled</span></span>${icon('chevron')}</button>
-          <button class="setup-row" data-action="replay-onboarding" data-source-surface="home_menu" data-ui-action-id="settings.onboarding.run_again"><span class="setup-icon">${icon('home')}</span><span class="setup-copy"><span class="setup-label">Run setup wizard</span><span class="setup-meta">Start or replay the simple guided setup</span></span>${icon('chevron')}</button>
-          <button class="setup-row" data-action="start-guided-tour" data-ui-action-id="settings.guided_tour.replay"><span class="setup-icon">${icon('play')}</span><span class="setup-copy"><span class="setup-label">Guided Tour</span><span class="setup-meta">Learn the live workspace with a local teacher</span></span>${icon('chevron')}</button>
+          ${window.O55TourSettingsRows ? window.O55TourSettingsRows(icon) : `<button class="setup-row" data-action="replay-onboarding" data-source-surface="home_menu" data-ui-action-id="settings.onboarding.run_again"><span class="setup-icon">${icon('home')}</span><span class="setup-copy"><span class="setup-label">Run Onboarding Again</span><span class="setup-meta">Go through the first-time setup again</span></span>${icon('chevron')}</button>
+          <button class="setup-row" data-action="start-guided-tour" data-ui-action-id="settings.guided_tour.replay"><span class="setup-icon">${icon('play')}</span><span class="setup-copy"><span class="setup-label">Replay Guided Tour</span><span class="setup-meta">Try the main actions again with a local example</span></span>${icon('chevron')}</button>`}
         </div>
         <div class="home-panel">
           <div class="home-panel-header"><span class="home-panel-title">Needs attention</span><span class="home-panel-meta">3 actionable items</span></div>
@@ -3761,8 +3771,7 @@ window.PM12_REFERENCE = {"version":"1.0.0","total":892,"inventory_sha256":"be85c
 
   function onDetailOpenSettled(e) {
     const { inspector } = getDetailNodes();
-    if (!inspector || e.target !== inspector || e.propertyName !== 'transform') return;
-    inspector.removeEventListener('transitionend', onDetailOpenSettled);
+    if (!inspector) return;
     if (detailInspectorVisible) inspector.classList.add('is-settled');
   }
 
@@ -3780,14 +3789,14 @@ window.PM12_REFERENCE = {"version":"1.0.0","total":892,"inventory_sha256":"be85c
     // Force layout so translate3d(102%) is the real transition start (W1 pattern)
     void inspector.offsetWidth;
     document.removeEventListener('keydown', onDetailEsc, true);
-    inspector.removeEventListener('transitionend', onDetailOpenSettled);
+    if (inspector.__pmDetailFinish) inspector.__pmDetailFinish();
     requestAnimationFrame(() => {
       requestAnimationFrame(() => {
         if (!detailInspectorVisible) return;
         scrim?.classList.add('is-open');
         inspector.classList.add('is-open');
         if (motionReduced()) inspector.classList.add('is-settled');
-        else inspector.addEventListener('transitionend', onDetailOpenSettled);
+        else inspector.__pmDetailFinish = window.PM7_MOTION_FINISH(inspector, 'transition', 'transform', onDetailOpenSettled);
       });
     });
     document.addEventListener('keydown', onDetailEsc, true);
@@ -3801,7 +3810,7 @@ window.PM12_REFERENCE = {"version":"1.0.0","total":892,"inventory_sha256":"be85c
     }
     detailInspectorVisible = false;
     document.removeEventListener('keydown', onDetailEsc, true);
-    inspector?.removeEventListener('transitionend', onDetailOpenSettled);
+    if (inspector?.__pmDetailFinish) inspector.__pmDetailFinish();
     if (inspector) {
       inspector.classList.remove('is-settled');
       inspector.classList.add('is-closing');
@@ -3870,11 +3879,7 @@ window.PM12_REFERENCE = {"version":"1.0.0","total":892,"inventory_sha256":"be85c
       const scroller = root.querySelector('#settings-document');
       const end = scroller?.querySelector('.settings-end-space');
       const sections = scroller ? [...scroller.querySelectorAll('[data-section-id]')] : [];
-      if (scroller && end && sections.length) {
-        const last = sections[sections.length - 1];
-        const required = Math.max(140, scroller.clientHeight - Math.min(last.offsetHeight, scroller.clientHeight * .62) + 48);
-        end.style.height = `${required}px`;
-      }
+      if (scroller && end) sizeSettingsEndSpace(scroller, end, sections);
       if (restoreTop != null) suppressScrollSpyUntil = performance.now() + 180;
       setupScrollSpy();
       if (pendingScroll && restoreTop == null) {
@@ -4118,7 +4123,7 @@ window.PM12_REFERENCE = {"version":"1.0.0","total":892,"inventory_sha256":"be85c
     const cleanup=()=>{document.removeEventListener('keydown',onEsc,true);wrap._pmCleanup=null;};wrap._pmCleanup=cleanup;
     wrap.addEventListener('mousedown',e=>{if(e.target===wrap)closeDrawerWrap(wrap);});
     portalRoot().append(wrap);document.addEventListener('keydown',onEsc,true);void wrap.offsetWidth;
-    requestAnimationFrame(()=>requestAnimationFrame(()=>{if(!wrap.isConnected)return;wrap.classList.add('is-open');if(motionReduced())wrap.classList.add('is-settled');else{const onSettled=e=>{if(e.target!==drawer||e.propertyName!=='transform')return;drawer.removeEventListener('transitionend',onSettled);if(wrap.isConnected&&wrap.classList.contains('is-open'))wrap.classList.add('is-settled');};drawer.addEventListener('transitionend',onSettled);}wrap.querySelector('button')?.focus();}));
+    requestAnimationFrame(()=>requestAnimationFrame(()=>{if(!wrap.isConnected)return;wrap.classList.add('is-open');if(motionReduced())wrap.classList.add('is-settled');else{window.PM7_MOTION_FINISH(drawer,'transition','transform',()=>{if(wrap.isConnected&&wrap.classList.contains('is-open'))wrap.classList.add('is-settled');});}wrap.querySelector('button')?.focus();}));
     return wrap;
   }
 
@@ -4595,7 +4600,7 @@ window.PM12_REFERENCE = {"version":"1.0.0","total":892,"inventory_sha256":"be85c
     [
       ['Set up Claude Code', 'Open provider installation and account setup', 'ai', 'providers', 'claude-code'],
       ['Change completion sound', 'Open event sound mappings and the sound library', 'general', 'notifications', ''],
-      ['Restore home layout', 'Open structured desktop and window settings', 'general', 'app-input', 'restore-defaults'],
+      ['Restore home layout', 'Put Home panels, docks and the terminal back in their default places', 'general', 'app-input', 'general.startup.reset-home-layout'],
       ['Connect GitHub', 'Open hosted forge connections in Source Control', 'source', 'source-manager', ''],
       ['Configure web search priority', 'Open Web & Research capability routing', 'ai', 'web', ''],
       ['Back up Puppet Master', 'Open project and settings backup setup', 'system', 'backup', '']
@@ -7515,7 +7520,7 @@ if(state.projectSyncTab==='move')return `<div class="card-grid two"><section cla
       case 'export-source-diagnostics': showToast('Source diagnostics exported','A redacted source-control receipt was prepared.','info');return;
 
       /* Notifications & Sounds */
-      case 'notification-tab': settingsSoundPreview.stop('notification-tab');switchManagerTab(el);return;
+      case 'notification-tab': settingsSoundPreview.stop('notification-tab');if(typeof window.PM51_NOTIF_APP_PREVIEW_STOP==='function')window.PM51_NOTIF_APP_PREVIEW_STOP();switchManagerTab(el);return;
       case 'select-notification-destination': state.selectedDestination=ds(el,'id');rerender();return;
       case 'add-notification-destination': editNotificationDestination();return;
       case 'edit-notification-destination': editNotificationDestination(state.notifications.destinations.find(d=>d.id===ds(el,'id')));return;
@@ -7797,6 +7802,8 @@ if(state.projectSyncTab==='move')return `<div class="card-grid two"><section cla
         state.doctorScope=ctx.returnScope;state.doctorReturnReceipt={checkId:ctx.checkId,findingId:ctx.findingId,findingRevision:ctx.findingRevision,targetId:ctx.targetId,remediationMode:ctx.remediationMode,ownerActionId:ctx.ownerActionId,typedOwnerRouteId:ctx.typedOwnerRouteId,ownerRoute:ctx.ownerRoute.slice(),idempotencyKey:ctx.idempotencyKey,ownerResultRef,normalizedStatus,routeOutcome:outcome,returnRoute:ctx.returnRoute.slice(),returnScope:ctx.returnScope,returnFocusId:ctx.returnFocusId,baseOwnerGeneration,baseCacheGeneration,ownerGeneration,cacheGeneration,freshnessState,ownerResultAccepted:true,returnAccepted:true,remediationResolved:resolved,productionMutationDispatched:false,browserProjectionOnly:true,productionRuntimeState:'unavailable'};state.doctorReturnContext=null;state.doctorReturnRejected=null;saveState();navigate(ctx.returnRoute[0],ctx.returnRoute[1]);setTimeout(()=>document.getElementById(ctx.returnFocusId)?.focus(),0);return;
       }
       case 'replay-onboarding': if(window.PM7_ONBOARDING_CINEMATIC)window.PM7_ONBOARDING_CINEMATIC.replay({source_surface:ds(el,'sourceSurface')==='home_menu'?'home_menu':'settings_rerun'});else showToast('Onboarding unavailable','The authored onboarding module is not mounted.','warning');return;
+      case 'resume-guided-tour': if(window.PM7_GUIDED_TOUR&&typeof window.PM7_GUIDED_TOUR.resume==='function'){window.PM7_GUIDED_TOUR.resume({source:'settings'});return;}
+      case 'restart-guided-tour': if(window.PM7_GUIDED_TOUR&&typeof window.PM7_GUIDED_TOUR.restart==='function'){window.PM7_GUIDED_TOUR.restart({source:'settings'});return;}
       case 'start-guided-tour': if(window.PM7_GUIDED_TOUR&&typeof window.PM7_GUIDED_TOUR.start==='function')window.PM7_GUIDED_TOUR.start({source:'settings'});else showToast('Guided Tour unavailable','The live-shell tour module is not mounted.','warning');return;
       case 'browser-scm-tab': switchManagerTab(el);return;
       case 'pair-client': infoDrawer('Pair Client','Owner route only. Start one generation-fenced pairing run; no trust is granted and no raw QR/code material is persisted.',[['Command','cmd.client.pair.start'],['Native handler','Unavailable'],['Pairing secret','Ephemeral; not persisted'],['Trust','Not granted by start'],['Return','Exact paired-clients route and focus']]);return;
@@ -8014,7 +8021,7 @@ if(state.projectSyncTab==='move')return `<div class="card-grid two"><section cla
       reset:()=>{settingsSoundPreview.clearFiles();window.PM7_SETTINGS_TOME.reset();state=loadState();ensureStateShape();renderApp();window.PM7_SETTINGS_TOME.applyPaint(state);},
       reloadProject:()=>{settingsSoundPreview.clearFiles();state=loadState();ensureStateShape();renderApp();window.PM7_SETTINGS_TOME.applyPaint(state);},
       setSettingFromHost:(id,value,rerenderView=true,syncRelated=true)=>{if(!commitSettingValue(id,value,{syncRelated})){window.PM7_SETTINGS_TOME.applyPaint(state);return false;}saveState();if(rerenderView)renderApp();return true;},
-      closeTransientUi:()=>{settingsSoundPreview.stop('settings-surface-close');hideTooltip();closeSearch();closeOverlay(false);document.removeEventListener('keydown',onDetailEsc,true);detailInspectorVisible=false;state.detailSetting=null;state.railOpen=false;state.resourceRosterOpen=false;root.querySelector('.pm-shell')?.classList.remove('rail-open');const active=document.activeElement;if(window.PM7_SETTINGS_TOME.ownsEvent(active)&&typeof active.blur==='function')active.blur();},
+      closeTransientUi:()=>{settingsSoundPreview.stop('settings-surface-close');if(typeof window.PM51_NOTIF_APP_PREVIEW_STOP==='function')window.PM51_NOTIF_APP_PREVIEW_STOP();hideTooltip();closeSearch();closeOverlay(false);document.removeEventListener('keydown',onDetailEsc,true);detailInspectorVisible=false;state.detailSetting=null;state.railOpen=false;state.resourceRosterOpen=false;root.querySelector('.pm-shell')?.classList.remove('rail-open');const active=document.activeElement;if(window.PM7_SETTINGS_TOME.ownsEvent(active)&&typeof active.blur==='function')active.blur();},
       returnToProviderInstallation:(providerId,action)=>{state.domain='ai';state.workspace='providers';state.providerTab='installation';if(providerId)state.selectedProvider=providerId;renderApp({soft:true});return {providerId,action};},
       navigate,
       renderApp,

@@ -154,6 +154,7 @@
 
   /* ---------------- stage switching ---------------- */
   function setStage(name) {
+    if (window.PM_WIZARD_STAGES) window.PM_WIZARD_STAGES.prepare(name);
     W.stage = name;
     var r = root();
     if (!r) return;
@@ -994,7 +995,8 @@
   /* ---------------- render everything ---------------- */
   function renderAll() {
     if (!WS()) return;
-    try { renderPrd(); } catch (e) {}
+    if (W.stage === 'prd_builder') { try { renderPrd(); } catch (e) {} }
+    if (W.stage !== 'workspace') { hydrateIcons(); return; }
     try { renderTopics(); } catch (e) {}
     try { renderDock(); } catch (e) {}
     try { renderStatePill(); } catch (e) {}

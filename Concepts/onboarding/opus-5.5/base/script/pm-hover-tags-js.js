@@ -12,7 +12,9 @@
     'hidden-template':'Inert source template that is never mounted as an interactive surface.',
     'programmatic-focus-landmark':'Static heading focused only to announce a modal or route transition; it is not an action or a second tooltip target.',
     'tooltip-owner':'The shared hover-tag overlay and its persistent description nodes.',
-    'noninteractive-chart-geometry':'Decorative chart scaffolding; each datum mark remains independently bound.'
+    'noninteractive-chart-geometry':'Decorative chart scaffolding; each datum mark remains independently bound.',
+    'labelled-field':'A field in a Settings panel whose label and help line sit beside it; a tag would only repeat them over the heading above.',
+    'menu':'A menu and its rows, back button and search field, which already show their names; a row given its own data-pm-hover-label is not exempt and keeps its tag.'
   });
   var SEMANTIC_ACTION_SELECTOR='a[href],button,input:not([type="hidden"]),select,textarea,summary,[contenteditable="true"],[role="button"],[role="link"],[role="menuitem"],[role="menuitemcheckbox"],[role="menuitemradio"],[role="tab"],[role="checkbox"],[role="radio"],[role="switch"],[role="slider"],[data-action],[data-command-id],[data-ui-action-id],[data-callback],[onclick]';
   var ACTION_SELECTOR=SEMANTIC_ACTION_SELECTOR+',[tabindex]';
@@ -25,8 +27,8 @@
   function attr(el,name){return clean(el&&el.getAttribute&&el.getAttribute(name));}
   function setAttrIfChanged(el,name,value){value=String(value);if(el.getAttribute(name)!==value)el.setAttribute(name,value);}
   function inOwner(el){return !!(el&&el.closest&&el.closest('#'+ROOT_ID));}
-  function activeOverlay(){var tour=document.getElementById('pm7-guided-tour'),onboarding=document.getElementById('pm7-onboarding');if(tour&&attr(tour,'data-open')==='true')return tour;if(onboarding&&attr(onboarding,'data-open')==='true')return onboarding;return null;}
-  function isProductOverlayRoot(el){return !!(el&&el.nodeType===1&&(el.id==='pm7-guided-tour'||el.id==='pm7-onboarding'));}
+  function activeOverlay(){var tour=document.getElementById('pm-o55-tour'),onboarding=document.getElementById('pm-o55-onboarding');if(tour&&attr(tour,'data-open')==='true')return tour;if(onboarding&&attr(onboarding,'data-open')==='true')return onboarding;return null;}
+  function isProductOverlayRoot(el){return !!(el&&el.nodeType===1&&(el.id==='pm-o55-tour'||el.id==='pm-o55-onboarding'));}
   function overlayTransitionRoot(record){
     if(!record)return null;
     if(record.type==='attributes'&&record.attributeName==='data-open'&&isProductOverlayRoot(record.target)&&record.oldValue!==record.target.getAttribute('data-open'))return record.target;
@@ -34,7 +36,7 @@
     for(var i=0;i<record.addedNodes.length;i++){
       var added=record.addedNodes[i];if(!added||added.nodeType!==1)continue;
       if(isProductOverlayRoot(added)&&attr(added,'data-open')==='true')return added;
-      var nested=added.querySelector&&added.querySelector('#pm7-guided-tour[data-open="true"],#pm7-onboarding[data-open="true"]');if(nested)return nested;
+      var nested=added.querySelector&&added.querySelector('#pm-o55-tour[data-open="true"],#pm-o55-onboarding[data-open="true"]');if(nested)return nested;
     }
     return null;
   }
@@ -167,11 +169,12 @@
       'ui.guided_tour.replay':['Replay guided tour','Start the tour again from the beginning.'],
       'ui.guided_tour.focus_route':['Open this page','Change the page you are viewing.'],
       'ui.guided_tour.toggle_eli5':['Use simpler words','Explain the same idea with shorter words and a familiar example.'],
-      'ui.guided_tour.finish':['Finish tour','Keep Teacher on the right and return to your work.'],
-      'settings.onboarding.run_again':['Run setup again','Review your setup choices from the beginning.'],
-      'settings.guided_tour.replay':['Replay guided tour','Learn the workspace again step by step.'],
+      'ui.guided_tour.finish':['Finish tour','End the tour and open Planning Wizard.'],
+      'settings.onboarding.run_again':['Run Onboarding Again','Go through the first-time setup again.'],
+      'settings.guided_tour.resume':['Resume the Guided Tour','Pick up the tour at the step where it stopped.'],
+      'settings.guided_tour.replay':['Start the Guided Tour over','Begin the tour again from its first step.'],
       'reset-layout':['Reset layout','Return panels and cards to their original places.'],
-      'run-onboarding':['Run setup again','Review your setup choices from the beginning.'],
+      'run-onboarding':['Run Onboarding Again','Go through the first-time setup again.'],
       'navigate':['Open this page','Show this part of Puppet Master.'],
       'ui.settings.route.open':['Open Settings','Go to this Settings page.'],
       'all-settings-query':['Search Settings','Find a preference by name or description.'],
@@ -189,7 +192,7 @@
     };
     if(exact[action])return exact[action];
     if(/reset[-_. ]?layout/.test(signal))return ['Reset layout','Return panels and cards to their original places.'];
-    if(/run[-_. ]?onboarding|replay[-_. ]?onboarding/.test(signal))return ['Run setup again','Review your setup choices from the beginning.'];
+    if(/run[-_. ]?onboarding|replay[-_. ]?onboarding/.test(signal))return ['Run Onboarding Again','Go through the first-time setup again.'];
     if(/start[-_. ]?guided[-_. ]?tour/.test(signal))return ['Start guided tour','Learn the workspace one step at a time.'];
     if(/theme/.test(signal))return ['Choose appearance','Change how Puppet Master looks.'];
     if(/settings/.test(signal)&&/add|create|new/.test(signal))return ['Add in Settings','Add another choice to this Settings section.'];
@@ -234,18 +237,19 @@
       detail=pin?'Move it back to its normal order.':'Keep it at the top.';
     }
     if(!label&&actionCopy[0])label=actionCopy[0];
-    if(looksInternal(label))label=actionCopy[0]||'Choose this option';
+    var literalTag=!!(el.closest&&el.closest('[data-pmh-tag="literal"]'));   /* O55: opt out of the internal-copy swap */
+    if(!literalTag&&looksInternal(label))label=actionCopy[0]||'Choose this option';
     if(!label&&el.tagName==='INPUT')label=attr(el,'placeholder')||'Enter a value';
     var technical=facts.technical;
     if(!label){
       label=facts.status?'Current status':facts.chart?'Chart value':facts.badge?'Current state':facts.actionable?'Use this control':'More information';
     }
-    if(looksInternal(detail))detail=actionCopy[1]||'See what this control does.';
+    if(!literalTag&&looksInternal(detail))detail=actionCopy[1]||'See what this control does.';
     var disabledReason=attr(el,'data-disabled-reason');
     if(facts.disabled&&disabledReason)detail=disabledReason;
     if(!detail&&facts.disabled)detail='This choice is not ready yet. Move over it to learn what is still needed.';
     if(!detail&&facts.truncated){var full=visibleText(el);if(full&&full!==label)detail=full;}
-    if(!detail&&facts.status)detail=el.closest&&el.closest('.pm7gt')?'Shows where you are in this tour.':'Shows the latest known state.';
+    if(!detail&&facts.status)detail=el.closest&&el.closest('.o55t-root')?'Shows where you are in this tour.':'Shows the latest known state.';
     if(!detail&&facts.badge)detail='A quick summary of the current state.';
     if(!detail&&facts.chart)detail='Shows the value at this point in the chart.';
     if(!detail)detail=actionDetail(el);
@@ -451,15 +455,21 @@
     if(this.liveDeep.size>24||this.liveShallow.size>256){var boundedSurface=overlay||activeSurface();this.liveDeep.clear();this.liveShallow.clear();if(boundedSurface&&boundedSurface.nodeType===1&&boundedSurface.isConnected&&!inOwner(boundedSurface))this.liveDeep.add(boundedSurface);}
   };
   HoverTagController.prototype.enqueueLive=function(el,deep){
-    if(this.pageSettling||this.overlaySettling||!el||el.nodeType!==1||!el.isConnected||inOwner(el))return;var self=this,covered=false,remove=[];this.pruneLiveScopes();
+    if(this.pageSettling||this.overlaySettling||!el||el.nodeType!==1||!el.isConnected||inOwner(el))return;var self=this,covered=false,remove=[];
+    if(!this.liveBatch||!this.liveBatchPruned){this.pruneLiveScopes();if(this.liveBatch){this.liveBatchPruned=true;this.liveBatchOverlay=activeOverlay();}}
     if(deep){
       this.liveDeep.forEach(function(root){if(root===el||root.contains(el))covered=true;else if(el.contains(root))remove.push(root);});
       if(!covered){remove.forEach(function(root){self.liveDeep.delete(root);});this.liveDeep.add(el);this.liveShallow.forEach(function(node){if(el.contains(node))self.liveShallow.delete(node);});}
     }else{
       this.liveDeep.forEach(function(root){if(root===el||root.contains(el))covered=true;});if(!covered)this.liveShallow.add(el);
     }
-    this.pruneLiveScopes();
+    if(this.liveBatch)this.pruneLiveAdded(el,deep);else this.pruneLiveScopes();
     if(!this.liveFrame&&!this.liveRunning){this.liveFrame=requestAnimationFrame(function(){self.liveFrame=0;self.beginLive();});}
+  };
+  HoverTagController.prototype.pruneLiveAdded=function(el,deep){
+    var overlay=this.liveBatchOverlay;
+    if(this.liveDeep.size>24||this.liveShallow.size>256){var surface=overlay||activeSurface();this.liveDeep.clear();this.liveShallow.clear();if(surface&&surface.nodeType===1&&surface.isConnected&&!inOwner(surface))this.liveDeep.add(surface);return;}
+    if(overlay){if(deep){if(el!==overlay&&!overlay.contains(el))this.liveDeep.delete(el);}else if(!overlay.contains(el))this.liveShallow.delete(el);}
   };
   HoverTagController.prototype.deferLiveScope=function(el){
     if(this.pageSettling||this.overlaySettling||!el||el.nodeType!==1)return;var self=this,covered=false,remove=[];
@@ -598,15 +608,17 @@
     var viewportRight=viewport.left+viewport.width,viewportBottom=viewport.top+viewport.height;
     this.tag.style.maxWidth=Math.min(MAX_WIDTH,Math.max(1,viewport.width-marginX*2))+'px';
     var availableHeight=Math.max(1,viewport.height-marginY*2);this.tag.style.minHeight=Math.min(24,availableHeight)+'px';this.tag.style.maxHeight=availableHeight+'px';
+    this.tag.toggleAttribute('data-literal',!!(this.active.closest&&this.active.closest('[data-pmh-tag="literal"]')));   /* O55: before the measure */
     var rect=this.tag.getBoundingClientRect(),left=anchor.left+anchor.width/2-rect.width/2;
     left=clamp(left,viewport.left+marginX,viewportRight-marginX-rect.width);
     var top=anchor.top-rect.height-GAP,placement='above';
     if(top<viewport.top+marginY){top=anchor.bottom+GAP;placement='below';}
+    if(document.documentElement.matches('[data-o55-nier-parts~="intel"]')&&anchor.bottom+GAP+rect.height<=viewportBottom-marginY){top=anchor.bottom+GAP;placement='below';}   /* O55 NieR intel: below first */
     /* A tag inside a teaching card must explain the control without covering
        the lesson. Prefer a free edge outside the active modal/callout; only
        fall back to ordinary anchor placement when the viewport has no such
        region. */
-    var teachingPanel=this.active.closest&&this.active.closest('.pm7gt-callout,.pm7ob-window');
+    var teachingPanel=this.active.closest&&this.active.closest('.o55t-callout,.o55-win');
     if(teachingPanel){var panel=teachingPanel.getBoundingClientRect(),outside=[
       {placement:'panel-right',left:panel.right+GAP,top:anchor.top+anchor.height/2-rect.height/2},
       {placement:'panel-left',left:panel.left-GAP-rect.width,top:anchor.top+anchor.height/2-rect.height/2},
@@ -618,7 +630,14 @@
     this.tag.style.left=Math.round(left)+'px';this.tag.style.top=Math.round(top)+'px';this.tag.setAttribute('data-placement',placement);
     return {left:left,top:top,width:rect.width,height:rect.height,placement:placement,gap:GAP,margin_x:marginX,margin_y:marginY};
   };
-  HoverTagController.prototype.readVisualSetting=function(){
+  HoverTagController.prototype.readVisualSetting=function(){   /* O55: kept until a Settings write */
+    var tome=window.PM7_SETTINGS_TOME,api=window.PM12_KIMI,self=this;
+    if(this.visualCacheOk&&this.visualCacheApi===api)return this.visualCache;
+    if(tome&&!tome.__pmhTagWatch){['save','load','reset','applyPaint'].forEach(function(name){var f=tome[name];if(typeof f==='function')tome[name]=function(){self.visualCacheOk=false;try{return f.apply(this,arguments);}finally{self.visualCacheOk=false;}};});try{Object.defineProperty(tome,'__pmhTagWatch',{value:true});}catch(_error){}}
+    var value=this.readVisualSettingNow();
+    this.visualCacheOk=!!(api&&tome&&tome.__pmhTagWatch);this.visualCacheApi=api;this.visualCache=value;return value;
+  };
+  HoverTagController.prototype.readVisualSettingNow=function(){
     try{
       var api=window.PM12_KIMI,state=api&&typeof api.getState==='function'?api.getState():null;
       if(state&&state.settings&&Object.prototype.hasOwnProperty.call(state.settings,'general.interaction.show-tooltips'))return state.settings['general.interaction.show-tooltips']!==false;
@@ -629,8 +648,8 @@
   };
   HoverTagController.prototype.syncVisualSetting=function(){return this.setVisualEnabled(this.readVisualSetting());};
   HoverTagController.prototype.setVisualEnabled=function(value){
-    this.ensureRoot();this.visualEnabled=value!==false;this.root.setAttribute('data-visual-enabled',String(this.visualEnabled));
-    if(!this.visualEnabled){this.cancelPendingOpen();this.active=null;this.activeModel=null;clearTimeout(this.departureTimer);clearTimeout(this.closeTimer);if(this.tag){this.tag.setAttribute('data-open','false');this.tag.hidden=true;}}
+    this.ensureRoot();this.visualEnabled=value!==false;setAttrIfChanged(this.root,'data-visual-enabled',String(this.visualEnabled));   /* O55: write only a change */
+    if(!this.visualEnabled){this.cancelPendingOpen();this.active=null;this.activeModel=null;clearTimeout(this.departureTimer);clearTimeout(this.closeTimer);if(this.tag){setAttrIfChanged(this.tag,'data-open','false');if(!this.tag.hidden)this.tag.hidden=true;}}
     return this.visualEnabled;
   };
   HoverTagController.prototype.pauseBackgroundCensus=function(){
@@ -659,6 +678,7 @@
          layout/state attributes together. Pointer and focus still bind a
          requested target synchronously. */
       if(self.pageSettling||self.overlaySettling)return;
+      self.liveBatch=true;self.liveBatchPruned=false;try{
       for(var i=0;i<records.length;i++){
         var record=records[i];
         if(record.target&&record.target.nodeType===1&&inOwner(record.target))continue;
@@ -690,6 +710,7 @@
           for(var k=0;k<record.removedNodes.length;k++)if(record.removedNodes[k].nodeType===1)self.cleanupRemoved(record.removedNodes[k]);
         }
       }
+      }finally{self.liveBatch=false;self.liveBatchOverlay=null;}
       self.syncOverlayState();
     });
     this.observer.observe(document.documentElement,{subtree:true,childList:true,characterData:true,attributes:true,attributeOldValue:true,attributeFilter:[

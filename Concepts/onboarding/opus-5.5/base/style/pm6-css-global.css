@@ -16,13 +16,7 @@
       position: relative;
       transition: transform 70ms var(--ease-out), box-shadow 70ms var(--ease-out), border-color 70ms var(--ease-out);
     }
-    .pm-sheen:hover {
-      transition-duration: var(--motion-fast);           /* fast in (120ms), instant-ish out (70ms base) */
-      transform: translateY(-2px);
-      border-color: color-mix(in srgb, var(--accent-primary) 40%, var(--border));
-      box-shadow: 0 0 0 1px color-mix(in srgb, var(--accent-primary) 30%, transparent),
-                  0 6px 18px color-mix(in srgb, var(--accent-primary) 16%, transparent);
-    }
+    /* .pm-sheen:hover: removed, PMH (src/css/22-hover.css) owns hover */
     .pm-hover-icon { transition: transform var(--motion-med) var(--ease-spring); }   /* keep micro-motion */
     .pm-sheen:hover .pm-hover-icon { transform: scale(1.06); }
     [data-motion="reduced"] .pm-sheen:hover { transform: none; }
@@ -125,7 +119,7 @@
        instead of a hard inner cut. Idle defaults resolve the band to
        nothing. */
     :is(.pm-sheen,.pm-term-icon-btn,.pm6-dash-iconbtn,.browser-action-btn,.activity-bar .icon,.pm6-dash-card,.pm7u-card,.pm6-dash-catalog-item,.pm6-proj-card,.project-card-bento,.pm6-wiz-choice-card,.pm6-wiz-attach-card,.pm6-wiz-disc-card,.pm6-orch-ctl,.pm6-orch-pc-stat,.pm6-orch-hist-state,.pm6-usage-acct-status,.pm6-sp-row,.pm6-art-row,.pm6-search-hit)::after {
-      content: "";
+      content: none;   /* PMH: the PM8 ring is off */
       position: absolute; inset: 0;
       border-radius: inherit;
       background: radial-gradient(var(--pm8-ring-spot) circle at var(--pm8-x, 50%) var(--pm8-y, 50%),
@@ -170,7 +164,7 @@
        escapes. */
     :is(.pm-sheen,.pm6-dash-card,.pm7u-card,.pm6-dash-catalog-item,.pm6-proj-card,.project-card-bento,.pm6-wiz-choice-card,.pm6-wiz-attach-card,.pm6-wiz-disc-card,.pm6-orch-ctl,.pm6-orch-pc-stat,.pm6-usage-acct-status,.pm6-sp-row,.pm6-art-row,.pm6-search-hit) { isolation: isolate; }
     :is(.pm-sheen,.pm6-dash-card,.pm7u-card,.pm6-dash-catalog-item,.pm6-proj-card,.project-card-bento,.pm6-wiz-choice-card,.pm6-wiz-attach-card,.pm6-wiz-disc-card,.pm6-orch-ctl,.pm6-orch-pc-stat,.pm6-usage-acct-status,.pm6-sp-row,.pm6-art-row,.pm6-search-hit)::before {
-      content: "";
+      content: none;   /* PMH: the PM8 wash is off; z-index:-1 stays for Glass */
       position: absolute; inset: 0;
       border-radius: inherit;
       z-index: -1;
@@ -456,12 +450,7 @@
     /* cozy hover/focus: own-accent glow ring + tiny scale on top of the
        shared .pm-sheen lift; --pm6-sheen-accent is set by the category
        scopes below and defaults to accent-primary (sky) elsewhere */
-    [data-theme^="friendly"] .pm-sheen:hover {
-      transform: translateY(-2px) scale(1.005);
-      border-color: color-mix(in srgb, var(--pm6-sheen-accent, var(--accent-primary)) 45%, var(--border));
-      box-shadow: 0 0 0 2px var(--pm6-sheen-accent, var(--accent-primary)),
-                  0 0 22px color-mix(in srgb, var(--pm6-sheen-accent, var(--accent-primary)) 55%, transparent);
-    }
+    /* [data-theme^="friendly"] .pm-sheen:hover: removed, PMH owns hover */
     [data-theme^="friendly"][data-motion="reduced"] .pm-sheen:hover { transform: none; }
     [data-theme^="friendly"] :where(button, [href], input, select, textarea, [role="tab"], [tabindex]):focus-visible {
       outline: 2px solid var(--pm6-sheen-accent, var(--accent-primary));
@@ -541,12 +530,7 @@
        bar icon .symbol scale, or primary-button brightness — so those elements
        felt flat vs other themes. Use glass tokens so the motion reads as glass
        (frosted edge + accent tint) rather than a copy of the cozy palette. */
-    [data-theme^="glass"] .pm-sheen:hover {
-      transform: translateY(-2px) scale(1.005);
-      border-color: color-mix(in srgb, var(--accent-primary) 40%, var(--border));
-      box-shadow: 0 0 0 1px var(--glass-hairline),
-                  0 8px 22px rgba(var(--pm6-glass-a-rgb), .22);
-    }
+    /* [data-theme^="glass"] .pm-sheen:hover: removed, PMH owns hover */
     [data-theme^="glass"][data-motion="reduced"] .pm-sheen:hover { transform: none; }
     [data-theme^="glass"] .activity-bar .icon:hover { color: var(--text-primary); }
     [data-theme^="glass"] .activity-bar .icon:hover .symbol {
@@ -950,7 +934,7 @@
       *, *::before, *::after {
         animation-duration: .01ms !important;
         animation-iteration-count: 1 !important;
-        transition-duration: .01ms !important;
+        transition: none !important;
         scroll-behavior: auto !important;
       }
       #glass-bg * { animation: none !important; }
@@ -960,7 +944,7 @@
     [data-motion="reduced"] *::after {
       animation-duration: .01ms !important;
       animation-iteration-count: 1 !important;
-      transition-duration: .01ms !important;
+      transition: none !important;
       scroll-behavior: auto !important;
     }
     [data-motion="reduced"] #glass-bg * { animation: none !important; }

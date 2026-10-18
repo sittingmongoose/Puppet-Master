@@ -132,14 +132,23 @@
   function installHomeDensity() {
     var observed = new WeakSet();
     var resizeObserver = new ResizeObserver(function (entries) { entries.forEach(function (entry) { syncHomeSurface(entry.target, entry.contentRect); }); });
-    function enroll() {
-      $$('.pm-home-surface').forEach(function (surface) {
-        if (observed.has(surface)) return;
-        observed.add(surface); resizeObserver.observe(surface); syncHomeSurface(surface);
-      });
+    function enrollSurface(surface) {
+      if (observed.has(surface) || !surface.isConnected) return;
+      observed.add(surface); resizeObserver.observe(surface); syncHomeSurface(surface);
+    }
+    function enroll(root) {
+      root = root || document;
+      if (root.nodeType === 1 && root.matches('.pm-home-surface')) enrollSurface(root);
+      if (root === document || root.childElementCount) {
+        root.querySelectorAll('.pm-home-surface').forEach(enrollSurface);
+      }
     }
     enroll();
-    new MutationObserver(enroll).observe(document.body, { childList: true, subtree: true });
+    new MutationObserver(function (mutations) {
+      mutations.forEach(function (mutation) {
+        mutation.addedNodes.forEach(function (node) { if (node.nodeType === 1) enroll(node); });
+      });
+    }).observe(document.body, { childList: true, subtree: true });
 
     var hud = document.createElement('div');
     hud.className = 'pm7-home-resize-hud';

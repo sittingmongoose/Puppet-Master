@@ -2439,6 +2439,8 @@
                         sTab = sibs[si];
                         if (sTab === g.tab || sTab.style.display === 'none') continue;
                         firsts.push([sTab, sTab.getBoundingClientRect().left]);
+                        window.PM7_MOTION_FINISH.cancel(sTab, 'transition', 'transform');
+                        cancelAnimationFrame(sTab.__pmTabSlideFrame);
                     }
                     g.strip.insertBefore(g.tab, ref);
                     var newMids = [];
@@ -2452,14 +2454,18 @@
                         if (dx >= 1 || dx <= -1) {
                             sTab.style.transform = 'translateX(' + dx + 'px)';
                             void sTab.offsetWidth; /* commit the offset frame */
-                            sTab.style.transition = 'transform 250ms cubic-bezier(.22,1,.36,1)';
-                            sTab.style.transform = '';
-                            sTab.addEventListener('transitionend', function onSlid(te) {
-                                if (te.propertyName !== 'transform') return;
-                                te.target.style.transition = '';
-                                te.target.style.transform = '';
-                                te.target.removeEventListener('transitionend', onSlid);
-                            });
+                            (function (tab) {
+                                // Old cancellation dispatches before this replacement frame.
+                                tab.__pmTabSlideFrame = requestAnimationFrame(function () {
+                                    tab.__pmTabSlideFrame = 0;
+                                    tab.style.transition = 'transform 250ms cubic-bezier(.22,1,.36,1)';
+                                    tab.style.transform = '';
+                                    window.PM7_MOTION_FINISH(tab, 'transition', 'transform', function () {
+                                        tab.style.transition = '';
+                                        tab.style.transform = '';
+                                    });
+                                });
+                            })(sTab);
                         } else {
                             sTab.style.transition = '';
                             sTab.style.transform = '';

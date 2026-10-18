@@ -1160,31 +1160,26 @@
       newP.style.setProperty('--pm-dir', String(dir));
       oldP.classList.add('pm8-page-out');
       newP.classList.add('pm8-page-in');
-      var cleanupTimer = 0;
+      var stopEntrance = null, finished = false;
       function cleanupOut() {
         oldP.classList.remove('pm8-page-out');
         oldP.style.top = oldP.style.left = oldP.style.width = oldP.style.height = '';
         if (oldP.__pm8PageCleanup === cleanupOut) oldP.__pm8PageCleanup = null;
       }
       function cleanupIn() {
-        clearTimeout(cleanupTimer);cleanupTimer=0;
+        if (finished) return;
+        finished = true;
+        if (stopEntrance) stopEntrance();
         newP.classList.remove('pm8-page-in');
-        newP.removeEventListener('animationend', onIn);
         if (newP.__pm8PageCleanup === cleanupIn) newP.__pm8PageCleanup = null;
         cleanupOut();
         document.documentElement.removeAttribute('data-pm-page-transition');
         requestAnimationFrame(function () { cachePanelRect(newP); cacheTabMetrics(); });
       }
-      function onIn(ev) {
-        if (ev.animationName !== 'pm8-page-in') return;
-        newP.removeEventListener('animationend', onIn);
-        /* Keep the fully faded outgoing page inert through Settings' own
-           340 ms entrance. Hiding its large subtree at 150 ms forced a
-           main-thread restyle through the middle of the visible animation. */
-        cleanupTimer=setTimeout(cleanupIn,80);
-      }
       oldP.__pm8PageCleanup = cleanupOut; newP.__pm8PageCleanup = cleanupIn;
-      newP.addEventListener('animationend', onIn);
+      /* Keep the existing 80 ms post-end hold: Settings still enters for
+         340 ms while the faded outgoing subtree stays inert. */
+      stopEntrance = window.PM7_MOTION_FINISH(newP, 'animation', 'pm8-page-in', cleanupIn, 80);
     }
     var origGo = window.PM_PAGES.go;
     window.PM_PAGES.go = function (pageId, subTab) {
@@ -1214,8 +1209,13 @@
     /* T36: the responsive title-bar density owner needs one visual-only
        resync after an overflow-only page becomes the visible active tab. */
     window.PM7_PAGE_TAB_INK = { resync: resync };
+    var resyncFrame = 0;
+    function resyncNextFrame() {
+      if (resyncFrame) return;
+      resyncFrame = requestAnimationFrame(function () { resyncFrame = 0; resync(); });
+    }
     try {
-      new MutationObserver(resync).observe(document.documentElement, {
+      new MutationObserver(resyncNextFrame).observe(document.documentElement, {
         attributes: true, attributeFilter: ['data-theme', 'data-motion']
       });
     } catch (e) {}
@@ -1368,6 +1368,13 @@
     ',.pm6-usage-acct-status,.pm6-sp-row,.pm6-art-row,.pm6-search-hit';
   (function () {
     var root = document.documentElement;
+    /* O55 PMH (src/js/18-hover.js) owns hover; PM8 stops here. The shared pointermove dispatcher stays (F3-446). */
+    window.PM7_PMOVE = window.PM7_PMOVE || [];
+    document.addEventListener('pointermove', function (e) {
+      var hooks = window.PM7_PMOVE;
+      for (var i = 0; i < hooks.length; i++) { try { hooks[i](e); } catch (err) {} }
+    });
+    return;
     var F = { bleed: 12, edge: .45, ramp: 18, glow: .8, wash: .5, mag: 1, stiff: 170, damp: 22 };
     var probe = null;
     var px = 0, py = 0, havePointer = false;
@@ -1852,8 +1859,9 @@
           if (muts[i].addedNodes.length || muts[i].removedNodes.length) { elsDirty = true; break; }
         }
       }).observe(document.body, { childList: true, subtree: true });
+      var themeFrame = 0;
       new MutationObserver(function () {
-        readTheme();
+        if (!themeFrame) themeFrame = requestAnimationFrame(function () { themeFrame = 0; readTheme(); });
         bloomHost = null;   /* radius may change with the theme */
         if (reduced()) { killAll(); return; }
         if (havePointer) start();

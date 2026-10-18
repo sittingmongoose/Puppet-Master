@@ -1400,7 +1400,7 @@
     portalCloseAnim(ptPopout);
   }
 
-  var PERSONA_CATALOG = ['Product Manager', 'Architect Reviewer', 'Rust Engineer'];
+  var PERSONA_CATALOG = ['Product Manager', 'Architect Reviewer', 'Rust Engineer', 'Teacher'];
   var PERSONA = 'Product Manager';
   function personaPopoutListHtml() {
     var body = PERSONA_CATALOG.map(function (name) {
@@ -2266,7 +2266,19 @@
   }
 
   /* ---------- chrome behavior: context module, lens, more menu, close, chips, rename ---------- */
+  function headerSproutOpen() {
+    var sprout = ['context-lens-popover', 'pm6-chat-more-menu', 'wt-bind-dropdown', 'context-hover-module'], state = ['is-open', 'is-closing'];
+    for (var s = 0; s < state.length; s++) {
+      var list = document.getElementsByClassName(state[s]);
+      for (var i = 0; i < list.length; i++) {
+        var cl = list[i].classList;
+        if (cl.contains(sprout[0]) || cl.contains(sprout[1]) || cl.contains(sprout[2]) || cl.contains(sprout[3])) return true;
+      }
+    }
+    return !!(document.querySelector('.pm6-chat-more-btn[aria-expanded="true"]') || document.querySelector('.context-usage.is-ctx-open'));
+  }
   function closeHeaderSprouts(except) {
+    if (!headerSproutOpen()) return;
     $all('.context-lens-popover, .pm6-chat-more-menu, .wt-bind-dropdown, .context-hover-module').forEach(function (p) {
       if (except && p === except) return;
       if (portalIsOpen(p) || p.classList.contains('is-closing')) portalCloseAnim(p);

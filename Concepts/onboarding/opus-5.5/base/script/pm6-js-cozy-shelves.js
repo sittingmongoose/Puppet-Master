@@ -703,7 +703,7 @@
           v._pmCozeEntered = true;
           if (!reduce()) {
             v.classList.add('pm-panel-enter');
-            v.addEventListener('animationend', function h() { v.classList.remove('pm-panel-enter'); v.removeEventListener('animationend', h); });
+            window.PM7_MOTION_FINISH(v, 'animation', 'railPanelIn', function () { v.classList.remove('pm-panel-enter'); });
           }
           schedule(v);
         } else if (!v.classList.contains('active')) {

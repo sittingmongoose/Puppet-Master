@@ -259,7 +259,7 @@ def load_patch_entries() -> list[tuple[str, str, str]]:
 
     entries: list[tuple[str, str, str]] = []
     for name in PATCH_LISTS:
-        entries.extend(getattr(build, name))
+        entries.extend(getattr(build, name, []))
     try:
         base = build.base_source.assemble().decode("utf-8")
         entries.extend(build.first_paint_patches(base))

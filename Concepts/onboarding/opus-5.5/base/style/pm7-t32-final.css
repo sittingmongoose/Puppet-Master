@@ -748,7 +748,7 @@ html.pm7-dash-moving * { cursor: grabbing !important; user-select: none !importa
   box-sizing: border-box !important;
   flex-wrap: wrap !important;
 }
-.pm7u-card:has(.pm7u-setup-cta) .pm7u-setup-cta > * {
+.pm7u-card .pm7u-setup-cta.pm7u-setup-cta > * {
   min-width: 0;
   overflow-wrap: anywhere;
 }

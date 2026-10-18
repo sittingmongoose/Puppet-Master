@@ -4,7 +4,7 @@
   'use strict';
   if(window.PM7_SYSTEMS_INTEGRATION)return;
   var shell=document.querySelector('.app-shell'),panel=document.getElementById('panel-settings'),chat=document.getElementById('chatPanel'),resizer=document.getElementById('chatResizer');
-  var reservedChatWidth=0,shellWidth=0,panelWidth=0,chatWidth=0,resizerWidth=5,syncFrame=0;
+  var reservedChatWidth=0,shellWidth=0,panelWidth=0,chatWidth=0,resizerWidth=5,syncFrame=0,pagesWidth=0;
   function settingsActive(){return !!(panel&&panel.classList.contains('active'));}
   function chatReservation(){
     if(!chat||chat.classList.contains('hidden'))return 0;
@@ -16,7 +16,7 @@
   }
   function hostProjection(){
     var focused=document.body.classList.contains('pm7-settings-focus-host'),reservation=chatReservation();
-    var width=panelWidth>0?panelWidth:Math.max(0,shellWidth-reservation);
+    var width=panelWidth>0?panelWidth:pagesWidth>0?pagesWidth:Math.max(0,shellWidth-reservation);
     return {settings_active:settingsActive(),shell_width:shellWidth,panel_width:width,focused:focused,chat_reservation:reservation,projected_with_chat:focused?Math.max(0,width-reservation):width,threshold:980};
   }
   function syncHost(){
@@ -94,6 +94,7 @@
   shellWidth=shell?shell.clientWidth:0;panelWidth=panel?panel.clientWidth:0;chatWidth=chat?chat.clientWidth:0;resizerWidth=resizer?(resizer.clientWidth||5):5;
   observeWidth(shell,function(width){shellWidth=width;});
   observeWidth(panel,function(width){panelWidth=width;});
+  observeWidth(panel&&panel.parentElement,function(width){pagesWidth=width;});
   observeWidth(chat,function(width){if(width>0)chatWidth=width;});
   observeWidth(resizer,function(width){if(width>0)resizerWidth=width;});
   if(panel&&typeof MutationObserver==='function')new MutationObserver(syncHost).observe(panel,{attributes:true,attributeFilter:['class']});
