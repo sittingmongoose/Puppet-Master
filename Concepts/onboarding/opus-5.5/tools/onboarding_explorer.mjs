@@ -11,6 +11,7 @@
  *   - raw copy keys on screen, content spilling past the pane, page errors
  * The rule table in AUDIT.md reads graph.json for its path checks (what is shown or offered after which choices). */
 import { launch, sleep } from './chrome.mjs';
+import { takeCoverageFlag } from './coverage_union.mjs';
 import { mkdirSync, writeFileSync, readFileSync } from 'node:fs';
 import { pathToFileURL, fileURLToPath } from 'node:url';
 import { resolve, join, dirname } from 'node:path';
@@ -18,6 +19,7 @@ import { createHash } from 'node:crypto';
 
 const here = dirname(fileURLToPath(import.meta.url));
 const argv = process.argv.slice(2);
+const coverageFile = takeCoverageFlag(argv);
 const out = resolve(argv[0] && !argv[0].startsWith('--') ? argv[0] : '/tmp/o55/explore');
 const opt = (k, d) => { const i = argv.indexOf('--' + k); return i >= 0 ? argv[i + 1] : d; };
 const PAGE = resolve(opt('page', resolve(here, '../../../Onboarding concepts/TestOpus5.5PmConcept.html')));
@@ -128,7 +130,7 @@ async function act(page, control) {
 }
 
 async function worker(id) {
-  const { page, close } = await launch({ width: W, height: H });
+  const { page, close } = await launch({ width: W, height: H, coverageFile });
   try {
     while (true) {
       const job = queue.shift();
@@ -177,7 +179,7 @@ if (ANALYZE) {
 }
 
 /* ---------------------------------------------------------------- analysis */
-const defined = await (async () => { const { page, close } = await launch({ width: 800, height: 600 }); try { await page.goto(pathToFileURL(PAGE).href + '?o55=off'); await sleep(1200); return await page.evaluate(() => Object.keys(window.O55.screens.defs)); } finally { await close(); } })();
+const defined = await (async () => { const { page, close } = await launch({ width: 800, height: 600, coverageFile }); try { await page.goto(pathToFileURL(PAGE).href + '?o55=off'); await sleep(1200); return await page.evaluate(() => Object.keys(window.O55.screens.defs)); } finally { await close(); } })();
 const reached = new Set([...states.values()].filter((s) => !s.closed).map((s) => s.screen));
 const outs = new Map(); for (const t of transitions) { if (!outs.has(t.from)) outs.set(t.from, []); outs.get(t.from).push(t); }
 const deadEnds = [], noops = [], noReason = [], raw = [], spills = [];

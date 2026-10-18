@@ -4,6 +4,7 @@
  * strip/patch results live in the page.  Usage: node tools/boot_check.mjs <out-dir> [themes=basic-dark,...] [--page <path>]
  * Writes boot.json and a screenshot per page/theme into <out-dir> (never into the repository). */
 import { launch, sleep } from './chrome.mjs';
+import { takeCoverageFlag } from './coverage_union.mjs';
 import { mkdirSync, writeFileSync } from 'node:fs';
 import { pathToFileURL, fileURLToPath } from 'node:url';
 import { resolve, join, dirname } from 'node:path';
@@ -11,6 +12,7 @@ import { resolve, join, dirname } from 'node:path';
 const here = dirname(fileURLToPath(import.meta.url));
 const concepts = resolve(here, '../../..');
 const raw = process.argv.slice(2);
+const coverageFile = takeCoverageFlag(raw);
 const pageIdx = raw.indexOf('--page');
 const argv = pageIdx >= 0 ? raw.filter((_, i) => i !== pageIdx && i !== pageIdx + 1) : raw;
 const out = resolve(argv[0] || '/tmp/o55-boot');
@@ -20,7 +22,7 @@ mkdirSync(out, { recursive: true });
 const pages = { base: join(concepts, 'Onboarding concepts', 'TestPMConcept.html'), built: pageIdx >= 0 && raw[pageIdx + 1] ? resolve(raw[pageIdx + 1]) : join(concepts, 'Onboarding concepts', 'TestOpus5.5PmConcept.html') };
 const report = {};
 for (const [name, file] of Object.entries(pages)) {
-  const { page, close } = await launch({ width: 1600, height: 1000 });
+  const { page, close } = await launch({ width: 1600, height: 1000, coverageFile: name === 'built' ? coverageFile : null });
   try {
     await page.addInitScript(() => { try { localStorage.setItem('pm.o55.boot-check', '1'); } catch {} });
     const t0 = Date.now();

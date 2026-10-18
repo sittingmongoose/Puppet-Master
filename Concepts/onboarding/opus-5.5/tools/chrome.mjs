@@ -5,6 +5,7 @@ import { launch as cdpLaunch, sleep } from '../../../pm7-tools/verify/pm_cdp.mjs
 import { rmSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { fileURLToPath } from 'node:url';
+import { coverPage } from './coverage_union.mjs';
 
 const executable = fileURLToPath(new URL('./agent-browser-pipe.mjs', import.meta.url));
 
@@ -18,13 +19,21 @@ export async function launch(opts = {}) {
   let b;
   try { b = await cdpLaunch(Object.assign({}, opts, { profile, chrome: executable })); }
   catch (err) { rmSync(profile, { recursive: true, force: true }); throw err; }
+  let finishCoverage = null;
+  if (opts.coverageFile) {
+    try { finishCoverage = await coverPage(b.page, opts.coverageFile); }
+    catch (err) { await b.close(); rmSync(profile, { recursive: true, force: true }); throw err; }
+  }
   let closed = false;
   const close = async () => {
     if (closed) return; closed = true; openBrowsers.delete(close);
+    let coverageError = null;
+    if (finishCoverage) try { await finishCoverage(); } catch (err) { coverageError = err; }
     try { await b.close(); } catch (_) {}
     const c = b.chrome;
     if (c && c.exitCode === null && c.signalCode === null) await new Promise((r) => { c.once('exit', r); setTimeout(r, 3000); });
-    for (let i = 0; i < 40; i++) { try { rmSync(profile, { recursive: true, force: true }); return; } catch (_) { await sleep(250); } }
+    for (let i = 0; i < 40; i++) { try { rmSync(profile, { recursive: true, force: true }); break; } catch (_) { await sleep(250); } }
+    if (coverageError) throw coverageError;
   };
   openBrowsers.add(close);
   return Object.assign({}, b, { close, profile });

@@ -50,6 +50,7 @@ import { mkdirSync, writeFileSync } from 'node:fs';
 import { join, resolve, dirname } from 'node:path';
 import { pathToFileURL, fileURLToPath } from 'node:url';
 import { createHash } from 'node:crypto';
+import { coverPage, takeCoverageFlag } from './coverage_union.mjs';
 
 const here = dirname(fileURLToPath(import.meta.url));
 /* playwright-core and Chrome: the VM's defaults, overridable for another machine */
@@ -75,6 +76,7 @@ const LOOKS = [
 const QUICK_REPS = ['ai/bsd', 'ai/media', 'ai/providers', 'memory/context-memory', 'system/advanced', 'code/editor-runtime'];
 
 const raw = process.argv.slice(2);
+const coverageFile = takeCoverageFlag(raw);
 function argOf(name) { const i = raw.indexOf(name); return i >= 0 && i + 1 < raw.length ? raw[i + 1] : null; }
 const hasFlag = (name) => raw.includes(name);
 const flagsWithValue = new Set(['--out', '--looks', '--scopes', '--viewport', '--cdp']);
@@ -289,7 +291,7 @@ const pageErrors = [];
 const findings = [];        /* one row per instance */
 const viewsWalked = [];
 const viewsFailed = [];
-let browser = null, page = null;
+let browser = null, page = null, finishCoverage = null;
 let ownedContext = null; /* retain the promise so signals also wait for in-flight context creation */
 
 /* open the Settings page through the page's own navigation (the tab can sit in the title bar's overflow at narrow widths) */
@@ -314,6 +316,7 @@ async function boot() {
   page.setDefaultTimeout(20000);
   /* offline without request interception (interception over CDP sends every inline asset through Node): Chrome blocks the network itself */
   { const s = await page.context().newCDPSession(page); await s.send('Network.enable'); await s.send('Network.setBlockedURLs', { urls: ['http://*', 'https://*', 'ws://*', 'wss://*'] }); }
+  if (coverageFile) finishCoverage = await coverPage(page, coverageFile);
   page.on('pageerror', (e) => pageErrors.push(String((e && e.message) || e)));
   await page.goto(pathToFileURL(pagePath).href, { waitUntil: 'domcontentloaded', timeout: 90000 });
   await page.locator('#pm-settings-root').waitFor({ state: 'attached', timeout: 60000 });
@@ -523,6 +526,7 @@ async function main() {
     progress('look ' + look.id + ' static views');
     await walkStaticViews(look);
   }
+  if (finishCoverage) { await finishCoverage(); finishCoverage = null; }
   if (ownedContext) { await (await ownedContext).close(); ownedContext = null; }
   if (cdpEndpoint) await page.close().catch(() => {});   /* over CDP, close() only disconnects: the session's owner stops it */
   await browser.close(); browser = null;
@@ -579,9 +583,10 @@ async function main() {
   else process.exitCode = 0;
 }
 
-for (const sig of ['SIGINT', 'SIGTERM']) process.once(sig, async () => { try { if (ownedContext) await (await ownedContext).close(); } catch (_) {} try { if (browser) await browser.close(); } catch (_) {} process.exit(sig === 'SIGINT' ? 130 : 143); });
+for (const sig of ['SIGINT', 'SIGTERM']) process.once(sig, async () => { try { if (finishCoverage) await finishCoverage(); } catch (_) {} try { if (ownedContext) await (await ownedContext).close(); } catch (_) {} try { if (browser) await browser.close(); } catch (_) {} process.exit(sig === 'SIGINT' ? 130 : 143); });
 main().catch(async (e) => {
   console.error('FATAL ' + ((e && e.stack) || e).toString().split('\n').slice(0, 6).join('\n'));
+  try { if (finishCoverage) await finishCoverage(); } catch (_) {}
   try { if (ownedContext) await (await ownedContext).close(); } catch (_) {}
   try { if (browser) await browser.close(); } catch (_) {}
   process.exit(2);

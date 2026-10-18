@@ -13,8 +13,8 @@ export const PAGE = pageIdx >= 0 && process.argv[pageIdx + 1] ? resolve(process.
 const LAYER = '#pm-o55-onboarding .o55-pane > .o55-layer:not(.o55-out)';
 const attr = (s) => String(s).replace(/\\/g, '\\\\').replace(/"/g, '\\"');
 
-export async function open({ scenario = 'fresh', theme = 'basic-dark', width = 1440, height = 900, query = '', snapDir = null, snapPrefix = '' } = {}) {
-  const { page, close } = await launch({ width, height });
+export async function open({ scenario = 'fresh', theme = 'basic-dark', width = 1440, height = 900, query = '', snapDir = null, snapPrefix = '', coverageFile = null } = {}) {
+  const { page, close } = await launch({ width, height, coverageFile });
   const context = () => page.evaluate(() => {
     const S = window.O55 && window.O55.S, r = document.getElementById('pm-o55-onboarding');
     const l = r && r.querySelector('.o55-pane > .o55-layer:not(.o55-out)');
