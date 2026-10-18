@@ -555,91 +555,8 @@ THEME_PREVIEW_PATCHES = [
 # Basic Dark and leaves the store unread; window.PM_O55_BOOT tells Settings (kit.d/18-nier.js) and the onboarding the
 # same decision. While NieR's boot log will run, the page waits under a cover of the log's own paper until the log is
 # up (kit.d/20-nier-world.js removes data-o55-boot-wait), so the app never shows between the first frame and the log.
-SETTINGS_PREFIX = 'pm7:settings:tome-tabs:v1:'
 
 
-def first_paint_patches(base: str) -> list[tuple[str, str, str]]:
-    menu = re.search(r'<div class="pm6-tb-menu" id="projectMenu"[^>]*>([\s\S]*?)</div>', base)
-    need(menu is not None, 'first paint: #projectMenu not found')
-    picked = re.findall(r'<button[^>]*class="pm6-tb-menu-item is-selected"[^>]*data-project="([^"]+)"', menu.group(1))
-    need(len(picked) == 1, f'first paint: the title bar selects {len(picked)} Projects in the markup (need exactly 1)')
-    need(base.count("var PREFIX='" + SETTINGS_PREFIX + "';") == 1, 'first paint: the Settings store key changed')
-    need("if(typeof window.PM_ACTIVE_PROJECT_ID==='string'){" in base, 'first paint: projectRecord() changed')
-    store = (SRC / 'js' / '20-store.js').read_text(encoding='utf-8')
-    onb = re.search(r"onboarding: '([^']+)'", store)
-    need(onb is not None, 'first paint: the onboarding record key (src/js/20-store.js) not found')
-    nier = (SRC / 'settings' / 'kit.d' / '18-nier.js').read_text(encoding='utf-8')
-    parts = re.findall(r"\['(?:Look|Motion|Sound & voice|Pointer|World)', '([^']+)', '([a-z0-9]+)'(?:, '[^']*')?\]", nier)
-    need(len(parts) == 29, f'first paint: found {len(parts)} NieR parts in kit.d/18-nier.js (need 29)')
-    pal = (SRC / 'settings' / 'styles.d' / '13-nier.css').read_text(encoding='utf-8')
-    ground = {}
-    for mode in ('light', 'dark'):
-        m = re.search(r'html\[data-o55-nier\]\[data-theme="basic-' + mode + r'"\] \{\n  --background: (#[0-9a-f]{6});', pal)
-        need(m is not None, f'first paint: NieR {mode} ground not found in styles.d/13-nier.css')
-        ground[mode] = m.group(1)
-    js = lambda v: json.dumps(v, ensure_ascii=False)
-    read = (
-        "        var leg = null;\n"
-        "        /* O55 first paint (tools/build.py): the look stored for the Project the page opens on, read and never\n"
-        "           written (T44: project-scoped Settings owns persistence; nothing here stores a theme). A new install's\n"
-        "           onboarding (?o55=fresh, or no onboarding record yet) always starts in Basic Dark. */\n"
-        "        var o55b = { project: '', install: false, nier: false, parts: '', glassBg: '', glassN: NaN, reduced: false, boot: false };\n"
-        "        try {\n"
-        "          var o55sw = new URLSearchParams(location.search).get('o55') || '', o55rec = null;\n"
-        f"          try {{ o55rec = JSON.parse(window.localStorage.getItem({js(onb.group(1))}) || 'null'); }} catch (e3) {{ o55rec = null; }}\n"
-        "          o55b.install = o55sw === 'fresh' || (!o55rec && o55sw !== 'off' && o55sw !== 'tour' && o55sw.indexOf('screen=') !== 0);\n"
-        f"          var o55pid = typeof window.PM_ACTIVE_PROJECT_ID === 'string' ? window.PM_ACTIVE_PROJECT_ID.trim() : {js(picked[0])};\n"
-        "          o55b.project = o55pid && !/^(none|no-project)$/i.test(o55pid) ? o55pid : '';\n"
-        f"          var o55p = o55b.project && !o55b.install ? JSON.parse(window.localStorage.getItem({js(SETTINGS_PREFIX)} + encodeURIComponent(o55b.project)) || 'null') : null;\n"
-        "          var o55s = o55p && o55p.settings && typeof o55p.settings === 'object' ? o55p.settings : null;\n"
-        "          if (o55s) {\n"
-        "            var o55sel = String(o55s['general.visual.theme'] || 'Basic Dark').trim().toLowerCase().replace(/\\s+/g, '-').split('-');\n"
-        "            fam = fams.indexOf(o55sel[0]) === -1 ? 'basic' : o55sel[0];\n"
-        "            tmode = String(o55s['general.visual.theme-mode'] || o55sel[1] || 'dark').toLowerCase();\n"
-        "            if (tmodes.indexOf(tmode) === -1) { tmode = o55sel[1] === 'light' ? 'light' : 'dark'; }\n"
-        "            var o55on = o55s['general.visual.nier-mode'], o55pl = o55s['general.visual.nier-parts'];\n"
-        "            if (o55on === true || o55on === 'true' || o55on === 'On') {\n"
-        f"              var o55all = {js([[label, key] for label, key in parts])}, o55k = [];\n"
-        "              for (var o55i = 0; o55i < o55all.length; o55i++) { if (!Array.isArray(o55pl) || o55pl.indexOf(o55all[o55i][0]) !== -1) { o55k.push(o55all[o55i][1]); } }\n"
-        "              o55b.nier = true; o55b.parts = o55k.join(' '); fam = 'basic';\n"
-        "            }\n"
-        "            var o55g = String(o55s['general.visual.glass-background-mode'] || 'Mesh').toLowerCase();\n"
-        "            o55b.glassBg = ['mesh', 'depth', 'minimal'].indexOf(o55g) === -1 ? 'mesh' : o55g;\n"
-        "            var o55a = Number(o55s['general.visual.glass-transparency'] == null ? 0.55 : o55s['general.visual.glass-transparency']);\n"
-        "            if (o55a > 1) { o55a /= 100; }\n"
-        "            o55b.glassN = isFinite(o55a) ? o55a : 0.55;\n"
-        "            o55b.reduced = !!o55s['general.visual.reduce-animations'];\n"
-        "          }\n"
-        "        } catch (eo55) { fam = 'basic'; tmode = 'dark'; o55b.nier = false; o55b.parts = ''; o55b.glassBg = ''; o55b.glassN = NaN; o55b.reduced = false; }\n"
-        "        window.PM_O55_BOOT = o55b;\n")
-    stamp_old = ("        /* T44: project-scoped Settings owns persistence; no global theme write. */\n"
-                 "        d.setAttribute('data-theme', t);\n")
-    stamp_new = (stamp_old +
-                 "        if (o55b.nier) { d.setAttribute('data-o55-nier', 'on'); d.setAttribute('data-o55-nier-parts', o55b.parts); }\n"
-                 "        if (o55b.reduced) { d.setAttribute('data-motion', 'reduced'); }\n"
-                 "        var o55still = o55b.reduced; try { o55still = o55still || window.matchMedia('(prefers-reduced-motion: reduce)').matches; } catch (e4) {}\n"
-                 "        o55b.boot = o55b.nier && (' ' + o55b.parts + ' ').indexOf(' boot ') !== -1 && !o55still && document.visibilityState !== 'hidden';\n"
-                 "        if (o55b.boot) {\n"
-                 "          d.setAttribute('data-o55-boot-wait', '');\n"
-                 "          window.addEventListener('load', function () { setTimeout(function () { d.removeAttribute('data-o55-boot-wait'); }, 400); });\n"
-                 "        }\n")
-    ground_js = js(ground)
-    return [
-        ("        var leg = null;\n", read, 'first paint: read the opening Project\'s stored look'),
-        (stamp_old, stamp_new, 'first paint: NieR Mode, reduced motion and the boot cover'),
-        ("        var g = 'mesh';\n", "        var g = o55b.glassBg || 'mesh';\n", 'first paint: glass background'),
-        ("        var a = NaN;\n",
-         "        var a = NaN;\n"
-         "        if (o55b.glassN === o55b.glassN) { d.style.setProperty('--glass-alpha', String(Math.max(/-light$/.test(t) ? 0.45 : 0.35, Math.min(1, o55b.glassN)))); }\n",
-         'first paint: glass transparency'),
-        ("        var bg = BGS[t] || '#211E26';\n",
-         f"        var bg = (o55b.nier && {ground_js}[scheme]) || BGS[t] || '#211E26';\n",
-         'first paint: NieR ground'),
-        ("        s.textContent = 'html,body{background:' + bg + ';color-scheme:' + (isDark ? 'dark' : 'light') + ';}';\n",
-         "        s.textContent = 'html,body{background:' + bg + ';color-scheme:' + (isDark ? 'dark' : 'light') + ';}'\n"
-         "          + 'html[data-o55-boot-wait] body::after{content:\"\";position:fixed;inset:0;z-index:2147483399;pointer-events:none;background:' + bg + ';}';\n",
-         'first paint: the boot log\'s cover'),
-    ]
 
 
 # Owner exposures (Astra precedent): hand the real owners to onboarding/tour without a second implementation.
@@ -740,8 +657,6 @@ def build_text(usage: bool = True, home: bool = True) -> str:
     # Legacy onboarding/tour removal is authored in base/shell.html (Q18).
 
     # 2. Guarded patches.
-    for old, new, label in first_paint_patches(text):
-        text = replace_once(text, old, new, label)
     text = shared_fitting_patch(text)
     for old, new, label in THEME_PREVIEW_PATCHES:
         text = replace_once(text, old, new, label)
