@@ -44,3 +44,21 @@ The unconditional patches from `build.py`, `shell_motion.py` and `wizorch_layer.
 The latter two tools and the four retired onboarding/tour block files remain historical only.
 Use `python scripts/pm7-where.py '<snippet>'` to find the live source, then the four checks above.
 Do not remove dead code as part of editing this split; the PM8 engine's early `return;` is intentional.
+
+## Historical inline patch names
+
+Published source comments retain the old patch names to preserve page bytes. Those names are
+historical references, not current edit locations. Paths below are relative to this `base/` folder.
+
+| Old inline name | Live implementation |
+|---|---|
+| `SETTINGS_EXPOSE` | `script/pm4-settings-js.js`: Settings transfer/staging bridge |
+| `THEME_PREVIEW_PATCHES` | `script/pm4-settings-js.js`: `PM7_SETTINGS_TOME.applyPaint` |
+| `first_paint_patches` | `script/script-001.js`: opening Project look, NieR and boot cover |
+| `wizorch_layer.py` | `script/pm7-t46-systems-js.js`: scope loop; `script/pm6-js-orchestrator.js`: node chips; `shell.html`: wrappers and surface attributes |
+| `shell_motion.py` | `script/pm6-js-globals.js`: pages; `script/pm-hover-tags-js.js`: tags/census; `script/pm7-t23-shell-adjustments.js`: status bar; `style/pm6-css-global.css`: motion styles |
+
+Other folded motion groups live in `script/pm6-js-chat.js`, `script/pm6-js-panels.js`,
+`script/script-020.js` and `script/script-038.js`. Use `scripts/pm7-where.py '<snippet>'`
+from the repository root to locate the exact live block. Update the emitted historical comments
+only in a later change that permits different published bytes.
