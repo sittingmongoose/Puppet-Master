@@ -358,40 +358,8 @@ def duplicate_keys() -> list[str]:
 # Settings layer reads them, exactly as settings_layer._canon_rows admits canon rows, so placement, search, Details,
 # transfer and the editor treat them as the rows they are proposed to become. A row whose id canon already holds is
 # skipped (the Settings layer admits canon's own), so this block retires itself row by row as canon admits them.
-EDITOR_LOOK_ROWS = SRC / 'settings' / 'proposed.d'
 
 
-def editor_look_rows(text: str) -> tuple[str, list]:
-    files = sorted(EDITOR_LOOK_ROWS.glob('*.json')) if EDITOR_LOOK_ROWS.is_dir() else []
-    if not files:
-        return text, []
-    inventory = PKG.parents[2] / 'Plans' / 'settings_inventory.json'
-    canon = {r['id'] for r in json.loads(inventory.read_text(encoding='utf-8'))['settings']} if inventory.exists() else set()
-    rows = [r for p in files for r in json.loads(p.read_text(encoding='utf-8'))['rows']]
-    need(len({r['id'] for r in rows}) == len(rows), 'EDITOR_LOOK_ROWS: a proposed row id is given twice')
-    key = 'window.PM12_REFERENCE = '
-    need(text.count(key) == 1, 'EDITOR_LOOK_ROWS: PM12_REFERENCE anchor drift')
-    s = text.index(key) + len(key)
-    e = text.index('\n', s)
-    ref = json.loads(text[s:e].rstrip(';'))
-    have = {r['id'] for c in ref['byCat'].values() for r in c.get('settings', [])}
-    added = [r for r in rows if r['id'] not in canon and r['id'] not in have]
-    for r in added:
-        cat, sub, _ = r['id'].split('.', 2)
-        need(cat in ref['byCat'] and any(g['id'] == sub for g in ref['byCat'][cat].get('subgroups', [])),
-             f'EDITOR_LOOK_ROWS: {r["id"]} has no reference subgroup')
-        ref['byCat'][cat]['settings'].append(dict(r, cat=cat, sub=sub))
-    if not added:
-        return text, []
-    ref['total'] = sum(len(c.get('settings', [])) for c in ref['byCat'].values())
-    text = text[:s] + json.dumps(ref, ensure_ascii=False, separators=(',', ':')) + ';' + text[e:]
-    m = re.search(r'(<script type="application/json" id="pm7-settings-data">)(.*?)(</script>)', text, re.S)
-    need(m is not None, 'EDITOR_LOOK_ROWS: pm7-settings-data missing')
-    data = json.loads(m.group(2))
-    known = {r['id'] for r in data['settings']}
-    data['settings'].extend(r for r in added if r['id'] not in known)
-    text = text[:m.start(2)] + json.dumps(data, ensure_ascii=False, separators=(',', ':')) + text[m.end(2):]
-    return text, [r['id'] for r in added]
 
 
 
@@ -488,7 +456,6 @@ def build_text(usage: bool = True, home: bool = True) -> str:
 
     # 0. Settings: swap the base's T50 managers layer for the Opus 5.5 fork in src/settings. The proposed Editor look
     #    rows join the embedded inventories first (EDITOR_LOOK_ROWS), so the layer places and validates them.
-    text, SETTINGS_NOTES['editor_look_rows'] = editor_look_rows(text)
     text, SETTINGS_NOTES['layer'] = settings_layer.apply(text, need)
 
     # Legacy onboarding/tour removal is authored in base/shell.html (Q18).
