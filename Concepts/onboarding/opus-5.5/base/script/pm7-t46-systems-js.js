@@ -75,7 +75,7 @@
     var showRun=scopeState.scope==='plan'&&selected&&selected.run==='pcr-47';
     orch.dataset.namedPlanScope=scopeState.scope;
     ['scope','project','plan'].forEach(function(field){bar.querySelector('[data-plan-field="'+field+'"]').value=scopeState[field];});
-    [...orch.children].forEach(function(child){if(child===bar||child===cards||child.classList.contains('orch-header'))return;child.hidden=!showRun;});
+    var woHead=orch.querySelector('.wo-orch-head');[...orch.children].concat(woHead?[...woHead.children]:[]).forEach(function(child){if(child===bar||child===cards||child===woHead||child.classList.contains('orch-header'))return;if(!showRun){if(!child.hidden){child.hidden=true;child.dataset.woScopeHid='1';}}else if(child.dataset.woScopeHid){child.hidden=false;delete child.dataset.woScopeHid;}});
     [...orch.querySelectorAll('.orch-header > :not(.orch-title)')].forEach(function(child){child.hidden=!showRun;});
     var shown=scopeState.scope==='all'?planFixtures:scopeState.scope==='project'?planFixtures.filter(function(p){return p.project===scopeState.project;}):showRun?[]:selected?[selected]:[];
     cards.hidden=!!showRun;

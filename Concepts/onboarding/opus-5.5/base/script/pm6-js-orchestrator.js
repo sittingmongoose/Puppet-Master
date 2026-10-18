@@ -683,7 +683,7 @@
       var sealed = tot > 0 && done === tot;
       var probHtml = problems.length
         ? '<div class="pm6-orch-seam-problems">' + problems.map(function (n) {
-            return chip('⚠ ' + n.id + ' ' + (n.degraded && n.state === 'complete' ? 'degraded' : n.state), n.state === 'blocked' ? 'err' : 'warn');
+            return chip(n.id + ' ' + (n.degraded && n.state === 'complete' ? 'degraded' : n.state), n.state === 'blocked' ? 'err' : 'warn');
           }).join('') + '</div>'
         : '';
       return '<div class="pm6-orch-seam-card' + (seamOpen[sm.id] ? ' is-open' : '') + '" data-seam="' + esc(sm.id) + '" style="--i:' + si + '">' +

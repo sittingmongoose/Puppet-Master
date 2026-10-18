@@ -504,10 +504,6 @@ def build_text(usage: bool = True, home: bool = True) -> str:
     else:
         SETTINGS_NOTES.pop('usage', None)
 
-    # 2c. Planning Wizard + Orchestrator theme-matching fixes (tools/wizorch_layer.py)
-    import wizorch_layer  # noqa: E402
-    text, SETTINGS_NOTES['wizorch'] = wizorch_layer.apply(text, need)
-
     # 3. Splice the O55 modules.
     css = settings_layer.inline_fonts(read_parts(SRC / 'css', '.css'), SRC / 'fonts')
     js = read_parts(SRC / 'js', '.js')

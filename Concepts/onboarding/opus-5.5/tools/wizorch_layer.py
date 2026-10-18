@@ -1,3 +1,5 @@
+# History (Q18, 2026-10-18): these patches are folded into ../base/.
+# The live build no longer imports this module. Edit the base sources, not these lists.
 """The Planning Wizard and the Orchestrator: theme-matching fixes on the pinned base (Jared, 2026-10-13: "Minor fixes
 and fixes to match the theme with the rest of the concept can be done to the orchestration and planning wizard pages";
 both pages get their full redesign later, so their layout, structure and flows stay as they are).

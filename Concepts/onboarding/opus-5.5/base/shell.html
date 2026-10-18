@@ -2167,7 +2167,7 @@ by its "PM7 SECTION n/total" banner comment (names, never byte offsets).
 
             <!-- STAGE 1: INTAKE ------------------------------------------------>
             <section class="pm6-wiz-stage pm6-wiz-stage-intake active" id="pm6WizStageIntake" data-wiz-stage="intake">
-              <div class="pm6-wiz-intake-scroll">
+              <div data-lg-surface="panel" class="pm6-wiz-intake-scroll">
                 <div class="pm6-wiz-hero pm-enter-up">
                   <div class="pm6-wiz-kicker">Planning Wizard</div>
                   <h1 class="pm6-wiz-hero-title">Let&rsquo;s plan something great.</h1>
@@ -2239,7 +2239,7 @@ by its "PM7 SECTION n/total" banner comment (names, never byte offsets).
 
             <!-- STAGE 2: REQUIREMENTS (attach docs + PRD builder) --------------->
             <section class="pm6-wiz-stage pm6-wiz-stage-reqs" id="pm6WizStageReqs" data-wiz-stage="requirements">
-              <div class="pm6-wiz-intake-scroll pm6-wiz-reqs-scroll">
+              <div data-lg-surface="panel" class="pm6-wiz-intake-scroll pm6-wiz-reqs-scroll">
                 <div class="pm6-wiz-hero pm-enter-up">
                   <div class="pm6-wiz-kicker">Provide requirements</div>
                   <h1 class="pm6-wiz-hero-title">Ground the plan in a PRD.</h1>
@@ -2289,7 +2289,7 @@ by its "PM7 SECTION n/total" banner comment (names, never byte offsets).
                 <div class="pm6-wiz-prdhead-state" id="pm6WizPrdReady"></div>
               </div>
               <div class="pm6-wiz-prdgrid">
-                <aside class="pm6-wiz-prdrail" id="pm6WizPrdRail">
+                <aside data-lg-surface="panel" class="pm6-wiz-prdrail" id="pm6WizPrdRail">
                   <div class="pm6-wiz-col-head">
                     <span class="pm6-wiz-col-title">PRD outline</span>
                     <span class="pm6-wiz-col-meta">PRD ledger &middot; updated every turn</span>
@@ -2312,10 +2312,10 @@ by its "PM7 SECTION n/total" banner comment (names, never byte offsets).
                   </div>
                   <div class="pm6-wiz-docrows" id="pm6WizReqDocs"></div>
                 </aside>
-                <main class="pm6-wiz-prdchat-wrap">
+                <main data-lg-surface="panel" class="pm6-wiz-prdchat-wrap">
                   <div class="pm6-wiz-prd-chat" id="pm6WizPrdChat"></div>
                 </main>
-                <aside class="pm6-wiz-prdpreview">
+                <aside data-lg-surface="panel" class="pm6-wiz-prdpreview">
                   <div class="pm6-wiz-col-head">
                     <span class="pm6-wiz-col-title">PRD &mdash; live projection</span>
                     <button class="pm6-wiz-expandbtn" type="button" data-demo-action="wizard.doc_expand" data-demo-arg="prd" title="Expand the PRD projection" aria-label="Expand the PRD projection"><span class="pm6-ico" data-pm6-icon="expand"></span></button>
@@ -2329,7 +2329,7 @@ by its "PM7 SECTION n/total" banner comment (names, never byte offsets).
             <!-- STAGE 3: DISCOVERY --------------------------------------------->
             <section class="pm6-wiz-stage pm6-wiz-stage-discovery" id="pm6WizStageDiscovery" data-wiz-stage="discovery">
               <div class="pm6-wiz-disc-wrap">
-                <div class="pm6-wiz-disc-card pm-enter-scale">
+                <div data-lg-surface="card" class="pm6-wiz-disc-card pm-enter-scale">
                   <div class="pm6-wiz-disc-spin" aria-hidden="true"></div>
                   <div class="pm6-wiz-disc-title">Reading your project&hellip;</div>
                   <div class="pm6-wiz-disc-sub"><span class="pm6-wiz-ro-badge">READ-ONLY</span> Looking, not touching. This takes a few seconds.</div>
@@ -2361,7 +2361,7 @@ by its "PM7 SECTION n/total" banner comment (names, never byte offsets).
 
               <div class="pm6-wiz-workgrid">
 
-                <aside class="pm6-wiz-topics">
+                <aside data-lg-surface="panel" class="pm6-wiz-topics">
                   <div class="pm6-wiz-col-head">
                     <span class="pm6-wiz-col-title">Topic map</span>
                     <span class="pm6-wiz-col-meta" id="pm6WizTopicCount"></span>
@@ -2370,9 +2370,9 @@ by its "PM7 SECTION n/total" banner comment (names, never byte offsets).
                   <div class="pm6-wiz-integrate-dock" id="pm6WizIntegrateDock"></div>
                 </aside>
 
-                <main class="pm6-wiz-thread" id="pm6WizThread"></main>
+                <main data-lg-surface="panel" class="pm6-wiz-thread" id="pm6WizThread"></main>
 
-                <aside class="pm6-wiz-right">
+                <aside data-lg-surface="panel" class="pm6-wiz-right">
                   <div class="pm6-wiz-preview">
                     <div class="pm6-wiz-col-head">
                       <span class="pm6-wiz-col-title" id="pm6WizDocTitle">Live plan preview</span>
@@ -2392,7 +2392,7 @@ by its "PM7 SECTION n/total" banner comment (names, never byte offsets).
                  stage sections so it can front either one. ------------------- -->
             <div class="pm6-wiz-doc-overlay" id="pm6WizDocOverlay" hidden style="display:none">
               <div class="pm6-wiz-doc-overlay-scrim" data-demo-action="wizard.doc_close"></div>
-              <div class="pm6-wiz-doc-overlay-panel" role="dialog" aria-label="Expanded document view">
+              <div data-lg-surface="menu" class="pm6-wiz-doc-overlay-panel" role="dialog" aria-label="Expanded document view">
                 <div class="pm6-wiz-doc-overlay-head">
                   <div class="pm6-wiz-doc-overlay-title" id="pm6WizDocOverlayHead"></div>
                   <button class="pm6-wiz-ghostbtn pm6-wiz-doc-overlay-close" type="button" data-demo-action="wizard.doc_close">Close</button>
@@ -2420,6 +2420,7 @@ by its "PM7 SECTION n/total" banner comment (names, never byte offsets).
 
           </div>
           <div class="page page-orchestrator" id="panel-orchestrator">
+            <div data-lg-surface="bar" class="wo-orch-head">
             <div class="orch-header pm6-orch-header">
               <span class="orch-title">Orchestrator</span>
               <button type="button" class="pm6-orch-run-chip" id="pm6OrchRunChip" data-demo-action="orch.copyRunId" title="focused_run_id pcr-47 (click to copy)">
@@ -2459,7 +2460,8 @@ by its "PM7 SECTION n/total" banner comment (names, never byte offsets).
               <span class="orch-tab" id="orch-tab-history" role="tab" tabindex="0" aria-selected="false" aria-controls="orch-panel-history" data-tab="history">History</span>
               <span class="orch-tab" id="orch-tab-ledger" role="tab" tabindex="0" aria-selected="false" aria-controls="orch-panel-ledger" data-tab="ledger">Ledger<span class="orch-tab-badge" id="orchTabBadgeLedger" aria-hidden="true"></span></span>
             </div>
-            <div class="orch-content pm6-orch-content">
+            </div>
+            <div data-lg-surface="panel" class="orch-content pm6-orch-content">
 
               <!-- ============ PROGRESS (widget-composed) ============ -->
               <div class="orch-tab-content active pm6-orch-pane" id="orch-panel-progress" data-tab="progress">
@@ -2724,7 +2726,7 @@ by its "PM7 SECTION n/total" banner comment (names, never byte offsets).
 
             <!-- safe-point retry confirmation -->
             <div class="pm6-orch-modal-scrim" id="pm6OrchSpModal" hidden>
-              <div class="pm6-orch-modal" role="dialog" aria-modal="true" aria-labelledby="pm6OrchSpModalTitle">
+              <div data-lg-surface="menu" class="pm6-orch-modal" role="dialog" aria-modal="true" aria-labelledby="pm6OrchSpModalTitle">
                 <div class="pm6-orch-modal-title" id="pm6OrchSpModalTitle"><span class="pm6-ico" data-ico="restart" aria-hidden="true"></span>Retry from safe point</div>
                 <div class="pm6-orch-modal-body" id="pm6OrchSpModalBody">
                   Restore <b id="pm6OrchSpModalSp">sp-000</b> and retry node <b id="pm6OrchSpModalNode">n-00</b>? Work after the safe point is discarded; everything before it is kept.
