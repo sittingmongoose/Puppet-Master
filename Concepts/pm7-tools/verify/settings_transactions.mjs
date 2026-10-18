@@ -86,7 +86,7 @@ const report = {
     'The selected project fixture is non-secret concept data; tests use a fresh browser context and do not attach a production Settings owner.',
     'Owner acceptance, rejection, stale revision, receipts, and exact return are deterministic injected browser-host responses, not native runtime evidence.',
     'Import/export UI checks validate route and preview wiring only; they do not write an archive or credential material.',
-    'Inventory completeness is compared with the inert canonical PM_SETTINGS_DATA projection and virtualization is asserted from mounted rows versus model rows.'
+    'Inventory completeness is compared with the live PM12_REFERENCE inventory Settings uses and virtualization is asserted from mounted rows versus model rows.'
   ],
   deterministic_context: {
     viewport: { width: 1280, height: 900 },
@@ -477,9 +477,8 @@ try {
     if (window.PM7_SETTINGS_COMMANDS) window.PM7_SETTINGS_COMMANDS.open({ domain: 'projects', workspace: 'project-settings' });
     else window.PM12_KIMI.navigate('projects', 'project-settings');
     await new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve)));
-    const inert = document.getElementById('pm7-settings-data');
-    const canonicalInventory = inert ? JSON.parse(inert.textContent || '{}') : {};
-    const modelCount = Array.isArray(canonicalInventory.settings) ? canonicalInventory.settings.length : 0;
+    const canonicalRows = Object.values(window.PM12_REFERENCE?.byCat || {}).flatMap(category => category.settings || []);
+    const modelCount = canonicalRows.length;
     const viewport = document.querySelector('[data-all-settings-viewport]');
     const firstBefore = document.querySelector('[data-all-setting-id]')?.getAttribute('data-all-setting-id') || null;
     const mountedBefore = document.querySelectorAll('[data-all-setting-id]').length;

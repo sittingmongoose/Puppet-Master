@@ -59,7 +59,6 @@ by its "PM7 SECTION n/total" banner comment (names, never byte offsets).
   15. usage-page-js      (script, no id) - usage page widget engine (pm6UsagePageInit: ambient baseline data + renderers)
   16. pm4-app-js         (script, no id) - PM4-era app script: wizard steps, editor panes + tabs, terminal workgroups/splits, bottom panel, misc page wiring
   17. prd-annotations-js (script, no id) - PRD mock content + annotation/popover wiring (legacy hooks null-guarded)
-  18. settings-data-json (script#pm7-settings-data) - current project-scoped Settings compatibility payload; T44 runtime uses PM12_REFERENCE
   19. settings-js        (script#pm4-settings-js) - settings engine: fuzzy search, chips + bloom modal, shelves, control renderers, LIVE_APPLY
   20. globals-js         (script#pm6-js-globals) - toasts, PM8 magnet+spotlight hover engine (replaced pm6 jiggle), shared PM7_PMOVE pointermove dispatcher (T07)
   21. demo-engine-js     (script#pm6-js-demo-engine) - PM_DEMO virtual-clock engine: beats, director/chapters, facades, action registry (the beat script doubles as a product-behavior spec)
@@ -3235,8 +3234,6 @@ status: completed with warnings</pre>
 <script>@@PM7_BASE_0039@@</script>
 <!-- Liquid Glass SVG Filters (used by glass-dark / glass-light themes) -->
 <!-- PMConcept6: SVG distortion filters + canvas engine removed — liquid glass is now the pure-CSS single-element recipe in the glass CSS parts. -->
-<!-- PM7 SECTION 18/32: settings-data-json - current 894-row project-scoped compatibility payload; T44 runtime uses PM12_REFERENCE (script#pm7-settings-data) -->
-<script type="application/json" id="pm7-settings-data">@@PM7_BASE_0040@@</script>
 <!-- PM7 SECTION 19/32: settings-js - settings engine: fuzzy search, chips + bloom modal, shelves, control renderers, LIVE_APPLY (script#pm4-settings-js) -->
 <script id="pm4-settings-js">@@PM7_BASE_0041@@</script>
 <!-- PM7 SECTION 20/32: globals-js - toasts, PM8 magnet+spotlight hover engine (replaced pm6 jiggle), shared PM7_PMOVE pointermove dispatcher (T07) (script#pm6-js-globals) -->

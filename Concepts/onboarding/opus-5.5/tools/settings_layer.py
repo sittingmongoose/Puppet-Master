@@ -334,8 +334,8 @@ def _band(text: str, start: str, end: str, replacement: str, need, label: str) -
 
 
 def _canon_defaults(doc: str, need) -> tuple[str, list]:
-    """The base sources carry the historical inventory twice (the page's settings data and
-    the Settings engine's reference). Rows whose default Plans/settings_inventory.json has since changed by decision
+    """The base sources carry the historical inventory in the Settings engine's reference.
+    Rows whose default Plans/settings_inventory.json has since changed by decision
     (DL-107 turned chat sounds on, DL-108 made Queue the busy-send default) take the canon default, recommendation and
     description, so the concept never shows a superseded default. Theme-owned defaults ("theme") are handled by the
     look layer, and empty and missing secrets mean the same, so neither is patched."""
@@ -376,7 +376,7 @@ def _canon_defaults(doc: str, need) -> tuple[str, list]:
 
 
 def _canon_rows(doc: str, merged: dict, need) -> tuple[str, list]:
-    """Rows admitted to Plans/settings_inventory.json after the base page was pinned join both embedded copies, so a
+    """Rows admitted to Plans/settings_inventory.json after the base page was pinned join PM12_REFERENCE, so a
     manager can bind them (PM51.bound, composed placement sections) and search, Details, All Settings and transfer know
     them. Rows the hand-written pages already draw under an admitted id (placement `hand_ids`) are left to those pages."""
     inventory = PKG.parents[2] / 'Plans' / 'settings_inventory.json'
@@ -401,12 +401,6 @@ def _canon_rows(doc: str, merged: dict, need) -> tuple[str, list]:
         return doc, []
     ref['total'] = sum(len(c.get('settings', [])) for c in ref['byCat'].values())
     doc = doc[:s] + json.dumps(ref, ensure_ascii=False, separators=(',', ':')) + ';' + doc[e:]
-    m = re.search(r'(<script type="application/json" id="pm7-settings-data">)(.*?)(</script>)', doc, re.S)
-    need(m is not None, 'O55 settings: pm7-settings-data missing')
-    data = json.loads(m.group(2))
-    known = {r['id'] for r in data['settings']}
-    data['settings'].extend(r for r in added if r['id'] not in known)
-    doc = doc[:m.start(2)] + json.dumps(data, ensure_ascii=False, separators=(',', ':')) + doc[m.end(2):]
     return doc, [r['id'] for r in added]
 
 
