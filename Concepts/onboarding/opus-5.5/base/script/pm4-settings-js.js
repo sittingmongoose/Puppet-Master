@@ -2176,6 +2176,8 @@ window.PM12_REFERENCE = {"version":"1.0.0","total":892,"inventory_sha256":"be85c
     var family=(selected.split('-')[0]||'basic'),explicitMode=(selected.split('-')[1]||'dark');
     var mode=p?String(settings['general.visual.theme-mode']||explicitMode).toLowerCase():'dark';
     if(['light','dark','auto'].indexOf(mode)<0)mode=explicitMode;
+    var o55Pair=typeof window.O55_PAINT_PAIR==='function'?window.O55_PAINT_PAIR():null;
+    if(o55Pair){family=o55Pair[0];mode=o55Pair[1];}
     var slug=(function(f){try{var p=typeof window.PM_THEME_PAINT_FAMILY==='function'?window.PM_THEME_PAINT_FAMILY(f):f;return /^(friendly|glass|retro|basic)$/.test(p)?p:f;}catch(e){return f;}})(family)+'-'+(mode==='auto'?(window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light'):mode);
     var themeKey=family+'|'+mode,currentSlug=document.documentElement.getAttribute('data-theme')||'';
     bridgeDepth++;

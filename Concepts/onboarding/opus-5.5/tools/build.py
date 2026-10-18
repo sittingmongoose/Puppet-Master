@@ -422,15 +422,6 @@ def editor_look_rows(text: str) -> tuple[str, list]:
 # the selected Project's stored pair: selecting the new Project at Create Project reapplied its Settings and painted
 # the factory Basic Dark for a moment, and the look's save wrote its family before its mode. Loaded Settings, the seed,
 # the save and the NieR paint hook (which runs on the slug below) are unchanged; with no pair, applyPaint is as before.
-THEME_PREVIEW_PATCHES = [
-    ("var mode=p?String(settings['general.visual.theme-mode']||explicitMode).toLowerCase():'dark';\n"
-     "    if(['light','dark','auto'].indexOf(mode)<0)mode=explicitMode;\n",
-     "var mode=p?String(settings['general.visual.theme-mode']||explicitMode).toLowerCase():'dark';\n"
-     "    if(['light','dark','auto'].indexOf(mode)<0)mode=explicitMode;\n"
-     "    var o55Pair=typeof window.O55_PAINT_PAIR==='function'?window.O55_PAINT_PAIR():null;\n"
-     "    if(o55Pair){family=o55Pair[0];mode=o55Pair[1];}\n",
-     'onboarding look preview holds applyPaint'),
-]
 
 # First paint (2026-10-09). The head boot script painted Basic Dark on every open (T44 had replaced its pm.themeFamily
 # read with literals: project-scoped Settings owns persistence, so there is no global theme key), and the stored look
@@ -547,8 +538,6 @@ def build_text(usage: bool = True, home: bool = True) -> str:
     # Legacy onboarding/tour removal is authored in base/shell.html (Q18).
 
     # 2. Guarded patches.
-    for old, new, label in THEME_PREVIEW_PATCHES:
-        text = replace_once(text, old, new, label)
     text = replace_once(text, SETTINGS_ANCHOR, SETTINGS_EXPOSE + SETTINGS_ANCHOR, 'settings transfer exposure')
     text = replace_once(text, LAYOUT_ANCHOR, LAYOUT_EXPOSE + LAYOUT_ANCHOR, 'layout restore exposure')
 
