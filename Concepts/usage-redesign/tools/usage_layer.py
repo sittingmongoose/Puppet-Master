@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Usage layer: replace the Prism Usage page of the built concept with the redesigned Usage page in ../src.
+"""Usage layer: fill the shell's shared-input carrier with the redesigned Usage page in ../src.
 
 opus-5.5 tools/build.py applies it at its step 2b (after assembling the live shell and Settings, before the O55 splice), which publishes
 PMConcept7.html (build.md section 9, Proposal B):
@@ -10,19 +10,19 @@ PMConcept7.html (build.md section 9, Proposal B):
 
 What apply() does, every step guarded so it happens exactly once or the build stops:
   1. Finds the #panel-usage band (`<div class="page page-usage" id="panel-usage">` .. `</div><!-- page-usage -->`).
-  2. Keeps from it only what the rest of the concept needs: the chat context module's rules from the anonymous T21
+  2. Reads what the rest of the concept needs from that carrier: the chat context module's rules from the anonymous T21
      stylesheet (69 rules), the two concept-wide Retro Light rules of pm7-t29-usage-final, and the global status bar
      and Home dashboard rules of pm7-t32-final (62 rules). The dead Prism selector arms have been removed from these
      sources. Both filtered stylesheets keep their ids and their order, so the cascade outside Usage is unchanged.
-     pm7-t31-usage-final, the old markup and the old Usage script go with the band.
-  3. Extracts the chat context module (window.PM7_CONTEXT) from the old Usage script, pinned by sha256, and runs it
+     The old Prism markup/controller are removed from source. T24 and T31 are retired manifest blocks kept as history.
+  3. Extracts the chat context module (window.PM7_CONTEXT) from its context-only base script, pinned by sha256, and runs it
      inside a shim that routes its Usage-side effects to the new page's window.PM7_USAGE.
   4. Writes the new band: the open tag, <!-- USAGE:BODY:START -->, <style id="pm-usage-ctx-css">, the filtered
      pm7-t29-usage-final and pm7-t32-final, <style id="pm-usage-css"> (src/css, every `#panel-usage ` anchor widened to
      `:is(#panel-usage,[data-pmu-host])` for hosted boards by host_scope_css, its count checked), src/markup.html,
      <script id="pm-usage-js"> (window.PM_USAGE_COPY, src/js, the context module), <!-- USAGE:BODY:END -->, the close tag.
-  5. Outside the band: removes pm7-t24-usage-readability-and-fit and filters the Usage rules out of
-     pm7-t23-adjustments (75 kept; its dead Prism rules have been removed from source). Shared blocks retain only
+  5. Outside the band: checks the filter census of pm7-t23-adjustments (75 kept; its dead Prism rules have been removed
+     from source). Shared blocks retain only
      their live selector arms.
   6. Merges the review roster (src/roster.json) into the Settings providers fixture and seeds saved Settings states once
      (roster_patch). NIER_ENTRIES contributes the page's selectors to the shared NieR registry, emitted by build.py
@@ -51,7 +51,7 @@ BODY_END = '<!-- USAGE:BODY:END -->'
 T21_ANCHOR = '<!-- PM7 SECTION 14/32: usage-prism-css'
 CTX_JS_START = '  /* U11 context module, mounted into every Assistant header. */'
 CTX_JS_END = '  window.PM7_CONTEXT = { enhance: enhanceContext, openDetails: openContextDetails, compact: compactContext };'
-# The context module as the old Usage script carries it. A change upstream must be looked at before it is carried over.
+# The retained context module in base/script/script-037.js. Review any change before it is carried over.
 CTX_JS_SHA256 = '5fb115273b346fb26bf7ea81246caae88b57bdb5e17f5878f510563477480c1e'
 
 # Exact rule counts of each filtered stylesheet. Any drift in the base fails the build instead of passing silently.
@@ -62,10 +62,7 @@ EXPECT = {
     'pm7-t23-adjustments': {'kept_rules': 75, 'rewritten_rules': 0, 'dropped_rules': 0, 'dropped_keyframes': 1},
 }
 # Inside the band and removed with it (each must be there exactly once, so a moved block cannot survive unnoticed).
-BAND_ONLY = ['id="pm7UsageApp"', 'id="pm7uBoard"', '<style id="pm7-t29-usage-final">', '<style id="pm7-t31-usage-final">',
-             '<style id="pm7-t32-final">', T21_ANCHOR, CTX_JS_START, CTX_JS_END]
-# Whole Usage-only stylesheets outside the band.
-DROP_WHOLE = ['pm7-t24-usage-readability-and-fit']
+BAND_ONLY = ['<style id="pm7-t29-usage-final">', '<style id="pm7-t32-final">', T21_ANCHOR, CTX_JS_START, CTX_JS_END]
 # What a built page with this layer must no longer carry, and what it must still carry (the old page's outside
 # contracts: the chat context module, the usage bridge, the status bar, Home, Retro Light's green). opus-5.5 build.py
 # check() enforces both on the published page.
@@ -451,12 +448,6 @@ def replace_once(need, text: str, old: str, new: str, label: str) -> str:
     return text.replace(old, new, 1)
 
 
-def remove_block(need, text: str, tag: str, element_id: str) -> str:
-    rx = re.compile(r'<' + tag + r'\b[^>]*\bid="' + re.escape(element_id) + r'"[^>]*>[\s\S]*?</' + tag + r'>\n?')
-    need(len(rx.findall(text)) == 1, f'usage layer: expected exactly one <{tag} id="{element_id}">')
-    return rx.sub('', text, count=1)
-
-
 def style_body(need, text: str, sid: str, where: str) -> re.Match:
     found = list(re.finditer(r'<style id="' + re.escape(sid) + r'">([\s\S]*?)</style>', text))
     need(len(found) == 1, f'usage layer: <style id="{sid}"> found {len(found)} times in {where} (need exactly 1)')
@@ -655,15 +646,13 @@ def apply(text: str, need) -> tuple[str, dict]:
                      'usage_css_bytes': len(css.encode('utf-8')), 'usage_js_bytes': len(script.encode('utf-8'))}
 
     # 5. outside the band
-    for sid in DROP_WHOLE:
-        text = remove_block(need, text, 'style', sid)
     m = style_body(need, text, 'pm7-t23-adjustments', 'the page')
     st = stats0()
     css = filter_css(m.group(1), st)
     expect(need, 'pm7-t23-adjustments', st)
     notes['pm7-t23-adjustments'] = st
     text = text[:m.start(1)] + css + text[m.end(1):]
-    notes['dropped whole'] = DROP_WHOLE + ['pm7-t31-usage-final (with the band)']
+    notes['retired source blocks'] = ['pm7-t24-usage-readability-and-fit', 'pm7-t31-usage-final']
 
     # 6. the review roster in the Settings fixture; build.py emits NIER_ENTRIES after composing the layers
     text = roster_patch(need, text, notes)
