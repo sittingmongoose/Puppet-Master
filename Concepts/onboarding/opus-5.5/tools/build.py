@@ -342,116 +342,6 @@ def duplicate_keys() -> list[str]:
     return out
 
 
-def shared_fitting_patch(text: str) -> str:
-    """M1: fit visible rail content in place; keep the pinned ladder and pass order.
-
-    The region hash is in addition to the pinned-input and exactly-once guards. Intrinsic probes for one
-    dock strip / breakpoint row share a read phase; dependent controls still run in their original order.
-    No hidden pane is exposed for measurement. Its activation schedules the same pre-paint fit callback.
-    """
-    start = text.index('    function overflows(el) {', text.index('(function pillFit()'))
-    end = text.index('    var scheduled = null, pendingScope = null;', start)
-    old = text[start:end]
-    need(hashlib.sha256(old.encode()).hexdigest() ==
-         '8c2dede5e1d6a51a01c0c5c52a793ab20fad515f7ef4e4eb92c91b20793221be',
-         'M1: pinned shared fitter region drift')
-    # Keep probes local to a single flex row: batching unrelated fit decisions would alter leftover-space fitting.
-    a = old.index('    function preferredWidth(el) {')
-    b = old.index('    function bannerCrowded(st) {', a)
-    intrinsic = r'''    function fitStyle(el, name, value) {
-      if (el.style[name] !== value) el.style[name] = value;
-    }
-    function preferredWidths(elements) {
-      var saved = elements.map(function (el) {
-        return { width: el.style.width, flex: el.style.flex, maxWidth: el.style.maxWidth, minWidth: el.style.minWidth };
-      });
-      elements.forEach(function (el) {
-        fitStyle(el, 'width', 'auto'); fitStyle(el, 'flex', '0 0 auto');
-        fitStyle(el, 'maxWidth', 'none'); fitStyle(el, 'minWidth', '0px');
-      });
-      var widths = elements.map(function (el) { return Math.ceil(el.scrollWidth); });
-      elements.forEach(function (el, i) {
-        Object.keys(saved[i]).forEach(function (name) { fitStyle(el, name, saved[i][name]); });
-      });
-      return widths;
-    }
-    function preferredWidth(el) { return el ? preferredWidths([el])[0] : 0; }
-'''
-    new = old[:a] + intrinsic + old[b:]
-    new = replace_once(new, "      if (fit) el.setAttribute('data-fit', fit);\n      else el.removeAttribute('data-fit');\n      void el.offsetWidth;",
-                       "      if (fit) { if (el.getAttribute('data-fit') !== fit) el.setAttribute('data-fit', fit); }\n"
-                       "      else if (el.hasAttribute('data-fit')) el.removeAttribute('data-fit');",
-                       'M1: equal fit writes and eager flush')
-    new = replace_once(new, "      el.removeAttribute('data-stack');\n      void el.offsetWidth;",
-                       "      if (el.hasAttribute('data-stack')) el.removeAttribute('data-stack');",
-                       'M1: breakpoint reset')
-    new = replace_once(new, "        need += preferredWidth(kids[i]);",
-                       "        need += widths[i];", 'M1: breakpoint intrinsic reads')
-    new = replace_once(new, "      var need = 0;\n      for (var i = 0; i < kids.length; i++) {",
-                       "      var widths = preferredWidths(kids);\n      var need = 0;\n      for (var i = 0; i < kids.length; i++) {",
-                       'M1: breakpoint intrinsic stage')
-    new = replace_once(new, "      btn.style.width = '';\n      btn.style.minWidth = '';\n      btn.style.maxWidth = '';",
-                       "      fitStyle(btn, 'width', '');\n      fitStyle(btn, 'minWidth', '');\n      fitStyle(btn, 'maxWidth', '');",
-                       'M1: equal configuration sizing writes')
-    a = new.index('      var worst = 0;\n', new.index('    function segtabCrushed(el) {'))
-    b = new.index('      return worst > el.clientWidth / items.length + 1;', a)
-    new = new[:a] + r'''      var probes = Array.prototype.slice.call(items);
-      var spans = [], saved = [];
-      probes.forEach(function (it) {
-        Array.prototype.forEach.call(it.querySelectorAll('span'), function (s) {
-          spans.push(s); saved.push(s.style.maxWidth); fitStyle(s, 'maxWidth', 'none');
-        });
-      });
-      var widths = preferredWidths(probes);
-      spans.forEach(function (s, i) { fitStyle(s, 'maxWidth', saved[i]); });
-      var worst = Math.max.apply(Math, widths);
-''' + new[b:]
-    a = new.index('    function fitIn(root) {')
-    new = new[:a] + r'''    var fittedInputs = new WeakMap(), fitFontEpoch = 0;
-    function fitVisible(el) {
-      return !el.closest('.side-panel-view:not(.active), [data-pane].pm-hidden') &&
-        isFittable(el) && !!el.getClientRects().length;
-    }
-    function fitInput(el, slotBox) {
-      var row = el.closest(ROW) || el.parentElement;
-      var box = el.getBoundingClientRect(), cs = getComputedStyle(el);
-      var view = el.closest('.side-panel-view'), pane = el.closest('[data-pane]');
-      return JSON.stringify([
-        document.documentElement.getAttribute('data-theme'), document.documentElement.getAttribute('data-o55-nier'),
-        document.documentElement.getAttribute('data-o55-nier-parts'), document.documentElement.style.cssText,
-        fitFontEpoch, window.devicePixelRatio, document.body.className, slot.className, slot.clientWidth, slotBox.width,
-        view && view.id, pane && pane.getAttribute('data-pane'),
-        el.className, el.style.cssText, el.getAttribute('data-fit'), el.getAttribute('data-stack'),
-        el.getAttribute('data-narrow'), el.innerHTML,
-        cs.fontFamily, cs.fontSize, cs.fontWeight, cs.letterSpacing,
-        el.clientWidth, el.scrollWidth, box.width, box.left - slotBox.left,
-        row && row.clientWidth, row && row.scrollWidth, row && row.innerHTML
-      ]);
-    }
-    function run(scope) {
-      if (!slotPageActive()) return;
-      var root = scope && slot.contains(scope) ? scope : slot;
-      var elements = Array.prototype.filter.call(root.querySelectorAll(SELECT), fitVisible);
-      if (!elements.length) return;
-      var slotBox = slot.getBoundingClientRect();
-      var inputs = elements.map(function (el) { return fitInput(el, slotBox); });
-      if (elements.every(function (el, i) { return fittedInputs.get(el) === inputs[i]; })) return;
-      /* Preserve the original sequential dependencies and the complete second pass. All writes and reads below
-         finish in this callback, before the pane's first paint; fitting never defers a newly shown label. */
-      elements.forEach(function (w) {
-        if (w.matches('.sh-cfgwrap')) { scrubCfgTrigger(w); setFit(w, 'full'); }
-      });
-      elements.forEach(fitOne);
-      elements.filter(function (el) { return el.matches('.sh-launchrow'); }).forEach(fitOne);
-      elements.filter(function (el) { return el.matches('.sh-cfgwrap, .sh-sesswrap, .sh-bpedit'); }).forEach(fitOne);
-      slotBox = slot.getBoundingClientRect();
-      elements.forEach(function (el) { fittedInputs.set(el, fitInput(el, slotBox)); });
-    }
-    if (document.fonts && document.fonts.addEventListener) {
-      document.fonts.addEventListener('loadingdone', function () { fitFontEpoch++; schedule(); });
-    }
-'''
-    return replace_once(text, old, new, 'M1: shared visible control fitting')
 
 
 
@@ -657,7 +547,6 @@ def build_text(usage: bool = True, home: bool = True) -> str:
     # Legacy onboarding/tour removal is authored in base/shell.html (Q18).
 
     # 2. Guarded patches.
-    text = shared_fitting_patch(text)
     for old, new, label in THEME_PREVIEW_PATCHES:
         text = replace_once(text, old, new, label)
     text = replace_once(text, SETTINGS_ANCHOR, SETTINGS_EXPOSE + SETTINGS_ANCHOR, 'settings transfer exposure')

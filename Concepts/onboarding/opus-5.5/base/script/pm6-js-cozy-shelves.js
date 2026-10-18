@@ -442,15 +442,24 @@
       if (!el || el.getBoundingClientRect().width < 1) return false;
       return el.scrollWidth > el.clientWidth + 1;
     }
-    function preferredWidth(el) {
-      if (!el) return 0;
-      var prev = { width: el.style.width, flex: el.style.flex, maxWidth: el.style.maxWidth, minWidth: el.style.minWidth };
-      el.style.width = 'auto'; el.style.flex = '0 0 auto'; el.style.maxWidth = 'none'; el.style.minWidth = '0';
-      void el.offsetWidth;
-      var w = Math.ceil(el.scrollWidth);
-      el.style.width = prev.width; el.style.flex = prev.flex; el.style.maxWidth = prev.maxWidth; el.style.minWidth = prev.minWidth;
-      return w;
+    function fitStyle(el, name, value) {
+      if (el.style[name] !== value) el.style[name] = value;
     }
+    function preferredWidths(elements) {
+      var saved = elements.map(function (el) {
+        return { width: el.style.width, flex: el.style.flex, maxWidth: el.style.maxWidth, minWidth: el.style.minWidth };
+      });
+      elements.forEach(function (el) {
+        fitStyle(el, 'width', 'auto'); fitStyle(el, 'flex', '0 0 auto');
+        fitStyle(el, 'maxWidth', 'none'); fitStyle(el, 'minWidth', '0px');
+      });
+      var widths = elements.map(function (el) { return Math.ceil(el.scrollWidth); });
+      elements.forEach(function (el, i) {
+        Object.keys(saved[i]).forEach(function (name) { fitStyle(el, name, saved[i][name]); });
+      });
+      return widths;
+    }
+    function preferredWidth(el) { return el ? preferredWidths([el])[0] : 0; }
     function bannerCrowded(st) {
       var banner = st.closest('.sh-banner');
       if (!banner || banner.getBoundingClientRect().width < 1) return false;
@@ -496,9 +505,8 @@
       return false;
     }
     function setFit(el, fit) {
-      if (fit) el.setAttribute('data-fit', fit);
-      else el.removeAttribute('data-fit');
-      void el.offsetWidth;
+      if (fit) { if (el.getAttribute('data-fit') !== fit) el.setAttribute('data-fit', fit); }
+      else if (el.hasAttribute('data-fit')) el.removeAttribute('data-fit');
     }
     function isFittable(el) {
       if (el.matches('.pm-chip[data-narrow-chip], .sh-bstatus[data-narrow], .sh-wtchips, .pm-segtab.fm-docktabs, .sh-cfgwrap, .sh-sesswrap, .sh-launchrow, .sh-bpedit')) return true;
@@ -507,15 +515,15 @@
       return false;
     }
     function fitBpEdit(el) {
-      el.removeAttribute('data-stack');
-      void el.offsetWidth;
+      if (el.hasAttribute('data-stack')) el.removeAttribute('data-stack');
       var gap = parseFloat(getComputedStyle(el).columnGap || getComputedStyle(el).gap) || 8;
       var kids = Array.prototype.filter.call(el.children, function (c) {
         return c.nodeType === 1 && getComputedStyle(c).display !== 'none';
       });
+      var widths = preferredWidths(kids);
       var need = 0;
       for (var i = 0; i < kids.length; i++) {
-        need += preferredWidth(kids[i]);
+        need += widths[i];
         if (i) need += gap;
       }
       if (need > el.clientWidth + 1) el.setAttribute('data-stack', '1');
@@ -524,9 +532,9 @@
     function scrubCfgTrigger(wrap) {
       var btn = wrap.querySelector('.sh-cfgbtn');
       if (!btn) return;
-      btn.style.width = '';
-      btn.style.minWidth = '';
-      btn.style.maxWidth = '';
+      fitStyle(btn, 'width', '');
+      fitStyle(btn, 'minWidth', '');
+      fitStyle(btn, 'maxWidth', '');
     }
     function segtabCrushed(el) {
       /* Dock-tab items are flex:1 1 0 with min-width:0: the bar's width is
@@ -538,15 +546,16 @@
          worst case against one share. */
       var items = el.querySelectorAll('.pm-segtab-item');
       if (!items.length || el.clientWidth < 1) return false;
-      var worst = 0;
-      Array.prototype.forEach.call(items, function (it) {
-        var spans = Array.prototype.slice.call(it.querySelectorAll('span'));
-        var prev = spans.map(function (s) { return s.style.maxWidth; });
-        spans.forEach(function (s) { s.style.maxWidth = 'none'; });
-        var w = preferredWidth(it);
-        spans.forEach(function (s, i) { s.style.maxWidth = prev[i]; });
-        if (w > worst) worst = w;
+      var probes = Array.prototype.slice.call(items);
+      var spans = [], saved = [];
+      probes.forEach(function (it) {
+        Array.prototype.forEach.call(it.querySelectorAll('span'), function (s) {
+          spans.push(s); saved.push(s.style.maxWidth); fitStyle(s, 'maxWidth', 'none');
+        });
       });
+      var widths = preferredWidths(probes);
+      spans.forEach(function (s, i) { fitStyle(s, 'maxWidth', saved[i]); });
+      var worst = Math.max.apply(Math, widths);
       return worst > el.clientWidth / items.length + 1;
     }
     function fitOne(el) {
@@ -616,28 +625,48 @@
         setFit(el, 'abbr');
       }
     }
-    function fitIn(root) { Array.prototype.forEach.call(root.querySelectorAll(SELECT), fitOne); }
+    var fittedInputs = new WeakMap(), fitFontEpoch = 0;
+    function fitVisible(el) {
+      return !el.closest('.side-panel-view:not(.active), [data-pane].pm-hidden') &&
+        isFittable(el) && !!el.getClientRects().length;
+    }
+    function fitInput(el, slotBox) {
+      var row = el.closest(ROW) || el.parentElement;
+      var box = el.getBoundingClientRect(), cs = getComputedStyle(el);
+      var view = el.closest('.side-panel-view'), pane = el.closest('[data-pane]');
+      return JSON.stringify([
+        document.documentElement.getAttribute('data-theme'), document.documentElement.getAttribute('data-o55-nier'),
+        document.documentElement.getAttribute('data-o55-nier-parts'), document.documentElement.style.cssText,
+        fitFontEpoch, window.devicePixelRatio, document.body.className, slot.className, slot.clientWidth, slotBox.width,
+        view && view.id, pane && pane.getAttribute('data-pane'),
+        el.className, el.style.cssText, el.getAttribute('data-fit'), el.getAttribute('data-stack'),
+        el.getAttribute('data-narrow'), el.innerHTML,
+        cs.fontFamily, cs.fontSize, cs.fontWeight, cs.letterSpacing,
+        el.clientWidth, el.scrollWidth, box.width, box.left - slotBox.left,
+        row && row.clientWidth, row && row.scrollWidth, row && row.innerHTML
+      ]);
+    }
     function run(scope) {
-      slot.classList.add('pill-fit-measure');
-      try {
-        void slot.offsetWidth;
-        var root = scope && slot.contains(scope) ? scope : slot;
-        /* Seed cfg as full so Start measures against real label width, not a
-           leftover 26px symbol from the previous frame (that traps cfg). */
-        Array.prototype.forEach.call(root.querySelectorAll('.sh-cfgwrap'), function (w) {
-          scrubCfgTrigger(w);
-          setFit(w, 'full');
-        });
-        fitIn(root);
-        /* Second pass: re-abbr Start, then cfg/sess/bpedit in leftover space. */
-        Array.prototype.forEach.call(root.querySelectorAll('.sh-launchrow'), fitOne);
-        Array.prototype.forEach.call(
-          root.querySelectorAll('.sh-cfgwrap, .sh-sesswrap, .sh-bpedit'),
-          fitOne
-        );
-      } finally {
-        slot.classList.remove('pill-fit-measure');
-      }
+      if (!slotPageActive()) return;
+      var root = scope && slot.contains(scope) ? scope : slot;
+      var elements = Array.prototype.filter.call(root.querySelectorAll(SELECT), fitVisible);
+      if (!elements.length) return;
+      var slotBox = slot.getBoundingClientRect();
+      var inputs = elements.map(function (el) { return fitInput(el, slotBox); });
+      if (elements.every(function (el, i) { return fittedInputs.get(el) === inputs[i]; })) return;
+      /* Preserve the original sequential dependencies and the complete second pass. All writes and reads below
+         finish in this callback, before the pane's first paint; fitting never defers a newly shown label. */
+      elements.forEach(function (w) {
+        if (w.matches('.sh-cfgwrap')) { scrubCfgTrigger(w); setFit(w, 'full'); }
+      });
+      elements.forEach(fitOne);
+      elements.filter(function (el) { return el.matches('.sh-launchrow'); }).forEach(fitOne);
+      elements.filter(function (el) { return el.matches('.sh-cfgwrap, .sh-sesswrap, .sh-bpedit'); }).forEach(fitOne);
+      slotBox = slot.getBoundingClientRect();
+      elements.forEach(function (el) { fittedInputs.set(el, fitInput(el, slotBox)); });
+    }
+    if (document.fonts && document.fonts.addEventListener) {
+      document.fonts.addEventListener('loadingdone', function () { fitFontEpoch++; schedule(); });
     }
     var scheduled = null, pendingScope = null;
     function slotPageActive() {
