@@ -5,8 +5,6 @@ Usage:
   python3 Concepts/onboarding/opus-5.5/tools/build.py          # build TestOpus only
   python3 Concepts/onboarding/opus-5.5/tools/build.py --publish-pm7  # build, then publish the exact bytes as Concepts/PMConcept7.html
   python3 Concepts/onboarding/opus-5.5/tools/build.py --out /tmp/x.html  # private build: lint, then write only that path
-  python3 Concepts/onboarding/opus-5.5/tools/build.py --out /tmp/ref.html --no-usage  # private build without the Usage layer (a reference page)
-  python3 Concepts/onboarding/opus-5.5/tools/build.py --out /tmp/ref.html --no-home   # private build without the Home layer (today's Home)
   python3 Concepts/onboarding/opus-5.5/tools/build.py --check  # verify the built file is current, every guard holds, and PMConcept7.html is byte-identical
 
 The live shell is ordinary source in ../base/: manifest.json fixes the block list, shell.html owns markup,
@@ -391,9 +389,8 @@ def emit_nier_lists(text: str, need) -> str:
     return nier_registry.emit(text, need, layers)
 
 
-def build_text(usage: bool = True, home: bool = True) -> str:
-    """The built page. usage=False leaves the base's Prism Usage page in place, and home=False today's Home: private
-    reference builds only (build.py --out PATH --no-usage / --no-home; usage_boot.mjs), never published."""
+def build_text() -> str:
+    """The built page: the live base shell with every authored layer applied (published through --publish-pm7)."""
     try:
         original = base_source.assemble()
     except ValueError as exc:
@@ -403,11 +400,8 @@ def build_text(usage: bool = True, home: bool = True) -> str:
     # 0. The Settings fork replaces the historical T50 bands in the live shell sources.
     text, SETTINGS_NOTES['layer'] = settings_layer.apply(text, need)
 
-    # 2b. Usage precedes the O55 splice, so its conditional layer never sees O55 modules.
-    if usage:
-        text, SETTINGS_NOTES['usage'] = usage_layer.apply(text, need)
-    else:
-        SETTINGS_NOTES.pop('usage', None)
+    # 2b. Usage precedes the O55 splice, so the Usage layer never sees O55 modules.
+    text, SETTINGS_NOTES['usage'] = usage_layer.apply(text, need)
 
     # 3. Splice the O55 modules.
     css = settings_layer.inline_fonts(read_parts(SRC / 'css', '.css'), SRC / 'fonts')
@@ -429,10 +423,7 @@ def build_text(usage: bool = True, home: bool = True) -> str:
     #    rail). home_layer.apply() adds the early script and its CSS between HOME:CSS markers before </head>, the panels
     #    and the terminal between HOME:BODY markers before </body>, plus guarded app JS patches. Its three NieR lists
     #    are registry contributions, emitted below; it anchors after the O55 and rail blocks, so it runs after them.
-    if home:
-        text, SETTINGS_NOTES['home'] = _home().apply(text, need)
-    else:
-        SETTINGS_NOTES.pop('home', None)
+    text, SETTINGS_NOTES['home'] = _home().apply(text, need)
     # 6. Liquid Glass and the wallpapers (Glass's publish: the coordinator's plan of 2026-10-14, go 2026-10-15, after the
     #    final review approved Glass round 3). Glass's layer (Concepts/liquid-glass/opus-5.5: glass.css with its prints,
     #    glass.js) and then the wallpapers package's (Concepts/wallpapers/opus-5.5: every look's prints, the catalog, the
@@ -453,7 +444,7 @@ def build_text(usage: bool = True, home: bool = True) -> str:
     # 7. T2 (P1000 speed team): the 13 '<compound with .active> *' rules made every .active toggle restyle the toggled
     #    element's whole subtree, so a page switch restyled the outgoing Home inside its layout. active_descendant_rewrite
     #    gives each a featured descendant (same matches today, same specificity) in the finished page.
-    text, SETTINGS_NOTES['active_descendants'] = active_descendant_rewrite.apply(text, usage and home, need)
+    text, SETTINGS_NOTES['active_descendants'] = active_descendant_rewrite.apply(text, True, need)
     # 7. Selector bucketing (P1000 speed team, T7): a rule whose subject is only a multi-argument :is()/:where() has no
     #    id, class, attribute or tag for the browser to file it under, so every whole-page restyle (a look or NieR
     #    switch) matches it against every element. css_bucket_split splits that one :is()/:where() into single-argument
@@ -582,9 +573,9 @@ def check(built: str) -> list[str]:
     return problems
 
 
-def syntax_check(built: str, usage: bool = True) -> list[str]:
+def syntax_check(built: str) -> list[str]:
     """node --check the scripts this package writes (the Settings engine with its managers, the O55 module, and the
-    Usage page's pm-usage-js from Concepts/usage-redesign, which must be there exactly once unless usage=False), the
+    Usage page's pm-usage-js from Concepts/usage-redesign, which must be there exactly once), the
     head boot script and pm6-js-globals, now authored in base/script/ along with the PMH switch-off and next-frame
     readers: malformed source there must fail at build time."""
     import subprocess
@@ -605,20 +596,18 @@ def syntax_check(built: str, usage: bool = True) -> list[str]:
         Path(path).unlink(missing_ok=True)
         if r.returncode:
             out.append(f'syntax error in {sid}: ' + ' | '.join(r.stderr.strip().splitlines()[-4:])[:600])
-    if usage:
-        out.extend(usage_layer.syntax_check(built))
+    out.extend(usage_layer.syntax_check(built))
     return out
 
 
 def main() -> int:
-    usage = '--no-usage' not in sys.argv
-    home = '--no-home' not in sys.argv
-    if (not usage or not home) and ('--out' not in sys.argv or '--check' in sys.argv or '--publish-pm7' in sys.argv):
-        print('--no-usage and --no-home make a private reference build only: use them with --out PATH, never --check or '
-              '--publish-pm7', file=sys.stderr)
+    unknown = [a for a in sys.argv[1:] if a.startswith('--') and a not in ('--check', '--publish-pm7', '--out')]
+    if unknown:
+        print(f"unknown option(s): {' '.join(unknown)} (the --no-usage and --no-home private reference builds were "
+              'retired on 2026-10-18)', file=sys.stderr)
         return 2
     try:
-        built = build_text(usage=usage, home=home)
+        built = build_text()
     except BuildError as exc:
         print(f'BUILD FAILED: {exc}', file=sys.stderr)
         return 2
@@ -628,9 +617,8 @@ def main() -> int:
             print('CHECK:', p)
         print('check', 'ok' if not problems else f'failed ({len(problems)})')
         return 0 if not problems else 1
-    problems = lint_sources() + syntax_check(built, usage=usage) + _rail().published_problems(built) + _glyphs().published_problems(built)
-    if home:
-        problems += _home().published_problems(built)
+    problems = (lint_sources() + syntax_check(built) + _rail().published_problems(built) + _glyphs().published_problems(built)
+                + _home().published_problems(built))
     if problems:
         for p in problems:
             print('LINT:', p)

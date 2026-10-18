@@ -8,11 +8,12 @@
  *   node Concepts/usage-redesign/tools/usage_boot.mjs <out-dir> --page /tmp/x.html # a private build.py --out build
  *   node Concepts/usage-redesign/tools/usage_boot.mjs <out-dir> [page-under-test] [reference-page]
  * Which pages: the Usage page is published through opus-5.5 build.py (step 2b, usage_layer). Published mode tests
- * Concepts/PMConcept7.html (or --page) against a fresh private reference build without the Usage layer
- * (build.py --out <out-dir>/reference-no-usage.html --no-usage, the same sources with the old page). It is the default
- * once the review copy Concepts/UsageTestPMConcept7.html is gone; while it exists, the default is that review copy
- * against its input, Concepts/Onboarding concepts/TestOpus5.5PmConcept.html (or against the --no-usage reference build
- * when build.py --publish-pm7 has already put the new Usage page into TestOpus in this working tree).
+ * Concepts/PMConcept7.html (or --page) against the published page from a git ref (--base-ref, default origin/main),
+ * written to <out-dir>/reference-published.html. The build.py --no-usage private reference build was retired on
+ * 2026-10-18; the published page is the reference. While the review copy Concepts/UsageTestPMConcept7.html exists,
+ * the default is that review copy against its input, Concepts/Onboarding concepts/TestOpus5.5PmConcept.html (or
+ * against the published reference page when build.py --publish-pm7 has already put the new Usage page into TestOpus
+ * in this working tree).
  * Writes <out-dir>/usage-boot.json (never into the repository), prints the summary, exits 1 when a check fails.
  * Each browser gets a private profile that chrome.mjs deletes on close. No screenshots. */
 import { launch, sleep } from '../../onboarding/opus-5.5/tools/chrome.mjs';
@@ -26,17 +27,20 @@ const concepts = resolve(here, '../..');
 const args = process.argv.slice(2);
 const flag = (name) => { const i = args.indexOf(name); if (i === -1) return null; const v = args[i + 1]; args.splice(i, 2); return v; };
 const pageArg = flag('--page');
+const baseRef = flag('--base-ref') || 'origin/main';
 const published = args.includes('--published') || !!pageArg; if (args.includes('--published')) args.splice(args.indexOf('--published'), 1);
 const out = resolve(args[0] || '/tmp/usage-boot');
 mkdirSync(out, { recursive: true });
 const reviewCopy = join(concepts, 'UsageTestPMConcept7.html');
 const testOpus = join(concepts, 'Onboarding concepts', 'TestOpus5.5PmConcept.html');
 const USAGE_MARK = '<!-- USAGE:BODY:START -->';
-/* the old-page reference: a fresh build.py --out <out-dir>/reference-no-usage.html --no-usage */
+/* the reference page: the published page from a git ref (--base-ref, default origin/main) */
 const referenceBuild = () => {
-  const base = join(out, 'reference-no-usage.html');
-  const r = spawnSync('python3', [join(concepts, 'onboarding', 'opus-5.5', 'tools', 'build.py'), '--out', base, '--no-usage'], { encoding: 'utf8' });
-  if (r.status !== 0) { console.error('reference build failed:', (r.stderr || '') + (r.stdout || '')); process.exit(2); }
+  const base = join(out, 'reference-published.html');
+  const repo = resolve(here, '../../..');
+  const r = spawnSync('git', ['-C', repo, 'show', `${baseRef}:Concepts/PMConcept7.html`], { maxBuffer: 256 * 1024 * 1024 });
+  if (r.status !== 0) { console.error(`reference page fetch failed (git -C ${repo} show ${baseRef}:Concepts/PMConcept7.html):`, (r.stderr || '').toString() + (r.stdout || '').toString()); process.exit(2); }
+  writeFileSync(base, r.stdout);
   return base;
 };
 let pages;
@@ -44,7 +48,7 @@ if (args[1] && !published) {
   pages = { base: resolve(args[2] || testOpus), usage: resolve(args[1]) };
 } else if (!published && existsSync(reviewCopy)) {
   /* review copy against its input; if build.py --publish-pm7 ran in this working tree, TestOpus already carries the new
-   * Usage page and is no old-page reference, so use the --no-usage build instead */
+   * Usage page and is no old-page reference, so use the published reference page instead */
   pages = { base: readFileSync(testOpus, 'utf8').includes(USAGE_MARK) ? referenceBuild() : testOpus, usage: reviewCopy };
 } else {
   const usage = resolve(pageArg || join(concepts, 'PMConcept7.html'));

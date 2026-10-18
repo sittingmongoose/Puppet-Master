@@ -37,8 +37,8 @@ Concepts/usage-redesign/
                           copy from build_text(usage=False) + the layer; published mode (once it is gone): build.py
                           --check, or build.py --out PATH (default <tmp>/usage-pm7/PMConcept7.html)
   tools/usage_boot.mjs    headless boot check: the review copy against its input while the review copy exists, else the
-                          published page (or --page, a private build) against a reference build without the Usage layer
-                          (build.py --out <path> --no-usage)
+                          published page (or --page, a private build) against the published page from a git ref
+                          (--base-ref, default origin/main; the --no-usage reference build was retired 2026-10-18)
   tools/boards.py         default boards of all 13 rooms -> src/js/62-boards-data.js (and --md BOARDS.md); --check validates
   src/markup.html         the #panel-usage markup (root: <div class="pmu-shell" id="pmuApp">), ARCHITECTURE section 5
   src/copy.json           shell strings; src/copy.d/*.json one file per owner (merged; a key in two files fails the build)
@@ -108,8 +108,9 @@ boot-check it with `usage_boot.mjs --page`, look at it on the GPU (the P1000 VM)
 run `--check`.
 `build.py` enforces the base pin (`BASE_SHA256`). Each build lints `src/` (`usage_layer.lint()`, which also runs the
 build's page-wide universal-selector lint over the Usage CSS) and runs `node --check` on `pm-usage-js`,
-`pm4-settings-js` and `pm-o55-js`. In published mode `usage_boot.mjs` makes its reference page itself (`build.py --out
-<out-dir>/reference-no-usage.html --no-usage`: the same sources with the old Prism Usage page) and writes
+`pm4-settings-js` and `pm-o55-js`. In published mode `usage_boot.mjs` fetches its reference page itself (`git show
+<base-ref>:Concepts/PMConcept7.html` written to `<out-dir>/reference-published.html`; `--base-ref` defaults to
+`origin/main`; the `--no-usage` private reference build was retired on 2026-10-18) and writes
 `<out-dir>/usage-boot.json`; it also takes `[page-under-test] [reference-page]` as plain arguments. Keep `<out-dir>`
 outside the repository (for example under `~/PM-Experiments/`). The boot check takes no screenshots and deletes its
 Chrome profiles.
@@ -173,7 +174,8 @@ The detail is in `understand/cur-xref.md` section 10 and `DESIGN-INPUTS.md` sect
 - `body.pmu-page-active` is set while Usage shows, and Home's `#pm-home-workspace` takes no pointer events then (the old
   page's rule, kept).
 
-`usage_boot.mjs` checks all of this against the reference build with the old page:
+`usage_boot.mjs` checks all of this against the reference page (the published page from a git ref; `--base-ref`,
+default `origin/main`):
 - no new console errors;
 - `#pmuApp` is present and `#pm7UsageApp` is absent;
 - every `.context-usage` is enhanced, its popup opens, the details drawer opens, and Compact writes
@@ -196,7 +198,7 @@ The detail is in `understand/cur-xref.md` section 10 and `DESIGN-INPUTS.md` sect
   "usage card cta :has restyle" fix is now ordinary `base/style/pm7-t32-final.css` source.
   `build_text()` assembles the live shell, applies Settings, Usage, O55, rail, glyphs,
   Home, Glass and wallpapers, then active-descendant and CSS-bucket rewrites.
-- `build_text(usage=False)` (`build.py --out <path> --no-usage`) leaves the old page in place. It is a private reference
-  build for the boot check only, never published.
+- The private reference build `build_text(usage=False)` (`build.py --out <path> --no-usage`), which left the old Prism
+  page in place, was retired on 2026-10-18; the boot check's reference is the published page from a git ref.
 - The NieR list registry replaces all six selector patches. The page's NieR CSS remains here; the old `pm7u`
-  names remain for the private reference build and can be pruned only when that build is retired.
+  names served that retired reference build and can be pruned in a future byte-changing task.
