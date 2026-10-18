@@ -50,8 +50,9 @@ Build order:
 Usage and Home retain their own conditional app/context patches. Their private reference
 builds remain available through `--out <path> --no-usage` and `--out <path> --no-home`.
 
-NieR list defaults and their publication order live beside the parts source in
-`src/settings/kit.d/nier_registry.py`. Edit each layer tool's `NIER_ENTRIES` dictionary to contribute
+NieR list defaults and their publication order live in the build tools at
+`tools/nier_registry.py`. Named slots in the base lists fix each contribution's position.
+Edit each layer tool's `NIER_ENTRIES` dictionary to contribute
 selectors to named lists: Usage supplies `cursor`, `chosen`, `strip`, `titles`, `confirm`, `cancel`;
 Home supplies `cursor`, `chosen`, `strip`; the rail review supplies `chosen`, `strip`.
 `build.emit_nier_lists()` registers only layers whose build markers are present, then the registry's
@@ -60,6 +61,8 @@ The rail review calls the same emitter after adding its markers. Order is fixed 
 independent of registration order; Usage's `titles` replaces its fallback title, and empty lists add nothing.
 Do not add source-text patches or edit the declaration placeholders. Private builds omit the disabled
 layer's entries; the published rail cursor remains a default in the registry.
+Keep the empty `TITLES['usage']` slot before `settings` when the legacy fallback and private
+`--no-usage` build are retired, so the contributed Usage title keeps its publication order.
 
 Every build also lints the Usage sources (`usage_layer.lint()`, in `lint_sources()`) and runs `node --check` on
 `pm-usage-js`; `--check` also fails on an old Usage reference left in the page (`id="pm7UsageApp"`,

@@ -14,7 +14,7 @@ and tools/base_source.py inserts raw style/script bodies byte for byte. Edit tho
 TestPMConcept.html, shell_motion.py and wizorch_layer.py are history. The split proof lives in base/README.md.
 Unconditional shell edits are already in base/; the fork-owned Doctor edit is in src/settings/managers/55-doctor.js.
 Settings (step 0), Usage (2b), O55 (3), rail (4), glyphs (5), Home/Glass/wallpapers (6) remain authored layers.
-The NieR registry (src/settings/kit.d/nier_registry.py) emits their list contributions after composition.
+The NieR registry (tools/nier_registry.py) emits their list contributions after composition.
 Step 7 applies active_descendant_rewrite and css_bucket_split over the finished page; page lint sees the unsplit CSS.
 Concepts/PMConcept7.html is published only from here (2026-09-26 user direction): --publish-pm7 writes the same built
 bytes to both outputs, and --check fails while PMConcept7.html is missing or differs by even one byte.
@@ -42,8 +42,12 @@ TARGET = CONCEPTS / 'Onboarding concepts' / 'TestOpus5.5PmConcept.html'
 PM7_TARGET = CONCEPTS / 'PMConcept7.html'
 SRC = PKG / 'src'
 
-sys.path.insert(0, str(SRC / 'settings' / 'kit.d'))
-import nier_registry  # noqa: E402  (data and the one emitter, beside 19-nier-parts.js)
+_previous_dont_write_bytecode = sys.dont_write_bytecode
+sys.dont_write_bytecode = True
+try:
+    import nier_registry  # noqa: E402  (build-time list data and the one emitter)
+finally:
+    sys.dont_write_bytecode = _previous_dont_write_bytecode
 
 sys.path.insert(0, str(CONCEPTS / 'usage-redesign' / 'tools'))
 import usage_layer  # noqa: E402  (the Usage page: Concepts/usage-redesign/tools/usage_layer.py)
@@ -261,7 +265,7 @@ def lint_page_wide_universal(rel: str, text: str, notes: list[str] | None = None
 def lint_sources() -> list[str]:
     problems = []
     for p in sorted(SRC.rglob('*')):
-        if not p.is_file() or p.suffix in BINARY_SUFFIXES:
+        if '__pycache__' in p.parts or not p.is_file() or p.suffix in BINARY_SUFFIXES:
             continue
         text = p.read_text(encoding='utf-8')
         if EMOJI.search(text):

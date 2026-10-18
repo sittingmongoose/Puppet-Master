@@ -26,7 +26,7 @@ What apply() does, every step guarded so it happens exactly once or the build st
      new pmu- namespace those selectors match nothing.
   6. Merges the review roster (src/roster.json) into the Settings providers fixture and seeds saved Settings states once
      (roster_patch). NIER_ENTRIES contributes the page's selectors to the shared NieR registry, emitted by build.py
-     after all layers (opus-5.5 src/settings/kit.d/nier_registry.py); no retained NieR source-text patches remain.
+     after all layers (opus-5.5 tools/nier_registry.py); no retained NieR list source-text patches remain.
 """
 from __future__ import annotations
 

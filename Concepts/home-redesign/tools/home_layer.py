@@ -22,7 +22,7 @@ edits the page's own markup. apply() only adds:
      Guarded app JS patches (APP_PATCHES): homeActive lets the chat stay one column on every page; the status bar's
      host item and NieR's readout of it; the left rail's Dashboard (HOME) toggle is removed.
   3. NIER_ENTRIES contributes the panels' NieR hook classes (.pmw-cur, .pmw-chosen, .pmw-strip) to the shared registry
-     (opus-5.5 src/settings/kit.d/nier_registry.py). build.py emits the lists after all layers; edit data, not anchors.
+     (opus-5.5 tools/nier_registry.py). build.py emits the lists after all layers; edit data, not anchors.
 At run time the panels replace the Home centre (CONTRACT.md); the old Home model stays loaded for the pages and tour
 code that still call it, behind compatibility shims. Every step is guarded: each anchor must be found exactly once and
 the layer markers must not be in the input already. The terminal thread owns src/terminal/**; this file is the panels

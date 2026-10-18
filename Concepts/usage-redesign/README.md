@@ -141,7 +141,7 @@ keep its exact rule count, or the build stops.
    the same roster as the Accounts room, also in a browser with saved Settings. Every account's Settings usage windows (pct
    and reset words) are written from the roster facts (`align_usage`) and the seed re-aligns saved states, so Settings and
    Usage read the same resets.
-6. Its `NIER_ENTRIES` dictionary contributes named lists to opus-5.5's `src/settings/kit.d/nier_registry.py`:
+6. Its `NIER_ENTRIES` dictionary contributes named lists to opus-5.5's `tools/nier_registry.py`:
    the menu cursor (`.pmu-navbtn`, `.pmu-poprow`, `.pmu-range button`), chosen brackets (`.pmu-navbtn`,
    `.pmu-range button`), strip cursor (`.pmu-range button`, `.pmu-seg button`), page-title decode
    (`#pmuRoomTitle`, `.pmu-brand h1`), and confirm/cancel sounds. `build.py` emits them after all layers;

@@ -16,7 +16,7 @@ every DOM change it makes, so PMR.concepts.set('current') puts the shell's own r
      share one scope and publish window.PMR), src/concepts/d/*.js in a wrapper of its own, then PMR.boot().
   3. data-rail-concept="d" data-rail-skin="d" on the <html> tag: D's CSS holds from the first frame, and the boot's
      switch to D writes nothing (setting an attribute on <html> after load restyles the whole document).
-  D's NieR hooks are kit source: .pmr-cur in opus-5.5 src/settings/kit.d/nier_registry.py's cursor defaults,
+  D's NieR hooks are kit source: .pmr-cur in opus-5.5 tools/nier_registry.py's cursor defaults,
   .pmr-lock in 19-nier-parts.js's brackets click handler.
 apply_review (on a page apply_published made; concepts A, B and C and the switcher, review-copy only):
   1. <style id="pm-rail-review-css"> between RAIL-REVIEW:CSS markers, right after RAIL:CSS:END: the src/css files not
@@ -79,10 +79,10 @@ PUBLISHED_ABSENT_SETTINGS = ('.pmr-chosen', '.pmr-strip')
 # NieR registry contributions: concepts tag their elements with these generic classes instead of growing the lists.
 # Review copy only (apply_review): .pmr-chosen and .pmr-strip serve concepts A, B and C. Concept D's two hooks, .pmr-cur
 # in the cursor list and the brackets locking after the click on .pmr-lock, are published defaults in the shared
-# kit.d/nier_registry.py and kit.d/19-nier-parts.js. Edit NIER_ENTRIES below, not source anchors. The cursor list brings
-# the Settings script's o55np-cur-over class (put on the hovered cursor-list item, and once from :hover when the Menu cursor part turns
-# on) to .pmr-cur rows: src/css/40-nier.css and concept D's 90-themes key the bar's paper text on that class, as the app
-# does (opus-5.5 kit.d/19-nier-parts.js, 2026-10-08).
+# tools/nier_registry.py and src/settings/kit.d/19-nier-parts.js. Edit NIER_ENTRIES below, not source anchors.
+# The cursor list brings the Settings script's o55np-cur-over class (put on the hovered cursor-list item, and once
+# from :hover when the Menu cursor part turns on) to .pmr-cur rows: src/css/40-nier.css and concept D's 90-themes key
+# the bar's paper text on that class, as the app does (opus-5.5 kit.d/19-nier-parts.js, 2026-10-08).
 NIER_ENTRIES = {'chosen': ['.pmr-chosen'], 'strip': ['.pmr-strip']}
 
 CONCEPT_IDS = REVIEW_CONCEPTS + PUBLISHED_CONCEPTS
@@ -409,7 +409,7 @@ def published_problems(built: str) -> list[str]:
         if absent in settings:
             problems.append(f'rail: the review-only NieR hook {absent} is in the published Settings script')
     if '.pmr-cur:not(.active)' not in settings:
-        problems.append('rail: the NieR cursor list does not name .pmr-cur (kit.d/19-nier-parts.js)')
+        problems.append('rail: the NieR cursor list does not name .pmr-cur (opus-5.5/tools/nier_registry.py)')
     if ".closest('.pmr-lock')" not in settings:
         problems.append('rail: the NieR brackets do not lock after the click on .pmr-lock (kit.d/19-nier-parts.js)')
     return problems
