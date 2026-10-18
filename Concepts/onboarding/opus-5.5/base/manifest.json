@@ -136,24 +136,6 @@
     },
     {
       "tag": "style",
-      "id": "pm7-onboarding-css",
-      "file": "style/pm7-onboarding-css.css",
-      "slot": "@@PM7_BASE_0023@@"
-    },
-    {
-      "tag": "style",
-      "id": "pm7-guided-tour-css",
-      "file": "style/pm7-guided-tour-css.css",
-      "slot": "@@PM7_BASE_0024@@"
-    },
-    {
-      "tag": "script",
-      "id": "pm7-guided-tour-js",
-      "file": "script/pm7-guided-tour-js.js",
-      "slot": "@@PM7_BASE_0025@@"
-    },
-    {
-      "tag": "style",
       "id": "pm7-t46-systems-css",
       "file": "style/pm7-t46-systems-css.css",
       "slot": "@@PM7_BASE_0026@@"
@@ -334,12 +316,6 @@
     },
     {
       "tag": "script",
-      "id": "pm7-onboarding-js",
-      "file": "script/pm7-onboarding-js.js",
-      "slot": "@@PM7_BASE_0056@@"
-    },
-    {
-      "tag": "script",
       "id": "pm7-t46-systems-js",
       "file": "script/pm7-t46-systems-js.js",
       "slot": "@@PM7_BASE_0057@@"
@@ -379,5 +355,31 @@
     "history": "Concepts/Onboarding concepts/TestPMConcept.html",
     "sha256": "b3888fad4993f484ab4548e9ff212ec0042fa0a912947a7f316514db939326be",
     "bytes": 7444795
-  }
+  },
+  "retired_blocks": [
+    {
+      "tag": "style",
+      "id": "pm7-onboarding-css",
+      "file": "style/pm7-onboarding-css.css",
+      "slot": "@@PM7_BASE_0023@@"
+    },
+    {
+      "tag": "style",
+      "id": "pm7-guided-tour-css",
+      "file": "style/pm7-guided-tour-css.css",
+      "slot": "@@PM7_BASE_0024@@"
+    },
+    {
+      "tag": "script",
+      "id": "pm7-guided-tour-js",
+      "file": "script/pm7-guided-tour-js.js",
+      "slot": "@@PM7_BASE_0025@@"
+    },
+    {
+      "tag": "script",
+      "id": "pm7-onboarding-js",
+      "file": "script/pm7-onboarding-js.js",
+      "slot": "@@PM7_BASE_0056@@"
+    }
+  ]
 }

@@ -132,11 +132,8 @@ by its "PM7 SECTION n/total" banner comment (names, never byte offsets).
 <style id="pm7-t37-contrast">@@PM7_BASE_0022@@</style>
 
 
-<style id="pm7-onboarding-css">@@PM7_BASE_0023@@</style>
 
-<style id="pm7-guided-tour-css">@@PM7_BASE_0024@@</style>
 
-<script id="pm7-guided-tour-js">@@PM7_BASE_0025@@</script>
 
 
 <style id="pm7-t46-systems-css">@@PM7_BASE_0026@@</style>
@@ -3273,59 +3270,9 @@ status: completed with warnings</pre>
 <script id="pm6-js-cozy-shelves">@@PM7_BASE_0054@@</script>
   <!-- PM7 T23: shared Chat, Home density, move HUD, and dashboard behavior -->
   <script id="pm7-t23-shell-adjustments">@@PM7_BASE_0055@@</script>
-<!-- PM7 Product Onboarding: simple cinematic guided setup -->
-<div id="pm7-onboarding" class="pm7ob" data-slint-counterpart="ProductOnboardingOverlay" data-open="false" data-screen="welcome" data-motion="idle" data-modal-presentation="windowed" data-shell-visibility="preserved" hidden>
-  <section class="pm7ob-window" role="dialog" aria-modal="true" aria-labelledby="pm7ob-title" aria-describedby="pm7ob-modal-purpose" data-slint-counterpart="ProductOnboardingModal">
-    <p id="pm7ob-modal-purpose" class="pm7ob-sr-only">A short, friendly setup for your first project, its safety net, the computer doing the work, and private access when you are away.</p>
-    <div class="pm7ob-ambient" aria-hidden="true"><i></i><i></i><i></i></div>
-    <header class="pm7ob-chrome">
-      <div class="pm7ob-brand" aria-label="Puppet Master setup"><span class="pm7ob-mark" aria-hidden="true">PM</span><span>Welcome to Puppet Master</span></div>
-      <div class="pm7ob-chrome-actions">
-        <button type="button" class="pm7ob-text-action pm7ob-defer" data-ui-action-id="ui.onboarding.defer">Do this later</button>
-        <button type="button" class="pm7ob-text-action pm7ob-skip" data-ui-action-id="ui.onboarding.skip">Skip setup</button>
-        <button type="button" class="pm7ob-icon-action" data-ui-action-id="ui.onboarding.close" aria-label="Close onboarding"><span class="pm7ob-shared-icon" data-pm7-shared-icon="close" aria-hidden="true"></span></button>
-      </div>
-    </header>
-    <div class="pm7ob-stage" data-slint-counterpart="OnboardingStage" aria-live="polite" aria-atomic="true">
-      <article class="pm7ob-layer is-current" data-slint-counterpart="OnboardingStageLayer" data-onboarding-layer="current"></article>
-      <article class="pm7ob-layer" data-slint-counterpart="OnboardingStageLayer" data-onboarding-layer="outgoing" aria-hidden="true" inert></article>
-    </div>
-    <section class="pm7ob-branch-panel" data-onboarding-branch="" data-slint-counterpart="OnboardingOwnerBranch" role="region" aria-labelledby="pm7ob-branch-title" hidden></section>
-    <aside id="pm7ob-explainer" class="pm7ob-explainer-popover" role="note" aria-live="polite" hidden></aside>
-    <footer class="pm7ob-footer">
-      <button type="button" class="pm7ob-back" data-ui-action-id="ui.onboarding.back">Back</button>
-      <ol class="pm7ob-progress" data-slint-counterpart="OnboardingProgress" aria-label="Setup progress"></ol>
-      <div class="pm7ob-footer-end"><button type="button" id="pm7ob-stage-details-toggle" class="pm7ob-details-toggle" data-ui-action-id="ui.onboarding.open_details" aria-expanded="false" aria-controls="pm7ob-stage-details">Details</button><span class="pm7ob-status" role="status"></span></div>
-    </footer>
-  </section>
-</div>
-<button type="button" id="pm7-onboarding-resume" class="pm7ob-resume" data-ui-action-id="ui.onboarding.start" data-source-surface="resume" hidden>Resume setup</button>
+<!-- O55:BODY:START -->
+<!-- O55:BODY:END -->
 
-<script id="pm7-onboarding-js">@@PM7_BASE_0056@@</script>
-<!-- PM7 Guided Tour: deterministic real-shell teacher -->
-<div id="pm7-guided-tour" class="pm7gt" data-open="false" data-motion="idle" data-step-id="tour.intro.comfort" data-choreography="idle" hidden>
-  <div class="pm7gt-scrim" aria-hidden="true"></div>
-  <div class="pm7gt-halo" aria-hidden="true"></div>
-  <div class="pm7gt-pointer" aria-hidden="true"></div>
-  <section class="pm7gt-callout" role="dialog" aria-modal="false">
-    <header class="pm7gt-head">
-      <div><span class="pm7gt-local">BEGINNER TOUR</span><span class="pm7gt-boundary">Try the real control, or choose Show Me</span></div>
-      <div class="pm7gt-head-actions">
-        <button type="button" id="pm7gt-eli5" class="pm7gt-quiet pm7gt-eli5" data-ui-action-id="ui.guided_tour.toggle_eli5" aria-pressed="false" data-pm-hover-label="Use simpler words" data-pm-hover-detail="The meaning stays accurate; only the explanation gets shorter and clearer.">ELI5: Off</button>
-        <button type="button" class="pm7gt-quiet" data-ui-action-id="ui.guided_tour.pause">Pause</button>
-        <button type="button" class="pm7gt-quiet" data-ui-action-id="ui.guided_tour.skip">Skip Tour</button>
-      </div>
-    </header>
-    <div class="pm7gt-clip"><div class="pm7gt-stage" data-guided-tour-layer="current"></div></div>
-    <footer class="pm7gt-foot">
-      <button type="button" class="pm7gt-back" data-ui-action-id="ui.guided_tour.back">Back</button>
-      <span class="pm7gt-progress" aria-live="polite">Introduction</span>
-      <span class="pm7gt-forward-slot" role="status" aria-live="polite"><span class="pm7gt-status">Ready</span></span>
-    </footer>
-  </section>
-</div>
-<button type="button" id="pm7-guided-tour-resume" class="pm7gt-return" data-ui-action-id="ui.guided_tour.resume" hidden>Resume Guided Tour</button>
-<button type="button" id="pm7-guided-tour-replay" class="pm7gt-return pm7gt-replay" data-ui-action-id="ui.guided_tour.replay" hidden>Replay Guided Tour</button>
 
 <script id="pm7-t46-systems-js">@@PM7_BASE_0057@@</script>
 <script id="pm7-t48-egolite-retained-contracts" type="application/json">@@PM7_BASE_0058@@</script>

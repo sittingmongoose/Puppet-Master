@@ -44,7 +44,6 @@ SOURCE = base_source.BASE  # live shell sources; the former page is history
 TARGET = CONCEPTS / 'Onboarding concepts' / 'TestOpus5.5PmConcept.html'
 PM7_TARGET = CONCEPTS / 'PMConcept7.html'
 SRC = PKG / 'src'
-BASE_SHA256 = 'b3888fad4993f484ab4548e9ff212ec0042fa0a912947a7f316514db939326be'
 
 sys.path.insert(0, str(CONCEPTS / 'usage-redesign' / 'tools'))
 import usage_layer  # noqa: E402  (the Usage page: Concepts/usage-redesign/tools/usage_layer.py)
@@ -63,27 +62,8 @@ def need(cond: bool, message: str) -> None:
         raise BuildError(message)
 
 
-def remove_block(text: str, tag: str, element_id: str) -> str:
-    """Remove <tag id=element_id>...</tag> exactly once (style/script: no nesting)."""
-    rx = re.compile(r'<' + tag + r'\b[^>]*\bid="' + re.escape(element_id) + r'"[^>]*>[\s\S]*?</' + tag + r'>\n?')
-    text, n = rx.subn('', text, count=1)
-    need(n == 1, f'expected exactly one <{tag} id="{element_id}">')
-    return text
 
 
-def remove_element(text: str, element_id: str) -> str:
-    """Remove a balanced element by id (handles nesting of the same tag)."""
-    m = re.search(r'<(?P<tag>[\w-]+)\b[^>]*\bid="' + re.escape(element_id) + r'"[^>]*>', text)
-    need(m is not None, f'missing element #{element_id}')
-    tag, depth = m.group('tag'), 1
-    for item in re.finditer(r'</?' + re.escape(tag) + r'\b[^>]*>', text[m.end():], re.I):
-        depth += -1 if item.group().startswith('</') else 1
-        if depth == 0:
-            end = m.end() + item.end()
-            if text[end:end + 1] == '\n':
-                end += 1
-            return text[:m.start()] + text[end:]
-    raise BuildError(f'unclosed element #{element_id}')
 
 
 def replace_once(text: str, old: str, new: str, label: str) -> str:
@@ -1377,8 +1357,6 @@ def build_text(usage: bool = True, home: bool = True) -> str:
     """The built page. usage=False leaves the base's Prism Usage page in place, and home=False today's Home: private
     reference builds only (build.py --out PATH --no-usage / --no-home; usage_boot.mjs), never published."""
     original = base_source.assemble()
-    need(hashlib.sha256(original).hexdigest() == BASE_SHA256,
-         'Phase 1: assembled base differs from the one-time split proof.')
     text = original.decode('utf-8')
 
     # 0. Settings: swap the base's T50 managers layer for the Opus 5.5 fork in src/settings. The proposed Editor look
@@ -1386,20 +1364,7 @@ def build_text(usage: bool = True, home: bool = True) -> str:
     text, SETTINGS_NOTES['editor_look_rows'] = editor_look_rows(text)
     text, SETTINGS_NOTES['layer'] = settings_layer.apply(text, need)
 
-    # 1. Strip the legacy Product Onboarding + Guided Tour.
-    text = remove_block(text, 'style', 'pm7-onboarding-css')
-    text = remove_block(text, 'style', 'pm7-guided-tour-css')
-    text = remove_block(text, 'script', 'pm7-guided-tour-js')
-    body_anchor = '<!-- PM7 Product Onboarding: simple cinematic guided setup -->'
-    need(text.count(body_anchor) == 1, 'onboarding body anchor comment missing')
-    text = text.replace(body_anchor, '<!-- O55:BODY:START -->\n<!-- O55:BODY:END -->', 1)
-    for element_id in ['pm7-onboarding', 'pm7-onboarding-resume', 'pm7-guided-tour', 'pm7-guided-tour-resume',
-                       'pm7-guided-tour-replay']:
-        text = remove_element(text, element_id)
-    text = remove_block(text, 'script', 'pm7-onboarding-js')
-    tour_comment = '<!-- PM7 Guided Tour: deterministic real-shell teacher -->\n'
-    if tour_comment in text:
-        text = text.replace(tour_comment, '', 1)
+    # Legacy onboarding/tour removal is authored in base/shell.html (Q18).
 
     # 2. Guarded patches.
     for old, new, label in PATCHES + NIER_PATCHES + first_paint_patches(text):
@@ -1672,7 +1637,7 @@ def main() -> int:
     TARGET.write_bytes(data)
     summary = {'output': str(TARGET.relative_to(CONCEPTS.parent)), 'bytes': len(data),
                'sha256': hashlib.sha256(data).hexdigest()[:16],
-               'base_sha256': BASE_SHA256[:16]}
+               'base_sha256': hashlib.sha256(base_source.assemble()).hexdigest()[:16]}
     if '--publish-pm7' in sys.argv:
         PM7_TARGET.write_bytes(data)
         summary['pm7_output'] = str(PM7_TARGET.relative_to(CONCEPTS.parent))
