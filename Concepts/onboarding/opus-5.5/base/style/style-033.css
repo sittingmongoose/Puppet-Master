@@ -7,7 +7,6 @@
                  and many useful horizontal spans. Every selector is pm7u-/pm7ctx-
                  scoped so the rest of PMConcept7 remains untouched.
                  ================================================================== */
-              @keyframes pm7u-spin{to{transform:rotate(360deg)}}
               body.pm7u-pointer-op{overflow:hidden!important;user-select:none!important;cursor:default!important}
               body.pm7u-pointer-op *{user-select:none!important}
               /* ----- chat context ring + in-chat details drawer ----- */

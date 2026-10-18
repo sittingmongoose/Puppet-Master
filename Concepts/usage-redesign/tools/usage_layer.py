@@ -56,10 +56,10 @@ CTX_JS_SHA256 = '5fb115273b346fb26bf7ea81246caae88b57bdb5e17f5878f510563477480c1
 
 # Exact rule counts of each filtered stylesheet. Any drift in the base fails the build instead of passing silently.
 EXPECT = {
-    't21 context rules': {'kept_rules': 69, 'rewritten_rules': 0, 'dropped_rules': 2, 'dropped_keyframes': 1},
+    't21 context rules': {'kept_rules': 69, 'rewritten_rules': 0, 'dropped_rules': 2, 'dropped_keyframes': 0},
     'pm7-t29-usage-final': {'kept_rules': 2, 'rewritten_rules': 0, 'dropped_rules': 1, 'dropped_keyframes': 0},
     'pm7-t32-final': {'kept_rules': 62, 'rewritten_rules': 0, 'dropped_rules': 0, 'dropped_keyframes': 0},
-    'pm7-t23-adjustments': {'kept_rules': 75, 'rewritten_rules': 0, 'dropped_rules': 0, 'dropped_keyframes': 1},
+    'pm7-t23-adjustments': {'kept_rules': 75, 'rewritten_rules': 0, 'dropped_rules': 0, 'dropped_keyframes': 0},
 }
 # Inside the band and removed with it (each must be there exactly once, so a moved block cannot survive unnoticed).
 BAND_ONLY = ['<style id="pm7-t29-usage-final">', '<style id="pm7-t32-final">', T21_ANCHOR, CTX_JS_START, CTX_JS_END]
