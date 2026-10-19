@@ -10,6 +10,10 @@ browser context; source bytes are fulfilled unchanged at the same intercepted fi
 external assets are unsupported. HTTP(S), WebSocket and FTP requests are blocked.
 Fetch interception checks actual schemes; CDP substring URL globs are avoided because they can
 block SVG data URLs containing an HTTP namespace. WebSocket construction is blocked before connection.
+The reserved `file:///__pm7_parity_asset__/` sampler markers are preblocked with scheme-aware
+`Network.setBlockedURLs.urlPatterns` before Fetch can pause them. This prevents replies to cancelled
+marker interceptions; every remaining interception error still fails the harness. The marker text
+inside a valid data-SVG remains renderable. No product-request or comparison rule is relaxed.
 
 ```sh
 git show 91649c220f:Concepts/PMConcept7.html > /absolute/evidence/baseline.html

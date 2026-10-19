@@ -2,8 +2,17 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import { encodePng, decodePng, diffPng, baselineEnvelopePng } from './pm7_parity_png.mjs';
-import { parseArgs, selectMatrix, differingPaths, discoverCustomReads } from './pm7_parity.mjs';
+import { parseArgs, selectMatrix, differingPaths, discoverCustomReads, samplerNetworkPolicy } from './pm7_parity.mjs';
 import { normalizeBlobValue } from './pm7_parity_browser.mjs';
+
+test('sampler markers use a scheme-aware block without legacy substring globs', () => {
+  assert.deepEqual(samplerNetworkPolicy(), {
+    urls: [], urlPatterns: [{ urlPattern: 'file:///__pm7_parity_asset__/*', block: true }]
+  });
+  const changed = samplerNetworkPolicy();
+  changed.urlPatterns[0].urlPattern = '*';
+  assert.equal(samplerNetworkPolicy().urlPatterns[0].urlPattern, 'file:///__pm7_parity_asset__/*');
+});
 
 test('PNG round trip, single-pixel sensitivity and explicit RGBA tolerances', () => {
   const a = { width: 2, height: 2, data: Buffer.from([0, 1, 2, 255, 40, 50, 60, 255, 70, 80, 90, 255, 100, 110, 120, 255]) };
