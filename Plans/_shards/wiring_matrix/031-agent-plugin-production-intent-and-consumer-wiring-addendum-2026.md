@@ -2,9 +2,9 @@
 
 Source: `Plans/Wiring_Matrix.md`
 
-Source lines: L4224-L4298
+Source lines: L4221-L4295
 
-Source SHA256: `4798573dabda2b10299dc4219dddbe4a5408b7adc13b7e83b7d1415821b50357`
+Source SHA256: `95b9855fbad3fdda5e2178024bb5218aac818a0810c0b353d89033abeea78b20`
 
 ---
 
@@ -66,11 +66,11 @@ acceptance_criteria:
   - Mutating work preserves confirmation, currentness, conformance, provenance, containment, permission, update-diff, rollback, ObservableWork, cancellation, recovery, and exact-return requirements.
   - Settings and Doctor consume Plugins owner facts and commands without private parsing, validation, adapter, migration, repair, or lifecycle mutation.
   - All effects remain receipt-only and no plugin.* or agent_plugin.* EventRecord, alias, second handler, or success simulation is admitted.
-validation_surfaces: [Plans/Wiring_Matrix.production.json, Plans/touch_closure.json, Plans/plugin_contract_fixtures.json, Concepts/pm7-tools/systems_integration_source.py, python3 scripts/pm-plans-verify.py validate-wiring-matrix, python3 scripts/pm-touch-closure-verify.py]
+validation_surfaces: [Plans/Wiring_Matrix.production.json, Plans/touch_closure.json, Plans/plugin_contract_fixtures.json, python3 scripts/pm-plans-verify.py validate-wiring-matrix, python3 scripts/pm-touch-closure-verify.py]
 risk_class: plugin_wiring_or_false_runtime_closure
 reasoning_tier: high
 context_scope: agent_plugin_production_intent
-implementation_surfaces: [Plans/Wiring_Matrix.md, Plans/Wiring_Matrix.production.json, Plans/touch_closure.json, Concepts/pm7-tools/systems_integration_source.py]
+implementation_surfaces: [Plans/Wiring_Matrix.md, Plans/Wiring_Matrix.production.json, Plans/touch_closure.json]
 node_compile_hint: {mode: agent_plugin_production_intent, create_worknodes: false, create_nodeseeds: false}
 source_lineage:
   - Plans/Commands_System.md#CS-071

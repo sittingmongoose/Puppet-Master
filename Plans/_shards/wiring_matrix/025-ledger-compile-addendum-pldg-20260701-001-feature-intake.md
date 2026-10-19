@@ -2,9 +2,9 @@
 
 Source: `Plans/Wiring_Matrix.md`
 
-Source lines: L3475-L3853
+Source lines: L3475-L3851
 
-Source SHA256: `4798573dabda2b10299dc4219dddbe4a5408b7adc13b7e83b7d1415821b50357`
+Source SHA256: `95b9855fbad3fdda5e2178024bb5218aac818a0810c0b353d89033abeea78b20`
 
 ---
 
@@ -156,8 +156,6 @@ validation_surfaces:
   - Plans/product_onboarding_contract_fixtures.json
   - Plans/guided_tour_contracts.schema.json
   - Plans/guided_tour_contract_fixtures.json
-  - Concepts/pm7-tools/onboarding_cinematic_source.py static assertions
-  - Concepts/pm7-tools/verify/onboarding_cinematic.mjs browser-concept verifier
   - future native Product Onboarding and Guided Tour local-action, owner-route, reverse-wiring, accessibility, and visual fixtures
 risk_class: onboarding_fake_command_or_parallel_owner_wiring
 reasoning_tier: high
