@@ -1054,7 +1054,247 @@
     }
   ],
   "pin_adjudication_mail_id": "1019051652-b067",
-  "post_push_followup": null,
+  "post_push_followup": {
+    "TMPDIR": "/home/sittingmongoose/pm-scratch/governance-reseal-20261019-tmp",
+    "baseline_failure_totals": {
+      "audit-governance": 1469,
+      "plan-migration-validate": 0,
+      "run-gates": 1486
+    },
+    "direct_markdown_count": 96,
+    "first_landing_verdict": {
+      "blocking": 0,
+      "infrastructure_count": 0,
+      "new_count": 6
+    },
+    "first_main_push_sha": "984f605c0759ee57f5468a36413cb9e96c4bd955",
+    "landing_base_commit": "dfe02ab1e809a3843d7e3a158d2fd7797f280184",
+    "lock_acquired_at_utc": "2026-10-19T08:40:03.549889+00:00",
+    "mode": "real",
+    "new_run_id": "pds-20261019-003-current-planunit-snapshot",
+    "outputs": [
+      {
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261019/phase2/landing/first-landing-check.json",
+        "sha256": "abddcf842953dc75d9a0cf0fd75f2da13f64b2d8f9635513c6802484661e8098"
+      },
+      {
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261019/phase2/landing/currentness-shared.out",
+        "sha256": "c1a812cd48c307af8ff0870839204f748202c0c5f035eb6751650741bc0a384b"
+      },
+      {
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261019/phase2/landing/shared-readiness-after-currentness.json",
+        "sha256": "851863fb8cdf1afd99cd8f4b85ae8905254e90445d32ffcbb336ae2a36fe8f21"
+      },
+      {
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261019/phase2/landing/currentness-installed.SHA256SUMS",
+        "sha256": "0d3cb39ad9305c81815b57874d1873a580b618981c17dc6d53cc36f38f1e7717"
+      },
+      {
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261019/phase2/landing/in-place-write-config.json",
+        "sha256": "5488e0ee8a995e5f3031eb771f4c749c199788d3362e77bd19a91e559d2e2229"
+      },
+      {
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261019/phase2/landing/in-place-check.out",
+        "sha256": "a90f0663f5226cdb2ac9f1b1305546b033c1ff44d07a3068d04b6a2a98f9bb36"
+      },
+      {
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261019/phase2/landing/in-place-write.out",
+        "sha256": "6c29173d60a92841870c73ad4fbd11ec123fc27ad497ff1ede03b3dc712379ca"
+      },
+      {
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261019/phase2/landing/shared-edition-at-lock.manifest.json",
+        "sha256": "3d418e1d894dd060c39c0ac221efd1bf50a6204987927043c63b187511a20d8d"
+      },
+      {
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261019/phase2/landing/milestones-through-recording.jsonl",
+        "sha256": "4fe26396cc512bf9f4b132285db58a6578d4a96ba707f8bb0db2a60c5e1bb0e4"
+      },
+      {
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261019/phase2/landing/baseline-before-first.json",
+        "sha256": "53976846b2dcfd6a1ac75d118f70175aa57094d13a017169e6a93f82c30234a9"
+      },
+      {
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261019/phase2/landing/first-export-coverage.json",
+        "sha256": "6583cc88485a4d99516210e5aea3393c1597b6878ee190cea5afed11e4968feb"
+      },
+      {
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261019/phase2/landing/record-baseline.out",
+        "sha256": "6ca9042f9a466c06aa08a965f1a0c24e70c8bb5d8a0ea796295392ed5907e1ff"
+      },
+      {
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261019/phase2/landing/snapshot-current.out",
+        "sha256": "fb20182b270b31b4a08cf95afd8c70c3d030ef98499b63c956aa4f3032f70c1b"
+      },
+      {
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261019/phase2/landing/snapshot-validate.out",
+        "sha256": "ecff6ced16d921df0b1e3c3e4fe9265460d295131cd0d98bccab639cae74aa42"
+      },
+      {
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261019/phase2/landing/currentness-after-recording.manifest.json",
+        "sha256": "75c2e0086a654c81257ddec626ec251235f49e479953ba43037aa511a30c9246"
+      },
+      {
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261019/phase2/landing/record-baseline-retry-baseline.json",
+        "sha256": "457862b22c38c396be558b447b9e6fff6b459ff03e166c568e49147dc3955212"
+      },
+      {
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261019/phase2/landing/record-baseline-retry.out",
+        "sha256": "6ca9042f9a466c06aa08a965f1a0c24e70c8bb5d8a0ea796295392ed5907e1ff"
+      },
+      {
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261019/phase2/landing/baseline-export-reduction-rerun.json",
+        "sha256": "89281316519c30038f511be9d29fd1488a5ecf736d90bec57ccb7cd02d81a970"
+      },
+      {
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261019/phase2/landing/record-baseline-export-coverage.json",
+        "sha256": "3a20c54de15d0ecbb7ccef6e2bdebd5e12e60fee2cc55f4517c1f541af70ec11"
+      },
+      {
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261019/phase2/landing/record-baseline-retry-export-coverage.json",
+        "sha256": "64b4cc81821ca32a5cef110d0dfbc61aff87992fbc606116609810237d652322"
+      },
+      {
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261019/phase2/landing/first-push-remotes.json",
+        "sha256": "fabf545e1ba6d373f9ac94f47f72e1e6ff4eebb2dbcaf84c7ed9885a8c8a8cb7"
+      },
+      {
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261019/phase2/landing/free-space-at-lock.command.json",
+        "sha256": "195f26aec7326c674faf5d686364b6827cff29bbdb173e4526ddefe04ced13fb"
+      },
+      {
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261019/phase2/landing/free-space-at-lock.json",
+        "sha256": "cba0ea54b5f2c8818953d56e8af7ff6098fcac2d9fc0721a9cfadab22549584e"
+      },
+      {
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261019/phase2/landing/free-space-first.json",
+        "sha256": "3552a6b053b8ea5002bd85de35a821d4da326b743b562942596ed5f748c855ef"
+      },
+      {
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261019/phase2/landing/free-space-record-baseline-retry.json",
+        "sha256": "d385c540f26b51443cb4e8275e81b7961c10e0cf08f33ab07a30489b6722b515"
+      },
+      {
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261019/phase2/landing/free-space-record-baseline.json",
+        "sha256": "2264b6b315eb070bd1a377efe8477aa5bf42432a53d50971e67c39850c0a8978"
+      },
+      {
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261019/phase2/landing/temp-space-at-lock.out",
+        "sha256": "1b0d50ce649035c77cadbfc1d31d9dac1ef67cd095f57bf838735d3609ae341a"
+      },
+      {
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261019/phase2/landing/temp-space-first.out",
+        "sha256": "f3881f0da513b40a25200eb9c2e4e13fa731afc6295b7ba180f63f8107316e8f"
+      },
+      {
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261019/phase2/landing/temp-space-record-baseline-retry.out",
+        "sha256": "b36e1fadb6502922c7f839329c51f2781036d8f44e4df1cee39931b76186f90d"
+      },
+      {
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261019/phase2/landing/temp-space-record-baseline.out",
+        "sha256": "d23db385b1b053517d4f0a46dd8388024e6d0468041017aded46af1ab294539a"
+      },
+      {
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261019/phase2/helpers-executed/landing/apply.py",
+        "sha256": "6bae0d53959f7ba1812fc609a043d11b67a071493ab3cd7bd8aa9782d02d90ed"
+      },
+      {
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261019/phase2/helpers-executed/landing/before_details.py",
+        "sha256": "4bd5238c613af7aa48ce550cfd7a5e1f6334e9c80b952cbec9c542fbd4619f82"
+      },
+      {
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261019/phase2/helpers-executed/landing/cleanup.py",
+        "sha256": "de2dd5009f59bcd7dafed2eac7b76e904b74d26b7f2cd6d3d698696681fd2ce8"
+      },
+      {
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261019/phase2/helpers-executed/landing/coverage.py",
+        "sha256": "5260658eb2cbaad68a6256206c9224e8478b25f7a1181e52d5083ff6016125dc"
+      },
+      {
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261019/phase2/helpers-executed/landing/finalize.py",
+        "sha256": "f18578a73704650134f814ea975ac2362becb3f01e3ca1516010fcf0351e8c23"
+      },
+      {
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261019/phase2/helpers-executed/landing/landing.py",
+        "sha256": "56b66fa3f2d7d885a87d2ec31703188b8f009a3e7b659a2bb10187562668735e"
+      },
+      {
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261019/phase2/helpers-executed/landing/preflight.py",
+        "sha256": "ecf015ab3225d49849e468c7b097ca36fe1ae892ca9328a68edb5b27e74e535c"
+      },
+      {
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261019/phase2/helpers-executed/landing/prepare.py",
+        "sha256": "2a28cdea6ba6c0c9b5a322fa80252986a21b79997947d913848d4a371f4e2631"
+      },
+      {
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261019/phase2/helpers-executed/landing/protected_inputs.py",
+        "sha256": "d61eebb32a62d2ed83f12f1215c96e44962b4dc6cc43c70b4e44fca32d5b0ff2"
+      },
+      {
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261019/phase2/helpers-executed/landing/publish.py",
+        "sha256": "3268b80a9729670352d06ba40ac0b1b799ffceddc0f4a1acbd754c3baeb88dc1"
+      },
+      {
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261019/phase2/helpers-executed/landing/records.py",
+        "sha256": "2d0e71e34de47d10e2a309613eb05def7ff35d499c3dd4f05fff6acc598f0fba"
+      },
+      {
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261019/phase2/helpers-executed/landing/runtime.py",
+        "sha256": "ff852b7bcd78bd4138e12bbfd732e87367d9705c4aa7c83a2d291dab72e7ae95"
+      },
+      {
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261019/phase2/helpers-executed/landing/start.py",
+        "sha256": "60f8274969b4f689a0b032e326c10444b54880bc0cf20a537c904250c8f7cb90"
+      },
+      {
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261019/phase2/landing/first-check-reports/audit-governance.json",
+        "sha256": "672da640661ee68058effdbc2abddde7496f1c0e6bc8167e01dde9d866c065ed"
+      },
+      {
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261019/phase2/landing/first-check-reports/exports/validate-implementation-readiness.json",
+        "sha256": "0d658062d98b91567e428fd23c5af0be5e8cee2448a2035f1ae46e88878deb5a"
+      },
+      {
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261019/phase2/landing/first-check-reports/exports/validate-prd-planning-runtime-contracts.json",
+        "sha256": "c9a86b9ec42f207a10aa1306da4dbbd831b92b39b8863b2c5e910692e93f291e"
+      },
+      {
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261019/phase2/landing/first-check-reports/plan-migration-validate.json",
+        "sha256": "e3b79be8d10b0aff24b9521d6f01d86738e721831cbfd612928ce7a1c089d51e"
+      },
+      {
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261019/phase2/landing/first-check-reports/run-gates.json",
+        "sha256": "ae4e57a1212f63596a67dae38effc8ca76359e0265c81a3f6e3955047c89f3e6"
+      },
+      {
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261019/phase2/landing/record-baseline-retry-check-reports/audit-governance.json",
+        "sha256": "dcb376ce9e0e7b855073ca0e2396a2c8f970060075fa2f052fa944ba237d27cf"
+      },
+      {
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261019/phase2/landing/record-baseline-retry-check-reports/exports/validate-prd-planning-runtime-contracts.json",
+        "sha256": "3238f883492ae7021d986f9c0ed30e4a6fecff5cc14b4a8ecb0049c5cbeb6b45"
+      },
+      {
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261019/phase2/landing/record-baseline-retry-check-reports/plan-migration-validate.json",
+        "sha256": "6f2910e2c88414d42c11f45f9bae7ab550c2369b769adb0b8d33325ab1aa3e20"
+      },
+      {
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261019/phase2/landing/record-baseline-retry-check-reports/run-gates.json",
+        "sha256": "bbd8f1fcaf801d3f4b44ebbac37f70aa374babacb07509d8b1f84096422b5878"
+      }
+    ],
+    "prepared_commit": "984f605c0759ee57f5468a36413cb9e96c4bd955",
+    "previous_export_bucket_count": 32,
+    "readiness_residual_kinds": {
+      "buildability_gate_report_stale_or_not_canonical": 1,
+      "event_denominator_unresolved": 2,
+      "event_family_contract_depth_unresolved": 2,
+      "event_legacy_fixture_root_mismatch": 1,
+      "implementation_readiness_self_tests_failed": 1,
+      "pnc019_source_hash_stale": 16
+    },
+    "recorded_export_bucket_count": 14,
+    "superseded_run_id": "pds-20261019-002-current-planunit-snapshot"
+  },
   "previous_seal_commit": "8552129defaa6cbbf50016438c8c05c6a1f763ba",
   "runtime_enabled": false,
   "schema_id": "pm.governance.reseal.execution_evidence.v1"
