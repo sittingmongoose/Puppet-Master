@@ -17,7 +17,11 @@ export { sleep };
 export async function launch(opts = {}) {
   const profile = opts.profile || `${tmpdir()}/pm-cdp-profile-${process.pid}-o55-${++n}`;
   let b;
-  try { b = await cdpLaunch(Object.assign({}, opts, { profile, chrome: executable })); }
+  // The pipe runs in a child Node process. Pass the opt-in explicitly rather
+  // than changing the parent's environment or every flag-off CDP connection.
+  const args = [...(opts.args || [])];
+  if (opts.coverageFile) args.push('--pm7-coverage-transport');
+  try { b = await cdpLaunch(Object.assign({}, opts, { args, profile, chrome: executable })); }
   catch (err) { rmSync(profile, { recursive: true, force: true }); throw err; }
   let finishCoverage = null;
   if (opts.coverageFile) {

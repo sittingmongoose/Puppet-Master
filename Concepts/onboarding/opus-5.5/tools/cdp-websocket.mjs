@@ -109,3 +109,7 @@ export class CdpWebSocket extends EventTarget {
     this.finish();
   }
 }
+// Keep the original Node WebSocket unless the launcher explicitly opts in.
+export function websocketForPipe(args = process.argv.slice(2)) {
+  return args.includes('--pm7-coverage-transport') ? CdpWebSocket : globalThis.WebSocket;
+}

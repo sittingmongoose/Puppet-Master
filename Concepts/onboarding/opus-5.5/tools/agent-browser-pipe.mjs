@@ -3,7 +3,7 @@
  * cap and owns the real profile; closing the pipe stops that exact session before acknowledging close. */
 import { execFileSync } from 'node:child_process';
 import { createReadStream, createWriteStream } from 'node:fs';
-import { CdpWebSocket } from './cdp-websocket.mjs';
+import { websocketForPipe } from './cdp-websocket.mjs';
 
 async function startSession() {
   for (let attempt = 1; attempt <= 80; attempt++) {
@@ -30,7 +30,8 @@ process.on('exit', () => { try { stop(); } catch (_) {} });
 for (const sig of ['SIGINT', 'SIGTERM']) process.once(sig, () => { try { stop(); } finally { process.exit(0); } });
 
 const version = await (await fetch(session.cdp_endpoint + '/json/version')).json();
-const socket = new CdpWebSocket(version.webSocketDebuggerUrl);
+const Socket = websocketForPipe();
+const socket = new Socket(version.webSocketDebuggerUrl);
 await new Promise((resolve, reject) => {
   socket.addEventListener('open', resolve, { once: true });
   socket.addEventListener('error', reject, { once: true });

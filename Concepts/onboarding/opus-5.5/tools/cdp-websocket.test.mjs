@@ -3,7 +3,35 @@ import assert from 'node:assert/strict';
 import { createServer } from 'node:http';
 import { createHash } from 'node:crypto';
 import { once } from 'node:events';
-import { CdpWebSocket } from './cdp-websocket.mjs';
+import { CdpWebSocket, websocketForPipe } from './cdp-websocket.mjs';
+import { execFileSync } from 'node:child_process';
+
+test('flag-off uses the original WebSocket and coverage selects the large-reply transport in the child', () => {
+  assert.equal(websocketForPipe([]), globalThis.WebSocket);
+  assert.equal(websocketForPipe(['--pm7-coverage-transport']), CdpWebSocket);
+  const chrome = new URL('./chrome.mjs', import.meta.url).href;
+  const source = `
+    import { registerHooks } from 'node:module';
+    import assert from 'node:assert/strict';
+    const launches = []; globalThis.__coverageLaunches = launches;
+    registerHooks({ load(url, context, next) {
+      if (url.endsWith('/pm_cdp.mjs')) return { format: 'module', shortCircuit: true,
+        source: 'export const sleep = async () => {}; export async function launch(opts) { globalThis.__coverageLaunches.push(opts); return {page:{},close:async()=>{}}; }' };
+      if (url.endsWith('/coverage_union.mjs')) return { format: 'module', shortCircuit: true,
+        source: 'export const coverPage = async () => async () => {};' };
+      return next(url, context);
+    } });
+    const {launch} = await import(${JSON.stringify(chrome)});
+    const args = ['--existing-argument'];
+    await (await launch({args})).close();
+    await (await launch({args, coverageFile:'fixture.json'})).close();
+    assert.deepEqual(launches[0].args, args);
+    assert.deepEqual(launches[1].args, [...args, '--pm7-coverage-transport']);
+    assert.deepEqual(args, ['--existing-argument']);
+    assert.ok(launches.every(o => o.chrome.endsWith('/agent-browser-pipe.mjs')));
+  `;
+  execFileSync(process.execPath, ['--input-type=module', '-e', source]);
+});
 
 function serverFrame(opcode, body, final = true) {
   const n = body.length, size = n < 126 ? 2 : n <= 65535 ? 4 : 10, out = Buffer.alloc(size + n);
