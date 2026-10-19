@@ -7,15 +7,15 @@ Own worktree; lead owns integration and landing.
 ## Mechanism
 
 `--host windows|mac` selects GPU Browser Fleet; each pair shares one Chrome process.
-Default local admission, rendering preparation and comparison gates remain unchanged.
-Remote input delivery uses an ephemeral controller LAN HTTPS server, a single per-worker
-URL for both exact input bodies and inert storage probes, fresh contexts, and no-store
-responses. All other HTTP routes return 404; the request gate permits only the exact
-current top-level document. Remote concurrency accepts 1..8; local remains 1..6.
-Rows include host, GPU renderer, Chrome build, session and transport. Remote process
-IDs are never sampled through local `/proc`; remote memory is controller-only.
-Minute keepalives protect leases; normal completion, signals and startup failures stop
-and purge owned remote sessions. Report browser lifecycles retain cleanup results.
+Remote inputs use the same virtual file URL and exact-byte `Fetch.fulfillRequest` path
+as local inputs. Nothing resolves on the browser's filesystem, including UNC paths.
+There is no HTTP server, certificate exception, crypto replacement or origin change.
+Local admission, preparation, storage checks, request policy and comparison gates are
+unchanged. Remote concurrency accepts 1..8; local remains 1..6.
+Rows include host, GPU renderer, Chrome build, session, transport and document URL.
+Remote process IDs are never sampled through local `/proc`; memory is controller-only.
+Minute keepalives protect leases; completion, signals and startup failures stop and
+purge owned remote sessions. Reports retain per-browser cleanup results.
 
 Remote CDP defaults to authenticated SSH. The documented P1000-to-Windows key restriction
 was reproduced: `SSH forwarding rejected by the host/key policy: channel 1: open failed:
@@ -45,12 +45,12 @@ caps; forced eight-fresh-main diagnostic surveys for every raw-pixel row; distin
 DOM-only tag/id/path records; then Mac exact proof-copies matrix if feasible.
 Original candidate captures and strict raw/selected verdicts will remain unchanged.
 
-## Transport correction
+## Transport investigation
 
-Initial plain-HTTP probes stopped before comparisons because WebCrypto requires a secure
-origin (`crypto.subtle` was undefined). All six sessions stopped and purged. HTTPS now
-uses an ephemeral one-day certificate, removed from disk immediately after loading; only
-disposable remote browsers ignore its certificate error. Original hashing code is unchanged.
-Windows ran the initial 12 unit tests successfully from a temporary local source copy;
-SSH could not read UNC paths, so the source snapshot was copied with SCP. Corrected-source
-unit and browser proofs are next.
+Plain HTTP lacked native WebCrypto. HTTPS enabled it but introduced intermittent hidden
+DOM ordinal differences on identical pages, with zero changed pixels. Whole-document
+fulfillment at HTTPS also retained those differences. Those failed runs are preserved,
+not accepted. Returning to the original virtual file origin works on Windows because
+CDP fulfills it before filesystem access; it also removes the need for a LAN web server,
+TLS configuration or OpenSSL. File-origin self/sensitivity proofs are in progress.
+Every completed diagnostic session has stopped and purged. No comparison gate changed.

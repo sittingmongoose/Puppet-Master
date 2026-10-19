@@ -67,7 +67,6 @@ export async function launch({ width = 1600, height = 900, scale = 1, host, remo
     });
     const on = (method, fn, session) => { const listener = { method, fn, session }; listeners.add(listener); return () => listeners.delete(listener); };
     browser.send = send;
-    if (host) await send('Security.setIgnoreCertificateErrors', { ignore: true });
     async function attachPage(targetId) {
     const { sessionId } = await send('Target.attachToTarget', { targetId, flatten: true });
     const s = (method, params) => send(method, params || {}, sessionId);
