@@ -14,6 +14,7 @@ import { mkdirSync, readFileSync, renameSync, writeFileSync } from 'node:fs';
 import { dirname, resolve } from 'node:path';
 
 const digest = (text) => createHash('sha256').update(text).digest('hex').slice(0, 16);
+export const USED_RANGES_PROVENANCE = 'per-sample-v1';
 const stylesheetStates = new WeakMap();
 
 export function takeCoverageFlag(argv) {
@@ -85,7 +86,9 @@ function copyScript(entry) {
     script: entry.script,
     url: entry.url || '',
     functions: (entry.functions || []).map(copyFunction),
-    usedRanges: unionRanges(entry.usedRanges || executedRanges(entry.functions || [])),
+    usedRanges: unionRanges(entry.usedRanges || []),
+    usedRangesProvenance: Array.isArray(entry.usedRanges) && entry.usedRangesProvenance === USED_RANGES_PROVENANCE
+      ? USED_RANGES_PROVENANCE : 'unknown-merged-counters',
   };
 }
 
@@ -149,7 +152,8 @@ export function mergeCoverage(base, sample) {
     const prev = js.get(key);
     if (!prev) js.set(key, copyScript(entry));
     else {
-      prev.usedRanges = unionRanges([...prev.usedRanges, ...(entry.usedRanges || executedRanges(entry.functions || []))]);
+      prev.usedRanges = unionRanges([...prev.usedRanges, ...(entry.usedRanges || [])]);
+      if (!Array.isArray(entry.usedRanges) || entry.usedRangesProvenance !== USED_RANGES_PROVENANCE) prev.usedRangesProvenance = 'unknown-merged-counters';
       prev.functions = mergeFunctions(prev.functions, entry.functions);
       if (!prev.url && entry.url) prev.url = entry.url;
     }
@@ -173,7 +177,7 @@ export function mergeCoverage(base, sample) {
 export function normalizeJsCoverage(scripts, keyFor) {
   const entries = [];
   for (const script of scripts || []) {
-    entries.push({
+    const entry = {
       script: keyFor(script),
       url: script.url || '',
       functions: (script.functions || []).map((fn) => ({
@@ -185,7 +189,10 @@ export function normalizeJsCoverage(scripts, keyFor) {
           count: range.count ?? 0,
         })),
       })),
-    });
+    };
+    entry.usedRanges = executedRanges(entry.functions);
+    entry.usedRangesProvenance = USED_RANGES_PROVENANCE;
+    entries.push(entry);
   }
   return entries;
 }

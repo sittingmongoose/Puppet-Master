@@ -14,11 +14,18 @@ const css = require('css-tree'), acorn = require('acorn'), walk = require('acorn
 const [pageArg, unionArg, outArg] = process.argv.slice(2);
 const completeIdx = process.argv.indexOf('--complete-union');
 const completeFile = completeIdx >= 0 ? resolve(process.argv[completeIdx + 1]) : null;
+const receiptIdx = process.argv.indexOf('--provenance-receipt');
+const receiptFile = receiptIdx >= 0 ? resolve(process.argv[receiptIdx + 1]) : null;
 if (!outArg) throw Error('usage: coverage_summary.mjs <page.html> <union.json> <out-prefix>');
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '../../../..');
 const pageFile = resolve(pageArg), unionFile = resolve(unionArg), out = resolve(outArg);
 const bytes = readFileSync(pageFile), html = bytes.toString('utf8'), union = JSON.parse(readFileSync(unionFile, 'utf8'));
 const hash = (s) => createHash('sha256').update(s).digest('hex');
+const receiptBytes = receiptFile ? readFileSync(receiptFile) : null;
+const receipt = receiptBytes ? JSON.parse(receiptBytes) : null;
+const receiptEntry = receipt?.version === 1 && receipt.kind === 'pm7-coverage-per-sample-provenance'
+  ? receipt.unions?.find((u) => u.path === unionFile && u.sha256 === hash(readFileSync(unionFile))
+    && u.origin === 'union-of-input-usedRanges' && u.reconstructed_from_counters === false) : null;
 const len = (s) => Buffer.byteLength(s);
 const rel = (p) => relative(root, p).split('\\').join('/');
 const base = resolve(root, 'Concepts/onboarding/opus-5.5/base');
@@ -131,10 +138,12 @@ for (const b of blocks) {
     if (coverage) matchedJs.add(digest);
     row.observed = !!coverage;
     const used = coverage?.usedRanges;
-    if (coverage && !used) throw Error('union lacks per-sample usedRanges; rerun with the updated collector');
+    row.usedRangesProvenance = coverage?.usedRangesProvenance || 'unknown-merged-counters';
+    row.byte_coverage_verified = Array.isArray(used) && (row.usedRangesProvenance === 'per-sample-v1'
+      || !!receiptEntry?.script_hashes?.includes(digest));
     row.used_bytes = (used || []).reduce((n, r) => n + len(b.text.slice(r.startOffset, r.endOffset)), 0);
-    row.unused_bytes = coverage ? row.bytes - row.used_bytes : 0;
-    row.unmeasured_bytes = coverage ? 0 : row.bytes;
+    row.unused_bytes = row.byte_coverage_verified ? row.bytes - row.used_bytes : 0;
+    row.unmeasured_bytes = row.bytes - row.used_bytes - row.unused_bytes;
     let ast;
     try { ast = acorn.parse(b.text, { ecmaVersion: 'latest', sourceType: b.type === 'module' ? 'module' : 'script', allowReturnOutsideFunction: true }); }
     catch (e) { errors.push({ block: b.id, type: 'js', message: e.message }); }
@@ -169,8 +178,9 @@ for (const b of blocks) {
 }
 const sum = (kind, key) => rows.filter((r) => r.kind === kind && r.executable !== false).reduce((n, r) => n + (r[key] || 0), 0);
 const report = { page: rel(pageFile), page_sha256: hash(bytes), union: unionFile, union_sha256: hash(readFileSync(unionFile)),
+  provenance_receipt: receiptFile ? { path: receiptFile, sha256: hash(receiptBytes), accepted_for_union: !!receiptEntry } : null,
   offset_units: 'UTF-16 code units, relative to block body; bytes are UTF-8',
-  caveats: ['Unused means not touched in these runs; it is not proof of dead code.', 'Unobserved CSS rules/functions are distinguished from explicit zero counts.', 'CSS used bytes count matched style-rule spans; fonts, keyframes, at-rules and whitespace are outside that metric.', 'JS usedRanges resolve nested zero ranges in each sample before taking the union.', 'Function counts sum samples, not independent users or test cases.'],
+  caveats: ['Unused means not touched in these runs; it is not proof of dead code.', 'Unobserved CSS rules/functions are distinguished from explicit zero counts.', 'CSS used bytes count matched style-rule spans; fonts, keyframes, at-rules and whitespace are outside that metric.', 'JS unused bytes require per-sample-v1 provenance or a matching hash-bound receipt; otherwise the remainder is unmeasured.', 'Function counts sum samples, not independent users or test cases.'],
   totals: { css_rules_used: sum('style', 'rules_used'), css_rules_total: sum('style', 'rules_total'), css_bytes: sum('style', 'bytes'), css_used_bytes: sum('style', 'used_bytes'), css_unused_bytes: sum('style', 'unused_bytes'), css_unmeasured_bytes: sum('style', 'unmeasured_bytes'),
     js_bytes: sum('script', 'bytes'), js_used_bytes: sum('script', 'used_bytes'), js_unused_bytes: sum('script', 'unused_bytes'), js_unmeasured_bytes: sum('script', 'unmeasured_bytes'), js_functions: sum('script', 'functions_total'), js_functions_used: sum('script', 'functions_used') },
   blocks: rows, css_rules: rules, js_functions: functions, errors,
@@ -217,6 +227,7 @@ if (completeFile) {
     script.functions.push({ functionName: '[coverage-union-bytes]', isBlockCoverage: true, union_projection: true, ranges });
   }
   union.census = { page: report.page, page_sha256: report.page_sha256, raw_union_sha256: report.union_sha256,
+    provenance_receipt: report.provenance_receipt,
     offset_units: report.offset_units, style_rules: rules.length, js_functions: functions.filter((f) => !f.script_root).length,
     policy: 'Static census completes only observed content hashes; union_projection is a touched-byte projection, not a function invocation count.' };
   mkdirSync(dirname(completeFile), { recursive: true });

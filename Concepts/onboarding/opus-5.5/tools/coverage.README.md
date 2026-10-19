@@ -31,6 +31,13 @@ function/range counts add, including explicit zeros. Scripts also carry
 before taking their union. Applying nested zeros after adding counters can erase
 bytes a different run executed.
 
+Native sample normalization stamps each script with
+`usedRangesProvenance: "per-sample-v1"`. Copying and merging preserve that marker
+only when every contributing entry already carries it and supplies `usedRanges`.
+Legacy aggregates become `unknown-merged-counters`; the collector never rebuilds
+their byte union from accumulated function counters. Positive ranges can still
+retain code, but uncertified remainders cannot establish unused bytes.
+
 `stylesheets` records installed stylesheet hashes, including sheets with no
 matching rules. A missing source remains unknown. A failed harness still
 contributes everything it touched.
@@ -49,6 +56,17 @@ The command writes JSON and Markdown, with every style/script block, every stati
 style rule's selector and offsets, and every static JS function's name, offsets,
 and count. Source paths come from the live base manifest, assembly comments, and
 the layer generators. Rail `d.css` maps to its authored `.src.css` inputs.
+
+For a fresh capture made before provenance markers existed, an independently
+reviewable hash-bound receipt may be passed with `--provenance-receipt FILE`.
+It has `version: 1`, `kind: "pm7-coverage-per-sample-provenance"`, and a `unions`
+array whose accepted entry exactly matches the input's absolute `path` and full
+`sha256`, lists its verified `script_hashes`, has
+`origin: "union-of-input-usedRanges"`, and declares
+`reconstructed_from_counters: false`. The receipt must retain the source/run and
+input-hash evidence for that claim. It does not change or certify legacy input
+bytes automatically. Without a native marker or a matching receipt, the summary
+reports the remainder as unmeasured rather than unused.
 
 `--complete-union` fills explicit `used:false` rules only for installed/observed
 stylesheet hashes and adds uncalled static functions only for observed scripts.

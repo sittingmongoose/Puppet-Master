@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import { mkdtempSync, readFileSync, rmSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
-import { coverPage, executedRanges, mergeCoverage } from './coverage_union.mjs';
+import { coverPage, executedRanges, mergeCoverage, normalizeJsCoverage } from './coverage_union.mjs';
 
 test('a later branch sample cannot erase bytes touched by an earlier sample', () => {
   const script = (zero) => ({ script: 'same', functions: [{ functionName: '', ranges: [
@@ -13,8 +13,21 @@ test('a later branch sample cannot erase bytes touched by an earlier sample', ()
   assert.deepEqual(executedRanges(script(20).functions), [
     { startOffset: 0, endOffset: 20 }, { startOffset: 30, endOffset: 100 },
   ]);
-  const union = mergeCoverage(mergeCoverage({ js: [], css: [] }, { js: [script(20)], css: [] }), { js: [script(60)], css: [] });
+  const sample = (zero) => ({ js: normalizeJsCoverage([script(zero)], () => 'same'), css: [] });
+  const union = mergeCoverage(mergeCoverage({ js: [], css: [] }, sample(20)), sample(60));
   assert.deepEqual(union.js[0].usedRanges, [{ startOffset: 0, endOffset: 100 }]);
+  assert.equal(union.js[0].usedRangesProvenance, 'per-sample-v1');
+});
+
+test('an uncertified aggregate never becomes certified or rebuilds touched bytes', () => {
+  const native = normalizeJsCoverage([{ functions: [{ functionName: '', ranges: [{ startOffset: 0, endOffset: 100, count: 1 }] }] }], () => 'same');
+  const legacy = { script: 'same', functions: [{ functionName: '', ranges: [{ startOffset: 0, endOffset: 200, count: 1 }] }] };
+  const union = mergeCoverage({ js: [legacy], css: [] }, { js: native, css: [] });
+  assert.equal(union.js[0].usedRangesProvenance, 'unknown-merged-counters');
+  assert.deepEqual(union.js[0].usedRanges, [{ startOffset: 0, endOffset: 100 }]);
+  const unmarked = { ...native[0] }; delete unmarked.usedRangesProvenance;
+  assert.equal(mergeCoverage({ js: native, css: [] }, { js: [unmarked], css: [] }).js[0].usedRangesProvenance, 'unknown-merged-counters');
+  assert.equal(mergeCoverage(union, { js: native, css: [] }).js[0].usedRangesProvenance, 'unknown-merged-counters');
 });
 
 test('navigation flushes the old stylesheet before Chrome discards its ID', async () => {
