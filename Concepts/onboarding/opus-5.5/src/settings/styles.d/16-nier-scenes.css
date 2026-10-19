@@ -12,11 +12,9 @@ html[data-o55-nier-scene] .app-shell { position: relative; z-index: 1; }
 /* Grounds the scene shows through: the dashboard, Projects and Orchestrator grounds are already the body's; the Usage
    board and Settings Home are made clear here. Panels, cards and docks keep their own fill, and pages whose text sits
    on the ground where the scene is (the Planning Wizard, every other Settings page) keep theirs. */
-html[data-o55-nier-scene] #pm7UsageApp.pm7u-shell,
 html[data-o55-nier-scene] #panel-settings[data-o55-home] { background: transparent; }
 /* Text never sits on the scene: see-through fills on those grounds become opaque (the Usage rail's 88 % surface is
    drawn as the surface itself; the current project's tint keeps its gradient over the canvas). */
-html[data-o55-nier-scene] #pm7UsageApp .pm7u-rail { background-color: var(--surface); }
 html[data-o55-nier-scene] .page-projects .project-card-bento { background-color: var(--background); }
 html[data-o55-nier-scene][data-theme$="-dark"] #o55-nier-scene { --o55-nier-scene-a: .2; }
 .o55-nier-scene-art {

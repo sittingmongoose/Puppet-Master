@@ -100,7 +100,7 @@
        edge-fade mask layers with a soft multi-stop curve, default-add)
        instead of a hard inner cut. Idle defaults resolve the band to
        nothing. */
-    :is(.pm-sheen,.pm-term-icon-btn,.pm6-dash-iconbtn,.browser-action-btn,.activity-bar .icon,.pm6-dash-card,.pm7u-card,.pm6-dash-catalog-item,.pm6-proj-card,.project-card-bento,.pm6-wiz-choice-card,.pm6-wiz-attach-card,.pm6-wiz-disc-card,.pm6-orch-ctl,.pm6-orch-pc-stat,.pm6-orch-hist-state,.pm6-usage-acct-status,.pm6-sp-row,.pm6-art-row,.pm6-search-hit)::after {
+    :is(.pm-sheen,.pm-term-icon-btn,.pm6-dash-iconbtn,.browser-action-btn,.activity-bar .icon,.pm6-dash-card,.pm6-dash-catalog-item,.pm6-proj-card,.project-card-bento,.pm6-wiz-choice-card,.pm6-wiz-attach-card,.pm6-wiz-disc-card,.pm6-orch-ctl,.pm6-orch-pc-stat,.pm6-orch-hist-state,.pm6-usage-acct-status,.pm6-sp-row,.pm6-art-row,.pm6-search-hit)::after {
       content: none;   /* PMH: the PM8 ring is off */
       position: absolute; inset: 0;
       border-radius: inherit;
@@ -110,7 +110,7 @@
     /* Ring hosts must be positioned for the ::after anchor; the rest of
        the set is static today (verified), so relative is safe and moves
        no layout. .pm-sheen / wizard cards / bento are already relative. */
-    :is(.pm-term-icon-btn,.pm6-dash-iconbtn,.browser-action-btn,.pm6-dash-card,.pm7u-card,.pm6-wiz-disc-card,.pm6-orch-ctl,.pm6-orch-pc-stat,.pm6-orch-hist-state,.pm6-usage-acct-status,.pm6-sp-row,.pm6-art-row,.pm6-search-hit) { position: relative; }
+    :is(.pm-term-icon-btn,.pm6-dash-iconbtn,.browser-action-btn,.pm6-dash-card,.pm6-wiz-disc-card,.pm6-orch-ctl,.pm6-orch-pc-stat,.pm6-orch-hist-state,.pm6-usage-acct-status,.pm6-sp-row,.pm6-art-row,.pm6-search-hit) { position: relative; }
     /* The magnet writes `translate` every frame; keep host transitions
        (hover shadow / border fades) but never transition translate
        itself. Some targets carry `transition: all`, which would lag the
@@ -126,8 +126,8 @@
        because widget cards - and their scroll containers - clip
        everything a child paints; only a fixed, window-level proxy
        escapes. */
-    :is(.pm-sheen,.pm6-dash-card,.pm7u-card,.pm6-dash-catalog-item,.pm6-proj-card,.project-card-bento,.pm6-wiz-choice-card,.pm6-wiz-attach-card,.pm6-wiz-disc-card,.pm6-orch-ctl,.pm6-orch-pc-stat,.pm6-usage-acct-status,.pm6-sp-row,.pm6-art-row,.pm6-search-hit) { isolation: isolate; }
-    :is(.pm-sheen,.pm6-dash-card,.pm7u-card,.pm6-dash-catalog-item,.pm6-proj-card,.project-card-bento,.pm6-wiz-choice-card,.pm6-wiz-attach-card,.pm6-wiz-disc-card,.pm6-orch-ctl,.pm6-orch-pc-stat,.pm6-usage-acct-status,.pm6-sp-row,.pm6-art-row,.pm6-search-hit)::before {
+    :is(.pm-sheen,.pm6-dash-card,.pm6-dash-catalog-item,.pm6-proj-card,.project-card-bento,.pm6-wiz-choice-card,.pm6-wiz-attach-card,.pm6-wiz-disc-card,.pm6-orch-ctl,.pm6-orch-pc-stat,.pm6-usage-acct-status,.pm6-sp-row,.pm6-art-row,.pm6-search-hit) { isolation: isolate; }
+    :is(.pm-sheen,.pm6-dash-card,.pm6-dash-catalog-item,.pm6-proj-card,.project-card-bento,.pm6-wiz-choice-card,.pm6-wiz-attach-card,.pm6-wiz-disc-card,.pm6-orch-ctl,.pm6-orch-pc-stat,.pm6-usage-acct-status,.pm6-sp-row,.pm6-art-row,.pm6-search-hit)::before {
       content: none;   /* PMH: the PM8 wash is off; z-index:-1 stays for Glass */
       position: absolute; inset: 0;
       border-radius: inherit;

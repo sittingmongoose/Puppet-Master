@@ -124,8 +124,8 @@ html[data-pmu-soft][data-o55-nier-scene] body.pmu-page-active #o55-nier-scene { 
 
 /* ======================================================================================================================
    PMConcept7's game UI on Usage (lane f-nier, 2026-10-09, Jared's item 6a; lanes/f-nier/NIER-ADOPT.md). The app's NieR
-   parts (styles.d/14-nier-parts.css, 15-nier-world.css, src/css/11-window-nier.css) name the retired .pm7u- page; these
-   are the same rules, timings and helper tokens on the pmu- names. Colours are styles.d/13-nier.css helpers only.
+   parts (styles.d/14-nier-parts.css, 15-nier-world.css, src/css/11-window-nier.css) share their timings and helper
+   tokens with these pmu- rules. Colours are styles.d/13-nier.css helpers only.
    ====================================================================================================================== */
 
 /* ---- Menu cursor [cursor]: a hovered or chosen rail room, a hovered range and a hovered or chosen menu row are the ink
@@ -261,8 +261,8 @@ html[data-o55-nier-parts~="glyphs"] #panel-usage .pmu-card[data-head="band"] > .
 html[data-motion="reduced"][data-o55-nier="on"] #panel-usage .pmu-inspector.pmu-inspector,
 html[data-motion="reduced"][data-o55-nier="on"] #panel-usage .pmu-inspector.pmu-inspector::before { transition: none; animation: none; }
 
-/* ---- Pod voice [voice] and the intel frame [headers]: Usage's stage note reads as a Report (14-nier-parts.css:336 names
-   the retired #pm7uToast) in a square ink frame with the hard shadow, its mark in an ink square ---- */
+/* ---- Pod voice [voice] and the intel frame [headers]: Usage's stage note reads as a Report
+   in a square ink frame with the hard shadow, its mark in an ink square ---- */
 html[data-o55-nier-parts~="voice"] #panel-usage #pmuToast .pmu-toast-text::before { content: "Report: "; font-weight: 600; }
 html[data-o55-nier="on"] #panel-usage .pmu-toast { border-radius: 0; border-color: var(--o55-nier-ink); background: var(--surface, var(--pmu-card));
   box-shadow: 3px 3px 0 rgba(var(--o55-nier-shadow-rgb), .16); }

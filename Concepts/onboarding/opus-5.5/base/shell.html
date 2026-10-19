@@ -110,7 +110,6 @@ by its "PM7 SECTION n/total" banner comment (names, never byte offsets).
   <!-- PM7 T23: capacity-fitted Usage, balanced defaults, and Home move feedback -->
   <style id="pm7-t23-adjustments">@@PM7_BASE_0014@@</style>
 
-<style id="pm7-t24-usage-readability-and-fit">@@PM7_BASE_0015@@</style>
 
 
 
@@ -2738,77 +2737,13 @@ by its "PM7 SECTION n/total" banner comment (names, never byte offsets).
             </div>
           </div>
           <div class="page page-usage" id="panel-usage">
-            <!-- PM7 T21: U11 Prism usage workspace + chat context surfaces -->
-            <!-- PM7 SECTION 14/32: usage-prism-css - Prism usage workspace + chat context surfaces (style, no id) -->
+            <!-- Shared inputs for the Usage layer: chat context, Retro Light, status bar and Home styles. -->
+            <!-- PM7 SECTION 14/32: usage-prism-css - shared chat context styles (style, no id) -->
             <style>@@PM7_BASE_0033@@</style>
 
-            <div class="pm7u-shell" id="pm7UsageApp" data-room="overview" data-detail="glance">
-              <aside class="pm7u-rail" aria-label="Usage sections">
-                <div class="pm7u-brand"><h1>Usage</h1></div>
-                <button type="button" class="pm7u-scope" id="pm7uScopeBtn" aria-haspopup="listbox" aria-expanded="false" aria-labelledby="pm7uScopeLabel pm7uScopeMeta" title="Usage scope">
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 5h16M7 12h10M10 19h4"/></svg>
-                  <span class="pm7u-scope-copy"><b id="pm7uScopeLabel">All current usage</b><span id="pm7uScopeMeta">every configured route</span></span>
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m8 10 4 4 4-4"/></svg>
-                </button>
-                <nav class="pm7u-nav" id="pm7uNav" aria-label="Usage rooms">
-                  <span class="pm7u-nav-ink" id="pm7uNavInk" aria-hidden="true"></span>
-                  <button type="button" class="pm7u-navbtn active" data-room="overview"><span class="pm7u-navico" data-icon="grid"></span><span class="pm7u-navtxt">Overview</span><span class="pm7u-navmeta">10</span></button>
-                  <button type="button" class="pm7u-navbtn" data-room="plans"><span class="pm7u-navico" data-icon="gauge"></span><span class="pm7u-navtxt">Plans &amp; limits</span></button>
-                  <button type="button" class="pm7u-navbtn" data-room="costs"><span class="pm7u-navico" data-icon="wallet"></span><span class="pm7u-navtxt">Costs</span></button>
-                  <button type="button" class="pm7u-navbtn" data-room="accounts"><span class="pm7u-navico" data-icon="users"></span><span class="pm7u-navtxt">Accounts</span></button>
-                  <button type="button" class="pm7u-navbtn" data-room="free"><span class="pm7u-navico" data-icon="spark"></span><span class="pm7u-navtxt">Free models</span></button>
-                  <button type="button" class="pm7u-navbtn" data-room="context"><span class="pm7u-navico" data-icon="ring"></span><span class="pm7u-navtxt">Context</span></button>
-                  <button type="button" class="pm7u-navbtn" data-room="analytics"><span class="pm7u-navico" data-icon="chart"></span><span class="pm7u-navtxt">Analytics</span></button>
-                  <button type="button" class="pm7u-navbtn" data-room="ledger"><span class="pm7u-navico" data-icon="list"></span><span class="pm7u-navtxt">Ledger</span></button>
-                  <div class="pm7u-sep"></div>
-                  <button type="button" class="pm7u-navbtn pm7u-more-toggle" id="pm7uMoreBtn" aria-expanded="false"><span class="pm7u-navico" data-icon="more"></span><span class="pm7u-navtxt">More</span><svg class="pm7u-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m8 10 4 4 4-4"/></svg></button>
-                  <div class="pm7u-more" id="pm7uMore">
-                    <button type="button" class="pm7u-navbtn" data-room="attention"><span class="pm7u-navico" data-icon="shield"></span><span class="pm7u-navtxt">Attention</span><span class="pm7u-navmeta">2</span></button>
-                    <button type="button" class="pm7u-navbtn" data-room="cache"><span class="pm7u-navico" data-icon="layers"></span><span class="pm7u-navtxt">Prompt cache</span></button>
-                    <button type="button" class="pm7u-navbtn" data-room="tools"><span class="pm7u-navico" data-icon="tool"></span><span class="pm7u-navtxt">Tools</span></button>
-                    <button type="button" class="pm7u-navbtn" data-room="signals"><span class="pm7u-navico" data-icon="pulse"></span><span class="pm7u-navtxt">Signals</span></button>
-                    <button type="button" class="pm7u-navbtn" data-room="authority"><span class="pm7u-navico" data-icon="book"></span><span class="pm7u-navtxt">Source authority</span></button>
-                  </div>
-                </nav>
-                <div class="pm7u-detailbox">
-                  <button type="button" class="pm7u-detailbtn" id="pm7uDetailBtn" aria-haspopup="menu" aria-expanded="false">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 7h16M7 12h10M10 17h4"/></svg>
-                    <span class="pm7u-detailcopy"><span>Detail</span><b id="pm7uDetailLabel">At a glance</b></span>
-                  </button>
-                </div>
-              </aside>
-
-              <section class="pm7u-stage">
-                <header class="pm7u-head">
-                  <div class="pm7u-headcopy">
-                    <div class="pm7u-kicker">Usage <span>/</span> <b id="pm7uRoomCrumb">Overview</b></div>
-                    <h2 class="pm7u-title" id="pm7uRoomTitle">Current usage</h2>
-                    <p class="pm7u-desc" id="pm7uRoomDesc">The limits and costs that need attention now.</p>
-                  </div>
-                  <div class="pm7u-headtools">
-                    <div class="pm7u-range" id="pm7uRange" aria-label="Usage range">
-                      <button type="button" data-range="5h">5h</button><button type="button" class="active" data-range="24h">24h</button><button type="button" data-range="7d">7d</button><button type="button" data-range="30d">30d</button>
-                    </div>
-                    <button type="button" class="pm7u-iconbtn" id="pm7uRefresh" title="Refresh usage" aria-label="Refresh usage"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 11a8 8 0 1 0-2.3 5.7"/><path d="M20 4v7h-7"/></svg></button>
-                    <button type="button" class="pm7u-iconbtn" id="pm7uCustomize" title="Choose panels" aria-label="Choose panels" aria-expanded="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="4" y="4" width="6" height="6" rx="1"/><rect x="14" y="4" width="6" height="6" rx="1"/><rect x="4" y="14" width="6" height="6" rx="1"/><path d="M17 14v6M14 17h6"/></svg></button>
-                  </div>
-                </header>
-                <div class="pm7u-boardhead"><span class="pm7u-boardmeta" id="pm7uBoardMeta"><b>10 panels</b> &middot; At a glance</span><span class="pm7u-boardhint">Drag headers to reorder &middot; drag a corner to resize</span></div>
-                <div class="pm7u-boardscroll" id="pm7uBoardScroll"><div class="pm7u-board" id="pm7uBoard" aria-live="polite"></div></div>
-                <aside class="pm7u-inspector" id="pm7uInspector" aria-label="Usage details" aria-hidden="true"><div class="pm7u-insphead"><div class="pm7u-insptitle" id="pm7uInspectorTitle">Usage details</div><button type="button" class="pm7u-iconbtn" id="pm7uInspectorClose" title="Close details" aria-label="Close details"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 6l12 12M18 6 6 18"/></svg></button></div><div class="pm7u-inspbody" id="pm7uInspectorBody"></div></aside>
-                <div class="pm7u-toast" id="pm7uToast" role="status"></div>
-              </section>
-
-              <div class="pm7u-pop" id="pm7uScopePop" role="listbox" aria-label="Usage scope"></div>
-              <div class="pm7u-pop" id="pm7uDetailPop" role="menu" aria-label="Usage detail"></div>
-              <div class="pm7u-pop" id="pm7uCustomizePop" role="dialog" aria-label="Choose usage panels"></div>
-              <div class="pm7u-pop" id="pm7uCardPop" role="menu" aria-label="Panel options"></div>
-            </div>
-
-            <!-- PM7 SECTION 15/32: usage-prism-js - Prism data, rooms, adaptive panels, resize/reorder, run inspector, and chat context module (script, no id) -->
+            <!-- Shared Retro Light, status bar and Home styles, then the pinned chat context module. -->
             <style id="pm7-t29-usage-final">@@PM7_BASE_0034@@</style>
 
-<style id="pm7-t31-usage-final">@@PM7_BASE_0035@@</style>
 <style id="pm7-t32-final">@@PM7_BASE_0036@@</style>
 <script>@@PM7_BASE_0037@@</script>
           </div><!-- page-usage -->

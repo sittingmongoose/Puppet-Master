@@ -2,8 +2,8 @@
 
 emit(text, need, layers) renders all six declarations. The order below is the publication order,
 independent of registration order. Missing layers contribute nothing; titles replace the Usage title.
-Keep TITLES['usage'] as an empty slot before settings: retiring LEGACY_USAGE_TITLE with --no-usage
-must not move the contributed Usage title after settings or change published bytes.
+Keep TITLES['usage'] as an empty slot before settings so the contributed Usage title
+retains its publication order after the legacy fallback is retired.
 """
 from __future__ import annotations
 
@@ -37,10 +37,9 @@ TITLES = {
     'projects': '.page-projects .projects-title',
     'wizard': '.page-wizard .pm6-wiz-hero-title',
     'orchestrator': '.page-orchestrator .orch-title',
-    'usage': None,  # Reserved publication-order slot; keep it when the legacy fallback is retired.
+    'usage': '',  # The Usage layer supplies this page's title selectors.
     'settings': '#panel-settings .rail-title, #panel-settings .workspace-separator h2',
 }
-LEGACY_USAGE_TITLE = '#pm7uRoomTitle, .pm7u-brand h1'  # Only the private --no-usage build needs this fallback.
 CONFIRM = ('.btn.primary', 'button[type="submit"]', '.n-btn.primary', '.pm6-dash-btn:not(.pm6-dash-btn--ghost)',
            '.primary-button', '.o55-btn-primary', '[data-o55-preview="keep"]')
 CANCEL = ('[data-action="close-overlay"]', '.n-x', '[aria-label="Close"]', '[aria-label="Dismiss"]', '.n-btn.danger',
@@ -80,7 +79,7 @@ def emit(text: str, need, layers: dict[str, dict[str, list[str]]]) -> str:
     chosen = expand(CHOSEN, 'chosen')
     strip = expand(STRIP, 'strip')
     titles = dict(TITLES)
-    titles['usage'] = ', '.join(values('usage', 'titles')) or LEGACY_USAGE_TITLE
+    titles['usage'] = ', '.join(values('usage', 'titles'))
     expressions = {
         'CURSOR_SEL': ('[' + ',\n    '.join(', '.join(map(_quote, row)) for row in cursor) + ',\n'
                        + RAIL_CURSOR_COMMENT + "    '.pmr-cur:not(.active):not([aria-disabled=\"true\"])'].join(',')"),

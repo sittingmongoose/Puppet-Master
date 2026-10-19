@@ -177,7 +177,7 @@ html[data-o55-nier][data-theme="basic-light"] #panel-settings {
   --k3-shadow-md: 0 2px 6px rgba(33,31,27,0.12);
   --k3-on-accent: #dcd8c2;
 }
-html[data-o55-nier][data-theme="basic-light"] :is(.pm7u-shell, .page-wizard, .page-orchestrator, .page-projects > .projects-header-bento, .page-projects > .projects-toolbar, .page-projects > .projects-grid-bento, .page-projects > .pm6-proj-empty, .page-projects > .pm6-proj-sheet-backdrop) {
+html[data-o55-nier][data-theme="basic-light"] :is(.page-wizard, .page-orchestrator, .page-projects > .projects-header-bento, .page-projects > .projects-toolbar, .page-projects > .projects-grid-bento, .page-projects > .pm6-proj-empty, .page-projects > .pm6-proj-sheet-backdrop) {
   --text-primary: #211f1b;
   --text-secondary: #4d4b3f;
   --text-muted: #4d4b40;
@@ -344,7 +344,7 @@ html[data-o55-nier][data-theme="basic-dark"] #panel-settings {
   --k3-shadow-md: 0 2px 6px rgba(33,31,27,0.45);
   --k3-on-accent: #2f2d26;
 }
-html[data-o55-nier][data-theme="basic-dark"] :is(.pm7u-shell, .page-wizard, .page-orchestrator, .page-projects > .projects-header-bento, .page-projects > .projects-toolbar, .page-projects > .projects-grid-bento, .page-projects > .pm6-proj-empty, .page-projects > .pm6-proj-sheet-backdrop) {
+html[data-o55-nier][data-theme="basic-dark"] :is(.page-wizard, .page-orchestrator, .page-projects > .projects-header-bento, .page-projects > .projects-toolbar, .page-projects > .projects-grid-bento, .page-projects > .pm6-proj-empty, .page-projects > .pm6-proj-sheet-backdrop) {
   --text-primary: #d1cdb7;
   --text-secondary: #a8a593;
   --text-muted: #9d9986;

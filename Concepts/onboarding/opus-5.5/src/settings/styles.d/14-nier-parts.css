@@ -24,13 +24,12 @@ html[data-o55-nier-parts~="square"] input:is([type="checkbox"], [type="radio"]) 
 
 /* ---- Menu cursor [cursor]: the hovered or chosen item is an ink bar with paper text; one square cursor beside it ---- */
 html[data-o55-nier-parts~="cursor"] :is(.page-tab:not(.active), .pm6-tb-menu-item, .pm6-tt-mode, .pm6-tb-pages-more-item, .activity-bar .icon,
-  .domain-link, .side-link, .index-link, .page-index-title, .workspace-tab, .manager-tab, .resource-row, .pm51-popout-item:not([aria-disabled="true"]), .pm51-menu-item,
-  .pm7u-navbtn, .pm7u-poprow, .orch-tab, .pm-segtab-item:not(.active), .fm-row, .fm-ctx-item, .ctx-item, .menu-item, .chat-dropdown-item,
+  .domain-link, .side-link, .index-link, .page-index-title, .workspace-tab, .manager-tab, .resource-row, .pm51-popout-item:not([aria-disabled="true"]), .pm51-menu-item, .orch-tab, .pm-segtab-item:not(.active), .fm-row, .fm-ctx-item, .ctx-item, .menu-item, .chat-dropdown-item,
   .pm6-chat-more-item, .cl-mode-item, .pm-home-menu-row, .palette-item, .search-result-item, .slash-cmd-item, .pm6-chat-slash-item,
   .pm6-fab-item, .chat-thread-item, .pm6-dash-catalog-item, [role="menuitem"], [role="option"]:not([aria-disabled="true"])):hover,
 html[data-o55-nier-parts~="cursor"] :is(.pm6-tb-menu-item.is-selected, .pm6-tt-mode[aria-checked="true"], .activity-bar .icon.active, .domain-link.active,
   .side-link.active, .index-link.is-active, .page-index-title.is-current, .workspace-tab.active, .manager-tab.active, .resource-row.active,
-  .pm51-popout-item.is-active, .pm51-popout-item[aria-selected="true"], .pm7u-navbtn.active, .pm7u-poprow.active, .orch-tab.active, .fm-row.selected,
+  .pm51-popout-item.is-active, .pm51-popout-item[aria-selected="true"], .orch-tab.active, .fm-row.selected,
   .chat-dropdown-item.active, .chat-thread-item.active, [role="option"][aria-selected="true"], [role="menuitemradio"][aria-checked="true"]) {
   background: var(--o55-nier-ink) !important; color: var(--o55-nier-on-ink) !important; border-color: var(--o55-nier-ink) !important;
   box-shadow: none !important; text-shadow: none !important;
@@ -41,18 +40,17 @@ html[data-o55-nier-parts~="cursor"] :is(.pm6-tb-menu-item.is-selected, .pm6-tt-m
    items keep their own branches. A badge inside the bar turns over again. */
 /* T2 build step: the .active-keyed '*' / ':where(*)' descendants below are rewritten at build time from onboarding/opus-5.5/tools/active_descendant_rules.json; a new descendant class or tag under these carriers needs an entry there (check: tools/active_descendant_guard.mjs). */
 html[data-o55-nier-parts~="cursor"] :is(.page-tab:not(.active), .pm6-tb-menu-item, .pm6-tt-mode, .pm6-tb-pages-more-item, .activity-bar .icon,
-  .domain-link, .side-link, .index-link, .page-index-title, .workspace-tab, .manager-tab, .resource-row, .pm51-popout-item:not([aria-disabled="true"]), .pm51-menu-item,
-  .pm7u-navbtn, .pm7u-poprow, .orch-tab, .pm-segtab-item:not(.active), .fm-row, .fm-ctx-item, .ctx-item, .menu-item, .chat-dropdown-item,
+  .domain-link, .side-link, .index-link, .page-index-title, .workspace-tab, .manager-tab, .resource-row, .pm51-popout-item:not([aria-disabled="true"]), .pm51-menu-item, .orch-tab, .pm-segtab-item:not(.active), .fm-row, .fm-ctx-item, .ctx-item, .menu-item, .chat-dropdown-item,
   .pm6-chat-more-item, .cl-mode-item, .pm-home-menu-row, .palette-item, .search-result-item, .slash-cmd-item, .pm6-chat-slash-item,
   .pm6-fab-item, .chat-thread-item, .pm6-dash-catalog-item, [role="menuitem"], [role="option"]:not([aria-disabled="true"])).o55np-cur-over :where(*),
 html[data-o55-nier-parts~="cursor"] :is(.pm6-tb-menu-item.is-selected, .pm6-tt-mode[aria-checked="true"], .activity-bar .icon.active, .domain-link.active,
   .side-link.active, .index-link.is-active, .page-index-title.is-current, .workspace-tab.active, .manager-tab.active, .resource-row.active,
-  .pm51-popout-item.is-active, .pm51-popout-item[aria-selected="true"], .pm7u-navbtn.active, .pm7u-poprow.active, .orch-tab.active, .fm-row.selected,
+  .pm51-popout-item.is-active, .pm51-popout-item[aria-selected="true"], .orch-tab.active, .fm-row.selected,
   .chat-dropdown-item.active, .chat-thread-item.active, [role="option"][aria-selected="true"], [role="menuitemradio"][aria-checked="true"]) :where(*) {
   color: inherit !important; -webkit-text-fill-color: currentColor;
 }
-html[data-o55-nier-parts~="cursor"] :is(.orch-tab, .pm7u-navbtn, .resource-row, .chat-thread-item, .fm-row, .index-link).o55np-cur-over :is([class*="badge"], [class*="count"], kbd),
-html[data-o55-nier-parts~="cursor"] :is(.orch-tab, .pm7u-navbtn, .resource-row, .chat-thread-item, .fm-row, .index-link):is(.active, .is-active, .selected) :is([class*="badge"], [class*="count"], kbd) {
+html[data-o55-nier-parts~="cursor"] :is(.orch-tab, .resource-row, .chat-thread-item, .fm-row, .index-link).o55np-cur-over :is([class*="badge"], [class*="count"], kbd),
+html[data-o55-nier-parts~="cursor"] :is(.orch-tab, .resource-row, .chat-thread-item, .fm-row, .index-link):is(.active, .is-active, .selected) :is([class*="badge"], [class*="count"], kbd) {
   background: var(--o55-nier-on-ink) !important; color: var(--o55-nier-ink) !important; border-color: var(--o55-nier-on-ink) !important;
 }
 /* the bar's own marks (index bullets, active side ticks) would double the cursor: hide them */
@@ -76,16 +74,16 @@ html:not([data-motion="reduced"]) #o55np-cursor[data-on][data-side="below"] > i 
 html[data-motion="reduced"] #o55np-cursor { transition: none; }
 
 /* ---- YoRHa headers [headers]: wide-spaced capitals over a rule with square end caps; ink title bands ---- */
-html[data-o55-nier-parts~="headers"] :is(.o55-group-title, .pm6-dash-card-title, .pm7u-cardtitle, .pm6-orch-w-title, .pm51-section-title, .roster-title,
+html[data-o55-nier-parts~="headers"] :is(.o55-group-title, .pm6-dash-card-title, .pm6-orch-w-title, .pm51-section-title, .roster-title,
   .rail-heading, .sh-title, .pm6-chat-sbtitle-label, .pm6-orch-w-kicker, #panel-settings .workspace-separator h2, #panel-settings .rail-title,
-  .projects-title, .orch-title, #pm7uRoomTitle, .pm7u-brand h1, .pm6-wiz-hero-title, .pm6-wiz-sect-label, .rs-panel-head > span) {
+  .projects-title, .orch-title, .pm6-wiz-hero-title, .pm6-wiz-sect-label, .rs-panel-head > span) {
   text-transform: uppercase; letter-spacing: .16em; font-feature-settings: "palt" 0;
 }
-html[data-o55-nier-parts~="headers"] :is(#panel-settings .workspace-separator h2, .projects-title, .orch-title, #pm7uRoomTitle, .pm7u-brand h1, .pm6-wiz-hero-title) { letter-spacing: .12em; font-weight: 600; }
+html[data-o55-nier-parts~="headers"] :is(#panel-settings .workspace-separator h2, .projects-title, .orch-title, .pm6-wiz-hero-title) { letter-spacing: .12em; font-weight: 600; }
 /* card titles share their head with chips and buttons: a narrower spacing keeps them whole */
-html[data-o55-nier-parts~="headers"] :is(.pm6-dash-card-title, .pm7u-cardtitle, .pm6-orch-w-title) { letter-spacing: .07em; }
+html[data-o55-nier-parts~="headers"] :is(.pm6-dash-card-title, .pm6-orch-w-title) { letter-spacing: .07em; }
 /* the rule: a hairline across the header box with a square cap at each end */
-html[data-o55-nier-parts~="headers"] :is(.o55-group-head, .pm6-dash-card-head, .pm7u-cardhead, .pm6-orch-w-head, #panel-settings .workspace-separator, #panel-settings .pm51-section-copy, .roster-head) {
+html[data-o55-nier-parts~="headers"] :is(.o55-group-head, .pm6-dash-card-head, .pm6-orch-w-head, #panel-settings .workspace-separator, #panel-settings .pm51-section-copy, .roster-head) {
   background-image: linear-gradient(var(--o55-nier-ink), var(--o55-nier-ink)), linear-gradient(var(--o55-nier-ink), var(--o55-nier-ink)),
     linear-gradient(rgba(var(--o55-nier-ink-rgb), .45), rgba(var(--o55-nier-ink-rgb), .45)) !important;
   background-size: 5px 5px, 5px 5px, calc(100% - 12px) 1px !important;
@@ -95,10 +93,10 @@ html[data-o55-nier-parts~="headers"] :is(.o55-group-head, .pm6-dash-card-head, .
 }
 html[data-o55-nier-parts~="headers"] #panel-settings .workspace-separator { border-bottom-color: transparent !important; }
 /* dialogs, drawers, dropdown titles and the inbox head: the ink title band */
-html[data-o55-nier-parts~="headers"] :is(#panel-settings .dialog-head, .pm6-orch-modal-title, .pm51-popout-title, .rs-panel-head, .pm7u-insphead) {
+html[data-o55-nier-parts~="headers"] :is(#panel-settings .dialog-head, .pm6-orch-modal-title, .pm51-popout-title, .rs-panel-head) {
   background: var(--o55-nier-ink) !important; color: var(--o55-nier-on-ink) !important; border-color: var(--o55-nier-ink) !important;
 }
-html[data-o55-nier-parts~="headers"] :is(#panel-settings .dialog-head, .pm6-orch-modal-title, .pm51-popout-title, .rs-panel-head, .pm7u-insphead) :where(*) { color: inherit !important; }
+html[data-o55-nier-parts~="headers"] :is(#panel-settings .dialog-head, .pm6-orch-modal-title, .pm51-popout-title, .rs-panel-head) :where(*) { color: inherit !important; }
 html[data-o55-nier-parts~="headers"] .pm51-popout-title { margin: -4px -4px 4px; padding: 6px 12px; letter-spacing: .16em; }
 html[data-o55-nier-parts~="headers"] .pm6-orch-modal-title { padding: 8px 12px; letter-spacing: .12em; text-transform: uppercase; }
 html[data-o55-nier-parts~="headers"] .rs-panel-head .clear-all-btn { background: transparent !important; border-color: var(--o55-nier-on-ink) !important; }
@@ -127,7 +125,7 @@ html[data-o55-nier][data-o55-nier-parts~="ground"] body > .app-shell, html[data-
   background-position: 0 0, -1px -1px, -1px -1px, -1px -1px, -1px -1px; }
 html[data-o55-nier-parts~="ground"] #o55np-ground > .o55np-grid { display: block; }
 /* the same grid, faint, on the grounds text sits on where no panel covers the window */
-html[data-o55-nier-parts~="ground"] :is(#panel-settings .workspace-shell, .page-wizard, .page-orchestrator, .page-projects, #pm7UsageApp.pm7u-shell) {
+html[data-o55-nier-parts~="ground"] :is(#panel-settings .workspace-shell, .page-wizard, .page-orchestrator, .page-projects) {
   background-image:
     linear-gradient(rgba(var(--o55-nier-ink-rgb), .045) 1px, transparent 1px),
     linear-gradient(90deg, rgba(var(--o55-nier-ink-rgb), .045) 1px, transparent 1px);
@@ -154,13 +152,14 @@ html[data-o55-nier-parts~="diamonds"] :is(.pm6-wiz-disc-spin, .pm6-orch-pc-ring 
 }
 html[data-o55-nier-parts~="diamonds"] :is(.o55-spin, .o55-ph-active .o55-phmark, .thread-working-pulse) { outline: 0; }
 html[data-o55-nier-parts~="diamonds"] :is(.o55-spin, .o55-ph-active .o55-phmark)::after { display: none !important; }
-html[data-o55-nier-parts~="diamonds"] :is(.pm6-spin, .pm7u-iconbtn.spinning) svg {
+/* Impossible arms preserve the retired spinner lists: (0,2,0) here, (0,2,1) in the motion overrides. */
+html[data-o55-nier-parts~="diamonds"] :is(.pm6-spin, .t7.t7:not(*)) svg {
   border: 1px solid currentColor; box-sizing: border-box; outline: 1px solid currentColor; outline-offset: -5px;
   animation: o55np-diamond 2.8s linear infinite !important;
 }
-html[data-o55-nier-parts~="diamonds"] :is(.pm6-spin, .pm7u-iconbtn.spinning) svg > * { visibility: hidden; }
+html[data-o55-nier-parts~="diamonds"] :is(.pm6-spin, .t7.t7:not(*)) svg > * { visibility: hidden; }
 @keyframes o55np-diamond { from { transform: rotateY(0deg) rotate(45deg) scale(.72); } to { transform: rotateY(360deg) rotate(45deg) scale(.72); } }
-html[data-motion="reduced"][data-o55-nier-parts~="diamonds"] :is(.pm6-wiz-disc-spin, .pm6-orch-pc-ring span, .o55-spin, .o55-ph-active .o55-phmark, .thread-working-pulse, .pm6-spin svg, .pm7u-iconbtn.spinning svg) { animation: none !important; }
+html[data-motion="reduced"][data-o55-nier-parts~="diamonds"] :is(.pm6-wiz-disc-spin, .pm6-orch-pc-ring span, .o55-spin, .o55-ph-active .o55-phmark, .thread-working-pulse, .pm6-spin svg, t7.t7.t7:not(*)) { animation: none !important; }
 
 /* ====================================================================================================== Motion */
 
@@ -273,7 +272,7 @@ html[data-o55-nier-parts~="slice"]:not([data-motion="reduced"]) .rs-panel { --rs
   --rs-sprout-sy: 1 !important; --rs-sprout-tx: 0px !important; --rs-sprout-ty: 0px !important; }
 /* the rest open by animation only (they close their own way) */
 html[data-o55-nier-parts~="slice"]:not([data-motion="reduced"]) :is(.rs-panel.open:not(.is-closing), #panel-settings .overlay > .dialog, .pm6-orch-modal, .pm-ctx-menu.is-open,
-  .fm-ctx.is-open, .pm7ctx-pop.is-open, .pm7-dash-size-pop.open, .pm7u-pop:is(.open, .is-open), .chat-dropdown-popover:is(.active, .is-open), .slash-command-menu.visible,
+  .fm-ctx.is-open, .pm7ctx-pop.is-open, .pm7-dash-size-pop.open, .chat-dropdown-popover:is(.active, .is-open), .slash-command-menu.visible,
   .dropdown-menu:is(.open, .is-open), .pm-ed-overflow-menu.is-open, .msg-runtime-popover.visible, .pm6-status-pop.visible, #panel-settings .popover) {
   animation: o55np-slice 300ms linear backwards !important; transform-origin: 50% 50%;
 }
@@ -341,7 +340,6 @@ html[data-o55-nier-parts~="voice"] #rsStage .rs-card::before {
   font: 500 9px/1.4 var(--mono-font); letter-spacing: .28em;
 }
 html[data-o55-nier-parts~="voice"][data-o55-nier-parts~="headers"] #rsStage .rs-card .n-row { margin-top: 0; padding-top: 2px; }
-html[data-o55-nier-parts~="voice"] #pm7uToast::before { content: "Report: "; }
 
 /* ---- Pod companion [pod]: a small ink-line Pod hovering by the bottom-right corner ---- */
 #o55np-pod { position: fixed; right: 14px; bottom: 58px; width: 40px; height: 52px; z-index: 2147481500; pointer-events: none; contain: layout style;
@@ -383,9 +381,9 @@ html[data-theme="basic-dark"][data-o55-nier-parts~="pointer"] :is(button, a[href
 /* ============================================================================================ Reduced motion */
 @media (prefers-reduced-motion: reduce) {
   #o55np-cursor, #o55np-cursor > i, #o55np-reticle, #o55np-reticle > i, #o55np-ground > .o55np-mote, #o55np-pod *, #o55np-wipe > i { animation: none !important; transition: none !important; }
-  html[data-o55-nier-parts~="diamonds"] :is(.pm6-wiz-disc-spin, .pm6-orch-pc-ring span, .o55-spin, .o55-ph-active .o55-phmark, .thread-working-pulse, .pm6-spin svg, .pm7u-iconbtn.spinning svg) { animation: none !important; }
+  html[data-o55-nier-parts~="diamonds"] :is(.pm6-wiz-disc-spin, .pm6-orch-pc-ring span, .o55-spin, .o55-ph-active .o55-phmark, .thread-working-pulse, .pm6-spin svg, t7.t7.t7:not(*)) { animation: none !important; }
   html[data-o55-nier-parts~="slice"] :is(.pm6-tb-menu, .pm6-chat-more-menu, .pm51-popout, .pm-home-portal, .pm6-chat-pt-popout-portal, .pm6-chat-persona-popout-portal,
     .pm6-chat-effort-popout-portal, .pm6-chat-mini-popout-portal, .pm6-chat-mode-popout-portal, .context-hover-module, .context-lens-popover, .wt-bind-dropdown,
-    .pm6-tb-search-pop, .rs-panel, .dialog, .pm6-orch-modal, .pm-ctx-menu, .fm-ctx, .pm7ctx-pop, .pm7-dash-size-pop, .pm7u-pop, .chat-dropdown-popover, .slash-command-menu,
+    .pm6-tb-search-pop, .rs-panel, .dialog, .pm6-orch-modal, .pm-ctx-menu, .fm-ctx, .pm7ctx-pop, .pm7-dash-size-pop, .chat-dropdown-popover, .slash-command-menu,
     .dropdown-menu, .pm-ed-overflow-menu, .msg-runtime-popover, .pm6-status-pop, .popover) { scale: none !important; }
 }

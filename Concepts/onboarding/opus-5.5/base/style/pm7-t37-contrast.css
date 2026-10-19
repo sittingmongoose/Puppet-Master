@@ -2,7 +2,6 @@
 /* PM7 T37: component-scoped contrast repair. These local variables do not
    alter global theme tokens and cannot enter Settings or Chat. */
 html[data-theme="glass-light"] :is(
-  .pm7u-shell,
   .page-wizard,
   .page-orchestrator,
   .page-projects > .projects-header-bento,
@@ -25,7 +24,6 @@ html[data-theme="glass-light"] :is(
   --accent-magenta: #78113f;
 }
 html[data-theme="glass-dark"] :is(
-  .pm7u-shell,
   .page-wizard,
   .page-orchestrator,
   .page-projects > .projects-header-bento,
@@ -48,7 +46,6 @@ html[data-theme="glass-dark"] :is(
   --accent-magenta: #ff91b8;
 }
 html[data-theme="friendly-light"] :is(
-  .pm7u-shell,
   .page-wizard,
   .page-orchestrator,
   .page-projects > .projects-header-bento,
@@ -70,7 +67,6 @@ html[data-theme="friendly-light"] :is(
   --accent-magenta: #782252;
 }
 html[data-theme="friendly-dark"] :is(
-  .pm7u-shell,
   .page-wizard,
   .page-orchestrator,
   .page-projects > .projects-header-bento,
@@ -89,7 +85,6 @@ html[data-theme="friendly-dark"] :is(
   --graph-failed: #ff9fbd;
 }
 html[data-theme="retro-light"] :is(
-  .pm7u-shell,
   .page-wizard,
   .page-orchestrator,
   .page-projects > .projects-header-bento,
@@ -111,7 +106,6 @@ html[data-theme="retro-light"] :is(
   --accent-magenta: #78113f;
 }
 html[data-theme="retro-dark"] :is(
-  .pm7u-shell,
   .page-wizard,
   .page-orchestrator,
   .page-projects > .projects-header-bento,
@@ -121,7 +115,6 @@ html[data-theme="retro-dark"] :is(
   .page-projects > .pm6-proj-sheet-backdrop
 ),
 html[data-theme="basic-dark"] :is(
-  .pm7u-shell,
   .page-wizard,
   .page-orchestrator,
   .page-projects > .projects-header-bento,
@@ -140,7 +133,6 @@ html[data-theme="basic-dark"] :is(
   --graph-failed: #ff91b8;
 }
 html[data-theme="basic-light"] :is(
-  .pm7u-shell,
   .page-wizard,
   .page-orchestrator,
   .page-projects > .projects-header-bento,
