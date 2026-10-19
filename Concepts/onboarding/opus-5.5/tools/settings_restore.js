@@ -62,16 +62,24 @@ function writeProjectWallpaper(request) {
     if (!current || current.id !== p.id || !readback || !readback.settings || readback.settings[id] !== request.value) return { ok: false, reason: 'The Project wallpaper readback did not match.' };
     /* Browser fixtures can retire their compatibility field only after the owner value is verified.
        An attached native owner retains its field until its own migration clears it; no shadow is edited. */
-    var pending = !!(request.retire_legacy && Object.prototype.hasOwnProperty.call(readback.settings, legacy));
+    var projection = readback, pending = !!(request.retire_legacy && Object.prototype.hasOwnProperty.call(readback.settings, legacy));
     if (pending && !owner) {
-      var latest = JSON.parse(localStorage.getItem(k) || 'null');
-      if (!latest || !latest.settings || latest.settings[id] !== request.value) return { ok: false, reason: 'The Project changed before compatibility cleanup.' };
-      delete latest.settings[legacy]; if (latest.changed) delete latest.changed[legacy];
-      var cleaned = JSON.stringify(latest);
-      localStorage.setItem(k, cleaned);
-      pending = localStorage.getItem(k) !== cleaned;
+      var retained = null, cleanupWritten = false;
+      try {
+        retained = localStorage.getItem(k);
+        var latest = JSON.parse(retained || 'null');
+        if (latest && latest.settings && latest.settings[id] === request.value) {
+          delete latest.settings[legacy]; if (latest.changed) delete latest.changed[legacy];
+          var cleaned = JSON.stringify(latest);
+          localStorage.setItem(k, cleaned); cleanupWritten = true;
+          pending = localStorage.getItem(k) !== cleaned;
+          if (!pending) projection = latest;
+        }
+      } catch (cleanupError) { pending = true; }
+      /* Keep the accepted value and compatibility input if cleanup cannot be verified. */
+      if (pending && cleanupWritten) try { localStorage.setItem(k, retained); } catch (cleanupError) {}
     }
-    if (window.PM12_KIMI && typeof window.PM12_KIMI.syncWallpaperProjection === 'function') window.PM12_KIMI.syncWallpaperProjection();
+    if (window.PM12_KIMI && typeof window.PM12_KIMI.syncWallpaperProjection === 'function') window.PM12_KIMI.syncWallpaperProjection({ project_id: p.id, snapshot: projection });
     return { ok: true, value: request.value, cleanup_pending: pending };
   } catch (error) {
     return { ok: false, reason: 'The Project wallpaper could not be saved and verified.' };
