@@ -47,7 +47,7 @@ Settings, the T46P inventory snapshot and the inventory harnesses read the live
 `PM12_REFERENCE.byCat` settings in `script/pm4-settings-js.js`, with admitted rows supplied
 by `tools/settings_layer.py` from `Plans/settings_inventory.json`.
 Use `python scripts/pm7-where.py '<snippet>'` to find the live source, then the four checks above.
-Do not remove dead code as part of editing this split; the PM8 engine's early `return;` is intentional.
+The retired PM8 hover engine is removed; its shared pointermove dispatcher and live page-motion rules remain.
 
 ## Historical inline patch names
 

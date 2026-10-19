@@ -91,24 +91,6 @@
        `translate` property (never `transform`) so it composes with -
        instead of displacing - entrance animations (fill-mode:both) and
        any existing transform state, exactly as the old WAA track did. */
-    :root {
-      --pm8-ring: 5px;     /* thickness of the pointer ring band */
-      --pm8-bleed: 12;     /* px outside a box over which intensity fades to zero (JS reads) */
-      --pm8-edge: .45;     /* intensity exactly at a box's edge (continuous ramp - no snap) */
-      --pm8-ramp: 18;      /* px inside a box over which intensity ramps edge -> full (JS reads) */
-      --pm8-spot: 53px;        /* activation disc radius (59px −10%) */
-      --pm8-ring-spot: 115px;   /* border-ring radial radius (independent of disc) */
-      --pm8-spot-glow: .04;     /* activation disc alpha (barely visible) */
-      --pm8-glow: .60;          /* border ring alpha (~75% of .8) */
-      --pm8-wash: .38;          /* outward bloom alpha (~75% of .5) */
-      --pm8-mag: 1;        /* magnet strength scale */
-      --pm8-stiff: 170;    /* magnet spring stiffness */
-      --pm8-damp: 22;      /* magnet spring damping */
-    }
-    [data-theme^="retro"]    { --pm8-ring: 3px; --pm8-bleed: 6;  --pm8-edge: .5;  --pm8-ramp: 10; --pm8-spot-glow: .05; --pm8-glow: .71; --pm8-wash: .34; --pm8-mag: .8;  --pm8-stiff: 340; --pm8-damp: 30; }
-    [data-theme^="basic"]    { --pm8-ring: 2px; --pm8-bleed: 10; --pm8-edge: .45; --pm8-ramp: 14; --pm8-spot-glow: .03; --pm8-glow: .45; --pm8-wash: .30; --pm8-mag: .9;  --pm8-stiff: 210; --pm8-damp: 26; }
-    [data-theme^="glass"]    { --pm8-ring: 6px; --pm8-bleed: 18; --pm8-edge: .4;  --pm8-ramp: 26; --pm8-spot-glow: .04; --pm8-glow: .64; --pm8-wash: .41; --pm8-mag: 1.15; --pm8-stiff: 110; --pm8-damp: 15; }
-    [data-theme^="friendly"] { --pm8-ring: 5px; --pm8-bleed: 12; --pm8-edge: .45; --pm8-ramp: 18; --pm8-spot-glow: .04; --pm8-glow: .60; --pm8-wash: .38; --pm8-mag: 1.1; --pm8-stiff: 150; --pm8-damp: 14; }
 
     /* Pointer-tracking accent ring. pm6-js-globals writes --pm8-x/--pm8-y
        (pointer position, %) and --pm8-i (continuous intensity 0..1).
@@ -122,23 +104,6 @@
       content: none;   /* PMH: the PM8 ring is off */
       position: absolute; inset: 0;
       border-radius: inherit;
-      background: radial-gradient(var(--pm8-ring-spot) circle at var(--pm8-x, 50%) var(--pm8-y, 50%),
-          rgba(var(--accent-primary-rgb), calc(var(--pm8-i, 0) * var(--pm8-glow) * .95)) 0%,
-          rgba(var(--accent-primary-rgb), calc(var(--pm8-i, 0) * var(--pm8-glow) * .5)) 28%,
-          rgba(var(--accent-primary-rgb), calc(var(--pm8-i, 0) * var(--pm8-glow) * .16)) 58%,
-          transparent 88%);
-      -webkit-mask:
-        linear-gradient(to bottom, white, rgba(255,255,255,.62) calc((var(--pm8-ring) + 11px) * .38), rgba(255,255,255,.25) calc((var(--pm8-ring) + 11px) * .68), transparent calc(var(--pm8-ring) + 11px)),
-        linear-gradient(to top,    white, rgba(255,255,255,.62) calc((var(--pm8-ring) + 11px) * .38), rgba(255,255,255,.25) calc((var(--pm8-ring) + 11px) * .68), transparent calc(var(--pm8-ring) + 11px)),
-        linear-gradient(to right,  white, rgba(255,255,255,.62) calc((var(--pm8-ring) + 11px) * .38), rgba(255,255,255,.25) calc((var(--pm8-ring) + 11px) * .68), transparent calc(var(--pm8-ring) + 11px)),
-        linear-gradient(to left,   white, rgba(255,255,255,.62) calc((var(--pm8-ring) + 11px) * .38), rgba(255,255,255,.25) calc((var(--pm8-ring) + 11px) * .68), transparent calc(var(--pm8-ring) + 11px));
-      -webkit-mask-composite: source-over;
-              mask:
-        linear-gradient(to bottom, white, rgba(255,255,255,.62) calc((var(--pm8-ring) + 11px) * .38), rgba(255,255,255,.25) calc((var(--pm8-ring) + 11px) * .68), transparent calc(var(--pm8-ring) + 11px)),
-        linear-gradient(to top,    white, rgba(255,255,255,.62) calc((var(--pm8-ring) + 11px) * .38), rgba(255,255,255,.25) calc((var(--pm8-ring) + 11px) * .68), transparent calc(var(--pm8-ring) + 11px)),
-        linear-gradient(to right,  white, rgba(255,255,255,.62) calc((var(--pm8-ring) + 11px) * .38), rgba(255,255,255,.25) calc((var(--pm8-ring) + 11px) * .68), transparent calc(var(--pm8-ring) + 11px)),
-        linear-gradient(to left,   white, rgba(255,255,255,.62) calc((var(--pm8-ring) + 11px) * .38), rgba(255,255,255,.25) calc((var(--pm8-ring) + 11px) * .68), transparent calc(var(--pm8-ring) + 11px));
-              mask-composite: add;
       pointer-events: none;
       z-index: 3;
     }
@@ -150,7 +115,6 @@
        (hover shadow / border fades) but never transition translate
        itself. Some targets carry `transition: all`, which would lag the
        spring. */
-    .pm8-live { transition-property: transform, box-shadow, border-color, background-color, color, opacity !important; }
 
     /* Interior wash: the hovered box's own light, from the pointer
        position. Scoped to card/row-level hosts (icon buttons keep just
@@ -169,20 +133,12 @@
       border-radius: inherit;
       z-index: -1;
       pointer-events: none;
-      background: radial-gradient(var(--pm8-spot) circle at var(--pm8-x, 50%) var(--pm8-y, 50%),
-          rgba(var(--accent-primary-rgb), calc(var(--pm8-i, 0) * var(--pm8-spot-glow) * .32)) 0%,
-          rgba(var(--accent-primary-rgb), calc(var(--pm8-i, 0) * var(--pm8-spot-glow) * .12)) 45%,
-          transparent 78%);
     }
 
     /* PM8 owns the hover feedback on a live box: suppress the uniform
        .pm-sheen accent ring/glow (base + themed variants further down
        this block) so only the pointer-tracking ring + wash read. The
        OUTWARD emission lives on #pm8-bloom below. */
-    .pm8-live {
-      border-color: var(--border) !important;
-      box-shadow: var(--elev-2) !important;
-    }
 
     /* Outward emission: the bloom is a box-shadow - but cast by a
        FIXED transparent proxy (#pm8-bloom) that the engine keeps
@@ -194,17 +150,6 @@
        clip, so the glow is never hard-cut at a panel edge the way a
        shadow on the card is. Lean (--pm8-ox/oy) and intensity
        (--pm8-i) are fed per-frame by the engine. */
-    #pm8-bloom {
-      position: fixed; left: 0; top: 0;
-      z-index: 95;
-      pointer-events: none;
-      background: transparent;
-      transform: translate3d(-9999px, -9999px, 0);
-      will-change: transform;
-      box-shadow: var(--pm8-ox, 0px) var(--pm8-oy, 0px)
-        calc(var(--pm8-i, 0) * 20px)
-        rgba(var(--accent-primary-rgb), calc(var(--pm8-i, 0) * var(--pm8-wash) * .62));
-    }
 
     /* --- motion keyframes --- */
     @keyframes pm-enter-up {
