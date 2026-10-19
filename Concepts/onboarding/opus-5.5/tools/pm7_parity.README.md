@@ -88,8 +88,10 @@ this avoids the old NUL-pipe parser's repeated copying of large snapshot replies
 ## Default states
 
 `pm7_parity_states.json` owns the list; no tour steps are included. Viewports are 1600×900 and
-390×844. The narrow size reuses the existing state-shot tool's narrow case and exercises the Home
-narrow ladder/Chat peek; pre-existing overflow is not an assertion of responsive design quality.
+900×900. This is the smallest window width measured by the canonical Home centre-width ladder
+(`Plans/FinalGUISpec.md`, F3-636). The whole desktop page cannot reach the Wizard and card hover states
+at the onboarding-only state-shot tool's 390px width. The 900px case exercises the Home narrow ladder
+and compact shell; pre-existing overflow is not an assertion of responsive design quality.
 
 | Surface | States per look/viewport |
 |---|---|

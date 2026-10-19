@@ -46,7 +46,7 @@ export function installParityRuntime(config) {
       if (++count > 100_000) throw Error('Deterministic timer budget exhausted');
       now = first.at;
       if (first.interval) first.at += first.interval; else tasks.delete(id);
-      if (typeof first.fn === 'function') first.fn(...(first.frame ? [now] : first.args));
+      if (typeof first.fn === 'function') first.fn.apply(window, first.frame ? [now] : first.args);
       else (0, eval)(String(first.fn));
       await Promise.resolve();
     }
@@ -54,7 +54,7 @@ export function installParityRuntime(config) {
     // A frozen visual clock paints one rAF generation per explicit advance. Catching up hundreds of
     // decorative frames would both defeat reduced motion and make a large-page warmup unbounded.
     const pendingFrames = [...frames.values()]; frames.clear();
-    for (const fn of pendingFrames) { fn(now); await Promise.resolve(); }
+    for (const fn of pendingFrames) { fn.call(window, now); await Promise.resolve(); }
     await barrier();
   }
   async function settle(delta = 400) {
