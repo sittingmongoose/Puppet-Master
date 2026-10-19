@@ -54,12 +54,13 @@
   function choice() {
     var current = context(), key = fingerprint(current), tome = window.PM7_SETTINGS_TOME;
     if (!current.project_id) { stale = null; migrationKey = key; return 'look'; }
+    if (!current.snapshot || !current.snapshot.settings) { migrationKey = ''; return 'look'; }
     if (key !== migrationKey) {
-      migrationKey = key;
-      var before = current.snapshot && current.snapshot.settings || {}, prior = before['general.visual.wallpaper'];
+      var before = current.snapshot.settings, prior = before['general.visual.wallpaper'];
       stale = prior != null && !valid(prior) ? { value: prior, at: new Date().toISOString() } : null;
-      if (tome && tome.migrateGlassWallpaper) tome.migrateGlassWallpaper(saved());
-      current = context(); migrationKey = fingerprint(current);
+      var result = tome && tome.migrateGlassWallpaper && tome.migrateGlassWallpaper(saved());
+      current = context();
+      migrationKey = result && result.ok && current.snapshot && current.snapshot.settings ? fingerprint(current) : '';
     }
     var c = current.snapshot && current.snapshot.settings && current.snapshot.settings['general.visual.wallpaper'];
     return valid(c) ? c : 'look';

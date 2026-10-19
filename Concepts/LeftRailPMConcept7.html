@@ -51230,7 +51230,7 @@ html {
 }
 /* Liquid Glass v2: the look (pm7-liquid-glass, Opus 5.5, 2026-10-11). glass.js computes each glass element's optics;
  * this sheet sets the scene and the material's colour, edges and depth. Live only while html[data-lg="on"] and the look
- * is Glass. Every other look, and Glass with data-lg="off", draws what PMConcept7 draws today.
+ * is Glass. Glass always uses Liquid Glass with a wallpaper; every other look keeps its own material.
  *
  * The scene follows Apple's own structure: a crisp wallpaper; floating sheets of glass; and controls that sit on a sheet
  * as vibrant fills, never glass on raw content. The sheets are the title bar, the sidebar (activity bar and rail panel),
@@ -92410,16 +92410,24 @@ function writeProjectWallpaper(request) {
     if (!current || current.id !== p.id || !readback || !readback.settings || readback.settings[id] !== request.value) return { ok: false, reason: 'The Project wallpaper readback did not match.' };
     /* Browser fixtures can retire their compatibility field only after the owner value is verified.
        An attached native owner retains its field until its own migration clears it; no shadow is edited. */
-    var pending = !!(request.retire_legacy && Object.prototype.hasOwnProperty.call(readback.settings, legacy));
+    var projection = readback, pending = !!(request.retire_legacy && Object.prototype.hasOwnProperty.call(readback.settings, legacy));
     if (pending && !owner) {
-      var latest = JSON.parse(localStorage.getItem(k) || 'null');
-      if (!latest || !latest.settings || latest.settings[id] !== request.value) return { ok: false, reason: 'The Project changed before compatibility cleanup.' };
-      delete latest.settings[legacy]; if (latest.changed) delete latest.changed[legacy];
-      var cleaned = JSON.stringify(latest);
-      localStorage.setItem(k, cleaned);
-      pending = localStorage.getItem(k) !== cleaned;
+      var retained = null, cleanupWritten = false;
+      try {
+        retained = localStorage.getItem(k);
+        var latest = JSON.parse(retained || 'null');
+        if (latest && latest.settings && latest.settings[id] === request.value) {
+          delete latest.settings[legacy]; if (latest.changed) delete latest.changed[legacy];
+          var cleaned = JSON.stringify(latest);
+          localStorage.setItem(k, cleaned); cleanupWritten = true;
+          pending = localStorage.getItem(k) !== cleaned;
+          if (!pending) projection = latest;
+        }
+      } catch (cleanupError) { pending = true; }
+      /* Keep the accepted value and compatibility input if cleanup cannot be verified. */
+      if (pending && cleanupWritten) try { localStorage.setItem(k, retained); } catch (cleanupError) {}
     }
-    if (window.PM12_KIMI && typeof window.PM12_KIMI.syncWallpaperProjection === 'function') window.PM12_KIMI.syncWallpaperProjection();
+    if (window.PM12_KIMI && typeof window.PM12_KIMI.syncWallpaperProjection === 'function') window.PM12_KIMI.syncWallpaperProjection({ project_id: p.id, snapshot: projection });
     return { ok: true, value: request.value, cleanup_pending: pending };
   } catch (error) {
     return { ok: false, reason: 'The Project wallpaper could not be saved and verified.' };
@@ -92428,7 +92436,8 @@ function writeProjectWallpaper(request) {
 function migrateGlassWallpaper(preference) {
   var context = wallpaperSnapshot(), snapshot = context.snapshot, id = 'general.visual.wallpaper', legacy = 'general.visual.glass-background-mode';
   if (!context.project_id) return { ok: true, value: 'look', ephemeral: true };
-  var settings = snapshot && snapshot.settings || {}, has = Object.prototype.hasOwnProperty;
+  if (!snapshot || !snapshot.settings) return { ok: false, retryable: true, reason: 'The Project Settings snapshot is not available yet.' };
+  var settings = snapshot.settings, has = Object.prototype.hasOwnProperty;
   var explicit = has.call(settings, id), old = has.call(settings, legacy);
   var value = validWallpaper(settings[id]) ? settings[id] : (!explicit && validWallpaper(preference) ? preference : 'look');
   if (!old && (!explicit || validWallpaper(settings[id])) && (explicit || !validWallpaper(preference))) return { ok: true, value: value, migrated: false };
@@ -98212,7 +98221,7 @@ if(state.projectSyncTab==='move')return `<div class="card-grid two"><section cla
       version:'12.5-pm7-t44',
       getState:()=>clone(state),
       /* Re-read only these owned fields after a verified gallery/migration transaction. No second write or rerender. */
-      syncWallpaperProjection:()=>{const p=window.PM7_SETTINGS_TOME.project(),snapshot=p&&window.PM7_SETTINGS_TOME.projectSnapshot(p.id);if(!snapshot||!snapshot.settings)return;for(const id of ['general.visual.wallpaper','general.visual.glass-background-mode']){if(Object.prototype.hasOwnProperty.call(snapshot.settings,id))state.settings[id]=clone(snapshot.settings[id]);else delete state.settings[id];if(snapshot.changed&&Object.prototype.hasOwnProperty.call(snapshot.changed,id))state.changed[id]=snapshot.changed[id];else delete state.changed[id];}},
+      syncWallpaperProjection:(accepted)=>{const p=window.PM7_SETTINGS_TOME.project(),snapshot=accepted?(p&&p.id===accepted.project_id?accepted.snapshot:null):p&&window.PM7_SETTINGS_TOME.projectSnapshot(p.id);if(!snapshot||!snapshot.settings)return;for(const id of ['general.visual.wallpaper','general.visual.glass-background-mode']){if(Object.prototype.hasOwnProperty.call(snapshot.settings,id))state.settings[id]=clone(snapshot.settings[id]);else delete state.settings[id];if(snapshot.changed&&Object.prototype.hasOwnProperty.call(snapshot.changed,id))state.changed[id]=snapshot.changed[id];else delete state.changed[id];}},
       setState:next=>{state=mergeState(clone(defaultState),next||{});ensureStateShape();saveState();renderApp();},
       reset:()=>{settingsSoundPreview.clearFiles();window.PM7_SETTINGS_TOME.reset();state=loadState();ensureStateShape();renderApp();window.PM7_SETTINGS_TOME.applyPaint(state);},
       reloadProject:()=>{settingsSoundPreview.clearFiles();state=loadState();ensureStateShape();renderApp();window.PM7_SETTINGS_TOME.applyPaint(state);},
@@ -232833,12 +232842,13 @@ window.PM_WALLPAPERS_CATALOG = {"version":1,"families":[{"family":"glass","label
   function choice() {
     var current = context(), key = fingerprint(current), tome = window.PM7_SETTINGS_TOME;
     if (!current.project_id) { stale = null; migrationKey = key; return 'look'; }
+    if (!current.snapshot || !current.snapshot.settings) { migrationKey = ''; return 'look'; }
     if (key !== migrationKey) {
-      migrationKey = key;
-      var before = current.snapshot && current.snapshot.settings || {}, prior = before['general.visual.wallpaper'];
+      var before = current.snapshot.settings, prior = before['general.visual.wallpaper'];
       stale = prior != null && !valid(prior) ? { value: prior, at: new Date().toISOString() } : null;
-      if (tome && tome.migrateGlassWallpaper) tome.migrateGlassWallpaper(saved());
-      current = context(); migrationKey = fingerprint(current);
+      var result = tome && tome.migrateGlassWallpaper && tome.migrateGlassWallpaper(saved());
+      current = context();
+      migrationKey = result && result.ok && current.snapshot && current.snapshot.settings ? fingerprint(current) : '';
     }
     var c = current.snapshot && current.snapshot.settings && current.snapshot.settings['general.visual.wallpaper'];
     return valid(c) ? c : 'look';
