@@ -59,10 +59,10 @@ Home supplies `cursor`, `chosen`, `strip`; the rail review supplies `chosen`, `s
 single `emit(text, need, layers)` renders the six declarations in `19-nier-parts.js`.
 The rail review calls the same emitter after adding its markers. Order is fixed by the registry,
 independent of registration order; Usage's `titles` replaces its fallback title, and empty lists add nothing.
-Do not add source-text patches or edit the declaration placeholders. Private builds omit the disabled
-layer's entries; the published rail cursor remains a default in the registry.
-Keep the empty `TITLES['usage']` slot before `settings` when the legacy fallback and private
-`--no-usage` build are retired, so the contributed Usage title keeps its publication order.
+Do not add source-text patches or edit the declaration placeholders. Every current page build includes
+Usage and Home; the retired private reference builds omitted the disabled layer's entries.
+The published rail cursor remains a default in the registry. Keep the empty `TITLES['usage']` slot
+before `settings` so the contributed Usage title keeps its publication order.
 
 Every build also lints the Usage sources (`usage_layer.lint()`, in `lint_sources()`) and runs `node --check` on
 `pm-usage-js`; `--check` also fails on an old Usage reference left in the page (`id="pm7UsageApp"`,

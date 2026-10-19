@@ -253,7 +253,6 @@ def apply_review(text: str, need) -> tuple[str, dict]:
     import build
     text = build.emit_nier_lists(text, need)
     notes['profile'] = 'review'
-    notes['nier selector patches'] = []
     notes['nier registry lists'] = list(NIER_ENTRIES)
     notes['concepts'] = [d.name for d in concept_dirs(REVIEW_CONCEPTS)]
     notes['review_css_bytes'] = len(css.encode('utf-8'))

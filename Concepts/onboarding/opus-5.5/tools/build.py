@@ -547,7 +547,8 @@ def check(built: str) -> list[str]:
     problems = (lint_sources() + syntax_check(built) + _rail().published_problems(built) + _glyphs().published_problems(built)
                 + _home().published_problems(built))
     for removed in dict.fromkeys(['id="pm7-onboarding"', 'id="pm7-guided-tour"', 'pm7-onboarding-js', 'pm7-guided-tour-js',
-                                  'pm7-onboarding-css', 'pm7-guided-tour-css', "'.pm7gt-callout", ".closest('.pm7gt')",
+                                  'pm7-onboarding-css', 'pm7-guided-tour-css', 'id="pm7-settings-data"',
+                                  "'.pm7gt-callout", ".closest('.pm7gt')",
                                   "getElementById('pm7-onboarding')", "getElementById('pm7-guided-tour')",
                                   'id="pm7UsageApp"', 'pm7-t31-usage-final', 'pm7-t24-usage-readability-and-fit']
                                  + usage_layer.REMOVED):

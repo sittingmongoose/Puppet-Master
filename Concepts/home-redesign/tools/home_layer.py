@@ -245,7 +245,6 @@ def apply(text: str, need) -> tuple[str, dict]:
     text = replace_once(need, text, BODY_ANCHOR,
                         '\n' + JS_START + f'\n<script id="pm-home-js">\n{script}</script>\n' + JS_END + '\n</body>',
                         'body end')
-    notes['nier selector patches'] = []
     notes['nier registry lists'] = list(NIER_ENTRIES)
     notes['home_css_bytes'] = len(css.encode('utf-8'))
     notes['home_js_bytes'] = len(script.encode('utf-8'))

@@ -58,7 +58,7 @@ def report(text: str, notes: dict, target: Path) -> dict:
     return {'output': shown, 'bytes': len(data), 'sha256': hashlib.sha256(data).hexdigest()[:16],
             'input_bytes': notes.get('bytes_in'), 'home_css_bytes': notes.get('home_css_bytes'),
             'home_js_bytes': notes.get('home_js_bytes'), 'terminal_present': notes.get('terminal_present'),
-            'nier_selector_patches': notes.get('nier selector patches')}
+            'nier_registry_lists': notes.get('nier registry lists')}
 
 
 def main() -> int:

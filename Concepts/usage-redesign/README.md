@@ -33,9 +33,8 @@ Concepts/usage-redesign/
   README.md
   tools/usage_layer.py    apply(text, need) -> (text, notes), lint(), syntax_check(text), REMOVED, KEPT: opus-5.5
                           build.py calls it at step 2b (apply), in lint_sources() (lint) and syntax_check()/check()
-  tools/build_usage.py    review mode (while Concepts/UsageTestPMConcept7.html exists): writes and --checks the review
-                          copy from build_text(usage=False) + the layer; published mode (once it is gone): build.py
-                          --check, or build.py --out PATH (default <tmp>/usage-pm7/PMConcept7.html)
+  tools/build_usage.py    published-mode wrapper: build.py --check, or build.py --out PATH
+                          (default <tmp>/usage-pm7/PMConcept7.html); the review copy was retired on 2026-10-09
   tools/usage_boot.mjs    headless boot check: the review copy against its input while the review copy exists, else the
                           published page (or --page, a private build) against the published page from a git ref
                           (--base-ref, default origin/main; the --no-usage reference build was retired 2026-10-18)
@@ -106,7 +105,7 @@ node Concepts/usage-redesign/tools/usage_boot.mjs <out-dir>         # boot check
 The dev loop after the publish: change `src/` (or `tools/usage_layer.py`), make a private build with `--out`,
 boot-check it with `usage_boot.mjs --page`, look at it on the GPU (the P1000 VM), then publish with `--publish-pm7` and
 run `--check`.
-`build.py` enforces the base pin (`BASE_SHA256`). Each build lints `src/` (`usage_layer.lint()`, which also runs the
+`build.py` assembles the live `base/` sources. Each build lints `src/` (`usage_layer.lint()`, which also runs the
 build's page-wide universal-selector lint over the Usage CSS) and runs `node --check` on `pm-usage-js`,
 `pm4-settings-js` and `pm-o55-js`. In published mode `usage_boot.mjs` fetches its reference page itself (`git show
 <base-ref>:Concepts/PMConcept7.html` written to `<out-dir>/reference-published.html`; `--base-ref` defaults to
@@ -114,6 +113,9 @@ build's page-wide universal-selector lint over the Usage CSS) and runs `node --c
 `<out-dir>/usage-boot.json`; it also takes `[page-under-test] [reference-page]` as plain arguments. Keep `<out-dir>`
 outside the repository (for example under `~/PM-Experiments/`). The boot check takes no screenshots and deletes its
 Chrome profiles.
+
+The reference is a regression baseline. With no candidate changes and the default `origin/main` ref, both pages can
+have identical bytes; those comparisons do not constitute an old-Prism-versus-redesigned-Usage check.
 
 ## What the layer does
 
@@ -146,7 +148,8 @@ keep its exact rule count, or the build stops.
    the menu cursor (`.pmu-navbtn`, `.pmu-poprow`, `.pmu-range button`), chosen brackets (`.pmu-navbtn`,
    `.pmu-range button`), strip cursor (`.pmu-range button`, `.pmu-seg button`), page-title decode
    (`#pmuRoomTitle`, `.pmu-brand h1`), and confirm/cancel sounds. `build.py` emits them after all layers;
-   edit the dictionary, never anchors in the Settings source. A private build without Usage contributes none.
+   edit the dictionary, never anchors in the Settings source. Every current page build includes these contributions;
+   the private build that omitted Usage was retired on 2026-10-18.
 7. It writes `window.PM_USAGE_COPY` (copy.json + copy.d) and `window.PM_USAGE_ROSTER` (the roster facts) before the page script.
 
 `lint()` runs on every build. It refuses emoji glyphs, any `:has(` in Usage CSS, `border-left` or

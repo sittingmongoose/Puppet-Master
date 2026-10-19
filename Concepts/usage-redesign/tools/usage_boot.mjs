@@ -1,6 +1,6 @@
-/* Usage boot check: load a page with the redesigned Usage page and a reference page with the old Prism Usage page
- * headless on file:// with ?o55=off, and confirm the new page boots without new console errors and keeps every outside
- * contract of the old Usage page (understand/cur-xref.md section 10): the chat context module, the pm6-js-usage bridge,
+/* Usage boot check: load a candidate page and a published reference page from the selected Git ref
+ * headless on file:// with ?o55=off, and confirm the candidate boots without new console errors and keeps every outside
+ * Usage contract (understand/cur-xref.md section 10): the chat context module, the pm6-js-usage bridge,
  * NieR Mode's and Pod 042's PM7_USAGE.data.context, the status bar, Retro Light's darker green, Home, all eight themes
  * and NieR Mode.
  *   node Concepts/usage-redesign/tools/usage_boot.mjs <out-dir>                    # see "which pages" below
@@ -10,7 +10,8 @@
  * Which pages: the Usage page is published through opus-5.5 build.py (step 2b, usage_layer). Published mode tests
  * Concepts/PMConcept7.html (or --page) against the published page from a git ref (--base-ref, default origin/main),
  * written to <out-dir>/reference-published.html. The build.py --no-usage private reference build was retired on
- * 2026-10-18; the published page is the reference. While the review copy Concepts/UsageTestPMConcept7.html exists,
+ * 2026-10-18; the published page is the regression baseline and can equal the candidate bytes. While the historical
+ * review copy Concepts/UsageTestPMConcept7.html exists,
  * the default is that review copy against its input, Concepts/Onboarding concepts/TestOpus5.5PmConcept.html (or
  * against the published reference page when build.py --publish-pm7 has already put the new Usage page into TestOpus
  * in this working tree).
@@ -96,7 +97,7 @@ async function runPage(name, file) {
       root.setAttribute('data-theme', 'retro-light');
       f.retroLightLime = getComputedStyle(root).getPropertyValue('--accent-lime').trim();
       root.setAttribute('data-theme', prev);
-      /* fixture parity: the data the new page carries against the old page's (timestamps are boot-relative) */
+      /* fixture parity: candidate data against the reference page's (timestamps are boot-relative) */
       f.dataJson = U ? JSON.stringify(U.data, (k, v) => (k === 'occurred_at' ? undefined : v)) : null;
 
       /* the Assistant context ring opens its pm7ctx popup */
@@ -225,7 +226,7 @@ const checks = {
   'bridge stats 10 actions / 3 subscriptions': !!(ub.bridge && ub.bridge.actions === 10 && ub.bridge.subscriptions === 3 && ub.bridge.failures === 0 && ub.bridge.initialized),
   'PM7_USAGE API complete': Array.isArray(ub.api) && ub.api.length === 0 && !!(ub.apiData && ub.apiData.logs && ub.apiData.state && ub.apiData.wiring),
   'PM7_USAGE.data.context.used > 0': !!(ub.context && ub.context.used > 0 && ub.context.limit > 0),
-  'fixture data identical to the old page': ub.dataJson !== null && ub.dataJson === b.boot.dataJson,
+  'fixture data identical to the reference page': ub.dataJson !== null && ub.dataJson === b.boot.dataJson,
   'status bar visible': !!(ub.statusbar && ub.statusbar.display !== 'none' && ub.statusbar.h > 0),
   'retro-light --accent-lime #2f7a3d': ub.retroLightLime === '#2f7a3d',
   'Usage page shows the new shell': ub.usageActive && !!(ub.usageShell && ub.usageShell.w > 0 && ub.usageShell.h > 0),

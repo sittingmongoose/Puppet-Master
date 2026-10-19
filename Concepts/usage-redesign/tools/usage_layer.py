@@ -667,7 +667,6 @@ def apply(text: str, need) -> tuple[str, dict]:
 
     # 6. the review roster in the Settings fixture; build.py emits NIER_ENTRIES after composing the layers
     text = roster_patch(need, text, notes)
-    notes['nier selector patches'] = []
     notes['nier registry lists'] = list(NIER_ENTRIES)
 
     # 7. app patches for performance that act only while Usage is the active page (DECISIONS, coordinator defaults item 7;
