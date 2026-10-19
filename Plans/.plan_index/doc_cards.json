@@ -214,7 +214,7 @@
         "visible_source_control_surface_routing",
         "web_firecrawl_owner_set"
       ],
-      "sha256": "cafc8fe7f5619bc6fe2455f2c8d401ba91f4b86a32add02b12415af67cd3c5e0",
+      "sha256": "2c53e9627f830b93a3cb44a5bef9b161f709321c36fdfa4b1a0bb0f6745782b4",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 68
@@ -1825,13 +1825,10 @@
         "False": 25,
         "True": 44
       },
-      "heading_count": 143,
+      "heading_count": 142,
       "implementation_surfaces": [
-        "Concepts/pm7-tools/global_hover_tags_source.py",
         "Concepts/pm7-tools/home_workspace_source.py",
-        "Concepts/pm7-tools/verify/full_thread_performance.mjs",
         "Concepts/pm7-tools/verify/home_workspace_matrix.mjs",
-        "Concepts/pm7-tools/verify/hover_tags.mjs",
         "Plans/Automated_Testing_System.md",
         "Plans/Collaborative_Workflows.md",
         "Plans/Commands_System.md",
@@ -1927,7 +1924,7 @@
         "tests/test_pm_evidence_artifact_binding_modes.py",
         "tests/test_pm_working_notebook_contracts.py"
       ],
-      "line_count": 6602,
+      "line_count": 6587,
       "path": "Plans/Automated_Testing_System.md",
       "plan_unit_count": 69,
       "plan_unit_ids": [
@@ -2067,7 +2064,7 @@
         "web_gui_dev_test_authority_leak",
         "workflow_activation_original_source_or_lifetime_drift"
       ],
-      "sha256": "349fcac59b4d65a594702e7afd89b1c2b9d0241507c7c6cf2f1e70463be3740c",
+      "sha256": "81e84b34edefb7e99afb2c1a5b0a2ba08168856d961c1fabb5e45831d7322928",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 68,
@@ -2083,14 +2080,6 @@
         "validation_criterion": 31
       },
       "validation_surfaces": [
-        "Concepts/pm7-tools/build_pm7.py final generated-artifact static gate",
-        "Concepts/pm7-tools/guided_tour_source.py static transform assertions",
-        "Concepts/pm7-tools/onboarding_cinematic_source.py static transform assertions",
-        "Concepts/pm7-tools/verify/guided_tour.mjs browser-concept verifier",
-        "Concepts/pm7-tools/verify/guided_tour_lifecycle_checkpoint.mjs scoped concept sequence, exit/retry, semantic resize, and local Teacher isolation checks only",
-        "Concepts/pm7-tools/verify/guided_tour_polish_checkpoint.mjs focused concept edit/copy/DOM-continuity checks only",
-        "Concepts/pm7-tools/verify/guided_tour_practice_selftest.mjs pure local practice reducer tests only",
-        "Concepts/pm7-tools/verify/onboarding_cinematic.mjs browser-concept verifier",
         "Future Assistant Chat visibility and toggle tests.",
         "Future DiscoveryService conformance suite.",
         "Future PlanUnit index no-worknodes-created check.",
@@ -2247,7 +2236,7 @@
         "tests/test_pm_testing_session_events.py",
         "tests/test_pm_touch_closure_source.py source/action inventory and owner routing checks only",
         "tests/test_pm_working_notebook_contracts.py",
-        "verification_pending: fresh exact-T43 Usage pointer live-resize preview and settlement film evidence under Plans/.audits/audit-20260830-001-pmconcept7-live-resize-preview/; readiness_claim=false"
+        "verification_pending: fresh artifact-bound Usage pointer live-resize preview and settlement motion evidence; readiness_claim=false"
       ]
     },
     {
@@ -5513,7 +5502,7 @@
         "usage_attention_acknowledged_semantics_drift",
         "wrapper_command_navigation_drift"
       ],
-      "sha256": "8828021b9b39d038cc0465d5dff5817a3d374afbe0bba5e83a0406be43f245f7",
+      "sha256": "fde887db26514e72482f24bdae8410b9a234bfe34c235637139015a2cbcaa4ff",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 52
@@ -18990,7 +18979,6 @@
       },
       "heading_count": 25,
       "implementation_surfaces": [
-        "Concepts/pm7-tools/verify",
         "Plans/Automated_Testing_System.md",
         "Plans/Commands_System.md",
         "Plans/Permissions_System.md",
@@ -19029,7 +19017,7 @@
         "motion_evidence_gap_or_false_certification",
         "raw_derived_identity_or_provenance_fabrication"
       ],
-      "sha256": "b84b5d978a5e0b0c7a48224e0f244e85b81ad954b1f7d7ab867dee5e66af6c6d",
+      "sha256": "53e60317b7c88dcb1e384d96754f2ffb00edd8d600b54524a43ebb85dbb4f457",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 8
@@ -19042,12 +19030,9 @@
         "requirement": 4
       },
       "validation_surfaces": [
-        "Concepts/pm7-tools/verify/final_campaign_capture.mjs",
-        "Concepts/pm7-tools/verify/final_evidence_gate.py",
-        "Concepts/pm7-tools/verify/review_capture_frames.py",
         "Plans/test_capture_motion_evidence_contract_fixtures.json",
         "Plans/test_capture_motion_evidence_contracts.schema.json",
-        "final campaign and interactive-browser receipts",
+        "Scenario, artifact-identity, cadence, provenance, and findings review with separate browser-concept and native verdicts",
         "future five-session GUI and all-theme motion-evidence matrix",
         "future motion synchronization and masking matrix",
         "future no-overwrite and provenance-selection matrix",
@@ -20948,7 +20933,7 @@
       ]
     }
   ],
-  "generated_at_utc": "2026-10-17T22:23:37Z",
+  "generated_at_utc": "2026-10-19T00:55:08Z",
   "schema_id": "pm.plan_index.doc_cards.v1",
   "source_scope": "top-level live Plans/*.md; excludes ledgers, generated shards, evidence, and pipeline artifacts",
   "summary": {
