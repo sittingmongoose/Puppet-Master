@@ -134,7 +134,9 @@ for (const b of blocks) {
     catch (e) { errors.push({ block: b.id, type: 'css', message: e.message }); rows.push(row); continue; }
     const found = [];
     css.walk(ast, { visit: 'Rule', enter(node) {
-      if (node.prelude?.type !== 'SelectorList') return; // @font-face/keyframe entries are not style-rule usage.
+      // css-tree gives from/to/percentage keyframe steps a SelectorList too.
+      // Chrome RuleUsage does not measure them, including prefixed keyframes.
+      if (node.prelude?.type !== 'SelectorList' || /keyframes$/i.test(this.atrule?.name || '')) return;
       const startOffset = node.loc.start.offset, endOffset = node.loc.end.offset;
       const sample = byOffset.get(startOffset + ':' + endOffset);
       const touching = coverage.filter((r) => r.used && r.startOffset < endOffset && r.endOffset > startOffset);
