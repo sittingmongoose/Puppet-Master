@@ -9,15 +9,19 @@ import { fileURLToPath } from 'node:url';
 
 const summaryTool = fileURLToPath(new URL('./coverage_summary.mjs', import.meta.url));
 function summarize(text, extra = {}) {
+  const sheet = createHash('sha256').update(text).digest('hex').slice(0, 16);
+  const startOffset = text.indexOf('.spinner'), endOffset = text.indexOf('}', startOffset) + 1;
+  return summarizePage(`<style id="fixture">${text}</style>`, { version: 2, js: [],
+    css: [{ sheet, startOffset, endOffset, used: true }], ...extra });
+}
+
+function summarizePage(html, union, args = []) {
   const dir = mkdtempSync(join(tmpdir(), 'pm7-coverage-summary-test-'));
   try {
-    const sheet = createHash('sha256').update(text).digest('hex').slice(0, 16);
-    const startOffset = text.indexOf('.spinner'), endOffset = text.indexOf('}', startOffset) + 1;
-    writeFileSync(join(dir, 'page.html'), `<style id="fixture">${text}</style>`);
-    writeFileSync(join(dir, 'raw.json'), JSON.stringify({ version: 2, js: [],
-      css: [{ sheet, startOffset, endOffset, used: true }], ...extra }));
+    writeFileSync(join(dir, 'page.html'), html);
+    writeFileSync(join(dir, 'raw.json'), JSON.stringify(union));
     execFileSync(process.execPath, [summaryTool, join(dir, 'page.html'), join(dir, 'raw.json'),
-      join(dir, 'summary'), '--complete-union', join(dir, 'complete.json')]);
+      join(dir, 'summary'), '--complete-union', join(dir, 'complete.json'), ...args]);
     return { summary: JSON.parse(readFileSync(join(dir, 'summary.json'))),
       complete: JSON.parse(readFileSync(join(dir, 'complete.json'))) };
   } finally { rmSync(dir, { recursive: true, force: true }); }
@@ -76,4 +80,43 @@ test('a union with no navigation tracking cannot certify CSS absence', () => {
   assert.equal(summary.totals.css_rules_unused, 0);
   assert.equal(summary.totals.css_rules_unmeasured, 1);
   assert.ok(complete.css.every(r => r.used));
+});
+
+test('JS absence needs tracked zero while native counts and positive touches remain intact', () => {
+  const text = 'function idle(){ return 1; } function absent(){ return 2; } void 0;';
+  const script = createHash('sha256').update(text).digest('hex').slice(0, 16);
+  const native = [
+    { functionName: '', ranges: [{ startOffset: 0, endOffset: text.length, count: 1 }] },
+    { functionName: 'idle', ranges: [{ startOffset: 0, endOffset: text.indexOf('}') + 1, count: 0 }] },
+  ];
+  for (const count of [undefined, null, 0, 2]) {
+    const union = { version: 2, js: [{ script, functions: native, usedRangesProvenance: 'per-sample-v1',
+      usedRanges: [{ startOffset: text.indexOf('void'), endOffset: text.length }] }], css: [],
+      ...(count === undefined ? {} : { unsampled_navigations: count }) };
+    const { summary, complete } = summarizePage(`<script id="fixture">${text}</script>`, union);
+    assert.equal(summary.totals.js_used_bytes, Buffer.byteLength('void 0;'));
+    assert.deepEqual(complete.js[0].functions.slice(0, native.length), native);
+    const idle = summary.js_functions.find(f => f.name === 'idle');
+    const absent = summary.js_functions.find(f => f.name === 'absent');
+    assert.equal(idle.count, 0);
+    assert.equal(idle.navigation_unchecked, count == null);
+    assert.equal(idle.unsampled_navigation_gap, count > 0);
+    const projection = complete.js[0].functions.find(f => f.union_projection);
+    if (count === 0) {
+      assert.ok(summary.totals.js_unused_bytes > 0);
+      assert.equal(idle.usage_state, 'unused');
+      assert.equal(absent.count, 0);
+      assert.ok(complete.js[0].functions.some(f => f.census));
+      assert.ok(projection.ranges.some(r => r.count === 0));
+    } else {
+      assert.equal(summary.totals.js_unused_bytes, 0);
+      assert.equal(summary.totals.js_unmeasured_bytes, Buffer.byteLength(text) - summary.totals.js_used_bytes);
+      assert.equal(idle.usage_state, 'unknown');
+      assert.equal(absent.count, null);
+      assert.equal(absent.usage_state, 'unknown');
+      assert.ok(!complete.js[0].functions.some(f => f.census));
+      assert.ok(projection.ranges.every(r => r.count === 1));
+      assert.equal(projection.navigation_unknown, true);
+    }
+  }
 });

@@ -176,7 +176,9 @@ for (const b of blocks) {
     row.byte_coverage_verified = Array.isArray(used) && (row.usedRangesProvenance === 'per-sample-v1'
       || !!receiptEntry?.script_hashes?.includes(digest));
     row.used_bytes = (used || []).reduce((n, r) => n + len(b.text.slice(r.startOffset, r.endOffset)), 0);
-    row.unused_bytes = row.byte_coverage_verified ? row.bytes - row.used_bytes - row.uncertain_bytes : 0;
+    row.navigation_unchecked = row.used_bytes < row.bytes && unsampledNavigations == null;
+    row.unsampled_navigation_gap = row.used_bytes < row.bytes && unsampledNavigations > 0;
+    row.unused_bytes = row.byte_coverage_verified && unsampledNavigations === 0 ? row.bytes - row.used_bytes - row.uncertain_bytes : 0;
     row.unmeasured_bytes = row.bytes - row.used_bytes - row.unused_bytes;
     let ast;
     try { ast = acorn.parse(b.text, { ecmaVersion: 'latest', sourceType: b.type === 'module' ? 'module' : 'script', allowReturnOutsideFunction: true }); }
@@ -194,9 +196,9 @@ for (const b of blocks) {
       for (const fn of aliases) seen.add(fn);
       const name = match?.functionName || node.id?.name || (parent?.type === 'VariableDeclarator' ? parent.id.name : parent?.type === 'Property' || parent?.type === 'MethodDefinition' ? parent.key.name || parent.key.value : '') || '';
       functions.push({ block: b.id, script: digest, startOffset: node.start, endOffset: node.end, name,
-        observed: !!match, count: match ? aliases.reduce((n, fn) => n + fn.ranges[0].count, 0) : coverage ? 0 : null,
+        observed: !!match, count: match ? aliases.reduce((n, fn) => n + fn.ranges[0].count, 0) : coverage && unsampledNavigations === 0 ? 0 : null,
         native_names: [...new Set(aliases.map((fn) => fn.functionName))],
-        count_basis: match ? 'CDP' : coverage ? 'static function absent from observed script coverage' : 'unobserved script',
+        count_basis: match ? 'CDP' : !coverage ? 'unobserved script' : unsampledNavigations === 0 ? 'static function absent from observed script coverage' : 'navigation history incomplete',
         v8_startOffset: match?.ranges[0]?.startOffset ?? null, v8_endOffset: match?.ranges[0]?.endOffset ?? null });
     });
     for (const fn of v8.filter((f) => !seen.has(f))) {
@@ -205,7 +207,12 @@ for (const b of blocks) {
         name: fn.functionName, count: r.count, observed: true, v8_only: true, script_root: r.startOffset === 0 && r.endOffset === b.text.length });
     }
     const fs = functions.filter((f) => f.block === b.id && !f.script_root);
-    for (const f of fs) f.unresolved_source_overlap = uncertain.some((r) => r.startOffset < f.endOffset && r.endOffset > f.startOffset);
+    for (const f of fs) {
+      f.unresolved_source_overlap = uncertain.some((r) => r.startOffset < f.endOffset && r.endOffset > f.startOffset);
+      f.navigation_unchecked = !(f.count > 0) && unsampledNavigations == null;
+      f.unsampled_navigation_gap = !(f.count > 0) && unsampledNavigations > 0;
+      f.usage_state = f.count > 0 ? 'used' : f.count === 0 && unsampledNavigations === 0 && !f.unresolved_source_overlap ? 'unused' : 'unknown';
+    }
     row.functions_total = fs.length; row.functions_used = fs.filter((f) => f.count > 0).length;
     row.functions_unobserved = fs.filter((f) => !f.observed).length;
   } else row.executable = false;
@@ -257,7 +264,11 @@ if (completeFile) {
     // projection at *all* boundaries so its byte union wins over a stale nested
     // zero from another sample. Native function counts remain untouched.
     const used = script.usedRanges || [];
-    const retain = unionRanges([...used, ...script.uncertainRanges]);
+    // Older consumers must not interpret native zero counters or usedRanges
+    // absence as proof when navigation tracking is incomplete. Preserve native
+    // counters, but retain the whole block in their Boolean byte projection.
+    const retain = unionRanges([...used, ...script.uncertainRanges,
+      ...(unsampledNavigations !== 0 ? [{ startOffset: 0, endOffset: block.units }] : [])]);
     const points = [...new Set([0, block.units, ...script.functions.flatMap((f) => f.ranges.flatMap((r) => [r.startOffset, r.endOffset])), ...retain.flatMap((r) => [r.startOffset, r.endOffset])])].sort((a, b) => a - b);
     const ranges = [];
     let j = 0;
@@ -267,7 +278,8 @@ if (completeFile) {
       const count = retain[j] && retain[j].startOffset <= startOffset && retain[j].endOffset >= endOffset ? 1 : 0;
       ranges.push({ startOffset, endOffset, count });
     }
-    script.functions.push({ functionName: '[coverage-union-bytes]', isBlockCoverage: true, union_projection: true, includes_uncertain_ranges: !!script.uncertainRanges.length, ranges });
+    script.functions.push({ functionName: '[coverage-union-bytes]', isBlockCoverage: true, union_projection: true,
+      includes_uncertain_ranges: !!script.uncertainRanges.length, navigation_unknown: unsampledNavigations !== 0, ranges });
   }
   union.census = { page: report.page, page_sha256: report.page_sha256, raw_union_sha256: report.union_sha256,
     provenance_receipt: report.provenance_receipt,

@@ -55,10 +55,13 @@ matching rules. A missing source remains unknown. A failed harness still
 contributes everything it touched.
 `unsampled_navigations` counts main-frame navigations/reloads without a preceding
 navigation flush; subframes and the initial empty tab are excluded. A nonzero
-count makes untapped CSS rules unknown and prevents false census rows. Captures
+count makes untapped CSS and JS unknown and prevents negative census evidence. Captures
 predating this counter report `null` in the summary, not a measured zero; a
 missing count also merges to unknown, and the summary flags its untapped rules
 `navigation_unchecked` instead of certifying them unused.
+JS native counters remain unchanged, but missing static-function counts stay
+unknown and the legacy byte projection retains the entire script while navigation
+tracking is incomplete. Positive touches remain usable.
 
 Generate a complete static-page census and source map with:
 
