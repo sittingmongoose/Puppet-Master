@@ -63,8 +63,10 @@ MIME type, preserving fragments. Quoted URL-like text is unchanged. Unknown Blob
 Caret hiding is enabled ONLY for screenshots; both style samplers and diagnostics disable the
 caret sheet so original caret-color values remain in the hash. Every accessible element/pseudo
 resolves its caret value first, avoiding cached inherited values in DOMSnapshot. Caret-color
-transitions caused by either toggle finish explicitly. Unexpected active animations fail capture;
-only intended infinite animations paused at zero remain. Preparation counts are recorded per side.
+transitions caused by either toggle finish explicitly. Style resolution can expose deferred entry
+animations, so this resolution and settled-animation preparation precede screenshots too. Finite
+animations finish; infinite animations pause at zero; any unresolved animation fails capture.
+Preparation counts are recorded per side without advancing the logical clock.
 
 A separate CSSOM rule-text guard compares selection, webkit-scrollbar, webkit-slider and webkit-search
 pseudo rules whose computed nodes are unavailable. Changes fail conservatively and report first rule
@@ -181,6 +183,8 @@ node --test Concepts/onboarding/opus-5.5/tools/pm7_parity.test.mjs Concepts/onbo
 
 The opt-in GPU caret regression uses one browser at a time. Its unchanged control must pass;
 caret-only mutations must fail with transition:all and with transitions disabled, with zero pixels.
+It also exercises real PM7 onboarding welcome in both motion modes, requiring settled preparation
+and exact styles. Any raw-pixel failure in that real-page preparation test remains in its report.
 Set PM7_PARITY_REGRESSION_OUT to a new external directory to retain captures and validation.
 
 ```sh

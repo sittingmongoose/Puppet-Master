@@ -321,25 +321,34 @@ export function installParityRuntime(config, normalizeBlobValue) {
       caretStyle.sheet.disabled = !hidden;
       // DOMSnapshot can retain inherited values in skipped/offscreen subtrees.
       // Resolve caret values explicitly before asking it for standard styles.
-      let resolvedRecords = 0;
+      let resolvedRecords = 0, finishedCaretTransitions = 0, finishedFiniteAnimations = 0, pausedInfiniteAnimations = 0;
       const targets = hidden ? [] : elements().list;
       if (hidden) for (let el = document.activeElement; el; el = el.shadowRoot?.activeElement) targets.push(el);
-      for (const el of targets) for (const pseudo of pseudos(el)) {
-        void getComputedStyle(el, pseudo || null).caretColor; resolvedRecords++;
-      }
       // The screenshot override can start caret-color transitions under
-      // transition:all. Playback is frozen, so settle these harness-induced
-      // transitions explicitly in BOTH directions; never hash their old value.
-      const caretTransitions = document.getAnimations().filter(a => a.transitionProperty === 'caret-color');
-      for (const animation of caretTransitions) animation.finish();
-      for (const animation of caretTransitions) {
-        const target = animation.effect?.target;
-        if (target) void getComputedStyle(target, animation.effect.pseudoElement || null).caretColor;
+      // transition:all. Resolving previously skipped UI can also instantiate
+      // finite entry animations. Apply the existing settled-animation contract
+      // after resolution, without advancing the logical clock.
+      for (let pass = 0; pass < 3; pass++) {
+        for (const el of targets) for (const pseudo of pseudos(el)) {
+          void getComputedStyle(el, pseudo || null).caretColor; resolvedRecords++;
+        }
+        let changed = false;
+        for (const animation of document.getAnimations()) {
+          if (['finished', 'idle'].includes(animation.playState)) continue;
+          if (Number.isFinite(animation.effect?.getComputedTiming().endTime)) {
+            animation.finish(); finishedFiniteAnimations++; changed = true;
+            if (animation.transitionProperty === 'caret-color') finishedCaretTransitions++;
+          } else if (animation.playState !== 'paused' || Number(animation.currentTime) !== 0) {
+            animation.pause(); animation.currentTime = 0; pausedInfiniteAnimations++; changed = true;
+          }
+        }
+        if (!changed) break;
       }
       const active = document.getAnimations().filter(a => !['finished', 'idle'].includes(a.playState));
       const unexpected = active.filter(a => a.playState !== 'paused' || Number(a.currentTime) !== 0 || Number.isFinite(a.effect?.getComputedTiming().endTime));
-      if (!hidden && unexpected.length) throw Error('Unsettled animation at style capture: ' + unexpected.map(a => a.constructor.name + ':' + (a.transitionProperty || a.animationName || 'script')).join(', '));
-      return { resolvedRecords, finishedCaretTransitions: caretTransitions.length, frozenInfiniteAnimations: active.length, unsettledAnimations: unexpected.length };
+      if (unexpected.length) throw Error('Unsettled animation at capture preparation: ' + unexpected.map(a => a.constructor.name + ':' + (a.transitionProperty || a.animationName || 'script')).join(', '));
+      return { resolvedRecords, finishedCaretTransitions, finishedFiniteAnimations, pausedInfiniteAnimations,
+        frozenInfiniteAnimations: active.length, unsettledAnimations: unexpected.length };
     },
     get now() { return now; } };
   const hideCaret = () => {

@@ -380,15 +380,18 @@ async function nativeSnapshot(browser) {
 }
 async function prepareCapture(browser) {
   await browser.page.bringToFront();
-  await browser.page.evaluate(async () => {
+  return browser.page.evaluate(async () => {
     await document.fonts.ready;
     await Promise.all(Array.from(document.images, async image => { if (!image.complete) await image.decode().catch(() => {}); }));
+    const resolved = __pm7Parity.setCaretHidden(false);
+    const hidden = __pm7Parity.setCaretHidden(true);
     await __pm7Parity.settle(0);
+    return { resolved, hidden };
   });
 }
 async function capture(browser, audit, deep) {
   if (browser.interceptErrors.length) throw Error(browser.interceptErrors.join('\n'));
-  await prepareCapture(browser);
+  const screenshotPreparation = await prepareCapture(browser);
   if (process.env.PM7_PARITY_DEBUG) console.log('CAPTURE screenshot start');
   const screenshot = await browser.page.screenshot();
   if (process.env.PM7_PARITY_DEBUG) console.log('CAPTURE screenshot done');
@@ -410,7 +413,7 @@ async function capture(browser, audit, deep) {
   const runtimeBlocked = await browser.page.evaluate(() => __pm7Parity.blockedRequests());
   const requests = { blocked: [...new Set([...browser.blocked, ...runtimeBlocked])].map(canonicalUrl).sort(),
     failed: browser.failedRequests.map(item => ({ ...item, url: canonicalUrl(item.url) })).sort((a, b) => JSON.stringify(a).localeCompare(JSON.stringify(b))) };
-  return { screenshot, styles, state, styleMilliseconds, caretPreparation, nativeDetails: deep ? null : browser.nativeDetails,
+  return { screenshot, styles, state, styleMilliseconds, screenshotPreparation, caretPreparation, nativeDetails: deep ? null : browser.nativeDetails,
     specialRules, specialRuleHash: digest(JSON.stringify(specialRules)), requests, storageAudit: browser.storageAudit,
     errors: [...new Set(browser.page.errors)] };
 }
@@ -586,6 +589,7 @@ async function run(options) {
       pixels: { ...pixels, heatmap: undefined }, baselineState: a.state, candidateState: b.state,
       runtimeErrors: { baseline: a.errors, candidate: b.errors, equal: sameErrors },
       caretPreparation: { baseline: a.caretPreparation, candidate: b.caretPreparation },
+      screenshotPreparation: { baseline: a.screenshotPreparation, candidate: b.screenshotPreparation },
       stateEqual: sameState, customCoverageComplete, requests: { baseline: a.requests, candidate: b.requests, equal: sameRequests },
       storageAudit: { baseline: a.storageAudit, candidate: b.storageAudit },
       specialRuleGuard: { baseline: a.specialRuleHash, candidate: b.specialRuleHash, equal: sameRules,
