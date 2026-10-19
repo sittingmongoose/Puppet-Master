@@ -5,10 +5,10 @@ import { createHash, randomBytes } from 'node:crypto';
 
 const MAX = 512 * 1024 * 1024;
 export class CdpWebSocket extends EventTarget {
-  constructor(url) {
+  constructor(url, { allowRemote = false } = {}) {
     super();
     const parsed = new URL(url);
-    if (parsed.protocol !== 'ws:' || !['127.0.0.1', 'localhost', '[::1]'].includes(parsed.hostname)) throw Error('CDP socket requires local ws: endpoint');
+    if (parsed.protocol !== 'ws:' || (!allowRemote && !['127.0.0.1', 'localhost', '[::1]'].includes(parsed.hostname))) throw Error('CDP socket requires local ws: endpoint (remote LAN needs explicit opt-in)');
     this.parts = []; this.available = 0; this.fragments = []; this.fragmentBytes = 0; this.closed = false;
     const key = randomBytes(16).toString('base64');
     const req = request({ hostname: parsed.hostname, port: parsed.port, path: parsed.pathname + parsed.search,

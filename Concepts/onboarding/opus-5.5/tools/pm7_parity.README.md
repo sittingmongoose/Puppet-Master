@@ -18,10 +18,36 @@ node Concepts/onboarding/opus-5.5/tools/pm7_parity.mjs /absolute/evidence/baseli
   --out /absolute/evidence/iteration
 ```
 
-`--concurrency` is the browser/worker cap, default 4, allowed 1..6. Each worker renders its baseline
+`--concurrency` is the browser/worker cap, default 4, allowed 1..6 locally and 1..8 remotely. Each worker renders its baseline
 sequence, then the identical candidate sequence. Respect the wave cap of four owned browsers.
 Fresh contexts share that browser's GPU process. Normal completion and signals stop owned sessions.
-No remote host mode is implemented.
+
+Opt-in remote GPU sessions use `gpu-browser`; local invocation remains unchanged:
+
+```sh
+node Concepts/onboarding/opus-5.5/tools/pm7_parity.mjs baseline.html candidate.html \
+  --host windows --serve-host 192.168.50.179 --concurrency 8 --out /absolute/evidence/windows
+```
+
+Default remote CDP uses `gpu-browser connect` with authenticated SSH to loopback. A forwarding
+restriction fails startup and cleans the session; it never falls back. If the trusted-LAN route is
+authorized, `--remote-cdp lan` explicitly uses `gpu-browser connect --lan` and permits its remote
+WebSocket endpoint. The Windows key on the P1000 currently forbids SSH forwarding, so that route
+needs this explicit option. The LAN listener ends when the session stops.
+
+The controller starts a temporary HTTP input server on its LAN address (`--serve-host`, auto-selected
+only with one non-loopback IPv4). Each worker has one unguessable document URL, shared by its two
+inputs and inert storage probe. It serves exact source bytes with `no-store`; all other routes return
+404. Only that exact top-level document is permitted through the existing request gate; all other
+HTTP(S)/WebSocket/FTP requests remain blocked. Storage is still checked in every fresh context.
+Relative external assets remain unsupported. Remote HTTP and local file origins are recorded; no
+cross-transport or cross-host parity claim is made.
+
+Every row records the rendering host, GPU renderer, Chrome build, session and transport. Both sides
+stay in one Chrome process. Remote sessions receive minute keepalives; completion, startup failures
+and signals stop and purge owned sessions. Cleanup status appears per browser in the report.
+Remote memory measurements cover only the controller, never unrelated local processes whose PIDs
+match remote Chrome PIDs. Respect the assigned fleet limits; this worker's cap is eight on either host.
 
 `--subset` accepts semicolon-separated looks, pages, states, viewports and motions filters. Quote
 semicolons. Repeated filters union their IDs. Unknown IDs and empty selections fail. `--list` shows
@@ -178,7 +204,7 @@ add noise-baseline-N, low/high range and noise-heatmap PNGs, each with SHA-256 i
 shared pages may count per process. It is not a kernel peak reading.
 
 ```sh
-node --test Concepts/onboarding/opus-5.5/tools/pm7_parity.test.mjs Concepts/onboarding/opus-5.5/tools/cdp-websocket.test.mjs
+node --test Concepts/onboarding/opus-5.5/tools/pm7_parity.test.mjs Concepts/onboarding/opus-5.5/tools/cdp-websocket.test.mjs Concepts/onboarding/opus-5.5/tools/pm7_parity_remote.test.mjs
 ```
 
 The opt-in GPU caret regression uses one browser at a time. Its unchanged control must pass;

@@ -9,25 +9,43 @@ const command = promisify(execFile), live = new Set();
 for (const signal of ['SIGINT', 'SIGTERM']) process.once(signal, async () => {
   await Promise.allSettled([...live].map(browser => browser.close())); process.exit(signal === 'SIGINT' ? 130 : 143);
 });
-export async function launch({ width = 1600, height = 900, scale = 1 } = {}) {
-  const { stdout } = await command('agent-browser', ['start', '--url', 'about:blank'], { maxBuffer: 2 ** 20, env: { ...process.env, PYTHONDONTWRITEBYTECODE: '1' } });
+export async function launch({ width = 1600, height = 900, scale = 1, host, remoteCdp = 'ssh' } = {}) {
+  if (host && !['windows', 'mac'].includes(host)) throw Error('Remote host must be windows or mac');
+  if (!['ssh', 'lan'].includes(remoteCdp) || (!host && remoteCdp !== 'ssh')) throw Error('Remote CDP transport requires --host and ssh or lan');
+  const cli = host ? 'gpu-browser' : 'agent-browser';
+  const invoke = args => command(cli, args, { maxBuffer: 2 ** 20, env: { ...process.env, PYTHONDONTWRITEBYTECODE: '1' } });
+  const { stdout } = await invoke(['start', ...(host ? ['--host', host] : []), '--url', 'about:blank']);
   const session = JSON.parse(stdout), pending = new Map(), listeners = new Set();
-  let socket, serial = 0, closing;
+  let socket, serial = 0, closing, keepalive, keepalivePending;
   const rejectAll = error => { for (const p of pending.values()) { clearTimeout(p.timer); p.reject(error); } pending.clear(); };
-  const browser = { chrome: { pid: session.pid }, session,
+  const browser = { chrome: { pid: host ? session.backend?.chrome_pid : session.pid }, session, host,
+    transport: host ? remoteCdp : 'local', lifecycle: { keepaliveErrors: [] },
     close() {
       if (closing) return closing;
       closing = (async () => {
+        clearInterval(keepalive);
         try { socket?.close(); rejectAll(Error('Browser closed')); }
-        finally { await command('agent-browser', ['stop', session.id], { maxBuffer: 2 ** 20, env: { ...process.env, PYTHONDONTWRITEBYTECODE: '1' } }); live.delete(browser); }
+        finally {
+          await keepalivePending;
+          const stopped = JSON.parse((await invoke(['stop', session.id])).stdout);
+          browser.lifecycle.stopped = stopped.status;
+          if (host) {
+            if (!['complete', 'stopped'].includes(stopped.status)) throw Error('Remote browser did not stop: ' + stopped.status);
+            browser.lifecycle.purged = JSON.parse((await invoke(['purge', session.id])).stdout).purged;
+            if (!browser.lifecycle.purged) throw Error('Remote session was not purged: ' + session.id);
+          }
+          live.delete(browser);
+        }
       })();
       return closing;
     }
   };
   live.add(browser);
   try {
-    const version = await (await fetch(session.cdp_endpoint + '/json/version')).json();
-    socket = new CdpWebSocket(version.webSocketDebuggerUrl);
+    if (host && session.host !== host) throw Error('Remote browser started on unexpected host: ' + session.host);
+    const endpoint = host ? JSON.parse((await invoke(['connect', session.id, ...(remoteCdp === 'lan' ? ['--lan'] : [])])).stdout).cdp_endpoint : session.cdp_endpoint;
+    const socketUrl = endpoint.startsWith('ws:') ? endpoint : (await (await fetch(endpoint + '/json/version')).json()).webSocketDebuggerUrl;
+    socket = new CdpWebSocket(socketUrl, { allowRemote: !!host && remoteCdp === 'lan' });
     await new Promise((resolve, reject) => { socket.addEventListener('open', resolve, { once: true }); socket.addEventListener('error', e => reject(e.error), { once: true }); });
     socket.addEventListener('error', e => rejectAll(e.error || Error(e.message)));
     socket.addEventListener('close', () => rejectAll(Error('CDP socket closed')));
@@ -98,6 +116,14 @@ export async function launch({ width = 1600, height = 900, scale = 1 } = {}) {
       browser.page = await attachPage(targetId);
       return browser.page;
     };
+    if (host) keepalive = setInterval(() => {
+      if (!keepalivePending) keepalivePending = invoke(['keepalive', session.id])
+        .catch(error => browser.lifecycle.keepaliveErrors.push(String(error)))
+        .finally(() => { keepalivePending = null; });
+    }, 60_000).unref();
     return browser;
-  } catch (error) { await browser.close().catch(() => {}); throw error; }
+  } catch (error) {
+    try { await browser.close(); } catch (cleanup) { throw new AggregateError([error, cleanup], 'Browser startup and cleanup failed'); }
+    throw error;
+  }
 }

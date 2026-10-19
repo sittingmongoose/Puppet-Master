@@ -7,6 +7,7 @@ import { fileURLToPath } from 'node:url';
 import { hostname } from 'node:os';
 import { execFileSync } from 'node:child_process';
 import { launch } from './pm7_parity_chrome.mjs';
+import { createInputServer, remoteServeHost, storageProbeHtml } from './pm7_parity_remote.mjs';
 import { installParityRuntime, normalizeBlobValue } from './pm7_parity_browser.mjs';
 import { diffPng, baselineEnvelopePng } from './pm7_parity_png.mjs';
 
@@ -17,7 +18,11 @@ const help = `Usage: node pm7_parity.mjs BASELINE.html CANDIDATE.html [options]
   --matrix FILE                   State data (default pm7_parity_states.json)
   --subset looks=a,b;pages=a,b;states=a,b;viewports=wide,narrow;motions=reduced,full
                                   Repeat --subset to combine filters; quote semicolons
-  --concurrency N                 Browser/worker cap, default 4; integer 1..6
+  --concurrency N                 Browser/worker cap, default 4; local 1..6, remote 1..8
+  --host windows|mac              Opt-in remote GPU browsers (default: local agent-browser)
+  --serve-host IPv4               Controller LAN address for remote input delivery; auto if unique
+  --remote-cdp ssh|lan             Remote CDP transport, default authenticated SSH; no fallback
+                                  lan explicitly opens trusted-LAN CDP until session stop
   --tolerance N                   RGBA channel delta allowed, default 0 (0..255)
   --max-diff-pixels N             Pixels above tolerance allowed, default 0
   --baseline-repeats N            Explicit measured pixel envelope, 2..8 baseline captures
@@ -29,11 +34,11 @@ const help = `Usage: node pm7_parity.mjs BASELINE.html CANDIDATE.html [options]
   --list                          Print selected matrix without opening browsers
   --help                          This help
 Exit: 0 parity, 1 differences, 2 harness error. Styles always compare exactly.
-GPU agent-browser sessions only. A pair stays on this host. No remote mode.
+GPU browsers only. Each pair stays in one browser process on the selected host.
 `;
 
 export function parseArgs(argv) {
-  const options = { concurrency: 4, tolerance: 0, maxDiffPixels: 0, baselineRepeats: 1, noiseMaxChannelSpan: 8, noiseMaxPixels: null, first: 8, filters: {},
+  const options = { concurrency: 4, remoteCdp: 'ssh', tolerance: 0, maxDiffPixels: 0, baselineRepeats: 1, noiseMaxChannelSpan: 8, noiseMaxPixels: null, first: 8, filters: {},
     matrix: join(here, 'pm7_parity_states.json') };
   const files = [];
   for (let i = 0; i < argv.length; i++) {
@@ -55,10 +60,17 @@ export function parseArgs(argv) {
         if (!Number.isSafeInteger(number) || number < 0) throw Error(`${arg} requires a nonnegative integer`);
         options[{ 'max-diff-pixels': 'maxDiffPixels', 'baseline-repeats': 'baselineRepeats', 'noise-max-channel-span': 'noiseMaxChannelSpan', 'noise-max-pixels': 'noiseMaxPixels' }[key] || key] = number;
       } else if (key === 'out' || key === 'matrix') options[key] = resolve(value);
+      else if (key === 'host') options.host = value;
+      else if (key === 'serve-host') options.serveHost = value;
+      else if (key === 'remote-cdp') options.remoteCdp = value;
       else throw Error(`Unknown option ${arg}`);
     } else files.push(resolve(arg));
   }
-  if (options.concurrency < 1 || options.concurrency > 6 || options.tolerance > 255 || options.first < 1) throw Error('Invalid concurrency (1..6), tolerance (0..255) or first (>=1)');
+  if (options.host && !['windows', 'mac'].includes(options.host)) throw Error('Remote host must be windows or mac');
+  if (!['ssh', 'lan'].includes(options.remoteCdp)) throw Error('Remote CDP transport must be ssh or lan');
+  if (!options.host && (options.serveHost || options.remoteCdp !== 'ssh')) throw Error('--serve-host and --remote-cdp lan require --host');
+  if (options.serveHost) remoteServeHost(options.serveHost);
+  if (options.concurrency < 1 || options.concurrency > (options.host ? 8 : 6) || options.tolerance > 255 || options.first < 1) throw Error('Invalid concurrency (local 1..6, remote 1..8), tolerance (0..255) or first (>=1)');
   if (options.baselineRepeats < 1 || options.baselineRepeats > 8) throw Error('Invalid baseline repeats (1..8)');
   if (options.baselineRepeats > 1 && (options.tolerance || options.maxDiffPixels || options.deep)) throw Error('Baseline repeats cannot combine with tolerance or --deep');
   if (options.noiseMaxChannelSpan > 255) throw Error('Invalid noise channel cap (0..255)');
@@ -133,7 +145,7 @@ async function configurePage(browser) {
     await page.send('Animation.enable'); await page.send('Animation.setPlaybackRate', { playbackRate: 0 });
     const interceptErrors = browser.interceptErrors = [];
     const requests = new Map(); browser.blocked = new Set(); browser.failedRequests = [];
-    browser.currentUrl = 'file:///__pm7_parity__/input.html?o55=off&o55scenario=fresh&pm-warm=0';
+    browser.currentUrl = browser.documentUrl || 'file:///__pm7_parity__/input.html?o55=off&o55scenario=fresh&pm-warm=0';
     page.on('Network.requestWillBeSent', e => requests.set(e.requestId, e.request.url));
     page.on('Network.loadingFinished', e => requests.delete(e.requestId));
     page.on('Network.loadingFailed', e => {
@@ -144,9 +156,9 @@ async function configurePage(browser) {
       const uri = event.request.url;
       let request;
       if (event.resourceType === 'Document' && uri === browser.currentUrl) {
-        request = page.send('Fetch.fulfillRequest', { requestId: event.requestId, responseCode: 200,
+        request = browser.documentUrl ? page.send('Fetch.continueRequest', { requestId: event.requestId }) : page.send('Fetch.fulfillRequest', { requestId: event.requestId, responseCode: 200,
           responseHeaders: [{ name: 'Content-Type', value: 'text/html; charset=utf-8' }],
-          body: browser.storageProbe ? Buffer.from('<!doctype html><title>Storage isolation probe</title>').toString('base64') : browser.input.body });
+          body: browser.storageProbe ? Buffer.from(storageProbeHtml).toString('base64') : browser.input.body });
       } else if (/^(?:data:|blob:|file:)/.test(uri) && !uri.startsWith('file:///__pm7_parity_asset__/')) {
         request = page.send('Fetch.continueRequest', { requestId: event.requestId });
       } else {
@@ -174,14 +186,15 @@ async function assertEmptyStorage(browser) {
   if (databaseNames.length || cookies.length || storage.localStorage || storage.sessionStorage || storage.cacheKeys?.length || storage.serviceWorkers) throw Error('Fresh context contains persistent storage: ' + JSON.stringify({ databaseNames, cookies: cookies.length, ...storage }));
   browser.storageAudit = { freshContext: true, databaseNames, cookieCount: cookies.length, ...storage };
 }
-async function createBrowser(input, telemetry) {
-  const browser = await launch({ width: 1600, height: 900, scale: 1 });
+async function createBrowser(input, telemetry, options = {}) {
+  const browser = await launch({ width: 1600, height: 900, scale: 1, host: options.host, remoteCdp: options.remoteCdp });
   telemetry.live.add(browser); browser.input = input;
   try {
     const info = await browser.send('SystemInfo.getInfo');
     const renderer = info.gpu?.auxAttributes?.glRenderer || info.gpu?.devices?.map(d => d.deviceString).join('; ');
     if (!renderer || /swiftshader|llvmpipe|software/i.test(renderer)) throw Error('GPU renderer required: ' + renderer);
     telemetry.renderers.add(renderer);
+    browser.renderer = renderer;
     browser.version = await browser.send('Browser.getVersion');
     return browser;
   } catch (error) { await browser.close(); telemetry.live.delete(browser); throw error; }
@@ -463,7 +476,7 @@ async function run(options) {
     if (sampling) return; sampling = true;
     try {
       const pids = new Set([process.pid]);
-      for (const browser of telemetry.live) {
+      for (const browser of options.host ? [] : telemetry.live) {
         pids.add(browser.chrome.pid);
         const info = await browser.send('SystemInfo.getProcessInfo').catch(() => ({ processInfo: [] }));
         for (const proc of info.processInfo) pids.add(proc.id);
@@ -474,23 +487,22 @@ async function run(options) {
       telemetry.peakNodeRssBytes = Math.max(telemetry.peakNodeRssBytes, process.memoryUsage().rss); telemetry.samples++;
     } finally { sampling = false; }
   }
-  const interval = setInterval(() => { sampleMemory().catch(() => {}); }, 2000);
   let gitHead = null;
   try { gitHead = execFileSync('git', ['rev-parse', 'HEAD'], { cwd: resolve(here, '../../../..'), encoding: 'utf8', stdio: ['ignore', 'pipe', 'ignore'] }).trim(); } catch {}
-  const sourceFiles = ['pm7_parity.mjs', 'pm7_parity_browser.mjs', 'pm7_parity_chrome.mjs', 'pm7_parity_png.mjs', 'cdp-websocket.mjs'];
-  const report = { version: 1, started: new Date(started).toISOString(), host: hostname(), input: inputs.map(({ body, ...rest }) => rest),
+  const sourceFiles = ['pm7_parity.mjs', 'pm7_parity_browser.mjs', 'pm7_parity_chrome.mjs', 'pm7_parity_remote.mjs', 'pm7_parity_png.mjs', 'cdp-websocket.mjs'];
+  const report = { version: 1, started: new Date(started).toISOString(), host: options.host || hostname(), controllerHost: hostname(), input: inputs.map(({ body, ...rest }) => rest),
     harness: { gitHead, files: sourceFiles.map(name => ({ name, sha256: digest(readFileSync(join(here, name))) })) },
     matrix: { path: options.matrix, sha256: digest(readFileSync(options.matrix)), looks: selected.looks,
       pages: selected.pages.map(p => p.id), states: selected.states.map(s => s.id), viewports: selected.viewports, motions: selected.motions, planned: selected.count },
     customPropertyReads: customReads,
-    options: { concurrency: options.concurrency, browserCap: options.concurrency,
+    options: { concurrency: options.concurrency, browserCap: options.concurrency, host: options.host || 'local', remoteCdp: options.host ? options.remoteCdp : null,
       tolerance: options.tolerance, maxDiffPixels: options.maxDiffPixels, baselineRepeats: options.baselineRepeats,
       noiseMaxChannelSpan: options.noiseMaxChannelSpan, noiseMaxPixels: options.noiseMaxPixels ?? 'ceil(viewport pixels * 0.0005)', first: options.first, deep: !!options.deep },
     mode: options.baselineRepeats > 1 ? 'explicit measured baseline pixel envelope; exact styles' : options.tolerance || options.maxDiffPixels ? 'explicit pixel tolerance; exact styles' : 'exact',
     determinism: { epoch: 1789000000000, seed: '0x9e3779b9', clock: 'manual deterministic timers/rAF; Date, performance.now, document.timeline and Event.timeStamp share clock',
       animations: 'CDP playback rate 0; finite animations finished, infinite paused at 0; SVG paused at 0', motionModes: selected.motions,
       storage: 'fresh browser context per load; IndexedDB/cookies/local/session/cache/service-worker emptiness checked on inert same-origin probe before real navigation; local/session seeded before app code', network: 'only file:, data: and blob: allowed; blocked/failed requests recorded and compared',
-      documentUrl: 'same intercepted file: URL on both sides; source bytes supplied unmodified',
+      documentUrl: options.host ? 'same per-worker LAN HTTP URL on both sides; only exact top-level input/probe document allowed, bytes served unmodified; other HTTP(S) requests blocked' : 'same intercepted file: URL on both sides; source bytes supplied unmodified',
       pairing: 'one browser per worker; baseline group then candidate group with identical state prefixes; shared GPU process',
       idlePrewarming: 'disabled through the page-owned pm-warm=0 test hook; transient shader warm-up DOM is never started',
       baselineEnvelope: options.baselineRepeats > 1 ? `${options.baselineRepeats} baseline captures for raw-pixel failures with exact styles; same-browser navigation replays, per-pixel RGBA ranges, every repeat must have identical styles/state/errors; original candidate proof capture never retried/replaced` : 'disabled; zero pixel allowance in exact mode',
@@ -506,6 +518,9 @@ async function run(options) {
         'Manual clock freezes live data and decorative motion; animation timing itself is outside this parity check.',
         ...(options.deep ? [] : ['Native mode excludes custom properties not read by JS and cannot sample computed properties of nodes without layout objects or non-generated pseudos. Use --deep for these.'])] },
     rows: [], errors: [], browsers: [] };
+  const inputServer = options.host ? await createInputServer(remoteServeHost(options.serveHost)) : null;
+  if (inputServer) report.inputServer = { origin: inputServer.origin, stats: inputServer.stats };
+  const interval = setInterval(() => { sampleMemory().catch(() => {}); }, 2000);
   let cursor = 0;
   async function replayPrefix(browser, group, input, through, takeCapture) {
     await deadline(loadPreparedGroup(browser, group, input), 'noise replay load');
@@ -573,6 +588,8 @@ async function run(options) {
     const sameBehavior = sameErrors && sameState && sameRequests && sameRules && customCoverageComplete;
     const domOnlyPaths = options.deep ? [] : paths.filter(path => !a.nativeDetails.get(path) && !b.nativeDetails.get(path));
     const row = { id: key, look: group.look, page: group.page.id, state: state.id, viewport: group.viewport, motion: group.motion,
+      browser: { host: options.host || hostname(), sessionId: browsers[0].session.id, renderer: browsers[0].renderer,
+        version: browsers[0].version, transport: browsers[0].transport },
       styles: { baseline: a.styles.hash, candidate: b.styles.hash, differingElements: paths.length,
         baselineElements: a.styles.elements, candidateElements: b.styles.elements, styleRecords: [a.styles.entries.length, b.styles.entries.length],
         pseudoRecords: [a.styles.entries.filter(([path]) => path.includes('::')).length, b.styles.entries.filter(([path]) => path.includes('::')).length],
@@ -626,11 +643,14 @@ async function run(options) {
   }
   async function worker(index) {
     const browsers = [];
+    let unregisterInput;
     try {
-      browsers.push(await deadline(createBrowser(inputs[0], telemetry), 'launch baseline'));
+      browsers.push(await deadline(createBrowser(inputs[0], telemetry, options), 'launch baseline'));
       browsers[0].customReads = customReads;
+      if (inputServer) unregisterInput = inputServer.register(browsers[0]);
       for (const browser of browsers) {
-        report.browsers.push({ worker: index, sessionId: browser.session.id, pid: browser.chrome.pid, version: browser.version });
+        report.browsers.push({ worker: index, host: options.host || hostname(), sessionId: browser.session.id, pid: browser.chrome.pid,
+          version: browser.version, renderer: browser.renderer, transport: browser.transport, lifecycle: browser.lifecycle });
         console.log(`BROWSER worker=${index} session=${browser.session.id} pid=${browser.chrome.pid}`);
       }
       const browser = browsers[0];
@@ -688,14 +708,15 @@ async function run(options) {
         await browser.close().catch(error => report.errors.push({ worker: index, cleanup: String(error) }));
         telemetry.live.delete(browser);
       }
+      unregisterInput?.();
     }
   }
   try { await Promise.all(Array.from({ length: options.concurrency }, (_, i) => worker(i))); }
-  finally { clearInterval(interval); await sampleMemory(); }
+  finally { clearInterval(interval); await sampleMemory(); await inputServer?.close(); }
   report.rows.sort((a, b) => a.id.localeCompare(b.id));
   report.wallSeconds = (Date.now() - started) / 1000;
   report.memory = { peakAggregateRssBytes: telemetry.peakRssBytes, peakNodeRssBytes: telemetry.peakNodeRssBytes, samples: telemetry.samples,
-    method: '2-second RSS sum for harness, adapter children and Chrome SystemInfo process IDs; shared pages counted per process; Linux only' };
+    method: options.host ? '2-second controller RSS only; remote Chrome RSS is not sampled (remote PIDs never read from local /proc)' : '2-second RSS sum for harness, adapter children and Chrome SystemInfo process IDs; shared pages counted per process; Linux only' };
   report.renderers = [...telemetry.renderers];
   report.counts = { planned: selected.count, completed: report.rows.length, pass: report.rows.filter(r => r.verdict.startsWith('PASS')).length,
     fail: report.rows.filter(r => r.verdict === 'FAIL').length, errors: report.errors.length,

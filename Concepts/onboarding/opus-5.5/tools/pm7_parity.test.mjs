@@ -52,6 +52,14 @@ test('CLI rejects silent tolerance, unknown flags, invalid concurrency and empty
   assert.throws(() => parseArgs([...args, '--baseline-repeats', '3', '--tolerance', '1']), /cannot combine/);
   assert.throws(() => parseArgs([...args, '--baseline-repeats', '3', '--deep']), /cannot combine/);
   assert.throws(() => parseArgs([...args, '--noise-max-channel-span', '256']), /noise channel/);
+  assert.equal(parseArgs(args).host, undefined);
+  assert.equal(parseArgs([...args, '--host', 'windows', '--concurrency', '8']).remoteCdp, 'ssh');
+  assert.equal(parseArgs([...args, '--host', 'mac', '--remote-cdp', 'lan']).remoteCdp, 'lan');
+  assert.throws(() => parseArgs([...args, '--host', 'windows', '--concurrency', '9']), /concurrency/);
+  assert.throws(() => parseArgs([...args, '--host', 'other']), /Remote host/);
+  assert.throws(() => parseArgs([...args, '--remote-cdp', 'lan']), /require --host/);
+  assert.throws(() => parseArgs([...args, '--host', 'mac', '--remote-cdp', 'auto']), /transport/);
+  assert.throws(() => parseArgs([...args, '--host', 'mac', '--serve-host', '0.0.0.0']), /IPv4/);
   assert.deepEqual(parseArgs([...args, '--subset', 'looks=basic-dark', '--subset', 'looks=retro-light,basic-dark']).filters.looks, ['basic-dark', 'retro-light']);
 });
 test('default motion coverage preserves all reduced states and adds the full-motion menu subset', () => {
