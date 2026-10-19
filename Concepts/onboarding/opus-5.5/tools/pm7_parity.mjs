@@ -528,6 +528,7 @@ async function run(options) {
     rows: [], errors: [], browsers: [] };
   if (options.expectRemoved?.length) {
     report.options.expectRemoved = options.expectRemoved;
+    report.mode += '; baseline non-rendered removal path alignment';
     report.determinism.removalAlignment = 'Baseline only; selectors and skipped descendants verified against the same DOMSnapshot that supplies native style vectors; any subtree layout box errors. Raw styles/counts retained; other gates unchanged.';
   }
   let cursor = 0;
@@ -651,7 +652,7 @@ async function run(options) {
     row.verdictReasons = row.verdict === 'FAIL' && row.pixelNoise?.applied
       ? [...row.rawExactReasons, row.pixelNoise.unstableBaseline ? 'unstable-baseline' : 'outside-baseline-envelope'] : row.rawExactReasons;
     report.rows.push(row); appendFileSync(join(options.out, 'progress.jsonl'), JSON.stringify(row) + '\n');
-    console.log(`${row.verdict} ${report.rows.length}/${selected.count} ${key} exact=${row.rawExactVerdict} styles=${paths.length} pixels=${pixels.diffPixels} raw=${pixels.rawDiffPixels}${row.pixelNoise?.applied ? ' envelope=' + (row.pixelNoise.pass ? 'PASS' : 'FAIL') : ''}`);
+    console.log(`${row.verdict} ${report.rows.length}/${selected.count} ${key} exact=${row.rawExactVerdict} styles=${paths.length} pixels=${pixels.diffPixels} raw=${pixels.rawDiffPixels}${rawPaths ? ' rawStyles=' + rawPaths.length : ''}${row.pixelNoise?.applied ? ' envelope=' + (row.pixelNoise.pass ? 'PASS' : 'FAIL') : ''}`);
   }
   async function worker(index) {
     const browsers = [];
@@ -742,6 +743,11 @@ async function run(options) {
     `Raw exact verdict: ${report.rawExactVerdict}; PASS ${report.rawExactCounts.pass}; FAIL ${report.rawExactCounts.fail}. Measured-noise acceptances: ${report.counts.measuredNoiseAccepted}.`,
     `Wall time: ${report.wallSeconds.toFixed(2)} s. Peak aggregate RSS: ${(telemetry.peakRssBytes / 2 ** 30).toFixed(2)} GiB (sampled every 2 s).`, '',
     '| Input | SHA-256 |', '|---|---|', ...report.input.map(i => `| ${i.path} | ${i.sha256} |`), '',
+    ...(options.expectRemoved?.length ? [
+      `Baseline-only style path exclusions: ${options.expectRemoved.map(selector => JSON.stringify(selector)).join(', ')}.`,
+      'Raw exact verdict uses original pixels and the explicitly aligned style paths. Unaligned raw style hashes/counts and every skipped-node layout proof remain in report.json.', '',
+      '| State | Raw style paths differing | Aligned style paths differing | Skipped elements |', '|---|---:|---:|---:|',
+      ...report.rows.map(r => `| ${r.id} | ${r.styles.removalAlignment.rawDifferingElements} | ${r.styles.differingElements} | ${new Set(r.styles.removalAlignment.skippedNodes.map(node => node.snapshotPath)).size} |`), ''] : []),
     `Matrix: ${selected.looks.length} looks × ${selected.pages.length} surfaces × ${selected.viewports.length} viewports × ${selected.motions.join('/')} motion; page-specific states in ${options.matrix}.`,
     options.deep ? 'Deep style hashes include all computed properties, hidden nodes, ::before/::after, form ::placeholder and list ::marker.' : 'Native hashes combine standard layout styles with JS-read custom values from CSSOM on accessible layout elements/generated pseudos. All DOM paths are retained. Hidden/no-layout and non-generated pseudo styles remain unsampled; unused custom properties are excluded. Use --deep for these.', '',
     ...(failed.length ? ['| State | Style elements | Pixels above tolerance | Raw differing pixels | Reasons |', '|---|---:|---:|---:|---|', ...failed.map(r => `| ${r.id} | ${r.styles.differingElements} | ${r.pixels.diffPixels} | ${r.pixels.rawDiffPixels} | ${r.verdictReasons.join(', ')} |`), ''] : []),

@@ -90,6 +90,9 @@ matches fail. A selector matching nothing records no skipped nodes and grants no
 Each row's `styles.removalAlignment` lists every skipped path, selector, computed display,
 snapshot node index and zero layout-box proof, plus raw/aligned differing-path counts and raw
 hashes. Normal style counts/hashes and diagnostics use the aligned paths. `--first` still caps
+property diagnostics. The raw exact verdict uses original pixels with this explicit style-path
+policy; the unaligned raw style result remains recorded. The summary labels alignment and shows
+raw/aligned counts separately. `--first` caps
 property diagnostics; raise it to list every remaining difference. The option also applies to
 baseline replays. It requires native mode and rejects `--deep`, whose CSSOM sampler does not
 supply a simultaneous DOMSnapshot layout proof. Without it, capture and report behavior is unchanged.
