@@ -37,7 +37,7 @@ while both are on a page. The original owner proposal is in
 
 | | |
 |---|---|
-| Saved choice | The active Project's `general.visual.wallpaper`, through `PM7_SETTINGS_TOME`: `'look'` (the default) or a wallpaper `id`, shared by every look. The old `localStorage['pm-lg-wallpaper']` is only a migration input for a readable Project snapshot whose canonical choice is absent; an explicit Project choice wins. No-Project rendering uses ephemeral `'look'` and writes nothing. |
+| Saved choice | The active Project's `general.visual.wallpaper`, through `PM7_SETTINGS_TOME`: `'look'` (the default) or a wallpaper `id`, shared by every look. The old `localStorage['pm-lg-wallpaper']` can seed a readable Project snapshot whose canonical choice is absent once, then is cleared or marked consumed after successful Project write/readback; an explicit Project choice wins. No-Project rendering uses ephemeral `'look'` and writes nothing. |
 | One-visit override | `?lgwall=<id>`, read before the saved choice, the way `glass.js` reads it. |
 | On show | `<html data-lg-wall="<id>">`: the chosen id, or the look's default while the choice is `'look'`, or absent. |
 | Non-Glass look showing one | `<html data-lg-wall-any>` present. |

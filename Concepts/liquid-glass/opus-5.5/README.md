@@ -30,8 +30,9 @@ Attributes on `<html>`:
 Current URL controls are `?lgtier=gpu|cpu` and the visit-only wallpaper override `?lgwall=<id>`.
 `PM_LG.set` keeps `data-lg` on; the off switch and Alt+Shift+L shortcut are retired.
 The gallery and `PM_LG.wall` save `general.visual.wallpaper` through the active Project Settings adapter.
-The old `pm-lg-wallpaper` preference can seed only a readable Project snapshot whose canonical choice is absent;
-an explicit Project choice wins, and rendering without a Project writes nothing.
+The old `pm-lg-wallpaper` preference can seed a readable Project snapshot whose canonical choice is absent once;
+it is cleared or marked consumed after successful Project write/readback. An explicit Project choice wins,
+and rendering without a Project writes nothing.
 
 ## Checks (tools write outside the repository)
 
