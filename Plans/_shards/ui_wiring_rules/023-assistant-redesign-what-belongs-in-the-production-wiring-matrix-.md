@@ -4,7 +4,7 @@ Source: `Plans/UI_Wiring_Rules.md`
 
 Source lines: L1282-L1369
 
-Source SHA256: `801fdc37504d2402de595ac24324f274994c7aca61a91b7d77096513431edcb0`
+Source SHA256: `223a17b8be9d7b4f4271ed0b4b1c41456dfa99316db297e818f254dc78cd88ed`
 
 ---
 

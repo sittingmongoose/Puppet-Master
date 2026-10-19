@@ -4455,7 +4455,7 @@
         "scripts/pm-implementation-readiness.py",
         "scripts/pm-plans-verify.py"
       ],
-      "line_count": 23950,
+      "line_count": 23952,
       "path": "Plans/Contracts_V0.md",
       "plan_unit_count": 355,
       "plan_unit_ids": [
@@ -5171,7 +5171,7 @@
         "worktree_lane_context_loss",
         "worktree_lifecycle_record_loss"
       ],
-      "sha256": "59159c24fea2637ba183c6ddc91ab8a8945b44862a2db51d9e756b530375a42c",
+      "sha256": "4774635c1122063f16bf56e0d83c4124c4656d96f330d52dacc4dc96e5902cb7",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 355
@@ -5202,6 +5202,8 @@
         "PlanUnit YAML parse and identifier uniqueness",
         "Plans/.plan_index/node_readiness_report.json",
         "Plans/Automated_Testing_System.md#ATS-058",
+        "Plans/Automated_Testing_System.md#ATS-075",
+        "Plans/Automated_Testing_System.md#ATS-076",
         "Plans/Contracts_V0.md#73-route_target",
         "Plans/Crosswalk.md#c-052---forge-backuptsnet-owner-precedence-and-exact-route-context",
         "Plans/assistant_plan_cancel_bound_entry.schema.json",
@@ -5289,7 +5291,6 @@
         "git diff --check",
         "independent complete original-source/schema/role preservation audit",
         "inline visualizer bridge registry and native host adapter fixtures",
-        "node Concepts/pm7-tools/verify/home_workspace_matrix.mjs",
         "notification delivery contract fixtures",
         "provider dispatch no-bypass and immutable-byte fixtures",
         "python3 -m json.tool Plans/event_record.schema.json",
@@ -19917,9 +19918,6 @@
       },
       "heading_count": 80,
       "implementation_surfaces": [
-        "Concepts/pm7-tools/",
-        "Concepts/pm7-tools/global_hover_tags_source.py",
-        "Concepts/pm7-tools/onboarding_cinematic_source.py",
         "Plans/.implementation_readiness/buildability_gate_report.json",
         "Plans/Commands_System.md",
         "Plans/Contracts_V0.md",
@@ -19942,7 +19940,7 @@
         "scripts/pm-plans-verify.py",
         "scripts/pm-touch-closure-verify.py"
       ],
-      "line_count": 2523,
+      "line_count": 2524,
       "path": "Plans/UI_Wiring_Rules.md",
       "plan_unit_count": 32,
       "plan_unit_ids": [
@@ -20015,7 +20013,7 @@
         "version_exact_opener_drift",
         "wiring_duplication_or_teardown_leak"
       ],
-      "sha256": "801fdc37504d2402de595ac24324f274994c7aca61a91b7d77096513431edcb0",
+      "sha256": "223a17b8be9d7b4f4271ed0b4b1c41456dfa99316db297e818f254dc78cd88ed",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 32
@@ -20030,9 +20028,6 @@
         "wiring_rule": 7
       },
       "validation_surfaces": [
-        "Concepts/pm7-tools/onboarding_cinematic_source.py",
-        "Concepts/pm7-tools/systems_integration_source.py",
-        "Concepts/pm7-tools/verify/onboarding_cinematic.mjs",
         "ContractRef lint",
         "Dispatcher tests",
         "Dispatcher tests for unknown-command rejection",
@@ -20047,6 +20042,10 @@
         "Migration coverage map for retained anchors and aliases",
         "Plans/.plan_migration/pds-20260611-001-standardize-plans/anchor_aliases.json",
         "Plans/Automated_Testing_System.md#ATS-047 — future terminal fixtures",
+        "Plans/Automated_Testing_System.md#ATS-075",
+        "Plans/Automated_Testing_System.md#ATS-076",
+        "Plans/FinalGUISpec.md#F3-523 (hover/focus, Escape, departure grace, geometry, themes and reduced-motion acceptance)",
+        "Plans/UI_Wiring_Rules.md#UIW-013 (accessible names/descriptions, disabled focus without activation, keyboard parity and documented exemptions)",
         "Plans/Wiring_Matrix.production.exclusions.json",
         "Plans/Wiring_Matrix.production.json",
         "Plans/Wiring_Matrix.schema.json",
@@ -20063,9 +20062,6 @@
         "future Settings eleven-row command/action census",
         "future native Product Onboarding request/result and accessibility fixtures",
         "handler-absence",
-        "node Concepts/pm7-tools/verify/accessibility_visual_matrix.mjs",
-        "node Concepts/pm7-tools/verify/home_workspace_matrix.mjs",
-        "node Concepts/pm7-tools/verify/hover_tags.mjs",
         "python3 scripts/pm-implementation-readiness.py validate",
         "python3 scripts/pm-plan-index.py validate",
         "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits",
@@ -20948,7 +20944,7 @@
       ]
     }
   ],
-  "generated_at_utc": "2026-10-17T22:23:37Z",
+  "generated_at_utc": "2026-10-19T00:14:31Z",
   "schema_id": "pm.plan_index.doc_cards.v1",
   "source_scope": "top-level live Plans/*.md; excludes ledgers, generated shards, evidence, and pipeline artifacts",
   "summary": {

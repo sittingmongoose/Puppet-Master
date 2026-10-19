@@ -2758,7 +2758,6 @@
       ],
       "return_route": "Originating Settings route and focus.",
       "reverse_consumers": [
-        "Concepts/pm7-tools/settings_tome_source.py",
         "Plans/FinalGUISpec.md"
       ],
       "event_refs": [
@@ -2807,8 +2806,7 @@
       "return_route": "Exact opener Project, route, focus, transient, query, and detail context.",
       "reverse_consumers": [
         "Plans/Planning_Wizard.md",
-        "Plans/newtools.md",
-        "Concepts/pm7-tools/systems_integration_source.py"
+        "Plans/newtools.md"
       ],
       "event_refs": [
         "none_route_only"
@@ -2964,8 +2962,7 @@
       "reverse_consumers": [
         "Plans/Settings_System.md",
         "Plans/Planning_Wizard.md",
-        "Plans/newtools.md",
-        "Concepts/pm7-tools/systems_integration_source.py"
+        "Plans/newtools.md"
       ],
       "event_refs": [
         "Plans/Server_System.md#3.3 Event Authority candidates pending admission"
@@ -3020,9 +3017,7 @@
       "reverse_consumers": [
         "Plans/Settings_System.md",
         "Plans/Planning_Wizard.md",
-        "Plans/newtools.md",
-        "Concepts/pm7-tools/onboarding_cinematic_source.py",
-        "Concepts/pm7-tools/systems_integration_source.py"
+        "Plans/newtools.md"
       ],
       "event_refs": [
         "No EventRecord emission until Event Authority admits the named Server candidates."
@@ -3042,8 +3037,7 @@
         "Plans/Server_System.md#SRV-009"
       ],
       "test_refs": [
-        "Plans/server_system_contract_fixtures.json",
-        "Concepts/pm7-tools/verify/onboarding_cinematic.mjs"
+        "Plans/server_system_contract_fixtures.json"
       ],
       "evidence_refs": [
         "static_schema_fixture_and_concept_only",
@@ -3241,7 +3235,6 @@
         "Plans/Settings_System.md",
         "Plans/newtools.md",
         "Plans/Test_Capture_and_Motion_Evidence.md",
-        "Concepts/pm7-tools/systems_integration_source.py",
         "Plans/usage-feature.md",
         "Plans/Prompt_Pipeline.md",
         "Plans/Wiring_Matrix.md"
@@ -3416,16 +3409,13 @@
       ],
       "persistence_refs": [
         "immutable raw segments and derived provenance records",
-        "approval-gated PMConcept7 campaign evidence retained until explicit user cleanup approval"
+        "approval-gated capture evidence retained until explicit user cleanup approval"
       ],
       "migration_refs": [
         "Plans/Test_Capture_and_Motion_Evidence.md#9"
       ],
       "test_refs": [
-        "Plans/test_capture_motion_evidence_contract_fixtures.json",
-        "Concepts/pm7-tools/verify/final_campaign_capture.mjs",
-        "Concepts/pm7-tools/verify/review_capture_frames.py",
-        "Concepts/pm7-tools/verify/final_evidence_gate.py"
+        "Plans/test_capture_motion_evidence_contract_fixtures.json"
       ],
       "evidence_refs": [
         "static_schema_fixture_and_external_harness_only",
@@ -3797,7 +3787,6 @@
       "reverse_consumers": [
         "Plans/Settings_System.md",
         "Plans/Section15_MVP_Promoted_Features_Spec.md",
-        "Concepts/pm7-tools/onboarding_cinematic_source.py",
         "Plans/Planning_Wizard.md",
         "Plans/FinalGUISpec.md",
         "Plans/Project_System.md",
@@ -3831,7 +3820,6 @@
       ],
       "test_refs": [
         "Plans/product_onboarding_contract_fixtures.json",
-        "Concepts/pm7-tools/verify/onboarding_cinematic.mjs",
         "tests/test_pm_onboarding_phases.py",
         "tests/test_pm_settings_draft_transfer.py",
         "Plans/final_gui_interaction_contract_fixtures.json",
@@ -3871,8 +3859,7 @@
       "return_route": "Skip restores captured layout/Chat selection, placeholder, unsent state and focus. Finish restores by default or keeps only by explicit selection, removes practice, and lands on the real Planning Wizard with the committed Project selected. Failed restoration remains unfinished.",
       "reverse_consumers": [
         "Plans/Settings_System.md",
-        "Plans/FinalGUISpec.md",
-        "Concepts/pm7-tools/guided_tour_source.py"
+        "Plans/FinalGUISpec.md"
       ],
       "event_refs": [
         "none_local_transition"
@@ -3890,9 +3877,7 @@
         "Predecessor Usage-first/Chat-final/no-resume and older five-chapter records are lineage only, without implicit completion, Keep, or replay of domain work."
       ],
       "test_refs": [
-        "Plans/guided_tour_contract_fixtures.json",
-        "Concepts/pm7-tools/verify/guided_tour_polish_checkpoint.mjs",
-        "Concepts/pm7-tools/verify/guided_tour_lifecycle_checkpoint.mjs"
+        "Plans/guided_tour_contract_fixtures.json"
       ],
       "evidence_refs": [
         "static_v3_contract_and_scoped_concept_checks_only",
@@ -3927,8 +3912,7 @@
       "return_route": "Exact Doctor scope/check, caller Settings route, and owner-remediation continuation.",
       "reverse_consumers": [
         "Plans/Settings_System.md",
-        "Plans/Planning_Wizard.md",
-        "Concepts/pm7-tools/systems_integration_source.py"
+        "Plans/Planning_Wizard.md"
       ],
       "event_refs": [
         "domain owner only"
@@ -3946,8 +3930,7 @@
         "Plans/newtools.md#N2-153"
       ],
       "test_refs": [
-        "Plans/doctor_contract_fixtures.json",
-        "Concepts/pm7-tools/verify/systems_integration.mjs"
+        "Plans/doctor_contract_fixtures.json"
       ],
       "evidence_refs": [
         "concept_simulation_not_native_runtime"
@@ -4013,9 +3996,7 @@
       "test_refs": [
         "Plans/plugin_contract_fixtures.json",
         "Plans/plugin_package_contract_fixtures.json",
-        "Plans/Wiring_Matrix.production.json",
-        "Concepts/pm7-tools/verify/systems_integration.mjs",
-        "Concepts/pm7-tools/verify/plugin_projection_matrix.mjs"
+        "Plans/Wiring_Matrix.production.json"
       ],
       "evidence_refs": [
         "static_schema_catalog_and_production_intent_wiring",
@@ -4126,7 +4107,7 @@
       ],
       "owner_plan": "Plans/FinalGUISpec.md",
       "plan_unit": "F3-523",
-      "dry_contract_ref": "Concepts/pm7-tools/global_hover_tags_source.py#PMHoverTag",
+      "dry_contract_ref": "Plans/FinalGUISpec.md#F3-523",
       "payload_schema_ref": "typed anchor geometry, target key, hover/focus state, timers, theme and accessibility text",
       "result_schema_ref": "overlay presentation state",
       "error_schema_ref": "suppressed or inaccessible target reason",
@@ -4136,15 +4117,13 @@
       "handler_owner": "Final GUI PMHoverTag/HoverTagController; native Slint component is not implemented.",
       "handler_status": "specified",
       "wiring_status": "concept_simulated",
-      "production_or_simulation": "PMConcept7 shared overlay simulation only.",
+      "production_or_simulation": "PMConcept7 shared overlay simulation only. Product acceptance references, fixtures and structural checks do not establish native execution; native executable cases remain owed.",
       "gui_triggers": [
         "Pointer hover, keyboard focus, Escape, departure grace, resize, zoom, theme change"
       ],
       "return_route": "Origin target and focus without layout shift.",
       "reverse_consumers": [
-        "Plans/Settings_System.md",
-        "Concepts/pm7-tools/global_hover_tags_source.py",
-        "Concepts/pm7-tools/verify/hover_tags.mjs"
+        "Plans/Settings_System.md"
       ],
       "event_refs": [
         "none_presentation_only"
@@ -4160,7 +4139,8 @@
         "native title tooltip replacement"
       ],
       "test_refs": [
-        "Concepts/pm7-tools/verify/hover_tags.mjs"
+        "Plans/UI_Wiring_Rules.md#UIW-013",
+        "scripts/pm-touch-closure-verify.py"
       ],
       "evidence_refs": [
         "concept_simulation_not_native_runtime"
@@ -4634,7 +4614,7 @@
       ],
       "owner_plan": "Plans/Settings_System.md",
       "plan_unit": "SSYS-003",
-      "dry_contract_ref": "Concepts/pm7-tools/systems_integration_source.py#typed Settings local actions",
+      "dry_contract_ref": "Plans/settings_system_contracts.schema.json#/$defs/settings_local_ui_action_payload",
       "payload_schema_ref": "typed route/tab, editor or library-filter identifier and current Settings state",
       "result_schema_ref": "local Settings projection state (tab, route, open editor or library filter)",
       "error_schema_ref": "missing target or concept_fixture_only",
@@ -4644,7 +4624,7 @@
       "handler_owner": "K3 Settings local projection controller; native Slint handler is absent.",
       "handler_status": "specified",
       "wiring_status": "concept_simulated",
-      "production_or_simulation": "PMConcept7 typed local-action simulation only; the NieR Mode editor and sound library actions are simulated by the opus-5.5 concept.",
+      "production_or_simulation": "PMConcept7 typed local-action simulation only; the NieR Mode editor and sound library actions are simulated by the opus-5.5 concept. Product acceptance references, fixtures and structural checks do not establish native execution; native executable cases remain owed.",
       "gui_triggers": [
         "Settings Server tabs, Browser/SCM tabs, and owner-backed route controls",
         "NieR Mode editor: Adjust NieR look in the title-bar theme selector and the Tour bar's Look menu, and the Settings row's Customize NieR Mode; its close button, Escape and scrim; Play reboot moment",
@@ -4652,7 +4632,6 @@
       ],
       "return_route": "Current Settings document/index/detail/manager context and focus; the NieR Mode editor returns focus to the control that opened it.",
       "reverse_consumers": [
-        "Concepts/pm7-tools/systems_integration_source.py",
         "Plans/FinalGUISpec.md",
         "Plans/Settings_System.md",
         "Concepts/onboarding/opus-5.5/src/settings/kit.d/22-nier-chips.js",
@@ -4670,8 +4649,9 @@
       ],
       "migration_refs": [],
       "test_refs": [
-        "Concepts/pm7-tools/verify/systems_integration.mjs",
-        "Concepts/onboarding/opus-5.5/tools/scenarios.mjs"
+        "Plans/Settings_System.md#SSYS-003",
+        "Plans/settings_system_contracts.schema.json#/$defs/settings_local_ui_action_payload",
+        "scripts/pm-touch-closure-verify.py"
       ],
       "evidence_refs": [
         "concept_simulation_not_native_runtime"
@@ -4685,7 +4665,7 @@
       ],
       "owner_plan": "Plans/Project_Sync_and_Backbone.md",
       "plan_unit": "PSB-002",
-      "dry_contract_ref": "Concepts/pm7-tools/systems_integration_source.py#typed Project Sync local actions",
+      "dry_contract_ref": "Plans/Project_Sync_and_Backbone.md#PSB-002",
       "payload_schema_ref": "Exact Project Sync tab, preview, inspector, or owner-route target plus current Project/Vault/topology projection",
       "result_schema_ref": "Local concept projection only; owner commands and owner results remain outside these UI actions",
       "error_schema_ref": "concept_preview_only, stale projection, missing target, or owner route unavailable",
@@ -4695,13 +4675,12 @@
       "handler_owner": "K3 Project Sync local projection controller only; Project Sync and Backbone retains every sync, move, copy, relocation, conflict, diagnostic, and recovery operation.",
       "handler_status": "specified",
       "wiring_status": "concept_simulated",
-      "production_or_simulation": "T46 PMConcept7 local projection metadata only; no native Slint handler, Project Sync runtime, or transfer evidence.",
+      "production_or_simulation": "PMConcept7 illustrates local Project Sync projections only; no native Slint handler, Project Sync runtime, or transfer evidence. Product acceptance references, fixtures and structural checks do not establish native execution; native executable cases remain owed.",
       "gui_triggers": [
         "Project Sync Settings tabs, previews, inspectors, disclosures, and owner-route affordances"
       ],
       "return_route": "Current Project Sync tab, row/detail identity, scroll position, and focus.",
       "reverse_consumers": [
-        "Concepts/pm7-tools/systems_integration_source.py",
         "Plans/Settings_System.md"
       ],
       "event_refs": [
@@ -4718,7 +4697,8 @@
       ],
       "migration_refs": [],
       "test_refs": [
-        "Concepts/pm7-tools/verify/systems_integration.mjs"
+        "Plans/Project_Sync_and_Backbone.md#PSB-002",
+        "scripts/pm-touch-closure-verify.py"
       ],
       "evidence_refs": [
         "concept_simulation_not_native_runtime"
@@ -4731,7 +4711,7 @@
       ],
       "owner_plan": "Plans/Test_Capture_and_Motion_Evidence.md",
       "plan_unit": "TCME-004",
-      "dry_contract_ref": "Concepts/pm7-tools/systems_integration_source.py#capture policy inspector",
+      "dry_contract_ref": "Plans/Test_Capture_and_Motion_Evidence.md#TCME-004",
       "payload_schema_ref": "typed capture policy projection target",
       "result_schema_ref": "local inspector route state",
       "error_schema_ref": "target or owner projection unavailable",
@@ -4741,13 +4721,13 @@
       "handler_owner": "Capture policy local inspector routing to TestCaptureService projections; native handler is absent.",
       "handler_status": "specified",
       "wiring_status": "concept_simulated",
-      "production_or_simulation": "PMConcept7 local inspector simulation only.",
+      "production_or_simulation": "PMConcept7 local inspector simulation only. Product acceptance references, fixtures and structural checks do not establish native execution; native executable cases remain owed.",
       "gui_triggers": [
         "Capture policy Inspect control"
       ],
       "return_route": "Originating Settings/Testing route and focus.",
       "reverse_consumers": [
-        "Concepts/pm7-tools/systems_integration_source.py"
+        "Plans/Settings_System.md"
       ],
       "event_refs": [
         "none_local_presentation_action"
@@ -4759,7 +4739,8 @@
       "persistence_refs": [],
       "migration_refs": [],
       "test_refs": [
-        "Concepts/pm7-tools/verify/systems_integration.mjs"
+        "Plans/Test_Capture_and_Motion_Evidence.md#TCME-004",
+        "scripts/pm-touch-closure-verify.py"
       ],
       "evidence_refs": [
         "concept_simulation_not_native_runtime"
@@ -4772,7 +4753,7 @@
       ],
       "owner_plan": "Plans/Named_Plan_System.md",
       "plan_unit": "NPLAN-002",
-      "dry_contract_ref": "Concepts/pm7-tools/systems_integration_source.py#Named Plan inspector",
+      "dry_contract_ref": "Plans/Named_Plan_System.md#NPLAN-002",
       "payload_schema_ref": "typed named_plan_id inspector target",
       "result_schema_ref": "local inspector route state",
       "error_schema_ref": "missing or stale Named Plan projection",
@@ -4782,13 +4763,13 @@
       "handler_owner": "Named Plan local inspector route; native handler is absent.",
       "handler_status": "specified",
       "wiring_status": "concept_simulated",
-      "production_or_simulation": "PMConcept7 local inspector simulation only.",
+      "production_or_simulation": "PMConcept7 local inspector simulation only. Product acceptance references, fixtures and structural checks do not establish native execution; native executable cases remain owed.",
       "gui_triggers": [
         "Named Plan Inspect control"
       ],
       "return_route": "Originating Named Plan/Settings route and focus.",
       "reverse_consumers": [
-        "Concepts/pm7-tools/systems_integration_source.py"
+        "Plans/Settings_System.md"
       ],
       "event_refs": [
         "none_local_presentation_action"
@@ -4800,7 +4781,8 @@
       "persistence_refs": [],
       "migration_refs": [],
       "test_refs": [
-        "Concepts/pm7-tools/verify/systems_integration.mjs"
+        "Plans/Named_Plan_System.md#NPLAN-002",
+        "scripts/pm-touch-closure-verify.py"
       ],
       "evidence_refs": [
         "concept_simulation_not_native_runtime"
@@ -4813,7 +4795,7 @@
       ],
       "owner_plan": "Plans/Cursor_Origin_Integration.md",
       "plan_unit": "ORI-008",
-      "dry_contract_ref": "Concepts/pm7-tools/systems_integration_source.py#Cursor Origin Preview inspector",
+      "dry_contract_ref": "Plans/Cursor_Origin_Integration.md#ORI-008",
       "payload_schema_ref": "typed cursor_origin Preview projection target",
       "result_schema_ref": "local Preview inspector route state",
       "error_schema_ref": "Preview eligibility or owner projection unavailable",
@@ -4823,13 +4805,12 @@
       "handler_owner": "Cursor Origin Preview local inspector route; native handler is absent.",
       "handler_status": "specified",
       "wiring_status": "concept_simulated",
-      "production_or_simulation": "PMConcept7 brief Preview insertion only.",
+      "production_or_simulation": "PMConcept7 brief Preview insertion only. Product acceptance references, fixtures and structural checks do not establish native execution; native executable cases remain owed.",
       "gui_triggers": [
         "Cursor Origin Preview Inspect control"
       ],
       "return_route": "Originating Project/Settings route and focus.",
       "reverse_consumers": [
-        "Concepts/pm7-tools/systems_integration_source.py",
         "Plans/Planning_Wizard.md"
       ],
       "event_refs": [
@@ -4844,7 +4825,8 @@
         "no dedicated Origin onboarding subsystem"
       ],
       "test_refs": [
-        "Concepts/pm7-tools/verify/systems_integration.mjs"
+        "Plans/Cursor_Origin_Integration.md#ORI-008",
+        "scripts/pm-touch-closure-verify.py"
       ],
       "evidence_refs": [
         "concept_simulation_not_native_runtime"
@@ -4857,7 +4839,7 @@
       ],
       "owner_plan": "Plans/Shared_Integration_Runtime.md",
       "plan_unit": "SIR-017",
-      "dry_contract_ref": "Concepts/pm7-tools/systems_integration_source.py#performance evidence inspector",
+      "dry_contract_ref": "Plans/Shared_Integration_Runtime.md#SIR-017",
       "payload_schema_ref": "typed performance evidence subject",
       "result_schema_ref": "local evidence inspector route state",
       "error_schema_ref": "evidence unavailable or not_run",
@@ -4867,13 +4849,12 @@
       "handler_owner": "Performance evidence local inspector route; native handler is absent.",
       "handler_status": "specified",
       "wiring_status": "concept_simulated",
-      "production_or_simulation": "PMConcept7 evidence inspector simulation only.",
+      "production_or_simulation": "PMConcept7 evidence inspector simulation only. Product acceptance references, fixtures and structural checks do not establish native execution; native executable cases remain owed.",
       "gui_triggers": [
         "Performance Evidence Inspect control"
       ],
       "return_route": "Originating performance/Settings route and focus.",
       "reverse_consumers": [
-        "Concepts/pm7-tools/systems_integration_source.py",
         "Plans/Release_Supply_Chain.md"
       ],
       "event_refs": [
@@ -4886,7 +4867,8 @@
       "persistence_refs": [],
       "migration_refs": [],
       "test_refs": [
-        "Concepts/pm7-tools/verify/systems_integration.mjs"
+        "Plans/Shared_Integration_Runtime.md#SIR-017",
+        "scripts/pm-touch-closure-verify.py"
       ],
       "evidence_refs": [
         "concept_simulation_not_native_runtime"
@@ -4899,7 +4881,7 @@
       ],
       "owner_plan": "Plans/Planning_Wizard.md",
       "plan_unit": "PWIZ-001",
-      "dry_contract_ref": "Concepts/pm7-tools/systems_integration_source.py#Planning Wizard route",
+      "dry_contract_ref": "Plans/Planning_Wizard.md#PWIZ-001",
       "payload_schema_ref": "typed Planning Wizard route target and return context",
       "result_schema_ref": "local route state",
       "error_schema_ref": "route target unavailable",
@@ -4909,14 +4891,13 @@
       "handler_owner": "Planning Wizard local route adapter; native handler is absent.",
       "handler_status": "specified",
       "wiring_status": "concept_simulated",
-      "production_or_simulation": "PMConcept7 local route simulation only.",
+      "production_or_simulation": "PMConcept7 local route simulation only. Product acceptance references, fixtures and structural checks do not establish native execution; native executable cases remain owed.",
       "gui_triggers": [
         "Guided Tour terminal Open Planning Wizard control"
       ],
       "return_route": "Exact prior shell route and focus.",
       "reverse_consumers": [
-        "Concepts/pm7-tools/systems_integration_source.py",
-        "Concepts/pm7-tools/guided_tour_source.py"
+        "Plans/Planning_Wizard.md#PWIZ-023"
       ],
       "event_refs": [
         "none_route_only"
@@ -4928,8 +4909,9 @@
       "persistence_refs": [],
       "migration_refs": [],
       "test_refs": [
-        "Concepts/pm7-tools/verify/systems_integration.mjs",
-        "Concepts/pm7-tools/verify/guided_tour.mjs"
+        "Plans/Planning_Wizard.md#PWIZ-001",
+        "Plans/Planning_Wizard.md#PWIZ-023",
+        "scripts/pm-touch-closure-verify.py"
       ],
       "evidence_refs": [
         "concept_simulation_not_native_runtime"
@@ -4953,7 +4935,7 @@
       "handler_owner": "Existing handlers::persona::select route; no new Tour handler.",
       "handler_status": "specified",
       "wiring_status": "concept_simulated",
-      "production_or_simulation": "Existing catalog/wiring candidate identity and scoped concept adapter only, not native execution.",
+      "production_or_simulation": "Existing catalog/wiring candidate identity and scoped concept adapter only, not native execution. Product acceptance references, fixtures and structural checks do not establish native execution; native executable cases remain owed.",
       "gui_triggers": [
         "Existing Persona picker including Teacher selection during Guided Tour"
       ],
@@ -4961,8 +4943,7 @@
       "reverse_consumers": [
         "Plans/UI_Command_Catalog.md",
         "Plans/Wiring_Matrix.production.json",
-        "Plans/Planning_Wizard.md#PWIZ-023",
-        "Concepts/pm7-tools/guided_tour_source.py"
+        "Plans/Planning_Wizard.md#PWIZ-023"
       ],
       "event_refs": [
         "Existing domain event candidates remain subject to Event Authority; no Tour event admission."
@@ -4980,8 +4961,10 @@
         "Concept ui.assistant_chat spellings are not canonical command alternatives."
       ],
       "test_refs": [
-        "Concepts/pm7-tools/verify/guided_tour_polish_checkpoint.mjs",
-        "Concepts/pm7-tools/verify/guided_tour_lifecycle_checkpoint.mjs"
+        "Plans/final_gui_interaction_contract_fixtures.json",
+        "Plans/Personas.md#P-056",
+        "Plans/Planning_Wizard.md#PWIZ-023",
+        "scripts/pm-touch-closure-verify.py"
       ],
       "evidence_refs": [
         "static_catalog_wiring_candidate_and_scoped_concept_only",
@@ -5009,7 +4992,7 @@
       "handler_owner": "Existing handlers::chat::send, handlers::assistant_chat::eli5_set and handlers::assistant_chat::eli5_explain_reply routes; no new Tour handler.",
       "handler_status": "specified",
       "wiring_status": "concept_simulated",
-      "production_or_simulation": "Existing catalog/wiring candidate identity and scoped concept adapter only, not native execution.",
+      "production_or_simulation": "Existing catalog/wiring candidate identity and scoped concept adapter only, not native execution. Product acceptance references, fixtures and structural checks do not establish native execution; native executable cases remain owed.",
       "gui_triggers": [
         "Existing Chat composer send and same-answer ELI5 during Guided Tour; the simpler version is one extra reply from Explain this reply simply and no switch rewrites the example answer (DL-126)"
       ],
@@ -5018,7 +5001,6 @@
         "Plans/UI_Command_Catalog.md",
         "Plans/Wiring_Matrix.production.json",
         "Plans/Planning_Wizard.md#PWIZ-023",
-        "Concepts/pm7-tools/guided_tour_source.py",
         "Concepts/onboarding/opus-5.5/src/js/81-tour-chat.js"
       ],
       "event_refs": [
@@ -5037,8 +5019,11 @@
         "Concept ui.assistant_chat spellings are not canonical command alternatives."
       ],
       "test_refs": [
-        "Concepts/pm7-tools/verify/guided_tour_polish_checkpoint.mjs",
-        "Concepts/pm7-tools/verify/guided_tour_lifecycle_checkpoint.mjs"
+        "Plans/assistant_chat_contract_fixtures.json",
+        "Plans/final_gui_interaction_contract_fixtures.json",
+        "Plans/assistant-chat-design.md#ACD-484",
+        "Plans/Planning_Wizard.md#PWIZ-023",
+        "scripts/pm-touch-closure-verify.py"
       ],
       "evidence_refs": [
         "static_catalog_wiring_candidate_and_scoped_concept_only",
@@ -5068,7 +5053,6 @@
       ],
       "return_route": "Prior shell route and focus.",
       "reverse_consumers": [
-        "Concepts/pm7-tools/guided_tour_source.py",
         "Plans/Planning_Wizard.md"
       ],
       "event_refs": [
@@ -5083,8 +5067,7 @@
         "cmd.nav.focus_route remains optional migration lineage only"
       ],
       "test_refs": [
-        "Plans/guided_tour_contract_fixtures.json",
-        "Concepts/pm7-tools/verify/guided_tour_lifecycle_checkpoint.mjs"
+        "Plans/guided_tour_contract_fixtures.json"
       ],
       "evidence_refs": [
         "authored typed local request/result current; final artifact browser evidence pending; native Slint evidence absent"
@@ -5110,15 +5093,13 @@
       "handler_owner": "Final GUI panel shell controller; production-native implementation evidence is absent.",
       "handler_status": "specified",
       "wiring_status": "concept_simulated",
-      "production_or_simulation": "PMConcept7 Home retains undock/redock controls. Current tour visibility switching and workspace-layout move practice share their respective existing owners; no native execution is evidenced. Amended 2026-10-09 (DL-180): from Home, undock and redock take only the chat, into its own window in the desktop app; no panel, tab or dashboard pops out (UCC-203).",
+      "production_or_simulation": "PMConcept7 Home retains undock/redock controls. Current tour visibility switching and workspace-layout move practice share their respective existing owners; no native execution is evidenced. Amended 2026-10-09 (DL-180): from Home, undock and redock take only the chat, into its own window in the desktop app; no panel, tab or dashboard pops out (UCC-203). Cases written for the retired four-panel Home model do not prove this row; replacement executable cases are owed (ATS-075/076).",
       "gui_triggers": [
         "The chat's Pop out and Dock back, the only panel undock/redock from Home (cmd.panel.undock / cmd.panel.redock with chat; amended 2026-10-09, DL-180)",
         "Guided Tour Chat visibility and captured-state restoration"
       ],
       "return_route": "Tour target plus restorable pre-tour layout/focus.",
       "reverse_consumers": [
-        "Concepts/pm7-tools/home_workspace_source.py",
-        "Concepts/pm7-tools/guided_tour_source.py",
         "Plans/FinalGUISpec.md"
       ],
       "event_refs": [
@@ -5133,8 +5114,10 @@
       ],
       "migration_refs": [],
       "test_refs": [
-        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs",
-        "Concepts/pm7-tools/verify/guided_tour_lifecycle_checkpoint.mjs"
+        "Plans/Automated_Testing_System.md#ATS-075",
+        "Plans/Automated_Testing_System.md#ATS-076",
+        "Plans/Planning_Wizard.md#PWIZ-035",
+        "scripts/pm-touch-closure-verify.py"
       ],
       "evidence_refs": [
         "concept_simulation_not_native_runtime"
@@ -5158,7 +5141,7 @@
       "handler_owner": "Widget System command router; production-native implementation evidence is absent.",
       "handler_status": "specified",
       "wiring_status": "concept_simulated",
-      "production_or_simulation": "The current tour reuses Widget add/configure for practice and owner layout/visibility methods for restoration; remove remains retained in ordinary Usage/Dashboard. No native execution is evidenced. Amended 2026-10-10 (DL-186; P1 B, P10; WM-041): the tour's widget practice adds Upcoming resets to the Home dashboard and then moves or resizes it there (cmd.widget.add, then cmd.widget.move or cmd.widget.resize, naming the Home board in room), finished only by the board's accepted add and then move or resize (PWIZ-035); configure is not a tour checkpoint.",
+      "production_or_simulation": "The current tour reuses Widget add/configure for practice and owner layout/visibility methods for restoration; remove remains retained in ordinary Usage/Dashboard. No native execution is evidenced. Amended 2026-10-10 (DL-186; P1 B, P10; WM-041): the tour's widget practice adds Upcoming resets to the Home dashboard and then moves or resizes it there (cmd.widget.add, then cmd.widget.move or cmd.widget.resize, naming the Home board in room), finished only by the board's accepted add and then move or resize (PWIZ-035); configure is not a tour checkpoint. Cases written for the retired four-panel Home model do not prove this row; replacement executable cases are owed (ATS-075/076).",
       "gui_triggers": [
         "Usage and Dashboard widget options",
         "Guided Tour workspace widget practice and captured-state restoration",
@@ -5166,9 +5149,6 @@
       ],
       "return_route": "Tour target plus restorable pre-tour widget layout/focus.",
       "reverse_consumers": [
-        "Concepts/pm7-tools/usage_corrections_source.py",
-        "Concepts/pm7-tools/widget_interaction_repairs_source.py",
-        "Concepts/pm7-tools/guided_tour_source.py",
         "Plans/FinalGUISpec.md"
       ],
       "event_refs": [
@@ -5183,8 +5163,12 @@
       ],
       "migration_refs": [],
       "test_refs": [
-        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs",
-        "Concepts/pm7-tools/verify/guided_tour_lifecycle_checkpoint.mjs"
+        "Plans/Widget_System.md#WS-005",
+        "Plans/guided_tour_contract_fixtures.json",
+        "Plans/Planning_Wizard.md#PWIZ-035",
+        "Plans/Automated_Testing_System.md#ATS-075",
+        "Plans/Automated_Testing_System.md#ATS-076",
+        "scripts/pm-touch-closure-verify.py"
       ],
       "evidence_refs": [
         "concept_simulation_not_native_runtime"
@@ -5207,16 +5191,13 @@
       "handler_owner": "Widget System transactional move/resize route; production-native implementation evidence is absent.",
       "handler_status": "specified",
       "wiring_status": "concept_simulated",
-      "production_or_simulation": "PMConcept7 Usage and Dashboard exercise transactional widget move/resize simulation independently of Guided Tour; native Slint/Rust wiring is absent. Amended 2026-10-10 (DL-186; P1 B, P10; WM-041): the tour's widget practice adds Upcoming resets to the Home dashboard and then moves or resizes it there (cmd.widget.add, then cmd.widget.move or cmd.widget.resize, naming the Home board in room), finished only by the board's accepted add and then move or resize (PWIZ-035); ordinary Usage and Dashboard movement and resizing are still exercised outside the tour too.",
+      "production_or_simulation": "PMConcept7 Usage and Dashboard exercise transactional widget move/resize simulation independently of Guided Tour; native Slint/Rust wiring is absent. Amended 2026-10-10 (DL-186; P1 B, P10; WM-041): the tour's widget practice adds Upcoming resets to the Home dashboard and then moves or resizes it there (cmd.widget.add, then cmd.widget.move or cmd.widget.resize, naming the Home board in room), finished only by the board's accepted add and then move or resize (PWIZ-035); ordinary Usage and Dashboard movement and resizing are still exercised outside the tour too. Cases written for the retired four-panel Home model do not prove this row; replacement executable cases are owed (ATS-075/076).",
       "gui_triggers": [
         "Usage and Dashboard pointer and keyboard widget move/resize controls",
         "Usage Tidy from a card menu or the Customize panel, and the board gravity each settled Usage move, resize, preset, hide or show applies inside its own single command (WS-019)"
       ],
       "return_route": "Current Usage or Dashboard card and focus after one settled owner result or an exact cancelled-preview rollback.",
       "reverse_consumers": [
-        "Concepts/pm7-tools/widget_grid_and_chart_repairs_source.py",
-        "Concepts/pm7-tools/widget_interaction_repairs_source.py",
-        "Concepts/pm7-tools/widget_live_resize_preview_source.py",
         "Plans/FinalGUISpec.md"
       ],
       "event_refs": [
@@ -5231,7 +5212,10 @@
       ],
       "migration_refs": [],
       "test_refs": [
-        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs"
+        "Plans/Widget_System.md#WS-019",
+        "Plans/Automated_Testing_System.md#ATS-075",
+        "Plans/Automated_Testing_System.md#ATS-076",
+        "scripts/pm-touch-closure-verify.py"
       ],
       "evidence_refs": [
         "concept_simulation_not_native_runtime"
@@ -5254,21 +5238,18 @@
       "result_schema_ref": "One revision-checked settled workspace layout result",
       "error_schema_ref": "invalid, stale, collision, host or target unavailable, persistence failure, or no_change",
       "availability_rule": "Exact Project, workspace tab, current layout revision, and verb-specific surface/host/geometry are required; reset uses the same family without inventing a refresh command.",
-      "permission_gate": "Workspace layout only; preview, disclosure, cancel, unchanged state, and T48 source refresh dispatch nothing and domain owners remain unchanged.",
+      "permission_gate": "Workspace layout only; preview, disclosure, cancel and unchanged state dispatch nothing, and domain owners remain unchanged.",
       "disabled_reason_rule": "Expose stale, collision, missing host/target/surface, persistence, or no-change result and preserve keyboard/pointer reversal.",
       "handler_owner": "Final GUI workspace layout controller; production-native implementation evidence is absent.",
       "handler_status": "specified",
       "wiring_status": "concept_simulated",
-      "production_or_simulation": "Home and the current tour share settled move/resize owner methods for practice and checked restoration. T48 is source refresh only; no native execution or durable recovery is evidenced. Amended 2026-10-09 (DL-180): Home is one universal panel system on pm.home_workspace_layout.v2 (SP-330); these four commands now act on panels and splits, Collapse Bottom Terminal retires in favour of any panel folding to its strip, and the tab and new layout commands of UCC-200 are wired in Plans/Wiring_Matrix.md#WM-090. The PMConcept7 sources and verifiers named here are the superseded fixed-zone concept.",
+      "production_or_simulation": "Home and the current tour share settled move/resize owner methods for practice and checked restoration; no native execution or durable recovery is evidenced. Amended 2026-10-09 (DL-180): Home is one universal panel system on pm.home_workspace_layout.v2 (Plans/storage-plan.md#SP-330); these four commands now act on panels and splits, Collapse Bottom Terminal retires in favour of any panel folding to its strip, and the tab and new layout commands of UCC-200 are wired in Plans/Wiring_Matrix.md#WM-090. The fixed-zone concept is superseded. Cases written for the retired four-panel Home model do not prove this row; replacement executable cases are owed (ATS-075/076).",
       "gui_triggers": [
         "Home panel grip and Move panel, dividers and their keys, Collapse to tabs / Expand on any panel, and Restore home layout (amended 2026-10-09, DL-180)",
         "Guided Tour panel practice and bounded restoration of the captured v2 layout; the Chat move/dock practice retired 2026-10-09 (DL-180)"
       ],
       "return_route": "Current Home target plus revision-checked settled workspace layout and focus.",
       "reverse_consumers": [
-        "Concepts/pm7-tools/home_workspace_source.py",
-        "Concepts/pm7-tools/home_workspace_refresh_source.py",
-        "Concepts/pm7-tools/guided_tour_source.py",
         "Plans/FinalGUISpec.md"
       ],
       "event_refs": [
@@ -5282,11 +5263,14 @@
         "revision-checked settled layout state once"
       ],
       "migration_refs": [
-        "T48 exact untouched v1 factory layout upgrade; customized v1 layouts copy forward"
+        "Plans/storage-plan.md#SP-330 (convert legacy v1 factory and customized layouts on first read; keep the original source read-only and never reset)"
       ],
       "test_refs": [
-        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs",
-        "Concepts/pm7-tools/verify/guided_tour_lifecycle_checkpoint.mjs"
+        "Plans/home_workspace_layout_v2_fixtures.json",
+        "Plans/Automated_Testing_System.md#ATS-075",
+        "Plans/Automated_Testing_System.md#ATS-076",
+        "Plans/Planning_Wizard.md#PWIZ-035",
+        "scripts/pm-touch-closure-verify.py"
       ],
       "evidence_refs": [
         "concept_simulation_not_native_runtime"
@@ -5708,7 +5692,6 @@
       ],
       "return_route": "Exact Settings document/index/detail/manager, scroll and focus context.",
       "reverse_consumers": [
-        "Concepts/pm7-tools/settings_tome_source.py",
         "Plans/FinalGUISpec.md"
       ],
       "event_refs": [],
@@ -5751,8 +5734,7 @@
       ],
       "return_route": "Exact Settings manager and focus.",
       "reverse_consumers": [
-        "Plans/FinalGUISpec.md",
-        "Concepts/pm7-tools/settings_tome_source.py"
+        "Plans/FinalGUISpec.md"
       ],
       "event_refs": [],
       "receipt_refs": [
@@ -10888,7 +10870,7 @@
       "ui_action",
       "ui.settings.project_sync.client.inspect",
       "partial",
-      "T46 exposes a concept-local client inspector only; native projection hydration, currentness, and accessibility evidence are absent."
+      "The concept exposes a concept-local client inspector only; native projection hydration, currentness, and accessibility evidence are absent."
     ],
     [
       "TOUCH-PSLOC-002",
@@ -10896,7 +10878,7 @@
       "ui_action",
       "ui.settings.project_sync.clients.preview_manage",
       "partial",
-      "T46 exposes a management preview only; it dispatches no client or Project Sync mutation, and native owner routing is absent."
+      "The concept exposes a management preview only; it dispatches no client or Project Sync mutation, and native owner routing is absent."
     ],
     [
       "TOUCH-PSLOC-003",
@@ -10904,7 +10886,7 @@
       "ui_action",
       "ui.settings.project_sync.conflict.preview_policy",
       "partial",
-      "T46 exposes conflict-policy presentation only; no policy is changed and native owner routing is absent."
+      "The concept exposes conflict-policy presentation only; no policy is changed and native owner routing is absent."
     ],
     [
       "TOUCH-PSLOC-004",
@@ -10912,7 +10894,7 @@
       "ui_action",
       "ui.settings.project_sync.conflict.preview_simulation",
       "partial",
-      "T46 exposes a conflict-simulation preview only; it proves no conflict engine or recovery behavior."
+      "The concept exposes a conflict-simulation preview only; it proves no conflict engine or recovery behavior."
     ],
     [
       "TOUCH-PSLOC-005",
@@ -10920,7 +10902,7 @@
       "ui_action",
       "ui.settings.project_sync.continuity.preview",
       "partial",
-      "T46 exposes a bounded continuity preview only; fresh owner currentness and native projection evidence are absent."
+      "The concept exposes a bounded continuity preview only; fresh owner currentness and native projection evidence are absent."
     ],
     [
       "TOUCH-PSLOC-006",
@@ -10928,7 +10910,7 @@
       "ui_action",
       "ui.settings.project_sync.continuity.preview_edit",
       "partial",
-      "T46 exposes an edit preview only; it changes no continuity policy and has no native owner handoff evidence."
+      "The concept exposes an edit preview only; it changes no continuity policy and has no native owner handoff evidence."
     ],
     [
       "TOUCH-PSLOC-007",
@@ -10936,7 +10918,7 @@
       "ui_action",
       "ui.settings.project_sync.diagnostic.inspect",
       "partial",
-      "T46 exposes a concept-local diagnostic inspector only; bounded native evidence hydration is absent."
+      "The concept exposes a concept-local diagnostic inspector only; bounded native evidence hydration is absent."
     ],
     [
       "TOUCH-PSLOC-008",
@@ -10944,7 +10926,7 @@
       "ui_action",
       "ui.settings.project_sync.diagnostics.preview_export",
       "partial",
-      "T46 exposes an export preview only; no artifact is produced and native FileSafe/owner routing is absent."
+      "The concept exposes an export preview only; no artifact is produced and native FileSafe/owner routing is absent."
     ],
     [
       "TOUCH-PSLOC-009",
@@ -10952,7 +10934,7 @@
       "ui_action",
       "ui.settings.project_sync.diagnostics.preview_run",
       "partial",
-      "T46 exposes a diagnostic-run preview only; no diagnostic executes and no owner receipt exists."
+      "The concept exposes a diagnostic-run preview only; no diagnostic executes and no owner receipt exists."
     ],
     [
       "TOUCH-PSLOC-010",
@@ -10960,7 +10942,7 @@
       "ui_action",
       "ui.settings.project_sync.location.preview_add",
       "partial",
-      "T46 exposes an add-location preview only; it creates no location and proves no Project Sync handler."
+      "The concept exposes an add-location preview only; it creates no location and proves no Project Sync handler."
     ],
     [
       "TOUCH-PSLOC-011",
@@ -10968,7 +10950,7 @@
       "ui_action",
       "ui.settings.project_sync.location.preview_edit",
       "partial",
-      "T46 exposes an edit-location preview only; it mutates no location and native owner routing is absent."
+      "The concept exposes an edit-location preview only; it mutates no location and native owner routing is absent."
     ],
     [
       "TOUCH-PSLOC-012",
@@ -10976,7 +10958,7 @@
       "ui_action",
       "ui.settings.project_sync.project.preview_copy",
       "partial",
-      "T46 exposes a Project-copy preview only; no bytes move and no verification, rollback, or runtime evidence exists."
+      "The concept exposes a Project-copy preview only; no bytes move and no verification, rollback, or runtime evidence exists."
     ],
     [
       "TOUCH-PSLOC-013",
@@ -10984,7 +10966,7 @@
       "ui_action",
       "ui.settings.project_sync.project.preview_move",
       "partial",
-      "T46 exposes a Project-move preview only; no bytes or source identity change and no recovery evidence exists."
+      "The concept exposes a Project-move preview only; no bytes or source identity change and no recovery evidence exists."
     ],
     [
       "TOUCH-PSLOC-014",
@@ -10992,7 +10974,7 @@
       "ui_action",
       "ui.settings.project_sync.remote.preview_add",
       "partial",
-      "T46 exposes an add-remote preview only; it creates no remote binding and proves no transport capability."
+      "The concept exposes an add-remote preview only; it creates no remote binding and proves no transport capability."
     ],
     [
       "TOUCH-PSLOC-015",
@@ -11000,7 +10982,7 @@
       "ui_action",
       "ui.settings.project_sync.remote.preview_edit",
       "partial",
-      "T46 exposes an edit-remote preview only; it mutates no remote binding and native owner routing is absent."
+      "The concept exposes an edit-remote preview only; it mutates no remote binding and native owner routing is absent."
     ],
     [
       "TOUCH-PSLOC-016",
@@ -11008,7 +10990,7 @@
       "ui_action",
       "ui.settings.project_sync.remote.preview_import",
       "partial",
-      "T46 exposes an import preview only; no content transfer, verification, or recovery execution occurs."
+      "The concept exposes an import preview only; no content transfer, verification, or recovery execution occurs."
     ],
     [
       "TOUCH-PSLOC-017",
@@ -11016,7 +10998,7 @@
       "ui_action",
       "ui.settings.project_sync.remote.preview_remove",
       "partial",
-      "T46 exposes a remove-remote preview only; it removes nothing and grants no destructive authority."
+      "The concept exposes a remove-remote preview only; it removes nothing and grants no destructive authority."
     ],
     [
       "TOUCH-PSLOC-018",
@@ -11024,7 +11006,7 @@
       "ui_action",
       "ui.settings.project_sync.remote.preview_test",
       "partial",
-      "T46 exposes a remote-test preview only; no transport probe executes and no current capability receipt exists."
+      "The concept exposes a remote-test preview only; no transport probe executes and no current capability receipt exists."
     ],
     [
       "TOUCH-PSLOC-019",
@@ -11032,7 +11014,7 @@
       "ui_action",
       "ui.settings.project_sync.remote.preview_toggle",
       "partial",
-      "T46 exposes a remote-toggle preview only; requested or effective owner state does not change."
+      "The concept exposes a remote-toggle preview only; requested or effective owner state does not change."
     ],
     [
       "TOUCH-PSLOC-020",
@@ -11040,7 +11022,7 @@
       "ui_action",
       "ui.settings.project_sync_tab.select",
       "partial",
-      "T46 exposes local Project Sync tab selection; native Slint tab, focus, and accessibility evidence are absent."
+      "The concept exposes local Project Sync tab selection; native Slint tab, focus, and accessibility evidence are absent."
     ],
     [
       "TOUCH-CAPLOC-001",
@@ -11088,7 +11070,7 @@
       "ui_action",
       "ui.guided_tour.focus_route",
       "partial",
-      "Typed local route/focus request and result schemas, fixtures, authored consumer, verifier, and integrated build gates exist; non-exact phases use a non-obscuring announced heading focus, but exhaustive current-artifact browser/video and native Slint presentation-controller evidence remain pending or unproven."
+      "Typed local route/focus request and result schemas and fixtures exist; non-exact phases use a non-obscuring announced heading focus, but exhaustive current-artifact browser/video and native Slint presentation-controller evidence remain pending or unproven."
     ],
     [
       "TOUCH-GPAN-001",
@@ -11184,7 +11166,7 @@
       "command",
       "cmd.workspace_layout.reset",
       "partial",
-      "T48 refreshes the current factory/default projection and concept reset path only; native reset, exact migration, persistence, and recovery evidence are absent. Amended 2026-10-09 (DL-180): reset is Restore home layout on the v2 record, from the panel menu, the title bar and Settings."
+      "The concept refreshes the current factory/default projection and concept reset path only; native reset, exact migration, persistence, and recovery evidence are absent. Amended 2026-10-09 (DL-180): reset is Restore home layout on the v2 record, from the panel menu, the title bar and Settings."
     ],
     [
       "TOUCH-HOVER-001",
@@ -11192,7 +11174,7 @@
       "presentation",
       "ui.hover_tag.show",
       "partial",
-      "The PMConcept7 overlay implements 900 ms continuous keyboard-focus dwell and passes integrated static/build gates; earlier focused Chrome concept verification is non-native and predates the current artifact, while exhaustive current-artifact browser/video, native Slint component, and final visual evidence remain pending or unproven."
+      "The PMConcept7 overlay illustrates 900 ms continuous keyboard-focus dwell; earlier focused Chrome concept verification is non-native and predates the current artifact, while exhaustive current-artifact browser/video, native Slint component, and final visual evidence remain pending or unproven."
     ],
     [
       "TOUCH-HOVER-002",
@@ -11200,7 +11182,7 @@
       "presentation",
       "ui.hover_tag.hide",
       "partial",
-      "The PMConcept7 overlay and integrated static/build gates cover hide behavior; earlier focused Chrome concept verification is non-native and predates the current artifact, while exhaustive current-artifact browser/video, native Slint component, and teardown proof remain pending or unproven."
+      "The PMConcept7 overlay illustrates hide behavior; earlier focused Chrome concept verification is non-native and predates the current artifact, while exhaustive current-artifact browser/video, native Slint component, and teardown proof remain pending or unproven."
     ],
     [
       "TOUCH-HOVER-003",
@@ -11208,7 +11190,7 @@
       "presentation",
       "ui.hover_tag.dismiss",
       "partial",
-      "The PMConcept7 overlay and integrated static/build gates cover dismissal behavior; earlier focused Chrome concept verification is non-native and predates the current artifact, while exhaustive current-artifact browser/video, native Slint component, and accessibility proof remain pending or unproven."
+      "The PMConcept7 overlay illustrates dismissal behavior; earlier focused Chrome concept verification is non-native and predates the current artifact, while exhaustive current-artifact browser/video, native Slint component, and accessibility proof remain pending or unproven."
     ],
     [
       "TOUCH-HOVER-004",
@@ -11216,7 +11198,7 @@
       "presentation",
       "ui.hover_tag.reposition",
       "partial",
-      "The PMConcept7 overlay and integrated static/build gates cover reposition behavior; earlier focused Chrome concept verification is non-native and predates the current artifact, while exhaustive current-artifact browser/video, native Slint component, and full viewport/zoom proof remain pending or unproven."
+      "The PMConcept7 overlay illustrates reposition behavior; earlier focused Chrome concept verification is non-native and predates the current artifact, while exhaustive current-artifact browser/video, native Slint component, and full viewport/zoom proof remain pending or unproven."
     ],
     [
       "TOUCH-ACCT-001",

@@ -2,9 +2,9 @@
 
 Source: `Plans/UI_Wiring_Rules.md`
 
-Source lines: L903-L951
+Source lines: L904-L952
 
-Source SHA256: `801fdc37504d2402de595ac24324f274994c7aca61a91b7d77096513431edcb0`
+Source SHA256: `223a17b8be9d7b4f4271ed0b4b1c41456dfa99316db297e818f254dc78cd88ed`
 
 ---
 
@@ -38,13 +38,13 @@ acceptance_criteria:
   - The census treats the controls inside an open activity bar domain preview that F3-590 lists as documented exemptions (DL-157) and still fails a hover tag on any of them.
   - PMConcept7 remains simulation-only until native dispatcher and handler evidence exists.
 validation_surfaces:
-  - node Concepts/pm7-tools/verify/hover_tags.mjs
-  - node Concepts/pm7-tools/verify/accessibility_visual_matrix.mjs
+  - Plans/FinalGUISpec.md#F3-523 (hover/focus, Escape, departure grace, geometry, themes and reduced-motion acceptance)
+  - Plans/UI_Wiring_Rules.md#UIW-013 (accessible names/descriptions, disabled focus without activation, keyboard parity and documented exemptions)
   - python3 scripts/pm-touch-closure-verify.py
 risk_class: orphan_control_or_inaccessible_hover_overlay
 reasoning_tier: high
 context_scope: typed_controls_and_hover_overlay
-implementation_surfaces: [Plans/UI_Wiring_Rules.md, Plans/FinalGUISpec.md, Plans/touch_closure.json, Concepts/pm7-tools/global_hover_tags_source.py]
+implementation_surfaces: [Plans/UI_Wiring_Rules.md, Plans/FinalGUISpec.md, Plans/touch_closure.json]
 node_compile_hint: {mode: typed_control_and_hover_binding, create_worknodes: false, create_nodeseeds: false}
 source_lineage:
   - Concepts/chat-assistant-concepts/5.6 Pro/PM_Chat_Assistant_5.6_Pro_Standalone.html

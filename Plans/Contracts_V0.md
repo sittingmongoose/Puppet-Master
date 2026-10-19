@@ -3659,7 +3659,8 @@ acceptance_criteria:
 - Disclosure-only popup/flyout actions remain view-local and do not dispatch.
 validation_surfaces:
 - python3 scripts/pm-implementation-readiness.py validate
-- node Concepts/pm7-tools/verify/home_workspace_matrix.mjs
+- Plans/Automated_Testing_System.md#ATS-075
+- Plans/Automated_Testing_System.md#ATS-076
 - python3 scripts/pm-plan-index.py validate
 risk_class: home_receipt_truth_drift
 reasoning_tier: standard
@@ -3681,6 +3682,7 @@ compatibility_only_notes:
 stale_retired_dispositions:
 - "Amended 2026-10-09 (DL-180, DL-181): the payload moves to CV-361's 2.0.0 once Event Authority admits it, and terminal.workgroup_moved is withdrawn."
 - "Amended 2026-10-10 (DL-188): Event Authority admitted the 2.0.0 payload (D42); the admission condition in the canonical text is met and removed."
+- "Cases written for the retired four-panel Home model do not prove this row; replacement executable cases are owed (ATS-075/076)."
 owner_hints: [Plans/Contracts_V0.md, Plans/UI_Command_Catalog.md, Plans/storage-plan.md]
 ```
 
