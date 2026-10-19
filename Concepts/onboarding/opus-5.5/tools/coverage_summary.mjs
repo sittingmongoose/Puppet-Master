@@ -123,10 +123,13 @@ for (const b of blocks) {
         selector: b.text.slice(node.prelude.loc.start.offset, node.prelude.loc.end.offset),
         bytes: len(b.text.slice(startOffset, endOffset)), used: !!sample?.used || touching.length > 0,
         observed: !!sample, sheet_observed: sheetObserved, conservative_overlap: !sample?.used && touching.length > 0 };
+      rule.usage_state = rule.used ? 'used' : sheetObserved ? 'unused' : 'unknown';
       found.push(rule); rules.push(rule);
     } });
     row.rules_total = found.length; row.rules_used = found.filter((r) => r.used).length;
-    row.rules_unused = found.length - row.rules_used; row.rules_observed = found.filter((r) => r.observed).length;
+    row.rules_unused = found.filter((r) => r.usage_state === 'unused').length;
+    row.rules_unmeasured = found.filter((r) => r.usage_state === 'unknown').length;
+    row.rules_observed = found.filter((r) => r.observed).length;
     row.rule_bytes = found.reduce((n, r) => n + r.bytes, 0);
     row.used_bytes = found.filter((r) => r.used).reduce((n, r) => n + r.bytes, 0);
     row.unused_bytes = found.filter((r) => !r.used && r.sheet_observed).reduce((n, r) => n + r.bytes, 0);
@@ -181,7 +184,7 @@ const report = { page: rel(pageFile), page_sha256: hash(bytes), union: unionFile
   provenance_receipt: receiptFile ? { path: receiptFile, sha256: hash(receiptBytes), accepted_for_union: !!receiptEntry } : null,
   offset_units: 'UTF-16 code units, relative to block body; bytes are UTF-8',
   caveats: ['Unused means not touched in these runs; it is not proof of dead code.', 'Unobserved CSS rules/functions are distinguished from explicit zero counts.', 'CSS used bytes count matched style-rule spans; fonts, keyframes, at-rules and whitespace are outside that metric.', 'JS unused bytes require per-sample-v1 provenance or a matching hash-bound receipt; otherwise the remainder is unmeasured.', 'Function counts sum samples, not independent users or test cases.'],
-  totals: { css_rules_used: sum('style', 'rules_used'), css_rules_total: sum('style', 'rules_total'), css_bytes: sum('style', 'bytes'), css_used_bytes: sum('style', 'used_bytes'), css_unused_bytes: sum('style', 'unused_bytes'), css_unmeasured_bytes: sum('style', 'unmeasured_bytes'),
+  totals: { css_rules_used: sum('style', 'rules_used'), css_rules_total: sum('style', 'rules_total'), css_rules_unused: sum('style', 'rules_unused'), css_rules_unmeasured: sum('style', 'rules_unmeasured'), css_bytes: sum('style', 'bytes'), css_used_bytes: sum('style', 'used_bytes'), css_unused_bytes: sum('style', 'unused_bytes'), css_unmeasured_bytes: sum('style', 'unmeasured_bytes'),
     js_bytes: sum('script', 'bytes'), js_used_bytes: sum('script', 'used_bytes'), js_unused_bytes: sum('script', 'unused_bytes'), js_unmeasured_bytes: sum('script', 'unmeasured_bytes'), js_functions: sum('script', 'functions_total'), js_functions_used: sum('script', 'functions_used') },
   blocks: rows, css_rules: rules, js_functions: functions, errors,
   runtime_css: [...new Set(union.css.filter((r) => !matchedCss.has(r.sheet)).map((r) => r.sheet))],
