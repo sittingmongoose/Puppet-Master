@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L46889-L49254
+Source lines: L46889-L49262
 
-Source SHA256: `19a5140c9ac50707b8a19f21fa6c0e9dea1782c4371fa229ef5eb9c31e50d9b2`
+Source SHA256: `5049fc1967b53eb12bd03c1e1f58e8d7fb3f3523722601a0c28611c90807b01b`
 
 ---
 
@@ -1656,9 +1656,12 @@ canonical_text: >-
   rows and search results have readable glass beneath their words. The editor and terminal Customize
   screens share dense menu material; their sticky section bar stays above the lenses of rows
   scrolling underneath. All consume F3-438 layout and F3-654 contrast. These rules add no primary
-  action or stored switcher state. The concept-only Liquid Glass status-bar toggle (html[data-lg],
-  window.PM_LG) is demonstration machinery and is not a product setting, command or native alternate
-  material mode.
+  action or stored switcher state. Amended 2026-10-19 (Jared, option 1): selecting either Glass
+  look always uses Liquid Glass over F3-653's wallpaper. There is no material off state or old
+  Glass fallback. The concept's ?lg=off flag, Demo Studio material on/off control and Alt+Shift+L
+  chord are retired. Its former html[data-lg] / window.PM_LG demonstration switch supplies no
+  current setting, command or alternate material mode. A renderer's static readable equivalent
+  remains the capability fallback for this same material, never a user-selectable off state.
   Amended 2026-10-16 (DL-214, the consistency pass Q16): every look adopts the switcher, each in its own
   material, so every tab, segment and list selection in a look is one component drawn one way. Glass keeps
   its approved clear lens unchanged. Basic draws a precise tinted chip: an accent tint, a crisp accent
@@ -1726,6 +1729,8 @@ acceptance_criteria:
   steps and NieR cuts, never gliding; a pressed label changes ink with the chip; hovered resting labels keep
   4.5:1.
 - Glass's warm-up is best effort under ACD-475 and changes no Glass look.
+- Selecting Glass Light or Glass Dark always uses Liquid Glass over the shared Wallpaper; no flag,
+  material control or shortcut selects an old Glass fallback or a material off state.
 validation_surfaces:
 - python3 scripts/pm-shard-plans.py --check
 - python3 scripts/pm-plan-index.py validate
@@ -1801,6 +1806,9 @@ stale_retired_dispositions:
   choices use the material in place without a travelling lens.'
 - 'Amended 2026-10-17 (DL-222): Glass warm-up is best effort. It read: first-use GPU programs are compiled
   before the first page or chapter change rather than during it.'
+- 'Retired 2026-10-19 (Jared, option 1): the concept-only Liquid Glass status-bar toggle,
+  ?lg=off, Demo Studio material on/off control and Alt+Shift+L supplied a demonstration off state;
+  both Glass looks now always use Liquid Glass with the shared Wallpaper.'
 ```
 
 ContractRef: ContractName:Plans/FinalGUISpec.md#F3-427, ContractName:Plans/FinalGUISpec.md#F3-431, ContractName:Plans/FinalGUISpec.md#F3-653, ContractName:Plans/FinalGUISpec.md#F3-654

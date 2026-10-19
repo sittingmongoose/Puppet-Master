@@ -4,7 +4,7 @@ Source: `Plans/FinalGUISpec.md`
 
 Source lines: L30369-L31486
 
-Source SHA256: `19a5140c9ac50707b8a19f21fa6c0e9dea1782c4371fa229ef5eb9c31e50d9b2`
+Source SHA256: `5049fc1967b53eb12bd03c1e1f58e8d7fb3f3523722601a0c28611c90807b01b`
 
 ---
 
@@ -248,7 +248,7 @@ canonical_text: >-
   2026-10-15 Glass/wallpaper publication. They are historical lineage, not extra native choices or
   an alternative material contract. SP-333 owns migration and cleanup.
 gui_related: true
-gui_classification_reason: This unit defines the visible glass wallpaper modes, their layer inventory, and their motion behavior.
+gui_classification_reason: This unit retires the former Glass background modes and points to the shared Wallpaper replacement and migration.
 split_recommended: false
 depends_on: [F3-427, F3-444]
 unblocks: []

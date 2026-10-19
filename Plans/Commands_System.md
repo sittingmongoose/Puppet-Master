@@ -7937,10 +7937,12 @@ canonical_text: >-
   through a local action.
   Amended 2026-10-17 (DL-228): background design tiles preview through the same ui.appearance.preview_scheme
   and cancel_preview as scheme tiles, after the same 110 ms rest (F3-642). ui.terminal.degauss is the Retro
-  Try it action, a local one-shot with no receipt (F3-643). Two concept review chords are not product
-  shortcuts: Alt+Shift+1..5, the left rail review copy's concept switcher, and Alt+Shift+L, the Liquid Glass
-  demonstration toggle; Alt+Shift+1..9 stays UCC-200's focus panel N, and no rebuild or fixture inherits the
-  collision.
+  Try it action, a local one-shot with no receipt (F3-643). Alt+Shift+1..5, the left rail review copy's
+  concept switcher, is not a product shortcut; Alt+Shift+1..9 stays UCC-200's focus panel N, and no
+  rebuild or fixture inherits the collision. Alt+Shift+L, the former Liquid Glass demonstration
+  toggle, is retired with ?lg=off and Demo Studio's material on/off control (Jared, 2026-10-19,
+  option 1). Neither a local action nor a command may select a material off state or old Glass
+  fallback; F3-652 always supplies the Glass look's Liquid Glass material.
 gui_related: true
 gui_classification_reason: Customize and notification local actions.
 split_recommended: false

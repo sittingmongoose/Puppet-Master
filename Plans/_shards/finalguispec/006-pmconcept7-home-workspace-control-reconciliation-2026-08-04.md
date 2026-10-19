@@ -4,7 +4,7 @@ Source: `Plans/FinalGUISpec.md`
 
 Source lines: L276-L1406
 
-Source SHA256: `19a5140c9ac50707b8a19f21fa6c0e9dea1782c4371fa229ef5eb9c31e50d9b2`
+Source SHA256: `5049fc1967b53eb12bd03c1e1f58e8d7fb3f3523722601a0c28611c90807b01b`
 
 ---
 
@@ -1071,8 +1071,8 @@ canonical_text: >-
   skin family: glass gains a drag-scoped frost,
   [data-theme^="glass"] .editor-tabs.ed-shape-on:has(.tab.dragging) .ed-tab-shape
   { opacity: .92; } - slightly see-through but never legible, honouring the user's
-  "like a blur" request. It is deliberately NOT a backdrop blur: glass panes run one
-  blur per pane by budget.
+  "like a blur" request. The drag plate adds no independent backdrop blur; F3-652 owns
+  its Liquid Glass material and optics budget, superseding the former one-blur-per-pane cap.
   The steady-state plate remains fully opaque in all eight themes; measured live at
   .92 mid-drag in glass-dark and 1 at idle.
   Amended 2026-10-09 (DL-180): this silhouette becomes the one tab silhouette of every panel and every tab kind; F3-631
@@ -1099,10 +1099,10 @@ acceptance_criteria:
 - "The editor minimap is the only code-pane scrollbar; native scrollbars are suppressed and the minimap band aligns with the frosted rail via margin, not padding."
 - "Dragging tracks the pointer one-to-one with corner values derived in the same frame; selection by click, snap or keyboard produces the identical transition."
 - "Any silhouette sync taken while the strip contains a dragging tab snaps in the same frame rather than springing, including the sync caused by grabbing a non-active tab, and sub-pixel pointer moves never preserve an in-flight spring during a drag; selection springs are unaffected (wave 8, 2026-08-15)."
-- "Glass themes render the travelling plate at .92 opacity while a drag is live and fully opaque at rest, achieved without any backdrop-filter so the one-blur-per-pane budget is preserved (wave 8, 2026-08-15)."
+- "Glass themes render the travelling plate at .92 opacity while a drag is live and fully opaque at rest; the plate adds no independent backdrop blur and consumes F3-652's Liquid Glass material and optics budget."
 - "No dark pinhole at a join, no one-frame square or round pop at the start or end of a transition, and no shrinking circular dimple near a collision boundary."
 - "Resizing the window or changing tab widths recomputes stable target bounds; reduced motion snaps without spring travel."
-- "The rail band ghosts scrolled content beneath it in non-glass themes (pixels change when the code canvas scrolls under the strip); glass themes composite by alpha without blur per their documented budget; the active tab and canvas keep the shared opaque fill so the join stays seamless."
+- "The rail band ghosts scrolled content beneath it in non-glass themes (pixels change when the code canvas scrolls under the strip); Glass consumes F3-652's Liquid Glass material and optics budget; the active tab and canvas keep the shared opaque fill so the join stays seamless."
 - "The silhouette never renders half-dressed: chrome classes apply only after a successful measure, so --ed-shape-x/--ed-shape-w are never stuck at zero while the strip is in the shape-on state, and the shape layer mounts as the strip's last child without contending for slot 0."
 - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
 validation_surfaces:

@@ -1336,8 +1336,8 @@ canonical_text: >-
   skin family: glass gains a drag-scoped frost,
   [data-theme^="glass"] .editor-tabs.ed-shape-on:has(.tab.dragging) .ed-tab-shape
   { opacity: .92; } - slightly see-through but never legible, honouring the user's
-  "like a blur" request. It is deliberately NOT a backdrop blur: glass panes run one
-  blur per pane by budget.
+  "like a blur" request. The drag plate adds no independent backdrop blur; F3-652 owns
+  its Liquid Glass material and optics budget, superseding the former one-blur-per-pane cap.
   The steady-state plate remains fully opaque in all eight themes; measured live at
   .92 mid-drag in glass-dark and 1 at idle.
   Amended 2026-10-09 (DL-180): this silhouette becomes the one tab silhouette of every panel and every tab kind; F3-631
@@ -1364,10 +1364,10 @@ acceptance_criteria:
 - "The editor minimap is the only code-pane scrollbar; native scrollbars are suppressed and the minimap band aligns with the frosted rail via margin, not padding."
 - "Dragging tracks the pointer one-to-one with corner values derived in the same frame; selection by click, snap or keyboard produces the identical transition."
 - "Any silhouette sync taken while the strip contains a dragging tab snaps in the same frame rather than springing, including the sync caused by grabbing a non-active tab, and sub-pixel pointer moves never preserve an in-flight spring during a drag; selection springs are unaffected (wave 8, 2026-08-15)."
-- "Glass themes render the travelling plate at .92 opacity while a drag is live and fully opaque at rest, achieved without any backdrop-filter so the one-blur-per-pane budget is preserved (wave 8, 2026-08-15)."
+- "Glass themes render the travelling plate at .92 opacity while a drag is live and fully opaque at rest; the plate adds no independent backdrop blur and consumes F3-652's Liquid Glass material and optics budget."
 - "No dark pinhole at a join, no one-frame square or round pop at the start or end of a transition, and no shrinking circular dimple near a collision boundary."
 - "Resizing the window or changing tab widths recomputes stable target bounds; reduced motion snaps without spring travel."
-- "The rail band ghosts scrolled content beneath it in non-glass themes (pixels change when the code canvas scrolls under the strip); glass themes composite by alpha without blur per their documented budget; the active tab and canvas keep the shared opaque fill so the join stays seamless."
+- "The rail band ghosts scrolled content beneath it in non-glass themes (pixels change when the code canvas scrolls under the strip); Glass consumes F3-652's Liquid Glass material and optics budget; the active tab and canvas keep the shared opaque fill so the join stays seamless."
 - "The silhouette never renders half-dressed: chrome classes apply only after a successful measure, so --ed-shape-x/--ed-shape-w are never stuck at zero while the strip is in the shape-on state, and the shape layer mounts as the strip's last child without contending for slot 0."
 - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
 validation_surfaces:
@@ -30606,7 +30606,7 @@ canonical_text: >-
   2026-10-15 Glass/wallpaper publication. They are historical lineage, not extra native choices or
   an alternative material contract. SP-333 owns migration and cleanup.
 gui_related: true
-gui_classification_reason: This unit defines the visible glass wallpaper modes, their layer inventory, and their motion behavior.
+gui_classification_reason: This unit retires the former Glass background modes and points to the shared Wallpaper replacement and migration.
 split_recommended: false
 depends_on: [F3-427, F3-444]
 unblocks: []
@@ -48534,9 +48534,12 @@ canonical_text: >-
   rows and search results have readable glass beneath their words. The editor and terminal Customize
   screens share dense menu material; their sticky section bar stays above the lenses of rows
   scrolling underneath. All consume F3-438 layout and F3-654 contrast. These rules add no primary
-  action or stored switcher state. The concept-only Liquid Glass status-bar toggle (html[data-lg],
-  window.PM_LG) is demonstration machinery and is not a product setting, command or native alternate
-  material mode.
+  action or stored switcher state. Amended 2026-10-19 (Jared, option 1): selecting either Glass
+  look always uses Liquid Glass over F3-653's wallpaper. There is no material off state or old
+  Glass fallback. The concept's ?lg=off flag, Demo Studio material on/off control and Alt+Shift+L
+  chord are retired. Its former html[data-lg] / window.PM_LG demonstration switch supplies no
+  current setting, command or alternate material mode. A renderer's static readable equivalent
+  remains the capability fallback for this same material, never a user-selectable off state.
   Amended 2026-10-16 (DL-214, the consistency pass Q16): every look adopts the switcher, each in its own
   material, so every tab, segment and list selection in a look is one component drawn one way. Glass keeps
   its approved clear lens unchanged. Basic draws a precise tinted chip: an accent tint, a crisp accent
@@ -48604,6 +48607,8 @@ acceptance_criteria:
   steps and NieR cuts, never gliding; a pressed label changes ink with the chip; hovered resting labels keep
   4.5:1.
 - Glass's warm-up is best effort under ACD-475 and changes no Glass look.
+- Selecting Glass Light or Glass Dark always uses Liquid Glass over the shared Wallpaper; no flag,
+  material control or shortcut selects an old Glass fallback or a material off state.
 validation_surfaces:
 - python3 scripts/pm-shard-plans.py --check
 - python3 scripts/pm-plan-index.py validate
@@ -48679,6 +48684,9 @@ stale_retired_dispositions:
   choices use the material in place without a travelling lens.'
 - 'Amended 2026-10-17 (DL-222): Glass warm-up is best effort. It read: first-use GPU programs are compiled
   before the first page or chapter change rather than during it.'
+- 'Retired 2026-10-19 (Jared, option 1): the concept-only Liquid Glass status-bar toggle,
+  ?lg=off, Demo Studio material on/off control and Alt+Shift+L supplied a demonstration off state;
+  both Glass looks now always use Liquid Glass with the shared Wallpaper.'
 ```
 
 ContractRef: ContractName:Plans/FinalGUISpec.md#F3-427, ContractName:Plans/FinalGUISpec.md#F3-431, ContractName:Plans/FinalGUISpec.md#F3-653, ContractName:Plans/FinalGUISpec.md#F3-654
