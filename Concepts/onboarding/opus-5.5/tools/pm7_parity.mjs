@@ -66,6 +66,7 @@ export function parseArgs(argv) {
   if (options.baselineRepeats < 1 || options.baselineRepeats > 8) throw Error('Invalid baseline repeats (1..8)');
   if (options.baselineRepeats > 1 && (options.tolerance || options.maxDiffPixels || options.deep)) throw Error('Baseline repeats cannot combine with tolerance or --deep');
   if (options.noiseMaxChannelSpan > 255) throw Error('Invalid noise channel cap (0..255)');
+  if (options.deep && options.expectRemoved?.length) throw Error('Expected removal alignment requires native DOMSnapshot mode; cannot combine with --deep');
   if (!options.help && files.length !== 2) throw Error('Pass baseline and candidate file paths');
   [options.baseline, options.candidate] = files;
   options.out ||= resolve('/mnt/Cursor/PuppetMaster-Evidence/scratch/2026-10-18-pm7-purge/A0-parity', new Date().toISOString().replace(/[:.]/g, '-') + '-' + process.pid);
@@ -308,12 +309,14 @@ async function enterState(browser, state, group) {
   if (state.assert) await visible(page, state.assert, state.id);
   if (state.check && !(await page.evaluate(state.check))) throw Error('State ownership/readiness assertion failed: ' + state.id);
 }
-async function nativeSnapshot(browser) {
+async function nativeSnapshot(browser, expectRemoved = []) {
   const start = performance.now();
   if (process.env.PM7_PARITY_DEBUG) console.log('NATIVE property names');
   browser.standardProperties ||= await browser.page.evaluate(() => Array.from(getComputedStyle(document.documentElement)).filter(p => !p.startsWith('--')).sort());
   const namesDone = performance.now();
+  const removedMatches = expectRemoved.length ? await browser.page.evaluate(findExpectedRemoved, expectRemoved) : null;
   const snapshot = await browser.page.send('DOMSnapshot.captureSnapshot', { computedStyles: browser.standardProperties, includeDOMRects: true });
+  const skippedNodes = removedMatches ? verifyRemovedSnapshot(snapshot, removedMatches) : null;
   const blobIdentities = await browser.page.evaluate(() => __pm7Parity.blobIdentities());
   const responseDone = performance.now();
   if (process.env.PM7_PARITY_DEBUG) console.log('NATIVE snapshot received');
@@ -375,6 +378,7 @@ async function nativeSnapshot(browser) {
   });
   browser.nativeDetails = byPath;
   return { hash: digest(JSON.stringify(entries)), entries, propertyNames, elements: nodes.nodeType.filter(t => t === 1).length,
+    ...(skippedNodes ? { skippedNodes } : {}),
     uniqueStyles: new Set(entries.map(e => e[1])).size, internedImageUrls: custom.internedImageUrls, interningAudit: custom.auditRecords, blobIdentities,
     customSampling: { names: customNames, runtimeReadNames, sampledRecords: custom.rows.length, unmatchedLayoutPaths: custom.unmatchedLayoutPaths },
     styledRecords: elements.filter(([path]) => byPath.get(path) !== null).length,
@@ -403,12 +407,10 @@ async function capture(browser, audit, deep, expectRemoved = []) {
   let styles, removalAlignment;
   const caretPreparation = await browser.page.evaluate(() => __pm7Parity.setCaretHidden(false));
   try {
-    styles = deep ? await browser.page.evaluate(async audit => __pm7Parity.snapshot(audit), audit) : await nativeSnapshot(browser);
+    styles = deep ? await browser.page.evaluate(async audit => __pm7Parity.snapshot(audit), audit) : await nativeSnapshot(browser, expectRemoved);
     if (expectRemoved.length) {
-      const matches = await browser.page.evaluate(findExpectedRemoved, expectRemoved);
-      const snapshot = await browser.page.send('DOMSnapshot.captureSnapshot', { computedStyles: [], includeDOMRects: true });
-      const skippedNodes = verifyRemovedSnapshot(snapshot, matches);
-      removalAlignment = alignRemovedEntries(styles.entries, skippedNodes.map(row => ({ ...row, path: deep ? row.path : row.snapshotPath })));
+      const skippedNodes = styles.skippedNodes;
+      removalAlignment = alignRemovedEntries(styles.entries, skippedNodes.map(row => ({ ...row, path: row.snapshotPath })));
       styles = { ...styles, raw: { hash: styles.hash, entries: styles.entries }, entries: removalAlignment.entries,
         hash: digest(JSON.stringify(removalAlignment.entries)), skippedNodes, removedRecords: removalAlignment.removedRecords };
     }
@@ -438,13 +440,7 @@ export function differingPaths(a, b) {
   const left = new Map(a), right = new Map(b);
   return [...new Set([...left.keys(), ...right.keys()])].filter(path => left.get(path) !== right.get(path));
 }
-async function readDeepDetails(browser, paths, capture) {
-  if (capture?.removalAlignment) {
-    const raw = paths.map(path => capture.removalAlignment.toRaw.get(path));
-    const details = await readDeepDetails(browser, raw.filter(Boolean));
-    let index = 0;
-    return raw.map((path, i) => path ? { ...details[index++], path: paths[i] } : { path: paths[i], absent: true });
-  }
+async function readDeepDetails(browser, paths) {
   return browser.page.evaluate(paths => {
     __pm7Parity.setCaretHidden(false);
     try { return __pm7Parity.details(paths); } finally { __pm7Parity.setCaretHidden(true); }
@@ -530,7 +526,10 @@ async function run(options) {
         'Manual clock freezes live data and decorative motion; animation timing itself is outside this parity check.',
         ...(options.deep ? [] : ['Native mode excludes custom properties not read by JS and cannot sample computed properties of nodes without layout objects or non-generated pseudos. Use --deep for these.'])] },
     rows: [], errors: [], browsers: [] };
-  if (options.expectRemoved?.length) report.options.expectRemoved = options.expectRemoved;
+  if (options.expectRemoved?.length) {
+    report.options.expectRemoved = options.expectRemoved;
+    report.determinism.removalAlignment = 'Baseline only; selectors and skipped descendants verified against the same DOMSnapshot that supplies native style vectors; any subtree layout box errors. Raw styles/counts retained; other gates unchanged.';
+  }
   let cursor = 0;
   async function replayPrefix(browser, group, input, through, takeCapture) {
     await deadline(loadPreparedGroup(browser, group, input), 'noise replay load');
@@ -676,16 +675,16 @@ async function run(options) {
             for (const input of inputs) {
               await deadline(loadPreparedGroup(browsers[0], group, input), 'serial load');
               for (const state of group.states.slice(0, s + 1)) await deadline(enterState(browsers[0], state, group), state.id);
-              caps.push(await deadline(capture(browsers[0], audit, options.deep, input === inputs[0] ? options.expectRemoved : undefined), 'serial capture', options.deep ? 1200000 : 180000));
+              caps.push(await deadline(capture(browsers[0], audit, options.deep), 'serial capture', options.deep ? 1200000 : 180000));
             }
             let details;
             const paths = differingPaths(caps[0].styles.entries, caps[1].styles.entries).slice(0, options.first);
             if (paths.length && options.deep) {
-              const right = await readDeepDetails(browsers[0], paths, caps[1]);
+              const right = await readDeepDetails(browsers[0], paths);
               await loadPreparedGroup(browsers[0], group, inputs[0]);
               for (const state of group.states.slice(0, s + 1)) await enterState(browsers[0], state, group);
               await prepareCapture(browsers[0]);
-              const left = await readDeepDetails(browsers[0], paths, caps[0]);
+              const left = await readDeepDetails(browsers[0], paths);
               details = formatStyleDetails(left, right, paths);
             }
             await compare(group, group.states[s], caps, browsers, details); audit = false;

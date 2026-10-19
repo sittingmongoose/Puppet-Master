@@ -28,6 +28,7 @@ test('repeatable removal CLI is opt-in and preserves the default options object'
   assert.deepEqual(parseArgs(['a.html', 'b.html', '--expect-removed', '#old-stage', '--expect-removed', '[data-retired]']).expectRemoved,
     ['#old-stage', '[data-retired]']);
   assert.throws(() => parseArgs(['a.html', 'b.html', '--expect-removed']), /requires a value/);
+  assert.throws(() => parseArgs(['a.html', 'b.html', '--expect-removed', '#old-stage', '--deep']), /requires native DOMSnapshot/);
 });
 test('hidden removed subtrees align later sibling ordinals, descendants and pseudos', () => {
   const original = structuredClone(baseline);

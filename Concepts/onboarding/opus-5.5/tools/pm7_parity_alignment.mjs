@@ -2,17 +2,19 @@
 export function findExpectedRemoved(selectors) {
   // Runs in the page. Match ordinary CSS selectors in each accessible root.
   const matches = [];
-  const visit = (root, prefix) => {
+  const visit = (root, prefix, inherited = []) => {
     const counts = new Map();
     for (const el of root.children || []) {
       const tag = el.localName.toLowerCase(), n = (counts.get(tag) || 0) + 1;
       counts.set(tag, n);
       const path = prefix + '/' + tag + '[' + n + ']';
-      for (const selector of selectors) if (el.matches(selector)) {
-        matches.push({ path, selector, display: getComputedStyle(el).display });
+      const owners = [...inherited, ...selectors.filter(selector => el.matches(selector)).map(selector => ({ selector, path }))];
+      for (const owner of owners) {
+        matches.push({ path, selector: owner.selector, display: getComputedStyle(el).display,
+          ...(owner.path === path ? {} : { matchedAncestorPath: owner.path }) });
       }
-      visit(el, path);
-      if (el.shadowRoot) visit(el.shadowRoot, path + '/#shadow-root');
+      visit(el, path, owners);
+      if (el.shadowRoot) visit(el.shadowRoot, path + '/#shadow-root', owners);
     }
   };
   // Validate even when the document contains no matching elements.

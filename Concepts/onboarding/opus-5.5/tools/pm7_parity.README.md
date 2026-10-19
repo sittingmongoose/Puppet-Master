@@ -82,7 +82,8 @@ node Concepts/onboarding/opus-5.5/tools/pm7_parity.mjs baseline.html candidate.h
 
 Only baseline style path keys exclude matched nodes and their subtrees, renumbering surviving
 siblings. Product DOM, screenshots, state, requests and the special-rule guard are unchanged.
-Every matching node is resolved against a DOMSnapshot; any layout box in its subtree is a hard
+Every skipped element, including descendants, is resolved against the same DOMSnapshot that
+supplies its native styles; any layout box in a matched subtree is a hard
 harness error, including text/pseudo boxes and children of `display:contents` nodes. Zero-size,
 transparent and offscreen layout boxes are still boxes. Invalid selectors or missing snapshot
 matches fail. A selector matching nothing records no skipped nodes and grants no exemption.
@@ -90,7 +91,8 @@ Each row's `styles.removalAlignment` lists every skipped path, selector, compute
 snapshot node index and zero layout-box proof, plus raw/aligned differing-path counts and raw
 hashes. Normal style counts/hashes and diagnostics use the aligned paths. `--first` still caps
 property diagnostics; raise it to list every remaining difference. The option also applies to
-baseline replays and deep diagnostics. Without it, capture and report behavior is unchanged.
+baseline replays. It requires native mode and rejects `--deep`, whose CSSOM sampler does not
+supply a simultaneous DOMSnapshot layout proof. Without it, capture and report behavior is unchanged.
 
 ## Pixels and measured variation
 
@@ -197,7 +199,7 @@ add noise-baseline-N, low/high range and noise-heatmap PNGs, each with SHA-256 i
 shared pages may count per process. It is not a kernel peak reading.
 
 ```sh
-node --test Concepts/onboarding/opus-5.5/tools/pm7_parity.test.mjs Concepts/onboarding/opus-5.5/tools/cdp-websocket.test.mjs
+node --test Concepts/onboarding/opus-5.5/tools/pm7_parity.test.mjs Concepts/onboarding/opus-5.5/tools/pm7_parity_alignment.test.mjs Concepts/onboarding/opus-5.5/tools/cdp-websocket.test.mjs
 ```
 
 The opt-in GPU caret regression uses one browser at a time. Its unchanged control must pass;
