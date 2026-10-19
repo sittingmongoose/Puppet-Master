@@ -5,8 +5,9 @@ import { appendFileSync, existsSync, mkdirSync, readFileSync, writeFileSync } fr
 import { dirname, join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { hostname } from 'node:os';
+import { execFileSync } from 'node:child_process';
 import { launch } from './pm7_parity_chrome.mjs';
-import { installParityRuntime } from './pm7_parity_browser.mjs';
+import { installParityRuntime, normalizeBlobValue } from './pm7_parity_browser.mjs';
 import { diffPng } from './pm7_parity_png.mjs';
 
 const here = dirname(fileURLToPath(import.meta.url));
@@ -138,7 +139,7 @@ async function loadGroup(browser, group, input = browser.input) {
   browser.input = input; browser.page.errors.length = 0;
   if (browser.initId) await browser.page.send('Page.removeScriptToEvaluateOnNewDocument', { identifier: browser.initId });
   const config = { epoch: 1789000000000, seed: 0x9e3779b9, storage: seedStorage(group.look) };
-  const init = await browser.page.send('Page.addScriptToEvaluateOnNewDocument', { source: `(${installParityRuntime.toString()})(${JSON.stringify(config)})` });
+  const init = await browser.page.send('Page.addScriptToEvaluateOnNewDocument', { source: `(${installParityRuntime.toString()})(${JSON.stringify(config)}, ${normalizeBlobValue.toString()})` });
   browser.initId = init.identifier;
   await browser.page.setViewport(group.viewport.width, group.viewport.height);
   await browser.page.send('Emulation.setEmulatedMedia', { features: [{ name: 'prefers-reduced-motion', value: 'reduce' }, { name: 'prefers-color-scheme', value: group.look.endsWith('-light') ? 'light' : 'dark' }] });
@@ -233,6 +234,7 @@ async function nativeSnapshot(browser) {
   browser.standardProperties ||= await browser.page.evaluate(() => Array.from(getComputedStyle(document.documentElement)).filter(p => !p.startsWith('--')).sort());
   const namesDone = performance.now();
   const snapshot = await browser.page.send('DOMSnapshot.captureSnapshot', { computedStyles: browser.standardProperties, includeDOMRects: true });
+  const blobIdentities = await browser.page.evaluate(() => __pm7Parity.blobIdentities());
   const responseDone = performance.now();
   if (process.env.PM7_PARITY_DEBUG) console.log('NATIVE snapshot received');
   const { strings } = snapshot, doc = snapshot.documents[0], { nodes, layout } = doc;
@@ -254,21 +256,22 @@ async function nativeSnapshot(browser) {
       counts.set(key, n); path = (paths.get(parent) || '') + '/' + tag + '[' + n + ']';
     }
     paths.set(i, path);
+    if (byPath.has(path)) throw Error('Non-unique native DOM path: ' + path);
     const indices = layoutStyles.get(i);
     let vector = null;
     if (indices) {
       const key = indices.join(','); vector = vectors.get(key);
       if (!vector) {
         if (indices.length !== browser.standardProperties.length) throw Error('Incomplete native property vector');
-        const values = indices.map(index => strings[index] ?? null);
-        vector = { values, hash: digest(namesHash + '\0' + JSON.stringify(values)) }; vectors.set(key, vector);
+        const rawValues = indices.map(index => strings[index] ?? null), values = rawValues.map(value => normalizeBlobValue(value, blobIdentities));
+        vector = { values, rawValues, hash: digest(namesHash + '\0' + JSON.stringify(values)) }; vectors.set(key, vector);
       }
     }
     byPath.set(path, vector); elements.push([path, vector?.hash || absentHash]);
   }
   browser.nativeDetails = byPath;
   return { hash: digest(JSON.stringify(elements)), entries: elements, elements: nodes.nodeType.filter(t => t === 1).length,
-    uniqueStyles: new Set(elements.map(e => e[1])).size, internedImageUrls: 0, interningAudit: 0,
+    uniqueStyles: new Set(elements.map(e => e[1])).size, internedImageUrls: 0, interningAudit: 0, blobIdentities,
     styledRecords: elements.filter(([path]) => byPath.get(path) !== null).length,
     unstyledDomRecords: elements.filter(([path]) => byPath.get(path) === null).length,
     phases: { names: namesDone - start, response: responseDone - namesDone, hash: performance.now() - responseDone } };
@@ -296,7 +299,8 @@ async function styleDetails(browsers, paths, deep, captures) {
   const [a, b] = deep ? await Promise.all(browsers.map(browser => browser.page.evaluate(paths => __pm7Parity.details(paths), paths))) : (captures || browsers).map((capture, i) => paths.map(path => {
     const records = capture.nativeDetails, record = records.get(path);
     return !records.has(path) ? { path, absent: true } : { path, label: path,
-      properties: record ? Object.fromEntries((browsers[i] || browsers[0]).standardProperties.map((name, j) => [name, record.values[j]])) : null };
+      properties: record ? Object.fromEntries((browsers[i] || browsers[0]).standardProperties.map((name, j) => [name, record.values[j]])) : null,
+      rawProperties: record ? Object.fromEntries((browsers[i] || browsers[0]).standardProperties.map((name, j) => [name, record.rawValues[j]])) : null };
   }));
   return formatStyleDetails(a, b, paths);
 }
@@ -306,7 +310,9 @@ function formatStyleDetails(a, b, paths) {
     if (x.absent || y.absent) return { path, baseline: x.absent ? 'absent' : x.label, candidate: y.absent ? 'absent' : y.label };
     if (!x.properties || !y.properties) return { path, baseline: x.properties ? 'layout style present' : 'no layout style', candidate: y.properties ? 'layout style present' : 'no layout style' };
     const properties = [...new Set([...Object.keys(x.properties), ...Object.keys(y.properties)])].filter(name => x.properties[name] !== y.properties[name]);
-    return { path, baseline: x.label, candidate: y.label, properties: properties.map(property => ({ property, baseline: x.properties[property] ?? null, candidate: y.properties[property] ?? null })) };
+    return { path, baseline: x.label, candidate: y.label, properties: properties.map(property => ({ property, baseline: x.properties[property] ?? null, candidate: y.properties[property] ?? null,
+      ...(x.rawProperties && x.rawProperties[property] !== x.properties[property] ? { baselineRaw: x.rawProperties[property] } : {}),
+      ...(y.rawProperties && y.rawProperties[property] !== y.properties[property] ? { candidateRaw: y.rawProperties[property] } : {}) })) };
   });
 }
 async function run(options) {
@@ -336,7 +342,11 @@ async function run(options) {
     } finally { sampling = false; }
   }
   const interval = setInterval(() => { sampleMemory().catch(() => {}); }, 2000);
+  let gitHead = null;
+  try { gitHead = execFileSync('git', ['rev-parse', 'HEAD'], { cwd: resolve(here, '../../../..'), encoding: 'utf8', stdio: ['ignore', 'pipe', 'ignore'] }).trim(); } catch {}
+  const sourceFiles = ['pm7_parity.mjs', 'pm7_parity_browser.mjs', 'pm7_parity_chrome.mjs', 'pm7_parity_png.mjs', 'cdp-websocket.mjs'];
   const report = { version: 1, started: new Date(started).toISOString(), host: hostname(), input: inputs.map(({ body, ...rest }) => rest),
+    harness: { gitHead, files: sourceFiles.map(name => ({ name, sha256: digest(readFileSync(join(here, name))) })) },
     matrix: { path: options.matrix, sha256: digest(readFileSync(options.matrix)), looks: selected.looks,
       pages: selected.pages.map(p => p.id), states: selected.states.map(s => s.id), viewports: selected.viewports, planned: selected.count },
     options: { concurrency: options.concurrency, browserCap: options.concurrency === 1 ? 1 : Math.floor(options.concurrency / 2) * 2,
@@ -348,6 +358,7 @@ async function run(options) {
       documentUrl: 'same intercepted file: URL on both sides; source bytes supplied unmodified',
       styleHash: options.deep ? 'Deep: SHA256 over DOM paths and per-vector SHA256 over sorted property names and original-value SHA256; all elements incl hidden and open shadow roots' : 'Native: DOMSnapshot standard computed properties on layout nodes; all DOM paths retained, including nodes without layout styles; custom properties excluded',
       imageInterning: options.deep ? 'temporary lossless CSSOM image URL interning, original values reconstructed before hashing; 12-node audit each browser first capture' : 'unused in native mode',
+      blobUrls: 'Opaque Blob URL identifiers canonicalized by SHA256 of exact bytes and MIME type; fragments preserved; unknown Blob URLs are errors',
       limits: ['Viewport screenshots, not offscreen scroll contents.', 'Closed shadow roots and child-frame documents are not traversed.',
         'Checks only listed reachable states, not every possible interaction.', 'No cross-host pixel equivalence claimed.',
         'Fresh self-contained PM7 inputs required; relative external files resolve from the shared intercepted URL.',
@@ -366,7 +377,7 @@ async function run(options) {
         baselineElements: a.styles.elements, candidateElements: b.styles.elements, pseudoRecords: [a.styles.entries.length, b.styles.entries.length],
         uniqueStyles: [a.styles.uniqueStyles, b.styles.uniqueStyles], sampling: options.deep ? 'deep CSSOM including custom and hidden styles' : 'native standard properties on layout nodes; all DOM paths retained',
         styledRecords: [a.styles.styledRecords, b.styles.styledRecords], unstyledDomRecords: [a.styles.unstyledDomRecords, b.styles.unstyledDomRecords],
-        milliseconds: [a.styleMilliseconds, b.styleMilliseconds], phases: [a.styles.phases, b.styles.phases], internedImageUrls: [a.styles.internedImageUrls, b.styles.internedImageUrls],
+        milliseconds: [a.styleMilliseconds, b.styleMilliseconds], phases: [a.styles.phases, b.styles.phases], blobIdentities: [a.styles.blobIdentities, b.styles.blobIdentities], internedImageUrls: [a.styles.internedImageUrls, b.styles.internedImageUrls],
         interningAuditRecords: [a.styles.interningAudit, b.styles.interningAudit] },
       pixels: { ...pixels, heatmap: undefined }, baselineState: a.state, candidateState: b.state,
       runtimeErrors: { baseline: a.errors, candidate: b.errors, equal: sameErrors },

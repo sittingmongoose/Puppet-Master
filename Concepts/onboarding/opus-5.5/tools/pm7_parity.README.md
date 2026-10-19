@@ -79,6 +79,12 @@ mode reports any resulting nondeterminism as a difference; it never relaxes the 
 screenshots produced on different hosts. Closed shadow roots, child-frame documents and offscreen
 scroll contents are outside the current traversal/capture contract.
 
+Glass creates fresh opaque Blob URL identifiers in each browser. Both samplers replace only actual
+CSS `url(blob:...)` references with the SHA-256 of the exact Blob bytes plus MIME type, retaining any
+fragment. Quoted text containing a URL is unchanged. Unknown Blob references are harness errors.
+Reports retain the URL-to-content identities and original property strings for differing resources.
+This canonicalizes resource identity without ignoring image content or changing pixels.
+
 The shared pipe transport uses an uncompressed local WebSocket because Node 22's built-in client
 rejects large decompressed PM7 protocol replies. The frame reader supports fragmentation, UTF-8,
 masking and ping/pong, and bounds a message at 512 MiB. It does not change Chrome's GPU flags.
@@ -118,7 +124,7 @@ The default output is a timestamped directory under the wave's external A0-parit
 Existing reports/progress files are never overwritten. Outputs:
 
 - `report.json`: every state, input/matrix hashes, styles, pixel counts, differences, diagnostics,
-  verdict, wall time and sampled peak aggregate RSS.
+  verdict, wall time, sampled peak aggregate RSS, Git head and executed source-file hashes.
 - `summary.md`: short result and failing states.
 - `progress.jsonl`: completed states as the run proceeds.
 - `states/*.baseline.png`, `*.candidate.png`, and `*.diff.png` for raw pixel mismatches.

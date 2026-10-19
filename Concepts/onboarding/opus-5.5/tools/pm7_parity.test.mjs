@@ -2,6 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { encodePng, decodePng, diffPng } from './pm7_parity_png.mjs';
 import { parseArgs, selectMatrix, differingPaths } from './pm7_parity.mjs';
+import { normalizeBlobValue } from './pm7_parity_browser.mjs';
 
 test('PNG round trip, single-pixel sensitivity and explicit RGBA tolerances', () => {
   const a = { width: 2, height: 2, data: Buffer.from([0, 1, 2, 255, 40, 50, 60, 255, 70, 80, 90, 255, 100, 110, 120, 255]) };
@@ -45,4 +46,12 @@ test('style comparison detects pseudo changes, missing and inserted elements', (
   const a = [['/html[1]', 'a'], ['/html[1]/body[1]::before', 'b'], ['/gone', 'z']];
   const b = [['/html[1]', 'a'], ['/html[1]/body[1]::before', 'c'], ['/new', 'z']];
   assert.deepEqual(differingPaths(a, b), ['/html[1]/body[1]::before', '/gone', '/new']);
+});
+test('Blob identities preserve bytes/MIME/fragments and reject untracked resources', () => {
+  const a = { 'blob:null/a': 'blob:pm7-sha256:abc;type=image%2Fpng' }, b = { 'blob:null/b': a['blob:null/a'] };
+  assert.equal(normalizeBlobValue('url("blob:null/a#filter")', a), normalizeBlobValue('url("blob:null/b#filter")', b));
+  assert.notEqual(normalizeBlobValue('url("blob:null/a")', a), normalizeBlobValue('url("blob:null/b")', { 'blob:null/b': 'blob:pm7-sha256:def;type=image%2Fpng' }));
+  assert.equal(normalizeBlobValue('"blob:null/a"', a), '"blob:null/a"');
+  assert.equal(normalizeBlobValue('"url(blob:null/a)"', a), '"url(blob:null/a)"');
+  assert.throws(() => normalizeBlobValue('url("blob:null/missing")', a), /Untracked Blob/);
 });

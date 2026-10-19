@@ -1,9 +1,28 @@
 /* Installed before any page code. No DOM nodes/properties are excluded from style capture. */
-export function installParityRuntime(config) {
+export function normalizeBlobValue(value, identities) {
+  if (typeof value !== 'string' || !value.includes('blob:')) return value;
+  let quote = null, escaped = false, end = 0;
+  const scan = text => { for (const char of text) {
+    if (escaped) { escaped = false; continue; }
+    if (char === '\\') { escaped = true; continue; }
+    if (quote) { if (char === quote) quote = null; }
+    else if (char === '"' || char === "'") quote = char;
+  } };
+  return value.replace(/url\(\s*(?:"(blob:[^"]+)"|'(blob:[^']+)'|(blob:[^)\s]+))\s*\)/g, (match, double, single, bare, offset) => {
+    scan(value.slice(end, offset)); end = offset + match.length;
+    if (quote) { scan(match); return match; }
+    const url = double || single || bare, cut = url.indexOf('#'), base = cut < 0 ? url : url.slice(0, cut), fragment = cut < 0 ? '' : url.slice(cut);
+    if (!identities[base]) throw Error('Untracked Blob URL in computed style: ' + base);
+    return match.replace(url, identities[base] + fragment);
+  });
+}
+export function installParityRuntime(config, normalizeBlobValue) {
   const nativeFrame = requestAnimationFrame.bind(window);
   const realDate = Date, epoch = config.epoch;
   let now = 0, nextId = 0, seed = config.seed >>> 0;
   const tasks = new Map(), frames = new Map();
+  const nativeCreateObjectURL = URL.createObjectURL.bind(URL), blobs = new Map(), blobHashes = {};
+  URL.createObjectURL = blob => { const url = nativeCreateObjectURL(blob); blobs.set(url, blob); return url; };
   function FixedDate(...args) {
     if (!new.target) return new realDate(epoch + now).toString();
     return args.length ? new realDate(...args) : new realDate(epoch + now);
@@ -32,9 +51,16 @@ export function installParityRuntime(config) {
   localStorage.clear(); sessionStorage.clear();
   for (const [key, value] of Object.entries(config.storage)) localStorage.setItem(key, typeof value === 'string' ? value : JSON.stringify(value));
   const sha = async value => {
-    const bytes = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(value));
+    const bytes = await crypto.subtle.digest('SHA-256', typeof value === 'string' ? new TextEncoder().encode(value) : value);
     return Array.from(new Uint8Array(bytes), v => v.toString(16).padStart(2, '0')).join('');
   };
+  async function blobIdentities() {
+    for (const [url, blob] of blobs) if (!blobHashes[url]) {
+      if (typeof blob.arrayBuffer !== 'function') throw Error('Cannot identify non-Blob object URL: ' + url);
+      blobHashes[url] = `blob:pm7-sha256:${await sha(await blob.arrayBuffer())};type=${encodeURIComponent(blob.type || '')}`;
+    }
+    return { ...blobHashes };
+  }
   const barrier = () => new Promise(resolve => nativeFrame(() => nativeFrame(resolve)));
   async function tick(delta) {
     const end = now + delta;
@@ -143,7 +169,6 @@ export function installParityRuntime(config) {
     };
     return { expand, customNames, registered, count: aliases.size / 2, restore() { for (const [style, text] of undo.reverse()) style.cssText = text; } };
   }
-  let lastSnapshot;
   async function snapshot(audit = false) {
     console.debug('PM7_PARITY_SNAPSHOT', 'start');
     const { list, paths } = elements(), auditRows = [];
@@ -161,7 +186,7 @@ export function installParityRuntime(config) {
       }
       console.debug('PM7_PARITY_SNAPSHOT', 'audit-done');
       const values = [], valueIds = new Map(), nameLists = [], nameIds = new Map();
-      const styles = [], styleIds = new Map(), rows = [], refs = new Map();
+      const styles = [], styleIds = new Map(), rows = [];
       // Blink's indexed computed-style getter repeatedly enumerates inherited custom properties.
       // Read the known union by name; verify its exact cardinality against CSSStyleDeclaration.length.
       // Empty custom values, a dynamically registered unknown name, or an unusual property set take
@@ -193,16 +218,16 @@ export function installParityRuntime(config) {
         const key = ni + ':' + ids.join(','); let si = styleIds.get(key);
         if (si === undefined) { si = styles.length; styles.push({ ni, ids }); styleIds.set(key, si); }
         const path = paths.get(el) + pseudo;
-        rows.push([path, si]); refs.set(path, { el, pseudo });
+        rows.push([path, si]);
         if (rows.length % 3000 === 0) console.debug('PM7_PARITY_SNAPSHOT', 'rows', rows.length, 'fallbacks', fallbackCount);
       }
       const valueHashes = [];
-      console.debug('PM7_PARITY_SNAPSHOT', 'collected', rows.length, values.length, styles.length, Math.max(...values.map(v => v.length)));
-      for (const value of values) valueHashes.push(await sha(intern.expand(value)));
+      console.debug('PM7_PARITY_SNAPSHOT', 'collected', rows.length, values.length, styles.length, values.reduce((max, v) => Math.max(max, v.length), 0));
+      const identities = await blobIdentities();
+      for (const value of values) valueHashes.push(await sha(normalizeBlobValue(intern.expand(value), identities)));
       const styleHashes = [];
       for (const { ni, ids } of styles) styleHashes.push(await sha(JSON.stringify(nameLists[ni]) + '\n' + ids.map(id => valueHashes[id]).join('')));
       const entries = rows.map(([path, si]) => [path, styleHashes[si]]);
-      lastSnapshot = { refs };
       return { hash: await sha(JSON.stringify(entries)), elements: list.length, entries,
         uniqueValues: values.length, uniqueStyles: styles.length, internedImageUrls: intern.count, interningAudit: auditRows.length, fallbackCount };
     } finally { intern.restore(); }
@@ -214,11 +239,12 @@ export function installParityRuntime(config) {
       const ref = refs.get(path);
       if (!ref || !ref.el.isConnected) return { path, absent: true };
       const cs = getComputedStyle(ref.el, ref.pseudo || null);
+      const rawProperties = Object.fromEntries(Array.from(cs).sort().map(name => [name, cs.getPropertyValue(name)]));
       return { path, label: (ref.el.id ? '#' + ref.el.id : ref.el.localName) + (ref.pseudo || ''),
-        properties: Object.fromEntries(Array.from(cs).sort().map(name => [name, cs.getPropertyValue(name)])) };
+        rawProperties, properties: Object.fromEntries(Object.entries(rawProperties).map(([name, value]) => [name, normalizeBlobValue(value, blobHashes)])) };
     });
   }
-  window.__pm7Parity = { tick, settle, snapshot, details, barrier, get now() { return now; } };
+  window.__pm7Parity = { tick, settle, snapshot, details, barrier, blobIdentities, get now() { return now; } };
   const hideCaret = () => {
     const sheet = document.createElement('style'); sheet.id = 'pm7-parity-caret';
     sheet.textContent = '* { caret-color: transparent !important; }'; document.head.appendChild(sheet);
