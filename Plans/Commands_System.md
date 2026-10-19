@@ -5513,7 +5513,7 @@ negative_constraints:
 
 ## Central Touch Production Closure Addendum - 2026-09-01
 
-The following exact 231 primary commands complete the remaining actionable Touch/production denominator after the 102-row Server/Egolite closure. Each target is now adjudicated by its semantic owner; the handler string is a sole future dispatch identity, not executable-handler evidence. Aliases, typed local UI actions, and the blocked false-inventory spelling `cmd.artifacts.open_panel` are excluded from this table.
+The following exact 232 primary commands complete the remaining actionable Touch/production denominator after the 102-row Server/Egolite closure. Each target is now adjudicated by its semantic owner; the handler string is a sole future dispatch identity, not executable-handler evidence. Aliases, typed local UI actions, and the blocked false-inventory spelling `cmd.artifacts.open_panel` are excluded from this table.
 
 | Command | Canonical owner binding | Sole future handler | Request -> result | Initial availability / effect |
 |---|---|---|---|---|
@@ -5768,13 +5768,13 @@ plan_unit_id: CS-074
 unit_type: command_catalog
 status: accepted
 owner_doc: Plans/Commands_System.md
-canonical_text: Exactly 231 remaining owner-admitted Touch commands are primary catalog entries with one owner-adjudicated future handler each, typed owner contracts, handler_unavailable initial state, no alias peers, and no newly admitted EventRecord types.
+canonical_text: Exactly 232 remaining owner-admitted Touch commands are primary catalog entries with one owner-adjudicated future handler each, typed owner contracts, handler_unavailable initial state, no alias peers, and no newly admitted EventRecord types.
 gui_related: true
 gui_classification_reason: The command set is consumed by Settings, Onboarding/Doctor, owner workspaces, palette/API, and other named GUI routes.
 depends_on: [CS-073, BRS-011, FGI-010, FGI-013, JJI-007, MACS-004, NPLAN-003, RAS-012, RAS-015, SMPFS-157, SRV-012, SIR-030, SCS-010, TCME-008]
 unblocks: []
 acceptance_criteria:
-- The exact table contains 231 unique primary IDs and no alias, typed local UI action, rejected token, or blocked false inventory.
+- The exact table contains 232 unique primary IDs and no alias, typed local UI action, rejected token, or blocked false inventory.
 - Each command has exactly one owner binding, handler target, production-intent row, typed request/result/error/availability/permission contract, and reverse GUI route.
 - Every row starts handler_unavailable and expected_event_types is empty until native and Event Authority evidence exists.
 validation_surfaces:

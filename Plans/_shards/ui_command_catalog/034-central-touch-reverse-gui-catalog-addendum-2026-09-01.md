@@ -2,15 +2,15 @@
 
 Source: `Plans/UI_Command_Catalog.md`
 
-Source lines: L12190-L12454
+Source lines: L12190-L12459
 
-Source SHA256: `f029792ee40e7c394a3ad23c66cddf2c3aff4e3eeab239b1a776fb0916e546b7`
+Source SHA256: `055f2b7301f6ac85aaec1c70d6e9fdd3c8dc4eb7ae05f538ca1e0dbdd1200180`
 
 ---
 
 ## Central Touch Reverse-GUI Catalog Addendum - 2026-09-01
 
-These 228 rows are the reverse-GUI projection of CS-074. They register no synthetic control: an existing same-intent control may be rebound, an owner surface may expose the action when required, and headless-only reachability remains explicitly classifiable. Every visible control must read typed availability and disabled reason before dispatch and return to the exact initiating route/focus/continuation.
+These 232 rows are the reverse-GUI projection of CS-074. They register no synthetic control: an existing same-intent control may be rebound, an owner surface may expose the action when required, and headless-only reachability remains explicitly classifiable. Every visible control must read typed availability and disabled reason before dispatch and return to the exact initiating route/focus/continuation.
 
 | Command | Label | Owner binding | Sole future handler | Intended GUI consumers / return |
 |---|---|---|---|---|
@@ -73,8 +73,10 @@ These 228 rows are the reverse-GUI projection of CS-074. They register no synthe
 | `cmd.forge.review.checkout` | Forge Review Checkout | `Plans/Forge_Integrations.md#FGI-010` | `handlers::forge::review_checkout` | Source Control forge sections, Settings connections, Project setup, official-page routes; Plans/Cursor_Origin_Integration.md; Plans/GitLab_Integration.md; Plans/Azure_DevOps_Integration.md; Plans/Bitbucket_Integration.md; Plans/Source_Control_System.md; return: Exact provider/repository/review/pipeline and caller focus. |
 | `cmd.forge.review.close` | Forge Review Close | `Plans/Forge_Integrations.md#FGI-010` | `handlers::forge::review_close` | Source Control forge sections, Settings connections, Project setup, official-page routes; Plans/Cursor_Origin_Integration.md; Plans/GitLab_Integration.md; Plans/Azure_DevOps_Integration.md; Plans/Bitbucket_Integration.md; Plans/Source_Control_System.md; return: Exact provider/repository/review/pipeline and caller focus. |
 | `cmd.forge.review.comment` | Forge Review Comment | `Plans/Forge_Integrations.md#FGI-010` | `handlers::forge::review_comment` | Source Control forge sections, Settings connections, Project setup, official-page routes; Plans/Cursor_Origin_Integration.md; Plans/GitLab_Integration.md; Plans/Azure_DevOps_Integration.md; Plans/Bitbucket_Integration.md; Plans/Source_Control_System.md; return: Exact provider/repository/review/pipeline and caller focus. |
+| `cmd.forge.review.create` | Create Review | `Plans/Forge_Integrations.md#FGI-010` | `handlers::forge::review_create` | Existing provider-discriminated Create Review controls under UCC-132; exact account, repository, source/target revisions and initiating route/focus; provider-owner availability and return, no synthetic control. |
 | `cmd.forge.review.edit` | Forge Review Edit | `Plans/Forge_Integrations.md#FGI-022` | `handlers::forge::review_edit` | Source Control forge sections, Settings connections, Project setup, official-page routes; Plans/Cursor_Origin_Integration.md; Plans/GitLab_Integration.md; Plans/Azure_DevOps_Integration.md; Plans/Bitbucket_Integration.md; Plans/Source_Control_System.md; return: Exact provider/repository/review/pipeline and caller focus. |
 | `cmd.forge.review.mark_ready` | Forge Review Mark Ready | `Plans/Forge_Integrations.md#FGI-010` | `handlers::forge::review_mark_ready` | Source Control forge sections, Settings connections, Project setup, official-page routes; Plans/Cursor_Origin_Integration.md; Plans/GitLab_Integration.md; Plans/Azure_DevOps_Integration.md; Plans/Bitbucket_Integration.md; Plans/Source_Control_System.md; return: Exact provider/repository/review/pipeline and caller focus. |
+| `cmd.forge.review.merge` | Merge Review | `Plans/Forge_Integrations.md#FGI-010` | `handlers::forge::review_merge` | Existing provider-discriminated Merge Review controls under UCC-132; exact review, repository, preflight and confirmation context; return to that review and initiating route/focus, no synthetic control. |
 | `cmd.forge.review.open` | Forge Review Open | `Plans/Forge_Integrations.md#FGI-010` | `handlers::forge::review_open` | Source Control forge sections, Settings connections, Project setup, official-page routes; Plans/Cursor_Origin_Integration.md; Plans/GitLab_Integration.md; Plans/Azure_DevOps_Integration.md; Plans/Bitbucket_Integration.md; Plans/Source_Control_System.md; return: Exact provider/repository/review/pipeline and caller focus. |
 | `cmd.forge.review.open_in_browser` | Forge Review Open In Browser | `Plans/Forge_Integrations.md#FGI-010` | `handlers::forge::review_open_in_browser` | Source Control forge sections, Settings connections, Project setup, official-page routes; Plans/Cursor_Origin_Integration.md; Plans/GitLab_Integration.md; Plans/Azure_DevOps_Integration.md; Plans/Bitbucket_Integration.md; Plans/Source_Control_System.md; return: Exact provider/repository/review/pipeline and caller focus. |
 | `cmd.forge.review.refresh` | Forge Review Refresh | `Plans/Forge_Integrations.md#FGI-010` | `handlers::forge::review_refresh` | Source Control forge sections, Settings connections, Project setup, official-page routes; Plans/Cursor_Origin_Integration.md; Plans/GitLab_Integration.md; Plans/Azure_DevOps_Integration.md; Plans/Bitbucket_Integration.md; Plans/Source_Control_System.md; return: Exact provider/repository/review/pipeline and caller focus. |
@@ -125,6 +127,8 @@ These 228 rows are the reverse-GUI projection of CS-074. They register no synthe
 | `cmd.named_plan.rename` | Named Plan Rename | `Plans/Named_Plan_System.md#NPLAN-003` | `handlers::named_plan::rename` | Named Plans list/card/menu and planning routes; Plans/Planning_Wizard.md; Plans/FinalGUISpec.md; return: Exact Named Plan and prior focus. |
 | `cmd.named_plan.restore` | Named Plan Restore | `Plans/Named_Plan_System.md#NPLAN-003` | `handlers::named_plan::restore` | Named Plans list/card/menu and planning routes; Plans/Planning_Wizard.md; Plans/FinalGUISpec.md; return: Exact Named Plan and prior focus. |
 | `cmd.named_plan.set_priority` | Named Plan Set Priority | `Plans/Named_Plan_System.md#NPLAN-003` | `handlers::named_plan::set_priority` | Named Plans list/card/menu and planning routes; Plans/Planning_Wizard.md; Plans/FinalGUISpec.md; return: Exact Named Plan and prior focus. |
+| `cmd.panel.redock` | Dock the chat back | `Plans/FinalGUISpec.md#F3-HOME-003` | `handlers::panel::redock` | UCC-203 chat window Dock back only, with panel_id: chat and current window/layout revision; return to the fixed right chat column and initiating chat focus. Other Home panel/tab kinds do not dock or float. |
+| `cmd.panel.undock` | Pop out the chat | `Plans/FinalGUISpec.md#F3-HOME-003` | `handlers::panel::undock` | UCC-203 chat-column Pop out only, with panel_id: chat and current layout revision; retain the same chat identity, open its window and focus its composer. Other Home panel/tab kinds do not dock or float. |
 | `cmd.remote_access.funnel.disable` | Remote Access Funnel Disable | `Plans/Remote_Access_System.md#RAS-012` | `handlers::remote_access::funnel_disable` | Settings Remote Access manager, Onboarding, Doctor, Server cards, palette, API; Plans/Settings_System.md; Plans/Planning_Wizard.md; Plans/newtools.md; Plans/Server_System.md; return: Exact remote route/details and focus. |
 | `cmd.remote_access.funnel.enable` | Remote Access Funnel Enable | `Plans/Remote_Access_System.md#RAS-012` | `handlers::remote_access::funnel_enable` | Settings Remote Access manager, Onboarding, Doctor, Server cards, palette, API; Plans/Settings_System.md; Plans/Planning_Wizard.md; Plans/newtools.md; Plans/Server_System.md; return: Exact remote route/details and focus. |
 | `cmd.remote_access.funnel.preflight` | Remote Access Funnel Preflight | `Plans/Remote_Access_System.md#RAS-012` | `handlers::remote_access::funnel_preflight` | Settings Remote Access manager, Onboarding, Doctor, Server cards, palette, API; Plans/Settings_System.md; Plans/Planning_Wizard.md; Plans/newtools.md; Plans/Server_System.md; return: Exact remote route/details and focus. |
@@ -245,6 +249,7 @@ These 228 rows are the reverse-GUI projection of CS-074. They register no synthe
 
 The four RAS-015 component/Serve spellings are compatibility inputs only and therefore receive no UI catalog row or visible control. Any retained deep link normalizes to its canonical built-in-connector target before availability, permission, policy, dispatch, receipt, or event handling.
 
+
 ### UCC-152 - Remaining Touch Reverse-GUI Closure
 
 ```yaml
@@ -252,13 +257,13 @@ plan_unit_id: UCC-152
 unit_type: gui_command_catalog
 status: accepted
 owner_doc: Plans/UI_Command_Catalog.md
-canonical_text: The 228 CS-074 commands have exact intended GUI consumers, typed availability and disabled-reason behavior, sole future handler routes, deterministic returns, and no synthetic-control requirement.
+canonical_text: The 232 CS-074 commands have exact intended GUI consumers, typed availability and disabled-reason behavior, sole future handler routes, deterministic returns, and no synthetic-control requirement.
 gui_related: true
 gui_classification_reason: This PlanUnit is the exact GUI reverse-coverage catalog for the remaining Touch commands.
 depends_on: [UCC-151, CS-074, FGI-013, RAS-015]
 unblocks: []
 acceptance_criteria:
-- All 228 CS-074 commands appear exactly once in this table with owner binding, handler, consumers, and return semantics.
+- All 232 CS-074 commands appear exactly once in this table with owner binding, handler, consumers, and return semantics.
 - Existing same-intent controls are rebound; nearby non-equivalent controls are not relabeled and no synthetic control is invented merely for coverage.
 - Disabled, keyboard, focus, accessibility, result/error, and exact-return behavior is evidenced before production certification.
 validation_surfaces: [python3 scripts/pm-touch-closure-verify.py --json, python3 scripts/pm-plans-verify.py validate-wiring-matrix]
