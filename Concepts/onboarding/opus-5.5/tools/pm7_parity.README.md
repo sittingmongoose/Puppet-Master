@@ -6,8 +6,9 @@ node Concepts/onboarding/opus-5.5/tools/pm7_parity.mjs baseline.html candidate.h
 
 Node 22+, `agent-browser` on PATH, and the host's GPU are required. There are no npm dependencies.
 Inputs are self-contained PMConcept7 or LeftRailPMConcept7 file pairs. Both sides use identical
-agent-browser launches, host, DPR 1, viewport, media, locale and timezone. The document bytes are
-fulfilled unchanged at the same synthetic file URL in separate browsers. Relative external assets
+agent-browser launches, host, DPR 1, viewport, media, locale and timezone. Each pair uses one browser
+and its GPU process: baseline states first, then a fresh navigation/storage reset and the identical
+candidate state sequence. The document bytes are fulfilled unchanged at the same synthetic file URL. Relative external assets
 are therefore unsupported; embedded data/blob assets work. HTTP(S)/WebSocket/FTP requests are blocked.
 
 ```sh
@@ -17,8 +18,8 @@ node Concepts/onboarding/opus-5.5/tools/pm7_parity.mjs /absolute/evidence/baseli
   --concurrency 4 --out /absolute/evidence/iteration
 ```
 
-`--concurrency` caps **browsers**, not pairs. Default 4 runs two pairs; 1 runs sequentially;
-3/5 use 2/4 browsers. Values outside 1..6 are errors. Respect any lower per-worker cap (this
+`--concurrency` caps **browsers/workers**. Default 4 runs four groups concurrently, each comparing
+its two inputs sequentially in one browser. Values outside 1..6 are errors. Respect any lower per-worker cap (this
 wave: 4). SIGINT/SIGTERM and normal completion close the owned agent-browser sessions and profiles.
 No remote GPU mode is implemented.
 
@@ -60,11 +61,37 @@ node Concepts/onboarding/opus-5.5/tools/pm7_parity.mjs baseline.html candidate.h
 
 The report preserves both raw differing-pixel counts and counts above the stated channel tolerance.
 Style equality remains exact. Every raw pixel difference produces a heat-map PNG, even if tolerated.
-There are no automatic retries, masks, learned baselines or silent tolerance increases.
+Exact mode has no retries, masks or pixel allowance. Tolerance never increases automatically.
+
+When same-input GPU renders differ, an **explicit, separate** measured-envelope mode is available:
+
+```sh
+node Concepts/onboarding/opus-5.5/tools/pm7_parity.mjs baseline.html candidate.html \
+  --baseline-repeats 5 --out /absolute/evidence/measured-run
+```
+
+Default `--baseline-repeats 1` leaves exact mode unchanged. Values 2..8 enable this mode; it cannot
+combine with tolerance or `--deep`. A raw pixel failure with exact styles triggers additional
+baseline navigations, replaying the same state prefix. Every repeat must have the original exact
+style hash, state/clock and runtime errors. Each pixel's RGBA channels receive only the minimum and
+maximum values actually observed at that pixel in the baseline captures. A pixel that repeats
+exactly has zero allowance. The original candidate proof capture is never retried or replaced.
+No envelope is learned or reused across runs. An unstable baseline style/state fails the comparison.
+Every replay also completes the group's remaining states before its next navigation, so the
+preceding paint/overlay history matches a full sequence. Those preparation/restoration screenshots
+do not replace any proof capture.
+
+Every row retains `rawExactVerdict` and raw pixel counts. Reports separately label the measured
+verdict, accepted-noise count, baseline hashes, ranges, out-of-envelope pixels and observed heat maps.
+A measured PASS is **not** zero-pixel parity. A real pixel change inside the observed channel range
+can be indistinguishable from that variation; computed styles still have to match exactly.
+The purge lead accepted this explicit split in mailbox message `1019010702-321f` after same-browser
+preparation still left Glass pixel variation. Default exact mode continues to report those failures.
 
 ## Determinism
 
-- Date and performance use one manually advanced clock, epoch `1789000000000`.
+- Date, performance, document.timeline.currentTime and Event.timeStamp use one manually advanced
+  clock, epoch `1789000000000` (timeline/event values use the relative clock).
 - Math.random uses a fixed LCG seed, `0x9e3779b9`, reset before each group load.
 - Timers run in due-time/registration order. Each explicit advance paints one synthetic rAF generation.
   Idle callbacks are scheduled on the same clock. Native double-rAF barriers allow layout to commit.
@@ -73,11 +100,25 @@ There are no automatic retries, masks, learned baselines or silent tolerance inc
 - Both OS reduced-motion media and the concept's persisted Reduce animations setting are enabled.
 - Local/session storage is cleared and seeded before load. PM_DEMO's clock is paused when assigned.
 - Fonts and images are awaited, caret is hidden, and timezone/locale are UTC/en-US.
+- Home receives a post-font layout warm-up before routing away, so hidden terminal prompt gutters
+  have completed their first render. Fonts are awaited again after look/route changes.
+- Before each measured input/group, a fixed preparation navigation loads every declared font face
+  and paints the requested look, then reloads the input. This keeps preview/terminal canvas metrics
+  from using a fallback font on the first input and a cached font on the second. The pointer resets
+  before navigation, and CDP focus emulation keeps worker-window activation from changing page focus.
+- The page's own `?pm-warm=0` test hook disables idle GPU prewarming. That queue measures native
+  frame timing and creates/removes transient shader-warming DOM; it cannot run deterministically
+  on the manual clock. Product UI and its real Glass effects remain enabled.
 
 GPU rasterization and native layout/font/image tasks remain browser implementation details. Exact
 mode reports any resulting nondeterminism as a difference; it never relaxes the gate. Do not compare
 screenshots produced on different hosts. Closed shadow roots, child-frame documents and offscreen
 scroll contents are outside the current traversal/capture contract.
+
+Separate Chrome GPU processes produced a few differing Glass edge pixels even when styles matched
+and repeated captures within each process were stable. Each pair shares a browser/GPU process and
+uses a fixed preparation sequence. Remaining variation fails exact mode; no pixel noise envelope is applied.
+Only an explicit `--baseline-repeats` invocation enables the separately labelled envelope above.
 
 Glass creates fresh opaque Blob URL identifiers in each browser. Both samplers replace only actual
 CSS `url(blob:...)` references with the SHA-256 of the exact Blob bytes plus MIME type, retaining any
@@ -124,10 +165,12 @@ The default output is a timestamped directory under the wave's external A0-parit
 Existing reports/progress files are never overwritten. Outputs:
 
 - `report.json`: every state, input/matrix hashes, styles, pixel counts, differences, diagnostics,
-  verdict, wall time, sampled peak aggregate RSS, Git head and executed source-file hashes.
+  raw exact and selected-mode verdicts, wall time, sampled peak aggregate RSS, Git head and executed source-file hashes.
 - `summary.md`: short result and failing states.
 - `progress.jsonl`: completed states as the run proceeds.
 - `states/*.baseline.png`, `*.candidate.png`, and `*.diff.png` for raw pixel mismatches.
+- In measured mode only, `*.noise-baseline-N.png`, per-pixel `*.noise-low.png`/`*.noise-high.png`
+  and `*.noise-heatmap.png` for every surveyed state, each with its SHA-256 in the JSON.
 
 Artifacts have SHA-256 values in each row. `--first N` controls the first differing elements whose
 property/value differences are included. Exit codes: **0 parity, 1 differences, 2 harness error**.

@@ -87,3 +87,37 @@ export function diffPng(baseline, candidate, tolerance = 0, maxDiffPixels = 0) {
     bounds: bounds[2] < 0 ? null : bounds, pass: diffPixels <= maxDiffPixels,
     heatmap: rawDiffPixels ? encodePng({ ...a, data: heat }) : null };
 }
+
+// Explicit noise mode only: ranges belong to individual pixel channels, never
+// to a whole region. An unchanged baseline pixel therefore has zero allowance.
+export function baselineEnvelopePng(baseline, candidate, repeats) {
+  if (!repeats.length) throw Error('Baseline envelope requires repeated captures');
+  const a = decodePng(baseline), b = decodePng(candidate), low = Buffer.from(a.data), high = Buffer.from(a.data);
+  const dimensions = image => {
+    if (image.width !== a.width || image.height !== a.height) throw Error('Baseline envelope dimensions differ');
+  };
+  dimensions(b);
+  for (const bytes of repeats) {
+    const image = decodePng(bytes); dimensions(image);
+    for (let i = 0; i < low.length; i++) { low[i] = Math.min(low[i], image.data[i]); high[i] = Math.max(high[i], image.data[i]); }
+  }
+  const heat = Buffer.alloc(low.length), noiseBounds = [a.width, a.height, -1, -1], outsideBounds = [...noiseBounds];
+  const mark = (bounds, x, y) => { bounds[0] = Math.min(bounds[0], x); bounds[1] = Math.min(bounds[1], y); bounds[2] = Math.max(bounds[2], x); bounds[3] = Math.max(bounds[3], y); };
+  let noisePixels = 0, outsidePixels = 0, maxObservedChannelSpan = 0, maxExcess = 0;
+  for (let i = 0; i < low.length; i += 4) {
+    let span = 0, excess = 0;
+    for (let c = 0; c < 4; c++) {
+      span = Math.max(span, high[i + c] - low[i + c]);
+      excess = Math.max(excess, low[i + c] - b.data[i + c], b.data[i + c] - high[i + c]);
+    }
+    const x = (i / 4) % a.width, y = Math.floor(i / 4 / a.width);
+    if (span) { noisePixels++; mark(noiseBounds, x, y); }
+    if (excess) { outsidePixels++; mark(outsideBounds, x, y); }
+    maxObservedChannelSpan = Math.max(maxObservedChannelSpan, span); maxExcess = Math.max(maxExcess, excess);
+    heat[i] = span ? 255 : 0; heat[i + 1] = Math.min(255, span * 4); heat[i + 3] = 255;
+  }
+  const bounds = value => value[2] < 0 ? null : value;
+  return { sampleCount: repeats.length + 1, noisePixels, noiseBounds: bounds(noiseBounds), maxObservedChannelSpan,
+    outsidePixels, outsideBounds: bounds(outsideBounds), maxExcess, pass: outsidePixels === 0,
+    lowPng: encodePng({ ...a, data: low }), highPng: encodePng({ ...a, data: high }), heatmap: encodePng({ ...a, data: heat }) };
+}

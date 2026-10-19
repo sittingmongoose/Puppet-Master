@@ -8,7 +8,7 @@ import { hostname } from 'node:os';
 import { execFileSync } from 'node:child_process';
 import { launch } from './pm7_parity_chrome.mjs';
 import { installParityRuntime, normalizeBlobValue } from './pm7_parity_browser.mjs';
-import { diffPng } from './pm7_parity_png.mjs';
+import { diffPng, baselineEnvelopePng } from './pm7_parity_png.mjs';
 
 const here = dirname(fileURLToPath(import.meta.url));
 const digest = bytes => createHash('sha256').update(bytes).digest('hex');
@@ -17,9 +17,11 @@ const help = `Usage: node pm7_parity.mjs BASELINE.html CANDIDATE.html [options]
   --matrix FILE                   State data (default pm7_parity_states.json)
   --subset looks=a,b;pages=a,b;states=a,b;viewports=wide,narrow
                                   Repeat --subset to combine filters; quote semicolons
-  --concurrency N                 Browser cap, default 4; integer 1..6 (1 runs serially)
+  --concurrency N                 Browser/worker cap, default 4; integer 1..6
   --tolerance N                   RGBA channel delta allowed, default 0 (0..255)
   --max-diff-pixels N             Pixels above tolerance allowed, default 0
+  --baseline-repeats N            Explicit measured pixel envelope, 2..8 baseline captures
+                                  Default 1 (exact); cannot combine with tolerance or --deep
   --first N                       First differing elements to detail, default 8
   --deep                          Exhaustive JS sampler, including hidden/custom styles (slow)
   --list                          Print selected matrix without opening browsers
@@ -29,7 +31,7 @@ GPU agent-browser sessions only. A pair stays on this host. No remote mode.
 `;
 
 export function parseArgs(argv) {
-  const options = { concurrency: 4, tolerance: 0, maxDiffPixels: 0, first: 8, filters: {},
+  const options = { concurrency: 4, tolerance: 0, maxDiffPixels: 0, baselineRepeats: 1, first: 8, filters: {},
     matrix: join(here, 'pm7_parity_states.json') };
   const files = [];
   for (let i = 0; i < argv.length; i++) {
@@ -46,15 +48,17 @@ export function parseArgs(argv) {
           if (!match) throw Error('Subset must be looks=...;pages=...;states=...;viewports=...');
           options.filters[match[1]] = match[2].split(',');
         }
-      } else if (['concurrency', 'tolerance', 'max-diff-pixels', 'first'].includes(key)) {
+      } else if (['concurrency', 'tolerance', 'max-diff-pixels', 'baseline-repeats', 'first'].includes(key)) {
         const number = Number(value);
         if (!Number.isSafeInteger(number) || number < 0) throw Error(`${arg} requires a nonnegative integer`);
-        options[{ 'max-diff-pixels': 'maxDiffPixels' }[key] || key] = number;
+        options[{ 'max-diff-pixels': 'maxDiffPixels', 'baseline-repeats': 'baselineRepeats' }[key] || key] = number;
       } else if (key === 'out' || key === 'matrix') options[key] = resolve(value);
       else throw Error(`Unknown option ${arg}`);
     } else files.push(resolve(arg));
   }
   if (options.concurrency < 1 || options.concurrency > 6 || options.tolerance > 255 || options.first < 1) throw Error('Invalid concurrency (1..6), tolerance (0..255) or first (>=1)');
+  if (options.baselineRepeats < 1 || options.baselineRepeats > 8) throw Error('Invalid baseline repeats (1..8)');
+  if (options.baselineRepeats > 1 && (options.tolerance || options.maxDiffPixels || options.deep)) throw Error('Baseline repeats cannot combine with tolerance or --deep');
   if (!options.help && files.length !== 2) throw Error('Pass baseline and candidate file paths');
   [options.baseline, options.candidate] = files;
   options.out ||= resolve('/mnt/Cursor/PuppetMaster-Evidence/scratch/2026-10-18-pm7-purge/A0-parity', new Date().toISOString().replace(/[:.]/g, '-') + '-' + process.pid);
@@ -109,9 +113,10 @@ async function createBrowser(input, telemetry) {
     await page.send('Network.setBlockedURLs', { urls: ['http://*', 'https://*', 'ws://*', 'wss://*', 'ftp://*', 'file:///__pm7_parity_asset__/*'] });
     await page.send('Emulation.setTimezoneOverride', { timezoneId: 'UTC' });
     await page.send('Emulation.setLocaleOverride', { locale: 'en-US' });
+    await page.send('Emulation.setFocusEmulationEnabled', { enabled: true });
     await page.send('Animation.enable'); await page.send('Animation.setPlaybackRate', { playbackRate: 0 });
     browser.input = input; browser.interceptErrors = []; browser.blocked = new Set();
-    browser.currentUrl = 'file:///__pm7_parity__/input.html?o55=off&o55scenario=fresh';
+    browser.currentUrl = 'file:///__pm7_parity__/input.html?o55=off&o55scenario=fresh&pm-warm=0';
     page.on('Fetch.requestPaused', event => {
       const uri = event.request.url;
       let request;
@@ -142,15 +147,21 @@ async function loadGroup(browser, group, input = browser.input) {
   const init = await browser.page.send('Page.addScriptToEvaluateOnNewDocument', { source: `(${installParityRuntime.toString()})(${JSON.stringify(config)}, ${normalizeBlobValue.toString()})` });
   browser.initId = init.identifier;
   await browser.page.setViewport(group.viewport.width, group.viewport.height);
+  // A pointer left over a menu control can populate hidden tooltip DOM on reload.
+  await browser.page.mouse(1, 1, { down: false, up: false });
   await browser.page.send('Emulation.setEmulatedMedia', { features: [{ name: 'prefers-reduced-motion', value: 'reduce' }, { name: 'prefers-color-scheme', value: group.look.endsWith('-light') ? 'light' : 'dark' }] });
   await browser.page.goto(browser.currentUrl);
   await browser.page.evaluate(async () => {
     if (!window.__pm7Parity) throw Error('Runtime was not installed');
     await __pm7Parity.settle(5000);
     if (!(window.PM_THEME && window.PM_NIER && window.PM_PAGES && window.O55)) throw Error('PM7 APIs missing');
+    if (window.PM_WARM && !PM_WARM.state().off) throw Error('Idle GPU prewarming did not stop');
     await document.fonts.ready;
     await Promise.all(Array.from(document.images, async img => { if (!img.complete) await img.decode().catch(() => {}); }));
     if (window.PM_DEMO?.clock?.pause) PM_DEMO.clock.pause();
+    // Font completion schedules terminal metrics/ResizeObserver work. Flush that
+    // while Home is still visible, before a route can hide its terminal gutter.
+    await __pm7Parity.settle(1000);
   });
   await browser.page.evaluate(async (route, prepare, look) => {
     const [family, mode] = look.split('-');
@@ -161,12 +172,27 @@ async function loadGroup(browser, group, input = browser.input) {
     if (PM_NIER.wanted() !== (family === 'nier')) PM_NIER.set(family === 'nier', { sound: false });
     PM_PAGES.go(route);
     if (prepare) (0, eval)(prepare);
+    await document.fonts.ready;
     await __pm7Parity.settle(1200);
     const root = document.documentElement;
     if (root.getAttribute('data-theme') !== (family === 'nier' ? 'basic' : family) + '-' + mode || PM_NIER.on() !== (family === 'nier')) throw Error('Requested look did not paint: ' + look);
     if (!matchMedia('(prefers-reduced-motion: reduce)').matches || root.getAttribute('data-motion') !== 'reduced') throw Error('Reduced motion did not apply');
   }, group.page.route, group.page.prepare || '', group.look);
   await visible(browser.page, group.page.assert, 'page ' + group.page.id);
+}
+async function loadPreparedGroup(browser, group, input) {
+  await loadGroup(browser, group, input);
+  // Preview/terminal canvases measure their fonts during construction. A cold
+  // first navigation can cache fallback metrics even after fonts.ready resolves.
+  // Warm every declared face and paint once, then measure a fresh navigation on
+  // both sides. This fixed preparation is applied before every input/group.
+  await browser.page.evaluate(async () => {
+    await Promise.all(Array.from(document.fonts, face => face.load()));
+    await document.fonts.ready;
+    await __pm7Parity.settle(1000);
+  });
+  await browser.page.screenshot();
+  await loadGroup(browser, group, input);
 }
 async function visible(page, selector, label = selector) {
   const found = await page.evaluate(sel => Array.from(document.querySelectorAll(sel)).some(el => {
@@ -276,9 +302,17 @@ async function nativeSnapshot(browser) {
     unstyledDomRecords: elements.filter(([path]) => byPath.get(path) === null).length,
     phases: { names: namesDone - start, response: responseDone - namesDone, hash: performance.now() - responseDone } };
 }
+async function prepareCapture(browser) {
+  await browser.page.bringToFront();
+  await browser.page.evaluate(async () => {
+    await document.fonts.ready;
+    await Promise.all(Array.from(document.images, async image => { if (!image.complete) await image.decode().catch(() => {}); }));
+    await __pm7Parity.settle(0);
+  });
+}
 async function capture(browser, audit, deep) {
   if (browser.interceptErrors.length) throw Error(browser.interceptErrors.join('\n'));
-  await browser.page.bringToFront();
+  await prepareCapture(browser);
   if (process.env.PM7_PARITY_DEBUG) console.log('CAPTURE screenshot start');
   const screenshot = await browser.page.screenshot();
   if (process.env.PM7_PARITY_DEBUG) console.log('CAPTURE screenshot done');
@@ -287,7 +321,8 @@ async function capture(browser, audit, deep) {
   const styleMilliseconds = performance.now() - styleStarted;
   const state = await browser.page.evaluate(() => ({ time: __pm7Parity.now, theme: document.documentElement.getAttribute('data-theme'),
     nier: PM_NIER.on(), page: PM_PAGES.current, focus: document.activeElement?.id || document.activeElement?.className || '',
-    fonts: document.fonts.status, viewport: [innerWidth, innerHeight, devicePixelRatio] }));
+    fonts: document.fonts.status, idlePrewarmingOff: window.PM_WARM?.state().off ?? null,
+    viewport: [innerWidth, innerHeight, devicePixelRatio] }));
   return { screenshot, styles, state, styleMilliseconds, nativeDetails: deep ? null : browser.nativeDetails,
     errors: [...new Set(browser.page.errors)] };
 }
@@ -349,13 +384,16 @@ async function run(options) {
     harness: { gitHead, files: sourceFiles.map(name => ({ name, sha256: digest(readFileSync(join(here, name))) })) },
     matrix: { path: options.matrix, sha256: digest(readFileSync(options.matrix)), looks: selected.looks,
       pages: selected.pages.map(p => p.id), states: selected.states.map(s => s.id), viewports: selected.viewports, planned: selected.count },
-    options: { concurrency: options.concurrency, browserCap: options.concurrency === 1 ? 1 : Math.floor(options.concurrency / 2) * 2,
-      tolerance: options.tolerance, maxDiffPixels: options.maxDiffPixels, first: options.first, deep: !!options.deep },
-    mode: options.tolerance || options.maxDiffPixels ? 'explicit pixel tolerance; exact styles' : 'exact',
-    determinism: { epoch: 1789000000000, seed: '0x9e3779b9', clock: 'manual deterministic timers/rAF; Date and performance.now share clock',
+    options: { concurrency: options.concurrency, browserCap: options.concurrency,
+      tolerance: options.tolerance, maxDiffPixels: options.maxDiffPixels, baselineRepeats: options.baselineRepeats, first: options.first, deep: !!options.deep },
+    mode: options.baselineRepeats > 1 ? 'explicit measured baseline pixel envelope; exact styles' : options.tolerance || options.maxDiffPixels ? 'explicit pixel tolerance; exact styles' : 'exact',
+    determinism: { epoch: 1789000000000, seed: '0x9e3779b9', clock: 'manual deterministic timers/rAF; Date, performance.now, document.timeline and Event.timeStamp share clock',
       animations: 'CDP playback rate 0; finite animations finished, infinite paused at 0; SVG paused at 0', reducedMotion: true,
       storage: 'localStorage/sessionStorage cleared and seeded before each group', network: 'only file:, data: and blob: allowed',
       documentUrl: 'same intercepted file: URL on both sides; source bytes supplied unmodified',
+      pairing: 'one browser per worker; baseline group then candidate group with identical state prefixes; shared GPU process',
+      idlePrewarming: 'disabled through the page-owned pm-warm=0 test hook; transient shader warm-up DOM is never started',
+      baselineEnvelope: options.baselineRepeats > 1 ? `${options.baselineRepeats} baseline captures for raw-pixel failures with exact styles; same-browser navigation replays, per-pixel RGBA ranges, every repeat must have identical styles/state/errors; original candidate proof capture never retried/replaced` : 'disabled; zero pixel allowance in exact mode',
       styleHash: options.deep ? 'Deep: SHA256 over DOM paths and per-vector SHA256 over sorted property names and original-value SHA256; all elements incl hidden and open shadow roots' : 'Native: DOMSnapshot standard computed properties on layout nodes; all DOM paths retained, including nodes without layout styles; custom properties excluded',
       imageInterning: options.deep ? 'temporary lossless CSSOM image URL interning, original values reconstructed before hashing; 12-node audit each browser first capture' : 'unused in native mode',
       blobUrls: 'Opaque Blob URL identifiers canonicalized by SHA256 of exact bytes and MIME type; fragments preserved; unknown Blob URLs are errors',
@@ -366,6 +404,53 @@ async function run(options) {
         ...(options.deep ? [] : ['Native mode excludes custom properties and cannot sample computed properties of nodes without layout objects or non-generated pseudo elements. Use --deep for these.'])] },
     rows: [], errors: [], browsers: [] };
   let cursor = 0;
+  async function replayPrefix(browser, group, input, through, takeCapture) {
+    await deadline(loadPreparedGroup(browser, group, input), 'noise replay load');
+    for (let i = 0; i <= through; i++) {
+      await deadline(enterState(browser, group.states[i], group), 'noise replay ' + group.states[i].id);
+      if (i === through && takeCapture) return deadline(capture(browser, false, false), 'noise baseline capture');
+      await prepareCapture(browser); await browser.page.screenshot();
+    }
+  }
+  async function completeSequence(browser, group, after) {
+    for (const state of group.states.slice(after + 1)) {
+      await deadline(enterState(browser, state, group), 'noise sequence ' + state.id);
+      await prepareCapture(browser); await browser.page.screenshot();
+    }
+  }
+  async function measureNoise(browser, group, state, baseline, candidate, prefix) {
+    const samples = [], hashes = [baseline.styles.hash], artifacts = {}, stateIndex = group.states.findIndex(s => s.id === state.id);
+    let stable = true;
+    const instability = [];
+    // Each navigation follows the full group sequence, including open overlays.
+    // A prefix-only repeat would give the GPU a different preceding paint history.
+    await completeSequence(browser, group, stateIndex);
+    for (let n = 2; n <= options.baselineRepeats; n++) {
+      console.log(`NOISE ${group.look} ${group.page.id} ${state.id} ${group.viewport.id} baseline=${n}/${options.baselineRepeats}`);
+      const sample = await replayPrefix(browser, group, inputs[0], stateIndex, true);
+      const same = sample.styles.hash === baseline.styles.hash && JSON.stringify(sample.state) === JSON.stringify(baseline.state)
+        && JSON.stringify(sample.errors) === JSON.stringify(baseline.errors);
+      stable &&= same; hashes.push(sample.styles.hash); samples.push(sample.screenshot);
+      if (!same) {
+        const paths = differingPaths(baseline.styles.entries, sample.styles.entries);
+        instability.push({ sample: n, state: sample.state, errors: sample.errors, differingElements: paths.length,
+          differences: await styleDetails([browser, browser], paths.slice(0, options.first), false, [baseline, sample]) });
+      }
+      const path = `${prefix}.noise-baseline-${n}.png`; writeFileSync(path, sample.screenshot);
+      artifacts['baseline' + n] = { path, sha256: digest(sample.screenshot) };
+      await completeSequence(browser, group, stateIndex);
+    }
+    const envelope = baselineEnvelopePng(baseline.screenshot, candidate.screenshot, samples);
+    for (const [name, bytes] of [['low', envelope.lowPng], ['high', envelope.highPng], ['heatmap', envelope.heatmap]]) {
+      const path = `${prefix}.noise-${name}.png`; writeFileSync(path, bytes); artifacts[name] = { path, sha256: digest(bytes) };
+    }
+    delete envelope.lowPng; delete envelope.highPng; delete envelope.heatmap;
+    // Continue the candidate sequence at the exact original state/clock. Its
+    // measured screenshot is never replaced by this restoration navigation.
+    await replayPrefix(browser, group, inputs[1], stateIndex, false);
+    return { requested: options.baselineRepeats, applied: true, ...envelope, baselineStylesAndStateStable: stable,
+      baselineStyleHashes: hashes, instability, artifacts, pass: stable && envelope.pass };
+  }
   async function compare(group, state, captures, browsers, detailOverride) {
     const [a, b] = captures, key = `${group.look}--${group.page.id}--${state.id}--${group.viewport.id}`;
     const prefix = join(options.out, 'states', key);
@@ -374,13 +459,15 @@ async function run(options) {
     const sameErrors = JSON.stringify(a.errors) === JSON.stringify(b.errors);
     const row = { id: key, look: group.look, page: group.page.id, state: state.id, viewport: group.viewport,
       styles: { baseline: a.styles.hash, candidate: b.styles.hash, differingElements: paths.length,
-        baselineElements: a.styles.elements, candidateElements: b.styles.elements, pseudoRecords: [a.styles.entries.length, b.styles.entries.length],
+        baselineElements: a.styles.elements, candidateElements: b.styles.elements, styleRecords: [a.styles.entries.length, b.styles.entries.length],
+        pseudoRecords: [a.styles.entries.filter(([path]) => path.includes('::')).length, b.styles.entries.filter(([path]) => path.includes('::')).length],
         uniqueStyles: [a.styles.uniqueStyles, b.styles.uniqueStyles], sampling: options.deep ? 'deep CSSOM including custom and hidden styles' : 'native standard properties on layout nodes; all DOM paths retained',
         styledRecords: [a.styles.styledRecords, b.styles.styledRecords], unstyledDomRecords: [a.styles.unstyledDomRecords, b.styles.unstyledDomRecords],
         milliseconds: [a.styleMilliseconds, b.styleMilliseconds], phases: [a.styles.phases, b.styles.phases], blobIdentities: [a.styles.blobIdentities, b.styles.blobIdentities], internedImageUrls: [a.styles.internedImageUrls, b.styles.internedImageUrls],
         interningAuditRecords: [a.styles.interningAudit, b.styles.interningAudit] },
       pixels: { ...pixels, heatmap: undefined }, baselineState: a.state, candidateState: b.state,
       runtimeErrors: { baseline: a.errors, candidate: b.errors, equal: sameErrors },
+      rawExactVerdict: !paths.length && a.styles.hash === b.styles.hash && !pixels.rawDiffPixels && sameErrors ? 'PASS' : 'FAIL',
       verdict: !paths.length && a.styles.hash === b.styles.hash && pixels.pass && sameErrors ? 'PASS' : 'FAIL', artifacts: {} };
     for (const [side, cap] of [['baseline', a], ['candidate', b]]) {
       const path = `${prefix}.${side}.png`; writeFileSync(path, cap.screenshot);
@@ -394,25 +481,35 @@ async function run(options) {
       row.styles.differences = detailOverride || await styleDetails(browsers, paths.slice(0, options.first), options.deep, captures);
       if (row.styles.differences.some(d => d.properties?.length === 0)) throw Error('Style hash differs but live details no longer match capture: ' + key);
     }
+    if (options.baselineRepeats > 1) {
+      row.pixelNoise = pixels.rawDiffPixels && !paths.length && a.styles.hash === b.styles.hash && sameErrors
+        ? await measureNoise(browsers[0], group, state, a, b, prefix)
+        : { requested: options.baselineRepeats, applied: false, reason: paths.length || a.styles.hash !== b.styles.hash || !sameErrors ? 'style/runtime difference; no pixel allowance' : 'pixels already exact' };
+      if (row.pixelNoise.applied && row.pixelNoise.pass) row.verdict = 'PASS';
+    }
     report.rows.push(row); appendFileSync(join(options.out, 'progress.jsonl'), JSON.stringify(row) + '\n');
-    console.log(`${row.verdict} ${report.rows.length}/${selected.count} ${key} styles=${paths.length} pixels=${pixels.diffPixels} raw=${pixels.rawDiffPixels}`);
+    console.log(`${row.verdict} ${report.rows.length}/${selected.count} ${key} styles=${paths.length} pixels=${pixels.diffPixels} raw=${pixels.rawDiffPixels}${row.pixelNoise?.applied ? ' envelope=' + (row.pixelNoise.pass ? 'PASS' : 'FAIL') : ''}`);
   }
   async function worker(index) {
     const browsers = [];
     try {
       browsers.push(await deadline(createBrowser(inputs[0], telemetry), 'launch baseline'));
-      if (options.concurrency > 1) browsers.push(await deadline(createBrowser(inputs[1], telemetry), 'launch candidate'));
-      for (const browser of browsers) report.browsers.push({ worker: index, version: browser.version });
+      for (const browser of browsers) {
+        report.browsers.push({ worker: index, sessionId: browser.session.id, pid: browser.chrome.pid, version: browser.version });
+        console.log(`BROWSER worker=${index} session=${browser.session.id} pid=${browser.chrome.pid}`);
+      }
+      const browser = browsers[0];
       let audit = true;
       for (;;) {
         const group = selected.groups[cursor++]; if (!group) break;
         console.log(`LOAD worker=${index} ${group.look} ${group.page.id} ${group.viewport.id}`);
-        if (browsers.length === 1) {
-          // One-browser mode replays the same state prefix for each side, avoiding state sharing.
+        if (options.deep) {
+          // Deep diagnostics need the live CSSOM. Replay each side's exact prefix,
+          // restoring the baseline only when a differing property needs details.
           for (let s = 0; s < group.states.length; s++) {
             const caps = [];
             for (const input of inputs) {
-              await deadline(loadGroup(browsers[0], group, input), 'serial load');
+              await deadline(loadPreparedGroup(browsers[0], group, input), 'serial load');
               for (const state of group.states.slice(0, s + 1)) await deadline(enterState(browsers[0], state, group), state.id);
               caps.push(await deadline(capture(browsers[0], audit, options.deep), 'serial capture', options.deep ? 1200000 : 180000));
             }
@@ -420,19 +517,31 @@ async function run(options) {
             const paths = differingPaths(caps[0].styles.entries, caps[1].styles.entries).slice(0, options.first);
             if (paths.length && options.deep) {
               const right = await browsers[0].page.evaluate(paths => __pm7Parity.details(paths), paths);
-              await loadGroup(browsers[0], group, inputs[0]);
+              await loadPreparedGroup(browsers[0], group, inputs[0]);
               for (const state of group.states.slice(0, s + 1)) await enterState(browsers[0], state, group);
+              await prepareCapture(browsers[0]);
               const left = await browsers[0].page.evaluate(paths => __pm7Parity.details(paths), paths);
               details = formatStyleDetails(left, right, paths);
             }
             await compare(group, group.states[s], caps, browsers, details); audit = false;
           }
         } else {
-          await deadline(Promise.all(browsers.map(browser => loadGroup(browser, group))), 'load group');
+          // Chrome GPU processes can rasterize a few Glass edge pixels differently.
+          // Keep both inputs in one browser; reload/reset storage between them and
+          // replay the same ordered states. Native captures retain their own details.
+          const baseline = [];
+          await deadline(loadPreparedGroup(browser, group, inputs[0]), 'load baseline group');
           for (const state of group.states) {
-            await deadline(Promise.all(browsers.map(browser => enterState(browser, state, group))), 'enter ' + state.id);
-            const caps = await deadline(Promise.all(browsers.map(browser => capture(browser, audit, options.deep))), 'capture ' + state.id, options.deep ? 1200000 : 180000);
-            await compare(group, state, caps, browsers); audit = false;
+            await deadline(enterState(browser, state, group), 'enter baseline ' + state.id);
+            baseline.push(await deadline(capture(browser, false, false), 'capture baseline ' + state.id));
+          }
+          await deadline(loadPreparedGroup(browser, group, inputs[1]), 'load candidate group');
+          for (let i = 0; i < group.states.length; i++) {
+            const state = group.states[i];
+            await deadline(enterState(browser, state, group), 'enter candidate ' + state.id);
+            const candidate = await deadline(capture(browser, false, false), 'capture candidate ' + state.id);
+            await compare(group, state, [baseline[i], candidate], [browser, browser]);
+            baseline[i] = null; audit = false;
           }
         }
       }
@@ -446,7 +555,7 @@ async function run(options) {
       }
     }
   }
-  try { await Promise.all(Array.from({ length: options.concurrency === 1 ? 1 : Math.floor(options.concurrency / 2) }, (_, i) => worker(i))); }
+  try { await Promise.all(Array.from({ length: options.concurrency }, (_, i) => worker(i))); }
   finally { clearInterval(interval); await sampleMemory(); }
   report.rows.sort((a, b) => a.id.localeCompare(b.id));
   report.wallSeconds = (Date.now() - started) / 1000;
@@ -454,22 +563,31 @@ async function run(options) {
     method: '2-second RSS sum for harness, adapter children and Chrome SystemInfo process IDs; shared pages counted per process; Linux only' };
   report.renderers = [...telemetry.renderers];
   report.counts = { planned: selected.count, completed: report.rows.length, pass: report.rows.filter(r => r.verdict === 'PASS').length,
-    fail: report.rows.filter(r => r.verdict === 'FAIL').length, errors: report.errors.length };
+    fail: report.rows.filter(r => r.verdict === 'FAIL').length, errors: report.errors.length,
+    measuredNoiseAccepted: report.rows.filter(r => r.pixelNoise?.applied && r.pixelNoise.pass).length };
   report.verdict = report.errors.length || report.rows.length !== selected.count ? 'ERROR' : report.counts.fail ? 'FAIL' : 'PASS';
+  report.rawExactCounts = { pass: report.rows.filter(r => r.styles.baseline === r.styles.candidate && !r.pixels.rawDiffPixels && r.runtimeErrors.equal).length };
+  report.rawExactCounts.fail = report.rows.length - report.rawExactCounts.pass;
+  report.rawExactVerdict = report.verdict === 'ERROR' ? 'ERROR' : report.rawExactCounts.fail ? 'FAIL' : 'PASS';
   writeFileSync(join(options.out, 'report.json'), JSON.stringify(report, null, 2) + '\n');
   const failed = report.rows.filter(r => r.verdict !== 'PASS');
+  const noisy = report.rows.filter(r => r.pixelNoise?.applied);
   const summary = [`# PM7 parity: ${report.verdict}`, '', `Mode: ${report.mode}. Host: ${report.host}. GPU: ${report.renderers.join('; ')}.`, '',
     `States: ${report.counts.completed}/${selected.count}; PASS ${report.counts.pass}; FAIL ${report.counts.fail}; errors ${report.errors.length}.`,
+    `Raw exact verdict: ${report.rawExactVerdict}; PASS ${report.rawExactCounts.pass}; FAIL ${report.rawExactCounts.fail}. Measured-noise acceptances: ${report.counts.measuredNoiseAccepted}.`,
     `Wall time: ${report.wallSeconds.toFixed(2)} s. Peak aggregate RSS: ${(telemetry.peakRssBytes / 2 ** 30).toFixed(2)} GiB (sampled every 2 s).`, '',
     '| Input | SHA-256 |', '|---|---|', ...report.input.map(i => `| ${i.path} | ${i.sha256} |`), '',
     `Matrix: ${selected.looks.length} looks × ${selected.pages.length} surfaces × ${selected.viewports.length} viewports; page-specific states in ${options.matrix}.`,
     options.deep ? 'Deep style hashes include all computed properties, hidden nodes, ::before/::after, form ::placeholder and list ::marker.' : 'Native style hashes include standard properties on layout nodes and generated pseudo nodes. All DOM paths are retained. Hidden nodes without layout and non-generated pseudo styles are unsampled; custom properties are excluded. Use --deep to inspect them.', '',
     ...(failed.length ? ['| State | Style elements | Pixels above tolerance | Raw differing pixels |', '|---|---:|---:|---:|', ...failed.map(r => `| ${r.id} | ${r.styles.differingElements} | ${r.pixels.diffPixels} | ${r.pixels.rawDiffPixels} |`), ''] : []),
+    ...(noisy.length ? ['| Measured baseline envelope | Raw candidate pixels | Variable baseline pixels | Max channel span | Outside envelope | Styles/state stable |', '|---|---:|---:|---:|---:|---|',
+      ...noisy.map(r => `| ${r.id} | ${r.pixels.rawDiffPixels} | ${r.pixelNoise.noisePixels} | ${r.pixelNoise.maxObservedChannelSpan} | ${r.pixelNoise.outsidePixels} | ${r.pixelNoise.baselineStylesAndStateStable} |`), ''] : []),
     ...report.errors.map(e => `Harness error: ${e.error || e.cleanup}`), '',
     'See report.json and progress.jsonl for every state, full property differences and artifact SHA-256 values.',
-    'Exact mode never retries, masks differences or increases tolerance automatically.', '', ...report.determinism.limits.map(l => '- ' + l), ''].join('\n');
+    'Exact mode never retries, masks differences or increases tolerance automatically. Explicit baseline-repeat mode retains the original candidate capture and reports every raw difference and measured per-pixel range.', '', ...report.determinism.limits.map(l => '- ' + l), ''].join('\n');
   writeFileSync(join(options.out, 'summary.md'), summary);
-  console.log(JSON.stringify({ verdict: report.verdict, ...report.counts, wallSeconds: report.wallSeconds, report: join(options.out, 'report.json') }));
+  console.log(JSON.stringify({ verdict: report.verdict, mode: report.mode, rawExactVerdict: report.rawExactVerdict,
+    rawExactCounts: report.rawExactCounts, ...report.counts, wallSeconds: report.wallSeconds, report: join(options.out, 'report.json') }));
   return report.verdict === 'ERROR' ? 2 : report.verdict === 'FAIL' ? 1 : 0;
 }
 export { createBrowser, loadGroup, enterState };

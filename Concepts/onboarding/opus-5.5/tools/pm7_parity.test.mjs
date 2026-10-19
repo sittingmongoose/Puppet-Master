@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { encodePng, decodePng, diffPng } from './pm7_parity_png.mjs';
+import { encodePng, decodePng, diffPng, baselineEnvelopePng } from './pm7_parity_png.mjs';
 import { parseArgs, selectMatrix, differingPaths } from './pm7_parity.mjs';
 import { normalizeBlobValue } from './pm7_parity_browser.mjs';
 
@@ -25,14 +25,31 @@ test('reject corrupt PNG and unequal dimensions', () => {
   assert.throws(() => decodePng(corrupt), /CRC/);
   assert.throws(() => diffPng(png, encodePng({ width: 2, height: 1, data: Buffer.alloc(8) })), /dimensions/);
 });
+test('measured pixel envelopes preserve exact pixels and bound every RGBA channel separately', () => {
+  const png = values => encodePng({ width: 2, height: 1, data: Buffer.from(values) });
+  const a = png([10, 10, 10, 255, 20, 20, 20, 255]), repeat = png([12, 10, 9, 255, 20, 20, 20, 255]);
+  const inside = baselineEnvelopePng(a, png([11, 10, 10, 255, 20, 20, 20, 255]), [repeat]);
+  assert.equal(inside.pass, true); assert.equal(inside.noisePixels, 1); assert.deepEqual(inside.noiseBounds, [0, 0, 0, 0]);
+  assert.equal(inside.maxObservedChannelSpan, 2);
+  const outside = baselineEnvelopePng(a, png([11, 10, 8, 255, 21, 20, 20, 255]), [repeat]);
+  assert.equal(outside.pass, false); assert.equal(outside.outsidePixels, 2); assert.equal(outside.maxExcess, 1);
+  assert.equal(baselineEnvelopePng(a, repeat, [a]).noisePixels, 0);
+  assert.equal(baselineEnvelopePng(a, repeat, [a]).pass, false);
+  assert.equal(baselineEnvelopePng(a, png([10, 10, 10, 254, 20, 20, 20, 255]), [repeat]).pass, false);
+  assert.throws(() => baselineEnvelopePng(a, a, []), /requires repeated/);
+});
 test('CLI rejects silent tolerance, unknown flags, invalid concurrency and empty subset', () => {
   const args = ['a.html', 'b.html'];
   assert.equal(parseArgs(args).tolerance, 0);
   assert.equal(parseArgs(args).maxDiffPixels, 0);
+  assert.equal(parseArgs(args).baselineRepeats, 1);
   assert.throws(() => parseArgs([...args, '--concurrency', '7']), /concurrency/);
   assert.throws(() => parseArgs([...args, '--tolerance', '256']), /tolerance/);
   assert.throws(() => parseArgs([...args, '--surprise', 'true']), /Unknown/);
   assert.throws(() => parseArgs([...args, '--subset', 'looks=']), /Subset/);
+  assert.throws(() => parseArgs([...args, '--baseline-repeats', '9']), /baseline repeats/);
+  assert.throws(() => parseArgs([...args, '--baseline-repeats', '3', '--tolerance', '1']), /cannot combine/);
+  assert.throws(() => parseArgs([...args, '--baseline-repeats', '3', '--deep']), /cannot combine/);
 });
 test('matrix filters preserve page-specific states and reject misspelled IDs', () => {
   const matrix = { version: 1, looks: ['basic-dark'], viewports: [{ id: 'wide', width: 1600, height: 900 }],

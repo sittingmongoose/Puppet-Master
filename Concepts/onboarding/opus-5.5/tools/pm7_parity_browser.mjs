@@ -31,6 +31,9 @@ export function installParityRuntime(config, normalizeBlobValue) {
   FixedDate.now = () => epoch + now; window.Date = FixedDate;
   Object.defineProperty(performance, 'now', { value: () => now });
   Object.defineProperty(performance, 'timeOrigin', { value: epoch });
+  // Product frame/hover helpers read these clocks as well as performance.now().
+  Object.defineProperty(document.timeline, 'currentTime', { get: () => now });
+  Object.defineProperty(Event.prototype, 'timeStamp', { get: () => now });
   Math.random = () => ((seed = (Math.imul(seed, 1664525) + 1013904223) >>> 0) / 4294967296);
   const enqueue = (fn, delay, args, interval = 0, frame = false) => {
     const id = ++nextId;
