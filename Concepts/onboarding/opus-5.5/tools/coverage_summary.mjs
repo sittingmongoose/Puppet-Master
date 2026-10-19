@@ -104,6 +104,7 @@ const unresolvedJs = union.js.filter((s) => !/^[a-f0-9]{16}$/i.test(s.script));
 const unresolvedUnbounded = unresolvedJs.some((s) => !Array.isArray(s.usedRanges) ||
   !(s.usedRangesProvenance === 'per-sample-v1' || receiptEntry?.script_hashes?.includes(s.script)));
 const unresolvedCss = union.css.filter((r) => !/^[a-f0-9]{16}$/i.test(r.sheet) && r.used);
+const unsampledNavigations = union.unsampled_navigations ?? null;
 const clip = (ranges, end) => unionRanges(ranges.map((r) => ({ startOffset: Math.max(0, r.startOffset), endOffset: Math.min(end, r.endOffset) })));
 function subtractRanges(ranges, cuts) {
   const result = [];
@@ -146,7 +147,8 @@ for (const b of blocks) {
         bytes: len(b.text.slice(startOffset, endOffset)), used: !!sample?.used || touching.length > 0,
         observed: !!sample, sheet_observed: sheetObserved, conservative_overlap: !sample?.used && touching.length > 0 };
       rule.unresolved_source_overlap = !rule.used && unresolvedCss.some((r) => r.startOffset < endOffset && r.endOffset > startOffset);
-      rule.usage_state = rule.used ? 'used' : sheetObserved && !rule.unresolved_source_overlap ? 'unused' : 'unknown';
+      rule.unsampled_navigation_gap = !rule.used && unsampledNavigations > 0;
+      rule.usage_state = rule.used ? 'used' : sheetObserved && !rule.unresolved_source_overlap && !rule.unsampled_navigation_gap ? 'unused' : 'unknown';
       found.push(rule); rules.push(rule);
     } });
     row.rules_total = found.length; row.rules_used = found.filter((r) => r.used).length;
@@ -213,6 +215,7 @@ const report = { page: rel(pageFile), page_sha256: hash(bytes), union: unionFile
   provenance_receipt: receiptFile ? { path: receiptFile, sha256: hash(receiptBytes), accepted_for_union: !!receiptEntry } : null,
   unresolved_js_sources: unresolvedJs.map((s) => ({ script: s.script, url: s.url, functions: s.functions.length, positive_ranges: s.usedRanges?.length || 0 })),
   unresolved_css_sources: [...new Set(unresolvedCss.map((r) => r.sheet))],
+  unsampled_navigations: unsampledNavigations,
   offset_units: 'UTF-16 code units, relative to block body; bytes are UTF-8',
   caveats: ['Unused means not touched in these runs; it is not proof of dead code.', 'Unobserved CSS rules/functions are distinguished from explicit zero counts.', 'CSS used bytes count matched style-rule spans; fonts, keyframes, at-rules and whitespace are outside that metric.', 'JS unused bytes require per-sample-v1 provenance or a matching hash-bound receipt; otherwise the remainder is unmeasured.', 'Unresolved same-page script identities conservatively make compatible positive offsets uncertain in every canonical script. Function counts are counts from resolved sources, with unresolved overlaps flagged.', 'Function counts sum samples, not independent users or test cases.'],
   totals: { css_rules_used: sum('style', 'rules_used'), css_rules_total: sum('style', 'rules_total'), css_rules_unused: sum('style', 'rules_unused'), css_rules_unmeasured: sum('style', 'rules_unmeasured'), css_bytes: sum('style', 'bytes'), css_used_bytes: sum('style', 'used_bytes'), css_unused_bytes: sum('style', 'unused_bytes'), css_unmeasured_bytes: sum('style', 'unmeasured_bytes'),
@@ -231,7 +234,7 @@ writeFileSync(out + '.md', md.join('\n'));
 if (completeFile) {
   // Complete only observed content hashes. An entirely missing script/sheet remains
   // unknown; a census never invents a successful load of an unrecorded block.
-  const entries = new Map(union.css.filter((r) => r.used !== false || !unresolvedCss.some((u) => u.startOffset < r.endOffset && u.endOffset > r.startOffset))
+  const entries = new Map(union.css.filter((r) => r.used !== false || !(unsampledNavigations > 0) && !unresolvedCss.some((u) => u.startOffset < r.endOffset && u.endOffset > r.startOffset))
     .map((r) => [r.sheet + ':' + r.startOffset + ':' + r.endOffset, r]));
   for (const r of rules.filter((r) => r.sheet_observed)) {
     const key = r.sheet + ':' + r.startOffset + ':' + r.endOffset;

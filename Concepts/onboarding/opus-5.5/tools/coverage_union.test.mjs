@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import { mkdtempSync, readFileSync, rmSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
-import { coverPage, executedRanges, mergeCoverage, normalizeJsCoverage } from './coverage_union.mjs';
+import { coverPage, executedRanges, mergeCoverage, normalizeJsCoverage, sampleCoverage } from './coverage_union.mjs';
 
 test('a later branch sample cannot erase bytes touched by an earlier sample', () => {
   const script = (zero) => ({ script: 'same', functions: [{ functionName: '', ranges: [
@@ -82,5 +82,44 @@ test('a stylesheet with no matched rules still has installed-source evidence', a
     assert.equal(union.stylesheets.length, 1);
     assert.equal(union.stylesheets[0].installed, true);
     assert.equal(listeners.size, 0);
+  } finally { rmSync(dir, { recursive: true, force: true }); }
+});
+
+test('page-initiated main-frame reloads count once; wrapped navigations and subframes do not', async () => {
+  const dir = mkdtempSync(join(tmpdir(), 'pm7-coverage-navigation-test-'));
+  const file = join(dir, 'union.json'), listeners = new Map();
+  let url = 'about:blank';
+  const navigated = () => listeners.get('Page.frameNavigated')({ frame: { id: 'main', url } });
+  const page = {
+    on(event, callback) { listeners.set(event, callback); return () => listeners.delete(event); },
+    async goto(next) { if (next === 'reject') throw Error('navigation rejected'); url = next; navigated(); },
+    async send(method) {
+      if (method === 'Page.getFrameTree') return { frameTree: { frame: { id: 'main', url } } };
+      if (method === 'Page.reload') navigated();
+      if (method === 'Profiler.takePreciseCoverage') return { result: [] };
+      if (method === 'CSS.takeCoverageDelta') return { coverage: [] };
+      if (method === 'CSS.stopRuleUsageTracking') return { ruleUsage: [] };
+      return {};
+    },
+  };
+  try {
+    const finish = await coverPage(page, file);
+    await page.goto('first'); await page.send('Page.reload');
+    assert.equal(JSON.parse(readFileSync(file)).unsampled_navigations, 0);
+    url = 'page-initiated'; navigated();
+    listeners.get('Page.frameNavigated')({ frame: { id: 'child', parentId: 'main', url } });
+    await sampleCoverage(page, file); await sampleCoverage(page, file);
+    assert.equal(JSON.parse(readFileSync(file)).unsampled_navigations, 1);
+    await assert.rejects(page.goto('reject'), /navigation rejected/);
+    url = 'reload-after-rejection'; navigated();
+    await page.send('Page.navigate');
+    listeners.get('Page.navigatedWithinDocument')({ frameId: 'main', url: url + '#hash' });
+    navigated();
+    await finish();
+    assert.equal(JSON.parse(readFileSync(file)).unsampled_navigations, 3);
+    assert.equal(listeners.size, 0);
+    const sum = mergeCoverage({ js: [], css: [], unsampled_navigations: 2 },
+      { js: [], css: [], unsampled_navigations: 3 });
+    assert.equal(sum.unsampled_navigations, 5);
   } finally { rmSync(dir, { recursive: true, force: true }); }
 });

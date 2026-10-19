@@ -28,6 +28,8 @@ For the raw CDP driver, pass `coverageFile` to `chrome.mjs`'s `launch()` or
 and `await finish()` in `finally`, before closing the page/context. Coverage is
 flushed before each `goto`/`reload` so Chrome cannot discard the old stylesheet
 IDs or V8 execution context first. The caller still owns browser cleanup.
+The pipe's large-reply transport is selected only by `launch({coverageFile})`;
+flag-off launches use the original Node WebSocket, including its child process.
 
 ## Data and interpretation
 
@@ -49,6 +51,10 @@ retain code, but uncertified remainders cannot establish unused bytes.
 `stylesheets` records installed stylesheet hashes, including sheets with no
 matching rules. A missing source remains unknown. A failed harness still
 contributes everything it touched.
+`unsampled_navigations` counts main-frame navigations/reloads without a preceding
+navigation flush; subframes and the initial empty tab are excluded. A nonzero
+count makes untapped CSS rules unknown and prevents false census rows. Captures
+predating this counter report `null` in the summary, not a measured zero.
 
 Generate a complete static-page census and source map with:
 

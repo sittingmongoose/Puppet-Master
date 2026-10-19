@@ -42,17 +42,38 @@ export async function beginCoverage(session) {
   await send('DOM.enable');
   // RuleUsage reports matching rules, but does not enumerate never-matched
   // sheets. Keep their installed content hashes too, for the static rule census.
-  const state = { headers: new Map(), off: [] };
+  const state = { headers: new Map(), off: [], unsampledNavigations: 0,
+    preflushedNavigation: false, documentUrl: null, navigationTracking: typeof session.on === 'function' };
   if (typeof session.on === 'function') {
     for (const [event, callback] of [
       ['CSS.styleSheetAdded', ({ header }) => state.headers.set(header.styleSheetId, header)],
       ['CSS.styleSheetRemoved', ({ styleSheetId }) => state.headers.delete(styleSheetId)],
+      ['Page.frameNavigated', ({ frame }) => {
+        if (!frame || frame.parentId) return;
+        // A new empty tab has no document usage to lose. Every later main-frame
+        // navigation needs its own pre-navigation sample, including page reloads.
+        if (!state.preflushedNavigation && state.documentUrl !== 'about:blank') state.unsampledNavigations++;
+        state.preflushedNavigation = false;
+        state.documentUrl = frame.url;
+        state.mainFrameId = frame.id;
+      }],
+      ['Page.navigatedWithinDocument', ({ frameId, url }) => {
+        if (frameId !== state.mainFrameId) return;
+        state.preflushedNavigation = false;
+        state.documentUrl = url;
+      }],
     ]) {
       const subscription = session.on(event, callback);
       state.off.push(typeof subscription === 'function' ? subscription : () => session.off?.(event, callback));
     }
   }
   stylesheetStates.set(session, state);
+  if (state.navigationTracking) {
+    await send('Page.enable');
+    const tree = await send('Page.getFrameTree');
+    state.documentUrl = tree.frameTree?.frame?.url || null;
+    state.mainFrameId = tree.frameTree?.frame?.id;
+  }
   await send('CSS.enable');
   await send('CSS.startRuleUsageTracking');
 }
@@ -171,6 +192,9 @@ export function mergeCoverage(base, sample) {
     js: [...js.values()].sort((a, b) => a.script.localeCompare(b.script)),
     css: [...css.values()].sort(byCss),
     stylesheets: [...new Map([...(base.stylesheets || []), ...(sample.stylesheets || [])].map((s) => [s.sheet, s])).values()].sort((a, b) => a.sheet.localeCompare(b.sheet)),
+    ...(base.unsampled_navigations != null || sample.unsampled_navigations != null ? {
+      unsampled_navigations: (base.unsampled_navigations || 0) + (sample.unsampled_navigations || 0),
+    } : {}),
   };
 }
 
@@ -281,21 +305,27 @@ function coverageCounts(merged) {
   return { functions, ranges, zero, unused };
 }
 
-export async function sampleCoverage(session, file, { stop = false } = {}) {
+export async function sampleCoverage(session, file, { stop = false, beforeNavigation = false } = {}) {
   const send = asSend(session);
   const jsPayload = await send('Profiler.takePreciseCoverage');
   if (stop) await send('Profiler.stopPreciseCoverage').catch(() => {});
   const cssPayload = await send(stop ? 'CSS.stopRuleUsageTracking' : 'CSS.takeCoverageDelta');
   const sheets = await cssEntries(send, cssPayload, stylesheetStates.get(session));
+  const state = stylesheetStates.get(session);
   const sample = {
     js: await jsEntries(send, jsPayload),
     ...sheets,
+    ...(state?.navigationTracking ? { unsampled_navigations: state.unsampledNavigations } : {}),
   };
   const merged = mergeCoverage(readUnion(file), sample);
   mkdirSync(dirname(file), { recursive: true });
   const tmp = `${file}.tmp`;
   writeFileSync(tmp, JSON.stringify(merged));
   renameSync(tmp, file);
+  if (state) {
+    state.unsampledNavigations = 0;
+    if (beforeNavigation) state.preflushedNavigation = true;
+  }
   const counts = coverageCounts(merged);
   console.error(`coverage union: ${file} scripts=${merged.js.length} functions=${counts.functions} ranges=${counts.ranges} zero=${counts.zero} css=${merged.css.length} unused=${counts.unused} bytes=${Buffer.byteLength(JSON.stringify(merged))}`);
   return merged;
@@ -322,15 +352,24 @@ export async function coverPage(page, file, session = null) {
     if (typeof page[method] !== 'function') continue;
     const original = page[method]; originals.set(method, original);
     page[method] = async function (...args) {
-      await sampleCoverage(cdp, file);
-      return original.apply(this, args);
+      await sampleCoverage(cdp, file, { beforeNavigation: true });
+      try { return await original.apply(this, args); }
+      catch (error) { stylesheetStates.get(cdp).preflushedNavigation = false; throw error; }
     };
   }
   if (typeof page.send === 'function') {
     const original = page.send; originals.set('send', original);
     page.send = async function (method, ...args) {
-      if (method === 'Page.reload' || method === 'Page.navigate') await sampleCoverage(cdp, file);
-      return original.call(this, method, ...args);
+      const navigating = method === 'Page.reload' || method === 'Page.navigate';
+      if (navigating) await sampleCoverage(cdp, file, { beforeNavigation: true });
+      try {
+        const result = await original.call(this, method, ...args);
+        if (navigating && result?.errorText) stylesheetStates.get(cdp).preflushedNavigation = false;
+        return result;
+      } catch (error) {
+        if (navigating) stylesheetStates.get(cdp).preflushedNavigation = false;
+        throw error;
+      }
     };
   }
   let closed = false;

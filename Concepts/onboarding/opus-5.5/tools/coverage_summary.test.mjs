@@ -48,3 +48,14 @@ test('a touched animation never certifies its standard or prefixed keyframe step
   assert.equal(summary.totals.css_unused_bytes,
     summary.css_rules.filter(r => r.usage_state === 'unused').reduce((n, r) => n + r.bytes, 0));
 });
+
+test('an unsampled navigation keeps observed touches but cannot certify CSS absence', () => {
+  const text = '.spinner { color: red; } .idle { color: blue; }';
+  const { summary, complete } = summarize(text, { unsampled_navigations: 1 });
+  assert.equal(summary.unsampled_navigations, 1);
+  assert.deepEqual(summary.css_rules.map(r => r.usage_state), ['used', 'unknown']);
+  assert.equal(summary.totals.css_rules_unused, 0);
+  assert.equal(summary.totals.css_rules_unmeasured, 1);
+  assert.ok(complete.css.every(r => r.used));
+  assert.equal(complete.unsampled_navigations, 1);
+});
