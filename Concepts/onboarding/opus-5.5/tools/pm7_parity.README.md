@@ -78,8 +78,10 @@ and deep captures. The pre-assertion NieR preparation and both existing 96 ms bo
 
 A separate CSSOM rule-text guard compares selection, webkit-scrollbar, webkit-slider and webkit-search
 pseudo rules whose computed nodes are unavailable. Changes fail conservatively and report first rule
-texts. Removed style/script/hidden nodes are labelled non-rendered DOM-only differences; they still
-fail exact parity. Standard layout changes are reported separately.
+texts. A changed DOM path is labelled non-rendered DOM-only only when neither captured side has
+layout on that node or anywhere in its subtree. This flag comes from every DOMSnapshot layout node,
+including text and generated pseudos; a `display:contents` parent with painted text is a layout-related
+difference. These diagnostics still fail exact parity. Standard layout changes are reported separately.
 
 For an explicitly expected non-rendered removal, repeat `--expect-removed SELECTOR`:
 

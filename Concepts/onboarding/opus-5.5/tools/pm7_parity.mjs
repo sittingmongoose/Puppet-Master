@@ -13,6 +13,9 @@ import { findExpectedRemoved, verifyRemovedSnapshot, alignRemovedEntries } from 
 
 const here = dirname(fileURLToPath(import.meta.url));
 const digest = bytes => createHash('sha256').update(bytes).digest('hex');
+// Snapshot-derived diagnostics stay outside serialized capture payloads. Each
+// retained details map owns its subtree-layout set, even after browser replays.
+const subtreeLayoutByDetails = new WeakMap();
 const help = `Usage: node pm7_parity.mjs BASELINE.html CANDIDATE.html [options]
   --out DIR                       JSON, Markdown, screenshots and heat maps
   --matrix FILE                   State data (default pm7_parity_states.json)
@@ -330,6 +333,10 @@ async function nativeSnapshot(browser, expectRemoved = []) {
   const sparseMap = sparse => new Map((sparse?.index || []).map((index, i) => [index, sparse.value[i]]));
   const pseudos = sparseMap(nodes.pseudoType), counts = new Map(), paths = new Map(), elements = [];
   const layoutStyles = new Map(layout.nodeIndex.map((node, i) => [node, layout.styles[i]]));
+  const layoutAncestors = new Set(), subtreeLayoutPaths = new Set();
+  // Text and generated pseudo layout nodes may paint under a no-box element
+  // (display:contents). Walk every snapshot layout node, not just style records.
+  for (const index of layout.nodeIndex) for (let node = index; node >= 0 && !layoutAncestors.has(node); node = nodes.parentIndex[node]) layoutAncestors.add(node);
   const byPath = new Map(), vectors = new Map();
   const namesHash = digest(JSON.stringify(browser.standardProperties)), absentHash = digest(namesHash + '\0null');
   for (let i = 0; i < nodes.nodeType.length; i++) {
@@ -344,6 +351,7 @@ async function nativeSnapshot(browser, expectRemoved = []) {
       counts.set(key, n); path = (paths.get(parent) || '') + '/' + tag + '[' + n + ']';
     }
     paths.set(i, path);
+    if (layoutAncestors.has(i)) subtreeLayoutPaths.add(path);
     if (byPath.has(path)) throw Error('Non-unique native DOM path: ' + path);
     const indices = layoutStyles.get(i);
     let vector = null;
@@ -382,6 +390,7 @@ async function nativeSnapshot(browser, expectRemoved = []) {
     byPath.set(path, vector); return [path, vector.hash];
   });
   browser.nativeDetails = byPath;
+  subtreeLayoutByDetails.set(byPath, subtreeLayoutPaths);
   return { hash: digest(JSON.stringify(entries)), entries, propertyNames, elements: nodes.nodeType.filter(t => t === 1).length,
     ...(skippedNodes ? { skippedNodes } : {}),
     uniqueStyles: new Set(entries.map(e => e[1])).size, internedImageUrls: custom.internedImageUrls, interningAudit: custom.auditRecords, blobIdentities,
@@ -475,6 +484,10 @@ async function capture(browser, audit, deep, expectRemoved = [], context = {}) {
     failed: browser.failedRequests.map(item => ({ ...item, url: canonicalUrl(item.url) })).sort((a, b) => JSON.stringify(a).localeCompare(JSON.stringify(b))) };
   const nativeDetails = deep ? null : removalAlignment
     ? new Map([...removalAlignment.toRaw].map(([path, raw]) => [path, browser.nativeDetails.get(raw)])) : browser.nativeDetails;
+  if (removalAlignment) {
+    const rawLayout = subtreeLayoutByDetails.get(browser.nativeDetails);
+    subtreeLayoutByDetails.set(nativeDetails, new Set([...removalAlignment.toRaw].filter(([, raw]) => rawLayout.has(raw)).map(([path]) => path)));
+  }
   return { screenshot, styles, state, styleMilliseconds, screenshotPreparation, caretPreparation, nativeDetails,
     ...(removalAlignment ? { removalAlignment } : {}),
     specialRules, specialRuleHash: digest(JSON.stringify(specialRules)), requests, storageAudit: browser.storageAudit,
@@ -483,6 +496,9 @@ async function capture(browser, audit, deep, expectRemoved = [], context = {}) {
 export function differingPaths(a, b) {
   const left = new Map(a), right = new Map(b);
   return [...new Set([...left.keys(), ...right.keys()])].filter(path => left.get(path) !== right.get(path));
+}
+export function nonRenderedDomOnlyPaths(captures, paths) {
+  return paths.filter(path => captures.every(cap => !cap.nativeDetails.get(path) && !subtreeLayoutByDetails.get(cap.nativeDetails)?.has(path)));
 }
 async function readDeepDetails(browser, paths) {
   return browser.page.evaluate(paths => {
@@ -646,7 +662,7 @@ async function run(options) {
     const sameRules = a.specialRuleHash === b.specialRuleHash;
     const customCoverageComplete = options.deep || [a, b].every(cap => !cap.styles.customSampling.unmatchedLayoutPaths.length);
     const sameBehavior = sameErrors && sameState && sameRequests && sameRules && customCoverageComplete;
-    const domOnlyPaths = options.deep ? [] : paths.filter(path => !a.nativeDetails.get(path) && !b.nativeDetails.get(path));
+    const domOnlyPaths = options.deep ? [] : nonRenderedDomOnlyPaths(captures, paths);
     const row = { id: key, look: group.look, page: group.page.id, state: state.id, viewport: group.viewport, motion: group.motion,
       styles: { baseline: a.styles.hash, candidate: b.styles.hash, differingElements: paths.length,
         baselineElements: a.styles.elements, candidateElements: b.styles.elements, styleRecords: [a.styles.entries.length, b.styles.entries.length],

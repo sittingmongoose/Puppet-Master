@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { createContext, runInContext } from 'node:vm';
-import { capture, enterState } from './pm7_parity.mjs';
+import { capture, enterState, differingPaths, nonRenderedDomOnlyPaths } from './pm7_parity.mjs';
 import { encodePng } from './pm7_parity_png.mjs';
 
 // Browser-free execution of the actual page callbacks. The settle model matches
@@ -150,4 +150,23 @@ test('candidate absence check accepts the named removal without excluding the su
   assert.equal(a.styles.hash, b.styles.hash);
   assert.equal(b.styles.entries.length, a.styles.raw.entries.length - 1);
   assert.equal(Object.hasOwn(b.styles, 'raw'), false);
+});
+
+test('DOM-only classification includes layout from text and generated pseudo descendants', async () => {
+  const path = '/html[1]/body[1]/div[1]';
+  const absent = await capture(timedBrowser().browser, false, false);
+  for (const descendant of ['text', 'pseudo', 'none']) {
+    const { browser } = timedBrowser();
+    browser.page.send = async () => ({ strings: ['#document', 'HTML', 'BODY', 'DIV', '#text', 'before', 'black', 'block'], documents: [{
+      nodes: { nodeType: [9, 1, 1, 1, descendant === 'text' ? 3 : 1], nodeName: [0, 1, 2, 3, descendant === 'text' ? 4 : 3],
+        parentIndex: [-1, 0, 1, 2, 3], ...(descendant === 'pseudo' ? { pseudoType: { index: [4], value: [5] } } : {}) },
+      layout: { nodeIndex: descendant === 'none' ? [1, 2] : [1, 2, 4],
+        styles: descendant === 'none' ? [[6, 7], [6, 7]] : [[6, 7], [6, 7], [6, 7]] } }] });
+    const present = await capture(browser, false, false);
+    assert.equal(present.nativeDetails.get(path), null, 'parent has no own layout vector');
+    const paths = differingPaths(present.styles.entries, absent.styles.entries);
+    assert(paths.includes(path));
+    assert.equal(nonRenderedDomOnlyPaths([present, absent], paths).includes(path), descendant === 'none');
+    assert.notEqual(present.styles.hash, absent.styles.hash, 'all removals still fail exact styles');
+  }
 });
