@@ -1,8 +1,8 @@
 # Governance reseal 2 plan — 2026-10-19
 
-**Phase 1 complete: both measurements and all 32 scratch controls passed their completion checks. No Phase 2 action is authorized.** The lead must complete the capped Opus xhigh and Astra max reviews, land G-register and its snapshot/baseline follow-up, and mail **GO Phase 2** before this worker refreshes governance.
+**Phase 1 plan revision, fix round 1. No Phase 2 action is authorized.** Original measurements and 32 controls are preserved below as cycle-1 evidence; revised controls and the two-place binding rehearsal appear in the fix-round section. The lead must complete cycle-2 Opus xhigh and Astra max reviews, confirm G-register and its snapshot/baseline follow-up, and mail **GO Phase 2** before this worker refreshes governance.
 
-Branch: `plans/governance-reseal2-20261019`. Agent: `codex-reseal2`. Full T3 worktree: `/home/sittingmongoose/.t3/worktrees/PuppetMaster/t3-cd5b8993`, owned by `/home/sittingmongoose/src/PuppetMaster`. Fresh initial main: `142cfa9192a135502328b3dd5fddf8462ef8fbd3`.
+Review branch: `plans/governance-reseal2-20261019`. Agent: `codex-reseal2`. Fix-round full T3 worktree: `/home/sittingmongoose/.t3/worktrees/PuppetMaster/t3-d20640ac`, owned by `/home/sittingmongoose/src/PuppetMaster`. Local branch and Phase 2 holder branch: `plans/governance-reseal2-fix-20261019`. The review branch is attached to the original worker's worktree; this local branch starts at reviewed `128ad789b901ab90a2a4e3c1be2052a9b9022564` and pushes as a fast-forward to the same review ref. Initial Phase 1 main was `142cfa9192a135502328b3dd5fddf8462ef8fbd3`. Original measurement paths are historical, not execution paths.
 
 ## Authority and procedure
 
@@ -12,7 +12,9 @@ Read `AGENTS.md`, `.claude/CLAUDE.md` and `Plans/00-plans-index.md`. The procedu
 
 Fresh helpers: `/mnt/Cursor/share/puppet-master/2026-10-19-reseal2/`. Raw evidence: `/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261019-2/`. Worker report: `/mnt/Cursor/share/puppet-master/2026-10-18-pm7-purge/reports/RESEAL2.md`.
 
-Scope: Spec Lock; the sole live-current evidence bundle; readiness projections; exactly one new decision through `upsert_auto_decision`; the run-002 refresh pair; currentness written in place after the first checked main push; and a separate snapshot/baseline follow-up. The addition is exactly seven registered machine inputs in Spec Lock and live evidence, following G-register's canon registration. Existing schema versions and lock fields stay unchanged except hashes and these seven new rows.
+Scope: Spec Lock; the sole live-current evidence bundle; readiness projections; exactly one new decision through `upsert_auto_decision`; the run-002 refresh pair; currentness written in place after the first checked main push; and a separate snapshot/baseline follow-up. The seven registered machine inputs are bound in **installed currentness and Spec Lock**, following G-register's canon registration. Existing schema versions and lock fields stay unchanged except hashes and these seven new rows.
+
+**Lead adjudication, Opus FIX 1:** before G-register, **45 of 163 machine inputs are in Spec Lock; 26 of 163 are in live evidence, all from the shard-source/configuration mechanism; `Plans/touch_closure_action_sources.json` is in neither.** The fresh rehearsal resolves those 26 as 25 configured document-source rows plus `Plans/sharding_config.json`, a native sync root input; the review's shorthand "all shard sources" includes that configuration input. Currentness is the complete inventory. Jared requested durable detection of companion edits, so the seven gain repository-native Spec Lock registrations through `pm-governance-seal.py refresh --spec-lock --register-file` (94 to 101). They are deliberately **not bound in evidence**: `sync-plan-sharding-evidence` rebuilds that list from configured shard sources and would silently erase an external append. The fix brief adjudicates currentness plus Spec Lock only. `admit-companions.py` stays on disk labelled **UNUSED**, excluded from Phase 2 and `HELPERS.SHA256SUMS`. The future `reseal-record.md` and `execution-evidence.json` must state these two binding locations, the deliberate evidence exclusion, and this reason.
 
 ## Prerequisites before GO
 
@@ -21,7 +23,7 @@ Scope: Spec Lock; the sole live-current evidence bundle; readiness projections; 
 | Previous real reseal | First checked main `984f605c0759ee57f5468a36413cb9e96c4bd955`; follow-up `ecd1e236395e1b95dc2f181a4be17543036065b7` | Verify ancestry and re-read its records. These are historical references. |
 | G-register `plans/register-companions-20261019` | Candidate `5ce8b1b0f9ba3d819c6dea113a38a973a91c0dbb` passed both G reviews per lead mail `1019193634-4882`; LANDING-G is landing it; main/follow-up receipts pending | Lead supplies reviewed main and follow-up SHAs. Both must be ancestors of the frozen main. Reinspect any candidate-to-landed delta. |
 | Local G-register preview | Measured without a commit, then aborted; the branch is restored to report-only changes | Completion and abort witnesses are bound in the Phase 1 manifest. The preview merge was never pushed. |
-| Opus xhigh and Astra max plan reviews | Lead-owned, pending | Two cycles at most. Remaining required decisions go to the lead. |
+| Opus xhigh and Astra max plan reviews | Cycle 1: Opus FIX, Astra OK with one LOW; fix round 1 implements the lead's adjudication and all LOW items | Cycle 2 is lead-owned, two cycles at most. Remaining required decisions go to the lead. |
 | Explicit authorization | Not received | Preserve the exact lead **GO Phase 2** mail and its id; `PENDING` is never executable authority. |
 
 Any intervening Plans change or governed script/input change requires re-inventory on the actual GO-time main. Protected inputs include every locked path, every discovered currentness source, all receipt source hashes and required-but-unpinned PNC dependencies, admission manifests/scripts/schema pins, the currentness generator, readiness validators, and every script used by this reseal or landing check. The lookup-only `scripts/pm7-where.py` is excluded only while it remains outside those bindings. Preparation and rebuilds occur outside the landing lock.
@@ -87,11 +89,11 @@ The seven JSON inputs remain byte-identical. Their registration describes the na
 
 **Spec Lock:** refresh all existing hashes with the repository tool and add exactly seven file registrations through its `--register-file` option. The initial lock has 94 entries, so the expected final count is 101. Preserve the existing entry order and all existing non-hash fields; preserve all other top-level and schema-version fields. If the landed prerequisite changes that inventory, explain and re-adjudicate it rather than assuming these counts.
 
-**Live evidence:** the binding-mode manifest identifies exactly one `live_current` bundle, `Plans/.evidence/pm7-usage-recovery-plan-sharding-2026-08-29/evidence.json`. The initial bundle has 3,178 artifacts. Generate its shard reports, synchronize using the repository tool, then run the guarded `admit-companions.py` generator before the ordinary evidence refresh. The generator appends exactly seven path/hash/owner-note records using repository hashing and atomic JSON writing; it preserves existing records and every other field. Its expected count is the freshly synchronized artifact count plus seven, initially 3,185 if G-register retains the shard path set. The synchronization tool reconstructs the shard artifact list and would otherwise omit these companions; the admission step therefore follows synchronization. No historical bundle changes. Evidence and graph must validate with no graph edit.
+**Live evidence:** the binding-mode manifest identifies exactly one `live_current` bundle, `Plans/.evidence/pm7-usage-recovery-plan-sharding-2026-08-29/evidence.json`. The initial bundle has 3,178 artifacts. Generate its shard reports, synchronize using the repository tool, then refresh existing evidence hashes. Expected count stays 3,178 if the prerequisite retains the shard path set; never add seven to this count. Save the synchronization result and inspect every `added_paths`/`removed_paths` entry. Machine inputs enter this bundle only through the configured shard-source/configuration mechanism. No companion evidence admission or historical bundle change is authorized. Evidence and graph must validate with no graph edit.
 
 **Currentness:** discover exactly seven new machine inputs with the unchanged selector. Generate two external seven-file editions in the established order; install each only into the local ignored preparation copy. Keep all eight frozen files and both quarantine/group artifacts byte-identical. The installed shared 15-file edition remains unchanged through the first checked main push. Status stays `UNKNOWN_OPEN`; `closed`, `complete_denominator_known`, `contract_depth_complete`, and `build_or_pnc019_authority` stay false.
 
-**DL-188:** both the event-family registry and workspace-layout v2 payload pins match the current receipt at initial main. Recompute them with the canonical SHA-256 helper. The expected apply is a no-op, preserving the entire receipt byte-for-byte. Only those two source-hash slots are permitted by the prior bounded rule; every other source hash, field, historical result and timestamp must equal a fresh backup. Drift outside those slots, a checkpoint mismatch or an unreviewed source change stops for lead adjudication. No certification harness runs.
+**DL-188:** both the event-family registry and workspace-layout v2 payload pins match the current receipt at initial main. Recompute them with the canonical SHA-256 helper. The expected apply is a no-op, preserving the entire receipt byte-for-byte. The helper asserts `changed_pin_paths == []` unless a fresh `--new-adjudication-mail-id` is passed; discovering drift stops for lead adjudication before passing that option. Keep `pm-mail:1019051652-b067` in `approval_refs` as the original bounded-rule lineage. Only those two source-hash slots are permitted; every other source hash, field, historical result and timestamp must equal a fresh backup. Drift outside those slots or a checkpoint mismatch stops. No certification harness runs.
 
 **Readiness and run 002:** regenerate node readiness, generate buildability once, retain that first generation, and perform `refresh-batch-hashes` followed by `refresh-final-summary --seal-state preseal` on `DEFAULT_PLAN_MIGRATION_RUN`. Reconfirm that default from the live verifier. Regenerate final node readiness only after the final currentness edition. Prove the retained buildability report differs from its read-only canonical probe solely at its node-readiness input hash; otherwise stop. Validate the current pointer run independently, without refreshing it until the post-push snapshot.
 
@@ -103,10 +105,10 @@ Inherited PRD references, audit-closure history, PM7 GUI fixture findings, raw-c
 
 The helper manifest binds the production copies under the fresh helper folder. Scratch tests copy them and their needed inputs into this task's evidence sandbox. Git object history is read through the original repository; no test invokes a Git mutation. All apply tests write only scratch copies. Production/shared manifests prove unchanged bytes afterward.
 
-Required controls: scratch writer `check/write/check/restore`, restoring all 15 files; Phase 1 rejection of shared writer access; pin preview and no-op scratch apply; canonical prefix40/current39 admission checks; seven evidence additions and an idempotent repeat; seven Spec Lock additions with no unrelated field change; one appended decision and duplicate rejection; attestation preview and seven-registration scratch apply; and malformed/incomplete report rejection. Every apply helper rejects `PENDING`, including `attestation.py`. A synthetic README-only writer edition is never eligible for installation. Phase 2 retests the writer on its real backup/final editions.
+Required revised controls: scratch writer `check/write/check/restore`, restoring all 15 files; Phase 1 rejection of shared writer access; non-test writer rejection of empty, `None`, `PENDING`, and `TEST_ONLY` GO ids before any live write; pin preview/no-op apply and rejection of unadjudicated drift in each allowed slot; original adjudication lineage; canonical prefix40/current39 admission checks; seven Spec Lock additions with no unrelated field change; exact currentness/Spec Lock proof with old-inventory and stale-binding negative controls; one appended decision and duplicate rejection; attestation preview and seven-registration scratch apply; temp-space and malformed/incomplete report rejection. No evidence-admission helper runs. Every apply helper rejects `PENDING`, including `attestation.py`. A synthetic README-only writer edition is never eligible for installation. Phase 2 retests the writer on its real backup/final editions.
 
 
-The final core scratch run has **27 controls**. Three temporary-space controls cover writable/missing TMPDIR and simulated low space. Two exact-binding controls accept a synthetic 266-source scratch edition and reject a 259-source edition missing exactly the seven, isolating the inventory gap. These are scratch proofs, not installed governance.
+The **cycle-1** core scratch run had 27 controls, plus three temporary-space and two exact-binding controls. Its original three-location evidence-admission controls are historical and superseded by this adjudication. Revised control counts and hashes are recorded in the fix-round section. These are scratch proofs, not installed governance.
 
 | Proof | SHA-256 |
 |---|---|
@@ -114,7 +116,7 @@ The final core scratch run has **27 controls**. Three temporary-space controls c
 | `/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261019-2/phase1/temp-guard-tests/verification.json` | `92e478a58914874057e0041a6ef2af435a01b8fd5a1f948b3bc0abba1045632b` |
 | `/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261019-2/phase1/seven-binding-tests/verification.json` | `550479309d842da909eab4e58b72f3aa337b97478c7cb4785a87072a0ca10193` |
 
-Fresh helper manifest: `/mnt/Cursor/share/puppet-master/2026-10-19-reseal2/HELPERS.SHA256SUMS`, SHA-256 `82330ec274aafbb9994309197595033972fc8f5ac4568198e19a988decff1d24`. It binds 13 Python sources and their README. All sources parse successfully. Scratch sources and duplicate editions were removed after retaining result snapshots, logs and the verification records.
+**Cycle-1** helper manifest SHA-256 was `82330ec274aafbb9994309197595033972fc8f5ac4568198e19a988decff1d24`, preserved with the original bundle under revision evidence. The current manifest excludes the unused admission helper; its revised digest and source count are recorded in the fix-round section. Scratch sources and duplicate editions are removed after retaining result snapshots, logs and verification records.
 ## Phase 2 commands and order
 
 Execution variables are assigned from fresh observations, not Phase 1 output filenames or the previous run's state:
@@ -138,6 +140,7 @@ export TMPDIR="$RESEAL_TMPDIR"
 | `RESEAL_CURRENT_RUN` | GO-time pointer's `run_path`; save its `run_id` separately. |
 | `RESEAL_RECEIPT_SHA` | SHA-256 of the fresh pre-apply receipt backup, proven equal to the live receipt. |
 | `RESEAL_WRITER_CONFIG` / `_SHA` | Fresh old/final manifests and scratch destination; after the first push rebind to verified main and stat-derived acquisition time, then hash the exact new config. |
+| `RESEAL_LOCK_ACQUIRED_AT_UTC` | Immutable timezone-aware UTC converted from the successful lock directory's initial `stat().st_mtime`, saved before writing the holder. |
 | Next snapshot id/count/superseded id | Next free execution-date id, direct `Plans/*.md` count, and current pointer read at the first pushed main, under lock. |
 
 Check the mailbox before each stage. Every long computation runs detached with a log and exit file. Every command receives explicit task `TMPDIR`, recorded with command metadata; remove inherited `PM_EVIDENCE_MAP` except for the two generator calls. Preserve the Phase 1 review ref and publish execution on the distinct ref above. No force push.
@@ -152,7 +155,7 @@ python3 scripts/pm-plans-verify.py validate-plan-migration --report "$RESEAL_EVI
 python3 scripts/pm-plan-migration.py validate --run-dir "$RESEAL_CURRENT_RUN"
 ```
 
-Also retain complete standalone Spec Lock, evidence and graph exports. No timeout flag is passed to `pm-plan-migration.py validate`; it has no `--write-report`. Reject missing output and rerun incomplete checks.
+Also retain complete standalone Spec Lock, evidence and graph exports. No timeout flag is passed to `pm-plan-migration.py validate`; **never pass `--write-report`**, which would write `validation_report.json`. Reject missing output and rerun incomplete checks.
 
 2. **Pins and first edition.** Run `admission-pins.py`, then `refresh-dl188-checkpoint-pins.py --apply --main-base "$RESEAL_MAIN_BASE" --go-mail-id "$RESEAL_GO_MAIL_ID" --expected-receipt-sha256 "$RESEAL_RECEIPT_SHA"`. Save `checkpoint-pin-verification.json` with actual main, GO, helper SHA, checkpoint and checkpoint-module SHA. Expected receipt bytes are unchanged. A drift requiring new adjudication stops before apply. Write a `pm.external_evidence_locations.v1` map with exactly one mapping from logical currentness root to the unchanged shared old edition. Set it only for:
 
@@ -163,7 +166,7 @@ PM_EVIDENCE_MAP="$RESEAL_EVIDENCE/evidence-map.json" python3 scripts/pm-event-au
 Install exactly seven generated files locally, preserving eight frozen files and quarantine/group bytes; validate locally without a map. Assert counts 266/96/170 and exactly the seven added paths. The standalone validator is mandatory even if a landing check reports no gap:
 
 ```bash
-python3 scripts/pm-event-authority-currentness.py validate
+python3 scripts/pm-event-authority-currentness.py validate > "$RESEAL_EVIDENCE/currentness-edition-1-validate.out"
 python3 -c 'import json,sys; expected={"all_sources":266,"direct_plans_markdown":96,"registered_machine_inputs":170}; actual=json.load(open(sys.argv[1]))["counts"]; assert actual==expected, actual; print(actual)' "$RESEAL_CURRENTNESS/CURRENT_EVENT_SOURCE_INVENTORY.json"
 ```
 
@@ -177,13 +180,13 @@ python3 scripts/pm-plan-migration.py refresh-final-summary --run-dir "$RESEAL_RU
 python3 scripts/pm-plan-migration.py validate --run-dir "$RESEAL_RUN002"
 ```
 
-4. **Evidence and seven bindings.** Generate and check shard reports in the live bundle. Any shard body/path difference from the landed prerequisite stops. Synchronize, admit exactly seven, then refresh evidence:
+4. **Evidence hash refresh.** Generate and check shard reports in the live bundle. Any shard body/path difference from the landed prerequisite stops. Synchronize, inspect its added/removed paths, then refresh existing evidence:
 
 ```bash
 python3 scripts/pm-shard-plans.py --generate --config Plans/sharding_config.json --report "$RESEAL_BUNDLE/shard_report.json"
 python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json --report "$RESEAL_BUNDLE/shard-check-report.json"
-python3 scripts/pm-governance-seal.py sync-plan-sharding-evidence --evidence "$RESEAL_BUNDLE/evidence.json" --report "$RESEAL_BUNDLE/shard_report.json"
-python3 "$RESEAL_NOTES/admit-companions.py" --apply --main-base "$RESEAL_MAIN_BASE" --go-mail-id "$RESEAL_GO_MAIL_ID"
+python3 scripts/pm-governance-seal.py sync-plan-sharding-evidence --evidence "$RESEAL_BUNDLE/evidence.json" --report "$RESEAL_BUNDLE/shard_report.json" \
+  > "$RESEAL_EVIDENCE/shard-evidence-sync.json"
 ```
 
 The ordinary `pm-governance-seal.py refresh --evidence ...` follows. Pass actual saved stdout through structured subprocess arguments for the three existing `commands_run` strings, preserving their spelling: index validate; shard generate with the live report path; shard check with the live check-report path. Keep the historical `plan-shard-generate` check unchanged. Update plan-index details from measured counts and add this reseal's check detail with actual main, GO, seven registrations and false authority limits. Validate evidence and graph; do not edit the graph.
@@ -206,16 +209,17 @@ python3 scripts/pm-plans-verify.py verify-spec-lock
 
 No schema-version assignment, canonical-doc registration command, sharding-config registration or additional decision is authorized. Prove exactly the seven new lock paths and preserved existing non-hash fields.
 
-6. **Final edition and checks.** Generate final currentness externally with the same one-root map; install the seven files locally and validate without a map. Confirm all seven companion hashes in currentness, evidence and Spec Lock, plus live Spec Lock/evidence/receipt inventory hashes. Regenerate/validate final node readiness; keep first-generation buildability and prove the sole cycle residual. Retest scratch writer check/write/check/restore with real old/final manifests. Validate shards, index, lock, decisions, evidence, graph and currentness; run all five after measurements, compare complete findings and rerun incomplete subchecks. Use `attestation.py --apply` with actual GO, previous seal and frozen main; it requires all seven registrations and rejects `PENDING`. Write `reseal-record.md`, `attestation.json`, `checkpoint-pin-verification.json`, and `execution-evidence.json`, mode 100644. Execution evidence binds helper/config hashes, manifests, commands, TMPDIR, free space and residuals; `post_push_followup` is initially null. Commit only explicit changed governance/report paths and push the distinct execution ref to both configured destinations. Remove the local ignored currentness copy before landing, keeping its backup/final editions externally and the other provisioned inputs locally.
+6. **Final edition and checks.** Generate final currentness externally with the same one-root map; install the seven files locally and validate without a map. Confirm all seven companion hashes in currentness and Spec Lock; the seven have no evidence binding. Regenerate/validate final node readiness; keep first-generation buildability and prove the sole cycle residual. Retest scratch writer check/write/check/restore with real old/final manifests. Validate shards, index, lock, decisions, evidence, graph and currentness; run all five after measurements, compare complete findings and rerun incomplete subchecks. Use `attestation.py --apply` with actual GO, previous seal and frozen main; it requires all seven registrations and rejects `PENDING`. Write `reseal-record.md`, `attestation.json`, `checkpoint-pin-verification.json`, and `execution-evidence.json`, mode 100644. Both the record and execution evidence explicitly explain currentness/Spec Lock binding and deliberate evidence exclusion. Execution evidence binds helper/config hashes, manifests, commands, TMPDIR, free space and residuals; `post_push_followup` is initially null. Commit only explicit changed governance/report paths and push the distinct execution ref to both configured destinations. Remove the local ignored currentness copy before landing, keeping its backup/final editions externally and the other provisioned inputs locally.
 
-After the final local edition is installed and all seven bindings are sealed, run both checks explicitly and retain their outputs:
+After the final local edition is installed and all seven companions have both bindings, run both checks explicitly and retain their outputs:
 
 ```bash
-python3 scripts/pm-event-authority-currentness.py validate
-python3 "$RESEAL_NOTES/verify-seven-bindings.py" --root /home/sittingmongoose/.t3/worktrees/PuppetMaster/t3-cd5b8993
+python3 scripts/pm-event-authority-currentness.py validate > "$RESEAL_EVIDENCE/currentness-final.out"
+python3 "$RESEAL_NOTES/verify-seven-bindings.py" --root /home/sittingmongoose/.t3/worktrees/PuppetMaster/t3-d20640ac \
+  > "$RESEAL_EVIDENCE/seven-bindings-final.json"
 ```
 
-`verify-seven-bindings.py` requires the exact live/installed source set, 266/96/170 counts, current source hashes, and seven matching SHA-256 bindings in Spec Lock, live evidence and currentness. It is separate from the landing check and grants no runtime or native authority.
+`verify-seven-bindings.py` requires the exact live/installed source set, 266/96/170 counts, current source hashes, and seven matching SHA-256 bindings in Spec Lock and currentness only. It is separate from the landing check and grants no runtime or native authority. `--inventory` accepts a task-evidence copy of the installed inventory for the foreign-dirty fallback below.
 
 ## The one auto-decisions row
 
@@ -225,7 +229,9 @@ Applied paths are Spec Lock; the live evidence bundle and two reports; buildabil
 
 ## Landing, follow-up and cleanup
 
-1. **Acquire immediately before landing fetch.** Atomically create `/mnt/Cursor/PuppetMaster-Evidence/scratch/landing-lock/held`. On contention read its holder; clear only after 90 minutes, otherwise wait five minutes with bounded waits and retry. Immediately preserve the successful directory's `stat().st_mtime` as immutable acquisition epoch/UTC. Save it before writing the holder. The holder has exactly four `key: value` lines: agent `codex-reseal2`, branch `plans/governance-reseal2-20261019`, current milestone UTC, phase. Milestones do not extend the **absolute 90-minute cap**. Deadline-bound command sessions and recovery act only on processes started by this task.
+1. **Acquire immediately before landing fetch.** Atomically create `/mnt/Cursor/PuppetMaster-Evidence/scratch/landing-lock/held`. On contention read its holder; clear only after 90 minutes, otherwise wait five minutes with bounded waits and retry. Immediately preserve the successful directory's `stat().st_mtime` as immutable acquisition epoch/UTC. Save it before writing the holder. The holder has exactly four `key: value` lines: agent `codex-reseal2`, branch `plans/governance-reseal2-fix-20261019`, current milestone UTC, phase. Update it at **lock taken, edition verified, rebase done, first check saved, first push, currentness written, snapshot recorded, follow-up checked, cleanup**; retain each holder/milestone in execution evidence. Milestones do not extend the **absolute 90-minute cap**. Deadline-bound command sessions and recovery act only on processes started by this task.
+
+   **Go/no-go budget:** require at least 80 minutes remaining before starting the first landing check; 55 minutes before the first push/currentness write; 50 minutes before `snapshot-current`; 40 minutes before baseline recording; 25 minutes before the follow-up landing check; and 5 minutes before the second push/cleanup. Before any optional full rerun require its bounded timeout allowance plus all remaining downstream budgets. A timeout rerun at 1200 seconds cannot consume the follow-up's reserved 25 minutes. Recheck the immutable deadline before every stage. If a threshold fails, start no dependent step: reset an unpushed shared fast-forward with `git reset --keep origin/main`, preserve pushed main and a coherent installed edition, release the lock safely, and report the exact incomplete state. Never retain the lock merely to finish another check.
 2. **Bind old input identity.** Immediately copy/hash all 15 shared currentness files; compare file set and bytes with preparation backup and the then-current baseline. Compare the baseline itself with the preparation copy. Mismatch stops, releases the lock, and requires re-inventory outside it. Do not record a baseline to excuse it.
 3. **Space and environment.** At acquisition and before every full under-lock check, assert that task `TMPDIR` exists and is writable, root free space is at least 6 GiB, and Python's selected temporary directory resolves to that path. Record actual byte count and `df -h /`. Failure releases the lock before main changes. Every command receives the explicit environment.
 
@@ -246,18 +252,49 @@ TMPDIR="$RESEAL_TMPDIR" python3 "$RESEAL_NOTES/reject-incomplete-checks.py" \
   "$RESEAL_EVIDENCE/landing/first-landing-check.json" "$RESEAL_EVIDENCE/landing/first-check-reports"
 ```
 
-6. **Shared writer after verified push.** Recheck all 15 old hashes; rebind/hash the writer config to fresh old/final manifests, verified pushed SHA and stat-derived acquisition UTC. Run non-test `check` immediately before `write`; require `old_baseline_bound`. The writer checks holder identity, deadline, directory mtime and shared HEAD/origin/main. It copies only seven generated files in place, preserving eight frozen files and quarantine/group bytes. Partial failure restores the seven old files and verifies all 15; report the incomplete follow-up with the already-pushed main retained. Validate shared currentness and standalone readiness with no map; save outputs and the installed 15-file manifest. Reject incomplete validators.
-After the guarded shared write, explicitly validate and prove the installed edition before taking the snapshot:
+6. **Shared writer after verified push.** Recheck all 15 old hashes; rebind/hash the writer config to fresh old/final manifests, verified pushed SHA and stat-derived acquisition UTC. Run non-test `check` immediately before `write`; require `old_baseline_bound`. The writer rejects empty, `None`, `PENDING` and `TEST_ONLY` GO ids and checks holder identity, deadline, directory mtime and shared HEAD/origin/main. It copies only seven generated files in place, preserving eight frozen files and quarantine/group bytes. Partial failure restores the seven old files and verifies all 15; report the incomplete follow-up with the already-pushed main retained. Validate shared currentness and standalone readiness with no map; save outputs and the installed 15-file manifest. Reject incomplete validators.
+After first-push verification and writer-config rebinding, run this sequence once; validate and prove the installed edition before taking the snapshot:
 
 ```bash
-TMPDIR="$RESEAL_TMPDIR" python3 scripts/pm-event-authority-currentness.py validate
+RESEAL_WRITER_CONFIG="$RESEAL_EVIDENCE/landing/in-place-write-config.json"
+RESEAL_WRITER_CONFIG_SHA=$(TMPDIR="$RESEAL_TMPDIR" python3 -c 'import hashlib,sys; print(hashlib.sha256(open(sys.argv[1],"rb").read()).hexdigest())' "$RESEAL_WRITER_CONFIG")
+TMPDIR="$RESEAL_TMPDIR" python3 "$RESEAL_NOTES/in-place-write.py" \
+  --config "$RESEAL_WRITER_CONFIG" --expected-config-sha256 "$RESEAL_WRITER_CONFIG_SHA" check \
+  > "$RESEAL_EVIDENCE/landing/in-place-check.out"
+TMPDIR="$RESEAL_TMPDIR" python3 "$RESEAL_NOTES/in-place-write.py" \
+  --config "$RESEAL_WRITER_CONFIG" --expected-config-sha256 "$RESEAL_WRITER_CONFIG_SHA" write \
+  > "$RESEAL_EVIDENCE/landing/in-place-write.out"
+TMPDIR="$RESEAL_TMPDIR" python3 scripts/pm-event-authority-currentness.py validate \
+  > "$RESEAL_EVIDENCE/landing/currentness-shared.out"
 TMPDIR="$RESEAL_TMPDIR" python3 "$RESEAL_NOTES/verify-seven-bindings.py" --root /mnt/Cursor/PuppetMaster \
   > "$RESEAL_EVIDENCE/landing/seven-bindings-shared.json"
+TMPDIR="$RESEAL_TMPDIR" python3 scripts/pm-implementation-readiness.py validate \
+  > "$RESEAL_EVIDENCE/landing/shared-readiness-after-currentness.json"
+TMPDIR="$RESEAL_TMPDIR" python3 "$RESEAL_NOTES/reject-incomplete-checks.py" \
+  "$RESEAL_EVIDENCE/landing/shared-readiness-after-currentness.json"
 ```
+
+**Foreign uncommitted paths:** if a shared currentness/binding proof fails or standalone readiness gains unexpected source drift beyond its adjudicated residuals, immediately retain `git --no-optional-locks status --porcelain -- Plans scripts` from the shared checkout. Inspect every failed path, compare it with the execution diff and clean first-pushed commit, and obtain any necessary owner confirmation through pm-mail. Only if **every unexpected failure** names another thread's uncommitted path, with no branch overlap or unexplained failure, copy/hash the installed inventory and repeat the proof against this clean worktree at the first pushed main:
+
+```bash
+git --no-optional-locks status --porcelain -- Plans scripts \
+  > "$RESEAL_EVIDENCE/landing/shared-dirty-paths.out"
+cp /mnt/Cursor/PuppetMaster/Plans/.audits/event-authority-2026-08-13-currentness/CURRENT_EVENT_SOURCE_INVENTORY.json \
+  "$RESEAL_EVIDENCE/landing/installed-inventory-copy.json"
+TMPDIR="$RESEAL_TMPDIR" python3 "$RESEAL_NOTES/verify-seven-bindings.py" \
+  --root /home/sittingmongoose/.t3/worktrees/PuppetMaster/t3-d20640ac \
+  --inventory "$RESEAL_EVIDENCE/landing/installed-inventory-copy.json" \
+  > "$RESEAL_EVIDENCE/landing/seven-bindings-clean-tree.json"
+```
+
+Also copy the installed 15-file edition into the local ignored currentness path, validate currentness and readiness there without a map, save both outputs, then remove only that temporary local copy **before snapshot/baseline**. Verify the shared 15-file manifest is unchanged throughout. Preserve the original failing output, all path attribution and the clean-tree results, and report the foreign-dirty condition to the lead. Never edit another thread's files. Any unattributed/overlapping failure or failed clean-tree proof stops the follow-up. This fallback does not waive the landing check's independent rules or authorize an unverified baseline.
 
 7. **Snapshot before baseline, same full tree.** In this same provisioned full worktree, fetch and assert clean HEAD equals the first pushed main, with no local currentness directory. Allocate the next free execution-date snapshot id, read actual direct Markdown count and superseded pointer, then run `snapshot-current` followed by `--record-baseline`. Pass explicit task TMPDIR and shared readiness root. Bind all 15 installed hashes before/after. The recorder's stdout is text saved as `.out`; guard the actual baseline JSON and every retained JSON report/export, never that text stdout. Reject `validator_no_output`, timeouts and phantom audit-status/widget-support rows. Retry a timeout at 1200 seconds without committing an incomplete baseline.
 
 ```bash
+RESEAL_DIRECT_MD_COUNT=$(TMPDIR="$RESEAL_TMPDIR" python3 -c 'from pathlib import Path; print(sum(p.is_file() for p in Path("Plans").glob("*.md")))')
+RESEAL_SUPERSEDED_RUN_ID=$(TMPDIR="$RESEAL_TMPDIR" python3 -c 'import json; print(json.load(open("Plans/.plan_migration/current_run.json"))["run_id"])')
+RESEAL_NEXT_RUN_ID=$(TMPDIR="$RESEAL_TMPDIR" python3 -c 'from pathlib import Path; from datetime import datetime,timezone; prefix="pds-"+datetime.now(timezone.utc).strftime("%Y%m%d")+"-"; ids=[int(p.name[len(prefix):len(prefix)+3]) for p in Path("Plans/.plan_migration").glob(prefix+"*-current-planunit-snapshot")]; print(prefix+f"{max(ids,default=0)+1:03d}"+"-current-planunit-snapshot")')
 TMPDIR="$RESEAL_TMPDIR" python3 scripts/pm-plan-migration.py snapshot-current \
   --run-id "$RESEAL_NEXT_RUN_ID" --expected-doc-count "$RESEAL_DIRECT_MD_COUNT" \
   --supersedes-run-id "$RESEAL_SUPERSEDED_RUN_ID"
@@ -270,15 +307,42 @@ TMPDIR="$RESEAL_TMPDIR" python3 "$RESEAL_NOTES/reject-incomplete-checks.py" \
 ```
 
 8. **Follow-up and second push.** Commit the new snapshot, pointer/supersession changes and baseline together with `baseline-record.md`, the completed-landing section of `reseal-record.md` and `post_push_followup` evidence. The baseline commit field must be the already-pushed main. Stage only explicitly enumerated changed paths; retain the required co-author trailer and mode 100644. Push execution ref, then shared fetch, overlap check, fast-forward, shard check and a second retained landing comparison before the second main push. Require empty `new`, `grown_buckets`, and `resolved_buckets`; zero blockers/infrastructure; unchanged installed hashes; and no `validator_no_output` anywhere. Push and verify both destinations. Any unpushed failure uses `reset --keep` immediately.
+
+Run the follow-up comparison from the shared checkout, only with at least 25 minutes remaining:
+
+```bash
+TMPDIR="$RESEAL_TMPDIR" python3 -c 'from datetime import datetime,timezone; import sys; acquired=datetime.fromisoformat(sys.argv[1]); assert acquired.tzinfo is not None; elapsed=(datetime.now(timezone.utc)-acquired).total_seconds(); remaining=90*60-elapsed; assert 0 <= elapsed and remaining >= 25*60, "Insufficient lock budget for follow-up; release and report"; print(remaining)' "$RESEAL_LOCK_ACQUIRED_AT_UTC" \
+  > "$RESEAL_EVIDENCE/landing/followup-budget-guard.out"
+TMPDIR="$RESEAL_TMPDIR" python3 scripts/pm-landing-check.py --base origin/main \
+  --readiness-audit-root /mnt/Cursor/PuppetMaster/Plans/.audits/event-authority-2026-08-13-currentness \
+  --keep-check-reports "$RESEAL_EVIDENCE/landing/followup-check-reports" --json \
+  > "$RESEAL_EVIDENCE/landing/followup-landing-check.json"
+TMPDIR="$RESEAL_TMPDIR" python3 "$RESEAL_NOTES/reject-incomplete-checks.py" \
+  "$RESEAL_EVIDENCE/landing/followup-landing-check.json" "$RESEAL_EVIDENCE/landing/followup-check-reports"
+```
 9. **Report and release within cap.** Mail the lead both verified main SHAs, actual inventory and residual findings. Preserve the later final comparison in external completion evidence; do not create a commit/check recursion to insert its own verdict. Remove only this worker's ignored copies/symlinks, scratch, task temporary directory, T3 worktree through its owning clone, and landed local branch. Keep cited helper/evidence/report deliverables and every Concepts file. Release the lock after worktree/branch removal, within the same immutable cap. If a post-first-push step cannot complete, preserve the pushed main, restore only a partially written edition, release safely, and hand over the exact incomplete state.
 
 **Export coverage:** compare both landing comparisons and the new baseline with the actual pre-landing baseline's keyed-from-export list, `compared_with_baseline_exports`, and `export_buckets` count. The initial observed count is 14; re-read it after G-register's landing. Any missing key or reduced bucket count triggers a complete rerun and row-level reconciliation showing findings cleared or became fully printed. An absent/unwritten/unreadable export is never an improvement. An unexplained reduction stops the relevant push or baseline commit. Bind both editions, lists/counts, reruns and reconciliation by SHA-256 in execution evidence.
+
+**Expected export-bucket reductions at the measured base: none (14 to 14).** All 14 buckets are `unresolved_local_ref` in the PRD validator, one per path below in each aggregate (`audit-governance/prd_planning_runtime_contracts` and `run-gates/validate_prd_planning_runtime_contracts`). Each listed count is per aggregate. They remain reported; this reseal does not repair those schemas. Save the GO-time baseline's full rows/fingerprints and compare these keys individually, rather than accepting only an equal total.
+
+| Export path | Count per aggregate | Expected after reseal |
+|---|---:|---|
+| `Plans/home_layout_event_contracts.schema.json` | 72 | retained |
+| `Plans/home_layout_pending_receipt.schema.json` | 172 | retained |
+| `Plans/home_layout_pending_receipt_v2_reader.schema.json` | 136 | retained |
+| `Plans/restore_point_deleted_read_adapter.schema.json` | 302 | retained |
+| `Plans/restore_point_retained_creation_read.schema.json` | 240 | retained |
+| `Plans/restore_point_retained_read.schema.json` | 286 | retained |
+| `Plans/storage_boot_recovery_control.schema.json` | 32 | retained |
+
+Expected **printed-row** reductions from G-register are 34 `artifact_hash_stale` rows in each evidence/graph validator, one index `stale_hash` in Spec Lock, one `event_authority_currentness_source_drift` readiness row after installed currentness, and two run-002 `stale_batch_report_sha256_after` rows. Those validators are below their aggregate sample caps at the measured base, so their reduction should remove no export bucket. G-register's stale current snapshot (54 findings) must already be replaced by its prerequisite follow-up. If the actual GO-time baseline has additional export keys, enumerate each key and its exact retained/resolved/fully-printed rows during preparation outside the lock. Any unpredicted reduction still requires a complete rerun and row-level proof within the go/no-go budget; otherwise release and report.
 
 ## Risks and stop conditions
 
 - A candidate preview is not a reviewed landing; GO-time main and G-register's follow-up may alter readiness, current-run and baseline inputs.
 - New or unexplained inventory/path/count differences require re-inventory; the seven JSON files themselves must remain byte-identical.
-- The evidence synchronization tool omits the companions without the explicit post-sync admission generator. All seven final bindings are asserted in lock, evidence and currentness.
+- Evidence sync deliberately excludes the companions because they are not configured shard sources. All seven final bindings are asserted in currentness and Spec Lock only; adding them to evidence would create a silently erasable binding.
 - Any DL-188 pin drift requiring new adjudication, non-allowlisted receipt change, frozen-custody change, authority-flag increase, shard-body/path drift, historical evidence change or graph edit stops.
 - Missing temporary space or `validator_no_output` is an infrastructure failure; it is never accepted as an inherited product finding or recorded baseline.
 - Local currentness must be absent for the shared-input landing comparison and post-push recording. All other named ignored support inputs must be present.
@@ -288,3 +352,30 @@ TMPDIR="$RESEAL_TMPDIR" python3 "$RESEAL_NOTES/reject-incomplete-checks.py" \
 ## Out of scope
 
 Owner prose, seven JSON body edits, Concepts edits or pruning, sharding-config registration, schema-version changes, historical evidence, certification-harness execution, receipt changes beyond the DL-188 rule, hand-edited shard bodies, plan-graph edits, executable WorkNodes/NodeSeeds, and native/runtime/buildability/denominator/depth authority.
+
+
+## Fix round 1 — cycle-2 review packet
+
+The lead's [fix brief](/mnt/Cursor/share/puppet-master/2026-10-18-pm7-purge/briefs/RESEAL2-fix.md) adjudicates Opus FIX 1 as installed currentness plus Spec Lock only. The evidence-admission helper is unused and absent from the active manifest. The decision helper, two-place proof, Phase 2 steps and required future reseal record all carry that policy. Original review reports are [Opus cycle 1](/mnt/Cursor/share/puppet-master/2026-10-18-pm7-purge/reviews/RESEAL2-opus-r1.md) and [Astra cycle 1](/mnt/Cursor/share/puppet-master/2026-10-18-pm7-purge/reviews/RESEAL2-astra-r1.md).
+
+**45 revised controls passed: 32 core and 13 rehearsal controls.** The non-test writer rejects empty, null, PENDING and TEST_ONLY GO ids. Each allowed DL-188 pin rejects unadjudicated drift, rejects placeholder adjudication, and accepts a bounded scratch-only change with a distinct simulated adjudication; the original `pm-mail:1019051652-b067` remains in the proof. The real no-drift receipt apply stays byte-identical. No test grants actual Phase 2 authority.
+
+The native Spec Lock CLI rehearsal at immutable main `5ce8b1b0f9ba3d819c6dea113a38a973a91c0dbb` gives **94 to 101**, changes only the existing index hash, preserves entry order/non-hash fields, verifies cleanly and repeats without a byte change. Canonical currentness generation and validation give **266/96/170**, exactly seven additions and no removals. The two-place proof and copied-inventory clean-tree proof pass with **zero companion artifact additions** to the unchanged 3,178-row evidence bundle. Old 259-source inventory, stale ordinary-source hashes and stale companion Spec Lock hashes are rejected. Frozen/quarantine/group custody stays byte-identical, UNKNOWN_OPEN and all authority flags stay false.
+
+The rehearsal independently resolves evidence coverage as **25 configured document sources plus the shard configuration root input**, totaling the review's 26/163. Lead FYI `1019202132-ef33` records that precision correction. Three scratch-driver setup/assertion corrections are retained as attempts with their cause/fix records: the 25-plus-config distinction, provisioning all locked derived inputs, and preserving evidence as a rehashed corpus source while omitting companion artifact bindings. These were scratch-only corrections, not Phase 2 or additional review cycles.
+
+All Opus LOWs are addressed: staged 90-minute go/no-go thresholds and an executable 25-minute follow-up guard; expected 14-to-14 export coverage with every PRD bucket listed; restored literal run-id/count, writer, shared readiness, follow-up and milestone instructions; enforced DL-188 no-op/new-adjudication boundary; foreign-dirty attribution and clean-worktree proof; and corrected `never pass --write-report` wording. Astra's writer-boundary LOW is covered by four negative controls. All 14 bash blocks parse without execution.
+
+Evidence root: `/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261019-2/revisions/fix-round-1/`.
+
+| File | SHA-256 |
+|---|---|
+| `/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261019-2/revisions/fix-round-1/verification.json` | `51f006b69f8f181298b2419c628e9e9e116ff968dcce68abf67817690d1b1ec1` |
+| `/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261019-2/revisions/fix-round-1/helper-tests/verification.json` | `b9102d01f7b58db2260c19e83e0d21900a3c36a0ca9f99bcf406d86adb83da47` |
+| `/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261019-2/revisions/fix-round-1/rehearsal/verification.json` | `2994dc6bca25c37e49034edc08dcc492770405d4d6ee869fb29e1cd24a055d1f` |
+| `/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261019-2/revisions/fix-round-1/rehearsal/spec-lock-registration-proof.json` | `d8909433224f19156f087852114980bdf69ba28474aa2ca621299c9302c13f6b` |
+| `/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261019-2/revisions/fix-round-1/rehearsal/binding-policy-facts.json` | `217d7a225f494e846b904af04e7c7035789e1c4cdbb834e19bfad9fc8648f115` |
+| `/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261019-2/revisions/fix-round-1/SHA256SUMS` | `8f1381a89b73db78dcc1d040158363518fbbcbbc92186e07916d8cd61930a1d2` |
+| `/mnt/Cursor/share/puppet-master/2026-10-19-reseal2/HELPERS.SHA256SUMS` | `f61a30369b784b565d614d3e3f6e39dbab8de0ac3e5280e50a7924cf08fbef99` |
+
+The active manifest binds 13 Python helpers and README; the unused admission helper is excluded. The closed evidence manifest binds 320 files, including before/after helper sources, passed controls and corrected scratch-attempt records. Task-owned scratch source trees, duplicate editions and TMPDIR were removed; one generated rehearsal edition remains as result evidence. No shared governance/currentness write, landing lock or landing occurred. The unlanded worktree is retained. Cycle-2 reviews and a separate lead **GO Phase 2** remain required.
