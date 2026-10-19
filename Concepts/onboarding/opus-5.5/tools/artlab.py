@@ -39,7 +39,7 @@ def page(families, rows, title):
     js = '\n'.join((SRC / 'js' / name).read_text(encoding='utf-8') for name in ART_JS if (SRC / 'js' / name).exists())
     extra = [p for p in sorted((SRC / 'js').glob('5[6-9]-*.js'))]
     js += '\n' + '\n'.join(p.read_text(encoding='utf-8') for p in extra)
-    css = '\n'.join(p.read_text(encoding='utf-8') for p in sorted((SRC / 'css').glob('*.css')))
+    css = '\n'.join(base_source.read_text_source(p) for p in sorted((SRC / 'css').glob('*.css')))
     copy = (SRC / 'copy.json').read_text(encoding='utf-8') if (SRC / 'copy.json').exists() else '{}'
     return f"""<!doctype html><html data-theme="basic-dark"><head><meta charset="utf-8"><title>{title}</title>
 <style>{theme_css()}</style><style>{css}</style>

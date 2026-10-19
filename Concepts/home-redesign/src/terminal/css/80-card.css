@@ -561,12 +561,24 @@
 }
 
 /* Glass: the ring of light that leaves the mark, and the pass of light across the card */
-/* @pm7-lg-slot home-redesign/src/terminal/css/80-card/G0871.css */
+html[data-theme^="glass"]:not([data-o55-nier="on"]) .pmt-card-glyph::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 14px;
+  height: 14px;
+  margin: -7px 0 0 -7px;
+  border: 1px solid currentColor;
+  border-radius: 50%;
+  opacity: 0;
+  pointer-events: none;
+}
 html[data-theme^="glass"]:not([data-o55-nier="on"]) :is(.pmt-card-cue-done, .pmt-card-cue-fail, .pmt-card-cue-ask) .pmt-card-glyph::after {
   animation: var(--pmt-card-a-ripple) 720ms cubic-bezier(0.05, 0.7, 0.1, 1) calc(var(--pmt-card-t-settle) * .25) both;
 }
 /* the light crosses the glass behind the words, so the text stays crisp while it passes */
-/* @pm7-lg-slot home-redesign/src/terminal/css/80-card/G0873.css */
+html[data-theme^="glass"]:not([data-o55-nier="on"]) .pmt-card { isolation: isolate; }
 html[data-theme^="glass"]:not([data-o55-nier="on"]) .pmt-card-cue-done::before {
   content: "";
   position: absolute;
@@ -643,9 +655,30 @@ html[data-theme^="friendly"]:not([data-o55-nier="on"]) .pmt-card-time { font-fam
 
 /* ---- Glass: a lighter pane of the same glass with a lit top edge; no extra blur (the chat column owns the blur
    budget) ---- */
-/* @pm7-lg-slot home-redesign/src/terminal/css/80-card/G0876.css */
-/* @pm7-lg-slot home-redesign/src/terminal/css/80-card/G0877.css */
-/* @pm7-lg-slot home-redesign/src/terminal/css/80-card/G0878.css */
+html[data-theme^="glass"] .pmt-card {
+  --pmt-card-radius: 14px;
+  --pmt-card-btn-radius: 6px;
+  --pmt-card-edge: var(--glass-hairline, var(--border));
+  --pmt-card-rule: var(--border-light, var(--border));
+  --pmt-card-well: color-mix(in srgb, var(--background) 46%, transparent);
+  --pmt-card-shadow: var(--elev-1), inset 0 1px 0 rgb(255 255 255 / .07);
+  --pmt-card-tint: rgb(255 255 255 / .09);
+  --pmt-card-tint-press: rgb(255 255 255 / .15);
+  --pmt-card-tint-accent: color-mix(in srgb, var(--pmt-card-accent) 13%, transparent);
+}
+html[data-theme="glass-light"] .pmt-card {
+  --pmt-card-well: color-mix(in srgb, var(--text-primary) 6%, transparent);
+  --pmt-card-bad: color-mix(in srgb, var(--accent-error) 64%, var(--text-primary));
+  --pmt-card-accent: color-mix(in srgb, var(--accent-primary) 62%, var(--text-primary));
+  --pmt-card-run: color-mix(in srgb, var(--accent-primary) 62%, var(--text-primary));
+  --pmt-card-ink-2: color-mix(in srgb, var(--text-primary) 84%, transparent);
+  --pmt-card-ink-3: color-mix(in srgb, var(--text-primary) 62%, transparent);
+  --pmt-card-shadow: var(--elev-1), inset 0 1px 0 rgb(255 255 255 / .55);
+  --pmt-card-tint: rgb(255 255 255 / .42);
+  --pmt-card-tint-press: rgb(255 255 255 / .6);
+  --pmt-card-tint-accent: rgb(255 255 255 / .5);
+}
+html[data-theme="glass-dark"] .pmt-card { --pmt-card-ink-3: color-mix(in srgb, var(--text-primary) 62%, transparent); }
 
 /* ---- Retro: square, bracket glyphs, a double rule, reverse video for focus ---- */
 html[data-theme^="retro"] .pmt-card {
