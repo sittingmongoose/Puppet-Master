@@ -1,0 +1,45 @@
+{
+  "active_checkpoint": {
+    "complete_denominator_known": false,
+    "contract_depth_complete": false,
+    "registered_kernel_rows": 43,
+    "registry_revision": "2026-10-09.1",
+    "registry_schema_id": "pm.event_family_registry.v1",
+    "registry_schema_version": "2.0.0"
+  },
+  "active_checkpoint_module_sha256": "7542cdac292405ec0d9b7b644ad7c345cadca822d36c710cd3c6729120274f32",
+  "admission_pins": {
+    "Plans/event_family_registry.json": {
+      "after": "4ffde4e80c0671c7240c65b7903e6cabc0c6112bc88afc3fc2faca2a044370fe",
+      "before": "4ffde4e80c0671c7240c65b7903e6cabc0c6112bc88afc3fc2faca2a044370fe"
+    },
+    "Plans/event_payloads/workspace_layout_changed_v2.schema.json": {
+      "after": "a611ee3d41f275e7dfd349021a3d41de866849f97f0108396bf0685c41431b1a",
+      "before": "a611ee3d41f275e7dfd349021a3d41de866849f97f0108396bf0685c41431b1a"
+    }
+  },
+  "all_other_receipt_fields_equal": true,
+  "all_other_source_hashes_equal": true,
+  "approval_refs": [
+    "Plans/Decision_Log.md#DL-188",
+    "pm-mail:1019051652-b067",
+    "RESEAL2-brief:Jared-assignment-2026-10-19",
+    "pm-mail:1019203718-54f1"
+  ],
+  "certification_harness_run": false,
+  "changed_pin_paths": [],
+  "checkpoint_contract_depth_complete": false,
+  "checkpoint_denominator_known": false,
+  "dry_run": false,
+  "go_mail_id": "1019203718-54f1",
+  "hash_algorithm": "pm_pnc019_currentness.sha256_file",
+  "helper_sha256": "36fa20013d16a40ea85e9bbebb6f278acccf92b5eae9be5b0cddb53d36caaa97",
+  "input_receipt_sha256": "49ce40e2816b155a738b7f9278deb8b1de105ec3f8204cfa79e8291cad4b4f29",
+  "live_event_registry_sha256": "4ffde4e80c0671c7240c65b7903e6cabc0c6112bc88afc3fc2faca2a044370fe",
+  "main_base": "e79239d3107f89b591c84755320eae28f4e1c2dc",
+  "new_adjudication_mail_id": null,
+  "output_receipt_sha256": "49ce40e2816b155a738b7f9278deb8b1de105ec3f8204cfa79e8291cad4b4f29",
+  "receipt_path": "Plans/.implementation_readiness/pnc019_certification_receipt.json",
+  "schema_id": "pm.governance.reseal.dl188_checkpoint_pin_refresh.v1",
+  "schema_valid": true
+}

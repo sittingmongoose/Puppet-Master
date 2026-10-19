@@ -3,7 +3,7 @@
     "files": [
       {
         "path": "Plans/00-plans-index.md",
-        "sha256": "4e0c7b43464d83a111401d41417e1c1b99ee6337347e14b9ddc44e449805f448"
+        "sha256": "0d832c742172e05aab8e847d29af53f62afbc2af22b02e75dc781e34def63881"
       },
       {
         "path": "Plans/acceptance_manifest.schema.json",
@@ -231,7 +231,7 @@
       },
       {
         "path": "Plans/.implementation_readiness/buildability_gate_report.json",
-        "sha256": "8363d2d930d58ae520de4558516297837da75be72776e36dc405bfd21d32651d"
+        "sha256": "057fdb82bd095a4b2a3e2e1f1f886daa3e957f872335892fc305d33f662e489c"
       },
       {
         "path": "Plans/event_record.schema.json",
@@ -376,6 +376,34 @@
       {
         "path": "Plans/Working_Notebook.md",
         "sha256": "0cf913e129241c8826dd1adee740d0cdce435fd1df5a2da3c3e7be1a3bc71a5c"
+      },
+      {
+        "path": "Plans/appearance_quick_sets.json",
+        "sha256": "1473b2eb48b7e5606e7483469494f3b336cce8327f80b258ffe2967b02c9cbcc"
+      },
+      {
+        "path": "Plans/appearance_quick_sets.schema.json",
+        "sha256": "cc847fa4c28675eb08b6a19f5a907ac3a2e6615a8f585053398f9c35b39d5e20"
+      },
+      {
+        "path": "Plans/editor_appearance.schema.json",
+        "sha256": "9b4bc56168e009184bd4bf4054b5fe38f9cd9cd05ecf31c769ba886db06f54b5"
+      },
+      {
+        "path": "Plans/glyph_catalog.json",
+        "sha256": "eae9467fc716d2b427092e15040d4fe79d7360fec823441468fa94fe14e11cf9"
+      },
+      {
+        "path": "Plans/pm7_canon.fixtures.json",
+        "sha256": "85ae2be85aaaf66613024df683710c00678c8e3bd6ef428231f96e57fc03a6f5"
+      },
+      {
+        "path": "Plans/pm7_control_bindings.schema.json",
+        "sha256": "1f4ed7076650843f3a3f3a75859c4d9f7dfbc569a1d74047155eb9b833f96223"
+      },
+      {
+        "path": "Plans/wallpaper_catalog.json",
+        "sha256": "9df22c328a860a657179f839ba86e935ad54e164dc708a2801f37ebad4d510b1"
       }
     ],
     "hash_alg": "sha256"
