@@ -26,8 +26,8 @@ python3 Concepts/onboarding/opus-5.5/tools/build.py --check  # markers, patches,
 ```
 
 `build.py --out <path>` is a private build: it lints, then writes only that path, never either published output.
-`build.py --out <path> --no-usage` is the same private build without the Usage layer (the base's old Prism Usage page):
-a reference page for `Concepts/usage-redesign/tools/usage_boot.mjs`, never published.
+The `--no-usage` / `--no-home` private reference builds were retired on 2026-10-18; `usage_boot.mjs` compares against
+the published `Concepts/PMConcept7.html` from a git ref (`--base-ref`, default `origin/main`) instead.
 
 `build.py` assembles the live `base/manifest.json` sources. Edit the shell in `base/` (markup in
 `shell.html`, block bodies in `style/` and `script/`); see `base/README.md` for source ownership.
@@ -40,15 +40,15 @@ The proposed Editor rows are now canonical and are admitted by `settings_layer` 
 Build order:
 
 - 0: assemble the shell, then replace Settings bands with the `src/settings` fork;
-- 2b: optionally replace Prism Usage with `Concepts/usage-redesign/tools/usage_layer.py`;
+- 2b: replace Prism Usage with `Concepts/usage-redesign/tools/usage_layer.py`;
 - 3: splice O55 `src/` between `<!-- O55:… -->` markers and retitle the page;
 - 4: add the left rail, concept D, after O55's markers;
 - 5: add the glyph system;
-- 6: optionally add Home, then Liquid Glass and wallpapers, and emit the shared NieR lists;
+- 6: add Home, then Liquid Glass and wallpapers, and emit the shared NieR lists;
 - 7: rewrite active descendants and split CSS selector buckets over the completed page.
 
 Usage and Home retain their own conditional app/context patches. Their private reference
-builds remain available through `--out <path> --no-usage` and `--out <path> --no-home`.
+builds were retired on 2026-10-18; the published page is the reference.
 
 NieR list defaults and their publication order live in the build tools at
 `tools/nier_registry.py`. Named slots in the base lists fix each contribution's position.
