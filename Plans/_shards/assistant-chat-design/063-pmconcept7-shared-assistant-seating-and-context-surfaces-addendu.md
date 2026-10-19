@@ -4,7 +4,7 @@ Source: `Plans/assistant-chat-design.md`
 
 Source lines: L24785-L24887
 
-Source SHA256: `b2c07a8d70ee9185cba6a5bfd4e9cdeb56ff589f5398bb48b9a9268fbb0226e9`
+Source SHA256: `1829eabf9cf6bddd363c00509666e812dcc6ccfdd72b9251e3a5680a87edb75a`
 
 ---
 
@@ -85,9 +85,9 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
-  - Concepts/pm7-tools/base/PM7-base.html (current pinned PM7 input; source-lineage-only)
-  - Concepts/pm7-tools/build_pm7.py#T33-T41 (source-owned transforms)
-  - Concepts/PMConcept7.html (generated artifact; terminal bytes and hash are audit-owned)
+  - Concepts/pm7-tools/base/PM7-base.html (historical PM7 prototype lineage only)
+  - Concepts/pm7-tools/build_pm7.py#T33-T41 (historical PM7 prototype lineage only)
+  - Concepts/PMConcept7.html (look-and-behaviour reference only)
   - Plans/.audits/audit-20260829-001-pmconcept7-widget-followup/audit_report.json (current repo-local successor audit status; verdict remains report-owned)
   - "Plans/Decision_Log.md#DL-180"
   - "Plans/assistant-chat-design.md#ACD-500"

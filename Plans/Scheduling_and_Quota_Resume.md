@@ -143,11 +143,11 @@ context_scope: scheduled_message_snapshot
 implementation_surfaces:
   - Plans/Scheduling_and_Quota_Resume.md
   - Plans/assistant-chat-design.md
-  - Concepts/chat-assistant-concepts/5.6 Pro/scheduling.js
 node_compile_hint:
   mode: scheduled_message_contract
   create_worknodes: false
 source_lineage:
+  - "Concepts/chat-assistant-concepts/5.6 Pro/scheduling.js (5.6 Pro prototype; behaviour reference only)"
   - pm-assistant-implementation-2026-09-02-recovered:SCHED-002
   - pm-assistant-implementation-2026-09-02-recovered:02_RUNTIME_AND_STORAGE_CONTRACTS.md#2.3
 preserved_exact_tokens:
@@ -228,11 +228,11 @@ context_scope: execution_windows
 implementation_surfaces:
   - Plans/Scheduling_and_Quota_Resume.md
   - Plans/Executor_Protocol.md
-  - Concepts/chat-assistant-concepts/5.6 Pro/scheduling.js
 node_compile_hint:
   mode: execution_window_contract
   create_worknodes: false
 source_lineage:
+  - "Concepts/chat-assistant-concepts/5.6 Pro/scheduling.js (5.6 Pro prototype; behaviour reference only)"
   - pm-assistant-implementation-2026-09-02-recovered:SCHED-004
   - pm-assistant-implementation-2026-09-02-recovered:01_IMPLEMENTATION_SPEC.md#15.3
 preserved_exact_tokens:
@@ -273,11 +273,11 @@ context_scope: quota_wait_and_consent
 implementation_surfaces:
   - Plans/Scheduling_and_Quota_Resume.md
   - Plans/usage-feature.md
-  - Concepts/chat-assistant-concepts/5.6 Pro/scheduling.js
 node_compile_hint:
   mode: quota_resume_consent_contract
   create_worknodes: false
 source_lineage:
+  - "Concepts/chat-assistant-concepts/5.6 Pro/scheduling.js (5.6 Pro prototype; behaviour reference only)"
   - pm-assistant-implementation-2026-09-02-recovered:SCHED-005
   - pm-assistant-implementation-2026-09-02-recovered:01_IMPLEMENTATION_SPEC.md#15.4
 preserved_exact_tokens:

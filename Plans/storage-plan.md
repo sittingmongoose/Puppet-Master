@@ -18154,7 +18154,6 @@ acceptance_criteria:
 - The record carries domain references only and never duplicates editor, terminal, Browser, Chat, or Dashboard internal authority.
 validation_surfaces:
 - python3 scripts/pm-implementation-readiness.py validate
-- node Concepts/pm7-tools/verify/home_workspace_matrix.mjs
 - python3 scripts/pm-plan-index.py validate
 risk_class: home_layout_persistence_drift
 reasoning_tier: standard
@@ -18489,9 +18488,9 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
-  - "Concepts/pm7-tools/base/PM7-base.html (current recovered PMConcept7 source base; source-lineage-only)"
-  - "Concepts/pm7-tools/build_pm7.py (current assertion-guarded T33-T41 pipeline)"
-  - "Concepts/PMConcept7.html (protected generated output; verification input only; never hand-edit)"
+  - "Concepts/pm7-tools/base/PM7-base.html (historical PM7 prototype lineage only)"
+  - "Concepts/pm7-tools/build_pm7.py (historical PM7 prototype lineage only)"
+  - "Concepts/PMConcept7.html (look-and-behaviour reference only)"
   - "Concepts/usage-concepts/QwenUsageConcept/u11-prism.html (superseded prototype/import lineage)"
   - Concepts/usage-concepts/QwenUsageConcept/u11-widgets.js
   - "Concepts/usage-redesign/src/js/40-board.js and src/js/15-film.js (the redesigned concept's layout envelope and remembered Live choice; source-lineage-only)"
@@ -18528,9 +18527,8 @@ owner_hints:
 ## PMConcept7 Recovery Settled Layout Addendum - 2026-08-27
 
 This addendum closes current Plans ownership for Usage/Dashboard widget layout and the recovered Home semantic
-size fields. Current source lineage is the pinned `Concepts/pm7-tools/base/PM7-base.html` plus the
-assertion-guarded T33-T41 pipeline in `Concepts/pm7-tools/build_pm7.py`; `Concepts/PMConcept7.html` remains the
-protected generated output and is never a storage owner. Current audit receipts are tracked by
+size fields. `Concepts/PMConcept7.html` illustrates this behavior and is never a storage owner.
+Audit receipts are tracked by
 `Plans/.audits/audit-20260829-001-pmconcept7-widget-followup/audit_report.json`; incomplete or failed
 rows remain `verification_pending`, so this addendum claims no executable persistence, interaction, visual, or motion acceptance. It
 does not create another database family, command family, event family, WorkNode, NodeSeed, executable queue,
@@ -18615,9 +18613,9 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
-  - "Concepts/pm7-tools/base/PM7-base.html (current recovered PMConcept7 source base; source-lineage-only)"
-  - "Concepts/pm7-tools/build_pm7.py (current assertion-guarded T33-T41 pipeline)"
-  - "Concepts/PMConcept7.html (protected generated output; verification input only; never hand-edit)"
+  - "Concepts/pm7-tools/base/PM7-base.html (historical PM7 prototype lineage only)"
+  - "Concepts/pm7-tools/build_pm7.py (historical PM7 prototype lineage only)"
+  - "Concepts/PMConcept7.html (look-and-behaviour reference only)"
   - "Plans/Decision_Log.md#DL-186"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/followup/DECISIONS-ADDENDUM-3.md, SHA-256 ecd18c2f2d8ac8f714f9578170d321584fb871e3d19601a68061898ffd6759a9 (D35)"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/followup/D10-DESIGN-per-instance-boards.md, SHA-256 927d0ed893c513f2f20efa3ff678f19ba785ac43cf84d690412038daa5d41796 (P1, P4, P5, P6; Jared's answers relayed by the planning thread, pm-mail 1010191613-9ce1; the panels thread's build facts, pm-mail 1010221905-e13e and 1010223444-a10e)"
@@ -18687,7 +18685,6 @@ acceptance_criteria:
 validation_surfaces:
   - python3 scripts/pm-plan-index.py validate
   - Draft 2020-12 validation of Plans/home_workspace_layout.schema.json
-  - Concepts/pm7-tools/verify/home_workspace_matrix.mjs
   - "evidence_ref: Plans/.audits/audit-20260828-001-pmconcept7-usage-successor/browser/runs/run-002/raw-results.json#/home_restoration_observations"
   - "evidence_ref: Plans/.audits/audit-20260828-001-pmconcept7-usage-successor/browser/runs/run-002/browser-verification-report.json"
 risk_class: home_cross_axis_or_semantic_preset_schema_drift
@@ -18702,9 +18699,9 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
-  - "Concepts/pm7-tools/base/PM7-base.html (current recovered PMConcept7 source base; source-lineage-only)"
-  - "Concepts/pm7-tools/build_pm7.py (current assertion-guarded T33-T41 pipeline)"
-  - "Concepts/PMConcept7.html (protected generated output; verification input only; never hand-edit)"
+  - "Concepts/pm7-tools/base/PM7-base.html (historical PM7 prototype lineage only)"
+  - "Concepts/pm7-tools/build_pm7.py (historical PM7 prototype lineage only)"
+  - "Concepts/PMConcept7.html (look-and-behaviour reference only)"
   - Plans/home_workspace_layout.schema.json
 preserved_exact_tokens:
   - pm.home_workspace_layout.v1

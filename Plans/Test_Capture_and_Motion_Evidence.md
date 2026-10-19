@@ -209,17 +209,13 @@ Migration rules:
 
 No migration may fabricate missing segments, clocks, lineage, permissions, redaction, continuity, or runtime evidence.
 
-## 10. PMConcept7 integration evidence campaign
+## 10. Scenario coverage and evidence integrity
 
-The Settings, Product Onboarding, Guided Tour, Doctor, hover-tag, Server/remote, Backup/Restore, Browser/testing/capture, SCM/Origin, Named Plan, performance, Plugins owner projection, and Home-workspace integration closes with one consolidated browser-concept evidence campaign after the generated artifact and canonical content freeze. The campaign exercises every touched system and every modified animation, including Settings preview/apply/rollback/reset/import/export; theme, Glass transparency, tooltip visibility, and Reduced Motion; each Onboarding path and its interruption/reversal/resize/theme variants; Automatic Preparation pending, measured-running, accepted-ready, owner-failed, and same-operation retry projections without synthetic progress or readiness; Guided Tour; every Doctor remediation mode and exact return; Server and route continuity; Full Server Backup and restore modes; Browser/capture; source-control and Origin routes; performance fixtures; the Plugins four-tab owner projection, truthful handler-unavailable command path, and Doctor return; global hover entry/exit/collision/dynamic state; and T48 Home motion. A chapter omitted from the scenario manifest is missing evidence, not an implicit pass.
+Evidence for a changed surface identifies the exact subject and configuration and declares the covered system and animation scenarios. Coverage includes Settings preview/apply/rollback/reset/import/export; theme, Glass transparency, tooltip visibility, and Reduced Motion; each Onboarding path and its interruption/reversal/resize/theme variants; Automatic Preparation pending, measured-running, accepted-ready, owner-failed, and same-operation retry projections without synthetic progress or readiness; Guided Tour; every Doctor remediation mode and exact return; Server and route continuity; Full Server Backup and restore modes; Browser/capture; source-control and Origin routes; Named Plan; performance; the Plugins four-tab owner projection, truthful handler-unavailable command path, and Doctor return; global hover entry/exit/collision/dynamic state; and Home-workspace motion. An omitted scenario is missing evidence, not an implicit pass.
 
-The requested capture target is `60 fps`, and capture attempts to retain every delivered compositor frame. Reports record requested and actual cadence, delivered timestamps, P50/P95/P99 intervals, delayed/dropped/repeated-frame estimates, and capture degradation. Frames are never resampled and then represented as natively captured at 60 fps. Durable campaign material includes lossless source frames, per-frame hashes, a frame index, an FFV1 Matroska master, a review MP4, action/scenario manifests, browser/runner/artifact/configuration hashes, console/network/performance logs, and explicit gap or encoder failure receipts. A derived contact sheet or MP4 never replaces the full-resolution source frame or raw master.
+Capture cadence and health follow sections 2 and 4; raw and derived identities, provenance, and retention follow section 6 and its named owners. Evidence binds delivered-frame indexes and findings to exact subject, artifact, and configuration identities. Findings identify scenario/frame ranges, severity, disposition, repair, and replacement-capture references. Unresolved findings, missing replacement capture, incomplete review, or stale/mixed hashes cannot pass an evidence gate. Derived contact sheets or exports never replace original capture evidence.
 
-Every full-resolution delivered frame receives at least one recorded review. Onboarding choreography, Retro and Reduced Motion boundaries, Guided Tour, hover entry/exit, interruption/reversal, responsive transitions, theme changes, and any defect span receive two independent reviewers. Review assignments use non-overlapping ordinary ranges where possible; high-risk overlap is explicit. The primary integrator reviews every contact or multi-view sheet and every defect candidate. Findings identify exact chapter/frame ranges, severity, evidence, disposition, repair, and replacement-capture references. Coverage alone cannot close review: unresolved findings, repaired findings without an admitted replacement capture, missing primary review, hash drift, or incomplete frame coverage fail the terminal review gate. A repaired chapter is re-recorded and the affected aggregate checks rerun before closure.
-
-Deterministic Playwright with system Chrome, an interactive enabled ChatGPT Chrome-extension pass, and a separate Codex in-app-browser pass each bind to the exact artifact SHA and record browser identity, scenarios, observations, screenshots, and disposition. These are distinct browser-concept evidence lanes. They do not certify native Slint 1.17.1 rendering, real platform integration, production handlers, assistive technology, network/WAN behavior, backup media, SCM providers, old hardware, or native performance.
-
-All screenshots, recordings, source frames, extracts, reports, and temporary harness material are approval-gated evidence. They remain intact until the user explicitly approves cleanup. Cleanup then removes only enumerated temporary/evidence paths, writes a cleanup receipt with pre-delete hashes and recovery disposition, preserves reusable regression tests, compact audit results, Touch Closure coverage, scenario/timing manifests, evidence hashes, and findings, and reruns reproducibility plus governance gates. Neither campaign completion nor user review alone authorizes cleanup.
+Browser-concept evidence never certifies native Slint rendering, real platform integration, production handlers, assistive technology, network/WAN behavior, backup media, SCM providers, old hardware, or native performance. Concept-host costs are reported separately and never subtracted (Plans/Decision_Log.md#DL-217).
 
 ## Owner / Consumer Map
 
@@ -232,7 +228,7 @@ All screenshots, recordings, source frames, extracts, reports, and temporary har
 | admission/resources and progress | `Plans/Shared_Integration_Runtime.md` | capture and derivation services |
 | commands and one-handler wiring | command and wiring owner docs | all GUI/DRY projections |
 | permission, transfer, persistence | Permissions, FileSafe, storage owners | capture and artifact services |
-| PMConcept7 consolidated capture, frame review, defect recapture, interactive-browser receipts, approval cleanup | this document's TCME-007 acceptance lane; no product-runtime ownership | PMConcept7 build/audit pipeline, Final GUI, Settings, Onboarding/Doctor |
+| scenario coverage, artifact identity, motion evidence integrity, and native-proof boundary | this document's TCME-007 acceptance gate | Automated Testing, Runtime Artifacts, Final GUI, Settings, Onboarding/Doctor |
 
 ## PlanUnits
 
@@ -411,46 +407,50 @@ negative_constraints:
   - Do not accept a legacy ID, unknown record kind, mismatched pair, or protected-auth payload by inference.
 ```
 
-### TCME-007 - Consolidated PMConcept7 Motion Evidence And Approval-Gated Cleanup
+### TCME-007 - Scenario Coverage And Motion Evidence Integrity
 
 ```yaml
 plan_unit_id: TCME-007
 unit_type: acceptance_gate
 status: accepted
 owner_doc: Plans/Test_Capture_and_Motion_Evidence.md
-canonical_text: The final PMConcept7 integration campaign binds one exact generated artifact to complete system and animation scenarios, actual delivered-frame cadence, lossless frame and FFV1 evidence, independent full-resolution frame review, defect repair and replacement capture, separate system-Chrome/Chrome-extension/in-app-browser receipts, and user-approval-gated cleanup followed by fresh gates; browser evidence never becomes native Slint or production-runtime certification. Amended 2026-10-16 (DL-217, the coordinator's ruling on Win's trace) - concept acceptance films keep running on the default browser, and each film receipt records 'autofill default'. Chrome's autofill and password-manager form extraction measures every form control at a cover lift; that cost is a measured artifact of the HTML concept running in Chrome, reported separately and never subtracted from a result. An autofill-off configuration may be used only once a harness can apply it, and then only for both arms of an A/B. The product is native Rust plus Slint (AI-045) and has no such cost, so this is a concept harness rule, never a product requirement.
+canonical_text: >-
+  Capture evidence binds declared system and animation scenarios, delivered-frame cadence, review findings,
+  repairs, and replacement captures to exact subject, artifact, and configuration identities. Missing scenarios,
+  unresolved findings, incomplete review, stale or mixed identities, and missing replacement capture remain
+  failures or explicit evidence gaps. Raw/derived identity, capture integrity, provenance, and retention remain
+  governed by TCME-001 through TCME-004 and the named permission, artifact, and storage owners. Browser-concept
+  evidence never becomes native Slint or production-runtime certification. Concept-host costs are reported
+  separately and never subtracted (Plans/Decision_Log.md#DL-217).
 gui_related: true
-gui_classification_reason: This unit governs visual, motion, interaction, accessibility, and browser review evidence for every touched PMConcept7 surface.
+gui_classification_reason: This unit governs scenario coverage and the integrity and declared scope of visual, motion, and interaction evidence.
 depends_on: [TCME-001, TCME-002, TCME-003, TCME-004]
 unblocks: []
 acceptance_criteria:
-  - The immutable campaign manifest covers every touched system and modified animation, including Automatic Preparation pending/measured/ready/failure/same-operation-retry owner projections plus the Plugins owner projection and Doctor route, and every report binds to one exact generated-artifact hash.
-  - The aggregate gate requires ten exact browser runs, including the standalone Plugins projection matrix; removing or demoting that run is a census failure rather than an optional-evidence disposition.
+  - Evidence declares every covered system and animation scenario under section 10, including Automatic Preparation pending/measured/ready/failure/same-operation-retry owner projections plus the Plugins owner projection and Doctor route; each report binds to exact subject, artifact, and configuration identities, and omitted scenarios remain missing evidence.
   - Capture targets 60 fps, retains delivered compositor frames, reports actual cadence and degradation, and never represents resampling as native capture cadence.
-  - Lossless frames, per-frame hashes/index, FFV1/MKV, review MP4, traces, console/network logs, action/scenario manifests, and provenance hashes are retained.
-  - Every full-resolution frame receives one reviewer, high-risk spans receive two independent reviewers, and the primary integrator reviews every contact sheet and defect candidate.
-  - Unresolved findings, missing replacement capture, incomplete review, missing interactive-browser receipts, stale/mixed hashes, or a false native/runtime claim fail the aggregate gate.
-  - Evidence remains until explicit user approval; enumerated cleanup writes a receipt and is followed by reproducibility and governance gates.
-  - Concept acceptance films run on the default browser with receipts recording 'autofill default'; Chrome's
-    form-extraction cost is reported separately and never subtracted, and an autofill-off run is used only for
-    both arms of an A/B that a harness can apply it to.
-validation_surfaces: [Concepts/pm7-tools/verify/final_campaign_capture.mjs, Concepts/pm7-tools/verify/review_capture_frames.py, Concepts/pm7-tools/verify/final_evidence_gate.py, final campaign and interactive-browser receipts]
+  - Findings identify exact scenario/frame ranges, severity, evidence, disposition, repair, and replacement-capture references; unresolved findings, missing replacement capture, incomplete review, stale/mixed hashes, or a false native/runtime claim fail the evidence gate.
+  - Raw capture, delivered-frame indexes, provenance, and derived artifacts retain distinct identities under TCME-003; a review export or contact sheet cannot replace the original capture.
+  - Concept-host costs are reported separately and never subtracted, as recorded in Plans/Decision_Log.md#DL-217.
+validation_surfaces:
+  - Plans/test_capture_motion_evidence_contracts.schema.json
+  - Plans/test_capture_motion_evidence_contract_fixtures.json
+  - Scenario, artifact-identity, cadence, provenance, and findings review with separate browser-concept and native verdicts
 risk_class: motion_evidence_gap_or_false_certification
 reasoning_tier: high
-context_scope: pmconcept7_final_evidence_and_cleanup
-implementation_surfaces: [Plans/Test_Capture_and_Motion_Evidence.md, Concepts/pm7-tools/verify]
+context_scope: capture_scenario_evidence_integrity
+implementation_surfaces: [Plans/Test_Capture_and_Motion_Evidence.md]
 node_compile_hint: {mode: acceptance_evidence_contract, create_worknodes: false, create_nodeseeds: false}
 source_lineage: [source_ref:egolite-requirement:CAP-005, source_ref:egolite-requirement:CAP-009, source_ref:egolite-requirement:CAP-011, source_ref:egolite-requirement:CAP-012, source_ref:egolite-requirement:CAP-016, source_ref:egolite-requirement:CAP-018, source_ref:egolite-requirement:CAP-019, source_ref:egolite-requirement:CAP-020, source_ref:packet:PKT-04/07_VALIDATION_AND_ACCEPTANCE.md:100-114, source_ref:packet:PKT-04/10_REQUIREMENT_RETENTION_AUDIT.md:20-38]
 negative_constraints:
   - Do not call browser capture native Slint, platform, hardware, production-handler, network, backup-media, SCM, or assistive-technology certification.
   - Do not resample footage and claim native 60-fps capture.
-  - Do not close review while any frame, high-risk overlap, primary review, or defect replacement is missing.
-  - Do not delete approval-gated evidence before explicit user approval.
+  - Do not count omitted scenarios, incomplete review, unresolved findings, missing replacement capture, or stale/mixed artifact identities as passing evidence.
 ```
 
 ## Migration Coverage
 
-This canonical compile plus TCME-007 records the acceptance contract consumed by the authored PMConcept7 build, browser campaign, frame-review, and aggregate-evidence tools. Those tools are browser-concept verification infrastructure, not product runtime handlers, encoders, platform backends, native Slint implementation, production wiring, WorkNodes, NodeSeeds, executable queues, or runtime certification. Central product command/event/wiring registration and native/runtime implementation remain separate owner work; the final governance seal may index this accepted PlanUnit only after content and evidence stabilize.
+TCME-007 applies the capture owner's scenario coverage, artifact identity, and evidence-integrity requirements. Browser-concept observations remain separate from product runtime handlers, encoders, platform backends, native Slint implementation, production wiring, and runtime certification. Central product command/event/wiring registration and native/runtime implementation remain separate owner work. These PlanUnits create no WorkNodes, NodeSeeds, or executable queues.
 
 ## Central Sole Future Handler Binding Addendum - 2026-09-01
 
