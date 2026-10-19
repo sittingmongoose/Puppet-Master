@@ -1,33 +1,261 @@
 {
   "version": 1,
   "viewports": [
-    { "id": "wide", "width": 1600, "height": 900 },
-    { "id": "narrow", "width": 900, "height": 900 }
+    {
+      "id": "wide",
+      "width": 1600,
+      "height": 900
+    },
+    {
+      "id": "narrow",
+      "width": 900,
+      "height": 900
+    }
   ],
-  "looks": ["basic-dark", "basic-light", "friendly-dark", "friendly-light", "glass-dark", "glass-light", "retro-dark", "retro-light", "nier-dark", "nier-light"],
+  "looks": [
+    "basic-dark",
+    "basic-light",
+    "friendly-dark",
+    "friendly-light",
+    "glass-dark",
+    "glass-light",
+    "retro-dark",
+    "retro-light",
+    "nier-dark",
+    "nier-light"
+  ],
   "pages": [
-    { "id": "home", "route": "dashboard", "assert": "#pmw-layout .pmw-panel, .pmw-panel" },
-    { "id": "projects", "route": "projects", "assert": "#pm6-proj-search" },
-    { "id": "wizard", "route": "wizard", "assert": "#panel-wizard" },
-    { "id": "orchestrator", "route": "orchestrator", "assert": "#panel-orchestrator" },
-    { "id": "usage", "route": "usage", "assert": "#panel-usage" },
-    { "id": "settings", "route": "settings", "assert": "#pm-settings-root" },
-    { "id": "chat", "route": "dashboard", "prepare": "PM_HOME.chat.reveal({});", "assert": ".pmw-sc-input" }
+    {
+      "id": "home",
+      "route": "dashboard",
+      "assert": "#pmw-layout .pmw-panel, .pmw-panel"
+    },
+    {
+      "id": "projects",
+      "route": "projects",
+      "assert": "#pm6-proj-search"
+    },
+    {
+      "id": "wizard",
+      "route": "wizard",
+      "assert": "#panel-wizard"
+    },
+    {
+      "id": "orchestrator",
+      "route": "orchestrator",
+      "assert": "#panel-orchestrator"
+    },
+    {
+      "id": "usage",
+      "route": "usage",
+      "assert": "#panel-usage"
+    },
+    {
+      "id": "settings",
+      "route": "settings",
+      "assert": "#pm-settings-root"
+    },
+    {
+      "id": "chat",
+      "route": "dashboard",
+      "prepare": "PM_HOME.chat.reveal({});",
+      "assert": ".pmw-sc-input"
+    }
   ],
   "states": [
-    { "id": "rest", "pages": "*", "steps": [] },
-    { "id": "hover", "pages": "*", "steps": [{ "action": "hover", "selector": "#themeSelect" }] },
-    { "id": "focus", "pages": "*", "steps": [{ "action": "focus", "selector": "#themeSelect" }] },
-    { "id": "theme-menu", "pages": "*", "steps": [{ "action": "click", "selector": "#themeSelect" }], "assert": "#themeMenu.is-open" },
-    { "id": "home-menu", "pages": ["home"], "steps": [{ "action": "click", "selector": "#pm-home-more-btn" }], "assert": "#pm-home-more-menu:not([hidden])" },
-    { "id": "project-menu", "pages": ["projects"], "steps": [{ "action": "click", "selector": "#projectMenuBtn" }], "assert": "#projectMenu.is-open" },
-    { "id": "project-hover", "pages": ["projects"], "steps": [{ "action": "hover", "selector": ".pm6-proj-card[data-name=\"tastebook\"]" }] },
-    { "id": "search-focus", "pages": ["projects"], "steps": [{ "action": "focus", "selector": "#pm6-proj-search" }] },
-    { "id": "usage-hover", "pages": ["usage"], "steps": [{ "action": "hover", "selector": ".pmu-card[data-widget=\"ov-skyline\"]" }] },
-    { "id": "usage-menu", "pages": ["usage"], "steps": [{ "action": "hover", "selector": ".pmu-card[data-widget=\"ov-skyline\"]" }, { "action": "click", "selector": ".pmu-card[data-widget=\"ov-skyline\"] button[data-tool=\"menu\"]" }], "assert": ".pmu-pop, .pmu-menu, [role=\"menu\"]" },
-    { "id": "chat-focus", "pages": ["chat"], "steps": [{ "action": "focus", "selector": ".pmw-sc-input" }] },
-    { "id": "chat-popover", "pages": ["chat"], "steps": [{ "action": "click", "selector": ".pmw-sc-head button[aria-label=\"More\"]" }], "assert": ".pmw-menu" },
-    { "id": "nier-popover", "pages": ["settings"], "steps": [{ "action": "click", "selector": "#themeSelect" }, { "action": "click", "selector": "[data-o55-nier-tt=\"adjust\"]" }], "assert": "[role=\"dialog\"]" },
-    { "id": "onboarding-welcome", "pages": ["home"], "steps": [{ "action": "eval", "script": "O55.ui.open({fresh:true});" }], "assert": "#pm-o55-onboarding .o55-layer[data-screen=\"welcome\"]" }
+    {
+      "id": "rest",
+      "pages": "*",
+      "steps": []
+    },
+    {
+      "id": "hover",
+      "pages": "*",
+      "steps": [
+        {
+          "action": "hover",
+          "selector": "#themeSelect"
+        }
+      ],
+      "motions": [
+        "reduced"
+      ]
+    },
+    {
+      "id": "focus",
+      "pages": "*",
+      "steps": [
+        {
+          "action": "focus",
+          "selector": "#themeSelect"
+        }
+      ],
+      "motions": [
+        "reduced"
+      ]
+    },
+    {
+      "id": "theme-menu",
+      "pages": "*",
+      "steps": [
+        {
+          "action": "click",
+          "selector": "#themeSelect"
+        }
+      ],
+      "assert": "#themeMenu.is-open"
+    },
+    {
+      "id": "home-menu",
+      "pages": [
+        "home"
+      ],
+      "steps": [
+        {
+          "action": "click",
+          "selector": "#pm-home-more-btn"
+        }
+      ],
+      "assert": "#pm-home-more-menu:not([hidden])"
+    },
+    {
+      "id": "project-menu",
+      "pages": [
+        "projects"
+      ],
+      "steps": [
+        {
+          "action": "click",
+          "selector": "#projectMenuBtn"
+        }
+      ],
+      "assert": "#projectMenu.is-open"
+    },
+    {
+      "id": "project-hover",
+      "pages": [
+        "projects"
+      ],
+      "steps": [
+        {
+          "action": "hover",
+          "selector": ".pm6-proj-card[data-name=\"tastebook\"]"
+        }
+      ],
+      "motions": [
+        "reduced"
+      ]
+    },
+    {
+      "id": "search-focus",
+      "pages": [
+        "projects"
+      ],
+      "steps": [
+        {
+          "action": "focus",
+          "selector": "#pm6-proj-search"
+        }
+      ],
+      "motions": [
+        "reduced"
+      ]
+    },
+    {
+      "id": "usage-hover",
+      "pages": [
+        "usage"
+      ],
+      "steps": [
+        {
+          "action": "hover",
+          "selector": ".pmu-card[data-widget=\"ov-skyline\"]"
+        }
+      ],
+      "motions": [
+        "reduced"
+      ]
+    },
+    {
+      "id": "usage-menu",
+      "pages": [
+        "usage"
+      ],
+      "steps": [
+        {
+          "action": "hover",
+          "selector": ".pmu-card[data-widget=\"ov-skyline\"]"
+        },
+        {
+          "action": "click",
+          "selector": ".pmu-card[data-widget=\"ov-skyline\"] button[data-tool=\"menu\"]"
+        }
+      ],
+      "assert": ".pmu-pop.pmu-menu[data-mstate=\"open\"]",
+      "check": "document.querySelector('.pmu-card[data-widget=\"ov-skyline\"] button[data-tool=\"menu\"]')?.getAttribute(\"aria-expanded\") === \"true\""
+    },
+    {
+      "id": "chat-focus",
+      "pages": [
+        "chat"
+      ],
+      "steps": [
+        {
+          "action": "focus",
+          "selector": ".pmw-sc-input"
+        }
+      ],
+      "motions": [
+        "reduced"
+      ]
+    },
+    {
+      "id": "chat-popover",
+      "pages": [
+        "chat"
+      ],
+      "steps": [
+        {
+          "action": "click",
+          "selector": ".pmw-sc-head button[aria-label=\"More\"]"
+        }
+      ],
+      "assert": "#pmw-overlay .pmw-menu[aria-label=\"Chat\"][data-mstate=\"open\"]",
+      "check": "document.querySelector('.pmw-sc-head button[aria-label=\"More\"]')?.getAttribute(\"aria-expanded\") === \"true\""
+    },
+    {
+      "id": "nier-popover",
+      "pages": [
+        "settings"
+      ],
+      "steps": [
+        {
+          "action": "click",
+          "selector": "#themeSelect"
+        },
+        {
+          "action": "click",
+          "selector": "[data-o55-nier-tt=\"adjust\"]"
+        }
+      ],
+      "assert": ".o55nc-pop-dialog[role=\"dialog\"][aria-labelledby=\"o55nc-pop-title\"]"
+    },
+    {
+      "id": "onboarding-welcome",
+      "pages": [
+        "home"
+      ],
+      "steps": [
+        {
+          "action": "eval",
+          "script": "O55.ui.open({fresh:true});"
+        }
+      ],
+      "assert": "#pm-o55-onboarding .o55-layer[data-screen=\"welcome\"]"
+    }
+  ],
+  "motions": [
+    "reduced",
+    "full"
   ]
 }

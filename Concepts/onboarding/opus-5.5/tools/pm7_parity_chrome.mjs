@@ -49,13 +49,15 @@ export async function launch({ width = 1600, height = 900, scale = 1 } = {}) {
     });
     const on = (method, fn, session) => { const listener = { method, fn, session }; listeners.add(listener); return () => listeners.delete(listener); };
     browser.send = send;
-    const { sessionId } = await send('Target.attachToTarget', { targetId: session.target_id, flatten: true });
+    async function attachPage(targetId) {
+    const { sessionId } = await send('Target.attachToTarget', { targetId, flatten: true });
     const s = (method, params) => send(method, params || {}, sessionId);
-    const errors = [];
-    on('Runtime.exceptionThrown', p => errors.push('EXC: ' + (p.exceptionDetails.exception?.description || p.exceptionDetails.text).slice(0, 400)), sessionId);
-    on('Runtime.consoleAPICalled', p => { if (p.type === 'error') errors.push('console.error: ' + p.args.map(a => a.value ?? a.description ?? '').join(' ').slice(0, 300)); }, sessionId);
-    const page = browser.page = {
-      send: s, errors, on: (method, fn) => on(method, fn, sessionId),
+    const errors = [], ownedListeners = [];
+    const listen = (method, fn) => { const off = on(method, fn, sessionId); ownedListeners.push(off); return off; };
+    listen('Runtime.exceptionThrown', p => errors.push('EXC: ' + (p.exceptionDetails.exception?.description || p.exceptionDetails.text).slice(0, 400)));
+    listen('Runtime.consoleAPICalled', p => { if (p.type === 'error') errors.push('console.error: ' + p.args.map(a => a.value ?? a.description ?? '').join(' ').slice(0, 300)); });
+    const page = {
+      send: s, errors, on: listen, disposeListeners: () => ownedListeners.splice(0).forEach(off => off()),
       async goto(url, { timeout = 90000 } = {}) {
         let off, timer;
         const loaded = new Promise((resolve, reject) => {
@@ -83,6 +85,19 @@ export async function launch({ width = 1600, height = 900, scale = 1 } = {}) {
     };
     for (const method of ['Page.enable', 'Runtime.enable', 'DOM.enable']) await s(method);
     await page.setViewport(width, height);
+    return page;
+    }
+    browser.page = await attachPage(session.target_id);
+    browser.resetContext = async () => {
+      browser.page.disposeListeners();
+      if (browser.contextId) await send('Target.disposeBrowserContext', { browserContextId: browser.contextId });
+      else await send('Target.closeTarget', { targetId: session.target_id });
+      const { browserContextId } = await send('Target.createBrowserContext', { disposeOnDetach: true });
+      browser.contextId = browserContextId;
+      const { targetId } = await send('Target.createTarget', { url: 'about:blank', browserContextId, newWindow: true });
+      browser.page = await attachPage(targetId);
+      return browser.page;
+    };
     return browser;
   } catch (error) { await browser.close().catch(() => {}); throw error; }
 }

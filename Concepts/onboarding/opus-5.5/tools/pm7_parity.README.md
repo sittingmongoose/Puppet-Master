@@ -1,181 +1,174 @@
 # PM7 parity
 
 ```sh
-node Concepts/onboarding/opus-5.5/tools/pm7_parity.mjs baseline.html candidate.html --out /absolute/evidence/run
+node Concepts/onboarding/opus-5.5/tools/pm7_parity.mjs baseline.html candidate.html --concurrency 4 --out /absolute/evidence/run
 ```
 
-Node 22+, `agent-browser` on PATH, and the host's GPU are required. There are no npm dependencies.
-Inputs are self-contained PMConcept7 or LeftRailPMConcept7 file pairs. Both sides use identical
-agent-browser launches, host, DPR 1, viewport, media, locale and timezone. Each pair uses one browser
-and its GPU process: baseline states first, then a fresh navigation/storage reset and the identical
-candidate state sequence. The document bytes are fulfilled unchanged at the same synthetic file URL. Relative external assets
-are therefore unsupported; embedded data/blob assets work. HTTP(S)/WebSocket/FTP requests are blocked.
+Node 22+, GPU agent-browser and no npm dependencies. Inputs are self-contained PMConcept7 or
+LeftRailPMConcept7 HTML files. A pair stays in one Chrome/GPU process. Each input/load gets a fresh
+browser context; source bytes are fulfilled unchanged at the same intercepted file URL. Relative
+external assets are unsupported. HTTP(S), WebSocket and FTP requests are blocked.
+Fetch interception checks actual schemes; CDP substring URL globs are avoided because they can
+block SVG data URLs containing an HTTP namespace. WebSocket construction is blocked before connection.
 
 ```sh
 git show 91649c220f:Concepts/PMConcept7.html > /absolute/evidence/baseline.html
 node Concepts/onboarding/opus-5.5/tools/pm7_parity.mjs /absolute/evidence/baseline.html Concepts/PMConcept7.html \
-  --subset 'looks=glass-dark,nier-light;pages=home,chat;states=rest,theme-menu;viewports=wide' \
-  --concurrency 4 --out /absolute/evidence/iteration
+  --subset 'looks=glass-dark;pages=home;states=rest,theme-menu;motions=reduced;viewports=wide' \
+  --out /absolute/evidence/iteration
 ```
 
-`--concurrency` caps **browsers/workers**. Default 4 runs four groups concurrently, each comparing
-its two inputs sequentially in one browser. Values outside 1..6 are errors. Respect any lower per-worker cap (this
-wave: 4). SIGINT/SIGTERM and normal completion close the owned agent-browser sessions and profiles.
-No remote GPU mode is implemented.
+`--concurrency` is the browser/worker cap, default 4, allowed 1..6. Each worker renders its baseline
+sequence, then the identical candidate sequence. Respect the wave cap of four owned browsers.
+Fresh contexts share that browser's GPU process. Normal completion and signals stop owned sessions.
+No remote host mode is implemented.
 
-`--subset` accepts semicolon-separated `looks=`, `pages=`, `states=` and `viewports=` filters.
-Quote semicolons. Unknown IDs and empty selections fail. `--list` prints the selected matrix without
-opening a browser. `--matrix FILE` accepts an extended state file with the same schema.
+`--subset` accepts semicolon-separated looks, pages, states, viewports and motions filters. Quote
+semicolons. Repeated filters union their IDs. Unknown IDs and empty selections fail. `--list` shows
+the expanded matrix without browsers. `--matrix FILE` accepts extended state data.
 
-## Sampling and exactness
+## Style contract
 
-Default **native mode** calls `DOMSnapshot.captureSnapshot` once per side/state, with every standard
-computed property enumerated from Chrome and `includeDOMRects: true`. Node hashes property names and
-values from the returned string table by stable tag/ordinal DOM path, including generated pseudo
-nodes. It retains DOM paths for nodes without layout objects. These paths have an explicit null
-style record: their computed properties are **not sampled**. Non-generated pseudo styles are also
-unsampled. Custom properties (`--*`) are excluded: unused token removal is an intended purge action.
-This default was directed by the purge lead in mailbox message `1018235310-e6f8` after the exhaustive
-sampler proved too slow. It does not claim exhaustive hidden/custom-style parity.
+Default native mode captures every standard computed property through DOMSnapshot, including
+generated pseudo nodes, keyed by stable tag/ordinal DOM paths. It retains null style records for
+nodes without layout objects. Their computed values and non-generated pseudo styles are unsampled.
 
-`--deep` uses the exhaustive CSSOM sampler: every element (including hidden elements and open shadow
-roots), `::before`, `::after`, list `::marker` and input/textarea `::placeholder`, with **all** enumerated
-properties including custom properties. Unused custom-property removal will fail this mode. It can
-take several minutes per state on this 20,000-element page. Individual capture timeout: 20 minutes.
-No sampling failure automatically switches modes.
+Native mode also hashes custom properties the input JavaScript reads. Literal getPropertyValue calls
+are unioned from BOTH inputs; concatenated/template prefixes expand against declared and root-enumerated
+names. Current PM7 has about 60 literal names plus the `--lg-wall-` wallpaper family.
+Dynamic property names actually read by page JS are recorded per document too; sampler reads are
+excluded from that recorder. A newly observed name conservatively changes that state's hash.
+Chrome rejects custom names in DOMSnapshot, so CSSOM samples these values on accessible layout elements and generated
+pseudos. Unmatched UA/closed-shadow layout paths are reported; complete closed-root custom sampling is
+not claimed. Other custom properties are excluded, allowing removal of unused tokens.
 
-Deep mode temporarily interns large CSS image data URLs during style capture, restores original CSS
-text in `finally`, and reconstructs the original property strings **before** SHA-256 hashing. This
-avoids repeatedly serializing about 4.8 MB of inherited wallpaper tokens per element. A direct audit
-of the first 12 nodes/pseudos checks reconstructed values against unmodified CSSOM values on each
-browser's first capture. Screenshots are taken before this transaction. Other properties are not
-masked. A property-count check falls back to full enumeration whenever the fast name list is incomplete.
+The lead approved the native/exhaustive split in mailbox 1018235310-e6f8. Review correction adds the
+JS-read token union; native mode does not claim exhaustive hidden/custom-property parity.
 
-Both modes require equal style hashes. Screenshots compare every RGBA channel. Exact mode requires
-zero differing pixels. Explicit later-work tolerance is available:
+`--deep` samples every actual element, hidden elements and open shadow roots, before/after, marker
+and form placeholder with ALL enumerated standard/custom properties. Unused token removal fails
+this mode. It can take several minutes per state; individual evaluation timeout is 20 minutes.
+No failure automatically switches sampling modes.
+
+Custom/deep CSSOM sampling temporarily interns large image data URLs, restores CSS in finally and
+reconstructs original values before hashing. Values are deduplicated before hashing, avoiding huge
+inherited wallpaper strings per element. Direct audits compare unmodified and reconstructed values:
+eight records per custom pass and twelve elements/pseudos on the first deep capture. Screenshots
+precede this transaction. No property is masked. Deep enumeration checks its cardinality and falls
+back to complete enumeration when necessary.
+
+Only actual CSS url(blob:...) references canonicalize opaque UUIDs to exact Blob-byte SHA-256 plus
+MIME type, preserving fragments. Quoted URL-like text is unchanged. Unknown Blob references error.
+Caret hiding is enabled ONLY for screenshots; both style samplers and diagnostics disable the
+caret sheet so original caret-color values remain in the hash.
+
+A separate CSSOM rule-text guard compares selection, webkit-scrollbar, webkit-slider and webkit-search
+pseudo rules whose computed nodes are unavailable. Changes fail conservatively and report first rule
+texts. Removed style/script/hidden nodes are labelled non-rendered DOM-only differences; they still
+fail exact parity. Standard layout changes are reported separately.
+
+## Pixels and measured variation
+
+Exact mode requires zero differing RGBA pixels and equal styles, state, requests and special-rule
+hashes. It never retries a candidate, masks pixels or increases tolerance. Explicit fixed tolerance:
 
 ```sh
 node Concepts/onboarding/opus-5.5/tools/pm7_parity.mjs baseline.html candidate.html \
-  --tolerance 2 --max-diff-pixels 100 --out /absolute/evidence/tolerant-run
+  --tolerance 2 --max-diff-pixels 100 --out /absolute/evidence/tolerant
 ```
 
-The report preserves both raw differing-pixel counts and counts above the stated channel tolerance.
-Style equality remains exact. Every raw pixel difference produces a heat-map PNG, even if tolerated.
-Exact mode has no retries, masks or pixel allowance. Tolerance never increases automatically.
+Raw counts are always retained. Styles remain exact. Raw differences always produce heat maps.
+When raw pixels differ but that fixed gate passes, the verdict is PASS-TOLERANT.
 
-When same-input GPU renders differ, an **explicit, separate** measured-envelope mode is available:
+Identical inputs can produce different GPU pixels despite stable styles and settled frames. The lead
+accepted separate raw exact and measured-envelope verdicts in mailbox 1019010702-321f:
 
 ```sh
 node Concepts/onboarding/opus-5.5/tools/pm7_parity.mjs baseline.html candidate.html \
-  --baseline-repeats 5 --out /absolute/evidence/measured-run
+  --baseline-repeats 8 --out /absolute/evidence/measured
 ```
 
-Default `--baseline-repeats 1` leaves exact mode unchanged. Values 2..8 enable this mode; it cannot
-combine with tolerance or `--deep`. A raw pixel failure with exact styles triggers additional
-baseline navigations, replaying the same state prefix. Every repeat must have the original exact
-style hash, state/clock and runtime errors. Each pixel's RGBA channels receive only the minimum and
-maximum values actually observed at that pixel in the baseline captures. A pixel that repeats
-exactly has zero allowance. The original candidate proof capture is never retried or replaced.
-No envelope is learned or reused across runs. An unstable baseline style/state fails the comparison.
-Every replay also completes the group's remaining states before its next navigation, so the
-preceding paint/overlay history matches a full sequence. Those preparation/restoration screenshots
-do not replace any proof capture.
+Default repeats 1 leaves exact mode unchanged. Explicit 2..8 cannot combine with tolerance or deep.
+Only raw pixel failures with exact styles/state/requests/rules trigger baseline replays. Every repeat
+must retain the original exact style hash, clock/state, errors, request lists and special-rule hash.
+Replays complete the group before their next navigation, retaining full overlay/paint history.
+The original candidate proof capture is never retried or replaced; restoration captures are discarded.
 
-Every row retains `rawExactVerdict` and raw pixel counts. Reports separately label the measured
-verdict, accepted-noise count, baseline hashes, ranges, out-of-envelope pixels and observed heat maps.
-A measured PASS is **not** zero-pixel parity. A real pixel change inside the observed channel range
-can be indistinguishable from that variation; computed styles still have to match exactly.
-The purge lead accepted this explicit split in mailbox message `1019010702-321f` after same-browser
-preparation still left Glass pixel variation. Default exact mode continues to report those failures.
+Ranges belong to each individual pixel AND channel. An exactly repeating pixel has zero allowance.
+Candidate pixels outside observed ranges fail. Baselines also fail as unstable above either cap:
+channel span 8; variable pixels 0.05% of viewport (720 wide, 405 narrow). Explicit
+`--noise-max-channel-span N` and `--noise-max-pixels N` override the recorded caps.
 
-## Determinism
+Accepted noisy rows/runs are PASS-MEASURED, never bare PASS. They retain rawExactVerdict=FAIL and
+all raw heat maps, baseline captures, min/max PNGs, observed-noise heat maps and outside counts.
+No envelope is reused across runs. A real change inside the observed ranges cannot be distinguished
+by that measured gate; exact styles remain mandatory. Exit 0 means the SELECTED gate passed;
+consumers requiring zero pixels must require rawExactVerdict=PASS.
 
-- Date, performance, document.timeline.currentTime and Event.timeStamp use one manually advanced
-  clock, epoch `1789000000000` (timeline/event values use the relative clock).
-- Math.random uses a fixed LCG seed, `0x9e3779b9`, reset before each group load.
-- Timers run in due-time/registration order. Each explicit advance paints one synthetic rAF generation.
-  Idle callbacks are scheduled on the same clock. Native double-rAF barriers allow layout to commit.
-- CDP Animation playback rate is 0; finite animations finish, infinite animations pause at time 0,
-  and SVG animation clocks pause at 0. This checks settled states, not animation timing.
-- Both OS reduced-motion media and the concept's persisted Reduce animations setting are enabled.
-- Local/session storage is cleared and seeded before load. PM_DEMO's clock is paused when assigned.
-- Fonts and images are awaited, caret is hidden, and timezone/locale are UTC/en-US.
-- Home receives a post-font layout warm-up before routing away, so hidden terminal prompt gutters
-  have completed their first render. Fonts are awaited again after look/route changes.
-- Before each measured input/group, a fixed preparation navigation loads every declared font face
-  and paints the requested look, then reloads the input. This keeps preview/terminal canvas metrics
-  from using a fallback font on the first input and a cached font on the second. The pointer resets
-  before navigation, and CDP focus emulation keeps worker-window activation from changing page focus.
-- The page's own `?pm-warm=0` test hook disables idle GPU prewarming. That queue measures native
-  frame timing and creates/removes transient shader-warming DOM; it cannot run deterministically
-  on the manual clock. Product UI and its real Glass effects remain enabled.
+## Deterministic preparation
 
-GPU rasterization and native layout/font/image tasks remain browser implementation details. Exact
-mode reports any resulting nondeterminism as a difference; it never relaxes the gate. Do not compare
-screenshots produced on different hosts. Closed shadow roots, child-frame documents and offscreen
-scroll contents are outside the current traversal/capture contract.
+- Date/performance/document timeline/event timestamps share a manual clock, epoch 1789000000000.
+  Math.random uses seed 0x9e3779b9, reset before each document. Timers run by due time/registration;
+  each explicit advance paints one synthetic rAF generation, with native double-frame barriers.
+- CDP animation playback is zero; finite animations finish, infinite animations pause at zero,
+  SVG clocks pause at zero. This checks settled visuals, not animation timing.
+- Each motion axis sets both media preference and the persisted Reduce animations setting.
+- Each load creates a fresh incognito context. An inert same-origin probe verifies empty IndexedDB,
+  cookies, local/session storage, caches and service-worker registrations before real navigation.
+  Unsupported file-origin storage APIs are recorded. Disposing the context removes previous data.
+  Local/session storage is seeded before app code; PM_DEMO pauses when assigned.
+- All declared fonts receive an unmeasured font/paint preparation navigation before measurement.
+  Fonts/images finish before capture; Home receives post-font layout work before routing away.
+  Pointer position resets before navigation; CDP focus emulation removes window-activation variance.
+- The existing pm-warm=0 test hook disables transient idle shader-prewarming DOM. Product UI and
+  real Glass effects remain enabled. Timezone/locale are UTC/en-US. DPR is 1.
+- Blocked/failed requests are recorded and compared. Synthetic image-interning requests are excluded
+  from those diagnostics because they exist only inside the lossless capture transaction.
 
-Separate Chrome GPU processes produced a few differing Glass edge pixels even when styles matched
-and repeated captures within each process were stable. Each pair shares a browser/GPU process and
-uses a fixed preparation sequence. Remaining variation fails exact mode; no pixel noise envelope is applied.
-Only an explicit `--baseline-repeats` invocation enables the separately labelled envelope above.
+The local uncompressed WebSocket avoids Node 22's decompressed-message limit and the older pipe's
+repeated large-message copies. It supports masking, fragmented UTF-8 and ping/pong, bounded at 512 MiB.
+GPU rendering flags remain those of agent-browser; software renderers fail startup.
 
-Glass creates fresh opaque Blob URL identifiers in each browser. Both samplers replace only actual
-CSS `url(blob:...)` references with the SHA-256 of the exact Blob bytes plus MIME type, retaining any
-fragment. Quoted text containing a URL is unchanged. Unknown Blob references are harness errors.
-Reports retain the URL-to-content identities and original property strings for differing resources.
-This canonicalizes resource identity without ignoring image content or changing pixels.
+## State coverage
 
-The shared pipe transport uses an uncompressed local WebSocket because Node 22's built-in client
-rejects large decompressed PM7 protocol replies. The frame reader supports fragmentation, UTF-8,
-masking and ping/pong, and bounds a message at 512 MiB. It does not change Chrome's GPU flags.
-Parity uses the same agent-browser admission and CDP driver interface through a direct connection;
-this avoids the old NUL-pipe parser's repeated copying of large snapshot replies.
+Ten looks: Basic/Friendly/Glass/Retro/NieR, dark/light. Viewports: 1600x900 and 900x900. The latter is
+the smallest desktop width measured by FinalGUISpec F3-636; 390px cannot reach the whole desktop
+Wizard/card states. Pre-existing overflow is not an assertion of responsive quality.
 
-## Default states
+| Surface | Reduced-motion states | Full-motion subset |
+|---|---|---|
+| Home | rest, hover, focus, theme-menu, home-menu, onboarding-welcome (6) | rest, theme-menu, home-menu, onboarding-welcome (4) |
+| Projects | rest, hover, focus, theme-menu, project-menu, project-hover, search-focus (7) | rest, theme-menu, project-menu (3) |
+| Wizard | rest, hover, focus, theme-menu (4) | rest, theme-menu (2) |
+| Orchestrator | rest, hover, focus, theme-menu (4) | rest, theme-menu (2) |
+| Usage | rest, hover, focus, theme-menu, usage-hover, usage-menu (6) | rest, theme-menu, usage-menu (3) |
+| Settings | rest, hover, focus, theme-menu, nier-popover dialog (5) | rest, theme-menu, nier-popover (3) |
+| Chat | rest, hover, focus, theme-menu, chat-focus, chat-popover (6) | rest, theme-menu, chat-popover (3) |
 
-`pm7_parity_states.json` owns the list; no tour steps are included. Viewports are 1600×900 and
-900×900. This is the smallest window width measured by the canonical Home centre-width ladder
-(`Plans/FinalGUISpec.md`, F3-636). The whole desktop page cannot reach the Wizard and card hover states
-at the onboarding-only state-shot tool's 390px width. The 900px case exercises the Home narrow ladder
-and compact shell; pre-existing overflow is not an assertion of responsive design quality.
+Reduced: 38 x 10 x 2 = 760. Full: 20 x 10 x 2 = 400. Total: **1,160 comparisons** in 280 groups.
+Chat is Home with its composer revealed. Hover/focus use the Theme control; specific states add card
+and input coverage. Click/hover targets must be visible, enabled and pass actual hit tests. Keyboard
+focus must reach its target AND match :focus-visible. Dialog/menu assertions identify their owning
+surface/trigger. Unreachable states error, never skip. Focus primes keyboard modality without tabbing
+through unrelated controls. Add declarative click/hover/focus/eval steps and ownership checks in JSON.
 
-| Surface | States per look/viewport |
-|---|---|
-| Home | rest, hover, focus, theme-menu, home-menu, onboarding-welcome |
-| Projects | rest, hover, focus, theme-menu, project-menu, project-hover, search-focus |
-| Planning Wizard | rest, hover, focus, theme-menu |
-| Orchestrator | rest, hover, focus, theme-menu |
-| Usage | rest, hover, focus, theme-menu, usage-hover, usage-menu |
-| Settings | rest, hover, focus, theme-menu, nier-popover (dialog) |
-| Chat | rest, hover, focus, theme-menu, chat-focus, chat-popover |
+This is a starting interaction list. Removals touching other hover/focus, onboarding, Settings or
+motion rule families must add states before claiming coverage. Full-motion hover/focus, high-DPI
+media rules, offscreen scroll contents, child frames and complete closed-shadow sampling are not
+covered. No cross-host pixel equivalence is claimed.
 
-Hover/focus use the title-bar Theme control; page-specific states add card/input coverage. Chat is
-Home with its composer revealed. The ten looks are Basic/Friendly/Glass/Retro/NieR × dark/light.
-Total: **38 states × 10 looks × 2 viewports = 760 comparisons**. Click/hover targets must be visible,
-enabled, and pass a real hit test. Focus must reach its intended control. Unreachable states are
-harness errors, never skipped cases. Add states as declarative steps: click, hover, focus or eval,
-with an optional visibility assertion. Each group replays states in file order.
-Focus primes keyboard modality with a Tab whose default traversal and product handlers are blocked,
-then focuses the specified control; unrelated controls do not receive a preliminary focus event.
+## Artifacts
 
-## Results
+Default output: timestamped directory in the wave's external A0-parity evidence folder. Existing
+reports/progress are never overwritten. JSON includes source/input/matrix hashes, every state,
+raw and selected verdicts, property/rule/DOM diagnostics, storage/request/state checks, wall time,
+sampled RSS, Chrome/GPU details and session IDs. Markdown summarizes failures and measured states.
+PNG baseline/candidate captures are always retained; raw mismatches add diff PNGs. Measured states
+add noise-baseline-N, low/high range and noise-heatmap PNGs, each with SHA-256 in the JSON.
 
-The default output is a timestamped directory under the wave's external A0-parity evidence folder.
-Existing reports/progress files are never overwritten. Outputs:
-
-- `report.json`: every state, input/matrix hashes, styles, pixel counts, differences, diagnostics,
-  raw exact and selected-mode verdicts, wall time, sampled peak aggregate RSS, Git head and executed source-file hashes.
-- `summary.md`: short result and failing states.
-- `progress.jsonl`: completed states as the run proceeds.
-- `states/*.baseline.png`, `*.candidate.png`, and `*.diff.png` for raw pixel mismatches.
-- In measured mode only, `*.noise-baseline-N.png`, per-pixel `*.noise-low.png`/`*.noise-high.png`
-  and `*.noise-heatmap.png` for every surveyed state, each with its SHA-256 in the JSON.
-
-Artifacts have SHA-256 values in each row. `--first N` controls the first differing elements whose
-property/value differences are included. Exit codes: **0 parity, 1 differences, 2 harness error**.
-RSS is sampled every two seconds from the harness, adapter and Chrome process IDs; shared pages can
-be counted once per process. It is a sampled upper aggregate, not a kernel maximum-resident-set reading.
+`--first N` controls detailed differing elements/rules. Exit codes: 0 selected gate passed,
+1 differences, 2 harness error. RSS is sampled every two seconds across harness/Chrome processes;
+shared pages may count per process. It is not a kernel peak reading.
 
 ```sh
 node --test Concepts/onboarding/opus-5.5/tools/pm7_parity.test.mjs Concepts/onboarding/opus-5.5/tools/cdp-websocket.test.mjs

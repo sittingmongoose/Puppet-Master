@@ -1,7 +1,8 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
+import { readFileSync } from 'node:fs';
 import { encodePng, decodePng, diffPng, baselineEnvelopePng } from './pm7_parity_png.mjs';
-import { parseArgs, selectMatrix, differingPaths } from './pm7_parity.mjs';
+import { parseArgs, selectMatrix, differingPaths, discoverCustomReads } from './pm7_parity.mjs';
 import { normalizeBlobValue } from './pm7_parity_browser.mjs';
 
 test('PNG round trip, single-pixel sensitivity and explicit RGBA tolerances', () => {
@@ -50,6 +51,25 @@ test('CLI rejects silent tolerance, unknown flags, invalid concurrency and empty
   assert.throws(() => parseArgs([...args, '--baseline-repeats', '9']), /baseline repeats/);
   assert.throws(() => parseArgs([...args, '--baseline-repeats', '3', '--tolerance', '1']), /cannot combine/);
   assert.throws(() => parseArgs([...args, '--baseline-repeats', '3', '--deep']), /cannot combine/);
+  assert.throws(() => parseArgs([...args, '--noise-max-channel-span', '256']), /noise channel/);
+  assert.deepEqual(parseArgs([...args, '--subset', 'looks=basic-dark', '--subset', 'looks=retro-light,basic-dark']).filters.looks, ['basic-dark', 'retro-light']);
+});
+test('default motion coverage preserves all reduced states and adds the full-motion menu subset', () => {
+  const matrix = JSON.parse(readFileSync(new URL('./pm7_parity_states.json', import.meta.url)));
+  assert.equal(selectMatrix(matrix, { motions: ['reduced'] }).count, 760);
+  assert.equal(selectMatrix(matrix, { motions: ['full'] }).count, 400);
+  assert.equal(selectMatrix(matrix, {}).count, 1160);
+  for (const group of selectMatrix(matrix, { motions: ['full'] }).groups) {
+    assert(group.states.some(state => state.id === 'rest'));
+    assert(group.states.some(state => state.id === 'theme-menu'));
+  }
+});
+test('JS-read custom-property union includes both inputs and declared dynamic prefixes, excluding unrelated tokens', () => {
+  const a = "a.getPropertyValue('--used'); a.getPropertyValue('--wall-' + id); :root { --wall-one: red; --unused: 1; }";
+  const b = 'b.getPropertyValue("--other"); b.getPropertyValue(`--part-${kind}`); div { --wall-two: blue; --part-x: 2; }';
+  const reads = discoverCustomReads([a, b]);
+  assert.deepEqual(reads.names, ['--other', '--part-x', '--used', '--wall-one', '--wall-two']);
+  assert.deepEqual(reads.prefixes, ['--part-', '--wall-']);
 });
 test('matrix filters preserve page-specific states and reject misspelled IDs', () => {
   const matrix = { version: 1, looks: ['basic-dark'], viewports: [{ id: 'wide', width: 1600, height: 900 }],

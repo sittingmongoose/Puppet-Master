@@ -15,13 +15,15 @@ const digest = bytes => createHash('sha256').update(bytes).digest('hex');
 const help = `Usage: node pm7_parity.mjs BASELINE.html CANDIDATE.html [options]
   --out DIR                       JSON, Markdown, screenshots and heat maps
   --matrix FILE                   State data (default pm7_parity_states.json)
-  --subset looks=a,b;pages=a,b;states=a,b;viewports=wide,narrow
+  --subset looks=a,b;pages=a,b;states=a,b;viewports=wide,narrow;motions=reduced,full
                                   Repeat --subset to combine filters; quote semicolons
   --concurrency N                 Browser/worker cap, default 4; integer 1..6
   --tolerance N                   RGBA channel delta allowed, default 0 (0..255)
   --max-diff-pixels N             Pixels above tolerance allowed, default 0
   --baseline-repeats N            Explicit measured pixel envelope, 2..8 baseline captures
                                   Default 1 (exact); cannot combine with tolerance or --deep
+  --noise-max-channel-span N      Baseline channel-range cap, default 8 (0..255)
+  --noise-max-pixels N            Variable baseline pixel cap; default 0.05% of viewport
   --first N                       First differing elements to detail, default 8
   --deep                          Exhaustive JS sampler, including hidden/custom styles (slow)
   --list                          Print selected matrix without opening browsers
@@ -31,7 +33,7 @@ GPU agent-browser sessions only. A pair stays on this host. No remote mode.
 `;
 
 export function parseArgs(argv) {
-  const options = { concurrency: 4, tolerance: 0, maxDiffPixels: 0, baselineRepeats: 1, first: 8, filters: {},
+  const options = { concurrency: 4, tolerance: 0, maxDiffPixels: 0, baselineRepeats: 1, noiseMaxChannelSpan: 8, noiseMaxPixels: null, first: 8, filters: {},
     matrix: join(here, 'pm7_parity_states.json') };
   const files = [];
   for (let i = 0; i < argv.length; i++) {
@@ -44,14 +46,14 @@ export function parseArgs(argv) {
       if (!value || value.startsWith('--')) throw Error(`${arg} requires a value`);
       if (key === 'subset') {
         for (const part of value.split(';')) {
-          const match = /^(looks|pages|states|viewports)=(.+)$/.exec(part);
-          if (!match) throw Error('Subset must be looks=...;pages=...;states=...;viewports=...');
-          options.filters[match[1]] = match[2].split(',');
+          const match = /^(looks|pages|states|viewports|motions)=(.+)$/.exec(part);
+          if (!match) throw Error('Subset must be looks=...;pages=...;states=...;viewports=...;motions=...');
+          options.filters[match[1]] = [...new Set([...(options.filters[match[1]] || []), ...match[2].split(',')])];
         }
-      } else if (['concurrency', 'tolerance', 'max-diff-pixels', 'baseline-repeats', 'first'].includes(key)) {
+      } else if (['concurrency', 'tolerance', 'max-diff-pixels', 'baseline-repeats', 'noise-max-channel-span', 'noise-max-pixels', 'first'].includes(key)) {
         const number = Number(value);
         if (!Number.isSafeInteger(number) || number < 0) throw Error(`${arg} requires a nonnegative integer`);
-        options[{ 'max-diff-pixels': 'maxDiffPixels', 'baseline-repeats': 'baselineRepeats' }[key] || key] = number;
+        options[{ 'max-diff-pixels': 'maxDiffPixels', 'baseline-repeats': 'baselineRepeats', 'noise-max-channel-span': 'noiseMaxChannelSpan', 'noise-max-pixels': 'noiseMaxPixels' }[key] || key] = number;
       } else if (key === 'out' || key === 'matrix') options[key] = resolve(value);
       else throw Error(`Unknown option ${arg}`);
     } else files.push(resolve(arg));
@@ -59,6 +61,7 @@ export function parseArgs(argv) {
   if (options.concurrency < 1 || options.concurrency > 6 || options.tolerance > 255 || options.first < 1) throw Error('Invalid concurrency (1..6), tolerance (0..255) or first (>=1)');
   if (options.baselineRepeats < 1 || options.baselineRepeats > 8) throw Error('Invalid baseline repeats (1..8)');
   if (options.baselineRepeats > 1 && (options.tolerance || options.maxDiffPixels || options.deep)) throw Error('Baseline repeats cannot combine with tolerance or --deep');
+  if (options.noiseMaxChannelSpan > 255) throw Error('Invalid noise channel cap (0..255)');
   if (!options.help && files.length !== 2) throw Error('Pass baseline and candidate file paths');
   [options.baseline, options.candidate] = files;
   options.out ||= resolve('/mnt/Cursor/PuppetMaster-Evidence/scratch/2026-10-18-pm7-purge/A0-parity', new Date().toISOString().replace(/[:.]/g, '-') + '-' + process.pid);
@@ -67,71 +70,114 @@ export function parseArgs(argv) {
 export function selectMatrix(matrix, filters) {
   if (matrix.version !== 1) throw Error('Unsupported state matrix version');
   const selected = {};
-  for (const key of ['looks', 'pages', 'states', 'viewports']) {
-    if (!Array.isArray(matrix[key]) || !matrix[key].length) throw Error(`Empty matrix ${key}`);
+  for (const key of ['looks', 'pages', 'states', 'viewports', 'motions']) {
+    const items = key === 'motions' ? matrix.motions || ['reduced'] : matrix[key];
+    if (!Array.isArray(items) || !items.length) throw Error(`Empty matrix ${key}`);
     const id = x => typeof x === 'string' ? x : x.id;
-    const ids = matrix[key].map(id);
+    const ids = items.map(id);
     if (ids.some(x => !/^[a-z0-9-]+$/.test(x)) || new Set(ids).size !== ids.length) throw Error(`Invalid/duplicate ${key} IDs`);
     for (const name of filters[key] || []) if (!ids.includes(name)) throw Error(`Unknown ${key} subset: ${name}`);
-    selected[key] = matrix[key].filter(x => !filters[key] || filters[key].includes(id(x)));
+    selected[key] = items.filter(x => !filters[key] || filters[key].includes(id(x)));
   }
   for (const look of selected.looks) if (!/^(basic|friendly|glass|retro|nier)-(dark|light)$/.test(look)) throw Error(`Unknown look ${look}`);
   const groups = [];
-  for (const viewport of selected.viewports) {
+  for (const motion of selected.motions) for (const viewport of selected.viewports) {
+    if (!['reduced', 'full'].includes(motion)) throw Error('Unknown motion mode ' + motion);
     if (![viewport.width, viewport.height].every(n => Number.isInteger(n) && n >= 200 && n <= 4096)) throw Error('Invalid viewport');
     for (const look of selected.looks) for (const page of selected.pages) {
-      const states = selected.states.filter(s => s.pages === '*' || s.pages.includes(page.id));
-      if (states.length) groups.push({ viewport, look, page, states });
+      const states = selected.states.filter(s => (s.pages === '*' || s.pages.includes(page.id)) && (!s.motions || s.motions.includes(motion)));
+      if (states.length) groups.push({ viewport, look, page, states, motion });
     }
   }
   if (!groups.length) throw Error('Subset selects no reachable states');
   return { ...selected, groups, count: groups.reduce((n, g) => n + g.states.length, 0) };
 }
+export function discoverCustomReads(sources) {
+  const names = new Set(), prefixes = new Set(), declared = new Set();
+  for (const text of sources) {
+    for (const match of text.matchAll(/(--[a-zA-Z0-9_-]+)\s*:/g)) declared.add(match[1]);
+    for (const match of text.matchAll(/\.getPropertyValue\s*\(\s*\\?(['"])(--[a-zA-Z0-9_-]+)\\?\1\s*([+)]?)/g)) {
+      if (match[3] === '+' || match[2].endsWith('-')) prefixes.add(match[2]); else names.add(match[2]);
+    }
+    for (const match of text.matchAll(/\.getPropertyValue\s*\(\s*`(--[a-zA-Z0-9_-]+)\$\{/g)) prefixes.add(match[1]);
+  }
+  for (const name of declared) if ([...prefixes].some(prefix => name.startsWith(prefix))) names.add(name);
+  return { names: [...names].sort(), prefixes: [...prefixes].sort() };
+}
 function deadline(promise, label, ms = 180_000) {
   let timer;
   return Promise.race([promise, new Promise((_, reject) => { timer = setTimeout(() => reject(Error(`Timeout: ${label}`)), ms); })]).finally(() => clearTimeout(timer));
 }
-function seedStorage(look) {
+function seedStorage(look, motion = 'reduced') {
   const [family, mode] = look.split('-');
   const title = value => value[0].toUpperCase() + value.slice(1);
   return { 'pm7:settings:tome-tabs:v1:tastebook': { settings: {
     'general.visual.theme': title(family === 'nier' ? 'basic' : family) + ' ' + title(mode),
     'general.visual.theme-mode': title(mode), 'general.visual.nier-mode': family === 'nier',
-    'general.visual.reduce-animations': true, 'general.audio.sound-enabled': false
+    'general.visual.reduce-animations': motion === 'reduced', 'general.audio.sound-enabled': false
   } } };
 }
-async function createBrowser(input, telemetry) {
-  const browser = await launch({ width: 1600, height: 900, scale: 1 });
-  telemetry.live.add(browser);
-  try {
+async function configurePage(browser) {
     const page = browser.page;
     await page.bringToFront();
     if (process.env.PM7_PARITY_DEBUG) page.on('Runtime.consoleAPICalled', e => {
       if (e.args[0]?.value === 'PM7_PARITY_SNAPSHOT') console.log(e.args.map(a => a.value).join(' '));
     });
     await page.send('Network.enable');
-    await page.send('Network.setBlockedURLs', { urls: ['http://*', 'https://*', 'ws://*', 'wss://*', 'ftp://*', 'file:///__pm7_parity_asset__/*'] });
+    // CDP blocked-URL globs also match text inside data: SVG URLs (for example
+    // an http:// namespace). Fetch below tests the actual scheme instead.
+    await page.send('Network.setBlockedURLs', { urls: [] });
     await page.send('Emulation.setTimezoneOverride', { timezoneId: 'UTC' });
     await page.send('Emulation.setLocaleOverride', { locale: 'en-US' });
     await page.send('Emulation.setFocusEmulationEnabled', { enabled: true });
     await page.send('Animation.enable'); await page.send('Animation.setPlaybackRate', { playbackRate: 0 });
-    browser.input = input; browser.interceptErrors = []; browser.blocked = new Set();
+    const interceptErrors = browser.interceptErrors = [];
+    const requests = new Map(); browser.blocked = new Set(); browser.failedRequests = [];
     browser.currentUrl = 'file:///__pm7_parity__/input.html?o55=off&o55scenario=fresh&pm-warm=0';
+    page.on('Network.requestWillBeSent', e => requests.set(e.requestId, e.request.url));
+    page.on('Network.loadingFinished', e => requests.delete(e.requestId));
+    page.on('Network.loadingFailed', e => {
+      const url = requests.get(e.requestId); requests.delete(e.requestId);
+      if (url && !url.startsWith('file:///__pm7_parity_asset__/')) browser.failedRequests.push({ url, error: e.errorText, blockedReason: e.blockedReason || null });
+    });
     page.on('Fetch.requestPaused', event => {
       const uri = event.request.url;
       let request;
       if (event.resourceType === 'Document' && uri === browser.currentUrl) {
         request = page.send('Fetch.fulfillRequest', { requestId: event.requestId, responseCode: 200,
-          responseHeaders: [{ name: 'Content-Type', value: 'text/html; charset=utf-8' }], body: browser.input.body });
+          responseHeaders: [{ name: 'Content-Type', value: 'text/html; charset=utf-8' }],
+          body: browser.storageProbe ? Buffer.from('<!doctype html><title>Storage isolation probe</title>').toString('base64') : browser.input.body });
       } else if (/^(?:data:|blob:|file:)/.test(uri) && !uri.startsWith('file:///__pm7_parity_asset__/')) {
         request = page.send('Fetch.continueRequest', { requestId: event.requestId });
       } else {
-        browser.blocked.add(uri.slice(0, 200));
+        if (!uri.startsWith('file:///__pm7_parity_asset__/')) browser.blocked.add(uri);
         request = page.send('Fetch.failRequest', { requestId: event.requestId, errorReason: 'BlockedByClient' });
       }
-      request.catch(error => browser.interceptErrors.push(String(error)));
+      request.catch(error => interceptErrors.push(String(error)));
     });
     await page.send('Fetch.enable', { patterns: [{ urlPattern: '*' }] });
+}
+async function assertEmptyStorage(browser) {
+  browser.storageProbe = true;
+  try { await browser.page.goto(browser.currentUrl); } finally { browser.storageProbe = false; }
+  const { frameTree } = await browser.page.send('Page.getFrameTree');
+  const { storageKey } = await browser.page.send('Storage.getStorageKeyForFrame', { frameId: frameTree.frame.id });
+  const { databaseNames } = await browser.page.send('IndexedDB.requestDatabaseNames', { storageKey });
+  const { cookies } = await browser.send('Storage.getCookies', { browserContextId: browser.contextId });
+  const storage = await browser.page.evaluate(async () => {
+    const unavailable = [];
+    const check = async (name, fn) => { try { return await fn(); } catch (e) { unavailable.push(name + ':' + e.name); return null; } };
+    return { localStorage: localStorage.length, sessionStorage: sessionStorage.length,
+      cacheKeys: await check('CacheStorage', () => caches.keys()),
+      serviceWorkers: await check('ServiceWorker', async () => navigator.serviceWorker ? (await navigator.serviceWorker.getRegistrations()).length : 0), unavailable };
+  });
+  if (databaseNames.length || cookies.length || storage.localStorage || storage.sessionStorage || storage.cacheKeys?.length || storage.serviceWorkers) throw Error('Fresh context contains persistent storage: ' + JSON.stringify({ databaseNames, cookies: cookies.length, ...storage }));
+  browser.storageAudit = { freshContext: true, databaseNames, cookieCount: cookies.length, ...storage };
+}
+async function createBrowser(input, telemetry) {
+  const browser = await launch({ width: 1600, height: 900, scale: 1 });
+  telemetry.live.add(browser); browser.input = input;
+  try {
     const info = await browser.send('SystemInfo.getInfo');
     const renderer = info.gpu?.auxAttributes?.glRenderer || info.gpu?.devices?.map(d => d.deviceString).join('; ');
     if (!renderer || /swiftshader|llvmpipe|software/i.test(renderer)) throw Error('GPU renderer required: ' + renderer);
@@ -141,15 +187,17 @@ async function createBrowser(input, telemetry) {
   } catch (error) { await browser.close(); telemetry.live.delete(browser); throw error; }
 }
 async function loadGroup(browser, group, input = browser.input) {
-  browser.input = input; browser.page.errors.length = 0;
-  if (browser.initId) await browser.page.send('Page.removeScriptToEvaluateOnNewDocument', { identifier: browser.initId });
-  const config = { epoch: 1789000000000, seed: 0x9e3779b9, storage: seedStorage(group.look) };
+  browser.input = input;
+  await browser.resetContext(); await configurePage(browser);
+  await assertEmptyStorage(browser);
+  const motion = group.motion || 'reduced';
+  const config = { epoch: 1789000000000, seed: 0x9e3779b9, storage: seedStorage(group.look, motion) };
   const init = await browser.page.send('Page.addScriptToEvaluateOnNewDocument', { source: `(${installParityRuntime.toString()})(${JSON.stringify(config)}, ${normalizeBlobValue.toString()})` });
   browser.initId = init.identifier;
   await browser.page.setViewport(group.viewport.width, group.viewport.height);
   // A pointer left over a menu control can populate hidden tooltip DOM on reload.
   await browser.page.mouse(1, 1, { down: false, up: false });
-  await browser.page.send('Emulation.setEmulatedMedia', { features: [{ name: 'prefers-reduced-motion', value: 'reduce' }, { name: 'prefers-color-scheme', value: group.look.endsWith('-light') ? 'light' : 'dark' }] });
+  await browser.page.send('Emulation.setEmulatedMedia', { features: [{ name: 'prefers-reduced-motion', value: motion === 'reduced' ? 'reduce' : 'no-preference' }, { name: 'prefers-color-scheme', value: group.look.endsWith('-light') ? 'light' : 'dark' }] });
   await browser.page.goto(browser.currentUrl);
   await browser.page.evaluate(async () => {
     if (!window.__pm7Parity) throw Error('Runtime was not installed');
@@ -163,12 +211,12 @@ async function loadGroup(browser, group, input = browser.input) {
     // while Home is still visible, before a route can hide its terminal gutter.
     await __pm7Parity.settle(1000);
   });
-  await browser.page.evaluate(async (route, prepare, look) => {
+  await browser.page.evaluate(async (route, prepare, look, motion) => {
     const [family, mode] = look.split('-');
     PM_NIER.setTransition(repaint => repaint());
     PM7_SETTINGS_TOME.setChromeThemeFamily(family === 'nier' ? 'basic' : family);
     PM7_SETTINGS_TOME.setChromeThemeMode(mode);
-    PM12_KIMI.setSettingFromHost('general.visual.reduce-animations', true);
+    PM12_KIMI.setSettingFromHost('general.visual.reduce-animations', motion === 'reduced');
     if (PM_NIER.wanted() !== (family === 'nier')) PM_NIER.set(family === 'nier', { sound: false });
     PM_PAGES.go(route);
     if (prepare) (0, eval)(prepare);
@@ -176,8 +224,8 @@ async function loadGroup(browser, group, input = browser.input) {
     await __pm7Parity.settle(1200);
     const root = document.documentElement;
     if (root.getAttribute('data-theme') !== (family === 'nier' ? 'basic' : family) + '-' + mode || PM_NIER.on() !== (family === 'nier')) throw Error('Requested look did not paint: ' + look);
-    if (!matchMedia('(prefers-reduced-motion: reduce)').matches || root.getAttribute('data-motion') !== 'reduced') throw Error('Reduced motion did not apply');
-  }, group.page.route, group.page.prepare || '', group.look);
+    if (matchMedia('(prefers-reduced-motion: reduce)').matches !== (motion === 'reduced') || (root.getAttribute('data-motion') === 'reduced') !== (motion === 'reduced')) throw Error('Motion mode did not apply: ' + motion);
+  }, group.page.route, group.page.prepare || '', group.look, motion);
   await visible(browser.page, group.page.assert, 'page ' + group.page.id);
 }
 async function loadPreparedGroup(browser, group, input) {
@@ -244,6 +292,7 @@ async function enterState(browser, state, group) {
       await page.evaluate(sel => {
         const el = Array.from(document.querySelectorAll(sel)).find(el => el.getClientRects().length && !el.closest('[hidden],[inert]'));
         el.focus(); if (document.activeElement !== el) throw Error('Focus did not reach target');
+        if (!el.matches(':focus-visible')) throw Error('Keyboard focus did not activate :focus-visible');
       }, step.selector);
     } else if (step.action === 'click' || step.action === 'hover') {
       const pt = await point(page, step.selector);
@@ -253,6 +302,7 @@ async function enterState(browser, state, group) {
   }
   await page.evaluate(() => __pm7Parity.settle(600));
   if (state.assert) await visible(page, state.assert, state.id);
+  if (state.check && !(await page.evaluate(state.check))) throw Error('State ownership/readiness assertion failed: ' + state.id);
 }
 async function nativeSnapshot(browser) {
   const start = performance.now();
@@ -295,12 +345,38 @@ async function nativeSnapshot(browser) {
     }
     byPath.set(path, vector); elements.push([path, vector?.hash || absentHash]);
   }
+  const customStart = performance.now();
+  const rootCustomNames = await browser.page.evaluate(() => Array.from(getComputedStyle(document.documentElement)).filter(p => p.startsWith('--')));
+  const runtimeReadNames = await browser.page.evaluate(() => __pm7Parity.readCustomProperties());
+  const policy = browser.customReads || { names: [], prefixes: [] };
+  const customNames = [...new Set([...policy.names, ...runtimeReadNames, ...rootCustomNames.filter(name => policy.prefixes.some(prefix => name.startsWith(prefix)))])].sort();
+  const layoutPaths = elements.filter(([path]) => byPath.get(path)).map(([path]) => path);
+  const custom = customNames.length ? await browser.page.evaluate((names, paths) => __pm7Parity.customSnapshot(names, paths), customNames, layoutPaths)
+    : { names: [], values: [], styles: [], rows: [], unmatchedLayoutPaths: [], internedImageUrls: 0, auditRecords: 0 };
+  Object.assign(blobIdentities, await browser.page.evaluate(() => __pm7Parity.blobIdentities()));
+  const customDone = performance.now();
+  const normalized = custom.values.map(value => normalizeBlobValue(value, blobIdentities));
+  const valueHashes = normalized.map(value => digest(value));
+  const customNameHash = digest(JSON.stringify(customNames));
+  const customVectors = custom.styles.map(ids => ({ rawValues: ids.map(id => custom.values[id]), values: ids.map(id => normalized[id]),
+    hash: digest(customNameHash + '\0' + ids.map(id => valueHashes[id]).join('')) }));
+  const customByPath = new Map(custom.rows.map(([path, index]) => [path, customVectors[index]]));
+  const propertyNames = [...browser.standardProperties, ...customNames];
+  const entries = elements.map(([path, hash]) => {
+    const standard = byPath.get(path); if (!standard) return [path, hash];
+    const extra = customByPath.get(path), absent = customNames.map(() => null);
+    const vector = { values: [...standard.values, ...(extra?.values || absent)], rawValues: [...standard.rawValues, ...(extra?.rawValues || absent)],
+      hash: customNames.length ? digest(standard.hash + '\0' + (extra?.hash || 'custom-unavailable')) : standard.hash };
+    byPath.set(path, vector); return [path, vector.hash];
+  });
   browser.nativeDetails = byPath;
-  return { hash: digest(JSON.stringify(elements)), entries: elements, elements: nodes.nodeType.filter(t => t === 1).length,
-    uniqueStyles: new Set(elements.map(e => e[1])).size, internedImageUrls: 0, interningAudit: 0, blobIdentities,
+  return { hash: digest(JSON.stringify(entries)), entries, propertyNames, elements: nodes.nodeType.filter(t => t === 1).length,
+    uniqueStyles: new Set(entries.map(e => e[1])).size, internedImageUrls: custom.internedImageUrls, interningAudit: custom.auditRecords, blobIdentities,
+    customSampling: { names: customNames, runtimeReadNames, sampledRecords: custom.rows.length, unmatchedLayoutPaths: custom.unmatchedLayoutPaths },
     styledRecords: elements.filter(([path]) => byPath.get(path) !== null).length,
     unstyledDomRecords: elements.filter(([path]) => byPath.get(path) === null).length,
-    phases: { names: namesDone - start, response: responseDone - namesDone, hash: performance.now() - responseDone } };
+    phases: { names: namesDone - start, response: responseDone - namesDone, standardHash: customStart - responseDone,
+      customCSSOM: customDone - customStart, hash: performance.now() - customDone } };
 }
 async function prepareCapture(browser) {
   await browser.page.bringToFront();
@@ -317,25 +393,43 @@ async function capture(browser, audit, deep) {
   const screenshot = await browser.page.screenshot();
   if (process.env.PM7_PARITY_DEBUG) console.log('CAPTURE screenshot done');
   const styleStarted = performance.now();
-  const styles = deep ? await browser.page.evaluate(async audit => __pm7Parity.snapshot(audit), audit) : await nativeSnapshot(browser);
+  let styles;
+  await browser.page.evaluate(() => __pm7Parity.setCaretHidden(false));
+  try { styles = deep ? await browser.page.evaluate(async audit => __pm7Parity.snapshot(audit), audit) : await nativeSnapshot(browser); }
+  finally { await browser.page.evaluate(() => __pm7Parity.setCaretHidden(true)); }
   const styleMilliseconds = performance.now() - styleStarted;
   const state = await browser.page.evaluate(() => ({ time: __pm7Parity.now, theme: document.documentElement.getAttribute('data-theme'),
+    motion: document.documentElement.getAttribute('data-motion'), reducedMedia: matchMedia('(prefers-reduced-motion: reduce)').matches,
     nier: PM_NIER.on(), page: PM_PAGES.current, focus: document.activeElement?.id || document.activeElement?.className || '',
     fonts: document.fonts.status, idlePrewarmingOff: window.PM_WARM?.state().off ?? null,
     viewport: [innerWidth, innerHeight, devicePixelRatio] }));
+  const rawSpecialRules = await browser.page.evaluate(() => __pm7Parity.specialRules());
+  const identities = await browser.page.evaluate(() => __pm7Parity.blobIdentities());
+  const specialRules = rawSpecialRules.map(rule => ({ ...rule, text: normalizeBlobValue(rule.text, identities) }));
+  const canonicalUrl = url => identities[url] || (url.startsWith('data:') ? 'data:sha256:' + digest(url) : url);
+  const runtimeBlocked = await browser.page.evaluate(() => __pm7Parity.blockedRequests());
+  const requests = { blocked: [...new Set([...browser.blocked, ...runtimeBlocked])].map(canonicalUrl).sort(),
+    failed: browser.failedRequests.map(item => ({ ...item, url: canonicalUrl(item.url) })).sort((a, b) => JSON.stringify(a).localeCompare(JSON.stringify(b))) };
   return { screenshot, styles, state, styleMilliseconds, nativeDetails: deep ? null : browser.nativeDetails,
+    specialRules, specialRuleHash: digest(JSON.stringify(specialRules)), requests, storageAudit: browser.storageAudit,
     errors: [...new Set(browser.page.errors)] };
 }
 export function differingPaths(a, b) {
   const left = new Map(a), right = new Map(b);
   return [...new Set([...left.keys(), ...right.keys()])].filter(path => left.get(path) !== right.get(path));
 }
+async function readDeepDetails(browser, paths) {
+  return browser.page.evaluate(paths => {
+    __pm7Parity.setCaretHidden(false);
+    try { return __pm7Parity.details(paths); } finally { __pm7Parity.setCaretHidden(true); }
+  }, paths);
+}
 async function styleDetails(browsers, paths, deep, captures) {
-  const [a, b] = deep ? await Promise.all(browsers.map(browser => browser.page.evaluate(paths => __pm7Parity.details(paths), paths))) : (captures || browsers).map((capture, i) => paths.map(path => {
+  const [a, b] = deep ? await Promise.all(browsers.map(browser => readDeepDetails(browser, paths))) : (captures || browsers).map((capture, i) => paths.map(path => {
     const records = capture.nativeDetails, record = records.get(path);
     return !records.has(path) ? { path, absent: true } : { path, label: path,
-      properties: record ? Object.fromEntries((browsers[i] || browsers[0]).standardProperties.map((name, j) => [name, record.values[j]])) : null,
-      rawProperties: record ? Object.fromEntries((browsers[i] || browsers[0]).standardProperties.map((name, j) => [name, record.rawValues[j]])) : null };
+      properties: record ? Object.fromEntries((capture.styles.propertyNames || (browsers[i] || browsers[0]).standardProperties).map((name, j) => [name, record.values[j]])) : null,
+      rawProperties: record ? Object.fromEntries((capture.styles.propertyNames || (browsers[i] || browsers[0]).standardProperties).map((name, j) => [name, record.rawValues[j]])) : null };
   }));
   return formatStyleDetails(a, b, paths);
 }
@@ -357,6 +451,7 @@ async function run(options) {
   const inputs = [options.baseline, options.candidate].map(path => {
     const bytes = readFileSync(path); return { path, sha256: digest(bytes), bytes: bytes.length, body: bytes.toString('base64') };
   });
+  const customReads = discoverCustomReads([readFileSync(options.baseline, 'utf8'), readFileSync(options.candidate, 'utf8')]);
   if (existsSync(join(options.out, 'report.json')) || existsSync(join(options.out, 'progress.jsonl'))) throw Error('Output directory already contains a run; use a new --out');
   mkdirSync(join(options.out, 'states'), { recursive: true });
   const telemetry = { live: new Set(), renderers: new Set(), peakRssBytes: 0, peakNodeRssBytes: 0, samples: 0 };
@@ -383,25 +478,30 @@ async function run(options) {
   const report = { version: 1, started: new Date(started).toISOString(), host: hostname(), input: inputs.map(({ body, ...rest }) => rest),
     harness: { gitHead, files: sourceFiles.map(name => ({ name, sha256: digest(readFileSync(join(here, name))) })) },
     matrix: { path: options.matrix, sha256: digest(readFileSync(options.matrix)), looks: selected.looks,
-      pages: selected.pages.map(p => p.id), states: selected.states.map(s => s.id), viewports: selected.viewports, planned: selected.count },
+      pages: selected.pages.map(p => p.id), states: selected.states.map(s => s.id), viewports: selected.viewports, motions: selected.motions, planned: selected.count },
+    customPropertyReads: customReads,
     options: { concurrency: options.concurrency, browserCap: options.concurrency,
-      tolerance: options.tolerance, maxDiffPixels: options.maxDiffPixels, baselineRepeats: options.baselineRepeats, first: options.first, deep: !!options.deep },
+      tolerance: options.tolerance, maxDiffPixels: options.maxDiffPixels, baselineRepeats: options.baselineRepeats,
+      noiseMaxChannelSpan: options.noiseMaxChannelSpan, noiseMaxPixels: options.noiseMaxPixels ?? 'ceil(viewport pixels * 0.0005)', first: options.first, deep: !!options.deep },
     mode: options.baselineRepeats > 1 ? 'explicit measured baseline pixel envelope; exact styles' : options.tolerance || options.maxDiffPixels ? 'explicit pixel tolerance; exact styles' : 'exact',
     determinism: { epoch: 1789000000000, seed: '0x9e3779b9', clock: 'manual deterministic timers/rAF; Date, performance.now, document.timeline and Event.timeStamp share clock',
-      animations: 'CDP playback rate 0; finite animations finished, infinite paused at 0; SVG paused at 0', reducedMotion: true,
-      storage: 'localStorage/sessionStorage cleared and seeded before each group', network: 'only file:, data: and blob: allowed',
+      animations: 'CDP playback rate 0; finite animations finished, infinite paused at 0; SVG paused at 0', motionModes: selected.motions,
+      storage: 'fresh browser context per load; IndexedDB/cookies/local/session/cache/service-worker emptiness checked on inert same-origin probe before real navigation; local/session seeded before app code', network: 'only file:, data: and blob: allowed; blocked/failed requests recorded and compared',
       documentUrl: 'same intercepted file: URL on both sides; source bytes supplied unmodified',
       pairing: 'one browser per worker; baseline group then candidate group with identical state prefixes; shared GPU process',
       idlePrewarming: 'disabled through the page-owned pm-warm=0 test hook; transient shader warm-up DOM is never started',
       baselineEnvelope: options.baselineRepeats > 1 ? `${options.baselineRepeats} baseline captures for raw-pixel failures with exact styles; same-browser navigation replays, per-pixel RGBA ranges, every repeat must have identical styles/state/errors; original candidate proof capture never retried/replaced` : 'disabled; zero pixel allowance in exact mode',
-      styleHash: options.deep ? 'Deep: SHA256 over DOM paths and per-vector SHA256 over sorted property names and original-value SHA256; all elements incl hidden and open shadow roots' : 'Native: DOMSnapshot standard computed properties on layout nodes; all DOM paths retained, including nodes without layout styles; custom properties excluded',
-      imageInterning: options.deep ? 'temporary lossless CSSOM image URL interning, original values reconstructed before hashing; 12-node audit each browser first capture' : 'unused in native mode',
+      styleHash: options.deep ? 'Deep: SHA256 over DOM paths and per-vector SHA256 over sorted property names and original-value SHA256; all elements incl hidden and open shadow roots' : 'DOMSnapshot standard computed properties plus CSSOM sample of JS-read custom properties from both inputs on accessible layout elements/generated pseudos; other custom properties excluded; all DOM paths retained',
+      caret: 'hidden for screenshots only; override disabled for native/deep style capture and diagnostics',
+      specialPseudoRules: 'serialized CSSOM rule guard for selection, scrollbar, slider and search pseudos; differences reported independently of visible layout styles',
+      imageInterning: 'temporary lossless CSSOM image URL interning for custom/deep sampling; original values reconstructed before hashing; direct audit before each custom sample and first deep capture',
       blobUrls: 'Opaque Blob URL identifiers canonicalized by SHA256 of exact bytes and MIME type; fragments preserved; unknown Blob URLs are errors',
-      limits: ['Viewport screenshots, not offscreen scroll contents.', 'Closed shadow roots and child-frame documents are not traversed.',
+      limits: ['Viewport screenshots, not offscreen scroll contents. DPR 1 only; high-resolution media rules are not exercised.', 'Closed shadow-root completeness is not asserted; CSSOM custom sampling covers accessible layout elements/generated pseudos and reports unmatched layout paths. Child frames are unsupported.',
         'Checks only listed reachable states, not every possible interaction.', 'No cross-host pixel equivalence claimed.',
+        'Full-motion coverage is the declared rest/menu/popover subset; hover and focus remain reduced-motion cases. Add states before removing other rule families.',
         'Fresh self-contained PM7 inputs required; relative external files resolve from the shared intercepted URL.',
         'Manual clock freezes live data and decorative motion; animation timing itself is outside this parity check.',
-        ...(options.deep ? [] : ['Native mode excludes custom properties and cannot sample computed properties of nodes without layout objects or non-generated pseudo elements. Use --deep for these.'])] },
+        ...(options.deep ? [] : ['Native mode excludes custom properties not read by JS and cannot sample computed properties of nodes without layout objects or non-generated pseudos. Use --deep for these.'])] },
     rows: [], errors: [], browsers: [] };
   let cursor = 0;
   async function replayPrefix(browser, group, input, through, takeCapture) {
@@ -429,11 +529,13 @@ async function run(options) {
       console.log(`NOISE ${group.look} ${group.page.id} ${state.id} ${group.viewport.id} baseline=${n}/${options.baselineRepeats}`);
       const sample = await replayPrefix(browser, group, inputs[0], stateIndex, true);
       const same = sample.styles.hash === baseline.styles.hash && JSON.stringify(sample.state) === JSON.stringify(baseline.state)
-        && JSON.stringify(sample.errors) === JSON.stringify(baseline.errors);
+        && JSON.stringify(sample.errors) === JSON.stringify(baseline.errors) && sample.specialRuleHash === baseline.specialRuleHash
+        && JSON.stringify(sample.requests) === JSON.stringify(baseline.requests);
       stable &&= same; hashes.push(sample.styles.hash); samples.push(sample.screenshot);
       if (!same) {
         const paths = differingPaths(baseline.styles.entries, sample.styles.entries);
-        instability.push({ sample: n, state: sample.state, errors: sample.errors, differingElements: paths.length,
+        instability.push({ sample: n, state: sample.state, errors: sample.errors, requests: sample.requests,
+          specialRuleHash: sample.specialRuleHash, differingElements: paths.length,
           differences: await styleDetails([browser, browser], paths.slice(0, options.first), false, [baseline, sample]) });
       }
       const path = `${prefix}.noise-baseline-${n}.png`; writeFileSync(path, sample.screenshot);
@@ -445,30 +547,48 @@ async function run(options) {
       const path = `${prefix}.noise-${name}.png`; writeFileSync(path, bytes); artifacts[name] = { path, sha256: digest(bytes) };
     }
     delete envelope.lowPng; delete envelope.highPng; delete envelope.heatmap;
+    const caps = { channelSpan: options.noiseMaxChannelSpan, variablePixels: options.noiseMaxPixels ?? Math.ceil(group.viewport.width * group.viewport.height * 0.0005) };
+    const withinCaps = envelope.maxObservedChannelSpan <= caps.channelSpan && envelope.noisePixels <= caps.variablePixels;
     // Continue the candidate sequence at the exact original state/clock. Its
     // measured screenshot is never replaced by this restoration navigation.
     await replayPrefix(browser, group, inputs[1], stateIndex, false);
-    return { requested: options.baselineRepeats, applied: true, ...envelope, baselineStylesAndStateStable: stable,
-      baselineStyleHashes: hashes, instability, artifacts, pass: stable && envelope.pass };
+    return { requested: options.baselineRepeats, applied: true, ...envelope, caps, baselineWithinCaps: withinCaps,
+      unstableBaseline: !stable || !withinCaps, baselineStylesAndStateStable: stable,
+      baselineStyleHashes: hashes, instability, artifacts, pass: stable && withinCaps && envelope.pass };
   }
   async function compare(group, state, captures, browsers, detailOverride) {
-    const [a, b] = captures, key = `${group.look}--${group.page.id}--${state.id}--${group.viewport.id}`;
+    const [a, b] = captures, key = `${group.look}--${group.page.id}--${state.id}--${group.viewport.id}--${group.motion}`;
     const prefix = join(options.out, 'states', key);
     const pixels = diffPng(a.screenshot, b.screenshot, options.tolerance, options.maxDiffPixels);
     const paths = differingPaths(a.styles.entries, b.styles.entries);
     const sameErrors = JSON.stringify(a.errors) === JSON.stringify(b.errors);
-    const row = { id: key, look: group.look, page: group.page.id, state: state.id, viewport: group.viewport,
+    const sameState = JSON.stringify(a.state) === JSON.stringify(b.state), sameRequests = JSON.stringify(a.requests) === JSON.stringify(b.requests);
+    const sameRules = a.specialRuleHash === b.specialRuleHash;
+    const sameBehavior = sameErrors && sameState && sameRequests && sameRules;
+    const domOnlyPaths = options.deep ? [] : paths.filter(path => !a.nativeDetails.get(path) && !b.nativeDetails.get(path));
+    const row = { id: key, look: group.look, page: group.page.id, state: state.id, viewport: group.viewport, motion: group.motion,
       styles: { baseline: a.styles.hash, candidate: b.styles.hash, differingElements: paths.length,
         baselineElements: a.styles.elements, candidateElements: b.styles.elements, styleRecords: [a.styles.entries.length, b.styles.entries.length],
         pseudoRecords: [a.styles.entries.filter(([path]) => path.includes('::')).length, b.styles.entries.filter(([path]) => path.includes('::')).length],
-        uniqueStyles: [a.styles.uniqueStyles, b.styles.uniqueStyles], sampling: options.deep ? 'deep CSSOM including custom and hidden styles' : 'native standard properties on layout nodes; all DOM paths retained',
+        uniqueStyles: [a.styles.uniqueStyles, b.styles.uniqueStyles], sampling: options.deep ? 'deep CSSOM including custom and hidden styles' : 'native standard styles plus CSSOM JS-read custom values on accessible layout nodes; all DOM paths retained',
         styledRecords: [a.styles.styledRecords, b.styles.styledRecords], unstyledDomRecords: [a.styles.unstyledDomRecords, b.styles.unstyledDomRecords],
+        nonRenderedDomOnlyDifferences: options.deep ? null : domOnlyPaths.length, nonRenderedDomOnlyPaths: domOnlyPaths.slice(0, options.first),
+        layoutStyleDifferences: options.deep ? null : paths.length - domOnlyPaths.length,
+        customSampling: [a, b].map(cap => cap.styles.customSampling ? { propertyCount: cap.styles.customSampling.names.length,
+          runtimeReadNames: cap.styles.customSampling.runtimeReadNames,
+          sampledRecords: cap.styles.customSampling.sampledRecords, unmatchedCount: cap.styles.customSampling.unmatchedLayoutPaths.length,
+          unmatchedPaths: cap.styles.customSampling.unmatchedLayoutPaths.slice(0, options.first) } : null),
         milliseconds: [a.styleMilliseconds, b.styleMilliseconds], phases: [a.styles.phases, b.styles.phases], blobIdentities: [a.styles.blobIdentities, b.styles.blobIdentities], internedImageUrls: [a.styles.internedImageUrls, b.styles.internedImageUrls],
         interningAuditRecords: [a.styles.interningAudit, b.styles.interningAudit] },
       pixels: { ...pixels, heatmap: undefined }, baselineState: a.state, candidateState: b.state,
       runtimeErrors: { baseline: a.errors, candidate: b.errors, equal: sameErrors },
-      rawExactVerdict: !paths.length && a.styles.hash === b.styles.hash && !pixels.rawDiffPixels && sameErrors ? 'PASS' : 'FAIL',
-      verdict: !paths.length && a.styles.hash === b.styles.hash && pixels.pass && sameErrors ? 'PASS' : 'FAIL', artifacts: {} };
+      stateEqual: sameState, requests: { baseline: a.requests, candidate: b.requests, equal: sameRequests },
+      storageAudit: { baseline: a.storageAudit, candidate: b.storageAudit },
+      specialRuleGuard: { baseline: a.specialRuleHash, candidate: b.specialRuleHash, equal: sameRules,
+        differences: sameRules ? [] : Array.from({ length: Math.max(a.specialRules.length, b.specialRules.length) }, (_, index) => ({ index, baseline: a.specialRules[index] || null, candidate: b.specialRules[index] || null }))
+          .filter(item => JSON.stringify(item.baseline) !== JSON.stringify(item.candidate)).slice(0, options.first) },
+      rawExactVerdict: !paths.length && a.styles.hash === b.styles.hash && !pixels.rawDiffPixels && sameBehavior ? 'PASS' : 'FAIL',
+      verdict: !paths.length && a.styles.hash === b.styles.hash && pixels.pass && sameBehavior ? 'PASS' : 'FAIL', artifacts: {} };
     for (const [side, cap] of [['baseline', a], ['candidate', b]]) {
       const path = `${prefix}.${side}.png`; writeFileSync(path, cap.screenshot);
       row.artifacts[side] = { path, sha256: digest(cap.screenshot) };
@@ -482,11 +602,17 @@ async function run(options) {
       if (row.styles.differences.some(d => d.properties?.length === 0)) throw Error('Style hash differs but live details no longer match capture: ' + key);
     }
     if (options.baselineRepeats > 1) {
-      row.pixelNoise = pixels.rawDiffPixels && !paths.length && a.styles.hash === b.styles.hash && sameErrors
+      row.pixelNoise = pixels.rawDiffPixels && !paths.length && a.styles.hash === b.styles.hash && sameBehavior
         ? await measureNoise(browsers[0], group, state, a, b, prefix)
-        : { requested: options.baselineRepeats, applied: false, reason: paths.length || a.styles.hash !== b.styles.hash || !sameErrors ? 'style/runtime difference; no pixel allowance' : 'pixels already exact' };
-      if (row.pixelNoise.applied && row.pixelNoise.pass) row.verdict = 'PASS';
+        : { requested: options.baselineRepeats, applied: false, reason: paths.length || a.styles.hash !== b.styles.hash || !sameBehavior ? 'style/state/request/rule difference; no pixel allowance' : 'pixels already exact' };
+      if (row.pixelNoise.applied && row.pixelNoise.pass) row.verdict = 'PASS-MEASURED';
     }
+    if (row.verdict === 'PASS' && row.rawExactVerdict === 'FAIL') row.verdict = 'PASS-TOLERANT';
+    row.rawExactReasons = [paths.length || a.styles.hash !== b.styles.hash ? 'style' : null, pixels.rawDiffPixels ? 'pixels' : null,
+      !sameState ? 'state' : null, !sameErrors ? 'runtime-errors' : null, !sameRequests ? 'requests' : null,
+      !sameRules ? 'special-pseudo-rules' : null].filter(Boolean);
+    row.verdictReasons = row.verdict === 'FAIL' && row.pixelNoise?.applied
+      ? [...row.rawExactReasons, row.pixelNoise.unstableBaseline ? 'unstable-baseline' : 'outside-baseline-envelope'] : row.rawExactReasons;
     report.rows.push(row); appendFileSync(join(options.out, 'progress.jsonl'), JSON.stringify(row) + '\n');
     console.log(`${row.verdict} ${report.rows.length}/${selected.count} ${key} styles=${paths.length} pixels=${pixels.diffPixels} raw=${pixels.rawDiffPixels}${row.pixelNoise?.applied ? ' envelope=' + (row.pixelNoise.pass ? 'PASS' : 'FAIL') : ''}`);
   }
@@ -494,6 +620,7 @@ async function run(options) {
     const browsers = [];
     try {
       browsers.push(await deadline(createBrowser(inputs[0], telemetry), 'launch baseline'));
+      browsers[0].customReads = customReads;
       for (const browser of browsers) {
         report.browsers.push({ worker: index, sessionId: browser.session.id, pid: browser.chrome.pid, version: browser.version });
         console.log(`BROWSER worker=${index} session=${browser.session.id} pid=${browser.chrome.pid}`);
@@ -502,7 +629,7 @@ async function run(options) {
       let audit = true;
       for (;;) {
         const group = selected.groups[cursor++]; if (!group) break;
-        console.log(`LOAD worker=${index} ${group.look} ${group.page.id} ${group.viewport.id}`);
+        console.log(`LOAD worker=${index} ${group.look} ${group.page.id} ${group.viewport.id} ${group.motion}`);
         if (options.deep) {
           // Deep diagnostics need the live CSSOM. Replay each side's exact prefix,
           // restoring the baseline only when a differing property needs details.
@@ -516,11 +643,11 @@ async function run(options) {
             let details;
             const paths = differingPaths(caps[0].styles.entries, caps[1].styles.entries).slice(0, options.first);
             if (paths.length && options.deep) {
-              const right = await browsers[0].page.evaluate(paths => __pm7Parity.details(paths), paths);
+              const right = await readDeepDetails(browsers[0], paths);
               await loadPreparedGroup(browsers[0], group, inputs[0]);
               for (const state of group.states.slice(0, s + 1)) await enterState(browsers[0], state, group);
               await prepareCapture(browsers[0]);
-              const left = await browsers[0].page.evaluate(paths => __pm7Parity.details(paths), paths);
+              const left = await readDeepDetails(browsers[0], paths);
               details = formatStyleDetails(left, right, paths);
             }
             await compare(group, group.states[s], caps, browsers, details); audit = false;
@@ -562,24 +689,25 @@ async function run(options) {
   report.memory = { peakAggregateRssBytes: telemetry.peakRssBytes, peakNodeRssBytes: telemetry.peakNodeRssBytes, samples: telemetry.samples,
     method: '2-second RSS sum for harness, adapter children and Chrome SystemInfo process IDs; shared pages counted per process; Linux only' };
   report.renderers = [...telemetry.renderers];
-  report.counts = { planned: selected.count, completed: report.rows.length, pass: report.rows.filter(r => r.verdict === 'PASS').length,
+  report.counts = { planned: selected.count, completed: report.rows.length, pass: report.rows.filter(r => r.verdict.startsWith('PASS')).length,
     fail: report.rows.filter(r => r.verdict === 'FAIL').length, errors: report.errors.length,
     measuredNoiseAccepted: report.rows.filter(r => r.pixelNoise?.applied && r.pixelNoise.pass).length };
-  report.verdict = report.errors.length || report.rows.length !== selected.count ? 'ERROR' : report.counts.fail ? 'FAIL' : 'PASS';
-  report.rawExactCounts = { pass: report.rows.filter(r => r.styles.baseline === r.styles.candidate && !r.pixels.rawDiffPixels && r.runtimeErrors.equal).length };
+  report.verdict = report.errors.length || report.rows.length !== selected.count ? 'ERROR' : report.counts.fail ? 'FAIL'
+    : report.rows.some(r => r.verdict === 'PASS-MEASURED') ? 'PASS-MEASURED' : report.rows.some(r => r.verdict === 'PASS-TOLERANT') ? 'PASS-TOLERANT' : 'PASS';
+  report.rawExactCounts = { pass: report.rows.filter(r => r.rawExactVerdict === 'PASS').length };
   report.rawExactCounts.fail = report.rows.length - report.rawExactCounts.pass;
   report.rawExactVerdict = report.verdict === 'ERROR' ? 'ERROR' : report.rawExactCounts.fail ? 'FAIL' : 'PASS';
   writeFileSync(join(options.out, 'report.json'), JSON.stringify(report, null, 2) + '\n');
-  const failed = report.rows.filter(r => r.verdict !== 'PASS');
+  const failed = report.rows.filter(r => !r.verdict.startsWith('PASS'));
   const noisy = report.rows.filter(r => r.pixelNoise?.applied);
   const summary = [`# PM7 parity: ${report.verdict}`, '', `Mode: ${report.mode}. Host: ${report.host}. GPU: ${report.renderers.join('; ')}.`, '',
     `States: ${report.counts.completed}/${selected.count}; PASS ${report.counts.pass}; FAIL ${report.counts.fail}; errors ${report.errors.length}.`,
     `Raw exact verdict: ${report.rawExactVerdict}; PASS ${report.rawExactCounts.pass}; FAIL ${report.rawExactCounts.fail}. Measured-noise acceptances: ${report.counts.measuredNoiseAccepted}.`,
     `Wall time: ${report.wallSeconds.toFixed(2)} s. Peak aggregate RSS: ${(telemetry.peakRssBytes / 2 ** 30).toFixed(2)} GiB (sampled every 2 s).`, '',
     '| Input | SHA-256 |', '|---|---|', ...report.input.map(i => `| ${i.path} | ${i.sha256} |`), '',
-    `Matrix: ${selected.looks.length} looks × ${selected.pages.length} surfaces × ${selected.viewports.length} viewports; page-specific states in ${options.matrix}.`,
-    options.deep ? 'Deep style hashes include all computed properties, hidden nodes, ::before/::after, form ::placeholder and list ::marker.' : 'Native style hashes include standard properties on layout nodes and generated pseudo nodes. All DOM paths are retained. Hidden nodes without layout and non-generated pseudo styles are unsampled; custom properties are excluded. Use --deep to inspect them.', '',
-    ...(failed.length ? ['| State | Style elements | Pixels above tolerance | Raw differing pixels |', '|---|---:|---:|---:|', ...failed.map(r => `| ${r.id} | ${r.styles.differingElements} | ${r.pixels.diffPixels} | ${r.pixels.rawDiffPixels} |`), ''] : []),
+    `Matrix: ${selected.looks.length} looks × ${selected.pages.length} surfaces × ${selected.viewports.length} viewports × ${selected.motions.join('/')} motion; page-specific states in ${options.matrix}.`,
+    options.deep ? 'Deep style hashes include all computed properties, hidden nodes, ::before/::after, form ::placeholder and list ::marker.' : 'Native hashes combine standard layout styles with JS-read custom values from CSSOM on accessible layout elements/generated pseudos. All DOM paths are retained. Hidden/no-layout and non-generated pseudo styles remain unsampled; unused custom properties are excluded. Use --deep for these.', '',
+    ...(failed.length ? ['| State | Style elements | Pixels above tolerance | Raw differing pixels | Reasons |', '|---|---:|---:|---:|---|', ...failed.map(r => `| ${r.id} | ${r.styles.differingElements} | ${r.pixels.diffPixels} | ${r.pixels.rawDiffPixels} | ${r.verdictReasons.join(', ')} |`), ''] : []),
     ...(noisy.length ? ['| Measured baseline envelope | Raw candidate pixels | Variable baseline pixels | Max channel span | Outside envelope | Styles/state stable |', '|---|---:|---:|---:|---:|---|',
       ...noisy.map(r => `| ${r.id} | ${r.pixels.rawDiffPixels} | ${r.pixelNoise.noisePixels} | ${r.pixelNoise.maxObservedChannelSpan} | ${r.pixelNoise.outsidePixels} | ${r.pixelNoise.baselineStylesAndStateStable} |`), ''] : []),
     ...report.errors.map(e => `Harness error: ${e.error || e.cleanup}`), '',

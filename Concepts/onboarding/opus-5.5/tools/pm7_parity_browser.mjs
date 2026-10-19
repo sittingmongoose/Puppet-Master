@@ -1,4 +1,4 @@
-/* Installed before any page code. No DOM nodes/properties are excluded from style capture. */
+/* Installed before page code. Native/deep capture contracts are documented in the README. */
 export function normalizeBlobValue(value, identities) {
   if (typeof value !== 'string' || !value.includes('blob:')) return value;
   let quote = null, escaped = false, end = 0;
@@ -17,6 +17,22 @@ export function normalizeBlobValue(value, identities) {
   });
 }
 export function installParityRuntime(config, normalizeBlobValue) {
+  const blockedRequests = [], NativeWebSocket = window.WebSocket;
+  function BlockedWebSocket(url) {
+    blockedRequests.push(new URL(String(url), document.baseURI).href);
+    throw new DOMException('Network blocked by parity harness', 'SecurityError');
+  }
+  Object.setPrototypeOf(BlockedWebSocket, NativeWebSocket);
+  BlockedWebSocket.prototype = NativeWebSocket.prototype;
+  window.WebSocket = BlockedWebSocket;
+  const nativePropertyValue = CSSStyleDeclaration.prototype.getPropertyValue, jsReadNames = new Set();
+  let samplingDepth = 0;
+  CSSStyleDeclaration.prototype.getPropertyValue = function (name) {
+    if (!samplingDepth && typeof name === 'string' && name.startsWith('--')) jsReadNames.add(name);
+    return nativePropertyValue.call(this, name);
+  };
+  const sampleAsync = async fn => { samplingDepth++; try { return await fn(); } finally { samplingDepth--; } };
+  const sampleSync = fn => { samplingDepth++; try { return fn(); } finally { samplingDepth--; } };
   const nativeFrame = requestAnimationFrame.bind(window);
   const realDate = Date, epoch = config.epoch;
   let now = 0, nextId = 0, seed = config.seed >>> 0;
@@ -103,7 +119,7 @@ export function installParityRuntime(config, normalizeBlobValue) {
     const visit = (root, prefix) => {
       const counts = new Map();
       for (const el of root.children || []) {
-        const tag = el.localName, n = (counts.get(tag) || 0) + 1; counts.set(tag, n);
+        const tag = el.localName.toLowerCase(), n = (counts.get(tag) || 0) + 1; counts.set(tag, n);
         const path = prefix + '/' + tag + '[' + n + ']';
         list.push(el); paths.set(el, path);
         visit(el, path);
@@ -235,6 +251,53 @@ export function installParityRuntime(config, normalizeBlobValue) {
         uniqueValues: values.length, uniqueStyles: styles.length, internedImageUrls: intern.count, interningAudit: auditRows.length, fallbackCount };
     } finally { intern.restore(); }
   }
+  async function customSnapshot(names, layoutPaths) {
+    const wanted = new Set(layoutPaths), { list, paths } = elements();
+    const refs = [], matched = new Set();
+    for (const el of list) for (const pseudo of ['', '::before', '::after', '::marker', '::placeholder']) {
+      const domPath = paths.get(el) + pseudo;
+      // DOMSnapshot flattens shadow roots, while the deep DOM walker names them.
+      const path = wanted.has(domPath) ? domPath : domPath.replaceAll('/#shadow-root', '');
+      if (wanted.has(path)) {
+        if (matched.has(path)) throw Error('Ambiguous flattened shadow DOM path: ' + path);
+        matched.add(path); refs.push({ el, pseudo, path });
+      }
+    }
+    const audit = refs.slice(0, 8).map(ref => {
+      const cs = getComputedStyle(ref.el, ref.pseudo || null); return { ...ref, values: names.map(name => cs.getPropertyValue(name)) };
+    });
+    const intern = await internImageUrls();
+    try {
+      for (const ref of audit) {
+        const cs = getComputedStyle(ref.el, ref.pseudo || null);
+        for (let i = 0; i < names.length; i++) if (ref.values[i] !== intern.expand(cs.getPropertyValue(names[i]))) throw Error('Custom URL interning changed ' + ref.path + ' ' + names[i]);
+      }
+      const values = [], valueIds = new Map(), styles = [], styleIds = new Map(), rows = [];
+      for (const { el, pseudo, path } of refs) {
+        const cs = getComputedStyle(el, pseudo || null);
+        const ids = names.map(name => {
+          const value = cs.getPropertyValue(name); let id = valueIds.get(value);
+          if (id === undefined) { id = values.length; values.push(value); valueIds.set(value, id); } return id;
+        });
+        const key = ids.join(','); let si = styleIds.get(key);
+        if (si === undefined) { si = styles.length; styles.push(ids); styleIds.set(key, si); }
+        rows.push([path, si]); wanted.delete(path);
+      }
+      return { names, values: values.map(intern.expand), styles, rows, unmatchedLayoutPaths: [...wanted],
+        internedImageUrls: intern.count, auditRecords: audit.length };
+    } finally { intern.restore(); }
+  }
+  function specialRules() {
+    const rows = [];
+    const visit = (rules, context) => { for (const rule of rules) {
+      if (rule.selectorText && /::(?:selection|-webkit-scrollbar[\w-]*|-webkit-slider[\w-]*|-webkit-search[\w-]*)/.test(rule.selectorText)) {
+        rows.push({ context, selector: rule.selectorText, text: rule.cssText });
+      }
+      if (rule.cssRules) visit(rule.cssRules, [...context, { type: rule.constructor.name, condition: rule.conditionText || null, name: rule.name || null }]);
+    } };
+    for (const sheet of document.styleSheets) visit(sheet.cssRules, []);
+    return rows;
+  }
   function details(paths) {
     const current = elements(), refs = new Map();
     for (const el of current.list) for (const pseudo of pseudos(el)) refs.set(current.paths.get(el) + pseudo, { el, pseudo });
@@ -247,9 +310,16 @@ export function installParityRuntime(config, normalizeBlobValue) {
         rawProperties, properties: Object.fromEntries(Object.entries(rawProperties).map(([name, value]) => [name, normalizeBlobValue(value, blobHashes)])) };
     });
   }
-  window.__pm7Parity = { tick, settle, snapshot, details, barrier, blobIdentities, get now() { return now; } };
+  let caretStyle;
+  window.__pm7Parity = { tick, settle, snapshot: audit => sampleAsync(() => snapshot(audit)),
+    customSnapshot: (names, paths) => sampleAsync(() => customSnapshot(names, paths)),
+    specialRules, details: paths => sampleSync(() => details(paths)), barrier, blobIdentities,
+    readCustomProperties: () => [...jsReadNames].sort(),
+    blockedRequests: () => [...blockedRequests],
+    setCaretHidden(hidden) { if (!caretStyle?.sheet) throw Error('Caret sheet unavailable'); caretStyle.sheet.disabled = !hidden; },
+    get now() { return now; } };
   const hideCaret = () => {
-    const sheet = document.createElement('style'); sheet.id = 'pm7-parity-caret';
+    const sheet = caretStyle = document.createElement('style'); sheet.id = 'pm7-parity-caret';
     sheet.textContent = '* { caret-color: transparent !important; }'; document.head.appendChild(sheet);
   };
   document.addEventListener('DOMContentLoaded', hideCaret, { once: true });
