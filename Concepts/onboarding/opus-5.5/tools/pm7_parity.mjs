@@ -301,7 +301,12 @@ async function enterState(browser, state, group) {
     await page.evaluate(() => __pm7Parity.settle(600));
   }
   await page.evaluate(() => __pm7Parity.settle(600));
-  if (state.assert) await visible(page, state.assert, state.id);
+  if (state.assert) {
+    // NieR welcome remains held until finite entry-animation promises finish.
+    // Use the same settled preparation before readiness checks and capture.
+    await prepareCapture(browser);
+    await visible(page, state.assert, state.id);
+  }
   if (state.check && !(await page.evaluate(state.check))) throw Error('State ownership/readiness assertion failed: ' + state.id);
 }
 async function nativeSnapshot(browser) {
