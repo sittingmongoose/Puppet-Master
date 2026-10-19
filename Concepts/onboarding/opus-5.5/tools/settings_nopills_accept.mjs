@@ -25,12 +25,14 @@ import { mkdirSync, writeFileSync, readFileSync } from 'node:fs';
 import { join, resolve } from 'node:path';
 import { pathToFileURL } from 'node:url';
 import { createHash } from 'node:crypto';
+import { coverPage, takeCoverageFlag } from './coverage_union.mjs';
 
 const require = createRequire(join(process.env.PM_PLAYWRIGHT_DIR || '/home/sittingmongoose/pmt-dev/pw/', 'noop.js'));
 const CHROME = process.env.PM_CHROME || '/usr/bin/google-chrome';
 const { chromium } = require('playwright-core');
 
 const raw = process.argv.slice(2);
+const coverageFile = takeCoverageFlag(raw);
 const argOf = (n) => { const i = raw.indexOf(n); return i >= 0 && i + 1 < raw.length ? raw[i + 1] : null; };
 const VALUED = new Set(['--out', '--cdp', '--viewports', '--motion', '--looks']);
 let pageArg = null;
@@ -48,6 +50,14 @@ mkdirSync(join(outDir, 'shots'), { recursive: true });
 
 const results = [], pageErrors = [];
 let browser = null, failedViews = 0;
+const coverageStops = new Map();
+async function finishCoverage(page = null) {
+  for (const [p, stop] of [...coverageStops]) {
+    if (page && p !== page) continue;
+    coverageStops.delete(p);
+    await stop();
+  }
+}
 const pageSha = createHash('sha256').update(readFileSync(pagePath)).digest('hex');
 const log = (m) => console.error('[accept] ' + m);
 
@@ -56,6 +66,7 @@ async function openPage(vp, motion) {
   if (cdp) { if (!browser) browser = await chromium.connectOverCDP(cdp); const ctx = browser.contexts()[0] || await browser.newContext(); page = await ctx.newPage(); await page.setViewportSize(vp); }
   else { if (!browser) browser = await chromium.launch({ executablePath: CHROME, headless: true }); page = await browser.newPage({ viewport: vp }); }
   page.setDefaultTimeout(30000);
+  if (coverageFile) coverageStops.set(page, await coverPage(page, coverageFile));
   page.on('pageerror', (e) => pageErrors.push({ vp: vp.width + 'x' + vp.height, motion, message: String((e && e.message) || e) }));
   /* offline without request interception (interception over CDP sends every inline asset through Node): Chrome blocks the network itself */
   { const s = await page.context().newCDPSession(page); await s.send('Network.enable'); await s.send('Network.setBlockedURLs', { urls: ['http://*', 'https://*', 'ws://*', 'wss://*'] }); }
@@ -202,7 +213,8 @@ async function main() {
       try { const r = await combo(page, look, vp, motion); r.renderer = renderer; results.push(r); log(`${r.id} ${r.pass ? 'PASS' : 'FAIL ' + Object.entries(r.checks).filter(([, c]) => !c.pass).map(([k, c]) => k + (c.why ? '(' + c.why + ')' : '')).join(' ')}`); }
       catch (e) { failedViews++; results.push({ id: `${look}-${motion}-${vp.width}x${vp.height}`, pass: false, error: String((e && e.message) || e).split('\n')[0] }); log('ERROR ' + look + ' ' + e.message.split('\n')[0]); }
     }
-    await page.close().catch(() => {});
+    try { await finishCoverage(page); }
+    finally { await page.close().catch(() => {}); }
   }
   if (browser) { await browser.close().catch(() => {}); browser = null; }
   const failed = results.filter((r) => !r.pass);
@@ -213,5 +225,5 @@ async function main() {
   console.log(`RESULT combinations=${results.length} passed=${results.length - failed.length} failed=${failed.length} failed_views=${failedViews} page_errors=${pageErrors.length} seconds=${report.seconds} renderers=${JSON.stringify([...renderers])}`);
   process.exitCode = failedViews ? 2 : failed.length ? 1 : 0;
 }
-for (const sig of ['SIGINT', 'SIGTERM']) process.once(sig, async () => { try { if (browser) await browser.close(); } catch (_) {} process.exit(sig === 'SIGINT' ? 130 : 143); });
-main().catch(async (e) => { console.error('FATAL ' + ((e && e.stack) || e)); try { if (browser) await browser.close(); } catch (_) {} process.exit(2); });
+for (const sig of ['SIGINT', 'SIGTERM']) process.once(sig, async () => { try { await finishCoverage(); } catch (_) {} try { if (browser) await browser.close(); } catch (_) {} process.exit(sig === 'SIGINT' ? 130 : 143); });
+main().catch(async (e) => { console.error('FATAL ' + ((e && e.stack) || e)); try { await finishCoverage(); } catch (_) {} try { if (browser) await browser.close(); } catch (_) {} process.exit(2); });

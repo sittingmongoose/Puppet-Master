@@ -5,7 +5,7 @@
  * step so it can be done again or watched with Show Me; t7 Run Onboarding Again (and a replay) start the tour over.
  * Each run asserts zero network requests and unchanged usage counters, and writes report.json + screenshots. */
 import { launch, sleep } from './chrome.mjs';
-import { beginCoverage, endCoverage, takeCoverageFlag } from './coverage_union.mjs';
+import { takeCoverageFlag } from './coverage_union.mjs';
 import { mkdirSync, writeFileSync, rmSync } from 'node:fs';
 import { pathToFileURL, fileURLToPath } from 'node:url';
 import { resolve, join, dirname } from 'node:path';
@@ -32,8 +32,7 @@ mkdirSync(out, { recursive: true });
 const PROFILE_BASE = `${tmpdir()}/pm-cdp-profile-${process.pid}-tour`;
 
 async function openPage(profile) {
-  const { page, close, chrome } = await launch({ width: 1600, height: 1000, profile });
-  if (coverageFile) await beginCoverage(page);
+  const { page, close, chrome } = await launch({ width: 1600, height: 1000, profile, coverageFile });
   const [fam, mode] = theme.split('-');
   await page.send('Emulation.setEmulatedMedia', { features: [{ name: 'prefers-color-scheme', value: mode }] });
   await page.goto(pathToFileURL(PAGE).href + '?o55=off');
@@ -447,13 +446,8 @@ for (const sc of SC) {
   const r = { id: sc.id, title: sc.title, ms: Date.now() - t0, pass: !error && asserts.every((x) => x.ok) && !t.page.errors.length, error, asserts, errors: t.page.errors.slice(0, 8), inv, state: await t.ev(() => window.O55.tour.state()).catch(() => null) };
   report.push(r);
   console.log((r.pass ? 'PASS ' : 'FAIL ') + sc.id + '  ' + sc.title + (error ? '  !! ' + error : '') + asserts.filter((x) => !x.ok).map((x) => '\n      x ' + x.m).join('') + (t.page.errors.length ? '\n      errors: ' + t.page.errors.slice(0, 3).join(' | ') : ''));
-  if (coverageFile) {
-    try { await endCoverage(t.page, coverageFile); }
-    finally { await t.close(); await dropProfile(profile, t.chrome); }
-  } else {
-    await t.close();
-    await dropProfile(profile, t.chrome);
-  }
+  try { await t.close(); }
+  finally { await dropProfile(profile, t.chrome); }
 }
 writeFileSync(join(out, 'report.json'), JSON.stringify(report, null, 1));
 console.log(JSON.stringify({ scenarios: report.length, pass: report.filter((r) => r.pass).length, fail: report.filter((r) => !r.pass).map((r) => r.id) }));

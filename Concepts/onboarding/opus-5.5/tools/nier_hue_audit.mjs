@@ -6,16 +6,18 @@
  * Deliberately left, and counted apart as `left`: swatches that show a real choice (a look tile or swatch carrying its
  * own data-theme, the accent swatches, the title-bar theme chips) and the concept's own demo pill.
  * Usage: node tools/nier_hue_audit.mjs <out-dir> [--modes light,dark] [--views dashboard,chat,...] [--family retro]
- *        [--shots] [--min 12] [--page <path>]
+ *        [--shots] [--min 12] [--page <path>] [--coverage <file>]
  * Writes <out-dir>/hue-audit.json (per view: flagged pixel counts and the offending elements, largest first) and, with
  * --shots, one PNG per view (scratch: delete when done). Chrome profiles live under <out-dir> and are removed. */
 import { launch, sleep } from './chrome.mjs';
 import { mkdirSync, writeFileSync } from 'node:fs';
 import { pathToFileURL, fileURLToPath } from 'node:url';
 import { resolve, join, dirname } from 'node:path';
+import { takeCoverageFlag } from './coverage_union.mjs';
 
 const here = dirname(fileURLToPath(import.meta.url));
 const argv = process.argv.slice(2);
+const coverageFile = takeCoverageFlag(argv);
 const out = resolve(argv[0] && !argv[0].startsWith('--') ? argv[0] : 'nier-hue-audit');
 const opt = (k, d) => { const i = argv.indexOf('--' + k); return i >= 0 ? argv[i + 1] : d; };
 const PAGE = resolve(opt('page', resolve(here, '../../../Onboarding concepts/TestOpus5.5PmConcept.html')));
@@ -88,7 +90,7 @@ function analyse() {
 const report = { page: PAGE, family, modes: {}, when: new Date().toISOString() };
 for (const mode of modes) {
   /* grayscale text antialiasing: LCD subpixel fringes are not colours any rule paints */
-  const { page, close } = await launch({ width: 1440, height: 900, profile: join(out, `profile-${process.pid}-${mode}`), args: ['--disable-lcd-text'] });
+  const { page, close } = await launch({ width: 1440, height: 900, profile: join(out, `profile-${process.pid}-${mode}`), args: ['--disable-lcd-text'], coverageFile });
   report.modes[mode] = {};
   try {
     await page.send('Emulation.setEmulatedMedia', { features: [{ name: 'prefers-color-scheme', value: mode }] });

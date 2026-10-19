@@ -1,6 +1,6 @@
 // Lane check for the T2 build step (active_descendant_rewrite.py + active_descendant_rules.json). See
 // active_descendant_guard.README.md. Attach to one already admitted browser; never launches one.
-//   node Concepts/onboarding/opus-5.5/tools/active_descendant_guard.mjs <cdp-endpoint> <page-url> <output.json> [rules.json]
+//   node Concepts/onboarding/opus-5.5/tools/active_descendant_guard.mjs <cdp-endpoint> <page-url> <output.json> [rules.json] [--coverage <file>]
 // The rewrite changes CSS only, so it is exact when every rewritten selector matches the same elements as its original in
 // every DOM state. In many DOM states (six pages, every Settings chapter, every rail panel and file view, fixture PMR menus
 // holding every item kind and every icon the rail draws, a submenu, the More tray) and five looks, the guard compares
@@ -11,9 +11,12 @@ import { createRequire } from 'node:module';
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { coverPage, takeCoverageFlag } from './coverage_union.mjs';
 const require = createRequire(import.meta.url);
 const { chromium } = require(process.env.PM7_PLAYWRIGHT || '/home/sittingmongoose/pmt-dev/pw/node_modules/playwright-core');
-const [endpoint, url, out, rulesArg] = process.argv.slice(2);
+const argv = process.argv.slice(2);
+const coverageFile = takeCoverageFlag(argv);
+const [endpoint, url, out, rulesArg] = argv;
 if (!endpoint || !url || !out) throw Error('Expected CDP endpoint, page URL, output JSON [, rules.json]');
 const rulesFile = rulesArg || path.join(path.dirname(fileURLToPath(import.meta.url)), 'active_descendant_rules.json');
 const RULES = JSON.parse(fs.readFileSync(rulesFile, 'utf8')).rules.map((r) => ({
@@ -45,6 +48,7 @@ const FORCE = [
 const browser = await chromium.connectOverCDP(endpoint);
 const ctx = await browser.newContext({ viewport: { width: 1920, height: 1080 } });
 const page = await ctx.newPage(); page.setDefaultTimeout(20000);
+const finishCoverage = coverageFile ? await coverPage(page, coverageFile) : null;
 const result = { url, rulesFile, started: new Date().toISOString(), states: 0, checks: 0, mismatches: [], maxMatches: {}, missingFeatures: {}, errors: [] };
 page.on('pageerror', (e) => result.errors.push(String(e).slice(0, 200)));
 
@@ -126,7 +130,8 @@ try {
   result.notExercised = RULES.filter((r) => !r.omit && !(result.maxMatches[r.rule] > 0)).map((r) => r.rule);
   result.pass = !result.mismatches.length && !result.notExercised.length && !result.errors.length && result.states > 0;
   fs.writeFileSync(out, JSON.stringify(result, null, 1));
-  await ctx.close().catch(() => {}); await browser.close().catch(() => {});
+  try { if (finishCoverage) await finishCoverage(); }
+  finally { await ctx.close().catch(() => {}); await browser.close().catch(() => {}); }
 }
 console.log('\n' + JSON.stringify({ pass: result.pass, states: result.states, checks: result.checks, neverBuiltSeen: result.neverBuiltSeen || 0, mismatches: result.mismatches.length, missingFeatures: result.missingFeatures, notExercised: result.notExercised, errors: result.errors.length }));
 process.exit(result.pass ? 0 : 1);

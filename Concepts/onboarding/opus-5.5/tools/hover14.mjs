@@ -2,12 +2,16 @@
 // node hover-regression.mjs <cdp-endpoint> <page-url> <output.json>
 import { createRequire } from 'node:module';
 import { writeFileSync } from 'node:fs';
+import { coverPage, takeCoverageFlag } from './coverage_union.mjs';
 const require = createRequire(import.meta.url);
 const { chromium } = require(process.env.PM7_PLAYWRIGHT || '/home/sittingmongoose/pmt-dev/pw/node_modules/playwright-core');
-const [endpoint, url, output] = process.argv.slice(2);
+const argv = process.argv.slice(2);
+const coverageFile = takeCoverageFlag(argv);
+const [endpoint, url, output] = argv;
 if (!endpoint || !url || !output) throw Error('Expected CDP endpoint, URL, output JSON');
 const browser = await chromium.connectOverCDP(endpoint);
 const pm7HoverContext=await browser.newContext({viewport:{width:1920,height:1080}});const page=await pm7HoverContext.newPage();await page.bringToFront();
+const finishCoverage = coverageFile ? await coverPage(page, coverageFile) : null;
 page.setDefaultTimeout(20000);
 const result = { head:process.env.PM7_TEST_HEAD,pageSha256:process.env.PM7_TEST_SHA256,url, browser: 'Nas1 agent-browser; ordinary-page hover smoke, intentional software rendering', runs: [], errors: [] };
 page.on('pageerror', e => result.errors.push(String(e)));
@@ -87,5 +91,5 @@ try {
     result.runs.push(searchRow);  console.log(JSON.stringify({ bug: 2, family, reduced, pass: searchRow.pass, checks: searchChecks }));
   }
 } catch (e) { result.failure = String(e.stack || e); console.error(result.failure); }
-finally { result.pass = !result.failure && !result.errors.length && result.runs.length === 14 && result.runs.every(r => r.pass); writeFileSync(output, JSON.stringify(result, null, 2) + '\n'); await pm7HoverContext.close();await browser.close(); }
+finally { result.pass = !result.failure && !result.errors.length && result.runs.length === 14 && result.runs.every(r => r.pass); writeFileSync(output, JSON.stringify(result, null, 2) + '\n'); try { if (finishCoverage) await finishCoverage(); } finally { await pm7HoverContext.close();await browser.close(); } }
 process.exitCode = result.pass ? 0 : 1;

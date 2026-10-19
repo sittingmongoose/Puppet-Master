@@ -1,0 +1,29 @@
+--- a/merge-unions.mjs
++++ b/merge-unions.mjs
+@@ -49,7 +49,7 @@
+ const receipts=[],provenanceInputs=[],provenanceUnions=[];
+ const producer_head=execFileSync('git',['rev-parse','HEAD'],{encoding:'utf8'}).trim();
+ const provenanceBase={version:1,kind:'pm7-coverage-per-sample-provenance',producer_head,
+- statement:'A0 attestation: all listed live inputs were freshly created in this task with the per-sample-resolving collector (74e5fbc0fb and successors); no historical counter aggregate was imported. Existing unmarked raw files are preserved byte-for-byte. Every output usedRanges is a union of input usedRanges, never reconstructed from accumulated counters.'};
++ statement:'Correction: four early inputs (coverage-campaign/matrix-union.json, coverage/draft-union.json, coverage/scenarios-union.json, contrast/contrast-union.json) were captured with an uncommitted collector revision; exact source provenance is not established by these records. Only scripts already carrying per-sample-v1 in the merged raw union are attested. Unmarked entries remain uncertified; their positive usedRanges are retained and their absence is unknown. Inputs remain byte-for-byte unchanged. No JS purge is authorized in this wave.'};
+ for(const[label,page,paths]of [
+  ['PMConcept7','Concepts/PMConcept7.html',[...core,...optional]],
+  ['LeftRailPMConcept7','Concepts/LeftRailPMConcept7.html',['priority/rail-union.json',...(mode==='final'?['rail-abc/union.json']:[])]],
+@@ -63,7 +63,7 @@
+   const urls=[...sample.js.map(s=>s.url||''),...(sample.stylesheets||[]).map(s=>s.sourceURL||'')];
+   if(urls.some(url=>wrong.test(url)))throw Error('Mixed page sources in '+path);
+   union=mergeCoverage(union,sample);inputs.push({path:ev+'/'+path,sha256:hash(bytes),script_hashes:sample.js.map(s=>s.script),
+-    origin:'fresh-native-samples-resolved-before-union-v1',native_marker_scripts:sample.js.filter(s=>s.usedRangesProvenance==='per-sample-v1').length,
++    origin:'native-markers-only; unmarked entries remain uncertified',native_marker_scripts:sample.js.filter(s=>s.usedRangesProvenance==='per-sample-v1').length,
+     run_provenance:runProvenance(path)});
+  }
+  if(missing.some(p=>!optional.includes(p)))throw Error('Missing mandatory unions '+missing.join(','));
+@@ -73,7 +73,7 @@
+  const unresolved_js_sources=union.js.filter(s=>!/^[a-f0-9]{16}$/i.test(s.script)).map(s=>({script:s.script,url:s.url,functions:s.functions.length}));
+  const unresolved_css_sources=[...new Set(union.css.filter(r=>!/^[a-f0-9]{16}$/i.test(r.sheet)).map(r=>r.sheet))];
+  if(mode==='final'&&unresolved_css_sources.length)throw Error('Cannot certify zero unresolved CSS sheets: '+unresolved_css_sources.join(','));
+- const rawEntry={path:raw,sha256:hash(readFileSync(raw)),script_hashes:union.js.map(s=>s.script),origin:'union-of-input-usedRanges',reconstructed_from_counters:false,page_sha256:pageSha,unresolved_js_sources,unresolved_css_sources};
++ const rawEntry={path:raw,sha256:hash(readFileSync(raw)),script_hashes:union.js.filter(s=>s.usedRangesProvenance==='per-sample-v1').map(s=>s.script),excluded_uncertified_script_hashes:union.js.filter(s=>s.usedRangesProvenance!=='per-sample-v1').map(s=>s.script),origin:'union-of-input-usedRanges',reconstructed_from_counters:false,page_sha256:pageSha,unresolved_js_sources,unresolved_css_sources};
+  const rawReceipt=prefix+'.raw-provenance.json';writeFileSync(rawReceipt,JSON.stringify({...provenanceBase,inputs,unions:[rawEntry]},null,2)+'\n');
+  execFileSync('node',[root+'/Concepts/onboarding/opus-5.5/tools/coverage_summary.mjs',root+'/'+page,raw,prefix,'--complete-union',prefix+'.union.json','--provenance-receipt',rawReceipt],{env:{...process.env,PM7_ANALYSIS_MODULES:ev+'/deps/node_modules'},stdio:'inherit'});
+  const complete=readFileSync(prefix+'.union.json'),summary=JSON.parse(readFileSync(prefix+'.json'));

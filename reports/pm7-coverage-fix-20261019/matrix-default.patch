@@ -1,0 +1,11 @@
+--- a/tools/matrix.mjs
++++ b/tools/matrix.mjs
+@@ -3,7 +3,7 @@
+ import {createRequire} from 'node:module';
+ import {writeFileSync,mkdirSync,readFileSync} from 'node:fs';
+ import {install} from './audit-scanner.mjs';
+-const require=createRequire(import.meta.url), {chromium}=require(process.env.PM7_PLAYWRIGHT);
++const require=createRequire(import.meta.url), {chromium}=require(process.env.PM7_PLAYWRIGHT || '/home/sittingmongoose/pmt-dev/pw/node_modules/playwright-core');
+ const argv=process.argv.slice(2),coverageFile=takeCoverageFlag(argv);
+ const [ep,url,out,variant,only]=argv;mkdirSync(out,{recursive:true});
+ const browser=await chromium.connectOverCDP(ep),page=browser.contexts()[0].pages().find(p=>!p.url().includes('recorder'));
