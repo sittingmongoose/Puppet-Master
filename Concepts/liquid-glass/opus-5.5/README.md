@@ -64,8 +64,10 @@ owns base block order. The feature CSS readers use the same helper before their
 existing joins, rail macro expansion, Usage host scoping, and glyph rewriting.
 No rule is appended to `lg-css`; each retains its original block and position.
 Whitespace around a slot remains in the original source, and a fragment has no
-added final newline. The reader rejects missing, duplicate, nested, malformed,
-out-of-package, CR, BOM, or invalid UTF-8 inputs instead of normalizing them.
+added final newline. For CSS sources and fragments, the reader rejects missing,
+duplicate, nested, malformed, out-of-package, CR, BOM, or invalid UTF-8 inputs
+instead of normalizing them. Other feature text keeps its existing read behavior;
+manifest script bodies retain the base assembler's strict byte guard.
 
 Edit the fragment to change its rule. `scripts/pm7-where.py` follows the source
 comment and names the fragment, including when rail macros expand its selector.

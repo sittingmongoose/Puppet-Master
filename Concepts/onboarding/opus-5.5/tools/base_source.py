@@ -26,9 +26,9 @@ def read_source(path: Path) -> bytes:
 
 def read_text_source(path: Path) -> str:
     """Read authored text, restoring LG-owned CSS at its original source slot."""
-    text = read_source(path).decode('utf-8')
     if path.suffix != '.css':
-        return text
+        return path.read_text(encoding='utf-8')
+    text = read_source(path).decode('utf-8')
     seen = set()
 
     def fragment(match: re.Match) -> str:
@@ -64,7 +64,7 @@ def assemble(folder: Path = BASE) -> bytes:
         path = (folder / block['file']).resolve()
         if not path.is_relative_to(folder.parent.resolve()):
             raise ValueError(f'PM7 base source outside package: {path}')
-        body = read_text_source(path).encode('utf-8')
+        body = read_text_source(path).encode('utf-8') if block['tag'] == 'style' else read_source(path)
         if b'@@PM7_BASE_' in body:
             raise ValueError(f'PM7 base slot token inside source: {path}')
         text = text.replace(slot, body, 1)
