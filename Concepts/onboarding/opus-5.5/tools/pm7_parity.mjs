@@ -117,6 +117,9 @@ function seedStorage(look, motion = 'reduced') {
     'general.visual.reduce-animations': motion === 'reduced', 'general.audio.sound-enabled': false
   } } };
 }
+export function samplerNetworkPolicy() {
+  return { urls: [], urlPatterns: [{ urlPattern: 'file:///__pm7_parity_asset__/*', block: true }] };
+}
 async function configurePage(browser) {
     const page = browser.page;
     await page.bringToFront();
@@ -124,9 +127,9 @@ async function configurePage(browser) {
       if (e.args[0]?.value === 'PM7_PARITY_SNAPSHOT') console.log(e.args.map(a => a.value).join(' '));
     });
     await page.send('Network.enable');
-    // CDP blocked-URL globs also match text inside data: SVG URLs (for example
-    // an http:// namespace). Fetch below tests the actual scheme instead.
-    await page.send('Network.setBlockedURLs', { urls: [] });
+    // Preblock reserved sampler markers before Fetch can pause/cancel them.
+    // Scheme-aware patterns preserve marker text inside valid data: SVG URLs.
+    await page.send('Network.setBlockedURLs', samplerNetworkPolicy());
     await page.send('Emulation.setTimezoneOverride', { timezoneId: 'UTC' });
     await page.send('Emulation.setLocaleOverride', { locale: 'en-US' });
     await page.send('Emulation.setFocusEmulationEnabled', { enabled: true });
