@@ -2,9 +2,9 @@
 
 Source: `Plans/UI_Command_Catalog.md`
 
-Source lines: L11025-L11096
+Source lines: L11023-L11094
 
-Source SHA256: `aa616e3c1819aa810103eb6409fd425047a83efe26a1f87c6696d2d24a456cdc`
+Source SHA256: `74ace7abc7bbd66f8616c34be183f1a133d32a82d17e5f24d6d9741e0f097ff7`
 
 ---
 
@@ -63,11 +63,11 @@ acceptance_criteria:
   - All controls remain disabled with handler_unavailable until a source-hashed native dispatcher/handler and production runtime evidence exist.
   - Details, Logs, and Receipt are bounded/redacted; mutating controls preserve confirmation, currentness, update-diff, conformance, provenance, permission, rollback, and recovery gates.
   - Doctor routes to the exact owner command and never mutates privately; no alias, second handler, success simulation, or EventRecord family is admitted.
-validation_surfaces: [Plans/Wiring_Matrix.production.json, Plans/touch_closure.json, Concepts/pm7-tools/systems_integration_source.py, python3 scripts/pm-plans-verify.py validate-wiring-matrix, python3 scripts/pm-touch-closure-verify.py]
+validation_surfaces: [Plans/Wiring_Matrix.production.json, Plans/touch_closure.json, python3 scripts/pm-plans-verify.py validate-wiring-matrix, python3 scripts/pm-touch-closure-verify.py]
 risk_class: plugin_catalog_or_reverse_consumer_gap
 reasoning_tier: high
 context_scope: agent_plugin_ui_catalog
-implementation_surfaces: [Plans/UI_Command_Catalog.md, Plans/Wiring_Matrix.md, Plans/Wiring_Matrix.production.json, Plans/touch_closure.json, Concepts/pm7-tools/systems_integration_source.py]
+implementation_surfaces: [Plans/UI_Command_Catalog.md, Plans/Wiring_Matrix.md, Plans/Wiring_Matrix.production.json, Plans/touch_closure.json]
 node_compile_hint: {mode: agent_plugin_ui_catalog, create_worknodes: false, create_nodeseeds: false}
 source_lineage:
   - Plans/Commands_System.md#CS-071

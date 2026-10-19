@@ -2,9 +2,9 @@
 
 Source: `Plans/UI_Command_Catalog.md`
 
-Source lines: L7760-L7929
+Source lines: L7760-L7927
 
-Source SHA256: `aa616e3c1819aa810103eb6409fd425047a83efe26a1f87c6696d2d24a456cdc`
+Source SHA256: `74ace7abc7bbd66f8616c34be183f1a133d32a82d17e5f24d6d9741e0f097ff7`
 
 ---
 
@@ -67,8 +67,6 @@ validation_surfaces:
   - python3 scripts/pm-plan-index.py validate
   - Plans/product_onboarding_contracts.schema.json
   - Plans/product_onboarding_contract_fixtures.json
-  - Concepts/pm7-tools/onboarding_cinematic_source.py static assertions
-  - Concepts/pm7-tools/verify/onboarding_cinematic.mjs browser-concept verifier
 risk_class: onboarding_command_lineage_revival
 reasoning_tier: high
 context_scope: product_onboarding_local_actions_and_command_lineage

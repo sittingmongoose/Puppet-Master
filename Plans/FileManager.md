@@ -4893,7 +4893,7 @@ owner_hints: [Plans/FileManager.md, Plans/FinalGUISpec.md]
 
 ## PMConcept7 Cozy Shelves Integration Addendum - 2026-07-28
 
-This addendum records the integration of the ratified Cozy Shelves File Manager concept (`Concepts/rail-concepts/QwenRailConcepts/c2-cozy-shelves-files.html`, source-lineage-only per `Plans/usage-feature.md`) into the `Concepts/PMConcept7.html` build via the `Concepts/pm6-build` parts pipeline. It creates no WorkNodes, NodeSeeds, executable queues, implementation files, runtime artifacts, generated wiring rows, production build tasks, final manifests, or PNC-019 receipts.
+This addendum records the File Manager behavior illustrated by the ratified Cozy Shelves concept (`Concepts/rail-concepts/QwenRailConcepts/c2-cozy-shelves-files.html`, source-lineage-only per `Plans/usage-feature.md`) and `Concepts/PMConcept7.html`. It creates no WorkNodes, NodeSeeds, executable queues, implementation files, runtime artifacts, generated wiring rows, production build tasks, final manifests, or PNC-019 receipts.
 
 ### F-079 - Cozy Shelves File Manager PM7 Integration
 
@@ -4903,8 +4903,8 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/FileManager.md
 canonical_text: >-
-  The Cozy Shelves File Manager is integrated into Concepts/PMConcept7.html as the
-  panel-files view: explorer/changed/open segmented tabs, a measured-height tree
+  The File Manager panel-files view follows the Cozy Shelves concept shown in
+  Concepts/PMConcept7.html: explorer/changed/open segmented tabs, a measured-height tree
   animator with full keyboard tree model, hover quick actions per row kind,
   multi-select with a selection bar, type-ahead filter, hide-ignored toggle,
   collapse-all, worktree root menu, and the sprout context menu whose hook id
@@ -4912,10 +4912,10 @@ canonical_text: >-
   trash-first decision (OS-trash soft delete with undo toast; permanent delete
   stays behind the fail-closed confirm; explicit disclosure when trash is
   impossible), and Open with / Copy path submenu entries keep their c2 command
-  bindings. The retired PM6 file-tree markup and its pm6FmFilter-era wiring are
-  removed in the same change.
+  bindings. The earlier PM6 file-tree presentation is retired; its markup and
+  filter wiring are historical only.
 gui_related: true
-gui_classification_reason: This unit records the user-visible File Manager panel integration into the PMConcept7 build.
+gui_classification_reason: This unit records the user-visible File Manager panel behavior shown in PMConcept7.
 split_recommended: false
 depends_on: [F-078, F2-205]
 unblocks: []
@@ -4930,9 +4930,7 @@ validation_surfaces:
 risk_class: filemanager_drift
 reasoning_tier: standard
 context_scope: pm7_cozy_shelves_integration
-implementation_surfaces:
-- "Concepts/pm6-build/parts/12-html-side-panels.part.html"
-- "Concepts/pm6-build/parts/29x-pm6-js-cozy-shelves.part.html"
+implementation_surfaces: []
 node_compile_hint:
   mode: cozy_shelves_fm_pm7_integration_record
   create_worknodes: false

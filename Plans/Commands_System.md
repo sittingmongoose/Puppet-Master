@@ -4943,9 +4943,8 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
-  - Concepts/pm7-tools/base/PM7-base.html (current pinned PM7 input; source-lineage-only)
-  - Concepts/pm7-tools/build_pm7.py#T33-T41 (source-owned transforms)
-  - Concepts/PMConcept7.html (generated artifact; terminal bytes and hash are audit-owned)
+  - Concepts/pm7-tools/base/PM7-base.html (retired PM7 input; history only)
+  - Concepts/PMConcept7.html (look-and-behaviour reference)
   - Plans/.audits/audit-20260829-001-pmconcept7-widget-followup/audit_report.json (current repo-local successor audit status; verdict remains report-owned)
   - Plans/Decision_Log.md#DL-173
   - Plans/Decision_Log.md#DL-174
@@ -5237,7 +5236,7 @@ acceptance_criteria:
   - The action reports unavailable with a keyboard-reachable disabled reason when the shell router is absent.
   - No cmd.nav.focus_route registration, alias, handler, event, persistence write, or production wiring row exists.
   - Static or browser concept evidence is never promoted into native Slint or runtime-handler evidence.
-validation_surfaces: [Plans/guided_tour_contracts.schema.json, Plans/guided_tour_contract_fixtures.json, Plans/Wiring_Matrix.production.exclusions.json, Concepts/pm7-tools/verify/guided_tour.mjs]
+validation_surfaces: [Plans/guided_tour_contracts.schema.json, Plans/guided_tour_contract_fixtures.json, Plans/Wiring_Matrix.production.exclusions.json]
 risk_class: local_presentation_promoted_to_false_domain_command
 reasoning_tier: high
 context_scope: guided_tour_shell_focus_route
@@ -6421,9 +6420,8 @@ This addendum is the Commands owner lane for finding G4 of
 `reports/concept-packet-integration-20260926/settings.md`
 ("Commands & Shortcuts typed mutation routing incomplete"): a per-control action-routing census
 over §6.1 (scope, create, edit, delete, save validation), §6.2 (dry-run preview), and §1
-(invocation surfaces), bound to the exact controls of the selected Settings manager
-(`Concepts/pm7-tools/settings_refresh/managers/24-commands.js`, selected
-`Concepts/TestOpus5.5PmConcept.html` `commands-shortcuts` behavior). Selected manager behavior
+(invocation surfaces), bound to the selected Settings manager
+(`Concepts/TestOpus5.5PmConcept.html` `commands-shortcuts` behavior). Selected manager behavior
 leads: every selected mutating control routes to a typed action below, every selected
 presentation control is classified view-only, and no selected control closes through an
 unadmitted placeholder. It mints no `cmd.*` UICommand, registers no EventRecord family, admits

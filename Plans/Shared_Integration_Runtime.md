@@ -957,18 +957,18 @@ acceptance_criteria:
   - Legacy shared-runtime admission/work spellings normalize once through the explicit compatibility map; new producers and consumers expose only the full-thread vocabulary and ambiguous rows fail closed.
   - Application and Project scope remain explicit without a fake Project; every record preserves exact Server, Host, Environment, and topology bindings, and a non-null named_plan_id resolves to a NamedPlan in the same Project or fails closed.
   - ObservableWork accepts every retained state from accepted through recovery-required, including testing-route and migrating-route, without treating a route as successful proof.
-  - The PMConcept7 browser fixture exposes exactly seven deterministic ObservableWork evidence rows, six GovernorDecision outcome rows, and five bounded-list families (findings, history, logs, provider, receipts), each with stable identity, truthful reason/reevaluation metadata, bounded row/byte metadata, and an explicit browser-fixture-only boundary; these rows do not prove native or production execution.
+  - PMConcept7 shows ObservableWork evidence rows, GovernorDecision outcomes, and the bounded-list families (findings, history, logs, provider, receipts) as the look-and-behaviour reference; each row keeps stable identity, truthful reason/reevaluation metadata and bounded row/byte metadata. This browser-fixture-only reference proves no native or production execution.
   - Same-frame acknowledgement is durable-command acknowledgement only and rolls back truthfully on later failure.
   - Success/cancellation and failure/unknown outcomes require their corresponding terminal evidence; work rows retain title, subject, blocking scope, activity, parent/child, and typed progress provenance.
   - Determinate work progress has a real positive denominator and never exceeds it; terminal controls and queued/waiting reevaluation remain truthful.
   - Stable-ID virtualized projections reject stale generations and hidden-surface paint suppression never cancels durable work.
   - Projection bounds, stable-ID cardinality, acknowledgement frame equality, continuation generation, stable prior/current identity, and duplicate-effect/Usage counts are checked as cross-field laws.
   - Reconnect, restart, sleep, and external return preserve logical identity and deduplicate replay/projector overlap.
-validation_surfaces: [Plans/full_thread_runtime_contract_fixtures.json, Plans/shared_runtime_contracts.schema.json, Plans/storage_value_registry.json, tests/test_pm_full_thread_contracts.py, tests/test_pm_runtime_vocabulary_migration.py, tests/test_pm_runtime_identity_scope.py, scripts/pm_full_thread_semantics.py, Concepts/pm7-tools/verify/full_thread_performance.mjs, future native command acknowledgement, stale-generation, virtualization, continuity, and low-resource tests]
+validation_surfaces: [Plans/full_thread_runtime_contract_fixtures.json, Plans/shared_runtime_contracts.schema.json, Plans/storage_value_registry.json, tests/test_pm_full_thread_contracts.py, tests/test_pm_runtime_vocabulary_migration.py, tests/test_pm_runtime_identity_scope.py, scripts/pm_full_thread_semantics.py, future native command acknowledgement, stale-generation, virtualization, continuity, and low-resource tests]
 risk_class: full_thread_axis_or_identity_conflation
 reasoning_tier: high
 context_scope: full_thread_runtime_axes_and_continuity
-implementation_surfaces: [Plans/Shared_Integration_Runtime.md, Plans/full_thread_runtime_contracts.schema.json, Concepts/pm7-tools/full_thread_performance_source.py, Concepts/pm7-tools/verify/full_thread_performance.mjs]
+implementation_surfaces: [Plans/Shared_Integration_Runtime.md, Plans/full_thread_runtime_contracts.schema.json]
 node_compile_hint: {mode: full_thread_runtime_axes_and_continuity, create_worknodes: false, create_nodeseeds: false}
 source_lineage:
   - PM_Full_Thread_Performance_Plans_PMConcept_Implementation_Packet_2026-08-08/02_FINAL_DECISION_REGISTER.md

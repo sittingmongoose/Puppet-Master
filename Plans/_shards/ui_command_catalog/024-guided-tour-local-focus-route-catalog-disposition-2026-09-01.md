@@ -2,9 +2,9 @@
 
 Source: `Plans/UI_Command_Catalog.md`
 
-Source lines: L10969-L11023
+Source lines: L10967-L11021
 
-Source SHA256: `aa616e3c1819aa810103eb6409fd425047a83efe26a1f87c6696d2d24a456cdc`
+Source SHA256: `74ace7abc7bbd66f8616c34be183f1a133d32a82d17e5f24d6d9741e0f097ff7`
 
 ---
 
@@ -47,7 +47,7 @@ acceptance_criteria:
   - route_target.page_id is required by the closed action schema.
   - Missing router state remains focusable, described, hover-bound, and non-activating.
   - cmd.nav.focus_route is exclusions-only and absent from the production matrix.
-validation_surfaces: [Plans/guided_tour_contracts.schema.json, Plans/guided_tour_contract_fixtures.json, Plans/Wiring_Matrix.production.json, Plans/Wiring_Matrix.production.exclusions.json, Concepts/pm7-tools/verify/guided_tour.mjs]
+validation_surfaces: [Plans/guided_tour_contracts.schema.json, Plans/guided_tour_contract_fixtures.json, Plans/Wiring_Matrix.production.json, Plans/Wiring_Matrix.production.exclusions.json]
 risk_class: guided_tour_catalog_alias_or_inaccessible_unavailable_state
 reasoning_tier: high
 context_scope: guided_tour_shell_focus_route
