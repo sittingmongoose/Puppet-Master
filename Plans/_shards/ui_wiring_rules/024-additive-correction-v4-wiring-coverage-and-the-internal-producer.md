@@ -2,9 +2,9 @@
 
 Source: `Plans/UI_Wiring_Rules.md`
 
-Source lines: L1371-L1489
+Source lines: L1371-L1490
 
-Source SHA256: `223a17b8be9d7b4f4271ed0b4b1c41456dfa99316db297e818f254dc78cd88ed`
+Source SHA256: `e60068790369830fbff891af3c9af4b50784ddfde1ebc184447a31c0beb35326`
 
 ---
 
@@ -50,7 +50,8 @@ provider-degradation paths the correction requires. Their `evidence_required` te
 
 The remaining twenty-four `CW-` rows have **no command identity**. Twenty-three describe
 owner-internal producers, projectors, and reducers; CW-046 is concept comparison lineage
-only (CONCEPT-017), with no runtime producer. All twenty-four stay out of this register.
+only (CONCEPT-017), with no runtime producer. All twenty-four stay out of this register
+for the same reason the sixteen view-local rows did.
 The product behaviour follows the same producer → handler → durable effect → consumer →
 failure shape in its owner documents:
 

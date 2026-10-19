@@ -4,13 +4,13 @@ Source: `Plans/UI_Command_Catalog.md`
 
 Source lines: L12190-L12454
 
-Source SHA256: `74ace7abc7bbd66f8616c34be183f1a133d32a82d17e5f24d6d9741e0f097ff7`
+Source SHA256: `f029792ee40e7c394a3ad23c66cddf2c3aff4e3eeab239b1a776fb0916e546b7`
 
 ---
 
 ## Central Touch Reverse-GUI Catalog Addendum - 2026-09-01
 
-These 227 rows are the reverse-GUI projection of CS-074. They register no synthetic control: an existing same-intent control may be rebound, an owner surface may expose the action when required, and headless-only reachability remains explicitly classifiable. Every visible control must read typed availability and disabled reason before dispatch and return to the exact initiating route/focus/continuation.
+These 228 rows are the reverse-GUI projection of CS-074. They register no synthetic control: an existing same-intent control may be rebound, an owner surface may expose the action when required, and headless-only reachability remains explicitly classifiable. Every visible control must read typed availability and disabled reason before dispatch and return to the exact initiating route/focus/continuation.
 
 | Command | Label | Owner binding | Sole future handler | Intended GUI consumers / return |
 |---|---|---|---|---|
@@ -252,13 +252,13 @@ plan_unit_id: UCC-152
 unit_type: gui_command_catalog
 status: accepted
 owner_doc: Plans/UI_Command_Catalog.md
-canonical_text: The 227 CS-074 commands have exact intended GUI consumers, typed availability and disabled-reason behavior, sole future handler routes, deterministic returns, and no synthetic-control requirement.
+canonical_text: The 228 CS-074 commands have exact intended GUI consumers, typed availability and disabled-reason behavior, sole future handler routes, deterministic returns, and no synthetic-control requirement.
 gui_related: true
 gui_classification_reason: This PlanUnit is the exact GUI reverse-coverage catalog for the remaining Touch commands.
 depends_on: [UCC-151, CS-074, FGI-013, RAS-015]
 unblocks: []
 acceptance_criteria:
-- All 227 CS-074 commands appear exactly once in this table with owner binding, handler, consumers, and return semantics.
+- All 228 CS-074 commands appear exactly once in this table with owner binding, handler, consumers, and return semantics.
 - Existing same-intent controls are rebound; nearby non-equivalent controls are not relabeled and no synthetic control is invented merely for coverage.
 - Disabled, keyboard, focus, accessibility, result/error, and exact-return behavior is evidenced before production certification.
 validation_surfaces: [python3 scripts/pm-touch-closure-verify.py --json, python3 scripts/pm-plans-verify.py validate-wiring-matrix]
