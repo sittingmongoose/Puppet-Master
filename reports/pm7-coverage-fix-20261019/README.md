@@ -85,3 +85,73 @@ Reproduce with the committed portable lock (copy `deps.package.json` / `deps.pac
 `matrix-followup.patch` applies to the reviewed external `A0-coverage/tools/matrix.mjs` (SHA-256 `351ec6ae376ea4239e04f7a37002c8872265661f3a9af350e8fc751202631802`). It binds both lazy helper exports and moves help ahead of Playwright resolution. The corrected external file is `4a1a2b0290ccc69d182de3168fb4cc45f5a3a07e081a6c10a6845fc07f77246d`.
 
 Browser-free replay: `python3 /mnt/Cursor/PuppetMaster-Evidence/scratch/2026-10-18-pm7-purge/F-coverage-fix/matrix-proof.py` from the checkout. It covers help, flag-off, exact-file flag-on, script-relative flag-on, and the reviewed regression with the real helper plus Playwright/CDP stubs. It does not test matrix cells. Receipt: `/mnt/Cursor/PuppetMaster-Evidence/scratch/2026-10-18-pm7-purge/A0-coverage/fix-followup-matrix-help.json`, SHA-256 `df53fe3cf777981667752389889485d27e04614cb7327d501b3c02705faacb88`. Both receipt before-files are retained in `/mnt/Cursor/PuppetMaster-Evidence/scratch/2026-10-18-pm7-purge/F-coverage-fix/input-snapshots`.
+
+## Fix round 1 — F-coverage-fix (2026-10-19)
+
+**Result:** the accepted CSS totals and readiness are reproducible with the current tool under the lead-authorized, evidence-bound historical navigation assumption. Original raw counts remain absent. Strict default regeneration certifies no absent CSS or JS bytes.
+
+**Code head:** `bf3d9de09ab57f26af0c3fe0144903cf361bd01c`. Fix branch: `fix/pm7-coverage-fix1-20261019`; every implementation item was committed and pushed to it and fast-forwarded to `concept/pm7-coverage-union-20261018` on both configured push targets. Final documentation head is in `reports/F-coverage-fix.md` in the wave share. Main landing belongs to the lead.
+
+**Evidence (`G`):** `/mnt/Cursor/PuppetMaster-Evidence/scratch/2026-10-18-pm7-purge/F-coverage-fix`. Use `G/unions/final-PMConcept7.union.json`, `G/unions/final-LeftRailPMConcept7.union.json`, and `G/unions/final-provenance.json` for the explicitly assumed historical result. Prior union files remain history.
+
+| Location | Cause | Fix |
+|---|---|---|
+| `coverage_union.mjs` | Empty serialized unknown aggregates were mistaken for fresh accumulators. | Explicit nonserialized initializer marker; `emptyUnion()` is the public initializer. Collector and end-to-end census regressions keep the three-session `2 → absent → absent` chain unknown. |
+| `coverage_summary.mjs`, raw CSS filter | A missing count passed the old `!(count > 0)` test. | Negative raw rows require tracked zero or the explicit assumption, including unmatched-sheet and non-rule spans. |
+| `coverage_summary.mjs`, JS absence | Provenance checks alone allowed absence despite incomplete navigation tracking. | Gate unused bytes and static zero counts; keep native counters/positive touches; retain uncertain absence in the legacy byte projection. |
+| `coverage_summary.mjs`, historical policy | Accepted captures predate the navigation counter. | `--assume-navigation-clean <evidence-file>` records its path/hash in caveats and census, preserves `navigation_unchecked`, and never overrides a known positive count. |
+| External `A0-coverage/tools/matrix.mjs` | The lazy import discarded the `coverPage` binding; help resolved Playwright first. | Keep `cov` and bind both exports, move help before dependency resolution, preserve both before-files, and replay setup/finalization with the real helper and CDP stubs. Patch is committed as `reports/pm7-coverage-fix-20261019/matrix-followup.patch`. |
+
+### Reproduced totals
+
+| Page | Unused ordinary CSS rules | Unused UTF-8 bytes | Strict default unused rules / bytes |
+|---|---:|---:|---:|
+| `Concepts/PMConcept7.html` | 8984 | 1521629 | 0 / 0 |
+| `Concepts/LeftRailPMConcept7.html` | 14471 | 2884276 | 0 / 0 |
+
+**Equality:** all original fields in both accepted summaries and completed unions compare exactly; only additional assumption/caveat fields differ. Every affected explicit false CSS row remains `navigation_unchecked: true`. Raw union bytes and hash-bound provenance are unchanged.
+
+**CSS join:** `582` ready source ranges / `82088` authored bytes remain identical. The complete ready CSS row/source projection has SHA-256 `eb91b683222a6f02e401b7232f123b6307c13061c53d1cfe63c6568a1e5e387c`; `G/css-ready.diff` is empty. The unchanged A1 join command and all input hashes are in `G/css-ready-comparison.json`.
+
+**Verification:** both suites pass `14/14`, with `0` failed, skipped or cancelled. Syntax and whitespace checks pass. The recorded four-generator proof passes and all committed page bytes still match the reference; its proof head is retained in `G/verify4.json`. Matrix proof runs through coverage initialization, page setup, final sampling, detach and close; the reviewed driver reproduces its ReferenceError as an expected negative control. All matrix cells are skipped by the fixture filter, so this is wiring verification, not a new campaign.
+
+**Navigation audit:** `G/assume-navigation-clean.md` lists every location reload/assign/replace call, the named popup, both forms, source file:line, and recipe reachability. The legacy reset controller is guarded out on covered default pages; the active Home layout reset stays in-document. Other mechanisms and local open/submit functions are adjudicated in the audit. No authored campaign recipe reaches a page-initiated main-document navigation. This remains an explicit assumption about historical captures, not a recovered zero count.
+
+### Reproduction
+
+```sh
+PM7_ANALYSIS_MODULES=G/deps/node_modules node --test Concepts/onboarding/opus-5.5/tools/coverage_union.test.mjs Concepts/onboarding/opus-5.5/tools/coverage_summary.test.mjs
+node G/navigation-scan.mjs
+python3 G/navigation-markup.py
+python3 G/navigation-audit.py
+PM7_ANALYSIS_MODULES=G/deps/node_modules node G/regenerate.mjs
+python3 G/join-and-compare.py
+python3 G/matrix-proof.py
+```
+
+Replace G with the absolute evidence root above. Restore the portable committed dependency lock into `G/deps/` and run `npm ci --ignore-scripts --no-audit --no-fund` before replay. Command receipts retain the literal argument arrays, environment, results and full output. No browser recollection was made; previous campaign failures and early uncertified JS lineage remain as disclosed.
+
+### Current artifact hashes
+
+| Artifact | SHA-256 |
+|---|---|
+| `G/assume-navigation-clean.md` | `7ad78ea2ba77ca3bdb154e844a89fde7f30724e0e67a736d4ebe7b9a498819f3` |
+| `G/navigation-audit.json` | `c6546f6fbdfb142dd6c12fe77e556915477f6a0394d463c1a8193233658ecc44` |
+| `G/unions/final-PMConcept7.json` | `2ced4a40daa578e07ccaa27468a956fe2f145cf659ea3fde32e2e82d18cc2fb8` |
+| `G/unions/final-PMConcept7.md` | `6ab59f7f83e1a50799a44f6fb738876f5298f3be153cc4c3f6c7a92fc2d65a78` |
+| `G/unions/final-PMConcept7.union.json` | `6815513ce8cfd9edf7dfb74e6cdeea23b30d466f295724fea4a3bc4677ea937b` |
+| `G/unions/final-LeftRailPMConcept7.json` | `86dea6265f9c452d807efe49f1536e6cae5c28d6e3487184561e5b9bee916ba4` |
+| `G/unions/final-LeftRailPMConcept7.md` | `ee10ff5ce42d172815a429ab664f5b49b3a24b68979ad3f6eb62e7a8a0c8d36d` |
+| `G/unions/final-LeftRailPMConcept7.union.json` | `bd2d4d0dcb44d1c75b8fbc757cfce7fdbd90577ba38156ed47fc9c7d17e44c43` |
+| `G/unions/final-provenance.json` | `eed6cea9093af2c634250e7e0550b287b4d40cc4a140b5675433f477fc5d0a8b` |
+| `G/unions/final-receipt.json` | `1374ce1fc2bd3a4dea8d3ac4f6eac016e6c33f9b9e64aca907744680516de4d7` |
+| `G/unions/validation.json` | `b0fafdd21033bebf578d0216f50db0a2631e1adf2d9d79652f8a2133c3c9b220` |
+| `G/final-joined-r3.json` | `c7d7b6f9c48773ec975739b88a17c467dfeb8f7baa23ff0dd458a5ed7f77915d` |
+| `G/css-ready-comparison.json` | `ecff2ccf00821be4884c9e10ff4e48dbe711857c34dd76b87097dc05180df2e8` |
+| `G/css-ready.diff` | `e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855` |
+| `G/final-tests.stdout` | `93073cd83104332a9c94c0bd449a61c6dc362de4aa7889fbb8a985b47bc9c8e1` |
+| `G/matrix-proof.json` | `df53fe3cf777981667752389889485d27e04614cb7327d501b3c02705faacb88` |
+| `G/verify4.json` | `a7930b45aa3b106317a87b62a2cf94868ba9afff3f13f5047b0d0e0210a55c53` |
+| `G/checks.json` | `66eb56dd51f1d3084d502b732d1790307c17e4f6290543e5a9867b48879a1a8d` |
+| `/mnt/Cursor/PuppetMaster-Evidence/scratch/2026-10-18-pm7-purge/A0-coverage/tools/matrix.mjs` | `4a1a2b0290ccc69d182de3168fb4cc45f5a3a07e081a6c10a6845fc07f77246d` |
+| `/mnt/Cursor/PuppetMaster-Evidence/scratch/2026-10-18-pm7-purge/A0-coverage/fix-followup-matrix-help.json` | `df53fe3cf777981667752389889485d27e04614cb7327d501b3c02705faacb88` |
