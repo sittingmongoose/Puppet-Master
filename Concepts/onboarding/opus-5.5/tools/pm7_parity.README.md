@@ -205,28 +205,33 @@ motion rule families must add states before claiming coverage. Full-motion hover
 media rules, offscreen scroll contents, child frames and complete closed-shadow sampling are not
 covered. No cross-host pixel equivalence is claimed.
 
-## Lead revalidation probe
+## Lead guarded transient comparison
 
-`pm7_parity_revalidate.mjs` is supplied unrun by H-fix. The lead can run it after GPU admission:
+`pm7_parity_revalidate.mjs` retains its filename for discoverability. It produces **new evidence**
+from a guarded transient comparison of two committed inputs with the current harness. It cannot
+validate historical A captures; their state validation remains open. Supplied unrun by H-fix/H-fix2.
+The lead can run it after GPU admission:
 
 ```sh
 git fetch origin
 node Concepts/onboarding/opus-5.5/tools/pm7_parity_revalidate.mjs --list
 node Concepts/onboarding/opus-5.5/tools/pm7_parity_revalidate.mjs \
-  --ref origin/main --page Concepts/PMConcept7.html --concurrency 1 \
-  --out /mnt/Cursor/PuppetMaster-Evidence/scratch/2026-10-18-pm7-purge/H-revalidate-main
+  --baseline-ref origin/main --candidate-ref HEAD --page Concepts/PMConcept7.html --concurrency 1 \
+  --out /mnt/Cursor/PuppetMaster-Evidence/scratch/2026-10-18-pm7-purge/H-transient-comparison
 ```
 
-It reads committed main bytes with `git show`, verifies main ancestry, and runs main against itself
-through the guarded harness. It selects only menu/popover states and states with hover/focus actions
-(800 comparisons in the current full matrix). Use `--page Concepts/LeftRailPMConcept7.html` for Rail
+It reads both committed inputs with `git show`, pins their commits, and runs both sides through
+the current guarded harness. Both input refs are required for a run. It selects only menu/popover
+states and states with hover/focus actions. Use `--page Concepts/LeftRailPMConcept7.html` for Rail
 and a fresh output directory. Optional looks/pages/viewports/motions subsets use the normal syntax.
 No expected removals, pixel tolerance or measured envelope is enabled. The wrapper retains pinned
-input bytes, command, source/matrix hashes and `probe.json`; `parity/report.json` holds every capture.
+input bytes, command, source/matrix hashes and `comparison.json`; `parity/report.json` holds every capture.
 Require completed=planned and zero errors to establish that every new capture remained in-state.
 Exit 1 can also report exact-pixel self-noise; inspect the raw result rather than increasing tolerance.
-This is a transient subset: rest and onboarding-welcome prefixes are omitted. Match provenance and
-sequence scope before using the new evidence to support earlier A runs; it does not inspect old PNGs.
+The output header and comparison record label the run as new evidence. This is a transient subset:
+rest and onboarding-welcome prefixes are omitted, changing preparation, clocks and paint history.
+It never reads the retained historical row provenance or PNGs, never reproduces their original state
+sequence, and must never be cited as validation or replacement of earlier captures.
 
 ## Artifacts
 
