@@ -48,7 +48,7 @@ function main(argv) {
   const out = resolve(options.out), fromRoot = relative(root, out);
   if (!fromRoot.startsWith('..' + sep) && !isAbsolute(fromRoot)) throw Error('Raw probe evidence must be outside the repository');
   if (existsSync(out)) throw Error('Output directory exists; choose a new --out');
-  const git = args => execFileSync('git', args, { cwd: root });
+  const git = args => execFileSync('git', args, { cwd: root, maxBuffer: 128 * 1024 ** 2 });
   const inputHead = git(['rev-parse', '--verify', '--end-of-options', options.ref + '^{commit}']).toString().trim();
   git(['merge-base', '--is-ancestor', inputHead, 'origin/main']);
   const input = git(['show', inputHead + ':' + options.page]);
