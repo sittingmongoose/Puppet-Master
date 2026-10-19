@@ -19,6 +19,7 @@ stage that contains the snippet:
 
 Every match is printed as file:line. Base hits name editable source files.
 CSS slot comments are followed to their Liquid Glass-owned fragments.
+Harness and snapshot copies are excluded from producing-source searches.
 """
 from __future__ import annotations
 
@@ -49,7 +50,7 @@ GENERATED_D_NOTE = (
 )
 
 
-SKIP_DIRS = {".git", "node_modules", "__pycache__", ".pytest_cache", "proposed.d"}
+SKIP_DIRS = {".git", "node_modules", "__pycache__", ".pytest_cache", "proposed.d", "harness", "snapshots"}
 SKIP_SUFFIXES = {
     ".woff", ".woff2", ".ttf", ".otf", ".png", ".jpg", ".jpeg", ".gif", ".webp",
     ".ico", ".mp3", ".wav", ".mp4", ".bin", ".zip", ".pdf",

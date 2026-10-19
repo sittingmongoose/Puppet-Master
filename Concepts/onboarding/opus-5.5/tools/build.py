@@ -260,29 +260,42 @@ def lint_page_wide_universal(rel: str, text: str, notes: list[str] | None = None
     return problems
 
 
+def lint_source_parts(path: Path):
+    """Lint authored CSS fragments under their own names, preserving host checks."""
+    text = base_source.read_source(path).decode('utf-8') if path.suffix == '.css' else base_source.read_text_source(path)
+    if path.suffix == '.css':
+        base_source.read_text_source(path)  # retain slot validation before linting authored parts
+    yield path, text
+    if path.suffix == '.css':
+        for match in base_source.CSS_SLOT.finditer(text):
+            fragment = (base_source.LG_SLOTS / match.group(1)).resolve()
+            yield fragment, base_source.read_source(fragment).decode('utf-8')
+
+
 def lint_sources() -> list[str]:
     problems = []
     for p in sorted(SRC.rglob('*')):
         if '__pycache__' in p.parts or not p.is_file() or p.suffix in BINARY_SUFFIXES:
             continue
-        text = base_source.read_text_source(p)
-        if EMOJI.search(text):
-            problems.append(f'emoji glyph in {p.relative_to(PKG)}')
-        if p.suffix == '.css':
-            # A :has() whose subject is html/body/:root makes every DOM insertion restyle the whole ~17k-node document
-            # (measured ~90 ms each); that is what made Settings lag. Settings styles use no :has() at all.
-            for m in re.finditer(r'(?:^|[\s,}])(?:html|body|:root)\b[^{},]*:has\(', text):
-                problems.append(f'page-wide :has() in {p.relative_to(PKG)}: {m.group(0).strip()[:80]}')
-            if 'settings' in p.relative_to(SRC).parts and ':has(' in text:
-                problems.append(f':has() in Settings styles {p.relative_to(PKG)}')
-            for m in re.finditer(r'border-(?:left|inline-start)\s*:\s*([^;]+);', text):
-                width = re.search(r'(\d+(?:\.\d+)?)px', m.group(1))
-                if width and float(width.group(1)) >= 2:
-                    problems.append(f'left accent border in {p.relative_to(PKG)}: {m.group(0)}')
-            notes: list[str] = []
-            problems.extend(lint_page_wide_universal(p.relative_to(PKG).as_posix(), text, notes))
-            for n in notes:
-                print('NOTE:', n, file=sys.stderr)
+        for source, text in lint_source_parts(p):
+            rel = source.relative_to(PKG) if source.is_relative_to(PKG) else source.relative_to(CONCEPTS.parent)
+            if EMOJI.search(text):
+                problems.append(f'emoji glyph in {rel}')
+            if p.suffix == '.css':
+                # A :has() whose subject is html/body/:root makes every DOM insertion restyle the whole ~17k-node document
+                # (measured ~90 ms each); that is what made Settings lag. Settings styles use no :has() at all.
+                for m in re.finditer(r'(?:^|[\s,}])(?:html|body|:root)\b[^{},]*:has\(', text):
+                    problems.append(f'page-wide :has() in {rel}: {m.group(0).strip()[:80]}')
+                if 'settings' in p.relative_to(SRC).parts and ':has(' in text:
+                    problems.append(f':has() in Settings styles {rel}')
+                for m in re.finditer(r'border-(?:left|inline-start)\s*:\s*([^;]+);', text):
+                    width = re.search(r'(\d+(?:\.\d+)?)px', m.group(1))
+                    if width and float(width.group(1)) >= 2:
+                        problems.append(f'left accent border in {rel}: {m.group(0)}')
+                notes: list[str] = []
+                problems.extend(lint_page_wide_universal(rel.as_posix(), text, notes))
+                for n in notes:
+                    print('NOTE:', n, file=sys.stderr)
     def walk(node, path):
         if isinstance(node, dict):
             for k, v in node.items():
