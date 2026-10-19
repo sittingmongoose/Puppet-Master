@@ -224,6 +224,8 @@ It reads both committed inputs with `git show`, pins their commits, and runs bot
 the current guarded harness. Both input refs are required for a run. It selects only menu/popover
 states and states with hover/focus actions. Use `--page Concepts/LeftRailPMConcept7.html` for Rail
 and a fresh output directory. Optional looks/pages/viewports/motions subsets use the normal syntax.
+The header count, `--list` selection and `comparison.json` planned count are calculated by
+`selectMatrix` for the requested subset; no comparison count is hardcoded in the wrapper.
 No expected removals, pixel tolerance or measured envelope is enabled. The wrapper retains pinned
 input bytes, command, source/matrix hashes and `comparison.json`; `parity/report.json` holds every capture.
 Require completed=planned and zero errors to establish that every new capture remained in-state.

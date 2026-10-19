@@ -49,6 +49,7 @@ function main(argv) {
   for (const subset of options.subsets) harnessArgs.push('--subset', subset);
   const selected = selectMatrix(matrix, parseArgs(harnessArgs).filters);
   console.log(scope);
+  console.log(`Selected transient comparisons: ${selected.count} (${selected.groups.length} groups; derived from selectMatrix).`);
   if (options.list) { console.log(JSON.stringify(selected, null, 2)); return 0; }
   if (!options['baseline-ref'] || !options['candidate-ref']) throw Error('--baseline-ref and --candidate-ref are required');
   if (!options.out || !isAbsolute(options.out)) throw Error('--out requires a new absolute directory outside the repository');
