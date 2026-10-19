@@ -21,85 +21,6 @@
     .pm-sheen:hover .pm-hover-icon { transform: scale(1.06); }
     [data-motion="reduced"] .pm-sheen:hover { transform: none; }
 
-    /* --- PM8 hover system: magnet + spotlight (replaces the pm6 jiggle).
-       Covers the same box-set the one-shot rotate wobble did (PM8_SEL in
-       pm6-js-globals): the hovered box leans a few px toward the pointer
-       (magnet) and lights an accent ring that is strongest at the
-       pointer and decays to nothing around the border (spotlight), plus
-       a soft interior wash AND an outward bloom around the box (the
-       reference's hover glow), concentrated at the pointer - the light
-       comes FROM the box itself; neighbors stay untouched. The bloom
-       is the box's own accent bloom shadow - cast by a FIXED
-       transparent proxy (#pm8-bloom) kept locked to the box's rect,
-       radius and magnet offset. The look is a plain card shadow
-       (lean + blur riding the same continuous field as the ring), but
-       fixed positioning escapes every scroll container's clip, so the
-       glow passes freely across scroll-region boundaries instead of
-       being hard-cut at a panel edge the way a shadow on the card is;
-       when the box itself is partly scrolled away the proxy is
-       clip-path'd to the box's visible rect so the shadow never floats
-       in dead space, and the field is occlusion-aware: a panel or
-       terminal over the grid (an unrelated hit subtree) can't light
-       the boxes behind it, while the gap between cards still bleeds
-       (the hit target there is the grid - an ancestor of the cards -
-       so entering a box from empty space stays snap-free).
-       Targets nested inside
-       another target (widget gear/close buttons) are not standalone -
-       the outer box owns the effect. Intensity is continuous everywhere:
-       it ramps up to --pm8-edge at a box's edge, reaches full --pm8-ramp
-       px inside, and fades to zero over --pm8-bleed px outside - no
-       snap at the edge. Feel is themed via the --pm8-* knobs below:
-       retro snaps (stiff spring, small hard ring), basic stays
-       restrained, glass drifts (wide soft ring, loose spring), friendly
-       springs with a micro overshoot. Color always rides
-       --accent-primary-rgb, so all 8 themes recolor automatically.
-
-       Slint 1.17 porting table (this HTML demo -> native primitives):
-         magnet offset            -> element `translate` property animated
-                                     with a spring (animate { spring(...) })
-         pointer tracking         -> TouchArea mouse-cursor-position
-         spotlight ring ::after   -> Rectangle painted with @radial-gradient
-                                     centered on the bound cursor position,
-                                     opacity bound to proximity; the CSS
-                                     mask below only crops the gradient to
-                                     the border band - in Slint, form the
-                                     band with an inner cover Rectangle
-                                     instead (no mask support needed)
-         interior wash ::before   -> second Rectangle painted with its own
-                                     @radial-gradient, stacked under the
-                                     box content (z-order, not z-index)
-         outward bloom shadow     -> Window-level transparent Rectangle
-                                     declared AFTER the content (never
-                                     clipped by a ScrollView - same
-                                     principle as the web's fixed
-                                     proxy), tracking the box's rect,
-                                     radius and magnet offset, with
-                                     drop-shadow-color / -offset /
-                                     -blur bound to intensity (Slint's
-                                     drop-shadow-* map 1:1 to the
-                                     proxy's box-shadow; an outer
-                                     shadow never paints inside its
-                                     border-box, so no mask needed). In
-                                     Slint the drop-shadow lives on the
-                                     box itself, so ScrollView clipping
-                                     is automatic - no proxy/clip-path
-                                     needed. Occlusion is automatic too
-                                     (a top element wins hit-testing).
-       Deliberately blend-mode-, filter- and canvas-free: everything here
-       reduces to translate + radial-gradient + opacity, all of which map
-       to Slint-native primitives. The magnet writes the standalone
-       `translate` property (never `transform`) so it composes with -
-       instead of displacing - entrance animations (fill-mode:both) and
-       any existing transform state, exactly as the old WAA track did. */
-
-    /* Pointer-tracking accent ring. pm6-js-globals writes --pm8-x/--pm8-y
-       (pointer position, %) and --pm8-i (continuous intensity 0..1).
-       Strongest at the pointer, decaying to nothing well before the far
-       side - never a uniform ring. Edge profile: a hard line on the box
-       perimeter, then an eased roll-off inward over ring+11px (four
-       edge-fade mask layers with a soft multi-stop curve, default-add)
-       instead of a hard inner cut. Idle defaults resolve the band to
-       nothing. */
     :is(.pm-sheen,.pm-term-icon-btn,.pm6-dash-iconbtn,.browser-action-btn,.activity-bar .icon,.pm6-dash-card,.pm6-dash-catalog-item,.pm6-proj-card,.project-card-bento,.pm6-wiz-choice-card,.pm6-wiz-attach-card,.pm6-wiz-disc-card,.pm6-orch-ctl,.pm6-orch-pc-stat,.pm6-orch-hist-state,.pm6-usage-acct-status,.pm6-sp-row,.pm6-art-row,.pm6-search-hit)::after {
       content: none;   /* PMH: the PM8 ring is off */
       position: absolute; inset: 0;
@@ -111,21 +32,6 @@
        the set is static today (verified), so relative is safe and moves
        no layout. .pm-sheen / wizard cards / bento are already relative. */
     :is(.pm-term-icon-btn,.pm6-dash-iconbtn,.browser-action-btn,.pm6-dash-card,.pm6-wiz-disc-card,.pm6-orch-ctl,.pm6-orch-pc-stat,.pm6-orch-hist-state,.pm6-usage-acct-status,.pm6-sp-row,.pm6-art-row,.pm6-search-hit) { position: relative; }
-    /* The magnet writes `translate` every frame; keep host transitions
-       (hover shadow / border fades) but never transition translate
-       itself. Some targets carry `transition: all`, which would lag the
-       spring. */
-
-    /* Interior wash: the hovered box's own light, from the pointer
-       position. Scoped to card/row-level hosts (icon buttons keep just
-       the ring arc - and some already own a ::before). The isolation
-       stacking context keeps the negative-z pseudo above the host's own
-       background and below its content, and inset:0 with the host's
-       radius keeps it inside the box. The OUTWARD emission is a
-       separate mechanism (the #pm8-bloom fixed shadow proxy below)
-       because widget cards - and their scroll containers - clip
-       everything a child paints; only a fixed, window-level proxy
-       escapes. */
     :is(.pm-sheen,.pm6-dash-card,.pm6-dash-catalog-item,.pm6-proj-card,.project-card-bento,.pm6-wiz-choice-card,.pm6-wiz-attach-card,.pm6-wiz-disc-card,.pm6-orch-ctl,.pm6-orch-pc-stat,.pm6-usage-acct-status,.pm6-sp-row,.pm6-art-row,.pm6-search-hit) { isolation: isolate; }
     :is(.pm-sheen,.pm6-dash-card,.pm6-dash-catalog-item,.pm6-proj-card,.project-card-bento,.pm6-wiz-choice-card,.pm6-wiz-attach-card,.pm6-wiz-disc-card,.pm6-orch-ctl,.pm6-orch-pc-stat,.pm6-usage-acct-status,.pm6-sp-row,.pm6-art-row,.pm6-search-hit)::before {
       content: none;   /* PMH: the PM8 wash is off; z-index:-1 stays for Glass */
@@ -134,22 +40,6 @@
       z-index: -1;
       pointer-events: none;
     }
-
-    /* PM8 owns the hover feedback on a live box: suppress the uniform
-       .pm-sheen accent ring/glow (base + themed variants further down
-       this block) so only the pointer-tracking ring + wash read. The
-       OUTWARD emission lives on #pm8-bloom below. */
-
-    /* Outward emission: the bloom is a box-shadow - but cast by a
-       FIXED transparent proxy (#pm8-bloom) that the engine keeps
-       locked to the hovered box's rect, radius and magnet offset,
-       instead of by the box itself. The look is identical to a shadow
-       on the card (same geometry: an outer shadow never paints inside
-       its own border-box, so the box surface stays clean - no mask
-       needed), but fixed positioning escapes every scroll container's
-       clip, so the glow is never hard-cut at a panel edge the way a
-       shadow on the card is. Lean (--pm8-ox/oy) and intensity
-       (--pm8-i) are fed per-frame by the engine. */
 
     /* --- motion keyframes --- */
     @keyframes pm-enter-up {
