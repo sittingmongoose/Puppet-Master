@@ -2,9 +2,9 @@
 
 Source: `Plans/Wiring_Matrix.md`
 
-Source lines: L4300-L4377
+Source lines: L4297-L4374
 
-Source SHA256: `4798573dabda2b10299dc4219dddbe4a5408b7adc13b7e83b7d1415821b50357`
+Source SHA256: `95b9855fbad3fdda5e2178024bb5218aac818a0810c0b353d89033abeea78b20`
 
 ---
 
@@ -74,7 +74,7 @@ validation_surfaces: [Plans/Wiring_Matrix.production.json, Plans/Wiring_Matrix.s
 risk_class: missing_reverse_wiring_or_false_production_claim
 reasoning_tier: high
 context_scope: cross_owner_setup_wiring
-implementation_surfaces: [Plans/Wiring_Matrix.md, Plans/Wiring_Matrix.production.json, Plans/UI_Command_Catalog.md, Plans/touch_closure.json, Concepts/pm7-tools/onboarding_cinematic_source.py, Concepts/pm7-tools/systems_integration_source.py]
+implementation_surfaces: [Plans/Wiring_Matrix.md, Plans/Wiring_Matrix.production.json, Plans/UI_Command_Catalog.md, Plans/touch_closure.json]
 node_compile_hint: {mode: cross_owner_production_intent_wiring, create_worknodes: false, create_nodeseeds: false}
 source_lineage:
   - scratchpad/pm-integration-20260831/authority-repairs/central-owner-merge/merged-central-owner-delta-manifest.json

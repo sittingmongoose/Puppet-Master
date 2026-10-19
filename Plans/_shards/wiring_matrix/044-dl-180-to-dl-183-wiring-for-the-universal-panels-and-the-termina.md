@@ -2,9 +2,9 @@
 
 Source: `Plans/Wiring_Matrix.md`
 
-Source lines: L5559-L6340
+Source lines: L5556-L6337
 
-Source SHA256: `4798573dabda2b10299dc4219dddbe4a5408b7adc13b7e83b7d1415821b50357`
+Source SHA256: `95b9855fbad3fdda5e2178024bb5218aac818a0810c0b353d89033abeea78b20`
 
 ---
 
@@ -339,12 +339,12 @@ context_scope: home_panels_terminal
 implementation_surfaces:
   - Plans/Wiring_Matrix.md
   - Plans/Wiring_Matrix.production.json
-  - Plans/PMConcept7_Home_Workspace_Control_Reconciliation.json
 node_compile_hint:
   mode: static_wiring_intent_only
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
+  - Plans/PMConcept7_Home_Workspace_Control_Reconciliation.json (superseded fixed-model Home reconciliation; control_census.retired_rows_2026_10_09 retains the retired rows)
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/followup/DECISIONS-ADDENDUM-2.md, SHA-256 1eecc96b03a1a774f52d06420c913553d5f5d1917e1bd5705e2f6e0bbc11fad6 (D31)"
   - "Plans/Decision_Log.md#DL-180"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/DECISIONS.md (SHA-256 0d2b45466c91734e15fd8659e9a8e3b17b70d92be785421e57e084dc8daf6b64)"

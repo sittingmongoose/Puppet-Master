@@ -3620,8 +3620,6 @@ validation_surfaces:
   - Plans/product_onboarding_contract_fixtures.json
   - Plans/guided_tour_contracts.schema.json
   - Plans/guided_tour_contract_fixtures.json
-  - Concepts/pm7-tools/onboarding_cinematic_source.py static assertions
-  - Concepts/pm7-tools/verify/onboarding_cinematic.mjs browser-concept verifier
   - future native Product Onboarding and Guided Tour local-action, owner-route, reverse-wiring, accessibility, and visual fixtures
 risk_class: onboarding_fake_command_or_parallel_owner_wiring
 reasoning_tier: high
@@ -4058,10 +4056,9 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
-  - Concepts/pm7-tools/base/PM7-base.html (current pinned PM7 input; source-lineage-only)
-  - Concepts/pm7-tools/build_pm7.py#T33-T43 (source-owned transforms)
-  - Concepts/pm7-tools/widget_live_resize_preview_source.py (authored T43 Usage-only live resize-preview transform)
-  - Concepts/PMConcept7.html (generated artifact; terminal bytes and hash are audit-owned)
+  - Concepts/pm7-tools/base/PM7-base.html (historical PM7 base; source-lineage-only)
+  - Concepts/pm7-tools/widget_live_resize_preview_source.py (retired Usage live resize-preview source; source-lineage-only)
+  - Concepts/PMConcept7.html (look-and-behaviour reference)
   - Plans/.audits/audit-20260829-001-pmconcept7-widget-followup/audit_report.json (current repo-local successor audit status; verdict remains report-owned)
   - "Concepts/usage-redesign/src/js/40-board.js (Usage redesign board: gravity and Tidy commits; source-lineage-only)"
   - Plans/Decision_Log.md#DL-176
@@ -4200,11 +4197,11 @@ gui_classification_reason: Governs exact GUI-to-local-controller and reverse-con
 depends_on: [WM-046, CS-072, UCC-150, PWIZ-023]
 unblocks: []
 acceptance_criteria:
-  - TCP-GUIDED-NAV has one typed UI action, one local concept controller, one GUI trigger, one exact return, and browser/static tests.
+  - TCP-GUIDED-NAV has one typed UI action, one local controller, one GUI trigger, one exact return, and tests.
   - No production matrix row, dispatcher, handler, domain event, or persistence effect is attributed to cmd.nav.focus_route.
   - Missing-router state remains keyboard-focusable, hover-bound, described, and non-dispatching.
   - Concept, browser, native Slint, and production-runtime evidence remain separate.
-validation_surfaces: [Plans/touch_closure.json, Plans/Wiring_Matrix.production.json, Plans/Wiring_Matrix.production.exclusions.json, python3 scripts/pm-touch-closure-verify.py, python3 scripts/pm-plans-verify.py validate-wiring-matrix, Concepts/pm7-tools/verify/guided_tour.mjs]
+validation_surfaces: [Plans/touch_closure.json, Plans/Wiring_Matrix.production.json, Plans/Wiring_Matrix.production.exclusions.json, python3 scripts/pm-touch-closure-verify.py, python3 scripts/pm-plans-verify.py validate-wiring-matrix]
 risk_class: false_production_wiring_or_missing_reverse_local_action_coverage
 reasoning_tier: high
 context_scope: guided_tour_application_focus_route
@@ -4279,11 +4276,11 @@ acceptance_criteria:
   - Mutating work preserves confirmation, currentness, conformance, provenance, containment, permission, update-diff, rollback, ObservableWork, cancellation, recovery, and exact-return requirements.
   - Settings and Doctor consume Plugins owner facts and commands without private parsing, validation, adapter, migration, repair, or lifecycle mutation.
   - All effects remain receipt-only and no plugin.* or agent_plugin.* EventRecord, alias, second handler, or success simulation is admitted.
-validation_surfaces: [Plans/Wiring_Matrix.production.json, Plans/touch_closure.json, Plans/plugin_contract_fixtures.json, Concepts/pm7-tools/systems_integration_source.py, python3 scripts/pm-plans-verify.py validate-wiring-matrix, python3 scripts/pm-touch-closure-verify.py]
+validation_surfaces: [Plans/Wiring_Matrix.production.json, Plans/touch_closure.json, Plans/plugin_contract_fixtures.json, python3 scripts/pm-plans-verify.py validate-wiring-matrix, python3 scripts/pm-touch-closure-verify.py]
 risk_class: plugin_wiring_or_false_runtime_closure
 reasoning_tier: high
 context_scope: agent_plugin_production_intent
-implementation_surfaces: [Plans/Wiring_Matrix.md, Plans/Wiring_Matrix.production.json, Plans/touch_closure.json, Concepts/pm7-tools/systems_integration_source.py]
+implementation_surfaces: [Plans/Wiring_Matrix.md, Plans/Wiring_Matrix.production.json, Plans/touch_closure.json]
 node_compile_hint: {mode: agent_plugin_production_intent, create_worknodes: false, create_nodeseeds: false}
 source_lineage:
   - Plans/Commands_System.md#CS-071
@@ -4363,7 +4360,7 @@ validation_surfaces: [Plans/Wiring_Matrix.production.json, Plans/Wiring_Matrix.s
 risk_class: missing_reverse_wiring_or_false_production_claim
 reasoning_tier: high
 context_scope: cross_owner_setup_wiring
-implementation_surfaces: [Plans/Wiring_Matrix.md, Plans/Wiring_Matrix.production.json, Plans/UI_Command_Catalog.md, Plans/touch_closure.json, Concepts/pm7-tools/onboarding_cinematic_source.py, Concepts/pm7-tools/systems_integration_source.py]
+implementation_surfaces: [Plans/Wiring_Matrix.md, Plans/Wiring_Matrix.production.json, Plans/UI_Command_Catalog.md, Plans/touch_closure.json]
 node_compile_hint: {mode: cross_owner_production_intent_wiring, create_worknodes: false, create_nodeseeds: false}
 source_lineage:
   - scratchpad/pm-integration-20260831/authority-repairs/central-owner-merge/merged-central-owner-delta-manifest.json
@@ -5887,12 +5884,12 @@ context_scope: home_panels_terminal
 implementation_surfaces:
   - Plans/Wiring_Matrix.md
   - Plans/Wiring_Matrix.production.json
-  - Plans/PMConcept7_Home_Workspace_Control_Reconciliation.json
 node_compile_hint:
   mode: static_wiring_intent_only
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
+  - Plans/PMConcept7_Home_Workspace_Control_Reconciliation.json (superseded fixed-model Home reconciliation; control_census.retired_rows_2026_10_09 retains the retired rows)
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/followup/DECISIONS-ADDENDUM-2.md, SHA-256 1eecc96b03a1a774f52d06420c913553d5f5d1917e1bd5705e2f6e0bbc11fad6 (D31)"
   - "Plans/Decision_Log.md#DL-180"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/DECISIONS.md (SHA-256 0d2b45466c91734e15fd8659e9a8e3b17b70d92be785421e57e084dc8daf6b64)"
