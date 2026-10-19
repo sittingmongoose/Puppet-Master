@@ -63,6 +63,15 @@ JS native counters remain unchanged, but missing static-function counts stay
 unknown and the legacy byte projection retains the entire script while navigation
 tracking is incomplete. Positive touches remain usable.
 
+For historical captures only, an explicit `--assume-navigation-clean <evidence-file>`
+may treat a missing count as zero for certification. Supply a nonempty audit of the
+covered page's navigation paths and whether the campaign recipes can reach them.
+The summary and completed union record the assumption, absolute evidence path and
+SHA-256 in `caveats` and `census.navigation_assumption`. Affected CSS/JS rows retain
+`navigation_unchecked: true` and mark `navigation_assumed_clean: true`; the raw
+counter stays absent or null. This flag never overrides a known positive count.
+Without the flag, missing tracking remains unknown.
+
 Generate a complete static-page census and source map with:
 
 ```sh

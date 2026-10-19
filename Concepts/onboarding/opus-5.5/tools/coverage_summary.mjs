@@ -17,11 +17,17 @@ const completeIdx = process.argv.indexOf('--complete-union');
 const completeFile = completeIdx >= 0 ? resolve(process.argv[completeIdx + 1]) : null;
 const receiptIdx = process.argv.indexOf('--provenance-receipt');
 const receiptFile = receiptIdx >= 0 ? resolve(process.argv[receiptIdx + 1]) : null;
-if (!outArg) throw Error('usage: coverage_summary.mjs <page.html> <union.json> <out-prefix>');
+const assumptionIdx = process.argv.indexOf('--assume-navigation-clean');
+const assumptionArg = assumptionIdx >= 0 ? process.argv[assumptionIdx + 1] : null;
+if (assumptionIdx >= 0 && (!assumptionArg || assumptionArg.startsWith('--'))) throw Error('--assume-navigation-clean needs an evidence file');
+const assumptionFile = assumptionArg ? resolve(assumptionArg) : null;
+if (!outArg) throw Error('usage: coverage_summary.mjs <page.html> <union.json> <out-prefix> [--assume-navigation-clean <evidence-file>]');
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '../../../..');
 const pageFile = resolve(pageArg), unionFile = resolve(unionArg), out = resolve(outArg);
 const bytes = readFileSync(pageFile), html = bytes.toString('utf8'), union = JSON.parse(readFileSync(unionFile, 'utf8'));
 const hash = (s) => createHash('sha256').update(s).digest('hex');
+const assumptionBytes = assumptionFile ? readFileSync(assumptionFile) : null;
+if (assumptionBytes && !assumptionBytes.toString('utf8').trim()) throw Error('--assume-navigation-clean needs nonempty evidence');
 const receiptBytes = receiptFile ? readFileSync(receiptFile) : null;
 const receipt = receiptBytes ? JSON.parse(receiptBytes) : null;
 const receiptEntry = receipt?.version === 1 && receipt.kind === 'pm7-coverage-per-sample-provenance'
@@ -105,6 +111,12 @@ const unresolvedUnbounded = unresolvedJs.some((s) => !Array.isArray(s.usedRanges
   !(s.usedRangesProvenance === 'per-sample-v1' || receiptEntry?.script_hashes?.includes(s.script)));
 const unresolvedCss = union.css.filter((r) => !/^[a-f0-9]{16}$/i.test(r.sheet) && r.used);
 const unsampledNavigations = union.unsampled_navigations ?? null;
+const navigationAssumption = assumptionFile ? {
+  kind: 'assume-navigation-clean', applied: unsampledNavigations == null,
+  statement: 'Assume missing navigation tracking is clean for absence certification only; the recorded count remains unknown. Known positive counts are never overridden.',
+  evidence: { path: assumptionFile, sha256: hash(assumptionBytes) },
+} : null;
+const navigationClean = unsampledNavigations === 0 || !!navigationAssumption?.applied;
 const clip = (ranges, end) => unionRanges(ranges.map((r) => ({ startOffset: Math.max(0, r.startOffset), endOffset: Math.min(end, r.endOffset) })));
 function subtractRanges(ranges, cuts) {
   const result = [];
@@ -149,7 +161,8 @@ for (const b of blocks) {
       rule.unresolved_source_overlap = !rule.used && unresolvedCss.some((r) => r.startOffset < endOffset && r.endOffset > startOffset);
       rule.unsampled_navigation_gap = !rule.used && unsampledNavigations > 0;
       rule.navigation_unchecked = !rule.used && unsampledNavigations == null;
-      rule.usage_state = rule.used ? 'used' : sheetObserved && !rule.unresolved_source_overlap && !rule.unsampled_navigation_gap && !rule.navigation_unchecked ? 'unused' : 'unknown';
+      rule.navigation_assumed_clean = rule.navigation_unchecked && !!navigationAssumption?.applied;
+      rule.usage_state = rule.used ? 'used' : sheetObserved && !rule.unresolved_source_overlap && navigationClean ? 'unused' : 'unknown';
       found.push(rule); rules.push(rule);
     } });
     row.rules_total = found.length; row.rules_used = found.filter((r) => r.used).length;
@@ -178,7 +191,8 @@ for (const b of blocks) {
     row.used_bytes = (used || []).reduce((n, r) => n + len(b.text.slice(r.startOffset, r.endOffset)), 0);
     row.navigation_unchecked = row.used_bytes < row.bytes && unsampledNavigations == null;
     row.unsampled_navigation_gap = row.used_bytes < row.bytes && unsampledNavigations > 0;
-    row.unused_bytes = row.byte_coverage_verified && unsampledNavigations === 0 ? row.bytes - row.used_bytes - row.uncertain_bytes : 0;
+    row.navigation_assumed_clean = row.navigation_unchecked && !!navigationAssumption?.applied;
+    row.unused_bytes = row.byte_coverage_verified && navigationClean ? row.bytes - row.used_bytes - row.uncertain_bytes : 0;
     row.unmeasured_bytes = row.bytes - row.used_bytes - row.unused_bytes;
     let ast;
     try { ast = acorn.parse(b.text, { ecmaVersion: 'latest', sourceType: b.type === 'module' ? 'module' : 'script', allowReturnOutsideFunction: true }); }
@@ -196,9 +210,9 @@ for (const b of blocks) {
       for (const fn of aliases) seen.add(fn);
       const name = match?.functionName || node.id?.name || (parent?.type === 'VariableDeclarator' ? parent.id.name : parent?.type === 'Property' || parent?.type === 'MethodDefinition' ? parent.key.name || parent.key.value : '') || '';
       functions.push({ block: b.id, script: digest, startOffset: node.start, endOffset: node.end, name,
-        observed: !!match, count: match ? aliases.reduce((n, fn) => n + fn.ranges[0].count, 0) : coverage && unsampledNavigations === 0 ? 0 : null,
+        observed: !!match, count: match ? aliases.reduce((n, fn) => n + fn.ranges[0].count, 0) : coverage && navigationClean ? 0 : null,
         native_names: [...new Set(aliases.map((fn) => fn.functionName))],
-        count_basis: match ? 'CDP' : !coverage ? 'unobserved script' : unsampledNavigations === 0 ? 'static function absent from observed script coverage' : 'navigation history incomplete',
+        count_basis: match ? 'CDP' : !coverage ? 'unobserved script' : navigationClean ? 'static function absent from observed script coverage' : 'navigation history incomplete',
         v8_startOffset: match?.ranges[0]?.startOffset ?? null, v8_endOffset: match?.ranges[0]?.endOffset ?? null });
     });
     for (const fn of v8.filter((f) => !seen.has(f))) {
@@ -211,7 +225,8 @@ for (const b of blocks) {
       f.unresolved_source_overlap = uncertain.some((r) => r.startOffset < f.endOffset && r.endOffset > f.startOffset);
       f.navigation_unchecked = !(f.count > 0) && unsampledNavigations == null;
       f.unsampled_navigation_gap = !(f.count > 0) && unsampledNavigations > 0;
-      f.usage_state = f.count > 0 ? 'used' : f.count === 0 && unsampledNavigations === 0 && !f.unresolved_source_overlap ? 'unused' : 'unknown';
+      f.navigation_assumed_clean = f.navigation_unchecked && !!navigationAssumption?.applied;
+      f.usage_state = f.count > 0 ? 'used' : f.count === 0 && navigationClean && !f.unresolved_source_overlap ? 'unused' : 'unknown';
     }
     row.functions_total = fs.length; row.functions_used = fs.filter((f) => f.count > 0).length;
     row.functions_unobserved = fs.filter((f) => !f.observed).length;
@@ -224,6 +239,7 @@ const report = { page: rel(pageFile), page_sha256: hash(bytes), union: unionFile
   unresolved_js_sources: unresolvedJs.map((s) => ({ script: s.script, url: s.url, functions: s.functions.length, positive_ranges: s.usedRanges?.length || 0 })),
   unresolved_css_sources: [...new Set(unresolvedCss.map((r) => r.sheet))],
   unsampled_navigations: unsampledNavigations,
+  navigation_assumption: navigationAssumption,
   offset_units: 'UTF-16 code units, relative to block body; bytes are UTF-8',
   caveats: ['Unused means not touched in these runs; it is not proof of dead code.', 'Unobserved CSS rules/functions are distinguished from explicit zero counts.', 'CSS used bytes count matched style-rule spans; fonts, keyframes, at-rules and whitespace are outside that metric.', 'JS unused bytes require per-sample-v1 provenance or a matching hash-bound receipt; otherwise the remainder is unmeasured.', 'Unresolved same-page script identities conservatively make compatible positive offsets uncertain in every canonical script. Function counts are counts from resolved sources, with unresolved overlaps flagged.', 'Function counts sum samples, not independent users or test cases.'],
   totals: { css_rules_used: sum('style', 'rules_used'), css_rules_total: sum('style', 'rules_total'), css_rules_unused: sum('style', 'rules_unused'), css_rules_unmeasured: sum('style', 'rules_unmeasured'), css_bytes: sum('style', 'bytes'), css_used_bytes: sum('style', 'used_bytes'), css_unused_bytes: sum('style', 'unused_bytes'), css_unmeasured_bytes: sum('style', 'unmeasured_bytes'),
@@ -231,6 +247,9 @@ const report = { page: rel(pageFile), page_sha256: hash(bytes), union: unionFile
   blocks: rows, css_rules: rules, js_functions: functions, errors,
   runtime_css: [...new Set(union.css.filter((r) => !matchedCss.has(r.sheet)).map((r) => r.sheet))],
   runtime_js: union.js.filter((s) => !matchedJs.has(s.script)).map((s) => ({ script: s.script, url: s.url, functions: s.functions.length })) };
+if (navigationAssumption) report.caveats.push(
+  `--assume-navigation-clean ${navigationAssumption.evidence.path} (SHA-256 ${navigationAssumption.evidence.sha256}): ` +
+  (navigationAssumption.applied ? 'missing navigation count treated as zero for certification; navigation_unchecked remains true. This is an explicit assumption, not a measured zero.' : 'not applied; a recorded count is present and known navigation gaps remain unknown.'));
 mkdirSync(dirname(out), { recursive: true });
 writeFileSync(out + '.json', JSON.stringify(report, null, 2) + '\n');
 const md = ['# Coverage by page block', '', '`' + report.page + '`', '', 'Page SHA-256: `' + report.page_sha256 + '`', 'Union SHA-256: `' + report.union_sha256 + '`', '', ...report.caveats.map((s) => '- ' + s), '',
@@ -242,23 +261,28 @@ writeFileSync(out + '.md', md.join('\n'));
 if (completeFile) {
   // Complete only observed content hashes. An entirely missing script/sheet remains
   // unknown; a census never invents a successful load of an unrecorded block.
-  const entries = new Map(union.css.filter((r) => r.used !== false || unsampledNavigations === 0 && !unresolvedCss.some((u) => u.startOffset < r.endOffset && u.endOffset > r.startOffset))
-    .map((r) => [r.sheet + ':' + r.startOffset + ':' + r.endOffset, r]));
+  const entries = new Map(union.css.filter((r) => r.used !== false || navigationClean && !unresolvedCss.some((u) => u.startOffset < r.endOffset && u.endOffset > r.startOffset))
+    .map((r) => [r.sheet + ':' + r.startOffset + ':' + r.endOffset, r.used === false && unsampledNavigations == null
+      ? { ...r, navigation_unchecked: true, navigation_assumed_clean: !!navigationAssumption?.applied } : r]));
   for (const r of rules.filter((r) => r.sheet_observed)) {
     const key = r.sheet + ':' + r.startOffset + ':' + r.endOffset;
     const previous = entries.get(key);
     if (r.usage_state === 'unknown') { if (previous?.used === false) entries.delete(key); continue; }
     entries.set(key, { ...previous, sheet: r.sheet, startOffset: r.startOffset, endOffset: r.endOffset,
       used: !!previous?.used || r.used, block: r.block, rule_hash: r.rule_hash, census: true });
+    if (r.navigation_unchecked) Object.assign(entries.get(key), { navigation_unchecked: true, navigation_assumed_clean: r.navigation_assumed_clean });
   }
   union.css = [...entries.values()];
   for (const script of union.js) {
     const block = rows.find((r) => r.kind === 'script' && r.hash === script.script);
     if (!block) continue;
     script.uncertainRanges = block.uncertainRanges || [];
+    script.navigation_unchecked = block.navigation_unchecked;
+    script.navigation_assumed_clean = block.navigation_assumed_clean;
     if (script.uncertainRanges.length) script.uncertainSourceKeys = unresolvedJs.map((s) => s.script);
     const missing = functions.filter((f) => f.script === script.script && !f.observed && f.count === 0);
     script.functions.push(...missing.map((f) => ({ functionName: f.name, isBlockCoverage: false, census: true,
+      navigation_unchecked: f.navigation_unchecked, navigation_assumed_clean: f.navigation_assumed_clean,
       ranges: [{ startOffset: f.startOffset, endOffset: f.endOffset, count: 0 }] })));
     // The legacy v2 join reads functions/ranges, not usedRanges. Split an extra
     // projection at *all* boundaries so its byte union wins over a stale nested
@@ -268,7 +292,7 @@ if (completeFile) {
     // absence as proof when navigation tracking is incomplete. Preserve native
     // counters, but retain the whole block in their Boolean byte projection.
     const retain = unionRanges([...used, ...script.uncertainRanges,
-      ...(unsampledNavigations !== 0 ? [{ startOffset: 0, endOffset: block.units }] : [])]);
+      ...(!navigationClean ? [{ startOffset: 0, endOffset: block.units }] : [])]);
     const points = [...new Set([0, block.units, ...script.functions.flatMap((f) => f.ranges.flatMap((r) => [r.startOffset, r.endOffset])), ...retain.flatMap((r) => [r.startOffset, r.endOffset])])].sort((a, b) => a - b);
     const ranges = [];
     let j = 0;
@@ -279,10 +303,12 @@ if (completeFile) {
       ranges.push({ startOffset, endOffset, count });
     }
     script.functions.push({ functionName: '[coverage-union-bytes]', isBlockCoverage: true, union_projection: true,
-      includes_uncertain_ranges: !!script.uncertainRanges.length, navigation_unknown: unsampledNavigations !== 0, ranges });
+      includes_uncertain_ranges: !!script.uncertainRanges.length, navigation_unknown: !navigationClean, ranges });
   }
   union.census = { page: report.page, page_sha256: report.page_sha256, raw_union_sha256: report.union_sha256,
     provenance_receipt: report.provenance_receipt,
+    navigation_assumption: navigationAssumption,
+    caveats: report.caveats,
     offset_units: report.offset_units, style_rules: rules.length, js_functions: functions.filter((f) => !f.script_root).length,
     policy: 'Static census completes only observed content hashes. usedRanges holds resolved touches; uncertainRanges holds possible touches from unresolved identities. union_projection conservatively retains either, and is not a function invocation count.' };
   mkdirSync(dirname(completeFile), { recursive: true });

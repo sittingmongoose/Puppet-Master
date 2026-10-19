@@ -8,11 +8,11 @@ import { join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const summaryTool = fileURLToPath(new URL('./coverage_summary.mjs', import.meta.url));
-function summarize(text, extra = {}) {
+function summarize(text, extra = {}, args = []) {
   const sheet = createHash('sha256').update(text).digest('hex').slice(0, 16);
   const startOffset = text.indexOf('.spinner'), endOffset = text.indexOf('}', startOffset) + 1;
   return summarizePage(`<style id="fixture">${text}</style>`, { version: 2, js: [],
-    css: [{ sheet, startOffset, endOffset, used: true }], ...extra });
+    css: [{ sheet, startOffset, endOffset, used: true }], ...extra }, args);
 }
 
 function summarizePage(html, union, args = []) {
@@ -119,4 +119,59 @@ test('JS absence needs tracked zero while native counts and positive touches rem
       assert.equal(projection.navigation_unknown, true);
     }
   }
+});
+
+test('the evidence-bound opt-in certifies missing counts without hiding unchecked navigation', () => {
+  const dir = mkdtempSync(join(tmpdir(), 'pm7-navigation-assumption-'));
+  try {
+    const evidence = join(dir, 'navigation.md'), statement = 'Fixture only: no page-initiated navigation in this synthetic page.\n';
+    writeFileSync(evidence, statement);
+    const css = '.spinner { color: red; } .idle { color: blue; }';
+    const js = 'function idle(){} void 0;';
+    const sheet = createHash('sha256').update(css).digest('hex').slice(0, 16);
+    const script = createHash('sha256').update(js).digest('hex').slice(0, 16);
+    for (const count of [undefined, null, 0, 2]) {
+      const raw = { version: 2, js: [{ script, functions: [], usedRangesProvenance: 'per-sample-v1',
+        usedRanges: [{ startOffset: js.indexOf('void'), endOffset: js.length }] }], css: [
+        { sheet, startOffset: 0, endOffset: css.indexOf('}') + 1, used: true },
+        { sheet: 'unmatched-sheet', startOffset: 0, endOffset: 10, used: false },
+      ], ...(count === undefined ? {} : { unsampled_navigations: count }) };
+      const { summary, complete } = summarizePage(`<style id="fixture">${css}</style><script id="js">${js}</script>`, raw,
+        ['--assume-navigation-clean', evidence]);
+      assert.equal(summary.unsampled_navigations, count ?? null);
+      assert.equal(complete.unsampled_navigations, count);
+      assert.equal(Object.hasOwn(complete, 'unsampled_navigations'), count !== undefined);
+      const assumption = summary.navigation_assumption;
+      assert.equal(assumption.applied, count == null);
+      assert.deepEqual(assumption.evidence, { path: evidence,
+        sha256: createHash('sha256').update(statement).digest('hex') });
+      assert.deepEqual(complete.census.navigation_assumption, assumption);
+      assert.deepEqual(complete.census.caveats, summary.caveats);
+      assert.ok(summary.caveats.some(s => s.includes(evidence) && s.includes(assumption.evidence.sha256)));
+      if (count > 0) {
+        assert.equal(summary.totals.css_rules_unused, 0);
+        assert.equal(summary.totals.js_unused_bytes, 0);
+        assert.equal(complete.css.filter(r => !r.used).length, 0);
+        assert.equal(summary.js_functions[0].usage_state, 'unknown');
+      } else {
+        assert.equal(summary.totals.css_rules_unused, 1);
+        assert.ok(summary.totals.js_unused_bytes > 0);
+        const idle = summary.css_rules.find(r => r.selector === '.idle');
+        assert.equal(idle.navigation_unchecked, count == null);
+        assert.equal(idle.navigation_assumed_clean, count == null);
+        assert.equal(summary.js_functions[0].navigation_unchecked, count == null);
+        assert.equal(summary.js_functions[0].usage_state, 'unused');
+        if (count == null) {
+          assert.ok(complete.css.filter(r => !r.used).every(r => r.navigation_unchecked && r.navigation_assumed_clean));
+          assert.ok(complete.js[0].functions.filter(f => f.census).every(f => f.navigation_unchecked && f.navigation_assumed_clean));
+        }
+      }
+    }
+    const empty = join(dir, 'empty.md'); writeFileSync(empty, '');
+    const raw = { version: 2, js: [], css: [] };
+    for (const args of [['--assume-navigation-clean'], ['--assume-navigation-clean', '--complete-union'],
+      ['--assume-navigation-clean', empty], ['--assume-navigation-clean', join(dir, 'missing.md')]]) {
+      assert.throws(() => summarizePage('<style></style>', raw, args));
+    }
+  } finally { rmSync(dir, { recursive: true, force: true }); }
 });
