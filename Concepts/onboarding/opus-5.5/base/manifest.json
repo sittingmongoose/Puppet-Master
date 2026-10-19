@@ -52,12 +52,6 @@
     },
     {
       "tag": "style",
-      "id": "pm6-css-usage",
-      "file": "style/pm6-css-usage.css",
-      "slot": "@@PM7_BASE_0009@@"
-    },
-    {
-      "tag": "style",
       "id": "pm6-css-chat",
       "file": "style/pm6-css-chat.css",
       "slot": "@@PM7_BASE_0010@@"
@@ -386,6 +380,12 @@
       "id": "pm7-t31-usage-final",
       "file": "style/pm7-t31-usage-final.css",
       "slot": "@@PM7_BASE_0035@@"
+    },
+    {
+      "tag": "style",
+      "id": "pm6-css-usage",
+      "file": "style/pm6-css-usage.css",
+      "slot": "@@PM7_BASE_0009@@"
     }
   ]
 }

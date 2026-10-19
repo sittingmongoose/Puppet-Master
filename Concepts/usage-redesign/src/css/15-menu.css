@@ -15,7 +15,6 @@
 }
 html[data-theme$="-light"] #panel-usage .pmu-shell { --pmu-menu-shadow: 0 18px 50px rgba(21,32,43,.16), 0 4px 14px rgba(21,32,43,.08); --pmu-menu-hot: color-mix(in srgb, var(--pmu-ink) 6%, transparent); }
 html[data-theme^="friendly"] #panel-usage .pmu-shell { --pmu-r-menu: 16px; --pmu-r-mitem: 10px; }
-html[data-theme="glass-dark"] #panel-usage .pmu-shell { --pmu-menu-bg: rgba(24,17,52,.96); --pmu-menu-border: rgba(196,179,255,.28); --pmu-menu-shadow: 0 18px 60px rgba(8,4,20,.6), 0 4px 18px rgba(8,4,20,.32); }
 html[data-theme="glass-light"] #panel-usage .pmu-shell { --pmu-menu-bg: rgba(255,255,255,.97); --pmu-menu-border: rgba(23,34,42,.14); }
 html[data-theme^="retro"] #panel-usage .pmu-shell { --pmu-r-menu: 0px; --pmu-r-mitem: 0px; --pmu-menu-shadow: var(--pmu-shadow-pop); --pmu-menu-border: var(--pmu-rule); }
 

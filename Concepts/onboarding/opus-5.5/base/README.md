@@ -48,6 +48,10 @@ Settings, the T46P inventory snapshot and the inventory harnesses read the live
 by `tools/settings_layer.py` from `Plans/settings_inventory.json`.
 Use `python scripts/pm7-where.py '<snippet>'` to find the live source, then the four checks above.
 The retired PM8 hover engine is removed; its shared pointermove dispatcher and live page-motion rules remain.
+The old Glass stage and Mesh/Depth/Minimal picker are retired; Glass always uses Liquid Glass with a wallpaper.
+The last legacy `pm6-css-usage` rule retired with B1-core; its body is retained byte-exact as inert history.
+Wallpaper migration and current writes use the active Project Settings adapter; the old browser-wide preference
+is only an absent-value migration input. Compatibility data clears only after successful Project write/readback.
 
 ## Historical inline patch names
 

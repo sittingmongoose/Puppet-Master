@@ -62,8 +62,6 @@
 }
 #themeMenu .o55-nier-tt-adjust:hover { background: var(--surface); color: var(--text-primary); }
 #themeMenu .o55-nier-tt-sliders { flex: 0 0 auto; display: block; }
-html[data-theme^="glass"] #themeMenu .o55-nier-tt-adjust { border-radius: 8px; }
-html[data-theme^="glass"] #themeMenu .o55-nier-tt-adjust:hover { background: var(--rg-menu-hover); }
 html[data-o55-nier] #themeMenu .o55-nier-tt-adjust { border-radius: 0; }
 
 /* ---------- popup (body-level; the editor rules live in 17-nier-chips.css under .o55nc-host) ---------- */
