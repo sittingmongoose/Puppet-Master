@@ -2080,8 +2080,6 @@ acceptance_criteria:
   call in both its variants; Reduced Motion and low resource show each moment's end state, and a key or a press snaps
   a running moment to it (F3-600, DL-153).
 validation_surfaces:
-- Concepts/pm7-tools/onboarding_cinematic_source.py static assertions
-- Concepts/pm7-tools/verify/onboarding_cinematic.mjs browser-concept verifier
 - future native six-width visual fixtures
 - Reduced Motion traces
 - keyboard and screen-reader fixtures
@@ -2244,7 +2242,6 @@ acceptance_criteria:
 validation_surfaces:
 - Plans/product_onboarding_contracts.schema.json
 - Plans/product_onboarding_contract_fixtures.json
-- Concepts/pm7-tools/onboarding_cinematic_source.py static assertions
 - future native four-route
 - live-review
 - defer/resume

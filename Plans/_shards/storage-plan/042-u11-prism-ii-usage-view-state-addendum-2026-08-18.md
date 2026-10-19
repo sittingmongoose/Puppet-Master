@@ -2,9 +2,9 @@
 
 Source: `Plans/storage-plan.md`
 
-Source lines: L18415-L18526
+Source lines: L18414-L18525
 
-Source SHA256: `082af0f739b10d86a02d4fbb43fe67a64348788d21baed2acfd0a7635b31f689`
+Source SHA256: `78282d3b7d16a5e5da1df370b6e8455f7fd9de9ef1fe77eee550685787307322`
 
 ---
 
@@ -85,9 +85,9 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
-  - "Concepts/pm7-tools/base/PM7-base.html (current recovered PMConcept7 source base; source-lineage-only)"
-  - "Concepts/pm7-tools/build_pm7.py (current assertion-guarded T33-T41 pipeline)"
-  - "Concepts/PMConcept7.html (protected generated output; verification input only; never hand-edit)"
+  - "Concepts/pm7-tools/base/PM7-base.html (historical PM7 prototype lineage only)"
+  - "Concepts/pm7-tools/build_pm7.py (historical PM7 prototype lineage only)"
+  - "Concepts/PMConcept7.html (look-and-behaviour reference only)"
   - "Concepts/usage-concepts/QwenUsageConcept/u11-prism.html (superseded prototype/import lineage)"
   - Concepts/usage-concepts/QwenUsageConcept/u11-widgets.js
   - "Concepts/usage-redesign/src/js/40-board.js and src/js/15-film.js (the redesigned concept's layout envelope and remembered Live choice; source-lineage-only)"

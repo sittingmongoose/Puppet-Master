@@ -557,7 +557,7 @@ The owner split is strict:
 - `Plans/settings_inventory.json` and its schema retain the exact 828 ordinary setting IDs and row metadata. Manager, action, status, diagnostic, setup, and unavailable-capability destinations are outside that denominator.
 - `Plans/FinalGUISpec.md` retains shared GUI/theme-token ownership and consumes Settings placement; its earlier Settings shell/global/inheritance clauses are superseded where SSYS-001..SSYS-023 adjudicate them.
 - Storage, Permissions/FileSafe/Multi-Account, Shared Integration Runtime, Commands/Catalog/Wiring, provider, Server, Project Sync, Browser, SCM, Docker Manager, Onboarding, Doctor, and testing docs retain their named domain contracts. Settings renders policy, compact projections, exact availability, owner commands, receipts, and routes without implementing peer runtimes.
-- K3 Tome Tabs is exact geometry lineage only. The generated PMConcept7 T44 fixture is not production/runtime proof; later Server First Backbone, Egolite/Hermes/Origin/Browser/SCM, Full Thread Performance, Onboarding/Doctor Correction, and Settings Bakeoff decisions control content and behavior.
+- K3 Tome Tabs and the PMConcept7 Settings illustration are geometry/concept lineage only, not production/runtime proof; later Server First Backbone, Egolite/Hermes/Origin/Browser/SCM, Full Thread Performance, Onboarding/Doctor Correction, and Settings Bakeoff decisions control content and behavior.
 - Every persisted ordinary setting is Project-scoped. An untouched fresh Project seeds Basic Dark only when no committed theme snapshot exists; an explicit saved selection or copied detached snapshot wins. A no-Project surface is ephemeral Basic Dark and rejects writes. The current inventory's non-Project scope vocabulary remains a deferred normalization, not contrary persistence authority.
 
 ContractRef: ContractName:Plans/Settings_System.md, ContractName:Plans/settings_inventory.json, ContractName:Plans/storage-plan.md, ContractName:Plans/FinalGUISpec.md
@@ -569,7 +569,7 @@ The five retained implementation packets extend canon through distinct owners ra
 - `Plans/Project_System.md` owns Project registration, open/archive/remove/delete-data semantics and Project identity; `Plans/Named_Plan_System.md` owns named-plan identity and lifecycle. Planning Wizard consumes both but owns neither.
 - `Plans/Server_System.md` owns Server catalog, identity, trust, pairing, endpoint, discovery, connection, client, and server lifecycle. `Plans/Remote_Access_System.md` owns route selection, migration, private/public exposure policy, and remote-link continuity without becoming Server identity authority.
 - `Plans/Backup_Restore_System.md` owns Project and Full Server backup/restore, verification, quarantine, test restore, replacement/selective restore, recovery points, activation, rollback, and the five typed receipt families. It excludes binaries, caches, active processes, PTYs, live browser state, reconstructable payloads, and ordinary secret bytes by default; portable secrets require a separate encrypted user-controlled recovery envelope.
-- `Plans/Test_Capture_and_Motion_Evidence.md` owns explicit capture, redaction, retention/evidence boundaries, frame indexes, browser-motion evidence, and TCME-007's exact-artifact PMConcept7 campaign, full-resolution review/defect-recapture, interactive-browser receipts, and approval-gated cleanup contract. It cannot inspect, record, export, or restore protected `AuthBrowserSession` content and cannot promote browser evidence into native Slint certification.
+- `Plans/Test_Capture_and_Motion_Evidence.md` owns explicit capture, redaction, retention/evidence boundaries, frame indexes, capture provenance, and TCME-007's scenario coverage, artifact identity, and motion evidence integrity. It cannot inspect, record, export, or restore protected `AuthBrowserSession` content and cannot promote browser-concept evidence into native Slint certification.
 - `Plans/Source_Control_System.md` owns common Git/source-control repository, workspace, status, diff, history, fetch/sync/publish semantics. `Plans/Jujutsu_Integration.md` owns JJ-specific changes, bookmarks, operations, Git interchange, and workspaces. `Plans/Forge_Integrations.md` owns provider-neutral hosted-forge reviews, pipelines, webhooks, repositories, mirrors, and connections.
 - `Plans/Cursor_Origin_Integration.md`, `Plans/GitLab_Integration.md`, `Plans/Azure_DevOps_Integration.md`, and `Plans/Bitbucket_Integration.md` are provider-specific consumers of the common forge/auth/install/connection contracts. They do not create `cmd.origin.*`, `cmd.gitlab.*`, `cmd.azure_devops.*`, or generic `cmd.bitbucket.*` primary namespaces. Cursor Origin remains a brief Preview insertion, not an SCM backend or dedicated Onboarding subsystem.
 - `Plans/Section15_MVP_Promoted_Features_Spec.md` remains the PM-native Browser/Browser Program owner. Protected `AuthBrowserSession` is human-only, ephemeral, non-recordable, non-inspectable, non-exportable, and unavailable to agents and adapters.
@@ -5553,6 +5553,8 @@ production-intent, and dispatch invariants remain in `Plans/Commands_System.md`,
 `Plans/UI_Wiring_Rules.md`. These are static canonical targets, not claims of
 native handlers, runtime success, readiness, or Slint certification.
 
+`Plans/touch_closure_action_sources.json`, owned by `Plans/UI_Wiring_Rules.md#UIW-017`, supplies the bounded static system-local, Guided Tour, and required Home layout action census for independent Touch discovery. Its action lists reference the existing semantic owners and are checked against their contracts, the command catalog, and the Touch crosswalk; the file grants no command, handler, runtime, or readiness authority. This live map registers it as a machine input.
+
 ### 0PI-068 - 203-Command Touch Closure Owner And Machine-Registry Map
 
 ```yaml
@@ -5570,7 +5572,10 @@ canonical_text: >-
   production-intent entries. The primary-command, alias, local-action,
   presentation, row, profile, exclusion, and production-intent denominators are
   the ones scripts/pm-touch-closure-verify.py resolves and reports, and this map
-  carries no literal census.
+  carries no literal census. Plans/touch_closure_action_sources.json is the
+  UIW-017-owned bounded static action census for independent Touch discovery,
+  registered here as a machine input without granting command, handler, runtime,
+  or readiness authority.
   Dedicated server-gap and Touch Closure validators fail closed on drift. Every row remains
   static planning/contract evidence until independently implemented and verified.
 gui_related: true
@@ -5580,6 +5585,7 @@ depends_on: [0PI-067, C-051, DR-041, CV-326, ATS-042, CS-074, UCC-152, WM-051, U
 unblocks: []
 acceptance_criteria:
   - "All eleven domain-owner documents and all four central owner documents are explicitly indexed and dependency-closed."
+  - "Plans/touch_closure_action_sources.json is registered as the UIW-017-owned independent static action census; its semantic-owner references and bounded discovery role remain explicit."
   - "Plans/Multi-Account_Connection_Spec.md is an explicit indexed owner path rather than an implicit command-row reference."
   - "The primary-command, alias, local-action, presentation-row, total-row, profile, and production-intent denominators are read from the report scripts/pm-touch-closure-verify.py emits; exactly one primary command is blocked and every other one is actionable, and no literal census is carried in canon."
   - "Every actionable primary command has exactly one production-intent route and one sole future-handler identity; the blocked token has neither."
@@ -5613,6 +5619,7 @@ implementation_surfaces:
   - Plans/Wiring_Matrix.md
   - Plans/UI_Wiring_Rules.md
   - Plans/touch_closure.json
+  - Plans/touch_closure_action_sources.json
   - Plans/Wiring_Matrix.production.json
 node_compile_hint: {mode: static_owner_and_machine_registry_map, create_worknodes: false, create_nodeseeds: false}
 source_lineage:
@@ -5621,7 +5628,7 @@ source_lineage:
   - Plans/Automated_Testing_System.md#ats-042---touch-and-server-command-gap-aggregate-gates
   - Plans/server_command_gap_adjudication.json
   - Plans/touch_closure.json
-preserved_exact_tokens: [Plans/Multi-Account_Connection_Spec.md, cmd.artifacts.open_panel]
+preserved_exact_tokens: [Plans/Multi-Account_Connection_Spec.md, cmd.artifacts.open_panel, Plans/touch_closure_action_sources.json]
 negative_constraints:
   - "Do not create a new aggregate runtime owner from this cross-document map."
   - "Do not wire the blocked false-inventory token or normalization-only aliases as peers."

@@ -2,9 +2,9 @@
 
 Source: `Plans/usage-feature.md`
 
-Source lines: L7317-L7542
+Source lines: L7316-L7541
 
-Source SHA256: `bbe0a2de3a014ce31764cb71c226ab9c513f203471d16a50e2d6a0bd5345cd33`
+Source SHA256: `c5ef8b5e3bc9d71f2a0b1d1f6f2a41c48af06695c2d153114ab6e0e7bf685b07`
 
 ---
 
@@ -145,9 +145,9 @@ canonical_text: >-
   month-end figures are labelled estimates read from the projection, so cmd.usage.forecast.request has no
   Usage producer and WM-044's location is lineage. The concept's chart gallery is a review aid, lab-only like
   the demo controls above; every widget kind on a default board is built, and a kind not yet built shows its
-  name and size, never invented data. Current source lineage for every Usage and board unit is
-  Concepts/usage-redesign, built through the opus-5.5 build since 2026-10-15; the Concepts/pm7-tools usage and
-  widget sources and their T33 to T48 pipeline are historical wherever a Plans unit still names them.
+  name and size, never invented data. Concepts/PMConcept7.html and Concepts/usage-redesign illustrate the Usage
+  and board look and behavior. The Concepts/pm7-tools Usage and widget sources remain historical lineage
+  wherever a Plans unit still names them.
   Amended 2026-10-17 (DL-228, DL-230, Jared): nine Usage Settings rows were read by no redesigned surface:
   ai.usage.usage-windows, ai.usage.platform-filters (seven fixed options against the catalog's 22 providers),
   ai.usage.chart-type, ai.usage.reset-countdown, ai.usage.cooldown-timers, ai.usage.pressure-visibility,

@@ -2,9 +2,9 @@
 
 Source: `Plans/Automated_Testing_System.md`
 
-Source lines: L3455-L4138
+Source lines: L3447-L4130
 
-Source SHA256: `349fcac59b4d65a594702e7afd89b1c2b9d0241507c7c6cf2f1e70463be3740c`
+Source SHA256: `81e84b34edefb7e99afb2c1a5b0a2ba08168856d961c1fabb5e45831d7322928`
 
 ---
 
@@ -71,9 +71,9 @@ implementation_surfaces: [Plans/Automated_Testing_System.md, tests/fixtures/usag
 node_compile_hint: {mode: usage_gui_fixture_contract_only, create_worknodes: false, create_nodeseeds: false}
 source_lineage:
   - Plans/usage-feature.md#uf-088---gui-usage-acceptance-fixture-matrix
-  - Concepts/pm7-tools/base/PM7-base.html (current pinned PM7 input; source-lineage-only)
-  - Concepts/pm7-tools/build_pm7.py#T33-T43 (source-owned transforms)
-  - Concepts/pm7-tools/widget_live_resize_preview_source.py (authored T43 Usage-only live resize-preview transform)
+  - Concepts/pm7-tools/base/PM7-base.html (historical PM7 prototype lineage only)
+  - Concepts/pm7-tools/build_pm7.py#T33-T43 (historical PM7 prototype lineage only)
+  - Concepts/pm7-tools/widget_live_resize_preview_source.py (historical T43 Usage live resize-preview prototype lineage)
   - Plans/.audits/audit-20260829-001-pmconcept7-widget-followup/audit_report.json (current repo-local follow-up audit status; verdict remains report-owned)
   - Plans/Decision_Log.md#DL-174
   - Plans/Decision_Log.md#DL-176
@@ -136,8 +136,8 @@ node_compile_hint: {mode: shared_pm7_fixture_contract_only, create_worknodes: fa
 source_lineage:
   - Plans/FinalGUISpec.md#f3-518---pmconcept7-fixture-evidence-and-bootstrap-scope-boundary
   - Concepts/pm7-tools/verify/home_workspace_matrix.mjs
-  - Concepts/pm7-tools/build_pm7.py#T33-T43 (source-owned transforms)
-  - Concepts/pm7-tools/widget_live_resize_preview_source.py (authored T43 Usage-only live resize-preview transform)
+  - Concepts/pm7-tools/build_pm7.py#T33-T43 (historical PM7 prototype lineage only)
+  - Concepts/pm7-tools/widget_live_resize_preview_source.py (historical T43 Usage live resize-preview prototype lineage)
   - Plans/.audits/audit-20260829-001-pmconcept7-widget-followup/audit_report.json (current repo-local follow-up audit status; verdict remains report-owned)
 preserved_exact_tokens: [surface_inventory, assistant_context_continuity, home_workspace_transaction, status_bar_contract, theme_surface_matrix, motion_frame_matrix, workspace_layout_event_fixtures]
 negative_constraints:
@@ -196,8 +196,8 @@ implementation_surfaces: [Plans/Automated_Testing_System.md, tests/fixtures/usag
 node_compile_hint: {mode: pm7_static_visual_matrix_only, create_worknodes: false, create_nodeseeds: false}
 source_lineage:
   - Plans/FinalGUISpec.md#f3-518---pmconcept7-fixture-evidence-and-bootstrap-scope-boundary
-  - Concepts/pm7-tools/base/PM7-base.html (current pinned PM7 input; source-lineage-only)
-  - Concepts/pm7-tools/build_pm7.py#T33-T43 (source-owned transforms)
+  - Concepts/pm7-tools/base/PM7-base.html (historical PM7 prototype lineage only)
+  - Concepts/pm7-tools/build_pm7.py#T33-T43 (historical PM7 prototype lineage only)
   - Plans/.audits/audit-20260829-001-pmconcept7-widget-followup/audit_report.json (current repo-local follow-up audit status; verdict remains report-owned)
 preserved_exact_tokens: [1440, 1180, 980, 860, 680, actual pixels, contact sheets, font fallback, local persistence]
 negative_constraints:
@@ -263,18 +263,18 @@ validation_surfaces:
   - "python3 scripts/pm-validate-pm7-gui-fixtures.py validate"
   - "evidence_ref: Plans/.audits/audit-20260829-001-pmconcept7-widget-followup/browser/runs/t41-build8-focused-regression-rerun-2/report.json (SHA-256 4de0320f73010440560c5fed357df8b67f02188b6ca0a07c1ff3875de31485c0; historical Build8 predecessor interaction slice only, superseded for Usage pointer-resize preview timing; readiness_claim=false)"
   - "evidence_ref: Plans/.audits/audit-20260829-001-pmconcept7-widget-followup/browser/films/build8/t41-final/independent_visual_review.json (SHA-256 b669c7588b87ecd757addb6cdd0b59b473d9de89e0bd9e53a916ecc484ff559b; historical Build8 predecessor Usage/Home film review only, superseded for Usage pointer-resize preview timing; readiness_claim=false)"
-  - "verification_pending: fresh exact-T43 Usage pointer live-resize preview and settlement film evidence under Plans/.audits/audit-20260830-001-pmconcept7-live-resize-preview/; readiness_claim=false"
+  - "verification_pending: fresh artifact-bound Usage pointer live-resize preview and settlement motion evidence; readiness_claim=false"
   - "python3 scripts/pm-plan-index.py validate"
 risk_class: pm7_motion_blackout_or_transaction_leak
 reasoning_tier: high
 context_scope: pm7_motion_transaction_audit
-implementation_surfaces: [Plans/Automated_Testing_System.md, tests/fixtures/pm7_shared, Concepts/pm7-tools/global_hover_tags_source.py, Concepts/pm7-tools/verify/hover_tags.mjs, Concepts/pm7-tools/verify/full_thread_performance.mjs]
+implementation_surfaces: [Plans/Automated_Testing_System.md, tests/fixtures/pm7_shared]
 node_compile_hint: {mode: pm7_motion_transaction_matrix_only, create_worknodes: false, create_nodeseeds: false}
 source_lineage:
   - Plans/FinalGUISpec.md#f3-515---settled-interaction-event-and-persistence-boundary
-  - Concepts/pm7-tools/base/PM7-base.html (current pinned PM7 input; source-lineage-only)
-  - Concepts/pm7-tools/build_pm7.py#T33-T43 (source-owned transforms)
-  - Concepts/pm7-tools/widget_live_resize_preview_source.py (authored T43 Usage-only live resize-preview transform)
+  - Concepts/pm7-tools/base/PM7-base.html (historical PM7 prototype lineage only)
+  - Concepts/pm7-tools/build_pm7.py#T33-T43 (historical PM7 prototype lineage only)
+  - Concepts/pm7-tools/widget_live_resize_preview_source.py (historical T43 Usage live resize-preview prototype lineage)
   - Plans/.audits/audit-20260829-001-pmconcept7-widget-followup/audit_report.json (current repo-local follow-up audit status; verdict remains report-owned)
 preserved_exact_tokens: [pointercancel, lostpointercapture, no-change release, frame-by-frame, final-coordinate, last painted intent, transaction spy]
 negative_constraints:
@@ -356,8 +356,8 @@ node_compile_hint: {mode: pm7_command_event_receipt_fixture_contract_only, creat
 source_lineage:
   - Plans/Commands_System.md#cs-068---pmconcept7-settled-interaction-command-reuse-and-local-preview-boundary
   - Plans/assistant-chat-design.md#acd-448---one-shared-assistant-seat-and-coherent-context-ring-detail-contract
-  - Concepts/pm7-tools/build_pm7.py#T33-T43 (source-owned transforms)
-  - Concepts/pm7-tools/widget_live_resize_preview_source.py (T43 Usage pointer-resize preview transform)
+  - Concepts/pm7-tools/build_pm7.py#T33-T43 (historical PM7 prototype lineage only)
+  - Concepts/pm7-tools/widget_live_resize_preview_source.py (historical T43 Usage pointer-resize preview prototype lineage)
   - Plans/.audits/audit-20260829-001-pmconcept7-widget-followup/audit_report.json (current repo-local follow-up audit status; verdict remains report-owned)
   - Plans/Decision_Log.md#DL-188
   - Plans/Contracts_V0.md#CV-361

@@ -1250,9 +1250,8 @@ owner_hints:
 ## PMConcept7 Recovery Canonical Integration Addendum - 2026-08-27
 
 This addendum integrates the recovered PMConcept7 Usage and Dashboard widget behavior into the current Widget
-System owner. Current source lineage is the pinned `Concepts/pm7-tools/base/PM7-base.html` plus the
-assertion-guarded T33-T43 pipeline in `Concepts/pm7-tools/build_pm7.py`; `Concepts/PMConcept7.html` is the
-protected generated output and is never an authored owner. The current repo-local audit status is
+System owner. `Concepts/PMConcept7.html` illustrates this behavior and is never an authored owner.
+The current repo-local audit status is
 `Plans/.audits/audit-20260829-001-pmconcept7-widget-followup/audit_report.json`; incomplete or failed runtime,
 visual, interaction, motion, or accessibility rows remain `verification_pending`, so this addendum grants no such audit
 credit. It reuses the existing `cmd.widget.*` family and current widget-layout namespaces; it creates no
@@ -1354,9 +1353,9 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
-  - "Concepts/pm7-tools/base/PM7-base.html (current recovered PMConcept7 source base; source-lineage-only)"
-  - "Concepts/pm7-tools/build_pm7.py (current assertion-guarded T33-T43 pipeline)"
-  - "Concepts/PMConcept7.html (protected generated output; verification input only; never hand-edit)"
+  - "Concepts/pm7-tools/base/PM7-base.html (historical PM7 prototype lineage only)"
+  - "Concepts/pm7-tools/build_pm7.py (historical PM7 prototype lineage only)"
+  - "Concepts/PMConcept7.html (look-and-behaviour reference only)"
   - "Concepts/usage-redesign/src/js/42-cards.js (Usage redesign card menu and size picker; source-lineage-only)"
   - "Concepts/usage-redesign/src/js/40-board.js (Usage redesign board track ladder; source-lineage-only)"
   - "Concepts/usage-redesign/tools/boards.py (the per-kind preset table as built, branch concept/usage-pm7-c-presets-20261009 at 21ca626731; source-lineage-only)"
@@ -1426,9 +1425,9 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
-  - "Concepts/pm7-tools/base/PM7-base.html (current recovered PMConcept7 source base; source-lineage-only)"
-  - "Concepts/pm7-tools/build_pm7.py (current assertion-guarded T33-T43 pipeline)"
-  - "Concepts/PMConcept7.html (protected generated output; verification input only; never hand-edit)"
+  - "Concepts/pm7-tools/base/PM7-base.html (historical PM7 prototype lineage only)"
+  - "Concepts/pm7-tools/build_pm7.py (historical PM7 prototype lineage only)"
+  - "Concepts/PMConcept7.html (look-and-behaviour reference only)"
 preserved_exact_tokens:
   - curated size
   - auto-grow
@@ -1567,7 +1566,7 @@ validation_surfaces:
   - tests/fixtures/usage_gui/presentation/interaction_transaction_matrix.json (static contract fixture only)
   - Plans/shared_runtime_command_contract_fixtures.json (static command/receipt/event-count fixture only)
   - "evidence_ref: Plans/.audits/audit-20260829-001-pmconcept7-widget-followup/browser/runs/t41-build8-focused-regression-rerun-2/report.json (SHA-256 4de0320f73010440560c5fed357df8b67f02188b6ca0a07c1ff3875de31485c0; historical predecessor evidence only; superseded for Usage resize-preview timing; readiness_claim=false)"
-  - "verification_pending: fresh exact-T43 live occupied-neighbor preview, settlement-parity, cancellation, failure, and film receipts under Plans/.audits/audit-20260830-001-pmconcept7-live-resize-preview/; readiness_claim=false"
+  - "verification_pending: fresh artifact-bound live occupied-neighbor preview, settlement-parity, cancellation, failure, and motion evidence; readiness_claim=false"
 risk_class: widget_preview_leaks_or_multi_commit
 reasoning_tier: high
 context_scope: widget_transactional_resize_reorder
@@ -1581,10 +1580,10 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
-  - "Concepts/pm7-tools/base/PM7-base.html (current recovered PMConcept7 source base; source-lineage-only)"
-  - "Concepts/pm7-tools/build_pm7.py (current assertion-guarded T33-T43 pipeline)"
-  - "Concepts/pm7-tools/widget_live_resize_preview_source.py (authored T43 Usage-only live resize-preview transform)"
-  - "Concepts/PMConcept7.html (protected generated output; verification input only; never hand-edit)"
+  - "Concepts/pm7-tools/base/PM7-base.html (historical PM7 prototype lineage only)"
+  - "Concepts/pm7-tools/build_pm7.py (historical PM7 prototype lineage only)"
+  - "Concepts/pm7-tools/widget_live_resize_preview_source.py (historical Usage live resize-preview prototype lineage)"
+  - "Concepts/PMConcept7.html (look-and-behaviour reference only)"
   - "Concepts/usage-redesign/src/js/40-board.js (Usage redesign board: resolver, gravity, Tidy, move and resize previews; source-lineage-only)"
   - Plans/Decision_Log.md#DL-176
 preserved_exact_tokens:
@@ -1728,9 +1727,9 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
-  - "Concepts/pm7-tools/base/PM7-base.html (current recovered PMConcept7 source base; source-lineage-only)"
-  - "Concepts/pm7-tools/build_pm7.py (current assertion-guarded T33-T43 pipeline)"
-  - "Concepts/PMConcept7.html (protected generated output; verification input only; never hand-edit)"
+  - "Concepts/pm7-tools/base/PM7-base.html (historical PM7 prototype lineage only)"
+  - "Concepts/pm7-tools/build_pm7.py (historical PM7 prototype lineage only)"
+  - "Concepts/PMConcept7.html (look-and-behaviour reference only)"
   - "Concepts/usage-redesign/src/js/42-cards.js and 40-board.js (preset ids, the chosen preset kept over reload; branch concept/usage-pm7-c-presets-20261009; source-lineage-only)"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/usage-mockups-20261001/lane-reports-20261010/c-presets-REPORT.md, SHA-256 505de34e60acd8d9efce08e5ec392f58c574db75cbadf5846a34c42424567a3e (fix cycles 1 and 2: preset names kept over reload, keyboard resize, and look change)"
   - Plans/Decision_Log.md#DL-176

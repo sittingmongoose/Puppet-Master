@@ -4,7 +4,7 @@ Source: `Plans/usage-feature.md`
 
 Source lines: L928-L5024
 
-Source SHA256: `bbe0a2de3a014ce31764cb71c226ab9c513f203471d16a50e2d6a0bd5345cd33`
+Source SHA256: `c5ef8b5e3bc9d71f2a0b1d1f6f2a41c48af06695c2d153114ab6e0e7bf685b07`
 
 ---
 
@@ -2356,7 +2356,7 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:usage-feature-S0077
-- Concepts/pm7-tools/build_pm7.py#T34 (current source-owned selector behavior; verification input only)
+- Concepts/pm7-tools/build_pm7.py#T34 (historical selector prototype lineage only)
 preserved_exact_tokens:
 - 5h|24h|7d|30d
 - 5h

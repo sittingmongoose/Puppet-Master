@@ -4,7 +4,7 @@ Source: `Plans/Section15_MVP_Promoted_Features_Spec.md`
 
 Source lines: L8871-L8991
 
-Source SHA256: `08d9a7033e1fc165aae1603f098e045fab11136eef8ca508731c1a2711fd826d`
+Source SHA256: `50aad96d4a9209f611db50d2787118771b8dd98679f14fefa7e47137b2b2c55e`
 
 ---
 
@@ -67,7 +67,7 @@ acceptance_criteria:
   - Negative fixtures reject any missing or duplicate surface, per-surface label/detail/state/receipt override, regenerated wording, stale or mismatched step ID/revision, missing owner receipt, unsafe copy, authority grant, or success wording unsupported by the owner receipt.
   - Missing or stale step identity, owner receipt, capability digest, or projection generation fails closed rather than inventing success text; reconnect/replay must re-project the owner record rather than synthesize a new label.
   - Schema/fixture and PM7 projection evidence remains static; browser/native/runtime behavior and visual fidelity require later execution.
-validation_surfaces: [Plans/egolite_retained_requirement_contracts.schema.json, Plans/egolite_retained_requirement_contract_fixtures.json, authored T48 PM7 source, focused Egolite remediation validator, future five-surface exact-value/replay/human-copy projection matrix]
+validation_surfaces: [Plans/egolite_retained_requirement_contracts.schema.json, Plans/egolite_retained_requirement_contract_fixtures.json, focused Egolite remediation validator, future five-surface exact-value/replay/human-copy projection matrix]
 risk_class: capability_digest_or_human_step_projection_drift
 reasoning_tier: high
 context_scope: browser_digest_and_human_step_projection
@@ -114,7 +114,7 @@ acceptance_criteria:
   - Unsupported foreground-equivalent behavior degrades explicitly or blocks; it is never inferred from foreground UI focus, and real_background evidence is never relabeled foreground_equivalent.
   - OS suspend, lock-screen restriction, process termination, or device disconnection emits an explicit interruption/recovery boundary and is not misreported as focus-independent continuity.
   - Static contracts do not prove background execution, timing fidelity, throttling behavior, CEF/platform behavior, or performance.
-validation_surfaces: [Plans/egolite_retained_requirement_contracts.schema.json, Plans/egolite_retained_requirement_contract_fixtures.json, authored T48 PM7 source, future four-state focus-independence and foreground-equivalent/real-background timing-throttle evidence matrix]
+validation_surfaces: [Plans/egolite_retained_requirement_contracts.schema.json, Plans/egolite_retained_requirement_contract_fixtures.json, future four-state focus-independence and foreground-equivalent/real-background timing-throttle evidence matrix]
 risk_class: focus_cancellation_or_fidelity_misrepresentation
 reasoning_tier: high
 context_scope: browser_focus_and_fidelity_profiles

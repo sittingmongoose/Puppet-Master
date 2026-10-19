@@ -513,11 +513,11 @@ reasoning_tier: high
 context_scope: collaborative_shared_runtime
 implementation_surfaces:
   - Plans/Collaborative_Workflows.md
-  - Concepts/chat-assistant-concepts/5.6 Pro/collaboration.js
 node_compile_hint:
   mode: collaborative_runtime_contract
   create_worknodes: false
 source_lineage:
+  - "Concepts/chat-assistant-concepts/5.6 Pro/collaboration.js (5.6 Pro prototype; behaviour reference only)"
   - pm-assistant-implementation-2026-09-02-recovered:COLLAB-001
   - pm-assistant-implementation-2026-09-02-recovered:07_DRY_OWNERSHIP_MAP.md#5
 preserved_exact_tokens:
@@ -605,11 +605,11 @@ implementation_surfaces:
   - Plans/Collaborative_Workflows.md
   - Plans/assistant-chat-design.md
   - Plans/FinalGUISpec.md
-  - Concepts/chat-assistant-concepts/5.6 Pro/collaboration.js
 node_compile_hint:
   mode: collaborative_surface_contract
   create_worknodes: false
 source_lineage:
+  - "Concepts/chat-assistant-concepts/5.6 Pro/collaboration.js (5.6 Pro prototype; behaviour reference only)"
   - pm-assistant-implementation-2026-09-02-recovered:COLLAB-003
   - pm-assistant-implementation-2026-09-02-recovered:04_GUI_IMPACTS.md#12
 preserved_exact_tokens:

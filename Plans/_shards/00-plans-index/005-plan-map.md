@@ -4,7 +4,7 @@ Source: `Plans/00-plans-index.md`
 
 Source lines: L328-L686
 
-Source SHA256: `cafc8fe7f5619bc6fe2455f2c8d401ba91f4b86a32add02b12415af67cd3c5e0`
+Source SHA256: `4e0c7b43464d83a111401d41417e1c1b99ee6337347e14b9ddc44e449805f448`
 
 ---
 
@@ -240,7 +240,7 @@ The owner split is strict:
 - `Plans/settings_inventory.json` and its schema retain the exact 828 ordinary setting IDs and row metadata. Manager, action, status, diagnostic, setup, and unavailable-capability destinations are outside that denominator.
 - `Plans/FinalGUISpec.md` retains shared GUI/theme-token ownership and consumes Settings placement; its earlier Settings shell/global/inheritance clauses are superseded where SSYS-001..SSYS-023 adjudicate them.
 - Storage, Permissions/FileSafe/Multi-Account, Shared Integration Runtime, Commands/Catalog/Wiring, provider, Server, Project Sync, Browser, SCM, Docker Manager, Onboarding, Doctor, and testing docs retain their named domain contracts. Settings renders policy, compact projections, exact availability, owner commands, receipts, and routes without implementing peer runtimes.
-- K3 Tome Tabs is exact geometry lineage only. The generated PMConcept7 T44 fixture is not production/runtime proof; later Server First Backbone, Egolite/Hermes/Origin/Browser/SCM, Full Thread Performance, Onboarding/Doctor Correction, and Settings Bakeoff decisions control content and behavior.
+- K3 Tome Tabs and the PMConcept7 Settings illustration are geometry/concept lineage only, not production/runtime proof; later Server First Backbone, Egolite/Hermes/Origin/Browser/SCM, Full Thread Performance, Onboarding/Doctor Correction, and Settings Bakeoff decisions control content and behavior.
 - Every persisted ordinary setting is Project-scoped. An untouched fresh Project seeds Basic Dark only when no committed theme snapshot exists; an explicit saved selection or copied detached snapshot wins. A no-Project surface is ephemeral Basic Dark and rejects writes. The current inventory's non-Project scope vocabulary remains a deferred normalization, not contrary persistence authority.
 
 ContractRef: ContractName:Plans/Settings_System.md, ContractName:Plans/settings_inventory.json, ContractName:Plans/storage-plan.md, ContractName:Plans/FinalGUISpec.md
@@ -252,7 +252,7 @@ The five retained implementation packets extend canon through distinct owners ra
 - `Plans/Project_System.md` owns Project registration, open/archive/remove/delete-data semantics and Project identity; `Plans/Named_Plan_System.md` owns named-plan identity and lifecycle. Planning Wizard consumes both but owns neither.
 - `Plans/Server_System.md` owns Server catalog, identity, trust, pairing, endpoint, discovery, connection, client, and server lifecycle. `Plans/Remote_Access_System.md` owns route selection, migration, private/public exposure policy, and remote-link continuity without becoming Server identity authority.
 - `Plans/Backup_Restore_System.md` owns Project and Full Server backup/restore, verification, quarantine, test restore, replacement/selective restore, recovery points, activation, rollback, and the five typed receipt families. It excludes binaries, caches, active processes, PTYs, live browser state, reconstructable payloads, and ordinary secret bytes by default; portable secrets require a separate encrypted user-controlled recovery envelope.
-- `Plans/Test_Capture_and_Motion_Evidence.md` owns explicit capture, redaction, retention/evidence boundaries, frame indexes, browser-motion evidence, and TCME-007's exact-artifact PMConcept7 campaign, full-resolution review/defect-recapture, interactive-browser receipts, and approval-gated cleanup contract. It cannot inspect, record, export, or restore protected `AuthBrowserSession` content and cannot promote browser evidence into native Slint certification.
+- `Plans/Test_Capture_and_Motion_Evidence.md` owns explicit capture, redaction, retention/evidence boundaries, frame indexes, capture provenance, and TCME-007's scenario coverage, artifact identity, and motion evidence integrity. It cannot inspect, record, export, or restore protected `AuthBrowserSession` content and cannot promote browser-concept evidence into native Slint certification.
 - `Plans/Source_Control_System.md` owns common Git/source-control repository, workspace, status, diff, history, fetch/sync/publish semantics. `Plans/Jujutsu_Integration.md` owns JJ-specific changes, bookmarks, operations, Git interchange, and workspaces. `Plans/Forge_Integrations.md` owns provider-neutral hosted-forge reviews, pipelines, webhooks, repositories, mirrors, and connections.
 - `Plans/Cursor_Origin_Integration.md`, `Plans/GitLab_Integration.md`, `Plans/Azure_DevOps_Integration.md`, and `Plans/Bitbucket_Integration.md` are provider-specific consumers of the common forge/auth/install/connection contracts. They do not create `cmd.origin.*`, `cmd.gitlab.*`, `cmd.azure_devops.*`, or generic `cmd.bitbucket.*` primary namespaces. Cursor Origin remains a brief Preview insertion, not an SCM backend or dedicated Onboarding subsystem.
 - `Plans/Section15_MVP_Promoted_Features_Spec.md` remains the PM-native Browser/Browser Program owner. Protected `AuthBrowserSession` is human-only, ephemeral, non-recordable, non-inspectable, non-exportable, and unavailable to agents and adapters.

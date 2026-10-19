@@ -2,9 +2,9 @@
 
 Source: `Plans/Wiring_Matrix.md`
 
-Source lines: L4167-L4222
+Source lines: L4164-L4219
 
-Source SHA256: `4798573dabda2b10299dc4219dddbe4a5408b7adc13b7e83b7d1415821b50357`
+Source SHA256: `95b9855fbad3fdda5e2178024bb5218aac818a0810c0b353d89033abeea78b20`
 
 ---
 
@@ -44,11 +44,11 @@ gui_classification_reason: Governs exact GUI-to-local-controller and reverse-con
 depends_on: [WM-046, CS-072, UCC-150, PWIZ-023]
 unblocks: []
 acceptance_criteria:
-  - TCP-GUIDED-NAV has one typed UI action, one local concept controller, one GUI trigger, one exact return, and browser/static tests.
+  - TCP-GUIDED-NAV has one typed UI action, one local controller, one GUI trigger, one exact return, and tests.
   - No production matrix row, dispatcher, handler, domain event, or persistence effect is attributed to cmd.nav.focus_route.
   - Missing-router state remains keyboard-focusable, hover-bound, described, and non-dispatching.
   - Concept, browser, native Slint, and production-runtime evidence remain separate.
-validation_surfaces: [Plans/touch_closure.json, Plans/Wiring_Matrix.production.json, Plans/Wiring_Matrix.production.exclusions.json, python3 scripts/pm-touch-closure-verify.py, python3 scripts/pm-plans-verify.py validate-wiring-matrix, Concepts/pm7-tools/verify/guided_tour.mjs]
+validation_surfaces: [Plans/touch_closure.json, Plans/Wiring_Matrix.production.json, Plans/Wiring_Matrix.production.exclusions.json, python3 scripts/pm-touch-closure-verify.py, python3 scripts/pm-plans-verify.py validate-wiring-matrix]
 risk_class: false_production_wiring_or_missing_reverse_local_action_coverage
 reasoning_tier: high
 context_scope: guided_tour_application_focus_route

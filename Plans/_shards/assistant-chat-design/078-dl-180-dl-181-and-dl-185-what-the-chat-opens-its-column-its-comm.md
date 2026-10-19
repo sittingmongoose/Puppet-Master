@@ -2,9 +2,9 @@
 
 Source: `Plans/assistant-chat-design.md`
 
-Source lines: L27499-L27909
+Source lines: L27499-L27906
 
-Source SHA256: `b2c07a8d70ee9185cba6a5bfd4e9cdeb56ff589f5398bb48b9a9268fbb0226e9`
+Source SHA256: `1829eabf9cf6bddd363c00509666e812dcc6ccfdd72b9251e3a5680a87edb75a`
 
 ---
 
@@ -228,9 +228,8 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/assistant-chat-design.md
 canonical_text: >-
-  The 5.6 Pro chat is ported into PMConcept7 after this redesign is published, which comes after the NieR showpiece,
-  the 5.6 Pro chat round with its fonts, the Usage port, the left rail and the hover polish (DL-185, D28). When it is
-  ported it meets these requirements (D27). Colours: its Basic, Friendly and Glass colours are fixed to PMConcept7's
+  The 5.6 Pro chat follows these shared presentation and behavior requirements (DL-185, D27).
+  Colours: its Basic, Friendly and Glass colours are fixed to PMConcept7's
   (Retro and NieR already match); it follows PMConcept7's one look setting and NieR Mode setting and keeps no theme
   store of its own, and its own names for colours, radii, surfaces and the code face map onto PMConcept7's, so the
   look settings reach every chat surface. General code text follows Plans/Decision_Log.md#DL-161,
@@ -272,7 +271,6 @@ acceptance_criteria:
   - "No pill and no coloured side stripe remains in the chat in any look."
   - "Every demo control of the chat is a section of the one Demo Studio and none is a product control."
   - "Under NieR Mode the page draws one scene and one ground layer, and the chat adds none."
-  - "The port happens after this redesign is published."
 validation_surfaces:
   - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
   - python3 scripts/pm-plan-index.py validate
@@ -298,7 +296,6 @@ preserved_exact_tokens:
   - "Demo Studio"
   - "Basic, Friendly and Glass"
 negative_constraints:
-  - "Do not port the chat before this redesign is published."
   - "Do not keep a chat theme store, a second NieR scene or ground layer, a second overlay root or a second hover tag system."
   - "Do not size the chat by the app window."
   - "Do not carry a pill, a coloured side stripe or a chat-only demo panel into PMConcept7."

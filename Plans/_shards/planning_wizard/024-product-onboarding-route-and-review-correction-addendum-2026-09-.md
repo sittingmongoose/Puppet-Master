@@ -2,9 +2,9 @@
 
 Source: `Plans/Planning_Wizard.md`
 
-Source lines: L2191-L2286
+Source lines: L2189-L2283
 
-Source SHA256: `517f9d8ec779d2259e9e29cb8152e9c073ef4a9ae6c370e248ab7b5a8c7ceb37`
+Source SHA256: `a5c0830e2ec391d50498ba4359a1f8ea9fb88d3d7b14eb929ea75f5962dfa614`
 
 ---
 
@@ -64,7 +64,6 @@ acceptance_criteria:
 validation_surfaces:
 - Plans/product_onboarding_contracts.schema.json
 - Plans/product_onboarding_contract_fixtures.json
-- Concepts/pm7-tools/onboarding_cinematic_source.py static assertions
 - future native four-route
 - live-review
 - defer/resume

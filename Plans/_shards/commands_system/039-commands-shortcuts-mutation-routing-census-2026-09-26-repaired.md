@@ -2,9 +2,9 @@
 
 Source: `Plans/Commands_System.md`
 
-Source lines: L6418-L6839
+Source lines: L6417-L6837
 
-Source SHA256: `2b193600a9072afac65287ec61f140a16ff350778972f0054a3e025e8f440a5e`
+Source SHA256: `ae15064c31e71e43b22c8d4be185a4e8a9d05465472daa3b5bf32e17a5cd6f0f`
 
 ---
 
@@ -14,9 +14,8 @@ This addendum is the Commands owner lane for finding G4 of
 `reports/concept-packet-integration-20260926/settings.md`
 ("Commands & Shortcuts typed mutation routing incomplete"): a per-control action-routing census
 over §6.1 (scope, create, edit, delete, save validation), §6.2 (dry-run preview), and §1
-(invocation surfaces), bound to the exact controls of the selected Settings manager
-(`Concepts/pm7-tools/settings_refresh/managers/24-commands.js`, selected
-`Concepts/TestOpus5.5PmConcept.html` `commands-shortcuts` behavior). Selected manager behavior
+(invocation surfaces), bound to the selected Settings manager
+(`Concepts/TestOpus5.5PmConcept.html` `commands-shortcuts` behavior). Selected manager behavior
 leads: every selected mutating control routes to a typed action below, every selected
 presentation control is classified view-only, and no selected control closes through an
 unadmitted placeholder. It mints no `cmd.*` UICommand, registers no EventRecord family, admits

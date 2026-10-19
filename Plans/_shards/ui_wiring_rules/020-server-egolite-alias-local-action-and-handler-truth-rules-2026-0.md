@@ -4,7 +4,7 @@ Source: `Plans/UI_Wiring_Rules.md`
 
 Source lines: L1140-L1178
 
-Source SHA256: `801fdc37504d2402de595ac24324f274994c7aca61a91b7d77096513431edcb0`
+Source SHA256: `73e8f9a1f478dcb4850d61b081b742accbd042cf6bafd8ace4d2b22e985f1026`
 
 ---
 
@@ -38,11 +38,11 @@ acceptance_criteria:
   - Every typed local action has owner-local currentness/focus/return behavior and no domain mutation or EventRecord.
   - Restoring an archived Project routes through cmd.project.unarchive before all gates; the old UI entry cannot privately save a registry change or fabricate navigation-only success, and receives no second handler or production row.
   - Concept simulation, schema validation, catalog presence, and planned target strings never claim native runtime readiness.
-validation_surfaces: [Plans/Wiring_Matrix.production.json, Plans/Wiring_Matrix.production.exclusions.json, Plans/touch_closure.json, Concepts/pm7-tools/systems_integration_source.py, Concepts/pm7-tools/onboarding_cinematic_source.py, scripts/pm-touch-closure-verify.py]
+validation_surfaces: [Plans/Wiring_Matrix.production.json, Plans/Wiring_Matrix.production.exclusions.json, Plans/touch_closure.json, scripts/pm-touch-closure-verify.py]
 risk_class: ui_alias_bypass_or_phantom_runtime_claim
 reasoning_tier: high
 context_scope: server_egolite_ui_dispatch_boundary
-implementation_surfaces: [Plans/UI_Wiring_Rules.md, Plans/Wiring_Matrix.production.json, Plans/touch_closure.json, Concepts/pm7-tools/]
+implementation_surfaces: [Plans/UI_Wiring_Rules.md, Plans/Wiring_Matrix.production.json, Plans/touch_closure.json]
 node_compile_hint: {mode: ui_wiring_rule_only, create_worknodes: false, create_nodeseeds: false}
 source_lineage: [source_ref:server-command-gap-adjudication:rows-1-171, source_report:scratchpad/pm-integration-20260831/authority-repairs/server-gap-adjudication/production-wiring-manifest/production-wiring-exact-map.json#92-command-denominator]
 negative_constraints: [No alias dispatch., No local domain command., No Doctor/Settings private owner., No fake native proof.]

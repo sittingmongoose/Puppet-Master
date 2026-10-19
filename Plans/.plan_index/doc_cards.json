@@ -71,10 +71,11 @@
         "Plans/runtime_integration_disposition.json",
         "Plans/storage-plan.md",
         "Plans/touch_closure.json",
+        "Plans/touch_closure_action_sources.json",
         "Plans/usage-feature.md",
         "scripts/pm-audit-closure.py"
       ],
-      "line_count": 6105,
+      "line_count": 6112,
       "path": "Plans/00-plans-index.md",
       "plan_unit_count": 68,
       "plan_unit_ids": [
@@ -214,7 +215,7 @@
         "visible_source_control_surface_routing",
         "web_firecrawl_owner_set"
       ],
-      "sha256": "cafc8fe7f5619bc6fe2455f2c8d401ba91f4b86a32add02b12415af67cd3c5e0",
+      "sha256": "4e0c7b43464d83a111401d41417e1c1b99ee6337347e14b9ddc44e449805f448",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 68
@@ -545,9 +546,6 @@
       "heading_count": 706,
       "implementation_surfaces": [
         "AGENTS.md",
-        "Concepts/chat-assistant-concepts/5.6 Pro/app.js",
-        "Concepts/chat-assistant-concepts/5.6 Pro/styles.css",
-        "Concepts/chat-assistant-concepts/5.6 Pro/transcript-records.js",
         "Plans/Architecture_Invariants.md",
         "Plans/Assistant_Plan_Runtime.md",
         "Plans/Automated_Testing_System.md",
@@ -623,7 +621,7 @@
         "future composer",
         "future run status UI"
       ],
-      "line_count": 27909,
+      "line_count": 27906,
       "path": "Plans/assistant-chat-design.md",
       "plan_unit_count": 486,
       "plan_unit_ids": [
@@ -1466,7 +1464,7 @@
         "worktree_storage",
         "wrong_chat_owner_or_unproved_dispatch"
       ],
-      "sha256": "b2c07a8d70ee9185cba6a5bfd4e9cdeb56ff589f5398bb48b9a9268fbb0226e9",
+      "sha256": "1829eabf9cf6bddd363c00509666e812dcc6ccfdd72b9251e3a5680a87edb75a",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 484,
@@ -1726,7 +1724,6 @@
       },
       "heading_count": 83,
       "implementation_surfaces": [
-        "Concepts/chat-assistant-concepts/5.6 Pro/plans.js",
         "Plans/Assistant_Plan_Runtime.md",
         "Plans/Collaborative_Workflows.md",
         "Plans/FinalGUISpec.md",
@@ -1786,7 +1783,7 @@
         "wrong_version_or_duplicate_scheduled_build",
         "wrong_version_or_hidden_build_state"
       ],
-      "sha256": "0902c7beecb969db7acec7d2338719eb765901d79ab21e527bddfdc46b002e43",
+      "sha256": "bc2e3e188b5abed1388c69341f1932df518025a7139dbb9da6560b89405885f1",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 18
@@ -1825,13 +1822,10 @@
         "False": 25,
         "True": 44
       },
-      "heading_count": 143,
+      "heading_count": 142,
       "implementation_surfaces": [
-        "Concepts/pm7-tools/global_hover_tags_source.py",
         "Concepts/pm7-tools/home_workspace_source.py",
-        "Concepts/pm7-tools/verify/full_thread_performance.mjs",
         "Concepts/pm7-tools/verify/home_workspace_matrix.mjs",
-        "Concepts/pm7-tools/verify/hover_tags.mjs",
         "Plans/Automated_Testing_System.md",
         "Plans/Collaborative_Workflows.md",
         "Plans/Commands_System.md",
@@ -1927,7 +1921,7 @@
         "tests/test_pm_evidence_artifact_binding_modes.py",
         "tests/test_pm_working_notebook_contracts.py"
       ],
-      "line_count": 6602,
+      "line_count": 6587,
       "path": "Plans/Automated_Testing_System.md",
       "plan_unit_count": 69,
       "plan_unit_ids": [
@@ -2067,7 +2061,7 @@
         "web_gui_dev_test_authority_leak",
         "workflow_activation_original_source_or_lifetime_drift"
       ],
-      "sha256": "349fcac59b4d65a594702e7afd89b1c2b9d0241507c7c6cf2f1e70463be3740c",
+      "sha256": "81e84b34edefb7e99afb2c1a5b0a2ba08168856d961c1fabb5e45831d7322928",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 68,
@@ -2083,14 +2077,6 @@
         "validation_criterion": 31
       },
       "validation_surfaces": [
-        "Concepts/pm7-tools/build_pm7.py final generated-artifact static gate",
-        "Concepts/pm7-tools/guided_tour_source.py static transform assertions",
-        "Concepts/pm7-tools/onboarding_cinematic_source.py static transform assertions",
-        "Concepts/pm7-tools/verify/guided_tour.mjs browser-concept verifier",
-        "Concepts/pm7-tools/verify/guided_tour_lifecycle_checkpoint.mjs scoped concept sequence, exit/retry, semantic resize, and local Teacher isolation checks only",
-        "Concepts/pm7-tools/verify/guided_tour_polish_checkpoint.mjs focused concept edit/copy/DOM-continuity checks only",
-        "Concepts/pm7-tools/verify/guided_tour_practice_selftest.mjs pure local practice reducer tests only",
-        "Concepts/pm7-tools/verify/onboarding_cinematic.mjs browser-concept verifier",
         "Future Assistant Chat visibility and toggle tests.",
         "Future DiscoveryService conformance suite.",
         "Future PlanUnit index no-worknodes-created check.",
@@ -2247,7 +2233,7 @@
         "tests/test_pm_testing_session_events.py",
         "tests/test_pm_touch_closure_source.py source/action inventory and owner routing checks only",
         "tests/test_pm_working_notebook_contracts.py",
-        "verification_pending: fresh exact-T43 Usage pointer live-resize preview and settlement film evidence under Plans/.audits/audit-20260830-001-pmconcept7-live-resize-preview/; readiness_claim=false"
+        "verification_pending: fresh artifact-bound Usage pointer live-resize preview and settlement motion evidence; readiness_claim=false"
       ]
     },
     {
@@ -2341,7 +2327,6 @@
       },
       "heading_count": 76,
       "implementation_surfaces": [
-        "Concepts/pm7-tools/settings_refresh/managers/40-bsd.js",
         "Plans/Back_Seat_Driver.md",
         "Plans/FinalGUISpec.md",
         "Plans/Prompt_Pipeline.md",
@@ -2350,7 +2335,7 @@
         "Plans/settings_inventory.json",
         "Plans/usage-feature.md"
       ],
-      "line_count": 2632,
+      "line_count": 2630,
       "path": "Plans/Back_Seat_Driver.md",
       "plan_unit_count": 37,
       "plan_unit_ids": [
@@ -2430,7 +2415,7 @@
         "unsafe_advisor_output_delivered",
         "usage_attribution_collapse"
       ],
-      "sha256": "467c771f13460c9e2f76d7d7e30566a57d0d50ed169eb4e73e85b03bff5af973",
+      "sha256": "456be45a86ded62e8c59d461e7d9b21011d40fcd45058b5dd376e229e68f81fe",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 37
@@ -2458,7 +2443,6 @@
         "failure isolation and health vocabulary fixtures",
         "frozen-boundary emission and negative fixtures",
         "hold, clear, re-raise, and escalation fixtures",
-        "node Concepts/pm7-tools/verify/settings_refresh_checkpoint.mjs",
         "python3 scripts/pm-ledger-compile-witness.py Plans/ledgers/v2/pldg-20260927-002-wand-back-seat-driver --base origin/main",
         "python3 scripts/pm-plan-index.py validate",
         "python3 scripts/pm-plans-verify.py run-gates",
@@ -2589,7 +2573,7 @@
         "unverified_or_mispriced_backup_verification",
         "workflow_activation_original_source_or_lifetime_drift"
       ],
-      "sha256": "cb7d055a0381998f39d801a4a4fd27dfe54216217bdfa5082f225e023768147a",
+      "sha256": "457d673823c59c7b11bd727c12c1ec9f56f4b296521372253d1c3e0cb709e6ab",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 30
@@ -3577,7 +3561,6 @@
       },
       "heading_count": 113,
       "implementation_surfaces": [
-        "Concepts/chat-assistant-concepts/5.6 Pro/collaboration.js",
         "Plans/Assistant_Plan_Runtime.md",
         "Plans/Automated_Testing_System.md",
         "Plans/CLI_Bridged_Providers.md",
@@ -3696,7 +3679,7 @@
         "silent_stand_in_for_chosen_model",
         "specialist_replaces_core_role"
       ],
-      "sha256": "9c0a26fe3d28c7f2231f418e666ce5ff6969ae9c8a40ceaeead14c1b892a2e87",
+      "sha256": "a17e0f1a7d0e5135b8dc8916154efe55486ff77810018c21a337a5899a398971",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 40
@@ -3967,7 +3950,7 @@
         "view_state_command_inflation",
         "web_slash_family_drift"
       ],
-      "sha256": "2b193600a9072afac65287ec61f140a16ff350778972f0054a3e025e8f440a5e",
+      "sha256": "ae15064c31e71e43b22c8d4be185a4e8a9d05465472daa3b5bf32e17a5cd6f0f",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 94
@@ -3988,7 +3971,6 @@
       },
       "validation_surfaces": [
         "CAS",
-        "Concepts/pm7-tools/verify/guided_tour.mjs",
         "Plans/UI_Command_Catalog.md",
         "Plans/Wiring_Matrix.production.exclusions.json",
         "Plans/Wiring_Matrix.production.json",
@@ -4455,7 +4437,7 @@
         "scripts/pm-implementation-readiness.py",
         "scripts/pm-plans-verify.py"
       ],
-      "line_count": 23950,
+      "line_count": 23952,
       "path": "Plans/Contracts_V0.md",
       "plan_unit_count": 355,
       "plan_unit_ids": [
@@ -5171,7 +5153,7 @@
         "worktree_lane_context_loss",
         "worktree_lifecycle_record_loss"
       ],
-      "sha256": "59159c24fea2637ba183c6ddc91ab8a8945b44862a2db51d9e756b530375a42c",
+      "sha256": "4774635c1122063f16bf56e0d83c4124c4656d96f330d52dacc4dc96e5902cb7",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 355
@@ -5202,6 +5184,8 @@
         "PlanUnit YAML parse and identifier uniqueness",
         "Plans/.plan_index/node_readiness_report.json",
         "Plans/Automated_Testing_System.md#ATS-058",
+        "Plans/Automated_Testing_System.md#ATS-075",
+        "Plans/Automated_Testing_System.md#ATS-076",
         "Plans/Contracts_V0.md#73-route_target",
         "Plans/Crosswalk.md#c-052---forge-backuptsnet-owner-precedence-and-exact-route-context",
         "Plans/assistant_plan_cancel_bound_entry.schema.json",
@@ -5289,7 +5273,6 @@
         "git diff --check",
         "independent complete original-source/schema/role preservation audit",
         "inline visualizer bridge registry and native host adapter fixtures",
-        "node Concepts/pm7-tools/verify/home_workspace_matrix.mjs",
         "notification delivery contract fixtures",
         "provider dispatch no-bypass and immutable-byte fixtures",
         "python3 -m json.tool Plans/event_record.schema.json",
@@ -5513,7 +5496,7 @@
         "usage_attention_acknowledged_semantics_drift",
         "wrapper_command_navigation_drift"
       ],
-      "sha256": "8828021b9b39d038cc0465d5dff5817a3d374afbe0bba5e83a0406be43f245f7",
+      "sha256": "fde887db26514e72482f24bdae8410b9a234bfe34c235637139015a2cbcaa4ff",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 52
@@ -6567,7 +6550,7 @@
         "shared_runtime_parallel_owner_drift",
         "usage_role_parallel_owner_drift"
       ],
-      "sha256": "e70b140f6d819e290bd8967fa441e611ee9762e7ddb3054f29598297b4a68e35",
+      "sha256": "df1a6f6a406b6a06e73e3b57d3a5ac2d02120bf050e82cb0361c72461df14e7c",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 63
@@ -6581,7 +6564,7 @@
       },
       "validation_surfaces": [
         "DRY fallback and disabled-state fixtures",
-        "python3 Concepts/onboarding/opus-5.5/tools/build.py --check",
+        "Verify byte-for-byte equality of shared font faces and script slices, allowing only F3-644's explicit Latin-upright exception.",
         "python3 scripts/pm-plan-index.py validate",
         "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits",
         "python3 scripts/pm-plans-verify.py lint-contractrefs",
@@ -7045,8 +7028,6 @@
       },
       "heading_count": 169,
       "implementation_surfaces": [
-        "Concepts/pm6-build/parts/12-html-side-panels.part.html",
-        "Concepts/pm6-build/parts/29x-pm6-js-cozy-shelves.part.html",
         "Concepts/pm7-tools/home_workspace_source.py",
         "Plans/Contracts_V0.md",
         "Plans/FileManager.md",
@@ -7064,7 +7045,7 @@
         "future editor viewer renderer",
         "future file tree renderer"
       ],
-      "line_count": 5422,
+      "line_count": 5420,
       "path": "Plans/FileManager.md",
       "plan_unit_count": 85,
       "plan_unit_ids": [
@@ -7175,7 +7156,7 @@
         "migration_lineage",
         "source_history_identity_safety_or_false_recovery"
       ],
-      "sha256": "1f8b8735ac479cc2ef429cfb5eb5f2be86b8612ae35c291df95db6029ac3af6a",
+      "sha256": "2fd5798870ecce2350e8b50203c6afe14837512fb7be8731398f68deb09a5518",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 84,
@@ -7574,39 +7555,7 @@
       },
       "heading_count": 1027,
       "implementation_surfaces": [
-        "Concepts/PMConcept7.html",
-        "Concepts/chat-assistant-concepts/5.6 Pro/attachments.js",
-        "Concepts/chat-assistant-concepts/5.6 Pro/composer.css",
-        "Concepts/chat-assistant-concepts/5.6 Pro/menus.js",
-        "Concepts/chat-assistant-concepts/5.6 Pro/plans.js",
-        "Concepts/chat-assistant-concepts/5.6 Pro/styles.css",
-        "Concepts/chat-assistant-concepts/5.6 Pro/todos.js",
-        "Concepts/onboarding/opus-5.5/src/css/22-hover.css",
-        "Concepts/onboarding/opus-5.5/src/js/18-hover.js",
-        "Concepts/pm6-build/contracts/HOOKS.md",
-        "Concepts/pm6-build/parts/02-css-tokens.part.html",
-        "Concepts/pm6-build/parts/09-css-bento-themes.part.html",
-        "Concepts/pm6-build/parts/10x-pm6-css-cozy-shelves.part.html",
-        "Concepts/pm6-build/parts/10x-pm6-css-global.part.html",
-        "Concepts/pm6-build/parts/11-html-shell-open.part.html",
-        "Concepts/pm6-build/parts/12-html-side-panels.part.html",
-        "Concepts/pm6-build/parts/29x-pm6-js-cozy-shelves.part.html",
-        "Concepts/pm6-build/parts/29x-pm6-js-panels.part.html",
-        "Concepts/pm7-tools/base/PM7-base.html",
-        "Concepts/pm7-tools/build_pm7.py",
-        "Concepts/pm7-tools/global_hover_tags_source.py",
-        "Concepts/pm7-tools/guided_tour_source.py",
-        "Concepts/pm7-tools/home_workspace_refresh_source.py",
         "Concepts/pm7-tools/home_workspace_source.py",
-        "Concepts/pm7-tools/onboarding_cinematic_source.py",
-        "Concepts/pm7-tools/settings_refresh/kit.js",
-        "Concepts/pm7-tools/settings_refresh/placement.json",
-        "Concepts/pm7-tools/settings_refresh/styles.css",
-        "Concepts/pm7-tools/settings_tome_source.py",
-        "Concepts/pm7-tools/systems_integration_source.py",
-        "Concepts/pm7-tools/verify/final_campaign_capture.mjs",
-        "Concepts/pm7-tools/verify/plugin_projection_matrix.mjs",
-        "Concepts/pm7-tools/verify/systems_integration.mjs",
         "Plans/00-plans-index.md",
         "Plans/Assistant_Plan_Runtime.md",
         "Plans/Automated_Testing_System.md",
@@ -7705,7 +7654,7 @@
         "tests/fixtures/pm7_shared",
         "tests/fixtures/usage_gui"
       ],
-      "line_count": 49320,
+      "line_count": 49262,
       "path": "Plans/FinalGUISpec.md",
       "plan_unit_count": 646,
       "plan_unit_ids": [
@@ -8494,7 +8443,7 @@
         "wand_sheet_presentation_drift",
         "web_client_stack_or_parity_drift"
       ],
-      "sha256": "46e4f7e518b4eee59e453c5fc1fcf5e43e6c43f0db5648ab420f21f97a89a63b",
+      "sha256": "5049fc1967b53eb12bd03c1e1f58e8d7fb3f3523722601a0c28611c90807b01b",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 639,
@@ -8518,18 +8467,7 @@
         "5MB+ projection cannot freeze main UI",
         "An artifact cannot be delivered/marked complete until required visual/evidence gates settle.",
         "Bypass attempts become typed gate violations with blocked state and repair route.",
-        "Concepts/pm7-tools/global_hover_tags_source.py authored guards",
-        "Concepts/pm7-tools/guided_tour_source.py authored guards",
-        "Concepts/pm7-tools/home_workspace_refresh_source.py authored guards",
-        "Concepts/pm7-tools/onboarding_cinematic_source.py authored guards",
-        "Concepts/pm7-tools/systems_integration_source.py",
-        "Concepts/pm7-tools/verify/accessibility_visual_matrix.mjs",
-        "Concepts/pm7-tools/verify/final_campaign_capture.mjs",
-        "Concepts/pm7-tools/verify/final_evidence_gate.py",
-        "Concepts/pm7-tools/verify/guided_tour_lifecycle_checkpoint.mjs scoped concept lifecycle checks, not native or final visual acceptance",
-        "Concepts/pm7-tools/verify/hover_tags.mjs",
-        "Concepts/pm7-tools/verify/plugin_projection_matrix.mjs",
-        "Concepts/pm7-tools/verify/systems_integration.mjs",
+        "Cases written for the retired four-panel Home model do not prove this row; replacement executable cases are owed (ATS-075/076).",
         "Copy from rendered view preserves source bytes where expected",
         "DRY Method settings and disclosure GUI fixtures",
         "Diagnostic bundle records hook health.",
@@ -8581,6 +8519,31 @@
         "Top-10 override disclosure fixtures",
         "User can disable terminal/global hotkey path from safe mode.",
         "User-defined gates for visual QA, local artifact delivery, screenshot/video proof, and output modality compile into RuntimeHardGate predicates.",
+        "Verify F3-520's onboarding presentation, owner-bound actions, ephemeral pre-Project look choices, return routes, interruption/reversal, accessibility and short-window behavior.",
+        "Verify F3-525's Plugins manager owner projections, geometry, accessibility and motion across its required states; concept simulation does not establish native runtime acceptance.",
+        "Verify F3-526's Doctor census, owner feeds, detach/rejoin, stale-return rejection and accessible presentation; concept evidence remains non-production.",
+        "Verify F3-531's accepted menu inventory, owner projections, Context Lens placement and selector behavior; concept fixtures do not prove native execution.",
+        "Verify F3-532's composer attachment tray, destination ribbon, quota strip and responsive acceptance; concept fixtures do not prove native execution.",
+        "Verify F3-533's card-family inventory, Plan actions, To-Do presentation and collapsed/expanded disclosures; concept fixtures do not prove native execution.",
+        "Verify F3-534's narrow-width layout, scroll containment and navigation acceptance; concept fixtures do not prove native execution.",
+        "Verify F3-543's manager presentation, status tokens, menus, scrolling, row placement and motion against the current Settings owner.",
+        "Verify F3-551's manager-topic placement, status tokens, drawn menus, roster scrolling and film acceptance without weakening its no-blank-frame requirement.",
+        "Verify F3-606's Plan-card presentation acceptance against the current chat owner.",
+        "Verify F3-618's rail geometry and type ladder in every look and required width.",
+        "Verify F3-619's status glyphs/words and plain counts, with no pills or coloured side bars.",
+        "Verify F3-620's rail text fitting, complete labels and tab-strip overflow behavior at the required widths.",
+        "Verify F3-621's shared rail dropdowns, tab switches and theme-family motion, including reduced motion.",
+        "Verify F3-623's distinct Git/Jujutsu tab strips, engine-switch placement and fitting of the longest label.",
+        "Verify the F3-523 hover-tag census and pointer, keyboard, Escape, grace, collision, zoom, theme, transparency and reduced-motion acceptance.",
+        "Verify the F3-524 and TCME-007 evidence obligations, including native execution and independent actual-pixel/frame review; concept/static success alone is insufficient.",
+        "Verify the contact-aware tab silhouette, drag tracking, join geometry, opacity and reduced-motion behavior against F3-505 and F3-631.",
+        "Verify the existing F3-521/PWIZ Guided Tour lifecycle, mounted-owner observations, focus, Skip restoration and completion disposition; concept simulation is not native or final visual acceptance.",
+        "Verify the existing F3-598 acceptance for NieR onboarding/Tour presentation, installed parts, reduced motion and look changes.",
+        "Verify the existing F3-599 sound-kit, shared-player, explicit-preview, sound-setting and reduced-motion acceptance.",
+        "Verify the existing F3-600 family-specific onboarding hero moments, first paint, look selection and reduced-motion acceptance.",
+        "Verify the native pop-out and web-client boundaries of F3-504/F3-637, including one chat instance and no web-client Chat Pop out.",
+        "Verify the title-bar and Settings Restore home layout routes dispatch cmd.workspace_layout.reset and retain all open tabs, under F3-502 and the current Home layout owner.",
+        "Verify transactional panel/tab gestures: no dispatch during preview, one changed-release command, exact cancel restoration, stable identity and reduced-motion behavior.",
         "evidence_ref: Plans/.audits/audit-20260829-001-pmconcept7-widget-followup/browser/films/build8/t41-final/independent_visual_review.json (SHA-256 b669c7588b87ecd757addb6cdd0b59b473d9de89e0bd9e53a916ecc484ff559b; credited Build8 Usage/Home lossless-film review only; readiness_claim=false)",
         "evidence_ref: Plans/.audits/audit-20260829-001-pmconcept7-widget-followup/browser/runs/t41-build8-cross-page-matrix-clean-tmp/independent_visual_review.json (SHA-256 daac899e74e5e74727ac8ba545441c5a593a3b7a55e39e4be4c2d1c430af2b7c; status=completed_with_visual_finding; IVR-T41-B8-XPAGE-001 retains protected Settings card crop at 1180/980/860/680; readiness_claim=false)",
         "evidence_ref: Plans/.audits/audit-20260829-001-pmconcept7-widget-followup/browser/runs/t41-build8-cross-page-matrix-clean-tmp/report.json (SHA-256 d310b6ccbe900c4f7845b15e79e92de6ac89487ac258ed82f0116992efc1104b; exact Build8 cross-page concept/browser geometry and state slice; readiness_claim=false)",
@@ -8625,23 +8588,9 @@
         "manual FinalGUISpec heading review",
         "manual markdown anchor/cross-reference review",
         "no validator surface in this landing; recorded as `q-020`. The shapes this unit describes are not in any schema or fixture pack, because the addendum admits no typed schema variant, so the unit is stated and not yet falsifiable. Neither final-GUI contract file is touched by this landing and neither carries a gate list, a source column or an enforcement value, so neither can test this unit.",
-        "node Concepts/leftrail-redesign/tools/rail_boot.mjs (concept acceptance on GPU Chrome)",
         "node Concepts/pm7-tools/verify/home_workspace_matrix.mjs",
-        "node Concepts/pm7-tools/verify/settings_placement_checkpoint.mjs",
-        "node Concepts/pm7-tools/verify/settings_refresh_checkpoint.mjs",
-        "node Concepts/pm7-tools/verify/settings_refresh_film.mjs",
-        "node tests/activity-detail-verify.mjs",
-        "node tests/assistant-plan-verify.mjs",
-        "node tests/attachments-composer-verify.mjs",
-        "node tests/audit.mjs",
-        "node tests/restored-features-verify.mjs",
-        "node tests/todo-verify.mjs",
         "project settings scope fixtures",
         "protected AuthBrowser schema negative fixtures",
-        "python3 \"Concepts/chat-assistant-concepts/5.6 Pro/build.py\" --check",
-        "python3 Concepts/onboarding/opus-5.5/tools/build.py --check",
-        "python3 Concepts/pm7-tools/build_pm7.py",
-        "python3 Concepts/pm7-tools/verify/settings_refresh_sheet.py",
         "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260614-002-part-3-fable-cleanup",
         "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260615-001-part-4-fable-cleanup",
         "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard",
@@ -9231,7 +9180,6 @@
       },
       "heading_count": 210,
       "implementation_surfaces": [
-        "Concepts/chat-assistant-concepts/5.6 Pro/goals.js",
         "Plans/.plan_index",
         "Plans/00-plans-index.md",
         "Plans/Assistant_Plan_Runtime.md",
@@ -9464,7 +9412,7 @@
         "workflow_activation_original_source_or_lifetime_drift",
         "workflow_state_absorbed_into_goal"
       ],
-      "sha256": "8b82a9356ecbf3567f6902795b84914645b7d6ada4e187d1702ccf68016c5004",
+      "sha256": "735482f2fd785f0a576872a4f35a84b21128fd67c2cc4981d33c1558be52a7af",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 74,
@@ -11610,7 +11558,6 @@
       },
       "heading_count": 260,
       "implementation_surfaces": [
-        "Concepts/pm7-tools/systems_integration_source.py",
         "Plans/Models_System.md",
         "Plans/Plugins_System.md",
         "Plans/Project_Sync_and_Backbone.md",
@@ -11948,7 +11895,7 @@
         "web_tool_search_site_reader",
         "worktree_config_cleanup_boundary"
       ],
-      "sha256": "8e8d163aaa15c432f0ced8535780a5160cd6a2b3bff06147fa1d20ff81949dc0",
+      "sha256": "886f1e8ed3cde26070966d603c085df84a94293ec72e8e4d0425dbdd97c7c7b6",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 157
@@ -11961,7 +11908,6 @@
         "requirement": 151
       },
       "validation_surfaces": [
-        "Concepts/pm7-tools/verify/plugin_projection_matrix.mjs",
         "Doctor registry schema fixtures",
         "Plans/backup_restore_system_contracts.schema.json",
         "Plans/doctor_contract_fixtures.json",
@@ -14327,7 +14273,7 @@
         "future Product Onboarding and Bootstrap projection controllers",
         "future Product Onboarding native controller"
       ],
-      "line_count": 2939,
+      "line_count": 2936,
       "path": "Plans/Planning_Wizard.md",
       "plan_unit_count": 30,
       "plan_unit_ids": [
@@ -14385,7 +14331,7 @@
         "tour_fake_shell_or_layout_loss",
         "unbounded_review_loop_or_suppressed_finding"
       ],
-      "sha256": "517f9d8ec779d2259e9e29cb8152e9c073ef4a9ae6c370e248ab7b5a8c7ceb37",
+      "sha256": "a5c0830e2ec391d50498ba4359a1f8ea9fb88d3d7b14eb929ea75f5962dfa614",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 29,
@@ -14400,8 +14346,6 @@
         "source_lineage_disposition": 1
       },
       "validation_surfaces": [
-        "Concepts/pm7-tools/onboarding_cinematic_source.py static assertions",
-        "Concepts/pm7-tools/verify/onboarding_cinematic.mjs browser-concept verifier",
         "Future Planning Wizard source pick local/SSH tests.",
         "Future policy-hidden source no-leak tests.",
         "Future research decision review integration, replay and accessible presentation receipts; not_run",
@@ -16512,7 +16456,6 @@
       },
       "heading_count": 55,
       "implementation_surfaces": [
-        "Concepts/chat-assistant-concepts/5.6 Pro/scheduling.js",
         "Plans/Assistant_Plan_Runtime.md",
         "Plans/Automated_Testing_System.md",
         "Plans/Collaborative_Workflows.md",
@@ -16576,7 +16519,7 @@
         "unsafe_pause_or_dst_double_fire",
         "wrong_plan_version_built_or_duplicate_nightly_build"
       ],
-      "sha256": "60cd1584b2d9c4bd39c647b66174008e8e28658c1feb4e662bc3c63f50add3ee",
+      "sha256": "27d663f00218d89da92597d2be094286e3a887f06f278f1219bc1b13b37bfab3",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 18
@@ -16962,7 +16905,7 @@
         "workspace_tab_identity_drift",
         "worktree_owner_boundary_drift"
       ],
-      "sha256": "08d9a7033e1fc165aae1603f098e045fab11136eef8ca508731c1a2711fd826d",
+      "sha256": "50aad96d4a9209f611db50d2787118771b8dd98679f14fefa7e47137b2b2c55e",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 171,
@@ -17052,7 +16995,6 @@
         "VT replay corpus includes OSC 52/8/9;4/133/633, bracketed paste, focus, mouse, alternate screen, synchronized update sequences.",
         "Weak/unknown protocol support downgrades requested-vs-effective state rather than fabricating command blocks.",
         "WebSocket, if used, is UI transport not terminal engine.",
-        "authored T48 PM7 source",
         "clear/cls preserves visible prompt/viewport invariants",
         "controlled production benchmark evidence",
         "exact-topology and optional-environment negative fixtures",
@@ -17221,25 +17163,6 @@
       },
       "heading_count": 105,
       "implementation_surfaces": [
-        "Concepts/PMConcept7.html",
-        "Concepts/onboarding/opus-5.5/src/settings/kit.d",
-        "Concepts/onboarding/opus-5.5/src/settings/kit.d/17-look.js",
-        "Concepts/onboarding/opus-5.5/src/settings/kit.d/18-nier.js",
-        "Concepts/onboarding/opus-5.5/src/settings/kit.d/22-nier-chips.js",
-        "Concepts/onboarding/opus-5.5/src/settings/kit.d/60-wizard.js",
-        "Concepts/onboarding/opus-5.5/src/settings/managers",
-        "Concepts/onboarding/opus-5.5/src/settings/o55/placement.d",
-        "Concepts/onboarding/opus-5.5/src/settings/o55/rows.d",
-        "Concepts/onboarding/opus-5.5/src/settings/styles.d/12-look.css",
-        "Concepts/pm7-tools/build_pm7.py",
-        "Concepts/pm7-tools/build_testpm_settings_refresh.py",
-        "Concepts/pm7-tools/settings_refresh/kit.js",
-        "Concepts/pm7-tools/settings_refresh/managers/24-commands.js",
-        "Concepts/pm7-tools/settings_refresh/placement.json",
-        "Concepts/pm7-tools/settings_refresh/styles.css",
-        "Concepts/pm7-tools/settings_refresh_source.py",
-        "Concepts/pm7-tools/settings_tome_source.py",
-        "Concepts/pm7-tools/systems_integration_source.py",
         "Plans/00-plans-index.md",
         "Plans/Automated_Testing_System.md",
         "Plans/Back_Seat_Driver.md",
@@ -17285,7 +17208,7 @@
         "future native Slint Plugins manager projection",
         "future typed Settings owner projections"
       ],
-      "line_count": 4026,
+      "line_count": 3984,
       "path": "Plans/Settings_System.md",
       "plan_unit_count": 49,
       "plan_unit_ids": [
@@ -17392,7 +17315,7 @@
         "theme_or_layout_cross_project_leak",
         "unowned_preference_or_scope_drift"
       ],
-      "sha256": "71bb642f546bf29fe23b56ecc016c03a60c642f1a1ec6c6a26454bacbb47b650",
+      "sha256": "069ee4d9fcbe8d846a2dcb5abe0ab5e28c2742e4f96a05b0c1936bb9c9908191",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 49
@@ -17409,7 +17332,6 @@
         "validation": 1
       },
       "validation_surfaces": [
-        "Concepts/pm7-tools/verify/plugin_projection_matrix.mjs",
         "Docker Manager redirect fixtures",
         "Plans/Automated_Testing_System.md#ATS-047",
         "Plans/Wiring_Matrix.production.json",
@@ -17427,6 +17349,12 @@
         "Plans/settings_system_contracts.schema.json",
         "Plans/settings_system_contracts.schema.json preview request validation (typed scope and provider id)",
         "Plans/touch_closure.json",
+        "SSYS-035 placement acceptance: each live setting once, exact manager and tab home, Details and search return, and inline refresh.",
+        "Settings manager acceptance: canonical rows and routes, shared kit, at least 85 percent first-frame brightness, labelled sounds, page scrolling, and no page errors.",
+        "Settings manager acceptance: shared kit, themed listboxes, viewport-bounded menus, and independent roster scrolling.",
+        "Settings motion evidence: no blank frames during manager, inspector, domain and tab transitions or sound play, with settling within the specified spring duration.",
+        "Settings motion evidence: no blank frames during manager, inspector, domain and tab transitions, with the specified menu motion.",
+        "Settings placement acceptance: each live setting once, manager and tab placement, search landing, Details, and inline refresh.",
         "exact packet-token denominator and replacement-target validator",
         "existing CS-066 and UCC-145 fixtures",
         "focused Server owner-bundle-B validator",
@@ -17435,7 +17363,6 @@
         "future Doctor freshness/dedupe/no-probe fixtures",
         "future Glass control-state tests",
         "future K3 eight-theme/width/keyboard/Reduced-Motion/native Slint tests",
-        "future PM7 source/generated reproducibility check",
         "future SSH CRUD route fixtures",
         "future Settings production acceptance harness",
         "future Settings provider-card availability and continuation fixtures",
@@ -17475,12 +17402,7 @@
         "future variable-height virtualization tests",
         "jq and schema census over Plans/settings_inventory.json",
         "named visible-state projection positive/negative fixtures",
-        "node Concepts/pm7-tools/verify/settings_placement_checkpoint.mjs",
-        "node Concepts/pm7-tools/verify/settings_refresh_checkpoint.mjs",
-        "node Concepts/pm7-tools/verify/settings_refresh_film.mjs",
         "protected-auth negative fixtures",
-        "python3 Concepts/onboarding/opus-5.5/tools/build.py --check",
-        "python3 Concepts/pm7-tools/build_testpm_settings_refresh.py --check",
         "python3 scripts/pm-plan-index.py validate",
         "python3 scripts/pm-plans-verify.py json-syntax",
         "python3 scripts/pm-plans-verify.py run-gates",
@@ -17502,8 +17424,6 @@
       },
       "heading_count": 118,
       "implementation_surfaces": [
-        "Concepts/pm7-tools/full_thread_performance_source.py",
-        "Concepts/pm7-tools/verify/full_thread_performance.mjs",
         "Plans/Automated_Testing_System.md",
         "Plans/Commands_System.md",
         "Plans/Contracts_V0.md",
@@ -17669,7 +17589,7 @@
         "unsafe_recovery",
         "unsupported_or_unmeasured_optimization"
       ],
-      "sha256": "e68e02baadd359d68c064ce80967a6d4c2a83b921385d46e95d9e6dcbeff8df9",
+      "sha256": "1b371fa64868d93fdc1a2e92d21c7755579af6262182519f61adbf042197aff5",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 52
@@ -17691,7 +17611,6 @@
       },
       "validation_surfaces": [
         "BSD timeout/quota tests",
-        "Concepts/pm7-tools/verify/full_thread_performance.mjs",
         "DAP event races",
         "Eval persistence tests",
         "Plans/Backup_Restore_System.md#BRS-026",
@@ -18232,7 +18151,7 @@
         "future visualizer artifact records",
         "scripts/pm-implementation-readiness.py"
       ],
-      "line_count": 28102,
+      "line_count": 28099,
       "path": "Plans/storage-plan.md",
       "plan_unit_count": 321,
       "plan_unit_ids": [
@@ -18664,7 +18583,7 @@
         "usage_view_state_becomes_second_policy_or_preview_store",
         "workflow_activation_original_source_or_lifetime_drift"
       ],
-      "sha256": "082af0f739b10d86a02d4fbb43fe67a64348788d21baed2acfd0a7635b31f689",
+      "sha256": "78282d3b7d16a5e5da1df370b6e8455f7fd9de9ef1fe77eee550685787307322",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 317,
@@ -18687,7 +18606,6 @@
         "127MB metadata fixture is rejected/segmented before UI or model context load.",
         "Alias/rename/provider-move persistence fixtures",
         "Closing/crashing PM reaps child helpers or marks them orphaned for cleanup.",
-        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs",
         "Context compiler emits compact summaries plus refs, not raw massive JSON.",
         "DRY setting and receipt persistence fixtures",
         "Draft 2020-12 validation of Plans/home_workspace_layout.schema.json",
@@ -18919,7 +18837,6 @@
         "git diff --check",
         "independent complete original-source/schema/role preservation audit",
         "manual storage owner-section review",
-        "node Concepts/pm7-tools/verify/home_workspace_matrix.mjs",
         "pre-build negative fixtures for arithmetic, timestamps, transitions, rollback, data-risk, and secret/path rejection",
         "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard",
         "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260626-001-feature-name",
@@ -18990,7 +18907,6 @@
       },
       "heading_count": 25,
       "implementation_surfaces": [
-        "Concepts/pm7-tools/verify",
         "Plans/Automated_Testing_System.md",
         "Plans/Commands_System.md",
         "Plans/Permissions_System.md",
@@ -19029,7 +18945,7 @@
         "motion_evidence_gap_or_false_certification",
         "raw_derived_identity_or_provenance_fabrication"
       ],
-      "sha256": "b84b5d978a5e0b0c7a48224e0f244e85b81ad954b1f7d7ab867dee5e66af6c6d",
+      "sha256": "cc92fa783b9676735670db6eecb6cf9f1d9bbb471ba7e5808fd7a10c39ec62fa",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 8
@@ -19042,12 +18958,9 @@
         "requirement": 4
       },
       "validation_surfaces": [
-        "Concepts/pm7-tools/verify/final_campaign_capture.mjs",
-        "Concepts/pm7-tools/verify/final_evidence_gate.py",
-        "Concepts/pm7-tools/verify/review_capture_frames.py",
         "Plans/test_capture_motion_evidence_contract_fixtures.json",
         "Plans/test_capture_motion_evidence_contracts.schema.json",
-        "final campaign and interactive-browser receipts",
+        "Scenario, artifact-identity, cadence, provenance, and findings review with separate browser-concept and native verdicts",
         "future five-session GUI and all-theme motion-evidence matrix",
         "future motion synchronization and masking matrix",
         "future no-overwrite and provenance-selection matrix",
@@ -19067,7 +18980,6 @@
       },
       "heading_count": 45,
       "implementation_surfaces": [
-        "Concepts/chat-assistant-concepts/5.6 Pro/todos.js",
         "Plans/CLI_Bridged_Providers.md",
         "Plans/Contracts_V0.md",
         "Plans/Executor_Protocol.md",
@@ -19113,7 +19025,7 @@
         "verification_status_reintroduced",
         "whole_list_model_authority"
       ],
-      "sha256": "dff255cb29cceef3a1b6239e39f624d2b39854aabf14e1fd74538f6bfd4bbe4d",
+      "sha256": "3389e4974ac876900f5548447e20648e73b82cf8892d8dcb7418f6c748d3754e",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 12
@@ -19504,8 +19416,6 @@
       "heading_count": 378,
       "implementation_surfaces": [
         "Concepts/pm7-tools/home_workspace_source.py",
-        "Concepts/pm7-tools/onboarding_cinematic_source.py",
-        "Concepts/pm7-tools/systems_integration_source.py",
         "Plans/Assistant_Plan_Runtime.md",
         "Plans/Automated_Testing_System.md",
         "Plans/Commands_System.md",
@@ -19555,7 +19465,7 @@
         "future command registry and routed Docker/Hosts actions",
         "scripts/pm-prd-planning-runtime-validate.py"
       ],
-      "line_count": 16054,
+      "line_count": 16056,
       "path": "Plans/UI_Command_Catalog.md",
       "plan_unit_count": 182,
       "plan_unit_ids": [
@@ -19816,7 +19726,7 @@
         "wand_module_surface_drift",
         "wrong_git_target_or_phantom_handler"
       ],
-      "sha256": "aa616e3c1819aa810103eb6409fd425047a83efe26a1f87c6696d2d24a456cdc",
+      "sha256": "5667433a1fa23a9ce6ddc6ae11238ad14bdd049ed70d5b69011e9e0c2aba684c",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 180,
@@ -19836,10 +19746,6 @@
         "requirement": 121
       },
       "validation_surfaces": [
-        "Concepts/pm7-tools/onboarding_cinematic_source.py static assertions",
-        "Concepts/pm7-tools/systems_integration_source.py",
-        "Concepts/pm7-tools/verify/guided_tour.mjs",
-        "Concepts/pm7-tools/verify/onboarding_cinematic.mjs browser-concept verifier",
         "DRY Method settings command fixture",
         "Future GUI route migration tests.",
         "Future UI command catalog compatibility review.",
@@ -19917,9 +19823,6 @@
       },
       "heading_count": 80,
       "implementation_surfaces": [
-        "Concepts/pm7-tools/",
-        "Concepts/pm7-tools/global_hover_tags_source.py",
-        "Concepts/pm7-tools/onboarding_cinematic_source.py",
         "Plans/.implementation_readiness/buildability_gate_report.json",
         "Plans/Commands_System.md",
         "Plans/Contracts_V0.md",
@@ -19939,10 +19842,11 @@
         "Plans/product_onboarding_contracts.schema.json",
         "Plans/settings_system_contract_fixtures.json",
         "Plans/touch_closure.json",
+        "Plans/touch_closure_action_sources.json",
         "scripts/pm-plans-verify.py",
         "scripts/pm-touch-closure-verify.py"
       ],
-      "line_count": 2523,
+      "line_count": 2529,
       "path": "Plans/UI_Wiring_Rules.md",
       "plan_unit_count": 32,
       "plan_unit_ids": [
@@ -20015,7 +19919,7 @@
         "version_exact_opener_drift",
         "wiring_duplication_or_teardown_leak"
       ],
-      "sha256": "801fdc37504d2402de595ac24324f274994c7aca61a91b7d77096513431edcb0",
+      "sha256": "73e8f9a1f478dcb4850d61b081b742accbd042cf6bafd8ace4d2b22e985f1026",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 32
@@ -20030,9 +19934,6 @@
         "wiring_rule": 7
       },
       "validation_surfaces": [
-        "Concepts/pm7-tools/onboarding_cinematic_source.py",
-        "Concepts/pm7-tools/systems_integration_source.py",
-        "Concepts/pm7-tools/verify/onboarding_cinematic.mjs",
         "ContractRef lint",
         "Dispatcher tests",
         "Dispatcher tests for unknown-command rejection",
@@ -20047,6 +19948,10 @@
         "Migration coverage map for retained anchors and aliases",
         "Plans/.plan_migration/pds-20260611-001-standardize-plans/anchor_aliases.json",
         "Plans/Automated_Testing_System.md#ATS-047 — future terminal fixtures",
+        "Plans/Automated_Testing_System.md#ATS-075",
+        "Plans/Automated_Testing_System.md#ATS-076",
+        "Plans/FinalGUISpec.md#F3-523 (hover/focus, Escape, departure grace, geometry, themes and reduced-motion acceptance)",
+        "Plans/UI_Wiring_Rules.md#UIW-013 (accessible names/descriptions, disabled focus without activation, keyboard parity and documented exemptions)",
         "Plans/Wiring_Matrix.production.exclusions.json",
         "Plans/Wiring_Matrix.production.json",
         "Plans/Wiring_Matrix.schema.json",
@@ -20055,6 +19960,7 @@
         "Plans/product_onboarding_contracts.schema.json",
         "Plans/settings_system_contract_fixtures.json",
         "Plans/touch_closure.json",
+        "Plans/touch_closure_action_sources.json",
         "Plans/ui_command_response_fixtures.json",
         "UI purity check",
         "UI purity lints",
@@ -20063,9 +19969,6 @@
         "future Settings eleven-row command/action census",
         "future native Product Onboarding request/result and accessibility fixtures",
         "handler-absence",
-        "node Concepts/pm7-tools/verify/accessibility_visual_matrix.mjs",
-        "node Concepts/pm7-tools/verify/home_workspace_matrix.mjs",
-        "node Concepts/pm7-tools/verify/hover_tags.mjs",
         "python3 scripts/pm-implementation-readiness.py validate",
         "python3 scripts/pm-plan-index.py validate",
         "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits",
@@ -20126,7 +20029,7 @@
         "Plans/usage_run_estimate_contracts.schema.json",
         "future usage events"
       ],
-      "line_count": 7542,
+      "line_count": 7541,
       "path": "Plans/usage-feature.md",
       "plan_unit_count": 107,
       "plan_unit_ids": [
@@ -20279,7 +20182,7 @@
         "usage_workspace_state_orphan_or_preview_persistence",
         "vision_usage_attribution_gap"
       ],
-      "sha256": "bbe0a2de3a014ce31764cb71c226ab9c513f203471d16a50e2d6a0bd5345cd33",
+      "sha256": "c5ef8b5e3bc9d71f2a0b1d1f6f2a41c48af06695c2d153114ab6e0e7bf685b07",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 107
@@ -20388,7 +20291,7 @@
         "Plans/storage-plan.md",
         "Plans/usage-feature.md"
       ],
-      "line_count": 2066,
+      "line_count": 2065,
       "path": "Plans/Widget_System.md",
       "plan_unit_count": 21,
       "plan_unit_ids": [
@@ -20429,7 +20332,7 @@
         "widget_preview_leaks_or_multi_commit",
         "widget_system_drift"
       ],
-      "sha256": "7fa1af288af8d9fdcdeab18d1f35b970160c3d6b863011cb720d9e9b96097cfa",
+      "sha256": "db30f1ae130c83d289a9fb65d96b33a32fa853b3bcd321c3d0d1334857432214",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 21
@@ -20461,7 +20364,7 @@
         "tests/fixtures/usage_gui/presentation/persistence_migration_matrix.json (static contract fixture only)",
         "tests/fixtures/usage_gui/presentation/room_disclosure_matrix.json (static contract fixture only)",
         "tests/fixtures/usage_gui/presentation/widget_content_tiers.json (static contract fixture only)",
-        "verification_pending: fresh exact-T43 live occupied-neighbor preview, settlement-parity, cancellation, failure, and film receipts under Plans/.audits/audit-20260830-001-pmconcept7-live-resize-preview/; readiness_claim=false"
+        "verification_pending: fresh artifact-bound live occupied-neighbor preview, settlement-parity, cancellation, failure, and motion evidence; readiness_claim=false"
       ]
     },
     {
@@ -20472,8 +20375,6 @@
       },
       "heading_count": 154,
       "implementation_surfaces": [
-        "Concepts/pm7-tools/onboarding_cinematic_source.py",
-        "Concepts/pm7-tools/systems_integration_source.py",
         "Plans/00-plans-index.md",
         "Plans/Commands_System.md",
         "Plans/Contracts_V0.md",
@@ -20483,7 +20384,6 @@
         "Plans/Goal_Runtime_System.md",
         "Plans/Jujutsu_Integration.md",
         "Plans/Orchestrator_Page.md",
-        "Plans/PMConcept7_Home_Workspace_Control_Reconciliation.json",
         "Plans/Plan_To_Node_Compilation.md",
         "Plans/Planning_Wizard.md",
         "Plans/Run_Graph_View.md",
@@ -20504,7 +20404,7 @@
         "future UI command dispatcher fixtures",
         "scripts/pm-ui-command-response.py"
       ],
-      "line_count": 6340,
+      "line_count": 6337,
       "path": "Plans/Wiring_Matrix.md",
       "plan_unit_count": 71,
       "plan_unit_ids": [
@@ -20618,7 +20518,7 @@
         "wiring_matrix_drift",
         "wiring_or_reverse_coverage_false_completion"
       ],
-      "sha256": "4798573dabda2b10299dc4219dddbe4a5408b7adc13b7e83b7d1415821b50357",
+      "sha256": "95b9855fbad3fdda5e2178024bb5218aac818a0810c0b353d89033abeea78b20",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 71
@@ -20636,10 +20536,6 @@
         "wiring_disposition": 1
       },
       "validation_surfaces": [
-        "Concepts/pm7-tools/onboarding_cinematic_source.py static assertions",
-        "Concepts/pm7-tools/systems_integration_source.py",
-        "Concepts/pm7-tools/verify/guided_tour.mjs",
-        "Concepts/pm7-tools/verify/onboarding_cinematic.mjs browser-concept verifier",
         "DRY Method settings wiring fixture",
         "Future native decision-review fixtures for response, identity, replay, persistence and dismissal.",
         "Future owner-qualified request/result, stale identity, denied, cancellation, partial and unknown-effect fixtures",
@@ -20948,7 +20844,7 @@
       ]
     }
   ],
-  "generated_at_utc": "2026-10-17T22:23:37Z",
+  "generated_at_utc": "2026-10-19T05:47:05Z",
   "schema_id": "pm.plan_index.doc_cards.v1",
   "source_scope": "top-level live Plans/*.md; excludes ledgers, generated shards, evidence, and pipeline artifacts",
   "summary": {

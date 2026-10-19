@@ -21,7 +21,7 @@ ContractRef: Primitive:UICommand, ContractName:Plans/Contracts_V0.md#7-uicommand
 
 ### 0.1 GUI concept reconciliation input
 
-When a GUI concept artifact is included in a reconciliation packet, `Concepts/PMConcept7.html` is the generated PM7 concept input for wiring review and `Concepts/ChatGuiUpdates2.md` remains historical change lineage. The active source chain is the current pinned PM7 base through source-owned T33-T43 transforms in `Concepts/pm7-tools/build_pm7.py`; generated HTML is never an authored owner, and terminal artifact hashes remain audit-owned. As of 2026-08-12 the artifact carries the direct-manipulation Home movement model (grab handle plus keyboard, no target-picker rail), the repaired resize/collapse/open-in-panel paths, and the contact-aware editor tab silhouette. As of 2026-08-13 it additionally carries the explicit-float-only movement rebuild (window exit is invalid_target, boot never restores floating), adjacent-pair pixel resize with fair-share minimums and the no-dead-space invariant, the top-left corner triangle grip, the dual-surface Reset Layout row in the four-row top-bar Home menu, the single in-canvas chat float system (the base full-screen overlay is retired), all-pane editor tab reorder persistence with the portal-family overflow chip, and the frosted-rail silhouette; the title-bar notification stack sits between the page tabs and the search field again (the 2026-08-12 after-search placement is retired per F3-460). The same-day tweak wave further carries the top-right lines-only grip (the corner triangle is retired), the toggling top-bar Collapse/Expand Bottom Terminal row, the full-height dock_right grid (both retired 2026-10-09 by DL-180: UIW-040 lists Collapse Bottom Terminal as retired with no row, and the chat is a fixed column), target-geometry drop previews with the pickup-band and preview-capture guards, the row-dock cross_basis_px track handle, the progress-driven silhouette redesign extended to the dashboard tab strip, the retired pane-close glyph, and the move-workgroup source reseed. Its app-status-bar removal is superseded on 2026-08-27 by the full-width F3-448 no-bell status bar. Wave 3 (2026-08-13) additionally carries the right-edge vertical-dots kebab below the grip (out of the head rows), two-frame drop-target hysteresis with mid-FLIP hit-test exclusion and the proportional-width placeholder, the live-fitting overflow chip beside the actions cluster with animated tab reorder, the theme-token silhouette skins with the minimap as the only code-pane scrollbar, 2 px vertical workspace padding, and the truth-gated terminal empty state. Wave 4 (2026-08-13) additionally carries latch-based geometric drop targeting (elementsFromPoint retired from resolution), the pointer-capture tab reorder (HTML5 DnD retired), and model-first browser-in-panel deactivation. The path tokens `/PMConcept7.html` and `/ChatGuiUpdates2.md` are evidence lineage, not live Plans owner paths; UI wiring canon remains in this document, GUI product/layout canon remains in `Plans/FinalGUISpec.md`, and command canon remains in `Plans/UI_Command_Catalog.md`. Current repo-local successor status is owned by `Plans/.audits/audit-20260830-001-pmconcept7-live-resize-preview/audit_report.json`; incomplete or failed rows remain `verification_pending` and this paragraph is not a verdict.
+When a GUI concept artifact is included in a reconciliation packet, `Concepts/PMConcept7.html` is the PM7 look-and-behavior reference for wiring review and `Concepts/ChatGuiUpdates2.md` remains historical change lineage. The concept is never an authored owner; artifact hashes and verdicts remain audit-owned. As of 2026-08-12 the artifact carries the direct-manipulation Home movement model (grab handle plus keyboard, no target-picker rail), the repaired resize/collapse/open-in-panel paths, and the contact-aware editor tab silhouette. As of 2026-08-13 it additionally carries the explicit-float-only movement rebuild (window exit is invalid_target, boot never restores floating), adjacent-pair pixel resize with fair-share minimums and the no-dead-space invariant, the top-left corner triangle grip, the dual-surface Reset Layout row in the four-row top-bar Home menu, the single in-canvas chat float system (the base full-screen overlay is retired), all-pane editor tab reorder persistence with the portal-family overflow chip, and the frosted-rail silhouette; the title-bar notification stack sits between the page tabs and the search field again (the 2026-08-12 after-search placement is retired per F3-460). The same-day tweak wave further carries the top-right lines-only grip (the corner triangle is retired), the toggling top-bar Collapse/Expand Bottom Terminal row, the full-height dock_right grid (both retired 2026-10-09 by DL-180: UIW-040 lists Collapse Bottom Terminal as retired with no row, and the chat is a fixed column), target-geometry drop previews with the pickup-band and preview-capture guards, the row-dock cross_basis_px track handle, the progress-driven silhouette redesign extended to the dashboard tab strip, and the retired pane-close glyph. Its app-status-bar removal is superseded on 2026-08-27 by the full-width F3-448 no-bell status bar. Wave 3 (2026-08-13) additionally carries the right-edge vertical-dots kebab below the grip (out of the head rows), two-frame drop-target hysteresis with mid-FLIP hit-test exclusion and the proportional-width placeholder, the live-fitting overflow chip beside the actions cluster with animated tab reorder, the theme-token silhouette skins with the minimap as the only code-pane scrollbar, 2 px vertical workspace padding, and the truth-gated terminal empty state. Wave 4 (2026-08-13) additionally carries latch-based geometric drop targeting (elementsFromPoint retired from resolution), the pointer-capture tab reorder (HTML5 DnD retired), and model-first browser-in-panel deactivation. The path tokens `/PMConcept7.html` and `/ChatGuiUpdates2.md` are evidence lineage, not live Plans owner paths; UI wiring canon remains in this document, GUI product/layout canon remains in `Plans/FinalGUISpec.md`, and command canon remains in `Plans/UI_Command_Catalog.md`. Current repo-local successor status is owned by `Plans/.audits/audit-20260830-001-pmconcept7-live-resize-preview/audit_report.json`; incomplete or failed rows remain `verification_pending` and this paragraph is not a verdict.
 
 `Concepts/PuppetMasterDashComp.html` and `Concepts/PMConcept.html` are prior concept inputs retained as historical concept lineage when cited by a transfer source; the path tokens `/PuppetMasterDashComp.html` and `/PMConcept.html` remain evidence lineage for reconciliation targeting of their own packets and MUST NOT be copied verbatim into canon or treated as live owner paths.
 
@@ -685,7 +685,8 @@ acceptance_criteria:
 - The source-hashed control census reports unresolved_count=0 and every production row names an executable test, not declarative prose alone.
 validation_surfaces:
 - python3 scripts/pm-validate-wiring-matrix.py
-- node Concepts/pm7-tools/verify/home_workspace_matrix.mjs
+- Plans/Automated_Testing_System.md#ATS-075
+- Plans/Automated_Testing_System.md#ATS-076
 - python3 scripts/pm-plan-index.py validate
 risk_class: home_wiring_orphan
 reasoning_tier: standard
@@ -703,7 +704,7 @@ negative_constraints:
 compatibility_only_notes: []
 stale_retired_dispositions:
 - The prior non-census Home reconciliation summary is superseded by the source-hashed control census.
-- "Amended 2026-10-09 (DL-180): the census contents are UIW-040's closed list; the fixed-zone rows, the terminal caps and Collapse Bottom Terminal leave it. DL-180 is cited here and not in depends_on: DL-180 builds on DL-147, whose chain already reaches this unit, so the dependency would close a loop; UIW-040 depends on this unit instead. The validation surface home_workspace_matrix.mjs is superseded lineage from this date: its fixed-model cases do not prove the DL-180 rows, and the replacement executable cases are Plans/Automated_Testing_System.md#ATS-075."
+- "Amended 2026-10-09 (DL-180): the census contents are UIW-040's closed list; the fixed-zone rows, the terminal caps and Collapse Bottom Terminal leave it. DL-180 is cited here and not in depends_on: DL-180 builds on DL-147, whose chain already reaches this unit, so the dependency would close a loop; UIW-040 depends on this unit instead. Cases written for the retired four-panel Home model do not prove this row; replacement executable cases are owed (ATS-075/076)."
 owner_hints: [Plans/UI_Wiring_Rules.md, Plans/Wiring_Matrix.production.json]
 ```
 
@@ -711,7 +712,7 @@ owner_hints: [Plans/UI_Wiring_Rules.md, Plans/Wiring_Matrix.production.json]
 
 §0.1 update: `Concepts/PMConcept7.html` remains the primary concept input for wiring review, now carrying the integrated Cozy Shelves rail panels (File Manager, Search, Source Control, GitHub Actions, Docker, Testing, Agents, Runtime Artifacts per `Plans/FinalGUISpec.md` F3-497) and the Debug & Run panel with its fleshed bottom Debug tab (Run & Debug Revival, F3-482..F3-496). `Plans/CozyShelves_PM7_Control_Reconciliation.json` preserves the historical 2026-07-29 integrated-panel census, but it is not currentness evidence after the PM6/PM7 rebaseline; a true re-census is required before restoring any 100% command-coverage claim. `Plans/CozyShelves_Control_Reconciliation.json` remains the concept-phase census of the source-lineage `Concepts/rail-concepts/**` files and is current at its relocated `QwenRailConcepts/**` paths. Independently of the deferred PM7 census, the catalog and wiring rows retain the named command dispositions: the `cmd.run_debug.*` family is registered in the Run & Debug Revival Addendum and wired in `Plans/Wiring_Matrix.production.json` (rows `catalog.run_debug_*`), and `cmd.chat.open` is recorded as a compatibility alias of `cmd.chat.open_thread` (exclusions-registered, no second primary row). This note creates no WorkNodes, NodeSeeds, executable queues, implementation files, runtime artifacts, generated wiring rows, production build tasks, final manifests, or PNC-019 receipts.
 
-§0.1 update 2026-10-09 (`Plans/Decision_Log.md#DL-162`, `#DL-163`): `Concepts/PMConcept7.html` remains the primary concept input for wiring review. Its rail panels and bottom Debug tab now carry the Polish design (`Plans/FinalGUISpec.md` F3-618 to F3-625), built into the page through the opus-5.5 build as a skin over the same shell panels: every shell control keeps its command id and its `data-demo-action` and `data-demo-arg`, and the Jujutsu view's five tabs (F3-623, F3-624) dispatch only existing `cmd.jujutsu.*`, `cmd.forge.review.*`, `cmd.file.open` and `ui.source_control.backup_history.open` ids, so the skin adds no wiring row and changes no census disposition. `Concepts/LeftRailPMConcept7.html` is the comparison copy (concepts A, B, C and "Original", the rail before Polish) and is not a wiring input. This note creates no WorkNodes, NodeSeeds, executable queues, implementation files, runtime artifacts, generated wiring rows, production build tasks, final manifests, or PNC-019 receipts.
+§0.1 update 2026-10-09 (`Plans/Decision_Log.md#DL-162`, `#DL-163`): `Concepts/PMConcept7.html` remains the primary concept input for wiring review. Its rail panels and bottom Debug tab now carry the Polish design (`Plans/FinalGUISpec.md` F3-618 to F3-625), shown as a skin over the same shell panels: every shell control keeps its command id and its `data-demo-action` and `data-demo-arg`, and the Jujutsu view's five tabs (F3-623, F3-624) dispatch only existing `cmd.jujutsu.*`, `cmd.forge.review.*`, `cmd.file.open` and `ui.source_control.backup_history.open` ids, so the skin adds no wiring row and changes no census disposition. `Concepts/LeftRailPMConcept7.html` is the comparison copy (concepts A, B, C and "Original", the rail before Polish) and is not a wiring input. This note creates no WorkNodes, NodeSeeds, executable queues, implementation files, runtime artifacts, generated wiring rows, production build tasks, final manifests, or PNC-019 receipts.
 
 Amended 2026-10-09 (`Plans/Decision_Log.md#DL-180`): Home has no bottom zone, so the bottom Debug tab that the two §0.1 updates above name is now the `debug_console` tab kind, opened in any panel and revealed wherever it is by `cmd.run_debug.console.reveal` (`Plans/Commands_System.md#CS-101`). The census of Home controls is `UIW-040`'s.
 
@@ -874,8 +875,8 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
-  - Concepts/pm7-tools/base/PM7-base.html (current pinned PM7 input; source-lineage-only)
-  - Concepts/pm7-tools/build_pm7.py#T33-T43 (source-owned transforms)
+  - Concepts/pm7-tools/base/PM7-base.html (retired PM7 base; historical source lineage only)
+  - Concepts/pm7-tools/build_pm7.py#T33-T43 (retired concept transforms; historical source lineage only)
   - Concepts/pm7-tools/widget_live_resize_preview_source.py (authored T43 Usage-only live resize-preview transform)
   - Concepts/PMConcept7.html (generated artifact; terminal bytes and hash are audit-owned)
   - Plans/.audits/audit-20260829-001-pmconcept7-widget-followup/audit_report.json (current repo-local successor audit status; verdict remains report-owned)
@@ -930,13 +931,13 @@ acceptance_criteria:
   - The census treats the controls inside an open activity bar domain preview that F3-590 lists as documented exemptions (DL-157) and still fails a hover tag on any of them.
   - PMConcept7 remains simulation-only until native dispatcher and handler evidence exists.
 validation_surfaces:
-  - node Concepts/pm7-tools/verify/hover_tags.mjs
-  - node Concepts/pm7-tools/verify/accessibility_visual_matrix.mjs
+  - Plans/FinalGUISpec.md#F3-523 (hover/focus, Escape, departure grace, geometry, themes and reduced-motion acceptance)
+  - Plans/UI_Wiring_Rules.md#UIW-013 (accessible names/descriptions, disabled focus without activation, keyboard parity and documented exemptions)
   - python3 scripts/pm-touch-closure-verify.py
 risk_class: orphan_control_or_inaccessible_hover_overlay
 reasoning_tier: high
 context_scope: typed_controls_and_hover_overlay
-implementation_surfaces: [Plans/UI_Wiring_Rules.md, Plans/FinalGUISpec.md, Plans/touch_closure.json, Concepts/pm7-tools/global_hover_tags_source.py]
+implementation_surfaces: [Plans/UI_Wiring_Rules.md, Plans/FinalGUISpec.md, Plans/touch_closure.json]
 node_compile_hint: {mode: typed_control_and_hover_binding, create_worknodes: false, create_nodeseeds: false}
 source_lineage:
   - Concepts/chat-assistant-concepts/5.6 Pro/PM_Chat_Assistant_5.6_Pro_Standalone.html
@@ -1070,8 +1071,7 @@ and are rejected as commands, aliases, handlers, and production rows because the
 own those semantics. This is separate from UCC-106's eleven retained provider-first command-era tokens, whose count and
 lineage remain unchanged.
 
-Schema/fixture validation, transform assertions, the generated-artifact static gate, and
-`Concepts/pm7-tools/verify/onboarding_cinematic.mjs` cover vocabulary, markup, request/result, required closed
+Schema/fixture validation and concept reference checks cover vocabulary, markup, request/result, required closed
 secret-free `local_context`, ambiguous/missing/additional/raw/secret-bearing-context rejection, both `more_ways`
 variants, both global/optional `skip` variants, disabled/rejected, modal/focus, durable defer, explicit Skip,
 non-completing Close, and ephemeral Details behavior at their declared
@@ -1117,11 +1117,11 @@ acceptance_criteria:
   - Defer persists exact stage/path/branch/history/revision/continuation/initiating-Client/focus return before dismissal; Close does not complete; Skip is explicitly skipped; Details remains same-stage and ephemeral.
   - The eight named packet candidate cmd.onboarding.* tokens are source-lineage only and receive no command, alias, handler, or production row; UCC-106's eleven retired command-era tokens retain their separate lineage count.
   - The flow stays a bounded modal with no route-history or breadcrumb chrome, and no static/browser evidence is treated as native or runtime proof.
-validation_surfaces: [Plans/product_onboarding_contracts.schema.json, Plans/product_onboarding_contract_fixtures.json, Concepts/pm7-tools/onboarding_cinematic_source.py, Concepts/pm7-tools/verify/onboarding_cinematic.mjs, future native Product Onboarding request/result and accessibility fixtures]
+validation_surfaces: [Plans/product_onboarding_contracts.schema.json, Plans/product_onboarding_contract_fixtures.json, future native Product Onboarding request/result and accessibility fixtures]
 risk_class: onboarding_local_action_or_result_wiring_drift
 reasoning_tier: high
 context_scope: product_onboarding_typed_local_request_result
-implementation_surfaces: [Plans/UI_Wiring_Rules.md, Plans/Planning_Wizard.md, Plans/UI_Command_Catalog.md, Plans/Wiring_Matrix.md, Plans/product_onboarding_contracts.schema.json, Concepts/pm7-tools/onboarding_cinematic_source.py]
+implementation_surfaces: [Plans/UI_Wiring_Rules.md, Plans/Planning_Wizard.md, Plans/UI_Command_Catalog.md, Plans/Wiring_Matrix.md, Plans/product_onboarding_contracts.schema.json]
 node_compile_hint: {mode: product_onboarding_local_action_wiring, create_worknodes: false, create_nodeseeds: false}
 source_lineage:
   - approved current Product Onboarding source/schema reconciliation
@@ -1167,11 +1167,11 @@ acceptance_criteria:
   - Every typed local action has owner-local currentness/focus/return behavior and no domain mutation or EventRecord.
   - Restoring an archived Project routes through cmd.project.unarchive before all gates; the old UI entry cannot privately save a registry change or fabricate navigation-only success, and receives no second handler or production row.
   - Concept simulation, schema validation, catalog presence, and planned target strings never claim native runtime readiness.
-validation_surfaces: [Plans/Wiring_Matrix.production.json, Plans/Wiring_Matrix.production.exclusions.json, Plans/touch_closure.json, Concepts/pm7-tools/systems_integration_source.py, Concepts/pm7-tools/onboarding_cinematic_source.py, scripts/pm-touch-closure-verify.py]
+validation_surfaces: [Plans/Wiring_Matrix.production.json, Plans/Wiring_Matrix.production.exclusions.json, Plans/touch_closure.json, scripts/pm-touch-closure-verify.py]
 risk_class: ui_alias_bypass_or_phantom_runtime_claim
 reasoning_tier: high
 context_scope: server_egolite_ui_dispatch_boundary
-implementation_surfaces: [Plans/UI_Wiring_Rules.md, Plans/Wiring_Matrix.production.json, Plans/touch_closure.json, Concepts/pm7-tools/]
+implementation_surfaces: [Plans/UI_Wiring_Rules.md, Plans/Wiring_Matrix.production.json, Plans/touch_closure.json]
 node_compile_hint: {mode: ui_wiring_rule_only, create_worknodes: false, create_nodeseeds: false}
 source_lineage: [source_ref:server-command-gap-adjudication:rows-1-171, source_report:scratchpad/pm-integration-20260831/authority-repairs/server-gap-adjudication/production-wiring-manifest/production-wiring-exact-map.json#92-command-denominator]
 negative_constraints: [No alias dispatch., No local domain command., No Doctor/Settings private owner., No fake native proof.]
@@ -1190,7 +1190,9 @@ plan_unit_id: UIW-017
 unit_type: gui_wiring_rule
 status: accepted
 owner_doc: Plans/UI_Wiring_Rules.md
-canonical_text: Every actionable Touch primary command must have production wiring and exactly one handler identity across all GUI consumers; aliases and blocked false inventory must have no peer wiring, and reverse coverage must not create synthetic controls.
+canonical_text: >-
+  Every actionable Touch primary command must have production wiring and exactly one handler identity across all GUI consumers; aliases and blocked false inventory must have no peer wiring, and reverse coverage must not create synthetic controls.
+  UIW-017 owns Plans/touch_closure_action_sources.json, the bounded static product action census used by Touch discovery independently of the Touch crosswalk and production wiring. Its system-local, Guided Tour, and required Home layout action lists reference the existing semantic owners. The census is not a command catalog, concept build input, native execution evidence, or readiness admission.
 gui_related: true
 gui_classification_reason: The rule closes bidirectional command-to-GUI reachability, accessibility, disabled behavior, and focus return.
 depends_on: [UIW-016, CS-074, UCC-152, WM-051]
@@ -1199,13 +1201,15 @@ acceptance_criteria:
 - The Touch verifier fails on missing production coverage, competing handler identities, alias peer rows, blocked-token wiring, missing GUI routes, or stale profile refs.
 - Rebinding uses exact semantic equivalence and never relabels a nearby non-equivalent action.
 - Static, concept-simulated, and native-runtime claims remain separate.
-validation_surfaces: [python3 scripts/pm-touch-closure-verify.py --json]
+- Plans/touch_closure_action_sources.json remains an independent static census; the verifier rejects action drift and unresolved semantic-owner references against the existing schema, catalog, and Touch contracts.
+validation_surfaces: [Plans/touch_closure_action_sources.json, python3 scripts/pm-touch-closure-verify.py --json]
 risk_class: gui_command_reverse_coverage
 reasoning_tier: high
 context_scope: touch_command_gui_closure
-implementation_surfaces: [Plans/UI_Wiring_Rules.md, Plans/touch_closure.json, scripts/pm-touch-closure-verify.py]
+implementation_surfaces: [Plans/UI_Wiring_Rules.md, Plans/touch_closure.json, Plans/touch_closure_action_sources.json, scripts/pm-touch-closure-verify.py]
 node_compile_hint: {mode: exact_touch_gui_closure, create_worknodes: false, create_nodeseeds: false}
 source_lineage: [Plans/Wiring_Matrix.md#WM-051]
+preserved_exact_tokens: [Plans/touch_closure_action_sources.json]
 negative_constraints: [Do not mint false domain commands for ephemeral presentation., Do not invent synthetic controls solely to satisfy a census.]
 compile_disposition: extend_existing_owner
 ```
@@ -1408,10 +1412,12 @@ provider-degradation paths the correction requires. Their `evidence_required` te
 
 ### Internal-producer rows — owner-documented, not matrix rows
 
-The remaining twenty-four `CW-` rows have **no command identity**. They are owner-internal
-producers, projectors, and reducers. They stay out of this register for the same reason the
-sixteen view-local rows did, and their behaviour is specified — with the same
-producer → handler → durable effect → consumer → failure shape — in their owner documents:
+The remaining twenty-four `CW-` rows have **no command identity**. Twenty-three describe
+owner-internal producers, projectors, and reducers; CW-046 is concept comparison lineage
+only (CONCEPT-017), with no runtime producer. All twenty-four stay out of this register
+for the same reason the sixteen view-local rows did.
+The product behaviour follows the same producer → handler → durable effect → consumer →
+failure shape in its owner documents:
 
 | Packet rows | Internal producer | Owner |
 |---|---|---|
@@ -1427,7 +1433,7 @@ producer → handler → durable effect → consumer → failure shape — in th
 | CW-038, CW-039, CW-040 | To-Do graph mutation, list replacement, late-event gate | `Plans/ToDo_Runtime.md` (TDG-001..012) |
 | CW-041, CW-042 | embed render and artifact retention | `Plans/Runtime_Artifacts_Panel.md` (PDET-008..012, PDET-006) |
 | CW-043, CW-044 | Goal completion predicate and replay | `Plans/Goal_Runtime_System.md` (GREPLAY-003..010) |
-| CW-046 | concept two-build byte check | `Concepts/chat-assistant-concepts/5.6 Pro/build.py` (CONCEPT-017) |
+| CW-046 | concept comparison lineage; excluded from production wiring | CONCEPT-017 (source-only; no runtime producer) |
 
 ### CDRY-012 — What a complete row covers
 

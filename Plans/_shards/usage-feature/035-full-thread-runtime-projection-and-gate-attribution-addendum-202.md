@@ -2,9 +2,9 @@
 
 Source: `Plans/usage-feature.md`
 
-Source lines: L6576-L6959
+Source lines: L6575-L6958
 
-Source SHA256: `bbe0a2de3a014ce31764cb71c226ab9c513f203471d16a50e2d6a0bd5345cd33`
+Source SHA256: `c5ef8b5e3bc9d71f2a0b1d1f6f2a41c48af06695c2d153114ab6e0e7bf685b07`
 
 ---
 
@@ -177,9 +177,9 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
-  - "Concepts/pm7-tools/base/PM7-base.html (current recovered PMConcept7 source base; source-lineage-only)"
-  - "Concepts/pm7-tools/build_pm7.py (current assertion-guarded T33-T41 pipeline)"
-  - "Concepts/PMConcept7.html (protected generated output; verification input only; never hand-edit)"
+  - "Concepts/pm7-tools/base/PM7-base.html (historical PM7 prototype lineage only)"
+  - "Concepts/pm7-tools/build_pm7.py (historical PM7 prototype lineage only)"
+  - "Concepts/PMConcept7.html (look-and-behaviour reference only)"
   - "Concepts/usage-redesign/src/js/40-board.js (the width-class ladder and versioned default sets of the redesigned Usage page, DL-173; source-lineage-only)"
 preserved_exact_tokens:
   - twelve-track
@@ -255,9 +255,9 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
-  - "Concepts/pm7-tools/base/PM7-base.html (current recovered PMConcept7 source base; source-lineage-only)"
-  - "Concepts/pm7-tools/build_pm7.py (current assertion-guarded T33-T41 pipeline)"
-  - "Concepts/PMConcept7.html (protected generated output; verification input only; never hand-edit)"
+  - "Concepts/pm7-tools/base/PM7-base.html (historical PM7 prototype lineage only)"
+  - "Concepts/pm7-tools/build_pm7.py (historical PM7 prototype lineage only)"
+  - "Concepts/PMConcept7.html (look-and-behaviour reference only)"
   - "Concepts/usage-redesign/src/js/40-board.js and src/js/15-film.js (the redesigned concept's layout envelope, its one-time v12 migration, and the remembered Live choice; source-lineage-only)"
 preserved_exact_tokens:
   - room
@@ -348,9 +348,9 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
-  - "Concepts/pm7-tools/base/PM7-base.html (current recovered PMConcept7 source base; source-lineage-only)"
-  - "Concepts/pm7-tools/build_pm7.py (current assertion-guarded T33-T41 pipeline)"
-  - "Concepts/PMConcept7.html (protected generated output; verification input only; never hand-edit)"
+  - "Concepts/pm7-tools/base/PM7-base.html (historical PM7 prototype lineage only)"
+  - "Concepts/pm7-tools/build_pm7.py (historical PM7 prototype lineage only)"
+  - "Concepts/PMConcept7.html (look-and-behaviour reference only)"
   - "Concepts/usage-redesign/src/js/42-cards.js and tools/boards.py (the redesigned per-kind size presets and narrow tiers; source-lineage-only)"
 preserved_exact_tokens:
   - "Plans & limits"

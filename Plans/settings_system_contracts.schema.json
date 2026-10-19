@@ -2053,12 +2053,9 @@
         "schema_id",
         "schema_version",
         "artifact_ref",
-        "authored_source_ref",
-        "builder_ref",
         "evidence_level",
         "handlers_simulated",
         "persistence_mode",
-        "direct_generated_edit_allowed",
         "allowed_claims",
         "prohibited_claims",
         "native_runtime_executed"
@@ -2076,12 +2073,6 @@
         "artifact_ref": {
           "const": "Concepts/PMConcept7.html"
         },
-        "authored_source_ref": {
-          "const": "Concepts/pm7-tools/settings_tome_source.py"
-        },
-        "builder_ref": {
-          "const": "Concepts/pm7-tools/build_pm7.py"
-        },
         "evidence_level": {
           "const": "concept_fixture_only"
         },
@@ -2090,9 +2081,6 @@
         },
         "persistence_mode": {
           "const": "fixture_local_non_authoritative"
-        },
-        "direct_generated_edit_allowed": {
-          "const": false
         },
         "allowed_claims": {
           "type": "array",

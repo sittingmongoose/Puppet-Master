@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L44049-L44233
+Source lines: L43983-L44167
 
-Source SHA256: `46e4f7e518b4eee59e453c5fc1fcf5e43e6c43f0db5648ab420f21f97a89a63b`
+Source SHA256: `5049fc1967b53eb12bd03c1e1f58e8d7fb3f3523722601a0c28611c90807b01b`
 
 ---
 
@@ -62,7 +62,7 @@ acceptance_criteria:
 validation_surfaces:
   - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
   - python3 scripts/pm-plan-index.py validate
-  - node Concepts/leftrail-redesign/tools/rail_boot.mjs (concept acceptance on GPU Chrome)
+  - "Verify F3-623's distinct Git/Jujutsu tab strips, engine-switch placement and fitting of the longest label."
 risk_class: rail_presentation_drift
 reasoning_tier: high
 context_scope: left_rail_polish

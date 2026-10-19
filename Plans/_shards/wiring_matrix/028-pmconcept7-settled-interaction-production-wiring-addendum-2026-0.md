@@ -2,9 +2,9 @@
 
 Source: `Plans/Wiring_Matrix.md`
 
-Source lines: L3950-L4090
+Source lines: L3948-L4087
 
-Source SHA256: `4798573dabda2b10299dc4219dddbe4a5408b7adc13b7e83b7d1415821b50357`
+Source SHA256: `95b9855fbad3fdda5e2178024bb5218aac818a0810c0b353d89033abeea78b20`
 
 ---
 
@@ -119,10 +119,9 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
-  - Concepts/pm7-tools/base/PM7-base.html (current pinned PM7 input; source-lineage-only)
-  - Concepts/pm7-tools/build_pm7.py#T33-T43 (source-owned transforms)
-  - Concepts/pm7-tools/widget_live_resize_preview_source.py (authored T43 Usage-only live resize-preview transform)
-  - Concepts/PMConcept7.html (generated artifact; terminal bytes and hash are audit-owned)
+  - Concepts/pm7-tools/base/PM7-base.html (historical PM7 base; source-lineage-only)
+  - Concepts/pm7-tools/widget_live_resize_preview_source.py (retired Usage live resize-preview source; source-lineage-only)
+  - Concepts/PMConcept7.html (look-and-behaviour reference)
   - Plans/.audits/audit-20260829-001-pmconcept7-widget-followup/audit_report.json (current repo-local successor audit status; verdict remains report-owned)
   - "Concepts/usage-redesign/src/js/40-board.js (Usage redesign board: gravity and Tidy commits; source-lineage-only)"
   - Plans/Decision_Log.md#DL-176

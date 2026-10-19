@@ -2,15 +2,15 @@
 
 Source: `Plans/Commands_System.md`
 
-Source lines: L5515-L5797
+Source lines: L5514-L5796
 
-Source SHA256: `2b193600a9072afac65287ec61f140a16ff350778972f0054a3e025e8f440a5e`
+Source SHA256: `ae15064c31e71e43b22c8d4be185a4e8a9d05465472daa3b5bf32e17a5cd6f0f`
 
 ---
 
 ## Central Touch Production Closure Addendum - 2026-09-01
 
-The following exact 231 primary commands complete the remaining actionable Touch/production denominator after the 102-row Server/Egolite closure. Each target is now adjudicated by its semantic owner; the handler string is a sole future dispatch identity, not executable-handler evidence. Aliases, typed local UI actions, and the blocked false-inventory spelling `cmd.artifacts.open_panel` are excluded from this table.
+The following exact 232 primary commands complete the remaining actionable Touch/production denominator after the 102-row Server/Egolite closure. Each target is now adjudicated by its semantic owner; the handler string is a sole future dispatch identity, not executable-handler evidence. Aliases, typed local UI actions, and the blocked false-inventory spelling `cmd.artifacts.open_panel` are excluded from this table.
 
 | Command | Canonical owner binding | Sole future handler | Request -> result | Initial availability / effect |
 |---|---|---|---|---|
@@ -73,10 +73,10 @@ The following exact 231 primary commands complete the remaining actionable Touch
 | `cmd.forge.review.checkout` | `Plans/Forge_Integrations.md#FGI-010` | `handlers::forge::review_checkout` | `Plans/forge_integration_contracts.schema.json#/$defs/command_request` -> `Plans/forge_integration_contracts.schema.json#/$defs/command_result` | `handler_unavailable`; owner result/receipt/projection only; `expected_event_types=[]` |
 | `cmd.forge.review.close` | `Plans/Forge_Integrations.md#FGI-010` | `handlers::forge::review_close` | `Plans/forge_integration_contracts.schema.json#/$defs/command_request` -> `Plans/forge_integration_contracts.schema.json#/$defs/command_result` | `handler_unavailable`; owner result/receipt/projection only; `expected_event_types=[]` |
 | `cmd.forge.review.comment` | `Plans/Forge_Integrations.md#FGI-010` | `handlers::forge::review_comment` | `Plans/forge_integration_contracts.schema.json#/$defs/command_request` -> `Plans/forge_integration_contracts.schema.json#/$defs/command_result` | `handler_unavailable`; owner result/receipt/projection only; `expected_event_types=[]` |
-| `cmd.forge.review.create` | `Plans/Forge_Integrations.md#FGI-010` | `handlers::forge::review_create` | `Plans/forge_integration_contracts.schema.json#/$defs/command_request` -> `Plans/forge_integration_contracts.schema.json#/$defs/command_result` | `handler_unavailable`; owner result/receipt/projection only; `expected_event_types=[]` |
+| `cmd.forge.review.create` | `Plans/Forge_Integrations.md` §3.3 (retained provider-owner routes); `Plans/Forge_Integrations.md#FGI-004` | `handlers::forge::review_create` | `Plans/forge_integration_contracts.schema.json#/$defs/command_request` -> `Plans/forge_integration_contracts.schema.json#/$defs/command_result` | `handler_unavailable`; owner result/receipt/projection only; `expected_event_types=[]` |
 | `cmd.forge.review.edit` | `Plans/Forge_Integrations.md#FGI-022` | `handlers::forge::review_edit` | `Plans/forge_integration_contracts.schema.json#/$defs/command_request` -> `Plans/forge_integration_contracts.schema.json#/$defs/command_result` | `handler_unavailable`; owner result/receipt/projection only; `expected_event_types=[]` |
 | `cmd.forge.review.mark_ready` | `Plans/Forge_Integrations.md#FGI-010` | `handlers::forge::review_mark_ready` | `Plans/forge_integration_contracts.schema.json#/$defs/command_request` -> `Plans/forge_integration_contracts.schema.json#/$defs/command_result` | `handler_unavailable`; owner result/receipt/projection only; `expected_event_types=[]` |
-| `cmd.forge.review.merge` | `Plans/Forge_Integrations.md#FGI-010` | `handlers::forge::review_merge` | `Plans/forge_integration_contracts.schema.json#/$defs/command_request` -> `Plans/forge_integration_contracts.schema.json#/$defs/command_result` | `handler_unavailable`; owner result/receipt/projection only; `expected_event_types=[]` |
+| `cmd.forge.review.merge` | `Plans/Forge_Integrations.md` §3.3 (retained provider-owner routes); `Plans/Forge_Integrations.md#FGI-004` | `handlers::forge::review_merge` | `Plans/forge_integration_contracts.schema.json#/$defs/command_request` -> `Plans/forge_integration_contracts.schema.json#/$defs/command_result` | `handler_unavailable`; owner result/receipt/projection only; `expected_event_types=[]` |
 | `cmd.forge.review.open` | `Plans/Forge_Integrations.md#FGI-010` | `handlers::forge::review_open` | `Plans/forge_integration_contracts.schema.json#/$defs/command_request` -> `Plans/forge_integration_contracts.schema.json#/$defs/command_result` | `handler_unavailable`; owner result/receipt/projection only; `expected_event_types=[]` |
 | `cmd.forge.review.open_in_browser` | `Plans/Forge_Integrations.md#FGI-010` | `handlers::forge::review_open_in_browser` | `Plans/forge_integration_contracts.schema.json#/$defs/command_request` -> `Plans/forge_integration_contracts.schema.json#/$defs/command_result` | `handler_unavailable`; owner result/receipt/projection only; `expected_event_types=[]` |
 | `cmd.forge.review.refresh` | `Plans/Forge_Integrations.md#FGI-010` | `handlers::forge::review_refresh` | `Plans/forge_integration_contracts.schema.json#/$defs/command_request` -> `Plans/forge_integration_contracts.schema.json#/$defs/command_result` | `handler_unavailable`; owner result/receipt/projection only; `expected_event_types=[]` |
@@ -265,13 +265,13 @@ plan_unit_id: CS-074
 unit_type: command_catalog
 status: accepted
 owner_doc: Plans/Commands_System.md
-canonical_text: Exactly 231 remaining owner-admitted Touch commands are primary catalog entries with one owner-adjudicated future handler each, typed owner contracts, handler_unavailable initial state, no alias peers, and no newly admitted EventRecord types.
+canonical_text: Exactly 232 remaining owner-admitted Touch commands are primary catalog entries with one owner-adjudicated future handler each, typed owner contracts, handler_unavailable initial state, no alias peers, and no newly admitted EventRecord types.
 gui_related: true
 gui_classification_reason: The command set is consumed by Settings, Onboarding/Doctor, owner workspaces, palette/API, and other named GUI routes.
 depends_on: [CS-073, BRS-011, FGI-010, FGI-013, JJI-007, MACS-004, NPLAN-003, RAS-012, RAS-015, SMPFS-157, SRV-012, SIR-030, SCS-010, TCME-008]
 unblocks: []
 acceptance_criteria:
-- The exact table contains 231 unique primary IDs and no alias, typed local UI action, rejected token, or blocked false inventory.
+- The exact table contains 232 unique primary IDs and no alias, typed local UI action, rejected token, or blocked false inventory.
 - Each command has exactly one owner binding, handler target, production-intent row, typed request/result/error/availability/permission contract, and reverse GUI route.
 - Every row starts handler_unavailable and expected_event_types is empty until native and Event Authority evidence exists.
 validation_surfaces:

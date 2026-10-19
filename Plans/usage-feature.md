@@ -3273,7 +3273,7 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:usage-feature-S0077
-- Concepts/pm7-tools/build_pm7.py#T34 (current source-owned selector behavior; verification input only)
+- Concepts/pm7-tools/build_pm7.py#T34 (historical selector prototype lineage only)
 preserved_exact_tokens:
 - 5h|24h|7d|30d
 - 5h
@@ -6441,10 +6441,9 @@ owner_hints:
 ## PMConcept7 Recovery Canonical Integration Addendum - 2026-08-27
 
 This addendum integrates the recovered PMConcept7 Usage workspace into the current Usage owner without
-disturbing the 2026-08-18 Usage accounting, disclosure, or policy-boundary canon above. Current source lineage
-is the pinned `Concepts/pm7-tools/base/PM7-base.html` plus the assertion-guarded T33-T41 pipeline in
-`Concepts/pm7-tools/build_pm7.py`; `Concepts/PMConcept7.html` is the protected generated output and is never an
-authored product or command owner. The current repo-local audit status is
+disturbing the 2026-08-18 Usage accounting, disclosure, or policy-boundary canon above.
+`Concepts/PMConcept7.html` illustrates this behavior and is never an authored product or command owner.
+The current repo-local audit status is
 `Plans/.audits/audit-20260829-001-pmconcept7-widget-followup/audit_report.json`; incomplete or failed runtime,
 visual, interaction, motion, or accessibility rows remain `verification_pending`, and static source presence or
 this Plans compile grants none of that audit credit. This addendum creates no WorkNodes, NodeSeeds, executable queues, implementation tasks,
@@ -6532,9 +6531,9 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
-  - "Concepts/pm7-tools/base/PM7-base.html (current recovered PMConcept7 source base; source-lineage-only)"
-  - "Concepts/pm7-tools/build_pm7.py (current assertion-guarded T33-T41 pipeline)"
-  - "Concepts/PMConcept7.html (protected generated output; verification input only; never hand-edit)"
+  - "Concepts/pm7-tools/base/PM7-base.html (historical PM7 prototype lineage only)"
+  - "Concepts/pm7-tools/build_pm7.py (historical PM7 prototype lineage only)"
+  - "Concepts/PMConcept7.html (look-and-behaviour reference only)"
 preserved_exact_tokens:
   - Overview
   - "Plans & limits"
@@ -6742,9 +6741,9 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
-  - "Concepts/pm7-tools/base/PM7-base.html (current recovered PMConcept7 source base; source-lineage-only)"
-  - "Concepts/pm7-tools/build_pm7.py (current assertion-guarded T33-T41 pipeline)"
-  - "Concepts/PMConcept7.html (protected generated output; verification input only; never hand-edit)"
+  - "Concepts/pm7-tools/base/PM7-base.html (historical PM7 prototype lineage only)"
+  - "Concepts/pm7-tools/build_pm7.py (historical PM7 prototype lineage only)"
+  - "Concepts/PMConcept7.html (look-and-behaviour reference only)"
   - "Concepts/usage-redesign/src/js/40-board.js (the width-class ladder and versioned default sets of the redesigned Usage page, DL-173; source-lineage-only)"
 preserved_exact_tokens:
   - twelve-track
@@ -6820,9 +6819,9 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
-  - "Concepts/pm7-tools/base/PM7-base.html (current recovered PMConcept7 source base; source-lineage-only)"
-  - "Concepts/pm7-tools/build_pm7.py (current assertion-guarded T33-T41 pipeline)"
-  - "Concepts/PMConcept7.html (protected generated output; verification input only; never hand-edit)"
+  - "Concepts/pm7-tools/base/PM7-base.html (historical PM7 prototype lineage only)"
+  - "Concepts/pm7-tools/build_pm7.py (historical PM7 prototype lineage only)"
+  - "Concepts/PMConcept7.html (look-and-behaviour reference only)"
   - "Concepts/usage-redesign/src/js/40-board.js and src/js/15-film.js (the redesigned concept's layout envelope, its one-time v12 migration, and the remembered Live choice; source-lineage-only)"
 preserved_exact_tokens:
   - room
@@ -6913,9 +6912,9 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
-  - "Concepts/pm7-tools/base/PM7-base.html (current recovered PMConcept7 source base; source-lineage-only)"
-  - "Concepts/pm7-tools/build_pm7.py (current assertion-guarded T33-T41 pipeline)"
-  - "Concepts/PMConcept7.html (protected generated output; verification input only; never hand-edit)"
+  - "Concepts/pm7-tools/base/PM7-base.html (historical PM7 prototype lineage only)"
+  - "Concepts/pm7-tools/build_pm7.py (historical PM7 prototype lineage only)"
+  - "Concepts/PMConcept7.html (look-and-behaviour reference only)"
   - "Concepts/usage-redesign/src/js/42-cards.js and tools/boards.py (the redesigned per-kind size presets and narrow tiers; source-lineage-only)"
 preserved_exact_tokens:
   - "Plans & limits"
@@ -7451,9 +7450,9 @@ canonical_text: >-
   month-end figures are labelled estimates read from the projection, so cmd.usage.forecast.request has no
   Usage producer and WM-044's location is lineage. The concept's chart gallery is a review aid, lab-only like
   the demo controls above; every widget kind on a default board is built, and a kind not yet built shows its
-  name and size, never invented data. Current source lineage for every Usage and board unit is
-  Concepts/usage-redesign, built through the opus-5.5 build since 2026-10-15; the Concepts/pm7-tools usage and
-  widget sources and their T33 to T48 pipeline are historical wherever a Plans unit still names them.
+  name and size, never invented data. Concepts/PMConcept7.html and Concepts/usage-redesign illustrate the Usage
+  and board look and behavior. The Concepts/pm7-tools Usage and widget sources remain historical lineage
+  wherever a Plans unit still names them.
   Amended 2026-10-17 (DL-228, DL-230, Jared): nine Usage Settings rows were read by no redesigned surface:
   ai.usage.usage-windows, ai.usage.platform-filters (seven fixed options against the catalog's 22 providers),
   ai.usage.chart-type, ai.usage.reset-countdown, ai.usage.cooldown-timers, ai.usage.pressure-visibility,
