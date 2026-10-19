@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L43562-L44047
+Source lines: L43496-L43981
 
-Source SHA256: `46e4f7e518b4eee59e453c5fc1fcf5e43e6c43f0db5648ab420f21f97a89a63b`
+Source SHA256: `19a5140c9ac50707b8a19f21fa6c0e9dea1782c4371fa229ef5eb9c31e50d9b2`
 
 ---
 
@@ -64,7 +64,7 @@ acceptance_criteria:
 validation_surfaces:
   - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
   - python3 scripts/pm-plan-index.py validate
-  - node Concepts/leftrail-redesign/tools/rail_boot.mjs (concept acceptance on GPU Chrome)
+  - "Verify F3-618's rail geometry and type ladder in every look and required width."
 risk_class: rail_presentation_drift
 reasoning_tier: high
 context_scope: left_rail_polish
@@ -129,7 +129,7 @@ acceptance_criteria:
 validation_surfaces:
   - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
   - python3 scripts/pm-plan-index.py validate
-  - node Concepts/leftrail-redesign/tools/rail_boot.mjs (concept acceptance on GPU Chrome)
+  - "Verify F3-619's status glyphs/words and plain counts, with no pills or coloured side bars."
 risk_class: rail_presentation_drift
 reasoning_tier: high
 context_scope: left_rail_polish
@@ -215,7 +215,7 @@ acceptance_criteria:
 validation_surfaces:
   - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
   - python3 scripts/pm-plan-index.py validate
-  - node Concepts/leftrail-redesign/tools/rail_boot.mjs (concept acceptance on GPU Chrome)
+  - "Verify F3-620's rail text fitting, complete labels and tab-strip overflow behavior at the required widths."
 risk_class: rail_presentation_drift
 reasoning_tier: high
 context_scope: left_rail_polish
@@ -327,7 +327,7 @@ acceptance_criteria:
 validation_surfaces:
   - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
   - python3 scripts/pm-plan-index.py validate
-  - node Concepts/leftrail-redesign/tools/rail_boot.mjs (concept acceptance on GPU Chrome)
+  - "Verify F3-621's shared rail dropdowns, tab switches and theme-family motion, including reduced motion."
 risk_class: rail_presentation_drift
 reasoning_tier: high
 context_scope: left_rail_polish

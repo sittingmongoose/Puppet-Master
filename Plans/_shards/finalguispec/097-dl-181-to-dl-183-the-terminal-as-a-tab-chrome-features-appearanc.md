@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L46955-L49320
+Source lines: L46889-L49254
 
-Source SHA256: `46e4f7e518b4eee59e453c5fc1fcf5e43e6c43f0db5648ab420f21f97a89a63b`
+Source SHA256: `19a5140c9ac50707b8a19f21fa6c0e9dea1782c4371fa229ef5eb9c31e50d9b2`
 
 ---
 
@@ -948,12 +948,12 @@ canonical_text: >-
   Retro included (F3-639). The terminal's default face is JetBrains Mono in every look except Retro,
   where it is VT323; Sixtyfour, Sixtyfour Raster and Departure Mono are Retro options and JetBrains
   Mono stays selectable there; Atkinson Hyperlegible Mono is offered for readability in every look;
-  and the system monospace is also a choice (F3-642). Every one of these faces is the page's own,
-  embedded once through DL-161's pipeline as one set of files shared with the rest of the page
-  (DR-050), and the terminal carries no font file of its own (amended 2026-10-10, DL-183, terminal
-  SPEC 01c5e78c42 section 4). JetBrains Mono's upright non-Latin slices reuse NieR Mode's PM NieR
+  and the system monospace is also a choice (F3-642). Every one of these faces belongs to the
+  page's one shared font asset set (DR-050), and the terminal carries no font file of its own
+  (amended 2026-10-10, DL-183, terminal SPEC 01c5e78c42 section 4). JetBrains Mono's upright
+  non-Latin slices reuse NieR Mode's PM NieR
   Mono files; its Latin face uses the full 100–800 source under the general family name 'JetBrains
-  Mono', which the 5.6 Pro fonts work builds through DL-161's pipeline, and its italic is JetBrains
+  Mono', and its italic is JetBrains
   Mono's own italic, which the page's code face embeds with the same script slices (DL-161, F3-430),
   so italic code and a program's italic text (SGR 3) are drawn, not slanted; VT323, Sixtyfour and
   Departure Mono have no italic, and theirs is synthesised. Each face comes as script slices with
@@ -984,7 +984,7 @@ canonical_text: >-
   terminal stay IBM Plex Mono. The system face exposes weights the selected face can draw; a
   fixed-weight face does not imply distinct variable weights. Terminal bold stays heavier: 700, or
   800 when regular weight is at least 600, within the supported face range. Jared reaffirmed the
-  full JetBrains Mono 100–800 promise on 2026-10-14: the shared embedding pipeline now includes the
+  full JetBrains Mono 100–800 promise on 2026-10-14: the shared font asset set includes the
   40,404-byte full-axis Latin upright for JetBrains Mono, so Thin, ExtraLight and Light have real
   outlines. PM NieR Mono retains its own earlier Latin file. This source delivery closes the asset
   hold; native text-rendering verification is still required. Amended 2026-10-16 (DL-213, terminal
@@ -1005,7 +1005,7 @@ acceptance_criteria:
   - "A new terminal draws JetBrains Mono in every look but Retro and VT323 in Retro, and each face listed above can be chosen."
   - "Each face that has a default size and line height listed above opens at them."
   - "JetBrains Mono's bytes are the page's code-face files, never a second copy inside the terminal, and the terminal-only faces total 84,572 bytes of Latin files before base64, plus 47,780 bytes of Latin Extended and Vietnamese slices."
-  - "Every face the terminal draws is the page's own, embedded once through DL-161's pipeline, the terminal package carries no font file, and each face ships the script slices listed here."
+  - "Every face the terminal draws is part of the page's one shared font asset set, the terminal package carries no font file, and each face ships the script slices listed here."
   - "A program's italic text draws JetBrains Mono's own italic and Atkinson Hyperlegible Mono's own italic, and is synthesised in VT323, Sixtyfour and Departure Mono."
   - "Box drawing, block, braille, powerline and sextant glyphs are drawn by the terminal and meet their neighbours with no gaps."
   - "Every built-in face is under the SIL Open Font License, Apache or MIT and ships with its licence and source record."

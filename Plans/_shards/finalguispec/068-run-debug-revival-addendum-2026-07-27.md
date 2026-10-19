@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L34638-L35777
+Source lines: L34635-L35774
 
-Source SHA256: `46e4f7e518b4eee59e453c5fc1fcf5e43e6c43f0db5648ab420f21f97a89a63b`
+Source SHA256: `19a5140c9ac50707b8a19f21fa6c0e9dea1782c4371fa229ef5eb9c31e50d9b2`
 
 ---
 
@@ -1095,7 +1095,7 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
-  The Concepts/pm6-build PMConcept7 demo carries a `panel-run` view implementing
+  The PMConcept7 reference shows a `panel-run` view implementing
   F3-485 through F3-488 with fixture data: two sessions (a paused parent
   "tastebook-api — cargo run" and a running child attach session), a populated
   locals scope, two watches, a four-frame main thread, and line, conditional,

@@ -4,7 +4,7 @@ Source: `Plans/DRY_Rules.md`
 
 Source lines: L2343-L2463
 
-Source SHA256: `e70b140f6d819e290bd8967fa441e611ee9762e7ddb3054f29598297b4a68e35`
+Source SHA256: `df1a6f6a406b6a06e73e3b57d3a5ac2d02120bf050e82cb0361c72461df14e7c`
 
 ---
 
@@ -101,8 +101,8 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
-  - Concepts/pm7-tools/base/PM7-base.html (current pinned PM7 input; source-lineage-only)
-  - Concepts/pm7-tools/build_pm7.py#T33-T41 (source-owned transforms)
+  - Concepts/pm7-tools/base/PM7-base.html (retired PM7 input; source-lineage-only)
+  - Concepts/pm7-tools/build_pm7.py (retired PM7 builder; source-lineage-only)
   - Concepts/PMConcept7.html (generated artifact; terminal bytes and hash are audit-owned)
   - Plans/.audits/audit-20260829-001-pmconcept7-widget-followup/audit_report.json (current repo-local successor audit status; verdict remains report-owned)
 preserved_exact_tokens:

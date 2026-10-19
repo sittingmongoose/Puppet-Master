@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L39149-L39287
+Source lines: L39088-L39221
 
-Source SHA256: `46e4f7e518b4eee59e453c5fc1fcf5e43e6c43f0db5648ab420f21f97a89a63b`
+Source SHA256: `19a5140c9ac50707b8a19f21fa6c0e9dea1782c4371fa229ef5eb9c31e50d9b2`
 
 ---
 
@@ -115,9 +115,7 @@ acceptance_criteria:
   - The exactly-once walk finds every concept id rendered once across managers and the surviving plain pages.
   - The 60 fps slow-motion films of dropdown open/close, menu open/close, and hero sheet open show no blank frames and settle within their own durations.
 validation_surfaces:
-  - node Concepts/pm7-tools/verify/settings_refresh_checkpoint.mjs
-  - node Concepts/pm7-tools/verify/settings_placement_checkpoint.mjs
-  - node Concepts/pm7-tools/verify/settings_refresh_film.mjs
+  - "Verify F3-551's manager-topic placement, status tokens, drawn menus, roster scrolling and film acceptance without weakening its no-blank-frame requirement."
   - python3 scripts/pm-plans-verify.py run-gates
 risk_class: settings_presentation_regression
 reasoning_tier: standard
@@ -125,9 +123,6 @@ context_scope: settings_manager_presentation
 implementation_surfaces:
   - Plans/FinalGUISpec.md
   - Plans/Settings_System.md
-  - Concepts/pm7-tools/settings_refresh/placement.json
-  - Concepts/pm7-tools/settings_refresh/kit.js
-  - Concepts/pm7-tools/settings_refresh/styles.css
 node_compile_hint:
   mode: settings_manager_specification
   create_worknodes: false

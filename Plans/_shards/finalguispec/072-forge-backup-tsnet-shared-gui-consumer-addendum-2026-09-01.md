@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L37323-L37413
+Source lines: L37277-L37367
 
-Source SHA256: `46e4f7e518b4eee59e453c5fc1fcf5e43e6c43f0db5648ab420f21f97a89a63b`
+Source SHA256: `19a5140c9ac50707b8a19f21fa6c0e9dea1782c4371fa229ef5eb9c31e50d9b2`
 
 ---
 
@@ -93,7 +93,7 @@ negative_constraints:
   - Do not let browse/download/extract/compare/export/archive retrieval imply restore activation or Project execution.
   - Do not add a Product Onboarding stage, bypass Review, or move Bootstrap/Backup/Remote Access/Forge/Doctor/notification/status ownership into Final GUI.
   - Do not restore Serve/full-package/sidecar/daemon/TUN/backend-selector UI or imply an ordinary browser is enrolled by tsnet.
-  - Do not alter K3 layout or PM7 theme authority, revive a GUI bakeoff, or hand-edit generated PMConcept7 HTML as source truth.
+  - Do not alter K3 layout or PM7 theme authority, revive a GUI bakeoff, or treat concept HTML as product implementation authority.
   - Do not claim handler, EventRecord, provider, crypto, restore, connector, native Slint, runtime, visual, security, performance, accessibility, readiness, or certification proof from Plans/static/concept material.
 owner_boundary_notes:
   - Final GUI owns shared presentation, shell identity, components, themes, motion, accessibility, focus, and routes only; Forge, Backup/Restore, Remote Access, Planning Wizard, Doctor, notification, and status owners retain semantic truth and effects.

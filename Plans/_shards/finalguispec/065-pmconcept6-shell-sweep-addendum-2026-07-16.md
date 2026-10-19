@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L32465-L33089
+Source lines: L32464-L33088
 
-Source SHA256: `46e4f7e518b4eee59e453c5fc1fcf5e43e6c43f0db5648ab420f21f97a89a63b`
+Source SHA256: `19a5140c9ac50707b8a19f21fa6c0e9dea1782c4371fa229ef5eb9c31e50d9b2`
 
 ---
 
@@ -97,7 +97,7 @@ canonical_text: >-
   than listening itself. The retired parallax sampler stays inactive under every motion preference; F3-465
   sets the active hover's reduced-motion form.
 gui_related: true
-gui_classification_reason: This unit defines the sheen hover targets, glass depth parallax and the single merged pointer-move handler on shell controls.
+gui_classification_reason: This unit defines the shell hover targets and single merged pointer-move handler; retired Glass depth parallax is compatibility/source lineage only.
 split_recommended: false
 depends_on: [F3-428]
 unblocks: [F3-465]
@@ -138,7 +138,7 @@ stale_retired_dispositions:
 - "The one-shot hover jiggle wobble on designated shell controls is retired per PMConcept7 rev 7, superseded by the F3-465 magnet spotlight hover system on the same selector set; glass depth parallax remains live and stays reduced-motion-disabled."
 - "Retired 2026-10-10 by DL-171: the sheen hover-lift and its glow (`.pm-sheen:hover` in the base, Friendly and Glass), in favour of the F3-465 merged hover system."
 owner_boundary_notes:
-- "F3-465 owns the hover look and motion of every sheen element; this unit owns the sheen targets' place, glass depth parallax and the single merged document pointer-move handler."
+- "F3-465 owns the hover look and motion of every sheen element; this unit owns the targets' placement and single merged document pointer-move handler. Retired Glass depth parallax is compatibility/source lineage only."
 owner_hints:
 - "Plans/FinalGUISpec.md"
 ```

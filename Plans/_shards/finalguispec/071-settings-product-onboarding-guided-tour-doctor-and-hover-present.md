@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L36506-L37321
+Source lines: L36482-L37275
 
-Source SHA256: `46e4f7e518b4eee59e453c5fc1fcf5e43e6c43f0db5648ab420f21f97a89a63b`
+Source SHA256: `19a5140c9ac50707b8a19f21fa6c0e9dea1782c4371fa229ef5eb9c31e50d9b2`
 
 ---
 
@@ -23,15 +23,15 @@ The following predecessor clauses remain historical lineage, not current behavio
   remains current.
 - F3-409's provider-first onboarding choreography is superseded; its Free Models requested/effective override and
   truthful availability presentation remain current outside the simple default onboarding path.
-- F3-513's T33-T43 build-tail statement is predecessor lineage for these surfaces; authored T44 Settings/Doctor,
-  T45 Product Onboarding/Guided Tour, T46 system consumers, T47 hover, and the bounded T48 Home refresh are the
-  current concept path; the authored T49 assistant-settings and T50 Settings-refresh transforms (USER-SETTINGS-MANAGER-REFRESH-20260908)
-  extend that path for the Settings manager surfaces, with the T44-T48 Settings presentation as their predecessor
-  lineage. T48 may refresh authored Home source to expose the setup-wizard return route; it does not
-  authorize a hand edit to generated `Concepts/PMConcept7.html`.
+- F3-513's former build-tail scope for these surfaces is predecessor lineage; F3-513 remains the whole-application
+  reference; the Settings/Doctor, Product Onboarding/Guided Tour, system-consumer, hover-tag and Home presentation
+  below refines those surfaces. The assistant-settings and Settings manager presentation
+  (USER-SETTINGS-MANAGER-REFRESH-20260908) extends that scope for the Settings manager surfaces; the earlier
+  Settings/Doctor presentation is its predecessor lineage there. Home's bounded refresh exposes the setup-wizard
+  return route under the current onboarding owner.
 - F3-517's prohibition on Settings changes does not apply to this user-authorized Settings/Doctor port. Its rule
   against theme overlays changing functional identity remains current.
-- F3-518's no-accessibility-expansion clause is superseded for the T44-T47 touched surfaces. The broader bootstrap
+- F3-518's no-accessibility-expansion clause is superseded for Settings, Doctor, Product Onboarding, Guided Tour, system-consumer and hover-tag surfaces. The broader bootstrap
   boundary remains historical context, but keyboard, screen-reader, focus, tooltip, and reduced-motion acceptance
   below is required.
 
@@ -70,8 +70,6 @@ reasoning_tier: high
 context_scope: k3_settings_doctor_pm7_presentation
 implementation_surfaces:
   - Plans/FinalGUISpec.md
-  - Concepts/pm7-tools/settings_tome_source.py
-  - Concepts/pm7-tools/build_pm7.py
   - future native Slint Settings and Doctor components
 node_compile_hint: {mode: k3_settings_doctor_presentation_contract, create_worknodes: false, create_nodeseeds: false}
 source_lineage:
@@ -239,17 +237,13 @@ validation_surfaces:
   - "Plans/product_onboarding_contracts.schema.json and Plans/product_onboarding_contract_fixtures.json (v2 owner actions, durable bounded draft, exact commit/result binding and phase continuation)"
   - tests/test_pm_onboarding_phases.py
   - tests/test_pm_settings_draft_transfer.py
-  - Concepts/pm7-tools/onboarding_cinematic_source.py authored guards
-  - Concepts/pm7-tools/home_workspace_refresh_source.py authored guards
+  - "Verify F3-520's onboarding presentation, owner-bound actions, ephemeral pre-Project look choices, return routes, interruption/reversal, accessibility and short-window behavior."
   - future eight-theme, Reduced Motion, interruption, reversal, and short-window film review
 risk_class: onboarding_overload_or_motion_blocking
 reasoning_tier: high
 context_scope: product_onboarding_cinematic_presentation
 implementation_surfaces:
   - Plans/FinalGUISpec.md
-  - Concepts/pm7-tools/onboarding_cinematic_source.py
-  - Concepts/pm7-tools/home_workspace_source.py
-  - Concepts/pm7-tools/home_workspace_refresh_source.py
   - future native Slint Product Onboarding components
 node_compile_hint: {mode: onboarding_cinematic_presentation_contract, create_worknodes: false, create_nodeseeds: false}
 source_lineage:
@@ -390,15 +384,13 @@ acceptance_criteria:
 validation_surfaces:
   - "Plans/final_gui_interaction_contracts.schema.json and Plans/final_gui_interaction_contract_fixtures.json (newbie-first static presentation consumer; story/actions reference the v3 owner definitions)"
   - "Plans/guided_tour_contracts.schema.json and Plans/guided_tour_contract_fixtures.json (v3 static Chat/workspace/Planning, eleven-action, shared Show Me, same-answer ELI5 as one extra, simpler reply with the original reply unchanged, safe checkpoint, and default restoration/explicit Keep obligations; schema/fixture validity establishes no durable recovery or runtime acceptance)"
-  - Concepts/pm7-tools/guided_tour_source.py authored guards
-  - Concepts/pm7-tools/verify/guided_tour_lifecycle_checkpoint.mjs scoped concept lifecycle checks, not native or final visual acceptance
+  - "Verify the existing F3-521/PWIZ Guided Tour lifecycle, mounted-owner observations, focus, Skip restoration and completion disposition; concept simulation is not native or final visual acceptance."
   - future mounted-owner handler observation, focus, Skip restoration, completion disposition, and film review
 risk_class: guided_tour_fake_state_or_story_loss
 reasoning_tier: high
 context_scope: guided_tour_newbie_first_practice_presentation
 implementation_surfaces:
   - Plans/FinalGUISpec.md
-  - Concepts/pm7-tools/guided_tour_source.py
   - future native Slint Guided Tour overlay components
 node_compile_hint: {mode: guided_tour_directed_beginner_film_contract, create_worknodes: false, create_nodeseeds: false}
 source_lineage:
@@ -468,8 +460,6 @@ reasoning_tier: high
 context_scope: doctor_k3_operational_workspace
 implementation_surfaces:
   - Plans/FinalGUISpec.md
-  - Concepts/pm7-tools/settings_tome_source.py
-  - Concepts/pm7-tools/systems_integration_source.py
   - future native Slint Doctor components
 node_compile_hint: {mode: doctor_k3_presentation_contract, create_worknodes: false, create_nodeseeds: false}
 source_lineage:
@@ -545,14 +535,13 @@ acceptance_criteria:
   - "The controls inside an open assistant-chat activity bar domain preview that F3-590 lists are a documented exemption (DL-157): they open no tag, because a tag would replace the preview card, and the census counts them as exempt rather than as missing bindings."
 validation_surfaces:
   - "Plans/final_gui_interaction_contracts.schema.json and Plans/final_gui_interaction_contract_fixtures.json (separate 1600 ms pointer-residence, 1100 ms stationary-intent, 5 px radius, 1000 ms visual-focus dwell, immediate accessible-description binding, and 160 ms departure-grace fields are required for current acceptance)"
-  - Concepts/pm7-tools/global_hover_tags_source.py authored guards
+  - "Verify the F3-523 hover-tag census and pointer, keyboard, Escape, grace, collision, zoom, theme, transparency and reduced-motion acceptance."
   - future hover census, pointer/keyboard/Escape/grace/collision/zoom/theme/transparency/reduced-motion tests
 risk_class: hover_overlay_accessibility_or_census_drift
 reasoning_tier: high
 context_scope: global_pm_hover_tag
 implementation_surfaces:
   - Plans/FinalGUISpec.md
-  - Concepts/pm7-tools/global_hover_tags_source.py
   - future native Slint PMHoverTag and HoverTagController components
 node_compile_hint: {mode: global_hover_tag_contract, create_worknodes: false, create_nodeseeds: false}
 source_lineage:
@@ -606,7 +595,7 @@ validation_surfaces:
   - Plans/final_gui_interaction_contracts.schema.json
   - Plans/final_gui_interaction_contract_fixtures.json
   - Plans/Test_Capture_and_Motion_Evidence.md#TCME-007
-  - Concepts/pm7-tools/verify/final_evidence_gate.py
+  - "Verify the F3-524 and TCME-007 evidence obligations, including native execution and independent actual-pixel/frame review; concept/static success alone is insufficient."
   - python3 scripts/pm-plans-verify.py run-gates
   - future native Slint build/runtime and independent actual-pixel/frame review
 risk_class: browser_concept_promoted_to_native_certification
@@ -615,7 +604,6 @@ context_scope: reconciled_gui_portability_and_evidence
 implementation_surfaces:
   - Plans/FinalGUISpec.md
   - Plans/Settings_System.md
-  - Concepts/pm7-tools/build_pm7.py
   - future native Slint components
 node_compile_hint: {mode: final_gui_portability_evidence_contract, create_worknodes: false, create_nodeseeds: false}
 source_lineage:
@@ -667,10 +655,7 @@ validation_surfaces:
   - Plans/final_gui_interaction_contracts.schema.json
   - Plans/plugin_contracts.schema.json
   - Plans/plugin_contract_fixtures.json
-  - Concepts/pm7-tools/verify/plugin_projection_matrix.mjs
-  - Concepts/pm7-tools/verify/hover_tags.mjs
-  - Concepts/pm7-tools/verify/accessibility_visual_matrix.mjs
-  - Concepts/pm7-tools/verify/final_campaign_capture.mjs
+  - "Verify F3-525's Plugins manager owner projections, geometry, accessibility and motion across its required states; concept simulation does not establish native runtime acceptance."
   - future native Slint Plugins manager visual/accessibility/runtime tests
 risk_class: plugin_manager_geometry_drift_or_false_owner_success
 reasoning_tier: high
@@ -680,9 +665,6 @@ implementation_surfaces:
   - Plans/Settings_System.md
   - Plans/Plugins_System.md
   - Plans/newtools.md
-  - Concepts/pm7-tools/systems_integration_source.py
-  - Concepts/pm7-tools/verify/plugin_projection_matrix.mjs
-  - Concepts/pm7-tools/verify/final_campaign_capture.mjs
   - future native Slint Plugins manager components
 node_compile_hint: {mode: k3_plugins_owner_projection_contract, create_worknodes: false, create_nodeseeds: false}
 source_lineage:
@@ -730,13 +712,11 @@ acceptance_criteria:
   - "Project/Vault authority remains Unknown without the Project Sync and Backbone owner feed; required-missing, security-critical, stale, unknown, blocked, and interrupted state cannot paint healthy."
   - "Provider CLI remediation opens the exact Settings target and does not install, authenticate, select a profile, or mark readiness. Named Plan remediation binds exact project_id and named_plan_id."
   - "View detach never cancels owner work; re-entry rejoins one persistent work identity and stale or mismatched owner returns fail closed without moving the finding row."
-  - "The authored transform self-check and browser matrix prove only deterministic browser-concept behavior; production/native runtime state stays unavailable and no production mutation, receipt, EventRecord, or Slint certification is claimed."
+  - "Concept checks prove only browser-concept behavior; production/native runtime state stays unavailable and no production mutation, receipt, EventRecord, or Slint certification is claimed."
 validation_surfaces:
   - Plans/doctor_contracts.schema.json
   - Plans/doctor_contract_fixtures.json
-  - Concepts/pm7-tools/systems_integration_source.py
-  - Concepts/pm7-tools/verify/systems_integration.mjs
-  - Concepts/pm7-tools/verify/plugin_projection_matrix.mjs
+  - "Verify F3-526's Doctor census, owner feeds, detach/rejoin, stale-return rejection and accessible presentation; concept evidence remains non-production."
   - future native Doctor owner-feed, ObservableWork detach/rejoin, stale-return, focus, accessibility, and Slint 1.17.1 tests
 risk_class: doctor_false_green_private_repair_or_stale_owner_return
 reasoning_tier: high
@@ -745,8 +725,6 @@ implementation_surfaces:
   - Plans/FinalGUISpec.md
   - Plans/newtools.md
   - Plans/Settings_System.md
-  - Concepts/pm7-tools/systems_integration_source.py
-  - Concepts/pm7-tools/verify/systems_integration.mjs
   - future native Slint Doctor consumer components
 node_compile_hint: {mode: operational_doctor_consumer_contract, create_worknodes: false, create_nodeseeds: false}
 source_lineage:

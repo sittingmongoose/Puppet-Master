@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L43128-L43266
+Source lines: L43062-L43200
 
-Source SHA256: `46e4f7e518b4eee59e453c5fc1fcf5e43e6c43f0db5648ab420f21f97a89a63b`
+Source SHA256: `19a5140c9ac50707b8a19f21fa6c0e9dea1782c4371fa229ef5eb9c31e50d9b2`
 
 ---
 
@@ -53,7 +53,7 @@ acceptance_criteria:
 validation_surfaces:
   - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
   - python3 scripts/pm-plan-index.py validate
-  - python3 "Concepts/chat-assistant-concepts/5.6 Pro/build.py" --check
+  - "Verify F3-606's Plan-card presentation acceptance against the current chat owner."
 risk_class: plan_card_layout_drift
 reasoning_tier: medium
 context_scope: chat_plan_card_actions_20261009
