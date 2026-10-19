@@ -9,6 +9,7 @@ import { execFileSync } from 'node:child_process';
 import { launch } from './pm7_parity_chrome.mjs';
 import { installParityRuntime, normalizeBlobValue } from './pm7_parity_browser.mjs';
 import { diffPng, baselineEnvelopePng } from './pm7_parity_png.mjs';
+import { findExpectedRemoved, verifyRemovedSnapshot, alignRemovedEntries } from './pm7_parity_alignment.mjs';
 
 const here = dirname(fileURLToPath(import.meta.url));
 const digest = bytes => createHash('sha256').update(bytes).digest('hex');
@@ -25,6 +26,8 @@ const help = `Usage: node pm7_parity.mjs BASELINE.html CANDIDATE.html [options]
   --noise-max-channel-span N      Baseline channel-range cap, default 8 (0..255)
   --noise-max-pixels N            Variable baseline pixel cap; default 0.05% of viewport
   --first N                       First differing elements to detail, default 8
+  --expect-removed SELECTOR        Repeatable; baseline-only removal of snapshot-proven
+                                  non-layout subtrees from style path numbering
   --deep                          Exhaustive JS sampler, including hidden/custom styles (slow)
   --list                          Print selected matrix without opening browsers
   --help                          This help
@@ -54,7 +57,8 @@ export function parseArgs(argv) {
         const number = Number(value);
         if (!Number.isSafeInteger(number) || number < 0) throw Error(`${arg} requires a nonnegative integer`);
         options[{ 'max-diff-pixels': 'maxDiffPixels', 'baseline-repeats': 'baselineRepeats', 'noise-max-channel-span': 'noiseMaxChannelSpan', 'noise-max-pixels': 'noiseMaxPixels' }[key] || key] = number;
-      } else if (key === 'out' || key === 'matrix') options[key] = resolve(value);
+      } else if (key === 'expect-removed') (options.expectRemoved ||= []).push(value);
+      else if (key === 'out' || key === 'matrix') options[key] = resolve(value);
       else throw Error(`Unknown option ${arg}`);
     } else files.push(resolve(arg));
   }
@@ -389,16 +393,26 @@ async function prepareCapture(browser) {
     return { resolved, hidden };
   });
 }
-async function capture(browser, audit, deep) {
+async function capture(browser, audit, deep, expectRemoved = []) {
   if (browser.interceptErrors.length) throw Error(browser.interceptErrors.join('\n'));
   const screenshotPreparation = await prepareCapture(browser);
   if (process.env.PM7_PARITY_DEBUG) console.log('CAPTURE screenshot start');
   const screenshot = await browser.page.screenshot();
   if (process.env.PM7_PARITY_DEBUG) console.log('CAPTURE screenshot done');
   const styleStarted = performance.now();
-  let styles;
+  let styles, removalAlignment;
   const caretPreparation = await browser.page.evaluate(() => __pm7Parity.setCaretHidden(false));
-  try { styles = deep ? await browser.page.evaluate(async audit => __pm7Parity.snapshot(audit), audit) : await nativeSnapshot(browser); }
+  try {
+    styles = deep ? await browser.page.evaluate(async audit => __pm7Parity.snapshot(audit), audit) : await nativeSnapshot(browser);
+    if (expectRemoved.length) {
+      const matches = await browser.page.evaluate(findExpectedRemoved, expectRemoved);
+      const snapshot = await browser.page.send('DOMSnapshot.captureSnapshot', { computedStyles: [], includeDOMRects: true });
+      const skippedNodes = verifyRemovedSnapshot(snapshot, matches);
+      removalAlignment = alignRemovedEntries(styles.entries, skippedNodes.map(row => ({ ...row, path: deep ? row.path : row.snapshotPath })));
+      styles = { ...styles, raw: { hash: styles.hash, entries: styles.entries }, entries: removalAlignment.entries,
+        hash: digest(JSON.stringify(removalAlignment.entries)), skippedNodes, removedRecords: removalAlignment.removedRecords };
+    }
+  }
   finally { await browser.page.evaluate(() => __pm7Parity.setCaretHidden(true)); }
   const styleMilliseconds = performance.now() - styleStarted;
   const state = await browser.page.evaluate(() => ({ time: __pm7Parity.now, theme: document.documentElement.getAttribute('data-theme'),
@@ -413,7 +427,10 @@ async function capture(browser, audit, deep) {
   const runtimeBlocked = await browser.page.evaluate(() => __pm7Parity.blockedRequests());
   const requests = { blocked: [...new Set([...browser.blocked, ...runtimeBlocked])].map(canonicalUrl).sort(),
     failed: browser.failedRequests.map(item => ({ ...item, url: canonicalUrl(item.url) })).sort((a, b) => JSON.stringify(a).localeCompare(JSON.stringify(b))) };
-  return { screenshot, styles, state, styleMilliseconds, screenshotPreparation, caretPreparation, nativeDetails: deep ? null : browser.nativeDetails,
+  const nativeDetails = deep ? null : removalAlignment
+    ? new Map([...removalAlignment.toRaw].map(([path, raw]) => [path, browser.nativeDetails.get(raw)])) : browser.nativeDetails;
+  return { screenshot, styles, state, styleMilliseconds, screenshotPreparation, caretPreparation, nativeDetails,
+    ...(removalAlignment ? { removalAlignment } : {}),
     specialRules, specialRuleHash: digest(JSON.stringify(specialRules)), requests, storageAudit: browser.storageAudit,
     errors: [...new Set(browser.page.errors)] };
 }
@@ -421,7 +438,13 @@ export function differingPaths(a, b) {
   const left = new Map(a), right = new Map(b);
   return [...new Set([...left.keys(), ...right.keys()])].filter(path => left.get(path) !== right.get(path));
 }
-async function readDeepDetails(browser, paths) {
+async function readDeepDetails(browser, paths, capture) {
+  if (capture?.removalAlignment) {
+    const raw = paths.map(path => capture.removalAlignment.toRaw.get(path));
+    const details = await readDeepDetails(browser, raw.filter(Boolean));
+    let index = 0;
+    return raw.map((path, i) => path ? { ...details[index++], path: paths[i] } : { path: paths[i], absent: true });
+  }
   return browser.page.evaluate(paths => {
     __pm7Parity.setCaretHidden(false);
     try { return __pm7Parity.details(paths); } finally { __pm7Parity.setCaretHidden(true); }
@@ -478,6 +501,7 @@ async function run(options) {
   let gitHead = null;
   try { gitHead = execFileSync('git', ['rev-parse', 'HEAD'], { cwd: resolve(here, '../../../..'), encoding: 'utf8', stdio: ['ignore', 'pipe', 'ignore'] }).trim(); } catch {}
   const sourceFiles = ['pm7_parity.mjs', 'pm7_parity_browser.mjs', 'pm7_parity_chrome.mjs', 'pm7_parity_png.mjs', 'cdp-websocket.mjs'];
+  if (options.expectRemoved?.length) sourceFiles.push('pm7_parity_alignment.mjs');
   const report = { version: 1, started: new Date(started).toISOString(), host: hostname(), input: inputs.map(({ body, ...rest }) => rest),
     harness: { gitHead, files: sourceFiles.map(name => ({ name, sha256: digest(readFileSync(join(here, name))) })) },
     matrix: { path: options.matrix, sha256: digest(readFileSync(options.matrix)), looks: selected.looks,
@@ -506,12 +530,13 @@ async function run(options) {
         'Manual clock freezes live data and decorative motion; animation timing itself is outside this parity check.',
         ...(options.deep ? [] : ['Native mode excludes custom properties not read by JS and cannot sample computed properties of nodes without layout objects or non-generated pseudos. Use --deep for these.'])] },
     rows: [], errors: [], browsers: [] };
+  if (options.expectRemoved?.length) report.options.expectRemoved = options.expectRemoved;
   let cursor = 0;
   async function replayPrefix(browser, group, input, through, takeCapture) {
     await deadline(loadPreparedGroup(browser, group, input), 'noise replay load');
     for (let i = 0; i <= through; i++) {
       await deadline(enterState(browser, group.states[i], group), 'noise replay ' + group.states[i].id);
-      if (i === through && takeCapture) return deadline(capture(browser, false, false), 'noise baseline capture');
+      if (i === through && takeCapture) return deadline(capture(browser, false, false, options.expectRemoved), 'noise baseline capture');
       await prepareCapture(browser); await browser.page.screenshot();
     }
   }
@@ -566,6 +591,7 @@ async function run(options) {
     const prefix = join(options.out, 'states', key);
     const pixels = diffPng(a.screenshot, b.screenshot, options.tolerance, options.maxDiffPixels);
     const paths = differingPaths(a.styles.entries, b.styles.entries);
+    const rawPaths = options.expectRemoved?.length ? differingPaths(a.styles.raw.entries, b.styles.entries) : null;
     const sameErrors = JSON.stringify(a.errors) === JSON.stringify(b.errors);
     const sameState = JSON.stringify(a.state) === JSON.stringify(b.state), sameRequests = JSON.stringify(a.requests) === JSON.stringify(b.requests);
     const sameRules = a.specialRuleHash === b.specialRuleHash;
@@ -601,6 +627,10 @@ async function run(options) {
       const path = `${prefix}.${side}.png`; writeFileSync(path, cap.screenshot);
       row.artifacts[side] = { path, sha256: digest(cap.screenshot) };
     }
+    if (rawPaths) row.styles.removalAlignment = { selectors: options.expectRemoved, skippedNodes: a.styles.skippedNodes,
+      removedRecords: a.styles.removedRecords, rawBaseline: a.styles.raw.hash, rawCandidate: b.styles.hash,
+      rawDifferingElements: rawPaths.length, alignedDifferingElements: paths.length,
+      rawStyleRecords: [a.styles.raw.entries.length, b.styles.entries.length] };
     if (pixels.heatmap) {
       const path = `${prefix}.diff.png`; writeFileSync(path, pixels.heatmap);
       row.artifacts.heatmap = { path, sha256: digest(pixels.heatmap) };
@@ -646,16 +676,16 @@ async function run(options) {
             for (const input of inputs) {
               await deadline(loadPreparedGroup(browsers[0], group, input), 'serial load');
               for (const state of group.states.slice(0, s + 1)) await deadline(enterState(browsers[0], state, group), state.id);
-              caps.push(await deadline(capture(browsers[0], audit, options.deep), 'serial capture', options.deep ? 1200000 : 180000));
+              caps.push(await deadline(capture(browsers[0], audit, options.deep, input === inputs[0] ? options.expectRemoved : undefined), 'serial capture', options.deep ? 1200000 : 180000));
             }
             let details;
             const paths = differingPaths(caps[0].styles.entries, caps[1].styles.entries).slice(0, options.first);
             if (paths.length && options.deep) {
-              const right = await readDeepDetails(browsers[0], paths);
+              const right = await readDeepDetails(browsers[0], paths, caps[1]);
               await loadPreparedGroup(browsers[0], group, inputs[0]);
               for (const state of group.states.slice(0, s + 1)) await enterState(browsers[0], state, group);
               await prepareCapture(browsers[0]);
-              const left = await readDeepDetails(browsers[0], paths);
+              const left = await readDeepDetails(browsers[0], paths, caps[0]);
               details = formatStyleDetails(left, right, paths);
             }
             await compare(group, group.states[s], caps, browsers, details); audit = false;
@@ -668,7 +698,7 @@ async function run(options) {
           await deadline(loadPreparedGroup(browser, group, inputs[0]), 'load baseline group');
           for (const state of group.states) {
             await deadline(enterState(browser, state, group), 'enter baseline ' + state.id);
-            baseline.push(await deadline(capture(browser, false, false), 'capture baseline ' + state.id));
+            baseline.push(await deadline(capture(browser, false, false, options.expectRemoved), 'capture baseline ' + state.id));
           }
           await deadline(loadPreparedGroup(browser, group, inputs[1]), 'load candidate group');
           for (let i = 0; i < group.states.length; i++) {

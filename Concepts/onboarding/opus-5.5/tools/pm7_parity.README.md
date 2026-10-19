@@ -73,6 +73,25 @@ pseudo rules whose computed nodes are unavailable. Changes fail conservatively a
 texts. Removed style/script/hidden nodes are labelled non-rendered DOM-only differences; they still
 fail exact parity. Standard layout changes are reported separately.
 
+For an explicitly expected non-rendered removal, repeat `--expect-removed SELECTOR`:
+
+```sh
+node Concepts/onboarding/opus-5.5/tools/pm7_parity.mjs baseline.html candidate.html \
+  --expect-removed '#glass-bg' --concurrency 2 --out /absolute/evidence/aligned
+```
+
+Only baseline style path keys exclude matched nodes and their subtrees, renumbering surviving
+siblings. Product DOM, screenshots, state, requests and the special-rule guard are unchanged.
+Every matching node is resolved against a DOMSnapshot; any layout box in its subtree is a hard
+harness error, including text/pseudo boxes and children of `display:contents` nodes. Zero-size,
+transparent and offscreen layout boxes are still boxes. Invalid selectors or missing snapshot
+matches fail. A selector matching nothing records no skipped nodes and grants no exemption.
+Each row's `styles.removalAlignment` lists every skipped path, selector, computed display,
+snapshot node index and zero layout-box proof, plus raw/aligned differing-path counts and raw
+hashes. Normal style counts/hashes and diagnostics use the aligned paths. `--first` still caps
+property diagnostics; raise it to list every remaining difference. The option also applies to
+baseline replays and deep diagnostics. Without it, capture and report behavior is unchanged.
+
 ## Pixels and measured variation
 
 Exact mode requires zero differing RGBA pixels and equal styles, state, requests and special-rule
