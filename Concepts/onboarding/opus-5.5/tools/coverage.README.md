@@ -79,6 +79,18 @@ counts are Boolean byte coverage, not function invocation counts. Prefer
 `usedRanges` when calculating executed bytes. Keep the raw union as provenance;
 do not feed a completed union back into live collection.
 
+When CDP cannot supply a script's source, its URL/ID fallback cannot establish
+which inline block owns the offsets. The summary conservatively carries its
+positive offsets as `uncertainRanges` in every compatible block of that page
+union, excluding already resolved touches. Those bytes are unmeasured; function
+counts are counts from resolved sources and flag overlapping uncertainty.
+Unverified fallback range provenance makes the entire remaining block uncertain.
+Consumers should return unknown for a probe overlapping `uncertainRanges` unless
+`usedRanges` already proves a touch. The legacy projection conservatively retains
+both used and uncertain ranges, and marks `includes_uncertain_ranges`.
+An unresolved stylesheet's positive offsets similarly suppress false rule rows;
+they never become proof of unused CSS. The summary lists unresolved identities.
+
 CSS used and unused bytes count style-rule spans from observed sheets. Fonts,
 keyframes, at-rule wrappers, whitespace, and unobserved source bytes are listed
 separately as `unmeasured_bytes`. Data script blocks are also unmeasured. Parse recovery notices and unmatched

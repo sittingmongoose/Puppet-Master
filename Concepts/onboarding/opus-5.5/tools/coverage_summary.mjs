@@ -8,6 +8,7 @@ import { createHash } from 'node:crypto';
 import { readFileSync, writeFileSync, existsSync, mkdirSync, readdirSync } from 'node:fs';
 import { resolve, dirname, relative, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { unionRanges } from './coverage_union.mjs';
 
 const require = createRequire(process.env.PM7_ANALYSIS_MODULES ? join(resolve(process.env.PM7_ANALYSIS_MODULES), '_coverage.cjs') : import.meta.url);
 const css = require('css-tree'), acorn = require('acorn'), walk = require('acorn-walk');
@@ -99,6 +100,25 @@ function sources(b) {
 }
 
 const blocks = splitBlocks(html), rules = [], functions = [], rows = [], errors = [];
+const unresolvedJs = union.js.filter((s) => !/^[a-f0-9]{16}$/i.test(s.script));
+const unresolvedUnbounded = unresolvedJs.some((s) => !Array.isArray(s.usedRanges) ||
+  !(s.usedRangesProvenance === 'per-sample-v1' || receiptEntry?.script_hashes?.includes(s.script)));
+const unresolvedCss = union.css.filter((r) => !/^[a-f0-9]{16}$/i.test(r.sheet) && r.used);
+const clip = (ranges, end) => unionRanges(ranges.map((r) => ({ startOffset: Math.max(0, r.startOffset), endOffset: Math.min(end, r.endOffset) })));
+function subtractRanges(ranges, cuts) {
+  const result = [];
+  for (const r of ranges) {
+    let at = r.startOffset;
+    for (const c of cuts) {
+      if (c.endOffset <= at) continue;
+      if (c.startOffset >= r.endOffset) break;
+      if (c.startOffset > at) result.push({ startOffset: at, endOffset: c.startOffset });
+      at = Math.max(at, c.endOffset); if (at >= r.endOffset) break;
+    }
+    if (at < r.endOffset) result.push({ startOffset: at, endOffset: r.endOffset });
+  }
+  return result;
+}
 const matchedCss = new Set(), matchedJs = new Set();
 for (const b of blocks) {
   const digest = hash(b.text).slice(0, 16), sourceFiles = sources(b);
@@ -123,7 +143,8 @@ for (const b of blocks) {
         selector: b.text.slice(node.prelude.loc.start.offset, node.prelude.loc.end.offset),
         bytes: len(b.text.slice(startOffset, endOffset)), used: !!sample?.used || touching.length > 0,
         observed: !!sample, sheet_observed: sheetObserved, conservative_overlap: !sample?.used && touching.length > 0 };
-      rule.usage_state = rule.used ? 'used' : sheetObserved ? 'unused' : 'unknown';
+      rule.unresolved_source_overlap = !rule.used && unresolvedCss.some((r) => r.startOffset < endOffset && r.endOffset > startOffset);
+      rule.usage_state = rule.used ? 'used' : sheetObserved && !rule.unresolved_source_overlap ? 'unused' : 'unknown';
       found.push(rule); rules.push(rule);
     } });
     row.rules_total = found.length; row.rules_used = found.filter((r) => r.used).length;
@@ -132,7 +153,7 @@ for (const b of blocks) {
     row.rules_observed = found.filter((r) => r.observed).length;
     row.rule_bytes = found.reduce((n, r) => n + r.bytes, 0);
     row.used_bytes = found.filter((r) => r.used).reduce((n, r) => n + r.bytes, 0);
-    row.unused_bytes = found.filter((r) => !r.used && r.sheet_observed).reduce((n, r) => n + r.bytes, 0);
+    row.unused_bytes = found.filter((r) => r.usage_state === 'unused').reduce((n, r) => n + r.bytes, 0);
     row.unmeasured_bytes = row.bytes - row.used_bytes - row.unused_bytes;
     row.cdp_rules = coverage.length;
     row.unmatched_cdp_rules = coverage.filter((r) => !found.some((s) => r.startOffset === s.startOffset && r.endOffset === s.endOffset)).length;
@@ -141,11 +162,16 @@ for (const b of blocks) {
     if (coverage) matchedJs.add(digest);
     row.observed = !!coverage;
     const used = coverage?.usedRanges;
+    const possible = clip([...(coverage?.uncertainRanges || []), ...unresolvedJs.flatMap((s) => s.usedRanges || []),
+      ...(unresolvedUnbounded ? [{ startOffset: 0, endOffset: b.text.length }] : [])], b.text.length);
+    const uncertain = subtractRanges(possible, unionRanges(used || []));
+    row.uncertainRanges = uncertain;
+    row.uncertain_bytes = uncertain.reduce((n, r) => n + len(b.text.slice(r.startOffset, r.endOffset)), 0);
     row.usedRangesProvenance = coverage?.usedRangesProvenance || 'unknown-merged-counters';
     row.byte_coverage_verified = Array.isArray(used) && (row.usedRangesProvenance === 'per-sample-v1'
       || !!receiptEntry?.script_hashes?.includes(digest));
     row.used_bytes = (used || []).reduce((n, r) => n + len(b.text.slice(r.startOffset, r.endOffset)), 0);
-    row.unused_bytes = row.byte_coverage_verified ? row.bytes - row.used_bytes : 0;
+    row.unused_bytes = row.byte_coverage_verified ? row.bytes - row.used_bytes - row.uncertain_bytes : 0;
     row.unmeasured_bytes = row.bytes - row.used_bytes - row.unused_bytes;
     let ast;
     try { ast = acorn.parse(b.text, { ecmaVersion: 'latest', sourceType: b.type === 'module' ? 'module' : 'script', allowReturnOutsideFunction: true }); }
@@ -174,6 +200,7 @@ for (const b of blocks) {
         name: fn.functionName, count: r.count, observed: true, v8_only: true, script_root: r.startOffset === 0 && r.endOffset === b.text.length });
     }
     const fs = functions.filter((f) => f.block === b.id && !f.script_root);
+    for (const f of fs) f.unresolved_source_overlap = uncertain.some((r) => r.startOffset < f.endOffset && r.endOffset > f.startOffset);
     row.functions_total = fs.length; row.functions_used = fs.filter((f) => f.count > 0).length;
     row.functions_unobserved = fs.filter((f) => !f.observed).length;
   } else row.executable = false;
@@ -182,10 +209,12 @@ for (const b of blocks) {
 const sum = (kind, key) => rows.filter((r) => r.kind === kind && r.executable !== false).reduce((n, r) => n + (r[key] || 0), 0);
 const report = { page: rel(pageFile), page_sha256: hash(bytes), union: unionFile, union_sha256: hash(readFileSync(unionFile)),
   provenance_receipt: receiptFile ? { path: receiptFile, sha256: hash(receiptBytes), accepted_for_union: !!receiptEntry } : null,
+  unresolved_js_sources: unresolvedJs.map((s) => ({ script: s.script, url: s.url, functions: s.functions.length, positive_ranges: s.usedRanges?.length || 0 })),
+  unresolved_css_sources: [...new Set(unresolvedCss.map((r) => r.sheet))],
   offset_units: 'UTF-16 code units, relative to block body; bytes are UTF-8',
-  caveats: ['Unused means not touched in these runs; it is not proof of dead code.', 'Unobserved CSS rules/functions are distinguished from explicit zero counts.', 'CSS used bytes count matched style-rule spans; fonts, keyframes, at-rules and whitespace are outside that metric.', 'JS unused bytes require per-sample-v1 provenance or a matching hash-bound receipt; otherwise the remainder is unmeasured.', 'Function counts sum samples, not independent users or test cases.'],
+  caveats: ['Unused means not touched in these runs; it is not proof of dead code.', 'Unobserved CSS rules/functions are distinguished from explicit zero counts.', 'CSS used bytes count matched style-rule spans; fonts, keyframes, at-rules and whitespace are outside that metric.', 'JS unused bytes require per-sample-v1 provenance or a matching hash-bound receipt; otherwise the remainder is unmeasured.', 'Unresolved same-page script identities conservatively make compatible positive offsets uncertain in every canonical script. Function counts are counts from resolved sources, with unresolved overlaps flagged.', 'Function counts sum samples, not independent users or test cases.'],
   totals: { css_rules_used: sum('style', 'rules_used'), css_rules_total: sum('style', 'rules_total'), css_rules_unused: sum('style', 'rules_unused'), css_rules_unmeasured: sum('style', 'rules_unmeasured'), css_bytes: sum('style', 'bytes'), css_used_bytes: sum('style', 'used_bytes'), css_unused_bytes: sum('style', 'unused_bytes'), css_unmeasured_bytes: sum('style', 'unmeasured_bytes'),
-    js_bytes: sum('script', 'bytes'), js_used_bytes: sum('script', 'used_bytes'), js_unused_bytes: sum('script', 'unused_bytes'), js_unmeasured_bytes: sum('script', 'unmeasured_bytes'), js_functions: sum('script', 'functions_total'), js_functions_used: sum('script', 'functions_used') },
+    js_bytes: sum('script', 'bytes'), js_used_bytes: sum('script', 'used_bytes'), js_unused_bytes: sum('script', 'unused_bytes'), js_unmeasured_bytes: sum('script', 'unmeasured_bytes'), js_uncertain_bytes: sum('script', 'uncertain_bytes'), js_functions: sum('script', 'functions_total'), js_functions_used: sum('script', 'functions_used') },
   blocks: rows, css_rules: rules, js_functions: functions, errors,
   runtime_css: [...new Set(union.css.filter((r) => !matchedCss.has(r.sheet)).map((r) => r.sheet))],
   runtime_js: union.js.filter((s) => !matchedJs.has(s.script)).map((s) => ({ script: s.script, url: s.url, functions: s.functions.length })) };
@@ -200,10 +229,12 @@ writeFileSync(out + '.md', md.join('\n'));
 if (completeFile) {
   // Complete only observed content hashes. An entirely missing script/sheet remains
   // unknown; a census never invents a successful load of an unrecorded block.
-  const entries = new Map(union.css.map((r) => [r.sheet + ':' + r.startOffset + ':' + r.endOffset, r]));
+  const entries = new Map(union.css.filter((r) => r.used !== false || !unresolvedCss.some((u) => u.startOffset < r.endOffset && u.endOffset > r.startOffset))
+    .map((r) => [r.sheet + ':' + r.startOffset + ':' + r.endOffset, r]));
   for (const r of rules.filter((r) => r.sheet_observed)) {
     const key = r.sheet + ':' + r.startOffset + ':' + r.endOffset;
     const previous = entries.get(key);
+    if (r.usage_state === 'unknown') { if (previous?.used === false) entries.delete(key); continue; }
     entries.set(key, { ...previous, sheet: r.sheet, startOffset: r.startOffset, endOffset: r.endOffset,
       used: !!previous?.used || r.used, block: r.block, rule_hash: r.rule_hash, census: true });
   }
@@ -211,6 +242,8 @@ if (completeFile) {
   for (const script of union.js) {
     const block = rows.find((r) => r.kind === 'script' && r.hash === script.script);
     if (!block) continue;
+    script.uncertainRanges = block.uncertainRanges || [];
+    if (script.uncertainRanges.length) script.uncertainSourceKeys = unresolvedJs.map((s) => s.script);
     const missing = functions.filter((f) => f.script === script.script && !f.observed && f.count === 0);
     script.functions.push(...missing.map((f) => ({ functionName: f.name, isBlockCoverage: false, census: true,
       ranges: [{ startOffset: f.startOffset, endOffset: f.endOffset, count: 0 }] })));
@@ -218,21 +251,22 @@ if (completeFile) {
     // projection at *all* boundaries so its byte union wins over a stale nested
     // zero from another sample. Native function counts remain untouched.
     const used = script.usedRanges || [];
-    const points = [...new Set([0, block.units, ...script.functions.flatMap((f) => f.ranges.flatMap((r) => [r.startOffset, r.endOffset])), ...used.flatMap((r) => [r.startOffset, r.endOffset])])].sort((a, b) => a - b);
+    const retain = unionRanges([...used, ...script.uncertainRanges]);
+    const points = [...new Set([0, block.units, ...script.functions.flatMap((f) => f.ranges.flatMap((r) => [r.startOffset, r.endOffset])), ...retain.flatMap((r) => [r.startOffset, r.endOffset])])].sort((a, b) => a - b);
     const ranges = [];
     let j = 0;
     for (let i = 1; i < points.length; i++) {
       const startOffset = points[i - 1], endOffset = points[i];
-      while (j < used.length && used[j].endOffset <= startOffset) j++;
-      const count = used[j] && used[j].startOffset <= startOffset && used[j].endOffset >= endOffset ? 1 : 0;
+      while (j < retain.length && retain[j].endOffset <= startOffset) j++;
+      const count = retain[j] && retain[j].startOffset <= startOffset && retain[j].endOffset >= endOffset ? 1 : 0;
       ranges.push({ startOffset, endOffset, count });
     }
-    script.functions.push({ functionName: '[coverage-union-bytes]', isBlockCoverage: true, union_projection: true, ranges });
+    script.functions.push({ functionName: '[coverage-union-bytes]', isBlockCoverage: true, union_projection: true, includes_uncertain_ranges: !!script.uncertainRanges.length, ranges });
   }
   union.census = { page: report.page, page_sha256: report.page_sha256, raw_union_sha256: report.union_sha256,
     provenance_receipt: report.provenance_receipt,
     offset_units: report.offset_units, style_rules: rules.length, js_functions: functions.filter((f) => !f.script_root).length,
-    policy: 'Static census completes only observed content hashes; union_projection is a touched-byte projection, not a function invocation count.' };
+    policy: 'Static census completes only observed content hashes. usedRanges holds resolved touches; uncertainRanges holds possible touches from unresolved identities. union_projection conservatively retains either, and is not a function invocation count.' };
   mkdirSync(dirname(completeFile), { recursive: true });
   writeFileSync(completeFile, JSON.stringify(union) + '\n');
 }
