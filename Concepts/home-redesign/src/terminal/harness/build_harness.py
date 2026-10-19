@@ -37,6 +37,9 @@ JS_DIR, CSS_DIR = TERM / 'js', TERM / 'css'
 # The page's faces, from the onboarding concept's DL-161 pipeline (the terminal faces moved there on 2026-10-10;
 # JetBrains Mono's upright is NieR's bytes): the harness reads the same files the page embeds, so there is one copy
 O55 = TERM.parents[2] / 'onboarding' / 'opus-5.5' / 'src'
+sys.path.insert(0, str(O55.parent / 'tools'))
+import base_source  # noqa: E402
+
 FONT_DIRS = [O55 / 'fonts', O55 / 'settings' / 'nier' / 'fonts']
 TEMPLATE = HARNESS / 'harness.template.html'
 DEMOS = HARNESS / 'demos.js'                # optional: harness demo scripts (window.PMT_HARNESS_DEMOS)
@@ -68,7 +71,7 @@ class BuildError(RuntimeError):
 
 
 def read(p: Path) -> str:
-    return p.read_text(encoding='utf-8')
+    return base_source.read_text_source(p)
 
 
 def rel(p: Path) -> str:

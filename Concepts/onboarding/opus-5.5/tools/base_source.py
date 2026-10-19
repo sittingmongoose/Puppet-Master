@@ -36,9 +36,9 @@ def read_text_source(path: Path) -> str:
         target = (LG_SLOTS / name).resolve()
         if not target.is_relative_to(LG_SLOTS.resolve()):
             raise ValueError(f'{path}: Liquid Glass slot outside package: {name}')
-        if name in seen:
+        if target in seen:
             raise ValueError(f'{path}: duplicate Liquid Glass slot: {name}')
-        seen.add(name)
+        seen.add(target)
         body = read_source(target).decode('utf-8')
         if '@pm7-lg-slot' in body:
             raise ValueError(f'{target}: nested Liquid Glass slot')
