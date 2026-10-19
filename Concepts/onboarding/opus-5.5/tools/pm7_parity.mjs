@@ -128,7 +128,14 @@ function seedStorage(look, motion = 'reduced') {
 export function samplerNetworkPolicy() {
   return { urls: [], urlPatterns: [{ urlPattern: 'file:///__pm7_parity_asset__/*', block: true }] };
 }
+async function drainInterceptions(browser) {
+  // A Fetch command may settle after the screenshot or the final page query.
+  // Drain newly added commands too, without advancing the page's manual clock.
+  while (browser.pendingInterceptions?.size) await Promise.all([...browser.pendingInterceptions]);
+  if (browser.interceptErrors?.length) throw Error('Fetch interception ERROR: ' + browser.interceptErrors.join('\n'));
+}
 async function configurePage(browser) {
+    await drainInterceptions(browser);
     const page = browser.page;
     await page.bringToFront();
     if (process.env.PM7_PARITY_DEBUG) page.on('Runtime.consoleAPICalled', e => {
@@ -143,6 +150,7 @@ async function configurePage(browser) {
     await page.send('Emulation.setFocusEmulationEnabled', { enabled: true });
     await page.send('Animation.enable'); await page.send('Animation.setPlaybackRate', { playbackRate: 0 });
     const interceptErrors = browser.interceptErrors = [];
+    const pendingInterceptions = browser.pendingInterceptions = new Set();
     const requests = new Map(); browser.blocked = new Set(); browser.failedRequests = [];
     browser.currentUrl = 'file:///__pm7_parity__/input.html?o55=off&o55scenario=fresh&pm-warm=0';
     page.on('Network.requestWillBeSent', e => requests.set(e.requestId, e.request.url));
@@ -152,19 +160,22 @@ async function configurePage(browser) {
       if (url && !url.startsWith('file:///__pm7_parity_asset__/')) browser.failedRequests.push({ url, error: e.errorText, blockedReason: e.blockedReason || null });
     });
     page.on('Fetch.requestPaused', event => {
-      const uri = event.request.url;
-      let request;
-      if (event.resourceType === 'Document' && uri === browser.currentUrl) {
-        request = page.send('Fetch.fulfillRequest', { requestId: event.requestId, responseCode: 200,
-          responseHeaders: [{ name: 'Content-Type', value: 'text/html; charset=utf-8' }],
-          body: browser.storageProbe ? Buffer.from('<!doctype html><title>Storage isolation probe</title>').toString('base64') : browser.input.body });
-      } else if (/^(?:data:|blob:|file:)/.test(uri) && !uri.startsWith('file:///__pm7_parity_asset__/')) {
-        request = page.send('Fetch.continueRequest', { requestId: event.requestId });
-      } else {
-        if (!uri.startsWith('file:///__pm7_parity_asset__/')) browser.blocked.add(uri);
-        request = page.send('Fetch.failRequest', { requestId: event.requestId, errorReason: 'BlockedByClient' });
-      }
-      request.catch(error => interceptErrors.push(String(error)));
+      const interception = (async () => {
+        const uri = event.request.url;
+        let request;
+        if (event.resourceType === 'Document' && uri === browser.currentUrl) {
+          request = page.send('Fetch.fulfillRequest', { requestId: event.requestId, responseCode: 200,
+            responseHeaders: [{ name: 'Content-Type', value: 'text/html; charset=utf-8' }],
+            body: browser.storageProbe ? Buffer.from('<!doctype html><title>Storage isolation probe</title>').toString('base64') : browser.input.body });
+        } else if (/^(?:data:|blob:|file:)/.test(uri) && !uri.startsWith('file:///__pm7_parity_asset__/')) {
+          request = page.send('Fetch.continueRequest', { requestId: event.requestId });
+        } else {
+          if (!uri.startsWith('file:///__pm7_parity_asset__/')) browser.blocked.add(uri);
+          request = page.send('Fetch.failRequest', { requestId: event.requestId, errorReason: 'BlockedByClient' });
+        }
+        await request;
+      })().catch(error => interceptErrors.push(String(error))).finally(() => pendingInterceptions.delete(interception));
+      pendingInterceptions.add(interception);
     });
     await page.send('Fetch.enable', { patterns: [{ urlPattern: '*' }] });
 }
@@ -198,6 +209,7 @@ async function createBrowser(input, telemetry) {
   } catch (error) { await browser.close(); telemetry.live.delete(browser); throw error; }
 }
 async function loadGroup(browser, group, input = browser.input) {
+  await drainInterceptions(browser);
   browser.input = input;
   await browser.resetContext(); await configurePage(browser);
   await assertEmptyStorage(browser);
@@ -448,7 +460,7 @@ async function assertExpectedAbsent(browser, context) {
     + retained.map(match => `${JSON.stringify(match.selector)} at ${match.path}`).join(', '));
 }
 async function capture(browser, audit, deep, expectRemoved = [], context = {}) {
-  if (browser.interceptErrors.length) throw Error(browser.interceptErrors.join('\n'));
+  await drainInterceptions(browser);
   const screenshotPreparation = await prepareCapture(browser);
   // Preparation advances the manual clock by its existing 3 x 32 ms. Recheck
   // afterwards without another settle, and again before sampling styles.
@@ -483,6 +495,7 @@ async function capture(browser, audit, deep, expectRemoved = [], context = {}) {
   const specialRules = rawSpecialRules.map(rule => ({ ...rule, text: normalizeBlobValue(rule.text, identities) }));
   const canonicalUrl = url => identities[url] || (url.startsWith('data:') ? 'data:sha256:' + digest(url) : url);
   const runtimeBlocked = await browser.page.evaluate(() => __pm7Parity.blockedRequests());
+  await drainInterceptions(browser);
   const requests = { blocked: [...new Set([...browser.blocked, ...runtimeBlocked])].map(canonicalUrl).sort(),
     failed: browser.failedRequests.map(item => ({ ...item, url: canonicalUrl(item.url) })).sort((a, b) => JSON.stringify(a).localeCompare(JSON.stringify(b))) };
   const nativeDetails = deep ? null : removalAlignment
@@ -604,6 +617,7 @@ async function run(options) {
       await prepareCapture(browser);
       await assertCaptureState(browser, group.states[i], input === inputs[0] ? 'baseline replay' : 'candidate restore');
       await browser.page.screenshot();
+      await drainInterceptions(browser);
     }
   }
   async function completeSequence(browser, group, after) {
@@ -612,6 +626,7 @@ async function run(options) {
       await prepareCapture(browser);
       await assertCaptureState(browser, state, 'noise sequence');
       await browser.page.screenshot();
+      await drainInterceptions(browser);
     }
   }
   async function measureNoise(browser, group, state, baseline, candidate, prefix) {
@@ -655,6 +670,7 @@ async function run(options) {
       baselineStyleHashes: hashes, instability, artifacts, pass: stable && withinCaps && envelope.pass };
   }
   async function compare(group, state, captures, browsers, detailOverride) {
+    await Promise.all([...new Set(browsers)].map(drainInterceptions));
     const [a, b] = captures, key = `${group.look}--${group.page.id}--${state.id}--${group.viewport.id}--${group.motion}`;
     const prefix = join(options.out, 'states', key);
     const pixels = diffPng(a.screenshot, b.screenshot, options.tolerance, options.maxDiffPixels);
@@ -719,6 +735,7 @@ async function run(options) {
       !sameRules ? 'special-pseudo-rules' : null, !customCoverageComplete ? 'unsampled-custom-layout' : null].filter(Boolean);
     row.verdictReasons = row.verdict === 'FAIL' && row.pixelNoise?.applied
       ? [...row.rawExactReasons, row.pixelNoise.unstableBaseline ? 'unstable-baseline' : 'outside-baseline-envelope'] : row.rawExactReasons;
+    await Promise.all([...new Set(browsers)].map(drainInterceptions));
     report.rows.push(row); appendFileSync(join(options.out, 'progress.jsonl'), JSON.stringify(row) + '\n');
     console.log(`${row.verdict} ${report.rows.length}/${selected.count} ${key} exact=${row.rawExactVerdict} styles=${paths.length} pixels=${pixels.diffPixels} raw=${pixels.rawDiffPixels}${rawPaths ? ' rawStyles=' + rawPaths.length : ''}${row.pixelNoise?.applied ? ' envelope=' + (row.pixelNoise.pass ? 'PASS' : 'FAIL') : ''}`);
   }
@@ -787,7 +804,15 @@ async function run(options) {
       cursor = selected.groups.length; console.error(error.stack || error);
     } finally {
       for (const browser of browsers) {
+        const finalErrors = new Set();
+        const recordInterceptionError = error => {
+          const message = String(error);
+          if (!finalErrors.has(message)) report.errors.push({ worker: index, error: message });
+          finalErrors.add(message);
+        };
+        await drainInterceptions(browser).catch(recordInterceptionError);
         await browser.close().catch(error => report.errors.push({ worker: index, cleanup: String(error) }));
+        await drainInterceptions(browser).catch(recordInterceptionError);
         telemetry.live.delete(browser);
       }
     }
@@ -835,7 +860,7 @@ async function run(options) {
     rawExactCounts: report.rawExactCounts, ...report.counts, wallSeconds: report.wallSeconds, report: join(options.out, 'report.json') }));
   return report.verdict === 'ERROR' ? 2 : report.verdict === 'FAIL' ? 1 : 0;
 }
-export { createBrowser, loadGroup, enterState, capture };
+export { createBrowser, configurePage, drainInterceptions, loadGroup, enterState, capture };
 if (process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
   try {
     const options = parseArgs(process.argv.slice(2));
