@@ -54,3 +54,13 @@ not accepted. Returning to the original virtual file origin works on Windows bec
 CDP fulfills it before filesystem access; it also removes the need for a LAN web server,
 TLS configuration or OpenSSL. File-origin self/sensitivity proofs are in progress.
 Every completed diagnostic session has stopped and purged. No comparison gate changed.
+
+## Remote navigation guard
+
+Inspection found that a newly created about:blank target can emit its old load event
+after input navigation starts. The original adapter listened to an unqualified load
+event. Remote navigation now waits for the exact frame and loader returned by
+Page.navigate; local navigation stays unchanged. Unit cases cover stale loads, child
+frame loads, a load arriving before the navigation reply, and failed navigations.
+This is a candidate cause of the hidden ordinal instability; live proof is pending.
+Controller unit tests: 15/15 pass.

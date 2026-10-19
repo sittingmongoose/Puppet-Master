@@ -42,6 +42,10 @@ an HTTP server, TLS exceptions or different origin semantics. All HTTP(S)/WebSoc
 remain blocked by the unchanged request gate. Storage checks and native WebCrypto are unchanged.
 Relative external assets remain unsupported.
 
+Remote navigation waits for the exact frame/loader returned by `Page.navigate`. It ignores an
+old about:blank load and retains a matching load that arrives before the navigation reply. This
+keeps preparation from starting on a previous document; local navigation is unchanged.
+
 Every row records the rendering host, GPU renderer, Chrome build, session and transport. Both sides
 stay in one Chrome process. Remote sessions receive minute keepalives; completion, startup failures
 and signals stop and purge owned sessions. Cleanup status appears per browser in the report.

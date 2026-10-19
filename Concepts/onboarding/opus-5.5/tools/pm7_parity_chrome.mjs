@@ -4,6 +4,7 @@ import { execFile } from 'node:child_process';
 import { promisify } from 'node:util';
 import { writeFileSync } from 'node:fs';
 import { CdpWebSocket } from './cdp-websocket.mjs';
+import { gotoRemoteDocument } from './pm7_parity_remote.mjs';
 
 const command = promisify(execFile), live = new Set();
 for (const signal of ['SIGINT', 'SIGTERM']) process.once(signal, async () => {
@@ -77,6 +78,7 @@ export async function launch({ width = 1600, height = 900, scale = 1, host, remo
     const page = {
       send: s, errors, on: listen, disposeListeners: () => ownedListeners.splice(0).forEach(off => off()),
       async goto(url, { timeout = 90000 } = {}) {
+        if (host) return gotoRemoteDocument(s, listen, url, timeout);
         let off, timer;
         const loaded = new Promise((resolve, reject) => {
           off = on('Page.loadEventFired', resolve, sessionId);
@@ -102,6 +104,7 @@ export async function launch({ width = 1600, height = 900, scale = 1, host, remo
       }
     };
     for (const method of ['Page.enable', 'Runtime.enable', 'DOM.enable']) await s(method);
+    if (host) await s('Page.setLifecycleEventsEnabled', { enabled: true });
     await page.setViewport(width, height);
     return page;
     }
