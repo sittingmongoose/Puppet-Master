@@ -2,9 +2,9 @@
 
 Source: `Plans/Commands_System.md`
 
-Source lines: L5203-L5254
+Source lines: L5202-L5253
 
-Source SHA256: `2b193600a9072afac65287ec61f140a16ff350778972f0054a3e025e8f440a5e`
+Source SHA256: `e234431417207642d320e6bf543b3d6d964026c5672d2549cbbbed2ed58322a1`
 
 ---
 
@@ -45,7 +45,7 @@ acceptance_criteria:
   - The action reports unavailable with a keyboard-reachable disabled reason when the shell router is absent.
   - No cmd.nav.focus_route registration, alias, handler, event, persistence write, or production wiring row exists.
   - Static or browser concept evidence is never promoted into native Slint or runtime-handler evidence.
-validation_surfaces: [Plans/guided_tour_contracts.schema.json, Plans/guided_tour_contract_fixtures.json, Plans/Wiring_Matrix.production.exclusions.json, Concepts/pm7-tools/verify/guided_tour.mjs]
+validation_surfaces: [Plans/guided_tour_contracts.schema.json, Plans/guided_tour_contract_fixtures.json, Plans/Wiring_Matrix.production.exclusions.json]
 risk_class: local_presentation_promoted_to_false_domain_command
 reasoning_tier: high
 context_scope: guided_tour_shell_focus_route

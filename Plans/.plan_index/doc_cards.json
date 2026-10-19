@@ -2589,7 +2589,7 @@
         "unverified_or_mispriced_backup_verification",
         "workflow_activation_original_source_or_lifetime_drift"
       ],
-      "sha256": "cb7d055a0381998f39d801a4a4fd27dfe54216217bdfa5082f225e023768147a",
+      "sha256": "457d673823c59c7b11bd727c12c1ec9f56f4b296521372253d1c3e0cb709e6ab",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 30
@@ -3773,7 +3773,7 @@
         "future command palette",
         "future command parser"
       ],
-      "line_count": 7988,
+      "line_count": 7986,
       "path": "Plans/Commands_System.md",
       "plan_unit_count": 94,
       "plan_unit_ids": [
@@ -3967,7 +3967,7 @@
         "view_state_command_inflation",
         "web_slash_family_drift"
       ],
-      "sha256": "2b193600a9072afac65287ec61f140a16ff350778972f0054a3e025e8f440a5e",
+      "sha256": "e234431417207642d320e6bf543b3d6d964026c5672d2549cbbbed2ed58322a1",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 94
@@ -3988,7 +3988,6 @@
       },
       "validation_surfaces": [
         "CAS",
-        "Concepts/pm7-tools/verify/guided_tour.mjs",
         "Plans/UI_Command_Catalog.md",
         "Plans/Wiring_Matrix.production.exclusions.json",
         "Plans/Wiring_Matrix.production.json",
@@ -7045,8 +7044,6 @@
       },
       "heading_count": 169,
       "implementation_surfaces": [
-        "Concepts/pm6-build/parts/12-html-side-panels.part.html",
-        "Concepts/pm6-build/parts/29x-pm6-js-cozy-shelves.part.html",
         "Concepts/pm7-tools/home_workspace_source.py",
         "Plans/Contracts_V0.md",
         "Plans/FileManager.md",
@@ -7064,7 +7061,7 @@
         "future editor viewer renderer",
         "future file tree renderer"
       ],
-      "line_count": 5422,
+      "line_count": 5420,
       "path": "Plans/FileManager.md",
       "plan_unit_count": 85,
       "plan_unit_ids": [
@@ -7175,7 +7172,7 @@
         "migration_lineage",
         "source_history_identity_safety_or_false_recovery"
       ],
-      "sha256": "1f8b8735ac479cc2ef429cfb5eb5f2be86b8612ae35c291df95db6029ac3af6a",
+      "sha256": "2fd5798870ecce2350e8b50203c6afe14837512fb7be8731398f68deb09a5518",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 84,
@@ -14327,7 +14324,7 @@
         "future Product Onboarding and Bootstrap projection controllers",
         "future Product Onboarding native controller"
       ],
-      "line_count": 2939,
+      "line_count": 2936,
       "path": "Plans/Planning_Wizard.md",
       "plan_unit_count": 30,
       "plan_unit_ids": [
@@ -14385,7 +14382,7 @@
         "tour_fake_shell_or_layout_loss",
         "unbounded_review_loop_or_suppressed_finding"
       ],
-      "sha256": "517f9d8ec779d2259e9e29cb8152e9c073ef4a9ae6c370e248ab7b5a8c7ceb37",
+      "sha256": "a5c0830e2ec391d50498ba4359a1f8ea9fb88d3d7b14eb929ea75f5962dfa614",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 29,
@@ -14400,8 +14397,6 @@
         "source_lineage_disposition": 1
       },
       "validation_surfaces": [
-        "Concepts/pm7-tools/onboarding_cinematic_source.py static assertions",
-        "Concepts/pm7-tools/verify/onboarding_cinematic.mjs browser-concept verifier",
         "Future Planning Wizard source pick local/SSH tests.",
         "Future policy-hidden source no-leak tests.",
         "Future research decision review integration, replay and accessible presentation receipts; not_run",
@@ -16962,7 +16957,7 @@
         "workspace_tab_identity_drift",
         "worktree_owner_boundary_drift"
       ],
-      "sha256": "08d9a7033e1fc165aae1603f098e045fab11136eef8ca508731c1a2711fd826d",
+      "sha256": "50aad96d4a9209f611db50d2787118771b8dd98679f14fefa7e47137b2b2c55e",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 171,
@@ -17052,7 +17047,6 @@
         "VT replay corpus includes OSC 52/8/9;4/133/633, bracketed paste, focus, mouse, alternate screen, synchronized update sequences.",
         "Weak/unknown protocol support downgrades requested-vs-effective state rather than fabricating command blocks.",
         "WebSocket, if used, is UI transport not terminal engine.",
-        "authored T48 PM7 source",
         "clear/cls preserves visible prompt/viewport invariants",
         "controlled production benchmark evidence",
         "exact-topology and optional-environment negative fixtures",
@@ -17502,8 +17496,6 @@
       },
       "heading_count": 118,
       "implementation_surfaces": [
-        "Concepts/pm7-tools/full_thread_performance_source.py",
-        "Concepts/pm7-tools/verify/full_thread_performance.mjs",
         "Plans/Automated_Testing_System.md",
         "Plans/Commands_System.md",
         "Plans/Contracts_V0.md",
@@ -17669,7 +17661,7 @@
         "unsafe_recovery",
         "unsupported_or_unmeasured_optimization"
       ],
-      "sha256": "e68e02baadd359d68c064ce80967a6d4c2a83b921385d46e95d9e6dcbeff8df9",
+      "sha256": "1b371fa64868d93fdc1a2e92d21c7755579af6262182519f61adbf042197aff5",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 52
@@ -17691,7 +17683,6 @@
       },
       "validation_surfaces": [
         "BSD timeout/quota tests",
-        "Concepts/pm7-tools/verify/full_thread_performance.mjs",
         "DAP event races",
         "Eval persistence tests",
         "Plans/Backup_Restore_System.md#BRS-026",
@@ -19504,8 +19495,6 @@
       "heading_count": 378,
       "implementation_surfaces": [
         "Concepts/pm7-tools/home_workspace_source.py",
-        "Concepts/pm7-tools/onboarding_cinematic_source.py",
-        "Concepts/pm7-tools/systems_integration_source.py",
         "Plans/Assistant_Plan_Runtime.md",
         "Plans/Automated_Testing_System.md",
         "Plans/Commands_System.md",
@@ -19555,7 +19544,7 @@
         "future command registry and routed Docker/Hosts actions",
         "scripts/pm-prd-planning-runtime-validate.py"
       ],
-      "line_count": 16054,
+      "line_count": 16051,
       "path": "Plans/UI_Command_Catalog.md",
       "plan_unit_count": 182,
       "plan_unit_ids": [
@@ -19816,7 +19805,7 @@
         "wand_module_surface_drift",
         "wrong_git_target_or_phantom_handler"
       ],
-      "sha256": "aa616e3c1819aa810103eb6409fd425047a83efe26a1f87c6696d2d24a456cdc",
+      "sha256": "74ace7abc7bbd66f8616c34be183f1a133d32a82d17e5f24d6d9741e0f097ff7",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 180,
@@ -19836,10 +19825,6 @@
         "requirement": 121
       },
       "validation_surfaces": [
-        "Concepts/pm7-tools/onboarding_cinematic_source.py static assertions",
-        "Concepts/pm7-tools/systems_integration_source.py",
-        "Concepts/pm7-tools/verify/guided_tour.mjs",
-        "Concepts/pm7-tools/verify/onboarding_cinematic.mjs browser-concept verifier",
         "DRY Method settings command fixture",
         "Future GUI route migration tests.",
         "Future UI command catalog compatibility review.",
@@ -20948,7 +20933,7 @@
       ]
     }
   ],
-  "generated_at_utc": "2026-10-17T22:23:37Z",
+  "generated_at_utc": "2026-10-19T00:30:34Z",
   "schema_id": "pm.plan_index.doc_cards.v1",
   "source_scope": "top-level live Plans/*.md; excludes ledgers, generated shards, evidence, and pipeline artifacts",
   "summary": {
