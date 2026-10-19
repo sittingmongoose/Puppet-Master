@@ -10,6 +10,9 @@ The switch is supported by `scenarios.mjs`, `draft_matrix.mjs`,
 `hover14.mjs`, `settings_nopills_accept.mjs`, `pill_check.mjs`,
 `tour_scenarios.mjs`, `contrast_worst.mjs`, and the layer tools `usage_boot.mjs`
 and `rail_boot.mjs`. `owner_fixtures.mjs` is exercised through `scenarios.mjs`.
+The current selector/visual diagnostics `active_descendant_guard.mjs`,
+`art_joints.mjs`, `nier_hue_audit.mjs`, and `onboarding_label_check.mjs` also accept
+the switch. The label comparison covers its candidate only.
 The boot comparison tools cover only their tested page, excluding the historical
 reference. For `rail_boot`, the tested page and reference must belong to the same
 page union; use a separate run/file for the published and review pages.

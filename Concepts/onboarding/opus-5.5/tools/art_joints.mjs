@@ -1,6 +1,6 @@
 /* The troupe's joints and strings, measured on the live page (2026-10-13, connected-limb rigs).
  *   node tools/art_joints.mjs <page> --cdp <endpoint> [--looks basic,friendly,glass,retro] [--modes dark,light]
- *        [--screens welcome,where,begin,name,ai,free,ready] [--reduced] [--poses 30] [--out <dir>]
+ *        [--screens welcome,where,begin,name,ai,free,ready] [--reduced] [--poses 30] [--out <dir>] [--coverage <file>]
  * For every look, mode and screen with a troupe, after the scene settles it takes --poses poses: the troupe moves for a
  * random 180-420 ms, the motion clock is held (O55.motion.setTimeScale(0)) and, two rig frames later, it measures
  *   - every string's two ends against the hook points they hang from (A.rig.gaps, scene units): a hand on a forearm that
@@ -17,10 +17,12 @@ import { createRequire } from 'node:module';
 import { mkdirSync, writeFileSync } from 'node:fs';
 import { join, resolve } from 'node:path';
 import { pathToFileURL } from 'node:url';
+import { coverPage, takeCoverageFlag } from './coverage_union.mjs';
 
 const require = createRequire(join(process.env.PM_PLAYWRIGHT_DIR || '/home/sittingmongoose/pmt-dev/pw/', 'noop.js'));
 const { chromium } = require('playwright-core');
 const argv = process.argv.slice(2);
+const coverageFile = takeCoverageFlag(argv);
 const opt = (k, d) => { const i = argv.indexOf('--' + k); return i >= 0 ? argv[i + 1] : d; };
 const page0 = argv[0] && !argv[0].startsWith('--') ? argv[0] : null;
 const cdp = opt('cdp');
@@ -35,6 +37,7 @@ const GAP = 0.6, GAP_RETRO = 0.75, BEND_MIN = 2, BEND_STILL = 0.01;
 const browser = await chromium.connectOverCDP(cdp);
 const ctx = await browser.newContext({ viewport: { width: 1440, height: 900 }, reducedMotion: reduced ? 'reduce' : 'no-preference' });
 const page = await ctx.newPage();
+const finishCoverage = coverageFile ? await coverPage(page, coverageFile) : null;
 const errors = [];
 page.on('pageerror', (e) => errors.push(String(e && e.message || e).slice(0, 300)));
 const rows = [];
@@ -95,8 +98,11 @@ try {
   const renderer = await page.evaluate(() => { try { const g = document.createElement('canvas').getContext('webgl'); const d = g.getExtension('WEBGL_debug_renderer_info'); return g.getParameter(d.UNMASKED_RENDERER_WEBGL); } catch (_) { return null; } }).catch(() => null);
   if (errors.length) failed++;
   writeFileSync(join(out, 'joints.json'), JSON.stringify({ url, reduced, poses, renderer, thresholds: { gap: GAP, gapRetro: GAP_RETRO, bendMin: BEND_MIN, bendStill: BEND_STILL }, failed, errors, rows }, null, 2));
-  await ctx.close().catch(() => {});
-  await browser.close().catch(() => {}); /* over CDP this only disconnects; the session's owner stops it */
+  try { if (finishCoverage) await finishCoverage(); }
+  finally {
+    await ctx.close().catch(() => {});
+    await browser.close().catch(() => {}); /* over CDP this only disconnects; the session's owner stops it */
+  }
 }
 console.log(JSON.stringify({ rows: rows.length, failed, errors: errors.slice(0, 5) }));
 process.exit(failed ? 1 : 0);
