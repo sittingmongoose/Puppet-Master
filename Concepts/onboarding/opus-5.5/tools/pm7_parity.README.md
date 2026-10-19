@@ -66,9 +66,15 @@ resolves its caret value first, avoiding cached inherited values in DOMSnapshot.
 transitions caused by either toggle finish explicitly. Style resolution can expose deferred entry
 animations, so this resolution and settled-animation preparation precede screenshots too. Finite
 animations finish; infinite animations pause at zero; any unresolved animation fails capture.
-Preparation counts are recorded per side without advancing the logical clock.
+Caret resolution itself does not advance the logical clock. The existing preparation's
+`settle(0)` also flushes three 32 ms ticks (96 ms).
 The same preparation runs before final state visibility assertions: NieR welcome layers remain
 held until their finite entry-animation promises finish. Visibility checks retain their full criteria.
+After the final capture preparation, visibility and ownership/readiness are checked again immediately
+before the screenshot and before style sampling. The final unsuperseded keyboard focus must still
+match `:focus-visible`; the final hover action must still match `:hover`. These checks never settle
+or advance time. A lost state raises a side-labelled state ERROR, including measured baseline repeats
+and deep captures. The pre-assertion NieR preparation and both existing 96 ms boundaries are retained.
 
 A separate CSSOM rule-text guard compares selection, webkit-scrollbar, webkit-slider and webkit-search
 pseudo rules whose computed nodes are unavailable. Changes fail conservatively and report first rule
@@ -204,7 +210,7 @@ add noise-baseline-N, low/high range and noise-heatmap PNGs, each with SHA-256 i
 shared pages may count per process. It is not a kernel peak reading.
 
 ```sh
-node --test Concepts/onboarding/opus-5.5/tools/pm7_parity.test.mjs Concepts/onboarding/opus-5.5/tools/pm7_parity_alignment.test.mjs Concepts/onboarding/opus-5.5/tools/cdp-websocket.test.mjs
+node --test Concepts/onboarding/opus-5.5/tools/pm7_parity.test.mjs Concepts/onboarding/opus-5.5/tools/pm7_parity_alignment.test.mjs Concepts/onboarding/opus-5.5/tools/pm7_parity_capture.test.mjs Concepts/onboarding/opus-5.5/tools/cdp-websocket.test.mjs
 ```
 
 The opt-in GPU caret regression uses one browser at a time. Its unchanged control must pass;

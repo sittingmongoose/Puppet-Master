@@ -402,9 +402,39 @@ async function prepareCapture(browser) {
     return { resolved, hidden };
   });
 }
-async function capture(browser, audit, deep, expectRemoved = []) {
+async function assertCaptureState(browser, state, side) {
+  if (!state) return;
+  const page = browser.page;
+  try {
+    if (state.assert) await visible(page, state.assert, state.id);
+    if (state.check && !(await page.evaluate(state.check))) throw Error('State ownership/readiness assertion failed');
+    // A later click may intentionally move focus or the pointer. Check only the
+    // final requested focus/hover that subsequent steps have not superseded.
+    const focusIndex = state.steps.findLastIndex(step => step.action === 'focus');
+    const clickIndex = state.steps.findLastIndex(step => step.action === 'click');
+    if (focusIndex > clickIndex) {
+      const selector = state.steps[focusIndex].selector;
+      await visible(page, selector, state.id);
+      const focused = await page.evaluate(sel => Array.from(document.querySelectorAll(sel)).some(el =>
+        document.activeElement === el && el.matches(':focus-visible')), selector);
+      if (!focused) throw Error('Keyboard focus/:focus-visible no longer on ' + selector);
+    }
+    const pointer = state.steps.findLast(step => step.action === 'hover' || step.action === 'click');
+    if (pointer?.action === 'hover') {
+      await visible(page, pointer.selector, state.id);
+      const hovered = await page.evaluate(sel => Array.from(document.querySelectorAll(sel)).some(el => el.matches(':hover')), pointer.selector);
+      if (!hovered) throw Error('Hover no longer on ' + pointer.selector);
+    }
+  } catch (error) {
+    throw Error(`State capture ERROR (${side || 'capture'} ${state.id}): ${error.message}`, { cause: error });
+  }
+}
+async function capture(browser, audit, deep, expectRemoved = [], context = {}) {
   if (browser.interceptErrors.length) throw Error(browser.interceptErrors.join('\n'));
   const screenshotPreparation = await prepareCapture(browser);
+  // Preparation advances the manual clock by its existing 3 x 32 ms. Recheck
+  // afterwards without another settle, and again before sampling styles.
+  await assertCaptureState(browser, context.state, context.side);
   if (process.env.PM7_PARITY_DEBUG) console.log('CAPTURE screenshot start');
   const screenshot = await browser.page.screenshot();
   if (process.env.PM7_PARITY_DEBUG) console.log('CAPTURE screenshot done');
@@ -412,6 +442,7 @@ async function capture(browser, audit, deep, expectRemoved = []) {
   let styles, removalAlignment;
   const caretPreparation = await browser.page.evaluate(() => __pm7Parity.setCaretHidden(false));
   try {
+    await assertCaptureState(browser, context.state, context.side);
     styles = deep ? await browser.page.evaluate(async audit => __pm7Parity.snapshot(audit), audit) : await nativeSnapshot(browser, expectRemoved);
     if (expectRemoved.length) {
       const skippedNodes = styles.skippedNodes;
@@ -541,14 +572,19 @@ async function run(options) {
     await deadline(loadPreparedGroup(browser, group, input), 'noise replay load');
     for (let i = 0; i <= through; i++) {
       await deadline(enterState(browser, group.states[i], group), 'noise replay ' + group.states[i].id);
-      if (i === through && takeCapture) return deadline(capture(browser, false, false, options.expectRemoved), 'noise baseline capture');
-      await prepareCapture(browser); await browser.page.screenshot();
+      if (i === through && takeCapture) return deadline(capture(browser, false, false, options.expectRemoved,
+        { state: group.states[i], side: 'baseline repeat' }), 'noise baseline capture');
+      await prepareCapture(browser);
+      await assertCaptureState(browser, group.states[i], input === inputs[0] ? 'baseline replay' : 'candidate restore');
+      await browser.page.screenshot();
     }
   }
   async function completeSequence(browser, group, after) {
     for (const state of group.states.slice(after + 1)) {
       await deadline(enterState(browser, state, group), 'noise sequence ' + state.id);
-      await prepareCapture(browser); await browser.page.screenshot();
+      await prepareCapture(browser);
+      await assertCaptureState(browser, state, 'noise sequence');
+      await browser.page.screenshot();
     }
   }
   async function measureNoise(browser, group, state, baseline, candidate, prefix) {
@@ -678,10 +714,11 @@ async function run(options) {
           // restoring the baseline only when a differing property needs details.
           for (let s = 0; s < group.states.length; s++) {
             const caps = [];
-            for (const input of inputs) {
+            for (const [side, input] of inputs.entries()) {
               await deadline(loadPreparedGroup(browsers[0], group, input), 'serial load');
               for (const state of group.states.slice(0, s + 1)) await deadline(enterState(browsers[0], state, group), state.id);
-              caps.push(await deadline(capture(browsers[0], audit, options.deep), 'serial capture', options.deep ? 1200000 : 180000));
+              caps.push(await deadline(capture(browsers[0], audit, options.deep, [],
+                { state: group.states[s], side: side ? 'candidate' : 'baseline' }), 'serial capture', options.deep ? 1200000 : 180000));
             }
             let details;
             const paths = differingPaths(caps[0].styles.entries, caps[1].styles.entries).slice(0, options.first);
@@ -690,6 +727,7 @@ async function run(options) {
               await loadPreparedGroup(browsers[0], group, inputs[0]);
               for (const state of group.states.slice(0, s + 1)) await enterState(browsers[0], state, group);
               await prepareCapture(browsers[0]);
+              await assertCaptureState(browsers[0], group.states[s], 'baseline diagnostics');
               const left = await readDeepDetails(browsers[0], paths);
               details = formatStyleDetails(left, right, paths);
             }
@@ -703,13 +741,15 @@ async function run(options) {
           await deadline(loadPreparedGroup(browser, group, inputs[0]), 'load baseline group');
           for (const state of group.states) {
             await deadline(enterState(browser, state, group), 'enter baseline ' + state.id);
-            baseline.push(await deadline(capture(browser, false, false, options.expectRemoved), 'capture baseline ' + state.id));
+            baseline.push(await deadline(capture(browser, false, false, options.expectRemoved,
+              { state, side: 'baseline' }), 'capture baseline ' + state.id));
           }
           await deadline(loadPreparedGroup(browser, group, inputs[1]), 'load candidate group');
           for (let i = 0; i < group.states.length; i++) {
             const state = group.states[i];
             await deadline(enterState(browser, state, group), 'enter candidate ' + state.id);
-            const candidate = await deadline(capture(browser, false, false), 'capture candidate ' + state.id);
+            const candidate = await deadline(capture(browser, false, false, [],
+              { state, side: 'candidate' }), 'capture candidate ' + state.id);
             await compare(group, state, [baseline[i], candidate], [browser, browser]);
             baseline[i] = null; audit = false;
           }
@@ -768,7 +808,7 @@ async function run(options) {
     rawExactCounts: report.rawExactCounts, ...report.counts, wallSeconds: report.wallSeconds, report: join(options.out, 'report.json') }));
   return report.verdict === 'ERROR' ? 2 : report.verdict === 'FAIL' ? 1 : 0;
 }
-export { createBrowser, loadGroup, enterState };
+export { createBrowser, loadGroup, enterState, capture };
 if (process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
   try {
     const options = parseArgs(process.argv.slice(2));
