@@ -149,6 +149,7 @@ async function configurePage(browser) {
     await page.send('Emulation.setLocaleOverride', { locale: 'en-US' });
     await page.send('Emulation.setFocusEmulationEnabled', { enabled: true });
     await page.send('Animation.enable'); await page.send('Animation.setPlaybackRate', { playbackRate: 0 });
+    await drainInterceptions(browser);
     const interceptErrors = browser.interceptErrors = [];
     const pendingInterceptions = browser.pendingInterceptions = new Set();
     const requests = new Map(); browser.blocked = new Set(); browser.failedRequests = [];

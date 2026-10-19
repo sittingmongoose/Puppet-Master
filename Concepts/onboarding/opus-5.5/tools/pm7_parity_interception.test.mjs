@@ -92,6 +92,19 @@ test('fulfill, continue and fail rejections all remain fatal, including marker c
   }
 });
 
+test('configurePage preserves errors arriving during setup before replacing its tracking arrays', async () => {
+  const f = fixture(); await configurePage(f.browser);
+  const errors = f.browser.interceptErrors, pending = f.browser.pendingInterceptions;
+  const send = f.browser.page.send;
+  f.browser.page.send = async (method, args) => {
+    if (method === 'Network.enable') f.pause().reject(interceptionError());
+    return send(method, args);
+  };
+  await assert.rejects(configurePage(f.browser), /Invalid InterceptionId/);
+  assert.equal(f.browser.interceptErrors, errors); assert.equal(errors.length, 1);
+  assert.equal(f.browser.pendingInterceptions, pending);
+});
+
 test('draining includes another interception started while an earlier one is pending', async () => {
   const f = fixture(); await configurePage(f.browser);
   const first = f.pause(), draining = drainInterceptions(f.browser);
