@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L30369-L31487
+Source lines: L30369-L31486
 
-Source SHA256: `46e4f7e518b4eee59e453c5fc1fcf5e43e6c43f0db5648ab420f21f97a89a63b`
+Source SHA256: `353cd17386ea59cd0b4702e030f93dcf3fdbdd3d1e624414a26a8daf27af988a`
 
 ---
 
@@ -403,11 +403,10 @@ canonical_text: >-
   Mono in NieR Mode; both concepts set their code blocks, inline code, file paths and logs through
   that token. The home redesign's editor and terminal faces are decided separately (its D17, which
   its Plans thread records). The page's symbol characters (arrows, check and cross marks, triangles,
-  the warning sign, dots, math signs, the command key and box lines) are PM Symbols, drawn as SVG in
-  src/fonts/symbols/svg and built into a proportional and a monospace variable font that are
-  attached to every embedded text face for those characters only, with each face's own family, style
-  and weight (src/css/03-symbols.css); form controls take the look's face
-  (src/css/02-control-fonts.css). While on, NieR Mode owns general.visual.accent-color and
+  the warning sign, dots, math signs, the command key and box lines) are PM Symbols in
+  proportional and monospace variable-font forms, attached to every embedded text face for those
+  characters only and matching each face's own family, style and weight; form controls
+  take the look's face. While on, NieR Mode owns general.visual.accent-color and
   general.visual.app-font (F3-441); turning it off restores the chosen theme. It is an overlay, not
   a ninth theme.
   Amended 2026-10-17 (DL-228): Japanese is not embedded. M PLUS 1 carries it upstream, but PM NieR Sans ships
@@ -1019,7 +1018,7 @@ Source since 2026-10-08 (DL-151): PMConcept7's retro-light, `Concepts/PMConcept7
 
 #### Diff-tint variables per variant (04-css-glass-b.part.html:138-192)
 
-The concept defines seven diff-tint custom properties per variant for six variants. Friendly variants define none; friendly editors resolve through the consumer fallback constants baked into the `var()` second arguments at `Concepts/pm6-build/parts/07-css-components-b.part.html:3-29`, which equal the basic-dark values.
+The concept shows seven diff-tint custom properties per variant for six variants. Friendly variants define none; Friendly editors use the Basic Dark fallback values.
 
 | Token | retro-dark | retro-light | basic-light | basic-dark | glass-dark | glass-light | friendly-dark | friendly-light |
 |---|---|---|---|---|---|---|---|---|

@@ -2,15 +2,15 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L35780-L36023
+Source lines: L35777-L36005
 
-Source SHA256: `46e4f7e518b4eee59e453c5fc1fcf5e43e6c43f0db5648ab420f21f97a89a63b`
+Source SHA256: `353cd17386ea59cd0b4702e030f93dcf3fdbdd3d1e624414a26a8daf27af988a`
 
 ---
 
 ## PMConcept7 Cozy Shelves Integration Addendum - 2026-07-28
 
-This addendum records the integration of the ratified Cozy Shelves rail concepts (`Concepts/rail-concepts/QwenRailConcepts/c2-cozy-shelves.html` and `c2-cozy-shelves-files.html`, both source-lineage-only per `Plans/usage-feature.md`) into the `Concepts/PMConcept7.html` build via the `Concepts/pm6-build` parts pipeline, the retirement of three superseded panel views, and the application of the F3-471 width envelope to the PM7 shell. It creates no WorkNodes, NodeSeeds, executable queues, implementation files, runtime artifacts, generated wiring rows, production build tasks, final manifests, or PNC-019 receipts.
+This addendum records the integration of the ratified Cozy Shelves rail concepts (`Concepts/rail-concepts/QwenRailConcepts/c2-cozy-shelves.html` and `c2-cozy-shelves-files.html`, both source-lineage-only per `Plans/usage-feature.md`) in the `Concepts/PMConcept7.html` appearance and interaction reference, the retirement of three superseded panel views, and the application of the F3-471 width envelope to the PM7 shell. It creates no WorkNodes, NodeSeeds, executable queues, implementation files, runtime artifacts, generated wiring rows, production build tasks, final manifests, or PNC-019 receipts.
 
 ### F3-497 - Cozy Shelves PM7 Panel Integration
 
@@ -20,11 +20,8 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
-  The eight Cozy Shelves rail panels (File Manager, Search, Source Control, GitHub
-  Actions, Docker, Testing, Agents, Runtime Artifacts) are integrated into
-  Concepts/PMConcept7.html through Concepts/pm6-build parts: panel markup in
-  12-html-side-panels.part.html, the pm6-css-cozy-shelves style part, and the
-  pm6-js-cozy-shelves behavior part. The c2 panel ids carry over verbatim
+  The PMConcept7 reference shows the eight Cozy Shelves rail panels (File Manager, Search,
+  Source Control, GitHub Actions, Docker, Testing, Agents, Runtime Artifacts). The c2 panel ids carry over verbatim
   (panel-files/search/source/git/docker/artifacts/testing/agents); the retired
   pm6-panel-testing and pm6-panel-agents ids migrate to panel-testing and
   panel-agents everywhere (activity bar data-targets, panels.show, hook census).
@@ -37,12 +34,12 @@ canonical_text: >-
   c2 explorer/changed/open segmented tabs, measured tree animator, hover quick
   actions, multi-select, filter, hide-ignored, and worktree root menu.
 gui_related: true
-gui_classification_reason: This unit records the user-visible integration of the winning rail panels into the PMConcept7 concept build.
+gui_classification_reason: This unit records the user-visible integration of the winning rail panels into the PMConcept7 shell.
 split_recommended: false
 depends_on: [F3-471, F3-472, F3-474, F3-480]
 unblocks: []
 acceptance_criteria:
-- "All eight panels open from the activity bar in the built Concepts/PMConcept7.html with every expander collapsed by default except the c2-sanctioned open shelves (File Manager MODIFIED/ADDED/UNTRACKED/OPEN EDITORS and the Artifacts INVESTIGATION shelf)."
+- "All eight panels open from the activity bar in the PMConcept7 reference with every expander collapsed by default except the c2-sanctioned open shelves (File Manager MODIFIED/ADDED/UNTRACKED/OPEN EDITORS and the Artifacts INVESTIGATION shelf)."
 - "Accordion expand/collapse works by click and Enter/Space with aria-expanded syncing; rail menus paint above shelves and restore their home node on close."
 - "The slideInLeft animation no longer appears on .side-panel-view; panel entrance runs once per activation via .pm-panel-enter."
 - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit."
@@ -52,10 +49,7 @@ validation_surfaces:
 risk_class: finalgui_drift
 reasoning_tier: standard
 context_scope: pm7_cozy_shelves_integration
-implementation_surfaces:
-- "Concepts/pm6-build/parts/12-html-side-panels.part.html"
-- "Concepts/pm6-build/parts/10x-pm6-css-cozy-shelves.part.html"
-- "Concepts/pm6-build/parts/29x-pm6-js-cozy-shelves.part.html"
+implementation_surfaces: []
 node_compile_hint:
   mode: pm7_cozy_shelves_integration_record
   create_worknodes: false
@@ -69,13 +63,12 @@ preserved_exact_tokens:
 - "panel-agents"
 - "slideInLeft"
 negative_constraints:
-- "Do not hand-edit Concepts/PMConcept7.html or Concepts/pm6-build/PMConcept6.assembled.html; all changes flow through the parts pipeline."
 - "Do not treat Concepts/pm6-build/** as implementation authority; it remains illustrative source-lineage only."
 compatibility_only_notes:
 - "Slint portability follows F3-473: only transform/opacity/height animations, portal menus map to PopupWindow, label fitting by measure never by width class."
 stale_retired_dispositions: []
 owner_boundary_notes:
-- "F3-472 owns the shelf-expander contract and F3-480 owns the presentation repairs; this unit records their application to the PM7 build and owns no new presentation rules."
+- "F3-472 owns the shelf-expander contract and F3-480 owns the presentation repairs; this unit records their appearance in the PMConcept7 reference and owns no new presentation rules."
 owner_hints:
 - "Plans/FinalGUISpec.md"
 ```
@@ -112,10 +105,7 @@ validation_surfaces:
 risk_class: finalgui_drift
 reasoning_tier: standard
 context_scope: pm7_cozy_shelves_integration
-implementation_surfaces:
-- "Concepts/pm6-build/parts/02-css-tokens.part.html"
-- "Concepts/pm6-build/parts/09-css-bento-themes.part.html"
-- "Concepts/pm6-build/parts/10x-pm6-css-global.part.html"
+implementation_surfaces: []
 node_compile_hint:
   mode: pm7_width_envelope_record
   create_worknodes: false
@@ -149,8 +139,8 @@ canonical_text: >-
   The activity bar carries a Debug icon directly below the Tests icon as its own
   entry (rail label "Debug", opening the Debug & Run panel per F3-482), wired
   with data-target="panel-run", making the cmd.panel.switch run_debug
-  destination resolve to a real, reachable panel for the first time in the PM7
-  build. The Testing and Agents panel ids are canonical as panel-testing and
+  destination resolve to a real, reachable panel for the first time in the PMConcept7
+  reference. The Testing and Agents panel ids are canonical as panel-testing and
   panel-agents (the retired pm6-panel-testing and pm6-panel-agents ids are gone
   from markup, data-targets, and the hook census). Icon order and Ctrl+number
   bindings remain user-adjustable per the existing customization contract; the
@@ -171,9 +161,7 @@ validation_surfaces:
 risk_class: finalgui_drift
 reasoning_tier: standard
 context_scope: pm7_cozy_shelves_integration
-implementation_surfaces:
-- "Concepts/pm6-build/parts/11-html-shell-open.part.html"
-- "Concepts/pm6-build/parts/29x-pm6-js-panels.part.html"
+implementation_surfaces: []
 node_compile_hint:
   mode: activity_bar_debug_entry_record
   create_worknodes: false
@@ -190,7 +178,7 @@ compatibility_only_notes:
 - "Slint: the activity bar model carries the same entries; hotkey assignment follows the model order, not a constant table."
 stale_retired_dispositions: []
 owner_boundary_notes:
-- "F3-482 owns the Debug & Run panel identity and placement canon; this unit owns the PM7 build realization and the panel id cleanup."
+- "F3-482 owns the Debug & Run panel identity and placement canon; this unit owns the PMConcept7 reference presentation and the panel id cleanup."
 owner_hints:
 - "Plans/FinalGUISpec.md"
 ```
@@ -203,7 +191,7 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
-  Two superseded side-panel views are removed from the PM7 build: panel-unraid
+  Two superseded side-panel views are retired from the PMConcept7 reference: panel-unraid
   (a self-declared redirect stub whose destination lives in the Docker panel's
   Publish view) and pm6-panel-notify (the Notifications side panel, retired when
   the title-bar notification stack became the sole in-app notification
@@ -228,10 +216,7 @@ validation_surfaces:
 risk_class: finalgui_drift
 reasoning_tier: standard
 context_scope: pm7_cozy_shelves_integration
-implementation_surfaces:
-- "Concepts/pm6-build/parts/12-html-side-panels.part.html"
-- "Concepts/pm6-build/parts/29x-pm6-js-panels.part.html"
-- "Concepts/pm6-build/contracts/HOOKS.md"
+implementation_surfaces: []
 node_compile_hint:
   mode: retired_panel_view_removals_record
   create_worknodes: false

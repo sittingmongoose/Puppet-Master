@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L37582-L37889
+Source lines: L37534-L37838
 
-Source SHA256: `46e4f7e518b4eee59e453c5fc1fcf5e43e6c43f0db5648ab420f21f97a89a63b`
+Source SHA256: `353cd17386ea59cd0b4702e030f93dcf3fdbdd3d1e624414a26a8daf27af988a`
 
 ---
 
@@ -133,8 +133,7 @@ acceptance_criteria:
   - Schedule Message appears in the wand and not in an outer overflow menu.
 validation_surfaces:
   - python3 scripts/pm-plan-index.py validate
-  - node tests/audit.mjs
-  - node tests/restored-features-verify.mjs
+  - "Verify F3-531's accepted menu inventory, owner projections, Context Lens placement and selector behavior; concept fixtures do not prove native execution."
 risk_class: mode_menu_or_lens_placement_drift
 reasoning_tier: high
 context_scope: assistant_redesign_menus
@@ -142,11 +141,11 @@ implementation_surfaces:
   - Plans/FinalGUISpec.md
   - Plans/assistant-chat-design.md
   - Plans/Run_Modes.md
-  - Concepts/chat-assistant-concepts/5.6 Pro/menus.js
 node_compile_hint:
   mode: assistant_menu_specification
   create_worknodes: false
 source_lineage:
+  - "Concepts/chat-assistant-concepts/5.6 Pro/menus.js (concept reference; source-lineage-only)"
   - pm-assistant-implementation-2026-09-02-recovered:GUI-001
   - pm-assistant-implementation-2026-09-02-recovered:04_GUI_IMPACTS.md#2
   - pm-assistant-implementation-2026-09-02-recovered:04_GUI_IMPACTS.md#3
@@ -186,19 +185,19 @@ acceptance_criteria:
   - The quota strip is in flow and does not collide with the activity bar or decision host.
 validation_surfaces:
   - python3 scripts/pm-plan-index.py validate
-  - node tests/attachments-composer-verify.mjs
+  - "Verify F3-532's composer attachment tray, destination ribbon, quota strip and responsive acceptance; concept fixtures do not prove native execution."
 risk_class: draft_ui_reintroduced_or_hidden_send_destination
 reasoning_tier: high
 context_scope: assistant_redesign_composer
 implementation_surfaces:
   - Plans/FinalGUISpec.md
   - Plans/assistant-chat-design.md
-  - Concepts/chat-assistant-concepts/5.6 Pro/composer.css
-  - Concepts/chat-assistant-concepts/5.6 Pro/attachments.js
 node_compile_hint:
   mode: assistant_composer_specification
   create_worknodes: false
 source_lineage:
+  - "Concepts/chat-assistant-concepts/5.6 Pro/composer.css (concept reference; source-lineage-only)"
+  - "Concepts/chat-assistant-concepts/5.6 Pro/attachments.js (concept reference; source-lineage-only)"
   - pm-assistant-implementation-2026-09-02-recovered:GUI-002
   - pm-assistant-implementation-2026-09-02-recovered:04_GUI_IMPACTS.md#5
 preserved_exact_tokens:
@@ -235,9 +234,7 @@ acceptance_criteria:
   - Activity exposes all nine domains with existing compaction and routing behavior.
 validation_surfaces:
   - python3 scripts/pm-plan-index.py validate
-  - node tests/assistant-plan-verify.mjs
-  - node tests/todo-verify.mjs
-  - node tests/activity-detail-verify.mjs
+  - "Verify F3-533's card-family inventory, Plan actions, To-Do presentation and collapsed/expanded disclosures; concept fixtures do not prove native execution."
 risk_class: goal_or_todo_transcript_card_or_done_section
 reasoning_tier: high
 context_scope: assistant_redesign_cards_and_activity
@@ -246,12 +243,12 @@ implementation_surfaces:
   - Plans/Assistant_Plan_Runtime.md
   - Plans/ToDo_Runtime.md
   - Plans/Goal_Runtime_System.md
-  - Concepts/chat-assistant-concepts/5.6 Pro/plans.js
-  - Concepts/chat-assistant-concepts/5.6 Pro/todos.js
 node_compile_hint:
   mode: assistant_card_and_activity_specification
   create_worknodes: false
 source_lineage:
+  - "Concepts/chat-assistant-concepts/5.6 Pro/plans.js (concept reference; source-lineage-only)"
+  - "Concepts/chat-assistant-concepts/5.6 Pro/todos.js (concept reference; source-lineage-only)"
   - pm-assistant-implementation-2026-09-02-recovered:GUI-003
   - pm-assistant-implementation-2026-09-02-recovered:04_GUI_IMPACTS.md#7
   - pm-assistant-implementation-2026-09-02-recovered:04_GUI_IMPACTS.md#8
@@ -290,18 +287,18 @@ acceptance_criteria:
   - No left accent bar, permanent bright status surface, or white-until-hover state is introduced.
 validation_surfaces:
   - python3 scripts/pm-plan-index.py validate
-  - node tests/audit.mjs
+  - "Verify F3-534's narrow-width layout, scroll containment and navigation acceptance; concept fixtures do not prove native execution."
 risk_class: responsive_collapse_hides_critical_control
 reasoning_tier: standard
 context_scope: assistant_redesign_responsive
 implementation_surfaces:
   - Plans/FinalGUISpec.md
-  - Concepts/chat-assistant-concepts/5.6 Pro/composer.css
-  - Concepts/chat-assistant-concepts/5.6 Pro/styles.css
 node_compile_hint:
   mode: assistant_responsive_specification
   create_worknodes: false
 source_lineage:
+  - "Concepts/chat-assistant-concepts/5.6 Pro/composer.css (concept reference; source-lineage-only)"
+  - "Concepts/chat-assistant-concepts/5.6 Pro/styles.css (concept reference; source-lineage-only)"
   - pm-assistant-implementation-2026-09-02-recovered:GUI-004
   - pm-assistant-implementation-2026-09-02-recovered:04_GUI_IMPACTS.md#18
   - pm-assistant-implementation-2026-09-02-recovered:AUTHORITY_AND_PRECEDENCE.md#6

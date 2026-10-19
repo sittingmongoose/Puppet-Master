@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L43400-L43493
+Source lines: L43332-L43425
 
-Source SHA256: `46e4f7e518b4eee59e453c5fc1fcf5e43e6c43f0db5648ab420f21f97a89a63b`
+Source SHA256: `353cd17386ea59cd0b4702e030f93dcf3fdbdd3d1e624414a26a8daf27af988a`
 
 ---
 
@@ -71,7 +71,7 @@ acceptance_criteria:
 validation_surfaces:
   - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
   - python3 scripts/pm-plan-index.py validate
-  - python3 Concepts/onboarding/opus-5.5/tools/build.py --check
+  - "Verify the existing F3-600 family-specific onboarding hero moments, first paint, look selection and reduced-motion acceptance."
 risk_class: nier_onboarding_tour_drift
 reasoning_tier: high
 context_scope: nier_onboarding_tour

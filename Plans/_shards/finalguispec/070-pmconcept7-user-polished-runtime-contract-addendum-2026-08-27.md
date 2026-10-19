@@ -2,15 +2,15 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L36025-L36504
+Source lines: L36007-L36480
 
-Source SHA256: `46e4f7e518b4eee59e453c5fc1fcf5e43e6c43f0db5648ab420f21f97a89a63b`
+Source SHA256: `353cd17386ea59cd0b4702e030f93dcf3fdbdd3d1e624414a26a8daf27af988a`
 
 ---
 
 ## PMConcept7 User-Polished Runtime Contract Addendum - 2026-08-27
 
-This addendum makes the recovered, source-owned PMConcept7 behavior canonical without treating the generated HTML or concept-only storage and command aliases as production authorities. It covers the complete application surface, not Usage alone, and delegates data, command, storage, event, and testing ownership to their existing canonical owners.
+This addendum makes the recovered PMConcept7 behavior canonical without treating the concept page or concept-only storage and command aliases as production authorities. It covers the complete application surface, not Usage alone, and delegates data, command, storage, event, and testing ownership to their existing canonical owners.
 
 Final successor evidence is report-owned. When `audit_report.json` records `status = pass_with_named_residuals`
 and `verdict = successor_scope_verified_with_named_residuals`, the `evidence_ref` entries below prove only their
@@ -33,18 +33,18 @@ owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
   The user-polished PMConcept7 is the visual and interaction authority for the recovered concept across the
   global shell, title bar, primary pages, side panels, Cozy Shelves, Home workspace, Dashboard, Usage,
-  shared Assistant and Context surfaces, bottom/status surfaces, menus, hover states, and motion. The current
-  pinned PM7 base plus source-owned T33-T43 transforms owns the current build path; generated PMConcept7.html
-  is a product and comparison input, never the sole authored source or product canon. The eight built-in themes remain Basic Dark,
+  shared Assistant and Context surfaces, bottom/status surfaces, menus, hover states, and motion.
+  PMConcept7 is the appearance and interaction reference for these surfaces; canonical product
+  behavior and implementation authority remain with the Plans owners. The eight built-in themes remain Basic Dark,
   Basic Light, Friendly Dark, Friendly Light, Retro Dark, Retro Light, Glass Dark, and Glass Light, with the
   recovered family-specific typography, palette, shape, contrast, and motion behavior.
 gui_related: true
-gui_classification_reason: This unit establishes the complete user-visible PMConcept7 authority and source-owned build boundary.
+gui_classification_reason: This unit establishes the whole-application appearance and interaction reference and its boundary with canonical product owners.
 split_recommended: false
 depends_on: [F3-425, F3-426, F3-500]
 unblocks: [F3-514, F3-516, F3-517, ATS-037, ATS-038]
 acceptance_criteria:
-  - "A clean build from the pinned PM7 base through source-owned T33-T43 produces PMConcept7.html; repo-local audit-20260830-001 must record two-build byte equality and any residual before a successor-scope verdict, and no new required behavior may exist only as a hand edit in generated HTML."
+  - "Every required appearance and interaction is stated in its canonical owner and validated against the whole-application contract; a concept-only change is not product acceptance."
   - "All primary pages, shell chrome, global panels, Cozy Shelves, Home, Dashboard, Usage, Assistant/context, bottom panel, and status bar retain the recovered semantic and presentation contract."
   - "All eight theme families preserve their intended font, palette, shape, inactive-state contrast, first-paint background, and family-specific composition."
   - "Initial paint and transitions never expose white or blank controls until hover and never introduce black-screen or uniform-frame flashes."
@@ -58,21 +58,18 @@ reasoning_tier: high
 context_scope: pm7_whole_application_authority
 implementation_surfaces:
   - Plans/FinalGUISpec.md
-  - Concepts/pm7-tools/base/PM7-base.html
-  - Concepts/pm7-tools/build_pm7.py
-  - Concepts/PMConcept7.html
 node_compile_hint:
   mode: pm7_whole_application_contract_only
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
-  - "Concepts/pm7-tools/base/PM7-base.html (current pinned PM7 input; base_sha256=9dcde2a8862de0cdd28a0d540cb4976396ea0556e6ff15a5c9c8fc14bd121090)"
-  - Concepts/pm7-tools/build_pm7.py#T33-T43 (source-owned transforms)
+  - Concepts/pm7-tools/base/PM7-base.html (retired PM7 input; source-lineage-only)
+  - Concepts/pm7-tools/build_pm7.py (retired PM7 builder; source-lineage-only)
   - Concepts/PMConcept7.html (generated artifact; terminal bytes and hash are audit-owned)
   - Plans/.audits/audit-20260830-001-pmconcept7-live-resize-preview/audit_report.json (current repo-local successor audit status; verdict remains report-owned)
-preserved_exact_tokens: [T33, T34, T38, T39, T40, T41, Basic Dark, Basic Light, Friendly Dark, Friendly Light, Retro Dark, Retro Light, Glass Dark, Glass Light]
+preserved_exact_tokens: [Basic Dark, Basic Light, Friendly Dark, Friendly Light, Retro Dark, Retro Light, Glass Dark, Glass Light]
 negative_constraints:
-  - "Do not treat generated PMConcept7.html as an authored source."
+  - "Do not treat PMConcept7 as product canon or as an implementation source."
   - "Do not narrow the recovered authority to Usage-only behavior."
   - "Do not add accessibility bootstrap acceptance work; preserve already-useful keyboard behavior without expanding scope."
 owner_hints: [Plans/FinalGUISpec.md]
@@ -150,9 +147,9 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
-  - Concepts/pm7-tools/base/PM7-base.html (current pinned PM7 input; source-lineage-only)
-  - Concepts/pm7-tools/build_pm7.py#T33-T43 (source-owned transforms)
-  - Concepts/pm7-tools/widget_live_resize_preview_source.py (authored T43 Usage-only live resize-preview transform)
+  - Concepts/pm7-tools/base/PM7-base.html (retired PM7 input; source-lineage-only)
+  - Concepts/pm7-tools/build_pm7.py (retired PM7 builder; source-lineage-only)
+  - Concepts/pm7-tools/widget_live_resize_preview_source.py (retired concept resize-preview source; source-lineage-only)
   - Concepts/PMConcept7.html (generated artifact; terminal bytes and hash are audit-owned)
   - Plans/.audits/audit-20260829-001-pmconcept7-widget-followup/audit_report.json (current repo-local follow-up audit status; verdict remains report-owned)
   - Plans/usage-feature.md#uf-093---usage-rooms-disclosure-and-local-projection-state
@@ -243,9 +240,9 @@ node_compile_hint:
 source_lineage:
   - Plans/Commands_System.md#cs-068---pmconcept7-settled-interaction-command-reuse-and-local-preview-boundary
   - Plans/UI_Wiring_Rules.md#uiw-012---transactional-preview-commit-cancel-cleanup-and-shared-assistant-re-seating
-  - Concepts/pm7-tools/base/PM7-base.html (current pinned PM7 input; source-lineage-only)
-  - Concepts/pm7-tools/build_pm7.py#T33-T43 (source-owned transforms)
-  - Concepts/pm7-tools/widget_live_resize_preview_source.py (authored T43 Usage-only live resize-preview transform)
+  - Concepts/pm7-tools/base/PM7-base.html (retired PM7 input; source-lineage-only)
+  - Concepts/pm7-tools/build_pm7.py (retired PM7 builder; source-lineage-only)
+  - Concepts/pm7-tools/widget_live_resize_preview_source.py (retired concept resize-preview source; source-lineage-only)
   - Plans/.audits/audit-20260829-001-pmconcept7-widget-followup/audit_report.json (current repo-local follow-up audit status; verdict remains report-owned)
   - Plans/Decision_Log.md#DL-186
   - Plans/Decision_Log.md#DL-188
@@ -311,8 +308,8 @@ node_compile_hint:
   create_nodeseeds: false
 source_lineage:
   - Plans/assistant-chat-design.md#acd-448---one-shared-assistant-seat-and-coherent-context-ring-detail-contract
-  - Concepts/pm7-tools/base/PM7-base.html (current pinned PM7 input; source-lineage-only)
-  - Concepts/pm7-tools/build_pm7.py#T33-T43 (source-owned transforms)
+  - Concepts/pm7-tools/base/PM7-base.html (retired PM7 input; source-lineage-only)
+  - Concepts/pm7-tools/build_pm7.py (retired PM7 builder; source-lineage-only)
   - Concepts/PMConcept7.html (generated artifact; terminal bytes and hash are audit-owned)
   - Plans/.audits/audit-20260829-001-pmconcept7-widget-followup/audit_report.json (current repo-local follow-up audit status; verdict remains report-owned)
 preserved_exact_tokens: [Compact Now, More Details, Curated, Raw, cmd.chat.compact_context, context.compaction.started, context.compaction.completed, context.compaction.failed]
@@ -387,19 +384,16 @@ reasoning_tier: high
 context_scope: pm7_shell_home_dashboard_panels_themes_motion
 implementation_surfaces:
   - Plans/FinalGUISpec.md
-  - Concepts/pm7-tools/base/PM7-base.html
-  - Concepts/pm7-tools/build_pm7.py
-  - Concepts/pm7-tools/home_workspace_source.py
   - tests/fixtures/pm7_shared
 node_compile_hint:
   mode: pm7_cross_surface_compatibility_contract_only
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
-  - Concepts/pm7-tools/base/PM7-base.html (current pinned PM7 input; source-lineage-only)
-  - Concepts/pm7-tools/build_pm7.py#T33-T43 (source-owned transforms)
-  - Concepts/pm7-tools/widget_live_resize_preview_source.py (authored T43 Usage-only live resize-preview transform; Dashboard behavior unchanged)
-  - Concepts/pm7-tools/home_workspace_source.py (authored Home owner projection; Browser Preview and Automation inactive-state repair)
+  - Concepts/pm7-tools/base/PM7-base.html (retired PM7 input; source-lineage-only)
+  - Concepts/pm7-tools/build_pm7.py (retired PM7 builder; source-lineage-only)
+  - Concepts/pm7-tools/widget_live_resize_preview_source.py (retired concept resize-preview source; source-lineage-only)
+  - Concepts/pm7-tools/home_workspace_source.py (historical Home projection; source-lineage-only)
   - Concepts/PMConcept7.html (generated artifact; terminal bytes and hash are audit-owned)
   - Plans/.audits/audit-20260829-001-pmconcept7-widget-followup/audit_report.json (current repo-local follow-up audit status; verdict remains report-owned)
   - Plans/Decision_Log.md#DL-186
@@ -431,9 +425,9 @@ canonical_text: >-
   for their owned slices. Every fixture names its owner PlanUnits, source lineage, positive assertions, negative
   assertions, and intended visual or interaction surface. Fixture presence and `must`/`must_not` lists establish
   static representation only and never prove runtime, visual, motion, or migration behavior; those require fresh
-  browser execution, raw receipts, and independent review. Final certification combines deterministic build
-  proof, machine-readable geometry and state assertions, actual-pixel review, and frame-by-frame motion review.
-  The widget interaction slice binds the exact generated artifact hash and covers repeated right-edge (primary),
+  browser execution, raw receipts, and independent review. Final certification combines
+  machine-readable geometry and state assertions, actual-pixel review, and frame-by-frame motion review.
+  The widget interaction evidence identifies the reviewed artifact by hash and covers repeated right-edge (primary),
   left-edge, and middle pointer/keyboard resize settlement plus pointer-only live occupied-peer preview repack with accepted-settlement parity
   up to settle-time gravity: the accepted layout equals the last-painted preview exactly except that the Usage board
   gravity of WS-019 (DL-176) slides shown cards other than the active one up into space freed above them, committed
@@ -453,7 +447,7 @@ acceptance_criteria:
   - "The canonical Usage and shared PM7 fixture trees exist in the repository and concept demo reports are not used as substitutes for them."
   - "Every fixture records stable identity, owner PlanUnits, source lineage, affected surfaces, must assertions, and must-not assertions."
   - "Fixture files and their must/must_not lists grant static representation only and do not prove runtime, visual, motion, or migration behavior; visual certification requires fresh browser execution, raw receipts, screenshots/contact sheets, and independent actual-pixel review in addition to DOM, state, and geometry assertions."
-  - "Motion certification requires fresh frame-sequence capture, raw receipts, and independent review for drag, resize, reorder, reflow, page, menu, drawer, hover, context, and tab movement rather than sampling only the final frame; widget interaction evidence binds one exact generated artifact and includes primary far-right plus far-left/middle horizontal pointer and keyboard resize, Usage occupied-peer displacement during held pointer preview, preview-to-accepted-settlement topology parity up to settle-time gravity (the accepted layout equals the last-painted layout with only the Usage board gravity of WS-019 applied at settle), the same live resize displacement on dashboard boards (amended 2026-10-10, DL-186: Dashboard-frozen resize peers are retired, F3-517), direct control acquisition, exact command/receipt/event/write counts, preview node/opacity/animation/child-list continuity, cancellation/no-op cleanup, and decoded frame review for black or empty intervals."
+  - "Motion certification requires fresh frame-sequence capture, raw receipts, and independent review for drag, resize, reorder, reflow, page, menu, drawer, hover, context, and tab movement rather than sampling only the final frame; widget interaction evidence identifies the reviewed artifact by hash and includes primary far-right plus far-left/middle horizontal pointer and keyboard resize, Usage occupied-peer displacement during held pointer preview, preview-to-accepted-settlement topology parity up to settle-time gravity (the accepted layout equals the last-painted layout with only the Usage board gravity of WS-019 applied at settle), the same live resize displacement on dashboard boards (amended 2026-10-10, DL-186: Dashboard-frozen resize peers are retired, F3-517), direct control acquisition, exact command/receipt/event/write counts, preview node/opacity/animation/child-list continuity, cancellation/no-op cleanup, and decoded frame review for black or empty intervals."
   - "No accessibility acceptance expansion, WorkNode, NodeSeed, executable queue, implementation task, or production code is created by this evidence contract."
 validation_surfaces:
   - "python3 scripts/pm-plan-index.py validate"
@@ -472,9 +466,9 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
-  - Concepts/pm7-tools/base/PM7-base.html (current pinned PM7 input; source-lineage-only)
-  - Concepts/pm7-tools/build_pm7.py#T33-T43 (source-owned transforms)
-  - Concepts/pm7-tools/widget_live_resize_preview_source.py (authored T43 Usage-only live resize-preview transform)
+  - Concepts/pm7-tools/base/PM7-base.html (retired PM7 input; source-lineage-only)
+  - Concepts/pm7-tools/build_pm7.py (retired PM7 builder; source-lineage-only)
+  - Concepts/pm7-tools/widget_live_resize_preview_source.py (retired concept resize-preview source; source-lineage-only)
   - Concepts/PMConcept7.html (generated artifact; terminal bytes and hash are audit-owned)
   - Plans/.audits/audit-20260829-001-pmconcept7-widget-followup/audit_report.json (current repo-local follow-up audit status; verdict remains report-owned)
   - Plans/Automated_Testing_System.md

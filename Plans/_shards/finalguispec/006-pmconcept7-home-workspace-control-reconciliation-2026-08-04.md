@@ -4,7 +4,7 @@ Source: `Plans/FinalGUISpec.md`
 
 Source lines: L276-L1406
 
-Source SHA256: `46e4f7e518b4eee59e453c5fc1fcf5e43e6c43f0db5648ab420f21f97a89a63b`
+Source SHA256: `353cd17386ea59cd0b4702e030f93dcf3fdbdd3d1e624414a26a8daf27af988a`
 
 ---
 
@@ -643,12 +643,12 @@ acceptance_criteria:
 - "No row opens a numbered panel or collapses a bottom terminal; collapsing is per panel (F3-630) (amended 2026-10-09, DL-180)."
 - "Restore home layout is dual-surface: the title-bar row and the Settings row general.startup.reset-home-layout both dispatch cmd.workspace_layout.reset, keep every open tab, and mint no new command ID; the concept demo's post-reset page reload is demo behavior only."
 validation_surfaces:
-- node Concepts/pm7-tools/verify/home_workspace_matrix.mjs
-- python3 Concepts/pm7-tools/build_pm7.py
+- "Verify the title-bar and Settings Restore home layout routes dispatch cmd.workspace_layout.reset and retain all open tabs, under F3-502 and the current Home layout owner."
+- "Cases written for the retired four-panel Home model do not prove this row; replacement executable cases are owed (ATS-075/076)."
 risk_class: home_menu_regression
 reasoning_tier: standard
 context_scope: pmconcept7_home_menu
-implementation_surfaces: [Plans/FinalGUISpec.md, Concepts/pm7-tools/home_workspace_source.py, Concepts/pm7-tools/build_pm7.py]
+implementation_surfaces: [Plans/FinalGUISpec.md]
 node_compile_hint:
   mode: compact_home_menu
   create_worknodes: false
@@ -814,11 +814,12 @@ acceptance_criteria:
 - "Host scrollbars occupy zero space on every engine (scrollbar-width none plus a zero-size ::-webkit-scrollbar), and the centre never scrolls sideways at any width; the below-1320 px overflow-x exception is retired (amended 2026-10-09, DL-180; F3-636)."
 - "Panels and tabs move with this transaction: nothing dispatches during a drag, a changed release commits one command, and every cancel path restores the exact earlier layout (F3-630)."
 validation_surfaces:
-- node Concepts/pm7-tools/verify/home_workspace_matrix.mjs
+- "Verify transactional panel/tab gestures: no dispatch during preview, one changed-release command, exact cancel restoration, stable identity and reduced-motion behavior."
+- "Cases written for the retired four-panel Home model do not prove this row; replacement executable cases are owed (ATS-075/076)."
 risk_class: home_gesture_regression
 reasoning_tier: standard
 context_scope: pmconcept7_home_gestures
-implementation_surfaces: [Plans/FinalGUISpec.md, Concepts/pm7-tools/home_workspace_source.py]
+implementation_surfaces: [Plans/FinalGUISpec.md]
 node_compile_hint:
   mode: home_gesture_transaction
   create_worknodes: false
@@ -885,7 +886,8 @@ acceptance_criteria:
 - "In the desktop app Pop out opens the one chat in its own window and Dock back returns it to its column; no panel or tab floats (amended 2026-10-09, DL-180; F3-637)."
 - "The web client shows no Pop out for the chat, and the chat stays in its column (amended 2026-10-10, lead ruling L6; F3-637)."
 validation_surfaces:
-- node Concepts/pm7-tools/verify/home_workspace_matrix.mjs
+- "Verify the native pop-out and web-client boundaries of F3-504/F3-637, including one chat instance and no web-client Chat Pop out."
+- "Cases written for the retired four-panel Home model do not prove this row; replacement executable cases are owed (ATS-075/076)."
 - python3 scripts/pm-plan-index.py validate
 risk_class: home_platform_claim_drift
 reasoning_tier: standard
@@ -1018,7 +1020,7 @@ canonical_text: >-
   darker backdrop; a corner exposing a same-tone backdrop reads as no corner
   (user-reported: the radius was applying at 18 px yet invisible). Strip heights
   re-tune with this dated disposition: editor 40 to 35 px and dashboard 36 to 31 px
-  (--ed-strip-h, --pm6-editor-tabs-h, --pm6-dash-head-h; the T20 resizer column top
+  (--ed-strip-h, --pm6-editor-tabs-h, --pm6-dash-head-h; the resizer column top
   follows 44 to 39 px), with the minimap/code alignment verified intact under the
   new tokens. Sixth follow-up (2026-08-14, both found by watched inspection): the
   fourth follow-up's animated border-radius canvas corner is RETIRED with cause -
@@ -1070,12 +1072,9 @@ canonical_text: >-
   [data-theme^="glass"] .editor-tabs.ed-shape-on:has(.tab.dragging) .ed-tab-shape
   { opacity: .92; } - slightly see-through but never legible, honouring the user's
   "like a blur" request. It is deliberately NOT a backdrop blur: glass panes run one
-  blur per pane by budget, and the build's T16 backdrop-filter count pin stays at 134.
+  blur per pane by budget.
   The steady-state plate remains fully opaque in all eight themes; measured live at
-  .92 mid-drag in glass-dark and 1 at idle. Build-pin lesson recorded here because it
-  bit this wave: T16 is a RAW SUBSTRING COUNT over the whole assembled document, so a
-  CSS COMMENT that merely spells the property name trips it - the comment was reworded
-  and the count returned to 134.
+  .92 mid-drag in glass-dark and 1 at idle.
   Amended 2026-10-09 (DL-180): this silhouette becomes the one tab silhouette of every panel and every tab kind; F3-631
   consumes it and F3-647 draws it in each look. The strip is 35 px in every panel with 31 px tabs whose plate overlaps
   the body by 1 px, 8 px apart (Retro 2 px); contact is measured to the neighbour's content inset by 8 px within the 20
@@ -1100,14 +1099,15 @@ acceptance_criteria:
 - "The editor minimap is the only code-pane scrollbar; native scrollbars are suppressed and the minimap band aligns with the frosted rail via margin, not padding."
 - "Dragging tracks the pointer one-to-one with corner values derived in the same frame; selection by click, snap or keyboard produces the identical transition."
 - "Any silhouette sync taken while the strip contains a dragging tab snaps in the same frame rather than springing, including the sync caused by grabbing a non-active tab, and sub-pixel pointer moves never preserve an in-flight spring during a drag; selection springs are unaffected (wave 8, 2026-08-15)."
-- "Glass themes render the travelling plate at .92 opacity while a drag is live and fully opaque at rest, achieved without any backdrop-filter so the one-blur-per-pane budget and the T16 count of 134 are preserved (wave 8, 2026-08-15)."
+- "Glass themes render the travelling plate at .92 opacity while a drag is live and fully opaque at rest, achieved without any backdrop-filter so the one-blur-per-pane budget is preserved (wave 8, 2026-08-15)."
 - "No dark pinhole at a join, no one-frame square or round pop at the start or end of a transition, and no shrinking circular dimple near a collision boundary."
 - "Resizing the window or changing tab widths recomputes stable target bounds; reduced motion snaps without spring travel."
 - "The rail band ghosts scrolled content beneath it in non-glass themes (pixels change when the code canvas scrolls under the strip); glass themes composite by alpha without blur per their documented budget; the active tab and canvas keep the shared opaque fill so the join stays seamless."
 - "The silhouette never renders half-dressed: chrome classes apply only after a successful measure, so --ed-shape-x/--ed-shape-w are never stuck at zero while the strip is in the shape-on state, and the shape layer mounts as the strip's last child without contending for slot 0."
 - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
 validation_surfaces:
-- node Concepts/pm7-tools/verify/home_workspace_matrix.mjs
+- "Verify the contact-aware tab silhouette, drag tracking, join geometry, opacity and reduced-motion behavior against F3-505 and F3-631."
+- "Cases written for the retired four-panel Home model do not prove this row; replacement executable cases are owed (ATS-075/076)."
 - python3 scripts/pm-plan-index.py validate
 risk_class: finalgui_drift
 reasoning_tier: standard
