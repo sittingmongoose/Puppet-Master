@@ -5,6 +5,11 @@ profiler, CSS tracking, or coverage navigation wrappers. Keep one union per page
 Run harnesses writing the same file serially; independent processes should write
 separate files, then merge with the exported `mergeCoverage(base, sample)`.
 
+The external matrix harness retains its original Playwright dependency path when
+`PM7_PLAYWRIGHT` is unset; that variable is an optional override. The correction
+to its evidence-folder copy is retained in
+`reports/pm7-coverage-fix-20261019/matrix-default.patch`.
+
 The switch is supported by `scenarios.mjs`, `draft_matrix.mjs`,
 `onboarding_explorer.mjs`, `state_shots.mjs`, `shots.mjs`, `boot_check.mjs`,
 `hover14.mjs`, `settings_nopills_accept.mjs`, `pill_check.mjs`,
