@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L36482-L37273
+Source lines: L36482-L37275
 
-Source SHA256: `353cd17386ea59cd0b4702e030f93dcf3fdbdd3d1e624414a26a8daf27af988a`
+Source SHA256: `19a5140c9ac50707b8a19f21fa6c0e9dea1782c4371fa229ef5eb9c31e50d9b2`
 
 ---
 
@@ -23,10 +23,12 @@ The following predecessor clauses remain historical lineage, not current behavio
   remains current.
 - F3-409's provider-first onboarding choreography is superseded; its Free Models requested/effective override and
   truthful availability presentation remain current outside the simple default onboarding path.
-- F3-513 remains the whole-application reference; the Settings/Doctor, Product Onboarding/Guided Tour,
-  system-consumer, hover-tag and Home presentation below refines those surfaces. The assistant-settings
-  and Settings manager presentation (USER-SETTINGS-MANAGER-REFRESH-20260908) extends that scope.
-  Home exposes the setup-wizard return route under the current onboarding owner.
+- F3-513's former build-tail scope for these surfaces is predecessor lineage; F3-513 remains the whole-application
+  reference; the Settings/Doctor, Product Onboarding/Guided Tour, system-consumer, hover-tag and Home presentation
+  below refines those surfaces. The assistant-settings and Settings manager presentation
+  (USER-SETTINGS-MANAGER-REFRESH-20260908) extends that scope for the Settings manager surfaces; the earlier
+  Settings/Doctor presentation is its predecessor lineage there. Home's bounded refresh exposes the setup-wizard
+  return route under the current onboarding owner.
 - F3-517's prohibition on Settings changes does not apply to this user-authorized Settings/Doctor port. Its rule
   against theme overlays changing functional identity remains current.
 - F3-518's no-accessibility-expansion clause is superseded for Settings, Doctor, Product Onboarding, Guided Tour, system-consumer and hover-tag surfaces. The broader bootstrap
