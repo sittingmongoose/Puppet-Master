@@ -22,7 +22,7 @@ No owner prose, certification harness, receipt field outside those two `source_h
 | PM7 stream C Plans cleanup | Landed through `203ff50040`, follow-up `10b644d389` | Includes the current snapshot and baseline; not a governance reseal. |
 | F-plans, branch `plans/pm7-purge-followups-20261019` | Candidate `46256f42bd` approved by Astra r2 and Opus r1; landing and snapshot/baseline follow-up in progress per lead mail `1019064852-0674`. Main receipt pending. | Liquid Glass off-switch retirement; UCC-152/CS-074 counts; SSYS-035; Touch re-anchor and new `touch_closure_action_sources.json`. Confirm final main/follow-up ancestry. |
 | DL-188 payload-pin drift | **Adjudicated for bounded Phase 2 refresh** | Stop mail `1019051623-f40e`; lead approval `1019051652-b067`. Dry-run now; apply only after GO against a fresh receipt-backup hash. |
-| Opus xhigh and Astra max plan reviews | Astra r1 **OK**, 0 FIX / 1 LOW; LOW addressed. Opus r1 **FIX**, 1 FIX / 4 LOWs, addressed for capped cycle 2 below. | Lead mail `1019065139-5614` requests the revision and Astra re-check. No third review cycle; unresolved required items go to the lead. |
+| Opus xhigh and Astra max plan reviews | Opus r2 **OK**, 0 FIX / 3 LOWs; LOWs addressed. Astra r2 **FIX**, one recorder-command correction, addressed below for the lead's diff check. | Lead mails `1019070730-b6e3` and `1019070902-1e67` request these final changes. Two-cycle cap reached; no third formal review. GO remains explicit. |
 | Explicit lead authorization | Not received | Read and preserve the exact `GO Phase 2` mail id. |
 
 Concepts-only A/B landings may occur during or after this work. Inspect every intervening landing: any `Plans/` path or governed `scripts/` input requires re-inventory. The governed set includes all Spec Lock paths, receipt source dependencies (including required-but-unpinned paths), the currentness inventory and validator, and every generator/validator used by this reseal or its landing checks. In particular, `scripts/pm-implementation-readiness.py`, `scripts/pm_pnc019_currentness.py`, the certification-harness source (read only), and F-plans' `scripts/pm-touch-closure-verify.py` require adjudication. The stream B lookup-only `scripts/pm7-where.py` is outside these bindings and does not add a governance hash. Recompute on the frozen main after GO and release the landing lock if a governed input changed and requires rebuilding.
@@ -142,13 +142,13 @@ The first audit-governance attempt contained `validator_no_output` on readiness 
 
 ### Fresh helper custody
 
-Fresh helpers are external files under `/mnt/Cursor/share/puppet-master/2026-10-19-reseal/`; no earlier dated helper is executed. Current `HELPERS.SHA256SUMS` SHA-256 `4596dbbb6d5c358cb5390370e1c629d65db0c9a1d63b2944042b6622e4c0ae8f` binds nine delivered helpers after the Astra attestation note, Opus checkpoint-record/refusal revision, and read-only completeness guard. The original eight helpers and original manifest remain immutable under `phase1/helpers-phase1/`. Phase 1 required tests are in `/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261019/phase1/helper-tests.json`, SHA-256 `d985480b9f03aa437ad7d935220e19e94d8b7d2c9132d4cd40fbe23af4a97d51`. The four writer commands returned 0, and the original 15-file scratch manifest was restored. A separate negative check returned the expected rejection for attempted shared access with the Phase 1 config. Receipt, decision and attestation helpers ran only in dry-run/preview mode. `admission-pins.out` is the additional canonical-JSON admission check above.
+Fresh helpers are external files under `/mnt/Cursor/share/puppet-master/2026-10-19-reseal/`; no earlier dated helper is executed. Current `HELPERS.SHA256SUMS` SHA-256 `96a1fe47626dabfbe5371f778be1ffe8fb0566e52d5de3249ea9fdfbd09df16e` binds nine delivered helpers after the final `PENDING` refusal alignment. The original eight helpers and original manifest remain immutable under `phase1/helpers-phase1/`. Phase 1 required tests are in `/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261019/phase1/helper-tests.json`, SHA-256 `d985480b9f03aa437ad7d935220e19e94d8b7d2c9132d4cd40fbe23af4a97d51`. The four writer commands returned 0, and the original 15-file scratch manifest was restored. A separate negative check returned the expected rejection for attempted shared access with the Phase 1 config. Receipt, decision and attestation helpers ran only in dry-run/preview mode. `admission-pins.out` is the additional canonical-JSON admission check above.
 
 | Helper | SHA-256 |
 |---|---|
 | `in-place-write.py` | `d204642cd8499ab007febaf6cfb259eb7e2129ef3a92eec7622e667423f2d4c1` |
 | `decision-row.py` | `2786a3d3b674b950c3ea9fda7d7fb853639c33de02e448435917fd124d49848f` |
-| `attestation.py` | `62f1b5585cdfe255fde31c07525d89a5ef04f5890eab6da1f35aaf3bc41d5fff` |
+| `attestation.py` | `96e800637a001fb6d8c9a6afcb0b0a8677079c5aa34be53a98325b09b3a02e69` |
 | `refresh-dl188-checkpoint-pins.py` | `b7e6da75c5618867c36d55e22af8ee71cc5fa34c536252824f0ef015018587c2` |
 | `reject-incomplete-checks.py` | `ca58c26a0c596d416dd9d9e606173b3c156f8100abb4323a76983e49eb3a6022` |
 
@@ -369,6 +369,9 @@ phase: <single-line milestone>
 ```
 
 ```bash
+test -d "$RESEAL_TMPDIR" -a -w "$RESEAL_TMPDIR"
+TMPDIR="$RESEAL_TMPDIR" python3 -c 'import json,os,shutil,tempfile; from pathlib import Path; free=shutil.disk_usage("/").free; assert free >= 6*2**30, "Less than 6 GiB free on /"; assert Path(tempfile.gettempdir()).resolve()==Path(os.environ["TMPDIR"]).resolve(), "TMPDIR fallback"; print(json.dumps({"free_bytes_on_root":free,"minimum_free_bytes":6*2**30,"TMPDIR":os.environ["TMPDIR"],"tempfile_directory":tempfile.gettempdir()}))' \
+  > "$RESEAL_EVIDENCE/landing/temp-space-guard-at-lock.json"
 TMPDIR="$RESEAL_TMPDIR" df -h / > "$RESEAL_EVIDENCE/landing/free-space-at-lock.out"
 TMPDIR="$RESEAL_TMPDIR" python3 scripts/pm-landing-check.py --base origin/main \
   --readiness-audit-root /mnt/Cursor/PuppetMaster/Plans/.audits/event-authority-2026-08-13-currentness \
@@ -403,12 +406,13 @@ TMPDIR="$RESEAL_TMPDIR" python3 scripts/pm-plan-migration.py snapshot-current \
   --supersedes-run-id "$RESEAL_SUPERSEDED_RUN_ID"
 TMPDIR="$RESEAL_TMPDIR" python3 scripts/pm-landing-check.py --record-baseline \
   --readiness-audit-root /mnt/Cursor/PuppetMaster/Plans/.audits/event-authority-2026-08-13-currentness \
-  --keep-check-reports "$RESEAL_EVIDENCE/landing/baseline-check-reports" --json \
-  > "$RESEAL_EVIDENCE/landing/record-baseline.json"
+  --keep-check-reports "$RESEAL_EVIDENCE/landing/baseline-check-reports" \
+  > "$RESEAL_EVIDENCE/landing/record-baseline.out"
 TMPDIR="$RESEAL_TMPDIR" python3 "$RESEAL_NOTES/reject-incomplete-checks.py" \
-  reports/landing-checks/baseline.json "$RESEAL_EVIDENCE/landing/record-baseline.json" \
-  "$RESEAL_EVIDENCE/landing/baseline-check-reports"
+  reports/landing-checks/baseline.json "$RESEAL_EVIDENCE/landing/baseline-check-reports"
 ```
+
+`--record-baseline` writes actual JSON to `reports/landing-checks/baseline.json` and prints a text summary to stdout before handling `--json`; its stdout is therefore retained and hashed as `record-baseline.out`, never passed to the JSON guard. The guard still scans the actual baseline and every JSON report/export in the retained directory and still rejects malformed JSON or `validator_no_output`.
 
 After the explicit-path follow-up commit, branch push, shared fetch, overlap check, fast-forward and shard check, run in the shared checkout:
 
@@ -422,6 +426,8 @@ TMPDIR="$RESEAL_TMPDIR" python3 "$RESEAL_NOTES/reject-incomplete-checks.py" \
 ```
 
 Hash all 15 installed inputs before/after baseline recording and after the final comparison. Require stable bytes and empty `new`, `grown_buckets` and `resolved_buckets` before the second push. A timeout is rerun with `--subcheck-timeout-seconds 1200`; an incomplete recording is never committed. Save installed hashes to `phase2/landing/currentness-installed.SHA256SUMS`. The follow-up's `post_push_followup` and completed-landing section bind the first verdict, shared validation, installed manifest and recording by path and SHA-256. The later final comparison is preserved externally and bound in the final share completion receipt. Do not create a recursive commit-and-recheck loop solely to insert a commit's own later check.
+
+**Export coverage:** after each landing comparison and the baseline recording, save and compare the keyed-from-export list (including `compared_with_baseline_exports` where rows are now fully printed) and the baseline `export_buckets` count against the previous baseline. The count is 32 at the initial reviewed main; read the then-current baseline at execution, not this dated count. Any dropped key or reduced bucket count triggers a rerun of the affected check/recording and inspection of its retained complete reports. Record a reconciliation: validators whose findings cleared or became fully printed can legitimately need fewer export buckets, but an unavailable/unwritten export cannot be treated as resolved work. Require complete row-level proof for every expected reduction; an unexplained coverage drop stops the push or baseline commit. Preserve these old/new lists, counts, rerun outputs and reconciliation in execution evidence.
 
 ## Risks and stop conditions
 
@@ -459,3 +465,15 @@ Opus cycle 1 reviewed `edec74818e`: `/mnt/Cursor/share/puppet-master/2026-10-18-
 5. **LOW 4 — variable sources and publication:** every runtime variable's source/assignment point is explicit, with literal assignments where inputs exist. Step 8 and follow-up pushes name the fresh `plans/governance-reseal-20261019-execution` ref.
 
 Targeted verification: `/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261019/revisions/opus-r1/verification.json`, SHA-256 `0694c3e16e2f369c74c8b294d73903f48930a7a8d5533129a4ff0a5ca8fa7206`. Revision manifest `SHA256SUMS` in that directory, SHA-256 `4bc7fd9bfe3781b6cf929027ddbaf2dafcf4717f0b3cea120db58ab0a3feca79`. Phase 1 governance/currentness bytes remain unchanged. No Phase 2 action has run; final review/landing receipts and explicit GO are still required.
+
+## Final capped-review follow-up
+
+Opus r2 is **OK**, zero FIX and three LOWs: `/mnt/Cursor/share/puppet-master/2026-10-18-pm7-purge/reviews/RESEAL-opus-r2.md`, SHA-256 `2541ef59caf5ef56f3b0efb06429268b777450a50a3cea73752d0ec56cb19fb7`. Lead mail `1019070730-b6e3` requests taking all three without another review cycle. Addressed:
+
+- Lock-time literal commands now test that `RESEAL_TMPDIR` exists and is writable, assert at least 6 GiB free on `/`, and assert Python's selected temp directory resolves to the configured directory. Their measured output is retained. This closes Python's silent fallback to `/tmp` when a temp directory is missing.
+- `attestation.py --apply` now rejects `PENDING`, matching the other apply helpers. The negative probe exits 1 for that reason, creates no attestation, and the read-only preview still passes. Proof manifest: `/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261019/revisions/opus-r2/SHA256SUMS`, SHA-256 `fcefcec7937549fb2c571c24d646f9d05ede81e5319afa4b616717bcac6a7024`.
+- Each landing comparison and baseline recording now captures and compares export-key coverage and export-bucket counts with the prior baseline, reruns on a drop, and records row-resolution evidence for legitimate reductions. Missing exports or unexplained loss stop progress; a stale bucket clearing is not silently confused with missing evidence.
+
+Astra r2 found one **FIX** in the newly added guard invocation: `/mnt/Cursor/share/puppet-master/2026-10-18-pm7-purge/reviews/RESEAL-astra-r2.md`, SHA-256 `e0b1c2f71fe431b37dd3a65b9d260720a33093a1d17302612c23c50534f6f4ab`. The recorder's stdout is text, even with `--json`; it is now saved as `record-baseline.out` and excluded from JSON guard inputs. The actual baseline and all retained JSON reports remain guarded. Malformed JSON and `validator_no_output` rejection stay intact. Lead mail `1019070902-1e67` requests this correction and the control reruns, with a direct lead diff check and no third formal review.
+
+Controls reran successfully: complete current reports pass; the real quota failure and injected baseline row fail; the 2026-10-16 baseline and its full retained JSON reports pass; the historical text recorder stdout is correctly rejected as JSON. Proof `/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261019/revisions/astra-r2/verification.json`, SHA-256 `e7be8ee1c1f540756b05b3b084c15880e83f78d2aac5207303331d02eaa59c19`; manifest `SHA256SUMS` there, SHA-256 `9d827bcb31bfe4b48cc6d526d930286e9814551c8c679b2a7a898a652ffbf614`. Only the plan and external helpers/proofs changed; no governance refresh or Phase 2 action has occurred. Await the lead's final diff check, F-plans follow-up receipt, and explicit GO.
