@@ -3,8 +3,8 @@ html[data-theme="basic-light"] { --pmg-ink-blocked: #c62828; --pmg-ink-attention
 html[data-theme="basic-dark"] { --pmg-ink-blocked: #ef5350; --pmg-ink-attention: #ffb74d; --pmg-ink-working: #64b5f6; --pmg-ink-changed: #b79cff; --pmg-ink-done: #3dd68c; --pmg-ink-paused: #959595; --pmg-ink-idle: #717887; }
 html[data-theme="friendly-light"] { --pmg-ink-blocked: #e6553a; --pmg-ink-attention: #aa811e; --pmg-ink-working: #348bb3; --pmg-ink-changed: #9678c9; --pmg-ink-done: #2a8f75; --pmg-ink-paused: #716979; --pmg-ink-idle: #8d8593; }
 html[data-theme="friendly-dark"] { --pmg-ink-blocked: #ff8a73; --pmg-ink-attention: #ffd97f; --pmg-ink-working: #6fc6e8; --pmg-ink-changed: #c3b1e4; --pmg-ink-done: #6fdabc; --pmg-ink-paused: #9c95aa; --pmg-ink-idle: #898393; }
-/* @pm7-lg-slot glyph-system/opus-5.5/src/bridge/pm7-glyph-inks/G0794.css */
-/* @pm7-lg-slot glyph-system/opus-5.5/src/bridge/pm7-glyph-inks/G0795.css */
+html[data-theme="glass-light"] { --pmg-ink-blocked: #a93548; --pmg-ink-attention: #82560a; --pmg-ink-working: #0060ad; --pmg-ink-changed: #6848c1; --pmg-ink-done: #066754; --pmg-ink-paused: #434f55; --pmg-ink-idle: #586164; }
+html[data-theme="glass-dark"] { --pmg-ink-blocked: #ff7893; --pmg-ink-attention: #ffd173; --pmg-ink-working: #64d9ff; --pmg-ink-changed: #b18cff; --pmg-ink-done: #68f2bd; --pmg-ink-paused: #9d91b4; --pmg-ink-idle: #7c728e; }
 html[data-theme="retro-light"] { --pmg-ink-blocked: #d32f2f; --pmg-ink-attention: #a65800; --pmg-ink-working: #0047ab; --pmg-ink-changed: #ff1493; --pmg-ink-done: #2f7a3d; --pmg-ink-paused: #6d6d6d; --pmg-ink-idle: #837e74; }
 html[data-theme="retro-dark"] { --pmg-ink-blocked: #e2694f; --pmg-ink-attention: #d8b93c; --pmg-ink-working: #9db4d0; --pmg-ink-changed: #c3a0d8; --pmg-ink-done: #86c46a; --pmg-ink-paused: #7f8e65; --pmg-ink-idle: #717a61; }
 html[data-o55-nier][data-theme="basic-light"] { --pmg-ink-blocked: #9e4534; --pmg-ink-attention: #5c5022; --pmg-ink-working: #211f1b; --pmg-ink-changed: #454138; --pmg-ink-done: #64662e; --pmg-ink-paused: #4d4b3f; --pmg-ink-idle: #5c5a4d; }
