@@ -141,11 +141,13 @@ async function configurePage(browser) {
     await page.send('Emulation.setFocusEmulationEnabled', { enabled: true });
     await page.send('Animation.enable'); await page.send('Animation.setPlaybackRate', { playbackRate: 0 });
     const interceptErrors = browser.interceptErrors = [];
+    const cancelledRequests = new Set();
     const requests = new Map(); browser.blocked = new Set(); browser.failedRequests = [];
     browser.currentUrl = parityDocumentUrl;
     page.on('Network.requestWillBeSent', e => requests.set(e.requestId, e.request.url));
     page.on('Network.loadingFinished', e => requests.delete(e.requestId));
     page.on('Network.loadingFailed', e => {
+      if (e.canceled) cancelledRequests.add(e.requestId);
       const url = requests.get(e.requestId); requests.delete(e.requestId);
       if (url && !url.startsWith('file:///__pm7_parity_asset__/')) browser.failedRequests.push({ url, error: e.errorText, blockedReason: e.blockedReason || null });
     });
@@ -162,7 +164,10 @@ async function configurePage(browser) {
         if (!uri.startsWith('file:///__pm7_parity_asset__/')) browser.blocked.add(uri);
         request = page.send('Fetch.failRequest', { requestId: event.requestId, errorReason: 'BlockedByClient' });
       }
-      request.catch(error => interceptErrors.push(String(error)));
+      request.catch(error => interceptErrors.push(browser.host ? JSON.stringify({ error: String(error),
+        url: uri.startsWith('data:') ? 'data:sha256:' + digest(uri) : uri, resourceType: event.resourceType,
+        networkId: event.networkId || null, cancelled: cancelledRequests.has(event.networkId),
+        syntheticAlias: uri.startsWith('file:///__pm7_parity_asset__/') }) : String(error)));
     });
     await page.send('Fetch.enable', { patterns: [{ urlPattern: '*' }] });
 }
