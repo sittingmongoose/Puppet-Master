@@ -1410,7 +1410,8 @@ provider-degradation paths the correction requires. Their `evidence_required` te
 
 The remaining twenty-four `CW-` rows have **no command identity**. Twenty-three describe
 owner-internal producers, projectors, and reducers; CW-046 is concept comparison lineage
-only (CONCEPT-017), with no runtime producer. All twenty-four stay out of this register.
+only (CONCEPT-017), with no runtime producer. All twenty-four stay out of this register
+for the same reason the sixteen view-local rows did.
 The product behaviour follows the same producer → handler → durable effect → consumer →
 failure shape in its owner documents:
 

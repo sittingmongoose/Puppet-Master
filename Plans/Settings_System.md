@@ -2223,6 +2223,7 @@ canonical_text: >-
   Under USER-SETTINGS-MANAGER-REFRESH-20260909 every manager-topic canonical setting appears once inside the manager
   and tab that own its topic, as an inline canonical section before that manager's one Advanced disclosure,
   with its Details inspector, search landing, All Settings entry, and change-refresh behaviour preserved.
+  The concept resolves placement by reference subgroup, then keyword override, then hand placement.
   Core settings stay on six plain pages; 10 of the 12 reference pages and the concept-only
   Assistant page retire because every row they held now has a manager home; the planning domain keeps its id
   with the label Planning. 674 inventory rows render inside managers, every one of the 891 live concept ids

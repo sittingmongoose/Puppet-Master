@@ -4727,7 +4727,7 @@
       ],
       "return_route": "Originating Settings/Testing route and focus.",
       "reverse_consumers": [
-        "Plans/Settings_System.md"
+        "Plans/Settings_System.md#SSYS-006"
       ],
       "event_refs": [
         "none_local_presentation_action"
@@ -4769,7 +4769,7 @@
       ],
       "return_route": "Originating Named Plan/Settings route and focus.",
       "reverse_consumers": [
-        "Plans/Settings_System.md"
+        "Plans/Settings_System.md#SSYS-006"
       ],
       "event_refs": [
         "none_local_presentation_action"
@@ -5213,6 +5213,7 @@
       "migration_refs": [],
       "test_refs": [
         "Plans/Widget_System.md#WS-019",
+        "Plans/shared_runtime_command_contract_fixtures.json",
         "Plans/Automated_Testing_System.md#ATS-075",
         "Plans/Automated_Testing_System.md#ATS-076",
         "scripts/pm-touch-closure-verify.py"
@@ -5263,7 +5264,7 @@
         "revision-checked settled layout state once"
       ],
       "migration_refs": [
-        "Plans/storage-plan.md#SP-330 (convert legacy v1 factory and customized layouts on first read; keep the original source read-only and never reset)"
+        "Plans/storage-plan.md#SP-330 (convert any v1 Home layout on first read through the conversion table; keep the original source read-only and never write, reset or delete it)"
       ],
       "test_refs": [
         "Plans/home_workspace_layout_v2_fixtures.json",
