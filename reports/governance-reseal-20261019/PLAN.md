@@ -22,10 +22,10 @@ No owner prose, certification harness, receipt field outside those two `source_h
 | PM7 stream C Plans cleanup | Landed through `203ff50040`, follow-up `10b644d389` | Includes the current snapshot and baseline; not a governance reseal. |
 | F-plans, branch `plans/pm7-purge-followups-20261019` | Candidate `46256f42bd` approved by Astra r2 and Opus r1; landing and snapshot/baseline follow-up in progress per lead mail `1019064852-0674`. Main receipt pending. | Liquid Glass off-switch retirement; UCC-152/CS-074 counts; SSYS-035; Touch re-anchor and new `touch_closure_action_sources.json`. Confirm final main/follow-up ancestry. |
 | DL-188 payload-pin drift | **Adjudicated for bounded Phase 2 refresh** | Stop mail `1019051623-f40e`; lead approval `1019051652-b067`. Dry-run now; apply only after GO against a fresh receipt-backup hash. |
-| Opus xhigh and Astra max plan reviews | Astra r1 **OK**, 0 FIX / 1 LOW; LOW addressed below. Opus running per lead mail `1019064852-0674`. | The later mail supersedes `1019054804-d5fc`'s expected 10:09Z start. Respond in at most two cycles. |
+| Opus xhigh and Astra max plan reviews | Astra r1 **OK**, 0 FIX / 1 LOW; LOW addressed. Opus r1 **FIX**, 1 FIX / 4 LOWs, addressed for capped cycle 2 below. | Lead mail `1019065139-5614` requests the revision and Astra re-check. No third review cycle; unresolved required items go to the lead. |
 | Explicit lead authorization | Not received | Read and preserve the exact `GO Phase 2` mail id. |
 
-Concepts-only A/B landings may occur during or after this work. Inspect every intervening landing: any `Plans/` path requires re-inventory. Recompute on the frozen main after GO and release the landing lock if a source-changing rebase requires rebuilding.
+Concepts-only A/B landings may occur during or after this work. Inspect every intervening landing: any `Plans/` path or governed `scripts/` input requires re-inventory. The governed set includes all Spec Lock paths, receipt source dependencies (including required-but-unpinned paths), the currentness inventory and validator, and every generator/validator used by this reseal or its landing checks. In particular, `scripts/pm-implementation-readiness.py`, `scripts/pm_pnc019_currentness.py`, the certification-harness source (read only), and F-plans' `scripts/pm-touch-closure-verify.py` require adjudication. The stream B lookup-only `scripts/pm7-where.py` is outside these bindings and does not add a governance hash. Recompute on the frozen main after GO and release the landing lock if a governed input changed and requires rebuilding.
 
 ## Previous seal and Plans landings since it
 
@@ -142,14 +142,15 @@ The first audit-governance attempt contained `validator_no_output` on readiness 
 
 ### Fresh helper custody
 
-Fresh helpers are external files under `/mnt/Cursor/share/puppet-master/2026-10-19-reseal/`; no earlier dated helper is executed. Current `HELPERS.SHA256SUMS` SHA-256 `815f88ee65557a8c781cc96fc2f117fdca4c03b3315712285d21d0111d751100` binds the delivered set after Astra's requested attestation-note revision. The original eight helpers and original manifest remain immutable under `phase1/helpers-phase1/`. Phase 1 required tests are in `/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261019/phase1/helper-tests.json`, SHA-256 `d985480b9f03aa437ad7d935220e19e94d8b7d2c9132d4cd40fbe23af4a97d51`. The four writer commands returned 0, and the original 15-file scratch manifest was restored. A separate negative check returned the expected rejection for attempted shared access with the Phase 1 config. Receipt, decision and attestation helpers ran only in dry-run/preview mode. `admission-pins.out` is the additional canonical-JSON admission check above.
+Fresh helpers are external files under `/mnt/Cursor/share/puppet-master/2026-10-19-reseal/`; no earlier dated helper is executed. Current `HELPERS.SHA256SUMS` SHA-256 `4596dbbb6d5c358cb5390370e1c629d65db0c9a1d63b2944042b6622e4c0ae8f` binds nine delivered helpers after the Astra attestation note, Opus checkpoint-record/refusal revision, and read-only completeness guard. The original eight helpers and original manifest remain immutable under `phase1/helpers-phase1/`. Phase 1 required tests are in `/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261019/phase1/helper-tests.json`, SHA-256 `d985480b9f03aa437ad7d935220e19e94d8b7d2c9132d4cd40fbe23af4a97d51`. The four writer commands returned 0, and the original 15-file scratch manifest was restored. A separate negative check returned the expected rejection for attempted shared access with the Phase 1 config. Receipt, decision and attestation helpers ran only in dry-run/preview mode. `admission-pins.out` is the additional canonical-JSON admission check above.
 
 | Helper | SHA-256 |
 |---|---|
 | `in-place-write.py` | `d204642cd8499ab007febaf6cfb259eb7e2129ef3a92eec7622e667423f2d4c1` |
 | `decision-row.py` | `2786a3d3b674b950c3ea9fda7d7fb853639c33de02e448435917fd124d49848f` |
 | `attestation.py` | `62f1b5585cdfe255fde31c07525d89a5ef04f5890eab6da1f35aaf3bc41d5fff` |
-| `refresh-dl188-checkpoint-pins.py` | `ef2e3924007f8f111975ea828fb329b695cc56781f6fe5ea1b0aec50c6b48043` |
+| `refresh-dl188-checkpoint-pins.py` | `b7e6da75c5618867c36d55e22af8ee71cc5fa34c536252824f0ef015018587c2` |
+| `reject-incomplete-checks.py` | `ca58c26a0c596d416dd9d9e606173b3c156f8100abb4323a76983e49eb3a6022` |
 
 The writer's Phase 1 candidate is deliberately synthetic: it copies the seven old generated files and changes only the scratch README to exercise replacement. It is neither a generated currentness edition nor eligible for shared installation. Phase 2 repeats the four tests against fresh real backup/final manifests before its branch push.
 
@@ -163,18 +164,43 @@ RESEAL_NOTES=/mnt/Cursor/share/puppet-master/2026-10-19-reseal
 RESEAL_BUNDLE=Plans/.evidence/pm7-usage-recovery-plan-sharding-2026-08-29
 RESEAL_RUN002=Plans/.plan_migration/pds-20260611-002-atomize-planunits
 RESEAL_CURRENTNESS=Plans/.audits/event-authority-2026-08-13-currentness
+RESEAL_EXECUTION_REF=plans/governance-reseal-20261019-execution
+RESEAL_TMPDIR=/home/sittingmongoose/pm-scratch/governance-reseal-20261019-tmp
+RESEAL_WRITER_CONFIG="$RESEAL_EVIDENCE/in-place-config.json"
+export TMPDIR="$RESEAL_TMPDIR"
+mkdir -p "$TMPDIR"
+# After GO is read/preserved and the fetched prerequisite ancestry is verified:
+RESEAL_MAIN_BASE=$(git rev-parse origin/main)
+RESEAL_GO_MAIL_ID=$(python3 -c 'import json,sys; print(json.load(open(sys.argv[1]))["mail_id"])' "$RESEAL_EVIDENCE/authorization/go.json")
 ```
 
 Every long command below runs in a detached process with an external log, stdout/stderr files, command metadata, and exit file. Check `pm-mail --as codex-reseal inbox` before each step. Detach computation with `start_new_session=True` or `nohup`/`setsid`; **never put `pm-mail wait` behind `&`**. Stage only explicit paths and keep the common co-author trailer on commits.
 
-1. **Provision, backup, measure, then pins.** Recopy the named ignored inputs physically. Back up Spec Lock, auto-decisions, node readiness, the certification receipt, the evidence tree, readiness directory, run 002, and all 15 shared currentness files. Save SHA-256 manifests. Run the same five before measurements as Phase 1, with `--subcheck-timeout-seconds 600` only on supported `pm-plans-verify.py` commands, never on `pm-plan-migration.py validate`. After GO, run the fresh DL-188 helper with `--apply --go-mail-id <actual-go> --expected-receipt-sha256 <fresh-backup-sha>`. Only its two allowlisted source hashes may differ from the backup. Verify every other field and historical result remains equal before generating currentness.
+Record `TMPDIR` in `phase2/environment.json`, each command's execution metadata, and `execution-evidence.json`. Every command runner explicitly passes this environment; the under-lock literal commands below also prefix it. Do not depend on an interactive shell retaining an export.
+
+| Variable | Source and point of assignment |
+|---|---|
+| `RESEAL_MAIN_BASE` | Full `git rev-parse origin/main` after the GO-time fetch and prerequisite ancestry checks. Freeze it in `phase2/state.json`; never substitute the report branch's HEAD. A governed-input advance requires a fresh preparation. |
+| `RESEAL_GO_MAIL_ID` | Exact preserved `GO Phase 2` mail id from `pm7-purge-lead`, after reading its body. `PENDING` is rejected by both apply helpers. Save the mail under `phase2/authorization/`; do not infer GO from reviews or landing notices. |
+| `RESEAL_RECEIPT_SHA` | SHA-256 of fresh `phase2/backup/pnc019_certification_receipt.json`, taken before apply; verify the live receipt equals that backup. Never derive this from an already-refreshed receipt. |
+| `RESEAL_CURRENT_RUN` | The `run_path` in the GO-time `Plans/.plan_migration/current_run.json`, read for the before/after validations. |
+| `RESEAL_WRITER_CONFIG` | First `phase2/in-place-config.json`, binding this run's old/final manifests and scratch directory for tests. After first-push verification, rebind to fresh `phase2/landing/in-place-write-config.json` with the actual pushed SHA, GO id and acquisition time. |
+| `RESEAL_WRITER_CONFIG_SHA` | SHA-256 of the exact config file named above, recomputed after landing rebind and before non-test check/write. Preserve both config editions and hashes. |
+| `RESEAL_NEXT_RUN_ID` | Next free `pds-<actual-UTC-execution-date>-NNN-current-planunit-snapshot` found under `Plans/.plan_migration/` at the first pushed main while the lock is held. Do not reserve an id in Phase 1. |
+| `RESEAL_DIRECT_MD_COUNT` | Count of existing direct `Plans/*.md` files at that same pushed main, immediately before `snapshot-current`. |
+| `RESEAL_SUPERSEDED_RUN_ID` | `run_id` from the same pushed main's current pointer, immediately before the snapshot. |
+| `RESEAL_EXECUTION_REF` | Fresh remote publication ref above; local branch/holder remain `plans/governance-reseal-20261019`. Both pre-landing and follow-up pushes use the explicit execution ref. |
+
+Use structured subprocess arguments and write these values into the execution state. Hash variables use SHA-256 of file bytes. The baseline recording must name the already-pushed main, never a later report or follow-up commit.
+
+1. **Provision, backup, measure, then pins.** Recopy the named ignored inputs physically. Back up Spec Lock, auto-decisions, node readiness, the certification receipt, the evidence tree, readiness directory, run 002, and all 15 shared currentness files. Save SHA-256 manifests. Run the same five before measurements as Phase 1, with `--subcheck-timeout-seconds 600` only on supported `pm-plans-verify.py` commands, never on `pm-plan-migration.py validate`. After GO, run the fresh DL-188 helper with `--apply --main-base <frozen-main> --go-mail-id <actual-go> --expected-receipt-sha256 <fresh-backup-sha>`. Only its two allowlisted source hashes may differ from the backup. Save the parsed output as `reports/governance-reseal-20261019/checkpoint-pin-verification.json`, including main base, GO id, helper SHA-256, active checkpoint and checkpoint-module SHA-256. Verify every other field and historical result remains equal before generating currentness.
 2. **First currentness edition.** Write `pm.external_evidence_locations.v1` mapping only logical currentness root to the shared old edition. Set `PM_EVIDENCE_MAP` only for `pm-event-authority-currentness.py generate --outdir <external-empty-edition-1>`. Copy the seven generated files into this worktree's ignored edition and validate there without a map. Preserve eight frozen files, the quarantine/group bytes, `UNKNOWN_OPEN`, and all four authority flags false.
 3. **Readiness and run 002.** Run index generate/validate, retain node readiness, restore other index JSON only after proving their sole difference is `generated_at_utc`, generate buildability once, and retain its bytes. Run the historical refresh pair in order, with `--seal-state preseal`, then validate. Do not repair the historical document inventory.
 4. **Evidence and graph.** Generate/check shards with `Plans/sharding_config.json` and reports in the live bundle; any changed shard body/path stops this reseal. Run `sync-plan-sharding-evidence`, then evidence refresh. Replace the three exact existing `commands_run` strings' stdout excerpts. Preserve historical `plan-shard-generate` text. Evidence and graph must validate without editing `Plans/plan_graph.json`.
 5. **Decision and Spec Lock.** Call this run's guarded `decision-row.py --apply` exactly once, validate auto-decisions, refresh existing Spec Lock entries without registration/schema flags, then verify all lock hashes. Preserve every non-hash lock field.
 6. **Final edition and node readiness.** Generate final currentness externally with the same one-root map; install locally and validate without a map. Confirm final inventory pins for Spec Lock, live evidence, and the bounded-refreshed receipt. Regenerate/validate node readiness; retain first-generation buildability. Prove its sole canonical difference is the node-readiness input hash, and report that cycle residual. Frozen custody is byte-identical; the receipt differs only at the two approved source-hash locations.
 7. **Writer test.** Rebind the fresh in-place helper to Phase 2 backups/final manifest. On a scratch copy only: `check --test`, `write --test`, `check --test`, `restore --test`. Expected editions are old, final, final, old; all 15 bytes match the original backup afterward. Record helper/config/output hashes. Repeat even though Phase 1 tests the algorithm independently.
-8. **Final checks and branch push.** Shards, index, Spec Lock, auto-decisions, evidence, graph, and currentness checks; run-gates, audit-governance, standalone readiness, run 002 and current-run validation. Compare complete before/after findings and rerun timed-out subchecks. Write reseal record, attestation, and execution evidence; commit only explicit changed governance/report paths, mode `100644`. Push the branch to both configured remotes. Remove this worktree's local currentness copy before landing; retain the other provisioned ignored inputs.
+8. **Final checks and branch push.** Shards, index, Spec Lock, auto-decisions, evidence, graph, and currentness checks; run-gates, audit-governance, standalone readiness, run 002 and current-run validation. Compare complete before/after findings and rerun timed-out or `validator_no_output` subchecks. Write reseal record, checkpoint-pin verification, attestation, and execution evidence; commit only explicit changed governance/report paths, mode `100644`. Publish with `git push origin "HEAD:refs/heads/$RESEAL_EXECUTION_REF"` to both configured push destinations: `plans/governance-reseal-20261019-execution`. Preserve the published Phase 1 review ref. Remove this worktree's local currentness copy before landing; retain the other provisioned ignored inputs.
 
 The literal command groups below implement those steps. Backup/copy/install operations verify the exact file sets and hashes described above. No `--write-report`, `--ledger-id`, `--seal-state postseal`, `register-canonical-docs`, `--register-file`, or `--schema-version` is part of this procedure.
 
@@ -200,12 +226,14 @@ python3 scripts/pm-plan-migration.py validate --run-dir "$RESEAL_CURRENT_RUN"
 After the fresh backup and GO, set `RESEAL_GO_MAIL_ID` from the preserved lead mail and `RESEAL_RECEIPT_SHA` from the actual backup bytes, then:
 
 ```bash
+RESEAL_RECEIPT_SHA=$(python3 -c 'import hashlib,sys; print(hashlib.sha256(open(sys.argv[1],"rb").read()).hexdigest())' "$RESEAL_EVIDENCE/backup/pnc019_certification_receipt.json")
 python3 "$RESEAL_NOTES/admission-pins.py"
 python3 "$RESEAL_NOTES/refresh-dl188-checkpoint-pins.py" --apply \
+  --main-base "$RESEAL_MAIN_BASE" \
   --go-mail-id "$RESEAL_GO_MAIL_ID" --expected-receipt-sha256 "$RESEAL_RECEIPT_SHA"
 ```
 
-Compare the resulting receipt with that backup. Only `source_hashes["Plans/event_family_registry.json"]` and `source_hashes["Plans/event_payloads/workspace_layout_changed_v2.schema.json"]` are allowlisted; every other field, source hash, historical execution result, timestamp and authority claim must be equal. The registry pin is currently unchanged. Recompute both rather than copying the Phase 1 expected values. Do not run `pm-pnc019-certification-harness.py`.
+Copy the validated apply output to `reports/governance-reseal-20261019/checkpoint-pin-verification.json` (mode `100644`) and include its hash in execution evidence. Its `main_base`, `go_mail_id`, `helper_sha256`, `active_checkpoint`, and `active_checkpoint_module_sha256` are measured at execution, following the 2026-10-11 record. Compare the resulting receipt with that backup. Only `source_hashes["Plans/event_family_registry.json"]` and `source_hashes["Plans/event_payloads/workspace_layout_changed_v2.schema.json"]` are allowlisted; every other field, source hash, historical execution result, timestamp and authority claim must be equal. The registry pin is currently unchanged. Recompute both rather than copying the Phase 1 expected values. Do not run `pm-pnc019-certification-harness.py`.
 
 ### Currentness, projections, and historical run 002
 
@@ -276,6 +304,7 @@ PM_EVIDENCE_MAP="$RESEAL_EVIDENCE/evidence-map.json" \
 python3 scripts/pm-event-authority-currentness.py validate
 python3 scripts/pm-plan-index.py generate
 python3 scripts/pm-plan-index.py validate
+RESEAL_WRITER_CONFIG_SHA=$(python3 -c 'import hashlib,sys; print(hashlib.sha256(open(sys.argv[1],"rb").read()).hexdigest())' "$RESEAL_WRITER_CONFIG")
 python3 "$RESEAL_NOTES/in-place-write.py" --config "$RESEAL_WRITER_CONFIG" \
   --expected-config-sha256 "$RESEAL_WRITER_CONFIG_SHA" check --test
 python3 "$RESEAL_NOTES/in-place-write.py" --config "$RESEAL_WRITER_CONFIG" \
@@ -309,7 +338,7 @@ python3 "$RESEAL_NOTES/attestation.py" --apply --go-mail-id "$RESEAL_GO_MAIL_ID"
   --output reports/governance-reseal-20261019/attestation.json
 ```
 
-The reseal commit contains changed governance paths plus `reseal-record.md`, `attestation.json` (`pm.governance.reseal_attestation.v1`), and `execution-evidence.json` (`pm.governance.reseal.execution_evidence.v1`). The attestation history ends at the frozen main, not at a report/plan commit. Execution evidence records `main_base`, `go_mail_id`, the pin-adjudication id, helper/config hashes, every selected output hash, and a null `post_push_followup` until the follow-up. `baseline-record.md` belongs only to the follow-up commit. All records use mode `100644`.
+The reseal commit contains changed governance paths plus `reseal-record.md`, `checkpoint-pin-verification.json`, `attestation.json` (`pm.governance.reseal_attestation.v1`), and `execution-evidence.json` (`pm.governance.reseal.execution_evidence.v1`). The attestation history ends at the frozen main, not at a report/plan commit. Execution evidence records `main_base`, `go_mail_id`, the pin-adjudication id, helper/config hashes, task-owned `TMPDIR`, free-space checks, every selected output hash, and a null `post_push_followup` until the follow-up. `baseline-record.md` belongs only to the follow-up commit. All records use mode `100644`.
 
 ## The one auto_decisions row
 
@@ -319,48 +348,77 @@ Applied paths: Spec Lock; the live bundle's `evidence.json`, `shard_report.json`
 
 ## Landing, follow-up, and cleanup
 
-1. Take the landing lock immediately before the landing fetch, never during preparation/rebuild. Record agent `codex-reseal`, branch, acquisition UTC and phase. Update `holder.txt` at lock taken, edition verified, rebase done, first check saved, first push, currentness written, snapshot recorded, follow-up checked, cleanup. **90 minutes from acquisition is an absolute cap; milestone updates do not extend it.** On contention read the holder; only a lock older than 90 minutes can be cleared; otherwise wait five minutes and retry.
+1. Take the landing lock immediately before the landing fetch, never during preparation/rebuild. Immediately after successful `mkdir held`, take the immutable acquisition epoch from `held.stat().st_mtime`, convert that exact value to timezone-aware UTC, and save both in execution state before writing the holder. Do not use a later `date` for acquisition. `holder.txt` contains strictly one `key: value` per line (`agent`, `branch`, `utc`, `phase`), with no blank or free-text lines; the milestone `utc` changes but acquisition time does not. Update it at lock taken, edition verified, rebase done, first check saved, first push, currentness written, snapshot recorded, follow-up checked, cleanup. Record `df -h /` and `shutil.disk_usage('/').free` at acquisition; require at least 6 GiB free on `/` for task-owned temporary reports and check again before each full under-lock check. Insufficient space releases the lock before changing main. **90 minutes from acquisition is an absolute cap; milestone updates do not extend it.** On contention read the holder; only a lock older than 90 minutes can be cleared; otherwise wait five minutes and retry.
 2. Immediately copy/hash all 15 shared currentness files at lock acquisition. Compare every hash and the path set against both preparation backup and the then-current baseline's `readiness_audit_inputs.files`. A mismatch stops; do not re-record a baseline to explain it.
-3. Fetch/rebase and inspect all intervening Plans changes. Rebuild outside the lock if inputs changed. Shard-check locally. The prescribed rebase can change the already-published Phase 1 commit ids. Preserve that review ref and publish the rebased execution at fresh remote ref `plans/governance-reseal-20261019-execution`; subsequent pushes to that ref are fast-forwards. The local branch and lock holder remain `plans/governance-reseal-20261019`. No published ref is force-updated. In shared checkout fetch the execution ref and compare uncommitted paths against its exact diff; overlap stops the landing and requires handoff. Fast-forward only.
-4. Keep the old edition unchanged through shared shard check and `pm-landing-check.py --base origin/main --readiness-audit-root /mnt/Cursor/PuppetMaster/Plans/.audits/event-authority-2026-08-13-currentness --keep-check-reports <external-first-check-dir> --json`. Save the verdict and all exports. Exit 2/3 stops; exit 1 requires adjudicating its rows and rerunning timeouts before pushing. Any failed unpushed landing uses `git reset --keep origin/main`, never `--hard`. Push main to both destinations and verify their exact SHAs before currentness mutation.
-5. Recheck all 15 old hashes. The new guarded writer requires this agent/branch lock, an unexpired acquisition time, and shared HEAD plus origin/main equal to the verified first push. Replace only seven generated files; on partial failure restore the seven old files, verify all 15, report the incomplete follow-up, and retain the already-pushed main. Validate currentness and standalone readiness from the shared checkout with no map; readiness has no audit-root option. Save both outputs and installed 15-file SHA-256 manifest.
-6. In this **same provisioned full worktree**, fetch and assert clean HEAD equals the first pushed main and no local currentness directory exists. Run `snapshot-current` first with next-free execution-date id, actual direct Markdown count, and then-current superseded run id. Run `--record-baseline` against the installed shared edition second. Hash all 15 files before/after. Retry a timed-out recording at 1200 seconds and never commit a timed-out baseline. Reject phantom `stale_audit_status_index` buckets or widget-report `missing_ref` rows in plans-index from absent ignored inputs.
-7. Follow-up commit includes new run, pointer/supersession changes, baseline, `baseline-record.md`, completed-landing section of `reseal-record.md`, and `post_push_followup` in execution evidence. Record actual totals, not the prior seal's counts. Push branch; shared fetch, overlap check, fast-forward, shard check, and a second saved landing check occur before second main push. Require empty `new`, `grown_buckets`, and `resolved_buckets`, plus unchanged 15-file installed hashes. Push and verify both main destinations.
+3. Fetch/rebase and inspect all intervening Plans and governed-script changes against the protected inputs defined above. Rebuild outside the lock if inputs changed. Shard-check locally. The prescribed rebase can change the already-published Phase 1 commit ids. Preserve that review ref and publish the rebased execution at fresh remote ref `plans/governance-reseal-20261019-execution`; subsequent pushes to that ref are fast-forwards. The local branch and lock holder remain `plans/governance-reseal-20261019`. No published ref is force-updated. In shared checkout fetch the execution ref and compare uncommitted paths against its exact diff; overlap stops the landing and requires handoff. Fast-forward only.
+4. Keep the old edition unchanged through shared shard check and `TMPDIR="$RESEAL_TMPDIR" python3 scripts/pm-landing-check.py --base origin/main --readiness-audit-root /mnt/Cursor/PuppetMaster/Plans/.audits/event-authority-2026-08-13-currentness --keep-check-reports <external-first-check-dir> --json`. Save the verdict and all exports. Exit 2/3 stops; exit 1 requires adjudicating its rows and rerunning timeouts before pushing. Independently scan the full retained aggregate/export reports: **any `validator_no_output` row stops the landing**, even if classified pre-existing or the check exits 0/1. Correct temporary-space/input conditions and rerun; never accept its count as a product result. Any failed unpushed landing uses `git reset --keep origin/main`, never `--hard`. Push main to both destinations and verify their exact SHAs before currentness mutation.
+5. Recheck all 15 old hashes. Rebind and hash the landing writer config with the verified pushed SHA and the stat-derived acquisition UTC. **Immediately after first-push verification run the non-test writer `check`, before `write`.** It must report `old_baseline_bound`, exercising the actual holder, 90-minute, mtime and HEAD/origin guards without writing. The guarded write then replaces only seven generated files; on partial failure restore the seven old files, verify all 15, report the incomplete follow-up, and retain the already-pushed main. Validate currentness and standalone readiness from the shared checkout with no map and explicit task-owned `TMPDIR`; readiness has no audit-root option. Any missing validator output stops the follow-up. Save both outputs and installed 15-file SHA-256 manifest.
+6. In this **same provisioned full worktree**, fetch and assert clean HEAD equals the first pushed main and no local currentness directory exists. Run `snapshot-current` first with next-free execution-date id, actual direct Markdown count, and then-current superseded run id. Run `--record-baseline` against the installed shared edition second; both receive explicit task-owned `TMPDIR`. Hash all 15 files before/after. Retry a timed-out recording at 1200 seconds and never commit a timed-out baseline. Reject **any `validator_no_output` row** in the full retained reports or baseline `buckets`/`export_buckets`, as well as phantom `stale_audit_status_index` buckets or widget-report `missing_ref` rows in plans-index from absent ignored inputs. Rerun after correcting the infrastructure; never commit such a recording and never treat a successful recorder exit alone as evidence of completeness.
+7. Follow-up commit includes new run, pointer/supersession changes, baseline, `baseline-record.md`, completed-landing section of `reseal-record.md`, and `post_push_followup` in execution evidence. Record actual totals, not the prior seal's counts. Push the explicit execution ref; shared fetch, overlap check, fast-forward, shard check, and a second saved landing check with task-owned `TMPDIR` occur before second main push. Require empty `new`, `grown_buckets`, and `resolved_buckets`, unchanged 15-file installed hashes, and **no `validator_no_output` row anywhere in the retained check/export reports**. Such a row stops the second push and requires an infrastructure correction/rerun. Push and verify both main destinations.
 8. Mail the lead both SHAs and residual findings. Remove ignored inputs/symlinks made here, this T3 worktree via its owning clone, and the landed local branch. Retain cited evidence/helper deliverables. Release the lock after worktree/branch cleanup. No other process, worktree, branch, or Concepts file is cleaned by this task.
 
 The first and second comparison commands run in `/mnt/Cursor/PuppetMaster`, before their respective main pushes. Preserve their JSON plus complete retained reports/exports:
 
+The holder format is exactly this four-line structure. Its acquisition timestamp is a separate immutable value derived immediately from `stat` of the successfully created lock directory, stored in state and later in the writer config; no blank/free-text line is appended to `holder.txt`:
+
+```text
+agent: codex-reseal
+branch: plans/governance-reseal-20261019
+utc: <current milestone UTC>
+phase: <single-line milestone>
+```
+
 ```bash
-python3 scripts/pm-landing-check.py --base origin/main \
+TMPDIR="$RESEAL_TMPDIR" df -h / > "$RESEAL_EVIDENCE/landing/free-space-at-lock.out"
+TMPDIR="$RESEAL_TMPDIR" python3 scripts/pm-landing-check.py --base origin/main \
   --readiness-audit-root /mnt/Cursor/PuppetMaster/Plans/.audits/event-authority-2026-08-13-currentness \
   --keep-check-reports "$RESEAL_EVIDENCE/landing/first-check-reports" --json \
   > "$RESEAL_EVIDENCE/landing/landing-check.json"
+TMPDIR="$RESEAL_TMPDIR" python3 "$RESEAL_NOTES/reject-incomplete-checks.py" \
+  "$RESEAL_EVIDENCE/landing/landing-check.json" "$RESEAL_EVIDENCE/landing/first-check-reports"
 # First checked main push and exact remote-SHA verification precede the guarded shared write.
-python3 scripts/pm-event-authority-currentness.py validate \
+# Rebind writer config/hash to the pushed SHA and stat-derived acquisition time first.
+RESEAL_WRITER_CONFIG="$RESEAL_EVIDENCE/landing/in-place-write-config.json"
+RESEAL_WRITER_CONFIG_SHA=$(TMPDIR="$RESEAL_TMPDIR" python3 -c 'import hashlib,sys; print(hashlib.sha256(open(sys.argv[1],"rb").read()).hexdigest())' "$RESEAL_WRITER_CONFIG")
+TMPDIR="$RESEAL_TMPDIR" python3 "$RESEAL_NOTES/in-place-write.py" \
+  --config "$RESEAL_WRITER_CONFIG" --expected-config-sha256 "$RESEAL_WRITER_CONFIG_SHA" check
+TMPDIR="$RESEAL_TMPDIR" python3 "$RESEAL_NOTES/in-place-write.py" \
+  --config "$RESEAL_WRITER_CONFIG" --expected-config-sha256 "$RESEAL_WRITER_CONFIG_SHA" write
+TMPDIR="$RESEAL_TMPDIR" python3 scripts/pm-event-authority-currentness.py validate \
   > "$RESEAL_EVIDENCE/landing/currentness-shared.out"
-python3 scripts/pm-implementation-readiness.py validate \
+TMPDIR="$RESEAL_TMPDIR" python3 scripts/pm-implementation-readiness.py validate \
   > "$RESEAL_EVIDENCE/landing/shared-readiness-after-currentness.json"
+TMPDIR="$RESEAL_TMPDIR" python3 "$RESEAL_NOTES/reject-incomplete-checks.py" \
+  "$RESEAL_EVIDENCE/landing/shared-readiness-after-currentness.json"
 ```
 
 In this same provisioned full T3 worktree, at the verified first pushed main with no local currentness directory, use the actual next-free id and pointer read at execution:
 
 ```bash
-python3 scripts/pm-plan-migration.py snapshot-current \
+RESEAL_DIRECT_MD_COUNT=$(TMPDIR="$RESEAL_TMPDIR" python3 -c 'from pathlib import Path; print(sum(p.is_file() for p in Path("Plans").glob("*.md")))')
+RESEAL_SUPERSEDED_RUN_ID=$(TMPDIR="$RESEAL_TMPDIR" python3 -c 'import json; print(json.load(open("Plans/.plan_migration/current_run.json"))["run_id"])')
+RESEAL_NEXT_RUN_ID=$(TMPDIR="$RESEAL_TMPDIR" python3 -c 'from pathlib import Path; from datetime import datetime,timezone; prefix="pds-"+datetime.now(timezone.utc).strftime("%Y%m%d")+"-"; ids=[int(p.name[len(prefix):len(prefix)+3]) for p in Path("Plans/.plan_migration").glob(prefix+"*-current-planunit-snapshot")]; print(prefix+f"{max(ids,default=0)+1:03d}"+"-current-planunit-snapshot")')
+TMPDIR="$RESEAL_TMPDIR" python3 scripts/pm-plan-migration.py snapshot-current \
   --run-id "$RESEAL_NEXT_RUN_ID" --expected-doc-count "$RESEAL_DIRECT_MD_COUNT" \
   --supersedes-run-id "$RESEAL_SUPERSEDED_RUN_ID"
-python3 scripts/pm-landing-check.py --record-baseline \
+TMPDIR="$RESEAL_TMPDIR" python3 scripts/pm-landing-check.py --record-baseline \
   --readiness-audit-root /mnt/Cursor/PuppetMaster/Plans/.audits/event-authority-2026-08-13-currentness \
   --keep-check-reports "$RESEAL_EVIDENCE/landing/baseline-check-reports" --json \
   > "$RESEAL_EVIDENCE/landing/record-baseline.json"
+TMPDIR="$RESEAL_TMPDIR" python3 "$RESEAL_NOTES/reject-incomplete-checks.py" \
+  reports/landing-checks/baseline.json "$RESEAL_EVIDENCE/landing/record-baseline.json" \
+  "$RESEAL_EVIDENCE/landing/baseline-check-reports"
 ```
 
 After the explicit-path follow-up commit, branch push, shared fetch, overlap check, fast-forward and shard check, run in the shared checkout:
 
 ```bash
-python3 scripts/pm-landing-check.py --base origin/main \
+TMPDIR="$RESEAL_TMPDIR" python3 scripts/pm-landing-check.py --base origin/main \
   --readiness-audit-root /mnt/Cursor/PuppetMaster/Plans/.audits/event-authority-2026-08-13-currentness \
   --keep-check-reports "$RESEAL_EVIDENCE/landing/followup-check-reports" --json \
   > "$RESEAL_EVIDENCE/landing/followup-landing-check.json"
+TMPDIR="$RESEAL_TMPDIR" python3 "$RESEAL_NOTES/reject-incomplete-checks.py" \
+  "$RESEAL_EVIDENCE/landing/followup-landing-check.json" "$RESEAL_EVIDENCE/landing/followup-check-reports"
 ```
 
 Hash all 15 installed inputs before/after baseline recording and after the final comparison. Require stable bytes and empty `new`, `grown_buckets` and `resolved_buckets` before the second push. A timeout is rerun with `--subcheck-timeout-seconds 1200`; an incomplete recording is never committed. Save installed hashes to `phase2/landing/currentness-installed.SHA256SUMS`. The follow-up's `post_push_followup` and completed-landing section bind the first verdict, shared validation, installed manifest and recording by path and SHA-256. The later final comparison is preserved externally and bound in the final share completion receipt. Do not create a recursive commit-and-recheck loop solely to insert a commit's own later check.
@@ -368,7 +426,8 @@ Hash all 15 installed inputs before/after baseline recording and after the final
 ## Risks and stop conditions
 
 - The payload pin drift was explicitly adjudicated. Only the two-pin helper is permitted, after GO and against a fresh receipt backup; any other receipt difference stops the reseal. Historical certification results remain unchanged.
-- F-plans is still pending; any additional Plans landing changes the inventory and invalidates cached counts/hashes.
+- F-plans' landing/follow-up is still pending; any additional Plans or governed-script change requires re-inventory and can invalidate cached counts/hashes.
+- Any `validator_no_output` row in either landing check, its retained exports, or the proposed baseline stops that step regardless of exit code or standing. Fix the infrastructure, rerun, and never commit the incomplete baseline. The explicit task-owned `TMPDIR` and root free-space check are mandatory under the lock.
 - A different local currentness directory or changed shared bytes cause landing input-identity exit 3. Remove the local preparation copy; bind the actual shared edition.
 - A fresh unprovisioned follow-up tree records phantom audit-input rows. Reuse this full worktree and reject those rows before committing.
 - Readiness/buildability have a generation cycle; prove and report its residual rather than regenerating repeatedly.
@@ -388,3 +447,15 @@ LOW 1 is addressed in `attestation.py`: a changed PNC-019 receipt row now explai
 Revision proof: `/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261019/revisions/astra-r1/verification.json`, SHA-256 `b85309f8a4f379d9a1c5739e2ddea5099cd4e6bb37f2ef91d764784ec8f00e2b`; revision `SHA256SUMS` in that directory, SHA-256 `dbd5d3cae30c6d704afe5f590a36197c13126caf869621ff238f39c5bc836fbc`.
 
 Lead mail `1019064852-0674` reports the F-plans candidate approved and landing, and this plan's Opus review running. Its source-discovery LOW is incorporated in the inventory above: expect 259/163, verify the new file's zero occurrence rows, and keep the old edition through the first push. Landing/follow-up receipts and the reseal's Opus verdict remain required before GO. No Phase 2 step has run.
+
+## Opus findings addressed for capped cycle 2
+
+Opus cycle 1 reviewed `edec74818e`: `/mnt/Cursor/share/puppet-master/2026-10-18-pm7-purge/reviews/RESEAL-opus-r1.md`, SHA-256 `11161c5b6855d67c55466f0f645ff5071761a8f0225be82c526445cd3373611e`. Verdict **FIX**, one FIX and four LOWs. Lead mail `1019065139-5614` requests this revision and the final Astra re-check. Every requested item is addressed:
+
+1. **FIX 1 — temporary space and incomplete validators:** explicit task-owned `TMPDIR` in the environment and every under-lock command, captured in execution metadata/evidence. Root free space is measured at acquisition and before full checks, with a 6 GiB floor. Either landing comparison or baseline recording containing any `validator_no_output` row is rejected, corrected and rerun. The new read-only guard scans the saved verdict, complete retained check/export reports, and baseline buckets/export buckets; missing or unreadable reports also fail. It accepts the complete real Phase 1 reports/baseline, rejects the real quota-failed audit, and rejects a baseline negative control with an injected exported `validator_no_output` row.
+2. **LOW 1 — bounded checkpoint record:** commit `checkpoint-pin-verification.json` with actual main/GO/helper hash and active checkpoint/module hash. The helper now emits these fields. Both apply helpers reject `--go-mail-id PENDING`; their refusal checks passed with the receipt and auto-decisions unchanged. The augmented pin dry-run passes and preserves the receipt bytes.
+3. **LOW 2 — live writer guards:** strictly four `key: value` holder lines, stat-derived immutable acquisition UTC, and non-test `check` immediately after first-push verification and before `write`. The writer code is unchanged; original scratch/guard proofs remain valid.
+4. **LOW 3 — governed inputs and F-plans:** widen re-inventory to governed scripts and all bound/validation inputs. The new JSON is one additional inventoried machine input, 259/163 expected, zero event-like rows; it is not an eighth unbound companion. The unbound lookup-only `pm7-where.py` adds no governance hash.
+5. **LOW 4 — variable sources and publication:** every runtime variable's source/assignment point is explicit, with literal assignments where inputs exist. Step 8 and follow-up pushes name the fresh `plans/governance-reseal-20261019-execution` ref.
+
+Targeted verification: `/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261019/revisions/opus-r1/verification.json`, SHA-256 `0694c3e16e2f369c74c8b294d73903f48930a7a8d5533129a4ff0a5ca8fa7206`. Revision manifest `SHA256SUMS` in that directory, SHA-256 `4bc7fd9bfe3781b6cf929027ddbaf2dafcf4717f0b3cea120db58ab0a3feca79`. Phase 1 governance/currentness bytes remain unchanged. No Phase 2 action has run; final review/landing receipts and explicit GO are still required.
