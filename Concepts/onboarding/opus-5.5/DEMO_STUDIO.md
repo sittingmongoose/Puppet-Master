@@ -29,7 +29,8 @@ A small menu titled "Try a situation" with:
 - The copy has a "Start the Guided Tour" string (`demo.tour`) that no control uses. The item hides while the tour runs.
 
 ### B. Onboarding and Guided Tour entry points outside the demo item
-- Home menu: "Reset Layout" (on today's Home: resets and reloads) and "Run Onboarding Again".
+- Home menu: "Restore home layout" (restores the panel layout without reloading; open tabs stay open) and
+  "Run Onboarding Again".
 - Settings › Settings Home › Essential setup: Run Onboarding Again, Resume the Guided Tour (only when there is one),
   Start the Guided Tour over.
 - Settings search "Restore home layout" (`general.startup.reset-home-layout`): Reset the Home layout, no reload.
@@ -118,7 +119,8 @@ beside it). It rises out of the item as one sheet anchored to the bottom-left co
 9. Reset: three sizes. Progress (onboarding, tour, situation); Workspace (the panel layout back to default); Everything
    (all of the above, the saved layouts, dashboards, chat column, terminal and Usage settings), shown item by item
    before it runs, then a reload into a fresh first run.
-10. Switches: the URL switches above as toggles, with "Reload with these".
+10. Switches: onboarding start mode, the current situation, hover engine off, Usage readings paused, no-GPU Usage and
+    the chart gallery, with "Reload with these".
 
 Ownership: the Studio is new files in the onboarding package (`src/js/9x-demo-studio*.js`,
 `src/css/5x-demo-studio*.css`, `src/copy.d/75-demo-studio.json`) plus a rewrite of `90-demo.js` (agreed with
