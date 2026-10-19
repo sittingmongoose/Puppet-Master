@@ -1,7 +1,9 @@
 /* Opt-in Chrome coverage for the PM7 harnesses. Off unless a harness is passed --coverage <file>.
  * Collects Profiler.startPreciseCoverage (JS) and CSS.startRuleUsageTracking, and merges every
- * recorded range into one union file. A count of 0 means the range was recorded and never ran.
- * A range that is absent was not recorded. Later runs add to a count; they do not drop a zero.
+ * recorded range into one union file. Native counters add only for identical recorded ranges;
+ * a zero is not a byte-level liveness verdict, since another sample may cover those offsets
+ * through an enclosing positive range. Use usedRanges, resolved within each sample before union,
+ * for touched bytes. Missing sources/ranges remain unknown until the observed-source census.
  *
  *   takeCoverageFlag(argv)   removes --coverage <file> from argv and returns the absolute path, or null
  *   beginCoverage(session)   session.send(method, params) — call before the page loads
