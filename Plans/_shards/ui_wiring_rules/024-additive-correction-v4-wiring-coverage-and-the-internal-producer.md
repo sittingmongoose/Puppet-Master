@@ -2,9 +2,9 @@
 
 Source: `Plans/UI_Wiring_Rules.md`
 
-Source lines: L1371-L1488
+Source lines: L1371-L1489
 
-Source SHA256: `801fdc37504d2402de595ac24324f274994c7aca61a91b7d77096513431edcb0`
+Source SHA256: `223a17b8be9d7b4f4271ed0b4b1c41456dfa99316db297e818f254dc78cd88ed`
 
 ---
 
@@ -48,10 +48,11 @@ provider-degradation paths the correction requires. Their `evidence_required` te
 
 ### Internal-producer rows — owner-documented, not matrix rows
 
-The remaining twenty-four `CW-` rows have **no command identity**. They are owner-internal
-producers, projectors, and reducers. They stay out of this register for the same reason the
-sixteen view-local rows did, and their behaviour is specified — with the same
-producer → handler → durable effect → consumer → failure shape — in their owner documents:
+The remaining twenty-four `CW-` rows have **no command identity**. Twenty-three describe
+owner-internal producers, projectors, and reducers; CW-046 is concept comparison lineage
+only (CONCEPT-017), with no runtime producer. All twenty-four stay out of this register.
+The product behaviour follows the same producer → handler → durable effect → consumer →
+failure shape in its owner documents:
 
 | Packet rows | Internal producer | Owner |
 |---|---|---|
@@ -67,7 +68,7 @@ producer → handler → durable effect → consumer → failure shape — in th
 | CW-038, CW-039, CW-040 | To-Do graph mutation, list replacement, late-event gate | `Plans/ToDo_Runtime.md` (TDG-001..012) |
 | CW-041, CW-042 | embed render and artifact retention | `Plans/Runtime_Artifacts_Panel.md` (PDET-008..012, PDET-006) |
 | CW-043, CW-044 | Goal completion predicate and replay | `Plans/Goal_Runtime_System.md` (GREPLAY-003..010) |
-| CW-046 | concept two-build byte check | `Concepts/chat-assistant-concepts/5.6 Pro/build.py` (CONCEPT-017) |
+| CW-046 | concept comparison lineage; excluded from production wiring | CONCEPT-017 (source-only; no runtime producer) |
 
 ### CDRY-012 — What a complete row covers
 

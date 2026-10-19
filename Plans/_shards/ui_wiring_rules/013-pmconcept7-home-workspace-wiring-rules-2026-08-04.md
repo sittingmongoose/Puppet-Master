@@ -2,9 +2,9 @@
 
 Source: `Plans/UI_Wiring_Rules.md`
 
-Source lines: L625-L708
+Source lines: L625-L709
 
-Source SHA256: `801fdc37504d2402de595ac24324f274994c7aca61a91b7d77096513431edcb0`
+Source SHA256: `223a17b8be9d7b4f4271ed0b4b1c41456dfa99316db297e818f254dc78cd88ed`
 
 ---
 
@@ -71,7 +71,8 @@ acceptance_criteria:
 - The source-hashed control census reports unresolved_count=0 and every production row names an executable test, not declarative prose alone.
 validation_surfaces:
 - python3 scripts/pm-validate-wiring-matrix.py
-- node Concepts/pm7-tools/verify/home_workspace_matrix.mjs
+- Plans/Automated_Testing_System.md#ATS-075
+- Plans/Automated_Testing_System.md#ATS-076
 - python3 scripts/pm-plan-index.py validate
 risk_class: home_wiring_orphan
 reasoning_tier: standard
@@ -89,6 +90,6 @@ negative_constraints:
 compatibility_only_notes: []
 stale_retired_dispositions:
 - The prior non-census Home reconciliation summary is superseded by the source-hashed control census.
-- "Amended 2026-10-09 (DL-180): the census contents are UIW-040's closed list; the fixed-zone rows, the terminal caps and Collapse Bottom Terminal leave it. DL-180 is cited here and not in depends_on: DL-180 builds on DL-147, whose chain already reaches this unit, so the dependency would close a loop; UIW-040 depends on this unit instead. The validation surface home_workspace_matrix.mjs is superseded lineage from this date: its fixed-model cases do not prove the DL-180 rows, and the replacement executable cases are Plans/Automated_Testing_System.md#ATS-075."
+- "Amended 2026-10-09 (DL-180): the census contents are UIW-040's closed list; the fixed-zone rows, the terminal caps and Collapse Bottom Terminal leave it. DL-180 is cited here and not in depends_on: DL-180 builds on DL-147, whose chain already reaches this unit, so the dependency would close a loop; UIW-040 depends on this unit instead. Cases written for the retired four-panel Home model do not prove this row; replacement executable cases are owed (ATS-075/076)."
 owner_hints: [Plans/UI_Wiring_Rules.md, Plans/Wiring_Matrix.production.json]
 ```

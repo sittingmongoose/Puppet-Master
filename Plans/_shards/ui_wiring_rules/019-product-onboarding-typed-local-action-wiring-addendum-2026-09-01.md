@@ -2,9 +2,9 @@
 
 Source: `Plans/UI_Wiring_Rules.md`
 
-Source lines: L1023-L1139
+Source lines: L1024-L1139
 
-Source SHA256: `801fdc37504d2402de595ac24324f274994c7aca61a91b7d77096513431edcb0`
+Source SHA256: `223a17b8be9d7b4f4271ed0b4b1c41456dfa99316db297e818f254dc78cd88ed`
 
 ---
 
@@ -58,8 +58,7 @@ and are rejected as commands, aliases, handlers, and production rows because the
 own those semantics. This is separate from UCC-106's eleven retained provider-first command-era tokens, whose count and
 lineage remain unchanged.
 
-Schema/fixture validation, transform assertions, the generated-artifact static gate, and
-`Concepts/pm7-tools/verify/onboarding_cinematic.mjs` cover vocabulary, markup, request/result, required closed
+Schema/fixture validation and concept reference checks cover vocabulary, markup, request/result, required closed
 secret-free `local_context`, ambiguous/missing/additional/raw/secret-bearing-context rejection, both `more_ways`
 variants, both global/optional `skip` variants, disabled/rejected, modal/focus, durable defer, explicit Skip,
 non-completing Close, and ephemeral Details behavior at their declared
@@ -105,11 +104,11 @@ acceptance_criteria:
   - Defer persists exact stage/path/branch/history/revision/continuation/initiating-Client/focus return before dismissal; Close does not complete; Skip is explicitly skipped; Details remains same-stage and ephemeral.
   - The eight named packet candidate cmd.onboarding.* tokens are source-lineage only and receive no command, alias, handler, or production row; UCC-106's eleven retired command-era tokens retain their separate lineage count.
   - The flow stays a bounded modal with no route-history or breadcrumb chrome, and no static/browser evidence is treated as native or runtime proof.
-validation_surfaces: [Plans/product_onboarding_contracts.schema.json, Plans/product_onboarding_contract_fixtures.json, Concepts/pm7-tools/onboarding_cinematic_source.py, Concepts/pm7-tools/verify/onboarding_cinematic.mjs, future native Product Onboarding request/result and accessibility fixtures]
+validation_surfaces: [Plans/product_onboarding_contracts.schema.json, Plans/product_onboarding_contract_fixtures.json, future native Product Onboarding request/result and accessibility fixtures]
 risk_class: onboarding_local_action_or_result_wiring_drift
 reasoning_tier: high
 context_scope: product_onboarding_typed_local_request_result
-implementation_surfaces: [Plans/UI_Wiring_Rules.md, Plans/Planning_Wizard.md, Plans/UI_Command_Catalog.md, Plans/Wiring_Matrix.md, Plans/product_onboarding_contracts.schema.json, Concepts/pm7-tools/onboarding_cinematic_source.py]
+implementation_surfaces: [Plans/UI_Wiring_Rules.md, Plans/Planning_Wizard.md, Plans/UI_Command_Catalog.md, Plans/Wiring_Matrix.md, Plans/product_onboarding_contracts.schema.json]
 node_compile_hint: {mode: product_onboarding_local_action_wiring, create_worknodes: false, create_nodeseeds: false}
 source_lineage:
   - approved current Product Onboarding source/schema reconciliation
