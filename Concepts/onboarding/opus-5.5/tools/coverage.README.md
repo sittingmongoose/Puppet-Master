@@ -82,6 +82,13 @@ input-hash evidence for that claim. It does not change or certify legacy input
 bytes automatically. Without a native marker or a matching receipt, the summary
 reports the remainder as unmeasured rather than unused.
 
+The A0 fix-round-1 receipts certify native-marked entries only. Four early inputs
+were captured with an uncommitted collector revision; their exact source lineage
+was not established. Their positive ranges still retain code. Unmarked merged
+entries remain uncertified, including when another input has a native marker.
+The portable analysis dependency lock and external receipt-generator correction
+are retained under `reports/pm7-coverage-fix-20261019/`.
+
 `--complete-union` fills explicit `used:false` rules only for installed/observed
 stylesheet hashes and adds uncalled static functions only for observed scripts.
 It preserves native counters. An extra function marked `union_projection:true`
