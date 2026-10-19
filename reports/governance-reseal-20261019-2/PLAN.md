@@ -1,6 +1,6 @@
 # Governance reseal 2 plan — 2026-10-19
 
-**Phase 1 draft: measurements and scratch controls are running. No Phase 2 action is authorized.** The lead must complete the capped Opus xhigh and Astra max reviews, land G-register and its snapshot/baseline follow-up, and mail **GO Phase 2** before this worker refreshes governance.
+**Phase 1 complete: both measurements and all 32 scratch controls passed their completion checks. No Phase 2 action is authorized.** The lead must complete the capped Opus xhigh and Astra max reviews, land G-register and its snapshot/baseline follow-up, and mail **GO Phase 2** before this worker refreshes governance.
 
 Branch: `plans/governance-reseal2-20261019`. Agent: `codex-reseal2`. Full T3 worktree: `/home/sittingmongoose/.t3/worktrees/PuppetMaster/t3-cd5b8993`, owned by `/home/sittingmongoose/src/PuppetMaster`. Fresh initial main: `142cfa9192a135502328b3dd5fddf8462ef8fbd3`.
 
@@ -19,8 +19,8 @@ Scope: Spec Lock; the sole live-current evidence bundle; readiness projections; 
 | Prerequisite | Phase 1 state | Execution requirement |
 |---|---|---|
 | Previous real reseal | First checked main `984f605c0759ee57f5468a36413cb9e96c4bd955`; follow-up `ecd1e236395e1b95dc2f181a4be17543036065b7` | Verify ancestry and re-read its records. These are historical references. |
-| G-register `plans/register-companions-20261019` | Worker mailed candidate `5ce8b1b0f9ba3d819c6dea113a38a973a91c0dbb` in `1019192537-7f98`; not a landing receipt | Lead supplies reviewed main and follow-up SHAs. Both must be ancestors of the frozen main. Reinspect any candidate-to-landed delta. |
-| Local G-register preview | An unpushed, uncommitted merge is measured after the initial main measurements | Abort that merge before committing this plan. Never push the preview merge. |
+| G-register `plans/register-companions-20261019` | Candidate `5ce8b1b0f9ba3d819c6dea113a38a973a91c0dbb` passed both G reviews per lead mail `1019193634-4882`; LANDING-G is landing it; main/follow-up receipts pending | Lead supplies reviewed main and follow-up SHAs. Both must be ancestors of the frozen main. Reinspect any candidate-to-landed delta. |
+| Local G-register preview | Measured without a commit, then aborted; the branch is restored to report-only changes | Completion and abort witnesses are bound in the Phase 1 manifest. The preview merge was never pushed. |
 | Opus xhigh and Astra max plan reviews | Lead-owned, pending | Two cycles at most. Remaining required decisions go to the lead. |
 | Explicit authorization | Not received | Preserve the exact lead **GO Phase 2** mail and its id; `PENDING` is never executable authority. |
 
@@ -33,7 +33,40 @@ The full tree is not sparse. Named ignored inputs were copied with `rsync -a --n
 Each long command is detached and has a log, stdout, stderr, command metadata and exit file. A task-owned `TMPDIR` is passed explicitly. Each edition's manifest is compared with all 15 baseline-bound shared input hashes before and after measurement. No validator output is used as a new baseline in Phase 1.
 
 <!-- PHASE1_RESULTS_START -->
-Main measurements and the G-register preview are pending. Final counts, findings, comparisons and SHA-256 references will replace this paragraph before **PLAN ready** is mailed.
+Both measurement sets completed with no `validator_no_output` or timed-out subcheck. Main exactly matches every aggregate subcheck count in its recorded baseline. The preview merge was aborted; this branch contains only the plan. All 15 local/shared currentness inputs, both receipt pins and all seven companion bodies remain byte-identical.
+
+| Check | Initial main | Uncommitted G-register preview |
+|---|---:|---:|
+| `audit-governance` | 1469 | 1541 |
+| `evidence` | 0 | 34 |
+| `migration-002` | 2 | 4 |
+| `migration-current` | 0 | 54 |
+| `plan-graph` | 0 | 34 |
+| `readiness` | 23 | 24 |
+| `run-gates` | 1486 | 1558 |
+| `spec-lock` | 0 | 1 |
+
+Standalone currentness is valid on initial main. Against the old installed edition, the G-register preview fails exactly `exact_live_source_set`, `all_live_sources_rehashed`. This directly exposes the seven unlisted inputs; the landing check cannot establish their inventory membership. The 34 evidence/graph hash drifts and one lock drift follow the edited index and its derived artifacts. Readiness adds one index source drift. Run 002 adds two `stale_batch_report_sha256_after` rows to its two inherited inventory findings. The old current snapshot has 54 source/snapshot mismatches after the index edit; G-register must land a fresh snapshot/baseline before GO.
+
+Measured main readiness retains `{"buildability_gate_report_stale_or_not_canonical": 1, "event_denominator_unresolved": 2, "event_family_contract_depth_unresolved": 2, "event_legacy_fixture_root_mismatch": 1, "implementation_readiness_self_tests_failed": 1, "pnc019_source_hash_stale": 16}`. Currentness stays `UNKNOWN_OPEN`, all four authority flags false; frozen/quarantine/group custody is unchanged. The previous baseline has 14 export buckets, measured from this tree.
+
+The paths below are relative to `/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261019-2/phase1/`; each row has the same filename under `main/` and `g-register-preview/`.
+
+| Output | Main SHA-256 | Preview SHA-256 |
+|---|---|---|
+| `audit-governance.json` | `255aec623e282abf11d56186c6b7b3577ec65309c88713578e965503c3de39f1` | `ba8e73a65ee0c53494ffde5471cf2d5fa206dbe58a9892dc214aed9942ccef72` |
+| `currentness-validate.out` | `c1a812cd48c307af8ff0870839204f748202c0c5f035eb6751650741bc0a384b` | `394531f008c2b980e8f1c943a031160ab86791a94154fa3933919f7bc56f1d2b` |
+| `evidence.json` | `1fb508b2f84d1602d7a0e161e4f530cb5fbaf90503571477fd0d5bce42e02f8e` | `8fcb7048a619fea8f819b8cba61d7aa745f10722c6caec45910b125af9309339` |
+| `migration-002.json` | `818c79b9f5726d55893b60fe22b89f64a0eb6377837c469abfb70bf84a6fec2d` | `ca7dea1cbde9bde35772156c35a23768710cfc3f61714c6e846870f36655eb83` |
+| `migration-current.out` | `ecff6ced16d921df0b1e3c3e4fe9265460d295131cd0d98bccab639cae74aa42` | `faa03d3d4b28057e72b5e0a6ca22e8f55d820ba2b6d92f11d1e124801057370f` |
+| `plan-graph.json` | `143578863cdb9795c906bf977a83d11be0fba22cdfbc096aa4541c4c0397da91` | `77079a1a3aaa9c230e43713d519061b3ad65fb2f7e01b99b47fb29e33e201846` |
+| `readiness.json` | `f2c21c21780879c81a9b0dc0b7721fbb5941fd444094ce74985e1bfc64f22e5b` | `d58da57d4de1a43d789b002aec9a6b8a2a964b9f0bf12ef4437a3449165df21d` |
+| `run-gates.json` | `e7aafc649513f425d3b64a437240e5f33e1af94d42797f1b54a6be6dbbcdc379` | `86092e4e80be91c1f2aa9ebdc55ed657010206d23036dbabb56635654ac3ff59` |
+| `spec-lock.json` | `2b410814097c0748d22858464d25a0f42127cb2e253f9b2dc023af588c38c7bc` | `01ddadbbea8cb646971b2503891770d7c46a289282576b489491414f88bcb2a3` |
+
+Full result/identity witness: `/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261019-2/phase1/phase1-summary.json`, SHA-256 `c63b060d7eba8fca87ccc95029d7dc746b8753e4de2832cfe84c96c1847696c6`. Closed evidence manifest: `/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261019-2/phase1/SHA256SUMS`, SHA-256 `4462ae29a4d953a0ef78c09d962b06e8694557b5ba21b3f04f0b4ac74ee690a9`. It binds 316 closed measurement/control files; mailbox waits and mutable working state are excluded.
+
+G-register ownership/report snapshot: `/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261019-2/phase1/G-register-report-snapshot.md`, SHA-256 `0594897af50c59c5eb9545754c97120955f93540c2c0cc1fe2471ab7d3a56b61`. Lead mail `1019193634-4882` confirms both G reviews are OK and records the standalone-currentness LOW; it does not authorize Phase 2.
 <!-- PHASE1_RESULTS_END -->
 
 The initial installed inventory has **259 total / 96 direct Markdown / 163 machine inputs**. The unchanged selector discovers the seven new inputs from G-register's live index registration, yielding **266 / 96 / 170**, exactly seven additions and no removals. Direct Markdown does not increase. `build_occurrences` finds zero event-like rows in each companion. The final re-inventory must reproduce those results on the reviewed landed main; a discrepancy is reported with its cause before proceeding.
@@ -58,7 +91,7 @@ The seven JSON inputs remain byte-identical. Their registration describes the na
 
 **Currentness:** discover exactly seven new machine inputs with the unchanged selector. Generate two external seven-file editions in the established order; install each only into the local ignored preparation copy. Keep all eight frozen files and both quarantine/group artifacts byte-identical. The installed shared 15-file edition remains unchanged through the first checked main push. Status stays `UNKNOWN_OPEN`; `closed`, `complete_denominator_known`, `contract_depth_complete`, and `build_or_pnc019_authority` stay false.
 
-**DL-188:** both the event-family registry and workspace-layout v2 payload pins match the current receipt at initial main. Recompute them with the canonical SHA-256 helper. The expected apply is a no-op, preserving the entire receipt byte-for-byte. Only those two source-hash slots are permitted by the prior bounded rule; every other source hash, field, historical result and timestamp must equal a fresh backup. Any new drift, checkpoint mismatch or change beyond that rule stops for lead adjudication. No certification harness runs.
+**DL-188:** both the event-family registry and workspace-layout v2 payload pins match the current receipt at initial main. Recompute them with the canonical SHA-256 helper. The expected apply is a no-op, preserving the entire receipt byte-for-byte. Only those two source-hash slots are permitted by the prior bounded rule; every other source hash, field, historical result and timestamp must equal a fresh backup. Drift outside those slots, a checkpoint mismatch or an unreviewed source change stops for lead adjudication. No certification harness runs.
 
 **Readiness and run 002:** regenerate node readiness, generate buildability once, retain that first generation, and perform `refresh-batch-hashes` followed by `refresh-final-summary --seal-state preseal` on `DEFAULT_PLAN_MIGRATION_RUN`. Reconfirm that default from the live verifier. Regenerate final node readiness only after the final currentness edition. Prove the retained buildability report differs from its read-only canonical probe solely at its node-readiness input hash; otherwise stop. Validate the current pointer run independently, without refreshing it until the post-push snapshot.
 
@@ -72,6 +105,16 @@ The helper manifest binds the production copies under the fresh helper folder. S
 
 Required controls: scratch writer `check/write/check/restore`, restoring all 15 files; Phase 1 rejection of shared writer access; pin preview and no-op scratch apply; canonical prefix40/current39 admission checks; seven evidence additions and an idempotent repeat; seven Spec Lock additions with no unrelated field change; one appended decision and duplicate rejection; attestation preview and seven-registration scratch apply; and malformed/incomplete report rejection. Every apply helper rejects `PENDING`, including `attestation.py`. A synthetic README-only writer edition is never eligible for installation. Phase 2 retests the writer on its real backup/final editions.
 
+
+The final core scratch run has **27 controls**. Three temporary-space controls cover writable/missing TMPDIR and simulated low space. Two exact-binding controls accept a synthetic 266-source scratch edition and reject a 259-source edition missing exactly the seven, isolating the inventory gap. These are scratch proofs, not installed governance.
+
+| Proof | SHA-256 |
+|---|---|
+| `/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261019-2/phase1/helper-tests/verification.json` | `f861ce2c24d5cfc7ced8bed787ae3e4f89a9a58f205dca8e6fc2a4fb1f7b9b28` |
+| `/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261019-2/phase1/temp-guard-tests/verification.json` | `92e478a58914874057e0041a6ef2af435a01b8fd5a1f948b3bc0abba1045632b` |
+| `/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261019-2/phase1/seven-binding-tests/verification.json` | `550479309d842da909eab4e58b72f3aa337b97478c7cb4785a87072a0ca10193` |
+
+Fresh helper manifest: `/mnt/Cursor/share/puppet-master/2026-10-19-reseal2/HELPERS.SHA256SUMS`, SHA-256 `82330ec274aafbb9994309197595033972fc8f5ac4568198e19a988decff1d24`. It binds 13 Python sources and their README. All sources parse successfully. Scratch sources and duplicate editions were removed after retaining result snapshots, logs and the verification records.
 ## Phase 2 commands and order
 
 Execution variables are assigned from fresh observations, not Phase 1 output filenames or the previous run's state:
@@ -83,6 +126,8 @@ RESEAL_BUNDLE=Plans/.evidence/pm7-usage-recovery-plan-sharding-2026-08-29
 RESEAL_CURRENTNESS=Plans/.audits/event-authority-2026-08-13-currentness
 RESEAL_TMPDIR=/home/sittingmongoose/pm-scratch/governance-reseal-20261019-2-tmp
 RESEAL_EXECUTION_REF=plans/governance-reseal2-20261019-execution
+mkdir -p "$RESEAL_TMPDIR"
+export TMPDIR="$RESEAL_TMPDIR"
 ```
 
 | Variable | Assignment point |
@@ -115,7 +160,13 @@ Also retain complete standalone Spec Lock, evidence and graph exports. No timeou
 PM_EVIDENCE_MAP="$RESEAL_EVIDENCE/evidence-map.json" python3 scripts/pm-event-authority-currentness.py generate --outdir "$RESEAL_EVIDENCE/currentness-edition-1"
 ```
 
-Install exactly seven generated files locally, preserving eight frozen files and quarantine/group bytes; validate locally without a map. Assert counts 266/96/170 and exactly the seven added paths.
+Install exactly seven generated files locally, preserving eight frozen files and quarantine/group bytes; validate locally without a map. Assert counts 266/96/170 and exactly the seven added paths. The standalone validator is mandatory even if a landing check reports no gap:
+
+```bash
+python3 scripts/pm-event-authority-currentness.py validate
+python3 -c 'import json,sys; expected={"all_sources":266,"direct_plans_markdown":96,"registered_machine_inputs":170}; actual=json.load(open(sys.argv[1]))["counts"]; assert actual==expected, actual; print(actual)' "$RESEAL_CURRENTNESS/CURRENT_EVENT_SOURCE_INVENTORY.json"
+```
+
 
 3. **Readiness and historical run.** Run index generate/validate. Restore non-node index JSON only after proving its sole difference is `generated_at_utc`; retain node readiness. Generate buildability once and keep its bytes. Then run:
 
@@ -157,6 +208,15 @@ No schema-version assignment, canonical-doc registration command, sharding-confi
 
 6. **Final edition and checks.** Generate final currentness externally with the same one-root map; install the seven files locally and validate without a map. Confirm all seven companion hashes in currentness, evidence and Spec Lock, plus live Spec Lock/evidence/receipt inventory hashes. Regenerate/validate final node readiness; keep first-generation buildability and prove the sole cycle residual. Retest scratch writer check/write/check/restore with real old/final manifests. Validate shards, index, lock, decisions, evidence, graph and currentness; run all five after measurements, compare complete findings and rerun incomplete subchecks. Use `attestation.py --apply` with actual GO, previous seal and frozen main; it requires all seven registrations and rejects `PENDING`. Write `reseal-record.md`, `attestation.json`, `checkpoint-pin-verification.json`, and `execution-evidence.json`, mode 100644. Execution evidence binds helper/config hashes, manifests, commands, TMPDIR, free space and residuals; `post_push_followup` is initially null. Commit only explicit changed governance/report paths and push the distinct execution ref to both configured destinations. Remove the local ignored currentness copy before landing, keeping its backup/final editions externally and the other provisioned inputs locally.
 
+After the final local edition is installed and all seven bindings are sealed, run both checks explicitly and retain their outputs:
+
+```bash
+python3 scripts/pm-event-authority-currentness.py validate
+python3 "$RESEAL_NOTES/verify-seven-bindings.py" --root /home/sittingmongoose/.t3/worktrees/PuppetMaster/t3-cd5b8993
+```
+
+`verify-seven-bindings.py` requires the exact live/installed source set, 266/96/170 counts, current source hashes, and seven matching SHA-256 bindings in Spec Lock, live evidence and currentness. It is separate from the landing check and grants no runtime or native authority.
+
 ## The one auto-decisions row
 
 Id: `dec-2026-10-19-governance-reseal-2`. Scope: `plans.governance.reseal_repository_wide`. Use `upsert_auto_decision`, which supplies timestamp and inputs hash. Rationale names Jared's 2026-10-19 assignment and registration approval, lead `pm7-purge-lead`, exact new GO mail id, previous seal, frozen main and intervening Plans history, seven product machine inputs, the DL-188 limit, refresh order, post-push currentness write, byte-identical custody and false authority flags. No row is written in Phase 1.
@@ -171,7 +231,7 @@ Applied paths are Spec Lock; the live evidence bundle and two reports; buildabil
 
 ```bash
 test -d "$RESEAL_TMPDIR" -a -w "$RESEAL_TMPDIR"
-TMPDIR="$RESEAL_TMPDIR" python3 -c 'import os,shutil,tempfile; from pathlib import Path; assert shutil.disk_usage("/").free >= 6*2**30; assert Path(tempfile.gettempdir()).resolve() == Path(os.environ["TMPDIR"]).resolve()'
+TMPDIR="$RESEAL_TMPDIR" python3 "$RESEAL_NOTES/check-temp-space.py" > "$RESEAL_EVIDENCE/landing/temp-space-at-lock.json"
 ```
 
 4. **Fetch, rebase, overlap, fast-forward.** Fetch/rebase the execution branch on current main. Reinspect all intervening protected inputs; if preparation no longer applies, release and rebuild outside the lock. Preserve the published review ref and publish rebased execution only on its distinct, fresh ref without force-updating a published ref. Check shards locally. In the shared landing checkout fetch the exact execution commit and inspect staged, unstaged and untracked paths for overlap with its diff; overlap stops for handoff. Shared HEAD must equal main's base. Fast-forward only. No other thread's dirty file is repaired or staged.
@@ -187,6 +247,14 @@ TMPDIR="$RESEAL_TMPDIR" python3 "$RESEAL_NOTES/reject-incomplete-checks.py" \
 ```
 
 6. **Shared writer after verified push.** Recheck all 15 old hashes; rebind/hash the writer config to fresh old/final manifests, verified pushed SHA and stat-derived acquisition UTC. Run non-test `check` immediately before `write`; require `old_baseline_bound`. The writer checks holder identity, deadline, directory mtime and shared HEAD/origin/main. It copies only seven generated files in place, preserving eight frozen files and quarantine/group bytes. Partial failure restores the seven old files and verifies all 15; report the incomplete follow-up with the already-pushed main retained. Validate shared currentness and standalone readiness with no map; save outputs and the installed 15-file manifest. Reject incomplete validators.
+After the guarded shared write, explicitly validate and prove the installed edition before taking the snapshot:
+
+```bash
+TMPDIR="$RESEAL_TMPDIR" python3 scripts/pm-event-authority-currentness.py validate
+TMPDIR="$RESEAL_TMPDIR" python3 "$RESEAL_NOTES/verify-seven-bindings.py" --root /mnt/Cursor/PuppetMaster \
+  > "$RESEAL_EVIDENCE/landing/seven-bindings-shared.json"
+```
+
 7. **Snapshot before baseline, same full tree.** In this same provisioned full worktree, fetch and assert clean HEAD equals the first pushed main, with no local currentness directory. Allocate the next free execution-date snapshot id, read actual direct Markdown count and superseded pointer, then run `snapshot-current` followed by `--record-baseline`. Pass explicit task TMPDIR and shared readiness root. Bind all 15 installed hashes before/after. The recorder's stdout is text saved as `.out`; guard the actual baseline JSON and every retained JSON report/export, never that text stdout. Reject `validator_no_output`, timeouts and phantom audit-status/widget-support rows. Retry a timeout at 1200 seconds without committing an incomplete baseline.
 
 ```bash
