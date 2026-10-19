@@ -1,0 +1,5 @@
+html[data-theme^="glass"] #sidePanelSlot :is(.panel-header,.files-panel-header,.sh-header,.sh-topbar,.sh-banner) {
+  min-width: 0;
+  padding-left: 8px !important;
+  padding-right: 8px !important;
+}

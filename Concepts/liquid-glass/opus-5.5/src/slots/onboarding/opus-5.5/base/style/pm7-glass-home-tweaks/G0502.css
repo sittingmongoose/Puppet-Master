@@ -1,0 +1,6 @@
+html[data-theme^="glass"] {
+  --pm6-glass-inset: 0px;
+  --pm-home-gap: 3px;
+  --pm-home-pad-y: 1.5px;
+  --pm-home-gap-y: 1.5px;
+}

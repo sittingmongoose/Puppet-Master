@@ -1,0 +1,17 @@
+html[data-theme^="glass"] .activity-bar,
+html[data-theme^="glass"] .activity-bar.collapsed {
+  flex: 0 0 48px !important;
+  width: 48px !important;
+  min-width: 48px !important;
+  max-width: 48px !important;
+  height: 100% !important;
+  padding: 8px 5px !important;
+  border-radius: 22px !important;
+  border: 1px solid transparent !important;
+  background:
+    linear-gradient(var(--rg-chrome), var(--rg-chrome)) padding-box,
+    linear-gradient(160deg, var(--rg-rim-soft), rgba(255,255,255,.035) 60%, var(--rg-rim-low)) border-box !important;
+  backdrop-filter: blur(24px) saturate(150%) !important;
+  -webkit-backdrop-filter: blur(24px) saturate(150%) !important;
+  box-shadow: 0 18px 38px var(--rg-shadow-soft), inset 0 1px 0 var(--rg-rim) !important;
+}

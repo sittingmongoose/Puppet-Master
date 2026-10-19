@@ -112,16 +112,7 @@ html[data-pmh-soft] #pmh-glow { display: none; }
    Every rule is scoped to the three families and leaves Retro and NieR (html[data-o55-nier]) alone. */
 
 /* --- engine tokens (read through the probe) and paint tokens --- */
-:root:is([data-theme^="basic"], [data-theme^="friendly"], [data-theme^="glass"]):not([data-o55-nier]) {
-  --pmh-pos: 1;                         /* only --pmh-x/-y are used */
-  --pmh-field: 1; --pmh-near: 1; --pmh-glow: 1; --pmh-frame: 0; --pmh-edge: .4;
-  --pmf-ease-out: cubic-bezier(.3, 0, .2, 1);
-  /* the light's falloff: a Gaussian exp(-4.5 t^2) tapered to 0 at the radius, sampled every 10 % (hand-set stops left
-     Mach rings in a warm pool). The few-% sheen shows only in the inner third; the hairline reads to about two thirds.
-     Jared's Glass review (2026-10-14, #16): the circle under the pointer was too strong and the edge glow right, so every
-     look's --pmf-sheen below is 0.6 of its 2026-10-10 value and the rim, band, mask and radius are unchanged. */
-  --pmf-mask: #000 0, rgb(0 0 0 / .956) 10%, rgb(0 0 0 / .833) 20%, rgb(0 0 0 / .663) 30%, rgb(0 0 0 / .481) 40%, rgb(0 0 0 / .317) 50%, rgb(0 0 0 / .189) 60%, rgb(0 0 0 / .1) 70%, rgb(0 0 0 / .046) 80%, rgb(0 0 0 / .015) 90%, transparent 100%;
-}
+/* @pm7-lg-slot onboarding/opus-5.5/src/css/22-hover/G0595.css */
 /* Basic: crisp. Critically damped and quick; a cool hairline over a short inner band; a small faint sheen; a tight
    plate. */
 :root[data-theme="basic-dark"]:not([data-o55-nier]) {
@@ -173,50 +164,16 @@ html[data-pmh-soft] #pmh-glow { display: none; }
 /* Glass: depth and light. A slow drift; a bright specular hairline (white into the accent in the dark, the accent in
    the light) with a medium roll-off; the strongest sheen, light through glass (accent-tinted in the light look, where
    white on white would not show); the deepest plate. */
-:root[data-theme="glass-dark"]:not([data-o55-nier]) {
-  --pmh-mag: 2.25; --pmh-mag-k: .028; --pmh-stiff: 130; --pmh-damp: 21;
-  --pmh-bleed: 20; --pmh-ramp: 20; --pmh-out-ms: 360; --pmh-glow-reach: 40;
-  --pmf-r: 96px; --pmf-band: 10px;
-  --pmf-rim: color-mix(in srgb, color-mix(in srgb, rgb(var(--accent-primary-rgb)) 45%, #fff) 85%, transparent);
-  --pmf-rim2: color-mix(in srgb, rgb(var(--accent-primary-rgb)) 38%, transparent);
-  --pmf-sheen: rgb(255 255 255 / .066);
-  --pmf-in: 140ms; --pmf-out: 360ms;
-  --pmf-plate: 0 14px 28px -12px rgba(0, 4, 14, .55);
-  --pmf-bloom: 0 0 14px rgba(var(--accent-primary-rgb), .2);
-  --pmh-glow-in-ms: 220ms; --pmh-glow-out-ms: 380ms;
-}
-:root[data-theme="glass-light"]:not([data-o55-nier]) {
-  --pmh-mag: 2.25; --pmh-mag-k: .028; --pmh-stiff: 130; --pmh-damp: 21;
-  --pmh-bleed: 20; --pmh-ramp: 20; --pmh-out-ms: 360; --pmh-glow-reach: 40;
-  --pmf-r: 96px; --pmf-band: 10px;
-  --pmf-rim: color-mix(in srgb, rgb(var(--accent-primary-rgb)) 85%, transparent);
-  --pmf-rim2: color-mix(in srgb, rgb(var(--accent-primary-rgb)) 28%, transparent);
-  --pmf-sheen: color-mix(in srgb, rgb(var(--accent-primary-rgb)) 6%, transparent);
-  --pmf-in: 140ms; --pmf-out: 360ms;
-  --pmf-plate: 0 12px 24px -12px rgba(30, 40, 60, .18);
-  --pmf-bloom: 0 0 14px rgba(var(--accent-primary-rgb), .14);
-  --pmh-glow-in-ms: 220ms; --pmh-glow-out-ms: 380ms;
-}
+/* @pm7-lg-slot onboarding/opus-5.5/src/css/22-hover/G0596.css */
+/* @pm7-lg-slot onboarding/opus-5.5/src/css/22-hover/G0597.css */
 /* kinds: tiles lean and glow less, rows take the light and a token of the magnet but no plate, icons nothing (they keep
    their own quiet hover tint; a lean on a 24-32 px button moves the click target) */
-:root:is([data-theme^="basic"], [data-theme^="friendly"], [data-theme^="glass"]):not([data-o55-nier]) [data-pmh-kind="tile"] { --pmh-mag-gain: .7; }
-:root:is([data-theme^="basic"], [data-theme^="friendly"], [data-theme^="glass"]):not([data-o55-nier]) [data-pmh-kind="row"] { --pmh-mag-gain: .35; --pmh-glow: 0; }
-:root:is([data-theme^="basic"], [data-theme^="friendly"], [data-theme^="glass"]):not([data-o55-nier]) [data-pmh-kind="icon"] { --pmh-mag-gain: 0; --pmh-field: 0; --pmh-near: 0; --pmh-glow: 0; --pmh-frame: 0; }
+/* @pm7-lg-slot onboarding/opus-5.5/src/css/22-hover/G0598.css */
+/* @pm7-lg-slot onboarding/opus-5.5/src/css/22-hover/G0599.css */
+/* @pm7-lg-slot onboarding/opus-5.5/src/css/22-hover/G0600.css */
 
 /* --- the light: one ::after per card, tile and row, always present (opacity 0 at rest), under the content --- */
-:root:is([data-theme^="basic"], [data-theme^="friendly"], [data-theme^="glass"]):not([data-o55-nier]) :is([data-pmh-kind="card"], [data-pmh-kind="tile"], [data-pmh-kind="row"]):not(.pmu-card)::after {
-  content: ""; position: absolute; inset: 0; z-index: -1; pointer-events: none; border-radius: inherit;
-  /* pre-painted: the sheen is the layer's flat tint, the hairline an inset line plus a soft inset band that follow any
-     border radius; only the mask moves with the pointer */
-  background: var(--pmf-sheen);
-  box-shadow: inset 0 0 0 1px var(--pmf-rim), inset 0 0 var(--pmf-band) 0 var(--pmf-rim2);
-  -webkit-mask: radial-gradient(circle var(--pmf-r) at var(--pmh-x) var(--pmh-y), var(--pmf-mask)) no-repeat;
-          mask: radial-gradient(circle var(--pmf-r) at var(--pmh-x) var(--pmh-y), var(--pmf-mask)) no-repeat;
-  opacity: var(--pmh-i);
-  /* going dark: the engine removes --pmh-i and the position together; the light fades where it was, and the position
-     falls back to its initial value only once the fade is over (a zero-length transition after a delay) */
-  transition: opacity var(--pmf-out) var(--pmf-ease-out), --pmh-x 0s linear var(--pmf-out), --pmh-y 0s linear var(--pmf-out);
-}
+/* @pm7-lg-slot onboarding/opus-5.5/src/css/22-hover/G0601.css */
 :root:is([data-theme^="basic"], [data-theme^="friendly"], [data-theme^="glass"]):not([data-o55-nier]) :is([data-pmh-kind="card"], [data-pmh-kind="tile"], [data-pmh-kind="row"]):not(.pmu-card):is(.pmh-on, .pmh-near)::after {
   transition: opacity var(--pmf-in) linear;
 }
@@ -231,11 +188,11 @@ html[data-pmh-soft] #pmh-glow { display: none; }
   --pmf-rim2: color-mix(in srgb, color-mix(in srgb, var(--pm6-sheen-accent, var(--accent-primary)) 70%, #f07a55) 50%, transparent);
 }
 /* smaller boxes take a smaller light (a row is a strip; the card radius would light all of it) */
-:root:is([data-theme^="basic"], [data-theme^="friendly"], [data-theme^="glass"]):not([data-o55-nier]) [data-pmh-kind="tile"]::after { --pmf-r: 64px; }
-:root:is([data-theme^="basic"], [data-theme^="friendly"], [data-theme^="glass"]):not([data-o55-nier]) [data-pmh-kind="row"]::after { --pmf-r: 56px; }
+/* @pm7-lg-slot onboarding/opus-5.5/src/css/22-hover/G0603.css */
+/* @pm7-lg-slot onboarding/opus-5.5/src/css/22-hover/G0604.css */
 
 /* --- the plate: elevation plus half bloom, pre-painted on the rest-rect proxy; only its opacity moves --- */
-:root:is([data-theme^="basic"], [data-theme^="friendly"], [data-theme^="glass"]):not([data-o55-nier]) #pmh-glow > i { box-shadow: var(--pmf-plate), var(--pmf-bloom); }
+/* @pm7-lg-slot onboarding/opus-5.5/src/css/22-hover/G0605.css */
 :root:is([data-theme^="basic"], [data-theme^="friendly"], [data-theme^="glass"]):not([data-o55-nier]) #pmh-glow > i[data-pmh-kind="tile"] {
   box-shadow: 0 4px 10px -5px rgba(0, 0, 0, .28), var(--pmf-bloom);
 }
@@ -255,9 +212,7 @@ html[data-theme^="glass"]:not([data-o55-nier]) .pm6-dash-card.pm6-dash-card[data
 
 /* --- Reduced Motion: no magnet and no following light (the engine). The state still reads at once: the whole
    hairline at half strength, no sheen, and the plate (the base patch already makes every transition none). --- */
-:root[data-motion="reduced"]:is([data-theme^="basic"], [data-theme^="friendly"], [data-theme^="glass"]):not([data-o55-nier]) :is([data-pmh-kind="card"], [data-pmh-kind="tile"], [data-pmh-kind="row"]):not(.pmu-card)::after {
-  -webkit-mask: none; mask: none; background: none; opacity: calc(var(--pmh-i) * .5); transition: none;
-}
+/* @pm7-lg-slot onboarding/opus-5.5/src/css/22-hover/G0608.css */
 @media (prefers-reduced-motion: reduce) {
   :root:is([data-theme^="basic"], [data-theme^="friendly"], [data-theme^="glass"]):not([data-o55-nier]) :is([data-pmh-kind="card"], [data-pmh-kind="tile"], [data-pmh-kind="row"]):not(.pmu-card)::after {
     -webkit-mask: none; mask: none; background: none; opacity: calc(var(--pmh-i) * .5); transition: none;

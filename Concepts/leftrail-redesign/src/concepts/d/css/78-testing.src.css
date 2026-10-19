@@ -60,7 +60,7 @@
 §R { --lf-tx: 100%; --lf-gl: 100%; }
 §R[data-theme$="-light"] { --lf-tx: 42%; --lf-gl: 58%; }
 §R[data-theme^="friendly"][data-theme$="-light"] { --lf-tx: 36%; }
-§R[data-theme^="glass"][data-theme$="-light"] { --lf-tx: 30%; --lf-gl: 50%; }
+/* @pm7-lg-slot leftrail-redesign/src/concepts/d/css/78-testing.src/G0780.css */
 §R[data-o55-nier="on"][data-theme$="-light"] { --lf-tx: 36%; --lf-gl: 48%; }
 §R[data-o55-nier="on"][data-theme$="-dark"] { --lf-tx: 40%; --lf-gl: 66%; }
 §{light}@testing [data-d-st], §{light}@agents [data-d-st], §{nier,dark}@testing [data-d-st], §{nier,dark}@agents [data-d-st] {

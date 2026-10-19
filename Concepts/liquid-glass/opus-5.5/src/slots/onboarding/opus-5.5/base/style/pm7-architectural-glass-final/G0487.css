@@ -1,0 +1,14 @@
+html[data-theme^="glass"] .title-bar #themeMenuWrap[data-mode="icon"] .pm6-tb-menu-trigger,
+html[data-theme^="glass"] .title-bar #projectMenuWrap[data-mode="icon"] .pm6-tb-menu-trigger,
+html[data-theme^="glass"] .title-bar #themeMenuWrap[data-mode="icon"] > button,
+html[data-theme^="glass"] .title-bar #projectMenuWrap[data-mode="icon"] > button {
+  min-width: 28px !important;
+  min-height: 28px !important;
+  width: 28px !important;
+  height: 28px !important;
+  padding: 5px !important;
+  box-sizing: border-box !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}

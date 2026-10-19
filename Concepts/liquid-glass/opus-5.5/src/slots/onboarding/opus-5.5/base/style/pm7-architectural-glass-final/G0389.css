@@ -1,0 +1,17 @@
+html[data-theme^="glass"] {
+  --body-font: "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --display-font: "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --radius-xs: 4px;
+  --radius-sm: 7px;
+  --radius-md: 11px;
+  --radius-lg: 15px;
+  --radius-xl: 21px;
+  --border-radius: 12px;
+  --pm-home-gap: 6px;
+  --pm-home-gap-y: 6px;
+  --pm-home-pad-y: 2px;
+  --grid-gap: 8px;
+  --rg-menu: rgba(24, 18, 36, .93);
+  --rg-menu-item: rgba(255,255,255,.055);
+  --rg-menu-hover: rgba(255,255,255,.105);
+}

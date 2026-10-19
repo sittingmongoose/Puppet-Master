@@ -85,36 +85,8 @@ html[data-theme="friendly-light"] .pmw-ed {
 /* Glass: the reading plate under code is kept at least about 82 % opaque over the wallpaper, and nothing here adds a
    blur (the closed blur budget): the header plate is the gutter tone made opaque instead, so a line scrolled under
    the header row never reads through it */
-html[data-theme="glass-dark"] .pmw-ed {
-  --pmw-ed-plate: rgb(16, 12, 28);
-  --pmw-ed-bg: rgba(12, 9, 22, .42);
-  --pmw-ed-gutbg: rgba(16, 12, 28, .95);
-  --pmw-ed-fg: #c0caf5;
-  --pmw-ed-hit: color-mix(in srgb, #e0af68 26%, transparent); --pmw-ed-hit-cur: color-mix(in srgb, #e0af68 50%, transparent);
-  --pmw-ed-hit-ring: #e0af68; --pmw-ed-hit-mark: #e0af68;
-  --pmw-ed-add-fg: #9ece6a; --pmw-ed-mod-fg: #7aa2f7; --pmw-ed-del-fg: #f7768e; --pmw-ed-conf-fg: #ff9e64;
-  --pmw-ed-s-kw: #bb9af7; --pmw-ed-s-str: #9ece6a; --pmw-ed-s-com: #848ebb; --pmw-ed-s-fn: #7aa2f7; --pmw-ed-s-ty: #2ac3de;
-  --pmw-ed-s-num: #ff9e64; --pmw-ed-s-op: #89ddff; --pmw-ed-s-pun: #9abdf5; --pmw-ed-s-prop: #73daca; --pmw-ed-s-attr: #bb9af7;
-  --pmw-ed-s-mac: #7dcfff; --pmw-ed-s-tag: #f7768e; --pmw-ed-s-esc: #b4f9f8; --pmw-ed-s-head: #7aa2f7; --pmw-ed-s-link: #73daca;
-  --pmw-ed-s-var: #e0af68; --pmw-ed-s-code: #b4f9f8;
-}
-html[data-theme="glass-light"] .pmw-ed {
-  --pmw-ed-plate: rgb(240, 243, 243);
-  --pmw-ed-bg: rgba(238, 242, 242, .70);
-  --pmw-ed-gutbg: rgba(240, 243, 243, .96);
-  --pmw-ed-fg: #343b58;
-  --pmw-ed-hit: color-mix(in srgb, #8f5e15 20%, transparent); --pmw-ed-hit-cur: color-mix(in srgb, #8f5e15 36%, transparent);
-  --pmw-ed-hit-ring: #8f5e15; --pmw-ed-hit-mark: #b8811f;
-  --pmw-ed-mm-alpha: .34;
-  --pmw-ed-add-fg: #506c30; --pmw-ed-mod-fg: #0761ca; --pmw-ed-del-fg: #ca0045; --pmw-ed-conf-fg: #a14d00;
-  --pmw-ed-add-bg: color-mix(in srgb, var(--pmw-ed-add-fg) 11%, transparent);
-  --pmw-ed-mod-bg: color-mix(in srgb, var(--pmw-ed-mod-fg) 8%, transparent);
-  --pmw-ed-del-bg: color-mix(in srgb, var(--pmw-ed-del-fg) 9%, transparent);
-  --pmw-ed-s-kw: #823ad7; --pmw-ed-s-str: #506c30; --pmw-ed-s-com: #5c6389; --pmw-ed-s-fn: #0761ca; --pmw-ed-s-ty: #006e80;
-  --pmw-ed-s-num: #a14d00; --pmw-ed-s-op: #006a83; --pmw-ed-s-pun: #52629e; --pmw-ed-s-prop: #356d65; --pmw-ed-s-attr: #823ad7;
-  --pmw-ed-s-mac: #006d92; --pmw-ed-s-tag: #ca0045; --pmw-ed-s-esc: #2e5857; --pmw-ed-s-head: #0761ca; --pmw-ed-s-link: #356d65;
-  --pmw-ed-s-var: #7e5f31; --pmw-ed-s-code: #2e5857;
-}
+/* @pm7-lg-slot home-redesign/src/panels/css/60-kind-editor/G0840.css */
+/* @pm7-lg-slot home-redesign/src/panels/css/60-kind-editor/G0841.css */
 /* Retro: monochrome phosphor (dark) and paper teletype (light) like the terminal's default schemes (D15); the diff
    keeps its own colours so added and removed lines still read apart; selection is reverse video */
 html[data-theme^="retro"] .pmw-ed {
@@ -221,7 +193,7 @@ html[data-o55-nier="on"] .pmw-ed {
   background: var(--pmw-ed-plate);
   -webkit-backdrop-filter: blur(11px) saturate(140%); backdrop-filter: blur(11px) saturate(140%);
 }
-html[data-theme^="glass"] .pmw-ed-head, html[data-o55-nier="on"] .pmw-ed-head { -webkit-backdrop-filter: none; backdrop-filter: none; }
+/* @pm7-lg-slot home-redesign/src/panels/css/60-kind-editor/G0842.css */
 .pmw-ed-head .pmw-hrow { background: transparent; }
 .pmw-ed-crumbs { display: flex; align-items: center; min-width: 0; gap: 1px; overflow: hidden; white-space: nowrap; font-size: 12px; color: var(--pmw-text-2); }
 .pmw-ed-seg { flex: 0 1 auto; min-width: 0; overflow: hidden; text-overflow: ellipsis; }
@@ -412,15 +384,8 @@ html[data-theme="friendly-light"] .pmw-ed {
   --pmw-ed-bp-0: #a75a00; --pmw-ed-bp-1: #8839ef; --pmw-ed-bp-2: #1b63f1; --pmw-ed-bp-3: #007a81; --pmw-ed-bp-4: #187f00; --pmw-ed-bp-5: #d20f39;
   --pmw-ed-guide: color-mix(in srgb, var(--pmw-ed-fg) 16%, transparent); --pmw-ed-ws: color-mix(in srgb, var(--pmw-ed-fg) 38%, transparent);
 }
-html[data-theme="glass-dark"] .pmw-ed {
-  --pmw-ed-bp-0: #e0af68; --pmw-ed-bp-1: #bb9af7; --pmw-ed-bp-2: #7aa2f7; --pmw-ed-bp-3: #7dcfff; --pmw-ed-bp-4: #9ece6a; --pmw-ed-bp-5: #f7768e;
-  --pmw-ed-dim: .72;
-}
-html[data-theme="glass-light"] .pmw-ed {
-  --pmw-ed-bp-0: #8f5e15; --pmw-ed-bp-1: #823ad7; --pmw-ed-bp-2: #0761ca; --pmw-ed-bp-3: #006d92; --pmw-ed-bp-4: #506c30; --pmw-ed-bp-5: #ca0045;
-  --pmw-ed-guide: color-mix(in srgb, var(--pmw-ed-fg) 16%, transparent); --pmw-ed-ws: color-mix(in srgb, var(--pmw-ed-fg) 40%, transparent);
-  --pmw-ed-dim: .72;
-}
+/* @pm7-lg-slot home-redesign/src/panels/css/60-kind-editor/G0843.css */
+/* @pm7-lg-slot home-redesign/src/panels/css/60-kind-editor/G0844.css */
 /* Retro: monochrome, so a bracket's depth is a brightness step and the guides are the phosphor at three strengths */
 html[data-theme="retro-dark"] .pmw-ed {
   --pmw-ed-bp-0: #e6ffd9; --pmw-ed-bp-1: #a3f08f; --pmw-ed-bp-2: #6fd25c; --pmw-ed-bp-3: #e6ffd9; --pmw-ed-bp-4: #a3f08f; --pmw-ed-bp-5: #6fd25c;

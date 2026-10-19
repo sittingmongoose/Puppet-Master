@@ -1,0 +1,3 @@
+html[data-theme="glass-light"]:not([data-o55-nier="on"]) .pmw-ink-row {
+  --pmw-ink-fill: linear-gradient(var(--glass-edge), var(--glass-edge)) 0 0 / 100% 1px no-repeat, var(--pm6-glass-plate, var(--pm6-glass-step-3));
+  --pmw-ink-hover: var(--pm6-glass-step-2); }

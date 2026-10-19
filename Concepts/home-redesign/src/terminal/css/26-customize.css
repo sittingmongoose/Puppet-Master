@@ -625,7 +625,7 @@ html[data-lg="on"][data-theme^="glass"] .pmt-cz :is(.pmt-cz-set, .pmt-cz-try .pm
 .pmt-cz { --pmt-cz-accent-hover: color-mix(in srgb, var(--pmt-cz-accent) 86%, #fff); }
 .pmt-cz[data-pmt-mode="light"] { --pmt-cz-accent-hover: color-mix(in srgb, var(--pmt-cz-accent) 86%, #000); }
 html[data-theme="friendly-light"]:not([data-o55-nier="on"]) .pmt-cz { --pmt-cz-on-accent: #17151b; --pmt-cz-accent-hover: color-mix(in srgb, var(--pmt-cz-accent) 86%, #fff); }
-html[data-theme="glass-light"]:not([data-o55-nier="on"]) .pmt-cz { --pmt-cz-on-accent: #fff; }
+/* @pm7-lg-slot home-redesign/src/terminal/css/26-customize/G0865.css */
 /* a placeholder is text: the second tier, not the browser's grey (#757575 read 2.7-4.4:1) */
 .pmt-cz .pmt-cz-search::placeholder { color: var(--pmw-text-2, var(--text-secondary)); opacity: 1; }
 /* on a chosen tile, a lit chip or a pressed set the quieter words take the full ink: the fill under them is a step off

@@ -1,0 +1,7 @@
+html[data-theme^="glass"] .activity-bar .icon.active::before {
+  border-radius: 999px !important;
+  width: 3px !important;
+  left: -5px !important;
+  background: var(--accent-blue) !important;
+  box-shadow: 0 0 12px var(--accent-blue) !important;
+}

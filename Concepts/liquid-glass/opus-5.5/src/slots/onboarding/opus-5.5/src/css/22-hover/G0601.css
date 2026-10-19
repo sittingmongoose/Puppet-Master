@@ -1,0 +1,13 @@
+:root:is([data-theme^="basic"], [data-theme^="friendly"], [data-theme^="glass"]):not([data-o55-nier]) :is([data-pmh-kind="card"], [data-pmh-kind="tile"], [data-pmh-kind="row"]):not(.pmu-card)::after {
+  content: ""; position: absolute; inset: 0; z-index: -1; pointer-events: none; border-radius: inherit;
+  /* pre-painted: the sheen is the layer's flat tint, the hairline an inset line plus a soft inset band that follow any
+     border radius; only the mask moves with the pointer */
+  background: var(--pmf-sheen);
+  box-shadow: inset 0 0 0 1px var(--pmf-rim), inset 0 0 var(--pmf-band) 0 var(--pmf-rim2);
+  -webkit-mask: radial-gradient(circle var(--pmf-r) at var(--pmh-x) var(--pmh-y), var(--pmf-mask)) no-repeat;
+          mask: radial-gradient(circle var(--pmf-r) at var(--pmh-x) var(--pmh-y), var(--pmf-mask)) no-repeat;
+  opacity: var(--pmh-i);
+  /* going dark: the engine removes --pmh-i and the position together; the light fades where it was, and the position
+     falls back to its initial value only once the fade is over (a zero-length transition after a delay) */
+  transition: opacity var(--pmf-out) var(--pmf-ease-out), --pmh-x 0s linear var(--pmf-out), --pmh-y 0s linear var(--pmf-out);
+}

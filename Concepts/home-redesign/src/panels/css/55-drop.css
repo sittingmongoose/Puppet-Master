@@ -169,16 +169,7 @@ html[data-theme^="basic"] .pmw-guide-tile[data-on], html[data-theme^="basic"] .p
 html[data-theme^="basic"] .pmw-guide-cap[data-swap] { transition: translate 190ms cubic-bezier(.2, .8, .2, 1); }
 
 /* Glass: frosted tiles with the slab's specular rim along the top; the lit tile is the selection glass */
-html[data-theme^="glass"] #pmw-overlay {
-  --pmw-guide-r: 12px;
-  --pmw-guide-map-r: 3px;
-  --pmw-guide-bg: var(--lg-tint-menu, color-mix(in srgb, var(--pmw-pop) 82%, transparent));
-  --pmw-guide-line: var(--rg-rim-low, rgba(255, 255, 255, .14));
-  --pmw-guide-on: var(--lg-sel, color-mix(in srgb, var(--pmw-accent) 70%, transparent));
-  --pmw-guide-on-ink: var(--lg-on-sel, #FFFFFF);
-  --pmw-guide-glow: color-mix(in srgb, var(--lg-sel, var(--pmw-accent)) 60%, transparent);
-  --pmw-guide-shadow: 0 12px 30px -12px var(--lg-shadow, rgba(0, 2, 12, .55)), 0 3px 8px -3px var(--lg-shadow-near, rgba(0, 2, 12, .3));
-}
+/* @pm7-lg-slot home-redesign/src/panels/css/55-drop/G0811.css */
 html[data-theme^="glass"] .pmw-guide-tile, html[data-theme^="glass"] .pmw-dock {
   box-shadow: inset 0 1px 0 var(--lg-edge-top, rgba(255, 255, 255, .3)), inset 0 -1px 0 var(--lg-edge-bot, rgba(0, 0, 0, .25)),
     0 0 0 1px var(--pmw-guide-line), var(--pmw-guide-shadow);
@@ -406,15 +397,7 @@ html[data-theme^="friendly"] .pmw-dv-ghost.is-in .pmw-dv-ghost-mark { animation:
 html[data-theme^="friendly"] .pmw-dv-hole { border-width: 2px; }
 
 /* Glass: a pane of the slab's glass, its rim lit, the selection glass glowing through */
-html[data-theme^="glass"] #pm-home-centre {
-  --pmw-dv-tint: color-mix(in srgb, var(--lg-sel, var(--pmw-accent)) 22%, var(--lg-tint-panel, var(--pmw-strip)));
-  --pmw-dv-tint-2: color-mix(in srgb, var(--lg-sel, var(--pmw-accent)) 8%, var(--lg-tint-panel, var(--pmw-strip)));
-  --pmw-dv-ring: color-mix(in srgb, var(--lg-sel, var(--pmw-accent)) 85%, #fff);
-  --pmw-dv-tab: color-mix(in srgb, var(--lg-sel, var(--pmw-accent)) 30%, var(--lg-tint-card, var(--pmw-surface)));
-  --pmw-dv-glow: 0 24px 56px -22px var(--lg-shadow, rgba(0, 2, 12, .55)), 0 0 44px -6px color-mix(in srgb, var(--lg-sel, var(--pmw-accent)) 55%, transparent);
-  --pmw-dv-sheen: rgba(255, 255, 255, .22);
-  --pmw-dv-veil: color-mix(in srgb, var(--lg-sel, var(--pmw-accent)) 16%, transparent);
-}
+/* @pm7-lg-slot home-redesign/src/panels/css/55-drop/G0817.css */
 html[data-theme^="glass"] .pmw-dv-ghost {
   box-shadow: inset 0 1px 0 var(--lg-edge-top, rgba(255, 255, 255, .45)), inset 0 0 0 1px var(--pmw-dv-ring),
     inset 0 -1px 0 var(--lg-edge-bot, rgba(0, 0, 0, .25)), var(--pmw-dv-glow);

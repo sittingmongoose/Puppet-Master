@@ -1,0 +1,8 @@
+html[data-theme^="glass"] #pm7GlobalStatusBar.pm7-statusbar,
+html[data-theme^="glass"] .pm7-statusbar {
+  left: -1px !important;
+  bottom: -1px !important;
+  width: calc(100% + 2px) !important;
+  margin: 0 !important;
+  border-radius: 0 !important;
+}

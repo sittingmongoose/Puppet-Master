@@ -1,0 +1,13 @@
+html[data-theme="glass-dark"] .pmw-ed {
+  --pmw-ed-plate: rgb(16, 12, 28);
+  --pmw-ed-bg: rgba(12, 9, 22, .42);
+  --pmw-ed-gutbg: rgba(16, 12, 28, .95);
+  --pmw-ed-fg: #c0caf5;
+  --pmw-ed-hit: color-mix(in srgb, #e0af68 26%, transparent); --pmw-ed-hit-cur: color-mix(in srgb, #e0af68 50%, transparent);
+  --pmw-ed-hit-ring: #e0af68; --pmw-ed-hit-mark: #e0af68;
+  --pmw-ed-add-fg: #9ece6a; --pmw-ed-mod-fg: #7aa2f7; --pmw-ed-del-fg: #f7768e; --pmw-ed-conf-fg: #ff9e64;
+  --pmw-ed-s-kw: #bb9af7; --pmw-ed-s-str: #9ece6a; --pmw-ed-s-com: #848ebb; --pmw-ed-s-fn: #7aa2f7; --pmw-ed-s-ty: #2ac3de;
+  --pmw-ed-s-num: #ff9e64; --pmw-ed-s-op: #89ddff; --pmw-ed-s-pun: #9abdf5; --pmw-ed-s-prop: #73daca; --pmw-ed-s-attr: #bb9af7;
+  --pmw-ed-s-mac: #7dcfff; --pmw-ed-s-tag: #f7768e; --pmw-ed-s-esc: #b4f9f8; --pmw-ed-s-head: #7aa2f7; --pmw-ed-s-link: #73daca;
+  --pmw-ed-s-var: #e0af68; --pmw-ed-s-code: #b4f9f8;
+}

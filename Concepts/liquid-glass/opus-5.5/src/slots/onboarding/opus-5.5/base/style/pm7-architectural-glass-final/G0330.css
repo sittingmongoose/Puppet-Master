@@ -1,0 +1,5 @@
+html[data-theme^="glass"] #leftPanelResizer::before {
+  width: 2px !important;
+  border-radius: 999px !important;
+  background: var(--rg-rim-soft) !important;
+}

@@ -1,0 +1,3 @@
+html[data-theme="glass-dark"] :is(#pm-home-centre, #pmw-overlay, #pmw-chat, .pmw-scope) {
+  --pmw-text-3: color-mix(in srgb, var(--text-muted) 72%, var(--text-primary));
+}

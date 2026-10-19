@@ -1,0 +1,3 @@
+:root[data-motion="reduced"]:is([data-theme^="basic"], [data-theme^="friendly"], [data-theme^="glass"]):not([data-o55-nier]) :is([data-pmh-kind="card"], [data-pmh-kind="tile"], [data-pmh-kind="row"]):not(.pmu-card)::after {
+  -webkit-mask: none; mask: none; background: none; opacity: calc(var(--pmh-i) * .5); transition: none;
+}

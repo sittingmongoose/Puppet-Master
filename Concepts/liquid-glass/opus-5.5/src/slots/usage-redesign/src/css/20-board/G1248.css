@@ -1,0 +1,3 @@
+html[data-theme^="glass"] #panel-usage .pmu-card:not([data-head="band"])::after { content: ""; position: absolute; inset: calc(-1 * var(--pmu-bw)); border-radius: inherit; pointer-events: none;
+  padding: 1px; background: linear-gradient(180deg, rgba(255,255,255,.34), rgba(255,255,255,.08) 40%, rgba(255,255,255,.04));
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0); -webkit-mask-composite: xor; mask-composite: exclude; }

@@ -1,0 +1,9 @@
+html[data-theme^="glass"] #sidePanelSlot {
+  flex: 0 0 auto !important;
+  width: var(--files-panel-w, 280px) !important;
+  min-width: 240px !important;
+  max-width: min(480px, 50vw) !important;
+  border-radius: 16px !important;
+  overflow: visible !important;
+  transition: width var(--motion-med) var(--ease-out) !important;
+}

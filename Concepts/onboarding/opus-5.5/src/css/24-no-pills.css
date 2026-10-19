@@ -22,9 +22,7 @@ html[data-theme^="friendly"] .pm6-tb-menu-item { border-radius: var(--pm-ctl-r) 
 html[data-theme] .title-bar .project-dropdown { border-radius: var(--pm-ctl-r) !important; }
 html[data-theme] .title-bar .page-tabs .page-tab, html[data-theme] .title-bar .page-tab-ink { border-radius: var(--pm-ctl-r) !important; }
 html[data-theme^="glass"] .title-bar .page-tabs { border-radius: calc(var(--pm-ctl-r) + 2px) !important; }
-html[data-theme^="glass"] .title-bar .page-tab-ink {
-  background: linear-gradient(180deg, color-mix(in srgb, #6A4BE5 78%, #3A2470) 0%, color-mix(in srgb, #6A4BE5 52%, #241450) 100%) !important;
-}
+/* @pm7-lg-slot onboarding/opus-5.5/src/css/24-no-pills/G0624.css */
 html[data-theme] .title-bar .search-bar, html[data-theme] .title-bar .pm6-tb-search-wrap .search-bar { border-radius: var(--pm-ctl-r) !important; }
 /* Friendly floats the title bar as a card with its large card corner (20px), which on a 40px bar is a capsule; it takes
    Glass's floating-bar corner instead, still soft and well under half its height. */

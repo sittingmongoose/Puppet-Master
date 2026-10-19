@@ -15,15 +15,8 @@
 html { --pm-tt-chosen: color-mix(in srgb, var(--text-primary) 11%, transparent); --pm-tt-hover: color-mix(in srgb, var(--text-primary) 5%, transparent); }
 html[data-theme="basic-light"] { --pm-tt-chosen: color-mix(in srgb, var(--text-primary) 17%, transparent); }
 html[data-theme="friendly-light"] { --pm-tt-chosen: color-mix(in srgb, var(--text-primary) 20%, transparent); }
-html[data-theme^="glass"] {
-  --pm-tt-chosen: linear-gradient(var(--glass-edge), var(--glass-edge)) 0 0 / 100% 1px no-repeat, linear-gradient(var(--pm6-glass-step-3), var(--pm6-glass-step-3));
-  --pm-tt-hover: var(--pm6-glass-step-1);
-}
-html[data-theme="glass-light"] {
-  --pm-tt-chosen: linear-gradient(var(--glass-edge), var(--glass-edge)) 0 0 / 100% 1px no-repeat,
-    linear-gradient(var(--pm6-glass-plate, var(--pm6-glass-step-3)), var(--pm6-glass-plate, var(--pm6-glass-step-3)));
-  --pm-tt-hover: var(--pm6-glass-step-2);
-}
+/* @pm7-lg-slot onboarding/opus-5.5/src/css/28-theme-menu-chosen/G0733.css */
+/* @pm7-lg-slot onboarding/opus-5.5/src/css/28-theme-menu-chosen/G0734.css */
 html:not([data-lg="on"]):not([data-o55-nier="on"]):is([data-theme^="basic"], [data-theme^="friendly"], [data-theme^="glass"]) .pm6-tt-mode[aria-checked="true"] {
   background: var(--pm-tt-chosen); color: var(--text-primary);
 }

@@ -1,0 +1,8 @@
+html[data-theme^="glass"] .center-column,
+html[data-theme^="glass"] #center-row,
+html[data-theme^="glass"] .content-wrapper,
+html[data-theme^="glass"] .primary-content {
+  min-width: 0 !important;
+  min-height: 0 !important;
+  background: transparent !important;
+}

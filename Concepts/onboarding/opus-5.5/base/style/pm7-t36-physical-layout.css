@@ -234,11 +234,4 @@
 /* The canonical status zone spans the application layout on every primary
    page.  Glass keeps its material recipe but not the superseded floating
    side/bottom inset. */
-html[data-theme^="glass"] #pm7GlobalStatusBar.pm7-statusbar,
-html[data-theme^="glass"] .pm7-statusbar {
-  left: -1px !important;
-  bottom: -1px !important;
-  width: calc(100% + 2px) !important;
-  margin: 0 !important;
-  border-radius: 0 !important;
-}
+/* @pm7-lg-slot onboarding/opus-5.5/base/style/pm7-t36-physical-layout/G0555.css */

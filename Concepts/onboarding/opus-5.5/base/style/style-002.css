@@ -363,91 +363,9 @@
        family; interior structure = transparency steps (see theme-glass).
        Every fill derives from --glass-alpha (transparency slider).
        ==================================================================== */
-    [data-theme="glass-dark"] {
-      --background: #241B36;
-      --glass-tint-rgb: 46,34,72;
-      --glass-alpha: .60;
-      --surface: rgba(var(--glass-tint-rgb), var(--glass-alpha));
-      --surface-elevated: rgba(58,44,88, calc(var(--glass-alpha) + .08));
-      --text-primary: #EDE7F8;
-      --text-secondary: #CFC5E6;
-      --text-muted: rgba(237,231,248,.55);
-      --border: rgba(255,255,255,.14);
-      --border-light: rgba(255,255,255,.08);
-      --accent-blue: #B79CFF;
-      --accent-magenta: #E58BC8;
-      --accent-lime: #8FD9A5;
-      --accent-orange: #F3B266;
-      --accent-warning: #F6C888;
-      --accent-error: #F0879B;
-      --accent-primary-rgb: 183,156,255;
-      --graph-pending: rgba(207,197,230,.55);
-      --graph-running: #F3B266;
-      --graph-passed: #8FD9A5;
-      --graph-failed: #F0879B;
-      --graph-planning: #93A2F2;
-      --graph-gating: #E58BC8;
-      --shadow: 0 8px 24px rgba(10,5,25,.45);
-      --elev-1: 0 2px 8px rgba(10,5,25,.35);
-      --elev-2: 0 8px 24px rgba(10,5,25,.45);
-      --elev-3: 0 16px 44px rgba(10,5,25,.55);
-      --glass-edge: rgba(255,255,255,.40);
-      --glass-hairline: rgba(255,255,255,.16);
-      --display-font: 'Inter', system-ui, sans-serif;
-      --body-font: 'Inter', system-ui, sans-serif;
-      --border-radius: 14px;
-      --border-width: 0px;
-      --base-font-size: 14px;
-      --line-height: 1.5;
-      --letter-spacing: 0.01em;
-      --grid-gap: 24px;
-      --ease-default: var(--ease-out);
-      --motion-med: 320ms;
-      --sheen-dur: .7s;
-    }
+    /* @pm7-lg-slot onboarding/opus-5.5/base/style/style-002/G0001.css */
 
-    [data-theme="glass-light"] {
-      --background: #E4CDE4;
-      --glass-tint-rgb: 246,240,255;
-      --glass-alpha: .55;
-      --surface: rgba(var(--glass-tint-rgb), var(--glass-alpha));
-      --surface-elevated: rgba(var(--glass-tint-rgb), calc(var(--glass-alpha) + .18));
-      --text-primary: #453A5C;
-      --text-secondary: rgba(69,58,92,.75);
-      --text-muted: rgba(69,58,92,.55);
-      --border: rgba(69,58,92,.16);
-      --border-light: rgba(69,58,92,.09);
-      --accent-blue: #8B6ED9;
-      --accent-magenta: #C167B4;
-      --accent-lime: #3E7D4E;
-      --accent-orange: #B26A2A;
-      --accent-warning: #8F6410;
-      --accent-error: #C0566B;
-      --accent-primary-rgb: 139,110,217;
-      --graph-pending: rgba(69,58,92,.40);
-      --graph-running: #B26A2A;
-      --graph-passed: #3E7D4E;
-      --graph-failed: #C0566B;
-      --graph-planning: #7E8BE0;
-      --graph-gating: #C167B4;
-      --shadow: 0 8px 24px rgba(93,63,133,.16);
-      --elev-1: 0 2px 8px rgba(93,63,133,.10);
-      --elev-2: 0 8px 24px rgba(93,63,133,.16);
-      --elev-3: 0 16px 44px rgba(93,63,133,.22);
-      --glass-edge: rgba(255,255,255,.95);
-      --glass-hairline: rgba(255,255,255,.55);
-      --display-font: 'Inter', system-ui, sans-serif;
-      --body-font: 'Inter', system-ui, sans-serif;
-      --border-radius: 14px;
-      --border-width: 0px;
-      --base-font-size: 14px;
-      --line-height: 1.5;
-      --letter-spacing: 0.01em;
-      --grid-gap: 20px;
-      --ease-default: var(--ease-out);
-      --motion-med: 320ms;
-      --sheen-dur: .7s;
-    }
+    /* @pm7-lg-slot onboarding/opus-5.5/base/style/style-002/G0002.css */
 
     /* ====================================================================
        THEMES 7 & 8 - FRIENDLY DARK (DEFAULT) / FRIENDLY LIGHT — "COZY"
@@ -700,37 +618,7 @@
     /* Safety token definitions — theme-tokens owns the canonical :root
        copies; values here are the glass-dark set and are overridden per
        variant in the glass-b block. */
-    [data-theme^="glass"] {
-      --glass-alpha: .60;
-      --glass-tint-rgb: 46, 34, 72;
-      --panel-blur: 16px;
-      --panel-blur-sm: 10px;
-      --glass-edge: rgba(255, 255, 255, .40);
-      --glass-hairline: rgba(255, 255, 255, .16);
-      --motion-fast: 120ms;
-      --motion-med: 320ms;
-      --ease-out: cubic-bezier(.22, 1, .36, 1);
-      --pm6-glass-a-rgb: 183, 156, 255;
-      --pm6-glass-b-rgb: 229, 139, 200;
-      --pm6-glass-sat: 1.6;
-      --pm6-glass-floor: rgba(255, 255, 255, .10);
-      --pm6-glass-drop: 0 12px 30px rgba(10, 5, 25, .45);
-      /* pane material (the one slab) */
-      --pm6-glass-pane-edge: rgba(255, 255, 255, .28);
-      --pm6-glass-pane-k1: .73;
-      --pm6-glass-pane-k2: .57;
-      --pm6-glass-pane-k3: .67;
-      --pm6-glass-pane-shadow: rgba(10, 5, 25, .60);
-      --pm6-glass-pane-shadow2: rgba(10, 5, 25, .40);
-      --pm6-glass-pane-sheen: rgba(255, 255, 255, .16);
-      --pm6-glass-pane-sheen2: rgba(255, 255, 255, .08);
-      --pm6-glass-inset: 5px;   /* sky ring around the pane */
-      /* transparency steps (all slider-driven) */
-      --pm6-glass-step-1: rgba(255, 255, 255, calc(var(--glass-alpha) * .10));
-      --pm6-glass-step-2: rgba(255, 255, 255, calc(var(--glass-alpha) * .16));
-      --pm6-glass-step-3: rgba(255, 255, 255, calc(var(--glass-alpha) * .28));
-      --pm6-glass-plate: rgba(16, 10, 32, calc(.35 + var(--glass-alpha) * .78));
-    }
+    /* @pm7-lg-slot onboarding/opus-5.5/base/style/style-002/G0026.css */
 
     /* ======================================================
        THE PANE — the app shell is the glass slab. Sky shows
@@ -761,18 +649,7 @@
         inset 0 0 0 1px rgba(255, 255, 255, .05);
     }
     /* soft sheen across the slab */
-    [data-theme^="glass"] .app-shell::after {
-      content: "";
-      position: absolute;
-      inset: 0;
-      z-index: 80;
-      border-radius: inherit;
-      pointer-events: none;
-      background: linear-gradient(120deg,
-        var(--pm6-glass-pane-sheen), transparent 30%,
-        transparent 82%, var(--pm6-glass-pane-sheen2));
-      mix-blend-mode: screen;
-    }
+    /* @pm7-lg-slot onboarding/opus-5.5/base/style/style-002/G0028.css */
 
     /* ======================================================
        INTERIOR STEPS — plain rgba fills on the sheet
@@ -802,9 +679,7 @@
       box-shadow: inset 0 1px 0 var(--glass-edge),
         inset 0 0 0 1px var(--glass-hairline);
     }
-    [data-theme^="glass"] .left-panel {
-      --surface-alt: transparent;
-    }
+    /* @pm7-lg-slot onboarding/opus-5.5/base/style/style-002/G0032.css */
     [data-theme^="glass"] .files-panel-header {
       border-bottom: none;
       background: transparent;
@@ -882,21 +757,7 @@
     /* ======================================================
        PRE-BAKED SURFACES — cards (no backdrop-filter)
        ====================================================== */
-    [data-theme^="glass"] .bento-card,
-    [data-theme^="glass"] .project-card-bento {
-      position: relative;
-      border: none;
-      background: linear-gradient(180deg,
-        var(--pm6-glass-step-2),
-        var(--pm6-glass-step-1));
-      box-shadow: inset 0 1px 0 var(--glass-edge),
-        inset 0 0 0 1px var(--glass-hairline),
-        inset 0 -12px 24px -18px var(--pm6-glass-floor),
-        0 4px 14px var(--pm6-glass-pane-shadow2);
-      transition: box-shadow var(--motion-med) var(--ease-out),
-        transform var(--motion-med) var(--ease-out),
-        background var(--motion-med) var(--ease-out);
-    }
+    /* @pm7-lg-slot onboarding/opus-5.5/base/style/style-002/G0041.css */
     [data-theme^="glass"] .bento-card {
       overflow: hidden auto;
       border-radius: 16px;
@@ -923,12 +784,7 @@
         inset 0 0 0 1px var(--glass-edge),
         0 10px 30px var(--pm6-glass-pane-shadow2);
     }
-    [data-theme^="glass"] .project-card-bento.current {
-      background: var(--pm6-glass-step-3);
-      box-shadow: inset 0 1px 0 var(--glass-edge),
-        inset 0 0 0 1px var(--glass-edge),
-        0 4px 14px var(--pm6-glass-pane-shadow2);
-    }
+    /* @pm7-lg-slot onboarding/opus-5.5/base/style/style-002/G0046.css */
 
     /* Secondary containers */
     [data-theme^="glass"] .bento-widget,
@@ -968,18 +824,8 @@
       border-radius: var(--radius-pill);
       box-shadow: inset 0 1px 0 var(--glass-edge);
     }
-    [data-theme^="glass"] .title-bar .project-dropdown {
-      padding: 3px 10px;
-      max-width: 200px;
-      overflow: hidden;
-    }
-    [data-theme^="glass"] .title-bar .project-dropdown span:first-child {
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
-      max-width: 160px;
-      display: inline-block;
-    }
+    /* @pm7-lg-slot onboarding/opus-5.5/base/style/style-002/G0052.css */
+    /* @pm7-lg-slot onboarding/opus-5.5/base/style/style-002/G0053.css */
     [data-theme^="glass"] .title-bar .theme-select {
       padding: 3px 8px;
     }
@@ -1082,13 +928,7 @@
       border-color: var(--glass-edge);
       box-shadow: 0 4px 16px var(--pm6-glass-pane-shadow2);
     }
-    [data-theme^="glass"] .page-projects .projects-actions button.primary {
-      background: linear-gradient(135deg,
-        rgba(var(--pm6-glass-a-rgb), .22),
-        rgba(var(--pm6-glass-a-rgb), .10));
-      color: var(--text-primary);
-      border-color: rgba(var(--pm6-glass-a-rgb), .45);
-    }
+    /* @pm7-lg-slot onboarding/opus-5.5/base/style/style-002/G0071.css */
 
     /* Status badges — soft translucent chips, semantic hues, no glow */
     [data-theme^="glass"] .status-badge {
@@ -1437,18 +1277,10 @@
       margin: 2px 2px 2px 0;
       border-radius: 0 6px 6px 0;
     }
-    [data-theme^="glass"] .primary-content {
-      padding: 2px;
-    }
+    /* @pm7-lg-slot onboarding/opus-5.5/base/style/style-002/G0135.css */
     /* pm7 A1: keep the 5px glass col / 2px row lines inside the shared
        expanded grab-zone geometry (content-box clip) */
-    [data-theme^="glass"] .resizer-col {
-      width: 12px;
-      margin: 0 -3.5px;
-      padding: 0 3.5px;
-      background: transparent;
-      background-clip: content-box;
-    }
+    /* @pm7-lg-slot onboarding/opus-5.5/base/style/style-002/G0136.css */
     [data-theme^="glass"] .resizer-row {
       height: 9px;
       margin: -3.5px 0;
@@ -1460,17 +1292,7 @@
        Must mirror the two-layer streak+bloom structure from pm6-css-bento —
        a single closest-side gradient here would collapse to a round blob on
        the new 46x180 halo box and lose the falloff along the bar. */
-    [data-theme^="glass"] .resizer-col::after {
-      background:
-        radial-gradient(ellipse 4px 48% at 50% 50%,
-          rgba(var(--accent-primary-rgb), .92),
-          rgba(var(--accent-primary-rgb), .34) 40%,
-          rgba(var(--accent-primary-rgb), 0) 100%),
-        radial-gradient(ellipse 55% 22% at 50% 50%,
-          rgba(var(--accent-primary-rgb), .48),
-          rgba(var(--accent-primary-rgb), .18) 55%,
-          rgba(var(--accent-primary-rgb), 0) 100%);
-    }
+    /* @pm7-lg-slot onboarding/opus-5.5/base/style/style-002/G0138.css */
     [data-theme^="glass"] .resizer-row::after {
       background:
         radial-gradient(ellipse 48% 4px at 50% 50%,
@@ -1540,62 +1362,15 @@
     /* ======================================================
        VARIANT TOKENS (canonical values from the approved mockup)
        ====================================================== */
-    [data-theme="glass-dark"] {
-      --glass-tint-rgb: 46, 34, 72;
-      --glass-alpha: .60;
-      --glass-edge: rgba(255, 255, 255, .40);
-      --glass-hairline: rgba(255, 255, 255, .16);
-      --pm6-glass-a-rgb: 183, 156, 255;  /* violet identity */
-      --pm6-glass-b-rgb: 229, 139, 200;  /* dusk-pink identity */
-      --pm6-glass-sat: 1.6;
-      --pm6-glass-floor: rgba(255, 255, 255, .10);
-      --pm6-glass-drop: 0 12px 30px rgba(10, 5, 25, .45);
-      --pm6-glass-pane-edge: rgba(255, 255, 255, .28);
-      --pm6-glass-pane-k1: .73;
-      --pm6-glass-pane-k2: .57;
-      --pm6-glass-pane-k3: .67;
-      --pm6-glass-pane-shadow: rgba(10, 5, 25, .60);
-      --pm6-glass-pane-shadow2: rgba(10, 5, 25, .40);
-      --pm6-glass-pane-sheen: rgba(255, 255, 255, .16);
-      --pm6-glass-pane-sheen2: rgba(255, 255, 255, .08);
-      --pm6-glass-step-1: rgba(255, 255, 255, calc(var(--glass-alpha) * .10));
-      --pm6-glass-step-2: rgba(255, 255, 255, calc(var(--glass-alpha) * .16));
-      --pm6-glass-step-3: rgba(255, 255, 255, calc(var(--glass-alpha) * .28));
-      --pm6-glass-plate: rgba(16, 10, 32, calc(.35 + var(--glass-alpha) * .78));
-    }
-    [data-theme="glass-light"] {
-      --glass-tint-rgb: 246, 240, 255;
-      --glass-alpha: .55;
-      --glass-edge: rgba(255, 255, 255, .95);
-      --glass-hairline: rgba(255, 255, 255, .55);
-      --pm6-glass-a-rgb: 139, 110, 217;  /* violet identity */
-      --pm6-glass-b-rgb: 193, 103, 180;  /* orchid identity */
-      --pm6-glass-sat: 1.6;
-      --pm6-glass-floor: rgba(255, 255, 255, .45);
-      --pm6-glass-drop: 0 10px 28px rgba(93, 63, 133, .18);
-      --pm6-glass-pane-edge: rgba(255, 255, 255, .75);
-      --pm6-glass-pane-k1: .62;
-      --pm6-glass-pane-k2: .36;
-      --pm6-glass-pane-k3: .47;
-      --pm6-glass-pane-shadow: rgba(93, 63, 133, .35);
-      --pm6-glass-pane-shadow2: rgba(93, 63, 133, .22);
-      --pm6-glass-pane-sheen: rgba(255, 255, 255, .50);
-      --pm6-glass-pane-sheen2: rgba(255, 255, 255, .25);
-      --pm6-glass-step-1: rgba(255, 255, 255, calc(var(--glass-alpha) * .25));
-      --pm6-glass-step-2: rgba(255, 255, 255, calc(var(--glass-alpha) * .55));
-      --pm6-glass-step-3: rgba(255, 255, 255, calc(var(--glass-alpha) * 1.1));
-      --pm6-glass-plate: rgba(255, 255, 255, calc(.42 + var(--glass-alpha) * .87));
-    }
+    /* @pm7-lg-slot onboarding/opus-5.5/base/style/style-002/G0149.css */
+    /* @pm7-lg-slot onboarding/opus-5.5/base/style/style-002/G0150.css */
 
     /* (Zone tint casts retired — the one-pane composition keeps a single
        unified violet sheet; interior contrast comes from the transparency
        steps set in the glass-a block, not per-zone color washes. The
        chat-thread-sidebar rides --pm6-glass-step-1 from the glass-a block.) */
     /* Light legibility: active page tab reads as solid ink */
-    [data-theme="glass-light"] .title-bar .page-tabs .page-tab.active {
-      font-weight: 600;
-      text-shadow: none;
-    }
+    /* @pm7-lg-slot onboarding/opus-5.5/base/style/style-002/G0151.css */
 
     /* ======================================================
        EDITOR PANES — the near-opaque reading plates
@@ -1667,12 +1442,7 @@
     }
 
     /* ── Glass Dark: diff tints, minimap, tab underline ── */
-    [data-theme="glass-dark"] {
-      --diff-added-bg: rgba(143,217,165,0.08); --diff-modified-bg: rgba(147,162,242,0.08);
-      --diff-deleted-bg: rgba(229,139,200,0.06); --diff-conflict-bg: rgba(243,178,102,0.08);
-      --diff-added-flash-bg: rgba(143,217,165,0.22); --diff-modified-flash-bg: rgba(147,162,242,0.22);
-      --diff-conflict-flash-bg: rgba(243,178,102,0.22);
-    }
+    /* @pm7-lg-slot onboarding/opus-5.5/base/style/style-002/G0164.css */
     [data-theme="glass-dark"] .editor-minimap { background: rgba(16,10,32,0.5); border-left: 1px solid rgba(255,255,255,0.04); }
     [data-theme="glass-dark"] .minimap-heat-strip { box-shadow: none; }
     [data-theme="glass-dark"] .minimap-viewport { background: rgba(183,156,255,0.06); border-color: rgba(183,156,255,0.15); }
@@ -1682,12 +1452,7 @@
        came later in the cascade at equal specificity) */
 
     /* ── Glass Light: diff tints, minimap ── */
-    [data-theme="glass-light"] {
-      --diff-added-bg: rgba(62,125,78,0.06); --diff-modified-bg: rgba(126,139,224,0.08);
-      --diff-deleted-bg: rgba(193,103,180,0.06); --diff-conflict-bg: rgba(178,106,42,0.06);
-      --diff-added-flash-bg: rgba(62,125,78,0.16); --diff-modified-flash-bg: rgba(126,139,224,0.18);
-      --diff-conflict-flash-bg: rgba(178,106,42,0.16);
-    }
+    /* @pm7-lg-slot onboarding/opus-5.5/base/style/style-002/G0169.css */
     [data-theme="glass-light"] .editor-minimap { background: rgba(255,255,255,0.6); border-left: 1px solid rgba(69,58,92,0.08); }
     [data-theme="glass-light"] .minimap-heat-strip { opacity: 0.7; }
     [data-theme="glass-light"] .minimap-viewport { background: rgba(139,110,217,0.08); border-color: rgba(139,110,217,0.18); }
@@ -3795,22 +3560,8 @@
       --terminal-chrome: #12181f;
     }
     /* terminal = near-opaque reading plate (violet family, slider-driven) */
-    [data-theme="glass-dark"] {
-      --terminal-bg: var(--pm6-glass-plate);
-      --terminal-fg: #CFC5E6;
-      --terminal-fg-2: #F2A3D2;
-      --terminal-fg-3: #F3B266;
-      --terminal-fg-4: #9A8FB8;
-      --terminal-chrome: rgba(16, 10, 32, calc(var(--glass-alpha) * .85));
-    }
-    [data-theme="glass-light"] {
-      --terminal-bg: var(--pm6-glass-plate);
-      --terminal-fg: #4A4458;
-      --terminal-fg-2: #B0508A;
-      --terminal-fg-3: #B26A2A;
-      --terminal-fg-4: #6C6480;
-      --terminal-chrome: rgba(255, 255, 255, calc(var(--glass-alpha) * .95));
-    }
+    /* @pm7-lg-slot onboarding/opus-5.5/base/style/style-002/G0183.css */
+    /* @pm7-lg-slot onboarding/opus-5.5/base/style/style-002/G0184.css */
 
     /* (W3 reaper: dead .pm-tab-model-strip / .pm-route-chip rules removed —
        zero markup/JS references in the current assembly.) */
@@ -5360,16 +5111,8 @@
       backdrop-filter: blur(11px) saturate(140%);
     }
     /* glass blur budget: no nested backdrop-filter inside the page */
-    [data-theme^="glass"] .page-projects .projects-header-bento {
-      -webkit-backdrop-filter: none;
-      backdrop-filter: none;
-      background: color-mix(in srgb, var(--surface) 88%, transparent);
-    }
-    [data-theme^="glass"] .page-projects .projects-toolbar {
-      -webkit-backdrop-filter: none;
-      backdrop-filter: none;
-      background: color-mix(in srgb, var(--surface-elevated) 88%, transparent);
-    }
+    /* @pm7-lg-slot onboarding/opus-5.5/base/style/style-002/G0196.css */
+    /* @pm7-lg-slot onboarding/opus-5.5/base/style/style-002/G0197.css */
 
     .page-projects .projects-toolbar label {
       font-size: 13px;

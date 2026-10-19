@@ -1,0 +1,7 @@
+html[data-theme^="glass"] .app-shell {
+  inset: 0 !important;
+  margin: 0 !important;
+  width: auto !important;
+  height: auto !important;
+  border-radius: 0 !important;
+}

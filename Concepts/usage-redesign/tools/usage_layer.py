@@ -924,7 +924,7 @@ def lint() -> list[str]:
         if not p.is_file():
             continue
         rel = p.relative_to(PKG).as_posix()
-        text = p.read_text(encoding='utf-8')
+        text = base_source.read_text_source(p)
         if build.EMOJI.search(text):
             problems.append(f'emoji glyph in {rel}')
         if p.suffix == '.css':

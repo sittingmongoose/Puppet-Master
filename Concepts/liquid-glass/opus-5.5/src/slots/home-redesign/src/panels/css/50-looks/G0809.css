@@ -1,0 +1,8 @@
+html[data-theme="glass-light"] :is(#pm-home-centre, #pmw-overlay, #pmw-chat, .pmw-scope) {
+  --pmw-text-2: color-mix(in srgb, var(--text-secondary) 70%, var(--text-primary));
+  --pmw-text-3: color-mix(in srgb, var(--text-muted) 50%, var(--text-primary));
+  --pmw-accent: color-mix(in srgb, var(--accent-primary, var(--accent-blue, #0078d8)) 74%, #000);
+  --pmw-ok: color-mix(in srgb, var(--accent-lime) 76%, #000);
+  --pmw-warn: color-mix(in srgb, var(--accent-warning, var(--accent-orange)) 78%, #000);
+  --pmw-bad: color-mix(in srgb, var(--accent-error, #c44258) 76%, #000);
+}

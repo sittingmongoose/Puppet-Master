@@ -1,0 +1,5 @@
+[data-theme^="glass"] .page-projects .projects-header-bento {
+      -webkit-backdrop-filter: none;
+      backdrop-filter: none;
+      background: color-mix(in srgb, var(--surface) 88%, transparent);
+    }

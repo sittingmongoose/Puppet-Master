@@ -1,0 +1,27 @@
+html[data-theme="glass-light"] #panel-usage .pmu-shell {
+  --pmu-s0: #0078D8; --pmu-s0-b: #5AAEF0;
+  --pmu-s1: #087F67; --pmu-s1-b: #3DB89C;
+  --pmu-s2: #BA5D20; --pmu-s2-b: #E08D55;
+  --pmu-s3: #7659C7; --pmu-s3-b: #A58EE3;
+  --pmu-s4: #B8407A; --pmu-s4-b: #DB7BA9;
+  --pmu-s5: #2F5FC4; --pmu-s5-b: #6E93E0;
+  --pmu-s6: #8A6D00; --pmu-s6-b: #BFA03A;
+  --pmu-s7: rgba(27,43,51,.5); --pmu-s7-b: rgba(27,43,51,.3);
+  --pmu-ink: #17222A;
+  --pmu-ink-2: #303C46;
+  --pmu-ink-3: #2D3740;
+  --pmu-ink-ok: #0B4F31;
+  --pmu-ink-warn: #603600;
+  --pmu-ink-error: #7C1730;
+  --pmu-card: rgba(255,255,255,.62);
+  --pmu-hairline: rgba(255,255,255,.60);
+  --pmu-track: rgba(23,34,42,.08);
+  --pmu-grid: rgba(23,34,42,.07);
+  --pmu-hover: rgba(255,255,255,.35);
+  --pmu-tone-watch: #8A6D00; --pmu-tone-watch-b: #BFA03A;
+  --pmu-tone-warn: #BA5D20; --pmu-tone-warn-b: #E08D55;
+  --pmu-tone-hot: #C44258; --pmu-tone-hot-b: #E07A8C;
+  --pmu-tone-exhausted: #A8213B; --pmu-tone-exhausted-b: #A8213B;
+  --pmu-r-card: 14px; --pmu-r-sm: 4px; --pmu-bw: 1px;
+  --pmu-accent-b: color-mix(in srgb, var(--accent-primary) 62%, #fff);
+}

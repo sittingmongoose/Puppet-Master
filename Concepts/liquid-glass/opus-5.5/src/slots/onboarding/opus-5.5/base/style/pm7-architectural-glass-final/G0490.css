@@ -1,0 +1,6 @@
+html[data-theme^="glass"] .activity-bar.collapsed {
+  min-width: 42px !important;
+  max-width: 48px !important;
+  width: 44px !important;
+  flex-basis: 44px !important;
+}

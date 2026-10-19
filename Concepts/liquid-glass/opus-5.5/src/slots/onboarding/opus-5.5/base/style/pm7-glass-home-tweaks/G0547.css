@@ -1,0 +1,6 @@
+html[data-theme^="glass"] .activity-bar .icon.active::before,
+html[data-theme^="glass"] .activity-bar .icon[aria-current="page"]::before,
+html[data-theme^="glass"] .activity-bar .icon::after {
+  display: none !important;
+  content: none !important;
+}

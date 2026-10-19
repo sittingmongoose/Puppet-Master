@@ -1,0 +1,4 @@
+:is(html[data-theme="friendly-dark"],html[data-theme="glass-dark"],html[data-theme="retro-dark"],html[data-theme="basic-dark"]) #panel-settings {
+  --pm-settings-color-scheme: dark;
+  color-scheme: dark;
+}

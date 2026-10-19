@@ -361,41 +361,8 @@ html[data-pmw-home="on"][data-theme^="friendly"]:not([data-o55-nier="on"]) .pmw-
    catch light --lg-lens-glint and its blend, no colour splitting, no filter or backdrop here). A sliver of light in the
    gap; the two plate edges facing it carry it along their length like light trapped in an edge; it scatters a little
    way into each frosted plate. Held, both edges glow their whole length; the drain runs back along both ---- */
-html[data-pmw-home="on"][data-theme^="glass"]:not([data-o55-nier="on"]) {
-  --gl-c: #FFFFFF;
-  --gl-hot: #FFFFFF;
-  --gl-blend: var(--lg-lens-glint-blend, plus-lighter);
-  --gl-glint: var(--lg-lens-glint, rgba(255, 255, 255, .24));
-  --gl-rim: #FFFFFF;
-  --gl-rim-x: 3.5px;
-  --gl-shade: transparent;
-  --gl-s-plate: transparent, rgba(0, 0, 0, .03) 12%, rgba(0, 0, 0, .1) 24%, rgba(0, 0, 0, .26) 33%, rgba(0, 0, 0, .52) 40%,
-    rgba(0, 0, 0, .82) 44.5%, #000 47%, #000 53%, rgba(0, 0, 0, .82) 55.5%, rgba(0, 0, 0, .52) 60%, rgba(0, 0, 0, .26) 67%,
-    rgba(0, 0, 0, .1) 76%, rgba(0, 0, 0, .03) 88%, transparent;
-  --gl-k: 380;
-  --gl-z: .82;
-  --gl-sc: rgba(255, 255, 255, .36);
-  --gl-ch: rgba(255, 255, 255, .55);
-  --gl-core-w: 1px;
-  --gl-core-l: 38px;
-  --gl-core-shadow: 0 0 1.5px .5px rgba(255, 255, 255, .9), 0 0 6px 1px rgba(255, 255, 255, .32);
-  --gl-ignite: 460ms;
-  --gl-drain-ease: cubic-bezier(.55, 0, .2, 1);
-  --gl-rail-a: 30%;
-}
-html[data-pmw-home="on"][data-theme="glass-light"]:not([data-o55-nier="on"]) {
-  --gl-blend: var(--lg-lens-glint-blend, normal);
-  --gl-glint: var(--lg-lens-glint, rgba(255, 255, 255, .7));
-  --gl-shade: var(--lg-edge-bot, rgba(48, 36, 84, .34));
-  --gl-ref: rgba(38, 44, 66, .42);
-  --gl-sc: rgba(255, 255, 255, .8);
-  --gl-ch: #FFFFFF;
-  /* no dark ring on the core: wrapped in one it read as a small grey capsule, an object rather than light
-     (pm7-liquid-glass's review, 2026-10-14); the edge lines carry the contrast */
-  --gl-core-shadow: 0 0 5px 1px rgba(255, 255, 255, .95), 0 0 14px 3px rgba(255, 255, 255, .55);
-  --gl-core-r: 0;
-  --gl-rail-a: 70%;
-}
+/* @pm7-lg-slot home-redesign/src/panels/css/56-light/G0822.css */
+/* @pm7-lg-slot home-redesign/src/panels/css/56-light/G0823.css */
 /* the two edges: a fine bright line on each, carried along the edge with long tails (::after), and the light
    scattering a few pixels into each frosted plate beside it, brightest at the edge (::before) */
 html[data-pmw-home="on"][data-theme^="glass"]:not([data-o55-nier="on"]) .pmw-gl-pool { --gl-pool-w: 48px; --gl-pool-l: 460px; }

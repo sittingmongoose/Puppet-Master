@@ -1,0 +1,6 @@
+[data-theme="glass-light"] {
+      --diff-added-bg: rgba(62,125,78,0.06); --diff-modified-bg: rgba(126,139,224,0.08);
+      --diff-deleted-bg: rgba(193,103,180,0.06); --diff-conflict-bg: rgba(178,106,42,0.06);
+      --diff-added-flash-bg: rgba(62,125,78,0.16); --diff-modified-flash-bg: rgba(126,139,224,0.18);
+      --diff-conflict-flash-bg: rgba(178,106,42,0.16);
+    }

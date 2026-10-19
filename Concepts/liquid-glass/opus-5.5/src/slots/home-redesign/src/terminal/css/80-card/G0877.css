@@ -1,0 +1,12 @@
+html[data-theme="glass-light"] .pmt-card {
+  --pmt-card-well: color-mix(in srgb, var(--text-primary) 6%, transparent);
+  --pmt-card-bad: color-mix(in srgb, var(--accent-error) 64%, var(--text-primary));
+  --pmt-card-accent: color-mix(in srgb, var(--accent-primary) 62%, var(--text-primary));
+  --pmt-card-run: color-mix(in srgb, var(--accent-primary) 62%, var(--text-primary));
+  --pmt-card-ink-2: color-mix(in srgb, var(--text-primary) 84%, transparent);
+  --pmt-card-ink-3: color-mix(in srgb, var(--text-primary) 62%, transparent);
+  --pmt-card-shadow: var(--elev-1), inset 0 1px 0 rgb(255 255 255 / .55);
+  --pmt-card-tint: rgb(255 255 255 / .42);
+  --pmt-card-tint-press: rgb(255 255 255 / .6);
+  --pmt-card-tint-accent: rgb(255 255 255 / .5);
+}

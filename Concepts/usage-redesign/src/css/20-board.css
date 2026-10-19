@@ -31,12 +31,8 @@ html[data-theme$="-light"] #panel-usage .pmu-shell {
 html[data-theme="friendly-light"] #panel-usage .pmu-shell {
   --pmu-plate-rest: inset 0 1px 0 rgba(255,255,255,.75), 0 10px 26px -14px rgba(92,64,51,.16);
   --pmu-plate-hover: inset 0 1px 0 rgba(255,255,255,.7), 0 16px 34px -12px rgba(92,64,51,.2), 0 0 0 1px rgba(92,64,51,.05); }
-html[data-theme^="glass"] #panel-usage .pmu-shell {
-  --pmu-plate-rest: inset 0 1px 0 rgba(255,255,255,.18), inset 0 -1px 0 rgba(255,255,255,.04), 0 18px 40px -18px rgba(8,4,20,.5);
-  --pmu-plate-hover: inset 0 1px 0 rgba(255,255,255,.24), 0 20px 44px -12px rgba(8,4,20,.55), 0 0 0 1px rgba(255,255,255,.12); }
-html[data-theme="glass-light"] #panel-usage .pmu-shell {
-  --pmu-plate-rest: inset 0 1px 0 rgba(255,255,255,.85), 0 12px 28px -14px rgba(23,34,42,.16);
-  --pmu-plate-hover: inset 0 1px 0 rgba(255,255,255,.9), 0 16px 34px -12px rgba(23,34,42,.2), 0 0 0 1px rgba(255,255,255,.5); }
+/* @pm7-lg-slot usage-redesign/src/css/20-board/G1236.css */
+/* @pm7-lg-slot usage-redesign/src/css/20-board/G1237.css */
 html[data-theme^="retro"] #panel-usage .pmu-shell {
   --pmu-plate-rest: var(--pmu-shadow-1); --pmu-plate-hover: 4px 4px 0 rgba(0,0,0,.38); --pmu-plate-lift: 7px 7px 0 rgba(0,0,0,.35); }
 html[data-theme="retro-light"] #panel-usage .pmu-shell { --pmu-plate-hover: 4px 4px 0 rgba(23,26,20,.22); --pmu-plate-lift: 7px 7px 0 rgba(23,26,20,.2); }
@@ -67,17 +63,7 @@ html[data-o55-nier="on"] #panel-usage .pmu-shell { --pmu-plate-rest: none; --pmu
    opacity and mask centre change: no box-shadow, border, background or filter animates. PMH rests through every board
    operation (body.pmu-pointer-op and pm-resizing, html[data-pmu-moment], .pmu-board[data-op]) and never lights a band
    or a plate that is pending, leaving, lifted, resizing, settling or morphing, the ghost board or the flyers. */
-:root:is([data-theme^="basic"], [data-theme^="friendly"], [data-theme^="glass"]):not([data-o55-nier]) #panel-usage .pmu-card[data-pmh-kind]:not([data-lifted], [data-settling], [data-resizing], [data-morphing])::before {
-  /* above the plate's own paint, under its head and body (both positioned and later in tree order), in the padding box
-     like a dashboard card's light; the tokens are the look's own (22-hover.css FAMILY LOOK) */
-  inset: 0; background: var(--pmf-sheen);
-  box-shadow: inset 0 0 0 1px var(--pmf-rim), inset 0 0 var(--pmf-band) 0 var(--pmf-rim2);
-  -webkit-mask: radial-gradient(circle var(--pmf-r) at var(--pmh-x) var(--pmh-y), var(--pmf-mask)) no-repeat;
-          mask: radial-gradient(circle var(--pmf-r) at var(--pmh-x) var(--pmh-y), var(--pmf-mask)) no-repeat;
-  opacity: var(--pmh-i);
-  /* going dark the light fades where it was: the position falls back only once the fade is over */
-  transition: opacity var(--pmf-out) var(--pmf-ease-out), --pmh-x 0s linear var(--pmf-out), --pmh-y 0s linear var(--pmf-out);
-}
+/* @pm7-lg-slot usage-redesign/src/css/20-board/G1238.css */
 :root:is([data-theme^="basic"], [data-theme^="friendly"], [data-theme^="glass"]):not([data-o55-nier]) #panel-usage .pmu-card[data-pmh-kind]:is(.pmh-on, .pmh-near):not([data-lifted], [data-settling], [data-resizing], [data-morphing])::before {
   transition: opacity var(--pmf-in) linear;
 }
@@ -93,9 +79,7 @@ html[data-o55-nier="on"] #panel-usage .pmu-shell { --pmu-plate-rest: none; --pmu
 /* Reduced Motion (PMH stops the following light and the neighbours): the hovered plate shows the whole line at half
    strength with its plate, at once; software-rendered (html[data-pmh-soft], no field and no #pmh-glow): the same line,
    painted once per hover */
-:root[data-motion="reduced"]:is([data-theme^="basic"], [data-theme^="friendly"], [data-theme^="glass"]):not([data-o55-nier]) #panel-usage .pmu-card[data-pmh-kind]:not([data-lifted], [data-settling], [data-resizing], [data-morphing])::before {
-  -webkit-mask: none; mask: none; background: none; opacity: calc(var(--pmh-i) * .5); transition: none;
-}
+/* @pm7-lg-slot usage-redesign/src/css/20-board/G1240.css */
 @media (prefers-reduced-motion: reduce) {
   :root:is([data-theme^="basic"], [data-theme^="friendly"], [data-theme^="glass"]):not([data-o55-nier]) #panel-usage .pmu-card[data-pmh-kind]:not([data-lifted], [data-settling], [data-resizing], [data-morphing])::before {
     -webkit-mask: none; mask: none; background: none; opacity: calc(var(--pmh-i) * .5); transition: none;
@@ -121,7 +105,7 @@ html[data-theme^="retro"]:not([data-motion="reduced"]) #panel-usage .pmu-card:is
 #panel-usage .pmu-card:focus-visible { box-shadow: 0 0 0 2px var(--pmu-accent), var(--pmu-plate-rest); }
 /* Glass with a GPU (not data-pmu-soft): plates blur what is behind them and carry a rim light (18 % white at the top,
    4 % at the bottom) and a static specular sheet on the room's hero plate (the first plate of the board) */
-html[data-theme^="glass"]:not([data-pmu-soft]) #panel-usage .pmu-card:not([data-head="band"]) { -webkit-backdrop-filter: blur(18px) saturate(1.2); backdrop-filter: blur(18px) saturate(1.2); }
+/* @pm7-lg-slot usage-redesign/src/css/20-board/G1244.css */
 /* the carry frost (Jared, Glass carry option A, 2026-10-11): from a plate's press until its drop and the board are still,
    html[data-lg-frost="painted"] (40-board.js frostHold) swaps every plate's live blur for its painted frost. Behind a
    plate at rest is the shell's frost already, so it drops only the blur and keeps its saturate(1.2): the same colour
@@ -131,12 +115,9 @@ html[data-theme^="glass"]:not([data-pmu-soft]) #panel-usage .pmu-card:not([data-
    (below). The carry then stops re-blurring the board's plates every frame. */
 html[data-theme^="glass"][data-lg-frost="painted"]:not([data-pmu-soft]) #panel-usage .pmu-card:not([data-head="band"]) { -webkit-backdrop-filter: saturate(1.2); backdrop-filter: saturate(1.2); }
 html[data-theme^="glass"][data-lg-frost="painted"]:not([data-pmu-soft]) #panel-usage .pmu-board > .pmu-card[data-lifted] { -webkit-backdrop-filter: none; backdrop-filter: none; }
-html[data-theme^="glass"] #panel-usage .pmu-card:not([data-head="band"]) { background-image: linear-gradient(180deg, rgba(255,255,255,.07), transparent 38%);
-  border-color: transparent; box-shadow: var(--pmu-plate-rest), inset 0 0 0 1px rgba(255,255,255,.08); }
-html[data-theme^="glass"] #panel-usage .pmu-card:not([data-head="band"])::after { content: ""; position: absolute; inset: calc(-1 * var(--pmu-bw)); border-radius: inherit; pointer-events: none;
-  padding: 1px; background: linear-gradient(180deg, rgba(255,255,255,.34), rgba(255,255,255,.08) 40%, rgba(255,255,255,.04));
-  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0); -webkit-mask-composite: xor; mask-composite: exclude; }
-html[data-theme="glass-light"] #panel-usage .pmu-card:not([data-head="band"])::after { background: linear-gradient(180deg, rgba(255,255,255,.95), rgba(255,255,255,.4) 40%, rgba(23,34,42,.08)); }
+/* @pm7-lg-slot usage-redesign/src/css/20-board/G1247.css */
+/* @pm7-lg-slot usage-redesign/src/css/20-board/G1248.css */
+/* @pm7-lg-slot usage-redesign/src/css/20-board/G1249.css */
 html[data-theme^="glass"] #panel-usage .pmu-board > .pmu-card[data-hero] { background-image: linear-gradient(118deg, rgba(255,255,255,.10), rgba(255,255,255,.02) 34%, transparent 52%, rgba(255,255,255,.05) 78%, transparent); }
 /* ---- WOW round 3 at rest (WOW-SPEC-3 4.3; tokens --pmu-l-* in 00-base.css): every plate except bands takes a neutral
    luminance at its top and real depth; a rim of the key light on ::after (not Glass, which keeps its own rim there, not
@@ -356,8 +337,8 @@ html[data-theme^="retro"] #panel-usage .pmu-card[data-lifted]::before { transiti
    wallpaper changes (Liquid Glass's restyle does all three), or the carried plate drifts from the live look. */
 html[data-theme^="glass"][data-lg-frost="painted"] #panel-usage .pmu-board > .pmu-card:is([data-lifted], [data-settling]):not([data-head="band"])::before {
   z-index: -1; background-color: var(--pmu-frost-plate); background-image: inherit; }
-html[data-theme="glass-dark"] { --pmu-frost-plate: rgb(38, 33, 64); }
-html[data-theme="glass-light"] { --pmu-frost-plate: rgb(217, 226, 230); }
+/* @pm7-lg-slot usage-redesign/src/css/20-board/G1256.css */
+/* @pm7-lg-slot usage-redesign/src/css/20-board/G1257.css */
 /* the lifted card holds the pointer capture, so its own cursor is the one shown: no rule on its descendants (PERF-3: the
    `*` part restyled the lifted card's whole subtree at pick-up and drop) */
 #panel-usage .pmu-card[data-lifted] { cursor: grabbing !important; }

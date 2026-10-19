@@ -1,0 +1,8 @@
+[data-theme="glass-dark"] {
+      --terminal-bg: var(--pm6-glass-plate);
+      --terminal-fg: #CFC5E6;
+      --terminal-fg-2: #F2A3D2;
+      --terminal-fg-3: #F3B266;
+      --terminal-fg-4: #9A8FB8;
+      --terminal-chrome: rgba(16, 10, 32, calc(var(--glass-alpha) * .85));
+    }

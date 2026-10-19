@@ -1,0 +1,5 @@
+html[data-theme^="glass"] .app-shell::before,
+html[data-theme^="glass"] .app-shell::after {
+  z-index: 0 !important;
+  border-radius: inherit !important;
+}

@@ -1,0 +1,3 @@
+html[data-theme="glass-light"] #panel-settings { --k3-text-2: rgba(23, 34, 42, .93); --k3-text-3: rgba(23, 34, 42, .88);
+  --k3-accent-ink: color-mix(in srgb, var(--k3-accent) 22%, var(--k3-text-1)); --k3-amber: color-mix(in srgb, #7a4f06 55%, var(--k3-text-1));
+  --k3-red: color-mix(in srgb, #a8334a 55%, var(--k3-text-1)); --k3-green: color-mix(in srgb, var(--accent-lime) 70%, var(--k3-text-1)); }

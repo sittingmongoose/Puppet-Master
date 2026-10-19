@@ -1,0 +1,1 @@
+html:is([data-theme="glass-light"], [data-o55-nier="on"]) #panel-projects :is(.pm6-proj-branch, .pm6-proj-activity, .project-last-opened, .pm6-proj-field > span, .pm6-proj-sheet-hint) { color: var(--pmp-quiet); }

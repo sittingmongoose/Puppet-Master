@@ -265,7 +265,7 @@ def lint_sources() -> list[str]:
     for p in sorted(SRC.rglob('*')):
         if '__pycache__' in p.parts or not p.is_file() or p.suffix in BINARY_SUFFIXES:
             continue
-        text = p.read_text(encoding='utf-8')
+        text = base_source.read_text_source(p)
         if EMOJI.search(text):
             problems.append(f'emoji glyph in {p.relative_to(PKG)}')
         if p.suffix == '.css':

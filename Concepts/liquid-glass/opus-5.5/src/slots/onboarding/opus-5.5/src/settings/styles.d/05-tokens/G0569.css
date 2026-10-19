@@ -1,0 +1,2 @@
+html[data-theme="glass-dark"] #panel-settings { --k3-text-2: rgba(236, 241, 250, .92); --k3-text-3: rgba(230, 236, 248, .86); --k3-on-accent: #0b1224;
+  --k3-accent-ink: color-mix(in srgb, var(--k3-accent) 50%, var(--k3-text-1)); --k3-red: color-mix(in srgb, #ff7893 80%, var(--k3-text-1)); }

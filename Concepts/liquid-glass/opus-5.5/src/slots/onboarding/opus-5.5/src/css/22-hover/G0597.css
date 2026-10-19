@@ -1,0 +1,12 @@
+:root[data-theme="glass-light"]:not([data-o55-nier]) {
+  --pmh-mag: 2.25; --pmh-mag-k: .028; --pmh-stiff: 130; --pmh-damp: 21;
+  --pmh-bleed: 20; --pmh-ramp: 20; --pmh-out-ms: 360; --pmh-glow-reach: 40;
+  --pmf-r: 96px; --pmf-band: 10px;
+  --pmf-rim: color-mix(in srgb, rgb(var(--accent-primary-rgb)) 85%, transparent);
+  --pmf-rim2: color-mix(in srgb, rgb(var(--accent-primary-rgb)) 28%, transparent);
+  --pmf-sheen: color-mix(in srgb, rgb(var(--accent-primary-rgb)) 6%, transparent);
+  --pmf-in: 140ms; --pmf-out: 360ms;
+  --pmf-plate: 0 12px 24px -12px rgba(30, 40, 60, .18);
+  --pmf-bloom: 0 0 14px rgba(var(--accent-primary-rgb), .14);
+  --pmh-glow-in-ms: 220ms; --pmh-glow-out-ms: 380ms;
+}

@@ -1,0 +1,11 @@
+html[data-theme^="glass"] .pmt-card {
+  --pmt-card-radius: 14px;
+  --pmt-card-btn-radius: 6px;
+  --pmt-card-edge: var(--glass-hairline, var(--border));
+  --pmt-card-rule: var(--border-light, var(--border));
+  --pmt-card-well: color-mix(in srgb, var(--background) 46%, transparent);
+  --pmt-card-shadow: var(--elev-1), inset 0 1px 0 rgb(255 255 255 / .07);
+  --pmt-card-tint: rgb(255 255 255 / .09);
+  --pmt-card-tint-press: rgb(255 255 255 / .15);
+  --pmt-card-tint-accent: color-mix(in srgb, var(--pmt-card-accent) 13%, transparent);
+}

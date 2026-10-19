@@ -28,22 +28,14 @@ html[data-theme$="-light"] #panel-projects {
 /* Glass Light's cards are frosted glass over the wallpaper, a mid-tone ground (L 0.26 to 0.38 on the default mesh), so
    its words take the text ink (the status words too: the tone stays in their marks, drawn toward the ink enough to read
    as marks) */
-html[data-theme="glass-light"] #panel-projects {
-  --pmp-ok: color-mix(in srgb, var(--accent-lime) 34%, var(--text-primary));
-  --pmp-warn: color-mix(in srgb, var(--accent-orange) 38%, var(--text-primary));
-  --pmp-attn: color-mix(in srgb, var(--accent-warning) 34%, var(--text-primary));
-  --pmp-err: color-mix(in srgb, var(--accent-magenta) 44%, var(--text-primary));
-  --pmp-info: color-mix(in srgb, var(--accent-blue) 48%, var(--text-primary));
-  --pmp-mut: color-mix(in srgb, var(--text-secondary) 40%, var(--text-primary));
-  --pmp-tag: var(--text-primary); --pmp-word: var(--text-primary);
-}
+/* @pm7-lg-slot onboarding/opus-5.5/src/css/24-no-pills-projects/G0613.css */
 /* Friendly Light's blue and amber are its lightest tones; Glass Dark's lilac sits on cards over the bright part of its
    wallpaper. Both measured under 4.5 and are drawn further toward the text ink. */
 html[data-theme="friendly-light"] #panel-projects {
   --pmp-info: color-mix(in srgb, var(--accent-blue) 55%, var(--text-primary));
   --pmp-attn: color-mix(in srgb, var(--accent-warning) 38%, var(--text-primary));
 }
-html[data-theme="glass-dark"] #panel-projects { --pmp-err: color-mix(in srgb, var(--accent-magenta) 60%, var(--text-primary)); }
+/* @pm7-lg-slot onboarding/opus-5.5/src/css/24-no-pills-projects/G0614.css */
 html[data-theme^="retro"] #panel-projects { --pmp-label-font: 700 10.5px/1.6 var(--display-font-sm, var(--body-font)); --pmp-label-track: .08em; }
 html[data-o55-nier="on"] #panel-projects {
   --pmp-ok: var(--o55-nier-ok-text, var(--o55-nier-ink)); --pmp-warn: var(--o55-nier-warn-text, var(--o55-nier-ink));
@@ -136,7 +128,7 @@ html[data-o55-nier="on"] .pm6-proj-sheet .pm6-proj-chip.active { border-color: v
 html[data-theme] #panel-projects .pm6-proj-search { border-radius: var(--pm-ctl-r); }
 html[data-theme] #panel-projects :is(.pm6-proj-search, .pm6-proj-sheet input)::placeholder { color: var(--pmp-ph, var(--text-secondary)); opacity: 1; }
 html[data-theme$="-light"] #panel-projects { --pmp-ph: color-mix(in srgb, var(--text-secondary) 70%, var(--text-primary)); }
-html[data-theme="glass-light"] #panel-projects { --pmp-ph: color-mix(in srgb, var(--text-secondary) 40%, var(--text-primary)); }
+/* @pm7-lg-slot onboarding/opus-5.5/src/css/24-no-pills-projects/G0617.css */
 html[data-o55-nier="on"] #panel-projects { --pmp-ph: color-mix(in srgb, var(--o55-nier-ink) 80%, transparent); }
 
 /* ── a card's Remove confirmation ─────────────────────────────────────────────────────────────────────────────────────
@@ -157,8 +149,8 @@ html:is([data-theme="friendly-light"], [data-theme="retro-light"]) .page-project
    Glass Light's frosted cards (3.7 to 4.5) and on NieR Mode's cards and sheet (4.0 to 4.5). There they take a quieter
    label ink (--pmp-quiet), and a card's reason ("stale — folder missing") the label ink with a fifth of its attention
    tone (Glass Light; the attention ink itself read 4.1) or a quarter of the ink (NieR Light). */
-html[data-theme="glass-light"] #panel-projects { --pmp-quiet: color-mix(in srgb, var(--text-secondary) 40%, var(--text-primary)); }
+/* @pm7-lg-slot onboarding/opus-5.5/src/css/24-no-pills-projects/G0620.css */
 html[data-o55-nier="on"] #panel-projects { --pmp-quiet: color-mix(in srgb, var(--o55-nier-ink) 78%, transparent); }
-html:is([data-theme="glass-light"], [data-o55-nier="on"]) #panel-projects :is(.pm6-proj-branch, .pm6-proj-activity, .project-last-opened, .pm6-proj-field > span, .pm6-proj-sheet-hint) { color: var(--pmp-quiet); }
-html[data-theme="glass-light"] #panel-projects .pm6-proj-reason { color: color-mix(in srgb, var(--accent-warning) 22%, var(--text-primary)); }
+/* @pm7-lg-slot onboarding/opus-5.5/src/css/24-no-pills-projects/G0621.css */
+/* @pm7-lg-slot onboarding/opus-5.5/src/css/24-no-pills-projects/G0622.css */
 html[data-o55-nier="on"][data-theme$="-light"] #panel-projects .pm6-proj-reason { color: color-mix(in srgb, var(--pmp-attn) 75%, var(--o55-nier-ink)); }

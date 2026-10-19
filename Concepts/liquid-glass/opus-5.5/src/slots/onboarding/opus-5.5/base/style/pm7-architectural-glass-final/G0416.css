@@ -1,0 +1,6 @@
+html[data-theme^="glass"] #sidePanelSlot > .side-panel-view {
+  width: 100%;
+  min-width: 0;
+  overflow: hidden !important;
+  border-radius: inherit !important;
+}

@@ -4,19 +4,9 @@
    ink on paper with hairlines and YoRHa capitals. */
 §{friendly} .sh-shelf { box-shadow: 0 1px 2px rgba(0, 0, 0, .10), 0 4px 14px -8px color-mix(in srgb, var(--cat, var(--accent-blue)) 40%, transparent) !important; }
 §{friendly,light} .sh-shelf { box-shadow: 0 1px 2px rgba(80, 60, 110, .06), 0 6px 16px -10px color-mix(in srgb, var(--cat, var(--accent-blue)) 45%, transparent) !important; }
-§{glass,dark} .pm-segtab-ink {
-  background:
-    linear-gradient(#B5A4FF, #B5A4FF) 0 0 / 100% 1.5px no-repeat,
-    linear-gradient(180deg, color-mix(in srgb, #6A4BE5 72%, #3A2470) 0%, color-mix(in srgb, #6A4BE5 48%, #241450) 100%) !important;
-  box-shadow: inset 0 0 0 1px rgba(181, 164, 255, .35), 0 4px 14px -4px rgba(106, 75, 229, .55) !important;
-}
-§{glass,light} .pm-segtab-ink {
-  background:
-    linear-gradient(#C9BCFF, #C9BCFF) 0 0 / 100% 1.5px no-repeat,
-    linear-gradient(180deg, color-mix(in srgb, #6A4BE5 42%, #F2EEFF) 0%, color-mix(in srgb, #6A4BE5 28%, #E4DCF8) 100%) !important;
-  box-shadow: inset 0 0 0 1px rgba(106, 75, 229, .25), 0 3px 10px -4px rgba(106, 75, 229, .35) !important;
-}
-§{glass} .pm-segtab-item.active svg { color: currentColor; }
+/* @pm7-lg-slot leftrail-redesign/src/concepts/d/css/90-themes.src/G0788.css */
+/* @pm7-lg-slot leftrail-redesign/src/concepts/d/css/90-themes.src/G0789.css */
+/* @pm7-lg-slot leftrail-redesign/src/concepts/d/css/90-themes.src/G0790.css */
 §{glass,dark} .pm-segtab-item.active { color: #fff !important; }
 §{glass,light} .pm-segtab-item.active { color: #2A1848 !important; }
 §{glass} .sh-shelf { box-shadow: inset 0 1px 0 rgba(255, 255, 255, .08) !important; }

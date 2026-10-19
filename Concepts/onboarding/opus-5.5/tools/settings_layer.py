@@ -173,7 +173,7 @@ def shared_font_drift(font_dir: Path) -> list[str]:
     ours = {hashlib.sha256(p.read_bytes()).hexdigest() for p in [*font_dir.glob('*.woff2'), *FONT_DIR.glob('*.woff2')]}
     problems = []
     for css in PRO56_FONT_CSS:
-        for m in re.finditer(r'@font-face\s*\{([^}]*)\}', css.read_text(encoding='utf-8')):
+        for m in re.finditer(r'@font-face\s*\{([^}]*)\}', base_source.read_text_source(css)):
             data = re.search(r'base64,([A-Za-z0-9+/=%]+)', m.group(1))
             if not data:
                 continue
@@ -211,7 +211,7 @@ def web_font_checks(src: Path) -> list[str]:
     the unicode-range is exactly the drawn glyphs, and every re-stated platform stack still matches the base page."""
     problems = shared_font_drift(src / 'fonts')
     css_files = sorted((src / 'css').glob('*.css')) + [FORK / 'styles.css'] + sorted((FORK / 'styles.d').glob('*.css'))
-    faces = [f for p in css_files for f in _font_faces(p.read_text(encoding='utf-8'))]
+    faces = [f for p in css_files for f in _font_faces(base_source.read_text_source(p))]
     text = {(f, s, w) for f, s, w, u, _ in faces if 'pm-symbols' not in u}
     sym = [(f, s, w, r) for f, s, w, u, r in faces if 'pm-symbols' in u]
     drawn = sorted(int(p.stem[1:], 16) for p in (src / 'fonts' / 'symbols' / 'svg' / 'sans' / '400').glob('u*.svg'))
@@ -239,7 +239,7 @@ def web_font_checks(src: Path) -> list[str]:
         if path.name not in listed:
             problems.append(f'{path.name} is embedded but not listed in src/fonts/SOURCE.md')
     base = base_source.assemble().decode('utf-8')
-    sym_css = (src / 'css' / '03-symbols.css').read_text(encoding='utf-8')
+    sym_css = base_source.read_text_source(src / 'css' / '03-symbols.css')
     for sel, prop, rest in re.findall(r"^([^@{}\n]+?)\s*\{\s*(font-family|--mono-font)\s*:\s*'PM Symbols Mono',\s*([^;]+);",
                                       sym_css, re.M):
         if prop == '--mono-font':

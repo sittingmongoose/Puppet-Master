@@ -301,7 +301,7 @@ def lint() -> list[str]:
         if SKIP_DIRS.intersection(rel_parts) or p.suffix in ('.md', '.txt'):
             continue
         rel = p.relative_to(PKG).as_posix()
-        text = p.read_text(encoding='utf-8')
+        text = base_source.read_text_source(p)
         if build.EMOJI.search(text):
             problems.append(f'emoji glyph in {rel}')
         if p.suffix == '.css':

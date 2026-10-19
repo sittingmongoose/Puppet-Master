@@ -1,0 +1,9 @@
+html[data-theme^="glass"] .activity-bar {
+  flex: 0 0 64px !important;
+  width: 64px !important;
+  min-width: 64px !important;
+  max-width: 64px !important;
+  padding: 6px 4px !important;
+  border-radius: 16px !important;
+  transition: width var(--motion-med) var(--ease-out), min-width var(--motion-med) var(--ease-out), flex-basis var(--motion-med) var(--ease-out) !important;
+}

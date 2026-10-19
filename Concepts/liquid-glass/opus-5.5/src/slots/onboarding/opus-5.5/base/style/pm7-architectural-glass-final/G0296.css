@@ -1,0 +1,48 @@
+html[data-theme="glass-dark"] {
+  --background: #07121d;
+  --surface: rgba(10, 24, 37, .48);
+  --surface-elevated: rgba(16, 35, 50, .60);
+  --surface-alt: rgba(7, 19, 30, .42);
+  --text-primary: #f4fbff;
+  --text-secondary: rgba(224, 242, 252, .76);
+  --text-muted: rgba(211, 235, 247, .46);
+  --border: rgba(196, 235, 255, .23);
+  --border-light: rgba(207, 240, 255, .12);
+  --accent-blue: #50d4ff;
+  --accent-primary: #50d4ff;
+  --accent-primary-rgb: 80,212,255;
+  --accent-magenta: #a981ff;
+  --accent-lime: #63f5c0;
+  --accent-orange: #ffb36c;
+  --accent-warning: #ffd06e;
+  --accent-error: #ff718b;
+  --glass-edge: rgba(232, 250, 255, .74);
+  --glass-hairline: rgba(210, 242, 255, .18);
+  --glass-tint-rgb: 10, 26, 39;
+  --glass-alpha: .48;
+
+  --rg-shell: rgba(7, 17, 27, .16);
+  --rg-shell-top: rgba(177, 233, 255, .16);
+  --rg-chrome: rgba(9, 23, 35, .32);
+  --rg-chrome-strong: rgba(10, 25, 38, .47);
+  --rg-pane: rgba(9, 25, 38, .29);
+  --rg-pane-strong: rgba(5, 16, 27, .48);
+  --rg-reading: rgba(3, 13, 23, .66);
+  --rg-reading-soft: rgba(5, 17, 28, .56);
+  --rg-card: rgba(18, 42, 57, .25);
+  --rg-card-hover: rgba(23, 54, 71, .38);
+  --rg-rail-solid: rgb(5, 17, 28);
+  --rg-rim: rgba(221, 247, 255, .72);
+  --rg-rim-soft: rgba(172, 226, 248, .24);
+  --rg-rim-low: rgba(64, 134, 166, .15);
+  --rg-shadow: rgba(0, 4, 11, .56);
+  --rg-shadow-soft: rgba(0, 6, 16, .33);
+  --rg-cyan: rgba(50, 211, 255, .75);
+  --rg-violet: rgba(142, 96, 255, .62);
+  --rg-warm: rgba(255, 154, 85, .52);
+  --rg-green: rgba(82, 247, 190, .72);
+  --rg-blur: 20px;
+  --rg-blur-card: 18px;
+  --rg-noise-opacity: .13;
+  color-scheme: dark;
+}

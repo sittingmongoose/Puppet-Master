@@ -1,0 +1,11 @@
+§R[data-theme^="glass"] {
+  --d-R: 13px; --d-r: 10px;
+  --d-t1: 160ms; --d-t2: 300ms; --d-t3: 440ms;
+  --d-ease: cubic-bezier(.16, 1, .3, 1);
+  --d-spring: cubic-bezier(.2, 1.15, .35, 1);
+  --d-hover: color-mix(in srgb, var(--text-primary) 8%, transparent);
+  --d-chrome: color-mix(in srgb, var(--surface-elevated) 70%, transparent);
+  --d-ctl-bg: color-mix(in srgb, var(--text-primary) 7%, transparent);
+  --d-on-accent: var(--bg, #241B36);
+  --d-shelf-fill: 9%; --d-shelf-head: 15%; --d-shelf-line: 26%;
+}

@@ -80,12 +80,8 @@
 .pmw-ink-row { position: relative; --pmw-ink-y: 4px; --pmw-ink-fill: var(--pmw-press); --pmw-ink-hover: color-mix(in srgb, var(--pmw-hover) 55%, transparent); }
 html[data-theme="basic-light"]:not([data-o55-nier="on"]) .pmw-ink-row { --pmw-ink-fill: color-mix(in srgb, var(--pmw-text) 17%, transparent); }
 html[data-theme="friendly-light"]:not([data-o55-nier="on"]) .pmw-ink-row { --pmw-ink-fill: color-mix(in srgb, var(--pmw-text) 20%, transparent); }
-html[data-theme^="glass"]:not([data-o55-nier="on"]) .pmw-ink-row {
-  --pmw-ink-fill: linear-gradient(var(--glass-edge), var(--glass-edge)) 0 0 / 100% 1px no-repeat, var(--pm6-glass-step-3);
-  --pmw-ink-hover: var(--pm6-glass-step-1); }
-html[data-theme="glass-light"]:not([data-o55-nier="on"]) .pmw-ink-row {
-  --pmw-ink-fill: linear-gradient(var(--glass-edge), var(--glass-edge)) 0 0 / 100% 1px no-repeat, var(--pm6-glass-plate, var(--pm6-glass-step-3));
-  --pmw-ink-hover: var(--pm6-glass-step-2); }
+/* @pm7-lg-slot home-redesign/src/panels/css/45-frames/G0800.css */
+/* @pm7-lg-slot home-redesign/src/panels/css/45-frames/G0801.css */
 .pmw-ink-opt { position: relative; z-index: 1; isolation: isolate; transition: color var(--pmw-t-fast) var(--pmw-ease); }
 .pmw-ink-opt::after, .pmw-ink { content: ""; position: absolute; top: var(--pmw-ink-y, 4px); bottom: var(--pmw-ink-y, 4px); border-radius: 6px; pointer-events: none; }
 .pmw-ink-opt::after { z-index: -1; left: 0; right: 0; }

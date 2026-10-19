@@ -1,0 +1,6 @@
+html[data-theme^="glass"] .app-name {
+  font-family: var(--display-font);
+  font-size: 15px;
+  font-weight: 680;
+  letter-spacing: -.02em;
+}

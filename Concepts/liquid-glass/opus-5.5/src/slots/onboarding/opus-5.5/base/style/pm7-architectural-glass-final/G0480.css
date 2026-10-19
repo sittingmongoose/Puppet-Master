@@ -1,0 +1,4 @@
+html[data-theme^="glass"] .title-bar {
+  z-index: 40 !important;
+  overflow: visible !important;
+}

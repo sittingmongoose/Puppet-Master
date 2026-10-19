@@ -1,0 +1,14 @@
+html[data-theme^="glass"] .app-shell::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 79;
+  pointer-events: none;
+  border-radius: inherit;
+  background:
+    linear-gradient(112deg, rgba(255,255,255,.23), transparent 17% 80%, rgba(255,255,255,.07)),
+    radial-gradient(ellipse 38% 12% at 24% 0%, var(--rg-cyan), transparent 72%),
+    radial-gradient(ellipse 28% 10% at 82% 100%, var(--rg-warm), transparent 72%);
+  mix-blend-mode: screen;
+  opacity: .42;
+}

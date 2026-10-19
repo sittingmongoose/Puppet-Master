@@ -1,0 +1,2 @@
+html[data-theme^="glass"] #panel-usage .pmu-card:not([data-head="band"]) { background-image: linear-gradient(180deg, rgba(255,255,255,.07), transparent 38%);
+  border-color: transparent; box-shadow: var(--pmu-plate-rest), inset 0 0 0 1px rgba(255,255,255,.08); }

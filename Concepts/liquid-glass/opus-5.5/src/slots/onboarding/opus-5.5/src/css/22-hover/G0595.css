@@ -1,0 +1,10 @@
+:root:is([data-theme^="basic"], [data-theme^="friendly"], [data-theme^="glass"]):not([data-o55-nier]) {
+  --pmh-pos: 1;                         /* only --pmh-x/-y are used */
+  --pmh-field: 1; --pmh-near: 1; --pmh-glow: 1; --pmh-frame: 0; --pmh-edge: .4;
+  --pmf-ease-out: cubic-bezier(.3, 0, .2, 1);
+  /* the light's falloff: a Gaussian exp(-4.5 t^2) tapered to 0 at the radius, sampled every 10 % (hand-set stops left
+     Mach rings in a warm pool). The few-% sheen shows only in the inner third; the hairline reads to about two thirds.
+     Jared's Glass review (2026-10-14, #16): the circle under the pointer was too strong and the edge glow right, so every
+     look's --pmf-sheen below is 0.6 of its 2026-10-10 value and the rim, band, mask and radius are unchanged. */
+  --pmf-mask: #000 0, rgb(0 0 0 / .956) 10%, rgb(0 0 0 / .833) 20%, rgb(0 0 0 / .663) 30%, rgb(0 0 0 / .481) 40%, rgb(0 0 0 / .317) 50%, rgb(0 0 0 / .189) 60%, rgb(0 0 0 / .1) 70%, rgb(0 0 0 / .046) 80%, rgb(0 0 0 / .015) 90%, transparent 100%;
+}

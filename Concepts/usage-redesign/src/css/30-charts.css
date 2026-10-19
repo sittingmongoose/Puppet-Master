@@ -151,7 +151,7 @@ html[data-theme^="retro"] #panel-usage :is(.pmu-halo, .pmu-hhalo), html[data-o55
 #panel-usage .pmu-chart[data-compact="1"] .pmu-legendslot { display: none; }
 
 /* depth per family: Glass glows widest (WOW-SPEC 6); Retro's phosphor rests at .14 after its one-shot afterglow (7) */
-html[data-theme^="glass"] #panel-usage .pmu-mark[data-mark="glow"] { stroke-width: 9; opacity: .24; }
+/* @pm7-lg-slot usage-redesign/src/css/30-charts/G1259.css */
 html[data-theme^="retro"] #panel-usage .pmu-mark[data-mark="glow"] { stroke-width: 6; opacity: .14; filter: none; stroke-linecap: square; stroke-linejoin: miter; }
 
 /* ---------- legend (A1 7.1) ---------- */
@@ -359,8 +359,8 @@ html[data-theme$="-light"] #panel-usage .pmu-sbfill > i { background-image: line
 /* rings lit along the arc (WOW-SPEC 2.5): short sub-arcs from 55 % of the colour (mixed into a solid base) to 100 % at
    the head, a round start cap, 1 px gaps between segments, a round head cap in the bright partner with a soft static glow */
 #panel-usage .pmu-ringbox { --ring-base: var(--pmu-card); }
-html[data-theme="glass-dark"] #panel-usage .pmu-ringbox { --ring-base: #2A2140; }
-html[data-theme="glass-light"] #panel-usage .pmu-ringbox { --ring-base: #F2F4FA; }
+/* @pm7-lg-slot usage-redesign/src/css/30-charts/G1262.css */
+/* @pm7-lg-slot usage-redesign/src/css/30-charts/G1263.css */
 #panel-usage .pmu-ringbox [data-mark="arc"] { fill: none; stroke: color-mix(in srgb, var(--c) var(--k, 100%), var(--ring-base)); stroke-width: var(--sw, 12); stroke-linecap: butt; transition: opacity 140ms; }
 #panel-usage .pmu-ringcap { fill: color-mix(in srgb, var(--c) var(--k, 100%), var(--ring-base)); stroke: none; }
 #panel-usage .pmu-ringcap.is-head { fill: var(--cb); }
@@ -757,7 +757,7 @@ html[data-theme$="-light"]:not([data-o55-nier="on"]):not([data-theme^="retro"]) 
 html:not([data-o55-nier="on"]):not([data-theme^="retro"]) #panel-usage .pmu-meterwash { display: none; }
 html:not([data-o55-nier="on"]):not([data-theme^="retro"]) #panel-usage .pmu-meterfill::after { width: 3px; background: var(--cb);
   box-shadow: var(--pmu-l-tip) color-mix(in srgb, var(--c) 75%, transparent); }
-html[data-theme^="glass"]:not([data-o55-nier="on"]) #panel-usage .pmu-meterfill::after { box-shadow: var(--pmu-l-tip) color-mix(in srgb, var(--c) 90%, transparent); }
+/* @pm7-lg-slot usage-redesign/src/css/30-charts/G1266.css */
 html:not([data-o55-nier="on"]):not([data-theme^="retro"]) #panel-usage .pmu-meterclip { overflow: visible; clip-path: inset(-12px -14px -12px 0 round var(--mr)); }
 /* estimates keep the hatch and no light (light means measured); missing keeps its dashed empty track */
 html:not([data-o55-nier="on"]):not([data-theme^="retro"]) #panel-usage .pmu-meter[data-est] .pmu-meterfill {
@@ -789,7 +789,7 @@ html[data-theme$="-light"]:not([data-o55-nier="on"]):not([data-theme^="retro"]) 
    (Tools), the live row highlight (ranked re-rank), quiet-grow origins ---------- */
 #panel-usage .pmu-ringtick { position: absolute; left: 50%; width: 2px; margin-left: -1px; z-index: 2; border-radius: 1px; background: var(--pmu-ink);
   box-shadow: 0 0 0 1.5px var(--pmu-card); pointer-events: auto; }
-html[data-theme="glass-dark"] #panel-usage .pmu-ringtick { box-shadow: 0 0 0 1.5px #2A2140; }
+/* @pm7-lg-slot usage-redesign/src/css/30-charts/G1267.css */
 html[data-theme^="retro"] #panel-usage .pmu-ringtick, html[data-o55-nier="on"] #panel-usage .pmu-ringtick { border-radius: 0; }
 html[data-o55-nier="on"] #panel-usage .pmu-ringtick { background: var(--o55-nier-ink); }
 #panel-usage .pmu-hinc { width: 22px; height: 22px; margin: -11px 0 0 -11px; opacity: 0;

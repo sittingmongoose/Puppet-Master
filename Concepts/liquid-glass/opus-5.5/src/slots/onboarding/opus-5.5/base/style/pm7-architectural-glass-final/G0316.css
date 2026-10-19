@@ -1,0 +1,16 @@
+html[data-theme^="glass"] .page-tab-ink {
+  border-radius: 11px !important;
+  background:
+    linear-gradient(#B5A4FF, #B5A4FF) 0 0 / 100% 2px no-repeat,
+    linear-gradient(
+      180deg,
+      color-mix(in srgb, #6A4BE5 78%, #3A2470) 0%,
+      color-mix(in srgb, #6A4BE5 52%, #241450) 100%
+    ) !important;
+  border: 1px solid color-mix(in srgb, #9B86F2 45%, transparent) !important;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, .30),
+    0 8px 20px rgba(106, 75, 229, .40),
+    0 0 22px rgba(106, 75, 229, .32) !important;
+  transform-origin: 50% 50% !important;
+}

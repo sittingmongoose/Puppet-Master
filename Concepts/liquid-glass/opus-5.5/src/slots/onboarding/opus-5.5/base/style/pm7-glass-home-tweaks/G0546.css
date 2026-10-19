@@ -1,0 +1,6 @@
+html[data-theme^="glass"] .activity-bar .icon.active,
+html[data-theme^="glass"] .activity-bar .icon[aria-current="page"] {
+  background: transparent !important;
+  box-shadow: none !important;
+  color: #FFFFFF !important;
+}

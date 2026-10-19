@@ -311,7 +311,7 @@ def lint(profile: str = 'review') -> list[str]:
         if not p.is_file() or not in_profile(p, profile):
             continue
         rel = p.relative_to(PKG).as_posix()
-        text = p.read_text(encoding='utf-8')
+        text = base_source.read_text_source(p)
         skin = CONCEPTS_SRC in p.parents and p.relative_to(CONCEPTS_SRC).parts[0] in SKIN_CONCEPTS
         allowed = SHELL_PILL_CLASSES if skin else set()
         if build.EMOJI.search(text):

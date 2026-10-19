@@ -1,0 +1,8 @@
+html[data-theme^="glass"] #panel-settings {
+  --k3-bg-1: rgba(var(--glass-tint-rgb), var(--glass-alpha));
+  --k3-bg-2: rgba(var(--glass-tint-rgb), var(--glass-alpha));
+  --k3-surface-0: rgba(var(--glass-tint-rgb), var(--glass-alpha));
+  --k3-surface-1: rgba(var(--glass-tint-rgb), var(--glass-alpha));
+  --k3-surface-2: rgba(var(--glass-tint-rgb), var(--glass-alpha));
+  --k3-surface-3: rgba(var(--glass-tint-rgb), var(--glass-alpha));
+}

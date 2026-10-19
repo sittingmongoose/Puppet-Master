@@ -1,0 +1,30 @@
+html[data-theme^="glass"] #pm7GlobalStatusBar.pm7-statusbar,
+html[data-theme^="glass"] .pm7-statusbar {
+  position: relative !important;
+  left: auto !important;
+  right: auto !important;
+  bottom: auto !important;
+  top: auto !important;
+  width: auto !important;
+  align-self: stretch !important;
+  flex: 0 0 25px !important;
+  height: 25px !important;
+  min-height: 25px !important;
+  z-index: 2;
+  margin: 2.7px 6px 5.4px !important;
+  padding: 0 8px !important;
+  box-sizing: border-box !important;
+  border-radius: 10px !important;
+  border: 1px solid transparent !important;
+  border-top: none !important;
+  background:
+    linear-gradient(var(--rg-chrome), var(--rg-chrome)) padding-box,
+    linear-gradient(145deg, var(--rg-rim-soft), rgba(255,255,255,.04) 52%, var(--rg-rim-low)) border-box !important;
+  backdrop-filter: blur(24px) saturate(145%) !important;
+  -webkit-backdrop-filter: blur(24px) saturate(145%) !important;
+  box-shadow:
+    0 10px 22px var(--rg-shadow-soft),
+    inset 0 1px 0 var(--rg-rim),
+    inset 0 -1px 0 rgba(0,0,0,.10) !important;
+  overflow: hidden;
+}
