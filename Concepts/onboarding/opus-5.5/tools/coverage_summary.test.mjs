@@ -6,6 +6,8 @@ import { mkdtempSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { EventEmitter } from 'node:events';
+import { beginCoverage, endCoverage } from './coverage_union.mjs';
 
 const summaryTool = fileURLToPath(new URL('./coverage_summary.mjs', import.meta.url));
 function summarize(text, extra = {}, args = []) {
@@ -173,5 +175,40 @@ test('the evidence-bound opt-in certifies missing counts without hiding unchecke
       ['--assume-navigation-clean', empty], ['--assume-navigation-clean', join(dir, 'missing.md')]]) {
       assert.throws(() => summarizePage('<style></style>', raw, args));
     }
+  } finally { rmSync(dir, { recursive: true, force: true }); }
+});
+
+test('the serialized three-session collector chain leaves the untouched rule unknown in the summary', async () => {
+  const dir = mkdtempSync(join(tmpdir(), 'pm7-navigation-chain-summary-'));
+  const css = '.touched { color: red; } .untouched { color: blue; }';
+  class Session extends EventEmitter {
+    constructor(withSheet = false) { super(); this.withSheet = withSheet; }
+    async send(method) {
+      if (method === 'Page.getFrameTree') return { frameTree: { frame: { id: 'main', url: 'about:blank' } } };
+      if (method === 'Profiler.takePreciseCoverage') return { result: [] };
+      if (method === 'CSS.stopRuleUsageTracking') return { ruleUsage: this.withSheet
+        ? [{ styleSheetId: 'sheet', startOffset: 0, endOffset: css.indexOf('}') + 1, used: true }] : [] };
+      if (method === 'CSS.getStyleSheetText') return { text: css };
+      return {};
+    }
+  }
+  try {
+    const file = join(dir, 'union.json'), first = new Session();
+    await beginCoverage(first);
+    for (const url of ['first', 'second', 'third']) first.emit('Page.frameNavigated', { frame: { id: 'main', url } });
+    await endCoverage(first, file);
+    assert.equal(JSON.parse(readFileSync(file)).unsampled_navigations, 2);
+    const second = async method => method === 'Profiler.takePreciseCoverage' ? { result: [] } : {};
+    await beginCoverage(second); await endCoverage(second, file);
+    const third = new Session(true);
+    await beginCoverage(third);
+    third.emit('CSS.styleSheetAdded', { header: { styleSheetId: 'sheet' } });
+    await endCoverage(third, file);
+    const raw = JSON.parse(readFileSync(file));
+    assert.ok(!Object.hasOwn(raw, 'unsampled_navigations'));
+    const { summary, complete } = summarizePage(`<style id="fixture">${css}</style>`, raw);
+    assert.equal(summary.css_rules.find(r => r.selector === '.untouched').usage_state, 'unknown');
+    assert.equal(summary.totals.css_rules_unused, 0);
+    assert.ok(complete.css.every(r => r.used));
   } finally { rmSync(dir, { recursive: true, force: true }); }
 });

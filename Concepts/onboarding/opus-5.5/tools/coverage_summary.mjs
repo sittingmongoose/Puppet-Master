@@ -169,6 +169,8 @@ for (const b of blocks) {
     row.rules_unused = found.filter((r) => r.usage_state === 'unused').length;
     row.rules_unmeasured = found.filter((r) => r.usage_state === 'unknown').length;
     row.rules_observed = found.filter((r) => r.observed).length;
+    row.navigation_unchecked = found.some((r) => r.navigation_unchecked);
+    row.navigation_assumed_clean = row.navigation_unchecked && !!navigationAssumption?.applied;
     row.rule_bytes = found.reduce((n, r) => n + r.bytes, 0);
     row.used_bytes = found.filter((r) => r.used).reduce((n, r) => n + r.bytes, 0);
     row.unused_bytes = found.filter((r) => r.usage_state === 'unused').reduce((n, r) => n + r.bytes, 0);
@@ -220,14 +222,15 @@ for (const b of blocks) {
       functions.push({ block: b.id, script: digest, startOffset: r.startOffset, endOffset: r.endOffset,
         name: fn.functionName, count: r.count, observed: true, v8_only: true, script_root: r.startOffset === 0 && r.endOffset === b.text.length });
     }
-    const fs = functions.filter((f) => f.block === b.id && !f.script_root);
-    for (const f of fs) {
+    const blockFunctions = functions.filter((f) => f.block === b.id);
+    for (const f of blockFunctions) {
       f.unresolved_source_overlap = uncertain.some((r) => r.startOffset < f.endOffset && r.endOffset > f.startOffset);
       f.navigation_unchecked = !(f.count > 0) && unsampledNavigations == null;
       f.unsampled_navigation_gap = !(f.count > 0) && unsampledNavigations > 0;
       f.navigation_assumed_clean = f.navigation_unchecked && !!navigationAssumption?.applied;
       f.usage_state = f.count > 0 ? 'used' : f.count === 0 && navigationClean && !f.unresolved_source_overlap ? 'unused' : 'unknown';
     }
+    const fs = blockFunctions.filter((f) => !f.script_root);
     row.functions_total = fs.length; row.functions_used = fs.filter((f) => f.count > 0).length;
     row.functions_unobserved = fs.filter((f) => !f.observed).length;
   } else row.executable = false;
