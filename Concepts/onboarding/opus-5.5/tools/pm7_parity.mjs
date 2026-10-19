@@ -329,6 +329,7 @@ async function nativeSnapshot(browser) {
   const pseudos = sparseMap(nodes.pseudoType), counts = new Map(), paths = new Map(), elements = [];
   const layoutStyles = new Map(layout.nodeIndex.map((node, i) => [node, layout.styles[i]]));
   const byPath = new Map(), vectors = new Map();
+  const identities = browser.host ? new Map() : null;
   const namesHash = digest(JSON.stringify(browser.standardProperties)), absentHash = digest(namesHash + '\0null');
   for (let i = 0; i < nodes.nodeType.length; i++) {
     const parent = nodes.parentIndex[i];
@@ -342,6 +343,12 @@ async function nativeSnapshot(browser) {
       counts.set(key, n); path = (paths.get(parent) || '') + '/' + tag + '[' + n + ']';
     }
     paths.set(i, path);
+    if (identities) {
+      const attributes = nodes.attributes[i] || [], values = new Map();
+      for (let j = 0; j < attributes.length; j += 2) values.set(strings[attributes[j]], strings[attributes[j + 1]]);
+      identities.set(path, { path, tag: strings[nodes.nodeName[i]].toLowerCase(), id: values.get('id') || null,
+        classes: values.get('class') || null, hasLayout: layoutStyles.has(i) });
+    }
     if (byPath.has(path)) throw Error('Non-unique native DOM path: ' + path);
     const indices = layoutStyles.get(i);
     let vector = null;
@@ -380,6 +387,7 @@ async function nativeSnapshot(browser) {
     byPath.set(path, vector); return [path, vector.hash];
   });
   browser.nativeDetails = byPath;
+  browser.nativeDomIdentities = identities;
   return { hash: digest(JSON.stringify(entries)), entries, propertyNames, elements: nodes.nodeType.filter(t => t === 1).length,
     uniqueStyles: new Set(entries.map(e => e[1])).size, internedImageUrls: custom.internedImageUrls, interningAudit: custom.auditRecords, blobIdentities,
     customSampling: { names: customNames, runtimeReadNames, sampledRecords: custom.rows.length, unmatchedLayoutPaths: custom.unmatchedLayoutPaths },
@@ -425,6 +433,7 @@ async function capture(browser, audit, deep) {
     failed: browser.failedRequests.map(item => ({ ...item, url: canonicalUrl(item.url) })).sort((a, b) => JSON.stringify(a).localeCompare(JSON.stringify(b))) };
   return { screenshot, styles, state, styleMilliseconds, screenshotPreparation, caretPreparation, nativeDetails: deep ? null : browser.nativeDetails,
     specialRules, specialRuleHash: digest(JSON.stringify(specialRules)), requests, storageAudit: browser.storageAudit,
+    nativeDomIdentities: deep ? null : browser.nativeDomIdentities,
     errors: [...new Set(browser.page.errors)] };
 }
 export function differingPaths(a, b) {
@@ -591,6 +600,8 @@ async function run(options) {
         uniqueStyles: [a.styles.uniqueStyles, b.styles.uniqueStyles], sampling: options.deep ? 'deep CSSOM including custom and hidden styles' : 'native standard styles plus CSSOM JS-read custom values on accessible layout nodes; all DOM paths retained',
         styledRecords: [a.styles.styledRecords, b.styles.styledRecords], unstyledDomRecords: [a.styles.unstyledDomRecords, b.styles.unstyledDomRecords],
         nonRenderedDomOnlyDifferences: options.deep ? null : domOnlyPaths.length, nonRenderedDomOnlyPaths: domOnlyPaths.slice(0, options.first),
+        ...(browsers[0].host && !options.deep ? { nonRenderedDomOnlyRecords: domOnlyPaths.map(path => ({ path,
+          baseline: a.nativeDomIdentities.get(path) || { path, absent: true }, candidate: b.nativeDomIdentities.get(path) || { path, absent: true } })) } : {}),
         layoutStyleDifferences: options.deep ? null : paths.length - domOnlyPaths.length,
         customSampling: [a, b].map(cap => cap.styles.customSampling ? { propertyCount: cap.styles.customSampling.names.length,
           runtimeReadNames: cap.styles.customSampling.runtimeReadNames,
