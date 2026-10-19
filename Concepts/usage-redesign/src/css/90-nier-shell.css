@@ -261,8 +261,8 @@ html[data-o55-nier-parts~="glyphs"] #panel-usage .pmu-card[data-head="band"] > .
 html[data-motion="reduced"][data-o55-nier="on"] #panel-usage .pmu-inspector.pmu-inspector,
 html[data-motion="reduced"][data-o55-nier="on"] #panel-usage .pmu-inspector.pmu-inspector::before { transition: none; animation: none; }
 
-/* ---- Pod voice [voice] and the intel frame [headers]: Usage's stage note reads as a Report (14-nier-parts.css:336 names
-   the retired #pm7uToast) in a square ink frame with the hard shadow, its mark in an ink square ---- */
+/* ---- Pod voice [voice] and the intel frame [headers]: Usage's stage note reads as a Report
+   in a square ink frame with the hard shadow, its mark in an ink square ---- */
 html[data-o55-nier-parts~="voice"] #panel-usage #pmuToast .pmu-toast-text::before { content: "Report: "; font-weight: 600; }
 html[data-o55-nier="on"] #panel-usage .pmu-toast { border-radius: 0; border-color: var(--o55-nier-ink); background: var(--surface, var(--pmu-card));
   box-shadow: 3px 3px 0 rgba(var(--o55-nier-shadow-rgb), .16); }

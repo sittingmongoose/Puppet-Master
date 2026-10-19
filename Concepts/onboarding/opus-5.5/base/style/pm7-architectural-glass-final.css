@@ -649,7 +649,7 @@ html[data-theme^="glass"] .pm6-dash-btn--primary {
 html[data-theme^="glass"] #panel-usage {
   background: transparent !important;
 }
-/* Pill progress bars only — do not match Usage .pm7u-meters / meterline chrome. */
+/* Pill progress bars only. Keep the retired meter exclusion in :not() for its specificity. */
 html[data-theme^="glass"] [class*="progress"]:not([class*="pm7u-meter"]) {
   border-radius: 999px !important;
 }
@@ -994,8 +994,6 @@ html[data-theme="glass-light"] .pm-segtab-item.active {
   color: #2A1848 !important;
 }
 
-/* Usage left-nav sliding pill (fills behind active room; spring + glass liquid) */
-
 /* --------------------------------------------------------------------------
    6. Home/editor/dashboard: smaller pane radii; original tab mechanics/shape
    -------------------------------------------------------------------------- */
@@ -1050,11 +1048,6 @@ html[data-theme^="glass"] .terminal-pane {
 }
 html[data-theme^="glass"] :is(.pm6-dash-card,.pm6-dash-cta) { border-radius: 12px !important; }
 html[data-theme^="glass"] :is(.pm6-dash-card):hover { transform: translateY(-1px) !important; }
-
-/* --------------------------------------------------------------------------
-   7. Usage: denser panes and the requested subtle dark widget color families
-   -------------------------------------------------------------------------- */
-
 
 /* --------------------------------------------------------------------------
    8. Opaque-enough menus/popovers and correct stacking
@@ -1418,12 +1411,4 @@ html[data-theme^="glass"] .pm-segtab-item {
 html[data-theme^="glass"] .pm-segtab-item span {
   overflow: hidden;
   text-overflow: ellipsis;
-}
-
-/* Soften Final Usage grid overrides that fight pm7-t29-usage-final.
-   Prefer material tokens only -- restore newest column rhythm. */
-
-@media (max-width: 1180px) {
-}
-@media (max-width: 860px) {
 }

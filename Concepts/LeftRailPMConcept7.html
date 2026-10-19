@@ -19798,39 +19798,6 @@ body > .pm6-tb-menu .pm6-tb-menu-item-label,
   <style id="pm7-t23-adjustments">
 
 /* =====================================================================
-   PM7 T23 — CAPACITY-FITTED CONTENT + BALANCED DEFAULT ROWS
-   Every size now receives a deliberately different information budget.
-   The goal is not maximum density; it is complete use of the panel without
-   internal scrolling or a stranded right/bottom half.
-   ===================================================================== */
-
-/* Four disclosure capacities: strip -> compact -> standard -> expanded. */
-
-/* Instrument cards consume the complete body at each capacity. */
-
-/* Two-row compact instruments retain two facts, two local rails and a footer. */
-
-/* Standard 3x3 cards: four facts, three rails, activity, and outcome footer. */
-
-/* Expanded/wide instruments become a genuine two-column dashboard rather
-   than a stretched standard card. */
-
-/* Summary cards use their vertical space instead of parking the footer at the
-   bottom of an otherwise empty body. */
-
-/* Lists grow their visible rows to the available body instead of leaving a
-   large blank region below the final row. Rows remain clipped—not scrolled. */
-
-/* Chart wrappers understand the new signal wrapper. */
-
-/* Context now has a complete standard hierarchy. */
-
-/* A calm resize transition makes the content-budget change legible. */
-
-/* T23.1: keep the expanded Context instrument within the curated 6x3 body
-   while retaining all four facts, source mix, meter, and route details. */
-
-/* =====================================================================
    PM7 T22 — Atlas retro theme, global Chat ownership, and Home systems
    ===================================================================== */
 
@@ -20052,8 +20019,7 @@ html.pm7-dash-resizing body{touch-action:none!important}
 .pm7-home-move-hud b{font:700 10px/1.15 var(--display-font);color:var(--text-primary);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .pm7-home-move-hud span{font:600 8.5px/1.2 var(--mono-font);color:var(--text-muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 body.pm-home-dragging [data-pm-home-host].pm-home-drop-active{box-shadow:inset 0 0 0 2px var(--accent-primary),inset 0 0 24px var(--accent-soft)}
-@media(prefers-reduced-motion:reduce){.pm7-home-move-hud{transition:none}}
-  </style>
+@media(prefers-reduced-motion:reduce){.pm7-home-move-hud{transition:none}}</style>
 
 
 
@@ -20719,7 +20685,7 @@ html[data-theme^="glass"] .pm6-dash-btn--primary {
 html[data-theme^="glass"] #panel-usage {
   background: transparent !important;
 }
-/* Pill progress bars only — do not match Usage .pm7u-meters / meterline chrome. */
+/* Pill progress bars only. Keep the retired meter exclusion in :not() for its specificity. */
 html[data-theme^="glass"] [class*="progress"]:not([class*="pm7u-meter"]) {
   border-radius: 999px !important;
 }
@@ -21108,8 +21074,6 @@ html[data-theme="glass-light"] .pm-segtab-item.active {
   color: #2A1848 !important;
 }
 
-/* Usage left-nav sliding pill (fills behind active room; spring + glass liquid) */
-
 /* --------------------------------------------------------------------------
    6. Home/editor/dashboard: smaller pane radii; original tab mechanics/shape
    -------------------------------------------------------------------------- */
@@ -21169,11 +21133,6 @@ html[data-theme^="glass"] .terminal-pane {
 html[data-theme^="glass"] :is(.pm6-dash-card),
 html[data-theme^="glass"] :is(.pm6-dash-cta) { border-radius: 12px !important; }
 html[data-theme^="glass"] :is(.pm6-dash-card):hover { transform: translateY(-1px) !important; }
-
-/* --------------------------------------------------------------------------
-   7. Usage: denser panes and the requested subtle dark widget color families
-   -------------------------------------------------------------------------- */
-
 
 /* --------------------------------------------------------------------------
    8. Opaque-enough menus/popovers and correct stacking
@@ -21659,14 +21618,6 @@ html[data-theme^="glass"] .pm-segtab-item {
 html[data-theme^="glass"] .pm-segtab-item span {
   overflow: hidden;
   text-overflow: ellipsis;
-}
-
-/* Soften Final Usage grid overrides that fight pm7-t29-usage-final.
-   Prefer material tokens only -- restore newest column rhythm. */
-
-@media (max-width: 1180px) {
-}
-@media (max-width: 860px) {
 }
 </style>
 <meta name="pm7-home-tweaks" content="friendly-glass-basic-retro-20260821">
@@ -56738,6 +56689,7 @@ html:is([data-theme^="retro"], [data-o55-nier="on"]) .wpk-check { border-radius:
           <div class="page page-usage" id="panel-usage">
 <!-- USAGE:BODY:START -->
 <style id="pm-usage-ctx-css">
+
               /* ----- chat context ring + in-chat details drawer ----- */
               .pm7ctx-pop{width:318px!important;max-width:calc(100vw - 16px)!important;padding:12px 13px!important;gap:9px!important;border-radius:11px!important;background:var(--surface-elevated)!important;border:1px solid var(--border)!important;box-shadow:0 16px 45px color-mix(in srgb,#000 28%,transparent)!important}
               .pm7ctx-head{display:flex;align-items:baseline;gap:8px}.pm7ctx-head b{font:700 11px/1 var(--display-font);color:var(--text-primary)}.pm7ctx-head span{margin-left:auto;font:700 9.5px/1 var(--mono-font);color:var(--text-secondary)}
@@ -56759,56 +56711,24 @@ html:is([data-theme^="retro"], [data-o55-nier="on"]) .wpk-check { border-radius:
               /* ----- theme fit ----- */
               [data-theme^="glass"] .pm7ctx-pop,[data-theme^="glass"] .pm7ctx-drawer{background:var(--pm6-glass-step-2)!important;border-color:var(--glass-hairline);box-shadow:inset 0 1px 0 var(--glass-edge),0 12px 35px var(--pm6-glass-pane-shadow2)}
               [data-theme="glass-light"] .pm7ctx-pop,[data-theme="glass-light"] .pm7ctx-drawer{background:color-mix(in srgb,var(--surface-elevated) 82%,transparent)!important}
-              /* Glass details inspector: same opaque reading plate as .pm7u-pop menus */
+
               [data-theme^="basic"] .pm7ctx-pop,[data-theme^="basic"] .pm7ctx-drawer{border-radius:4px;box-shadow:none}
               [data-theme^="retro"] .pm7ctx-pop,[data-theme^="retro"] .pm7ctx-drawer,[data-theme^="retro"] .pm7ctx-tile{border-radius:0;border-width:2px;box-shadow:3px 3px 0 color-mix(in srgb,var(--text-primary) 25%,transparent)}
               [data-theme^="retro"] .pm7ctx-actions button{border-radius:0}
+
               @media(max-width:680px){.pm7ctx-drawer{top:43px;width:100%}}
-              /* PM7 T34: Usage audit corrections. */
-              @media(prefers-reduced-motion:reduce){.pm7ctx-drawer{transition:none!important;animation:none!important}}
-            </style>
+              /* PM7 T34: chat context drawer reduced motion. */
+              @media(prefers-reduced-motion:reduce){.pm7ctx-drawer{transition:none!important;animation:none!important}}</style>
 <style id="pm7-t29-usage-final">
 
 /* Retro Light: darker readable green across the entire concept. */
 [data-theme="retro-light"]{--accent-lime:#2f7a3d!important;--graph-passed:#2f7a3d!important;--success:#2f7a3d!important;--status-success:#2f7a3d!important}
 /* The impossible arm preserves the retired list's (0,2,0) specificity. */
 [data-theme="retro-light"] :where(.ok):not(.t7.t7:not(*)),
-[data-theme="retro-light"] :is(.t7.t7:not(*)){color:#2f7a3d!important}</style>
+[data-theme="retro-light"] :is(.t7.t7:not(*)){color:#2f7a3d!important}
+</style>
 <style id="pm7-t32-final">
-/* PM7 T32 — final Usage chart/text closure, restored global status bar,
-   and Home dashboard interaction parity.
-   This is the last stylesheet in the document and intentionally owns the
-   selectors below. */
-
-/* ========================================================================
-   Usage panel chrome and protected right-edge lanes
-   ======================================================================== */
-
-/* Slightly down and right from T31, while remaining wholly inside the 34px
-   title strip and clear of the 19px triangular move corner. */
-
-/* ========================================================================
-   Usage list composition: no severed glyphs, and descriptive copy uses the
-   vertical room that a standard/tall card already provides.
-   ======================================================================== */
-
-/* ========================================================================
-   Accurate vertical-bar charts.
-
-   Each datum is a full-height column wrapper. The colored fill has a true
-   percentage height, so 14, 20, and 42 no longer collapse to the same minimum
-   pixel height. Short-value labels move above the fill; taller-value labels
-   sit inside it. A chart is either fully present or wholly absent.
-   ======================================================================== */
-
-/* Every value visible in charts and in instrument/summary plots that host bars. */
-
-/* Old selectors hid leading bars at two columns. The new grid shows all
-   points; values remain legible at this width because each is a real column. */
-
-/* Complete-or-hidden allocation by kind/height. */
-
-/* Meter and footer lanes remain fully separated. */
+/* PM7 T32 — restored global status bar and Home dashboard interaction parity. */
 
 /* ========================================================================
    Restored full-width global status bar (notifications intentionally absent)
@@ -57047,7 +56967,6 @@ html.pm7-dash-moving * { cursor: grabbing !important; user-select: none !importa
 .pm6-dash-card.pm7-dash-resize-placeholder > *,
 .pm6-dash-card.pm7-dash-move-placeholder > * { display: none !important; }
 
-
 /* Legacy dashboard grips remain in the markup for compatibility but are not
    interactive. The v2 controls below own all move/resize gestures. */
 .pm6-dash-drag[data-pm6-dash="drag"],
@@ -57089,12 +57008,9 @@ html.pm7-dash-moving * { cursor: grabbing !important; user-select: none !importa
   .pm7-dash-move-ghost { transition: none !important; transform: none !important; }
 }
 
+/* PM7 T38: Dashboard scroll anchoring and move feedback. */
 
-/* PM7 T38: stable widget transactions and chart labels.
-   The protected Settings and Assistant surfaces are intentionally absent. */
-
-/* The reorder marker must have exactly the physical footprint that the held
-   Usage card currently paints.  T38 supplies these measured span variables. */
+/* Prevent scroll anchoring while a Dashboard card moves. */
 html.pm7-dash-moving #pm6DashScroll,
 html.pm7-dash-moving #pm6DashGrid {
   overflow-anchor: none !important;
@@ -57130,20 +57046,7 @@ body > .pm7-dash-move-ghost {
   outline-offset: 3px !important;
 }
 
-/* A grid-slot placeholder is explicit. It cannot be redirected by DOM order
-   or painted under the card whose occupied slot caused the displacement. */
-
-
-/* PM7 T40: stable Usage preview paint and directional resize.
-   The protected Settings and Assistant surfaces are intentionally absent. */
-
-/* Moving an existing card within the same board can restart the inherited
-   staggered entrance animation.  A live transaction must keep every peer at
-   its already-painted opacity while FLIP supplies the only preview motion. */
-
-
-/* PM7 T41: stable Usage control acquisition and page overflow.
-   The protected Settings and Assistant surfaces are intentionally absent. */
+/* PM7 T41: page overflow. */
 
 /* The page-overflow menu is an in-tree child of the edge-faded tab strip.
    Disable that ancestor mask only for the menu's visible lifecycle; otherwise
@@ -57153,7 +57056,6 @@ body > .pm7-dash-move-ghost {
   -webkit-mask-image: none !important;
   mask-image: none !important;
 }
-
 </style>
 <style id="pm-usage-css">
 /* ---- css/00-base.css ---- */
@@ -61531,8 +61433,8 @@ html[data-o55-nier-parts~="glyphs"] :is(#panel-usage,[data-pmu-host]) .pmu-card[
 html[data-motion="reduced"][data-o55-nier="on"] :is(#panel-usage,[data-pmu-host]) .pmu-inspector.pmu-inspector,
 html[data-motion="reduced"][data-o55-nier="on"] :is(#panel-usage,[data-pmu-host]) .pmu-inspector.pmu-inspector::before { transition: none; animation: none; }
 
-/* ---- Pod voice [voice] and the intel frame [headers]: Usage's stage note reads as a Report (14-nier-parts.css:336 names
-   the retired #pm7uToast) in a square ink frame with the hard shadow, its mark in an ink square ---- */
+/* ---- Pod voice [voice] and the intel frame [headers]: Usage's stage note reads as a Report
+   in a square ink frame with the hard shadow, its mark in an ink square ---- */
 html[data-o55-nier-parts~="voice"] :is(#panel-usage,[data-pmu-host]) #pmuToast .pmu-toast-text::before { content: "Report: "; font-weight: 600; }
 html[data-o55-nier="on"] :is(#panel-usage,[data-pmu-host]) .pmu-toast { border-radius: 0; border-color: var(--o55-nier-ink); background: var(--surface, var(--pmu-card));
   box-shadow: 3px 3px 0 rgba(var(--o55-nier-shadow-rgb), .16); }

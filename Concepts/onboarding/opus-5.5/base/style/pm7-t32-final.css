@@ -1,38 +1,5 @@
 
-/* PM7 T32 — final Usage chart/text closure, restored global status bar,
-   and Home dashboard interaction parity.
-   This is the last stylesheet in the document and intentionally owns the
-   selectors below. */
-
-/* ========================================================================
-   Usage panel chrome and protected right-edge lanes
-   ======================================================================== */
-
-/* Slightly down and right from T31, while remaining wholly inside the 34px
-   title strip and clear of the 19px triangular move corner. */
-
-/* ========================================================================
-   Usage list composition: no severed glyphs, and descriptive copy uses the
-   vertical room that a standard/tall card already provides.
-   ======================================================================== */
-
-/* ========================================================================
-   Accurate vertical-bar charts.
-
-   Each datum is a full-height column wrapper. The colored fill has a true
-   percentage height, so 14, 20, and 42 no longer collapse to the same minimum
-   pixel height. Short-value labels move above the fill; taller-value labels
-   sit inside it. A chart is either fully present or wholly absent.
-   ======================================================================== */
-
-/* Every value visible in charts and in instrument/summary plots that host bars. */
-
-/* Old selectors hid leading bars at two columns. The new grid shows all
-   points; values remain legible at this width because each is a real column. */
-
-/* Complete-or-hidden allocation by kind/height. */
-
-/* Meter and footer lanes remain fully separated. */
+/* PM7 T32 — restored global status bar and Home dashboard interaction parity. */
 
 /* ========================================================================
    Restored full-width global status bar (notifications intentionally absent)
@@ -271,7 +238,6 @@ html.pm7-dash-moving * { cursor: grabbing !important; user-select: none !importa
 .pm6-dash-card.pm7-dash-resize-placeholder > *,
 .pm6-dash-card.pm7-dash-move-placeholder > * { display: none !important; }
 
-
 /* Legacy dashboard grips remain in the markup for compatibility but are not
    interactive. The v2 controls below own all move/resize gestures. */
 .pm6-dash-drag[data-pm6-dash="drag"],
@@ -313,116 +279,12 @@ html.pm7-dash-moving * { cursor: grabbing !important; user-select: none !importa
   .pm7-dash-move-ghost { transition: none !important; transform: none !important; }
 }
 
-/* T32.1 — narrow-card text and chart label closure. */
+/* PM7 T38: Dashboard scroll anchoring and move feedback. */
 
-/* Even the narrowest curated chart keeps every datum labeled. The compact
-   type and two-pixel gap preserve legibility without suppressing history. */
-@container pm7u-card (max-width: 190px) {
-}
-
-/* T32.2 — narrow card composition still exposes complete facts instead of
-   truncating several tiny columns. */
-@container pm7u-card (max-width: 300px) {
-}
-
-
-/* PM7 T35: Usage residual audit closure.  Container queries follow the
-   physical Usage stage, including space retained by Assistant. */
-
-/* Viewport media queries cannot see the physical Usage width left after the
-   shared Assistant is seated.  The ResizeObserver projection below marks the
-   shell itself, allowing the rail to become a collision-free two-row header
-   at the same physical widths used by the board/card tiers. */
-
-/* The model-owned row/column geometry stays canonical.  This measured tier
-   controls disclosure only, so a narrow physical card never attempts to
-   paint the content budget of a much wider logical preset. */
-/* Deliberately no corresponding show rule: physical tiers may cap the
-   logical preset's disclosure, but may never promote content the persisted
-   row geometry did not authorize. */
-
-/* Narrow cards mount complete primary facts and omit optional fragments.
-   Wider list cards keep their value lane and use height for complete rows
-   instead of sparse two-column islands. */
-
-/* A four-track chart is physically about 300px wide in the desktop grid.
-   Two side-fact columns at that width force adjacent labels/values to touch
-   (for example, `Input 1.30MOutput 222k`).  Keep the facts as complete rows
-   until the card earns enough physical width for two independent columns. */
-@container pm7u-card (max-width: 360px) {
-}
-/* The repeated generic label remains in each button's accessible name but
-   does not consume one of the tiny Ledger card's visible fact lines. */
-
-/* Old canvas placement rules survived a later flex-to-grid refactor and put
-   facts in row two while meters occupied row one.  Keep both primary lanes in
-   the same row so maximum account/plan cards earn their upper-left quadrant. */
-
-/* Four- and five-row wide summaries use their earned height for the complete
-   trend figure.  The existing right-hand authority facts remain unchanged. */
-
-/* Tiny charts keep their full accessible series while painting at most five
-   deterministic labels.  This rule intentionally outranks older all-label
-   experiments later in the inherited cascade. */
-
-/* Painted values belong to their bar tops, not to the plot baseline.  The
-   value is nested in its fill so the actual painted bar, rather than a second
-   percentage calculation, is the positioning authority.  Keep the compact
-   label intrinsic so a multi-character value is never cropped by its narrow
-   grid column; the plot itself remains the clipping boundary. */
-
-/* Keep the triangular grip artwork, but make the complete transparent 19px
-   control box interactive.  Earlier visual layers clip the button itself to
-   the painted triangle, which makes the center pickup miss at compact widths. */
-
-/* The reorder clone is a body portal, so it must not inherit card entrance
-   animation, delayed opacity, or a local stacking context. */
-
-@container pm7u-card (max-width: 250px) {
-}
-
-@container pm7u-stage (max-width: 760px) {
-}
-
-@container pm7u-stage (max-width: 520px) {
-}
-
-
-/* PM7 T38: stable widget transactions and chart labels.
-   The protected Settings and Assistant surfaces are intentionally absent. */
-
-/* The reorder marker must have exactly the physical footprint that the held
-   Usage card currently paints.  T38 supplies these measured span variables. */
+/* Prevent scroll anchoring while a Dashboard card moves. */
 html.pm7-dash-moving #pm6DashScroll,
 html.pm7-dash-moving #pm6DashGrid {
   overflow-anchor: none !important;
-}
-/* `row dense` can back-fill the final card into an earlier geometric hole,
-   collapsing distinct before/after identities into one painted rectangle.
-   Reorderable boards must paint settled DOM order monotonically so every
-   semantic insertion, including the final/below slot, remains reachable. */
-/* At the 860px application width the Usage stage is roughly 790px wide.
-   Keeping twelve tracks in that narrow band can pack an end insertion beside
-   the preceding wide card even when the painted pointer intent is the lower
-   slot.  Enter the existing six-track responsive composition before that
-   ambiguous band; this changes only presentation, not the settled order or
-   the measured preview footprint. */
-@container pm7u-stage (max-width: 820px) {
-}
-
-/* Values use one placement rule: every painted value is immediately above
-   its own fill.  The plot reserves a real label lane and remains the final
-   clipping boundary. */
-
-/* The title and latest/peak fact are either a complete single row or a
-   complete two-row narrow composition.  Neither required fact is ellipsized. */
-@container pm7u-card (max-width: 360px) {
-}
-
-/* A canonical 2x3 summary can be only about 142px wide on the twelve-track
-   board.  Keep both primary facts, but stack the trend below the value once
-   their intrinsic widths cannot coexist. */
-@container pm7u-card (max-width: 180px) {
 }
 
 /* Home keeps its existing visual vocabulary, with a marker that remains
@@ -455,29 +317,7 @@ body > .pm7-dash-move-ghost {
   outline-offset: 3px !important;
 }
 
-
-/* PM7 T39: exact chart labels and two-dimensional Usage slots.
-   Protected Settings and Assistant selectors are intentionally absent. */
-
-/* Every painted bar has a value node. JavaScript places the node immediately
-   above its fill, then raises it only as far as required to avoid a peer. */
-@container pm7u-card (max-width: 190px) {
-}
-
-/* A grid-slot placeholder is explicit. It cannot be redirected by DOM order
-   or painted under the card whose occupied slot caused the displacement. */
-
-
-/* PM7 T40: stable Usage preview paint and directional resize.
-   The protected Settings and Assistant surfaces are intentionally absent. */
-
-/* Moving an existing card within the same board can restart the inherited
-   staggered entrance animation.  A live transaction must keep every peer at
-   its already-painted opacity while FLIP supplies the only preview motion. */
-
-
-/* PM7 T41: stable Usage control acquisition and page overflow.
-   The protected Settings and Assistant surfaces are intentionally absent. */
+/* PM7 T41: page overflow. */
 
 /* The page-overflow menu is an in-tree child of the edge-faded tab strip.
    Disable that ancestor mask only for the menu's visible lifecycle; otherwise
@@ -487,4 +327,3 @@ body > .pm7-dash-move-ghost {
   -webkit-mask-image: none !important;
   mask-image: none !important;
 }
-

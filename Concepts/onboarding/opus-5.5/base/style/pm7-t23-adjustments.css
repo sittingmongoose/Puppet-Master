@@ -1,66 +1,4 @@
 
-/* =====================================================================
-   PM7 T22 — PRISM USAGE DENSITY + ADAPTIVE PANEL PASS
-   The U11 panel mechanics remain, but the visual defaults now follow the
-   supplied instrument-panel reference: narrower cards, taller information
-   stacks, more local comparisons, short meters, and no empty card middles.
-   ===================================================================== */
-/* Restore each component's real layout mode when its expanded tier is
-   disclosed; the generic tier switch otherwise turns flex/grid instruments
-   into block boxes and makes their children overflow invisibly. */
-
-/* Calm, reference-style instrument stack. */
-
-/* Compact strips use the card header as their label, then reserve the body
-   for the one value and one local rail that remain meaningful at one row. */
-
-/* Wide/tall cards reflow instead of stretching one long meter through empty space. */
-
-/* Summary cards retain hierarchy as they grow. */
-
-/* Compact data rows and mini visualizations. */
-
-/* Context and cost instruments use short local bars rather than one giant rail. */
-
-/* More obvious but restrained interaction affordances. */
-
-/* Theme refinements for the denser cards. */
-
-@media(max-width:1180px){}
-@media(max-width:860px){}
-
-/* =====================================================================
-   PM7 T23 — CAPACITY-FITTED CONTENT + BALANCED DEFAULT ROWS
-   Every size now receives a deliberately different information budget.
-   The goal is not maximum density; it is complete use of the panel without
-   internal scrolling or a stranded right/bottom half.
-   ===================================================================== */
-
-/* Four disclosure capacities: strip -> compact -> standard -> expanded. */
-
-/* Instrument cards consume the complete body at each capacity. */
-
-/* Two-row compact instruments retain two facts, two local rails and a footer. */
-
-/* Standard 3x3 cards: four facts, three rails, activity, and outcome footer. */
-
-/* Expanded/wide instruments become a genuine two-column dashboard rather
-   than a stretched standard card. */
-
-/* Summary cards use their vertical space instead of parking the footer at the
-   bottom of an otherwise empty body. */
-
-/* Lists grow their visible rows to the available body instead of leaving a
-   large blank region below the final row. Rows remain clipped—not scrolled. */
-
-/* Chart wrappers understand the new signal wrapper. */
-
-/* Context now has a complete standard hierarchy. */
-
-/* A calm resize transition makes the content-budget change legible. */
-
-/* T23.1: keep the expanded Context instrument within the curated 6x3 body
-   while retaining all four facts, source mix, meter, and route details. */
 
 /* =====================================================================
    PM7 T22 — Atlas retro theme, global Chat ownership, and Home systems
@@ -271,4 +209,3 @@ html.pm7-dash-resizing body{touch-action:none!important}
 .pm7-home-move-hud span{font:600 8.5px/1.2 var(--mono-font);color:var(--text-muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 body.pm-home-dragging [data-pm-home-host].pm-home-drop-active{box-shadow:inset 0 0 0 2px var(--accent-primary),inset 0 0 24px var(--accent-soft)}
 @media(prefers-reduced-motion:reduce){.pm7-home-move-hud{transition:none}}
-  

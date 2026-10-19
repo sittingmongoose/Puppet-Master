@@ -1,14 +1,5 @@
 
-              /* ==================================================================
-                 PM7 T21 — PRISM USAGE WORKSPACE
-                 Ported from U11 Prism II, then deliberately simplified around
-                 the supplied instrument-panel reference: compact panel headers,
-                 aligned figures, thin dividers, restrained accents, short copy,
-                 and many useful horizontal spans. Every selector is pm7u-/pm7ctx-
-                 scoped so the rest of PMConcept7 remains untouched.
-                 ================================================================== */
-              body.pm7u-pointer-op{overflow:hidden!important;user-select:none!important;cursor:default!important}
-              body.pm7u-pointer-op *{user-select:none!important}
+
               /* ----- chat context ring + in-chat details drawer ----- */
               .pm7ctx-pop{width:318px!important;max-width:calc(100vw - 16px)!important;padding:12px 13px!important;gap:9px!important;border-radius:11px!important;background:var(--surface-elevated)!important;border:1px solid var(--border)!important;box-shadow:0 16px 45px color-mix(in srgb,#000 28%,transparent)!important}
               .pm7ctx-head{display:flex;align-items:baseline;gap:8px}.pm7ctx-head b{font:700 11px/1 var(--display-font);color:var(--text-primary)}.pm7ctx-head span{margin-left:auto;font:700 9.5px/1 var(--mono-font);color:var(--text-secondary)}
@@ -30,13 +21,11 @@
               /* ----- theme fit ----- */
               [data-theme^="glass"] .pm7ctx-pop,[data-theme^="glass"] .pm7ctx-drawer{background:var(--pm6-glass-step-2)!important;border-color:var(--glass-hairline);box-shadow:inset 0 1px 0 var(--glass-edge),0 12px 35px var(--pm6-glass-pane-shadow2)}
               [data-theme="glass-light"] .pm7ctx-pop,[data-theme="glass-light"] .pm7ctx-drawer{background:color-mix(in srgb,var(--surface-elevated) 82%,transparent)!important}
-              /* Glass details inspector: same opaque reading plate as .pm7u-pop menus */
+
               [data-theme^="basic"] .pm7ctx-pop,[data-theme^="basic"] .pm7ctx-drawer{border-radius:4px;box-shadow:none}
               [data-theme^="retro"] .pm7ctx-pop,[data-theme^="retro"] .pm7ctx-drawer,[data-theme^="retro"] .pm7ctx-tile{border-radius:0;border-width:2px;box-shadow:3px 3px 0 color-mix(in srgb,var(--text-primary) 25%,transparent)}
               [data-theme^="retro"] .pm7ctx-actions button{border-radius:0}
-              @media(max-width:1180px){}
-              @media(max-width:860px){}
+
               @media(max-width:680px){.pm7ctx-drawer{top:43px;width:100%}}
-              /* PM7 T34: Usage audit corrections. */
+              /* PM7 T34: chat context drawer reduced motion. */
               @media(prefers-reduced-motion:reduce){.pm7ctx-drawer{transition:none!important;animation:none!important}}
-            
