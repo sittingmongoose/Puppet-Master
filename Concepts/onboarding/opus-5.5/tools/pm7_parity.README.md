@@ -39,8 +39,9 @@ names. Current PM7 has about 60 literal names plus the `--lg-wall-` wallpaper fa
 Dynamic property names actually read by page JS are recorded per document too; sampler reads are
 excluded from that recorder. A newly observed name conservatively changes that state's hash.
 Chrome rejects custom names in DOMSnapshot, so CSSOM samples these values on accessible layout elements and generated
-pseudos. Unmatched UA/closed-shadow layout paths are reported; complete closed-root custom sampling is
-not claimed. Other custom properties are excluded, allowing removal of unused tokens.
+pseudos. Any unmatched layout path fails that row as unsampled-custom-layout, even when both sides
+skip it. Complete hidden closed-root sampling is not claimed. Other custom properties are excluded,
+allowing removal of unused tokens.
 
 The lead approved the native/exhaustive split in mailbox 1018235310-e6f8. Review correction adds the
 JS-read token union; native mode does not claim exhaustive hidden/custom-property parity.
@@ -60,7 +61,10 @@ back to complete enumeration when necessary.
 Only actual CSS url(blob:...) references canonicalize opaque UUIDs to exact Blob-byte SHA-256 plus
 MIME type, preserving fragments. Quoted URL-like text is unchanged. Unknown Blob references error.
 Caret hiding is enabled ONLY for screenshots; both style samplers and diagnostics disable the
-caret sheet so original caret-color values remain in the hash.
+caret sheet so original caret-color values remain in the hash. Every accessible element/pseudo
+resolves its caret value first, avoiding cached inherited values in DOMSnapshot. Caret-color
+transitions caused by either toggle finish explicitly. Unexpected active animations fail capture;
+only intended infinite animations paused at zero remain. Preparation counts are recorded per side.
 
 A separate CSSOM rule-text guard compares selection, webkit-scrollbar, webkit-slider and webkit-search
 pseudo rules whose computed nodes are unavailable. Changes fail conservatively and report first rule
@@ -163,6 +167,7 @@ Default output: timestamped directory in the wave's external A0-parity evidence 
 reports/progress are never overwritten. JSON includes source/input/matrix hashes, every state,
 raw and selected verdicts, property/rule/DOM diagnostics, storage/request/state checks, wall time,
 sampled RSS, Chrome/GPU details and session IDs. Markdown summarizes failures and measured states.
+Every Markdown state row and CLI progress line distinguishes raw exact from the selected verdict.
 PNG baseline/candidate captures are always retained; raw mismatches add diff PNGs. Measured states
 add noise-baseline-N, low/high range and noise-heatmap PNGs, each with SHA-256 in the JSON.
 
@@ -172,4 +177,12 @@ shared pages may count per process. It is not a kernel peak reading.
 
 ```sh
 node --test Concepts/onboarding/opus-5.5/tools/pm7_parity.test.mjs Concepts/onboarding/opus-5.5/tools/cdp-websocket.test.mjs
+```
+
+The opt-in GPU caret regression uses one browser at a time. Its unchanged control must pass;
+caret-only mutations must fail with transition:all and with transitions disabled, with zero pixels.
+Set PM7_PARITY_REGRESSION_OUT to a new external directory to retain captures and validation.
+
+```sh
+PM7_PARITY_GPU_REGRESSION=1 node --test Concepts/onboarding/opus-5.5/tools/pm7_parity.caret.test.mjs
 ```

@@ -316,7 +316,31 @@ export function installParityRuntime(config, normalizeBlobValue) {
     specialRules, details: paths => sampleSync(() => details(paths)), barrier, blobIdentities,
     readCustomProperties: () => [...jsReadNames].sort(),
     blockedRequests: () => [...blockedRequests],
-    setCaretHidden(hidden) { if (!caretStyle?.sheet) throw Error('Caret sheet unavailable'); caretStyle.sheet.disabled = !hidden; },
+    setCaretHidden(hidden) {
+      if (!caretStyle?.sheet) throw Error('Caret sheet unavailable');
+      caretStyle.sheet.disabled = !hidden;
+      // DOMSnapshot can retain inherited values in skipped/offscreen subtrees.
+      // Resolve caret values explicitly before asking it for standard styles.
+      let resolvedRecords = 0;
+      const targets = hidden ? [] : elements().list;
+      if (hidden) for (let el = document.activeElement; el; el = el.shadowRoot?.activeElement) targets.push(el);
+      for (const el of targets) for (const pseudo of pseudos(el)) {
+        void getComputedStyle(el, pseudo || null).caretColor; resolvedRecords++;
+      }
+      // The screenshot override can start caret-color transitions under
+      // transition:all. Playback is frozen, so settle these harness-induced
+      // transitions explicitly in BOTH directions; never hash their old value.
+      const caretTransitions = document.getAnimations().filter(a => a.transitionProperty === 'caret-color');
+      for (const animation of caretTransitions) animation.finish();
+      for (const animation of caretTransitions) {
+        const target = animation.effect?.target;
+        if (target) void getComputedStyle(target, animation.effect.pseudoElement || null).caretColor;
+      }
+      const active = document.getAnimations().filter(a => !['finished', 'idle'].includes(a.playState));
+      const unexpected = active.filter(a => a.playState !== 'paused' || Number(a.currentTime) !== 0 || Number.isFinite(a.effect?.getComputedTiming().endTime));
+      if (!hidden && unexpected.length) throw Error('Unsettled animation at style capture: ' + unexpected.map(a => a.constructor.name + ':' + (a.transitionProperty || a.animationName || 'script')).join(', '));
+      return { resolvedRecords, finishedCaretTransitions: caretTransitions.length, frozenInfiniteAnimations: active.length, unsettledAnimations: unexpected.length };
+    },
     get now() { return now; } };
   const hideCaret = () => {
     const sheet = caretStyle = document.createElement('style'); sheet.id = 'pm7-parity-caret';

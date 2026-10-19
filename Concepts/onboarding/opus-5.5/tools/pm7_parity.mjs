@@ -394,7 +394,7 @@ async function capture(browser, audit, deep) {
   if (process.env.PM7_PARITY_DEBUG) console.log('CAPTURE screenshot done');
   const styleStarted = performance.now();
   let styles;
-  await browser.page.evaluate(() => __pm7Parity.setCaretHidden(false));
+  const caretPreparation = await browser.page.evaluate(() => __pm7Parity.setCaretHidden(false));
   try { styles = deep ? await browser.page.evaluate(async audit => __pm7Parity.snapshot(audit), audit) : await nativeSnapshot(browser); }
   finally { await browser.page.evaluate(() => __pm7Parity.setCaretHidden(true)); }
   const styleMilliseconds = performance.now() - styleStarted;
@@ -410,7 +410,7 @@ async function capture(browser, audit, deep) {
   const runtimeBlocked = await browser.page.evaluate(() => __pm7Parity.blockedRequests());
   const requests = { blocked: [...new Set([...browser.blocked, ...runtimeBlocked])].map(canonicalUrl).sort(),
     failed: browser.failedRequests.map(item => ({ ...item, url: canonicalUrl(item.url) })).sort((a, b) => JSON.stringify(a).localeCompare(JSON.stringify(b))) };
-  return { screenshot, styles, state, styleMilliseconds, nativeDetails: deep ? null : browser.nativeDetails,
+  return { screenshot, styles, state, styleMilliseconds, caretPreparation, nativeDetails: deep ? null : browser.nativeDetails,
     specialRules, specialRuleHash: digest(JSON.stringify(specialRules)), requests, storageAudit: browser.storageAudit,
     errors: [...new Set(browser.page.errors)] };
 }
@@ -496,7 +496,7 @@ async function run(options) {
       specialPseudoRules: 'serialized CSSOM rule guard for selection, scrollbar, slider and search pseudos; differences reported independently of visible layout styles',
       imageInterning: 'temporary lossless CSSOM image URL interning for custom/deep sampling; original values reconstructed before hashing; direct audit before each custom sample and first deep capture',
       blobUrls: 'Opaque Blob URL identifiers canonicalized by SHA256 of exact bytes and MIME type; fragments preserved; unknown Blob URLs are errors',
-      limits: ['Viewport screenshots, not offscreen scroll contents. DPR 1 only; high-resolution media rules are not exercised.', 'Closed shadow-root completeness is not asserted; CSSOM custom sampling covers accessible layout elements/generated pseudos and reports unmatched layout paths. Child frames are unsupported.',
+      limits: ['Viewport screenshots, not offscreen scroll contents. DPR 1 only; high-resolution media rules are not exercised.', 'Complete hidden closed-root sampling is not asserted. CSSOM custom sampling covers accessible layout elements/generated pseudos; any unmatched layout path fails the row. Child frames are unsupported.',
         'Checks only listed reachable states, not every possible interaction.', 'No cross-host pixel equivalence claimed.',
         'Full-motion coverage is the declared rest/menu/popover subset; hover and focus remain reduced-motion cases. Add states before removing other rule families.',
         'Fresh self-contained PM7 inputs required; relative external files resolve from the shared intercepted URL.',
@@ -530,11 +530,13 @@ async function run(options) {
       const sample = await replayPrefix(browser, group, inputs[0], stateIndex, true);
       const same = sample.styles.hash === baseline.styles.hash && JSON.stringify(sample.state) === JSON.stringify(baseline.state)
         && JSON.stringify(sample.errors) === JSON.stringify(baseline.errors) && sample.specialRuleHash === baseline.specialRuleHash
-        && JSON.stringify(sample.requests) === JSON.stringify(baseline.requests);
+        && JSON.stringify(sample.requests) === JSON.stringify(baseline.requests)
+        && !sample.styles.customSampling.unmatchedLayoutPaths.length;
       stable &&= same; hashes.push(sample.styles.hash); samples.push(sample.screenshot);
       if (!same) {
         const paths = differingPaths(baseline.styles.entries, sample.styles.entries);
         instability.push({ sample: n, state: sample.state, errors: sample.errors, requests: sample.requests,
+          customUnmatchedPaths: sample.styles.customSampling.unmatchedLayoutPaths,
           specialRuleHash: sample.specialRuleHash, differingElements: paths.length,
           differences: await styleDetails([browser, browser], paths.slice(0, options.first), false, [baseline, sample]) });
       }
@@ -564,7 +566,8 @@ async function run(options) {
     const sameErrors = JSON.stringify(a.errors) === JSON.stringify(b.errors);
     const sameState = JSON.stringify(a.state) === JSON.stringify(b.state), sameRequests = JSON.stringify(a.requests) === JSON.stringify(b.requests);
     const sameRules = a.specialRuleHash === b.specialRuleHash;
-    const sameBehavior = sameErrors && sameState && sameRequests && sameRules;
+    const customCoverageComplete = options.deep || [a, b].every(cap => !cap.styles.customSampling.unmatchedLayoutPaths.length);
+    const sameBehavior = sameErrors && sameState && sameRequests && sameRules && customCoverageComplete;
     const domOnlyPaths = options.deep ? [] : paths.filter(path => !a.nativeDetails.get(path) && !b.nativeDetails.get(path));
     const row = { id: key, look: group.look, page: group.page.id, state: state.id, viewport: group.viewport, motion: group.motion,
       styles: { baseline: a.styles.hash, candidate: b.styles.hash, differingElements: paths.length,
@@ -582,7 +585,8 @@ async function run(options) {
         interningAuditRecords: [a.styles.interningAudit, b.styles.interningAudit] },
       pixels: { ...pixels, heatmap: undefined }, baselineState: a.state, candidateState: b.state,
       runtimeErrors: { baseline: a.errors, candidate: b.errors, equal: sameErrors },
-      stateEqual: sameState, requests: { baseline: a.requests, candidate: b.requests, equal: sameRequests },
+      caretPreparation: { baseline: a.caretPreparation, candidate: b.caretPreparation },
+      stateEqual: sameState, customCoverageComplete, requests: { baseline: a.requests, candidate: b.requests, equal: sameRequests },
       storageAudit: { baseline: a.storageAudit, candidate: b.storageAudit },
       specialRuleGuard: { baseline: a.specialRuleHash, candidate: b.specialRuleHash, equal: sameRules,
         differences: sameRules ? [] : Array.from({ length: Math.max(a.specialRules.length, b.specialRules.length) }, (_, index) => ({ index, baseline: a.specialRules[index] || null, candidate: b.specialRules[index] || null }))
@@ -610,11 +614,11 @@ async function run(options) {
     if (row.verdict === 'PASS' && row.rawExactVerdict === 'FAIL') row.verdict = 'PASS-TOLERANT';
     row.rawExactReasons = [paths.length || a.styles.hash !== b.styles.hash ? 'style' : null, pixels.rawDiffPixels ? 'pixels' : null,
       !sameState ? 'state' : null, !sameErrors ? 'runtime-errors' : null, !sameRequests ? 'requests' : null,
-      !sameRules ? 'special-pseudo-rules' : null].filter(Boolean);
+      !sameRules ? 'special-pseudo-rules' : null, !customCoverageComplete ? 'unsampled-custom-layout' : null].filter(Boolean);
     row.verdictReasons = row.verdict === 'FAIL' && row.pixelNoise?.applied
       ? [...row.rawExactReasons, row.pixelNoise.unstableBaseline ? 'unstable-baseline' : 'outside-baseline-envelope'] : row.rawExactReasons;
     report.rows.push(row); appendFileSync(join(options.out, 'progress.jsonl'), JSON.stringify(row) + '\n');
-    console.log(`${row.verdict} ${report.rows.length}/${selected.count} ${key} styles=${paths.length} pixels=${pixels.diffPixels} raw=${pixels.rawDiffPixels}${row.pixelNoise?.applied ? ' envelope=' + (row.pixelNoise.pass ? 'PASS' : 'FAIL') : ''}`);
+    console.log(`${row.verdict} ${report.rows.length}/${selected.count} ${key} exact=${row.rawExactVerdict} styles=${paths.length} pixels=${pixels.diffPixels} raw=${pixels.rawDiffPixels}${row.pixelNoise?.applied ? ' envelope=' + (row.pixelNoise.pass ? 'PASS' : 'FAIL') : ''}`);
   }
   async function worker(index) {
     const browsers = [];
@@ -710,6 +714,8 @@ async function run(options) {
     ...(failed.length ? ['| State | Style elements | Pixels above tolerance | Raw differing pixels | Reasons |', '|---|---:|---:|---:|---|', ...failed.map(r => `| ${r.id} | ${r.styles.differingElements} | ${r.pixels.diffPixels} | ${r.pixels.rawDiffPixels} | ${r.verdictReasons.join(', ')} |`), ''] : []),
     ...(noisy.length ? ['| Measured baseline envelope | Raw candidate pixels | Variable baseline pixels | Max channel span | Outside envelope | Styles/state stable |', '|---|---:|---:|---:|---:|---|',
       ...noisy.map(r => `| ${r.id} | ${r.pixels.rawDiffPixels} | ${r.pixelNoise.noisePixels} | ${r.pixelNoise.maxObservedChannelSpan} | ${r.pixelNoise.outsidePixels} | ${r.pixelNoise.baselineStylesAndStateStable} |`), ''] : []),
+    '| State | Style elements | Raw pixels | Raw exact verdict | Selected verdict |', '|---|---:|---:|---|---|',
+    ...report.rows.map(r => `| ${r.id} | ${r.styles.differingElements} | ${r.pixels.rawDiffPixels} | ${r.rawExactVerdict} | ${r.verdict} |`), '',
     ...report.errors.map(e => `Harness error: ${e.error || e.cleanup}`), '',
     'See report.json and progress.jsonl for every state, full property differences and artifact SHA-256 values.',
     'Exact mode never retries, masks differences or increases tolerance automatically. Explicit baseline-repeat mode retains the original candidate capture and reports every raw difference and measured per-pixel range.', '', ...report.determinism.limits.map(l => '- ' + l), ''].join('\n');
