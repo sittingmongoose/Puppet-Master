@@ -3106,7 +3106,6 @@
      the two writers always agree, and reads each look's default from the catalog (default_for); without the package
      (a Glass-only build) Glass shows Ribbons. The choice is 'look' (each look's own) or a wallpaper id, used by every
      look; its dark or light print follows the look's mode. */
-  var WALL_KEY = 'pm-lg-wallpaper';
   function catalogWalls() {
     var C = window.PM_WALLPAPERS_CATALOG, out = [];
     if (C && C.families) C.families.forEach(function (f) { (f.wallpapers || []).forEach(function (w) { out.push({ id: w.id, name: w.name, family: f.label || f.family, default_for: w.default_for || null }); }); });
@@ -3117,7 +3116,10 @@
     for (var i = 0; i < ws.length; i++) if (ws[i].default_for === fam) return ws[i].id;
     return '';
   }
-  function wallChoice() { try { return localStorage.getItem(WALL_KEY) || 'look'; } catch (e) { return 'look'; } }
+  function wallChoice() {
+    var tome = window.PM7_SETTINGS_TOME, current = tome && tome.wallpaperSnapshot && tome.wallpaperSnapshot();
+    return current && current.snapshot && current.snapshot.settings && current.snapshot.settings['general.visual.wallpaper'] || 'look';
+  }
   function applyWall() {
     var c = q.get('lgwall') || (window.PM_WALLPAPERS && window.PM_WALLPAPERS.paintChoice ? window.PM_WALLPAPERS.paintChoice() : wallChoice()), fam = (root.getAttribute('data-theme') || '').split('-')[0], ws = catalogWalls();
     if (c !== 'look' && ws.length && !ws.some(function (w) { return w.id === c; })) c = 'look';   /* a stale id: the package resets it */
@@ -3130,8 +3132,12 @@
   }
   /* choosing goes through the package when it is there, so its gallery and its hold stay in step */
   function setWall(c) {
-    if (window.PM_WALLPAPERS && typeof window.PM_WALLPAPERS.choose === 'function') { window.PM_WALLPAPERS.choose(c); applyWall(); return; }
-    try { localStorage.setItem(WALL_KEY, c); } catch (e) {} applyWall();
+    if (window.PM_WALLPAPERS && typeof window.PM_WALLPAPERS.choose === 'function') { return window.PM_WALLPAPERS.choose(c); }
+    var tome = window.PM7_SETTINGS_TOME, current = tome && tome.wallpaperSnapshot && tome.wallpaperSnapshot();
+    if (!current || !current.project_id || !tome.writeWallpaper) return false;
+    var result = tome.writeWallpaper({ project_id: current.project_id, value: c, retire_legacy: true });
+    if (!result || !result.ok) return false;
+    applyWall(); return true;
   }
 
   /* ---- the concept's own control (status bar) -------------------------------------------------------------------- */

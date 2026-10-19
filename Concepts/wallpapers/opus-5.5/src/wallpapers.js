@@ -6,13 +6,15 @@
  * light) that follows the look's mode.
  *
  * The shared contract (CONTRACT.md), which Glass's glass.js already follows, so the two never disagree:
- *   - the choice is localStorage['pm-lg-wallpaper'] ('look' or an id); ?lgwall= overrides it for one visit;
+ *   - the choice is the active Project's general.visual.wallpaper ('look' or an id), through PM7_SETTINGS_TOME;
+ *     the old localStorage['pm-lg-wallpaper'] can seed only an absent Project choice; ?lgwall= is a one-visit override;
  *   - <html data-lg-wall="<id>"> names the wallpaper on show; data-lg-wall-any is present when a look other than Glass
  *     shows one; both are computed exactly as glass.js's applyWall computes them;
  *   - the images are CSS variables --lg-wall-<id>-<dark|light> (and thumbnails --wpk-t-<id>-<dark|light>), and the
  *     catalog comes from catalog.d, merged by tools/build_walls.py into window.PM_WALLPAPERS_CATALOG.
- * A saved id this build does not have is set back to 'look' when the page loads, so nothing paints an image that is not
- * there and glass.js, which reads the same key, agrees at its next pass.
+ * A stale saved id draws Look's own and is disclosed; repair uses the same Project write/readback transaction.
+ * SP-333 migration preserves explicit Project choices and clears old Mesh/Depth/Minimal input only after readback.
+ * No-Project rendering uses an ephemeral look default, and never writes a Project or app-global preference.
  *
  * The gallery is one row in Settings > App & Input > Theme & colors, right after Light or dark, with the id
  * setting-general.visual.wallpaper. If an older picker (glass.js's mountPicker) put a row there, it is replaced, and
@@ -38,19 +40,32 @@
   function esc(s) { return String(s).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); }
 
   /* ---- the choice ------------------------------------------------------------------------------------------------ */
-  var stale = null;
-  function saved() { try { return localStorage.getItem(KEY) || 'look'; } catch (e) { return 'look'; } }
+  var stale = null, migrationKey = '';
+  function saved() { try { return localStorage.getItem(KEY); } catch (e) { return null; } }
+  function context() {
+    var tome = window.PM7_SETTINGS_TOME;
+    return tome && tome.wallpaperSnapshot ? tome.wallpaperSnapshot() : { project_id: null, snapshot: null };
+  }
+  function valid(c) { return c === 'look' || (typeof c === 'string' && !!byId[c]); }
+  function fingerprint(c) {
+    var s = c.snapshot && c.snapshot.settings || {};
+    return JSON.stringify([c.project_id, s['general.visual.wallpaper'], s['general.visual.glass-background-mode'], saved()]);
+  }
   function choice() {
-    var c = saved();
-    if (c !== 'look' && !byId[c]) {   /* saved by a build with a wallpaper this one lacks: back to the default, saved */
-      stale = { value: c, at: new Date().toISOString() };
-      try { localStorage.setItem(KEY, 'look'); } catch (e) {}
-      c = 'look';
+    var current = context(), key = fingerprint(current), tome = window.PM7_SETTINGS_TOME;
+    if (!current.project_id) { stale = null; migrationKey = key; return 'look'; }
+    if (key !== migrationKey) {
+      migrationKey = key;
+      var before = current.snapshot && current.snapshot.settings || {}, prior = before['general.visual.wallpaper'];
+      stale = prior != null && !valid(prior) ? { value: prior, at: new Date().toISOString() } : null;
+      if (tome && tome.migrateGlassWallpaper) tome.migrateGlassWallpaper(saved());
+      current = context(); migrationKey = fingerprint(current);
     }
-    return c;
+    var c = current.snapshot && current.snapshot.settings && current.snapshot.settings['general.visual.wallpaper'];
+    return valid(c) ? c : 'look';
   }
   /* the wallpaper on show: ?lgwall= first, as glass.js reads it, then the saved choice */
-  function shown() { var c = q.get('lgwall') || choice(); return c === 'look' ? lookDefault(look()) : c; }
+  function shown() { var override = q.get('lgwall'), c = valid(override) ? override : choice(); return c === 'look' ? lookDefault(look()) : c; }
   function attr(a, v) { if (v === null) { if (root.hasAttribute(a)) root.removeAttribute(a); } else if (root.getAttribute(a) !== v) root.setAttribute(a, v); }
   /* A selected radio paints before decoding or restyling. Two permanent background layers carry the print fade;
      the cached frost joins when the fade starts. No snapshots or nodes are added to the live sheets on a choice. */
@@ -369,7 +384,11 @@
 
   function choose(c, later) {
     if (c !== 'look' && !byId[c]) return false;
-    try { localStorage.setItem(KEY, c); } catch (e) {}
+    var current = context(), tome = window.PM7_SETTINGS_TOME;
+    if (!current.project_id || !tome || !tome.writeWallpaper) return false;
+    var result = tome.writeWallpaper({ project_id: current.project_id, value: c, retire_legacy: true });
+    if (!result || !result.ok) return false;
+    migrationKey = fingerprint(context()); stale = null;
     clearTimeout(commitT); cancelAnimationFrame(commitFrame); ++paintSerial;
     sync();
     /* The timeout begins after a presented frame, rather than inside that frame's rAF callback. */
@@ -503,8 +522,16 @@
     }).observe(document.body, { childList: true, subtree: true });
     watchRetainPanel(); mount();
   }
-  /* another window chose a wallpaper */
-  window.addEventListener('storage', function (e) { if (e.key === KEY || e.key === null) { sync(); requestAnimationFrame(function () { setTimeout(function () { apply(true); }, 0); }); } });
+  /* Only the active Project follows another window's choice. The global key is a read-only migration input. */
+  window.addEventListener('storage', function (e) {
+    var current = context(), projectKey = current.project_id && 'pm7:settings:tome-tabs:v1:' + encodeURIComponent(current.project_id);
+    if (e.key === projectKey || e.key === KEY || e.key === null) refresh();
+  });
+  function refresh() {
+    choice();
+    if (window.PM12_KIMI && window.PM12_KIMI.syncWallpaperProjection) window.PM12_KIMI.syncWallpaperProjection();
+    apply(); sync();
+  }
 
   /* Jared #18 (2026-10-14): the most recent wallpaper decision wins, from either control. NieR Mode's customizer writes
      only its own background (general.visual.nier-background); when that committed value changes, this package hands the
@@ -539,6 +566,7 @@
       var source = imageUrls.get(id + '-' + (mode || (/-light$/.test(root.getAttribute('data-theme') || '') ? 'light' : 'dark')));
       return source === '' ? null : source;
     },
-    choice: choice, shown: shown, paintChoice: function () { return paintedChoice; }, choose: function (c) { return choose(c, false); }, stale: function () { return stale; }
+    choice: choice, shown: shown, paintChoice: function () { return paintedChoice; }, choose: function (c) { return choose(c, false); }, refresh: refresh, stale: function () { return stale; }
   };
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', refresh); else refresh();
 })();

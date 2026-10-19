@@ -1009,38 +1009,6 @@
     } catch (e3) {}
   }
 
-  function wireParallax() {
-    var bg = byId('glass-bg');
-    if (!bg) return;
-    var reduced = false;
-    try {
-      reduced = (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) ||
-        document.documentElement.getAttribute('data-motion') === 'reduced';
-    } catch (e) {}
-    if (reduced) return;
-    var px = 0, py = 0, raf = null;
-    /* PM7 T07: routed through the shared PM7_PMOVE pointermove dispatcher
-       (pm6-js-globals) instead of a second document-level listener. Guarded
-       per event: inert unless a glass theme is active (only glass-depth
-       consumes --par-x/--par-y), and the guard re-evaluates on every event so
-       a live theme switch to glass behaves exactly like PM6. */
-    var pm7ParallaxHook = function (e) {
-      if ((document.documentElement.getAttribute('data-theme') || '').indexOf('glass') !== 0) return;
-      px = (e.clientX / Math.max(1, window.innerWidth)) * 2 - 1;
-      py = (e.clientY / Math.max(1, window.innerHeight)) * 2 - 1;
-      if (raf) return;
-      raf = requestAnimationFrame(function () {
-        raf = null;
-        try {
-          bg.style.setProperty('--par-x', px.toFixed(3));
-          bg.style.setProperty('--par-y', py.toFixed(3));
-        } catch (e2) {}
-      });
-    };
-    if (window.PM7_PMOVE && window.PM7_PMOVE.push) window.PM7_PMOVE.push(pm7ParallaxHook);
-    else document.addEventListener('pointermove', pm7ParallaxHook, { passive: true });
-  }
-
   /* ================= boot ================= */
   function boot() {
     try { wireActivityBar(); } catch (e) { console.warn('[pm6] wireActivityBar', e); }
@@ -1049,7 +1017,6 @@
     try { wireProjectMenu(); } catch (e) {}
     try { wireTitleBarMenusDismiss(); } catch (e) {}
     try { wireTitleBarDensity(); } catch (e) {}
-    try { wireParallax(); } catch (e) {}
   }
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot);
   else boot();
