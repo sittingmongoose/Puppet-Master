@@ -21,7 +21,7 @@ What apply() does, every step guarded so it happens exactly once or the build st
      pm7-t29-usage-final and pm7-t32-final, <style id="pm-usage-css"> (src/css, every `#panel-usage ` anchor widened to
      `:is(#panel-usage,[data-pmu-host])` for hosted boards by host_scope_css, its count checked), src/markup.html,
      <script id="pm-usage-js"> (window.PM_USAGE_COPY, src/js, the context module), <!-- USAGE:BODY:END -->, the close tag.
-  5. Outside the band: checks the filter census of pm7-t23-adjustments (69 kept; its dead Prism rules have been removed
+  5. Outside the band: checks the filter census of pm7-t23-adjustments (66 kept; its dead Prism rules have been removed
      from source). Shared blocks retain only their live selector arms.
   6. Merges the review roster (src/roster.json) into the Settings providers fixture and seeds saved Settings states once
      (roster_patch). NIER_ENTRIES contributes the page's selectors to the shared NieR registry, emitted by build.py
@@ -58,7 +58,7 @@ EXPECT = {
     't21 context rules': {'kept_rules': 69, 'rewritten_rules': 0, 'dropped_rules': 0, 'dropped_keyframes': 0},
     'pm7-t29-usage-final': {'kept_rules': 2, 'rewritten_rules': 0, 'dropped_rules': 0, 'dropped_keyframes': 0},
     'pm7-t32-final': {'kept_rules': 57, 'rewritten_rules': 0, 'dropped_rules': 0, 'dropped_keyframes': 0},
-    'pm7-t23-adjustments': {'kept_rules': 69, 'rewritten_rules': 0, 'dropped_rules': 0, 'dropped_keyframes': 0},
+    'pm7-t23-adjustments': {'kept_rules': 66, 'rewritten_rules': 0, 'dropped_rules': 0, 'dropped_keyframes': 0},
 }
 # Inside the band and removed with it (each must be there exactly once, so a moved block cannot survive unnoticed).
 BAND_ONLY = ['<style id="pm7-t29-usage-final">', '<style id="pm7-t32-final">', T21_ANCHOR, CTX_JS_START, CTX_JS_END]
