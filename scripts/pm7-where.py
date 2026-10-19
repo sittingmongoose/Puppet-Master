@@ -11,10 +11,11 @@ stage that contains the snippet:
      lands there is mapped back to the .src.css line whose build_d_css.py
      macro expanded into it. d.css is printed afterwards as a generated
      intermediate.
-  3. home: Concepts/home-redesign
-  4. usage: Concepts/usage-redesign
-  5. Settings generator: Concepts/onboarding/opus-5.5/tools/settings_layer.py
-  6. live shell: base/shell.html and the active sources named by base/manifest.json
+  3. glyphs: Concepts/glyph-system/opus-5.5/src/bridge and the 5.6 Pro neon CSS
+  4. home: Concepts/home-redesign
+  5. usage: Concepts/usage-redesign
+  6. Settings generator: Concepts/onboarding/opus-5.5/tools/settings_layer.py
+  7. live shell: base/shell.html and the active sources named by base/manifest.json
 
 Every match is printed as file:line. Base hits name editable source files.
 CSS slot comments are followed to their Liquid Glass-owned fragments.
@@ -34,6 +35,8 @@ O55_SRC = ROOT / "Concepts" / "onboarding" / "opus-5.5" / "src"
 RAIL = ROOT / "Concepts" / "leftrail-redesign"
 HOME = ROOT / "Concepts" / "home-redesign"
 USAGE = ROOT / "Concepts" / "usage-redesign"
+GLYPHS = ROOT / "Concepts" / "glyph-system" / "opus-5.5" / "src" / "bridge"
+NEON_CSS = ROOT / "Concepts" / "chat-assistant-concepts" / "5.6 Pro" / "neon-icons.css"
 SETTINGS_LAYER = ROOT / "Concepts" / "onboarding" / "opus-5.5" / "tools" / "settings_layer.py"
 sys.path.insert(0, str(SETTINGS_LAYER.parent))
 import base_source  # noqa: E402
@@ -242,6 +245,7 @@ def search_paths(paths: list[Path], snippet: str) -> list[tuple[Path, int]]:
 STAGES: list[tuple[str, str]] = [
     ("O55 source", "o55"),
     ("rail layer", "rail"),
+    ("glyph layer", "glyph"),
     ("home layer", "home"),
     ("usage layer", "usage"),
     ("settings layer", "settings"),
@@ -258,6 +262,8 @@ def stage_hits(kind: str, snippet: str) -> list[tuple[Path, int]]:
         return authored
     if kind == "home":
         return search_tree(HOME, snippet)
+    if kind == "glyph":
+        return search_paths([GLYPHS, NEON_CSS], snippet)
     if kind == "usage":
         return search_tree(USAGE, snippet)
     if kind == "settings":
@@ -273,7 +279,7 @@ def build_parser() -> argparse.ArgumentParser:
         prog="pm7-where.py",
         description="Find a snippet of Concepts/PMConcept7.html and name the source that produced it.",
         epilog=(
-            "Search order: O55 src (copy.json and copy.d included), then the rail, home, usage, "
+            "Search order: O55 src (copy.json and copy.d included), then the rail, glyphs, home, usage, "
             "the Settings generator, then the active live base sources. "
             "The first stage that contains the snippet wins, and every match in that stage is printed. "
             "A rail snippet that exists only in generated d.css is answered from the .src.css line "
