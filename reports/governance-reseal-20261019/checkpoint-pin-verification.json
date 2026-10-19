@@ -1,0 +1,44 @@
+{
+  "active_checkpoint": {
+    "complete_denominator_known": false,
+    "contract_depth_complete": false,
+    "registered_kernel_rows": 43,
+    "registry_revision": "2026-10-09.1",
+    "registry_schema_id": "pm.event_family_registry.v1",
+    "registry_schema_version": "2.0.0"
+  },
+  "active_checkpoint_module_sha256": "7542cdac292405ec0d9b7b644ad7c345cadca822d36c710cd3c6729120274f32",
+  "admission_pins": {
+    "Plans/event_family_registry.json": {
+      "after": "4ffde4e80c0671c7240c65b7903e6cabc0c6112bc88afc3fc2faca2a044370fe",
+      "before": "4ffde4e80c0671c7240c65b7903e6cabc0c6112bc88afc3fc2faca2a044370fe"
+    },
+    "Plans/event_payloads/workspace_layout_changed_v2.schema.json": {
+      "after": "a611ee3d41f275e7dfd349021a3d41de866849f97f0108396bf0685c41431b1a",
+      "before": "5d486daf7af60d2e8e487a3102a1d4200fdbd66465839578d96640d1405b04f1"
+    }
+  },
+  "all_other_receipt_fields_equal": true,
+  "all_other_source_hashes_equal": true,
+  "approval_refs": [
+    "Plans/Decision_Log.md#DL-188",
+    "pm-mail:1019051652-b067"
+  ],
+  "certification_harness_run": false,
+  "changed_pin_paths": [
+    "Plans/event_payloads/workspace_layout_changed_v2.schema.json"
+  ],
+  "checkpoint_contract_depth_complete": false,
+  "checkpoint_denominator_known": false,
+  "dry_run": false,
+  "go_mail_id": "1019075733-82d5",
+  "hash_algorithm": "pm_pnc019_currentness.sha256_file",
+  "helper_sha256": "b7e6da75c5618867c36d55e22af8ee71cc5fa34c536252824f0ef015018587c2",
+  "input_receipt_sha256": "574e33cf6e008a903a7ba06953cbabc64a605faebafe0ae91267a78d9ff1a316",
+  "live_event_registry_sha256": "4ffde4e80c0671c7240c65b7903e6cabc0c6112bc88afc3fc2faca2a044370fe",
+  "main_base": "dfe02ab1e809a3843d7e3a158d2fd7797f280184",
+  "output_receipt_sha256": "49ce40e2816b155a738b7f9278deb8b1de105ec3f8204cfa79e8291cad4b4f29",
+  "receipt_path": "Plans/.implementation_readiness/pnc019_certification_receipt.json",
+  "schema_id": "pm.governance.reseal.dl188_checkpoint_pin_refresh.v1",
+  "schema_valid": true
+}
