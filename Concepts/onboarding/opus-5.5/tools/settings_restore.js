@@ -80,7 +80,8 @@ function writeProjectWallpaper(request) {
 function migrateGlassWallpaper(preference) {
   var context = wallpaperSnapshot(), snapshot = context.snapshot, id = 'general.visual.wallpaper', legacy = 'general.visual.glass-background-mode';
   if (!context.project_id) return { ok: true, value: 'look', ephemeral: true };
-  var settings = snapshot && snapshot.settings || {}, has = Object.prototype.hasOwnProperty;
+  if (!snapshot || !snapshot.settings) return { ok: false, retryable: true, reason: 'The Project Settings snapshot is not available yet.' };
+  var settings = snapshot.settings, has = Object.prototype.hasOwnProperty;
   var explicit = has.call(settings, id), old = has.call(settings, legacy);
   var value = validWallpaper(settings[id]) ? settings[id] : (!explicit && validWallpaper(preference) ? preference : 'look');
   if (!old && (!explicit || validWallpaper(settings[id])) && (explicit || !validWallpaper(preference))) return { ok: true, value: value, migrated: false };

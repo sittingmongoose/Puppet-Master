@@ -92428,7 +92428,8 @@ function writeProjectWallpaper(request) {
 function migrateGlassWallpaper(preference) {
   var context = wallpaperSnapshot(), snapshot = context.snapshot, id = 'general.visual.wallpaper', legacy = 'general.visual.glass-background-mode';
   if (!context.project_id) return { ok: true, value: 'look', ephemeral: true };
-  var settings = snapshot && snapshot.settings || {}, has = Object.prototype.hasOwnProperty;
+  if (!snapshot || !snapshot.settings) return { ok: false, retryable: true, reason: 'The Project Settings snapshot is not available yet.' };
+  var settings = snapshot.settings, has = Object.prototype.hasOwnProperty;
   var explicit = has.call(settings, id), old = has.call(settings, legacy);
   var value = validWallpaper(settings[id]) ? settings[id] : (!explicit && validWallpaper(preference) ? preference : 'look');
   if (!old && (!explicit || validWallpaper(settings[id])) && (explicit || !validWallpaper(preference))) return { ok: true, value: value, migrated: false };
@@ -232833,12 +232834,13 @@ window.PM_WALLPAPERS_CATALOG = {"version":1,"families":[{"family":"glass","label
   function choice() {
     var current = context(), key = fingerprint(current), tome = window.PM7_SETTINGS_TOME;
     if (!current.project_id) { stale = null; migrationKey = key; return 'look'; }
+    if (!current.snapshot || !current.snapshot.settings) { migrationKey = ''; return 'look'; }
     if (key !== migrationKey) {
-      migrationKey = key;
-      var before = current.snapshot && current.snapshot.settings || {}, prior = before['general.visual.wallpaper'];
+      var before = current.snapshot.settings, prior = before['general.visual.wallpaper'];
       stale = prior != null && !valid(prior) ? { value: prior, at: new Date().toISOString() } : null;
-      if (tome && tome.migrateGlassWallpaper) tome.migrateGlassWallpaper(saved());
-      current = context(); migrationKey = fingerprint(current);
+      var result = tome && tome.migrateGlassWallpaper && tome.migrateGlassWallpaper(saved());
+      current = context();
+      migrationKey = result && result.ok && current.snapshot && current.snapshot.settings ? fingerprint(current) : '';
     }
     var c = current.snapshot && current.snapshot.settings && current.snapshot.settings['general.visual.wallpaper'];
     return valid(c) ? c : 'look';
