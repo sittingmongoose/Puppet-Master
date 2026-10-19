@@ -85,12 +85,13 @@ for an A/B; `?o55=off` skips onboarding.
 
 ## What the layer does
 
-`home_layer.apply()` runs as the last step of opus-5.5 `build.build_text()` and adds, between `HOME:` markers: the early script and
+`home_layer.apply()` runs after the rail and glyphs in opus-5.5 `build.build_text()` and adds, between `HOME:` markers: the early script and
 `<style id="pm-home-css">` before `</head>`, and `<script id="pm-home-js">` before `</body>` (panels core, then each
-panels kind in its own scope, then the terminal, then `PM_HOME.boot()`), plus the panels' NieR hook classes in the
-Settings script's NieR selector lists, on anchors the Usage and rail layers do not use. Guarded app JS patches let the
-chat stay one column on every page (`homeActive`) and give the status bar's host item plain words that NieR's readout
-finds by an attribute. It never edits the page's markup.
+panels kind in its own scope, then the terminal, then `PM_HOME.boot()`). Its `NIER_ENTRIES` dictionary contributes
+`cursor`, `chosen`, and `strip` selectors to opus-5.5's `tools/nier_registry.py`; `build.py` emits the
+lists after all layers. Edit those entries, not Settings source anchors; a private build without Home contributes none.
+Guarded app JS patches let the chat stay one column on every page (`homeActive`) and give the status bar's host item
+plain words that NieR's readout finds by an attribute. It never edits the page's markup.
 
 At run time the early script defines `PM_HOME_WORKSPACE` before the old Home controller parses, so that controller's own
 guard skips it: one Home model. The centre mounts in `#panel-dashboard`; the chat column reuses `#chatPanel` and

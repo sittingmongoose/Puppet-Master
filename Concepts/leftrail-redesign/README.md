@@ -101,7 +101,7 @@ run it with `--disable-gpu`.
 
 Two profiles over the same sources, so the D in both pages is one program.
 
-- **Published** (`rail_layer.apply_published`, the last step of opus-5.5 `build.build_text()`): the shell's rail band
+- **Published** (`rail_layer.apply_published`, step 4 of opus-5.5 `build.build_text()`): the shell's rail band
   stays as it is (guarded: the band and all nine panels exactly once). The layer adds `<style id="pm-rail-css">`
   before `</head>` and `<script id="pm-rail-js">` before `</body>` (between `RAIL:CSS` / `RAIL:BODY` markers) with
   the files named in `PUBLISHED_CSS` / `PUBLISHED_JS` and concept D, and writes `data-rail-concept="d"
@@ -114,15 +114,16 @@ Two profiles over the same sources, so the D in both pages is one program.
 - **Review** (`rail_layer.apply_review`, `build_rail.py`, on the published page): `<style id="pm-rail-review-css">`
   and `<script id="pm-rail-review-js">` right after the published blocks (between `RAIL-REVIEW:` markers) with the
   other `src/css` and `src/js` files and concepts A, B and C, plus the view concepts' NieR hooks `.pmr-chosen` and
-  `.pmr-strip` in the Settings script's NieR selector lists (anchored on neighbours the usage-redesign layer does not
-  touch, so both layers compose). The boot (end of the published script) waits for `load`, finds the switcher and
+  `.pmr-strip` through `rail_layer.NIER_ENTRIES` (`chosen` and `strip`). After adding its markers it calls the shared
+  NieR list emitter in opus-5.5's `tools/nier_registry.py`; edit the entries, not Settings source anchors.
+  The boot (end of the published script) waits for `load`, finds the switcher and
   behaves as before: `?rail=`, the remembered choice (`localStorage['pmr.concept.v2']`, written by the switcher), D by
   default. For a view concept the host adds, on first use, a `section.pmr-view[data-pmr-for="panel-*"]` per
   redesigned panel at the end of `#sidePanelSlot`; CSS hides the original panel and shows its view while the original
   is `.active`, so every way of switching panels keeps working.
 
-D's NieR hooks are kit source (`Concepts/onboarding/opus-5.5/src/settings/kit.d/19-nier-parts.js`): `.pmr-cur` in the
-cursor list (D's rows and every `PMR.menu` item get the square cursor and its tick; the ink bar is `src/css/40-nier.css`)
-and `.pmr-lock` in the brackets' click handler (D's tabs: the brackets lock on after the click, on the box the ink
+D's NieR hooks are kit source: `.pmr-cur` in `Concepts/onboarding/opus-5.5/tools/nier_registry.py`'s
+cursor defaults (D's rows and every `PMR.menu` item get the square cursor and its tick; the ink bar is `src/css/40-nier.css`)
+and `.pmr-lock` in `19-nier-parts.js`'s brackets click handler (D's tabs: the brackets lock on after the click, on the box the ink
 fills). Both do nothing for an element without those classes. Under any concept the active activity-bar icon's 3 px side
 bar is removed; each concept draws its own active mark.

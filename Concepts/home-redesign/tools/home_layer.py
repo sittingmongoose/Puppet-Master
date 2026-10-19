@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Home layer: add the universal panel system (src/panels) and the terminal tab kind (src/terminal) to the built page.
 
-  text, notes = home_layer.apply(text, need)       # step 5 of opus-5.5 build.build_text(), after Usage and the rail
+  text, notes = home_layer.apply(text, need)       # step 6 of opus-5.5 build.build_text(), after Usage, rail and glyphs
   problems = home_layer.lint()                     # source rules for ../src (in build.py's lint_sources())
   problems = home_layer.syntax_check(text)         # node --check of <script id="pm-home-early"> and "pm-home-js"
   problems = home_layer.published_problems(text)   # build.py and --check: syntax, markers, the anchors kept exactly once
@@ -21,8 +21,8 @@ edits the page's own markup. apply() only adds:
      controller's own guard skips it, and html[data-pmw-home="on"] (?home=current keeps today's Home for an A/B).
      Guarded app JS patches (APP_PATCHES): homeActive lets the chat stay one column on every page; the status bar's
      host item and NieR's readout of it; the left rail's Dashboard (HOME) toggle is removed.
-  3. The panels' NieR hook classes (.pmw-cur, .pmw-chosen, .pmw-strip) in the Settings script's NieR selector lists, on
-     anchors the Usage and rail layers do not use, so the three layers compose in either order.
+  3. NIER_ENTRIES contributes the panels' NieR hook classes (.pmw-cur, .pmw-chosen, .pmw-strip) to the shared registry
+     (opus-5.5 tools/nier_registry.py). build.py emits the lists after all layers; edit data, not anchors.
 At run time the panels replace the Home centre (CONTRACT.md); the old Home model stays loaded for the pages and tour
 code that still call it, behind compatibility shims. Every step is guarded: each anchor must be found exactly once and
 the layer markers must not be in the input already. The terminal thread owns src/terminal/**; this file is the panels
@@ -134,17 +134,12 @@ APP_PATCHES = [
      'rail Dashboard toggle removed (home layer)'),
 ]
 
-# NieR Mode selector lists in the Settings script (opus-5.5 src/settings/kit.d/19-nier-parts.js). Filled from the
-# looks digest: anchors distinct from the Usage layer's and the rail layer's.
-NIER_SELECTOR_PATCHES: list[tuple[str, str, str]] = [
-    ("'.palette-item', '.search-result-item', '.slash-cmd-item',",
-     "'.palette-item', '.search-result-item', '.slash-cmd-item', '.pmw-cur:not(.active):not([aria-disabled=\"true\"])',",
-     'nier cursor list (home)'),
-    (".resource-row';", ".resource-row, .pmw-chosen';", 'nier chosen list (home)'),
-    ('.workspace-tab, .manager-tab, .orch-tab, .pm-segtab-item, .pm6-tt-mode',
-     '.workspace-tab, .manager-tab, .orch-tab, .pm-segtab-item, .pmw-strip, .pm6-tt-mode',
-     'nier strip list (home)'),
-]
+# NieR registry contributions, filled from the looks digest. No layer patches another layer's selector text.
+NIER_ENTRIES = {
+    'cursor': ['.pmw-cur:not(.active):not([aria-disabled="true"])'],
+    'chosen': ['.pmw-chosen'],
+    'strip': ['.pmw-strip'],
+}
 
 FONT_URL = re.compile(r'url\("o55font:([^"]+)"\)')
 FONT_DIRS = [PANELS / 'fonts']
@@ -254,9 +249,8 @@ def apply(text: str, need) -> tuple[str, dict]:
     text = replace_once(need, text, BODY_ANCHOR,
                         '\n' + JS_START + f'\n<script id="pm-home-js">\n{script}</script>\n' + JS_END + '\n</body>',
                         'body end')
-    for old, new, label in NIER_SELECTOR_PATCHES:
-        text = replace_once(need, text, old, new, label)
-    notes['nier selector patches'] = [label for _, _, label in NIER_SELECTOR_PATCHES]
+    notes['nier selector patches'] = []
+    notes['nier registry lists'] = list(NIER_ENTRIES)
     notes['home_css_bytes'] = len(css.encode('utf-8'))
     notes['home_js_bytes'] = len(script.encode('utf-8'))
     notes['terminal_present'] = (TERMINAL / 'js').is_dir() and any((TERMINAL / 'js').glob('*.js'))

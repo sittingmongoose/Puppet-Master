@@ -25,7 +25,8 @@ What apply() does, every step guarded so it happens exactly once or the build st
      pm7-t23-adjustments (75 kept, 215 dropped). Shared blocks that merely name a pm7u- class are left alone: with the
      new pmu- namespace those selectors match nothing.
   6. Merges the review roster (src/roster.json) into the Settings providers fixture and seeds saved Settings states once
-     (roster_patch), then adds the new page's class names to the NieR Mode selector lists (NIER_SELECTOR_PATCHES).
+     (roster_patch). NIER_ENTRIES contributes the page's selectors to the shared NieR registry, emitted by build.py
+     after all layers (opus-5.5 tools/nier_registry.py); no retained NieR list source-text patches remain.
 """
 from __future__ import annotations
 
@@ -87,12 +88,12 @@ CTX_JS_EDITS = [
      'context projection re-render'),
 ]
 
-# NieR Mode selector lists in the Settings script (built from opus-5.5 src/settings/kit.d/19-nier-parts.js). The new
-# page's class names go here (ARCHITECTURE.md section 7.1). An empty list skips that patch. The CSS half of the cursor
+# NieR registry contributions (ARCHITECTURE.md section 7.1). Edit these lists, not Settings source anchors.
+# An empty list contributes nothing. The CSS half of the cursor
 # (the ink bar and its paper text) is Usage's own src/css/90-nier-shell.css: the app's CSS lists name the retired .pm7u-
 # rows and Usage's rows need their own exceptions (disabled rows, icon boxes, the Attention count). Lane f-nier
 # (2026-10-09) added the range strip to the cursor and chosen lists and the confirm / cancel menu sounds.
-NIER_NAMES = {
+NIER_ENTRIES = {
     'cursor': ['.pmu-navbtn', '.pmu-poprow', '.pmu-range button'],   # items that become the NieR ink-bar menu cursor
     'chosen': ['.pmu-navbtn', '.pmu-range button'],             # places a click chooses (the brackets lock on)
     'strip': ['.pmu-range button', '.pmu-seg button'],          # items in a horizontal strip (the cursor sits under them)
@@ -101,32 +102,6 @@ NIER_NAMES = {
     'cancel': ['#pmuInspClose'],                                # a click that closes without choosing (Menu sounds: cancel)
 }
 
-
-def nier_selector_patches(names: dict | None = None) -> list[tuple[str, str, str]]:
-    names = NIER_NAMES if names is None else names
-    out = []
-    if names.get('cursor'):
-        old = "'.pm51-menu-item',"
-        out.append((old, old + ' ' + ', '.join(f"'{s}'" for s in names['cursor']) + ',', 'nier cursor list'))
-    if names.get('chosen'):
-        old = '.orch-tab, .domain-link'
-        out.append((old, '.orch-tab, ' + ', '.join(names['chosen']) + ', .domain-link', 'nier chosen list'))
-    if names.get('strip'):
-        old = ".pm6-tt-mode';"
-        out.append((old, '.pm6-tt-mode, ' + ', '.join(names['strip']) + "';", 'nier strip list'))
-    if names.get('titles'):
-        old = "usage: '#pm7uRoomTitle, .pm7u-brand h1',"
-        out.append((old, "usage: '" + ', '.join(names['titles']) + "',", 'nier page titles'))
-    if names.get('confirm'):
-        old = """.o55-btn-primary, [data-o55-preview="keep"]';"""
-        out.append((old, """.o55-btn-primary, [data-o55-preview="keep"], """ + ', '.join(names['confirm']) + "';", 'nier confirm sound list'))
-    if names.get('cancel'):
-        old = """[data-o55-preview="back"], [data-o55-nier-note="close"]';"""
-        out.append((old, """[data-o55-preview="back"], [data-o55-nier-note="close"], """ + ', '.join(names['cancel']) + "';", 'nier cancel sound list'))
-    return out
-
-
-NIER_SELECTOR_PATCHES = nier_selector_patches()
 
 # ---------------------------------------------------------------------------------------------------------------------
 # CSS rule filter (ported from understand/tools/strip_probe.py, proven 2026-10-01)
@@ -690,11 +665,10 @@ def apply(text: str, need) -> tuple[str, dict]:
     text = text[:m.start(1)] + css + text[m.end(1):]
     notes['dropped whole'] = DROP_WHOLE + ['pm7-t31-usage-final (with the band)']
 
-    # 6. the review roster in the Settings fixture, then NieR Mode selector lists
+    # 6. the review roster in the Settings fixture; build.py emits NIER_ENTRIES after composing the layers
     text = roster_patch(need, text, notes)
-    for old, new, label in NIER_SELECTOR_PATCHES:
-        text = replace_once(need, text, old, new, label)
-    notes['nier selector patches'] = [label for _, _, label in NIER_SELECTOR_PATCHES]
+    notes['nier selector patches'] = []
+    notes['nier registry lists'] = list(NIER_ENTRIES)
 
     # 7. app patches for performance that act only while Usage is the active page (DECISIONS, coordinator defaults item 7;
     #    listed with numbers in design/final/PERF-3.md "App patches (round 3)")

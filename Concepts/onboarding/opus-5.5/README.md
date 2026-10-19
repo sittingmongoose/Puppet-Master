@@ -44,11 +44,25 @@ Build order:
 - 3: splice O55 `src/` between `<!-- O55:… -->` markers and retitle the page;
 - 4: add the left rail, concept D, after O55's markers;
 - 5: add the glyph system;
-- 6: optionally add Home, then Liquid Glass and wallpapers;
+- 6: optionally add Home, then Liquid Glass and wallpapers, and emit the shared NieR lists;
 - 7: rewrite active descendants and split CSS selector buckets over the completed page.
 
-Usage and Home retain their own conditional app/context/NieR patches. Their private reference
+Usage and Home retain their own conditional app/context patches. Their private reference
 builds remain available through `--out <path> --no-usage` and `--out <path> --no-home`.
+
+NieR list defaults and their publication order live in the build tools at
+`tools/nier_registry.py`. Named slots in the base lists fix each contribution's position.
+Edit each layer tool's `NIER_ENTRIES` dictionary to contribute
+selectors to named lists: Usage supplies `cursor`, `chosen`, `strip`, `titles`, `confirm`, `cancel`;
+Home supplies `cursor`, `chosen`, `strip`; the rail review supplies `chosen`, `strip`.
+`build.emit_nier_lists()` registers only layers whose build markers are present, then the registry's
+single `emit(text, need, layers)` renders the six declarations in `19-nier-parts.js`.
+The rail review calls the same emitter after adding its markers. Order is fixed by the registry,
+independent of registration order; Usage's `titles` replaces its fallback title, and empty lists add nothing.
+Do not add source-text patches or edit the declaration placeholders. Private builds omit the disabled
+layer's entries; the published rail cursor remains a default in the registry.
+Keep the empty `TITLES['usage']` slot before `settings` when the legacy fallback and private
+`--no-usage` build are retired, so the contributed Usage title keeps its publication order.
 
 Every build also lints the Usage sources (`usage_layer.lint()`, in `lint_sources()`) and runs `node --check` on
 `pm-usage-js`; `--check` also fails on an old Usage reference left in the page (`id="pm7UsageApp"`,
@@ -57,8 +71,8 @@ context module, the usage bridge, the status bar, Retro Light's green; `usage_la
 not there exactly once. `build.py` and `--check` also add `rail_layer.published_problems()` to their problem lists, so
 editing a D source without `--publish-pm7` fails the check. D's sources, the review copy with the earlier concepts A-C
 (`LeftRailPMConcept7.html`) and the rail's tools are in `Concepts/leftrail-redesign/` (see its README). The rail's NieR
-hooks are kit source: `.pmr-cur` in `CURSOR_SEL` and the `.pmr-lock` branch of `retChoose` in
-`src/settings/kit.d/19-nier-parts.js`.
+hooks are kit source: `.pmr-cur` in `nier_registry.py`'s cursor defaults and the `.pmr-lock` branch of
+`retChoose` in `src/settings/kit.d/19-nier-parts.js`.
 
 `Concepts/PMConcept7.html` is published only from this generator (2026-09-26 user direction): `--publish-pm7`
 writes the same built bytes to both outputs, and `--check` fails while `PMConcept7.html` is missing or differs by
