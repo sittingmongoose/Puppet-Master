@@ -22,7 +22,7 @@ No owner prose, certification harness, receipt field outside those two `source_h
 | PM7 stream C Plans cleanup | Landed through `203ff50040`, follow-up `10b644d389` | Includes the current snapshot and baseline; not a governance reseal. |
 | F-plans, branch `plans/pm7-purge-followups-20261019` | Pending lead's main SHA | Liquid Glass off-switch retirement; UCC-152/CS-074 counts; SSYS-035; touch-closure validator re-anchor. Confirm main ancestry. |
 | DL-188 payload-pin drift | **Adjudicated for bounded Phase 2 refresh** | Stop mail `1019051623-f40e`; lead approval `1019051652-b067`. Dry-run now; apply only after GO against a fresh receipt-backup hash. |
-| Opus xhigh and Astra max plan reviews | Phase 1 ready for submission | Lead runs both; respond in at most two cycles. |
+| Opus xhigh and Astra max plan reviews | Astra r1 **OK**, 0 FIX / 1 LOW; LOW addressed below. Opus pending. | Lead mail `1019054804-d5fc` schedules Opus after the 10:09Z quota reset. Respond in at most two cycles. |
 | Explicit lead authorization | Not received | Read and preserve the exact `GO Phase 2` mail id. |
 
 Concepts-only A/B landings may occur during or after this work. Inspect every intervening landing: any `Plans/` path requires re-inventory. Recompute on the frozen main after GO and release the landing lock if a source-changing rebase requires rebuilding.
@@ -140,13 +140,13 @@ The first audit-governance attempt contained `validator_no_output` on readiness 
 
 ### Fresh helper custody
 
-Fresh helpers are external files under `/mnt/Cursor/share/puppet-master/2026-10-19-reseal/`; no earlier dated helper is executed. `HELPERS.SHA256SUMS` binds the delivered set. Phase 1 required tests are in `/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261019/phase1/helper-tests.json`, SHA-256 `d985480b9f03aa437ad7d935220e19e94d8b7d2c9132d4cd40fbe23af4a97d51`. The four writer commands returned 0, and the original 15-file scratch manifest was restored. A separate negative check returned the expected rejection for attempted shared access with the Phase 1 config. Receipt, decision and attestation helpers ran only in dry-run/preview mode. `admission-pins.out` is the additional canonical-JSON admission check above.
+Fresh helpers are external files under `/mnt/Cursor/share/puppet-master/2026-10-19-reseal/`; no earlier dated helper is executed. Current `HELPERS.SHA256SUMS` SHA-256 `815f88ee65557a8c781cc96fc2f117fdca4c03b3315712285d21d0111d751100` binds the delivered set after Astra's requested attestation-note revision. The original eight helpers and original manifest remain immutable under `phase1/helpers-phase1/`. Phase 1 required tests are in `/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261019/phase1/helper-tests.json`, SHA-256 `d985480b9f03aa437ad7d935220e19e94d8b7d2c9132d4cd40fbe23af4a97d51`. The four writer commands returned 0, and the original 15-file scratch manifest was restored. A separate negative check returned the expected rejection for attempted shared access with the Phase 1 config. Receipt, decision and attestation helpers ran only in dry-run/preview mode. `admission-pins.out` is the additional canonical-JSON admission check above.
 
 | Helper | SHA-256 |
 |---|---|
 | `in-place-write.py` | `d204642cd8499ab007febaf6cfb259eb7e2129ef3a92eec7622e667423f2d4c1` |
 | `decision-row.py` | `2786a3d3b674b950c3ea9fda7d7fb853639c33de02e448435917fd124d49848f` |
-| `attestation.py` | `6230f33051e2742237fdd5ea0f33dbc88ff25e7aa63db9d39ef07dc73532ce2c` |
+| `attestation.py` | `62f1b5585cdfe255fde31c07525d89a5ef04f5890eab6da1f35aaf3bc41d5fff` |
 | `refresh-dl188-checkpoint-pins.py` | `ef2e3924007f8f111975ea828fb329b695cc56781f6fe5ea1b0aec50c6b48043` |
 
 The writer's Phase 1 candidate is deliberately synthetic: it copies the seven old generated files and changes only the scratch README to exercise replacement. It is neither a generated currentness edition nor eligible for shared installation. Phase 2 repeats the four tests against fresh real backup/final manifests before its branch push.
@@ -376,3 +376,11 @@ Hash all 15 installed inputs before/after baseline recording and after the final
 ## Out of scope
 
 Canonical owner prose, Concepts, registry/schema registrations, historical evidence bundles, certification harness or receipt changes beyond the two approved admission hashes, shard-body hand edits, executable WorkNodes/NodeSeeds, and native runtime/buildability/denominator/depth authority.
+
+## Review cycle 1
+
+Astra review `/mnt/Cursor/share/puppet-master/2026-10-18-pm7-purge/reviews/RESEAL-astra-r1.md`, SHA-256 `9a463011cdc7e6152ab05b1a269478d8503f85cf0504ee673c212e99a4e104f2`, is **OK**, with no FIX and one LOW. Lead mail `1019054804-d5fc` requests addressing LOW 1 before the later Opus review; it is not a GO.
+
+LOW 1 is addressed in `attestation.py`: a changed PNC-019 receipt row now explains the bounded DL-188 source-pin refresh, adjudication `1019051652-b067`, preserved historical certification fields and all other receipt fields/source hashes, and no certification-harness execution. Only this explanatory note changed. The helper compiles and its read-only preview passes against the same measured main, with unchanged receipt bytes. Current helper and manifest hashes above are updated; the original Phase 1 helper snapshot and evidence manifest remain unchanged.
+
+Revision proof: `/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261019/revisions/astra-r1/verification.json`, SHA-256 `b85309f8a4f379d9a1c5739e2ddea5099cd4e6bb37f2ef91d764784ec8f00e2b`; revision `SHA256SUMS` in that directory, SHA-256 `dbd5d3cae30c6d704afe5f590a36197c13126caf869621ff238f39c5bc836fbc`. Opus and F-plans remain pending; no Phase 2 step has run.
