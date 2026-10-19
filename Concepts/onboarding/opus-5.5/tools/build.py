@@ -542,10 +542,40 @@ def warn_inert_sources() -> None:
                   file=sys.stderr)
 
 
+def lint_liquid_glass_slots() -> list[str]:
+    """Every LG fragment must have content and exactly one authored CSS marker."""
+    slots = base_source.LG_SLOTS.resolve()
+    references = {}
+    problems = []
+    for path in sorted(CONCEPTS.rglob('*.css')):
+        if path.is_relative_to(slots) or b'@pm7-lg-slot' not in path.read_bytes():
+            continue
+        text = base_source.read_source(path).decode('utf-8')
+        for match in base_source.CSS_SLOT.finditer(text):
+            target = (slots / match.group(1)).resolve()
+            if not target.is_relative_to(slots):
+                problems.append(f'{path}: Liquid Glass slot outside package: {match.group(1)}')
+                continue
+            line = text.count('\n', 0, match.start()) + 1
+            references.setdefault(target, []).append(f'{path}:{line}')
+        if '@pm7-lg-slot' in base_source.CSS_SLOT.sub('', text):
+            problems.append(f'{path}: malformed Liquid Glass slot')
+    for path in sorted(slots.rglob('*.css')):
+        if not base_source.read_source(path).strip():
+            problems.append(f'{path}: empty Liquid Glass slot fragment')
+        uses = references.pop(path.resolve(), [])
+        if len(uses) != 1:
+            problems.append(f'{path}: Liquid Glass slot referenced {len(uses)} times (need exactly 1)' +
+                            (f': {", ".join(uses)}' if uses else ''))
+    for target, uses in references.items():
+        problems.append(f'{target}: missing Liquid Glass slot fragment: {", ".join(uses)}')
+    return problems
+
+
 def check(built: str) -> list[str]:
     warn_inert_sources()
-    problems = (lint_sources() + syntax_check(built) + _rail().published_problems(built) + _glyphs().published_problems(built)
-                + _home().published_problems(built))
+    problems = (lint_liquid_glass_slots() + lint_sources() + syntax_check(built) + _rail().published_problems(built)
+                + _glyphs().published_problems(built) + _home().published_problems(built))
     for removed in dict.fromkeys(['id="pm7-onboarding"', 'id="pm7-guided-tour"', 'pm7-onboarding-js', 'pm7-guided-tour-js',
                                   'pm7-onboarding-css', 'pm7-guided-tour-css', 'id="pm7-settings-data"',
                                   "'.pm7gt-callout", ".closest('.pm7gt')",
