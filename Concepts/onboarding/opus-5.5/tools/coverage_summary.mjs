@@ -143,11 +143,16 @@ for (const b of blocks) {
     if (ast) walk.fullAncestor(ast, (node, _state, ancestors) => {
       if (!['FunctionDeclaration', 'FunctionExpression', 'ArrowFunctionExpression'].includes(node.type)) return;
       const parent = ancestors.at(-2);
-      const match = v8.find((fn) => fn.ranges[0]?.endOffset === node.end && Math.abs(fn.ranges[0].startOffset - node.start) < 80);
-      if (match) seen.add(match);
+      // Nested expression-bodied arrows can share an end offset. Prefer the
+      // closest start, and combine V8 name aliases of that exact source span.
+      const match = v8.filter((fn) => fn.ranges[0]?.endOffset === node.end && Math.abs(fn.ranges[0].startOffset - node.start) < 80)
+        .sort((a, z) => Math.abs(a.ranges[0].startOffset - node.start) - Math.abs(z.ranges[0].startOffset - node.start))[0];
+      const aliases = match ? v8.filter((fn) => fn.ranges[0]?.startOffset === match.ranges[0].startOffset && fn.ranges[0]?.endOffset === match.ranges[0].endOffset) : [];
+      for (const fn of aliases) seen.add(fn);
       const name = match?.functionName || node.id?.name || (parent?.type === 'VariableDeclarator' ? parent.id.name : parent?.type === 'Property' || parent?.type === 'MethodDefinition' ? parent.key.name || parent.key.value : '') || '';
       functions.push({ block: b.id, script: digest, startOffset: node.start, endOffset: node.end, name,
-        observed: !!match, count: match?.ranges[0]?.count ?? (coverage ? 0 : null),
+        observed: !!match, count: match ? aliases.reduce((n, fn) => n + fn.ranges[0].count, 0) : coverage ? 0 : null,
+        native_names: [...new Set(aliases.map((fn) => fn.functionName))],
         count_basis: match ? 'CDP' : coverage ? 'static function absent from observed script coverage' : 'unobserved script',
         v8_startOffset: match?.ranges[0]?.startOffset ?? null, v8_endOffset: match?.ranges[0]?.endOffset ?? null });
     });
