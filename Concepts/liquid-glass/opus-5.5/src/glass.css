@@ -1,6 +1,6 @@
 /* Liquid Glass v2: the look (pm7-liquid-glass, Opus 5.5, 2026-10-11). glass.js computes each glass element's optics;
  * this sheet sets the scene and the material's colour, edges and depth. Live only while html[data-lg="on"] and the look
- * is Glass. Every other look, and Glass with data-lg="off", draws what PMConcept7 draws today.
+ * is Glass. Glass always uses Liquid Glass with a wallpaper; every other look keeps its own material.
  *
  * The scene follows Apple's own structure: a crisp wallpaper; floating sheets of glass; and controls that sit on a sheet
  * as vibrant fills, never glass on raw content. The sheets are the title bar, the sidebar (activity bar and rail panel),

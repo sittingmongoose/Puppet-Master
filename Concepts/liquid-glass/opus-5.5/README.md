@@ -4,31 +4,34 @@ The concept surface of the Liquid Glass thread (pm-mail `pm7-liquid-glass`, brie
 `/mnt/Cursor/share/puppet-master/2026-10-10-design-consistency-threads/BRIEF-liquid-glass.md`). It covers Usage plus the
 left rail, in Glass Dark and Glass Light. `NOTE.md` says what is borrowed from Apple's Liquid Glass (iOS and macOS 26
 and 27) and what is not. The review packet (cards, film, GPU stills, results) is in
-`/mnt/Cursor/share/puppet-master/2026-10-11-liquid-glass-concept/`. Nothing here is published into PMConcept7 until Jared
-answers the cards; the rollout then moves these rules into the surfaces' own sources.
+`/mnt/Cursor/share/puppet-master/2026-10-11-liquid-glass-concept/`. That dated packet records the prototype; the
+published Glass look now always uses Liquid Glass with a wallpaper.
 
 ## How it is built
 
-The concept is one stylesheet and one script over the published page. Everything is gated on `html[data-lg="on"]` and
-a Glass look, so every other look, and Glass with `data-lg="off"`, draws exactly what PMConcept7 draws today.
+The material is gated on `html[data-lg="on"]` and a Glass look. Glass always uses Liquid Glass with a wallpaper;
+every other look keeps its own material.
 
 | File | What |
 |---|---|
 | `src/lg.css` | The material: tokens, the one slab and the painted frost, the toolbar band and the sidebar, the title bar, the lens, the rail, Usage, press and light, the CPU path (7b), clarity, accessibility, and the concept's own control |
-| `src/lg.js` | The plates, the lenses and their liquid motion, the pointer light, the press, the menu bloom, the sweep, focus recede, GPU/CPU detection, the concept control (status bar, Alt+Shift+L) and `window.PM_LG` |
+| `src/lg.js` | The plates, the lenses and their liquid motion, the pointer light, the press, the menu bloom, the sweep, focus recede, GPU/CPU detection and `window.PM_LG` |
 | `src/wallpapers.json` | Tide and Pearl, baked by `tools/bake.mjs`: the wall, and its frost (the wall as the 34 px, 160 % slab sees it) |
 | `index.html` | The live concept in the Concept Hub: the published PMConcept7 in a frame, with the three sources injected (needs http) |
 | `tools/build_proto.py --out <file>` | The same as one file for the share folder; never writes into `Concepts/` |
 
-Switches on `<html>`:
-- `data-lg` on/off;
+Attributes on `<html>`:
+- `data-lg="on"` (always used by Glass);
 - `data-lg-tier` gpu/cpu (detected from the WebGL renderer and a frame-time check; `?lgtier=` forces it);
 - `data-lg-clarity` 0..4 (2, the default, is canon's numbers);
 - `data-lg-frost="painted"`, which the drag engine sets while a plate is carried (Jared's option A, a 140 ms crossfade);
 - `data-lg-rt` (Reduce Transparency) and `data-lg-hc` (Increase Contrast).
 
-URL forms: `?lg=off`, `?lgclarity=`, `?lgrt=1`, `?lghc=1`, and `?lgkeep=1`, which keeps this browser's look on the first
-visit.
+Current URL controls are `?lgtier=gpu|cpu` and the visit-only wallpaper override `?lgwall=<id>`.
+`PM_LG.set` keeps `data-lg` on; the off switch and Alt+Shift+L shortcut are retired.
+The gallery and `PM_LG.wall` save `general.visual.wallpaper` through the active Project Settings adapter.
+The old `pm-lg-wallpaper` preference can seed only a readable Project snapshot whose canonical choice is absent;
+an explicit Project choice wins, and rendering without a Project writes nothing.
 
 ## Checks (tools write outside the repository)
 
