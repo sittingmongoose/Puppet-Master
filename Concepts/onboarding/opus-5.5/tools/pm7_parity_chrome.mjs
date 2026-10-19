@@ -28,13 +28,14 @@ export async function launch({ width = 1600, height = 900, scale = 1, host, remo
         try { socket?.close(); rejectAll(Error('Browser closed')); }
         finally {
           await keepalivePending;
-          const stopped = JSON.parse((await invoke(['stop', session.id])).stdout);
-          browser.lifecycle.stopped = stopped.status;
+          const stoppedOutput = await invoke(['stop', session.id]);
           if (host) {
+            const stopped = JSON.parse(stoppedOutput.stdout);
+            browser.lifecycle.stopped = stopped.status;
             if (!['complete', 'stopped'].includes(stopped.status)) throw Error('Remote browser did not stop: ' + stopped.status);
             browser.lifecycle.purged = JSON.parse((await invoke(['purge', session.id])).stdout).purged;
             if (!browser.lifecycle.purged) throw Error('Remote session was not purged: ' + session.id);
-          }
+          } else browser.lifecycle.stopped = true;
           live.delete(browser);
         }
       })();
