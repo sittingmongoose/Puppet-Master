@@ -429,12 +429,19 @@ async function assertCaptureState(browser, state, side) {
     throw Error(`State capture ERROR (${side || 'capture'} ${state.id}): ${error.message}`, { cause: error });
   }
 }
+async function assertExpectedAbsent(browser, context) {
+  if (!context.expectAbsent?.length) return;
+  const retained = await browser.page.evaluate(findExpectedRemoved, context.expectAbsent);
+  if (retained.length) throw Error(`Expected removal ERROR (${context.side || 'candidate'} ${context.state?.id || 'capture'}): retained `
+    + retained.map(match => `${JSON.stringify(match.selector)} at ${match.path}`).join(', '));
+}
 async function capture(browser, audit, deep, expectRemoved = [], context = {}) {
   if (browser.interceptErrors.length) throw Error(browser.interceptErrors.join('\n'));
   const screenshotPreparation = await prepareCapture(browser);
   // Preparation advances the manual clock by its existing 3 x 32 ms. Recheck
   // afterwards without another settle, and again before sampling styles.
   await assertCaptureState(browser, context.state, context.side);
+  await assertExpectedAbsent(browser, context);
   if (process.env.PM7_PARITY_DEBUG) console.log('CAPTURE screenshot start');
   const screenshot = await browser.page.screenshot();
   if (process.env.PM7_PARITY_DEBUG) console.log('CAPTURE screenshot done');
@@ -443,6 +450,7 @@ async function capture(browser, audit, deep, expectRemoved = [], context = {}) {
   const caretPreparation = await browser.page.evaluate(() => __pm7Parity.setCaretHidden(false));
   try {
     await assertCaptureState(browser, context.state, context.side);
+    await assertExpectedAbsent(browser, context);
     styles = deep ? await browser.page.evaluate(async audit => __pm7Parity.snapshot(audit), audit) : await nativeSnapshot(browser, expectRemoved);
     if (expectRemoved.length) {
       const skippedNodes = styles.skippedNodes;
@@ -749,7 +757,7 @@ async function run(options) {
             const state = group.states[i];
             await deadline(enterState(browser, state, group), 'enter candidate ' + state.id);
             const candidate = await deadline(capture(browser, false, false, [],
-              { state, side: 'candidate' }), 'capture candidate ' + state.id);
+              { state, side: 'candidate', expectAbsent: options.expectRemoved }), 'capture candidate ' + state.id);
             await compare(group, state, [baseline[i], candidate], [browser, browser]);
             baseline[i] = null; audit = false;
           }

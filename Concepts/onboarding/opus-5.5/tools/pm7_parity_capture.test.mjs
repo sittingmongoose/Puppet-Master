@@ -109,3 +109,45 @@ test('a surviving state captures at the original clock; assertion calls never se
   assert.deepEqual(sequence.events.filter(({ event }) => event === 'screenshot' || event === 'styles'),
     [{ event: 'screenshot', at: 2668, open: true }, { event: 'styles', at: 2668, open: true }]);
 });
+
+function hiddenStylesBrowser(ids) {
+  const fixture = timedBrowser();
+  const element = (localName, id, children = []) => ({ localName, id, children,
+    matches: selector => selector === 'style#' + id && localName === 'style' });
+  const html = element('html', '', [element('head', '', ids.map(id => element('style', id))), element('body', '')]);
+  const context = createContext({ document: { documentElement: html, children: [html] }, getComputedStyle: () => ({ display: 'none' }) });
+  const originalEvaluate = fixture.browser.page.evaluate;
+  fixture.browser.page.evaluate = async (fn, ...args) => fn.name === 'findExpectedRemoved'
+    ? runInContext(`(${fn.toString()})(${JSON.stringify(args[0])})`, context) : originalEvaluate(fn, ...args);
+  fixture.browser.page.send = async method => {
+    assert.equal(method, 'DOMSnapshot.captureSnapshot');
+    const strings = ['#document', 'HTML', 'HEAD', 'STYLE', 'BODY', 'black', 'block', 'id', ...ids];
+    return { strings, documents: [{
+      nodes: { nodeType: [9, 1, 1, ...ids.map(() => 1), 1], nodeName: [0, 1, 2, ...ids.map(() => 3), 4],
+        parentIndex: [-1, 0, 1, ...ids.map(() => 2), 1], attributes: [[], [], [], ...ids.map((_, i) => [7, 8 + i]), []] },
+      layout: { nodeIndex: [1, 3 + ids.length], styles: [[5, 6], [5, 6]] } }] };
+  };
+  return fixture;
+}
+
+test('expected removal rejects the wrong empty-style sibling despite identical aligned records', async () => {
+  const baseline = hiddenStylesBrowser(['retire', 'keep']);
+  const retained = hiddenStylesBrowser(['retire']);
+  const a = await capture(baseline.browser, false, false, ['style#retire']);
+  const unguarded = await capture(retained.browser, false, false);
+  assert.equal(a.styles.hash, unguarded.styles.hash, 'empty styles alias after ordinal alignment');
+  assert.equal(a.styles.skippedNodes.length, 1);
+  retained.sequence.events.length = 0;
+  await assert.rejects(capture(retained.browser, false, false, [],
+    { side: 'candidate', expectAbsent: ['style#absent', 'style#retire'] }), /Expected removal ERROR.*style#retire.*style\[1\]/);
+  assert(!retained.sequence.events.some(({ event }) => event === 'screenshot'));
+});
+
+test('candidate absence check accepts the named removal without excluding the surviving sibling', async () => {
+  const a = await capture(hiddenStylesBrowser(['retire', 'keep']).browser, false, false, ['style#retire']);
+  const b = await capture(hiddenStylesBrowser(['keep']).browser, false, false, [],
+    { side: 'candidate', expectAbsent: ['style#retire'] });
+  assert.equal(a.styles.hash, b.styles.hash);
+  assert.equal(b.styles.entries.length, a.styles.raw.entries.length - 1);
+  assert.equal(Object.hasOwn(b.styles, 'raw'), false);
+});

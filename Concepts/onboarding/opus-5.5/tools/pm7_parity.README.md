@@ -89,7 +89,11 @@ node Concepts/onboarding/opus-5.5/tools/pm7_parity.mjs baseline.html candidate.h
 ```
 
 Only baseline style path keys exclude matched nodes and their subtrees, renumbering surviving
-siblings. Product DOM, screenshots, state, requests and the special-rule guard are unchanged.
+siblings. Each candidate capture must match none of the expected-removal selectors, including
+inside accessible shadow roots. Retaining a named target is an ERROR even if a different hidden
+sibling was removed and the aligned style records happen to match. Absence is checked before the
+screenshot and style sampling, without advancing time. Product DOM, screenshots, state, requests
+and the special-rule guard are unchanged.
 Every skipped element, including descendants, is resolved against the same DOMSnapshot that
 supplies its native styles; any layout box in a matched subtree is a hard
 harness error, including text/pseudo boxes and children of `display:contents` nodes. Zero-size,
