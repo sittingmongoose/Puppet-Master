@@ -2341,7 +2341,6 @@
       },
       "heading_count": 76,
       "implementation_surfaces": [
-        "Concepts/pm7-tools/settings_refresh/managers/40-bsd.js",
         "Plans/Back_Seat_Driver.md",
         "Plans/FinalGUISpec.md",
         "Plans/Prompt_Pipeline.md",
@@ -2350,7 +2349,7 @@
         "Plans/settings_inventory.json",
         "Plans/usage-feature.md"
       ],
-      "line_count": 2632,
+      "line_count": 2630,
       "path": "Plans/Back_Seat_Driver.md",
       "plan_unit_count": 37,
       "plan_unit_ids": [
@@ -2430,7 +2429,7 @@
         "unsafe_advisor_output_delivered",
         "usage_attribution_collapse"
       ],
-      "sha256": "467c771f13460c9e2f76d7d7e30566a57d0d50ed169eb4e73e85b03bff5af973",
+      "sha256": "456be45a86ded62e8c59d461e7d9b21011d40fcd45058b5dd376e229e68f81fe",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 37
@@ -2458,7 +2457,6 @@
         "failure isolation and health vocabulary fixtures",
         "frozen-boundary emission and negative fixtures",
         "hold, clear, re-raise, and escalation fixtures",
-        "node Concepts/pm7-tools/verify/settings_refresh_checkpoint.mjs",
         "python3 scripts/pm-ledger-compile-witness.py Plans/ledgers/v2/pldg-20260927-002-wand-back-seat-driver --base origin/main",
         "python3 scripts/pm-plan-index.py validate",
         "python3 scripts/pm-plans-verify.py run-gates",
@@ -11610,7 +11608,6 @@
       },
       "heading_count": 260,
       "implementation_surfaces": [
-        "Concepts/pm7-tools/systems_integration_source.py",
         "Plans/Models_System.md",
         "Plans/Plugins_System.md",
         "Plans/Project_Sync_and_Backbone.md",
@@ -11948,7 +11945,7 @@
         "web_tool_search_site_reader",
         "worktree_config_cleanup_boundary"
       ],
-      "sha256": "8e8d163aaa15c432f0ced8535780a5160cd6a2b3bff06147fa1d20ff81949dc0",
+      "sha256": "886f1e8ed3cde26070966d603c085df84a94293ec72e8e4d0425dbdd97c7c7b6",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 157
@@ -11961,7 +11958,6 @@
         "requirement": 151
       },
       "validation_surfaces": [
-        "Concepts/pm7-tools/verify/plugin_projection_matrix.mjs",
         "Doctor registry schema fixtures",
         "Plans/backup_restore_system_contracts.schema.json",
         "Plans/doctor_contract_fixtures.json",
@@ -17221,25 +17217,6 @@
       },
       "heading_count": 105,
       "implementation_surfaces": [
-        "Concepts/PMConcept7.html",
-        "Concepts/onboarding/opus-5.5/src/settings/kit.d",
-        "Concepts/onboarding/opus-5.5/src/settings/kit.d/17-look.js",
-        "Concepts/onboarding/opus-5.5/src/settings/kit.d/18-nier.js",
-        "Concepts/onboarding/opus-5.5/src/settings/kit.d/22-nier-chips.js",
-        "Concepts/onboarding/opus-5.5/src/settings/kit.d/60-wizard.js",
-        "Concepts/onboarding/opus-5.5/src/settings/managers",
-        "Concepts/onboarding/opus-5.5/src/settings/o55/placement.d",
-        "Concepts/onboarding/opus-5.5/src/settings/o55/rows.d",
-        "Concepts/onboarding/opus-5.5/src/settings/styles.d/12-look.css",
-        "Concepts/pm7-tools/build_pm7.py",
-        "Concepts/pm7-tools/build_testpm_settings_refresh.py",
-        "Concepts/pm7-tools/settings_refresh/kit.js",
-        "Concepts/pm7-tools/settings_refresh/managers/24-commands.js",
-        "Concepts/pm7-tools/settings_refresh/placement.json",
-        "Concepts/pm7-tools/settings_refresh/styles.css",
-        "Concepts/pm7-tools/settings_refresh_source.py",
-        "Concepts/pm7-tools/settings_tome_source.py",
-        "Concepts/pm7-tools/systems_integration_source.py",
         "Plans/00-plans-index.md",
         "Plans/Automated_Testing_System.md",
         "Plans/Back_Seat_Driver.md",
@@ -17285,7 +17262,7 @@
         "future native Slint Plugins manager projection",
         "future typed Settings owner projections"
       ],
-      "line_count": 4026,
+      "line_count": 3981,
       "path": "Plans/Settings_System.md",
       "plan_unit_count": 49,
       "plan_unit_ids": [
@@ -17392,7 +17369,7 @@
         "theme_or_layout_cross_project_leak",
         "unowned_preference_or_scope_drift"
       ],
-      "sha256": "fe8d81e18351213ca5d21c68e6acdf43045005271f8125d66925805c3ef95d97",
+      "sha256": "d04ef8d0012e8bc79b72dbe116c42ee336c4c00ca9a0090f765bf326f6f01879",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 49
@@ -17409,7 +17386,6 @@
         "validation": 1
       },
       "validation_surfaces": [
-        "Concepts/pm7-tools/verify/plugin_projection_matrix.mjs",
         "Docker Manager redirect fixtures",
         "Plans/Automated_Testing_System.md#ATS-047",
         "Plans/Wiring_Matrix.production.json",
@@ -17427,6 +17403,12 @@
         "Plans/settings_system_contracts.schema.json",
         "Plans/settings_system_contracts.schema.json preview request validation (typed scope and provider id)",
         "Plans/touch_closure.json",
+        "SSYS-035 placement acceptance: each live setting once, exact manager and tab home, Details and search return, and inline refresh.",
+        "Settings manager acceptance: canonical rows and routes, shared kit, at least 85 percent first-frame brightness, labelled sounds, page scrolling, and no page errors.",
+        "Settings manager acceptance: shared kit, themed listboxes, viewport-bounded menus, and independent roster scrolling.",
+        "Settings motion evidence: no blank frames during manager, inspector, domain and tab transitions or sound play, with settling within the specified spring duration.",
+        "Settings motion evidence: no blank frames during manager, inspector, domain and tab transitions, with the specified menu motion.",
+        "Settings placement acceptance: each live setting once, manager and tab placement, search landing, Details, and inline refresh.",
         "exact packet-token denominator and replacement-target validator",
         "existing CS-066 and UCC-145 fixtures",
         "focused Server owner-bundle-B validator",
@@ -17435,7 +17417,6 @@
         "future Doctor freshness/dedupe/no-probe fixtures",
         "future Glass control-state tests",
         "future K3 eight-theme/width/keyboard/Reduced-Motion/native Slint tests",
-        "future PM7 source/generated reproducibility check",
         "future SSH CRUD route fixtures",
         "future Settings production acceptance harness",
         "future Settings provider-card availability and continuation fixtures",
@@ -17475,12 +17456,7 @@
         "future variable-height virtualization tests",
         "jq and schema census over Plans/settings_inventory.json",
         "named visible-state projection positive/negative fixtures",
-        "node Concepts/pm7-tools/verify/settings_placement_checkpoint.mjs",
-        "node Concepts/pm7-tools/verify/settings_refresh_checkpoint.mjs",
-        "node Concepts/pm7-tools/verify/settings_refresh_film.mjs",
         "protected-auth negative fixtures",
-        "python3 Concepts/onboarding/opus-5.5/tools/build.py --check",
-        "python3 Concepts/pm7-tools/build_testpm_settings_refresh.py --check",
         "python3 scripts/pm-plan-index.py validate",
         "python3 scripts/pm-plans-verify.py json-syntax",
         "python3 scripts/pm-plans-verify.py run-gates",
@@ -20948,7 +20924,7 @@
       ]
     }
   ],
-  "generated_at_utc": "2026-10-19T00:28:35Z",
+  "generated_at_utc": "2026-10-19T00:33:15Z",
   "schema_id": "pm.plan_index.doc_cards.v1",
   "source_scope": "top-level live Plans/*.md; excludes ledgers, generated shards, evidence, and pipeline artifacts",
   "summary": {
