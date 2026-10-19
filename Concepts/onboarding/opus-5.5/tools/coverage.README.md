@@ -54,7 +54,9 @@ contributes everything it touched.
 `unsampled_navigations` counts main-frame navigations/reloads without a preceding
 navigation flush; subframes and the initial empty tab are excluded. A nonzero
 count makes untapped CSS rules unknown and prevents false census rows. Captures
-predating this counter report `null` in the summary, not a measured zero.
+predating this counter report `null` in the summary, not a measured zero; a
+missing count also merges to unknown, and the summary flags its untapped rules
+`navigation_unchecked` instead of certifying them unused.
 
 Generate a complete static-page census and source map with:
 

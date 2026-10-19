@@ -148,7 +148,8 @@ for (const b of blocks) {
         observed: !!sample, sheet_observed: sheetObserved, conservative_overlap: !sample?.used && touching.length > 0 };
       rule.unresolved_source_overlap = !rule.used && unresolvedCss.some((r) => r.startOffset < endOffset && r.endOffset > startOffset);
       rule.unsampled_navigation_gap = !rule.used && unsampledNavigations > 0;
-      rule.usage_state = rule.used ? 'used' : sheetObserved && !rule.unresolved_source_overlap && !rule.unsampled_navigation_gap ? 'unused' : 'unknown';
+      rule.navigation_unchecked = !rule.used && unsampledNavigations == null;
+      rule.usage_state = rule.used ? 'used' : sheetObserved && !rule.unresolved_source_overlap && !rule.unsampled_navigation_gap && !rule.navigation_unchecked ? 'unused' : 'unknown';
       found.push(rule); rules.push(rule);
     } });
     row.rules_total = found.length; row.rules_used = found.filter((r) => r.used).length;

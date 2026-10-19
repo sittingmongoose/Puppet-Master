@@ -187,14 +187,18 @@ export function mergeCoverage(base, sample) {
     else prev.used = !!(prev.used || entry.used);
   }
   const byCss = (a, b) => cssKey(a).localeCompare(cssKey(b));
+  // Navigation knowledge merges like provenance: a count from a tracked input
+  // cannot speak for an input that was not tracked, so any missing count merges
+  // to unknown. An empty base is the fresh-file placeholder, not an untracked input.
+  const baseNav = base.unsampled_navigations, sampleNav = sample.unsampled_navigations;
+  const baseEmpty = baseNav == null && !(base.js || []).length && !(base.css || []).length && !(base.stylesheets || []).length;
+  const navigations = baseNav != null && sampleNav != null ? baseNav + sampleNav : baseEmpty ? sampleNav : null;
   return {
     version: 2,
     js: [...js.values()].sort((a, b) => a.script.localeCompare(b.script)),
     css: [...css.values()].sort(byCss),
     stylesheets: [...new Map([...(base.stylesheets || []), ...(sample.stylesheets || [])].map((s) => [s.sheet, s])).values()].sort((a, b) => a.sheet.localeCompare(b.sheet)),
-    ...(base.unsampled_navigations != null || sample.unsampled_navigations != null ? {
-      unsampled_navigations: (base.unsampled_navigations || 0) + (sample.unsampled_navigations || 0),
-    } : {}),
+    ...(navigations != null ? { unsampled_navigations: navigations } : {}),
   };
 }
 

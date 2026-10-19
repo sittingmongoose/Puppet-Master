@@ -123,3 +123,14 @@ test('page-initiated main-frame reloads count once; wrapped navigations and subf
     assert.equal(sum.unsampled_navigations, 5);
   } finally { rmSync(dir, { recursive: true, force: true }); }
 });
+
+test('a count from a tracked input never speaks for an untracked one when merging', () => {
+  const tracked = { js: [], css: [], unsampled_navigations: 2 };
+  const untracked = { js: [{ script: 'a', url: '', functions: [], usedRanges: [], usedRangesProvenance: 'per-sample-v1' }], css: [] };
+  assert.ok(!('unsampled_navigations' in mergeCoverage(tracked, untracked)));
+  assert.ok(!('unsampled_navigations' in mergeCoverage(untracked, tracked)));
+  assert.ok(!('unsampled_navigations' in mergeCoverage(untracked, { js: [], css: [], unsampled_navigations: null })));
+  // An empty base is the fresh-file placeholder, not an untracked input.
+  assert.equal(mergeCoverage({ js: [], css: [] }, { js: [], css: [], unsampled_navigations: 1 }).unsampled_navigations, 1);
+  assert.equal(mergeCoverage(tracked, { js: [], css: [], unsampled_navigations: 3 }).unsampled_navigations, 5);
+});
