@@ -201,6 +201,29 @@ motion rule families must add states before claiming coverage. Full-motion hover
 media rules, offscreen scroll contents, child frames and complete closed-shadow sampling are not
 covered. No cross-host pixel equivalence is claimed.
 
+## Lead revalidation probe
+
+`pm7_parity_revalidate.mjs` is supplied unrun by H-fix. The lead can run it after GPU admission:
+
+```sh
+git fetch origin
+node Concepts/onboarding/opus-5.5/tools/pm7_parity_revalidate.mjs --list
+node Concepts/onboarding/opus-5.5/tools/pm7_parity_revalidate.mjs \
+  --ref origin/main --page Concepts/PMConcept7.html --concurrency 1 \
+  --out /mnt/Cursor/PuppetMaster-Evidence/scratch/2026-10-18-pm7-purge/H-revalidate-main
+```
+
+It reads committed main bytes with `git show`, verifies main ancestry, and runs main against itself
+through the guarded harness. It selects only menu/popover states and states with hover/focus actions
+(800 comparisons in the current full matrix). Use `--page Concepts/LeftRailPMConcept7.html` for Rail
+and a fresh output directory. Optional looks/pages/viewports/motions subsets use the normal syntax.
+No expected removals, pixel tolerance or measured envelope is enabled. The wrapper retains pinned
+input bytes, command, source/matrix hashes and `probe.json`; `parity/report.json` holds every capture.
+Require completed=planned and zero errors to establish that every new capture remained in-state.
+Exit 1 can also report exact-pixel self-noise; inspect the raw result rather than increasing tolerance.
+This is a transient subset: rest and onboarding-welcome prefixes are omitted. Match provenance and
+sequence scope before using the new evidence to support earlier A runs; it does not inspect old PNGs.
+
 ## Artifacts
 
 Default output: timestamped directory in the wave's external A0-parity evidence folder. Existing
