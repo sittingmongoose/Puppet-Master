@@ -36,7 +36,8 @@ body.pm7u-pointer-op{user-select:none!important;cursor:nwse-resize!important;ove
 
 /* Retro Light: darker readable green across the entire concept. */
 [data-theme="retro-light"]{--accent-lime:#2f7a3d!important;--graph-passed:#2f7a3d!important;--success:#2f7a3d!important;--status-success:#2f7a3d!important}
-[data-theme="retro-light"] :is(.ok){color:#2f7a3d!important}
+/* The impossible arm preserves the retired list's (0,2,0) specificity. */
+[data-theme="retro-light"] :is(.ok, .t7.t7:not(*)){color:#2f7a3d!important}
 
 @media(max-width:1180px){}
 @media(max-width:980px){}

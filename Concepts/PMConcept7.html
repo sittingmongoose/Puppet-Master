@@ -25105,18 +25105,21 @@ html[data-o55-nier-parts~="diamonds"] :is(.o55-ph-active .o55-phmark),
 html[data-o55-nier-parts~="diamonds"] :where(.thread-working-pulse):not(.t7.t7:not(*)) { outline: 0; }
 html[data-o55-nier-parts~="diamonds"] :where(.o55-spin):not(.t7.t7:not(*))::after,
 html[data-o55-nier-parts~="diamonds"] :is(.o55-ph-active .o55-phmark)::after { display: none !important; }
-html[data-o55-nier-parts~="diamonds"] :is(.pm6-spin) svg {
+/* Impossible arms preserve the retired spinner lists: (0,2,0) here, (0,2,1) in the motion overrides. */
+html[data-o55-nier-parts~="diamonds"] :is(.pm6-spin, .t7.t7:not(*)) svg {
   border: 1px solid currentColor; box-sizing: border-box; outline: 1px solid currentColor; outline-offset: -5px;
   animation: o55np-diamond 2.8s linear infinite !important;
 }
-html[data-o55-nier-parts~="diamonds"] :is(.pm6-spin) svg > * { visibility: hidden; }
+html[data-o55-nier-parts~="diamonds"] :where(.pm6-spin):not(.t7.t7:not(*)) svg > *,
+html[data-o55-nier-parts~="diamonds"] :is(.t7.t7:not(*)) svg > * { visibility: hidden; }
 @keyframes o55np-diamond { from { transform: rotateY(0deg) rotate(45deg) scale(.72); } to { transform: rotateY(360deg) rotate(45deg) scale(.72); } }
-html[data-motion="reduced"][data-o55-nier-parts~="diamonds"] :where(.pm6-wiz-disc-spin):not(.t7.t7:not(*)),
-html[data-motion="reduced"][data-o55-nier-parts~="diamonds"] :where(.pm6-orch-pc-ring span):not(.t7.t7:not(*)),
-html[data-motion="reduced"][data-o55-nier-parts~="diamonds"] :where(.o55-spin):not(.t7.t7:not(*)),
-html[data-motion="reduced"][data-o55-nier-parts~="diamonds"] :is(.o55-ph-active .o55-phmark),
-html[data-motion="reduced"][data-o55-nier-parts~="diamonds"] :where(.thread-working-pulse):not(.t7.t7:not(*)),
-html[data-motion="reduced"][data-o55-nier-parts~="diamonds"] :where(.pm6-spin svg):not(.t7.t7:not(*)) { animation: none !important; }
+html[data-motion="reduced"][data-o55-nier-parts~="diamonds"] :where(.pm6-wiz-disc-spin):not(.t7.t7:not(*)):not(t7:not(*)),
+html[data-motion="reduced"][data-o55-nier-parts~="diamonds"] :where(.pm6-orch-pc-ring span):not(.t7.t7:not(*)):not(t7:not(*)),
+html[data-motion="reduced"][data-o55-nier-parts~="diamonds"] :where(.o55-spin):not(.t7.t7:not(*)):not(t7:not(*)),
+html[data-motion="reduced"][data-o55-nier-parts~="diamonds"] :where(.o55-ph-active .o55-phmark):not(.t7.t7:not(*)):not(t7:not(*)),
+html[data-motion="reduced"][data-o55-nier-parts~="diamonds"] :where(.thread-working-pulse):not(.t7.t7:not(*)):not(t7:not(*)),
+html[data-motion="reduced"][data-o55-nier-parts~="diamonds"] :where(.pm6-spin svg):not(.t7.t7:not(*)):not(t7:not(*)),
+html[data-motion="reduced"][data-o55-nier-parts~="diamonds"] :is(t7.t7.t7:not(*)) { animation: none !important; }
 
 /* ====================================================================================================== Motion */
 
@@ -25401,12 +25404,13 @@ html[data-theme="basic-dark"][data-o55-nier-parts~="pointer"] :where(.tab):not(.
 /* ============================================================================================ Reduced motion */
 @media (prefers-reduced-motion: reduce) {
   #o55np-cursor, #o55np-cursor > i, #o55np-reticle, #o55np-reticle > i, #o55np-ground > .o55np-mote, #o55np-pod *, #o55np-wipe > i { animation: none !important; transition: none !important; }
-  html[data-o55-nier-parts~="diamonds"] :where(.pm6-wiz-disc-spin):not(.t7.t7:not(*)),
-html[data-o55-nier-parts~="diamonds"] :where(.pm6-orch-pc-ring span):not(.t7.t7:not(*)),
-html[data-o55-nier-parts~="diamonds"] :where(.o55-spin):not(.t7.t7:not(*)),
-html[data-o55-nier-parts~="diamonds"] :is(.o55-ph-active .o55-phmark),
-html[data-o55-nier-parts~="diamonds"] :where(.thread-working-pulse):not(.t7.t7:not(*)),
-html[data-o55-nier-parts~="diamonds"] :where(.pm6-spin svg):not(.t7.t7:not(*)) { animation: none !important; }
+  html[data-o55-nier-parts~="diamonds"] :where(.pm6-wiz-disc-spin):not(.t7.t7:not(*)):not(t7:not(*)),
+html[data-o55-nier-parts~="diamonds"] :where(.pm6-orch-pc-ring span):not(.t7.t7:not(*)):not(t7:not(*)),
+html[data-o55-nier-parts~="diamonds"] :where(.o55-spin):not(.t7.t7:not(*)):not(t7:not(*)),
+html[data-o55-nier-parts~="diamonds"] :where(.o55-ph-active .o55-phmark):not(.t7.t7:not(*)):not(t7:not(*)),
+html[data-o55-nier-parts~="diamonds"] :where(.thread-working-pulse):not(.t7.t7:not(*)):not(t7:not(*)),
+html[data-o55-nier-parts~="diamonds"] :where(.pm6-spin svg):not(.t7.t7:not(*)):not(t7:not(*)),
+html[data-o55-nier-parts~="diamonds"] :is(t7.t7.t7:not(*)) { animation: none !important; }
   html[data-o55-nier-parts~="slice"] :is(.pm6-tb-menu),
 html[data-o55-nier-parts~="slice"] :is(.pm6-chat-more-menu),
 html[data-o55-nier-parts~="slice"] :is(.pm51-popout),
@@ -28011,12 +28015,14 @@ html[data-o55-open] #pm-hover-tag-root { display: none !important; }
 html[data-o55-open] body > [data-o55-held], html[data-o55-open] body > [data-o55-held] * { animation-play-state: paused !important; }
 /* NieR Mode's diamond loaders (styles.d/14-nier-parts.css) set their animation with an !important shorthand, which
    resets the play state and outranks the line above: under the window they are paused here by name, so ticking NieR
-   Mode in the window never wakes the app beneath (performance rule 6; review W9) */
-html[data-o55-open][data-o55-nier-parts] body > [data-o55-held] :where(.pm6-wiz-disc-spin):not(.t7:not(*)):not(t7:not(*)),
-html[data-o55-open][data-o55-nier-parts] body > [data-o55-held] :is(.pm6-orch-pc-ring span),
-html[data-o55-open][data-o55-nier-parts] body > [data-o55-held] :where(.o55-spin):not(.t7:not(*)):not(t7:not(*)),
-html[data-o55-open][data-o55-nier-parts] body > [data-o55-held] :where(.thread-working-pulse):not(.t7:not(*)):not(t7:not(*)),
-html[data-o55-open][data-o55-nier-parts] body > [data-o55-held] :is(.pm6-spin svg) { animation-play-state: paused !important; }
+   Mode in the window never wakes the app beneath (performance rule 6; review W9).
+   The impossible t7.t7.t7:not(*) arm preserves the retired spinner's (0,2,1) specificity. */
+html[data-o55-open][data-o55-nier-parts] body > [data-o55-held] :where(.pm6-wiz-disc-spin):not(.t7.t7:not(*)):not(t7:not(*)),
+html[data-o55-open][data-o55-nier-parts] body > [data-o55-held] :where(.pm6-orch-pc-ring span):not(.t7.t7:not(*)):not(t7:not(*)),
+html[data-o55-open][data-o55-nier-parts] body > [data-o55-held] :where(.o55-spin):not(.t7.t7:not(*)):not(t7:not(*)),
+html[data-o55-open][data-o55-nier-parts] body > [data-o55-held] :where(.thread-working-pulse):not(.t7.t7:not(*)):not(t7:not(*)),
+html[data-o55-open][data-o55-nier-parts] body > [data-o55-held] :where(.pm6-spin svg):not(.t7.t7:not(*)):not(t7:not(*)),
+html[data-o55-open][data-o55-nier-parts] body > [data-o55-held] :is(t7.t7.t7:not(*)) { animation-play-state: paused !important; }
 /* the solid backdrop (60-ui-core.js): on a computer that cannot composite the app beneath at full rate, the app is
    not drawn at all while the window is open; the scrim then lies over the page's own ground */
 html[data-o55-open][data-o55-solid] body > [data-o55-held] { visibility: hidden !important; }
@@ -55183,7 +55189,9 @@ html:is([data-theme^="retro"], [data-o55-nier="on"]) .wpk-check { border-radius:
 
 /* Retro Light: darker readable green across the entire concept. */
 [data-theme="retro-light"]{--accent-lime:#2f7a3d!important;--graph-passed:#2f7a3d!important;--success:#2f7a3d!important;--status-success:#2f7a3d!important}
-[data-theme="retro-light"] :is(.ok){color:#2f7a3d!important}</style>
+/* The impossible arm preserves the retired list's (0,2,0) specificity. */
+[data-theme="retro-light"] :where(.ok):not(.t7.t7:not(*)),
+[data-theme="retro-light"] :is(.t7.t7:not(*)){color:#2f7a3d!important}</style>
 <style id="pm7-t32-final">
 /* PM7 T32 — final Usage chart/text closure, restored global status bar,
    and Home dashboard interaction parity.
