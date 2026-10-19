@@ -1,0 +1,90 @@
+{
+  "version": 1,
+  "owner_doc": "Plans/UI_Wiring_Rules.md",
+  "scope": "Static product action lists for independent Touch discovery. Not a command catalog, concept build instruction, native execution evidence, or readiness admission.",
+  "sources": {
+    "systems_local": {
+      "owner_refs": [
+        "Plans/Settings_System.md#SSYS-003",
+        "Plans/Settings_System.md#SSYS-012",
+        "Plans/Test_Capture_and_Motion_Evidence.md#TCME-008",
+        "Plans/Named_Plan_System.md#NPLAN-002",
+        "Plans/Cursor_Origin_Integration.md#ORI-008",
+        "Plans/Shared_Integration_Runtime.md#SIR-017",
+        "Plans/Planning_Wizard.md#PWIZ-001",
+        "Plans/Project_Sync_and_Backbone.md#PSB-002"
+      ],
+      "actions": [
+        "ui.capture.policy.inspect",
+        "ui.named_plan.inspect",
+        "ui.origin.preview.open",
+        "ui.performance.evidence.inspect",
+        "ui.planning_wizard.open",
+        "ui.settings.browser_scm_tab.select",
+        "ui.settings.project_sync.client.inspect",
+        "ui.settings.project_sync.clients.preview_manage",
+        "ui.settings.project_sync.conflict.preview_policy",
+        "ui.settings.project_sync.conflict.preview_simulation",
+        "ui.settings.project_sync.continuity.preview",
+        "ui.settings.project_sync.continuity.preview_edit",
+        "ui.settings.project_sync.diagnostic.inspect",
+        "ui.settings.project_sync.diagnostics.preview_export",
+        "ui.settings.project_sync.diagnostics.preview_run",
+        "ui.settings.project_sync.location.preview_add",
+        "ui.settings.project_sync.location.preview_edit",
+        "ui.settings.project_sync.project.preview_copy",
+        "ui.settings.project_sync.project.preview_move",
+        "ui.settings.project_sync.remote.preview_add",
+        "ui.settings.project_sync.remote.preview_edit",
+        "ui.settings.project_sync.remote.preview_import",
+        "ui.settings.project_sync.remote.preview_remove",
+        "ui.settings.project_sync.remote.preview_test",
+        "ui.settings.project_sync.remote.preview_toggle",
+        "ui.settings.project_sync_tab.select",
+        "ui.settings.route.open",
+        "ui.settings.server_tab.select"
+      ]
+    },
+    "guided_tour": {
+      "owner_refs": [
+        "Plans/Planning_Wizard.md#PWIZ-023",
+        "Plans/Planning_Wizard.md#PWIZ-035",
+        "Plans/guided_tour_contracts.schema.json#/$defs/guided_tour_action_request",
+        "Plans/UI_Command_Catalog.md#UCC-174"
+      ],
+      "actions": [
+        "cmd.chat.eli5.explain_reply",
+        "cmd.chat.eli5.set",
+        "cmd.chat.send",
+        "cmd.panel.switch",
+        "cmd.persona.select",
+        "cmd.widget.add",
+        "cmd.widget.configure",
+        "cmd.widget.resize",
+        "cmd.workspace_layout.move_surface",
+        "ui.guided_tour.back",
+        "ui.guided_tour.finish",
+        "ui.guided_tour.focus_route",
+        "ui.guided_tour.next",
+        "ui.guided_tour.pause",
+        "ui.guided_tour.replay",
+        "ui.guided_tour.resume",
+        "ui.guided_tour.show_me",
+        "ui.guided_tour.skip",
+        "ui.guided_tour.start",
+        "ui.guided_tour.toggle_eli5",
+        "ui.planning_wizard.open"
+      ]
+    },
+    "home_layout": {
+      "owner_refs": [
+        "Plans/UI_Command_Catalog.md#UCC-144",
+        "Plans/UI_Command_Catalog.md#UCC-201"
+      ],
+      "actions": [
+        "cmd.workspace_layout.reset",
+        "cmd.workspace_layout.set_collapsed"
+      ]
+    }
+  }
+}

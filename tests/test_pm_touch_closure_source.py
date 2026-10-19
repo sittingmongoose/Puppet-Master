@@ -1,4 +1,4 @@
-"""The action census must inspect emitted source, never retired controllers."""
+"""The action census must inspect owner lists, never retired concept controllers."""
 
 from __future__ import annotations
 
@@ -25,10 +25,9 @@ def load_module(name, path):
 
 
 validator = load_module("touch_closure", ROOT / "scripts/pm-touch-closure-verify.py")
-SOURCE = ROOT / "Concepts/pm7-tools/guided_tour_source.py"
 
 
-class EffectiveGuidedTourSourceTests(unittest.TestCase):
+class OwnerActionSourceTests(unittest.TestCase):
     def test_current_tour_inventory_preserves_domain_owners_and_open_status(self) -> None:
         expected, failures = validator.expected_inventory()
         self.assertFalse([item for item in failures if "Guided Tour" in item], failures)
@@ -71,78 +70,91 @@ class EffectiveGuidedTourSourceTests(unittest.TestCase):
             with self.assertRaisesRegex(ValueError, "domain routes absent from canonical catalog"):
                 validator.expected_inventory()
 
-    def test_current_composition_matches_emitted_bands_exactly(self) -> None:
-        actual = validator.effective_guided_tour_bands(SOURCE.read_text(encoding="utf-8"))
-        with mock.patch.object(sys, "path", [str(SOURCE.parent), *sys.path]):
-            authored = load_module("guided_tour_authored", SOURCE)
-        self.assertEqual(actual, (authored.GUIDED_TOUR_MARKUP, authored.GUIDED_TOUR_STYLE, authored.GUIDED_TOUR_SCRIPT))
-        self.assertIn("ui.guided_tour.show_me", actual[2])
-        self.assertNotIn("cmd.panel.redock", actual[2])
-        self.assertNotIn("cmd.widget.remove", actual[2])
-        self.assertIn("createGuidedPlanningPractice", actual[2])
-        self.assertIn("cmd.chat.send", actual[2])
-        self.assertNotIn("ui.assistant_chat.", actual[2])
+    def changed_sources(self, mutate):
+        actual = validator.load_json
+        document = copy.deepcopy(actual(validator.ACTION_SOURCES_PATH))
+        mutate(document)
 
-    def test_only_reviewed_literal_helper_is_read_without_execution(self) -> None:
-        source = '''
-from guided_tour_practice_source import PLANNING_PRACTICE_SCRIPT
-GUIDED_TOUR_MARKUP = "markup"
-GUIDED_TOUR_STYLE = "style"
-GUIDED_TOUR_SCRIPT = PLANNING_PRACTICE_SCRIPT
-'''
-        with mock.patch.object(validator, "read", return_value='raise RuntimeError("not executed")\nPLANNING_PRACTICE_SCRIPT = "literal"'):
-            self.assertEqual(validator.effective_guided_tour_bands(source), ("markup", "style", "literal"))
-        for helper in (
-            'PLANNING_PRACTICE_SCRIPT = str("computed")',
-            'PLANNING_PRACTICE_SCRIPT = "first"\nPLANNING_PRACTICE_SCRIPT = "second"',
-            'PLANNING_PRACTICE_SCRIPT = "first"\nif True:\n    PLANNING_PRACTICE_SCRIPT = "hidden"',
+        def changed(path):
+            return document if path == validator.ACTION_SOURCES_PATH else actual(path)
+
+        return mock.patch.object(validator, "load_json", side_effect=changed)
+
+    def test_inventory_reads_no_concept_source(self) -> None:
+        actual_read = validator.read
+        actual_load = validator.load_json
+
+        def read(path):
+            self.assertNotIn("Concepts/", path)
+            return actual_read(path)
+
+        def load(path):
+            self.assertNotIn("Concepts/", str(path))
+            return actual_load(path)
+
+        with mock.patch.object(validator, "read", side_effect=read), \
+                mock.patch.object(validator, "load_json", side_effect=load):
+            expected, failures = validator.expected_inventory()
+        self.assertEqual(failures, [])
+        self.assertEqual(len(expected), 507)
+        self.assertNotIn("ui.guided_tour.keep_layout", expected)
+        self.assertNotIn("ui.guided_tour.restore_layout", expected)
+
+    def test_source_groups_and_owner_references_fail_closed(self) -> None:
+        invalid = [
+            lambda d: d.update(version=True),
+            lambda d: d.update(version=2),
+            lambda d: d.update(owner_doc="Plans/Commands_System.md"),
+            lambda d: d.update(scope=""),
+            lambda d: d.update(extra=[]),
+            lambda d: d["sources"].update(extra={}),
+            lambda d: d["sources"].pop("home_layout"),
+            lambda d: d["sources"]["home_layout"].update(extra=[]),
+            lambda d: d["sources"]["home_layout"].update(actions=[]),
+            lambda d: d["sources"]["home_layout"]["actions"].append("cmd.workspace_layout.reset"),
+            lambda d: d["sources"]["home_layout"]["actions"].append("ambient prose"),
+            lambda d: d["sources"]["home_layout"].update(owner_refs=[]),
+            lambda d: d["sources"]["home_layout"].update(owner_refs=[None]),
+            lambda d: d["sources"]["home_layout"].update(owner_refs=["Concepts/PMConcept7.html#layout"]),
+            lambda d: d["sources"]["home_layout"].update(owner_refs=["Plans/../Concepts/PMConcept7.html#layout"]),
+            lambda d: d["sources"]["home_layout"].update(owner_refs=["Plans/UI_Command_Catalog.md#UCC-MISSING"]),
+            lambda d: d["sources"]["home_layout"].update(owner_refs=["Plans/guided_tour_contracts.schema.json#/$defs/missing"]),
+        ]
+        for mutate in invalid:
+            with self.subTest(mutation=invalid.index(mutate)), self.changed_sources(mutate):
+                with self.assertRaisesRegex(ValueError, "Touch action sources"):
+                    validator.plans_action_sources()
+
+    def test_missing_or_extra_system_action_cannot_change_the_census(self) -> None:
+        for mutate in (
+            lambda d: d["sources"]["systems_local"]["actions"].remove("ui.named_plan.inspect"),
+            lambda d: d["sources"]["systems_local"]["actions"].append("ui.named_plan.synthetic"),
         ):
-            with self.subTest(helper=helper), mock.patch.object(validator, "read", return_value=helper):
-                with self.assertRaises(ValueError):
-                    validator.effective_guided_tour_bands(source)
-        for changed in (source.replace("guided_tour_practice_source", "unreviewed_helper"),
-                        source.replace("import PLANNING_PRACTICE_SCRIPT", "import PLANNING_PRACTICE_SCRIPT as other")):
-            with self.assertRaises(ValueError):
-                validator.effective_guided_tour_bands(changed)
+            with self.changed_sources(mutate):
+                with self.assertRaisesRegex(ValueError, "system local owner action inventory drift"):
+                    validator.expected_inventory()
 
-    def test_composed_fixture_retains_only_bounded_live_fragment(self) -> None:
-        source = '''
-GUIDED_TOUR_MARKUP = "markup"
-GUIDED_TOUR_STYLE = "style"
-legacy = "retired<start>live<end>retired"
-begin = legacy.index("<start>")
-end = legacy.index("<end>")
-fragment = legacy[begin:end]
-GUIDED_TOUR_SCRIPT = "before:" + fragment + ":after"
-'''
-        self.assertEqual(validator.effective_guided_tour_bands(source), ("markup", "style", "before:<start>live:after"))
-        for changed in (
-            source.replace('index("<end>")', 'index("missing")'),
-            source.replace('"before:" + fragment + ":after"', '"".join([fragment])'),
-            source + '\nGUIDED_TOUR_SCRIPT = "duplicate"\n',
-            source.replace("legacy[begin:end]", "legacy[end:begin:-1]"),
-            source.replace("legacy[begin:end]", "legacy[begin:end:2]"),
-            source.replace("legacy[begin:end]", "legacy[:]"),
-            source.replace("legacy[begin:end]", "legacy[begin:999999]"),
-            source.replace('"before:" + fragment + ":after"', '"before:" + 7'),
-            source.replace('"before:" + fragment + ":after"', 'GUIDED_TOUR_SCRIPT'),
-            source + '\nif True:\n    GUIDED_TOUR_SCRIPT = "hidden overwrite"\n',
-            source + '\nGUIDED_TOUR_SCRIPT += "hidden append"\n',
-            source + '\nfragment, extra = "different", "other"\n',
-            source + '\ndel GUIDED_TOUR_SCRIPT\n',
-        ):
-            with self.subTest(source=changed):
-                with self.assertRaises(ValueError):
-                    validator.effective_guided_tour_bands(changed)
+    def test_missing_tour_action_cannot_disappear_from_owner_schema_comparison(self) -> None:
+        with self.changed_sources(lambda d: d["sources"]["guided_tour"]["actions"].remove("ui.guided_tour.show_me")):
+            expected, failures = validator.expected_inventory()
+        self.assertIn("ui.guided_tour.show_me", expected)
+        self.assertTrue(any("Guided Tour owner/schema action inventory drift" in error for error in failures))
 
-    def test_source_resolution_does_not_execute_module_code(self) -> None:
-        source = '''
-raise RuntimeError("must not execute")
-GUIDED_TOUR_MARKUP = "markup"
-GUIDED_TOUR_STYLE = "style"
-GUIDED_TOUR_SCRIPT = "script"
-'''
-        self.assertEqual(validator.effective_guided_tour_bands(source), ("markup", "style", "script"))
+    def test_missing_reused_domain_owner_action_stays_a_failure(self) -> None:
+        with self.changed_sources(lambda d: d["sources"]["guided_tour"]["actions"].remove("cmd.chat.send")):
+            expected, failures = validator.expected_inventory()
+        self.assertIn("cmd.chat.send", expected)
+        self.assertTrue(any("reused domain routes missing from owner census" in error for error in failures))
+
+    def test_optional_navigation_alias_cannot_replace_local_tour_focus(self) -> None:
+        with self.changed_sources(lambda d: d["sources"]["guided_tour"]["actions"].append("cmd.nav.focus_route")):
+            with self.assertRaisesRegex(ValueError, "must use typed local"):
+                validator.expected_inventory()
+
+    def test_required_home_layout_actions_cannot_disappear(self) -> None:
+        with self.changed_sources(lambda d: d["sources"]["home_layout"]["actions"].remove("cmd.workspace_layout.reset")):
+            with self.assertRaisesRegex(ValueError, "Home required layout commands missing from owner census"):
+                validator.expected_inventory()
 
 
 class WholeCommandAccountingTests(unittest.TestCase):
@@ -417,8 +429,8 @@ class BoundedGapRepairInventoryTests(unittest.TestCase):
         self.assertEqual(sum(c.startswith("cmd.bsd.") for c in admitted), 9)
         self.assertEqual(sum(c.startswith("cmd.chat.context_lens.") for c in admitted), 7)
         self.assertNotIn("cmd.bsd.set", admitted)
-        self.assertEqual(len(rows), 682)
-        self.assertEqual(len(profiles), 135)
+        self.assertEqual(len(rows), 681)
+        self.assertEqual(len(profiles), 134)
         for command, (profile_id, owner, unit) in admitted.items():
             with self.subTest(command=command):
                 self.assertEqual(rows[command][1:5], [profile_id, "command", command, "partial"])
@@ -570,7 +582,7 @@ class ForgeReviewAliasConsumerTests(unittest.TestCase):
         self.assertEqual(self.row(self.registry)[:5],
                          ["TOUCH-GHPR-001", "TCP-GITHUB-PR", "command_alias", self.ALIAS, "partial"])
         self.assertEqual(sum(row[3] == self.ALIAS for row in self.registry["rows"]), 1)
-        self.assertEqual((len(self.registry["rows"]), len(self.registry["profiles"])), (682, 135))
+        self.assertEqual((len(self.registry["rows"]), len(self.registry["profiles"])), (681, 134))
         binding = self.registry["alias_bindings"][self.ALIAS]
         for field in ("exact_target", "availability_source", "handler_dispatch_token"):
             self.assertEqual(binding[field], self.TARGET)
@@ -877,7 +889,7 @@ class CommandsShortcutsCensusTests(unittest.TestCase):
         self.assertEqual(sum(row[1] == "TCP-CMDSC" for row in registry["rows"]), 16)
         self.assertEqual((len(registry["rows"]), len(registry["profiles"]),
                           len(registry["excluded_tokens"]), len(registry["alias_bindings"])),
-                         (682, 135, 58, 65))
+                         (681, 134, 59, 65))
 
     def test_unknown_commands_ids_are_rejected(self) -> None:
         for unknown in self.UNKNOWN:
@@ -902,7 +914,7 @@ class CommandsShortcutsCensusTests(unittest.TestCase):
         production_actions = {entry["ui_command_id"] for entry in matrix["entries"].values()}
         registry = json.loads((ROOT / "Plans/touch_closure.json").read_text(encoding="utf-8"))
         kinds = {row[3]: row[2] for row in registry["rows"]}
-        self.assertEqual(len(matrix["entries"]), 1154)
+        self.assertEqual(len(matrix["entries"]), 1258)
         for action in self.ALL:
             with self.subTest(action=action):
                 self.assertEqual(kinds[action], "ui_action")
