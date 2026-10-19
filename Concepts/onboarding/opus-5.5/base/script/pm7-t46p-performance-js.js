@@ -8,10 +8,10 @@
   var IDENTITY={operation_id:WORK_ID,session_id:'concept-session:001',stream_id:'concept-stream:001',upload_id:'concept-upload:001'};
   function copy(value){return JSON.parse(JSON.stringify(value));}
   function settingsInventorySnapshot(){
-    var source=document.getElementById('pm7-settings-data'),model=null;
-    try{model=source?JSON.parse(source.textContent):null;}catch(error){model=null;}
+    var model=window.PM12_REFERENCE;
+    var settings=model&&model.byCat?Object.values(model.byCat).flatMap(function(category){return category.settings||[];}):null;
     var viewport=document.querySelector('[data-all-settings-viewport]');
-    return {model_backed:!!(model&&Array.isArray(model.settings)),total:model&&Array.isArray(model.settings)?model.settings.length:0,
+    return {model_backed:Array.isArray(settings),total:settings?settings.length:0,
       mounted:document.querySelectorAll('[data-all-setting-id]').length,virtualized:!!viewport,owner:'T44 All Settings'};
   }
   function probeDedupStaleGeneration(){

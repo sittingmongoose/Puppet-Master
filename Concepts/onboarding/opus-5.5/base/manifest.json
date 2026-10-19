@@ -226,12 +226,6 @@
     },
     {
       "tag": "script",
-      "id": "pm7-settings-data",
-      "file": "script/pm7-settings-data.js",
-      "slot": "@@PM7_BASE_0040@@"
-    },
-    {
-      "tag": "script",
       "id": "pm4-settings-js",
       "file": "script/pm4-settings-js.js",
       "slot": "@@PM7_BASE_0041@@"
@@ -386,6 +380,12 @@
       "id": "pm7-onboarding-js",
       "file": "script/pm7-onboarding-js.js",
       "slot": "@@PM7_BASE_0056@@"
+    },
+    {
+      "tag": "script",
+      "id": "pm7-settings-data",
+      "file": "script/pm7-settings-data.js",
+      "slot": "@@PM7_BASE_0040@@"
     }
   ]
 }

@@ -954,8 +954,8 @@ async function finalSettingsPreferencesChapter(page) {
   await action(page, 'settings-all-virtualized', async () => {
     await openAllSettings(page);
     return page.evaluate(() => {
-      const model = JSON.parse(document.getElementById('pm7-settings-data')?.textContent || '{}');
-      const total = Array.isArray(model.settings) ? model.settings.length : 0, mounted = document.querySelectorAll('[data-all-setting-id]').length, viewport = Boolean(document.querySelector('[data-all-settings-viewport]'));
+      const settings = Object.values(window.PM12_REFERENCE?.byCat || {}).flatMap(category => category.settings || []);
+      const total = settings.length, mounted = document.querySelectorAll('[data-all-setting-id]').length, viewport = Boolean(document.querySelector('[data-all-settings-viewport]'));
       if (!(total > 100 && mounted > 0 && mounted < total && viewport)) throw new Error('All Settings is not model-backed and virtualized');
       return { total, mounted, viewport };
     });
