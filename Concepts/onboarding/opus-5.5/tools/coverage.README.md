@@ -58,8 +58,9 @@ counts are Boolean byte coverage, not function invocation counts. Prefer
 `usedRanges` when calculating executed bytes. Keep the raw union as provenance;
 do not feed a completed union back into live collection.
 
-CSS used bytes count touched style-rule spans. Fonts, keyframes, at-rule wrappers,
-and whitespace are outside that metric. Parse recovery notices and unmatched
+CSS used and unused bytes count style-rule spans from observed sheets. Fonts,
+keyframes, at-rule wrappers, whitespace, and unobserved source bytes are listed
+separately as `unmeasured_bytes`. Data script blocks are also unmeasured. Parse recovery notices and unmatched
 runtime styles/scripts are reported. A CSS usage range overlapping a static rule
 conservatively retains it. Neither an unused row nor an unobserved row alone is
 permission to remove code; the static analysis and parity evidence remain required.
