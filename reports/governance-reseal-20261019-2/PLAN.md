@@ -1,8 +1,10 @@
 # Governance reseal 2 plan — 2026-10-19
 
-**Phase 1 plan revision, fix round 1. No Phase 2 action is authorized.** Original measurements and 32 controls are preserved below as cycle-1 evidence; revised controls and the two-place binding rehearsal appear in the fix-round section. The lead must complete cycle-2 Opus xhigh and Astra max reviews, confirm G-register and its snapshot/baseline follow-up, and mail **GO Phase 2** before this worker refreshes governance.
+**Reviewed Phase 1 plan plus lead-directed Phase 2 GO amendment.** GO `1019203718-54f1` authorizes execution after the three Opus r2 LOW fixes below. The original reviewed plan is `0758b870c62725420a98a7b7870f3048df95613c`; both cycle-2 reviews are OK. Historical Phase 1 status statements below describe that review packet.
 
-Review branch: `plans/governance-reseal2-20261019`. Agent: `codex-reseal2`. Fix-round full T3 worktree: `/home/sittingmongoose/.t3/worktrees/PuppetMaster/t3-d20640ac`, owned by `/home/sittingmongoose/src/PuppetMaster`. Local branch and Phase 2 holder branch: `plans/governance-reseal2-fix-20261019`. The review branch is attached to the original worker's worktree; this local branch starts at reviewed `128ad789b901ab90a2a4e3c1be2052a9b9022564` and pushes as a fast-forward to the same review ref. Initial Phase 1 main was `142cfa9192a135502328b3dd5fddf8462ef8fbd3`. Original measurement paths are historical, not execution paths.
+**Historical Phase 1 revision:** Original measurements and 32 controls are preserved below as cycle-1 evidence; revised controls and the two-place binding rehearsal appear in the fix-round section. The lead must complete cycle-2 Opus xhigh and Astra max reviews, confirm G-register and its snapshot/baseline follow-up, and mail **GO Phase 2** before this worker refreshes governance.
+
+Review branch (preserved): `plans/governance-reseal2-20261019`. Agent: `codex-reseal2`. Phase 2 full T3 worktree: `/home/sittingmongoose/.t3/worktrees/PuppetMaster/t3-2c4141a9`, owned by `/home/sittingmongoose/src/PuppetMaster`. Local branch and Phase 2 holder branch: `plans/governance-reseal2-phase2-20261019`. The local execution branch starts at reviewed `0758b870c62725420a98a7b7870f3048df95613c`. Publish this GO amendment on a distinct amendment ref and the rebased execution on `plans/governance-reseal2-20261019-execution`, preserving the review ref without force pushes. Initial Phase 1 main was `142cfa9192a135502328b3dd5fddf8462ef8fbd3`. Original measurement paths are historical, not execution paths.
 
 ## Authority and procedure
 
@@ -187,6 +189,7 @@ python3 scripts/pm-shard-plans.py --generate --config Plans/sharding_config.json
 python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json --report "$RESEAL_BUNDLE/shard-check-report.json"
 python3 scripts/pm-governance-seal.py sync-plan-sharding-evidence --evidence "$RESEAL_BUNDLE/evidence.json" --report "$RESEAL_BUNDLE/shard_report.json" \
   > "$RESEAL_EVIDENCE/shard-evidence-sync.json"
+python3 "$RESEAL_NOTES/verify-sync-policy.py" "$RESEAL_EVIDENCE/shard-evidence-sync.json" "$RESEAL_BUNDLE/evidence.json"
 ```
 
 The ordinary `pm-governance-seal.py refresh --evidence ...` follows. Pass actual saved stdout through structured subprocess arguments for the three existing `commands_run` strings, preserving their spelling: index validate; shard generate with the live report path; shard check with the live check-report path. Keep the historical `plan-shard-generate` check unchanged. Update plan-index details from measured counts and add this reseal's check detail with actual main, GO, seven registrations and false authority limits. Validate evidence and graph; do not edit the graph.
@@ -215,11 +218,11 @@ After the final local edition is installed and all seven companions have both bi
 
 ```bash
 python3 scripts/pm-event-authority-currentness.py validate > "$RESEAL_EVIDENCE/currentness-final.out"
-python3 "$RESEAL_NOTES/verify-seven-bindings.py" --root /home/sittingmongoose/.t3/worktrees/PuppetMaster/t3-d20640ac \
+python3 "$RESEAL_NOTES/verify-seven-bindings.py" --root /home/sittingmongoose/.t3/worktrees/PuppetMaster/t3-2c4141a9 \
   > "$RESEAL_EVIDENCE/seven-bindings-final.json"
 ```
 
-`verify-seven-bindings.py` requires the exact live/installed source set, 266/96/170 counts, current source hashes, and seven matching SHA-256 bindings in Spec Lock and currentness only. It is separate from the landing check and grants no runtime or native authority. `--inventory` accepts a task-evidence copy of the installed inventory for the foreign-dirty fallback below.
+`verify-seven-bindings.py` requires the exact live/installed source set, 266/96/170 counts, current source hashes, and seven matching SHA-256 bindings in Spec Lock and currentness, and `companion_evidence_artifacts == 0`. It is separate from the landing check and grants no runtime or native authority. `--inventory` accepts a task-evidence copy of the installed inventory for the foreign-dirty fallback below.
 
 ## The one auto-decisions row
 
@@ -229,7 +232,7 @@ Applied paths are Spec Lock; the live evidence bundle and two reports; buildabil
 
 ## Landing, follow-up and cleanup
 
-1. **Acquire immediately before landing fetch.** Atomically create `/mnt/Cursor/PuppetMaster-Evidence/scratch/landing-lock/held`. On contention read its holder; clear only after 90 minutes, otherwise wait five minutes with bounded waits and retry. Immediately preserve the successful directory's `stat().st_mtime` as immutable acquisition epoch/UTC. Save it before writing the holder. The holder has exactly four `key: value` lines: agent `codex-reseal2`, branch `plans/governance-reseal2-fix-20261019`, current milestone UTC, phase. Update it at **lock taken, edition verified, rebase done, first check saved, first push, currentness written, snapshot recorded, follow-up checked, cleanup**; retain each holder/milestone in execution evidence. Milestones do not extend the **absolute 90-minute cap**. Deadline-bound command sessions and recovery act only on processes started by this task.
+1. **Acquire immediately before landing fetch.** Atomically create `/mnt/Cursor/PuppetMaster-Evidence/scratch/landing-lock/held`. On contention read its holder; clear only after 90 minutes, otherwise wait five minutes with bounded waits and retry. Immediately preserve the successful directory's `stat().st_mtime` as immutable acquisition epoch/UTC. Save it before writing the holder. The holder has exactly four `key: value` lines: agent `codex-reseal2`, branch `plans/governance-reseal2-phase2-20261019`, current milestone UTC, phase. Update it at **lock taken, edition verified, rebase done, first check saved, first push, currentness written, snapshot recorded, follow-up checked, cleanup**; retain each holder/milestone in execution evidence. Milestones do not extend the **absolute 90-minute cap**. Deadline-bound command sessions and recovery act only on processes started by this task.
 
    **Go/no-go budget:** require at least 80 minutes remaining before starting the first landing check; 55 minutes before the first push/currentness write; 50 minutes before `snapshot-current`; 40 minutes before baseline recording; 25 minutes before the follow-up landing check; and 5 minutes before the second push/cleanup. Before any optional full rerun require its bounded timeout allowance plus all remaining downstream budgets. A timeout rerun at 1200 seconds cannot consume the follow-up's reserved 25 minutes. Recheck the immutable deadline before every stage. If a threshold fails, start no dependent step: reset an unpushed shared fast-forward with `git reset --keep origin/main`, preserve pushed main and a coherent installed edition, release the lock safely, and report the exact incomplete state. Never retain the lock merely to finish another check.
 2. **Bind old input identity.** Immediately copy/hash all 15 shared currentness files; compare file set and bytes with preparation backup and the then-current baseline. Compare the baseline itself with the preparation copy. Mismatch stops, releases the lock, and requires re-inventory outside it. Do not record a baseline to excuse it.
@@ -282,7 +285,7 @@ git --no-optional-locks status --porcelain -- Plans scripts \
 cp /mnt/Cursor/PuppetMaster/Plans/.audits/event-authority-2026-08-13-currentness/CURRENT_EVENT_SOURCE_INVENTORY.json \
   "$RESEAL_EVIDENCE/landing/installed-inventory-copy.json"
 TMPDIR="$RESEAL_TMPDIR" python3 "$RESEAL_NOTES/verify-seven-bindings.py" \
-  --root /home/sittingmongoose/.t3/worktrees/PuppetMaster/t3-d20640ac \
+  --root /home/sittingmongoose/.t3/worktrees/PuppetMaster/t3-2c4141a9 \
   --inventory "$RESEAL_EVIDENCE/landing/installed-inventory-copy.json" \
   > "$RESEAL_EVIDENCE/landing/seven-bindings-clean-tree.json"
 ```
@@ -311,8 +314,9 @@ TMPDIR="$RESEAL_TMPDIR" python3 "$RESEAL_NOTES/reject-incomplete-checks.py" \
 Run the follow-up comparison from the shared checkout, only with at least 25 minutes remaining:
 
 ```bash
-TMPDIR="$RESEAL_TMPDIR" python3 -c 'from datetime import datetime,timezone; import sys; acquired=datetime.fromisoformat(sys.argv[1]); assert acquired.tzinfo is not None; elapsed=(datetime.now(timezone.utc)-acquired).total_seconds(); remaining=90*60-elapsed; assert 0 <= elapsed and remaining >= 25*60, "Insufficient lock budget for follow-up; release and report"; print(remaining)' "$RESEAL_LOCK_ACQUIRED_AT_UTC" \
-  > "$RESEAL_EVIDENCE/landing/followup-budget-guard.out"
+set -euo pipefail
+TMPDIR="$RESEAL_TMPDIR" python3 "$RESEAL_NOTES/lock-budget-guard.py" "$RESEAL_LOCK_ACQUIRED_AT_UTC" 25 \
+  > "$RESEAL_EVIDENCE/landing/followup-budget-guard.out" &&
 TMPDIR="$RESEAL_TMPDIR" python3 scripts/pm-landing-check.py --base origin/main \
   --readiness-audit-root /mnt/Cursor/PuppetMaster/Plans/.audits/event-authority-2026-08-13-currentness \
   --keep-check-reports "$RESEAL_EVIDENCE/landing/followup-check-reports" --json \
@@ -379,3 +383,32 @@ Evidence root: `/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261019-2/r
 | `/mnt/Cursor/share/puppet-master/2026-10-19-reseal2/HELPERS.SHA256SUMS` | `f61a30369b784b565d614d3e3f6e39dbab8de0ac3e5280e50a7924cf08fbef99` |
 
 The active manifest binds 13 Python helpers and README; the unused admission helper is excluded. The closed evidence manifest binds 320 files, including before/after helper sources, passed controls and corrected scratch-attempt records. Task-owned scratch source trees, duplicate editions and TMPDIR were removed; one generated rehearsal edition remains as result evidence. No shared governance/currentness write, landing lock or landing occurred. The unlanded worktree is retained. Cycle-2 reviews and a separate lead **GO Phase 2** remain required.
+
+
+## Lead-directed GO amendment — mail 1019203718-54f1
+
+GO `1019203718-54f1` is the authority for this amendment and execution. G-register main `5ce8b1b0f9` and follow-up `f4d1daa2f7` are prerequisites. Wait for `codex-landing-d` to release its lock, then fetch/rebase onto its new main; verify its delta contains only Concepts and the unbound `scripts/pm7-where.py`. Re-inventory outside the lock. Preserve both original OK reviews; no third review cycle is requested.
+
+The three Opus r2 LOWs are implemented before lock acquisition:
+
+1. `lock-budget-guard.py` validates all six immutable reserves. The execution runner calls a guard synchronously before each dependent stage; a nonzero result raises before that stage. Every literal guard is chained with `&&` or enclosed by `set -euo pipefail`.
+2. `verify-seven-bindings.py` now asserts and reports `companion_evidence_artifacts == 0`, and hashes its evidence input. `verify-sync-policy.py` asserts both sync path lists are empty and companion artifacts are zero. Run it immediately after native sync and retain its output.
+3. The DL-188 helper trims `--go-mail-id` before rejecting empty/PENDING/TEST_ONLY ids. Whitespace negative controls fail before any receipt write. Prior 32 core controls and 13 rehearsal controls retain their own executed helper snapshots; they are historical versions, distinct from this amendment's fresh controls and executed helper manifest.
+
+All six literal thresholds use the same helper:
+
+```bash
+set -euo pipefail
+reseal_budget() {
+  TMPDIR="$RESEAL_TMPDIR" python3 "$RESEAL_NOTES/lock-budget-guard.py" "$RESEAL_LOCK_ACQUIRED_AT_UTC" "$1"
+}
+# Invoke immediately before the corresponding dependent step; any failure stops it.
+reseal_before_first_check() { reseal_budget 80; }
+reseal_before_first_push_and_currentness() { reseal_budget 55; }
+reseal_before_snapshot() { reseal_budget 50; }
+reseal_before_baseline_recording() { reseal_budget 40; }
+reseal_before_followup_check() { reseal_budget 25; }
+reseal_before_second_push_and_cleanup() { reseal_budget 5; }
+```
+
+Fresh stage runners under `/mnt/Cursor/share/puppet-master/2026-10-19-reseal2/phase2-runtime/` are copied from the last reseal's inspected procedure, with current worktree, GO, prerequisite SHAs and seven-companion policy. No dated measurement, runtime id or holder state is reused. The updated helper manifest binds these runner sources as well as the amended helpers. Fresh control results, source snapshots and the exact manifest digest are retained under `/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261019-2/revisions/go-amendment/` and bound into execution evidence. Mail the lead at lock acquisition, each verified main push, and after cleanup with both SHAs and measured residuals.
