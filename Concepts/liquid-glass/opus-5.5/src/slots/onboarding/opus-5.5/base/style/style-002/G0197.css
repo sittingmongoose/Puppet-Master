@@ -1,0 +1,5 @@
+[data-theme^="glass"] .page-projects .projects-toolbar {
+      -webkit-backdrop-filter: none;
+      backdrop-filter: none;
+      background: color-mix(in srgb, var(--surface-elevated) 88%, transparent);
+    }

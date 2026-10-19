@@ -1,0 +1,17 @@
+html[data-theme="glass-light"] .pmw-ed {
+  --pmw-ed-plate: rgb(240, 243, 243);
+  --pmw-ed-bg: rgba(238, 242, 242, .70);
+  --pmw-ed-gutbg: rgba(240, 243, 243, .96);
+  --pmw-ed-fg: #343b58;
+  --pmw-ed-hit: color-mix(in srgb, #8f5e15 20%, transparent); --pmw-ed-hit-cur: color-mix(in srgb, #8f5e15 36%, transparent);
+  --pmw-ed-hit-ring: #8f5e15; --pmw-ed-hit-mark: #b8811f;
+  --pmw-ed-mm-alpha: .34;
+  --pmw-ed-add-fg: #506c30; --pmw-ed-mod-fg: #0761ca; --pmw-ed-del-fg: #ca0045; --pmw-ed-conf-fg: #a14d00;
+  --pmw-ed-add-bg: color-mix(in srgb, var(--pmw-ed-add-fg) 11%, transparent);
+  --pmw-ed-mod-bg: color-mix(in srgb, var(--pmw-ed-mod-fg) 8%, transparent);
+  --pmw-ed-del-bg: color-mix(in srgb, var(--pmw-ed-del-fg) 9%, transparent);
+  --pmw-ed-s-kw: #823ad7; --pmw-ed-s-str: #506c30; --pmw-ed-s-com: #5c6389; --pmw-ed-s-fn: #0761ca; --pmw-ed-s-ty: #006e80;
+  --pmw-ed-s-num: #a14d00; --pmw-ed-s-op: #006a83; --pmw-ed-s-pun: #52629e; --pmw-ed-s-prop: #356d65; --pmw-ed-s-attr: #823ad7;
+  --pmw-ed-s-mac: #006d92; --pmw-ed-s-tag: #ca0045; --pmw-ed-s-esc: #2e5857; --pmw-ed-s-head: #0761ca; --pmw-ed-s-link: #356d65;
+  --pmw-ed-s-var: #7e5f31; --pmw-ed-s-code: #2e5857;
+}

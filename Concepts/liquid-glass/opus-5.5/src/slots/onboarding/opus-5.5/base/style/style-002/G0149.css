@@ -1,0 +1,23 @@
+[data-theme="glass-dark"] {
+      --glass-tint-rgb: 46, 34, 72;
+      --glass-alpha: .60;
+      --glass-edge: rgba(255, 255, 255, .40);
+      --glass-hairline: rgba(255, 255, 255, .16);
+      --pm6-glass-a-rgb: 183, 156, 255;  /* violet identity */
+      --pm6-glass-b-rgb: 229, 139, 200;  /* dusk-pink identity */
+      --pm6-glass-sat: 1.6;
+      --pm6-glass-floor: rgba(255, 255, 255, .10);
+      --pm6-glass-drop: 0 12px 30px rgba(10, 5, 25, .45);
+      --pm6-glass-pane-edge: rgba(255, 255, 255, .28);
+      --pm6-glass-pane-k1: .73;
+      --pm6-glass-pane-k2: .57;
+      --pm6-glass-pane-k3: .67;
+      --pm6-glass-pane-shadow: rgba(10, 5, 25, .60);
+      --pm6-glass-pane-shadow2: rgba(10, 5, 25, .40);
+      --pm6-glass-pane-sheen: rgba(255, 255, 255, .16);
+      --pm6-glass-pane-sheen2: rgba(255, 255, 255, .08);
+      --pm6-glass-step-1: rgba(255, 255, 255, calc(var(--glass-alpha) * .10));
+      --pm6-glass-step-2: rgba(255, 255, 255, calc(var(--glass-alpha) * .16));
+      --pm6-glass-step-3: rgba(255, 255, 255, calc(var(--glass-alpha) * .28));
+      --pm6-glass-plate: rgba(16, 10, 32, calc(.35 + var(--glass-alpha) * .78));
+    }

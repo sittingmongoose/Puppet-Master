@@ -1,0 +1,4 @@
+html[data-theme^="glass"] .center-column {
+  border-radius: 0 !important;
+  overflow: hidden !important;
+}

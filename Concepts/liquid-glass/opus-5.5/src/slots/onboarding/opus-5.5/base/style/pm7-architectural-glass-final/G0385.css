@@ -1,0 +1,3 @@
+html[data-theme^="glass"] :is(#sidePanelSlot,.activity-bar,.editor-pane,.dashboard-view,#bottomPanel,.pm6-dash-card,.pm6-dash-cta,.terminal-pane) {
+  background-blend-mode: screen, normal, normal !important;
+}

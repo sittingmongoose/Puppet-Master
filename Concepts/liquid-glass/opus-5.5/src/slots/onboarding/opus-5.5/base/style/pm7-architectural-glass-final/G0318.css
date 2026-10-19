@@ -1,0 +1,8 @@
+html[data-theme^="glass"] .main-area {
+  flex: 1 1 auto !important;
+  height: auto !important;
+  min-height: 0 !important;
+  padding: 12px 14px 14px !important;
+  gap: 10px !important;
+  overflow: hidden !important;
+}

@@ -472,10 +472,7 @@
       --pm6-sb-thumb: color-mix(in srgb, var(--accent-primary) 50%, transparent);
       --pm6-sb-thumb-hover: color-mix(in srgb, var(--accent-primary) 70%, transparent);
     }
-    [data-theme^="glass"] {
-      --pm6-sb-thumb: color-mix(in srgb, var(--text-primary) 26%, transparent);
-      --pm6-sb-thumb-hover: color-mix(in srgb, var(--text-primary) 40%, transparent);
-    }
+    /* @pm7-lg-slot onboarding/opus-5.5/base/style/pm6-css-global/G0225.css */
 
     /* card padding floor: var(--xl), friendly 20px (density-scaled below) */
     .bento-widget,

@@ -1,0 +1,9 @@
+html[data-theme="glass-light"] #panel-projects {
+  --pmp-ok: color-mix(in srgb, var(--accent-lime) 34%, var(--text-primary));
+  --pmp-warn: color-mix(in srgb, var(--accent-orange) 38%, var(--text-primary));
+  --pmp-attn: color-mix(in srgb, var(--accent-warning) 34%, var(--text-primary));
+  --pmp-err: color-mix(in srgb, var(--accent-magenta) 44%, var(--text-primary));
+  --pmp-info: color-mix(in srgb, var(--accent-blue) 48%, var(--text-primary));
+  --pmp-mut: color-mix(in srgb, var(--text-secondary) 40%, var(--text-primary));
+  --pmp-tag: var(--text-primary); --pmp-word: var(--text-primary);
+}

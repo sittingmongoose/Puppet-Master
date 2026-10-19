@@ -1,0 +1,5 @@
+html[data-theme^="glass"] .page-tab {
+  border-radius: 11px !important;
+  color: var(--text-secondary) !important;
+  font-weight: 560 !important;
+}

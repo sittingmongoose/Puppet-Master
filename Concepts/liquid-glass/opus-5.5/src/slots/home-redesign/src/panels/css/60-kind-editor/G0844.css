@@ -1,0 +1,5 @@
+html[data-theme="glass-light"] .pmw-ed {
+  --pmw-ed-bp-0: #8f5e15; --pmw-ed-bp-1: #823ad7; --pmw-ed-bp-2: #0761ca; --pmw-ed-bp-3: #006d92; --pmw-ed-bp-4: #506c30; --pmw-ed-bp-5: #ca0045;
+  --pmw-ed-guide: color-mix(in srgb, var(--pmw-ed-fg) 16%, transparent); --pmw-ed-ws: color-mix(in srgb, var(--pmw-ed-fg) 40%, transparent);
+  --pmw-ed-dim: .72;
+}

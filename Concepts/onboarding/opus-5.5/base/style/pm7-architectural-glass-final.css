@@ -7,192 +7,23 @@
    ============================================================================ */
 
 /* ---------- shared optical vocabulary ---------- */
-html[data-theme^="glass"] {
-  --radius-xs: 5px;
-  --radius-sm: 9px;
-  --radius-md: 14px;
-  --radius-lg: 20px;
-  --radius-xl: 28px;
-  --border-radius: 18px;
-  --body-font: "SF Pro Text", "Segoe UI Variable", "Inter", system-ui, sans-serif;
-  --display-font: "SF Pro Display", "Segoe UI Variable Display", "Inter", system-ui, sans-serif;
-  --motion-fast: 140ms;
-  --motion-med: 360ms;
-  --ease-out: cubic-bezier(.16,1,.3,1);
-  --ease-spring: cubic-bezier(.22,1.5,.36,1);
-  --pm6-glass-inset: 0px;
-  --pm-home-gap: 12px;
-  --pm-home-gap-y: 12px;
-  --pm-home-pad-y: 5px;
-  --grid-gap: 12px;
-  color-scheme: dark;
-}
+/* @pm7-lg-slot onboarding/opus-5.5/base/style/pm7-architectural-glass-final/G0295.css */
 
-html[data-theme="glass-dark"] {
-  --background: #07121d;
-  --surface: rgba(10, 24, 37, .48);
-  --surface-elevated: rgba(16, 35, 50, .60);
-  --surface-alt: rgba(7, 19, 30, .42);
-  --text-primary: #f4fbff;
-  --text-secondary: rgba(224, 242, 252, .76);
-  --text-muted: rgba(211, 235, 247, .46);
-  --border: rgba(196, 235, 255, .23);
-  --border-light: rgba(207, 240, 255, .12);
-  --accent-blue: #50d4ff;
-  --accent-primary: #50d4ff;
-  --accent-primary-rgb: 80,212,255;
-  --accent-magenta: #a981ff;
-  --accent-lime: #63f5c0;
-  --accent-orange: #ffb36c;
-  --accent-warning: #ffd06e;
-  --accent-error: #ff718b;
-  --glass-edge: rgba(232, 250, 255, .74);
-  --glass-hairline: rgba(210, 242, 255, .18);
-  --glass-tint-rgb: 10, 26, 39;
-  --glass-alpha: .48;
+/* @pm7-lg-slot onboarding/opus-5.5/base/style/pm7-architectural-glass-final/G0296.css */
 
-  --rg-shell: rgba(7, 17, 27, .16);
-  --rg-shell-top: rgba(177, 233, 255, .16);
-  --rg-chrome: rgba(9, 23, 35, .32);
-  --rg-chrome-strong: rgba(10, 25, 38, .47);
-  --rg-pane: rgba(9, 25, 38, .29);
-  --rg-pane-strong: rgba(5, 16, 27, .48);
-  --rg-reading: rgba(3, 13, 23, .66);
-  --rg-reading-soft: rgba(5, 17, 28, .56);
-  --rg-card: rgba(18, 42, 57, .25);
-  --rg-card-hover: rgba(23, 54, 71, .38);
-  --rg-rail-solid: rgb(5, 17, 28);
-  --rg-rim: rgba(221, 247, 255, .72);
-  --rg-rim-soft: rgba(172, 226, 248, .24);
-  --rg-rim-low: rgba(64, 134, 166, .15);
-  --rg-shadow: rgba(0, 4, 11, .56);
-  --rg-shadow-soft: rgba(0, 6, 16, .33);
-  --rg-cyan: rgba(50, 211, 255, .75);
-  --rg-violet: rgba(142, 96, 255, .62);
-  --rg-warm: rgba(255, 154, 85, .52);
-  --rg-green: rgba(82, 247, 190, .72);
-  --rg-blur: 20px;
-  --rg-blur-card: 18px;
-  --rg-noise-opacity: .13;
-  color-scheme: dark;
-}
-
-html[data-theme="glass-light"] {
-  --background: #aeb7b8;
-  --surface: rgba(225, 230, 229, .30);
-  --surface-elevated: rgba(241, 242, 238, .45);
-  --surface-alt: rgba(207, 216, 216, .28);
-  --text-primary: #17222a;
-  --text-secondary: rgba(24, 37, 45, .74);
-  --text-muted: rgba(27, 43, 51, .48);
-  --border: rgba(255, 255, 255, .68);
-  --border-light: rgba(255, 255, 255, .35);
-  --accent-blue: #0078d8;
-  --accent-primary: #0078d8;
-  --accent-primary-rgb: 0,120,216;
-  --accent-magenta: #7659c7;
-  --accent-lime: #087f67;
-  --accent-orange: #ba5d20;
-  --accent-warning: #95620b;
-  --accent-error: #c44258;
-  --glass-edge: rgba(255, 255, 255, .95);
-  --glass-hairline: rgba(255, 255, 255, .54);
-  --glass-tint-rgb: 224, 230, 229;
-  --glass-alpha: .34;
-
-  --rg-shell: rgba(220, 226, 225, .11);
-  --rg-shell-top: rgba(255, 255, 255, .66);
-  --rg-chrome: rgba(222, 227, 226, .18);
-  --rg-chrome-strong: rgba(221, 226, 225, .29);
-  --rg-pane: rgba(218, 226, 227, .17);
-  --rg-pane-strong: rgba(223, 230, 231, .29);
-  --rg-reading: rgba(228, 234, 234, .43);
-  --rg-reading-soft: rgba(216, 224, 225, .37);
-  --rg-card: rgba(236, 238, 234, .21);
-  --rg-card-hover: rgba(247, 247, 242, .34);
-  --rg-rail-solid: rgb(193, 202, 203);
-  --rg-rim: rgba(255, 255, 255, .96);
-  --rg-rim-soft: rgba(255, 255, 255, .56);
-  --rg-rim-low: rgba(63, 82, 88, .14);
-  --rg-shadow: rgba(38, 46, 49, .30);
-  --rg-shadow-soft: rgba(40, 51, 55, .18);
-  --rg-cyan: rgba(0, 155, 219, .50);
-  --rg-violet: rgba(117, 86, 202, .38);
-  --rg-warm: rgba(232, 119, 53, .45);
-  --rg-green: rgba(16, 142, 109, .52);
-  --rg-blur: 22px;
-  --rg-blur-card: 20px;
-  --rg-noise-opacity: .09;
-  color-scheme: light;
-}
+/* @pm7-lg-slot onboarding/opus-5.5/base/style/pm7-architectural-glass-final/G0297.css */
 
 /* ---------- retained canvas beneath the Liquid Glass wallpaper ---------- */
-html[data-theme^="glass"] body {
-  background: var(--background) !important;
-  overflow: hidden;
-}
+/* @pm7-lg-slot onboarding/opus-5.5/base/style/pm7-architectural-glass-final/G0298.css */
 /* Retired nighttime stage scene. */
 /* Retired daytime stage scene. */
 /* fine optical grain; unlike the old pixel grid this is material noise, not decoration */
-html[data-theme^="glass"] #pixelGrid {
-  display: block !important;
-  opacity: var(--rg-noise-opacity) !important;
-  background-image:
-    url("data:image/svg+xml,%3Csvg viewBox='0 0 160 160' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.78' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.42'/%3E%3C/svg%3E") !important;
-  background-size: 180px 180px !important;
-  mix-blend-mode: overlay;
-  pointer-events: none;
-}
+/* @pm7-lg-slot onboarding/opus-5.5/base/style/pm7-architectural-glass-final/G0306.css */
 
 /* ---------- the app becomes a floating optical instrument, not one tinted rectangle ---------- */
-html[data-theme^="glass"] .app-shell {
-  position: fixed !important;
-  inset: 22px !important;
-  z-index: 2;
-  width: auto !important;
-  height: auto !important;
-  margin: 0 !important;
-  min-width: 0;
-  min-height: 0;
-  overflow: hidden !important;
-  border-radius: 30px !important;
-  border: 1px solid transparent !important;
-  background:
-    linear-gradient(var(--rg-shell), var(--rg-shell)) padding-box,
-    linear-gradient(145deg, var(--rg-rim), rgba(255,255,255,.08) 23%, rgba(255,255,255,.04) 68%, var(--rg-rim-low)) border-box !important;
-  backdrop-filter: blur(var(--rg-blur)) saturate(132%) contrast(103%) !important;
-  -webkit-backdrop-filter: blur(var(--rg-blur)) saturate(132%) contrast(103%) !important;
-  box-shadow:
-    0 54px 110px var(--rg-shadow),
-    0 12px 34px var(--rg-shadow-soft),
-    inset 0 1px 0 var(--rg-rim),
-    inset 1px 0 0 rgba(255,255,255,.18),
-    inset 0 -1px 0 rgba(0,0,0,.24) !important;
-}
-html[data-theme^="glass"] .app-shell::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  z-index: 79;
-  pointer-events: none;
-  border-radius: inherit;
-  background:
-    linear-gradient(112deg, rgba(255,255,255,.23), transparent 17% 80%, rgba(255,255,255,.07)),
-    radial-gradient(ellipse 38% 12% at 24% 0%, var(--rg-cyan), transparent 72%),
-    radial-gradient(ellipse 28% 10% at 82% 100%, var(--rg-warm), transparent 72%);
-  mix-blend-mode: screen;
-  opacity: .42;
-}
-html[data-theme^="glass"] .app-shell::after {
-  content: "";
-  position: absolute;
-  inset: 1px;
-  z-index: 80;
-  pointer-events: none;
-  border-radius: 29px;
-  box-shadow: inset 0 0 0 1px rgba(255,255,255,.055), inset 0 -24px 42px rgba(0,0,0,.08);
-  background: linear-gradient(180deg, rgba(255,255,255,.035), transparent 15%, transparent 84%, rgba(0,0,0,.06));
-}
+/* @pm7-lg-slot onboarding/opus-5.5/base/style/pm7-architectural-glass-final/G0307.css */
+/* @pm7-lg-slot onboarding/opus-5.5/base/style/pm7-architectural-glass-final/G0308.css */
+/* @pm7-lg-slot onboarding/opus-5.5/base/style/pm7-architectural-glass-final/G0309.css */
 
 /* ---------- floating chrome ---------- */
 html[data-theme^="glass"] .title-bar {
@@ -213,12 +44,7 @@ html[data-theme^="glass"] .title-bar {
     inset 0 1px 0 var(--rg-rim),
     inset 0 -1px 0 rgba(0,0,0,.10) !important;
 }
-html[data-theme^="glass"] .app-name {
-  font-family: var(--display-font);
-  font-size: 15px;
-  font-weight: 680;
-  letter-spacing: -.02em;
-}
+/* @pm7-lg-slot onboarding/opus-5.5/base/style/pm7-architectural-glass-final/G0311.css */
 html[data-theme^="glass"] .project-dropdown,
 html[data-theme^="glass"] .pm6-tb-menu-trigger,
 html[data-theme^="glass"] .title-bar button {
@@ -232,61 +58,15 @@ html[data-theme^="glass"] .page-tabs {
   background: color-mix(in srgb, var(--rg-chrome-strong) 54%, transparent) !important;
   box-shadow: inset 0 1px 0 rgba(255,255,255,.14), inset 0 0 0 1px var(--rg-rim-soft) !important;
 }
-html[data-theme^="glass"] .page-tab {
-  border-radius: 11px !important;
-  color: var(--text-secondary) !important;
-  font-weight: 560 !important;
-}
+/* @pm7-lg-slot onboarding/opus-5.5/base/style/pm7-architectural-glass-final/G0314.css */
 html[data-theme^="glass"] .page-tab.active { color: var(--text-primary) !important; }
-html[data-theme^="glass"] .page-tab-ink {
-  border-radius: 11px !important;
-  background:
-    linear-gradient(#B5A4FF, #B5A4FF) 0 0 / 100% 2px no-repeat,
-    linear-gradient(
-      180deg,
-      color-mix(in srgb, #6A4BE5 78%, #3A2470) 0%,
-      color-mix(in srgb, #6A4BE5 52%, #241450) 100%
-    ) !important;
-  border: 1px solid color-mix(in srgb, #9B86F2 45%, transparent) !important;
-  box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, .30),
-    0 8px 20px rgba(106, 75, 229, .40),
-    0 0 22px rgba(106, 75, 229, .32) !important;
-  transform-origin: 50% 50% !important;
-}
-html[data-theme="glass-dark"] .page-tab.active {
-  color: #FFFFFF !important;
-  font-weight: 650 !important;
-  text-shadow: 0 1px 10px rgba(106, 75, 229, .40) !important;
-}
+/* @pm7-lg-slot onboarding/opus-5.5/base/style/pm7-architectural-glass-final/G0316.css */
+/* @pm7-lg-slot onboarding/opus-5.5/base/style/pm7-architectural-glass-final/G0317.css */
 
-html[data-theme^="glass"] .main-area {
-  flex: 1 1 auto !important;
-  height: auto !important;
-  min-height: 0 !important;
-  padding: 12px 14px 14px !important;
-  gap: 10px !important;
-  overflow: hidden !important;
-}
+/* @pm7-lg-slot onboarding/opus-5.5/base/style/pm7-architectural-glass-final/G0318.css */
 
 /* Activity rail becomes the slim floating glass remote seen in the references. */
-html[data-theme^="glass"] .activity-bar,
-html[data-theme^="glass"] .activity-bar.collapsed {
-  flex: 0 0 48px !important;
-  width: 48px !important;
-  min-width: 48px !important;
-  max-width: 48px !important;
-  height: 100% !important;
-  padding: 8px 5px !important;
-  border-radius: 22px !important;
-  border: 1px solid transparent !important;
-  background:
-    linear-gradient(var(--rg-chrome), var(--rg-chrome)) padding-box,
-    linear-gradient(160deg, var(--rg-rim-soft), rgba(255,255,255,.035) 60%, var(--rg-rim-low)) border-box !important;
-  backdrop-filter: blur(24px) saturate(150%) !important;
-  -webkit-backdrop-filter: blur(24px) saturate(150%) !important;
-  box-shadow: 0 18px 38px var(--rg-shadow-soft), inset 0 1px 0 var(--rg-rim) !important;
-}
+/* @pm7-lg-slot onboarding/opus-5.5/base/style/pm7-architectural-glass-final/G0319.css */
 html[data-theme^="glass"] .activity-bar .icon {
   width: 36px !important;
   height: 36px !important;
@@ -309,38 +89,11 @@ html[data-theme^="glass"] .activity-bar .icon.active {
     color-mix(in srgb, var(--accent-blue) 20%, var(--rg-card)) !important;
   box-shadow: inset 0 1px 0 var(--rg-rim), 0 0 22px color-mix(in srgb, var(--accent-blue) 25%, transparent) !important;
 }
-html[data-theme^="glass"] .activity-bar .icon.active::before {
-  border-radius: 999px !important;
-  width: 3px !important;
-  left: -5px !important;
-  background: var(--accent-blue) !important;
-  box-shadow: 0 0 12px var(--accent-blue) !important;
-}
+/* @pm7-lg-slot onboarding/opus-5.5/base/style/pm7-architectural-glass-final/G0323.css */
 
 /* File browser is a distinct floating slab, not a flat colored column. */
-html[data-theme^="glass"] #sidePanelSlot {
-  flex: 0 0 248px !important;
-  width: 248px !important;
-  min-width: 0 !important;
-  height: 100% !important;
-  overflow: hidden !important;
-  border-radius: 24px !important;
-  border: 1px solid transparent !important;
-  background:
-    linear-gradient(var(--rg-pane), var(--rg-pane)) padding-box,
-    linear-gradient(150deg, var(--rg-rim-soft), rgba(255,255,255,.04) 57%, var(--rg-rim-low)) border-box !important;
-  backdrop-filter: blur(28px) saturate(145%) !important;
-  -webkit-backdrop-filter: blur(28px) saturate(145%) !important;
-  box-shadow: 0 20px 44px var(--rg-shadow-soft), inset 0 1px 0 var(--rg-rim) !important;
-}
-html[data-theme^="glass"] #sidePanelSlot .side-panel-view,
-html[data-theme^="glass"] #panel-files,
-html[data-theme^="glass"] .files-panel,
-html[data-theme^="glass"] .left-panel {
-  background: transparent !important;
-  border: 0 !important;
-  box-shadow: none !important;
-}
+/* @pm7-lg-slot onboarding/opus-5.5/base/style/pm7-architectural-glass-final/G0324.css */
+/* @pm7-lg-slot onboarding/opus-5.5/base/style/pm7-architectural-glass-final/G0325.css */
 html[data-theme^="glass"] #sidePanelSlot :is(.panel-header,.files-panel-header,.sh-header,.sh-topbar) {
   background: color-mix(in srgb, var(--rg-chrome-strong) 52%, transparent) !important;
   border-bottom: 1px solid var(--rg-rim-soft) !important;
@@ -356,27 +109,10 @@ html[data-theme^="glass"] #sidePanelSlot :is(.active,.selected)[class*="item"] {
   box-shadow: inset 0 1px 0 rgba(255,255,255,.15), inset 3px 0 0 var(--accent-blue) !important;
   border-radius: 9px !important;
 }
-html[data-theme^="glass"] #leftPanelResizer {
-  flex: 0 0 4px !important;
-  width: 4px !important;
-  min-width: 4px !important;
-  margin: 0 -2px !important;
-  opacity: .36;
-}
-html[data-theme^="glass"] #leftPanelResizer::before {
-  width: 2px !important;
-  border-radius: 999px !important;
-  background: var(--rg-rim-soft) !important;
-}
+/* @pm7-lg-slot onboarding/opus-5.5/base/style/pm7-architectural-glass-final/G0329.css */
+/* @pm7-lg-slot onboarding/opus-5.5/base/style/pm7-architectural-glass-final/G0330.css */
 
-html[data-theme^="glass"] .center-column,
-html[data-theme^="glass"] #center-row,
-html[data-theme^="glass"] .content-wrapper,
-html[data-theme^="glass"] .primary-content {
-  min-width: 0 !important;
-  min-height: 0 !important;
-  background: transparent !important;
-}
+/* @pm7-lg-slot onboarding/opus-5.5/base/style/pm7-architectural-glass-final/G0331.css */
 html[data-theme^="glass"] .center-column {
   /* Keep 0: shared top-left + overflow:hidden was clipping editor tops. */
   border-radius: 0 !important;
@@ -593,9 +329,7 @@ html[data-theme^="glass"] .pm6-dash-btn--primary {
 }
 
 /* ---------- Usage: a transparent instrument wall, no flat purple canvas ---------- */
-html[data-theme^="glass"] #panel-usage {
-  background: transparent !important;
-}
+/* @pm7-lg-slot onboarding/opus-5.5/base/style/pm7-architectural-glass-final/G0367.css */
 /* Pill progress bars only. Keep the retired meter exclusion in :not() for its specificity. */
 html[data-theme^="glass"] [class*="progress"]:not([class*="pm7u-meter"]) {
   border-radius: 999px !important;
@@ -640,9 +374,7 @@ html[data-theme^="glass"] :is(.pm6-tb-menu,.pm-ctx-menu,.chat-dropdown-popover,.
 }
 
 /* v7 optical-thickness pass */
-html[data-theme^="glass"] :is(#sidePanelSlot,.activity-bar,.editor-pane,.dashboard-view,#bottomPanel,.pm6-dash-card,.pm6-dash-cta,.terminal-pane) {
-  background-blend-mode: screen, normal, normal !important;
-}
+/* @pm7-lg-slot onboarding/opus-5.5/base/style/pm7-architectural-glass-final/G0385.css */
 html[data-theme^="glass"] :is(.editor-pane,.dashboard-view,#bottomPanel) {
   outline: 1px solid color-mix(in srgb, var(--rg-rim) 20%, transparent);
   outline-offset: -3px;
@@ -665,35 +397,13 @@ html[data-theme="glass-dark"] :is(.editor-pane,.dashboard-view,#bottomPanel,.pm6
 /* --------------------------------------------------------------------------
    1. Shared typography and tighter optical geometry
    -------------------------------------------------------------------------- */
-html[data-theme^="glass"] {
-  --body-font: "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-  --display-font: "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-  --radius-xs: 4px;
-  --radius-sm: 7px;
-  --radius-md: 11px;
-  --radius-lg: 15px;
-  --radius-xl: 21px;
-  --border-radius: 12px;
-  --pm-home-gap: 6px;
-  --pm-home-gap-y: 6px;
-  --pm-home-pad-y: 2px;
-  --grid-gap: 8px;
-  --rg-menu: rgba(24, 18, 36, .93);
-  --rg-menu-item: rgba(255,255,255,.055);
-  --rg-menu-hover: rgba(255,255,255,.105);
-}
+/* @pm7-lg-slot onboarding/opus-5.5/base/style/pm7-architectural-glass-final/G0389.css */
 html[data-theme="glass-light"] {
   --rg-menu: rgba(226, 231, 230, .93);
   --rg-menu-item: rgba(255,255,255,.28);
   --rg-menu-hover: rgba(255,255,255,.47);
 }
-html[data-theme^="glass"] body,
-html[data-theme^="glass"] button,
-html[data-theme^="glass"] input,
-html[data-theme^="glass"] select,
-html[data-theme^="glass"] textarea {
-  font-family: var(--body-font) !important;
-}
+/* @pm7-lg-slot onboarding/opus-5.5/base/style/pm7-architectural-glass-final/G0391.css */
 html[data-theme^="glass"] :is(code,pre,kbd,samp,.editor-code,.editor-gutter,.terminal-output,.terminal-pane-body,.pm6-bottom-pre,.pm6-orch-mono) {
   font-family: var(--mono-font) !important;
 }
@@ -754,54 +464,25 @@ html[data-theme^="glass"] .app-shell {
   inset: 10px !important;
   border-radius: 22px !important;
 }
-html[data-theme^="glass"] .app-shell::before,
-html[data-theme^="glass"] .app-shell::after {
-  z-index: 0 !important;
-  border-radius: inherit !important;
-}
+/* @pm7-lg-slot onboarding/opus-5.5/base/style/pm7-architectural-glass-final/G0399.css */
 html[data-theme^="glass"] :is(.title-bar,.main-area) {
   position: relative;
   z-index: 2;
 }
-html[data-theme^="glass"] .title-bar {
-  flex: 0 0 42px !important;
-  width: auto !important;
-  max-width: none !important;
-  height: 42px !important;
-  min-height: 42px !important;
-  min-width: 0 !important;
-  align-self: stretch !important;
-  box-sizing: border-box !important;
-  margin: 6px 6px 0 !important;
-  padding: 0 8px !important;
-  gap: 7px !important;
-  border-radius: 14px !important;
-  overflow: visible !important;
-}
-html[data-theme^="glass"] .title-bar > * { min-width: 0; }
-html[data-theme^="glass"] .app-name { font-size: 14px !important; white-space: nowrap; }
-html[data-theme^="glass"] .page-tabs { border-radius: 11px !important; padding: 2px !important; }
+/* @pm7-lg-slot onboarding/opus-5.5/base/style/pm7-architectural-glass-final/G0401.css */
+/* @pm7-lg-slot onboarding/opus-5.5/base/style/pm7-architectural-glass-final/G0402.css */
+/* @pm7-lg-slot onboarding/opus-5.5/base/style/pm7-architectural-glass-final/G0403.css */
+/* @pm7-lg-slot onboarding/opus-5.5/base/style/pm7-architectural-glass-final/G0404.css */
 html[data-theme^="glass"] .page-tab,
 html[data-theme^="glass"] .page-tab-ink {
   border-radius: 11px !important;
 }
-html[data-theme^="glass"] .main-area {
-  padding: 6px !important;
-  gap: 6px !important;
-}
+/* @pm7-lg-slot onboarding/opus-5.5/base/style/pm7-architectural-glass-final/G0406.css */
 
 /* --------------------------------------------------------------------------
    4. Activity rail: preserve original expansion behavior and remove accents
    -------------------------------------------------------------------------- */
-html[data-theme^="glass"] .activity-bar {
-  flex: 0 0 64px !important;
-  width: 64px !important;
-  min-width: 64px !important;
-  max-width: 64px !important;
-  padding: 6px 4px !important;
-  border-radius: 16px !important;
-  transition: width var(--motion-med) var(--ease-out), min-width var(--motion-med) var(--ease-out), flex-basis var(--motion-med) var(--ease-out) !important;
-}
+/* @pm7-lg-slot onboarding/opus-5.5/base/style/pm7-architectural-glass-final/G0407.css */
 html[data-theme^="glass"] .activity-bar.collapsed {
   flex-basis: 44px !important;
   width: 44px !important;
@@ -840,26 +521,9 @@ html[data-theme^="glass"] .activity-bar-toggle {
 /* --------------------------------------------------------------------------
    5. Side panel: restore width/resizer behavior; protect segmented picker
    -------------------------------------------------------------------------- */
-html[data-theme^="glass"] #sidePanelSlot {
-  flex: 0 0 auto !important;
-  width: var(--files-panel-w, 280px) !important;
-  min-width: 240px !important;
-  max-width: min(480px, 50vw) !important;
-  border-radius: 16px !important;
-  overflow: visible !important;
-  transition: width var(--motion-med) var(--ease-out) !important;
-}
-html[data-theme^="glass"] #sidePanelSlot > .side-panel-view {
-  width: 100%;
-  min-width: 0;
-  overflow: hidden !important;
-  border-radius: inherit !important;
-}
-html[data-theme^="glass"] #sidePanelSlot :is(.panel-header,.files-panel-header,.sh-header,.sh-topbar,.sh-banner) {
-  min-width: 0;
-  padding-left: 8px !important;
-  padding-right: 8px !important;
-}
+/* @pm7-lg-slot onboarding/opus-5.5/base/style/pm7-architectural-glass-final/G0415.css */
+/* @pm7-lg-slot onboarding/opus-5.5/base/style/pm7-architectural-glass-final/G0416.css */
+/* @pm7-lg-slot onboarding/opus-5.5/base/style/pm7-architectural-glass-final/G0417.css */
 html[data-theme^="glass"] #sidePanelSlot :is(.active,.selected)[class*="row"],
 html[data-theme^="glass"] #sidePanelSlot :is(.active,.selected)[class*="item"] {
   box-shadow: inset 0 1px 0 rgba(255,255,255,.15), 0 6px 15px var(--rg-shadow-soft) !important;
@@ -878,11 +542,7 @@ html[data-theme^="glass"] .pm-segtab-item {
   padding: 5px 6px !important;
   border-radius: 8px !important;
 }
-html[data-theme^="glass"] .pm-segtab-item span {
-  min-width: 0;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
+/* @pm7-lg-slot onboarding/opus-5.5/base/style/pm7-architectural-glass-final/G0421.css */
 html[data-theme^="glass"] .pm-segtab-ink {
   border-radius: 8px !important;
   background:
@@ -920,10 +580,7 @@ html[data-theme="glass-light"] .pm-segtab-item.active {
 /* --------------------------------------------------------------------------
    6. Home/editor/dashboard: smaller pane radii; original tab mechanics/shape
    -------------------------------------------------------------------------- */
-html[data-theme^="glass"] .center-column {
-  border-radius: 0 !important;
-  overflow: hidden !important;
-}
+/* @pm7-lg-slot onboarding/opus-5.5/base/style/pm7-architectural-glass-final/G0432.css */
 html[data-theme^="glass"] #pm-home-host-grid { gap: 0 !important; padding: 0 !important; }
 html[data-theme^="glass"] .pm-home-host-main,
 html[data-theme^="glass"] .pm-home-host:not(.pm-home-host-empty) { gap: 6px !important; }
@@ -1051,11 +708,7 @@ html[data-theme^="glass"] :is(
 
 /* Preserve popup legibility and keep text fields from becoming transparent
    holes in the material. */
-html[data-theme^="glass"] :is(input,textarea,select,.search-bar,.pm6-proj-search,.s4-input) {
-  background: color-mix(in srgb,var(--rg-reading-soft) 76%,transparent) !important;
-  border-color: var(--rg-rim-soft) !important;
-  color: var(--text-primary) !important;
-}
+/* @pm7-lg-slot onboarding/opus-5.5/base/style/pm7-architectural-glass-final/G0471.css */
 
 /* No ornamental left-edge strips anywhere in the glass family. */
 html[data-theme^="glass"] :is(
@@ -1097,7 +750,7 @@ html[data-theme^="glass"] :is(
   backdrop-filter: none !important;
   -webkit-backdrop-filter: none !important;
 }
-html[data-theme^="glass"] #pixelGrid { opacity: .055 !important; }
+/* @pm7-lg-slot onboarding/opus-5.5/base/style/pm7-architectural-glass-final/G0476.css */
 
 /* Sprout code deliberately begins at opacity:0. Make the visible state
    deterministic in glass so a slow frame cannot leave an unreadable ghost. */
@@ -1170,71 +823,21 @@ html[data-theme^="glass"] :is(
 
 /* ---------- A. Alpha-driven material layers (overrides Final hardcodes) --- */
 
-html[data-theme="glass-dark"] {
-  --glass-alpha: .47;
+/* @pm7-lg-slot onboarding/opus-5.5/base/style/pm7-architectural-glass-final/G0478.css */
 
-  --rg-shell: rgba(24, 15, 39, calc(var(--glass-alpha) * 0.32));
-  --rg-shell-top: rgba(224, 203, 255, calc(var(--glass-alpha) * 0.32));
-  --rg-chrome: rgba(29, 20, 45, calc(var(--glass-alpha) * 0.72));
-  --rg-chrome-strong: rgba(37, 27, 55, calc(var(--glass-alpha) * 1.09));
-  --rg-pane: rgba(32, 23, 49, calc(var(--glass-alpha) * 0.64));
-  --rg-pane-strong: rgba(24, 16, 39, calc(var(--glass-alpha) * 1.04));
-  --rg-card: rgba(44, 33, 63, calc(var(--glass-alpha) * 0.60));
-  --rg-card-hover: rgba(57, 42, 80, calc(var(--glass-alpha) * 0.89));
-  --rg-reading: rgba(12, 9, 22, calc(var(--glass-alpha) * 1.49));
-  --rg-reading-soft: rgba(18, 13, 31, calc(var(--glass-alpha) * 1.28));
-  /* Menus stay near-opaque across the dark clamp (0.35-0.85). */
-  --rg-menu: rgba(25, 17, 40, calc(0.72 + var(--glass-alpha) * 0.47));
-  --rg-menu-item: rgba(255, 255, 255, calc(0.04 + var(--glass-alpha) * 0.03));
-  --rg-menu-hover: rgba(255, 255, 255, calc(0.07 + var(--glass-alpha) * 0.07));
-
-  --surface: rgba(25, 18, 40, calc(var(--glass-alpha) * 0.96));
-  --surface-elevated: rgba(37, 28, 57, calc(var(--glass-alpha) * 1.15));
-  --surface-alt: rgba(28, 20, 44, calc(var(--glass-alpha) * 0.81));
-}
-
-html[data-theme="glass-light"] {
-  --glass-alpha: .55;
-
-  --rg-shell: rgba(220, 226, 225, calc(var(--glass-alpha) * 0.20));
-  --rg-shell-top: rgba(255, 255, 255, calc(var(--glass-alpha) * 1.20));
-  --rg-chrome: rgba(222, 227, 226, calc(var(--glass-alpha) * 0.33));
-  --rg-chrome-strong: rgba(221, 226, 225, calc(var(--glass-alpha) * 0.53));
-  --rg-pane: rgba(218, 226, 227, calc(var(--glass-alpha) * 0.31));
-  --rg-pane-strong: rgba(223, 230, 231, calc(var(--glass-alpha) * 0.53));
-  --rg-card: rgba(236, 238, 234, calc(var(--glass-alpha) * 0.38));
-  --rg-card-hover: rgba(247, 247, 242, calc(var(--glass-alpha) * 0.62));
-  --rg-reading: rgba(228, 234, 234, calc(var(--glass-alpha) * 0.78));
-  --rg-reading-soft: rgba(216, 224, 225, calc(var(--glass-alpha) * 0.67));
-  /* Menus stay near-opaque across the light clamp (0.45-0.88). */
-  --rg-menu: rgba(226, 231, 230, calc(0.70 + var(--glass-alpha) * 0.42));
-  --rg-menu-item: rgba(255, 255, 255, calc(0.18 + var(--glass-alpha) * 0.18));
-  --rg-menu-hover: rgba(255, 255, 255, calc(0.30 + var(--glass-alpha) * 0.30));
-
-  --surface: rgba(225, 230, 229, calc(var(--glass-alpha) * 0.55));
-  --surface-elevated: rgba(241, 242, 238, calc(var(--glass-alpha) * 0.82));
-  --surface-alt: rgba(207, 216, 216, calc(var(--glass-alpha) * 0.51));
-}
+/* @pm7-lg-slot onboarding/opus-5.5/base/style/pm7-architectural-glass-final/G0479.css */
 
 /* ---------- B. Menu stacking (in-tree under .title-bar; no body portal) --- */
 
-html[data-theme^="glass"] .title-bar {
-  z-index: 40 !important;
-  overflow: visible !important;
-}
-html[data-theme^="glass"] .main-area {
-  z-index: 1 !important;
-}
+/* @pm7-lg-slot onboarding/opus-5.5/base/style/pm7-architectural-glass-final/G0480.css */
+/* @pm7-lg-slot onboarding/opus-5.5/base/style/pm7-architectural-glass-final/G0481.css */
 html[data-theme^="glass"] .title-bar:has(.pm6-tb-menu.is-open),
 html[data-theme^="glass"] .title-bar:has(.pm6-tb-menu.open),
 html[data-theme^="glass"] .title-bar:has([aria-expanded="true"]) {
   z-index: 50 !important;
 }
 
-html[data-theme^="glass"] .pm6-tb-menu-wrap {
-  position: relative;
-  z-index: 120;
-}
+/* @pm7-lg-slot onboarding/opus-5.5/base/style/pm7-architectural-glass-final/G0483.css */
 html[data-theme^="glass"] .pm6-tb-menu-wrap:has(.pm6-tb-menu.is-open),
 html[data-theme^="glass"] .pm6-tb-menu-wrap:has(.pm6-tb-menu.open),
 html[data-theme^="glass"] .pm6-tb-menu-wrap:has([aria-expanded="true"]) {
@@ -1269,25 +872,9 @@ html[data-theme^="glass"] :is(
 
 /* Icon-mode theme + project triggers: usable hit targets (newest uses
    #themeMenuWrap[data-mode="icon"], not full label mode). */
-html[data-theme^="glass"] .title-bar #themeMenuWrap[data-mode="icon"] .pm6-tb-menu-trigger,
-html[data-theme^="glass"] .title-bar #projectMenuWrap[data-mode="icon"] .pm6-tb-menu-trigger,
-html[data-theme^="glass"] .title-bar #themeMenuWrap[data-mode="icon"] > button,
-html[data-theme^="glass"] .title-bar #projectMenuWrap[data-mode="icon"] > button {
-  min-width: 28px !important;
-  min-height: 28px !important;
-  width: 28px !important;
-  height: 28px !important;
-  padding: 5px !important;
-  box-sizing: border-box !important;
-  display: inline-flex !important;
-  align-items: center !important;
-  justify-content: center !important;
-}
+/* @pm7-lg-slot onboarding/opus-5.5/base/style/pm7-architectural-glass-final/G0487.css */
 
-html[data-theme^="glass"] .title-bar .pm6-tb-menu-trigger {
-  min-height: 26px !important;
-  padding-block: 4px !important;
-}
+/* @pm7-lg-slot onboarding/opus-5.5/base/style/pm7-architectural-glass-final/G0488.css */
 
 /* Soften activity-rail forced widths if Final's 64/44 crush newest labels. */
 html[data-theme^="glass"] .activity-bar {
@@ -1297,12 +884,7 @@ html[data-theme^="glass"] .activity-bar {
   flex: 0 0 auto !important;
   padding: 6px 4px !important;
 }
-html[data-theme^="glass"] .activity-bar.collapsed {
-  min-width: 42px !important;
-  max-width: 48px !important;
-  width: 44px !important;
-  flex-basis: 44px !important;
-}
+/* @pm7-lg-slot onboarding/opus-5.5/base/style/pm7-architectural-glass-final/G0490.css */
 html[data-theme^="glass"] .activity-bar .icon {
   width: auto !important;
   min-width: 36px !important;

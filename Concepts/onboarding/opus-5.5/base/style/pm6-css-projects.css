@@ -301,7 +301,7 @@
                   inset 0 0 0 1px var(--glass-hairline, rgba(255, 255, 255, 0.08)),
                   var(--pm6-glass-drop);
     }
-    [data-theme^="glass"] .pm6-proj-glyph { border-color: var(--glass-hairline, rgba(255, 255, 255, 0.08)); }
+    /* @pm7-lg-slot onboarding/opus-5.5/base/style/pm6-css-projects/G0247.css */
 
     /* ---- reduced motion ---- */
     @media (prefers-reduced-motion: reduce) {

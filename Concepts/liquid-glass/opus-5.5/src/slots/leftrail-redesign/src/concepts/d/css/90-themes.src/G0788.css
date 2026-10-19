@@ -1,0 +1,6 @@
+§{glass,dark} .pm-segtab-ink {
+  background:
+    linear-gradient(#B5A4FF, #B5A4FF) 0 0 / 100% 1.5px no-repeat,
+    linear-gradient(180deg, color-mix(in srgb, #6A4BE5 72%, #3A2470) 0%, color-mix(in srgb, #6A4BE5 48%, #241450) 100%) !important;
+  box-shadow: inset 0 0 0 1px rgba(181, 164, 255, .35), 0 4px 14px -4px rgba(106, 75, 229, .55) !important;
+}

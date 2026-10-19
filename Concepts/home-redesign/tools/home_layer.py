@@ -44,6 +44,8 @@ PANELS = SRC / 'panels'
 TERMINAL = SRC / 'terminal'
 CONCEPTS = PKG.parent
 OPUS_TOOLS = CONCEPTS / 'onboarding' / 'opus-5.5' / 'tools'
+sys.path.insert(0, str(OPUS_TOOLS))
+import base_source  # noqa: E402
 
 CSS_START, CSS_END = '<!-- HOME:CSS:START -->', '<!-- HOME:CSS:END -->'
 JS_START, JS_END = '<!-- HOME:BODY:START -->', '<!-- HOME:BODY:END -->'
@@ -155,7 +157,7 @@ def read_parts(folder: Path, suffix: str) -> str:
         return ''
     out = []
     for p in sorted(folder.glob('*' + suffix)):
-        out.append(f'/* ---- {p.relative_to(SRC).as_posix()} ---- */\n' + p.read_text(encoding='utf-8').rstrip() + '\n')
+        out.append(f'/* ---- {p.relative_to(SRC).as_posix()} ---- */\n' + base_source.read_text_source(p).rstrip() + '\n')
     return ''.join(out)
 
 
@@ -299,7 +301,7 @@ def lint() -> list[str]:
         if SKIP_DIRS.intersection(rel_parts) or p.suffix in ('.md', '.txt'):
             continue
         rel = p.relative_to(PKG).as_posix()
-        text = p.read_text(encoding='utf-8')
+        text = base_source.read_text_source(p)
         if build.EMOJI.search(text):
             problems.append(f'emoji glyph in {rel}')
         if p.suffix == '.css':

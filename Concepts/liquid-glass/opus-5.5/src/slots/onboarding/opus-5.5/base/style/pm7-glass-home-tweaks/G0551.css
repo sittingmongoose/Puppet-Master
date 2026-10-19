@@ -1,0 +1,20 @@
+html[data-theme^="glass"] .activity-bar .icon.active .symbol,
+html[data-theme^="glass"] .activity-bar .icon[aria-current="page"] .symbol {
+  background:
+    linear-gradient(#B5A4FF, #B5A4FF) 0 0 / 100% 1.5px no-repeat,
+    linear-gradient(
+      165deg,
+      color-mix(in srgb, #6A4BE5 78%, #3A2470) 0%,
+      color-mix(in srgb, #6A4BE5 48%, #1A1035) 100%
+    ) !important;
+  border-color: color-mix(in srgb, #9B86F2 55%, transparent) !important;
+  box-shadow:
+    inset 0 2px 4px rgba(20, 8, 50, .35),
+    inset 0 1px 0 rgba(255,255,255,.28),
+    inset 0 -1px 0 rgba(255,255,255,.08),
+    0 0 0 1px rgba(106, 75, 229, .22),
+    0 4px 12px rgba(40, 20, 80, .28),
+    0 0 14px rgba(106, 75, 229, .28) !important;
+  color: #FFFFFF !important;
+  transform: translateY(0.5px) scale(0.98) !important;
+}

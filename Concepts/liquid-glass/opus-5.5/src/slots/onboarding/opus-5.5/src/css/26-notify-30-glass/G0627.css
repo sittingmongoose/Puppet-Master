@@ -1,0 +1,8 @@
+html[data-theme^="glass"] {
+  --pmn-r: 14px;
+  --pmn-r-panel: 16px;
+  --pmn-r-item: 11px;
+  --pmn-r-tile: 9px;
+  --pmn-r-btn: var(--pm-ctl-r, 6px);
+  --pmn-edge: inset 0 1px 0 var(--glass-edge, rgba(255, 255, 255, .4)), inset 0 0 0 1px var(--glass-hairline, rgba(255, 255, 255, .16));
+}

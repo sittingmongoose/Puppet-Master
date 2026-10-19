@@ -1,0 +1,7 @@
+html[data-theme^="glass"] body,
+html[data-theme^="glass"] button,
+html[data-theme^="glass"] input,
+html[data-theme^="glass"] select,
+html[data-theme^="glass"] textarea {
+  font-family: var(--body-font) !important;
+}

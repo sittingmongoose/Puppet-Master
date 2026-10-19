@@ -1,0 +1,22 @@
+html[data-theme="glass-dark"] {
+  --glass-alpha: .47;
+
+  --rg-shell: rgba(24, 15, 39, calc(var(--glass-alpha) * 0.32));
+  --rg-shell-top: rgba(224, 203, 255, calc(var(--glass-alpha) * 0.32));
+  --rg-chrome: rgba(29, 20, 45, calc(var(--glass-alpha) * 0.72));
+  --rg-chrome-strong: rgba(37, 27, 55, calc(var(--glass-alpha) * 1.09));
+  --rg-pane: rgba(32, 23, 49, calc(var(--glass-alpha) * 0.64));
+  --rg-pane-strong: rgba(24, 16, 39, calc(var(--glass-alpha) * 1.04));
+  --rg-card: rgba(44, 33, 63, calc(var(--glass-alpha) * 0.60));
+  --rg-card-hover: rgba(57, 42, 80, calc(var(--glass-alpha) * 0.89));
+  --rg-reading: rgba(12, 9, 22, calc(var(--glass-alpha) * 1.49));
+  --rg-reading-soft: rgba(18, 13, 31, calc(var(--glass-alpha) * 1.28));
+  /* Menus stay near-opaque across the dark clamp (0.35-0.85). */
+  --rg-menu: rgba(25, 17, 40, calc(0.72 + var(--glass-alpha) * 0.47));
+  --rg-menu-item: rgba(255, 255, 255, calc(0.04 + var(--glass-alpha) * 0.03));
+  --rg-menu-hover: rgba(255, 255, 255, calc(0.07 + var(--glass-alpha) * 0.07));
+
+  --surface: rgba(25, 18, 40, calc(var(--glass-alpha) * 0.96));
+  --surface-elevated: rgba(37, 28, 57, calc(var(--glass-alpha) * 1.15));
+  --surface-alt: rgba(28, 20, 44, calc(var(--glass-alpha) * 0.81));
+}

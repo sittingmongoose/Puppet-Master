@@ -1,0 +1,29 @@
+html[data-theme^="glass"] .activity-bar .icon .symbol {
+  width: 32px !important;
+  height: 32px !important;
+  min-width: 32px !important;
+  min-height: 32px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  border-radius: 11px !important;
+  box-sizing: border-box !important;
+  /* Glassneomorphism hybrid: frosted plate + soft dual-tone emboss */
+  background:
+    linear-gradient(155deg, rgba(255,255,255,.20), transparent 52%),
+    color-mix(in srgb, var(--rg-card, rgba(40,30,60,.62)) 82%, transparent) !important;
+  border: 1px solid color-mix(in srgb, rgba(255,255,255,.38) 65%, var(--rg-rim, rgba(255,255,255,.2))) !important;
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.38),
+    inset 0 -1px 0 rgba(40, 20, 80, .22),
+    inset 1px 0 0 rgba(255,255,255,.12),
+    0 1px 2px rgba(40, 20, 80, .12),
+    0 6px 14px rgba(60, 35, 120, .22) !important;
+  backdrop-filter: blur(18px) saturate(165%) !important;
+  -webkit-backdrop-filter: blur(18px) saturate(165%) !important;
+  transition:
+    transform var(--motion-fast) var(--ease-out),
+    background var(--motion-fast) var(--ease-out),
+    box-shadow var(--motion-fast) var(--ease-out),
+    border-color var(--motion-fast) var(--ease-out) !important;
+}

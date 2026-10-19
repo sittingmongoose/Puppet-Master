@@ -1,0 +1,5 @@
+html[data-theme^="glass"] #leftPanelResizer.resizer-col {
+  width: 7px !important;
+  margin: 0 -2px !important;
+  padding: 0 2px !important;
+}

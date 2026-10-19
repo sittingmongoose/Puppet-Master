@@ -123,60 +123,8 @@ html[data-theme="friendly-dark"] #panel-usage .pmu-shell {
   --pmu-r-card: 16px; --pmu-r-sm: 4px; --pmu-bw: 1px;
   --pmu-accent-b: color-mix(in srgb, var(--accent-primary) 58%, #fff);
 }
-html[data-theme="glass-dark"] #panel-usage .pmu-shell {
-  --pmu-s0: #64D9FF; --pmu-s0-b: #B0EEFF;
-  --pmu-s1: #68F2BD; --pmu-s1-b: #B2F9DD;
-  --pmu-s2: #FFB36D; --pmu-s2-b: #FFD4AA;
-  --pmu-s3: #B18CFF; --pmu-s3-b: #D6C3FF;
-  --pmu-s4: #FF8FC8; --pmu-s4-b: #FFC2E1;
-  --pmu-s5: #7AA8FF; --pmu-s5-b: #B6CFFF;
-  --pmu-s6: #FFE27A; --pmu-s6-b: #FFF0B5;
-  --pmu-s7: rgba(226,215,245,.55); --pmu-s7-b: rgba(226,215,245,.8);
-  --pmu-ink: #F1F4F7;
-  --pmu-ink-2: #D3D8E0;
-  --pmu-ink-3: #B9C1CC;
-  --pmu-ink-ok: #78CFA8;
-  --pmu-ink-warn: #FFBF69;
-  --pmu-ink-error: #FF91B8;
-  --pmu-card: rgba(37,28,57,.62);
-  --pmu-hairline: rgba(232,220,255,.14);
-  --pmu-track: rgba(232,220,255,.10);
-  --pmu-grid: rgba(232,220,255,.08);
-  --pmu-hover: rgba(232,220,255,.06);
-  --pmu-tone-watch: #FFE27A; --pmu-tone-watch-b: #FFF0B5;
-  --pmu-tone-warn: #FFB36D; --pmu-tone-warn-b: #FFD4AA;
-  --pmu-tone-hot: #FF7893; --pmu-tone-hot-b: #FFB0C0;
-  --pmu-tone-exhausted: #FF5C7A; --pmu-tone-exhausted-b: #FF5C7A;
-  --pmu-r-card: 14px; --pmu-r-sm: 4px; --pmu-bw: 1px;
-  --pmu-accent-b: color-mix(in srgb, var(--accent-primary) 58%, #fff);
-}
-html[data-theme="glass-light"] #panel-usage .pmu-shell {
-  --pmu-s0: #0078D8; --pmu-s0-b: #5AAEF0;
-  --pmu-s1: #087F67; --pmu-s1-b: #3DB89C;
-  --pmu-s2: #BA5D20; --pmu-s2-b: #E08D55;
-  --pmu-s3: #7659C7; --pmu-s3-b: #A58EE3;
-  --pmu-s4: #B8407A; --pmu-s4-b: #DB7BA9;
-  --pmu-s5: #2F5FC4; --pmu-s5-b: #6E93E0;
-  --pmu-s6: #8A6D00; --pmu-s6-b: #BFA03A;
-  --pmu-s7: rgba(27,43,51,.5); --pmu-s7-b: rgba(27,43,51,.3);
-  --pmu-ink: #17222A;
-  --pmu-ink-2: #303C46;
-  --pmu-ink-3: #2D3740;
-  --pmu-ink-ok: #0B4F31;
-  --pmu-ink-warn: #603600;
-  --pmu-ink-error: #7C1730;
-  --pmu-card: rgba(255,255,255,.62);
-  --pmu-hairline: rgba(255,255,255,.60);
-  --pmu-track: rgba(23,34,42,.08);
-  --pmu-grid: rgba(23,34,42,.07);
-  --pmu-hover: rgba(255,255,255,.35);
-  --pmu-tone-watch: #8A6D00; --pmu-tone-watch-b: #BFA03A;
-  --pmu-tone-warn: #BA5D20; --pmu-tone-warn-b: #E08D55;
-  --pmu-tone-hot: #C44258; --pmu-tone-hot-b: #E07A8C;
-  --pmu-tone-exhausted: #A8213B; --pmu-tone-exhausted-b: #A8213B;
-  --pmu-r-card: 14px; --pmu-r-sm: 4px; --pmu-bw: 1px;
-  --pmu-accent-b: color-mix(in srgb, var(--accent-primary) 62%, #fff);
-}
+/* @pm7-lg-slot usage-redesign/src/css/00-base/G1218.css */
+/* @pm7-lg-slot usage-redesign/src/css/00-base/G1219.css */
 html[data-theme="retro-dark"] #panel-usage .pmu-shell {
   --pmu-s0: #B8D066; --pmu-s0-b: #D6E89A;
   --pmu-s1: #9DB4D0; --pmu-s1-b: #C3D3E6;
@@ -409,82 +357,8 @@ html[data-theme="friendly-dark"] #panel-usage .pmu-shell {
   --pmu-v-anthropic: #E88D69; --pmu-v-openai: #D3DBE4; --pmu-v-google: #7AA6F7; --pmu-v-alibaba: #9C94FF; --pmu-v-moonshot: #5FD0DA; --pmu-v-github: #56D364; --pmu-v-meta: #5C9DFF; --pmu-v-xai: #C8C8D0; --pmu-v-zai: #AAB6C4; --pmu-v-minimax: #FF7FA6; --pmu-v-opencode: #C4BBB2; --pmu-v-cursor: #BDB7AA; --pmu-v-community: #9AA2AC; --pmu-v-network: #9AA2AC;
   --pmu-heat-lo: color-mix(in srgb, var(--pmu-tk-all) 30%, var(--pmu-heat-zero));
 }
-html[data-theme="glass-dark"] #panel-usage .pmu-shell {
-  --pmu-hairline: var(--pmu-rule); --pmu-hover: var(--pmu-row-hover); --pmu-ink-ok: var(--pmu-ink-good); --pmu-ink-error: var(--pmu-ink-crit);
-  --pmu-elev-hover: var(--pmu-shadow-2); --pmu-elev-lift: var(--pmu-shadow-pop);
-  --pmu-card-2: rgba(232,220,255,.05);
-  --pmu-card-3: rgba(232,220,255,.08);
-  --pmu-rule: rgba(232,220,255,.14);
-  --pmu-rule-2: rgba(232,220,255,.08);
-  --pmu-rule-strong: rgba(232,220,255,.26);
-  --pmu-grid: rgba(232,220,255,.08);
-  --pmu-track: rgba(232,220,255,.10);
-  --pmu-track-hover: rgba(232,220,255,.15);
-  --pmu-track-tick: rgba(37,28,57,.9);
-  --pmu-row-hover: rgba(232,220,255,.06);
-  --pmu-row-sel: color-mix(in srgb, var(--accent-primary) 14%, var(--pmu-card));
-  --pmu-flash: color-mix(in srgb, var(--accent-primary) 24%, var(--pmu-card));
-  --pmu-shadow-1: inset 0 1px 0 rgba(255,255,255,.10), 0 1px 3px rgba(0,0,0,.30);
-  --pmu-shadow-2: inset 0 1px 0 rgba(255,255,255,.14), 0 16px 34px rgba(8,4,20,.45);
-  --pmu-shadow-pop: 0 18px 44px rgba(8,4,20,.55);
-  --pmu-r-card: 14px;
-  --pmu-calm: #68F2BD;
-  --pmu-warn: #FFD173;
-  --pmu-crit: #FF7893;
-  --pmu-over: #FF6FD0;
-  --pmu-wash: rgba(36,27,54,.45);
-  --pmu-ink-good: #7FF5C8;
-  --pmu-ink-warn: #FFD88A;
-  --pmu-ink-crit: #FF8FA6;
-  --pmu-ink-over: #FF8AD8;
-  --pmu-tk-in: #5CE6DA;
-  --pmu-tk-out: #C4A2FF;
-  --pmu-tk-rsn: #E0D0FF;
-  --pmu-tk-cw: #FF8CC6;
-  --pmu-tk-cr: #8FB4F0;
-  --pmu-tk-all: #8FB8FF;
-  --pmu-mark-ink: #121212;
-  --pmu-v-anthropic: #E88D69; --pmu-v-openai: #D3DBE4; --pmu-v-google: #7AA6F7; --pmu-v-alibaba: #9C94FF; --pmu-v-moonshot: #5FD0DA; --pmu-v-github: #56D364; --pmu-v-meta: #5C9DFF; --pmu-v-xai: #C8C8D0; --pmu-v-zai: #AAB6C4; --pmu-v-minimax: #FF7FA6; --pmu-v-opencode: #C4BBB2; --pmu-v-cursor: #BDB7AA; --pmu-v-community: #9AA2AC; --pmu-v-network: #9AA2AC;
-  --pmu-heat-lo: color-mix(in srgb, var(--pmu-tk-all) 30%, var(--pmu-heat-zero));
-}
-html[data-theme="glass-light"] #panel-usage .pmu-shell {
-  --pmu-hairline: var(--pmu-rule); --pmu-hover: var(--pmu-row-hover); --pmu-ink-ok: var(--pmu-ink-good); --pmu-ink-error: var(--pmu-ink-crit);
-  --pmu-elev-hover: var(--pmu-shadow-2); --pmu-elev-lift: var(--pmu-shadow-pop);
-  --pmu-card-2: rgba(255,255,255,.40);
-  --pmu-card-3: rgba(23,34,42,.05);
-  --pmu-rule: rgba(255,255,255,.60);
-  --pmu-rule-2: rgba(23,34,42,.07);
-  --pmu-rule-strong: rgba(23,34,42,.18);
-  --pmu-grid: rgba(23,34,42,.07);
-  --pmu-track: rgba(23,34,42,.08);
-  --pmu-track-hover: rgba(23,34,42,.12);
-  --pmu-track-tick: rgba(255,255,255,.75);
-  --pmu-row-hover: rgba(255,255,255,.38);
-  --pmu-row-sel: color-mix(in srgb, var(--accent-primary) 10%, var(--pmu-card));
-  --pmu-flash: color-mix(in srgb, var(--accent-primary) 18%, var(--pmu-card));
-  --pmu-shadow-1: inset 0 1px 0 rgba(255,255,255,.70), 0 1px 3px rgba(23,34,42,.06);
-  --pmu-shadow-2: inset 0 1px 0 rgba(255,255,255,.80), 0 12px 28px rgba(23,34,42,.12);
-  --pmu-shadow-pop: 0 16px 40px rgba(23,34,42,.16);
-  --pmu-r-card: 14px;
-  --pmu-calm: #087F67;
-  --pmu-warn: #B07A10;
-  --pmu-crit: #C44258;
-  --pmu-over: #8E2C6E;
-  --pmu-wash: rgba(255,255,255,.50);
-  --pmu-ink-good: #0B6E59;
-  --pmu-ink-warn: #7D5300;
-  --pmu-ink-crit: #A8213B;
-  --pmu-ink-over: #7A1F5E;
-  --pmu-tk-in: #08807E;
-  --pmu-tk-out: #6E43CF;
-  --pmu-tk-rsn: #9F82E2;
-  --pmu-tk-cw: #C23A7F;
-  --pmu-tk-cr: #4F79AE;
-  --pmu-tk-all: #1F4FC2;
-  --pmu-mark-ink: #FFFFFF;
-  --pmu-v-anthropic: #C25E3B; --pmu-v-openai: #2E3B4A; --pmu-v-google: #3A77E0; --pmu-v-alibaba: #4B3EEF; --pmu-v-moonshot: #0E9AA7; --pmu-v-github: #1F883D; --pmu-v-meta: #0B5FD3; --pmu-v-xai: #3A3A40; --pmu-v-zai: #4C5A6C; --pmu-v-minimax: #D6336C; --pmu-v-opencode: #7A716A; --pmu-v-cursor: #6B665C; --pmu-v-community: #6B7480; --pmu-v-network: #6B7480;
-  --pmu-heat-lo: color-mix(in srgb, var(--pmu-tk-all) 12%, var(--pmu-heat-zero));
-}
+/* @pm7-lg-slot usage-redesign/src/css/00-base/G1220.css */
+/* @pm7-lg-slot usage-redesign/src/css/00-base/G1221.css */
 html[data-theme="retro-dark"] #panel-usage .pmu-shell {
   --pmu-hairline: var(--pmu-rule); --pmu-hover: var(--pmu-row-hover); --pmu-ink-ok: var(--pmu-ink-good); --pmu-ink-error: var(--pmu-ink-crit);
   --pmu-elev-hover: var(--pmu-shadow-2); --pmu-elev-lift: var(--pmu-shadow-pop);
@@ -636,7 +510,7 @@ html[data-theme="friendly-light"] #panel-usage .pmu-shell {
   --pmu-l-r0: #9A86E8; --pmu-l-r1: #3AA7D6; --pmu-l-r2: #2FB38B;
 }
 html[data-theme="friendly-dark"] #panel-usage .pmu-shell { --pmu-l-key: #FF9F7A; --pmu-l-ink-top: #D2C4EE; --pmu-l-ink-bot: #7FE0D2; }
-html[data-theme^="glass"] #panel-usage .pmu-shell { --pmu-l-key-a: 26%; --pmu-l-ink-top: #FFFFFF; --pmu-l-ink-bot: #B9E6FF; --pmu-l-r0: #8D7BFF; --pmu-l-r1: #4FD2FF; --pmu-l-r2: #6CF5C2; }
-html[data-theme="glass-light"] #panel-usage .pmu-shell { --pmu-l-key-a: 20%; --pmu-l-ink-top: #17222A; --pmu-l-ink-bot: #2F5FC4; --pmu-l-r0: #6E62D8; --pmu-l-r1: #0F86C6; --pmu-l-r2: #0A8A66; }
+/* @pm7-lg-slot usage-redesign/src/css/00-base/G1222.css */
+/* @pm7-lg-slot usage-redesign/src/css/00-base/G1223.css */
 html[data-theme^="retro"] #panel-usage .pmu-shell { --pmu-l-key: var(--pmu-s0); --pmu-l-key-a: 10%; --pmu-l-key-b: 6%; --pmu-l-plate-hi: transparent; --pmu-l-hero-spot: 0%;
   --pmu-l-r0: var(--pmu-s1); --pmu-l-r1: var(--pmu-s4); --pmu-l-r2: var(--pmu-s0); --pmu-l-track-in: none; --pmu-l-tip: 0 0 8px 1px; }

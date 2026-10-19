@@ -1,0 +1,7 @@
+[data-theme^="glass"] .resizer-col {
+      width: 12px;
+      margin: 0 -3.5px;
+      padding: 0 3.5px;
+      background: transparent;
+      background-clip: content-box;
+    }

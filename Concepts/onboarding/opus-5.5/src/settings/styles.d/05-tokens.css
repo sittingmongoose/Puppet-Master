@@ -28,15 +28,12 @@ html[data-theme="retro-dark"] #panel-settings { --k3-text-3: #9aa489; --k3-red: 
 html[data-theme="retro-light"] #panel-settings { --k3-amber: #9c5000; --k3-red: #bd2c2c; }
 /* Glass Dark's quieter words are Glass's own cool white (Q16, 2026-10-15: they were a lavender, rgba(240, 234, 253) and
    rgba(236, 228, 252), left from old Glass's violet; the same luminance, so every contrast stays where it was) */
-html[data-theme="glass-dark"] #panel-settings { --k3-text-2: rgba(236, 241, 250, .92); --k3-text-3: rgba(230, 236, 248, .86); --k3-on-accent: #0b1224;
-  --k3-accent-ink: color-mix(in srgb, var(--k3-accent) 50%, var(--k3-text-1)); --k3-red: color-mix(in srgb, #ff7893 80%, var(--k3-text-1)); }
+/* @pm7-lg-slot onboarding/opus-5.5/src/settings/styles.d/05-tokens/G0569.css */
 /* Glass Light's sheets are frosted over the wallpaper, a mid-tone ground (luminance down to about .3), where only an
    ink close to the label's reads 4.5 to 1. Its words take the label ink, a little lighter for the quieter ones, and
    carry their tone (accent, attention, error, ok) as a tint, as on the Projects page; the accent's fills and edges
    keep the full colour. */
-html[data-theme="glass-light"] #panel-settings { --k3-text-2: rgba(23, 34, 42, .93); --k3-text-3: rgba(23, 34, 42, .88);
-  --k3-accent-ink: color-mix(in srgb, var(--k3-accent) 22%, var(--k3-text-1)); --k3-amber: color-mix(in srgb, #7a4f06 55%, var(--k3-text-1));
-  --k3-red: color-mix(in srgb, #a8334a 55%, var(--k3-text-1)); --k3-green: color-mix(in srgb, var(--accent-lime) 70%, var(--k3-text-1)); }
+/* @pm7-lg-slot onboarding/opus-5.5/src/settings/styles.d/05-tokens/G0570.css */
 
 #panel-settings .pm51-mgr .pm51-roster .resource-row.active .resource-row-meta { color: color-mix(in srgb, var(--k3-text-1) 50%, var(--k3-text-2)); }
 /* the chosen chapter's line in the rail, likewise (it read 3.7 to 4.0 on the chosen row's tint) */

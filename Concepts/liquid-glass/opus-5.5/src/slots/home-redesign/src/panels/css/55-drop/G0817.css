@@ -1,0 +1,9 @@
+html[data-theme^="glass"] #pm-home-centre {
+  --pmw-dv-tint: color-mix(in srgb, var(--lg-sel, var(--pmw-accent)) 22%, var(--lg-tint-panel, var(--pmw-strip)));
+  --pmw-dv-tint-2: color-mix(in srgb, var(--lg-sel, var(--pmw-accent)) 8%, var(--lg-tint-panel, var(--pmw-strip)));
+  --pmw-dv-ring: color-mix(in srgb, var(--lg-sel, var(--pmw-accent)) 85%, #fff);
+  --pmw-dv-tab: color-mix(in srgb, var(--lg-sel, var(--pmw-accent)) 30%, var(--lg-tint-card, var(--pmw-surface)));
+  --pmw-dv-glow: 0 24px 56px -22px var(--lg-shadow, rgba(0, 2, 12, .55)), 0 0 44px -6px color-mix(in srgb, var(--lg-sel, var(--pmw-accent)) 55%, transparent);
+  --pmw-dv-sheen: rgba(255, 255, 255, .22);
+  --pmw-dv-veil: color-mix(in srgb, var(--lg-sel, var(--pmw-accent)) 16%, transparent);
+}

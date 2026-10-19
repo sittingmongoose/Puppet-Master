@@ -1,0 +1,8 @@
+html[data-theme^="glass"] .title-bar .pm6-tb-search-wrap .search-bar {
+  width: var(--tb-search-w) !important;
+  max-width: 180px !important;
+  min-width: 0 !important;
+  flex: 0 0 auto !important;
+  padding-inline: 12px !important;
+  box-sizing: border-box;
+}

@@ -1,0 +1,13 @@
+html[data-pmw-home="on"][data-theme="glass-light"]:not([data-o55-nier="on"]) {
+  --gl-blend: var(--lg-lens-glint-blend, normal);
+  --gl-glint: var(--lg-lens-glint, rgba(255, 255, 255, .7));
+  --gl-shade: var(--lg-edge-bot, rgba(48, 36, 84, .34));
+  --gl-ref: rgba(38, 44, 66, .42);
+  --gl-sc: rgba(255, 255, 255, .8);
+  --gl-ch: #FFFFFF;
+  /* no dark ring on the core: wrapped in one it read as a small grey capsule, an object rather than light
+     (pm7-liquid-glass's review, 2026-10-14); the edge lines carry the contrast */
+  --gl-core-shadow: 0 0 5px 1px rgba(255, 255, 255, .95), 0 0 14px 3px rgba(255, 255, 255, .55);
+  --gl-core-r: 0;
+  --gl-rail-a: 70%;
+}

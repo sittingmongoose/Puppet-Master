@@ -5,7 +5,7 @@
    beside toggled the old dashboard, which the panels replaced; the Home layer removes it from the page. */
 §R { --d-Rbar: 7px; }
 §R[data-theme^="friendly"] { --d-Rbar: 10px; }
-§R[data-theme^="glass"] { --d-Rbar: 10px; }
+/* @pm7-lg-slot leftrail-redesign/src/concepts/d/css/80-bar.src/G0782.css */
 /* square corners in Retro, and in NieR only with its "Square hairlines" part, as the rest of D's NieR corners */
 §R[data-theme^="retro"], §R[data-o55-nier-parts~="square"] { --d-Rbar: 0px; }
 §B { position: relative; }
@@ -21,10 +21,7 @@
   transition: opacity var(--d-t2) var(--d-ease);
 }
 §B > .d-abind.is-on { opacity: 1; }
-§R[data-theme^="glass"] #activityBar > .d-abind {
-  background: linear-gradient(180deg, color-mix(in srgb, var(--accent-primary) 30%, transparent), color-mix(in srgb, var(--accent-primary) 14%, transparent));
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, .22), inset 0 0 0 1px color-mix(in srgb, var(--accent-primary) 36%, transparent), 0 2px 10px color-mix(in srgb, var(--accent-primary) 22%, transparent);
-}
+/* @pm7-lg-slot leftrail-redesign/src/concepts/d/css/80-bar.src/G0783.css */
 §B .icon { z-index: 1; }
 §B .icon .symbol { border-radius: var(--d-Rbar) !important; transition: background-color var(--d-t1) var(--d-ease), color var(--d-t1) var(--d-ease), transform var(--d-t2) var(--d-spring) !important; }
 §B .icon:is([data-target], [data-ab-id="chat"]) .symbol { width: 28px !important; height: 28px !important; }
@@ -48,8 +45,8 @@
    at the top and under a lit tile's glow, the text ink over a soft shadow of the bar's own deep violet (no box, nothing
    behind the bar changes). */
 §R:not([data-o55-nier="on"]) #activityBar:not(.collapsed) .icon:not(.active) .icon-label { color: var(--d-label, var(--d-text-2)) !important; }
-§R[data-theme="glass-light"] { --d-label: var(--text-primary); }
-§R[data-theme="glass-dark"] { --d-label: var(--text-primary); }
+/* @pm7-lg-slot leftrail-redesign/src/concepts/d/css/80-bar.src/G0784.css */
+/* @pm7-lg-slot leftrail-redesign/src/concepts/d/css/80-bar.src/G0785.css */
 §R[data-theme="glass-dark"]:not([data-o55-nier="on"]) #activityBar:not(.collapsed) .icon .icon-label {
   text-shadow: 0 1px 2px rgba(18, 10, 36, .85), 0 0 9px rgba(18, 10, 36, .7);
 }

@@ -1,0 +1,3 @@
+html[data-theme^="glass"] .title-bar .page-tab-ink {
+  background: linear-gradient(180deg, color-mix(in srgb, #6A4BE5 78%, #3A2470) 0%, color-mix(in srgb, #6A4BE5 52%, #241450) 100%) !important;
+}

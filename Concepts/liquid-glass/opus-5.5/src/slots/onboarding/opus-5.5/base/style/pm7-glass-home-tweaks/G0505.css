@@ -1,0 +1,3 @@
+html[data-theme^="glass"] .pm7-statusbar-group + .pm7-statusbar-group {
+  border-left-color: var(--glass-hairline, rgba(255, 255, 255, .08)) !important;
+}

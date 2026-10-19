@@ -1,0 +1,7 @@
+html[data-theme^="glass"] #leftPanelResizer {
+  flex: 0 0 4px !important;
+  width: 4px !important;
+  min-width: 4px !important;
+  margin: 0 -2px !important;
+  opacity: .36;
+}

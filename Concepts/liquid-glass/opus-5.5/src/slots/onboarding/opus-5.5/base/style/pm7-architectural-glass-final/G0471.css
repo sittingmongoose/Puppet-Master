@@ -1,0 +1,5 @@
+html[data-theme^="glass"] :is(input,textarea,select,.search-bar,.pm6-proj-search,.s4-input) {
+  background: color-mix(in srgb,var(--rg-reading-soft) 76%,transparent) !important;
+  border-color: var(--rg-rim-soft) !important;
+  color: var(--text-primary) !important;
+}

@@ -1,0 +1,1 @@
+html[data-theme^="glass"]:not([data-o55-nier="on"]) #panel-usage .pmu-meterfill::after { box-shadow: var(--pmu-l-tip) color-mix(in srgb, var(--c) 90%, transparent); }

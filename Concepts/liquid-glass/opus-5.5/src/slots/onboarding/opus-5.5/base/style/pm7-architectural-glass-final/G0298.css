@@ -1,0 +1,4 @@
+html[data-theme^="glass"] body {
+  background: var(--background) !important;
+  overflow: hidden;
+}

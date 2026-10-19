@@ -1,0 +1,4 @@
+:is(html[data-theme="friendly-light"],html[data-theme="glass-light"],html[data-theme="retro-light"],html[data-theme="basic-light"]) #panel-settings {
+  --pm-settings-color-scheme: light;
+  color-scheme: light;
+}

@@ -1,0 +1,38 @@
+html[data-theme="glass-dark"] #panel-usage .pmu-shell {
+  --pmu-hairline: var(--pmu-rule); --pmu-hover: var(--pmu-row-hover); --pmu-ink-ok: var(--pmu-ink-good); --pmu-ink-error: var(--pmu-ink-crit);
+  --pmu-elev-hover: var(--pmu-shadow-2); --pmu-elev-lift: var(--pmu-shadow-pop);
+  --pmu-card-2: rgba(232,220,255,.05);
+  --pmu-card-3: rgba(232,220,255,.08);
+  --pmu-rule: rgba(232,220,255,.14);
+  --pmu-rule-2: rgba(232,220,255,.08);
+  --pmu-rule-strong: rgba(232,220,255,.26);
+  --pmu-grid: rgba(232,220,255,.08);
+  --pmu-track: rgba(232,220,255,.10);
+  --pmu-track-hover: rgba(232,220,255,.15);
+  --pmu-track-tick: rgba(37,28,57,.9);
+  --pmu-row-hover: rgba(232,220,255,.06);
+  --pmu-row-sel: color-mix(in srgb, var(--accent-primary) 14%, var(--pmu-card));
+  --pmu-flash: color-mix(in srgb, var(--accent-primary) 24%, var(--pmu-card));
+  --pmu-shadow-1: inset 0 1px 0 rgba(255,255,255,.10), 0 1px 3px rgba(0,0,0,.30);
+  --pmu-shadow-2: inset 0 1px 0 rgba(255,255,255,.14), 0 16px 34px rgba(8,4,20,.45);
+  --pmu-shadow-pop: 0 18px 44px rgba(8,4,20,.55);
+  --pmu-r-card: 14px;
+  --pmu-calm: #68F2BD;
+  --pmu-warn: #FFD173;
+  --pmu-crit: #FF7893;
+  --pmu-over: #FF6FD0;
+  --pmu-wash: rgba(36,27,54,.45);
+  --pmu-ink-good: #7FF5C8;
+  --pmu-ink-warn: #FFD88A;
+  --pmu-ink-crit: #FF8FA6;
+  --pmu-ink-over: #FF8AD8;
+  --pmu-tk-in: #5CE6DA;
+  --pmu-tk-out: #C4A2FF;
+  --pmu-tk-rsn: #E0D0FF;
+  --pmu-tk-cw: #FF8CC6;
+  --pmu-tk-cr: #8FB4F0;
+  --pmu-tk-all: #8FB8FF;
+  --pmu-mark-ink: #121212;
+  --pmu-v-anthropic: #E88D69; --pmu-v-openai: #D3DBE4; --pmu-v-google: #7AA6F7; --pmu-v-alibaba: #9C94FF; --pmu-v-moonshot: #5FD0DA; --pmu-v-github: #56D364; --pmu-v-meta: #5C9DFF; --pmu-v-xai: #C8C8D0; --pmu-v-zai: #AAB6C4; --pmu-v-minimax: #FF7FA6; --pmu-v-opencode: #C4BBB2; --pmu-v-cursor: #BDB7AA; --pmu-v-community: #9AA2AC; --pmu-v-network: #9AA2AC;
+  --pmu-heat-lo: color-mix(in srgb, var(--pmu-tk-all) 30%, var(--pmu-heat-zero));
+}

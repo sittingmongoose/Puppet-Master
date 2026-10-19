@@ -43,6 +43,8 @@ SRC = PKG / 'src'
 CONCEPTS_SRC = SRC / 'concepts'
 CONCEPTS = PKG.parent
 OPUS_TOOLS = CONCEPTS / 'onboarding' / 'opus-5.5' / 'tools'
+sys.path.insert(0, str(OPUS_TOOLS))
+import base_source  # noqa: E402
 
 CSS_START, CSS_END = '<!-- RAIL:CSS:START -->', '<!-- RAIL:CSS:END -->'
 JS_START, JS_END = '<!-- RAIL:BODY:START -->', '<!-- RAIL:BODY:END -->'
@@ -113,7 +115,7 @@ def read_parts(folder: Path, suffix: str) -> str:
         return ''
     out = []
     for p in sorted(folder.glob('*' + suffix)):
-        out.append(f'/* ---- {p.relative_to(SRC).as_posix()} ---- */\n' + p.read_text(encoding='utf-8').rstrip() + '\n')
+        out.append(f'/* ---- {p.relative_to(SRC).as_posix()} ---- */\n' + base_source.read_text_source(p).rstrip() + '\n')
     return ''.join(out)
 
 
@@ -129,7 +131,7 @@ def _core_parts(suffix: str, published: bool) -> str:
     out = []
     for p in sorted(folder.glob('*' + suffix)):
         if (p.name in names) == published:
-            out.append(f'/* ---- {p.relative_to(SRC).as_posix()} ---- */\n' + p.read_text(encoding='utf-8').rstrip() + '\n')
+            out.append(f'/* ---- {p.relative_to(SRC).as_posix()} ---- */\n' + base_source.read_text_source(p).rstrip() + '\n')
     return ''.join(out)
 
 
@@ -309,7 +311,7 @@ def lint(profile: str = 'review') -> list[str]:
         if not p.is_file() or not in_profile(p, profile):
             continue
         rel = p.relative_to(PKG).as_posix()
-        text = p.read_text(encoding='utf-8')
+        text = base_source.read_text_source(p)
         skin = CONCEPTS_SRC in p.parents and p.relative_to(CONCEPTS_SRC).parts[0] in SKIN_CONCEPTS
         allowed = SHELL_PILL_CLASSES if skin else set()
         if build.EMOJI.search(text):

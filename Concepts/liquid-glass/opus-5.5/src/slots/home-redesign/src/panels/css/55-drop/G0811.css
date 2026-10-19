@@ -1,0 +1,10 @@
+html[data-theme^="glass"] #pmw-overlay {
+  --pmw-guide-r: 12px;
+  --pmw-guide-map-r: 3px;
+  --pmw-guide-bg: var(--lg-tint-menu, color-mix(in srgb, var(--pmw-pop) 82%, transparent));
+  --pmw-guide-line: var(--rg-rim-low, rgba(255, 255, 255, .14));
+  --pmw-guide-on: var(--lg-sel, color-mix(in srgb, var(--pmw-accent) 70%, transparent));
+  --pmw-guide-on-ink: var(--lg-on-sel, #FFFFFF);
+  --pmw-guide-glow: color-mix(in srgb, var(--lg-sel, var(--pmw-accent)) 60%, transparent);
+  --pmw-guide-shadow: 0 12px 30px -12px var(--lg-shadow, rgba(0, 2, 12, .55)), 0 3px 8px -3px var(--lg-shadow-near, rgba(0, 2, 12, .3));
+}

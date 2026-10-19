@@ -1,0 +1,20 @@
+html[data-theme^="glass"] .activity-bar .icon,
+html[data-theme^="glass"] .activity-bar.collapsed .icon {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 3px !important;
+  width: 100% !important;
+  min-width: 0 !important;
+  height: auto !important;
+  min-height: 0 !important;
+  padding: 4px 0 !important;
+  margin: 0 !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  transform: none !important;
+  color: var(--text-secondary) !important;
+  transition: color var(--motion-fast) var(--ease-out) !important;
+}

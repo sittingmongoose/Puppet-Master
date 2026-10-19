@@ -1,0 +1,8 @@
+html[data-theme="glass-dark"] :is(#pm-home-centre, #pmw-overlay, #pmw-chat, .pmw-scope) {
+  --pmw-tab-active: #FFFFFF; --pmw-tab-weight: 700;
+  --pmw-tab-inactive: #F8F4FF;
+  /* inactive tabs are plain labels on the strip, as in Glass light: no idle plate, so only the active tab is a surface */
+  --pmw-tab-hover: rgba(255, 255, 255, .12);
+  /* Jared, 2026-10-10: the 2026-08-20 purple plate is dropped; the active tab is one surface with its panel, as in
+     every other look (the plate falls back to --pmw-surface with Glass's 1 px rim) */
+}

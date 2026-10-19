@@ -74,7 +74,7 @@ def read_parts(folder: Path, suffix: str) -> str:
     files = sorted(p for p in folder.rglob(f'*{suffix}') if p.is_file())
     out = []
     for p in files:
-        body = p.read_text(encoding='utf-8')
+        body = base_source.read_text_source(p)
         out.append(f'/* ---- {p.relative_to(SRC).as_posix()} ---- */\n{body.rstrip()}\n')
     return '\n'.join(out)
 
@@ -265,7 +265,7 @@ def lint_sources() -> list[str]:
     for p in sorted(SRC.rglob('*')):
         if '__pycache__' in p.parts or not p.is_file() or p.suffix in BINARY_SUFFIXES:
             continue
-        text = p.read_text(encoding='utf-8')
+        text = base_source.read_text_source(p)
         if EMOJI.search(text):
             problems.append(f'emoji glyph in {p.relative_to(PKG)}')
         if p.suffix == '.css':

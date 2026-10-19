@@ -1,0 +1,6 @@
+html[data-theme^="glass"] .activity-bar .icon .symbol svg,
+html[data-theme^="glass"] .activity-bar .icon .symbol .pm-ico {
+  width: 16px !important;
+  height: 16px !important;
+  display: block !important;
+}

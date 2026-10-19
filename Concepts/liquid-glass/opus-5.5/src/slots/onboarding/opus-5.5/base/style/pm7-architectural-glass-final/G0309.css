@@ -1,0 +1,10 @@
+html[data-theme^="glass"] .app-shell::after {
+  content: "";
+  position: absolute;
+  inset: 1px;
+  z-index: 80;
+  pointer-events: none;
+  border-radius: 29px;
+  box-shadow: inset 0 0 0 1px rgba(255,255,255,.055), inset 0 -24px 42px rgba(0,0,0,.08);
+  background: linear-gradient(180deg, rgba(255,255,255,.035), transparent 15%, transparent 84%, rgba(0,0,0,.06));
+}

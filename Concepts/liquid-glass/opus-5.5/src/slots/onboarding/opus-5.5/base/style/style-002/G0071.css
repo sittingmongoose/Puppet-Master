@@ -1,0 +1,7 @@
+[data-theme^="glass"] .page-projects .projects-actions button.primary {
+      background: linear-gradient(135deg,
+        rgba(var(--pm6-glass-a-rgb), .22),
+        rgba(var(--pm6-glass-a-rgb), .10));
+      color: var(--text-primary);
+      border-color: rgba(var(--pm6-glass-a-rgb), .45);
+    }

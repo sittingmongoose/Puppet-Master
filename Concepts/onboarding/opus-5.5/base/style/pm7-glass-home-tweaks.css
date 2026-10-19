@@ -4,54 +4,12 @@
 /* 1–2. Outer fill — architectural glass uses position:fixed + inset.
    Do NOT set height/margin (overconstrains and shoves UI off-screen).
    Fill the viewport; status bar is an in-flow floating chrome pill below. */
-html[data-theme^="glass"] {
-  --pm6-glass-inset: 0px;
-  --pm-home-gap: 3px;
-  --pm-home-pad-y: 1.5px;
-  --pm-home-gap-y: 1.5px;
-}
-html[data-theme^="glass"] .app-shell {
-  inset: 0 !important;
-  margin: 0 !important;
-  width: auto !important;
-  height: auto !important;
-  border-radius: 0 !important;
-}
+/* @pm7-lg-slot onboarding/opus-5.5/base/style/pm7-glass-home-tweaks/G0502.css */
+/* @pm7-lg-slot onboarding/opus-5.5/base/style/pm7-glass-home-tweaks/G0503.css */
 /* Floating glass status — title-bar chrome recipe, 25px tall, in-flow so
    .main-area rises. Gap above ≈ home panels; sides match title-bar. */
-html[data-theme^="glass"] #pm7GlobalStatusBar.pm7-statusbar,
-html[data-theme^="glass"] .pm7-statusbar {
-  position: relative !important;
-  left: auto !important;
-  right: auto !important;
-  bottom: auto !important;
-  top: auto !important;
-  width: auto !important;
-  align-self: stretch !important;
-  flex: 0 0 25px !important;
-  height: 25px !important;
-  min-height: 25px !important;
-  z-index: 2;
-  margin: 2.7px 6px 5.4px !important;
-  padding: 0 8px !important;
-  box-sizing: border-box !important;
-  border-radius: 10px !important;
-  border: 1px solid transparent !important;
-  border-top: none !important;
-  background:
-    linear-gradient(var(--rg-chrome), var(--rg-chrome)) padding-box,
-    linear-gradient(145deg, var(--rg-rim-soft), rgba(255,255,255,.04) 52%, var(--rg-rim-low)) border-box !important;
-  backdrop-filter: blur(24px) saturate(145%) !important;
-  -webkit-backdrop-filter: blur(24px) saturate(145%) !important;
-  box-shadow:
-    0 10px 22px var(--rg-shadow-soft),
-    inset 0 1px 0 var(--rg-rim),
-    inset 0 -1px 0 rgba(0,0,0,.10) !important;
-  overflow: hidden;
-}
-html[data-theme^="glass"] .pm7-statusbar-group + .pm7-statusbar-group {
-  border-left-color: var(--glass-hairline, rgba(255, 255, 255, .08)) !important;
-}
+/* @pm7-lg-slot onboarding/opus-5.5/base/style/pm7-glass-home-tweaks/G0504.css */
+/* @pm7-lg-slot onboarding/opus-5.5/base/style/pm7-glass-home-tweaks/G0505.css */
 html[data-theme^="glass"] .pm7-statusbar .pm7-statusitem:hover,
 html[data-theme^="glass"] .pm7-statusbar .pm7-statusitem:focus-visible {
   background: color-mix(in srgb, var(--accent-primary) 12%, transparent) !important;
@@ -73,11 +31,7 @@ html[data-theme^="glass"] .pm-home-host[data-pm-home-host="dock_left"]:not(.pm-h
 }
 
 /* 3. Left activity resizer thinner; home handles slight bump */
-html[data-theme^="glass"] #leftPanelResizer.resizer-col {
-  width: 7px !important;
-  margin: 0 -2px !important;
-  padding: 0 2px !important;
-}
+/* @pm7-lg-slot onboarding/opus-5.5/base/style/pm7-glass-home-tweaks/G0511.css */
 html[data-theme^="glass"] .pm-home-resize-handle.resizer-col {
   width: 7px !important;
   padding: 0 2.5px !important;
@@ -90,9 +44,7 @@ html[data-theme^="glass"] .pm-home-resize-handle.resizer-row {
 }
 
 /* 4. Activity ↔ files gap */
-html[data-theme^="glass"] .left-panel {
-  gap: 8px !important;
-}
+/* @pm7-lg-slot onboarding/opus-5.5/base/style/pm7-glass-home-tweaks/G0514.css */
 
 /* 5. Right dock tighter — same top pad as home_main (0) so chat top
    aligns with the file editors */
@@ -109,17 +61,8 @@ html[data-theme^="glass"] .chat-panel-header.pm6-chat-header {
 }
 
 /* 7. Search pill — match Basic/Retro density width; pad text clear of pill ends */
-html[data-theme^="glass"] .title-bar .pm6-tb-search-wrap {
-  --tb-search-w: 170px !important;
-}
-html[data-theme^="glass"] .title-bar .pm6-tb-search-wrap .search-bar {
-  width: var(--tb-search-w) !important;
-  max-width: 180px !important;
-  min-width: 0 !important;
-  flex: 0 0 auto !important;
-  padding-inline: 12px !important;
-  box-sizing: border-box;
-}
+/* @pm7-lg-slot onboarding/opus-5.5/base/style/pm7-glass-home-tweaks/G0517.css */
+/* @pm7-lg-slot onboarding/opus-5.5/base/style/pm7-glass-home-tweaks/G0518.css */
 
 /* 8. Kill dissolve */
 html[data-theme^="glass"] .pm-home-host,
@@ -328,83 +271,18 @@ html[data-theme^="glass"] .rs-clip .rs-card:first-child {
 /* ---------- Activity rail: symbol-centered glass “lens” chips ----------
    Glow/fill live on .symbol (glyph box), not the oversized .icon hit target.
    Clears conflicting icon-level fills, left ticks, and early step-3 pills. */
-html[data-theme^="glass"] .activity-bar .icon,
-html[data-theme^="glass"] .activity-bar.collapsed .icon {
-  display: flex !important;
-  flex-direction: column !important;
-  align-items: center !important;
-  justify-content: center !important;
-  gap: 3px !important;
-  width: 100% !important;
-  min-width: 0 !important;
-  height: auto !important;
-  min-height: 0 !important;
-  padding: 4px 0 !important;
-  margin: 0 !important;
-  border-radius: 0 !important;
-  background: transparent !important;
-  box-shadow: none !important;
-  transform: none !important;
-  color: var(--text-secondary) !important;
-  transition: color var(--motion-fast) var(--ease-out) !important;
-}
-html[data-theme^="glass"] .activity-bar.collapsed .icon {
-  padding: 5px 0 !important;
-}
+/* @pm7-lg-slot onboarding/opus-5.5/base/style/pm7-glass-home-tweaks/G0543.css */
+/* @pm7-lg-slot onboarding/opus-5.5/base/style/pm7-glass-home-tweaks/G0544.css */
 html[data-theme^="glass"] .activity-bar .icon:hover {
   background: transparent !important;
   box-shadow: none !important;
   transform: none !important;
   color: var(--text-primary) !important;
 }
-html[data-theme^="glass"] .activity-bar .icon.active,
-html[data-theme^="glass"] .activity-bar .icon[aria-current="page"] {
-  background: transparent !important;
-  box-shadow: none !important;
-  color: #FFFFFF !important;
-}
-html[data-theme^="glass"] .activity-bar .icon.active::before,
-html[data-theme^="glass"] .activity-bar .icon[aria-current="page"]::before,
-html[data-theme^="glass"] .activity-bar .icon::after {
-  display: none !important;
-  content: none !important;
-}
-html[data-theme^="glass"] .activity-bar .icon .symbol {
-  width: 32px !important;
-  height: 32px !important;
-  min-width: 32px !important;
-  min-height: 32px !important;
-  display: flex !important;
-  align-items: center !important;
-  justify-content: center !important;
-  border-radius: 11px !important;
-  box-sizing: border-box !important;
-  /* Glassneomorphism hybrid: frosted plate + soft dual-tone emboss */
-  background:
-    linear-gradient(155deg, rgba(255,255,255,.20), transparent 52%),
-    color-mix(in srgb, var(--rg-card, rgba(40,30,60,.62)) 82%, transparent) !important;
-  border: 1px solid color-mix(in srgb, rgba(255,255,255,.38) 65%, var(--rg-rim, rgba(255,255,255,.2))) !important;
-  box-shadow:
-    inset 0 1px 0 rgba(255,255,255,.38),
-    inset 0 -1px 0 rgba(40, 20, 80, .22),
-    inset 1px 0 0 rgba(255,255,255,.12),
-    0 1px 2px rgba(40, 20, 80, .12),
-    0 6px 14px rgba(60, 35, 120, .22) !important;
-  backdrop-filter: blur(18px) saturate(165%) !important;
-  -webkit-backdrop-filter: blur(18px) saturate(165%) !important;
-  transition:
-    transform var(--motion-fast) var(--ease-out),
-    background var(--motion-fast) var(--ease-out),
-    box-shadow var(--motion-fast) var(--ease-out),
-    border-color var(--motion-fast) var(--ease-out) !important;
-}
-html[data-theme^="glass"] .activity-bar.collapsed .icon .symbol {
-  width: 30px !important;
-  height: 30px !important;
-  min-width: 30px !important;
-  min-height: 30px !important;
-  border-radius: 10px !important;
-}
+/* @pm7-lg-slot onboarding/opus-5.5/base/style/pm7-glass-home-tweaks/G0546.css */
+/* @pm7-lg-slot onboarding/opus-5.5/base/style/pm7-glass-home-tweaks/G0547.css */
+/* @pm7-lg-slot onboarding/opus-5.5/base/style/pm7-glass-home-tweaks/G0548.css */
+/* @pm7-lg-slot onboarding/opus-5.5/base/style/pm7-glass-home-tweaks/G0549.css */
 html[data-theme^="glass"] .activity-bar .icon:hover .symbol {
   transform: translateY(-1px) scale(1.04) !important;
   border-color: color-mix(in srgb, #B5A4FF 48%, transparent) !important;
@@ -416,26 +294,7 @@ html[data-theme^="glass"] .activity-bar .icon:hover .symbol {
     0 0 12px rgba(106, 75, 229, .16) !important;
 }
 /* Active lens — pressed/inset emboss + Beeper fill (no oversized outer glow cloud). */
-html[data-theme^="glass"] .activity-bar .icon.active .symbol,
-html[data-theme^="glass"] .activity-bar .icon[aria-current="page"] .symbol {
-  background:
-    linear-gradient(#B5A4FF, #B5A4FF) 0 0 / 100% 1.5px no-repeat,
-    linear-gradient(
-      165deg,
-      color-mix(in srgb, #6A4BE5 78%, #3A2470) 0%,
-      color-mix(in srgb, #6A4BE5 48%, #1A1035) 100%
-    ) !important;
-  border-color: color-mix(in srgb, #9B86F2 55%, transparent) !important;
-  box-shadow:
-    inset 0 2px 4px rgba(20, 8, 50, .35),
-    inset 0 1px 0 rgba(255,255,255,.28),
-    inset 0 -1px 0 rgba(255,255,255,.08),
-    0 0 0 1px rgba(106, 75, 229, .22),
-    0 4px 12px rgba(40, 20, 80, .28),
-    0 0 14px rgba(106, 75, 229, .28) !important;
-  color: #FFFFFF !important;
-  transform: translateY(0.5px) scale(0.98) !important;
-}
+/* @pm7-lg-slot onboarding/opus-5.5/base/style/pm7-glass-home-tweaks/G0551.css */
 html[data-theme="glass-light"] .activity-bar .icon.active .symbol,
 html[data-theme="glass-light"] .activity-bar .icon[aria-current="page"] .symbol {
   background:
@@ -453,12 +312,7 @@ html[data-theme="glass-light"] .activity-bar .icon[aria-current="page"] .symbol 
     0 0 12px rgba(106, 75, 229, .18) !important;
   color: #2A1848 !important;
 }
-html[data-theme^="glass"] .activity-bar .icon .symbol svg,
-html[data-theme^="glass"] .activity-bar .icon .symbol .pm-ico {
-  width: 16px !important;
-  height: 16px !important;
-  display: block !important;
-}
+/* @pm7-lg-slot onboarding/opus-5.5/base/style/pm7-glass-home-tweaks/G0553.css */
 html[data-theme^="glass"] .activity-bar .icon-label {
   margin: 0 !important;
   line-height: 1.1 !important;

@@ -1,0 +1,15 @@
+html[data-theme^="glass"] #sidePanelSlot {
+  flex: 0 0 248px !important;
+  width: 248px !important;
+  min-width: 0 !important;
+  height: 100% !important;
+  overflow: hidden !important;
+  border-radius: 24px !important;
+  border: 1px solid transparent !important;
+  background:
+    linear-gradient(var(--rg-pane), var(--rg-pane)) padding-box,
+    linear-gradient(150deg, var(--rg-rim-soft), rgba(255,255,255,.04) 57%, var(--rg-rim-low)) border-box !important;
+  backdrop-filter: blur(28px) saturate(145%) !important;
+  -webkit-backdrop-filter: blur(28px) saturate(145%) !important;
+  box-shadow: 0 20px 44px var(--rg-shadow-soft), inset 0 1px 0 var(--rg-rim) !important;
+}

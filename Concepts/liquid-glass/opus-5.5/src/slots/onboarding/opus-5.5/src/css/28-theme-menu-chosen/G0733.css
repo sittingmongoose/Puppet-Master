@@ -1,0 +1,4 @@
+html[data-theme^="glass"] {
+  --pm-tt-chosen: linear-gradient(var(--glass-edge), var(--glass-edge)) 0 0 / 100% 1px no-repeat, linear-gradient(var(--pm6-glass-step-3), var(--pm6-glass-step-3));
+  --pm-tt-hover: var(--pm6-glass-step-1);
+}

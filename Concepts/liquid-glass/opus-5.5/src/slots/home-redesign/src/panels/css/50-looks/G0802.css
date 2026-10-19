@@ -1,0 +1,18 @@
+html[data-theme^="glass"] :is(#pm-home-centre, #pmw-overlay, #pmw-chat, .pmw-scope) {
+  --pmw-surface: var(--rg-reading, var(--surface));
+  --pmw-surface-2: var(--rg-card, var(--pmw-surface));
+  --pmw-strip: color-mix(in srgb, var(--rg-rail-solid, #111) 88%, var(--rg-reading, #222));
+  --pmw-gutter: transparent;
+  --pmw-line: var(--border-light); --pmw-line-2: var(--border);
+  --pmw-ok: var(--accent-lime); --pmw-warn: var(--accent-warning, var(--accent-orange)); --pmw-bad: var(--accent-error, #ef6b6b);
+  --pmw-pop: var(--rg-menu, var(--pmw-surface)); --pmw-hover: var(--rg-menu-hover, color-mix(in srgb, var(--pmw-text) 8%, transparent));
+  --pmw-pop-line: var(--rg-rim-soft, rgba(255, 255, 255, .18));
+  --pmw-pop-shadow: 0 18px 50px var(--rg-shadow, rgba(0, 0, 0, .35)), 0 0 0 1px var(--rg-rim-low, rgba(255, 255, 255, .12));
+  --pm-font-ui: var(--body-font, inherit);
+  --pmw-radius: 11px; --pmw-panel-radius: 12px; --pmw-row-radius: 8px; --pmw-menu-radius: 14px;
+  --pmw-tab-crown: 16px; --pmw-tab-shoulder: 16px; --pmw-tab-flare: 25px; --pmw-tab-profile: arc;
+  --pmw-tab-font: 11.5px; --pmw-tab-weight: 650;
+  --pmw-tab-active: var(--text-primary);
+  --pmw-plate-crown: var(--rg-rim, rgba(255, 255, 255, .9)); --pmw-plate-crown-h: 1px;
+  --pmw-t-med: 260ms;
+}

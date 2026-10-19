@@ -1,0 +1,11 @@
+:root:is([data-theme^="basic"], [data-theme^="friendly"], [data-theme^="glass"]):not([data-o55-nier]) #panel-usage .pmu-card[data-pmh-kind]:not([data-lifted], [data-settling], [data-resizing], [data-morphing])::before {
+  /* above the plate's own paint, under its head and body (both positioned and later in tree order), in the padding box
+     like a dashboard card's light; the tokens are the look's own (22-hover.css FAMILY LOOK) */
+  inset: 0; background: var(--pmf-sheen);
+  box-shadow: inset 0 0 0 1px var(--pmf-rim), inset 0 0 var(--pmf-band) 0 var(--pmf-rim2);
+  -webkit-mask: radial-gradient(circle var(--pmf-r) at var(--pmh-x) var(--pmh-y), var(--pmf-mask)) no-repeat;
+          mask: radial-gradient(circle var(--pmf-r) at var(--pmh-x) var(--pmh-y), var(--pmf-mask)) no-repeat;
+  opacity: var(--pmh-i);
+  /* going dark the light fades where it was: the position falls back only once the fade is over */
+  transition: opacity var(--pmf-out) var(--pmf-ease-out), --pmh-x 0s linear var(--pmf-out), --pmh-y 0s linear var(--pmf-out);
+}

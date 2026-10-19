@@ -216,7 +216,7 @@ html[data-motion="reduced"] #panel-usage :is(.pmu-seg-ink, .pmu-toggle, .pmu-ctl
 html[data-theme^="friendly"] #panel-usage .pmu-ld-dot { fill: url(#pmuLiveGrad); }
 html[data-theme^="friendly"] #panel-usage .pmu-livectl { --pmu-live-c: #6F55A8; }
 html[data-theme="friendly-dark"] #panel-usage .pmu-livectl { --pmu-live-c: #D2C4EE; }
-html[data-theme^="glass"] #panel-usage .pmu-livectl[data-state="on"] .pmu-livedot svg { filter: drop-shadow(0 0 3px var(--pmu-live-c)); }
+/* @pm7-lg-slot usage-redesign/src/css/10-shell/G1233.css */
 html[data-theme^="retro"] #panel-usage .pmu-livectl { --pmu-live-c: var(--pmu-s0); }
 html[data-theme^="retro"] #panel-usage .pmu-livebtn { gap: 3px; font-family: var(--pmu-mono); font-size: 12px; letter-spacing: .02em; }
 html[data-theme^="retro"] #panel-usage .pmu-livedot { order: 2; width: 7px; }

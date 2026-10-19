@@ -1,0 +1,15 @@
+html[data-theme^="glass"] .title-bar {
+  flex: 0 0 42px !important;
+  width: auto !important;
+  max-width: none !important;
+  height: 42px !important;
+  min-height: 42px !important;
+  min-width: 0 !important;
+  align-self: stretch !important;
+  box-sizing: border-box !important;
+  margin: 6px 6px 0 !important;
+  padding: 0 8px !important;
+  gap: 7px !important;
+  border-radius: 14px !important;
+  overflow: visible !important;
+}

@@ -248,8 +248,8 @@ html:not([data-o55-tour]) #chatPanel[data-pmw-sc="on"] > :not(#pmw-chat) { visib
 
 /* ---- looks ---- */
 /* Glass: legible over the wallpaper; opaque reading surface, no blur layer of our own */
-html[data-theme^="glass"] #pmw-chat.pmw-sc { background: var(--rg-reading, var(--pmw-surface)); }
-html[data-theme^="glass"] .pmw-sc-head { background: transparent; }
+/* @pm7-lg-slot home-redesign/src/panels/css/80-standin-chat/G0859.css */
+/* @pm7-lg-slot home-redesign/src/panels/css/80-standin-chat/G0860.css */
 /* the flyout sits over our own messages, so it needs a solid ground under Glass's translucent menu tint: the tint is
    layered over an opaque colour (a colour-mix with a translucent tint stays translucent, and the messages showed
    through) */

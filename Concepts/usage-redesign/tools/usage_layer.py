@@ -42,6 +42,8 @@ PKG = TOOLS.parent
 SRC = PKG / 'src'
 CONCEPTS = PKG.parent
 OPUS_TOOLS = CONCEPTS / 'onboarding' / 'opus-5.5' / 'tools'
+sys.path.insert(0, str(OPUS_TOOLS))
+import base_source  # noqa: E402
 
 OPEN_TAG = '<div class="page page-usage" id="panel-usage">'
 CLOSE_TAG = '</div><!-- page-usage -->'
@@ -464,7 +466,7 @@ def expect(need, label: str, stats: dict) -> None:
 
 def read_parts(folder: Path, suffix: str) -> str:
     files = sorted(p for p in folder.rglob(f'*{suffix}') if p.is_file())
-    return '\n'.join(f'/* ---- {p.relative_to(SRC).as_posix()} ---- */\n{p.read_text(encoding="utf-8").rstrip()}\n'
+    return '\n'.join(f'/* ---- {p.relative_to(SRC).as_posix()} ---- */\n{base_source.read_text_source(p).rstrip()}\n'
                      for p in files)
 
 
@@ -922,7 +924,7 @@ def lint() -> list[str]:
         if not p.is_file():
             continue
         rel = p.relative_to(PKG).as_posix()
-        text = p.read_text(encoding='utf-8')
+        text = base_source.read_text_source(p)
         if build.EMOJI.search(text):
             problems.append(f'emoji glyph in {rel}')
         if p.suffix == '.css':
