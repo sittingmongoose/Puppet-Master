@@ -41,6 +41,12 @@ A separate four-load diagnostic retained body-child IDs/orders and stable style 
 | LeftRail candidate | pending | pending | pending | pending | pending | pending |
 | Mac proof copies | pending | pending | pending | pending | pending | pending |
 
+Windows descriptor diagnostic: PASS, 6/6; raw and selected verdicts remain native. The JSON retains every DOM-only path with original baseline/candidate tag, ID, class and layout status.
+
+
+Mac qualification: PASS; selected concurrency 4.
+
+
 ## Evidence
 
 Native JSON records every PNG path and SHA-256. The following index identifies the dataset/provenance files; all paths are Linux-readable. Raw evidence is outside Git.
@@ -65,6 +71,10 @@ Native JSON records every PNG path and SHA-256. The following index identifies t
 | /mnt/Cursor/PuppetMaster-Evidence/scratch/2026-10-18-pm7-purge/A-remote/capped-proof/mutation-2/report.json | `4b423d6e78385d77c7c433c178fccc546ca7090b06eac12cb9c4cafefece02d1` |
 | /mnt/Cursor/PuppetMaster-Evidence/scratch/2026-10-18-pm7-purge/A-remote/capped-proof/self-1/report.json | `a77c58825a2ed3141ec68ff6ff2e1c6591a1362a9f13f4a21d23d284ceb1aa36` |
 | /mnt/Cursor/PuppetMaster-Evidence/scratch/2026-10-18-pm7-purge/A-remote/capped-proof/mutation-1/report.json | `4dd4d6e448c076723f20b9bf2139be9a778e71abbd14b49fe09cca6fbf98e9fe` |
+| /mnt/Cursor/PuppetMaster-Evidence/scratch/2026-10-18-pm7-purge/A-remote/windows-descriptors/report.json | `ebc123582111c6f9368c177ab3cbe9acb6439bfaca7c277e9344e698bb31fae1` |
+| /mnt/Cursor/PuppetMaster-Evidence/scratch/2026-10-18-pm7-purge/A-remote/mac-capped-proof/validation.json | `32432001b7fddf45faa918946ae5deae7f5d6852a7294cc1163b79aa5a63e46f` |
+| /mnt/Cursor/PuppetMaster-Evidence/scratch/2026-10-18-pm7-purge/A-remote/mac-capped-proof/self-4/report.json | `78f3aa78b9190b51bce649bb6fbb6a00416b5d2bce44cb2b4fbc74cc92e51c7e` |
+| /mnt/Cursor/PuppetMaster-Evidence/scratch/2026-10-18-pm7-purge/A-remote/mac-capped-proof/mutation-4/report.json | `44899b4c28e767ef09f4fbeb5ec4504b6a79c019ae379a646d0b3d467a8c48c2` |
 
 ## Cleanup
 
