@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import { mkdtempSync, readFileSync, rmSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
-import { coverPage, executedRanges, mergeCoverage, normalizeJsCoverage, sampleCoverage } from './coverage_union.mjs';
+import { beginCoverage, coverPage, emptyUnion, endCoverage, executedRanges, mergeCoverage, normalizeJsCoverage, sampleCoverage } from './coverage_union.mjs';
 
 test('a later branch sample cannot erase bytes touched by an earlier sample', () => {
   const script = (zero) => ({ script: 'same', functions: [{ functionName: '', ranges: [
@@ -130,7 +130,54 @@ test('a count from a tracked input never speaks for an untracked one when mergin
   assert.ok(!('unsampled_navigations' in mergeCoverage(tracked, untracked)));
   assert.ok(!('unsampled_navigations' in mergeCoverage(untracked, tracked)));
   assert.ok(!('unsampled_navigations' in mergeCoverage(untracked, { js: [], css: [], unsampled_navigations: null })));
-  // An empty base is the fresh-file placeholder, not an untracked input.
-  assert.equal(mergeCoverage({ js: [], css: [] }, { js: [], css: [], unsampled_navigations: 1 }).unsampled_navigations, 1);
+  // Empty untracked data is unknown; only the explicit initializer is fresh.
+  assert.ok(!('unsampled_navigations' in mergeCoverage({ js: [], css: [] }, tracked)));
+  assert.ok(!('unsampled_navigations' in mergeCoverage(JSON.parse(JSON.stringify(emptyUnion())), tracked)));
+  assert.equal(mergeCoverage(emptyUnion(), { js: [], css: [], unsampled_navigations: 1 }).unsampled_navigations, 1);
+  assert.equal(mergeCoverage(emptyUnion(), { js: [], css: [], unsampled_navigations: 0 }).unsampled_navigations, 0);
   assert.equal(mergeCoverage(tracked, { js: [], css: [], unsampled_navigations: 3 }).unsampled_navigations, 5);
+});
+
+test('three serialized sessions cannot upgrade an empty unknown aggregate to tracked zero', async () => {
+  const dir = mkdtempSync(join(tmpdir(), 'pm7-coverage-empty-chain-'));
+  const file = join(dir, 'union.json');
+  const session = (withSheet = false) => {
+    const listeners = new Map();
+    return {
+      listeners,
+      on(event, callback) { listeners.set(event, callback); return () => listeners.delete(event); },
+      async send(method) {
+        if (method === 'Page.getFrameTree') return { frameTree: { frame: { id: 'main', url: 'about:blank' } } };
+        if (method === 'Profiler.takePreciseCoverage') return { result: [] };
+        if (method === 'CSS.stopRuleUsageTracking') return { ruleUsage: withSheet
+          ? [{ styleSheetId: 'sheet', startOffset: 0, endOffset: 11, used: true }] : [] };
+        if (method === 'CSS.getStyleSheetText') return { text: '.touched {} .untouched {}' };
+        return {};
+      },
+    };
+  };
+  try {
+    const first = session();
+    await beginCoverage(first);
+    for (const url of ['first', 'second', 'third']) first.listeners.get('Page.frameNavigated')({ frame: { id: 'main', url } });
+    await endCoverage(first, file);
+    assert.equal(JSON.parse(readFileSync(file)).unsampled_navigations, 2);
+
+    const untracked = async (method) => method === 'Profiler.takePreciseCoverage' ? { result: [] } : {};
+    await beginCoverage(untracked);
+    await endCoverage(untracked, file);
+    const middle = JSON.parse(readFileSync(file));
+    assert.equal(middle.js.length + middle.css.length + middle.stylesheets.length, 0);
+    assert.ok(!('unsampled_navigations' in middle));
+
+    const third = session(true);
+    await beginCoverage(third);
+    third.listeners.get('CSS.styleSheetAdded')({ header: { styleSheetId: 'sheet' } });
+    await endCoverage(third, file);
+    const final = JSON.parse(readFileSync(file));
+    assert.ok(!('unsampled_navigations' in final));
+    assert.equal(final.css.length, 1);
+    assert.equal(final.stylesheets.length, 1);
+    assert.equal(first.listeners.size + third.listeners.size, 0);
+  } finally { rmSync(dir, { recursive: true, force: true }); }
 });

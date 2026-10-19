@@ -16,6 +16,7 @@ import { dirname, resolve } from 'node:path';
 const digest = (text) => createHash('sha256').update(text).digest('hex').slice(0, 16);
 export const USED_RANGES_PROVENANCE = 'per-sample-v1';
 const stylesheetStates = new WeakMap();
+const freshUnion = Symbol('fresh coverage accumulator');
 
 export function takeCoverageFlag(argv) {
   const i = argv.indexOf('--coverage');
@@ -189,10 +190,10 @@ export function mergeCoverage(base, sample) {
   const byCss = (a, b) => cssKey(a).localeCompare(cssKey(b));
   // Navigation knowledge merges like provenance: a count from a tracked input
   // cannot speak for an input that was not tracked, so any missing count merges
-  // to unknown. An empty base is the fresh-file placeholder, not an untracked input.
+  // to unknown. Only an explicitly fresh accumulator is the initial placeholder;
+  // a serialized empty aggregate may already have lost navigation knowledge.
   const baseNav = base.unsampled_navigations, sampleNav = sample.unsampled_navigations;
-  const baseEmpty = baseNav == null && !(base.js || []).length && !(base.css || []).length && !(base.stylesheets || []).length;
-  const navigations = baseNav != null && sampleNav != null ? baseNav + sampleNav : baseEmpty ? sampleNav : null;
+  const navigations = base[freshUnion] ? sampleNav : baseNav != null && sampleNav != null ? baseNav + sampleNav : null;
   return {
     version: 2,
     js: [...js.values()].sort((a, b) => a.script.localeCompare(b.script)),
@@ -276,8 +277,9 @@ async function cssEntries(send, payload, state) {
   return { css: entries, stylesheets };
 }
 
-function emptyUnion() {
-  return { version: 2, js: [], css: [] };
+export function emptyUnion() {
+  // This marker is never serialized or carried into a merged result.
+  return { version: 2, js: [], css: [], [freshUnion]: true };
 }
 
 function readUnion(file) {

@@ -4,6 +4,8 @@
 profiler, CSS tracking, or coverage navigation wrappers. Keep one union per page.
 Run harnesses writing the same file serially; independent processes should write
 separate files, then merge with the exported `mergeCoverage(base, sample)`.
+Use `emptyUnion()` for a fresh accumulator. An arbitrary or serialized empty
+union is an untracked input; later tracked samples cannot restore its count.
 
 The external matrix harness retains its original Playwright dependency path when
 `PM7_PLAYWRIGHT` is unset; that variable is an optional override. The correction
