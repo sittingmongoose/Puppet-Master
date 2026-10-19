@@ -107,7 +107,7 @@ html[data-theme$="-light"] #panel-usage :is([data-series-index], [data-tk], [dat
 #panel-usage .pmu-mark[data-mark="line"] { fill: none; stroke: var(--c); stroke-width: 2.25; stroke-linejoin: round; stroke-linecap: round; }
 #panel-usage .pmu-mark[data-mark="line"][data-role="cost"] { stroke-width: 2; }
 #panel-usage .pmu-mark[data-mark="bridge"] { fill: none; stroke: var(--c); stroke-width: 1.25; stroke-dasharray: 2 4; stroke-linecap: round; opacity: .55; }
-#panel-usage .pmu-costdots .pmu-mark[data-mark="dot"] { stroke-width: 1.75; }
+
 #panel-usage .pmu-mark[data-mark="line"][data-series-role="baseline"] { stroke-dasharray: 4 3; stroke-width: 1.5; opacity: .8; }
 #panel-usage .pmu-mark[data-mark="line"][data-dash="dash"] { stroke-dasharray: 9 4; }
 #panel-usage .pmu-mark[data-mark="line"][data-spark] { stroke-width: 1.5; }
@@ -122,7 +122,7 @@ html:not([data-pmu-soft]) #panel-usage .pmu-mark[data-mark="glow"] { filter: blu
 html:not([data-pmu-soft])[data-theme$="-light"] #panel-usage .pmu-mark[data-mark="glow"] { opacity: .18; }
 #panel-usage .pmu-mark[data-mark="dot"] { fill: var(--c); stroke: var(--pmu-card); stroke-width: 2; transform-box: fill-box; transform-origin: center; }
 #panel-usage .pmu-mark[data-mark="dot"][data-spark] { stroke-width: 1.5; }
-#panel-usage .pmu-halo { fill: var(--c); opacity: .18; stroke: none; pointer-events: none; transform-box: fill-box; transform-origin: center; }
+
 html[data-theme^="retro"] #panel-usage :is(.pmu-halo, .pmu-hhalo), html[data-o55-nier="on"] #panel-usage :is(.pmu-halo, .pmu-hhalo) { display: none; }
 /* HTML marks over the plot (WOW-TASKS C-9): dots, halos, the TODAY marker and the budget rule animate on the compositor */
 #panel-usage .pmu-hmarks { position: absolute; inset: 0; z-index: 2; pointer-events: none; }

@@ -506,7 +506,7 @@ html[data-o55-nier][data-contrast="high"][data-theme^="basic"] #panel-settings {
 
 /* Basic's rules that paint a colour of their own (blue tints, black shadows, white terminal tab text), in ink. */
 html[data-o55-nier][data-theme^="basic"] .minimap-viewport { background: rgba(var(--o55-nier-ink-rgb), .06); border-color: rgba(var(--o55-nier-ink-rgb), .16); }
-html[data-o55-nier][data-theme^="basic"] .files-panel { box-shadow: var(--elev-2); }
+
 html[data-o55-nier][data-theme^="basic"] .floating-chat { box-shadow: var(--elev-3); }
 html[data-o55-nier][data-theme^="basic"] .page-projects .projects-actions button:hover { box-shadow: var(--elev-hover); }
 html[data-o55-nier][data-theme^="basic"] .page-projects .projects-toolbar { box-shadow: var(--elev-1); }

@@ -12,7 +12,7 @@ What apply() does, every step guarded so it happens exactly once or the build st
   1. Finds the #panel-usage band (`<div class="page page-usage" id="panel-usage">` .. `</div><!-- page-usage -->`).
   2. Reads what the rest of the concept needs from that carrier: the chat context module's rules from the anonymous T21
      stylesheet (69 rules), the two concept-wide Retro Light rules of pm7-t29-usage-final, and the global status bar
-     and Home dashboard rules of pm7-t32-final (62 rules). The dead Prism selector arms have been removed from these
+     and Home dashboard rules of pm7-t32-final (57 rules). The dead Prism selector arms have been removed from these
      sources. Both filtered stylesheets keep their ids and their order, so the cascade outside Usage is unchanged.
      The old Prism markup/controller are removed from source. T24 and T31 are retired manifest blocks kept as history.
   3. Extracts the chat context module (window.PM7_CONTEXT) from its context-only base script, pinned by sha256, and runs it
@@ -21,7 +21,7 @@ What apply() does, every step guarded so it happens exactly once or the build st
      pm7-t29-usage-final and pm7-t32-final, <style id="pm-usage-css"> (src/css, every `#panel-usage ` anchor widened to
      `:is(#panel-usage,[data-pmu-host])` for hosted boards by host_scope_css, its count checked), src/markup.html,
      <script id="pm-usage-js"> (window.PM_USAGE_COPY, src/js, the context module), <!-- USAGE:BODY:END -->, the close tag.
-  5. Outside the band: checks the filter census of pm7-t23-adjustments (75 kept; its dead Prism rules have been removed
+  5. Outside the band: checks the filter census of pm7-t23-adjustments (69 kept; its dead Prism rules have been removed
      from source). Shared blocks retain only their live selector arms.
   6. Merges the review roster (src/roster.json) into the Settings providers fixture and seeds saved Settings states once
      (roster_patch). NIER_ENTRIES contributes the page's selectors to the shared NieR registry, emitted by build.py
@@ -57,8 +57,8 @@ CTX_JS_SHA256 = '5fb115273b346fb26bf7ea81246caae88b57bdb5e17f5878f510563477480c1
 EXPECT = {
     't21 context rules': {'kept_rules': 69, 'rewritten_rules': 0, 'dropped_rules': 0, 'dropped_keyframes': 0},
     'pm7-t29-usage-final': {'kept_rules': 2, 'rewritten_rules': 0, 'dropped_rules': 0, 'dropped_keyframes': 0},
-    'pm7-t32-final': {'kept_rules': 62, 'rewritten_rules': 0, 'dropped_rules': 0, 'dropped_keyframes': 0},
-    'pm7-t23-adjustments': {'kept_rules': 75, 'rewritten_rules': 0, 'dropped_rules': 0, 'dropped_keyframes': 0},
+    'pm7-t32-final': {'kept_rules': 57, 'rewritten_rules': 0, 'dropped_rules': 0, 'dropped_keyframes': 0},
+    'pm7-t23-adjustments': {'kept_rules': 69, 'rewritten_rules': 0, 'dropped_rules': 0, 'dropped_keyframes': 0},
 }
 # Inside the band and removed with it (each must be there exactly once, so a moved block cannot survive unnoticed).
 BAND_ONLY = ['<style id="pm7-t29-usage-final">', '<style id="pm7-t32-final">', T21_ANCHOR, CTX_JS_START, CTX_JS_END]
@@ -294,7 +294,9 @@ HOST_SCOPE = ':is(#panel-usage,[data-pmu-host])'
 # them too), then re-pin the number here. Any other use of #panel-usage (a child or sibling combinator, a rule for the
 # panel itself, an anchor outside a selector) stops the build: it would be Usage-only, or not a selector, without
 # saying so.
-HOST_SCOPE_EXPECT = {'rewritten': 2680, 'compound': 20}
+# A3-css (2026-10-19): twenty certified dead whole rules removed from the authored Usage CSS;
+# their twenty descendant anchors leave the hosted-board census. Compound uses stay unchanged.
+HOST_SCOPE_EXPECT = {'rewritten': 2660, 'compound': 20}
 HOST_AT_GROUPS = ('@media', '@supports', '@container', '@layer')
 _ANCHOR_RX = re.compile(re.escape(HOST_ANCHOR) + r'(?![\w-])')
 

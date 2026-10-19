@@ -35,7 +35,7 @@
 .plugin-owner-kicker { color:var(--accent-primary); font-size:10px; font-weight:820; letter-spacing:.08em; text-transform:uppercase; }
 .plugin-owner-title { color:var(--text-primary); font-weight:780; }
 .plugin-owner-note { color:var(--text-secondary); font-size:var(--fs-sm); line-height:1.4; }
-.plugin-fact-stack { display:grid; gap:8px; }
+
 .plugin-fact-card { min-width:0; padding:12px; border:1px solid var(--border); border-radius:var(--radius-md); background:var(--surface); }
 .plugin-fact-card .panel-title { margin-bottom:3px; }
 .plugin-fact-card .panel-subtitle { margin-bottom:9px; }

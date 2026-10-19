@@ -33,7 +33,7 @@
 #panel-usage .pmu-textbtn[disabled] { border-color: var(--pmu-rule); color: var(--pmu-ink-3); cursor: default; }
 #panel-usage .pmu-textbtn.is-primary { background: color-mix(in srgb, var(--pmu-accent) 12%, transparent); }
 #panel-usage .pmu-more { flex: none; grid-column: 1 / -1; padding: 4px 0 0; color: var(--pmu-ink-3); font-size: 12px; }
-#panel-usage .pmu-note { margin: 0; color: var(--pmu-ink-3); font-size: 12px; line-height: 1.45; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; flex: none; }
+
 #panel-usage .pmu-wempty p { margin: 0; font-size: 13px; color: var(--pmu-ink-3); text-align: center; }
 #panel-usage .pmu-wempty span { font-size: 12px; color: var(--pmu-ink-3); text-align: center; }
 #panel-usage .pmu-cfoot { min-width: 0; }
@@ -403,7 +403,7 @@ html[data-theme^="retro"] #panel-usage .pmu-caveat, html[data-o55-nier="on"] #pa
 #panel-usage .pmu-freeprice { display: flex; align-items: baseline; gap: 8px; height: 30px; }
 #panel-usage .pmu-freeprice b { font-size: 18px; font-weight: 640; color: var(--pmu-ink); }
 #panel-usage .pmu-freeprice span { font-size: 12px; color: var(--pmu-ink-3); }
-#panel-usage .pmu-freeavail { min-width: 0; }
+
 #panel-usage .pmu-cachetop { display: flex; align-items: center; gap: 12px; min-width: 0; }
 #panel-usage .pmu-cachering { flex: none; }
 #panel-usage .pmu-cachehead { display: flex; flex-direction: column; gap: 1px; min-width: 0; }

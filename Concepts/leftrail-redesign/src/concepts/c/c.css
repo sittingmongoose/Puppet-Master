@@ -342,8 +342,8 @@ html[data-motion="reduced"][data-rail-concept="c"] #activityBar *, html[data-red
 /* ---------------------------------------------------------------- Source Control and Docker pieces */
 .pmr-c-identcol { display: flex; flex-direction: column; gap: 2px; min-width: 0; width: 100%; }
 .pmr-c-identcol > .pmr-c-idstate { align-self: flex-start; margin-left: -6px; }
-.pmr-c-idready { display: inline-flex; min-width: 0; }
-.pmr-c-idready .pmr-status { font-size: var(--pmr-fs-meta); }
+
+
 .pmr-c-engine .pmr-trigger-label { font-weight: 600; }
 .pmr-c-row.is-two { height: auto; min-height: var(--pmr-row2-h); padding-top: 5px; padding-bottom: 5px; align-items: center; }
 .pmr-c-two { flex: 1 1 auto; min-width: 0; display: flex; flex-direction: column; gap: 1px; }

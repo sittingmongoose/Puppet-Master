@@ -122,7 +122,7 @@ html[data-theme^="retro"] #panel-settings .o55g-recap-list li { border: 2px soli
 #panel-settings .o55g-layer.o55g-out { pointer-events: none; z-index: 0; }
 #panel-settings .o55g-content { margin-block: auto; padding: 30px 40px 26px; max-width: 620px; width: 100%; box-sizing: border-box; }
 #panel-settings .o55g-eyebrow { margin: 0 0 10px; font: 700 11.5px/1.2 var(--body-font); letter-spacing: 0.13em; text-transform: uppercase; color: var(--g-accent); }
-#panel-settings .o55g-eyebrow-step { color: var(--text-muted); }
+
 #panel-settings .o55g-title { margin: 0 0 10px; font: 750 clamp(22px, 2.1vw, 28px)/1.18 var(--display-font, var(--body-font)); letter-spacing: -0.012em; color: var(--text-primary); outline: none; text-wrap: balance; }
 #panel-settings .o55g-lead { margin: 0 0 22px; font: 400 15px/1.55 var(--body-font); color: var(--text-secondary); max-width: 54ch; text-wrap: pretty; }
 #panel-settings .o55g-title + .o55g-main { margin-top: 14px; }

@@ -13,8 +13,8 @@
 #panel-usage .pmu-stale { display: inline-flex; align-items: center; gap: 3px; color: var(--pmu-ink-warn); }
 #panel-usage .pmu-stale .pmu-glyph { width: 12px; height: 12px; color: inherit; }
 #panel-usage .pmu-stale .pmu-glyph svg { width: 11px; height: 11px; }
-#panel-usage .pmu-asw { display: inline-flex; align-items: center; gap: 6px; font-size: 12.5px; color: var(--pmu-ink-3); white-space: nowrap; }
-#panel-usage .pmu-asw svg { width: 6px; height: 14px; color: var(--pmu-ink); }
+
+
 
 /* ------------------------------------------------------------------ provider plate, two or more accounts (A1 10.1) */
 #panel-usage .pmu-acc { display: flex; flex-direction: column; min-width: 0; min-height: 0; flex: 1 1 auto; }
@@ -42,7 +42,7 @@
 #panel-usage .pmu-amounts { font-size: 12px; color: var(--pmu-ink-3); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 #panel-usage .pmu-amounts b { font-weight: 560; color: var(--pmu-ink-2); }
 #panel-usage .pmu-acccell { min-width: 0; }
-#panel-usage .pmu-accnone { min-width: 0; font-size: 12.5px; }
+
 #panel-usage .pmu-accactcell { display: flex; justify-content: flex-end; min-width: 0; }
 #panel-usage .pmu-accact.is-active { font-size: 12.5px; font-weight: 640; color: var(--pmu-ink-good); white-space: nowrap; }
 #panel-usage .pmu-accbtn { height: 28px; }
@@ -69,7 +69,7 @@
    the second line (54-w-accounts.js single) */
 #panel-usage .pmu-accmeter.is-na .pmu-vs { white-space: normal; align-items: flex-start; line-height: 17px; }
 #panel-usage .pmu-accmeter.is-na .pmu-vs .pmu-ico { margin-top: 2px; }
-#panel-usage .pmu-naplan { font-size: 12px; color: var(--pmu-ink-3); }
+
 #panel-usage .pmu-amtv { display: block; min-width: 0; text-align: right; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 #panel-usage .pmu-amtv .pmu-vs { display: inline; }
 #panel-usage .pmu-amtv .pmu-vs .pmu-ico { display: inline-block; vertical-align: -2px; margin-right: 4px; }
@@ -84,7 +84,7 @@
 /* ------------------------------------------------------------------ the auto-switch strip (A1 10.3) */
 #panel-usage .pmu-switch { display: flex; align-items: center; gap: 10px 24px; min-width: 0; flex: 1 1 auto; font-size: 12.5px; }
 #panel-usage .pmu-switch.is-two { flex-direction: column; align-items: stretch; justify-content: center; gap: 8px; }
-#panel-usage .pmu-swctl { display: flex; align-items: center; flex-wrap: wrap; gap: 6px 10px; min-width: 0; flex: none; }
+
 #panel-usage .pmu-swlabel { font-size: 12.5px; font-weight: 540; color: var(--pmu-ink); margin-right: 4px; }
 #panel-usage .pmu-swat { font-size: 12.5px; color: var(--pmu-ink-2); }
 #panel-usage .pmu-stepval { border: 0; background: transparent; color: var(--pmu-ink); font: inherit; cursor: pointer; }
@@ -92,8 +92,8 @@
 /* one disabled look in either form (motion QA A15: the hover bridge's aria-disabled form drew at .56) */
 #panel-usage .pmu-stepper button:is([disabled], [aria-disabled="true"]) { opacity: .35; cursor: default; }
 #panel-usage .pmu-stepper button:is([disabled], [aria-disabled="true"]):hover { background: transparent; color: var(--pmu-ink-3); }
-#panel-usage .pmu-swwarn { margin-left: 6px; color: var(--pmu-ink-3); white-space: nowrap; }
-#panel-usage .pmu-swwarn b { font-weight: 600; color: var(--pmu-ink-2); }
+
+
 #panel-usage .pmu-swfams { display: flex; align-items: center; flex-wrap: nowrap; gap: 8px 18px; min-width: 0; overflow: hidden; }
 #panel-usage .pmu-switch.is-two .pmu-swfams { flex-wrap: wrap; overflow: visible; }
 #panel-usage .pmu-swfams > .pmu-cap { flex: none; }
@@ -102,8 +102,8 @@
 #panel-usage .pmu-swfam b { font-weight: 600; color: var(--pmu-ink); }
 #panel-usage .pmu-swbar { display: inline-block; width: 110px; flex: none; }
 #panel-usage .pmu-switch.is-panel { flex-direction: column; align-items: stretch; gap: 4px; }
-#panel-usage .pmu-switch.is-panel .pmu-swrow { display: flex; align-items: center; gap: 8px; min-height: 30px; }
-#panel-usage .pmu-switch.is-panel .pmu-swwarn { margin-left: 0; }
+
+
 #panel-usage .pmu-switch.is-panel .pmu-swcap { margin-top: 6px; }
 #panel-usage .pmu-switch.is-panel .pmu-swfam { display: grid; grid-template-columns: 16px minmax(0, 1fr) 110px; height: 30px; border-top: 1px solid var(--pmu-rule-2); }
 #panel-usage .pmu-switch.is-panel .pmu-swfamname { overflow: hidden; text-overflow: ellipsis; }
@@ -126,7 +126,7 @@
 #panel-usage .pmu-setuphead .pmu-glyph { color: inherit; }
 #panel-usage .pmu-setupcta-row { display: flex; align-items: center; height: 36px; }
 #panel-usage .pmu-setupnote { margin: 0; height: 22px; font-size: 12px; color: var(--pmu-ink-3); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-#panel-usage .pmu-amtsub { margin: -4px 0 0 26px; font-size: 12px; color: var(--pmu-ink-3); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
 #panel-usage .pmu-setupcta { height: auto; min-height: 28px; padding: 4px 10px; white-space: normal; text-align: left; line-height: 1.3; }
 #panel-usage .pmu-setupcta-row { height: auto; min-height: 36px; }
 #panel-usage .pmu-amt .pmu-amtline2 { display: block; flex-basis: 100%; font-style: normal; font-weight: 400; font-size: 12px; text-align: right; color: var(--pmu-ink-3); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
@@ -177,10 +177,10 @@ html[data-theme^="retro"] #panel-usage .pmu-provrow.is-setup { border-radius: 0;
 #panel-usage .pmu-ladder { display: grid; column-gap: 28px; min-width: 0; flex: 1 1 auto; }
 #panel-usage .pmu-ladside { display: flex; flex-direction: column; gap: 10px; min-width: 0; }
 #panel-usage .pmu-ladside .pmu-herohead { height: auto; min-height: 60px; flex-wrap: wrap; }
-#panel-usage .pmu-ladctl { flex-wrap: wrap; column-gap: 7px; }
-#panel-usage .pmu-ladctl .pmu-swlabel { margin-right: 0; }
-#panel-usage .pmu-ladwarn { font-size: 12.5px; }
-#panel-usage .pmu-ladwarn .pmu-swwarn { margin-left: 0; }
+
+
+
+
 #panel-usage .pmu-ladmain { display: flex; flex-direction: column; min-width: 0; }
 #panel-usage .pmu-ladcap { display: flex; justify-content: space-between; height: 22px; align-items: center; }
 #panel-usage .pmu-ladcols { display: grid; column-gap: 28px; min-width: 0; }
@@ -206,9 +206,8 @@ html[data-theme^="retro"] #panel-usage .pmu-provrow.is-setup { border-radius: 0;
 #panel-usage .pmu-ladrow:hover .pmu-ladtrack { box-shadow: 0 0 0 1px color-mix(in srgb, var(--c) 50%, transparent); }
 /* the switch line: at the switch level of every track (16 + 8 + the measured name column + 8: it lives in the track
    column's coordinates; 104 px = the fixed columns and the four gaps) */
-#panel-usage .pmu-ladline { position: absolute; top: -4px; bottom: -2px; width: 0; pointer-events: none; border-left: 1.5px dashed color-mix(in srgb, var(--pmu-ink) 60%, transparent);
-  left: calc(32px + var(--ln, 110px) + (100% - 104px - var(--ln, 110px)) * var(--swf, .1)); }
-#panel-usage .pmu-ladline[data-off] { opacity: .25; }
+
+
 #panel-usage .pmu-ladfoot { margin: 4px 0 0; font-size: 12px; color: var(--pmu-ink-3); }
 html[data-theme^="retro"] #panel-usage :is(.pmu-ladtrack, .pmu-ladfill) { border-radius: 0; }
 html[data-o55-nier="on"] #panel-usage .pmu-ladfill { background: repeating-linear-gradient(90deg, var(--o55-nier-ink) 0 5px, transparent 5px 7px); box-shadow: none; }

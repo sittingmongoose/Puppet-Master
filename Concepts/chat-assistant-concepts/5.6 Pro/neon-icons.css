@@ -105,7 +105,7 @@ svg:where(.nx) .nx-f { fill: var(--nx-ink, currentColor); stroke: none; }
 /* The quieter half of a two-level drawing (working's ring under the bright bead that orbits on it). */
 svg:where(.nx) .nx-dim { opacity: .65; }
 /* module-shell's picker chevron (CHEVRON) keeps the 2-unit weight it was drawn with. */
-svg.pmx-chevron { --nx-stroke-base: 2; }
+
 
 /* ------------------------------------------------------------------ 3. halos */
 /* The core band, one merged path. Strength is stroke-opacity on the halo path, never group opacity or color-mix().
@@ -220,7 +220,7 @@ svg:where(.nx-z0) .nx-p { animation: none; }
 }
 /* Filled chips (primary buttons) already carry their own fill: the act plays, the halo stays off. (Send/Stop is
    send-stop.css's solid chip, its glyph inside .ss-face with its own lighting; the .send-button arm went with it.) */
-.primary-button > svg.nx, .soft-button.primary > svg.nx { --nx-hiv: hidden; --nx-fl: none; }
+
 
 /* ------------------------------------------------------------------ 8b. Fast mode (Jared, G1 item 15; the strike, 3D) */
 /* OWNER of this block: Neon icons, surface step 3D (2026-10-02); the strike redrawn 2026-10-07. The Fast bolt is drawn
@@ -263,7 +263,7 @@ body[data-theme$="-light"] .nx-bolt { --nxb-bl: nx-bolt-bl-l; --nxb-blh: nx-bolt
   background: radial-gradient(closest-side, var(--warning), transparent);
   opacity: var(--nxb-rest);
 }
-svg.fast-bolt, svg.meta-fast, svg.fast-row-bolt { --nx-ink: var(--warning); --nx-hiv: visible; --nx-hi-a: var(--nx-h-bolt-i); animation: none; opacity: 1; }
+
 .nx-bolt > svg .nx-h { opacity: .32; }
 /* The strike overlays (neon-icons.js lightning: .nx-bk0-4 the leader bands, .nx-bkf the flash fill) are act overlays
    (nx-ov, section 6): hidden and still everywhere until a strike lights them, so the Fast row's unlit glyph (no
@@ -411,11 +411,7 @@ svg:where([data-nx="grill"]) .nx-gsm { stroke-width: calc(var(--nx-stroke-base, 
    row is a label and a shelf item a plain row, not the hover rule's hosts, so they are named here: hovering the row or
    focusing its box or its Add swells the halo and plays the act once, exactly like a concept glyph in a button. At
    rest the grill stands still (a sheet's marks hold still, the pmx loop budget is the sheen's). */
-.pmx-check:where(:hover, :focus-within) > .pmx-check-glyph > svg:where(.nx),
-.pmx-spec:where(:hover, :focus-within) > .pmx-spec-glyph > svg:where(.nx) {
-  --nx-hi-a: var(--nx-h-swell-i);
-  --nx-1: var(--nx-d1) var(--nx-ease) backwards;
-}
+
 @keyframes nx-grill-lid {
   0% { transform: translate(0px, 0px) rotate(0deg); } 24%, 50% { transform: translate(0px, -1.2px) rotate(-20deg); }
   58% { transform: translate(0px, -.96px) rotate(-16deg); } 63% { transform: translate(0px, -.54px) rotate(-9deg); }
@@ -511,7 +507,7 @@ body[data-theme$="-light"] .ph-status .nx-st-waiting:not(.nx-still)::before { an
 @media (prefers-reduced-motion: reduce) {
   svg.nx, svg.nx .nx-p, svg.nx .nx-h, svg.nx .nx-ov, .nx-st, .nx-st::before, .nx-bolt::before { animation: none !important; transition: none !important; }
 }
-body.pm56-reduced svg.nx, body.pm56-reduced svg.nx .nx-p, body.pm56-reduced svg.nx .nx-h, body.pm56-reduced svg.nx .nx-ov, body.pm56-reduced .nx-st, body.pm56-reduced .nx-st::before, body.pm56-reduced .nx-bolt::before { animation: none !important; transition: none !important; }
+
 html[data-motion="reduced"] svg.nx, html[data-motion="reduced"] svg.nx .nx-p, html[data-motion="reduced"] svg.nx .nx-h, html[data-motion="reduced"] svg.nx .nx-ov, html[data-motion="reduced"] .nx-st, html[data-motion="reduced"] .nx-st::before, html[data-motion="reduced"] .nx-bolt::before { animation: none !important; transition: none !important; }
 
 /* ------------------------------------------------------------------ 11. NieR Mode (PMConcept7 contract) */
@@ -529,7 +525,7 @@ html[data-o55-nier="on"] body {
 }
 html[data-o55-nier="on"] svg.nx .nx-h { display: none; }
 html[data-o55-nier="on"] .nx-st::before { display: none; }
-html[data-o55-nier="on"] .activity-item[data-hover-domain]::after { display: none; }
+
 html[data-o55-nier="on"] svg:where(.nx-a-spin) { --nx-le: steps(12, end); }
 html[data-o55-nier="on"] svg:where(.nx-t-idle) { --nx-ink: rgba(var(--o55-nier-ink-rgb), var(--nx-idle-a, .45)); }
 /* NieR Light: idle ink at .545 reads 3.06:1 on the row field (3:1 floor; the rust of blocked is 3.14) (3E2). A token,
@@ -578,7 +574,7 @@ html[data-o55-nier="on"] .nx-st-waiting { background: var(--nx-bk, var(--o55-nie
 html[data-o55-nier="on"] .nx-st-waiting > svg.nx { --nx-ink: var(--o55-nier-on-ink); }
 /* a pmx decision row ("Your move.") inks its mark in --accent (module-shell.css, 0,5,1), and NieR's --accent is the
    block's own ink, so the "?" vanished into the block (final review, 2026-10-03): the block's strokes stay paper there */
-html[data-o55-nier="on"] .pmx-decision[data-tone] .pmx-decision-mark > .nx-st-waiting > svg.nx { --nx-ink: var(--o55-nier-on-ink); }
+
 /* on an ink cursor bar the block turns over: paper with ink strokes */
 html[data-o55-nier-parts~="cursor"] .thread-row:hover .nx-st-waiting,
 html[data-o55-nier-parts~="cursor"] .thread-row.active .nx-st-waiting { --nx-bk: var(--o55-nier-on-ink); }
@@ -635,24 +631,13 @@ html[data-o55-nier-parts~="cursor"][data-o55-nier-parts~="square"] .thread-row:h
 html[data-o55-nier-parts~="cursor"][data-o55-nier-parts~="square"] .thread-row.active .nx-st-pending::after { border-color: var(--o55-nier-on-ink); }
 /* The bar: ink glyphs with stepped acts (the tokens above); a working domain carries an ink underline under its
    glyph, drawn by the item's anchored ::after (the backlight's slot, unused in NieR). */
-html[data-o55-nier="on"][data-ab-goal="working"] .activity-item[data-hover-domain="goal"]::after,
-html[data-o55-nier="on"][data-ab-todo="working"] .activity-item[data-hover-domain="todo"]::after,
-html[data-o55-nier="on"][data-ab-subagents="working"] .activity-item[data-hover-domain="subagents"]::after,
-html[data-o55-nier="on"][data-ab-crew="working"] .activity-item[data-hover-domain="crew"]::after,
-html[data-o55-nier="on"][data-ab-brainstorm="working"] .activity-item[data-hover-domain="brainstorm"]::after,
-html[data-o55-nier="on"][data-ab-review="working"] .activity-item[data-hover-domain="review"]::after,
-html[data-o55-nier="on"][data-ab-chat_room="working"] .activity-item[data-hover-domain="chat_room"]::after,
-html[data-o55-nier="on"][data-ab-changes="working"] .activity-item[data-hover-domain="changes"]::after,
-html[data-o55-nier="on"][data-ab-artifacts="working"] .activity-item[data-hover-domain="artifacts"]::after {
-  display: block; top: anchor(bottom); width: 12px; height: 2px; translate: -50% 3px; border-radius: 0; z-index: 0;
-  background: var(--o55-nier-ink); opacity: 1;
-}
+
 /* Reduced motion (the media query, html[data-motion], body.pm56-reduced): every NieR act and loop stops; the inverted
    needs-you block, the diamond and the underline still carry the state. */
 @media (prefers-reduced-motion: reduce) {
   html[data-o55-nier="on"] svg.nx .nx-c, html[data-o55-nier="on"] .nx-st::after { animation: none !important; }
 }
-html[data-o55-nier="on"] body.pm56-reduced svg.nx .nx-c, html[data-o55-nier="on"] body.pm56-reduced .nx-st::after { animation: none !important; }
+
 html[data-o55-nier="on"][data-motion="reduced"] svg.nx, html[data-o55-nier="on"][data-motion="reduced"] svg.nx .nx-p,
 html[data-o55-nier="on"][data-motion="reduced"] svg.nx .nx-c, html[data-o55-nier="on"][data-motion="reduced"] .nx-st,
 html[data-o55-nier="on"][data-motion="reduced"] .nx-st::after { animation: none !important; transition: none !important; }
@@ -670,52 +655,52 @@ html[data-o55-nier="on"][data-motion="reduced"] .nx-st::after { animation: none 
 :where(.event-card.warning) > .event-icon { color: var(--warning); }
 :where(.event-card.danger) > .event-icon { color: var(--danger); }
 /* a menu row's glyph takes the row's ink: muted at rest, the text ink on hover, where it ignites (section 8) */
-.menu-item .menu-icon { color: inherit; }
+
 /* a toggled icon button reads as on by its lit glyph on the raised neutral tile (the pins' idiom, composer.css), not
    by an accent tile, and never by the hover tile (--surface-3) */
-.icon-button.active { color: var(--text); border-color: var(--border-strong); background: var(--surface-4); }
-.icon-button.active > svg.nx { --nx-hiv: visible; --nx-hi-a: var(--nx-h-concept-i); }
+
+
 /* Activity lines name their tone (data-tone), never an inline colour. */
-.activity-line [data-tone="blocked"] { color: var(--danger); }
-.activity-line [data-tone="attention"] { color: var(--warning); }
-.activity-line [data-tone="working"] { color: var(--accent); }
-.activity-line [data-tone="changed"] { color: var(--accent-2); }
-.activity-line [data-tone="done"] { color: var(--positive); }
-.activity-line [data-tone="idle"] { color: var(--subtle); }
-.activity-line [data-tone="paused"] { color: var(--muted); }
+
+
+
+
+
+
+
 /* Capability dots (the composer): a neutral tile; a dot is drawn only while its capability is on, so its glyph is
    concept-lit (the text ink with its bloom) and plays its act when hovered. Back Seat Driver On (the open eye) is
    lit; Auto (the lowered lid) is dim: bsd.css's muted ink and no bloom. */
-.capability-dot, .capability-dot.goal { color: var(--text); background: var(--surface-3); }
-.composer-infield .capability-dot, .composer-infield .capability-dot.goal { color: var(--text); background: var(--surface-3); border-color: var(--border); }
-.composer-infield .capability-dot.bsd > svg.nx[data-nx="eye"] { color: var(--text); }
-.capability-dot.bsd > svg.nx[data-nx="kind-bsd-auto"] { --nx-hi-a: 0; }
-.capability-dot:hover > svg.nx { --nx-hi-a: var(--nx-h-swell-i); --nx-1: var(--nx-d1) var(--nx-ease) backwards; }
+
+
+
+
+
 /* The working card's head: while the run runs, the step's glyph is a live status mark (working tone and bloom) that
    breathes like the bar's working domain. It is keyed by step (wpi:<step.id>), so it remounts at every handover and
    plays the step glyph's act once. The tile is neutral; a paused or finished run shows the glyph at rest. */
-.working-head .work-phase-icon { background: var(--surface-3); color: var(--muted); box-shadow: none; }
-.working-head .work-phase-icon > svg.nx-r-status { --nx-1: var(--nx-d1) var(--nx-ease) backwards; animation: ab-breathe 2200ms ease-in-out infinite; }
-html[data-o55-nier="on"] .working-head .work-phase-icon > svg.nx-r-status { animation-timing-function: steps(3, end); }
+
+
+
 /* The chat header's status: the thread's live mark beside the word, and the word in the mark's tone (app.js
    headerStatusTone; styles.css gave every word the warning amber, so Ready, Paused and Complete read lit beside their
    quiet marks and Waiting matched Working: final review, 2026-10-03). The quiet tones read muted. */
-.chat-state > .nx-st { margin-right: 1px; }
-.chat-state[data-tone="blocked"] { color: var(--danger); }
-.chat-state[data-tone="attention"] { color: var(--warning); }
-.chat-state[data-tone="working"] { color: var(--accent); }
-.chat-state[data-tone="changed"] { color: var(--accent-2); }
-.chat-state[data-tone="done"] { color: var(--positive); }
-.chat-state[data-tone="idle"], .chat-state[data-tone="paused"] { color: var(--muted); }
+
+
+
+
+
+
+
 /* the decision panel is needs-you: its head glyph keeps the canon accent (ACD-469) on the neutral tile */
-.decision-top > .event-icon { color: var(--accent); }
+
 
 /* ------------------------------------------------------------------ 13. 3D surfaces (step 3D) */
 /* OWNER of this section: Neon icons, surface step 3D (2026-10-02). The 3D surfaces keep their rules in their owner
    sheets (composer.css, composer-state.css, lens.css, turn-stage.css, transcript.css, history.css) and the Fast
    bolt's strike is block 8b; only the NieR restatement of an owner sheet's rhythm lives here, under the contract. */
 /* the Context Lens trigger's breathe (Mute, Focus) is stepped like every NieR rhythm */
-html[data-o55-nier="on"] .pm-lens-trigger.is-on svg.nx { animation-timing-function: steps(3, end); }
+
 
 /* ------------------------------------------------------------------ 14. still status marks (step 3E) */
 /* OWNER of this section: Neon icons, surface step 3E (2026-10-02). A status mark whose wrapper carries nx-still is

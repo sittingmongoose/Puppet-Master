@@ -85,20 +85,11 @@
     .pm-enter-up { animation: pm-enter-up var(--motion-med) var(--ease-default) both; }
     .pm-enter-scale { animation: pm-enter-scale var(--motion-med) var(--ease-default) both; }
     .pm-pop { animation: pm-pop var(--motion-med) var(--ease-spring) both; }
-    .pm-page-in { animation: pm-page-in 180ms var(--ease-out) both; }
-    .pm-shake-subtle { animation: pm-shake-subtle 300ms var(--ease-smooth); }
+    
+    
     .pm-press:active { transform: scale(.97); transition: transform var(--motion-fast) var(--ease-snap); }
-    .pm-celebrate { position: relative; animation: pm-celebrate 480ms var(--ease-spring); }
-    .pm-celebrate::after {
-      content: "";
-      position: absolute;
-      inset: -2px;
-      border-radius: inherit;
-      border: 1px solid var(--accent-primary);
-      opacity: 0;
-      animation: pm-celebrate-ring 600ms var(--ease-out);
-      pointer-events: none;
-    }
+    
+    
     .pm-stagger > * { animation-delay: calc(min(var(--i, 0), 8) * 50ms); }
 
     /* --- focus ring alias (low-specificity default; explicit class wins) --- */
@@ -295,20 +286,9 @@
 
     /* category accents: mint = files / side-panel area */
     [data-theme^="friendly"] .side-panel-slot { --pm6-sheen-accent: var(--pm6-cozy-mint); }
-    [data-theme^="friendly"] .files-panel {
-      --pm6-sheen-accent: var(--pm6-cozy-mint);
-      background: color-mix(in srgb, var(--pm6-cozy-mint) var(--pm6-cozy-mix), var(--pm6-cozy-card-base));
-      border: 1px solid color-mix(in srgb, var(--pm6-cozy-mint) var(--pm6-cozy-border-mix), var(--pm6-cozy-card-base));
-      border-radius: var(--radius-lg);
-      box-shadow: var(--elev-1);
-    }
-    [data-theme^="friendly"] .files-panel-header {
-      background: transparent;
-      border-bottom-color: color-mix(in srgb, var(--pm6-cozy-mint) var(--pm6-cozy-border-mix), var(--pm6-cozy-card-base));
-    }
-    [data-theme^="friendly"] .files-status {
-      border-top-color: color-mix(in srgb, var(--pm6-cozy-mint) var(--pm6-cozy-border-mix), var(--pm6-cozy-card-base));
-    }
+    
+    
+    
 
     /* chat panel chrome stays neutral; message stream shows the cozy ground */
     [data-theme^="friendly"] .chat-panel {
@@ -481,7 +461,7 @@
     ::selection { background: var(--accent-glow); color: var(--text-primary); }
 
     /* panel headers step up the type scale (design_system section 4) */
-    .s4-panel-title { font-size: var(--fs-xl); }
+    
     .chat-panel-header .title { font-size: var(--fs-lg); }
 
     /* themed scrollbars: part 02 ships the hidden-by-default base + the
@@ -665,13 +645,13 @@
       gap: calc(var(--md) * var(--density, 1));
     }
     .chat-panel-header { padding: calc(var(--md) * var(--density, 1)); }
-    .files-panel-header { padding: calc(var(--xs) * var(--density, 1)) calc(var(--sm) * var(--density, 1)); }
+    
     /* Issue 7: balanced bubble padding — was 2px top / 8px bottom (top-heavy),
        leaving text crowded against the top edge and the hover-row cramped.
        Symmetric vertical padding with slightly more bottom gives text room to
        breathe and centers multi-line content. */
     .msg-body { padding: calc(var(--sm) * var(--density, 1)) calc(var(--md) * var(--density, 1)) calc(var(--md) * var(--density, 1)); }
-    .sticky-plan-tracker { padding: calc(var(--md) * var(--density, 1)); }
+    
 
     /* ==================================================================
        RESPONSIVE RANGES (design_system section 6)

@@ -187,11 +187,7 @@ button.pm7-statusitem:focus-visible {
 .pm6-dash-resize:not([data-pm6-dash="resize"]).resizing { color: var(--accent-primary) !important; opacity: 1 !important; outline: none !important; }
 
 /* Frozen-grid dashboard resize preview. */
-.pm6-dash-card.pm7-dash-resize-origin {
-  opacity: 0 !important;
-  pointer-events: none !important;
-  transition: none !important;
-}
+
 .pm6-dash-card.pm7-dash-resize-lift {
   position: fixed !important;
   z-index: 2147481900 !important;
@@ -261,18 +257,10 @@ html.pm7-dash-moving * { cursor: grabbing !important; user-select: none !importa
 }
 .pm7-dash-size-btn:hover,
 .pm7-dash-size-btn:focus-visible { color: var(--accent-primary) !important; opacity: 1 !important; outline: none !important; }
-.pm7-dash-resize-preview {
-  position: fixed !important;
-  z-index: 2147481900 !important;
-  margin: 0 !important;
-  pointer-events: none !important;
-  contain: layout paint style !important;
-  box-shadow: 0 18px 46px color-mix(in srgb,#000 34%,transparent), 0 0 0 2px color-mix(in srgb,var(--accent-primary) 30%,transparent) !important;
-  transition: width 105ms cubic-bezier(.2,.8,.2,1), height 105ms cubic-bezier(.2,.8,.2,1) !important;
-}
-.pm6-dash-card.pm7-dash-move-origin { opacity: 0 !important; pointer-events: none !important; }
-.pm6-dash-card.pm7-dash-drop-before { box-shadow: inset 3px 0 0 var(--accent-primary), var(--elev-1) !important; }
-.pm6-dash-card.pm7-dash-drop-after { box-shadow: inset -3px 0 0 var(--accent-primary), var(--elev-1) !important; }
+
+
+
+
 
 @media (prefers-reduced-motion: reduce) {
   .pm6-dash-card.pm7-dash-resize-lift,

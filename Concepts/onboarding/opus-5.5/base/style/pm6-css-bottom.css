@@ -236,7 +236,7 @@
       font-family: var(--mono-font);
       letter-spacing: 0;
     }
-    [data-theme^="retro"] .pm-toast { border-radius: 0; box-shadow: var(--pm6-rb-shadow-hard, var(--elev-2)); }
+    
     [data-theme^="retro"] .pm6-bottom-empty-title { font-family: var(--mono-font); }
 
     /* popover + toast float above the sheet = reading plates */
@@ -247,7 +247,7 @@
     }
     [data-theme^="glass"] .pm6-session-chip { background: var(--pm6-glass-step-2); }
 
-    [data-theme^="basic"] .pm-toast { box-shadow: none; }
+    
 
     /* friendly cozy: frosted drawer internals + lavender branch/worktree accents */
     [data-theme^="friendly"] .bottom-tabs { background: transparent; }
@@ -257,16 +257,12 @@
     }
     [data-theme^="friendly"] .fm-wt-breadcrumb .fm-wt-branch { color: var(--accent-magenta); }
     [data-theme^="friendly"] .fm-wt-breadcrumb .fm-wt-icon { color: var(--accent-magenta); }
-    [data-theme^="friendly"] .pm-toast {
-      border-radius: var(--radius-md);
-      border-color: var(--border);
-      box-shadow: var(--elev-3);
-    }
+    
 
     @media (prefers-reduced-motion: reduce) {
-      .pm-toast, .pm-toast.pm6-toast-out { animation: none !important; transition: none !important; }
+      
     }
-    [data-motion="reduced"] .pm-toast, [data-motion="reduced"] .pm-toast.pm6-toast-out { animation: none !important; transition: none !important; }
+    
 
 
     /* ============================================================

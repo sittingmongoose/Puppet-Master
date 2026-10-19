@@ -141,7 +141,7 @@ body > .pm6-tb-menu.is-closing { z-index: 400; }
 .pm-input:focus-within { border-color: color-mix(in srgb, var(--accent-primary) 55%, transparent); box-shadow: 0 0 0 3px var(--accent-soft); }
 .pm-input input { flex: 1; min-width: 0; background: none; border: none; outline: none; font-size: 12px; color: var(--text-primary); }
 .pm-input input::placeholder { color: var(--text-muted); }
-.pm-input-ico { width: 13px; height: 13px; }
+
 
 .pm-btnrow { display: flex; gap: var(--sm); margin-bottom: var(--md); }
 .pm-btnrow .pm-btn { flex: 1; min-width: 0; }
@@ -535,8 +535,8 @@ body > .pm6-tb-menu .pm6-tb-menu-item-label,
 .sh-hlabel { font-family: var(--display-font); font-size: var(--rail-fs-label); font-weight: 700; letter-spacing: 1.4px; color: var(--text-primary); }
 .sh-hcount { margin-left: auto; flex: 0 1 auto; max-width: 48%; font-size: var(--rail-fs-label); font-weight: 700; padding: 1px 8px; border-radius: var(--radius-pill); background: color-mix(in srgb, var(--cat, var(--accent-blue)) 16%, transparent); color: var(--cat, var(--accent-blue)); white-space: nowrap; min-width: 0; overflow: hidden; text-overflow: ellipsis; }
 .sh-hcount .hc-full, .sh-hcount .hc-abbr { min-width: 0; overflow: hidden; text-overflow: ellipsis; }
-.sh-hstatus { margin-left: auto; display: inline-flex; align-items: center; gap: 6px; font-size: 9px; font-weight: 700; padding: 2px 9px; border-radius: var(--radius-pill); background: color-mix(in srgb, var(--graph-passed) 14%, transparent); color: var(--graph-passed); white-space: nowrap; }
-.sh-hstatus .dot { width: 7px; height: 7px; flex: none; }
+
+
 .sh-body { padding: var(--rail-pad-y) var(--rail-pad-x) var(--rail-pad-x); }
 /* denser shelf well (source staged/unstaged + sibling panes); optional class for panel agents */
 .sh-body.dense,
@@ -598,7 +598,7 @@ body > .pm6-tb-menu .pm6-tb-menu-item-label,
 .sh-name { font-size: var(--rail-fs-body); font-weight: 600; color: var(--text-primary); line-height: var(--rail-lh); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; display: flex; align-items: center; gap: 6px; }
 .sh-meta { font-size: var(--rail-fs-meta); color: var(--text-muted); line-height: var(--rail-lh); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .sh-mono { font-family: var(--mono-font); }
-.sh-rowact { display: flex; gap: var(--xs); flex: none; margin-left: auto; }
+
 
 /* changed-file / branch / stash rows as collapsed expanders: header keeps the
    pill-row look (button-free — actions live in the sprung .sh-accb body) */

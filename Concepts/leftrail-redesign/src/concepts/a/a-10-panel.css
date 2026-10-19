@@ -347,7 +347,7 @@ html[data-rail-concept="a"] .pmr-a-selacts { margin: 2px 0 0 -6px; gap: 0 2px; }
 html[data-rail-concept="a"] .pmr-a-selacts:empty { display: none; }
 html[data-rail-concept="a"] .pmr-a-ops { border-top: 1px solid var(--pmr-line); padding: 4px 0 8px; }
 html[data-rail-concept="a"] .pmr-a .pmr-a-oprow { margin-bottom: 2px; }
-html[data-rail-concept="a"] .pmr-a-opcount { font-size: var(--pmr-fs-meta); color: var(--pmr-text-2); }
+
 html[data-rail-concept="a"] .pmr-a-prog { height: 2px; margin: 0 calc(var(--a-px) + 0px) 0 calc(var(--a-px) + 14px); border-radius: 1px; background: var(--pmr-line); overflow: hidden; }
 html[data-rail-concept="a"] .pmr-a-progfill { display: block; height: 100%; background: var(--pmr-st-running); transform-origin: 0 0; }
 html[data-rail-concept="a"] .pmr-a-ops.is-cancelled .pmr-a-progfill { background: var(--pmr-text-3); }

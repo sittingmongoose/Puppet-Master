@@ -21,173 +21,118 @@
     .pm6-ab-group .icon { width: 100%; }
 
     /* ---- shared side-panel building blocks ---- */
-    .pm6-sp-row {
-      display: flex;
-      align-items: center;
-      gap: var(--sm);
-      font-size: var(--fs-xs);
-      padding: 3px var(--xs);
-      border-radius: var(--radius-xs);
-      cursor: pointer;
-      color: var(--text-primary);
-    }
-    .pm6-sp-row:hover { background: var(--accent-soft); }
-    .pm6-sp-row-meta { margin-left: auto; font-size: var(--fs-2xs); color: var(--text-muted); font-weight: 400; }
-    .pm6-sp-note { font-size: var(--fs-xs); color: var(--text-secondary); line-height: var(--lh-body); }
-    .pm6-note-glyph { font-size: var(--fs-xs); }
-    .pm6-sp-footnote { font-size: var(--fs-2xs); color: var(--text-muted); line-height: var(--lh-body); }
+    
+    
+    
+    
+    
+    
 
-    .pm6-sp-btn-primary:hover { background: var(--accent-primary); filter: brightness(1.12); }
-    .pm6-sp-minibtn {
-      font-size: var(--fs-2xs);
-      padding: 2px 7px;
-      border-radius: var(--radius-xs);
-      border: var(--border-width, 1px) solid var(--border-light);
-      background: var(--surface-elevated);
-      color: var(--text-secondary);
-      cursor: pointer;
-    }
-    .pm6-sp-minibtn:hover { color: var(--text-primary); border-color: var(--accent-primary); }
-    .pm6-sp-minibtn[disabled], .pm6-sp-minibtn[aria-disabled="true"], .pm6-sp-minibtn[data-demo-disabled] { opacity: .45; cursor: not-allowed; }
-    .pm6-sp-minibtn[aria-disabled="true"]:hover, .pm6-sp-minibtn[data-demo-disabled]:hover { border-color: var(--border-light); color: var(--text-secondary); background: var(--surface-elevated); }
-    .pm6-sp-minibtn.pm6-danger:hover { color: var(--accent-error); border-color: var(--accent-error); }
-    .pm6-btnrow { display: flex; flex-wrap: wrap; gap: var(--xs); margin-top: var(--xs); }
+    
+    
+    
+    
+    
+    
+    
     .pm6-hidden { display: none; }
-    .pm6-mono { font-family: var(--mono-font, monospace); font-size: var(--fs-2xs); }
+    
 
-    .pm6-chip {
-      display: inline-flex;
-      align-items: center;
-      font-size: var(--fs-2xs);
-      font-weight: 600;
-      line-height: 1.4;
-      padding: 1px 8px;
-      border-radius: var(--radius-pill);
-      background: color-mix(in srgb, var(--text-muted) 14%, transparent);
-      color: var(--text-secondary);
-      white-space: nowrap;
-    }
-    .pm6-chip-ok { background: color-mix(in srgb, var(--accent-lime) 16%, transparent); color: var(--accent-lime); }
-    .pm6-chip-warn { background: color-mix(in srgb, var(--accent-warning) 16%, transparent); color: var(--accent-warning); }
-    .pm6-chip-err { background: color-mix(in srgb, var(--accent-error) 16%, transparent); color: var(--accent-error); }
-    .pm6-fam { text-transform: none; font-family: var(--mono-font, monospace); font-weight: 500; }
-    .pm6-fam-web { background: var(--accent-soft); color: var(--accent-primary); }
+    
+    
+    
+    
+    
+    
 
-    .pm6-status-dot { font-size: 9px; line-height: 1; flex: none; }
-    .pm6-dot-ok { color: var(--accent-lime); }
-    .pm6-dot-err { color: var(--accent-error); }
-    .pm6-dot-idle { color: var(--text-muted); }
-    .pm6-dot-run { color: var(--accent-primary); animation: pm6-panels-pulse 1.4s ease-in-out infinite; }
+    
+    
+    
+    
+    
     @keyframes pm6-panels-pulse { 50% { opacity: .35; } }
 
     /* ---- File Manager ---- */
-    .pm6-fm-search .wizard-input { width: 100%; font-size: var(--fs-xs); padding: 4px var(--sm); }
-    .pm6-fm-folder { padding: 3px 0; color: var(--text-secondary); font-weight: 600; }
-    .pm6-fm-file { display: flex; align-items: center; gap: var(--xs); padding: 3px 0 3px var(--sm); border-radius: var(--radius-xs); cursor: pointer; }
-    .pm6-fm-file:hover { background: var(--accent-soft); }
-    .pm6-fm-file.file-active { background: var(--accent-soft); color: var(--accent-primary); }
-    .pm6-fm-file .git-status { margin-left: auto; font-weight: 700; font-size: var(--fs-2xs); }
-    .pm6-gs-staged { color: var(--accent-lime); }
-    .pm6-gs-mod { color: var(--accent-orange); }
+    
+    
+    
+    
+    
+    
+    
+    
 
     /* ---- Search ---- */
-    .pm6-search-qrow .wizard-input { padding: 4px var(--sm); font-size: var(--fs-xs); }
-    .pm6-search-replacerow .wizard-input { padding: 4px var(--sm); font-size: var(--fs-xs); }
-    .pm6-search-hit { padding: 2px var(--sm); cursor: pointer; border-radius: var(--radius-xs); font-size: var(--fs-xs); }
-    .pm6-search-hit:hover { background: var(--accent-soft); }
-    .pm6-search-hit .search-match { background: color-mix(in srgb, var(--accent-warning) 30%, transparent); padding: 0 2px; border-radius: var(--radius-xs); }
+    
+    
+    
+    
+    
 
     /* ---- Run & Debug ---- */
-    .pm6-run-launchrow .wizard-select { font-size: var(--fs-xs); padding: 4px; }
+    
 
     /* ---- Source Control ---- */
-    .pm6-sc-file { display: flex; justify-content: space-between; align-items: center; gap: var(--sm); font-size: var(--fs-xs); padding: 3px 0; }
-    .pm6-sc-fname { cursor: pointer; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; display: inline-flex; gap: var(--xs); align-items: center; }
-    .pm6-sc-fname:hover { color: var(--accent-primary); }
-    .pm6-sc-acts { display: flex; gap: 2px; flex: none; }
-    .pm6-sc-commitrow .wizard-input { padding: 4px var(--sm); font-size: var(--fs-xs); }
+    
+    
+    
+    
+    
 
     /* ---- GitHub Actions ---- */
-    .pm6-gh-run { display: flex; align-items: center; gap: var(--sm); padding: 4px 0; font-size: var(--fs-xs); border-bottom: 1px solid var(--border-light); }
-    .pm6-gh-run:last-child { border-bottom: none; }
-    .pm6-gh-run-name { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; flex: 1; display: inline-flex; gap: var(--xs); align-items: baseline; min-width: 0; }
-    .pm6-gh-run .pm6-chip { margin-left: auto; flex: none; }
+    
+    
+    
+    
 
     /* ---- Docker Manager ---- */
-    .pm6-dm-chips { display: flex; flex-wrap: wrap; gap: var(--xs); padding: var(--xs) var(--md); border-bottom: 1px solid var(--border-light); }
-    .pm6-dm-chip {
-      font-size: var(--fs-2xs);
-      font-weight: 600;
-      padding: 2px 9px;
-      border-radius: var(--radius-pill);
-      border: var(--border-width, 1px) solid var(--border-light);
-      background: none;
-      color: var(--text-secondary);
-      cursor: pointer;
-      transition: color var(--motion-fast) var(--ease-default), border-color var(--motion-fast) var(--ease-default), background var(--motion-fast) var(--ease-default);
-    }
-    .pm6-dm-chip:hover { color: var(--text-primary); border-color: var(--accent-primary); }
-    .pm6-dm-chip.active { background: var(--accent-soft); border-color: var(--accent-primary); color: var(--accent-primary); }
-    .pm6-dm-ct { display: flex; align-items: center; gap: var(--sm); padding: 5px 0; border-bottom: 1px solid var(--border-light); font-size: var(--fs-xs); }
-    .pm6-dm-ct:last-child { border-bottom: none; }
-    .pm6-dm-ct-name { min-width: 0; flex: 1; display: flex; flex-direction: column; }
-    .pm6-dm-ct-meta { font-size: var(--fs-2xs); color: var(--text-muted); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    
+    
+    
+    
+    
+    
+    
+    
 
     /* ---- Runtime Artifacts ---- */
-    .pm6-art-row { border: var(--border-width, 1px) solid var(--border-light); background: var(--surface); border-radius: var(--radius-sm); padding: var(--sm) var(--md); display: flex; flex-direction: column; gap: 3px; cursor: pointer; }
-    .pm6-art-row:hover { border-color: var(--accent-primary); }
-    .pm6-art-typed { cursor: default; }
-    .pm6-art-l1 { display: flex; align-items: center; gap: var(--xs); min-width: 0; }
-    .pm6-art-label { font-size: var(--fs-xs); font-weight: 600; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; flex: 1; }
-    .pm6-art-l1 .pm6-chip:last-child { margin-left: auto; flex: none; }
-    .pm6-art-prev { font-size: var(--fs-xs); color: var(--text-secondary); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-    .pm6-art-meta { font-size: var(--fs-2xs); color: var(--text-muted); }
-    .pm6-art-prov { font-size: var(--fs-2xs); color: var(--text-secondary); display: flex; flex-wrap: wrap; gap: var(--xs); align-items: center; line-height: var(--lh-body); }
-    .pm6-art-empty { padding: var(--sm); border: 1px dashed var(--border-light); border-radius: var(--radius-sm); }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
 
     /* ---- Agents / Notifications ---- */
-    .pm6-notify-row { border: var(--border-width, 1px) solid var(--border-light); background: var(--surface); border-radius: var(--radius-sm); padding: var(--sm) var(--md); display: flex; flex-direction: column; gap: 3px; margin-bottom: var(--sm); animation: pm-enter-up var(--motion-med) var(--ease-default) both; }
-    .pm6-notify-warn { background: color-mix(in srgb, var(--accent-warning) 8%, transparent); border-color: color-mix(in srgb, var(--accent-warning) 30%, var(--border)); }
-    .pm6-notify-gate { background: color-mix(in srgb, var(--accent-error) 8%, transparent); border-color: color-mix(in srgb, var(--accent-error) 30%, var(--border)); }
-    .pm6-notify-row.pm6-acked { opacity: .5; }
-    .pm6-notify-row.pm6-acked .pm6-btnrow { display: none; }
+    
+    
+    
+    
+    
 
     /* ---- theme accents (own block only) ---- */
-    [data-theme^="retro"] .pm6-art-row, [data-theme^="retro"] .pm6-notify-row, [data-theme^="retro"] .pm6-sp-minibtn, [data-theme^="retro"] .pm6-dm-chip { border-radius: 0; }
-    [data-theme^="retro"] .pm6-chip { border-radius: 0; }
+    
+    
     [data-theme^="glass"] .pm6-art-row, [data-theme^="glass"] .pm6-notify-row {
       background: var(--pm6-glass-step-2);
       box-shadow: inset 0 1px 0 var(--glass-hairline);
     }
     /* root dropdown = reading plate (no nested blur inside the pane) */
     /* friendly cozy: side-panel cards ride the mint (files) category */
-    [data-theme^="friendly"] .pm6-art-row, [data-theme^="friendly"] .pm6-notify-row {
-      border-radius: var(--radius-md);
-      box-shadow: var(--elev-1);
-    }
+    
     /* worktree / branch rows go lavender */
-    [data-theme^="friendly"] .sc-wt-row {
-      --pm6-sheen-accent: var(--pm6-cozy-lav);
-      background: color-mix(in srgb, var(--pm6-cozy-lav) var(--pm6-cozy-mix), var(--pm6-cozy-card-base));
-      border-bottom-color: color-mix(in srgb, var(--pm6-cozy-lav) var(--pm6-cozy-border-mix), var(--pm6-cozy-card-base));
-    }
-    [data-theme^="friendly"] .sc-wt-row:hover {
-      background: color-mix(in srgb, var(--pm6-cozy-lav) 20%, var(--pm6-cozy-card-base));
-    }
+    
+    
     /* warnings = butter, errors/gates = coral */
-    [data-theme^="friendly"] .pm6-notify-warn {
-      --pm6-sheen-accent: var(--pm6-cozy-butter);
-      background: color-mix(in srgb, var(--pm6-cozy-butter) 18%, var(--pm6-cozy-card-base));
-      border-color: color-mix(in srgb, var(--pm6-cozy-butter) 45%, var(--pm6-cozy-card-base));
-    }
-    [data-theme^="friendly"] .pm6-notify-gate {
-      --pm6-sheen-accent: var(--pm6-cozy-coral);
-      background: color-mix(in srgb, var(--pm6-cozy-coral) 14%, var(--pm6-cozy-card-base));
-      border-color: color-mix(in srgb, var(--pm6-cozy-coral) 38%, var(--pm6-cozy-card-base));
-    }
+    
+    
 
     @media (prefers-reduced-motion: reduce) {
-      .pm6-dot-run { animation: none; }
+      
       .pm6-notify-row { animation: none; }
     }
-    [data-motion="reduced"] .pm6-dot-run, [data-motion="reduced"] .pm6-notify-row { animation: none; }
+    

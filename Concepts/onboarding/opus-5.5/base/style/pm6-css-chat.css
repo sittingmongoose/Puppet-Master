@@ -200,7 +200,7 @@
       filter: drop-shadow(0 0 3px color-mix(in srgb, var(--accent-blue) 70%, transparent))
               drop-shadow(0 0 7px color-mix(in srgb, var(--accent-blue) 40%, transparent));
     }
-    .pm6-chat-ctx-label { display: none; }
+    
     .pm6-chat-wt { position: relative; }
     .pm6-chat-wt-dot {
       position: absolute; top: -1px; right: -2px;
@@ -305,7 +305,7 @@
     /* sticky plan tracker pins just below the frost plate, not at the
        scrollport top (which now sits behind the header); fallback
        mirrors the stream's 58px overlap fallback */
-    .sticky-plan-tracker { top: var(--pm-chat-head-h, 58px); }
+    
 
     /* ---- thread sidebar ---- */
     .pm6-chat-newthread {
