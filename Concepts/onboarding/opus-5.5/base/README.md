@@ -43,7 +43,7 @@ Eight bodies deliberately have no final LF. Preserve their EOF exactly; disable 
 The unconditional patches from `build.py`, `shell_motion.py` and `wizorch_layer.py` are folded.
 The latter two tools and the four retired onboarding/tour block files remain historical only.
 Use `python scripts/pm7-where.py '<snippet>'` to find the live source, then the four checks above.
-Do not remove dead code as part of editing this split; the PM8 engine's early `return;` is intentional.
+The retired PM8 hover engine is removed; its shared pointermove dispatcher and live page-motion rules remain.
 
 ## Historical inline patch names
 
