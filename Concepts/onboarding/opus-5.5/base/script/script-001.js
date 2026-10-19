@@ -15,8 +15,8 @@
         'retro-light': '#F5F0E8',
         'basic-dark': '#121212',
         'basic-light': '#EAECEF',
-        'glass-dark': '#241B36',
-        'glass-light': '#E4CDE4'
+        'glass-dark': '#04060d',
+        'glass-light': '#eef1f6'
       };
       try {
         var fams = ['friendly', 'glass', 'retro', 'basic'];
@@ -65,6 +65,7 @@
         }
         var t = fam + '-' + scheme;
         /* T44: project-scoped Settings owns persistence; no global theme write. */
+        if (fam === 'glass') { d.setAttribute('data-lg', 'on'); d.setAttribute('data-lg-wall', 'ribbons'); }
         d.setAttribute('data-theme', t);
         if (o55b.nier) { d.setAttribute('data-o55-nier', 'on'); d.setAttribute('data-o55-nier-parts', o55b.parts); }
         if (o55b.reduced) { d.setAttribute('data-motion', 'reduced'); }

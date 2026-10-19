@@ -285,11 +285,9 @@
       try { const t = tome(); if (t && t.applyPaint) t.applyPaint(K.getState()); } catch (_) {}
       return ok;
     },
-    /* Liquid Glass (pm7-liquid-glass's engine, window.PM_LG): the material, who draws it, and the wallpaper */
+    /* Liquid Glass (pm7-liquid-glass's engine, window.PM_LG): who draws it and the wallpaper; Glass always uses Liquid Glass */
     lg: {
       avail: () => !!(W('PM_LG') && fn(W('PM_LG'), 'set')),
-      on: () => document.documentElement.getAttribute('data-lg') === 'on',
-      set: (on) => W('PM_LG').set({ 'data-lg': on ? 'on' : 'off' }),
       tier: () => document.documentElement.getAttribute('data-lg-tier') || 'gpu',
       setTier: (x) => W('PM_LG').set({ 'data-lg-tier': x }),
       walls: () => { try { return fn(W('PM_LG'), 'walls') ? W('PM_LG').walls() || [] : []; } catch (_) { return []; } },

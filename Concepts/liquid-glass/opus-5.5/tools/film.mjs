@@ -1,7 +1,7 @@
 /* film.mjs <file:// url of the concept page> <out.mp4> [--looks glass-dark,glass-light]   (run on the P1000)
  *
  * The v2 concept film, real speed, recorded on the GPU by agent-browser. In each look:
- *   - today's Glass, then Liquid Glass materializing;
+ *   - an LG-on baseline, then explicit Liquid Glass materialization (no old-material comparison);
  *   - the pointer's light on the sheets;
  *   - the lens: clicks, then press-and-drag scrubbing on Usage's range and the rail's tabs;
  *   - the accent selection travelling in Usage's navigation and the activity bar;
@@ -28,7 +28,6 @@ async function box(sel) { return page.evaluate(sel => { const e = document.query
 async function click(sel, hold = 90) { const b = await box(sel); if (!b) { console.log('missing', sel); return; } await glide(b.x, b.y, 480); await page.mouse.down(); await wait(hold); await page.mouse.up(); }
 async function scrub(fromSel, toSel) { const a = await box(fromSel), b = await box(toSel); if (!a || !b) return; await glide(a.x, a.y, 420); await page.mouse.down(); await wait(140); const n = 70; for (let i = 1; i <= n; i++) { await page.mouse.move(a.x + (b.x - a.x) * i / n, a.y); await wait(16); } mx = b.x; my = a.y; await wait(260); await page.mouse.up(); }
 const set = o => page.evaluate(o => window.PM_LG.set(o), o);
-const row = (n, v) => click(`#lg-demo-pop .lg-row:nth-of-type(${n}) button[data-v="${v}"]`);
 
 await page.goto(url, { waitUntil: 'domcontentloaded', timeout: 120000 });
 await page.locator('#pm-settings-root').waitFor({ state: 'attached', timeout: 90000 });
@@ -36,10 +35,10 @@ await wait(1500);
 const renderer = await page.evaluate(() => { const g = document.createElement('canvas').getContext('webgl'); const x = g.getExtension('WEBGL_debug_renderer_info'); return g.getParameter(x.UNMASKED_RENDERER_WEBGL); });
 for (const look of looks) {
   const name = look === 'glass-dark' ? 'Glass Dark' : 'Glass Light';
-  await page.evaluate(n => { const r = document.documentElement; r.setAttribute('data-lg', 'off'); r.setAttribute('data-lg-wall', 'ribbons'); window.PM12_KIMI.setSettingFromHost('general.visual.theme', n); window.PM_PAGES.go('usage'); }, name);
+  await page.evaluate(n => { const r = document.documentElement; r.setAttribute('data-lg', 'on'); r.setAttribute('data-lg-wall', 'ribbons'); window.PM12_KIMI.setSettingFromHost('general.visual.theme', n); window.PM_PAGES.go('usage'); }, name);
   await glide(1150, 620, 300); await wait(3000);
-  mark(`${name}: today's Glass`); await wait(2500);
-  mark(`${name}: Liquid Glass materializes`); await set({ 'data-lg': 'on' }); await wait(2600);
+  mark(`${name}: Liquid Glass baseline`); await wait(2500);
+  mark(`${name}: Liquid Glass materializes`); await page.evaluate(() => window.PM_LG.materialize()); await wait(2600);
   mark(`${name}: the pointer is a light`);
   await glide(260, 28, 900); await glide(1500, 28, 1500); await glide(700, 300, 900); await glide(1000, 200, 700); await glide(1300, 360, 800); await glide(160, 420, 1100); await glide(1000, 640, 900);
   mark(`${name}: the lens (clicks)`);
@@ -61,10 +60,9 @@ for (const look of looks) {
   await click('#pmuDetailBtn', 520); await wait(800); await page.keyboard.press('Escape'); await wait(400);
   await click('#pmuRefresh', 420); await wait(900);
   mark(`${name}: wallpapers (Ribbons, Prism, Orbs)`);
-  await click('#lg-demo-btn'); await wait(900);
-  for (const v of ['prism', 'orbs', 'ribbons']) { await row(3, v); await wait(2200); }
+  for (const v of ['prism', 'orbs', 'ribbons']) { await page.evaluate(id => window.PM_LG.wall(id), v); await wait(2200); }
   mark(`${name}: the CPU path against the GPU`);
-  for (const v of ['cpu', 'gpu']) { await row(4, v); await wait(1800); }
+  for (const v of ['cpu', 'gpu']) { await set({ 'data-lg-tier': v }); await wait(1800); }
   await page.keyboard.press('Escape'); await page.mouse.click(1910, 1000); await wait(400);
   mark(`${name}: the window loses focus, then comes back`);
   await page.evaluate(() => window.dispatchEvent(new Event('blur'))); await wait(2000); await page.evaluate(() => window.dispatchEvent(new Event('focus'))); await wait(1000);

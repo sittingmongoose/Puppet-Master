@@ -16,15 +16,15 @@
  *   - glass materializes by ramping its refraction rather than fading;
  *   - presses flex the glass.
  * The CPU path (no GPU) draws the same shapes and rims as frosted glass without refraction.
- * Switches on <html>: data-lg on|off, data-lg-tier gpu|cpu, data-lg-wall <id>.
- * URL: ?lg=off ?lgtier=cpu ?lgwall=. Test hook: window.PM_LG.
+ * Switches on <html>: data-lg="on" (Glass always uses Liquid Glass), data-lg-tier gpu|cpu, data-lg-wall <id>.
+ * URL: ?lgtier=cpu ?lgwall=. The retired ?lg=off flag is ignored. Test hook: window.PM_LG.
  */
 (function () {
   'use strict';
   if (window.PM_LG) return;
   var root = document.documentElement, q = new URLSearchParams(location.search);
   var SVGNS = 'http://www.w3.org/2000/svg';
-  root.setAttribute('data-lg', q.get('lg') === 'off' ? 'off' : 'on');
+  root.setAttribute('data-lg', 'on');
   /* the wallpaper is applied by applyWall() (below) from the saved choice or ?lgwall= */
 
   function isGlass() { return root.getAttribute('data-lg') === 'on' && /^glass/.test(root.getAttribute('data-theme') || ''); }
@@ -3141,7 +3141,7 @@
     if (root.hasAttribute('data-lg-demo-host')) { var old = document.getElementById('lg-demo-btn'); if (old) old.remove(); return; }
     var bar = document.getElementById('pm7GlobalStatusBar'); if (!bar || document.getElementById('lg-demo-btn')) return;
     var groups = bar.querySelectorAll('.pm7-statusbar-group'), host = groups[groups.length - 1] || bar;
-    var btn = el('button', { id: 'lg-demo-btn', class: 'pm7-statusitem', type: 'button', title: 'Liquid Glass concept (Alt+Shift+L: on or off)' }); btn.textContent = 'Liquid Glass';
+    var btn = el('button', { id: 'lg-demo-btn', class: 'pm7-statusitem', type: 'button', title: 'Liquid Glass concept' }); btn.textContent = 'Liquid Glass';
     host.insertBefore(btn, host.firstChild);
     var pop = el('div', { id: 'lg-demo-pop', role: 'dialog', 'aria-label': 'Liquid Glass concept' });
     function row(name, attr, opts) {
@@ -3153,7 +3153,6 @@
     function set(a, v) { return function () { if (v == null) root.removeAttribute(a); else root.setAttribute(a, v); }; }
     function look(v) { return function () { try { window.PM12_KIMI.setSettingFromHost('general.visual.theme', v); } catch (e) { root.setAttribute('data-theme', v.toLowerCase().replace(' ', '-')); } }; }
     var rows = [
-      row('Liquid Glass', 'data-lg', [['on', 'On', set('data-lg', 'on')], ['off', 'Today', set('data-lg', 'off')]]),
       row('Look', 'data-theme', [['glass-dark', 'Dark', look('Glass Dark')], ['glass-light', 'Light', look('Glass Light')]]),
       row('Path', 'data-lg-tier', [['gpu', 'GPU', set('data-lg-tier', 'gpu')], ['cpu', 'CPU', set('data-lg-tier', 'cpu')]]),
       row('Motion', 'data-motion', [['', 'Full', set('data-motion', null)], ['reduced', 'Reduced', set('data-motion', 'reduced')]]),
@@ -3164,13 +3163,12 @@
     function render() { rows.forEach(function (r) { var cur = root.getAttribute(r.__attr) || ''; r.querySelectorAll('button').forEach(function (b) { b.setAttribute('aria-pressed', String(b.getAttribute('data-v') === cur)); }); }); }
     btn.onclick = function (e) { e.stopPropagation(); if (pop.hasAttribute('data-open')) pop.removeAttribute('data-open'); else { render(); pop.setAttribute('data-open', ''); mount(pop, 'menu'); pop.__lgMorphed = false; morph(pop, btn); } };
     document.addEventListener('pointerdown', function (e) { if (pop.hasAttribute('data-open') && !pop.contains(e.target) && e.target !== btn) pop.removeAttribute('data-open'); }, true);
-    document.addEventListener('keydown', function (e) { if (e.altKey && e.shiftKey && (e.code === 'KeyL')) { root.setAttribute('data-lg', root.getAttribute('data-lg') === 'on' ? 'off' : 'on'); render(); e.preventDefault(); } });
   }
 
-  /* Public: set({'data-lg': 'on'|'off', 'data-lg-tier': 'gpu'|'cpu', 'data-motion': 'reduced'|null}); wall(id|'look')
-     chooses a wallpaper for every look; walls() lists them; surfaces: data-lg-surface on any element (see syncSurfaces). */
+  /* Public: set({'data-lg': 'on', 'data-lg-tier': 'gpu'|'cpu', 'data-motion': 'reduced'|null}); wall(id|'look')
+     chooses a wallpaper for every look; walls() lists them. Retired data-lg off/null requests normalize to on; surfaces: data-lg-surface on any element (see syncSurfaces). */
   window.PM_LG = { version: 'v3-2026-10-13', sync: syncAll, materialize: function () { materialize(Array.from(glassSet)); }, kinds: KINDS, count: function () { return glassSet.size; },
-    set: function (o) { for (var k in o) { if (o[k] == null) root.removeAttribute(k); else root.setAttribute(k, o[k]); } syncAll(); },
+    set: function (o) { for (var k in o) { if (k === 'data-lg') root.setAttribute(k, 'on'); else if (o[k] == null) root.removeAttribute(k); else root.setAttribute(k, o[k]); } syncAll(); },
     /* Decode and bake through the same bounded caches as visible sheets. Preparation changes no visible pixels. */
     /* opts.canRun (optional): asked again once the print is decoded, before its frost is encoded; false resolves false
        and the caller tries again later (the gallery warms nearby prints only while the page is idle; Settings, B3) */

@@ -230,8 +230,7 @@
     }).join('')).join('') + '</div>';
     const mode = `<div class="pmds-rowacts"><span class="pmds-btitle">${esc(T('studio.looks.mode'))}</span>${seg({ do: 'look-mode', value: now.setMode, label: T('studio.looks.mode'), off: !ok, items: [{ v: 'light', label: T('studio.looks.light'), icon: 'sun' }, { v: 'dark', label: T('studio.looks.dark'), icon: 'moon' }, { v: 'auto', label: T('studio.looks.auto'), icon: 'auto' }] })}</div>`;
     const G = L.lg, lg = G.avail() ? block(T('studio.looks.lg.title'), `<div class="pmds-lgrows">`
-      + `<div class="pmds-rowacts"><span class="pmds-btitle">${esc(T('studio.looks.lg.material'))}</span>${seg({ do: 'lg', value: G.on() ? 'on' : 'off', label: T('studio.looks.lg.material'), items: [{ v: 'on', label: T('studio.looks.lg.on') }, { v: 'off', label: T('studio.looks.lg.off') }] })}`
-      + `<span class="pmds-btitle">${esc(T('studio.looks.lg.tier'))}</span>${seg({ do: 'lg-tier', value: G.tier(), label: T('studio.looks.lg.tier'), items: [{ v: 'gpu', label: T('studio.looks.lg.gpu') }, { v: 'cpu', label: T('studio.looks.lg.cpu') }] })}</div>`
+      + `<div class="pmds-rowacts"><span class="pmds-btitle">${esc(T('studio.looks.lg.tier'))}</span>${seg({ do: 'lg-tier', value: G.tier(), label: T('studio.looks.lg.tier'), items: [{ v: 'gpu', label: T('studio.looks.lg.gpu') }, { v: 'cpu', label: T('studio.looks.lg.cpu') }] })}</div>`
       + (L.walls.avail() ? '' : `<h5 class="pmds-gtitle"><span>${esc(T('studio.looks.lg.wall'))}</span></h5><div class="pmds-walls" role="radiogroup" aria-label="${esc(T('studio.looks.lg.wall'))}">`
       + [{ id: 'look', name: T('studio.looks.lg.wallLook') }].concat(G.walls()).map((w) => `<button type="button" role="radio"${at({ class: `pmds-wall${G.wall() === w.id ? ' pmds-on' : ''}`, 'aria-checked': String(G.wall() === w.id), 'data-pmds-do': 'lg-wall', 'data-arg': w.id, 'data-key': `lg-wall:${w.id}`, 'data-pmh': 'row' })}><span class="pmds-mark" aria-hidden="true">${ico('check', 12)}</span><span>${esc(w.name || w.id)}</span></button>`).join('') + '</div>')
       + '</div>', { lead: T('studio.looks.lg.lead') }) : '';
@@ -719,7 +718,6 @@
     'notices-clear': () => { M.notices.clear(); },
     look: (arg) => { const [f, m] = arg.split(':'); M.looks.set(f, m); real.setTimeout(() => { syncLook(); refresh(); }, 80); },
     wall: (arg) => { M.looks.walls.choose(arg); real.setTimeout(refresh, 120); },
-    lg: (arg) => { M.looks.lg.set(arg === 'on'); real.setTimeout(refresh, 80); },
     'lg-tier': (arg) => { M.looks.lg.setTier(arg); real.setTimeout(refresh, 80); },
     'lg-wall': (arg) => { M.looks.lg.setWall(arg); real.setTimeout(refresh, 80); },
     'look-mode': (arg) => { M.looks.mode(arg); real.setTimeout(() => { syncLook(); refresh(); }, 80); },
