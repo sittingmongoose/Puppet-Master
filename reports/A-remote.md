@@ -8,7 +8,7 @@ Own worktree; lead owns integration and landing.
 
 `--host windows|mac` selects GPU Browser Fleet; each pair shares one Chrome process.
 Default local admission, rendering preparation and comparison gates remain unchanged.
-Remote input delivery uses an ephemeral controller LAN HTTP server, a single per-worker
+Remote input delivery uses an ephemeral controller LAN HTTPS server, a single per-worker
 URL for both exact input bodies and inert storage probes, fresh contexts, and no-store
 responses. All other HTTP routes return 404; the request gate permits only the exact
 current top-level document. Remote concurrency accepts 1..8; local remains 1..6.
@@ -29,7 +29,7 @@ it was stopped gracefully and purged.
 Controller unit tests: 12/12 pass, none skipped. Existing PNG/envelope/style/matrix/blob
 and WebSocket tests remain, plus remote option boundaries and exact-byte HTTP delivery,
 inert probes, per-input switching, non-document route rejection, and unregister cleanup.
-Four-generator/hash proof is in progress. No generated page or Plans file was edited.
+Four-generator/hash proof: PASS, all four hashes equal main 91649c220f. No generated page or Plans file was edited.
 
 Evidence root: `/mnt/Cursor/PuppetMaster-Evidence/scratch/2026-10-18-pm7-purge/A-remote/`.
 
@@ -44,3 +44,13 @@ full LeftRail `10b644d389` versus `a6d9473cec` with baseline repeats eight and d
 caps; forced eight-fresh-main diagnostic surveys for every raw-pixel row; distinct
 DOM-only tag/id/path records; then Mac exact proof-copies matrix if feasible.
 Original candidate captures and strict raw/selected verdicts will remain unchanged.
+
+## Transport correction
+
+Initial plain-HTTP probes stopped before comparisons because WebCrypto requires a secure
+origin (`crypto.subtle` was undefined). All six sessions stopped and purged. HTTPS now
+uses an ephemeral one-day certificate, removed from disk immediately after loading; only
+disposable remote browsers ignore its certificate error. Original hashing code is unchanged.
+Windows ran the initial 12 unit tests successfully from a temporary local source copy;
+SSH could not read UNC paths, so the source snapshot was copied with SCP. Corrected-source
+unit and browser proofs are next.

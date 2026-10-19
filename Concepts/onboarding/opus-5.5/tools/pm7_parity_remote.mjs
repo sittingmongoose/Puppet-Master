@@ -1,7 +1,11 @@
 /* Remote document delivery only. Comparison, preparation and request gates stay in pm7_parity. */
-import { createServer } from 'node:http';
+import { createServer } from 'node:https';
 import { randomUUID } from 'node:crypto';
-import { networkInterfaces } from 'node:os';
+import { networkInterfaces, tmpdir } from 'node:os';
+import { mkdtempSync, readFileSync, rmSync } from 'node:fs';
+import { join } from 'node:path';
+import { execFile } from 'node:child_process';
+import { promisify } from 'node:util';
 import { isIP } from 'node:net';
 
 export const storageProbeHtml = '<!doctype html><title>Storage isolation probe</title>';
@@ -15,8 +19,18 @@ export function remoteServeHost(explicit) {
   return addresses[0];
 }
 export async function createInputServer(advertiseHost, bindHost = '0.0.0.0') {
+  // WebCrypto requires a secure origin. Use one ephemeral certificate, never a global
+  // browser flag or crypto replacement. Only our exact document URL passes Fetch.
+  const directory = mkdtempSync(join(tmpdir(), 'pm7-parity-tls-'));
+  let tls;
+  try {
+    await promisify(execFile)('openssl', ['req', '-x509', '-newkey', 'rsa:2048', '-nodes', '-days', '1',
+      '-subj', '/CN=PM7 parity temporary input', '-addext', `subjectAltName=IP:${advertiseHost}`,
+      '-keyout', join(directory, 'key.pem'), '-out', join(directory, 'cert.pem')]);
+    tls = { key: readFileSync(join(directory, 'key.pem')), cert: readFileSync(join(directory, 'cert.pem')) };
+  } finally { rmSync(directory, { recursive: true, force: true }); }
   const documents = new Map(), stats = { probes: 0, inputs: {} };
-  const server = createServer((request, response) => {
+  const server = createServer(tls, (request, response) => {
     const browser = documents.get(request.url);
     if (request.method !== 'GET' || !browser) { response.writeHead(404); response.end(); return; }
     const bytes = browser.storageProbe ? Buffer.from(storageProbeHtml) : Buffer.from(browser.input.body, 'base64');
@@ -26,7 +40,7 @@ export async function createInputServer(advertiseHost, bindHost = '0.0.0.0') {
     response.end(bytes);
   });
   await new Promise((resolve, reject) => { server.once('error', reject); server.listen(0, bindHost, resolve); });
-  const origin = `http://${advertiseHost}:${server.address().port}`;
+  const origin = `https://${advertiseHost}:${server.address().port}`;
   return {
     origin, stats,
     register(browser) {

@@ -3,6 +3,18 @@ import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
 import { createInputServer, remoteServeHost, storageProbeHtml } from './pm7_parity_remote.mjs';
 import { CdpWebSocket } from './cdp-websocket.mjs';
+import { request } from 'node:https';
+
+function fetchInput(url, options = {}) {
+  return new Promise((resolve, reject) => {
+    const req = request(url, { ...options, rejectUnauthorized: false }, response => {
+      const parts = []; response.on('data', part => parts.push(part));
+      response.on('end', () => resolve({ status: response.statusCode, headers: response.headers,
+        text: async () => Buffer.concat(parts).toString(), arrayBuffer: async () => Buffer.concat(parts) }));
+    });
+    req.on('error', reject); req.end();
+  });
+}
 
 test('remote document URL serves exact selected bytes and inert probe, with no other HTTP routes', async () => {
   const server = await createInputServer('127.0.0.1', '127.0.0.1');
@@ -10,20 +22,20 @@ test('remote document URL serves exact selected bytes and inert probe, with no o
     const input = value => ({ body: Buffer.from(value).toString('base64'), sha256: createHash('sha256').update(value).digest('hex') });
     const baseline = Buffer.from('<!doctype html>\r\n<p>baseline é</p>'), candidate = Buffer.from('<!doctype html><p>candidate</p>');
     const browser = { input: input(baseline) }, unregister = server.register(browser), url = browser.documentUrl;
-    const response = await fetch(url);
-    assert.equal(response.status, 200); assert.equal(response.headers.get('cache-control'), 'no-store');
+    const response = await fetchInput(url);
+    assert.equal(response.status, 200); assert.equal(response.headers['cache-control'], 'no-store');
     assert.deepEqual(Buffer.from(await response.arrayBuffer()), baseline);
     browser.storageProbe = true;
-    assert.equal(await (await fetch(url)).text(), storageProbeHtml);
+    assert.equal(await (await fetchInput(url)).text(), storageProbeHtml);
     browser.storageProbe = false; browser.input = input(candidate);
     assert.equal(browser.documentUrl, url);
-    assert.deepEqual(Buffer.from(await (await fetch(url)).arrayBuffer()), candidate);
-    assert.equal((await fetch(server.origin + '/')).status, 404);
-    assert.equal((await fetch(url + '&other=1')).status, 404);
-    assert.equal((await fetch(url, { method: 'POST' })).status, 404);
+    assert.deepEqual(Buffer.from(await (await fetchInput(url)).arrayBuffer()), candidate);
+    assert.equal((await fetchInput(server.origin + '/')).status, 404);
+    assert.equal((await fetchInput(url + '&other=1')).status, 404);
+    assert.equal((await fetchInput(url, { method: 'POST' })).status, 404);
     assert.equal(server.stats.probes, 1);
     assert.deepEqual(Object.values(server.stats.inputs), [1, 1]);
-    unregister(); assert.equal((await fetch(url)).status, 404);
+    unregister(); assert.equal((await fetchInput(url)).status, 404);
   } finally { await server.close(); }
 });
 test('remote transport stays opt-in and requires an explicit valid advertised address', () => {

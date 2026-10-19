@@ -4,7 +4,7 @@
 node Concepts/onboarding/opus-5.5/tools/pm7_parity.mjs baseline.html candidate.html --concurrency 4 --out /absolute/evidence/run
 ```
 
-Node 22+, GPU agent-browser and no npm dependencies. Inputs are self-contained PMConcept7 or
+Node 22+, GPU agent-browser and no npm dependencies. Remote controller mode also needs OpenSSL on PATH. Inputs are self-contained PMConcept7 or
 LeftRailPMConcept7 HTML files. A pair stays in one Chrome/GPU process. Each input/load gets a fresh
 browser context; source bytes are fulfilled unchanged at the same intercepted file URL. Relative
 external assets are unsupported. HTTP(S), WebSocket and FTP requests are blocked.
@@ -35,12 +35,14 @@ authorized, `--remote-cdp lan` explicitly uses `gpu-browser connect --lan` and p
 WebSocket endpoint. The Windows key on the P1000 currently forbids SSH forwarding, so that route
 needs this explicit option. The LAN listener ends when the session stops.
 
-The controller starts a temporary HTTP input server on its LAN address (`--serve-host`, auto-selected
+The controller starts a temporary HTTPS input server on its LAN address (`--serve-host`, auto-selected
 only with one non-loopback IPv4). Each worker has one unguessable document URL, shared by its two
 inputs and inert storage probe. It serves exact source bytes with `no-store`; all other routes return
-404. Only that exact top-level document is permitted through the existing request gate; all other
+404. A one-day self-signed certificate is generated in a removed temporary directory;
+certificate errors are ignored only in disposable remote browsers. This preserves native WebCrypto
+without changing any hashing code. Only that exact top-level document is permitted through the existing request gate; all other
 HTTP(S)/WebSocket/FTP requests remain blocked. Storage is still checked in every fresh context.
-Relative external assets remain unsupported. Remote HTTP and local file origins are recorded; no
+Relative external assets remain unsupported. Remote HTTPS and local file origins are recorded; no
 cross-transport or cross-host parity claim is made.
 
 Every row records the rendering host, GPU renderer, Chrome build, session and transport. Both sides
