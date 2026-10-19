@@ -240,11 +240,6 @@
     [data-theme^="retro"] .pm6-bottom-empty-title { font-family: var(--mono-font); }
 
     /* popover + toast float above the sheet = reading plates */
-    [data-theme^="glass"] .pm-toast {
-      background: var(--pm6-glass-plate);
-      border-color: var(--glass-hairline);
-      box-shadow: inset 0 1px 0 var(--glass-edge), var(--elev-2);
-    }
     [data-theme^="glass"] .pm6-session-chip { background: var(--pm6-glass-step-2); }
 
     
@@ -954,4 +949,3 @@
       border-radius: var(--border-radius);
     }
     .rs-stage .rs-card .n-row { display: flex; align-items: center; gap: 6px; width: 100%; }
-

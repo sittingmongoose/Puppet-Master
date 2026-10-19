@@ -66,15 +66,17 @@ Source: `Concepts/home-redesign/src/panels/**`.
 ### F. Looks and motion
 - Title-bar theme menu: family (Basic, Friendly, Retro, Glass, plus Fun looks), Light / Dark / Auto, NieR Mode row and
   Adjust NieR look (the Plug-in Chips editor with Play reboot moment).
-- Settings: Reduce animations (`general.visual.reduce-animations`), sound effects, Glass background and transparency.
+- Settings: Reduce animations (`general.visual.reduce-animations`), sound effects, Wallpaper and Glass transparency.
 
 ### G. Notifications
 - PMConcept7 has no way to fire sample notifications. The notifications thread's lab (eleven moments: quiet, notice,
   attention, approval, permission, FileSafe, concern, failure, repeat, burst, setup prompt) lives only on its own
   review page, and its branch adds `PM_TITLEBAR_NOTIFY.demo(name)` to the page.
 
-### H. Liquid Glass (on the pm7-liquid-glass branch, not yet in PMConcept7)
-- A "Liquid Glass" status-bar item with its own popover (`#lg-demo-btn`, `#lg-demo-pop`) and Alt+Shift+L (on or off).
+### H. Liquid Glass
+- Glass always uses Liquid Glass with a wallpaper. The Studio keeps its graphics-card/processor and wallpaper controls.
+- The old material switch, `?lg=off` and Alt+Shift+L are retired. `PM_LG.set` off/null requests keep Liquid Glass on.
+- Without a Studio host, the Liquid Glass status popover keeps Look, Path and Motion controls.
 
 ### URL switches (reload the page with them)
 | Switch | What it does |
@@ -93,7 +95,7 @@ Source: `Concepts/home-redesign/src/panels/**`.
 | `?bindings=github,gitlab` | Gives the page a Project with those online services (picker review) |
 
 ### Keyboard
-- Ctrl+Shift+D: the demo director. Alt+Shift+L: Liquid Glass on or off (Glass branch only).
+- Ctrl+Shift+D: the demo director.
 
 ### What this browser keeps (what a real full reset must clear)
 `pm.o55.onboarding.v1`, `pm.o55.tour.v1`, `pm.o55.tour-basis.v1`, `pm.o55.scenario.v1` (onboarding and tour);
@@ -125,7 +127,7 @@ beside it). It rises out of the item as one sheet anchored to the bottom-left co
 Ownership: the Studio is new files in the onboarding package (`src/js/9x-demo-studio*.js`,
 `src/css/5x-demo-studio*.css`, `src/copy.d/75-demo-studio.json`) plus a rewrite of `90-demo.js` (agreed with
 pm7-onboarding-art-glass, 2026-10-13). It calls onboarding and the tour through their public APIs and never restyles
-them. Glass joins through pm7-liquid-glass's opt-in (asked).
+them. Glass always uses the Liquid Glass package with a wallpaper.
 
 ## How it is built
 

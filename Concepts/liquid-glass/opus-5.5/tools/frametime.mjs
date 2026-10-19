@@ -1,9 +1,9 @@
 /* frametime.mjs <page.html> <out.json>   CPU-only frame-time check (BRIEF gates). Run on Nas1: headless Chrome there
  * draws with SwiftShader, so this is the machine without a GPU. For each look and configuration it drives the same
  * script (a pointer sweep over the toolbar and cards, four range clicks, four navigation clicks, a menu opened and
- * closed twice) and records every animation-frame interval: today's Glass, Liquid Glass on its CPU path (the painted
+ * closed twice) and records every animation-frame interval: the LG-on default baseline, Liquid Glass on its CPU path (the painted
  * frost, what Nas1 detects), and Liquid Glass with the live blur forced on (what the CPU path avoids).
- * AB=1 runs the same script on the P1000's GPU through agent-browser (today against the live-blur path).
+ * AB=1 runs the same script on the P1000's GPU through agent-browser (LG-on automatic tier against the forced GPU path; no old-material comparison).
  */
 import { createRequire } from 'node:module';
 import { resolve } from 'node:path';
@@ -14,8 +14,8 @@ const AB = !!process.env.AB;
 const require = createRequire(process.env.PW_DIR || '/home/sittingmongoose/pmt-dev/pw/noop.js');
 const { chromium } = require('playwright-core');
 const [pageFile, outFile] = process.argv.slice(2);
-const CONFIGS = AB ? [['today', 'lg=off'], ['liquid-glass-gpu-path', 'lgtier=gpu']]
-  : [['today', 'lg=off'], ['liquid-glass-cpu-path', 'lgtier=cpu'], ['liquid-glass-live-blur-on-cpu', 'lgtier=gpu']];
+const CONFIGS = AB ? [['liquid-glass-default', ''], ['liquid-glass-gpu-path', 'lgtier=gpu']]
+  : [['liquid-glass-default', ''], ['liquid-glass-cpu-path', 'lgtier=cpu'], ['liquid-glass-live-blur-on-cpu', 'lgtier=gpu']];
 const results = [];
 let ab = null, browser;
 if (AB) { ab = JSON.parse(execFileSync('agent-browser', ['start', '--url', 'about:blank']).toString()); browser = await chromium.connectOverCDP(ab.cdp_endpoint); }

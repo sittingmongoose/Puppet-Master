@@ -1,5 +1,5 @@
 /* stills.mjs <file:// url> <outdir>   (run on the P1000: headless agent-browser on the GPU, no recording)
- * The concept's GPU stills: each look today and with Liquid Glass, clarity Clear and Tinted, the window unfocused,
+ * The concept's GPU stills: each look with an LG-on baseline and explicit materialization, clarity Clear and Tinted, the window unfocused,
  * Reduce Transparency, Increase Contrast, the painted (carry) frost, a menu open, a card under the pointer.
  */
 import { execFileSync } from 'node:child_process';
@@ -23,8 +23,8 @@ try {
     const name = look === 'glass-dark' ? 'Glass Dark' : 'Glass Light';
     await page.evaluate(n => { window.PM12_KIMI.setSettingFromHost('general.visual.theme', n); window.PM_PAGES.go('usage'); }, name);
     await page.mouse.move(1910, 1075); await page.waitForTimeout(3000);
-    await set({ 'data-lg': 'off' }); await shot(`${look}-1-today`);
-    await set({ 'data-lg': 'on' }); await page.waitForTimeout(1600); await shot(`${look}-2-liquid-glass`);
+    await set({ 'data-lg': 'on' }); await shot(`${look}-1-liquid-glass-baseline`);
+    await page.evaluate(() => window.PM_LG.materialize()); await page.waitForTimeout(1600); await shot(`${look}-2-liquid-glass-materialized`);
     await set({ 'data-lg-clarity': '0' }); await shot(`${look}-3-clarity-clear`);
     await set({ 'data-lg-clarity': '4' }); await shot(`${look}-4-clarity-tinted`);
     await set({ 'data-lg-clarity': null, 'data-lg-frost': 'painted' }); await shot(`${look}-5-carry-painted-frost`);

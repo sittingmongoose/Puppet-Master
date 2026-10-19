@@ -752,7 +752,6 @@
         transition: none !important;
         scroll-behavior: auto !important;
       }
-      #glass-bg * { animation: none !important; }
     }
     [data-motion="reduced"] *,
     [data-motion="reduced"] *::before,
@@ -762,8 +761,6 @@
       transition: none !important;
       scroll-behavior: auto !important;
     }
-    [data-motion="reduced"] #glass-bg * { animation: none !important; }
-
     /* ============================================================
        pm6-css-global overrides (Wave: concept touch-up)
        These rules sit AFTER the frozen base parts in the cascade and

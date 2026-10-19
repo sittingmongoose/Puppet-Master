@@ -33,29 +33,11 @@ html[data-theme="glass-light"] {
 
 /* ---- plain Glass: reading plates ---- */
 html[data-theme^="glass"] :is(.pmn-toast, .pmn-chrome, .pmn-banner) { background: linear-gradient(180deg, rgba(255, 255, 255, .06), transparent 40%), var(--pmn-plate); border: 0; box-shadow: var(--pmn-edge), var(--pmn-shadow); }
-html[data-theme^="glass"] .pmn-chrome { box-shadow: var(--pmn-edge), var(--pmn-shadow-panel); }
-html[data-theme^="glass"] .pmn-toast:is([data-level="attention"], [data-level="blocking"]) { background: linear-gradient(180deg, color-mix(in srgb, var(--pmn-acc) 16%, transparent), transparent 70%), var(--pmn-plate); box-shadow: var(--pmn-edge), inset 0 0 0 1px color-mix(in srgb, var(--pmn-acc) 40%, transparent), var(--pmn-shadow); }
-html[data-theme^="glass"] .pmn-tile { background: linear-gradient(180deg, color-mix(in srgb, var(--pmn-acc) 34%, transparent), color-mix(in srgb, var(--pmn-acc) 16%, transparent)); box-shadow: inset 0 1px 0 rgba(255, 255, 255, .35), inset 0 0 0 1px color-mix(in srgb, var(--pmn-acc) 40%, transparent); }
-html[data-theme^="glass"] .pmn-head { border-bottom-color: var(--glass-hairline, rgba(255, 255, 255, .12)); }
-html[data-theme^="glass"] .pmn-item:hover { background: rgba(255, 255, 255, .07); }
-html[data-theme="glass-light"] .pmn-item:hover { background: rgba(12, 15, 21, .05); }
-html[data-theme^="glass"] .pmn-btn { background: rgba(255, 255, 255, .08); box-shadow: inset 0 1px 0 rgba(255, 255, 255, .22), inset 0 0 0 1px var(--glass-hairline, rgba(255, 255, 255, .16)); }
-html[data-theme="glass-light"] .pmn-btn { background: rgba(255, 255, 255, .6); box-shadow: inset 0 1px 0 #fff, inset 0 0 0 1px rgba(12, 15, 21, .12); }
-html[data-theme^="glass"] .pmn-btn:hover { background: rgba(255, 255, 255, .15); }
-html[data-theme="glass-light"] .pmn-btn:hover { background: #fff; }
 /* the primary key: the accent as a lit fill with dark or white text, never the translucent surface colour */
-html[data-theme^="glass"] .pmn-btn-primary { background: linear-gradient(180deg, color-mix(in srgb, var(--pmn-acc) 85%, #fff), var(--pmn-acc)); color: var(--pmn-on-acc); box-shadow: inset 0 1px 0 rgba(255, 255, 255, .45), 0 2px 8px -2px color-mix(in srgb, var(--pmn-acc) 60%, transparent); }
-html[data-theme^="glass"] .pmn-btn-primary:hover { background: linear-gradient(180deg, color-mix(in srgb, var(--pmn-acc) 75%, #fff), var(--pmn-acc)); }
 html[data-theme^="glass"] .pmn-timer { background: linear-gradient(90deg, color-mix(in srgb, var(--pmn-acc) 30%, transparent), var(--pmn-acc)); height: 2px; opacity: .9; }
 /* the stack: glass chips; the deck keeps its left-mask peek */
 html[data-theme^="glass"] .pmn-front, html[data-theme^="glass"] .pmn-peek { border: 0; border-radius: 9px; }
-html[data-theme^="glass"] .pmn-front { background: linear-gradient(180deg, color-mix(in srgb, var(--pmn-acc) 18%, transparent), transparent), var(--pmn-plate); box-shadow: var(--pmn-edge), 0 2px 8px -2px rgba(0, 0, 0, .3); }
-html[data-theme^="glass"] .pmn-peek { background: var(--pmn-plate); box-shadow: var(--pmn-edge); }
-html[data-theme^="glass"] .pmn-deck { -webkit-mask-image: linear-gradient(90deg, rgba(0, 0, 0, .72), #000 4%); mask-image: linear-gradient(90deg, rgba(0, 0, 0, .72), #000 4%); }
-html[data-theme^="glass"] .pmn-badge { box-shadow: inset 0 1px 0 rgba(255, 255, 255, .45), 0 0 0 2px rgba(0, 0, 0, .2), 0 2px 8px rgba(0, 0, 0, .3); }
 html[data-theme^="glass"] .pmn-bell { border-radius: 9px; }
-html[data-theme^="glass"] .pmn-group[data-folded="true"] .pmn-item[data-under] { background: var(--pmn-plate-2); box-shadow: var(--pmn-edge); }
-html[data-theme^="glass"] .pmn-group[data-folded="true"] .pmn-item:not([data-under]) { background: rgba(255, 255, 255, .05); box-shadow: var(--pmn-edge); }
 html[data-theme^="glass"] .pmn-empty-art { border-radius: 16px; background: linear-gradient(180deg, rgba(255, 255, 255, .14), rgba(255, 255, 255, .04)); box-shadow: var(--pmn-edge); }
 
 /* ---- Liquid Glass: the menu material (P = html[data-lg="on"][data-theme^="glass"]:not(#lgz), as the overlay writes it) ---- */
@@ -111,13 +93,7 @@ html[data-lg="on"][data-lg-hc][data-theme^="glass"]:not(#lgz) :is(.pmn-toast, .p
    bar's notification slot, so their own keys restate themselves here with !important; that rule is also what hid the
    old inbox's Approve key in Glass. ---- */
 html[data-theme^="glass"] .title-bar :is(.pmn-stack, .pmn-x, .pmn-textbtn, .pmn-group-fold, .pmn-fold) { border: 0 !important; background: transparent !important; box-shadow: none !important; }
-html[data-theme^="glass"] .title-bar :is(.pmn-x, .pmn-textbtn, .pmn-group-fold):hover { background: var(--pmn-hover) !important; }
 html[data-theme^="glass"] .title-bar .pmn-btn { border: 0 !important; background: rgba(255, 255, 255, .08) !important; box-shadow: inset 0 1px 0 rgba(255, 255, 255, .22), inset 0 0 0 1px var(--glass-hairline, rgba(255, 255, 255, .16)) !important; }
-html[data-theme="glass-light"] .title-bar .pmn-btn { background: rgba(255, 255, 255, .62) !important; box-shadow: inset 0 1px 0 #fff, inset 0 0 0 1px rgba(12, 15, 21, .12) !important; }
-html[data-theme^="glass"] .title-bar .pmn-btn:hover { background: rgba(255, 255, 255, .15) !important; }
-html[data-theme="glass-light"] .title-bar .pmn-btn:hover { background: #fff !important; }
-html[data-theme^="glass"] .title-bar .pmn-btn-primary { background: linear-gradient(180deg, color-mix(in srgb, var(--pmn-acc) 85%, #fff), var(--pmn-acc)) !important; box-shadow: inset 0 1px 0 rgba(255, 255, 255, .45), 0 2px 8px -2px color-mix(in srgb, var(--pmn-acc) 60%, transparent) !important; }
-html[data-theme^="glass"] .title-bar .pmn-btn-primary:hover { background: linear-gradient(180deg, color-mix(in srgb, var(--pmn-acc) 72%, #fff), var(--pmn-acc)) !important; }
 html[data-theme^="glass"] .title-bar .pmn-btn-danger { box-shadow: inset 0 1px 0 rgba(255, 255, 255, .18), inset 0 0 0 1px color-mix(in srgb, var(--accent-error) 50%, transparent) !important; }
 html[data-theme^="glass"] .title-bar #rsStage .o55-resume.pmn-pin button { border: 0 !important; background: transparent !important; box-shadow: none !important; }
 html[data-theme^="glass"] .title-bar #rsStage .o55-resume.pmn-pin button:hover { background: var(--pmn-hover) !important; }

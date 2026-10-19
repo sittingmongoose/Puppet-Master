@@ -144,7 +144,6 @@ html[data-lg="on"][data-theme^="glass"]:not(#lgz) #panel-settings .btn.primary {
 html[data-lg="on"][data-theme^="glass"]:not(#lgz) body { background: var(--background) var(--lg-wall) center / cover no-repeat fixed !important; }
 /* while the sheets' frost catches up with a new wallpaper, the page keeps the print that frost was made from (glass.js) */
 html[data-lg="on"][data-theme^="glass"][data-lg-wall-hold]:not(#lgz) body { background-image: var(--lg-wall-hold) !important; }
-html[data-lg="on"][data-theme^="glass"]:not(#lgz) #glass-bg { display: none !important; }
 html[data-lg="on"][data-theme^="glass"]:not(#lgz) .app-shell,
 html[data-lg="on"][data-theme^="glass"]:not(#lgz) .main-area,
 html[data-lg="on"][data-theme^="glass"]:not(#lgz) .title-bar,

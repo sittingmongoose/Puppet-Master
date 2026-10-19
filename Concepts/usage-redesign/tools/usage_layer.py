@@ -296,7 +296,7 @@ HOST_SCOPE = ':is(#panel-usage,[data-pmu-host])'
 # saying so.
 # A3-css (2026-10-19): twenty certified dead whole rules removed from the authored Usage CSS;
 # their twenty descendant anchors leave the hosted-board census. Compound uses stay unchanged.
-HOST_SCOPE_EXPECT = {'rewritten': 2660, 'compound': 20}
+HOST_SCOPE_EXPECT = {'rewritten': 2659, 'compound': 20}
 HOST_AT_GROUPS = ('@media', '@supports', '@container', '@layer')
 _ANCHOR_RX = re.compile(re.escape(HOST_ANCHOR) + r'(?![\w-])')
 

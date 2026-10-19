@@ -1,5 +1,5 @@
 
-    /* pm6 boot: apply persisted theme prefs BEFORE first CSS paint (defaults: friendly + dark / mesh).
+    /* pm6 boot: apply persisted theme prefs BEFORE first CSS paint (defaults: Basic Dark; Glass always uses Liquid Glass).
        Theme model: pm.themeFamily (friendly|glass|retro|basic) x pm.themeMode (light|dark|auto);
        auto follows prefers-color-scheme. The legacy pm.theme slug migrates on first read and is
        kept in sync (resolved slug) for older readers.
@@ -15,8 +15,8 @@
         'retro-light': '#F5F0E8',
         'basic-dark': '#121212',
         'basic-light': '#EAECEF',
-        'glass-dark': '#241B36',
-        'glass-light': '#E4CDE4'
+        'glass-dark': '#04060d',
+        'glass-light': '#eef1f6'
       };
       try {
         var fams = ['friendly', 'glass', 'retro', 'basic'];
@@ -27,7 +27,7 @@
         /* O55 first paint (tools/build.py): the look stored for the Project the page opens on, read and never
            written (T44: project-scoped Settings owns persistence; nothing here stores a theme). A new install's
            onboarding (?o55=fresh, or no onboarding record yet) always starts in Basic Dark. */
-        var o55b = { project: '', install: false, nier: false, parts: '', glassBg: '', glassN: NaN, reduced: false, boot: false };
+        var o55b = { project: '', install: false, nier: false, parts: '', wallpaper: '', glassN: NaN, reduced: false, boot: false };
         try {
           var o55sw = new URLSearchParams(location.search).get('o55') || '', o55rec = null;
           try { o55rec = JSON.parse(window.localStorage.getItem("pm.o55.onboarding.v1") || 'null'); } catch (e3) { o55rec = null; }
@@ -47,14 +47,13 @@
               for (var o55i = 0; o55i < o55all.length; o55i++) { if (!Array.isArray(o55pl) || o55pl.indexOf(o55all[o55i][0]) !== -1) { o55k.push(o55all[o55i][1]); } }
               o55b.nier = true; o55b.parts = o55k.join(' '); fam = 'basic';
             }
-            var o55g = String(o55s['general.visual.glass-background-mode'] || 'Mesh').toLowerCase();
-            o55b.glassBg = ['mesh', 'depth', 'minimal'].indexOf(o55g) === -1 ? 'mesh' : o55g;
+            o55b.wallpaper = typeof o55s['general.visual.wallpaper'] === 'string' ? o55s['general.visual.wallpaper'] : '';
             var o55a = Number(o55s['general.visual.glass-transparency'] == null ? 0.55 : o55s['general.visual.glass-transparency']);
             if (o55a > 1) { o55a /= 100; }
             o55b.glassN = isFinite(o55a) ? o55a : 0.55;
             o55b.reduced = !!o55s['general.visual.reduce-animations'];
           }
-        } catch (eo55) { fam = 'basic'; tmode = 'dark'; o55b.nier = false; o55b.parts = ''; o55b.glassBg = ''; o55b.glassN = NaN; o55b.reduced = false; }
+        } catch (eo55) { fam = 'basic'; tmode = 'dark'; o55b.nier = false; o55b.parts = ''; o55b.wallpaper = ''; o55b.glassN = NaN; o55b.reduced = false; }
         window.PM_O55_BOOT = o55b;
         if (fams.indexOf(fam) === -1) { fam = leg ? leg[1] : 'friendly'; }
         if (tmodes.indexOf(tmode) === -1) { tmode = leg ? leg[2] : 'dark'; }
@@ -65,6 +64,7 @@
         }
         var t = fam + '-' + scheme;
         /* T44: project-scoped Settings owns persistence; no global theme write. */
+        if (fam === 'glass') { d.setAttribute('data-lg', 'on'); d.setAttribute('data-lg-wall', !o55b.wallpaper || o55b.wallpaper === 'look' ? 'ribbons' : o55b.wallpaper); }
         d.setAttribute('data-theme', t);
         if (o55b.nier) { d.setAttribute('data-o55-nier', 'on'); d.setAttribute('data-o55-nier-parts', o55b.parts); }
         if (o55b.reduced) { d.setAttribute('data-motion', 'reduced'); }
@@ -74,10 +74,6 @@
           d.setAttribute('data-o55-boot-wait', '');
           window.addEventListener('load', function () { setTimeout(function () { d.removeAttribute('data-o55-boot-wait'); }, 400); });
         }
-        var modes = ['mesh', 'depth', 'minimal'];
-        var g = o55b.glassBg || 'mesh';
-        if (modes.indexOf(g) === -1) { g = 'mesh'; }
-        d.setAttribute('data-glass-bg', g);
         var a = NaN;
         if (o55b.glassN === o55b.glassN) { d.style.setProperty('--glass-alpha', String(Math.max(/-light$/.test(t) ? 0.45 : 0.35, Math.min(1, o55b.glassN)))); }
         if (!isNaN(a)) {
