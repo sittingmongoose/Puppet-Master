@@ -61,8 +61,15 @@ test('an unsampled navigation keeps observed touches but cannot certify CSS abse
 });
 
 test('a union with no navigation tracking cannot certify CSS absence', () => {
-  const text = '.spinner { color: red; } .idle { color: blue; }';
-  const { summary, complete } = summarize(text);
+  const text = '.spinner { color: red; } .idle { color: blue; } @font-face { font-family: fixture; }';
+  const sheet = createHash('sha256').update(text).digest('hex').slice(0, 16);
+  const { summary, complete } = summarize(text, { css: [
+    { sheet, startOffset: 0, endOffset: text.indexOf('}') + 1, used: true },
+    { sheet, startOffset: text.indexOf('.idle'), endOffset: text.indexOf('}', text.indexOf('.idle')) + 1, used: false },
+    // Neither row is a static selector rule: the census cannot clean them up.
+    { sheet, startOffset: text.indexOf('@font-face'), endOffset: text.length, used: false },
+    { sheet: 'unmatched-sheet', startOffset: 0, endOffset: 10, used: false },
+  ] });
   assert.equal(summary.unsampled_navigations, null);
   assert.deepEqual(summary.css_rules.map(r => [r.usage_state, r.navigation_unchecked]),
     [['used', false], ['unknown', true]]);

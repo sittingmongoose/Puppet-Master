@@ -235,7 +235,7 @@ writeFileSync(out + '.md', md.join('\n'));
 if (completeFile) {
   // Complete only observed content hashes. An entirely missing script/sheet remains
   // unknown; a census never invents a successful load of an unrecorded block.
-  const entries = new Map(union.css.filter((r) => r.used !== false || !(unsampledNavigations > 0) && !unresolvedCss.some((u) => u.startOffset < r.endOffset && u.endOffset > r.startOffset))
+  const entries = new Map(union.css.filter((r) => r.used !== false || unsampledNavigations === 0 && !unresolvedCss.some((u) => u.startOffset < r.endOffset && u.endOffset > r.startOffset))
     .map((r) => [r.sheet + ':' + r.startOffset + ':' + r.endOffset, r]));
   for (const r of rules.filter((r) => r.sheet_observed)) {
     const key = r.sheet + ':' + r.startOffset + ':' + r.endOffset;
