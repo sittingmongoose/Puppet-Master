@@ -2,9 +2,12 @@
 from __future__ import annotations
 
 import json
+import re
 from pathlib import Path
 
 BASE = Path(__file__).resolve().parent.parent / 'base'
+LG_SLOTS = BASE.parents[2] / 'liquid-glass' / 'opus-5.5' / 'src' / 'slots'
+CSS_SLOT = re.compile(r'/\* @pm7-lg-slot ([^\r\n*]+\.css) \*/')
 
 
 def read_source(path: Path) -> bytes:
@@ -21,6 +24,32 @@ def read_source(path: Path) -> bytes:
     return data
 
 
+def read_text_source(path: Path) -> str:
+    """Read authored text, restoring LG-owned CSS at its original source slot."""
+    text = read_source(path).decode('utf-8')
+    if path.suffix != '.css':
+        return text
+    seen = set()
+
+    def fragment(match: re.Match) -> str:
+        name = match.group(1)
+        target = (LG_SLOTS / name).resolve()
+        if not target.is_relative_to(LG_SLOTS.resolve()):
+            raise ValueError(f'{path}: Liquid Glass slot outside package: {name}')
+        if name in seen:
+            raise ValueError(f'{path}: duplicate Liquid Glass slot: {name}')
+        seen.add(name)
+        body = read_source(target).decode('utf-8')
+        if '@pm7-lg-slot' in body:
+            raise ValueError(f'{target}: nested Liquid Glass slot')
+        return body
+
+    text = CSS_SLOT.sub(fragment, text)
+    if '@pm7-lg-slot' in text:
+        raise ValueError(f'{path}: malformed or unresolved Liquid Glass slot')
+    return text
+
+
 def assemble(folder: Path = BASE) -> bytes:
     manifest = json.loads(read_source(folder / 'manifest.json'))
     if manifest['version'] != 1:
@@ -35,7 +64,7 @@ def assemble(folder: Path = BASE) -> bytes:
         path = (folder / block['file']).resolve()
         if not path.is_relative_to(folder.parent.resolve()):
             raise ValueError(f'PM7 base source outside package: {path}')
-        body = read_source(path)
+        body = read_text_source(path).encode('utf-8')
         if b'@@PM7_BASE_' in body:
             raise ValueError(f'PM7 base slot token inside source: {path}')
         text = text.replace(slot, body, 1)

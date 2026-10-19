@@ -74,7 +74,7 @@ def read_parts(folder: Path, suffix: str) -> str:
     files = sorted(p for p in folder.rglob(f'*{suffix}') if p.is_file())
     out = []
     for p in files:
-        body = p.read_text(encoding='utf-8')
+        body = base_source.read_text_source(p)
         out.append(f'/* ---- {p.relative_to(SRC).as_posix()} ---- */\n{body.rstrip()}\n')
     return '\n'.join(out)
 

@@ -128,8 +128,8 @@ def module_source() -> str:
 
 
 def styles() -> str:
-    parts = [(FORK / 'styles.css').read_text(encoding='utf-8')]
-    parts += [f'/* ---- styles.d/{p.name} ---- */\n' + p.read_text(encoding='utf-8') for p in sorted((FORK / 'styles.d').glob('*.css'))]
+    parts = [base_source.read_text_source(FORK / 'styles.css')]
+    parts += [f'/* ---- styles.d/{p.name} ---- */\n' + base_source.read_text_source(p) for p in sorted((FORK / 'styles.d').glob('*.css'))]
     return inline_fonts('\n'.join(parts))
 
 

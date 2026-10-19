@@ -17,6 +17,7 @@ stage that contains the snippet:
   6. live shell: base/shell.html and the active sources named by base/manifest.json
 
 Every match is printed as file:line. Base hits name editable source files.
+CSS slot comments are followed to their Liquid Glass-owned fragments.
 """
 from __future__ import annotations
 
@@ -34,11 +35,14 @@ RAIL = ROOT / "Concepts" / "leftrail-redesign"
 HOME = ROOT / "Concepts" / "home-redesign"
 USAGE = ROOT / "Concepts" / "usage-redesign"
 SETTINGS_LAYER = ROOT / "Concepts" / "onboarding" / "opus-5.5" / "tools" / "settings_layer.py"
+sys.path.insert(0, str(SETTINGS_LAYER.parent))
+import base_source  # noqa: E402
+
 D_CSS = RAIL / "src" / "concepts" / "d" / "d.css"
 BUILD_D_CSS = RAIL / "tools" / "build_d_css.py"
 GENERATED_D_NOTE = (
     "generated intermediate: Concepts/leftrail-redesign/src/concepts/d/d.css "
-    "(Concepts/leftrail-redesign/tools/build_d_css.py; edit the .src.css files, never d.css)"
+    "(Concepts/leftrail-redesign/tools/build_d_css.py; edit .src.css or its referenced LG fragment, never d.css)"
 )
 
 
@@ -110,6 +114,17 @@ def search_file(path: Path, snippet: str) -> list[int]:
     return unique(line_hits(text, snippet))
 
 
+def source_paths(path: Path):
+    """A source and the LG fragments referenced at its authored CSS slots."""
+    yield path
+    if path.suffix == ".css":
+        for match in base_source.CSS_SLOT.finditer(read_text(path) or ""):
+            fragment = (base_source.LG_SLOTS / match.group(1)).resolve()
+            if not fragment.is_relative_to(base_source.LG_SLOTS.resolve()):
+                raise ValueError(f"{rel(path)}: Liquid Glass slot outside package")
+            yield fragment
+
+
 def iter_files(root: Path):
     if not root.is_dir():
         return
@@ -132,8 +147,9 @@ def os_walk(root: Path):
 def search_tree(root: Path, snippet: str) -> list[tuple[Path, int]]:
     found: list[tuple[Path, int]] = []
     for path in iter_files(root):
-        for line in search_file(path, snippet):
-            found.append((path, line))
+        for source in source_paths(path):
+            for line in search_file(source, snippet):
+                found.append((source, line))
     return found
 
 
@@ -173,7 +189,7 @@ def macro_source_hits(snippet: str) -> list[tuple[Path, int]]:
     src = module.SRC
     if not src.is_dir():
         return found
-    for path in sorted(src.glob("*.src.css")):
+    for path in (source for path in sorted(src.glob("*.src.css")) for source in source_paths(path)):
         text = read_text(path)
         if text is None:
             continue
@@ -203,7 +219,7 @@ def search_rail(snippet: str) -> tuple[list[tuple[Path, int]], list[tuple[Path, 
     authored = [hit for hit in raw if not is_generated_d_css(hit[0])]
     if generated:
         authored.extend(macro_source_hits(snippet))
-        if not any(hit[0].name.endswith(".src.css") for hit in authored):
+        if not any(hit[0].name.endswith(".src.css") or hit[0].is_relative_to(base_source.LG_SLOTS) for hit in authored):
             # The snippet is in the generated file but not in any expanded source line
             # (the generator header). Name the generator so d.css is not the only answer.
             header = search_file(BUILD_D_CSS, snippet)
@@ -215,8 +231,9 @@ def search_paths(paths: list[Path], snippet: str) -> list[tuple[Path, int]]:
     found: list[tuple[Path, int]] = []
     for path in paths:
         if path.is_file():
-            for line in search_file(path, snippet):
-                found.append((path, line))
+            for source in source_paths(path):
+                for line in search_file(source, snippet):
+                    found.append((source, line))
         elif path.is_dir():
             found.extend(search_tree(path, snippet))
     return found

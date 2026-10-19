@@ -22,6 +22,9 @@ import sys
 from pathlib import Path
 
 PKG = Path(__file__).resolve().parent.parent
+sys.path.insert(0, str(PKG.parent / 'onboarding' / 'opus-5.5' / 'tools'))
+import base_source  # noqa: E402
+
 SRC = PKG / 'src' / 'concepts' / 'd' / 'css'
 OUT = PKG / 'src' / 'concepts' / 'd' / 'd.css'
 ROOT = '[data-rail-skin="d"]'
@@ -51,7 +54,7 @@ def expand(text: str) -> str:
 
 
 def generate() -> str:
-    parts = [expand(p.read_text(encoding='utf-8')).rstrip() + '\n' for p in sorted(SRC.glob('*.src.css'))]
+    parts = [expand(base_source.read_text_source(p)).rstrip() + '\n' for p in sorted(SRC.glob('*.src.css'))]
     out = HEAD + '\n'.join(parts)
     if '§' in out:
         raise SystemExit('build_d_css: a macro did not expand')

@@ -50,6 +50,30 @@ clarity 0, 2 and 4, on both paths. On Nas1's CPU, the share of frames over 20 ms
 
 On the P1000's GPU it was 0.31 and 0.29 against today's 0.79 and 0.69.
 
+## Published source slots
+
+The surviving old Glass rules also live here as plain CSS in `src/slots/`.
+Each fragment is one exact authored rule, named by its B0-r2 rule id beneath its
+original source path. Its former location contains a one-line comment such as
+`/* @pm7-lg-slot onboarding/opus-5.5/base/style/style-002/G0001.css */`.
+The filename is relative to this package's `src/slots/` directory.
+
+`onboarding/opus-5.5/tools/base_source.py:read_text_source` replaces that comment
+with the fragment's exact UTF-8 bytes. The existing `base/manifest.json` still
+owns base block order. The feature CSS readers use the same helper before their
+existing joins, rail macro expansion, Usage host scoping, and glyph rewriting.
+No rule is appended to `lg-css`; each retains its original block and position.
+Whitespace around a slot remains in the original source, and a fragment has no
+added final newline. The reader rejects missing, duplicate, nested, malformed,
+out-of-package, CR, BOM, or invalid UTF-8 inputs instead of normalizing them.
+
+Edit the fragment to change its rule. `scripts/pm7-where.py` follows the source
+comment and names the fragment, including when rail macros expand its selector.
+Do not regenerate these fragments from an old page. The B1 move preserves token
+values and scopes without consolidation; all 28 Wizard/Orchestrator-related
+survivors remain in their original source files. The four publication checks
+and exact page hashes verify that this source relocation preserves output bytes.
+
 ## Rules this keeps
 
 F3-427 (one shell blur, plain fills inside, baked wallpaper), F3-431 (closed blur budget, no SVG filters, colours

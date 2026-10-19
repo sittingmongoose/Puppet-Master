@@ -25,18 +25,22 @@ draws exactly as before.
 """
 from __future__ import annotations
 import re
+import sys
 from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
 ROOT = HERE.parent
 CONCEPTS = ROOT.parents[1]
+sys.path.insert(0, str(CONCEPTS / 'onboarding' / 'opus-5.5' / 'tools'))
+import base_source  # noqa: E402
+
 SRC = ROOT / 'src'
 NEON = CONCEPTS / 'chat-assistant-concepts' / '5.6 Pro'
 START, END = '<!-- GLYPHS:START -->', '<!-- GLYPHS:END -->'
 
 
 def _read(p: Path) -> str:
-    t = p.read_text(encoding='utf-8')
+    t = base_source.read_text_source(p)
     low = t.lower()
     if '</script' in low or '</style' in low:
         raise SystemExit(f'{p}: contains a closing </script> or </style>')
