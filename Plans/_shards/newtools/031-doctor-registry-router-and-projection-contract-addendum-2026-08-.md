@@ -4,7 +4,7 @@ Source: `Plans/newtools.md`
 
 Source lines: L8719-L8864
 
-Source SHA256: `8e8d163aaa15c432f0ced8535780a5160cd6a2b3bff06147fa1d20ff81949dc0`
+Source SHA256: `886f1e8ed3cde26070966d603c085df84a94293ec72e8e4d0425dbdd97c7c7b6`
 
 ---
 
@@ -139,11 +139,11 @@ acceptance_criteria:
   - Details, Logs, and Receipt remain explicit lazy bounded redacted projections; secret bytes, protected authentication content, sensitive paths, and raw package/runtime output are absent.
   - Owner routing opens code/toolchain with the Plugins tab and intended detail selected, while exact finding/target/generation/continuation/focus context is preserved for return.
   - handler_unavailable, stale, unknown, waiting-for-user, blocked, and needs-attention remain distinct and cannot be rendered Ready by route completion or browser fixture state.
-validation_surfaces: [Plans/doctor_contracts.schema.json, Plans/doctor_contract_fixtures.json, Plans/plugin_contracts.schema.json, Plans/plugin_contract_fixtures.json, Concepts/pm7-tools/verify/plugin_projection_matrix.mjs]
+validation_surfaces: [Plans/doctor_contracts.schema.json, Plans/doctor_contract_fixtures.json, Plans/plugin_contracts.schema.json, Plans/plugin_contract_fixtures.json]
 risk_class: doctor_plugin_private_repair_or_false_green
 reasoning_tier: high
 context_scope: doctor_plugins_owner_projection
-implementation_surfaces: [Plans/newtools.md, Plans/Plugins_System.md, Plans/Settings_System.md, Concepts/pm7-tools/systems_integration_source.py, future Doctor descriptor registry fixtures]
+implementation_surfaces: [Plans/newtools.md, Plans/Plugins_System.md, Plans/Settings_System.md, future Doctor descriptor registry fixtures]
 node_compile_hint: {mode: doctor_plugins_descriptor_contract_only, create_worknodes: false, create_nodeseeds: false}
 source_lineage:
   - Plans/Plugins_System.md#PLUG-067

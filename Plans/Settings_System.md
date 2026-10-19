@@ -811,7 +811,7 @@ negative_constraints: [Do not call Provider Manager plus a few rows a complete S
 owner_hints: [Plans/Settings_System.md, Plans/Shared_Integration_Runtime.md]
 ```
 
-### SSYS-016 - PMConcept7 T44 And Slint Portability Boundary
+### SSYS-016 - PMConcept7 Reference And Slint Portability Boundary
 
 ```yaml
 plan_unit_id: SSYS-016
@@ -819,12 +819,8 @@ unit_type: constraint
 status: accepted
 owner_doc: Plans/Settings_System.md
 canonical_text: >-
-  The generated PMConcept7 Settings fixture is source-owned by the T44 transform in
-  Concepts/pm7-tools/settings_tome_source.py and the T50 Settings-refresh transform in
-  Concepts/pm7-tools/settings_refresh_source.py (USER-SETTINGS-MANAGER-REFRESH-20260908), composed by
-  Concepts/pm7-tools/build_pm7.py, and emitted as Concepts/PMConcept7.html, with Concepts/TestPMConcept.html a second
-  generated concept artifact under the same concept_fixture_only boundary, published through
-  Concepts/pm7-tools/build_testpm_settings_refresh.py; the generated HTML is never the authored production owner. T44 may demonstrate the K3
+  PMConcept7 (Concepts/PMConcept7.html) is the Settings look-and-behaviour reference under the
+  concept_fixture_only boundary; the concept is never the authored production owner. It may demonstrate the K3
   geometry, 828-row projection, later-packet manager additions, project/no-Project defaults, and command previews, but
   fixture state, local browser storage, simulated receipts, and JavaScript handlers are not runtime proof. Production
   targets Rust stable and Slint 1.17.1 using typed models, host-width layout states, variable-height virtualization,
@@ -835,28 +831,28 @@ canonical_text: >-
   concept are translation inputs, not production dependencies of the Slint desktop; the Leptos web GUI (F3-583,
   DL-139) draws Settings with its own DOM and CSS from the shared interface-model crate and design-token source, and
   the concept HTML is a design reference there, not script to run under Leptos. This direction makes no portability, build, runtime, visual,
-  performance, accessibility, or certification claim.
+  performance or accessibility claim and no certification claim.
 gui_related: true
-gui_classification_reason: This unit governs the visual concept lineage and future Slint implementation direction.
+gui_classification_reason: This unit governs the Settings visual reference and future Slint implementation direction.
 depends_on: [SSYS-003, SSYS-010]
 unblocks: [SSYS-017]
 acceptance_criteria:
-  - PMConcept7 is reproducibly generated from authored transforms and is labeled concept_fixture_only.
+  - PMConcept7 demonstrates Settings geometry, content and interactions and is labeled concept_fixture_only.
   - Production implementation does not hand-port the concept's browser persistence, JavaScript handlers or DOM/CSS-only mechanisms as runtime architecture; the Leptos web GUI (F3-583) uses its own DOM and CSS presentation over the shared interface model.
   - Any Slint acceptance claim requires fresh build/runtime/visual/accessibility/performance evidence under SSYS-017.
-validation_surfaces: [future PM7 source/generated reproducibility check, future Slint build and runtime evidence]
+validation_surfaces: [future Slint build and runtime evidence]
 risk_class: concept_fixture_promoted_as_runtime_proof
 reasoning_tier: high
 context_scope: settings_pmconcept_slint_boundary
-implementation_surfaces: [Plans/Settings_System.md, Concepts/pm7-tools/settings_tome_source.py, Concepts/pm7-tools/build_pm7.py, Concepts/PMConcept7.html, future Slint Settings components]
+implementation_surfaces: [Plans/Settings_System.md, future Slint Settings components]
 node_compile_hint: {mode: settings_concept_portability_boundary, create_worknodes: false, create_nodeseeds: false}
 source_lineage:
   - Concepts/pm7-tools/settings_tome_source.py
   - Concepts/pm7-tools/build_pm7.py
   - Concepts/settings-redesign-concepts/kimi-k3-polish/concept-12-tome-tabs.html
   - source_ref:chat:settings-canonical-owner-lane-2026-08-31
-preserved_exact_tokens: [T44, PMConcept7, Slint 1.17.1, concept_fixture_only, no certification claim]
-negative_constraints: [Do not hand-edit generated PMConcept7.html., Do not call static or browser concept checks Slint proof., Do not claim portability or certification without fresh production evidence.]
+preserved_exact_tokens: [PMConcept7, Slint 1.17.1, concept_fixture_only, no certification claim]
+negative_constraints: [Do not call static or browser concept checks Slint proof., Do not claim portability or certification without fresh production evidence.]
 owner_hints: [Plans/Settings_System.md, Plans/FinalGUISpec.md, Plans/Automated_Testing_System.md]
 ```
 
@@ -1181,11 +1177,11 @@ acceptance_criteria:
   - Complete update diff, authority/reapproval, containment/isolation, signature/trust/publisher/license/SBOM/provenance/known-bad/compatibility/rollback, crash budget, bounded redacted logs, and stale promoted-routine disposition are progressively disclosed without a wall of text.
   - handler_unavailable actions preserve package generation/status and exact return context, emit no EventRecord, issue no production receipt, and cannot fall through to legacy concept mutation handlers.
   - Eight plugin Doctor checks route back to the exact Plugins tab/detail without Doctor or Settings performing scan, install, update, repair, permission, runtime, rollback, or package mutation.
-validation_surfaces: [Plans/plugin_contracts.schema.json, Plans/plugin_contract_fixtures.json, Plans/plugin_package_contracts.schema.json, Plans/plugin_package_contract_fixtures.json, Plans/Wiring_Matrix.production.json, Plans/touch_closure.json, Concepts/pm7-tools/verify/plugin_projection_matrix.mjs]
+validation_surfaces: [Plans/plugin_contracts.schema.json, Plans/plugin_contract_fixtures.json, Plans/plugin_package_contracts.schema.json, Plans/plugin_package_contract_fixtures.json, Plans/Wiring_Matrix.production.json, Plans/touch_closure.json]
 risk_class: settings_plugin_parallel_owner_or_false_success
 reasoning_tier: high
 context_scope: settings_k3_plugin_owner_projection
-implementation_surfaces: [Plans/Settings_System.md, Plans/Plugins_System.md, Plans/newtools.md, Plans/FinalGUISpec.md, Concepts/pm7-tools/systems_integration_source.py, future native Slint Plugins manager projection]
+implementation_surfaces: [Plans/Settings_System.md, Plans/Plugins_System.md, Plans/newtools.md, Plans/FinalGUISpec.md, future native Slint Plugins manager projection]
 node_compile_hint: {mode: settings_plugins_owner_projection_contract_only, create_worknodes: false, create_nodeseeds: false}
 source_lineage:
   - Plans/Plugins_System.md#PLUG-067
@@ -1346,7 +1342,7 @@ For every Settings or retained-owner action, `pm.settings_ui_action_projection.v
 
 `pm.settings_doctor_projection.v1` carries only a cached, currentness-aware N2-151/domain-owner finding: check ID, domain owner, generation, capture/expiry, severity, raw status, evidence refs, dedupe key, and current owner remediation route/availability. Its invariants are `probe_execution_owner=domain_owner_only`, `settings_authority=cached_projection_and_owner_route_only`, and `readiness_claim=false`. Expired or generation-mismatched findings render `doctor_projection_stale`; they cannot enable remediation. `settings.doctor.remediation.open` navigates to `check:{check_id}` and never runs the probe or repair.
 
-`pm.settings_concept_boundary.v1` fixes PMConcept7 at `concept_fixture_only`: authored source is `settings_tome_source.py`, the builder is `build_pm7.py`, generated HTML direct edits are forbidden, handlers are simulated, persistence is fixture-local/non-authoritative, and `native_runtime_executed=false`. It permits geometry/content/interaction demonstration only and explicitly prohibits production runtime, persistence, handler-wiring, visual, performance, accessibility, or certification claims.
+`pm.settings_concept_boundary.v1` fixes PMConcept7 at `concept_fixture_only`: handlers are simulated, persistence is fixture-local/non-authoritative, and `native_runtime_executed=false`. It permits geometry/content/interaction demonstration only and explicitly prohibits production runtime, persistence, handler-wiring, visual, performance, accessibility, or certification claims.
 
 ContractRef: ContractName:Plans/settings_system_contracts.schema.json, ContractName:Plans/settings_system_contract_fixtures.json, ContractName:Plans/Crosswalk.md, ContractName:Plans/Shared_Integration_Runtime.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Commands_System.md, ContractName:Plans/UI_Command_Catalog.md
 
@@ -1849,10 +1845,10 @@ Settings manager refresh under USER-SETTINGS-MANAGER-REFRESH-20260908 (§22, SSY
   The visual prescription derived from the reference video (`ScreenRecording_08-11-2026 19-26-05_1(1).mov`)
   enforcing flat-row, borderless-section, and forced single-column layout is selectively superseded under
   user correction USER-REFERENCE-LAYOUT-ROLLBACK-20260908. Settings surfaces restore prior native card, section
-  box, and grid layouts across all thirty-eight registered managers and the 23 concrete manager workspaces measured
-  at the pinned base `66cd9ca232ef6017c45ce93e0ab2dcd65a44923f95ea24b580b94f53187ddf30` after the Settings manager refresh (USER-SETTINGS-MANAGER-REFRESH-20260908; a presentation count over the unchanged
-  38-key registry). Historical evidence and request records are retained intact. Active presentation across every
-  Settings manager enforces:
+  box, and grid layouts across all thirty-eight registered managers. The September 8 Settings manager refresh
+  (USER-SETTINGS-MANAGER-REFRESH-20260908) demonstrated 23 concrete manager workspaces over the unchanged
+  38-key registry; this is a historical presentation count. Historical evidence and request records are retained
+  intact. Active presentation across every Settings manager enforces:
   1. *Stable Alignment:* Left-aligned section headers and property labels, fixed-width input controls,
      and uniform vertical baselines.
   2. *Legible Short Labels:* Human-friendly descriptive names omitting internal dotted path prefixes.
@@ -1905,16 +1901,6 @@ Settings manager refresh under USER-SETTINGS-MANAGER-REFRESH-20260908 (§22, SSY
   And across the three named visible-state projections: `teacher-help`, `project-search-index`, and `dry-method`.
   All 892 settings in the inventory remain preserved. Census (USER-SETTINGS-MANAGER-REFRESH-20260908): `Plans/settings_inventory.json` holds 887 ordinary setting ids and the concept's `PM12_REFERENCE` holds 892 (887 plus the five concept-proposed roster/stage rows); the 828 figure in SSYS-004/SSYS-005 is a preserved historical denominator token.
   Amended 2026-10-10 (DL-187; the planning thread's count, pm-mail 1010234358-ab8b): with Chat Layout (`general.visual.chat-layout-mode`) retired, the published concept's census is 891 live concept ids plus 1 retired row (Chat Layout), 892 ids in all, and no setting is lost. This is the census of what the published concept draws. It is not the inventory census of SSYS-050, which counts `Plans/settings_inventory.json` itself: 964 rows, 11 of them retired, 953 live. The two differ because the inventory has grown since the 2026-09-08 concept census by rows the concept does not draw yet (Settings is not ported in the home redesign), and because the concept's five roster/stage rows are not inventory rows.
-- **Source-Only Checkpoint Generation (APR-063, amended by USER-SETTINGS-MANAGER-REFRESH-20260908):** Hand-editing of
-  TestPMConcept.html is strictly forbidden. The published file is generated by
-  `Concepts/pm7-tools/build_testpm_settings_refresh.py` from the pinned published checkpoint
-  (`Concepts/pm7-tools/settings_refresh_checkpoint.json`) through the authored T50 transform
-  `Concepts/pm7-tools/settings_refresh_source.py` (with `settings_refresh/kit.js`, `managers/*.js`, `styles.css`,
-  `data.json`), which is also registered as T50 in `Concepts/pm7-tools/build_pm7.py`; `--check` reproduces the
-  published bytes, every non-Settings script element is asserted byte-identical to the pinned base, and
-  `--parity` asserts identical Settings blocks between the checkpoint lane and the full pipeline. The earlier
-  `build_testpm_layout_b06.py` lane (`pm50-manager-layout` replacement with 29 byte-identical scripts) is
-  predecessor lineage contained in the new pinned base.
 - **Context-Sensitive Manager Navigation (APR-065):** Selecting a manager from a contextual link or
   dropdown retains and highlights that manager's identity during navigation, avoiding disorientation.
 - **Manager Kit and Workspace Presentation (USER-SETTINGS-MANAGER-REFRESH-20260908):** Every Settings manager of the
@@ -2088,27 +2074,23 @@ canonical_text: >-
   workspaces over tools-integrations and commands-shortcuts; one System workspace, Server & Project Location,
   presents server-claim-bootstrap, servers-hosts-environments, clients-continuity, project-hosting-files,
   project-sync-move-copy, ssh-remote, and remote-access; Single Owners and Browser & SCM governance are Advanced
-  disclosures; Back Seat Driver is its own kit manager. The published TestPMConcept.html is generated by
-  Concepts/pm7-tools/build_testpm_settings_refresh.py from the pinned checkpoint through the authored T50
-  transform Concepts/pm7-tools/settings_refresh_source.py, also registered in build_pm7.py. Domain switches
+  disclosures; Back Seat Driver is its own kit manager. Domain switches
   never blank (first frame at least 85 percent of settled brightness), built-in sounds play as labelled
   demonstration tones, and All Settings scrolls with the page while staying variable-height virtualized.
 gui_related: true
-gui_classification_reason: Governs the shared manager kit, workspace grouping, side-panel anatomy, motion, sound, and build lane of every Settings manager in the published concept.
+gui_classification_reason: Governs the shared manager kit, workspace grouping, side-panel anatomy, motion and sound of every Settings manager.
 depends_on: [SSYS-032, SSYS-005, SSYS-006, SSYS-015, SSYS-024]
 unblocks: []
 acceptance_criteria:
   - Every manager workspace mounts through the shared kit with zero header-level action buttons, at most six tabs, and one Advanced disclosure per view.
   - Registry keys, routes, detail ids, command ids, and the settings inventory are unchanged; every workspace carries data-manager-key.
-  - build_testpm_settings_refresh.py --check reproduces the published file and every non-Settings script is byte-identical to the pinned base.
-  - The browser checkpoint reports first-frame brightness at least 85 percent of settled on a domain switch, a playable labelled demonstration tone for every built-in sound row, no nested scroller in All Settings, and no page errors.
-  - The 60 fps slow-motion films of panel open/close, inspector open/close, domain switch, tab switch, and sound play show no blank frames and settle within the spring's own duration.
-  - (USER-SETTINGS-MANAGER-REFRESH-20260909) State renders as dot-plus-text status tokens and no capsule pill remains except keyboard keys; every select is a concept-drawn listbox over a hidden native select and every menu shares its popout motion; rosters scroll inside their manager block; manager-topic canonical settings render inline inside their manager before its Advanced disclosure and every concept id renders exactly once (SSYS-035).
+  - A domain switch's first frame is at least 85 percent of settled brightness; every built-in sound row plays a labelled demonstration tone; All Settings has no nested scroller; no page errors occur.
+  - Panel open/close, inspector open/close, domain switch, tab switch, and sound play show no blank frames and settle within the spring's own duration.
+  - (USER-SETTINGS-MANAGER-REFRESH-20260909) State renders as dot-plus-text status tokens and no capsule pill remains except keyboard keys; every select is a themed listbox and every menu shares its popout motion; rosters scroll inside their manager block; manager-topic canonical settings render inline inside their manager before its Advanced disclosure and every concept id renders exactly once (SSYS-035).
 validation_surfaces:
-  - python3 Concepts/pm7-tools/build_testpm_settings_refresh.py --check
-  - node Concepts/pm7-tools/verify/settings_refresh_checkpoint.mjs
-  - node Concepts/pm7-tools/verify/settings_refresh_film.mjs
-  - node Concepts/pm7-tools/verify/settings_placement_checkpoint.mjs
+  - "Settings manager acceptance: canonical rows and routes, shared kit, at least 85 percent first-frame brightness, labelled sounds, page scrolling, and no page errors."
+  - "Settings motion evidence: no blank frames during manager, inspector, domain and tab transitions or sound play, with settling within the specified spring duration."
+  - "SSYS-035 placement acceptance: each live setting once, exact manager and tab home, Details and search return, and inline refresh."
   - python3 scripts/pm-plans-verify.py run-gates
 risk_class: manager_kit_regression_or_registry_drift
 reasoning_tier: high
@@ -2116,10 +2098,6 @@ context_scope: settings_manager_presentation
 implementation_surfaces:
   - Plans/Settings_System.md
   - Plans/FinalGUISpec.md
-  - Concepts/pm7-tools/settings_refresh_source.py
-  - Concepts/pm7-tools/build_testpm_settings_refresh.py
-  - Concepts/pm7-tools/settings_refresh/kit.js
-  - Concepts/pm7-tools/settings_refresh/placement.json
 node_compile_hint:
   mode: settings_manager_specification
   create_worknodes: false
@@ -2133,7 +2111,6 @@ preserved_exact_tokens:
   - "shared manager kit"
   - "Server & Project Location"
   - "one Advanced disclosure"
-  - "T50"
 negative_constraints:
   - Do not reintroduce a per-manager top action bar.
   - Do not render a canonical setting twice or inside a second Advanced disclosure.
@@ -2141,7 +2118,6 @@ negative_constraints:
   - Do not exceed six tabs in a manager.
   - Do not render a second Advanced disclosure in one manager view.
   - Do not mint, rename, or remove a manager_id key for a presentation grouping.
-  - Do not hand-edit Concepts/TestPMConcept.html; rebuild through the lane.
 owner_hints:
   - Plans/Settings_System.md
   - Plans/FinalGUISpec.md
@@ -2244,35 +2220,32 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Settings_System.md
 canonical_text: >-
-  Under USER-SETTINGS-MANAGER-REFRESH-20260909 the published concept places every manager-topic canonical setting inside the manager
-  that owns its topic: an authored placement map (Concepts/pm7-tools/settings_refresh/placement.json) resolves
-  each inventory id by reference subgroup, keyword override, or hand placement to one manager (and tab), renders
-  it as an inline canonical section through the engine row renderer before that manager's single Advanced
-  disclosure, and keeps its Details inspector, search landing, All Settings row, and change-refresh behaviour.
-  Core settings stay on six plain pages; 10 of the 12 machine-generated reference pages and the concept-only
+  Under USER-SETTINGS-MANAGER-REFRESH-20260909 every manager-topic canonical setting appears once inside the manager
+  and tab that own its topic, as an inline canonical section before that manager's one Advanced disclosure,
+  with its Details inspector, search landing, All Settings entry, and change-refresh behaviour preserved.
+  Core settings stay on six plain pages; 10 of the 12 reference pages and the concept-only
   Assistant page retire because every row they held now has a manager home; the planning domain keeps its id
   with the label Planning. 674 inventory rows render inside managers, every one of the 891 live concept ids
   renders exactly once and the retired Chat Layout row, the 892nd id, is never offered as a setting to change
-  (amended 2026-10-10, DL-187, SSYS-050; it read: every one of the 892 concept ids renders exactly once), and the five branching plan-limit ids that the reference builder dropped are hosted by
-  the placement map pending subgroup registration. The same pass gives the kit themed listboxes for every
+  (amended 2026-10-10, DL-187, SSYS-050; it read: every one of the 892 concept ids renders exactly once), and the five branching plan-limit ids remain visible in their
+  manager homes pending subgroup registration. The shared kit provides themed listboxes for every
   select and menu, dot-plus-text status tokens instead of pills, hero side panels (identity header, facts,
   progress rail, card sections revealed in a stagger, sticky footer), rosters that scroll inside their manager,
-  meter, order, and accordion primitives, and per-manager fixture files merged over the shared fixture.
+  meter, order, and accordion primitives.
 gui_related: true
 gui_classification_reason: Governs where canonical settings render, the listbox and status presentation, side-panel anatomy, and roster scrolling across every Settings manager in the published concept.
 depends_on: [SSYS-033, SSYS-005, SSYS-006, SSYS-015, DL-187]
 unblocks: []
 acceptance_criteria:
   - "A walk over every workspace and every manager tab finds each of the 891 live concept ids rendered exactly once; All Settings lists 891 live rows in 12 categories; the retired Chat Layout row is never offered as a setting to change (amended 2026-10-10, DL-187; it read: A walk over every workspace and every manager tab finds each of the 892 concept ids rendered exactly once; All Settings lists 892 rows in 12 categories.)"
-  - Details opens for a setting rendered inside a manager; global search lands on a setting inside a non-active manager tab; refreshSettingRow swaps an inline row in place.
+  - Details opens for a setting rendered inside a manager; global search lands on a setting inside a non-active manager tab; changing a setting refreshes its inline row in place.
   - No manager renders a second Advanced disclosure; inline sections precede the manager's Advanced disclosure; advanced placements render first inside it.
   - No native select is visible in Settings; dropdown and menu popouts open with the shared sprout motion inside the viewport; no capsule pills remain except keyboard keys.
   - Rosters scroll independently inside their manager block while the settings document still scrolls.
 validation_surfaces:
-  - node Concepts/pm7-tools/verify/settings_placement_checkpoint.mjs
-  - node Concepts/pm7-tools/verify/settings_refresh_checkpoint.mjs
-  - node Concepts/pm7-tools/verify/settings_refresh_film.mjs
-  - python3 Concepts/pm7-tools/build_testpm_settings_refresh.py --check
+  - "Settings placement acceptance: each live setting once, manager and tab placement, search landing, Details, and inline refresh."
+  - "Settings manager acceptance: shared kit, themed listboxes, viewport-bounded menus, and independent roster scrolling."
+  - "Settings motion evidence: no blank frames during manager, inspector, domain and tab transitions, with the specified menu motion."
   - python3 scripts/pm-plans-verify.py run-gates
 risk_class: canonical_setting_placement_drift
 reasoning_tier: high
@@ -2280,10 +2253,6 @@ context_scope: settings_manager_presentation
 implementation_surfaces:
   - Plans/Settings_System.md
   - Plans/FinalGUISpec.md
-  - Concepts/pm7-tools/settings_refresh/placement.json
-  - Concepts/pm7-tools/settings_refresh/kit.js
-  - Concepts/pm7-tools/settings_refresh/styles.css
-  - Concepts/pm7-tools/settings_refresh_source.py
 node_compile_hint:
   mode: settings_manager_specification
   create_worknodes: false
@@ -2293,7 +2262,6 @@ source_lineage:
   - SSYS-033
   - Concepts/pm7-tools/SETTINGS_REFRESH_README.md
 preserved_exact_tokens:
-  - "placement.json"
   - "exactly once"
   - "one Advanced disclosure"
 negative_constraints:
@@ -2461,7 +2429,7 @@ validation_surfaces: [Plans/settings_inventory.json, Plans/settings_system_contr
 risk_class: unowned_preference_or_scope_drift
 reasoning_tier: medium
 context_scope: commands_manager_project_preferences
-implementation_surfaces: [Plans/Settings_System.md, Plans/settings_inventory.json, Concepts/pm7-tools/settings_refresh/managers/24-commands.js]
+implementation_surfaces: [Plans/Settings_System.md, Plans/settings_inventory.json]
 node_compile_hint: {mode: settings_owner_binding_contract, create_worknodes: false}
 source_lineage: [Concepts/TestOpus5.5PmConcept.html, Plans/Commands_System.md#CS-081]
 preserved_exact_tokens: [extensions.commands.keyboard-layout, extensions.commands.command-palette-visibility, Auto-detect, "US (QWERTY)", UK, "German (QWERTZ)", "French (AZERTY)", cmd.settings.transaction.preview, cmd.settings.transaction.apply]
@@ -2759,7 +2727,6 @@ acceptance_criteria:
   - No Settings action opens a generic preview panel; each action row reaches its owner route or a flow that dispatches its owner command, or shows the owner's unavailable reason, and SSYS-013 operations route to their owner surface.
   - List, key/value and structured rows open structured editors; no secret is rendered; per-account and per-service rows are edited inside their account or service.
 validation_surfaces:
-  - python3 Concepts/onboarding/opus-5.5/tools/build.py --check
   - python3 scripts/pm-plan-index.py validate
 risk_class: settings_information_architecture_or_duplicate_control_drift
 reasoning_tier: high
@@ -2767,9 +2734,6 @@ context_scope: settings_manager_presentation
 implementation_surfaces:
   - Plans/Settings_System.md
   - Plans/FinalGUISpec.md
-  - Concepts/onboarding/opus-5.5/src/settings/o55/placement.d
-  - Concepts/onboarding/opus-5.5/src/settings/o55/rows.d
-  - Concepts/onboarding/opus-5.5/src/settings/kit.d
 node_compile_hint:
   mode: settings_manager_specification
   create_worknodes: false
@@ -2824,7 +2788,6 @@ acceptance_criteria:
   - Accent choices carry precomputed per-mode values for the primary accent, its RGB triple and the accent tokens derived from it.
   - Border width, corner roundness and scrollbar width show the active variant's value until chosen, and returning them to the theme removes the override.
 validation_surfaces:
-  - python3 Concepts/onboarding/opus-5.5/tools/build.py --check
   - python3 scripts/pm-plan-index.py validate
 risk_class: appearance_setting_without_effect_or_theme_override_leak
 reasoning_tier: standard
@@ -2832,8 +2795,6 @@ context_scope: project_appearance_settings
 implementation_surfaces:
   - Plans/Settings_System.md
   - Plans/FinalGUISpec.md
-  - Concepts/onboarding/opus-5.5/src/settings/kit.d/17-look.js
-  - Concepts/onboarding/opus-5.5/src/settings/styles.d/12-look.css
 node_compile_hint:
   mode: project_appearance_settings_contract
   create_worknodes: false
@@ -2884,15 +2845,12 @@ acceptance_criteria:
   - Servers, SSH computers and Git's sign-in attach keys from one SSH key list, and no private key half is rendered.
   - The transfer preview shows each changing setting by its plain label with plain before and after values, and lists what is never copied.
 validation_surfaces:
-  - python3 Concepts/onboarding/opus-5.5/tools/build.py --check
   - python3 scripts/pm-plan-index.py validate
 risk_class: settings_live_work_or_guided_setup_drift
 reasoning_tier: standard
 context_scope: settings_manager_presentation
 implementation_surfaces:
   - Plans/Settings_System.md
-  - Concepts/onboarding/opus-5.5/src/settings/managers
-  - Concepts/onboarding/opus-5.5/src/settings/kit.d/60-wizard.js
 node_compile_hint:
   mode: settings_manager_specification
   create_worknodes: false
@@ -2970,7 +2928,6 @@ acceptance_criteria:
   - "No manager_id, route, detail id, command id, settings key, NieR part or theme variant is added."
 validation_surfaces:
   - python3 scripts/pm-plan-index.py validate
-  - python3 Concepts/onboarding/opus-5.5/tools/build.py --check
 risk_class: nier_mode_settings_drift
 reasoning_tier: high
 context_scope: project_appearance_settings
@@ -2978,8 +2935,6 @@ implementation_surfaces:
   - Plans/Settings_System.md
   - Plans/settings_inventory.json
   - Plans/FinalGUISpec.md
-  - Concepts/onboarding/opus-5.5/src/settings/kit.d/18-nier.js
-  - Concepts/onboarding/opus-5.5/src/settings/kit.d/22-nier-chips.js
 node_compile_hint:
   mode: project_appearance_settings_contract
   create_worknodes: false
