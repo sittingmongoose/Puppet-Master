@@ -3,6 +3,12 @@
 export const parityDocumentUrl = 'file:///__pm7_parity__/input.html?o55=off&o55scenario=fresh&pm-warm=0';
 export const storageProbeHtml = '<!doctype html><title>Storage isolation probe</title>';
 
+export function remoteNetworkPolicy(remote) {
+  // Block only reserved sampler markers before Fetch can pause them. URLPattern
+  // is scheme-aware; legacy `urls` globs also match text inside SVG data URLs.
+  return remote ? { urls: [], urlPatterns: [{ urlPattern: 'file:///__pm7_parity_asset__/*', block: true }] } : { urls: [] };
+}
+
 // A just-created about:blank target can still emit its load event after navigation
 // starts. Match the navigation's loader, including events arriving before its reply.
 export async function gotoRemoteDocument(send, on, url, timeout = 90_000) {

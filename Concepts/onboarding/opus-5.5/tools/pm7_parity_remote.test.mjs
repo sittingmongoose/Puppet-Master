@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { parityDocumentUrl, storageProbeHtml, gotoRemoteDocument } from './pm7_parity_remote.mjs';
+import { parityDocumentUrl, storageProbeHtml, gotoRemoteDocument, remoteNetworkPolicy } from './pm7_parity_remote.mjs';
 import { CdpWebSocket } from './cdp-websocket.mjs';
 
 test('virtual document preserves the local origin and preparation query on remote browsers', () => {
@@ -10,6 +10,10 @@ test('virtual document preserves the local origin and preparation query on remot
 test('CDP LAN sockets remain explicit opt-in and never change protocol', () => {
   assert.throws(() => new CdpWebSocket('ws://192.168.50.253:1234/devtools/browser/test'), /local ws/);
   assert.throws(() => new CdpWebSocket('wss://192.168.50.253:1234/', { allowRemote: true }), /local ws/);
+});
+test('remote sampler-marker policy preserves local settings and avoids legacy substring globs', () => {
+  assert.deepEqual(remoteNetworkPolicy(false), { urls: [] });
+  assert.deepEqual(remoteNetworkPolicy(true), { urls: [], urlPatterns: [{ urlPattern: 'file:///__pm7_parity_asset__/*', block: true }] });
 });
 test('remote navigation ignores the old blank load and a child frame load', async () => {
   let listener, removed = false, done = false;

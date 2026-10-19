@@ -42,6 +42,15 @@ an HTTP server, TLS exceptions or different origin semantics. All HTTP(S)/WebSoc
 remain blocked by the unchanged request gate. Storage checks and native WebCrypto are unchanged.
 Relative external assets remain unsupported.
 
+Remote sampler-marker requests use a scheme-aware `Network.setBlockedURLs.urlPatterns`
+rule for the reserved `file:///__pm7_parity_asset__/` namespace. This prevents cancelled
+markers from reaching Fetch with expired interception IDs. Legacy substring globs are
+not used: they can also match marker text inside an otherwise valid SVG data URL.
+Real requests still pass through the original Fetch scheme guard; no interception error
+is ignored. Local network configuration remains `{urls: []}`. This uses the experimental
+[Chrome URLPattern protocol field](https://raw.githubusercontent.com/ChromeDevTools/devtools-protocol/master/json/browser_protocol.json),
+verified on the recorded Chrome 155 Mac build.
+
 Remote navigation waits for the exact frame/loader returned by `Page.navigate`. It ignores an
 old about:blank load and retains a matching load that arrives before the navigation reply. This
 keeps preparation from starting on a previous document; local navigation is unchanged.

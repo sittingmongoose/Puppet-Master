@@ -7,7 +7,7 @@ import { fileURLToPath } from 'node:url';
 import { hostname } from 'node:os';
 import { execFileSync } from 'node:child_process';
 import { launch } from './pm7_parity_chrome.mjs';
-import { parityDocumentUrl, storageProbeHtml } from './pm7_parity_remote.mjs';
+import { parityDocumentUrl, storageProbeHtml, remoteNetworkPolicy } from './pm7_parity_remote.mjs';
 import { installParityRuntime, normalizeBlobValue } from './pm7_parity_browser.mjs';
 import { diffPng, baselineEnvelopePng } from './pm7_parity_png.mjs';
 
@@ -133,9 +133,9 @@ async function configurePage(browser) {
       if (e.args[0]?.value === 'PM7_PARITY_SNAPSHOT') console.log(e.args.map(a => a.value).join(' '));
     });
     await page.send('Network.enable');
-    // CDP blocked-URL globs also match text inside data: SVG URLs (for example
-    // an http:// namespace). Fetch below tests the actual scheme instead.
-    await page.send('Network.setBlockedURLs', { urls: [] });
+    // Legacy globs also match namespace text inside data: SVG URLs. Only remote
+    // sampler markers use a scheme-aware URLPattern; real requests stay in Fetch.
+    await page.send('Network.setBlockedURLs', remoteNetworkPolicy(!!browser.host));
     await page.send('Emulation.setTimezoneOverride', { timezoneId: 'UTC' });
     await page.send('Emulation.setLocaleOverride', { locale: 'en-US' });
     await page.send('Emulation.setFocusEmulationEnabled', { enabled: true });
