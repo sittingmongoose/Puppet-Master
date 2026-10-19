@@ -1,4 +1,4 @@
-/* Shell integration (keyed on html[data-pmw-home="on"], set by the early script; ?home=current leaves it off).
+/* Shell integration (keyed on html[data-pmw-home="on"], set by the early script).
    The layer's CSS is in <head>, ahead of the page's body-level blocks, so every override wins on specificity. */
 
 /* the old Home model no longer runs: its nodes are hidden, never removed (other code holds references) */

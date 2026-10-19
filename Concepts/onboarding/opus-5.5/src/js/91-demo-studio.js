@@ -353,7 +353,6 @@
   const LOAD = ['normal', 'off', 'fresh', 'tourOn'];
   const LOAD_PARAM = { off: 'off', fresh: 'fresh', tourOn: 'tour' };
   const FLAGS = [
-    { id: 'home', param: 'home', value: 'current' },
     { id: 'pmh', param: 'pmh', value: 'off' },
     { id: 'live', param: 'pmu-live', value: 'off' },
     { id: 'soft', param: 'pmu-soft', value: '1' },
@@ -367,7 +366,7 @@
   }
   function switchesUrl(sw) {
     const u = new URL(location.href);
-    ['o55', 'o55scenario'].concat(FLAGS.map((f) => f.param)).forEach((p) => u.searchParams.delete(p));
+    ['o55', 'o55scenario', 'home'].concat(FLAGS.map((f) => f.param)).forEach((p) => u.searchParams.delete(p));
     if (LOAD_PARAM[sw.load]) u.searchParams.set('o55', LOAD_PARAM[sw.load]);
     if (sw.situation) u.searchParams.set('o55scenario', currentSituation());
     FLAGS.forEach((f) => { if (sw.flags[f.id]) u.searchParams.set(f.param, f.value); });

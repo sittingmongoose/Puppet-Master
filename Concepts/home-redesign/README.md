@@ -76,12 +76,10 @@ python3 Concepts/leftrail-redesign/tools/build_rail.py             # the rail's 
 python3 Concepts/onboarding/opus-5.5/tools/build.py --check        # lint, syntax, markers, both published pages current
 python3 Concepts/home-redesign/tools/build_home.py --check         # the same for this layer, plus the review copy
 python3 Concepts/home-redesign/tools/build_home.py --out PATH      # a private build (workers, screenshots)
-python3 Concepts/onboarding/opus-5.5/tools/build.py --out PATH --no-home  # a private reference page with today's Home
 python3 Concepts/ConceptHub/validate.py "Concepts/home-redesign/opus-5.5-hub"
 ```
 
-`?home=current` shows today's Home (the layer stands down, and the tour's workspace chapter is its orientation alone)
-for an A/B; `?o55=off` skips onboarding.
+The universal panels are the Home workspace. `?o55=off` skips onboarding.
 
 ## What the layer does
 
@@ -89,12 +87,12 @@ for an A/B; `?o55=off` skips onboarding.
 `<style id="pm-home-css">` before `</head>`, and `<script id="pm-home-js">` before `</body>` (panels core, then each
 panels kind in its own scope, then the terminal, then `PM_HOME.boot()`). Its `NIER_ENTRIES` dictionary contributes
 `cursor`, `chosen`, and `strip` selectors to opus-5.5's `tools/nier_registry.py`; `build.py` emits the
-lists after all layers. Edit those entries, not Settings source anchors; a private build without Home contributes none.
+lists after all layers. Edit those entries, not Settings source anchors.
 Guarded app JS patches let the chat stay one column on every page (`homeActive`) and give the status bar's host item
 plain words that NieR's readout finds by an attribute. It never edits the page's markup.
 
-At run time the early script defines `PM_HOME_WORKSPACE` before the old Home controller parses, so that controller's own
-guard skips it: one Home model. The centre mounts in `#panel-dashboard`; the chat column reuses `#chatPanel` and
+At run time the early script defines `PM_HOME_WORKSPACE` as a compatibility shim for the tour, chat and activity bar.
+The retired Home controller is no longer assembled. The centre mounts in `#panel-dashboard`; the chat column reuses `#chatPanel` and
 `#chatResizer`; the legacy Home nodes are hidden, never removed; old open paths (the file tree, `cmd.file.open`, the demo
 facade, the bottom-panel reveals) go through `PM_HOME.open`.
 
