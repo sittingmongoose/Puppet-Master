@@ -2,9 +2,9 @@
 
 Source: `Plans/Automated_Testing_System.md`
 
-Source lines: L1642-L1911
+Source lines: L1642-L1903
 
-Source SHA256: `349fcac59b4d65a594702e7afd89b1c2b9d0241507c7c6cf2f1e70463be3740c`
+Source SHA256: `81e84b34edefb7e99afb2c1a5b0a2ba08168856d961c1fabb5e45831d7322928`
 
 ---
 
@@ -99,14 +99,6 @@ validation_surfaces:
   - tests/test_pm_guided_tour_v3_contracts.py static v3 positive/negative record coverage only
   - tests/test_pm_finalgui_tour_v3.py static shared-owner references and causal presentation mutations only
   - tests/test_pm_touch_closure_source.py source/action inventory and owner routing checks only
-  - Concepts/pm7-tools/onboarding_cinematic_source.py static transform assertions
-  - Concepts/pm7-tools/verify/onboarding_cinematic.mjs browser-concept verifier
-  - Concepts/pm7-tools/guided_tour_source.py static transform assertions
-  - Concepts/pm7-tools/verify/guided_tour.mjs browser-concept verifier
-  - Concepts/pm7-tools/verify/guided_tour_practice_selftest.mjs pure local practice reducer tests only
-  - Concepts/pm7-tools/verify/guided_tour_polish_checkpoint.mjs focused concept edit/copy/DOM-continuity checks only
-  - Concepts/pm7-tools/verify/guided_tour_lifecycle_checkpoint.mjs scoped concept sequence, exit/retry, semantic resize, and local Teacher isolation checks only
-  - Concepts/pm7-tools/build_pm7.py final generated-artifact static gate
   - scratchpad/pm-integration-20260831/audits/onboarding-doctor-128-current-runner/audit_runner.py
   - future Onboarding/Tour acceptance runner (the scratchpad runner above is predecessor-packet audit only and is not current acceptance)
   - future native PWIZ-021 v2 Product Onboarding GUI, draft/copy/preflight/source-auth/Project-commit/paid-free phases, durable continuation/migration and no-command-family acceptance suite

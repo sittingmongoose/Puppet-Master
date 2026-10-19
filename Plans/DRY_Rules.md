@@ -2433,8 +2433,8 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
-  - Concepts/pm7-tools/base/PM7-base.html (current pinned PM7 input; source-lineage-only)
-  - Concepts/pm7-tools/build_pm7.py#T33-T41 (source-owned transforms)
+  - Concepts/pm7-tools/base/PM7-base.html (retired PM7 input; source-lineage-only)
+  - Concepts/pm7-tools/build_pm7.py (retired PM7 builder; source-lineage-only)
   - Concepts/PMConcept7.html (generated artifact; terminal bytes and hash are audit-owned)
   - Plans/.audits/audit-20260829-001-pmconcept7-widget-followup/audit_report.json (current repo-local successor audit status; verdict remains report-owned)
 preserved_exact_tokens:
@@ -2804,10 +2804,10 @@ canonical_text: >-
   script slices, in Concepts/chat-assistant-concepts/5.6 Pro/styles.css and pmx-system.css) is
   carried byte for byte by PMConcept7's Concepts/onboarding/opus-5.5/src/fonts or, for JetBrains
   Mono, src/settings/nier/fonts, where the same files are NieR Mode's PM NieR Mono;
-  src/fonts/SOURCE.md lists each file's source and SHA-256, and 5.6 Pro's NieR faces are generated
-  from those files (amended 2026-10-09, DL-161). A concept that adds or changes a shared face
-  changes it for both, and Concepts/onboarding/opus-5.5/tools/build.py --check fails while a face
-  5.6 Pro embeds is missing from src/fonts byte for byte. The one dated exception is the full-axis
+  src/fonts/SOURCE.md lists each file's source and SHA-256, and 5.6 Pro's NieR faces use those
+  same shared files (amended 2026-10-09, DL-161). A concept that adds or changes a shared face
+  changes it for both; a missing or changed shared face fails acceptance unless the following
+  explicit exception applies. The one dated exception is the full-axis
   Latin upright admitted by F3-644 on 2026-10-16: PMConcept7's JetBrains Mono uses the new 100–800
   file, while PM NieR Mono and the existing 5.6 Pro face retain their old Latin bytes; shared
   non-Latin slices stay identical. F3-644 owns that file choice and its source hash. Which faces
@@ -2819,10 +2819,10 @@ split_recommended: false
 depends_on: [F3-430, DL-161]
 unblocks: []
 acceptance_criteria:
-  - "Each face 5.6 Pro embeds decodes to a file in Concepts/onboarding/opus-5.5/src/fonts or src/settings/nier/fonts with the same SHA-256."
-  - "build.py --check reports a missing or changed shared face as a failure."
+  - "Each face 5.6 Pro embeds decodes to a file in Concepts/onboarding/opus-5.5/src/fonts or src/settings/nier/fonts with the same SHA-256, subject only to F3-644's explicit Latin-upright exception."
+  - "A missing or changed shared face fails acceptance, subject only to F3-644's explicit Latin-upright exception."
 validation_surfaces:
-  - python3 Concepts/onboarding/opus-5.5/tools/build.py --check
+  - "Verify byte-for-byte equality of shared font faces and script slices, allowing only F3-644's explicit Latin-upright exception."
   - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
   - python3 scripts/pm-plan-index.py validate
 risk_class: duplicate_presentation_authority

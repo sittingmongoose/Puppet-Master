@@ -1,7 +1,9 @@
 /* Opt-in Chrome coverage for the PM7 harnesses. Off unless a harness is passed --coverage <file>.
  * Collects Profiler.startPreciseCoverage (JS) and CSS.startRuleUsageTracking, and merges every
- * recorded range into one union file. A count of 0 means the range was recorded and never ran.
- * A range that is absent was not recorded. Later runs add to a count; they do not drop a zero.
+ * recorded range into one union file. Native counters add only for identical recorded ranges;
+ * a zero is not a byte-level liveness verdict, since another sample may cover those offsets
+ * through an enclosing positive range. Use usedRanges, resolved within each sample before union,
+ * for touched bytes. Missing sources/ranges remain unknown until the observed-source census.
  *
  *   takeCoverageFlag(argv)   removes --coverage <file> from argv and returns the absolute path, or null
  *   beginCoverage(session)   session.send(method, params) — call before the page loads
@@ -12,6 +14,9 @@ import { mkdirSync, readFileSync, renameSync, writeFileSync } from 'node:fs';
 import { dirname, resolve } from 'node:path';
 
 const digest = (text) => createHash('sha256').update(text).digest('hex').slice(0, 16);
+export const USED_RANGES_PROVENANCE = 'per-sample-v1';
+const stylesheetStates = new WeakMap();
+const freshUnion = Symbol('fresh coverage accumulator');
 
 export function takeCoverageFlag(argv) {
   const i = argv.indexOf('--coverage');
@@ -36,6 +41,40 @@ export async function beginCoverage(session) {
   await send('Profiler.enable');
   await send('Profiler.startPreciseCoverage', { callCount: true, detailed: true });
   await send('DOM.enable');
+  // RuleUsage reports matching rules, but does not enumerate never-matched
+  // sheets. Keep their installed content hashes too, for the static rule census.
+  const state = { headers: new Map(), off: [], unsampledNavigations: 0,
+    preflushedNavigation: false, documentUrl: null, navigationTracking: typeof session.on === 'function' };
+  if (typeof session.on === 'function') {
+    for (const [event, callback] of [
+      ['CSS.styleSheetAdded', ({ header }) => state.headers.set(header.styleSheetId, header)],
+      ['CSS.styleSheetRemoved', ({ styleSheetId }) => state.headers.delete(styleSheetId)],
+      ['Page.frameNavigated', ({ frame }) => {
+        if (!frame || frame.parentId) return;
+        // A new empty tab has no document usage to lose. Every later main-frame
+        // navigation needs its own pre-navigation sample, including page reloads.
+        if (!state.preflushedNavigation && state.documentUrl !== 'about:blank') state.unsampledNavigations++;
+        state.preflushedNavigation = false;
+        state.documentUrl = frame.url;
+        state.mainFrameId = frame.id;
+      }],
+      ['Page.navigatedWithinDocument', ({ frameId, url }) => {
+        if (frameId !== state.mainFrameId) return;
+        state.preflushedNavigation = false;
+        state.documentUrl = url;
+      }],
+    ]) {
+      const subscription = session.on(event, callback);
+      state.off.push(typeof subscription === 'function' ? subscription : () => session.off?.(event, callback));
+    }
+  }
+  stylesheetStates.set(session, state);
+  if (state.navigationTracking) {
+    await send('Page.enable');
+    const tree = await send('Page.getFrameTree');
+    state.documentUrl = tree.frameTree?.frame?.url || null;
+    state.mainFrameId = tree.frameTree?.frame?.id;
+  }
   await send('CSS.enable');
   await send('CSS.startRuleUsageTracking');
 }
@@ -69,7 +108,41 @@ function copyScript(entry) {
     script: entry.script,
     url: entry.url || '',
     functions: (entry.functions || []).map(copyFunction),
+    usedRanges: unionRanges(entry.usedRanges || []),
+    usedRangesProvenance: Array.isArray(entry.usedRanges) && entry.usedRangesProvenance === USED_RANGES_PROVENANCE
+      ? USED_RANGES_PROVENANCE : 'unknown-merged-counters',
   };
+}
+
+// CDP offsets are UTF-16 code units. Resolve each sample's nested zero ranges before
+// merging samples: summing their counters first can hide a branch used by another run.
+export function unionRanges(ranges) {
+  const out = [];
+  for (const r of [...ranges].sort((a, b) => a.startOffset - b.startOffset || a.endOffset - b.endOffset)) {
+    if (r.endOffset <= r.startOffset) continue;
+    const prev = out.at(-1);
+    if (prev && r.startOffset <= prev.endOffset) prev.endOffset = Math.max(prev.endOffset, r.endOffset);
+    else out.push({ startOffset: r.startOffset, endOffset: r.endOffset });
+  }
+  return out;
+}
+
+export function executedRanges(functions) {
+  const ranges = functions.flatMap((fn) => fn.ranges || []);
+  const end = Math.max(0, ...ranges.map((r) => r.endOffset));
+  const used = new Uint8Array(end);
+  // Broad ranges first, then more specific function/branch ranges override them.
+  for (const r of ranges.sort((a, b) => (b.endOffset - b.startOffset) - (a.endOffset - a.startOffset) || (a.count > 0) - (b.count > 0))) {
+    used.fill(r.count > 0 ? 1 : 0, r.startOffset, r.endOffset);
+  }
+  const out = [];
+  for (let i = 0; i < used.length; i++) {
+    if (!used[i]) continue;
+    const startOffset = i;
+    while (i < used.length && used[i]) i++;
+    out.push({ startOffset, endOffset: i });
+  }
+  return out;
 }
 
 function mergeFunctions(baseFns, sampleFns) {
@@ -101,6 +174,8 @@ export function mergeCoverage(base, sample) {
     const prev = js.get(key);
     if (!prev) js.set(key, copyScript(entry));
     else {
+      prev.usedRanges = unionRanges([...prev.usedRanges, ...(entry.usedRanges || [])]);
+      if (!Array.isArray(entry.usedRanges) || entry.usedRangesProvenance !== USED_RANGES_PROVENANCE) prev.usedRangesProvenance = 'unknown-merged-counters';
       prev.functions = mergeFunctions(prev.functions, entry.functions);
       if (!prev.url && entry.url) prev.url = entry.url;
     }
@@ -113,17 +188,25 @@ export function mergeCoverage(base, sample) {
     else prev.used = !!(prev.used || entry.used);
   }
   const byCss = (a, b) => cssKey(a).localeCompare(cssKey(b));
+  // Navigation knowledge merges like provenance: a count from a tracked input
+  // cannot speak for an input that was not tracked, so any missing count merges
+  // to unknown. Only an explicitly fresh accumulator is the initial placeholder;
+  // a serialized empty aggregate may already have lost navigation knowledge.
+  const baseNav = base.unsampled_navigations, sampleNav = sample.unsampled_navigations;
+  const navigations = base[freshUnion] ? sampleNav : baseNav != null && sampleNav != null ? baseNav + sampleNav : null;
   return {
     version: 2,
     js: [...js.values()].sort((a, b) => a.script.localeCompare(b.script)),
     css: [...css.values()].sort(byCss),
+    stylesheets: [...new Map([...(base.stylesheets || []), ...(sample.stylesheets || [])].map((s) => [s.sheet, s])).values()].sort((a, b) => a.sheet.localeCompare(b.sheet)),
+    ...(navigations != null ? { unsampled_navigations: navigations } : {}),
   };
 }
 
 export function normalizeJsCoverage(scripts, keyFor) {
   const entries = [];
   for (const script of scripts || []) {
-    entries.push({
+    const entry = {
       script: keyFor(script),
       url: script.url || '',
       functions: (script.functions || []).map((fn) => ({
@@ -135,7 +218,10 @@ export function normalizeJsCoverage(scripts, keyFor) {
           count: range.count ?? 0,
         })),
       })),
-    });
+    };
+    entry.usedRanges = executedRanges(entry.functions);
+    entry.usedRangesProvenance = USED_RANGES_PROVENANCE;
+    entries.push(entry);
   }
   return entries;
 }
@@ -157,10 +243,19 @@ async function jsEntries(send, payload) {
   return normalizeJsCoverage(scripts, (script) => keys.get(script));
 }
 
-async function cssEntries(send, payload) {
-  const rules = (payload && payload.ruleUsage) || [];
+async function cssEntries(send, payload, state) {
+  const rules = (payload && (payload.ruleUsage || payload.coverage)) || [];
   const sheets = new Map();
+  const stylesheets = [];
   const entries = [];
+  for (const header of [...(state?.headers.values() || [])]) {
+    try {
+      const { text } = await send('CSS.getStyleSheetText', { styleSheetId: header.styleSheetId });
+      const sheet = digest(text); sheets.set(header.styleSheetId, sheet);
+      stylesheets.push({ sheet, sourceURL: header.sourceURL || '', startLine: header.startLine, startColumn: header.startColumn,
+        units: text.length, bytes: Buffer.byteLength(text), installed: true });
+    } catch { /* a removed sheet is not evidence of an installed current source */ }
+  }
   for (const rule of rules) {
     let sheet = sheets.get(rule.styleSheetId);
     if (!sheet) {
@@ -179,11 +274,12 @@ async function cssEntries(send, payload) {
       used: !!rule.used,
     });
   }
-  return entries;
+  return { css: entries, stylesheets };
 }
 
-function emptyUnion() {
-  return { version: 2, js: [], css: [] };
+export function emptyUnion() {
+  // This marker is never serialized or carried into a merged result.
+  return { version: 2, js: [], css: [], [freshUnion]: true };
 }
 
 function readUnion(file) {
@@ -215,21 +311,81 @@ function coverageCounts(merged) {
   return { functions, ranges, zero, unused };
 }
 
-export async function endCoverage(session, file) {
+export async function sampleCoverage(session, file, { stop = false, beforeNavigation = false } = {}) {
   const send = asSend(session);
   const jsPayload = await send('Profiler.takePreciseCoverage');
-  await send('Profiler.stopPreciseCoverage').catch(() => {});
-  const cssPayload = await send('CSS.stopRuleUsageTracking');
+  if (stop) await send('Profiler.stopPreciseCoverage').catch(() => {});
+  const cssPayload = await send(stop ? 'CSS.stopRuleUsageTracking' : 'CSS.takeCoverageDelta');
+  const sheets = await cssEntries(send, cssPayload, stylesheetStates.get(session));
+  const state = stylesheetStates.get(session);
   const sample = {
     js: await jsEntries(send, jsPayload),
-    css: await cssEntries(send, cssPayload),
+    ...sheets,
+    ...(state?.navigationTracking ? { unsampled_navigations: state.unsampledNavigations } : {}),
   };
   const merged = mergeCoverage(readUnion(file), sample);
   mkdirSync(dirname(file), { recursive: true });
   const tmp = `${file}.tmp`;
   writeFileSync(tmp, JSON.stringify(merged));
   renameSync(tmp, file);
+  if (state) {
+    state.unsampledNavigations = 0;
+    if (beforeNavigation) state.preflushedNavigation = true;
+  }
   const counts = coverageCounts(merged);
   console.error(`coverage union: ${file} scripts=${merged.js.length} functions=${counts.functions} ranges=${counts.ranges} zero=${counts.zero} css=${merged.css.length} unused=${counts.unused} bytes=${Buffer.byteLength(JSON.stringify(merged))}`);
   return merged;
+}
+
+export async function endCoverage(session, file) {
+  try { return await sampleCoverage(session, file, { stop: true }); }
+  finally {
+    const state = stylesheetStates.get(session);
+    for (const off of state?.off || []) off();
+    stylesheetStates.delete(session);
+  }
+}
+
+// A reload discards the previous document's stylesheet IDs and V8 contexts. Flush
+// before goto/reload and once at close, including failed harness runs.
+export async function coverPage(page, file, session = null) {
+  if (!file) return async () => {};
+  const owned = !session && typeof page.send !== 'function';
+  const cdp = session || (owned ? await page.context().newCDPSession(page) : page);
+  await beginCoverage(cdp);
+  const originals = new Map();
+  for (const method of ['goto', 'reload']) {
+    if (typeof page[method] !== 'function') continue;
+    const original = page[method]; originals.set(method, original);
+    page[method] = async function (...args) {
+      await sampleCoverage(cdp, file, { beforeNavigation: true });
+      try { return await original.apply(this, args); }
+      catch (error) { stylesheetStates.get(cdp).preflushedNavigation = false; throw error; }
+    };
+  }
+  if (typeof page.send === 'function') {
+    const original = page.send; originals.set('send', original);
+    page.send = async function (method, ...args) {
+      const navigating = method === 'Page.reload' || method === 'Page.navigate';
+      if (navigating) await sampleCoverage(cdp, file, { beforeNavigation: true });
+      try {
+        const result = await original.call(this, method, ...args);
+        if (navigating && result?.errorText) stylesheetStates.get(cdp).preflushedNavigation = false;
+        return result;
+      } catch (error) {
+        if (navigating) stylesheetStates.get(cdp).preflushedNavigation = false;
+        throw error;
+      }
+    };
+  }
+  let closed = false;
+  return async () => {
+    if (closed) return;
+    closed = true;
+    try { await endCoverage(cdp, file); }
+    finally {
+      for (const [method, original] of originals) page[method] = original;
+      if (owned) await cdp.detach();
+    }
+  };
 }

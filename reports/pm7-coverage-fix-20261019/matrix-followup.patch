@@ -1,0 +1,20 @@
+--- a/tools/matrix.mjs
++++ b/tools/matrix.mjs
+@@ -1,13 +1,14 @@
+ import {createRequire} from 'node:module';
+ import {writeFileSync,mkdirSync,readFileSync} from 'node:fs';
+ import {install} from './audit-scanner.mjs';
+-const require=createRequire(import.meta.url), {chromium}=require(process.env.PM7_PLAYWRIGHT || '/home/sittingmongoose/pmt-dev/pw/node_modules/playwright-core');
+ const argv=process.argv.slice(2);
+ if(argv.includes('--help')){console.log('usage: node matrix.mjs <cdp-endpoint> <url> <out-dir> [variant] [only] [--coverage <union.json>]');process.exit(0);}
+-const coverageFile=argv.includes('--coverage')?(await import(process.env.PM7_COVERAGE_HELPER||new URL('../Concepts/onboarding/opus-5.5/tools/coverage_union.mjs',import.meta.url).href)).takeCoverageFlag(argv):null;
++const require=createRequire(import.meta.url), {chromium}=require(process.env.PM7_PLAYWRIGHT || '/home/sittingmongoose/pmt-dev/pw/node_modules/playwright-core');
++const cov=argv.includes('--coverage')?await import(process.env.PM7_COVERAGE_HELPER||new URL('../Concepts/onboarding/opus-5.5/tools/coverage_union.mjs',import.meta.url).href):null;
++const coverageFile=cov?cov.takeCoverageFlag(argv):null;
+ const [ep,url,out,variant,only]=argv;mkdirSync(out,{recursive:true});
+ const browser=await chromium.connectOverCDP(ep),page=browser.contexts()[0].pages().find(p=>!p.url().includes('recorder'));
+-const finishCoverage=coverageFile?await coverPage(page,coverageFile):null;
++const finishCoverage=coverageFile?await cov.coverPage(page,coverageFile):null;
+ page.setDefaultTimeout(15000); const cdp=await page.context().newCDPSession(page);await cdp.send('Emulation.setDeviceMetricsOverride',{width:1920,height:1080,deviceScaleFactor:1,mobile:false});
+ let current=null;page.on('pageerror',e=>{if(current)current.errors.push(String(e));});page.on('console',m=>{if(current&&m.type()==='error'&&!/favicon|status of 404/.test(m.text()+(m.location().url||'')))current.errors.push('console '+m.text());});
+ const families=['basic','friendly','glass','nier','retro'];let rows=[];

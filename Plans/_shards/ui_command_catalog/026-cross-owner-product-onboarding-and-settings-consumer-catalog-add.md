@@ -2,9 +2,9 @@
 
 Source: `Plans/UI_Command_Catalog.md`
 
-Source lines: L11098-L11358
+Source lines: L11096-L11356
 
-Source SHA256: `aa616e3c1819aa810103eb6409fd425047a83efe26a1f87c6696d2d24a456cdc`
+Source SHA256: `5667433a1fa23a9ce6ddc6ae11238ad14bdd049ed70d5b69011e9e0c2aba684c`
 
 ---
 
@@ -80,7 +80,7 @@ validation_surfaces: [Plans/Wiring_Matrix.production.json, Plans/touch_closure.j
 risk_class: catalog_or_reverse_route_gap
 reasoning_tier: high
 context_scope: cross_owner_product_onboarding_catalog
-implementation_surfaces: [Plans/UI_Command_Catalog.md, Plans/Wiring_Matrix.md, Plans/Wiring_Matrix.production.json, Plans/touch_closure.json, Concepts/pm7-tools/onboarding_cinematic_source.py, Concepts/pm7-tools/systems_integration_source.py]
+implementation_surfaces: [Plans/UI_Command_Catalog.md, Plans/Wiring_Matrix.md, Plans/Wiring_Matrix.production.json, Plans/touch_closure.json]
 node_compile_hint: {mode: cross_owner_catalog_closure, create_worknodes: false, create_nodeseeds: false}
 source_lineage:
   - Plans/Commands_System.md#CS-070

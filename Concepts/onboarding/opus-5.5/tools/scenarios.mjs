@@ -3,11 +3,13 @@
  * Writes report.json (per scenario: steps, assertions, errors, refused commands, command log), drafts.json (every
  * captured draft, for tools/schema_check.py validate) and a final screenshot per scenario. */
 import { open, sleep } from './drive.mjs';
+import { takeCoverageFlag } from './coverage_union.mjs';
 import { injectOwnerResult, assertPublishedProject, finishServerSetup, finishBackupProtection } from './owner_fixtures.mjs';
 import { mkdirSync, writeFileSync } from 'node:fs';
 import { resolve, join } from 'node:path';
 
 const argv = process.argv.slice(2);
+const coverageFile = takeCoverageFlag(argv);
 const out = resolve(argv[0] && !argv[0].startsWith('--') ? argv[0] : '/tmp/o55/scenarios');
 const opt = (k, d) => { const i = argv.indexOf('--' + k); return i >= 0 ? argv[i + 1] : d; };
 const only = opt('only', '') ? opt('only', '').split(',') : null;
@@ -823,7 +825,7 @@ const report = [], drafts = [];
 for (const sc of SC) {
   if (only && !only.includes(sc.id)) continue;
   if (snaps) mkdirSync(join(out, 'walk'), { recursive: true });
-  const d = await open({ scenario: sc.scenario, theme, snapDir: snaps ? join(out, 'walk') : null, snapPrefix: sc.id + '-' });
+  const d = await open({ scenario: sc.scenario, theme, snapDir: snaps ? join(out, 'walk') : null, snapPrefix: sc.id + '-', coverageFile });
   const asserts = [];
   const A = {
     ok(c, m) { asserts.push({ ok: !!c, m }); },

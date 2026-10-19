@@ -1928,7 +1928,6 @@ acceptance_criteria:
   - The Stages tab offers Inherit, Off, Auto, and On for all ten stages inline and updates safety.approvals.bsd-stage-bindings.
   - The eight canonical rows render exactly once through the engine row renderer with their Details buttons; the Findings tab never offers to deliver a held finding.
 validation_surfaces:
-  - node Concepts/pm7-tools/verify/settings_refresh_checkpoint.mjs
   - python3 scripts/pm-plans-verify.py run-gates
 risk_class: bsd_manager_presentation_drift
 reasoning_tier: standard
@@ -1936,7 +1935,6 @@ context_scope: bsd_settings_presentation
 implementation_surfaces:
   - Plans/Back_Seat_Driver.md
   - Plans/Settings_System.md
-  - Concepts/pm7-tools/settings_refresh/managers/40-bsd.js
 node_compile_hint:
   mode: bsd_ui_specification
   create_worknodes: false

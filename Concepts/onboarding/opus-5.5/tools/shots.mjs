@@ -4,12 +4,14 @@
  * Each screen is reached through O55.ui.go on one live page per theme (the same path a person clicks), so the shot
  * shows the real session state. Writes <screen>--<theme>--<WxH>.png and shots.json (errors, rects) into <out-dir>. */
 import { launch, sleep } from './chrome.mjs';
+import { takeCoverageFlag } from './coverage_union.mjs';
 import { mkdirSync, writeFileSync } from 'node:fs';
 import { pathToFileURL, fileURLToPath } from 'node:url';
 import { resolve, join, dirname } from 'node:path';
 
 const here = dirname(fileURLToPath(import.meta.url));
 const argv = process.argv.slice(2);
+const coverageFile = takeCoverageFlag(argv);
 const out = resolve(argv[0] && !argv[0].startsWith('--') ? argv[0] : '/tmp/o55/shots');
 const opt = (k, d) => { const i = argv.indexOf('--' + k); return i >= 0 ? argv[i + 1] : d; };
 const page_ = resolve(opt('page', resolve(here, '../../../Onboarding concepts/TestOpus5.5PmConcept.html')));
@@ -25,7 +27,7 @@ mkdirSync(out, { recursive: true });
 const report = { page: page_, shots: [], errors: [] };
 for (const [w, h] of sizes) {
   for (const theme of themes) {
-    const { page, close } = await launch({ width: w, height: h });
+    const { page, close } = await launch({ width: w, height: h, coverageFile });
     try {
       const [fam, mode] = theme.split('-');
       await page.send('Emulation.setEmulatedMedia', { features: [{ name: 'prefers-color-scheme', value: mode }] });

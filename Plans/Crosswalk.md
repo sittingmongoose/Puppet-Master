@@ -146,7 +146,7 @@ ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Decision_Pol
 
 `Plans/settings_inventory.json` remains the 828-ID ordinary-setting machine inventory. Its scope metadata routes applicability and domain ownership but does not authorize non-Project persistence. `Plans/FinalGUISpec.md` retains shared application-shell and theme-token ownership; Storage retains physical persistence; Permissions/FileSafe/Multi-Account retain authority and credential custody; Shared Integration Runtime plus Commands/Catalog/Wiring retain lifecycle commands; provider, Server, Project Sync, Browser, SCM, Docker Manager, Onboarding, Doctor, and testing docs retain runtime truth. Settings consumes those owners and must not implement peer operations.
 
-K3 Tome Tabs and generated PMConcept7 T44 are geometry/concept lineage, not runtime authority or certification. Later Server First Backbone, Egolite/Hermes/Origin/Browser/SCM, Full Thread Performance, Onboarding/Doctor Correction, and Settings Bakeoff decisions supersede K3 content and behavior through SSYS-001..SSYS-017.
+K3 Tome Tabs and the PMConcept7 Settings illustration are geometry/concept lineage, not runtime authority or certification. Later Server First Backbone, Egolite/Hermes/Origin/Browser/SCM, Full Thread Performance, Onboarding/Doctor Correction, and Settings Bakeoff decisions supersede K3 content and behavior through SSYS-001..SSYS-017.
 
 ContractRef: ContractName:Plans/Settings_System.md, ContractName:Plans/settings_inventory.json, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Shared_Integration_Runtime.md
 

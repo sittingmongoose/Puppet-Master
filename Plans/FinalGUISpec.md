@@ -908,12 +908,12 @@ acceptance_criteria:
 - "No row opens a numbered panel or collapses a bottom terminal; collapsing is per panel (F3-630) (amended 2026-10-09, DL-180)."
 - "Restore home layout is dual-surface: the title-bar row and the Settings row general.startup.reset-home-layout both dispatch cmd.workspace_layout.reset, keep every open tab, and mint no new command ID; the concept demo's post-reset page reload is demo behavior only."
 validation_surfaces:
-- node Concepts/pm7-tools/verify/home_workspace_matrix.mjs
-- python3 Concepts/pm7-tools/build_pm7.py
+- "Verify the title-bar and Settings Restore home layout routes dispatch cmd.workspace_layout.reset and retain all open tabs, under F3-502 and the current Home layout owner."
+- "Cases written for the retired four-panel Home model do not prove this row; replacement executable cases are owed (ATS-075/076)."
 risk_class: home_menu_regression
 reasoning_tier: standard
 context_scope: pmconcept7_home_menu
-implementation_surfaces: [Plans/FinalGUISpec.md, Concepts/pm7-tools/home_workspace_source.py, Concepts/pm7-tools/build_pm7.py]
+implementation_surfaces: [Plans/FinalGUISpec.md]
 node_compile_hint:
   mode: compact_home_menu
   create_worknodes: false
@@ -1079,11 +1079,12 @@ acceptance_criteria:
 - "Host scrollbars occupy zero space on every engine (scrollbar-width none plus a zero-size ::-webkit-scrollbar), and the centre never scrolls sideways at any width; the below-1320 px overflow-x exception is retired (amended 2026-10-09, DL-180; F3-636)."
 - "Panels and tabs move with this transaction: nothing dispatches during a drag, a changed release commits one command, and every cancel path restores the exact earlier layout (F3-630)."
 validation_surfaces:
-- node Concepts/pm7-tools/verify/home_workspace_matrix.mjs
+- "Verify transactional panel/tab gestures: no dispatch during preview, one changed-release command, exact cancel restoration, stable identity and reduced-motion behavior."
+- "Cases written for the retired four-panel Home model do not prove this row; replacement executable cases are owed (ATS-075/076)."
 risk_class: home_gesture_regression
 reasoning_tier: standard
 context_scope: pmconcept7_home_gestures
-implementation_surfaces: [Plans/FinalGUISpec.md, Concepts/pm7-tools/home_workspace_source.py]
+implementation_surfaces: [Plans/FinalGUISpec.md]
 node_compile_hint:
   mode: home_gesture_transaction
   create_worknodes: false
@@ -1150,7 +1151,8 @@ acceptance_criteria:
 - "In the desktop app Pop out opens the one chat in its own window and Dock back returns it to its column; no panel or tab floats (amended 2026-10-09, DL-180; F3-637)."
 - "The web client shows no Pop out for the chat, and the chat stays in its column (amended 2026-10-10, lead ruling L6; F3-637)."
 validation_surfaces:
-- node Concepts/pm7-tools/verify/home_workspace_matrix.mjs
+- "Verify the native pop-out and web-client boundaries of F3-504/F3-637, including one chat instance and no web-client Chat Pop out."
+- "Cases written for the retired four-panel Home model do not prove this row; replacement executable cases are owed (ATS-075/076)."
 - python3 scripts/pm-plan-index.py validate
 risk_class: home_platform_claim_drift
 reasoning_tier: standard
@@ -1283,7 +1285,7 @@ canonical_text: >-
   darker backdrop; a corner exposing a same-tone backdrop reads as no corner
   (user-reported: the radius was applying at 18 px yet invisible). Strip heights
   re-tune with this dated disposition: editor 40 to 35 px and dashboard 36 to 31 px
-  (--ed-strip-h, --pm6-editor-tabs-h, --pm6-dash-head-h; the T20 resizer column top
+  (--ed-strip-h, --pm6-editor-tabs-h, --pm6-dash-head-h; the resizer column top
   follows 44 to 39 px), with the minimap/code alignment verified intact under the
   new tokens. Sixth follow-up (2026-08-14, both found by watched inspection): the
   fourth follow-up's animated border-radius canvas corner is RETIRED with cause -
@@ -1334,13 +1336,10 @@ canonical_text: >-
   skin family: glass gains a drag-scoped frost,
   [data-theme^="glass"] .editor-tabs.ed-shape-on:has(.tab.dragging) .ed-tab-shape
   { opacity: .92; } - slightly see-through but never legible, honouring the user's
-  "like a blur" request. It is deliberately NOT a backdrop blur: glass panes run one
-  blur per pane by budget, and the build's T16 backdrop-filter count pin stays at 134.
+  "like a blur" request. The drag plate adds no independent backdrop blur; F3-652 owns
+  its Liquid Glass material and optics budget, superseding the former one-blur-per-pane cap.
   The steady-state plate remains fully opaque in all eight themes; measured live at
-  .92 mid-drag in glass-dark and 1 at idle. Build-pin lesson recorded here because it
-  bit this wave: T16 is a RAW SUBSTRING COUNT over the whole assembled document, so a
-  CSS COMMENT that merely spells the property name trips it - the comment was reworded
-  and the count returned to 134.
+  .92 mid-drag in glass-dark and 1 at idle.
   Amended 2026-10-09 (DL-180): this silhouette becomes the one tab silhouette of every panel and every tab kind; F3-631
   consumes it and F3-647 draws it in each look. The strip is 35 px in every panel with 31 px tabs whose plate overlaps
   the body by 1 px, 8 px apart (Retro 2 px); contact is measured to the neighbour's content inset by 8 px within the 20
@@ -1365,14 +1364,15 @@ acceptance_criteria:
 - "The editor minimap is the only code-pane scrollbar; native scrollbars are suppressed and the minimap band aligns with the frosted rail via margin, not padding."
 - "Dragging tracks the pointer one-to-one with corner values derived in the same frame; selection by click, snap or keyboard produces the identical transition."
 - "Any silhouette sync taken while the strip contains a dragging tab snaps in the same frame rather than springing, including the sync caused by grabbing a non-active tab, and sub-pixel pointer moves never preserve an in-flight spring during a drag; selection springs are unaffected (wave 8, 2026-08-15)."
-- "Glass themes render the travelling plate at .92 opacity while a drag is live and fully opaque at rest, achieved without any backdrop-filter so the one-blur-per-pane budget and the T16 count of 134 are preserved (wave 8, 2026-08-15)."
+- "Glass themes render the travelling plate at .92 opacity while a drag is live and fully opaque at rest; the plate adds no independent backdrop blur and consumes F3-652's Liquid Glass material and optics budget."
 - "No dark pinhole at a join, no one-frame square or round pop at the start or end of a transition, and no shrinking circular dimple near a collision boundary."
 - "Resizing the window or changing tab widths recomputes stable target bounds; reduced motion snaps without spring travel."
-- "The rail band ghosts scrolled content beneath it in non-glass themes (pixels change when the code canvas scrolls under the strip); glass themes composite by alpha without blur per their documented budget; the active tab and canvas keep the shared opaque fill so the join stays seamless."
+- "The rail band ghosts scrolled content beneath it in non-glass themes (pixels change when the code canvas scrolls under the strip); Glass consumes F3-652's Liquid Glass material and optics budget; the active tab and canvas keep the shared opaque fill so the join stays seamless."
 - "The silhouette never renders half-dressed: chrome classes apply only after a successful measure, so --ed-shape-x/--ed-shape-w are never stuck at zero while the strip is in the shape-on state, and the shape layer mounts as the strip's last child without contending for slot 0."
 - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
 validation_surfaces:
-- node Concepts/pm7-tools/verify/home_workspace_matrix.mjs
+- "Verify the contact-aware tab silhouette, drag tracking, join geometry, opacity and reduced-motion behavior against F3-505 and F3-631."
+- "Cases written for the retired four-panel Home model do not prove this row; replacement executable cases are owed (ATS-075/076)."
 - python3 scripts/pm-plan-index.py validate
 risk_class: finalgui_drift
 reasoning_tier: standard
@@ -30606,7 +30606,7 @@ canonical_text: >-
   2026-10-15 Glass/wallpaper publication. They are historical lineage, not extra native choices or
   an alternative material contract. SP-333 owns migration and cleanup.
 gui_related: true
-gui_classification_reason: This unit defines the visible glass wallpaper modes, their layer inventory, and their motion behavior.
+gui_classification_reason: This unit retires the former Glass background modes and points to the shared Wallpaper replacement and migration.
 split_recommended: false
 depends_on: [F3-427, F3-444]
 unblocks: []
@@ -30761,11 +30761,10 @@ canonical_text: >-
   Mono in NieR Mode; both concepts set their code blocks, inline code, file paths and logs through
   that token. The home redesign's editor and terminal faces are decided separately (its D17, which
   its Plans thread records). The page's symbol characters (arrows, check and cross marks, triangles,
-  the warning sign, dots, math signs, the command key and box lines) are PM Symbols, drawn as SVG in
-  src/fonts/symbols/svg and built into a proportional and a monospace variable font that are
-  attached to every embedded text face for those characters only, with each face's own family, style
-  and weight (src/css/03-symbols.css); form controls take the look's face
-  (src/css/02-control-fonts.css). While on, NieR Mode owns general.visual.accent-color and
+  the warning sign, dots, math signs, the command key and box lines) are PM Symbols in
+  proportional and monospace variable-font forms, attached to every embedded text face for those
+  characters only and matching each face's own family, style and weight; form controls
+  take the look's face. While on, NieR Mode owns general.visual.accent-color and
   general.visual.app-font (F3-441); turning it off restores the chosen theme. It is an overlay, not
   a ninth theme.
   Amended 2026-10-17 (DL-228): Japanese is not embedded. M PLUS 1 carries it upstream, but PM NieR Sans ships
@@ -31377,7 +31376,7 @@ Source since 2026-10-08 (DL-151): PMConcept7's retro-light, `Concepts/PMConcept7
 
 #### Diff-tint variables per variant (04-css-glass-b.part.html:138-192)
 
-The concept defines seven diff-tint custom properties per variant for six variants. Friendly variants define none; friendly editors resolve through the consumer fallback constants baked into the `var()` second arguments at `Concepts/pm6-build/parts/07-css-components-b.part.html:3-29`, which equal the basic-dark values.
+The concept shows seven diff-tint custom properties per variant for six variants. Friendly variants define none; Friendly editors use the Basic Dark fallback values.
 
 | Token | retro-dark | retro-light | basic-light | basic-dark | glass-dark | glass-light | friendly-dark | friendly-light |
 |---|---|---|---|---|---|---|---|---|
@@ -32551,7 +32550,7 @@ canonical_text: >-
   than listening itself. The retired parallax sampler stays inactive under every motion preference; F3-465
   sets the active hover's reduced-motion form.
 gui_related: true
-gui_classification_reason: This unit defines the sheen hover targets, glass depth parallax and the single merged pointer-move handler on shell controls.
+gui_classification_reason: This unit defines the shell hover targets and single merged pointer-move handler; retired Glass depth parallax is compatibility/source lineage only.
 split_recommended: false
 depends_on: [F3-428]
 unblocks: [F3-465]
@@ -32592,7 +32591,7 @@ stale_retired_dispositions:
 - "The one-shot hover jiggle wobble on designated shell controls is retired per PMConcept7 rev 7, superseded by the F3-465 magnet spotlight hover system on the same selector set; glass depth parallax remains live and stays reduced-motion-disabled."
 - "Retired 2026-10-10 by DL-171: the sheen hover-lift and its glow (`.pm-sheen:hover` in the base, Friendly and Glass), in favour of the F3-465 merged hover system."
 owner_boundary_notes:
-- "F3-465 owns the hover look and motion of every sheen element; this unit owns the sheen targets' place, glass depth parallax and the single merged document pointer-move handler."
+- "F3-465 owns the hover look and motion of every sheen element; this unit owns the targets' placement and single merged document pointer-move handler. Retired Glass depth parallax is compatibility/source lineage only."
 owner_hints:
 - "Plans/FinalGUISpec.md"
 ```
@@ -33511,8 +33510,8 @@ canonical_text: >-
   animations; tiles lean less, rows by a token amount, and icons and the Usage plates get no magnet. The
   spotlight is a small soft pointer light, a radius of about 90 to 100 px with a Gaussian roll-off
   (smaller on tiles and rows), that reveals a pre-painted sheen tint and a hairline along the border,
-  under the box's content; only the light's centre moves with the pointer. The emitted glow is halved from
-  PM8's bloom and pre-painted with a short elevation shadow on a plate that stays at the box's rest rect,
+  under the box's content; only the light's centre moves with the pointer. The emitted glow is restrained (the current PMH reference) and
+  pre-painted with a short elevation shadow on a plate that stays at the box's rest rect,
   never moving with the magnet, and animates by opacity only. The family voices stay: Basic crisp with no
   overshoot, Friendly a warm pool and a soft band with a gentle settle, Glass a slow drift and a bright
   specular hairline, the accent riding the theme accent. Retro and NieR use no soft light, glow, blur,
@@ -33570,7 +33569,7 @@ acceptance_criteria:
 - In Basic, Friendly and Glass the magnet moves a hovered card at most about 2.5 px at an edge, through the standalone
   translate channel only; icons and the Usage plates never move.
 - The pointer light is a small soft pool, about 90 to 100 px in radius on cards, revealing a pre-painted sheen and
-  hairline under the content; the emitted glow is half of PM8's bloom, pre-painted, opacity-only, and stays at the
+  hairline under the content; the emitted glow is restrained as in the current PMH reference, pre-painted, opacity-only, and stays at the
   box's rest rect while the box leans.
 - Intensity ramps continuously from the bleed distance outside the box with no snap at edges; neighbours inside the
   bleed light only their near edge; overlaying panels do not light boxes beneath them, and nested targets resolve
@@ -33595,8 +33594,6 @@ reasoning_tier: standard
 context_scope: finalgui_standardization
 implementation_surfaces:
 - "Plans/FinalGUISpec.md"
-- "Concepts/onboarding/opus-5.5/src/js/18-hover.js"
-- "Concepts/onboarding/opus-5.5/src/css/22-hover.css"
 node_compile_hint:
   mode: magnet_spotlight_hover_system
   create_worknodes: false
@@ -33643,7 +33640,7 @@ stale_retired_dispositions:
 - 'Amended 2026-10-14: The static-tint-only small-control restriction is superseded by the approved control-marker
   polish; card hover is unchanged.'
 owner_boundary_notes:
-- "F3-446 owns glass depth parallax and the single merged document pointer-move handler this system rides on; DR-072 makes this unit the single owner of the hover grammar."
+- "F3-446 owns the single merged document pointer-move handler this system uses; its former Glass depth parallax is compatibility/source lineage only. DR-072 makes this unit the single owner of the hover grammar."
 - "Tab silhouettes and tab hover belong to their tab owners (F3-505, F3-466); the resizers keep their own grab glow; the left rail's rows and icons keep their owner's hover."
 owner_hints:
 - "Plans/FinalGUISpec.md"
@@ -35722,7 +35719,7 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
-  The Concepts/pm6-build PMConcept7 demo carries a `panel-run` view implementing
+  The PMConcept7 reference shows a `panel-run` view implementing
   F3-485 through F3-488 with fixture data: two sessions (a paused parent
   "tastebook-api — cargo run" and a running child attach session), a populated
   locals scope, two watches, a four-frame main thread, and line, conditional,
@@ -35779,7 +35776,7 @@ owner_hints:
 
 ## PMConcept7 Cozy Shelves Integration Addendum - 2026-07-28
 
-This addendum records the integration of the ratified Cozy Shelves rail concepts (`Concepts/rail-concepts/QwenRailConcepts/c2-cozy-shelves.html` and `c2-cozy-shelves-files.html`, both source-lineage-only per `Plans/usage-feature.md`) into the `Concepts/PMConcept7.html` build via the `Concepts/pm6-build` parts pipeline, the retirement of three superseded panel views, and the application of the F3-471 width envelope to the PM7 shell. It creates no WorkNodes, NodeSeeds, executable queues, implementation files, runtime artifacts, generated wiring rows, production build tasks, final manifests, or PNC-019 receipts.
+This addendum records the integration of the ratified Cozy Shelves rail concepts (`Concepts/rail-concepts/QwenRailConcepts/c2-cozy-shelves.html` and `c2-cozy-shelves-files.html`, both source-lineage-only per `Plans/usage-feature.md`) in the `Concepts/PMConcept7.html` appearance and interaction reference, the retirement of three superseded panel views, and the application of the F3-471 width envelope to the PM7 shell. It creates no WorkNodes, NodeSeeds, executable queues, implementation files, runtime artifacts, generated wiring rows, production build tasks, final manifests, or PNC-019 receipts.
 
 ### F3-497 - Cozy Shelves PM7 Panel Integration
 
@@ -35789,11 +35786,8 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
-  The eight Cozy Shelves rail panels (File Manager, Search, Source Control, GitHub
-  Actions, Docker, Testing, Agents, Runtime Artifacts) are integrated into
-  Concepts/PMConcept7.html through Concepts/pm6-build parts: panel markup in
-  12-html-side-panels.part.html, the pm6-css-cozy-shelves style part, and the
-  pm6-js-cozy-shelves behavior part. The c2 panel ids carry over verbatim
+  The PMConcept7 reference shows the eight Cozy Shelves rail panels (File Manager, Search,
+  Source Control, GitHub Actions, Docker, Testing, Agents, Runtime Artifacts). The c2 panel ids carry over verbatim
   (panel-files/search/source/git/docker/artifacts/testing/agents); the retired
   pm6-panel-testing and pm6-panel-agents ids migrate to panel-testing and
   panel-agents everywhere (activity bar data-targets, panels.show, hook census).
@@ -35806,12 +35800,12 @@ canonical_text: >-
   c2 explorer/changed/open segmented tabs, measured tree animator, hover quick
   actions, multi-select, filter, hide-ignored, and worktree root menu.
 gui_related: true
-gui_classification_reason: This unit records the user-visible integration of the winning rail panels into the PMConcept7 concept build.
+gui_classification_reason: This unit records the user-visible integration of the winning rail panels into the PMConcept7 shell.
 split_recommended: false
 depends_on: [F3-471, F3-472, F3-474, F3-480]
 unblocks: []
 acceptance_criteria:
-- "All eight panels open from the activity bar in the built Concepts/PMConcept7.html with every expander collapsed by default except the c2-sanctioned open shelves (File Manager MODIFIED/ADDED/UNTRACKED/OPEN EDITORS and the Artifacts INVESTIGATION shelf)."
+- "All eight panels open from the activity bar in the PMConcept7 reference with every expander collapsed by default except the c2-sanctioned open shelves (File Manager MODIFIED/ADDED/UNTRACKED/OPEN EDITORS and the Artifacts INVESTIGATION shelf)."
 - "Accordion expand/collapse works by click and Enter/Space with aria-expanded syncing; rail menus paint above shelves and restore their home node on close."
 - "The slideInLeft animation no longer appears on .side-panel-view; panel entrance runs once per activation via .pm-panel-enter."
 - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit."
@@ -35821,10 +35815,7 @@ validation_surfaces:
 risk_class: finalgui_drift
 reasoning_tier: standard
 context_scope: pm7_cozy_shelves_integration
-implementation_surfaces:
-- "Concepts/pm6-build/parts/12-html-side-panels.part.html"
-- "Concepts/pm6-build/parts/10x-pm6-css-cozy-shelves.part.html"
-- "Concepts/pm6-build/parts/29x-pm6-js-cozy-shelves.part.html"
+implementation_surfaces: []
 node_compile_hint:
   mode: pm7_cozy_shelves_integration_record
   create_worknodes: false
@@ -35838,13 +35829,12 @@ preserved_exact_tokens:
 - "panel-agents"
 - "slideInLeft"
 negative_constraints:
-- "Do not hand-edit Concepts/PMConcept7.html or Concepts/pm6-build/PMConcept6.assembled.html; all changes flow through the parts pipeline."
 - "Do not treat Concepts/pm6-build/** as implementation authority; it remains illustrative source-lineage only."
 compatibility_only_notes:
 - "Slint portability follows F3-473: only transform/opacity/height animations, portal menus map to PopupWindow, label fitting by measure never by width class."
 stale_retired_dispositions: []
 owner_boundary_notes:
-- "F3-472 owns the shelf-expander contract and F3-480 owns the presentation repairs; this unit records their application to the PM7 build and owns no new presentation rules."
+- "F3-472 owns the shelf-expander contract and F3-480 owns the presentation repairs; this unit records their appearance in the PMConcept7 reference and owns no new presentation rules."
 owner_hints:
 - "Plans/FinalGUISpec.md"
 ```
@@ -35881,10 +35871,7 @@ validation_surfaces:
 risk_class: finalgui_drift
 reasoning_tier: standard
 context_scope: pm7_cozy_shelves_integration
-implementation_surfaces:
-- "Concepts/pm6-build/parts/02-css-tokens.part.html"
-- "Concepts/pm6-build/parts/09-css-bento-themes.part.html"
-- "Concepts/pm6-build/parts/10x-pm6-css-global.part.html"
+implementation_surfaces: []
 node_compile_hint:
   mode: pm7_width_envelope_record
   create_worknodes: false
@@ -35918,8 +35905,8 @@ canonical_text: >-
   The activity bar carries a Debug icon directly below the Tests icon as its own
   entry (rail label "Debug", opening the Debug & Run panel per F3-482), wired
   with data-target="panel-run", making the cmd.panel.switch run_debug
-  destination resolve to a real, reachable panel for the first time in the PM7
-  build. The Testing and Agents panel ids are canonical as panel-testing and
+  destination resolve to a real, reachable panel for the first time in the PMConcept7
+  reference. The Testing and Agents panel ids are canonical as panel-testing and
   panel-agents (the retired pm6-panel-testing and pm6-panel-agents ids are gone
   from markup, data-targets, and the hook census). Icon order and Ctrl+number
   bindings remain user-adjustable per the existing customization contract; the
@@ -35940,9 +35927,7 @@ validation_surfaces:
 risk_class: finalgui_drift
 reasoning_tier: standard
 context_scope: pm7_cozy_shelves_integration
-implementation_surfaces:
-- "Concepts/pm6-build/parts/11-html-shell-open.part.html"
-- "Concepts/pm6-build/parts/29x-pm6-js-panels.part.html"
+implementation_surfaces: []
 node_compile_hint:
   mode: activity_bar_debug_entry_record
   create_worknodes: false
@@ -35959,7 +35944,7 @@ compatibility_only_notes:
 - "Slint: the activity bar model carries the same entries; hotkey assignment follows the model order, not a constant table."
 stale_retired_dispositions: []
 owner_boundary_notes:
-- "F3-482 owns the Debug & Run panel identity and placement canon; this unit owns the PM7 build realization and the panel id cleanup."
+- "F3-482 owns the Debug & Run panel identity and placement canon; this unit owns the PMConcept7 reference presentation and the panel id cleanup."
 owner_hints:
 - "Plans/FinalGUISpec.md"
 ```
@@ -35972,7 +35957,7 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
-  Two superseded side-panel views are removed from the PM7 build: panel-unraid
+  Two superseded side-panel views are retired from the PMConcept7 reference: panel-unraid
   (a self-declared redirect stub whose destination lives in the Docker panel's
   Publish view) and pm6-panel-notify (the Notifications side panel, retired when
   the title-bar notification stack became the sole in-app notification
@@ -35997,10 +35982,7 @@ validation_surfaces:
 risk_class: finalgui_drift
 reasoning_tier: standard
 context_scope: pm7_cozy_shelves_integration
-implementation_surfaces:
-- "Concepts/pm6-build/parts/12-html-side-panels.part.html"
-- "Concepts/pm6-build/parts/29x-pm6-js-panels.part.html"
-- "Concepts/pm6-build/contracts/HOOKS.md"
+implementation_surfaces: []
 node_compile_hint:
   mode: retired_panel_view_removals_record
   create_worknodes: false
@@ -36024,7 +36006,7 @@ owner_hints:
 
 ## PMConcept7 User-Polished Runtime Contract Addendum - 2026-08-27
 
-This addendum makes the recovered, source-owned PMConcept7 behavior canonical without treating the generated HTML or concept-only storage and command aliases as production authorities. It covers the complete application surface, not Usage alone, and delegates data, command, storage, event, and testing ownership to their existing canonical owners.
+This addendum makes the recovered PMConcept7 behavior canonical without treating the concept page or concept-only storage and command aliases as production authorities. It covers the complete application surface, not Usage alone, and delegates data, command, storage, event, and testing ownership to their existing canonical owners.
 
 Final successor evidence is report-owned. When `audit_report.json` records `status = pass_with_named_residuals`
 and `verdict = successor_scope_verified_with_named_residuals`, the `evidence_ref` entries below prove only their
@@ -36047,18 +36029,18 @@ owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
   The user-polished PMConcept7 is the visual and interaction authority for the recovered concept across the
   global shell, title bar, primary pages, side panels, Cozy Shelves, Home workspace, Dashboard, Usage,
-  shared Assistant and Context surfaces, bottom/status surfaces, menus, hover states, and motion. The current
-  pinned PM7 base plus source-owned T33-T43 transforms owns the current build path; generated PMConcept7.html
-  is a product and comparison input, never the sole authored source or product canon. The eight built-in themes remain Basic Dark,
+  shared Assistant and Context surfaces, bottom/status surfaces, menus, hover states, and motion.
+  PMConcept7 is the appearance and interaction reference for these surfaces; canonical product
+  behavior and implementation authority remain with the Plans owners. The eight built-in themes remain Basic Dark,
   Basic Light, Friendly Dark, Friendly Light, Retro Dark, Retro Light, Glass Dark, and Glass Light, with the
   recovered family-specific typography, palette, shape, contrast, and motion behavior.
 gui_related: true
-gui_classification_reason: This unit establishes the complete user-visible PMConcept7 authority and source-owned build boundary.
+gui_classification_reason: This unit establishes the whole-application appearance and interaction reference and its boundary with canonical product owners.
 split_recommended: false
 depends_on: [F3-425, F3-426, F3-500]
 unblocks: [F3-514, F3-516, F3-517, ATS-037, ATS-038]
 acceptance_criteria:
-  - "A clean build from the pinned PM7 base through source-owned T33-T43 produces PMConcept7.html; repo-local audit-20260830-001 must record two-build byte equality and any residual before a successor-scope verdict, and no new required behavior may exist only as a hand edit in generated HTML."
+  - "Every required appearance and interaction is stated in its canonical owner and validated against the whole-application contract; a concept-only change is not product acceptance."
   - "All primary pages, shell chrome, global panels, Cozy Shelves, Home, Dashboard, Usage, Assistant/context, bottom panel, and status bar retain the recovered semantic and presentation contract."
   - "All eight theme families preserve their intended font, palette, shape, inactive-state contrast, first-paint background, and family-specific composition."
   - "Initial paint and transitions never expose white or blank controls until hover and never introduce black-screen or uniform-frame flashes."
@@ -36072,21 +36054,18 @@ reasoning_tier: high
 context_scope: pm7_whole_application_authority
 implementation_surfaces:
   - Plans/FinalGUISpec.md
-  - Concepts/pm7-tools/base/PM7-base.html
-  - Concepts/pm7-tools/build_pm7.py
-  - Concepts/PMConcept7.html
 node_compile_hint:
   mode: pm7_whole_application_contract_only
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
-  - "Concepts/pm7-tools/base/PM7-base.html (current pinned PM7 input; base_sha256=9dcde2a8862de0cdd28a0d540cb4976396ea0556e6ff15a5c9c8fc14bd121090)"
-  - Concepts/pm7-tools/build_pm7.py#T33-T43 (source-owned transforms)
+  - Concepts/pm7-tools/base/PM7-base.html (retired PM7 input; source-lineage-only)
+  - Concepts/pm7-tools/build_pm7.py (retired PM7 builder; source-lineage-only)
   - Concepts/PMConcept7.html (generated artifact; terminal bytes and hash are audit-owned)
   - Plans/.audits/audit-20260830-001-pmconcept7-live-resize-preview/audit_report.json (current repo-local successor audit status; verdict remains report-owned)
-preserved_exact_tokens: [T33, T34, T38, T39, T40, T41, Basic Dark, Basic Light, Friendly Dark, Friendly Light, Retro Dark, Retro Light, Glass Dark, Glass Light]
+preserved_exact_tokens: [Basic Dark, Basic Light, Friendly Dark, Friendly Light, Retro Dark, Retro Light, Glass Dark, Glass Light]
 negative_constraints:
-  - "Do not treat generated PMConcept7.html as an authored source."
+  - "Do not treat PMConcept7 as product canon or as an implementation source."
   - "Do not narrow the recovered authority to Usage-only behavior."
   - "Do not add accessibility bootstrap acceptance work; preserve already-useful keyboard behavior without expanding scope."
 owner_hints: [Plans/FinalGUISpec.md]
@@ -36164,9 +36143,9 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
-  - Concepts/pm7-tools/base/PM7-base.html (current pinned PM7 input; source-lineage-only)
-  - Concepts/pm7-tools/build_pm7.py#T33-T43 (source-owned transforms)
-  - Concepts/pm7-tools/widget_live_resize_preview_source.py (authored T43 Usage-only live resize-preview transform)
+  - Concepts/pm7-tools/base/PM7-base.html (retired PM7 input; source-lineage-only)
+  - Concepts/pm7-tools/build_pm7.py (retired PM7 builder; source-lineage-only)
+  - Concepts/pm7-tools/widget_live_resize_preview_source.py (retired concept resize-preview source; source-lineage-only)
   - Concepts/PMConcept7.html (generated artifact; terminal bytes and hash are audit-owned)
   - Plans/.audits/audit-20260829-001-pmconcept7-widget-followup/audit_report.json (current repo-local follow-up audit status; verdict remains report-owned)
   - Plans/usage-feature.md#uf-093---usage-rooms-disclosure-and-local-projection-state
@@ -36257,9 +36236,9 @@ node_compile_hint:
 source_lineage:
   - Plans/Commands_System.md#cs-068---pmconcept7-settled-interaction-command-reuse-and-local-preview-boundary
   - Plans/UI_Wiring_Rules.md#uiw-012---transactional-preview-commit-cancel-cleanup-and-shared-assistant-re-seating
-  - Concepts/pm7-tools/base/PM7-base.html (current pinned PM7 input; source-lineage-only)
-  - Concepts/pm7-tools/build_pm7.py#T33-T43 (source-owned transforms)
-  - Concepts/pm7-tools/widget_live_resize_preview_source.py (authored T43 Usage-only live resize-preview transform)
+  - Concepts/pm7-tools/base/PM7-base.html (retired PM7 input; source-lineage-only)
+  - Concepts/pm7-tools/build_pm7.py (retired PM7 builder; source-lineage-only)
+  - Concepts/pm7-tools/widget_live_resize_preview_source.py (retired concept resize-preview source; source-lineage-only)
   - Plans/.audits/audit-20260829-001-pmconcept7-widget-followup/audit_report.json (current repo-local follow-up audit status; verdict remains report-owned)
   - Plans/Decision_Log.md#DL-186
   - Plans/Decision_Log.md#DL-188
@@ -36325,8 +36304,8 @@ node_compile_hint:
   create_nodeseeds: false
 source_lineage:
   - Plans/assistant-chat-design.md#acd-448---one-shared-assistant-seat-and-coherent-context-ring-detail-contract
-  - Concepts/pm7-tools/base/PM7-base.html (current pinned PM7 input; source-lineage-only)
-  - Concepts/pm7-tools/build_pm7.py#T33-T43 (source-owned transforms)
+  - Concepts/pm7-tools/base/PM7-base.html (retired PM7 input; source-lineage-only)
+  - Concepts/pm7-tools/build_pm7.py (retired PM7 builder; source-lineage-only)
   - Concepts/PMConcept7.html (generated artifact; terminal bytes and hash are audit-owned)
   - Plans/.audits/audit-20260829-001-pmconcept7-widget-followup/audit_report.json (current repo-local follow-up audit status; verdict remains report-owned)
 preserved_exact_tokens: [Compact Now, More Details, Curated, Raw, cmd.chat.compact_context, context.compaction.started, context.compaction.completed, context.compaction.failed]
@@ -36401,19 +36380,16 @@ reasoning_tier: high
 context_scope: pm7_shell_home_dashboard_panels_themes_motion
 implementation_surfaces:
   - Plans/FinalGUISpec.md
-  - Concepts/pm7-tools/base/PM7-base.html
-  - Concepts/pm7-tools/build_pm7.py
-  - Concepts/pm7-tools/home_workspace_source.py
   - tests/fixtures/pm7_shared
 node_compile_hint:
   mode: pm7_cross_surface_compatibility_contract_only
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
-  - Concepts/pm7-tools/base/PM7-base.html (current pinned PM7 input; source-lineage-only)
-  - Concepts/pm7-tools/build_pm7.py#T33-T43 (source-owned transforms)
-  - Concepts/pm7-tools/widget_live_resize_preview_source.py (authored T43 Usage-only live resize-preview transform; Dashboard behavior unchanged)
-  - Concepts/pm7-tools/home_workspace_source.py (authored Home owner projection; Browser Preview and Automation inactive-state repair)
+  - Concepts/pm7-tools/base/PM7-base.html (retired PM7 input; source-lineage-only)
+  - Concepts/pm7-tools/build_pm7.py (retired PM7 builder; source-lineage-only)
+  - Concepts/pm7-tools/widget_live_resize_preview_source.py (retired concept resize-preview source; source-lineage-only)
+  - Concepts/pm7-tools/home_workspace_source.py (historical Home projection; source-lineage-only)
   - Concepts/PMConcept7.html (generated artifact; terminal bytes and hash are audit-owned)
   - Plans/.audits/audit-20260829-001-pmconcept7-widget-followup/audit_report.json (current repo-local follow-up audit status; verdict remains report-owned)
   - Plans/Decision_Log.md#DL-186
@@ -36445,9 +36421,9 @@ canonical_text: >-
   for their owned slices. Every fixture names its owner PlanUnits, source lineage, positive assertions, negative
   assertions, and intended visual or interaction surface. Fixture presence and `must`/`must_not` lists establish
   static representation only and never prove runtime, visual, motion, or migration behavior; those require fresh
-  browser execution, raw receipts, and independent review. Final certification combines deterministic build
-  proof, machine-readable geometry and state assertions, actual-pixel review, and frame-by-frame motion review.
-  The widget interaction slice binds the exact generated artifact hash and covers repeated right-edge (primary),
+  browser execution, raw receipts, and independent review. Final certification combines
+  machine-readable geometry and state assertions, actual-pixel review, and frame-by-frame motion review.
+  The widget interaction evidence identifies the reviewed artifact by hash and covers repeated right-edge (primary),
   left-edge, and middle pointer/keyboard resize settlement plus pointer-only live occupied-peer preview repack with accepted-settlement parity
   up to settle-time gravity: the accepted layout equals the last-painted preview exactly except that the Usage board
   gravity of WS-019 (DL-176) slides shown cards other than the active one up into space freed above them, committed
@@ -36467,7 +36443,7 @@ acceptance_criteria:
   - "The canonical Usage and shared PM7 fixture trees exist in the repository and concept demo reports are not used as substitutes for them."
   - "Every fixture records stable identity, owner PlanUnits, source lineage, affected surfaces, must assertions, and must-not assertions."
   - "Fixture files and their must/must_not lists grant static representation only and do not prove runtime, visual, motion, or migration behavior; visual certification requires fresh browser execution, raw receipts, screenshots/contact sheets, and independent actual-pixel review in addition to DOM, state, and geometry assertions."
-  - "Motion certification requires fresh frame-sequence capture, raw receipts, and independent review for drag, resize, reorder, reflow, page, menu, drawer, hover, context, and tab movement rather than sampling only the final frame; widget interaction evidence binds one exact generated artifact and includes primary far-right plus far-left/middle horizontal pointer and keyboard resize, Usage occupied-peer displacement during held pointer preview, preview-to-accepted-settlement topology parity up to settle-time gravity (the accepted layout equals the last-painted layout with only the Usage board gravity of WS-019 applied at settle), the same live resize displacement on dashboard boards (amended 2026-10-10, DL-186: Dashboard-frozen resize peers are retired, F3-517), direct control acquisition, exact command/receipt/event/write counts, preview node/opacity/animation/child-list continuity, cancellation/no-op cleanup, and decoded frame review for black or empty intervals."
+  - "Motion certification requires fresh frame-sequence capture, raw receipts, and independent review for drag, resize, reorder, reflow, page, menu, drawer, hover, context, and tab movement rather than sampling only the final frame; widget interaction evidence identifies the reviewed artifact by hash and includes primary far-right plus far-left/middle horizontal pointer and keyboard resize, Usage occupied-peer displacement during held pointer preview, preview-to-accepted-settlement topology parity up to settle-time gravity (the accepted layout equals the last-painted layout with only the Usage board gravity of WS-019 applied at settle), the same live resize displacement on dashboard boards (amended 2026-10-10, DL-186: Dashboard-frozen resize peers are retired, F3-517), direct control acquisition, exact command/receipt/event/write counts, preview node/opacity/animation/child-list continuity, cancellation/no-op cleanup, and decoded frame review for black or empty intervals."
   - "No accessibility acceptance expansion, WorkNode, NodeSeed, executable queue, implementation task, or production code is created by this evidence contract."
 validation_surfaces:
   - "python3 scripts/pm-plan-index.py validate"
@@ -36486,9 +36462,9 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
-  - Concepts/pm7-tools/base/PM7-base.html (current pinned PM7 input; source-lineage-only)
-  - Concepts/pm7-tools/build_pm7.py#T33-T43 (source-owned transforms)
-  - Concepts/pm7-tools/widget_live_resize_preview_source.py (authored T43 Usage-only live resize-preview transform)
+  - Concepts/pm7-tools/base/PM7-base.html (retired PM7 input; source-lineage-only)
+  - Concepts/pm7-tools/build_pm7.py (retired PM7 builder; source-lineage-only)
+  - Concepts/pm7-tools/widget_live_resize_preview_source.py (retired concept resize-preview source; source-lineage-only)
   - Concepts/PMConcept7.html (generated artifact; terminal bytes and hash are audit-owned)
   - Plans/.audits/audit-20260829-001-pmconcept7-widget-followup/audit_report.json (current repo-local follow-up audit status; verdict remains report-owned)
   - Plans/Automated_Testing_System.md
@@ -36518,15 +36494,15 @@ The following predecessor clauses remain historical lineage, not current behavio
   remains current.
 - F3-409's provider-first onboarding choreography is superseded; its Free Models requested/effective override and
   truthful availability presentation remain current outside the simple default onboarding path.
-- F3-513's T33-T43 build-tail statement is predecessor lineage for these surfaces; authored T44 Settings/Doctor,
-  T45 Product Onboarding/Guided Tour, T46 system consumers, T47 hover, and the bounded T48 Home refresh are the
-  current concept path; the authored T49 assistant-settings and T50 Settings-refresh transforms (USER-SETTINGS-MANAGER-REFRESH-20260908)
-  extend that path for the Settings manager surfaces, with the T44-T48 Settings presentation as their predecessor
-  lineage. T48 may refresh authored Home source to expose the setup-wizard return route; it does not
-  authorize a hand edit to generated `Concepts/PMConcept7.html`.
+- F3-513's former build-tail scope for these surfaces is predecessor lineage; F3-513 remains the whole-application
+  reference; the Settings/Doctor, Product Onboarding/Guided Tour, system-consumer, hover-tag and Home presentation
+  below refines those surfaces. The assistant-settings and Settings manager presentation
+  (USER-SETTINGS-MANAGER-REFRESH-20260908) extends that scope for the Settings manager surfaces; the earlier
+  Settings/Doctor presentation is its predecessor lineage there. Home's bounded refresh exposes the setup-wizard
+  return route under the current onboarding owner.
 - F3-517's prohibition on Settings changes does not apply to this user-authorized Settings/Doctor port. Its rule
   against theme overlays changing functional identity remains current.
-- F3-518's no-accessibility-expansion clause is superseded for the T44-T47 touched surfaces. The broader bootstrap
+- F3-518's no-accessibility-expansion clause is superseded for Settings, Doctor, Product Onboarding, Guided Tour, system-consumer and hover-tag surfaces. The broader bootstrap
   boundary remains historical context, but keyboard, screen-reader, focus, tooltip, and reduced-motion acceptance
   below is required.
 
@@ -36565,8 +36541,6 @@ reasoning_tier: high
 context_scope: k3_settings_doctor_pm7_presentation
 implementation_surfaces:
   - Plans/FinalGUISpec.md
-  - Concepts/pm7-tools/settings_tome_source.py
-  - Concepts/pm7-tools/build_pm7.py
   - future native Slint Settings and Doctor components
 node_compile_hint: {mode: k3_settings_doctor_presentation_contract, create_worknodes: false, create_nodeseeds: false}
 source_lineage:
@@ -36734,17 +36708,13 @@ validation_surfaces:
   - "Plans/product_onboarding_contracts.schema.json and Plans/product_onboarding_contract_fixtures.json (v2 owner actions, durable bounded draft, exact commit/result binding and phase continuation)"
   - tests/test_pm_onboarding_phases.py
   - tests/test_pm_settings_draft_transfer.py
-  - Concepts/pm7-tools/onboarding_cinematic_source.py authored guards
-  - Concepts/pm7-tools/home_workspace_refresh_source.py authored guards
+  - "Verify F3-520's onboarding presentation, owner-bound actions, ephemeral pre-Project look choices, return routes, interruption/reversal, accessibility and short-window behavior."
   - future eight-theme, Reduced Motion, interruption, reversal, and short-window film review
 risk_class: onboarding_overload_or_motion_blocking
 reasoning_tier: high
 context_scope: product_onboarding_cinematic_presentation
 implementation_surfaces:
   - Plans/FinalGUISpec.md
-  - Concepts/pm7-tools/onboarding_cinematic_source.py
-  - Concepts/pm7-tools/home_workspace_source.py
-  - Concepts/pm7-tools/home_workspace_refresh_source.py
   - future native Slint Product Onboarding components
 node_compile_hint: {mode: onboarding_cinematic_presentation_contract, create_worknodes: false, create_nodeseeds: false}
 source_lineage:
@@ -36885,15 +36855,13 @@ acceptance_criteria:
 validation_surfaces:
   - "Plans/final_gui_interaction_contracts.schema.json and Plans/final_gui_interaction_contract_fixtures.json (newbie-first static presentation consumer; story/actions reference the v3 owner definitions)"
   - "Plans/guided_tour_contracts.schema.json and Plans/guided_tour_contract_fixtures.json (v3 static Chat/workspace/Planning, eleven-action, shared Show Me, same-answer ELI5 as one extra, simpler reply with the original reply unchanged, safe checkpoint, and default restoration/explicit Keep obligations; schema/fixture validity establishes no durable recovery or runtime acceptance)"
-  - Concepts/pm7-tools/guided_tour_source.py authored guards
-  - Concepts/pm7-tools/verify/guided_tour_lifecycle_checkpoint.mjs scoped concept lifecycle checks, not native or final visual acceptance
+  - "Verify the existing F3-521/PWIZ Guided Tour lifecycle, mounted-owner observations, focus, Skip restoration and completion disposition; concept simulation is not native or final visual acceptance."
   - future mounted-owner handler observation, focus, Skip restoration, completion disposition, and film review
 risk_class: guided_tour_fake_state_or_story_loss
 reasoning_tier: high
 context_scope: guided_tour_newbie_first_practice_presentation
 implementation_surfaces:
   - Plans/FinalGUISpec.md
-  - Concepts/pm7-tools/guided_tour_source.py
   - future native Slint Guided Tour overlay components
 node_compile_hint: {mode: guided_tour_directed_beginner_film_contract, create_worknodes: false, create_nodeseeds: false}
 source_lineage:
@@ -36963,8 +36931,6 @@ reasoning_tier: high
 context_scope: doctor_k3_operational_workspace
 implementation_surfaces:
   - Plans/FinalGUISpec.md
-  - Concepts/pm7-tools/settings_tome_source.py
-  - Concepts/pm7-tools/systems_integration_source.py
   - future native Slint Doctor components
 node_compile_hint: {mode: doctor_k3_presentation_contract, create_worknodes: false, create_nodeseeds: false}
 source_lineage:
@@ -37040,14 +37006,13 @@ acceptance_criteria:
   - "The controls inside an open assistant-chat activity bar domain preview that F3-590 lists are a documented exemption (DL-157): they open no tag, because a tag would replace the preview card, and the census counts them as exempt rather than as missing bindings."
 validation_surfaces:
   - "Plans/final_gui_interaction_contracts.schema.json and Plans/final_gui_interaction_contract_fixtures.json (separate 1600 ms pointer-residence, 1100 ms stationary-intent, 5 px radius, 1000 ms visual-focus dwell, immediate accessible-description binding, and 160 ms departure-grace fields are required for current acceptance)"
-  - Concepts/pm7-tools/global_hover_tags_source.py authored guards
+  - "Verify the F3-523 hover-tag census and pointer, keyboard, Escape, grace, collision, zoom, theme, transparency and reduced-motion acceptance."
   - future hover census, pointer/keyboard/Escape/grace/collision/zoom/theme/transparency/reduced-motion tests
 risk_class: hover_overlay_accessibility_or_census_drift
 reasoning_tier: high
 context_scope: global_pm_hover_tag
 implementation_surfaces:
   - Plans/FinalGUISpec.md
-  - Concepts/pm7-tools/global_hover_tags_source.py
   - future native Slint PMHoverTag and HoverTagController components
 node_compile_hint: {mode: global_hover_tag_contract, create_worknodes: false, create_nodeseeds: false}
 source_lineage:
@@ -37101,7 +37066,7 @@ validation_surfaces:
   - Plans/final_gui_interaction_contracts.schema.json
   - Plans/final_gui_interaction_contract_fixtures.json
   - Plans/Test_Capture_and_Motion_Evidence.md#TCME-007
-  - Concepts/pm7-tools/verify/final_evidence_gate.py
+  - "Verify the F3-524 and TCME-007 evidence obligations, including native execution and independent actual-pixel/frame review; concept/static success alone is insufficient."
   - python3 scripts/pm-plans-verify.py run-gates
   - future native Slint build/runtime and independent actual-pixel/frame review
 risk_class: browser_concept_promoted_to_native_certification
@@ -37110,7 +37075,6 @@ context_scope: reconciled_gui_portability_and_evidence
 implementation_surfaces:
   - Plans/FinalGUISpec.md
   - Plans/Settings_System.md
-  - Concepts/pm7-tools/build_pm7.py
   - future native Slint components
 node_compile_hint: {mode: final_gui_portability_evidence_contract, create_worknodes: false, create_nodeseeds: false}
 source_lineage:
@@ -37162,10 +37126,7 @@ validation_surfaces:
   - Plans/final_gui_interaction_contracts.schema.json
   - Plans/plugin_contracts.schema.json
   - Plans/plugin_contract_fixtures.json
-  - Concepts/pm7-tools/verify/plugin_projection_matrix.mjs
-  - Concepts/pm7-tools/verify/hover_tags.mjs
-  - Concepts/pm7-tools/verify/accessibility_visual_matrix.mjs
-  - Concepts/pm7-tools/verify/final_campaign_capture.mjs
+  - "Verify F3-525's Plugins manager owner projections, geometry, accessibility and motion across its required states; concept simulation does not establish native runtime acceptance."
   - future native Slint Plugins manager visual/accessibility/runtime tests
 risk_class: plugin_manager_geometry_drift_or_false_owner_success
 reasoning_tier: high
@@ -37175,9 +37136,6 @@ implementation_surfaces:
   - Plans/Settings_System.md
   - Plans/Plugins_System.md
   - Plans/newtools.md
-  - Concepts/pm7-tools/systems_integration_source.py
-  - Concepts/pm7-tools/verify/plugin_projection_matrix.mjs
-  - Concepts/pm7-tools/verify/final_campaign_capture.mjs
   - future native Slint Plugins manager components
 node_compile_hint: {mode: k3_plugins_owner_projection_contract, create_worknodes: false, create_nodeseeds: false}
 source_lineage:
@@ -37225,13 +37183,11 @@ acceptance_criteria:
   - "Project/Vault authority remains Unknown without the Project Sync and Backbone owner feed; required-missing, security-critical, stale, unknown, blocked, and interrupted state cannot paint healthy."
   - "Provider CLI remediation opens the exact Settings target and does not install, authenticate, select a profile, or mark readiness. Named Plan remediation binds exact project_id and named_plan_id."
   - "View detach never cancels owner work; re-entry rejoins one persistent work identity and stale or mismatched owner returns fail closed without moving the finding row."
-  - "The authored transform self-check and browser matrix prove only deterministic browser-concept behavior; production/native runtime state stays unavailable and no production mutation, receipt, EventRecord, or Slint certification is claimed."
+  - "Concept checks prove only browser-concept behavior; production/native runtime state stays unavailable and no production mutation, receipt, EventRecord, or Slint certification is claimed."
 validation_surfaces:
   - Plans/doctor_contracts.schema.json
   - Plans/doctor_contract_fixtures.json
-  - Concepts/pm7-tools/systems_integration_source.py
-  - Concepts/pm7-tools/verify/systems_integration.mjs
-  - Concepts/pm7-tools/verify/plugin_projection_matrix.mjs
+  - "Verify F3-526's Doctor census, owner feeds, detach/rejoin, stale-return rejection and accessible presentation; concept evidence remains non-production."
   - future native Doctor owner-feed, ObservableWork detach/rejoin, stale-return, focus, accessibility, and Slint 1.17.1 tests
 risk_class: doctor_false_green_private_repair_or_stale_owner_return
 reasoning_tier: high
@@ -37240,8 +37196,6 @@ implementation_surfaces:
   - Plans/FinalGUISpec.md
   - Plans/newtools.md
   - Plans/Settings_System.md
-  - Concepts/pm7-tools/systems_integration_source.py
-  - Concepts/pm7-tools/verify/systems_integration.mjs
   - future native Slint Doctor consumer components
 node_compile_hint: {mode: operational_doctor_consumer_contract, create_worknodes: false, create_nodeseeds: false}
 source_lineage:
@@ -37405,7 +37359,7 @@ negative_constraints:
   - Do not let browse/download/extract/compare/export/archive retrieval imply restore activation or Project execution.
   - Do not add a Product Onboarding stage, bypass Review, or move Bootstrap/Backup/Remote Access/Forge/Doctor/notification/status ownership into Final GUI.
   - Do not restore Serve/full-package/sidecar/daemon/TUN/backend-selector UI or imply an ordinary browser is enrolled by tsnet.
-  - Do not alter K3 layout or PM7 theme authority, revive a GUI bakeoff, or hand-edit generated PMConcept7 HTML as source truth.
+  - Do not alter K3 layout or PM7 theme authority, revive a GUI bakeoff, or treat concept HTML as product implementation authority.
   - Do not claim handler, EventRecord, provider, crypto, restore, connector, native Slint, runtime, visual, security, performance, accessibility, readiness, or certification proof from Plans/static/concept material.
 owner_boundary_notes:
   - Final GUI owns shared presentation, shell identity, components, themes, motion, accessibility, focus, and routes only; Forge, Backup/Restore, Remote Access, Planning Wizard, Doctor, notification, and status owners retain semantic truth and effects.
@@ -37704,8 +37658,7 @@ acceptance_criteria:
   - Schedule Message appears in the wand and not in an outer overflow menu.
 validation_surfaces:
   - python3 scripts/pm-plan-index.py validate
-  - node tests/audit.mjs
-  - node tests/restored-features-verify.mjs
+  - "Verify F3-531's accepted menu inventory, owner projections, Context Lens placement and selector behavior; concept fixtures do not prove native execution."
 risk_class: mode_menu_or_lens_placement_drift
 reasoning_tier: high
 context_scope: assistant_redesign_menus
@@ -37713,11 +37666,11 @@ implementation_surfaces:
   - Plans/FinalGUISpec.md
   - Plans/assistant-chat-design.md
   - Plans/Run_Modes.md
-  - Concepts/chat-assistant-concepts/5.6 Pro/menus.js
 node_compile_hint:
   mode: assistant_menu_specification
   create_worknodes: false
 source_lineage:
+  - "Concepts/chat-assistant-concepts/5.6 Pro/menus.js (concept reference; source-lineage-only)"
   - pm-assistant-implementation-2026-09-02-recovered:GUI-001
   - pm-assistant-implementation-2026-09-02-recovered:04_GUI_IMPACTS.md#2
   - pm-assistant-implementation-2026-09-02-recovered:04_GUI_IMPACTS.md#3
@@ -37757,19 +37710,19 @@ acceptance_criteria:
   - The quota strip is in flow and does not collide with the activity bar or decision host.
 validation_surfaces:
   - python3 scripts/pm-plan-index.py validate
-  - node tests/attachments-composer-verify.mjs
+  - "Verify F3-532's composer attachment tray, destination ribbon, quota strip and responsive acceptance; concept fixtures do not prove native execution."
 risk_class: draft_ui_reintroduced_or_hidden_send_destination
 reasoning_tier: high
 context_scope: assistant_redesign_composer
 implementation_surfaces:
   - Plans/FinalGUISpec.md
   - Plans/assistant-chat-design.md
-  - Concepts/chat-assistant-concepts/5.6 Pro/composer.css
-  - Concepts/chat-assistant-concepts/5.6 Pro/attachments.js
 node_compile_hint:
   mode: assistant_composer_specification
   create_worknodes: false
 source_lineage:
+  - "Concepts/chat-assistant-concepts/5.6 Pro/composer.css (concept reference; source-lineage-only)"
+  - "Concepts/chat-assistant-concepts/5.6 Pro/attachments.js (concept reference; source-lineage-only)"
   - pm-assistant-implementation-2026-09-02-recovered:GUI-002
   - pm-assistant-implementation-2026-09-02-recovered:04_GUI_IMPACTS.md#5
 preserved_exact_tokens:
@@ -37806,9 +37759,7 @@ acceptance_criteria:
   - Activity exposes all nine domains with existing compaction and routing behavior.
 validation_surfaces:
   - python3 scripts/pm-plan-index.py validate
-  - node tests/assistant-plan-verify.mjs
-  - node tests/todo-verify.mjs
-  - node tests/activity-detail-verify.mjs
+  - "Verify F3-533's card-family inventory, Plan actions, To-Do presentation and collapsed/expanded disclosures; concept fixtures do not prove native execution."
 risk_class: goal_or_todo_transcript_card_or_done_section
 reasoning_tier: high
 context_scope: assistant_redesign_cards_and_activity
@@ -37817,12 +37768,12 @@ implementation_surfaces:
   - Plans/Assistant_Plan_Runtime.md
   - Plans/ToDo_Runtime.md
   - Plans/Goal_Runtime_System.md
-  - Concepts/chat-assistant-concepts/5.6 Pro/plans.js
-  - Concepts/chat-assistant-concepts/5.6 Pro/todos.js
 node_compile_hint:
   mode: assistant_card_and_activity_specification
   create_worknodes: false
 source_lineage:
+  - "Concepts/chat-assistant-concepts/5.6 Pro/plans.js (concept reference; source-lineage-only)"
+  - "Concepts/chat-assistant-concepts/5.6 Pro/todos.js (concept reference; source-lineage-only)"
   - pm-assistant-implementation-2026-09-02-recovered:GUI-003
   - pm-assistant-implementation-2026-09-02-recovered:04_GUI_IMPACTS.md#7
   - pm-assistant-implementation-2026-09-02-recovered:04_GUI_IMPACTS.md#8
@@ -37861,18 +37812,18 @@ acceptance_criteria:
   - No left accent bar, permanent bright status surface, or white-until-hover state is introduced.
 validation_surfaces:
   - python3 scripts/pm-plan-index.py validate
-  - node tests/audit.mjs
+  - "Verify F3-534's narrow-width layout, scroll containment and navigation acceptance; concept fixtures do not prove native execution."
 risk_class: responsive_collapse_hides_critical_control
 reasoning_tier: standard
 context_scope: assistant_redesign_responsive
 implementation_surfaces:
   - Plans/FinalGUISpec.md
-  - Concepts/chat-assistant-concepts/5.6 Pro/composer.css
-  - Concepts/chat-assistant-concepts/5.6 Pro/styles.css
 node_compile_hint:
   mode: assistant_responsive_specification
   create_worknodes: false
 source_lineage:
+  - "Concepts/chat-assistant-concepts/5.6 Pro/composer.css (concept reference; source-lineage-only)"
+  - "Concepts/chat-assistant-concepts/5.6 Pro/styles.css (concept reference; source-lineage-only)"
   - pm-assistant-implementation-2026-09-02-recovered:GUI-004
   - pm-assistant-implementation-2026-09-02-recovered:04_GUI_IMPACTS.md#18
   - pm-assistant-implementation-2026-09-02-recovered:AUTHORITY_AND_PRECEDENCE.md#6
@@ -38255,7 +38206,7 @@ Amended 2026-10-09 (DL-180): a plan opens as a plan tab in the universal panels 
   enforcing flattened manager surfaces, borderless sections, and forced single-column rows is selectively
   superseded under user correction USER-REFERENCE-LAYOUT-ROLLBACK-20260908. Settings surfaces restore prior
   native card, section box, and grid layouts across all thirty-eight registered Settings managers and
-  the 23 concrete manager workspaces measured at the pinned base `66cd9ca232ef6017c45ce93e0ab2dcd65a44923f95ea24b580b94f53187ddf30` after the Settings manager refresh
+  the 23 concrete manager workspaces in the dated Settings manager refresh reference
   (USER-SETTINGS-MANAGER-REFRESH-20260908; a presentation count over the unchanged 38-key registry). The historical video analysis and
   packet evidence remain recorded, while active presentation enforces:
   1. *Stable Alignment:* Left-aligned labels, standardized form field widths, and predictable baseline alignments.
@@ -38314,13 +38265,6 @@ Amended 2026-10-09 (DL-180): a plan opens as a plan tab in the universal panels 
   And across the three named visible-state projections: `teacher-help`, `project-search-index`,
   and `dry-method`, as well as the Assistant Settings projections (`settings.assistant`,
   `settings.bsd`, `settings.schedule`). All 892 settings in the inventory remain preserved. Census (USER-SETTINGS-MANAGER-REFRESH-20260908): `Plans/settings_inventory.json` holds 887 ordinary setting ids and the concept's `PM12_REFERENCE` holds 892 (887 plus the five concept-proposed roster/stage rows); the 828 figure in SSYS-004/SSYS-005 is a preserved historical denominator token.
-- **Source-Only Builder Maintenance (APR-063, amended by USER-SETTINGS-MANAGER-REFRESH-20260908):** Settings HTML is never
-  hand-edited. The published `Concepts/TestPMConcept.html` is generated by
-  `Concepts/pm7-tools/build_testpm_settings_refresh.py` from the pinned published checkpoint through the
-  authored T50 transform `Concepts/pm7-tools/settings_refresh_source.py` (also registered in
-  `Concepts/pm7-tools/build_pm7.py`); the lane asserts every non-Settings script element byte-identical to the
-  pinned base and reproduces the published bytes under `--check`. The `build_testpm_layout_b06.py` lane is
-  predecessor lineage contained in the new pinned base.
 - **Context-Sensitive Manager Navigation (APR-065):** When opening a Settings manager from an
   in-canvas context link or dropdown picker, the picker retains and visually indicates the specific
   manager identity for which it was opened. Context is not dropped or reset during deep navigation.
@@ -38751,9 +38695,7 @@ acceptance_criteria:
   - Eight themes at 760, 960, and 1440 px render the key managers with zero horizontal overflow.
   - (USER-SETTINGS-MANAGER-REFRESH-20260909) Status tokens instead of pills, concept-drawn listboxes and menus with the shared popout motion, independently scrolling rosters, a two-column sound grid, ordered account and route lists with inline priority controls, and inline manager-topic settings rendered exactly once (F3-551).
 validation_surfaces:
-  - node Concepts/pm7-tools/verify/settings_refresh_checkpoint.mjs
-  - node Concepts/pm7-tools/verify/settings_refresh_film.mjs
-  - python3 Concepts/pm7-tools/verify/settings_refresh_sheet.py
+  - "Verify F3-543's manager presentation, status tokens, menus, scrolling, row placement and motion against the current Settings owner."
   - python3 scripts/pm-plans-verify.py run-gates
 risk_class: manager_presentation_regression_or_motion_flash
 reasoning_tier: high
@@ -38761,9 +38703,6 @@ context_scope: settings_manager_presentation
 implementation_surfaces:
   - Plans/FinalGUISpec.md
   - Plans/Settings_System.md
-  - Concepts/pm7-tools/settings_refresh/styles.css
-  - Concepts/pm7-tools/settings_refresh/kit.js
-  - Concepts/pm7-tools/settings_refresh/placement.json
 node_compile_hint:
   mode: gui_presentation_specification
   create_worknodes: false
@@ -39253,9 +39192,7 @@ acceptance_criteria:
   - The exactly-once walk finds every concept id rendered once across managers and the surviving plain pages.
   - The 60 fps slow-motion films of dropdown open/close, menu open/close, and hero sheet open show no blank frames and settle within their own durations.
 validation_surfaces:
-  - node Concepts/pm7-tools/verify/settings_refresh_checkpoint.mjs
-  - node Concepts/pm7-tools/verify/settings_placement_checkpoint.mjs
-  - node Concepts/pm7-tools/verify/settings_refresh_film.mjs
+  - "Verify F3-551's manager-topic placement, status tokens, drawn menus, roster scrolling and film acceptance without weakening its no-blank-frame requirement."
   - python3 scripts/pm-plans-verify.py run-gates
 risk_class: settings_presentation_regression
 reasoning_tier: standard
@@ -39263,9 +39200,6 @@ context_scope: settings_manager_presentation
 implementation_surfaces:
   - Plans/FinalGUISpec.md
   - Plans/Settings_System.md
-  - Concepts/pm7-tools/settings_refresh/placement.json
-  - Concepts/pm7-tools/settings_refresh/kit.js
-  - Concepts/pm7-tools/settings_refresh/styles.css
 node_compile_hint:
   mode: settings_manager_specification
   create_worknodes: false
@@ -42755,7 +42689,7 @@ acceptance_criteria:
 validation_surfaces:
   - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
   - python3 scripts/pm-plan-index.py validate
-  - python3 Concepts/onboarding/opus-5.5/tools/build.py --check
+  - "Verify the existing F3-598 acceptance for NieR onboarding/Tour presentation, installed parts, reduced motion and look changes."
 risk_class: nier_onboarding_tour_drift
 reasoning_tier: high
 context_scope: nier_onboarding_tour
@@ -42886,7 +42820,7 @@ acceptance_criteria:
 validation_surfaces:
   - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
   - python3 scripts/pm-plan-index.py validate
-  - python3 Concepts/onboarding/opus-5.5/tools/build.py --check
+  - "Verify the existing F3-599 sound-kit, shared-player, explicit-preview, sound-setting and reduced-motion acceptance."
 risk_class: onboarding_tour_sound_drift
 reasoning_tier: high
 context_scope: onboarding_tour_sound
@@ -43170,7 +43104,7 @@ acceptance_criteria:
 validation_surfaces:
   - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
   - python3 scripts/pm-plan-index.py validate
-  - python3 "Concepts/chat-assistant-concepts/5.6 Pro/build.py" --check
+  - "Verify F3-606's Plan-card presentation acceptance against the current chat owner."
 risk_class: plan_card_layout_drift
 reasoning_tier: medium
 context_scope: chat_plan_card_actions_20261009
@@ -43460,7 +43394,7 @@ acceptance_criteria:
 validation_surfaces:
   - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
   - python3 scripts/pm-plan-index.py validate
-  - python3 Concepts/onboarding/opus-5.5/tools/build.py --check
+  - "Verify the existing F3-600 family-specific onboarding hero moments, first paint, look selection and reduced-motion acceptance."
 risk_class: nier_onboarding_tour_drift
 reasoning_tier: high
 context_scope: nier_onboarding_tour
@@ -43615,7 +43549,7 @@ acceptance_criteria:
 validation_surfaces:
   - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
   - python3 scripts/pm-plan-index.py validate
-  - node Concepts/leftrail-redesign/tools/rail_boot.mjs (concept acceptance on GPU Chrome)
+  - "Verify F3-618's rail geometry and type ladder in every look and required width."
 risk_class: rail_presentation_drift
 reasoning_tier: high
 context_scope: left_rail_polish
@@ -43680,7 +43614,7 @@ acceptance_criteria:
 validation_surfaces:
   - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
   - python3 scripts/pm-plan-index.py validate
-  - node Concepts/leftrail-redesign/tools/rail_boot.mjs (concept acceptance on GPU Chrome)
+  - "Verify F3-619's status glyphs/words and plain counts, with no pills or coloured side bars."
 risk_class: rail_presentation_drift
 reasoning_tier: high
 context_scope: left_rail_polish
@@ -43766,7 +43700,7 @@ acceptance_criteria:
 validation_surfaces:
   - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
   - python3 scripts/pm-plan-index.py validate
-  - node Concepts/leftrail-redesign/tools/rail_boot.mjs (concept acceptance on GPU Chrome)
+  - "Verify F3-620's rail text fitting, complete labels and tab-strip overflow behavior at the required widths."
 risk_class: rail_presentation_drift
 reasoning_tier: high
 context_scope: left_rail_polish
@@ -43878,7 +43812,7 @@ acceptance_criteria:
 validation_surfaces:
   - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
   - python3 scripts/pm-plan-index.py validate
-  - node Concepts/leftrail-redesign/tools/rail_boot.mjs (concept acceptance on GPU Chrome)
+  - "Verify F3-621's shared rail dropdowns, tab switches and theme-family motion, including reduced motion."
 risk_class: rail_presentation_drift
 reasoning_tier: high
 context_scope: left_rail_polish
@@ -44100,7 +44034,7 @@ acceptance_criteria:
 validation_surfaces:
   - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
   - python3 scripts/pm-plan-index.py validate
-  - node Concepts/leftrail-redesign/tools/rail_boot.mjs (concept acceptance on GPU Chrome)
+  - "Verify F3-623's distinct Git/Jujutsu tab strips, engine-switch placement and fitting of the longest label."
 risk_class: rail_presentation_drift
 reasoning_tier: high
 context_scope: left_rail_polish
@@ -47892,12 +47826,12 @@ canonical_text: >-
   Retro included (F3-639). The terminal's default face is JetBrains Mono in every look except Retro,
   where it is VT323; Sixtyfour, Sixtyfour Raster and Departure Mono are Retro options and JetBrains
   Mono stays selectable there; Atkinson Hyperlegible Mono is offered for readability in every look;
-  and the system monospace is also a choice (F3-642). Every one of these faces is the page's own,
-  embedded once through DL-161's pipeline as one set of files shared with the rest of the page
-  (DR-050), and the terminal carries no font file of its own (amended 2026-10-10, DL-183, terminal
-  SPEC 01c5e78c42 section 4). JetBrains Mono's upright non-Latin slices reuse NieR Mode's PM NieR
+  and the system monospace is also a choice (F3-642). Every one of these faces belongs to the
+  page's one shared font asset set (DR-050), and the terminal carries no font file of its own
+  (amended 2026-10-10, DL-183, terminal SPEC 01c5e78c42 section 4). JetBrains Mono's upright
+  non-Latin slices reuse NieR Mode's PM NieR
   Mono files; its Latin face uses the full 100–800 source under the general family name 'JetBrains
-  Mono', which the 5.6 Pro fonts work builds through DL-161's pipeline, and its italic is JetBrains
+  Mono', and its italic is JetBrains
   Mono's own italic, which the page's code face embeds with the same script slices (DL-161, F3-430),
   so italic code and a program's italic text (SGR 3) are drawn, not slanted; VT323, Sixtyfour and
   Departure Mono have no italic, and theirs is synthesised. Each face comes as script slices with
@@ -47928,7 +47862,7 @@ canonical_text: >-
   terminal stay IBM Plex Mono. The system face exposes weights the selected face can draw; a
   fixed-weight face does not imply distinct variable weights. Terminal bold stays heavier: 700, or
   800 when regular weight is at least 600, within the supported face range. Jared reaffirmed the
-  full JetBrains Mono 100–800 promise on 2026-10-14: the shared embedding pipeline now includes the
+  full JetBrains Mono 100–800 promise on 2026-10-14: the shared font asset set includes the
   40,404-byte full-axis Latin upright for JetBrains Mono, so Thin, ExtraLight and Light have real
   outlines. PM NieR Mono retains its own earlier Latin file. This source delivery closes the asset
   hold; native text-rendering verification is still required. Amended 2026-10-16 (DL-213, terminal
@@ -47949,7 +47883,7 @@ acceptance_criteria:
   - "A new terminal draws JetBrains Mono in every look but Retro and VT323 in Retro, and each face listed above can be chosen."
   - "Each face that has a default size and line height listed above opens at them."
   - "JetBrains Mono's bytes are the page's code-face files, never a second copy inside the terminal, and the terminal-only faces total 84,572 bytes of Latin files before base64, plus 47,780 bytes of Latin Extended and Vietnamese slices."
-  - "Every face the terminal draws is the page's own, embedded once through DL-161's pipeline, the terminal package carries no font file, and each face ships the script slices listed here."
+  - "Every face the terminal draws is part of the page's one shared font asset set, the terminal package carries no font file, and each face ships the script slices listed here."
   - "A program's italic text draws JetBrains Mono's own italic and Atkinson Hyperlegible Mono's own italic, and is synthesised in VT323, Sixtyfour and Departure Mono."
   - "Box drawing, block, braille, powerline and sextant glyphs are drawn by the terminal and meet their neighbours with no gaps."
   - "Every built-in face is under the SIL Open Font License, Apache or MIT and ships with its licence and source record."
@@ -48600,9 +48534,12 @@ canonical_text: >-
   rows and search results have readable glass beneath their words. The editor and terminal Customize
   screens share dense menu material; their sticky section bar stays above the lenses of rows
   scrolling underneath. All consume F3-438 layout and F3-654 contrast. These rules add no primary
-  action or stored switcher state. The concept-only Liquid Glass status-bar toggle (html[data-lg],
-  window.PM_LG) is demonstration machinery and is not a product setting, command or native alternate
-  material mode.
+  action or stored switcher state. Amended 2026-10-19 (Jared, option 1): selecting either Glass
+  look always uses Liquid Glass over F3-653's wallpaper. There is no material off state or old
+  Glass fallback. The concept's ?lg=off flag, Demo Studio material on/off control and Alt+Shift+L
+  chord are retired. Its former html[data-lg] / window.PM_LG demonstration switch supplies no
+  current setting, command or alternate material mode. A renderer's static readable equivalent
+  remains the capability fallback for this same material, never a user-selectable off state.
   Amended 2026-10-16 (DL-214, the consistency pass Q16): every look adopts the switcher, each in its own
   material, so every tab, segment and list selection in a look is one component drawn one way. Glass keeps
   its approved clear lens unchanged. Basic draws a precise tinted chip: an accent tint, a crisp accent
@@ -48670,6 +48607,8 @@ acceptance_criteria:
   steps and NieR cuts, never gliding; a pressed label changes ink with the chip; hovered resting labels keep
   4.5:1.
 - Glass's warm-up is best effort under ACD-475 and changes no Glass look.
+- Selecting Glass Light or Glass Dark always uses Liquid Glass over the shared Wallpaper; no flag,
+  material control or shortcut selects an old Glass fallback or a material off state.
 validation_surfaces:
 - python3 scripts/pm-shard-plans.py --check
 - python3 scripts/pm-plan-index.py validate
@@ -48745,6 +48684,9 @@ stale_retired_dispositions:
   choices use the material in place without a travelling lens.'
 - 'Amended 2026-10-17 (DL-222): Glass warm-up is best effort. It read: first-use GPU programs are compiled
   before the first page or chapter change rather than during it.'
+- 'Retired 2026-10-19 (Jared, option 1): the concept-only Liquid Glass status-bar toggle,
+  ?lg=off, Demo Studio material on/off control and Alt+Shift+L supplied a demonstration off state;
+  both Glass looks now always use Liquid Glass with the shared Wallpaper.'
 ```
 
 ContractRef: ContractName:Plans/FinalGUISpec.md#F3-427, ContractName:Plans/FinalGUISpec.md#F3-431, ContractName:Plans/FinalGUISpec.md#F3-653, ContractName:Plans/FinalGUISpec.md#F3-654

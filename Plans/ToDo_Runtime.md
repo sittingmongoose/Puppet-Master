@@ -83,11 +83,11 @@ context_scope: todo_runtime_list_scope
 implementation_surfaces:
   - Plans/ToDo_Runtime.md
   - Plans/assistant-chat-design.md
-  - Concepts/chat-assistant-concepts/5.6 Pro/todos.js
 node_compile_hint:
   mode: todo_list_scope_contract
   create_worknodes: false
 source_lineage:
+  - "Concepts/chat-assistant-concepts/5.6 Pro/todos.js (5.6 Pro prototype; behaviour reference only)"
   - pm-assistant-implementation-2026-09-02-recovered:TODO-001
   - pm-assistant-implementation-2026-09-02-recovered:01_IMPLEMENTATION_SPEC.md#6.1
 preserved_exact_tokens:
@@ -343,11 +343,11 @@ implementation_surfaces:
   - Plans/ToDo_Runtime.md
   - Plans/assistant-chat-design.md
   - Plans/FinalGUISpec.md
-  - Concepts/chat-assistant-concepts/5.6 Pro/todos.js
 node_compile_hint:
   mode: todo_activity_projection
   create_worknodes: false
 source_lineage:
+  - "Concepts/chat-assistant-concepts/5.6 Pro/todos.js (5.6 Pro prototype; behaviour reference only)"
   - pm-assistant-implementation-2026-09-02-recovered:TODO-008
   - pm-assistant-implementation-2026-09-02-recovered:04_GUI_IMPACTS.md#9
 preserved_exact_tokens:

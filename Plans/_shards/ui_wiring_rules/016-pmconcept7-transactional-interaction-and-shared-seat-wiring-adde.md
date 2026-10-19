@@ -2,9 +2,9 @@
 
 Source: `Plans/UI_Wiring_Rules.md`
 
-Source lines: L771-L901
+Source lines: L772-L902
 
-Source SHA256: `801fdc37504d2402de595ac24324f274994c7aca61a91b7d77096513431edcb0`
+Source SHA256: `73e8f9a1f478dcb4850d61b081b742accbd042cf6bafd8ace4d2b22e985f1026`
 
 ---
 
@@ -114,8 +114,8 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
-  - Concepts/pm7-tools/base/PM7-base.html (current pinned PM7 input; source-lineage-only)
-  - Concepts/pm7-tools/build_pm7.py#T33-T43 (source-owned transforms)
+  - Concepts/pm7-tools/base/PM7-base.html (retired PM7 base; historical source lineage only)
+  - Concepts/pm7-tools/build_pm7.py#T33-T43 (retired concept transforms; historical source lineage only)
   - Concepts/pm7-tools/widget_live_resize_preview_source.py (authored T43 Usage-only live resize-preview transform)
   - Concepts/PMConcept7.html (generated artifact; terminal bytes and hash are audit-owned)
   - Plans/.audits/audit-20260829-001-pmconcept7-widget-followup/audit_report.json (current repo-local successor audit status; verdict remains report-owned)

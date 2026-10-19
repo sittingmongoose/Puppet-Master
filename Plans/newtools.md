@@ -8847,11 +8847,11 @@ acceptance_criteria:
   - Details, Logs, and Receipt remain explicit lazy bounded redacted projections; secret bytes, protected authentication content, sensitive paths, and raw package/runtime output are absent.
   - Owner routing opens code/toolchain with the Plugins tab and intended detail selected, while exact finding/target/generation/continuation/focus context is preserved for return.
   - handler_unavailable, stale, unknown, waiting-for-user, blocked, and needs-attention remain distinct and cannot be rendered Ready by route completion or browser fixture state.
-validation_surfaces: [Plans/doctor_contracts.schema.json, Plans/doctor_contract_fixtures.json, Plans/plugin_contracts.schema.json, Plans/plugin_contract_fixtures.json, Concepts/pm7-tools/verify/plugin_projection_matrix.mjs]
+validation_surfaces: [Plans/doctor_contracts.schema.json, Plans/doctor_contract_fixtures.json, Plans/plugin_contracts.schema.json, Plans/plugin_contract_fixtures.json]
 risk_class: doctor_plugin_private_repair_or_false_green
 reasoning_tier: high
 context_scope: doctor_plugins_owner_projection
-implementation_surfaces: [Plans/newtools.md, Plans/Plugins_System.md, Plans/Settings_System.md, Concepts/pm7-tools/systems_integration_source.py, future Doctor descriptor registry fixtures]
+implementation_surfaces: [Plans/newtools.md, Plans/Plugins_System.md, Plans/Settings_System.md, future Doctor descriptor registry fixtures]
 node_compile_hint: {mode: doctor_plugins_descriptor_contract_only, create_worknodes: false, create_nodeseeds: false}
 source_lineage:
   - Plans/Plugins_System.md#PLUG-067

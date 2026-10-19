@@ -4,7 +4,7 @@ Source: `Plans/assistant-chat-design.md`
 
 Source lines: L25049-L25418
 
-Source SHA256: `b2c07a8d70ee9185cba6a5bfd4e9cdeb56ff589f5398bb48b9a9268fbb0226e9`
+Source SHA256: `1829eabf9cf6bddd363c00509666e812dcc6ccfdd72b9251e3a5680a87edb75a`
 
 ---
 
@@ -62,13 +62,13 @@ context_scope: assistant_chat_chrome
 implementation_surfaces:
   - Plans/assistant-chat-design.md
   - Plans/FinalGUISpec.md
-  - Concepts/chat-assistant-concepts/5.6 Pro/app.js
-  - Concepts/chat-assistant-concepts/5.6 Pro/styles.css
 node_compile_hint:
   mode: gui_surface_spec
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
+  - "Concepts/chat-assistant-concepts/5.6 Pro/app.js (5.6 Pro prototype; behaviour reference only)"
+  - "Concepts/chat-assistant-concepts/5.6 Pro/styles.css (5.6 Pro prototype; behaviour reference only)"
   - source_packet:pm-assistant-plans-v3-restored:REQUIREMENTS.csv:APR-003
   - source_packet:pm-assistant-plans-v3-restored:REQUIREMENTS.csv:APR-004
 preserved_exact_tokens:
@@ -112,12 +112,12 @@ context_scope: assistant_chat_activity
 implementation_surfaces:
   - Plans/assistant-chat-design.md
   - Plans/FinalGUISpec.md
-  - Concepts/chat-assistant-concepts/5.6 Pro/app.js
 node_compile_hint:
   mode: gui_surface_spec
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
+  - "Concepts/chat-assistant-concepts/5.6 Pro/app.js (5.6 Pro prototype; behaviour reference only)"
   - source_packet:pm-assistant-plans-v3-restored:REQUIREMENTS.csv:APR-001
   - source_packet:pm-assistant-plans-v3-restored:REQUIREMENTS.csv:APR-002
   - source_packet:pm-assistant-plans-v3-restored:REQUIREMENTS.csv:APR-006
@@ -257,12 +257,12 @@ context_scope: assistant_chat_records
 implementation_surfaces:
   - Plans/assistant-chat-design.md
   - Plans/FinalGUISpec.md
-  - Concepts/chat-assistant-concepts/5.6 Pro/transcript-records.js
 node_compile_hint:
   mode: gui_surface_spec
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
+  - "Concepts/chat-assistant-concepts/5.6 Pro/transcript-records.js (5.6 Pro prototype; behaviour reference only)"
   - source_packet:pm-assistant-plans-v3-restored:REQUIREMENTS.csv:APR-039
   - source_packet:pm-assistant-plans-v3-restored:REQUIREMENTS.csv:APR-040
   - source_packet:pm-assistant-plans-v3-restored:REQUIREMENTS.csv:APR-041

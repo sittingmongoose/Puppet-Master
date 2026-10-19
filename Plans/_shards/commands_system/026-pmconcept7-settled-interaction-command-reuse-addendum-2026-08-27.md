@@ -2,9 +2,9 @@
 
 Source: `Plans/Commands_System.md`
 
-Source lines: L4848-L4978
+Source lines: L4848-L4977
 
-Source SHA256: `2b193600a9072afac65287ec61f140a16ff350778972f0054a3e025e8f440a5e`
+Source SHA256: `ae15064c31e71e43b22c8d4be185a4e8a9d05465472daa3b5bf32e17a5cd6f0f`
 
 ---
 
@@ -106,9 +106,8 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
-  - Concepts/pm7-tools/base/PM7-base.html (current pinned PM7 input; source-lineage-only)
-  - Concepts/pm7-tools/build_pm7.py#T33-T41 (source-owned transforms)
-  - Concepts/PMConcept7.html (generated artifact; terminal bytes and hash are audit-owned)
+  - Concepts/pm7-tools/base/PM7-base.html (retired PM7 input; history only)
+  - Concepts/PMConcept7.html (look-and-behaviour reference)
   - Plans/.audits/audit-20260829-001-pmconcept7-widget-followup/audit_report.json (current repo-local successor audit status; verdict remains report-owned)
   - Plans/Decision_Log.md#DL-173
   - Plans/Decision_Log.md#DL-174

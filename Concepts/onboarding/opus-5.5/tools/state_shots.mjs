@@ -6,12 +6,14 @@
  * --where is a JavaScript expression over the saved session S. Writes <screen>--<n>--<theme>--<WxH>.png, and
  * states.json with each shot's state key, click path length and the text that runs past the pane (with its rectangles). */
 import { launch, sleep } from './chrome.mjs';
+import { takeCoverageFlag } from './coverage_union.mjs';
 import { mkdirSync, writeFileSync, readFileSync, existsSync } from 'node:fs';
 import { pathToFileURL, fileURLToPath } from 'node:url';
 import { resolve, join, dirname } from 'node:path';
 
 const here = dirname(fileURLToPath(import.meta.url));
 const argv = process.argv.slice(2);
+const coverageFile = takeCoverageFlag(argv);
 const graphPath = resolve(argv[0]);
 const out = resolve(argv[1] && !argv[1].startsWith('--') ? argv[1] : '/tmp/o55/state-shots');
 const opt = (k, d) => { const i = argv.indexOf('--' + k); return i >= 0 ? argv[i + 1] : d; };
@@ -53,7 +55,7 @@ const shots = [];
 for (const [w, h] of sizes) {
   for (const theme of themes) {
     const [fam, mode] = theme.split('-');
-    const { page, close } = await launch({ width: w, height: h });
+    const { page, close } = await launch({ width: w, height: h, coverageFile });
     try {
       await page.send('Emulation.setEmulatedMedia', { features: [{ name: 'prefers-color-scheme', value: mode }] });
       for (const st of picked) {

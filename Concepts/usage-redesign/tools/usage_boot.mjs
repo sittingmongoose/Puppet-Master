@@ -18,6 +18,7 @@
  * Writes <out-dir>/usage-boot.json (never into the repository), prints the summary, exits 1 when a check fails.
  * Each browser gets a private profile that chrome.mjs deletes on close. No screenshots. */
 import { launch, sleep } from '../../onboarding/opus-5.5/tools/chrome.mjs';
+import { takeCoverageFlag } from '../../onboarding/opus-5.5/tools/coverage_union.mjs';
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { spawnSync } from 'node:child_process';
 import { pathToFileURL, fileURLToPath } from 'node:url';
@@ -26,6 +27,7 @@ import { resolve, join, dirname } from 'node:path';
 const here = dirname(fileURLToPath(import.meta.url));
 const concepts = resolve(here, '../..');
 const args = process.argv.slice(2);
+const coverageFile = takeCoverageFlag(args);
 const flag = (name) => { const i = args.indexOf(name); if (i === -1) return null; const v = args[i + 1]; args.splice(i, 2); return v; };
 const pageArg = flag('--page');
 const baseRef = flag('--base-ref') || 'origin/main';
@@ -65,7 +67,7 @@ const THEMES = ['basic-dark', 'basic-light', 'friendly-dark', 'friendly-light', 
 const norm = (e) => e.replace(/file:\/\/\S+?\.html(:\d+)*(:\d+)?/g, '<page>').replace(/\s+/g, ' ').trim();
 
 async function runPage(name, file) {
-  const { page, close } = await launch({ width: 1600, height: 1000 });
+  const { page, close } = await launch({ width: 1600, height: 1000, coverageFile: name === 'usage' ? coverageFile : null });
   try {
     const t0 = Date.now();
     await page.goto(pathToFileURL(file).href + '?o55=off');

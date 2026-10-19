@@ -37,7 +37,7 @@
  *
  * Usage:
  *   node tools/onboarding_label_check.mjs <candidate.html> --base <base.html> [--out <dir>] [--looks a,b]
- *        [--motion normal,reduced] [--viewport WxH] [--no-tour] [--no-window] [--sweep]
+ *        [--motion normal,reduced] [--viewport WxH] [--no-tour] [--no-window] [--sweep] [--coverage <file>]
  *   --looks     out of basic-light friendly-light glass-dark retro-dark basic-dark friendly-dark glass-light retro-light
  *               nier-light nier-dark (default all ten); nier-*-plain is NieR Mode with its Square part off, so its
  *               ink rides the Basic shapes (degrade check)
@@ -53,8 +53,10 @@ import { mkdirSync, writeFileSync, readFileSync } from 'node:fs';
 import { resolve, join } from 'node:path';
 import { pathToFileURL } from 'node:url';
 import { createHash } from 'node:crypto';
+import { takeCoverageFlag } from './coverage_union.mjs';
 
 const argv = process.argv.slice(2);
+const coverageFile = takeCoverageFlag(argv);
 const opt = (k, d) => { const i = argv.indexOf('--' + k); return i >= 0 && i + 1 < argv.length ? argv[i + 1] : d; };
 const flag = (k) => argv.includes('--' + k);
 const withValue = new Set(['--base', '--out', '--looks', '--motion', '--viewport']);
@@ -444,7 +446,7 @@ async function tourWalk(page) {
 async function runLook(look, motion) {
   const res = { look: look.id, motion, pages: {} };
   for (const which of ['base', 'cand']) {
-    const { page, close } = await launch(VIEWPORT);
+    const { page, close } = await launch({ ...VIEWPORT, coverageFile: which === 'cand' ? coverageFile : null });
     const pr = { views: {}, tour: [], state: null, errors: [] };
     try {
       await page.setViewport(VIEWPORT.width, VIEWPORT.height);

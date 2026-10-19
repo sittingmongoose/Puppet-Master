@@ -1,0 +1,103 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import { readFileSync } from 'node:fs';
+import { encodePng, decodePng, diffPng, baselineEnvelopePng } from './pm7_parity_png.mjs';
+import { parseArgs, selectMatrix, differingPaths, discoverCustomReads, samplerNetworkPolicy } from './pm7_parity.mjs';
+import { normalizeBlobValue } from './pm7_parity_browser.mjs';
+
+test('sampler markers use a scheme-aware block without legacy substring globs', () => {
+  assert.deepEqual(samplerNetworkPolicy(), {
+    urls: [], urlPatterns: [{ urlPattern: 'file:///__pm7_parity_asset__/*', block: true }]
+  });
+  const changed = samplerNetworkPolicy();
+  changed.urlPatterns[0].urlPattern = '*';
+  assert.equal(samplerNetworkPolicy().urlPatterns[0].urlPattern, 'file:///__pm7_parity_asset__/*');
+});
+
+test('PNG round trip, single-pixel sensitivity and explicit RGBA tolerances', () => {
+  const a = { width: 2, height: 2, data: Buffer.from([0, 1, 2, 255, 40, 50, 60, 255, 70, 80, 90, 255, 100, 110, 120, 255]) };
+  const png = encodePng(a); assert.deepEqual(decodePng(png), a);
+  assert.equal(diffPng(png, png).diffPixels, 0);
+  const changed = Buffer.from(a.data); changed[4]++;
+  const b = encodePng({ ...a, data: changed });
+  const exact = diffPng(png, b);
+  assert.equal(exact.diffPixels, 1); assert.equal(exact.rawDiffPixels, 1);
+  assert.equal(exact.pass, false); assert.deepEqual(exact.bounds, [1, 0, 1, 0]);
+  assert.equal(decodePng(exact.heatmap).data[4], 255);
+  assert.equal(diffPng(png, b, 1).diffPixels, 0);
+  assert.equal(diffPng(png, b, 1).rawDiffPixels, 1);
+  assert.equal(diffPng(png, b, 0, 1).pass, true);
+  changed[3]--; assert.equal(diffPng(png, encodePng({ ...a, data: changed })).diffPixels, 2);
+});
+test('reject corrupt PNG and unequal dimensions', () => {
+  const png = encodePng({ width: 1, height: 1, data: Buffer.from([1, 2, 3, 255]) });
+  const corrupt = Buffer.from(png); corrupt[29] ^= 1;
+  assert.throws(() => decodePng(corrupt), /CRC/);
+  assert.throws(() => diffPng(png, encodePng({ width: 2, height: 1, data: Buffer.alloc(8) })), /dimensions/);
+});
+test('measured pixel envelopes preserve exact pixels and bound every RGBA channel separately', () => {
+  const png = values => encodePng({ width: 2, height: 1, data: Buffer.from(values) });
+  const a = png([10, 10, 10, 255, 20, 20, 20, 255]), repeat = png([12, 10, 9, 255, 20, 20, 20, 255]);
+  const inside = baselineEnvelopePng(a, png([11, 10, 10, 255, 20, 20, 20, 255]), [repeat]);
+  assert.equal(inside.pass, true); assert.equal(inside.noisePixels, 1); assert.deepEqual(inside.noiseBounds, [0, 0, 0, 0]);
+  assert.equal(inside.maxObservedChannelSpan, 2);
+  const outside = baselineEnvelopePng(a, png([11, 10, 8, 255, 21, 20, 20, 255]), [repeat]);
+  assert.equal(outside.pass, false); assert.equal(outside.outsidePixels, 2); assert.equal(outside.maxExcess, 1);
+  assert.equal(baselineEnvelopePng(a, repeat, [a]).noisePixels, 0);
+  assert.equal(baselineEnvelopePng(a, repeat, [a]).pass, false);
+  assert.equal(baselineEnvelopePng(a, png([10, 10, 10, 254, 20, 20, 20, 255]), [repeat]).pass, false);
+  assert.throws(() => baselineEnvelopePng(a, a, []), /requires repeated/);
+});
+test('CLI rejects silent tolerance, unknown flags, invalid concurrency and empty subset', () => {
+  const args = ['a.html', 'b.html'];
+  assert.equal(parseArgs(args).tolerance, 0);
+  assert.equal(parseArgs(args).maxDiffPixels, 0);
+  assert.equal(parseArgs(args).baselineRepeats, 1);
+  assert.throws(() => parseArgs([...args, '--concurrency', '7']), /concurrency/);
+  assert.throws(() => parseArgs([...args, '--tolerance', '256']), /tolerance/);
+  assert.throws(() => parseArgs([...args, '--surprise', 'true']), /Unknown/);
+  assert.throws(() => parseArgs([...args, '--subset', 'looks=']), /Subset/);
+  assert.throws(() => parseArgs([...args, '--baseline-repeats', '9']), /baseline repeats/);
+  assert.throws(() => parseArgs([...args, '--baseline-repeats', '3', '--tolerance', '1']), /cannot combine/);
+  assert.throws(() => parseArgs([...args, '--baseline-repeats', '3', '--deep']), /cannot combine/);
+  assert.throws(() => parseArgs([...args, '--noise-max-channel-span', '256']), /noise channel/);
+  assert.deepEqual(parseArgs([...args, '--subset', 'looks=basic-dark', '--subset', 'looks=retro-light,basic-dark']).filters.looks, ['basic-dark', 'retro-light']);
+});
+test('default motion coverage preserves all reduced states and adds the full-motion menu subset', () => {
+  const matrix = JSON.parse(readFileSync(new URL('./pm7_parity_states.json', import.meta.url)));
+  assert.equal(selectMatrix(matrix, { motions: ['reduced'] }).count, 760);
+  assert.equal(selectMatrix(matrix, { motions: ['full'] }).count, 400);
+  assert.equal(selectMatrix(matrix, {}).count, 1160);
+  for (const group of selectMatrix(matrix, { motions: ['full'] }).groups) {
+    assert(group.states.some(state => state.id === 'rest'));
+    assert(group.states.some(state => state.id === 'theme-menu'));
+  }
+});
+test('JS-read custom-property union includes both inputs and declared dynamic prefixes, excluding unrelated tokens', () => {
+  const a = "a.getPropertyValue('--used'); a.getPropertyValue('--wall-' + id); :root { --wall-one: red; --unused: 1; }";
+  const b = 'b.getPropertyValue("--other"); b.getPropertyValue(`--part-${kind}`); div { --wall-two: blue; --part-x: 2; }';
+  const reads = discoverCustomReads([a, b]);
+  assert.deepEqual(reads.names, ['--other', '--part-x', '--used', '--wall-one', '--wall-two']);
+  assert.deepEqual(reads.prefixes, ['--part-', '--wall-']);
+});
+test('matrix filters preserve page-specific states and reject misspelled IDs', () => {
+  const matrix = { version: 1, looks: ['basic-dark'], viewports: [{ id: 'wide', width: 1600, height: 900 }],
+    pages: [{ id: 'home' }, { id: 'chat' }], states: [{ id: 'rest', pages: '*' }, { id: 'composer', pages: ['chat'] }] };
+  assert.equal(selectMatrix(matrix, {}).count, 3);
+  assert.equal(selectMatrix(matrix, { pages: ['chat'] }).count, 2);
+  assert.throws(() => selectMatrix(matrix, { pages: ['hat'] }), /Unknown pages/);
+  assert.throws(() => selectMatrix(matrix, { pages: ['home'], states: ['composer'] }), /no reachable/);
+});
+test('style comparison detects pseudo changes, missing and inserted elements', () => {
+  const a = [['/html[1]', 'a'], ['/html[1]/body[1]::before', 'b'], ['/gone', 'z']];
+  const b = [['/html[1]', 'a'], ['/html[1]/body[1]::before', 'c'], ['/new', 'z']];
+  assert.deepEqual(differingPaths(a, b), ['/html[1]/body[1]::before', '/gone', '/new']);
+});
+test('Blob identities preserve bytes/MIME/fragments and reject untracked resources', () => {
+  const a = { 'blob:null/a': 'blob:pm7-sha256:abc;type=image%2Fpng' }, b = { 'blob:null/b': a['blob:null/a'] };
+  assert.equal(normalizeBlobValue('url("blob:null/a#filter")', a), normalizeBlobValue('url("blob:null/b#filter")', b));
+  assert.notEqual(normalizeBlobValue('url("blob:null/a")', a), normalizeBlobValue('url("blob:null/b")', { 'blob:null/b': 'blob:pm7-sha256:def;type=image%2Fpng' }));
+  assert.equal(normalizeBlobValue('"blob:null/a"', a), '"blob:null/a"');
+  assert.equal(normalizeBlobValue('"url(blob:null/a)"', a), '"url(blob:null/a)"');
+  assert.throws(() => normalizeBlobValue('url("blob:null/missing")', a), /Untracked Blob/);
+});

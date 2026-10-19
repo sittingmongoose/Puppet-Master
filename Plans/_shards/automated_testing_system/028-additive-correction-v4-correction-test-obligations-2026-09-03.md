@@ -2,9 +2,9 @@
 
 Source: `Plans/Automated_Testing_System.md`
 
-Source lines: L4140-L4191
+Source lines: L4132-L4176
 
-Source SHA256: `349fcac59b4d65a594702e7afd89b1c2b9d0241507c7c6cf2f1e70463be3740c`
+Source SHA256: `81e84b34edefb7e99afb2c1a5b0a2ba08168856d961c1fabb5e45831d7322928`
 
 ---
 
@@ -53,10 +53,3 @@ separate verdicts and are reported separately.
 
 A lower level never certifies a higher one. A toast, a screenshot, a truncated file, or a
 requirement counted as covered is not a pass.
-
-### Generated-output byte check
-
-The concept's two deliverables are regenerated from `build.py` and compared byte-for-byte against
-a fresh second build. Hand-editing generated HTML is a test failure, not a shortcut, and a source
-module omitted from `build.py`'s `MODULES` list must fail the check rather than silently vanish
-from the deliverables.

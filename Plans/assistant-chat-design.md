@@ -24859,9 +24859,9 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
-  - Concepts/pm7-tools/base/PM7-base.html (current pinned PM7 input; source-lineage-only)
-  - Concepts/pm7-tools/build_pm7.py#T33-T41 (source-owned transforms)
-  - Concepts/PMConcept7.html (generated artifact; terminal bytes and hash are audit-owned)
+  - Concepts/pm7-tools/base/PM7-base.html (historical PM7 prototype lineage only)
+  - Concepts/pm7-tools/build_pm7.py#T33-T41 (historical PM7 prototype lineage only)
+  - Concepts/PMConcept7.html (look-and-behaviour reference only)
   - Plans/.audits/audit-20260829-001-pmconcept7-widget-followup/audit_report.json (current repo-local successor audit status; verdict remains report-owned)
   - "Plans/Decision_Log.md#DL-180"
   - "Plans/assistant-chat-design.md#ACD-500"
@@ -25100,13 +25100,13 @@ context_scope: assistant_chat_chrome
 implementation_surfaces:
   - Plans/assistant-chat-design.md
   - Plans/FinalGUISpec.md
-  - Concepts/chat-assistant-concepts/5.6 Pro/app.js
-  - Concepts/chat-assistant-concepts/5.6 Pro/styles.css
 node_compile_hint:
   mode: gui_surface_spec
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
+  - "Concepts/chat-assistant-concepts/5.6 Pro/app.js (5.6 Pro prototype; behaviour reference only)"
+  - "Concepts/chat-assistant-concepts/5.6 Pro/styles.css (5.6 Pro prototype; behaviour reference only)"
   - source_packet:pm-assistant-plans-v3-restored:REQUIREMENTS.csv:APR-003
   - source_packet:pm-assistant-plans-v3-restored:REQUIREMENTS.csv:APR-004
 preserved_exact_tokens:
@@ -25150,12 +25150,12 @@ context_scope: assistant_chat_activity
 implementation_surfaces:
   - Plans/assistant-chat-design.md
   - Plans/FinalGUISpec.md
-  - Concepts/chat-assistant-concepts/5.6 Pro/app.js
 node_compile_hint:
   mode: gui_surface_spec
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
+  - "Concepts/chat-assistant-concepts/5.6 Pro/app.js (5.6 Pro prototype; behaviour reference only)"
   - source_packet:pm-assistant-plans-v3-restored:REQUIREMENTS.csv:APR-001
   - source_packet:pm-assistant-plans-v3-restored:REQUIREMENTS.csv:APR-002
   - source_packet:pm-assistant-plans-v3-restored:REQUIREMENTS.csv:APR-006
@@ -25295,12 +25295,12 @@ context_scope: assistant_chat_records
 implementation_surfaces:
   - Plans/assistant-chat-design.md
   - Plans/FinalGUISpec.md
-  - Concepts/chat-assistant-concepts/5.6 Pro/transcript-records.js
 node_compile_hint:
   mode: gui_surface_spec
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
+  - "Concepts/chat-assistant-concepts/5.6 Pro/transcript-records.js (5.6 Pro prototype; behaviour reference only)"
   - source_packet:pm-assistant-plans-v3-restored:REQUIREMENTS.csv:APR-039
   - source_packet:pm-assistant-plans-v3-restored:REQUIREMENTS.csv:APR-040
   - source_packet:pm-assistant-plans-v3-restored:REQUIREMENTS.csv:APR-041
@@ -27716,9 +27716,8 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/assistant-chat-design.md
 canonical_text: >-
-  The 5.6 Pro chat is ported into PMConcept7 after this redesign is published, which comes after the NieR showpiece,
-  the 5.6 Pro chat round with its fonts, the Usage port, the left rail and the hover polish (DL-185, D28). When it is
-  ported it meets these requirements (D27). Colours: its Basic, Friendly and Glass colours are fixed to PMConcept7's
+  The 5.6 Pro chat follows these shared presentation and behavior requirements (DL-185, D27).
+  Colours: its Basic, Friendly and Glass colours are fixed to PMConcept7's
   (Retro and NieR already match); it follows PMConcept7's one look setting and NieR Mode setting and keeps no theme
   store of its own, and its own names for colours, radii, surfaces and the code face map onto PMConcept7's, so the
   look settings reach every chat surface. General code text follows Plans/Decision_Log.md#DL-161,
@@ -27760,7 +27759,6 @@ acceptance_criteria:
   - "No pill and no coloured side stripe remains in the chat in any look."
   - "Every demo control of the chat is a section of the one Demo Studio and none is a product control."
   - "Under NieR Mode the page draws one scene and one ground layer, and the chat adds none."
-  - "The port happens after this redesign is published."
 validation_surfaces:
   - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
   - python3 scripts/pm-plan-index.py validate
@@ -27786,7 +27784,6 @@ preserved_exact_tokens:
   - "Demo Studio"
   - "Basic, Friendly and Glass"
 negative_constraints:
-  - "Do not port the chat before this redesign is published."
   - "Do not keep a chat theme store, a second NieR scene or ground layer, a second overlay root or a second hover tag system."
   - "Do not size the chat by the app window."
   - "Do not carry a pill, a coloured side stripe or a chat-only demo panel into PMConcept7."

@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L33091-L33932
+Source lines: L33090-L33929
 
-Source SHA256: `46e4f7e518b4eee59e453c5fc1fcf5e43e6c43f0db5648ab420f21f97a89a63b`
+Source SHA256: `5049fc1967b53eb12bd03c1e1f58e8d7fb3f3523722601a0c28611c90807b01b`
 
 ---
 
@@ -431,8 +431,8 @@ canonical_text: >-
   animations; tiles lean less, rows by a token amount, and icons and the Usage plates get no magnet. The
   spotlight is a small soft pointer light, a radius of about 90 to 100 px with a Gaussian roll-off
   (smaller on tiles and rows), that reveals a pre-painted sheen tint and a hairline along the border,
-  under the box's content; only the light's centre moves with the pointer. The emitted glow is halved from
-  PM8's bloom and pre-painted with a short elevation shadow on a plate that stays at the box's rest rect,
+  under the box's content; only the light's centre moves with the pointer. The emitted glow is restrained (the current PMH reference) and
+  pre-painted with a short elevation shadow on a plate that stays at the box's rest rect,
   never moving with the magnet, and animates by opacity only. The family voices stay: Basic crisp with no
   overshoot, Friendly a warm pool and a soft band with a gentle settle, Glass a slow drift and a bright
   specular hairline, the accent riding the theme accent. Retro and NieR use no soft light, glow, blur,
@@ -490,7 +490,7 @@ acceptance_criteria:
 - In Basic, Friendly and Glass the magnet moves a hovered card at most about 2.5 px at an edge, through the standalone
   translate channel only; icons and the Usage plates never move.
 - The pointer light is a small soft pool, about 90 to 100 px in radius on cards, revealing a pre-painted sheen and
-  hairline under the content; the emitted glow is half of PM8's bloom, pre-painted, opacity-only, and stays at the
+  hairline under the content; the emitted glow is restrained as in the current PMH reference, pre-painted, opacity-only, and stays at the
   box's rest rect while the box leans.
 - Intensity ramps continuously from the bleed distance outside the box with no snap at edges; neighbours inside the
   bleed light only their near edge; overlaying panels do not light boxes beneath them, and nested targets resolve
@@ -515,8 +515,6 @@ reasoning_tier: standard
 context_scope: finalgui_standardization
 implementation_surfaces:
 - "Plans/FinalGUISpec.md"
-- "Concepts/onboarding/opus-5.5/src/js/18-hover.js"
-- "Concepts/onboarding/opus-5.5/src/css/22-hover.css"
 node_compile_hint:
   mode: magnet_spotlight_hover_system
   create_worknodes: false
@@ -563,7 +561,7 @@ stale_retired_dispositions:
 - 'Amended 2026-10-14: The static-tint-only small-control restriction is superseded by the approved control-marker
   polish; card hover is unchanged.'
 owner_boundary_notes:
-- "F3-446 owns glass depth parallax and the single merged document pointer-move handler this system rides on; DR-072 makes this unit the single owner of the hover grammar."
+- "F3-446 owns the single merged document pointer-move handler this system uses; its former Glass depth parallax is compatibility/source lineage only. DR-072 makes this unit the single owner of the hover grammar."
 - "Tab silhouettes and tab hover belong to their tab owners (F3-505, F3-466); the resizers keep their own grab glow; the left rail's rows and icons keep their owner's hover."
 owner_hints:
 - "Plans/FinalGUISpec.md"

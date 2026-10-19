@@ -4943,9 +4943,8 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
-  - Concepts/pm7-tools/base/PM7-base.html (current pinned PM7 input; source-lineage-only)
-  - Concepts/pm7-tools/build_pm7.py#T33-T41 (source-owned transforms)
-  - Concepts/PMConcept7.html (generated artifact; terminal bytes and hash are audit-owned)
+  - Concepts/pm7-tools/base/PM7-base.html (retired PM7 input; history only)
+  - Concepts/PMConcept7.html (look-and-behaviour reference)
   - Plans/.audits/audit-20260829-001-pmconcept7-widget-followup/audit_report.json (current repo-local successor audit status; verdict remains report-owned)
   - Plans/Decision_Log.md#DL-173
   - Plans/Decision_Log.md#DL-174
@@ -5237,7 +5236,7 @@ acceptance_criteria:
   - The action reports unavailable with a keyboard-reachable disabled reason when the shell router is absent.
   - No cmd.nav.focus_route registration, alias, handler, event, persistence write, or production wiring row exists.
   - Static or browser concept evidence is never promoted into native Slint or runtime-handler evidence.
-validation_surfaces: [Plans/guided_tour_contracts.schema.json, Plans/guided_tour_contract_fixtures.json, Plans/Wiring_Matrix.production.exclusions.json, Concepts/pm7-tools/verify/guided_tour.mjs]
+validation_surfaces: [Plans/guided_tour_contracts.schema.json, Plans/guided_tour_contract_fixtures.json, Plans/Wiring_Matrix.production.exclusions.json]
 risk_class: local_presentation_promoted_to_false_domain_command
 reasoning_tier: high
 context_scope: guided_tour_shell_focus_route
@@ -5514,7 +5513,7 @@ negative_constraints:
 
 ## Central Touch Production Closure Addendum - 2026-09-01
 
-The following exact 231 primary commands complete the remaining actionable Touch/production denominator after the 102-row Server/Egolite closure. Each target is now adjudicated by its semantic owner; the handler string is a sole future dispatch identity, not executable-handler evidence. Aliases, typed local UI actions, and the blocked false-inventory spelling `cmd.artifacts.open_panel` are excluded from this table.
+The following exact 232 primary commands complete the remaining actionable Touch/production denominator after the 102-row Server/Egolite closure. Each target is now adjudicated by its semantic owner; the handler string is a sole future dispatch identity, not executable-handler evidence. Aliases, typed local UI actions, and the blocked false-inventory spelling `cmd.artifacts.open_panel` are excluded from this table.
 
 | Command | Canonical owner binding | Sole future handler | Request -> result | Initial availability / effect |
 |---|---|---|---|---|
@@ -5577,10 +5576,10 @@ The following exact 231 primary commands complete the remaining actionable Touch
 | `cmd.forge.review.checkout` | `Plans/Forge_Integrations.md#FGI-010` | `handlers::forge::review_checkout` | `Plans/forge_integration_contracts.schema.json#/$defs/command_request` -> `Plans/forge_integration_contracts.schema.json#/$defs/command_result` | `handler_unavailable`; owner result/receipt/projection only; `expected_event_types=[]` |
 | `cmd.forge.review.close` | `Plans/Forge_Integrations.md#FGI-010` | `handlers::forge::review_close` | `Plans/forge_integration_contracts.schema.json#/$defs/command_request` -> `Plans/forge_integration_contracts.schema.json#/$defs/command_result` | `handler_unavailable`; owner result/receipt/projection only; `expected_event_types=[]` |
 | `cmd.forge.review.comment` | `Plans/Forge_Integrations.md#FGI-010` | `handlers::forge::review_comment` | `Plans/forge_integration_contracts.schema.json#/$defs/command_request` -> `Plans/forge_integration_contracts.schema.json#/$defs/command_result` | `handler_unavailable`; owner result/receipt/projection only; `expected_event_types=[]` |
-| `cmd.forge.review.create` | `Plans/Forge_Integrations.md#FGI-010` | `handlers::forge::review_create` | `Plans/forge_integration_contracts.schema.json#/$defs/command_request` -> `Plans/forge_integration_contracts.schema.json#/$defs/command_result` | `handler_unavailable`; owner result/receipt/projection only; `expected_event_types=[]` |
+| `cmd.forge.review.create` | `Plans/Forge_Integrations.md` §3.3 (retained provider-owner routes); `Plans/Forge_Integrations.md#FGI-004` | `handlers::forge::review_create` | `Plans/forge_integration_contracts.schema.json#/$defs/command_request` -> `Plans/forge_integration_contracts.schema.json#/$defs/command_result` | `handler_unavailable`; owner result/receipt/projection only; `expected_event_types=[]` |
 | `cmd.forge.review.edit` | `Plans/Forge_Integrations.md#FGI-022` | `handlers::forge::review_edit` | `Plans/forge_integration_contracts.schema.json#/$defs/command_request` -> `Plans/forge_integration_contracts.schema.json#/$defs/command_result` | `handler_unavailable`; owner result/receipt/projection only; `expected_event_types=[]` |
 | `cmd.forge.review.mark_ready` | `Plans/Forge_Integrations.md#FGI-010` | `handlers::forge::review_mark_ready` | `Plans/forge_integration_contracts.schema.json#/$defs/command_request` -> `Plans/forge_integration_contracts.schema.json#/$defs/command_result` | `handler_unavailable`; owner result/receipt/projection only; `expected_event_types=[]` |
-| `cmd.forge.review.merge` | `Plans/Forge_Integrations.md#FGI-010` | `handlers::forge::review_merge` | `Plans/forge_integration_contracts.schema.json#/$defs/command_request` -> `Plans/forge_integration_contracts.schema.json#/$defs/command_result` | `handler_unavailable`; owner result/receipt/projection only; `expected_event_types=[]` |
+| `cmd.forge.review.merge` | `Plans/Forge_Integrations.md` §3.3 (retained provider-owner routes); `Plans/Forge_Integrations.md#FGI-004` | `handlers::forge::review_merge` | `Plans/forge_integration_contracts.schema.json#/$defs/command_request` -> `Plans/forge_integration_contracts.schema.json#/$defs/command_result` | `handler_unavailable`; owner result/receipt/projection only; `expected_event_types=[]` |
 | `cmd.forge.review.open` | `Plans/Forge_Integrations.md#FGI-010` | `handlers::forge::review_open` | `Plans/forge_integration_contracts.schema.json#/$defs/command_request` -> `Plans/forge_integration_contracts.schema.json#/$defs/command_result` | `handler_unavailable`; owner result/receipt/projection only; `expected_event_types=[]` |
 | `cmd.forge.review.open_in_browser` | `Plans/Forge_Integrations.md#FGI-010` | `handlers::forge::review_open_in_browser` | `Plans/forge_integration_contracts.schema.json#/$defs/command_request` -> `Plans/forge_integration_contracts.schema.json#/$defs/command_result` | `handler_unavailable`; owner result/receipt/projection only; `expected_event_types=[]` |
 | `cmd.forge.review.refresh` | `Plans/Forge_Integrations.md#FGI-010` | `handlers::forge::review_refresh` | `Plans/forge_integration_contracts.schema.json#/$defs/command_request` -> `Plans/forge_integration_contracts.schema.json#/$defs/command_result` | `handler_unavailable`; owner result/receipt/projection only; `expected_event_types=[]` |
@@ -5769,13 +5768,13 @@ plan_unit_id: CS-074
 unit_type: command_catalog
 status: accepted
 owner_doc: Plans/Commands_System.md
-canonical_text: Exactly 231 remaining owner-admitted Touch commands are primary catalog entries with one owner-adjudicated future handler each, typed owner contracts, handler_unavailable initial state, no alias peers, and no newly admitted EventRecord types.
+canonical_text: Exactly 232 remaining owner-admitted Touch commands are primary catalog entries with one owner-adjudicated future handler each, typed owner contracts, handler_unavailable initial state, no alias peers, and no newly admitted EventRecord types.
 gui_related: true
 gui_classification_reason: The command set is consumed by Settings, Onboarding/Doctor, owner workspaces, palette/API, and other named GUI routes.
 depends_on: [CS-073, BRS-011, FGI-010, FGI-013, JJI-007, MACS-004, NPLAN-003, RAS-012, RAS-015, SMPFS-157, SRV-012, SIR-030, SCS-010, TCME-008]
 unblocks: []
 acceptance_criteria:
-- The exact table contains 231 unique primary IDs and no alias, typed local UI action, rejected token, or blocked false inventory.
+- The exact table contains 232 unique primary IDs and no alias, typed local UI action, rejected token, or blocked false inventory.
 - Each command has exactly one owner binding, handler target, production-intent row, typed request/result/error/availability/permission contract, and reverse GUI route.
 - Every row starts handler_unavailable and expected_event_types is empty until native and Event Authority evidence exists.
 validation_surfaces:
@@ -6421,9 +6420,8 @@ This addendum is the Commands owner lane for finding G4 of
 `reports/concept-packet-integration-20260926/settings.md`
 ("Commands & Shortcuts typed mutation routing incomplete"): a per-control action-routing census
 over §6.1 (scope, create, edit, delete, save validation), §6.2 (dry-run preview), and §1
-(invocation surfaces), bound to the exact controls of the selected Settings manager
-(`Concepts/pm7-tools/settings_refresh/managers/24-commands.js`, selected
-`Concepts/TestOpus5.5PmConcept.html` `commands-shortcuts` behavior). Selected manager behavior
+(invocation surfaces), bound to the selected Settings manager
+(`Concepts/TestOpus5.5PmConcept.html` `commands-shortcuts` behavior). Selected manager behavior
 leads: every selected mutating control routes to a typed action below, every selected
 presentation control is classified view-only, and no selected control closes through an
 unadmitted placeholder. It mints no `cmd.*` UICommand, registers no EventRecord family, admits
@@ -7939,10 +7937,12 @@ canonical_text: >-
   through a local action.
   Amended 2026-10-17 (DL-228): background design tiles preview through the same ui.appearance.preview_scheme
   and cancel_preview as scheme tiles, after the same 110 ms rest (F3-642). ui.terminal.degauss is the Retro
-  Try it action, a local one-shot with no receipt (F3-643). Two concept review chords are not product
-  shortcuts: Alt+Shift+1..5, the left rail review copy's concept switcher, and Alt+Shift+L, the Liquid Glass
-  demonstration toggle; Alt+Shift+1..9 stays UCC-200's focus panel N, and no rebuild or fixture inherits the
-  collision.
+  Try it action, a local one-shot with no receipt (F3-643). Alt+Shift+1..5, the left rail review copy's
+  concept switcher, is not a product shortcut; Alt+Shift+1..9 stays UCC-200's focus panel N, and no
+  rebuild or fixture inherits the collision. Alt+Shift+L, the former Liquid Glass demonstration
+  toggle, is retired with ?lg=off and Demo Studio's material on/off control (Jared, 2026-10-19,
+  option 1). Neither a local action nor a command may select a material off state or old Glass
+  fallback; F3-652 always supplies the Glass look's Liquid Glass material.
 gui_related: true
 gui_classification_reason: Customize and notification local actions.
 split_recommended: false

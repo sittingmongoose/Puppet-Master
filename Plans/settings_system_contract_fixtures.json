@@ -2777,12 +2777,9 @@
         "schema_id": "pm.settings_concept_boundary.v1",
         "schema_version": "1.0.0",
         "artifact_ref": "Concepts/PMConcept7.html",
-        "authored_source_ref": "Concepts/pm7-tools/settings_tome_source.py",
-        "builder_ref": "Concepts/pm7-tools/build_pm7.py",
         "evidence_level": "concept_fixture_only",
         "handlers_simulated": true,
         "persistence_mode": "fixture_local_non_authoritative",
-        "direct_generated_edit_allowed": false,
         "allowed_claims": [
           "geometry_demonstration",
           "content_projection_demonstration",
