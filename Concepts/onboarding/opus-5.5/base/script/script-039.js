@@ -322,14 +322,6 @@
     el.classList.add(next.replace(/_/g, '-'));
   };
 
-  // ── LSP registry filtering ──
-  window.filterLSPRegistry = function(query) {
-    var rows = document.querySelectorAll('.lsp-registry-row');
-    var q = query.toLowerCase();
-    rows.forEach(function(row) {
-      row.style.display = (!q || row.textContent.toLowerCase().indexOf(q) !== -1) ? '' : 'none';
-    });
-  };
 
   // ── File context menu → add chip to chat ──
   window.addFileChipToChat = function(filename) {

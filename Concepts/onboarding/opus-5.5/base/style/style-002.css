@@ -579,7 +579,6 @@
     }
 
     /* 3. Files panel + left panel — deepest see-through region */
-    [data-theme^="glass"] .files-panel,
     [data-theme^="glass"] .left-panel {
       background: var(--pm6-glass-step-1);
       border: none;
@@ -622,8 +621,7 @@
     }
 
     /* 7. Modal / popover layer — near-opaque reading plate */
-    [data-theme^="glass"] .chat-dropdown-popover,
-    [data-theme^="glass"] .settings-inspector-panel {
+    [data-theme^="glass"] .chat-dropdown-popover {
       background: var(--pm6-glass-plate);
       border: 1px solid var(--glass-hairline);
       box-shadow: inset 0 1px 0 var(--glass-edge),
@@ -631,10 +629,6 @@
     }
     [data-theme^="glass"] .chat-dropdown-popover {
       border-radius: 12px;
-    }
-    [data-theme^="glass"] .settings-inspector-panel {
-      border-radius: 16px 0 0 16px;
-      border-left: none;
     }
 
     /* Hero surfaces: gradient-hairline edge (mask-composite ring) */
@@ -4790,7 +4784,6 @@
     .orch-content { margin-top: calc(-1 * var(--pm6-orch-lift, 0px)); }
     .orch-tab-content { padding-top: calc(var(--pm6-orch-lift, 0px) + var(--md)); }
     
-    .terminal-output .line-ok { color: var(--accent-lime); }
     
     
     /* (reaped W3: .orch-card leftovers deleted — orchestrator rebuilt on
@@ -5241,12 +5234,6 @@
        overflow:hidden clipper and the header sits flush at its top, so the
        header's own box is the whole lift. */
     
-    /* glass blur budget: no nested backdrop-filter inside the drawer */
-    [data-theme^="glass"] .settings-inspector-panel .inspector-header {
-      -webkit-backdrop-filter: none;
-      backdrop-filter: none;
-      background: color-mix(in srgb, var(--surface) 88%, transparent);
-    }
 
     .inspector-view {
       display: none;

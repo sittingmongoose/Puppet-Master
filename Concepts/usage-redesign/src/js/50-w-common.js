@@ -528,7 +528,7 @@
      the bodies whose content is taller than the body; whole trailing rows are removed (never cut) and one quiet
      "N more at a taller size" line says so. Reads are batched across every card of the pass, then the writes. */
   var FIT_SEL = '.pmu-lrow, .pmu-lday, .pmu-fact, .pmu-tbody > .pmu-trow, .pmu-agline, .pmu-qrow:not(.pmu-qaxis), .pmu-qgroup, .pmu-mixrow, .pmu-ctxleg, ' +
-    '.pmu-amount, .pmu-limitplan, .pmu-accrow, .pmu-provrow, .pmu-swfam, .pmu-setupnote, .pmu-factrow, .pmu-note, .pmu-agbeyond, .pmu-effsave > em, .pmu-effcost, .pmu-efflegend, .pmu-effspark, .pmu-kpitrend, .pmu-kpifoot, .pmu-cfoot';
+    '.pmu-amount, .pmu-limitplan, .pmu-accrow, .pmu-provrow, .pmu-swfam, .pmu-setupnote, .pmu-factrow, .pmu-agbeyond, .pmu-effsave > em, .pmu-effcost, .pmu-efflegend, .pmu-effspark, .pmu-kpitrend, .pmu-kpifoot, .pmu-cfoot';
   var fitQueue = [], fitScheduled = false, fitAgain = [], fitAgainScheduled = false;
   /* NOTES3-perf C1: while the engine builds a room in slices it may set PMU.content.fitDefer = true and call
      PMU.content.fitSlice() at the end of each slice (one batched read for the cards of that slice, inside the slice's

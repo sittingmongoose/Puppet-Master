@@ -1967,17 +1967,6 @@
       if (gh) { gh.closest('.sa-batch-group').classList.toggle('expanded'); }
     });
 
-    // ── Worktree filter bar ─────────────────────────────────────────
-    window.filterWorktrees = function(btn, filter) {
-      var bar = btn.closest('.sc-wt-filter-bar');
-      bar.querySelectorAll('.sc-wt-filter-btn').forEach(function(b) { b.classList.remove('active'); });
-      btn.classList.add('active');
-      var rows = btn.closest('.sc-accordion-body').querySelectorAll('.sc-wt-row');
-      rows.forEach(function(r) {
-        if (filter === 'all') { r.style.display = ''; }
-        else { r.style.display = r.getAttribute('data-wt-state') === filter ? '' : 'none'; }
-      });
-    };
 
     // ── File manager worktree root toggle ───────────────────────────
     window.toggleFileManagerRoot = function(btn) {
@@ -2894,30 +2883,6 @@
             }
         }
 
-        // Open/Close Inspector Panel (Settings)
-        const bentoAction = e.target.closest('.bento-action');
-        if (bentoAction) {
-            const card = bentoAction.closest('.bento-card');
-            if (card) {
-                const viewId = card.getAttribute('data-inspector-view');
-                if (viewId) {
-                    const panel = document.querySelector('.settings-inspector-panel');
-                    const currentActive = document.querySelector('.inspector-view.active');
-                    if (panel && panel.classList.contains('open') && currentActive && currentActive.getAttribute('data-view') === viewId) {
-                        panel.classList.remove('open');
-                        return;
-                    }
-                    document.querySelectorAll('.inspector-view').forEach(view => {
-                        view.classList.toggle('active', view.getAttribute('data-view') === viewId);
-                    });
-                    if (panel) panel.classList.add('open');
-                }
-            }
-        }
-        const closeInspector = e.target.closest('.close-inspector');
-        if (closeInspector) {
-            document.querySelectorAll('.settings-inspector-panel').forEach(panel => panel.classList.remove('open'));
-        }
       });
 
       /* ── Browser Tab Switching in Editor Pane 2 ── */
@@ -3114,37 +3079,6 @@
         });
       });
 
-      document.querySelectorAll('.page-settings .settings-tab').forEach(tab => {
-          tab.addEventListener('click', function(e) {
-              e.preventDefault();
-              // Update active state in sidebar
-              document.querySelectorAll('.page-settings .settings-tab').forEach(t => t.classList.remove('active'));
-              this.classList.add('active');
-              
-              const filter = this.getAttribute('data-filter');
-              const cards = document.querySelectorAll('.page-settings .bento-card');
-              
-              const applyFilter = () => {
-                  cards.forEach(card => {
-                      if (filter === 'all' || card.getAttribute('data-category') === filter) {
-                          card.classList.remove('filtered-out');
-                      } else {
-                          card.classList.add('filtered-out');
-                      }
-                  });
-              };
-
-              if (document.startViewTransition) {
-                  document.startViewTransition(applyFilter);
-              } else {
-                  applyFilter();
-              }
-          });
-      });
-
-      document.querySelectorAll('.page-settings .bento-card').forEach((card, index) => {
-          card.style.viewTransitionName = `bento-card-${index}`;
-      });
 
       // Theme Switcher — title-bar sprout menu (PM_THEME); keep change bridge for legacy listeners
       const themeSelect = document.getElementById('themeSelect');

@@ -1475,7 +1475,7 @@
     var CONFIG = {
       /* vertical scrollers: the part-02 opt-in scroll-pane list
          (minus the bothAxes members below) */
-      vertical: '.primary-content, .page-projects, .panel-content, .message-stream, .messageStream, .chat-thread-list, .file-tree, .s4-shell, .s4-stage, .s4-panel-body, .s4-psm-body, .s4-rail, .pm6-usage-wrap [class*="scroll"], .dashboard-grid, .bento-card, .chat-dropdown-list, textarea, .browser-permissions-panel, .browser-console-pane, .browser-network-pane, .browser-evidence-pane, .wizard-step-panel, .wizard-annotation-drawer, .wizard-activity-log, .pm6-wiz-intake-scroll, .pm6-wiz-topic-list, .pm6-wiz-thread-body, .pm6-wiz-doc, .orch-tab-content, .orch-evidence-detail-body, .orch-rungraph-canvas, .orch-rungraph-table-wrap, .orch-rungraph-detail-body, .pm6-orch-w-body, .pm6-orch-pc-feed, .pm6-orch-pc-sidecol, .pm6-orch-seams, .pm6-orch-inspector-body, .pm6-orch-evlist, .pm6-orch-history, .settings-inspector-panel .inspector-body, .interview-sidebar, .interview-messages, .pm-inspector-drawer, .pm-debug-cell, .pm6-dash-scroll, .pm6-dash-catalog-panel, .pm6-proj-sheet, .pm6-sp-content, .pm6-bottom-empty, .context-detail-pane, .cdp-raw-view, .wt-test-output, .sa-work-stream, .sc-accordion-body, .sh-scroll',
+      vertical: '.primary-content, .page-projects, .panel-content, .message-stream, .messageStream, .chat-thread-list, .file-tree, .s4-shell, .s4-stage, .s4-panel-body, .s4-psm-body, .s4-rail, .pm6-usage-wrap [class*="scroll"], .dashboard-grid, .bento-card, .chat-dropdown-list, textarea, .browser-permissions-panel, .browser-console-pane, .browser-network-pane, .browser-evidence-pane, .wizard-step-panel, .wizard-annotation-drawer, .wizard-activity-log, .pm6-wiz-intake-scroll, .pm6-wiz-topic-list, .pm6-wiz-thread-body, .pm6-wiz-doc, .orch-tab-content, .orch-evidence-detail-body, .orch-rungraph-canvas, .orch-rungraph-table-wrap, .orch-rungraph-detail-body, .pm6-orch-w-body, .pm6-orch-pc-feed, .pm6-orch-pc-sidecol, .pm6-orch-seams, .pm6-orch-inspector-body, .pm6-orch-evlist, .pm6-orch-history, .interview-sidebar, .interview-messages, .pm-debug-cell, .pm6-dash-scroll, .pm6-dash-catalog-panel, .pm6-proj-sheet, .pm6-sp-content, .pm6-bottom-empty, .context-detail-pane, .cdp-raw-view, .wt-test-output, .sa-work-stream, .sc-accordion-body, .sh-scroll',
       /* DELIBERATE DIVERGENCE from the CSS :is() mirror: .sh-scroll is enrolled
          HERE (so it gets edge classes and Stage-B bands) but is deliberately
          ABSENT from the mask list in pm6-css-global. A mask-image makes its
@@ -1511,7 +1511,7 @@
          Any scroller with a plate above it belongs in BOTH places. */
       skipTop: '.pm6-usage-tblwrap, .pm6-orch-ledger-wrap, .message-stream, .messageStream, ' +
                '.orch-tab-content, .pm6-orch-w-body, .pm6-usage-scroll, ' +
-               '.s4-panel-body, .s4-psm-body, .settings-inspector-panel .inspector-body, ' +
+               '.s4-panel-body, .s4-psm-body, ' +
                '.chat-thread-list, .page-projects, ' +
                '.pm6-wiz-doc, .pm6-wiz-topic-list, .sh-scroll, .browser-viewport, ' +
                /* the four sites frosted before this list existed: same
@@ -1977,7 +1977,6 @@
       { host: '.pm6-usage-wrap',            head: '.pm6-usage-head',           v: '--pm6-usage-head-h' },
       { host: '.s4-panel',                  head: '.s4-panel-head',            v: '--pm6-s4-panel-head-h' },
       { host: '.s4-psm',                    head: '.s4-psm-tabs',              v: '--pm6-s4-psm-tabs-h' },
-      { host: '.settings-inspector-panel',  head: '.inspector-header',         v: '--pm6-insp-head-h' },
       { host: '.pm6-wiz-doc-overlay-panel', head: '.pm6-wiz-doc-overlay-head', v: '--pm6-wiz-docov-head-h' },
       { host: '.pm6-wiz-topics', head: '.pm6-wiz-col-head', v: '--pm6-wiz-colhead-h' },
       /* the plan preview header owns the frost and publishes the measured

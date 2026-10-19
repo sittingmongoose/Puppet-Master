@@ -695,9 +695,8 @@ html[data-lg="on"][data-theme="glass-light"][data-lg-tier="cpu"]:not(#lgz) { --l
 /* ---------------------------------------------------------------------------------------------------------------
    9. Wallpapers for every look (Jared, 2026-10-11). The choice, the Settings gallery and the prints for every look
       belong to the wallpapers package (Concepts/wallpapers/opus-5.5, CONTRACT.md); Glass refracts the print it lands
-      on --lg-wall. Until W5 is on main, the old Glass background row (Mesh, Depth, Minimal) stays hidden here.
+      on --lg-wall.
    --------------------------------------------------------------------------------------------------------------- */
-html[data-lg="on"][data-theme^="glass"]:not(#lgz) #setting-general\.visual\.glass-background-mode { display: none !important; }
 
 /* Settings under Liquid Glass: sections are cards on the sheet; the active domain is a lens-like fill */
 html[data-lg="on"][data-theme^="glass"]:not(#lgz) #pm-settings-root :is(.pm-shell, .workspace-shell, .workspace-stage, .document-layout, .document-main) { background: transparent !important; }
@@ -921,22 +920,6 @@ html[data-lg="on"][data-theme^="glass"]:not(#lgz) { --pm-switch: lens; }
   --pm-switch-r: 6px; --pm-switch-r-in: 3px;
   --pm-switch-ink: var(--text-secondary); --pm-switch-ink-on: var(--text-primary); --pm-switch-mark: var(--accent-primary);
 }
-
-/* ---------------------------------------------------------------------------------------------------------------
-   13. Today's Glass, with Liquid Glass off (coordinator, 2026-10-15, after pm7-contrast-opus's round): Settings' words
-   that stand straight on the wallpaper, where no ink reaches 4.5:1 over a bright print, get that look's own reading
-   surface and blur. These are the chapter headers, Settings Home's intro, the managers' footer links, their toolbars,
-   intro lines and leads, and the Notifications switch. With Liquid Glass on, the headers and the intro are glass sheets
-   and the rest take the card tint (section 1). Found by walking every chapter, section and manager tab for text with no
-   ground under it.
-   --------------------------------------------------------------------------------------------------------------- */
-html[data-theme^="glass"]:not([data-lg="on"]) #panel-settings :is(header.workspace-separator, .home-page > section.home-hero, .pm51-quiet, .o55-toolbar, .o55-quiet-line, .o55-mgp-lead, .o55-notif-master):not(:is(.domain-card, .panel-card, .pm51-stats, .pm51-panel-card, .pm51-advanced, .pm51-hero-facts, .pm51-settings-inline .settings-section, .drawer, .detail-inspector, .o55-notif-master, .o55-toolbar) *) {
-  background: var(--rg-reading) !important; -webkit-backdrop-filter: blur(18px) saturate(1.25); backdrop-filter: blur(18px) saturate(1.25);
-  border-color: transparent !important; border-radius: 14px !important;
-}
-html[data-theme^="glass"]:not([data-lg="on"]) #panel-settings header.workspace-separator { padding: 10px 16px 11px !important; }
-html[data-theme^="glass"]:not([data-lg="on"]) #panel-settings .home-page > section.home-hero { padding: 20px 22px 22px !important; }
-html[data-theme^="glass"]:not([data-lg="on"]) #panel-settings :is(.pm51-quiet, .o55-quiet-line, .o55-mgp-lead):not(:is(.domain-card, .panel-card, .pm51-stats, .pm51-panel-card, .pm51-advanced, .pm51-hero-facts, .pm51-settings-inline .settings-section, .drawer, .detail-inspector) *) { padding: 8px 12px !important; }
 
 /* ---------------------------------------------------------------------------------------------------------------
    14. The Customize screens (Jared #24, 2026-10-15): the terminal's and the editor's (.pmt-cz; the editor's adds

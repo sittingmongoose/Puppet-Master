@@ -1020,7 +1020,6 @@ body:not(.pmu-page-active) :is(.rd-console):hover { --pm6-sb-ink: var(--pm6-sb-t
     }
 
     /* 3. Files panel + left panel — deepest see-through region */
-    [data-theme^="glass"] .files-panel,
     [data-theme^="glass"] .left-panel {
       background: var(--pm6-glass-step-1);
       border: none;
@@ -1065,8 +1064,7 @@ body:not(.pmu-page-active) :is(.rd-console):hover { --pm6-sb-ink: var(--pm6-sb-t
     }
 
     /* 7. Modal / popover layer — near-opaque reading plate */
-    [data-theme^="glass"] .chat-dropdown-popover,
-    [data-theme^="glass"] .settings-inspector-panel {
+    [data-theme^="glass"] .chat-dropdown-popover {
       background: var(--pm6-glass-plate);
       border: 1px solid var(--glass-hairline);
       box-shadow: inset 0 1px 0 var(--glass-edge),
@@ -1074,10 +1072,6 @@ body:not(.pmu-page-active) :is(.rd-console):hover { --pm6-sb-ink: var(--pm6-sb-t
     }
     [data-theme^="glass"] .chat-dropdown-popover {
       border-radius: 12px;
-    }
-    [data-theme^="glass"] .settings-inspector-panel {
-      border-radius: 16px 0 0 16px;
-      border-left: none;
     }
 
     /* Hero surfaces: gradient-hairline edge (mask-composite ring) */
@@ -5357,7 +5351,6 @@ body:not(.pmu-page-active) :is(.rd-console):hover { --pm6-sb-ink: var(--pm6-sb-t
     .orch-content { margin-top: calc(-1 * var(--pm6-orch-lift, 0px)); }
     .orch-tab-content { padding-top: calc(var(--pm6-orch-lift, 0px) + var(--md)); }
     
-    .terminal-output .line-ok { color: var(--accent-lime); }
     
     
     /* (reaped W3: .orch-card leftovers deleted — orchestrator rebuilt on
@@ -5816,12 +5809,6 @@ body:not(.pmu-page-active) :is(.rd-console):hover { --pm6-sb-ink: var(--pm6-sb-t
        overflow:hidden clipper and the header sits flush at its top, so the
        header's own box is the whole lift. */
     
-    /* glass blur budget: no nested backdrop-filter inside the drawer */
-    [data-theme^="glass"] .settings-inspector-panel .inspector-header {
-      -webkit-backdrop-filter: none;
-      backdrop-filter: none;
-      background: color-mix(in srgb, var(--surface) 88%, transparent);
-    }
 
     .inspector-view {
       display: none;
@@ -16766,10 +16753,6 @@ body.pm-home-dragging { -webkit-user-select: none; user-select: none; }
     /* ---- theme accents (own block only) ---- */
     
     
-    [data-theme^="glass"] .pm6-art-row, [data-theme^="glass"] .pm6-notify-row {
-      background: var(--pm6-glass-step-2);
-      box-shadow: inset 0 1px 0 var(--glass-hairline);
-    }
     /* root dropdown = reading plate (no nested blur inside the pane) */
     /* friendly cozy: side-panel cards ride the mint (files) category */
     
@@ -16777,14 +16760,6 @@ body.pm-home-dragging { -webkit-user-select: none; user-select: none; }
     
     
     /* warnings = butter, errors/gates = coral */
-    
-    
-
-    @media (prefers-reduced-motion: reduce) {
-      
-      .pm6-notify-row { animation: none; }
-    }
-    
 </style>
 <!-- PM7 SECTION 13/32: cozy-shelves-css - Cozy Shelves rail panel layer (2026-07-27 reconciliation port): shelf expanders, --cat-* palette, pill-fit machinery, Debug & Run panel + bottom Debug tab (style#pm6-css-cozy-shelves) -->
 <style id="pm6-css-cozy-shelves">
@@ -19183,7 +19158,6 @@ html[data-theme^="glass"] #sidePanelSlot {
 }
 html[data-theme^="glass"] #sidePanelSlot .side-panel-view,
 html[data-theme^="glass"] #panel-files,
-html[data-theme^="glass"] .files-panel,
 html[data-theme^="glass"] .left-panel {
   background: transparent !important;
   border: 0 !important;
@@ -31457,10 +31431,6 @@ html[data-lg="on"][data-theme^="glass"] #panel-orchestrator :is(#pm7-named-plan-
    at 20 % in Friendly Light (their 11 % step is too faint for a small cell); Glass takes its selection frost with its
    1 px rim along the top edge, and Glass Light its near-opaque reading plate. The chosen word is the text colour. A
    hovered cell takes the quieter step (about half), so it never reads as a second chosen one.
-   Glass: old Glass paints every title-bar button with its chrome, !important (pm7-architectural-glass-final, "html
-   [data-theme^=glass] .title-bar button"), which gave each of the three cells its own chrome box, border and shadow, so
-   the chosen cell could not be told apart (measured 1.0:1 against its neighbours). The cells here step out of that
-   rule: plain, with the chosen one filled.
    Only the fill and the ink change: the joined cells, dividers and corners stay 24-no-pills.css's; Retro and NieR keep
    their reverse video (24-no-pills.css) and NieR its cursor ink block; under Liquid Glass, glass.css draws the menu. */
 html { --pm-tt-chosen: color-mix(in srgb, var(--text-primary) 11%, transparent); --pm-tt-hover: color-mix(in srgb, var(--text-primary) 5%, transparent); }
@@ -31481,10 +31451,6 @@ html:not([data-lg="on"]):not([data-o55-nier="on"]):is([data-theme^="basic"], [da
 html:not([data-lg="on"]):not([data-o55-nier="on"]):is([data-theme^="basic"], [data-theme^="friendly"], [data-theme^="glass"]) .pm6-tt-mode:not([aria-checked="true"]):hover {
   background: var(--pm-tt-hover); color: var(--text-primary);
 }
-/* Glass: out of old Glass's title-bar button chrome (see above) */
-html[data-theme^="glass"]:not([data-lg="on"]) .title-bar .pm6-tt-mode { background: transparent !important; border: 0 !important; box-shadow: none !important; }
-html[data-theme^="glass"]:not([data-lg="on"]) .title-bar .pm6-tt-mode[aria-checked="true"] { background: var(--pm-tt-chosen) !important; }
-html[data-theme^="glass"]:not([data-lg="on"]) .title-bar .pm6-tt-mode:not([aria-checked="true"]):hover { background: var(--pm-tt-hover) !important; }
 
 /* ---- css/29-wizard-stage.css ---- */
 /* Keep the previous stage drawn under the existing entrance, including the frames before that entrance is ready.
@@ -50488,9 +50454,8 @@ html[data-lg="on"][data-theme="glass-light"][data-lg-tier="cpu"]:not(#lgz) { --l
 /* ---------------------------------------------------------------------------------------------------------------
    9. Wallpapers for every look (Jared, 2026-10-11). The choice, the Settings gallery and the prints for every look
       belong to the wallpapers package (Concepts/wallpapers/opus-5.5, CONTRACT.md); Glass refracts the print it lands
-      on --lg-wall. Until W5 is on main, the old Glass background row (Mesh, Depth, Minimal) stays hidden here.
+      on --lg-wall.
    --------------------------------------------------------------------------------------------------------------- */
-html[data-lg="on"][data-theme^="glass"]:not(#lgz) #setting-general\.visual\.glass-background-mode { display: none !important; }
 
 /* Settings under Liquid Glass: sections are cards on the sheet; the active domain is a lens-like fill */
 html[data-lg="on"][data-theme^="glass"]:not(#lgz) #pm-settings-root :is(.pm-shell),
@@ -50737,30 +50702,6 @@ html[data-lg="on"][data-theme^="glass"]:not(#lgz) { --pm-switch: lens; }
   --pm-switch-r: 6px; --pm-switch-r-in: 3px;
   --pm-switch-ink: var(--text-secondary); --pm-switch-ink-on: var(--text-primary); --pm-switch-mark: var(--accent-primary);
 }
-
-/* ---------------------------------------------------------------------------------------------------------------
-   13. Today's Glass, with Liquid Glass off (coordinator, 2026-10-15, after pm7-contrast-opus's round): Settings' words
-   that stand straight on the wallpaper, where no ink reaches 4.5:1 over a bright print, get that look's own reading
-   surface and blur. These are the chapter headers, Settings Home's intro, the managers' footer links, their toolbars,
-   intro lines and leads, and the Notifications switch. With Liquid Glass on, the headers and the intro are glass sheets
-   and the rest take the card tint (section 1). Found by walking every chapter, section and manager tab for text with no
-   ground under it.
-   --------------------------------------------------------------------------------------------------------------- */
-html[data-theme^="glass"]:not([data-lg="on"]) #panel-settings :where(header.workspace-separator):not(.t7.t7:not(*)):not(t7:not(*)):not(:is(.domain-card, .panel-card, .pm51-stats, .pm51-panel-card, .pm51-advanced, .pm51-hero-facts, .pm51-settings-inline .settings-section, .drawer, .detail-inspector, .o55-notif-master, .o55-toolbar) *),
-html[data-theme^="glass"]:not([data-lg="on"]) #panel-settings :is(.home-page > section.home-hero):not(:is(.domain-card, .panel-card, .pm51-stats, .pm51-panel-card, .pm51-advanced, .pm51-hero-facts, .pm51-settings-inline .settings-section, .drawer, .detail-inspector, .o55-notif-master, .o55-toolbar) *),
-html[data-theme^="glass"]:not([data-lg="on"]) #panel-settings :where(.pm51-quiet):not(.t7.t7:not(*)):not(t7:not(*)):not(:is(.domain-card, .panel-card, .pm51-stats, .pm51-panel-card, .pm51-advanced, .pm51-hero-facts, .pm51-settings-inline .settings-section, .drawer, .detail-inspector, .o55-notif-master, .o55-toolbar) *),
-html[data-theme^="glass"]:not([data-lg="on"]) #panel-settings :where(.o55-toolbar):not(.t7.t7:not(*)):not(t7:not(*)):not(:is(.domain-card, .panel-card, .pm51-stats, .pm51-panel-card, .pm51-advanced, .pm51-hero-facts, .pm51-settings-inline .settings-section, .drawer, .detail-inspector, .o55-notif-master, .o55-toolbar) *),
-html[data-theme^="glass"]:not([data-lg="on"]) #panel-settings :where(.o55-quiet-line):not(.t7.t7:not(*)):not(t7:not(*)):not(:is(.domain-card, .panel-card, .pm51-stats, .pm51-panel-card, .pm51-advanced, .pm51-hero-facts, .pm51-settings-inline .settings-section, .drawer, .detail-inspector, .o55-notif-master, .o55-toolbar) *),
-html[data-theme^="glass"]:not([data-lg="on"]) #panel-settings :where(.o55-mgp-lead):not(.t7.t7:not(*)):not(t7:not(*)):not(:is(.domain-card, .panel-card, .pm51-stats, .pm51-panel-card, .pm51-advanced, .pm51-hero-facts, .pm51-settings-inline .settings-section, .drawer, .detail-inspector, .o55-notif-master, .o55-toolbar) *),
-html[data-theme^="glass"]:not([data-lg="on"]) #panel-settings :where(.o55-notif-master):not(.t7.t7:not(*)):not(t7:not(*)):not(:is(.domain-card, .panel-card, .pm51-stats, .pm51-panel-card, .pm51-advanced, .pm51-hero-facts, .pm51-settings-inline .settings-section, .drawer, .detail-inspector, .o55-notif-master, .o55-toolbar) *) {
-  background: var(--rg-reading) !important; -webkit-backdrop-filter: blur(18px) saturate(1.25); backdrop-filter: blur(18px) saturate(1.25);
-  border-color: transparent !important; border-radius: 14px !important;
-}
-html[data-theme^="glass"]:not([data-lg="on"]) #panel-settings header.workspace-separator { padding: 10px 16px 11px !important; }
-html[data-theme^="glass"]:not([data-lg="on"]) #panel-settings .home-page > section.home-hero { padding: 20px 22px 22px !important; }
-html[data-theme^="glass"]:not([data-lg="on"]) #panel-settings :is(.pm51-quiet):not(:is(.domain-card, .panel-card, .pm51-stats, .pm51-panel-card, .pm51-advanced, .pm51-hero-facts, .pm51-settings-inline .settings-section, .drawer, .detail-inspector) *),
-html[data-theme^="glass"]:not([data-lg="on"]) #panel-settings :is(.o55-quiet-line):not(:is(.domain-card, .panel-card, .pm51-stats, .pm51-panel-card, .pm51-advanced, .pm51-hero-facts, .pm51-settings-inline .settings-section, .drawer, .detail-inspector) *),
-html[data-theme^="glass"]:not([data-lg="on"]) #panel-settings :is(.o55-mgp-lead):not(:is(.domain-card, .panel-card, .pm51-stats, .pm51-panel-card, .pm51-advanced, .pm51-hero-facts, .pm51-settings-inline .settings-section, .drawer, .detail-inspector) *) { padding: 8px 12px !important; }
 
 /* ---------------------------------------------------------------------------------------------------------------
    14. The Customize screens (Jared #24, 2026-10-15): the terminal's and the editor's (.pmt-cz; the editor's adds
@@ -75794,7 +75735,7 @@ var PMU_SERIES = {
      the bodies whose content is taller than the body; whole trailing rows are removed (never cut) and one quiet
      "N more at a taller size" line says so. Reads are batched across every card of the pass, then the writes. */
   var FIT_SEL = '.pmu-lrow, .pmu-lday, .pmu-fact, .pmu-tbody > .pmu-trow, .pmu-agline, .pmu-qrow:not(.pmu-qaxis), .pmu-qgroup, .pmu-mixrow, .pmu-ctxleg, ' +
-    '.pmu-amount, .pmu-limitplan, .pmu-accrow, .pmu-provrow, .pmu-swfam, .pmu-setupnote, .pmu-factrow, .pmu-note, .pmu-agbeyond, .pmu-effsave > em, .pmu-effcost, .pmu-efflegend, .pmu-effspark, .pmu-kpitrend, .pmu-kpifoot, .pmu-cfoot';
+    '.pmu-amount, .pmu-limitplan, .pmu-accrow, .pmu-provrow, .pmu-swfam, .pmu-setupnote, .pmu-factrow, .pmu-agbeyond, .pmu-effsave > em, .pmu-effcost, .pmu-efflegend, .pmu-effspark, .pmu-kpitrend, .pmu-kpifoot, .pmu-cfoot';
   var fitQueue = [], fitScheduled = false, fitAgain = [], fitAgainScheduled = false;
   /* NOTES3-perf C1: while the engine builds a room in slices it may set PMU.content.fitDefer = true and call
      PMU.content.fitSlice() at the end of each slice (one batched read for the cards of that slice, inside the slice's
@@ -85019,17 +84960,6 @@ status: completed with warnings</pre>
       if (gh) { gh.closest('.sa-batch-group').classList.toggle('expanded'); }
     });
 
-    // ── Worktree filter bar ─────────────────────────────────────────
-    window.filterWorktrees = function(btn, filter) {
-      var bar = btn.closest('.sc-wt-filter-bar');
-      bar.querySelectorAll('.sc-wt-filter-btn').forEach(function(b) { b.classList.remove('active'); });
-      btn.classList.add('active');
-      var rows = btn.closest('.sc-accordion-body').querySelectorAll('.sc-wt-row');
-      rows.forEach(function(r) {
-        if (filter === 'all') { r.style.display = ''; }
-        else { r.style.display = r.getAttribute('data-wt-state') === filter ? '' : 'none'; }
-      });
-    };
 
     // ── File manager worktree root toggle ───────────────────────────
     window.toggleFileManagerRoot = function(btn) {
@@ -85946,30 +85876,6 @@ status: completed with warnings</pre>
             }
         }
 
-        // Open/Close Inspector Panel (Settings)
-        const bentoAction = e.target.closest('.bento-action');
-        if (bentoAction) {
-            const card = bentoAction.closest('.bento-card');
-            if (card) {
-                const viewId = card.getAttribute('data-inspector-view');
-                if (viewId) {
-                    const panel = document.querySelector('.settings-inspector-panel');
-                    const currentActive = document.querySelector('.inspector-view.active');
-                    if (panel && panel.classList.contains('open') && currentActive && currentActive.getAttribute('data-view') === viewId) {
-                        panel.classList.remove('open');
-                        return;
-                    }
-                    document.querySelectorAll('.inspector-view').forEach(view => {
-                        view.classList.toggle('active', view.getAttribute('data-view') === viewId);
-                    });
-                    if (panel) panel.classList.add('open');
-                }
-            }
-        }
-        const closeInspector = e.target.closest('.close-inspector');
-        if (closeInspector) {
-            document.querySelectorAll('.settings-inspector-panel').forEach(panel => panel.classList.remove('open'));
-        }
       });
 
       /* ── Browser Tab Switching in Editor Pane 2 ── */
@@ -86166,37 +86072,6 @@ status: completed with warnings</pre>
         });
       });
 
-      document.querySelectorAll('.page-settings .settings-tab').forEach(tab => {
-          tab.addEventListener('click', function(e) {
-              e.preventDefault();
-              // Update active state in sidebar
-              document.querySelectorAll('.page-settings .settings-tab').forEach(t => t.classList.remove('active'));
-              this.classList.add('active');
-              
-              const filter = this.getAttribute('data-filter');
-              const cards = document.querySelectorAll('.page-settings .bento-card');
-              
-              const applyFilter = () => {
-                  cards.forEach(card => {
-                      if (filter === 'all' || card.getAttribute('data-category') === filter) {
-                          card.classList.remove('filtered-out');
-                      } else {
-                          card.classList.add('filtered-out');
-                      }
-                  });
-              };
-
-              if (document.startViewTransition) {
-                  document.startViewTransition(applyFilter);
-              } else {
-                  applyFilter();
-              }
-          });
-      });
-
-      document.querySelectorAll('.page-settings .bento-card').forEach((card, index) => {
-          card.style.viewTransitionName = `bento-card-${index}`;
-      });
 
       // Theme Switcher — title-bar sprout menu (PM_THEME); keep change bridge for legacy listeners
       const themeSelect = document.getElementById('themeSelect');
@@ -86564,14 +86439,6 @@ status: completed with warnings</pre>
     el.classList.add(next.replace(/_/g, '-'));
   };
 
-  // ── LSP registry filtering ──
-  window.filterLSPRegistry = function(query) {
-    var rows = document.querySelectorAll('.lsp-registry-row');
-    var q = query.toLowerCase();
-    rows.forEach(function(row) {
-      row.style.display = (!q || row.textContent.toLowerCase().indexOf(q) !== -1) ? '' : 'none';
-    });
-  };
 
   // ── File context menu → add chip to chat ──
   window.addFileChipToChat = function(filename) {
@@ -118593,7 +118460,7 @@ html[data-theme^="retro"] #panel-settings .o55-goals-phase-n { border-radius: 0;
     var CONFIG = {
       /* vertical scrollers: the part-02 opt-in scroll-pane list
          (minus the bothAxes members below) */
-      vertical: '.primary-content, .page-projects, .panel-content, .message-stream, .messageStream, .chat-thread-list, .file-tree, .s4-shell, .s4-stage, .s4-panel-body, .s4-psm-body, .s4-rail, .pm6-usage-wrap [class*="scroll"], .dashboard-grid, .bento-card, .chat-dropdown-list, textarea, .browser-permissions-panel, .browser-console-pane, .browser-network-pane, .browser-evidence-pane, .wizard-step-panel, .wizard-annotation-drawer, .wizard-activity-log, .pm6-wiz-intake-scroll, .pm6-wiz-topic-list, .pm6-wiz-thread-body, .pm6-wiz-doc, .orch-tab-content, .orch-evidence-detail-body, .orch-rungraph-canvas, .orch-rungraph-table-wrap, .orch-rungraph-detail-body, .pm6-orch-w-body, .pm6-orch-pc-feed, .pm6-orch-pc-sidecol, .pm6-orch-seams, .pm6-orch-inspector-body, .pm6-orch-evlist, .pm6-orch-history, .settings-inspector-panel .inspector-body, .interview-sidebar, .interview-messages, .pm-inspector-drawer, .pm-debug-cell, .pm6-dash-scroll, .pm6-dash-catalog-panel, .pm6-proj-sheet, .pm6-sp-content, .pm6-bottom-empty, .context-detail-pane, .cdp-raw-view, .wt-test-output, .sa-work-stream, .sc-accordion-body, .sh-scroll',
+      vertical: '.primary-content, .page-projects, .panel-content, .message-stream, .messageStream, .chat-thread-list, .file-tree, .s4-shell, .s4-stage, .s4-panel-body, .s4-psm-body, .s4-rail, .pm6-usage-wrap [class*="scroll"], .dashboard-grid, .bento-card, .chat-dropdown-list, textarea, .browser-permissions-panel, .browser-console-pane, .browser-network-pane, .browser-evidence-pane, .wizard-step-panel, .wizard-annotation-drawer, .wizard-activity-log, .pm6-wiz-intake-scroll, .pm6-wiz-topic-list, .pm6-wiz-thread-body, .pm6-wiz-doc, .orch-tab-content, .orch-evidence-detail-body, .orch-rungraph-canvas, .orch-rungraph-table-wrap, .orch-rungraph-detail-body, .pm6-orch-w-body, .pm6-orch-pc-feed, .pm6-orch-pc-sidecol, .pm6-orch-seams, .pm6-orch-inspector-body, .pm6-orch-evlist, .pm6-orch-history, .interview-sidebar, .interview-messages, .pm-debug-cell, .pm6-dash-scroll, .pm6-dash-catalog-panel, .pm6-proj-sheet, .pm6-sp-content, .pm6-bottom-empty, .context-detail-pane, .cdp-raw-view, .wt-test-output, .sa-work-stream, .sc-accordion-body, .sh-scroll',
       /* DELIBERATE DIVERGENCE from the CSS :is() mirror: .sh-scroll is enrolled
          HERE (so it gets edge classes and Stage-B bands) but is deliberately
          ABSENT from the mask list in pm6-css-global. A mask-image makes its
@@ -118629,7 +118496,7 @@ html[data-theme^="retro"] #panel-settings .o55-goals-phase-n { border-radius: 0;
          Any scroller with a plate above it belongs in BOTH places. */
       skipTop: '.pm6-usage-tblwrap, .pm6-orch-ledger-wrap, .message-stream, .messageStream, ' +
                '.orch-tab-content, .pm6-orch-w-body, .pm6-usage-scroll, ' +
-               '.s4-panel-body, .s4-psm-body, .settings-inspector-panel .inspector-body, ' +
+               '.s4-panel-body, .s4-psm-body, ' +
                '.chat-thread-list, .page-projects, ' +
                '.pm6-wiz-doc, .pm6-wiz-topic-list, .sh-scroll, .browser-viewport, ' +
                /* the four sites frosted before this list existed: same
@@ -119095,7 +118962,6 @@ html[data-theme^="retro"] #panel-settings .o55-goals-phase-n { border-radius: 0;
       { host: '.pm6-usage-wrap',            head: '.pm6-usage-head',           v: '--pm6-usage-head-h' },
       { host: '.s4-panel',                  head: '.s4-panel-head',            v: '--pm6-s4-panel-head-h' },
       { host: '.s4-psm',                    head: '.s4-psm-tabs',              v: '--pm6-s4-psm-tabs-h' },
-      { host: '.settings-inspector-panel',  head: '.inspector-header',         v: '--pm6-insp-head-h' },
       { host: '.pm6-wiz-doc-overlay-panel', head: '.pm6-wiz-doc-overlay-head', v: '--pm6-wiz-docov-head-h' },
       { host: '.pm6-wiz-topics', head: '.pm6-wiz-col-head', v: '--pm6-wiz-colhead-h' },
       /* the plan preview header owns the frost and publishes the measured

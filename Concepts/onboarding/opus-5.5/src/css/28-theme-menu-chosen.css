@@ -6,10 +6,6 @@
    at 20 % in Friendly Light (their 11 % step is too faint for a small cell); Glass takes its selection frost with its
    1 px rim along the top edge, and Glass Light its near-opaque reading plate. The chosen word is the text colour. A
    hovered cell takes the quieter step (about half), so it never reads as a second chosen one.
-   Glass: old Glass paints every title-bar button with its chrome, !important (pm7-architectural-glass-final, "html
-   [data-theme^=glass] .title-bar button"), which gave each of the three cells its own chrome box, border and shadow, so
-   the chosen cell could not be told apart (measured 1.0:1 against its neighbours). The cells here step out of that
-   rule: plain, with the chosen one filled.
    Only the fill and the ink change: the joined cells, dividers and corners stay 24-no-pills.css's; Retro and NieR keep
    their reverse video (24-no-pills.css) and NieR its cursor ink block; under Liquid Glass, glass.css draws the menu. */
 html { --pm-tt-chosen: color-mix(in srgb, var(--text-primary) 11%, transparent); --pm-tt-hover: color-mix(in srgb, var(--text-primary) 5%, transparent); }
@@ -23,7 +19,3 @@ html:not([data-lg="on"]):not([data-o55-nier="on"]):is([data-theme^="basic"], [da
 html:not([data-lg="on"]):not([data-o55-nier="on"]):is([data-theme^="basic"], [data-theme^="friendly"], [data-theme^="glass"]) .pm6-tt-mode:not([aria-checked="true"]):hover {
   background: var(--pm-tt-hover); color: var(--text-primary);
 }
-/* Glass: out of old Glass's title-bar button chrome (see above) */
-html[data-theme^="glass"]:not([data-lg="on"]) .title-bar .pm6-tt-mode { background: transparent !important; border: 0 !important; box-shadow: none !important; }
-html[data-theme^="glass"]:not([data-lg="on"]) .title-bar .pm6-tt-mode[aria-checked="true"] { background: var(--pm-tt-chosen) !important; }
-html[data-theme^="glass"]:not([data-lg="on"]) .title-bar .pm6-tt-mode:not([aria-checked="true"]):hover { background: var(--pm-tt-hover) !important; }

@@ -117,10 +117,6 @@
     /* ---- theme accents (own block only) ---- */
     
     
-    [data-theme^="glass"] .pm6-art-row, [data-theme^="glass"] .pm6-notify-row {
-      background: var(--pm6-glass-step-2);
-      box-shadow: inset 0 1px 0 var(--glass-hairline);
-    }
     /* root dropdown = reading plate (no nested blur inside the pane) */
     /* friendly cozy: side-panel cards ride the mint (files) category */
     
@@ -128,11 +124,3 @@
     
     
     /* warnings = butter, errors/gates = coral */
-    
-    
-
-    @media (prefers-reduced-motion: reduce) {
-      
-      .pm6-notify-row { animation: none; }
-    }
-    
