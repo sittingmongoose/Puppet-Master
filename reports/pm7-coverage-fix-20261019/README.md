@@ -79,3 +79,9 @@ Paths in this table are relative to `F` (full root above); raw unions remain at 
 Reproduce with the committed portable lock (copy `deps.package.json` / `deps.package-lock.json` to `package.json` / `package-lock.json` outside the repository and run `npm ci --ignore-scripts --no-audit --no-fund`). Set `PM7_ANALYSIS_MODULES` to that installation's `node_modules`, run `F/rebuild-final.mjs` from this assigned checkout, then run `F/compare-css-ready.py`. The manifest retains exact runners, inputs, external tool corrections, and all hashes.
 
 **Cleanup:** no browsers, recordings, servers, or temporary worktrees were started. The analysis dependency installation was removed. Only cited evidence remains; the supplied unlanded worktree/branch and mailbox waiter remain for the lead.
+
+## F-coverage-fix: matrix wiring
+
+`matrix-followup.patch` applies to the reviewed external `A0-coverage/tools/matrix.mjs` (SHA-256 `351ec6ae376ea4239e04f7a37002c8872265661f3a9af350e8fc751202631802`). It binds both lazy helper exports and moves help ahead of Playwright resolution. The corrected external file is `4a1a2b0290ccc69d182de3168fb4cc45f5a3a07e081a6c10a6845fc07f77246d`.
+
+Browser-free replay: `python3 /mnt/Cursor/PuppetMaster-Evidence/scratch/2026-10-18-pm7-purge/F-coverage-fix/matrix-proof.py` from the checkout. It covers help, flag-off, exact-file flag-on, script-relative flag-on, and the reviewed regression with the real helper plus Playwright/CDP stubs. It does not test matrix cells. Receipt: `/mnt/Cursor/PuppetMaster-Evidence/scratch/2026-10-18-pm7-purge/A0-coverage/fix-followup-matrix-help.json`, SHA-256 `df53fe3cf777981667752389889485d27e04614cb7327d501b3c02705faacb88`. Both receipt before-files are retained in `/mnt/Cursor/PuppetMaster-Evidence/scratch/2026-10-18-pm7-purge/F-coverage-fix/input-snapshots`.
