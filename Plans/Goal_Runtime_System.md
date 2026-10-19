@@ -392,11 +392,11 @@ context_scope: goal_runtime_v2_record
 implementation_surfaces:
   - Plans/Goal_Runtime_System.md
   - Plans/storage-plan.md
-  - Concepts/chat-assistant-concepts/5.6 Pro/goals.js
 node_compile_hint:
   mode: goal_v2_record_contract
   create_worknodes: false
 source_lineage:
+  - "Concepts/chat-assistant-concepts/5.6 Pro/goals.js (5.6 Pro prototype; behaviour reference only)"
   - pm-assistant-implementation-2026-09-02-recovered:GOAL-001
   - pm-assistant-implementation-2026-09-02-recovered:GOAL-002
   - pm-assistant-implementation-2026-09-02-recovered:02_RUNTIME_AND_STORAGE_CONTRACTS.md#4.1
@@ -706,11 +706,11 @@ implementation_surfaces:
   - Plans/Goal_Runtime_System.md
   - Plans/assistant-chat-design.md
   - Plans/FinalGUISpec.md
-  - Concepts/chat-assistant-concepts/5.6 Pro/goals.js
 node_compile_hint:
   mode: goal_activity_projection
   create_worknodes: false
 source_lineage:
+  - "Concepts/chat-assistant-concepts/5.6 Pro/goals.js (5.6 Pro prototype; behaviour reference only)"
   - pm-assistant-implementation-2026-09-02-recovered:GOAL-010
   - pm-assistant-implementation-2026-09-02-recovered:04_GUI_IMPACTS.md#8
 preserved_exact_tokens:

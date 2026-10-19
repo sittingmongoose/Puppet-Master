@@ -384,11 +384,11 @@ context_scope: assistant_plan_build_control
 implementation_surfaces:
   - Plans/Assistant_Plan_Runtime.md
   - Plans/FinalGUISpec.md
-  - Concepts/chat-assistant-concepts/5.6 Pro/plans.js
 node_compile_hint:
   mode: assistant_plan_build_control
   create_worknodes: false
 source_lineage:
+  - "Concepts/chat-assistant-concepts/5.6 Pro/plans.js (5.6 Pro prototype; behaviour reference only)"
   - pm-assistant-implementation-2026-09-02-recovered:PLAN-007
   - pm-assistant-implementation-2026-09-02-recovered:04_GUI_IMPACTS.md#7.3
 preserved_exact_tokens:

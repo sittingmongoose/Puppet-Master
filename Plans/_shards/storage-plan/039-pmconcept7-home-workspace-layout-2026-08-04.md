@@ -2,9 +2,9 @@
 
 Source: `Plans/storage-plan.md`
 
-Source lines: L18092-L18179
+Source lines: L18092-L18178
 
-Source SHA256: `082af0f739b10d86a02d4fbb43fe67a64348788d21baed2acfd0a7635b31f689`
+Source SHA256: `78282d3b7d16a5e5da1df370b6e8455f7fd9de9ef1fe77eee550685787307322`
 
 ---
 
@@ -73,7 +73,6 @@ acceptance_criteria:
 - The record carries domain references only and never duplicates editor, terminal, Browser, Chat, or Dashboard internal authority.
 validation_surfaces:
 - python3 scripts/pm-implementation-readiness.py validate
-- node Concepts/pm7-tools/verify/home_workspace_matrix.mjs
 - python3 scripts/pm-plan-index.py validate
 risk_class: home_layout_persistence_drift
 reasoning_tier: standard

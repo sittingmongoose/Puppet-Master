@@ -2,19 +2,18 @@
 
 Source: `Plans/usage-feature.md`
 
-Source lines: L6441-L6574
+Source lines: L6441-L6573
 
-Source SHA256: `bbe0a2de3a014ce31764cb71c226ab9c513f203471d16a50e2d6a0bd5345cd33`
+Source SHA256: `c5ef8b5e3bc9d71f2a0b1d1f6f2a41c48af06695c2d153114ab6e0e7bf685b07`
 
 ---
 
 ## PMConcept7 Recovery Canonical Integration Addendum - 2026-08-27
 
 This addendum integrates the recovered PMConcept7 Usage workspace into the current Usage owner without
-disturbing the 2026-08-18 Usage accounting, disclosure, or policy-boundary canon above. Current source lineage
-is the pinned `Concepts/pm7-tools/base/PM7-base.html` plus the assertion-guarded T33-T41 pipeline in
-`Concepts/pm7-tools/build_pm7.py`; `Concepts/PMConcept7.html` is the protected generated output and is never an
-authored product or command owner. The current repo-local audit status is
+disturbing the 2026-08-18 Usage accounting, disclosure, or policy-boundary canon above.
+`Concepts/PMConcept7.html` illustrates this behavior and is never an authored product or command owner.
+The current repo-local audit status is
 `Plans/.audits/audit-20260829-001-pmconcept7-widget-followup/audit_report.json`; incomplete or failed runtime,
 visual, interaction, motion, or accessibility rows remain `verification_pending`, and static source presence or
 this Plans compile grants none of that audit credit. This addendum creates no WorkNodes, NodeSeeds, executable queues, implementation tasks,
@@ -102,9 +101,9 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
-  - "Concepts/pm7-tools/base/PM7-base.html (current recovered PMConcept7 source base; source-lineage-only)"
-  - "Concepts/pm7-tools/build_pm7.py (current assertion-guarded T33-T41 pipeline)"
-  - "Concepts/PMConcept7.html (protected generated output; verification input only; never hand-edit)"
+  - "Concepts/pm7-tools/base/PM7-base.html (historical PM7 prototype lineage only)"
+  - "Concepts/pm7-tools/build_pm7.py (historical PM7 prototype lineage only)"
+  - "Concepts/PMConcept7.html (look-and-behaviour reference only)"
 preserved_exact_tokens:
   - Overview
   - "Plans & limits"

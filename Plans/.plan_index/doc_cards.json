@@ -545,9 +545,6 @@
       "heading_count": 706,
       "implementation_surfaces": [
         "AGENTS.md",
-        "Concepts/chat-assistant-concepts/5.6 Pro/app.js",
-        "Concepts/chat-assistant-concepts/5.6 Pro/styles.css",
-        "Concepts/chat-assistant-concepts/5.6 Pro/transcript-records.js",
         "Plans/Architecture_Invariants.md",
         "Plans/Assistant_Plan_Runtime.md",
         "Plans/Automated_Testing_System.md",
@@ -623,7 +620,7 @@
         "future composer",
         "future run status UI"
       ],
-      "line_count": 27909,
+      "line_count": 27906,
       "path": "Plans/assistant-chat-design.md",
       "plan_unit_count": 486,
       "plan_unit_ids": [
@@ -1466,7 +1463,7 @@
         "worktree_storage",
         "wrong_chat_owner_or_unproved_dispatch"
       ],
-      "sha256": "b2c07a8d70ee9185cba6a5bfd4e9cdeb56ff589f5398bb48b9a9268fbb0226e9",
+      "sha256": "1829eabf9cf6bddd363c00509666e812dcc6ccfdd72b9251e3a5680a87edb75a",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 484,
@@ -1726,7 +1723,6 @@
       },
       "heading_count": 83,
       "implementation_surfaces": [
-        "Concepts/chat-assistant-concepts/5.6 Pro/plans.js",
         "Plans/Assistant_Plan_Runtime.md",
         "Plans/Collaborative_Workflows.md",
         "Plans/FinalGUISpec.md",
@@ -1786,7 +1782,7 @@
         "wrong_version_or_duplicate_scheduled_build",
         "wrong_version_or_hidden_build_state"
       ],
-      "sha256": "0902c7beecb969db7acec7d2338719eb765901d79ab21e527bddfdc46b002e43",
+      "sha256": "bc2e3e188b5abed1388c69341f1932df518025a7139dbb9da6560b89405885f1",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 18
@@ -3566,7 +3562,6 @@
       },
       "heading_count": 113,
       "implementation_surfaces": [
-        "Concepts/chat-assistant-concepts/5.6 Pro/collaboration.js",
         "Plans/Assistant_Plan_Runtime.md",
         "Plans/Automated_Testing_System.md",
         "Plans/CLI_Bridged_Providers.md",
@@ -3685,7 +3680,7 @@
         "silent_stand_in_for_chosen_model",
         "specialist_replaces_core_role"
       ],
-      "sha256": "9c0a26fe3d28c7f2231f418e666ce5ff6969ae9c8a40ceaeead14c1b892a2e87",
+      "sha256": "a17e0f1a7d0e5135b8dc8916154efe55486ff77810018c21a337a5899a398971",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 40
@@ -9220,7 +9215,6 @@
       },
       "heading_count": 210,
       "implementation_surfaces": [
-        "Concepts/chat-assistant-concepts/5.6 Pro/goals.js",
         "Plans/.plan_index",
         "Plans/00-plans-index.md",
         "Plans/Assistant_Plan_Runtime.md",
@@ -9453,7 +9447,7 @@
         "workflow_activation_original_source_or_lifetime_drift",
         "workflow_state_absorbed_into_goal"
       ],
-      "sha256": "8b82a9356ecbf3567f6902795b84914645b7d6ada4e187d1702ccf68016c5004",
+      "sha256": "735482f2fd785f0a576872a4f35a84b21128fd67c2cc4981d33c1558be52a7af",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 74,
@@ -16501,7 +16495,6 @@
       },
       "heading_count": 55,
       "implementation_surfaces": [
-        "Concepts/chat-assistant-concepts/5.6 Pro/scheduling.js",
         "Plans/Assistant_Plan_Runtime.md",
         "Plans/Automated_Testing_System.md",
         "Plans/Collaborative_Workflows.md",
@@ -16565,7 +16558,7 @@
         "unsafe_pause_or_dst_double_fire",
         "wrong_plan_version_built_or_duplicate_nightly_build"
       ],
-      "sha256": "60cd1584b2d9c4bd39c647b66174008e8e28658c1feb4e662bc3c63f50add3ee",
+      "sha256": "27d663f00218d89da92597d2be094286e3a887f06f278f1219bc1b13b37bfab3",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 18
@@ -18221,7 +18214,7 @@
         "future visualizer artifact records",
         "scripts/pm-implementation-readiness.py"
       ],
-      "line_count": 28102,
+      "line_count": 28099,
       "path": "Plans/storage-plan.md",
       "plan_unit_count": 321,
       "plan_unit_ids": [
@@ -18653,7 +18646,7 @@
         "usage_view_state_becomes_second_policy_or_preview_store",
         "workflow_activation_original_source_or_lifetime_drift"
       ],
-      "sha256": "082af0f739b10d86a02d4fbb43fe67a64348788d21baed2acfd0a7635b31f689",
+      "sha256": "78282d3b7d16a5e5da1df370b6e8455f7fd9de9ef1fe77eee550685787307322",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 317,
@@ -18676,7 +18669,6 @@
         "127MB metadata fixture is rejected/segmented before UI or model context load.",
         "Alias/rename/provider-move persistence fixtures",
         "Closing/crashing PM reaps child helpers or marks them orphaned for cleanup.",
-        "Concepts/pm7-tools/verify/home_workspace_matrix.mjs",
         "Context compiler emits compact summaries plus refs, not raw massive JSON.",
         "DRY setting and receipt persistence fixtures",
         "Draft 2020-12 validation of Plans/home_workspace_layout.schema.json",
@@ -18908,7 +18900,6 @@
         "git diff --check",
         "independent complete original-source/schema/role preservation audit",
         "manual storage owner-section review",
-        "node Concepts/pm7-tools/verify/home_workspace_matrix.mjs",
         "pre-build negative fixtures for arithmetic, timestamps, transitions, rollback, data-risk, and secret/path rejection",
         "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard",
         "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260626-001-feature-name",
@@ -19052,7 +19043,6 @@
       },
       "heading_count": 45,
       "implementation_surfaces": [
-        "Concepts/chat-assistant-concepts/5.6 Pro/todos.js",
         "Plans/CLI_Bridged_Providers.md",
         "Plans/Contracts_V0.md",
         "Plans/Executor_Protocol.md",
@@ -19098,7 +19088,7 @@
         "verification_status_reintroduced",
         "whole_list_model_authority"
       ],
-      "sha256": "dff255cb29cceef3a1b6239e39f624d2b39854aabf14e1fd74538f6bfd4bbe4d",
+      "sha256": "3389e4974ac876900f5548447e20648e73b82cf8892d8dcb7418f6c748d3754e",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 12
@@ -20111,7 +20101,7 @@
         "Plans/usage_run_estimate_contracts.schema.json",
         "future usage events"
       ],
-      "line_count": 7542,
+      "line_count": 7541,
       "path": "Plans/usage-feature.md",
       "plan_unit_count": 107,
       "plan_unit_ids": [
@@ -20264,7 +20254,7 @@
         "usage_workspace_state_orphan_or_preview_persistence",
         "vision_usage_attribution_gap"
       ],
-      "sha256": "bbe0a2de3a014ce31764cb71c226ab9c513f203471d16a50e2d6a0bd5345cd33",
+      "sha256": "c5ef8b5e3bc9d71f2a0b1d1f6f2a41c48af06695c2d153114ab6e0e7bf685b07",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 107
@@ -20373,7 +20363,7 @@
         "Plans/storage-plan.md",
         "Plans/usage-feature.md"
       ],
-      "line_count": 2066,
+      "line_count": 2065,
       "path": "Plans/Widget_System.md",
       "plan_unit_count": 21,
       "plan_unit_ids": [
@@ -20414,7 +20404,7 @@
         "widget_preview_leaks_or_multi_commit",
         "widget_system_drift"
       ],
-      "sha256": "7fa1af288af8d9fdcdeab18d1f35b970160c3d6b863011cb720d9e9b96097cfa",
+      "sha256": "db30f1ae130c83d289a9fb65d96b33a32fa853b3bcd321c3d0d1334857432214",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 21
@@ -20446,7 +20436,7 @@
         "tests/fixtures/usage_gui/presentation/persistence_migration_matrix.json (static contract fixture only)",
         "tests/fixtures/usage_gui/presentation/room_disclosure_matrix.json (static contract fixture only)",
         "tests/fixtures/usage_gui/presentation/widget_content_tiers.json (static contract fixture only)",
-        "verification_pending: fresh exact-T43 live occupied-neighbor preview, settlement-parity, cancellation, failure, and film receipts under Plans/.audits/audit-20260830-001-pmconcept7-live-resize-preview/; readiness_claim=false"
+        "verification_pending: fresh artifact-bound live occupied-neighbor preview, settlement-parity, cancellation, failure, and motion evidence; readiness_claim=false"
       ]
     },
     {
@@ -20933,7 +20923,7 @@
       ]
     }
   ],
-  "generated_at_utc": "2026-10-19T00:55:08Z",
+  "generated_at_utc": "2026-10-19T01:00:00Z",
   "schema_id": "pm.plan_index.doc_cards.v1",
   "source_scope": "top-level live Plans/*.md; excludes ledgers, generated shards, evidence, and pipeline artifacts",
   "summary": {
