@@ -26,7 +26,7 @@ function restoreProjectDefaults(request) {
 }
 
 /* SP-333 / SSYS-054: wallpaper custody stays with this Project Settings adapter.
-   The old browser-wide preference is only a migration input, never a current writer. */
+   The old browser-wide preference is a one-time migration input, never a current writer. */
 function validWallpaper(value) {
   if (value === 'look') return true;
   var catalog = window.PM_WALLPAPERS_CATALOG;
@@ -93,5 +93,19 @@ function migrateGlassWallpaper(preference) {
   var explicit = has.call(settings, id), old = has.call(settings, legacy);
   var value = validWallpaper(settings[id]) ? settings[id] : (!explicit && validWallpaper(preference) ? preference : 'look');
   if (!old && (!explicit || validWallpaper(settings[id])) && (explicit || !validWallpaper(preference))) return { ok: true, value: value, migrated: false };
-  return writeProjectWallpaper({ project_id: context.project_id, value: value, retire_legacy: old });
+  var result = writeProjectWallpaper({ project_id: context.project_id, value: value, retire_legacy: old });
+  if (result.ok && !explicit && validWallpaper(preference)) {
+    /* Consume only after owner acceptance/readback, so later Projects use their own default. */
+    var key = 'pm-lg-wallpaper';
+    try {
+      localStorage.removeItem(key);
+      if (localStorage.getItem(key) !== null) throw new Error('Legacy wallpaper cleanup was not verified.');
+    } catch (cleanupError) {
+      /* A consumed marker in the same legacy slot also prevents fan-out if removal is unavailable. */
+      var consumed = '{"consumed":true}';
+      try { localStorage.setItem(key, consumed); if (localStorage.getItem(key) !== consumed) result.cleanup_pending = true; }
+      catch (markerError) { result.cleanup_pending = true; }
+    }
+  }
+  return result;
 }

@@ -7,7 +7,7 @@
  *
  * The shared contract (CONTRACT.md), which Glass's glass.js already follows, so the two never disagree:
  *   - the choice is the active Project's general.visual.wallpaper ('look' or an id), through PM7_SETTINGS_TOME;
- *     the old localStorage['pm-lg-wallpaper'] can seed only an absent Project choice; ?lgwall= is a one-visit override;
+ *     the old localStorage['pm-lg-wallpaper'] can seed an absent Project choice once; ?lgwall= is a one-visit override;
  *   - <html data-lg-wall="<id>"> names the wallpaper on show; data-lg-wall-any is present when a look other than Glass
  *     shows one; both are computed exactly as glass.js's applyWall computes them;
  *   - the images are CSS variables --lg-wall-<id>-<dark|light> (and thumbnails --wpk-t-<id>-<dark|light>), and the
@@ -523,7 +523,7 @@
     }).observe(document.body, { childList: true, subtree: true });
     watchRetainPanel(); mount();
   }
-  /* Only the active Project follows another window's choice. The global key is a read-only migration input. */
+  /* Only the active Project follows another window's choice. The global key is consumed after a verified seed. */
   window.addEventListener('storage', function (e) {
     var current = context(), projectKey = current.project_id && 'pm7:settings:tome-tabs:v1:' + encodeURIComponent(current.project_id);
     if (e.key === projectKey || e.key === KEY || e.key === null) refresh();
