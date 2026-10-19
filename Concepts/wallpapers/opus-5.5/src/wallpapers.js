@@ -60,7 +60,7 @@
       stale = prior != null && !valid(prior) ? { value: prior, at: new Date().toISOString() } : null;
       var result = tome && tome.migrateGlassWallpaper && tome.migrateGlassWallpaper(saved());
       current = context();
-      migrationKey = result && result.ok && current.snapshot && current.snapshot.settings ? fingerprint(current) : '';
+      migrationKey = result && result.ok && !result.retryable && current.snapshot && current.snapshot.settings ? fingerprint(current) : '';
     }
     var c = current.snapshot && current.snapshot.settings && current.snapshot.settings['general.visual.wallpaper'];
     return valid(c) ? c : 'look';

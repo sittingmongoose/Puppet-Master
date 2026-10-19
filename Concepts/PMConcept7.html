@@ -90851,26 +90851,35 @@ function writeProjectWallpaper(request) {
     return { ok: false, reason: 'The Project wallpaper could not be saved and verified.' };
   }
 }
+var pendingWallpaperSeed = null;
 function migrateGlassWallpaper(preference) {
   var context = wallpaperSnapshot(), snapshot = context.snapshot, id = 'general.visual.wallpaper', legacy = 'general.visual.glass-background-mode';
   if (!context.project_id) return { ok: true, value: 'look', ephemeral: true };
   if (!snapshot || !snapshot.settings) return { ok: false, retryable: true, reason: 'The Project Settings snapshot is not available yet.' };
   var settings = snapshot.settings, has = Object.prototype.hasOwnProperty;
   var explicit = has.call(settings, id), old = has.call(settings, legacy);
-  var value = validWallpaper(settings[id]) ? settings[id] : (!explicit && validWallpaper(preference) ? preference : 'look');
-  if (!old && (!explicit || validWallpaper(settings[id])) && (explicit || !validWallpaper(preference))) return { ok: true, value: value, migrated: false };
-  var result = writeProjectWallpaper({ project_id: context.project_id, value: value, retire_legacy: old });
-  if (result.ok && !explicit && validWallpaper(preference)) {
+  var offered = validWallpaper(preference) && !(pendingWallpaperSeed && pendingWallpaperSeed.verified && pendingWallpaperSeed.value === preference);
+  var value = validWallpaper(settings[id]) ? settings[id] : (!explicit && offered ? preference : 'look');
+  /* A failed readback can leave the seed stored; its next verified read must still consume the old input. */
+  if (!explicit && offered) pendingWallpaperSeed = { project_id: context.project_id, value: value, verified: false };
+  var result;
+  if (old && window.PM_SETTINGS_REGISTRY && explicit && validWallpaper(settings[id])) result = { ok: true, value: value, migrated: false, cleanup_pending: true };
+  else if (!old && (!explicit || validWallpaper(settings[id])) && (explicit || !offered)) result = { ok: true, value: value, migrated: false };
+  else result = writeProjectWallpaper({ project_id: context.project_id, value: value, retire_legacy: old });
+  if (result.ok && pendingWallpaperSeed && (pendingWallpaperSeed.verified || (pendingWallpaperSeed.project_id === context.project_id && pendingWallpaperSeed.value === value))) {
+    pendingWallpaperSeed.verified = true;
     /* Consume only after owner acceptance/readback, so later Projects use their own default. */
     var key = 'pm-lg-wallpaper';
     try {
       localStorage.removeItem(key);
       if (localStorage.getItem(key) !== null) throw new Error('Legacy wallpaper cleanup was not verified.');
+      pendingWallpaperSeed = null;
     } catch (cleanupError) {
       /* A consumed marker in the same legacy slot also prevents fan-out if removal is unavailable. */
       var consumed = '{"consumed":true}';
-      try { localStorage.setItem(key, consumed); if (localStorage.getItem(key) !== consumed) result.cleanup_pending = true; }
-      catch (markerError) { result.cleanup_pending = true; }
+      try { localStorage.setItem(key, consumed); if (localStorage.getItem(key) === consumed) pendingWallpaperSeed = null; }
+      catch (markerError) {}
+      if (pendingWallpaperSeed) { result.cleanup_pending = true; result.retryable = true; }
     }
   }
   return result;
@@ -223566,7 +223575,7 @@ window.PM_WALLPAPERS_CATALOG = {"version":1,"families":[{"family":"glass","label
       stale = prior != null && !valid(prior) ? { value: prior, at: new Date().toISOString() } : null;
       var result = tome && tome.migrateGlassWallpaper && tome.migrateGlassWallpaper(saved());
       current = context();
-      migrationKey = result && result.ok && current.snapshot && current.snapshot.settings ? fingerprint(current) : '';
+      migrationKey = result && result.ok && !result.retryable && current.snapshot && current.snapshot.settings ? fingerprint(current) : '';
     }
     var c = current.snapshot && current.snapshot.settings && current.snapshot.settings['general.visual.wallpaper'];
     return valid(c) ? c : 'look';
