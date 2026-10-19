@@ -5553,6 +5553,8 @@ production-intent, and dispatch invariants remain in `Plans/Commands_System.md`,
 `Plans/UI_Wiring_Rules.md`. These are static canonical targets, not claims of
 native handlers, runtime success, readiness, or Slint certification.
 
+`Plans/touch_closure_action_sources.json`, owned by `Plans/UI_Wiring_Rules.md#UIW-017`, supplies the bounded static system-local, Guided Tour, and required Home layout action census for independent Touch discovery. Its action lists reference the existing semantic owners and are checked against their contracts, the command catalog, and the Touch crosswalk; the file grants no command, handler, runtime, or readiness authority. This live map registers it as a machine input.
+
 ### 0PI-068 - 203-Command Touch Closure Owner And Machine-Registry Map
 
 ```yaml
@@ -5570,7 +5572,10 @@ canonical_text: >-
   production-intent entries. The primary-command, alias, local-action,
   presentation, row, profile, exclusion, and production-intent denominators are
   the ones scripts/pm-touch-closure-verify.py resolves and reports, and this map
-  carries no literal census.
+  carries no literal census. Plans/touch_closure_action_sources.json is the
+  UIW-017-owned bounded static action census for independent Touch discovery,
+  registered here as a machine input without granting command, handler, runtime,
+  or readiness authority.
   Dedicated server-gap and Touch Closure validators fail closed on drift. Every row remains
   static planning/contract evidence until independently implemented and verified.
 gui_related: true
@@ -5580,6 +5585,7 @@ depends_on: [0PI-067, C-051, DR-041, CV-326, ATS-042, CS-074, UCC-152, WM-051, U
 unblocks: []
 acceptance_criteria:
   - "All eleven domain-owner documents and all four central owner documents are explicitly indexed and dependency-closed."
+  - "Plans/touch_closure_action_sources.json is registered as the UIW-017-owned independent static action census; its semantic-owner references and bounded discovery role remain explicit."
   - "Plans/Multi-Account_Connection_Spec.md is an explicit indexed owner path rather than an implicit command-row reference."
   - "The primary-command, alias, local-action, presentation-row, total-row, profile, and production-intent denominators are read from the report scripts/pm-touch-closure-verify.py emits; exactly one primary command is blocked and every other one is actionable, and no literal census is carried in canon."
   - "Every actionable primary command has exactly one production-intent route and one sole future-handler identity; the blocked token has neither."
@@ -5613,6 +5619,7 @@ implementation_surfaces:
   - Plans/Wiring_Matrix.md
   - Plans/UI_Wiring_Rules.md
   - Plans/touch_closure.json
+  - Plans/touch_closure_action_sources.json
   - Plans/Wiring_Matrix.production.json
 node_compile_hint: {mode: static_owner_and_machine_registry_map, create_worknodes: false, create_nodeseeds: false}
 source_lineage:
@@ -5621,7 +5628,7 @@ source_lineage:
   - Plans/Automated_Testing_System.md#ats-042---touch-and-server-command-gap-aggregate-gates
   - Plans/server_command_gap_adjudication.json
   - Plans/touch_closure.json
-preserved_exact_tokens: [Plans/Multi-Account_Connection_Spec.md, cmd.artifacts.open_panel]
+preserved_exact_tokens: [Plans/Multi-Account_Connection_Spec.md, cmd.artifacts.open_panel, Plans/touch_closure_action_sources.json]
 negative_constraints:
   - "Do not create a new aggregate runtime owner from this cross-document map."
   - "Do not wire the blocked false-inventory token or normalization-only aliases as peers."

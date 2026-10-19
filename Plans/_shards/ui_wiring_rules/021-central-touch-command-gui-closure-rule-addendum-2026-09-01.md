@@ -2,9 +2,9 @@
 
 Source: `Plans/UI_Wiring_Rules.md`
 
-Source lines: L1180-L1211
+Source lines: L1180-L1215
 
-Source SHA256: `e60068790369830fbff891af3c9af4b50784ddfde1ebc184447a31c0beb35326`
+Source SHA256: `73e8f9a1f478dcb4850d61b081b742accbd042cf6bafd8ace4d2b22e985f1026`
 
 ---
 
@@ -21,7 +21,9 @@ plan_unit_id: UIW-017
 unit_type: gui_wiring_rule
 status: accepted
 owner_doc: Plans/UI_Wiring_Rules.md
-canonical_text: Every actionable Touch primary command must have production wiring and exactly one handler identity across all GUI consumers; aliases and blocked false inventory must have no peer wiring, and reverse coverage must not create synthetic controls.
+canonical_text: >-
+  Every actionable Touch primary command must have production wiring and exactly one handler identity across all GUI consumers; aliases and blocked false inventory must have no peer wiring, and reverse coverage must not create synthetic controls.
+  UIW-017 owns Plans/touch_closure_action_sources.json, the bounded static product action census used by Touch discovery independently of the Touch crosswalk and production wiring. Its system-local, Guided Tour, and required Home layout action lists reference the existing semantic owners. The census is not a command catalog, concept build input, native execution evidence, or readiness admission.
 gui_related: true
 gui_classification_reason: The rule closes bidirectional command-to-GUI reachability, accessibility, disabled behavior, and focus return.
 depends_on: [UIW-016, CS-074, UCC-152, WM-051]
@@ -30,13 +32,15 @@ acceptance_criteria:
 - The Touch verifier fails on missing production coverage, competing handler identities, alias peer rows, blocked-token wiring, missing GUI routes, or stale profile refs.
 - Rebinding uses exact semantic equivalence and never relabels a nearby non-equivalent action.
 - Static, concept-simulated, and native-runtime claims remain separate.
-validation_surfaces: [python3 scripts/pm-touch-closure-verify.py --json]
+- Plans/touch_closure_action_sources.json remains an independent static census; the verifier rejects action drift and unresolved semantic-owner references against the existing schema, catalog, and Touch contracts.
+validation_surfaces: [Plans/touch_closure_action_sources.json, python3 scripts/pm-touch-closure-verify.py --json]
 risk_class: gui_command_reverse_coverage
 reasoning_tier: high
 context_scope: touch_command_gui_closure
-implementation_surfaces: [Plans/UI_Wiring_Rules.md, Plans/touch_closure.json, scripts/pm-touch-closure-verify.py]
+implementation_surfaces: [Plans/UI_Wiring_Rules.md, Plans/touch_closure.json, Plans/touch_closure_action_sources.json, scripts/pm-touch-closure-verify.py]
 node_compile_hint: {mode: exact_touch_gui_closure, create_worknodes: false, create_nodeseeds: false}
 source_lineage: [Plans/Wiring_Matrix.md#WM-051]
+preserved_exact_tokens: [Plans/touch_closure_action_sources.json]
 negative_constraints: [Do not mint false domain commands for ephemeral presentation., Do not invent synthetic controls solely to satisfy a census.]
 compile_disposition: extend_existing_owner
 ```

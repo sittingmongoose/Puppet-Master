@@ -71,10 +71,11 @@
         "Plans/runtime_integration_disposition.json",
         "Plans/storage-plan.md",
         "Plans/touch_closure.json",
+        "Plans/touch_closure_action_sources.json",
         "Plans/usage-feature.md",
         "scripts/pm-audit-closure.py"
       ],
-      "line_count": 6105,
+      "line_count": 6112,
       "path": "Plans/00-plans-index.md",
       "plan_unit_count": 68,
       "plan_unit_ids": [
@@ -214,7 +215,7 @@
         "visible_source_control_surface_routing",
         "web_firecrawl_owner_set"
       ],
-      "sha256": "2c53e9627f830b93a3cb44a5bef9b161f709321c36fdfa4b1a0bb0f6745782b4",
+      "sha256": "4e0c7b43464d83a111401d41417e1c1b99ee6337347e14b9ddc44e449805f448",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 68
@@ -19841,10 +19842,11 @@
         "Plans/product_onboarding_contracts.schema.json",
         "Plans/settings_system_contract_fixtures.json",
         "Plans/touch_closure.json",
+        "Plans/touch_closure_action_sources.json",
         "scripts/pm-plans-verify.py",
         "scripts/pm-touch-closure-verify.py"
       ],
-      "line_count": 2525,
+      "line_count": 2529,
       "path": "Plans/UI_Wiring_Rules.md",
       "plan_unit_count": 32,
       "plan_unit_ids": [
@@ -19917,7 +19919,7 @@
         "version_exact_opener_drift",
         "wiring_duplication_or_teardown_leak"
       ],
-      "sha256": "e60068790369830fbff891af3c9af4b50784ddfde1ebc184447a31c0beb35326",
+      "sha256": "73e8f9a1f478dcb4850d61b081b742accbd042cf6bafd8ace4d2b22e985f1026",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 32
@@ -19958,6 +19960,7 @@
         "Plans/product_onboarding_contracts.schema.json",
         "Plans/settings_system_contract_fixtures.json",
         "Plans/touch_closure.json",
+        "Plans/touch_closure_action_sources.json",
         "Plans/ui_command_response_fixtures.json",
         "UI purity check",
         "UI purity lints",
@@ -20841,7 +20844,7 @@
       ]
     }
   ],
-  "generated_at_utc": "2026-10-19T05:44:06Z",
+  "generated_at_utc": "2026-10-19T05:47:05Z",
   "schema_id": "pm.plan_index.doc_cards.v1",
   "source_scope": "top-level live Plans/*.md; excludes ledgers, generated shards, evidence, and pipeline artifacts",
   "summary": {
