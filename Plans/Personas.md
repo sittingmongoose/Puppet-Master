@@ -3531,6 +3531,8 @@ Wonderer explores tethered adjacent possibilities and produces **leads**. A lead
 connection back to the seed, so lateral exploration stays tethered and does not drift. A lead is
 not a final answer and is not an evidence claim; Wonderer does not conclude.
 
+<a id="wonv-003..004-default-abstention-retained-voice"></a>
+
 ### WONV-003..004 — Never votes, delivers passes
 
 An active Wonderer never votes in a BrainStorm: it abstains and is excluded from the quorum and

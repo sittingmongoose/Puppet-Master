@@ -2,9 +2,9 @@
 
 Source: `Plans/Personas.md`
 
-Source lines: L3516-L3552
+Source lines: L3516-L3554
 
-Source SHA256: `35f253eabcc7cce9987c55d5d2100af7cf78ee1a6df81f9d71214639ab2f2317`
+Source SHA256: `f550e21e1654e8c2bbc5b73ed8947b5f71c8cfb3d5dc86fa40413db167463298`
 
 ---
 
@@ -25,6 +25,8 @@ profile config switcher, and no profile runtime is implemented or imported.
 Wonderer explores tethered adjacent possibilities and produces **leads**. A lead explains its
 connection back to the seed, so lateral exploration stays tethered and does not drift. A lead is
 not a final answer and is not an evidence claim; Wonderer does not conclude.
+
+<a id="wonv-003..004-default-abstention-retained-voice"></a>
 
 ### WONV-003..004 — Never votes, delivers passes
 
