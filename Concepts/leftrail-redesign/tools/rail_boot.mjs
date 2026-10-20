@@ -1,9 +1,9 @@
 /* Rail acceptance check: boots PMConcept7.html (or a private comparison build with --page), whose published rail is
  * concept D) over file:// (?o55=off) in GPU Chrome on the VM (one agent-browser headless session per boot, driven
  * through playwright-core connectOverCDP), and for each concept checks the panels by real clicks against the reference
- * page: a private build_rail.py --out build in a temporary directory, opened with ?rail=current so D never mounts.
- * It is built once per run and removed on exit. --page and --ref take a file, optionally with a query
- * (`--ref 'rail.html?rail=current'`); ?o55=off is always added. Checks:
+ * page: by default, a private build_rail.py --out build in a temporary directory, opened with ?rail=current so D never
+ * mounts. It is built once per run and removed on exit; --ref skips the build. --page and --ref take a file, optionally
+ * with a query (`--ref 'rail.html?rail=current'`); ?o55=off is always added. Checks:
  *   - no new console errors; the concept view replaces the original panel when its icon is clicked. A skin concept
  *     (registered with skin: true, today d "Polish"; 'current' is checked the same way) keeps the shell's own panels
  *     instead: the original panel must stay visible and its reach is read straight off it, not crawled;
@@ -30,12 +30,15 @@
  * renderer), prints a summary, exits 1 when a check fails. --shots writes rail screenshots per concept x theme x panel
  * into <out-dir>/shots (review media: delete after review). Every agent-browser session is stopped when its page is
  * done (finally, SIGINT, SIGTERM); the private reference directory is removed too, and profiles are deleted by
- * agent-browser at stop. Running on the GPU is mandatory:
+ * agent-browser at stop.
+ * --coverage samples only boots of the page under test. Reference boots are sampled only when the reference resolves
+ * to the same file as the page; the default private build and any other --ref file are never sampled.
+ * Running on the GPU is mandatory:
  * --disable-gpu and swiftshader flags are forbidden, and a browser whose WebGL UNMASKED_RENDERER_WEBGL names
  * SwiftShader or llvmpipe aborts the run with the failing check `not on the GPU: <renderer>`. */
 import { execFileSync } from 'node:child_process';
 import { createRequire } from 'node:module';
-import { existsSync, mkdirSync, mkdtempSync, rmSync, writeFileSync } from 'node:fs';
+import { existsSync, mkdirSync, mkdtempSync, realpathSync, rmSync, writeFileSync } from 'node:fs';
 import { pathToFileURL, fileURLToPath } from 'node:url';
 import { resolve, join, dirname } from 'node:path';
 import { homedir, tmpdir } from 'node:os';
@@ -110,12 +113,12 @@ function buildReference() {
   const file = join(refDir, 'rail.html');
   try {
     execFileSync('python3', [join(here, 'build_rail.py'), '--out', file], {
-      encoding: 'utf8', stdio: ['ignore', 'pipe', 'pipe'],
+      encoding: 'utf8', stdio: ['ignore', 'inherit', 'inherit'],
       env: { ...process.env, PYTHONDONTWRITEBYTECODE: '1' },
     });
   } catch (e) {
     console.error('rail boot: reference build failed');
-    console.error(String(e.stderr || e.message).trim());
+    console.error(e.message);
     process.exit(1);
   }
   const ref = target(file + '?rail=current');
@@ -414,7 +417,7 @@ async function bootPage(tgt, { width = 1600, height = 1000 } = {}) {
     page.on('pageerror', (e) => b.errors.push('PAGEERROR ' + String((e && e.message) || e).slice(0, 300)));
     page.on('console', (m) => { if (m.type() === 'error') b.errors.push('CONSOLE ' + m.text().slice(0, 300)); });
     const cdp = await ctx.newCDPSession(page);
-    if (coverageFile) { await beginCoverage(cdp); b.coverage = cdp; }
+    if (coverageFile && realpathSync(tgt.file) === realpathSync(PAGE.file)) { await beginCoverage(cdp); b.coverage = cdp; }
     await cdp.send('Emulation.setDeviceMetricsOverride', { width, height, deviceScaleFactor: 1, mobile: false });
     await page.goto(pathToFileURL(tgt.file).href + '?o55=off' + (tgt.query ? '&' + tgt.query : ''), { waitUntil: 'load', timeout: 60000 });
     b.gpu = await page.evaluate(GPU_PROBE);
@@ -586,7 +589,7 @@ function shortDiff(a, b) {
   const clip = (s) => (s === undefined ? '(end)' : s.replace(/\s+/g, ' ').slice(0, 160));
   return { lines: count, at: first, before: clip(A.slice(first, first + 2).join('')), after: clip(B.slice(first, first + 2).join('')) };
 }
-/* --restore baseline: the reference's own rail (Current, D never mounted when the reference is the review copy at
+/* --restore baseline: the reference's own rail (Current, D never mounted in the default private build at
    ?rail=current) in one theme, walked and snapshotted exactly as the page's first snapshot is */
 async function refRailSnapshot(t) {
   const b = await bootPage(REF);

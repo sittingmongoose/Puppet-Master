@@ -21,8 +21,10 @@ The current selector/visual diagnostics `active_descendant_guard.mjs`,
 `art_joints.mjs`, `nier_hue_audit.mjs`, and `onboarding_label_check.mjs` also accept
 the switch. The label comparison covers its candidate only.
 The boot comparison tools cover only their tested page, excluding the historical
-reference. For `rail_boot`, the tested page and reference must belong to the same
-page union; use a separate run/file for the published and review pages.
+reference. For `rail_boot`, `--coverage` samples only boots of the page under test.
+Reference boots are sampled only when the reference resolves to the same file as
+the page; the default private build and any other `--ref` file are never sampled.
+Use a separate run/file for each page under test.
 
 For the raw CDP driver, pass `coverageFile` to `chrome.mjs`'s `launch()` or
 `drive.mjs`'s `open()`. For an attached Playwright page, call

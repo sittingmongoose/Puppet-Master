@@ -75,7 +75,8 @@ python3 Concepts/leftrail-redesign/tools/parity.py --list       # fixture comple
 node Concepts/leftrail-redesign/tools/rail_boot.mjs <out-dir> [--page P[?query]] [--ref R[?query]]
      [--concepts a,b,c,d,current|none] [--panels files,search] [--themes all|basic-dark,...] [--quick] [--shots] [--restore]
      # page: PMConcept7.html by default, concepts d,current
-     # ref: private build_rail.py --out build in a temporary directory, opened with ?rail=current; built once per run
+     # ref: by default, private build_rail.py --out build in a temporary directory, opened with ?rail=current; built once per run
+     # --ref PATH[?query] skips the private build
      # private comparison: --page /tmp/rail.html --concepts a,b,c,d --ref '/tmp/rail.html?rail=current'
      # the reference never mounts D; its temporary directory is removed on exit, SIGINT and SIGTERM
      # d and current: all nine panels by default; a, b, c: files, source, docker; --panels overrides both;
