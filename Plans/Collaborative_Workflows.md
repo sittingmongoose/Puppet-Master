@@ -189,7 +189,7 @@ Turn policy is deterministic and replayable. `moderated` routes each turn throug
 
 The user interacts through `Ask Everyone`, addressing selected participants, `@mention` of a participant, reply or thread where the policy supports it, adding or removing a participant through controlled reconfiguration, `Next Round`, `Pause`, `Resume`, `Cancel`, `Summarize Now`, and `End discussion`, which ends the room as `completed` through `cmd.chat_room.end`. User messages reach the room through the ordinary targeted composer and are delivered to the addressed participants exactly once. A message sent while a round is in progress is queued for the next round unless the user sends it now to steer the round without interrupting it; a message sent now is read first by the next participant to speak, and every later speaker in that round sees it (CWR-024, DL-112, 2026-09-27). Reconfiguration that adds or removes a participant bumps the definition revision and is recorded in the transcript as a `system` message; it never rewrites prior transcript attribution. After the last configured round the room enters `waiting` and shows `This room used all its rounds`; it remains available for `Add 2 more rounds`, `Summarize Now`, or `End discussion`, and does not finish by itself. Adding rounds is the same reconfiguration, and continuing without a member who never joined or failed is an explicit waiver through it (CWR-024, DL-138).
 
-A room with Wonderer receives the Wonderer's first pass before round 1, and the Wonderer takes no turn in any round under any turn policy. A room with Grill Me on has the moderator grill the user about the topic before round 1, and round 1 waits until the user confirms what was agreed (section 9, DL-218).
+A room never waits for the Wonderer: round 1 starts on time, and its first pass joins the room between turns whenever it is delivered. The Wonderer takes no turn under any turn policy. A room with Grill Me on still has the moderator grill the user about the topic before round 1, and round 1 waits until the user confirms what was agreed (section 9, DL-218).
 
 ### 6.4 Promotion
 
@@ -263,17 +263,17 @@ ContractRef: ContractName:Plans/Shared_Integration_Runtime.md, ContractName:Plan
 
 The default roster is four core roles: Architecture, Product, Implementation, and Adversarial Review, each with its own model and Persona. Core count supports 2 to 8. The modal configures the effective question maximum, research strength, external browser and tool provisioning posture, blind proposals, debate rounds, voting mode, dissent preservation, core roles, additive roles, and time, token, cost, and concurrency limits.
 
-The additive Wonderer may push the total roster above the active concurrency; Grill Me is a switch and adds no participant (section 9.3, DL-218). In that case the roster runs in waves rather than dropping or replacing a core role. A wave schedule never silently removes a configured participant, and the panel shows which participants are queued for a later wave.
+The additive Wonderer may push the total roster above the active concurrency; Grill Me is a switch and adds no participant (section 9.3, DL-218). The Wonderer's first pass starts during Intake, before blind proposals take the concurrency. A later pass queues behind core work when no slot is free, and its lane reads `queued`. Core participants run in waves when needed, with no configured participant silently dropped or replaced; the panel shows participants queued for a later wave.
 
 ### 8.4 Shared question bank
 
-`QuestionBank` is one registry for the entire run, shared across every participant including the additive Wonderer. It records `baseline_limit`, `grill_extension`, `effective_limit`, and the asked, resolved, duplicate, and research-routed question ID sets.
+`QuestionBank` is one registry for the entire BrainStorm run, and for a Crew or Chat Room with Grill Me on. It is keyed by `collaboration_run_id` and records the run's `kind`, `baseline_limit`, `grill_extension`, `effective_limit`, and the asked, resolved, duplicate, and research-routed question ID sets. The legacy `brainstorm_run_id` key remains compatible for BrainStorm and normalizes to that same run identity; when both keys are present they agree. The coordinator or moderator records the bank for all question requesters; the Wonderer never asks the user or reads or writes the counter. A Crew or Chat Room has `baseline_limit` 0, so its extension is its whole maximum.
 
 The BrainStorm base maximum of user-decision questions is 20. Grill Me raises the maximum by a configurable extension whose default is 25, so the default Grill Me effective maximum is 45. The modal states the arithmetic explicitly, showing `Maximum questions: 20` without Grill Me and `Maximum questions: 45 (20 + Grill Me 25)` with it; when Settings configure a different base or extension, the displayed arithmetic uses the configured values rather than the literals. The other five planning strategies carry their own bases -- Plan Quick 3, Standard 6, Thorough 8, Deep Thorough 10, Deep Exhaustive 15 -- and the same one extension, giving effective maxima of 28, 31, 33, 35, and 40. `Plans/Assistant_Plan_Runtime.md` (`QMAX-001..016`) owns the table, the single shared counter, the charge point, and typed exhaustion.
 
-With Grill Me on, the effective maximum is a safety net rather than the session's end: the Coordinator asks in grilling rounds until no decision is left on the frontier or the user presses Wrap up, and the maximum stops only a session that has not ended by then (section 9.3, DL-218). Questions already asked count toward the effective maximum. Enabling Grill Me mid-flow raises the ceiling and never resets the count. The allowance is a workflow-level shared budget, not a per-participant budget, so adding participants does not inflate the number of questions the user is asked.
+With Grill Me on, the effective maximum is a safety net: the coordinator or moderator asks in grilling rounds until no decision is ready, no fact research is pending and no branch is unsettled, or the user presses Wrap up; the maximum stops a session that has not ended by then (section 9.3, DL-218). Questions already asked count toward the effective maximum. Enabling Grill Me mid-flow raises the ceiling and never resets the count. The allowance is a workflow-level shared budget, not a per-participant budget, so adding participants does not inflate the number of questions the user is asked.
 
-Answered questions from the current thread are imported and are not asked again. Semantic duplicates across participants are merged into one registry entry with all requesting participants recorded. Factual questions that an agent can answer are routed to research rather than asked of the user, and the routed set is recorded on the bank. Remaining user-decision questions are batched through the existing questionnaire choreography rather than delivered as a stream of single prompts. The run stops asking before the maximum when the decision frontier is empty; reaching the maximum is a ceiling, not a target.
+Answered questions from the current thread are imported and are not asked again. Semantic duplicates across participants are merged into one registry entry with all requesting participants recorded. Factual questions that an agent can answer are routed to research rather than asked of the user, and the routed set is recorded on the bank. Remaining user-decision questions are batched through the existing questionnaire choreography rather than delivered as a stream of single prompts. The charge point is the first durable presentation of a new QuestionItem under QMAX-005..007; routed facts are recorded without a charge. QMAX-014..015 owns typed `question_budget_exhausted` for BrainStorm, Crew and Chat Room alike. When only research blocks the remaining frontier the interview waits and says it is looking things up, then recomputes when research returns. Reaching the maximum is a ceiling, not a target.
 
 ### 8.5 Protocol
 
@@ -311,47 +311,47 @@ Both are adapted from outside sources, not imported: Wonderer from the Hermes `w
 
 Wonderer runs alongside a Crew, a BrainStorm or a Chat Room and feeds what it finds back to the run's agents, who decide what is worth exploring (CWR-041, DL-218). It is an additive participant with its own model, the Wonderer Persona and the Wonderer methodology Skill. Its seed is the run's topic (the Crew's job, the BrainStorm topic with its must-haves, or the room's topic) with the context every participant shares. It explores in a fresh context of its own and never reads another participant's private working slice or a blind proposal. It uses read-only search and read tools under the parent permission ceiling; it never writes to the target project, never requests research provisioning, and never starts execution.
 
-**Passes.** A pass is one exploration of the seed. The first pass starts when the run starts. A further pass runs only when a core participant, the coordinator, the moderator or the user asks the Wonderer for one in an addressed message, and a run takes at most two further passes; a request beyond that is answered with that reason and starts nothing. A further pass stays anchored to the run's topic and widens around the point the request names. Each pass works three or four of the method's angles and returns three to five leads. A lead names its angle, states in one sentence how it connects to the seed (its tether), and cites where it came from: a search result URL or the transcript message it grew from. A lead without a tether is drift and is dropped; a lead without a source is not delivered.
+**Passes.** A pass is one exploration of the seed. The first starts with the run; in a BrainStorm it starts during Intake, before blind proposals take the concurrency (section 8.3). A further pass runs only when a core participant, coordinator, moderator or user asks for one in an addressed message, and a run takes at most two further delivered passes. A failed, timed-out or unavailable further attempt is recorded under PART-001..006 and consumes neither repeat; a retry uses a new attempt identity and the next undelivered pass number. A further pass stays anchored to the topic and widens around the requested point. When no slot is free it queues behind core work, with its lane reading `queued`. Each pass works three or four method angles, aims for three to five leads and delivers at most five; the method's stop signals may end it earlier with fewer leads or none. An empty pass is still delivered and recorded with outcome `no_new_leads`; a pass with leads has outcome `leads`. A request beyond the delivered-pass limit starts nothing and states the reason. Each lead names its angle, states in one sentence how it connects to the seed (its tether), and cites a search result URL or the transcript message it grew from. A lead without a tether is drift and is dropped; a lead without a source is not delivered.
 
-**Delivery.** A pass is one Puppet Master artifact with progressive disclosure (`Plans/Runtime_Artifacts_Panel.md` WONV-008) and one transcript message from the Wonderer that references it. Every core participant and the coordinator or moderator receive the pass summary in context; the angles and each lead's dossier are read on demand through ordinary artifact identity. The Wonderer takes no turn in a debate or a room round, never argues for or against a proposal, and never votes. It speaks only to deliver a pass or to answer a question addressed to it about one of its leads.
+**Delivery.** Every delivered pass, including an empty one, is one Puppet Master artifact with progressive disclosure (`Plans/Runtime_Artifacts_Panel.md` WONV-008) and one transcript message from the Wonderer that references it. Every core participant and the coordinator or moderator receive the summary in context; angles and lead dossiers are read on demand through ordinary artifact identity. Every BrainStorm pass is withheld until every blind proposal is in, then released at Normalize or on delivery if it arrives later. The Wonderer takes no debate or room turn, never argues for or against a proposal and never votes. It speaks only to deliver a pass or answer a question addressed to it about one of its leads.
 
-**Dispositions.** Every lead is a hypothesis until it is explored. The run's agents decide each lead with exactly one disposition, closed as `explore | use | set_aside`: research it, carry it into the work as a hypothesis, or leave it. The coordinator, or in a Chat Room the moderator, records the disposition the agents reached with a one-line reason; a disposition without a reason is refused. The disposition and its reason are shown wherever the lead appears. An explored lead ends `substantiated`, with evidence, or `set_aside`, with the reason research did not support it. The Wonderer never disposes, explores or sends its own leads to research. A lead never becomes an accepted fact, a Plan decision or an acceptance criterion without evidence or an explicit user decision, and a lead the agents `use` stays labeled a hypothesis wherever it appears (WONV-005).
+**Dispositions.** Every lead is a hypothesis until explored. The agents decide each lead with exactly one disposition, closed as `explore | use | set_aside`: research it, carry it into the work as a hypothesis, or leave it. The coordinator records dispositions from the Debate for BrainStorm leads delivered by then and while splitting for a Crew; a lead delivered later is decided and recorded on delivery. In a Chat Room the moderator records each disposition on delivery between turns. Every disposition carries a one-line reason containing non-whitespace text and the recorder's identity; a disposition without a reason is refused. Its reason appears wherever the lead appears. An explored lead ends `substantiated`, with evidence and a null `set_aside_reason`, or `set_aside`, with a reason containing non-whitespace text for why research did not support it. The Wonderer never disposes, explores or sends its own leads to research. A lead never becomes an accepted fact, Plan decision or acceptance criterion without evidence or an explicit user decision, and a lead the agents `use` stays labeled a hypothesis wherever it appears (WONV-005).
 
-**Check it.** The user may send any lead to research with Check it, `cmd.collaboration.research_lead`, in any of the three kinds and whatever the lead's disposition. It is the user's override and never waits for the agents; a checked lead is researched like an `explore` lead and keeps its result.
+**Check it.** The user may send any lead to research with Check it, `cmd.collaboration.research_lead`, in any of the three kinds and whatever its disposition. It is the user's override and never waits for the agents. If that lead's research is already in flight, Check it returns the existing research operation and starts no second attempt. Both the canonical command and its one-to-one BrainStorm alias return a committed success only with at least one receipt, non-null resulting revision and currentness hash, and either a terminal research outcome (substantiated with evidence, or set aside with a reason) or a non-null `observable_work_ref` for research still running.
 
-**What waits.** In a BrainStorm, synthesis waits until every lead of every pass has a disposition and every lead sent to research has a result. The coordinator records any disposition still missing before synthesis begins, `cmd.brainstorm.synthesize_plan` is unavailable with that reason while research on a lead is in flight, and the Plan lists every lead with its disposition and reason. In a Crew, the coordinator's final synthesis waits the same way, and the Crew's result lists every lead the same way. In a Chat Room nothing waits on a lead: `Summarize Now` and `End discussion` are never blocked, and the room's summary lists every lead with its disposition and reason, or `not taken up` when the room left it undecided.
+**What waits.** In a BrainStorm, `cmd.brainstorm.synthesize_plan` is unavailable with a stated reason while a pass is in flight, any lead is undecided or research on a lead is in flight. The coordinator records each disposition when it is due rather than leaving it until synthesis. A Crew's final synthesis waits on the same three conditions. Starting synthesis atomically closes further-pass and Check it admission with typed `lead_admission_closed`; the synthesis is bound to the lead and research revision it started from, and its publication revalidates that snapshot. No late callback or new request may change the result's lead set or evidence revision. The Plan or Crew result lists every lead with its disposition and reason. In a Chat Room nothing waits on a pass or lead: `Summarize Now` and `End discussion` are never blocked by them, and the summary lists every delivered lead with its disposition and reason, or `not taken up` if undecided.
 
 | Kind | First pass reaches the agents | Who records each disposition | An `explore` lead |
 |---|---|---|---|
-| BrainStorm | At Normalize, once every blind proposal is in (section 8.5) | The coordinator, from the Debate | Is researched in the Evidence round |
-| Crew | Before the coordinator splits the job (section 5.2) | The coordinator, while it splits | Becomes a read-only exploration assignment with its own expected output |
-| Chat Room | Before round 1 (section 6.3) | The moderator, at any point in the room | Is researched by a participant in a later round, under the room's tool policy |
+| BrainStorm | At Normalize after every blind proposal is in, or on delivery if later (section 8.5) | The coordinator, from the Debate for leads delivered by then and on delivery for later leads | Is researched in the Evidence round, or on delivery if later |
+| Crew | Before the coordinator splits the job (section 5.2) | The coordinator, while splitting for leads delivered by then and on delivery for later leads | Becomes a read-only exploration assignment with its own expected output |
+| Chat Room | Between turns whenever delivered; round 1 starts on time (section 6.3) | The moderator, on delivery | Is researched by a participant under the room's tool policy without holding a room turn |
 
 A Wonderer that fails, times out or is unavailable is recorded with that outcome (PART-001..006), and the run continues without its pass rather than waiting for it. In a BrainStorm an active Wonderer never votes: it is shown `Abstained` and is excluded from the support and oppose denominators (PART-011..015), and no disposition changes a vote count.
 
 ### 9.3 Grill Me
 
-Grill Me is the definition's `grill_me_enabled` switch, not a participant (CWR-042, DL-218). When it is on, the participant that already talks to the user runs the grilling Skill: the coordinator in a Crew, the moderator in a Chat Room, and the coordinator during BrainStorm intake; the assistant does the same in Plan and Deep Plan under `Plans/Assistant_Plan_Runtime.md`. Grill Me has no model, Persona, roster row, wave slot or vote of its own, so the quality of its questions is the quality of that participant's model.
+Grill Me is the definition's `grill_me_enabled` switch, not a participant (CWR-042, DL-218). When it is on, the participant that already talks to the user runs the grilling Skill: the coordinator in a Crew, moderator in a Chat Room, coordinator during BrainStorm intake, or assistant in Plan and Deep Plan under `Plans/Assistant_Plan_Runtime.md`. Grill Me has no model, Persona, roster row, wave slot or vote of its own.
 
-Grilling interviews the user and never the other agents: decisions are the user's, and an agent never answers one on the user's behalf. It maps the subject's decisions as a design tree and works the tree's frontier, the decisions whose prerequisites are already settled, in rounds. Each round asks the whole current frontier at once, numbers each question, gives a recommended answer for each, words each question so that yes accepts the recommendation, and waits for the user's answers before recomputing the frontier. A question whose answer depends on another question still open in the round belongs to a later round. "I don't know" is a valid answer and leaves that decision open.
+Grilling interviews the user and never other agents: decisions are the user's, and no agent answers one on the user's behalf. It maps decisions as a design tree and works the frontier, decisions whose prerequisites are settled, in rounds. Each round asks the whole current frontier at once, numbers each question, gives a recommended answer for each, words each so that yes accepts the recommendation, and waits for the user's answers before recomputing. Puppet Master offers no one-question-at-a-time setting; every round asks the whole frontier. A question dependent on another still open belongs to a later round. "I don't know" is valid: that decision leaves the frontier and is listed as open in What we agreed, without being asked again unless the user reopens it.
 
-Facts are the workflow's job: a frontier question that needs a fact is routed to a research agent instead of being asked, and the routed set is recorded. Research never holds the round: only the questions that depend on it wait, and the rest of the frontier is asked now. A question already answered in the thread or in imported planning context is not asked again. In BrainStorm, Grill Me raises the effective question maximum and uses the shared question bank, so enabling it adds allowance without duplicate questions or per-agent inflation.
+Facts are the workflow's job: a question needing a fact is routed to research and recorded in the bank's routed set without charging the user-question counter. Only dependent questions wait; the rest of the ready frontier is asked now. If every remaining question waits on research, the interview waits, says it is looking things up and recomputes when research returns. A prior answer from the thread or imported context is reused. BrainStorm, and a Crew or Chat Room with Grill Me on, each have one QuestionBank keyed by `collaboration_run_id`. Its charge point and typed exhaustion are QMAX-005..007 and QMAX-014..015; BrainStorm uses base plus extension, and Crew and Chat Room use baseline 0 plus extension as the whole maximum. Enabling Grill Me or starting a later decision round preserves that same counter and its routed set.
 
-The session ends when the frontier is empty or when the user presses `Wrap up`. The question maximum is a safety net that ends a session not ended before it is reached (section 8.4, QMAX-001..004). When the session ends, the user sees what was agreed, every decision with its answer and every decision left open, with `Confirm` and `Keep going`. Nothing acts on the answers until the user confirms. `Keep going` returns to the interview to revisit an answer or raise a decision, within the question maximum; `Confirm` records the answers as the user's decisions on the run, and the Plan, PRD or Wizard owner captures them where one is active. Grill Me has no implementation authority: it cannot mutate the target project, cannot start execution, and cannot approve anything.
+The session ends by itself only when no decision is ready, no fact research is pending and no branch is unsettled. Wrap up and the question maximum can also end it, with open items listed; the maximum is a safety net (section 8.4, QMAX-001..004). Each session ends in its own What we agreed card listing every answer and every open decision, with Confirm and Keep going. Only the step that would use those new answers waits for Confirm of that current agreement revision. Keep going returns to the interview within the maximum; Confirm records the user's decisions for the active owner. Running work continues and never loses an earlier valid confirmation. Grill Me cannot mutate the target project, start execution or approve anything.
 
-| Kind | Who grills the user | When | What waits for Confirm |
+| Kind | Who grills the user | When initially enabled | What waits for that session's Confirm |
 |---|---|---|---|
-| BrainStorm | The coordinator | Intake, over the shared question bank; a question a core participant raises for the user joins the frontier and never forms a second queue | Blind proposals |
-| Crew | The coordinator | Before it splits the job | The split |
+| BrainStorm | The coordinator | Intake, over the shared bank; a core participant's user question joins this frontier | Blind proposals |
+| Crew | The coordinator | Before splitting the job | The split |
 | Chat Room | The moderator | Before round 1 | Round 1 |
 
-A decision for the user that arises later in a run is asked as a further grilling round by the same participant. In a Crew or a Chat Room, which have no question base, the maximum is the Grill Me extension (section 14). With Grill Me off, a decision only the user can answer reaches the user through the ordinary needs-you prompt, with no allowance setting of its own (DL-138).
+Turning Grill Me on mid-run starts its session at the next round, assignment or phase boundary. Work already running continues; only the step needing the new answers waits for that session's Confirm. A later decision round likewise ends in its own What we agreed and requires a fresh Confirm for the step that needs it, using the same question counter. With Grill Me off, a decision only the user can answer uses the ordinary needs-you prompt, with no allowance setting of its own (DL-138).
 
 ### 9.4 Placement
 
 Wonderer and Grill Me appear as checkboxes in the `Add specialists` shelf of the BrainStorm, Crew, and Chat Room configuration sheets. Checking Wonderer adds a dedicated participant row with its own model and Persona that never overwrites or repurposes a core row. Checking Grill Me adds no row: it sets `grill_me_enabled`, and the shelf names who will grill the user. Both are refused in Crew Auto teams and in scheduled-build Crews (CWR-028, 2026-09-27). The Deep Plan submenu footer carries a persistent `Grill Me` check option that applies to the next Deep Plan invocation and visually matches the existing auxiliary-row pattern without being confused with model effort.
 
-PRD Builder and Planning Wizard start flows offer BSD, Wonderer, and Grill Me, with a shared global question history preventing repetition across topics. When each runs there, and in what order, is owned by `Plans/PRD_Builder.md` and `Plans/Planning_Wizard.md` and is named here only to fix the shared-registry boundary; the earlier rule that Grill Me runs near the end of discovery or topic work is retired (DL-218). How Wonderer behaves in those flows is theirs as well: the run model of section 9.2 applies only to Crew, BrainStorm and Chat Room (DL-218). Wonderer and Grill Me do not participate in hidden PlanUnit, WorkNode, audit, execution, or certification stages unless explicitly invoked as ordinary agents for a relevant visible planning task; Back Seat Driver may cover those stages under `Plans/Back_Seat_Driver.md`.
+PRD Builder and Planning Wizard start flows offer BSD, Wonderer, and Grill Me, with a shared global question history preventing repetition across topics. When each runs there, and in what order, is owned by `Plans/PRD_Builder.md` and `Plans/Planning_Wizard.md` and is named here only to fix the shared-registry boundary; the earlier rule that Grill Me runs near the end is no longer stated here, and DL-218 hands when Grill Me runs in those flows to those owners. How Wonderer behaves in those flows is theirs as well: the run model of section 9.2 applies only to Crew, BrainStorm and Chat Room (DL-218). Wonderer is not admitted to hidden PlanUnit, WorkNode, audit, execution or certification stages; it may be explicitly invoked as an ordinary participant for a relevant visible planning task. Grill Me may be explicitly enabled as a Skill on the assistant conducting such a visible task, and never becomes an agent; Back Seat Driver may cover those stages under `Plans/Back_Seat_Driver.md`.
 
 ContractRef: ContractName:Plans/Personas.md, ContractName:Plans/Skills_System.md, ContractName:Plans/PRD_Builder.md, ContractName:Plans/Planning_Wizard.md, ContractName:Plans/Back_Seat_Driver.md
 
@@ -372,9 +372,9 @@ The exact collaborative command IDs owned by this document are listed below. The
 | `cmd.collaboration.export` | domain_action | `CollaborationExportRequest` / `CollaborationExportResult` | `content_kind` is `transcript \| result_artifact \| report`, beside the format. Exports the referenced transcript or artifact version and hash through the artifact and file owners. Never re-renders or re-generates content as part of export. |
 | `cmd.collaboration.reconfigure` | domain_action | `CollaborationReconfigureRequest` / `CollaborationReconfigureResult` | Bumps the definition revision under an expected-revision check, records a `system` transcript entry, and never rewrites prior transcript attribution or widens the permission ceiling. Available only while the run is `waiting`, `running`, `blocked` or `paused`; a completed run is run again through configure and a new start. `accept_stale_target: true` finishes a stale Review on its old pack with a staleness disclosure and requires `target_pack_stale`. |
 | `cmd.brainstorm.next_round` | domain_action | `BrainstormRoundRequest` / `BrainstormRoundResult` | Advances exactly one protocol round under the configured debate policy. Cannot skip the blind-proposal phase and cannot exceed configured debate rounds. |
-| `cmd.brainstorm.synthesize_plan` | domain_action | `BrainstormSynthesisRequest` / `AssistantPlanCreateResult` | Requests Plan creation from the Plan owner and returns that owner's create result. Creates exactly one Plan, preserves dissent and rejected alternatives in the synthesis, and leaves the BrainStorm card in place. Accepts `tie_resolution: coordinator` on a tied vote. |
-| `cmd.collaboration.research_lead` | domain_action | `CollaborationLeadResearchRequest` / `CollaborationLeadResearchResult` | Check it: asks a running or waiting Crew, BrainStorm or Chat Room run to research one Wonderer lead, whatever its disposition (section 9.2, DL-218). The lead stays a hypothesis until research returns evidence; the result records that evidence or the reason the lead was set aside. Never accepts a lead as fact without evidence. |
-| `cmd.brainstorm.research_lead` | domain_action | `BrainstormLeadResearchRequest` / `BrainstormLeadResearchResult` | Compatibility alias of `cmd.collaboration.research_lead` for a BrainStorm run, with one-to-one semantics (DL-218). Asks a running or waiting BrainStorm run to research one Wonderer lead. The lead stays a hypothesis until research returns evidence; the result records that evidence or the reason the lead was set aside. Never accepts a lead as fact without evidence. |
+| `cmd.brainstorm.synthesize_plan` | domain_action | `BrainstormSynthesisRequest` / `AssistantPlanCreateResult` | Requests Plan creation from the Plan owner and returns that owner's create result. Creates exactly one Plan, preserves dissent and rejected alternatives in the synthesis, and leaves the BrainStorm card in place. Accepts `tie_resolution: coordinator` on a tied vote. Unavailable while a pass, undecided lead or lead research remains; starting it closes lead admission and binds the lead/research revision (section 9.2). |
+| `cmd.collaboration.research_lead` | domain_action | `CollaborationLeadResearchRequest` / `CollaborationLeadResearchResult` | Check it: asks a running or waiting Crew, BrainStorm or Chat Room run to research one Wonderer lead, whatever its disposition (section 9.2, DL-218). A committed result has receipts, resulting revision and currentness, and either terminal evidence or a set-aside reason, or observable_work_ref for research still running. In-flight research returns the same operation; after synthesis starts, refuse lead_admission_closed (section 9.2). Never accepts a lead as fact without evidence. |
+| `cmd.brainstorm.research_lead` | domain_action | `BrainstormLeadResearchRequest` / `BrainstormLeadResearchResult` | Compatibility alias of `cmd.collaboration.research_lead` for a BrainStorm run, with one-to-one semantics (DL-218). Asks a running or waiting BrainStorm run to research one Wonderer lead. A committed result has receipts, resulting revision and currentness, and either terminal evidence or a set-aside reason, or observable_work_ref for research still running. In-flight research returns the same operation; after synthesis starts, refuse lead_admission_closed (section 9.2). Never accepts a lead as fact without evidence. |
 | `cmd.review.create_todos` | domain_action | `ReviewCreateTodosRequest` / `ReviewCreateTodosResult` | Converts explicitly selected confirmed findings into bounded To-Do items through the To-Do owner with lineage back to each `finding_id`. Never converts rejected, duplicate, or uncertain findings implicitly. |
 | `cmd.review.send_findings_to_agent` | domain_action | `ReviewSendFindingsRequest` / `ComposerBufferResult` | Its tagged `review_findings` source writes a fix request from selected findings; its `taught_rule_check` source writes a fix request from failed taught-rule checks on a finished reply (AMS-053). Both fill only the source thread's empty composer, return `ComposerBufferResult`, refuse `composer_not_empty`, retain source lineage in message metadata, and never send or run the draft (DL-138). |
 | `cmd.review.run_again` | domain_action | `ReviewRunAgainRequest` / `CollaborationStartResult` | Starts a new review run against a newly frozen target pack. Never merges results into the prior run and never reuses a stale `ReviewTargetPack`. |
@@ -387,7 +387,7 @@ The exact collaborative command IDs owned by this document are listed below. The
 | `cmd.chat.crew_auto.set` | domain_action | `CrewAutoSetRequest` / `CrewAutoSetResult` | Sets Crew Auto at the scope its request names (CWR-038): `thread`, from a chat's check, sets only that chat's override of the project value; `project`, from the Crew Auto sheet, commits the rules and the team in one `CrewAutoSetRequest` and turns Crew Auto on for the project. An enable that finds no stored Crew Auto configuration returns `configuration_required` and changes no check. Commits before any check changes. Cannot widen authority. |
 | `cmd.chat.crew_auto.open_config` | shell_view | `CrewAutoConfigRoute` / `RouteResult` | Opens the Crew Auto configuration modal. Route success is not enablement; the check state changes only through `cmd.chat.crew_auto.set`. |
 
-Source surfaces for the ten original `cmd.collaboration.*` rows are `workflow_modal`, `workflow_card`, `workflow_panel`, `activity`, and `composer`; `cmd.collaboration.research_lead` is raised from `workflow_card`, `workflow_panel` and `wonderer_workspace` (DL-218). `cmd.brainstorm.*` surfaces are `brainstorm_card` and `brainstorm_panel`, and `cmd.brainstorm.research_lead` also `wonderer_workspace`, the Wonderer workspace surface the central catalog registers (CWR-031; Plans/UI_Command_Catalog.md UCC-169, UCC-171); `cmd.review.*` surfaces are `review_card` and `review_panel`, with the catalog-owned `message_chrome` origin additionally allowed only for the `taught_rule_check` variant of `cmd.review.send_findings_to_agent` (UCC-172); its `review_findings` variant keeps the Review-only origins; `cmd.chat_room.*` surfaces are `chat_room_card` and `chat_room_panel`; `cmd.chat.crew_auto.set` surfaces are `multi_agent_menu` and `crew_auto_modal`; `cmd.chat.crew_auto.open_config` surfaces are `multi_agent_menu`, `workflow_modal` and `crew_auto_receipt` (CWR-038).
+Source surfaces for the ten original `cmd.collaboration.*` rows are `workflow_modal`, `workflow_card`, `workflow_panel`, `activity`, and `composer`; `cmd.collaboration.reconfigure` additionally has `brainstorm_panel` for turning Grill Me on mid-run (DL-218); `cmd.collaboration.research_lead` is raised from `workflow_card`, `workflow_panel` and `wonderer_workspace` (DL-218). `cmd.brainstorm.*` surfaces are `brainstorm_card` and `brainstorm_panel`, and `cmd.brainstorm.research_lead` also `wonderer_workspace`, the Wonderer workspace surface the central catalog registers (CWR-031; Plans/UI_Command_Catalog.md UCC-169, UCC-171); `cmd.review.*` surfaces are `review_card` and `review_panel`, with the catalog-owned `message_chrome` origin additionally allowed only for the `taught_rule_check` variant of `cmd.review.send_findings_to_agent` (UCC-172); its `review_findings` variant keeps the Review-only origins; `cmd.chat_room.*` surfaces are `chat_room_card` and `chat_room_panel`; `cmd.chat.crew_auto.set` surfaces are `multi_agent_menu` and `crew_auto_modal`; `cmd.chat.crew_auto.open_config` surfaces are `multi_agent_menu`, `workflow_modal` and `crew_auto_receipt` (CWR-038).
 
 `cmd.chat.plan.build_with_crew`, owned by `Plans/Assistant_Plan_Runtime.md`, is produced by the Crew sheet in Build With Crew mode and never decomposes into `cmd.collaboration.start`. The revisions to `open`, `reconfigure`, `message`, `export`, `synthesize_plan` and `send_findings_to_agent` above, and the rows `cmd.chat_room.end` and `cmd.brainstorm.research_lead`, are specified by CWR-031 (2026-09-27); `cmd.collaboration.research_lead`, and the alias status of `cmd.brainstorm.research_lead`, by CWR-041 (DL-218).
 
@@ -397,7 +397,7 @@ Every collaborative mutation request reuses the central command and runtime enve
 
 Every collaborative mutation result carries `status`, `committed`, the revision and currentness after the mutation, receipt refs, an `observable_work` ref when the work is asynchronous, an error or reason enum when not committed, and `replay_of` when the result is an idempotent replay. A UI acknowledgement is never domain success, and a rendered card is never proof that a run was admitted.
 
-The typed error enumeration for this owner is `invalid_request`, `project_not_found`, `thread_not_found`, `collaboration_not_found`, `collaboration_run_not_found`, `participant_not_found`, `stale_definition_revision`, `stale_currentness`, `configuration_required`, `configuration_not_committed`, `duplicate_id_conflict`, `command_not_registered`, `permission_denied`, `permission_ceiling_exceeded`, `model_unavailable`, `persona_unavailable`, `account_unavailable`, `substitution_not_permitted`, `concurrency_ceiling_exceeded`, `target_pack_stale`, `target_hash_mismatch`, `question_limit_reached`, `provisioning_approval_required`, `read_only_violation`, `destination_generation_stale`, `destination_target_ended`, `run_state_invalid`, `owner_unavailable`, or `cancelled`. A failure remains a failure: it never advances run state, never emits a success-shaped receipt, and never produces a card that implies work occurred.
+The typed error enumeration for this owner is `invalid_request`, `project_not_found`, `thread_not_found`, `collaboration_not_found`, `collaboration_run_not_found`, `participant_not_found`, `stale_definition_revision`, `stale_currentness`, `configuration_required`, `configuration_not_committed`, `duplicate_id_conflict`, `command_not_registered`, `permission_denied`, `permission_ceiling_exceeded`, `model_unavailable`, `persona_unavailable`, `account_unavailable`, `substitution_not_permitted`, `concurrency_ceiling_exceeded`, `target_pack_stale`, `target_hash_mismatch`, `question_limit_reached`, `provisioning_approval_required`, `read_only_violation`, `destination_generation_stale`, `destination_target_ended`, `run_state_invalid`, `lead_admission_closed`, `owner_unavailable`, or `cancelled`. A failure remains a failure: it never advances run state, never emits a success-shaped receipt, and never produces a card that implies work occurred.
 
 Availability payloads name the exact missing prerequisite — central catalog registration, Event Authority registration, native handler, storage binding, provider or model availability, permission decision, or production wiring row — rather than reporting a generic disabled state. `target_hash_mismatch` and `target_pack_stale` are always distinguishable so the Review surface can offer finish-stale, restart, or new-review without guessing.
 
@@ -411,8 +411,8 @@ This document is the semantic owner of the following record families. Physical k
 | `pm.collaboration.participant_spec.v1` | `ParticipantSpec` | Owned here. Carries `participant_slot_id`, `role`, `requested_provider_id`, `requested_account_id`, `requested_model_id`, `requested_persona_id`, `requested_skill_ids`, `requested_tool_profile_id`, `additive_role_kind`. A Wonderer is a spec with `additive_role_kind` `wonderer` and its own requested model and Persona (CWR-028); Grill Me is never a spec (DL-218). Effective values live in the runtime assignment record with a substitution or failure reason. |
 | `pm.collaboration.run.v1` | `CollaborativeRun` | Owned here. Carries `collaboration_run_id`, `collaboration_id`, `definition_revision`, `kind`, `parent_run_id`, `assistant_plan_id`, `plan_version`, `goal_id`, `state`, `participant_run_refs`, `coordinator_run_ref`, `transcript_ref`, `artifact_refs`, `usage_group_ref`, `requested_effective_snapshot_ref`, `admission_source`, `crew_auto_revision`, `stop_reason` (on a `cancelled` run only, CWR-029), `created_at`, `completed_at`. |
 | `pm.collaboration.message.v1` | `CollaborationMessage` | Owned here. Carries `collaboration_message_id`, `collaboration_run_id`, `sender_kind`, `sender_id`, `recipient_ids`, `message_type`, `body_ref`, `reply_to`, `attachment_refs`, `created_at`, `sequence`. The `collaboration_message_id` of a participant's or coordinator's message is allocated when the message starts streaming, and the record is written once, when the message is complete, with its `sequence` assigned at that write (EP-129, EP-130). |
-| `pm.brainstorm.question_bank.v1` | `QuestionBank` | Owned here. Carries `brainstorm_run_id`, `baseline_limit`, `grill_extension`, `effective_limit`, `asked_question_ids`, `resolved_question_ids`, `duplicate_question_ids`, `research_routed_question_ids`. |
-| `pm.collaboration.wonderer_pass.v1` | `WondererPass` | Owned here (CWR-041). Carries `wonderer_pass_id`, `collaboration_run_id`, `participant_slot_id`, `pass_number` (1 to 3), `requested_by` (null for the first pass, else the requesting participant or user), `seed_ref`, `artifact_ref`, `lead_ids`, `delivered_at`. |
+| `pm.brainstorm.question_bank.v1` | `QuestionBank` | Owned here for BrainStorm, and for Crew or Chat Room with Grill Me on. Carries `collaboration_run_id`, `kind`, `baseline_limit` (0 for Crew and Chat Room), `grill_extension`, `effective_limit`, `asked_question_ids`, `resolved_question_ids`, `duplicate_question_ids`, `research_routed_question_ids`. Legacy `brainstorm_run_id` remains compatible for BrainStorm and denotes the same bank; both keys must agree if present. QMAX-005..007 and QMAX-014..015 own charging and typed exhaustion. |
+| `pm.collaboration.wonderer_pass.v1` | `WondererPass` | Owned here (CWR-041). Carries `wonderer_pass_id`, `collaboration_run_id`, `participant_slot_id`, `pass_number` (1 to 3), `requested_by` (null for the first pass, else the requesting participant or user), `seed_ref`, `artifact_ref`, `outcome` (`leads \| no_new_leads`), `lead_ids` (0 to 5), `delivered_at`. An empty delivered pass has `no_new_leads`; failures are attempt outcomes, not delivered passes. |
 | `pm.collaboration.wonderer_lead.v1` | `WondererLead` | Owned here (CWR-041). Carries `lead_id`, `wonderer_pass_id`, `collaboration_run_id`, `angle`, `claim`, `tether`, `source_refs` (at least one search result URL or transcript message ref), `disposition` (`explore \| use \| set_aside`, or null while undecided), `disposition_reason`, `disposed_by`, `lead_status` (`hypothesis \| substantiated \| set_aside`), `evidence_refs`, `set_aside_reason`. |
 | `pm.brainstorm.proposal.v1` | `BrainstormProposal` | Owned here. Carries `proposal_id`, `participant_id`, `approach`, `assumptions`, `benefits`, `costs`, `risks`, `migrations`, `cross_system_effects`, `validation`, `rollback`, `evidence_refs`, `proposal_round`. |
 | `pm.brainstorm.vote.v1` | `BrainstormVote` | Owned here. Carries `vote_id`, `proposal_id`, `participant_id`, `position`, `confidence`, `reason`, `evidence_refs`, `hard_constraint_conflicts`. |
@@ -503,7 +503,7 @@ These prior models are superseded and require migration.
 
 **Crew as an On/Off switch.** That model is retired. A legacy Crew boolean migrates to a `crew` definition with the default participant count, coordinator, assignment strategy, and parallelism drawn from Settings at migration time, and `auto_enabled` set to the legacy boolean's value. Enabling Crew Auto still requires a committed configuration before a run may start. The redesign concept's per-chat "Allow Crews in this chat" switch is not adopted: the only per-chat Crew control is the chat's Crew Auto check, an override of the project value (section 5.3, CWR-004, DL-120, 2026-09-27).
 
-**Grill Me as a participant.** Grill Me is no longer a participant slot (DL-218). A stored definition or run whose participant specs carry `additive_role_kind` `grill_me` migrates to `grill_me_enabled` true with that spec removed from the roster. Messages that participant wrote stay in the transcript with their recorded attribution, its Usage stays attributed, nothing it asked is asked again, and a vote recorded for it under an ordinary voting role stays as recorded.
+**Grill Me as a participant.** Grill Me is no longer a participant slot (DL-218). MIG-021 converts stored definitions for future runs and terminal runs (`completed`, `cancelled` or `failed`) whose specs carry `additive_role_kind` `grill_me` to `grill_me_enabled` true, removing that spec from the converted roster. A run still in progress finishes under its recorded roster or quarantines; migration never swaps its active voters, quorum or confirmation gate. Messages that participant wrote retain their attribution, its Usage stays attributed, prior answers are not asked again, and ordinary historical votes stay as recorded. The legacy reader is confined to that retained history or in-progress run; it never admits a new Grill Me participant.
 
 Migration receipts record converted runs, unrecoverable state, synthesized defaults, and residual risk. A run whose thread or Project edge cannot validate quarantines rather than being attached to a guess.
 
@@ -2470,58 +2470,64 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Collaborative_Workflows.md
 canonical_text: >-
-  cmd.collaboration.open takes target, closed as `card | run_view | activity_detail`, and an optional
-  focus naming a tab, a participant_id or a finding_id; run_view is the editor document of CWR-020,
-  and route success is still not run success. cmd.collaboration.reconfigure is available only while
-  the run is waiting, running, blocked or paused, and it carries participant retry, replacement and
-  explicit waiver, coordinator or moderator replacement, added rounds, and turning Grill Me on mid-run. A
-  completed run is never reconfigured: running it again is configure plus a new start with a
-  definition seeded from the prior one, or cmd.review.run_again for Review. With accept_stale_target
-  true, reconfigure finishes a Review whose target changed on the old frozen pack as an explicit
-  waiver with a staleness disclosure, and it is accepted only while the run reports
-  target_pack_stale. cmd.collaboration.message, and setting a collaborative composer destination, are
-  unavailable on a completed, cancelled or failed run, with the printed reason that the run has
-  finished and cannot take messages. cmd.collaboration.export takes content_kind, closed as
-  `transcript | result_artifact | report`, beside its format, so one command exports the transcript,
-  a Crew result or a Review report. cmd.brainstorm.synthesize_plan accepts tie_resolution coordinator
-  when the vote is tied, with no new command. cmd.chat.plan.build_with_crew, owned by
+  cmd.collaboration.open takes target, closed as `card | run_view | activity_detail`, and an
+  optional focus naming a tab, a participant_id or a finding_id; run_view is the editor document of
+  CWR-020, and route success is still not run success. cmd.collaboration.reconfigure is available
+  only while the run is waiting, running, blocked or paused, and it carries participant retry,
+  replacement and explicit waiver, coordinator or moderator replacement, added rounds, and turning
+  Grill Me on mid-run. Enabling it schedules the coordinator or moderator to grill at the next
+  round, assignment or phase boundary; running work continues and only the step using the new
+  answers waits for that session's current What we agreed Confirm. A completed run is never
+  reconfigured: running it again is configure plus a new start with a definition seeded from the
+  prior one, or cmd.review.run_again for Review. With accept_stale_target true, reconfigure finishes
+  a Review whose target changed on the old frozen pack as an explicit waiver with a staleness
+  disclosure, and it is accepted only while the run reports target_pack_stale.
+  cmd.collaboration.message, and setting a collaborative composer destination, are unavailable on a
+  completed, cancelled or failed run, with the printed reason that the run has finished and cannot
+  take messages. cmd.collaboration.export takes content_kind, closed as `transcript |
+  result_artifact | report`, beside its format, so one command exports the transcript, a Crew result
+  or a Review report. cmd.brainstorm.synthesize_plan accepts tie_resolution coordinator when the
+  vote is tied, with no new command. cmd.chat.plan.build_with_crew, owned by
   Plans/Assistant_Plan_Runtime.md, is produced by the Crew sheet in Build With Crew mode and never
   decomposes into cmd.collaboration.start followed by a separate build.
   cmd.review.send_findings_to_agent has tagged source_kind review_findings or taught_rule_check
   (DL-138). The review_findings variant keeps the selected findings, collaboration_run_id and
-  currentness check of DL-125. The taught_rule_check variant names the finished reply_message_id
-  and nonempty missed_teaching_refs, each with memory_id and normalized_fact_sha256 as the
-  included rule version, whose stored check
-  outcome on that reply is failed (AMS-053); it carries no invented review run or finding ids.
-  Both variants write an editable fix request into the source thread's empty composer buffer, return
-  ComposerBufferResult, refuse composer_not_empty when that buffer holds text, and put source lineage
-  in message metadata, never in the text. They never send the draft, start a run or repair the reply;
-  only the user's later Send submits it. Two commands are added (DL-130). cmd.chat_room.end ends a Chat Room
-  that is running, waiting or paused, with ChatRoomEndRequest and ChatRoomEndResult: the room takes
-  no further rounds or messages, the run settles completed, and promotion of existing messages stays
-  allowed; it is distinct from cmd.collaboration.cancel, which settles cancelled.
-  cmd.brainstorm.research_lead asks a BrainStorm run that is running or waiting to research one
-  Wonderer lead, with BrainstormLeadResearchRequest and BrainstormLeadResearchResult; the lead stays
-  a hypothesis until the research returns evidence, and the result records that evidence or the
-  reason the lead was set aside (section 9.2). Its source surfaces are brainstorm_panel and
-  wonderer_workspace, the Wonderer workspace document that the central catalog registers as a
-  surface (Plans/UI_Command_Catalog.md UCC-169, UCC-171); this document adds no surface of its own
-  for it.
+  currentness check of DL-125. The taught_rule_check variant names the finished reply_message_id and
+  nonempty missed_teaching_refs, each with memory_id and normalized_fact_sha256 as the included rule
+  version, whose stored check outcome on that reply is failed (AMS-053); it carries no invented
+  review run or finding ids. Both variants write an editable fix request into the source thread's
+  empty composer buffer, return ComposerBufferResult, refuse composer_not_empty when that buffer
+  holds text, and put source lineage in message metadata, never in the text. They never send the
+  draft, start a run or repair the reply; only the user's later Send submits it. Two commands are
+  added (DL-130). cmd.chat_room.end ends a Chat Room that is running, waiting or paused, with
+  ChatRoomEndRequest and ChatRoomEndResult: the room takes no further rounds or messages, the run
+  settles completed, and promotion of existing messages stays allowed; it is distinct from
+  cmd.collaboration.cancel, which settles cancelled. cmd.brainstorm.research_lead is the one-to-one
+  compatibility alias of cmd.collaboration.research_lead for BrainStorm, using the same handler and
+  normalized semantics with its retained request/result names; it asks a BrainStorm run that is
+  running or waiting to research one Wonderer lead, with BrainstormLeadResearchRequest and
+  BrainstormLeadResearchResult; the lead stays a hypothesis until the research returns evidence, and
+  the result records that evidence or the reason the lead was set aside (section 9.2). Its source
+  surfaces are brainstorm_panel and wonderer_workspace, the Wonderer workspace document that the
+  central catalog registers as a surface (Plans/UI_Command_Catalog.md UCC-169, UCC-171); this
+  document adds no surface of its own for it.
 gui_related: true
 gui_classification_reason: Card, run view and sheet controls dispatch these revised commands and payloads.
 depends_on: [CWR-020, CWR-022]
 unblocks: []
 acceptance_criteria:
-  - The taught_rule_check source variant names a finished reply and failed included-rule checks, requires no review run or finding ids, and only fills an empty composer.
-  - cmd.collaboration.open accepts only the three targets and an optional focus.
-  - Reconfigure is refused on a completed, cancelled or failed run.
-  - accept_stale_target is accepted only while target_pack_stale holds.
-  - Message is unavailable on a terminal run with a printed reason.
-  - Export takes one of the three content kinds.
-  - Build With Crew never dispatches cmd.collaboration.start.
-  - Send Findings To Agent fills an empty composer and never sends; a composer that holds text refuses with composer_not_empty.
-  - cmd.chat_room.end settles the room completed, never cancelled.
-  - cmd.brainstorm.research_lead never makes a lead a fact without evidence.
+  - "The taught_rule_check source variant names a finished reply and failed included-rule checks, requires no review run or finding ids, and only fills an empty composer."
+  - "cmd.collaboration.open accepts only the three targets and an optional focus."
+  - "Reconfigure is refused on a completed, cancelled or failed run."
+  - "accept_stale_target is accepted only while target_pack_stale holds."
+  - "Message is unavailable on a terminal run with a printed reason."
+  - "Export takes one of the three content kinds."
+  - "Build With Crew never dispatches cmd.collaboration.start."
+  - "Send Findings To Agent fills an empty composer and never sends; a composer that holds text refuses with composer_not_empty."
+  - "cmd.chat_room.end settles the room completed, never cancelled."
+  - "cmd.brainstorm.research_lead never makes a lead a fact without evidence."
+  - "Turning Grill Me on mid-run gates only the step needing the newly confirmed answers."
+  - "The BrainStorm research-lead ID normalizes to the canonical shared command without changing its semantics."
 validation_surfaces:
   - python3 scripts/pm-plan-index.py validate
 risk_class: command_precondition_drift
@@ -2534,6 +2540,9 @@ node_compile_hint:
   mode: collaborative_command_contract
   create_worknodes: false
 source_lineage:
+  - "Plans/Decision_Log.md DL-218"
+  - "/mnt/Cursor/share/puppet-master/2026-10-16-wonderer-grill-me/DECISIONS.md sha256:dfa2f354936defd187d610de4aee77a3d8b75b6d25692e592ba48f7b66bfebce"
+  - "/mnt/Cursor/share/puppet-master/2026-10-16-wonderer-grill-me/DEFAULTS-APPROVED.md sha256:f199f188e3e4b1ecd5474a1bc2f87c2d5156863909eb9de9cc3ee9fcb7bfd5be"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-followups-20260929/ANSWERS-20260929.md sha256:345247dfb965fa19ae2f68847125c5b6cafe26126a56bb5b80242e88d3fa9d5c (DL-138, question 18)"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/DESIGN-SPEC.md sha256:dc0a02e550dd2e927faa59006cecab098e7c08b4aeb2479bf62e219f9b5907de sections 7.9 (G-30 DEST-03), 8.15"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/IMPACT-REGISTER.md sha256:71227f8edda108ed849256d909ff12f859f98bef58202ef988f9d3b4e4f8d493 B-CW-23 (NOW part: REV-1..REV-4), B-CW-24 (NOW part: N-9, N-10, REV-12)"
@@ -3205,49 +3214,53 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Collaborative_Workflows.md
 canonical_text: >-
-  In a Crew, BrainStorm or Chat Room the Wonderer runs alongside the run and feeds what it finds to the
-  run's agents, who decide what is worth exploring (DL-218). It explores the run's topic, its seed, in
-  a fresh context of its own with read-only search and read tools, never reads a private working slice
-  or a blind proposal, never writes, never requests provisioning and never starts execution. A pass is
-  one exploration: the first starts with the run, and a further pass runs only when a core
-  participant, the coordinator, the moderator or the user asks for one, at most two further passes per
-  run. A pass works three or four angles of the Wonderer methodology Skill (SS-037) and returns three
-  to five leads, each with its angle, a one-sentence tether to the seed and at least one source (a
-  search result URL or the transcript message it grew from); a lead without a tether is dropped as
-  drift and a lead without a source is not delivered. A pass is recorded as a WondererPass and one
-  progressive-disclosure artifact (WONV-008) referenced by one Wonderer message; every core participant
-  and the coordinator or moderator receive its summary in context and read the angles and dossiers on
-  demand. Every lead is a WondererLead and a hypothesis until explored. The agents decide each lead
-  with one disposition, explore, use or set_aside, recorded with a one-line reason by the coordinator
-  or, in a Chat Room, the moderator; a disposition without a reason is refused. An explored lead ends
-  substantiated with evidence or set_aside with the reason research did not support it, and a used
-  lead stays labeled a hypothesis. The Wonderer takes no debate or room turn, never argues for or
-  against a proposal, never votes, and never disposes, explores or sends its own leads to research.
-  Check it, cmd.collaboration.research_lead, is the user's override in all three kinds: it sends any
-  lead to research whatever its disposition and never waits for the agents; cmd.brainstorm.research_lead
-  stays its one-to-one compatibility alias for a BrainStorm run. In a BrainStorm the first pass is
-  withheld until every blind proposal is in and is released at Normalize, Debate starts once it is
-  delivered or the Wonderer has a recorded failed, timed-out or unavailable outcome, explored leads are
-  researched in the Evidence round, and synthesis starts only when every lead has a disposition and
-  every lead sent to research has a result; the Plan lists every lead with its disposition and reason.
-  In a Crew the first pass is delivered before the coordinator splits the job, an explored lead
-  becomes a read-only exploration assignment with its own expected output, the Wonderer gets no
-  assignment, and the final synthesis waits and lists leads the same way. In a Chat Room the first
-  pass is delivered before round 1, nothing waits on a lead, and the summary lists every lead with its
-  disposition and reason or not taken up.
+  In a Crew, BrainStorm or Chat Room the Wonderer runs alongside the agents, who decide which leads
+  to explore (DL-218). It explores the topic in fresh context with read-only search and read tools,
+  never reads a private working slice or blind proposal, never writes, requests provisioning or
+  starts execution. The first pass starts with the run; in BrainStorm it runs during Intake before
+  blind proposals take the concurrency. Further passes require an addressed request from a core
+  participant, coordinator, moderator or user, with at most two further delivered passes; a failed,
+  timed-out or unavailable further attempt consumes neither repeat. A later pass queues behind core
+  work when no slot is free. Each pass works three or four SS-037 angles, aims for three to five
+  leads and delivers at most five, stopping earlier with fewer or none when the method's stop
+  signals come first. Every delivered pass is a WondererPass with outcome leads or no_new_leads, one
+  progressive-disclosure artifact (WONV-008) and one Wonderer transcript message. Every lead is a
+  WondererLead with an angle, a one-sentence tether to the seed and at least one source; untethered
+  drift and unsourced leads are dropped. All core participants and the coordinator or moderator
+  receive the summary and read angles and dossiers on demand. Every lead is a hypothesis until
+  explored. The agents decide explore, use or set_aside with a non-whitespace reason and recorder:
+  the coordinator records BrainStorm leads from the Debate if delivered by then, Crew leads while
+  splitting, and later leads on delivery; the room moderator records leads on delivery between
+  turns. An explored lead ends substantiated with evidence and a null set_aside_reason, or set_aside
+  with a non-whitespace reason; use stays labeled a hypothesis. The Wonderer takes no debate or room
+  turn, never argues, votes, disposes or sends its own leads to research. Check it,
+  cmd.collaboration.research_lead, sends any lead to research in all three kinds whatever its
+  disposition; cmd.brainstorm.research_lead remains its one-to-one BrainStorm compatibility alias.
+  Checking a lead already in research returns the same operation and starts no second attempt. In
+  BrainStorm every pass is withheld until every blind proposal is in and released at Normalize or
+  later delivery; Debate starts after first-pass delivery or its recorded failed, timed-out or
+  unavailable outcome. Explored leads are researched in Evidence or on later delivery. BrainStorm
+  synthesis and a Crew's final synthesis are unavailable with a stated reason while a pass is in
+  flight, any lead is undecided or lead research is in flight. Starting either closes further-pass
+  and Check it admission with lead_admission_closed and binds synthesis and publication to the
+  starting lead and research revision. Their result lists every lead with its disposition and
+  reason. A Crew receives the first pass before splitting, explored leads become read-only
+  exploration assignments, and Wonderer gets no assignment. A Chat Room never waits for a pass:
+  round 1 starts on time, the first pass joins between turns whenever delivered, and its summary
+  lists every delivered lead with disposition and reason or not taken up.
 gui_related: false
 gui_classification_reason: Runtime protocol, records and gates; CWR-043 owns how they are shown.
 depends_on: [CWR-008, CWR-028, CWR-031]
 unblocks: [CWR-043]
 acceptance_criteria:
-  - Every delivered lead carries an angle, a tether and at least one source.
-  - A run takes at most three passes, and a further pass starts only on an addressed request.
-  - No core participant reads a BrainStorm pass before every blind proposal is in.
-  - Every disposition carries a reason and the identity of who recorded it.
-  - BrainStorm synthesis and a Crew's final synthesis never start with an undecided lead or a lead whose research is in flight.
-  - A Chat Room is never blocked by a lead, and its summary lists every lead.
-  - The Wonderer casts no vote, takes no debate or room turn, and never sends its own lead to research.
-  - Check it works on any lead in all three kinds, and cmd.brainstorm.research_lead behaves exactly as cmd.collaboration.research_lead on a BrainStorm run.
+  - "Every delivered lead has an angle, tether and source; dispositions and set-aside reasons contain non-whitespace text."
+  - "Thin and empty delivered passes are valid, six leads are refused, and only delivered further passes consume the two repeats."
+  - "The first BrainStorm pass runs in Intake; later passes queue behind core work, and every pass remains blind until all proposals are in."
+  - "Dispositions are recorded from Debate, while splitting or on later delivery as specified, with no wait until synthesis."
+  - "BrainStorm and Crew synthesis wait for passes, dispositions and research, then atomically close admission and bind the starting revision."
+  - "Check it coalesces in-flight research and returns lead_admission_closed after synthesis starts."
+  - "A room starts round 1 on time, admits a delivered pass between turns and never waits for Wonderer."
+  - "Wonderer never votes or self-dispatches research; the BrainStorm command remains a one-to-one alias."
 validation_surfaces:
   - python3 scripts/pm-plan-index.py validate
   - node tests/collaboration-verify.mjs
@@ -3265,7 +3278,8 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
   - "Plans/Decision_Log.md DL-218"
-  - "/mnt/Cursor/share/puppet-master/2026-10-16-wonderer-grill-me/DECISIONS.md sha256:dfa2f354936defd187d610de4aee77a3d8b75b6d25692e592ba48f7b66bfebce (Wonderer 1-8)"
+  - "/mnt/Cursor/share/puppet-master/2026-10-16-wonderer-grill-me/DECISIONS.md sha256:dfa2f354936defd187d610de4aee77a3d8b75b6d25692e592ba48f7b66bfebce"
+  - "/mnt/Cursor/share/puppet-master/2026-10-16-wonderer-grill-me/DEFAULTS-APPROVED.md sha256:f199f188e3e4b1ecd5474a1bc2f87c2d5156863909eb9de9cc3ee9fcb7bfd5be"
   - "/mnt/Cursor/share/puppet-master/2026-10-16-wonderer-grill-me/sources/hermes-profiles-wonderer-AGENTS.md sha256:b2699abdbf7b7952e1895012accecd8d468940f4d3ca9c1d1201fecd44a36477 (Hermes wonderer profile at 867a555e13; source lineage, adapted)"
 preserved_exact_tokens:
   - "WondererPass"
@@ -3294,38 +3308,41 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Collaborative_Workflows.md
 canonical_text: >-
-  Grill Me is the definition's grill_me_enabled switch, never a participant (DL-218). When it is on,
-  the participant that already talks to the user runs the grilling Skill (SS-038): the coordinator in a
-  Crew, before it splits the job; the moderator in a Chat Room, before round 1; and the coordinator
-  during BrainStorm intake, before blind proposals. Grill Me has no model, Persona, roster row, wave
-  slot or vote of its own. It interviews the user and never the other agents, and no agent answers a
-  user decision on the user's behalf. It works the frontier of the subject's design tree in rounds:
-  each round asks every decision whose prerequisites are settled, numbered, each with a recommended
-  answer and worded so that yes accepts it, and waits for the answers before recomputing the frontier;
-  a question that depends on one still open belongs to a later round, and I don't know is a valid
-  answer that leaves the decision open. A question that needs a fact is routed to a research agent and
-  never asked; research never holds the round, so only the questions that depend on it wait. A
-  question already answered in the thread or imported context is not asked again. The session ends
-  when the frontier is empty or the user presses Wrap up, and the question maximum is a safety net that
-  ends a session not ended before it is reached; in a BrainStorm that maximum is the base plus the Grill
-  Me extension over the shared question bank, and in a Crew or Chat Room it is the extension alone.
-  When the session ends the user sees what was agreed, every decision with its answer and every
-  decision left open, with Confirm and Keep going, and nothing acts on the answers until Confirm; Keep
-  going returns to the interview within the maximum. A later decision for the user is asked as a
-  further round by the same participant. With Grill Me off, a decision only the user can answer
-  reaches the user through the ordinary needs-you prompt (DL-138). Grill Me cannot mutate the target
-  project, start execution or approve anything.
+  Grill Me is the definition's grill_me_enabled switch, never a participant, model, Persona, roster
+  row, wave slot or vote (DL-218). The participant already talking to the user loads SS-038: the
+  Crew coordinator initially before the split, room moderator initially before round 1, and
+  BrainStorm coordinator during Intake before blind proposals. When enabled mid-run it starts at the
+  next round, assignment or phase boundary; work already running continues. Only the step using new
+  answers waits for that session's current agreement Confirm. It interviews only the user, and no
+  agent answers a user decision. Each round asks the whole design-tree frontier of decisions whose
+  prerequisites are settled, numbered and each with a recommended answer that yes accepts, then
+  waits for the answers and recomputes. Puppet Master offers no one-question-at-a-time setting;
+  every round asks the whole frontier. Dependent decisions belong to later rounds. I don't know
+  removes that decision from the frontier and lists it as open in What we agreed until the user
+  reopens it. Facts go to research, never to the user; only dependent questions wait and the routed
+  set is recorded in the run's single QuestionBank. If all remaining questions wait on research, the
+  interview says it is looking things up, waits and recomputes when research returns. Prior answers
+  are reused. BrainStorm uses base plus extension; Crew and Chat Room use baseline 0 with extension
+  as the whole maximum, keyed by collaboration_run_id, with QMAX-005..007 charging and QMAX-014..015
+  typed exhaustion. The session ends by itself only when no decision is ready, no fact research is
+  pending and no branch is unsettled. Wrap up and the maximum also end it with open items listed.
+  Each session, including a later decision round, ends in its own What we agreed with every answer
+  and open item, Confirm and Keep going. Confirm gates only the step needing that session's answers;
+  a later session needs a fresh Confirm. Keep going preserves answers and the same counter within
+  the maximum. With Grill Me off, only the user can answer the ordinary needs-you prompt (DL-138).
+  Grill Me cannot mutate the project, start execution or approve anything.
 gui_related: false
 gui_classification_reason: Runtime interview protocol; CWR-043 owns how it is shown.
 depends_on: [CWR-008, CWR-028]
 unblocks: [CWR-043]
 acceptance_criteria:
-  - Turning Grill Me on adds no participant, row, model or Persona.
-  - Every Grill Me question goes to the user, and no agent answers a user decision.
-  - A round never holds two questions where one depends on the other.
-  - A question that needs a fact is researched, and only questions that depend on it wait.
-  - Blind proposals, a Crew's split and a room's round 1 wait for Confirm.
-  - The session ends at an empty frontier, at Wrap up, or at the question maximum.
+  - "Grill Me adds no participant or Persona and asks only the user, with no one-question-at-a-time setting."
+  - "Only questions with settled prerequisites share a round; research blocks only dependent questions."
+  - "An empty ready frontier with pending fact research remains waiting and recomputes on return."
+  - "I do not know leaves the decision open without repeating it; automatic completion also requires no unsettled branch."
+  - "Initial proposals, split or round 1 wait for the initial Confirm; mid-run activation waits at the next boundary and gates only the consuming step."
+  - "Each later decision session has its own agreement and fresh Confirm, preserving one counter and running work."
+  - "Wrap up and typed exhaustion show all open items without confirming them."
 validation_surfaces:
   - python3 scripts/pm-plan-index.py validate
   - node tests/collaboration-verify.mjs
@@ -3342,7 +3359,8 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
   - "Plans/Decision_Log.md DL-218"
-  - "/mnt/Cursor/share/puppet-master/2026-10-16-wonderer-grill-me/DECISIONS.md sha256:dfa2f354936defd187d610de4aee77a3d8b75b6d25692e592ba48f7b66bfebce (Grill Me 1-5)"
+  - "/mnt/Cursor/share/puppet-master/2026-10-16-wonderer-grill-me/DECISIONS.md sha256:dfa2f354936defd187d610de4aee77a3d8b75b6d25692e592ba48f7b66bfebce"
+  - "/mnt/Cursor/share/puppet-master/2026-10-16-wonderer-grill-me/DEFAULTS-APPROVED.md sha256:f199f188e3e4b1ecd5474a1bc2f87c2d5156863909eb9de9cc3ee9fcb7bfd5be"
   - "/mnt/Cursor/share/puppet-master/2026-10-16-wonderer-grill-me/sources/mattpocock-skills-productivity-grilling-SKILL.md sha256:befdff1e27a1dfe2a294d5871169ac1afe16d983911daa4f32627514a48c1e15 (grilling skill at 49dd158d10; source lineage)"
 preserved_exact_tokens:
   - "grill_me_enabled"
@@ -3367,33 +3385,38 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Collaborative_Workflows.md
 canonical_text: >-
-  Each Wonderer pass appears once in the run's transcript as a Wonderer message that opens its pass
-  artifact and lists its leads (DL-218). Each lead row shows the lead, its angle, its tether as how it
-  connects to the topic, its source, and one status that changes in place: waiting for the team,
-  exploring, using, set aside, supported or not supported, with the reason and who recorded it, and
-  Check it while the run takes requests. A participant message that takes up a lead links to that
-  lead. The run card's Wonderer lane reads exploring during a pass and the lead count after it, never
-  waits its turn; the card's summary line counts the leads explored, used and set aside and those
-  still waiting. The run view, and in a BrainStorm the Wonderer workspace, lists every pass and lead
-  with the same statuses, reasons, research results and Check it. While a BrainStorm withholds a pass
-  the Wonderer row says its ideas are held until every proposal is in, and Write the plan states the
-  reason it waits while a lead is undecided or in research. The Wonderer stays in the specialists wing
-  of the cast plate. Grill Me has no seat, lane or row: while it is on, the coordinator or moderator
-  carries the Grill Me mark, the sheet's shelf says who will question the user first, and the
-  coordinator's or moderator's lane reads grilling with the round number. Its rounds reach the user as
-  the ordinary questionnaire: numbered questions, each with the recommended answer preselected so one
-  action accepts it, a way to accept the whole round, and Wrap up; its end is one What we agreed card
-  with every decision, every decision left open, Confirm and Keep going.
+  Each Wonderer pass, including an empty pass, appears once as a Wonderer transcript message opening
+  its artifact and listing its leads (DL-218). Each lead row shows its angle, tether as how it
+  connects to the topic, source, reason and recorder. Its disposition maps to waiting for the team
+  when undecided, exploring for explore, using for use and set aside for set_aside; a research
+  result overrides the displayed status with supported for substantiated or not supported for
+  research set_aside, while preserving the disposition and its reason. Check it appears while the
+  run admits requests. Participant messages that take up a lead link to it. The Wonderer lane reads
+  exploring during an admitted pass, queued when a later pass is queued behind core work, and the
+  lead count after delivery, never waits its turn. The card counts explored, used, set-aside and
+  undecided leads. The run view and BrainStorm Wonderer workspace list every pass, reason and
+  research result. Every withheld BrainStorm pass says its ideas are held until all proposals are
+  in. Write the plan states why it is unavailable while a pass is in flight, a lead is undecided or
+  research is in flight; once synthesis starts, further-pass and Check it controls report
+  lead_admission_closed. A Chat Room's first pass joins between turns without holding round 1.
+  Wonderer stays in the specialists wing. Grill Me has no seat, lane or row: its coordinator or
+  moderator carries the Grill Me mark and a grilling lane with round number, or says it is looking
+  things up while the remaining frontier waits on research. The shelf names who will interview the
+  user. The ordinary questionnaire shows numbered questions with preselected recommended answers,
+  one action to accept the whole round, and Wrap up. Each session ends in one What we agreed card
+  listing answers and open items, Confirm and Keep going. Mid-run or later sessions gate only the
+  step needing their freshly confirmed answers, while running work continues.
 gui_related: true
 gui_classification_reason: This unit fixes what the transcript, run cards, run views and sheets show for Wonderer and Grill Me.
 depends_on: [CWR-019, CWR-020, CWR-041, CWR-042]
 unblocks: []
 acceptance_criteria:
-  - A pass shows once in the transcript and every lead shows its tether, source and current status with a reason once decided.
-  - The Wonderer lane never shows waits its turn.
-  - A withheld BrainStorm pass is stated, and Write the plan states why it waits.
-  - Grill Me shows no seat, lane or row, and the coordinator or moderator carries its mark while it is on.
-  - A grilling round shows numbered questions with preselected recommended answers, accept-the-round and Wrap up, and ends in one What we agreed card with Confirm and Keep going.
+  - "Every pass and lead has one transcript presentation, including truthful empty deliveries and visible reasons."
+  - "The Wonderer lane uses queued for capacity waits and never waits its turn."
+  - "Disposition set_aside shows set aside, while research set_aside shows not supported without losing disposition lineage."
+  - "Write the plan states each blocking reason and synthesis closes further lead admission."
+  - "No Wonderer delivery blocks room round 1; research waiting has truthful questionnaire feedback."
+  - "Every grilling session shows whole-frontier recommendations, accept-the-round, Wrap up and its own What we agreed with Confirm and Keep going."
 validation_surfaces:
   - python3 scripts/pm-plan-index.py validate
 risk_class: wonderer_or_grill_me_misrepresented
@@ -3409,6 +3432,7 @@ node_compile_hint:
 source_lineage:
   - "Plans/Decision_Log.md DL-218"
   - "/mnt/Cursor/share/puppet-master/2026-10-16-wonderer-grill-me/DECISIONS.md sha256:dfa2f354936defd187d610de4aee77a3d8b75b6d25692e592ba48f7b66bfebce"
+  - "/mnt/Cursor/share/puppet-master/2026-10-16-wonderer-grill-me/DEFAULTS-APPROVED.md sha256:f199f188e3e4b1ecd5474a1bc2f87c2d5156863909eb9de9cc3ee9fcb7bfd5be"
 preserved_exact_tokens:
   - "Check it"
   - "Wrap up"

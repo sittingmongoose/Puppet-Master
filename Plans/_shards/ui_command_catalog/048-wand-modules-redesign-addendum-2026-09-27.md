@@ -2,9 +2,9 @@
 
 Source: `Plans/UI_Command_Catalog.md`
 
-Source lines: L13699-L14797
+Source lines: L13699-L14798
 
-Source SHA256: `2a9122df5830b433a0fff4dd86234fe0f9eb21b86fff509bb7ac771913b276ef`
+Source SHA256: `b61f2bc13545284ddcb63793a3b69f73fb1043a057a6e3f6dcce50ebde745a5f`
 
 ---
 
@@ -18,6 +18,7 @@ The redesigned Assistant wand popups and their in-chat presence (Crew, Chat Room
 |---|---|---|
 | `run_dock` | The one to three lines above the composer that carry live runs and needs-you items whose cards are off-screen (ACD-476). | `cmd.collaboration.open`, `cmd.questionnaire.resume` |
 | `wonderer_workspace` | The BrainStorm Wonderer workspace, an editor-pane document like the run view (CWR-020). | `cmd.brainstorm.synthesize_plan`, `cmd.collaboration.pause`, `cmd.collaboration.resume`, `cmd.collaboration.research_lead` (DL-218) |
+| `questionnaire_card` | The existing questionnaire host's question and What we agreed cards; this surface ID is newly registered by UCC-206 under DL-218. | `cmd.questionnaire.draft_update`, `cmd.questionnaire.submit`, `cmd.questionnaire.grill_me.wrap_up`, `cmd.questionnaire.grill_me.confirm`, `cmd.questionnaire.grill_me.keep_going` |
 | `memory_proposal_line` | The one in-chat line that proposes a memory for review (AMS-047). | `cmd.chat.teach.open_memory` |
 | `bsd_note` | The Back Seat Driver advisor note in the transcript, with its catch-up, failure and safety lines (BSD-030). | `cmd.bsd.finding.open`, `cmd.bsd.assignment.resume`, `cmd.bsd.assignment.retry`, `cmd.chat.open_thread_context_details` |
 | `schedule_sheet` | The Schedule Message sheet. The wand row only opens it; its primary commits. | `cmd.chat.schedule_message` |
@@ -567,7 +568,7 @@ The six primary rows are canonical owner requests with one named sole future tar
 | Command ID | Label | Description | Preconditions | command_kind | Owner | Request → Result | Sole future target |
 |---|---|---|---|---|---|---|---|
 | `cmd.chat_room.end` | End Discussion | Ends a Chat Room: no further rounds or messages are taken, and the run settles `completed`, not `cancelled`. Promoting existing messages stays allowed. | `chat_room_run_present && run_status in {running, waiting, paused}` | `domain_action` | `Plans/Collaborative_Workflows.md` | `ChatRoomEndRequest` → `ChatRoomEndResult` | `handlers::collaboration::chat_room_end` |
-| `cmd.brainstorm.research_lead` | Check It | BrainStorm-only one-to-one compatibility alias of cmd.collaboration.research_lead (DL-218, UCC-205); researches the lead regardless of disposition, preserving evidence or the set-aside reason. | `brainstorm_run_present && wonderer_lead_present && run_status in {running, waiting}` | `domain_action` | `Plans/Collaborative_Workflows.md` | `BrainstormLeadResearchRequest` → `BrainstormLeadResearchResult` | `handlers::collaboration::research_lead` (after alias normalization) |
+| `cmd.brainstorm.research_lead` | Check It | BrainStorm-only one-to-one compatibility alias of cmd.collaboration.research_lead (DL-218, UCC-205); researches the lead regardless of disposition, preserving evidence or the set-aside reason. | `brainstorm_run_present && wonderer_lead_present && run_status in {running, waiting} && lead_admission_open` | `domain_action` | `Plans/Collaborative_Workflows.md` | `BrainstormLeadResearchRequest` → `BrainstormLeadResearchResult` | `handlers::collaboration::research_lead` (after alias normalization) |
 | `cmd.bsd.finding.dismiss` | Dismiss Advice | Closes one emitted Back Seat Driver finding for its current evidence. It stays closed across restart; changed evidence may raise it again as a new finding. It never touches the primary run. | `bsd_finding_present && finding_state == emitted && expected_epoch_current` | `domain_action` | `Plans/Back_Seat_Driver.md` | `BSDFindingDismissRequest` → `BSDFindingDismissResult` | `handlers::bsd::finding_dismiss` |
 | `cmd.bsd.catch_up.release` | Don't Wait | Releases the current catch-up wait at this boundary, so the primary continues at once. The advisor keeps reviewing and its later notes arrive normally. It never pauses or stops Back Seat Driver. | `bsd_assignment_present && catch_up_state == waiting && expected_epoch_current` | `domain_action` | `Plans/Back_Seat_Driver.md` | `BSDCatchUpReleaseRequest` → `BSDCatchUpReleaseResult` | `handlers::bsd::catch_up_release` |
 | `cmd.chat.teach.revoke` | Turn Off Rule | Turns off one taught rule by setting its `revoked_at`. The rule stays in history, and older versions do not come back. | `teaching_present && teaching_not_revoked && expected_revision_current` | `domain_action` | `Plans/assistant-memory-subsystem.md` | `TeachRevokeRequest` → `TeachRevokeResult` | `handlers::assistant_memory::teach_revoke` |

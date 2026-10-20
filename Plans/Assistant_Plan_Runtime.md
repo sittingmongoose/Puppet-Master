@@ -1011,8 +1011,9 @@ charged and is never persisted as asked.
 ### QMAX-006 — One counter per run, shared by every participant
 
 Question admission for a Plan or Deep Plan run uses exactly one durable counter, keyed by the
-planning run, not by participant, agent, specialist, pass, or card. BrainStorm participants,
-the Wonderer role, and the participant running Grill Me read and write that one counter. The ceiling is
+planning run, not by participant, agent, specialist, pass, or card. BrainStorm question requesters
+and the participant running Grill Me share that counter through the coordinator or questionnaire
+host. The Wonderer never asks the user and never reads or writes the question counter (DL-218). The ceiling is
 never multiplied by participant count and is never partitioned into per-agent pools.
 
 For a Deep Plan run, `Plans/Planning_Ledger_System.md` owns the durable question record and its
@@ -1021,8 +1022,13 @@ single-registry guarantee. This document owns the arithmetic and the admission d
 The durable question records that back this counter are mapped per backend, and the budget names
 in this section never collapse into one type. For a Deep Plan run they are the ledger session
 question records inside `DeepPlanLedgerSession` (`pm.assistant_plan.deep_ledger_session.v1`); a
-BrainStorm run records its shared participant frontier in `QuestionBank`
-(`pm.brainstorm.question_bank.v1`, owned by `Plans/Collaborative_Workflows.md`). For a regular
+BrainStorm run, and a Crew or Chat Room with Grill Me on, record the shared participant frontier
+and research-routed set in one `QuestionBank` (`pm.brainstorm.question_bank.v1`, owned by
+`Plans/Collaborative_Workflows.md` sections 8.4, 9.3 and 12), keyed by `collaboration_run_id`.
+Legacy `brainstorm_run_id` denotes the same BrainStorm bank. Crew and Chat Room have
+`baseline_limit` 0, with the configured extension as their whole maximum. Their charge point
+is QMAX-005..007 and their typed exhaustion is QMAX-014..015; no separate counter is added
+(DL-218). For a regular
 Plan run, which creates no ledger session, they are the durably admitted `QuestionnaireEnvelope`
 question and answer records of the existing questionnaire host owned by
 `Plans/assistant-chat-design.md`; opening a ledger session for a regular Plan remains an
@@ -1807,26 +1813,35 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Assistant_Plan_Runtime.md
 canonical_text: >-
-  With Grill Me on in a Plan or Deep Plan run, the assistant asks its questions as the grilling Skill
-  (SS-038, DL-218). It works the frontier in rounds through the existing questionnaire host: each round
-  asks every decision whose prerequisites are settled, each question numbered and carrying a recommended
-  answer that yes accepts, and a question that depends on one still open waits for a later round. A fact
-  goes to research and is never asked, and research holds only the questions that depend on it. The
-  session ends when the frontier is empty or the user presses Wrap up; the effective limit of QMAX-001..004
-  is a safety net, and reaching it ends the session with the typed question_budget_exhausted result of QMAX-014..015. When the
-  session ends the user sees What we agreed, every decision with its answer and every decision left open,
-  with Confirm and Keep going, and the Plan document is not written or revised from those answers until
-  the user confirms; Keep going returns to the interview within the limit. Every question still counts once
-  against the run's one counter (QMAX-005..007), and Grill Me adds no participant and no second counter.
+  With Grill Me on in a Plan or Deep Plan run, the assistant asks its questions as the grilling
+  Skill (SS-038, DL-218). It works the frontier in rounds through the existing questionnaire host:
+  each round asks every decision whose prerequisites are settled, each question numbered and
+  carrying a recommended answer that yes accepts, and a question that depends on one still open
+  waits for a later round. A fact goes to research and is never asked, and research holds only the
+  questions that depend on it. I don't know removes that decision from the frontier and lists it as
+  open in What we agreed unless the user reopens it. The session ends by itself only when no
+  decision is ready, no fact research is pending and no branch is unsettled. If every remaining
+  question waits on research, the interview waits, says it is looking things up and recomputes when
+  research returns. The user may also end it with Wrap up; the effective limit of QMAX-001..004 is a
+  safety net, and reaching it ends the session with the typed question_budget_exhausted result of
+  QMAX-014..015. When the session ends the user sees What we agreed, every decision with its answer
+  and every decision left open, with Confirm and Keep going, and the Plan document is not written or
+  revised from those answers until the user confirms; Keep going returns to the interview within the
+  limit. Every later decision session ends in its own What we agreed and requires a fresh Confirm of
+  that agreement before the Plan step using its new answers proceeds; already running work
+  continues. Every question still counts once against the run's one counter (QMAX-005..007), and
+  Grill Me adds no participant and no second counter.
 gui_related: true
 gui_classification_reason: The rounds, Wrap up and the What we agreed step are visible in the chat's questionnaire.
 depends_on: [APR-002, APR-009]
 unblocks: []
 acceptance_criteria:
-  - With Grill Me on, every round holds only questions whose prerequisites are settled, each with a recommended answer.
-  - The session ends at an empty frontier, at Wrap up or at the effective limit.
-  - No Plan document is written from the answers before Confirm.
-  - Grill Me charges the same one counter and adds no second one.
+  - "Every round holds only questions whose prerequisites are settled, each with a recommended answer."
+  - "Pending fact research keeps an otherwise blocked interview waiting until it returns."
+  - "Automatic completion requires no ready decision, pending research or unsettled branch; Wrap up and typed exhaustion list open items."
+  - "I do not know leaves an open decision outside the frontier until explicitly reopened."
+  - "Each agreement needs its own Confirm before the consuming Plan step; already running work continues."
+  - "Grill Me charges one shared counter and never adds a participant or second counter."
 validation_surfaces:
   - python3 scripts/pm-plan-index.py validate
 risk_class: grill_me_acts_before_confirm
@@ -1843,8 +1858,7 @@ node_compile_hint:
 source_lineage:
   - "Plans/Decision_Log.md DL-218"
   - "/mnt/Cursor/share/puppet-master/2026-10-16-wonderer-grill-me/DECISIONS.md sha256:dfa2f354936defd187d610de4aee77a3d8b75b6d25692e592ba48f7b66bfebce"
-  - Plans/Decision_Log.md#DL-218
-  - "/mnt/Cursor/share/puppet-master/2026-10-16-wonderer-grill-me/DECISIONS.md sha256:dfa2f354936defd187d610de4aee77a3d8b75b6d25692e592ba48f7b66bfebce (Grill Me 1, 3, 4)"
+  - "/mnt/Cursor/share/puppet-master/2026-10-16-wonderer-grill-me/DEFAULTS-APPROVED.md sha256:f199f188e3e4b1ecd5474a1bc2f87c2d5156863909eb9de9cc3ee9fcb7bfd5be"
 preserved_exact_tokens:
   - "Wrap up"
   - "What we agreed"

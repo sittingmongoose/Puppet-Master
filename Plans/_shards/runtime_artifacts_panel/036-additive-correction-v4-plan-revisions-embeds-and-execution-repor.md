@@ -4,7 +4,7 @@ Source: `Plans/Runtime_Artifacts_Panel.md`
 
 Source lines: L2707-L2798
 
-Source SHA256: `f37269b54ee47641bbafcf473c12d92cb05e38a4045b1c1a3d1b11c89cdd6dc6`
+Source SHA256: `e7aa2b010c748593bb7c5f4615faa78dac656603b0f0a9d14793cbff7d5eefce`
 
 ---
 
@@ -92,7 +92,7 @@ owner owns the durability and disclosure of what it writes down.
 
 Each Wonderer pass is one Puppet Master artifact with progressive disclosure in three layers
 (amended 2026-10-16, DL-218): a one-paragraph summary naming the seed, the territory explored and
-the three most interesting leads; the angles explored, each with a brief signal assessment; and one
+up to three most interesting leads, or that it found no new leads; the angles explored, each with a brief signal assessment; and one
 dossier per lead, saying what was found, why it is interesting, what is worth investigating next,
 and where it came from. Each layer is routeable through ordinary artifact identity, so a consumer
 reads the summary and opens a lower layer only when it needs it (`Plans/Collaborative_Workflows.md`

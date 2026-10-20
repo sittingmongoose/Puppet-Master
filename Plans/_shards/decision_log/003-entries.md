@@ -4,7 +4,7 @@ Source: `Plans/Decision_Log.md`
 
 Source lines: L13-L4294
 
-Source SHA256: `fa5b2194d597f7f33b749cfcbce65c50361db3baffe4ab0a30706eba50b072dd`
+Source SHA256: `76cde50db8ca0f86fc49614de6ca0bf165a63d4e198b4ebf901cf4b8db0966cc`
 
 ---
 
@@ -3247,7 +3247,7 @@ ContractRef: ContractName:Plans/FinalGUISpec.md#F3-592, ContractName:Plans/Final
 **Why it came up:** Jared found the agent graphs in the setup popups messy and hard to follow. He pointed to the puppet helpers of PMConcept7's onboarding and suggested drawing the agents as little puppets matching each theme, in the popups, in the chat's cards and in the panel a card opens, with NieR Mode changing them too, and for Technical details to leave the cards.
 
 **What you get:**
-- Every agent is a small marionette: a control bar with strings, a chibi figure, and one prop or piece of headwear that names its role (the Coordinator's crown, the Moderator's gavel, a builder's hard hat, a reviewer's magnifier, a critic's jester cap, Wonderer's orbit ring, Grill Me's little kettle grill and so on), so roles read without colour. The seat colour paints the figure.
+- Every agent is a small marionette: a control bar with strings, a chibi figure, and one prop or piece of headwear that names its role (the Coordinator's crown, the Moderator's gavel, a builder's hard hat, a reviewer's magnifier, a critic's jester cap, Wonderer's orbit ring, Grill Me's little kettle grill and so on), so roles read without colour. The seat colour paints the figure. DL-218 later makes Grill Me a switch with no puppet of its own: its kettle belongs to the existing coordinator or moderator while the switch is on.
 - Each theme family has its own puppet material: a blueprint line puppet in Basic, felt in Friendly, crystal in Glass, a pixel sprite in Retro. Under NieR Mode the puppet is PMConcept7's NieR puppet: ink on parchment with a rigid visor band.
 - One drawing serves every place an agent appears: the popups' rosters and graphs, run cards, run views, Activity's rows and the chat's live agents card. No agent is ever drawn as initials.
 - Each graph becomes one tidy cast plate: a bar across the top saying what goes in and who runs it, ending at you; the cast hanging under it on straight strings, every seat named; specialists in a wing on the right; the run's state shown on the seats. The run view opens with the same plate.

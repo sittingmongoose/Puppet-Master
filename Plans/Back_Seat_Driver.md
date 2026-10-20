@@ -264,7 +264,7 @@ BSD stage coverage is configurable as `inherit|off|auto|on` per stage. The stage
 | `remediation` | remediation |
 | `certification` | certification |
 
-BSD is the only advisory option that may cover the hidden stages. Wonderer and Grill Me do not participate in hidden PlanUnit, WorkNode, audit, execution, or certification stages unless explicitly invoked as ordinary agents for a visible planning task.
+BSD is the only advisory option that may cover the hidden stages. Wonderer is not admitted to hidden PlanUnit, WorkNode, audit, execution or certification stages; it may be explicitly invoked as an ordinary participant for a visible planning task. Grill Me may be explicitly enabled as a Skill on the assistant conducting that visible task and never becomes an agent (DL-218).
 
 Configuration is frozen at start. Exactly one configuration modal opens when BSD is explicitly selected as a start option for PRD Builder or Planning Wizard. It writes a `BSDWorkflowBinding` whose `stage_bindings` and requested/effective advisor identity are frozen for that run. A modal does not open at every stage; mid-run stage changes require an explicit reconfiguration action that creates a new binding revision and records the change, and they never retroactively rewrite the frozen identity of reviews already performed.
 
@@ -1224,14 +1224,18 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Back_Seat_Driver.md
 canonical_text: >-
-  BSD stage coverage is configurable as inherit, off, auto, or on for the workflow kinds assistant, prd_builder,
-  planning_wizard, deep_plan, planunit_compile, plan_compile, worknode_generation, worknode_audit, worknode_execution,
-  verification, remediation, and certification, including the PRD intake, discovery, synthesis, conflict, and final readiness
-  stages and the Planning Wizard intake, topic entry, research, draft, audit, integration, final pack, and approval readiness
-  stages. BSD is the only advisory option that may cover the hidden PlanUnit, WorkNode, audit, execution, verification,
-  remediation, and certification stages; Wonderer and Grill Me do not, unless explicitly invoked as ordinary agents for a
-  visible planning task. A stage resolving to off creates no assignment and no advisor context, and a stage resolving to auto
-  or on creates exactly one assignment per primary run and stage with double dispatch unable to create a second.
+  BSD stage coverage is configurable as inherit, off, auto, or on for the workflow kinds assistant,
+  prd_builder, planning_wizard, deep_plan, planunit_compile, plan_compile, worknode_generation,
+  worknode_audit, worknode_execution, verification, remediation, and certification, including the
+  PRD intake, discovery, synthesis, conflict, and final readiness stages and the Planning Wizard
+  intake, topic entry, research, draft, audit, integration, final pack, and approval readiness
+  stages. BSD is the only advisory option that may cover the hidden PlanUnit, WorkNode, audit,
+  execution, verification, remediation, and certification stages; Wonderer is not admitted there but
+  may be explicitly invoked as an ordinary participant for a visible planning task. Grill Me may be
+  enabled as a Skill on the assistant conducting that visible task and never becomes an agent
+  (DL-218). A stage resolving to off creates no assignment and no advisor context, and a stage
+  resolving to auto or on creates exactly one assignment per primary run and stage with double
+  dispatch unable to create a second.
 gui_related: true
 gui_classification_reason: Stage rows are user-configurable in the PRD Builder and Planning Wizard start surfaces.
 depends_on:
@@ -1255,7 +1259,10 @@ node_compile_hint:
   mode: bsd_stage_coverage
   create_worknodes: false
 source_lineage:
-  - pm-assistant-implementation-2026-09-02-recovered:BSD-016
+  - "Plans/Decision_Log.md DL-218"
+  - "/mnt/Cursor/share/puppet-master/2026-10-16-wonderer-grill-me/DECISIONS.md sha256:dfa2f354936defd187d610de4aee77a3d8b75b6d25692e592ba48f7b66bfebce"
+  - "/mnt/Cursor/share/puppet-master/2026-10-16-wonderer-grill-me/DEFAULTS-APPROVED.md sha256:f199f188e3e4b1ecd5474a1bc2f87c2d5156863909eb9de9cc3ee9fcb7bfd5be"
+  - "pm-assistant-implementation-2026-09-02-recovered:BSD-016"
 preserved_exact_tokens:
   - "inherit"
   - "planunit_compile"

@@ -3249,7 +3249,7 @@ ContractRef: ContractName:Plans/FinalGUISpec.md#F3-592, ContractName:Plans/Final
 **Why it came up:** Jared found the agent graphs in the setup popups messy and hard to follow. He pointed to the puppet helpers of PMConcept7's onboarding and suggested drawing the agents as little puppets matching each theme, in the popups, in the chat's cards and in the panel a card opens, with NieR Mode changing them too, and for Technical details to leave the cards.
 
 **What you get:**
-- Every agent is a small marionette: a control bar with strings, a chibi figure, and one prop or piece of headwear that names its role (the Coordinator's crown, the Moderator's gavel, a builder's hard hat, a reviewer's magnifier, a critic's jester cap, Wonderer's orbit ring, Grill Me's little kettle grill and so on), so roles read without colour. The seat colour paints the figure.
+- Every agent is a small marionette: a control bar with strings, a chibi figure, and one prop or piece of headwear that names its role (the Coordinator's crown, the Moderator's gavel, a builder's hard hat, a reviewer's magnifier, a critic's jester cap, Wonderer's orbit ring, Grill Me's little kettle grill and so on), so roles read without colour. The seat colour paints the figure. DL-218 later makes Grill Me a switch with no puppet of its own: its kettle belongs to the existing coordinator or moderator while the switch is on.
 - Each theme family has its own puppet material: a blueprint line puppet in Basic, felt in Friendly, crystal in Glass, a pixel sprite in Retro. Under NieR Mode the puppet is PMConcept7's NieR puppet: ink on parchment with a rigid visor band.
 - One drawing serves every place an agent appears: the popups' rosters and graphs, run cards, run views, Activity's rows and the chat's live agents card. No agent is ever drawn as initials.
 - Each graph becomes one tidy cast plate: a bar across the top saying what goes in and who runs it, ending at you; the cast hanging under it on straight strings, every seat named; specialists in a wing on the right; the run's state shown on the seats. The run view opens with the same plate.
@@ -16140,26 +16140,34 @@ unit_type: decision
 status: accepted
 owner_doc: Plans/Decision_Log.md
 canonical_text: >-
-  Decided by Jared on 2026-10-16 after a review of how the Plans describe Wonderer and Grill Me against
-  the two sources they were based on: the Hermes wonderer profile (hermes-profiles 867a555e13) and the
-  grilling skill (mattpocock/skills 49dd158d10). Wonderer in Crew, BrainStorm and Chat Room is an
-  automated helper that runs alongside the run and feeds its leads back to the agents, who decide
-  whether each is worth exploring. It explores the run's topic once at the start, with the Hermes method,
-  and again only when an agent or the user asks, at most twice more. Every agent gets a short summary of
-  each pass and opens a lead's dossier only when it needs it, and every lead says how it connects to the
-  topic and where it came from. In a BrainStorm its leads reach the agents only after every blind
-  proposal is in. The agents decide each lead (explore it, use it or set it aside) with a one-line reason
-  that is shown, and the user's Check it sends any lead to research as an override. Writing a BrainStorm
-  plan, and a Crew's final result, wait until every lead has a decision; a Chat Room never waits, and its
-  summary lists every lead and what the room did with it. The Wonderer never votes, never argues for or
-  against a proposal and never sends its own leads to research. Grill Me works like the grilling skill:
-  it is a skill switched on for the run, not a participant, and whoever already talks to the user (the
-  assistant, a Crew's coordinator, a Chat Room's moderator, or a BrainStorm's coordinator at intake)
-  grills the user, never the other agents. This replaces question 10 of DL-138. The question cap stays
-  as a safety net, the session normally ends when no decision is left to ask or the user presses Wrap
-  up, and nothing acts on the answers until the user confirms what was agreed. Chat Room keeps Grill Me.
-  Wonderer in PRD Builder and the Planning Wizard is more human-driven and interactive and is designed
-  by those owners, as is when Grill Me runs there, which Jared handed to the thread working on them.
+  Decided by Jared on 2026-10-16 after a review of how the Plans describe Wonderer and Grill Me
+  against the two sources they were based on: the Hermes wonderer profile (hermes-profiles
+  867a555e13) and the grilling skill (mattpocock/skills 49dd158d10). Wonderer in Crew, BrainStorm
+  and Chat Room is an automated helper that runs alongside the run and feeds its leads back to the
+  agents, who decide whether each is worth exploring. It explores the run's topic once at the start,
+  with the Hermes method, and again only when an agent or the user asks, at most twice more. Every
+  agent gets a short summary of each pass and opens a lead's dossier only when it needs it, and
+  every lead says how it connects to the topic and where it came from. In a BrainStorm its leads
+  reach the agents only after every blind proposal is in. The agents decide each lead (explore it,
+  use it or set it aside) with a one-line reason that is shown, and the user's Check it sends any
+  lead to research as an override. Writing a BrainStorm plan, and a Crew's final result, wait until
+  every lead has a decision; a Chat Room never waits, and its summary lists every lead and what the
+  room did with it. The Wonderer never votes, never argues for or against a proposal and never sends
+  its own leads to research. Grill Me works like the grilling skill: it is a skill switched on for
+  the run, not a participant, and whoever already talks to the user (the assistant, a Crew's
+  coordinator, a Chat Room's moderator, or a BrainStorm's coordinator at intake) grills the user,
+  never the other agents. This replaces question 10 of DL-138. The question cap stays as a safety
+  net, the session normally ends when no decision is left to ask or the user presses Wrap up, and
+  nothing acts on the answers until the user confirms what was agreed. Chat Room keeps Grill Me.
+  Wonderer in PRD Builder and the Planning Wizard is more human-driven and interactive and is
+  designed by those owners, as is when Grill Me runs there, which Jared handed to the thread working
+  on them. On 2026-10-20 Jared approved seven defaults: at most two further Wonderer passes (three
+  total); no Wonderer debate or room turn, only pass delivery and answers to addressed lead
+  questions; shared cmd.collaboration.research_lead with cmd.brainstorm.research_lead as its
+  one-to-one BrainStorm alias; a Crew waits for the first pass before splitting; Crew and Chat Room
+  use no question base and the extension as their whole maximum (default 25); Crew Auto and
+  scheduled-build Crews still refuse both options; and Puppet Master offers no
+  one-question-at-a-time setting, so every round asks the whole frontier.
 gui_related: true
 gui_classification_reason: Changes what the collaboration sheets, run cards, run views and the chat's questionnaire show for Wonderer and Grill Me.
 split_recommended: false
@@ -16186,11 +16194,10 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
-- /mnt/Cursor/share/puppet-master/2026-10-16-wonderer-grill-me/DECISIONS.md, SHA-256
-  dfa2f354936defd187d610de4aee77a3d8b75b6d25692e592ba48f7b66bfebce (decision record, T3 thread
-  3e741762-c008-45a0-931b-b27997b1d784; decision lineage)
-- /mnt/Cursor/share/puppet-master/2026-10-16-wonderer-grill-me/SOURCE-SHA256.txt (pinned copies of the
-  Hermes wonderer profile and the grilling skill; source lineage)
+  - "Plans/Decision_Log.md DL-218"
+  - "/mnt/Cursor/share/puppet-master/2026-10-16-wonderer-grill-me/DECISIONS.md sha256:dfa2f354936defd187d610de4aee77a3d8b75b6d25692e592ba48f7b66bfebce"
+  - "/mnt/Cursor/share/puppet-master/2026-10-16-wonderer-grill-me/DEFAULTS-APPROVED.md sha256:f199f188e3e4b1ecd5474a1bc2f87c2d5156863909eb9de9cc3ee9fcb7bfd5be"
+  - "/mnt/Cursor/share/puppet-master/2026-10-16-wonderer-grill-me/SOURCE-SHA256.txt (pinned copies of the Hermes wonderer profile and the grilling skill; source lineage)"
 preserved_exact_tokens: []
 negative_constraints:
 - Wonderer never votes, argues or routes its own leads to research.

@@ -187,6 +187,18 @@
     },
     {
       "$ref": "#/$defs/RouteResult"
+    },
+    {
+      "$ref": "#/$defs/WondererPass"
+    },
+    {
+      "$ref": "#/$defs/WondererLead"
+    },
+    {
+      "$ref": "#/$defs/CollaborationLeadResearchRequest"
+    },
+    {
+      "$ref": "#/$defs/CollaborationLeadResearchResult"
     }
   ],
   "$defs": {
@@ -446,7 +458,8 @@
         "destination_target_ended",
         "run_state_invalid",
         "owner_unavailable",
-        "cancelled"
+        "cancelled",
+        "lead_admission_closed"
       ]
     },
     "composer_buffer_error": {
@@ -600,14 +613,35 @@
             },
             {
               "not": {
-                "enum": [
-                  "Grill Me",
-                  "grill-me",
-                  "grill_me",
-                  "grilling",
-                  "persona:grill-me",
-                  "persona:grill_me",
-                  "persona:grilling"
+                "anyOf": [
+                  {
+                    "type": "string",
+                    "pattern": "^[gG][rR][iI][lL][lL] [mM][eE]$"
+                  },
+                  {
+                    "type": "string",
+                    "pattern": "^[gG][rR][iI][lL][lL]-[mM][eE]$"
+                  },
+                  {
+                    "type": "string",
+                    "pattern": "^[gG][rR][iI][lL][lL]_[mM][eE]$"
+                  },
+                  {
+                    "type": "string",
+                    "pattern": "^[gG][rR][iI][lL][lL][iI][nN][gG]$"
+                  },
+                  {
+                    "type": "string",
+                    "pattern": "^[pP][eE][rR][sS][oO][nN][aA]:[gG][rR][iI][lL][lL]-[mM][eE]$"
+                  },
+                  {
+                    "type": "string",
+                    "pattern": "^[pP][eE][rR][sS][oO][nN][aA]:[gG][rR][iI][lL][lL]_[mM][eE]$"
+                  },
+                  {
+                    "type": "string",
+                    "pattern": "^[pP][eE][rR][sS][oO][nN][aA]:[gG][rR][iI][lL][lL][iI][nN][gG]$"
+                  }
                 ]
               }
             }
@@ -657,14 +691,35 @@
             },
             {
               "not": {
-                "enum": [
-                  "Grill Me",
-                  "grill-me",
-                  "grill_me",
-                  "grilling",
-                  "persona:grill-me",
-                  "persona:grill_me",
-                  "persona:grilling"
+                "anyOf": [
+                  {
+                    "type": "string",
+                    "pattern": "^[gG][rR][iI][lL][lL] [mM][eE]$"
+                  },
+                  {
+                    "type": "string",
+                    "pattern": "^[gG][rR][iI][lL][lL]-[mM][eE]$"
+                  },
+                  {
+                    "type": "string",
+                    "pattern": "^[gG][rR][iI][lL][lL]_[mM][eE]$"
+                  },
+                  {
+                    "type": "string",
+                    "pattern": "^[gG][rR][iI][lL][lL][iI][nN][gG]$"
+                  },
+                  {
+                    "type": "string",
+                    "pattern": "^[pP][eE][rR][sS][oO][nN][aA]:[gG][rR][iI][lL][lL]-[mM][eE]$"
+                  },
+                  {
+                    "type": "string",
+                    "pattern": "^[pP][eE][rR][sS][oO][nN][aA]:[gG][rR][iI][lL][lL]_[mM][eE]$"
+                  },
+                  {
+                    "type": "string",
+                    "pattern": "^[pP][eE][rR][sS][oO][nN][aA]:[gG][rR][iI][lL][lL][iI][nN][gG]$"
+                  }
                 ]
               }
             }
@@ -679,13 +734,31 @@
               },
               {
                 "not": {
-                  "enum": [
-                    "grill-me",
-                    "grill_me",
-                    "grilling",
-                    "skill:grill-me",
-                    "skill:grill_me",
-                    "skill:grilling"
+                  "anyOf": [
+                    {
+                      "type": "string",
+                      "pattern": "^[gG][rR][iI][lL][lL]-[mM][eE]$"
+                    },
+                    {
+                      "type": "string",
+                      "pattern": "^[gG][rR][iI][lL][lL]_[mM][eE]$"
+                    },
+                    {
+                      "type": "string",
+                      "pattern": "^[gG][rR][iI][lL][lL][iI][nN][gG]$"
+                    },
+                    {
+                      "type": "string",
+                      "pattern": "^[sS][kK][iI][lL][lL]:[gG][rR][iI][lL][lL]-[mM][eE]$"
+                    },
+                    {
+                      "type": "string",
+                      "pattern": "^[sS][kK][iI][lL][lL]:[gG][rR][iI][lL][lL]_[mM][eE]$"
+                    },
+                    {
+                      "type": "string",
+                      "pattern": "^[sS][kK][iI][lL][lL]:[gG][rR][iI][lL][lL][iI][nN][gG]$"
+                    }
                   ]
                 }
               }
@@ -1365,12 +1438,11 @@
     },
     "QuestionBank": {
       "type": "object",
-      "description": "One shared question registry per BrainStorm run (section 8.4). The allowance table, counter and charge point are owned by Plans/Assistant_Plan_Runtime.md (QMAX-001..016).",
+      "description": "One QuestionBank per collaboration_run_id for BrainStorm and for a Crew/Chat Room with Grill Me on. kind matches the owning run. Crew and Chat Room baseline_limit is zero and effective_limit is the extension alone. Normalize legacy brainstorm_run_id only for BrainStorm. QMAX-005..007 owns charging and QMAX-014..015 owns typed exhaustion; the routed set lives here.",
       "additionalProperties": false,
       "required": [
         "schema_id",
         "schema_version",
-        "brainstorm_run_id",
         "baseline_limit",
         "grill_extension",
         "effective_limit",
@@ -1387,7 +1459,8 @@
           "const": "1.0.0"
         },
         "brainstorm_run_id": {
-          "$ref": "#/$defs/non_empty_string"
+          "$ref": "#/$defs/non_empty_string",
+          "description": "Compatibility-only BrainStorm spelling of collaboration_run_id; normalize to one bank, never a second counter. When both are supplied their values must agree."
         },
         "baseline_limit": {
           "type": "integer",
@@ -1428,10 +1501,68 @@
             "$ref": "#/$defs/non_empty_string"
           },
           "uniqueItems": true
+        },
+        "collaboration_run_id": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "kind": {
+          "enum": [
+            "brainstorm",
+            "crew",
+            "chat_room"
+          ]
         }
       },
-      "x-primary-identity-fields": [
-        "brainstorm_run_id"
+      "anyOf": [
+        {
+          "required": [
+            "collaboration_run_id",
+            "kind"
+          ]
+        },
+        {
+          "required": [
+            "brainstorm_run_id"
+          ]
+        }
+      ],
+      "allOf": [
+        {
+          "if": {
+            "required": [
+              "brainstorm_run_id"
+            ]
+          },
+          "then": {
+            "properties": {
+              "kind": {
+                "const": "brainstorm"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "kind": {
+                "enum": [
+                  "crew",
+                  "chat_room"
+                ]
+              }
+            },
+            "required": [
+              "kind"
+            ]
+          },
+          "then": {
+            "properties": {
+              "baseline_limit": {
+                "const": 0
+              }
+            }
+          }
+        }
       ]
     },
     "BrainstormProposal": {
@@ -2388,14 +2519,35 @@
             },
             {
               "not": {
-                "enum": [
-                  "Grill Me",
-                  "grill-me",
-                  "grill_me",
-                  "grilling",
-                  "persona:grill-me",
-                  "persona:grill_me",
-                  "persona:grilling"
+                "anyOf": [
+                  {
+                    "type": "string",
+                    "pattern": "^[gG][rR][iI][lL][lL] [mM][eE]$"
+                  },
+                  {
+                    "type": "string",
+                    "pattern": "^[gG][rR][iI][lL][lL]-[mM][eE]$"
+                  },
+                  {
+                    "type": "string",
+                    "pattern": "^[gG][rR][iI][lL][lL]_[mM][eE]$"
+                  },
+                  {
+                    "type": "string",
+                    "pattern": "^[gG][rR][iI][lL][lL][iI][nN][gG]$"
+                  },
+                  {
+                    "type": "string",
+                    "pattern": "^[pP][eE][rR][sS][oO][nN][aA]:[gG][rR][iI][lL][lL]-[mM][eE]$"
+                  },
+                  {
+                    "type": "string",
+                    "pattern": "^[pP][eE][rR][sS][oO][nN][aA]:[gG][rR][iI][lL][lL]_[mM][eE]$"
+                  },
+                  {
+                    "type": "string",
+                    "pattern": "^[pP][eE][rR][sS][oO][nN][aA]:[gG][rR][iI][lL][lL][iI][nN][gG]$"
+                  }
                 ]
               }
             }
@@ -2425,14 +2577,35 @@
             },
             {
               "not": {
-                "enum": [
-                  "Grill Me",
-                  "grill-me",
-                  "grill_me",
-                  "grilling",
-                  "persona:grill-me",
-                  "persona:grill_me",
-                  "persona:grilling"
+                "anyOf": [
+                  {
+                    "type": "string",
+                    "pattern": "^[gG][rR][iI][lL][lL] [mM][eE]$"
+                  },
+                  {
+                    "type": "string",
+                    "pattern": "^[gG][rR][iI][lL][lL]-[mM][eE]$"
+                  },
+                  {
+                    "type": "string",
+                    "pattern": "^[gG][rR][iI][lL][lL]_[mM][eE]$"
+                  },
+                  {
+                    "type": "string",
+                    "pattern": "^[gG][rR][iI][lL][lL][iI][nN][gG]$"
+                  },
+                  {
+                    "type": "string",
+                    "pattern": "^[pP][eE][rR][sS][oO][nN][aA]:[gG][rR][iI][lL][lL]-[mM][eE]$"
+                  },
+                  {
+                    "type": "string",
+                    "pattern": "^[pP][eE][rR][sS][oO][nN][aA]:[gG][rR][iI][lL][lL]_[mM][eE]$"
+                  },
+                  {
+                    "type": "string",
+                    "pattern": "^[pP][eE][rR][sS][oO][nN][aA]:[gG][rR][iI][lL][lL][iI][nN][gG]$"
+                  }
                 ]
               }
             }
@@ -6067,7 +6240,7 @@
     },
     "BrainstormLeadResearchRequest": {
       "type": "object",
-      "description": "DL-218 one-to-one BrainStorm-only compatibility shape of CollaborationLeadResearchRequest. Normalize before availability, permissions, idempotency and dispatch; there is no separate BrainStorm handler. Asks a running or waiting BrainStorm run to research one Wonderer lead (CWR-031, DL-130, section 9.2).",
+      "description": "DL-218 one-to-one BrainStorm-only compatibility shape of CollaborationLeadResearchRequest. Normalize before availability, permissions, idempotency and dispatch; there is no separate BrainStorm handler. Asks a running or waiting BrainStorm run to research one Wonderer lead (CWR-031, DL-130, section 9.2). Refuse lead_admission_closed after BrainStorm synthesis or the Crew final result starts. A Check It already in research returns the existing operation; no second attempt.",
       "additionalProperties": false,
       "required": [
         "schema_id",
@@ -6155,7 +6328,7 @@
     },
     "BrainstormLeadResearchResult": {
       "type": "object",
-      "description": "DL-218 one-to-one BrainStorm-only compatibility shape of CollaborationLeadResearchResult. Normalize before availability, permissions, idempotency and dispatch; there is no separate BrainStorm handler. The lead stays a hypothesis until research returns evidence; the result records that evidence or the reason it was set aside. A lead is never accepted as fact without evidence.",
+      "description": "DL-218 one-to-one BrainStorm-only compatibility shape of CollaborationLeadResearchResult. Normalize before availability, permissions, idempotency and dispatch; there is no separate BrainStorm handler. The lead stays a hypothesis until research returns evidence; the result records that evidence or the reason it was set aside. A lead is never accepted as fact without evidence. A committed success has receipt, resulting revision/hash, and either a terminal supported/set-aside outcome or non-null observable work for research still running (DL-218).",
       "additionalProperties": false,
       "required": [
         "schema_id",
@@ -6278,7 +6451,9 @@
         "set_aside_reason": {
           "oneOf": [
             {
-              "$ref": "#/$defs/non_empty_string"
+              "type": "string",
+              "minLength": 1,
+              "pattern": "\\S"
             },
             {
               "type": "null"
@@ -6305,8 +6480,36 @@
             "properties": {
               "error": {
                 "type": "null"
+              },
+              "receipt_refs": {
+                "minItems": 1
+              },
+              "revision_after": {
+                "$ref": "#/$defs/revision"
+              },
+              "currentness_hash_after": {
+                "$ref": "#/$defs/sha256_hex"
               }
-            }
+            },
+            "anyOf": [
+              {
+                "properties": {
+                  "lead_status": {
+                    "enum": [
+                      "substantiated",
+                      "set_aside"
+                    ]
+                  }
+                }
+              },
+              {
+                "properties": {
+                  "observable_work_ref": {
+                    "$ref": "#/$defs/non_empty_string"
+                  }
+                }
+              }
+            ]
           }
         },
         {
@@ -6378,7 +6581,9 @@
           "then": {
             "properties": {
               "set_aside_reason": {
-                "$ref": "#/$defs/non_empty_string"
+                "type": "string",
+                "minLength": 1,
+                "pattern": "\\S"
               }
             }
           }
@@ -9376,7 +9581,7 @@
     },
     "CrewAutoConfigRoute": {
       "type": "object",
-      "description": "Opens the Crew Auto sheet from the Crew Auto settings\u2026 row, the Crew sheet or the Crew Auto note's Change control (CWR-038).",
+      "description": "Opens the Crew Auto sheet from the Crew Auto settings… row, the Crew sheet or the Crew Auto note's Change control (CWR-038).",
       "additionalProperties": false,
       "required": [
         "schema_id",
@@ -9413,7 +9618,7 @@
           "$ref": "#/$defs/non_empty_string"
         },
         "source_surface": {
-          "description": "The cmd.chat.crew_auto.open_config surfaces of section 10: the multi-agent menu's Crew Auto settings\u2026 row, the Crew sheet's link (workflow_modal) and the Change control of the Crew Auto is on for this project note (crew_auto_receipt, DL-135).",
+          "description": "The cmd.chat.crew_auto.open_config surfaces of section 10: the multi-agent menu's Crew Auto settings… row, the Crew sheet's link (workflow_modal) and the Change control of the Crew Auto is on for this project note (crew_auto_receipt, DL-135).",
           "enum": [
             "multi_agent_menu",
             "workflow_modal",
@@ -9545,7 +9750,7 @@
     },
     "WondererPass": {
       "type": "object",
-      "description": "One pass in CW section 12, CWR-041 (DL-218). The first starts with the run; at most two further passes require an addressed request.",
+      "description": "One delivered pass in CW section 12 (CWR-041, DL-218). Aim for three to five usable leads, maximum five; method stop signals may end it with fewer or none. Failed further attempts retain PART outcomes and do not consume a delivered repeat number.",
       "additionalProperties": false,
       "required": [
         "schema_id",
@@ -9558,7 +9763,8 @@
         "seed_ref",
         "artifact_ref",
         "lead_ids",
-        "delivered_at"
+        "delivered_at",
+        "outcome"
       ],
       "properties": {
         "schema_id": {
@@ -9603,11 +9809,18 @@
             "$ref": "#/$defs/non_empty_string"
           },
           "uniqueItems": true,
-          "minItems": 3,
+          "minItems": 0,
           "maxItems": 5
         },
         "delivered_at": {
           "$ref": "#/$defs/utc_timestamp"
+        },
+        "outcome": {
+          "enum": [
+            "leads",
+            "no_new_leads"
+          ],
+          "description": "A delivered pass with at least one usable lead, or a truthful empty pass. Attempt failure uses PART-001..006 and is not a delivered pass outcome."
         }
       },
       "x-primary-identity-fields": [
@@ -9636,6 +9849,32 @@
             "properties": {
               "requested_by": {
                 "$ref": "#/$defs/non_empty_string"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "outcome": {
+                "const": "no_new_leads"
+              }
+            },
+            "required": [
+              "outcome"
+            ]
+          },
+          "then": {
+            "properties": {
+              "lead_ids": {
+                "maxItems": 0
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "lead_ids": {
+                "minItems": 1
               }
             }
           }
@@ -9709,7 +9948,9 @@
         "disposition_reason": {
           "oneOf": [
             {
-              "$ref": "#/$defs/non_empty_string"
+              "type": "string",
+              "minLength": 1,
+              "pattern": "\\S"
             },
             {
               "type": "null"
@@ -9743,7 +9984,9 @@
         "set_aside_reason": {
           "oneOf": [
             {
-              "$ref": "#/$defs/non_empty_string"
+              "type": "string",
+              "minLength": 1,
+              "pattern": "\\S"
             },
             {
               "type": "null"
@@ -9769,7 +10012,9 @@
           "then": {
             "properties": {
               "disposition_reason": {
-                "$ref": "#/$defs/non_empty_string"
+                "type": "string",
+                "minLength": 1,
+                "pattern": "\\S"
               },
               "disposed_by": {
                 "$ref": "#/$defs/non_empty_string"
@@ -9828,7 +10073,9 @@
           "then": {
             "properties": {
               "set_aside_reason": {
-                "$ref": "#/$defs/non_empty_string"
+                "type": "string",
+                "minLength": 1,
+                "pattern": "\\S"
               }
             }
           }
@@ -9859,7 +10106,7 @@
     },
     "CollaborationLeadResearchRequest": {
       "type": "object",
-      "description": "CW section 10, CWR-041 (DL-218). User Check It on any Wonderer lead in a running or waiting Crew, BrainStorm or Chat Room. Roster and run state are owner-validated before dispatch.",
+      "description": "CW section 10, CWR-041 (DL-218). User Check It on any Wonderer lead in a running or waiting Crew, BrainStorm or Chat Room. Roster and run state are owner-validated before dispatch. Refuse lead_admission_closed after BrainStorm synthesis or the Crew final result starts. A Check It already in research returns the existing operation; no second attempt.",
       "additionalProperties": false,
       "required": [
         "schema_id",
@@ -9950,7 +10197,7 @@
     },
     "CollaborationLeadResearchResult": {
       "type": "object",
-      "description": "CW section 10, CWR-041 (DL-218). User Check It on any Wonderer lead in a running or waiting Crew, BrainStorm or Chat Room. No disposition gate; never accepts fact without evidence.",
+      "description": "CW section 10, CWR-041 (DL-218). User Check It on any Wonderer lead in a running or waiting Crew, BrainStorm or Chat Room. No disposition gate; never accepts fact without evidence. A committed success has receipt, resulting revision/hash, and either a terminal supported/set-aside outcome or non-null observable work for research still running (DL-218).",
       "additionalProperties": false,
       "required": [
         "schema_id",
@@ -10073,7 +10320,9 @@
         "set_aside_reason": {
           "oneOf": [
             {
-              "$ref": "#/$defs/non_empty_string"
+              "type": "string",
+              "minLength": 1,
+              "pattern": "\\S"
             },
             {
               "type": "null"
@@ -10100,8 +10349,36 @@
             "properties": {
               "error": {
                 "type": "null"
+              },
+              "receipt_refs": {
+                "minItems": 1
+              },
+              "revision_after": {
+                "$ref": "#/$defs/revision"
+              },
+              "currentness_hash_after": {
+                "$ref": "#/$defs/sha256_hex"
               }
-            }
+            },
+            "anyOf": [
+              {
+                "properties": {
+                  "lead_status": {
+                    "enum": [
+                      "substantiated",
+                      "set_aside"
+                    ]
+                  }
+                }
+              },
+              {
+                "properties": {
+                  "observable_work_ref": {
+                    "$ref": "#/$defs/non_empty_string"
+                  }
+                }
+              }
+            ]
           }
         },
         {
@@ -10173,7 +10450,9 @@
           "then": {
             "properties": {
               "set_aside_reason": {
-                "$ref": "#/$defs/non_empty_string"
+                "type": "string",
+                "minLength": 1,
+                "pattern": "\\S"
               }
             }
           }

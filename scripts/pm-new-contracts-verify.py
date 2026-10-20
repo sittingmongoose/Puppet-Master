@@ -1301,6 +1301,14 @@ def jujutsu_semantic_failures(definition_name: str, value: Any) -> list[str]:
 def contract_semantic_failures(
     schema_rel: str, definition_name: str, value: Any, *, context: Any = None,
 ) -> list[str]:
+    if schema_rel == "Plans/collaborative_workflows_contracts.schema.json" and definition_name == "QuestionBank":
+        failures = []
+        if value["effective_limit"] != value["baseline_limit"] + value["grill_extension"]:
+            failures.append("question_bank_limit_arithmetic_mismatch")
+        if ("brainstorm_run_id" in value and "collaboration_run_id" in value
+                and value["brainstorm_run_id"] != value["collaboration_run_id"]):
+            failures.append("question_bank_legacy_id_mismatch")
+        return failures
     if schema_rel == "Plans/collaborative_workflows_contracts.schema.json" and definition_name == "BrainstormVote":
         # DL-218: the vote record intentionally has no copied role field. The
         # fixture-only roster join proves eligibility, including abstain votes.
@@ -1660,6 +1668,16 @@ def main() -> int:
                 if errors:
                     findings.append({"code": "positive_fixture_rejected", "fixture": fixture_rel, "case": name, "definition": definition_name, "detail": errors[0].message})
                     continue
+                # A selected definition can pass while the published aggregate
+                # rejects it. Check every positive admitted by a root branch;
+                # definitions-only libraries intentionally have no such root.
+                if definition_name in root_definition_names(schema):
+                    counts["root_positive_cases_checked"] += 1
+                    root_errors = list(validator_for(schema, schema, schema_registry).iter_errors(value))
+                    if root_errors:
+                        findings.append({"code": "positive_root_fixture_rejected", "fixture": fixture_rel, "case": name, "definition": definition_name, "detail": root_errors[0].message})
+                        continue
+                    counts["root_positive_cases_valid"] += 1
                 semantic_failures = contract_semantic_failures(schema_rel, definition_name, value, context=case.get("context"))
                 if semantic_failures:
                     findings.append({"code": "positive_semantic_invariant_failure", "fixture": fixture_rel, "case": name, "definition": definition_name, "semantic_failures": semantic_failures})

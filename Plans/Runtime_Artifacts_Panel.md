@@ -2788,7 +2788,7 @@ owner owns the durability and disclosure of what it writes down.
 
 Each Wonderer pass is one Puppet Master artifact with progressive disclosure in three layers
 (amended 2026-10-16, DL-218): a one-paragraph summary naming the seed, the territory explored and
-the three most interesting leads; the angles explored, each with a brief signal assessment; and one
+up to three most interesting leads, or that it found no new leads; the angles explored, each with a brief signal assessment; and one
 dossier per lead, saying what was found, why it is interesting, what is worth investigating next,
 and where it came from. Each layer is routeable through ordinary artifact identity, so a consumer
 reads the summary and opens a lower layer only when it needs it (`Plans/Collaborative_Workflows.md`

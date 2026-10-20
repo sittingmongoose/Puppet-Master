@@ -1241,7 +1241,7 @@ Conversion is the profile's terminal step inside the Assistant. When the session
 
 Promotion is the profile's only route out of the Assistant. `Send To Planning Wizard` may carry the sealed session ref, its question/decision/correction/research records, source and answer identity, and the `source_hash` into `Plans/Planning_Wizard.md`, which then owns its own PlanningRun ledger work under its own rules. Promotion preserves lineage; it does not transfer ledger ownership, and Planning Wizard never writes back into a sealed Deep Plan session.
 
-Question records in a Deep Plan session are the shared question registry for the whole run. When `BrainStorm` or `Grill Me` is active, every participant reads and writes the same registry so that the strategy's base maximum of user-decision questions (Plan 3/6/8, Deep Plan 10/15/20), the configured Grill extension (default `+25`), duplicate merging, imported prior thread answers, and researched-instead-of-asked dispositions are counted once across all participants rather than per agent. `Plans/Collaborative_Workflows.md` owns participant protocol and `Plans/Skills_System.md` owns the Wonderer and Grill Me methodology; this document owns only the durable question record shape and its single-registry guarantee.
+Question records in a Deep Plan session are the shared question registry for the whole run. When `BrainStorm` or `Grill Me` is active, question requesters and the participant interviewing the user share the same registry through its host; the Wonderer neither asks the user nor reads or writes its counter (DL-218), so the strategy's base maximum of user-decision questions (Plan 3/6/8, Deep Plan 10/15/20), the configured Grill extension (default `+25`), duplicate merging, imported prior thread answers, and researched-instead-of-asked dispositions are counted once across all participants rather than per agent. `Plans/Collaborative_Workflows.md` owns participant protocol and `Plans/Skills_System.md` owns the Wonderer and Grill Me methodology; this document owns only the durable question record shape and its single-registry guarantee.
 
 ContractRef: ContractName:Plans/Assistant_Plan_Runtime.md, ContractName:Plans/Plan_Document_System.md, ContractName:Plans/Planning_Wizard.md, ContractName:Plans/Collaborative_Workflows.md, ContractName:Plans/Bootstrap_Planning_Migration.md
 
@@ -1360,9 +1360,9 @@ single-registry guarantee; the arithmetic and the admission decision are owned b
 `Plans/Assistant_Plan_Runtime.md` (`QMAX-001..016`).
 
 - The registry is keyed by the **planning run**, not by participant, agent, pass, or card. Every
-  BrainStorm participant, the Wonderer role, and the participant running Grill Me (a switch, not a
-  participant of its own, DL-218) read and write the same registry, so the ceiling is never
-  multiplied by participant count.
+  BrainStorm question requester and the participant running Grill Me (a switch, not a participant
+  of its own) share the same registry through its host. The Wonderer never asks the user or
+  reads or writes its counter (DL-218), and the ceiling is never multiplied by participant count.
 - A `QuestionItem` is charged once, when its stable identity is first durably presented to the
   user. Re-render, reconnect, restart, retry, and panel reopen resolve the existing record rather
   than writing a new one.

@@ -4,7 +4,7 @@ Source: `Plans/storage-plan.md`
 
 Source lines: L19157-L19236
 
-Source SHA256: `ebdbf218675862e2cace465e5fb4fc61121592eefbb143baedf44f9b73baceb9`
+Source SHA256: `cce7b8d8b0cf5548ce56220a1f4a21225b7a5ba992f89025f6d60611ba3fb117`
 
 ---
 
@@ -73,7 +73,7 @@ one schedule; repeated timer delivery admits one run.
 | MIG-018 | Wonderer counted as a final voting participant | no active vote record; displayed abstention excluded from quorum (DL-218) | recompute a historical vote projection only where raw role and votes permit; do not rewrite old decisions |
 | MIG-019 | domain commands for local view toggles | local or shared view-state primitives | normalise aliases; remove independent domain handlers and events |
 | MIG-020 | the old v2 audit Goal plus an addendum | one replacement audit Goal | mark the original audit Goal replaced for this implementation; never concatenate |
-| MIG-021 | definition/run participant spec with additive_role_kind grill_me | grill_me_enabled true and that spec removed from the active roster | CW section 17, DL-218: preserve original message attribution, Usage, answered questions and any vote recorded under an ordinary voting role; no question is re-asked, no vote is rewritten; idempotent and restart-safe, quarantine ambiguous identity |
+| MIG-021 | definition for future runs or terminal run with additive_role_kind grill_me spec | grill_me_enabled true and that spec removed from the converted roster | CW section 17, DL-218: an in-progress run finishes under its recorded roster or quarantines; never change live voters, quorum or confirmation gates. Preserve message attribution, Usage, answered questions and ordinary historical votes; idempotent and restart-safe, quarantine ambiguous identity |
 
 ### CDRY-015 — Migration safety
 

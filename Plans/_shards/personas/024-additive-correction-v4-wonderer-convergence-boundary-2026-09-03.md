@@ -4,7 +4,7 @@ Source: `Plans/Personas.md`
 
 Source lines: L3516-L3552
 
-Source SHA256: `3e94838ed9bd7925024e1ef79557a42fa21d28f0550d364e127da4c5744cb070`
+Source SHA256: `35f253eabcc7cce9987c55d5d2100af7cf78ee1a6df81f9d71214639ab2f2317`
 
 ---
 
@@ -26,7 +26,7 @@ Wonderer explores tethered adjacent possibilities and produces **leads**. A lead
 connection back to the seed, so lateral exploration stays tethered and does not drift. A lead is
 not a final answer and is not an evidence claim; Wonderer does not conclude.
 
-### WONV-003..004 — Default abstention, retained voice
+### WONV-003..004 — Never votes, delivers passes
 
 An active Wonderer never votes in a BrainStorm: it abstains and is excluded from the quorum and
 majority denominators. A surface may show `Abstained` without depressing the support percentage,

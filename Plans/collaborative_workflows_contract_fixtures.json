@@ -445,7 +445,6 @@
       "value": {
         "schema_id": "pm.brainstorm.question_bank.v1",
         "schema_version": "1.0.0",
-        "brainstorm_run_id": "crun-bs-0001",
         "baseline_limit": 20,
         "grill_extension": 25,
         "effective_limit": 45,
@@ -459,7 +458,9 @@
         "duplicate_question_ids": [],
         "research_routed_question_ids": [
           "q-3"
-        ]
+        ],
+        "collaboration_run_id": "crun-bs-0001",
+        "kind": "brainstorm"
       }
     },
     {
@@ -2680,7 +2681,8 @@
           "lead-pass-1-2",
           "lead-pass-1-3"
         ],
-        "delivered_at": "2026-10-20T22:00:00Z"
+        "delivered_at": "2026-10-20T22:00:00Z",
+        "outcome": "leads"
       }
     },
     {
@@ -2701,7 +2703,8 @@
           "lead-pass-2-2",
           "lead-pass-2-3"
         ],
-        "delivered_at": "2026-10-20T22:00:00Z"
+        "delivered_at": "2026-10-20T22:00:00Z",
+        "outcome": "leads"
       }
     },
     {
@@ -2722,7 +2725,8 @@
           "lead-pass-3-2",
           "lead-pass-3-3"
         ],
-        "delivered_at": "2026-10-20T22:00:00Z"
+        "delivered_at": "2026-10-20T22:00:00Z",
+        "outcome": "leads"
       }
     },
     {
@@ -2995,6 +2999,207 @@
         "stop_condition": "max_rounds_4",
         "summary_style": "agreed_debated_open",
         "grill_me_enabled": true
+      }
+    },
+    {
+      "name": "wonderer_pass_thin",
+      "definition": "WondererPass",
+      "value": {
+        "schema_id": "pm.collaboration.wonderer_pass.v1",
+        "schema_version": "1.0.0",
+        "wonderer_pass_id": "pass-r1-wonderer_pass_thin",
+        "collaboration_run_id": "crun-bs-0001",
+        "participant_slot_id": "collab-bs-0001-slot-3",
+        "pass_number": 2,
+        "requested_by": "user:jared",
+        "seed_ref": "artifact:job/topic-v1",
+        "artifact_ref": "artifact:wonderer/pass-2",
+        "lead_ids": [
+          "lead-thin-1"
+        ],
+        "delivered_at": "2026-10-20T22:00:00Z",
+        "outcome": "leads"
+      }
+    },
+    {
+      "name": "wonderer_pass_empty_repeat",
+      "definition": "WondererPass",
+      "value": {
+        "schema_id": "pm.collaboration.wonderer_pass.v1",
+        "schema_version": "1.0.0",
+        "wonderer_pass_id": "pass-r1-wonderer_pass_empty_repeat",
+        "collaboration_run_id": "crun-bs-0001",
+        "participant_slot_id": "collab-bs-0001-slot-3",
+        "pass_number": 3,
+        "requested_by": "user:jared",
+        "seed_ref": "artifact:job/topic-v1",
+        "artifact_ref": "artifact:wonderer/pass-3",
+        "lead_ids": [],
+        "delivered_at": "2026-10-20T22:00:00Z",
+        "outcome": "no_new_leads"
+      }
+    },
+    {
+      "name": "shared_research_in_flight",
+      "definition": "CollaborationLeadResearchResult",
+      "value": {
+        "schema_id": "pm.collaboration.lead_research_result.v1",
+        "schema_version": "1.0.0",
+        "command_id": "cmd.collaboration.research_lead",
+        "command_instance_id": "ci-r1-async-shared",
+        "committed": true,
+        "status": "committed",
+        "revision_after": 3,
+        "currentness_hash_after": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+        "receipt_refs": [
+          "receipt:r1-async-shared"
+        ],
+        "observable_work_ref": "work:lead-research/shared",
+        "error": null,
+        "replay_of": null,
+        "lead_id": "lead-3",
+        "lead_status": "hypothesis",
+        "evidence_refs": [],
+        "set_aside_reason": null
+      }
+    },
+    {
+      "name": "shared_research_admission_closed",
+      "definition": "CollaborationLeadResearchResult",
+      "value": {
+        "schema_id": "pm.collaboration.lead_research_result.v1",
+        "schema_version": "1.0.0",
+        "command_id": "cmd.collaboration.research_lead",
+        "command_instance_id": "ci-r1-closed-shared",
+        "committed": false,
+        "status": "rejected",
+        "revision_after": null,
+        "currentness_hash_after": null,
+        "receipt_refs": [],
+        "observable_work_ref": null,
+        "error": "lead_admission_closed",
+        "replay_of": null,
+        "lead_id": "lead-3",
+        "lead_status": null,
+        "evidence_refs": [],
+        "set_aside_reason": null
+      }
+    },
+    {
+      "name": "brainstorm_research_in_flight",
+      "definition": "BrainstormLeadResearchResult",
+      "value": {
+        "schema_id": "pm.collaboration.brainstorm_lead_research_result.v1",
+        "schema_version": "1.0.0",
+        "command_id": "cmd.brainstorm.research_lead",
+        "command_instance_id": "ci-r1-async-brainstorm",
+        "committed": true,
+        "status": "committed",
+        "revision_after": 3,
+        "currentness_hash_after": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+        "receipt_refs": [
+          "receipt:r1-async-brainstorm"
+        ],
+        "observable_work_ref": "work:lead-research/brainstorm",
+        "error": null,
+        "replay_of": null,
+        "lead_id": "lead-3",
+        "lead_status": "hypothesis",
+        "evidence_refs": [],
+        "set_aside_reason": null
+      }
+    },
+    {
+      "name": "brainstorm_research_admission_closed",
+      "definition": "BrainstormLeadResearchResult",
+      "value": {
+        "schema_id": "pm.collaboration.brainstorm_lead_research_result.v1",
+        "schema_version": "1.0.0",
+        "command_id": "cmd.brainstorm.research_lead",
+        "command_instance_id": "ci-r1-closed-brainstorm",
+        "committed": false,
+        "status": "rejected",
+        "revision_after": null,
+        "currentness_hash_after": null,
+        "receipt_refs": [],
+        "observable_work_ref": null,
+        "error": "lead_admission_closed",
+        "replay_of": null,
+        "lead_id": "lead-3",
+        "lead_status": null,
+        "evidence_refs": [],
+        "set_aside_reason": null
+      }
+    },
+    {
+      "name": "crew_question_bank_grill_me",
+      "definition": "QuestionBank",
+      "value": {
+        "schema_id": "pm.brainstorm.question_bank.v1",
+        "schema_version": "1.0.0",
+        "baseline_limit": 0,
+        "grill_extension": 25,
+        "effective_limit": 25,
+        "asked_question_ids": [
+          "q-1",
+          "q-2"
+        ],
+        "resolved_question_ids": [
+          "q-1"
+        ],
+        "duplicate_question_ids": [],
+        "research_routed_question_ids": [
+          "q-3"
+        ],
+        "collaboration_run_id": "crun-r1-grill-crew",
+        "kind": "crew"
+      }
+    },
+    {
+      "name": "chat_room_question_bank_grill_me",
+      "definition": "QuestionBank",
+      "value": {
+        "schema_id": "pm.brainstorm.question_bank.v1",
+        "schema_version": "1.0.0",
+        "baseline_limit": 0,
+        "grill_extension": 25,
+        "effective_limit": 25,
+        "asked_question_ids": [
+          "q-1",
+          "q-2"
+        ],
+        "resolved_question_ids": [
+          "q-1"
+        ],
+        "duplicate_question_ids": [],
+        "research_routed_question_ids": [
+          "q-3"
+        ],
+        "collaboration_run_id": "crun-r1-grill-chat_room",
+        "kind": "chat_room"
+      }
+    },
+    {
+      "name": "question_bank_legacy_brainstorm_key",
+      "definition": "QuestionBank",
+      "value": {
+        "schema_id": "pm.brainstorm.question_bank.v1",
+        "schema_version": "1.0.0",
+        "baseline_limit": 20,
+        "grill_extension": 25,
+        "effective_limit": 45,
+        "asked_question_ids": [
+          "q-1",
+          "q-2"
+        ],
+        "resolved_question_ids": [
+          "q-1"
+        ],
+        "duplicate_question_ids": [],
+        "research_routed_question_ids": [
+          "q-3"
+        ],
+        "brainstorm_run_id": "crun-r1-legacy-brainstorm"
       }
     }
   ],
@@ -4287,13 +4492,18 @@
       }
     },
     {
-      "name": "wonderer_pass_too_few_leads",
+      "name": "wonderer_pass_six_leads",
       "base_valid": "wonderer_pass_1",
-      "rejects_for": "each pass delivers 3 to 5 leads",
-      "reason": "DL-218 / CWR-041..043: each pass delivers 3 to 5 leads",
+      "rejects_for": "a pass delivers at most five leads",
+      "reason": "DL-218 Round 1 F4: three to five is a target; six exceeds the delivery maximum.",
       "patch": {
         "lead_ids": [
-          "lead-only"
+          "lead-0",
+          "lead-1",
+          "lead-2",
+          "lead-3",
+          "lead-4",
+          "lead-5"
         ]
       }
     },
@@ -4430,6 +4640,259 @@
       "reason": "DL-218 / CWR-039: a preset can turn on Grill Me only through its switch, never through an unvalidated replacement roster.",
       "patch": {
         "config_overrides.participant_specs": []
+      }
+    },
+    {
+      "name": "wonderer_empty_outcome_with_leads",
+      "base_valid": "wonderer_pass_1",
+      "rejects_for": "no_new_leads has an empty lead_ids",
+      "reason": "DL-218 Round 1: no_new_leads has an empty lead_ids",
+      "patch": {
+        "outcome": "no_new_leads"
+      }
+    },
+    {
+      "name": "wonderer_leads_outcome_empty",
+      "base_valid": "wonderer_pass_empty_repeat",
+      "rejects_for": "the leads outcome has at least one lead",
+      "reason": "DL-218 Round 1: the leads outcome has at least one lead",
+      "patch": {
+        "outcome": "leads"
+      }
+    },
+    {
+      "name": "shared_research_success_no_outcome_or_work",
+      "base_valid": "collaboration_lead_research_result_substantiated",
+      "rejects_for": "committed research needs a terminal result or work plus receipt/revision/currentness",
+      "reason": "DL-218 Round 1: committed research needs a terminal result or work plus receipt/revision/currentness",
+      "patch": {
+        "lead_status": null,
+        "evidence_refs": [],
+        "set_aside_reason": null,
+        "observable_work_ref": null
+      }
+    },
+    {
+      "name": "shared_research_success_no_receipt",
+      "base_valid": "collaboration_lead_research_result_substantiated",
+      "rejects_for": "committed research needs a terminal result or work plus receipt/revision/currentness",
+      "reason": "DL-218 Round 1: committed research needs a terminal result or work plus receipt/revision/currentness",
+      "patch": {
+        "receipt_refs": []
+      }
+    },
+    {
+      "name": "shared_research_success_no_revision",
+      "base_valid": "collaboration_lead_research_result_substantiated",
+      "rejects_for": "committed research needs a terminal result or work plus receipt/revision/currentness",
+      "reason": "DL-218 Round 1: committed research needs a terminal result or work plus receipt/revision/currentness",
+      "patch": {
+        "revision_after": null
+      }
+    },
+    {
+      "name": "shared_research_success_no_currentness",
+      "base_valid": "collaboration_lead_research_result_substantiated",
+      "rejects_for": "committed research needs a terminal result or work plus receipt/revision/currentness",
+      "reason": "DL-218 Round 1: committed research needs a terminal result or work plus receipt/revision/currentness",
+      "patch": {
+        "currentness_hash_after": null
+      }
+    },
+    {
+      "name": "shared_research_blank_set_aside_reason",
+      "base_valid": "collaboration_lead_research_result_set_aside",
+      "rejects_for": "set_aside_reason contains non-whitespace text",
+      "reason": "DL-218 Round 1: set_aside_reason contains non-whitespace text",
+      "patch": {
+        "set_aside_reason": " \t\n "
+      }
+    },
+    {
+      "name": "brainstorm_research_success_no_outcome_or_work",
+      "base_valid": "lead_research_result_substantiated",
+      "rejects_for": "committed research needs a terminal result or work plus receipt/revision/currentness",
+      "reason": "DL-218 Round 1: committed research needs a terminal result or work plus receipt/revision/currentness",
+      "patch": {
+        "lead_status": null,
+        "evidence_refs": [],
+        "set_aside_reason": null,
+        "observable_work_ref": null
+      }
+    },
+    {
+      "name": "brainstorm_research_success_no_receipt",
+      "base_valid": "lead_research_result_substantiated",
+      "rejects_for": "committed research needs a terminal result or work plus receipt/revision/currentness",
+      "reason": "DL-218 Round 1: committed research needs a terminal result or work plus receipt/revision/currentness",
+      "patch": {
+        "receipt_refs": []
+      }
+    },
+    {
+      "name": "brainstorm_research_success_no_revision",
+      "base_valid": "lead_research_result_substantiated",
+      "rejects_for": "committed research needs a terminal result or work plus receipt/revision/currentness",
+      "reason": "DL-218 Round 1: committed research needs a terminal result or work plus receipt/revision/currentness",
+      "patch": {
+        "revision_after": null
+      }
+    },
+    {
+      "name": "brainstorm_research_success_no_currentness",
+      "base_valid": "lead_research_result_substantiated",
+      "rejects_for": "committed research needs a terminal result or work plus receipt/revision/currentness",
+      "reason": "DL-218 Round 1: committed research needs a terminal result or work plus receipt/revision/currentness",
+      "patch": {
+        "currentness_hash_after": null
+      }
+    },
+    {
+      "name": "brainstorm_research_blank_set_aside_reason",
+      "base_valid": "lead_research_result_set_aside",
+      "rejects_for": "set_aside_reason contains non-whitespace text",
+      "reason": "DL-218 Round 1: set_aside_reason contains non-whitespace text",
+      "patch": {
+        "set_aside_reason": " \t\n "
+      }
+    },
+    {
+      "name": "wonderer_blank_disposition_reason",
+      "base_valid": "wonderer_lead_explore",
+      "rejects_for": "disposition_reason contains non-whitespace text",
+      "reason": "DL-218 Round 1: disposition_reason contains non-whitespace text",
+      "patch": {
+        "disposition_reason": " \t\n "
+      }
+    },
+    {
+      "name": "wonderer_blank_research_reason",
+      "base_valid": "wonderer_lead_research_set_aside",
+      "rejects_for": "set_aside_reason contains non-whitespace text",
+      "reason": "DL-218 Round 1: set_aside_reason contains non-whitespace text",
+      "patch": {
+        "set_aside_reason": " \t\n "
+      }
+    },
+    {
+      "name": "crew_question_bank_nonzero_base",
+      "base_valid": "crew_question_bank_grill_me",
+      "rejects_for": "Crew has no question base",
+      "reason": "DL-218 Round 1: Crew has no question base",
+      "patch": {
+        "baseline_limit": 20
+      }
+    },
+    {
+      "name": "room_question_bank_nonzero_base",
+      "base_valid": "chat_room_question_bank_grill_me",
+      "rejects_for": "Chat Room has no question base",
+      "reason": "DL-218 Round 1: Chat Room has no question base",
+      "patch": {
+        "baseline_limit": 20
+      }
+    },
+    {
+      "name": "question_bank_missing_identity",
+      "base_valid": "crew_question_bank_grill_me",
+      "rejects_for": "a bank has its canonical or compatible run identity",
+      "reason": "DL-218 Round 1: a bank has its canonical or compatible run identity",
+      "remove": [
+        "collaboration_run_id"
+      ]
+    },
+    {
+      "name": "legacy_question_bank_wrong_kind",
+      "base_valid": "question_bank_legacy_brainstorm_key",
+      "rejects_for": "brainstorm_run_id is BrainStorm-only",
+      "reason": "DL-218 Round 1: brainstorm_run_id is BrainStorm-only",
+      "patch": {
+        "kind": "crew"
+      }
+    },
+    {
+      "name": "question_bank_limit_arithmetic",
+      "base_valid": "crew_question_bank_grill_me",
+      "rejects_for": "effective_limit equals base plus extension",
+      "reason": "DL-218 Round 1: effective_limit equals base plus extension",
+      "semantic_rule": "question_bank_limit_arithmetic_mismatch",
+      "patch": {
+        "effective_limit": 24
+      }
+    },
+    {
+      "name": "question_bank_legacy_id_conflict",
+      "base_valid": "question_bank_grill_me",
+      "rejects_for": "a legacy alias cannot identify a second bank",
+      "reason": "DL-218 Round 1: a legacy alias cannot identify a second bank",
+      "semantic_rule": "question_bank_legacy_id_mismatch",
+      "patch": {
+        "brainstorm_run_id": "crun-r1-wrong"
+      }
+    },
+    {
+      "name": "participant_grill_role_lower",
+      "base_valid": "definition_crew_shared_notes",
+      "rejects_for": "Grill Me role reservation ignores case",
+      "reason": "DL-218 Round 1: Grill Me role reservation ignores case",
+      "patch": {
+        "participant_specs.0.role": "grill me"
+      }
+    },
+    {
+      "name": "participant_grill_role_upper",
+      "base_valid": "definition_crew_shared_notes",
+      "rejects_for": "Grill Me role reservation ignores case",
+      "reason": "DL-218 Round 1: Grill Me role reservation ignores case",
+      "patch": {
+        "participant_specs.0.role": "GRILL ME"
+      }
+    },
+    {
+      "name": "participant_grill_role_mixed",
+      "base_valid": "definition_crew_shared_notes",
+      "rejects_for": "Grill Me role reservation ignores case",
+      "reason": "DL-218 Round 1: Grill Me role reservation ignores case",
+      "patch": {
+        "participant_specs.0.role": "gRiLl Me"
+      }
+    },
+    {
+      "name": "participant_grill_persona_upper",
+      "base_valid": "definition_crew_shared_notes",
+      "rejects_for": "Grill Me Persona reservation ignores case",
+      "reason": "DL-218 Round 1: Grill Me Persona reservation ignores case",
+      "patch": {
+        "participant_specs.0.requested_persona_id": "PERSONA:GRILL-ME"
+      }
+    },
+    {
+      "name": "participant_grill_skill_upper",
+      "base_valid": "definition_crew_shared_notes",
+      "rejects_for": "Grill Me Skill reservation ignores case",
+      "reason": "DL-218 Round 1: Grill Me Skill reservation ignores case",
+      "patch": {
+        "participant_specs.0.requested_skill_ids": [
+          "SKILL:GRILLING"
+        ]
+      }
+    },
+    {
+      "name": "preset_grill_role_lower",
+      "base_valid": "preset_crew_build_and_check",
+      "rejects_for": "preset Grill Me role reservation ignores case",
+      "reason": "DL-218 Round 1: preset Grill Me role reservation ignores case",
+      "patch": {
+        "rows.0.role": "grill me"
+      }
+    },
+    {
+      "name": "preset_grill_persona_upper",
+      "base_valid": "preset_crew_build_and_check",
+      "rejects_for": "preset Grill Me Persona reservation ignores case",
+      "reason": "DL-218 Round 1: preset Grill Me Persona reservation ignores case",
+      "patch": {
+        "rows.0.requested_persona_id": "PERSONA:GRILL-ME"
       }
     }
   ]
