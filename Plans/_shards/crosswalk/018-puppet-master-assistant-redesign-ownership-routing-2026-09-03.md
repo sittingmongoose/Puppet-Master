@@ -4,7 +4,7 @@ Source: `Plans/Crosswalk.md`
 
 Source lines: L3524-L3545
 
-Source SHA256: `fde887db26514e72482f24bdae8410b9a234bfe34c235637139015a2cbcaa4ff`
+Source SHA256: `ac2de2788f202b57b9bd6d22b69a7406ed4d31a733f949b5dec11bd2cf041188`
 
 ---
 
@@ -21,7 +21,7 @@ The Assistant redesign introduces five owner documents and moves several dispute
 | One thread-local To-Do list, hierarchy, dependencies, statuses, `ToDoController`, transitions | `Plans/ToDo_Runtime.md` | Rejects whole-list model authority, verification status, source grouping, cross-thread aggregation. |
 | Provider-native To-Do proposal translation | `Plans/Tools.md` reading `Plans/ToDo_Runtime.md` | Translation never transfers authority. |
 | Crew, BrainStorm, Review, Chat Room shared runtime and all four protocols | `Plans/Collaborative_Workflows.md` | One runtime, four protocols. Not Orchestrator and not child-goal orchestration. |
-| Wonderer and Grill Me participant-role semantics | `Plans/Collaborative_Workflows.md` | Persona identity is `Plans/Personas.md`; skill materialization is `Plans/Skills_System.md`. |
+| Wonderer participant-role and Grill Me switch semantics | `Plans/Collaborative_Workflows.md` | Persona identity is `Plans/Personas.md`; skill materialization and the two methods (SS-037, SS-038) are `Plans/Skills_System.md` (DL-218). |
 | Back Seat Driver policy, assignments, held findings, stage bindings, quarantine | `Plans/Back_Seat_Driver.md` | Read-only advisor. `Plans/Shared_Integration_Runtime.md` keeps generic resource admission and ObservableWork; it does not own BSD semantics. |
 | Scheduled message snapshots, execution windows, wind-down, DST, quota reset truth and consent, automation precedence | `Plans/Scheduling_and_Quota_Resume.md` | Goal, Plan, Crew and the composer consume this service and own no timers. |
 | Simplified Goal objective, revision, lifecycle, durable host continuation | `Plans/Goal_Runtime_System.md` | No phases, tranches, child Goals, budgets, or mandatory role cast. Workflow owners keep their own state. |

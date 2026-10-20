@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L41958-L42573
+Source lines: L41958-L42577
 
-Source SHA256: `5049fc1967b53eb12bd03c1e1f58e8d7fb3f3523722601a0c28611c90807b01b`
+Source SHA256: `97da549bf19f41c235cbda5e1395c90c6a434765040065d1e3fddfb707e4bf3e`
 
 ---
 
@@ -335,7 +335,9 @@ canonical_text: >-
   assistant, wears a crown and keeps the text colour or its seat colour, never the accent (DL-111); the Chat Room
   Moderator holds a gavel wherever it is drawn; builders, implementers and helpers wear a hard hat; reviewers,
   checkers and testers hold a magnifier; critics and adversarial reviewers wear a jester's cap; Wonderer has an orbit
-  ring and moon; Grill Me stands behind a little kettle grill, the same kettle as its glyph (F3-588); scribes,
+  ring and moon; Grill Me has no puppet of its own, being a switch and not a participant (DL-218), so while it is on
+  the Coordinator or Moderator who grills the user stands behind a little kettle grill, the same kettle as its glyph
+  (F3-588); scribes,
   teachers and writers hold a page; architects and designers a set square; product roles a pennant; and You hold the
   control bar up yourself, with no strings. A Persona matches on its full name, then on its last word, and an unknown
   role wears the hard hat. Material by theme family: Basic is a blueprint line puppet, with the neon halo only on dark
@@ -378,6 +380,7 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
+  - "Plans/Decision_Log.md#DL-218"
   - "Plans/Decision_Log.md#DL-149"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/chat56-tweaks-20261007/JARED_REQUEST.md, SHA-256 acf112cbd082a46daddb57044df694fb780ebbf938bc2bd7cf20dd6a96ba02fe"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/chat56-tweaks-20261007/ANSWERS-20261007.txt, SHA-256 e481b9d35a5e4bced327100b6f8e46d96c94ba21d43a353ec6b3a75d468dd1fe"
@@ -421,9 +424,9 @@ canonical_text: >-
   under the bar on straight vertical and horizontal strings only, never diagonals or curves; every seat stands on one
   baseline at one pitch and is always named, and the full mode adds the model on a second line. A queued helper hangs
   on a slack string, and "waits its turn" is written once under the group. Review and BrainStorm stand a short screen
-  between seats, because the helpers cannot see each other, said once in a note line. The specialists (Wonderer, Grill
-  Me) stand in a wing on the right after a dotted rule in every kind that has them, and nothing routes under or
-  through the wing. Chat Room's turn policy and rounds are one note line built from its settings, never arcs or a
+  between seats, because the helpers cannot see each other, said once in a note line. The Wonderer stands in a wing
+  on the right after a dotted rule in every kind that has it, and nothing routes under or through the wing; Grill Me
+  has no seat and shows only as the kettle grill at the Coordinator's or Moderator's seat (DL-218). Chat Room's turn policy and rounds are one note line built from its settings, never arcs or a
   table. State shows on the seats only. The plate shows its richest mode that fits: full, then compact (names only),
   then a one-row strip, then the wrap (the strip's seats on two or three rows, F3-601), then one caption sentence, with
   BrainStorm adding a lean mode between compact and strip that keeps its chapters and Chat Room, whose slot is the
@@ -459,6 +462,7 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
+  - "Plans/Decision_Log.md#DL-218"
   - "Plans/Decision_Log.md#DL-149"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/chat56-tweaks-20261007/JARED_REQUEST.md, SHA-256 acf112cbd082a46daddb57044df694fb780ebbf938bc2bd7cf20dd6a96ba02fe"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/chat56-tweaks-20261007/ANSWERS-20261007.txt, SHA-256 e481b9d35a5e4bced327100b6f8e46d96c94ba21d43a353ec6b3a75d468dd1fe"

@@ -2847,7 +2847,7 @@ Jared answered all 29 distinct wand-modules questions (33 ledger question record
 | 7 | Stored Build At grace and occurrence summary | Version the saved ExecutionSchedule to persist grace_seconds; define an occurrence summary rebuilt from existing owner records. | SQR-015, SQR-016 |
 | 8 | Plan-card Cancel schedule | Add plan_card as an allowed origin for cmd.execution_window.cancel. | SQR-013, UCC-169 |
 | 9 | Pause all automations companions | Approve storage, wiring, runtime acceptance and event-registration work; complete the first three now and retain event registration as an outstanding Event Authority obligation under the required admission procedure. | SQR-018, ATS-064 |
-| 10 | Grill Me outside BrainStorm | Question peers and research independently; ask the user only through the ordinary needs-you path, with no new allowance. | CWR-028 |
+| 10 | Grill Me outside BrainStorm | Question peers and research independently; ask the user only through the ordinary needs-you path, with no new allowance. Replaced 2026-10-16 by DL-218: Grill Me is a switch, and the coordinator or moderator grills the user. | CWR-028 |
 | 11 | Crew Auto parallelism | Use Crew parallelism capped by app limits and show a read-only value on the sheet. | CWR-021 |
 | 12 | Hard budget vs run limit | Hard budgets always cap a run limit and the sheet shows both requested and effective limits. | CWR-032, CWR-029, UF-106 |
 | 13 | First Crew Auto run | Create untouched configuration version 1 with the project; no confirmation sheet before first use, then show the note and settings link. | CWR-004, CWR-021 |
@@ -11694,7 +11694,8 @@ canonical_text: >-
   the required admission procedure.
 
   10. Grill Me outside BrainStorm: Question peers and research independently; ask the user only through the ordinary
-  needs-you path, with no new allowance.
+  needs-you path, with no new allowance. Replaced 2026-10-16 by DL-218: Grill Me is a switch, and the coordinator or
+  moderator grills the user.
 
   11. Crew Auto parallelism: Use Crew parallelism capped by app limits and show a read-only value on the sheet.
 
@@ -16130,6 +16131,75 @@ owner_hints:
 ```
 
 ContractRef: ContractName:Plans/DRY_Rules.md#DR-073, ContractName:Plans/FinalGUISpec.md#F3-628, ContractName:Plans/FinalGUISpec.md#F3-653, ContractName:Plans/assistant-chat-design.md#ACD-475, ContractName:Plans/FinalGUISpec.md#F3-077, ContractName:Plans/FinalGUISpec.md#F3-598, ContractName:Plans/FinalGUISpec.md#F3-650, ContractName:Plans/FinalGUISpec.md#F3-652, ContractName:Plans/Settings_System.md#SSYS-053, ContractName:Plans/Test_Capture_and_Motion_Evidence.md#TCME-007
+
+### DL-218 - Wonderer Runs Alongside And Grill Me Is A Skill
+
+```yaml
+plan_unit_id: DL-218
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: >-
+  Decided by Jared on 2026-10-16 after a review of how the Plans describe Wonderer and Grill Me against
+  the two sources they were based on: the Hermes wonderer profile (hermes-profiles 867a555e13) and the
+  grilling skill (mattpocock/skills 49dd158d10). Wonderer in Crew, BrainStorm and Chat Room is an
+  automated helper that runs alongside the run and feeds its leads back to the agents, who decide
+  whether each is worth exploring. It explores the run's topic once at the start, with the Hermes method,
+  and again only when an agent or the user asks, at most twice more. Every agent gets a short summary of
+  each pass and opens a lead's dossier only when it needs it, and every lead says how it connects to the
+  topic and where it came from. In a BrainStorm its leads reach the agents only after every blind
+  proposal is in. The agents decide each lead (explore it, use it or set it aside) with a one-line reason
+  that is shown, and the user's Check it sends any lead to research as an override. Writing a BrainStorm
+  plan, and a Crew's final result, wait until every lead has a decision; a Chat Room never waits, and its
+  summary lists every lead and what the room did with it. The Wonderer never votes, never argues for or
+  against a proposal and never sends its own leads to research. Grill Me works like the grilling skill:
+  it is a skill switched on for the run, not a participant, and whoever already talks to the user (the
+  assistant, a Crew's coordinator, a Chat Room's moderator, or a BrainStorm's coordinator at intake)
+  grills the user, never the other agents. This replaces question 10 of DL-138. The question cap stays
+  as a safety net, the session normally ends when no decision is left to ask or the user presses Wrap
+  up, and nothing acts on the answers until the user confirms what was agreed. Chat Room keeps Grill Me.
+  Wonderer in PRD Builder and the Planning Wizard is more human-driven and interactive and is designed
+  by those owners, as is when Grill Me runs there, which Jared handed to the thread working on them.
+gui_related: true
+gui_classification_reason: Changes what the collaboration sheets, run cards, run views and the chat's questionnaire show for Wonderer and Grill Me.
+split_recommended: false
+depends_on: [DL-133, DL-138]
+unblocks: [CWR-041, CWR-042, CWR-043, SS-037, SS-038, P-059, APR-072]
+acceptance_criteria:
+- Collaborative Workflows, Skills System, Personas, Runtime Artifacts Panel, Assistant Plan Runtime and FinalGUISpec agree with this decision; PRD Builder and Planning Wizard keep their own Wonderer and Grill Me timing.
+validation_surfaces:
+- python3 scripts/pm-shard-plans.py --check
+- python3 scripts/pm-plan-index.py validate
+risk_class: owner_drift
+reasoning_tier: high
+context_scope: wonderer_and_grill_me_roles
+implementation_surfaces:
+- Plans/Decision_Log.md
+- Plans/Collaborative_Workflows.md
+- Plans/Skills_System.md
+- Plans/Personas.md
+- Plans/Runtime_Artifacts_Panel.md
+- Plans/Assistant_Plan_Runtime.md
+- Plans/FinalGUISpec.md
+node_compile_hint:
+  mode: owner_decision_record
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- /mnt/Cursor/share/puppet-master/2026-10-16-wonderer-grill-me/DECISIONS.md, SHA-256
+  dfa2f354936defd187d610de4aee77a3d8b75b6d25692e592ba48f7b66bfebce (decision record, T3 thread
+  3e741762-c008-45a0-931b-b27997b1d784; decision lineage)
+- /mnt/Cursor/share/puppet-master/2026-10-16-wonderer-grill-me/SOURCE-SHA256.txt (pinned copies of the
+  Hermes wonderer profile and the grilling skill; source lineage)
+preserved_exact_tokens: []
+negative_constraints:
+- Wonderer never votes, argues or routes its own leads to research.
+- Grill Me is never a participant and never puts the user's decisions to other agents.
+owner_hints:
+- Plans/Decision_Log.md
+```
+
+ContractRef: ContractName:Plans/Collaborative_Workflows.md#CWR-041, ContractName:Plans/Collaborative_Workflows.md#CWR-042, ContractName:Plans/Collaborative_Workflows.md#CWR-043, ContractName:Plans/Skills_System.md#SS-037, ContractName:Plans/Skills_System.md#SS-038, ContractName:Plans/Personas.md#P-059, ContractName:Plans/Assistant_Plan_Runtime.md#APR-072, ContractName:Plans/Decision_Log.md#DL-138
 
 ### DL-219 - No Platform-Specific Solutions
 

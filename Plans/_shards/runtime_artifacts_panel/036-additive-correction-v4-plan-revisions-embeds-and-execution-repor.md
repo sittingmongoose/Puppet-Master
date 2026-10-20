@@ -2,9 +2,9 @@
 
 Source: `Plans/Runtime_Artifacts_Panel.md`
 
-Source lines: L2707-L2792
+Source lines: L2707-L2798
 
-Source SHA256: `ba25a15996b0a9dc4c4054f337c02353cef6e3c2c6490fc3308451e77a5b114c`
+Source SHA256: `f37269b54ee47641bbafcf473c12d92cb05e38a4045b1c1a3d1b11c89cdd6dc6`
 
 ---
 
@@ -90,7 +90,13 @@ owner owns the durability and disclosure of what it writes down.
 
 ### WONV-008 — Research artifacts use Puppet Master identity
 
-Wonderer research and synthesis output is a Puppet Master artifact with progressive disclosure:
-a summary, an analysis, and deeper dossiers, each routeable through ordinary artifact identity.
-An absolute external profile path is never the deliverable, and no Hermes profile-home handoff is
-required to read a lead.
+Each Wonderer pass is one Puppet Master artifact with progressive disclosure in three layers
+(amended 2026-10-16, DL-218): a one-paragraph summary naming the seed, the territory explored and
+the three most interesting leads; the angles explored, each with a brief signal assessment; and one
+dossier per lead, saying what was found, why it is interesting, what is worth investigating next,
+and where it came from. Each layer is routeable through ordinary artifact identity, so a consumer
+reads the summary and opens a lower layer only when it needs it (`Plans/Collaborative_Workflows.md`
+CWR-041). The Wonderer explores and neither researches nor synthesizes, so the artifact holds
+leads, never findings. Where the Hermes profile hands its caller one absolute path to its index
+file, Puppet Master hands one artifact reference: an absolute external profile path is never the
+deliverable, and no Hermes profile-home handoff is required to read a lead.
