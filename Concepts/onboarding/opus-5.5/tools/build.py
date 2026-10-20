@@ -37,6 +37,7 @@ TOOLS = Path(__file__).resolve().parent
 PKG = TOOLS.parent
 CONCEPTS = PKG.parents[1]
 TARGET = CONCEPTS / 'PMConcept7.html'
+PAGE_TITLE = 'PMConcept7 · Puppet Master'
 SRC = PKG / 'src'
 
 _previous_dont_write_bytecode = sys.dont_write_bytecode
@@ -428,7 +429,7 @@ def build_text() -> str:
     body_block = (f'<!-- O55:BODY:START -->\n<script id="pm-o55-js">\n'
                   f'window.O55_COPY={copy};\n{js}\n</script>\n<!-- O55:BODY:END -->')
     text = text.replace('<!-- O55:BODY:START -->\n<!-- O55:BODY:END -->', body_block, 1)
-    text = re.sub(r'<title>.*?</title>', '<title>TestOpus5.5 · Puppet Master</title>', text, count=1, flags=re.S)
+    text = re.sub(r'<title>.*?</title>', f'<title>{PAGE_TITLE}</title>', text, count=1, flags=re.S)
     # 4. The left rail: concept D (Polish) from Concepts/leftrail-redesign, a skin over the shell's own rail panels
     #    (its CSS, its script and data-rail-* on the <html> tag); the review copy with concepts A-C is build_rail.py.
     text, SETTINGS_NOTES['rail'] = _rail().apply_published(text, need)

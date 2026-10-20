@@ -74,9 +74,10 @@ python3 Concepts/leftrail-redesign/tools/build_rail.py --check  # rebuild in mem
 python3 Concepts/leftrail-redesign/tools/parity.py --list       # fixture completeness against PMConcept7.html
 node Concepts/leftrail-redesign/tools/rail_boot.mjs <out-dir> [--page P[?query]] [--ref R[?query]]
      [--concepts a,b,c,d,current|none] [--panels files,search] [--themes all|basic-dark,...] [--quick] [--shots] [--restore]
-     # page/ref: PMConcept7.html by default, concepts d,current; the reference switches to Current
+     # page: PMConcept7.html by default, concepts d,current
+     # ref: private build_rail.py --out build in a temporary directory, opened with ?rail=current; built once per run
      # private comparison: --page /tmp/rail.html --concepts a,b,c,d --ref '/tmp/rail.html?rail=current'
-     # private ref at ?rail=current never mounts D; default PM7 boots D before switching to Current
+     # the reference never mounts D; its temporary directory is removed on exit, SIGINT and SIGTERM
      # d and current: all nine panels by default; a, b, c: files, source, docker; --panels overrides both;
      # --restore: switches to Current (Original), uses D, returns to Current and fails on any difference (every theme,
      #   NieR included) and when the first Current differs from the reference's own rail;

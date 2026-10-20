@@ -1,8 +1,8 @@
 /* Rail acceptance check: boots PMConcept7.html (or a private comparison build with --page), whose published rail is
  * concept D) over file:// (?o55=off) in GPU Chrome on the VM (one agent-browser headless session per boot, driven
  * through playwright-core connectOverCDP), and for each concept checks the panels by real clicks against the reference
- * page: PMConcept7.html by default, switched to Current for the shell's own rail. A private --ref comparison build
- * opened with ?rail=current supplies a reference where D never mounts. --page and --ref take a file, optionally with a query
+ * page: a private build_rail.py --out build in a temporary directory, opened with ?rail=current so D never mounts.
+ * It is built once per run and removed on exit. --page and --ref take a file, optionally with a query
  * (`--ref 'rail.html?rail=current'`); ?o55=off is always added. Checks:
  *   - no new console errors; the concept view replaces the original panel when its icon is clicked. A skin concept
  *     (registered with skin: true, today d "Polish"; 'current' is checked the same way) keeps the shell's own panels
@@ -21,7 +21,7 @@
  *     t-restore.mjs does), uses D (every panel, every tab, two expanders and a menu per panel, the Git/Jujutsu engine
  *     switch both ways), goes back to Current, snapshots again and fails on any difference, per panel and theme. The
  *     first snapshot is also compared with the reference's own rail in the same theme (baseline): the page may have
- *     mounted D at boot. Use a private --ref 'rail.html?rail=current' to compare against a rail D never touched.
+ *     mounted D at boot. The default reference compares against a rail D never touched.
  *
  *   node Concepts/leftrail-redesign/tools/rail_boot.mjs <out-dir> [--page P[?query]] [--ref R[?query]] [--concepts a,b,c,d|none]
  *        [--panels files,source,docker] [--themes all|basic-dark,...] [--quick] [--shots] [--restore] [--coverage <file>]
@@ -29,15 +29,16 @@
  * (files, source, docker); --panels overrides both. Writes <out-dir>/rail-boot.json (summary.gpu names the WebGL
  * renderer), prints a summary, exits 1 when a check fails. --shots writes rail screenshots per concept x theme x panel
  * into <out-dir>/shots (review media: delete after review). Every agent-browser session is stopped when its page is
- * done (finally, SIGINT, SIGTERM); profiles are deleted by agent-browser at stop. Running on the GPU is mandatory:
+ * done (finally, SIGINT, SIGTERM); the private reference directory is removed too, and profiles are deleted by
+ * agent-browser at stop. Running on the GPU is mandatory:
  * --disable-gpu and swiftshader flags are forbidden, and a browser whose WebGL UNMASKED_RENDERER_WEBGL names
  * SwiftShader or llvmpipe aborts the run with the failing check `not on the GPU: <renderer>`. */
 import { execFileSync } from 'node:child_process';
 import { createRequire } from 'node:module';
-import { existsSync, mkdirSync, writeFileSync } from 'node:fs';
+import { existsSync, mkdirSync, mkdtempSync, rmSync, writeFileSync } from 'node:fs';
 import { pathToFileURL, fileURLToPath } from 'node:url';
 import { resolve, join, dirname } from 'node:path';
-import { homedir } from 'node:os';
+import { homedir, tmpdir } from 'node:os';
 import { beginCoverage, endCoverage, takeCoverageFlag } from '../../onboarding/opus-5.5/tools/coverage_union.mjs';
 
 const here = dirname(fileURLToPath(import.meta.url));
@@ -51,7 +52,6 @@ mkdirSync(out, { recursive: true });
 const target = (s) => { s = String(s); const i = s.indexOf('?'); return i < 0 ? { file: resolve(s), query: '' } : { file: resolve(s.slice(0, i)), query: s.slice(i + 1) }; };
 const shown = (t) => t.file + (t.query ? '?' + t.query : '');
 const PAGE = target(opt('page', join(concepts, 'PMConcept7.html')));
-const REF = target(opt('ref', join(concepts, 'PMConcept7.html')));
 const ALL_THEMES = ['basic-dark', 'basic-light', 'friendly-dark', 'friendly-light', 'glass-dark', 'glass-light', 'retro-dark', 'retro-light'];
 const themesOpt = opt('themes', 'all');
 const THEMES = themesOpt === 'all' ? ALL_THEMES : String(themesOpt).split(',');
@@ -93,11 +93,36 @@ try { chromium = loadChromium(); } catch (e) { console.error(`rail boot: ${e.mes
 /* agent-browser sessions: every started id is tracked and stopped on every exit path (close() in finally, plus
    SIGINT/SIGTERM), so no headless Chrome of this harness survives a run or an interrupt. */
 const openSessions = new Set();
+let refDir = null;
 function stopSession(id) {
   openSessions.delete(id);
   try { execFileSync('agent-browser', ['stop', id], { stdio: 'ignore', timeout: 90000 }); } catch (_) { /* already gone */ }
 }
-for (const sig of ['SIGINT', 'SIGTERM']) process.once(sig, () => { for (const id of [...openSessions]) stopSession(id); process.exit(sig === 'SIGINT' ? 130 : 143); });
+function cleanup() {
+  for (const id of [...openSessions]) stopSession(id);
+  if (refDir) { rmSync(refDir, { recursive: true, force: true }); refDir = null; }
+}
+process.once('exit', cleanup);
+for (const sig of ['SIGINT', 'SIGTERM']) process.once(sig, () => { cleanup(); process.exit(sig === 'SIGINT' ? 130 : 143); });
+
+function buildReference() {
+  refDir = mkdtempSync(join(tmpdir(), 'rail-boot-ref-'));
+  const file = join(refDir, 'rail.html');
+  try {
+    execFileSync('python3', [join(here, 'build_rail.py'), '--out', file], {
+      encoding: 'utf8', stdio: ['ignore', 'pipe', 'pipe'],
+      env: { ...process.env, PYTHONDONTWRITEBYTECODE: '1' },
+    });
+  } catch (e) {
+    console.error('rail boot: reference build failed');
+    console.error(String(e.stderr || e.message).trim());
+    process.exit(1);
+  }
+  const ref = target(file + '?rail=current');
+  console.log(`rail boot: built reference ${shown(ref)}`);
+  return ref;
+}
+const REF = argv.includes('--ref') ? target(opt('ref', null)) : buildReference();
 
 /* the run must be on the VM GPU: once per browser, read the WebGL renderer and abort on a software one */
 const GPU_PROBE = () => { const g = document.createElement('canvas').getContext('webgl'); if (!g) return 'no webgl'; const x = g.getExtension('WEBGL_debug_renderer_info'); return g.getParameter(x ? x.UNMASKED_RENDERER_WEBGL : g.RENDERER); };
@@ -681,6 +706,8 @@ try {
 } catch (e) {
   if (e instanceof NoGpu) fails.push(e.message);
   else throw e;
+} finally {
+  cleanup();
 }
 const summary = { page: shown(PAGE), ref: shown(REF), gpu: GPU, refErrors: ref.errors.length, refPairs: Object.fromEntries(Object.entries(ref.pairs).map(([k, v]) => [k, v.length])), concepts: results.map((r) => ({ concept: r.concept, skin: r.skin, gpu: r.gpu, errors: r.errors.length, reach: Object.fromEntries(Object.entries(r.panels).map(([p, x]) => [p, x.reach ? `${x.reach.reached} seen, ${x.reach.missingCount} missing` : 'skipped'])), type: Object.fromEntries(Object.entries(r.panels).map(([p, x]) => [p, x.type && x.type.min])) })), fails };
 if (rest) summary.restore = Object.fromEntries(Object.entries(rest.themes).map(([k, t]) => [k, { used: t.used, differing: Object.keys(t.diffs) }]));
