@@ -4,17 +4,17 @@
     "build_order_available": true,
     "build_order_blocked_node_count": 0,
     "cycle_blocker_count": 0,
-    "depends_on_edge_count": 17650,
+    "depends_on_edge_count": 17680,
     "downstream_blocked_node_count": 0,
-    "edge_count": 20878,
-    "node_count": 7165,
+    "edge_count": 20908,
+    "node_count": 7173,
     "true_cycle_component_count": 0,
     "unblocks_edge_count": 3228,
     "unresolved_reference_count": 0
   },
-  "generated_at_utc": "2026-10-20T22:14:41Z",
+  "generated_at_utc": "2026-10-20T22:33:43Z",
   "gui_related_units": {
-    "count": 3598,
+    "count": 3604,
     "units": [
       {
         "owner_doc": "Plans/00-plans-index.md",
@@ -3746,6 +3746,17 @@
         }
       },
       {
+        "owner_doc": "Plans/assistant-chat-design.md",
+        "plan_unit_id": "ACD-503",
+        "source_location": {
+          "heading": "ACD-503 - Grilling Rounds And What We Agreed",
+          "heading_level": 3,
+          "heading_line": 27916,
+          "line": 27918,
+          "path": "Plans/assistant-chat-design.md"
+        }
+      },
+      {
         "owner_doc": "Plans/Azure_DevOps_Integration.md",
         "plan_unit_id": "ADO-001",
         "source_location": {
@@ -4400,8 +4411,8 @@
         "source_location": {
           "heading": "17. Plan Schedule Invalidation and Immediate Build Precedence (APR-019)",
           "heading_level": 3,
-          "heading_line": 1452,
-          "line": 1464,
+          "heading_line": 1453,
+          "line": 1465,
           "path": "Plans/Assistant_Plan_Runtime.md"
         }
       },
@@ -4411,8 +4422,8 @@
         "source_location": {
           "heading": "APR-071 - Plan Card Schedule Line And The Two Plan-Bound Crew Modes",
           "heading_level": 3,
-          "heading_line": 1758,
-          "line": 1760,
+          "heading_line": 1759,
+          "line": 1761,
           "path": "Plans/Assistant_Plan_Runtime.md"
         }
       },
@@ -4422,8 +4433,8 @@
         "source_location": {
           "heading": "APR-072 - The Assistant Grills The User When Grill Me Is On",
           "heading_level": 3,
-          "heading_line": 1801,
-          "line": 1803,
+          "heading_line": 1802,
+          "line": 1804,
           "path": "Plans/Assistant_Plan_Runtime.md"
         }
       },
@@ -4906,8 +4917,8 @@
         "source_location": {
           "heading": "ATS-063 - Live Helper Text Acceptance Checks",
           "heading_level": 3,
-          "heading_line": 5596,
-          "line": 5598,
+          "heading_line": 5598,
+          "line": 5600,
           "path": "Plans/Automated_Testing_System.md"
         }
       },
@@ -4917,8 +4928,8 @@
         "source_location": {
           "heading": "ATS-064 - Pause All Automations Acceptance Checks",
           "heading_level": 3,
-          "heading_line": 5664,
-          "line": 5670,
+          "heading_line": 5666,
+          "line": 5672,
           "path": "Plans/Automated_Testing_System.md"
         }
       },
@@ -4928,8 +4939,8 @@
         "source_location": {
           "heading": "ATS-065 - ELI5 Resolution Forward-Only Switching And Explain This Reply Simply Checks",
           "heading_level": 3,
-          "heading_line": 5748,
-          "line": 5750,
+          "heading_line": 5750,
+          "line": 5752,
           "path": "Plans/Automated_Testing_System.md"
         }
       },
@@ -4939,8 +4950,8 @@
         "source_location": {
           "heading": "ATS-066 - Closure-Wave Command Identity And Wiring Checks",
           "heading_level": 3,
-          "heading_line": 5815,
-          "line": 5819,
+          "heading_line": 5817,
+          "line": 5821,
           "path": "Plans/Automated_Testing_System.md"
         }
       },
@@ -4950,8 +4961,8 @@
         "source_location": {
           "heading": "ATS-067 - GUI Test-Build Observability",
           "heading_level": 3,
-          "heading_line": 5886,
-          "line": 5888,
+          "heading_line": 5888,
+          "line": 5890,
           "path": "Plans/Automated_Testing_System.md"
         }
       },
@@ -4961,8 +4972,8 @@
         "source_location": {
           "heading": "ATS-075 - Home Panels Certification",
           "heading_level": 3,
-          "heading_line": 5960,
-          "line": 5962,
+          "heading_line": 5962,
+          "line": 5964,
           "path": "Plans/Automated_Testing_System.md"
         }
       },
@@ -4972,8 +4983,8 @@
         "source_location": {
           "heading": "ATS-076 - Terminal Tab Certification",
           "heading_level": 3,
-          "heading_line": 6217,
-          "line": 6219,
+          "heading_line": 6219,
+          "line": 6221,
           "path": "Plans/Automated_Testing_System.md"
         }
       },
@@ -4983,8 +4994,19 @@
         "source_location": {
           "heading": "ATS-077 - Appearance And Shell Acceptance",
           "heading_level": 3,
-          "heading_line": 6458,
-          "line": 6460,
+          "heading_line": 6460,
+          "line": 6462,
+          "path": "Plans/Automated_Testing_System.md"
+        }
+      },
+      {
+        "owner_doc": "Plans/Automated_Testing_System.md",
+        "plan_unit_id": "ATS-078",
+        "source_location": {
+          "heading": "ATS-078 - Wonderer Passes And Grilling Confirmation Obligations",
+          "heading_level": 3,
+          "heading_line": 6606,
+          "line": 6608,
           "path": "Plans/Automated_Testing_System.md"
         }
       },
@@ -7684,6 +7706,17 @@
         }
       },
       {
+        "owner_doc": "Plans/Commands_System.md",
+        "plan_unit_id": "CS-103",
+        "source_location": {
+          "heading": "CS-103 - Wonderer Research Alias And Grilling Session Dispatch",
+          "heading_level": 3,
+          "heading_line": 8005,
+          "line": 8007,
+          "path": "Plans/Commands_System.md"
+        }
+      },
+      {
         "owner_doc": "Plans/Contracts_V0.md",
         "plan_unit_id": "CV-001",
         "source_location": {
@@ -9480,7 +9513,7 @@
         "owner_doc": "Plans/Collaborative_Workflows.md",
         "plan_unit_id": "CWR-008",
         "source_location": {
-          "heading": "CWR-008 - Wonderer And Grill Me As Additive Participant Roles",
+          "heading": "CWR-008 - Wonderer Participant And Grill Me Switch",
           "heading_level": 3,
           "heading_line": 849,
           "line": 851,
@@ -33539,8 +33572,8 @@
         "source_location": {
           "heading": "Slot migration-generation custody and activation",
           "heading_level": 3,
-          "heading_line": 21957,
-          "line": 21979,
+          "heading_line": 21958,
+          "line": 21980,
           "path": "Plans/storage-plan.md"
         }
       },
@@ -33550,8 +33583,8 @@
         "source_location": {
           "heading": "SP-279 — Storage integrity finding custody and checkpoint-free read",
           "heading_level": 3,
-          "heading_line": 23468,
-          "line": 23470,
+          "heading_line": 23469,
+          "line": 23471,
           "path": "Plans/storage-plan.md"
         }
       },
@@ -33561,8 +33594,8 @@
         "source_location": {
           "heading": "SP-330 - The v2 Home Layout Record, Its Transaction And The Migration From v1",
           "heading_level": 3,
-          "heading_line": 27521,
-          "line": 27523,
+          "heading_line": 27522,
+          "line": 27524,
           "path": "Plans/storage-plan.md"
         }
       },
@@ -33572,8 +33605,8 @@
         "source_location": {
           "heading": "SP-331 - Terminal Appearance Storage",
           "heading_level": 3,
-          "heading_line": 27701,
-          "line": 27703,
+          "heading_line": 27702,
+          "line": 27704,
           "path": "Plans/storage-plan.md"
         }
       },
@@ -33583,8 +33616,8 @@
         "source_location": {
           "heading": "SP-332 - Terminal Records Re-Scoped To One Session Per Tab, And Saved Scrollback",
           "heading_level": 3,
-          "heading_line": 27894,
-          "line": 27896,
+          "heading_line": 27895,
+          "line": 27897,
           "path": "Plans/storage-plan.md"
         }
       },
@@ -33594,8 +33627,8 @@
         "source_location": {
           "heading": "SP-333 - Editor Appearance And Wallpaper Remain Project-Owned",
           "heading_level": 3,
-          "heading_line": 28024,
-          "line": 28026,
+          "heading_line": 28025,
+          "line": 28027,
           "path": "Plans/storage-plan.md"
         }
       },
@@ -37186,6 +37219,28 @@
         }
       },
       {
+        "owner_doc": "Plans/UI_Command_Catalog.md",
+        "plan_unit_id": "UCC-205",
+        "source_location": {
+          "heading": "UCC-205 - Check It Across The Three Collaborative Kinds",
+          "heading_level": 3,
+          "heading_line": 16070,
+          "line": 16072,
+          "path": "Plans/UI_Command_Catalog.md"
+        }
+      },
+      {
+        "owner_doc": "Plans/UI_Command_Catalog.md",
+        "plan_unit_id": "UCC-206",
+        "source_location": {
+          "heading": "UCC-206 - Grilling Controls Reuse The Question Host",
+          "heading_level": 3,
+          "heading_line": 16144,
+          "line": 16146,
+          "path": "Plans/UI_Command_Catalog.md"
+        }
+      },
+      {
         "owner_doc": "Plans/usage-feature.md",
         "plan_unit_id": "UF-002",
         "source_location": {
@@ -39375,6 +39430,17 @@
         }
       },
       {
+        "owner_doc": "Plans/Wiring_Matrix.md",
+        "plan_unit_id": "WM-094",
+        "source_location": {
+          "heading": "WM-094 - Shared Research Alias And Grilling Control Wiring",
+          "heading_level": 3,
+          "heading_line": 6355,
+          "line": 6357,
+          "path": "Plans/Wiring_Matrix.md"
+        }
+      },
+      {
         "owner_doc": "Plans/Working_Notebook.md",
         "plan_unit_id": "WN-019",
         "source_location": {
@@ -39602,10 +39668,10 @@
   "no_final_node_queues_created": true,
   "no_worknodes_created": true,
   "nodeseed_candidates_created": false,
-  "plan_unit_count": 7165,
+  "plan_unit_count": 7173,
   "risk_and_reasoning_summary": {
     "reasoning_tier_counts": {
-      "high": 2496,
+      "high": 2504,
       "low": 6,
       "medium": 29,
       "standard": 4634
@@ -40206,7 +40272,12 @@
       "codex_jsonl_subagent_output_parser_example": 1,
       "coding_plan_product_labels_picker_recommendation": 1,
       "coding_plan_route_drift": 1,
+      "collaboration_command_identity": 1,
+      "collaboration_contract_registry": 1,
+      "collaboration_migration_attribution": 1,
       "collaboration_popup_or_activity_family_grammar_drift": 1,
+      "collaboration_questionnaire_dispatch": 1,
+      "collaboration_wiring_semantics": 1,
       "collaborative_run_failure_event_drift": 1,
       "collaborative_workflow_event_scope_expansion": 1,
       "collaborative_workflow_history_retention_drift": 1,
@@ -41146,6 +41217,7 @@
       "graph_projection_contract_drift": 1,
       "grill_me_acts_before_confirm": 1,
       "grill_me_answers_for_the_user": 2,
+      "grilling_confirmation_boundary": 1,
       "grounded_pm_debug_core_web_repro": 1,
       "gui_acceptance": 1,
       "gui_action_projection_stale": 1,
@@ -42367,6 +42439,7 @@
       "question_lifecycle_state_drift": 1,
       "question_response_wire_format_drift": 1,
       "questionnaire_contract_drift": 1,
+      "questionnaire_control_semantics": 1,
       "questionnaire_state": 1,
       "quickstart_authority_drift": 1,
       "quickstart_generation_drift": 1,
@@ -43621,6 +43694,7 @@
       "wizard_unblocked_payload_loss": 1,
       "wonderer_converges_or_contaminates_blind_phase": 1,
       "wonderer_drift_or_premature_convergence": 1,
+      "wonderer_grilling_contract_coverage": 1,
       "wonderer_or_grill_me_misrepresented": 1,
       "wonderer_persona_converges": 1,
       "workbench_feature_cluster_drift": 1,
@@ -43675,7 +43749,7 @@
     "source_preserving_unit_count": 0,
     "source_preserving_units": [],
     "status_counts": {
-      "accepted": 6960,
+      "accepted": 6968,
       "retired": 182,
       "superseded": 23
     },
@@ -43694,7 +43768,7 @@
       "capability_matrix": 1,
       "command_binding": 20,
       "command_catalog": 3,
-      "command_contract": 54,
+      "command_contract": 57,
       "command_disposition": 4,
       "command_registration": 1,
       "command_registry": 4,
@@ -43722,9 +43796,11 @@
       "gui_surface_rule": 1,
       "gui_wiring_rule": 1,
       "implementation_reference": 1,
-      "integration_contract": 97,
+      "integration_contract": 98,
       "interaction_contract": 6,
+      "interface_contract": 1,
       "invariant": 24,
+      "migration": 1,
       "migration_contract": 2,
       "migration_requirement": 3,
       "operational_policy": 1,
@@ -43742,7 +43818,7 @@
       "recovery_requirement": 4,
       "reference": 5,
       "reference_formula": 1,
-      "requirement": 5496,
+      "requirement": 5497,
       "risk": 2,
       "runtime_contract": 22,
       "runtime_disclosure": 2,
@@ -43768,7 +43844,7 @@
       "ui_wiring_rule": 1,
       "validation": 13,
       "validation_contract": 1,
-      "validation_criterion": 35,
+      "validation_criterion": 36,
       "validation_requirement": 3,
       "validation_rule": 24,
       "variant_contract": 2,
@@ -43861,19 +43937,19 @@
       {
         "actual": "0b4f3de3038366fd021ea32775313d8e728f279f7873af2436dd119ed603b467",
         "error": "pnc019_source_hash_stale",
-        "expected": "81e84b34edefb7e99afb2c1a5b0a2ba08168856d961c1fabb5e45831d7322928",
+        "expected": "0df46c702538197544f5100167ca0b32a163eeb10822dfe4b981cac4d79305de",
         "source_path": "Plans/Automated_Testing_System.md"
       },
       {
         "actual": null,
         "error": "pnc019_source_hash_stale",
-        "expected": "5667433a1fa23a9ce6ddc6ae11238ad14bdd049ed70d5b69011e9e0c2aba684c",
+        "expected": "2a9122df5830b433a0fff4dd86234fe0f9eb21b86fff509bb7ac771913b276ef",
         "source_path": "Plans/UI_Command_Catalog.md"
       },
       {
         "actual": null,
         "error": "pnc019_source_hash_stale",
-        "expected": "e5904d9c65571779943637648be39d9e59f72c1b9ebfe4aa16f29f485485a5c3",
+        "expected": "4c41c8a297a373a3bbb131d0e95af85733df5be4bafdaa37c45d435857c2fa2d",
         "source_path": "Plans/Wiring_Matrix.production.json"
       },
       {

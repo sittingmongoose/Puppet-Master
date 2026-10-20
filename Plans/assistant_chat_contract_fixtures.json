@@ -77,7 +77,7 @@
         "destination": {
           "destination_kind": "brainstorm",
           "destination_id": "collab-run:fixture:bs-1",
-          "display_label": "BrainStorm · Provider Architecture · 4 helpers",
+          "display_label": "BrainStorm \u00b7 Provider Architecture \u00b7 4 helpers",
           "state_generation": 3
         }
       }
@@ -102,7 +102,7 @@
           "destination_kind": "crew",
           "destination_id": "collab-run:fixture:crew-1",
           "participant_id": "participant:fixture:crew-1:2",
-          "display_label": "Crew · Storage migration · Helper 2",
+          "display_label": "Crew \u00b7 Storage migration \u00b7 Helper 2",
           "state_generation": 7
         }
       }
@@ -126,7 +126,7 @@
         "destination": {
           "destination_kind": "plan_revision",
           "destination_id": "assistant-plan:fixture:1@r4",
-          "display_label": "Plan · Storage migration · revision 4",
+          "display_label": "Plan \u00b7 Storage migration \u00b7 revision 4",
           "state_generation": 4
         }
       }
@@ -147,7 +147,7 @@
         "destination": {
           "destination_kind": "brainstorm",
           "destination_id": "collab-run:fixture:bs-1",
-          "display_label": "BrainStorm · Provider Architecture · 4 helpers",
+          "display_label": "BrainStorm \u00b7 Provider Architecture \u00b7 4 helpers",
           "state_generation": 3
         },
         "side_effects": {
@@ -616,6 +616,281 @@
       "name": "crew_auto_thread_absent_inherits",
       "definition": "ThreadCrewAutoOverride",
       "value": {}
+    },
+    {
+      "name": "grill_wrap_up_request",
+      "definition": "QuestionnaireGrillWrapUpRequest",
+      "value": {
+        "schema_id": "pm.chat.questionnaire_grill_wrap_up_request.v1",
+        "schema_version": "1.0.0",
+        "request_type": "QuestionnaireGrillWrapUpRequest",
+        "command_id": "cmd.questionnaire.grill_me.wrap_up",
+        "command_instance_id": "ci-grill-wrap_up",
+        "project_id": "project:dl218",
+        "actor_ref": "user:jared",
+        "permission_snapshot_ref": "permission:grill",
+        "idempotency_key": "idem-grill-wrap_up",
+        "source_surface": "questionnaire_card",
+        "return_route": "route:chat/dl218",
+        "thread_id": "thread:dl218",
+        "session_ref": "host-session:dl218",
+        "questionnaire_id": "questionnaire:dl218",
+        "expected_revision": 2,
+        "expected_currentness_hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+      }
+    },
+    {
+      "name": "grill_wrap_up_result",
+      "definition": "QuestionnaireGrillWrapUpResult",
+      "value": {
+        "schema_id": "pm.chat.questionnaire_grill_wrap_up_result.v1",
+        "schema_version": "1.0.0",
+        "result_type": "QuestionnaireGrillWrapUpResult",
+        "command_id": "cmd.questionnaire.grill_me.wrap_up",
+        "command_instance_id": "ci-grill-wrap_up",
+        "outcome": "accepted",
+        "error_code": null,
+        "projection_ref": "projection:grill-wrap_up",
+        "session_ref": "host-session:dl218",
+        "session_state_after": "awaiting_confirmation",
+        "agreement_confirmed": false,
+        "replay_of": null,
+        "side_effects": {
+          "target_project_mutated": false,
+          "execution_started": false,
+          "permission_granted": false
+        }
+      }
+    },
+    {
+      "name": "grill_wrap_up_refusal",
+      "definition": "QuestionnaireGrillWrapUpResult",
+      "value": {
+        "schema_id": "pm.chat.questionnaire_grill_wrap_up_result.v1",
+        "schema_version": "1.0.0",
+        "result_type": "QuestionnaireGrillWrapUpResult",
+        "command_id": "cmd.questionnaire.grill_me.wrap_up",
+        "command_instance_id": "ci-grill-wrap_up-denied",
+        "outcome": "rejected",
+        "error_code": "permission_denied",
+        "projection_ref": "projection:grill-wrap_up",
+        "session_ref": "host-session:dl218",
+        "session_state_after": null,
+        "agreement_confirmed": false,
+        "replay_of": null,
+        "side_effects": {
+          "target_project_mutated": false,
+          "execution_started": false,
+          "permission_granted": false
+        }
+      }
+    },
+    {
+      "name": "grill_wrap_up_replay",
+      "definition": "QuestionnaireGrillWrapUpResult",
+      "value": {
+        "schema_id": "pm.chat.questionnaire_grill_wrap_up_result.v1",
+        "schema_version": "1.0.0",
+        "result_type": "QuestionnaireGrillWrapUpResult",
+        "command_id": "cmd.questionnaire.grill_me.wrap_up",
+        "command_instance_id": "ci-grill-wrap_up-replay",
+        "outcome": "accepted",
+        "error_code": null,
+        "projection_ref": "projection:grill-wrap_up",
+        "session_ref": "host-session:dl218",
+        "session_state_after": "awaiting_confirmation",
+        "agreement_confirmed": false,
+        "replay_of": "ci-grill-wrap_up",
+        "side_effects": {
+          "target_project_mutated": false,
+          "execution_started": false,
+          "permission_granted": false
+        }
+      }
+    },
+    {
+      "name": "grill_confirm_request",
+      "definition": "QuestionnaireGrillConfirmRequest",
+      "value": {
+        "schema_id": "pm.chat.questionnaire_grill_confirm_request.v1",
+        "schema_version": "1.0.0",
+        "request_type": "QuestionnaireGrillConfirmRequest",
+        "command_id": "cmd.questionnaire.grill_me.confirm",
+        "command_instance_id": "ci-grill-confirm",
+        "project_id": "project:dl218",
+        "actor_ref": "user:jared",
+        "permission_snapshot_ref": "permission:grill",
+        "idempotency_key": "idem-grill-confirm",
+        "source_surface": "questionnaire_card",
+        "return_route": "route:chat/dl218",
+        "thread_id": "thread:dl218",
+        "session_ref": "host-session:dl218",
+        "questionnaire_id": "questionnaire:dl218",
+        "expected_revision": 2,
+        "expected_currentness_hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "agreement_ref": "artifact:what-we-agreed/v1"
+      }
+    },
+    {
+      "name": "grill_confirm_result",
+      "definition": "QuestionnaireGrillConfirmResult",
+      "value": {
+        "schema_id": "pm.chat.questionnaire_grill_confirm_result.v1",
+        "schema_version": "1.0.0",
+        "result_type": "QuestionnaireGrillConfirmResult",
+        "command_id": "cmd.questionnaire.grill_me.confirm",
+        "command_instance_id": "ci-grill-confirm",
+        "outcome": "accepted",
+        "error_code": null,
+        "projection_ref": "projection:grill-confirm",
+        "session_ref": "host-session:dl218",
+        "session_state_after": "confirmed",
+        "agreement_confirmed": true,
+        "replay_of": null,
+        "side_effects": {
+          "target_project_mutated": false,
+          "execution_started": false,
+          "permission_granted": false
+        }
+      }
+    },
+    {
+      "name": "grill_confirm_refusal",
+      "definition": "QuestionnaireGrillConfirmResult",
+      "value": {
+        "schema_id": "pm.chat.questionnaire_grill_confirm_result.v1",
+        "schema_version": "1.0.0",
+        "result_type": "QuestionnaireGrillConfirmResult",
+        "command_id": "cmd.questionnaire.grill_me.confirm",
+        "command_instance_id": "ci-grill-confirm-denied",
+        "outcome": "rejected",
+        "error_code": "permission_denied",
+        "projection_ref": "projection:grill-confirm",
+        "session_ref": "host-session:dl218",
+        "session_state_after": null,
+        "agreement_confirmed": false,
+        "replay_of": null,
+        "side_effects": {
+          "target_project_mutated": false,
+          "execution_started": false,
+          "permission_granted": false
+        }
+      }
+    },
+    {
+      "name": "grill_confirm_replay",
+      "definition": "QuestionnaireGrillConfirmResult",
+      "value": {
+        "schema_id": "pm.chat.questionnaire_grill_confirm_result.v1",
+        "schema_version": "1.0.0",
+        "result_type": "QuestionnaireGrillConfirmResult",
+        "command_id": "cmd.questionnaire.grill_me.confirm",
+        "command_instance_id": "ci-grill-confirm-replay",
+        "outcome": "accepted",
+        "error_code": null,
+        "projection_ref": "projection:grill-confirm",
+        "session_ref": "host-session:dl218",
+        "session_state_after": "confirmed",
+        "agreement_confirmed": true,
+        "replay_of": "ci-grill-confirm",
+        "side_effects": {
+          "target_project_mutated": false,
+          "execution_started": false,
+          "permission_granted": false
+        }
+      }
+    },
+    {
+      "name": "grill_keep_going_request",
+      "definition": "QuestionnaireGrillKeepGoingRequest",
+      "value": {
+        "schema_id": "pm.chat.questionnaire_grill_keep_going_request.v1",
+        "schema_version": "1.0.0",
+        "request_type": "QuestionnaireGrillKeepGoingRequest",
+        "command_id": "cmd.questionnaire.grill_me.keep_going",
+        "command_instance_id": "ci-grill-keep_going",
+        "project_id": "project:dl218",
+        "actor_ref": "user:jared",
+        "permission_snapshot_ref": "permission:grill",
+        "idempotency_key": "idem-grill-keep_going",
+        "source_surface": "questionnaire_card",
+        "return_route": "route:chat/dl218",
+        "thread_id": "thread:dl218",
+        "session_ref": "host-session:dl218",
+        "questionnaire_id": "questionnaire:dl218",
+        "expected_revision": 2,
+        "expected_currentness_hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "agreement_ref": "artifact:what-we-agreed/v1"
+      }
+    },
+    {
+      "name": "grill_keep_going_result",
+      "definition": "QuestionnaireGrillKeepGoingResult",
+      "value": {
+        "schema_id": "pm.chat.questionnaire_grill_keep_going_result.v1",
+        "schema_version": "1.0.0",
+        "result_type": "QuestionnaireGrillKeepGoingResult",
+        "command_id": "cmd.questionnaire.grill_me.keep_going",
+        "command_instance_id": "ci-grill-keep_going",
+        "outcome": "accepted",
+        "error_code": null,
+        "projection_ref": "projection:grill-keep_going",
+        "session_ref": "host-session:dl218",
+        "session_state_after": "interviewing",
+        "agreement_confirmed": false,
+        "replay_of": null,
+        "side_effects": {
+          "target_project_mutated": false,
+          "execution_started": false,
+          "permission_granted": false
+        }
+      }
+    },
+    {
+      "name": "grill_keep_going_refusal",
+      "definition": "QuestionnaireGrillKeepGoingResult",
+      "value": {
+        "schema_id": "pm.chat.questionnaire_grill_keep_going_result.v1",
+        "schema_version": "1.0.0",
+        "result_type": "QuestionnaireGrillKeepGoingResult",
+        "command_id": "cmd.questionnaire.grill_me.keep_going",
+        "command_instance_id": "ci-grill-keep_going-denied",
+        "outcome": "rejected",
+        "error_code": "permission_denied",
+        "projection_ref": "projection:grill-keep_going",
+        "session_ref": "host-session:dl218",
+        "session_state_after": null,
+        "agreement_confirmed": false,
+        "replay_of": null,
+        "side_effects": {
+          "target_project_mutated": false,
+          "execution_started": false,
+          "permission_granted": false
+        }
+      }
+    },
+    {
+      "name": "grill_keep_going_replay",
+      "definition": "QuestionnaireGrillKeepGoingResult",
+      "value": {
+        "schema_id": "pm.chat.questionnaire_grill_keep_going_result.v1",
+        "schema_version": "1.0.0",
+        "result_type": "QuestionnaireGrillKeepGoingResult",
+        "command_id": "cmd.questionnaire.grill_me.keep_going",
+        "command_instance_id": "ci-grill-keep_going-replay",
+        "outcome": "accepted",
+        "error_code": null,
+        "projection_ref": "projection:grill-keep_going",
+        "session_ref": "host-session:dl218",
+        "session_state_after": "interviewing",
+        "agreement_confirmed": false,
+        "replay_of": "ci-grill-keep_going",
+        "side_effects": {
+          "target_project_mutated": false,
+          "execution_started": false,
+          "permission_granted": false
+        }
+      }
     }
   ],
   "invalid": [
@@ -754,7 +1029,7 @@
         "destination": {
           "destination_kind": "brainstorm",
           "destination_id": "collab-run:fixture:bs-1",
-          "display_label": "BrainStorm · Provider Architecture · 4 helpers",
+          "display_label": "BrainStorm \u00b7 Provider Architecture \u00b7 4 helpers",
           "state_generation": 3
         }
       }
@@ -1123,6 +1398,105 @@
       "expected_error": "project_default is not a chat override request field",
       "patch": {
         "project_default": true
+      }
+    },
+    {
+      "name": "grill_wrap_up_cannot_start_execution",
+      "base_valid": "grill_wrap_up_result",
+      "rejects_for": "cannot_start_execution",
+      "reason": "DL-218 / ACD-503: explicit user confirmation and current owner identity are required; none of these controls starts execution.",
+      "patch": {
+        "side_effects.execution_started": true
+      }
+    },
+    {
+      "name": "grill_wrap_up_refusal_cannot_confirm",
+      "base_valid": "grill_wrap_up_refusal",
+      "rejects_for": "refusal_cannot_confirm",
+      "reason": "DL-218 / ACD-503: explicit user confirmation and current owner identity are required; none of these controls starts execution.",
+      "patch": {
+        "agreement_confirmed": true
+      }
+    },
+    {
+      "name": "grill_wrap_up_request_needs_currentness",
+      "base_valid": "grill_wrap_up_request",
+      "rejects_for": "request_needs_currentness",
+      "reason": "DL-218 / ACD-503: explicit user confirmation and current owner identity are required; none of these controls starts execution.",
+      "patch": {
+        "expected_currentness_hash": "stale"
+      }
+    },
+    {
+      "name": "grill_wrap_up_cannot_confirm",
+      "base_valid": "grill_wrap_up_result",
+      "rejects_for": "only Confirm accepts the accumulated agreement",
+      "reason": "DL-218: Wrap up and Keep going never confirm decisions.",
+      "patch": {
+        "agreement_confirmed": true
+      }
+    },
+    {
+      "name": "grill_confirm_cannot_start_execution",
+      "base_valid": "grill_confirm_result",
+      "rejects_for": "cannot_start_execution",
+      "reason": "DL-218 / ACD-503: explicit user confirmation and current owner identity are required; none of these controls starts execution.",
+      "patch": {
+        "side_effects.execution_started": true
+      }
+    },
+    {
+      "name": "grill_confirm_refusal_cannot_confirm",
+      "base_valid": "grill_confirm_refusal",
+      "rejects_for": "refusal_cannot_confirm",
+      "reason": "DL-218 / ACD-503: explicit user confirmation and current owner identity are required; none of these controls starts execution.",
+      "patch": {
+        "agreement_confirmed": true
+      }
+    },
+    {
+      "name": "grill_confirm_request_needs_currentness",
+      "base_valid": "grill_confirm_request",
+      "rejects_for": "request_needs_currentness",
+      "reason": "DL-218 / ACD-503: explicit user confirmation and current owner identity are required; none of these controls starts execution.",
+      "patch": {
+        "expected_currentness_hash": "stale"
+      }
+    },
+    {
+      "name": "grill_keep_going_cannot_start_execution",
+      "base_valid": "grill_keep_going_result",
+      "rejects_for": "cannot_start_execution",
+      "reason": "DL-218 / ACD-503: explicit user confirmation and current owner identity are required; none of these controls starts execution.",
+      "patch": {
+        "side_effects.execution_started": true
+      }
+    },
+    {
+      "name": "grill_keep_going_refusal_cannot_confirm",
+      "base_valid": "grill_keep_going_refusal",
+      "rejects_for": "refusal_cannot_confirm",
+      "reason": "DL-218 / ACD-503: explicit user confirmation and current owner identity are required; none of these controls starts execution.",
+      "patch": {
+        "agreement_confirmed": true
+      }
+    },
+    {
+      "name": "grill_keep_going_request_needs_currentness",
+      "base_valid": "grill_keep_going_request",
+      "rejects_for": "request_needs_currentness",
+      "reason": "DL-218 / ACD-503: explicit user confirmation and current owner identity are required; none of these controls starts execution.",
+      "patch": {
+        "expected_currentness_hash": "stale"
+      }
+    },
+    {
+      "name": "grill_keep_going_cannot_confirm",
+      "base_valid": "grill_keep_going_result",
+      "rejects_for": "only Confirm accepts the accumulated agreement",
+      "reason": "DL-218: Wrap up and Keep going never confirm decisions.",
+      "patch": {
+        "agreement_confirmed": true
       }
     }
   ]

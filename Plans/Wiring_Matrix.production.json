@@ -2786,14 +2786,15 @@
       "handler_location": "handlers::collaboration::reconfigure",
       "expected_event_types": [],
       "acceptance_checks": [
-        "cmd.collaboration.reconfigure dispatches the typed request CollaborationReconfigureRequest and returns CollaborationReconfigureResult; the surfaces that may raise it are exactly: workflow_modal, workflow_card, workflow_panel, activity, composer.",
+        "cmd.collaboration.reconfigure dispatches the typed request CollaborationReconfigureRequest and returns CollaborationReconfigureResult; the surfaces that may raise it are exactly: workflow_modal, workflow_card, workflow_panel, activity, composer, brainstorm_panel.",
         "Read state.assistant_redesign.collaboration_reconfigure.availability and state.assistant_redesign.collaboration_reconfigure.disabled_reason before dispatch; keep handler_unavailable and command_not_registered until source-hashed native proof exists.",
         "The durable effect is the owner typed result, receipt or projection under Plans/Collaborative_Workflows.md. Emit no unregistered EventRecord.",
         "Every named reverse consumer renders from the same owner projection; no consumer keeps a private copy.",
         "Negative path is enforced: an unavailable or denied dispatch changes nothing and states its exact reason.",
         "Prove disabled behaviour, keyboard and pointer parity, and deterministic return to the initiating route and focus.",
         "Correction v4 (PART-003..005, PART-017..018): reconfigure owns explicit participant retry (new attempt identity), replacement (new assignment revision), explicit waiver carrying actor, reason and currentness, and coordinator or moderator replacement. It never silently substitutes a failed or unavailable slot, and failed-attempt evidence is never overwritten.",
-        "Correction v4 (WONV-006): changing a slot from Wonderer to an ordinary voting role lets only the new role's current attempt vote; the earlier abstaining attempt stays as history and is never retroactively converted."
+        "Correction v4 (WONV-006): changing a slot from Wonderer to an ordinary voting role lets only the new role's current attempt vote; the earlier abstaining attempt stays as history and is never retroactively converted.",
+        "DL-218 / UCC-205 / WM-094: the existing Allow more questions mid-run control on brainstorm_panel raises this same command. change_kind add_grill_me sets grill_me_enabled true without a ParticipantSpec, model, Persona or added roster row, retains asked question identities/count, and records the existing definition revision/system transcript entry. Review, Crew Auto and scheduled-build specialist restrictions remain in force; the control never widens the permission ceiling."
       ],
       "evidence_required": "Future production evidence for cmd.collaboration.reconfigure: source-hashed native dispatcher and sole handler handlers::collaboration::reconfigure, typed CollaborationReconfigureRequest/CollaborationReconfigureResult/error/availability/permission fixtures, receipt or ObservableWork correlation, zero unregistered events, exact reverse GUI coverage, restart/race/currentness/stale-target negatives, and exact return. Owner refs: Plans/Collaborative_Workflows.md. Packet ref: pm-assistant-implementation-2026-09-02-recovered:machine/commands.json#cmd.collaboration.reconfigure. The owner binding and this production-intent row prove none of those runtime facts. Additive Correction v4 (CW-024) adds the correction acceptance checks and correction test rows above; they are production-intent, and neither the owner binding nor this row proves any runtime fact.",
       "state_selector": "state.assistant_redesign.collaboration_reconfigure.availability",
@@ -2847,6 +2848,11 @@
           "test_id": "wiring.correction_v4.collaboration_reconfigure.participant_attempt_fencing",
           "evidence_kind": "receipt_or_event_assertion",
           "requirement": "Race. Prove a superseded attempt returning late is rejected by epoch/currentness and cannot count toward a vote or a completion."
+        },
+        {
+          "test_id": "wiring.dl218.collaboration_reconfigure.grill_me_switch",
+          "evidence_kind": "receipt_or_event_assertion",
+          "requirement": "Prove add_grill_me changes only the enabled switch and definition revision/system message under the owner transaction, preserves question count, and adds no participant, model, Persona, wave slot or EventRecord."
         }
       ],
       "event_test_requirements": [
@@ -4829,7 +4835,8 @@
         "Every named reverse consumer renders from the same owner projection: linked Plan card.",
         "Negative path is enforced: one final Plan.",
         "Prove accessible disabled behavior, keyboard and pointer parity, and deterministic return to the initiating route and focus.",
-        "Producer surfaces (2026-09-27 wand-module redesign, UCC-169, WM-062): wonderer_workspace also raise cmd.brainstorm.synthesize_plan, and no other surface is added. Each reads state.assistant_redesign.brainstorm_synthesize_plan.availability and state.assistant_redesign.brainstorm_synthesize_plan.disabled_reason (UCC-156), dispatches the identical typed request, and renders disabled, never optimistic, when it cannot read them."
+        "Producer surfaces (2026-09-27 wand-module redesign, UCC-169, WM-062): wonderer_workspace also raise cmd.brainstorm.synthesize_plan, and no other surface is added. Each reads state.assistant_redesign.brainstorm_synthesize_plan.availability and state.assistant_redesign.brainstorm_synthesize_plan.disabled_reason (UCC-156), dispatches the identical typed request, and renders disabled, never optimistic, when it cannot read them.",
+        "DL-218 / CWR-041 / WM-094: Write the plan is unavailable with the exact owner reason while any Wonderer lead lacks a disposition or any requested lead research lacks a result. Release the first pass only after all blind proposals. Final output lists all leads with dispositions and reasons; a failed/timed-out/unavailable pass has its recorded outcome and never blocks forever. Grilling intake also waits for explicit Confirm; exhaustion and Wrap up do not release that gate."
       ],
       "evidence_required": "Future production evidence for cmd.brainstorm.synthesize_plan: source-hashed native dispatcher and sole handler, typed request/result/error/availability/permission fixtures, receipt or ObservableWork correlation, zero unregistered events, exact reverse GUI coverage, restart/race/currentness/stale-target negatives, and exact return. Owner refs: Plans/Collaborative_Workflows.md. Packet ref: pm-assistant-implementation-2026-09-02-recovered:machine/wiring.json#W-029. The owner binding and this production-intent row prove none of those runtime facts.",
       "state_selector": "state.assistant_redesign.brainstorm_synthesize_plan.availability",
@@ -4873,6 +4880,11 @@
           "test_id": "wiring.assistant_redesign.brainstorm_synthesize_plan.accessibility",
           "evidence_kind": "accessibility_regression",
           "requirement": "Prove role and name, keyboard-pointer parity, focus return, disabled reason, and outcome announcement."
+        },
+        {
+          "test_id": "wiring.dl218.brainstorm_synthesis.lead_and_grilling_gates",
+          "evidence_kind": "state_projection",
+          "requirement": "Negative path: an undecided lead, in-flight research or unconfirmed grilling agreement keeps synthesis unavailable with its owner reason. Resolving those exact conditions restores only the owner-allowed action; no new event is emitted."
         }
       ],
       "event_test_requirements": [

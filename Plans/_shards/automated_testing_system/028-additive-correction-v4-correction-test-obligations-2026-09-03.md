@@ -4,7 +4,7 @@ Source: `Plans/Automated_Testing_System.md`
 
 Source lines: L4132-L4176
 
-Source SHA256: `81e84b34edefb7e99afb2c1a5b0a2ba08168856d961c1fabb5e45831d7322928`
+Source SHA256: `0df46c702538197544f5100167ca0b32a163eeb10822dfe4b981cac4d79305de`
 
 ---
 
@@ -37,7 +37,7 @@ The test families the correction requires, by seam:
 | Browser currentness | negative (zero, multiple, destroyed, mismatched all return `stale_capture`), race (late resolution fenced by epoch and buffer revision) |
 | Folder attachments | negative (the file-only alias rejects a folder), stale (scheduled manifest unavailable at dispatch holds or fails) |
 | To-Do graph | negative (self-parent, parent cycle, dependency cycle, cross-thread, unknown, duplicate each rejected atomically), race (stale event retained as rejected evidence) |
-| Wonderer | negative (abstention excluded from the denominator and never counted as opposition) |
+| Wonderer | negative (no vote record, including abstain; its displayed Abstained state is excluded from both support/oppose denominators), blind-proposal isolation, pass limit, reasoned dispositions and evidence gates (DL-218, CWR-041) |
 
 ### CDRY-018, CONCEPT-019 — Three readiness levels, reported separately
 

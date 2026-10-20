@@ -4,7 +4,7 @@ Source: `Plans/Commands_System.md`
 
 Source lines: L6975-L7498
 
-Source SHA256: `ae15064c31e71e43b22c8d4be185a4e8a9d05465472daa3b5bf32e17a5cd6f0f`
+Source SHA256: `b6eb4771725c91707a5356493e7c7dfab8df2f33a682a28b25e62157ed9bbde8`
 
 ---
 
@@ -177,7 +177,7 @@ The owning documents define what each command does. This record fixes only the d
 | Command | Sole handler | Request → Result | Owner |
 |---|---|---|---|
 | `cmd.chat_room.end` | `handlers::collaboration::chat_room_end` | `ChatRoomEndRequest` → `ChatRoomEndResult` | `Plans/Collaborative_Workflows.md` |
-| `cmd.brainstorm.research_lead` | `handlers::collaboration::brainstorm_research_lead` | `BrainstormLeadResearchRequest` → `BrainstormLeadResearchResult` | `Plans/Collaborative_Workflows.md` |
+| `cmd.brainstorm.research_lead` (compatibility alias of cmd.collaboration.research_lead, DL-218) | `handlers::collaboration::research_lead` | `BrainstormLeadResearchRequest` → `BrainstormLeadResearchResult` | `Plans/Collaborative_Workflows.md` |
 | `cmd.bsd.finding.dismiss` | `handlers::bsd::finding_dismiss` | `BSDFindingDismissRequest` → `BSDFindingDismissResult` | `Plans/Back_Seat_Driver.md` |
 | `cmd.bsd.catch_up.release` | `handlers::bsd::catch_up_release` | `BSDCatchUpReleaseRequest` → `BSDCatchUpReleaseResult` | `Plans/Back_Seat_Driver.md` |
 | `cmd.chat.teach.revoke` | `handlers::assistant_memory::teach_revoke` | `TeachRevokeRequest` → `TeachRevokeResult` | `Plans/assistant-memory-subsystem.md` |
@@ -194,7 +194,7 @@ owner_doc: Plans/Commands_System.md
 canonical_text: >-
   The seven wand-module commands DL-130 adds each have one sole handler and one request and result
   contract: cmd.chat_room.end (handlers::collaboration::chat_room_end), cmd.brainstorm.research_lead
-  (handlers::collaboration::brainstorm_research_lead), cmd.bsd.finding.dismiss
+  (handlers::collaboration::research_lead), cmd.bsd.finding.dismiss
   (handlers::bsd::finding_dismiss), cmd.bsd.catch_up.release (handlers::bsd::catch_up_release),
   cmd.chat.teach.revoke (handlers::assistant_memory::teach_revoke), cmd.chat.teach.set_lock
   (handlers::assistant_memory::teach_set_lock) and cmd.chat.memory.export
@@ -261,7 +261,7 @@ preserved_exact_tokens:
   - "ChatRoomEndRequest"
   - "DL-138"
   - "handlers::collaboration::chat_room_end"
-  - "handlers::collaboration::brainstorm_research_lead"
+  - "handlers::collaboration::research_lead"
   - "handlers::bsd::finding_dismiss"
   - "handlers::bsd::catch_up_release"
   - "handlers::assistant_memory::teach_revoke"

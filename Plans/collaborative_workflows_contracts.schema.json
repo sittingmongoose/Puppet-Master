@@ -3,7 +3,7 @@
   "$id": "https://puppetmaster.local/schemas/collaborative_workflows/1.0.0/collaborative_workflows_contracts.schema.json",
   "x-schema-id": "pm.collaborative_workflows.contracts.v1",
   "title": "Collaborative Workflows static contract schemas",
-  "description": "Closed record, projection, request and result shapes for Plans/Collaborative_Workflows.md sections 10 to 12, PART-001..020, the Wand Modules Redesign Addendum (CWR-018..CWR-040) and the helper message in progress of Plans/Executor_Protocol.md EP-129..EP-131. Static schema and fixture consistency only: no writer, storage key, EventRecord, native handler or production wiring is admitted, and every command stays handler_unavailable. Fields that wait on an owner answer recorded as an open ledger question are not admitted.",
+  "description": "Closed record, projection, request and result shapes for Plans/Collaborative_Workflows.md sections 10 to 12, PART-001..020, the Wand Modules Redesign Addendum (CWR-018..CWR-043) and the helper message in progress of Plans/Executor_Protocol.md EP-129..EP-131. Static schema and fixture consistency only: no writer, storage key, EventRecord, native handler or production wiring is admitted, and every command stays handler_unavailable. Fields that wait on an owner answer recorded as an open ledger question are not admitted. DL-218 adds WondererPass, WondererLead, the definition grill_me_enabled switch and cmd.collaboration.research_lead; the BrainStorm spelling remains a compatibility alias.",
   "oneOf": [
     {
       "$ref": "#/$defs/ParticipantSpec"
@@ -257,8 +257,7 @@
       "description": "Closed additive_role_kind of sections 2.2, 9.1 and 12.",
       "enum": [
         "none",
-        "wonderer",
-        "grill_me"
+        "wonderer"
       ]
     },
     "sender_kind": {
@@ -569,7 +568,7 @@
     },
     "ParticipantSpec": {
       "type": "object",
-      "description": "ParticipantSpec of sections 2.2 and 12. Requested fields only: effective values live in the runtime assignment record. A specialist is a spec with additive_role_kind set and its own requested model (CWR-028); Grill Me is a methodology Skill and never a Persona (DL-133), so its spec carries no Persona.",
+      "description": "Requested participant identity (CW sections 2.2 and 12; DL-218). Wonderer has its own model and Persona. Grill Me is only grill_me_enabled on the definition; its Skill is loaded into the existing coordinator or moderator, never into a participant spec.",
       "additionalProperties": false,
       "required": [
         "schema_id",
@@ -595,7 +594,24 @@
           "$ref": "#/$defs/non_empty_string"
         },
         "role": {
-          "$ref": "#/$defs/non_empty_string"
+          "allOf": [
+            {
+              "$ref": "#/$defs/non_empty_string"
+            },
+            {
+              "not": {
+                "enum": [
+                  "Grill Me",
+                  "grill-me",
+                  "grill_me",
+                  "grilling",
+                  "persona:grill-me",
+                  "persona:grill_me",
+                  "persona:grilling"
+                ]
+              }
+            }
+          ]
         },
         "requested_provider_id": {
           "oneOf": [
@@ -628,19 +644,52 @@
           ]
         },
         "requested_persona_id": {
-          "oneOf": [
+          "allOf": [
             {
-              "$ref": "#/$defs/non_empty_string"
+              "oneOf": [
+                {
+                  "$ref": "#/$defs/non_empty_string"
+                },
+                {
+                  "type": "null"
+                }
+              ]
             },
             {
-              "type": "null"
+              "not": {
+                "enum": [
+                  "Grill Me",
+                  "grill-me",
+                  "grill_me",
+                  "grilling",
+                  "persona:grill-me",
+                  "persona:grill_me",
+                  "persona:grilling"
+                ]
+              }
             }
           ]
         },
         "requested_skill_ids": {
           "type": "array",
           "items": {
-            "$ref": "#/$defs/non_empty_string"
+            "allOf": [
+              {
+                "$ref": "#/$defs/non_empty_string"
+              },
+              {
+                "not": {
+                  "enum": [
+                    "grill-me",
+                    "grill_me",
+                    "grilling",
+                    "skill:grill-me",
+                    "skill:grill_me",
+                    "skill:grilling"
+                  ]
+                }
+              }
+            ]
           },
           "uniqueItems": true
         },
@@ -666,10 +715,7 @@
           "if": {
             "properties": {
               "additive_role_kind": {
-                "enum": [
-                  "wonderer",
-                  "grill_me"
-                ]
+                "const": "wonderer"
               }
             },
             "required": [
@@ -680,25 +726,9 @@
             "properties": {
               "requested_model_id": {
                 "$ref": "#/$defs/non_empty_string"
-              }
-            }
-          }
-        },
-        {
-          "if": {
-            "properties": {
-              "additive_role_kind": {
-                "const": "grill_me"
-              }
-            },
-            "required": [
-              "additive_role_kind"
-            ]
-          },
-          "then": {
-            "properties": {
+              },
               "requested_persona_id": {
-                "type": "null"
+                "$ref": "#/$defs/non_empty_string"
               }
             }
           }
@@ -860,6 +890,11 @@
         },
         "provisioning_posture": {
           "$ref": "#/$defs/provisioning_posture"
+        },
+        "grill_me_enabled": {
+          "type": "boolean",
+          "default": false,
+          "description": "DL-218: turns the grilling Skill on in the existing coordinator or moderator; adds no ParticipantSpec. False when absent on legacy reads; migrate old Grill Me slots before validating current definitions (CW section 17)."
         }
       },
       "x-primary-identity-fields": [
@@ -880,7 +915,8 @@
           "then": {
             "required": [
               "shared_notes_policy",
-              "assignment_strategy"
+              "assignment_strategy",
+              "grill_me_enabled"
             ],
             "properties": {
               "evidence_citation_rule": false,
@@ -934,6 +970,9 @@
                     }
                   ]
                 }
+              },
+              "grill_me_enabled": {
+                "const": false
               }
             }
           }
@@ -955,7 +994,8 @@
               "moderator_style",
               "mention_policy",
               "stop_condition",
-              "summary_style"
+              "summary_style",
+              "grill_me_enabled"
             ],
             "properties": {
               "shared_notes_policy": false,
@@ -980,7 +1020,8 @@
           "then": {
             "required": [
               "hard_constraints",
-              "provisioning_posture"
+              "provisioning_posture",
+              "grill_me_enabled"
             ],
             "properties": {
               "shared_notes_policy": false,
@@ -2341,7 +2382,24 @@
       ],
       "properties": {
         "role": {
-          "$ref": "#/$defs/non_empty_string"
+          "allOf": [
+            {
+              "$ref": "#/$defs/non_empty_string"
+            },
+            {
+              "not": {
+                "enum": [
+                  "Grill Me",
+                  "grill-me",
+                  "grill_me",
+                  "grilling",
+                  "persona:grill-me",
+                  "persona:grill_me",
+                  "persona:grilling"
+                ]
+              }
+            }
+          ]
         },
         "requested_model_id": {
           "oneOf": [
@@ -2354,12 +2412,29 @@
           ]
         },
         "requested_persona_id": {
-          "oneOf": [
+          "allOf": [
             {
-              "$ref": "#/$defs/non_empty_string"
+              "oneOf": [
+                {
+                  "$ref": "#/$defs/non_empty_string"
+                },
+                {
+                  "type": "null"
+                }
+              ]
             },
             {
-              "type": "null"
+              "not": {
+                "enum": [
+                  "Grill Me",
+                  "grill-me",
+                  "grill_me",
+                  "grilling",
+                  "persona:grill-me",
+                  "persona:grill_me",
+                  "persona:grilling"
+                ]
+              }
             }
           ]
         },
@@ -2370,28 +2445,7 @@
           "description": "Review reviewer focus only.",
           "$ref": "#/$defs/non_empty_string"
         }
-      },
-      "allOf": [
-        {
-          "if": {
-            "properties": {
-              "additive_role_kind": {
-                "const": "grill_me"
-              }
-            },
-            "required": [
-              "additive_role_kind"
-            ]
-          },
-          "then": {
-            "properties": {
-              "requested_persona_id": {
-                "type": "null"
-              }
-            }
-          }
-        }
-      ]
+      }
     },
     "TeamPreset": {
       "type": "object",
@@ -2431,7 +2485,13 @@
         },
         "config_overrides": {
           "type": "object",
-          "description": "Definition fields the sheet exposes; a preset only prefills the draft and never writes a definition, a Settings value or a run (CWR-018, CWR-039)."
+          "description": "Definition fields the sheet exposes; a preset only prefills the draft and never writes a definition, a Settings value or a run (CWR-018, CWR-039).",
+          "properties": {
+            "grill_me_enabled": {
+              "type": "boolean"
+            },
+            "participant_specs": false
+          }
         }
       },
       "x-primary-identity-fields": [
@@ -5103,28 +5163,18 @@
         },
         {
           "type": "object",
+          "description": "Retained truthful spelling: add the Grill Me capability by turning grill_me_enabled on. No participant spec, slot, model or Persona (DL-218, CWR-031, CWR-042).",
           "additionalProperties": false,
           "required": [
             "change_kind",
-            "participant_spec"
+            "grill_me_enabled"
           ],
           "properties": {
             "change_kind": {
               "const": "add_grill_me"
             },
-            "participant_spec": {
-              "allOf": [
-                {
-                  "$ref": "#/$defs/ParticipantSpec"
-                },
-                {
-                  "properties": {
-                    "additive_role_kind": {
-                      "const": "grill_me"
-                    }
-                  }
-                }
-              ]
+            "grill_me_enabled": {
+              "const": true
             }
           }
         }
@@ -6017,7 +6067,7 @@
     },
     "BrainstormLeadResearchRequest": {
       "type": "object",
-      "description": "Asks a running or waiting BrainStorm run to research one Wonderer lead (CWR-031, DL-130, section 9.2).",
+      "description": "DL-218 one-to-one BrainStorm-only compatibility shape of CollaborationLeadResearchRequest. Normalize before availability, permissions, idempotency and dispatch; there is no separate BrainStorm handler. Asks a running or waiting BrainStorm run to research one Wonderer lead (CWR-031, DL-130, section 9.2).",
       "additionalProperties": false,
       "required": [
         "schema_id",
@@ -6105,7 +6155,7 @@
     },
     "BrainstormLeadResearchResult": {
       "type": "object",
-      "description": "The lead stays a hypothesis until research returns evidence; the result records that evidence or the reason it was set aside. A lead is never accepted as fact without evidence.",
+      "description": "DL-218 one-to-one BrainStorm-only compatibility shape of CollaborationLeadResearchResult. Normalize before availability, permissions, idempotency and dispatch; there is no separate BrainStorm handler. The lead stays a hypothesis until research returns evidence; the result records that evidence or the reason it was set aside. A lead is never accepted as fact without evidence.",
       "additionalProperties": false,
       "required": [
         "schema_id",
@@ -9326,7 +9376,7 @@
     },
     "CrewAutoConfigRoute": {
       "type": "object",
-      "description": "Opens the Crew Auto sheet from the Crew Auto settings… row, the Crew sheet or the Crew Auto note's Change control (CWR-038).",
+      "description": "Opens the Crew Auto sheet from the Crew Auto settings\u2026 row, the Crew sheet or the Crew Auto note's Change control (CWR-038).",
       "additionalProperties": false,
       "required": [
         "schema_id",
@@ -9363,7 +9413,7 @@
           "$ref": "#/$defs/non_empty_string"
         },
         "source_surface": {
-          "description": "The cmd.chat.crew_auto.open_config surfaces of section 10: the multi-agent menu's Crew Auto settings… row, the Crew sheet's link (workflow_modal) and the Change control of the Crew Auto is on for this project note (crew_auto_receipt, DL-135).",
+          "description": "The cmd.chat.crew_auto.open_config surfaces of section 10: the multi-agent menu's Crew Auto settings\u2026 row, the Crew sheet's link (workflow_modal) and the Change control of the Crew Auto is on for this project note (crew_auto_receipt, DL-135).",
           "enum": [
             "multi_agent_menu",
             "workflow_modal",
@@ -9492,6 +9542,665 @@
           "$ref": "#/$defs/missed_teaching_refs"
         }
       }
+    },
+    "WondererPass": {
+      "type": "object",
+      "description": "One pass in CW section 12, CWR-041 (DL-218). The first starts with the run; at most two further passes require an addressed request.",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "wonderer_pass_id",
+        "collaboration_run_id",
+        "participant_slot_id",
+        "pass_number",
+        "requested_by",
+        "seed_ref",
+        "artifact_ref",
+        "lead_ids",
+        "delivered_at"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.collaboration.wonderer_pass.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "wonderer_pass_id": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "collaboration_run_id": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "participant_slot_id": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "pass_number": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 3
+        },
+        "requested_by": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/non_empty_string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "seed_ref": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "artifact_ref": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "lead_ids": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/non_empty_string"
+          },
+          "uniqueItems": true,
+          "minItems": 3,
+          "maxItems": 5
+        },
+        "delivered_at": {
+          "$ref": "#/$defs/utc_timestamp"
+        }
+      },
+      "x-primary-identity-fields": [
+        "wonderer_pass_id"
+      ],
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "pass_number": {
+                "const": 1
+              }
+            },
+            "required": [
+              "pass_number"
+            ]
+          },
+          "then": {
+            "properties": {
+              "requested_by": {
+                "type": "null"
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "requested_by": {
+                "$ref": "#/$defs/non_empty_string"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "WondererLead": {
+      "type": "object",
+      "description": "Exactly the CW section 12 lead fields, CWR-041 (DL-218). A disposition is a reasoned team decision, separate from the research result.",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "lead_id",
+        "wonderer_pass_id",
+        "collaboration_run_id",
+        "angle",
+        "claim",
+        "tether",
+        "source_refs",
+        "disposition",
+        "disposition_reason",
+        "disposed_by",
+        "lead_status",
+        "evidence_refs",
+        "set_aside_reason"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.collaboration.wonderer_lead.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "lead_id": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "wonderer_pass_id": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "collaboration_run_id": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "angle": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "claim": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "tether": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "\\S"
+        },
+        "source_refs": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/non_empty_string"
+          },
+          "uniqueItems": true,
+          "minItems": 1
+        },
+        "disposition": {
+          "enum": [
+            "explore",
+            "use",
+            "set_aside",
+            null
+          ]
+        },
+        "disposition_reason": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/non_empty_string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "disposed_by": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/non_empty_string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "lead_status": {
+          "enum": [
+            "hypothesis",
+            "substantiated",
+            "set_aside"
+          ]
+        },
+        "evidence_refs": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/non_empty_string"
+          },
+          "uniqueItems": true
+        },
+        "set_aside_reason": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/non_empty_string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "x-primary-identity-fields": [
+        "lead_id"
+      ],
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "disposition": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "disposition"
+            ]
+          },
+          "then": {
+            "properties": {
+              "disposition_reason": {
+                "$ref": "#/$defs/non_empty_string"
+              },
+              "disposed_by": {
+                "$ref": "#/$defs/non_empty_string"
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "disposition_reason": {
+                "type": "null"
+              },
+              "disposed_by": {
+                "type": "null"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "lead_status": {
+                "const": "substantiated"
+              }
+            },
+            "required": [
+              "lead_status"
+            ]
+          },
+          "then": {
+            "properties": {
+              "evidence_refs": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/$defs/non_empty_string"
+                },
+                "uniqueItems": true,
+                "minItems": 1
+              },
+              "set_aside_reason": {
+                "type": "null"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "lead_status": {
+                "const": "set_aside"
+              }
+            },
+            "required": [
+              "lead_status"
+            ]
+          },
+          "then": {
+            "properties": {
+              "set_aside_reason": {
+                "$ref": "#/$defs/non_empty_string"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "lead_status": {
+                "const": "hypothesis"
+              }
+            },
+            "required": [
+              "lead_status"
+            ]
+          },
+          "then": {
+            "properties": {
+              "evidence_refs": {
+                "maxItems": 0
+              },
+              "set_aside_reason": {
+                "type": "null"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "CollaborationLeadResearchRequest": {
+      "type": "object",
+      "description": "CW section 10, CWR-041 (DL-218). User Check It on any Wonderer lead in a running or waiting Crew, BrainStorm or Chat Room. Roster and run state are owner-validated before dispatch.",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "command_id",
+        "command_instance_id",
+        "project_id",
+        "thread_id",
+        "actor_identity",
+        "source_surface",
+        "correlation_id",
+        "created_at",
+        "permission_snapshot_id",
+        "idempotency_key",
+        "causation_id",
+        "collaboration_run_id",
+        "expected_revision",
+        "expected_currentness_hash",
+        "lead_id"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.collaboration.lead_research_request.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "command_id": {
+          "const": "cmd.collaboration.research_lead"
+        },
+        "command_instance_id": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "project_id": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "thread_id": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "actor_identity": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "source_surface": {
+          "enum": [
+            "workflow_card",
+            "workflow_panel",
+            "wonderer_workspace"
+          ]
+        },
+        "correlation_id": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "created_at": {
+          "$ref": "#/$defs/utc_timestamp"
+        },
+        "permission_snapshot_id": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "idempotency_key": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "causation_id": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/non_empty_string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "collaboration_run_id": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "expected_revision": {
+          "$ref": "#/$defs/revision"
+        },
+        "expected_currentness_hash": {
+          "$ref": "#/$defs/sha256_hex"
+        },
+        "lead_id": {
+          "$ref": "#/$defs/non_empty_string"
+        }
+      },
+      "x-primary-identity-fields": [
+        "command_instance_id"
+      ]
+    },
+    "CollaborationLeadResearchResult": {
+      "type": "object",
+      "description": "CW section 10, CWR-041 (DL-218). User Check It on any Wonderer lead in a running or waiting Crew, BrainStorm or Chat Room. No disposition gate; never accepts fact without evidence.",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "command_id",
+        "command_instance_id",
+        "committed",
+        "status",
+        "revision_after",
+        "currentness_hash_after",
+        "receipt_refs",
+        "observable_work_ref",
+        "error",
+        "replay_of",
+        "lead_id",
+        "lead_status",
+        "evidence_refs",
+        "set_aside_reason"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.collaboration.lead_research_result.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "command_id": {
+          "const": "cmd.collaboration.research_lead"
+        },
+        "command_instance_id": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "committed": {
+          "type": "boolean"
+        },
+        "status": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "revision_after": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/revision"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "currentness_hash_after": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/sha256_hex"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "receipt_refs": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/non_empty_string"
+          },
+          "uniqueItems": true
+        },
+        "observable_work_ref": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/non_empty_string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "error": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/collaboration_error"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "replay_of": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/non_empty_string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "lead_id": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "lead_status": {
+          "oneOf": [
+            {
+              "enum": [
+                "hypothesis",
+                "substantiated",
+                "set_aside"
+              ]
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "evidence_refs": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/non_empty_string"
+          },
+          "uniqueItems": true
+        },
+        "set_aside_reason": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/non_empty_string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "x-primary-identity-fields": [
+        "command_instance_id"
+      ],
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "committed": {
+                "const": true
+              }
+            },
+            "required": [
+              "committed"
+            ]
+          },
+          "then": {
+            "properties": {
+              "error": {
+                "type": "null"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "committed": {
+                "const": false
+              }
+            },
+            "required": [
+              "committed"
+            ]
+          },
+          "then": {
+            "properties": {
+              "error": {
+                "$ref": "#/$defs/collaboration_error"
+              },
+              "observable_work_ref": {
+                "type": "null"
+              },
+              "replay_of": {
+                "type": "null"
+              },
+              "revision_after": {
+                "type": "null"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "lead_status": {
+                "const": "substantiated"
+              }
+            },
+            "required": [
+              "lead_status"
+            ]
+          },
+          "then": {
+            "properties": {
+              "evidence_refs": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/$defs/non_empty_string"
+                },
+                "uniqueItems": true,
+                "minItems": 1
+              },
+              "set_aside_reason": {
+                "type": "null"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "lead_status": {
+                "const": "set_aside"
+              }
+            },
+            "required": [
+              "lead_status"
+            ]
+          },
+          "then": {
+            "properties": {
+              "set_aside_reason": {
+                "$ref": "#/$defs/non_empty_string"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "lead_status": {
+                "const": "hypothesis"
+              }
+            },
+            "required": [
+              "lead_status"
+            ]
+          },
+          "then": {
+            "properties": {
+              "evidence_refs": {
+                "maxItems": 0
+              },
+              "set_aside_reason": {
+                "type": "null"
+              }
+            }
+          }
+        }
+      ]
     }
   }
 }

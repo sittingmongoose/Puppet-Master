@@ -4,7 +4,7 @@ Source: `Plans/UI_Command_Catalog.md`
 
 Source lines: L13699-L14797
 
-Source SHA256: `5667433a1fa23a9ce6ddc6ae11238ad14bdd049ed70d5b69011e9e0c2aba684c`
+Source SHA256: `2a9122df5830b433a0fff4dd86234fe0f9eb21b86fff509bb7ac771913b276ef`
 
 ---
 
@@ -17,7 +17,7 @@ The redesigned Assistant wand popups and their in-chat presence (Crew, Chat Room
 | Surface | What it is | Rows it produces |
 |---|---|---|
 | `run_dock` | The one to three lines above the composer that carry live runs and needs-you items whose cards are off-screen (ACD-476). | `cmd.collaboration.open`, `cmd.questionnaire.resume` |
-| `wonderer_workspace` | The BrainStorm Wonderer workspace, an editor-pane document like the run view (CWR-020). | `cmd.brainstorm.synthesize_plan`, `cmd.collaboration.pause`, `cmd.collaboration.resume` |
+| `wonderer_workspace` | The BrainStorm Wonderer workspace, an editor-pane document like the run view (CWR-020). | `cmd.brainstorm.synthesize_plan`, `cmd.collaboration.pause`, `cmd.collaboration.resume`, `cmd.collaboration.research_lead` (DL-218) |
 | `memory_proposal_line` | The one in-chat line that proposes a memory for review (AMS-047). | `cmd.chat.teach.open_memory` |
 | `bsd_note` | The Back Seat Driver advisor note in the transcript, with its catch-up, failure and safety lines (BSD-030). | `cmd.bsd.finding.open`, `cmd.bsd.assignment.resume`, `cmd.bsd.assignment.retry`, `cmd.chat.open_thread_context_details` |
 | `schedule_sheet` | The Schedule Message sheet. The wand row only opens it; its primary commits. | `cmd.chat.schedule_message` |
@@ -210,7 +210,7 @@ A row may list several controls, and then it gives each its disposition. The Sur
 | Start from a team | Draft | `workflow_modal` |
 | Choice fields: Coordinator, who decides who does what, who talks when, research depth, review approach, what to review | Draft | `workflow_modal` |
 | Steppers: working at the same time, rounds, rounds of debate, reviewers | Draft | `workflow_modal` |
-| Add specialists: Wonderer, Grill Me | Draft | `workflow_modal` |
+| Add specialists: Wonderer, Grill Me | Draft: Wonderer adds a participant row; Grill Me sets grill_me_enabled and adds no row (DL-218) | `workflow_modal` |
 | Advanced page rows | Draft | `workflow_modal` |
 | Save as default | Settings. The label is set by UCC-173 (DL-134). | `workflow_modal` |
 | Cancel, ×, Escape, scrim | View | `workflow_modal` |
@@ -308,10 +308,10 @@ A row may list several controls, and then it gives each its disposition. The Sur
 | Tie: Let the Coordinator decide, One more debate round, Cancel | Command, revised, `cmd.brainstorm.synthesize_plan` with tie_resolution coordinator (CWR-031). The other two are `cmd.brainstorm.next_round` and `cmd.collaboration.cancel`. | `brainstorm_card` |
 | Write the plan; One more debate round | Command, `cmd.brainstorm.synthesize_plan` (label from UCC-173) and `cmd.brainstorm.next_round` | `brainstorm_card`, `brainstorm_panel`, `wonderer_workspace` |
 | Open Plan | Command, `cmd.nav.open_subject` | `brainstorm_card`, `brainstorm_panel` |
-| Allow more questions mid-run (Grill Me) | Command, revised, `cmd.collaboration.reconfigure`, adding Grill Me (CWR-031) | `brainstorm_panel` |
+| Allow more questions mid-run (Grill Me) | Command, revised, `cmd.collaboration.reconfigure`, change_kind add_grill_me sets grill_me_enabled true without a ParticipantSpec (CWR-031, DL-218) | `brainstorm_panel` |
 | Formatted, Plain text | View (CDRY-021) | `brainstorm_panel` |
 | Evidence links; Back to how they decided | Command, `cmd.nav.open_subject`. Back to how they decided is `cmd.collaboration.open` with focus tab. | `brainstorm_panel` |
-| Wonderer "Check it" | New, `cmd.brainstorm.research_lead` (UCC-171) | `wonderer_workspace`, `brainstorm_panel` |
+| Wonderer "Check it" | Command, `cmd.collaboration.research_lead`; cmd.brainstorm.research_lead is its BrainStorm-only compatibility alias (UCC-205, DL-218) | `workflow_card`, `workflow_panel`, `wonderer_workspace` |
 | Wonderer workspace Pause, Resume | Command, `cmd.collaboration.pause`, `cmd.collaboration.resume` | `wonderer_workspace` |
 | Pitch timed out: Retry, Use another model, Continue without it | Command, revised, the same as a helper that timed out | `brainstorm_card` |
 
@@ -474,7 +474,7 @@ canonical_text: >-
   End discussion is cmd.chat_room.end; advisor-note Dismiss is cmd.bsd.finding.dismiss; Don't wait is
   cmd.bsd.catch_up.release; Turn off and Lock are cmd.chat.teach.revoke and cmd.chat.teach.set_lock;
   memory and taught-rule Export is cmd.chat.memory.export; the Wonderer's Check it is
-  cmd.brainstorm.research_lead (DL-130). Send Findings To Agent is cmd.review.send_findings_to_agent
+  cmd.collaboration.research_lead; cmd.brainstorm.research_lead is its BrainStorm-only compatibility alias (DL-218). Send Findings To Agent is cmd.review.send_findings_to_agent
   and fills the message box (DL-125). Every
   Teach entry opens the Teach sheet (DL-127). Recovery buttons use Retry and Recover (DL-118). The
   ELI5 sheet's choices and the ELI5 dot are cmd.chat.eli5.set with on, off or inherit from eli5_sheet
@@ -562,12 +562,12 @@ ContractRef: ContractName:Plans/UI_Command_Catalog.md#UCC-169, ContractName:Plan
 
 DL-130 adds all seven new commands. The rows below follow the 2026-09-03 registration columns. An alias census ran over all live `Plans/**` at `origin/main` 3c132c7f3f before registration (CDRY-001). It found no existing command with any of these seven IDs, and no existing row with the same effect under another name.
 
-Every row is a canonical owner request with one named sole future target. None of them asserts that a native dispatcher, handler, runtime, receipt or rendered control exists. Each row starts `handler_unavailable`, and its GUI controls stay disabled with `command_not_registered` until the central command contract layer, Event Authority, storage registration and production wiring close for that row. No page-local handler, alias or toast may simulate success. Mutating rows apply the §2.0B projection-freshness gating clause before dispatch, read their owner availability and exact disabled reason from their state selectors, give identical keyboard and pointer behaviour, and return to the initiating route and focus. The owning documents define what each command does. This catalog registers the identity, the contract names and the producers.
+The six primary rows are canonical owner requests with one named sole future target; DL-218 makes the BrainStorm research row the compatibility alias in UCC-205. None of them asserts that a native dispatcher, handler, runtime, receipt or rendered control exists. Each row starts `handler_unavailable`, and its GUI controls stay disabled with `command_not_registered` until the central command contract layer, Event Authority, storage registration and production wiring close for that row. No page-local handler, alias or toast may simulate success. Mutating rows apply the §2.0B projection-freshness gating clause before dispatch, read their owner availability and exact disabled reason from their state selectors, give identical keyboard and pointer behaviour, and return to the initiating route and focus. The owning documents define what each command does. This catalog registers the identity, the contract names and the producers.
 
 | Command ID | Label | Description | Preconditions | command_kind | Owner | Request → Result | Sole future target |
 |---|---|---|---|---|---|---|---|
 | `cmd.chat_room.end` | End Discussion | Ends a Chat Room: no further rounds or messages are taken, and the run settles `completed`, not `cancelled`. Promoting existing messages stays allowed. | `chat_room_run_present && run_status in {running, waiting, paused}` | `domain_action` | `Plans/Collaborative_Workflows.md` | `ChatRoomEndRequest` → `ChatRoomEndResult` | `handlers::collaboration::chat_room_end` |
-| `cmd.brainstorm.research_lead` | Check It | Asks the BrainStorm research step to check one Wonderer lead, which then becomes checked or set aside with its evidence. | `brainstorm_run_present && wonderer_lead_present && run_status in {running, waiting}` | `domain_action` | `Plans/Collaborative_Workflows.md` | `BrainstormLeadResearchRequest` → `BrainstormLeadResearchResult` | `handlers::collaboration::brainstorm_research_lead` |
+| `cmd.brainstorm.research_lead` | Check It | BrainStorm-only one-to-one compatibility alias of cmd.collaboration.research_lead (DL-218, UCC-205); researches the lead regardless of disposition, preserving evidence or the set-aside reason. | `brainstorm_run_present && wonderer_lead_present && run_status in {running, waiting}` | `domain_action` | `Plans/Collaborative_Workflows.md` | `BrainstormLeadResearchRequest` → `BrainstormLeadResearchResult` | `handlers::collaboration::research_lead` (after alias normalization) |
 | `cmd.bsd.finding.dismiss` | Dismiss Advice | Closes one emitted Back Seat Driver finding for its current evidence. It stays closed across restart; changed evidence may raise it again as a new finding. It never touches the primary run. | `bsd_finding_present && finding_state == emitted && expected_epoch_current` | `domain_action` | `Plans/Back_Seat_Driver.md` | `BSDFindingDismissRequest` → `BSDFindingDismissResult` | `handlers::bsd::finding_dismiss` |
 | `cmd.bsd.catch_up.release` | Don't Wait | Releases the current catch-up wait at this boundary, so the primary continues at once. The advisor keeps reviewing and its later notes arrive normally. It never pauses or stops Back Seat Driver. | `bsd_assignment_present && catch_up_state == waiting && expected_epoch_current` | `domain_action` | `Plans/Back_Seat_Driver.md` | `BSDCatchUpReleaseRequest` → `BSDCatchUpReleaseResult` | `handlers::bsd::catch_up_release` |
 | `cmd.chat.teach.revoke` | Turn Off Rule | Turns off one taught rule by setting its `revoked_at`. The rule stays in history, and older versions do not come back. | `teaching_present && teaching_not_revoked && expected_revision_current` | `domain_action` | `Plans/assistant-memory-subsystem.md` | `TeachRevokeRequest` → `TeachRevokeResult` | `handlers::assistant_memory::teach_revoke` |
@@ -576,7 +576,7 @@ Every row is a canonical owner request with one named sole future target. None o
 
 Source surfaces for these rows:
 - `cmd.chat_room.end`: `chat_room_card`, `chat_room_panel`.
-- `cmd.brainstorm.research_lead`: `wonderer_workspace`, `brainstorm_panel`.
+- `cmd.brainstorm.research_lead`: compatibility inputs from `wonderer_workspace` and `brainstorm_panel`; normalize to the canonical `wonderer_workspace` or `workflow_panel` origin under UCC-205 before all gates.
 - `cmd.bsd.finding.dismiss`: `bsd_note`, `bsd_details`.
 - `cmd.bsd.catch_up.release`: `bsd_note`.
 - `cmd.chat.teach.revoke`: `teach_document`, `memory_sheet`.
@@ -600,7 +600,7 @@ canonical_text: >-
   DL-130 adds seven command rows, each a domain_action with one owner, one request and result
   contract and one sole future target, and each registered after an alias census over live Plans
   found no collision: cmd.chat_room.end (Collaborative_Workflows; the room settles completed, not
-  cancelled), cmd.brainstorm.research_lead (Collaborative_Workflows), cmd.bsd.finding.dismiss and
+  cancelled), cmd.brainstorm.research_lead (Collaborative_Workflows; now the DL-218 alias of cmd.collaboration.research_lead), cmd.bsd.finding.dismiss and
   cmd.bsd.catch_up.release (Back_Seat_Driver), and cmd.chat.teach.revoke, cmd.chat.teach.set_lock and
   cmd.chat.memory.export (assistant-memory-subsystem). TeachLockRequest carries locked; MemoryExportRequest
   carries scope gists, teachings or all. Each row starts handler_unavailable and its controls stay

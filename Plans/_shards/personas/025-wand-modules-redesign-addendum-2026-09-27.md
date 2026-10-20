@@ -2,9 +2,9 @@
 
 Source: `Plans/Personas.md`
 
-Source lines: L3554-L3640
+Source lines: L3554-L3642
 
-Source SHA256: `5b91f117e602609c2221530c7cc2fb50cbcfce9b891ffa60647f5331fd27d33e`
+Source SHA256: `3e94838ed9bd7925024e1ef79557a42fa21d28f0550d364e127da4c5744cb070`
 
 ---
 
@@ -66,14 +66,14 @@ unit_type: constraint
 status: accepted
 owner_doc: Plans/Personas.md
 canonical_text: >-
-  Grill Me is a methodology Skill, not a Persona (DL-133, card p18, E-35), in the same way Wonderer's method is a Skill (WONV-001). No Persona ID exists for it, and "Grill Me", "grill-me" and "grill_me" never resolve to a Persona. In a collaboration run the Grill Me participant is marked by additive_role_kind grill_me (Plans/Collaborative_Workflows.md §9), takes its method from the Grill Me Skill owned by Plans/Skills_System.md, and carries no Persona of its own.
+  Grill Me is a methodology Skill, not a Persona (DL-133, card p18, E-35), in the same way Wonderer's method is a Skill (WONV-001). No Persona ID exists for it, and "Grill Me", "grill-me" and "grill_me" never resolve to a Persona. In a collaboration run Grill Me is the definition’s grill_me_enabled switch (DL-218, Plans/Collaborative_Workflows.md §9), never a participant or an additive_role_kind grill_me spec. The switch loads the grilling methodology Skill of Plans/Skills_System.md SS-038 into the existing coordinator or moderator, with no model or Persona of its own.
 gui_related: false
 gui_classification_reason: This unit fixes Persona and Skill identity rather than presentation.
 depends_on: [P-057]
 unblocks: []
 acceptance_criteria:
   - No Persona ID named for Grill Me exists or resolves.
-  - A Grill Me participant is identified by additive_role_kind grill_me and the Grill Me Skill.
+  - Grill Me turns on grill_me_enabled and adds no ParticipantSpec, model or Persona.
 validation_surfaces:
   - python3 scripts/pm-plan-index.py validate
   - python3 scripts/pm-ledger-compile-witness.py Plans/ledgers/v2/pldg-20260927-004-wand-memory-plan-usage --base origin/main
@@ -83,6 +83,8 @@ context_scope: personas_team_catalog
 implementation_surfaces: [Plans/Personas.md, Plans/Skills_System.md, Plans/Collaborative_Workflows.md]
 node_compile_hint: {mode: persona_catalog_contract, create_worknodes: false, create_nodeseeds: false}
 source_lineage:
+  - "Plans/Decision_Log.md DL-218"
+  - "/mnt/Cursor/share/puppet-master/2026-10-16-wonderer-grill-me/DECISIONS.md sha256:dfa2f354936defd187d610de4aee77a3d8b75b6d25692e592ba48f7b66bfebce"
   - /mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/DESIGN-SPEC.md#8.4 (SHA-256 dc0a02e550dd2e927faa59006cecab098e7c08b4aeb2479bf62e219f9b5907de)
   - /mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/IMPACT-REGISTER.md#B-PER-01 (card p18 E-35) (SHA-256 71227f8edda108ed849256d909ff12f859f98bef58202ef988f9d3b4e4f8d493)
   - /mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/cards.json (SHA-256 61bb8f6b19684c7ed0df1f6c92daf3e0ee94b6b07fd4c7e8f9b70c9717caa37a)

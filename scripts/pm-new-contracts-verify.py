@@ -1298,7 +1298,24 @@ def jujutsu_semantic_failures(definition_name: str, value: Any) -> list[str]:
     return sorted(set(failures))
 
 
-def contract_semantic_failures(schema_rel: str, definition_name: str, value: Any) -> list[str]:
+def contract_semantic_failures(
+    schema_rel: str, definition_name: str, value: Any, *, context: Any = None,
+) -> list[str]:
+    if schema_rel == "Plans/collaborative_workflows_contracts.schema.json" and definition_name == "BrainstormVote":
+        # DL-218: the vote record intentionally has no copied role field. The
+        # fixture-only roster join proves eligibility, including abstain votes.
+        # Runtime admission must resolve the actual current participant attempt.
+        if not isinstance(context, dict) or not isinstance(context.get("participant_specs"), list):
+            return ["vote_roster_context_required"]
+        specs = context["participant_specs"]
+        owner_schema = load_json(ROOT / schema_rel)
+        spec_validator = Draft202012Validator({**owner_schema, "$ref": "#/$defs/ParticipantSpec"})
+        if any(not spec_validator.is_valid(spec) for spec in specs):
+            return ["vote_roster_context_invalid"]
+        matches = [spec for spec in specs if spec["participant_slot_id"] == value.get("participant_id")]
+        if len(matches) != 1:
+            return ["vote_participant_not_in_roster"]
+        return ["wonderer_cannot_vote"] if matches[0]["additive_role_kind"] == "wonderer" else []
     if schema_rel == "Plans/git_adapter_command_contracts.schema.json":
         return git_semantic_problems(definition_name, value) if isinstance(value, dict) else ["git_record_not_object"]
     if schema_rel == "Plans/named_plan_system_contracts.schema.json":
@@ -1643,7 +1660,7 @@ def main() -> int:
                 if errors:
                     findings.append({"code": "positive_fixture_rejected", "fixture": fixture_rel, "case": name, "definition": definition_name, "detail": errors[0].message})
                     continue
-                semantic_failures = contract_semantic_failures(schema_rel, definition_name, value)
+                semantic_failures = contract_semantic_failures(schema_rel, definition_name, value, context=case.get("context"))
                 if semantic_failures:
                     findings.append({"code": "positive_semantic_invariant_failure", "fixture": fixture_rel, "case": name, "definition": definition_name, "semantic_failures": semantic_failures})
                     continue
@@ -1713,7 +1730,7 @@ def main() -> int:
                 accepted = validator_for(schema, selected, schema_registry).is_valid(value)
                 semantic_rule = case.get("semantic_rule")
                 if is_git_pair and case.get("rejection_layer") == "semantic":
-                    semantic_failures = contract_semantic_failures(schema_rel, definition_name, value)
+                    semantic_failures = contract_semantic_failures(schema_rel, definition_name, value, context=case.get("context"))
                     if not accepted:
                         findings.append({"code": "semantic_negative_not_structurally_valid", "fixture": fixture_rel, "case": name, "definition": definition_name})
                     elif not semantic_failures:
@@ -1721,7 +1738,7 @@ def main() -> int:
                     else:
                         counts["negative_cases_rejected"] += 1
                 elif semantic_rule is not None:
-                    semantic_failures = contract_semantic_failures(schema_rel, definition_name, value)
+                    semantic_failures = contract_semantic_failures(schema_rel, definition_name, value, context=case.get("context"))
                     if not accepted:
                         findings.append({"code": "semantic_negative_not_structurally_valid", "fixture": fixture_rel, "case": name, "definition": definition_name, "semantic_rule": semantic_rule})
                     elif semantic_rule not in semantic_failures:

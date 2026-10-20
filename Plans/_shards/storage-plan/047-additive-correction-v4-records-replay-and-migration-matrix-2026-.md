@@ -2,9 +2,9 @@
 
 Source: `Plans/storage-plan.md`
 
-Source lines: L19157-L19235
+Source lines: L19157-L19236
 
-Source SHA256: `78282d3b7d16a5e5da1df370b6e8455f7fd9de9ef1fe77eee550685787307322`
+Source SHA256: `ebdbf218675862e2cace465e5fb4fc61121592eefbb143baedf44f9b73baceb9`
 
 ---
 
@@ -70,9 +70,10 @@ one schedule; repeated timer delivery admits one run.
 | MIG-015 | `add_file_reference` declares folders out of scope | shared `attachment.add` file\|folder; alias file-only | retire the conflicting active prose and any duplicate handler candidate |
 | MIG-016 | whole-list provider replacement and stale graph edges | `ToDoController` stable graph, list revisions, work bindings | import only when the graph validates; preserve ambiguous active work as blocked migration |
 | MIG-017 | To-Do verification field/status/test terminology | validation as an ordinary To-Do; `todo-runtime` naming | retire active `verifying` semantics; preserve historical evidence outside current status |
-| MIG-018 | Wonderer counted as a final voting participant | default abstention, excluded from quorum | recompute a historical vote projection only where raw role and votes permit; do not rewrite old decisions |
+| MIG-018 | Wonderer counted as a final voting participant | no active vote record; displayed abstention excluded from quorum (DL-218) | recompute a historical vote projection only where raw role and votes permit; do not rewrite old decisions |
 | MIG-019 | domain commands for local view toggles | local or shared view-state primitives | normalise aliases; remove independent domain handlers and events |
 | MIG-020 | the old v2 audit Goal plus an addendum | one replacement audit Goal | mark the original audit Goal replaced for this implementation; never concatenate |
+| MIG-021 | definition/run participant spec with additive_role_kind grill_me | grill_me_enabled true and that spec removed from the active roster | CW section 17, DL-218: preserve original message attribution, Usage, answered questions and any vote recorded under an ordinary voting role; no question is re-asked, no vote is rewritten; idempotent and restart-safe, quarantine ambiguous identity |
 
 ### CDRY-015 — Migration safety
 

@@ -2,9 +2,9 @@
 
 Source: `Plans/Automated_Testing_System.md`
 
-Source lines: L5499-L5592
+Source lines: L5499-L5594
 
-Source SHA256: `81e84b34edefb7e99afb2c1a5b0a2ba08168856d961c1fabb5e45831d7322928`
+Source SHA256: `0df46c702538197544f5100167ca0b32a163eeb10822dfe4b981cac4d79305de`
 
 ---
 
@@ -27,11 +27,11 @@ canonical_text: >-
   completion projection of CWR-029, the participant activity projection of CWR-030 with its
   live_message_id, the helper message in progress of Plans/Executor_Protocol.md EP-129 (DL-137), the
   team preset of CWR-039, and the request and result of every collaborative command, including
-  cmd.chat_room.end and cmd.brainstorm.research_lead (CWR-031, DL-130) and ComposerBufferResult. It
+  cmd.chat_room.end and cmd.brainstorm.research_lead (CWR-031, DL-130), its canonical cmd.collaboration.research_lead pair, WondererPass and WondererLead (DL-218), and ComposerBufferResult. It
   originally shipped 95 positive fixtures and 116 negative fixtures. The DL-138 companion edition
   contains 98 positive fixtures and 128 negative fixtures, each negative mutating one named positive
   so that it fails for one named constraint. The negatives prove that a definition cannot store a substitution policy,
-  carry another kind's fields, give Review a specialist or give Grill Me a Persona; that a Crew
+  carry another kind's fields, give Review a specialist or give Grill Me a Persona or any participant spec (DL-218); that a Crew
   Auto admission cannot omit its crew_auto_revision and cmd.collaboration.start cannot admit Build
   With Crew; that a run carries stop_reason exactly when it is cancelled, from the closed set of
   CWR-029, and a run stopped at its limit cannot settle failed; that a Review start cannot omit or silently swap its target; that configure cannot
@@ -81,6 +81,8 @@ context_scope: collaborative_workflows_static_contracts
 implementation_surfaces: [Plans/Automated_Testing_System.md, Plans/collaborative_workflows_contracts.schema.json, Plans/collaborative_workflows_contract_fixtures.json, scripts/pm-new-contracts-verify.py]
 node_compile_hint: {mode: static_contract_fixture_gate_only, create_worknodes: false, create_nodeseeds: false}
 source_lineage:
+  - "Plans/Decision_Log.md DL-218"
+  - "/mnt/Cursor/share/puppet-master/2026-10-16-wonderer-grill-me/DECISIONS.md sha256:dfa2f354936defd187d610de4aee77a3d8b75b6d25692e592ba48f7b66bfebce"
   - Plans/Collaborative_Workflows.md#CWR-018
   - Plans/Commands_System.md#CS-085
   - Plans/Executor_Protocol.md#EP-129

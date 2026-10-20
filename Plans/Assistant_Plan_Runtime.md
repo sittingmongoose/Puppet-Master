@@ -1067,7 +1067,8 @@ behaviour, not an under-run.
 
 Attempting to admit a question when `questions_remaining` is zero returns typed
 `question_budget_exhausted`. No extra `QuestionItem` is persisted, the planning run does not
-fail, and synthesis continues.
+fail, and synthesis continues. With Grill Me on, that continuation first shows What we agreed and
+waits for Confirm before writing or revising the Plan (APR-072, DL-218).
 
 Exhaustion preserves unresolved questions in the Plan document as visible open items. Build is
 disabled **only** when an unresolved item carries an explicit `build_blocker: true`
@@ -1812,7 +1813,7 @@ canonical_text: >-
   answer that yes accepts, and a question that depends on one still open waits for a later round. A fact
   goes to research and is never asked, and research holds only the questions that depend on it. The
   session ends when the frontier is empty or the user presses Wrap up; the effective limit of QMAX-001..004
-  is a safety net, and reaching it ends the session with the typed exhaustion of QMAX-014..015. When the
+  is a safety net, and reaching it ends the session with the typed question_budget_exhausted result of QMAX-014..015. When the
   session ends the user sees What we agreed, every decision with its answer and every decision left open,
   with Confirm and Keep going, and the Plan document is not written or revised from those answers until
   the user confirms; Keep going returns to the interview within the limit. Every question still counts once
@@ -1840,6 +1841,8 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
+  - "Plans/Decision_Log.md DL-218"
+  - "/mnt/Cursor/share/puppet-master/2026-10-16-wonderer-grill-me/DECISIONS.md sha256:dfa2f354936defd187d610de4aee77a3d8b75b6d25692e592ba48f7b66bfebce"
   - Plans/Decision_Log.md#DL-218
   - "/mnt/Cursor/share/puppet-master/2026-10-16-wonderer-grill-me/DECISIONS.md sha256:dfa2f354936defd187d610de4aee77a3d8b75b6d25692e592ba48f7b66bfebce (Grill Me 1, 3, 4)"
 preserved_exact_tokens:

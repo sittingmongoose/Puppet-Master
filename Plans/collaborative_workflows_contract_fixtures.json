@@ -60,7 +60,8 @@
         "output_policy": "summary_and_artifacts",
         "stuck_policy": "ask_user",
         "shared_notes_policy": "shared_space",
-        "assignment_strategy": "manager_directed"
+        "assignment_strategy": "manager_directed",
+        "grill_me_enabled": false
       }
     },
     {
@@ -181,7 +182,8 @@
         "moderator_style": "keep_on_topic",
         "mention_policy": "mentions_and_replies",
         "stop_condition": "max_rounds_4",
-        "summary_style": "agreed_debated_open"
+        "summary_style": "agreed_debated_open",
+        "grill_me_enabled": false
       }
     },
     {
@@ -236,19 +238,6 @@
             "requested_skill_ids": [],
             "requested_tool_profile_id": null,
             "additive_role_kind": "wonderer"
-          },
-          {
-            "schema_id": "pm.collaboration.participant_spec.v1",
-            "schema_version": "1.0.0",
-            "participant_slot_id": "collab-bs-0001-slot-4",
-            "role": "Grill Me",
-            "requested_provider_id": "provider:anthropic",
-            "requested_account_id": "account:main",
-            "requested_model_id": "model:claude-sonnet",
-            "requested_persona_id": null,
-            "requested_skill_ids": [],
-            "requested_tool_profile_id": null,
-            "additive_role_kind": "grill_me"
           }
         ],
         "coordinator_spec": {
@@ -272,7 +261,8 @@
             "source": "user"
           }
         ],
-        "provisioning_posture": "ask_first"
+        "provisioning_posture": "ask_first",
+        "grill_me_enabled": true
       }
     },
     {
@@ -520,6 +510,49 @@
         ],
         "hard_constraint_conflicts": [
           "hc-1"
+        ]
+      },
+      "context": {
+        "participant_specs": [
+          {
+            "schema_id": "pm.collaboration.participant_spec.v1",
+            "schema_version": "1.0.0",
+            "participant_slot_id": "collab-bs-0001-slot-1",
+            "role": "Implementer",
+            "requested_provider_id": "provider:anthropic",
+            "requested_account_id": "account:main",
+            "requested_model_id": "model:claude-opus",
+            "requested_persona_id": "persona:implementer",
+            "requested_skill_ids": [],
+            "requested_tool_profile_id": null,
+            "additive_role_kind": "none"
+          },
+          {
+            "schema_id": "pm.collaboration.participant_spec.v1",
+            "schema_version": "1.0.0",
+            "participant_slot_id": "collab-bs-0001-slot-2",
+            "role": "Reviewer",
+            "requested_provider_id": "provider:anthropic",
+            "requested_account_id": "account:main",
+            "requested_model_id": "model:claude-opus",
+            "requested_persona_id": "persona:reviewer",
+            "requested_skill_ids": [],
+            "requested_tool_profile_id": null,
+            "additive_role_kind": "none"
+          },
+          {
+            "schema_id": "pm.collaboration.participant_spec.v1",
+            "schema_version": "1.0.0",
+            "participant_slot_id": "collab-bs-0001-slot-3",
+            "role": "Wonderer",
+            "requested_provider_id": "provider:anthropic",
+            "requested_account_id": "account:main",
+            "requested_model_id": "model:claude-haiku",
+            "requested_persona_id": "persona:wonderer",
+            "requested_skill_ids": [],
+            "requested_tool_profile_id": null,
+            "additive_role_kind": "wonderer"
+          }
         ]
       }
     },
@@ -1519,19 +1552,7 @@
         "changes": [
           {
             "change_kind": "add_grill_me",
-            "participant_spec": {
-              "schema_id": "pm.collaboration.participant_spec.v1",
-              "schema_version": "1.0.0",
-              "participant_slot_id": "collab-bs-0001-slot-5",
-              "role": "Grill Me",
-              "requested_provider_id": "provider:anthropic",
-              "requested_account_id": "account:main",
-              "requested_model_id": "model:claude-sonnet",
-              "requested_persona_id": null,
-              "requested_skill_ids": [],
-              "requested_tool_profile_id": null,
-              "additive_role_kind": "grill_me"
-            }
+            "grill_me_enabled": true
           }
         ],
         "accept_stale_target": false
@@ -2500,6 +2521,481 @@
           ]
         }
       }
+    },
+    {
+      "name": "wonderer_lead_undecided",
+      "definition": "WondererLead",
+      "value": {
+        "schema_id": "pm.collaboration.wonderer_lead.v1",
+        "schema_version": "1.0.0",
+        "lead_id": "lead-dl218-1",
+        "wonderer_pass_id": "pass-dl218-1",
+        "collaboration_run_id": "crun-bs-0001",
+        "angle": "adjacent field",
+        "claim": "Local queues may avoid remote upload.",
+        "tether": "A local queue could preserve the job\u2019s offline-only constraint.",
+        "source_refs": [
+          "https://example.org/local-queues"
+        ],
+        "disposition": null,
+        "disposition_reason": null,
+        "disposed_by": null,
+        "lead_status": "hypothesis",
+        "evidence_refs": [],
+        "set_aside_reason": null
+      }
+    },
+    {
+      "name": "wonderer_lead_explore",
+      "definition": "WondererLead",
+      "value": {
+        "schema_id": "pm.collaboration.wonderer_lead.v1",
+        "schema_version": "1.0.0",
+        "lead_id": "lead-dl218-explore",
+        "wonderer_pass_id": "pass-dl218-1",
+        "collaboration_run_id": "crun-bs-0001",
+        "angle": "adjacent field",
+        "claim": "Local queues may avoid remote upload.",
+        "tether": "A local queue could preserve the job\u2019s offline-only constraint.",
+        "source_refs": [
+          "https://example.org/local-queues"
+        ],
+        "disposition": "explore",
+        "disposition_reason": "The team chose explore because it fits the job constraints.",
+        "disposed_by": "coordinator:01",
+        "lead_status": "hypothesis",
+        "evidence_refs": [],
+        "set_aside_reason": null
+      }
+    },
+    {
+      "name": "wonderer_lead_use",
+      "definition": "WondererLead",
+      "value": {
+        "schema_id": "pm.collaboration.wonderer_lead.v1",
+        "schema_version": "1.0.0",
+        "lead_id": "lead-dl218-use",
+        "wonderer_pass_id": "pass-dl218-1",
+        "collaboration_run_id": "crun-bs-0001",
+        "angle": "adjacent field",
+        "claim": "Local queues may avoid remote upload.",
+        "tether": "A local queue could preserve the job\u2019s offline-only constraint.",
+        "source_refs": [
+          "https://example.org/local-queues"
+        ],
+        "disposition": "use",
+        "disposition_reason": "The team chose use because it fits the job constraints.",
+        "disposed_by": "coordinator:01",
+        "lead_status": "hypothesis",
+        "evidence_refs": [],
+        "set_aside_reason": null
+      }
+    },
+    {
+      "name": "wonderer_lead_set_aside",
+      "definition": "WondererLead",
+      "value": {
+        "schema_id": "pm.collaboration.wonderer_lead.v1",
+        "schema_version": "1.0.0",
+        "lead_id": "lead-dl218-set_aside",
+        "wonderer_pass_id": "pass-dl218-1",
+        "collaboration_run_id": "crun-bs-0001",
+        "angle": "adjacent field",
+        "claim": "Local queues may avoid remote upload.",
+        "tether": "A local queue could preserve the job\u2019s offline-only constraint.",
+        "source_refs": [
+          "https://example.org/local-queues"
+        ],
+        "disposition": "set_aside",
+        "disposition_reason": "The team chose set_aside because it fits the job constraints.",
+        "disposed_by": "coordinator:01",
+        "lead_status": "hypothesis",
+        "evidence_refs": [],
+        "set_aside_reason": null
+      }
+    },
+    {
+      "name": "wonderer_lead_substantiated",
+      "definition": "WondererLead",
+      "value": {
+        "schema_id": "pm.collaboration.wonderer_lead.v1",
+        "schema_version": "1.0.0",
+        "lead_id": "lead-dl218-supported",
+        "wonderer_pass_id": "pass-dl218-1",
+        "collaboration_run_id": "crun-bs-0001",
+        "angle": "adjacent field",
+        "claim": "Local queues may avoid remote upload.",
+        "tether": "A local queue could preserve the job\u2019s offline-only constraint.",
+        "source_refs": [
+          "https://example.org/local-queues"
+        ],
+        "disposition": "explore",
+        "disposition_reason": "Research the offline claim.",
+        "disposed_by": "coordinator:01",
+        "lead_status": "substantiated",
+        "evidence_refs": [
+          "artifact:research/local-queue-v1"
+        ],
+        "set_aside_reason": null
+      }
+    },
+    {
+      "name": "wonderer_lead_research_set_aside",
+      "definition": "WondererLead",
+      "value": {
+        "schema_id": "pm.collaboration.wonderer_lead.v1",
+        "schema_version": "1.0.0",
+        "lead_id": "lead-dl218-unsupported",
+        "wonderer_pass_id": "pass-dl218-1",
+        "collaboration_run_id": "crun-bs-0001",
+        "angle": "adjacent field",
+        "claim": "Local queues may avoid remote upload.",
+        "tether": "A local queue could preserve the job\u2019s offline-only constraint.",
+        "source_refs": [
+          "https://example.org/local-queues"
+        ],
+        "disposition": "explore",
+        "disposition_reason": "Research the offline claim.",
+        "disposed_by": "coordinator:01",
+        "lead_status": "set_aside",
+        "evidence_refs": [],
+        "set_aside_reason": "Research found an unavoidable network dependency."
+      }
+    },
+    {
+      "name": "wonderer_pass_1",
+      "definition": "WondererPass",
+      "value": {
+        "schema_id": "pm.collaboration.wonderer_pass.v1",
+        "schema_version": "1.0.0",
+        "wonderer_pass_id": "pass-dl218-1",
+        "collaboration_run_id": "crun-bs-0001",
+        "participant_slot_id": "collab-bs-0001-slot-3",
+        "pass_number": 1,
+        "requested_by": null,
+        "seed_ref": "artifact:job/topic-v1",
+        "artifact_ref": "artifact:wonderer/pass-1",
+        "lead_ids": [
+          "lead-pass-1-1",
+          "lead-pass-1-2",
+          "lead-pass-1-3"
+        ],
+        "delivered_at": "2026-10-20T22:00:00Z"
+      }
+    },
+    {
+      "name": "wonderer_pass_2",
+      "definition": "WondererPass",
+      "value": {
+        "schema_id": "pm.collaboration.wonderer_pass.v1",
+        "schema_version": "1.0.0",
+        "wonderer_pass_id": "pass-dl218-2",
+        "collaboration_run_id": "crun-bs-0001",
+        "participant_slot_id": "collab-bs-0001-slot-3",
+        "pass_number": 2,
+        "requested_by": "user:jared",
+        "seed_ref": "artifact:job/topic-v1",
+        "artifact_ref": "artifact:wonderer/pass-2",
+        "lead_ids": [
+          "lead-pass-2-1",
+          "lead-pass-2-2",
+          "lead-pass-2-3"
+        ],
+        "delivered_at": "2026-10-20T22:00:00Z"
+      }
+    },
+    {
+      "name": "wonderer_pass_3",
+      "definition": "WondererPass",
+      "value": {
+        "schema_id": "pm.collaboration.wonderer_pass.v1",
+        "schema_version": "1.0.0",
+        "wonderer_pass_id": "pass-dl218-3",
+        "collaboration_run_id": "crun-bs-0001",
+        "participant_slot_id": "collab-bs-0001-slot-3",
+        "pass_number": 3,
+        "requested_by": "user:jared",
+        "seed_ref": "artifact:job/topic-v1",
+        "artifact_ref": "artifact:wonderer/pass-3",
+        "lead_ids": [
+          "lead-pass-3-1",
+          "lead-pass-3-2",
+          "lead-pass-3-3"
+        ],
+        "delivered_at": "2026-10-20T22:00:00Z"
+      }
+    },
+    {
+      "name": "collaboration_lead_research_request_crew",
+      "definition": "CollaborationLeadResearchRequest",
+      "value": {
+        "schema_id": "pm.collaboration.lead_research_request.v1",
+        "schema_version": "1.0.0",
+        "command_id": "cmd.collaboration.research_lead",
+        "command_instance_id": "ci-research-crew",
+        "project_id": "project:01",
+        "thread_id": "thread:01",
+        "actor_identity": "user:jared",
+        "source_surface": "workflow_card",
+        "correlation_id": "corr-0022",
+        "created_at": "2026-09-27T12:00:00Z",
+        "permission_snapshot_id": "perm-snap-01",
+        "idempotency_key": "idem-research-crew",
+        "causation_id": null,
+        "collaboration_run_id": "crun-crew-0001",
+        "expected_revision": 2,
+        "expected_currentness_hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "lead_id": "lead-3"
+      }
+    },
+    {
+      "name": "collaboration_lead_research_request_brainstorm",
+      "definition": "CollaborationLeadResearchRequest",
+      "value": {
+        "schema_id": "pm.collaboration.lead_research_request.v1",
+        "schema_version": "1.0.0",
+        "command_id": "cmd.collaboration.research_lead",
+        "command_instance_id": "ci-research-brainstorm",
+        "project_id": "project:01",
+        "thread_id": "thread:01",
+        "actor_identity": "user:jared",
+        "source_surface": "wonderer_workspace",
+        "correlation_id": "corr-0022",
+        "created_at": "2026-09-27T12:00:00Z",
+        "permission_snapshot_id": "perm-snap-01",
+        "idempotency_key": "idem-research-brainstorm",
+        "causation_id": null,
+        "collaboration_run_id": "crun-brainstorm-0001",
+        "expected_revision": 2,
+        "expected_currentness_hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "lead_id": "lead-3"
+      }
+    },
+    {
+      "name": "collaboration_lead_research_request_chat_room",
+      "definition": "CollaborationLeadResearchRequest",
+      "value": {
+        "schema_id": "pm.collaboration.lead_research_request.v1",
+        "schema_version": "1.0.0",
+        "command_id": "cmd.collaboration.research_lead",
+        "command_instance_id": "ci-research-chat_room",
+        "project_id": "project:01",
+        "thread_id": "thread:01",
+        "actor_identity": "user:jared",
+        "source_surface": "workflow_panel",
+        "correlation_id": "corr-0022",
+        "created_at": "2026-09-27T12:00:00Z",
+        "permission_snapshot_id": "perm-snap-01",
+        "idempotency_key": "idem-research-chat_room",
+        "causation_id": null,
+        "collaboration_run_id": "crun-chat_room-0001",
+        "expected_revision": 2,
+        "expected_currentness_hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "lead_id": "lead-3"
+      }
+    },
+    {
+      "name": "collaboration_lead_research_result_substantiated",
+      "definition": "CollaborationLeadResearchResult",
+      "value": {
+        "schema_id": "pm.collaboration.lead_research_result.v1",
+        "schema_version": "1.0.0",
+        "command_id": "cmd.collaboration.research_lead",
+        "command_instance_id": "ci-collaboration-result-substantiated",
+        "committed": true,
+        "status": "committed",
+        "revision_after": 3,
+        "currentness_hash_after": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+        "receipt_refs": [
+          "receipt:collaboration-substantiated"
+        ],
+        "observable_work_ref": null,
+        "error": null,
+        "replay_of": null,
+        "lead_id": "lead-3",
+        "lead_status": "substantiated",
+        "evidence_refs": [
+          "web:rfc4180"
+        ],
+        "set_aside_reason": null
+      }
+    },
+    {
+      "name": "collaboration_lead_research_result_set_aside",
+      "definition": "CollaborationLeadResearchResult",
+      "value": {
+        "schema_id": "pm.collaboration.lead_research_result.v1",
+        "schema_version": "1.0.0",
+        "command_id": "cmd.collaboration.research_lead",
+        "command_instance_id": "ci-collaboration-result-set_aside",
+        "committed": true,
+        "status": "committed",
+        "revision_after": 3,
+        "currentness_hash_after": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+        "receipt_refs": [
+          "receipt:collaboration-set_aside"
+        ],
+        "observable_work_ref": null,
+        "error": null,
+        "replay_of": null,
+        "lead_id": "lead-4",
+        "lead_status": "set_aside",
+        "evidence_refs": [],
+        "set_aside_reason": "No connection back to the seed topic"
+      }
+    },
+    {
+      "name": "preset_grill_me_switch_no_row",
+      "definition": "TeamPreset",
+      "value": {
+        "schema_id": "pm.collaboration.team_preset.v1",
+        "schema_version": "1.0.0",
+        "id": "preset-crew-grilling",
+        "label": "Build and check with grilling",
+        "helper": "One builds, one checks",
+        "rows": [
+          {
+            "role": "Implementer",
+            "requested_model_id": "model:claude-opus",
+            "requested_persona_id": "persona:implementer",
+            "additive_role_kind": "none"
+          },
+          {
+            "role": "Reviewer",
+            "requested_model_id": "model:claude-sonnet",
+            "requested_persona_id": "persona:reviewer",
+            "additive_role_kind": "none"
+          }
+        ],
+        "config_overrides": {
+          "concurrency": 2,
+          "grill_me_enabled": true
+        }
+      }
+    },
+    {
+      "name": "definition_crew_grill_me_switch",
+      "definition": "CollaborativeDefinition",
+      "value": {
+        "schema_id": "pm.collaboration.definition.v1",
+        "schema_version": "1.0.0",
+        "collaboration_id": "collab-grilling-crew",
+        "kind": "crew",
+        "project_id": "project:01",
+        "thread_id": "thread:01",
+        "name": "Add CSV export with tests",
+        "purpose": "Add CSV export to the collection page",
+        "revision": 2,
+        "participant_specs": [
+          {
+            "schema_id": "pm.collaboration.participant_spec.v1",
+            "schema_version": "1.0.0",
+            "participant_slot_id": "collab-crew-0001-slot-1",
+            "role": "Implementer",
+            "requested_provider_id": "provider:anthropic",
+            "requested_account_id": "account:main",
+            "requested_model_id": "model:claude-opus",
+            "requested_persona_id": "persona:implementer",
+            "requested_skill_ids": [],
+            "requested_tool_profile_id": null,
+            "additive_role_kind": "none"
+          },
+          {
+            "schema_id": "pm.collaboration.participant_spec.v1",
+            "schema_version": "1.0.0",
+            "participant_slot_id": "collab-crew-0001-slot-2",
+            "role": "Reviewer",
+            "requested_provider_id": "provider:anthropic",
+            "requested_account_id": "account:main",
+            "requested_model_id": "model:claude-opus",
+            "requested_persona_id": "persona:reviewer",
+            "requested_skill_ids": [],
+            "requested_tool_profile_id": null,
+            "additive_role_kind": "none"
+          }
+        ],
+        "coordinator_spec": {
+          "kind": "parent_assistant"
+        },
+        "context_policy_ref": "ctx-policy:mentioned-files",
+        "tool_policy_ref": "tool-policy:parent",
+        "permission_ceiling_ref": "ceiling:parent-thread",
+        "concurrency": 2,
+        "time_limit_seconds": 1800,
+        "token_limit": null,
+        "cost_limit": 4.0,
+        "transcript_policy": "keep_full",
+        "output_policy": "summary_and_artifacts",
+        "stuck_policy": "ask_user",
+        "shared_notes_policy": "shared_space",
+        "assignment_strategy": "manager_directed",
+        "grill_me_enabled": true
+      }
+    },
+    {
+      "name": "definition_chat_room_grill_me_switch",
+      "definition": "CollaborativeDefinition",
+      "value": {
+        "schema_id": "pm.collaboration.definition.v1",
+        "schema_version": "1.0.0",
+        "collaboration_id": "collab-grilling-chat_room",
+        "kind": "chat_room",
+        "project_id": "project:01",
+        "thread_id": "thread:01",
+        "name": "Add CSV export with tests",
+        "purpose": "Add CSV export to the collection page",
+        "revision": 2,
+        "participant_specs": [
+          {
+            "schema_id": "pm.collaboration.participant_spec.v1",
+            "schema_version": "1.0.0",
+            "participant_slot_id": "collab-room-0001-slot-1",
+            "role": "Implementer",
+            "requested_provider_id": "provider:anthropic",
+            "requested_account_id": "account:main",
+            "requested_model_id": "model:claude-opus",
+            "requested_persona_id": "persona:implementer",
+            "requested_skill_ids": [],
+            "requested_tool_profile_id": null,
+            "additive_role_kind": "none"
+          },
+          {
+            "schema_id": "pm.collaboration.participant_spec.v1",
+            "schema_version": "1.0.0",
+            "participant_slot_id": "collab-room-0001-slot-2",
+            "role": "Reviewer",
+            "requested_provider_id": "provider:anthropic",
+            "requested_account_id": "account:main",
+            "requested_model_id": "model:claude-opus",
+            "requested_persona_id": "persona:reviewer",
+            "requested_skill_ids": [],
+            "requested_tool_profile_id": null,
+            "additive_role_kind": "none"
+          }
+        ],
+        "coordinator_spec": {
+          "kind": "dedicated_model",
+          "requested_provider_id": "provider:anthropic",
+          "requested_model_id": "model:claude-sonnet",
+          "requested_persona_id": "persona:critical-advisor"
+        },
+        "context_policy_ref": "ctx-policy:mentioned-files",
+        "tool_policy_ref": "tool-policy:parent",
+        "permission_ceiling_ref": "ceiling:parent-thread",
+        "concurrency": 2,
+        "time_limit_seconds": 1800,
+        "token_limit": null,
+        "cost_limit": 4.0,
+        "transcript_policy": "keep_full",
+        "output_policy": "summary_and_artifacts",
+        "stuck_policy": "ask_user",
+        "turn_policy": "moderated",
+        "moderator_style": "keep_on_topic",
+        "mention_policy": "mentions_and_replies",
+        "stop_condition": "max_rounds_4",
+        "summary_style": "agreed_debated_open",
+        "grill_me_enabled": true
+      }
     }
   ],
   "invalid": [
@@ -2578,10 +3074,10 @@
     {
       "name": "definition_grill_me_with_persona",
       "base_valid": "definition_brainstorm_must_haves_and_specialists",
-      "rejects_for": "grill_me spec forbids a Persona",
-      "reason": "Grill Me is a methodology Skill and never a Persona, so its row has no Persona (DL-133, CWR-028).",
+      "rejects_for": "ParticipantSpec never resolves a Grill Me Persona",
+      "reason": "DL-218: Grill Me is a switch and never a Persona-bearing participant.",
       "patch": {
-        "participant_specs.3.requested_persona_id": "persona:grill-me"
+        "participant_specs.1.requested_persona_id": "persona:grill-me"
       }
     },
     {
@@ -2983,8 +3479,8 @@
     {
       "name": "preset_grill_me_as_persona",
       "base_valid": "preset_crew_build_and_check",
-      "rejects_for": "grill_me preset row forbids a Persona",
-      "reason": "A preset adds Grill Me only as a specialist row, never as a Persona (CWR-039, DL-133).",
+      "rejects_for": "additive_role_kind excludes grill_me",
+      "reason": "DL-218: presets turn Grill Me on through config_overrides.grill_me_enabled, never a row.",
       "patch": {
         "rows.1.additive_role_kind": "grill_me"
       }
@@ -3251,12 +3747,24 @@
       ]
     },
     {
-      "name": "reconfigure_add_participant_as_wonderer",
+      "name": "reconfigure_add_grill_me_carries_participant",
       "base_valid": "reconfigure_request_add_grill_me",
-      "rejects_for": "add_grill_me carries a grill_me spec",
-      "reason": "Adding Grill Me mid-run adds a Grill Me row; it never repurposes the change for another role (CWR-031).",
+      "rejects_for": "add_grill_me has no participant_spec",
+      "reason": "DL-218: the retained change name turns the switch on and never adds a row.",
       "patch": {
-        "changes.0.participant_spec.additive_role_kind": "wonderer"
+        "changes.0.participant_spec": {
+          "schema_id": "pm.collaboration.participant_spec.v1",
+          "schema_version": "1.0.0",
+          "participant_slot_id": "collab-bs-0001-slot-3",
+          "role": "Wonderer",
+          "requested_provider_id": "provider:anthropic",
+          "requested_account_id": "account:main",
+          "requested_model_id": "model:claude-haiku",
+          "requested_persona_id": "persona:wonderer",
+          "requested_skill_ids": [],
+          "requested_tool_profile_id": null,
+          "additive_role_kind": "wonderer"
+        }
       }
     },
     {
@@ -3684,6 +4192,244 @@
       "reason": "substantiated lead requires evidence",
       "patch": {
         "evidence_refs": []
+      }
+    },
+    {
+      "name": "participant_additive_role_grill_me",
+      "base_valid": "definition_brainstorm_must_haves_and_specialists",
+      "rejects_for": "additive_role_kind is closed to none | wonderer",
+      "reason": "DL-218 / CWR-041..043: additive_role_kind is closed to none | wonderer",
+      "patch": {
+        "participant_specs.1.additive_role_kind": "grill_me"
+      }
+    },
+    {
+      "name": "participant_grill_me_skill",
+      "base_valid": "definition_crew_shared_notes",
+      "rejects_for": "the Grill Me Skill is applied through the definition switch, never a ParticipantSpec",
+      "reason": "DL-218 / CWR-041..043: the Grill Me Skill is applied through the definition switch, never a ParticipantSpec",
+      "patch": {
+        "participant_specs.0.requested_skill_ids": [
+          "skill:grilling"
+        ]
+      }
+    },
+    {
+      "name": "wonderer_lead_without_tether",
+      "base_valid": "wonderer_lead_undecided",
+      "rejects_for": "a delivered lead requires tether",
+      "reason": "DL-218 / CWR-041..043: a delivered lead requires tether",
+      "remove": [
+        "tether"
+      ]
+    },
+    {
+      "name": "wonderer_lead_blank_tether",
+      "base_valid": "wonderer_lead_undecided",
+      "rejects_for": "tether must contain nonblank text",
+      "reason": "DL-218 / CWR-041..043: tether must contain nonblank text",
+      "patch": {
+        "tether": "   "
+      }
+    },
+    {
+      "name": "wonderer_lead_empty_sources",
+      "base_valid": "wonderer_lead_undecided",
+      "rejects_for": "source_refs has at least one source",
+      "reason": "DL-218 / CWR-041..043: source_refs has at least one source",
+      "patch": {
+        "source_refs": []
+      }
+    },
+    {
+      "name": "wonderer_disposition_without_reason",
+      "base_valid": "wonderer_lead_explore",
+      "rejects_for": "a non-null disposition requires a reason",
+      "reason": "DL-218 / CWR-041..043: a non-null disposition requires a reason",
+      "remove": [
+        "disposition_reason"
+      ]
+    },
+    {
+      "name": "wonderer_disposition_null_reason",
+      "base_valid": "wonderer_lead_use",
+      "rejects_for": "a non-null disposition requires a non-null reason",
+      "reason": "DL-218 / CWR-041..043: a non-null disposition requires a non-null reason",
+      "patch": {
+        "disposition_reason": null
+      }
+    },
+    {
+      "name": "wonderer_disposition_without_recorder",
+      "base_valid": "wonderer_lead_explore",
+      "rejects_for": "a disposition records who decided",
+      "reason": "DL-218 / CWR-041..043: a disposition records who decided",
+      "patch": {
+        "disposed_by": null
+      }
+    },
+    {
+      "name": "wonderer_pass_four",
+      "base_valid": "wonderer_pass_3",
+      "rejects_for": "pass_number cannot exceed 3",
+      "reason": "DL-218 / CWR-041..043: pass_number cannot exceed 3",
+      "patch": {
+        "pass_number": 4
+      }
+    },
+    {
+      "name": "wonderer_pass_unrequested_repeat",
+      "base_valid": "wonderer_pass_2",
+      "rejects_for": "a further pass requires requested_by",
+      "reason": "DL-218 / CWR-041..043: a further pass requires requested_by",
+      "patch": {
+        "requested_by": null
+      }
+    },
+    {
+      "name": "wonderer_pass_too_few_leads",
+      "base_valid": "wonderer_pass_1",
+      "rejects_for": "each pass delivers 3 to 5 leads",
+      "reason": "DL-218 / CWR-041..043: each pass delivers 3 to 5 leads",
+      "patch": {
+        "lead_ids": [
+          "lead-only"
+        ]
+      }
+    },
+    {
+      "name": "wonderer_substantiated_without_evidence",
+      "base_valid": "wonderer_lead_substantiated",
+      "rejects_for": "substantiated requires nonempty evidence_refs",
+      "reason": "DL-218 / CWR-041..043: substantiated requires nonempty evidence_refs",
+      "patch": {
+        "evidence_refs": []
+      }
+    },
+    {
+      "name": "wonderer_substantiated_with_set_aside_reason",
+      "base_valid": "wonderer_lead_substantiated",
+      "rejects_for": "substantiated has a null set_aside_reason",
+      "reason": "DL-218 / CWR-041..043: substantiated has a null set_aside_reason",
+      "patch": {
+        "set_aside_reason": "Unfounded doubt"
+      }
+    },
+    {
+      "name": "wonderer_set_aside_without_reason",
+      "base_valid": "wonderer_lead_research_set_aside",
+      "rejects_for": "set_aside requires set_aside_reason",
+      "reason": "DL-218 / CWR-041..043: set_aside requires set_aside_reason",
+      "patch": {
+        "set_aside_reason": null
+      }
+    },
+    {
+      "name": "collaboration_research_substantiated_without_evidence",
+      "base_valid": "collaboration_lead_research_result_substantiated",
+      "rejects_for": "research substantiation requires evidence",
+      "reason": "DL-218 / CWR-041..043: research substantiation requires evidence",
+      "patch": {
+        "evidence_refs": []
+      }
+    },
+    {
+      "name": "collaboration_research_set_aside_without_reason",
+      "base_valid": "collaboration_lead_research_result_set_aside",
+      "rejects_for": "research set_aside requires a reason",
+      "reason": "DL-218 / CWR-041..043: research set_aside requires a reason",
+      "patch": {
+        "set_aside_reason": null
+      }
+    },
+    {
+      "name": "collaboration_research_unknown_surface",
+      "base_valid": "collaboration_lead_research_request_crew",
+      "rejects_for": "Check It uses only workflow_card, workflow_panel and wonderer_workspace",
+      "reason": "DL-218 / CWR-041..043: Check It uses only workflow_card, workflow_panel and wonderer_workspace",
+      "patch": {
+        "source_surface": "brainstorm_panel"
+      }
+    },
+    {
+      "name": "reconfigure_grill_me_false",
+      "base_valid": "reconfigure_request_add_grill_me",
+      "rejects_for": "add_grill_me only turns the switch on",
+      "reason": "DL-218 / CWR-041..043: add_grill_me only turns the switch on",
+      "patch": {
+        "changes.0.grill_me_enabled": false
+      }
+    },
+    {
+      "name": "review_grill_me_enabled",
+      "base_valid": "definition_review_file_and_line",
+      "rejects_for": "Review admits no Grill Me switch on",
+      "reason": "DL-218 / CWR-041..043: Review admits no Grill Me switch on",
+      "patch": {
+        "grill_me_enabled": true
+      }
+    },
+    {
+      "name": "wonderer_vote",
+      "base_valid": "vote_with_constraint_conflict",
+      "rejects_for": "a Wonderer participant cannot cast a vote, including an abstain record",
+      "reason": "DL-218 / CWR-041..043: a Wonderer participant cannot cast a vote, including an abstain record",
+      "semantic_rule": "wonderer_cannot_vote",
+      "context": {
+        "participant_specs": [
+          {
+            "schema_id": "pm.collaboration.participant_spec.v1",
+            "schema_version": "1.0.0",
+            "participant_slot_id": "collab-bs-0001-slot-1",
+            "role": "Implementer",
+            "requested_provider_id": "provider:anthropic",
+            "requested_account_id": "account:main",
+            "requested_model_id": "model:claude-opus",
+            "requested_persona_id": "persona:implementer",
+            "requested_skill_ids": [],
+            "requested_tool_profile_id": null,
+            "additive_role_kind": "none"
+          },
+          {
+            "schema_id": "pm.collaboration.participant_spec.v1",
+            "schema_version": "1.0.0",
+            "participant_slot_id": "collab-bs-0001-slot-2",
+            "role": "Reviewer",
+            "requested_provider_id": "provider:anthropic",
+            "requested_account_id": "account:main",
+            "requested_model_id": "model:claude-opus",
+            "requested_persona_id": "persona:reviewer",
+            "requested_skill_ids": [],
+            "requested_tool_profile_id": null,
+            "additive_role_kind": "none"
+          },
+          {
+            "schema_id": "pm.collaboration.participant_spec.v1",
+            "schema_version": "1.0.0",
+            "participant_slot_id": "collab-bs-0001-slot-3",
+            "role": "Wonderer",
+            "requested_provider_id": "provider:anthropic",
+            "requested_account_id": "account:main",
+            "requested_model_id": "model:claude-haiku",
+            "requested_persona_id": "persona:wonderer",
+            "requested_skill_ids": [],
+            "requested_tool_profile_id": null,
+            "additive_role_kind": "wonderer"
+          }
+        ]
+      },
+      "patch": {
+        "participant_id": "collab-bs-0001-slot-3",
+        "position": "abstain"
+      }
+    },
+    {
+      "name": "preset_cannot_hide_grill_me_roster_in_overrides",
+      "base_valid": "preset_grill_me_switch_no_row",
+      "rejects_for": "participant_specs is not a config override; roster rows use the typed rows list",
+      "reason": "DL-218 / CWR-039: a preset can turn on Grill Me only through its switch, never through an unvalidated replacement roster.",
+      "patch": {
+        "config_overrides.participant_specs": []
       }
     }
   ]

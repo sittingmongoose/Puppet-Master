@@ -1,0 +1,92 @@
+# Shard 045: DL-218 shared research and grilling wiring
+
+Source: `Plans/Wiring_Matrix.md`
+
+Source lines: L6339-L6420
+
+Source SHA256: `59dc3a325c0f6ba6722602d4ed69cc15d748ae4b02955fa4c8fe151794ba3cc5`
+
+---
+
+## DL-218 shared research and grilling wiring
+
+| Producer | Command | Disposition and target |
+|---|---|---|
+| workflow_card, workflow_panel, wonderer_workspace Check It | `cmd.collaboration.research_lead` | Exact candidate exclusion; sole future handlers::collaboration::research_lead, CollaborationLeadResearchRequest → CollaborationLeadResearchResult. |
+| Legacy BrainStorm brainstorm_panel or wonderer_workspace Check It | `cmd.brainstorm.research_lead` | Compatibility-only normalization to the preceding row; brainstorm_panel maps to workflow_panel; no second primary row or handler. |
+| questionnaire_card recommended-answer acceptance or edit | `cmd.questionnaire.draft_update` | Reuse existing exact candidate exclusion and host draft operation. |
+| questionnaire_card accept whole round | `cmd.questionnaire.submit` | Reuse existing exact candidate exclusion and explicit validated round submission; no agreement confirmation. |
+| questionnaire_card Wrap up | `cmd.questionnaire.grill_me.wrap_up` | Exact candidate exclusion; sole future handlers::questionnaire::grill_me_wrap_up, QuestionnaireGrillWrapUpRequest → QuestionnaireGrillWrapUpResult. |
+| questionnaire_card What we agreed / Confirm | `cmd.questionnaire.grill_me.confirm` | Exact candidate exclusion; sole future handlers::questionnaire::grill_me_confirm, QuestionnaireGrillConfirmRequest → QuestionnaireGrillConfirmResult. |
+| questionnaire_card What we agreed / Keep going | `cmd.questionnaire.grill_me.keep_going` | Exact candidate exclusion; sole future handlers::questionnaire::grill_me_keep_going, QuestionnaireGrillKeepGoingRequest → QuestionnaireGrillKeepGoingResult. |
+| brainstorm_panel Allow more questions mid-run | `cmd.collaboration.reconfigure` | Existing assistant.redesign.cmd.collaboration_reconfigure gains this source and the switch-only add_grill_me acceptance test. |
+| BrainStorm Write the plan | `cmd.brainstorm.synthesize_plan` | Existing assistant.redesign.w_029.brainstorm_synthesize_plan gains the lead disposition/research and grilling confirmation gates. |
+
+The four new candidates and six existing questionnaire candidates stay handler_unavailable, render disabled command_not_registered, and have empty expected_event_types under DL-093. Plans/Wiring_Matrix.production.exclusions.json is their current inventory location; admission atomically removes an exact candidate exclusion and supplies its native command/handler and sole production row. Adding a production row now would contradict the existing candidate boundary (WM-063). Existing production-intent entries above are updated in Plans/Wiring_Matrix.production.json; they still prove no native runtime. Every surface reads its owner availability, currentness and exact reason, preserves route/focus, and uses the same keyboard/pointer request. An unavailable control, denied request, stale agreement or replay changes no extra state. No new event is proposed by these companions.
+
+### WM-094 - Shared Research Alias And Grilling Control Wiring
+
+```yaml
+plan_unit_id: WM-094
+unit_type: integration_contract
+status: accepted
+owner_doc: Plans/Wiring_Matrix.md
+canonical_text: >-
+  DL-218 places cmd.collaboration.research_lead and cmd.questionnaire.grill_me.wrap_up, cmd.questionnaire.grill_me.confirm
+  and cmd.questionnaire.grill_me.keep_going in exact candidate exclusions under UCC-205..206 and CS-103.
+  Canonical Check It sources are workflow_card, workflow_panel and wonderer_workspace, and grilling session
+  controls use questionnaire_card. All render disabled command_not_registered with handler_unavailable
+  and no expected_event_types until admission removes each exact exclusion atomically with its handler
+  and production row. cmd.brainstorm.research_lead is only the BrainStorm compatibility alias; normalize
+  before all gates, map brainstorm_panel to workflow_panel and preserve operation identity with no peer
+  handler or production row. Existing draft_update and submit exclusions cover recommendation edits and
+  accept-the-round without changing lifecycle semantics. assistant.redesign.cmd.collaboration_reconfigure
+  gains brainstorm_panel and switch-only add_grill_me tests; assistant.redesign.w_029.brainstorm_synthesize_plan
+  gains the undecided-lead, pending-research and grilling-Confirm gates. The two production-intent edits
+  and exclusions are machine companions, never native proof or event admission.
+gui_related: true
+gui_classification_reason: Wires visible Check It, grilling and synthesis controls and exact disabled
+  reasons.
+depends_on:
+- UCC-205
+- UCC-206
+- CS-103
+- ACD-503
+unblocks: []
+acceptance_criteria:
+- Each candidate has its exact explained exclusion and no premature production row.
+- Both research spellings reach one canonical operation.
+- Switch enabling adds no ParticipantSpec and preserves question history.
+- Synthesis gates and keyboard/pointer availability agree with owner state.
+validation_surfaces:
+- python3 scripts/pm-plans-verify.py validate-wiring-matrix
+- python3 scripts/pm-new-contracts-verify.py
+- python3 scripts/pm-plan-index.py validate
+risk_class: collaboration_wiring_semantics
+reasoning_tier: high
+context_scope: wonderer_grill_me_companions
+implementation_surfaces:
+- Plans/Wiring_Matrix.md
+- Plans/Wiring_Matrix.production.json
+- Plans/Wiring_Matrix.production.exclusions.json
+node_compile_hint:
+  mode: static_wiring_intent_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md DL-218
+- /mnt/Cursor/share/puppet-master/2026-10-16-wonderer-grill-me/DECISIONS.md sha256:dfa2f354936defd187d610de4aee77a3d8b75b6d25692e592ba48f7b66bfebce
+preserved_exact_tokens:
+- cmd.collaboration.research_lead
+- cmd.brainstorm.research_lead
+- questionnaire_card
+- add_grill_me
+- expected_event_types
+negative_constraints:
+- Do not create peer alias handlers or fabricate native availability.
+- Do not add an EventRecord.
+owner_hints:
+- Plans/Wiring_Matrix.md
+```
+
+ContractRef: ContractName:Plans/Decision_Log.md#DL-218, ContractName:Plans/UI_Command_Catalog.md#UCC-205, ContractName:Plans/UI_Command_Catalog.md#UCC-206, ContractName:Plans/Commands_System.md#CS-103

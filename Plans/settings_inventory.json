@@ -23087,7 +23087,7 @@
  {
   "id": "branching.crew.grill-me-question-extension",
   "label": "Extra questions in Grill Me",
-  "desc": "How many additional questions Grill Me adds to a workflow's allowance (25). Questions are shared across participants, so this does not multiply per teammate.",
+  "desc": "The Grill Me safety cap: adds 25 to a Plan or BrainStorm base, or allows 25 total in a Crew or Chat Room. The existing assistant, coordinator or moderator grills you; no teammate is added. The session ends earlier at an empty frontier or Wrap up and waits for your confirmation (DL-218).",
   "type": "number",
   "default": 25,
   "scope": [

@@ -846,7 +846,7 @@ owner_hints:
   - Plans/Collaborative_Workflows.md
 ```
 
-### CWR-008 - Wonderer And Grill Me As Additive Participant Roles
+### CWR-008 - Wonderer Participant And Grill Me Switch
 
 ```yaml
 plan_unit_id: CWR-008
@@ -856,7 +856,7 @@ owner_doc: Plans/Collaborative_Workflows.md
 canonical_text: >-
   Wonderer is a built-in Persona plus a reusable methodology Skill, explicitly not a Hermes profile subsystem; its Persona identity is owned by Personas and its Skill materialization by Skills System, while this document owns its participant-role semantics. Wonderer explores adjacent domains and overlooked possibilities and its leads remain hypotheses until researched. In a Crew, BrainStorm or Chat Room it runs alongside the run and feeds its leads to the agents, who decide each one; it never votes, argues or sends its own leads to research (CWR-041; amended 2026-10-16, DL-218). Grill Me is additive, uses a shared question frontier that avoids duplicates, researches answerable facts rather than asking the user for them, and raises the workflow question allowance without per-agent duplicate inflation. It is a switch on the run and never a participant: the participant that already talks to the user grills the user, and nothing acts on the answers until the user confirms (CWR-042; amended 2026-10-16, DL-218). Both are additive options in BrainStorm, Crew, and Chat Room; the Deep Plan submenu carries a persistent Grill Me check option; and PRD Builder and Planning Wizard start flows offer BSD, Wonderer, and Grill Me, with when and in what order each runs owned by those two documents (amended 2026-10-16, DL-218).
 gui_related: true
-gui_classification_reason: These are additive rows in the workflow modals and a persistent check option in the Deep Plan submenu.
+gui_classification_reason: Wonderer adds a row; Grill Me is a switch in the workflow sheets and a persistent Deep Plan check.
 depends_on: [CWR-007]
 unblocks: []
 acceptance_criteria:
@@ -879,7 +879,7 @@ implementation_surfaces:
   - Plans/PRD_Builder.md
   - Plans/Planning_Wizard.md
 node_compile_hint:
-  mode: additive_participant_roles
+  mode: additive_workflow_options
   create_worknodes: false
 source_lineage:
   - pm-assistant-implementation-2026-09-02-recovered:WGM-001
