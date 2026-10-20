@@ -1,4 +1,6 @@
 > PM7 history (2026-10-18): this frozen build chain and `Onboarding concepts/TestPMConcept.html`
+
+Retired 2026-10-20 at Jared's direction: `Concepts/PMConcept7.html` is the only published page; `build_rail.py --out PATH` builds the rail comparison privately.
 > remain for lineage. Edit the live shell in `Concepts/onboarding/opus-5.5/base/` and the live layers
 > in `Concepts/onboarding/opus-5.5/src/`; publish with its `tools/build.py --publish-pm7`.
 > Do not regenerate the historical base to change PMConcept7.
@@ -41,16 +43,15 @@ Read the next section before changing anything here.
 
 ## PM7 publication — 2026-09-26 (current)
 
-The checked-in `Concepts/PMConcept7.html` is published byte-identical from
-`Concepts/Onboarding concepts/TestOpus5.5PmConcept.html` — the current leading GUI/interaction
-reference — through its authored generator:
+The checked-in `Concepts/PMConcept7.html` is the current leading GUI/interaction reference, built directly
+from its authored sources through this generator:
 
     python3 Concepts/onboarding/opus-5.5/tools/build.py --publish-pm7
     python3 Concepts/onboarding/opus-5.5/tools/build.py --check  # includes PM7 byte parity
 
 Current source chain: `Concepts/onboarding/opus-5.5/base/` + its authored Settings/O55 sources
 and the Usage, rail, glyph, Home, Glass and wallpaper layers → opus-5.5 `tools/build.py` →
-`Concepts/Onboarding concepts/TestOpus5.5PmConcept.html` → `Concepts/PMConcept7.html` (same bytes).
+`Concepts/PMConcept7.html` (plain runs and `--publish-pm7` both publish only that file).
 The frozen TestPM checkpoint chain below is historical lineage.
 
 The T33+ pipeline in this directory, including the old T44 Settings tome,
@@ -640,7 +641,7 @@ The build writes the HTML plus `<outdir>/build_report.json`. The old
 promotion of a checked-in artifact through the same command with
 `--out Concepts/PMConcept7.html` is superseded (2026-09-26): that path now
 aborts unless `--allow-legacy-pm7-promotion` is passed explicitly; publish
-`Concepts/PMConcept7.html` from TestOpus instead (see "PM7 publication"
+`Concepts/PMConcept7.html` from authored opus-5.5 sources instead (see "PM7 publication"
 above). Never copy or patch an intermediate by hand.
 
 During an integration wave, first build to a fresh scratch directory. Promote
@@ -909,8 +910,8 @@ separate T45 Product Onboarding and live-shell Guided Tour transforms and a
 T46F forge/backup post-integration transform plus a T46P full-thread
 performance transform; `T48_home_workspace_source_refresh`
 is the current tail. `Concepts/PMConcept7.html` remains a generated artifact;
-since 2026-09-26 it is published byte-identical from
-`Concepts/TestOpus5.5PmConcept.html` (see "PM7 publication" above), and the
+since 2026-09-26 it is published by the authored opus-5.5 generator
+(see "PM7 publication" above), and the
 older rule promoting it only from `build_pm7.py` is superseded — this
 pipeline's tail is retained for explicit historical output only.
 

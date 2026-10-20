@@ -7,7 +7,7 @@
   problems = home_layer.published_problems(text)   # build.py and --check: syntax, markers, the anchors kept exactly once
 
 opus-5.5 build.py publishes this layer (build.py --publish-pm7 writes PMConcept7.html with it); build_home.py writes
-the review copy, the same bytes.
+a private copy with --out PATH, the same bytes.
 
 The layer follows the Usage and left-rail layer pattern (Concepts/usage-redesign, Concepts/leftrail-redesign): it never
 edits the page's own markup. apply() only adds:

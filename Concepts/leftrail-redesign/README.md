@@ -1,12 +1,14 @@
 # Left rail redesign
 
+Retired 2026-10-20 at Jared's direction: `Concepts/PMConcept7.html` is the only published page; `build_rail.py --out PATH` builds the rail comparison privately.
+
 Four concepts for the left rail of the Puppet Master concept (the activity bar and its side panels). Jared chose D,
 Polish (2026-10-09), and it is the rail of the published concept: `Concepts/PMConcept7.html` carries D, built in by the
-opus-5.5 build (`build.py --publish-pm7`, whose last step is `rail_layer.apply_published()`). The review copy
-`Concepts/LeftRailPMConcept7.html` is that page plus concepts A, B and C and a switcher in the status bar ("Rail",
+opus-5.5 build (`build.py --publish-pm7`, which calls `rail_layer.apply_published()`). A private comparison build
+(`build_rail.py --out PATH`) adds concepts A, B and C and a switcher in the status bar ("Rail",
 Alt+Shift+1..5 for A, B, C, D and Original, or `?rail=a|b|c|d|current`; D is the default), so the D compared there is
 the published D byte for byte. "Original" (id `current`) is the rail before Polish: the shell's own rail with D
-unmounted. Both pages are generated: never hand-edit them.
+unmounted. The published page and private builds are generated: never hand-edit them.
 
 Concept round (Jared, 2026-10-02): each concept redesigns the activity bar and three panels — Files, Source Control and
 Docker. The other six panels stay as they are, and "Current" (now labelled Original) shows the rail untouched, so the
@@ -37,8 +39,8 @@ narrow (280 px default), all eight theme variants plus NieR Mode, smooth motion.
 ```
 Concepts/leftrail-redesign/
   README.md, DATA.md            this file; the fixture schema every concept renders from
-  tools/build_rail.py           build / --check Concepts/LeftRailPMConcept7.html (--out PATH [--only a,b,c] for private
-                                builds); the published page comes from opus-5.5 build.py, which calls rail_layer
+  tools/build_rail.py           --check every guard in memory; --out PATH [--only a,b,c] for private comparison builds;
+                                the published page comes from opus-5.5 build.py, which calls rail_layer
   tools/rail_layer.py           apply_published(text, need) (PMConcept7.html: core subset + D), apply_review(text, need)
                                 (the review copy, stacked on the published page), published_problems(built),
                                 lint(profile), syntax_check(text, sid)
@@ -65,20 +67,21 @@ Concepts/leftrail-redesign/
 ## Commands (from the repository root)
 
 ```
-python3 Concepts/onboarding/opus-5.5/tools/build.py --publish-pm7  # PMConcept7.html (and TestOpus5.5PmConcept.html) with D
-python3 Concepts/onboarding/opus-5.5/tools/build.py --check     # "check ok": lint, syntax, rail markers, both pages current
-python3 Concepts/leftrail-redesign/tools/build_rail.py          # build Concepts/LeftRailPMConcept7.html (after --publish-pm7)
-python3 Concepts/leftrail-redesign/tools/build_rail.py --check  # rebuild in memory, lint, syntax, byte parity
+python3 Concepts/onboarding/opus-5.5/tools/build.py --publish-pm7  # PMConcept7.html with D
+python3 Concepts/onboarding/opus-5.5/tools/build.py --check     # "check ok": lint, syntax, rail markers, PMConcept7.html current
+python3 Concepts/leftrail-redesign/tools/build_rail.py --out /tmp/rail.html  # private comparison with A-D
+python3 Concepts/leftrail-redesign/tools/build_rail.py --check  # rebuild in memory, lint, syntax, markers, kept anchors
 python3 Concepts/leftrail-redesign/tools/parity.py --list       # fixture completeness against PMConcept7.html
 node Concepts/leftrail-redesign/tools/rail_boot.mjs <out-dir> [--page P[?query]] [--ref R[?query]]
      [--concepts a,b,c,d,current|none] [--panels files,search] [--themes all|basic-dark,...] [--quick] [--shots] [--restore]
-     # page: the review copy by default; the published page: --page Concepts/PMConcept7.html --concepts d
-     # ref: the shell's own rail, by default Concepts/LeftRailPMConcept7.html?rail=current (D never mounts there)
+     # page/ref: PMConcept7.html by default, concepts d,current; the reference switches to Current
+     # private comparison: --page /tmp/rail.html --concepts a,b,c,d --ref '/tmp/rail.html?rail=current'
+     # private ref at ?rail=current never mounts D; default PM7 boots D before switching to Current
      # d and current: all nine panels by default; a, b, c: files, source, docker; --panels overrides both;
      # --restore: switches to Current (Original), uses D, returns to Current and fails on any difference (every theme,
      #   NieR included) and when the first Current differs from the reference's own rail;
      # --concepts none --restore runs the restore check alone
-python3 Concepts/leftrail-redesign/tools/rail_perf.py Concepts/LeftRailPMConcept7.html <out.json> [--concepts d,current]
+python3 Concepts/leftrail-redesign/tools/rail_perf.py Concepts/PMConcept7.html <out.json> [--concepts d,current]
      [--themes basic-dark,glass-dark,retro-light] [--size 1600x1000] [--port 9351]
      # d and current: nine panels (bar-switch, expand, menu-open, tab per panel, as each panel has them); a, b, c: their own
      # moments; each run record has name (the moment kind) and panel. On the VM, from the lane directory:
@@ -88,7 +91,7 @@ python3 Concepts/leftrail-redesign/tools/build_d_css.py [--check]
 
 `build_rail.py` starts from `build.build_text()` of `Concepts/onboarding/opus-5.5/tools/build.py` (the published bytes,
 D included), so the base pin is enforced there. Order after any rail or opus-5.5 change: `build_d_css.py`, then
-`build.py --publish-pm7`, then `build_rail.py`; `build.py --check` fails while `PMConcept7.html` is stale against the
+`build.py --publish-pm7`, then `build_rail.py --check` (or `--out PATH` for a private comparison); `build.py --check` fails while `PMConcept7.html` is stale against the
 D sources. The opus-5.5 build reads `Plans/settings_inventory.json`; in a sparse worktree without `Plans`, write
 that one file from `HEAD` (`git show HEAD:Plans/settings_inventory.json > Plans/settings_inventory.json`). Keep
 `<out-dir>` outside the repository; `--shots` writes review screenshots there (delete them after review).

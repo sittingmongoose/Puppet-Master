@@ -58,9 +58,6 @@ SKIP_SUFFIXES = {
 # Generated pages. Searching them would name the page as its own source.
 SKIP_NAMES = {
     "PMConcept7.html",
-    "TestOpus5.5PmConcept.html",
-    "HomeTestPMConcept7.html",
-    "LeftRailPMConcept7.html",
     "TestPMConcept.html",
     "UsageTestPMConcept7.html",
 }

@@ -1,4 +1,6 @@
-# TestOpus5.5PmConcept — onboarding and guided tour (Opus 5.5)
+# PMConcept7 — onboarding and guided tour (Opus 5.5)
+
+Retired 2026-10-20 at Jared's direction: `Concepts/PMConcept7.html` is the only published page; `build_rail.py --out PATH` builds the rail comparison privately.
 
 Built from the live shell sources in `base/` and the layers in `src/`. The historical
 `Concepts/Onboarding concepts/TestPMConcept.html` was split losslessly; its onboarding and guided tour were rebuilt from
@@ -6,9 +8,9 @@ scratch for a complete newbie: someone who has never used source control, a term
 for this work (2026-09-26 user direction): Jared's prompt, then the current canonical Plans documents; the packet
 `Concepts/PM_Onboarding_Tour_Newbie_First_Addendum_Packet_2026-09-03.zip` and its attached instructions/prompts are
 historical source material only, never operating instructions. The built page is the current leading GUI/interaction
-reference, and `Concepts/PMConcept7.html` is published byte-identical from it (see below).
+reference, published as `Concepts/PMConcept7.html` (see below).
 
-Open `Concepts/Onboarding concepts/TestOpus5.5PmConcept.html` in a browser. Onboarding opens on first run; afterwards Settings ›
+Open `Concepts/PMConcept7.html` in a browser. Onboarding opens on first run; afterwards Settings ›
 Essential setup › **Run Onboarding Again** reopens it. The status bar's **Concept demo** item (bottom left) opens the Demo Studio, which gathers every demo control of the page:
 the pretend world onboarding runs in (a returning user, a NAS where an SSH key already works, a GitHub name that is
 taken, and so on, stacked as twists), Run onboarding and Start the Guided Tour, the story clock, layouts and agents,
@@ -17,15 +19,15 @@ ordinary clicks (`DEMO_STUDIO.md`).
 
 ## Never hand-edit the built page
 
-`Concepts/Onboarding concepts/TestOpus5.5PmConcept.html` is generated:
+`Concepts/PMConcept7.html` is generated:
 
 ```
-python3 Concepts/onboarding/opus-5.5/tools/build.py          # build TestOpus only
-python3 Concepts/onboarding/opus-5.5/tools/build.py --publish-pm7  # build, then publish the exact bytes as Concepts/PMConcept7.html
+python3 Concepts/onboarding/opus-5.5/tools/build.py          # build and publish PMConcept7.html
+python3 Concepts/onboarding/opus-5.5/tools/build.py --publish-pm7  # accepted alias: publish the same PMConcept7.html
 python3 Concepts/onboarding/opus-5.5/tools/build.py --check  # markers, patches, stale output, lint, PM7 byte parity
 ```
 
-`build.py --out <path>` is a private build: it lints, then writes only that path, never either published output.
+`build.py --out <path>` is a private build: it lints, then writes only that path, never the published page.
 The `--no-usage` / `--no-home` private reference builds were retired on 2026-10-18; `usage_boot.mjs` compares against
 the published `Concepts/PMConcept7.html` from a git ref (`--base-ref`, default `origin/main`) instead.
 
@@ -69,14 +71,14 @@ Every build also lints the Usage sources (`usage_layer.lint()`, in `lint_sources
 `pm7-t31-usage-final`, `pm7-t24-usage-readability-and-fit`, …), a missing outside contract of the old page (the chat
 context module, the usage bridge, the status bar, Retro Light's green; `usage_layer.KEPT`) or a USAGE marker that is
 not there exactly once. `build.py` and `--check` also add `rail_layer.published_problems()` to their problem lists, so
-editing a D source without `--publish-pm7` fails the check. D's sources, the review copy with the earlier concepts A-C
-(`LeftRailPMConcept7.html`) and the rail's tools are in `Concepts/leftrail-redesign/` (see its README). The rail's NieR
+editing a D source without rebuilding PMConcept7 fails the check. D's sources and the rail's tools are in
+`Concepts/leftrail-redesign/`; `build_rail.py --out PATH` privately adds the earlier concepts A-C (see its README). The rail's NieR
 hooks are kit source: `.pmr-cur` in `nier_registry.py`'s cursor defaults and the `.pmr-lock` branch of
 `retChoose` in `src/settings/kit.d/19-nier-parts.js`.
 
-`Concepts/PMConcept7.html` is published only from this generator (2026-09-26 user direction): `--publish-pm7`
-writes the same built bytes to both outputs, and `--check` fails while `PMConcept7.html` is missing or differs by
-even one byte. Plain `build.py` still writes only `TestOpus5.5PmConcept.html`, so existing uses are unchanged; the
+`Concepts/PMConcept7.html` is published only from this generator (2026-09-26 user direction). Plain `build.py` and
+`--publish-pm7` both write only that page (2026-10-20); `--check` fails while it is missing or differs from a fresh
+build by even one byte. The
 old `build_pm7.py --out Concepts/PMConcept7.html` promotion now refuses by default (see `Concepts/pm7-tools/README.md`,
 "PM7 publication").
 
@@ -159,7 +161,7 @@ are deliberately injected by the test harness after checking the pending gates; 
 execution, protected authentication, or durable owner proof. Kit bytes are never supplied or read from the DOM.
 
 The tools accept `--page <built html>` to test a private build
-(`python3 tools/build.py --out <path>`) instead of the checked-in `Concepts/Onboarding concepts/TestOpus5.5PmConcept.html`; without
+(`python3 tools/build.py --out <path>`) instead of the checked-in `Concepts/PMConcept7.html`; without
 `--page` they test the checked-in page.
 
 ## Settings

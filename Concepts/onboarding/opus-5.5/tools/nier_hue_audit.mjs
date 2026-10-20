@@ -20,7 +20,7 @@ const argv = process.argv.slice(2);
 const coverageFile = takeCoverageFlag(argv);
 const out = resolve(argv[0] && !argv[0].startsWith('--') ? argv[0] : 'nier-hue-audit');
 const opt = (k, d) => { const i = argv.indexOf('--' + k); return i >= 0 ? argv[i + 1] : d; };
-const PAGE = resolve(opt('page', resolve(here, '../../../Onboarding concepts/TestOpus5.5PmConcept.html')));
+const PAGE = resolve(opt('page', resolve(here, '../../../PMConcept7.html')));
 const modes = opt('modes', 'light,dark').split(',');
 const family = opt('family', 'retro');
 const minCell = Number(opt('min', '12'));

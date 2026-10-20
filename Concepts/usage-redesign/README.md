@@ -1,13 +1,14 @@
 # Usage redesign
 
+Retired 2026-10-20 at Jared's direction: `Concepts/PMConcept7.html` is the only published page; `build_rail.py --out PATH` builds the rail comparison privately.
+
 The redesigned Usage page of the Puppet Master concept. `Concepts/onboarding/opus-5.5/tools/build.py` is its publish
 path: its step 2b calls `tools/usage_layer.py` here to replace the base's old Prism Usage page with the page in `src/`,
-and `--publish-pm7` writes the result to `Concepts/PMConcept7.html` (and the same bytes to
-`Concepts/Onboarding concepts/TestOpus5.5PmConcept.html`). Never hand-edit the Usage page inside a built page: change
+and plain runs or `--publish-pm7` write only `Concepts/PMConcept7.html`. Never hand-edit the Usage page inside a built page: change
 `src/` or `tools/usage_layer.py` and rebuild.
 
 Jared approved the redesign on 2026-10-09 and asked for it in PMConcept7 ("So the UsageTestPMConcept7.html will go away
-after you finish"). Two stages, so check which one your checkout is in:
+after you finish"). The historical 2026-10-09 publication had two stages:
 - **Before the publish** (the committed `Concepts/PMConcept7.html` has no `<!-- USAGE:BODY:START -->`): the review copy
   `Concepts/UsageTestPMConcept7.html` still exists and `tools/build_usage.py` writes it; that is the lanes' loop. A
   working tree where `build.py --publish-pm7` ran has the new page in both published pages; never commit them before
@@ -86,7 +87,7 @@ Before the publish (review copy present):
 
 ```
 python3 Concepts/usage-redesign/tools/build_usage.py           # write Concepts/UsageTestPMConcept7.html (never commit it on a lane branch)
-python3 Concepts/usage-redesign/tools/build_usage.py --check   # review copy current, guards hold, TestOpus current with or without Usage
+python3 Concepts/usage-redesign/tools/build_usage.py --check   # PMConcept7.html current, Usage guards hold
 python3 Concepts/onboarding/opus-5.5/tools/build.py --check    # fails on the two published-page staleness lines until
                                                                # --publish-pm7 runs in the working tree (do not commit them)
 node Concepts/usage-redesign/tools/usage_boot.mjs <out-dir>    # boot check of the review copy
@@ -95,9 +96,9 @@ node Concepts/usage-redesign/tools/usage_boot.mjs <out-dir>    # boot check of t
 After the publish (review copy gone):
 
 ```
-python3 Concepts/onboarding/opus-5.5/tools/build.py --publish-pm7   # publish: TestOpus5.5PmConcept.html and PMConcept7.html
+python3 Concepts/onboarding/opus-5.5/tools/build.py --publish-pm7   # publish only PMConcept7.html
 python3 Concepts/onboarding/opus-5.5/tools/build.py --check         # lint, syntax, markers, old references gone, outside
-                                                                    # contracts kept, both published pages byte-current
+                                                                    # contracts kept, PMConcept7.html byte-current
 python3 Concepts/usage-redesign/tools/build_usage.py [--check | --out PATH]   # the same through the wrapper
 node Concepts/usage-redesign/tools/usage_boot.mjs <out-dir>         # boot check of Concepts/PMConcept7.html
 ```

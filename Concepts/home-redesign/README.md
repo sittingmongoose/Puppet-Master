@@ -1,5 +1,7 @@
 # Home redesign: universal panels and the terminal
 
+Retired 2026-10-20 at Jared's direction: `Concepts/PMConcept7.html` is the only published page; `build_rail.py --out PATH` builds the rail comparison privately.
+
 The new PMConcept7 Home: one universal panel system (an n-ary split tree of tab groups) between the left rail and the
 chat column, replacing today's separate editor panels, dashboard and terminal dock. Decisions D1-D28 are in
 `/mnt/Cursor/share/puppet-master/2026-10-09-home-panels-terminal/DECISIONS.md`, and D17a and D29-D41 are in the addenda
@@ -8,8 +10,8 @@ beside it (`DECISIONS-ADDENDUM-1.md` to `DECISIONS-ADDENDUM-3.md`); the host con
 
 This package follows the **layer pattern** of the Usage and left-rail redesigns (`Concepts/usage-redesign`,
 `Concepts/leftrail-redesign`), not the per-model concept folder of `Concepts/CONCEPT_RULES.md`: it is a build layer over
-the published concept, and its review copy is a generated page. The Concept Hub registers it through
-`opus-5.5-hub/` (a model-named folder whose page frames the review copy and passes the Hub's theme and Reduced Motion).
+the published concept. The Concept Hub registers it through `opus-5.5-hub/` (a model-named folder whose page frames
+`PMConcept7.html` and passes the Hub's theme and Reduced Motion).
 
 ## Layout
 
@@ -17,7 +19,7 @@ the published concept, and its review copy is a generated page. The Concept Hub 
 Concepts/home-redesign/
   CONTRACT.md                 the tab-kind registry and host contract (panels thread; the terminal thread builds on it)
   tools/home_layer.py         apply(text, need) -> (text, notes), lint(), syntax_check(text), published_problems(text)
-  tools/build_home.py         build / --check Concepts/HomeTestPMConcept7.html (--out PATH for private builds)
+  tools/build_home.py         --check the Home layer and PMConcept7.html; --out PATH for private builds
   src/panels/early/*.js       <script id="pm-home-early"> in <head>: the PM_HOME_WORKSPACE shim, html[data-pmw-home]
   src/panels/js/*.js          the engine, one shared strict scope: window.PM_HOME (public) and window.PMW (internals)
   src/panels/kinds/*.js       the panels' own tab kinds, each in a scope of its own (sees PM_HOME and PMW only)
@@ -55,26 +57,22 @@ steps look up when they run; it defines and edits no step.
 
 The Home layer is published. `Concepts/onboarding/opus-5.5/tools/build.py` builds the page in this order: Settings, the
 Usage page (`usage_layer`), the left rail (`rail_layer.apply_published`), then this layer (`home_layer.apply`, step 5
-of `build_text()`). So `build.py` writes `Concepts/Onboarding concepts/TestOpus5.5PmConcept.html` with the panels and
-the terminal, and `build.py --publish-pm7` writes the same bytes to `Concepts/PMConcept7.html`. `build.py` and
+of `build_text()`). Plain `build.py` and `build.py --publish-pm7` both write only `Concepts/PMConcept7.html` with the
+panels and the terminal. `build.py` and
 `build.py --check` lint this package's sources (`home_layer.lint()`, in `lint_sources()`) and add
 `home_layer.published_problems()` to their checks.
 
-The review copy `Concepts/HomeTestPMConcept7.html` (the Concept Hub's `opus-5.5-hub/` frames it) is the same bytes as a
-fresh build, so it can never drift from the published page. `build_home.py --check` fails when a source breaks the
-layer's rules, a script does not parse, a HOME marker or a kept anchor is not there exactly once, or the review copy,
-`TestOpus5.5PmConcept.html` or `PMConcept7.html` differs from a fresh build. Every one of them is generated: after
-changing a source, run `build.py --publish-pm7`, then `build_home.py` (and the rail's `build_rail.py`, whose review
-copy stacks on the published page).
+`build_home.py --check` rebuilds in memory and fails when a source breaks the layer's rules, a script does not parse,
+a HOME marker or a kept anchor is not there exactly once, or `PMConcept7.html` differs from a fresh build.
+After changing a source, run `build.py --publish-pm7`, then `build_home.py --check` and `build_rail.py --check`.
+`build_home.py --out PATH` writes a private copy with the same bytes; it has no committed output.
 
 ## Commands (from the repository root)
 
 ```
 python3 Concepts/onboarding/opus-5.5/tools/build.py --publish-pm7  # build and publish PMConcept7.html with the layer
-python3 Concepts/home-redesign/tools/build_home.py                 # write the review copy (the same bytes)
-python3 Concepts/leftrail-redesign/tools/build_rail.py             # the rail's review copy, stacked on the page
-python3 Concepts/onboarding/opus-5.5/tools/build.py --check        # lint, syntax, markers, both published pages current
-python3 Concepts/home-redesign/tools/build_home.py --check         # the same for this layer, plus the review copy
+python3 Concepts/onboarding/opus-5.5/tools/build.py --check        # lint, syntax, markers, PMConcept7.html current
+python3 Concepts/home-redesign/tools/build_home.py --check         # lint, syntax, markers, kept anchors, PMConcept7.html parity
 python3 Concepts/home-redesign/tools/build_home.py --out PATH      # a private build (workers, screenshots)
 python3 Concepts/ConceptHub/validate.py "Concepts/home-redesign/opus-5.5-hub"
 ```

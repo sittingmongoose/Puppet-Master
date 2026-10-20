@@ -22,7 +22,7 @@ const argv = process.argv.slice(2);
 const coverageFile = takeCoverageFlag(argv);
 const out = resolve(argv[0] && !argv[0].startsWith('--') ? argv[0] : '/tmp/o55/explore');
 const opt = (k, d) => { const i = argv.indexOf('--' + k); return i >= 0 ? argv[i + 1] : d; };
-const PAGE = resolve(opt('page', resolve(here, '../../../Onboarding concepts/TestOpus5.5PmConcept.html')));
+const PAGE = resolve(opt('page', resolve(here, '../../../PMConcept7.html')));
 const SCENARIO = opt('scenario', 'fresh');
 const MAX = Number(opt('max', 1200));
 /* at most this many states per screen, so the budget reaches every screen instead of one screen's combinations */

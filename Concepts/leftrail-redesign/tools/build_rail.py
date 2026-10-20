@@ -1,19 +1,19 @@
 #!/usr/bin/env python3
-"""Build Concepts/LeftRailPMConcept7.html: the review copy of the left rail, stacked on the published concept.
+"""Build a private left-rail comparison page, stacked on Concepts/PMConcept7.html.
 
 Usage (from the repository root):
-  python3 Concepts/leftrail-redesign/tools/build_rail.py              # build and write Concepts/LeftRailPMConcept7.html
-  python3 Concepts/leftrail-redesign/tools/build_rail.py --out PATH   # build to PATH instead (private builds)
+  python3 Concepts/leftrail-redesign/tools/build_rail.py --out PATH   # write a private comparison build
   python3 Concepts/leftrail-redesign/tools/build_rail.py --out PATH --only a   # the published page + concept a only
-  python3 Concepts/leftrail-redesign/tools/build_rail.py --check      # rebuild in memory, verify guards and the written file
+  python3 Concepts/leftrail-redesign/tools/build_rail.py --check      # rebuild in memory and verify every guard
 
-The input is opus-5.5 build.build_text(): the exact bytes of TestOpus5.5PmConcept.html and PMConcept7.html, which
-already carry concept D (rail_layer.apply_published; the base pin is enforced there). rail_layer.apply_review adds the
+The input is opus-5.5 build.build_text(): the exact bytes of PMConcept7.html, which
+already carries concept D (rail_layer.apply_published; its guards are enforced there). rail_layer.apply_review adds the
 view concepts A, B and C, their fixture and the switcher, so the D here is byte for byte the published D. The output
 is generated: never hand-edit it.
 """
 from __future__ import annotations
 
+import argparse
 import hashlib
 import json
 import sys
@@ -29,7 +29,6 @@ sys.path.insert(0, str(TOOLS))
 import build  # noqa: E402  (opus-5.5 tools/build.py)
 import rail_layer  # noqa: E402
 
-TARGET = CONCEPTS / 'LeftRailPMConcept7.html'
 INPUT_FILE = CONCEPTS / 'PMConcept7.html'
 OLD_TITLE = '<title>TestOpus5.5 · Puppet Master</title>'
 NEW_TITLE = '<title>LeftRail PM7 · Puppet Master</title>'
@@ -71,10 +70,10 @@ def problems_for(text: str) -> list[str]:
     return problems
 
 
-def report(text: str, notes: dict, target: Path) -> dict:
+def report(text: str, notes: dict, target: Path | None) -> dict:
     data = text.encode('utf-8')
     try:
-        shown = str(target.relative_to(CONCEPTS.parent))
+        shown = str(target.relative_to(CONCEPTS.parent)) if target is not None else None
     except ValueError:
         shown = str(target)
     return {'output': shown, 'bytes': len(data), 'sha256': hashlib.sha256(data).hexdigest()[:16],
@@ -85,18 +84,19 @@ def report(text: str, notes: dict, target: Path) -> dict:
 
 
 def main() -> int:
-    args = sys.argv[1:]
-    check = '--check' in args
-    target = TARGET
-    if '--out' in args:
-        i = args.index('--out')
-        if i + 1 >= len(args):
-            print('--out needs a path', file=sys.stderr)
-            return 2
-        target = Path(args[i + 1]).expanduser().resolve()
-    if '--only' in args:
-        i = args.index('--only')
-        rail_layer.ONLY = [x for x in (args[i + 1] if i + 1 < len(args) else '').split(',') if x]
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('--check', action='store_true', help='rebuild and check in memory; write nothing')
+    parser.add_argument('--out', type=Path, help='private comparison output path')
+    parser.add_argument('--only', help='comma-separated review concepts (a, b, c); D is always included')
+    args = parser.parse_args()
+    check = args.check
+    target = args.out.expanduser().resolve() if args.out is not None else None
+    if target == INPUT_FILE.resolve():
+        parser.error('--out must not be the published PMConcept7.html page')
+    if not check and target is None:
+        parser.error('use --out PATH for a private comparison build, or --check to verify without writing')
+    if args.only is not None:
+        rail_layer.ONLY = [x for x in args.only.split(',') if x]
         if not rail_layer.ONLY or any(x not in rail_layer.REVIEW_CONCEPTS for x in rail_layer.ONLY):
             print('--only takes review concepts (a, b, c): the published page, concept D included, is always built',
                   file=sys.stderr)
@@ -104,8 +104,8 @@ def main() -> int:
         if check:
             print('--only is for private builds; --check always builds every concept', file=sys.stderr)
             return 2
-        if target == TARGET:
-            print('--only needs --out (the shared review copy always holds every concept)', file=sys.stderr)
+        if target is None:
+            print('--only needs --out', file=sys.stderr)
             return 2
     try:
         text, notes, input_current = build_page()
@@ -120,10 +120,6 @@ def main() -> int:
         else:
             print('WARNING:', message, file=sys.stderr)
     if check:
-        if not target.exists():
-            problems.append(f'{target.name} is missing; run build_rail.py')
-        elif target.read_bytes() != text.encode('utf-8'):
-            problems.append(f'{target.name} is stale or hand-edited; run build_rail.py')
         for p in problems:
             print('CHECK:', p)
         print(json.dumps(report(text, notes, target)))

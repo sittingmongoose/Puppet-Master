@@ -9,7 +9,7 @@ import { resolve, dirname } from 'node:path';
 
 const here = dirname(fileURLToPath(import.meta.url));
 const pageIdx = process.argv.indexOf('--page');
-export const PAGE = pageIdx >= 0 && process.argv[pageIdx + 1] ? resolve(process.argv[pageIdx + 1]) : resolve(here, '../../../Onboarding concepts/TestOpus5.5PmConcept.html');
+export const PAGE = pageIdx >= 0 && process.argv[pageIdx + 1] ? resolve(process.argv[pageIdx + 1]) : resolve(here, '../../../PMConcept7.html');
 const LAYER = '#pm-o55-onboarding .o55-pane > .o55-layer:not(.o55-out)';
 const attr = (s) => String(s).replace(/\\/g, '\\\\').replace(/"/g, '\\"');
 

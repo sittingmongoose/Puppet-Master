@@ -1,21 +1,21 @@
 #!/usr/bin/env python3
-"""Build Concepts/HomeTestPMConcept7.html, the Home panels review copy: the published concept, byte for byte.
+"""Check the published Home panels or build a private copy of Concepts/PMConcept7.html.
 
 Usage (from the repository root):
-  python3 Concepts/home-redesign/tools/build_home.py              # build and write Concepts/HomeTestPMConcept7.html
-  python3 Concepts/home-redesign/tools/build_home.py --out PATH   # build to PATH instead (private builds, workers)
+  python3 Concepts/home-redesign/tools/build_home.py --out PATH   # write a private build (workers, screenshots)
   python3 Concepts/home-redesign/tools/build_home.py --check      # rebuild in memory: lint, syntax, markers, parity
 
-The Home layer is published: opus-5.5 build.build_text() applies tools/home_layer.py as its last step (step 5, after
-Usage and the left rail), so build.py --publish-pm7 writes PMConcept7.html with the panels and the terminal. The review
-copy is the same bytes as a fresh build (the Concept Hub frames it from opus-5.5-hub/); it has no header or title of its
-own any more, so it can never drift from the published page. --check fails when the Home sources break the layer's
-rules, a script does not parse, a HOME marker or a kept anchor is not there exactly once, the review copy differs from
-a fresh build, or PMConcept7.html does (run opus-5.5 build.py --publish-pm7). Every output is generated: never
+The Home layer is published: opus-5.5 build.build_text() applies tools/home_layer.py at step 6, after Usage, the rail
+and glyphs, so build.py --publish-pm7 writes PMConcept7.html with the panels and the terminal. A review
+copy can be built privately with --out; the Concept Hub frames PMConcept7.html from opus-5.5-hub/.
+--check fails when the Home sources break the layer's rules, a script does not parse, a HOME marker or a kept anchor
+is not there exactly once, or PMConcept7.html differs from a fresh build (run opus-5.5 build.py --publish-pm7).
+There is no committed Home review output. Every output is generated: never
 hand-edit it.
 """
 from __future__ import annotations
 
+import argparse
 import hashlib
 import json
 import sys
@@ -31,8 +31,7 @@ sys.path.insert(0, str(TOOLS))
 import build  # noqa: E402  (opus-5.5 tools/build.py)
 import home_layer  # noqa: E402
 
-TARGET = CONCEPTS / 'HomeTestPMConcept7.html'
-PUBLISHED = (CONCEPTS / 'PMConcept7.html', CONCEPTS / 'Onboarding concepts' / 'TestOpus5.5PmConcept.html')
+PUBLISHED = CONCEPTS / 'PMConcept7.html'
 
 
 def build_page() -> tuple[str, dict]:
@@ -49,10 +48,10 @@ def problems_for(text: str) -> list[str]:
     return problems
 
 
-def report(text: str, notes: dict, target: Path) -> dict:
+def report(text: str, notes: dict, target: Path | None) -> dict:
     data = text.encode('utf-8')
     try:
-        shown = str(target.relative_to(CONCEPTS.parent))
+        shown = str(target.relative_to(CONCEPTS.parent)) if target is not None else None
     except ValueError:
         shown = str(target)
     return {'output': shown, 'bytes': len(data), 'sha256': hashlib.sha256(data).hexdigest()[:16],
@@ -62,24 +61,16 @@ def report(text: str, notes: dict, target: Path) -> dict:
 
 
 def main() -> int:
-    args = sys.argv[1:]
-    known = {'--check', '--out'}
-    stray = [a for i, a in enumerate(args) if a not in known and not (i > 0 and args[i - 1] == '--out')]
-    if stray:
-        # an unknown flag (--help included) never writes the tracked review copy
-        print('usage: build_home.py [--check] [--out PATH]', file=sys.stderr)
-        return 2
-    check = '--check' in args
-    target = TARGET
-    if '--out' in args:
-        i = args.index('--out')
-        if i + 1 >= len(args):
-            print('--out needs a path', file=sys.stderr)
-            return 2
-        target = Path(args[i + 1]).expanduser().resolve()
-        if target in tuple(p.resolve() for p in PUBLISHED):
-            print('--out must not be a published page (opus-5.5 build.py --publish-pm7 writes those)', file=sys.stderr)
-            return 2
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('--check', action='store_true', help='check the Home layer and published page; write nothing')
+    parser.add_argument('--out', type=Path, help='private output path')
+    args = parser.parse_args()
+    check = args.check
+    target = args.out.expanduser().resolve() if args.out is not None else None
+    if target == PUBLISHED.resolve():
+        parser.error('--out must not be the published page (opus-5.5 build.py publishes it)')
+    if not check and target is None:
+        parser.error('use --out PATH for a private build, or --check to verify without writing')
     try:
         text, notes = build_page()
     except (build.BuildError, ValueError) as exc:
@@ -87,19 +78,14 @@ def main() -> int:
         return 2
     problems = problems_for(text)
     data = text.encode('utf-8')
-    stale = [p for p in PUBLISHED if not p.exists() or p.read_bytes() != data]
-    for p in stale:
-        message = (f'{p.relative_to(CONCEPTS.parent)} differs from a fresh build (the Home layer is published): run '
+    if not PUBLISHED.exists() or PUBLISHED.read_bytes() != data:
+        message = (f'{PUBLISHED.relative_to(CONCEPTS.parent)} differs from a fresh build (the Home layer is published): run '
                    f'opus-5.5 build.py --publish-pm7')
         if check:
             problems.append(message)
         else:
             print('WARNING:', message, file=sys.stderr)
     if check:
-        if not target.exists():
-            problems.append(f'{target.name} is missing; run build_home.py')
-        elif target.read_bytes() != data:
-            problems.append(f'{target.name} is stale or hand-edited (it must equal a fresh build); run build_home.py')
         for p in problems:
             print('CHECK:', p)
         print(json.dumps(report(text, notes, target)))

@@ -40,8 +40,8 @@ function main(argv) {
     } else options[arg.slice(2)] = value;
   }
   if (!/^\d+$/.test(options.concurrency) || Number(options.concurrency) < 1 || Number(options.concurrency) > 4) throw Error('Concurrency must be 1..4');
-  const pages = ['Concepts/PMConcept7.html', 'Concepts/Onboarding concepts/TestOpus5.5PmConcept.html', 'Concepts/HomeTestPMConcept7.html', 'Concepts/LeftRailPMConcept7.html'];
-  if (!pages.includes(options.page)) throw Error('Choose one of the four published pages');
+  const pages = ['Concepts/PMConcept7.html'];
+  if (!pages.includes(options.page)) throw Error('The published page is Concepts/PMConcept7.html; use pm7_parity.mjs for private input paths');
   const matrixPath = join(here, 'pm7_parity_states.json'), matrixBytes = readFileSync(matrixPath), matrix = JSON.parse(matrixBytes);
   const transientStates = matrix.states.filter(state => /menu|popover/.test(state.id)
     || state.steps.some(step => step.action === 'hover' || step.action === 'focus')).map(state => state.id);

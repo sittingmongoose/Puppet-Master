@@ -1,11 +1,11 @@
 #!/usr/bin/env python3
-"""Build Concepts/Onboarding concepts/TestOpus5.5PmConcept.html from the live ../base shell sources plus ./src (onboarding, tour, Settings).
+"""Build Concepts/PMConcept7.html from the live ../base shell sources plus ./src (onboarding, tour, Settings).
 
 Usage:
-  python3 Concepts/onboarding/opus-5.5/tools/build.py          # build TestOpus only
-  python3 Concepts/onboarding/opus-5.5/tools/build.py --publish-pm7  # build, then publish the exact bytes as Concepts/PMConcept7.html
+  python3 Concepts/onboarding/opus-5.5/tools/build.py          # build and publish Concepts/PMConcept7.html
+  python3 Concepts/onboarding/opus-5.5/tools/build.py --publish-pm7  # accepted alias for the same publication
   python3 Concepts/onboarding/opus-5.5/tools/build.py --out /tmp/x.html  # private build: lint, then write only that path
-  python3 Concepts/onboarding/opus-5.5/tools/build.py --check  # verify the built file is current, every guard holds, and PMConcept7.html is byte-identical
+  python3 Concepts/onboarding/opus-5.5/tools/build.py --check  # verify PMConcept7.html is current and every guard holds
 
 The live shell is ordinary source in ../base/: manifest.json fixes the block list, shell.html owns markup,
 and tools/base_source.py inserts raw style/script bodies byte for byte. Edit those files directly; the old
@@ -14,8 +14,8 @@ Unconditional shell edits are already in base/; the fork-owned Doctor edit is in
 Settings (step 0), Usage (2b), O55 (3), rail (4), glyphs (5), Home/Glass/wallpapers (6) remain authored layers.
 The NieR registry (tools/nier_registry.py) emits their list contributions after composition.
 Step 7 applies active_descendant_rewrite and css_bucket_split over the finished page; page lint sees the unsplit CSS.
-Concepts/PMConcept7.html is published only from here (2026-09-26 user direction): --publish-pm7 writes the same built
-bytes to both outputs, and --check fails while PMConcept7.html is missing or differs by even one byte.
+Concepts/PMConcept7.html is the only published page (2026-10-20 user direction). Plain runs and --publish-pm7 write
+that file; --check fails while it is missing or differs from a fresh build by even one byte.
 """
 from __future__ import annotations
 
@@ -36,8 +36,7 @@ import css_bucket_split
 TOOLS = Path(__file__).resolve().parent
 PKG = TOOLS.parent
 CONCEPTS = PKG.parents[1]
-TARGET = CONCEPTS / 'Onboarding concepts' / 'TestOpus5.5PmConcept.html'
-PM7_TARGET = CONCEPTS / 'PMConcept7.html'
+TARGET = CONCEPTS / 'PMConcept7.html'
 SRC = PKG / 'src'
 
 _previous_dont_write_bytecode = sys.dont_write_bytecode
@@ -606,12 +605,8 @@ def check(built: str) -> list[str]:
             problems.append(f'marker {marker} appears {built.count(marker)} times')
     expected = built.encode('utf-8')
     if not TARGET.exists():
-        problems.append('Concepts/Onboarding concepts/TestOpus5.5PmConcept.html is missing; run build.py')
-    elif TARGET.read_bytes() != expected:
-        problems.append('Concepts/Onboarding concepts/TestOpus5.5PmConcept.html is stale; run build.py')
-    if not PM7_TARGET.exists():
         problems.append('Concepts/PMConcept7.html is missing; run build.py --publish-pm7')
-    elif PM7_TARGET.read_bytes() != expected:
+    elif TARGET.read_bytes() != expected:
         problems.append('Concepts/PMConcept7.html differs from a fresh build; run build.py --publish-pm7')
     unsplit = UNSPLIT.get(built)
     if unsplit is None:
@@ -672,11 +667,11 @@ def main() -> int:
             print('LINT:', p)
         return 1
     if '--out' in sys.argv:
-        # a private build (parallel workers, screenshots): writes only the given path, never either published output
+        # a private build (parallel workers, screenshots): writes only the given path, never the published page
         i = sys.argv.index('--out')
         out = Path(sys.argv[i + 1]).expanduser().resolve() if i + 1 < len(sys.argv) else None
-        if out is None or out in (TARGET.resolve(), PM7_TARGET.resolve()) or '--publish-pm7' in sys.argv:
-            print('--out needs a private path (not TestOpus5.5PmConcept.html or PMConcept7.html) and no --publish-pm7', file=sys.stderr)
+        if out is None or out == TARGET.resolve() or '--publish-pm7' in sys.argv:
+            print('--out needs a private path (not PMConcept7.html) and no --publish-pm7', file=sys.stderr)
             return 2
         out.parent.mkdir(parents=True, exist_ok=True)
         tmp = out.with_name(out.name + '.tmp')
@@ -691,8 +686,7 @@ def main() -> int:
                'sha256': hashlib.sha256(data).hexdigest()[:16],
                'base_sha256': hashlib.sha256(base_source.assemble()).hexdigest()[:16]}
     if '--publish-pm7' in sys.argv:
-        PM7_TARGET.write_bytes(data)
-        summary['pm7_output'] = str(PM7_TARGET.relative_to(CONCEPTS.parent))
+        summary['pm7_output'] = str(TARGET.relative_to(CONCEPTS.parent))
         summary['pm7_bytes'] = len(data)
         summary['pm7_sha256'] = hashlib.sha256(data).hexdigest()
     print(json.dumps(summary))

@@ -10,7 +10,7 @@ import { resolve, dirname } from 'node:path';
 const here = dirname(fileURLToPath(import.meta.url));
 const argv = process.argv.slice(2);
 const pageIdx = argv.indexOf('--page');
-const PAGE = resolve(pageIdx >= 0 && argv[pageIdx + 1] ? argv[pageIdx + 1] : resolve(here, '../../../Onboarding concepts/TestOpus5.5PmConcept.html'));
+const PAGE = resolve(pageIdx >= 0 && argv[pageIdx + 1] ? argv[pageIdx + 1] : resolve(here, '../../../PMConcept7.html'));
 const KEYS = ['pm.o55.tour.v1', 'pm.o55.tour-basis.v1'];
 const url = (n) => `${pathToFileURL(PAGE).href}?o55=off&r=${n}`;
 let loads = 0;

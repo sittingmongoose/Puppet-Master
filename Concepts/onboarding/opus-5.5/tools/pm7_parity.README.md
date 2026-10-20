@@ -1,11 +1,13 @@
 # PM7 parity
 
+Retired 2026-10-20 at Jared's direction: `Concepts/PMConcept7.html` is the only published page; `build_rail.py --out PATH` builds the rail comparison privately.
+
 ```sh
 node Concepts/onboarding/opus-5.5/tools/pm7_parity.mjs baseline.html candidate.html --concurrency 4 --out /absolute/evidence/run
 ```
 
 Node 22+, GPU agent-browser and no npm dependencies. Inputs are self-contained PMConcept7 or
-LeftRailPMConcept7 HTML files. A pair stays in one Chrome/GPU process. Each input/load gets a fresh
+private rail comparison HTML files (`build_rail.py --out PATH`). A pair stays in one Chrome/GPU process. Each input/load gets a fresh
 browser context; source bytes are fulfilled unchanged at the same intercepted file URL. Relative
 external assets are unsupported. HTTP(S), WebSocket and FTP requests are blocked.
 Fetch interception checks actual schemes; CDP substring URL globs are avoided because they can
@@ -222,8 +224,9 @@ node Concepts/onboarding/opus-5.5/tools/pm7_parity_revalidate.mjs \
 
 It reads both committed inputs with `git show`, pins their commits, and runs both sides through
 the current guarded harness. Both input refs are required for a run. It selects only menu/popover
-states and states with hover/focus actions. Use `--page Concepts/LeftRailPMConcept7.html` for Rail
-and a fresh output directory. Optional looks/pages/viewports/motions subsets use the normal syntax.
+states and states with hover/focus actions. This wrapper accepts only the published `Concepts/PMConcept7.html`.
+For private rail comparison builds, use `build_rail.py --out PATH`, then pass arbitrary baseline and candidate
+file paths to `pm7_parity.mjs` directly, with a fresh output directory. Optional looks/pages/viewports/motions subsets use the normal syntax.
 The header count, `--list` selection and `comparison.json` planned count are calculated by
 `selectMatrix` for the requested subset; no comparison count is hardcoded in the wrapper.
 No expected removals, pixel tolerance or measured envelope is enabled. The wrapper retains pinned

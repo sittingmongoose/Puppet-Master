@@ -8,16 +8,15 @@
   .model { position: fixed; right: 8px; bottom: 30px; z-index: 2; font: 600 11px/1 system-ui, sans-serif; color: rgba(255, 255, 255, .55); pointer-events: none; }
 </style>
 </head><body>
-<!-- The Concept Hub registers this model folder; the review copy itself is Concepts/HomeTestPMConcept7.html, built by
-     Concepts/home-redesign/tools/build_home.py (the layer-package pattern of the Usage and left-rail redesigns, not a
-     per-model concept folder). This page frames it and passes the Hub's theme and Reduced Motion through. -->
+<!-- The Concept Hub registers this model folder and frames Concepts/PMConcept7.html, built by
+     Concepts/onboarding/opus-5.5/tools/build.py. This layer-package entry passes the Hub's theme and Reduced Motion. -->
 <span class="model" data-concept-model="Opus 5.5">Opus 5.5</span>
-<iframe id="review" title="Home panels review copy" src="../../HomeTestPMConcept7.html"></iframe>
+<iframe id="review" title="Home panels in PMConcept7" src="../../PMConcept7.html"></iframe>
 <script>
 (function () {
   'use strict';
   var frame = document.getElementById('review');
-  frame.src = '../../HomeTestPMConcept7.html' + (location.search || '?o55=off') + location.hash;
+  frame.src = '../../PMConcept7.html' + (location.search || '?o55=off') + location.hash;
   var pending = null;
   function apply(state) {
     var w = frame.contentWindow;

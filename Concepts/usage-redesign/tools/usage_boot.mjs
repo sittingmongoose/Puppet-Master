@@ -12,8 +12,8 @@
  * written to <out-dir>/reference-published.html. The build.py --no-usage private reference build was retired on
  * 2026-10-18; the published page is the regression baseline and can equal the candidate bytes. While the historical
  * review copy Concepts/UsageTestPMConcept7.html exists,
- * the default is that review copy against its input, Concepts/Onboarding concepts/TestOpus5.5PmConcept.html (or
- * against the published reference page when build.py --publish-pm7 has already put the new Usage page into TestOpus
+ * the default is that review copy against its input, Concepts/PMConcept7.html (or
+ * against the published reference page when build.py --publish-pm7 has already put the new Usage page into PM7
  * in this working tree).
  * Writes <out-dir>/usage-boot.json (never into the repository), prints the summary, exits 1 when a check fails.
  * Each browser gets a private profile that chrome.mjs deletes on close. No screenshots. */
@@ -35,7 +35,7 @@ const published = args.includes('--published') || !!pageArg; if (args.includes('
 const out = resolve(args[0] || '/tmp/usage-boot');
 mkdirSync(out, { recursive: true });
 const reviewCopy = join(concepts, 'UsageTestPMConcept7.html');
-const testOpus = join(concepts, 'Onboarding concepts', 'TestOpus5.5PmConcept.html');
+const pm7 = join(concepts, 'PMConcept7.html');
 const USAGE_MARK = '<!-- USAGE:BODY:START -->';
 /* the reference page: the published page from a git ref (--base-ref, default origin/main) */
 const referenceBuild = () => {
@@ -48,11 +48,11 @@ const referenceBuild = () => {
 };
 let pages;
 if (args[1] && !published) {
-  pages = { base: resolve(args[2] || testOpus), usage: resolve(args[1]) };
+  pages = { base: resolve(args[2] || pm7), usage: resolve(args[1]) };
 } else if (!published && existsSync(reviewCopy)) {
-  /* review copy against its input; if build.py --publish-pm7 ran in this working tree, TestOpus already carries the new
+  /* review copy against its input; if build.py --publish-pm7 ran in this working tree, PM7 already carries the new
    * Usage page and is no old-page reference, so use the published reference page instead */
-  pages = { base: readFileSync(testOpus, 'utf8').includes(USAGE_MARK) ? referenceBuild() : testOpus, usage: reviewCopy };
+  pages = { base: readFileSync(pm7, 'utf8').includes(USAGE_MARK) ? referenceBuild() : pm7, usage: reviewCopy };
 } else {
   const usage = resolve(pageArg || join(concepts, 'PMConcept7.html'));
   if (!readFileSync(usage, 'utf8').includes(USAGE_MARK)) {

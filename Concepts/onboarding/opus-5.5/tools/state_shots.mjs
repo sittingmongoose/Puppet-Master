@@ -17,7 +17,7 @@ const coverageFile = takeCoverageFlag(argv);
 const graphPath = resolve(argv[0]);
 const out = resolve(argv[1] && !argv[1].startsWith('--') ? argv[1] : '/tmp/o55/state-shots');
 const opt = (k, d) => { const i = argv.indexOf('--' + k); return i >= 0 ? argv[i + 1] : d; };
-const PAGE = resolve(opt('page', resolve(here, '../../../Onboarding concepts/TestOpus5.5PmConcept.html')));
+const PAGE = resolve(opt('page', resolve(here, '../../../PMConcept7.html')));
 const reportPath = join(dirname(graphPath), 'report.json');
 const scenario = opt('scenario', existsSync(reportPath) ? JSON.parse(readFileSync(reportPath, 'utf8')).scenario : 'fresh');
 const screens = opt('screens', '').split(',').filter(Boolean);

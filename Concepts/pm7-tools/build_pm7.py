@@ -6,8 +6,7 @@ pinned base IS the prior shipped document: base/PM7-base.html. New work lands
 as T33+ transforms derived from that pin. See README.md ("Re-baseline").
 
 2026-09-26 publication change (user direction): the checked-in
-Concepts/PMConcept7.html is published byte-identical from
-Concepts/Onboarding concepts/TestOpus5.5PmConcept.html via
+Concepts/PMConcept7.html is built from the authored sources via
 Concepts/onboarding/opus-5.5/tools/build.py --publish-pm7. This pipeline's
 T33+ tail, including the old T44 Settings tome, T45 onboarding/tour, and T50
 Settings refresh stages, is retained for explicit historical output only: a
@@ -94,7 +93,7 @@ T01_DESIGN_BAND = (40960, 61440)
 NO_EMOJI_CHECKER = REPO / "Concepts" / "pm6-build" / "checks" / "check_no_emoji.py"
 
 # Canonical checked-in PM7 artifact. Since the 2026-09-26 publication change
-# this file is published from TestOpus5.5PmConcept.html via the opus-5.5
+# this file is published directly from authored sources via the opus-5.5
 # generator; this pipeline may target it only with --allow-legacy-pm7-promotion.
 CANONICAL_PM7 = REPO / "Concepts" / "PMConcept7.html"
 
@@ -2674,8 +2673,7 @@ def main(argv=None):
     if targets_canonical_pm7 and not args.allow_legacy_pm7_promotion:
         print("FATAL: refusing to write the T33+ historical tail (old T44/T45/T50) "
               "to Concepts/PMConcept7.html.\n"
-              "Since 2026-09-26 that file is published byte-identical from "
-              "Concepts/Onboarding concepts/TestOpus5.5PmConcept.html via\n"
+              "Since 2026-09-26 that file is published from the authored sources via\n"
               "  python3 Concepts/onboarding/opus-5.5/tools/build.py --publish-pm7\n"
               "Build this pipeline to a scratch --out for historical output, or pass "
               "--allow-legacy-pm7-promotion for an explicit historical promotion.",

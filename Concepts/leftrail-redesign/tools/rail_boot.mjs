@@ -1,8 +1,8 @@
-/* Rail acceptance check: boots LeftRailPMConcept7.html (or, with --page, the published PMConcept7.html, whose rail is
+/* Rail acceptance check: boots PMConcept7.html (or a private comparison build with --page), whose published rail is
  * concept D) over file:// (?o55=off) in GPU Chrome on the VM (one agent-browser headless session per boot, driven
  * through playwright-core connectOverCDP), and for each concept checks the panels by real clicks against the reference
- * page: the shell's own rail, by default the review copy opened with ?rail=current (D never mounts there; since
- * 2026-10-09 PMConcept7.html carries D, so it is no reference). --page and --ref take a file, optionally with a query
+ * page: PMConcept7.html by default, switched to Current for the shell's own rail. A private --ref comparison build
+ * opened with ?rail=current supplies a reference where D never mounts. --page and --ref take a file, optionally with a query
  * (`--ref 'rail.html?rail=current'`); ?o55=off is always added. Checks:
  *   - no new console errors; the concept view replaces the original panel when its icon is clicked. A skin concept
  *     (registered with skin: true, today d "Polish"; 'current' is checked the same way) keeps the shell's own panels
@@ -21,7 +21,7 @@
  *     t-restore.mjs does), uses D (every panel, every tab, two expanders and a menu per panel, the Git/Jujutsu engine
  *     switch both ways), goes back to Current, snapshots again and fails on any difference, per panel and theme. The
  *     first snapshot is also compared with the reference's own rail in the same theme (baseline): the page may have
- *     mounted D at boot, and Current after that must be the rail D never touched.
+ *     mounted D at boot. Use a private --ref 'rail.html?rail=current' to compare against a rail D never touched.
  *
  *   node Concepts/leftrail-redesign/tools/rail_boot.mjs <out-dir> [--page P[?query]] [--ref R[?query]] [--concepts a,b,c,d|none]
  *        [--panels files,source,docker] [--themes all|basic-dark,...] [--quick] [--shots] [--restore] [--coverage <file>]
@@ -50,12 +50,12 @@ mkdirSync(out, { recursive: true });
 /* a page to boot: a file and an optional query (after the first '?'), e.g. 'rail.html?rail=current' */
 const target = (s) => { s = String(s); const i = s.indexOf('?'); return i < 0 ? { file: resolve(s), query: '' } : { file: resolve(s.slice(0, i)), query: s.slice(i + 1) }; };
 const shown = (t) => t.file + (t.query ? '?' + t.query : '');
-const PAGE = target(opt('page', join(concepts, 'LeftRailPMConcept7.html')));
-const REF = target(opt('ref', join(concepts, 'LeftRailPMConcept7.html') + '?rail=current'));
+const PAGE = target(opt('page', join(concepts, 'PMConcept7.html')));
+const REF = target(opt('ref', join(concepts, 'PMConcept7.html')));
 const ALL_THEMES = ['basic-dark', 'basic-light', 'friendly-dark', 'friendly-light', 'glass-dark', 'glass-light', 'retro-dark', 'retro-light'];
 const themesOpt = opt('themes', 'all');
 const THEMES = themesOpt === 'all' ? ALL_THEMES : String(themesOpt).split(',');
-const CONCEPTS = opt('concepts', 'a,b,c,d') === 'none' ? [] : String(opt('concepts', 'a,b,c,d')).split(',');
+const CONCEPTS = opt('concepts', 'd,current') === 'none' ? [] : String(opt('concepts', 'd,current')).split(',');
 /* the rail's nine panels in activity-bar order (keep in step with PANEL_IDS in 00-d.js) */
 const ALL_PANELS = ['files', 'search', 'source', 'git', 'docker', 'testing', 'run', 'agents', 'artifacts'];
 const VIEW_PANELS = ['files', 'source', 'docker'];
@@ -412,6 +412,13 @@ async function refErrors() {
 async function refPairs() {
   const b = await bootPage(REF);
   try {
+    await b.page.evaluate(async () => {
+      const L = window.__railCheck;
+      for (let i = 0; i < 60 && !document.documentElement.hasAttribute('data-pmr-ready'); i++) await L.sleep(100);
+      if (window.PMR && window.PMR.concepts && window.PMR.concepts.current() !== 'current') {
+        window.PMR.concepts.set('current'); await L.sleep(800);
+      }
+    });
     return await b.page.evaluate((targets) => {
       const o = {};
       for (const [p, id] of Object.entries(targets)) { const s = new Set(); const el = document.getElementById(id); el.querySelectorAll('[data-demo-action]').forEach((e) => s.add(e.getAttribute('data-demo-action') + ' | ' + (e.getAttribute('data-demo-arg') || ''))); if (p === 'files') document.querySelectorAll('#fileContextMenu [data-demo-action]').forEach((e) => s.add(e.getAttribute('data-demo-action') + ' | ' + (e.getAttribute('data-demo-arg') || ''))); o[p] = [...s]; }

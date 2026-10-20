@@ -1,6 +1,6 @@
 # Concept C (Lens) — builder notes
 
-Build: `python3 Concepts/leftrail-redesign/tools/build_rail.py --out ~/PM-Experiments/leftrail-redesign-20261002/builds/c/LeftRailPMConcept7.html --only c`
+Build: `python3 Concepts/leftrail-redesign/tools/build_rail.py --out ~/PM-Experiments/leftrail-redesign-20261002/builds/c/rail-c.html --only c`
 Own drivers (not in repo): `~/PM-Experiments/leftrail-redesign-20261002/builds/c/tools/drive.mjs <script.mjs>` (boots the build, concept c, screenshots to builds/c/shots).
 
 ## Files

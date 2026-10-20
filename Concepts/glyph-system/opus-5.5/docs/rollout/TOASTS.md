@@ -24,7 +24,7 @@ info) pushed through `toast.important`.
 5. Reduced Motion: the marks are lit and still (nx-still). No pills, side stripes or emoji.
 
 ## Gates
-- `python3 Concepts/onboarding/opus-5.5/tools/build.py --publish-pm7` and `--check`; `build_rail.py` and `--check`.
+- `python3 Concepts/onboarding/opus-5.5/tools/build.py --publish-pm7` and `--check`; `build_rail.py --check` (or `build_rail.py --out PATH` for a private comparison).
 - A P1000 GPU check: push one toast of each kind (`toast.important(...)`, read the base for the call) in all ten looks,
   screenshot each, and measure each mark's contrast against its toast's field (>= 3:1); a short H.264 film of the four
   kinds arriving and being dismissed, plus Reduced Motion.

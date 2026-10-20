@@ -1,5 +1,7 @@
 # PMConcept7 - Notes
 
+Retired 2026-10-20 at Jared's direction: `Concepts/PMConcept7.html` is the only published page; `build_rail.py --out PATH` builds the rail comparison privately.
+
 ## What this file is
 
 `Concepts/PMConcept7.html` began as the refactored, cleaned, runtime-lighter derivative of `Concepts/PMConcept6.html`, produced for one purpose: a Slint-porting agent should be able to read it without being confused by dead code, iteration debris, or HTML-only implementation artifacts. Through T20 it was functionally equivalent and visually identical to PMConcept6 with exactly one approved exception (glass wallpaper pre-bake, below), plus the rev-4 chat/page-switch work that lives upstream in parts.
@@ -25,10 +27,10 @@ shell's own rail back byte for byte. NieR Mode's hooks for the rail are kit sour
 and `.pmr-lock` in the brackets' click handler (the rail's tabs). Publishing D grew the page by 259,170 bytes
 (10,329,282 to 10,588,452, +2.5 %, measured on the first build that carried it).
 
-The comparison copy `Concepts/LeftRailPMConcept7.html` (`tools/build_rail.py`) is now this page plus the earlier
+A private comparison build (`tools/build_rail.py --out PATH`) is this page plus the earlier
 concepts A, B and C and the status-bar "Rail" switcher (`rail_layer.apply_review()`), so its D is the published D;
 its "Original" option (id `current`, `?rail=current`, Alt+Shift+5) is the rail before Polish. Never hand-edit either
-page; see `Concepts/leftrail-redesign/README.md`.
+page or private build; see `Concepts/leftrail-redesign/README.md`.
 
 ## Re-baseline onto the hand-edited Prism Usage build — 2026-08-27
 

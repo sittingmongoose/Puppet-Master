@@ -49,9 +49,9 @@ per state everywhere.
 
 ## Gates
 
-- Regenerate, never text-edit, the generated pages: `python3 Concepts/leftrail-redesign/tools/build_d_css.py`,
-  `python3 Concepts/leftrail-redesign/tools/build_rail.py` (the review copy `Concepts/LeftRailPMConcept7.html`), then
-  `python3 Concepts/onboarding/opus-5.5/tools/build.py --publish-pm7` and `--check`; `build_d_css.py --check`.
+- Regenerate, never text-edit, the published page: `python3 Concepts/leftrail-redesign/tools/build_d_css.py`, then
+  `python3 Concepts/onboarding/opus-5.5/tools/build.py --publish-pm7` and `--check`; `build_d_css.py --check` and
+  `build_rail.py --check`. Use `build_rail.py --out PATH` for a private A-D comparison build.
 - The rail's own checks in `Concepts/leftrail-redesign/tools/` (`parity.py`, `rail_boot.mjs`, `rail_perf.py`: read each
   header for how to run it; browser checks run on the P1000, never more than one browser at a time on Nas1), before
   and after; report every difference.
