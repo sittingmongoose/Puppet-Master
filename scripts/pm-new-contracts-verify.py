@@ -1357,6 +1357,7 @@ def contract_semantic_failures(
         admitted = (
             context.get("kind") == "chat_room"
             and context.get("state") == "waiting"
+            and context.get("waiting_between_rounds") is True
             and context.get("pause_between_rounds", False) is True
             and type(completed) is int and type(maximum) is int
             and 1 <= completed < maximum

@@ -4,7 +4,7 @@ Source: `Plans/Automated_Testing_System.md`
 
 Source lines: L6716-L6802
 
-Source SHA256: `4c0221e74f1e458481e058f9b25cf6752777bf72a3ebc0b277fddd4e1f5fcdd3`
+Source SHA256: `46b8158ec22dd46ca54c25bb178a7d8c9e9ab05f1d85a9570fb2e2b747368a87`
 
 ---
 
@@ -15,7 +15,7 @@ Source SHA256: `4c0221e74f1e458481e058f9b25cf6752777bf72a3ebc0b277fddd4e1f5fcdd3
 | Start and initial Grill Me | Start begins round 1 with no Ask Everyone or Next Round click. With Grill Me on, no participant turn starts before the current What we agreed Confirm; round 1 starts automatically after it. A Wonderer never delays the round. |
 | Automatic rounds | With pause_between_rounds false or absent, run every later round without a click under the same moderated, round_robin or free_discussion policy and its deterministic recorded participant order, until the configured limit or stop condition. No automatic start dispatches cmd.chat_room.next_round or any other command. |
 | Pausing between rounds | With the switch true, wait after each non-final round, show Round N done as the user's move and offer Next Round, Summarize Now and End discussion. One Next Round starts exactly one round under the unchanged policy. |
-| Next Round refusal | Return run_state_invalid with no committed work when the switch is false or absent, a round is running, round 1 has not run, all configured rounds are used, the stop condition is met, the room is paused or terminal, or ask_everyone_once has finished. Exercise both chat_room_card and chat_room_panel. |
+| Next Round refusal | Return run_state_invalid with no committed work when the switch is false or absent, a round is running, round 1 has not run, all configured rounds are used, the stop condition is met, the room is paused or terminal, it waits for Grill Me or another user action instead of between rounds, the wait position is unknown, or ask_everyone_once has finished. Exercise both chat_room_card and chat_room_panel. |
 | Exhaustion and stop condition | Wait after the final round or an earlier stop condition; never finish automatically. Preserve This room used all its rounds at exhaustion. Add 2 more rounds raises add_rounds through reconfigure and starts the next round immediately; added rounds obey the switch. Summarize Now writes a summary and does not end the room. End discussion completes; Cancel cancels. |
 | Pause and Resume | Pause wins over automatic continuation and holds at the next safe turn boundary. Resume continues the round in progress, with later automatic rounds unless the switch is on. No turn is cancelled, duplicated or restarted by a switch change. |
 | Messages | A message queued mid-round reaches its addressees exactly once when the next round starts, whether automatically or through Next Round. Send now steers without cancelling a turn; the next speaker reads it first and all later speakers in that round see it. |
@@ -42,8 +42,8 @@ canonical_text: >-
   reconfigure results. Negatives reject non-booleans, the field on other kinds, malformed changes,
   non-Chat Room switching and cmd.chat_room.next_round outside the switch-on between-round wait.
   Fixture-only owner-state joins prove run_state_invalid for switch false or absent, a running
-  round, before round 1, exhausted rounds, met stop conditions, paused/terminal state and one-shot
-  completion; these context projections are not new durable records or request fields. Native
+  round, before round 1, exhausted rounds, met stop conditions, paused/terminal state, other or
+  unknown user waits and one-shot completion; these context projections are not new durable records or request fields. Native
   acceptance must prove automatic round starts dispatch no command, unchanged deterministic turn
   order, exactly one user-started round, one revision and system entry per switch, boundary
   activation without cancelled work, immediate continuation when switched off at the between-round

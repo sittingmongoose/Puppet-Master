@@ -1968,7 +1968,8 @@
         "completed_rounds": 1,
         "configured_max_rounds": 4,
         "stop_condition_met": false,
-        "turn_policy": "round_robin"
+        "turn_policy": "round_robin",
+        "waiting_between_rounds": true
       }
     },
     {
@@ -3529,7 +3530,8 @@
         "completed_rounds": 1,
         "configured_max_rounds": 4,
         "stop_condition_met": false,
-        "turn_policy": "round_robin"
+        "turn_policy": "round_robin",
+        "waiting_between_rounds": true
       }
     },
     {
@@ -5325,7 +5327,8 @@
         "completed_rounds": 1,
         "configured_max_rounds": 4,
         "stop_condition_met": false,
-        "turn_policy": "round_robin"
+        "turn_policy": "round_robin",
+        "waiting_between_rounds": true
       }
     },
     {
@@ -5342,7 +5345,8 @@
         "completed_rounds": 1,
         "configured_max_rounds": 4,
         "stop_condition_met": false,
-        "turn_policy": "round_robin"
+        "turn_policy": "round_robin",
+        "waiting_between_rounds": true
       }
     },
     {
@@ -5359,7 +5363,8 @@
         "completed_rounds": 0,
         "configured_max_rounds": 4,
         "stop_condition_met": false,
-        "turn_policy": "round_robin"
+        "turn_policy": "round_robin",
+        "waiting_between_rounds": true
       }
     },
     {
@@ -5376,7 +5381,8 @@
         "completed_rounds": 4,
         "configured_max_rounds": 4,
         "stop_condition_met": false,
-        "turn_policy": "round_robin"
+        "turn_policy": "round_robin",
+        "waiting_between_rounds": true
       }
     },
     {
@@ -5393,7 +5399,8 @@
         "completed_rounds": 1,
         "configured_max_rounds": 4,
         "stop_condition_met": true,
-        "turn_policy": "round_robin"
+        "turn_policy": "round_robin",
+        "waiting_between_rounds": true
       }
     },
     {
@@ -5410,7 +5417,8 @@
         "completed_rounds": 1,
         "configured_max_rounds": 4,
         "stop_condition_met": false,
-        "turn_policy": "round_robin"
+        "turn_policy": "round_robin",
+        "waiting_between_rounds": true
       }
     },
     {
@@ -5427,7 +5435,8 @@
         "completed_rounds": 1,
         "configured_max_rounds": 4,
         "stop_condition_met": false,
-        "turn_policy": "round_robin"
+        "turn_policy": "round_robin",
+        "waiting_between_rounds": true
       }
     },
     {
@@ -5444,7 +5453,8 @@
         "completed_rounds": 1,
         "configured_max_rounds": 4,
         "stop_condition_met": false,
-        "turn_policy": "ask_everyone_once"
+        "turn_policy": "ask_everyone_once",
+        "waiting_between_rounds": true
       }
     },
     {
@@ -5457,6 +5467,42 @@
         "collaboration_run_id": "crun-room-0001",
         "kind": "chat_room",
         "state": "waiting",
+        "completed_rounds": 1,
+        "configured_max_rounds": 4,
+        "stop_condition_met": false,
+        "turn_policy": "round_robin",
+        "waiting_between_rounds": true
+      }
+    },
+    {
+      "name": "room_next_round_other_user_wait",
+      "base_valid": "room_round_request",
+      "rejects_for": "waiting for Grill Me or another user action is not the between-round wait",
+      "reason": "DL-231 / CWR-044: waiting for Grill Me or another user action is not the between-round wait",
+      "semantic_rule": "run_state_invalid",
+      "context": {
+        "collaboration_run_id": "crun-room-0001",
+        "kind": "chat_room",
+        "state": "waiting",
+        "pause_between_rounds": true,
+        "completed_rounds": 1,
+        "configured_max_rounds": 4,
+        "stop_condition_met": false,
+        "turn_policy": "round_robin",
+        "waiting_between_rounds": false
+      }
+    },
+    {
+      "name": "room_next_round_wait_position_unknown",
+      "base_valid": "room_round_request",
+      "rejects_for": "the between-round wait must be positively known",
+      "reason": "DL-231 / CWR-044: the between-round wait must be positively known",
+      "semantic_rule": "run_state_invalid",
+      "context": {
+        "collaboration_run_id": "crun-room-0001",
+        "kind": "chat_room",
+        "state": "waiting",
+        "pause_between_rounds": true,
         "completed_rounds": 1,
         "configured_max_rounds": 4,
         "stop_condition_met": false,
