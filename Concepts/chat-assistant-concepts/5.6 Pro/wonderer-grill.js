@@ -395,7 +395,7 @@
   function attention(r) {
     var s = activeSession(r); if (!s || !r.pendingUserDecision) return null;
     var rd = GE.round(s), what = cap(waitsFor(r, s)) + (/proposals$/.test(waitsFor(r, s)) ? ' wait' : ' waits'), rest = s.later ? ' Everything else keeps going.' : '';
-    if (s.status === 'grilling' && rd) return { tone: 'accent', strong: 'Your move.', word: 'Your move', text: 'The ' + leadName(r) + (s.later ? ' has ' + plural(rd.ids.length, 'decision') + ' for you: round ' + rd.n + '. ' : ' is grilling you: round ' + rd.n + ', ' + plural(rd.ids.length, 'decision') + '. ') + what + ' for your answers.' + rest,
+    if (s.status === 'grilling' && rd) return { tone: 'accent', strong: 'Your move.', word: 'Your move', text: 'The ' + leadName(r) + (s.later ? ' has ' + plural(rd.ids.length, 'decision') + ' for you in Grill Me round ' + rd.n + '. ' : ' is grilling you: round ' + rd.n + ', ' + plural(rd.ids.length, 'decision') + '. ') + what + ' for your answers.' + rest,
       actions: [{ action: 'wg-open-round', attrs: 'data-key="run:' + esc(r.id) + '"', label: 'Answer round ' + rd.n, primary: true }, { action: 'wg-wrap-up', attrs: 'data-key="run:' + esc(r.id) + '"', label: 'Wrap up', soft: true }] };
     if (s.status === 'agreeing') return { tone: 'accent', strong: 'Your move.', word: 'Your move', text: 'Confirm what you agreed with the ' + leadName(r) + '. ' + what + ' for Confirm.' + rest,
       actions: [{ action: 'wg-show-agreed', attrs: 'data-key="run:' + esc(r.id) + '"', label: 'See what we agreed', primary: true }] };
@@ -759,7 +759,8 @@
     }).join('') + '</ul>' : '';
     /* n2: no parentheses inside the line's own */
     var facts = a.facts.length ? '<p class="wg-agreed-facts">' + S_.pmxGlyph('flask', 12) + '<span>Looked up, not asked: ' + esc(a.facts.map(function (f) { return f.title + ': ' + f.fact; }).join('; ')) + '</span></p>' : '';
-    var map = S_.pmxDisclosure({ key: 'wg-agreed-map:' + m.id, cls: 'wg-agreed-map', summary: 'How the decisions hang together', body: treeHtml(m.key, { sessionId: s.id, where: 'agreed' }) });
+    /* the map is a part of this card, never a transcript surface of its own (IMPACT A2-18), so it sits in a plain wrapper */
+    var map = '<div class="wg-agreed-mapwrap">' + S_.pmxDisclosure({ key: 'wg-agreed-map:' + m.id, cls: 'wg-agreed-map', summary: 'How the decisions hang together', body: treeHtml(m.key, { sessionId: s.id, where: 'agreed' }) }) + '</div>';
     var foot = superseded ? '<p class="wg-agreed-note">' + S_.pmxStatus('skipped', 14) + '<span>You kept going after this; the newer What we agreed below replaces it.</span></p>'
       : confirmed ? '<p class="wg-agreed-note wg-agreed-done">' + S_.pmxStatus('done', 14) + '<span><b>Confirmed.</b> These are your decisions on this ' + (r ? 'run' : 'plan') + '. ' + (r ? 'The ' + lead + ' goes on with ' + esc(what) + ' now.' : 'The assistant writes the plan from them.') + '</span></p>'
         : '<div class="wg-agreed-acts"><button type="button" class="primary-button" data-action="wg-confirm" data-key="' + esc(m.key) + '">Confirm</button><button type="button" class="text-button" data-action="wg-keep-going" data-key="' + esc(m.key) + '">Keep going</button>' +
@@ -826,8 +827,10 @@
   E.action('wg-open-leads', function (c, b) {
     var r = runOf(b); if (!r) return true;
     if (r.kind === 'brainstorm' && r.wonderer && window.PM56_BATCH13) { c.openEditor('wonderer:' + r.id); return true; }
-    var V = window.PM56_COLLAB_VIEW;
-    if (V && V.open) V.open(r.id, { tab: 'overview' });
+    /* the kind's own document (a Crew's crew-work:, a Chat Room's room:) on the tab that holds the Wonderer section, so a
+       run already open beside the chat is not opened a second time in another tab */
+    var V = window.PM56_COLLAB_VIEW, own = { crew: ['crew-work:', 'overview'], chat_room: ['room:', 'transcript'] }[r.kind];
+    if (V && V.open) V.open(r.id, own ? { tab: own[1], docId: own[0] + r.id } : { tab: 'overview' });
     setTimeout(function () { var el = document.querySelector('[data-k^="wg-sec:' + r.id + '"]'); if (el && el.scrollIntoView) el.scrollIntoView({ block: 'start', behavior: 'auto' }); }, 60);
     return true;
   });

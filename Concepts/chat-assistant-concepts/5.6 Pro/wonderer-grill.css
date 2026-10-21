@@ -186,6 +186,8 @@ body.pm56-reduced .wg-lead[data-flash="1"]::after, html[data-motion="reduced"] .
 .wg-agreed-facts > svg, .wg-agreed-facts > .nx-i { flex: none; margin-top: 2px; }
 .wg-agreed-acts { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 12px; margin-top: 14px; padding-top: 12px; box-shadow: 0 -1px 0 var(--border); }
 .wg-agreed-acts .primary-button, .wg-agreed-acts .text-button { min-height: 32px; }
+/* a card in the chat, like the pmx surfaces: Confirm carries no glow (module-shell.css does the same for .pmx-*) */
+.wg-agreed-acts .primary-button { box-shadow: none; }
 .wg-agreed-acts .wg-agreed-prov { flex: 1 1 100%; margin: 0; }
 .wg-agreed-note { display: flex; gap: 8px; align-items: flex-start; margin: 14px 0 0; padding-top: 12px; box-shadow: 0 -1px 0 var(--border); font: var(--pmx-w-reg) 12.5px/19px var(--font-ui); color: var(--muted); }
 .wg-agreed-note b { color: var(--text); }
@@ -203,9 +205,10 @@ body.pm56-reduced .wg-lead[data-flash="1"]::after, html[data-motion="reduced"] .
 .wg-tree-tally { display: flex; flex-wrap: wrap; gap: 4px 14px; margin: 0 0 6px; font: var(--pmx-fs-fine); color: var(--muted); }
 .wg-tree-tally-i { display: inline-flex; align-items: center; gap: 5px; white-space: nowrap; }
 .wg-tree, .wg-tree-kids { margin: 0; padding: 0; list-style: none; }
-.wg-tree-kids { margin-left: 7px; padding-left: 14px; box-shadow: inset 1px 0 0 var(--border-strong); }
+/* nesting reads by indentation under the parent's mark, never a one-sided rule (DL-184, pmx no-stripe) */
+.wg-tree-kids { margin-left: 24px; }
 .wg-tree-li { min-width: 0; }
-.wg-tree-node { display: grid; grid-template-columns: 16px minmax(0, 1fr); column-gap: 8px; align-items: start; width: 100%; min-width: 0; padding: 3px 0; text-align: left; font: var(--pmx-w-reg) 12.5px/18px var(--font-ui); color: var(--muted); background: transparent; border: 0; border-radius: 4px; }
+.wg-tree-node { display: grid; grid-template-columns: 16px minmax(0, 1fr); column-gap: 8px; row-gap: 2px; align-items: start; width: 100%; min-width: 0; padding: 3px 0; text-align: left; font: var(--pmx-w-reg) 12.5px/18px var(--font-ui); color: var(--muted); background: transparent; border: 0; border-radius: 4px; }
 button.wg-tree-node { cursor: pointer; }
 button.wg-tree-node:hover .wg-tree-t { text-decoration: underline; text-underline-offset: 3px; }
 button.wg-tree-node:focus-visible { outline: 2px solid var(--pmx-focus-outline, var(--accent)); outline-offset: 1px; }

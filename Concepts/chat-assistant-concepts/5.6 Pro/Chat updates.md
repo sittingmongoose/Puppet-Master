@@ -2146,27 +2146,42 @@ exactly **one** Deep Plan document, whose Plan card appears directly beneath;
 the BrainStorm card stays. "Who writes the plan" (the synthesis model) is its
 own Advanced row.
 
-**The Wonderer and Grill Me** (DL-218, with Jared's steer of 2026-10-20). The
-Wonderer runs alongside a Crew, a Chat Room or a BrainStorm and feeds what it
-finds back to the run's agents, who decide what to explore.
+**The Wonderer and Grill Me** (DL-218, with Jared's steer of 2026-10-20 and
+the concept review of 2026-10-21). The Wonderer runs alongside a Crew, a Chat
+Room or a BrainStorm and feeds what it finds back to the run's agents, who
+decide what to explore.
 - **Passes.** The first pass starts with the run (in a BrainStorm, during
   intake, before the blind proposals take the concurrency). A further pass runs
   only when a helper, the Coordinator, the Moderator or you ask for it in an
-  addressed message, at most two more ("Ask for another pass · N left"); a
-  failed pass doesn't count toward the two, and the Wonderer never asks itself.
-  A later pass with no free slot is **queued** behind core work (its lane reads
-  "queued", never "waits its turn"). A pass works 3 or 4 of the method's eight
+  addressed message, at most two more; the Wonderer never asks itself. A failed
+  try doesn't count toward the two, and its retry keeps its number (2 or 3) with
+  a new attempt ("Wonderer · pass 3 · try 2"); a pass asked for after a failed
+  first pass is pass 2. "Ask the Wonderer for another pass" says why it is
+  unavailable: a pass is already exploring or queued, both extra passes are
+  used, the team is writing the result, or a recorded example still asks for
+  its next pass itself. A later pass with no free slot is **queued** behind core
+  work (its lane reads "queued", never "waits its turn"); in a Crew or a
+  BrainStorm it says the team keeps working and the final result waits for it,
+  in a Chat Room that nothing waits. A pass works 3 or 4 of the method's eight
   angles; 3 to 5 leads is its target, not a minimum: it may stop early with one
   or two, or with none ("No new leads" is shown as a truthful result), and never
   hands over more than 5. A lead without a tether is drift and is dropped; a
   lead without a source is not delivered.
-- **Leads, in place.** Every pass message (in the run's conversation, the main
-  chat's Wonderer card, the run view's "Wonderer's leads" section and the
-  BrainStorm workspace) lists each lead numbered with its angle, its tether
-  ("Why it matters"), its source, its status in place (Waiting for the team ·
+- **A pass, in three layers.** Every pass message (the run's conversation, the
+  main chat's Wonderer card, the run view's "Wonderer's leads" section and the
+  BrainStorm workspace) opens with the territory: a small compass of the eight
+  angles with the ones it worked lit (a dot for each lead an angle gave), the
+  summary, and a tally of where its leads stand. "N angles explored, with what
+  each turned up" opens each angle's brief signal; every lead has its dossier.
+- **Leads, in place.** Each lead is numbered with its angle (a label, never a
+  link), its tether, its source, its status in place (Waiting for the team ·
   Exploring · Using · Set aside · Supported · Not supported), the one-line
-  reason and who recorded it, and **Check it**. A helper's message that takes up
-  a lead links to it ("Takes up lead 3").
+  reason and who recorded it, and **Check it**. A research result overrides the
+  status, never the decision: under "Supported" or "Not supported" (with who
+  checked it and what they found) the row keeps "The team: Explore · recorded
+  by Coordinator" and its quoted reason. Research outcomes have their own marks
+  (the check; the flask), apart from a decision to set a lead aside. A helper's
+  message that takes up a lead links to it ("Takes up lead 3").
 - **Decided as they arrive.** The Coordinator (in a Chat Room, the Moderator)
   records each lead's decision (explore, use or set aside, with a one-line
   reason) when it arrives: in the Debate for BrainStorm's first pass, while
@@ -2175,38 +2190,78 @@ finds back to the run's agents, who decide what to explore.
   evidence) or Not supported (with the reason).
 - **Check it** is your one override: it sends any lead to research whatever the
   team decided, and never waits. On a lead already in research it shows that
-  research instead of starting another. Once synthesis or a Crew's final result
-  starts, a new pass and Check it are refused with "The team is writing the
-  result".
+  research instead of starting another. In a BrainStorm the request is recorded
+  at once and researched in the Evidence round: no core participant reads a
+  held lead, and the row says "checked in the Evidence round, because you
+  asked". Once synthesis or a Crew's final result starts, a new pass and Check
+  it are refused (lead_admission_closed: "The team is writing the result").
 - **What waits.** In a BrainStorm a pass is **held** until every blind proposal
   is in and released at Line up the options. BrainStorm's Write the plan and a
-  Crew's final result are unavailable, with the reason shown, while a pass is in
-  flight, a lead is undecided or a lead's research is out ("Write the plan
-  waits: …"; never for you). A **Chat Room never waits** for the Wonderer: round
-  1 starts on time, the first pass joins between turns, and the room's summary
-  lists every lead with its decision, or "Not taken up".
+  Crew's final result are unavailable, with the reason shown and the button
+  dimmed, while a pass is in flight, a lead is undecided or a lead's research
+  is out ("Write the plan waits: …"; never for you). A **Chat Room never waits**
+  for the Wonderer: round 1 starts on time, the first pass joins between turns,
+  and the room's summary lists every lead with its decision, or "not taken up";
+  a lead the Moderator decides after the summary is listed again as the room
+  ends, so a decided lead never ends as "not taken up".
 - **The card and the lanes.** The run card's meta line counts the leads
-  explored, used, set aside and waiting. The Wonderer's lane reads Exploring,
-  then the lead count ("4 leads", "No new leads"); it never reads "waits its
-  turn". The result, the Plan and the room summary list every lead with its
-  decision and reason; a used lead stays a hypothesis.
-- **Grill Me.** With Grill Me on, the Coordinator (in a Chat Room, the
-  Moderator) questions you in the main chat before the run's first step, in
-  rounds over every decision that is ready (the Ask Card's round bar: "The
-  Coordinator is grilling you · Round N · K decisions ready · A of up to C
-  questions asked"), each with a recommended answer preselected, Accept all,
-  Not sure and Wrap up. Facts it can look up are looked up instead of asked; if
-  every remaining question depends on a lookup, the session waits and shows
-  "Looking things up" rather than jumping ahead. It ends by itself only when
-  nothing is left to ask; Wrap up and the question cap end it too, with the open
-  items listed, and an answer of "not sure" leaves that question open. It ends
-  in **What we agreed** (decisions, open items with why, facts found), and the
-  run's first step waits for **Confirm** (Keep going asks more). Turned on
-  mid-run, Grill Me questions you at the next round or assignment boundary;
-  work already running goes on, and only the step that would use the answers
-  waits for its own small What we agreed / Confirm ("Only the vote waits"). A
-  decision asked later in a run works the same way. In Deep Plan the assistant
-  grills you, and the Plan is written only after Confirm.
+  explored, used, set aside and undecided, the same leads the gate waits on. The
+  Wonderer's lane reads Exploring or queued, then the lead count ("4 leads",
+  "No new leads"); it never reads "waits its turn". The result, the Plan and the
+  room summary list every lead with the team's decision and reason and, when
+  research came back, its outcome after an arrow; a used lead stays a
+  hypothesis. On BrainStorm's ballot the Wonderer stands under "Abstained"; on a
+  Crew's or a Chat Room's plate it "takes no turn".
+- **Grill Me** is a switch, named "Grill Me" for screen readers with its helper
+  as its description, whose focus ring shows on the visible control; on a sheet
+  narrower than 460 px it reads On / Off. With Grill Me on, the Coordinator (in
+  a Chat Room, the Moderator) questions you in the main chat before the run's
+  first step, in rounds over every decision that is ready. The Ask Card's round
+  bar names who is grilling you, the round, how many decisions are ready, the
+  run's one question count ("6 of up to 25 asked"), a one-line map tally
+  (settled · asking now · looking it up · waits) and "Nothing acts on your
+  answers until you confirm what you agreed". **Map** unfolds the design tree:
+  each decision under the one it hangs off, what is settled, what is asked now
+  (a button to that question), what research is looking up, what waits and
+  what each answer unlocks. Each question has its recommended answer
+  preselected, but a preselection is only a draft: it counts once you send the
+  round or press the round's soft-primary "Accept all N recommended" (which
+  becomes "Accept the rest" once you have changed an answer, and "Send all N
+  answers" once you have answered them all). The foot is one row: Wrap up, the
+  count, Back, Not sure, Accept, Next. Facts it can look up are looked up
+  instead of asked; if every remaining question depends on a lookup, the
+  session waits and shows "Looking things up", and the lead's lane opens that
+  lookup, never What we agreed. It ends by itself only when nothing is left to
+  ask; **Wrap up** ends it without submitting drafts: the rounds you sent stand,
+  an answer you gave stands, everything else is listed open ("Not answered: you
+  wrapped up"); the question limit ends it too, and "not sure" leaves a question
+  open. It ends in **What we agreed** (decisions, open items with why, facts
+  found, the run's count, and "How the decisions hang together", the map), and
+  the step it holds waits for **Confirm**. **Keep going** brings back what was
+  left open and, if nothing was, lets you revisit your answers; **Ask again**
+  reopens one open decision. A question is charged once, on its first
+  presentation, to the run's one QuestionBank (a BrainStorm's budget; a Crew's
+  or a Chat Room's, opened when Grill Me is first on, with the extension of 25
+  as its whole maximum; a Deep Plan's 35); every later session on the run counts
+  on from it, asking again charges nothing, and at the limit no new question is
+  admitted. Turned on mid-run, from the sheet or the switch in a Crew's, a Chat
+  Room's or a BrainStorm's run view, Grill Me questions you at the next
+  boundary, wherever that is: the next part a Crew is about to start, the next
+  round of a Chat Room, the next chapter of a BrainStorm (the vote waits for it,
+  or Write the plan once the vote is under way); work already running goes on,
+  and only that step waits for its own What we agreed / Confirm. Turned off, a
+  pending request is cleared, and a session still questioning you ends like Wrap
+  up, its open items listed for your Confirm. In Deep Plan the assistant grills
+  you, and the Plan is written only after Confirm, from what you confirmed: an
+  alternative answer, such as "Rank by recency instead", or an item left open,
+  changes the plan's steps. An ordinary Plan's Question budget "Turn Grill Me
+  on" starts the same interview on that Plan's thread, over the Plan's own
+  question count, and its Revise waits for that Confirm.
+- **Recorded examples respect both switches.** With the Wonderer removed, a
+  Crew or Chat Room recording skips its leads; with Grill Me off nobody grills
+  you, and a later decision would reach you as the ordinary needs-you prompt.
+  The BrainStorm recordings follow the Wonderer's leads, so removing it keeps
+  Start disabled with that reason.
 
 **Review.** Single Agent, or Multi-Pass with **1–8 reviewers, default 3**
 (the count and the approach stay in sync: 1 is Single Agent), repeated models

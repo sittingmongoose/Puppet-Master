@@ -1390,6 +1390,10 @@ html[data-o55-nier="on"] .qs-ask-mark::after{ animation-timing-function:steps(3,
 .qs-rec{ display:inline-flex; align-items:center; gap:4px; color:var(--accent); font-weight:600; white-space:nowrap; }
 .qs-rec > svg, .qs-rec > .nx-i{ flex:none; }
 .qs-rec-sep{ color:var(--muted); }
+/* on the selected option the accent tint sits under the mark, so Recommended takes the selected label's ink there
+   (Friendly Light's accent on its own tint reads 3.2:1; M5, R10) */
+.qs-ask-opt.is-on .qs-rec{ color:var(--text); }
+.qs-ask-opt.is-on .qs-rec-sep{ color:var(--text); opacity:.7; }
 .qs-grill-unsure{
   display:flex; align-items:center; gap:6px; margin:10px 8px 0 0;
   font-size:12px; line-height:17px; color:var(--muted);

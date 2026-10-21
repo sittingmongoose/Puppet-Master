@@ -447,6 +447,8 @@
     var key = flow === 'deepplan' ? 'thread:' + a.threadId : r ? 'run:' + r.id : '', s = key ? wg.sessionOf(key) : null;
     var lead = flow === 'room' ? 'the Moderator' : flow === 'deepplan' ? 'the assistant' : 'the Coordinator';
     if (a.error) return { text: 'This recording stopped here (' + a.error.replace(/_/g, ' ') + '). Everything so far is kept. Replay starts it again.', replay: true };
+    /* between Start and the tick that binds the room's run, the guide says so rather than offering the sheet again */
+    if (flow === 'room' && (r ? !a.begun : C().runsForThread(a.threadId).some(function (q) { return q.kind === 'chat_room'; }))) return { text: 'The room is starting.' };
     if (flow !== 'deepplan' && !r) return { text: 'Set up the ' + (flow === 'crew' ? 'Crew' : 'room') + ': the Wonderer and Grill Me are already on. Press Start.', act: { action: 'wg-demo-configure', label: 'Set it up' } };
     if (s && s.status === 'grilling') {
       var rd = wg.grill.round(s), only = s.later ? ' Only ' + (s.gateLabel || 'that step') + ' waits; everything else keeps going.' : '';
@@ -480,7 +482,9 @@
       return { text: 'Start round 2' + (w ? ': Engineering checks the explored lead' + (r3 && r3.research && r3.research.via === 'check_it' ? ', and Design checks the one you sent.' : '.') : '.'), act: { action: 'collab-room-next-round', label: 'Start round 2', data: { run: r.id } } };
     }
     if (cr.roundsSoFar === 2 && !cr.summary) {
-      if (undecided) return { text: 'The Moderator is deciding the last ' + (undecided === 1 ? 'lead' : undecided + ' leads') + ' as they arrive. Nothing waits on a lead: you can sum up now or in a moment.' , act: { action: 'collab-room-summarize', label: 'Summarize Now', data: { run: r.id } } };
+      /* the guide waits the moment it takes the Moderator to decide what just arrived, so the summary it offers lists
+         every lead with its decision (m1); Summarize Now on the card is never blocked */
+      if (undecided) return { text: 'The Moderator is deciding the last ' + (undecided === 1 ? 'lead' : undecided + ' leads') + ' as they arrive; the summary comes next. Nothing waits on a lead: Summarize Now on the card works at any time.' };
       return { text: 'Sum it up: the summary lists every lead' + (w ? ', each with what the room did with it.' : '.') + ' Nothing waits on a lead.', act: { action: 'collab-room-summarize', label: 'Summarize Now', data: { run: r.id } } };
     }
     return { text: 'End the discussion. Nothing becomes a To-Do or Plan by itself.', act: { action: 'room-finish', label: 'End discussion', data: { run: r.id } } };

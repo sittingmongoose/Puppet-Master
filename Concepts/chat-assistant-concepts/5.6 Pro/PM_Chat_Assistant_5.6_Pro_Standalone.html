@@ -9006,6 +9006,10 @@ html[data-o55-nier="on"] .qs-ask-mark::after{ animation-timing-function:steps(3,
 .qs-rec{ display:inline-flex; align-items:center; gap:4px; color:var(--accent); font-weight:600; white-space:nowrap; }
 .qs-rec > svg, .qs-rec > .nx-i{ flex:none; }
 .qs-rec-sep{ color:var(--muted); }
+/* on the selected option the accent tint sits under the mark, so Recommended takes the selected label's ink there
+   (Friendly Light's accent on its own tint reads 3.2:1; M5, R10) */
+.qs-ask-opt.is-on .qs-rec{ color:var(--text); }
+.qs-ask-opt.is-on .qs-rec-sep{ color:var(--text); opacity:.7; }
 .qs-grill-unsure{
   display:flex; align-items:center; gap:6px; margin:10px 8px 0 0;
   font-size:12px; line-height:17px; color:var(--muted);
@@ -16959,6 +16963,8 @@ body.pm56-reduced .wg-lead[data-flash="1"]::after, html[data-motion="reduced"] .
 .wg-agreed-facts > svg, .wg-agreed-facts > .nx-i { flex: none; margin-top: 2px; }
 .wg-agreed-acts { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 12px; margin-top: 14px; padding-top: 12px; box-shadow: 0 -1px 0 var(--border); }
 .wg-agreed-acts .primary-button, .wg-agreed-acts .text-button { min-height: 32px; }
+/* a card in the chat, like the pmx surfaces: Confirm carries no glow (module-shell.css does the same for .pmx-*) */
+.wg-agreed-acts .primary-button { box-shadow: none; }
 .wg-agreed-acts .wg-agreed-prov { flex: 1 1 100%; margin: 0; }
 .wg-agreed-note { display: flex; gap: 8px; align-items: flex-start; margin: 14px 0 0; padding-top: 12px; box-shadow: 0 -1px 0 var(--border); font: var(--pmx-w-reg) 12.5px/19px var(--font-ui); color: var(--muted); }
 .wg-agreed-note b { color: var(--text); }
@@ -16976,9 +16982,10 @@ body.pm56-reduced .wg-lead[data-flash="1"]::after, html[data-motion="reduced"] .
 .wg-tree-tally { display: flex; flex-wrap: wrap; gap: 4px 14px; margin: 0 0 6px; font: var(--pmx-fs-fine); color: var(--muted); }
 .wg-tree-tally-i { display: inline-flex; align-items: center; gap: 5px; white-space: nowrap; }
 .wg-tree, .wg-tree-kids { margin: 0; padding: 0; list-style: none; }
-.wg-tree-kids { margin-left: 7px; padding-left: 14px; box-shadow: inset 1px 0 0 var(--border-strong); }
+/* nesting reads by indentation under the parent's mark, never a one-sided rule (DL-184, pmx no-stripe) */
+.wg-tree-kids { margin-left: 24px; }
 .wg-tree-li { min-width: 0; }
-.wg-tree-node { display: grid; grid-template-columns: 16px minmax(0, 1fr); column-gap: 8px; align-items: start; width: 100%; min-width: 0; padding: 3px 0; text-align: left; font: var(--pmx-w-reg) 12.5px/18px var(--font-ui); color: var(--muted); background: transparent; border: 0; border-radius: 4px; }
+.wg-tree-node { display: grid; grid-template-columns: 16px minmax(0, 1fr); column-gap: 8px; row-gap: 2px; align-items: start; width: 100%; min-width: 0; padding: 3px 0; text-align: left; font: var(--pmx-w-reg) 12.5px/18px var(--font-ui); color: var(--muted); background: transparent; border: 0; border-radius: 4px; }
 button.wg-tree-node { cursor: pointer; }
 button.wg-tree-node:hover .wg-tree-t { text-decoration: underline; text-underline-offset: 3px; }
 button.wg-tree-node:focus-visible { outline: 2px solid var(--pmx-focus-outline, var(--accent)); outline-offset: 1px; }
@@ -40383,7 +40390,10 @@ window.PM56_NIER_FACES = [
     crew_more_required_slots_than_work: ['', 'This plan has fewer steps than helpers. Remove a helper so each one has a step.'],
     scheduled_specialist_adapter_unavailable: ['', 'Scheduled builds can’t include the Wonderer or Grill Me: they run while you’re away. Turn them off to schedule this.'],
     scheduled_coordinator_adapter_unavailable: ['', 'Scheduled builds are led by this chat’s assistant. Pick it as the Coordinator to schedule this.'],
-    scheduled_adaptive_adapter_unavailable: ['', 'In a scheduled build each helper keeps its part. Pick another way to decide who does what.']
+    scheduled_adaptive_adapter_unavailable: ['', 'In a scheduled build each helper keeps its part. Pick another way to decide who does what.'],
+    /* DL-218: a step Grill Me holds, and a lead or Check it once the team is writing the result */
+    grill_me_waits_for_confirm: ['', 'Grill Me has a decision for you first. Answer it in the chat and confirm what you agreed, and this goes on.'],
+    lead_admission_closed: ['', 'The team is writing the result, so it takes no new pass or check.']
   };
   var REFUSE_ALIAS = {
     provider_unavailable: 'model_unresolved', route_unavailable: 'model_unresolved', crew_route_unavailable: 'model_unresolved',
@@ -66195,7 +66205,7 @@ root.PM56_SCHEDULE_TIME=api;if(typeof module!=='undefined')module.exports=api;
  const isRecorded=d=>!!(C.isRecordedDraft?C.isRecordedDraft(d):d&&d.roomInput);
  const sayNo=(c,title,code)=>{const t=window.PM56_SHELL&&window.PM56_SHELL.pmxRefusalText?window.PM56_SHELL.pmxRefusalText(code):null;c.toast(title,t?t.text:'Nothing changed.');};
  E.chainAction('collab-modal-commit',(c)=>{const d=C.draft();if(d?.kind!=='chat_room'||!isRecorded(d))return false;const ok=preflight(d);if(ok.ok)return false;const t=window.PM56_SHELL?.pmxRefusalText?.(ok.error);d.lastFailure={error:ok.error,message:t?t.text:'This recorded example needs exactly 3 helpers, no specialists, Moderator guides or One answer each, and 1 or 2 rounds.'};c.renderOverlays();return true;});
- E.chainAction('collab-room-next-round',(c,b)=>{if(!owns(b.dataset.run))return false;const x=beginRound(b.dataset.run,envelope(b.dataset.run));if(x.ok)document.dispatchEvent(new CustomEvent('pm56:room-round',{detail:{runId:b.dataset.run}}));else sayNo(c,'Round not started',x.error);c.renderApp();return true;});
+ E.chainAction('collab-room-next-round',(c,b)=>{if(!owns(b.dataset.run))return false;const x=beginRound(b.dataset.run,envelope(b.dataset.run));if(x.ok)document.dispatchEvent(new CustomEvent('pm56:room-round',{detail:{runId:b.dataset.run}}));else sayNo(c,x.error==='grill_me_waits_for_confirm'?'The next round waits for you':'Round not started',x.error);c.renderApp();return true;});
  E.chainAction('collab-room-summarize',(c,b)=>{if(!owns(b.dataset.run))return false;const x=summarize(b.dataset.run);if(!x.ok)sayNo(c,'Summary not ready',x.error);c.renderApp();return true;});
  E.action('room-finish',(c,b)=>{const x=finish(b.dataset.run);if(!x.ok)sayNo(c,'Discussion not ended',x.error);c.renderApp();return true;});
  E.action('room-select-message',(c,b)=>{if(!owns(b.dataset.run))return true;view.set(b.dataset.run,{...view.get(b.dataset.run),selected:b.dataset.message});c.renderApp();return true;});
@@ -66438,7 +66448,11 @@ root.PM56_SCHEDULE_TIME=api;if(typeof module!=='undefined')module.exports=api;
   if(done){
    const m=f.summary||[...r.messages].reverse().find(m=>m.senderKind==='coordinator'),made=promotionsWord(r);
    const head=m?firstSentence(m.body).replace(/[.!]+$/,''):'The discussion ended';
-   const rest=m?String(m.body).slice(firstSentence(m.body).length).trim():'';
+   let rest=m?String(m.body).slice(firstSentence(m.body).length).trim():'';
+   /* the card clamps its summary to two lines a block, so the Wonderer's lead list would collapse under its own heading:
+      the card counts the leads by decision instead, and the summary in the panel lists each one (DL-218) */
+   const LH='The Wonderer’s leads, and what the room did with each:',lh=rest.indexOf(LH),WGs=window.PM56_WG;
+   if(lh>=0){rest=rest.slice(0,lh).trim();const ct=WGs&&WGs.countsText?WGs.countsText(r):'';if(ct)rest+=(rest?'\n\n':'')+'The Wonderer’s '+ct.replace(/^Leads: /,'leads: ')+'. The summary lists each one with what the room did with it.';}
    /* 7.12: while the room document is open beside the chat, promotion lives there; the card keeps what was made
       and says where the room is, and Open Panel is no longer the loud action (it would only show the same tab) */
    const beside='<p class="pmx-room-card-help" data-k="room-beside:'+escH(r.id)+'">Open beside the chat.</p>';
@@ -73429,7 +73443,7 @@ window.PM56_B19DEMO={start:flow=>start(E.ctx(),flow),snapshot:()=>{const r=curre
   function attention(r) {
     var s = activeSession(r); if (!s || !r.pendingUserDecision) return null;
     var rd = GE.round(s), what = cap(waitsFor(r, s)) + (/proposals$/.test(waitsFor(r, s)) ? ' wait' : ' waits'), rest = s.later ? ' Everything else keeps going.' : '';
-    if (s.status === 'grilling' && rd) return { tone: 'accent', strong: 'Your move.', word: 'Your move', text: 'The ' + leadName(r) + (s.later ? ' has ' + plural(rd.ids.length, 'decision') + ' for you: round ' + rd.n + '. ' : ' is grilling you: round ' + rd.n + ', ' + plural(rd.ids.length, 'decision') + '. ') + what + ' for your answers.' + rest,
+    if (s.status === 'grilling' && rd) return { tone: 'accent', strong: 'Your move.', word: 'Your move', text: 'The ' + leadName(r) + (s.later ? ' has ' + plural(rd.ids.length, 'decision') + ' for you in Grill Me round ' + rd.n + '. ' : ' is grilling you: round ' + rd.n + ', ' + plural(rd.ids.length, 'decision') + '. ') + what + ' for your answers.' + rest,
       actions: [{ action: 'wg-open-round', attrs: 'data-key="run:' + esc(r.id) + '"', label: 'Answer round ' + rd.n, primary: true }, { action: 'wg-wrap-up', attrs: 'data-key="run:' + esc(r.id) + '"', label: 'Wrap up', soft: true }] };
     if (s.status === 'agreeing') return { tone: 'accent', strong: 'Your move.', word: 'Your move', text: 'Confirm what you agreed with the ' + leadName(r) + '. ' + what + ' for Confirm.' + rest,
       actions: [{ action: 'wg-show-agreed', attrs: 'data-key="run:' + esc(r.id) + '"', label: 'See what we agreed', primary: true }] };
@@ -73793,7 +73807,8 @@ window.PM56_B19DEMO={start:flow=>start(E.ctx(),flow),snapshot:()=>{const r=curre
     }).join('') + '</ul>' : '';
     /* n2: no parentheses inside the line's own */
     var facts = a.facts.length ? '<p class="wg-agreed-facts">' + S_.pmxGlyph('flask', 12) + '<span>Looked up, not asked: ' + esc(a.facts.map(function (f) { return f.title + ': ' + f.fact; }).join('; ')) + '</span></p>' : '';
-    var map = S_.pmxDisclosure({ key: 'wg-agreed-map:' + m.id, cls: 'wg-agreed-map', summary: 'How the decisions hang together', body: treeHtml(m.key, { sessionId: s.id, where: 'agreed' }) });
+    /* the map is a part of this card, never a transcript surface of its own (IMPACT A2-18), so it sits in a plain wrapper */
+    var map = '<div class="wg-agreed-mapwrap">' + S_.pmxDisclosure({ key: 'wg-agreed-map:' + m.id, cls: 'wg-agreed-map', summary: 'How the decisions hang together', body: treeHtml(m.key, { sessionId: s.id, where: 'agreed' }) }) + '</div>';
     var foot = superseded ? '<p class="wg-agreed-note">' + S_.pmxStatus('skipped', 14) + '<span>You kept going after this; the newer What we agreed below replaces it.</span></p>'
       : confirmed ? '<p class="wg-agreed-note wg-agreed-done">' + S_.pmxStatus('done', 14) + '<span><b>Confirmed.</b> These are your decisions on this ' + (r ? 'run' : 'plan') + '. ' + (r ? 'The ' + lead + ' goes on with ' + esc(what) + ' now.' : 'The assistant writes the plan from them.') + '</span></p>'
         : '<div class="wg-agreed-acts"><button type="button" class="primary-button" data-action="wg-confirm" data-key="' + esc(m.key) + '">Confirm</button><button type="button" class="text-button" data-action="wg-keep-going" data-key="' + esc(m.key) + '">Keep going</button>' +
@@ -73860,8 +73875,10 @@ window.PM56_B19DEMO={start:flow=>start(E.ctx(),flow),snapshot:()=>{const r=curre
   E.action('wg-open-leads', function (c, b) {
     var r = runOf(b); if (!r) return true;
     if (r.kind === 'brainstorm' && r.wonderer && window.PM56_BATCH13) { c.openEditor('wonderer:' + r.id); return true; }
-    var V = window.PM56_COLLAB_VIEW;
-    if (V && V.open) V.open(r.id, { tab: 'overview' });
+    /* the kind's own document (a Crew's crew-work:, a Chat Room's room:) on the tab that holds the Wonderer section, so a
+       run already open beside the chat is not opened a second time in another tab */
+    var V = window.PM56_COLLAB_VIEW, own = { crew: ['crew-work:', 'overview'], chat_room: ['room:', 'transcript'] }[r.kind];
+    if (V && V.open) V.open(r.id, own ? { tab: own[1], docId: own[0] + r.id } : { tab: 'overview' });
     setTimeout(function () { var el = document.querySelector('[data-k^="wg-sec:' + r.id + '"]'); if (el && el.scrollIntoView) el.scrollIntoView({ block: 'start', behavior: 'auto' }); }, 60);
     return true;
   });
@@ -74485,6 +74502,8 @@ window.PM56_B19DEMO={start:flow=>start(E.ctx(),flow),snapshot:()=>{const r=curre
     var key = flow === 'deepplan' ? 'thread:' + a.threadId : r ? 'run:' + r.id : '', s = key ? wg.sessionOf(key) : null;
     var lead = flow === 'room' ? 'the Moderator' : flow === 'deepplan' ? 'the assistant' : 'the Coordinator';
     if (a.error) return { text: 'This recording stopped here (' + a.error.replace(/_/g, ' ') + '). Everything so far is kept. Replay starts it again.', replay: true };
+    /* between Start and the tick that binds the room's run, the guide says so rather than offering the sheet again */
+    if (flow === 'room' && (r ? !a.begun : C().runsForThread(a.threadId).some(function (q) { return q.kind === 'chat_room'; }))) return { text: 'The room is starting.' };
     if (flow !== 'deepplan' && !r) return { text: 'Set up the ' + (flow === 'crew' ? 'Crew' : 'room') + ': the Wonderer and Grill Me are already on. Press Start.', act: { action: 'wg-demo-configure', label: 'Set it up' } };
     if (s && s.status === 'grilling') {
       var rd = wg.grill.round(s), only = s.later ? ' Only ' + (s.gateLabel || 'that step') + ' waits; everything else keeps going.' : '';
@@ -74518,7 +74537,9 @@ window.PM56_B19DEMO={start:flow=>start(E.ctx(),flow),snapshot:()=>{const r=curre
       return { text: 'Start round 2' + (w ? ': Engineering checks the explored lead' + (r3 && r3.research && r3.research.via === 'check_it' ? ', and Design checks the one you sent.' : '.') : '.'), act: { action: 'collab-room-next-round', label: 'Start round 2', data: { run: r.id } } };
     }
     if (cr.roundsSoFar === 2 && !cr.summary) {
-      if (undecided) return { text: 'The Moderator is deciding the last ' + (undecided === 1 ? 'lead' : undecided + ' leads') + ' as they arrive. Nothing waits on a lead: you can sum up now or in a moment.' , act: { action: 'collab-room-summarize', label: 'Summarize Now', data: { run: r.id } } };
+      /* the guide waits the moment it takes the Moderator to decide what just arrived, so the summary it offers lists
+         every lead with its decision (m1); Summarize Now on the card is never blocked */
+      if (undecided) return { text: 'The Moderator is deciding the last ' + (undecided === 1 ? 'lead' : undecided + ' leads') + ' as they arrive; the summary comes next. Nothing waits on a lead: Summarize Now on the card works at any time.' };
       return { text: 'Sum it up: the summary lists every lead' + (w ? ', each with what the room did with it.' : '.') + ' Nothing waits on a lead.', act: { action: 'collab-room-summarize', label: 'Summarize Now', data: { run: r.id } } };
     }
     return { text: 'End the discussion. Nothing becomes a To-Do or Plan by itself.', act: { action: 'room-finish', label: 'End discussion', data: { run: r.id } } };

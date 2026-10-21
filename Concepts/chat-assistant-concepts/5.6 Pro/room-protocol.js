@@ -178,7 +178,7 @@
  const isRecorded=d=>!!(C.isRecordedDraft?C.isRecordedDraft(d):d&&d.roomInput);
  const sayNo=(c,title,code)=>{const t=window.PM56_SHELL&&window.PM56_SHELL.pmxRefusalText?window.PM56_SHELL.pmxRefusalText(code):null;c.toast(title,t?t.text:'Nothing changed.');};
  E.chainAction('collab-modal-commit',(c)=>{const d=C.draft();if(d?.kind!=='chat_room'||!isRecorded(d))return false;const ok=preflight(d);if(ok.ok)return false;const t=window.PM56_SHELL?.pmxRefusalText?.(ok.error);d.lastFailure={error:ok.error,message:t?t.text:'This recorded example needs exactly 3 helpers, no specialists, Moderator guides or One answer each, and 1 or 2 rounds.'};c.renderOverlays();return true;});
- E.chainAction('collab-room-next-round',(c,b)=>{if(!owns(b.dataset.run))return false;const x=beginRound(b.dataset.run,envelope(b.dataset.run));if(x.ok)document.dispatchEvent(new CustomEvent('pm56:room-round',{detail:{runId:b.dataset.run}}));else sayNo(c,'Round not started',x.error);c.renderApp();return true;});
+ E.chainAction('collab-room-next-round',(c,b)=>{if(!owns(b.dataset.run))return false;const x=beginRound(b.dataset.run,envelope(b.dataset.run));if(x.ok)document.dispatchEvent(new CustomEvent('pm56:room-round',{detail:{runId:b.dataset.run}}));else sayNo(c,x.error==='grill_me_waits_for_confirm'?'The next round waits for you':'Round not started',x.error);c.renderApp();return true;});
  E.chainAction('collab-room-summarize',(c,b)=>{if(!owns(b.dataset.run))return false;const x=summarize(b.dataset.run);if(!x.ok)sayNo(c,'Summary not ready',x.error);c.renderApp();return true;});
  E.action('room-finish',(c,b)=>{const x=finish(b.dataset.run);if(!x.ok)sayNo(c,'Discussion not ended',x.error);c.renderApp();return true;});
  E.action('room-select-message',(c,b)=>{if(!owns(b.dataset.run))return true;view.set(b.dataset.run,{...view.get(b.dataset.run),selected:b.dataset.message});c.renderApp();return true;});
@@ -421,7 +421,11 @@
   if(done){
    const m=f.summary||[...r.messages].reverse().find(m=>m.senderKind==='coordinator'),made=promotionsWord(r);
    const head=m?firstSentence(m.body).replace(/[.!]+$/,''):'The discussion ended';
-   const rest=m?String(m.body).slice(firstSentence(m.body).length).trim():'';
+   let rest=m?String(m.body).slice(firstSentence(m.body).length).trim():'';
+   /* the card clamps its summary to two lines a block, so the Wonderer's lead list would collapse under its own heading:
+      the card counts the leads by decision instead, and the summary in the panel lists each one (DL-218) */
+   const LH='The Wonderer’s leads, and what the room did with each:',lh=rest.indexOf(LH),WGs=window.PM56_WG;
+   if(lh>=0){rest=rest.slice(0,lh).trim();const ct=WGs&&WGs.countsText?WGs.countsText(r):'';if(ct)rest+=(rest?'\n\n':'')+'The Wonderer’s '+ct.replace(/^Leads: /,'leads: ')+'. The summary lists each one with what the room did with it.';}
    /* 7.12: while the room document is open beside the chat, promotion lives there; the card keeps what was made
       and says where the room is, and Open Panel is no longer the loud action (it would only show the same tab) */
    const beside='<p class="pmx-room-card-help" data-k="room-beside:'+escH(r.id)+'">Open beside the chat.</p>';

@@ -2579,7 +2579,10 @@
     crew_more_required_slots_than_work: ['', 'This plan has fewer steps than helpers. Remove a helper so each one has a step.'],
     scheduled_specialist_adapter_unavailable: ['', 'Scheduled builds can’t include the Wonderer or Grill Me: they run while you’re away. Turn them off to schedule this.'],
     scheduled_coordinator_adapter_unavailable: ['', 'Scheduled builds are led by this chat’s assistant. Pick it as the Coordinator to schedule this.'],
-    scheduled_adaptive_adapter_unavailable: ['', 'In a scheduled build each helper keeps its part. Pick another way to decide who does what.']
+    scheduled_adaptive_adapter_unavailable: ['', 'In a scheduled build each helper keeps its part. Pick another way to decide who does what.'],
+    /* DL-218: a step Grill Me holds, and a lead or Check it once the team is writing the result */
+    grill_me_waits_for_confirm: ['', 'Grill Me has a decision for you first. Answer it in the chat and confirm what you agreed, and this goes on.'],
+    lead_admission_closed: ['', 'The team is writing the result, so it takes no new pass or check.']
   };
   var REFUSE_ALIAS = {
     provider_unavailable: 'model_unresolved', route_unavailable: 'model_unresolved', crew_route_unavailable: 'model_unresolved',
