@@ -1,5 +1,7 @@
 # DL-231 companion implementation
 
+Round 1 follow-up: [REVIEW-R1.md](REVIEW-R1.md) records the four fixes, the authorized DL-231 clarification, index validation with all 15 baseline-bound audit inputs, and the nonblocking landing check. Its paired index result supersedes the input-incomplete pass reported below.
+
 Branch: `plans/chat-room-auto-rounds-companions-20261021`.
 Checked source head: `fd812aad57bb1feb4198124bfc467050233c69f2`.
 Base: `681ae1578caabf69417f82868dc9222e786b6ddb`.
