@@ -1,0 +1,122 @@
+{
+  "authority": "Jared assigned the 2026-10-21 governance reseal in this task. Landing requires later explicit GO.",
+  "certification_harness_run": false,
+  "changed_since_previous_seal": 12,
+  "files": [
+    {
+      "commits": [
+        "04513d9acdb0577cedcc9158d0661357fe69d802 Fix Wonderer/Grill Me review F1-F9, M1-M3, m1-m12 and n1-n11 contracts",
+        "1cf61034c35075bf8b0e80e42e36c44e68ce2b3e plans: align Wonderer and Grill Me companion contracts with DL-218",
+        "a87ed6a0ee7b3cf7a253607409389783ea2791d0 plans: Wonderer runs alongside the run and Grill Me is a skill (DL-218)"
+      ],
+      "hash_at_previous_seal": "0d832c742172e05aab8e847d29af53f62afbc2af22b02e75dc781e34def63881",
+      "hash_at_reseal": "9093358acb8282a09d7e0848214b0ad9cb62a0fdb4653f92aeedf07a7bb4f76e",
+      "path": "Plans/00-plans-index.md"
+    },
+    {
+      "commits": [
+        "8bb3ed9abb5dc9d7f9b710fdafee724bb86dffcb Fix final DL-218 review findings N1-N10 and bank identity",
+        "04513d9acdb0577cedcc9158d0661357fe69d802 Fix Wonderer/Grill Me review F1-F9, M1-M3, m1-m12 and n1-n11 contracts",
+        "1cf61034c35075bf8b0e80e42e36c44e68ce2b3e plans: align Wonderer and Grill Me companion contracts with DL-218"
+      ],
+      "hash_at_previous_seal": "81e84b34edefb7e99afb2c1a5b0a2ba08168856d961c1fabb5e45831d7322928",
+      "hash_at_reseal": "7375d53c62194fe2dd3391d1857a3e003e50468d87872591db23508b9e549343",
+      "path": "Plans/Automated_Testing_System.md"
+    },
+    {
+      "commits": [
+        "1cf61034c35075bf8b0e80e42e36c44e68ce2b3e plans: align Wonderer and Grill Me companion contracts with DL-218"
+      ],
+      "hash_at_previous_seal": "4774635c1122063f16bf56e0d83c4124c4656d96f330d52dacc4dc96e5902cb7",
+      "hash_at_reseal": "7a63689307b14a7c68ab2e251dff6df3c6fdbcf43a3869ba122b27cc2f23bda1",
+      "path": "Plans/Contracts_V0.md"
+    },
+    {
+      "commits": [
+        "a87ed6a0ee7b3cf7a253607409389783ea2791d0 plans: Wonderer runs alongside the run and Grill Me is a skill (DL-218)"
+      ],
+      "hash_at_previous_seal": "fde887db26514e72482f24bdae8410b9a234bfe34c235637139015a2cbcaa4ff",
+      "hash_at_reseal": "ac2de2788f202b57b9bd6d22b69a7406ed4d31a733f949b5dec11bd2cf041188",
+      "path": "Plans/Crosswalk.md"
+    },
+    {
+      "commits": [
+        "04513d9acdb0577cedcc9158d0661357fe69d802 Fix Wonderer/Grill Me review F1-F9, M1-M3, m1-m12 and n1-n11 contracts",
+        "a87ed6a0ee7b3cf7a253607409389783ea2791d0 plans: Wonderer runs alongside the run and Grill Me is a skill (DL-218)"
+      ],
+      "hash_at_previous_seal": "90fa584e9dc777abc3dc135ee5bc7929cb154b7ceab5a72911a7fe63366f038c",
+      "hash_at_reseal": "516b9ec4748fe0aaafe6af831dcc84ca522b7829bfcda607a48d7cf1ccf6b866",
+      "path": "Plans/Planning_Ledger_System.md"
+    },
+    {
+      "commits": [
+        "04513d9acdb0577cedcc9158d0661357fe69d802 Fix Wonderer/Grill Me review F1-F9, M1-M3, m1-m12 and n1-n11 contracts",
+        "1cf61034c35075bf8b0e80e42e36c44e68ce2b3e plans: align Wonderer and Grill Me companion contracts with DL-218"
+      ],
+      "hash_at_previous_seal": "5667433a1fa23a9ce6ddc6ae11238ad14bdd049ed70d5b69011e9e0c2aba684c",
+      "hash_at_reseal": "b61f2bc13545284ddcb63793a3b69f73fb1043a057a6e3f6dcce50ebde745a5f",
+      "path": "Plans/UI_Command_Catalog.md"
+    },
+    {
+      "commits": [
+        "a87ed6a0ee7b3cf7a253607409389783ea2791d0 plans: Wonderer runs alongside the run and Grill Me is a skill (DL-218)"
+      ],
+      "hash_at_previous_seal": "5049fc1967b53eb12bd03c1e1f58e8d7fb3f3523722601a0c28611c90807b01b",
+      "hash_at_reseal": "97da549bf19f41c235cbda5e1395c90c6a434765040065d1e3fddfb707e4bf3e",
+      "path": "Plans/FinalGUISpec.md"
+    },
+    {
+      "commits": [
+        "8bb3ed9abb5dc9d7f9b710fdafee724bb86dffcb Fix final DL-218 review findings N1-N10 and bank identity",
+        "04513d9acdb0577cedcc9158d0661357fe69d802 Fix Wonderer/Grill Me review F1-F9, M1-M3, m1-m12 and n1-n11 contracts",
+        "1cf61034c35075bf8b0e80e42e36c44e68ce2b3e plans: align Wonderer and Grill Me companion contracts with DL-218"
+      ],
+      "hash_at_previous_seal": "1829eabf9cf6bddd363c00509666e812dcc6ccfdd72b9251e3a5680a87edb75a",
+      "hash_at_reseal": "369a81ddb3a047c4ea3c13b21bf5ea4fc54cc98d1fc34504b4c19542f045fec1",
+      "path": "Plans/assistant-chat-design.md"
+    },
+    {
+      "commits": [
+        "04513d9acdb0577cedcc9158d0661357fe69d802 Fix Wonderer/Grill Me review F1-F9, M1-M3, m1-m12 and n1-n11 contracts",
+        "1cf61034c35075bf8b0e80e42e36c44e68ce2b3e plans: align Wonderer and Grill Me companion contracts with DL-218"
+      ],
+      "hash_at_previous_seal": "95b9855fbad3fdda5e2178024bb5218aac818a0810c0b353d89033abeea78b20",
+      "hash_at_reseal": "c5e0dbd366ade9209c2146b51880500d182a83feb058739b7b14b14265810c08",
+      "path": "Plans/Wiring_Matrix.md"
+    },
+    {
+      "commits": [],
+      "hash_at_previous_seal": "057fdb82bd095a4b2a3e2e1f1f886daa3e957f872335892fc305d33f662e489c",
+      "hash_at_reseal": "5bde87c859e7e75420b834fa0da679117ab2204d31f7813cb7a10f60e4a91827",
+      "path": "Plans/.implementation_readiness/buildability_gate_report.json"
+    },
+    {
+      "commits": [
+        "04513d9acdb0577cedcc9158d0661357fe69d802 Fix Wonderer/Grill Me review F1-F9, M1-M3, m1-m12 and n1-n11 contracts",
+        "1cf61034c35075bf8b0e80e42e36c44e68ce2b3e plans: align Wonderer and Grill Me companion contracts with DL-218"
+      ],
+      "hash_at_previous_seal": "78282d3b7d16a5e5da1df370b6e8455f7fd9de9ef1fe77eee550685787307322",
+      "hash_at_reseal": "cce7b8d8b0cf5548ce56220a1f4a21225b7a5ba992f89025f6d60611ba3fb117",
+      "path": "Plans/storage-plan.md"
+    },
+    {
+      "commits": [
+        "04513d9acdb0577cedcc9158d0661357fe69d802 Fix Wonderer/Grill Me review F1-F9, M1-M3, m1-m12 and n1-n11 contracts",
+        "1cf61034c35075bf8b0e80e42e36c44e68ce2b3e plans: align Wonderer and Grill Me companion contracts with DL-218"
+      ],
+      "hash_at_previous_seal": "ae15064c31e71e43b22c8d4be185a4e8a9d05465472daa3b5bf32e17a5cd6f0f",
+      "hash_at_reseal": "65241c5eadb888e593ca008aff5d5c07c10a06c08d74905daef442bbbaf42f82",
+      "path": "Plans/Commands_System.md"
+    }
+  ],
+  "locked_file_count": 101,
+  "locked_file_count_before": 101,
+  "mode": "real",
+  "newly_registered_paths": [],
+  "non_hash_lock_fields_unchanged": true,
+  "previous_seal_commit": "edd9e230e846c4829e6b87134900747f4af68120",
+  "reseal_base_commit": "40bf3f157436a659804113eb7f08bbb248b0122d",
+  "review_state": "awaiting_astra_review_and_explicit_landing_GO",
+  "runtime_enabled": false,
+  "schema_id": "pm.governance.reseal_attestation.v1"
+}

@@ -1,0 +1,32 @@
+{
+  "active_checkpoint": {
+    "complete_denominator_known": false,
+    "contract_depth_complete": false,
+    "registered_kernel_rows": 43,
+    "registry_revision": "2026-10-09.1",
+    "registry_schema_id": "pm.event_family_registry.v1",
+    "registry_schema_version": "2.0.0"
+  },
+  "active_checkpoint_module_sha256": "7542cdac292405ec0d9b7b644ad7c345cadca822d36c710cd3c6729120274f32",
+  "admission_pins": {
+    "Plans/event_family_registry.json": {
+      "actual": "4ffde4e80c0671c7240c65b7903e6cabc0c6112bc88afc3fc2faca2a044370fe",
+      "recorded": "4ffde4e80c0671c7240c65b7903e6cabc0c6112bc88afc3fc2faca2a044370fe"
+    },
+    "Plans/event_payloads/workspace_layout_changed_v2.schema.json": {
+      "actual": "a611ee3d41f275e7dfd349021a3d41de866849f97f0108396bf0685c41431b1a",
+      "recorded": "a611ee3d41f275e7dfd349021a3d41de866849f97f0108396bf0685c41431b1a"
+    }
+  },
+  "all_other_receipt_fields_equal": true,
+  "all_other_source_hashes_equal": true,
+  "authority": "Jared assigned the 2026-10-21 governance reseal in this task. Landing requires later explicit GO.",
+  "certification_harness_run": false,
+  "changed_pin_paths": [],
+  "hash_algorithm": "pm_pnc019_currentness.sha256_file",
+  "input_receipt_sha256": "49ce40e2816b155a738b7f9278deb8b1de105ec3f8204cfa79e8291cad4b4f29",
+  "main_base": "40bf3f157436a659804113eb7f08bbb248b0122d",
+  "mode": "verify_only",
+  "output_receipt_sha256": "49ce40e2816b155a738b7f9278deb8b1de105ec3f8204cfa79e8291cad4b4f29",
+  "schema_id": "pm.governance.reseal.dl188_checkpoint_pin_refresh.v1"
+}
