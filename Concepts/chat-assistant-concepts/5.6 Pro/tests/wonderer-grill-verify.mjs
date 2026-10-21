@@ -248,6 +248,15 @@ check('S5b a BrainStorm vote from the Wonderer is refused', /wonderer_never_vote
 check('S5c the Wonderer lane never says it waits its turn', !/waits its turn|waiting its turn/.test(src['wonderer-grill.js'].replace(/\/\*[\s\S]*?\*\//g, '')));
 check('S6 the BrainStorm Wonderer workspace has no user decide controls', !/b13-decide|user_decided|Use as my decision/.test(src['lens-wonderer-batch13.js']));
 check('S6b Write the plan and the Crew’s result read one gate', /WG\.engine\.gate\(r\)|PM56_WG\.engine\.gate\(r\)/.test(src['brainstorm-protocol.js']) && /WG\.engine\.gate\(r\)/.test(src['crew-protocol.js']));
+/* round 2 nits (CONCEPT-ROUND2-RULINGS.md 11-17), read from the sources */
+const CSSF = Object.fromEntries(readdirSync(ROOT).filter(f => f.endsWith('.css')).map(f => [f, readFileSync(path.join(ROOT, f), 'utf8')]));
+check('R2-n11 one plain line per BrainStorm Grill Me toggle: the numbers fold into it, the technical "Effective question maximum" line only without PM56_WG', /if \(!WG_\(\)\) run\.messages\.push\(mkMsg\(run, \{[^}]*Effective question maximum/.test(src['collaboration.js']) && /function limitWords/.test(src['wonderer-grill.js']));
+check('R2-n12 mid-run copy lowercases only the first letter of a part title', /t\.charAt\(0\)\.toLowerCase\(\)\+t\.slice\(1\)/.test(src['crew-protocol.js']) && !/a\.title\|\|'next'\)\.replace\(\/\\\.\$\/,''\)\.toLowerCase\(\)/.test(src['crew-protocol.js']));
+check('R2-n13 the cap and done branch says "No more questions to ask." when decisions are left open', /No more questions to ask\./.test(src['wonderer-grill-demos.js']) && /No more questions to ask\./.test(src['lens-wonderer-batch13.js']));
+check('R2-n14 a held BrainStorm pass says why once, on its held note; rows say Waiting for the team', !/note = '<p class="wg-lead-why">Held until every blind proposal is in\./.test(src['wonderer-grill.js']) && /held\?'Leads held for now'/.test(src['lens-wonderer-batch13.js']));
+check('R2-n15 24 px above the Wonderer section in the Room transcript', /\.pmx-rv-scriptwrap \+ \.wg-section \{ margin-top: 24px; \}/.test(CSSF['wonderer-grill.css']));
+check('R2-n16 a lead row reads like the listing: the team’s decision first, then research; the team’s reason in --muted', /return dec \+ head \+ note;/.test(src['wonderer-grill.js']) && /\.wg-team-why \{ color: var\(--muted\); \}/.test(CSSF['wonderer-grill.css']));
+check('R2-n17 What we agreed’s title has a real face in Friendly and Retro (700)', /body\[data-theme\^="friendly"\] \.wg-agreed-title, body\[data-theme\^="retro"\] \.wg-agreed-title \{ font-weight: 700; \}/.test(CSSF['wonderer-grill.css']));
 
 /* ------------------------------------------------------------------ contrast on the painted pixels (round 2, ruling 4)
    Hide only the measured text, screenshot its first line, sample the background the browser actually painted there
@@ -755,19 +764,27 @@ async function reviewRound2({ page, ev, act, sleep, startSheet, answerAll }) {
   await click('[data-action="pd-q-grill"][data-id="' + plan.id + '"]'); await roundOpen(); await sleep(600);
   const d1 = await dest();
   await page.locator('.qs-grill .qs-ask-opt').nth(1).click(); await sleep(300);
-  const sendText = async txt => { await page.locator('.composer-input').first().fill(txt); await sleep(150); await page.locator('[data-action="send"]').first().click(); await sleep(700); };
+  /* a send while the thread's turn is busy is queued and delivered when the turn ends (app.js handleSend): the check
+     follows it through the queue, so either way it reaches revision admission */
+  const sendText = async txt => { await page.locator('.composer-input').first().fill(txt); await sleep(150); await page.locator('[data-action="send"]').first().click(); await sleep(700);
+    await until(t => { const c = window.PM56_EXT.ctx(); return !((c.state.sendQueue || {})[t] || []).length || c.state.toast.some(x => /Revise waits/.test(x.title)); }, plan.tid, 30000); await sleep(500); };
+  const f2read = () => ev(([id, tid]) => { const c = window.PM56_EXT.ctx(), s = window.PM56_WG.threadSession(tid), t = c.state.threads.find(x => x.id === tid);
+    return { v: window.PM56_PLANS.all()[id].version, st: s && s.status, words: String(c.state.composer || '') + ' | ' + ((c.state.sendQueue || {})[tid] || []).map(q => q.text).join(' | '), receipts: t.messages.filter(m => m.type === 'plan-revision-receipt').length }; }, [plan.id, plan.tid]);
+  const r0 = await ev(([id, tid]) => window.PM56_EXT.ctx().state.threads.find(x => x.id === tid).messages.filter(m => m.type === 'plan-revision-receipt').length, [plan.id, plan.tid]);
   await sendText('Narrow this plan to its first step.');
-  const f2a = await ev(([id, tid]) => { const c = window.PM56_EXT.ctx(), s = window.PM56_WG.threadSession(tid); return { v: window.PM56_PLANS.all()[id].version, st: s && s.status, composer: c.state.composer, toast: c.state.toast.map(x => x.title).join(' | ') }; }, [plan.id, plan.tid]);
-  await ev(id => { const R = window.PM56_RUNTIME, c = window.PM56_EXT.ctx(); const ds = R.composer.destinationProviders.map(f => f(c)).reduce((a, b) => a.concat(b || []), []); R.composer.destination = ds.find(d => d.refId === id) || null; c.renderApp(); }, plan.id); await sleep(300);
+  const f2a = await f2read();
+  await ev(id => { const R = window.PM56_RUNTIME, c = window.PM56_EXT.ctx(); const ds = R.composer.destinationProviders.map(f => f(c)).reduce((a, b) => a.concat(b || []), []); R.composer.destination = ds.find(d => d.refId === id) || null; c.state.composer = ''; c.renderApp(); }, plan.id); await sleep(300);
   await sendText('Narrow this plan to its first step, by the picker.');
-  const f2b = await ev(([id, tid]) => { const c = window.PM56_EXT.ctx(), s = window.PM56_WG.threadSession(tid); return { v: window.PM56_PLANS.all()[id].version, st: s && s.status, composer: c.state.composer }; }, [plan.id, plan.tid]);
+  const f2b = await f2read();
   const confirmed = await confirmThread(plan.tid);
+  await ev(([id, tid]) => { const c = window.PM56_EXT.ctx(); c.state.composer = ''; (c.state.sendQueue || {})[tid] = []; c.renderApp(); }, [plan.id, plan.tid]);
   await act('pd-revise', { id: plan.id }); await sleep(300);
   await sendText('Narrow this plan to its first step.');
+  await until(([id, v]) => window.PM56_PLANS.all()[id].version === v + 1, [plan.id, plan.v], 30000);
   const f2c = await ev(id => window.PM56_PLANS.all()[id].version, plan.id);
-  check('R2-2 a Plan revision is refused before Confirm on every route (targeted before Grill Me came on; the destination picker), the composer keeps your words; after Confirm it is admitted',
-    f2a.v === plan.v && f2a.st === 'grilling' && /Narrow this plan/.test(f2a.composer) && /Revise waits for your Confirm/.test(f2a.toast) && f2b.v === plan.v && /by the picker/.test(f2b.composer) && confirmed && f2c === plan.v + 1,
-    JSON.stringify({ plan, d0, d1, f2a, f2b, confirmed, f2c }));
+  check('R2-2 a Plan revision is refused before Confirm on every route (targeted before Grill Me came on; the destination picker), your words are kept; after Confirm it is admitted',
+    d0 === 'plan-revision' && d1 === 'plan-revision' && f2a.v === plan.v && f2a.st === 'grilling' && /Narrow this plan to its first step\./.test(f2a.words) && f2a.receipts === r0 && f2b.v === plan.v && /by the picker/.test(f2b.words) && f2b.receipts === r0 && confirmed && f2c === plan.v + 1,
+    JSON.stringify({ plan, d0, d1, r0, f2a, f2b, confirmed, f2c }));
 
   /* 3 (Astra F3): turning a Plan's Grill Me off keeps the pick you made, clears the Ask Card and shows one What we
      agreed that waits for Confirm */
@@ -811,6 +828,37 @@ async function reviewRound2({ page, ev, act, sleep, startSheet, answerAll }) {
   await ev(() => window.PM56_DEMO.setTheme('basic-dark')); await fast(1);
   check('R2-4 required words read 4.5:1 or better on the painted pixels in ten looks (the round bar over its tint, the map frontier, the source line, who asked for a pass)',
     !Object.keys(low4).length && Object.values(n4).every(n => n >= 8), JSON.stringify({ low4, n4 }));
+
+  /* D1 (ruling 18): the map draws its dependencies, has no tally of its own, keeps the question in view at 1440 x 900,
+     and marks the question on screen; in What we agreed it gives the structure without repeating the answers */
+  await ev(x => window.PM56_DEMO.selectThread(x), dpT); await sleep(400);
+  if (!(await ev(() => !!document.querySelector('.qs-grill')))) await act('wg-open-round', { key: 'thread:' + dpT });
+  await sleep(500);
+  if (!(await ev(() => !!document.querySelector('.qs-grill-map')))) await click('.qs-grill [data-action="qs-grill-map"]');
+  await sleep(500);
+  const dd1 = await ev(() => { const m = document.querySelector('.qs-grill-map'), t = document.querySelector('.qs-grill .qs-ask-title'), o = document.querySelector('.qs-grill .qs-ask-opt'), body = document.querySelector('.qs-grill .qs-ask-body').getBoundingClientRect(), r = t && t.getBoundingClientRect(), ro = o && o.getBoundingClientRect(), lim = Math.min(body.bottom, innerHeight);
+    return { tally: !!(m && m.querySelector('.wg-tree-tally')), guides: m ? m.querySelectorAll('.wg-tg').length : 0, current: m ? m.querySelectorAll('[data-current="1"]').length : 0, title: !!r && r.top >= body.top - 1 && r.bottom <= lim, option: !!ro && ro.top + 12 < lim }; });
+  await click('.qs-grill [data-action="qs-grill-map"]'); await sleep(300);
+  await answerAll(40000);
+  await click('.wg-agreed[data-state="open"] .wg-agreed-map > summary'); await sleep(500);
+  const dd1b = await ev(() => { const a = document.querySelector('.wg-agreed[data-state="open"]'), rows = [...a.querySelectorAll('.wg-tree-li[data-state="settled"]')]; return { settled: rows.length, repeat: rows.filter(li => li.querySelector('.wg-tree-d')).length, guides: a.querySelectorAll('.wg-tg').length, tally: !!a.querySelector('.wg-tree-tally') }; });
+  check('R2-D1 the design tree draws its dependencies, has no tally of its own, keeps the question in view at 1440 x 900 and marks it; What we agreed shows the structure without repeating answers',
+    !dd1.tally && dd1.guides >= 2 && dd1.current === 1 && dd1.title && dd1.option && dd1b.settled >= 4 && dd1b.repeat === 0 && dd1b.guides >= 2 && !dd1b.tally, JSON.stringify({ dd1, dd1b }));
+  /* D2 (ruling 19): eight rim dots, a caption, every lit angle named without hover, the status marks in the gutter */
+  await ev(x => window.PM56_DEMO.selectThread(x), crewT); await sleep(500); await click('.qs-grill .qs-ask-x'); await sleep(300);
+  const dd2 = await ev(() => { const c = document.querySelector('.transcript .wg-card'), leads = c.querySelectorAll('.wg-lead');
+    return { dots: c.querySelectorAll('.wg-compass .wg-cmp-ray circle').length, lit: c.querySelectorAll('.wg-compass .wg-cmp-ray[data-on="1"]').length, cap: (c.querySelector('.wg-cmp-cap') || {}).textContent || '', named: c.querySelectorAll('.wg-cmp-legend .wg-cmp-key').length, leads: leads.length, gutter: c.querySelectorAll('.wg-lead-n > .wg-st-mark').length, inline: c.querySelectorAll('.wg-lead-status .wg-st-mark').length }; });
+  check('R2-D2 the compass draws all eight rim positions, captions "N of 8 angles", names every lit angle without hover, and each lead’s status mark sits in its number gutter',
+    dd2.dots === 8 && dd2.lit >= 1 && new RegExp('^' + dd2.lit + ' of 8 angles$').test(dd2.cap) && dd2.named === dd2.lit && dd2.gutter === dd2.leads && dd2.leads >= 3 && dd2.inline === 0, JSON.stringify(dd2));
+  /* D3 (ruling 20, chosen): Accept all is the filled primary while every answer is the recommendation, Next takes it
+     back once you touch one */
+  await ev(() => window.PM56_WG_DEMOS.start('deepplan')); await roundOpen(); await sleep(700);
+  const kind = () => ev(() => { const a = document.querySelector('.qs-grill [data-action="qs-accept-round"]'), n = document.querySelector('.qs-grill-foot [data-action="next-question"], .qs-grill-foot [data-action="submit-questionnaire"]'); return { accept: a && a.className.split(' ')[0], next: n && n.className.split(' ')[0] }; });
+  const dd3a = await kind();
+  await page.locator('.qs-grill .qs-ask-opt').nth(1).click(); await sleep(400);
+  const dd3b = await kind();
+  check('R2-D3 Accept all is the primary while nothing is touched; once an answer is touched, Next is the primary again', dd3a.accept === 'primary-button' && dd3a.next === 'soft-button' && dd3b.accept === 'soft-button' && dd3b.next === 'primary-button', JSON.stringify({ dd3a, dd3b }));
+  await fast(1);
 
   /* 5 (Astra F5 = Opus n-d): on a recorded example, Space on Grill Me (and on the Wonderer) never drops focus to BODY,
      and the switch can be turned back on */
