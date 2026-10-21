@@ -104,7 +104,10 @@
  const clockMs=v=>{const K=window.PM56_CLOCK;return K&&K.ms?K.ms(v):v;},nowClock=()=>{const K=window.PM56_CLOCK;return K&&K.now?K.now():performance.now();};
  const maxOf=r=>(r.chatRoom.turnPolicy||r.config.turnPolicy)==='ask_everyone_once'?1:+r.config.maxRounds;
  const once=r=>(r.chatRoom.turnPolicy||r.config.turnPolicy)==='ask_everyone_once';
- function schedule(id,delay,what){const t=timers.get(id);if(t)clearTimeout(t);timers.set(id,setTimeout(()=>{timers.delete(id);if(what==='boundary')boundary(id);else advance(id);},clockMs(delay||0)));}
+ /* motion-time timers (PM56_CLOCK.after keeps its due moment when a film or a test changes the clock's scale) */
+ const later=(motionMs,fn)=>{const K=window.PM56_CLOCK;return K&&K.after?K.after(motionMs,fn):setTimeout(fn,clockMs(motionMs));};
+ const unlater=h=>{const K=window.PM56_CLOCK;if(h&&typeof h==='object'&&K&&K.cancel)K.cancel(h);else clearTimeout(h);};
+ function schedule(id,delay,what){const t=timers.get(id);if(t)unlater(t);timers.set(id,later(delay||0,()=>{timers.delete(id);if(what==='boundary')boundary(id);else advance(id);}));}
  /* why the room waits for you between rounds now, or null when it goes on by itself */
  function waitsFor(r){
   if(!owns(r?.id)||r.status!=='running')return null;const s=r.chatRoom;
@@ -256,7 +259,7 @@
  E.chainAction('collab-pause',(c,b)=>{const r=run(b.dataset.run);if(!owns(r?.id)||r.status!=='running')return false;const s=r.chatRoom;
   const D=window.PM56_ROOM_DEMOS,mid=s.round&&!s.round.complete&&!!(D&&D.speaking&&D.speaking(r.id));if(!mid)return false;s.pausing=true;c.renderApp();return true;});
  E.chainAction('collab-resume',(c,b)=>{const id=b.dataset.run;if(owns(id)){const r=run(id);r.chatRoom.pausing=false;queueMicrotask(()=>{const q=run(id);if(q&&q.status==='running'&&!(q.chatRoom.round&&!q.chatRoom.round.complete))schedule(id,START,q.chatRoom.roundsSoFar?'boundary':undefined);});}return false;});
- E.chainAction('collab-cancel',(c,b)=>{const id=b.dataset.run;if(owns(id)){const t=timers.get(id);if(t)clearTimeout(t);timers.delete(id);run(id).chatRoom.pausing=false;}return false;});
+ E.chainAction('collab-cancel',(c,b)=>{const id=b.dataset.run;if(owns(id)){const t=timers.get(id);if(t)unlater(t);timers.delete(id);run(id).chatRoom.pausing=false;}return false;});
  /* Grill Me's Confirm releases the round it held: round 1, or the round a later session gated */
  document.addEventListener('pm56:wg-confirmed',e=>{const k=String(e.detail&&e.detail.key||'');if(k.indexOf('run:')!==0)return;const id=k.slice(4);if(owns(id))schedule(id,START);});
  E.action('room-select-message',(c,b)=>{if(!owns(b.dataset.run))return true;view.set(b.dataset.run,{...view.get(b.dataset.run),selected:b.dataset.message});c.renderApp();return true;});
@@ -301,7 +304,7 @@
     anything else in this chat, its "Not sent" rows go */
  (RT.composer.commitHooks||(RT.composer.commitHooks=[])).push((c,t,msg,buf)=>{try{const d=buf&&buf.destination;if(d&&owns(d.refId))return;
   (C.runsForThread?C.runsForThread(t.id):[]).forEach(r=>{if(!owns(r.id)||['running','paused'].includes(r.status))return;const q=r.chatRoom.queued;if(q&&q.length)q.length=0;});}catch(err){console.error('PM56 room queue commitHook threw',err);}});
- E.chainAction('reset-all',()=>{view.clear();refused.clear();streamStart.clear();speakerOf.clear();for(const t of timers.values())clearTimeout(t);timers.clear();return false;});
+ E.chainAction('reset-all',()=>{view.clear();refused.clear();streamStart.clear();speakerOf.clear();for(const t of timers.values())unlater(t);timers.clear();return false;});
  /* =====================================================================
     PRESENTATION (ROOM-A; DESIGN-SPEC 8.3, 7, 5.5): PM56_ROOM.sheetParts(draft, ctx, generic) and
     PM56_ROOM.cardParts(run, ctx, face, generic). COLLAB draws the frame (KIND INTERFACE in COLLAB-NOTES); these

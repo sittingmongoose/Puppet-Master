@@ -20,9 +20,12 @@
  /* pacing of the recorded turns: the words stream at MS_WORD a word (as before), the whole reply then stays on screen
     for HOLD so it can be read, then it lands and the next helper speaks */
  const MS_WORD=70,HOLD=3600,ms=v=>{const K=window.PM56_CLOCK;return K&&K.ms?K.ms(v):v;};
+ /* motion-time timers that keep their due moment when the clock's scale changes (PM56_CLOCK.after) */
+ const later=(motionMs,fn)=>{const K=window.PM56_CLOCK;return K&&K.after?K.after(motionMs,fn):setTimeout(fn,ms(motionMs));};
+ const unlater=h=>{const K=window.PM56_CLOCK;if(h&&typeof h==='object'&&K&&K.cancel)K.cancel(h);else clearTimeout(h);};
  function current(){if(!active)return null;let r=active.runId?C.run(active.runId):C.runsForThread(active.threadId).find(r=>W.owns(r.id));if(r)active.runId=r.id;return r;}
  function configure(){if(!active)return;C.openConfigure('chat_room');const d=C.draft();d.name='Make search easier to reach';d.nameEdited=true;d.purpose='How should people reach search: a visible button, a keyboard shortcut, or both?';d.rows=d.rows.slice(0,3);d.rows.forEach((r,i)=>{r.role=['Product','Design','Engineering'][i];r.persona=['Product Manager','Architect','Implementer'][i];});d.config.participantCount=3;d.config.turnPolicy=active.kind==='plan'?'ask_everyone_once':'moderated';d.config.maxRounds=active.kind==='plan'?1:2;d.roomInput=fixture();d.wonderer=false;d.grillMe=false;if(C.markRecorded)C.markRecorded(d);E.ctx().openDialog({type:'collab-configure'});}
- function stop(id){const t=clocks.get(id);if(t)clearTimeout(t);clocks.delete(id);turns.delete(id);}
+ function stop(id){const t=clocks.get(id);if(t)unlater(t);clocks.delete(id);turns.delete(id);}
  function start(kind){if(!flows[kind])return;const c=E.ctx(),old=current();if(old){stop(old.id);if(['running','paused'].includes(old.status)){const b=document.createElement('button');b.dataset.run=old.id;E.run('collab-cancel',b,new Event('click'));}}
   const id='room-demo-'+kind+'-'+(++serial),t=clone(c.state.threads.find(t=>t.id==='plain')||c.state.threads[0]);Object.assign(t,{id,title:flows[kind].label+' · recorded example',goalId:null,status:'ready',pinned:false,archived:false,messages:[{id:id+'-seed',role:'user',type:'text',body:'Talk through how to make search easier to reach. Don’t create any work until I pick something.'}]});c.state.threads.push(t);
   Object.assign(c.state,{mode:'Ask',demoOpen:false,menu:null,dialog:null,hover:null,historyMode:'closed',editorTabs:[],activeEditor:null,editorRevealed:false,composer:''});c.state.activity.open=false;c.state.capabilities.goal=false;c.state.work={step:0,running:false,expanded:false,started:false,completed:false,elapsed:0,openPhase:null};window.PM56_RUNTIME.composer.destination=null;active={kind,threadId:id,runId:null,events:[],errors:[]};c.switchThread(id);configure();
@@ -32,12 +35,12 @@
  function nextTurn(r){const round=r.chatRoom.round;if(!round||round.complete)return null;const pid=round.participantIds.find(pid=>!round.messages.some(mid=>r.messages.find(m=>m.id===mid)?.senderId===pid));if(!pid)return null;const slot=r.participants.findIndex(p=>p.id===pid);return {pid,slot,text:(r.chatRoom.input.rounds[round.number-1]||[])[slot]||''};}
  function play(id){const r=C.run(id);if(!W.owns(id)||clocks.has(id)||!r.chatRoom.round||r.chatRoom.round.complete)return;const owner=active,round=r.chatRoom.round;
   /* a paused room (Pause holds at the turn boundary) arms no speaker until it is resumed */
-  function arm(){if(r.status==='paused'){turns.delete(id);clocks.set(id,setTimeout(()=>{clocks.delete(id);arm();},ms(150)));return;}if(r.status!=='running'){turns.delete(id);return;}
-   const t=nextTurn(r);if(!t){turns.delete(id);return;}turns.set(id,{pid:t.pid,text:t.text,msPerWord:MS_WORD});const words=t.text.split(/\s+/).filter(Boolean).length;clocks.set(id,setTimeout(next,ms(words*MS_WORD+HOLD)));}
+  function arm(){if(r.status==='paused'){turns.delete(id);clocks.set(id,later(150,()=>{clocks.delete(id);arm();}));return;}if(r.status!=='running'){turns.delete(id);return;}
+   const t=nextTurn(r);if(!t){turns.delete(id);return;}turns.set(id,{pid:t.pid,text:t.text,msPerWord:MS_WORD});const words=t.text.split(/\s+/).filter(Boolean).length;clocks.set(id,later(words*MS_WORD+HOLD,next));}
   /* Pause holds the turn; after Resume the reply stays on screen a beat before it lands */
   let held=false;
-  function next(){clocks.delete(id);if(!C.run(id)||C.run(id)!==r||r.status==='canceled'||r.status==='completed'){turns.delete(id);return;}if(r.status==='paused'){held=true;clocks.set(id,setTimeout(next,ms(120)));return;}
-   if(held){held=false;clocks.set(id,setTimeout(next,ms(1500)));return;}
+  function next(){clocks.delete(id);if(!C.run(id)||C.run(id)!==r||r.status==='canceled'||r.status==='completed'){turns.delete(id);return;}if(r.status==='paused'){held=true;clocks.set(id,later(120,next));return;}
+   if(held){held=false;clocks.set(id,later(1500,next));return;}
    const t=nextTurn(r);if(!t){turns.delete(id);return;}const x=W.request(id,t.pid);if(!x){turns.delete(id);return;}const result=W.submit(id,{...x,body:t.text});
    if(!result.ok){turns.delete(id);if(owner)owner.errors.push(result.error);E.ctx().renderApp();return;}if(owner)owner.events.push({round:round.number,participantId:t.pid,messageId:result.messageId});
    if(!round.complete)arm();else turns.delete(id);E.ctx().renderApp();
@@ -80,5 +83,5 @@
  E.chainAction('reset-all',()=>{for(const id of [...clocks.keys()])stop(id);turns.clear();active=null;return false;});
  ['plan-demo-start','schedule-demo-start','review-demo-start','brainstorm-demo-start','crew-demo-start','wg-demo-start','b13-start'].forEach(n=>E.chainAction(n,()=>{active=null;return false;}));
  const G=window.PM56_REPAIR_DEMOS,old=G.gallery;G.gallery=c=>'<section class="demo-section"><h3>Chat Room recorded examples</h3><div class="demo-section-body">'+Object.entries(flows).map(([id,f])=>'<button class="demo-trigger" data-action="room-demo-start" data-flow="'+id+'"><strong>'+c.esc(f.label)+'</strong><small>'+c.esc(f.detail)+'</small></button>').join('')+'</div></section>'+old(c);
- window.PM56_ROOM_DEMOS={start,configure,fixture,play,pace:{msPerWord:MS_WORD,hold:HOLD},speaking:id=>turns.get(id)||null,freeze:id=>{const t=clocks.get(id);if(t)clearTimeout(t);clocks.set(id,0);},snapshot:()=>active?clone({...active,runId:current()?.id||null}):null,editorGuide:id=>current()?.id===id?guide(E.ctx(),true):''};
+ window.PM56_ROOM_DEMOS={start,configure,fixture,play,pace:{msPerWord:MS_WORD,hold:HOLD},speaking:id=>turns.get(id)||null,freeze:id=>{const t=clocks.get(id);if(t)unlater(t);clocks.set(id,0);},snapshot:()=>active?clone({...active,runId:current()?.id||null}):null,editorGuide:id=>current()?.id===id?guide(E.ctx(),true):''};
 })();

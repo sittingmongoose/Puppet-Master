@@ -128,8 +128,18 @@
     now() { const r = performance.now(); this._v += (r - this._r) * this.scale; this._r = r; return this._v; },
     /* announced, so an interval armed with ms() can re-arm at the new rate */
     setScale(k) { this.now(); this.scale = Math.max(0, Number(k) || 0); window.dispatchEvent(new Event('pm56-clock-scale')); },
-    ms(realMs) { return this.scale > 0 ? realMs / this.scale : realMs; }   /* a real-time delay for a motion-time one */
+    ms(realMs) { return this.scale > 0 ? realMs / this.scale : realMs; },   /* a real-time delay for a motion-time one */
+    /* after(motionMs, fn): a one-shot timer in motion time that keeps its due moment when the scale changes (a film or a
+       test that speeds the recordings up or slows them down mid-wait). Returns a handle; clock.cancel(handle) stops it. */
+    after(motionMs, fn) {
+      const h = { due: this.now() + Math.max(0, +motionMs || 0), fn, t: 0, done: false };
+      const arm = () => { clearTimeout(h.t); h.t = setTimeout(() => { if (h.done) return; const left = h.due - this.now(); if (left > 1) { arm(); return; } h.done = true; timers.delete(h); h.fn(); }, Math.max(0, this.ms(h.due - this.now()))); };
+      timers.add(h); arm(); h.rearm = arm; return h;
+    },
+    cancel(h) { if (h && h.t != null) { h.done = true; clearTimeout(h.t); timers.delete(h); } }
   };
+  const timers = new Set();
+  window.addEventListener('pm56-clock-scale', () => { timers.forEach(h => { if (!h.done) h.rearm(); }); });
   window.PM56_CLOCK = clock;
 
   /* Registry for working-animation takes that live outside app.js.
