@@ -493,7 +493,7 @@ async function reviewRound1({ page, ev, act, sleep, startSheet, answerAll }) {
   const sw = await ev(() => { const i = document.querySelector('#pmOverlayRoot [data-collab-input="grillMe"]'), d = i && document.getElementById(i.getAttribute('aria-describedby') || ''); return { label: i && i.getAttribute('aria-label'), role: i && i.getAttribute('role'), described: d ? d.textContent : '' }; });
   await page.focus('#pmOverlayRoot [data-collab-input="grillMe"]'); await page.keyboard.press('Space'); await sleep(500);
   const after = await ev(() => { const a = document.activeElement; return { on: a && a.getAttribute && a.getAttribute('data-collab-input'), checked: a && a.checked, ring: a && a.closest && getComputedStyle(a.closest('.pmx-add')).outlineStyle }; });
-  check('R1-R11 the switch is named Grill Me, described by its helper, and keeps focus with a visible ring after Space', sw.label === 'Grill Me' && sw.role === 'switch' && /questions you/.test(sw.described) && after.on === 'grillMe' && after.checked === false && after.ring !== 'none', JSON.stringify({ sw, after }));
+  check('R1-R11 the switch is named Grill Me, described by its helper, and keeps focus with a visible ring after Space', sw.label === 'Grill Me' && sw.role === 'switch' && /questions you/i.test(sw.described) && after.on === 'grillMe' && after.checked === false && after.ring !== 'none', JSON.stringify({ sw, after }));
   await ev(() => { const c = window.PM56_EXT.ctx(); c.state.dialog = null; c.renderOverlays(); });
 
   /* R5 + M1: a Crew with the Wonderer; the lane during a lookup; your extra pass while the recording owns the next */
@@ -587,7 +587,6 @@ async function reviewRound1({ page, ev, act, sleep, startSheet, answerAll }) {
 
   /* m10: an ordinary Plan's Question budget "Turn Grill Me on" starts the real grilling on that Plan's thread, over
      the Plan's own counter; its Revise waits for Confirm; Confirm lets it go */
-  await ev(() => { const b = document.createElement('button'); b.dataset.action = 'reset-all'; document.body.appendChild(b); b.click(); b.remove(); }); await sleep(800);
   const plan10 = await ev(() => { const c = window.PM56_EXT.ctx(), all = Object.values(window.PM56_PLANS.all()); const p = all.find(x => x.status === 'ready' && !x.grillMe && c.state.threads.some(t => t.id === x.thread_id)); if (!p) return null; window.PM56_DEMO.selectThread(p.thread_id); return { id: p.plan_id, tid: p.thread_id }; });
   let m10 = { plan: plan10 };
   if (plan10) {
@@ -601,7 +600,15 @@ async function reviewRound1({ page, ev, act, sleep, startSheet, answerAll }) {
     await act('pd-revise', { id: plan10.id }); await sleep(400);
     m10.toast = await ev(() => window.PM56_EXT.ctx().state.toast.map(t => t.title).join(' | '));
     m10.bank = await ev(id => { const s = window.PM56_PLANS.budgetOwner && window.PM56_PLANS.budgetOwner.projection('plan:' + id); return s ? s.questions_asked : null; }, plan10.id);
-    await answerAll(40000); await click('.wg-agreed[data-state="open"] [data-action="wg-confirm"]'); await sleep(600);
+    /* the Plan's own thread: answer its rounds and confirm by what is on screen (the recorded examples' snapshot is
+       another thread's) */
+    for (let i = 0; i < 30; i++) {
+      const st = await ev(tid => { const s = window.PM56_WG.threadSession(tid); return s ? s.status : ''; }, plan10.tid);
+      if (st === 'confirmed') break;
+      if (await click('.wg-agreed[data-state="open"] [data-action="wg-confirm"]')) { await sleep(700); continue; }
+      if (await click('.qs-grill [data-action="qs-accept-round"]')) { await sleep(900); continue; }
+      await sleep(500);
+    }
     m10.after = await ev(tid => window.PM56_WG.threadHolds(tid, 'revise'), plan10.tid);
   }
   check('R1-m10 an ordinary Plan’s Turn Grill Me on grills you on its thread, Revise waits for Confirm, then goes', !!plan10 && m10.on && /assistant/i.test(m10.card) && m10.held === true && /Revise waits/i.test(m10.toast) && m10.bank >= 1 && m10.after === false, JSON.stringify(m10));

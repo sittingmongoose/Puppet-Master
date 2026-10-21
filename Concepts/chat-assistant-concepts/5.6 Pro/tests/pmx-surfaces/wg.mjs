@@ -44,6 +44,9 @@ async function roomDone(h) {
   await fast(h, 1);
   return h.ev(() => window.PM56_WG_DEMOS.snapshot().runId);
 }
+/* Open the leads lands the section below the view's sticky head; the lint then measures the view from its top, where no
+   scrolled text passes under that opaque head (the head occludes it, which crowding's geometry cannot see) */
+const viewTop = h => h.ev(() => { const s = document.querySelector('.pmx-view [data-k^="wg-sec:"]'); let sc = s && s.parentElement; while (sc && sc !== document.body && !(sc.scrollHeight > sc.clientHeight + 4 && /auto|scroll/.test(getComputedStyle(sc).overflowY))) sc = sc.parentElement; if (sc && sc !== document.body) sc.scrollTop = 0; });
 const leave = async h => { await fast(h, 1); await h.ev(() => { const c = window.PM56_EXT.ctx(); for (const t of [...(c.state.editorTabs || [])]) c.closeEditor(t.id || t); c.state.editorRevealed = false; c.renderApp(); }); await h.closeAll(); };
 export default () => [
   { id: 'wg:crew-chat', title: 'The Crew’s chat at the end: the Wonderer pass cards and both What we agreed cards (DL-218)', kind: 'chat', tags: ['app', 'wonderer', 'chat'], canon: ['Crew', 'Wonderer', 'Grill Me'],
@@ -52,11 +55,11 @@ export default () => [
     async after(h) { await leave(h); } },
   { id: 'wg:crew-view', title: 'The Crew’s run view, its Wonderer section: two passes, the territory, every lead with its decision and research', kind: 'view', tags: ['app', 'wonderer', 'view'], canon: ['Crew', 'Wonderer'],
     sizes: SIZES_VIEW, change: QUIET_CHANGE,
-    async open(h) { const run = await crewDone(h); await h.action('wg-open-leads', { run }); await h.wait(600); await h.settle(); },
+    async open(h) { const run = await crewDone(h); await h.action('wg-open-leads', { run }); await h.wait(600); await viewTop(h); await h.settle(); },
     async after(h) { await leave(h); } },
   { id: 'wg:room-view', title: 'The Chat Room’s run view after the room ended: the Wonderer section, every lead with its dossier', kind: 'view', tags: ['app', 'wonderer', 'view'], canon: ['Chat Room', 'Wonderer'],
     sizes: SIZES_VIEW, change: QUIET_CHANGE,
-    async open(h) { const run = await roomDone(h); await h.action('wg-open-leads', { run }); await h.wait(600); await h.settle(); },
+    async open(h) { const run = await roomDone(h); await h.action('wg-open-leads', { run }); await h.wait(600); await viewTop(h); await h.settle(); },
     async after(h) { await leave(h); } },
   { id: 'wg:agreed-map', title: 'Deep Plan’s What we agreed with the map of how the decisions hang together (APR-072)', kind: 'chat', tags: ['app', 'wonderer', 'chat'], canon: ['Grill Me'],
     roots: '.wg-agreed', sizes: SIZES_CHAT, change: QUIET_CHANGE,
