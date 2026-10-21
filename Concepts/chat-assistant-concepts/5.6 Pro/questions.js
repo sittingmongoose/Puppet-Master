@@ -1131,7 +1131,11 @@
        Next at the end; the count stays left of Back */
     var gfoot = '';
     if (g) {
-      var accept = { a: 'qs-accept-round', label: acceptLabel(qs, false), labelHtml: acceptLabelHtml(ctx, qs), kind: 'soft', icon: 'check' };
+      /* D3 (round 2): while every answer is still the recommendation, Accept all is the round's primary and Next steps
+         back; once you touch an answer (or revisit your own), Next takes the primary back */
+      var untouched = !qs.some(function (q) { return q.touched || q.revisit; });
+      var accept = { a: 'qs-accept-round', label: acceptLabel(qs, false), labelHtml: acceptLabelHtml(ctx, qs), kind: untouched ? 'primary' : 'soft', icon: 'check' };
+      if (untouched && next && next.kind === 'primary') next = Object.assign({}, next, { kind: 'soft' });
       gfoot = '<div class="qs-ask-foot qs-grill-foot" data-k="qs-ask-foot">'
         + actionBtn(ctx, { a: 'qs-wrap-up', label: 'Wrap up', kind: 'text' })
         + '<span class="qs-ask-count" data-k="qs-ask-n:' + idx + '">' + (idx + 1) + ' of ' + qs.length + '</span>'

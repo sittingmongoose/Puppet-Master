@@ -182,20 +182,22 @@
   function whoLine(text) { return '<span class="wg-who">' + esc(text) + '</span>'; }
   function decisionLine(r, d) {
     return '<p class="wg-lead-decision"><span class="wg-dec-word">The team: <b>' + esc(WE.DISPOSITION_WORD[d.kind]) + '</b></span>' + byLine(r, d.by) + '</p>' +
-      '<p class="wg-lead-why wg-quote"><q>' + esc(d.reason) + '</q></p>';
+      '<p class="wg-lead-why wg-quote wg-team-why"><q>' + esc(d.reason) + '</q></p>';
   }
   function statusLine(r, l) {
     var st = engine.status(l), w = wState(r), d = l.disposition, rs = l.research, pass = engine.passOf(r, l);
     var held = pass && pass.status === 'held', done = rs && (rs.status === 'supported' || rs.status === 'not_supported'), live = rs && (rs.status === 'queued' || rs.status === 'running');
     var bs = w.kind === 'brainstorm', head = '', note = '', dec = '';
-    var line = function (key, word, extra) { return '<p class="wg-lead-status" data-status="' + key + '"><span class="wg-st-head">' + statusMark(key === 'held' ? 'held' : key) + '<b>' + esc(word) + '</b></span>' + (extra || '') + '</p>'; };
+    /* the mark sits in the number gutter now (D2), so the status line is the word and who */
+    var line = function (key, word, extra) { return '<p class="wg-lead-status" data-status="' + key + '"><span class="wg-st-head"><b>' + esc(word) + '</b></span>' + (extra || '') + '</p>'; };
     if (done) {
       head = line(rs.status, WE.STATUS_WORD[rs.status], rs.by ? whoLine('checked by ' + rs.by.name + (rs.via === 'check_it' ? ', because you asked' : '')) : '');
       note = '<p class="wg-lead-why wg-quote wg-lead-result"><q>' + esc(rs.note) + '</q></p>';
       if (d) dec = decisionLine(r, d);
     } else if (held) {
       head = line('held', 'Waiting for the team');
-      note = '<p class="wg-lead-why">Held until every blind proposal is in.' + (live && rs.via === 'check_it' ? ' You asked to check it: it is checked in the Evidence round.' : '') + '</p>';
+      /* the pass's held note says why once (n-f); a row adds only what you asked for */
+      note = live && rs.via === 'check_it' ? '<p class="wg-lead-why">You asked to check it: it is checked in the Evidence round.</p>' : '';
     } else if (live) {
       var who = rs.status === 'running' && rs.by ? rs.by.name + ' is on it' + (rs.via === 'check_it' ? ', because you asked' : '')
         : rs.via === 'check_it' ? (bs ? 'checked in the Evidence round, because you asked' : 'you asked to check it')
@@ -206,14 +208,15 @@
     } else if (d) {
       var hyp = l.hypothesis && st === 'using' ? '<span class="wg-hyp">still a hypothesis</span>' : '';
       head = line(st, WE.STATUS_WORD[st], hyp + '<span class="wg-by-wrap">' + byLine(r, d.by) + '</span>');
-      note = '<p class="wg-lead-why wg-quote"><q>' + esc(d.reason) + '</q></p>';
+      note = '<p class="wg-lead-why wg-quote wg-team-why"><q>' + esc(d.reason) + '</q></p>';
     } else if (w.kind === 'chat_room' && r.status === 'completed') {
       head = line('waiting', 'Not taken up'); note = '<p class="wg-lead-why">The room left it undecided.</p>';
     } else {
       head = line('waiting', WE.STATUS_WORD.waiting);
       note = '<p class="wg-lead-why">' + esc(pass && pass.n > 1 ? 'The ' + leadName(r) + ' decides it now that it has arrived.' : w.kind === 'chat_room' ? 'The Moderator decides it as it arrives.' : w.kind === 'crew' ? 'The Coordinator decides it while it splits the job.' : 'The team decides it in the Debate.') + '</p>';
     }
-    return head + note + dec;
+    /* a row reads like the listing: the team's decision first, then what research found (n-h, D6) */
+    return dec + head + note;
   }
   function evidenceLine(r, l) {
     var rs = l.research;
@@ -238,7 +241,7 @@
     var takes = list(l.takenUpBy).map(function (mid) { return list(r.messages).filter(function (m) { return m.id === mid; })[0]; }).filter(Boolean);
     var taken = o.compact || !takes.length ? '' : '<p class="wg-lead-taken">' + S().pmxGlyph('reply', 12) + '<span>Taken up by ' + esc(words(takes.map(function (m) { return m.senderName || 'a helper'; }).filter(function (v, i, a) { return a.indexOf(v) === i; }))) + '</span></p>';
     return '<li class="wg-lead" data-k="wg-lead:' + esc(k) + (o.compact ? ':c' : '') + '" data-lead="' + esc(l.id) + '" data-status="' + (pass && pass.status === 'held' ? 'held' : st) + '"' + flash + '>' +
-      '<span class="wg-lead-n" aria-hidden="true">' + l.n + '</span>' +
+      '<span class="wg-lead-n"><span aria-hidden="true">' + l.n + '</span>' + statusMark(pass && pass.status === 'held' ? 'held' : st) + '</span>' +
       '<div class="wg-lead-body">' +
         '<p class="wg-lead-title">' + esc(l.title) + '</p>' +
         '<p class="wg-lead-tether"><span class="wg-angle" data-angle="' + esc(l.angle) + '">' + angleMark(l.angle, 11) + esc(WE.ANGLES[l.angle] || l.angle) + '</span><span class="wg-tether">' + esc(l.tether) + '</span></p>' +
@@ -257,17 +260,29 @@
     var z = size || 11, c = z / 2, rr = z / 2 - 1, a = (i / 8) * Math.PI * 2 - Math.PI / 2, x = c + Math.cos(a) * rr, y = c + Math.sin(a) * rr;
     return '<svg class="wg-angle-mark" width="' + z + '" height="' + z + '" viewBox="0 0 ' + z + ' ' + z + '" aria-hidden="true"><circle cx="' + c + '" cy="' + c + '" r="' + rr + '" fill="none" stroke="currentColor" stroke-opacity=".35"/><line x1="' + c + '" y1="' + c + '" x2="' + x.toFixed(2) + '" y2="' + y.toFixed(2) + '" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>';
   }
+  /* D2 (round 2): every one of the eight rim positions is a dot; a lit angle is a filled dot, sized by its leads, on a
+     ray from the hub; an unlit one a small open dot. The caption counts them, and the legend beside it names each lit
+     angle with its direction mark, so nothing needs a hover */
   function compass(pass, leads, size) {
-    var z = size || 64, c = z / 2, R = z / 2 - 6, worked = {}, counts = {};
+    var z = size || 64, c = z / 2, R = z / 2 - 7, worked = {}, counts = {};
     pass.angles.forEach(function (a) { worked[a.key] = 1; });
     leads.forEach(function (l) { counts[l.angle] = (counts[l.angle] || 0) + 1; });
     var parts = COMPASS.map(function (k, i) {
       var a = (i / 8) * Math.PI * 2 - Math.PI / 2, x = c + Math.cos(a) * R, y = c + Math.sin(a) * R, on = !!worked[k], n = counts[k] || 0;
-      var len = on ? (n ? R : R * 0.62) : R * 0.34, x2 = c + Math.cos(a) * len, y2 = c + Math.sin(a) * len;
-      return '<g class="wg-cmp-ray" data-on="' + (on ? 1 : 0) + '" data-leads="' + n + '"><line x1="' + c + '" y1="' + c + '" x2="' + x2.toFixed(2) + '" y2="' + y2.toFixed(2) + '"/>' +
-        (on ? '<circle cx="' + x2.toFixed(2) + '" cy="' + y2.toFixed(2) + '" r="' + (n ? 2.6 + Math.min(n, 3) * 0.6 : 2) + '"/>' : '') + '<title>' + esc(WE.ANGLES[k]) + (on ? ': ' + (n ? plural(n, 'lead') : 'no lead') : ': not explored') + '</title></g>';
+      var dot = on ? (n ? 2.4 + Math.min(n, 3) * 0.9 : 2.4) : 1.5;
+      return '<g class="wg-cmp-ray" data-on="' + (on ? 1 : 0) + '" data-leads="' + n + '">' + (on ? '<line x1="' + c + '" y1="' + c + '" x2="' + x.toFixed(2) + '" y2="' + y.toFixed(2) + '"/>' : '') +
+        '<circle cx="' + x.toFixed(2) + '" cy="' + y.toFixed(2) + '" r="' + dot.toFixed(1) + '"/><title>' + esc(WE.ANGLES[k]) + (on ? ': ' + (n ? plural(n, 'lead') : 'no lead') : ': not explored') + '</title></g>';
     }).join('');
-    return '<svg class="wg-compass" width="' + z + '" height="' + z + '" viewBox="0 0 ' + z + ' ' + z + '" role="img" aria-label="' + esc('Angles explored: ' + words(pass.angles.map(function (a) { return a.name; }))) + '"><circle class="wg-cmp-rim" cx="' + c + '" cy="' + c + '" r="' + R + '"/>' + parts + '<circle class="wg-cmp-hub" cx="' + c + '" cy="' + c + '" r="2.2"/></svg>';
+    return '<figure class="wg-cmp"><svg class="wg-compass" width="' + z + '" height="' + z + '" viewBox="0 0 ' + z + ' ' + z + '" role="img" aria-label="' + esc(pass.angles.length + ' of 8 angles explored: ' + words(pass.angles.map(function (a) { return a.name; }))) + '"><circle class="wg-cmp-rim" cx="' + c + '" cy="' + c + '" r="' + R + '"/>' + parts + '<circle class="wg-cmp-hub" cx="' + c + '" cy="' + c + '" r="2"/></svg>' +
+      '<figcaption class="wg-cmp-cap">' + pass.angles.length + ' of 8 angles</figcaption></figure>';
+  }
+  /* the lit angles by name, each with its direction mark and how many leads it gave (D2) */
+  function compassLegend(pass, leads) {
+    if (!pass.angles.length) return '';
+    return '<p class="wg-cmp-legend">' + pass.angles.map(function (a) {
+      var n = leads.filter(function (l) { return l.angle === a.key; }).length;
+      return '<span class="wg-cmp-key" data-leads="' + n + '">' + angleMark(a.key, 11) + esc(a.name) + (n ? '<span class="wg-cmp-n">' + n + '</span>' : '') + '</span>';
+    }).join('') + '</p>';
   }
   /* the second layer (SS-037): each angle explored with its brief signal and how many leads it gave */
   function anglesLayer(r, pass, leads, o) {
@@ -298,7 +313,7 @@
         : pass.stoppedEarly ? 'Stopped early with ' + plural(leads.length, 'lead') + (pass.stopReason ? ': ' + esc(pass.stopReason) : '.') + ' None of them is a fact yet.'
           : plural(leads.length, 'lead') + ' for the team to weigh; none of them is a fact yet.';
       say = '<div class="wg-territory">' + (pass.angles.length ? compass(pass, leads, o.where === 'chat' ? 56 : 64) : '') +
-        '<div class="wg-territory-text"><p class="wg-pass-say">' + esc(pass.summary) + '</p><p class="wg-pass-angles">' + outcome + '</p>' + tally + '</div></div>' + anglesLayer(r, pass, leads, o);
+        '<div class="wg-territory-text"><p class="wg-pass-say">' + esc(pass.summary) + '</p>' + compassLegend(pass, leads) + '<p class="wg-pass-angles">' + outcome + '</p>' + tally + '</div></div>' + anglesLayer(r, pass, leads, o);
     }
     var heldNote = held ? '<p class="wg-held">' + S().pmxStatus('waiting-dep', 14) + '<span><b>Held until every proposal is in.</b> The helpers draft alone first; they see these leads when the options are lined up.</span></p>' : '';
     var rows = leads.length ? '<ol class="wg-leads' + (o.where === 'chat' ? ' wg-leads--chat' : '') + '">' + leads.map(function (l) { return leadRow(r, l, { compact: o.where === 'chat' }); }).join('') + '</ol>' : '';
@@ -711,6 +726,16 @@
   }
   /* the one-line tally of the map, for the round bar */
   function treeTally(key) { var s = sessionOf(key); if (!s) return ''; var count = {}; GE.map(s).forEach(function (n) { count[n.state] = (count[n.state] || 0) + 1; }); return tallyOf(count); }
+  /* D1 (round 2): the tree draws its dependencies. Each decision hangs under the first decision it depends on, joined
+     to it by a neutral connector (an inline line in --border-strong, never a coloured side box); the rows run flat, so
+     the lines run unbroken down the left. In the Ask Card the map is compact (one line a decision, the question on
+     screen marked) so it never pushes the question out of view; in What we agreed it is the structure alone, since the
+     list above already gives each settled answer. The round bar carries the tally, so the map has none of its own. */
+  function treeGuide(kind) {
+    var top = kind === 'blank' ? '' : '<path d="M7 0V11' + (kind === 'pipe' ? '' : 'H14') + '"/>', more = kind === 'pipe' || kind === 'tee';
+    return '<span class="wg-tg" data-g="' + kind + '" aria-hidden="true"><svg class="wg-tg-a" width="14" height="11" viewBox="0 0 14 11">' + top + '</svg>' +
+      (more ? '<svg class="wg-tg-b" width="14" height="8" viewBox="0 0 14 8" preserveAspectRatio="none"><path d="M7 0V8" vector-effect="non-scaling-stroke"/></svg>' : '') + '</span>';
+  }
   function treeHtml(key, o) {
     o = o || {};
     var s = sessionOf(key, o.sessionId); if (!s) return '';
@@ -719,31 +744,39 @@
     if (rd) rd.ids.forEach(function (id, i) { qIndex[id] = i; });
     nodes.forEach(function (n) { var p = n.dependsOn.filter(function (d) { return byId[d]; })[0]; if (p) kids[p].push(n); else roots.push(n); });
     var lc = function (t) { return String(t).charAt(0).toLowerCase() + String(t).slice(1); };
-    var count = {}; nodes.forEach(function (n) { count[n.state] = (count[n.state] || 0) + 1; });
+    var ask = o.where === 'ask', agreed = o.where === 'agreed';
     /* in the Ask Card the question on screen is "you are here": the accent is its mark's alone; every other frontier
        row reads in text ink with the your-move mark (ruling 4 / D1 of round 2) */
-    var cq = o.where === 'ask' ? (function () { var st = ctx().state, q = (st.questions || [])[st.questionIndex || 0]; return q && q.grillNode; })() : null;
-    function line(n) {
+    var cq = ask ? (function () { var st = ctx().state, q = (st.questions || [])[st.questionIndex || 0]; return q && q.grillNode; })() : null;
+    function detailOf(n) {
       var also = n.dependsOn.slice(1).map(function (d) { return byId[d]; }).filter(Boolean);
-      var detail = n.state === 'settled' ? esc(n.answer) + (n.took === 'recommended' ? '<span class="wg-tree-fine"> · recommended</span>' : '<span class="wg-tree-fine"> · your answer</span>')
-        : n.state === 'found' ? esc(n.answer)
-          : n.state === 'frontier' ? 'asking now' + (n.unlocks.length ? '<span class="wg-tree-fine"> · unlocks ' + esc(words(n.unlocks.map(function (u) { return lc(byId[u].title); }))) + '</span>' : '')
-            : n.state === 'lookup' ? 'research is looking it up; nothing for you'
+      var d = n.state === 'settled' ? (agreed ? '' : esc(n.answer) + (n.took === 'recommended' ? '<span class="wg-tree-fine"> · recommended</span>' : '<span class="wg-tree-fine"> · your answer</span>'))
+        : n.state === 'found' ? (agreed ? 'looked up' : esc(n.answer))
+          : n.state === 'frontier' ? (cq && n.id === cq ? 'on screen now' : 'asking now') + (n.unlocks.length && !ask ? '<span class="wg-tree-fine"> · unlocks ' + esc(words(n.unlocks.map(function (u) { return lc(byId[u].title); }))) + '</span>' : '')
+            : n.state === 'lookup' ? (ask ? 'looking it up' : 'research is looking it up; nothing for you')
               : n.state === 'open' ? 'left open'
-                : n.state === 'next' ? 'ready for the next round'
-                  : n.waitsOnLookup ? 'waits for the lookup' : 'waits for ' + esc(words(n.dependsOn.map(function (d) { return byId[d]; }).filter(function (d) { return d && d.state !== 'settled' && d.state !== 'found'; }).map(function (d) { return lc(d.title); })) || 'an earlier decision');
-      if (also.length && n.state !== 'settled') detail += '<span class="wg-tree-fine"> · also hangs on ' + esc(words(also.map(function (d) { return lc(d.title); }))) + '</span>';
-      var label = '<span class="wg-tree-t">' + esc(n.title) + '</span><span class="wg-tree-d">' + detail + '</span>';
+                : n.state === 'next' ? (ask ? 'next round' : 'ready for the next round')
+                  : n.waitsOnLookup ? 'waits for the lookup' : 'waits for ' + esc(words(n.dependsOn.map(function (x) { return byId[x]; }).filter(function (x) { return x && x.state !== 'settled' && x.state !== 'found'; }).map(function (x) { return lc(x.title); })) || 'an earlier decision');
+      if (also.length && n.state !== 'settled') d += '<span class="wg-tree-fine"> · also hangs on ' + esc(words(also.map(function (x) { return lc(x.title); }))) + '</span>';
+      return d;
+    }
+    var rows = [];
+    function walk(n, flags, last, depth) {
+      var guides = depth ? flags.map(function (f) { return treeGuide(f ? 'pipe' : 'blank'); }).join('') + treeGuide(last ? 'elbow' : 'tee') : '';
+      var d = detailOf(n);
+      var label = '<span class="wg-tree-t">' + esc(n.title) + '</span>' + (d ? '<span class="wg-tree-d">' + d + '</span>' : '');
       var mark = '<span class="wg-tree-mark" data-kind="' + n.kind + '">' + (n.kind === 'fact' ? S().pmxGlyph('flask', 12) : S().pmxStatus(TREE_MARK[n.state], 12)) + '</span>';
       var body = n.state === 'frontier' && o.jump && qIndex[n.id] != null
         ? '<button type="button" class="wg-tree-node" data-action="qs-goto-question" data-index="' + qIndex[n.id] + '" aria-label="' + esc('Go to the question: ' + n.title) + '">' + mark + label + '</button>'
         : '<span class="wg-tree-node">' + mark + label + '</span>';
-      return '<li class="wg-tree-li" data-state="' + n.state + '" data-kind="' + n.kind + '"' + (cq && n.id === cq && n.state === 'frontier' ? ' data-current="1" aria-current="step"' : '') + ' role="treeitem" aria-label="' + esc(n.title + ': ' + TREE_STATE[n.state]) + '"' + (kids[n.id].length ? ' aria-expanded="true"' : '') + '>' + body +
-        (kids[n.id].length ? '<ol class="wg-tree-kids" role="group">' + kids[n.id].map(line).join('') + '</ol>' : '') + '</li>';
+      rows.push('<li class="wg-tree-li" data-state="' + n.state + '" data-kind="' + n.kind + '" data-depth="' + depth + '"' + (cq && n.id === cq && n.state === 'frontier' ? ' data-current="1" aria-current="step"' : '') +
+        ' role="treeitem" aria-level="' + (depth + 1) + '" aria-label="' + esc(n.title + ': ' + TREE_STATE[n.state]) + '">' + (guides ? '<span class="wg-tree-guides">' + guides + '</span>' : '') + body + '</li>');
+      var ks = kids[n.id];
+      ks.forEach(function (k, i) { walk(k, depth ? flags.concat([!last]) : [], i === ks.length - 1, depth + 1); });
     }
-    var tally = tallyOf(count);
-    return '<div class="wg-tree-wrap" data-k="wg-tree:' + esc(s.id) + (o.where ? ':' + o.where : '') + '"><p class="wg-tree-tally">' + tally + '</p>' +
-      '<ol class="wg-tree" role="tree" aria-label="' + esc('How the decisions hang together') + '">' + roots.map(line).join('') + '</ol></div>';
+    roots.forEach(function (n, i) { walk(n, [], i === roots.length - 1, 0); });
+    return '<div class="wg-tree-wrap" data-k="wg-tree:' + esc(s.id) + (o.where ? ':' + o.where : '') + '" data-where="' + esc(o.where || '') + '">' +
+      '<ol class="wg-tree" role="tree" aria-label="' + esc('How the decisions hang together') + '">' + rows.join('') + '</ol></div>';
   }
   /* What we agreed: every decision with its answer and every decision left open, Confirm and Keep going (CWR-042),
      the run's one counter, and the map of how the decisions hang together */
@@ -935,25 +968,29 @@
      Off: a pending request is cleared, and a session still questioning you ends like Wrap up, with the open items
      listed in What we agreed (its Confirm still gates its step). */
   var BOUNDARY = { chat_room: 'round', crew: 'assignment', brainstorm: 'chapter' };
+  /* a BrainStorm's question numbers, folded into the one plain line a toggle writes (n-b) */
+  function limitWords(r, on) {
+    var qb = r.kind === 'brainstorm' && r.brainstorm && r.brainstorm.questionBank; if (!qb) return '';
+    var eff = (qb.baselineLimit || 0) + (on ? (qb.grillExtension || 0) : 0), n = (qb.askedIds || []).length;
+    return ' The question limit is ' + (on ? 'now ' : 'back to ') + eff + (n ? '; the ' + plural(n, 'question') + ' already asked still count.' : '.');
+  }
   function setGrill(r, on) {
     if (!r || r.kind === 'review') return { ok: false, error: 'no_grill_here' };
     r.config = r.config || {};
     var was = grillOn(r); r.config.grill_me_enabled = !!on;
     if (r.kind === 'brainstorm' && r.brainstorm && r.brainstorm.questionBank) { try { r.brainstorm.questionBank.grillMeEnabled = !!on; } catch (e) {} }
+    var say = function (body) { C().appendMessage(r.id, { senderKind: 'system', senderName: 'System', messageType: 'message', body: body + limitWords(r, on) }); };
     if (on) {
       openRunBank(r);
-      if (!was && takesRequests(r) && !activeSession(r)) {
-        r.grillPending = true;
-        C().appendMessage(r.id, { senderKind: 'system', senderName: 'System', messageType: 'message', body: 'Grill Me is on. The ' + leadName(r) + ' will question you at the next ' + BOUNDARY[r.kind] + ' boundary; what is running keeps going.' });
-      }
+      if (!was && takesRequests(r) && !activeSession(r)) { r.grillPending = true; say('Grill Me is on. The ' + leadName(r) + ' will question you at the next ' + BOUNDARY[r.kind] + ' boundary; what is running keeps going.'); }
+      else if (r.kind === 'brainstorm') say('Grill Me is on.');
       return { ok: true };
     }
     var hadPending = !!r.grillPending; r.grillPending = false;
     var s = activeSession(r);
-    if (s && s.status === 'grilling') {
-      switchOffSession('run:' + r.id, s);
-      C().appendMessage(r.id, { senderKind: 'system', senderName: 'System', messageType: 'message', body: 'Grill Me is off. The ' + leadName(r) + ' stops questioning you; what you agreed so far, and what was left open, waits for your Confirm.' });
-    } else if (was && hadPending) C().appendMessage(r.id, { senderKind: 'system', senderName: 'System', messageType: 'message', body: 'Grill Me is off again before the ' + leadName(r) + ' asked anything. Nothing waits for it.' });
+    if (s && s.status === 'grilling') { switchOffSession('run:' + r.id, s); say('Grill Me is off. The ' + leadName(r) + ' stops questioning you; what you agreed so far, and what was left open, waits for your Confirm.'); }
+    else if (was && hadPending) say('Grill Me is off again before the ' + leadName(r) + ' asked anything. Nothing waits for it.');
+    else if (r.kind === 'brainstorm') say('Grill Me is off.');
     return { ok: true };
   }
   /* Grill Me turned off while a session questions you, for a run or a Plan's thread alike (CWR-042, ACD-503; Astra F3):

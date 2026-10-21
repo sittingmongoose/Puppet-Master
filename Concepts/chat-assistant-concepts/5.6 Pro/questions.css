@@ -1389,10 +1389,10 @@ html[data-o55-nier="on"] .qs-ask-mark::after{ animation-timing-function:steps(3,
 /* the round bar sits on the card's header light (a radial accent tint): its fine print takes an ink measured against
    the painted tint, 4.8:1 or better (Astra F4, Opus N4; ruling 4 of round 2). Dark looks and Retro Light keep --muted;
    NieR Light also sets basic-light on body, so it is excluded */
-.qs-grill-bar{ --qs-grill-ink:var(--muted); }
-html:not([data-o55-nier="on"]) body[data-theme="basic-light"] .qs-grill-bar{ --qs-grill-ink:#5f5f67; }
-body[data-theme="glass-light"] .qs-grill-bar{ --qs-grill-ink:#645c7a; }
-body[data-theme="friendly-light"] .qs-grill-bar{ --qs-grill-ink:#655862; }
+.qs-grill{ --qs-grill-ink:var(--muted); }
+html:not([data-o55-nier="on"]) body[data-theme="basic-light"] .qs-grill{ --qs-grill-ink:#5f5f67; }
+body[data-theme="glass-light"] .qs-grill{ --qs-grill-ink:#645c7a; }
+body[data-theme="friendly-light"] .qs-grill{ --qs-grill-ink:#655862; }
 .qs-grill-meta{ font-size:11.5px; font-weight:450; line-height:16px; color:var(--qs-grill-ink); font-variant-numeric:tabular-nums; }
 .qs-rec{ display:inline-flex; align-items:center; gap:4px; color:var(--accent); font-weight:600; white-space:nowrap; }
 .qs-rec > svg, .qs-rec > .nx-i{ flex:none; }
@@ -1436,9 +1436,9 @@ body[data-theme="friendly-light"] .qs-grill-bar{ --qs-grill-ink:#655862; }
   .qs-grill-foot > .text-button{ padding-left:6px; padding-right:6px; }
   .qs-grill-foot > [data-action="qs-wrap-up"]{ padding-left:0; }
   .qs-ask-foot.qs-grill-foot > .qs-action[data-action="prev-question"]{ padding-left:6px; padding-right:6px; }
-  .qs-ask-foot .qs-action.soft-button[data-action="qs-accept-round"] > svg, .qs-ask-foot .qs-action.soft-button[data-action="qs-accept-round"] > .nx-i{ display:none; }
-  .qs-ask-foot .qs-action.soft-button[data-action="qs-accept-round"]{ padding-left:10px; padding-right:10px; }
-  .qs-grill-foot > .primary-button{ padding-left:12px; padding-right:12px; }
+  .qs-ask-foot .qs-action[data-action="qs-accept-round"] > svg, .qs-ask-foot .qs-action[data-action="qs-accept-round"] > .nx-i{ display:none; }
+  .qs-ask-foot .qs-action[data-action="qs-accept-round"]{ padding-left:10px; padding-right:10px; }
+  .qs-grill-foot > .primary-button, .qs-ask-foot.qs-grill-foot > .qs-action:is([data-action="next-question"], [data-action="submit-questionnaire"]){ padding-left:12px; padding-right:12px; }
 }
 /* NieR (M5): on the chosen answer, an ink bar with paper text, the Recommended mark and its separator take the
    chosen label's paper ink; elsewhere they keep the ink */

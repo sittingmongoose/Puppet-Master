@@ -1994,8 +1994,8 @@
        the pending request is cleared and a session still questioning you ends like Wrap up (PM56_WG.setGrill) */
     if (WG_()) WG_().setGrill(run, on); else { qb.grillMeEnabled = on; if (run.config) run.config.grill_me_enabled = on; }
     qb.grillMeEnabled = on;
-    var eff = qb.baselineLimit + (qb.grillMeEnabled ? qb.grillExtension : 0);
-    run.messages.push(mkMsg(run, { senderKind: 'system', senderName: 'System', messageType: 'message', body: 'Grill Me ' + (qb.grillMeEnabled ? 'enabled' : 'disabled') + '. Effective question maximum is now ' + eff + '. The ' + qb.askedIds.length + ' questions already asked still count — the allowance did not reset.' }));
+    /* one plain line per toggle (n-b): PM56_WG.setGrill writes it, with the question numbers folded in */
+    if (!WG_()) run.messages.push(mkMsg(run, { senderKind: 'system', senderName: 'System', messageType: 'message', body: 'Grill Me ' + (qb.grillMeEnabled ? 'enabled' : 'disabled') + '. Effective question maximum is now ' + (qb.baselineLimit + (qb.grillMeEnabled ? qb.grillExtension : 0)) + '. The ' + qb.askedIds.length + ' questions already asked still count — the allowance did not reset.' }));
     ctx.renderOverlays(); ctx.renderApp();
     return true;
   });

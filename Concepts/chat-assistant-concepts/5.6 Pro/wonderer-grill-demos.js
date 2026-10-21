@@ -455,7 +455,7 @@
   /* how a session ended, in plain words (m2): every decision, a wrap-up, the limit, or Grill Me turned off */
   function endedWords(s) {
     var a = WG().grill.agreed(s), n = a.open.length, open = n ? ' ' + n + (n === 1 ? ' decision is' : ' decisions are') + ' left open.' : '';
-    return (a.endedBy === 'wrap_up' ? 'You wrapped up.' : a.endedBy === 'cap' ? 'The question limit was reached.' : a.endedBy === 'switched_off' ? 'Grill Me is off, so the questions stopped.' : 'That’s every decision.') + open + ' Read What we agreed, then Confirm.';
+    return (a.endedBy === 'wrap_up' ? 'You wrapped up.' : a.endedBy === 'cap' ? 'The question limit was reached.' : a.endedBy === 'switched_off' ? 'Grill Me is off, so the questions stopped.' : n ? 'No more questions to ask.' : 'That’s every decision.') + open + ' Read What we agreed, then Confirm.';
   }
   function who(pass) { return pass.by.kind === 'user' ? 'You' : pass.by.name || 'A helper'; }
   function step(c) {
