@@ -16946,7 +16946,7 @@ split_recommended: false
 depends_on: [DL-112, DL-138, DL-218]
 unblocks: [CWR-044]
 acceptance_criteria:
-- Collaborative Workflows and the chat design agree with this decision; a Chat Room's rounds run by themselves unless Pause between rounds is on, and a room between two automatic rounds is never the user's move.
+- Collaborative Workflows and the chat design agree with this decision; with Pause between rounds off, eligible rounds continue automatically subject to existing gates, and completing a round alone never makes it the user's move. Existing permission, needs-you, Grill Me and manual-pause attention remains as CWR-044 and ACD-476 specify.
 - The mechanics listed above as the lead's and the writer's readings are not read as Jared's words.
 validation_surfaces:
 - python3 scripts/pm-shard-plans.py --check

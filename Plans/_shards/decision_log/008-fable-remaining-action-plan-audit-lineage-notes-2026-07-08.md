@@ -4,7 +4,7 @@ Source: `Plans/Decision_Log.md`
 
 Source lines: L14505-L16975
 
-Source SHA256: `267cf935f449201397de2834188a8db66a6e42fdd7489850253edf0a8d95d6c8`
+Source SHA256: `ee4a3b0dd48e18035b163510df01a3b56397c5141b3f69db94881ce016f6d9da`
 
 ---
 
@@ -2452,7 +2452,7 @@ split_recommended: false
 depends_on: [DL-112, DL-138, DL-218]
 unblocks: [CWR-044]
 acceptance_criteria:
-- Collaborative Workflows and the chat design agree with this decision; a Chat Room's rounds run by themselves unless Pause between rounds is on, and a room between two automatic rounds is never the user's move.
+- Collaborative Workflows and the chat design agree with this decision; with Pause between rounds off, eligible rounds continue automatically subject to existing gates, and completing a round alone never makes it the user's move. Existing permission, needs-you, Grill Me and manual-pause attention remains as CWR-044 and ACD-476 specify.
 - The mechanics listed above as the lead's and the writer's readings are not read as Jared's words.
 validation_surfaces:
 - python3 scripts/pm-shard-plans.py --check
