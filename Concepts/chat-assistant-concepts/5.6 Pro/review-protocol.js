@@ -544,8 +544,9 @@
    /* at most 3 rows (7.2): 3 lanes, or the 2 most urgent (failed, then reading) plus "+N more"; shown in seat order
       so a reviewer finishing never reorders the rows */
    const pri=rv=>rv.state==='failed'||rv.retrying?0:rv.state==='working'?1:2;
-   const list=vm.reviewers;
-   const pick=list.length>3?list.slice().sort((a,b)=>pri(a)-pri(b)||a.seat-b.seat).slice(0,2):list;
+   /* Show all lists every reviewer in place, Show fewer folds back (2026-10-21) */
+   const list=vm.reviewers,all=!!(C.lanesOpen&&C.lanesOpen(r.id));
+   const pick=list.length>3&&!all?list.slice().sort((a,b)=>pri(a)-pri(b)||a.seat-b.seat).slice(0,2):list;
    const shown=list.filter(rv=>pick.includes(rv)),rest=list.filter(rv=>!pick.includes(rv));
    const lanes=shown.map(rv=>{
     const off=rv.state==='failed'||rv.state==='waived';
@@ -558,7 +559,8 @@
    }).join('');
    const working=rest.filter(x=>x.state==='working').length,finished=rest.filter(x=>x.done).length;
    out.lanes=S.pmxLanes({key:'lanes:'+r.id,lanesHtml:lanes,runId:r.id,kind:'review',
-    more:rest.length?{count:rest.length,text:[working?working+' reading':'',finished?finished+' done':''].filter(Boolean).join(', ')+' · Show all',action:'collab-toggle-expand',attrs:R}:null});
+    more:rest.length?{count:rest.length,text:[working?working+' reading':'',finished?finished+' done':''].filter(Boolean).join(', ')+' · Show all',action:'collab-show-lanes',attrs:R}:null,
+    less:all&&list.length>=2?{action:'collab-show-lanes',attrs:R,always:list.length>3}:null});
   }
   /* comparing: a compact agreement grid, at most 4 rows, then "and N more" */
   if(vm.phase==='comparing'){

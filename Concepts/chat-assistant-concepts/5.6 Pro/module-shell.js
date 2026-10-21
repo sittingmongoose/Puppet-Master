@@ -1713,22 +1713,30 @@
       '<span class="pmx-lane-time">' + str(o.time) + '</span>' +
       '<span class="pmx-lane-l2" data-kind="' + kind + '"' + (o.keep ? ' data-pm-keep' : '') + k(o.keepKey) + '>' + str(o.line2) + '</span></button>';
   }
-  /* pmxLanes({key,cls,attrs,lanesHtml,more:{count,text,action,attrs},narrow:{action,attrs}|false,kind,collabHooks,runId})
+  /* pmxLanes({key,cls,attrs,lanesHtml,more:{count,text,action,attrs},narrow:{action,attrs}|false,less:{action,attrs,always},
+                kind,collabHooks,runId})
      - review cycle 2 (7.2 below 260 px): an attention card keeps ONE lane there, so with two or more lanes the builder
      also writes the narrow "+N more · Show all" row, whose N counts the lanes it hides too (the caller's own row counts
      only the ones it left out). Exactly one of the two rows is displayed at any width (CSS), so the count shown is
      always true. The narrow row reuses the caller's more action, or `narrow`, or (a Collaboration kind with its runId)
-     collab-toggle-expand on that run; with no action to give it, nothing narrows (all lanes stay, line 1 only). */
+     collab-show-lanes on that run; with no action to give it, nothing narrows (all lanes stay, line 1 only).
+     Show all lists every lane in place and never folds the card (2026-10-21, Jared: Show all "compacts the box"): the
+     caller then passes `less`, which writes the "Show fewer" row that folds them back and drops the narrow row. With
+     less.always the row shows at every width (the caller left lanes out); without it, only where the attention fold
+     applies (the narrow row's own places), since nothing else was hidden. */
   var LANE_RE = /<button type="button" class="pmx-lane[ "]/g;
   function pmxLanes(o) {
     o = o || {};
-    var m = o.more, n = (str(o.lanesHtml).match(LANE_RE) || []).length;
-    var na = o.narrow === false ? null : (o.narrow || (m && m.action ? { action: m.action, attrs: m.attrs } :
-      (collabOn(o) && o.runId != null && o.runId !== '' ? { action: 'collab-toggle-expand', attrs: 'data-run="' + esc(o.runId) + '"' } : null)));
-    var narrow = na && na.action && n >= 2 ? '<button type="button" class="pmx-lanes-more pmx-lanes-more-s"' + at('data-action', na.action) + raw(na.attrs) + '><b>' +
+    var m = o.more, n = (str(o.lanesHtml).match(LANE_RE) || []).length, l = o.less;
+    var na = o.narrow === false || l ? null : (o.narrow || (m && m.action ? { action: m.action, attrs: m.attrs } :
+      (collabOn(o) && o.runId != null && o.runId !== '' ? { action: 'collab-show-lanes', attrs: 'data-run="' + esc(o.runId) + '"' } : null)));
+    var narrow = na && na.action && n >= 2 ? '<button type="button" class="pmx-lanes-more pmx-lanes-more-s"' + at('data-action', na.action) + raw(na.attrs) + ' aria-expanded="false"><b>' +
       pmxFill(PMX_COPY.actions.moreRows, { n: (m ? num(m.count, 0) : 0) + n - 1 }) + '</b> · ' + PMX_COPY.actions.showAll + '</button>' : '';
+    var la = l && (l.action || (collabOn(o) && o.runId != null && o.runId !== '' ? 'collab-show-lanes' : ''));
+    var less = la ? '<button type="button" class="pmx-lanes-more pmx-lanes-less' + (l.always ? '' : ' pmx-lanes-less-s') + '"' + at('data-action', la) +
+      (l.attrs != null ? raw(l.attrs) : (o.runId != null ? ' data-run="' + esc(o.runId) + '"' : '')) + ' aria-expanded="true"><b>' + PMX_COPY.actions.showFewer + '</b></button>' : '';
     return '<div class="' + cls('pmx-lanes', o.cls) + '"' + k(o.key) + raw(o.attrs) + '>' + str(o.lanesHtml) +
-      (m ? '<button type="button" class="pmx-lanes-more"' + at('data-action', m.action) + raw(m.attrs) + '><b>+' + num(m.count, 0) + ' more</b>' + (m.text ? ' · ' + m.text : '') + '</button>' : '') + narrow + '</div>';
+      (m ? '<button type="button" class="pmx-lanes-more"' + at('data-action', m.action) + raw(m.attrs) + ' aria-expanded="false"><b>+' + num(m.count, 0) + ' more</b>' + (m.text ? ' · ' + m.text : '') + '</button>' : '') + narrow + less + '</div>';
   }
   function btnCls(a, base) {
     var t = a.tone || (a.primary ? 'primary' : (a.soft ? 'soft' : 'text'));
@@ -1852,7 +1860,7 @@
     var run = o.runId != null ? ' data-run="' + esc(o.runId) + '"' : '';
     var open = o.open || {}, ex = o.expand || {}, mo = o.more || {};
     var ea = ex.action || (collab ? 'collab-toggle-expand' : ''), oa = open.action || (collab ? 'collab-open-panel' : ''), ma = mo.action || (collab ? 'collab-toggle-more' : '');
-    var foot = (ea ? '<button type="button" class="icon-button pmx-act" data-action="' + esc(ea) + '"' + run + raw(ex.attrs) + ' aria-label="Expand">' + pmxGlyph('chevron-down', 15) + '</button>' : '') +
+    var foot = (ea ? '<button type="button" class="icon-button pmx-act" data-action="' + esc(ea) + '"' + run + raw(ex.attrs) + ' aria-label="Expand" aria-expanded="false">' + pmxGlyph('chevron-down', 15) + '</button>' : '') +
       (oa ? '<button type="button" class="text-button pmx-act pmx-open" data-action="' + esc(oa) + '"' + run + raw(open.attrs) + '>' + str(open.label || '<span>Open<span class="pmx-long"> Panel</span></span>') + '</button>' : '') +
       (ma ? '<button type="button" class="icon-button pmx-act" data-action="' + esc(ma) + '"' + run + raw(mo.attrs) + ' aria-label="More">' + pmxGlyph('more', 16) + '</button>' : '');
     var p = {}; for (var key in o) if (Object.prototype.hasOwnProperty.call(o, key)) p[key] = o[key];
@@ -2294,7 +2302,7 @@
     clockIdle: 'not started',
     actions: { expand: 'Expand', collapse: 'Collapse', openPanel: 'Open Panel', message: 'Message', more: 'More', retry: 'Retry', details: 'Details',
       technical: 'Technical details', download: 'Download transcript', changeSetup: 'Change setup…', runAgain: 'Run again with changes…', watchExample: 'Watch a recorded example',
-      pause: 'Pause', resume: 'Resume', cancelKind: 'Cancel {kind}…', moreRows: '+{n} more', showAll: 'Show all' },
+      pause: 'Pause', resume: 'Resume', cancelKind: 'Cancel {kind}…', moreRows: '+{n} more', showAll: 'Show all', showFewer: 'Show fewer' },
     cancelConfirm: { sentence: 'Cancel this {kind}? Everything so far is kept.', confirm: 'Cancel {kind}', keep: 'Keep going' },
     notes: { started: 'Started with {n} helpers.', paused: 'Paused. Nothing was lost.', resumed: 'Picked up where it left off.', cancelled: 'Cancelled. Everything it produced so far is kept here.' },
     participant: { empty: 'Nothing from {name} yet.', back: 'Back to everyone' },
@@ -2516,7 +2524,8 @@
     round_incomplete: ['', 'Wait for everyone to finish this round first.'],
     current_summary_required: ['', 'Sum up the latest round before ending.'],
     finish_current_round: ['', 'This round is still going. You can send when it ends.'],
-    finish_pending_delivery: ['', 'The room hasn’t answered your last message yet. Start the next round.'],
+    finish_pending_delivery: ['', 'The room hasn’t answered your last message yet. It answers in the next round.'],
+    recorded_rounds_missing: ['', 'This recording has no replies past its last round.'],
     room_ended_or_paused: ['', 'This room is paused or ended.'],
     participant_missing: ['', 'That helper isn’t in this room.'],
     select_room_output: ['', 'Pick one of the helpers’ messages.'],

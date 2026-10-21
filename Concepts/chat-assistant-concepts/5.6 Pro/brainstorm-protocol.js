@@ -388,7 +388,9 @@
     mark:markP(r,p,22,quote?'working':'idle'),name:H(p.role),verb:quote?'answered':'spoke first',verbKey:'vb:'+r.id+':'+p.id+':'+d.round+':'+(quote?'a':'f'),
     line2:quote?'“'+H(m.body)+'”':'round '+d.round+' · '+H(String(m.body).split(/(?<=[.!?])\s/)[0]),line2Kind:quote?'quote':'detail',
     keep:quote,keepKey:'l2:'+r.id+':'+p.id+':quote:'+H(r.id+'-r'+d.round+'-'+ms.indexOf(m))};};
-  return S.pmxLanes({key:'lanes:'+r.id,runId:r.id,kind:'brainstorm',lanesHtml:[last&&lane(last,'quote'),prev&&lane(prev,'detail')].filter(Boolean).map(l=>S.pmxLane(l)).join(''),more:null});
+  const two=[last&&lane(last,'quote'),prev&&lane(prev,'detail')].filter(Boolean),all=!!(C.lanesOpen&&C.lanesOpen(r.id));
+  /* the attention fold's Show all lists both lanes; Show fewer folds back (2026-10-21) */
+  return S.pmxLanes({key:'lanes:'+r.id,runId:r.id,kind:'brainstorm',lanesHtml:two.map(l=>S.pmxLane(l)).join(''),more:null,less:all&&two.length>=2?{action:'collab-show-lanes',attrs:ra}:null});
  }
  function dissentQuote(r){
   const b=r.brainstorm,v=b.dissent[0];if(!v)return '';
@@ -445,8 +447,14 @@
    /* held by Grill Me: no sealed notes yet (nobody is writing), the chapter is Understand the ask */
    if(grillHolds(r)){now='Grill Me';board='';}
    sentence=!inn?{status:'starting',word:'Starting',reason:'Everyone drafts an idea alone. '+(reused?plural(reused,'earlier answer')+' reused, so nobody asks again.':'Nobody sees the others’ ideas.')}
-    :{status:'running',word:'Running',reason:inn+' of '+n+' ideas are in. '+H(listWords(straggle))+(straggle.length===1?' is':' are')+' still writing. Nobody sees the others’ ideas yet.'};
+    /* (2026-10-21) every idea in, before Line up: no empty "are still writing" (a paced recording holds this moment) */
+    :{status:'running',word:'Running',reason:inn+' of '+n+(inn===1?' ideas is in. ':' ideas are in. ')+(straggle.length?H(listWords(straggle))+(straggle.length===1?' is':' are')+' still writing. Nobody sees the others’ ideas yet.':'Lining them up comes next.')};
    if(!inn)density='starting';
+   /* DL-218: the Wonderer's first pass explores during intake, before anyone drafts: the run is working, not starting
+      (2026-10-21: a paced recording held "Starting" for that whole pass) */
+   const WGx=window.PM56_WG,p1=!inn&&running&&!grillHolds(r)&&WGx&&WGx.engine&&WGx.engine.state(r)?(WGx.engine.state(r).passes||[])[0]:null;
+   if(p1&&p1.status==='exploring'){sentence={status:'running',word:'Understanding the ask',reason:'The Wonderer’s first pass explores before anyone drafts.'};density='live';}
+   else if(p1&&p1.status==='held'){sentence={status:'running',word:'Drafting alone',reason:'Everyone drafts an idea alone. The Wonderer’s leads wait until every idea is in.'};density='live';}
   }else if(phase==='normalize'){
    board=optionsBoard(r);now=plural(b.proposals.length,'option');
    sentence={status:'running',word:'Running',reason:n+' ideas boiled down to '+plural(b.proposals.length,'option')+'. Every original idea is kept.'};

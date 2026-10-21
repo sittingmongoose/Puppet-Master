@@ -975,6 +975,9 @@ body[data-theme^="retro"] .pmx-p-line{stroke-linecap:square;}
 .pmx-lanes-more b{color:var(--text);font-weight:600;}
 /* the narrow "+N more · Show all" row (review cycle 2) shows only on an attention card below 260 px */
 .pmx-lanes > .pmx-lanes-more-s{display:none;}
+/* Show fewer (2026-10-21): after Show all every lane is in place; a row whose lanes only the attention fold hid shows
+   only where that fold applies, the same places as the narrow row */
+.pmx-lanes > .pmx-lanes-less-s{display:none;}
 
 /* C7 decision row (the one loud moment) */
 .pmx-decision{display:flex;flex-direction:column;gap:10px;min-width:0;}
@@ -1404,7 +1407,7 @@ body[data-theme^="retro"] .pmx-finding-claim{font-size:12.5px;}
      includes the lanes hidden here */
   .pmx-run[data-density="attention"] .pmx-lanes:has(> .pmx-lanes-more-s) > .pmx-lane ~ .pmx-lane,
   .pmx-run[data-density="attention"] .pmx-lanes:has(> .pmx-lanes-more-s) > .pmx-lanes-more:not(.pmx-lanes-more-s){display:none;}
-  .pmx-run[data-density="attention"] .pmx-lanes > .pmx-lanes-more-s{display:flex;}
+  .pmx-run[data-density="attention"] .pmx-lanes > .pmx-lanes-more-s, .pmx-run[data-density="attention"] .pmx-lanes > .pmx-lanes-less-s{display:flex;}
   .pmx-run[data-density="attention"] .pmx-lane{grid-template-rows:17.5px;row-gap:0;height:40px;min-height:40px;padding:0;align-content:center;}
   .pmx-run[data-density="attention"] .pmx-lane-mark{grid-row:1;}
   .pmx-run[data-density="attention"] .pmx-lane-l2{display:none;}

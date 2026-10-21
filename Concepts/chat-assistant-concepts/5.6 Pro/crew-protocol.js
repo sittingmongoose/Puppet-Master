@@ -518,6 +518,8 @@
   const sg=!started?splitGate(r):null;
   if(!started&&sg==='waiting_for_wonderer_first_pass')sentence={status:'starting',word:'Starting',reason:'The Coordinator splits the job once the Wonderer’s first pass is in.'};
   else if(!started&&sg==='wonderer_leads_undecided_at_split')sentence={status:'running',word:'Splitting the job',reason:'The Coordinator is deciding each Wonderer lead as it splits the job.'};
+  /* every Wonderer lead decided and no part handed out yet: the split goes on, it does not start over (2026-10-21) */
+  else if(!started&&window.PM56_WG&&window.PM56_WG.engine&&window.PM56_WG.engine.state(r)&&window.PM56_WG.counts(r).total)sentence={status:'running',word:'Splitting the job',reason:'The Coordinator is handing out the parts.'};
   else if(!started)sentence={status:'starting',word:'Starting',reason:'The Coordinator is reading the job.'};
   else if(exporting)sentence={status:'running',word:'Running',reason:H(exporting.owner.name)+' is putting the checked parts together.'};
   else if(running.length){const next=vm.parts.find(x=>x.status==='pending'&&x.waitsOn.length);
@@ -533,10 +535,13 @@
     mark:S.pmxMark({role:x.owner.persona,seat:x.owner.seat,size:22,state:s,standin:x.owner.standIn}),
     name:H(started?x.title:x.owner.name),sub:H(x.owner.effectiveModel),verb:H(verb),verbKey:'vb:'+r.id+':'+x.id+':'+s,
     line2:started?H(x.owner.name)+' · '+l2:l2,line2Kind:'detail'});};
-  const shown=vm.parts.length>3?vm.parts.slice(0,2):vm.parts;
-  Object.assign(out,{density:started||sg?'live':'starting',sentence,
+  /* Show all lists every part in place and Show fewer folds them back (2026-10-21: it was the card's chevron action,
+     which folded the card) */
+  const all=!!(C.lanesOpen&&C.lanesOpen(r.id)),shown=vm.parts.length>3&&!all?vm.parts.slice(0,2):vm.parts;
+  Object.assign(out,{density:started||sg||sentence.status==='running'?'live':'starting',sentence,
    lanes:S.pmxLanes({key:'pmx-lanes:'+r.id,kind:'crew',runId:r.id,lanesHtml:shown.map(lane).join(''),
-    more:vm.parts.length>3?{count:vm.parts.length-2,text:'Show all',action:'collab-toggle-expand',attrs:ra}:null})});
+    more:vm.parts.length>3&&!all?{count:vm.parts.length-2,text:'Show all',action:'collab-show-lanes',attrs:ra}:null,
+    less:all&&vm.parts.length>=2?{action:'collab-show-lanes',attrs:ra,always:vm.parts.length>3}:null})});
   return out;
  }
  /* M4 (5.5, 8.1 Motion): when the Coordinator checks a part, one attention bar travels from that part's lane mark to

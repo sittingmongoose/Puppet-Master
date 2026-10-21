@@ -44,7 +44,8 @@
    "+N more · Show all" row for the others, as the S tier does (module-shell.css); Show all lists every lane */
 .pmx-run.collab-card[data-density="attention"] .pmx-lanes:has(> .pmx-lanes-more-s) > .pmx-lane ~ .pmx-lane,
 .pmx-run.collab-card[data-density="attention"] .pmx-lanes:has(> .pmx-lanes-more-s) > .pmx-lanes-more:not(.pmx-lanes-more-s) { display: none; }
-.pmx-run.collab-card[data-density="attention"] .pmx-lanes > .pmx-lanes-more-s { display: flex; }
+.pmx-run.collab-card[data-density="attention"] .pmx-lanes > .pmx-lanes-more-s,
+.pmx-run.collab-card[data-density="attention"] .pmx-lanes > .pmx-lanes-less-s { display: flex; }
 /* OWNER ANSWER E-31 (DL-137): a helper's line streaming into its lane (collaboration.js laneLine2). The words wear the
    lane's own line-2 face, the same as the whole quote that replaces them once every word is in, so the swap changes
    nothing but the markup; the empty island before the first word keeps its line box and shows no bare quote marks. */

@@ -319,8 +319,17 @@ const B = (name, html) => { built.push([name, html]); return html; };
   pc('C5 G-06 line 2: kind + kept island keyed by source', has(ln, '<span class="pmx-lane-l2" data-kind="quote" data-pm-keep data-k="l2:r1:p1:quote:m9"><q>Adding cases</q></span></button>'));
   pc('C5 line2Kind detail|sealed', has(X.pmxLane({ line2Kind: 'sealed' }), 'data-kind="sealed"') && has(X.pmxLane({}), 'data-kind="detail"'));
 
-  const lns = B('pmxLanes', X.pmxLanes({ key: 'ls', lanesHtml: '<i>L</i>', more: { count: 5, text: '2 working, 3 waiting · Show all', action: 'collab-toggle-expand', attrs: 'data-run="r1"' } }));
-  pc('C6 pmxLanes: +N more row with action and data-run', has(lns, '<div class="pmx-lanes" data-k="ls"><i>L</i><button type="button" class="pmx-lanes-more" data-action="collab-toggle-expand" data-run="r1">', '+5 more', '· 2 working, 3 waiting · Show all</button></div>'));
+  const lns = B('pmxLanes', X.pmxLanes({ key: 'ls', lanesHtml: '<i>L</i>', more: { count: 5, text: '2 working, 3 waiting · Show all', action: 'collab-show-lanes', attrs: 'data-run="r1"' } }));
+  pc('C6 pmxLanes: +N more row with action and data-run', has(lns, '<div class="pmx-lanes" data-k="ls"><i>L</i><button type="button" class="pmx-lanes-more" data-action="collab-show-lanes" data-run="r1" aria-expanded="false">', '+5 more', '· 2 working, 3 waiting · Show all</button></div>'));
+  /* 2026-10-21 (Jared: Show all "compacts the box"): Show all lists every lane in place and Show fewer folds them back;
+     the narrow row of a Collaboration kind shows its lanes too, never collab-toggle-expand (that folds the card) */
+  const two = '<button type="button" class="pmx-lane">A</button><button type="button" class="pmx-lane">B</button>';
+  const nrw = X.pmxLanes({ key: 'ln2', lanesHtml: two, kind: 'crew', runId: 'r3' });
+  pc('C6 the narrow Show all row of a Collaboration kind shows its lanes, never folds the card', has(nrw, 'class="pmx-lanes-more pmx-lanes-more-s" data-action="collab-show-lanes" data-run="r3" aria-expanded="false"') && !nrw.includes('collab-toggle-expand'));
+  const les = X.pmxLanes({ key: 'ln3', lanesHtml: two, kind: 'crew', runId: 'r3', less: { always: true } }), les2 = X.pmxLanes({ key: 'ln4', lanesHtml: two, kind: 'crew', runId: 'r3', less: {} });
+  pc('C6 less: one Show fewer row on the same action, no narrow row; always shows at every width, otherwise only where the fold applies',
+    has(les, '<button type="button" class="pmx-lanes-more pmx-lanes-less" data-action="collab-show-lanes" data-run="r3" aria-expanded="true"><b>Show fewer</b></button></div>') && !les.includes('pmx-lanes-more-s') &&
+    has(les2, 'class="pmx-lanes-more pmx-lanes-less pmx-lanes-less-s"'));
 
   const dec = B('pmxDecision', X.pmxDecision({ key: 'dc', tone: 'warm', sentence: '<b>CSV specialist needs your OK</b>.', actions: [{ action: 'collab-approve', attrs: 'data-run="r1"', label: 'Allow once', primary: true }, { action: 'collab-deny', attrs: 'data-run="r1"', label: 'Don’t allow' }] }));
   pc('C7 pmxDecision: tone, group, sentence, buttons carry attrs', has(dec, '<div class="pmx-decision" data-k="dc" data-tone="warm" role="group"><p class="pmx-decision-say">', '<span><b>CSV specialist needs your OK</b>.</span></p><div class="pmx-decision-acts">',
