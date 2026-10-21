@@ -23607,6 +23607,33 @@
   ]
  },
  {
+  "id": "branching.crew.chat-room-pause-between-rounds",
+  "label": "Pause between rounds",
+  "desc": "Wait after each Chat Room round for Next Round. Off runs the rounds automatically. Copied into the setup sheet; later default changes do not alter a committed room.",
+  "type": "toggle",
+  "default": false,
+  "scope": [
+   "global",
+   "project"
+  ],
+  "tier": "advanced",
+  "recommended": "off",
+  "related_features": [
+   "assistant-redesign",
+   "multi-agent-workflows.chat-room"
+  ],
+  "search": [
+   "agent",
+   "assistant.multi_agent.chat_room.pause_between_rounds",
+   "chat",
+   "multi",
+   "room",
+   "pause",
+   "rounds",
+   "Pause between rounds"
+  ]
+ },
+ {
   "id": "safety.approvals.bsd-mode",
   "label": "Advisor",
   "desc": "Auto checks in at key moments. Always watching checks in all the time.",

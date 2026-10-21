@@ -1580,6 +1580,7 @@ DL-138, question 14, sets the factory `branching.crew.crew-auto-enabled` value t
 | `branching.crew.chat-room-participant-count` | Chat Room Size | `number` | `4` | `multi-agent-workflows.chat-room` | `assistant.multi_agent.chat_room.participant_count` |
 | `branching.crew.chat-room-turn-policy` | Chat Room Turns | `select` | `Moderated` | `multi-agent-workflows.chat-room` | `assistant.multi_agent.chat_room.turn_policy` |
 | `branching.crew.chat-room-max-rounds` | Chat Room Rounds | `number` | `5` | `multi-agent-workflows.chat-room` | `assistant.multi_agent.chat_room.max_rounds` |
+| `branching.crew.chat-room-pause-between-rounds` | Pause between rounds | `toggle` | `false` | `multi-agent-workflows.chat-room` | `assistant.multi_agent.chat_room.pause_between_rounds` |
 | `safety.approvals.bsd-mode` | Back Seat Driver | `select` | `Auto` | `back-seat-driver` | `assistant.bsd.mode` |
 | `safety.approvals.bsd-model` | Adviser Model | `select` | `Default` | `back-seat-driver` | `assistant.bsd.model` |
 | `safety.approvals.bsd-persona` | Adviser Persona | `select` | `Critical Advisor` | `back-seat-driver` | `assistant.bsd.persona` |
@@ -1657,14 +1658,20 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Settings_System.md
 canonical_text: >-
-  Fifty new settings are registered in Plans/settings_inventory.json under the existing twelve categories, because this inventory derives a setting's category and subgroup from its ID prefix. The packet's assistant.* and browser.* spellings are reconciled to those canonical IDs and retained as search aliases on the canonical entry; a packet spelling receives no second inventory row, no peer control, and no independent persistence identity. The original proposed_census_required packet status is retained as source lineage. A census found one genuine reuse: general.interaction.chat-eli5 is the per-conversation ELI5 override; general.interaction.eli5-default provides the app-default and project-default levels under DL-138. Resolve an explicit chat override first, then the project's explicit default, then the app default; inherit clears only the chat override and defaults never change generated documents. Project defaults use the ordinary Settings transaction and snapshot, and the app fallback is the bundled default false in Plans/settings_inventory.json. F3-581's editable All chats requirement remains pending: its app-wide commit and persistence route conflicts with SSYS-002 and is tracked as pldg-20260927-001-wand-collab-workflows q-035. Inventory scope admits no app-wide writer or global ordinary Settings value. Until the owner resolves that question, the All chats edit is disabled with the Settings owner's reason; its editable requirement is retained, not replaced by a permanent read-only decision. The pre-existing branching.crew.crew-enabled toggle is preserved as the master Crew enable, and the retired model in which Crew was only that switch is superseded because a Crew run now requires a committed configuration regardless of the toggle.
+  Fifty-one new settings are registered in Plans/settings_inventory.json under the existing twelve categories, because this inventory derives a setting's category and subgroup from its ID prefix. The packet's assistant.* and browser.* spellings are reconciled to those canonical IDs and retained as search aliases on the canonical entry; a packet spelling receives no second inventory row, no peer control, and no independent persistence identity. The original proposed_census_required packet status is retained as source lineage. A census found one genuine reuse: general.interaction.chat-eli5 is the per-conversation ELI5 override; general.interaction.eli5-default provides the app-default and project-default levels under DL-138. Resolve an explicit chat override first, then the project's explicit default, then the app default; inherit clears only the chat override and defaults never change generated documents. Project defaults use the ordinary Settings transaction and snapshot, and the app fallback is the bundled default false in Plans/settings_inventory.json. F3-581's editable All chats requirement remains pending: its app-wide commit and persistence route conflicts with SSYS-002 and is tracked as pldg-20260927-001-wand-collab-workflows q-035. Inventory scope admits no app-wide writer or global ordinary Settings value. Until the owner resolves that question, the All chats edit is disabled with the Settings owner's reason; its editable requirement is retained, not replaced by a permanent read-only decision. The pre-existing branching.crew.crew-enabled toggle is preserved as the master Crew enable, and the retired model in which Crew was only that switch is superseded because a Crew run now requires a committed configuration regardless of the toggle.
+  DL-231 adds branching.crew.chat-room-pause-between-rounds, a toggle with factory default false
+  and search alias assistant.multi_agent.chat_room.pause_between_rounds in
+  multi-agent-workflows.chat-room. The setup check copies this default when the sheet opens and
+  commits pause_between_rounds with the definition. Save as default uses the ordinary Settings
+  transaction; a later Settings change never alters a committed definition or a running room.
   DL-138 sets branching.crew.crew-auto-enabled to factory true for a new project while preserving an existing explicit false. The per-chat override is crew_auto_override (true, false or null) on existing thread metadata, absent or null inheriting the project value. cmd.chat.crew_auto.set with scope=thread commits it before the check changes and preserves the prior value on failure. It is a Collaboration-owned preference, not another ordinary Settings value or inventory ID; inventory run applicability is descriptive metadata. The factory Crew Auto configuration is committed as version 1 when the project is created (CWR-021); later user edits require an explicit successful commit.
 gui_related: true
 gui_classification_reason: Each registered setting is a rendered control in a Settings pane with a category, subgroup, and tier.
 depends_on: [SSYS-027]
 unblocks: []
 acceptance_criteria:
-  - All fifty settings exist once each with a valid category, subgroup, type, default, scope, and tier.
+  - All fifty-one settings exist once each with a valid category, subgroup, type, default, scope, and tier.
+  - The Chat Room pause toggle defaults false, resolves its assistant.multi_agent.chat_room.pause_between_rounds alias once, and changes no already committed room.
   - Every packet spelling resolves to exactly one canonical entry through its search aliases.
   - No packet spelling receives its own row or persistence identity.
   - The existing chat-eli5 override and crew-enabled toggle are preserved rather than duplicated.
@@ -1686,10 +1693,14 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
+  - Plans/Decision_Log.md#DL-231
   - pm-assistant-implementation-2026-09-02-recovered:machine/settings.json
   - pm-assistant-implementation-2026-09-02-recovered:SET-002
   - Plans/Decision_Log.md#DL-138
 preserved_exact_tokens:
+  - "pause_between_rounds"
+  - "assistant.multi_agent.chat_room.pause_between_rounds"
+  - "branching.crew.chat-room-pause-between-rounds"
   - "general.interaction.chat-eli5"
   - "branching.crew.crew-enabled"
   - "proposed_census_required"

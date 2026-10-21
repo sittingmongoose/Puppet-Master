@@ -1828,9 +1828,9 @@
       "all_planunits_have_gui_related": true,
       "gui_related_counts": {
         "False": 25,
-        "True": 45
+        "True": 46
       },
-      "heading_count": 144,
+      "heading_count": 146,
       "implementation_surfaces": [
         "Concepts/pm7-tools/home_workspace_source.py",
         "Concepts/pm7-tools/verify/home_workspace_matrix.mjs",
@@ -1930,9 +1930,9 @@
         "tests/test_pm_evidence_artifact_binding_modes.py",
         "tests/test_pm_working_notebook_contracts.py"
       ],
-      "line_count": 6714,
+      "line_count": 6802,
       "path": "Plans/Automated_Testing_System.md",
-      "plan_unit_count": 70,
+      "plan_unit_count": 71,
       "plan_unit_ids": [
         "ATS-001",
         "ATS-023",
@@ -2003,7 +2003,8 @@
         "ATS-075",
         "ATS-076",
         "ATS-077",
-        "ATS-078"
+        "ATS-078",
+        "ATS-079"
       ],
       "reasoning_tiers": [
         "high",
@@ -2015,6 +2016,7 @@
         "automatic_resume_overrides_user_stop",
         "case_l_durable_state_false_positive_oracle",
         "chat_presentation_regression",
+        "chat_room_round_boundary_coverage",
         "compaction_manual_entrypoint_validation_gap",
         "containerized_host_test_proof_gap",
         "contract_fixture_drift_or_false_runtime_claim",
@@ -2072,10 +2074,10 @@
         "wonderer_grilling_contract_coverage",
         "workflow_activation_original_source_or_lifetime_drift"
       ],
-      "sha256": "7375d53c62194fe2dd3391d1857a3e003e50468d87872591db23508b9e549343",
+      "sha256": "4c0221e74f1e458481e058f9b25cf6752777bf72a3ebc0b277fddd4e1f5fcdd3",
       "source_preserving_unit_ids": [],
       "status_counts": {
-        "accepted": 69,
+        "accepted": 70,
         "superseded": 1
       },
       "title": "Automated Testing System",
@@ -2085,7 +2087,7 @@
         "requirement": 30,
         "schema_contract": 3,
         "validation_contract": 1,
-        "validation_criterion": 32
+        "validation_criterion": 33
       },
       "validation_surfaces": [
         "Future Assistant Chat visibility and toggle tests.",
@@ -3777,7 +3779,7 @@
         "future command palette",
         "future command parser"
       ],
-      "line_count": 8072,
+      "line_count": 8081,
       "path": "Plans/Commands_System.md",
       "plan_unit_count": 95,
       "plan_unit_ids": [
@@ -3973,7 +3975,7 @@
         "view_state_command_inflation",
         "web_slash_family_drift"
       ],
-      "sha256": "65241c5eadb888e593ca008aff5d5c07c10a06c08d74905daef442bbbaf42f82",
+      "sha256": "4bc5f953d8d5769d4762c7cdeac244c13948e2535e5cbe48acbc35fb94dfc6c0",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 95
@@ -4357,10 +4359,10 @@
     {
       "all_planunits_have_gui_related": true,
       "gui_related_counts": {
-        "False": 280,
+        "False": 281,
         "True": 76
       },
-      "heading_count": 555,
+      "heading_count": 557,
       "implementation_surfaces": [
         "Plans/Architecture_Invariants.md",
         "Plans/Automated_Testing_System.md",
@@ -4413,6 +4415,7 @@
         "Plans/browser_event_payloads.schema.json",
         "Plans/chain-wizard-flexibility.md",
         "Plans/chain-wizard.md",
+        "Plans/collaborative_workflows_contract_fixtures.json",
         "Plans/collaborative_workflows_contracts.schema.json",
         "Plans/event_append_receipt_contracts.schema.json",
         "Plans/event_family_registry.json",
@@ -4460,11 +4463,12 @@
         "future run receipts",
         "future vision_bridge result records",
         "scripts/pm-implementation-readiness.py",
+        "scripts/pm-new-contracts-verify.py",
         "scripts/pm-plans-verify.py"
       ],
-      "line_count": 24030,
+      "line_count": 24099,
       "path": "Plans/Contracts_V0.md",
-      "plan_unit_count": 356,
+      "plan_unit_count": 357,
       "plan_unit_ids": [
         "CV-292",
         "CV-293",
@@ -4821,7 +4825,8 @@
         "CV-360",
         "CV-361",
         "CV-362",
-        "CV-363"
+        "CV-363",
+        "CV-364"
       ],
       "reasoning_tiers": [
         "high",
@@ -4879,6 +4884,7 @@
         "case_l_restore_outcome_contract_drift",
         "case_l_retention_quarantine_contract_drift",
         "case_l_storage_compatibility_envelope_drift",
+        "chat_room_shape_owner_drift",
         "chat_todo_mutation_identity_loss",
         "child_crew_event_grammar_split",
         "child_lifecycle_enum_drift",
@@ -5180,10 +5186,10 @@
         "worktree_lane_context_loss",
         "worktree_lifecycle_record_loss"
       ],
-      "sha256": "7a63689307b14a7c68ab2e251dff6df3c6fdbcf43a3869ba122b27cc2f23bda1",
+      "sha256": "2cbcda1c4776a368c3a581f4e04e2fa2fa02f76140733ab77a2e10fcbfa592d0",
       "source_preserving_unit_ids": [],
       "status_counts": {
-        "accepted": 356
+        "accepted": 357
       },
       "title": "Contracts V0 (Canonical)",
       "unit_type_counts": {
@@ -5192,7 +5198,7 @@
         "consumer_requirement": 1,
         "future_scope_decision": 1,
         "integration_contract": 3,
-        "interface_contract": 1,
+        "interface_contract": 2,
         "owner_boundary": 1,
         "requirement": 230,
         "schema_contract": 28,
@@ -5326,6 +5332,7 @@
         "python3 scripts/pm-plans-verify.py validate-filesafe-security-policy",
         "python3 scripts/pm-plans-verify.py validate-goal-runtime-event-fixtures",
         "python3 scripts/pm-plans-verify.py validate-implementation-readiness",
+        "python3 scripts/pm-plans-verify.py validate-new-contracts",
         "python3 scripts/pm-plans-verify.py validate-plans-to-code-handoff-schema",
         "python3 scripts/pm-plans-verify.py validate-pm7-gui-fixtures",
         "python3 scripts/pm-plans-verify.py validate-server-command-gap",
@@ -17242,7 +17249,7 @@
         "future native Slint Plugins manager projection",
         "future typed Settings owner projections"
       ],
-      "line_count": 3984,
+      "line_count": 3995,
       "path": "Plans/Settings_System.md",
       "plan_unit_count": 49,
       "plan_unit_ids": [
@@ -17349,7 +17356,7 @@
         "theme_or_layout_cross_project_leak",
         "unowned_preference_or_scope_drift"
       ],
-      "sha256": "069ee4d9fcbe8d846a2dcb5abe0ab5e28c2742e4f96a05b0c1936bb9c9908191",
+      "sha256": "99220036b8af2244e3f995230649e23c31cd64baa3b58a8223caa2212319ae01",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 49
@@ -19458,9 +19465,9 @@
       "all_planunits_have_gui_related": true,
       "gui_related_counts": {
         "False": 20,
-        "True": 164
+        "True": 165
       },
-      "heading_count": 381,
+      "heading_count": 383,
       "implementation_surfaces": [
         "Concepts/pm7-tools/home_workspace_source.py",
         "Plans/Assistant_Plan_Runtime.md",
@@ -19494,6 +19501,7 @@
         "Plans/WorktreeGitImprovement.md",
         "Plans/assistant-chat-design.md",
         "Plans/assistant_chat_contracts.schema.json",
+        "Plans/collaborative_workflows_contracts.schema.json",
         "Plans/prd_planning_runtime_contracts.json",
         "Plans/prd_planning_runtime_contracts.schema.json",
         "Plans/settings_inventory.json",
@@ -19513,9 +19521,9 @@
         "future command registry and routed Docker/Hosts actions",
         "scripts/pm-prd-planning-runtime-validate.py"
       ],
-      "line_count": 16230,
+      "line_count": 16322,
       "path": "Plans/UI_Command_Catalog.md",
-      "plan_unit_count": 184,
+      "plan_unit_count": 185,
       "plan_unit_ids": [
         "UCC-002",
         "UCC-003",
@@ -19700,7 +19708,8 @@
         "UCC-203",
         "UCC-204",
         "UCC-205",
-        "UCC-206"
+        "UCC-206",
+        "UCC-207"
       ],
       "reasoning_tiers": [
         "high",
@@ -19723,6 +19732,7 @@
         "catalog_reverse_coverage_or_alias_promotion_drift",
         "central_admission_alias_collision_or_simulated_success",
         "chat_command_catalog_gap",
+        "chat_room_control_availability_drift",
         "collaboration_command_identity",
         "command_catalog_duplication",
         "command_identity_registration",
@@ -19778,10 +19788,10 @@
         "wand_module_surface_drift",
         "wrong_git_target_or_phantom_handler"
       ],
-      "sha256": "b61f2bc13545284ddcb63793a3b69f73fb1043a057a6e3f6dcce50ebde745a5f",
+      "sha256": "efde0db36281a8369c735d35ac530ab9ec8d0d6f59609ee3b269125b3bfc4631",
       "source_preserving_unit_ids": [],
       "status_counts": {
-        "accepted": 182,
+        "accepted": 183,
         "retired": 1,
         "superseded": 1
       },
@@ -19789,7 +19799,7 @@
       "unit_type_counts": {
         "command_binding": 1,
         "command_catalog": 2,
-        "command_contract": 45,
+        "command_contract": 46,
         "command_disposition": 2,
         "compatibility_disposition": 1,
         "constraint": 1,
@@ -19854,6 +19864,7 @@
         "python3 scripts/pm-plan-index.py validate",
         "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits",
         "python3 scripts/pm-plans-verify.py run-gates",
+        "python3 scripts/pm-plans-verify.py validate-new-contracts",
         "python3 scripts/pm-plans-verify.py validate-prd-planning-runtime-contracts",
         "python3 scripts/pm-plans-verify.py validate-ui-command-response",
         "python3 scripts/pm-plans-verify.py validate-wiring-matrix",
@@ -20424,9 +20435,9 @@
       "all_planunits_have_gui_related": true,
       "gui_related_counts": {
         "False": 13,
-        "True": 59
+        "True": 60
       },
-      "heading_count": 156,
+      "heading_count": 158,
       "implementation_surfaces": [
         "Plans/00-plans-index.md",
         "Plans/Commands_System.md",
@@ -20457,9 +20468,9 @@
         "future UI command dispatcher fixtures",
         "scripts/pm-ui-command-response.py"
       ],
-      "line_count": 6433,
+      "line_count": 6511,
       "path": "Plans/Wiring_Matrix.md",
-      "plan_unit_count": 72,
+      "plan_unit_count": 73,
       "plan_unit_ids": [
         "WM-002",
         "WM-003",
@@ -20532,7 +20543,8 @@
         "WM-091",
         "WM-092",
         "WM-093",
-        "WM-094"
+        "WM-094",
+        "WM-095"
       ],
       "reasoning_tiers": [
         "high",
@@ -20541,6 +20553,7 @@
       ],
       "risk_classes": [
         "browser_command_event_reverse_coverage_or_false_dispatch",
+        "chat_room_wiring_availability_drift",
         "collaboration_wiring_semantics",
         "command_response_identity_or_false_completion",
         "cross_target_dispatch_or_false_runtime_claim",
@@ -20573,17 +20586,17 @@
         "wiring_matrix_drift",
         "wiring_or_reverse_coverage_false_completion"
       ],
-      "sha256": "c5e0dbd366ade9209c2146b51880500d182a83feb058739b7b14b14265810c08",
+      "sha256": "7304c55288721d09f1c08a64e30ee5cd202487c687a30507474da61c58fa3f1a",
       "source_preserving_unit_ids": [],
       "status_counts": {
-        "accepted": 72
+        "accepted": 73
       },
       "title": "Wiring Matrix (Canonical)",
       "unit_type_counts": {
         "compatibility_disposition": 1,
         "constraint": 11,
         "generated_artifact_residual": 1,
-        "integration_contract": 13,
+        "integration_contract": 14,
         "production_wiring": 3,
         "requirement": 35,
         "validation_rule": 1,
@@ -20618,6 +20631,7 @@
         "python3 scripts/pm-plan-index.py validate",
         "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits",
         "python3 scripts/pm-plans-verify.py run-gates",
+        "python3 scripts/pm-plans-verify.py validate-new-contracts",
         "python3 scripts/pm-plans-verify.py validate-ui-command-response",
         "python3 scripts/pm-plans-verify.py validate-wiring-matrix",
         "python3 scripts/pm-shard-plans.py --check",
@@ -20900,7 +20914,7 @@
       ]
     }
   ],
-  "generated_at_utc": "2026-10-21T20:11:47Z",
+  "generated_at_utc": "2026-10-21T20:45:25Z",
   "schema_id": "pm.plan_index.doc_cards.v1",
   "source_scope": "top-level live Plans/*.md; excludes ledgers, generated shards, evidence, and pipeline artifacts",
   "summary": {
@@ -20908,13 +20922,13 @@
     "docs_with_plan_units": 96,
     "docs_without_plan_units": 0,
     "gui_related_counts": {
-      "False": 3569,
-      "True": 3606
+      "False": 3570,
+      "True": 3609
     },
-    "plan_unit_count": 7175,
+    "plan_unit_count": 7179,
     "source_preserving_unit_count": 0,
     "status_counts": {
-      "accepted": 6970,
+      "accepted": 6974,
       "retired": 182,
       "superseded": 23
     },
@@ -20933,7 +20947,7 @@
       "capability_matrix": 1,
       "command_binding": 20,
       "command_catalog": 3,
-      "command_contract": 57,
+      "command_contract": 58,
       "command_disposition": 4,
       "command_registration": 1,
       "command_registry": 4,
@@ -20961,9 +20975,9 @@
       "gui_surface_rule": 1,
       "gui_wiring_rule": 1,
       "implementation_reference": 1,
-      "integration_contract": 98,
+      "integration_contract": 99,
       "interaction_contract": 6,
-      "interface_contract": 1,
+      "interface_contract": 2,
       "invariant": 24,
       "migration": 1,
       "migration_contract": 2,
@@ -21009,7 +21023,7 @@
       "ui_wiring_rule": 1,
       "validation": 13,
       "validation_contract": 1,
-      "validation_criterion": 36,
+      "validation_criterion": 37,
       "validation_requirement": 3,
       "validation_rule": 24,
       "variant_contract": 2,

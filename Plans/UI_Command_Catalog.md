@@ -12665,18 +12665,18 @@ Crew, BrainStorm, Review and Chat Room share the `cmd.collaboration.*` lifecycle
 | `cmd.collaboration.start` | Start Workflow | Starts a collaborative run from a committed configuration and freezes the effective participant roster and the Review target identity/hash at Start, not at modal open. Repeating the same idempotency binding returns the original run; the same key with changed configuration is rejected; a failed Start creates no card and no partial participant records (MODAL-005, MODAL-009..010, MODAL-017). | `configuration_committed && permission_ceiling_satisfied` | `domain_action` | `Plans/Collaborative_Workflows.md` | `CollaborationStartRequest` → `CollaborationStartResult` | `handlers::collaboration::start` |
 | `cmd.collaboration.pause` | Pause Workflow | Pauses a running collaborative workflow without discarding participant transcripts or artifacts. | `run_present && run_status == running` | `domain_action` | `Plans/Collaborative_Workflows.md` | `CollaborationPauseRequest` → `CollaborationPauseResult` | `handlers::collaboration::pause` |
 | `cmd.collaboration.resume` | Resume Workflow | Resumes a paused collaborative workflow; refused when the pause came from a manual stop. | `run_present && run_status == paused && !manual_stop_latched` | `domain_action` | `Plans/Collaborative_Workflows.md` | `CollaborationResumeRequest` → `CollaborationResumeResult` | `handlers::collaboration::resume` |
-| `cmd.collaboration.cancel` | Cancel Workflow | Ends a collaborative run, preserving transcripts, dissent, and partial artifacts under their owners. | `run_present && run_status in {running, paused}` | `domain_action` | `Plans/Collaborative_Workflows.md` | `CollaborationCancelRequest` → `CollaborationCancelResult` | `handlers::collaboration::cancel` |
+| `cmd.collaboration.cancel` | Cancel Workflow | Ends a collaborative run, preserving transcripts, dissent, and partial artifacts under their owners. A Chat Room can also cancel while waiting between rounds, at exhaustion or at its stop condition (CWR-044, DL-231). | `run_present && (run_status in {running, paused} or (run_kind == chat_room && run_status == waiting))` | `domain_action` | `Plans/Collaborative_Workflows.md` | `CollaborationCancelRequest` → `CollaborationCancelResult` | `handlers::collaboration::cancel` |
 | `cmd.collaboration.message` | Message Workflow | Targets the ordinary composer at a run or participant; composer chrome visibly changes and names the destination. | `run_present && composer_available` | `domain_action` | `Plans/Collaborative_Workflows.md` | `CollaborationMessageRequest` → `CollaborationMessageResult` | `handlers::collaboration::message` |
 | `cmd.collaboration.open` | Open Workflow | Opens the collaborative run's full panel from a card, the Activity bar, or a deep link. | `run_present` | `navigation_wrapper` | `Plans/Collaborative_Workflows.md` | `CollaborationOpenRequest` → `CollaborationOpenResult` | `handlers::collaboration::open` |
 | `cmd.collaboration.participant.open` | Open Participant Transcript | Opens one participant's own transcript from the card, panel, or Activity row. | `run_present && participant_present` | `navigation_wrapper` | `Plans/Collaborative_Workflows.md` | `CollaborationParticipantOpenRequest` → `CollaborationParticipantOpenResult` | `handlers::collaboration::participant_open` |
 | `cmd.collaboration.export` | Export Workflow | Exports the run's artifact set through the artifact owner without inventing a new artifact store. | `run_present && artifact_export_available` | `domain_action` | `Plans/Collaborative_Workflows.md` | `CollaborationExportRequest` → `CollaborationExportResult` | `handlers::collaboration::export` |
-| `cmd.collaboration.reconfigure` | Reconfigure Workflow | Applies a configuration change to a paused or finished run and records the requested-versus-effective delta. It also owns explicit participant retry (new attempt identity), replacement (new assignment revision), waiver (actor/reason/currentness), and coordinator or moderator replacement. It never silently substitutes a failed or unavailable slot (PART-003..005, PART-017..018). | `run_present && run_status in {paused, completed, canceled}` | `domain_action` | `Plans/Collaborative_Workflows.md` | `CollaborationReconfigureRequest` → `CollaborationReconfigureResult` | `handlers::collaboration::reconfigure` |
+| `cmd.collaboration.reconfigure` | Reconfigure Workflow | Applies a configuration change only while a run is waiting, running, blocked or paused; a completed, cancelled or failed run is refused (CWR-031). Records the requested-versus-effective delta. Chat Room set_pause_between_rounds switches pause_between_rounds on or off at the next round boundary without cancelling a turn (DL-231, UCC-207). It also owns explicit participant retry (new attempt identity), replacement (new assignment revision), waiver (actor/reason/currentness), and coordinator or moderator replacement. It never silently substitutes a failed or unavailable slot (PART-003..005, PART-017..018). | `run_present && run_status in {waiting, running, blocked, paused}` | `domain_action` | `Plans/Collaborative_Workflows.md` | `CollaborationReconfigureRequest` → `CollaborationReconfigureResult` | `handlers::collaboration::reconfigure` |
 | `cmd.brainstorm.next_round` | Next BrainStorm Round | Advances the BrainStorm protocol to its next proposal, research, debate, or voting round. | `brainstorm_run_present && round_budget_remaining` | `domain_action` | `Plans/Collaborative_Workflows.md` | `BrainstormRoundRequest` → `BrainstormRoundResult` | `handlers::collaboration::brainstorm_next_round` |
 | `cmd.brainstorm.synthesize_plan` | Synthesize Plan | Synthesizes the BrainStorm result into exactly one Deep Plan document owned by the Assistant Plan Runtime. **Historical wording; current rule: UCC-173: Write the plan (DL-138).** | `brainstorm_run_present && synthesis_admissible && no_unfinished_current_plan_on_thread` | `domain_action` | `Plans/Collaborative_Workflows.md` | `BrainstormSynthesisRequest` → `AssistantPlanCreateResult` | `handlers::collaboration::brainstorm_synthesize_plan` |
 | `cmd.review.create_todos` | Create To-Dos From Findings | Creates To-Dos from selected review findings; Review itself never repairs anything. | `review_run_present && findings_present && todo_runtime_available` | `domain_action` | `Plans/Collaborative_Workflows.md` | `ReviewCreateTodosRequest` → `ReviewCreateTodosResult` | `handlers::collaboration::review_create_todos` |
 | `cmd.review.send_findings_to_agent` | Send Findings To Agent | Fills the source thread's empty composer from Review findings or saved missed taught-rule checks; never sends. UCC-172 owns both source variants and composer_not_empty refusal. The former send-to-agent wording and CollaborationMessageResult are historical only (DL-125, DL-138). | `composer_available && source_variant_eligible` | `domain_action` | `Plans/Collaborative_Workflows.md` | `ReviewSendFindingsRequest` → `ComposerBufferResult` | `handlers::collaboration::review_send_findings_to_agent` |
 | `cmd.review.run_again` | Run Another Review | Starts a fresh review pass against a newly frozen target pack; it cannot merge across target versions. **Historical wording; current rule: UCC-173: Run Another Review (DL-138).** | `review_run_present && target_pack_freezable` | `domain_action` | `Plans/Collaborative_Workflows.md` | `ReviewRunAgainRequest` → `CollaborationStartResult` | `handlers::collaboration::review_run_again` |
-| `cmd.chat_room.next_round` | Next Chat Room Round | Advances the room to its next moderated or free-form round. | `chat_room_run_present && round_budget_remaining` | `domain_action` | `Plans/Collaborative_Workflows.md` | `ChatRoomRoundRequest` → `ChatRoomRoundResult` | `handlers::collaboration::chat_room_next_round` |
+| `cmd.chat_room.next_round` | Next Chat Room Round | Starts exactly one next round under the unchanged turn policy while Pause between rounds is on and the room waits between rounds; otherwise run_state_invalid. Start begins round 1 (after Grill Me Confirm if enabled); automatic round starts dispatch no command (CWR-044, DL-231). | `chat_room_run_present && run_status == waiting && pause_between_rounds && completed_rounds >= 1 && round_budget_remaining && !stop_condition_met && turn_policy != ask_everyone_once` | `domain_action` | `Plans/Collaborative_Workflows.md` | `ChatRoomRoundRequest` → `ChatRoomRoundResult` | `handlers::collaboration::chat_room_next_round` |
 | `cmd.chat_room.summarize` | Summarize Now | Produces a room summary artifact without promoting anything. **Historical wording; current rule: UCC-173: Summarize Now (DL-138).** | `chat_room_run_present && artifact_owner_available` | `domain_action` | `Plans/Collaborative_Workflows.md` | `ChatRoomSummarizeRequest` → `ArtifactResult` | `handlers::collaboration::chat_room_summarize` |
 | `cmd.chat_room.promote_to_plan` | Promote To Plan | Explicitly promotes room output into an Assistant Plan; ordinary discussion never does this implicitly. | `chat_room_run_present && explicit_user_action && assistant_plan_runtime_available` | `domain_action` | `Plans/Collaborative_Workflows.md` | `ChatRoomPromotePlanRequest` → `ChatRoomPromotePlanResult` | `handlers::collaboration::chat_room_promote_to_plan` |
 | `cmd.chat_room.promote_to_todo` | Promote To To-Do | Explicitly promotes room output into the thread's To-Do list. | `chat_room_run_present && explicit_user_action && todo_runtime_available` | `domain_action` | `Plans/Collaborative_Workflows.md` | `ChatRoomPromoteTodoRequest` → `ChatRoomPromoteTodoResult` | `handlers::collaboration::chat_room_promote_to_todo` |
@@ -13858,7 +13858,7 @@ In the closure wave on 2026-09-27, three of them were settled. The owner confirm
 
 ### UCC-170 - Wand Module Command Census
 
-The census classifies the redesign's product controls: the sheets, cards, dock lines, run view, header, managers and documents of the redesigned Assistant wand modules. The redesign's commands audit counts 197 controls. 188 of them are product controls; the other nine are concept demo controls, which stay `CONCEPT_DEMO_ONLY` under CS-079 and are not listed here. The owner's closure answers add three product controls that the audit did not count. Two come from DL-126: the ELI5 dot by the message box, and "Explain this reply simply" on a finished reply. The third comes from DL-136: the "Pause all automations" switch, which the design had shown read-only. DL-138 adds See which rule and Ask for a fix on the taught-rule note, bringing the census to 193 controls.
+The census classifies the redesign's product controls: the sheets, cards, dock lines, run view, header, managers and documents of the redesigned Assistant wand modules. The redesign's commands audit counts 197 controls. 188 of them are product controls; the other nine are concept demo controls, which stay `CONCEPT_DEMO_ONLY` under CS-079 and are not listed here. The owner's closure answers add three product controls that the audit did not count. Two come from DL-126: the ELI5 dot by the message box, and "Explain this reply simply" on a finished reply. The third comes from DL-136: the "Pause all automations" switch, which the design had shown read-only. DL-138 adds See which rule and Ask for a fix on the taught-rule note, bringing the census to 193 controls. DL-231 adds the Chat Room setup check and the run switch for Pause between rounds, bringing the census to 195; the retired Ask Everyone remains classified as No producer.
 
 Each control has exactly one of these dispositions:
 - **Command**: it dispatches the named row unchanged.
@@ -13870,7 +13870,7 @@ Each control has exactly one of these dispositions:
 - **No producer**: the design drew it, but canon gives it no producer, because a decision retires it or the product does not draw it. The row names which.
 - **Open**: it waits on an unanswered card or a follow-up, and the row names which. After DL-135 and the lead's rulings on DL-112 and DL-120, no control is Open.
 
-A row may list several controls, and then it gives each its disposition. The Surfaces column says where the control sits. The only producer surfaces a row gains are those named in UCC-169, UCC-171, UCC-172, UCC-174 and UCC-175.
+A row may list several controls, and then it gives each its disposition. The Surfaces column says where the control sits. The only producer surfaces a row gains are those named in UCC-169, UCC-171, UCC-172, UCC-174, UCC-175, UCC-205, UCC-206 and UCC-207.
 
 **Foundation (7)**
 
@@ -13971,12 +13971,14 @@ A row may list several controls, and then it gives each its disposition. The Sur
 | Allow Crews in this chat | No producer. DL-120 retires it into the Crew Auto check, which is the chat's only per-chat Crew control. | — |
 | Wand row "Build With Crew…" | View. It opens the Crew sheet in Build With Crew mode, whose Start is `cmd.chat.plan.build_with_crew`. | `wand` |
 
-**Chat Room (11)**
+**Chat Room (13)**
 
 | Control | Disposition | Surfaces |
 |---|---|---|
-| Ask Everyone | Command, `cmd.chat_room.next_round` (round 1) | `chat_room_card`, `chat_room_panel` |
-| Next Round, Summarize Now | Command, `cmd.chat_room.next_round`, `cmd.chat_room.summarize` | `chat_room_card`, `chat_room_panel` |
+| Ask Everyone | No producer. DL-231 retires this step; Start starts round 1, after Grill Me Confirm when enabled. | — |
+| Pause between rounds (setup check) | Draft, `pause_between_rounds`, copied from the Settings default and committed with the definition (CWR-044). | `workflow_modal` |
+| Pause between rounds (run switch) | Command, revised, `cmd.collaboration.reconfigure` with `set_pause_between_rounds` and boolean on or off, at the next round boundary (UCC-207, DL-231). | `chat_room_card`, `chat_room_panel` |
+| Next Round, Summarize Now | Command, revised, `cmd.chat_room.next_round` only at a between-round wait with `pause_between_rounds` on and another round available; `cmd.chat_room.summarize` writes a summary without ending the room (CWR-044). | `chat_room_card`, `chat_room_panel` |
 | End discussion | New, `cmd.chat_room.end` (UCC-171) | `chat_room_card`, `chat_room_panel` |
 | Member never joined: Replace helper, Continue without | Command, revised, `cmd.collaboration.reconfigure` (replacement, waiver) | `chat_room_card` |
 | Add 2 more rounds | Command, revised, `cmd.collaboration.reconfigure` with added rounds | `chat_room_card` |
@@ -14152,10 +14154,15 @@ unit_type: command_contract
 status: accepted
 owner_doc: Plans/UI_Command_Catalog.md
 canonical_text: >-
-  The wand-module command census classifies all 193 product controls of the redesigned Assistant wand
+  The wand-module command census classifies all 195 product controls of the redesigned Assistant wand
   modules: the commands audit's 197 less nine CONCEPT_DEMO_ONLY demo controls, plus the ELI5 dot,
   "Explain this reply simply" and the "Pause all automations" switch, which the closure answers add
-  (DL-126, DL-136), plus See which rule and Ask for a fix on the taught-rule note (DL-138). Each control is
+  (DL-126, DL-136), plus See which rule and Ask for a fix on the taught-rule note (DL-138), plus the Chat Room setup check and run switch for
+  Pause between rounds (DL-231). Ask Everyone has No producer because Start starts round 1;
+  cmd.chat_room.next_round is only the user's start of a round at the switch-on between-round wait.
+  Automatic starts dispatch nothing. The setup check is a workflow_modal draft; the run switch is
+  cmd.collaboration.reconfigure with set_pause_between_rounds from chat_room_card or chat_room_panel
+  (UCC-207), taking effect at the next round boundary without cancelling a turn. Each control is
   exactly one of Command (an existing row), Command revised (an existing row with a named revision),
   New (a UCC-171 or UCC-174 row), Draft, View, Settings (owner transaction), No producer (retired
   by a named decision, or not drawn in the product) or Open (a named unanswered card or follow-up;
@@ -14182,12 +14189,14 @@ canonical_text: >-
 gui_related: true
 gui_classification_reason: "Classifies every visible control of the redesigned sheets, cards, dock, run view, header and managers."
 split_recommended: false
-depends_on: [UCC-169, UCC-171, UCC-172, UCC-173, UCC-174, UCC-175, CDRY-021, CWR-024, CWR-031, CWR-038, SQR-013, CS-079]
+depends_on: [UCC-169, UCC-171, UCC-172, UCC-173, UCC-174, UCC-175, CDRY-021, CWR-024, CWR-031, CWR-038, CWR-044, UCC-207, SQR-013, CS-079]
 unblocks: [CDRY-022, CDRY-023, WM-063, WM-064]
 acceptance_criteria:
   - "Every control in the census has exactly one disposition, and no Draft or View control has a catalog row or production wiring entry."
   - "Every New control dispatches a row of UCC-171 or UCC-174 and nothing else."
   - "The only controls that dispatch cmd.runtime.automation_pause.set with paused false are Turn back on and the switch itself, both in schedule_manager."
+  - "Ask Everyone has no producer; automatic round starts dispatch no command, and Next Round is available only at the switch-on between-round wait."
+  - "The setup Pause between rounds check is Draft; only the run switch dispatches set_pause_between_rounds through reconfigure."
   - "No Open control is given a command, surface or label before its card or follow-up is answered."
   - "No wand row produces cmd.collaboration.configure for Review or BrainStorm."
 validation_surfaces:
@@ -14206,6 +14215,7 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
+  - Plans/Decision_Log.md#DL-231
   - "Plans/Decision_Log.md#DL-138 (owner answers, 2026-09-29)"
   - "Plans/Decision_Log.md#DL-138 (owner answers, 2026-09-29)"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/DESIGN-SPEC.md sha256:dc0a02e550dd2e927faa59006cecab098e7c08b4aeb2479bf62e219f9b5907de sections 4.6, 6.7, 7, 8.0-8.14"
@@ -14214,6 +14224,9 @@ source_lineage:
   - "Plans/Decision_Log.md#DL-112, #DL-118, #DL-119, #DL-120, #DL-125, #DL-126, #DL-127, #DL-130, #DL-134, #DL-135, #DL-136"
   - "Plans/ledgers/v2/pldg-20260927-006-wand-command-census/records/design_atoms.jsonl"
 preserved_exact_tokens:
+  - "cmd.chat_room.next_round"
+  - "set_pause_between_rounds"
+  - "pause_between_rounds"
   - "DL-138"
   - "message_chrome"
   - "taught_rule_check"
@@ -14238,7 +14251,7 @@ preserved_exact_tokens:
 negative_constraints:
   - "Do not give an Open control a command, surface or label before its card or follow-up is answered."
   - "Do not list or register the concept demo controls."
-  - "Do not treat the census's Surfaces column as adding producer surfaces beyond UCC-169, UCC-171, UCC-172, UCC-174 and UCC-175."
+  - "Do not treat the census's Surfaces column as adding producer surfaces beyond UCC-169, UCC-171, UCC-172, UCC-174, UCC-175, UCC-205, UCC-206 and UCC-207."
   - "Do not give the wand's ELI5 row a command; it only opens the ELI5 sheet."
 owner_hints:
   - Plans/UI_Command_Catalog.md
@@ -16228,3 +16241,82 @@ owner_hints:
 ```
 
 ContractRef: ContractName:Plans/Decision_Log.md#DL-218, ContractName:Plans/Collaborative_Workflows.md#CWR-041, ContractName:Plans/Collaborative_Workflows.md#CWR-042, ContractName:Plans/Collaborative_Workflows.md#CWR-043
+
+## DL-231 Chat Room round controls
+
+### UCC-207 - Chat Room Pause Switch And User Next Round
+
+```yaml
+plan_unit_id: UCC-207
+unit_type: command_contract
+status: accepted
+owner_doc: Plans/UI_Command_Catalog.md
+canonical_text: >-
+  DL-231 and CWR-044 retain cmd.chat_room.next_round, ChatRoomRoundRequest,
+  ChatRoomRoundResult and handlers::collaboration::chat_room_next_round for the user's start of
+  exactly one round while a Chat Room waits between rounds with pause_between_rounds true, a
+  completed first round, another configured round available and an unmet stop condition. The
+  command preserves the active turn policy and returns its deterministic participant order;
+  otherwise it refuses run_state_invalid. Its sources remain chat_room_card and chat_room_panel.
+  Start starts round 1, after Grill Me Confirm when enabled. Ask Everyone has No producer and
+  automatic round starts dispatch no command. Pause between rounds on workflow_modal is a draft
+  field copied from assistant.multi_agent.chat_room.pause_between_rounds, default false, and
+  committed with the definition. The run switch on chat_room_card and chat_room_panel reuses
+  cmd.collaboration.reconfigure with change_kind set_pause_between_rounds and a boolean
+  pause_between_rounds. Those sources are added to that command's workflow_modal, workflow_card,
+  workflow_panel, activity, composer and brainstorm_panel sources. Reconfigure is available only
+  in waiting, running, blocked or paused, never on a terminal run. It bumps the definition revision
+  once under the expected-revision check, writes one system transcript entry, takes effect at
+  the next round boundary and cancels no turn; switching off at a between-round wait starts the
+  next round immediately. Only one host is actionable under CWR-020. The existing chat_room_card
+  Add 2 more rounds and Continue without also reach this reconfigure handler as add_rounds and
+  waive_participant, preserving their revision and explicit-waiver checks (CWR-024). No command
+  identity is minted or retired; handler_unavailable and command_not_registered still apply.
+  cmd.collaboration.cancel also remains available to a Chat Room in waiting, including its
+  between-round, exhausted-round and stop-condition waits, as CWR-044 requires.
+gui_related: true
+gui_classification_reason: Binds the Chat Room setup check, run switch and Next Round to their existing commands and sources.
+depends_on: [CWR-024, CWR-031, CWR-044, UCC-169]
+unblocks: []
+acceptance_criteria:
+  - The setup check is draft state; both run-switch sources use the same reconfigure command and boolean change.
+  - Next Round starts one round only at the switch-on between-round wait; every other state refuses run_state_invalid.
+  - Automatic starts dispatch no command and Ask Everyone has no producer.
+  - Reconfigure refuses terminal runs, preserves in-flight turns and applies the switch at the next boundary.
+  - Add 2 more rounds and Continue without on chat_room_card use the existing reconfigure handler.
+validation_surfaces:
+  - python3 scripts/pm-plans-verify.py validate-new-contracts
+  - python3 scripts/pm-plans-verify.py validate-wiring-matrix
+  - python3 scripts/pm-plan-index.py validate
+risk_class: chat_room_control_availability_drift
+reasoning_tier: standard
+context_scope: chat_room_rounds_companions
+implementation_surfaces:
+  - Plans/UI_Command_Catalog.md
+  - Plans/Commands_System.md
+  - Plans/Wiring_Matrix.production.json
+  - Plans/collaborative_workflows_contracts.schema.json
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - Plans/Decision_Log.md#DL-231
+  - Plans/Collaborative_Workflows.md#CWR-044
+preserved_exact_tokens:
+  - cmd.chat_room.next_round
+  - cmd.collaboration.reconfigure
+  - pause_between_rounds
+  - set_pause_between_rounds
+  - assistant.multi_agent.chat_room.pause_between_rounds
+  - chat_room_card
+  - chat_room_panel
+  - run_state_invalid
+negative_constraints:
+  - Do not dispatch a command for automatic round progression.
+  - Do not expose Ask Everyone or a second switch command.
+owner_hints:
+  - Plans/UI_Command_Catalog.md
+```
+
+ContractRef: ContractName:Plans/Decision_Log.md#DL-231, ContractName:Plans/Collaborative_Workflows.md#CWR-044, ContractName:Plans/Collaborative_Workflows.md#CWR-031

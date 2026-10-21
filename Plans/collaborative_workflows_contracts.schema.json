@@ -3,7 +3,7 @@
   "$id": "https://puppetmaster.local/schemas/collaborative_workflows/1.0.0/collaborative_workflows_contracts.schema.json",
   "x-schema-id": "pm.collaborative_workflows.contracts.v1",
   "title": "Collaborative Workflows static contract schemas",
-  "description": "Closed record, projection, request and result shapes for Plans/Collaborative_Workflows.md sections 10 to 12, PART-001..020, the Wand Modules Redesign Addendum (CWR-018..CWR-043) and the helper message in progress of Plans/Executor_Protocol.md EP-129..EP-131. Static schema and fixture consistency only: no writer, storage key, EventRecord, native handler or production wiring is admitted, and every command stays handler_unavailable. Fields that wait on an owner answer recorded as an open ledger question are not admitted. DL-218 adds WondererPass, WondererLead, the definition grill_me_enabled switch and cmd.collaboration.research_lead; the BrainStorm spelling remains a compatibility alias.",
+  "description": "Closed record, projection, request and result shapes for Plans/Collaborative_Workflows.md sections 10 to 12, PART-001..020, the Wand Modules Redesign Addendum (CWR-018..CWR-044) and the helper message in progress of Plans/Executor_Protocol.md EP-129..EP-131. Static schema and fixture consistency only: no writer, storage key, EventRecord, native handler or production wiring is admitted, and every command stays handler_unavailable. Fields that wait on an owner answer recorded as an open ledger question are not admitted. DL-218 adds WondererPass, WondererLead, the definition grill_me_enabled switch and cmd.collaboration.research_lead; the BrainStorm spelling remains a compatibility alias. DL-231 adds the Chat Room-only pause_between_rounds field (false when absent), set_pause_between_rounds reconfiguration and the user-only Next Round boundary; automatic round starts dispatch no command.",
   "oneOf": [
     {
       "$ref": "#/$defs/ParticipantSpec"
@@ -952,6 +952,11 @@
         "stop_condition": {
           "$ref": "#/$defs/non_empty_string"
         },
+        "pause_between_rounds": {
+          "type": "boolean",
+          "default": false,
+          "description": "DL-231 / CWR-044: Chat Room only. False when absent on existing definitions. A new sheet copies its Settings default at commit; set_pause_between_rounds changes it at the next round boundary without cancelling a turn."
+        },
         "summary_style": {
           "$ref": "#/$defs/non_empty_string"
         },
@@ -997,6 +1002,7 @@
               "moderator_style": false,
               "mention_policy": false,
               "stop_condition": false,
+              "pause_between_rounds": false,
               "summary_style": false,
               "hard_constraints": false,
               "provisioning_posture": false
@@ -1025,6 +1031,7 @@
               "moderator_style": false,
               "mention_policy": false,
               "stop_condition": false,
+              "pause_between_rounds": false,
               "summary_style": false,
               "hard_constraints": false,
               "provisioning_posture": false,
@@ -1104,6 +1111,7 @@
               "moderator_style": false,
               "mention_policy": false,
               "stop_condition": false,
+              "pause_between_rounds": false,
               "summary_style": false
             }
           }
@@ -5200,7 +5208,7 @@
       ]
     },
     "reconfigure_change": {
-      "description": "One explicit reconfiguration (PART-001..006, CWR-024, CWR-026, CWR-031). Replacement always carries the new requested identity; a waiver carries its reason (actor and currentness ride on the request).",
+      "description": "One explicit reconfiguration (PART-001..006, CWR-024, CWR-026, CWR-031). Replacement always carries the new requested identity; a waiver carries its reason (actor and currentness ride on the request). DL-231 / CWR-044: set_pause_between_rounds switches a Chat Room on or off at the next round boundary without cancelling a turn; switching off at a between-round wait starts the next round immediately.",
       "oneOf": [
         {
           "type": "object",
@@ -5350,12 +5358,29 @@
               "const": true
             }
           }
+        },
+        {
+          "type": "object",
+          "description": "Chat Room only (DL-231 / CWR-044). The revision and one system transcript entry are committed by the existing reconfigure request; this change never cancels or restarts a turn.",
+          "additionalProperties": false,
+          "required": [
+            "change_kind",
+            "pause_between_rounds"
+          ],
+          "properties": {
+            "change_kind": {
+              "const": "set_pause_between_rounds"
+            },
+            "pause_between_rounds": {
+              "type": "boolean"
+            }
+          }
         }
       ]
     },
     "CollaborationReconfigureRequest": {
       "type": "object",
-      "description": "Bumps the definition revision under the expected-revision check. accept_stale_target true finishes a stale Review on its old pack (finish_stale) and is accepted only while the run reports target_pack_stale (CWR-031).",
+      "description": "Bumps the definition revision under the expected-revision check. accept_stale_target true finishes a stale Review on its old pack (finish_stale) and is accepted only while the run reports target_pack_stale (CWR-031). Available only in waiting, running, blocked or paused; terminal runs are refused (CWR-031). The Chat Room-only set_pause_between_rounds change is raised from chat_room_card or chat_room_panel (DL-231).",
       "additionalProperties": false,
       "required": [
         "schema_id",
@@ -7347,7 +7372,7 @@
     },
     "ChatRoomRoundRequest": {
       "type": "object",
-      "description": "Typed request of cmd.chat_room.next_round (sections 10 and 11).",
+      "description": "DL-231 / CWR-044: the user starts exactly one next round while a Chat Room waits between rounds with pause_between_rounds true. Refuse run_state_invalid when the switch is false or absent, a round is running, round 1 has not run, the configured rounds are exhausted or the stop condition is met. Automatic round starts and Start/Grill Me Confirm dispatch no Next Round command. Identity, envelope and chat_room_card/chat_room_panel sources are retained.",
       "additionalProperties": false,
       "required": [
         "schema_id",
@@ -7431,7 +7456,7 @@
     },
     "ChatRoomRoundResult": {
       "type": "object",
-      "description": "Advances exactly one round under the unchanged turn policy and returns the deterministic participant order used (section 10).",
+      "description": "DL-231 / CWR-044: starts exactly one round under the unchanged turn policy from the between-round wait with pause_between_rounds true, returning its deterministic participant order. Otherwise returns run_state_invalid without committed work; automatic round starts produce no command result.",
       "additionalProperties": false,
       "required": [
         "schema_id",

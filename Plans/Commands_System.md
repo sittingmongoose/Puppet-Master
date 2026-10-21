@@ -5988,7 +5988,7 @@ This addendum records the central command-contract registration for the approved
 | `cmd.review.create_todos` | `Plans/Collaborative_Workflows.md` | `handlers::collaboration::review_create_todos` | `Plans/collaborative_workflows_contracts.schema.json#/$defs/ReviewCreateTodosRequest` -> `Plans/collaborative_workflows_contracts.schema.json#/$defs/ReviewCreateTodosResult` | `handler_unavailable`; owner typed result, receipt and projection only; expected_event_types resolved by the owner event table below |
 | `cmd.review.send_findings_to_agent` | `Plans/Collaborative_Workflows.md` | `handlers::collaboration::review_send_findings_to_agent` | `Plans/collaborative_workflows_contracts.schema.json#/$defs/ReviewSendFindingsRequest` -> `Plans/collaborative_workflows_contracts.schema.json#/$defs/CollaborationMessageResult` | `handler_unavailable`; owner typed result, receipt and projection only; expected_event_types resolved by the owner event table below |
 | `cmd.review.run_again` | `Plans/Collaborative_Workflows.md` | `handlers::collaboration::review_run_again` | `Plans/collaborative_workflows_contracts.schema.json#/$defs/ReviewRunAgainRequest` -> `Plans/collaborative_workflows_contracts.schema.json#/$defs/CollaborationStartResult` | `handler_unavailable`; owner typed result, receipt and projection only; expected_event_types resolved by the owner event table below |
-| `cmd.chat_room.next_round` | `Plans/Collaborative_Workflows.md` | `handlers::collaboration::chat_room_next_round` | `Plans/collaborative_workflows_contracts.schema.json#/$defs/ChatRoomRoundRequest` -> `Plans/collaborative_workflows_contracts.schema.json#/$defs/ChatRoomRoundResult` | `handler_unavailable`; owner typed result, receipt and projection only; expected_event_types resolved by the owner event table below |
+| `cmd.chat_room.next_round` | `Plans/Collaborative_Workflows.md` | `handlers::collaboration::chat_room_next_round` | `Plans/collaborative_workflows_contracts.schema.json#/$defs/ChatRoomRoundRequest` -> `Plans/collaborative_workflows_contracts.schema.json#/$defs/ChatRoomRoundResult` | `handler_unavailable`; DL-231 / CWR-044: user-only start of exactly one next round at a waiting between-round boundary with pause_between_rounds true and another round available; otherwise run_state_invalid. Preserve the turn policy and return its deterministic participant order. Round 1 starts as part of Start/Grill Me Confirm with no extra round-start command; automatic later round starts mint and dispatch no command; expected_event_types resolved by the owner event table below |
 | `cmd.chat_room.summarize` | `Plans/Collaborative_Workflows.md` | `handlers::collaboration::chat_room_summarize` | `Plans/collaborative_workflows_contracts.schema.json#/$defs/ChatRoomSummarizeRequest` -> `Plans/collaborative_workflows_contracts.schema.json#/$defs/ArtifactResult` | `handler_unavailable`; owner typed result, receipt and projection only; expected_event_types resolved by the owner event table below |
 | `cmd.chat_room.promote_to_plan` | `Plans/Collaborative_Workflows.md` | `handlers::collaboration::chat_room_promote_to_plan` | `Plans/collaborative_workflows_contracts.schema.json#/$defs/ChatRoomPromotePlanRequest` -> `Plans/collaborative_workflows_contracts.schema.json#/$defs/ChatRoomPromotePlanResult` | `handler_unavailable`; owner typed result, receipt and projection only; expected_event_types resolved by the owner event table below |
 | `cmd.chat_room.promote_to_todo` | `Plans/Collaborative_Workflows.md` | `handlers::collaboration::chat_room_promote_to_todo` | `Plans/collaborative_workflows_contracts.schema.json#/$defs/ChatRoomPromoteTodoRequest` -> `Plans/collaborative_workflows_contracts.schema.json#/$defs/ChatRoomPromoteTodoResult` | `handler_unavailable`; owner typed result, receipt and projection only; expected_event_types resolved by the owner event table below |
@@ -7261,7 +7261,7 @@ Nothing else is minted on DL-130. Apart from the two closure identities that CDR
 - a control that canon gives no producer;
 - a concept demo control.
 
-`cmd.runtime.automation_stop.set` is not minted, and never will be. It was the audit's draft name for the automation pause. The closure answers DL-126 and DL-136 are new decisions, and they mint two more identities, `cmd.chat.eli5.explain_reply` and `cmd.runtime.automation_pause.set`; CDRY-023 records them, and with them the redesign mints nine in all. A Chat Room message sent mid-round, and its Send now steer, reuse `cmd.collaboration.message` with `delivery_mode` queue or steer (CWR-024, DL-112) and get no new identity.
+`cmd.runtime.automation_stop.set` is not minted, and never will be. It was the audit's draft name for the automation pause. The closure answers DL-126 and DL-136 are new decisions, and they mint two more identities, `cmd.chat.eli5.explain_reply` and `cmd.runtime.automation_pause.set`; CDRY-023 records them, and with them the redesign mints nine in all. A Chat Room message sent mid-round, and its Send now steer, reuse `cmd.collaboration.message` with `delivery_mode` queue or steer (CWR-024, DL-112) and get no new identity. DL-231 narrows `cmd.chat_room.next_round` to the user starting a round at a wait with `pause_between_rounds` on; Start already starts round 1 and Ask Everyone has no producer. Automatic rounds mint and dispatch no command. The run switch reuses `cmd.collaboration.reconfigure` with `set_pause_between_rounds` (UCC-207), and the setup check is draft state.
 
 ```yaml
 plan_unit_id: CDRY-022
@@ -7279,6 +7279,11 @@ canonical_text: >-
   the closure decisions DL-126 and DL-136 mint cmd.chat.eli5.explain_reply and
   cmd.runtime.automation_pause.set, which CDRY-023 records, nine identities in all. A Chat Room
   message sent mid-round reuses cmd.collaboration.message with delivery_mode queue or steer (DL-112).
+  DL-231 keeps cmd.chat_room.next_round only for the user starting a round at a between-round wait
+  with pause_between_rounds true. Start already begins round 1, after Grill Me Confirm if enabled;
+  Ask Everyone has no producer. Automatic round starts mint and dispatch no command. The run switch
+  reuses cmd.collaboration.reconfigure with set_pause_between_rounds; the setup check is draft state
+  (UCC-207). No command is minted or retired by this decision.
 gui_related: true
 gui_classification_reason: "Bounds the command identities behind the visible controls of the redesigned wand modules."
 split_recommended: false
@@ -7302,10 +7307,14 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
+  - Plans/Decision_Log.md#DL-231
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/IMPACT-REGISTER.md sha256:71227f8edda108ed849256d909ff12f859f98bef58202ef988f9d3b4e4f8d493 line B-CMD-07"
   - "Plans/Decision_Log.md#DL-112, #DL-130"
   - "Plans/ledgers/v2/pldg-20260927-006-wand-command-census/records/design_atoms.jsonl"
 preserved_exact_tokens:
+  - "cmd.chat_room.next_round"
+  - "set_pause_between_rounds"
+  - "pause_between_rounds"
   - "delivery_mode"
   - "cmd.chat_room.end"
   - "cmd.brainstorm.research_lead"

@@ -1754,7 +1754,8 @@
         "The durable effect is the owner typed result, receipt or projection under Plans/Collaborative_Workflows.md. Emit no unregistered EventRecord.",
         "Every named reverse consumer renders from the same owner projection; no consumer keeps a private copy.",
         "Negative path is enforced: an unavailable or denied dispatch changes nothing and states its exact reason.",
-        "Prove disabled behaviour, keyboard and pointer parity, and deterministic return to the initiating route and focus."
+        "Prove disabled behaviour, keyboard and pointer parity, and deterministic return to the initiating route and focus.",
+        "DL-231 / CWR-044 / UCC-207 / WM-095: available only for the user while state is waiting between rounds, pause_between_rounds is true, at least round 1 has completed, the stop condition is unmet and another configured round remains. Start exactly one round under the unchanged policy with recorded deterministic participant order. Otherwise refuse run_state_invalid, including switch false or absent, an active round, before round 1 and exhausted rounds. Round 1 starts as part of cmd.collaboration.start or the Grill Me Confirm command, with no extra round-start command. Automatic later round starts dispatch no command at all; Ask Everyone has no producer."
       ],
       "evidence_required": "Future production evidence for cmd.chat_room.next_round: source-hashed native dispatcher and sole handler handlers::collaboration::chat_room_next_round, typed ChatRoomRoundRequest/ChatRoomRoundResult/error/availability/permission fixtures, receipt or ObservableWork correlation, zero unregistered events, exact reverse GUI coverage, restart/race/currentness/stale-target negatives, and exact return. Owner refs: Plans/Collaborative_Workflows.md. Packet ref: pm-assistant-implementation-2026-09-02-recovered:machine/commands.json#cmd.chat_room.next_round. The owner binding and this production-intent row prove none of those runtime facts.",
       "state_selector": "state.assistant_redesign.chat_room_next_round.availability",
@@ -1798,6 +1799,11 @@
           "test_id": "wiring.assistant_redesign.chat_room_next_round.a11y",
           "evidence_kind": "accessibility_regression",
           "requirement": "Prove role, name, state, keyboard parity and disabled announcement for this element."
+        },
+        {
+          "test_id": "wiring.assistant_redesign.chat_room_next_round.dl231",
+          "evidence_kind": "dispatcher_fixture",
+          "requirement": "Prove one user Next Round from either admitted host starts one round only at the switch-on between-round wait. Refuse all other states with run_state_invalid. Observe zero extra round-start commands when Start or Grill Me Confirm begins round 1, and zero command dispatches for automatic later starts; verify deterministic ordering, idempotency and exhaustion/Add 2 more rounds."
         }
       ],
       "event_test_requirements": [
@@ -2397,7 +2403,8 @@
         "The durable effect is the owner typed result, receipt or projection under Plans/Collaborative_Workflows.md. Emit no unregistered EventRecord.",
         "Every named reverse consumer renders from the same owner projection; no consumer keeps a private copy.",
         "Negative path is enforced: an unavailable or denied dispatch changes nothing and states its exact reason.",
-        "Prove disabled behaviour, keyboard and pointer parity, and deterministic return to the initiating route and focus."
+        "Prove disabled behaviour, keyboard and pointer parity, and deterministic return to the initiating route and focus.",
+        "DL-231 / CWR-044 / UCC-207 / WM-095: a Chat Room remains cancellable while waiting between rounds, after its last configured round or at its stop condition. The same cmd.collaboration.cancel handler settles cancelled with no further automatic round, retaining transcript, roster and artifacts. Cancel wins over an automatic continuation; stale, denied or replayed requests never duplicate work."
       ],
       "evidence_required": "Future production evidence for cmd.collaboration.cancel: source-hashed native dispatcher and sole handler handlers::collaboration::cancel, typed CollaborationCancelRequest/CollaborationCancelResult/error/availability/permission fixtures, receipt or ObservableWork correlation, zero unregistered events, exact reverse GUI coverage, restart/race/currentness/stale-target negatives, and exact return. Owner refs: Plans/Collaborative_Workflows.md. Packet ref: pm-assistant-implementation-2026-09-02-recovered:machine/commands.json#cmd.collaboration.cancel. The owner binding and this production-intent row prove none of those runtime facts.",
       "state_selector": "state.assistant_redesign.collaboration_cancel.availability",
@@ -2786,7 +2793,7 @@
       "handler_location": "handlers::collaboration::reconfigure",
       "expected_event_types": [],
       "acceptance_checks": [
-        "cmd.collaboration.reconfigure dispatches the typed request CollaborationReconfigureRequest and returns CollaborationReconfigureResult; the surfaces that may raise it are exactly: workflow_modal, workflow_card, workflow_panel, activity, composer, brainstorm_panel.",
+        "cmd.collaboration.reconfigure dispatches the typed request CollaborationReconfigureRequest and returns CollaborationReconfigureResult; the surfaces that may raise it are exactly: workflow_modal, workflow_card, workflow_panel, activity, composer, brainstorm_panel, chat_room_card, chat_room_panel.",
         "Read state.assistant_redesign.collaboration_reconfigure.availability and state.assistant_redesign.collaboration_reconfigure.disabled_reason before dispatch; keep handler_unavailable and command_not_registered until source-hashed native proof exists.",
         "The durable effect is the owner typed result, receipt or projection under Plans/Collaborative_Workflows.md. Emit no unregistered EventRecord.",
         "Every named reverse consumer renders from the same owner projection; no consumer keeps a private copy.",
@@ -2794,7 +2801,8 @@
         "Prove disabled behaviour, keyboard and pointer parity, and deterministic return to the initiating route and focus.",
         "Correction v4 (PART-003..005, PART-017..018): reconfigure owns explicit participant retry (new attempt identity), replacement (new assignment revision), explicit waiver carrying actor, reason and currentness, and coordinator or moderator replacement. It never silently substitutes a failed or unavailable slot, and failed-attempt evidence is never overwritten.",
         "Correction v4 (WONV-006): changing a slot from Wonderer to an ordinary voting role lets only the new role's current attempt vote; the earlier abstaining attempt stays as history and is never retroactively converted.",
-        "DL-218 / UCC-205 / WM-094: the existing Allow more questions mid-run control on brainstorm_panel raises this same command. change_kind add_grill_me sets grill_me_enabled true without a ParticipantSpec, model, Persona or added roster row, retains asked question identities/count, and records the existing definition revision/system transcript entry. Review, Crew Auto and scheduled-build specialist restrictions remain in force; the control never widens the permission ceiling. On mid-run enablement, the coordinator or moderator interviews the user at the next round, assignment or phase boundary; already running work continues and only the step using the new answers waits for that session's current What we agreed Confirm. Later decision sessions also require their own fresh Confirm and preserve the same counter."
+        "DL-218 / UCC-205 / WM-094: the existing Allow more questions mid-run control on brainstorm_panel raises this same command. change_kind add_grill_me sets grill_me_enabled true without a ParticipantSpec, model, Persona or added roster row, retains asked question identities/count, and records the existing definition revision/system transcript entry. Review, Crew Auto and scheduled-build specialist restrictions remain in force; the control never widens the permission ceiling. On mid-run enablement, the coordinator or moderator interviews the user at the next round, assignment or phase boundary; already running work continues and only the step using the new answers waits for that session's current What we agreed Confirm. Later decision sessions also require their own fresh Confirm and preserve the same counter.",
+        "DL-231 / UCC-207 / WM-095: chat_room_card and chat_room_panel raise set_pause_between_rounds with a boolean on or off. Require waiting, running, blocked or paused; refuse terminal runs. Bump the definition revision once under expected-revision/currentness checks and record one system transcript entry. Apply at the next round boundary without cancelling or restarting a turn; turning off at a between-round wait starts the next round immediately. CWR-020 permits only one actionable host. The same chat_room_card surface carries Add 2 more rounds (add_rounds) and Continue without (waive_participant); retain their explicit revision/waiver contracts."
       ],
       "evidence_required": "Future production evidence for cmd.collaboration.reconfigure: source-hashed native dispatcher and sole handler handlers::collaboration::reconfigure, typed CollaborationReconfigureRequest/CollaborationReconfigureResult/error/availability/permission fixtures, receipt or ObservableWork correlation, zero unregistered events, exact reverse GUI coverage, restart/race/currentness/stale-target negatives, and exact return. Owner refs: Plans/Collaborative_Workflows.md. Packet ref: pm-assistant-implementation-2026-09-02-recovered:machine/commands.json#cmd.collaboration.reconfigure. The owner binding and this production-intent row prove none of those runtime facts. Additive Correction v4 (CW-024) adds the correction acceptance checks and correction test rows above; they are production-intent, and neither the owner binding nor this row proves any runtime fact.",
       "state_selector": "state.assistant_redesign.collaboration_reconfigure.availability",
@@ -2853,6 +2861,11 @@
           "test_id": "wiring.dl218.collaboration_reconfigure.grill_me_switch",
           "evidence_kind": "receipt_or_event_assertion",
           "requirement": "Prove add_grill_me changes only the enabled switch and definition revision/system message under the owner transaction, preserves question count, and adds no participant, model, Persona, wave slot or EventRecord. Prove next-boundary interview admission, continued running work, a gate only on the step consuming new answers, and a fresh agreement Confirm for every later session with no counter reset."
+        },
+        {
+          "test_id": "wiring.assistant_redesign.collaboration_reconfigure.dl231",
+          "evidence_kind": "dispatcher_fixture",
+          "requirement": "Prove on/off switching from chat_room_card and chat_room_panel reaches the same reconfigure handler with one revision/system entry, no cancelled turn and correct next-boundary effect; test off at a between-round wait, stale revision, replay, terminal-run refusal and one actionable host. Verify chat_room_card add_rounds and waive_participant dispatch to this same handler."
         }
       ],
       "event_test_requirements": [

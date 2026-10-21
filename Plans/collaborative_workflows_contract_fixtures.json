@@ -182,6 +182,7 @@
         "moderator_style": "keep_on_topic",
         "mention_policy": "mentions_and_replies",
         "stop_condition": "max_rounds_4",
+        "pause_between_rounds": false,
         "summary_style": "agreed_debated_open",
         "grill_me_enabled": false
       }
@@ -1958,6 +1959,16 @@
         "collaboration_run_id": "crun-room-0001",
         "expected_revision": 2,
         "expected_currentness_hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+      },
+      "context": {
+        "collaboration_run_id": "crun-room-0001",
+        "kind": "chat_room",
+        "state": "waiting",
+        "pause_between_rounds": true,
+        "completed_rounds": 1,
+        "configured_max_rounds": 4,
+        "stop_condition_met": false,
+        "turn_policy": "round_robin"
       }
     },
     {
@@ -2997,6 +3008,7 @@
         "moderator_style": "keep_on_topic",
         "mention_policy": "mentions_and_replies",
         "stop_condition": "max_rounds_4",
+        "pause_between_rounds": false,
         "summary_style": "agreed_debated_open",
         "grill_me_enabled": true
       }
@@ -3241,6 +3253,303 @@
         ],
         "delivered_at": "2026-10-20T22:00:00Z",
         "outcome": "leads"
+      }
+    },
+    {
+      "name": "definition_chat_room_pause_between_rounds",
+      "definition": "CollaborativeDefinition",
+      "value": {
+        "schema_id": "pm.collaboration.definition.v1",
+        "schema_version": "1.0.0",
+        "collaboration_id": "collab-room-dl231-pausing",
+        "kind": "chat_room",
+        "project_id": "project:01",
+        "thread_id": "thread:01",
+        "name": "Add CSV export with tests",
+        "purpose": "Add CSV export to the collection page",
+        "revision": 2,
+        "participant_specs": [
+          {
+            "schema_id": "pm.collaboration.participant_spec.v1",
+            "schema_version": "1.0.0",
+            "participant_slot_id": "collab-room-dl231-pausing-slot-1",
+            "role": "Implementer",
+            "requested_provider_id": "provider:anthropic",
+            "requested_account_id": "account:main",
+            "requested_model_id": "model:claude-opus",
+            "requested_persona_id": "persona:implementer",
+            "requested_skill_ids": [],
+            "requested_tool_profile_id": null,
+            "additive_role_kind": "none"
+          },
+          {
+            "schema_id": "pm.collaboration.participant_spec.v1",
+            "schema_version": "1.0.0",
+            "participant_slot_id": "collab-room-dl231-pausing-slot-2",
+            "role": "Reviewer",
+            "requested_provider_id": "provider:anthropic",
+            "requested_account_id": "account:main",
+            "requested_model_id": "model:claude-opus",
+            "requested_persona_id": "persona:reviewer",
+            "requested_skill_ids": [],
+            "requested_tool_profile_id": null,
+            "additive_role_kind": "none"
+          }
+        ],
+        "coordinator_spec": {
+          "kind": "dedicated_model",
+          "requested_provider_id": "provider:anthropic",
+          "requested_model_id": "model:claude-sonnet",
+          "requested_persona_id": "persona:critical-advisor"
+        },
+        "context_policy_ref": "ctx-policy:mentioned-files",
+        "tool_policy_ref": "tool-policy:parent",
+        "permission_ceiling_ref": "ceiling:parent-thread",
+        "concurrency": 2,
+        "time_limit_seconds": 1800,
+        "token_limit": null,
+        "cost_limit": 4.0,
+        "transcript_policy": "keep_full",
+        "output_policy": "summary_and_artifacts",
+        "stuck_policy": "ask_user",
+        "turn_policy": "moderated",
+        "moderator_style": "keep_on_topic",
+        "mention_policy": "mentions_and_replies",
+        "stop_condition": "max_rounds_4",
+        "pause_between_rounds": true,
+        "summary_style": "agreed_debated_open",
+        "grill_me_enabled": false
+      }
+    },
+    {
+      "name": "definition_chat_room_legacy_pause_absent",
+      "definition": "CollaborativeDefinition",
+      "value": {
+        "schema_id": "pm.collaboration.definition.v1",
+        "schema_version": "1.0.0",
+        "collaboration_id": "collab-room-dl231-legacy",
+        "kind": "chat_room",
+        "project_id": "project:01",
+        "thread_id": "thread:01",
+        "name": "Add CSV export with tests",
+        "purpose": "Add CSV export to the collection page",
+        "revision": 2,
+        "participant_specs": [
+          {
+            "schema_id": "pm.collaboration.participant_spec.v1",
+            "schema_version": "1.0.0",
+            "participant_slot_id": "collab-room-dl231-legacy-slot-1",
+            "role": "Implementer",
+            "requested_provider_id": "provider:anthropic",
+            "requested_account_id": "account:main",
+            "requested_model_id": "model:claude-opus",
+            "requested_persona_id": "persona:implementer",
+            "requested_skill_ids": [],
+            "requested_tool_profile_id": null,
+            "additive_role_kind": "none"
+          },
+          {
+            "schema_id": "pm.collaboration.participant_spec.v1",
+            "schema_version": "1.0.0",
+            "participant_slot_id": "collab-room-dl231-legacy-slot-2",
+            "role": "Reviewer",
+            "requested_provider_id": "provider:anthropic",
+            "requested_account_id": "account:main",
+            "requested_model_id": "model:claude-opus",
+            "requested_persona_id": "persona:reviewer",
+            "requested_skill_ids": [],
+            "requested_tool_profile_id": null,
+            "additive_role_kind": "none"
+          }
+        ],
+        "coordinator_spec": {
+          "kind": "dedicated_model",
+          "requested_provider_id": "provider:anthropic",
+          "requested_model_id": "model:claude-sonnet",
+          "requested_persona_id": "persona:critical-advisor"
+        },
+        "context_policy_ref": "ctx-policy:mentioned-files",
+        "tool_policy_ref": "tool-policy:parent",
+        "permission_ceiling_ref": "ceiling:parent-thread",
+        "concurrency": 2,
+        "time_limit_seconds": 1800,
+        "token_limit": null,
+        "cost_limit": 4.0,
+        "transcript_policy": "keep_full",
+        "output_policy": "summary_and_artifacts",
+        "stuck_policy": "ask_user",
+        "turn_policy": "moderated",
+        "moderator_style": "keep_on_topic",
+        "mention_policy": "mentions_and_replies",
+        "stop_condition": "max_rounds_4",
+        "summary_style": "agreed_debated_open",
+        "grill_me_enabled": false
+      }
+    },
+    {
+      "name": "reconfigure_request_pause_between_rounds_on",
+      "definition": "CollaborationReconfigureRequest",
+      "value": {
+        "schema_id": "pm.collaboration.collaboration_reconfigure_request.v1",
+        "schema_version": "1.0.0",
+        "command_id": "cmd.collaboration.reconfigure",
+        "command_instance_id": "ci-dl231-pause-on",
+        "project_id": "project:01",
+        "thread_id": "thread:01",
+        "actor_identity": "user:jared",
+        "source_surface": "chat_room_card",
+        "correlation_id": "corr-ci-dl231-pause-on",
+        "created_at": "2026-09-27T12:00:00Z",
+        "permission_snapshot_id": "perm-snap-01",
+        "idempotency_key": "idem-ci-dl231-pause-on",
+        "causation_id": null,
+        "collaboration_run_id": "crun-room-0001",
+        "expected_revision": 2,
+        "expected_currentness_hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "changes": [
+          {
+            "change_kind": "set_pause_between_rounds",
+            "pause_between_rounds": true
+          }
+        ],
+        "accept_stale_target": false
+      },
+      "context": {
+        "collaboration_run_id": "crun-room-0001",
+        "kind": "chat_room",
+        "state": "running"
+      }
+    },
+    {
+      "name": "reconfigure_result_pause_between_rounds_on",
+      "definition": "CollaborationReconfigureResult",
+      "value": {
+        "schema_id": "pm.collaboration.collaboration_reconfigure_result.v1",
+        "schema_version": "1.0.0",
+        "command_id": "cmd.collaboration.reconfigure",
+        "command_instance_id": "ci-dl231-pause-on",
+        "committed": true,
+        "status": "committed",
+        "revision_after": 3,
+        "currentness_hash_after": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+        "receipt_refs": [
+          "receipt-dl231-pause-on"
+        ],
+        "observable_work_ref": null,
+        "error": null,
+        "replay_of": null,
+        "definition_revision_after": 3,
+        "system_message_id": "cmsg-dl231-pause-on",
+        "run_state_after": "running"
+      }
+    },
+    {
+      "name": "reconfigure_request_pause_between_rounds_off",
+      "definition": "CollaborationReconfigureRequest",
+      "value": {
+        "schema_id": "pm.collaboration.collaboration_reconfigure_request.v1",
+        "schema_version": "1.0.0",
+        "command_id": "cmd.collaboration.reconfigure",
+        "command_instance_id": "ci-dl231-pause-off",
+        "project_id": "project:01",
+        "thread_id": "thread:01",
+        "actor_identity": "user:jared",
+        "source_surface": "chat_room_panel",
+        "correlation_id": "corr-ci-dl231-pause-off",
+        "created_at": "2026-09-27T12:00:00Z",
+        "permission_snapshot_id": "perm-snap-01",
+        "idempotency_key": "idem-ci-dl231-pause-off",
+        "causation_id": null,
+        "collaboration_run_id": "crun-room-0001",
+        "expected_revision": 2,
+        "expected_currentness_hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "changes": [
+          {
+            "change_kind": "set_pause_between_rounds",
+            "pause_between_rounds": false
+          }
+        ],
+        "accept_stale_target": false
+      },
+      "context": {
+        "collaboration_run_id": "crun-room-0001",
+        "kind": "chat_room",
+        "state": "waiting"
+      }
+    },
+    {
+      "name": "reconfigure_result_pause_between_rounds_off",
+      "definition": "CollaborationReconfigureResult",
+      "value": {
+        "schema_id": "pm.collaboration.collaboration_reconfigure_result.v1",
+        "schema_version": "1.0.0",
+        "command_id": "cmd.collaboration.reconfigure",
+        "command_instance_id": "ci-dl231-pause-off",
+        "committed": true,
+        "status": "committed",
+        "revision_after": 3,
+        "currentness_hash_after": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+        "receipt_refs": [
+          "receipt-dl231-pause-off"
+        ],
+        "observable_work_ref": null,
+        "error": null,
+        "replay_of": null,
+        "definition_revision_after": 3,
+        "system_message_id": "cmsg-dl231-pause-off",
+        "run_state_after": "running"
+      }
+    },
+    {
+      "name": "room_round_request_panel",
+      "definition": "ChatRoomRoundRequest",
+      "value": {
+        "schema_id": "pm.collaboration.chat_room_round_request.v1",
+        "schema_version": "1.0.0",
+        "command_id": "cmd.chat_room.next_round",
+        "command_instance_id": "ci-dl231-next-panel",
+        "project_id": "project:01",
+        "thread_id": "thread:01",
+        "actor_identity": "user:jared",
+        "source_surface": "chat_room_panel",
+        "correlation_id": "corr-ci-dl231-next-panel",
+        "created_at": "2026-09-27T12:00:00Z",
+        "permission_snapshot_id": "perm-snap-01",
+        "idempotency_key": "idem-ci-dl231-next-panel",
+        "causation_id": null,
+        "collaboration_run_id": "crun-room-0001",
+        "expected_revision": 2,
+        "expected_currentness_hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+      },
+      "context": {
+        "collaboration_run_id": "crun-room-0001",
+        "kind": "chat_room",
+        "state": "waiting",
+        "pause_between_rounds": true,
+        "completed_rounds": 1,
+        "configured_max_rounds": 4,
+        "stop_condition_met": false,
+        "turn_policy": "round_robin"
+      }
+    },
+    {
+      "name": "room_round_result_run_state_invalid",
+      "definition": "ChatRoomRoundResult",
+      "value": {
+        "schema_id": "pm.collaboration.chat_room_round_result.v1",
+        "schema_version": "1.0.0",
+        "command_id": "cmd.chat_room.next_round",
+        "command_instance_id": "ci-dl231-round-refused",
+        "committed": false,
+        "status": "refused",
+        "revision_after": null,
+        "currentness_hash_after": null,
+        "receipt_refs": [],
+        "observable_work_ref": null,
+        "error": "run_state_invalid",
+        "replay_of": null,
+        "turn_policy": "round_robin",
+        "participant_order": []
       }
     }
   ],
@@ -4934,6 +5243,224 @@
       "reason": "DL-218 / CWR-041..043: preset Grill Me Persona reservation ignores case",
       "patch": {
         "rows.0.requested_persona_id": "PERSONA:GRILL-ME"
+      }
+    },
+    {
+      "name": "definition_crew_pause_between_rounds",
+      "base_valid": "definition_crew_shared_notes",
+      "rejects_for": "pause_between_rounds is forbidden outside Chat Room",
+      "reason": "DL-231 / CWR-044: pause_between_rounds is forbidden outside Chat Room",
+      "patch": {
+        "pause_between_rounds": false
+      }
+    },
+    {
+      "name": "definition_review_pause_between_rounds",
+      "base_valid": "definition_review_file_and_line",
+      "rejects_for": "pause_between_rounds is forbidden outside Chat Room",
+      "reason": "DL-231 / CWR-044: pause_between_rounds is forbidden outside Chat Room",
+      "patch": {
+        "pause_between_rounds": false
+      }
+    },
+    {
+      "name": "definition_brainstorm_pause_between_rounds",
+      "base_valid": "definition_brainstorm_must_haves_and_specialists",
+      "rejects_for": "pause_between_rounds is forbidden outside Chat Room",
+      "reason": "DL-231 / CWR-044: pause_between_rounds is forbidden outside Chat Room",
+      "patch": {
+        "pause_between_rounds": false
+      }
+    },
+    {
+      "name": "definition_chat_room_pause_not_boolean",
+      "base_valid": "definition_chat_room_kind_rows",
+      "rejects_for": "pause_between_rounds must be boolean",
+      "reason": "DL-231 / CWR-044: pause_between_rounds must be boolean",
+      "patch": {
+        "pause_between_rounds": "false"
+      }
+    },
+    {
+      "name": "reconfigure_pause_between_rounds_missing_value",
+      "base_valid": "reconfigure_request_pause_between_rounds_on",
+      "rejects_for": "the switch change requires a boolean value",
+      "reason": "DL-231 / CWR-044: the switch change requires a boolean value",
+      "remove": [
+        "changes.0.pause_between_rounds"
+      ]
+    },
+    {
+      "name": "reconfigure_pause_between_rounds_not_boolean",
+      "base_valid": "reconfigure_request_pause_between_rounds_on",
+      "rejects_for": "the switch change requires a boolean value",
+      "reason": "DL-231 / CWR-044: the switch change requires a boolean value",
+      "patch": {
+        "changes.0.pause_between_rounds": "on"
+      }
+    },
+    {
+      "name": "reconfigure_pause_between_rounds_other_kind",
+      "base_valid": "reconfigure_request_pause_between_rounds_on",
+      "rejects_for": "the switch change is Chat Room only",
+      "reason": "DL-231 / CWR-044: the switch change is Chat Room only",
+      "semantic_rule": "pause_between_rounds_chat_room_only",
+      "context": {
+        "collaboration_run_id": "crun-room-0001",
+        "kind": "crew",
+        "state": "running"
+      }
+    },
+    {
+      "name": "room_next_round_switch_off",
+      "base_valid": "room_round_request",
+      "rejects_for": "Next Round requires the between-round wait with the switch on and another round available",
+      "reason": "DL-231 / CWR-044: Next Round requires the between-round wait with the switch on and another round available",
+      "semantic_rule": "run_state_invalid",
+      "context": {
+        "collaboration_run_id": "crun-room-0001",
+        "kind": "chat_room",
+        "state": "waiting",
+        "pause_between_rounds": false,
+        "completed_rounds": 1,
+        "configured_max_rounds": 4,
+        "stop_condition_met": false,
+        "turn_policy": "round_robin"
+      }
+    },
+    {
+      "name": "room_next_round_round_running",
+      "base_valid": "room_round_request",
+      "rejects_for": "Next Round requires the between-round wait with the switch on and another round available",
+      "reason": "DL-231 / CWR-044: Next Round requires the between-round wait with the switch on and another round available",
+      "semantic_rule": "run_state_invalid",
+      "context": {
+        "collaboration_run_id": "crun-room-0001",
+        "kind": "chat_room",
+        "state": "running",
+        "pause_between_rounds": true,
+        "completed_rounds": 1,
+        "configured_max_rounds": 4,
+        "stop_condition_met": false,
+        "turn_policy": "round_robin"
+      }
+    },
+    {
+      "name": "room_next_round_before_round_one",
+      "base_valid": "room_round_request",
+      "rejects_for": "Next Round requires the between-round wait with the switch on and another round available",
+      "reason": "DL-231 / CWR-044: Next Round requires the between-round wait with the switch on and another round available",
+      "semantic_rule": "run_state_invalid",
+      "context": {
+        "collaboration_run_id": "crun-room-0001",
+        "kind": "chat_room",
+        "state": "waiting",
+        "pause_between_rounds": true,
+        "completed_rounds": 0,
+        "configured_max_rounds": 4,
+        "stop_condition_met": false,
+        "turn_policy": "round_robin"
+      }
+    },
+    {
+      "name": "room_next_round_rounds_exhausted",
+      "base_valid": "room_round_request",
+      "rejects_for": "Next Round requires the between-round wait with the switch on and another round available",
+      "reason": "DL-231 / CWR-044: Next Round requires the between-round wait with the switch on and another round available",
+      "semantic_rule": "run_state_invalid",
+      "context": {
+        "collaboration_run_id": "crun-room-0001",
+        "kind": "chat_room",
+        "state": "waiting",
+        "pause_between_rounds": true,
+        "completed_rounds": 4,
+        "configured_max_rounds": 4,
+        "stop_condition_met": false,
+        "turn_policy": "round_robin"
+      }
+    },
+    {
+      "name": "room_next_round_stop_condition_met",
+      "base_valid": "room_round_request",
+      "rejects_for": "Next Round requires the between-round wait with the switch on and another round available",
+      "reason": "DL-231 / CWR-044: Next Round requires the between-round wait with the switch on and another round available",
+      "semantic_rule": "run_state_invalid",
+      "context": {
+        "collaboration_run_id": "crun-room-0001",
+        "kind": "chat_room",
+        "state": "waiting",
+        "pause_between_rounds": true,
+        "completed_rounds": 1,
+        "configured_max_rounds": 4,
+        "stop_condition_met": true,
+        "turn_policy": "round_robin"
+      }
+    },
+    {
+      "name": "room_next_round_paused",
+      "base_valid": "room_round_request",
+      "rejects_for": "Next Round requires the between-round wait with the switch on and another round available",
+      "reason": "DL-231 / CWR-044: Next Round requires the between-round wait with the switch on and another round available",
+      "semantic_rule": "run_state_invalid",
+      "context": {
+        "collaboration_run_id": "crun-room-0001",
+        "kind": "chat_room",
+        "state": "paused",
+        "pause_between_rounds": true,
+        "completed_rounds": 1,
+        "configured_max_rounds": 4,
+        "stop_condition_met": false,
+        "turn_policy": "round_robin"
+      }
+    },
+    {
+      "name": "room_next_round_completed",
+      "base_valid": "room_round_request",
+      "rejects_for": "Next Round requires the between-round wait with the switch on and another round available",
+      "reason": "DL-231 / CWR-044: Next Round requires the between-round wait with the switch on and another round available",
+      "semantic_rule": "run_state_invalid",
+      "context": {
+        "collaboration_run_id": "crun-room-0001",
+        "kind": "chat_room",
+        "state": "completed",
+        "pause_between_rounds": true,
+        "completed_rounds": 1,
+        "configured_max_rounds": 4,
+        "stop_condition_met": false,
+        "turn_policy": "round_robin"
+      }
+    },
+    {
+      "name": "room_next_round_ask_everyone_once",
+      "base_valid": "room_round_request",
+      "rejects_for": "Next Round requires the between-round wait with the switch on and another round available",
+      "reason": "DL-231 / CWR-044: Next Round requires the between-round wait with the switch on and another round available",
+      "semantic_rule": "run_state_invalid",
+      "context": {
+        "collaboration_run_id": "crun-room-0001",
+        "kind": "chat_room",
+        "state": "waiting",
+        "pause_between_rounds": true,
+        "completed_rounds": 1,
+        "configured_max_rounds": 4,
+        "stop_condition_met": false,
+        "turn_policy": "ask_everyone_once"
+      }
+    },
+    {
+      "name": "room_next_round_switch_absent",
+      "base_valid": "room_round_request",
+      "rejects_for": "an absent switch reads as false",
+      "reason": "DL-231 / CWR-044: an absent switch reads as false",
+      "semantic_rule": "run_state_invalid",
+      "context": {
+        "collaboration_run_id": "crun-room-0001",
+        "kind": "chat_room",
+        "state": "waiting",
+        "completed_rounds": 1,
+        "configured_max_rounds": 4,
+        "stop_condition_met": false,
+        "turn_policy": "round_robin"
       }
     }
   ]

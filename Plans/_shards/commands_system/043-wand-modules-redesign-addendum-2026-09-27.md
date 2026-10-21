@@ -2,9 +2,9 @@
 
 Source: `Plans/Commands_System.md`
 
-Source lines: L6975-L7498
+Source lines: L6975-L7507
 
-Source SHA256: `65241c5eadb888e593ca008aff5d5c07c10a06c08d74905daef442bbbaf42f82`
+Source SHA256: `4bc5f953d8d5769d4762c7cdeac244c13948e2535e5cbe48acbc35fb94dfc6c0`
 
 ---
 
@@ -297,7 +297,7 @@ Nothing else is minted on DL-130. Apart from the two closure identities that CDR
 - a control that canon gives no producer;
 - a concept demo control.
 
-`cmd.runtime.automation_stop.set` is not minted, and never will be. It was the audit's draft name for the automation pause. The closure answers DL-126 and DL-136 are new decisions, and they mint two more identities, `cmd.chat.eli5.explain_reply` and `cmd.runtime.automation_pause.set`; CDRY-023 records them, and with them the redesign mints nine in all. A Chat Room message sent mid-round, and its Send now steer, reuse `cmd.collaboration.message` with `delivery_mode` queue or steer (CWR-024, DL-112) and get no new identity.
+`cmd.runtime.automation_stop.set` is not minted, and never will be. It was the audit's draft name for the automation pause. The closure answers DL-126 and DL-136 are new decisions, and they mint two more identities, `cmd.chat.eli5.explain_reply` and `cmd.runtime.automation_pause.set`; CDRY-023 records them, and with them the redesign mints nine in all. A Chat Room message sent mid-round, and its Send now steer, reuse `cmd.collaboration.message` with `delivery_mode` queue or steer (CWR-024, DL-112) and get no new identity. DL-231 narrows `cmd.chat_room.next_round` to the user starting a round at a wait with `pause_between_rounds` on; Start already starts round 1 and Ask Everyone has no producer. Automatic rounds mint and dispatch no command. The run switch reuses `cmd.collaboration.reconfigure` with `set_pause_between_rounds` (UCC-207), and the setup check is draft state.
 
 ```yaml
 plan_unit_id: CDRY-022
@@ -315,6 +315,11 @@ canonical_text: >-
   the closure decisions DL-126 and DL-136 mint cmd.chat.eli5.explain_reply and
   cmd.runtime.automation_pause.set, which CDRY-023 records, nine identities in all. A Chat Room
   message sent mid-round reuses cmd.collaboration.message with delivery_mode queue or steer (DL-112).
+  DL-231 keeps cmd.chat_room.next_round only for the user starting a round at a between-round wait
+  with pause_between_rounds true. Start already begins round 1, after Grill Me Confirm if enabled;
+  Ask Everyone has no producer. Automatic round starts mint and dispatch no command. The run switch
+  reuses cmd.collaboration.reconfigure with set_pause_between_rounds; the setup check is draft state
+  (UCC-207). No command is minted or retired by this decision.
 gui_related: true
 gui_classification_reason: "Bounds the command identities behind the visible controls of the redesigned wand modules."
 split_recommended: false
@@ -338,10 +343,14 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
+  - Plans/Decision_Log.md#DL-231
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/IMPACT-REGISTER.md sha256:71227f8edda108ed849256d909ff12f859f98bef58202ef988f9d3b4e4f8d493 line B-CMD-07"
   - "Plans/Decision_Log.md#DL-112, #DL-130"
   - "Plans/ledgers/v2/pldg-20260927-006-wand-command-census/records/design_atoms.jsonl"
 preserved_exact_tokens:
+  - "cmd.chat_room.next_round"
+  - "set_pause_between_rounds"
+  - "pause_between_rounds"
   - "delivery_mode"
   - "cmd.chat_room.end"
   - "cmd.brainstorm.research_lead"

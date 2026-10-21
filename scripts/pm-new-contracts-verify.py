@@ -1344,6 +1344,37 @@ def jujutsu_semantic_failures(definition_name: str, value: Any) -> list[str]:
 def contract_semantic_failures(
     schema_rel: str, definition_name: str, value: Any, *, context: Any = None,
 ) -> list[str]:
+    if schema_rel == "Plans/collaborative_workflows_contracts.schema.json" and definition_name == "ChatRoomRoundRequest":
+        # DL-231: the envelope names a run, not a copy of its configuration.
+        # Join fixture-only owner state; this proves admission predicates only,
+        # never runtime progression, dispatch, or persistence.
+        if not isinstance(context, dict):
+            return ["chat_room_round_context_required"]
+        if context.get("collaboration_run_id") != value.get("collaboration_run_id"):
+            return ["chat_room_round_context_invalid"]
+        completed = context.get("completed_rounds")
+        maximum = context.get("configured_max_rounds")
+        admitted = (
+            context.get("kind") == "chat_room"
+            and context.get("state") == "waiting"
+            and context.get("pause_between_rounds", False) is True
+            and type(completed) is int and type(maximum) is int
+            and 1 <= completed < maximum
+            and context.get("stop_condition_met") is False
+            and context.get("turn_policy") in {"moderated", "round_robin", "free_discussion"}
+        )
+        return [] if admitted else ["run_state_invalid"]
+    if (schema_rel == "Plans/collaborative_workflows_contracts.schema.json"
+            and definition_name == "CollaborationReconfigureRequest"
+            and any(change.get("change_kind") == "set_pause_between_rounds"
+                    for change in value.get("changes", []))):
+        if not isinstance(context, dict):
+            return ["pause_between_rounds_context_required"]
+        if context.get("collaboration_run_id") != value.get("collaboration_run_id"):
+            return ["pause_between_rounds_context_invalid"]
+        if context.get("kind") != "chat_room":
+            return ["pause_between_rounds_chat_room_only"]
+        return [] if context.get("state") in {"waiting", "running", "blocked", "paused"} else ["run_state_invalid"]
     if schema_rel == "Plans/collaborative_workflows_contracts.schema.json" and definition_name == "QuestionBank":
         failures = []
         if value["effective_limit"] != value["baseline_limit"] + value["grill_extension"]:
