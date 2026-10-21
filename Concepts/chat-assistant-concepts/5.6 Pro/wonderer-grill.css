@@ -172,6 +172,9 @@ body.pm56-reduced .wg-lead[data-flash="1"]::after, html[data-motion="reduced"] .
 .wg-listing-s b { color: var(--text); font-weight: 600; }
 .wg-listing li[data-status="supported"] .wg-listing-s b { color: var(--positive); }
 .wg-listing-d, .wg-listing-r { grid-column: 2; display: block; margin-top: 1px; overflow-wrap: anywhere; }
+/* Poppins sits a pixel tighter: Friendly keeps 6 px between a lead's lines (pmx crowding, round 2) */
+body[data-theme^="friendly"] .wg-listing-d, body[data-theme^="friendly"] .wg-listing-r { margin-top: 2px; }
+body[data-theme^="friendly"] .wg-lead-why { margin-top: 3px; }
 .wg-listing-d b, .wg-listing-r b { color: var(--text); font-weight: 600; }
 .wg-listing-d q { quotes: '“' '”'; }
 .wg-listing-r > .wg-st-mark { display: inline-flex; vertical-align: -2px; margin-right: 5px; }
@@ -209,6 +212,8 @@ body.pm56-reduced .wg-lead[data-flash="1"]::after, html[data-motion="reduced"] .
 .wg-agreed-acts .primary-button, .wg-agreed-acts .text-button { min-height: 32px; }
 /* a card in the chat, like the pmx surfaces: Confirm carries no glow (module-shell.css does the same for .pmx-*) */
 .wg-agreed-acts .primary-button { box-shadow: none; }
+/* Friendly and Retro: the house primary's 680 draws the 700 cut, so ask for 700 (pmx theme-font, as module-shell's J-1) */
+body[data-theme^="friendly"] .wg-agreed-acts .primary-button, body[data-theme^="retro"] .wg-agreed-acts .primary-button { font-weight: 700; }
 .wg-agreed-acts .wg-agreed-prov { flex: 1 1 100%; margin: 0; }
 .wg-agreed-note { display: flex; gap: 8px; align-items: flex-start; margin: 14px 0 0; padding-top: 12px; box-shadow: 0 -1px 0 var(--border); font: var(--pmx-w-reg) 12.5px/19px var(--font-ui); color: var(--muted); }
 .wg-agreed-note b { color: var(--text); }

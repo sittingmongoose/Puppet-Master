@@ -266,13 +266,18 @@ check('R2-n17 What we agreed’s title has a real face in Friendly and Retro (70
 async function pixelRatios(page, sels) {
   const out = {};
   for (const sel of sels) {
+    /* the first match that is really on screen: brought into view, and the topmost element at its text's centre */
     let info = await page.evaluate(sel => {
-      const el = [...document.querySelectorAll(sel)].find(e => e.getClientRects().length && e.textContent.trim() && getComputedStyle(e).visibility !== 'hidden');
-      if (!el) return null;
       document.querySelectorAll('[data-pxc]').forEach(x => x.removeAttribute('data-pxc'));
-      el.setAttribute('data-pxc', '1');
-      const br = el.getBoundingClientRect(); if (br.top < 0 || br.bottom > innerHeight) el.scrollIntoView({ block: 'center', behavior: 'instant' });
-      return true;
+      const textBox = el => { const tw = document.createTreeWalker(el, NodeFilter.SHOW_TEXT); for (let t = tw.nextNode(); t; t = tw.nextNode()) { if (!t.textContent.trim()) continue; const rg = document.createRange(); rg.selectNodeContents(t); const r = [...rg.getClientRects()].find(r => r.width > 4 && r.height > 4); if (r) return r; } return null; };
+      for (const el of document.querySelectorAll(sel)) {
+        if (!el.getClientRects().length || !el.textContent.trim() || getComputedStyle(el).visibility === 'hidden') continue;
+        let r = textBox(el); if (!r) continue;
+        if (r.top < 0 || r.bottom > innerHeight) { el.scrollIntoView({ block: 'center', behavior: 'instant' }); r = textBox(el); if (!r) continue; }
+        const hit = document.elementFromPoint(r.left + Math.min(r.width / 2, 20), r.top + r.height / 2);
+        if (hit && (hit === el || el.contains(hit))) { el.setAttribute('data-pxc', '1'); return true; }
+      }
+      return null;
     }, sel);
     if (!info) continue;
     await page.waitForTimeout(120);
@@ -288,9 +293,21 @@ async function pixelRatios(page, sels) {
     Object.assign(info === true ? (info = {}) : info, geo);
     const vp = page.viewportSize(); if (info.rect.y + info.rect.h > vp.height || info.rect.x + 4 > vp.width) { await page.evaluate(() => document.querySelectorAll('[data-pxc]').forEach(x => x.removeAttribute('data-pxc'))); continue; }
     info.rect.w = Math.min(info.rect.w, vp.width - info.rect.x);
-    await page.evaluate(() => { const st = document.createElement('style'); st.id = 'pxc-hide'; st.textContent = '[data-pxc="1"], [data-pxc="1"] * { color: transparent !important; -webkit-text-fill-color: transparent !important; text-shadow: none !important; text-decoration-color: transparent !important; } [data-pxc="1"] svg, [data-pxc="1"] .nx-i { visibility: hidden !important; }'; document.head.appendChild(st); });
+    await page.evaluate(() => { const st = document.createElement('style'); st.id = 'pxc-hide'; st.textContent = '[data-pxc="1"], [data-pxc="1"] * { color: transparent !important; -webkit-text-fill-color: transparent !important; text-shadow: none !important; text-decoration-color: transparent !important; transition: none !important; } [data-pxc="1"] svg, [data-pxc="1"] .nx-i { visibility: hidden !important; }'; document.head.appendChild(st); });
     await page.waitForTimeout(80);
-    const png = await page.screenshot({ clip: { x: info.rect.x, y: info.rect.y, width: Math.max(4, info.rect.w), height: Math.max(4, info.rect.h) }, animations: 'disabled' });
+    /* a live chat may still scroll (a run posting, the transcript keeping to its end): clip where the text is when the
+       shot is taken, and take it again if the text moved while it was being taken */
+    const at = () => page.evaluate(() => { const el = document.querySelector('[data-pxc="1"]'); if (!el) return null; const tw = document.createTreeWalker(el, NodeFilter.SHOW_TEXT); for (let t = tw.nextNode(); t; t = tw.nextNode()) { if (!t.textContent.trim() || (t.parentElement && t.parentElement.closest('svg'))) continue; const rg = document.createRange(); rg.selectNodeContents(t); const r = [...rg.getClientRects()].find(r => r.width > 4 && r.height > 4); if (r) return { x: Math.max(0, r.left), y: Math.max(0, r.top) }; } return null; });
+    let png = null;
+    for (let k = 0; k < 4; k++) {
+      const p0 = await at(); if (!p0 || p0.y < 0 || p0.y + info.rect.h > vp.height) break;
+      info.rect.x = p0.x; info.rect.y = p0.y;
+      const shot = await page.screenshot({ clip: { x: info.rect.x, y: info.rect.y, width: Math.max(4, Math.min(info.rect.w, vp.width - info.rect.x)), height: Math.max(4, info.rect.h) }, animations: 'disabled' });
+      const p1 = await at();
+      if (p1 && Math.abs(p1.x - p0.x) < 1 && Math.abs(p1.y - p0.y) < 1) { png = shot; break; }
+      await page.waitForTimeout(250);
+    }
+    if (!png) { await page.evaluate(() => { const st = document.getElementById('pxc-hide'); if (st) st.remove(); document.querySelectorAll('[data-pxc]').forEach(x => x.removeAttribute('data-pxc')); }); out[sel] = 0; continue; }
     await page.evaluate(() => { const st = document.getElementById('pxc-hide'); if (st) st.remove(); document.querySelectorAll('[data-pxc]').forEach(x => x.removeAttribute('data-pxc')); });
     out[sel] = await page.evaluate(async ([b64, color, op]) => {
       const img = new Image(); img.src = 'data:image/png;base64,' + b64; await img.decode();

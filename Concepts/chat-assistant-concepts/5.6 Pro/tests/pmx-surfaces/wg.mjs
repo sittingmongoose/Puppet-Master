@@ -82,7 +82,7 @@ export default () => [
     sizes: [[1440, 900], [1280, 800], [519, 860], [480, 860], [400, 860]],
     async open(h) { await h.closeAll(); await h.ev(() => window.PM56_WG_DEMOS.start('room')); await h.wait(1400); await h.page.mouse.move(2, 2); await h.settle(); },
     async after(h) { await h.closeAll(); } },
-  { id: 'wg:ask-round', title: 'Deep Plan’s grilling round with the map open: the round bar, the tree with its connectors, the one-row foot', kind: 'chat', tags: ['app', 'wonderer', 'chat'], canon: ['Grill Me'],
+  { id: 'wg:ask-round', title: 'Deep Plan’s grilling round with the map open: the round bar, the tree with its connectors, the one-row foot', kind: 'chat', tags: ['app', 'wonderer', 'chat'], canon: [],
     roots: '.qs-grill', sizes: [[1440, 900], [900, 800], [480, 860], [400, 860]], change: QUIET_CHANGE,
     async open(h) {
       await h.closeAll(); await h.ev(() => window.PM56_WG_DEMOS.start('deepplan')); await h.wait(1400);
