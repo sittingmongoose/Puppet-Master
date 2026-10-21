@@ -1406,6 +1406,8 @@
     plateFit: function (key) { return plateFitMem[key] || ''; },
     fitSheet: fitSheet,
     get sheet() { return currentSheet; },
+    /* QA hook: every dock item the owners publish now, before the visibility rule picks what shows ({runId, tone}) */
+    _dockItems: function (c) { var all = []; for (var i = 0; i < providers.length; i++) { try { var r = providers[i](c); if (Array.isArray(r)) all = all.concat(r); } catch (e) { } } return all.filter(Boolean).map(function (it) { return { runId: it.runId != null ? String(it.runId) : null, tone: it.tone }; }); },
     _debug: function () { return { slotLive: slotLive, vis: Array.from(vis.entries()), providers: providers.length, flight: !!flight, landQueue: landQueue.length, hint: hint, opener: opener }; }
   };
   /* One reduced-motion policy: PM56_MOTION.animate is PM56_PMX.animate. */

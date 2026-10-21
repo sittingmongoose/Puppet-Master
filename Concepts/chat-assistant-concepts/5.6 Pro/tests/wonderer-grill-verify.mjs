@@ -359,6 +359,8 @@ async function browser() {
     await load();
     /* WGV_ONLY=r2: the round 2 checks alone (a quick local loop; the full pass runs everything) */
     if (process.env.WGV_ONLY === 'r2') { await reviewRound2({ page, ev, act, sleep, startSheet, answerAll }); check('B7 no page errors', !errs.length, errs.slice(0, 3).join(' | ')); if (cdp) await b.close().catch(() => {}); return; }
+    /* WGV_ONLY=rx: the recorded-examples checks alone (2026-10-21) */
+    if (process.env.WGV_ONLY === 'rx') { await page.setViewportSize({ width: 1440, height: 900 }); await recordedExamples({ page, ev, act, sleep }); check('B7 no page errors', !errs.length, errs.slice(0, 3).join(' | ')); if (cdp) await b.close().catch(() => {}); else await b.close(); return; }
     /* sheets: the shelf, the plate */
     for (const [kind, who] of [['crew', 'The Coordinator'], ['chat_room', 'The Moderator'], ['brainstorm', 'The Coordinator']]) {
       await ev(k => { const C = window.PM56_COLLAB, c = window.PM56_EXT.ctx(); c.switchThread('query'); C.openConfigure(k); const d = C.draft(); d.purpose = 'Make search easier to reach.'; d.wonderer = true; d.grillMe = true; c.openDialog({ type: 'collab-configure' }); c.renderOverlays(); }, kind);
@@ -385,6 +387,9 @@ async function browser() {
     const agreed = await ev(() => { const a = document.querySelector('.wg-agreed[data-state="open"]'); return a ? { rows: a.querySelectorAll('.wg-agreed-row').length, confirm: !!a.querySelector('[data-action="wg-confirm"]'), keep: !!a.querySelector('[data-action="wg-keep-going"]') } : null; });
     check('B2d What we agreed lists every decision, with Confirm and Keep going', agreed && agreed.rows === 5 && agreed.confirm && agreed.keep, JSON.stringify(agreed));
     await page.locator('.wg-agreed [data-action="wg-confirm"]').first().click();
+    /* the recordings are paced for a person (2026-10-21); this pass reads their order, so it plays them 3x faster */
+    const pace = k => ev(k => window.PM56_CLOCK.setScale(k), k);
+    await pace(3);
     let laneBad = [], seen = 0, sawQueued = false, laterHeld = null, laterOther = false;
     for (let i = 0; i < 110; i++) {
       await sleep(700);
@@ -396,6 +401,7 @@ async function browser() {
       if (st.later && await ev(() => !!document.querySelector('[data-action="qs-accept-round"]'))) { await sleep(2500); await page.locator('[data-action="qs-accept-round"]').first().click().catch(() => {}); await sleep(1200); await page.locator('.wg-agreed[data-state="open"] [data-action="wg-confirm"]').first().click().catch(() => {}); }
       if (st.st === 'completed') break;
     }
+    await pace(1);
     check('B3 the Wonderer lane shows, and never says it waits its turn', seen > 0 && !laneBad.length, laneBad[0] || 'no Wonderer lane seen');
     check('B3e a later pass with no free slot is queued, and its lane says so', sawQueued);
     check('B3f a later decision gates only the export part; the other parts keep going', laterHeld && laterHeld.error === 'grill_me_waits_for_confirm' && laterOther, JSON.stringify({ laterHeld, laterOther }));
@@ -418,7 +424,7 @@ async function browser() {
     const early = await ev(id => { const r = window.PM56_COLLAB.run(id), a = r.brainstorm.attempts[0]; return window.PM56_BRAINSTORM.submitProposal(id, { epoch: r.stopEpoch, sourceHash: r.brainstorm.input.sourceHash, attemptId: a.id, assignmentRevision: a.assignmentRevision, proposal: {} }); }, bsId);
     check('B4b the blind proposals wait for Confirm', early.error === 'grill_me_waits_for_confirm', JSON.stringify(early));
     await page.locator('.wg-agreed [data-action="wg-confirm"]').first().click();
-    await act('b13-open', { run: bsId }); await sleep(600);
+    await act('b13-open', { run: bsId }); await sleep(600); await pace(3);
     let normalized = null, waits = [], checked = false, firstPassAt = null;
     for (let i = 0; i < 120; i++) {
       await sleep(600);
@@ -430,6 +436,7 @@ async function browser() {
       if (st.phase === 'synthesis' && st.gate.ok) break;
       if (st.wVote) { check('B5 the Wonderer never votes', false, 'a Wonderer vote was recorded'); break; }
     }
+    await pace(1);
     check('B4d the first pass ran during intake, before any blind proposal took a slot', firstPassAt === 'held', String(firstPassAt));
     check('B4c the leads are released only once every blind proposal is in', normalized && normalized.proposals === normalized.n && normalized.phase !== 'blind_proposals', JSON.stringify(normalized));
     check('B5 Write the plan waits for a pass in flight and for research (never for you), with the button disabled', waits.some(w => /^exploring:true/.test(w)) && waits.some(w => /^research:true/.test(w)) && !waits.some(w => /:false$/.test(w)), waits.join(','));
@@ -442,7 +449,7 @@ async function browser() {
     /* Grill Me turned on mid-run (the 'dissent' recording) */
     await ev(() => { const b = document.createElement('button'); b.dataset.flow = 'dissent'; window.PM56_EXT.run('b13-start', b, new Event('click')); }); await sleep(900); await startSheet();
     const dsId = await ev(() => window.PM56_BATCH13.currentRun().id);
-    await act('collab-brainstorm-toggle-grill', { run: dsId });
+    await act('collab-brainstorm-toggle-grill', { run: dsId }); await pace(3);
     let mid = null, voteHeld = null, debatedWhileHeld = false;
     for (let i = 0; i < 90; i++) {
       await sleep(600);
@@ -453,6 +460,7 @@ async function browser() {
       if (st.held && st.phase === 'evidence' && st.open) { await page.locator('[data-action="qs-accept-round"]').first().click(); await sleep(1300); await page.locator('.wg-agreed[data-state="open"] [data-action="wg-confirm"]').first().click(); }
       if (st.phase === 'synthesis') break;
     }
+    await pace(1);
     check('B8 Grill Me turned on mid-run grills you at the next chapter, gating only the vote', mid && mid.gate === 'vote', JSON.stringify(mid));
     check('B8b work already running continues: the debate went on while the vote waited', debatedWhileHeld && voteHeld && voteHeld.error === 'grill_me_waits_for_confirm', JSON.stringify({ debatedWhileHeld, voteHeld }));
     check('B8c after Confirm the vote goes on', await ev(id => window.PM56_COLLAB.run(id).brainstorm.phase, dsId) === 'synthesis');
@@ -509,9 +517,339 @@ async function browser() {
     check('APR-072b the Plan is written after Confirm', !(await noPlan()));
     await reviewRound1({ page, ev, act, sleep, startSheet, answerAll });
     await reviewRound2({ page, ev, act, sleep, startSheet, answerAll });
+    await recordedExamples({ page, ev, act, sleep });
     check('B7 no page errors', !errs.length, errs.slice(0, 3).join(' | '));
   } catch (e) { check('B0 the browser pass ran to the end', false, e && e.stack || e); }
   if (cdp) await b.close().catch(() => {}); else await b.close();
+}
+/* ------------------------------------------------------------------ recorded examples play on their own (2026-10-21)
+   Jared (Edge, 1680x1300): "The recorded example of the chat room keeps asking me to click Next Round and stuff. I
+   thought it would be automated. When you click Show all, it doesn't, it compacts the box. The BrainStorm demo doesn't
+   work at all. Neither does Review. Neither does Crew. Also, the card starts with the chevron down; click it and it just
+   flips the chevron up, click again and it compacts."
+   RX-*: every listed example, from Start, with no click but the moves the product itself waits for (the Ask Card, What
+   we agreed's Confirm, Write the plan, Next Round, Summarize Now, End discussion), reaches its end or its documented wait
+   point; no card says Starting for more than 2 s; the guide shows no button but Replay; nothing on screen offers Play
+   the recording, Watch the Crew work or Do this step; each guide sentence after Start stays at least 2 s (but the brief
+   "Starting" one, which the 2 s rule bounds) and the playback runs 12-100 s. Times are motion time (PM56_CLOCK): the
+   pass runs the recordings 3x faster than a person watches them, so a Starting span also counts 3x the browser's own
+   render time.
+   SA-*: Show all lists every lane in place and Show fewer folds back; the card never folds. CV-*: the chevron always
+   matches the card, and its first click changes it. */
+async function recordedExamples({ page, ev, act, sleep }) {
+  const SCALE = 3, fast = k => ev(k => window.PM56_CLOCK.setScale(k), k);
+  const until = (fn, arg, ms = 60000) => page.waitForFunction(fn, arg, { timeout: ms, polling: 120 }).then(() => true, () => false);
+  const click = async sel => { try { const l = page.locator(sel).first(); if (await l.count() && await l.isVisible()) { await l.click({ timeout: 3000 }); return true; } } catch (e) { } return false; };
+  const sheetStart = async () => { await until(() => !!document.querySelector('#pmOverlayRoot .pmx-sheet .pmx-foot .primary-button'), null, 8000); await page.locator('#pmOverlayRoot .pmx-sheet .pmx-foot .primary-button').last().click(); await ev(() => { if (window.__rx && window.__rx.started == null) window.__rx.started = window.PM56_CLOCK.now(); }); };
+  /* the recorder: every visible guide sentence (motion time), every guide button, how long each card said Starting, and
+     any retired control anywhere on screen */
+  const record = () => ev(() => {
+    if (window.__rxStop) window.__rxStop();
+    const K = window.PM56_CLOCK, log = window.__rx = { t0: K.now(), guide: [], buttons: {}, starting: {}, banned: [], held: 0 };
+    let queued = false, lastT = K.now(), lastHeld = false;
+    /* time Grill Me spends asking you (the Ask Card, What we agreed, its lookups) is the interview, not the playback */
+    const asking = () => { const W = window.PM56_WG, c = window.PM56_EXT.ctx(), tid = c.state.selectedThread; if (!W) return false;
+      const ts = W.threadSession(tid); if (ts && (ts.status === 'grilling' || ts.status === 'agreeing')) return true;
+      return window.PM56_COLLAB.runsForThread(tid).some(r => W.holds(r) || !!W.activeSession(r)); };
+    const read = () => {
+      queued = false; const t = K.now();
+      if (log.started != null) { if (lastHeld) log.held += t - lastT; } lastT = t; const wasHeld = lastHeld; lastHeld = asking();
+      const g = [...document.querySelectorAll('.pmx-guide')].filter(n => n.getClientRects().length)[0];
+      const text = g ? (g.querySelector('.pmx-guide-step') || g).textContent.trim() : '';
+      if (!log.guide.length || log.guide[log.guide.length - 1].text !== text) log.guide.push({ t, text, asking: lastHeld || (log.askedUntil != null && t - log.askedUntil < 300) });
+      if (wasHeld && !lastHeld) log.askedUntil = t;
+      if (g && log.started != null) g.querySelectorAll('button').forEach(b => { const l = b.textContent.trim(); if (l) log.buttons[l] = 1; });
+      document.querySelectorAll('.transcript article.pmx-run[data-run-id]').forEach(c => {
+        const id = c.getAttribute('data-run-id'), s = c.querySelector('.pmx-sentence'), on = c.getAttribute('data-density') === 'starting' || !!(s && /^Starting\b/.test(s.textContent.trim()));
+        const x = log.starting[id] || (log.starting[id] = { since: null, max: 0 });
+        if (on && x.since == null) x.since = t; if (!on && x.since != null) { x.max = Math.max(x.max, t - x.since); x.since = null; }
+      });
+      document.querySelectorAll('button').forEach(b => { if (b.getClientRects().length && /Play the recording|Watch the Crew work|Do this step/.test(b.textContent)) log.banned.push(b.textContent.trim()); });
+    };
+    const mo = new MutationObserver(() => { if (!queued) { queued = true; requestAnimationFrame(read); } });
+    mo.observe(document.body, { subtree: true, childList: true, characterData: true, attributes: true, attributeFilter: ['data-density'] });
+    const iv = setInterval(read, 200); read();
+    window.__rxStop = () => { mo.disconnect(); clearInterval(iv); read(); };
+  });
+  const report = () => ev(() => { window.__rxStop && window.__rxStop(); const x = window.__rx, K = window.PM56_CLOCK, now = K.now();
+    Object.values(x.starting).forEach(s => { if (s.since != null) s.max = Math.max(s.max, now - s.since); });
+    /* a sentence shown while Grill Me asks you ends when you answer (here at once), and the one your answer brings may
+       meet the next recorded step at once: their times are yours, not the pace */
+    const from = x.started != null ? x.started : x.t0, g = x.guide.filter(e => e.text), timed = g.slice(0, -1).map((e, i) => ({ text: e.text, t: e.t, d: g[i + 1].t - e.t, asking: e.asking }))
+      .filter(e => e.t >= from - 1 && !e.asking && !/^(Starting\b|The room is starting)/.test(e.text));
+    return { total: Math.round(now - from - x.held), interview: Math.round(x.held), starting: Math.round(Math.max(0, ...Object.values(x.starting).map(s => s.max))), minDwell: timed.length ? Math.round(Math.min(...timed.map(e => e.d))) : null,
+      short: timed.filter(e => e.d < 2000).map(e => e.text.slice(0, 50) + ' ' + Math.round(e.d)), buttons: Object.keys(x.buttons), banned: [...new Set(x.banned)], sentences: g.length }; });
+  const verdict = (name, r, ok, extra) => {
+    const buttonsOk = r.buttons.every(b => b === 'Replay');
+    check('RX ' + name + ': plays on its own from Start to its end or wait point' + (extra ? ' (' + extra + ')' : ''), ok, JSON.stringify(r).slice(0, 500));
+    check('RX ' + name + ': no card says Starting for more than 2 s, and nothing offers Play the recording, Watch the Crew work or Do this step', r.starting <= 2000 && !r.banned.length, JSON.stringify({ starting: r.starting, banned: r.banned }));
+    check('RX ' + name + ': the guide narrates (its only button is Replay)', buttonsOk && r.sentences >= 2, JSON.stringify({ buttons: r.buttons, sentences: r.sentences }));
+    check('RX ' + name + ': paced to follow (every guide sentence stays 2 s or more; the playback, less any Grill Me interview, runs 12-100 s)', r.minDwell != null && r.minDwell >= 2000 && r.total >= 12000 && r.total <= 100000, JSON.stringify({ minDwell: r.minDwell, short: r.short, total: r.total }));
+  };
+  const runOf = (kind) => ev(k => { const c = window.PM56_EXT.ctx(); const r = window.PM56_COLLAB.runsForThread(c.state.selectedThread).filter(x => x.kind === k).pop(); return r ? r.id : null; }, kind);
+  const st = id => ev(id => { const r = window.PM56_COLLAB.run(id); if (!r) return {}; return { status: r.status, phase: r.brainstorm ? r.brainstorm.phase : r.review ? r.review.phase : '', synth: !!(r.brainstorm && r.brainstorm.synthesis), decision: !!(r.brainstorm && r.brainstorm.decision), rounds: r.chatRoom ? r.chatRoom.roundsSoFar : null, inRound: !!(r.chatRoom && r.chatRoom.round && !r.chatRoom.round.complete), summary: !!(r.chatRoom && r.chatRoom.summary) }; }, id);
+  /* the user's own move on the card: the product's control, pressed where a person would */
+  const cardMove = async (id, action) => click('.transcript [data-run-id="' + id + '"] [data-action="' + action + '"]');
+
+  await fast(SCALE);
+  /* Crew: Delegate and verify */
+  await act('crew-demo-start', { flow: 'delegation' }); await sleep(900);
+  await record(); await sheetStart();
+  let id = null; await until(() => true, null, 300); id = await runOf('crew');
+  let ok = await until(id => window.PM56_COLLAB.run(id) && window.PM56_COLLAB.run(id).status === 'completed', id, 60000);
+  verdict('Crew · Delegate and verify', await report(), ok);
+  /* Crew Auto: its rules saved, it sends its three requests itself and brings in a Crew for the big job */
+  await act('crew-demo-start', { flow: 'auto' }); await sleep(900);
+  await record(); await sheetStart();
+  ok = await until(() => { const s = window.PM56_CREW_DEMOS.snapshot(); return !!(s && s.evaluations.length === 3 && s.runId && window.PM56_COLLAB.run(s.runId).status === 'completed'); }, null, 60000);
+  const autoSnap = await ev(() => { const s = window.PM56_CREW_DEMOS.snapshot(); return s ? s.evaluations.map(e => e.which + ':' + (e.result.admitted ? 'crew' : e.result.reason)) : null; });
+  verdict('Crew · Crew Auto', await report(), ok, (autoSnap || []).join(' '));
+  /* BrainStorm, both recordings: to Ready to write the plan (your move), then Write the plan on the card */
+  for (const flow of ['synthesis', 'constraint']) {
+    await act('brainstorm-demo-start', { flow }); await sleep(900);
+    await record(); await sheetStart();
+    await until(() => true, null, 300); id = await runOf('brainstorm');
+    const waited = await until(id => { const r = window.PM56_COLLAB.run(id); return r && r.brainstorm.phase === 'synthesis' && !!r.brainstorm.decision && !r.brainstorm.synthesis; }, id, 60000);
+    const rep = await report();
+    const wrote = waited && await cardMove(id, 'collab-brainstorm-synthesize') && await until(id => !!window.PM56_COLLAB.run(id).brainstorm.synthesis, id, 15000);
+    verdict('BrainStorm · ' + flow, rep, waited && wrote, 'waits at Ready to write the plan; Write the plan on the card writes it');
+  }
+  /* Review, both recordings: to the finished report */
+  for (const flow of ['single', 'multi']) {
+    await act('review-demo-start', { flow }); await sleep(900);
+    await record(); await sheetStart();
+    await until(() => true, null, 300); id = await runOf('review');
+    ok = await until(id => window.PM56_COLLAB.run(id).status === 'completed', id, 60000);
+    verdict('Review · ' + flow, await report(), ok);
+  }
+  /* Chat Room, both recordings (Jared, 2026-10-21: a Chat Room runs its rounds by itself): Start opens round 1, every
+     round follows by itself, and the room waits only at the end of its rounds. The discussion waits there (Summarize
+     Now, End discussion on the card); the plan example's Moderator sums up by itself, and you promote the summary. */
+  for (const flow of ['discussion', 'plan']) {
+    await act('room-demo-start', { flow }); await sleep(900);
+    await record(); await sheetStart();
+    await until(() => true, null, 300); id = await runOf('chat_room');
+    const max = flow === 'plan' ? 1 : 2;
+    const waited = await until(([id, max]) => { const r = window.PM56_COLLAB.run(id), s = r.chatRoom; return s.roundsSoFar >= max && (!s.round || s.round.complete) && !!window.PM56_ROOM.waitsFor(r); }, [id, max], 60000);
+    const at = await ev(id => { const r = window.PM56_COLLAB.run(id), g = [...document.querySelectorAll('.pmx-guide')].filter(n => n.getClientRects().length)[0], c = document.querySelector('.transcript [data-run-id="' + id + '"]');
+      return { why: window.PM56_ROOM.waitsFor(r), rounds: r.chatRoom.roundsSoFar, summary: !!r.chatRoom.summary, density: c && c.getAttribute('data-density'), guide: g ? g.textContent : '', ask: [...document.querySelectorAll('button')].some(b => /Ask Everyone/.test(b.textContent)) }; }, id);
+    check('RX Chat Room · ' + flow + ': every round plays with no click after Start, and the room waits only at the end of its rounds' + (flow === 'plan' ? ' (the Moderator summed up by itself)' : ''),
+      waited && at.why === 'last' && at.rounds === max && at.density === 'attention' && !at.ask && (flow === 'plan' ? at.summary && /promote the summary/.test(at.guide) : !at.summary && /waits for you now/.test(at.guide)), JSON.stringify(at).slice(0, 400));
+    const rep = await report();
+    let ok2;
+    if (flow === 'plan') ok2 = await cardMove(id, 'room-promote') && await until(id => window.PM56_COLLAB.run(id).chatRoom.promotions.length === 1, id, 10000);
+    else ok2 = await cardMove(id, 'collab-room-summarize') && await until(id => !!window.PM56_COLLAB.run(id).chatRoom.summary, id, 10000) && await cardMove(id, 'room-finish') && await until(id => window.PM56_COLLAB.run(id).status === 'completed', id, 10000);
+    verdict('Chat Room · ' + flow, rep, waited && ok2, flow === 'plan' ? 'then a promotion from the card' : 'then Summarize Now and End discussion on the card');
+  }
+
+  {
+  /* AR: automatic rounds, production behaviour (Jared, 2026-10-21) */
+  const room = async (flow, pause) => { await act('room-demo-start', { flow }); await sleep(900);
+    if (pause) { await page.locator('#pmOverlayRoot [data-collab-input="cfg-pauseBetweenRounds"]').first().click(); await sleep(400); }
+    await sheetStart(); await until(() => true, null, 300); return runOf('chat_room'); };
+  const rs = id => ev(id => { const r = window.PM56_COLLAB.run(id), s = r.chatRoom, D = window.PM56_ROOM_DEMOS; return { st: r.status, rounds: s.roundsSoFar, round: s.round ? s.round.number : 0, inRound: !!(s.round && !s.round.complete), replies: r.messages.filter(m => m.roomRound).length, speaking: !!(D.speaking(id)), why: window.PM56_ROOM.waitsFor(r), pausing: !!s.pausing, sys: r.messages.filter(m => m.senderKind === 'system').map(m => m.body) }; }, id);
+  /* the dock item the room publishes (it shows once the card is off screen; the tone is what it would say) */
+  const dock = id => ev(id => { const it = (window.PM56_PMX._dockItems(window.PM56_EXT.ctx()) || []).find(x => x.runId === id); return it ? it.tone : ''; }, id);
+  const presentOf = id => ev(id => window.PM56_COLLAB.sentenceOf ? window.PM56_COLLAB.sentenceOf(window.PM56_COLLAB.run(id)).status : '', id);
+  /* AR1 Start opens round 1 (no Ask Everyone), and round 2 follows with no click; between rounds it reads live */
+  await fast(1);
+  id = await room('discussion', false);
+  const r1at = await until(id => { const s = window.PM56_COLLAB.run(id).chatRoom; return !!(s.round && s.round.number === 1); }, id, 2500);
+  const askBtn = await ev(() => [...document.querySelectorAll('button')].some(b => b.getClientRects().length && /Ask Everyone/.test(b.textContent)));
+  check('AR1 Start Chat Room opens round 1 by itself within 2 s; nothing offers Ask Everyone', r1at && !askBtn, JSON.stringify({ r1at, askBtn }));
+  await fast(SCALE);
+  await until(id => { const s = window.PM56_COLLAB.run(id).chatRoom; return s.roundsSoFar === 1 && (!s.round || s.round.complete); }, id, 60000);
+  await fast(0.1);
+  const beat = { ...(await rs(id)), present: await presentOf(id), dock: await dock(id), card: await ev(id => { const c = document.querySelector('.transcript [data-run-id="' + id + '"]'); return c ? { d: c.getAttribute('data-density'), t: (c.querySelector('.pmx-sentence') || {}).textContent || '', next: !!c.querySelector('[data-action="collab-room-next-round"]') } : null; }, id) };
+  await fast(SCALE);
+  const r2 = await until(id => { const s = window.PM56_COLLAB.run(id).chatRoom; return !!(s.round && s.round.number === 2); }, id, 30000);
+  check('AR2 a finished round is not your move: between rounds the card, dock and status read live ("Round 1 done · Round 2 starting"), no Next Round', !beat.why && beat.present !== 'yourmove' && beat.dock !== 'yourmove' && beat.card && beat.card.d === 'live' && /Round 1 done/.test(beat.card.t) && /Round 2 starting/.test(beat.card.t) && !beat.card.next, JSON.stringify(beat));
+  check('AR3 round 2 starts with no click', r2);
+  /* AR4 Pause during a turn holds at the turn boundary; nothing moves while paused; Resume goes on with the rounds */
+  await fast(1);
+  await until(id => !!window.PM56_ROOM_DEMOS.speaking(id), id, 15000);
+  const ap0 = await rs(id);
+  await act('collab-pause', { run: id }); await sleep(200);
+  const ap1 = await rs(id);
+  await fast(SCALE);
+  await until(([id, n]) => window.PM56_COLLAB.run(id).messages.filter(m => m.roomRound).length > n, [id, ap0.replies], 20000); await sleep(200);
+  const ap2 = await rs(id); await sleep(2000);
+  const ap3 = await rs(id);
+  check('AR4 Pause during a turn holds the room at the turn boundary: the speaker finishes, then it is paused and nothing moves', ap1.st === 'running' && ap1.pausing && ap2.st === 'paused' && ap2.replies === ap0.replies + 1 && ap3.st === 'paused' && ap3.replies === ap2.replies && !ap3.speaking, JSON.stringify({ ap0, ap1, ap2, ap3 }));
+  check('AR4b a paused room waits for you: the dock says your move', await dock(id) === 'yourmove');
+  await act('collab-resume', { run: id });
+  const resumed = await until(id => { const r = window.PM56_COLLAB.run(id), s = r.chatRoom; return s.roundsSoFar === 2 && (!s.round || s.round.complete); }, id, 60000);
+  await fast(0.1);
+  const endS = { ...(await rs(id)), present: await presentOf(id), dock: await dock(id) };
+  await fast(1);
+  check('AR5 Resume goes on with the rounds to the end; the room waits only after its last round (your move: This room used all its rounds)', resumed && endS.why === 'last' && endS.present === 'yourmove' && endS.dock === 'yourmove', JSON.stringify(endS));
+  /* AR6 a message sent during a round is queued and goes to the room at the next round, which answers it */
+  id = await room('discussion', false);
+  await until(id => !!window.PM56_ROOM_DEMOS.speaking(id), id, 15000);
+  const q = await ev(id => { const R = window.PM56_ROOM, e = R.enqueue(id, 'Please weigh in on a shortcut hint.', { kind: 'workflow', destinationKind: 'chat_room', refId: id, label: 'Chat Room' }); window.PM56_EXT.ctx().renderApp(); return e.ok; }, id);
+  await fast(SCALE);
+  const delivered = await until(id => { const r = window.PM56_COLLAB.run(id); return r.messages.some(m => m.senderKind === 'user' && /shortcut hint/.test(m.body)); }, id, 60000);
+  const answered = await until(id => { const r = window.PM56_COLLAB.run(id), u = r.messages.find(m => m.senderKind === 'user' && /shortcut hint/.test(m.body)); return !!u && r.messages.some(m => m.roomRound === 2 && m.replyTo === u.id); }, id, 60000);
+  const qs = await ev(id => { const r = window.PM56_COLLAB.run(id), u = r.messages.find(m => m.senderKind === 'user' && /shortcut hint/.test(m.body)); return { queued: (r.chatRoom.queued || []).length, at: u ? r.messages.indexOf(u) : -1, r1: r.messages.filter(m => m.roomRound === 1).map(m => r.messages.indexOf(m)) }; }, id);
+  check('AR6 a message sent during a round is queued, goes to the room when that round ends, and the next round answers it (no click)', q && delivered && answered && qs.queued === 0 && qs.at > Math.max(...qs.r1), JSON.stringify({ q, delivered, answered, qs }));
+  await fast(1);
+
+  /* PB: Pause between rounds. The sheet (off by default, its summary says so), the card and the panel (a switch that works
+     mid-run, keeps the focus, and writes one plain line per change) */
+  await act('room-demo-start', { flow: 'discussion' }); await sleep(900);
+  const sh0 = await ev(() => { const i = document.querySelector('#pmOverlayRoot [data-collab-input="cfg-pauseBetweenRounds"]'), rb = document.querySelector('#pmOverlayRoot .pmx-foot, #pmOverlayRoot .pmx-sheet'); return { has: !!i, checked: i && i.checked, role: i && i.getAttribute('role'), near: !!(i && i.closest('.pmx-ctl') && i.closest('.pmx-ctl').previousElementSibling && /Rounds/.test(i.closest('.pmx-ctl').previousElementSibling.textContent)), say: (document.querySelector('#pmOverlayRoot .pmx-sheet') || {}).textContent || '' }; });
+  await page.focus('#pmOverlayRoot [data-collab-input="cfg-pauseBetweenRounds"]'); await page.keyboard.press('Space'); await sleep(500);
+  const sh1 = await ev(() => { const i = document.querySelector('#pmOverlayRoot [data-collab-input="cfg-pauseBetweenRounds"]'), a = document.activeElement; return { checked: i && i.checked, focus: a === i, say: (document.querySelector('#pmOverlayRoot .pmx-sheet') || {}).textContent || '' }; });
+  check('PB1 the sheet has Pause between rounds beside Rounds, off by default; Space turns it on, the focus stays on it, and the summary says the room waits after each round',
+    sh0.has && sh0.checked === false && sh0.role === 'switch' && sh0.near && /one after another/.test(sh0.say) && sh1.checked && sh1.focus && /waiting for you after each one/.test(sh1.say), JSON.stringify({ sh0: { ...sh0, say: undefined }, sh1: { ...sh1, say: undefined } }));
+  await sheetStart(); await until(() => true, null, 300); id = await runOf('chat_room');
+  await fast(SCALE);
+  const w1 = await until(id => { const r = window.PM56_COLLAB.run(id); return r.chatRoom.roundsSoFar === 1 && window.PM56_ROOM.waitsFor(r) === 'between'; }, id, 60000);
+  await sleep(1500);
+  const w1s = { ...(await rs(id)), dock: await dock(id), present: await presentOf(id) };
+  check('PB2 with it on, the room waits after round 1 ("Round 1 done · your move", the dock says your move)', w1 && w1s.rounds === 1 && !w1s.inRound && w1s.why === 'between' && w1s.dock === 'yourmove' && w1s.present === 'yourmove', JSON.stringify(w1s));
+  await cardMove(id, 'collab-room-next-round');
+  const one = await until(id => { const r = window.PM56_COLLAB.run(id); return r.chatRoom.roundsSoFar === 2 && (!r.chatRoom.round || r.chatRoom.round.complete); }, id, 60000);
+  check('PB3 Next Round starts exactly one round, and the room waits again after it', one && (await rs(id)).why === 'last' && (await rs(id)).round === 2);
+  await fast(1);
+  /* mid-run, on the card: on during round 1 → round 1 finishes, then the room waits; off while it waits → round 2 at once */
+  id = await room('discussion', false);
+  await until(id => !!window.PM56_ROOM_DEMOS.speaking(id), id, 15000);
+  const sel = where => '[data-room-pause="' + where + '"][data-run="' + id + '"]';
+  await page.focus(sel('card')); await page.keyboard.press('Space'); await sleep(400);
+  const c1 = await ev(([id, s]) => { const i = document.querySelector(s), r = window.PM56_COLLAB.run(id); return { on: r.chatRoom.pauseBetween, checked: i && i.checked, aria: i && i.getAttribute('aria-checked'), focus: document.activeElement === i, inRound: !!(r.chatRoom.round && !r.chatRoom.round.complete) }; }, [id, sel('card')]);
+  await fast(SCALE);
+  await until(id => window.PM56_COLLAB.run(id).chatRoom.roundsSoFar === 1, id, 60000); await sleep(1500);
+  const c2 = await rs(id);
+  check('PB4 the card’s switch works mid-round with Space and keeps the focus; that round finishes (no turn cancelled) and the room then waits',
+    c1.on && c1.checked && c1.aria === 'true' && c1.focus && c1.inRound && c2.rounds === 1 && c2.replies === 3 && !c2.inRound && c2.why === 'between', JSON.stringify({ c1, c2 }));
+  await fast(1);
+  await act('collab-open-panel', { run: id }); await sleep(900);
+  await page.focus(sel('view')); await page.keyboard.press('Space'); await sleep(200);
+  const v1 = await ev(([id, s]) => { const i = document.querySelector(s), r = window.PM56_COLLAB.run(id); return { on: r.chatRoom.pauseBetween, focus: document.activeElement === i, round2: !!(r.chatRoom.round && r.chatRoom.round.number === 2) }; }, [id, sel('view')]);
+  const sysLines = (await rs(id)).sys.filter(t => /^Pause between rounds is (on|off)\.$/.test(t));
+  check('PB5 the panel’s switch, turned off while the room waits, starts round 2 at once; the focus stays on it', !v1.on && v1.focus && v1.round2, JSON.stringify(v1));
+  check('PB6 each change writes one plain line in the room’s transcript', sysLines.join('|') === 'Pause between rounds is on.|Pause between rounds is off.', sysLines.join('|'));
+  await fast(SCALE); await until(id => window.PM56_COLLAB.run(id).chatRoom.roundsSoFar === 2, id, 60000); await fast(1);
+  await ev(() => { const c = window.PM56_EXT.ctx(); c.state.editorRevealed = false; c.renderApp(); });
+  }
+  /* the Wonderer and Grill Me examples: the Ask Card and Confirm are the only moves; the room waits between rounds */
+  const answer = async (stop, ms = 90000) => { const t0 = Date.now(); while (Date.now() - t0 < ms) { if (await ev(stop.fn, stop.arg)) return true; if (await click('.qs-grill [data-action="qs-accept-round"]')) { await sleep(250); continue; } if (await click('.wg-agreed[data-state="open"] [data-action="wg-confirm"]')) { await sleep(250); continue; } await sleep(200); } return false; };
+  for (const flow of ['crew', 'room', 'brainstorm', 'deepplan']) {
+    await ev(f => window.PM56_WG_DEMOS.start(f), flow); await sleep(1000);
+    await record(); if (flow !== 'deepplan') await sheetStart();
+    await sleep(400);
+    const stop = flow === 'crew' ? { fn: () => { const s = window.PM56_WG_DEMOS.snapshot(), r = s && s.runId && window.PM56_COLLAB.run(s.runId); return !!(r && r.status === 'completed'); } }
+      : flow === 'room' ? { fn: () => { const s = window.PM56_WG_DEMOS.snapshot(), r = s && s.runId && window.PM56_COLLAB.run(s.runId); return !!(r && r.chatRoom.roundsSoFar >= 1 && (!r.chatRoom.round || r.chatRoom.round.complete)); } }
+      : flow === 'brainstorm' ? { fn: () => { const r = window.PM56_BATCH13.currentRun(); return !!(r && r.brainstorm.phase === 'synthesis' && window.PM56_WONDERER.gateState(r).ok && !r.brainstorm.synthesis); } }
+      : { fn: () => { const s = window.PM56_WG_DEMOS.snapshot(); return !!(s && s.planId); } };
+    ok = await answer(stop, 120000);
+    const rep = await report();
+    const err = await ev(() => { const s = window.PM56_WG_DEMOS.snapshot(); return s && s.error; });
+    verdict('Wonderer and Grill Me · ' + flow, rep, ok && !err, flow === 'room' ? 'waits between rounds' : flow === 'brainstorm' ? 'waits at Write the plan' : 'to the end');
+  }
+  /* the BrainStorm whose rule beats the vote, with the Wonderer: no Grill Me, so no move at all before Write the plan */
+  await act('b13-start', { flow: 'dissent' }); await sleep(1000);
+  await record(); await sheetStart();
+  ok = await until(() => { const r = window.PM56_BATCH13.currentRun(); return !!(r && r.brainstorm.phase === 'synthesis' && window.PM56_WONDERER.gateState(r).ok); }, null, 90000);
+  verdict('Wonderer · a rule beats the vote', await report(), ok, 'no move until Write the plan');
+
+  /* RC: the run's own controls work while it plays, as in the product. Open Panel opens the run view and the playback
+     goes on; Pause holds it (nothing moves); Resume goes on; Cancel ends it, and the guide offers Replay. */
+  await act('crew-demo-start', { flow: 'delegation' }); await sleep(900); await sheetStart();
+  await until(() => true, null, 300); id = await runOf('crew');
+  await until(id => window.PM56_COLLAB.run(id).crew.assignments.some(a => a.status === 'done'), id, 30000);
+  await act('crew-open-work', { run: id }); await sleep(500);
+  const opened = await ev(id => window.PM56_EXT.ctx().state.activeEditor === 'crew-work:' + id, id);
+  await act('collab-pause', { run: id }); await sleep(300);
+  const p0 = await ev(id => { const r = window.PM56_COLLAB.run(id); return { st: r.status, a: r.crew.assignments.map(a => a.status).join(','), ev: window.PM56_CREW_DEMOS.snapshot().events.length }; }, id);
+  await sleep(3000);
+  const p1 = await ev(id => { const r = window.PM56_COLLAB.run(id); return { st: r.status, a: r.crew.assignments.map(a => a.status).join(','), ev: window.PM56_CREW_DEMOS.snapshot().events.length }; }, id);
+  check('RC Crew: Pause on the card holds the recording where it is (nothing moves while it is paused)', p0.st === 'paused' && p1.st === 'paused' && p0.a === p1.a && p0.ev === p1.ev, JSON.stringify({ p0, p1 }));
+  await act('collab-resume', { run: id });
+  const resumed = await until(id => window.PM56_COLLAB.run(id).status === 'completed', id, 40000);
+  check('RC Crew: Open Panel opens its run view while it plays, and after Resume it plays on to the end', opened && resumed, JSON.stringify({ opened, resumed }));
+  await act('brainstorm-demo-start', { flow: 'synthesis' }); await sleep(900); await sheetStart();
+  await until(() => true, null, 300); id = await runOf('brainstorm');
+  await until(id => window.PM56_COLLAB.run(id).brainstorm.attempts.filter(a => a.status === 'completed').length >= 2, id, 30000);
+  await act('collab-cancel', { run: id }); await sleep(300);
+  const c0 = await ev(id => window.PM56_COLLAB.run(id).brainstorm.attempts.filter(a => a.status === 'completed').length, id);
+  await sleep(3000);
+  const c1 = await ev(id => { const r = window.PM56_COLLAB.run(id), g = [...document.querySelectorAll('.pmx-guide')].filter(n => n.getClientRects().length)[0]; return { st: r.status, n: r.brainstorm.attempts.filter(a => a.status === 'completed').length, buttons: g ? [...g.querySelectorAll('button')].map(b => b.textContent.trim()).filter(Boolean) : [] }; }, id);
+  check('RC BrainStorm: Cancel on the card ends the recording (nothing more arrives) and the guide offers Replay', /^cancel/.test(c1.st) && c1.n === c0 && c1.buttons.includes('Replay'), JSON.stringify({ c0, c1 }));
+  await fast(1);
+
+  /* SA: Show all lists every lane in place and Show fewer folds back; the card never folds. The room's between-round
+     card (Jared's report) folds its lanes under "+N more · Show all"; the Wonderer Crew has five parts. */
+  const lanes = id => ev(id => { const c = document.querySelector('.transcript article.pmx-run[data-run-id="' + id + '"]'); if (!c) return null;
+    const vis = el => !!el && getComputedStyle(el).display !== 'none' && el.getClientRects().length > 0;
+    return { density: c.getAttribute('data-density'), lanes: [...c.querySelectorAll('.pmx-lanes > .pmx-lane')].filter(vis).length, more: [...c.querySelectorAll('.pmx-lanes > .pmx-lanes-more:not(.pmx-lanes-less)')].filter(vis).map(b => b.textContent.trim()), less: [...c.querySelectorAll('.pmx-lanes > .pmx-lanes-less')].filter(vis).length, actions: [...c.querySelectorAll('.pmx-lanes > .pmx-lanes-more')].filter(vis).map(b => b.dataset.action) }; }, id);
+  /* every lane the "+N more" row counts comes into view: what showed plus N (a Wonderer lane rides along on its own) */
+  const showAll = async (name, id) => {
+    const a = await lanes(id), want = a ? a.lanes + (+((/\+(\d+) more/.exec(a.more[0] || '') || [])[1] || 0)) : -1;
+    const shown = await click('.transcript article.pmx-run[data-run-id="' + id + '"] .pmx-lanes > .pmx-lanes-more:not(.pmx-lanes-less):not([style*="none"])');
+    await sleep(500); const b = await lanes(id);
+    await click('.transcript article.pmx-run[data-run-id="' + id + '"] .pmx-lanes > .pmx-lanes-less'); await sleep(500); const c = await lanes(id);
+    check('SA ' + name + ': Show all lists every lane in place, with Show fewer; the card does not fold', !!a && a.more.length === 1 && /Show all/.test(a.more[0]) && shown && b.density === a.density && b.density !== 'collapsed' && b.lanes === want && b.less === 1 && !b.more.length && b.actions.every(x => x === 'collab-show-lanes'), JSON.stringify({ a, b }));
+    check('SA ' + name + ': Show fewer folds the lanes back, and the card stays as it was', !!c && c.density === a.density && c.lanes === a.lanes && c.more.length === 1 && !c.less, JSON.stringify({ a, c }));
+  };
+  await act('room-demo-start', { flow: 'discussion' }); await sleep(900); await sheetStart(); await fast(SCALE);
+  await until(() => true, null, 300); id = await runOf('chat_room');
+  await until(id => { const r = window.PM56_COLLAB.run(id), s = r.chatRoom; return s.roundsSoFar === 2 && window.PM56_ROOM.waitsFor(r) === 'last'; }, id, 60000); await fast(1); await sleep(600);
+  await showAll('Chat Room at the end of its rounds (attention card, Jared’s report)', id);
+  await page.setViewportSize({ width: 480, height: 900 }); await sleep(600);
+  await showAll('Chat Room at the end of its rounds, 480 px', id);
+  await page.setViewportSize({ width: 1440, height: 900 }); await sleep(600);
+  await ev(() => window.PM56_WG_DEMOS.start('crew')); await sleep(1000);
+  await ev(() => { const i = document.querySelector('#pmOverlayRoot [data-collab-input="grillMe"]'); if (i && i.checked) i.click(); }); await sleep(300);
+  await sheetStart(); await fast(SCALE);
+  id = await ev(() => window.PM56_WG_DEMOS.snapshot().runId);
+  await until(id => window.PM56_COLLAB.run(id).crew.assignments.length >= 5 && window.PM56_COLLAB.run(id).status === 'running', id, 60000);
+  await fast(0.05); await sleep(500);
+  await showAll('Crew with five parts (live card)', id);
+  await fast(1);
+
+  /* CV: the chevron. A card that shows its body has one chevron, Collapse (chevron up, expanded); its first click folds
+     the card; the folded card's chevron is Expand, and its first click opens it again. A receipt opens and folds back. */
+  const chev = id => ev(id => { const c = document.querySelector('.transcript [data-run-id="' + id + '"]'); if (!c) return null;
+    const b = [...c.querySelectorAll('[data-action="collab-toggle-expand"]')].filter(x => x.getClientRects().length);
+    return { density: c.getAttribute('data-density') || (c.matches('.pmx-receipt, .pmx-ledger') ? 'receipt' : ''), n: b.length, label: b[0] && b[0].getAttribute('aria-label'), expanded: b[0] && b[0].getAttribute('aria-expanded'), up: !!(b[0] && /chevron-up/.test(b[0].innerHTML)), receipt: !c.matches('article.pmx-run') }; }, id);
+  const press = async id => { await click('.transcript [data-run-id="' + id + '"] [data-action="collab-toggle-expand"]'); await sleep(450); return chev(id); };
+  const folded = x => x.density === 'collapsed' || x.density === 'receipt' || x.receipt;
+  const matches = x => !!x && x.n === 1 && (folded(x) ? x.label === 'Expand' && x.expanded === 'false' && !x.up : x.label === 'Collapse' && x.expanded === 'true' && x.up);
+  const cycle = async (name, id) => {
+    const a = await chev(id), b = await press(id), c = await press(id);
+    const opened = a && folded(a);
+    check('CV ' + name + ': the chevron matches the card, and its first click changes it (' + (a && a.density) + ' → ' + (b && b.density) + ' → ' + (c && c.density) + ')',
+      matches(a) && matches(b) && matches(c) && (opened ? !folded(b) : folded(b)) && c.density === a.density, JSON.stringify({ a, b, c }));
+  };
+  /* a starting card (Jared's report): the BrainStorm recording held at Starting, so the face can be read */
+  await act('brainstorm-demo-start', { flow: 'synthesis' }); await sleep(900); await fast(0.02); await sheetStart(); await sleep(500);
+  id = await runOf('brainstorm');
+  await cycle('BrainStorm, Starting', id);
+  await fast(1);
+  for (const [kind, flow] of [['crew-demo-start', 'delegation'], ['review-demo-start', 'multi']]) {
+    await act(kind, { flow }); await sleep(900); await sheetStart(); await sleep(2600);
+    id = await runOf(kind === 'crew-demo-start' ? 'crew' : 'review');
+    await cycle((kind === 'crew-demo-start' ? 'Crew' : 'Review') + ', live', id);
+  }
+  await act('room-demo-start', { flow: 'plan' }); await sleep(900); await sheetStart(); await fast(SCALE);
+  await until(() => true, null, 300); id = await runOf('chat_room');
+  await until(id => { const r = window.PM56_COLLAB.run(id); return !!r.chatRoom.summary && window.PM56_ROOM.waitsFor(r) === 'last'; }, id, 60000); await fast(1); await sleep(500);
+  await cycle('Chat Room, your move after its last round', id);
+  /* a finished card: the receipt opens with its chevron, then folds back */
+  await act('crew-demo-start', { flow: 'delegation' }); await sleep(900); await sheetStart(); await fast(SCALE);
+  id = await runOf('crew'); await until(id => window.PM56_COLLAB.run(id).status === 'completed', id, 60000); await fast(1); await sleep(600);
+  await ev(() => { const c = window.PM56_EXT.ctx(); c.state.composer = ''; const t = c.state.threads.find(x => x.id === c.state.selectedThread); t.messages.push({ id: 'rx-u-' + Date.now(), role: 'user', type: 'text', body: 'Thanks.' }); c.renderApp(); }); await sleep(700);
+  await cycle('Crew, finished (receipt)', id);
+  /* the Wonderer and Grill Me cards: the round map's toggle says what it shows */
+  await ev(() => window.PM56_WG_DEMOS.start('deepplan')); await until(() => !!document.querySelector('.qs-grill-maptoggle'), null, 15000);
+  const m0 = await ev(() => { const b = document.querySelector('.qs-grill-maptoggle'); return { e: b.getAttribute('aria-expanded'), map: !!document.getElementById('qs-grill-map') }; });
+  await click('.qs-grill-maptoggle'); await sleep(500);
+  const m1 = await ev(() => { const b = document.querySelector('.qs-grill-maptoggle'); return { e: b.getAttribute('aria-expanded'), map: !!document.getElementById('qs-grill-map') }; });
+  await click('.qs-grill-maptoggle'); await sleep(500);
+  const m2 = await ev(() => { const b = document.querySelector('.qs-grill-maptoggle'); return { e: b.getAttribute('aria-expanded'), map: !!document.getElementById('qs-grill-map') }; });
+  check('CV Grill Me round map: its chevron matches what shows, and each click changes it', m0.e === String(m0.map) && m1.e === String(m1.map) && m2.e === String(m2.map) && m1.e !== m0.e && m2.e === m0.e, JSON.stringify({ m0, m1, m2 }));
 }
 /* ------------------------------------------------------------------ concept review, round 1 (2026-10-21)
    Every finding of CONCEPT-REVIEW-ASTRA.md and CONCEPT-REVIEW-OPUS.md, replayed the way the reviewers reproduced it,
@@ -670,13 +1008,15 @@ async function reviewRound1({ page, ev, act, sleep, startSheet, answerAll }) {
   await ev(() => window.PM56_WG_DEMOS.start('room')); await sleep(1400);
   await ev(() => { const i = document.querySelector('#pmOverlayRoot [data-collab-input="grillMe"]'); if (i && i.checked) i.click(); }); await sleep(400); await startSheet(); await sleep(1200);
   const room = await ev(() => window.PM56_WG_DEMOS.snapshot().runId);
-  await act('collab-room-next-round', { run: room }); await fast(4);
-  await until(id => { const c = window.PM56_COLLAB.run(id).chatRoom; return c.roundsSoFar === 1 && (!c.round || c.round.complete); }, room, 60000);
-  await fast(1); await act('wg-toggle-grill', { run: room }); await act('collab-room-next-round', { run: room }); await sleep(800);
+  /* the room opens round 1 by itself (2026-10-21); Grill Me turned on during it questions you at the next boundary */
+  await until(id => { const c = window.PM56_COLLAB.run(id).chatRoom; return !!(c.round && !c.round.complete); }, room, 20000);
+  await act('wg-toggle-grill', { run: room }); await fast(4);
+  await until(id => { const r = window.PM56_COLLAB.run(id); return r.chatRoom.roundsSoFar === 1 && window.PM56_WG.sessionsOf(r).length > 0; }, room, 60000);
+  await fast(1); await sleep(800);
   const rm = await ev(id => { const r = window.PM56_COLLAB.run(id), s = window.PM56_WG.sessionsOf(r)[0]; return { gate: s && s.gate, round2: !!(r.chatRoom.round && r.chatRoom.round.number === 2) }; }, room);
   check('R1-m5c Chat Room: Grill Me turned on mid-run grills you before round 2, and round 2 waits', rm.gate === 'round:2' && !rm.round2, JSON.stringify(rm));
-  await confirmAll(30000); await act('collab-room-next-round', { run: room }); await sleep(600);
-  check('R1-m5d round 2 starts after that Confirm', await ev(id => { const r = window.PM56_COLLAB.run(id); return !!(r.chatRoom.round && r.chatRoom.round.number === 2); }, room));
+  await confirmAll(30000);
+  check('R1-m5d round 2 starts by itself after that Confirm (no click)', await until(id => { const r = window.PM56_COLLAB.run(id); return !!(r.chatRoom.round && r.chatRoom.round.number === 2); }, room, 15000));
 
   /* m10: an ordinary Plan's Question budget "Turn Grill Me on" starts the real grilling on that Plan's thread, over
      the Plan's own counter; its Revise waits for Confirm; Confirm lets it go */
@@ -905,11 +1245,12 @@ async function reviewRound2({ page, ev, act, sleep, startSheet, answerAll }) {
   await ev(() => window.PM56_WG_DEMOS.start('room')); await sleep(1400);
   await ev(() => { const i = document.querySelector('#pmOverlayRoot [data-collab-input="grillMe"]'); if (i && i.checked) i.click(); }); await sleep(400); await startSheet(); await sleep(1200);
   const room = await ev(() => window.PM56_WG_DEMOS.snapshot().runId);
-  await act('collab-room-next-round', { run: room }); await fast(4);
-  await until(id => { const c = window.PM56_COLLAB.run(id).chatRoom; return c.roundsSoFar === 1 && (!c.round || c.round.complete); }, room, 60000);
-  await fast(1); await act('wg-toggle-grill', { run: room });
+  await until(id => { const c = window.PM56_COLLAB.run(id).chatRoom; return !!(c.round && !c.round.complete); }, room, 20000);
+  await act('wg-toggle-grill', { run: room });
   await ev(id => { const b = window.PM56_WG.bankFor('run:' + id); const items = []; for (let i = 1; i <= 25; i++) items.push({ id: 'seed-' + i, prompt: 'Seeded question ' + i }); return b.charge(items); }, room);
-  await act('collab-room-next-round', { run: room }); await sleep(900);
+  await fast(4);
+  await until(id => { const r = window.PM56_COLLAB.run(id); return r.chatRoom.roundsSoFar === 1 && window.PM56_WG.sessionsOf(r).length > 0; }, room, 60000);
+  await fast(1); await sleep(900);
   const f7 = await ev(id => { const r = window.PM56_COLLAB.run(id), s = window.PM56_WG.sessionsOf(r).slice(-1)[0], c = s && window.PM56_WG.grill.counter(s); const t = window.PM56_EXT.ctx().state.threads.find(x => x.id === r.threadId); return { st: s && s.status, ended: s && s.endedBy, counter: c && c.asked + '/' + c.limit, card: !!(s && t.messages.some(m => m.type === 'wg-agreed' && m.sessionId === s.id)), shown: !!document.querySelector('.wg-agreed[data-state="open"]') }; }, room);
   check('R2-7 a session that begins on an exhausted bank (25 of 25) posts its What we agreed card at once', f7.st === 'agreeing' && f7.ended === 'cap' && f7.counter === '25/25' && f7.card && f7.shown, JSON.stringify(f7));
 
