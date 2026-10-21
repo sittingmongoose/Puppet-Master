@@ -1574,6 +1574,10 @@
   function applyRevision(ctx,r,feedback,expected){
     const TX=window.PM56_TX;
     return TX.run(()=>{
+      /* APR-072: a Grill Me interview on this plan holds its next revision until you confirm what you agreed. Checked
+         here, where a revision is admitted, so no route publishes before Confirm: the Revise button, a destination
+         targeted before Grill Me came on, the destination picker, or the API (Astra F2, round 2) */
+      const WGh=window.PM56_WG;if(WGh&&WGh.threadHolds&&WGh.threadHolds(r.thread_id,'revise'))TX.fail('grill_me_waits_for_confirm');
       const stopped=r.revisionStop,stoppedRun=stopped&&P().runs[stopped.plan_run_id];
       const safeStopped=r.status==='building'&&stopped&&stoppedRun?.state==='paused'&&
         stopped.version===r.version&&stopped.hash===hashOf(body(r))&&stopped.epoch===r.runEpoch;
@@ -2385,7 +2389,8 @@
           {id:ctx.uid('plan-revision'),role:'system',type:'plan-revision-receipt',plan_id:r.plan_id,plan_version:r.version,title:'Plan revised',detail:'V'+r.version+' · V'+(r.version-1)+' preserved',time:new Date().toISOString()}));
         window.PM56_TX.set(RT.composer,'destination',null);return result;
       });
-      if(!out.ok)ctx.toast('Revision not admitted',out.error+'. Your instructions remain in the composer. Reopen Revise against the current document.');
+      if(!out.ok&&out.error==='grill_me_waits_for_confirm')ctx.toast('Revise waits for your Confirm','The assistant is grilling you about this plan. Your instructions stay in the composer; send them once you confirm what you agreed.');
+      else if(!out.ok)ctx.toast('Revision not admitted',out.error+'. Your instructions remain in the composer. Reopen Revise against the current document.');
       return {claimed:true,preserveComposer:!out.ok};
     });
   }

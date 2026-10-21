@@ -12,6 +12,8 @@
 .wg-pass-title { display: flex; flex-wrap: wrap; align-items: baseline; column-gap: 8px; row-gap: 2px; min-width: 0; margin: 0; font: var(--pmx-w-reg) 13px/19px var(--font-ui); color: var(--muted); }
 .wg-pass-title > b { color: var(--text); font-weight: var(--pmx-w-640); }
 .wg-fine { display: inline; font: var(--pmx-fs-fine); color: var(--subtle); }
+/* who asked for a pass, and what it was started with, is information since M1: --muted, not the faint token (n-a) */
+.wg-pass-title .wg-fine, .wg-card-foot .wg-fine { color: var(--muted); }
 .wg-pass-say { display: flex; gap: 8px; align-items: flex-start; margin: 8px 0 0; max-width: 72ch; font: var(--pmx-w-reg) 13px/20px var(--pmx-voice); color: var(--text); }
 .wg-pass-say > .nx-st, .wg-pass-say > svg { flex: none; margin-top: 3px; }
 .wg-pass-say q { quotes: '“' '”'; color: var(--text); }
@@ -61,6 +63,10 @@
 .wg-lead-src, .wg-lead-evidence, .wg-lead-taken { display: flex; align-items: flex-start; gap: 6px; min-width: 0; margin: 4px 0 0; font: var(--pmx-fs-fine); color: var(--muted); }
 .wg-lead-src > svg, .wg-lead-evidence > svg, .wg-lead-taken > svg, .wg-lead-src > .nx-i, .wg-lead-evidence > .nx-i, .wg-lead-taken > .nx-i { flex: none; margin-top: 2px; }
 .wg-lead-src > span, .wg-lead-src > a { min-width: 0; overflow-wrap: anywhere; }
+/* the source line, measured on the painted card: Friendly Light's and NieR Dark's --muted fall to 4.3-4.4:1 there, so
+   it takes an ink of 4.8:1 or better in those two looks (Opus N4; ruling 4 of round 2) */
+body[data-theme="friendly-light"] .wg-lead-src { color: #6a5d67; }
+html[data-o55-nier="on"] body[data-theme="basic-dark"] .wg-lead-src { color: #b8b5a1; }
 .wg-lead-src q { quotes: '“' '”'; }
 .wg-src-link, .wg-lead-evidence a { color: var(--muted); text-decoration: none; }
 .wg-src-link:hover, .wg-lead-evidence a:hover { color: var(--text); text-decoration: underline; text-underline-offset: 2px; }
@@ -216,7 +222,9 @@ button.wg-tree-node:focus-visible { outline: 2px solid var(--pmx-focus-outline, 
 .wg-tree-t { grid-column: 2; color: var(--text); font-weight: 600; overflow-wrap: anywhere; }
 .wg-tree-d { grid-column: 2; min-width: 0; overflow-wrap: anywhere; }
 .wg-tree-fine { color: var(--muted); }
-.wg-tree-li[data-state="frontier"] > .wg-tree-node .wg-tree-d { color: var(--accent); font-weight: 600; }
+.wg-tree-li[data-state="frontier"] > .wg-tree-node .wg-tree-d { color: var(--text); font-weight: 600; }
+/* the question the Ask Card is on: its mark alone takes the accent (a graphic, 3:1 is its bar; never the text) */
+.wg-tree-li[data-current="1"] > .wg-tree-node .wg-tree-mark { color: var(--accent); --nx-ink: var(--accent); }
 .wg-tree-li[data-state="waiting"] > .wg-tree-node .wg-tree-t, .wg-tree-li[data-state="next"] > .wg-tree-node .wg-tree-t { font-weight: var(--pmx-w-reg); }
 .wg-tree-li[data-state="settled"] > .wg-tree-node .wg-tree-d { color: var(--text); }
 .wg-tree-li[data-kind="fact"] > .wg-tree-node .wg-tree-t { font-weight: var(--pmx-w-reg); font-style: normal; }

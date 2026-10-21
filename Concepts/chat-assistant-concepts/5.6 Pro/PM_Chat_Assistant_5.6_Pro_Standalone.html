@@ -9002,7 +9002,14 @@ html[data-o55-nier="on"] .qs-ask-mark::after{ animation-timing-function:steps(3,
 .qs-grill-kettle > svg, .qs-grill-kettle > .nx-i{ --nx-ink:var(--text); }
 .qs-grill-who{ display:flex; flex-direction:column; gap:1px; min-width:0; flex:1 1 auto; }
 .qs-grill-who > b{ font-size:12.5px; font-weight:620; line-height:17px; color:var(--text); }
-.qs-grill-meta{ font-size:11.5px; font-weight:450; line-height:16px; color:var(--muted); font-variant-numeric:tabular-nums; }
+/* the round bar sits on the card's header light (a radial accent tint): its fine print takes an ink measured against
+   the painted tint, 4.8:1 or better (Astra F4, Opus N4; ruling 4 of round 2). Dark looks and Retro Light keep --muted;
+   NieR Light also sets basic-light on body, so it is excluded */
+.qs-grill-bar{ --qs-grill-ink:var(--muted); }
+html:not([data-o55-nier="on"]) body[data-theme="basic-light"] .qs-grill-bar{ --qs-grill-ink:#5f5f67; }
+body[data-theme="glass-light"] .qs-grill-bar{ --qs-grill-ink:#645c7a; }
+body[data-theme="friendly-light"] .qs-grill-bar{ --qs-grill-ink:#655862; }
+.qs-grill-meta{ font-size:11.5px; font-weight:450; line-height:16px; color:var(--qs-grill-ink); font-variant-numeric:tabular-nums; }
 .qs-rec{ display:inline-flex; align-items:center; gap:4px; color:var(--accent); font-weight:600; white-space:nowrap; }
 .qs-rec > svg, .qs-rec > .nx-i{ flex:none; }
 .qs-rec-sep{ color:var(--muted); }
@@ -9015,10 +9022,10 @@ html[data-o55-nier="on"] .qs-ask-mark::after{ animation-timing-function:steps(3,
   font-size:12px; line-height:17px; color:var(--muted);
 }
 /* the map's one-line tally in the round bar: settled, asking now, looking it up, waits */
-.qs-grill-tally{ display:flex; flex-wrap:wrap; gap:2px 12px; margin:2px 0 1px; font-size:11.5px; line-height:16px; color:var(--muted); }
+.qs-grill-tally{ display:flex; flex-wrap:wrap; gap:2px 12px; margin:2px 0 1px; font-size:11.5px; line-height:16px; color:var(--qs-grill-ink); }
 .qs-grill-tally .wg-tree-tally-i{ display:inline-flex; align-items:center; gap:4px; white-space:nowrap; }
 /* the safety copy sits in the round bar (m7); muted, never the faint fine print (m8) */
-.qs-grill-note{ font-size:11.5px; line-height:16px; color:var(--muted); }
+.qs-grill-note{ font-size:11.5px; line-height:16px; color:var(--qs-grill-ink); }
 /* the frontier map: a quiet toggle at the end of the bar, the map under it (a concept design choice, 2026-10-21) */
 .qs-grill-maptoggle{ flex:none; align-self:flex-start; display:inline-flex; align-items:center; gap:4px; min-height:28px; padding:0 6px; color:var(--muted); font-size:12px; font-weight:600; border-radius:6px; }
 .qs-grill-maptoggle:hover{ color:var(--text); background:transparent; }
@@ -9033,10 +9040,21 @@ html[data-o55-nier="on"] .qs-ask-mark::after{ animation-timing-function:steps(3,
   background:var(--qs-accept-fill, var(--surface-3)); box-shadow:inset 0 0 0 1px var(--qs-accept-edge, var(--border-strong));
 }
 .qs-ask-foot .qs-action.soft-button[data-action="qs-accept-round"]:hover{ color:var(--text); background:var(--qs-accept-fill, var(--surface-3)); box-shadow:inset 0 0 0 1px var(--accent); }
+/* phone width (Opus N2): the safety note stays, the tally goes (the Map toggle carries it), and the soft-primary says
+   "Accept all", so the foot keeps one row and the question its room */
 @container (max-width: 460px){
   .qs-grill-foot > .qs-ask-count{ display:none; }
   .qs-grill-foot > [data-action="qs-wrap-up"]{ margin-right:auto; }
-  .qs-grill-note{ display:none; }
+  .qs-grill-tally{ display:none; }
+  .qs-accept-more{ display:none; }
+  /* five controls in one row at 400 px: a 4 px gap and slimmer side padding (their height, the tap target, stays) */
+  .qs-ask-foot.qs-grill-foot{ column-gap:4px; }
+  .qs-grill-foot > .text-button{ padding-left:6px; padding-right:6px; }
+  .qs-grill-foot > [data-action="qs-wrap-up"]{ padding-left:0; }
+  .qs-ask-foot.qs-grill-foot > .qs-action[data-action="prev-question"]{ padding-left:6px; padding-right:6px; }
+  .qs-ask-foot .qs-action.soft-button[data-action="qs-accept-round"] > svg, .qs-ask-foot .qs-action.soft-button[data-action="qs-accept-round"] > .nx-i{ display:none; }
+  .qs-ask-foot .qs-action.soft-button[data-action="qs-accept-round"]{ padding-left:10px; padding-right:10px; }
+  .qs-grill-foot > .primary-button{ padding-left:12px; padding-right:12px; }
 }
 /* NieR (M5): on the chosen answer, an ink bar with paper text, the Recommended mark and its separator take the
    chosen label's paper ink; elsewhere they keep the ink */
@@ -9376,6 +9394,8 @@ body[data-theme^="retro"] .pmx-sheet{--pmx-hero-side-full:330px;}
 .pmx-sheet .pmx-ctl-control{min-width:0;}
 .pmx-sheet .pmx-ctl[data-state="disabled"] .pmx-ctl-control{opacity:.5;pointer-events:none;}
 body[data-theme^="retro"] .pmx-sheet :is(.pmx-ctl-copy, .pmx-spec-copy) .pmx-help{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+/* a shelf helper is a whole sentence in Retro too: it wraps, never "Never…" (Opus N3; scheduling.css does the same) */
+body[data-theme^="retro"] .pmx-sheet .pmx-spec-copy .pmx-help{white-space:normal;overflow:visible;text-overflow:clip;}
 
 /* ================================================================ A5/A6 roster */
 /* J-2: the last column holds two 28 px row actions 10 px apart; the model and persona triggers keep 10 px */
@@ -9491,8 +9511,10 @@ html[data-o55-nier="on"] .pmx-sheet .pmx-shelf > .pmx-q-head + .pmx-help + .pmx-
   .pmx-sheet .pmx-spec .pmx-add[data-switch="1"] > .pmx-add-word{display:none;}
   .pmx-sheet .pmx-spec .pmx-add[data-switch="1"] > .pmx-add-short{display:inline;}
   .pmx-sheet .pmx-spec .pmx-add[data-switch="1"]{padding:0 6px;}
-  /* a phone-width row: the name keeps its own line (never crushed by the picker, "Grill Me" never wraps under its
-     mark), the control goes under it, then the helper (m6) */
+}
+@media (max-width: 519.98px){
+  /* a narrow row (up to 519 px, Opus N3): the name keeps its own line (never crushed by the picker, "Grill Me" never
+     wraps under its mark), the control goes under it, then the helper (m6) */
   .pmx-sheet .pmx-spec{grid-template-rows:auto auto auto;}
   .pmx-sheet .pmx-spec-copy > b{white-space:nowrap;}
   .pmx-sheet .pmx-spec-control{grid-column:2 / -1;grid-row:2;margin:6px 0 0;justify-content:space-between;}
@@ -16813,6 +16835,8 @@ body.pm56-reduced .pmx-view.room-discussion :is(.pmx-rv-msg[data-arrive], .pmx-r
 .wg-pass-title { display: flex; flex-wrap: wrap; align-items: baseline; column-gap: 8px; row-gap: 2px; min-width: 0; margin: 0; font: var(--pmx-w-reg) 13px/19px var(--font-ui); color: var(--muted); }
 .wg-pass-title > b { color: var(--text); font-weight: var(--pmx-w-640); }
 .wg-fine { display: inline; font: var(--pmx-fs-fine); color: var(--subtle); }
+/* who asked for a pass, and what it was started with, is information since M1: --muted, not the faint token (n-a) */
+.wg-pass-title .wg-fine, .wg-card-foot .wg-fine { color: var(--muted); }
 .wg-pass-say { display: flex; gap: 8px; align-items: flex-start; margin: 8px 0 0; max-width: 72ch; font: var(--pmx-w-reg) 13px/20px var(--pmx-voice); color: var(--text); }
 .wg-pass-say > .nx-st, .wg-pass-say > svg { flex: none; margin-top: 3px; }
 .wg-pass-say q { quotes: '“' '”'; color: var(--text); }
@@ -16862,6 +16886,10 @@ body.pm56-reduced .pmx-view.room-discussion :is(.pmx-rv-msg[data-arrive], .pmx-r
 .wg-lead-src, .wg-lead-evidence, .wg-lead-taken { display: flex; align-items: flex-start; gap: 6px; min-width: 0; margin: 4px 0 0; font: var(--pmx-fs-fine); color: var(--muted); }
 .wg-lead-src > svg, .wg-lead-evidence > svg, .wg-lead-taken > svg, .wg-lead-src > .nx-i, .wg-lead-evidence > .nx-i, .wg-lead-taken > .nx-i { flex: none; margin-top: 2px; }
 .wg-lead-src > span, .wg-lead-src > a { min-width: 0; overflow-wrap: anywhere; }
+/* the source line, measured on the painted card: Friendly Light's and NieR Dark's --muted fall to 4.3-4.4:1 there, so
+   it takes an ink of 4.8:1 or better in those two looks (Opus N4; ruling 4 of round 2) */
+body[data-theme="friendly-light"] .wg-lead-src { color: #6a5d67; }
+html[data-o55-nier="on"] body[data-theme="basic-dark"] .wg-lead-src { color: #b8b5a1; }
 .wg-lead-src q { quotes: '“' '”'; }
 .wg-src-link, .wg-lead-evidence a { color: var(--muted); text-decoration: none; }
 .wg-src-link:hover, .wg-lead-evidence a:hover { color: var(--text); text-decoration: underline; text-underline-offset: 2px; }
@@ -17017,7 +17045,9 @@ button.wg-tree-node:focus-visible { outline: 2px solid var(--pmx-focus-outline, 
 .wg-tree-t { grid-column: 2; color: var(--text); font-weight: 600; overflow-wrap: anywhere; }
 .wg-tree-d { grid-column: 2; min-width: 0; overflow-wrap: anywhere; }
 .wg-tree-fine { color: var(--muted); }
-.wg-tree-li[data-state="frontier"] > .wg-tree-node .wg-tree-d { color: var(--accent); font-weight: 600; }
+.wg-tree-li[data-state="frontier"] > .wg-tree-node .wg-tree-d { color: var(--text); font-weight: 600; }
+/* the question the Ask Card is on: its mark alone takes the accent (a graphic, 3:1 is its bar; never the text) */
+.wg-tree-li[data-current="1"] > .wg-tree-node .wg-tree-mark { color: var(--accent); --nx-ink: var(--accent); }
 .wg-tree-li[data-state="waiting"] > .wg-tree-node .wg-tree-t, .wg-tree-li[data-state="next"] > .wg-tree-node .wg-tree-t { font-weight: var(--pmx-w-reg); }
 .wg-tree-li[data-state="settled"] > .wg-tree-node .wg-tree-d { color: var(--text); }
 .wg-tree-li[data-kind="fact"] > .wg-tree-node .wg-tree-t { font-weight: var(--pmx-w-reg); font-style: normal; }
@@ -35921,12 +35951,19 @@ window.PM56_NIER_FACES = [
      leaves through PM56_WG.grillAnswered, never the stock receipt */
   function grillOf(flow) { return flow && flow.grill ? flow.grill : null; }
   /* Accept all says what it does (m3): every recommendation while you have touched nothing, "the rest" once you have,
-     and "send" when every answer is yours */
+     and "send" when every answer is yours. A revisited question shows the answer you submitted before, so it counts as
+     yours too, never as a recommendation to accept (Astra F6, round 2) */
   function acceptLabel(qs, short) {
-    var touched = qs.filter(function (q) { return q.touched; }).length;
+    var touched = qs.filter(function (q) { return q.touched || q.revisit; }).length;
     if (!touched) return qs.length === 1 ? 'Accept it' : (short ? 'Accept all ' + qs.length : 'Accept all ' + qs.length + ' recommended');
     if (touched >= qs.length) return qs.length === 1 ? 'Send it' : 'Send all ' + qs.length + ' answers';
     return 'Accept the rest';
+  }
+  /* the same words with their tail in a span the narrow card drops ("Accept all", "Send all"), so the foot fits one
+     row at phone width (Opus N2) */
+  function acceptLabelHtml(ctx, qs) {
+    var l = acceptLabel(qs, false), m = /^((?:Accept|Send) all)( .+)$/.exec(l);
+    return m ? ctx.esc(m[1]) + '<span class="qs-accept-more">' + ctx.esc(m[2]) + '</span>' : ctx.esc(l);
   }
   function hintHtml(ctx, o) {
     var rec = o.rec ? '<span class="qs-rec">' + iconOf(ctx, 'check', 11) + 'Recommended</span>' : '';
@@ -36299,7 +36336,8 @@ window.PM56_NIER_FACES = [
     var data = '';
     if (a.data) for (var k in a.data) if (Object.prototype.hasOwnProperty.call(a.data, k)) data += ' data-' + k + '="' + ctx.esc(a.data[k]) + '"';
     var g = a.icon ? iconOf(ctx, a.icon, 12) : '';
-    var body = a.after ? ctx.esc(a.label) + ' ' + g : (g ? g + ' ' + ctx.esc(a.label) : ctx.esc(a.label));
+    var lbl = a.labelHtml || ctx.esc(a.label);
+    var body = a.after ? lbl + ' ' + g : (g ? g + ' ' + lbl : lbl);
     /* An icon-only button still has to say what it is: take 1 renders Back as a
        glyph, and an unnamed control is an accessibility defect, not a style. */
     var named = a.label ? '' : ' aria-label="' + ctx.esc(a.aria || a.a) + '" title="' + ctx.esc(a.aria || a.a) + '"';
@@ -36930,7 +36968,7 @@ window.PM56_NIER_FACES = [
        Next at the end; the count stays left of Back */
     var gfoot = '';
     if (g) {
-      var accept = { a: 'qs-accept-round', label: acceptLabel(qs, false), kind: 'soft', icon: 'check' };
+      var accept = { a: 'qs-accept-round', label: acceptLabel(qs, false), labelHtml: acceptLabelHtml(ctx, qs), kind: 'soft', icon: 'check' };
       gfoot = '<div class="qs-ask-foot qs-grill-foot" data-k="qs-ask-foot">'
         + actionBtn(ctx, { a: 'qs-wrap-up', label: 'Wrap up', kind: 'text' })
         + '<span class="qs-ask-count" data-k="qs-ask-n:' + idx + '">' + (idx + 1) + ' of ' + qs.length + '</span>'
@@ -46799,6 +46837,10 @@ AT.sha256=sha256;AT.snapshotLimits=Object.freeze({fileBytes:MAX_FILE,totalBytes:
   function applyRevision(ctx,r,feedback,expected){
     const TX=window.PM56_TX;
     return TX.run(()=>{
+      /* APR-072: a Grill Me interview on this plan holds its next revision until you confirm what you agreed. Checked
+         here, where a revision is admitted, so no route publishes before Confirm: the Revise button, a destination
+         targeted before Grill Me came on, the destination picker, or the API (Astra F2, round 2) */
+      const WGh=window.PM56_WG;if(WGh&&WGh.threadHolds&&WGh.threadHolds(r.thread_id,'revise'))TX.fail('grill_me_waits_for_confirm');
       const stopped=r.revisionStop,stoppedRun=stopped&&P().runs[stopped.plan_run_id];
       const safeStopped=r.status==='building'&&stopped&&stoppedRun?.state==='paused'&&
         stopped.version===r.version&&stopped.hash===hashOf(body(r))&&stopped.epoch===r.runEpoch;
@@ -47610,7 +47652,8 @@ AT.sha256=sha256;AT.snapshotLimits=Object.freeze({fileBytes:MAX_FILE,totalBytes:
           {id:ctx.uid('plan-revision'),role:'system',type:'plan-revision-receipt',plan_id:r.plan_id,plan_version:r.version,title:'Plan revised',detail:'V'+r.version+' · V'+(r.version-1)+' preserved',time:new Date().toISOString()}));
         window.PM56_TX.set(RT.composer,'destination',null);return result;
       });
-      if(!out.ok)ctx.toast('Revision not admitted',out.error+'. Your instructions remain in the composer. Reopen Revise against the current document.');
+      if(!out.ok&&out.error==='grill_me_waits_for_confirm')ctx.toast('Revise waits for your Confirm','The assistant is grilling you about this plan. Your instructions stay in the composer; send them once you confirm what you agreed.');
+      else if(!out.ok)ctx.toast('Revision not admitted',out.error+'. Your instructions remain in the composer. Reopen Revise against the current document.');
       return {claimed:true,preserveComposer:!out.ok};
     });
   }
@@ -49620,6 +49663,13 @@ AT.sha256=sha256;AT.snapshotLimits=Object.freeze({fileBytes:MAX_FILE,totalBytes:
   function ready(s, n) { return (n.dependsOn || []).every(function (d) { return settled(node(s, d)); }); }
   function openRound(s) { var r = s.rounds[s.rounds.length - 1]; return r && r.status === 'open' ? r : null; }
   function charged(s, n) { var b = bankOf(s); return !!n.charged || !!(b && b.has(n.id)); }
+  /* KEPT: a decision you answered keeps that submitted answer and its provenance (n.kept) while Keep going or Ask
+     again reopens it for a revisit. A revisit you leave untouched withdraws nothing: Wrap up, the limit, Grill Me
+     turned off or a natural end give it back as answered. Only a new answer you give, or Not sure, replaces it
+     (Astra F1 = Opus N1, ruling 1 of round 2; ACD-503 "Keep going recomputes its frontier with the existing answers") */
+  function keep(n) { if (n.state === 'answered' && n.answer != null) n.kept = { answer: n.answer, took: n.took }; n.prev = n.state === 'answered' ? n.answer : null; }
+  function restore(n) { if (!n.kept) return false; n.state = 'answered'; n.answer = n.kept.answer; n.took = n.kept.took; n.openReason = null; n.notSure = false; n.kept = null; return true; }
+  function settle(n, v) { n.answer = v; n.state = 'answered'; n.took = v === n.recommended ? 'recommended' : 'own'; n.openReason = null; n.kept = null; }
 
   /* create({by, subject, tree, cap, bank, gate, gateLabel}) - by: coordinator | moderator | assistant (never a Grill Me
      participant); bank: the run's or thread's one counter (else a private one of size cap); gate: the step that waits
@@ -49690,7 +49740,9 @@ AT.sha256=sha256;AT.snapshotLimits=Object.freeze({fileBytes:MAX_FILE,totalBytes:
      answer stays open ("not answered"); a ready one never asked stays open ("not asked") */
   function end(s, why) {
     var r = openRound(s);
-    if (r) { r.ids.forEach(function (id) { var n = node(s, id); if (n.state === 'asked' && n.answer == null) { n.state = 'open'; n.openReason = n.notSure ? 'not_sure' : why === 'switched_off' ? 'off_unanswered' : 'wrapped_unanswered'; } }); r.status = 'answered'; }
+    if (r) { r.ids.forEach(function (id) { var n = node(s, id); if (n.state === 'asked' && n.answer == null) { if (!n.notSure && restore(n)) return; n.state = 'open'; n.openReason = n.notSure ? 'not_sure' : why === 'switched_off' ? 'off_unanswered' : 'wrapped_unanswered'; } }); r.status = 'answered'; }
+    /* a revisited decision still waiting behind the round (or never re-asked) keeps the answer you submitted */
+    s.tree.forEach(function (n) { if (n.kind === 'decision' && n.state === 'pending') restore(n); });
     if (why === 'cap') s.tree.forEach(function (n) { if (n.kind === 'decision' && n.state === 'pending' && ready(s, n)) { n.state = 'open'; n.openReason = 'cap'; } });
     s.status = 'agreeing'; s.endedBy = why;
     s.log.push({ kind: 'ended', why: why });
@@ -49718,8 +49770,8 @@ AT.sha256=sha256;AT.snapshotLimits=Object.freeze({fileBytes:MAX_FILE,totalBytes:
     var r = openRound(s); if (!r) return fail('no_open_round');
     r.ids.forEach(function (id) {
       var n = node(s, id);
-      if (n.answer != null) { n.state = 'answered'; n.took = n.answer === n.recommended ? 'recommended' : 'own'; n.openReason = null; }
-      else { n.state = 'open'; n.openReason = 'not_sure'; }
+      if (n.answer != null) settle(n, n.answer);
+      else { n.state = 'open'; n.openReason = 'not_sure'; n.kept = null; }
     });
     r.status = 'answered';
     s.log.push({ kind: 'answered', n: r.n });
@@ -49731,9 +49783,9 @@ AT.sha256=sha256;AT.snapshotLimits=Object.freeze({fileBytes:MAX_FILE,totalBytes:
   function wrapUp(s, why) {
     if (s.status !== 'grilling') return fail('session_not_grilling');
     var r = openRound(s);
-    if (r) r.ids.forEach(function (id) { var n = node(s, id); if (n.answer != null) { n.state = 'answered'; n.took = n.answer === n.recommended ? 'recommended' : 'own'; } });
+    if (r) r.ids.forEach(function (id) { var n = node(s, id); if (n.answer != null) settle(n, n.answer); });
     var off = why === 'switched_off';
-    s.tree.forEach(function (n) { if (n.kind === 'decision' && n.state === 'pending') { n.state = 'open'; n.openReason = off ? 'off_unasked' : 'wrapped_up'; } });
+    s.tree.forEach(function (n) { if (n.kind === 'decision' && n.state === 'pending' && !restore(n)) { n.state = 'open'; n.openReason = off ? 'off_unasked' : 'wrapped_up'; } });
     return end(s, off ? 'switched_off' : 'wrap_up');
   }
   /* Grill Me turned off while a session is open: it ends like Wrap up, with the open items listed */
@@ -49790,7 +49842,10 @@ AT.sha256=sha256;AT.snapshotLimits=Object.freeze({fileBytes:MAX_FILE,totalBytes:
     if (revisit) back = s.tree.filter(function (n) { return n.kind === 'decision' && n.state === 'answered'; });
     if (!back.length) return fail(c.left <= 0 ? 'question_limit_reached' : 'nothing_to_keep_going_from');
     s.status = 'grilling'; s.endedBy = null; s.keepGoing++;
-    back.forEach(function (n) { n.prev = n.answer; n.state = 'pending'; n.openReason = null; n.notSure = false; });
+    back.forEach(function (n) { keep(n); n.state = 'pending'; n.openReason = null; n.notSure = false; });
+    /* the frontier is recomputed with the existing answers (ACD-503): a decision never asked because you wrapped up
+       first, the limit came or Grill Me went off comes back too, and is asked once what it hangs off is settled */
+    if (!revisit) open.forEach(function (n) { if (back.indexOf(n) < 0 && /^(wrapped_up|off_unasked|cap)$/.test(n.openReason || '') && (charged(s, n) || c.left > 0)) { n.state = 'pending'; n.openReason = null; } });
     s.log.push({ kind: 'keep_going', revisit: revisit, ids: back.map(function (n) { return n.id; }) });
     return next(s);
   }
@@ -49802,7 +49857,7 @@ AT.sha256=sha256;AT.snapshotLimits=Object.freeze({fileBytes:MAX_FILE,totalBytes:
     if (!ready(s, n)) return fail('waits_on_another_decision');
     if (!charged(s, n) && counter(s).left <= 0) return fail('question_budget_exhausted');
     s.status = 'grilling'; s.endedBy = null; s.keepGoing++;
-    n.prev = n.answer; n.state = 'pending'; n.openReason = null; n.notSure = false;
+    keep(n); n.state = 'pending'; n.openReason = null; n.notSure = false;
     s.log.push({ kind: 'reopen', id: id });
     return next(s);
   }
@@ -52843,7 +52898,9 @@ AT.sha256=sha256;AT.snapshotLimits=Object.freeze({fileBytes:MAX_FILE,totalBytes:
     var who = d.kind === 'chat_room' ? 'The Moderator' : 'The Coordinator', when = d.kind === 'crew' ? 'before the split' : d.kind === 'chat_room' ? 'before round 1' : 'before anyone drafts';
     function item(key, name, helper, role) {
       var on = !!d[key];
-      var state = reason ? 'disabled' : (rec && !on) ? 'disabled' : on ? 'on' : 'off';
+      /* a recording that plays with the item on or off (d.recordedSpecialists: the DL-218 Crew, Chat Room and
+         BrainStorm recordings) keeps an editable switch, so turning it off can be undone (Astra F5) */
+      var state = reason ? 'disabled' : (rec && !on && !d.recordedSpecialists) ? 'disabled' : on ? 'on' : 'off';
       /* the helper is one line in the shelf; its whole sentence rides in the app hover card */
       var it = { key: 'pmx-spec-' + key, name: name, helper: '<span id="pmx-spec-help-' + key + '" data-hover-key="collab-spec-help:' + key + '" data-hover-tip="' + esc(helper) + '">' + esc(helper) + '</span>', state: state, reason: reason || (rec ? 'This recorded example uses its own team.' : ''),
         affects: (key === 'wonderer' ? 'wonderer' : 'grill') + ' specialists',
@@ -53622,6 +53679,8 @@ AT.sha256=sha256;AT.snapshotLimits=Object.freeze({fileBytes:MAX_FILE,totalBytes:
       if (key) {
         var sel = '[data-collab-input="' + key + '"]' + (row ? '[data-row="' + row + '"]' : '');
         var again = document.querySelector('#pmOverlayRoot ' + sel);
+        /* the control left with the change (a refusal replaced it): its shelf item takes the focus, never the page */
+        if (!again && (key === 'wonderer' || key === 'grillMe')) { again = document.querySelector('#pmOverlayRoot [data-k="pmx-spec-' + key + '"]'); if (again) again.setAttribute('tabindex', '-1'); }
         if (again && again.focus && document.activeElement !== again) { try { again.focus({ preventScroll: true }); } catch (err) { } }
       }
     }
@@ -65433,7 +65492,8 @@ root.PM56_SCHEDULE_TIME=api;if(typeof module!=='undefined')module.exports=api;
   if(r.crew.assignments.filter(t=>t.status==='running').length+wSlot>=r.crew.effectiveConcurrency)return fail('concurrency_full');
   /* Grill Me turned on mid-run starts at the next assignment boundary: this part, about to start (CWR-042, R4/m5);
      the parts already running keep going, and only this part waits for that session's Confirm */
-  if(WGc&&WGc.takeMidRun(r)){WGc.beginMidRun(r,'part:'+assignmentId,'the '+String(a.title||'next').replace(/\.$/,'').toLowerCase()+' part');return fail('grill_me_waits_for_confirm');}
+  /* the part's own title, only its first letter lowercased ("the verify CSV quoting part", n-c) */
+  if(WGc&&WGc.takeMidRun(r)){const t=String(a.title||'Next').replace(/\.$/,'');WGc.beginMidRun(r,'part:'+assignmentId,'the '+t.charAt(0).toLowerCase()+t.slice(1)+' part');return fail('grill_me_waits_for_confirm');}
   if(a.leadId){
    const q=r.participants.find(p=>p.id===a.participantId);if(!q||q.additiveRoleKind==='wonderer'||['failed','timed_out','unavailable','canceled'].includes(q.outcome))return fail('participant_unavailable');
    const attempt={id:'crew-explore-'+r.id+'-'+a.id,assignmentRevision:q.assignmentRevision,participantId:q.id};
@@ -69111,7 +69171,7 @@ const E=window.PM56_EXT,F=window.PM56_FEATURES,T=window.PM56_TEACH,S=window.PM56
     const input=BD.fixture(flow==='dissent'?'constraint':'synthesis'),grill=flow==='leads';
     t.messages=[{id:tid+'-request',role:'user',type:'text',body:input.objective+(grill?' Ask me what you need to know first.':' Collection contents must stay on the device.')}];
     C.openConfigure('brainstorm');const d=C.draft();
-    d.name=flows[flow].title;d.purpose=input.objective;d.brainstormInput=input;d.wonderer=true;d.grillMe=grill;
+    d.name=flows[flow].title;d.purpose=input.objective;d.brainstormInput=input;d.wonderer=true;d.grillMe=grill;d.recordedSpecialists=true;
     /* this recording follows the Wonderer's leads: removing it stops Start with a stated reason (R6) */
     d.recordingNeeds={wonderer:true};
     // IMPACT A1-01: a recorded draft is flagged; its rules are copied into the user field as prefill only
@@ -73673,6 +73733,9 @@ window.PM56_B19DEMO={start:flow=>start(E.ctx(),flow),snapshot:()=>{const r=curre
     if (r) syncPending(r);
     if (res.opened) { openRound(key, { auto: true }); if (HOOKS[key].onRound) HOOKS[key].onRound(res.opened); }
     else if (res.waiting) postLookup(key);
+    /* a session that begins on an exhausted bank (or with nothing to ask) ends at once: its What we agreed is posted
+       now, like every other ending (ACD-503: the safety cap shows that session's agreement; Astra F7) */
+    else if (res.ended) postAgreed(key);
     return { ok: true, session: s };
   }
   /* the session is looking things up: one line in the chat, kept in place until research finds them (steer 2026-10-20) */
@@ -73791,6 +73854,9 @@ window.PM56_B19DEMO={start:flow=>start(E.ctx(),flow),snapshot:()=>{const r=curre
     nodes.forEach(function (n) { var p = n.dependsOn.filter(function (d) { return byId[d]; })[0]; if (p) kids[p].push(n); else roots.push(n); });
     var lc = function (t) { return String(t).charAt(0).toLowerCase() + String(t).slice(1); };
     var count = {}; nodes.forEach(function (n) { count[n.state] = (count[n.state] || 0) + 1; });
+    /* in the Ask Card the question on screen is "you are here": the accent is its mark's alone; every other frontier
+       row reads in text ink with the your-move mark (ruling 4 / D1 of round 2) */
+    var cq = o.where === 'ask' ? (function () { var st = ctx().state, q = (st.questions || [])[st.questionIndex || 0]; return q && q.grillNode; })() : null;
     function line(n) {
       var also = n.dependsOn.slice(1).map(function (d) { return byId[d]; }).filter(Boolean);
       var detail = n.state === 'settled' ? esc(n.answer) + (n.took === 'recommended' ? '<span class="wg-tree-fine"> · recommended</span>' : '<span class="wg-tree-fine"> · your answer</span>')
@@ -73806,7 +73872,7 @@ window.PM56_B19DEMO={start:flow=>start(E.ctx(),flow),snapshot:()=>{const r=curre
       var body = n.state === 'frontier' && o.jump && qIndex[n.id] != null
         ? '<button type="button" class="wg-tree-node" data-action="qs-goto-question" data-index="' + qIndex[n.id] + '" aria-label="' + esc('Go to the question: ' + n.title) + '">' + mark + label + '</button>'
         : '<span class="wg-tree-node">' + mark + label + '</span>';
-      return '<li class="wg-tree-li" data-state="' + n.state + '" data-kind="' + n.kind + '" role="treeitem" aria-label="' + esc(n.title + ': ' + TREE_STATE[n.state]) + '"' + (kids[n.id].length ? ' aria-expanded="true"' : '') + '>' + body +
+      return '<li class="wg-tree-li" data-state="' + n.state + '" data-kind="' + n.kind + '"' + (cq && n.id === cq && n.state === 'frontier' ? ' data-current="1" aria-current="step"' : '') + ' role="treeitem" aria-label="' + esc(n.title + ': ' + TREE_STATE[n.state]) + '"' + (kids[n.id].length ? ' aria-expanded="true"' : '') + '>' + body +
         (kids[n.id].length ? '<ol class="wg-tree-kids" role="group">' + kids[n.id].map(line).join('') + '</ol>' : '') + '</li>';
     }
     var tally = tallyOf(count);
@@ -74019,15 +74085,25 @@ window.PM56_B19DEMO={start:flow=>start(E.ctx(),flow),snapshot:()=>{const r=curre
     var hadPending = !!r.grillPending; r.grillPending = false;
     var s = activeSession(r);
     if (s && s.status === 'grilling') {
-      var c = ctx(), fid = c.state.wgGrill && c.state.wgGrill.key === 'run:' + r.id && c.state.wgGrill.flow, flow = fid && D().questionFlows.filter(function (f) { return f.id === fid; })[0];
-      if (flow && GE.round(s) && flow.grill.round === GE.round(s).n) {
-        /* the round in the Ask Card closes like Wrap up: only the answers you gave count */
-        (c.state.questions || []).forEach(function (q) { if (!q.grillNode) return; var own = String(q.other || '').trim(), v = q.notSure ? null : own || q.answer; if (q.notSure) GE.answer(s, q.grillNode, null); else if ((q.touched || own) && v) GE.answer(s, q.grillNode, v); });
-        flow.state = 'completed'; c.state.wgGrill = null; c.state.decision = null;
-      }
-      GE.switchOff(s); syncPending(r); postAgreed('run:' + r.id);
+      switchOffSession('run:' + r.id, s);
       C().appendMessage(r.id, { senderKind: 'system', senderName: 'System', messageType: 'message', body: 'Grill Me is off. The ' + leadName(r) + ' stops questioning you; what you agreed so far, and what was left open, waits for your Confirm.' });
     } else if (was && hadPending) C().appendMessage(r.id, { senderKind: 'system', senderName: 'System', messageType: 'message', body: 'Grill Me is off again before the ' + leadName(r) + ' asked anything. Nothing waits for it.' });
+    return { ok: true };
+  }
+  /* Grill Me turned off while a session questions you, for a run or a Plan's thread alike (CWR-042, ACD-503; Astra F3):
+     the round in the Ask Card closes like Wrap up (the answers you picked count, Not sure stays Not sure, an untouched
+     draft is no answer), the Ask Card and its binding go, and one current What we agreed waits for your Confirm */
+  function switchOffSession(key, s) {
+    var c = ctx(), bound = c.state.wgGrill && c.state.wgGrill.key === key ? c.state.wgGrill : null;
+    var flow = bound && D().questionFlows.filter(function (f) { return f.id === bound.flow; })[0], rd = GE.round(s);
+    if (flow && rd && flow.grill.round === rd.n) {
+      (c.state.questions || []).forEach(function (q) { if (!q.grillNode) return; var own = String(q.other || '').trim(), v = q.notSure ? null : own || q.answer; if (q.notSure) GE.answer(s, q.grillNode, null); else if ((q.touched || own) && v) GE.answer(s, q.grillNode, v); });
+    }
+    if (flow) flow.state = 'completed';
+    if (bound) { c.state.wgGrill = null; if (c.state.decision && c.state.decision.type === 'question') c.state.decision = null; c.state.questions = []; }
+    GE.switchOff(s);
+    if (key.indexOf('run:') === 0) syncPending(run(key.slice(4)));
+    postAgreed(key);
     return { ok: true };
   }
   function requestMidRunGrill(r) { return setGrill(r, true); }
@@ -74039,7 +74115,9 @@ window.PM56_B19DEMO={start:flow=>start(E.ctx(),flow),snapshot:()=>{const r=curre
     chat_room: [{ id: 'd-next-round', title: 'The next round', prompt: 'Keep the next round on the question as you asked it?', why: 'Only the next round waits for your answer.', options: [{ label: 'Yes, keep it on the question' }, { label: 'Widen it to the follow-ups' }], recommended: 'Yes, keep it on the question' }],
     brainstorm: [{ id: 'd-next-step', title: 'The vote', prompt: 'Let the team vote on the options as they stand?', why: 'Only the vote waits for your answer; the debate goes on.', options: [{ label: 'Yes, vote on them as they stand' }, { label: 'Add an option first' }], recommended: 'Yes, vote on them as they stand' }]
   };
-  function setMidRunFixture(r, tree) { if (r) MIDRUN[r.id] = copy(tree); }
+  /* a recording's fixture is a tree, or a function of the step it gates (gate, run) -> tree, so the question always
+     asks about the step that actually waits for it (Astra F8) */
+  function setMidRunFixture(r, tree) { if (r) MIDRUN[r.id] = typeof tree === 'function' ? tree : copy(tree); }
   /* An ordinary Plan or Deep Plan with Grill Me turned on (APR-072, m10): the assistant grills you on that Plan's
      thread, over the Plan's own question counter, and the next revision waits for your Confirm (the Plan's Revise
      says so). The decisions are the ones any revision of a plan turns on. */
@@ -74058,12 +74136,13 @@ window.PM56_B19DEMO={start:flow=>start(E.ctx(),flow),snapshot:()=>{const r=curre
     return begin(key, { by: 'assistant', subject: rec.title, tree: copy(PLAN_TREE), gate: 'revise', gateLabel: 'the next revision', bankKey: 'plan:' + rec.plan_id,
       hooks: { onConfirm: function (a) { var t2 = ctx().state.threads.filter(function (x) { return x.id === rec.thread_id; })[0]; if (t2) ctx().appendMessage({ id: 'wg-plan-ok-' + rec.plan_id + '-' + Date.now(), role: 'assistant', type: 'text', recordedExample: true, time: new Date().toISOString(), body: 'Thanks. The next revision of “' + rec.title + '” follows what we agreed: ' + a.decisions.map(function (d) { return d.title.toLowerCase() + ', ' + d.answer.charAt(0).toLowerCase() + d.answer.slice(1); }).join('; ') + '.' }, t2); } } });
   }
-  function planGrillOff(rec) { var s = rec && THREAD_GRILL[rec.thread_id]; if (s && s.status === 'grilling') { GE.switchOff(s); postAgreed('thread:' + rec.thread_id); } return { ok: true }; }
+  function planGrillOff(rec) { var s = rec && THREAD_GRILL[rec.thread_id]; if (s && s.status === 'grilling') switchOffSession('thread:' + rec.thread_id, s); return { ok: true }; }
   /* does a thread's Grill Me session still hold that step (the Plan's Revise asks) */
   function threadHolds(tid, gate) { var s = THREAD_GRILL[tid]; return !!s && (!gate || s.gate === gate) && GE.holds(s); }
   /* beginMidRun(run, gate, gateLabel): the session Grill Me turned on mid-run starts here, at the boundary */
   function beginMidRun(r, gate, gateLabel) {
-    var tree = MIDRUN[r.id] || MIDRUN_DEFAULT[r.kind]; if (!tree) return { ok: false, error: 'no_grill_here' };
+    var fx = MIDRUN[r.id], tree = typeof fx === 'function' ? fx(gate, r) : fx;
+    tree = tree || MIDRUN_DEFAULT[r.kind]; if (!tree) return { ok: false, error: 'no_grill_here' };
     C().appendMessage(r.id, { senderKind: 'coordinator', senderName: leadName(r), messageType: 'message', body: 'Grill Me is on now, so I have ' + (tree.filter(function (n) { return n.kind !== 'fact'; }).length === 1 ? 'one decision' : 'a few decisions') + ' for you before ' + gateLabel + '. What is running keeps going; only ' + gateLabel + ' waits for your answers.' });
     return begin('run:' + r.id, { by: leadRole(r), subject: r.purpose, tree: copy(tree), gate: gate, gateLabel: gateLabel });
   }
@@ -74151,9 +74230,25 @@ window.PM56_B19DEMO={start:flow=>start(E.ctx(),flow),snapshot:()=>{const r=curre
   };
   var FACTS = { crew: ['f-ending', 'CRLF, the line ending RFC 4180 names', 8000], room: ['f-keys', '/ is free; Ctrl+K opens the command menu', 1600], deepplan: ['f-size', 'about 2,000 items, the median of the collection stats', 7000] };
   /* Grill Me turned on mid-run (CWR-042): the decision the Coordinator or the Moderator asks at the next boundary */
+  /* the Crew's question is the one the gated part turns on (Astra F8): whichever part the next claim is, the question is
+     about that part, and only that part waits for its Confirm */
+  var CREW_MID = {
+    normalize: { id: 'd-trim-mid', title: 'Titles', prompt: 'Trim only the spaces around each title, leaving the words inside as they are?', why: 'The next part normalizes the titles. The parts already running keep going; only this one waits for you.',
+      options: [{ label: 'Yes, only the outer spaces' }, { label: 'Also collapse spaces inside' }], recommended: 'Yes, only the outer spaces' },
+    quoting: { id: 'd-quote-mid', title: 'Quoting', prompt: 'Quote only the cells that need it (commas, quotes, line breaks)?', why: 'The next part checks how the cells are quoted. The parts already running keep going; only this one waits for you.',
+      options: [{ label: 'Yes, only where needed' }, { label: 'Quote every cell' }], recommended: 'Yes, only where needed' },
+    export: { id: 'd-order-mid', title: 'Row order', prompt: 'Keep the rows in the order the collection lists them?', why: 'The next part assembles the file from the checked parts. The parts already running keep going; only this one waits for you.',
+      options: [{ label: 'Yes, keep the input order' }, { label: 'Sort them by title' }], recommended: 'Yes, keep the input order' }
+  };
+  function crewMid(gate, r) {
+    var id = String(gate || '').replace(/^part:/, ''), a = ((r && r.crew && r.crew.assignments) || []).filter(function (x) { return x.id === id; })[0];
+    if (CREW_MID[id]) return [clone(CREW_MID[id])];
+    if (a && a.leadId) return [{ id: 'd-lead-mid', title: a.title, prompt: 'Have the helper checking ' + a.title.replace(/^Explore /, '') + ' cite a source for what it finds?', why: 'The next part checks a Wonderer lead read-only. The parts already running keep going; only this one waits for you.',
+      options: [{ label: 'Yes, cite a source' }, { label: 'Its own check is enough' }], recommended: 'Yes, cite a source' }];
+    return null;
+  }
   var MIDRUN = {
-    crew: [{ id: 'd-quote-mid', title: 'Quoting', prompt: 'Quote only the cells that need it (commas, quotes, line breaks)?', why: 'The next part writes the file’s cells. The parts already running keep going; only the next one waits for you.',
-      options: [{ label: 'Yes, only where needed' }, { label: 'Quote every cell' }], recommended: 'Yes, only where needed' }],
+    crew: crewMid,
     room: [{ id: 'd-optional', title: 'The shortcut', prompt: 'Keep any shortcut optional, with a way to turn it off?', why: 'The next round weighs the shortcut. This round goes on; only the next one waits for you.',
       options: [{ label: 'Yes, optional and easy to turn off' }, { label: 'Always on' }], recommended: 'Yes, optional and easy to turn off' }]
   };
@@ -74284,7 +74379,7 @@ window.PM56_B19DEMO={start:flow=>start(E.ctx(),flow),snapshot:()=>{const r=curre
     d.config.parallelism = 2; d.config.coordinator = 'parent_assistant'; d.config.assignmentStrategy = 'explicit_static';
     d.rows.forEach(function (r, i) { r.role = ['Data mapper', 'CSV specialist', 'Integrator'][i] || r.role; });
     d.crewInput = fx; d.requestKey = active.threadId + ':wg'; d.threadId = active.threadId;
-    d.wonderer = true; d.grillMe = true;
+    d.wonderer = true; d.grillMe = true; d.recordedSpecialists = true;
     if (C().markRecorded) C().markRecorded(d);
     c.openDialog({ type: 'collab-configure' }); c.renderApp();
   }
@@ -74407,7 +74502,7 @@ window.PM56_B19DEMO={start:flow=>start(E.ctx(),flow),snapshot:()=>{const r=curre
     d.name = 'Make search easier to reach'; d.nameEdited = true; d.purpose = 'How should people reach search: a visible button, a keyboard shortcut, or both?';
     d.rows = d.rows.slice(0, 3); d.rows.forEach(function (r, i) { r.role = ['Product', 'Design', 'Engineering'][i]; r.persona = ['Product Manager', 'Architect', 'Implementer'][i]; });
     d.config.participantCount = 3; d.config.turnPolicy = 'moderated'; d.config.maxRounds = 2;
-    d.roomInput = roomFixture(); d.wonderer = true; d.grillMe = true;
+    d.roomInput = roomFixture(); d.wonderer = true; d.grillMe = true; d.recordedSpecialists = true;
     if (C().markRecorded) C().markRecorded(d);
     c.openDialog({ type: 'collab-configure' });
   }

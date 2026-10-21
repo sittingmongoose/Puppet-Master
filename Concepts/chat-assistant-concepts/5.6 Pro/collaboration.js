@@ -3010,7 +3010,9 @@
     var who = d.kind === 'chat_room' ? 'The Moderator' : 'The Coordinator', when = d.kind === 'crew' ? 'before the split' : d.kind === 'chat_room' ? 'before round 1' : 'before anyone drafts';
     function item(key, name, helper, role) {
       var on = !!d[key];
-      var state = reason ? 'disabled' : (rec && !on) ? 'disabled' : on ? 'on' : 'off';
+      /* a recording that plays with the item on or off (d.recordedSpecialists: the DL-218 Crew, Chat Room and
+         BrainStorm recordings) keeps an editable switch, so turning it off can be undone (Astra F5) */
+      var state = reason ? 'disabled' : (rec && !on && !d.recordedSpecialists) ? 'disabled' : on ? 'on' : 'off';
       /* the helper is one line in the shelf; its whole sentence rides in the app hover card */
       var it = { key: 'pmx-spec-' + key, name: name, helper: '<span id="pmx-spec-help-' + key + '" data-hover-key="collab-spec-help:' + key + '" data-hover-tip="' + esc(helper) + '">' + esc(helper) + '</span>', state: state, reason: reason || (rec ? 'This recorded example uses its own team.' : ''),
         affects: (key === 'wonderer' ? 'wonderer' : 'grill') + ' specialists',
@@ -3789,6 +3791,8 @@
       if (key) {
         var sel = '[data-collab-input="' + key + '"]' + (row ? '[data-row="' + row + '"]' : '');
         var again = document.querySelector('#pmOverlayRoot ' + sel);
+        /* the control left with the change (a refusal replaced it): its shelf item takes the focus, never the page */
+        if (!again && (key === 'wonderer' || key === 'grillMe')) { again = document.querySelector('#pmOverlayRoot [data-k="pmx-spec-' + key + '"]'); if (again) again.setAttribute('tabindex', '-1'); }
         if (again && again.focus && document.activeElement !== again) { try { again.focus({ preventScroll: true }); } catch (err) { } }
       }
     }

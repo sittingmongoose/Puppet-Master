@@ -54,7 +54,7 @@
     const input=BD.fixture(flow==='dissent'?'constraint':'synthesis'),grill=flow==='leads';
     t.messages=[{id:tid+'-request',role:'user',type:'text',body:input.objective+(grill?' Ask me what you need to know first.':' Collection contents must stay on the device.')}];
     C.openConfigure('brainstorm');const d=C.draft();
-    d.name=flows[flow].title;d.purpose=input.objective;d.brainstormInput=input;d.wonderer=true;d.grillMe=grill;
+    d.name=flows[flow].title;d.purpose=input.objective;d.brainstormInput=input;d.wonderer=true;d.grillMe=grill;d.recordedSpecialists=true;
     /* this recording follows the Wonderer's leads: removing it stops Start with a stated reason (R6) */
     d.recordingNeeds={wonderer:true};
     // IMPACT A1-01: a recorded draft is flagged; its rules are copied into the user field as prefill only

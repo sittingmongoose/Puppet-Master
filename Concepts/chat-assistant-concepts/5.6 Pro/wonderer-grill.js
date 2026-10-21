@@ -599,6 +599,9 @@
     if (r) syncPending(r);
     if (res.opened) { openRound(key, { auto: true }); if (HOOKS[key].onRound) HOOKS[key].onRound(res.opened); }
     else if (res.waiting) postLookup(key);
+    /* a session that begins on an exhausted bank (or with nothing to ask) ends at once: its What we agreed is posted
+       now, like every other ending (ACD-503: the safety cap shows that session's agreement; Astra F7) */
+    else if (res.ended) postAgreed(key);
     return { ok: true, session: s };
   }
   /* the session is looking things up: one line in the chat, kept in place until research finds them (steer 2026-10-20) */
@@ -717,6 +720,9 @@
     nodes.forEach(function (n) { var p = n.dependsOn.filter(function (d) { return byId[d]; })[0]; if (p) kids[p].push(n); else roots.push(n); });
     var lc = function (t) { return String(t).charAt(0).toLowerCase() + String(t).slice(1); };
     var count = {}; nodes.forEach(function (n) { count[n.state] = (count[n.state] || 0) + 1; });
+    /* in the Ask Card the question on screen is "you are here": the accent is its mark's alone; every other frontier
+       row reads in text ink with the your-move mark (ruling 4 / D1 of round 2) */
+    var cq = o.where === 'ask' ? (function () { var st = ctx().state, q = (st.questions || [])[st.questionIndex || 0]; return q && q.grillNode; })() : null;
     function line(n) {
       var also = n.dependsOn.slice(1).map(function (d) { return byId[d]; }).filter(Boolean);
       var detail = n.state === 'settled' ? esc(n.answer) + (n.took === 'recommended' ? '<span class="wg-tree-fine"> · recommended</span>' : '<span class="wg-tree-fine"> · your answer</span>')
@@ -732,7 +738,7 @@
       var body = n.state === 'frontier' && o.jump && qIndex[n.id] != null
         ? '<button type="button" class="wg-tree-node" data-action="qs-goto-question" data-index="' + qIndex[n.id] + '" aria-label="' + esc('Go to the question: ' + n.title) + '">' + mark + label + '</button>'
         : '<span class="wg-tree-node">' + mark + label + '</span>';
-      return '<li class="wg-tree-li" data-state="' + n.state + '" data-kind="' + n.kind + '" role="treeitem" aria-label="' + esc(n.title + ': ' + TREE_STATE[n.state]) + '"' + (kids[n.id].length ? ' aria-expanded="true"' : '') + '>' + body +
+      return '<li class="wg-tree-li" data-state="' + n.state + '" data-kind="' + n.kind + '"' + (cq && n.id === cq && n.state === 'frontier' ? ' data-current="1" aria-current="step"' : '') + ' role="treeitem" aria-label="' + esc(n.title + ': ' + TREE_STATE[n.state]) + '"' + (kids[n.id].length ? ' aria-expanded="true"' : '') + '>' + body +
         (kids[n.id].length ? '<ol class="wg-tree-kids" role="group">' + kids[n.id].map(line).join('') + '</ol>' : '') + '</li>';
     }
     var tally = tallyOf(count);
@@ -945,15 +951,25 @@
     var hadPending = !!r.grillPending; r.grillPending = false;
     var s = activeSession(r);
     if (s && s.status === 'grilling') {
-      var c = ctx(), fid = c.state.wgGrill && c.state.wgGrill.key === 'run:' + r.id && c.state.wgGrill.flow, flow = fid && D().questionFlows.filter(function (f) { return f.id === fid; })[0];
-      if (flow && GE.round(s) && flow.grill.round === GE.round(s).n) {
-        /* the round in the Ask Card closes like Wrap up: only the answers you gave count */
-        (c.state.questions || []).forEach(function (q) { if (!q.grillNode) return; var own = String(q.other || '').trim(), v = q.notSure ? null : own || q.answer; if (q.notSure) GE.answer(s, q.grillNode, null); else if ((q.touched || own) && v) GE.answer(s, q.grillNode, v); });
-        flow.state = 'completed'; c.state.wgGrill = null; c.state.decision = null;
-      }
-      GE.switchOff(s); syncPending(r); postAgreed('run:' + r.id);
+      switchOffSession('run:' + r.id, s);
       C().appendMessage(r.id, { senderKind: 'system', senderName: 'System', messageType: 'message', body: 'Grill Me is off. The ' + leadName(r) + ' stops questioning you; what you agreed so far, and what was left open, waits for your Confirm.' });
     } else if (was && hadPending) C().appendMessage(r.id, { senderKind: 'system', senderName: 'System', messageType: 'message', body: 'Grill Me is off again before the ' + leadName(r) + ' asked anything. Nothing waits for it.' });
+    return { ok: true };
+  }
+  /* Grill Me turned off while a session questions you, for a run or a Plan's thread alike (CWR-042, ACD-503; Astra F3):
+     the round in the Ask Card closes like Wrap up (the answers you picked count, Not sure stays Not sure, an untouched
+     draft is no answer), the Ask Card and its binding go, and one current What we agreed waits for your Confirm */
+  function switchOffSession(key, s) {
+    var c = ctx(), bound = c.state.wgGrill && c.state.wgGrill.key === key ? c.state.wgGrill : null;
+    var flow = bound && D().questionFlows.filter(function (f) { return f.id === bound.flow; })[0], rd = GE.round(s);
+    if (flow && rd && flow.grill.round === rd.n) {
+      (c.state.questions || []).forEach(function (q) { if (!q.grillNode) return; var own = String(q.other || '').trim(), v = q.notSure ? null : own || q.answer; if (q.notSure) GE.answer(s, q.grillNode, null); else if ((q.touched || own) && v) GE.answer(s, q.grillNode, v); });
+    }
+    if (flow) flow.state = 'completed';
+    if (bound) { c.state.wgGrill = null; if (c.state.decision && c.state.decision.type === 'question') c.state.decision = null; c.state.questions = []; }
+    GE.switchOff(s);
+    if (key.indexOf('run:') === 0) syncPending(run(key.slice(4)));
+    postAgreed(key);
     return { ok: true };
   }
   function requestMidRunGrill(r) { return setGrill(r, true); }
@@ -965,7 +981,9 @@
     chat_room: [{ id: 'd-next-round', title: 'The next round', prompt: 'Keep the next round on the question as you asked it?', why: 'Only the next round waits for your answer.', options: [{ label: 'Yes, keep it on the question' }, { label: 'Widen it to the follow-ups' }], recommended: 'Yes, keep it on the question' }],
     brainstorm: [{ id: 'd-next-step', title: 'The vote', prompt: 'Let the team vote on the options as they stand?', why: 'Only the vote waits for your answer; the debate goes on.', options: [{ label: 'Yes, vote on them as they stand' }, { label: 'Add an option first' }], recommended: 'Yes, vote on them as they stand' }]
   };
-  function setMidRunFixture(r, tree) { if (r) MIDRUN[r.id] = copy(tree); }
+  /* a recording's fixture is a tree, or a function of the step it gates (gate, run) -> tree, so the question always
+     asks about the step that actually waits for it (Astra F8) */
+  function setMidRunFixture(r, tree) { if (r) MIDRUN[r.id] = typeof tree === 'function' ? tree : copy(tree); }
   /* An ordinary Plan or Deep Plan with Grill Me turned on (APR-072, m10): the assistant grills you on that Plan's
      thread, over the Plan's own question counter, and the next revision waits for your Confirm (the Plan's Revise
      says so). The decisions are the ones any revision of a plan turns on. */
@@ -984,12 +1002,13 @@
     return begin(key, { by: 'assistant', subject: rec.title, tree: copy(PLAN_TREE), gate: 'revise', gateLabel: 'the next revision', bankKey: 'plan:' + rec.plan_id,
       hooks: { onConfirm: function (a) { var t2 = ctx().state.threads.filter(function (x) { return x.id === rec.thread_id; })[0]; if (t2) ctx().appendMessage({ id: 'wg-plan-ok-' + rec.plan_id + '-' + Date.now(), role: 'assistant', type: 'text', recordedExample: true, time: new Date().toISOString(), body: 'Thanks. The next revision of “' + rec.title + '” follows what we agreed: ' + a.decisions.map(function (d) { return d.title.toLowerCase() + ', ' + d.answer.charAt(0).toLowerCase() + d.answer.slice(1); }).join('; ') + '.' }, t2); } } });
   }
-  function planGrillOff(rec) { var s = rec && THREAD_GRILL[rec.thread_id]; if (s && s.status === 'grilling') { GE.switchOff(s); postAgreed('thread:' + rec.thread_id); } return { ok: true }; }
+  function planGrillOff(rec) { var s = rec && THREAD_GRILL[rec.thread_id]; if (s && s.status === 'grilling') switchOffSession('thread:' + rec.thread_id, s); return { ok: true }; }
   /* does a thread's Grill Me session still hold that step (the Plan's Revise asks) */
   function threadHolds(tid, gate) { var s = THREAD_GRILL[tid]; return !!s && (!gate || s.gate === gate) && GE.holds(s); }
   /* beginMidRun(run, gate, gateLabel): the session Grill Me turned on mid-run starts here, at the boundary */
   function beginMidRun(r, gate, gateLabel) {
-    var tree = MIDRUN[r.id] || MIDRUN_DEFAULT[r.kind]; if (!tree) return { ok: false, error: 'no_grill_here' };
+    var fx = MIDRUN[r.id], tree = typeof fx === 'function' ? fx(gate, r) : fx;
+    tree = tree || MIDRUN_DEFAULT[r.kind]; if (!tree) return { ok: false, error: 'no_grill_here' };
     C().appendMessage(r.id, { senderKind: 'coordinator', senderName: leadName(r), messageType: 'message', body: 'Grill Me is on now, so I have ' + (tree.filter(function (n) { return n.kind !== 'fact'; }).length === 1 ? 'one decision' : 'a few decisions') + ' for you before ' + gateLabel + '. What is running keeps going; only ' + gateLabel + ' waits for your answers.' });
     return begin('run:' + r.id, { by: leadRole(r), subject: r.purpose, tree: copy(tree), gate: gate, gateLabel: gateLabel });
   }

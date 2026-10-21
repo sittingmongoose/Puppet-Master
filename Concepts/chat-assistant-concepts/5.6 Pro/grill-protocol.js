@@ -71,6 +71,13 @@
   function ready(s, n) { return (n.dependsOn || []).every(function (d) { return settled(node(s, d)); }); }
   function openRound(s) { var r = s.rounds[s.rounds.length - 1]; return r && r.status === 'open' ? r : null; }
   function charged(s, n) { var b = bankOf(s); return !!n.charged || !!(b && b.has(n.id)); }
+  /* KEPT: a decision you answered keeps that submitted answer and its provenance (n.kept) while Keep going or Ask
+     again reopens it for a revisit. A revisit you leave untouched withdraws nothing: Wrap up, the limit, Grill Me
+     turned off or a natural end give it back as answered. Only a new answer you give, or Not sure, replaces it
+     (Astra F1 = Opus N1, ruling 1 of round 2; ACD-503 "Keep going recomputes its frontier with the existing answers") */
+  function keep(n) { if (n.state === 'answered' && n.answer != null) n.kept = { answer: n.answer, took: n.took }; n.prev = n.state === 'answered' ? n.answer : null; }
+  function restore(n) { if (!n.kept) return false; n.state = 'answered'; n.answer = n.kept.answer; n.took = n.kept.took; n.openReason = null; n.notSure = false; n.kept = null; return true; }
+  function settle(n, v) { n.answer = v; n.state = 'answered'; n.took = v === n.recommended ? 'recommended' : 'own'; n.openReason = null; n.kept = null; }
 
   /* create({by, subject, tree, cap, bank, gate, gateLabel}) - by: coordinator | moderator | assistant (never a Grill Me
      participant); bank: the run's or thread's one counter (else a private one of size cap); gate: the step that waits
@@ -141,7 +148,9 @@
      answer stays open ("not answered"); a ready one never asked stays open ("not asked") */
   function end(s, why) {
     var r = openRound(s);
-    if (r) { r.ids.forEach(function (id) { var n = node(s, id); if (n.state === 'asked' && n.answer == null) { n.state = 'open'; n.openReason = n.notSure ? 'not_sure' : why === 'switched_off' ? 'off_unanswered' : 'wrapped_unanswered'; } }); r.status = 'answered'; }
+    if (r) { r.ids.forEach(function (id) { var n = node(s, id); if (n.state === 'asked' && n.answer == null) { if (!n.notSure && restore(n)) return; n.state = 'open'; n.openReason = n.notSure ? 'not_sure' : why === 'switched_off' ? 'off_unanswered' : 'wrapped_unanswered'; } }); r.status = 'answered'; }
+    /* a revisited decision still waiting behind the round (or never re-asked) keeps the answer you submitted */
+    s.tree.forEach(function (n) { if (n.kind === 'decision' && n.state === 'pending') restore(n); });
     if (why === 'cap') s.tree.forEach(function (n) { if (n.kind === 'decision' && n.state === 'pending' && ready(s, n)) { n.state = 'open'; n.openReason = 'cap'; } });
     s.status = 'agreeing'; s.endedBy = why;
     s.log.push({ kind: 'ended', why: why });
@@ -169,8 +178,8 @@
     var r = openRound(s); if (!r) return fail('no_open_round');
     r.ids.forEach(function (id) {
       var n = node(s, id);
-      if (n.answer != null) { n.state = 'answered'; n.took = n.answer === n.recommended ? 'recommended' : 'own'; n.openReason = null; }
-      else { n.state = 'open'; n.openReason = 'not_sure'; }
+      if (n.answer != null) settle(n, n.answer);
+      else { n.state = 'open'; n.openReason = 'not_sure'; n.kept = null; }
     });
     r.status = 'answered';
     s.log.push({ kind: 'answered', n: r.n });
@@ -182,9 +191,9 @@
   function wrapUp(s, why) {
     if (s.status !== 'grilling') return fail('session_not_grilling');
     var r = openRound(s);
-    if (r) r.ids.forEach(function (id) { var n = node(s, id); if (n.answer != null) { n.state = 'answered'; n.took = n.answer === n.recommended ? 'recommended' : 'own'; } });
+    if (r) r.ids.forEach(function (id) { var n = node(s, id); if (n.answer != null) settle(n, n.answer); });
     var off = why === 'switched_off';
-    s.tree.forEach(function (n) { if (n.kind === 'decision' && n.state === 'pending') { n.state = 'open'; n.openReason = off ? 'off_unasked' : 'wrapped_up'; } });
+    s.tree.forEach(function (n) { if (n.kind === 'decision' && n.state === 'pending' && !restore(n)) { n.state = 'open'; n.openReason = off ? 'off_unasked' : 'wrapped_up'; } });
     return end(s, off ? 'switched_off' : 'wrap_up');
   }
   /* Grill Me turned off while a session is open: it ends like Wrap up, with the open items listed */
@@ -241,7 +250,10 @@
     if (revisit) back = s.tree.filter(function (n) { return n.kind === 'decision' && n.state === 'answered'; });
     if (!back.length) return fail(c.left <= 0 ? 'question_limit_reached' : 'nothing_to_keep_going_from');
     s.status = 'grilling'; s.endedBy = null; s.keepGoing++;
-    back.forEach(function (n) { n.prev = n.answer; n.state = 'pending'; n.openReason = null; n.notSure = false; });
+    back.forEach(function (n) { keep(n); n.state = 'pending'; n.openReason = null; n.notSure = false; });
+    /* the frontier is recomputed with the existing answers (ACD-503): a decision never asked because you wrapped up
+       first, the limit came or Grill Me went off comes back too, and is asked once what it hangs off is settled */
+    if (!revisit) open.forEach(function (n) { if (back.indexOf(n) < 0 && /^(wrapped_up|off_unasked|cap)$/.test(n.openReason || '') && (charged(s, n) || c.left > 0)) { n.state = 'pending'; n.openReason = null; } });
     s.log.push({ kind: 'keep_going', revisit: revisit, ids: back.map(function (n) { return n.id; }) });
     return next(s);
   }
@@ -253,7 +265,7 @@
     if (!ready(s, n)) return fail('waits_on_another_decision');
     if (!charged(s, n) && counter(s).left <= 0) return fail('question_budget_exhausted');
     s.status = 'grilling'; s.endedBy = null; s.keepGoing++;
-    n.prev = n.answer; n.state = 'pending'; n.openReason = null; n.notSure = false;
+    keep(n); n.state = 'pending'; n.openReason = null; n.notSure = false;
     s.log.push({ kind: 'reopen', id: id });
     return next(s);
   }
