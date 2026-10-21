@@ -216,6 +216,19 @@ check('G1b every decision carries a recommended answer', GE.create({ by: 'coordi
   check('G8 Grill Me turned off ends a session like Wrap up, open items listed (M2)', GE.switchOff(off).ended === 'switched_off' && GE.agreed(off).open.length >= 2 && GE.agreed(off).decisions.length === 0);
   const m = GE.map(GE.create({ by: 'assistant', tree: JSON.parse(JSON.stringify(TREE)) }).session);
   check('G9 the design tree knows what each decision unlocks', m.find(n => n.id === 'd1').unlocks.join() === 'd3' && m.find(n => n.id === 'f1').unlocks.join() === 'd4');
+  /* round 2, ruling 1 (Astra F1 = Opus N1): a revisit left untouched withdraws nothing. Answer all four (d2 your own),
+     Keep going revisits them; Wrap up, the limit or Grill Me off all give back the four submitted answers */
+  const drain = k => { for (let i = 0; i < 8 && k.status === 'grilling'; i++) { if (GE.round(k)) { GE.acceptRound(k); GE.submitRound(k); } else if (GE.lookups(k).length) GE.factFound(k, 'f1', 'x'); } };
+  const kept = why => { const k = GE.create({ by: 'assistant', tree: JSON.parse(JSON.stringify(TREE)) }).session; GE.next(k); GE.answer(k, 'd2', 'No'); GE.acceptRound(k); GE.submitRound(k); drain(k);
+    const before = GE.agreed(k).decisions.map(d => d.id + '=' + d.answer + '/' + d.took).sort().join(); GE.keepGoing(k); const revisit = GE.round(k).ids.slice();
+    if (why === 'off') GE.switchOff(k); else GE.wrapUp(k); const after = GE.agreed(k).decisions.map(d => d.id + '=' + d.answer + '/' + d.took).sort().join(); return { before, after, revisit, open: GE.agreed(k).open.length }; };
+  const kw = kept('wrap'), ko = kept('off');
+  check('G10 Keep going then an untouched Wrap up (or Grill Me off) keeps every submitted answer, downstream ones included (R2 ruling 1)', kw.before.split(',').length === 4 && kw.after === kw.before && ko.after === ko.before && kw.open === 0 && kw.revisit.length >= 2, JSON.stringify({ kw, ko }));
+  /* ... while a revisited answer you change, or say Not sure about, replaces it */
+  const kc = GE.create({ by: 'assistant', tree: JSON.parse(JSON.stringify(TREE)) }).session; GE.next(kc); drain(kc); GE.keepGoing(kc);
+  GE.answer(kc, 'd1', 'No'); GE.answer(kc, 'd2', null); GE.wrapUp(kc);
+  const kca = GE.agreed(kc);
+  check('G11 in a revisit, a changed answer replaces the kept one and Not sure opens it (R2 ruling 1)', kca.decisions.some(d => d.id === 'd1' && d.answer === 'No' && d.took === 'own') && kca.open.some(o => o.id === 'd2' && o.reason === 'not_sure'), JSON.stringify(kca));
 }
 
 /* ------------------------------------------------------------------ static: the sources say the same */
@@ -235,6 +248,50 @@ check('S5b a BrainStorm vote from the Wonderer is refused', /wonderer_never_vote
 check('S5c the Wonderer lane never says it waits its turn', !/waits its turn|waiting its turn/.test(src['wonderer-grill.js'].replace(/\/\*[\s\S]*?\*\//g, '')));
 check('S6 the BrainStorm Wonderer workspace has no user decide controls', !/b13-decide|user_decided|Use as my decision/.test(src['lens-wonderer-batch13.js']));
 check('S6b Write the plan and the Crew’s result read one gate', /WG\.engine\.gate\(r\)|PM56_WG\.engine\.gate\(r\)/.test(src['brainstorm-protocol.js']) && /WG\.engine\.gate\(r\)/.test(src['crew-protocol.js']));
+
+/* ------------------------------------------------------------------ contrast on the painted pixels (round 2, ruling 4)
+   Hide only the measured text, screenshot its first line, sample the background the browser actually painted there
+   (gradients, tints, translucency and images included), and composite the text colour (with its opacity chain) over
+   each sample; the lowest ratio counts. This replaces compositing flat background colours, which missed the Ask
+   Card's radial tint (Astra F4). */
+async function pixelRatios(page, sels) {
+  const out = {};
+  for (const sel of sels) {
+    const info = await page.evaluate(sel => {
+      const el = [...document.querySelectorAll(sel)].find(e => e.getClientRects().length && e.textContent.trim() && getComputedStyle(e).visibility !== 'hidden');
+      if (!el) return null;
+      document.querySelectorAll('[data-pxc]').forEach(x => x.removeAttribute('data-pxc'));
+      el.setAttribute('data-pxc', '1');
+      const br = el.getBoundingClientRect(); if (br.top < 0 || br.bottom > innerHeight) el.scrollIntoView({ block: 'center' });
+      const cs = getComputedStyle(el), tw = document.createTreeWalker(el, NodeFilter.SHOW_TEXT), rects = [];
+      for (let t = tw.nextNode(); t; t = tw.nextNode()) { if (!t.textContent.trim() || (t.parentElement && t.parentElement.closest('svg'))) continue; const rg = document.createRange(); rg.selectNodeContents(t); rects.push(...[...rg.getClientRects()].filter(r => r.width > 4 && r.height > 4)); }
+      const r = rects[0] || el.getBoundingClientRect();
+      let op = 1; for (let x = el; x && x.nodeType === 1; x = x.parentElement) op *= parseFloat(getComputedStyle(x).opacity || '1');
+      return { color: cs.color, op, rect: { x: Math.max(0, r.left), y: Math.max(0, r.top), w: Math.min(r.width, 360), h: r.height } };
+    }, sel);
+    if (!info || info.rect.w < 4) continue;
+    const vp = page.viewportSize(); if (info.rect.y + info.rect.h > vp.height || info.rect.x + 4 > vp.width) continue;
+    info.rect.w = Math.min(info.rect.w, vp.width - info.rect.x);
+    await page.evaluate(() => { const st = document.createElement('style'); st.id = 'pxc-hide'; st.textContent = '[data-pxc="1"], [data-pxc="1"] * { color: transparent !important; -webkit-text-fill-color: transparent !important; text-shadow: none !important; text-decoration-color: transparent !important; } [data-pxc="1"] svg, [data-pxc="1"] .nx-i { visibility: hidden !important; }'; document.head.appendChild(st); });
+    await page.waitForTimeout(80);
+    const png = await page.screenshot({ clip: { x: info.rect.x, y: info.rect.y, width: Math.max(4, info.rect.w), height: Math.max(4, info.rect.h) }, animations: 'disabled' });
+    await page.evaluate(() => { const st = document.getElementById('pxc-hide'); if (st) st.remove(); document.querySelectorAll('[data-pxc]').forEach(x => x.removeAttribute('data-pxc')); });
+    out[sel] = await page.evaluate(async ([b64, color, op]) => {
+      const img = new Image(); img.src = 'data:image/png;base64,' + b64; await img.decode();
+      const c = document.createElement('canvas'); c.width = img.width; c.height = img.height; const g = c.getContext('2d'); g.drawImage(img, 0, 0);
+      const m = /rgba?\(([^)]+)\)/.exec(color), p = m[1].split(/[ ,/]+/).filter(Boolean).map(Number), fg = { r: p[0], g: p[1], b: p[2] }, a = (p.length > 3 ? p[3] : 1) * op;
+      const lum = c => { const f = v => { v /= 255; return v <= .03928 ? v / 12.92 : Math.pow((v + .055) / 1.055, 2.4); }; return .2126 * f(c.r) + .7152 * f(c.g) + .0722 * f(c.b); };
+      let min = 99;
+      for (const fy of [0.35, 0.5, 0.65]) for (let i = 1; i <= 7; i++) {
+        const d = g.getImageData(Math.floor(img.width * i / 8), Math.floor(img.height * fy), 1, 1).data, bg = { r: d[0], g: d[1], b: d[2] };
+        const f = { r: fg.r * a + bg.r * (1 - a), g: fg.g * a + bg.g * (1 - a), b: fg.b * a + bg.b * (1 - a) };
+        const L1 = lum(f), L2 = lum(bg); min = Math.min(min, (Math.max(L1, L2) + .05) / (Math.min(L1, L2) + .05));
+      }
+      return Math.round(min * 100) / 100;
+    }, [png.toString('base64'), info.color, info.op]);
+  }
+  return out;
+}
 
 /* ------------------------------------------------------------------ browser: what the screen shows */
 async function browser() {
@@ -267,6 +324,8 @@ async function browser() {
   const wonLanes = () => ev(() => [...document.querySelectorAll('.pmx-lane[data-k*=":"]')].filter(l => /Wonderer/.test(l.querySelector('.pmx-lane-name')?.textContent || '')).map(l => l.textContent));
   try {
     await load();
+    /* WGV_ONLY=r2: the round 2 checks alone (a quick local loop; the full pass runs everything) */
+    if (process.env.WGV_ONLY === 'r2') { await reviewRound2({ page, ev, act, sleep, startSheet, answerAll }); check('B7 no page errors', !errs.length, errs.slice(0, 3).join(' | ')); if (cdp) await b.close().catch(() => {}); return; }
     /* sheets: the shelf, the plate */
     for (const [kind, who] of [['crew', 'The Coordinator'], ['chat_room', 'The Moderator'], ['brainstorm', 'The Coordinator']]) {
       await ev(k => { const C = window.PM56_COLLAB, c = window.PM56_EXT.ctx(); c.switchThread('query'); C.openConfigure(k); const d = C.draft(); d.purpose = 'Make search easier to reach.'; d.wonderer = true; d.grillMe = true; c.openDialog({ type: 'collab-configure' }); c.renderOverlays(); }, kind);
@@ -416,6 +475,7 @@ async function browser() {
     await page.locator('.wg-agreed [data-action="wg-confirm"]').first().click(); await sleep(2500);
     check('APR-072b the Plan is written after Confirm', !(await noPlan()));
     await reviewRound1({ page, ev, act, sleep, startSheet, answerAll });
+    await reviewRound2({ page, ev, act, sleep, startSheet, answerAll });
     check('B7 no page errors', !errs.length, errs.slice(0, 3).join(' | '));
   } catch (e) { check('B0 the browser pass ran to the end', false, e && e.stack || e); }
   if (cdp) await b.close().catch(() => {}); else await b.close();
@@ -615,16 +675,7 @@ async function reviewRound1({ page, ev, act, sleep, startSheet, answerAll }) {
 
   /* M5 + m8 = R10: required words read at 4.5:1 or better on their real background, NieR's Recommended included, in
      a light and a dark theme of every family */
-  const measure = sels => ev(sels => {
-    const parse = c => { const m = /rgba?\(([^)]+)\)/.exec(c || ''); if (!m) return null; const p = m[1].split(/[ ,/]+/).filter(Boolean).map(Number); return { r: p[0], g: p[1], b: p[2], a: p.length > 3 ? p[3] : 1 }; };
-    const over = (top, bot) => ({ r: top.r * top.a + bot.r * (1 - top.a), g: top.g * top.a + bot.g * (1 - top.a), b: top.b * top.a + bot.b * (1 - top.a), a: 1 });
-    const bgOf = el => { const layers = []; for (let x = el; x && x.nodeType === 1; x = x.parentElement) { const c = parse(getComputedStyle(x).backgroundColor); if (c && c.a > 0) layers.push(c); if (c && c.a >= 1) break; } let acc = parse(getComputedStyle(document.documentElement).backgroundColor) || { r: 0, g: 0, b: 0, a: 1 }; if (acc.a < 1) acc = over(acc, { r: 255, g: 255, b: 255, a: 1 }); for (let i = layers.length - 1; i >= 0; i--) acc = over(layers[i], acc); return acc; };
-    const lum = c => { const f = v => { v /= 255; return v <= .03928 ? v / 12.92 : Math.pow((v + .055) / 1.055, 2.4); }; return .2126 * f(c.r) + .7152 * f(c.g) + .0722 * f(c.b); };
-    const ratio = el => { const fg = parse(getComputedStyle(el).color), bg = bgOf(el); let op = 1; for (let x = el; x && x.nodeType === 1; x = x.parentElement) op *= parseFloat(getComputedStyle(x).opacity || '1'); const f = over({ ...fg, a: (fg.a == null ? 1 : fg.a) * op }, bg); const a = lum(f), b = lum(bg); return (Math.max(a, b) + .05) / (Math.min(a, b) + .05); };
-    const out = {};
-    for (const sel of sels) { const el = [...document.querySelectorAll(sel)].find(e => e.getClientRects().length && e.textContent.trim()); if (el) out[sel] = Math.round(ratio(el) * 100) / 100; }
-    return out;
-  }, sels);
+  const measure = sels => pixelRatios(page, sels);
   const crewThread = await ev(id => window.PM56_COLLAB.run(id).threadId, (await ev(() => (window.PM56_COLLAB.runs().filter(r => r.kind === 'crew' && r.wonderer && r.status === 'completed').pop() || {}).id)));
   const low = {};
   for (const theme of ['basic-dark', 'basic-light', 'glass-light', 'friendly-light', 'retro-dark', 'nier-dark', 'nier-light']) {
@@ -640,6 +691,199 @@ async function reviewRound1({ page, ev, act, sleep, startSheet, answerAll }) {
   await ev(() => window.PM56_DEMO.setTheme('basic-dark'));
   const misses = Object.entries(low).filter(([k]) => !/^n:/.test(k)), counted = Object.entries(low).filter(([k]) => /^n:/.test(k)).map(([k, v]) => v);
   check('R1-R10 required words and the Recommended mark meet 4.5:1 on their real background in seven themes (' + counted.join('/') + ' measured)', !misses.length && counted.every(n => n >= 6), JSON.stringify(Object.fromEntries(misses)));
+}
+/* ------------------------------------------------------------------ concept review, round 2 (final, 2026-10-21)
+   CONCEPT-ROUND2-RULINGS.md items 1-10, one check each, replayed on the path the reviewer reported
+   (CONCEPT-REVIEW-ASTRA-R2.md F1-F8, CONCEPT-REVIEW-OPUS-R2.md N1-N4 and n-a). */
+async function reviewRound2({ page, ev, act, sleep, startSheet, answerAll }) {
+  const fast = k => ev(k => window.PM56_CLOCK.setScale(k), k);
+  const until = (fn, arg, ms = 60000) => page.waitForFunction(fn, arg, { timeout: ms }).then(() => true, () => false);
+  const click = async sel => { try { const l = page.locator(sel).first(); if (await l.count() && await l.isVisible()) { await l.click({ timeout: 3000 }); return true; } } catch (e) { } return false; };
+  const roundOpen = () => until(() => !!document.querySelector('.qs-grill [data-action="qs-accept-round"]'), null, 20000);
+  const thread = () => ev(() => window.PM56_WG_DEMOS.snapshot().threadId);
+  const agreedOf = t => ev(t => { const s = window.PM56_WG.threadSession(t), a = window.PM56_WG.grill.agreed(s); return { st: s.status, ended: a.endedBy, dec: a.decisions.map(d => d.id + '=' + d.answer + '/' + d.took), open: a.open.map(o => o.id + ':' + o.why), asked: a.counter.asked }; }, t);
+  const reset = async () => { await ev(() => { const b = document.createElement('button'); b.dataset.action = 'reset-all'; document.body.appendChild(b); b.click(); b.remove(); }); await sleep(900); };
+  const confirmThread = async (tid, ms = 40000) => { const t0 = Date.now(); while (Date.now() - t0 < ms) { const st = await ev(t => { const s = window.PM56_WG.threadSession(t); return s ? s.status : ''; }, tid); if (st === 'confirmed') return true; if (await click('.wg-agreed[data-state="open"] [data-action="wg-confirm"]')) { await sleep(700); continue; } if (await click('.qs-grill [data-action="qs-accept-round"]')) { await sleep(900); continue; } await sleep(400); } return false; };
+  const acceptLabel = () => ev(() => { const b = document.querySelector('.qs-grill [data-action="qs-accept-round"]'); return b ? b.textContent.replace(/\s+/g, ' ').trim() : ''; });
+
+  /* 1 (Astra F1 = Opus N1): Keep going followed by an untouched Wrap up keeps every answer you submitted */
+  await ev(() => window.PM56_WG_DEMOS.start('deepplan')); await roundOpen(); await sleep(600);
+  let t = await thread();
+  await click('.qs-grill [data-action="next-question"]'); await sleep(400);
+  await page.locator('.qs-grill .qs-ask-opt').nth(1).click(); await sleep(300);
+  await answerAll(40000);
+  const a5 = await agreedOf(t);
+  await click('.wg-agreed[data-state="open"] [data-action="wg-keep-going"]'); await roundOpen(); await sleep(700);
+  const revisitLabel = await acceptLabel();
+  const revisit = await ev(t => window.PM56_WG.grill.round(window.PM56_WG.threadSession(t)).ids, t);
+  await click('.qs-grill [data-action="qs-wrap-up"]'); await sleep(1800);
+  const aw = await agreedOf(t);
+  /* Opus's order: Not sure on the first, accept the rest; Keep going brings back only the Not sure one (a first-time
+     recommendation, untouched): Wrap up leaves it open and keeps the other four */
+  await ev(() => window.PM56_WG_DEMOS.start('deepplan')); await roundOpen(); await sleep(600);
+  const t2 = await thread();
+  await click('.qs-grill [data-action="skip-question"]'); await sleep(400);
+  await answerAll(40000);
+  await click('.wg-agreed[data-state="open"] [data-action="wg-keep-going"]'); await roundOpen(); await sleep(700);
+  await click('.qs-grill [data-action="qs-wrap-up"]'); await sleep(1800);
+  const ao = await agreedOf(t2);
+  /* ... and the full revisit after that: Keep going (the Not sure one), accept; Keep going (every answer), Wrap up */
+  await click('.wg-agreed[data-state="open"] [data-action="wg-keep-going"]'); await roundOpen(); await sleep(700);
+  await click('.qs-grill [data-action="qs-accept-round"]'); await sleep(1500);
+  await answerAll(30000);
+  await click('.wg-agreed[data-state="open"] [data-action="wg-keep-going"]'); await roundOpen(); await sleep(700);
+  await click('.qs-grill [data-action="qs-wrap-up"]'); await sleep(1800);
+  const ao2 = await agreedOf(t2);
+  check('R2-1 Keep going then an untouched Wrap up keeps every submitted answer (5 with Rank by recency instead stay 5; Opus order 5 stay 5); a first-time untouched recommendation stays open',
+    a5.dec.length === 5 && aw.dec.length === 5 && aw.dec.some(d => d === 'd-rank=Rank by recency instead/own') && aw.asked === a5.asked && revisit.length >= 2 &&
+    ao.dec.length === 3 && ao.open.some(o => /^d-where:Not answered: you wrapped up/.test(o)) && ao.open.some(o => /^d-fallback:Not asked/.test(o)) && ao2.dec.length === 5,
+    JSON.stringify({ a5: a5.dec.length, aw, revisit, ao, ao2: ao2.dec.length }).slice(0, 900));
+
+  /* 6 (Astra F6): the revisit round holds your earlier answers, so it never offers to "Accept all N recommended" */
+  check('R2-6 a revisit of your earlier answers (Rank by recency instead among them) is never labelled "Accept all N recommended"', !!revisitLabel && !/recommended/i.test(revisitLabel) && /Send/.test(revisitLabel), revisitLabel);
+
+  /* 2 (Astra F2): a Plan revision never publishes before Confirm: Revise targeted first, then Grill Me on, then Send;
+     and the destination-provider route */
+  await reset();
+  const plan = await ev(() => { const c = window.PM56_EXT.ctx(), all = Object.values(window.PM56_PLANS.all()); const p = all.find(x => x.plan_id === 'ap-index') || all.find(x => x.status === 'ready' && c.state.threads.some(t => t.id === x.thread_id)); window.PM56_DEMO.selectThread(p.thread_id); return { id: p.plan_id, tid: p.thread_id, v: p.version, grill: !!p.grillMe }; });
+  await sleep(600);
+  const ver = () => ev(id => window.PM56_PLANS.all()[id].version, plan.id);
+  const dest = () => ev(() => { const d = window.PM56_RUNTIME.composer.destination; return d ? d.kind : null; });
+  await act('pd-revise', { id: plan.id }); await sleep(400);
+  const d0 = await dest();
+  await act('pd-inspect', { id: plan.id }); await sleep(500);
+  await click('[data-action="pd-q-grill"][data-id="' + plan.id + '"]'); await roundOpen(); await sleep(600);
+  const d1 = await dest();
+  await page.locator('.qs-grill .qs-ask-opt').nth(1).click(); await sleep(300);
+  const sendText = async txt => { await page.locator('.composer-input').first().fill(txt); await sleep(150); await page.locator('[data-action="send"]').first().click(); await sleep(700); };
+  await sendText('Narrow this plan to its first step.');
+  const f2a = await ev(([id, tid]) => { const c = window.PM56_EXT.ctx(), s = window.PM56_WG.threadSession(tid); return { v: window.PM56_PLANS.all()[id].version, st: s && s.status, composer: c.state.composer, toast: c.state.toast.map(x => x.title).join(' | ') }; }, [plan.id, plan.tid]);
+  await ev(id => { const R = window.PM56_RUNTIME, c = window.PM56_EXT.ctx(); const ds = R.composer.destinationProviders.map(f => f(c)).reduce((a, b) => a.concat(b || []), []); R.composer.destination = ds.find(d => d.refId === id) || null; c.renderApp(); }, plan.id); await sleep(300);
+  await sendText('Narrow this plan to its first step, by the picker.');
+  const f2b = await ev(([id, tid]) => { const c = window.PM56_EXT.ctx(), s = window.PM56_WG.threadSession(tid); return { v: window.PM56_PLANS.all()[id].version, st: s && s.status, composer: c.state.composer }; }, [plan.id, plan.tid]);
+  const confirmed = await confirmThread(plan.tid);
+  await act('pd-revise', { id: plan.id }); await sleep(300);
+  await sendText('Narrow this plan to its first step.');
+  const f2c = await ev(id => window.PM56_PLANS.all()[id].version, plan.id);
+  check('R2-2 a Plan revision is refused before Confirm on every route (targeted before Grill Me came on; the destination picker), the composer keeps your words; after Confirm it is admitted',
+    f2a.v === plan.v && f2a.st === 'grilling' && /Narrow this plan/.test(f2a.composer) && /Revise waits for your Confirm/.test(f2a.toast) && f2b.v === plan.v && /by the picker/.test(f2b.composer) && confirmed && f2c === plan.v + 1,
+    JSON.stringify({ plan, d0, d1, f2a, f2b, confirmed, f2c }));
+
+  /* 3 (Astra F3): turning a Plan's Grill Me off keeps the pick you made, clears the Ask Card and shows one What we
+     agreed that waits for Confirm */
+  await reset();
+  const p3 = await ev(() => { const all = Object.values(window.PM56_PLANS.all()); const p = all.find(x => x.plan_id === 'ap-index'); window.PM56_DEMO.selectThread(p.thread_id); return { id: p.plan_id, tid: p.thread_id }; });
+  await sleep(600);
+  await act('pd-inspect', { id: p3.id }); await sleep(500);
+  await click('[data-action="pd-q-grill"][data-id="' + p3.id + '"]'); await roundOpen(); await sleep(600);
+  await page.locator('.qs-grill .qs-ask-opt').nth(1).click(); await sleep(300);
+  await act('pd-inspect', { id: p3.id }); await sleep(500);
+  await click('[data-action="pd-q-grill"][data-id="' + p3.id + '"]'); await sleep(600);
+  await ev(() => { const c = window.PM56_EXT.ctx(); c.state.dialog = null; c.renderApp(); }); await sleep(600);
+  const f3 = await ev(tid => { const c = window.PM56_EXT.ctx(), s = window.PM56_WG.threadSession(tid), a = window.PM56_WG.grill.agreed(s); return { st: s.status, ended: a.endedBy, dec: a.decisions.map(d => d.id + '=' + d.answer), card: !!document.querySelector('.qs-grill'), bound: !!c.state.wgGrill, agreed: document.querySelectorAll('.wg-agreed[data-state="open"]').length }; }, p3.tid);
+  check('R2-3 turning a Plan’s Grill Me off keeps “Narrow it to the first step”, clears the Ask Card and its binding, and shows one What we agreed for Confirm',
+    f3.st === 'agreeing' && f3.ended === 'switched_off' && f3.dec.includes('d-scope=Narrow it to the first step') && !f3.card && !f3.bound && f3.agreed === 1, JSON.stringify(f3));
+
+  /* 4 (Astra F4 + Opus N4 + n-a): contrast on the painted pixels in ten looks: the round bar over its tint, the map's
+     frontier, the source line, who asked for a pass, and the rest of the required words */
+  await reset();
+  await ev(() => window.PM56_WG_DEMOS.start('crew')); await sleep(1400); await startSheet(); await fast(5);
+  await until(() => !!document.querySelector('.transcript .wg-card .wg-lead-src'), null, 40000);
+  await fast(0.01);
+  const crewT = await thread();
+  await ev(() => window.PM56_WG_DEMOS.start('deepplan')); await roundOpen(); await sleep(800);
+  const dpT = await thread();
+  const low4 = {}, n4 = {};
+  for (const look of ['basic-dark', 'basic-light', 'glass-dark', 'glass-light', 'friendly-dark', 'friendly-light', 'retro-dark', 'retro-light', 'nier-dark', 'nier-light']) {
+    await ev(x => window.PM56_DEMO.setTheme(x), look); await sleep(400);
+    await ev(x => window.PM56_DEMO.selectThread(x), dpT); await sleep(500);
+    if (!(await ev(() => !!document.querySelector('.qs-grill')))) await act('wg-open-round', { key: 'thread:' + dpT });
+    await sleep(600);
+    const a = await pixelRatios(page, ['.qs-grill-meta', '.qs-grill-note', '.qs-grill-tally .wg-tree-tally-i', '.qs-ask-opt.is-on .qs-rec']);
+    if (await click('.qs-grill [data-action="qs-grill-map"]')) { await sleep(500); Object.assign(a, await pixelRatios(page, ['.qs-grill-map .wg-tree-li[data-state="frontier"] .wg-tree-d', '.qs-grill-map .wg-tree-li[data-state="waiting"] .wg-tree-d'])); await click('.qs-grill [data-action="qs-grill-map"]'); }
+    await ev(x => window.PM56_DEMO.selectThread(x), crewT); await sleep(500);
+    await click('.qs-grill .qs-ask-x'); await sleep(300);
+    await ev(() => { const e = document.querySelector('.transcript .wg-card'); if (e) e.scrollIntoView({ block: 'start' }); }); await sleep(400);
+    Object.assign(a, await pixelRatios(page, ['.transcript .wg-card .wg-lead-src', '.transcript .wg-card .wg-pass-title .wg-fine', '.transcript .wg-card .wg-who', '.transcript .wg-card-foot .wg-fine']));
+    Object.entries(a).forEach(([k, v]) => { if (v < 4.5) low4[look + ' ' + k] = v; });
+    n4[look] = Object.keys(a).length;
+  }
+  await ev(() => window.PM56_DEMO.setTheme('basic-dark')); await fast(1);
+  check('R2-4 required words read 4.5:1 or better on the painted pixels in ten looks (the round bar over its tint, the map frontier, the source line, who asked for a pass)',
+    !Object.keys(low4).length && Object.values(n4).every(n => n >= 8), JSON.stringify({ low4, n4 }));
+
+  /* 5 (Astra F5 = Opus n-d): on a recorded example, Space on Grill Me (and on the Wonderer) never drops focus to BODY,
+     and the switch can be turned back on */
+  await reset();
+  await ev(() => window.PM56_WG_DEMOS.start('crew')); await sleep(1400);
+  const f5 = {};
+  for (const key of ['grillMe', 'wonderer']) {
+    await page.focus('#pmOverlayRoot [data-collab-input="' + key + '"]'); await page.keyboard.press('Space'); await sleep(500);
+    const off = await ev(k => { const a = document.activeElement, i = document.querySelector('#pmOverlayRoot [data-collab-input="' + k + '"]'); return { focus: a === document.body ? 'BODY' : (a && (a.getAttribute('data-collab-input') || a.getAttribute('data-k') || a.tagName)), checked: i ? i.checked : null, disabled: i ? i.disabled : null }; }, key);
+    await page.keyboard.press('Space'); await sleep(500);
+    const on = await ev(k => { const a = document.activeElement, i = document.querySelector('#pmOverlayRoot [data-collab-input="' + k + '"]'); return { focus: a === document.body ? 'BODY' : (a && a.getAttribute('data-collab-input')), checked: i ? i.checked : null }; }, key);
+    f5[key] = { off, on };
+  }
+  check('R2-5 on a recorded example, Space turns Grill Me and the Wonderer off and on again, and the focus stays on the switch (never BODY)',
+    ['grillMe', 'wonderer'].every(k => f5[k].off.focus === k && f5[k].off.checked === false && !f5[k].off.disabled && f5[k].on.focus === k && f5[k].on.checked === true), JSON.stringify(f5));
+  await ev(() => { const c = window.PM56_EXT.ctx(); c.state.dialog = null; c.renderOverlays(); });
+
+  /* 7 (Astra F7): a session that begins on an exhausted bank posts its What we agreed at once */
+  await reset();
+  await ev(() => window.PM56_WG_DEMOS.start('room')); await sleep(1400);
+  await ev(() => { const i = document.querySelector('#pmOverlayRoot [data-collab-input="grillMe"]'); if (i && i.checked) i.click(); }); await sleep(400); await startSheet(); await sleep(1200);
+  const room = await ev(() => window.PM56_WG_DEMOS.snapshot().runId);
+  await act('collab-room-next-round', { run: room }); await fast(4);
+  await until(id => { const c = window.PM56_COLLAB.run(id).chatRoom; return c.roundsSoFar === 1 && (!c.round || c.round.complete); }, room, 60000);
+  await fast(1); await act('wg-toggle-grill', { run: room });
+  await ev(id => { const b = window.PM56_WG.bankFor('run:' + id); const items = []; for (let i = 1; i <= 25; i++) items.push({ id: 'seed-' + i, prompt: 'Seeded question ' + i }); return b.charge(items); }, room);
+  await act('collab-room-next-round', { run: room }); await sleep(900);
+  const f7 = await ev(id => { const r = window.PM56_COLLAB.run(id), s = window.PM56_WG.sessionsOf(r).slice(-1)[0], c = s && window.PM56_WG.grill.counter(s); const t = window.PM56_EXT.ctx().state.threads.find(x => x.id === r.threadId); return { st: s && s.status, ended: s && s.endedBy, counter: c && c.asked + '/' + c.limit, card: !!(s && t.messages.some(m => m.type === 'wg-agreed' && m.sessionId === s.id)), shown: !!document.querySelector('.wg-agreed[data-state="open"]') }; }, room);
+  check('R2-7 a session that begins on an exhausted bank (25 of 25) posts its What we agreed card at once', f7.st === 'agreeing' && f7.ended === 'cap' && f7.counter === '25/25' && f7.card && f7.shown, JSON.stringify(f7));
+
+  /* 8 (Astra F8): the recorded Crew's late-on question is about the part it actually holds */
+  await reset();
+  await ev(() => window.PM56_WG_DEMOS.start('crew')); await sleep(1400);
+  await ev(() => { const i = document.querySelector('#pmOverlayRoot [data-collab-input="grillMe"]'); if (i && i.checked) i.click(); }); await sleep(400); await startSheet(); await fast(3);
+  const crew = await ev(() => window.PM56_WG_DEMOS.snapshot().runId);
+  await until(id => window.PM56_COLLAB.run(id).crew.assignments.some(a => a.status === 'running'), crew, 60000);
+  await act('wg-toggle-grill', { run: crew });
+  await until(id => window.PM56_WG.sessionsOf(window.PM56_COLLAB.run(id)).some(s => /^part:/.test(s.gate)), crew, 90000);
+  await fast(1);
+  const f8 = await ev(id => { const r = window.PM56_COLLAB.run(id), s = window.PM56_WG.sessionsOf(r).find(x => /^part:/.test(x.gate)), part = s.gate.slice(5), a = r.crew.assignments.find(x => x.id === part), q = s.tree[0];
+    return { gate: s.gate, part, title: a && a.title, lead: !!(a && a.leadId), qid: q.id, prompt: q.prompt, why: q.why, held: a && a.status }; }, crew);
+  const want8 = { normalize: /title/i, quoting: /quote/i, export: /rows|order/i };
+  const fits8 = f8.lead ? new RegExp(String(f8.title).replace(/^Explore /, ''), 'i').test(f8.prompt) : !!(want8[f8.part] && want8[f8.part].test(f8.prompt));
+  await confirmThread(await thread(), 30000);
+  const go8 = await until(([id, part]) => { const a = window.PM56_COLLAB.run(id).crew.assignments.find(x => x.id === part); return a && a.status !== 'pending'; }, [crew, f8.part], 60000);
+  check('R2-8 the recorded Crew’s late-on question is about the part it holds (' + f8.part + '), and Confirm releases that part', fits8 && f8.held === 'pending' && go8, JSON.stringify(f8));
+  await fast(1);
+
+  /* 9 (Opus N2): at phone width the safety note stays, the tally goes, and the foot is one row with "Accept all" */
+  await page.setViewportSize({ width: 400, height: 860 }); await sleep(500);
+  await ev(() => window.PM56_WG_DEMOS.start('deepplan')); await roundOpen(); await sleep(900);
+  const f9 = await ev(() => {
+    const card = document.querySelector('.qs-grill'), note = card.querySelector('.qs-grill-note'), tally = card.querySelector('.qs-grill-tally'), acc = card.querySelector('[data-action="qs-accept-round"]');
+    const vis = el => !!el && getComputedStyle(el).display !== 'none' && el.getClientRects().length > 0;
+    const tops = [...card.querySelectorAll('.qs-grill-foot > button')].filter(vis).map(b => Math.round(b.getBoundingClientRect().top));
+    return { note: vis(note), tally: vis(tally), accept: acc ? acc.innerText.replace(/\s+/g, ' ').trim() : '', rows: new Set(tops.map(x => Math.round(x / 8))).size, tops };
+  });
+  await page.setViewportSize({ width: 1440, height: 900 }); await sleep(400);
+  check('R2-9 at 400 px the “nothing acts until you confirm” note stays, the tally hides, and the foot is one row with “Accept all”', f9.note && !f9.tally && f9.accept === 'Accept all' && f9.rows === 1, JSON.stringify(f9));
+
+  /* 10 (Opus N3): the shelf never cuts off "Never votes." or any helper: Retro at 1440 and 400, and 460-519 px */
+  const shelf = () => ev(() => [...document.querySelectorAll('#pmOverlayRoot .pmx-spec')].map(sp => { const h = sp.querySelector('.pmx-help'), b = sp.querySelector('.pmx-spec-copy > b'), lh = parseFloat(getComputedStyle(b).lineHeight) || 18;
+    return { name: b.textContent, cut: !!h && (h.scrollWidth > h.clientWidth + 1 || getComputedStyle(h).textOverflow === 'ellipsis' && getComputedStyle(h).whiteSpace === 'nowrap'), help: h ? h.textContent : '', nameClip: b.scrollWidth > b.clientWidth + 1, nameLines: Math.round(b.getBoundingClientRect().height / lh) }; }));
+  const f10 = {};
+  for (const [look, w] of [['retro-light', 1440], ['retro-dark', 1440], ['retro-light', 400], ['retro-dark', 400], ['basic-dark', 460], ['basic-dark', 480], ['basic-dark', 500], ['basic-dark', 519]]) {
+    await page.setViewportSize({ width: w, height: 900 }); await ev(x => window.PM56_DEMO.setTheme(x), look); await sleep(300);
+    await ev(() => window.PM56_WG_DEMOS.start('crew')); await sleep(1300);
+    f10[look + '@' + w] = await shelf();
+    await ev(() => { const c = window.PM56_EXT.ctx(); c.state.dialog = null; c.renderOverlays(); });
+  }
+  await page.setViewportSize({ width: 1440, height: 900 }); await ev(() => window.PM56_DEMO.setTheme('basic-dark')); await sleep(300);
+  const bad10 = Object.entries(f10).filter(([k, v]) => !v.length || v.some(x => x.cut || x.nameClip || x.nameLines > 1) || !v.some(x => /Never votes\./.test(x.help))).map(([k, v]) => k + ' ' + JSON.stringify(v));
+  check('R2-10 the shelf never cuts off a helper (“Never votes.” whole in Retro at 1440 and 400) and no name is clipped or wrapped at 460-519 px', !bad10.length, bad10.join(' | ').slice(0, 900));
 }
 if (argv.includes('--browser')) await browser();
 const failed = results.filter(r => !r.pass);
