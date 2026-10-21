@@ -74,8 +74,8 @@ const coord = { role: 'coordinator', name: 'Coordinator' }, mod = { role: 'moder
 {
   const { q, r } = delivered('crew', 3);
   const qd = q.requestPass(r, { by: { kind: 'participant', id: 'a', name: 'A' }, messageId: 'm1', queue: true });
-  check('W2h a later pass with no slot free is queued, never waiting its turn', qd.ok && qd.queued && r.wonderer.passes[1].status === 'queued' && q.gate(r).code === 'exploring');
-  check('W2i a queued pass starts when a slot frees up', q.startQueued(r).ok && r.wonderer.passes[1].status === 'exploring');
+  check('W2k a later pass with no slot free is queued, never waiting its turn', qd.ok && qd.queued && r.wonderer.passes[1].status === 'queued' && q.gate(r).code === 'exploring');
+  check('W2l a queued pass starts when a slot frees up', q.startQueued(r).ok && r.wonderer.passes[1].status === 'exploring');
 }
 {
   const q = new Protocol(), r = runOf('crew'); q.attach(r, { seed: 'x' });
@@ -226,8 +226,8 @@ const grillPart = hits(/additiveRoleKind\s*:\s*'grill_me'|role\s*:\s*'Grill Me'|
 check('S1 no source makes a Grill Me participant, roster row or Persona', grillPart.length === 0, grillPart.join('; '));
 check('S2 the specialist defaults give Grill Me no model, Persona or seat', !/SPECIALIST_DEFAULTS\s*=\s*\{[^}]*grillMe/.test(src['collaboration.js']) && !/SPECIALIST_SEAT\s*=\s*\{[^}]*grillMe/.test(src['collaboration.js']));
 check('S3 the cast plate draws no Grill Me seat; the kettle rides the hub', !/role:\s*'grill'/.test(src['collaboration.js']) && /grill:\s*!!d\.grillMe/.test(src['collaboration.js']));
-check('S4 the shelf says what the Wonderer does and that it never votes', /Explores around the topic and hands its ideas to the team to weigh\. Never votes\./.test(src['collaboration.js']) && !/marked hypothesis/.test(src['collaboration.js']));
-check('S4b the shelf names who questions you first', /who \+ ' questions you ' \+ when/.test(src['collaboration.js']) && /'The Moderator' : 'The Coordinator'/.test(src['collaboration.js']));
+check('S4 the shelf says what the Wonderer does and that it never votes', /Explores around the topic for the team to weigh\. Never votes\./.test(src['collaboration.js']) && !/marked hypothesis/.test(src['collaboration.js']));
+check('S4b the shelf says when it questions you and names who asks first', /'Questions you ' \+ when/.test(src['collaboration.js']) && /esc\(who\) \+ ' asks first/.test(src['collaboration.js']) && /'The Moderator' : 'The Coordinator'/.test(src['collaboration.js']));
 check('S5 a room round never addresses the Wonderer', /filter\(pid=>!wonderer\(/.test(src['room-protocol.js']));
 check('S5d a Chat Room never waits for the Wonderer’s pass', !/waiting_for_wonderer_first_pass/.test(src['room-protocol.js']) && !/waiting_for_wonderer_first_pass/.test(src['room-view.js']));
 check('S5e synthesis and the final result close the run to new passes and Check it', /engine\.close\(r\)/.test(src['brainstorm-protocol.js']) && /engine\.close\(r\)/.test(src['crew-protocol.js']));
@@ -396,6 +396,13 @@ async function browser() {
        written as the room ends) */
     const m1room = await ev(id => { const r = window.PM56_COLLAB.run(id), msgs = r.messages.filter(m => m.roomConclusion || m.roomLeadsUpdate).map(m => m.body); const last = {}; msgs.forEach(b => b.split('\n').filter(x => /^- /.test(x)).forEach(x => { last[x.split(' — ')[0]] = x; })); const bad = r.wonderer.leads.filter(l => l.disposition && /not taken up/.test(last['- ' + l.title] || '')); return bad.map(l => l.id); }, roomId);
     check('B6h no lead the Moderator decided ends the room as “not taken up” (m1)', !m1room.length, JSON.stringify(m1room));
+    /* M3: lead 3 is scripted, so Design checks it (never the fallback); the guide's words follow its real decision; every
+       research note is a real result from the recording, and no summary carries stub copy */
+    const m3 = await ev(id => { const r = window.PM56_COLLAB.run(id), W = window.PM56_WG, r3 = W.engine.lead(r, 'r3'), by = r3 && r3.research && r3.research.by, who = by && r.participants.find(p => p.id === by.id);
+      const notes = r.wonderer.leads.filter(l => l.research && /^(supported|not_supported)$/.test(l.research.status)).map(l => ({ id: l.id, note: l.research.note || '', fx: !!(l.check && l.check.note === l.research.note) }));
+      const sums = r.messages.filter(m => m.roomConclusion || m.roomLeadsUpdate).map(m => m.body).join('\n');
+      return { r3: r3 && { via: r3.research && r3.research.via, st: r3.research && r3.research.status, by: who && (who.role || who.name) }, notes, stub: /stub|placeholder|lorem|TODO|a core helper checked it/i.test(sums + notes.map(n => n.note).join(' ')) }; }, roomId);
+    check('R1-M3 the scripted lead 3 is checked by Design, every research note is the recording’s real result, no stub copy', !!m3.r3 && m3.r3.via === 'check_it' && /Design/.test(m3.r3.by || '') && /^(supported|not_supported)$/.test(m3.r3.st) && m3.notes.length >= 2 && m3.notes.every(n => n.note.length > 20 && n.fx) && !m3.stub, JSON.stringify(m3).slice(0, 600));
     /* the Deep Plan */
     await ev(() => window.PM56_WG_DEMOS.start('deepplan')); await sleep(1500);
     const tid = await ev(() => window.PM56_WG_DEMOS.snapshot().threadId);
