@@ -1427,7 +1427,8 @@
       /* a switch item (DL-218: Grill Me adds nobody) says Turn on / Turn off instead of Add / Remove (it.addWord, it.removeWord) */
       var add = state === 'disabled' ? '<p class="pmx-reason">' + str(it.reason) + '</p>'
         : '<label class="pmx-add" data-on="' + (state === 'on' ? 1 : 0) + '"' + (it.isSwitch ? ' data-switch="1"' : '') + '><input type="checkbox" class="pmx-add-input"' + raw(inp.attrs) + (state === 'on' ? ' checked' : '') + (it.isSwitch ? ' role="switch" aria-checked="' + (state === 'on') + '"' : '') + ' data-pmx-harness>' +
-          pmxGlyph(it.isSwitch ? (state === 'on' ? 'ring-dot' : 'ring') : state === 'on' ? 'minus' : 'plus', 13) + '<span>' + (state === 'on' ? (it.removeWord || 'Remove') : (it.addWord || 'Add')) + '</span></label>';
+          pmxGlyph(it.isSwitch ? (state === 'on' ? 'ring-dot' : 'ring') : state === 'on' ? 'minus' : 'plus', 13) + '<span class="pmx-add-word">' + (state === 'on' ? (it.removeWord || 'Remove') : (it.addWord || 'Add')) + '</span>' +
+          (it.isSwitch ? '<span class="pmx-add-short" aria-hidden="true">' + (state === 'on' ? 'On' : 'Off') + '</span>' : '') + '</label>';
       return '<div class="pmx-spec"' + k(it.key) + ' data-state="' + state + '"' + (it.isSwitch ? ' data-switch="1"' : '') + at('data-pmx-affects', it.affects) + '>' + str(it.mark) +
         '<div class="pmx-spec-copy"><b>' + str(it.name) + '</b>' + (it.helper ? '<span class="pmx-help">' + it.helper + '</span>' : '') + '</div>' +
         '<div class="pmx-spec-control">' + (state === 'on' ? str(it.control) : '') + add + '</div></div>';
@@ -2578,7 +2579,10 @@
     crew_more_required_slots_than_work: ['', 'This plan has fewer steps than helpers. Remove a helper so each one has a step.'],
     scheduled_specialist_adapter_unavailable: ['', 'Scheduled builds can’t include the Wonderer or Grill Me: they run while you’re away. Turn them off to schedule this.'],
     scheduled_coordinator_adapter_unavailable: ['', 'Scheduled builds are led by this chat’s assistant. Pick it as the Coordinator to schedule this.'],
-    scheduled_adaptive_adapter_unavailable: ['', 'In a scheduled build each helper keeps its part. Pick another way to decide who does what.']
+    scheduled_adaptive_adapter_unavailable: ['', 'In a scheduled build each helper keeps its part. Pick another way to decide who does what.'],
+    /* DL-218: a step Grill Me holds, and a lead or Check it once the team is writing the result */
+    grill_me_waits_for_confirm: ['', 'Grill Me has a decision for you first. Answer it in the chat and confirm what you agreed, and this goes on.'],
+    lead_admission_closed: ['', 'The team is writing the result, so it takes no new pass or check.']
   };
   var REFUSE_ALIAS = {
     provider_unavailable: 'model_unresolved', route_unavailable: 'model_unresolved', crew_route_unavailable: 'model_unresolved',

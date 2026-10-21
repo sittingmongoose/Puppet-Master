@@ -57,14 +57,18 @@
  function claim(id,assignmentId,x){
   const r=run(id),why=gate(r,x);if(why)return fail(why);const a=r.crew.assignments.find(t=>t.id===assignmentId);if(!a)return fail('assignment_missing');
   if(!r.crew.assignments.some(t=>t.attempt)){const sg=splitGate(r);if(sg)return fail(sg);}
+  const WGc=window.PM56_WG;
   /* a later grilling session gates only the part that needs its answers (steer 2026-10-20) */
-  if(window.PM56_WG&&window.PM56_WG.stepHeld(r,'part:'+assignmentId))return fail('grill_me_waits_for_confirm');
+  if(WGc&&WGc.stepHeld(r,'part:'+assignmentId))return fail('grill_me_waits_for_confirm');
   if(a.status==='done')return current(r,a)?{ok:true,reused:true,attempt:clone(a.attempt)}:fail('stale_participant_attempt');
   if(a.status==='running')return current(r,a)?{ok:true,reused:true,attempt:clone(a.attempt)}:fail('stale_participant_attempt');
   if(a.dependsOn.some(d=>{const dep=r.crew.assignments.find(t=>t.id===d);return dep.status!=='done'||!current(r,dep);}))return fail('dependencies_pending');
   /* a later Wonderer pass that is exploring holds one slot (it queued behind the parts when none was free) */
-  const wl=window.PM56_WG&&window.PM56_WG.engine.state(r),wSlot=wl&&wl.passes.some(x=>x.n>1&&x.status==='exploring')?1:0;
+  const wl=WGc&&WGc.engine.state(r),wSlot=wl&&wl.passes.some(x=>x.n>1&&x.status==='exploring')?1:0;
   if(r.crew.assignments.filter(t=>t.status==='running').length+wSlot>=r.crew.effectiveConcurrency)return fail('concurrency_full');
+  /* Grill Me turned on mid-run starts at the next assignment boundary: this part, about to start (CWR-042, R4/m5);
+     the parts already running keep going, and only this part waits for that session's Confirm */
+  if(WGc&&WGc.takeMidRun(r)){WGc.beginMidRun(r,'part:'+assignmentId,'the '+String(a.title||'next').replace(/\.$/,'').toLowerCase()+' part');return fail('grill_me_waits_for_confirm');}
   if(a.leadId){
    const q=r.participants.find(p=>p.id===a.participantId);if(!q||q.additiveRoleKind==='wonderer'||['failed','timed_out','unavailable','canceled'].includes(q.outcome))return fail('participant_unavailable');
    const attempt={id:'crew-explore-'+r.id+'-'+a.id,assignmentRevision:q.assignmentRevision,participantId:q.id};
@@ -155,7 +159,8 @@
  /* the reply names what the Wonderer's leads came to, in plain words (every lead is listed in the result) */
  function wonderWords(leads){
   const n=k=>leads.filter(x=>x.status===k).length,sup=leads.filter(x=>x.status==='supported');
-  return '\n\nThe Wonderer handed the Crew '+plural(leads.length,'lead')+'. '+(sup.length?'One check turned something up: '+sup[0].title.replace(/\.$/,'')+' ('+sup[0].reason.replace(/\.$/,'')+'). ':'')+
+  /* one sentence per finding, no parentheses inside parentheses (n2) */
+  return '\n\nThe Wonderer handed the Crew '+plural(leads.length,'lead')+'. '+(sup.length?'One check turned something up: '+sup[0].title.replace(/\.$/,'')+'. '+(sup[0].researchNote||sup[0].reason).replace(/\.$/,'')+'. ':'')+
    [n('using')?n('using')+' carried in as '+(n('using')===1?'a hypothesis':'hypotheses'):'',n('set_aside')?n('set_aside')+' set aside':'',n('not_supported')?n('not_supported')+' not supported':''].filter(Boolean).join(', ')+'. The Crew’s result lists each one with the reason.';
  }
  function parentSummary(r,output){

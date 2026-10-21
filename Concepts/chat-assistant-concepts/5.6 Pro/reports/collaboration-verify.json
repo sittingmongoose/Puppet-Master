@@ -292,7 +292,7 @@
     {
       "name": "the panel names the single frozen target pack hash all initial passes shared",
       "pass": true,
-      "detail": "a1c9f02e Snapshot of orchestrator-subagent-integration.md#executionLimits, taken 12:50 AM. Every reviewer read that exact version."
+      "detail": "a1c9f02e Snapshot of orchestrator-subagent-integration.md#executionLimits, taken 4:41 AM. Every reviewer read that exact version."
     },
     {
       "name": "a finding produced against a DIFFERENT target hash is excluded from corroboration, not silently merged",
@@ -307,7 +307,7 @@
     {
       "name": "Review states it is read-only and never auto-repairs, and no control anywhere on the run exposes a repair action",
       "pass": true,
-      "detail": "{\"targetTxt\":\"a1c9f02e Snapshot of orchestrator-subagent-integration.md#executionLimits, taken 12:50 AM. Every reviewer read that exact version.\",\"excludedTxt\":\"Set aside: this reviewer saw an older version of the file.\",\"excludedReason\":\"different_target_hash\",\"excludedHash\":\"f77e10bb\",\"readonlyNote\":\"Review never changes your files and never auto-repairs.\",\"hasRepairAction\":false}"
+      "detail": "{\"targetTxt\":\"a1c9f02e Snapshot of orchestrator-subagent-integration.md#executionLimits, taken 4:41 AM. Every reviewer read that exact version.\",\"excludedTxt\":\"Set aside: this reviewer saw an older version of the file.\",\"excludedReason\":\"different_target_hash\",\"excludedHash\":\"f77e10bb\",\"readonlyNote\":\"Review never changes your files and never auto-repairs.\",\"hasRepairAction\":false}"
     },
     {
       "name": "the review configure modal reopened for the auto-repair lock check",
@@ -442,7 +442,7 @@
     {
       "name": "an EXPLICIT promotion is the only thing that adds a promotion record, with lineage to the source message",
       "pass": true,
-      "detail": "[{\"id\":\"promo-147\",\"target\":\"todo\",\"summary\":\"Round 3 close. Still nothing promoted — say the word and I will promote a conclusion.\",\"sourceMessageId\":\"msg-146\",\"at\":\"2026-10-21T00:51:45.952Z\"}]"
+      "detail": "[{\"id\":\"promo-147\",\"target\":\"todo\",\"summary\":\"Round 3 close. Still nothing promoted — say the word and I will promote a conclusion.\",\"sourceMessageId\":\"msg-146\",\"at\":\"2026-10-21T04:42:36.276Z\"}]"
     },
     {
       "name": "the explicit promotion is recorded as a durable, visible receipt in the transcript",
@@ -462,7 +462,7 @@
     {
       "name": "E-31: a helper message that arrives on a live run streams into its lane through PM56_PMX.stream (a kept island, words arriving)",
       "pass": true,
-      "detail": "{\"e31State\":\"running\",\"e31Density\":\"live\",\"e31Mid\":{\"streaming\":true,\"keep\":true,\"words\":12,\"html\":\"<q data-collab-stream=\\\"msg-89\\\">I would keep the account boundary first-class: the spend guard says no</q>\",\"text\":\"I would keep the account boundary first-class: the spend guard says no\"}}"
+      "detail": "{\"e31State\":\"running\",\"e31Density\":\"live\",\"e31Mid\":{\"streaming\":true,\"keep\":true,\"words\":13,\"html\":\"<q data-collab-stream=\\\"msg-89\\\">I would keep the account boundary first-class: the spend guard says no before</q>\",\"text\":\"I would keep the account boundary first-class: the spend guard says no before\"}}"
     },
     {
       "name": "E-31: once every word is in, the whole message lands once, with its inline markup, and the island is gone",

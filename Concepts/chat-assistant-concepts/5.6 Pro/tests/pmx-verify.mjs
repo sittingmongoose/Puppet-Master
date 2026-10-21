@@ -211,7 +211,10 @@ export const TEST_THEMES = ['basic-dark', 'basic-light', 'glass-light', 'retro-d
 /* IMPACT A2-25: every check runs in all eight themes by default (the four test themes first) */
 const THEME_ORDER = [...TEST_THEMES, 'friendly-dark', 'friendly-light', 'glass-dark', 'retro-light'];
 const THEMES = opts.quick ? ['basic-dark'] : !opts.themes || opts.themes === 'all' ? THEME_ORDER : opts.themes === 'test' ? TEST_THEMES : opts.themes.split(',');
-for (const t of THEMES) if (!ALL_THEMES.includes(t)) usage('unknown theme ' + t);
+/* NieR Mode's two themes paint over Basic (nier.js); they are never in the default sweep, but --themes may name them
+   so a change that touches NieR's overrides is linted there too (DL-218 concept review round 1, 2026-10-21) */
+const NIER_THEMES = ['nier-dark', 'nier-light'];
+for (const t of THEMES) if (!ALL_THEMES.includes(t) && !NIER_THEMES.includes(t)) usage('unknown theme ' + t);
 const CHECKS = ['present', 'page-errors', 'no-pill', 'no-stripe', 'no-emoji', 'no-missing-glyph', 'h-overflow', 'clipped-text', 'sheet-in-viewport', 'no-scroll', 'no-spill', 'primary-pixel',
   'plate-labels', 'card-budget', 'route-stack', 'unique-controls', 'loop-census', 'no-bleed', 'surfaces-list', 'forbidden-props', 'canon-names', 'parts', 'harness-nodes', 'crowding', 'theme-font',
   'tick-height', 'reduced-census', 'reduced-census-class', 'streaming', 'effects-ledger'];

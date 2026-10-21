@@ -409,7 +409,25 @@ body[data-theme^="retro"] .pmx-sheet .pmx-roster :is(.pmx-roster-head, .pmx-row)
 .pmx-sheet .pmx-spec[data-state="disabled"] > .pmx-spec-glyph{opacity:.45;}
 .pmx-sheet .pmx-spec-copy{min-width:0;}
 .pmx-sheet .pmx-spec-copy b{display:block;font:var(--pmx-fs-ctl);color:var(--text);}
-.pmx-sheet .pmx-spec-copy .pmx-help{margin-top:4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+/* the helper wraps instead of truncating (m6, 2026-10-21): it is the sentence that says who will question you. It
+   runs under the name and the control, across the row, so it wraps to two lines rather than six in the side column
+   (the copy box steps aside, display:contents, and its two lines are the grid's own rows) */
+.pmx-sheet .pmx-spec{grid-template-rows:auto auto;}
+.pmx-sheet .pmx-spec > .pmx-spec-glyph, .pmx-sheet .pmx-spec > .pmx-mark{grid-row:1;}
+.pmx-sheet .pmx-spec-copy{display:contents;}
+.pmx-sheet .pmx-spec-copy > b{grid-column:2;grid-row:1;align-self:center;}
+.pmx-sheet .pmx-spec-control{grid-column:3;grid-row:1;}
+.pmx-sheet .pmx-spec-copy .pmx-help{grid-column:2 / -1;grid-row:2;margin-top:4px;font-size:12px;line-height:17.5px;white-space:normal;overflow-wrap:anywhere;}
+.pmx-sheet .pmx-spec[data-state="disabled"] .pmx-spec-copy .pmx-help{margin-top:6px;}
+.pmx-sheet .pmx-spec, .pmx-sheet .pmx-spec[data-state="on"]{padding:3px 0;min-height:0;}
+.pmx-sheet .pmx-shelf > .pmx-q-head + .pmx-help + .pmx-spec, .pmx-sheet .pmx-shelf > .pmx-q-head + .pmx-spec{padding-top:6px;}
+/* NieR's title face sits lower in its line, so the first item keeps 8 px under the shelf title there */
+html[data-o55-nier="on"] .pmx-sheet .pmx-shelf > .pmx-q-head + .pmx-help + .pmx-spec, html[data-o55-nier="on"] .pmx-sheet .pmx-shelf > .pmx-q-head + .pmx-spec{padding-top:8px;}
+/* in the side column the shelf's model picker drops the account line (the menu still names it), as the side column's
+   other triggers do below 820 px, and stands as tall as the shelf's other controls (32 px): that is the height the
+   helpers' line takes, so the common case still fits 1440 x 900 */
+.pmx-sheet .pmx-col--side .pmx-spec .shared-picker-copy small{display:none;}
+.pmx-sheet .pmx-col--side .pmx-spec .shared-picker-button{min-height:32px;height:32px;padding-top:0;padding-bottom:0;}
 .pmx-sheet .pmx-spec-control{display:flex;align-items:center;gap:10px;margin-left:6px;min-width:0;}
 .pmx-sheet .pmx-spec-control .shared-picker-button{width:172px;}
 .pmx-sheet .pmx-spec[data-state="disabled"] .pmx-spec-copy b{color:var(--muted);}
@@ -418,6 +436,22 @@ body[data-theme^="retro"] .pmx-sheet .pmx-roster :is(.pmx-roster-head, .pmx-row)
 .pmx-sheet .pmx-spec .pmx-add[data-on="1"]{color:var(--muted);}
 .pmx-sheet .pmx-spec .pmx-add:hover > span{text-decoration:underline;text-underline-offset:3px;}
 .pmx-sheet .pmx-add-input{position:absolute;inset:0;width:100%;height:100%;margin:0;opacity:0;cursor:pointer;}
+/* the input is invisible, so its keyboard focus shows on the visible control (R11) */
+.pmx-sheet .pmx-spec .pmx-add:has(> .pmx-add-input:focus-visible){outline:2px solid var(--pmx-focus-outline, var(--accent));outline-offset:2px;border-radius:6px;}
+/* a phone-width sheet: a switch says On / Off (m6) */
+.pmx-add-short{display:none;}
+@media (max-width: 459.98px){
+  .pmx-sheet .pmx-spec .pmx-add[data-switch="1"] > .pmx-add-word{display:none;}
+  .pmx-sheet .pmx-spec .pmx-add[data-switch="1"] > .pmx-add-short{display:inline;}
+  .pmx-sheet .pmx-spec .pmx-add[data-switch="1"]{padding:0 6px;}
+  /* a phone-width row: the name keeps its own line (never crushed by the picker, "Grill Me" never wraps under its
+     mark), the control goes under it, then the helper (m6) */
+  .pmx-sheet .pmx-spec{grid-template-rows:auto auto auto;}
+  .pmx-sheet .pmx-spec-copy > b{white-space:nowrap;}
+  .pmx-sheet .pmx-spec-control{grid-column:2 / -1;grid-row:2;margin:6px 0 0;justify-content:space-between;}
+  .pmx-sheet .pmx-spec-control .shared-picker-button{width:auto;flex:1 1 auto;min-width:0;max-width:220px;}
+  .pmx-sheet .pmx-spec-copy .pmx-help{grid-row:3;}
+}
 
 /* ================================================================ A9 stepper */
 .pmx-stepper{display:flex;align-items:center;gap:8px;height:40px;position:relative;min-width:0;}
@@ -1223,10 +1257,12 @@ body[data-theme^="retro"] .pmx-finding-claim{font-size:12.5px;}
 .pmx-view .pmx-view-head .pmx-view-acts{grid-column:2;grid-row:1 / 4;display:flex;flex-direction:row;flex-wrap:wrap;justify-content:flex-end;gap:4px;align-items:center;padding:0;border:0;background:none;}
 .pmx-view .pmx-view-acts .text-button{color:var(--muted);}
 /* a phone-width view: the actions go under the title, so a run with four of them (Wonderer's leads, Pause, Message,
-   More) never squeezes its title into a one-word column */
-@media (max-width: 560px){
+   More) never squeezes its title into a one-word column; the view's own width decides (the file's container idiom),
+   and a head with no actions keeps no empty row */
+@container pmxview (max-width: 560px){
   .pmx-view .pmx-view-head.drawer-head{grid-template-columns:minmax(0,1fr);}
   .pmx-view .pmx-view-head .pmx-view-acts{grid-column:1;grid-row:4;justify-content:flex-start;margin:8px 0 0 -8px;}
+  .pmx-view .pmx-view-head .pmx-view-acts:empty{display:none;}
 }
 .pmx-view-plate{margin:18px 0 0;}
 .pmx-view-plate .pmx-plate{margin:0;}

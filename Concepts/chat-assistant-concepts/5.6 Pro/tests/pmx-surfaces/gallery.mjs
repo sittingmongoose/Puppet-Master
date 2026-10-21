@@ -128,9 +128,9 @@ export function galleryInPage() {
         control: S.pmxStepper({ key: 'g-step', input: { attrs: 'data-collab-input="cfg-parallelism"', key: 'cfg-parallelism' }, value: 3, min: 1, max: 8, cap: CAP, unit: 'at once', affects: 'parallel' }) });
     var side = S.pmxQuestion({ key: 'g-q3', n: 3, title: 'How should they work together?', body: how }) +
       S.pmxShelf({ key: 'g-shelf', n: 4, title: 'Add specialists', items: [
-        { key: 'sp-w', mark: mark('wonderer', 7, 22), name: 'Wonderer', helper: 'Explores around the topic and hands its ideas to the team to weigh. Never votes.', state: 'off', input: { attrs: 'data-collab-input="wonderer"' }, affects: 'wonderer' },
+        { key: 'sp-w', mark: mark('wonderer', 7, 22), name: 'Wonderer', helper: 'Explores around the topic for the team to weigh. Never votes.', state: 'off', input: { attrs: 'data-collab-input="wonderer"' }, affects: 'wonderer' },
         /* DL-218: Grill Me is a switch (no seat, no row, no model); on, it names who questions you first */
-        { key: 'sp-g', mark: '<span class="pmx-spec-glyph" style="--nx-ink:var(--pmx-seat-lead)">' + S.pmxGlyph('grill', 22) + '</span>', name: 'Grill Me', helper: 'The Coordinator questions you before it splits the job, round by round, with a recommended answer for each decision.', state: 'on', isSwitch: true, addWord: 'Turn on', removeWord: 'Turn off',
+        { key: 'sp-g', mark: '<span class="pmx-spec-glyph" style="--nx-ink:var(--pmx-seat-lead)">' + S.pmxGlyph('grill', 22) + '</span>', name: 'Grill Me', helper: 'Questions you before the split, recommending each answer.', state: 'on', isSwitch: true, addWord: 'Turn on', removeWord: 'Turn off',
           control: '<span class="pmx-spec-who">' + S.pmxMark({ role: 'coordinator', size: 18, grill: true }) + '<span>The Coordinator asks first</span></span>', input: { attrs: 'data-collab-input="grillMe"' }, affects: 'grill' }] }) +
       S.pmxPromises(S.pmxPromise({ key: 'pr1', glyph: 'lock', strong: 'Helpers can\u2019t do more than this chat', text: '(Agent, asks first).', part: 'permission' }) +
         S.pmxPromise({ key: 'pr2', glyph: 'not', strong: 'Crew Auto is off:', text: 'no Crew starts by itself. <button type="button" class="text-button" data-action="noop">Settings…</button>', part: 'auto' })) +

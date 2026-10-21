@@ -134,7 +134,8 @@
   if(WG&&r.wonderer&&r.wonderer.version===2){
    const rows=WG.engine.listing(r);
    blocks.push(h('Wonderer leads'),p('The Wonderer ran alongside the team and never voted. The team decided each lead; a lead it used is still a hypothesis, not a fact or a decision.'),ul(WG.listingText(r)));
-   rows.forEach(x=>{result.ledgerEntries.push({k:'wonderer_lead',v:x.title+' — '+x.word+(x.reason?': '+x.reason:'')});if(x.evidence)result.sourceRefs.push({ref:'wonderer-evidence:'+r.id+':'+x.id,kind:'recorded_evidence',summary:x.evidence.label});});
+   /* the ledger keeps the team's decision beside any research outcome (CWR-043, M4) */
+   rows.forEach(x=>{result.ledgerEntries.push({k:'wonderer_lead',v:x.title+' — '+(x.disposition?'the team: '+x.dispositionWord+', '+x.dispositionReason:'undecided')+(x.researchNote?' → '+x.researchWord+': '+x.researchNote:'')});if(x.evidence)result.sourceRefs.push({ref:'wonderer-evidence:'+r.id+':'+x.id,kind:'recorded_evidence',summary:x.evidence.label});});
   }
   return result;
  }
@@ -362,8 +363,9 @@
   const deciding=und.slice(0,1).map(p=>'<span class="pmx-voter" data-k="pmx-voter:'+H(r.id)+':'+H(p.id)+'"><span class="pmx-bs-vmark" data-hover-key="bs-voter:'+H(r.id)+':'+H(p.id)+'" data-hover-tip="'+H((p.role||'Helper')+' · still deciding')+'">'+markP(r,p,22,'working')+'</span>'+(und.length>1?'<span class="pmx-bs-more">+'+(und.length-1)+'</span>':'')+'</span>').join('');
   const w=wondererP(r),abst=cs.filter(p=>voted.get(p.id)&&voted.get(p.id).position==='abstain');
   const standIn=(p,label)=>'<span class="pmx-voter" data-k="pmx-voter:'+H(r.id)+':'+H(p.id)+'">'+markP(r,p,22,'abstained')+'<span>'+H(label)+'</span></span>';
-  /* the Wonderer never votes (8.4 "doesn't vote"); a core helper that abstains did */
-  const wing=(w?'<p class="pmx-bs-wlab">Doesn’t vote</p>'+standIn(w,'Wonderer'):'')+(abst.length?'<p class="pmx-bs-wlab">Abstained</p>'+abst.map(p=>standIn(p,p.role||'Helper')).join(''):'');
+  /* the Wonderer never votes and is shown Abstained, out of the support and oppose counts (section 9.2, n6); a core
+     helper that abstained stands with it */
+  const wing=(w||abst.length?'<p class="pmx-bs-wlab">Abstained</p>':'')+(w?standIn(w,'Wonderer'):'')+abst.map(p=>standIn(p,p.role||'Helper')).join('');
   /* column widths (measured at 391 in basic and retro): with two options (the common case) both keep an equal share,
      which holds each title on one line and gives three backers the 90 px their marks need; with three or more options
      a column grows with its backers */
@@ -406,9 +408,8 @@
   const WG=window.PM56_WG,w=wondererP(r),gate=WG&&r.wonderer?WG.gate(r):null,blocked=!!(gate&&!gate.ok);
   const wpass=r.wonderer&&r.wonderer.passes?r.wonderer.passes[r.wonderer.passes.length-1]:null,wstate=['vote','synthesis','completed'].includes(phase)?'abstained':wpass&&wpass.status==='exploring'?'working':'idle';
   const budget=budgetOf(r);
-  /* DL-218: the Coordinator's grilling questions come out of the same shared allowance, so the card counts them too */
-  const WGq=window.PM56_WG,grillAsked=WGq&&WGq.sessionsOf?WGq.sessionsOf(r).reduce((t,x)=>t+(x.asked||0),0):0;
-  const qAsked=budget?budget.questions_asked+grillAsked:0,qLeft=budget?Math.max(0,budget.effective_limit-qAsked):0;
+  /* DL-218: the Coordinator's grilling questions are charged to this same bank, so the card's count is the bank's */
+  const qAsked=budget?budget.questions_asked:0,qLeft=budget?Math.max(0,budget.effective_limit-qAsked):0;
   const qline=budget?(budget.exhausted||(qAsked&&!qLeft)?'The team has asked all the questions it’s allowed. It will decide the rest from research and your earlier answers.':(qAsked?qAsked+' asked · '+qLeft+' left (shared)':'No questions yet · up to '+budget.effective_limit+' (shared)')):'';
   const reused=(b.input.answers||[]).length;
   const cluster=cs.map(p=>{const a=b.attempts.find(x=>x.participantId===p.id)||{},v=b.votes.find(x=>x.participantId===p.id);

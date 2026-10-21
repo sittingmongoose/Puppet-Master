@@ -381,9 +381,16 @@
     /* no Technical details (2026-10-07, Jared): the commands stay on the sheet's Advanced page only */
     var run = C.run(vm.runId), wp = run && WG() ? WG().wondererP(run) : null, grill = run && WG() && WG().grillOn(run);
     if (wp) rows += '<li>' + S.pmxMark({ role: 'wonderer', seat: 7, size: 18 }) + '<span><b>Wonderer</b> · alongside<small>Explores around the topic and hands the room its leads. Takes no turn and never votes.</small></span></li>';
-    if (grill) rows = rows.replace(S.pmxMark({ role: 'moderator', size: 18 }), S.pmxMark({ role: 'moderator', size: 18, grill: true })) + '<li class="pmx-rv-grill">' + S.pmxGlyph('grill', 16) + '<span><b>Grill Me</b> is on<small>It adds nobody: the Moderator questions you before round 1.</small></span></li>';
+    if (grill) rows = rows.replace(S.pmxMark({ role: 'moderator', size: 18 }), S.pmxMark({ role: 'moderator', size: 18, grill: true }));
+    /* DL-218 (CWR-042, m5): the Grill Me switch on a running room; turned on, the Moderator questions you before the next
+       round and only that round waits for your Confirm */
+    var live = run && (run.status === 'running' || run.status === 'paused' || run.status === 'blocked');
+    var sw = live && WG() ? S.pmxCheck({ key: 'room-grill:' + run.id, cls: 'bs-grill room-grill', attrs: 'data-action="wg-toggle-grill" data-run="' + esc(run.id) + '"', checked: !!grill, label: 'Grill Me', glyph: 'grill',
+      helper: grill ? (run.grillPending ? 'On. The Moderator questions you before the next round; this round goes on.' : 'On. It adds nobody: the Moderator questions you, and the round that needs your answers waits for your Confirm.') : 'Off. Turn it on and the Moderator questions you before the next round.' })
+      : grill ? '<li class="pmx-rv-grill">' + S.pmxGlyph('grill', 16) + '<span><b>Grill Me</b> is on<small>It adds nobody: the Moderator questions you before round 1.</small></span></li>' : '';
+    if (!live && grill) rows += sw;
     return '<p class="pmx-fine pmx-rv-asidehead">' + COPY.table + '</p><ul class="pmx-rv-table">' + rows + '</ul>' +
-      '<p class="pmx-rv-policy"><b>' + esc(vm.policy.label) + '</b> · up to ' + plural(vm.maxRounds, 'round') + '</p>' +
+      '<p class="pmx-rv-policy"><b>' + esc(vm.policy.label) + '</b> · up to ' + plural(vm.maxRounds, 'round') + '</p>' + (live ? sw : '') +
       '<p class="pmx-rv-promise">' + g('not', 14) + '<span>' + COPY.promise + '</span></p>' +
       (vm.source === 'protocol' ? '<button type="button" class="text-button pmx-rv-export" data-action="room-export"' + runAttr(vm) + '>' + g('download', 14) + '<span>' + COPY.download + '</span></button>' : '');
   }

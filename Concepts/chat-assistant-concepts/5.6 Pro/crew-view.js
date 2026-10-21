@@ -408,6 +408,14 @@
     out += '<li>' + (cl && cl.card.indexOf(' (') > 0 ? '<b>' + esc(cl.card.split(' (')[0]) + '</b> (' + esc(cl.card.split(' (')[1]) : '<b>' + runs + ' at a time</b>') + '</li>';
     (r.participants || []).forEach(function (p) { var si = standIn(p); if (si) out += '<li>' + si.card + '</li>'; });
     out += '<li>Helpers can do what this chat can: ' + esc(((r.crew && r.crew.parent) || {}).mode || 'Agent') + ', asking first.</li></ul>';
+    /* DL-218 (CWR-042, m5): the Grill Me switch on a running Crew; turned on, the Coordinator questions you at the next
+       assignment and only that part waits for your Confirm; turned off, a pending request is dropped */
+    var WGx = window.PM56_WG;
+    if (WGx && (r.status === 'running' || r.status === 'paused' || r.status === 'blocked')) {
+      var on = WGx.grillOn(r), pend = !!r.grillPending;
+      out += S().pmxCheck({ key: 'crew-grill:' + r.id, cls: 'bs-grill crew-grill', attrs: 'data-action="wg-toggle-grill" data-run="' + esc(r.id) + '"', checked: on, label: 'Grill Me', glyph: 'grill',
+        helper: on ? (pend ? 'On. The Coordinator questions you at the next assignment; the parts running keep going.' : 'On. The Coordinator puts each decision only you can make to you, round by round, and the part that needs it waits for your Confirm.') : 'Off. Turn it on and the Coordinator questions you at the next assignment; only that part waits for your answers.' });
+    }
     /* no Technical details (2026-10-07, Jared): the commands stay on the sheet's Advanced page only */
     return out;
   }

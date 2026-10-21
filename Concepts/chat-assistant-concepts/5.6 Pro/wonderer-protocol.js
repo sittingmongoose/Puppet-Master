@@ -9,8 +9,9 @@
  *   PASSES   The first pass starts with the run (in a BrainStorm, during intake, before the blind proposals take the
  *            concurrency). A further pass runs only when a core participant, the coordinator, the moderator or the user
  *            asks for one in an addressed message, at most two further passes; a failed pass does not count toward
- *            the two. A later pass queues behind core work when no slot is free (it is queued, never "waits its
- *            turn"). The Wonderer never asks itself. A pass works 3 or 4 of the method's eight angles; 3 to 5 leads is
+ *            the two, and its retry keeps its number (2 or 3) with a new attempt identity; a pass asked for after a
+ *            failed first pass is pass 2. A later pass queues behind core work when no slot is free (it is queued,
+ *            never "waits its turn"). The Wonderer never asks itself. A pass works 3 or 4 of the method's eight angles; 3 to 5 leads is
  *            its target, not a minimum: it may stop early with one or two, or with none ("no new leads" is a truthful
  *            result), and it never returns more than 5. A lead without a tether is drift and is dropped; a lead
  *            without a source is not delivered. (Steer of 2026-10-20 from the two Plans reviews.)
@@ -21,15 +22,19 @@
  *            pass, while splitting for a Crew, on delivery for any later pass. A disposition without a reason is
  *            refused. An explored lead ends supported (with evidence) or not supported (set aside, with the reason).
  *   CHECK IT The user's only override: it sends any lead to research, whatever its disposition, and never waits. On a
- *            lead already in research (or already checked) it shows that research instead of starting another.
+ *            lead already in research (or already checked) it shows that research instead of starting another. In a
+ *            BrainStorm the request is recorded at once and researched in the Evidence round: no core participant
+ *            reads a held lead, so research never starts on one (startResearch refuses).
  *   CLOSED   Once synthesis or a Crew's final result starts (close()), a new pass request and Check it are refused
- *            with a stated reason: the team is writing the result.
+ *            with lead_admission_closed: the team is writing the result.
  *   NEVER    The Wonderer never votes, never takes a debate or room turn, never argues for or against a proposal,
  *            never disposes, explores or sends its own leads to research.
  *   WAITS    BrainStorm's Write the plan and a Crew's final result are unavailable, with a stated reason, while a pass
  *            is in flight, a lead is undecided or a lead's research is in flight. A Chat Room never waits for the
  *            Wonderer: round 1 starts on time and a pass joins between turns; its summary lists every lead with its
  *            decision, or "not taken up".
+ *   LISTING  A research result overrides the status shown, never the decision: the listing keeps the disposition, its
+ *            reason and who recorded it beside the research outcome and its note (CWR-043).
  *
  * Every refusal is { ok:false, error } with a code; wonderer-grill.js words it (REFUSED). Nothing here touches the
  * DOM, a provider or the network. */
@@ -62,6 +67,8 @@
     waiting: 'Waiting for the team', exploring: 'Exploring', using: 'Using', set_aside: 'Set aside',
     supported: 'Supported', not_supported: 'Not supported'
   };
+  /* the team's decision, in the words a lead row and a listing show beside any research result */
+  var DISPOSITION_WORD = { explore: 'Explore', use: 'Use', set_aside: 'Set aside' };
 
   function recorderOf(kind) { return kind === 'chat_room' ? 'moderator' : 'coordinator'; }
   function isWonderer(p) { return !!p && String(p.additiveRoleKind || '').toLowerCase() === 'wonderer'; }
@@ -111,7 +118,7 @@
     var w = this.state(r); if (!w) return fail('wonderer_not_configured');
     req = req || {};
     var by = req.by || {}, passes = w.passes;
-    if (w.closedAt) return fail('team_writing_result');
+    if (w.closedAt) return fail('lead_admission_closed');
     if (by.kind === 'start') {
       if (passes.length) return fail('first_pass_already_started');
     } else {
@@ -123,7 +130,12 @@
     }
     if (passes.some(function (x) { return IN_FLIGHT[x.status]; })) return fail('pass_running');
     var queued = !!req.queue && by.kind !== 'start';
-    var pass = { id: 'pass-' + r.id + '-' + (passes.length + 1), n: passes.length + 1, by: copy(by), about: req.about || '', askedIn: req.messageId || null, messageId: null,
+    /* the pass number: 1 for the first; a further pass is 1 + the further passes delivered + 1, so a retry of a failed
+       further pass keeps its number (2 or 3), and a pass after a failed first pass is pass 2 (CWR-041) */
+    var delivered = passes.filter(function (x) { return x.by.kind !== 'start' && x.status !== 'failed'; }).length;
+    var n = by.kind === 'start' ? 1 : 2 + delivered, attempt = passes.filter(function (x) { return x.n === n; }).length + 1;
+    if (n > MAX_PASSES) return fail('pass_limit');
+    var pass = { id: 'pass-' + r.id + '-' + n + (attempt > 1 ? '-a' + attempt : ''), n: n, attempt: attempt, attemptId: 'attempt-' + r.id + '-' + n + '-' + attempt, by: copy(by), about: req.about || '', askedIn: req.messageId || null, messageId: null,
       status: queued ? 'queued' : 'exploring', queuedAt: queued ? this.now() : null, startedAt: queued ? null : this.now(), deliveredAt: null, releasedAt: null, summary: '', territory: '', angles: [], leadIds: [] };
     passes.push(pass);
     this.receipt(r, queued ? 'pass_queued' : 'pass_started', { passId: pass.id, by: by });
@@ -169,7 +181,7 @@
     var n0 = w.leads.length;
     kept.forEach(function (x, i) {
       w.leads.push({ id: x.id, n: n0 + i + 1, passId: pass.id, angle: x.angle, title: x.title, tether: x.tether, source: copy(x.source),
-        dossier: copy(x.dossier || null), disposition: null, research: null, takenUpBy: [], checkedByUser: false, hypothesis: true });
+        dossier: copy(x.dossier || null), check: copy(x.check || null), disposition: null, research: null, takenUpBy: [], checkedByUser: false, hypothesis: true });
       pass.leadIds.push(x.id);
     });
     dropped.forEach(function (d) { w.dropped.push({ passId: pass.id, id: d.id, reason: d.reason }); });
@@ -236,11 +248,12 @@
     var w = this.state(r); if (!w) return fail('wonderer_not_configured');
     var l = this.lead(r, id); if (!l) return fail('lead_missing');
     if (o && o.takesRequests === false) return fail('run_takes_no_requests');
-    if (w.closedAt) return fail('team_writing_result');
+    if (w.closedAt) return fail('lead_admission_closed');
     /* a lead already in research, or already checked, shows that research; no second one starts */
     if (l.research) return { ok: true, existing: true, research: copy(l.research) };
     l.checkedByUser = true;
-    l.research = { status: 'queued', via: 'check_it', by: null, assignmentId: null };
+    /* in a BrainStorm the request is recorded now and researched in the Evidence round (section 8.5) */
+    l.research = { status: 'queued', via: 'check_it', by: null, assignmentId: null, when: w.kind === 'brainstorm' ? 'evidence' : 'next' };
     this.receipt(r, 'check_it', { leadId: id });
     return { ok: true };
   };
@@ -251,6 +264,8 @@
     by = by || {};
     if (by.role === 'wonderer' || (by.id && by.id === w.participantId)) return fail('wonderer_cannot_research');
     if (!l.research || l.research.status !== 'queued') return fail('nothing_to_research');
+    /* no core participant reads a held lead (CWR-041), so research never starts on one */
+    if (!this.visible(r, l.passId)) return fail('lead_held_until_proposals_in');
     l.research.status = 'running'; l.research.by = { id: by.id || null, name: by.name || 'A helper', role: by.role || 'participant' }; l.research.startedAt = this.now();
     this.receipt(r, 'research_started', { leadId: id, by: l.research.by });
     return { ok: true };
@@ -295,28 +310,31 @@
     return 'waiting';
   };
   P.statusWord = function (l) { return STATUS_WORD[this.status(l)]; };
-  /* the run card's summary line: leads explored, used, set aside and waiting (held leads are waiting) */
+  /* the run card's summary line (CWR-043): leads explored, used, set aside and undecided. A lead the team has not
+     decided counts undecided whatever its research, so the card agrees with the gate; held leads are undecided */
   P.counts = function (r) {
-    var w = this.state(r), self = this, c = { total: 0, explored: 0, used: 0, setAside: 0, waiting: 0, exploring: 0, supported: 0, notSupported: 0, held: 0, undecided: 0, passes: 0 };
+    var w = this.state(r), self = this, c = { total: 0, explored: 0, used: 0, setAside: 0, waiting: 0, exploring: 0, supported: 0, notSupported: 0, held: 0, undecided: 0, checking: 0, passes: 0 };
     if (!w) return c;
     c.passes = w.passes.length;
     w.leads.forEach(function (l) {
-      var s = self.status(l);
+      var s = self.status(l), rs = l.research && l.research.status;
       c.total++;
       if (!self.visible(r, l.passId)) c.held++;
-      if (!l.disposition) c.undecided++;
+      if (rs === 'queued' || rs === 'running') c.checking++;
+      if (rs === 'supported') c.supported++;
+      if (rs === 'not_supported') c.notSupported++;
+      if (!l.disposition) { c.undecided++; return; }
       if (s === 'exploring' || s === 'supported' || s === 'not_supported') c.explored++;
       if (s === 'exploring') c.exploring++;
-      if (s === 'supported') c.supported++;
-      if (s === 'not_supported') c.notSupported++;
       if (s === 'using') c.used++;
       if (s === 'set_aside') c.setAside++;
-      if (s === 'waiting') c.waiting++;
     });
+    c.waiting = c.undecided;
     return c;
   };
-  /* what waits (CWR-041): BrainStorm synthesis and a Crew's final result wait while any lead is undecided or in
-     research; a Chat Room never waits. code: '' | held | undecided | research | exploring */
+  /* what waits (CWR-041): BrainStorm synthesis and a Crew's final result wait while a pass is in flight (exploring or
+     queued), any lead is undecided or in research; a Chat Room never waits. code: '' | exploring | held | undecided |
+     research */
   P.gate = function (r) {
     var w = this.state(r), self = this;
     if (!w || w.kind === 'chat_room') return { ok: true, code: '', count: 0 };
@@ -334,12 +352,15 @@
     var w = this.state(r), self = this;
     if (!w) return [];
     return w.leads.map(function (l) {
-      var s = self.status(l), d = l.disposition, rs = l.research;
-      var reason = rs && (rs.status === 'supported' || rs.status === 'not_supported') ? rs.note : d ? d.reason : '';
+      var s = self.status(l), d = l.disposition, rs = l.research, done = rs && (rs.status === 'supported' || rs.status === 'not_supported');
       return { id: l.id, n: l.n, pass: (self.passOf(r, l) || {}).n || 1, title: l.title, angle: ANGLES[l.angle], tether: l.tether, status: s,
-        word: !d && !rs && w.kind === 'chat_room' ? 'Not taken up' : STATUS_WORD[s], disposition: d ? d.kind : null, reason: reason,
-        recordedBy: d ? d.by.name : '', checkedByUser: l.checkedByUser, hypothesis: l.hypothesis, evidence: rs && rs.evidence ? copy(rs.evidence) : null };
+        word: !d && !rs && w.kind === 'chat_room' ? 'Not taken up' : STATUS_WORD[s],
+        /* the team's decision stays beside the research outcome (CWR-043) */
+        disposition: d ? d.kind : null, dispositionWord: d ? DISPOSITION_WORD[d.kind] : '', dispositionReason: d ? d.reason : '', recordedBy: d ? d.by.name : '',
+        research: rs ? rs.status : null, researchWord: done ? STATUS_WORD[rs.status] : rs ? 'Exploring' : '', researchNote: done ? rs.note : '', researchBy: rs && rs.by ? rs.by.name : '',
+        reason: done ? rs.note : d ? d.reason : '',
+        checkedByUser: l.checkedByUser, hypothesis: l.hypothesis, evidence: rs && rs.evidence ? copy(rs.evidence) : null };
     });
   };
-  return { Protocol: Protocol, ANGLES: ANGLES, STATUS_WORD: STATUS_WORD, MAX_PASSES: MAX_PASSES, MAX_FURTHER: MAX_FURTHER, TARGET_LEADS: TARGET_LEADS, copy: copy, recorderOf: recorderOf, isWonderer: isWonderer };
+  return { Protocol: Protocol, ANGLES: ANGLES, STATUS_WORD: STATUS_WORD, DISPOSITION_WORD: DISPOSITION_WORD, MAX_PASSES: MAX_PASSES, MAX_FURTHER: MAX_FURTHER, TARGET_LEADS: TARGET_LEADS, copy: copy, recorderOf: recorderOf, isWonderer: isWonderer };
 });

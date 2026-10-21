@@ -42,7 +42,9 @@
  function roundGate(r){
   const WG=window.PM56_WG;if(!WG)return null;
   if(WG.holds(r))return 'grill_me_waits_for_confirm';
-  if(WG.stepHeld(r,'round:'+((r.chatRoom.roundsSoFar||0)+1)))return 'grill_me_waits_for_confirm';
+  const nx=(r.chatRoom.roundsSoFar||0)+1;
+  /* (a pending Grill Me is taken by beginRound itself: pressing Next Round starts the interview for that round) */
+  if(WG.stepHeld(r,'round:'+nx))return 'grill_me_waits_for_confirm';
   return null;
  }
  function beginRound(id,x){
@@ -50,6 +52,8 @@
   if(s.round&&!s.round.complete)return {ok:true,reused:true,round:s.round.number};
   const max=r.config.turnPolicy==='ask_everyone_once'?1:+r.config.maxRounds;
   if(s.roundsSoFar>=max)return fail('round_limit_reached');
+  /* Grill Me turned on mid-run starts at the next round boundary: here, before this round (CWR-042, m5) */
+  const WGr=window.PM56_WG;if(WGr&&WGr.takeMidRun(r)){const nx=(s.roundsSoFar||0)+1;WGr.beginMidRun(r,'round:'+nx,'round '+nx);}
   const rg=roundGate(r);if(rg)return fail(rg);
   const addressed=(s.pendingRecipientIds||r.participants.map(p=>p.id)).filter(pid=>!wonderer(r.participants.find(p=>p.id===pid)));s.pendingRecipientIds=null;
   s.round={number:s.roundsSoFar+1,participantIds:addressed.slice(),messages:[],complete:false,replyTo:s.lastUserMessageId};
@@ -142,9 +146,14 @@
   const WG=window.PM56_WG,leads=WG&&WG.engine.state(r)?WG.listingText(r):[];
   const body=s.input.summary+(leads.length?'\n\nThe Wonderer’s leads, and what the room did with each:\n'+leads.map(t=>'- '+t.replace(/^\d+\. /,'')).join('\n'):'');
   const m=C.appendMessage(id,{senderKind:'coordinator',senderId:'moderator:'+id,senderName:'Moderator',messageType:'response',body});m.roomConclusion=true;freeze(m);
-  s.summary={round:s.roundsSoFar,messageId:m.id};return {ok:true,messageId:m.id};
+  s.summary={round:s.roundsSoFar,messageId:m.id,leads:leads.slice()};return {ok:true,messageId:m.id};
  }
- function finish(id){const r=run(id);if(!owns(id))return fail('room_missing');if(r.status==='completed')return {ok:true,reused:true};if(r.status!=='running'||r.chatRoom.pendingRecipientIds||!r.chatRoom.summary||!r.chatRoom.round?.complete||r.chatRoom.summary.round!==r.chatRoom.roundsSoFar)return fail('current_summary_required');r.status='completed';r.completedAt=new Date().toISOString();r.stopEpoch++;r.participants.forEach(p=>{p.status='done';p.outcome='completed';p.current='Discussion complete';});return {ok:true};}
+ function finish(id){const r=run(id);if(!owns(id))return fail('room_missing');if(r.status==='completed')return {ok:true,reused:true};if(r.status!=='running'||r.chatRoom.pendingRecipientIds||!r.chatRoom.summary||!r.chatRoom.round?.complete||r.chatRoom.summary.round!==r.chatRoom.roundsSoFar)return fail('current_summary_required');/* a lead the Moderator decided after the summary was written is listed again as the room ends, so no lead it decided
+     reads "not taken up" (m1); the summary itself stays as it was written */
+  const WGf=window.PM56_WG,now=WGf&&WGf.engine.state(r)?WGf.listingText(r):[],was=(r.chatRoom.summary.leads||[]);
+  const changed=now.filter(t=>was.indexOf(t)<0);
+  if(changed.length){const m=C.appendMessage(id,{senderKind:'coordinator',senderId:'moderator:'+id,senderName:'Moderator',messageType:'response',body:'Before the room ends: '+(changed.length===1?'one of the Wonderer’s leads was':changed.length+' of the Wonderer’s leads were')+' decided after the summary.\n'+changed.map(t=>'- '+t.replace(/^\d+\. /,'')).join('\n')});m.roomLeadsUpdate=true;freeze(m);}
+  r.status='completed';r.completedAt=new Date().toISOString();r.stopEpoch++;r.participants.forEach(p=>{p.status='done';p.outcome='completed';p.current='Discussion complete';});return {ok:true};}
  function promotionRequest(id,mid,target){const r=run(id),m=r?.messages.find(m=>m.id===mid);return r&&m?{runId:id,messageId:mid,target,threadId:r.threadId,definitionRevision:r.definitionRevision,messageHash:hash({id:m.id,body:m.body,senderId:m.senderId})}:null;}
  function validatePromotion(x,target){
   const r=run(x?.runId);if(!owns(r?.id)||!['running','completed'].includes(r.status))return fail('room_unavailable');
@@ -169,7 +178,7 @@
  const isRecorded=d=>!!(C.isRecordedDraft?C.isRecordedDraft(d):d&&d.roomInput);
  const sayNo=(c,title,code)=>{const t=window.PM56_SHELL&&window.PM56_SHELL.pmxRefusalText?window.PM56_SHELL.pmxRefusalText(code):null;c.toast(title,t?t.text:'Nothing changed.');};
  E.chainAction('collab-modal-commit',(c)=>{const d=C.draft();if(d?.kind!=='chat_room'||!isRecorded(d))return false;const ok=preflight(d);if(ok.ok)return false;const t=window.PM56_SHELL?.pmxRefusalText?.(ok.error);d.lastFailure={error:ok.error,message:t?t.text:'This recorded example needs exactly 3 helpers, no specialists, Moderator guides or One answer each, and 1 or 2 rounds.'};c.renderOverlays();return true;});
- E.chainAction('collab-room-next-round',(c,b)=>{if(!owns(b.dataset.run))return false;const x=beginRound(b.dataset.run,envelope(b.dataset.run));if(x.ok)document.dispatchEvent(new CustomEvent('pm56:room-round',{detail:{runId:b.dataset.run}}));else sayNo(c,'Round not started',x.error);c.renderApp();return true;});
+ E.chainAction('collab-room-next-round',(c,b)=>{if(!owns(b.dataset.run))return false;const x=beginRound(b.dataset.run,envelope(b.dataset.run));if(x.ok)document.dispatchEvent(new CustomEvent('pm56:room-round',{detail:{runId:b.dataset.run}}));else sayNo(c,x.error==='grill_me_waits_for_confirm'?'The next round waits for you':'Round not started',x.error);c.renderApp();return true;});
  E.chainAction('collab-room-summarize',(c,b)=>{if(!owns(b.dataset.run))return false;const x=summarize(b.dataset.run);if(!x.ok)sayNo(c,'Summary not ready',x.error);c.renderApp();return true;});
  E.action('room-finish',(c,b)=>{const x=finish(b.dataset.run);if(!x.ok)sayNo(c,'Discussion not ended',x.error);c.renderApp();return true;});
  E.action('room-select-message',(c,b)=>{if(!owns(b.dataset.run))return true;view.set(b.dataset.run,{...view.get(b.dataset.run),selected:b.dataset.message});c.renderApp();return true;});
@@ -412,7 +421,11 @@
   if(done){
    const m=f.summary||[...r.messages].reverse().find(m=>m.senderKind==='coordinator'),made=promotionsWord(r);
    const head=m?firstSentence(m.body).replace(/[.!]+$/,''):'The discussion ended';
-   const rest=m?String(m.body).slice(firstSentence(m.body).length).trim():'';
+   let rest=m?String(m.body).slice(firstSentence(m.body).length).trim():'';
+   /* the card clamps its summary to two lines a block, so the Wonderer's lead list would collapse under its own heading:
+      the card counts the leads by decision instead, and the summary in the panel lists each one (DL-218) */
+   const LH='The Wonderer’s leads, and what the room did with each:',lh=rest.indexOf(LH),WGs=window.PM56_WG;
+   if(lh>=0){rest=rest.slice(0,lh).trim();const ct=WGs&&WGs.countsText?WGs.countsText(r):'';if(ct)rest+=(rest?'\n\n':'')+'The Wonderer’s '+ct.replace(/^Leads: /,'leads: ')+'. The summary lists each one with what the room did with it.';}
    /* 7.12: while the room document is open beside the chat, promotion lives there; the card keeps what was made
       and says where the room is, and Open Panel is no longer the loud action (it would only show the same tab) */
    const beside='<p class="pmx-room-card-help" data-k="room-beside:'+escH(r.id)+'">Open beside the chat.</p>';

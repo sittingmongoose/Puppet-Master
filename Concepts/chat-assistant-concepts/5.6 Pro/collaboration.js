@@ -322,6 +322,8 @@
       wonderer: o.wonderer || null,
       grill: o.grill || null,
       grills: o.grills || null,
+      /* a Crew's or a Chat Room's QuestionBank, opened when Grill Me is first on (section 8.4); BrainStorm keeps its own */
+      grillBank: o.grillBank || null,
       demo: true
     };
   }
@@ -1987,10 +1989,11 @@
   var BS_PHASE_LABEL = { intake: 'Intake and frontier', blind_proposals: 'Blind proposals', normalize: 'Normalize', debate: 'Debate', evidence: 'Evidence round', vote: 'Vote', synthesis: 'Synthesis' };
   EXT.action('collab-brainstorm-toggle-grill', function (ctx, btn) {
     var run = findRun(btn.dataset.run); if (!run) return true;
-    var qb = run.brainstorm.questionBank;
-    qb.grillMeEnabled = !qb.grillMeEnabled;
-    /* DL-218, steer 2026-10-20: Grill Me turned on mid-run grills you at the next chapter; nothing running stops */
-    if (qb.grillMeEnabled && WG_()) WG_().requestMidRunGrill(run); else if (run.config) run.config.grill_me_enabled = !!qb.grillMeEnabled;
+    var qb = run.brainstorm.questionBank, on = !qb.grillMeEnabled;
+    /* DL-218 (CWR-042): Grill Me turned on mid-run grills you at the next chapter; nothing running stops. Turned off,
+       the pending request is cleared and a session still questioning you ends like Wrap up (PM56_WG.setGrill) */
+    if (WG_()) WG_().setGrill(run, on); else { qb.grillMeEnabled = on; if (run.config) run.config.grill_me_enabled = on; }
+    qb.grillMeEnabled = on;
     var eff = qb.baselineLimit + (qb.grillMeEnabled ? qb.grillExtension : 0);
     run.messages.push(mkMsg(run, { senderKind: 'system', senderName: 'System', messageType: 'message', body: 'Grill Me ' + (qb.grillMeEnabled ? 'enabled' : 'disabled') + '. Effective question maximum is now ' + eff + '. The ' + qb.askedIds.length + ' questions already asked still count — the allowance did not reset.' }));
     ctx.renderOverlays(); ctx.renderApp();
@@ -2596,6 +2599,9 @@
   }
   /* The first offline choice in the draft (helpers, then specialists that are on, then the Moderator/synthesis
      model), as the disabled-Start sentence; '' when every chosen model is available. */
+  /* a recorded example that cannot play without a switch says so before Start (R6): the BrainStorm recordings follow
+     the Wonderer's leads; every other recording plays with either switch off and skips its steps */
+  function recordingReason(d) { return d && d.recordingNeeds && d.recordingNeeds.wonderer && !d.wonderer ? 'This recording follows the Wonderer’s leads. Add the Wonderer back to start it.' : ''; }
   function offlineReason(d) {
     if (!d) return '';
     var verb = d.autoMode ? 'save' : 'start';
@@ -2776,7 +2782,7 @@
      Coordinator's or the Moderator's seat (hub.grill), or at BrainStorm's Understand chapter */
   function castWing(d, kind, live) {
     var k = CAST_KEY[kind] || kind, st = (live && live.states) || {}, out = [];
-    if (d.wonderer) out.push({ key: 'pmx-p-seat:' + k + ':wonderer', role: 'wonderer', seat: SPECIALIST_SEAT.wonderer, label: 'Wonderer', sub: 'never votes', state: st.wonderer || (kind === 'brainstorm' && live && live.vote ? 'abstained' : 'idle'), part: 'wonderer specialists' });
+    if (d.wonderer) out.push({ key: 'pmx-p-seat:' + k + ':wonderer', role: 'wonderer', seat: SPECIALIST_SEAT.wonderer, label: 'Wonderer', sub: kind === 'brainstorm' || kind === 'review' ? 'never votes' : 'takes no turn', state: st.wonderer || (kind === 'brainstorm' && live && live.vote ? 'abstained' : 'idle'), part: 'wonderer specialists' });
     return out;
   }
   function castSeats(d, kind, live, o) {
@@ -3001,14 +3007,16 @@
     var rec = isRecordedDraft(d);
     var routes = d.specialistRoutes || SPECIALIST_DEFAULTS;
     /* DL-218: who questions you first, when Grill Me is on (the one who already talks to you) */
-    var who = d.kind === 'chat_room' ? 'The Moderator' : 'The Coordinator', when = d.kind === 'crew' ? 'before it splits the job' : d.kind === 'chat_room' ? 'before round 1' : 'before anyone drafts';
+    var who = d.kind === 'chat_room' ? 'The Moderator' : 'The Coordinator', when = d.kind === 'crew' ? 'before the split' : d.kind === 'chat_room' ? 'before round 1' : 'before anyone drafts';
     function item(key, name, helper, role) {
       var on = !!d[key];
       var state = reason ? 'disabled' : (rec && !on) ? 'disabled' : on ? 'on' : 'off';
       /* the helper is one line in the shelf; its whole sentence rides in the app hover card */
-      var it = { key: 'pmx-spec-' + key, name: name, helper: '<span data-hover-key="collab-spec-help:' + key + '" data-hover-tip="' + esc(helper) + '">' + esc(helper) + '</span>', state: state, reason: reason || (rec ? 'This recorded example uses its own team.' : ''),
+      var it = { key: 'pmx-spec-' + key, name: name, helper: '<span id="pmx-spec-help-' + key + '" data-hover-key="collab-spec-help:' + key + '" data-hover-tip="' + esc(helper) + '">' + esc(helper) + '</span>', state: state, reason: reason || (rec ? 'This recorded example uses its own team.' : ''),
         affects: (key === 'wonderer' ? 'wonderer' : 'grill') + ' specialists',
-        input: { attrs: 'data-collab-input="' + key + '"' } };
+        /* the switch's name is the feature's, and its helper describes it (R11; the visible Turn on / Turn off is the
+           state the switch already announces) */
+        input: { attrs: 'data-collab-input="' + key + '"' + (key === 'grillMe' ? ' aria-label="Grill Me" aria-describedby="pmx-spec-help-grillMe"' : ' aria-label="Wonderer" aria-describedby="pmx-spec-help-wonderer"') } };
       if (key === 'wonderer') {
         it.mark = S.pmxMark({ role: role, seat: SPECIALIST_SEAT[key], size: 24, state: on ? 'idle' : 'optional' });
         it.control = PK.modelButton('collab-pick-model', 'collab-model-spec-' + key, (routes[key] || SPECIALIST_DEFAULTS[key]).modelId, 'data-specialist="' + key + '"');
@@ -3024,13 +3032,15 @@
       }
       return it;
     }
-    var grillHelp = who + ' questions you ' + when + ', round by round, with a recommended answer for each decision.' + (d.kind === 'brainstorm' ? ' Allows 25 more questions.' : '');
+    /* one line in the side column at 1440 x 900, so the whole sentence shows and the common case still fits (m6, 6.3);
+       who asks first is the control's own words beside it */
+    var grillHelp = 'Questions you ' + when + ', recommending each answer.' + (d.kind === 'brainstorm' ? ' Adds 25 questions.' : '');
     /* J-2 / 6.3: the canon helper ("Extra helpers that join the team. They never replace one.") rides in the
        title's hover card and a short meta, so the side column fits the 88 px hero at 1440 x 900 */
     return S.pmxShelf({ key: 'q-specialists', n: d.autoMode ? null : 4,
       title: '<span data-hover-key="collab-specialists" data-hover-tip="The Wonderer joins the ' + (d.kind === 'crew' ? 'Crew' : d.kind === 'chat_room' ? 'room' : 'team') + ' and never replaces a helper. Grill Me is a switch: it adds nobody.">Add specialists</span>',
       meta: 'Optional · they never replace a helper',
-      items: [item('wonderer', 'Wonderer', 'Explores around the topic and hands its ideas to the team to weigh. Never votes.', 'wonderer'), item('grillMe', 'Grill Me', grillHelp, 'grill')] });
+      items: [item('wonderer', 'Wonderer', 'Explores around the topic for the team to weigh. Never votes.', 'wonderer'), item('grillMe', 'Grill Me', grillHelp, 'grill')] });
   }
 
   /* E-02: the project default, or with a thread id this chat's answer (its Crew Auto check overrides the default) */
@@ -3382,7 +3392,7 @@
     var S = S_();
     var p = sheetPartsFor(d, ctx);
     /* E-03: an offline chosen model keeps Start disabled with its sentence, over any kind's own primary state */
-    var offline = offlineReason(d);
+    var offline = recordingReason(d) || offlineReason(d);
     if (offline) { p.primaryDisabled = true; p.primaryReason = offline; }
     var n = d.rows.length;
     UI.jobEmpty = !String(d.purpose || '').trim();
@@ -3799,6 +3809,8 @@
         return { ok: false, error: 'provider_unavailable', slot: r.role, rowId: r.rowId, helper: r.role, message: offlineSentence(r.requestedModelId) + ' Nothing was started.' };
     }
     /* E-03: a specialist, the Moderator or the synthesis model that is offline blocks Start the same way */
+    var need = recordingReason(d);
+    if (need) return { ok: false, error: 'recording_needs_wonderer', slot: null, message: need + ' Nothing was started.' };
     var off = offlineReason(d);
     if (off) return { ok: false, error: 'provider_unavailable', slot: null, message: off + ' Nothing was started.' };
     return { ok: true };
@@ -3831,6 +3843,8 @@
     var P = PMX_();
     /* E-03: an offline chosen model refuses every start, scheduled ones and Crew Auto's rules included; the row
        carries the notice and its Fix, the sheet and its values stay */
+    var need = recordingReason(d);
+    if (need) { d.lastFailure = { error: 'recording_needs_wonderer', rowId: null, helper: '', message: need + ' Nothing was started.' }; ctx.renderOverlays(); return true; }
     var offline = offlineReason(d);
     if (offline) {
       var offRow = d.rows.filter(function (r) { return UNAVAILABLE_DEMO[r.requestedModelId]; })[0];
@@ -3909,7 +3923,7 @@
     if (d.kind === 'crew') newRun.crew = { boundPlanId: d.boundPlanId || null, boundPlanVersion: d.boundPlanVersion || null, boundTodoIds: d.boundPlanId ? ['Bound at Crew start: see the Plan owner for the current To-Do set.'] : [], assignments: [] };
     if (d.kind === 'review') newRun.review = { targetPack: targetPackOf(ctx, d), findings: [], excludedFindings: [], focus: focusOf(d) };
     if (d.kind === 'chat_room') newRun.chatRoom = { roundsSoFar: 0, turnPolicy: d.config.turnPolicy, promotions: [] };
-    if (d.kind === 'brainstorm') newRun.brainstorm = { phase: 'intake', questionBank: { baselineLimit: d.config.questionLimit, grillExtension: d.config.grillExtension, grillMeEnabled: d.grillMe, askedIds: [], resolvedIds: [], duplicateIds: [], researchRoutedIds: [] }, proposals: [], debateRounds: d.config.debateRounds, votes: [], hardConstraintViolations: [], dissent: [], wondererLeads: [], provisioning: [], synthesis: null, mustHaves: mustHaveLines(d) };
+    if (d.kind === 'brainstorm') newRun.brainstorm = { phase: 'intake', questionBank: { baselineLimit: d.config.questionLimit, grillExtension: d.config.grillExtension, grillMeEnabled: d.grillMe, askedIds: [], resolvedIds: [], duplicateIds: [], researchRoutedIds: [] }, proposals: [], debateRounds: d.config.debateRounds, votes: [], hardConstraintViolations: [], dissent: [], provisioning: [], synthesis: null, mustHaves: mustHaveLines(d) };
     newRun.messages.push(mkMsg(newRun, { senderKind: 'system', senderName: 'System', messageType: 'message', body: 'Started with ' + plural2(coreParticipants.length, NOUN[d.kind]) + '.' }));
     /* MODAL-002: the ONLY place a durable collaborative effect is counted. Opening, editing and cancelling a sheet
        reach none of these lines. A wand-started run with no recording makes no provider call (it is born waiting). */
