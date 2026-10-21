@@ -1789,9 +1789,11 @@ show the same puppet. No agent is drawn as initials anywhere.
   Builders, implementers, engineers and helpers wear a hard hat. Reviewers,
   checkers, auditors, QA, testers and analysts hold a magnifier. Critics,
   critical advisors, skeptics and adversarial reviewers wear a jester's cap.
-  Wonderer has an orbit ring and moon round its head. Grill Me stands behind a
-  little kettle grill with its hands on the lid (the neon `grill` glyph's
-  anatomy: a domed lid, the bowl with three grill marks, two splayed legs).
+  Wonderer has an orbit ring and moon round its head. Grill Me has no puppet of
+  its own: while it is on, the Coordinator (in a Chat Room, the Moderator)
+  stands behind a little kettle grill with its hands on the lid, crown or gavel
+  still on (the neon `grill` glyph's anatomy: a domed lid, the bowl with three
+  grill marks, two splayed legs).
   Scribes, teachers and writers hold a page; architects and designers a set
   square; product people and managers a pennant. You are an unstrung figure
   holding the control bar up yourself. A persona matches on its full name, then
@@ -1878,15 +1880,18 @@ the same sheet.
   check (one reviewer, Single Agent) and Deep audit (5 reviewers, one of them a
   Critical Advisor).
 - **Add specialists** (Crew, Chat Room and BrainStorm; never Review):
-  **Wonderer** is a built-in Persona plus a reusable methodology skill that
-  brings ideas from other fields, kept labelled as hypotheses until researched;
-  it doesn't vote. **Grill Me** is a skill that asks you the key decisions
-  first, with suggested answers; on the shelf its item shows the neon kettle
-  grill in its seat hue, which plays its act when the item is hovered or its
-  Add is focused, and once added its puppet stands behind the same kettle on
-  the plate and in the roster. Both are off by default, are added on top of the
-  helpers and never replace one, and each shows its own model trigger; they
-  join the run on those visible models.
+  **Wonderer** ("Explores around the topic and hands its ideas to the team to
+  weigh. Never votes.") is a built-in Persona plus a reusable methodology skill;
+  it is added on top of the helpers, never replaces one, and shows its own model
+  trigger. **Grill Me** is a switch, not a seat: Turn on / Turn off, no model,
+  no plate seat and no roster row. Its helper names who will question you first
+  ("The Coordinator questions you before it splits the job" / "The Moderator …
+  before round 1" / "The Coordinator … before anyone drafts", round by round,
+  with a recommended answer for each decision; BrainStorm adds "Allows 25 more
+  questions."), and once on, the item shows that lead behind the kettle with
+  "… asks first". The item's mark is the neon kettle grill in the lead's hue,
+  which plays its act when the item is hovered or its switch is focused. Both
+  are off by default.
 - Every collaboration Advanced page starts with the same rows, in this order:
   Time and cost limit · Token limit · What helpers can see · Tools they can use
   · If a helper gets stuck · If a model is offline · Keep the full record
@@ -1938,9 +1943,11 @@ in `module-shell.js`; each kind only describes its cast in
   "waits its turn" is written once under the queued group. Review and
   BrainStorm stand a short screen between seats, because the helpers can't see
   each other, and one note line says so.
-- **The wing.** The specialists (Wonderer, Grill Me) stand in a wing at the
-  right end of the row, after a dotted rule, in every kind that has them, Chat
-  Room included. Nothing routes under or through the wing.
+- **The wing.** The Wonderer stands in a wing at the right end of the row,
+  after a dotted rule, in every kind that has it, Chat Room included, with "never
+  votes" under it. Nothing routes under or through the wing. Grill Me has no
+  seat: when it is on, the hub's Coordinator or Moderator stands behind the
+  kettle (in BrainStorm, at the Understand chapter, and the line starts past it).
 - **Chat Room.** Its turn policy and rounds are one note line ("Moderator
   guides · up to 5 rounds"), never arcs or a table.
 - **State** shows on the seats only. There is no table, no rim ticks, no lock
@@ -2133,11 +2140,73 @@ ideas are lined up into options, debated for 1-4 rounds (default 2), and
 checked against evidence (a research tool install is a warm decision); then
 they vote. Evidence decides and votes inform it, and a rule always wins: an
 option that breaks a must-have is ruled out whatever the votes. Dissent is kept
-word for word, and Wonderer abstains and leaves the vote count. A tie is a warm
+word for word, and the Wonderer never votes and leaves the vote count. A tie is a warm
 decision. **Write the plan** (the Plans' new label for Synthesize) produces
 exactly **one** Deep Plan document, whose Plan card appears directly beneath;
 the BrainStorm card stays. "Who writes the plan" (the synthesis model) is its
 own Advanced row.
+
+**The Wonderer and Grill Me** (DL-218, with Jared's steer of 2026-10-20). The
+Wonderer runs alongside a Crew, a Chat Room or a BrainStorm and feeds what it
+finds back to the run's agents, who decide what to explore.
+- **Passes.** The first pass starts with the run (in a BrainStorm, during
+  intake, before the blind proposals take the concurrency). A further pass runs
+  only when a helper, the Coordinator, the Moderator or you ask for it in an
+  addressed message, at most two more ("Ask for another pass · N left"); a
+  failed pass doesn't count toward the two, and the Wonderer never asks itself.
+  A later pass with no free slot is **queued** behind core work (its lane reads
+  "queued", never "waits its turn"). A pass works 3 or 4 of the method's eight
+  angles; 3 to 5 leads is its target, not a minimum: it may stop early with one
+  or two, or with none ("No new leads" is shown as a truthful result), and never
+  hands over more than 5. A lead without a tether is drift and is dropped; a
+  lead without a source is not delivered.
+- **Leads, in place.** Every pass message (in the run's conversation, the main
+  chat's Wonderer card, the run view's "Wonderer's leads" section and the
+  BrainStorm workspace) lists each lead numbered with its angle, its tether
+  ("Why it matters"), its source, its status in place (Waiting for the team ·
+  Exploring · Using · Set aside · Supported · Not supported), the one-line
+  reason and who recorded it, and **Check it**. A helper's message that takes up
+  a lead links to it ("Takes up lead 3").
+- **Decided as they arrive.** The Coordinator (in a Chat Room, the Moderator)
+  records each lead's decision (explore, use or set aside, with a one-line
+  reason) when it arrives: in the Debate for BrainStorm's first pass, while
+  splitting for a Crew, on delivery for any later pass. An explored lead is
+  checked by a core helper, never the Wonderer, and ends Supported (with its
+  evidence) or Not supported (with the reason).
+- **Check it** is your one override: it sends any lead to research whatever the
+  team decided, and never waits. On a lead already in research it shows that
+  research instead of starting another. Once synthesis or a Crew's final result
+  starts, a new pass and Check it are refused with "The team is writing the
+  result".
+- **What waits.** In a BrainStorm a pass is **held** until every blind proposal
+  is in and released at Line up the options. BrainStorm's Write the plan and a
+  Crew's final result are unavailable, with the reason shown, while a pass is in
+  flight, a lead is undecided or a lead's research is out ("Write the plan
+  waits: …"; never for you). A **Chat Room never waits** for the Wonderer: round
+  1 starts on time, the first pass joins between turns, and the room's summary
+  lists every lead with its decision, or "Not taken up".
+- **The card and the lanes.** The run card's meta line counts the leads
+  explored, used, set aside and waiting. The Wonderer's lane reads Exploring,
+  then the lead count ("4 leads", "No new leads"); it never reads "waits its
+  turn". The result, the Plan and the room summary list every lead with its
+  decision and reason; a used lead stays a hypothesis.
+- **Grill Me.** With Grill Me on, the Coordinator (in a Chat Room, the
+  Moderator) questions you in the main chat before the run's first step, in
+  rounds over every decision that is ready (the Ask Card's round bar: "The
+  Coordinator is grilling you · Round N · K decisions ready · A of up to C
+  questions asked"), each with a recommended answer preselected, Accept all,
+  Not sure and Wrap up. Facts it can look up are looked up instead of asked; if
+  every remaining question depends on a lookup, the session waits and shows
+  "Looking things up" rather than jumping ahead. It ends by itself only when
+  nothing is left to ask; Wrap up and the question cap end it too, with the open
+  items listed, and an answer of "not sure" leaves that question open. It ends
+  in **What we agreed** (decisions, open items with why, facts found), and the
+  run's first step waits for **Confirm** (Keep going asks more). Turned on
+  mid-run, Grill Me questions you at the next round or assignment boundary;
+  work already running goes on, and only the step that would use the answers
+  waits for its own small What we agreed / Confirm ("Only the vote waits"). A
+  decision asked later in a run works the same way. In Deep Plan the assistant
+  grills you, and the Plan is written only after Confirm.
 
 **Review.** Single Agent, or Multi-Pass with **1–8 reviewers, default 3**
 (the count and the approach stay in sync: 1 is Single Agent), repeated models

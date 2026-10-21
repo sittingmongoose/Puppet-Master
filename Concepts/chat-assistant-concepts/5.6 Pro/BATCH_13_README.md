@@ -1,5 +1,12 @@
 # Batch 13 — Context Lens and Wonderer
 
+> **Wonderer and Grill Me changed after this batch (DL-218, 2026-10-16, with the steer of 2026-10-20).** The Wonderer
+> now runs alongside a Crew, a Chat Room or a BrainStorm, and the team decides its leads (`wonderer-protocol.js` v2,
+> `wonderer-grill.js`); Grill Me is a switch, so the Coordinator or the Moderator questions you
+> (`grill-protocol.js`). The Lens half below still stands. For current Wonderer and Grill Me behaviour, read
+> `Chat updates.md` ("The Wonderer and Grill Me"). The demos are in Demo Studio → Wonderer and Grill Me, and in this
+> batch's "leads" and "dissent" flows. The checks are in `tests/wonderer-grill-verify.mjs`.
+
 This is the cumulative **5.6 Pro Assistant concept**, continuing the supplied
 Batch 12 source. It is not a new Puppet Master app, a Plans rewrite, or a
 production runtime implementation. Use the guarded delta to install into an
