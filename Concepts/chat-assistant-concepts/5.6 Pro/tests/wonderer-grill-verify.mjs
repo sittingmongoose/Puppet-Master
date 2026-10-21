@@ -359,6 +359,8 @@ async function browser() {
     await load();
     /* WGV_ONLY=r2: the round 2 checks alone (a quick local loop; the full pass runs everything) */
     if (process.env.WGV_ONLY === 'r2') { await reviewRound2({ page, ev, act, sleep, startSheet, answerAll }); check('B7 no page errors', !errs.length, errs.slice(0, 3).join(' | ')); if (cdp) await b.close().catch(() => {}); return; }
+    /* WGV_ONLY=r1: the round 1 checks alone (a quick local loop) */
+    if (process.env.WGV_ONLY === 'r1') { await reviewRound1({ page, ev, act, sleep, startSheet, answerAll }); check('B7 no page errors', !errs.length, errs.slice(0, 3).join(' | ')); if (cdp) await b.close().catch(() => {}); else await b.close(); return; }
     /* WGV_ONLY=rx: the recorded-examples checks alone (2026-10-21) */
     if (process.env.WGV_ONLY === 'rx') { await page.setViewportSize({ width: 1440, height: 900 }); await recordedExamples({ page, ev, act, sleep }); check('B7 no page errors', !errs.length, errs.slice(0, 3).join(' | ')); if (cdp) await b.close().catch(() => {}); else await b.close(); return; }
     /* sheets: the shelf, the plate */
@@ -476,6 +478,14 @@ async function browser() {
     const onTime = await ev(id => { const r = window.PM56_COLLAB.run(id), W = window.PM56_WG; return { exploring: W.engine.state(r).passes[0].status === 'exploring', gate: window.PM56_ROOM.roundGate(r) }; }, roomId);
     check('B6a round 1 starts on time: the room never waits for the Wonderer', onTime.gate === null, JSON.stringify(onTime));
     let roomChecked = null;
+    /* the rounds run by themselves (2026-10-21): as a person would, Check lead 3 once the Moderator has decided it,
+       during round 1, so Design checks it in round 2 (M3) */
+    let r3checked = false;
+    for (let i = 0; i < 40 && !r3checked; i++) {
+      r3checked = await ev(id => { const r = window.PM56_COLLAB.run(id), l = window.PM56_WG.engine.lead(r, 'r3'); if (!l || !l.disposition || l.research) return !!(l && l.research);
+        const b = document.createElement('button'); b.dataset.run = id; b.dataset.lead = 'r3'; window.PM56_EXT.run('wg-check-it', b, new Event('click')); return true; }, roomId);
+      if (!r3checked) await sleep(500);
+    }
     for (let i = 0; i < 14; i++) {
       await act('wg-demo-step'); await sleep(7000);
       if (await ev(id => window.PM56_COLLAB.run(id).status, roomId) === 'completed') break;
@@ -514,7 +524,8 @@ async function browser() {
     await answerAll(30000);
     check('APR-072 no Plan document before Confirm', await noPlan());
     await page.locator('.wg-agreed [data-action="wg-confirm"]').first().click(); await sleep(2500);
-    check('APR-072b the Plan is written after Confirm', !(await noPlan()));
+    let written = false; for (let i = 0; i < 20 && !written; i++) { written = !(await noPlan()); if (!written) await sleep(500); }
+    check('APR-072b the Plan is written after Confirm', written);
     await reviewRound1({ page, ev, act, sleep, startSheet, answerAll });
     await reviewRound2({ page, ev, act, sleep, startSheet, answerAll });
     await recordedExamples({ page, ev, act, sleep });
