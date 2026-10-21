@@ -1028,13 +1028,16 @@ and research-routed set in one `QuestionBank` (`pm.brainstorm.question_bank.v1`,
 Legacy `brainstorm_run_id` denotes the same BrainStorm bank. Crew and Chat Room have
 `baseline_limit` 0, with the configured extension as their whole maximum. Their charge point
 is QMAX-005..007 and their typed exhaustion is QMAX-014..015; no separate counter is added
-(DL-218). For a regular
+(DL-218). For a Crew or Chat Room, QMAX-005..007 and QMAX-014..015 apply to its QuestionBank
+directly. QMAX-001..004's strategy table, QMAX-008 and the QMAX-016 projection remain Plan and
+Deep Plan only. Its bank opens when Grill Me is first turned on; earlier ordinary needs-you
+prompts are not charged to it. For a regular
 Plan run, which creates no ledger session, they are the durably admitted `QuestionnaireEnvelope`
 question and answer records of the existing questionnaire host owned by
 `Plans/assistant-chat-design.md`; opening a ledger session for a regular Plan remains an
 owner-boundary violation. `PlanningQuestionBudgetProjection`
 (`pm.assistant_plan.question_budget_projection.v1`, QMAX-016) is the derived projection rebuilt
-from those durable records, and `pm.assistant_plan.question_budget_policy.v2` is the policy
+from the Plan and Deep Plan durable records, and `pm.assistant_plan.question_budget_policy.v2` is the policy
 record whose seven factory values are the registered Settings rows (QMAX-018). Physical storage
 registration for every record named here follows the boundary in section 3: no writer is
 admitted until central Storage and Contracts adjudication closes.
@@ -1820,17 +1823,18 @@ canonical_text: >-
   waits for a later round. A fact goes to research and is never asked, and research holds only the
   questions that depend on it. I don't know removes that decision from the frontier and lists it as
   open in What we agreed unless the user reopens it. The session ends by itself only when no
-  decision is ready, no fact research is pending and no branch is unsettled. If every remaining
-  question waits on research, the interview waits, says it is looking things up and recomputes when
-  research returns. The user may also end it with Wrap up; the effective limit of QMAX-001..004 is a
-  safety net, and reaching it ends the session with the typed question_budget_exhausted result of
-  QMAX-014..015. When the session ends the user sees What we agreed, every decision with its answer
-  and every decision left open, with Confirm and Keep going, and the Plan document is not written or
-  revised from those answers until the user confirms; Keep going returns to the interview within the
-  limit. Every later decision session ends in its own What we agreed and requires a fresh Confirm of
-  that agreement before the Plan step using its new answers proceeds; already running work
-  continues. Every question still counts once against the run's one counter (QMAX-005..007), and
-  Grill Me adds no participant and no second counter.
+  decision is ready, no fact research is pending and no branch is unsettled. A decision left open,
+  and every decision that depends on it, is listed as open in What we agreed and does not count as
+  an unsettled branch. If every remaining question waits on research, the interview waits, says it
+  is looking things up and recomputes when research returns. The user may also end it with Wrap up;
+  the effective limit of QMAX-001..004 is a safety net, and reaching it ends the session with the
+  typed question_budget_exhausted result of QMAX-014..015. When the session ends the user sees What
+  we agreed, every decision with its answer and every decision left open, with Confirm and Keep
+  going, and the Plan document is not written or revised from those answers until the user confirms;
+  Keep going returns to the interview within the limit. Every later decision session ends in its own
+  What we agreed and requires a fresh Confirm of that agreement before the Plan step using its new
+  answers proceeds; already running work continues. Every question still counts once against the
+  run's one counter (QMAX-005..007), and Grill Me adds no participant and no second counter.
 gui_related: true
 gui_classification_reason: The rounds, Wrap up and the What we agreed step are visible in the chat's questionnaire.
 depends_on: [APR-002, APR-009]
@@ -1838,7 +1842,7 @@ unblocks: []
 acceptance_criteria:
   - "Every round holds only questions whose prerequisites are settled, each with a recommended answer."
   - "Pending fact research keeps an otherwise blocked interview waiting until it returns."
-  - "Automatic completion requires no ready decision, pending research or unsettled branch; Wrap up and typed exhaustion list open items."
+  - "Automatic completion requires no ready decision, pending research or unsettled branch; Wrap up and typed exhaustion list open items. A decision left open, and every decision that depends on it, is listed as open in What we agreed and does not count as an unsettled branch."
   - "I do not know leaves an open decision outside the frontier until explicitly reopened."
   - "Each agreement needs its own Confirm before the consuming Plan step; already running work continues."
   - "Grill Me charges one shared counter and never adds a participant or second counter."

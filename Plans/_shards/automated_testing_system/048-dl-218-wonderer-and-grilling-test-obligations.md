@@ -2,9 +2,9 @@
 
 Source: `Plans/Automated_Testing_System.md`
 
-Source lines: L6597-L6707
+Source lines: L6597-L6714
 
-Source SHA256: `8c94e88553f2f115079308a7b11104984fcdc6d4204b188360c972df0a4cf030`
+Source SHA256: `7375d53c62194fe2dd3391d1857a3e003e50468d87872591db23508b9e549343`
 
 ---
 
@@ -18,7 +18,7 @@ Source SHA256: `8c94e88553f2f115079308a7b11104984fcdc6d4204b188360c972df0a4cf030
 | CWR-041, UCC-205 | Check It accepts any disposition in running/waiting Crew, BrainStorm and Chat Room while lead admission is open; its BrainStorm alias reaches the same operation. Research already in flight returns the existing operation without another attempt. Both result definitions require receipts, resulting revision/currentness and a terminal evidence/reason outcome or observable running work. Test all canonical and compatibility surfaces. |
 | CWR-041, CWR-043 | BrainStorm/Crew synthesis waits on in-flight passes, undecided leads and research; starting it atomically refuses later pass or Check It requests with lead_admission_closed and binds publication to its starting lead/research revision. Chat Room summary/end never waits and lists undecided leads as not taken up. |
 | CWR-042 | Grill Me adds no participant, model, Persona, lane, slot or vote. User-only rounds ask the whole ready frontier with settled prerequisites and no one-question-at-a-time option. Facts route to research; only dependent questions wait. Reuse prior answers, preserve one bank/counter and routed set keyed by collaboration_run_id, baseline 0 in Crew/Chat Room, QMAX-005..007 charge and QMAX-014..015 typed exhaustion. |
-| CWR-042, APR-072 | Automatic completion needs no ready decision, pending fact research or unsettled branch. A frontier waiting only on research stays waiting with feedback and recomputes on return; I don't know removes a decision from the frontier and lists it open. Wrap up and cap end with open items. Every session has its own What we agreed and fresh Confirm; Keep going preserves history and count. Exhaustion, stale identity, denial, duplicate submit and restart never bypass its gate. |
+| CWR-042, APR-072 | Automatic completion needs no ready decision, pending fact research or unsettled branch. A decision left open, and every decision that depends on it, is listed as open in What we agreed and does not count as an unsettled branch. A frontier waiting only on research stays waiting with feedback and recomputes on return; I don't know removes a decision from the frontier and lists it open. Wrap up and cap end with open items. Every session has its own What we agreed and fresh Confirm; Keep going preserves history and count. Exhaustion, stale identity, denial, duplicate submit and restart never bypass its gate. |
 | CWR-042, ACD-503 | Initial Crew split, room round 1, BrainStorm proposals and Plan writes wait for that session's Confirm. Mid-run activation starts at the next round, assignment or phase boundary, continues already running work and gates only the step using the new answers. Every later decision session needs its own current agreement Confirm, with the same counter. |
 | CWR-043, ACD-503 | Numbered questions, preselected recommendations, explicit accept-the-round, Wrap up, all answered/open decisions, Confirm and Keep going render truthfully. Preselection never submits. Grill Me marks the existing coordinator/moderator. Lead rows show tether, source, reason and recorder; disposition set_aside shows set aside, research set_aside shows not supported. Keyboard and pointer use identical controls and reasons. |
 | CW section 17, MIG-021 | Convert definitions for future runs and terminal runs once, preserving attribution, Usage, answers and ordinary historical votes. An in-progress run finishes with its recorded roster or quarantines, with no hot swap of voters, quorum or confirmation gate. Restart is idempotent; ambiguous identity quarantines. |
@@ -43,29 +43,36 @@ canonical_text: >-
   and either a terminal evidence/reason outcome or an observable running operation. Reject missing
   values and whitespace-only reasons. Deny Grill Me role, Persona and Skill participant names
   case-insensitively. The fixture-only roster join rejects every Wonderer vote, even abstain, while
-  displayed Abstained stays outside both denominators. Runtime tests must prove first-pass Intake
-  admission before blind proposals take concurrency, every-pass blind isolation, queued later passes
-  behind core work, no repeat charge for failed, timed-out or unavailable further attempts, and Chat
-  Room round 1 starting on time with later pass delivery between turns. Grill Me's initial interview
-  still precedes room round 1. Verify disposition recording from Debate, while splitting or on later
-  delivery, and BrainStorm/Crew synthesis gating on accepted passes, undecided leads and in-flight
-  research. Synthesis atomically closes further-pass and Check it admission with
-  lead_admission_closed and binds publication to its starting lead/research revision; Check it
-  coalesces an already running lead operation. Exercise all kinds and BrainStorm alias paths. Grill
-  Me adds no participant or Persona. Test whole-frontier user-only rounds with numbered preselected
-  recommendations, explicit accept-the-round, fact routing and prior-answer reuse. Crew and Chat
-  Room use one collaboration_run_id QuestionBank with baseline 0, routed sets, QMAX-005..007 first
-  durable presentation charging and QMAX-014..015 typed exhaustion; extension is the whole maximum.
-  A research-blocked frontier must wait with feedback and recompute on return; I don't know leaves
-  the frontier and appears as open in What we agreed. Automatic completion requires no ready
-  decision, pending fact research or unsettled branch; Wrap up and cap completion list open items.
-  Mid-run enablement starts at the next round, assignment or phase boundary, continues running work
-  and gates only the step using newly confirmed answers. Every later decision session has its own
-  What we agreed and fresh Confirm, preserving one counter. Check set aside for disposition and not
-  supported for research, stale/repeated actions and restart. MIG-021 converts definitions and
-  terminal runs while preserving attribution; an in-progress run finishes under its recorded roster
-  or quarantines without swapping voters, quorum or confirmation gates. Static schema/fixture
-  success proves no native handler, migration execution, UI, provider or recovery behavior.
+  displayed Abstained stays outside both denominators. Runtime tests must prove that a failed first
+  pass is never retried automatically, that a requested pass after it is further pass 2 and counts
+  toward the two on delivery, and first-pass Intake admission before blind proposals take
+  concurrency, every-pass blind isolation, queued later passes behind core work, no repeat charge
+  for failed, timed-out or unavailable further attempts, and Chat Room round 1 starting on time with
+  later pass delivery between turns. Grill Me's initial interview still precedes room round 1.
+  Verify disposition recording from Debate, while splitting or on later delivery, and
+  BrainStorm/Crew synthesis gating on accepted passes, undecided leads and in-flight research.
+  Synthesis atomically closes further-pass and Check it admission with lead_admission_closed and
+  binds publication to its starting lead/research revision; Check it coalesces an already running
+  lead operation. A refused further-pass message returns CollaborationMessageResult with
+  lead_admission_closed and a null collaboration_message_id, delivers no request and starts no pass.
+  Exercise all kinds and BrainStorm alias paths. Grill Me adds no participant or Persona. Test
+  whole-frontier user-only rounds with numbered preselected recommendations, explicit
+  accept-the-round, fact routing and prior-answer reuse. Crew and Chat Room use one
+  collaboration_run_id QuestionBank with baseline 0, routed sets, QMAX-005..007 first durable
+  presentation charging and QMAX-014..015 typed exhaustion; extension is the whole maximum. The Crew
+  or Chat Room bank opens on the first Grill Me enablement and never charges earlier ordinary
+  needs-you prompts. A research-blocked frontier must wait with feedback and recompute on return; I
+  don't know leaves the frontier and appears as open in What we agreed. Automatic completion
+  requires no ready decision, pending fact research or unsettled branch. A decision left open, and
+  every decision that depends on it, is listed as open in What we agreed and does not count as an
+  unsettled branch. Wrap up and cap completion list open items. Mid-run enablement starts at the
+  next round, assignment or phase boundary, continues running work and gates only the step using
+  newly confirmed answers. Every later decision session has its own What we agreed and fresh
+  Confirm, preserving one counter. Check set aside for disposition and not supported for research,
+  stale/repeated actions and restart. MIG-021 converts definitions and terminal runs while
+  preserving attribution; an in-progress run finishes under its recorded roster or quarantines
+  without swapping voters, quorum or confirmation gates. Static schema/fixture success proves no
+  native handler, migration execution, UI, provider or recovery behavior.
 gui_related: true
 gui_classification_reason: Defines the visible controls and their owner behavior.
 depends_on:

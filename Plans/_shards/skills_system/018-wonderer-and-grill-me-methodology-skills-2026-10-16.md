@@ -2,9 +2,9 @@
 
 Source: `Plans/Skills_System.md`
 
-Source lines: L2690-L2850
+Source lines: L2690-L2851
 
-Source SHA256: `5e9a8d2f190d6d72c40a90e7bd86d3f5f279a90f89ba6e0a5f31da2bc5468a40`
+Source SHA256: `8beb0fcd8afb1cc6ddfcf7bc20710d2e41f07bb4059c08d5007d508804b3d0e6`
 
 ---
 
@@ -75,7 +75,6 @@ node_compile_hint:
 source_lineage:
   - "Plans/Decision_Log.md DL-218"
   - "/mnt/Cursor/share/puppet-master/2026-10-16-wonderer-grill-me/DECISIONS.md sha256:dfa2f354936defd187d610de4aee77a3d8b75b6d25692e592ba48f7b66bfebce"
-  - "/mnt/Cursor/share/puppet-master/2026-10-16-wonderer-grill-me/DEFAULTS-APPROVED.md sha256:f199f188e3e4b1ecd5474a1bc2f87c2d5156863909eb9de9cc3ee9fcb7bfd5be"
   - "/mnt/Cursor/share/puppet-master/2026-10-16-wonderer-grill-me/sources/hermes-skills-wonderer-methodology-SKILL.md sha256:cad5f7cb4e092d5af027b25bd35ae964f78f8fa1e5c0ffddbd6d30d898a931c3 (hermes-profiles 867a555e13; source lineage, adapted)"
   - "/mnt/Cursor/share/puppet-master/2026-10-16-wonderer-grill-me/sources/hermes-skills-wonderer-methodology-references-wonderer-patterns.md sha256:6bd524d2c728da7c7e5149f5418630ac4c297dd828ca6df2446b2eff3151ce8b (angles, search patterns, tether check, stop signals)"
   - "/mnt/Cursor/share/puppet-master/2026-10-16-wonderer-grill-me/sources/hermes-profiles-wonderer-AGENTS.md sha256:b2699abdbf7b7952e1895012accecd8d468940f4d3ca9c1d1201fecd44a36477 (output layers)"
@@ -117,10 +116,12 @@ canonical_text: >-
   without re-asking unless the user reopens it, and a question that talking cannot settle, such as
   how something should look or feel, is left open with that reason rather than rephrased. The
   session ends by itself only when no decision is ready, no fact research is pending and no branch
-  is unsettled. If every remaining question waits on research, the interview waits, says it is
-  looking things up and recomputes when research returns. Wrap up and the owner's question maximum
-  also end the session with open items listed; the maximum is only a safety net. It never acts on
-  what was agreed until the user confirms the shared understanding.
+  is unsettled. A decision left open, and every decision that depends on it, is listed as open in
+  What we agreed and does not count as an unsettled branch. If every remaining question waits on
+  research, the interview waits, says it is looking things up and recomputes when research returns.
+  Wrap up and the owner's question maximum also end the session with open items listed; the maximum
+  is only a safety net. It never acts on what was agreed until the user confirms the shared
+  understanding.
 gui_related: false
 gui_classification_reason: Skill content and behavior, not presentation.
 depends_on: [SS-036]
@@ -134,7 +135,7 @@ acceptance_criteria:
   - "No one-question-at-a-time setting exists; every round asks the whole ready frontier."
   - "A research-blocked frontier waits and recomputes on return instead of completing."
   - "I do not know leaves an open item outside the frontier until the user reopens it."
-  - "Automatic completion requires no ready decision, pending fact research or unsettled branch."
+  - "Automatic completion requires no ready decision, pending fact research or unsettled branch. A decision left open, and every decision that depends on it, is listed as open in What we agreed and does not count as an unsettled branch."
 validation_surfaces:
   - python3 scripts/pm-plan-index.py validate
 risk_class: grill_me_answers_for_the_user

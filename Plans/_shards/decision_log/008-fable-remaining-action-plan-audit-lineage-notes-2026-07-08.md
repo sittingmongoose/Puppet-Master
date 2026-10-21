@@ -2,9 +2,9 @@
 
 Source: `Plans/Decision_Log.md`
 
-Source lines: L14505-L16886
+Source lines: L14505-L16885
 
-Source SHA256: `76cde50db8ca0f86fc49614de6ca0bf165a63d4e198b4ebf901cf4b8db0966cc`
+Source SHA256: `98d4eb100ae1842121c3fe20c0caa17f33d5a2b8d096454561294faef8e5549f`
 
 ---
 
@@ -1700,8 +1700,7 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
-  - "Plans/Decision_Log.md DL-218"
-  - "/mnt/Cursor/share/puppet-master/2026-10-16-wonderer-grill-me/DECISIONS.md sha256:dfa2f354936defd187d610de4aee77a3d8b75b6d25692e592ba48f7b66bfebce"
+  - "/mnt/Cursor/share/puppet-master/2026-10-16-wonderer-grill-me/DECISIONS.md sha256:dfa2f354936defd187d610de4aee77a3d8b75b6d25692e592ba48f7b66bfebce (decision record, T3 thread 3e741762-c008-45a0-931b-b27997b1d784; decision lineage)"
   - "/mnt/Cursor/share/puppet-master/2026-10-16-wonderer-grill-me/DEFAULTS-APPROVED.md sha256:f199f188e3e4b1ecd5474a1bc2f87c2d5156863909eb9de9cc3ee9fcb7bfd5be"
   - "/mnt/Cursor/share/puppet-master/2026-10-16-wonderer-grill-me/SOURCE-SHA256.txt (pinned copies of the Hermes wonderer profile and the grilling skill; source lineage)"
 preserved_exact_tokens: []

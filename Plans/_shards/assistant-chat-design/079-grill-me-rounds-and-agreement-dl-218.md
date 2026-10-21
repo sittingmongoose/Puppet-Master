@@ -2,9 +2,9 @@
 
 Source: `Plans/assistant-chat-design.md`
 
-Source lines: L27908-L28000
+Source lines: L27908-L28002
 
-Source SHA256: `8f058ecc712db40eff989a6e1ed36e4edafaf178be272eb68138c34cad4297d8`
+Source SHA256: `369a81ddb3a047c4ea3c13b21bf5ea4fc54cc98d1fc34504b4c19542f045fec1`
 
 ---
 
@@ -12,7 +12,7 @@ Source SHA256: `8f058ecc712db40eff989a6e1ed36e4edafaf178be272eb68138c34cad4297d8
 
 This is a profile of section 7.4's existing questionnaire, consumed by CWR-042, CWR-043 and APR-072. It adds no alternate question store. The host numbers the round's frontier questions and marks the recommended option in its description; that existing option ID is seeded through default_values. The recommendation is only a draft. Accepting an individual recommendation uses cmd.questionnaire.draft_update on that question’s PM-managed draft; it submits no other question. One explicit cmd.questionnaire.submit accepts all validated answers in the whole round. Answers from completed rounds are staged for the session, not yet decisions the workflow may act on. I don't know is a supported freeform answer: it removes that decision from the frontier, lists it as open in What we agreed and does not ask it again unless the user reopens it.
 
-The session ends by itself only when no decision is ready, no fact research is pending and no branch is unsettled. If every remaining question waits on research, the host waits, says it is looking things up and recomputes when research returns. Automatic completion, the safety cap and Wrap up each show that session's What we agreed card with every answer and every open decision and reason. It is a review of existing answers, not a new charged QuestionItem. Wrap up uses cmd.questionnaire.grill_me.wrap_up and preserves any unfinished draft without submitting it. Confirm uses cmd.questionnaire.grill_me.confirm against the current agreement revision; only its acknowledged owner result confirms the accumulated decisions. Keep going uses cmd.questionnaire.grill_me.keep_going to return to the same interview with its answers and one counter intact. At the cap it may revisit existing answers but cannot admit another fresh question. Each newly presented question is still charged once under QMAX; a recommendation, action button or agreement render charges nothing.
+The session ends by itself only when no decision is ready, no fact research is pending and no branch is unsettled. A decision left open, and every decision that depends on it, is listed as open in What we agreed and does not count as an unsettled branch. If every remaining question waits on research, the host waits, says it is looking things up and recomputes when research returns. Automatic completion, the safety cap and Wrap up each show that session's What we agreed card with every answer and every open decision and reason. It is a review of existing answers, not a new charged QuestionItem. Wrap up uses cmd.questionnaire.grill_me.wrap_up and preserves any unfinished draft without submitting it. Confirm uses cmd.questionnaire.grill_me.confirm against the current agreement revision; only its acknowledged owner result confirms the accumulated decisions. Keep going uses cmd.questionnaire.grill_me.keep_going to return to the same interview with its answers and one counter intact. At the cap it may revisit existing answers but cannot admit another fresh question. Each newly presented question is still charged once under QMAX; a recommendation, action button or agreement render charges nothing.
 
 The three typed request/result pairs live in Plans/assistant_chat_contracts.schema.json and its fixture pair. They reference the existing host session and source flow, current questionnaire and agreement, revision and currentness; they define no new durable record family. The session states interviewing, awaiting_confirmation and confirmed describe this profile's owner state, not new QuestionnaireEnvelope.flow_state values. The envelope's answer sources, response_kind and lifecycle enums stay locked. Authenticated host user provenance, revision checks and idempotent replay apply; an actor_ref string supplied by an agent is never proof of user action. Dismissal still pauses, resume restores the same paused envelope, and neither confirms or wraps up. No step may consume the staged agreement before that session's current Confirm. Initially this gates Plan writes, Crew split, room round 1 or BrainStorm blind proposals. Enabling Grill Me mid-run starts the interview at the next round, assignment or phase boundary; already running work continues, and only the step using new answers waits. Every later decision session ends in its own What we agreed revision with fresh Confirm and the same question counter. A stale confirmation changes nothing. The controls never mutate a target project, start execution or grant permission. No EventRecord is admitted (DL-093).
 
@@ -29,14 +29,16 @@ canonical_text: >-
   cmd.questionnaire.draft_update, and explicit cmd.questionnaire.submit to accept the whole ready
   round. Default selection is no submitted answer. The host stages round answers until What we
   agreed lists every answer and every open decision. The interview ends by itself only when no
-  decision is ready, no fact research is pending and no branch is unsettled; a frontier blocked on
-  research waits with looking-things-up feedback and recomputes on return. I don't know removes a
-  decision from the frontier and lists it as open until the user reopens it. Wrap up and exhaustion
-  may end earlier with open items listed. cmd.questionnaire.grill_me.wrap_up ends questioning
-  without submitting incomplete drafts; cmd.questionnaire.grill_me.confirm confirms that current
-  agreement; cmd.questionnaire.grill_me.keep_going returns to the same interview and recomputes its
-  frontier with the existing answers and question count. These are session operations, distinct from
-  dismiss, resume and round submission. The three request/result pairs are
+  decision is ready, no fact research is pending and no branch is unsettled. A decision left open,
+  and every decision that depends on it, is listed as open in What we agreed and does not count as
+  an unsettled branch. A frontier blocked on research waits with looking-things-up feedback and
+  recomputes on return. I don't know removes a decision from the frontier and lists it as open until
+  the user reopens it. Wrap up and exhaustion may end earlier with open items listed.
+  cmd.questionnaire.grill_me.wrap_up ends questioning without submitting incomplete drafts;
+  cmd.questionnaire.grill_me.confirm confirms that current agreement;
+  cmd.questionnaire.grill_me.keep_going returns to the same interview and recomputes its frontier
+  with the existing answers and question count. These are session operations, distinct from dismiss,
+  resume and round submission. The three request/result pairs are
   QuestionnaireGrillWrapUpRequest/QuestionnaireGrillWrapUpResult,
   QuestionnaireGrillConfirmRequest/QuestionnaireGrillConfirmResult and
   QuestionnaireGrillKeepGoingRequest/QuestionnaireGrillKeepGoingResult in
@@ -62,7 +64,7 @@ acceptance_criteria:
   - "Each recommendation uses an existing option and remains a draft until explicit user submit; accept-the-round submits all validated responses once."
   - "Pending fact research keeps an otherwise blocked interview waiting, with visible feedback and recomputation when research returns."
   - "I do not know leaves an open item outside the frontier until reopened."
-  - "Automatic completion requires no ready decision, pending fact research or unsettled branch; Wrap up and exhaustion list open items."
+  - "Automatic completion requires no ready decision, pending fact research or unsettled branch; Wrap up and exhaustion list open items. A decision left open, and every decision that depends on it, is listed as open in What we agreed and does not count as an unsettled branch."
   - "Each session has its own current agreement and Confirm; stale and repeated actions do not release a later gate."
   - "Mid-run enablement starts at the next boundary, preserves running work and gates only the step using new answers."
   - "Keep going preserves answers, session and the shared counter."

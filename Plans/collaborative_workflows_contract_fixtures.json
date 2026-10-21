@@ -3201,6 +3201,47 @@
         ],
         "brainstorm_run_id": "crun-r1-legacy-brainstorm"
       }
+    },
+    {
+      "name": "further_pass_message_admission_closed",
+      "definition": "CollaborationMessageResult",
+      "value": {
+        "schema_id": "pm.collaboration.collaboration_message_result.v1",
+        "schema_version": "1.0.0",
+        "command_id": "cmd.collaboration.message",
+        "command_instance_id": "ci-further-pass-admission-closed",
+        "committed": false,
+        "status": "refused",
+        "revision_after": null,
+        "currentness_hash_after": null,
+        "receipt_refs": [],
+        "observable_work_ref": null,
+        "error": "lead_admission_closed",
+        "replay_of": null,
+        "collaboration_message_id": null
+      }
+    },
+    {
+      "name": "wonderer_pass_after_failed_first",
+      "definition": "WondererPass",
+      "value": {
+        "schema_id": "pm.collaboration.wonderer_pass.v1",
+        "schema_version": "1.0.0",
+        "wonderer_pass_id": "wpass-after-failed-first",
+        "collaboration_run_id": "crun-after-failed-first",
+        "participant_slot_id": "collab-bs-0001-slot-3",
+        "pass_number": 2,
+        "requested_by": "user",
+        "seed_ref": "artifact:job/topic-v1",
+        "artifact_ref": "artifact:wonderer-after-failed-first",
+        "lead_ids": [
+          "lead-after-failed-first-1",
+          "lead-after-failed-first-2",
+          "lead-after-failed-first-3"
+        ],
+        "delivered_at": "2026-10-20T22:00:00Z",
+        "outcome": "leads"
+      }
     }
   ],
   "invalid": [
@@ -4495,7 +4536,7 @@
       "name": "wonderer_pass_six_leads",
       "base_valid": "wonderer_pass_1",
       "rejects_for": "a pass delivers at most five leads",
-      "reason": "DL-218 Round 1 F4: three to five is a target; six exceeds the delivery maximum.",
+      "reason": "DL-218 / CWR-041..043: three to five is a target; six exceeds the delivery maximum.",
       "patch": {
         "lead_ids": [
           "lead-0",
@@ -4646,7 +4687,7 @@
       "name": "wonderer_empty_outcome_with_leads",
       "base_valid": "wonderer_pass_1",
       "rejects_for": "no_new_leads has an empty lead_ids",
-      "reason": "DL-218 Round 1: no_new_leads has an empty lead_ids",
+      "reason": "DL-218 / CWR-041..043: no_new_leads has an empty lead_ids",
       "patch": {
         "outcome": "no_new_leads"
       }
@@ -4655,7 +4696,7 @@
       "name": "wonderer_leads_outcome_empty",
       "base_valid": "wonderer_pass_empty_repeat",
       "rejects_for": "the leads outcome has at least one lead",
-      "reason": "DL-218 Round 1: the leads outcome has at least one lead",
+      "reason": "DL-218 / CWR-041..043: the leads outcome has at least one lead",
       "patch": {
         "outcome": "leads"
       }
@@ -4664,7 +4705,7 @@
       "name": "shared_research_success_no_outcome_or_work",
       "base_valid": "collaboration_lead_research_result_substantiated",
       "rejects_for": "committed research needs a terminal result or work plus receipt/revision/currentness",
-      "reason": "DL-218 Round 1: committed research needs a terminal result or work plus receipt/revision/currentness",
+      "reason": "DL-218 / CWR-041..043: committed research needs a terminal result or work plus receipt/revision/currentness",
       "patch": {
         "lead_status": null,
         "evidence_refs": [],
@@ -4676,7 +4717,7 @@
       "name": "shared_research_success_no_receipt",
       "base_valid": "collaboration_lead_research_result_substantiated",
       "rejects_for": "committed research needs a terminal result or work plus receipt/revision/currentness",
-      "reason": "DL-218 Round 1: committed research needs a terminal result or work plus receipt/revision/currentness",
+      "reason": "DL-218 / CWR-041..043: committed research needs a terminal result or work plus receipt/revision/currentness",
       "patch": {
         "receipt_refs": []
       }
@@ -4685,7 +4726,7 @@
       "name": "shared_research_success_no_revision",
       "base_valid": "collaboration_lead_research_result_substantiated",
       "rejects_for": "committed research needs a terminal result or work plus receipt/revision/currentness",
-      "reason": "DL-218 Round 1: committed research needs a terminal result or work plus receipt/revision/currentness",
+      "reason": "DL-218 / CWR-041..043: committed research needs a terminal result or work plus receipt/revision/currentness",
       "patch": {
         "revision_after": null
       }
@@ -4694,7 +4735,7 @@
       "name": "shared_research_success_no_currentness",
       "base_valid": "collaboration_lead_research_result_substantiated",
       "rejects_for": "committed research needs a terminal result or work plus receipt/revision/currentness",
-      "reason": "DL-218 Round 1: committed research needs a terminal result or work plus receipt/revision/currentness",
+      "reason": "DL-218 / CWR-041..043: committed research needs a terminal result or work plus receipt/revision/currentness",
       "patch": {
         "currentness_hash_after": null
       }
@@ -4703,7 +4744,7 @@
       "name": "shared_research_blank_set_aside_reason",
       "base_valid": "collaboration_lead_research_result_set_aside",
       "rejects_for": "set_aside_reason contains non-whitespace text",
-      "reason": "DL-218 Round 1: set_aside_reason contains non-whitespace text",
+      "reason": "DL-218 / CWR-041..043: set_aside_reason contains non-whitespace text",
       "patch": {
         "set_aside_reason": " \t\n "
       }
@@ -4712,7 +4753,7 @@
       "name": "brainstorm_research_success_no_outcome_or_work",
       "base_valid": "lead_research_result_substantiated",
       "rejects_for": "committed research needs a terminal result or work plus receipt/revision/currentness",
-      "reason": "DL-218 Round 1: committed research needs a terminal result or work plus receipt/revision/currentness",
+      "reason": "DL-218 / CWR-041..043: committed research needs a terminal result or work plus receipt/revision/currentness",
       "patch": {
         "lead_status": null,
         "evidence_refs": [],
@@ -4724,7 +4765,7 @@
       "name": "brainstorm_research_success_no_receipt",
       "base_valid": "lead_research_result_substantiated",
       "rejects_for": "committed research needs a terminal result or work plus receipt/revision/currentness",
-      "reason": "DL-218 Round 1: committed research needs a terminal result or work plus receipt/revision/currentness",
+      "reason": "DL-218 / CWR-041..043: committed research needs a terminal result or work plus receipt/revision/currentness",
       "patch": {
         "receipt_refs": []
       }
@@ -4733,7 +4774,7 @@
       "name": "brainstorm_research_success_no_revision",
       "base_valid": "lead_research_result_substantiated",
       "rejects_for": "committed research needs a terminal result or work plus receipt/revision/currentness",
-      "reason": "DL-218 Round 1: committed research needs a terminal result or work plus receipt/revision/currentness",
+      "reason": "DL-218 / CWR-041..043: committed research needs a terminal result or work plus receipt/revision/currentness",
       "patch": {
         "revision_after": null
       }
@@ -4742,7 +4783,7 @@
       "name": "brainstorm_research_success_no_currentness",
       "base_valid": "lead_research_result_substantiated",
       "rejects_for": "committed research needs a terminal result or work plus receipt/revision/currentness",
-      "reason": "DL-218 Round 1: committed research needs a terminal result or work plus receipt/revision/currentness",
+      "reason": "DL-218 / CWR-041..043: committed research needs a terminal result or work plus receipt/revision/currentness",
       "patch": {
         "currentness_hash_after": null
       }
@@ -4751,7 +4792,7 @@
       "name": "brainstorm_research_blank_set_aside_reason",
       "base_valid": "lead_research_result_set_aside",
       "rejects_for": "set_aside_reason contains non-whitespace text",
-      "reason": "DL-218 Round 1: set_aside_reason contains non-whitespace text",
+      "reason": "DL-218 / CWR-041..043: set_aside_reason contains non-whitespace text",
       "patch": {
         "set_aside_reason": " \t\n "
       }
@@ -4760,7 +4801,7 @@
       "name": "wonderer_blank_disposition_reason",
       "base_valid": "wonderer_lead_explore",
       "rejects_for": "disposition_reason contains non-whitespace text",
-      "reason": "DL-218 Round 1: disposition_reason contains non-whitespace text",
+      "reason": "DL-218 / CWR-041..043: disposition_reason contains non-whitespace text",
       "patch": {
         "disposition_reason": " \t\n "
       }
@@ -4769,7 +4810,7 @@
       "name": "wonderer_blank_research_reason",
       "base_valid": "wonderer_lead_research_set_aside",
       "rejects_for": "set_aside_reason contains non-whitespace text",
-      "reason": "DL-218 Round 1: set_aside_reason contains non-whitespace text",
+      "reason": "DL-218 / CWR-041..043: set_aside_reason contains non-whitespace text",
       "patch": {
         "set_aside_reason": " \t\n "
       }
@@ -4778,7 +4819,7 @@
       "name": "crew_question_bank_nonzero_base",
       "base_valid": "crew_question_bank_grill_me",
       "rejects_for": "Crew has no question base",
-      "reason": "DL-218 Round 1: Crew has no question base",
+      "reason": "DL-218 / CWR-041..043: Crew has no question base",
       "patch": {
         "baseline_limit": 20
       }
@@ -4787,7 +4828,7 @@
       "name": "room_question_bank_nonzero_base",
       "base_valid": "chat_room_question_bank_grill_me",
       "rejects_for": "Chat Room has no question base",
-      "reason": "DL-218 Round 1: Chat Room has no question base",
+      "reason": "DL-218 / CWR-041..043: Chat Room has no question base",
       "patch": {
         "baseline_limit": 20
       }
@@ -4796,7 +4837,7 @@
       "name": "question_bank_missing_identity",
       "base_valid": "crew_question_bank_grill_me",
       "rejects_for": "a bank has its canonical or compatible run identity",
-      "reason": "DL-218 Round 1: a bank has its canonical or compatible run identity",
+      "reason": "DL-218 / CWR-041..043: a bank has its canonical or compatible run identity",
       "remove": [
         "collaboration_run_id"
       ]
@@ -4805,7 +4846,7 @@
       "name": "legacy_question_bank_wrong_kind",
       "base_valid": "question_bank_legacy_brainstorm_key",
       "rejects_for": "brainstorm_run_id is BrainStorm-only",
-      "reason": "DL-218 Round 1: brainstorm_run_id is BrainStorm-only",
+      "reason": "DL-218 / CWR-041..043: brainstorm_run_id is BrainStorm-only",
       "patch": {
         "kind": "crew"
       }
@@ -4814,7 +4855,7 @@
       "name": "question_bank_limit_arithmetic",
       "base_valid": "crew_question_bank_grill_me",
       "rejects_for": "effective_limit equals base plus extension",
-      "reason": "DL-218 Round 1: effective_limit equals base plus extension",
+      "reason": "DL-218 / CWR-041..043: effective_limit equals base plus extension",
       "semantic_rule": "question_bank_limit_arithmetic_mismatch",
       "patch": {
         "effective_limit": 24
@@ -4824,7 +4865,7 @@
       "name": "question_bank_legacy_id_conflict",
       "base_valid": "question_bank_grill_me",
       "rejects_for": "a legacy alias cannot identify a second bank",
-      "reason": "DL-218 Round 1: a legacy alias cannot identify a second bank",
+      "reason": "DL-218 / CWR-041..043: a legacy alias cannot identify a second bank",
       "semantic_rule": "question_bank_legacy_id_mismatch",
       "patch": {
         "brainstorm_run_id": "crun-r1-wrong"
@@ -4834,7 +4875,7 @@
       "name": "participant_grill_role_lower",
       "base_valid": "definition_crew_shared_notes",
       "rejects_for": "Grill Me role reservation ignores case",
-      "reason": "DL-218 Round 1: Grill Me role reservation ignores case",
+      "reason": "DL-218 / CWR-041..043: Grill Me role reservation ignores case",
       "patch": {
         "participant_specs.0.role": "grill me"
       }
@@ -4843,7 +4884,7 @@
       "name": "participant_grill_role_upper",
       "base_valid": "definition_crew_shared_notes",
       "rejects_for": "Grill Me role reservation ignores case",
-      "reason": "DL-218 Round 1: Grill Me role reservation ignores case",
+      "reason": "DL-218 / CWR-041..043: Grill Me role reservation ignores case",
       "patch": {
         "participant_specs.0.role": "GRILL ME"
       }
@@ -4852,7 +4893,7 @@
       "name": "participant_grill_role_mixed",
       "base_valid": "definition_crew_shared_notes",
       "rejects_for": "Grill Me role reservation ignores case",
-      "reason": "DL-218 Round 1: Grill Me role reservation ignores case",
+      "reason": "DL-218 / CWR-041..043: Grill Me role reservation ignores case",
       "patch": {
         "participant_specs.0.role": "gRiLl Me"
       }
@@ -4861,7 +4902,7 @@
       "name": "participant_grill_persona_upper",
       "base_valid": "definition_crew_shared_notes",
       "rejects_for": "Grill Me Persona reservation ignores case",
-      "reason": "DL-218 Round 1: Grill Me Persona reservation ignores case",
+      "reason": "DL-218 / CWR-041..043: Grill Me Persona reservation ignores case",
       "patch": {
         "participant_specs.0.requested_persona_id": "PERSONA:GRILL-ME"
       }
@@ -4870,7 +4911,7 @@
       "name": "participant_grill_skill_upper",
       "base_valid": "definition_crew_shared_notes",
       "rejects_for": "Grill Me Skill reservation ignores case",
-      "reason": "DL-218 Round 1: Grill Me Skill reservation ignores case",
+      "reason": "DL-218 / CWR-041..043: Grill Me Skill reservation ignores case",
       "patch": {
         "participant_specs.0.requested_skill_ids": [
           "SKILL:GRILLING"
@@ -4881,7 +4922,7 @@
       "name": "preset_grill_role_lower",
       "base_valid": "preset_crew_build_and_check",
       "rejects_for": "preset Grill Me role reservation ignores case",
-      "reason": "DL-218 Round 1: preset Grill Me role reservation ignores case",
+      "reason": "DL-218 / CWR-041..043: preset Grill Me role reservation ignores case",
       "patch": {
         "rows.0.role": "grill me"
       }
@@ -4890,7 +4931,7 @@
       "name": "preset_grill_persona_upper",
       "base_valid": "preset_crew_build_and_check",
       "rejects_for": "preset Grill Me Persona reservation ignores case",
-      "reason": "DL-218 Round 1: preset Grill Me Persona reservation ignores case",
+      "reason": "DL-218 / CWR-041..043: preset Grill Me Persona reservation ignores case",
       "patch": {
         "rows.0.requested_persona_id": "PERSONA:GRILL-ME"
       }

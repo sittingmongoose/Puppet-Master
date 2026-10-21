@@ -267,13 +267,13 @@ The additive Wonderer may push the total roster above the active concurrency; Gr
 
 ### 8.4 Shared question bank
 
-`QuestionBank` is one registry for the entire BrainStorm run, and for a Crew or Chat Room with Grill Me on. It is keyed by `collaboration_run_id` and records the run's `kind`, `baseline_limit`, `grill_extension`, `effective_limit`, and the asked, resolved, duplicate, and research-routed question ID sets. The legacy `brainstorm_run_id` key remains compatible for BrainStorm and normalizes to that same run identity; when both keys are present they agree. The coordinator or moderator records the bank for all question requesters; the Wonderer never asks the user or reads or writes the counter. A Crew or Chat Room has `baseline_limit` 0, so its extension is its whole maximum.
+`QuestionBank` is one registry for the entire BrainStorm run, and for a Crew or Chat Room with Grill Me on. It is keyed by `collaboration_run_id` and records the run's `kind`, `baseline_limit`, `grill_extension`, `effective_limit`, and the asked, resolved, duplicate, and research-routed question ID sets. The legacy `brainstorm_run_id` key remains compatible for BrainStorm and normalizes to that same run identity; when both keys are present they agree. The coordinator or moderator records the bank for all question requesters; the Wonderer never asks the user or reads or writes the counter. A Crew or Chat Room has `baseline_limit` 0, so its extension is its whole maximum. Its bank opens when Grill Me is first turned on; earlier ordinary needs-you prompts are not charged to it, and their answers are still reused to avoid duplicates.
 
-The BrainStorm base maximum of user-decision questions is 20. Grill Me raises the maximum by a configurable extension whose default is 25, so the default Grill Me effective maximum is 45. The modal states the arithmetic explicitly, showing `Maximum questions: 20` without Grill Me and `Maximum questions: 45 (20 + Grill Me 25)` with it; when Settings configure a different base or extension, the displayed arithmetic uses the configured values rather than the literals. The other five planning strategies carry their own bases -- Plan Quick 3, Standard 6, Thorough 8, Deep Thorough 10, Deep Exhaustive 15 -- and the same one extension, giving effective maxima of 28, 31, 33, 35, and 40. `Plans/Assistant_Plan_Runtime.md` (`QMAX-001..016`) owns the table, the single shared counter, the charge point, and typed exhaustion.
+The BrainStorm base maximum of user-decision questions is 20. Grill Me raises the maximum by a configurable extension whose default is 25, so the default Grill Me effective maximum is 45. The modal states the arithmetic explicitly, showing `Maximum questions: 20` without Grill Me and `Maximum questions: 45 (20 + Grill Me 25)` with it; when Settings configure a different base or extension, the displayed arithmetic uses the configured values rather than the literals. The other five planning strategies carry their own bases -- Plan Quick 3, Standard 6, Thorough 8, Deep Thorough 10, Deep Exhaustive 15 -- and the same one extension, giving effective maxima of 28, 31, 33, 35, and 40. `Plans/Assistant_Plan_Runtime.md` owns the Plan and Deep Plan strategy table (`QMAX-001..004`), the shared charge point (`QMAX-005..007`) and typed exhaustion (`QMAX-014..015`). Crew and Chat Room apply charging and exhaustion directly to their QuestionBank; the Plan-only QMAX-008 identity and QMAX-016 projection do not apply to them.
 
-With Grill Me on, the effective maximum is a safety net: the coordinator or moderator asks in grilling rounds until no decision is ready, no fact research is pending and no branch is unsettled, or the user presses Wrap up; the maximum stops a session that has not ended by then (section 9.3, DL-218). Questions already asked count toward the effective maximum. Enabling Grill Me mid-flow raises the ceiling and never resets the count. The allowance is a workflow-level shared budget, not a per-participant budget, so adding participants does not inflate the number of questions the user is asked.
+With Grill Me on, the effective maximum is a safety net: the coordinator or moderator asks in grilling rounds until no decision is ready, no fact research is pending and no branch is unsettled, or the user presses Wrap up; the maximum stops a session that has not ended by then (section 9.3, DL-218). A decision left open, and every decision that depends on it, is listed as open in What we agreed and does not count as an unsettled branch. Questions already charged to the bank count toward the effective maximum; earlier ordinary needs-you prompts in a Crew or Chat Room are not charged. Enabling Grill Me mid-flow raises the ceiling and never resets the count. The allowance is a workflow-level shared budget, not a per-participant budget, so adding participants does not inflate the number of questions the user is asked.
 
-Answered questions from the current thread are imported and are not asked again. Semantic duplicates across participants are merged into one registry entry with all requesting participants recorded. Factual questions that an agent can answer are routed to research rather than asked of the user, and the routed set is recorded on the bank. Remaining user-decision questions are batched through the existing questionnaire choreography rather than delivered as a stream of single prompts. The charge point is the first durable presentation of a new QuestionItem under QMAX-005..007; routed facts are recorded without a charge. QMAX-014..015 owns typed `question_budget_exhausted` for BrainStorm, Crew and Chat Room alike. When only research blocks the remaining frontier the interview waits and says it is looking things up, then recomputes when research returns. Reaching the maximum is a ceiling, not a target.
+Answered questions from the current thread are imported and are not asked again. Semantic duplicates across participants are merged into one registry entry with all requesting participants recorded. Factual questions that an agent can answer are routed to research rather than asked of the user, and the routed set is recorded on the bank. Remaining user-decision questions are batched through the existing questionnaire choreography rather than delivered as a stream of single prompts. The charge point is the first durable presentation of a new QuestionItem under QMAX-005..007; routed facts are recorded without a charge. QMAX-014..015 owns typed `question_budget_exhausted`. For a Crew or Chat Room, QMAX-005..007 and QMAX-014..015 apply to its QuestionBank directly. QMAX-001..004's strategy table, QMAX-008 and the QMAX-016 projection remain Plan and Deep Plan only. When only research blocks the remaining frontier the interview waits and says it is looking things up, then recomputes when research returns. Reaching the maximum is a ceiling, not a target.
 
 ### 8.5 Protocol
 
@@ -285,7 +285,7 @@ BrainStorm runs seven ordered phases on one `CollaborativeRun`; their plain disp
 4. **Debate.** Participants challenge assumptions, expose conflicts and dependencies, propose hybrids, and request targeted research. Debate rounds default to two and are configurable. Participants weigh the Wonderer's leads, and the Coordinator records one disposition per lead with its reason; the Wonderer takes no debate turn.
 5. **Evidence round.** Factual disagreements are resolved with bounded research rather than assertion. Research assignments are distinct per participant and cite sources. Every Wonderer lead disposed `explore`, and every lead the user sends with Check it, is researched here.
 6. **Vote.** Each participant records `position` closed to `support | oppose | abstain`, plus confidence, reason, evidence refs, and any hard-constraint conflicts it has identified.
-7. **Synthesis.** The coordinator selects the best option or a justified hybrid, preserves material dissent, explains rejected alternatives, and produces the standardized Deep Plan content and ledger input. Synthesis starts only when every Wonderer lead has a disposition and every lead sent to research has a result, and the Plan lists every lead with its disposition and reason (section 9.2).
+7. **Synthesis.** The coordinator selects the best option or a justified hybrid, preserves material dissent, explains rejected alternatives, and produces the standardized Deep Plan content and ledger input. Synthesis starts only when no pass is in flight, every Wonderer lead has a disposition and every lead sent to research has a result, and the Plan lists every lead with its disposition and reason (section 9.2).
 
 ### 8.6 Voting and hard constraints
 
@@ -311,7 +311,7 @@ Both are adapted from outside sources, not imported: Wonderer from the Hermes `w
 
 Wonderer runs alongside a Crew, a BrainStorm or a Chat Room and feeds what it finds back to the run's agents, who decide what is worth exploring (CWR-041, DL-218). It is an additive participant with its own model, the Wonderer Persona and the Wonderer methodology Skill. Its seed is the run's topic (the Crew's job, the BrainStorm topic with its must-haves, or the room's topic) with the context every participant shares. It explores in a fresh context of its own and never reads another participant's private working slice or a blind proposal. It uses read-only search and read tools under the parent permission ceiling; it never writes to the target project, never requests research provisioning, and never starts execution.
 
-**Passes.** A pass is one exploration of the seed. The first starts with the run; in a BrainStorm it starts during Intake, before blind proposals take the concurrency (section 8.3). A further pass runs only when a core participant, coordinator, moderator or user asks for one in an addressed message, and a run takes at most two further delivered passes. A failed, timed-out or unavailable further attempt is recorded under PART-001..006 and consumes neither repeat; a retry uses a new attempt identity and the next undelivered pass number. A further pass stays anchored to the topic and widens around the requested point. When no slot is free it queues behind core work, with its lane reading `queued`. Each pass works three or four method angles, aims for three to five leads and delivers at most five; the method's stop signals may end it earlier with fewer leads or none. An empty pass is still delivered and recorded with outcome `no_new_leads`; a pass with leads has outcome `leads`. A request beyond the delivered-pass limit starts nothing and states the reason. Each lead names its angle, states in one sentence how it connects to the seed (its tether), and cites a search result URL or the transcript message it grew from. A lead without a tether is drift and is dropped; a lead without a source is not delivered.
+**Passes.** A pass is one exploration of the seed. The first starts with the run; in a BrainStorm it starts during Intake, before blind proposals take the concurrency (section 8.3). A further pass runs only when a core participant, coordinator, moderator or user asks for one in an addressed message, and a run takes at most two further delivered passes. A failed, timed-out or unavailable further attempt is recorded under PART-001..006 and consumes neither repeat; a retry of that further pass uses a new attempt identity and retains its further-pass number, 2 or 3. A failed first pass is never retried by itself. A pass requested after a failed first pass is a further pass, numbered 2, and counts toward the two further passes when delivered. A further pass stays anchored to the topic and widens around the requested point. When no slot is free it queues behind core work, with its lane reading `queued`. Each pass works three or four method angles, aims for three to five leads and delivers at most five; the method's stop signals may end it earlier with fewer leads or none. An empty pass is still delivered and recorded with outcome `no_new_leads`; a pass with leads has outcome `leads`. A request beyond the delivered-pass limit starts nothing and states the reason. A further-pass request refused after synthesis starts begins nothing and states `lead_admission_closed` in `CollaborationMessageResult`: the addressed request is not delivered, its `collaboration_message_id` is null and no pass starts. Each lead names its angle, states in one sentence how it connects to the seed (its tether), and cites a search result URL or the transcript message it grew from. A lead without a tether is drift and is dropped; a lead without a source is not delivered.
 
 **Delivery.** Every delivered pass, including an empty one, is one Puppet Master artifact with progressive disclosure (`Plans/Runtime_Artifacts_Panel.md` WONV-008) and one transcript message from the Wonderer that references it. Every core participant and the coordinator or moderator receive the summary in context; angles and lead dossiers are read on demand through ordinary artifact identity. Every BrainStorm pass is withheld until every blind proposal is in, then released at Normalize or on delivery if it arrives later. The Wonderer takes no debate or room turn, never argues for or against a proposal and never votes. It speaks only to deliver a pass or answer a question addressed to it about one of its leads.
 
@@ -335,9 +335,9 @@ Grill Me is the definition's `grill_me_enabled` switch, not a participant (CWR-0
 
 Grilling interviews the user and never other agents: decisions are the user's, and no agent answers one on the user's behalf. It maps decisions as a design tree and works the frontier, decisions whose prerequisites are settled, in rounds. Each round asks the whole current frontier at once, numbers each question, gives a recommended answer for each, words each so that yes accepts the recommendation, and waits for the user's answers before recomputing. Puppet Master offers no one-question-at-a-time setting; every round asks the whole frontier. A question dependent on another still open belongs to a later round. "I don't know" is valid: that decision leaves the frontier and is listed as open in What we agreed, without being asked again unless the user reopens it.
 
-Facts are the workflow's job: a question needing a fact is routed to research and recorded in the bank's routed set without charging the user-question counter. Only dependent questions wait; the rest of the ready frontier is asked now. If every remaining question waits on research, the interview waits, says it is looking things up and recomputes when research returns. A prior answer from the thread or imported context is reused. BrainStorm, and a Crew or Chat Room with Grill Me on, each have one QuestionBank keyed by `collaboration_run_id`. Its charge point and typed exhaustion are QMAX-005..007 and QMAX-014..015; BrainStorm uses base plus extension, and Crew and Chat Room use baseline 0 plus extension as the whole maximum. Enabling Grill Me or starting a later decision round preserves that same counter and its routed set.
+Facts are the workflow's job: a question needing a fact is routed to research and recorded in the bank's routed set without charging the user-question counter. Only dependent questions wait; the rest of the ready frontier is asked now. If every remaining question waits on research, the interview waits, says it is looking things up and recomputes when research returns. A prior answer from the thread or imported context is reused. BrainStorm, and a Crew or Chat Room with Grill Me on, each have one QuestionBank keyed by `collaboration_run_id`. Its charge point and typed exhaustion are QMAX-005..007 and QMAX-014..015; BrainStorm uses base plus extension, and Crew and Chat Room use baseline 0 plus extension as the whole maximum. A Crew or Chat Room QuestionBank opens when Grill Me is first turned on, and earlier ordinary needs-you prompts are not charged to it. After the bank opens, later decision rounds preserve that same counter and its routed set.
 
-The session ends by itself only when no decision is ready, no fact research is pending and no branch is unsettled. Wrap up and the question maximum can also end it, with open items listed; the maximum is a safety net (section 8.4, QMAX-001..004). Each session ends in its own What we agreed card listing every answer and every open decision, with Confirm and Keep going. Only the step that would use those new answers waits for Confirm of that current agreement revision. Keep going returns to the interview within the maximum; Confirm records the user's decisions for the active owner. Running work continues and never loses an earlier valid confirmation. Grill Me cannot mutate the target project, start execution or approve anything.
+The session ends by itself only when no decision is ready, no fact research is pending and no branch is unsettled. A decision left open, and every decision that depends on it, is listed as open in What we agreed and does not count as an unsettled branch. Wrap up and the question maximum can also end it, with open items listed; the maximum is a safety net (section 8.4, QMAX-001..004). Each session ends in its own What we agreed card listing every answer and every open decision, with Confirm and Keep going. Only the step that would use those new answers waits for Confirm of that current agreement revision. Keep going returns to the interview within the maximum; Confirm records the user's decisions for the active owner. Running work continues and never loses an earlier valid confirmation. Grill Me cannot mutate the target project, start execution or approve anything.
 
 | Kind | Who grills the user | When initially enabled | What waits for that session's Confirm |
 |---|---|---|---|
@@ -3220,34 +3220,39 @@ canonical_text: >-
   starts execution. The first pass starts with the run; in BrainStorm it runs during Intake before
   blind proposals take the concurrency. Further passes require an addressed request from a core
   participant, coordinator, moderator or user, with at most two further delivered passes; a failed,
-  timed-out or unavailable further attempt consumes neither repeat. A later pass queues behind core
-  work when no slot is free. Each pass works three or four SS-037 angles, aims for three to five
-  leads and delivers at most five, stopping earlier with fewer or none when the method's stop
-  signals come first. Every delivered pass is a WondererPass with outcome leads or no_new_leads, one
-  progressive-disclosure artifact (WONV-008) and one Wonderer transcript message. Every lead is a
-  WondererLead with an angle, a one-sentence tether to the seed and at least one source; untethered
-  drift and unsourced leads are dropped. All core participants and the coordinator or moderator
-  receive the summary and read angles and dossiers on demand. Every lead is a hypothesis until
-  explored. The agents decide explore, use or set_aside with a non-whitespace reason and recorder:
-  the coordinator records BrainStorm leads from the Debate if delivered by then, Crew leads while
-  splitting, and later leads on delivery; the room moderator records leads on delivery between
-  turns. An explored lead ends substantiated with evidence and a null set_aside_reason, or set_aside
-  with a non-whitespace reason; use stays labeled a hypothesis. The Wonderer takes no debate or room
-  turn, never argues, votes, disposes or sends its own leads to research. Check it,
-  cmd.collaboration.research_lead, sends any lead to research in all three kinds whatever its
-  disposition; cmd.brainstorm.research_lead remains its one-to-one BrainStorm compatibility alias.
-  Checking a lead already in research returns the same operation and starts no second attempt. In
-  BrainStorm every pass is withheld until every blind proposal is in and released at Normalize or
-  later delivery; Debate starts after first-pass delivery or its recorded failed, timed-out or
-  unavailable outcome. Explored leads are researched in Evidence or on later delivery. BrainStorm
-  synthesis and a Crew's final synthesis are unavailable with a stated reason while a pass is in
-  flight, any lead is undecided or lead research is in flight. Starting either closes further-pass
-  and Check it admission with lead_admission_closed and binds synthesis and publication to the
-  starting lead and research revision. Their result lists every lead with its disposition and
-  reason. A Crew receives the first pass before splitting, explored leads become read-only
-  exploration assignments, and Wonderer gets no assignment. A Chat Room never waits for a pass:
-  round 1 starts on time, the first pass joins between turns whenever delivered, and its summary
-  lists every delivered lead with disposition and reason or not taken up.
+  timed-out or unavailable further attempt consumes neither repeat, and retrying it keeps its
+  further-pass number, 2 or 3, with a new attempt identity. A failed first pass is never retried by
+  itself; a pass requested after it is a further pass numbered 2 and counts toward the two when
+  delivered. A further-pass request after synthesis starts begins nothing and returns
+  CollaborationMessageResult with lead_admission_closed and a null collaboration_message_id, without
+  delivering the addressed request. A later pass queues behind core work when no slot is free. Each
+  pass works three or four SS-037 angles, aims for three to five leads and delivers at most five,
+  stopping earlier with fewer or none when the method's stop signals come first. Every delivered
+  pass is a WondererPass with outcome leads or no_new_leads, one progressive-disclosure artifact
+  (WONV-008) and one Wonderer transcript message. Every lead is a WondererLead with an angle, a
+  one-sentence tether to the seed and at least one source; untethered drift and unsourced leads are
+  dropped. All core participants and the coordinator or moderator receive the summary and read
+  angles and dossiers on demand. Every lead is a hypothesis until explored. The agents decide
+  explore, use or set_aside with a non-whitespace reason and recorder: the coordinator records
+  BrainStorm leads from the Debate if delivered by then, Crew leads while splitting, and later leads
+  on delivery; the room moderator records leads on delivery between turns. An explored lead ends
+  substantiated with evidence and a null set_aside_reason, or set_aside with a non-whitespace
+  reason; use stays labeled a hypothesis. The Wonderer takes no debate or room turn, never argues,
+  votes, disposes or sends its own leads to research. Check it, cmd.collaboration.research_lead,
+  sends any lead to research in all three kinds whatever its disposition;
+  cmd.brainstorm.research_lead remains its one-to-one BrainStorm compatibility alias. Checking a
+  lead already in research returns the same operation and starts no second attempt. In BrainStorm
+  every pass is withheld until every blind proposal is in and released at Normalize or later
+  delivery; Debate starts after first-pass delivery or its recorded failed, timed-out or unavailable
+  outcome. Explored leads are researched in Evidence or on later delivery. BrainStorm synthesis and
+  a Crew's final synthesis are unavailable with a stated reason while a pass is in flight, any lead
+  is undecided or lead research is in flight. Starting either closes further-pass and Check it
+  admission with lead_admission_closed and binds synthesis and publication to the starting lead and
+  research revision. Their result lists every lead with its disposition and reason. A Crew receives
+  the first pass before splitting, explored leads become read-only exploration assignments, and
+  Wonderer gets no assignment. A Chat Room never waits for a pass: round 1 starts on time, the first
+  pass joins between turns whenever delivered, and its summary lists every delivered lead with
+  disposition and reason or not taken up.
 gui_related: false
 gui_classification_reason: Runtime protocol, records and gates; CWR-043 owns how they are shown.
 depends_on: [CWR-008, CWR-028, CWR-031]
@@ -3322,15 +3327,19 @@ canonical_text: >-
   reopens it. Facts go to research, never to the user; only dependent questions wait and the routed
   set is recorded in the run's single QuestionBank. If all remaining questions wait on research, the
   interview says it is looking things up, waits and recomputes when research returns. Prior answers
-  are reused. BrainStorm uses base plus extension; Crew and Chat Room use baseline 0 with extension
-  as the whole maximum, keyed by collaboration_run_id, with QMAX-005..007 charging and QMAX-014..015
-  typed exhaustion. The session ends by itself only when no decision is ready, no fact research is
-  pending and no branch is unsettled. Wrap up and the maximum also end it with open items listed.
-  Each session, including a later decision round, ends in its own What we agreed with every answer
-  and open item, Confirm and Keep going. Confirm gates only the step needing that session's answers;
-  a later session needs a fresh Confirm. Keep going preserves answers and the same counter within
-  the maximum. With Grill Me off, only the user can answer the ordinary needs-you prompt (DL-138).
-  Grill Me cannot mutate the project, start execution or approve anything.
+  are reused. A Crew or Chat Room QuestionBank opens when Grill Me is first turned on; earlier
+  needs-you prompts are not charged to it. BrainStorm uses base plus extension; Crew and Chat Room
+  use baseline 0 with extension as the whole maximum, keyed by collaboration_run_id, with
+  QMAX-005..007 charging and QMAX-014..015 typed exhaustion. The session ends by itself only when no
+  decision is ready, no fact research is pending and no branch is unsettled. A decision left open,
+  and every decision that depends on it, is listed as open in What we agreed and does not count as
+  an unsettled branch. Wrap up and the maximum also end it with open items listed. Each session,
+  including a later decision round, ends in its own What we agreed with every answer and open item,
+  Confirm and Keep going. Confirm gates only the step needing that session's answers; a later
+  session needs a fresh Confirm. Keep going preserves answers and the same counter within the
+  maximum. With Grill Me off, a decision only the user can answer reaches the user through the
+  ordinary needs-you prompt (DL-138). Grill Me cannot mutate the project, start execution or approve
+  anything.
 gui_related: false
 gui_classification_reason: Runtime interview protocol; CWR-043 owns how it is shown.
 depends_on: [CWR-008, CWR-028]
@@ -3339,7 +3348,7 @@ acceptance_criteria:
   - "Grill Me adds no participant or Persona and asks only the user, with no one-question-at-a-time setting."
   - "Only questions with settled prerequisites share a round; research blocks only dependent questions."
   - "An empty ready frontier with pending fact research remains waiting and recomputes on return."
-  - "I do not know leaves the decision open without repeating it; automatic completion also requires no unsettled branch."
+  - "I do not know leaves the decision open without repeating it; automatic completion also requires no unsettled branch. A decision left open, and every decision that depends on it, is listed as open in What we agreed and does not count as an unsettled branch."
   - "Initial proposals, split or round 1 wait for the initial Confirm; mid-run activation waits at the next boundary and gates only the consuming step."
   - "Each later decision session has its own agreement and fresh Confirm, preserving one counter and running work."
   - "Wrap up and typed exhaustion show all open items without confirming them."

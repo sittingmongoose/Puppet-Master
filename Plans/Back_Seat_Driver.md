@@ -1261,7 +1261,6 @@ node_compile_hint:
 source_lineage:
   - "Plans/Decision_Log.md DL-218"
   - "/mnt/Cursor/share/puppet-master/2026-10-16-wonderer-grill-me/DECISIONS.md sha256:dfa2f354936defd187d610de4aee77a3d8b75b6d25692e592ba48f7b66bfebce"
-  - "/mnt/Cursor/share/puppet-master/2026-10-16-wonderer-grill-me/DEFAULTS-APPROVED.md sha256:f199f188e3e4b1ecd5474a1bc2f87c2d5156863909eb9de9cc3ee9fcb7bfd5be"
   - "pm-assistant-implementation-2026-09-02-recovered:BSD-016"
 preserved_exact_tokens:
   - "inherit"

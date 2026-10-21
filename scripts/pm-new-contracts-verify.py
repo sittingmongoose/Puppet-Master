@@ -856,6 +856,13 @@ def walk_values(value: Any, path: str = "$"):
 def primary_identity(definition_name: str, definition: dict[str, Any], value: Any) -> tuple[str, str] | None:
     if not isinstance(value, dict):
         return None
+    if (definition_name == "QuestionBank"
+            and definition.get("properties", {}).get("schema_id", {}).get("const")
+            == "pm.brainstorm.question_bank.v1"):
+        # Shape and alias agreement are validated before indexing. Both the
+        # canonical key and the BrainStorm compatibility key name one bank.
+        identity = value.get("collaboration_run_id", value.get("brainstorm_run_id"))
+        return ("collaboration_run_id", identity) if isinstance(identity, str) and identity else None
     required = set(definition.get("required", []))
     declared = definition.get("x-primary-identity-fields")
     if declared is not None:
@@ -999,6 +1006,42 @@ def run_internal_self_tests() -> tuple[int, list[dict[str, Any]]]:
         len(duplicate_runtime_id_findings({("schema", "Request", "id=duplicate"): ["one", "two"]})) == 1,
         "duplicate_runtime_id_not_detected",
     ))
+
+    def check_question_bank_identity() -> None:
+        schema_rel = "Plans/collaborative_workflows_contracts.schema.json"
+        schema = load_json(ROOT / schema_rel)
+        definition = schema["$defs"]["QuestionBank"]
+        fixtures = load_json(ROOT / "Plans/collaborative_workflows_contract_fixtures.json")
+        cases = {case["name"]: case["value"] for case in fixtures["valid"]}
+        canonical = copy.deepcopy(cases["question_bank_grill_me"])
+        legacy = copy.deepcopy(cases["question_bank_legacy_brainstorm_key"])
+        canonical["collaboration_run_id"] = legacy["brainstorm_run_id"] = "crun-self-test-bank"
+        validator = validator_for(schema, definition, Registry())
+        for record in [canonical, legacy]:
+            expect(validator.is_valid(record), "question_bank_identity_control_invalid")
+            expect(not contract_semantic_failures(schema_rel, "QuestionBank", record),
+                   "question_bank_identity_control_semantically_invalid")
+        for records in [(canonical, canonical), (legacy, legacy), (canonical, legacy)]:
+            locations: defaultdict[tuple[str, str, str], list[str]] = defaultdict(list)
+            for label, record in zip(("original", "duplicate"), records):
+                identity = primary_identity("QuestionBank", definition, record)
+                expect(identity == ("collaboration_run_id", "crun-self-test-bank"),
+                       "question_bank_identity_not_normalized")
+                key, value = identity
+                locations[(schema_rel, "QuestionBank", f"{key}={value}")].append(label)
+            duplicates = duplicate_runtime_id_findings(locations)
+            expect(len(duplicates) == 1
+                   and duplicates[0]["code"] == "duplicate_runtime_record_id"
+                   and duplicates[0]["locations"] == ["original", "duplicate"],
+                   "duplicate_question_bank_identity_not_detected")
+        for name in ["crew_question_bank_grill_me", "chat_room_question_bank_grill_me"]:
+            record = cases[name]
+            expect(validator.is_valid(record), "question_bank_identity_control_invalid")
+            expect(primary_identity("QuestionBank", definition, record)
+                   == ("collaboration_run_id", record["collaboration_run_id"]),
+                   "question_bank_kind_lost_normalized_identity")
+
+    check("question_bank_normalized_run_identity_fails_closed", check_question_bank_identity)
     check("malformed_template_patch_fails_closed", lambda: expect_raises(
         lambda: dotted_patch({"nested": {}}, {"nested.missing": 1}, require_existing=True),
         KeyError,

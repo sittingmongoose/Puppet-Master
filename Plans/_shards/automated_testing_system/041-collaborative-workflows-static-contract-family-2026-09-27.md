@@ -4,7 +4,7 @@ Source: `Plans/Automated_Testing_System.md`
 
 Source lines: L5499-L5600
 
-Source SHA256: `8c94e88553f2f115079308a7b11104984fcdc6d4204b188360c972df0a4cf030`
+Source SHA256: `7375d53c62194fe2dd3391d1857a3e003e50468d87872591db23508b9e549343`
 
 ---
 
@@ -31,7 +31,7 @@ canonical_text: >-
   canonical cmd.collaboration.research_lead pair, WondererPass and WondererLead (DL-218), and
   ComposerBufferResult. It originally shipped 95 positive fixtures and 116 negative fixtures. The
   historical DL-138 companion edition contained 98 positive fixtures and 128 negative fixtures. The
-  DL-218 review-fix edition contains 124 positive fixtures and 176 negative fixtures, each negative
+  DL-218 companion edition contains 126 positive fixtures and 176 negative fixtures, each negative
   mutating one named positive so that it fails for one named constraint. The negatives prove that a
   definition cannot store a substitution policy, carry another kind's fields, give Review a
   specialist or give Grill Me a Persona or any participant spec (DL-218); that a Crew Auto admission
