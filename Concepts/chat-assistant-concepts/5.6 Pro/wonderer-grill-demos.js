@@ -64,9 +64,25 @@
   };
   var FACTS = { crew: ['f-ending', 'CRLF, the line ending RFC 4180 names', 8000], room: ['f-keys', '/ is free; Ctrl+K opens the command menu', 1600], deepplan: ['f-size', 'about 2,000 items, the median of the collection stats', 7000] };
   /* Grill Me turned on mid-run (CWR-042): the decision the Coordinator or the Moderator asks at the next boundary */
+  /* the Crew's question is the one the gated part turns on (Astra F8): whichever part the next claim is, the question is
+     about that part, and only that part waits for its Confirm */
+  var CREW_MID = {
+    normalize: { id: 'd-trim-mid', title: 'Titles', prompt: 'Trim only the spaces around each title, leaving the words inside as they are?', why: 'The next part normalizes the titles. The parts already running keep going; only this one waits for you.',
+      options: [{ label: 'Yes, only the outer spaces' }, { label: 'Also collapse spaces inside' }], recommended: 'Yes, only the outer spaces' },
+    quoting: { id: 'd-quote-mid', title: 'Quoting', prompt: 'Quote only the cells that need it (commas, quotes, line breaks)?', why: 'The next part checks how the cells are quoted. The parts already running keep going; only this one waits for you.',
+      options: [{ label: 'Yes, only where needed' }, { label: 'Quote every cell' }], recommended: 'Yes, only where needed' },
+    export: { id: 'd-order-mid', title: 'Row order', prompt: 'Keep the rows in the order the collection lists them?', why: 'The next part assembles the file from the checked parts. The parts already running keep going; only this one waits for you.',
+      options: [{ label: 'Yes, keep the input order' }, { label: 'Sort them by title' }], recommended: 'Yes, keep the input order' }
+  };
+  function crewMid(gate, r) {
+    var id = String(gate || '').replace(/^part:/, ''), a = ((r && r.crew && r.crew.assignments) || []).filter(function (x) { return x.id === id; })[0];
+    if (CREW_MID[id]) return [clone(CREW_MID[id])];
+    if (a && a.leadId) return [{ id: 'd-lead-mid', title: a.title, prompt: 'Have the helper checking ' + a.title.replace(/^Explore /, '') + ' cite a source for what it finds?', why: 'The next part checks a Wonderer lead read-only. The parts already running keep going; only this one waits for you.',
+      options: [{ label: 'Yes, cite a source' }, { label: 'Its own check is enough' }], recommended: 'Yes, cite a source' }];
+    return null;
+  }
   var MIDRUN = {
-    crew: [{ id: 'd-quote-mid', title: 'Quoting', prompt: 'Quote only the cells that need it (commas, quotes, line breaks)?', why: 'The next part writes the file’s cells. The parts already running keep going; only the next one waits for you.',
-      options: [{ label: 'Yes, only where needed' }, { label: 'Quote every cell' }], recommended: 'Yes, only where needed' }],
+    crew: crewMid,
     room: [{ id: 'd-optional', title: 'The shortcut', prompt: 'Keep any shortcut optional, with a way to turn it off?', why: 'The next round weighs the shortcut. This round goes on; only the next one waits for you.',
       options: [{ label: 'Yes, optional and easy to turn off' }, { label: 'Always on' }], recommended: 'Yes, optional and easy to turn off' }]
   };
@@ -197,7 +213,7 @@
     d.config.parallelism = 2; d.config.coordinator = 'parent_assistant'; d.config.assignmentStrategy = 'explicit_static';
     d.rows.forEach(function (r, i) { r.role = ['Data mapper', 'CSV specialist', 'Integrator'][i] || r.role; });
     d.crewInput = fx; d.requestKey = active.threadId + ':wg'; d.threadId = active.threadId;
-    d.wonderer = true; d.grillMe = true;
+    d.wonderer = true; d.grillMe = true; d.recordedSpecialists = true;
     if (C().markRecorded) C().markRecorded(d);
     c.openDialog({ type: 'collab-configure' }); c.renderApp();
   }
@@ -320,7 +336,7 @@
     d.name = 'Make search easier to reach'; d.nameEdited = true; d.purpose = 'How should people reach search: a visible button, a keyboard shortcut, or both?';
     d.rows = d.rows.slice(0, 3); d.rows.forEach(function (r, i) { r.role = ['Product', 'Design', 'Engineering'][i]; r.persona = ['Product Manager', 'Architect', 'Implementer'][i]; });
     d.config.participantCount = 3; d.config.turnPolicy = 'moderated'; d.config.maxRounds = 2;
-    d.roomInput = roomFixture(); d.wonderer = true; d.grillMe = true;
+    d.roomInput = roomFixture(); d.wonderer = true; d.grillMe = true; d.recordedSpecialists = true;
     if (C().markRecorded) C().markRecorded(d);
     c.openDialog({ type: 'collab-configure' });
   }
@@ -439,7 +455,7 @@
   /* how a session ended, in plain words (m2): every decision, a wrap-up, the limit, or Grill Me turned off */
   function endedWords(s) {
     var a = WG().grill.agreed(s), n = a.open.length, open = n ? ' ' + n + (n === 1 ? ' decision is' : ' decisions are') + ' left open.' : '';
-    return (a.endedBy === 'wrap_up' ? 'You wrapped up.' : a.endedBy === 'cap' ? 'The question limit was reached.' : a.endedBy === 'switched_off' ? 'Grill Me is off, so the questions stopped.' : 'That’s every decision.') + open + ' Read What we agreed, then Confirm.';
+    return (a.endedBy === 'wrap_up' ? 'You wrapped up.' : a.endedBy === 'cap' ? 'The question limit was reached.' : a.endedBy === 'switched_off' ? 'Grill Me is off, so the questions stopped.' : n ? 'No more questions to ask.' : 'That’s every decision.') + open + ' Read What we agreed, then Confirm.';
   }
   function who(pass) { return pass.by.kind === 'user' ? 'You' : pass.by.name || 'A helper'; }
   function step(c) {

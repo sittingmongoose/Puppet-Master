@@ -1994,8 +1994,8 @@
        the pending request is cleared and a session still questioning you ends like Wrap up (PM56_WG.setGrill) */
     if (WG_()) WG_().setGrill(run, on); else { qb.grillMeEnabled = on; if (run.config) run.config.grill_me_enabled = on; }
     qb.grillMeEnabled = on;
-    var eff = qb.baselineLimit + (qb.grillMeEnabled ? qb.grillExtension : 0);
-    run.messages.push(mkMsg(run, { senderKind: 'system', senderName: 'System', messageType: 'message', body: 'Grill Me ' + (qb.grillMeEnabled ? 'enabled' : 'disabled') + '. Effective question maximum is now ' + eff + '. The ' + qb.askedIds.length + ' questions already asked still count — the allowance did not reset.' }));
+    /* one plain line per toggle (n-b): PM56_WG.setGrill writes it, with the question numbers folded in */
+    if (!WG_()) run.messages.push(mkMsg(run, { senderKind: 'system', senderName: 'System', messageType: 'message', body: 'Grill Me ' + (qb.grillMeEnabled ? 'enabled' : 'disabled') + '. Effective question maximum is now ' + (qb.baselineLimit + (qb.grillMeEnabled ? qb.grillExtension : 0)) + '. The ' + qb.askedIds.length + ' questions already asked still count — the allowance did not reset.' }));
     ctx.renderOverlays(); ctx.renderApp();
     return true;
   });
@@ -3010,7 +3010,9 @@
     var who = d.kind === 'chat_room' ? 'The Moderator' : 'The Coordinator', when = d.kind === 'crew' ? 'before the split' : d.kind === 'chat_room' ? 'before round 1' : 'before anyone drafts';
     function item(key, name, helper, role) {
       var on = !!d[key];
-      var state = reason ? 'disabled' : (rec && !on) ? 'disabled' : on ? 'on' : 'off';
+      /* a recording that plays with the item on or off (d.recordedSpecialists: the DL-218 Crew, Chat Room and
+         BrainStorm recordings) keeps an editable switch, so turning it off can be undone (Astra F5) */
+      var state = reason ? 'disabled' : (rec && !on && !d.recordedSpecialists) ? 'disabled' : on ? 'on' : 'off';
       /* the helper is one line in the shelf; its whole sentence rides in the app hover card */
       var it = { key: 'pmx-spec-' + key, name: name, helper: '<span id="pmx-spec-help-' + key + '" data-hover-key="collab-spec-help:' + key + '" data-hover-tip="' + esc(helper) + '">' + esc(helper) + '</span>', state: state, reason: reason || (rec ? 'This recorded example uses its own team.' : ''),
         affects: (key === 'wonderer' ? 'wonderer' : 'grill') + ' specialists',
@@ -3789,6 +3791,8 @@
       if (key) {
         var sel = '[data-collab-input="' + key + '"]' + (row ? '[data-row="' + row + '"]' : '');
         var again = document.querySelector('#pmOverlayRoot ' + sel);
+        /* the control left with the change (a refusal replaced it): its shelf item takes the focus, never the page */
+        if (!again && (key === 'wonderer' || key === 'grillMe')) { again = document.querySelector('#pmOverlayRoot [data-k="pmx-spec-' + key + '"]'); if (again) again.setAttribute('tabindex', '-1'); }
         if (again && again.focus && document.activeElement !== again) { try { again.focus({ preventScroll: true }); } catch (err) { } }
       }
     }

@@ -2173,16 +2173,21 @@ decide what to explore.
 - **A pass, in three layers.** Every pass message (the run's conversation, the
   main chat's Wonderer card, the run view's "Wonderer's leads" section and the
   BrainStorm workspace) opens with the territory: a small compass of the eight
-  angles with the ones it worked lit (a dot for each lead an angle gave), the
-  summary, and a tally of where its leads stand. "N angles explored, with what
-  each turned up" opens each angle's brief signal; every lead has its dossier.
-- **Leads, in place.** Each lead is numbered with its angle (a label, never a
+  angles, every rim position a dot (the worked ones filled and sized by the
+  leads they gave), captioned "4 of 8 angles", with a legend naming each worked
+  angle and its leads, then the summary and a tally of where its leads stand.
+  "N angles explored, with what each turned up" opens each angle's brief
+  signal; every lead has its dossier.
+- **Leads, in place.** Each lead is numbered, its status mark under the number
+  (so the statuses scan down the left edge), with its angle (a label, never a
   link), its tether, its source, its status in place (Waiting for the team ·
   Exploring · Using · Set aside · Supported · Not supported), the one-line
-  reason and who recorded it, and **Check it**. A research result overrides the
-  status, never the decision: under "Supported" or "Not supported" (with who
-  checked it and what they found) the row keeps "The team: Explore · recorded
-  by Coordinator" and its quoted reason. Research outcomes have their own marks
+  reason and who recorded it, and **Check it**. A row reads like the listing:
+  the team's decision first ("The team: Explore · recorded by Coordinator" and
+  its quoted reason, in the quieter ink), then what research found ("Supported"
+  or "Not supported", who checked it and what they found); research never
+  hides the decision. On a BrainStorm pass still held, the pass says once that
+  it is held until every proposal is in, and its rows say Waiting for the team. Research outcomes have their own marks
   (the check; the flask), apart from a decision to set a lead aside. A helper's
   message that takes up a lead links to it ("Takes up lead 3").
 - **Decided as they arrive.** The Coordinator (in a Chat Room, the Moderator)
@@ -2217,21 +2222,31 @@ decide what to explore.
   Crew's or a Chat Room's plate it "takes no turn".
 - **Grill Me** is a switch, named "Grill Me" for screen readers with its helper
   as its description, whose focus ring shows on the visible control; on a sheet
-  narrower than 460 px it reads On / Off. With Grill Me on, the Coordinator (in
+  narrower than 460 px it reads On / Off, and below 520 px each shelf item
+  stacks (its name on its own line, the control under it, then its helper,
+  which wraps rather than being cut off, Retro included). A recorded example
+  that plays either way keeps both switches editable, and the focus never
+  falls to the page. With Grill Me on, the Coordinator (in
   a Chat Room, the Moderator) questions you in the main chat before the run's
   first step, in rounds over every decision that is ready. The Ask Card's round
   bar names who is grilling you, the round, how many decisions are ready, the
   run's one question count ("6 of up to 25 asked"), a one-line map tally
   (settled · asking now · looking it up · waits) and "Nothing acts on your
-  answers until you confirm what you agreed". **Map** unfolds the design tree:
-  each decision under the one it hangs off, what is settled, what is asked now
-  (a button to that question), what research is looking up, what waits and
-  what each answer unlocks. Each question has its recommended answer
-  preselected, but a preselection is only a draft: it counts once you send the
-  round or press the round's soft-primary "Accept all N recommended" (which
-  becomes "Accept the rest" once you have changed an answer, and "Send all N
-  answers" once you have answered them all). The foot is one row: Wrap up, the
-  count, Back, Not sure, Accept, Next. Facts it can look up are looked up
+  answers until you confirm what you agreed" (its fine print is set in an ink
+  measured against the card's tint, 4.5:1 or better). **Map** unfolds the
+  design tree, one line a decision: each decision joined by a drawn connector
+  to the one it hangs off, what is settled, what is asked now (a button to
+  that question; the one on screen is marked), what research is looking up,
+  and what waits; the question stays in view below it. Each question has its
+  recommended answer preselected, but a preselection is only a draft: it
+  counts once you send the round or accept it. While every answer is still the
+  recommendation, "Accept all N recommended" is the round's primary; once you
+  change one, it becomes "Accept the rest" and Next is the primary again, and
+  "Send all N answers" once every answer is yours (a revisit of answers you
+  gave before reads that way too, never "recommended"). The foot is one row:
+  Wrap up, the count, Back, Not sure, Accept, Next; at phone width the count
+  and the tally step aside, Accept reads "Accept all", and the safety line
+  stays. Facts it can look up are looked up
   instead of asked; if every remaining question depends on a lookup, the
   session waits and shows "Looking things up", and the lead's lane opens that
   lookup, never What we agreed. It ends by itself only when nothing is left to
@@ -2239,17 +2254,22 @@ decide what to explore.
   an answer you gave stands, everything else is listed open ("Not answered: you
   wrapped up"); the question limit ends it too, and "not sure" leaves a question
   open. It ends in **What we agreed** (decisions, open items with why, facts
-  found, the run's count, and "How the decisions hang together", the map), and
-  the step it holds waits for **Confirm**. **Keep going** brings back what was
-  left open and, if nothing was, lets you revisit your answers; **Ask again**
-  reopens one open decision. A question is charged once, on its first
+  found, the run's count, and "How the decisions hang together", the tree's
+  structure without repeating the answers listed above it), and the step it
+  holds waits for **Confirm**; a session that begins with the bank already
+  spent ends at once and posts its What we agreed. **Keep going** brings back
+  what was left open (with the decisions never asked because you wrapped up
+  first, asked once what they hang off is settled) and, if nothing was, lets
+  you revisit your answers; a revisit withdraws nothing: an answer you leave
+  untouched stays yours, even if you then wrap up. **Ask again** reopens one
+  open decision. A question is charged once, on its first
   presentation, to the run's one QuestionBank (a BrainStorm's budget; a Crew's
   or a Chat Room's, opened when Grill Me is first on, with the extension of 25
   as its whole maximum; a Deep Plan's 35); every later session on the run counts
   on from it, asking again charges nothing, and at the limit no new question is
   admitted. Turned on mid-run, from the sheet or the switch in a Crew's, a Chat
   Room's or a BrainStorm's run view, Grill Me questions you at the next
-  boundary, wherever that is: the next part a Crew is about to start, the next
+  boundary, wherever that is, asking about that step: the next part a Crew is about to start, the next
   round of a Chat Room, the next chapter of a BrainStorm (the vote waits for it,
   or Write the plan once the vote is under way); work already running goes on,
   and only that step waits for its own What we agreed / Confirm. Turned off, a
@@ -2259,7 +2279,11 @@ decide what to explore.
   alternative answer, such as "Rank by recency instead", or an item left open,
   changes the plan's steps. An ordinary Plan's Question budget "Turn Grill Me
   on" starts the same interview on that Plan's thread, over the Plan's own
-  question count, and its Revise waits for that Confirm.
+  question count, and no revision of that Plan is admitted before that
+  Confirm, whatever the route (Revise, a revision targeted before Grill Me came
+  on, the destination picker); your words stay in the composer. Turning it off
+  there ends the interview like Wrap up: the pick you made counts, the Ask Card
+  goes, and one What we agreed waits for your Confirm.
 - **Recorded examples respect both switches.** With the Wonderer removed, a
   Crew or Chat Room recording skips its leads; with Grill Me off nobody grills
   you, and a later decision would reach you as the ordinary needs-you prompt.

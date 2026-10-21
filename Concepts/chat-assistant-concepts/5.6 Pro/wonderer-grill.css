@@ -12,6 +12,14 @@
 .wg-pass-title { display: flex; flex-wrap: wrap; align-items: baseline; column-gap: 8px; row-gap: 2px; min-width: 0; margin: 0; font: var(--pmx-w-reg) 13px/19px var(--font-ui); color: var(--muted); }
 .wg-pass-title > b { color: var(--text); font-weight: var(--pmx-w-640); }
 .wg-fine { display: inline; font: var(--pmx-fs-fine); color: var(--subtle); }
+/* who asked for a pass, and what it was started with, is information since M1: --muted, not the faint token (n-a) */
+.wg-pass-title .wg-fine, .wg-card-foot .wg-fine { color: var(--muted); }
+/* the team's reason reads apart from what research found: same size, --muted (D6) */
+.wg-team-why { color: var(--muted); }
+/* the Room transcript: the Wonderer section keeps 24 px from the last message (n-g) */
+.pmx-rv-scriptwrap + .wg-section { margin-top: 24px; }
+/* a weight with a real face: Poppins and IBM Plex Mono have no 680 (n-i) */
+body[data-theme^="friendly"] .wg-agreed-title, body[data-theme^="retro"] .wg-agreed-title { font-weight: 700; }
 .wg-pass-say { display: flex; gap: 8px; align-items: flex-start; margin: 8px 0 0; max-width: 72ch; font: var(--pmx-w-reg) 13px/20px var(--pmx-voice); color: var(--text); }
 .wg-pass-say > .nx-st, .wg-pass-say > svg { flex: none; margin-top: 3px; }
 .wg-pass-say q { quotes: '“' '”'; color: var(--text); }
@@ -21,13 +29,20 @@
 .wg-territory { display: flex; align-items: flex-start; gap: 14px; margin: 10px 0 0; min-width: 0; }
 .wg-territory-text { min-width: 0; flex: 1 1 auto; }
 .wg-territory-text > .wg-pass-say { margin-top: 0; }
+.wg-cmp { flex: none; display: flex; flex-direction: column; align-items: center; gap: 4px; margin: 0; }
 .wg-compass { flex: none; display: block; overflow: visible; }
 .wg-cmp-rim { fill: none; stroke: var(--border-strong); stroke-width: 1; stroke-dasharray: 2 3; }
-.wg-cmp-ray line { stroke: var(--border-strong); stroke-width: 1.2; stroke-linecap: round; }
-.wg-cmp-ray[data-on="1"] line { stroke: var(--pmx-seat-7); stroke-width: 2; }
-.wg-cmp-ray circle { fill: var(--pmx-seat-7); }
+.wg-cmp-ray line { stroke: var(--pmx-seat-7); stroke-width: 1.6; stroke-linecap: round; }
+.wg-cmp-ray circle { fill: var(--pmx-card, var(--surface)); stroke: var(--muted); stroke-width: 1; }
+.wg-cmp-ray[data-on="1"] circle { fill: var(--pmx-seat-7); stroke: none; }
 .wg-cmp-ray[data-on="1"][data-leads="0"] circle { fill: var(--pmx-card, var(--surface)); stroke: var(--pmx-seat-7); stroke-width: 1.4; }
 .wg-cmp-hub { fill: var(--muted); }
+.wg-cmp-cap { font: var(--pmx-fs-fine); color: var(--muted); white-space: nowrap; font-variant-numeric: tabular-nums; }
+.wg-cmp-legend { display: flex; flex-wrap: wrap; gap: 2px 14px; margin: 6px 0 0; font: var(--pmx-w-reg) 12px/17px var(--font-ui); color: var(--text); }
+.wg-cmp-key { display: inline-flex; align-items: center; gap: 5px; white-space: nowrap; }
+.wg-cmp-key > .wg-angle-mark { color: var(--pmx-seat-7); }
+.wg-cmp-n { color: var(--muted); font-variant-numeric: tabular-nums; }
+.wg-cmp-n::before { content: '· '; }
 /* where the pass's leads stand now: one mark and count per status */
 .wg-tally { display: flex; flex-wrap: wrap; gap: 4px 14px; margin: 8px 0 0; font: var(--pmx-fs-fine); color: var(--muted); }
 .wg-tally-i { display: inline-flex; align-items: center; gap: 5px; white-space: nowrap; }
@@ -50,7 +65,9 @@
 .wg-lead { position: relative; display: grid; grid-template-columns: 22px minmax(0, 1fr) auto; column-gap: 10px; align-items: start; padding: 12px 0; min-width: 0; }
 .wg-lead + .wg-lead { box-shadow: 0 -1px 0 var(--border); }
 .wg-lead:first-child { box-shadow: 0 -1px 0 var(--border); }
-.wg-lead-n { display: block; padding-top: 1px; font: var(--pmx-w-650) 12px/19px var(--font-ui); color: var(--pmx-seat-7); text-align: right; font-variant-numeric: tabular-nums; }
+.wg-lead-n { display: flex; flex-direction: column; align-items: flex-end; gap: 5px; padding-top: 1px; font: var(--pmx-w-650) 12px/19px var(--font-ui); color: var(--pmx-seat-7); text-align: right; font-variant-numeric: tabular-nums; }
+/* each lead's status mark under its number: the statuses scan down the left edge (D2) */
+.wg-lead-n > .wg-st-mark { line-height: 0; }
 .wg-lead-body { min-width: 0; }
 .wg-lead-title { margin: 0; font: var(--pmx-w-620) 13.5px/19px var(--font-ui); color: var(--text); overflow-wrap: anywhere; }
 .wg-lead-tether { margin: 4px 0 0; font: var(--pmx-fs-help); color: var(--muted); overflow-wrap: anywhere; }
@@ -61,6 +78,10 @@
 .wg-lead-src, .wg-lead-evidence, .wg-lead-taken { display: flex; align-items: flex-start; gap: 6px; min-width: 0; margin: 4px 0 0; font: var(--pmx-fs-fine); color: var(--muted); }
 .wg-lead-src > svg, .wg-lead-evidence > svg, .wg-lead-taken > svg, .wg-lead-src > .nx-i, .wg-lead-evidence > .nx-i, .wg-lead-taken > .nx-i { flex: none; margin-top: 2px; }
 .wg-lead-src > span, .wg-lead-src > a { min-width: 0; overflow-wrap: anywhere; }
+/* the source line, measured on the painted card: Friendly Light's and NieR Dark's --muted fall to 4.3-4.4:1 there, so
+   it takes an ink of 4.8:1 or better in those two looks (Opus N4; ruling 4 of round 2) */
+body[data-theme="friendly-light"] .wg-lead-src { color: #6a5d67; }
+html[data-o55-nier="on"] body[data-theme="basic-dark"] .wg-lead-src { color: #b8b5a1; }
 .wg-lead-src q { quotes: '“' '”'; }
 .wg-src-link, .wg-lead-evidence a { color: var(--muted); text-decoration: none; }
 .wg-src-link:hover, .wg-lead-evidence a:hover { color: var(--text); text-decoration: underline; text-underline-offset: 2px; }
@@ -71,7 +92,7 @@
 .wg-lead-status .wg-st-head > b { color: var(--text); font-weight: var(--pmx-w-620); }
 .wg-lead-status[data-status="supported"] .wg-st-head > b { color: var(--positive); }
 .wg-lead-status[data-status="set_aside"] .wg-st-head > b, .wg-lead-status[data-status="not_supported"] .wg-st-head > b, .wg-lead-status[data-status="held"] .wg-st-head > b, .wg-lead-status[data-status="waiting"] .wg-st-head > b { color: var(--muted); }
-.wg-lead-why { margin: 2px 0 0 20px; max-width: 64ch; font: var(--pmx-w-reg) 12.5px/18.5px var(--pmx-voice); color: var(--muted); overflow-wrap: anywhere; }
+.wg-lead-why { margin: 2px 0 0; max-width: 64ch; font: var(--pmx-w-reg) 12.5px/18.5px var(--pmx-voice); color: var(--muted); overflow-wrap: anywhere; }
 .wg-lead-why q { quotes: '“' '”'; color: var(--text); }
 .wg-who { color: var(--muted); }
 .wg-hyp { font: var(--pmx-fs-fine); color: var(--muted); }
@@ -79,9 +100,9 @@
 .wg-by::before { content: 'recorded by'; margin-right: 2px; color: var(--muted); }
 .wg-by-wrap { display: contents; }
 /* the team's decision stays under a research result (M4): one quiet line with who recorded it, then its reason */
-.wg-lead-decision { display: flex; flex-wrap: wrap; align-items: center; column-gap: 12px; row-gap: 2px; margin: 6px 0 0 20px; font: var(--pmx-w-reg) 12px/18px var(--font-ui); color: var(--muted); overflow-x: clip; }
+.wg-lead-decision { display: flex; flex-wrap: wrap; align-items: center; column-gap: 12px; row-gap: 2px; margin: 6px 0 0; font: var(--pmx-w-reg) 12px/18px var(--font-ui); color: var(--muted); overflow-x: clip; }
 .wg-dec-word b { color: var(--text); font-weight: 600; }
-.wg-lead-decision + .wg-lead-why { margin-left: 20px; }
+.wg-lead-decision + .wg-lead-why { margin-left: 0; }
 .wg-lead-result q { color: var(--text); }
 .wg-st-flask { color: var(--muted); }
 .wg-st-flask > svg { display: block; }
@@ -151,6 +172,9 @@ body.pm56-reduced .wg-lead[data-flash="1"]::after, html[data-motion="reduced"] .
 .wg-listing-s b { color: var(--text); font-weight: 600; }
 .wg-listing li[data-status="supported"] .wg-listing-s b { color: var(--positive); }
 .wg-listing-d, .wg-listing-r { grid-column: 2; display: block; margin-top: 1px; overflow-wrap: anywhere; }
+/* Poppins sits a pixel tighter: Friendly keeps 6 px between a lead's lines (pmx crowding, round 2) */
+body[data-theme^="friendly"] .wg-listing-d, body[data-theme^="friendly"] .wg-listing-r { margin-top: 2px; }
+body[data-theme^="friendly"] .wg-lead-why { margin-top: 3px; }
 .wg-listing-d b, .wg-listing-r b { color: var(--text); font-weight: 600; }
 .wg-listing-d q { quotes: '“' '”'; }
 .wg-listing-r > .wg-st-mark { display: inline-flex; vertical-align: -2px; margin-right: 5px; }
@@ -188,6 +212,8 @@ body.pm56-reduced .wg-lead[data-flash="1"]::after, html[data-motion="reduced"] .
 .wg-agreed-acts .primary-button, .wg-agreed-acts .text-button { min-height: 32px; }
 /* a card in the chat, like the pmx surfaces: Confirm carries no glow (module-shell.css does the same for .pmx-*) */
 .wg-agreed-acts .primary-button { box-shadow: none; }
+/* Friendly and Retro: the house primary's 680 draws the 700 cut, so ask for 700 (pmx theme-font, as module-shell's J-1) */
+body[data-theme^="friendly"] .wg-agreed-acts .primary-button, body[data-theme^="retro"] .wg-agreed-acts .primary-button { font-weight: 700; }
 .wg-agreed-acts .wg-agreed-prov { flex: 1 1 100%; margin: 0; }
 .wg-agreed-note { display: flex; gap: 8px; align-items: flex-start; margin: 14px 0 0; padding-top: 12px; box-shadow: 0 -1px 0 var(--border); font: var(--pmx-w-reg) 12.5px/19px var(--font-ui); color: var(--muted); }
 .wg-agreed-note b { color: var(--text); }
@@ -207,7 +233,19 @@ body.pm56-reduced .wg-lead[data-flash="1"]::after, html[data-motion="reduced"] .
 .wg-tree, .wg-tree-kids { margin: 0; padding: 0; list-style: none; }
 /* nesting reads by indentation under the parent's mark, never a one-sided rule (DL-184, pmx no-stripe) */
 .wg-tree-kids { margin-left: 24px; }
-.wg-tree-li { min-width: 0; }
+/* D1 (round 2): flat rows; each child row starts with its connector cells (inline SVG lines in --border-strong) */
+.wg-tree-li { display: flex; align-items: stretch; min-width: 0; }
+.wg-tree-guides { display: flex; flex: none; }
+.wg-tg { display: flex; flex-direction: column; flex: none; width: 14px; }
+.wg-tg > svg { display: block; flex: none; overflow: visible; }
+.wg-tg > .wg-tg-b { flex: 1 1 auto; min-height: 0; height: auto; }
+.wg-tg path { fill: none; stroke: var(--border-strong); stroke-width: 1; }
+.wg-tree-li > .wg-tree-node { flex: 1 1 auto; }
+/* the Ask Card's map: one line a decision (title, then what it is now), so the question stays in view */
+.wg-tree-wrap[data-where="ask"] .wg-tree-node { grid-template-columns: 16px auto minmax(0, 1fr); padding: 2px 0; }
+.wg-tree-wrap[data-where="ask"] .wg-tree-d { grid-column: 3; color: var(--qs-grill-ink, var(--muted)); }
+.wg-tree-wrap[data-where="ask"] .wg-tree-fine { color: var(--qs-grill-ink, var(--muted)); }
+.wg-tree-wrap[data-where="ask"] .wg-tree-d::before { content: '· '; }
 .wg-tree-node { display: grid; grid-template-columns: 16px minmax(0, 1fr); column-gap: 8px; row-gap: 2px; align-items: start; width: 100%; min-width: 0; padding: 3px 0; text-align: left; font: var(--pmx-w-reg) 12.5px/18px var(--font-ui); color: var(--muted); background: transparent; border: 0; border-radius: 4px; }
 button.wg-tree-node { cursor: pointer; }
 button.wg-tree-node:hover .wg-tree-t { text-decoration: underline; text-underline-offset: 3px; }
@@ -216,7 +254,9 @@ button.wg-tree-node:focus-visible { outline: 2px solid var(--pmx-focus-outline, 
 .wg-tree-t { grid-column: 2; color: var(--text); font-weight: 600; overflow-wrap: anywhere; }
 .wg-tree-d { grid-column: 2; min-width: 0; overflow-wrap: anywhere; }
 .wg-tree-fine { color: var(--muted); }
-.wg-tree-li[data-state="frontier"] > .wg-tree-node .wg-tree-d { color: var(--accent); font-weight: 600; }
+.wg-tree-li[data-state="frontier"] > .wg-tree-node .wg-tree-d { color: var(--text); font-weight: 600; }
+/* the question the Ask Card is on: its mark alone takes the accent (a graphic, 3:1 is its bar; never the text) */
+.wg-tree-li[data-current="1"] > .wg-tree-node .wg-tree-mark { color: var(--accent); --nx-ink: var(--accent); }
 .wg-tree-li[data-state="waiting"] > .wg-tree-node .wg-tree-t, .wg-tree-li[data-state="next"] > .wg-tree-node .wg-tree-t { font-weight: var(--pmx-w-reg); }
 .wg-tree-li[data-state="settled"] > .wg-tree-node .wg-tree-d { color: var(--text); }
 .wg-tree-li[data-kind="fact"] > .wg-tree-node .wg-tree-t { font-weight: var(--pmx-w-reg); font-style: normal; }
@@ -229,7 +269,9 @@ button.wg-tree-node:focus-visible { outline: 2px solid var(--pmx-focus-outline, 
 /* ---------------------------------------------------------------- NieR Mode: ink, no hue */
 html[data-o55-nier="on"] .wg-lead-n, html[data-o55-nier="on"] .wg-angle, html[data-o55-nier="on"] .wg-angle-mark, html[data-o55-nier="on"] .wg-takeup-link, html[data-o55-nier="on"] .wg-agreed-n { color: var(--text); }
 html[data-o55-nier="on"] .wg-cmp-ray[data-on="1"] line { stroke: var(--text); }
-html[data-o55-nier="on"] .wg-cmp-ray circle { fill: var(--text); }
+html[data-o55-nier="on"] .wg-cmp-ray[data-on="1"] circle { fill: var(--text); }
+html[data-o55-nier="on"] .wg-cmp-ray line { stroke: var(--text); }
+html[data-o55-nier="on"] .wg-cmp-key > .wg-angle-mark { color: var(--text); }
 html[data-o55-nier="on"] .wg-tree-li[data-state="frontier"] > .wg-tree-node .wg-tree-d { color: var(--text); }
 html[data-o55-nier="on"] .wg-lead[data-flash="1"]::after { background: var(--pmx-soft-fill); }
 /* Retro: square corners, the family's own box */

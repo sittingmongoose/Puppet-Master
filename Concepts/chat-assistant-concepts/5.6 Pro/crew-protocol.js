@@ -68,7 +68,8 @@
   if(r.crew.assignments.filter(t=>t.status==='running').length+wSlot>=r.crew.effectiveConcurrency)return fail('concurrency_full');
   /* Grill Me turned on mid-run starts at the next assignment boundary: this part, about to start (CWR-042, R4/m5);
      the parts already running keep going, and only this part waits for that session's Confirm */
-  if(WGc&&WGc.takeMidRun(r)){WGc.beginMidRun(r,'part:'+assignmentId,'the '+String(a.title||'next').replace(/\.$/,'').toLowerCase()+' part');return fail('grill_me_waits_for_confirm');}
+  /* the part's own title, only its first letter lowercased ("the verify CSV quoting part", n-c) */
+  if(WGc&&WGc.takeMidRun(r)){const t=String(a.title||'Next').replace(/\.$/,'');WGc.beginMidRun(r,'part:'+assignmentId,'the '+t.charAt(0).toLowerCase()+t.slice(1)+' part');return fail('grill_me_waits_for_confirm');}
   if(a.leadId){
    const q=r.participants.find(p=>p.id===a.participantId);if(!q||q.additiveRoleKind==='wonderer'||['failed','timed_out','unavailable','canceled'].includes(q.outcome))return fail('participant_unavailable');
    const attempt={id:'crew-explore-'+r.id+'-'+a.id,assignmentRevision:q.assignmentRevision,participantId:q.id};

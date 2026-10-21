@@ -54,7 +54,7 @@
     const input=BD.fixture(flow==='dissent'?'constraint':'synthesis'),grill=flow==='leads';
     t.messages=[{id:tid+'-request',role:'user',type:'text',body:input.objective+(grill?' Ask me what you need to know first.':' Collection contents must stay on the device.')}];
     C.openConfigure('brainstorm');const d=C.draft();
-    d.name=flows[flow].title;d.purpose=input.objective;d.brainstormInput=input;d.wonderer=true;d.grillMe=grill;
+    d.name=flows[flow].title;d.purpose=input.objective;d.brainstormInput=input;d.wonderer=true;d.grillMe=grill;d.recordedSpecialists=true;
     /* this recording follows the Wonderer's leads: removing it stops Start with a stated reason (R6) */
     d.recordingNeeds={wonderer:true};
     // IMPACT A1-01: a recorded draft is flagged; its rules are copied into the user field as prefill only
@@ -268,7 +268,7 @@
     const held=w.passes.some(p=>p.status==='held'),exploring=w.passes.some(p=>p.status==='exploring');
     const acts=btn(c,'brainstorm-open-results','See how they decided',attrs)+
       (running?btn(c,'collab-pause',S.pmxGlyph('pause',13)+'Pause',attrs):r.status==='paused'?btn(c,'collab-resume',S.pmxGlyph('play',13)+'Resume',attrs):'');
-    const lead=exploring?'Exploring':held?'Held until every proposal is in':cnt.waiting?plural(cnt.waiting,'lead')+' waiting for the team':cnt.exploring?plural(cnt.exploring,'lead')+' being checked':cnt.total?'Every lead decided':'Starting';
+    const lead=exploring?'Exploring':held?'Leads held for now':cnt.waiting?plural(cnt.waiting,'lead')+' waiting for the team':cnt.exploring?plural(cnt.exploring,'lead')+' being checked':cnt.total?'Every lead decided':'Starting';
     const status='<b>'+esc(lead)+'.</b> '+esc(W.countsText(r)?W.countsText(r)+'.':'It runs alongside the BrainStorm.')+' It never votes, argues or takes a turn.';
     const g=gateState(r),done=!!b.synthesis;
     const conv=S.pmxViewSection({key:'convergence:'+r.id,cls:'b13-convergence',title:'Write the plan',
@@ -294,7 +294,7 @@
     if(a.endedBy==='wrap_up')return 'You wrapped up.'+open+' Read What we agreed.';
     if(a.endedBy==='cap')return 'The question limit was reached.'+open+' Read What we agreed.';
     if(a.endedBy==='switched_off')return 'Grill Me is off, so the Coordinator stopped asking.'+open+' Read What we agreed.';
-    return 'That’s every decision.'+open+' Read What we agreed.';
+    return (n?'No more questions to ask.':'That’s every decision.')+open+' Read What we agreed.';
   }
   /* The guide reads the live state and moves on with the user. Its caption is the run's provenance (the card's words). */
   function wondererStep(c,s){

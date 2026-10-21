@@ -329,6 +329,8 @@ body[data-theme^="retro"] .pmx-sheet{--pmx-hero-side-full:330px;}
 .pmx-sheet .pmx-ctl-control{min-width:0;}
 .pmx-sheet .pmx-ctl[data-state="disabled"] .pmx-ctl-control{opacity:.5;pointer-events:none;}
 body[data-theme^="retro"] .pmx-sheet :is(.pmx-ctl-copy, .pmx-spec-copy) .pmx-help{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+/* a shelf helper is a whole sentence in Retro too: it wraps, never "Never…" (Opus N3; scheduling.css does the same) */
+body[data-theme^="retro"] .pmx-sheet .pmx-spec-copy .pmx-help{white-space:normal;overflow:visible;text-overflow:clip;}
 
 /* ================================================================ A5/A6 roster */
 /* J-2: the last column holds two 28 px row actions 10 px apart; the model and persona triggers keep 10 px */
@@ -444,8 +446,10 @@ html[data-o55-nier="on"] .pmx-sheet .pmx-shelf > .pmx-q-head + .pmx-help + .pmx-
   .pmx-sheet .pmx-spec .pmx-add[data-switch="1"] > .pmx-add-word{display:none;}
   .pmx-sheet .pmx-spec .pmx-add[data-switch="1"] > .pmx-add-short{display:inline;}
   .pmx-sheet .pmx-spec .pmx-add[data-switch="1"]{padding:0 6px;}
-  /* a phone-width row: the name keeps its own line (never crushed by the picker, "Grill Me" never wraps under its
-     mark), the control goes under it, then the helper (m6) */
+}
+@media (max-width: 519.98px){
+  /* a narrow row (up to 519 px, Opus N3): the name keeps its own line (never crushed by the picker, "Grill Me" never
+     wraps under its mark), the control goes under it, then the helper (m6) */
   .pmx-sheet .pmx-spec{grid-template-rows:auto auto auto;}
   .pmx-sheet .pmx-spec-copy > b{white-space:nowrap;}
   .pmx-sheet .pmx-spec-control{grid-column:2 / -1;grid-row:2;margin:6px 0 0;justify-content:space-between;}

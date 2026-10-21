@@ -114,12 +114,19 @@
      leaves through PM56_WG.grillAnswered, never the stock receipt */
   function grillOf(flow) { return flow && flow.grill ? flow.grill : null; }
   /* Accept all says what it does (m3): every recommendation while you have touched nothing, "the rest" once you have,
-     and "send" when every answer is yours */
+     and "send" when every answer is yours. A revisited question shows the answer you submitted before, so it counts as
+     yours too, never as a recommendation to accept (Astra F6, round 2) */
   function acceptLabel(qs, short) {
-    var touched = qs.filter(function (q) { return q.touched; }).length;
+    var touched = qs.filter(function (q) { return q.touched || q.revisit; }).length;
     if (!touched) return qs.length === 1 ? 'Accept it' : (short ? 'Accept all ' + qs.length : 'Accept all ' + qs.length + ' recommended');
     if (touched >= qs.length) return qs.length === 1 ? 'Send it' : 'Send all ' + qs.length + ' answers';
     return 'Accept the rest';
+  }
+  /* the same words with their tail in a span the narrow card drops ("Accept all", "Send all"), so the foot fits one
+     row at phone width (Opus N2) */
+  function acceptLabelHtml(ctx, qs) {
+    var l = acceptLabel(qs, false), m = /^((?:Accept|Send) all)( .+)$/.exec(l);
+    return m ? ctx.esc(m[1]) + '<span class="qs-accept-more">' + ctx.esc(m[2]) + '</span>' : ctx.esc(l);
   }
   function hintHtml(ctx, o) {
     var rec = o.rec ? '<span class="qs-rec">' + iconOf(ctx, 'check', 11) + 'Recommended</span>' : '';
@@ -492,7 +499,8 @@
     var data = '';
     if (a.data) for (var k in a.data) if (Object.prototype.hasOwnProperty.call(a.data, k)) data += ' data-' + k + '="' + ctx.esc(a.data[k]) + '"';
     var g = a.icon ? iconOf(ctx, a.icon, 12) : '';
-    var body = a.after ? ctx.esc(a.label) + ' ' + g : (g ? g + ' ' + ctx.esc(a.label) : ctx.esc(a.label));
+    var lbl = a.labelHtml || ctx.esc(a.label);
+    var body = a.after ? lbl + ' ' + g : (g ? g + ' ' + lbl : lbl);
     /* An icon-only button still has to say what it is: take 1 renders Back as a
        glyph, and an unnamed control is an accessibility defect, not a style. */
     var named = a.label ? '' : ' aria-label="' + ctx.esc(a.aria || a.a) + '" title="' + ctx.esc(a.aria || a.a) + '"';
@@ -1123,7 +1131,11 @@
        Next at the end; the count stays left of Back */
     var gfoot = '';
     if (g) {
-      var accept = { a: 'qs-accept-round', label: acceptLabel(qs, false), kind: 'soft', icon: 'check' };
+      /* D3 (round 2): while every answer is still the recommendation, Accept all is the round's primary and Next steps
+         back; once you touch an answer (or revisit your own), Next takes the primary back */
+      var untouched = !qs.some(function (q) { return q.touched || q.revisit; });
+      var accept = { a: 'qs-accept-round', label: acceptLabel(qs, false), labelHtml: acceptLabelHtml(ctx, qs), kind: untouched ? 'primary' : 'soft', icon: 'check' };
+      if (untouched && next && next.kind === 'primary') next = Object.assign({}, next, { kind: 'soft' });
       gfoot = '<div class="qs-ask-foot qs-grill-foot" data-k="qs-ask-foot">'
         + actionBtn(ctx, { a: 'qs-wrap-up', label: 'Wrap up', kind: 'text' })
         + '<span class="qs-ask-count" data-k="qs-ask-n:' + idx + '">' + (idx + 1) + ' of ' + qs.length + '</span>'

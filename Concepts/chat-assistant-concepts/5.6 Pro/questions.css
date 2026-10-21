@@ -1385,8 +1385,17 @@ html[data-o55-nier="on"] .qs-ask-mark::after{ animation-timing-function:steps(3,
 .qs-grill-kettle{ flex:none; display:inline-flex; line-height:0; }
 .qs-grill-kettle > svg, .qs-grill-kettle > .nx-i{ --nx-ink:var(--text); }
 .qs-grill-who{ display:flex; flex-direction:column; gap:1px; min-width:0; flex:1 1 auto; }
+/* Friendly: Poppins' ink runs taller, so the title and its meta keep 6 px of air (pmx text-gap) */
+body[data-theme^="friendly"] .qs-grill-who{ gap:2px; }
 .qs-grill-who > b{ font-size:12.5px; font-weight:620; line-height:17px; color:var(--text); }
-.qs-grill-meta{ font-size:11.5px; font-weight:450; line-height:16px; color:var(--muted); font-variant-numeric:tabular-nums; }
+/* the round bar sits on the card's header light (a radial accent tint): its fine print takes an ink measured against
+   the painted tint, 4.8:1 or better (Astra F4, Opus N4; ruling 4 of round 2). Dark looks and Retro Light keep --muted;
+   NieR Light also sets basic-light on body, so it is excluded */
+.qs-grill{ --qs-grill-ink:var(--muted); }
+html:not([data-o55-nier="on"]) body[data-theme="basic-light"] .qs-grill{ --qs-grill-ink:#5f5f67; }
+body[data-theme="glass-light"] .qs-grill{ --qs-grill-ink:#645c7a; }
+body[data-theme="friendly-light"] .qs-grill{ --qs-grill-ink:#655862; }
+.qs-grill-meta{ font-size:11.5px; font-weight:450; line-height:17px; color:var(--qs-grill-ink); font-variant-numeric:tabular-nums; }
 .qs-rec{ display:inline-flex; align-items:center; gap:4px; color:var(--accent); font-weight:600; white-space:nowrap; }
 .qs-rec > svg, .qs-rec > .nx-i{ flex:none; }
 .qs-rec-sep{ color:var(--muted); }
@@ -1399,10 +1408,10 @@ html[data-o55-nier="on"] .qs-ask-mark::after{ animation-timing-function:steps(3,
   font-size:12px; line-height:17px; color:var(--muted);
 }
 /* the map's one-line tally in the round bar: settled, asking now, looking it up, waits */
-.qs-grill-tally{ display:flex; flex-wrap:wrap; gap:2px 12px; margin:2px 0 1px; font-size:11.5px; line-height:16px; color:var(--muted); }
+.qs-grill-tally{ display:flex; flex-wrap:wrap; gap:2px 12px; margin:2px 0 1px; font-size:11.5px; line-height:16px; color:var(--qs-grill-ink); }
 .qs-grill-tally .wg-tree-tally-i{ display:inline-flex; align-items:center; gap:4px; white-space:nowrap; }
 /* the safety copy sits in the round bar (m7); muted, never the faint fine print (m8) */
-.qs-grill-note{ font-size:11.5px; line-height:16px; color:var(--muted); }
+.qs-grill-note{ font-size:11.5px; line-height:17px; color:var(--qs-grill-ink); }
 /* the frontier map: a quiet toggle at the end of the bar, the map under it (a concept design choice, 2026-10-21) */
 .qs-grill-maptoggle{ flex:none; align-self:flex-start; display:inline-flex; align-items:center; gap:4px; min-height:28px; padding:0 6px; color:var(--muted); font-size:12px; font-weight:600; border-radius:6px; }
 .qs-grill-maptoggle:hover{ color:var(--text); background:transparent; }
@@ -1416,11 +1425,36 @@ html[data-o55-nier="on"] .qs-ask-mark::after{ animation-timing-function:steps(3,
   display:inline-flex; align-items:center; gap:5px; padding:5px 12px; color:var(--accent); font-weight:640;
   background:var(--qs-accept-fill, var(--surface-3)); box-shadow:inset 0 0 0 1px var(--qs-accept-edge, var(--border-strong));
 }
+/* the soft-primary keeps the 32 px tap height of the foot's other buttons (pmx button-height) */
+.qs-ask-foot .qs-action[data-action="qs-accept-round"]{ min-height:32px; }
+/* Friendly and Retro ship 400/500/600/700 cuts only: the Ask Card asks for the cut that renders (450 draws 500, 550
+   draws 600, 620 to 680 draw 700), so no weight is requested that no embedded face provides; the rendered text is
+   unchanged (pmx theme-font, as module-shell's J-1) */
+body:is([data-theme^="retro"], [data-theme^="friendly"]) .qs-grill-meta,
+body:is([data-theme^="retro"], [data-theme^="friendly"]) .qs-ask-desc,
+body:is([data-theme^="retro"], [data-theme^="friendly"]) .qs-ask-opt-desc{ font-weight:500; }
+body:is([data-theme^="retro"], [data-theme^="friendly"]) .qs-ask-opt .qs-num,
+body:is([data-theme^="retro"], [data-theme^="friendly"]) .qs-ask .qs-other-ask .qs-num{ font-weight:600; }
+body:is([data-theme^="retro"], [data-theme^="friendly"]) .qs-grill-who > b,
+body:is([data-theme^="retro"], [data-theme^="friendly"]) .qs-ask-title,
+body:is([data-theme^="retro"], [data-theme^="friendly"]) .qs-ask-foot .primary-button,
+body:is([data-theme^="retro"], [data-theme^="friendly"]) .qs-ask-foot .qs-action[data-action="qs-accept-round"]{ font-weight:700; }
 .qs-ask-foot .qs-action.soft-button[data-action="qs-accept-round"]:hover{ color:var(--text); background:var(--qs-accept-fill, var(--surface-3)); box-shadow:inset 0 0 0 1px var(--accent); }
+/* phone width (Opus N2): the safety note stays, the tally goes (the Map toggle carries it), and the soft-primary says
+   "Accept all", so the foot keeps one row and the question its room */
 @container (max-width: 460px){
   .qs-grill-foot > .qs-ask-count{ display:none; }
   .qs-grill-foot > [data-action="qs-wrap-up"]{ margin-right:auto; }
-  .qs-grill-note{ display:none; }
+  .qs-grill-tally{ display:none; }
+  .qs-accept-more{ display:none; }
+  /* five controls in one row at 400 px: a 4 px gap and slimmer side padding (their height, the tap target, stays) */
+  .qs-ask-foot.qs-grill-foot{ column-gap:4px; }
+  .qs-grill-foot > .text-button{ padding-left:6px; padding-right:6px; }
+  .qs-grill-foot > [data-action="qs-wrap-up"]{ padding-left:0; }
+  .qs-ask-foot.qs-grill-foot > .qs-action[data-action="prev-question"]{ padding-left:6px; padding-right:6px; }
+  .qs-ask-foot .qs-action[data-action="qs-accept-round"] > svg, .qs-ask-foot .qs-action[data-action="qs-accept-round"] > .nx-i{ display:none; }
+  .qs-ask-foot .qs-action[data-action="qs-accept-round"]{ padding-left:10px; padding-right:10px; }
+  .qs-grill-foot > .primary-button, .qs-ask-foot.qs-grill-foot > .qs-action:is([data-action="next-question"], [data-action="submit-questionnaire"]){ padding-left:12px; padding-right:12px; }
 }
 /* NieR (M5): on the chosen answer, an ink bar with paper text, the Recommended mark and its separator take the
    chosen label's paper ink; elsewhere they keep the ink */
