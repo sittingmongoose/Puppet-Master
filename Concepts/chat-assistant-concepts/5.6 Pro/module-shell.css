@@ -409,8 +409,23 @@ body[data-theme^="retro"] .pmx-sheet .pmx-roster :is(.pmx-roster-head, .pmx-row)
 .pmx-sheet .pmx-spec[data-state="disabled"] > .pmx-spec-glyph{opacity:.45;}
 .pmx-sheet .pmx-spec-copy{min-width:0;}
 .pmx-sheet .pmx-spec-copy b{display:block;font:var(--pmx-fs-ctl);color:var(--text);}
-/* the helper wraps instead of truncating (m6, 2026-10-21): it is the sentence that says who will question you */
-.pmx-sheet .pmx-spec-copy .pmx-help{margin-top:4px;white-space:normal;overflow-wrap:anywhere;}
+/* the helper wraps instead of truncating (m6, 2026-10-21): it is the sentence that says who will question you. It
+   runs under the name and the control, across the row, so it wraps to two lines rather than six in the side column
+   (the copy box steps aside, display:contents, and its two lines are the grid's own rows) */
+.pmx-sheet .pmx-spec{grid-template-rows:auto auto;}
+.pmx-sheet .pmx-spec > .pmx-spec-glyph, .pmx-sheet .pmx-spec > .pmx-mark{grid-row:1;}
+.pmx-sheet .pmx-spec-copy{display:contents;}
+.pmx-sheet .pmx-spec-copy > b{grid-column:2;grid-row:1;align-self:center;}
+.pmx-sheet .pmx-spec-control{grid-column:3;grid-row:1;}
+.pmx-sheet .pmx-spec-copy .pmx-help{grid-column:2 / -1;grid-row:2;margin-top:4px;font-size:12px;line-height:17.5px;white-space:normal;overflow-wrap:anywhere;}
+.pmx-sheet .pmx-spec[data-state="disabled"] .pmx-spec-copy .pmx-help{margin-top:6px;}
+.pmx-sheet .pmx-spec, .pmx-sheet .pmx-spec[data-state="on"]{padding:3px 0;min-height:0;}
+.pmx-sheet .pmx-shelf > .pmx-q-head + .pmx-help + .pmx-spec, .pmx-sheet .pmx-shelf > .pmx-q-head + .pmx-spec{padding-top:6px;}
+/* in the side column the shelf's model picker drops the account line (the menu still names it), as the side column's
+   other triggers do below 820 px, and stands as tall as the shelf's other controls (32 px): that is the height the
+   helpers' line takes, so the common case still fits 1440 x 900 */
+.pmx-sheet .pmx-col--side .pmx-spec .shared-picker-copy small{display:none;}
+.pmx-sheet .pmx-col--side .pmx-spec .shared-picker-button{min-height:32px;height:32px;padding-top:0;padding-bottom:0;}
 .pmx-sheet .pmx-spec-control{display:flex;align-items:center;gap:10px;margin-left:6px;min-width:0;}
 .pmx-sheet .pmx-spec-control .shared-picker-button{width:172px;}
 .pmx-sheet .pmx-spec[data-state="disabled"] .pmx-spec-copy b{color:var(--muted);}

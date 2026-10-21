@@ -1880,16 +1880,19 @@ the same sheet.
   check (one reviewer, Single Agent) and Deep audit (5 reviewers, one of them a
   Critical Advisor).
 - **Add specialists** (Crew, Chat Room and BrainStorm; never Review):
-  **Wonderer** ("Explores around the topic and hands its ideas to the team to
-  weigh. Never votes.") is a built-in Persona plus a reusable methodology skill;
-  it is added on top of the helpers, never replaces one, and shows its own model
-  trigger. **Grill Me** is a switch, not a seat: Turn on / Turn off, no model,
-  no plate seat and no roster row. Its helper names who will question you first
-  ("The Coordinator questions you before it splits the job" / "The Moderator …
-  before round 1" / "The Coordinator … before anyone drafts", round by round,
-  with a recommended answer for each decision; BrainStorm adds "Allows 25 more
-  questions."), and once on, the item shows that lead behind the kettle with
-  "… asks first". The item's mark is the neon kettle grill in the lead's hue,
+  **Wonderer** ("Explores around the topic for the team to weigh. Never
+  votes.") is a built-in Persona plus a reusable methodology skill; it is added
+  on top of the helpers, never replaces one, and shows its own model trigger.
+  **Grill Me** is a switch, not a seat: Turn on / Turn off (On / Off on a sheet
+  narrower than 460 px), no model, no plate seat and no roster row. Its helper
+  says when it questions you ("Questions you before the split, recommending each
+  answer" / "… before round 1 …" / "… before anyone drafts …", and BrainStorm
+  adds "Adds 25 questions."), and once on, the item shows the lead who asks first
+  behind the kettle with "The Coordinator asks first" (in a Chat Room, the
+  Moderator). Each helper is a whole sentence on its own line under the item's
+  name and control, wrapping rather than cut off; in the side column the
+  Wonderer's model trigger shows the model alone (its menu names the account),
+  so the common case still fits a 1440 x 900 sheet without scrolling. The item's mark is the neon kettle grill in the lead's hue,
   which plays its act when the item is hovered or its switch is focused. Both
   are off by default.
 - Every collaboration Advanced page starts with the same rows, in this order:

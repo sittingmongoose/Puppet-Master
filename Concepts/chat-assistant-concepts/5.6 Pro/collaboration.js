@@ -3007,7 +3007,7 @@
     var rec = isRecordedDraft(d);
     var routes = d.specialistRoutes || SPECIALIST_DEFAULTS;
     /* DL-218: who questions you first, when Grill Me is on (the one who already talks to you) */
-    var who = d.kind === 'chat_room' ? 'The Moderator' : 'The Coordinator', when = d.kind === 'crew' ? 'before it splits the job' : d.kind === 'chat_room' ? 'before round 1' : 'before anyone drafts';
+    var who = d.kind === 'chat_room' ? 'The Moderator' : 'The Coordinator', when = d.kind === 'crew' ? 'before the split' : d.kind === 'chat_room' ? 'before round 1' : 'before anyone drafts';
     function item(key, name, helper, role) {
       var on = !!d[key];
       var state = reason ? 'disabled' : (rec && !on) ? 'disabled' : on ? 'on' : 'off';
@@ -3032,13 +3032,15 @@
       }
       return it;
     }
-    var grillHelp = who + ' questions you ' + when + ', round by round, with a recommended answer for each decision.' + (d.kind === 'brainstorm' ? ' Allows 25 more questions.' : '');
+    /* one line in the side column at 1440 x 900, so the whole sentence shows and the common case still fits (m6, 6.3);
+       who asks first is the control's own words beside it */
+    var grillHelp = 'Questions you ' + when + ', recommending each answer.' + (d.kind === 'brainstorm' ? ' Adds 25 questions.' : '');
     /* J-2 / 6.3: the canon helper ("Extra helpers that join the team. They never replace one.") rides in the
        title's hover card and a short meta, so the side column fits the 88 px hero at 1440 x 900 */
     return S.pmxShelf({ key: 'q-specialists', n: d.autoMode ? null : 4,
       title: '<span data-hover-key="collab-specialists" data-hover-tip="The Wonderer joins the ' + (d.kind === 'crew' ? 'Crew' : d.kind === 'chat_room' ? 'room' : 'team') + ' and never replaces a helper. Grill Me is a switch: it adds nobody.">Add specialists</span>',
       meta: 'Optional · they never replace a helper',
-      items: [item('wonderer', 'Wonderer', 'Explores around the topic and hands its ideas to the team to weigh. Never votes.', 'wonderer'), item('grillMe', 'Grill Me', grillHelp, 'grill')] });
+      items: [item('wonderer', 'Wonderer', 'Explores around the topic for the team to weigh. Never votes.', 'wonderer'), item('grillMe', 'Grill Me', grillHelp, 'grill')] });
   }
 
   /* E-02: the project default, or with a thread id this chat's answer (its Crew Auto check overrides the default) */

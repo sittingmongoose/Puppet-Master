@@ -831,7 +831,13 @@
        run already open beside the chat is not opened a second time in another tab */
     var V = window.PM56_COLLAB_VIEW, own = { crew: ['crew-work:', 'overview'], chat_room: ['room:', 'transcript'] }[r.kind];
     if (V && V.open) V.open(r.id, own ? { tab: own[1], docId: own[0] + r.id } : { tab: 'overview' });
-    setTimeout(function () { var el = document.querySelector('[data-k^="wg-sec:' + r.id + '"]'); if (el && el.scrollIntoView) el.scrollIntoView({ block: 'start', behavior: 'auto' }); }, 60);
+    /* the section's top lands below the view's sticky head (a Chat Room's), never under it */
+    setTimeout(function () {
+      var el = document.querySelector('[data-k^="wg-sec:' + r.id + '"]'); if (!el || !el.scrollIntoView) return;
+      var v = el.closest('.pmx-view'), head = v && v.querySelector(':scope > .pmx-view-head');
+      el.style.scrollMarginTop = (head && getComputedStyle(head).position === 'sticky' ? Math.ceil(head.getBoundingClientRect().height) + 12 : 0) + 'px';
+      el.scrollIntoView({ block: 'start', behavior: 'auto' });
+    }, 60);
     return true;
   });
   E.action('wg-show-lead', function (c, b) {
