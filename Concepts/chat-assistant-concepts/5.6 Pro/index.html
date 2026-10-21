@@ -10056,6 +10056,9 @@ body[data-theme^="retro"] .pmx-p-line{stroke-linecap:square;}
 .pmx-lanes-more b{color:var(--text);font-weight:600;}
 /* the narrow "+N more · Show all" row (review cycle 2) shows only on an attention card below 260 px */
 .pmx-lanes > .pmx-lanes-more-s{display:none;}
+/* Show fewer (2026-10-21): after Show all every lane is in place; a row whose lanes only the attention fold hid shows
+   only where that fold applies, the same places as the narrow row */
+.pmx-lanes > .pmx-lanes-less-s{display:none;}
 
 /* C7 decision row (the one loud moment) */
 .pmx-decision{display:flex;flex-direction:column;gap:10px;min-width:0;}
@@ -10485,7 +10488,7 @@ body[data-theme^="retro"] .pmx-finding-claim{font-size:12.5px;}
      includes the lanes hidden here */
   .pmx-run[data-density="attention"] .pmx-lanes:has(> .pmx-lanes-more-s) > .pmx-lane ~ .pmx-lane,
   .pmx-run[data-density="attention"] .pmx-lanes:has(> .pmx-lanes-more-s) > .pmx-lanes-more:not(.pmx-lanes-more-s){display:none;}
-  .pmx-run[data-density="attention"] .pmx-lanes > .pmx-lanes-more-s{display:flex;}
+  .pmx-run[data-density="attention"] .pmx-lanes > .pmx-lanes-more-s, .pmx-run[data-density="attention"] .pmx-lanes > .pmx-lanes-less-s{display:flex;}
   .pmx-run[data-density="attention"] .pmx-lane{grid-template-rows:17.5px;row-gap:0;height:40px;min-height:40px;padding:0;align-content:center;}
   .pmx-run[data-density="attention"] .pmx-lane-mark{grid-row:1;}
   .pmx-run[data-density="attention"] .pmx-lane-l2{display:none;}
@@ -12764,7 +12767,8 @@ html[data-o55-nier="on"] .plan-doc .pd-build-building::after{ width:5px; height:
    "+N more · Show all" row for the others, as the S tier does (module-shell.css); Show all lists every lane */
 .pmx-run.collab-card[data-density="attention"] .pmx-lanes:has(> .pmx-lanes-more-s) > .pmx-lane ~ .pmx-lane,
 .pmx-run.collab-card[data-density="attention"] .pmx-lanes:has(> .pmx-lanes-more-s) > .pmx-lanes-more:not(.pmx-lanes-more-s) { display: none; }
-.pmx-run.collab-card[data-density="attention"] .pmx-lanes > .pmx-lanes-more-s { display: flex; }
+.pmx-run.collab-card[data-density="attention"] .pmx-lanes > .pmx-lanes-more-s,
+.pmx-run.collab-card[data-density="attention"] .pmx-lanes > .pmx-lanes-less-s { display: flex; }
 /* OWNER ANSWER E-31 (DL-137): a helper's line streaming into its lane (collaboration.js laneLine2). The words wear the
    lane's own line-2 face, the same as the whole quote that replaces them once every word is in, so the swap changes
    nothing but the markup; the empty island before the first word keeps its line box and shows no bare quote marks. */
@@ -15241,6 +15245,26 @@ body.pm56-reduced .pmx-run[data-density="result"] .pmx-room-card-summary, body.p
 @container pmxrun (max-width: 359.98px){
   .pmx-run[data-pmx-kind="chat_room"] .pmx-decision-say{height:auto;min-height:0;}
 }
+/* "Pause between rounds" (Jared, 2026-10-21): the card's and the panel's switch are Grill Me's run-view switch
+   (pmxCheck: box, glyph, bold label, its state in words); on the card it sits under the lanes on its own hairline */
+.pmx-run .pmx-room-pause{margin:8px 0 0;padding:8px 0 0;box-shadow:0 -1px 0 var(--border);min-width:0;}
+.pmx-run .pmx-room-pause .pmx-check-copy b{font:600 12.5px/18px var(--font-ui);}
+.pmx-run .pmx-room-pause .pmx-check-copy small{margin-top:1px;}
+.pmx-run[data-density="collapsed"] .pmx-room-pause{display:none;}
+.pmx-rv-aside .pmx-room-pause, .room-document .pmx-room-pause{margin:10px 0 12px;}
+/* the sheet's switch beside the rounds stepper: the specialists shelf's switch (Turn on / Turn off, On / Off narrow) */
+.pmx-sheet .pmx-ctl-pause .pmx-add{position:relative;display:inline-flex;align-items:center;gap:5px;height:32px;padding:0 10px;font:600 12.5px/17px var(--font-ui);color:var(--accent);cursor:pointer;white-space:nowrap;}
+.pmx-sheet .pmx-ctl-pause .pmx-add[data-on="1"]{color:var(--muted);}
+.pmx-sheet .pmx-ctl-pause .pmx-add:hover > span{text-decoration:underline;text-underline-offset:3px;}
+.pmx-sheet .pmx-ctl-pause .pmx-add:has(> .pmx-add-input:focus-visible){outline:2px solid var(--pmx-focus-outline, var(--accent));outline-offset:2px;border-radius:6px;}
+@media (max-width: 459.98px){
+  .pmx-sheet .pmx-ctl-pause .pmx-add[data-switch="1"] > .pmx-add-word{display:none;}
+  .pmx-sheet .pmx-ctl-pause .pmx-add[data-switch="1"] > .pmx-add-short{display:inline;}
+  .pmx-sheet .pmx-ctl-pause .pmx-add[data-switch="1"]{padding:0 6px;}
+}
+/* the room's own plain lines in the Discussion (Paused, Pause between rounds is on…) */
+.pmx-rv-msg.pmx-rv-sys .pmx-rv-sysline{margin:0;font:var(--pmx-fs-meta);color:var(--muted);}
+.pmx-rv-msg.pmx-rv-sys .pmx-rv-sysw{font-weight:var(--pmx-w-reg);color:var(--muted);}
 
 /* Chat Room recorded examples: the guide is pmxGuide (the one recorded-example look, 4.3 G-25), styled by the
    foundation; the .room-demo-guide class is kept for the demo hooks. J-2 (wrap, never compress): with two actions
@@ -39640,22 +39664,30 @@ window.PM56_NIER_FACES = [
       '<span class="pmx-lane-time">' + str(o.time) + '</span>' +
       '<span class="pmx-lane-l2" data-kind="' + kind + '"' + (o.keep ? ' data-pm-keep' : '') + k(o.keepKey) + '>' + str(o.line2) + '</span></button>';
   }
-  /* pmxLanes({key,cls,attrs,lanesHtml,more:{count,text,action,attrs},narrow:{action,attrs}|false,kind,collabHooks,runId})
+  /* pmxLanes({key,cls,attrs,lanesHtml,more:{count,text,action,attrs},narrow:{action,attrs}|false,less:{action,attrs,always},
+                kind,collabHooks,runId})
      - review cycle 2 (7.2 below 260 px): an attention card keeps ONE lane there, so with two or more lanes the builder
      also writes the narrow "+N more · Show all" row, whose N counts the lanes it hides too (the caller's own row counts
      only the ones it left out). Exactly one of the two rows is displayed at any width (CSS), so the count shown is
      always true. The narrow row reuses the caller's more action, or `narrow`, or (a Collaboration kind with its runId)
-     collab-toggle-expand on that run; with no action to give it, nothing narrows (all lanes stay, line 1 only). */
+     collab-show-lanes on that run; with no action to give it, nothing narrows (all lanes stay, line 1 only).
+     Show all lists every lane in place and never folds the card (2026-10-21, Jared: Show all "compacts the box"): the
+     caller then passes `less`, which writes the "Show fewer" row that folds them back and drops the narrow row. With
+     less.always the row shows at every width (the caller left lanes out); without it, only where the attention fold
+     applies (the narrow row's own places), since nothing else was hidden. */
   var LANE_RE = /<button type="button" class="pmx-lane[ "]/g;
   function pmxLanes(o) {
     o = o || {};
-    var m = o.more, n = (str(o.lanesHtml).match(LANE_RE) || []).length;
-    var na = o.narrow === false ? null : (o.narrow || (m && m.action ? { action: m.action, attrs: m.attrs } :
-      (collabOn(o) && o.runId != null && o.runId !== '' ? { action: 'collab-toggle-expand', attrs: 'data-run="' + esc(o.runId) + '"' } : null)));
-    var narrow = na && na.action && n >= 2 ? '<button type="button" class="pmx-lanes-more pmx-lanes-more-s"' + at('data-action', na.action) + raw(na.attrs) + '><b>' +
+    var m = o.more, n = (str(o.lanesHtml).match(LANE_RE) || []).length, l = o.less;
+    var na = o.narrow === false || l ? null : (o.narrow || (m && m.action ? { action: m.action, attrs: m.attrs } :
+      (collabOn(o) && o.runId != null && o.runId !== '' ? { action: 'collab-show-lanes', attrs: 'data-run="' + esc(o.runId) + '"' } : null)));
+    var narrow = na && na.action && n >= 2 ? '<button type="button" class="pmx-lanes-more pmx-lanes-more-s"' + at('data-action', na.action) + raw(na.attrs) + ' aria-expanded="false"><b>' +
       pmxFill(PMX_COPY.actions.moreRows, { n: (m ? num(m.count, 0) : 0) + n - 1 }) + '</b> · ' + PMX_COPY.actions.showAll + '</button>' : '';
+    var la = l && (l.action || (collabOn(o) && o.runId != null && o.runId !== '' ? 'collab-show-lanes' : ''));
+    var less = la ? '<button type="button" class="pmx-lanes-more pmx-lanes-less' + (l.always ? '' : ' pmx-lanes-less-s') + '"' + at('data-action', la) +
+      (l.attrs != null ? raw(l.attrs) : (o.runId != null ? ' data-run="' + esc(o.runId) + '"' : '')) + ' aria-expanded="true"><b>' + PMX_COPY.actions.showFewer + '</b></button>' : '';
     return '<div class="' + cls('pmx-lanes', o.cls) + '"' + k(o.key) + raw(o.attrs) + '>' + str(o.lanesHtml) +
-      (m ? '<button type="button" class="pmx-lanes-more"' + at('data-action', m.action) + raw(m.attrs) + '><b>+' + num(m.count, 0) + ' more</b>' + (m.text ? ' · ' + m.text : '') + '</button>' : '') + narrow + '</div>';
+      (m ? '<button type="button" class="pmx-lanes-more"' + at('data-action', m.action) + raw(m.attrs) + ' aria-expanded="false"><b>+' + num(m.count, 0) + ' more</b>' + (m.text ? ' · ' + m.text : '') + '</button>' : '') + narrow + less + '</div>';
   }
   function btnCls(a, base) {
     var t = a.tone || (a.primary ? 'primary' : (a.soft ? 'soft' : 'text'));
@@ -39779,7 +39811,7 @@ window.PM56_NIER_FACES = [
     var run = o.runId != null ? ' data-run="' + esc(o.runId) + '"' : '';
     var open = o.open || {}, ex = o.expand || {}, mo = o.more || {};
     var ea = ex.action || (collab ? 'collab-toggle-expand' : ''), oa = open.action || (collab ? 'collab-open-panel' : ''), ma = mo.action || (collab ? 'collab-toggle-more' : '');
-    var foot = (ea ? '<button type="button" class="icon-button pmx-act" data-action="' + esc(ea) + '"' + run + raw(ex.attrs) + ' aria-label="Expand">' + pmxGlyph('chevron-down', 15) + '</button>' : '') +
+    var foot = (ea ? '<button type="button" class="icon-button pmx-act" data-action="' + esc(ea) + '"' + run + raw(ex.attrs) + ' aria-label="Expand" aria-expanded="false">' + pmxGlyph('chevron-down', 15) + '</button>' : '') +
       (oa ? '<button type="button" class="text-button pmx-act pmx-open" data-action="' + esc(oa) + '"' + run + raw(open.attrs) + '>' + str(open.label || '<span>Open<span class="pmx-long"> Panel</span></span>') + '</button>' : '') +
       (ma ? '<button type="button" class="icon-button pmx-act" data-action="' + esc(ma) + '"' + run + raw(mo.attrs) + ' aria-label="More">' + pmxGlyph('more', 16) + '</button>' : '');
     var p = {}; for (var key in o) if (Object.prototype.hasOwnProperty.call(o, key)) p[key] = o[key];
@@ -40221,7 +40253,7 @@ window.PM56_NIER_FACES = [
     clockIdle: 'not started',
     actions: { expand: 'Expand', collapse: 'Collapse', openPanel: 'Open Panel', message: 'Message', more: 'More', retry: 'Retry', details: 'Details',
       technical: 'Technical details', download: 'Download transcript', changeSetup: 'Change setup…', runAgain: 'Run again with changes…', watchExample: 'Watch a recorded example',
-      pause: 'Pause', resume: 'Resume', cancelKind: 'Cancel {kind}…', moreRows: '+{n} more', showAll: 'Show all' },
+      pause: 'Pause', resume: 'Resume', cancelKind: 'Cancel {kind}…', moreRows: '+{n} more', showAll: 'Show all', showFewer: 'Show fewer' },
     cancelConfirm: { sentence: 'Cancel this {kind}? Everything so far is kept.', confirm: 'Cancel {kind}', keep: 'Keep going' },
     notes: { started: 'Started with {n} helpers.', paused: 'Paused. Nothing was lost.', resumed: 'Picked up where it left off.', cancelled: 'Cancelled. Everything it produced so far is kept here.' },
     participant: { empty: 'Nothing from {name} yet.', back: 'Back to everyone' },
@@ -40443,7 +40475,8 @@ window.PM56_NIER_FACES = [
     round_incomplete: ['', 'Wait for everyone to finish this round first.'],
     current_summary_required: ['', 'Sum up the latest round before ending.'],
     finish_current_round: ['', 'This round is still going. You can send when it ends.'],
-    finish_pending_delivery: ['', 'The room hasn’t answered your last message yet. Start the next round.'],
+    finish_pending_delivery: ['', 'The room hasn’t answered your last message yet. It answers in the next round.'],
+    recorded_rounds_missing: ['', 'This recording has no replies past its last round.'],
     room_ended_or_paused: ['', 'This room is paused or ended.'],
     participant_missing: ['', 'That helper isn’t in this room.'],
     select_room_output: ['', 'Pick one of the helpers’ messages.'],
@@ -42947,6 +42980,8 @@ window.PM56_NIER_FACES = [
     plateFit: function (key) { return plateFitMem[key] || ''; },
     fitSheet: fitSheet,
     get sheet() { return currentSheet; },
+    /* QA hook: every dock item the owners publish now, before the visibility rule picks what shows ({runId, tone}) */
+    _dockItems: function (c) { var all = []; for (var i = 0; i < providers.length; i++) { try { var r = providers[i](c); if (Array.isArray(r)) all = all.concat(r); } catch (e) { } } return all.filter(Boolean).map(function (it) { return { runId: it.runId != null ? String(it.runId) : null, tone: it.tone }; }); },
     _debug: function () { return { slotLive: slotLive, vis: Array.from(vis.entries()), providers: providers.length, flight: !!flight, landQueue: landQueue.length, hint: hint, opener: opener }; }
   };
   /* One reduced-motion policy: PM56_MOTION.animate is PM56_PMX.animate. */
@@ -50503,7 +50538,9 @@ AT.sha256=sha256;AT.snapshotLimits=Object.freeze({fileBytes:MAX_FILE,totalBytes:
       title: 'Chat Room · Onboarding Redesign Options',
       purpose: 'Debate three onboarding directions before anything is written to a Plan.',
       status: 'running', definitionRevision: 1,
-      config: { turnPolicy: 'moderated', maxRounds: 5, roundsSoFar: 2, moderator: 'Product Manager persona (dedicated)' },
+      /* Pause between rounds is on here (Jared, 2026-10-21: rounds run by themselves unless it is): this seed waits for
+         you between its rounds, so it keeps its Next Round */
+      config: { turnPolicy: 'moderated', maxRounds: 5, roundsSoFar: 2, moderator: 'Product Manager persona (dedicated)', pauseBetweenRounds: true },
       coordinator: { kind: 'dedicated_moderator', label: 'Moderator (Product Manager persona)' },
       participants: [
         mkParticipant({ role: 'Product', requestedModelId: 'sonnet46', persona: 'Product Manager', status: 'waiting', current: 'Waiting for the next moderated turn.' }),
@@ -51164,7 +51201,9 @@ AT.sha256=sha256;AT.snapshotLimits=Object.freeze({fileBytes:MAX_FILE,totalBytes:
        order: its first lane is the helper that needs you. */
     function order(list) { return rankOrder ? list : list.slice().sort(function (a, b) { return a.i - b.i; }); }
     var runAttr = 'data-run="' + esc(run.id) + '"', narrow = open ? false : { action: 'collab-show-lanes', attrs: runAttr };
-    if (open || all.length <= 3) return S.pmxLanes({ key: 'lanes:' + run.id, lanesHtml: order(all.slice(0, 8)).map(function (l) { return l.html; }).join(''), kind: run.kind, runId: run.id, narrow: narrow });
+    /* once shown, Show fewer folds them back: at every width when lanes were left out, else where the attention fold is */
+    var less = open && all.length >= 2 ? { action: 'collab-show-lanes', attrs: runAttr, always: all.length > 3 } : null;
+    if (open || all.length <= 3) return S.pmxLanes({ key: 'lanes:' + run.id, lanesHtml: order(all.slice(0, 8)).map(function (l) { return l.html; }).join(''), kind: run.kind, runId: run.id, narrow: narrow, less: less });
     var shown = order(all.slice(0, 2)), rest = all.slice(2), count = {};
     rest.forEach(function (l) { count[l.state] = (count[l.state] || 0) + 1; });
     var WORD = { working: 'working', queued: 'waiting', done: 'done', needs: 'need you', failed: 'didn’t finish', abstained: 'skipped' };
@@ -51550,7 +51589,9 @@ AT.sha256=sha256;AT.snapshotLimits=Object.freeze({fileBytes:MAX_FILE,totalBytes:
       } else if (UI.more[id]) {
         foot = moreRowHtml(run, st, p, shown);
       } else {
-        foot = S.pmxActions({ key: 'acts:' + id, collabHooks: true, items: withRun(acts, run), expand: { attrs: ra, open: UI.expanded[id] === 'open' || face === 'live' || face === 'attention' || face === 'result' || face === 'failed' }, more: { attrs: ra } });
+        /* the foot is drawn only on a card that shows its body, so its chevron is always Collapse (2026-10-21: a starting
+           or waiting card drew Expand, whose first click changed nothing and whose second folded the card) */
+        foot = S.pmxActions({ key: 'acts:' + id, collabHooks: true, items: withRun(acts, run), expand: { attrs: ra, open: true }, more: { attrs: ra } });
         var ptr = viewing && inView ? (p.pointer || (run.kind === 'review' ? S.PMX_COPY.oneControlSet.review : S.PMX_COPY.oneControlSet.panel)) : '';
         if (ptr) foot = foot.replace(/^(<div[^>]*>)/, '$1<span class="pmx-collab-choosing" data-k="choosing:' + esc(id) + '">' + S.pmxGlyph('chevron-right', 14) + '<span>' + esc(ptr) + '</span></span>');
       }
@@ -51621,7 +51662,11 @@ AT.sha256=sha256;AT.snapshotLimits=Object.freeze({fileBytes:MAX_FILE,totalBytes:
   UI.allLanes = UI.allLanes || {};
   /* view state (A3-07): "Show all" lists every helper's lane on the card; the run view's Team tab has the same list */
   EXT.action('collab-show-lanes', function (ctx, btn) { var id = btn.dataset.run; UI.allLanes[id] = !UI.allLanes[id]; ctx.renderApp(); return true; });
-  EXT.action('collab-toggle-expand', function (ctx, btn) { var id = btn.dataset.run; UI.expanded[id] = UI.expanded[id] === 'open' ? 'closed' : 'open'; ctx.renderApp(); return true; });
+  /* the chevron flips what is on screen: a card showing its body folds, a folded card or a receipt opens. The stored
+     choice alone said nothing on a card's first click (unset read as folded, though the card was open), so that click
+     only flipped the chevron (2026-10-21) */
+  function shownOpen(id) { var f = UI.face[id]; return !!f && f !== 'collapsed' && f !== 'receipt'; }
+  EXT.action('collab-toggle-expand', function (ctx, btn) { var id = btn.dataset.run; UI.expanded[id] = shownOpen(id) ? 'closed' : 'open'; ctx.renderApp(); return true; });
   EXT.action('collab-toggle-more', function (ctx, btn) {
     var id = btn.dataset.run, run = findRun(id);
     UI.more[id] = !UI.more[id]; UI.cancelAsk[id] = false;
@@ -53086,7 +53131,12 @@ AT.sha256=sha256;AT.snapshotLimits=Object.freeze({fileBytes:MAX_FILE,totalBytes:
         howHtml:
           S.pmxCtl({ key: 'ctl-policy', label: 'Who talks when', helper: 'How the conversation moves from one helper to the next.', affects: 'policy', control: choiceTrigger(d, 'turnPolicy', false, ctx) }) +
           S.pmxCtl({ key: 'ctl-rounds', label: 'Rounds', helper: 'A round means everyone gets one turn. You can end early or add more.', affects: 'rounds',
-            control: S.pmxStepper({ key: 'step-rounds', input: { key: 'cfg-maxRounds', attrs: 'data-collab-input="cfg-maxRounds"' }, value: rounds, min: 1, max: 20, cells: false, unit: 'rounds', affects: 'rounds' }) }),
+            control: S.pmxStepper({ key: 'step-rounds', input: { key: 'cfg-maxRounds', attrs: 'data-collab-input="cfg-maxRounds"' }, value: rounds, min: 1, max: 20, cells: false, unit: 'rounds', affects: 'rounds' }) }) +
+          /* Jared, 2026-10-21: the rounds run by themselves; this switch makes the room wait for you after each one. Off
+             by default; Grill Me's switch grammar (Turn on / Turn off, On / Off at phone width) */
+          S.pmxCtl({ key: 'ctl-pause', cls: 'pmx-ctl-pause', label: 'Pause between rounds', affects: 'rounds',
+            helper: pol.value === 'ask_everyone_once' ? 'One answer each is a single round, so there is nothing to pause between.' : cfg.pauseBetweenRounds ? 'On: the room waits for you after each round.' : 'Off: rounds run one after another. On: the room waits for you after each.',
+            control: pol.value === 'ask_everyone_once' ? '' : pauseSwitchCtl(!!cfg.pauseBetweenRounds) }),
         promises: [
           { key: 'pr-changes', glyph: 'not', strong: 'Talking changes nothing.', text: 'You pick what, if anything, to keep.', part: 'you' },
           { key: 'pr-read', glyph: 'lock', text: 'Helpers can read your project and the web, never change it.', part: 'permission' }],
@@ -53094,7 +53144,7 @@ AT.sha256=sha256;AT.snapshotLimits=Object.freeze({fileBytes:MAX_FILE,totalBytes:
         readback: [
           { part: 'team', html: '<b>' + inkText('rb:room:n', plural2(n, 'helper')) + '</b> talk it through, ' },
           { part: 'policy', html: '<b>' + inkText('rb:room:pol', pol.read) + '</b>, ' },
-          { part: 'rounds', html: 'for up to <b>' + inkText('rb:room:r', plural2(rounds, 'round')) + '</b>. Nothing changes unless you pick it.' }],
+          { part: 'rounds', html: 'for up to <b>' + inkText('rb:room:r', plural2(rounds, 'round')) + '</b>' + (cfg.pauseBetweenRounds ? ', <b>waiting for you after each one</b>' : ', one after another') + '. Nothing changes unless you pick it.' }],
         estimate: recorded ? { recorded: true } : { text: 'About ' + (n * Math.min(rounds, 5)) + ' replies · usually 4–10 min · stops at $' + Number(cfg.costLimitUsd || 4).toFixed(2) + ' · an estimate, not a promise' },
         primaryDisabled: rangeBad || needsJob,
         primaryReason: rangeBad ? 'Chat Room needs 2 to 8 helpers.' : needsJob ? 'Add a question first.' : ''
@@ -53185,6 +53235,11 @@ AT.sha256=sha256;AT.snapshotLimits=Object.freeze({fileBytes:MAX_FILE,totalBytes:
     var P = window.PM56_PLANS, id = d.scheduleIntent && d.scheduleIntent.expected && d.scheduleIntent.expected.plan_id;
     if (!id && window.PM56_SCHED && window.PM56_SCHED.currentCrewTarget) id = window.PM56_SCHED.currentCrewTarget();
     return P && P.get && id ? P.get(id) : null;
+  }
+  /* the sheet's "Pause between rounds" switch: the specialists shelf's switch (Grill Me), so it reads and works the same */
+  function pauseSwitchCtl(on) {
+    return '<label class="pmx-add" data-switch="1" data-on="' + (on ? 1 : 0) + '"><input type="checkbox" class="pmx-add-input" data-collab-input="cfg-pauseBetweenRounds" role="switch" aria-checked="' + on + '" aria-label="Pause between rounds"' + (on ? ' checked' : '') + ' data-pmx-harness>' +
+      S_().pmxGlyph(on ? 'ring-dot' : 'ring', 13) + '<span class="pmx-add-word">' + (on ? 'Turn off' : 'Turn on') + '</span><span class="pmx-add-short" aria-hidden="true">' + (on ? 'On' : 'Off') + '</span></label>';
   }
   function moderatorRow(ctx, d) {
     var S = S_(), PK = window.PM56_PICKERS;
@@ -53679,6 +53734,7 @@ AT.sha256=sha256;AT.snapshotLimits=Object.freeze({fileBytes:MAX_FILE,totalBytes:
     else if (k === 'grillMe') d.grillMe = !!t.checked;
     else if (k.indexOf('focus-') === 0) { d.reviewFocus = d.reviewFocus || {}; d.reviewFocus[k.slice(6)] = !!t.checked; }
     else if (k === 'cfg-reviewerCount') { if (d.kind === 'review') setReviewerCount(d, t.value); }
+    else if (k === 'cfg-pauseBetweenRounds') d.config.pauseBetweenRounds = !!t.checked;
     else if (k.indexOf('cfg-') === 0) {
       var field = k.slice(4);
       var LIM = { parallelism: [1, 8], debateRounds: [1, 4], maxRounds: [1, 20] };
@@ -54625,6 +54681,8 @@ AT.sha256=sha256;AT.snapshotLimits=Object.freeze({fileBytes:MAX_FILE,totalBytes:
     crewAutoAllowed: function (threadId) { return crewAutoOn(threadId == null ? ((EXT.ctx && EXT.ctx() && EXT.ctx().state || {}).selectedThread) : threadId); },
     runs: function () { return RTC.runs; },
     run: findRun,
+    /* Show all (A3-07): true once every lane of this run's card is asked for; each kind's own lanes read it */
+    lanesOpen: function (id) { return !!(UI.allLanes && UI.allLanes[id]); },
     runsForThread: runsForThread,
     draft: function () { return RTC.draft; },
     restore: restoreFixture,
@@ -64465,8 +64523,9 @@ root.PM56_SCHEDULE_TIME=api;if(typeof module!=='undefined')module.exports=api;
    /* at most 3 rows (7.2): 3 lanes, or the 2 most urgent (failed, then reading) plus "+N more"; shown in seat order
       so a reviewer finishing never reorders the rows */
    const pri=rv=>rv.state==='failed'||rv.retrying?0:rv.state==='working'?1:2;
-   const list=vm.reviewers;
-   const pick=list.length>3?list.slice().sort((a,b)=>pri(a)-pri(b)||a.seat-b.seat).slice(0,2):list;
+   /* Show all lists every reviewer in place, Show fewer folds back (2026-10-21) */
+   const list=vm.reviewers,all=!!(C.lanesOpen&&C.lanesOpen(r.id));
+   const pick=list.length>3&&!all?list.slice().sort((a,b)=>pri(a)-pri(b)||a.seat-b.seat).slice(0,2):list;
    const shown=list.filter(rv=>pick.includes(rv)),rest=list.filter(rv=>!pick.includes(rv));
    const lanes=shown.map(rv=>{
     const off=rv.state==='failed'||rv.state==='waived';
@@ -64479,7 +64538,8 @@ root.PM56_SCHEDULE_TIME=api;if(typeof module!=='undefined')module.exports=api;
    }).join('');
    const working=rest.filter(x=>x.state==='working').length,finished=rest.filter(x=>x.done).length;
    out.lanes=S.pmxLanes({key:'lanes:'+r.id,lanesHtml:lanes,runId:r.id,kind:'review',
-    more:rest.length?{count:rest.length,text:[working?working+' reading':'',finished?finished+' done':''].filter(Boolean).join(', ')+' · Show all',action:'collab-toggle-expand',attrs:R}:null});
+    more:rest.length?{count:rest.length,text:[working?working+' reading':'',finished?finished+' done':''].filter(Boolean).join(', ')+' · Show all',action:'collab-show-lanes',attrs:R}:null,
+    less:all&&list.length>=2?{action:'collab-show-lanes',attrs:R,always:list.length>3}:null});
   }
   /* comparing: a compact agreement grid, at most 4 rows, then "and N more" */
   if(vm.phase==='comparing'){
@@ -64634,10 +64694,15 @@ root.PM56_SCHEDULE_TIME=api;if(typeof module!=='undefined')module.exports=api;
 /* Gallery-only recorded examples. The deterministic fixture evaluates its actual
  * source to produce test evidence. Human-readable reviewer observations are
  * recorded examples, not generated model output. Normal product controls start,
- * inspect, export and convert. One bounded replay clock feeds the Review owner. */
+ * inspect, export and convert. One bounded replay clock feeds the Review owner.
+ * Playback (2026-10-21, Jared: the Review demo "doesn't work"): the recording plays on its own from Start Review, each
+ * phase on screen long enough to read, and ends where the product does: the report is ready. Reading it, its proof
+ * links and its To-Dos is yours to do, never a step. The guide narrates; it never asks for a click to go on. */
 (function(){
  'use strict';const E=window.PM56_EXT,C=window.PM56_COLLAB,P=window.PM56_REVIEW;
  const clone=x=>JSON.parse(JSON.stringify(x));let active=null,serial=0;const clocks=new Map(),sessions=new Map();
+ /* motion time (PM56_CLOCK): a test may run the recording faster; elapsed time is counted on the same clock */
+ const ms=v=>window.PM56_CLOCK&&window.PM56_CLOCK.ms?window.PM56_CLOCK.ms(v):v,now=()=>window.PM56_CLOCK&&window.PM56_CLOCK.now?window.PM56_CLOCK.now():performance.now();
  const flows={single:{label:'Single Agent Review',summary:'One fresh reviewer reads a locked snapshot and writes a report.'},multi:{label:'Multi-Pass Review',summary:'Three reviewers check alone, compare notes, then you pick the To-Dos.'}};
  function checksum(text){let h=2166136261;for(let i=0;i<text.length;i++)h=Math.imul(h^text.charCodeAt(i),16777619);return 'demo-fnv1a-'+(h>>>0).toString(16).padStart(8,'0');}
  function fixture(kind){
@@ -64693,10 +64758,13 @@ root.PM56_SCHEDULE_TIME=api;if(typeof module!=='undefined')module.exports=api;
   const r=runId?C.run(runId):current(),session=runId?sessions.get(r?.threadId):active;
   if(!playable(r,session))return;
   session.runId=r.id;session.played=true;session.stage='playing';
+  /* the pace (ms from Start, motion time): each reviewer's notes land a few seconds apart, then comparing notes and the
+     report each hold long enough to read */
   const results=observed(session.kind),hash=()=>r.review.targetPack.targetHashes.primary,multi=r.participants.length>1,steps=[];
-  r.review.passes.forEach((a,i)=>steps.push({at:1200+i*500,fn:ep=>P.submitPass(r.id,{attemptId:a.id,assignmentRevision:a.assignmentRevision,epoch:ep,targetHash:hash(),findings:clone(results[i%results.length])})}));
-  steps.push({at:3000,fn:()=>P.normalize(r.id)});
-  if(multi)steps.push({at:4200,fn:ep=>{
+  const T=multi?{pass:i=>5500+i*3500,normalize:16500,vote:22500,final:29000}:{pass:()=>8000,normalize:14500,final:22000};
+  r.review.passes.forEach((a,i)=>steps.push({at:T.pass(i),fn:ep=>P.submitPass(r.id,{attemptId:a.id,assignmentRevision:a.assignmentRevision,epoch:ep,targetHash:hash(),findings:clone(results[i%results.length])})}));
+  steps.push({at:T.normalize,fn:()=>P.normalize(r.id)});
+  if(multi)steps.push({at:T.vote,fn:ep=>{
    for(const f of r.review.findings)for(let i=0;i<r.participants.length;i++){
     let disposition='confirmed',reason='The frozen source and fixture checks reproduce the mismatch.';
     if(f.findingKey==='preserve-ranking'&&i===1){disposition='uncertain';reason='Alphabetical ordering could be intentional; confirm that the supplied ranking is the required order.';}
@@ -64704,16 +64772,16 @@ root.PM56_SCHEDULE_TIME=api;if(typeof module!=='undefined')module.exports=api;
     const result=P.vote(r.id,r.participants[i].id,f.id,{epoch:ep,targetHash:hash(),disposition,confidence:disposition==='confirmed'?'high':'low',reason,evidenceRefs:f.evidenceRefs});if(!result.ok)return result;
    }return {ok:true};
   }});
-  steps.push({at:multi?5400:4200,last:true,fn:()=>P.finalize(r.id,r.review.findings.map(f=>({findingId:f.id,disposition:f.findingKey==='pre-index-search'?'uncertain':'confirmed',reason:f.findingKey==='pre-index-search'?'Keep this as an open suggestion until a representative benchmark exists.':f.findingKey==='preserve-ranking'?'The supplied criterion explicitly requires the original ranking, and the fixture shows that sorting changes it.':'The exact source lowercases without trimming. The padded-query check returns no entries instead of a.'})))});
+  steps.push({at:T.final,last:true,fn:()=>P.finalize(r.id,r.review.findings.map(f=>({findingId:f.id,disposition:f.findingKey==='pre-index-search'?'uncertain':'confirmed',reason:f.findingKey==='pre-index-search'?'Keep this as an open suggestion until a representative benchmark exists.':f.findingKey==='preserve-ranking'?'The supplied criterion explicitly requires the original ranking, and the fixture shows that sorting changes it.':'The exact source lowercases without trimming. The padded-query check returns no entries instead of a.'})))});
   const clock={runId:r.id,steps,timers:[],elapsed:0,armedAt:0,epoch:r.stopEpoch,held:false};clocks.set(r.id,clock);arm(clock);
   E.ctx().renderApp();
  }
  function playable(r,session){return !!(r&&session&&!(session.runId&&session.runId!==r.id)&&r.status==='running'&&r.review?.phase==='independent'&&!clocks.has(r.id)&&!session.played);}
  function arm(clock){
-  const r=C.run(clock.runId);clock.timers.forEach(clearTimeout);clock.timers=[];clock.held=false;clock.epoch=r.stopEpoch;clock.armedAt=performance.now();
-  clock.steps.filter(x=>!x.done).forEach(x=>clock.timers.push(setTimeout(()=>fire(clock,x),Math.max(0,x.at-clock.elapsed))));
+  const r=C.run(clock.runId);clock.timers.forEach(clearTimeout);clock.timers=[];clock.held=false;clock.epoch=r.stopEpoch;clock.armedAt=now();
+  clock.steps.filter(x=>!x.done).forEach(x=>clock.timers.push(setTimeout(()=>fire(clock,x),ms(Math.max(0,x.at-clock.elapsed)))));
  }
- function hold(clock){if(clock.held)return;clock.elapsed+=performance.now()-clock.armedAt;clock.timers.forEach(clearTimeout);clock.timers=[];clock.held=true;}
+ function hold(clock){if(clock.held)return;clock.elapsed+=now()-clock.armedAt;clock.timers.forEach(clearTimeout);clock.timers=[];clock.held=true;}
  function fire(clock,step){
   if(clocks.get(clock.runId)!==clock||step.done||clock.held)return;
   const r=C.run(clock.runId),session=r&&sessions.get(r.threadId);
@@ -64729,7 +64797,8 @@ root.PM56_SCHEDULE_TIME=api;if(typeof module!=='undefined')module.exports=api;
  /* Pause and Resume are COLLAB's; the player follows them once COLLAB's handler has run (a refused Pause holds nothing) */
  E.chainAction('collab-pause',(c,b)=>{const id=b.dataset.run;queueMicrotask(()=>{const k=clocks.get(id),r=C.run(id);if(k&&r?.status==='paused')hold(k);});return false;});
  E.chainAction('collab-resume',(c,b)=>{const id=b.dataset.run;queueMicrotask(()=>{const k=clocks.get(id),r=C.run(id);if(k&&k.held&&r?.status==='running'){arm(k);c.renderApp();}});return false;});
- function finished(){const r=current();return !!(active&&r?.status==='completed'&&active.reportOpened&&active.markdownSeen&&active.evidenceSeen&&(active.kind==='single'||active.todosSeen));}
+ /* the example ends where the product does: the report is ready */
+ function finished(){const r=current();return !!(active&&r?.status==='completed');}
  /* The recorded example's guide (C27 pmxGuide): in the dock under the chat, or as the report's first row when a narrow
     window shows the report instead of the chat. Plain words only; the replay's error codes stay in data-failure. */
  /* The guide reads the run's status first, so it never offers a control that does nothing: Play only while the run
@@ -64742,16 +64811,15 @@ root.PM56_SCHEDULE_TIME=api;if(typeof module!=='undefined')module.exports=api;
   if(!r)return {text:'Check the setup, then press Start Review.'};
   if(ENDED[r.status])return {text:ENDED[r.status]==='cancelled'?'This example was cancelled. Everything so far is kept.':'This example stopped. Everything so far is kept.',action:'replay'};
   if(r.status==='paused')return {text:'Paused. Resume it on its card to go on.'};
-  if(r.status!=='completed'){
-   if(playable(r,active))return {text:'Play the recorded reviewers. They read the locked snapshot on their own.',action:'play'};
-   return {text:active.kind==='single'?'The reviewer is reading the locked snapshot.':'The reviewers are reading on their own, then they compare notes.'};
-  }
-  if(!active.reportOpened)return {text:'Open the report to read what they found.'};
-  if(!active.evidenceSeen)return {text:'Open a proof link to see the exact version they read.'};
-  if(!active.markdownSeen)return {text:'Switch the report to Plain text: it is what Export saves.'};
-  if(active.kind==='multi'&&!active.todosSeen)return {text:'Tick the findings you want, create To-Dos, then open them.'};
-  return {text:'All done. Your files were never changed.',action:'replay'};
+  if(r.status!=='completed')return {text:phaseText(r)};
+  return {text:active.kind==='single'?'Done. The report is ready, and your files were never changed. Open the report from the card to read the finding and its proof.':'Done. The report is ready, and your files were never changed. Open the report from the card; tick the findings you want as To-Dos.',action:'replay'};
  }
+ /* what the reviewers are doing now and what comes next, read from the run's own phase */
+ function phaseText(r){const v=r.review,multi=r.participants.length>1,done=(v.passes||[]).filter(p=>p.status==='completed').length,N=r.participants.length;
+  if(v.phase==='independent')return multi?(done?done+' of '+N+' reviewers '+(done===1?'is':'are')+' done. Each reads the locked snapshot alone; comparing notes comes next.':'Starting. '+N+' reviewers read a locked snapshot, each on their own, sealed from the others.'):'Starting. One fresh reviewer reads a locked snapshot of the file. The report comes next.';
+  const voted=(v.findings||[]).every(f=>(f.reviewerVotes||[]).length===r.participants.length);
+  if(v.phase==='corroboration'&&!voted)return 'Every reviewer is done, so the notes are unsealed. They compare them: which findings hold up, which are unsure. The report comes next.';
+  return multi?'The reviewers agreed what holds up. Writing one report from it.':'The reviewer is writing the report.';}
  /* The recorded example's guide (C27 pmxGuide): in the dock under the chat, or as the report's first row when a narrow
     window shows the report instead of the chat. Plain words only; the replay's error codes stay in data-failure.
     review-demo-batch3.css stacks the action under the step when the guide is narrow (FOUNDATION REQUEST 4). */
@@ -64760,7 +64828,7 @@ root.PM56_SCHEDULE_TIME=api;if(typeof module!=='undefined')module.exports=api;
   if(inDialog&&(C.draft()?.kind!=='review'||active.runId))return '';
   if(!inDialog&&(innerWidth<=1100&&c.state.editorRevealed)!==inEditor)return '';
   const st=stage(),S=window.PM56_SHELL;
-  const acts=st.action?[{action:'review-demo-'+st.action,label:st.action==='replay'?'Replay':PLAY_LABEL}]:[];
+  const acts=st.action==='replay'?[{action:'review-demo-replay',label:'Replay'}]:[];
   const failed=active.errors.length?' data-failure="'+c.esc(active.errors.join('; '))+'"':'';
   return S.pmxGuide({key:'review-demo-guide',cls:'review-demo-guide',placement:inEditor?'doc':'dock',step:c.esc(st.text),actions:acts,
    close:{action:'review-demo-close',label:'Close guide'},attrs:failed});
@@ -64769,19 +64837,20 @@ root.PM56_SCHEDULE_TIME=api;if(typeof module!=='undefined')module.exports=api;
  ['review-open-report','review-open-evidence','review-report-view','review-open-todos'].forEach(note);
  E.slot('composerBelow',c=>guide(c));
  E.action('review-demo-start',(c,b)=>{start(b.dataset.flow);return true;});
+ /* review-demo-play stays as a QA hook (pmx-surfaces); the guide never shows it. The recording plays from Start Review. */
  E.action('review-demo-play',()=>{play();return true;});
+ function autoplay(tid){const s=sessions.get(tid);if(!s||s.played)return;const r=C.runsForThread(tid).find(r=>r.kind==='review'&&r.review?.protocolVersion&&r.status==='running');if(r)play(r.id);}
+ E.chainAction('collab-modal-commit',c=>{const d=C.draft(),tid=c&&c.state?c.state.selectedThread:null;if(d&&d.kind==='review'&&tid&&sessions.has(tid))setTimeout(()=>autoplay(tid),0);return false;});
  E.action('review-demo-replay',()=>{if(active)start(active.kind);return true;});
  E.action('review-demo-close',()=>{current();active=null;E.ctx().renderApp();return true;});
  E.chainAction('reset-all',()=>{for(const id of clocks.keys())stopClock(id);sessions.clear();active=null;return false;});
- ['plan-demo-start','schedule-demo-start'].forEach(name=>E.chainAction(name,()=>{active=null;return false;}));
+ ['plan-demo-start','schedule-demo-start','crew-demo-start','brainstorm-demo-start','room-demo-start','wg-demo-start','b13-start'].forEach(name=>E.chainAction(name,()=>{active=null;return false;}));
  const G=window.PM56_REPAIR_DEMOS,old=G.gallery;
  G.gallery=c=>'<section class="demo-section"><h3>Guided Review workflows</h3><div class="demo-section-body">'+Object.entries(flows).map(([id,f])=>'<button class="demo-trigger" data-action="review-demo-start" data-flow="'+id+'"><strong>'+c.esc(f.label)+'</strong><small>'+c.esc(f.summary)+'</small></button>').join('')+'</div></section>'+old(c);
 
- function controls(c,r){
-  const session=sessions.get(r.threadId);
-  if(!session||session===active||(session.runId&&session.runId!==r.id)||session.played||!['running','paused'].includes(r.status))return '';
-  return '<button class="soft-button" data-action="review-example-play" data-run="'+c.esc(r.id)+'"'+(r.status==='paused'?' disabled title="Resume this run before playing the example"':'')+'>'+PLAY_LABEL+'</button>';
- }
+ /* "Play the recording" is retired (2026-10-21): every recorded Review plays from Start, so the card and the report
+    offer no control to start it. controls() stays for the callers that ask. */
+ function controls(){return '';}
  E.action('review-example-play',(c,b)=>{play(b.dataset.run);return true;});
  window.PM56_REVIEW_DEMOS={controls,start,play,fixture,guide,playLabel:PLAY_LABEL,editorGuide:id=>active&&active.runId===id?guide(E.ctx(),false,true):'',snapshot:()=>active?clone({...active,finished:finished(),runId:current()?.id||null}):null};
 })();
@@ -65176,7 +65245,9 @@ root.PM56_SCHEDULE_TIME=api;if(typeof module!=='undefined')module.exports=api;
     mark:markP(r,p,22,quote?'working':'idle'),name:H(p.role),verb:quote?'answered':'spoke first',verbKey:'vb:'+r.id+':'+p.id+':'+d.round+':'+(quote?'a':'f'),
     line2:quote?'“'+H(m.body)+'”':'round '+d.round+' · '+H(String(m.body).split(/(?<=[.!?])\s/)[0]),line2Kind:quote?'quote':'detail',
     keep:quote,keepKey:'l2:'+r.id+':'+p.id+':quote:'+H(r.id+'-r'+d.round+'-'+ms.indexOf(m))};};
-  return S.pmxLanes({key:'lanes:'+r.id,runId:r.id,kind:'brainstorm',lanesHtml:[last&&lane(last,'quote'),prev&&lane(prev,'detail')].filter(Boolean).map(l=>S.pmxLane(l)).join(''),more:null});
+  const two=[last&&lane(last,'quote'),prev&&lane(prev,'detail')].filter(Boolean),all=!!(C.lanesOpen&&C.lanesOpen(r.id));
+  /* the attention fold's Show all lists both lanes; Show fewer folds back (2026-10-21) */
+  return S.pmxLanes({key:'lanes:'+r.id,runId:r.id,kind:'brainstorm',lanesHtml:two.map(l=>S.pmxLane(l)).join(''),more:null,less:all&&two.length>=2?{action:'collab-show-lanes',attrs:ra}:null});
  }
  function dissentQuote(r){
   const b=r.brainstorm,v=b.dissent[0];if(!v)return '';
@@ -65233,8 +65304,14 @@ root.PM56_SCHEDULE_TIME=api;if(typeof module!=='undefined')module.exports=api;
    /* held by Grill Me: no sealed notes yet (nobody is writing), the chapter is Understand the ask */
    if(grillHolds(r)){now='Grill Me';board='';}
    sentence=!inn?{status:'starting',word:'Starting',reason:'Everyone drafts an idea alone. '+(reused?plural(reused,'earlier answer')+' reused, so nobody asks again.':'Nobody sees the others’ ideas.')}
-    :{status:'running',word:'Running',reason:inn+' of '+n+' ideas are in. '+H(listWords(straggle))+(straggle.length===1?' is':' are')+' still writing. Nobody sees the others’ ideas yet.'};
+    /* (2026-10-21) every idea in, before Line up: no empty "are still writing" (a paced recording holds this moment) */
+    :{status:'running',word:'Running',reason:inn+' of '+n+(inn===1?' ideas is in. ':' ideas are in. ')+(straggle.length?H(listWords(straggle))+(straggle.length===1?' is':' are')+' still writing. Nobody sees the others’ ideas yet.':'Lining them up comes next.')};
    if(!inn)density='starting';
+   /* DL-218: the Wonderer's first pass explores during intake, before anyone drafts: the run is working, not starting
+      (2026-10-21: a paced recording held "Starting" for that whole pass) */
+   const WGx=window.PM56_WG,p1=!inn&&running&&!grillHolds(r)&&WGx&&WGx.engine&&WGx.engine.state(r)?(WGx.engine.state(r).passes||[])[0]:null;
+   if(p1&&p1.status==='exploring'){sentence={status:'running',word:'Understanding the ask',reason:'The Wonderer’s first pass explores before anyone drafts.'};density='live';}
+   else if(p1&&p1.status==='held'){sentence={status:'running',word:'Drafting alone',reason:'Everyone drafts an idea alone. The Wonderer’s leads wait until every idea is in.'};density='live';}
   }else if(phase==='normalize'){
    board=optionsBoard(r);now=plural(b.proposals.length,'option');
    sentence={status:'running',word:'Running',reason:n+' ideas boiled down to '+plural(b.proposals.length,'option')+'. Every original idea is kept.'};
@@ -65349,13 +65426,20 @@ root.PM56_SCHEDULE_TIME=api;if(typeof module!=='undefined')module.exports=api;
 
 /* Gallery-only BrainStorm stories. Model observations are supplied recordings;
  * option capabilities and example query results are calculated from local inputs.
- * Every round uses validated protocol ingress. The final Plan uses its owner. */
+ * Every round uses validated protocol ingress. The final Plan uses its owner.
+ * Playback (2026-10-21, Jared: the BrainStorm demo "doesn't work at all"): the recording plays on its own from Start
+ * BrainStorm, one chapter at a time, each on screen long enough to read, and stops where the real product waits for
+ * you: Ready to write the plan (Write the plan is your move), then the end. The guide narrates; it never asks for a
+ * click to go on. Pause, Cancel and the run's own controls work as in the product while it plays. */
 (function(){
  'use strict';
  const E=window.PM56_EXT,C=window.PM56_COLLAB,B=window.PM56_BRAINSTORM,P=window.PM56_PLANS;
  const clone=x=>JSON.parse(JSON.stringify(x));let active=null,serial=0;const clocks=new Map(),sessions=new Map();
  const flows={synthesis:{label:'Decide and write one plan',summary:'Ideas drafted alone → a debate → one plan'},constraint:{label:'A rule beats the vote',summary:'The popular option breaks a rule → its backers’ view is kept → one plan'}};
  const S=window.PM56_SHELL,ms=v=>window.PM56_CLOCK&&window.PM56_CLOCK.ms?window.PM56_CLOCK.ms(v):v;
+ /* the pace (motion time): how long the moment before each recorded step stays on screen. The first proposal lands
+    well inside 2 s, so a started card never sits at "Starting". */
+ const PACE={first:900,proposal:3200,normalize:4000,debate:6500,evidence:5500,vote:5000,decide:5000};
  const hash=x=>{let h=2166136261;for(const c of JSON.stringify(x)){h^=c.charCodeAt(0);h=Math.imul(h,16777619);}return 'demo:'+((h>>>0).toString(16)).padStart(8,'0');};
  function fixture(kind){
   const rows=[{id:'z',label:'Zeta Alpha'},{id:'a',label:'Alpha'}],query=' alpha ';
@@ -65407,21 +65491,26 @@ root.PM56_SCHEDULE_TIME=api;if(typeof module!=='undefined')module.exports=api;
   const records=expected(r,session.kind),a=r.brainstorm.attempts,clock={timer:null,index:0};session.played=true;clocks.set(r.id,clock);
   const x=()=>({epoch:r.stopEpoch,sourceHash:r.brainstorm.input.sourceHash});
   /* at[i]: the stop each recorded step moves the run into (a rejected step names it in the failed sentence) */
-  const at=a.map(()=>'blind_proposals');
+  const at=a.map(()=>'blind_proposals'),wait=a.map((_,i)=>i?PACE.proposal:PACE.first);
   const actions=a.map((attempt,i)=>()=>B.submitProposal(r.id,{...x(),attemptId:attempt.id,assignmentRevision:attempt.assignmentRevision,proposal:clone(records.proposals[i])}));
-  actions.push(()=>B.normalize(r.id,x()));at.push('normalize');
-  for(let round=1;round<=r.config.debateRounds;round++,at.push('debate'))actions.push(()=>B.debate(r.id,{...x(),round,messages:[{participantId:a[0].participantId,body:round===1?'Separate input handling from query work, but preserve result order and request identity.':'Measure startup and transfer costs before choosing a default cutoff.',evidenceRefs:['query','latency']},{participantId:a[1].participantId,body:session.kind==='constraint'?'The hosted alternative requires uploads. A higher vote count cannot override that constraint.':'A simple local path remains the rollback. No latency benefit has been demonstrated yet.',evidenceRefs:['requirements','capabilities']}]}));
-  at.push('evidence','vote','vote');
+  actions.push(()=>B.normalize(r.id,x()));at.push('normalize');wait.push(PACE.normalize);
+  for(let round=1;round<=r.config.debateRounds;round++,at.push('debate'))wait.push(round===1?PACE.normalize:PACE.debate),actions.push(()=>B.debate(r.id,{...x(),round,messages:[{participantId:a[0].participantId,body:round===1?'Separate input handling from query work, but preserve result order and request identity.':'Measure startup and transfer costs before choosing a default cutoff.',evidenceRefs:['query','latency']},{participantId:a[1].participantId,body:session.kind==='constraint'?'The hosted alternative requires uploads. A higher vote count cannot override that constraint.':'A simple local path remains the rollback. No latency benefit has been demonstrated yet.',evidenceRefs:['requirements','capabilities']}]}));
+  at.push('evidence','vote','vote');wait.push(PACE.debate,PACE.evidence,PACE.vote);
   actions.push(()=>B.recordEvidence(r.id,{...x(),checks:r.brainstorm.proposals.map(q=>({proposalId:q.id,evidenceRefs:q.evidenceRefs,summary:q.facts.networkRequired?'Network dependency conflicts with the offline constraint.':'Local query behavior is consistent with the frozen requirement; speed remains unmeasured.'}))}));
   actions.push(()=>{for(let i=0;i<a.length;i++){const result=B.vote(r.id,a[i].participantId,{...x(),...clone(records.votes[i])});if(!result.ok)return result;}return {ok:true};});
   actions.push(()=>B.decide(r.id,{...x(),selectedProposalId:'worker',reason:session.kind==='constraint'?'Choose the local snapshot path. The hosted option has more recorded support but violates the no-upload requirement. Preserve those preferences as dissent, not permission to ignore the constraint.':'Choose the snapshot worker, retain the simple local fallback, and make device measurements an acceptance step rather than claiming an unmeasured speedup.',steps:records.steps}));
-  function next(){if(clocks.get(r.id)!==clock)return;if(r.status==='paused'){clock.timer=setTimeout(next,120);return;}if(r.status!=='running'){stopClock(r.id);return;}
+  /* Pause holds the recording where it is; after Resume the next step waits a beat, never lands at once */
+  function next(){if(clocks.get(r.id)!==clock)return;if(r.status==='paused'){clock.paused=true;clock.timer=setTimeout(next,ms(120));return;}if(r.status!=='running'){stopClock(r.id);return;}
+   if(clock.paused){clock.paused=false;clock.timer=setTimeout(next,ms(1500));return;}
    try{const res=actions[clock.index++]();if(!res.ok)throw Error(res.error);session.events.push({phase:r.brainstorm.phase,at:performance.now()});}
    catch(e){session.failure=String(e.message||e);stopClock(r.id);session.errors.push(failRun(r,at[clock.index-1]).replace(/^The recording/,'The BrainStorm recording')+' Replay starts it again.');E.ctx().renderApp();return;}
-   E.ctx().renderApp();if(clock.index<actions.length)clock.timer=setTimeout(next,ms(450));else stopClock(r.id);
+   E.ctx().renderApp();if(clock.index<actions.length)clock.timer=setTimeout(next,ms(wait[clock.index]));else stopClock(r.id);
   }
-  clock.timer=setTimeout(next,ms(800));E.ctx().renderApp();
+  clock.timer=setTimeout(next,ms(wait[0]));E.ctx().renderApp();
  }
+ /* the recording plays from Start BrainStorm: no "Play the recording" between Start and the work */
+ function autoplay(tid){const s=sessions.get(tid);if(!s||s.played)return;const r=C.runsForThread(tid).find(r=>r.brainstorm?.protocolVersion&&r.status==='running'&&(!s.runId||s.runId===r.id));if(r)play(r.id);}
+ E.chainAction('collab-modal-commit',c=>{const d=C.draft(),tid=c&&c.state?c.state.selectedThread:null;if(d&&d.kind==='brainstorm'&&tid&&sessions.has(tid))setTimeout(()=>autoplay(tid),0);return false;});
  /* A rejected recorded step ends the run through the run's own failed state (review fix): the card shows the shared
     failed face with this plain sentence, the guide offers Replay; the error code stays in data-failure. */
  function failRun(r,key){
@@ -65433,7 +65522,8 @@ root.PM56_SCHEDULE_TIME=api;if(typeof module!=='undefined')module.exports=api;
   }
   return reason;
  }
- function finished(){const r=current();return !!(r?.brainstorm?.synthesis&&active.resultsOpened&&active.evidenceSeen&&active.dissentSeen&&active.planOpened&&active.markdownSeen);}
+ /* the example ends where the product does: the plan is written (reading how they decided is yours to do, never a step) */
+ function finished(){const r=current();return !!r?.brainstorm?.synthesis;}
  /* The recorded sheet carries no guide line (review fix, as the Crew demos): pmxGuide's sheet strip cannot keep its ink
     8 px from its hairlines under a one-line lead (F0 request), and its only step was the sheet's own primary. The sheet
     still says it is recorded (its read-only rules and foot); the dock guide takes over once the sheet closes. */
@@ -65443,13 +65533,23 @@ root.PM56_SCHEDULE_TIME=api;if(typeof module!=='undefined')module.exports=api;
   const done=finished(),b=r?.brainstorm,ended=r&&['canceled','failed'].includes(r.status);
   // The dissent disclosure opens by default in the run view, so reading it there counts as seeing it.
   if(inEditor&&active.resultsOpened&&b?.dissent?.length&&document.querySelector('.bs-document [data-bs-section="dissent"][open]'))active.dissentSeen=true;
-  let text=!r?'Set up the team, then press Start BrainStorm.':!active.played?'Play the recording to watch the team decide.':!b.decision?'The helpers draft alone, debate, check the facts and vote.':!active.resultsOpened?'Open Panel to see how they decided.':!active.dissentSeen?'Read what still disagrees. It is kept word for word.':!active.evidenceSeen?'Open one of the sources they used.':!b.synthesis?'Press Write the plan to turn the pick into one plan.':!active.markdownSeen?'Open the plan and show it as Markdown.':'Plan ready. Nothing has been built.';
-  if(r?.status==='paused')text='Paused. Resume it from the run’s controls.';
+  const text0=!r?'Set up the team, then press Start BrainStorm.':b.synthesis?'Plan ready. Nothing has been built. Open Panel on the card shows how they decided; the plan keeps the disagreement word for word.':b.decision?'They picked an option and kept the dissent. Ready to write the plan: that is your move, here as in the product. Press Write the plan on the card.':phaseStep(r);
+  let text=text0;
+  if(r?.status==='paused')text='Paused. Resume it from the card’s More menu to go on.';
   if(ended)text='This recording ended. Replay starts it again.';
   if(active.errors.length)text=active.errors[0];
-  const acts=done||ended||active.errors.length?[{action:'brainstorm-demo-replay',label:'Replay'}]:r&&!active.played?[{action:'brainstorm-demo-play',label:'Play the recording'}]:r&&b?.decision&&!active.resultsOpened&&!inEditor?[{action:'brainstorm-open-results',label:'See how they decided',attrs:'data-run="'+c.esc(r.id)+'"'}]:[];
+  const acts=done||ended||active.errors.length?[{action:'brainstorm-demo-replay',label:'Replay'}]:[];
   return S.pmxGuide({key:'bs-demo-guide',cls:'bs-demo-guide',placement:inEditor?'doc':'dock',attrs:active.failure?'data-failure="'+c.esc(active.failure)+'"':'',step:c.esc(text),actions:acts,close:{action:'brainstorm-demo-close',label:'Close the guide'}});
  }
+ /* what the team is doing now and what comes next, read from the run's own phase */
+ function phaseStep(r){const b=r.brainstorm,n=b.attempts.filter(a=>a.status==='completed').length,N=b.attempts.length,R=r.config.debateRounds||1;
+  switch(b.phase){
+   case 'intake':case 'blind_proposals':return n?(n<N?n+' of '+N+(n===1?' ideas is in.':' ideas are in.')+' Each helper drafts alone, without seeing the others. Lining them up comes next.':'Every idea is in. Lining them up side by side comes next.'):'Starting. Each helper drafts an idea alone, without seeing the others.';
+   case 'normalize':return 'Every idea is in. Lining up the options side by side. The debate comes next.';
+   case 'debate':return 'Debate round '+b.debates.length+' of '+R+': the helpers argue from the evidence. '+(b.debates.length<R?'Another round comes next.':'Checking the facts comes next.');
+   case 'evidence':return 'Checking the facts each option relies on. The vote comes next.';
+   case 'vote':return b.votes.length?'Every helper voted with a reason. A rule can beat the vote; the pick comes next.':'Each helper votes, with a reason. The pick comes next.';
+   default:return 'The helpers draft alone, debate, check the facts and vote.';}}
  ['brainstorm-open-results','brainstorm-open-evidence','brainstorm-open-plan','collab-brainstorm-synthesize'].forEach(name=>E.chainAction(name,(c,b)=>{const r=current();if(r&&b.dataset.run===r.id){if(name==='brainstorm-open-results'){active.resultsOpened=true;if(r.brainstorm.dissent?.length)active.dissentSeen=true;}if(name==='brainstorm-open-evidence')active.evidenceSeen=true;if(name==='brainstorm-open-plan'||name==='collab-brainstorm-synthesize')active.planOpened=true;}return false;}));
  E.chainAction('pd-view',(c,b)=>{const r=current();if(r?.brainstorm.synthesis?.planId===b.dataset.id&&b.dataset.value==='markdown')active.markdownSeen=true;return false;});
  document.addEventListener('toggle',e=>{
@@ -65461,17 +65561,15 @@ root.PM56_SCHEDULE_TIME=api;if(typeof module!=='undefined')module.exports=api;
   if(html){const t=document.createElement('template');t.innerHTML=html;document.querySelectorAll('.bs-demo-guide').forEach(n=>{if(n.getClientRects().length)n.replaceWith(t.content.firstElementChild.cloneNode(true));});}
  },true);
  E.slot('composerBelow',c=>guide(c));
+ /* brainstorm-demo-play stays as a QA hook (pmx-surfaces); the guide never shows it */
  E.action('brainstorm-demo-start',(c,b)=>{start(b.dataset.flow);return true;});E.action('brainstorm-demo-play',()=>{play();return true;});E.action('brainstorm-demo-replay',()=>{if(active)start(active.kind);return true;});E.action('brainstorm-demo-close',()=>{current();active=null;E.ctx().renderApp();return true;});
  E.chainAction('reset-all',()=>{for(const id of clocks.keys())stopClock(id);sessions.clear();active=null;return false;});
- ['plan-demo-start','schedule-demo-start','review-demo-start'].forEach(name=>E.chainAction(name,()=>{active=null;return false;}));
+ ['plan-demo-start','schedule-demo-start','review-demo-start','crew-demo-start','room-demo-start','wg-demo-start','b13-start'].forEach(name=>E.chainAction(name,()=>{active=null;return false;}));
  const G=window.PM56_REPAIR_DEMOS,old=G.gallery;G.gallery=c=>'<section class="demo-section"><h3>BrainStorm recordings</h3><div class="demo-section-body">'+Object.entries(flows).map(([id,f])=>'<button class="demo-trigger" data-action="brainstorm-demo-start" data-flow="'+id+'"><strong>'+c.esc(f.label)+'</strong><small>'+c.esc(f.summary)+'</small></button>').join('')+'</div></section>'+old(c);
 
- function controls(c,r){
-  const session=sessions.get(r.threadId);
-  if(!session||session===active||(session.runId&&session.runId!==r.id)||session.played||!['running','paused'].includes(r.status))return '';
-  // MOD-17: a disabled control prints its reason beside it, never in a title
-  return '<button type="button" class="text-button" data-action="brainstorm-example-play" data-run="'+c.esc(r.id)+'"'+(r.status==='paused'?' disabled':'')+'>Play the recording</button>'+(r.status==='paused'?'<span class="pmx-reason">Resume the run to play the recording.</span>':'');
- }
+ /* "Play the recording" is retired (2026-10-21): every recorded BrainStorm plays from Start, so the card and the run
+    view offer no control to start it. controls() stays for the callers that ask. */
+ function controls(){return '';}
  E.action('brainstorm-example-play',(c,b)=>{play(b.dataset.run);return true;});
  window.PM56_BRAINSTORM_DEMOS={controls,start,play,fixture,expected,guide,editorGuide:id=>active&&active.runId===id?guide(E.ctx(),false,true):'',planGuide:id=>current()?.brainstorm.synthesis?.planId===id?guide(E.ctx(),false,true):'',snapshot:()=>active?clone({...active,runId:current()?.id||null,finished:finished()}):null};
 })();
@@ -65996,6 +66094,8 @@ root.PM56_SCHEDULE_TIME=api;if(typeof module!=='undefined')module.exports=api;
   const sg=!started?splitGate(r):null;
   if(!started&&sg==='waiting_for_wonderer_first_pass')sentence={status:'starting',word:'Starting',reason:'The Coordinator splits the job once the Wonderer’s first pass is in.'};
   else if(!started&&sg==='wonderer_leads_undecided_at_split')sentence={status:'running',word:'Splitting the job',reason:'The Coordinator is deciding each Wonderer lead as it splits the job.'};
+  /* every Wonderer lead decided and no part handed out yet: the split goes on, it does not start over (2026-10-21) */
+  else if(!started&&window.PM56_WG&&window.PM56_WG.engine&&window.PM56_WG.engine.state(r)&&window.PM56_WG.counts(r).total)sentence={status:'running',word:'Splitting the job',reason:'The Coordinator is handing out the parts.'};
   else if(!started)sentence={status:'starting',word:'Starting',reason:'The Coordinator is reading the job.'};
   else if(exporting)sentence={status:'running',word:'Running',reason:H(exporting.owner.name)+' is putting the checked parts together.'};
   else if(running.length){const next=vm.parts.find(x=>x.status==='pending'&&x.waitsOn.length);
@@ -66011,10 +66111,13 @@ root.PM56_SCHEDULE_TIME=api;if(typeof module!=='undefined')module.exports=api;
     mark:S.pmxMark({role:x.owner.persona,seat:x.owner.seat,size:22,state:s,standin:x.owner.standIn}),
     name:H(started?x.title:x.owner.name),sub:H(x.owner.effectiveModel),verb:H(verb),verbKey:'vb:'+r.id+':'+x.id+':'+s,
     line2:started?H(x.owner.name)+' · '+l2:l2,line2Kind:'detail'});};
-  const shown=vm.parts.length>3?vm.parts.slice(0,2):vm.parts;
-  Object.assign(out,{density:started||sg?'live':'starting',sentence,
+  /* Show all lists every part in place and Show fewer folds them back (2026-10-21: it was the card's chevron action,
+     which folded the card) */
+  const all=!!(C.lanesOpen&&C.lanesOpen(r.id)),shown=vm.parts.length>3&&!all?vm.parts.slice(0,2):vm.parts;
+  Object.assign(out,{density:started||sg||sentence.status==='running'?'live':'starting',sentence,
    lanes:S.pmxLanes({key:'pmx-lanes:'+r.id,kind:'crew',runId:r.id,lanesHtml:shown.map(lane).join(''),
-    more:vm.parts.length>3?{count:vm.parts.length-2,text:'Show all',action:'collab-toggle-expand',attrs:ra}:null})});
+    more:vm.parts.length>3&&!all?{count:vm.parts.length-2,text:'Show all',action:'collab-show-lanes',attrs:ra}:null,
+    less:all&&vm.parts.length>=2?{action:'collab-show-lanes',attrs:ra,always:vm.parts.length>3}:null})});
   return out;
  }
  /* M4 (5.5, 8.1 Motion): when the Coordinator checks a part, one attention bar travels from that part's lane mark to
@@ -66062,10 +66165,18 @@ root.PM56_SCHEDULE_TIME=api;if(typeof module!=='undefined')module.exports=api;
  * the dock and as the run view's first row (doc); the recorded sheets carry no guide line (their foot already says
  * "Recorded example · no AI cost", and the line cost the Crew sheet its plate: CREW-B-NOTES); its copy has no engine words; the recorded draft is flagged through
  * PM56_COLLAB.markRecorded (IMPACT A3-03); Crew Auto's try-it evaluation prints the same verdict words as the Crew
- * Auto sheet's "How it would decide", and a declined request leaves no card (CREW-04). */
+ * Auto sheet's "How it would decide", and a declined request leaves no card (CREW-04).
+ * Playback (2026-10-21, Jared: "I thought it would be automated"): the recording plays on its own from Start, paced so
+ * each step stays on screen long enough to read, and stops only where the real product waits for you (the end). The
+ * guide narrates what is happening and what comes next; it never asks for a click to go on. Crew Auto's example sends
+ * its three requests by itself once its rules are saved. Pause, Cancel and Open Panel on the card work as in the
+ * product while it plays. */
 (function(){
  'use strict';const E=window.PM56_EXT,C=window.PM56_COLLAB,W=window.PM56_CREW,clone=x=>JSON.parse(JSON.stringify(x));let active=null,serial=0;const clocks=new Map(),sessions=new Map();
- const S=()=>window.PM56_SHELL;
+ const S=()=>window.PM56_SHELL,ms=v=>window.PM56_CLOCK&&window.PM56_CLOCK.ms?window.PM56_CLOCK.ms(v):v;
+ /* the pace: how long each moment stays on screen before the next step (motion time, PM56_CLOCK). The first step
+    lands well inside 2 s, so a started card never sits at "Starting". */
+ const RESUME=1500,PACE={first:900,claim:6500,deliver:5000,join:6000,finalize:4500,request:2200,nextRequest:5200};
  const flows={delegation:{label:'Delegate and verify',detail:'A Crew splits a job into parts and checks each one'},auto:{label:'Crew Auto knows when to help',detail:'Small requests stay with one assistant; a big job that splits gets a Crew'}};
  function fixture(){const i={taskSet:'collection-csv-v1',label:'Prepare a collection export',objective:'Export two collection records without losing order, commas, or quotes.',rows:[{id:'z',title:'  Night, Sky '},{id:'a',title:' The "Arrival"  '}],requirements:['Trim outer title whitespace.','Preserve identifiers and input order.','Quote CSV cells containing commas, quotes or line breaks.'],capacity:{maxConcurrent:2,maxMembers:4},provenance:'Frozen local example inputs; capacity is a supplied concept fixture, not a production orchestrator probe.'};i.sourceHash=W.sourceHash(i);return i;}
  function current(){if(!active)return null;const r=active.runId?C.run(active.runId):C.runsForThread(active.threadId).find(r=>W.owns(r.id));if(r)active.runId=r.id;return r;}
@@ -66090,16 +66201,30 @@ root.PM56_SCHEDULE_TIME=api;if(typeof module!=='undefined')module.exports=api;
  const REQUESTS={simple:{text:'Fix the typo in the README',complexity:'low'},single:{text:'Add CSV export, but keep it to one assistant',complexity:'high'},parallel:{text:'Add CSV export with tests and a docs note',complexity:'high'}};
  function request(which){const q=REQUESTS[which]||REQUESTS.parallel;return {id:active.threadId+':'+which,threadId:active.threadId,input:fixture(),memberCount:3,complexity:q.complexity,explicitSingle:which==='single'};}
  function evaluate(which){if(!active||active.kind!=='auto')return;const r=W.evaluate(request(which));active.evaluations.push({which,result:clone(r)});if(r.admitted)active.runId=r.runId;if(!r.ok)active.errors.push(r.error);E.ctx().renderApp();return r;}
+ /* Crew Auto's recording: once its rules are saved it sends the three requests itself, one at a time, each verdict on
+    screen long enough to read; the big job brings the Crew in, which then plays like the delegation example */
+ const ASKS=['simple','single','parallel'];
+ function autoSequence(){const session=active;if(!session||session.kind!=='auto'||session.asking)return;session.asking=true;
+  const step=()=>{if(active!==session||!C.definitions().crew.autoPolicy)return;const done=new Set(session.evaluations.map(e=>e.which)),next=ASKS.find(w=>!done.has(w));if(!next)return;
+   const res=evaluate(next);if(res&&res.admitted){if(active===session)play(res.runId);return;}
+   if(next!=='parallel')session.askTimer=setTimeout(step,ms(PACE.nextRequest));};
+  session.askTimer=setTimeout(step,ms(PACE.request));E.ctx().renderApp();}
+ function stopAsking(session){if(session&&session.askTimer){clearTimeout(session.askTimer);session.askTimer=0;}}
  function play(runId){const r=runId?C.run(runId):current(),session=runId?sessions.get(r?.threadId):active;if(!r||!session||(session.runId&&session.runId!==r.id)||r.status!=='running'||clocks.has(r.id)||session.played)return;session.runId=r.id;const envelope=()=>({epoch:r.stopEpoch,sourceHash:r.crew.input.sourceHash});session.played=true;const clock={timer:null,index:0};clocks.set(r.id,clock);
-  const claim=id=>()=>W.claim(r.id,id,envelope()),deliver=id=>()=>W.deliver(r.id,id,W.payload(r.id,id));
-  const steps=r.crew.effectiveConcurrency>1?[()=>{const a=claim('normalize')();return a.ok?claim('quoting')():a;},deliver('normalize'),deliver('quoting')]:[claim('normalize'),deliver('normalize'),claim('quoting'),deliver('quoting')];
-  steps.push(claim('export'),deliver('export'),()=>W.finalize(r.id,envelope()));
-  function next(){if(clocks.get(r.id)!==clock)return;if(r.status==='paused'){clock.timer=setTimeout(next,100);return;}if(r.status!=='running'){stopClock(r.id);return;}
-   try{const result=steps[clock.index++]();if(!result.ok)throw Error(result.error);session.events.push({step:clock.index,at:performance.now(),states:r.crew.assignments.map(a=>a.status)});}catch(e){session.errors.push(e.message||String(e));stopClock(r.id);E.ctx().renderApp();return;}
-   E.ctx().renderApp();if(clock.index<steps.length)clock.timer=setTimeout(next,650);else stopClock(r.id);
-  }clock.timer=setTimeout(next,750);E.ctx().renderApp();
+  /* each step waits the time the moment before it needs on screen: two parts claimed at once read longest */
+  const claim=id=>()=>W.claim(r.id,id,envelope()),deliver=id=>()=>W.deliver(r.id,id,W.payload(r.id,id)),st=(run,wait)=>({run,wait});
+  const steps=r.crew.effectiveConcurrency>1?[st(()=>{const a=claim('normalize')();return a.ok?claim('quoting')():a;},PACE.first),st(deliver('normalize'),PACE.claim),st(deliver('quoting'),PACE.deliver)]
+   :[st(claim('normalize'),PACE.first),st(deliver('normalize'),PACE.claim),st(claim('quoting'),PACE.deliver),st(deliver('quoting'),PACE.claim)];
+  steps.push(st(claim('export'),PACE.deliver),st(deliver('export'),PACE.join),st(()=>W.finalize(r.id,envelope()),PACE.finalize));
+  /* Pause holds the recording where it is; after Resume the next step waits a beat (RESUME), never lands at once */
+  function next(){if(clocks.get(r.id)!==clock)return;if(r.status==='paused'){clock.paused=true;clock.timer=setTimeout(next,ms(100));return;}if(r.status!=='running'){stopClock(r.id);return;}
+   if(clock.paused){clock.paused=false;clock.timer=setTimeout(next,ms(RESUME));return;}
+   try{const result=steps[clock.index++].run();if(!result.ok)throw Error(result.error);session.events.push({step:clock.index,at:performance.now(),states:r.crew.assignments.map(a=>a.status)});}catch(e){session.errors.push(e.message||String(e));stopClock(r.id);E.ctx().renderApp();return;}
+   E.ctx().renderApp();if(clock.index<steps.length)clock.timer=setTimeout(next,ms(steps[clock.index].wait));else stopClock(r.id);
+  }clock.timer=setTimeout(next,ms(steps[0].wait));E.ctx().renderApp();
  }
- function done(){const r=current();return !!(r?.status==='completed'&&active.opened&&active.sourceSeen&&active.exported);}
+ /* the example ends where the product does: the run finished (opening its panel or the CSV is yours to do, never a step) */
+ function done(){const r=current();return r?.status==='completed';}
  /* 9.3 "Crew protocol fences when surfaced": the sentence, never the code (the code stays in data-failure) */
  const FENCE={stale_epoch:'crew_fence_changed',different_source:'crew_fence_changed',definition_changed:'crew_fence_changed',parent_context_changed:'crew_fence_changed',stale_participant_attempt:'crew_fence_changed',run_not_running:'crew_fence_changed',dependencies_pending:'crew_fence_waiting',dependencies_pending_or_stale:'crew_fence_waiting',concurrency_full:'crew_fence_waiting',output_contract_unsatisfied:'crew_fence_mismatch',conflicting_result:'crew_fence_mismatch',evidence_missing:'crew_fence_mismatch'};
  function failureText(code){const t=S().pmxRefusalText(FENCE[code]||code,{part:'the part before it'});return (t&&t.text?t.text:'This step couldn’t run, so the recording stopped here.')+' Replay starts it again.';}
@@ -66119,43 +66244,48 @@ root.PM56_SCHEDULE_TIME=api;if(typeof module!=='undefined')module.exports=api;
   const policy=C.definitions().crew.autoPolicy,evals=active.evaluations,ended=r&&['canceled','failed'].includes(r.status),id=r?c.esc(r.id):'';let step='',acts=[],extra='',failure='';
   /* one control per purpose (7.12): Open Panel lives on the card right above the guide, so the guide points at it */
   if(active.kind==='delegation'&&!r){step='No Crew yet. Set up the recorded Crew to begin.';acts=[{action:'crew-demo-configure',label:'Set up the Crew'}];}
-  else if(active.kind==='auto'&&!policy){step='Crew Auto is off. Set when it may call the Crew before trying requests.';acts=[{action:'crew-demo-configure',label:'Set up Crew Auto'}];}
-  else if(active.kind==='auto'&&!r){const next=!evals.some(e=>e.which==='simple')?'simple':!evals.some(e=>e.which==='single')?'single':'parallel';
-   step=next==='simple'?'Crew Auto is on. Try a small request first.':next==='single'?'Now ask for one assistant on purpose. Your choice always wins.':'Now try a big job that splits into parts.';
-   acts=[{action:'crew-demo-evaluate',attrs:'data-case="'+next+'"',label:{simple:'Try a small request',single:'Try asking for one assistant',parallel:'Try a big job'}[next]}];}
-  else if(r&&!active.played){step=r.crew.admissionKind==='auto'?'Crew brought in: this job splits into 2 parts that can run at once. Watch it work.':'The Crew is set up but hasn’t started. Watch it split the job and check each part.';acts=[{action:'crew-demo-play',label:'Watch the Crew work'}];}
+  else if(active.kind==='auto'&&!policy){step='Crew Auto is off. Set when it may call the Crew. Then the recording sends it three requests.';acts=[{action:'crew-demo-configure',label:'Set up Crew Auto'}];}
+  else if(active.kind==='auto'&&!r){const n=evals.length;
+   step=!n?'Crew Auto is on. The recording sends a small request first.':n===1?'Next: a big job, but the request asks for one assistant. Your choice always wins.':'Last: a big job that splits into parts.';}
+  else if(r&&r.status==='running'&&!begun(r))step=r.crew.admissionKind==='auto'?'Starting. Crew Auto brought in a Crew; the Coordinator hands out its 2 parts next.':'Starting. The Coordinator is reading the job and splitting it into parts.';
   else if(r?.status==='running')step=runningStep(r);
-  else if(r?.status==='paused')step='Paused. Resume it on its card to go on.';
-  else if(r?.status==='completed'){if(!active.opened)step='Done. Open the Crew’s panel from its card to see how each part was checked.';else if(!active.sourceSeen)step='Scroll to the end of the panel’s Summary and open “The locked copy of the job” to see exactly what the Crew started from.';else if(!active.exported){step='Download the checked CSV.';acts=[{action:'crew-export-result',attrs:'data-run="'+id+'"',label:'Download'}];}else step='The checked CSV is ready. Your collection didn’t change.';}
+  else if(r?.status==='paused')step='Paused. Resume it from the card’s More menu to go on.';
+  else if(r?.status==='completed')step='Done. The checked CSV is ready, and your collection didn’t change. Open Panel on the card shows how each part was checked.';
   if(ended)step='This run ended. Replay starts a fresh setup.';
   if(active.errors.length){failure=active.errors[0];step=failureText(failure);}
   if(done()||ended||active.errors.length)acts=[{action:'crew-demo-replay',label:'Replay'}];
-  const last=evals.at(-1);if(last&&!r)extra=verdictLine(c,last);
+  /* each verdict stays under the guide until the next request lands; the one that brought the Crew in stays with it */
+  const last=evals.at(-1);if(last&&(!r||active.kind==='auto'))extra=verdictLine(c,last);
   return S().pmxGuide({key:'crew-demo-guide',cls:'crew-demo-guide',placement:inEditor?'doc':'dock',attrs:failure?'data-failure="'+c.esc(failure)+'"':'',step:c.esc(step),extra,actions:acts,close:{action:'crew-demo-close',label:'Close the example'}});
  }
  /* the running step follows the run's progress (never "two parts run at once" while only the Integrator works) */
  function runningStep(r){const A=r.crew.assignments||[],free=A.filter(a=>!(a.dependsOn||[]).length),joins=A.filter(a=>(a.dependsOn||[]).length);
-  if(joins.some(a=>a.status==='running'))return 'Putting the checked parts together.';
-  if(free.length&&free.every(a=>a.status==='done'))return 'Every part is checked. Putting them together is next.';
+  if(joins.some(a=>a.status==='done'))return 'The file is put together and checked. The Coordinator signs it off next.';
+  if(joins.some(a=>a.status==='running'))return 'The Integrator is putting the checked parts together into one CSV.';
+  if(free.length&&free.every(a=>a.status==='done'))return 'Every part is checked against its “done when”. Putting them together is next.';
+  if(free.some(a=>a.status==='done'))return 'One part is checked. The other is still working; putting them together waits for both.';
   return r.crew.effectiveConcurrency===1?'One part at a time. Putting it together waits for checked parts.':'Two parts run at once. Putting them together waits until both are checked.';}
  // Run another Crew receives a fresh guide after successful admission.
  // This observes an existing run; it creates no run, result, or provider effect.
- document.addEventListener('pm56:crew-example-admitted',e=>{const r=C.run(e.detail?.runId);if(!e.detail?.rerun||!r||!W.owns(r.id))return;active={kind:'delegation',threadId:r.threadId,runId:r.id,played:false,opened:false,exported:false,sourceSeen:false,evaluations:[],events:[],errors:[]};sessions.set(r.threadId,active);});
+ document.addEventListener('pm56:crew-example-admitted',e=>{const r=C.run(e.detail?.runId);if(!r||!W.owns(r.id))return;
+  if(e.detail?.rerun){active={kind:'delegation',threadId:r.threadId,runId:r.id,played:false,opened:false,exported:false,sourceSeen:false,evaluations:[],events:[],errors:[]};sessions.set(r.threadId,active);}
+  /* a recorded Crew plays from Start: no "Watch the Crew work" between Start and the work */
+  /* (Crew Auto's own admission is played by autoSequence, right away) */
+  const session=sessions.get(r.threadId);if(session&&session.kind!=='auto'&&!session.played&&(!session.runId||session.runId===r.id))setTimeout(()=>play(r.id),0);});
  E.chainAction('crew-open-work',(c,b)=>{if(current()?.id===b.dataset.run)active.opened=true;return false;});
  E.chainAction('crew-export-result',(c,b)=>{if(current()?.id===b.dataset.run&&current().crew.summary)active.exported=true;return false;});
- document.addEventListener('toggle',e=>{if(!active||!e.target.matches?.('.crew-work-source')||!e.target.open)return;active.sourceSeen=true;const html=guide(E.ctx(),false,innerWidth<=1100&&E.ctx().state.editorRevealed);if(html){const t=document.createElement('template');t.innerHTML=html;document.querySelectorAll('.crew-demo-guide').forEach(n=>{if(n.getClientRects().length)n.replaceWith(t.content.firstElementChild.cloneNode(true));});}},true);
- E.slot('composerBelow',c=>guide(c));E.action('crew-demo-start',(c,b)=>{start(b.dataset.flow);return true;});E.action('crew-demo-configure',()=>{configure(active?.kind==='auto');return true;});E.action('crew-demo-evaluate',(c,b)=>{evaluate(b.dataset.case);return true;});E.action('crew-demo-play',()=>{play();return true;});E.action('crew-demo-replay',()=>{if(active)start(active.kind);return true;});E.action('crew-demo-close',()=>{current();restoreAuto();active=null;E.ctx().renderApp();return true;});
- E.chainAction('reset-all',()=>{for(const id of clocks.keys())stopClock(id);sessions.clear();active=null;autoStash=null;return false;});
- ['plan-demo-start','schedule-demo-start','review-demo-start','brainstorm-demo-start'].forEach(n=>E.chainAction(n,()=>{restoreAuto();active=null;return false;}));
+ document.addEventListener('toggle',e=>{if(active&&e.target.matches?.('.crew-work-source')&&e.target.open)active.sourceSeen=true;},true);
+ /* Crew Auto's rules saved (its own sheet, or the wand's while this example is open): the recording sends its requests */
+ E.chainAction('collab-modal-commit',()=>{const s=active,d=C.draft();if(s&&s.kind==='auto'&&d&&d.autoMode)setTimeout(()=>{if(active===s&&C.definitions().crew.autoPolicy)autoSequence();},0);return false;});
+ /* crew-demo-play and crew-demo-evaluate stay as QA hooks (pmx-surfaces); the guide never shows them */
+ E.slot('composerBelow',c=>guide(c));E.action('crew-demo-start',(c,b)=>{stopAsking(active);start(b.dataset.flow);return true;});E.action('crew-demo-configure',()=>{configure(active?.kind==='auto');return true;});E.action('crew-demo-evaluate',(c,b)=>{evaluate(b.dataset.case);return true;});E.action('crew-demo-play',()=>{play();return true;});E.action('crew-demo-replay',()=>{if(active){stopAsking(active);start(active.kind);}return true;});E.action('crew-demo-close',()=>{current();stopAsking(active);restoreAuto();active=null;E.ctx().renderApp();return true;});
+ E.chainAction('reset-all',()=>{for(const id of clocks.keys())stopClock(id);stopAsking(active);sessions.clear();active=null;autoStash=null;return false;});
+ ['plan-demo-start','schedule-demo-start','review-demo-start','brainstorm-demo-start','room-demo-start','wg-demo-start','b13-start'].forEach(n=>E.chainAction(n,()=>{stopAsking(active);restoreAuto();active=null;return false;}));
  const G=window.PM56_REPAIR_DEMOS,old=G.gallery;G.gallery=c=>'<section class="demo-section"><h3>Guided Crew workflows</h3><div class="demo-section-body">'+Object.entries(flows).map(([id,f])=>'<button class="demo-trigger" data-action="crew-demo-start" data-flow="'+id+'"><strong>'+c.esc(f.label)+'</strong><small>'+c.esc(f.detail)+'</small></button>').join('')+'</div></section>'+old(c);
 
- /* "Play the recording" (8.1 G-26: shown in the run view's head for a recorded run that isn't played yet). Offered
-    only while the run is running (a paused run is resumed first, so the control is simply not offered then). */
- function controls(c,r){
-  const session=sessions.get(r.threadId);
-  if(!session||session===active||(session.runId&&session.runId!==r.id)||session.played||r.status!=='running'||begun(r))return '';
-  return '<button type="button" class="text-button crew-demo-play" data-action="crew-example-play" data-run="'+c.esc(r.id)+'">'+S().pmxGlyph('play-ring',14)+'<span>Play the recording</span></button>';
- }
+ /* "Play the recording" (8.1 G-26) is retired (2026-10-21): every recorded Crew plays from Start, so the card and the
+    run view offer no control to start it. controls() stays for the callers that ask. */
+ function controls(){return '';}
  /* playable(runId): true while this recorded run can still be played in place (a recorded example's session, not
     played yet, still running, and no part handed out yet: a run whose parts were already claimed is past the point a
     recording could start from); the frame's card and view offer "Play the recording" only then (7.7 G-32) */
@@ -66167,7 +66297,12 @@ root.PM56_SCHEDULE_TIME=api;if(typeof module!=='undefined')module.exports=api;
 
 /* B06 Chat Room concept slice. One CollaborativeRun and one shared message store.
    Recorded participant replies, never live model calls. Discussion is read-only;
-   explicit selected-message promotion delegates to the existing Plan/To-Do owner. */
+   explicit selected-message promotion delegates to the existing Plan/To-Do owner.
+   Automatic rounds (Jared, 2026-10-21; the Plans canon follows on its own branch): Start Chat Room starts round 1
+   (with Grill Me on, after your Confirm); each round then starts the next by itself, after a short beat, until the
+   room's last configured round. A room waits for you only after its last round ("This room used all its rounds":
+   Summarize Now, Add 2 more rounds, End discussion; DL-138), when paused, when you asked it to sum up, or after every
+   round when "Pause between rounds" is on (the sheet, the card and the panel). See AUTOMATIC ROUNDS below. */
 (function(){
  'use strict';
  const E=window.PM56_EXT,C=window.PM56_COLLAB,RT=window.PM56_RUNTIME;
@@ -66190,6 +66325,10 @@ root.PM56_SCHEDULE_TIME=api;if(typeof module!=='undefined')module.exports=api;
   r.chatRoom={protocolVersion:1,roundsSoFar:0,turnPolicy:d.config.turnPolicy,promotions:[],input:freeze(clone(d.roomInput)),
    sourceHash:hash(d.roomInput),definitionRevision:r.definitionRevision,round:null,summary:null,lastUserMessageId:null,pendingRecipientIds:null,deliveries:[],admittedRoster:r.participants.map(p=>({id:p.id,revision:p.assignmentRevision,attemptId:p.attempts.at(-1)?.attempt_id||null})),operationResults:{}};
   r.usage={costUsd:0,inputTokens:0,outputTokens:0};r.participants.forEach(p=>{p.status='waiting';p.current=wonderer(p)?'Runs alongside the room; takes no turn':'Ready for discussion';p.outcome=null;});
+  /* "Pause between rounds" (off by default): the sheet's choice; the card's and the panel's switch change it mid-run */
+  r.chatRoom.pauseBetween=!!d.config.pauseBetweenRounds;r.chatRoom.admittedAt=nowClock();
+  /* Start Chat Room is your go: round 1 opens by itself (Grill Me's Confirm first, when it is on) */
+  schedule(r.id,START);
  }
  function gate(r,x){
   if(!owns(r?.id))return 'room_missing';
@@ -66247,10 +66386,63 @@ root.PM56_SCHEDULE_TIME=api;if(typeof module!=='undefined')module.exports=api;
   freeze(m);round.messages.push(m.id);
   s.operationResults[x.requestId]={signature:stable(x),messageId:m.id};p.status='waiting';p.current='Turn delivered';
   if(round.messages.length===round.participantIds.length){round.complete=true;s.roundsSoFar=round.number;}
-  /* E-18: like the main chat's queue at the end of a turn, the first queued message goes to the room when the round ends */
-  if(round.complete)flushQueue(id);
+  /* E-18: like the main chat's queue at the end of a turn, the first queued message goes to the room when the round ends
+     (not when you asked the room to sum up or end: then it stays queued) */
+  if(round.complete&&!s.after)flushQueue(id);
+  /* Pause asked during the turn holds here, at the turn boundary */
+  if(s.pausing){s.pausing=false;holdAtBoundary(r);}
+  else if(round.complete)schedule(id,BEAT,'boundary');
   return {ok:true,messageId:m.id,roundComplete:round.complete};
  }
+ /* ---- AUTOMATIC ROUNDS. One timer per room: 'advance' starts the next round when the room goes on by itself;
+    'boundary' runs what a round's end asks for (a summary, the end of the room, One answer each's summary) and then
+    advances. Times are motion time (PM56_CLOCK), so a film or a test can run them faster. ---- */
+ const BEAT=2500,START=400,GRILL_GRACE=1500,timers=new Map();
+ const clockMs=v=>{const K=window.PM56_CLOCK;return K&&K.ms?K.ms(v):v;},nowClock=()=>{const K=window.PM56_CLOCK;return K&&K.now?K.now():performance.now();};
+ const maxOf=r=>(r.chatRoom.turnPolicy||r.config.turnPolicy)==='ask_everyone_once'?1:+r.config.maxRounds;
+ const once=r=>(r.chatRoom.turnPolicy||r.config.turnPolicy)==='ask_everyone_once';
+ function schedule(id,delay,what){const t=timers.get(id);if(t)clearTimeout(t);timers.set(id,setTimeout(()=>{timers.delete(id);if(what==='boundary')boundary(id);else advance(id);},clockMs(delay||0)));}
+ /* why the room waits for you between rounds now, or null when it goes on by itself */
+ function waitsFor(r){
+  if(!owns(r?.id)||r.status!=='running')return null;const s=r.chatRoom;
+  if(s.round&&!s.round.complete)return null;
+  if(!s.round&&!s.roundsSoFar)return null;
+  if(s.after)return null;
+  /* One answer each: the Moderator sums up by itself once everyone has answered (the sheet's promise), then it waits */
+  if(once(r)&&!s.summary)return null;
+  if(s.roundsSoFar>=maxOf(r))return 'last';
+  if(s.summary&&s.summary.round===s.roundsSoFar)return 'summed';
+  if(s.pauseBetween)return s.pendingRecipientIds&&s.pendingRecipientIds.length?'message':'between';
+  return null;
+ }
+ /* round 1 waits for Grill Me's Confirm when Grill Me is on (DL-218), never for the Wonderer; a room whose interview
+    never began (nothing to ask) starts after a short grace */
+ function grillFirst(r){const WG=window.PM56_WG,s=r.chatRoom;if(!WG||s.roundsSoFar||s.round)return false;if(WG.holds(r))return true;
+  return WG.grillOn(r)&&!r.grill&&nowClock()-(s.admittedAt||0)<GRILL_GRACE;}
+ function goesOn(r){if(!owns(r?.id)||r.status!=='running')return false;const s=r.chatRoom;if(s.round&&!s.round.complete)return false;if(s.roundsSoFar>=maxOf(r)||s.after)return false;
+  if(s.roundsSoFar&&waitsFor(r))return false;return true;}
+ function startRound(id){const x=beginRound(id,envelope(id));if(x.ok&&!x.reused)document.dispatchEvent(new CustomEvent('pm56:room-round',{detail:{runId:id}}));return x;}
+ function advance(id){const r=run(id);if(!goesOn(r))return;if(grillFirst(r)){if(!window.PM56_WG.holds(r))schedule(id,300);return;}
+  startRound(id);const c=E.ctx();if(c)c.renderApp();}
+ function boundary(id){const r=run(id);if(!owns(id)||r.status!=='running')return;const s=r.chatRoom;if(s.round&&!s.round.complete)return;
+  const ask=s.after;s.after=null;
+  if(ask==='end'){if(!(s.summary&&s.summary.round===s.roundsSoFar))summarize(id);finish(id);}
+  else if(ask==='summarize'||(once(r)&&s.roundsSoFar>=1&&!s.summary))summarize(id);
+  else advance(id);
+  const c=E.ctx();if(c)c.renderApp();}
+ /* Pause during a turn: the speaker finishes, then the room holds (COLLAB's paused face, the same words as its Pause) */
+ function holdAtBoundary(r){if(r.status!=='running')return;r.status='paused';r.stopEpoch+=1;C.appendMessage(r.id,{senderKind:'system',senderName:'System',messageType:'message',body:'Paused. Nothing was lost.'});}
+ /* Summarize Now and End discussion are always there while the room runs: asked during a round they act when it ends */
+ function askAfterRound(id,what){const r=run(id);if(!owns(id)||r.status!=='running')return fail('room_not_running');const s=r.chatRoom;
+  if(!(s.round&&!s.round.complete))return {ok:true,now:true};if(s.after!=='end')s.after=what;return {ok:true,later:true};}
+ function endDiscussion(id){const r=run(id);if(!owns(id))return fail('room_missing');if(r.status==='completed')return {ok:true,reused:true};
+  const later=askAfterRound(id,'end');if(!later.ok)return later;if(later.later)return later;
+  const s=r.chatRoom;if(!(s.summary&&s.summary.round===s.roundsSoFar)){const x=summarize(id);if(!x.ok)return x;}return finish(id);}
+ function setPauseBetween(id,on){const r=run(id);if(!owns(id))return fail('room_missing');if(!['running','paused'].includes(r.status))return fail('room_ended_or_paused');
+  const s=r.chatRoom;on=!!on;if(!!s.pauseBetween===on)return {ok:true,reused:true};s.pauseBetween=on;
+  C.appendMessage(id,{senderKind:'system',senderName:'System',messageType:'message',body:'Pause between rounds is '+(on?'on.':'off.')});
+  /* turned off while the room waits between rounds: the next round starts at once; on during a round: it waits after it */
+  if(!on&&r.status==='running')advance(id);return {ok:true};}
  function canSend(id,dest){const r=run(id);if(!owns(id))return fail('room_missing');if(r.status!=='running')return fail('room_ended_or_paused');if(r.chatRoom.round&&!r.chatRoom.round.complete)return fail('finish_current_round');if(r.chatRoom.pendingRecipientIds?.length)return fail('finish_pending_delivery');if(r.config.turnPolicy==='ask_everyone_once'&&r.chatRoom.roundsSoFar>=1||r.chatRoom.roundsSoFar>=+r.config.maxRounds)return fail('round_limit_reached');if(dest?.participantId&&!r.participants.some(p=>p.id===dest.participantId))return fail('participant_missing');return {ok:true};}
  function receiveUser(id,message,buffer,thread){
   if(message&&message.roomSteer)return steer(id,message,buffer&&buffer.destination,thread);
@@ -66345,9 +66537,25 @@ root.PM56_SCHEDULE_TIME=api;if(typeof module!=='undefined')module.exports=api;
  const isRecorded=d=>!!(C.isRecordedDraft?C.isRecordedDraft(d):d&&d.roomInput);
  const sayNo=(c,title,code)=>{const t=window.PM56_SHELL&&window.PM56_SHELL.pmxRefusalText?window.PM56_SHELL.pmxRefusalText(code):null;c.toast(title,t?t.text:'Nothing changed.');};
  E.chainAction('collab-modal-commit',(c)=>{const d=C.draft();if(d?.kind!=='chat_room'||!isRecorded(d))return false;const ok=preflight(d);if(ok.ok)return false;const t=window.PM56_SHELL?.pmxRefusalText?.(ok.error);d.lastFailure={error:ok.error,message:t?t.text:'This recorded example needs exactly 3 helpers, no specialists, Moderator guides or One answer each, and 1 or 2 rounds.'};c.renderOverlays();return true;});
- E.chainAction('collab-room-next-round',(c,b)=>{if(!owns(b.dataset.run))return false;const x=beginRound(b.dataset.run,envelope(b.dataset.run));if(x.ok)document.dispatchEvent(new CustomEvent('pm56:room-round',{detail:{runId:b.dataset.run}}));else sayNo(c,x.error==='grill_me_waits_for_confirm'?'The next round waits for you':'Round not started',x.error);c.renderApp();return true;});
- E.chainAction('collab-room-summarize',(c,b)=>{if(!owns(b.dataset.run))return false;const x=summarize(b.dataset.run);if(!x.ok)sayNo(c,'Summary not ready',x.error);c.renderApp();return true;});
- E.action('room-finish',(c,b)=>{const x=finish(b.dataset.run);if(!x.ok)sayNo(c,'Discussion not ended',x.error);c.renderApp();return true;});
+ /* Next Round where the room waits (Pause between rounds, or after a summary): one round, then the room's own rule */
+ E.chainAction('collab-room-next-round',(c,b)=>{if(!owns(b.dataset.run))return false;const x=startRound(b.dataset.run);if(!x.ok)sayNo(c,x.error==='grill_me_waits_for_confirm'?'The next round waits for you':'Round not started',x.error);c.renderApp();return true;});
+ E.chainAction('collab-room-summarize',(c,b)=>{if(!owns(b.dataset.run))return false;const id=b.dataset.run,a=askAfterRound(id,'summarize');const x=!a.ok?a:a.later?a:summarize(id);if(!x.ok)sayNo(c,'Summary not ready',x.error);c.renderApp();return true;});
+ E.action('room-finish',(c,b)=>{const x=endDiscussion(b.dataset.run);if(!x.ok)sayNo(c,'Discussion not ended',x.error);c.renderApp();return true;});
+ /* Add 2 more rounds (DL-138) after the last round: a recording has no replies past its last round, so here it says so */
+ E.action('room-add-rounds',(c,b)=>{const r=run(b.dataset.run);if(!owns(r?.id))return true;sayNo(c,'No more rounds','recorded_rounds_missing');c.renderApp();return true;});
+ /* the "Pause between rounds" switch on the card and in the panel: Space or a click; the focus stays on the switch */
+ E.action('room-toggle-pause-between',(c,b)=>{const id=b.dataset.run,r=run(id);if(!owns(r?.id))return true;const where=b.getAttribute('data-room-pause')||'';
+  const x=setPauseBetween(id,!r.chatRoom.pauseBetween);if(!x.ok)sayNo(c,'Nothing changed',x.error);c.renderApp();
+  /* the panel redraws after the chat, so the focus is put back now and once more after that redraw (R2-5) */
+  const refocus=()=>{const again=document.querySelector('[data-room-pause="'+where+'"][data-run="'+CSS.escape(id)+'"]');if(again&&document.activeElement!==again){try{again.focus({preventScroll:true});}catch(e){}}};
+  refocus();requestAnimationFrame(refocus);setTimeout(refocus,80);return true;});
+ /* Pause: between rounds at once (COLLAB's), during a turn at its end; Resume goes on with the rounds */
+ E.chainAction('collab-pause',(c,b)=>{const r=run(b.dataset.run);if(!owns(r?.id)||r.status!=='running')return false;const s=r.chatRoom;
+  const D=window.PM56_ROOM_DEMOS,mid=s.round&&!s.round.complete&&!!(D&&D.speaking&&D.speaking(r.id));if(!mid)return false;s.pausing=true;c.renderApp();return true;});
+ E.chainAction('collab-resume',(c,b)=>{const id=b.dataset.run;if(owns(id)){const r=run(id);r.chatRoom.pausing=false;queueMicrotask(()=>{const q=run(id);if(q&&q.status==='running'&&!(q.chatRoom.round&&!q.chatRoom.round.complete))schedule(id,START,q.chatRoom.roundsSoFar?'boundary':undefined);});}return false;});
+ E.chainAction('collab-cancel',(c,b)=>{const id=b.dataset.run;if(owns(id)){const t=timers.get(id);if(t)clearTimeout(t);timers.delete(id);run(id).chatRoom.pausing=false;}return false;});
+ /* Grill Me's Confirm releases the round it held: round 1, or the round a later session gated */
+ document.addEventListener('pm56:wg-confirmed',e=>{const k=String(e.detail&&e.detail.key||'');if(k.indexOf('run:')!==0)return;const id=k.slice(4);if(owns(id))schedule(id,START);});
  E.action('room-select-message',(c,b)=>{if(!owns(b.dataset.run))return true;view.set(b.dataset.run,{...view.get(b.dataset.run),selected:b.dataset.message});c.renderApp();return true;});
  E.chainAction('collab-open-panel',(c,b)=>{if(!owns(b.dataset.run)||b.classList.contains('ab-row'))return false;c.closeDialog();c.closeMenu();c.state.editorRevealed=true;c.openEditor('room:'+b.dataset.run);return true;});
  E.chainAction('collab-open-configure',(c,b)=>{const r=run(b.dataset.reconfigure);if(!owns(r?.id))return false;if(['running','paused'].includes(r.status)){c.toast('Keep the current discussion','End or cancel this discussion before setting up another one.');return true;}if(c.state.selectedThread!==r.threadId)c.switchThread(r.threadId);C.openConfigure('chat_room',r.id);const d=C.draft();d.reconfigureRunId=null;d.roomInput=clone(r.chatRoom.input);c.openDialog({type:'collab-configure'});return true;});
@@ -66390,7 +66598,7 @@ root.PM56_SCHEDULE_TIME=api;if(typeof module!=='undefined')module.exports=api;
     anything else in this chat, its "Not sent" rows go */
  (RT.composer.commitHooks||(RT.composer.commitHooks=[])).push((c,t,msg,buf)=>{try{const d=buf&&buf.destination;if(d&&owns(d.refId))return;
   (C.runsForThread?C.runsForThread(t.id):[]).forEach(r=>{if(!owns(r.id)||['running','paused'].includes(r.status))return;const q=r.chatRoom.queued;if(q&&q.length)q.length=0;});}catch(err){console.error('PM56 room queue commitHook threw',err);}});
- E.chainAction('reset-all',()=>{view.clear();refused.clear();streamStart.clear();speakerOf.clear();return false;});
+ E.chainAction('reset-all',()=>{view.clear();refused.clear();streamStart.clear();speakerOf.clear();for(const t of timers.values())clearTimeout(t);timers.clear();return false;});
  /* =====================================================================
     PRESENTATION (ROOM-A; DESIGN-SPEC 8.3, 7, 5.5): PM56_ROOM.sheetParts(draft, ctx, generic) and
     PM56_ROOM.cardParts(run, ctx, face, generic). COLLAB draws the frame (KIND INTERFACE in COLLAB-NOTES); these
@@ -66435,14 +66643,14 @@ root.PM56_SCHEDULE_TIME=api;if(typeof module!=='undefined')module.exports=api;
    {key:'pr-read',glyph:'lock',text:'Helpers can read your project and the web, never change it.',part:'permission'}];
   out.readback=once
    ?[{part:'team',html:'<b>'+ink('rb:room:n',plural(n,'helper'))+'</b> '},{part:'policy',html:'<b>'+ink('rb:room:pol','each answer once')+'</b>, '},{part:'moderator',html:'then <b>the Moderator</b> sums it up. Nothing changes unless you pick it.'}]
-   :[{part:'team',html:'<b>'+ink('rb:room:n',plural(n,'helper'))+'</b> talk it through, '},{part:'policy',html:'<b>'+ink('rb:room:pol',pol.read)+'</b>, '},{part:'rounds',html:'for up to <b>'+ink('rb:room:r',plural(R,'round'))+'</b>. Nothing changes unless you pick it.'}];
+   :[{part:'team',html:'<b>'+ink('rb:room:n',plural(n,'helper'))+'</b> talk it through, '},{part:'policy',html:'<b>'+ink('rb:room:pol',pol.read)+'</b>, '},{part:'rounds',html:'for up to <b>'+ink('rb:room:r',plural(R,'round'))+'</b>'+(cfg.pauseBetweenRounds?', <b>waiting for you after each one</b>':', one after another')+'. Nothing changes unless you pick it.'}];
   /* 8.3 estimate: replies = helpers x rounds; time and cost are ranges and say they are an estimate */
   const replies=n*R,lo=Math.max(1,Math.round(replies*0.27)),hi=Math.max(lo+2,Math.round(replies*0.67));
   out.estimate=recorded?{recorded:true}:{text:'About '+(replies===1?'1 reply':replies+' replies')+' · usually '+lo+'–'+hi+' min · roughly $'+(replies*0.027).toFixed(2)+'–$'+(replies*0.08).toFixed(2)+' · an estimate, not a promise'};
   /* the preview's first frame (A16): the card's top frame as it will be born */
   const stops=[];for(let i=1;i<=R;i++)stops.push('Round '+i);
   out.firstFrame=recorded
-   ?{density:'starting',status:'yourmove',word:'Your move',reason:'start the first round.',stops,nowText:'<b>Round 1 of '+R+'</b> · not started'}
+   ?{density:'starting',status:'starting',word:'Starting',reason:'Round 1 opens when you press Start.',stops,nowText:'<b>Round 1 of '+R+'</b> · not started'}
    :{density:'waiting',status:'waiting',word:'Waiting to start',reason:escH(C.waitingReason?C.waitingReason({kind:'chat_room'}):'Nothing runs by itself in this preview, so the Moderator hasn’t opened the first round yet.'),stops,nowText:'<b>Round 1 of '+R+'</b> · not started'};
   return out;
  }
@@ -66457,7 +66665,7 @@ root.PM56_SCHEDULE_TIME=api;if(typeof module!=='undefined')module.exports=api;
  const refused=new Map();
  /* the moment a refusal belongs to: it is shown until the round (or the room's state) moves on */
  const roomMoment=r=>{const s=r&&r.chatRoom;return s?[s.round?s.round.number:0,s.round&&s.round.complete?1:0,s.roundsSoFar,s.pendingRecipientIds?1:0,r.status].join(':'):'';};
- const HELP={ask:'Everyone gives an opening view.',next:'Each helper speaks once more.',sum:'The Moderator writes where everyone agrees, where they differ, and what’s still open.',end:'Locks the conversation. You can still promote messages.'};
+ const HELP={next:'Each helper speaks once more.',sum:'The Moderator writes where everyone agrees, where they differ, and what’s still open. During a round it sums up when the round ends.',end:'The Moderator sums up first, then the conversation locks. You can still promote messages.',more:'Two more rounds on the same topic.',pause:'Off: rounds run one after another. On: the room waits for you after each round.'};
  const tip=(key,text)=>'data-hover-key="room-act-'+key+'" data-hover-tip="'+escH(text)+'"';
  function personaOf(p){return String(p&&(p.effectivePersona||p.requestedPersona)||'Implementer');}
  function markFor(r,p,size,state,key){const i=r.participants.indexOf(p);return SH().pmxMark({key,role:wonderer(p)?'wonderer':personaOf(p),seat:wonderer(p)?7:(Math.max(0,i)%8)+1,size,state});}
@@ -66526,9 +66734,14 @@ root.PM56_SCHEDULE_TIME=api;if(typeof module!=='undefined')module.exports=api;
     up, its headline leads and the helpers fold to their marks. A room that stopped mid-round (paused, cancelled,
     the Moderator stopped) says who spoke, who was speaking and who hadn't, in plain words. */
  function lanesOf(r,f){
-  const S=SH(),out=[],live=r.status==='running';
-  const wrap=more=>out.length?S.pmxLanes({key:'lanes:'+r.id,lanesHtml:out.join(''),more,runId:r.id,kind:'chat_room'}):'';
-  const moreOf=n=>n>0?{count:n,text:'Show all',action:'room-open-discussion',attrs:'data-run="'+escH(r.id)+'"'}:null;
+  const S=SH(),out=[],live=r.status==='running',all=!!(C.lanesOpen&&C.lanesOpen(r.id)),ra='data-run="'+escH(r.id)+'"';
+  /* Show all lists every speaker in place and Show fewer folds back (2026-10-21, Jared: Show all "compacts the box"; it
+     opened the room document, and the narrow row folded the card). Open discussion stays the way to the document. */
+  let cut=0;
+  const fold=()=>{if(out.length>3&&!all){cut=out.length-2;out.length=2;}};
+  const wrap=more=>out.length?S.pmxLanes({key:'lanes:'+r.id,lanesHtml:out.join(''),more:all?null:more,runId:r.id,kind:'chat_room',
+   less:all&&out.length>=2?{action:'collab-show-lanes',attrs:ra,always:out.length>3}:null}):'';
+  const moreOf=n=>n>0?{count:n,text:'Show all',action:'collab-show-lanes',attrs:ra}:null;
   if(live&&f.inRound&&f.speaker){
    /* the island's key carries the words' hash: a kept island never gets new children, so other words get a new island */
    const w=speakingWords(r,f),key='l2:'+r.id+':'+f.speaker.id+':quote:r'+f.round.number+(w?':'+hash(w.text).slice(8):'');
@@ -66549,16 +66762,17 @@ root.PM56_SCHEDULE_TIME=api;if(typeof module!=='undefined')module.exports=api;
     if(m)out.push(laneFor(r,p,{verb:'spoke in round '+m.roomRound,verbKey:'vb:'+p.id+':spoke:'+m.id,message:m.id,line2:quoteOf(m),line2Kind:'quote'}));
     else if(p===f.speaker)out.push(laneFor(r,p,{verb:'was speaking '+how,verbKey:'vb:'+p.id+':cut:'+f.round.number,line2:r.status==='paused'?'their reply isn’t finished yet':'their reply wasn’t finished',line2Kind:'detail'}));
     else out.push(laneFor(r,p,{verb:'hadn’t spoken yet',verbKey:'vb:'+p.id+':not:'+f.round.number,line2:r.status==='paused'?'speaks after you resume':'the round stopped before their turn',line2Kind:'detail'}));});
-   if(out.length>3){const n=out.length-2;out.length=2;return wrap(moreOf(n));}
-   return wrap(null);
+   fold();return wrap(moreOf(cut));
   }
+  const spoke=()=>f.delivered.forEach(m=>{const p=r.participants.find(p=>p.id===m.senderId);if(p)out.push(laneFor(r,p,{state:r.status==='completed'?'done':'idle',verb:'spoke in round '+m.roomRound,verbKey:'vb:'+p.id+':spoke:'+m.id,message:m.id,line2:quoteOf(m),line2Kind:'quote'}));});
   if(live&&f.summarized&&f.summary){
    out.push(moderatorLane(r,{verb:'summed up round '+f.s.summary.round,verbKey:'vb:mod:sum:'+f.summary.id,message:f.summary.id,line2:quoteOf(f.summary),line2Kind:'quote'}));
+   /* the Moderator's headline leads; Show all adds every helper's line under it */
+   if(all)spoke();
    return wrap(moreOf(f.delivered.length));
   }
-  f.delivered.forEach(m=>{const p=r.participants.find(p=>p.id===m.senderId);if(p)out.push(laneFor(r,p,{state:r.status==='completed'?'done':'idle',verb:'spoke in round '+m.roomRound,verbKey:'vb:'+p.id+':spoke:'+m.id,message:m.id,line2:quoteOf(m),line2Kind:'quote'}));});
-  if(out.length>3){const n=out.length-2;out.length=2;return wrap(moreOf(n));}
-  return wrap(null);
+  spoke();fold();
+  return wrap(moreOf(cut));
  }
  /* promotion (8.3, G-16): Promote to To-Do · Plan · Goal as three text buttons, Goal disabled with its printed
     reason, acting on the whole summary message until point-level promotion exists (D-11). Card-only class names
@@ -66581,10 +66795,13 @@ root.PM56_SCHEDULE_TIME=api;if(typeof module!=='undefined')module.exports=api;
      way the words get a line of their own on the card (queueLine), never a cut-off tail of the meta line */
   if(refused.has(r.id)&&(canSend(r.id).ok||r.status!=='running'||refused.get(r.id).at!==roomMoment(r)))refused.delete(r.id);
   const lc=window.PM56_WG?window.PM56_WG.countsText(r):'';
-  out.meta={recorded:f.prov==='recorded',parts:lc?[escH(pol.label),escH(lc)]:r.status==='running'?[escH(pol.label),'you can sum up and end after any round']:[escH(pol.label)]};
-  const endItem={action:'room-finish',label:'End discussion',disabled:!(f.summarized&&r.status==='running'),reason:f.summarized?'':refusalWords('current_summary_required'),attrs:tip('end',HELP.end)};
+  const auto=!once(r)&&!r.chatRoom.pauseBetween;
+  out.meta={recorded:f.prov==='recorded',parts:lc?[escH(pol.label),escH(lc)]:r.status==='running'?[escH(pol.label),once(r)?'everyone answers once':auto?'rounds run one after another':'waits for you after each round']:[escH(pol.label)]};
+  /* End discussion and Summarize Now work at any time while the room runs; asked during a round they act at its end */
+  const endItem={action:'room-finish',label:'End discussion',disabled:r.status!=='running',reason:r.status==='running'?'':refusalWords('room_not_running'),attrs:tip('end',HELP.end)};
+  const sumItem={action:'collab-room-summarize',label:'Summarize Now',attrs:tip('sum',HELP.sum)};
   const exportItem={action:'room-export',label:'Download transcript (.md)'};
-  out.more=[endItem,exportItem];
+  out.more=r.status==='running'&&!f.summarized?[sumItem,endItem,exportItem]:[endItem,exportItem];
   if(done){
    const m=f.summary||[...r.messages].reverse().find(m=>m.senderKind==='coordinator'),made=promotionsWord(r);
    const head=m?firstSentence(m.body).replace(/[.!]+$/,''):'The discussion ended';
@@ -66611,7 +66828,7 @@ root.PM56_SCHEDULE_TIME=api;if(typeof module!=='undefined')module.exports=api;
    out.lanes='';
    return out;
   }
-  out.lanes=lanesOf(r,f)+queueLine(r);
+  out.lanes=lanesOf(r,f)+queueLine(r)+pauseSwitch(r,f,'card');
   if(r.status!=='running'){
    /* paused and cancelled keep COLLAB's shared sentence and actions (A3-04); the lanes and the track above are the
       room's own words. The Moderator stopping is the room's own case (7.6 G-31, IMPACT A1-28). */
@@ -66622,37 +66839,71 @@ root.PM56_SCHEDULE_TIME=api;if(typeof module!=='undefined')module.exports=api;
     out.receipt={glyph:'warn',headline:'Needs attention · the Moderator stopped',time:escH(plural(f.s.roundsSoFar,'round')+' done'),cost:'',recorded:f.prov==='recorded'};
     out.more=[exportItem];
    }
+   /* a paused room waits for you: Resume goes on with the rounds */
+   if(r.status==='paused')out.dock={tone:'yourmove',sentence:escH('Paused · Resume goes on with the rounds')};
    return out;
   }
   if(f.inRound){
    const sp=f.speaker?escH(f.speaker.role):'',nx=f.next?escH(f.next.role):'';
    out.density='live';out.decision=null;
-   out.sentence={status:'running',word:escH(S.pmxFill(T.status.round,{n:f.n,m:f.max})),reason:sp?(sp+(f.round.replyTo?' is answering your message':' is speaking')+(nx?' · Up next: '+nx+'.':' · Then it’s your move.')):'The round is ending.'};
+   /* what follows this round: the next one by itself, or the moment the room waits for you */
+   const sx=r.chatRoom,then=sx.pausing?'Pausing after this turn.':sx.after==='end'?'The room ends after this round.':sx.after==='summarize'?'The Moderator sums up after this round.'
+    :f.n>=f.max?(once(r)?'Then the Moderator sums up.':'Then it’s your move.'):sx.pauseBetween?'Then it’s your move.':'Round '+(f.n+1)+' follows.';
+   out.sentence={status:'running',word:escH(S.pmxFill(T.status.round,{n:f.n,m:f.max})),reason:sp?(sp+(f.round.replyTo?' is answering your message':' is speaking')+(nx?' · Up next: '+nx+'.':' · '+then)):'The round is ending.'};
    out.dock={tone:'live',sentence:escH('Round '+f.n+' of '+f.max+(f.speaker?' · '+f.speaker.role+' is speaking':''))};
    return out;
   }
+  /* between rounds while the room goes on by itself: live, never "your move" (a short line until the next round) */
+  const why=waitsFor(r);
+  if(!why&&!f.userWaiting){
+   const sx=r.chatRoom,first=!f.started;
+   const word=first?'Starting':'Round '+f.n+' done',say=first?(window.PM56_WG&&window.PM56_WG.grillOn(r)&&!r.grill?'The Moderator is getting ready.':'Round 1 opens.')
+    :sx.after==='end'||sx.after==='summarize'||(once(r)&&!f.summarized)?'The Moderator is summing up.':'Round '+(f.n+1)+' starting.';
+   out.density=first?'starting':'live';out.decision=null;
+   out.sentence={status:first?'starting':'running',word:escH(word),reason:escH(say)};
+   out.dock={tone:'live',sentence:escH(first?'Round 1 opens':'Round '+f.n+' done · '+say.charAt(0).toLowerCase()+say.slice(1).replace(/\.$/,''))};
+   return out;
+  }
   /* between rounds: "your move", the accent decision (7.4), never a warm needs-you */
-  const A={ask:{action:'collab-room-next-round',label:'Ask Everyone',primary:true,attrs:tip('ask',HELP.ask)},
-   next:p=>({action:'collab-room-next-round',label:'Next Round',primary:p,soft:!p,attrs:tip('next',HELP.next)}),
+  /* the room waits for you (7.4: "your move", the accent decision, never a warm needs-you): only after its last round,
+     after a summary you asked for, after every round with Pause between rounds on, or for a message of yours */
+  const A={next:p=>({action:'collab-room-next-round',label:'Next Round',primary:p,soft:!p,attrs:tip('next',HELP.next)}),
    sum:p=>({action:'collab-room-summarize',label:'Summarize Now',primary:p,soft:!p,attrs:tip('sum',HELP.sum)}),
-   end:p=>({action:'room-finish',label:'End discussion',primary:p,soft:!p,attrs:tip('end',HELP.end)})};
+   end:p=>({action:'room-finish',label:'End discussion',primary:p,soft:!p,attrs:tip('end',HELP.end)}),
+   more:{action:'room-add-rounds',label:'Add 2 more rounds',soft:true,disabled:f.prov==='recorded',reason:f.prov==='recorded'?'This recording has no replies past round '+f.max+'.':'',attrs:tip('more',HELP.more)}};
   let word,say,acts;
-  if(!f.started&&!f.userWaiting){word='Your move';say='start the first round.';acts=[A.ask];}
-  else if(f.userWaiting){word='Your message is with the room';say='start the next round so they can answer.';acts=f.lastUsed?[A.sum(true)]:[A.next(true)];}
-  else if(!f.summarized&&!f.lastUsed){word='Round '+f.n+' done';say='Your move.';acts=[A.next(true),A.sum(false)];}
-  else if(!f.summarized){word='Round '+f.n+' done';say='That was the last round: sum it up, then end the discussion.';acts=[A.sum(true)];}
-  else if(!f.lastUsed){word='Round '+f.n+' is summed up';say='Your move: keep going, or end the discussion.';acts=[A.end(true),A.next(false)];}
-  else{word='Summed up';say='Your move: end the discussion.';acts=[A.end(true)];}
+  if(f.userWaiting){word='Your message is with the room';say='start the next round so they can answer.';acts=f.lastUsed?[A.sum(true)]:[A.next(true),A.end(false)];}
+  /* One answer each is always one round: no more rounds to add */
+  else if(f.lastUsed&&!f.summarized){word='This room used all its rounds';say=once(r)?'everyone answered once.':'sum it up, add more rounds, or end the discussion.';acts=once(r)?[A.sum(true),A.end(false)]:[A.sum(true),A.more,A.end(false)];}
+  else if(f.lastUsed){word='Summed up';say=once(r)?'everyone answered once. Promote the summary, or end the discussion.':'Your move: promote the summary, or end the discussion.';acts=once(r)?[A.end(true)]:[A.end(true),A.more];}
+  else if(f.summarized){word='Round '+f.n+' is summed up';say='Your move: keep going, or end the discussion.';acts=[A.end(true),A.next(false)];}
+  else{word='Round '+f.n+' done';say='Pause between rounds is on, so the room waits for you.';acts=[A.next(true),A.sum(false),A.end(false)];}
+  /* the end-of-rounds wait with a summary: promote it here, as on a finished room (a real step of yours) */
+  if(f.lastUsed&&f.summarized&&f.summary&&!viewing)out.board=promoteRow(r,f.summary);
   out.density='attention';
   out.sentence={status:'yourmove',word:escH(word),reason:escH(say)};
   /* 7.12 one control set: while the room document is open beside the chat its controls are the only ones, and the
      decision row says where they are */
   out.decision={tone:'accent',glyph:'ring-dot',sentence:'<b>'+escH(word)+'.</b> '+escH(viewing?T.oneControlSet.panel+'.':say.charAt(0).toUpperCase()+say.slice(1)),actions:viewing?[]:acts};
-  out.dock={tone:'yourmove',sentence:escH(!f.started?'Your move · start the first round':'Round '+f.n+' of '+f.max+' is done · your move')};
+  out.dock={tone:'yourmove',sentence:escH(f.lastUsed?'All '+plural(f.max,'round')+' done · your move':'Round '+f.n+' of '+f.max+' is done · your move')};
   /* DON'T 31: a control on the card is never repeated in More */
   const onCard={};out.decision.actions.forEach(a=>{onCard[a.action]=1;});
   out.more=out.more.filter(x=>!onCard[x.action]);
   return out;
+ }
+ /* "Pause between rounds" (Jared, 2026-10-21): the card's and the panel's switch, in Grill Me's switch grammar (a
+    labelled checkbox switch, its state in words, Space or a click, the focus kept on it after it re-renders). It works
+    mid-run and never cancels a turn: on during a round, the room waits once that round ends; off while the room waits
+    between rounds, the next round starts at once. Hidden where it changes nothing (One answer each, a room whose rounds are used up). */
+ function pauseSwitch(r,f,where){
+  if(!owns(r.id)||once(r)||!['running','paused'].includes(r.status))return '';
+  /* shown through the last round (so a switch turned off a moment ago keeps its place and its focus), gone once the
+     rounds are used up */
+  const s=r.chatRoom,left=s.roundsSoFar<f.max;if(!left)return '';
+  const on=!!s.pauseBetween,S=SH();
+  return '<div class="pmx-room-pause" data-k="room-pause:'+where+':'+escH(r.id)+'">'+S.pmxCheck({key:'room-pause-check:'+where+':'+escH(r.id),cls:'room-pause',glyph:'pause',checked:on,label:'Pause between rounds',
+   attrs:'role="switch" aria-checked="'+on+'" data-action="room-toggle-pause-between" data-run="'+escH(r.id)+'" data-room-pause="'+where+'" aria-label="Pause between rounds" '+tip('pause',HELP.pause),
+   helper:on?'On. The room waits for you after each round.':'Off. Rounds run one after another.'})+'</div>';
  }
  /* ---- E-18 queue, presentation: the card's queue line and the queued rows above the composer (the main chat's
     queue strip: the words, Edit, Send now, and a Remove; J-2 sizes). The rows carry pmx classes, so the chat
@@ -66718,15 +66969,22 @@ root.PM56_SCHEDULE_TIME=api;if(typeof module!=='undefined')module.exports=api;
  }
  if(PMXo()&&PMXo().after)PMXo().after((c,phase)=>{if(phase==='app')afterApp();});
 
- window.PM56_ROOM={roundGate,owns,preflight,admit,envelope,beginRound,request,submit,canSend,receiveUser,summarize,finish,promotionRequest,validatePromotion,promote,inline,controls,documentHtml,exportTranscript,hash,
+ window.PM56_ROOM={pauseSwitch:(r,where)=>owns(r?.id)?pauseSwitch(r,roomFacts(r),where):'',roundGate,owns,preflight,admit,envelope,beginRound,startRound,waitsFor,goesOn,setPauseBetween,endDiscussion,askAfterRound,maxRounds:id=>owns(id)?maxOf(run(id)):null,pace:{beat:BEAT,start:START},request,submit,canSend,receiveUser,summarize,finish,promotionRequest,validatePromotion,promote,inline,controls,documentHtml,exportTranscript,hash,
   sheetParts,cardParts,facts:id=>owns(id)?roomFacts(run(id)):null,waitingNoun:WAIT_NOUN,
   queued:id=>queued(id).map(e=>({id:e.id,text:e.text,participantId:e.participantId,at:e.at})),queueState,enqueue,steer,deliverQueued};
 })();
 
 /* Chat Room recorded examples (Demo Studio). Pre-written replies, never live AI. The guide is the one
    recorded-example look (pmxGuide, 4.3 G-25): in the dock under the composer, or as the first row of the room
-   document. It narrates the next step and can take it for you ("Do this step", a demo action, never a command);
-   the run's own controls stay on the card and in the room document (one control set, 7.12). */
+   document. It narrates what is happening and what comes next; the run's own controls stay on the card and in the
+   room document (one control set, 7.12).
+   Playback (2026-10-21, Jared: "keeps asking me to click Next Round ... I thought it would be automated"; then his
+   decision that a Chat Room runs its rounds by itself): the room itself opens round 1 at Start and starts each next
+   round (room-protocol.js, AUTOMATIC ROUNDS); this file supplies the recorded replies, each streamed and then held on
+   screen long enough to read. Both examples play every round with no click after Start and stop where a real room
+   waits: "This room used all its rounds" (the discussion: Summarize Now, End discussion, then a promotion; the plan:
+   everyone answered once and the Moderator summed it up, so you promote the summary). The examples keep Pause between
+   rounds off; the discussion's guide says once that you can turn it on. */
 (function(){
  'use strict';const E=window.PM56_EXT,C=window.PM56_COLLAB,W=window.PM56_ROOM,S=window.PM56_SHELL,clone=x=>JSON.parse(JSON.stringify(x));let active=null,serial=0;const clocks=new Map(),turns=new Map();
  const flows={discussion:{label:'Talk it through, then keep one idea',detail:'Two rounds with the Moderator guiding. You can message the room, then promote one message to a To-Do.',target:'todo'},
@@ -66735,8 +66993,9 @@ root.PM56_SCHEDULE_TIME=api;if(typeof module!=='undefined')module.exports=api;
   ['Keep a visible Search button so the feature remains discoverable.','A / shortcut is useful for frequent users, but should stay optional.','Avoid triggering the shortcut while someone is typing in an input.'],
   ['Keep the Search button unchanged; the shortcut is an optional second route.','Remember the shortcut preference without removing the visible Search button.','Add tests that keep / literal inside editable text inputs.']
  ]});
- /* pacing of the recorded turns: the words stream in the room document at MS_WORD a word, then the reply lands */
- const MS_WORD=70,HOLD=500,ms=v=>{const K=window.PM56_CLOCK;return K&&K.ms?K.ms(v):v;};
+ /* pacing of the recorded turns: the words stream at MS_WORD a word (as before), the whole reply then stays on screen
+    for HOLD so it can be read, then it lands and the next helper speaks */
+ const MS_WORD=70,HOLD=3600,ms=v=>{const K=window.PM56_CLOCK;return K&&K.ms?K.ms(v):v;};
  function current(){if(!active)return null;let r=active.runId?C.run(active.runId):C.runsForThread(active.threadId).find(r=>W.owns(r.id));if(r)active.runId=r.id;return r;}
  function configure(){if(!active)return;C.openConfigure('chat_room');const d=C.draft();d.name='Make search easier to reach';d.nameEdited=true;d.purpose='How should people reach search: a visible button, a keyboard shortcut, or both?';d.rows=d.rows.slice(0,3);d.rows.forEach((r,i)=>{r.role=['Product','Design','Engineering'][i];r.persona=['Product Manager','Architect','Implementer'][i];});d.config.participantCount=3;d.config.turnPolicy=active.kind==='plan'?'ask_everyone_once':'moderated';d.config.maxRounds=active.kind==='plan'?1:2;d.roomInput=fixture();d.wonderer=false;d.grillMe=false;if(C.markRecorded)C.markRecorded(d);E.ctx().openDialog({type:'collab-configure'});}
  function stop(id){const t=clocks.get(id);if(t)clearTimeout(t);clocks.delete(id);turns.delete(id);}
@@ -66748,8 +67007,13 @@ root.PM56_SCHEDULE_TIME=api;if(typeof module!=='undefined')module.exports=api;
  /* the recorded turn in progress: who is speaking and the words they will say (the room document streams them) */
  function nextTurn(r){const round=r.chatRoom.round;if(!round||round.complete)return null;const pid=round.participantIds.find(pid=>!round.messages.some(mid=>r.messages.find(m=>m.id===mid)?.senderId===pid));if(!pid)return null;const slot=r.participants.findIndex(p=>p.id===pid);return {pid,slot,text:(r.chatRoom.input.rounds[round.number-1]||[])[slot]||''};}
  function play(id){const r=C.run(id);if(!W.owns(id)||clocks.has(id)||!r.chatRoom.round||r.chatRoom.round.complete)return;const owner=active,round=r.chatRoom.round;
-  function arm(){const t=nextTurn(r);if(!t){turns.delete(id);return;}turns.set(id,{pid:t.pid,text:t.text,msPerWord:MS_WORD});const words=t.text.split(/\s+/).filter(Boolean).length;clocks.set(id,setTimeout(next,ms(words*MS_WORD+HOLD)));}
-  function next(){clocks.delete(id);if(!C.run(id)||C.run(id)!==r||r.status==='canceled'||r.status==='completed'){turns.delete(id);return;}if(r.status==='paused'){clocks.set(id,setTimeout(next,ms(120)));return;}
+  /* a paused room (Pause holds at the turn boundary) arms no speaker until it is resumed */
+  function arm(){if(r.status==='paused'){turns.delete(id);clocks.set(id,setTimeout(()=>{clocks.delete(id);arm();},ms(150)));return;}if(r.status!=='running'){turns.delete(id);return;}
+   const t=nextTurn(r);if(!t){turns.delete(id);return;}turns.set(id,{pid:t.pid,text:t.text,msPerWord:MS_WORD});const words=t.text.split(/\s+/).filter(Boolean).length;clocks.set(id,setTimeout(next,ms(words*MS_WORD+HOLD)));}
+  /* Pause holds the turn; after Resume the reply stays on screen a beat before it lands */
+  let held=false;
+  function next(){clocks.delete(id);if(!C.run(id)||C.run(id)!==r||r.status==='canceled'||r.status==='completed'){turns.delete(id);return;}if(r.status==='paused'){held=true;clocks.set(id,setTimeout(next,ms(120)));return;}
+   if(held){held=false;clocks.set(id,setTimeout(next,ms(1500)));return;}
    const t=nextTurn(r);if(!t){turns.delete(id);return;}const x=W.request(id,t.pid);if(!x){turns.delete(id);return;}const result=W.submit(id,{...x,body:t.text});
    if(!result.ok){turns.delete(id);if(owner)owner.errors.push(result.error);E.ctx().renderApp();return;}if(owner)owner.events.push({round:round.number,participantId:t.pid,messageId:result.messageId});
    if(!round.complete)arm();else turns.delete(id);E.ctx().renderApp();
@@ -66757,33 +67021,42 @@ root.PM56_SCHEDULE_TIME=api;if(typeof module!=='undefined')module.exports=api;
   arm();E.ctx().renderApp();
  }
  document.addEventListener('pm56:room-round',e=>play(e.detail.runId));
- /* the next step, in plain words, and what "Do this step" does (a demo action: it presses the same control you would) */
+ /* what is happening and what comes next, in plain words. Where the room waits for you, the guide says so and names
+    the control on the card; it never takes the step for you. */
  function step(r){
   const target=flows[active.kind].target,word=target==='plan'?'Plan':'To-Do';
-  if(!r)return {text:'Set up the room: three helpers, the Moderator guides, and '+(active.kind==='plan'?'one round.':'two rounds.'),act:{action:'room-demo-configure',label:'Set up the room'}};
+  if(!r)return {text:'Set up the room: three helpers, the Moderator guides, and '+(active.kind==='plan'?'one round.':'two rounds.')+' Press Start and the recording plays.',act:{action:'room-demo-configure',label:'Set up the room'}};
   if(['canceled','failed'].includes(r.status))return {text:'This discussion ended. Replay starts a fresh one.',replay:true};
-  const s=r.chatRoom,done=r.status==='completed';
-  if(s.promotions.length)return {text:'Your '+word+' is ready. It keeps a link back to the message it came from.',act:{action:'room-open-promotion',label:'Open the '+word,data:{run:r.id,key:s.promotions[0].key}},replay:true};
-  if(done)return {text:'Pick a message and promote it to a '+word+'. Nothing was created until you do.',act:{action:'room-promote',label:'Promote the summary',data:{run:r.id,message:s.summary?.messageId||'',target}}};
-  if(!s.round)return {text:'Start the first round: Ask Everyone gives every helper one turn.',act:{action:'collab-room-next-round',label:'Do this step',data:{run:r.id}}};
-  if(!s.round.complete)return {text:'Each helper speaks once. Talking changes nothing in your project.'};
-  const max=r.config.turnPolicy==='ask_everyone_once'?1:+r.config.maxRounds;
-  if(!s.summary||s.summary.round!==s.roundsSoFar){
-   if(s.roundsSoFar<max)return {text:active.kind==='discussion'&&s.roundsSoFar===1?'Round 1 is done. Send the room a message if you like, then start the next round.':'Round '+s.roundsSoFar+' is done. Start the next round, or sum it up now.',act:{action:'collab-room-next-round',label:'Do this step',data:{run:r.id}}};
-   return {text:'That was the last round. Summarize Now asks the Moderator to sum it up.',act:{action:'collab-room-summarize',label:'Do this step',data:{run:r.id}}};
-  }
-  return {text:'End the discussion. Nothing becomes a To-Do or Plan by itself.',act:{action:'room-finish',label:'Do this step',data:{run:r.id}}};
+  const s=r.chatRoom,done=r.status==='completed',max=r.config.turnPolicy==='ask_everyone_once'?1:+r.config.maxRounds;
+  if(s.promotions.length)return {text:'Your '+word+' is ready. It keeps a link back to the message it came from.',replay:true};
+  if(done)return {text:'The discussion ended, and nothing was created. If you want a '+word+', promote the summary.',replay:true};
+  if(r.status==='paused')return {text:'Paused. Resume it from the card’s More menu: the rounds go on from there.'};
+  if(s.pausing)return {text:'Pausing: the helper speaking now finishes first, then the room holds.'};
+  if(!s.round)return {text:'The room is starting. Round 1 opens in a moment.'};
+  const why=W.waitsFor?W.waitsFor(r):null,n=s.roundsSoFar,summed=!!(s.summary&&s.summary.round===s.roundsSoFar);
+  if(!s.round.complete){const base='Round '+s.round.number+' of '+max+'. Each helper speaks once, in turn, and reads what came before.';
+   /* the discussion says once that the rounds can wait for you (the switch stays off in the example) */
+   return {text:active.kind==='discussion'&&s.round.number===1?base+' The rounds run one after another; to have the room wait for you after each one, turn on Pause between rounds on the card.':base+' Talking changes nothing in your project.'};}
+  if(!why)return {text:s.after||(max===1&&!summed)?'Round '+n+' is done. The Moderator is summing it up.':'Round '+n+' is done. Round '+(n+1)+' starts by itself in a moment.'};
+  if(why==='between'||why==='message')return {text:'Round '+n+' is done. Pause between rounds is on, so the room waits for you: press Next Round for round '+(n+1)+', or Summarize Now.'};
+  if(why==='summed')return {text:'The Moderator summed it up. Your move: End discussion, or Next Round to keep going.'};
+  if(max===1)return {text:'Everyone answered once and the Moderator summed it up. Your move: promote the summary to a '+word+'. Nothing was created until you do.'};
+  if(!summed)return {text:'That was the last round, so the room waits for you now: Summarize Now has the Moderator sum it up; End discussion ends it.'};
+  return {text:'The Moderator summed it up. Press End discussion when you are done. Nothing becomes a To-Do or Plan by itself.'};
  }
  function guide(c,inEditor=false){if(!active||c.state.selectedThread!==active.threadId||c.state.dialog)return '';const r=current();if((innerWidth<=1100&&c.state.editorRevealed)!==inEditor)return '';
-  const st=step(r),acts=[];if(st.act)acts.push({action:'room-demo-step',label:st.act.label});if(st.replay)acts.push({action:'room-demo-replay',label:'Replay'});
+  const st=step(r),acts=[];if(st.act)acts.push({action:st.act.action,label:st.act.label});if(st.replay)acts.push({action:'room-demo-replay',label:'Replay'});
   return S.pmxGuide({key:inEditor?'room-demo-guide:doc':'room-demo-guide',cls:'room-demo-guide'+(acts.length>1?' room-demo-guide-stack':''),placement:inEditor?'doc':'dock',step:c.esc(st.text),actions:acts,close:{action:'room-demo-close',label:'Close guide'}});
  }
  E.slot('composerBelow',c=>guide(c));E.action('room-demo-start',(c,b)=>{start(b.dataset.flow);return true;});E.action('room-demo-configure',()=>{configure();return true;});E.action('room-demo-replay',()=>{if(active)start(active.kind);return true;});E.action('room-demo-close',()=>{active=null;E.ctx().renderApp();return true;});
- E.action('room-demo-step',(c)=>{if(!active)return true;const st=step(current());if(!st.act)return true;const b=document.createElement('button');b.dataset.action=st.act.action;Object.assign(b.dataset,st.act.data||{});E.run(st.act.action,b,new Event('click'));c.renderApp();return true;});
+ /* room-demo-step stays as a QA hook: it presses the control the room waits on, as you would (the guide never shows it) */
+ function waitsOn(r){const why=r&&W.waitsFor?W.waitsFor(r):null;if(!why)return null;const s=r.chatRoom;
+  if(why==='between'||why==='message')return 'collab-room-next-round';return s.summary&&s.summary.round===s.roundsSoFar?'room-finish':'collab-room-summarize';}
+ E.action('room-demo-step',(c)=>{if(!active)return true;const r=current(),a=waitsOn(r);if(!a)return true;const b=document.createElement('button');b.dataset.action=a;b.dataset.run=r.id;E.run(a,b,new Event('click'));c.renderApp();return true;});
  E.chainAction('reset-all',()=>{for(const id of [...clocks.keys()])stop(id);turns.clear();active=null;return false;});
- ['plan-demo-start','schedule-demo-start','review-demo-start','brainstorm-demo-start','crew-demo-start'].forEach(n=>E.chainAction(n,()=>{active=null;return false;}));
+ ['plan-demo-start','schedule-demo-start','review-demo-start','brainstorm-demo-start','crew-demo-start','wg-demo-start','b13-start'].forEach(n=>E.chainAction(n,()=>{active=null;return false;}));
  const G=window.PM56_REPAIR_DEMOS,old=G.gallery;G.gallery=c=>'<section class="demo-section"><h3>Chat Room recorded examples</h3><div class="demo-section-body">'+Object.entries(flows).map(([id,f])=>'<button class="demo-trigger" data-action="room-demo-start" data-flow="'+id+'"><strong>'+c.esc(f.label)+'</strong><small>'+c.esc(f.detail)+'</small></button>').join('')+'</div></section>'+old(c);
- window.PM56_ROOM_DEMOS={start,configure,fixture,play,speaking:id=>turns.get(id)||null,freeze:id=>{const t=clocks.get(id);if(t)clearTimeout(t);clocks.set(id,0);},snapshot:()=>active?clone({...active,runId:current()?.id||null}):null,editorGuide:id=>current()?.id===id?guide(E.ctx(),true):''};
+ window.PM56_ROOM_DEMOS={start,configure,fixture,play,pace:{msPerWord:MS_WORD,hold:HOLD},speaking:id=>turns.get(id)||null,freeze:id=>{const t=clocks.get(id);if(t)clearTimeout(t);clocks.set(id,0);},snapshot:()=>active?clone({...active,runId:current()?.id||null}):null,editorGuide:id=>current()?.id===id?guide(E.ctx(),true):''};
 })();
 
 /* B07 Teach: explicit user capture and immutable-content revision history.
@@ -69178,6 +69451,10 @@ const E=window.PM56_EXT,F=window.PM56_FEATURES,T=window.PM56_TEACH,S=window.PM56
  * plan waits only for the team's decisions or research, never for you. Your one override is Check it. The lead engine
  * and every lead surface are PM56_WG (wonderer-grill.js); this file plays the recording and draws the Wonderer
  * workspace, the BrainStorm's fine document view of the leads.
+ * Playback (2026-10-21, Jared: recorded examples play on their own): the recording plays from Start BrainStorm, paced
+ * (PACE) so each decision stays on screen long enough to read, and stops only where the product waits for you: the Ask
+ * Card, What we agreed's Confirm, Write the plan (your move) and the end. The guide narrates and names the control on
+ * screen; its only buttons are Replay and Close. Check it and turning Grill Me on mid-run stay yours, never steps.
  */
 (function () {
   'use strict';
@@ -69196,6 +69473,8 @@ const E=window.PM56_EXT,F=window.PM56_FEATURES,T=window.PM56_TEACH,S=window.PM56
   const current=c=>C.runsForThread(c.thread.id).find(r=>r.wonderer);
   const refresh=()=>{E.ctx().renderApp();E.ctx().renderOverlays();};
   const ms=v=>window.PM56_CLOCK&&window.PM56_CLOCK.ms?window.PM56_CLOCK.ms(v):v;
+  /* the pace: the recorded steps were written at a quick 300-3000 ms; PACE stretches each so it can be read */
+  const PACE=2.2;
   function newThread(flow){
     const c=E.ctx(),tid='batch13-'+flow+'-'+(++serial),base=copy(c.state.threads.find(t=>t.id==='query'));
     Object.assign(base,{id:tid,title:flows[flow].title+(flows[flow].kind==='wonderer'?' · recorded example':' · local example'),status:'ready',pinned:false,archived:false,goalId:null,messages:[]});
@@ -69340,8 +69619,10 @@ const E=window.PM56_EXT,F=window.PM56_FEATURES,T=window.PM56_TEACH,S=window.PM56
     const P=i=>r.participants.find(p=>p.id===a[i].participantId),pass2=r.wonderer.flow==='leads';
     const out=[],say2=(x,d)=>say(r,'Lead '+W.engine.lead(r,x).n+': '+({explore:'explore',use:'use',set_aside:'set aside'})[d[0]]+'. '+d[1]+(d[0]==='explore'?' It is checked in the Evidence round.':''));
     /* the first pass runs during intake, before the blind proposals take the concurrency (steer 2026-10-20) */
-    out.push({wait:300,run:()=>{if(passOf(r,0)&&passOf(r,0).status==='exploring')return 'later';a.forEach((t,i)=>{const p=P(i);p.status='working';p.current='Drafting alone';});return {ok:true};}});
-    a.forEach((attempt,i)=>out.push({wait:650,run:()=>B.submitProposal(r.id,{...x(),attemptId:attempt.id,assignmentRevision:attempt.assignmentRevision,proposal:copy(records.proposals[i])})}));
+    /* (2026-10-21) the drafting starts at once after your Confirm and the first idea lands soon after, so the card never
+       sits at Starting */
+    out.push({wait:0,run:()=>{if(passOf(r,0)&&passOf(r,0).status==='exploring')return 'later';a.forEach((t,i)=>{const p=P(i);p.status='working';p.current='Drafting alone';});return {ok:true};}});
+    a.forEach((attempt,i)=>out.push({wait:i?650:250,run:()=>B.submitProposal(r.id,{...x(),attemptId:attempt.id,assignmentRevision:attempt.assignmentRevision,proposal:copy(records.proposals[i])})}));
     out.push({wait:700,boundary:true,run:()=>passOf(r,0)&&passOf(r,0).status==='exploring'?'later':B.normalize(r.id,x())});
     out.push({wait:900,boundary:true,run:()=>B.debate(r.id,{...x(),round:1,messages:[
       {participantId:a[1].participantId,body:'The Wonderer’s third lead fits: answer from the local filter at once, then refine. It stays a hypothesis until we measure.',evidenceRefs:['requirements','latency']},
@@ -69355,8 +69636,8 @@ const E=window.PM56_EXT,F=window.PM56_FEATURES,T=window.PM56_TEACH,S=window.PM56
     out.push({wait:400,run:()=>{say(r,'Recording the team’s decision on each of the Wonderer’s first four leads, from this round of the debate.');return {ok:true};}});
     DECIDE1.forEach(d=>out.push({wait:750,run:()=>{const res=W.dispose(r,d[0],d[1],d[2]);if(res.ok)say2(d[0],[d[1],d[2]]);return res;}}));
     if(pass2){
-      out.push({wait:500,run:()=>{const q=passOf(r,1);if(q&&q.status==='queued'){W.engine.startQueued(r);}return {ok:true};}});
-      out.push({wait:1700,run:()=>passOf(r,1)&&passOf(r,1).status==='exploring'?deliverPass(r,1):{ok:true}});
+      out.push({wait:500,skip:()=>!(passOf(r,1)&&passOf(r,1).status==='queued'),run:()=>{const q=passOf(r,1);if(q&&q.status==='queued'){W.engine.startQueued(r);}return {ok:true};}});
+      out.push({wait:1700,skip:()=>!(passOf(r,1)&&passOf(r,1).status==='exploring'),run:()=>passOf(r,1)&&passOf(r,1).status==='exploring'?deliverPass(r,1):{ok:true}});
       out.push({wait:300,run:()=>{say(r,'The Wonderer’s second pass is in. Deciding its leads as they arrive.');return {ok:true};}});
       DECIDE2.forEach(d=>out.push({wait:650,run:()=>{const res=W.dispose(r,d[0],d[1],d[2]);if(res.ok)say2(d[0],[d[1],d[2]]);return res;}}));
     }
@@ -69368,8 +69649,8 @@ const E=window.PM56_EXT,F=window.PM56_FEATURES,T=window.PM56_TEACH,S=window.PM56
     /* the Evidence round researches every lead the team explores and every lead you sent with Check it (section 8.5,
        B1), each by a core helper, one after another */
     const queued=()=>r.wonderer.leads.filter(l=>l.research&&l.research.status==='queued'&&W.engine.visible(r,l.passId));
-    for(let i=0;i<4;i++)out.push({wait:700,run:()=>{const l=queued()[0];if(!l)return {ok:true};const p=r.participants[RESEARCHER[l.id]!=null?RESEARCHER[l.id]:1];return W.engine.startResearch(r,l.id,{id:p.id,name:p.role});}});
-    for(let i=0;i<4;i++)out.push({wait:900,run:()=>{const l=r.wonderer.leads.find(l=>l.research&&l.research.status==='running');if(!l)return {ok:true};return W.engine.finishResearch(r,l.id,researchResult(r,l.id));}});
+    for(let i=0;i<4;i++)out.push({wait:700,skip:()=>!queued()[0],run:()=>{const l=queued()[0];if(!l)return {ok:true};const p=r.participants[RESEARCHER[l.id]!=null?RESEARCHER[l.id]:1];return W.engine.startResearch(r,l.id,{id:p.id,name:p.role});}});
+    for(let i=0;i<4;i++)out.push({wait:900,skip:()=>!r.wonderer.leads.some(l=>l.research&&l.research.status==='running'),run:()=>{const l=r.wonderer.leads.find(l=>l.research&&l.research.status==='running');if(!l)return {ok:true};return W.engine.finishResearch(r,l.id,researchResult(r,l.id));}});
     /* at the vote Implementation asks for one last pass: Write the plan waits while it is in flight */
     if(pass2)out.push({wait:700,gate:'vote',boundary:true,run:()=>{const p=P(2),m=C.appendMessage(r.id,{senderKind:'participant',senderId:p.id,senderName:p.role,messageType:'request',recipientIds:[r.wonderer.participantId],body:'Wonderer, one last look: what breaks when a collection is huge?'});const res=W.startPass(r,{kind:'participant',id:p.id,name:p.role},'what breaks when a collection is huge',m.id,{queue:false,scripted:true});if(res.ok)r.wonderer.corePlayback.passIds[2]=res.pass.id;return res;}});
     out.push({wait:900,gate:pass2?'':'vote',boundary:!pass2,run:()=>{for(let i=0;i<a.length;i++){const res=B.vote(r.id,a[i].participantId,{...x(),...copy(records.votes[i])});if(!res.ok)return res;}return {ok:true};}});
@@ -69377,19 +69658,21 @@ const E=window.PM56_EXT,F=window.PM56_FEATURES,T=window.PM56_TEACH,S=window.PM56
     /* Write the plan waits (CWR-041, steer 2026-10-20): while the last pass is in flight, while its lead is undecided (it
        is decided on delivery), and while its research and any lead you sent with Check it are out */
     if(pass2){
-      out.push({wait:2600,run:()=>passOf(r,2)&&passOf(r,2).status==='exploring'?deliverPass(r,2):{ok:true}});
-      DECIDE3.forEach(d=>out.push({wait:900,run:()=>{const l=W.engine.lead(r,d[0]);if(!l||l.disposition)return {ok:true};const res=W.dispose(r,d[0],d[1],d[2]);if(res.ok)say(r,'The last pass is in. Lead '+l.n+': explore. '+d[2]);return res;}}));
+      out.push({wait:2600,skip:()=>!(passOf(r,2)&&passOf(r,2).status==='exploring'),run:()=>passOf(r,2)&&passOf(r,2).status==='exploring'?deliverPass(r,2):{ok:true}});
+      DECIDE3.forEach(d=>out.push({wait:900,skip:()=>{const l=W.engine.lead(r,d[0]);return !l||!!l.disposition;},run:()=>{const l=W.engine.lead(r,d[0]);if(!l||l.disposition)return {ok:true};const res=W.dispose(r,d[0],d[1],d[2]);if(res.ok)say(r,'The last pass is in. Lead '+l.n+': explore. '+d[2]);return res;}}));
     }
-    out.push({wait:600,run:()=>{r.wonderer.leads.filter(l=>l.research&&l.research.status==='queued').forEach(l=>{const p=r.participants[RESEARCHER[l.id]||1];W.engine.startResearch(r,l.id,{id:p.id,name:p.role});});return {ok:true};}});
-    out.push({wait:3000,run:()=>{const q=r.wonderer.leads.filter(l=>l.research&&l.research.status==='running');q.forEach(l=>W.engine.finishResearch(r,l.id,researchResult(r,l.id)));return {ok:true};}});
+    out.push({wait:600,skip:()=>!r.wonderer.leads.some(l=>l.research&&l.research.status==='queued'),run:()=>{r.wonderer.leads.filter(l=>l.research&&l.research.status==='queued').forEach(l=>{const p=r.participants[RESEARCHER[l.id]||1];W.engine.startResearch(r,l.id,{id:p.id,name:p.role});});return {ok:true};}});
+    out.push({wait:3000,skip:()=>!r.wonderer.leads.some(l=>l.research&&l.research.status==='running'),run:()=>{const q=r.wonderer.leads.filter(l=>l.research&&l.research.status==='running');q.forEach(l=>W.engine.finishResearch(r,l.id,researchResult(r,l.id)));return {ok:true};}});
     return out;
   }
   function arm(r){if(clocks.has('core:'+r.id))return;clocks.set('core:'+r.id,setInterval(()=>tick(r),ms(450)));}
   function stopClock(r){const t=clocks.get('core:'+r.id);if(t)clearInterval(t);clocks.delete('core:'+r.id);}
   function tick(r){
     const W=WG(),w=r.wonderer,cp=w&&w.corePlayback;if(!w||!cp)return stopClock(r);
-    if(r.status==='paused')return;
+    /* Pause holds the script; after Resume the current step waits its full time again */
+    if(r.status==='paused'){cp.wasPaused=true;return;}
     if(r.status!=='running'){cp.status=r.status==='completed'?'completed':'stopped';return stopClock(r);}
+    if(cp.wasPaused){cp.wasPaused=false;delete cp.at['s'+cp.step];}
     const at=(k,wait)=>{const t=Date.now();if(cp.at[k]==null){cp.at[k]=t;return false;}return t-cp.at[k]>=ms(wait);};
     /* research finds the intake fact while you answer; the Wonderer's first pass lands, held, while you are grilled */
     const s=r.grill;
@@ -69399,12 +69682,14 @@ const E=window.PM56_EXT,F=window.PM56_FEATURES,T=window.PM56_TEACH,S=window.PM56
     if(cp.status==='not_started')cp.status='playing';
     const list=cp.list||(cp.list=steps(r)),st=list[cp.step];
     if(!st){cp.status='completed';refresh();return stopClock(r);}
-    if(!at('s'+cp.step,st.wait))return;
+    /* a step with nothing to do (no lead queued, no pass in flight) is passed over at once: its wait would show nothing */
+    if(st.skip&&!st.boundary&&!st.gate&&st.skip()){cp.step++;cp.cursor=cp.step;return;}
+    if(st.wait&&!at('s'+cp.step,st.wait*PACE))return;
     /* Grill Me turned on mid-run starts at the next chapter boundary, whichever it is (CWR-042, R4): the vote waits for
        its Confirm while the debate goes on, or, once the vote is under way, Write the plan does */
     if(st.boundary&&W.takeMidRun(r)){const early=['intake','blind_proposals','normalize','debate','evidence'].includes(r.brainstorm.phase);W.beginMidRun(r,early?'vote':'synthesis',early?'the vote':'Write the plan');refresh();return;}
     /* at the vote the recording gives you a moment to Check a lead (optional; it goes on without you) */
-    if(st.gate==='vote'&&!cp.offered){cp.offered=true;cp.at['s'+cp.step]=Date.now()+ms(4200);refresh();return;}
+    if(st.gate==='vote'&&!cp.offered){cp.offered=true;cp.at['s'+cp.step]=Date.now()+ms(6000);refresh();return;}
     const res=st.run();
     if(res==='later')return;
     /* a later grilling session gates only its own step: this step waits, the rest already ran */
@@ -69473,35 +69758,36 @@ const E=window.PM56_EXT,F=window.PM56_FEATURES,T=window.PM56_TEACH,S=window.PM56
     if(!r)return {text:c.state.dialog?'The Wonderer is already on the team'+(s.flow==='leads'?' and Grill Me is on':'')+'. Press Start BrainStorm.':'Set up the BrainStorm. The Wonderer is already on the team.'};
     const w=r.wonderer,b=r.brainstorm||{},cp=w?.corePlayback||{},esc=c.esc,open=[{action:'b13-open',label:'Open the Wonderer’s leads',attrs:'data-run="'+esc(r.id)+'"'}];
     const gs=r.grill&&W.sessionOf('run:'+r.id);
-    if(cp.status==='failed')return {text:'This recording stopped here. Everything so far is kept. Replay starts it again.'};
-    if(['canceled','cancelled','failed'].includes(r.status)&&!b.synthesis)return {text:'This example ended. Everything so far is kept.'};
-    if(b.synthesis)return {text:'Plan written. It lists every Wonderer lead with the team’s decision and reason; the core votes and the disagreement are unchanged. Nothing has been built.',actions:[{action:'brainstorm-open-plan',label:'Open Plan',attrs:'data-run="'+esc(r.id)+'"'}]};
-    if(gs&&gs.status==='grilling')return {text:'Grill Me is on, so the Coordinator is grilling you before anyone drafts. Meanwhile the Wonderer explores in its own context; its leads are held until every blind proposal is in.',actions:[{action:'wg-open-round',label:'Answer the round',attrs:'data-key="run:'+esc(r.id)+'"'}]};
-    if(gs&&gs.status==='agreeing')return {text:agreedWords(gs)+' The blind proposals wait for your Confirm.',actions:[{action:'wg-show-agreed',label:'See what we agreed',attrs:'data-key="run:'+esc(r.id)+'"'}]};
-    if(r.status==='paused')return {text:'Paused. Resume it from the Wonderer’s leads.',actions:open};
+    const replay=[{action:'b13-configure',label:'Replay'}];
+    if(cp.status==='failed')return {text:'This recording stopped here. Everything so far is kept. Replay starts it again.',actions:replay};
+    if(['canceled','cancelled','failed'].includes(r.status)&&!b.synthesis)return {text:'This example ended. Everything so far is kept.',actions:replay};
+    if(b.synthesis)return {text:'Plan written. It lists every Wonderer lead with the team’s decision and reason; the core votes and the disagreement are unchanged. Nothing has been built. Open Plan on the card to read it.',actions:replay};
+    if(gs&&gs.status==='grilling')return {text:'Grill Me is on, so the Coordinator is grilling you before anyone drafts. Your move: answer on the Ask Card. Meanwhile the Wonderer explores in its own context; its leads are held until every blind proposal is in.'};
+    if(gs&&gs.status==='agreeing')return {text:agreedWords(gs)+' Then press Confirm on it: the blind proposals wait for your Confirm.'};
+    if(r.status==='paused')return {text:'Paused. Resume it from the card’s More menu to go on.'};
     const held=w.passes.some(p=>p.status==='held');
-    if(w.flow==='dissent'&&!W.grillOn(r)&&['intake','blind_proposals','normalize'].includes(b.phase))return {text:'Every helper drafts alone, and the Wonderer’s leads are held until every proposal is in. Turn Grill Me on now: the Coordinator questions you at the next chapter, and only the vote waits for your answer.',actions:[{action:'collab-brainstorm-toggle-grill',label:'Turn Grill Me on',attrs:'data-run="'+esc(r.id)+'"'}]};
+    if(w.flow==='dissent'&&!W.grillOn(r)&&['intake','blind_proposals','normalize'].includes(b.phase))return {text:'Every helper drafts alone, and the Wonderer’s leads are held until every proposal is in. If you like, turn Grill Me on from Open Panel: the Coordinator questions you at the next chapter, and only the vote waits for your answer.'};
     const later=W.activeSession(r);
     if(later&&later.later){const gl=later.gateLabel||'that step',vb=/^the vote$/.test(gl)?'the debate goes on':'everything else keeps going';
-      return later.status==='agreeing'?{text:agreedWords(later)+' Only '+gl+' waits for your Confirm; '+vb+'.',actions:[{action:'wg-show-agreed',label:'See what we agreed',attrs:'data-key="run:'+esc(r.id)+'"'}]}
-        :W.grill.round(later)?{text:'Grill Me is on mid-run: the Coordinator has a decision for you before '+gl+'. '+vb.charAt(0).toUpperCase()+vb.slice(1)+'; only '+gl+' waits for your answer.',actions:[{action:'wg-open-round',label:'Answer it',attrs:'data-key="run:'+esc(r.id)+'"'}]}
+      return later.status==='agreeing'?{text:agreedWords(later)+' Then press Confirm on it. Only '+gl+' waits for your Confirm; '+vb+'.'}
+        :W.grill.round(later)?{text:'Grill Me is on mid-run: the Coordinator has a decision for you before '+gl+'. Your move: answer on the Ask Card. '+vb.charAt(0).toUpperCase()+vb.slice(1)+'; only '+gl+' waits for your answer.'}
           :{text:'The Coordinator is looking a fact up before it asks you about '+gl+'. Nothing for you yet.'};}
-    if(['intake','blind_proposals'].includes(b.phase))return {text:held?'Every helper drafts alone. The Wonderer’s first pass ran during intake; its leads are held until every proposal is in, so nobody’s draft is shaped by them.':'The Wonderer’s first pass runs during intake, before the helpers start drafting.',actions:open};
+    if(['intake','blind_proposals'].includes(b.phase))return {text:held?'Every helper drafts alone. The Wonderer’s first pass ran during intake; its leads are held until every proposal is in, so nobody’s draft is shaped by them.':'The Wonderer’s first pass runs during intake, before the helpers start drafting.'};
     if(b.phase==='normalize'||b.phase==='debate'){
       /* who asked comes from the pass itself (a pass you asked for says you did) */
       const q=w.passes.find(p=>p.status==='queued'),x=w.passes.find(p=>p.n>1&&p.status==='exploring'),who=p=>p.by.kind==='user'?'You':p.by.name||'A helper';
-      if(q)return {text:who(q)+' asked the Wonderer for pass '+q.n+'. The debate holds the slots, so the pass is queued behind it; the team keeps working, and Write the plan waits for it.',actions:open};
-      if(x)return {text:'A slot freed up, so pass '+x.n+' is exploring. Its leads are decided as they arrive.',actions:open};
-      return {text:'Every proposal is in, so the leads are released. The team weighs them in the Debate, and the Coordinator records each decision with its reason.',actions:open};
+      if(q)return {text:who(q)+' asked the Wonderer for pass '+q.n+'. The debate holds the slots, so the pass is queued behind it; the team keeps working, and Write the plan waits for it.'};
+      if(x)return {text:'A slot freed up, so pass '+x.n+' is exploring. Its leads are decided as they arrive.'};
+      return {text:'Every proposal is in, so the leads are released. The team weighs them in the Debate, and the Coordinator records each decision with its reason.'};
     }
-    if(b.phase==='evidence')return {text:'The Evidence round checks every lead the team chose to explore. Watch each one end supported or not supported.',actions:open};
+    if(b.phase==='evidence')return {text:'The Evidence round checks every lead the team chose to explore. Watch each one end supported or not supported.'};
     const used=w.leads.find(l=>l.disposition&&l.disposition.kind==='use'&&!l.research&&!l.checkedByUser);
-    if(b.phase==='vote'&&used&&!w.leads.some(l=>l.checkedByUser))return {text:'Lead '+used.n+' is being used as a hypothesis. Check it sends it to research anyway: only you can do that.',actions:[{action:'wg-check-it',label:'Check lead '+used.n,attrs:'data-run="'+esc(r.id)+'" data-lead="'+esc(used.id)+'"'}]};
+    if(b.phase==='vote'&&used&&!w.leads.some(l=>l.checkedByUser))return {text:'Lead '+used.n+' is being used as a hypothesis. Check it on that lead’s row sends it to research anyway; only you can do that. The vote goes on without you.'};
     const last=passOf(r,2);
-    if(b.phase==='vote')return {text:last?(last.by.kind==='user'?'You':last.by.name)+' asked for one last pass. The team votes meanwhile; the Wonderer never votes.':'The team votes. The Wonderer never votes.',actions:open};
+    if(b.phase==='vote')return {text:last?(last.by.kind==='user'?'You':last.by.name)+' asked for one last pass. The team votes meanwhile; the Wonderer never votes.':'The team votes. The Wonderer never votes.'};
     const g=gateState(r);
-    if(!g.ok)return {text:'Write the plan waits: '+g.reason.charAt(0).toLowerCase()+g.reason.slice(1)+' That is the team’s work, not yours.',actions:open};
-    return {text:'Every lead is decided and back from research. Press Write the plan: one plan, listing every lead.',actions:[{action:'collab-brainstorm-synthesize',label:'Write the plan',attrs:'data-run="'+esc(r.id)+'"'}]};
+    if(!g.ok)return {text:'Write the plan waits: '+g.reason.charAt(0).toLowerCase()+g.reason.slice(1)+' That is the team’s work, not yours.'};
+    return {text:'Every lead is decided and back from research. Ready to write the plan: that is your move, here as in the product. Press Write the plan on the card: one plan, listing every lead.'};
   }
 
   function guide(c){
@@ -72683,8 +72969,8 @@ window.PM56_B19DEMO={start:flow=>start(E.ctx(),flow),snapshot:()=>{const r=curre
   var COPY = {
     kind: 'Chat Room',
     tabs: { transcript: 'Discussion', participants: 'Team', usage: 'Cost' },
-    ask: { label: 'Ask Everyone', helper: 'Everyone gives an opening view.' },
     next: { label: 'Next Round', helper: 'Each helper speaks once more.' },
+    more: { label: 'Add 2 more rounds', helper: 'Two more rounds on the same topic.' },
     summarize: { label: 'Summarize Now', helper: 'The Moderator writes where everyone agrees, where they differ, and what’s still open.' },
     end: { label: 'End discussion', helper: 'Locks the conversation. You can still promote messages.' },
     message: 'Message',
@@ -72701,14 +72987,14 @@ window.PM56_B19DEMO={start:flow=>start(E.ctx(),flow),snapshot:()=>{const r=curre
     toYou: 'to you',
     landed: 'Where the room landed',
     table: 'At the table',
-    emptyRoom: 'Nobody has spoken yet. Ask Everyone starts the first round.',
+    emptyRoom: 'Nobody has spoken yet. Round 1 opens by itself.',
     emptyWaiting: 'Nothing has been said yet.',
     queued: 'Queued for the next round',
     queuedHeld: 'Queued · it goes when the next round ends',
     queuedPaused: 'Queued · the room is paused',
     steered: 'Sent during the round · the next speaker reads it, nobody was interrupted',
     readNote: 'read your note',
-    firstMove: 'start the first round.'
+    firstMove: 'Round 1 opens.'
   };
   /* 9.3: refusal codes read as sentences through the shared map (the code stays in data-failure) */
   function refusal(code) { var t = S.pmxRefusalText ? S.pmxRefusalText(code) : null; return t ? t.text : ''; }
@@ -72786,7 +73072,7 @@ window.PM56_B19DEMO={start:flow=>start(E.ctx(),flow),snapshot:()=>{const r=curre
     });
   }
   function msgOf(run, m, ch, hooks) {
-    var kind = m.senderKind === 'user' ? 'you' : m.senderKind === 'coordinator' ? 'moderator' : m.messageType === 'wonderer_pass' ? 'wonderer' : 'helper';
+    var kind = m.senderKind === 'user' ? 'you' : m.senderKind === 'system' ? 'system' : m.senderKind === 'coordinator' ? 'moderator' : m.messageType === 'wonderer_pass' ? 'wonderer' : 'helper';
     var p = kind === 'helper' || kind === 'wonderer' ? personOf(run, m.senderId) : null;
     var reply = null;
     if (m.replyTo) { var src = run.messages.filter(function (x) { return x.id === m.replyTo; })[0]; if (src && src.senderKind === 'user') reply = firstSentence(src.body); }
@@ -72795,7 +73081,7 @@ window.PM56_B19DEMO={start:flow=>start(E.ctx(),flow),snapshot:()=>{const r=curre
     (m.readSteering || []).forEach(function (sid) { var n = run.messages.filter(function (x) { return x.id === sid; })[0]; if (n && !note) note = firstSentence(n.body); });
     return {
       id: m.id, key: hooks.msgKey + m.id, kind: kind, pid: kind === 'helper' ? m.senderId : kind === 'moderator' ? 'moderator' : null,
-      who: kind === 'you' ? 'You' : kind === 'moderator' ? 'Moderator' : (p ? (p.name || p.role) : m.senderName || 'Helper'),
+      who: kind === 'you' ? 'You' : kind === 'system' ? 'Room' : kind === 'moderator' ? 'Moderator' : (p ? (p.name || p.role) : m.senderName || 'Helper'),
       seat: p ? seatOf(run, p.id) : 0, persona: p ? (p.effectivePersona || p.requestedPersona) : '',
       when: when(m.createdAt), body: String(m.body || ''), chapter: ch, replyTo: reply, promotable: false, pinned: false,
       steered: kind === 'you' && !!m.roomSteer, readNote: note,
@@ -72808,11 +73094,12 @@ window.PM56_B19DEMO={start:flow=>start(E.ctx(),flow),snapshot:()=>{const r=curre
     var s = run.chatRoom, hooks = { msgKey: 'room-msg-', promoteAction: 'room-promote', goal: false, legacy: false };
     var live = run.status === 'running', pol = policyOf(s.turnPolicy || (run.config || {}).turnPolicy);
     var max = pol.value === 'ask_everyone_once' ? 1 : +((run.config || {}).maxRounds || 1);
-    var list = run.messages.filter(function (m) { return m.senderKind !== 'system'; });
+    /* the room's own plain lines (Paused, Pause between rounds is on/off…) stay in the script, in their round */
+    var list = run.messages.slice();
     var chs = chapters(run, list);
     var msgs = list.map(function (m, i) {
       var v = msgOf(run, m, chs[i], hooks);
-      v.promotable = v.kind !== 'you' && v.kind !== 'wonderer' && !!v.body.trim() && ['running', 'completed'].indexOf(run.status) >= 0;
+      v.promotable = v.kind !== 'you' && v.kind !== 'wonderer' && v.kind !== 'system' && !!v.body.trim() && ['running', 'completed'].indexOf(run.status) >= 0;
       return v;
     });
     var round = s.round ? { number: s.round.number, complete: !!s.round.complete, total: s.round.participantIds.length, spoken: s.round.messages.length } : null;
@@ -72837,19 +73124,22 @@ window.PM56_B19DEMO={start:flow=>start(E.ctx(),flow),snapshot:()=>{const r=curre
     /* E-18: Message works while the room runs (a mid-round send is queued for the next round, never refused) */
     var controls = { primary: null, secondary: [], message: null };
     if (live) {
-      /* DL-218: round 1 waits for your Confirm (Grill Me) and for the Wonderer's first pass, and says so */
-      var rg = !s.round && window.PM56_ROOM && window.PM56_ROOM.roundGate ? window.PM56_ROOM.roundGate(run) : null;
-      if (!s.round && rg) controls.primary = { action: 'collab-room-next-round', label: COPY.ask.label, disabled: true, code: rg, cmd: 'cmd.chat_room.next_round',
-        reason: 'Round 1 waits until you confirm what you agreed with the Moderator.' };
-      else if (!s.round) controls.primary = { action: 'collab-room-next-round', label: COPY.ask.label, helper: COPY.ask.helper, cmd: 'cmd.chat_room.next_round' };
-      else if (roundGoing) controls.primary = { action: 'collab-room-next-round', label: COPY.next.label, disabled: true, reason: refusal('round_incomplete'), code: 'round_incomplete', cmd: 'cmd.chat_room.next_round' };
-      else if (summaryCurrent) {
-        controls.primary = { action: 'room-finish', label: COPY.end.label, helper: COPY.end.helper, cmd: 'cmd.chat_room.end' };
-        if (left) controls.secondary.push({ action: 'collab-room-next-round', label: COPY.next.label + ' (' + (s.roundsSoFar + 1) + ' of ' + max + ')' });
-      } else if (left) {
-        controls.primary = { action: 'collab-room-next-round', label: COPY.next.label + ' (' + (s.roundsSoFar + 1) + ' of ' + max + ')', helper: COPY.next.helper, cmd: 'cmd.chat_room.next_round' };
-        controls.secondary.push({ action: 'collab-room-summarize', label: COPY.summarize.label });
-      } else controls.primary = { action: 'collab-room-summarize', label: COPY.summarize.label, helper: COPY.summarize.helper, cmd: 'cmd.chat_room.summarize' };
+      /* automatic rounds (Jared, 2026-10-21): round 1 opens with Start (after Grill Me's Confirm when it is on), and each
+         round starts the next by itself, so no control starts a round while they run. The room's controls appear where
+         it waits for you (R.waitsFor): Pause between rounds on, a summary you asked for, your message, or the last
+         round ("This room used all its rounds": Summarize Now, Add 2 more rounds, End discussion, DL-138). While the
+         rounds run, Summarize Now and End discussion are there at any time and act when the round ends. */
+      var why = R.waitsFor ? R.waitsFor(run) : null, recordedRoom = C.provenance ? C.provenance(run.id) === 'recorded' : true;
+      var nextBtn = function (p) { return { action: 'collab-room-next-round', label: COPY.next.label + ' (' + (s.roundsSoFar + 1) + ' of ' + max + ')', helper: p ? COPY.next.helper : '', cmd: 'cmd.chat_room.next_round' }; };
+      var addMore = { action: 'room-add-rounds', label: COPY.more.label, disabled: recordedRoom, reason: recordedRoom ? 'This recording has no replies past round ' + max + '.' : '' };
+      var sumBtn = { action: 'collab-room-summarize', label: COPY.summarize.label, helper: COPY.summarize.helper, cmd: 'cmd.chat_room.summarize' };
+      var endBtn = { action: 'room-finish', label: COPY.end.label, helper: COPY.end.helper, cmd: 'cmd.chat_room.end' };
+      if (!s.round) { /* round 1 opens by itself: nothing to press */ }
+      else if (!why) { if (!summaryCurrent) controls.secondary.push(sumBtn); controls.secondary.push(endBtn); }
+      else if (why === 'summed') { controls.primary = endBtn; controls.secondary.push(nextBtn(false)); }
+      else if (why === 'between' || why === 'message') { controls.primary = nextBtn(true); controls.secondary.push(sumBtn, endBtn); }
+      else if (summaryCurrent) { controls.primary = endBtn; if (pol.value !== 'ask_everyone_once') controls.secondary.push(addMore); }
+      else { controls.primary = sumBtn; if (pol.value !== 'ask_everyone_once') controls.secondary.push(addMore); controls.secondary.push(endBtn); }
       controls.message = { action: 'collab-message', label: COPY.message };
     }
     /* E-18: the messages queued above the composer, shown here as words only (Edit and Send now live once, there) */
@@ -72886,7 +73176,10 @@ window.PM56_B19DEMO={start:flow=>start(E.ctx(),flow),snapshot:()=>{const r=curre
     var live = run.status === 'running' && !waiting, left = (s.roundsSoFar || 0) < max;
     var controls = { primary: null, secondary: [], message: null };
     if (live) {
-      controls.primary = left ? { action: 'collab-room-next-round', label: COPY.next.label + ' (' + ((s.roundsSoFar || 0) + 1) + ' of ' + max + ')', helper: COPY.next.helper, cmd: 'cmd.chat_room.next_round' }
+      /* a seed room with Pause between rounds on waits between rounds (Next Round); otherwise its rounds run by themselves
+         and only the last one leaves you a move */
+      var waitsHere = !left || !!(run.config || {}).pauseBetweenRounds;
+      if (waitsHere) controls.primary = left ? { action: 'collab-room-next-round', label: COPY.next.label + ' (' + ((s.roundsSoFar || 0) + 1) + ' of ' + max + ')', helper: COPY.next.helper, cmd: 'cmd.chat_room.next_round' }
         : { action: 'collab-room-summarize', label: COPY.summarize.label, helper: COPY.summarize.helper, cmd: 'cmd.chat_room.summarize' };
       if (left) controls.secondary.push({ action: 'collab-room-summarize', label: COPY.summarize.label });
       controls.message = { action: 'collab-message', label: COPY.message };
@@ -72940,6 +73233,9 @@ window.PM56_B19DEMO={start:flow=>start(E.ctx(),flow),snapshot:()=>{const r=curre
     return now - seen[id] < 700;
   }
   function entry(vm, m) {
+    /* the room's own plain line (Paused, Pause between rounds is on…): no speaker, no actions */
+    if (m.kind === 'system') return { key: m.key, mid: m.id, markHtml: g('ring', 14), who: '<span class="pmx-rv-sysw">' + esc(m.who) + '</span>', when: esc(m.when), cls: 'pmx-rv-msg pmx-rv-sys',
+      attrs: ' data-room-message="' + esc(m.id) + '" data-who="system"', bodyHtml: '<p class="pmx-rv-sysline">' + esc(m.body) + '</p>' };
     var reply = m.replyTo ? '<p class="pmx-rv-reply">' + g('quote', 12) + '<span>' + COPY.toYou + ': “' + esc(m.replyTo) + '”</span></p>' : '';
     if (m.readNote) reply += '<p class="pmx-rv-reply" data-room-read-note="1">' + g('quote', 12) + '<span>' + COPY.readNote + ': “' + esc(m.readNote) + '”</span></p>';
     if (m.steered) reply += '<p class="pmx-rv-reply" data-room-steered="1">' + g('send', 12) + '<span>' + COPY.steered + '</span></p>';
@@ -73013,10 +73309,19 @@ window.PM56_B19DEMO={start:flow=>start(E.ctx(),flow),snapshot:()=>{const r=curre
       out = '<b>Finished</b> · ' + plural(vm.roundsSoFar, 'round') + ' · ' + (kept || 'nothing kept yet');
     } else if (vm.speaking) out = '<b>Round ' + vm.round.number + ' of ' + vm.maxRounds + '</b> · ' + esc(vm.speaking.name) + ' is speaking' + (vm.upNext ? ' · Up next: ' + esc(vm.upNext.name) : '') + '.';
     else if (vm.round && !vm.round.complete) out = '<b>Round ' + vm.round.number + ' of ' + vm.maxRounds + '</b> · The helpers are answering.';
+    else if (vm.roundsSoFar && vm.source === 'protocol') {
+      /* the room waits for you only where it says "Your move"; otherwise the next round is starting by itself */
+      var why = R.waitsFor ? R.waitsFor(run) : null, summed = !!(vm.summary && vm.summary.current);
+      out = why === 'last' ? '<b>This room used all its rounds</b> · ' + (summed ? 'The Moderator summed it up. ' : '') + 'Your move.'
+        : why === 'summed' ? '<b>Round ' + vm.roundsSoFar + ' done</b> · The Moderator summed it up. Your move.'
+        : why === 'message' ? '<b>Round ' + vm.roundsSoFar + ' done</b> · Your message is with the room. Your move.'
+        : why === 'between' ? '<b>Round ' + vm.roundsSoFar + ' done</b> · Pause between rounds is on. Your move.'
+        : '<b>Round ' + vm.roundsSoFar + ' done</b> · ' + (run.chatRoom.after || (vm.policy.value === 'ask_everyone_once' && !summed) ? 'The Moderator is summing up.' : 'Round ' + (vm.roundsSoFar + 1) + ' starting.');
+    }
     else if (vm.summary && vm.summary.current && vm.roundsSoFar) out = '<b>Round ' + vm.roundsSoFar + ' done</b> · The Moderator summed it up. Your move.';
-    else if (vm.roundsSoFar) out = '<b>Round ' + vm.roundsSoFar + ' done</b> · Your move.';
+    else if (vm.roundsSoFar) out = vm.controls.primary ? '<b>Round ' + vm.roundsSoFar + ' done</b> · Your move.' : '<b>Round ' + vm.roundsSoFar + ' done</b> · Round ' + (vm.roundsSoFar + 1) + ' starting.';
     else if (st === 'running' && WG() && run && WG().holds(run)) out = '<b>Your move</b> · The Moderator is grilling you before round 1.';
-    else if (st === 'running') out = '<b>Your move</b> · ' + COPY.firstMove;
+    else if (st === 'running') out = '<b>Starting</b> · ' + COPY.firstMove;
     else out = '<b>Not started</b> · ' + plural(vm.team.length, 'helper') + ' · ' + esc(vm.policy.label) + '.';
     return '<span class="room-meta pmx-rv-say">' + out + '</span>' + (vm.recorded ? '<span class="pmx-rv-prov">' + g('play-ring', 13) + '<span>' + COPY.recorded + '</span></span>' : '');
   }
@@ -73025,11 +73330,13 @@ window.PM56_B19DEMO={start:flow=>start(E.ctx(),flow),snapshot:()=>{const r=curre
      room's own Message stands in for the frame's. */
   function actionsHtml(vm, generic) {
     var c = vm.controls, p = c.primary, out = generic && generic.actions != null ? String(generic.actions) : '';
-    c.secondary.forEach(function (a) { out += '<button type="button" class="text-button" data-action="' + a.action + '"' + runAttr(vm) + '>' + esc(a.label) + '</button>'; });
+    var why2 = [];
+    c.secondary.forEach(function (a) { out += '<button type="button" class="text-button" data-action="' + a.action + '"' + runAttr(vm) + (a.disabled ? ' disabled' : '') + '>' + esc(a.label) + '</button>'; if (a.disabled && a.reason) why2.push(a.reason); });
     if (c.message && !(generic && generic.actions != null)) out += '<button type="button" class="text-button" data-action="' + c.message.action + '"' + runAttr(vm) + '>' + c.message.label + '</button>';
     if (p) out += '<button type="button" class="primary-button" data-action="' + p.action + '"' + runAttr(vm) + (p.disabled ? ' disabled data-failure="' + esc(p.code || '') + '"' : '') + '>' + esc(p.label) + '</button>';
     var say = p ? (p.disabled ? p.reason : p.helper) : '';
-    return (out ? '<div class="room-controls pmx-rv-controls">' + out + '</div>' : '') + (say ? '<p class="' + (p && p.disabled ? 'pmx-reason' : 'pmx-help') + ' pmx-rv-acthelp">' + esc(say) + '</p>' : '');
+    return (out ? '<div class="room-controls pmx-rv-controls">' + out + '</div>' : '') + (say ? '<p class="' + (p && p.disabled ? 'pmx-reason' : 'pmx-help') + ' pmx-rv-acthelp">' + esc(say) + '</p>' : '') +
+      why2.map(function (w) { return '<p class="pmx-reason pmx-rv-acthelp">' + esc(w) + '</p>'; }).join('');
   }
   function aside(vm) {
     var mod = vm.moderator;
@@ -73047,7 +73354,7 @@ window.PM56_B19DEMO={start:flow=>start(E.ctx(),flow),snapshot:()=>{const r=curre
       : grill ? '<li class="pmx-rv-grill">' + S.pmxGlyph('grill', 16) + '<span><b>Grill Me</b> is on<small>It adds nobody: the Moderator questions you before round 1.</small></span></li>' : '';
     if (!live && grill) rows += sw;
     return '<p class="pmx-fine pmx-rv-asidehead">' + COPY.table + '</p><ul class="pmx-rv-table">' + rows + '</ul>' +
-      '<p class="pmx-rv-policy"><b>' + esc(vm.policy.label) + '</b> · up to ' + plural(vm.maxRounds, 'round') + '</p>' + (live ? sw : '') +
+      '<p class="pmx-rv-policy"><b>' + esc(vm.policy.label) + '</b> · up to ' + plural(vm.maxRounds, 'round') + '</p>' + (run && R.pauseSwitch ? R.pauseSwitch(run, 'view') : '') + (live ? sw : '') +
       '<p class="pmx-rv-promise">' + g('not', 14) + '<span>' + COPY.promise + '</span></p>' +
       (vm.source === 'protocol' ? '<button type="button" class="text-button pmx-rv-export" data-action="room-export"' + runAttr(vm) + '>' + g('download', 14) + '<span>' + COPY.download + '</span></button>' : '');
   }
@@ -73095,7 +73402,7 @@ window.PM56_B19DEMO={start:flow=>start(E.ctx(),flow),snapshot:()=>{const r=curre
       var guide = demos() && demos().editorGuide ? demos().editorGuide(run.id) : '';
       main = guide + pinnedSummary(vm) + '<div class="pmx-rv-scriptwrap">' + script(vm) + '</div>' + (WG() ? WG().section(run) : '');
     }
-    var mess = vm.messages.length;
+    var mess = vm.messages.filter(function (m) { return m.kind !== 'system'; }).length;
     return {
       title: esc(isRoomDoc(ctx) && vm.source === 'legacy' ? bareTitle(run.title) : run.title), kindWord: COPY.kind,
       status: statusHtml(vm), actions: actionsHtml(vm, generic || {}), plate: plateOf(run, vm),
@@ -74261,8 +74568,12 @@ window.PM56_B19DEMO={start:flow=>start(E.ctx(),flow),snapshot:()=>{const r=curre
  * you before round 1; and a Deep Plan where the assistant grills you (APR-072). Everything is pre-written: no provider,
  * network or native call. Each flow drives the real owners (crew-protocol.js, room-protocol.js, the lead engine and the
  * Grill Me engine through PM56_WG), one step at a time on a 450 ms tick that waits whenever the next move is yours
- * (answering a round, Confirm, Check it), and a guide in the dock narrates the next step and can take it for you
- * ("Do this step" presses the same control you would). */
+ * (answering a round, Confirm).
+ * Playback (2026-10-21, Jared: recorded examples should play on their own): each example plays from Start, paced so
+ * every decision stays on screen long enough to read, and stops only where the real product waits for you: the Ask
+ * Card and What we agreed's Confirm, the room's end-of-rounds wait, and the end. The room opens round 1 by itself once
+ * you confirm and runs its rounds one after another (room-protocol.js, AUTOMATIC ROUNDS). The guide narrates what is happening
+ * and what comes next and names the control on screen; it never takes a step for you (wg-demo-step stays a QA hook). */
 (function () {
   'use strict';
   var E = window.PM56_EXT; if (!E || !E.slot) return;
@@ -74273,6 +74584,9 @@ window.PM56_B19DEMO={start:flow=>start(E.ctx(),flow),snapshot:()=>{const r=curre
   function clone(x) { return JSON.parse(JSON.stringify(x)); }
   function ms(v) { var K = window.PM56_CLOCK; return K && K.ms ? K.ms(v) : v; }
   var active = null, serial = 0, timer = 0;
+  /* the pace: the Crew's recorded steps were written at a quick 300-1800 ms; PACE stretches each so a decision, a claim
+     or a delivery stays on screen long enough to read (motion time, so a test can run it faster) */
+  var PACE = 2.8, ROOM_DECIDE_MS = 2600;
 
   var flows = {
     crew: { label: 'A Crew that grills you first, with a Wonderer alongside', detail: 'Grill Me before the split → leads decided as they arrive → pass 2 queues for a slot → one later decision gates only the export' },
@@ -74503,12 +74817,15 @@ window.PM56_B19DEMO={start:flow=>start(E.ctx(),flow),snapshot:()=>{const r=curre
     if (hasW(r)) wg.pump(r);
     /* the Wonderer explores alongside, from the start */
     if (passOf(r, 0) && passOf(r, 0).status === 'exploring' && at('pass1', 2600)) { if (!deliverPass(r, 0).ok) return fail('pass_1'); render(); return; }
-    if (wg.holds(r) || r.status === 'paused') return;
+    /* Pause holds the script; after Resume the current step waits its full time again */
+    if (r.status === 'paused') { active.wasPaused = true; return; }
+    if (active.wasPaused) { active.wasPaused = false; if (active.at) delete active.at['step' + active.step]; }
+    if (wg.holds(r)) return;
     /* a later session gates only its own step: everything else in the script keeps going */
     if (r.status !== 'running') { if (r.status === 'completed') stop(); return; }
     var steps = active.steps || (active.steps = crewScript(r));
     var st = steps[active.step]; if (!st) { stop(); return; }
-    if (st.wait && !at('step' + active.step, st.wait)) return;
+    if (st.wait && !at('step' + active.step, st.wait * PACE)) return;
     var out = st.run(r, W, wg);
     if (out === 'later') return;
     if (out && out.ok === false) {
@@ -74613,7 +74930,7 @@ window.PM56_B19DEMO={start:flow=>start(E.ctx(),flow),snapshot:()=>{const r=curre
     /* the Moderator decides each lead as it arrives, between turns: every lead of a pass on the tick it lands, so no
        lead is still undecided when the room is summed up (m1) */
     var und = w.leads.filter(function (l) { return !l.disposition && wg.engine.visible(r, l.passId) && ROOM_DECIDE[l.id]; });
-    if (und.length && at('decide:' + und[0].passId, 700)) {
+    if (und.length && at('decide:' + und[0].passId, ROOM_DECIDE_MS)) {
       for (var i = 0; i < und.length; i++) {
         var l = und[i], x = ROOM_DECIDE[l.id], res = wg.dispose(r, l.id, x[0], x[1]); if (!res.ok) return fail(res.error);
         say(r, 'Lead ' + l.n + ': ' + ({ explore: 'explore', use: 'use', set_aside: 'set aside' })[x[0]] + '. ' + x[1] + (x[0] === 'explore' ? ' Engineering checks it in round 2.' : ''));
@@ -74697,7 +75014,7 @@ window.PM56_B19DEMO={start:flow=>start(E.ctx(),flow),snapshot:()=>{const r=curre
       P.all()[pid] = tpl;
       c.appendMessage({ id: tid + '-plan', role: 'system', type: 'plan-card-v2', planId: pid, time: new Date().toISOString() }, t);
       active.planId = pid; render();
-    }, ms(1200));
+    }, ms(2800));
   }
 
   /* ================================================================ the tick and the guide */
@@ -74725,14 +75042,14 @@ window.PM56_B19DEMO={start:flow=>start(E.ctx(),flow),snapshot:()=>{const r=curre
     if (flow !== 'deepplan' && !r) return { text: 'Set up the ' + (flow === 'crew' ? 'Crew' : 'room') + ': the Wonderer and Grill Me are already on. Press Start.', act: { action: 'wg-demo-configure', label: 'Set it up' } };
     if (s && s.status === 'grilling') {
       var rd = wg.grill.round(s), only = s.later ? ' Only ' + (s.gateLabel || 'that step') + ' waits; everything else keeps going.' : '';
-      return rd ? { text: (s.later ? 'A later decision: ' + lead + ' is grilling you before ' + (s.gateLabel || 'the next step') + '. ' : 'Round ' + rd.n + ': ' + lead + ' is grilling you. ') + 'Each answer is filled in with the recommended one; it counts once you send or accept the round. Change any, say Not sure, or accept them all.' + only + (rd.n === 1 && !s.later && s.routed.length ? ' A fact it can look up is being researched, not asked.' : ''), act: { action: 'wg-open-round', label: c.state.decision ? '' : (s.later ? 'Answer it' : 'Answer round ' + rd.n), data: { key: key } } }
+      return rd ? { text: (s.later ? 'A later decision: ' + lead + ' is grilling you before ' + (s.gateLabel || 'the next step') + '. ' : 'Round ' + rd.n + ': ' + lead + ' is grilling you. ') + 'Your move: answer on the Ask Card. Each answer is filled in with the recommended one; it counts once you send or accept the round. Change any, say Not sure, or accept them all.' + only + (rd.n === 1 && !s.later && s.routed.length ? ' A fact it can look up is being researched, not asked.' : ''), act: { action: 'wg-open-round', label: c.state.decision ? '' : (s.later ? 'Answer it' : 'Answer round ' + rd.n), data: { key: key } } }
         : { text: lead.charAt(0).toUpperCase() + lead.slice(1) + ' is looking a fact up. Every question left depends on it, so the session waits rather than ending early. Nothing for you yet.' };
     }
-    if (s && s.status === 'agreeing') return { text: endedWords(s) + ' ' + (s.later ? 'Only ' + (s.gateLabel || 'that step') + ' waits for it.' : flow === 'crew' ? 'The split waits for it.' : flow === 'room' ? 'Round 1 waits for it.' : 'The plan isn’t written until then.'), act: { action: 'wg-confirm', label: 'Confirm', data: { key: key } } };
+    if (s && s.status === 'agreeing') return { text: endedWords(s) + ' ' + (s.later ? 'Only ' + (s.gateLabel || 'that step') + ' waits for it; the rest keeps going.' : flow === 'crew' ? 'The split waits for it, then the Crew plays on.' : flow === 'room' ? 'Round 1 opens once you confirm.' : 'The plan isn’t written until then.'), act: { action: 'wg-confirm', label: 'Confirm', data: { key: key } } };
     if (flow === 'deepplan') return a.planId ? { text: 'The plan is written from what you agreed. Nothing has been built. Open it from its card.', replay: true } : { text: 'Writing the plan from what you agreed.' };
     var w = wg.engine.state(r), c2 = wg.counts(r);
     if (flow === 'crew') {
-      if (r.status === 'completed') return { text: 'Done. Open the Crew’s panel: the result lists ' + (w ? 'every Wonderer lead and what the Crew did with it.' : 'what each part did.'), act: { action: 'crew-open-work', label: 'Open Panel', data: { run: r.id } }, replay: true };
+      if (r.status === 'completed') return { text: 'Done. Open Panel on the card: the result lists ' + (w ? 'every Wonderer lead and what the Crew did with it.' : 'what each part did.'), replay: true };
       if (r.grillPending) return { text: 'Grill Me is on now. The Coordinator questions you at the next assignment; the parts already running keep going.' };
       var q = w && w.passes.filter(function (x) { return x.status === 'queued'; })[0], x = w && w.passes.filter(function (y) { return y.n > 1 && y.status === 'exploring'; })[0];
       if (q) return { text: who(q) + ' asked the Wonderer for pass ' + q.n + '. Both slots are busy, so it is queued behind the parts: the team keeps working, and the final result waits for it.' };
@@ -74744,28 +75061,33 @@ window.PM56_B19DEMO={start:flow=>start(E.ctx(),flow),snapshot:()=>{const r=curre
     var cr = r.chatRoom;
     if (r.status === 'completed') return { text: 'The room ended. ' + (w ? 'Its summary lists every lead, with what the room did with it or “not taken up”.' : 'Nothing became a To-Do or Plan by itself.'), replay: true };
     if (r.grillPending) return { text: 'Grill Me is on now. The Moderator questions you before the next round; this round goes on.' };
-    if (!cr.roundsSoFar && !(cr.round && !cr.round.complete)) return { text: 'Start round 1. ' + (w ? 'It doesn’t wait for the Wonderer: its leads join the room between turns when they are ready, and it never takes a turn.' : 'Each helper speaks once.'), act: { action: 'collab-room-next-round', label: 'Start round 1', data: { run: r.id } } };
-    if (cr.round && !cr.round.complete) return { text: w && c2.total ? 'The Wonderer’s leads joined between turns, and the Moderator decides each one as it arrives. A reply that takes up a lead links to it.' : w ? 'Each helper speaks once. The Wonderer is still exploring alongside.' : 'Each helper speaks once.' };
+    if (!cr.roundsSoFar && !(cr.round && !cr.round.complete)) return { text: 'The room is starting. Round 1 opens in a moment.', act: { action: 'collab-room-next-round', label: 'Start round 1', data: { run: r.id } } };
+    /* lead 3 (M3): once the Moderator has decided it, the guide says what Check it would do; the rounds go on by
+       themselves, so it is said during round 1, never as a step the room waits for */
+    var r3 = w && wg.engine.lead(r, 'r3'), why = window.PM56_ROOM && window.PM56_ROOM.waitsFor ? window.PM56_ROOM.waitsFor(r) : null;
+    var r3say = r3 && !r3.research && r3.disposition ? ' The Moderator ' + (r3.disposition.kind === 'set_aside' ? 'set lead 3 aside' : r3.disposition.kind === 'use' ? 'is using lead 3 as a hypothesis' : 'chose to explore lead 3') + '; Check it on that lead’s row sends it to research anyway, and only you can do that. Design checks it in round 2.' : '';
+    if (cr.round && !cr.round.complete) return { text: (w && c2.total ? 'Round ' + cr.round.number + ': the Wonderer’s leads joined between turns, and the Moderator decides each one as it arrives. A reply that takes up a lead links to it.' : w ? 'Round ' + cr.round.number + ': each helper speaks once. The room doesn’t wait for the Wonderer: its leads join between turns when they are ready, and it never takes a turn.' : 'Round ' + cr.round.number + ': each helper speaks once.') + (cr.round.number === 1 ? r3say : ''), act: r3say && cr.round.number === 1 ? { action: 'wg-check-it', label: 'Check lead 3', data: { run: r.id, lead: 'r3' } } : null };
     var undecided = w ? w.leads.filter(function (l) { return !l.disposition && wg.engine.visible(r, l.passId); }).length : 0;
     if (cr.roundsSoFar === 1) {
-      /* the guide reads lead 3's real state before it says what the Moderator did with it (M3) */
-      var r3 = w && wg.engine.lead(r, 'r3');
-      if (r3 && !r3.research && r3.disposition) return { text: 'The Moderator ' + (r3.disposition.kind === 'set_aside' ? 'set lead 3 aside' : r3.disposition.kind === 'use' ? 'is using lead 3 as a hypothesis' : 'chose to explore lead 3') + '. Check it sends it to research anyway: only you can do that.', act: { action: 'wg-check-it', label: 'Check lead 3', data: { run: r.id, lead: 'r3' } } };
-      if (r3 && !r3.disposition && !r3.research) return { text: 'The Moderator decides lead 3 as it arrives. You can Check any lead now, whatever the room decides.' };
-      return { text: 'Start round 2' + (w ? ': Engineering checks the explored lead' + (r3 && r3.research && r3.research.via === 'check_it' ? ', and Design checks the one you sent.' : '.') : '.'), act: { action: 'collab-room-next-round', label: 'Start round 2', data: { run: r.id } } };
+      /* round 2 starts by itself after a short beat; with Pause between rounds on, the room waits for Next Round */
+      var r2 = 'Round 1 is done.' + (w ? ' In round 2 Engineering checks the explored lead' + (r3 && r3.research && r3.research.via === 'check_it' ? ', and Design checks the one you sent.' : '.') : '');
+      if (why === 'between' || why === 'message') return { text: r2 + ' Pause between rounds is on, so the room waits for you: press Next Round on the card for round 2.' + r3say, act: r3say ? { action: 'wg-check-it', label: 'Check lead 3', data: { run: r.id, lead: 'r3' } } : { action: 'collab-room-next-round', label: 'Start round 2', data: { run: r.id } } };
+      return { text: r2 + ' Round 2 starts by itself in a moment.' };
     }
     if (cr.roundsSoFar === 2 && !cr.summary) {
       /* the guide waits the moment it takes the Moderator to decide what just arrived, so the summary it offers lists
          every lead with its decision (m1); Summarize Now on the card is never blocked */
       if (undecided) return { text: 'The Moderator is deciding the last ' + (undecided === 1 ? 'lead' : undecided + ' leads') + ' as they arrive; the summary comes next. Nothing waits on a lead: Summarize Now on the card works at any time.' };
-      return { text: 'Sum it up: the summary lists every lead' + (w ? ', each with what the room did with it.' : '.') + ' Nothing waits on a lead.', act: { action: 'collab-room-summarize', label: 'Summarize Now', data: { run: r.id } } };
+      return { text: 'That was the last round, so the room waits for you now: press Summarize Now on the card. The summary lists every lead' + (w ? ', each with what the room did with it.' : '.') + ' Nothing waits on a lead.', act: { action: 'collab-room-summarize', label: 'Summarize Now', data: { run: r.id } } };
     }
-    return { text: 'End the discussion. Nothing becomes a To-Do or Plan by itself.', act: { action: 'room-finish', label: 'End discussion', data: { run: r.id } } };
+    return { text: 'The Moderator summed it up. Press End discussion on the card when you are done. Nothing becomes a To-Do or Plan by itself.', act: { action: 'room-finish', label: 'End discussion', data: { run: r.id } } };
   }
+  /* the guide narrates; its only buttons are Set it up before Start (the sheet, if you closed it) and Replay. Where the
+     example waits for you, its words name the control on screen; step().act stays for the wg-demo-step QA hook */
   function guide(c) {
     if (!active || c.state.selectedThread !== active.threadId || c.state.dialog) return '';
     var st = step(c), acts = [];
-    if (st.act && st.act.label) acts.push({ action: 'wg-demo-step', label: st.act.label === 'Confirm' ? 'Confirm' : 'Do this step' });
+    if (st.act && st.act.action === 'wg-demo-configure') acts.push({ action: 'wg-demo-configure', label: st.act.label });
     if (st.replay) acts.push({ action: 'wg-demo-replay', label: 'Replay' });
     return S().pmxGuide({ key: 'wg-demo-guide', cls: 'wg-demo-guide', placement: 'dock', step: c.esc(st.text), actions: acts, close: { action: 'wg-demo-close', label: 'Close the example' } });
   }
