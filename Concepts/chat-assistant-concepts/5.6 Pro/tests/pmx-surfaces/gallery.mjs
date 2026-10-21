@@ -128,8 +128,10 @@ export function galleryInPage() {
         control: S.pmxStepper({ key: 'g-step', input: { attrs: 'data-collab-input="cfg-parallelism"', key: 'cfg-parallelism' }, value: 3, min: 1, max: 8, cap: CAP, unit: 'at once', affects: 'parallel' }) });
     var side = S.pmxQuestion({ key: 'g-q3', n: 3, title: 'How should they work together?', body: how }) +
       S.pmxShelf({ key: 'g-shelf', n: 4, title: 'Add specialists', items: [
-        { key: 'sp-w', mark: mark('wonderer', 5, 22), name: 'Wonderer', helper: 'Ideas from other fields, marked hypothesis. Doesn\u2019t vote.', state: 'off', input: { attrs: 'data-collab-input="wonderer"' }, affects: 'wonderer' },
-        { key: 'sp-g', mark: mark('grill', 4, 22), name: 'Grill Me', helper: 'Asks you the key decisions first, with suggested answers.', state: 'off', input: { attrs: 'data-collab-input="grillMe"' }, affects: 'grill' }] }) +
+        { key: 'sp-w', mark: mark('wonderer', 7, 22), name: 'Wonderer', helper: 'Explores around the topic and hands its ideas to the team to weigh. Never votes.', state: 'off', input: { attrs: 'data-collab-input="wonderer"' }, affects: 'wonderer' },
+        /* DL-218: Grill Me is a switch (no seat, no row, no model); on, it names who questions you first */
+        { key: 'sp-g', mark: '<span class="pmx-spec-glyph" style="--nx-ink:var(--pmx-seat-lead)">' + S.pmxGlyph('grill', 22) + '</span>', name: 'Grill Me', helper: 'The Coordinator questions you before it splits the job, round by round, with a recommended answer for each decision.', state: 'on', isSwitch: true, addWord: 'Turn on', removeWord: 'Turn off',
+          control: '<span class="pmx-spec-who">' + S.pmxMark({ role: 'coordinator', size: 18, grill: true }) + '<span>The Coordinator asks first</span></span>', input: { attrs: 'data-collab-input="grillMe"' }, affects: 'grill' }] }) +
       S.pmxPromises(S.pmxPromise({ key: 'pr1', glyph: 'lock', strong: 'Helpers can\u2019t do more than this chat', text: '(Agent, asks first).', part: 'permission' }) +
         S.pmxPromise({ key: 'pr2', glyph: 'not', strong: 'Crew Auto is off:', text: 'no Crew starts by itself. <button type="button" class="text-button" data-action="noop">Settings…</button>', part: 'auto' })) +
       S.pmxAdvancedEntry({ key: 'g-adv', summary: 'Stops after 45 min or $6.00 · same-provider stand-ins' });
@@ -202,8 +204,10 @@ export function galleryInPage() {
     var grid = function (html) { return '<div style="display:flex;flex-wrap:wrap;align-items:flex-start">' + html + '</div>'; };
     var glyphs = Object.keys(S.PMX_GLYPHS).map(function (n) { return cell(G(n, 20), id(n)); }).join('');
     var kinds = ['crew', 'crew-auto', 'chat_room', 'brainstorm', 'review', 'bsd', 'bsd-off', 'bsd-auto', 'bsd-on', 'schedule', 'build-at', 'scheduled', 'memory', 'teach', 'revert', 'eli5', 'defaults'].map(function (k) { return cell(S.pmxKindMark(k, 22), id(k)); }).join('');
-    var roles = ['coordinator', 'builder', 'checker', 'architect', 'product', 'adversarial', 'wonderer', 'grill', 'you', 'mystery'];
-    var sil = roles.map(function (r) { return cell(mark(r, 1, 28), id(r)); }).join('');
+    var roles = ['coordinator', 'builder', 'checker', 'architect', 'product', 'adversarial', 'wonderer', 'you', 'mystery'];
+    /* DL-218: Grill Me is no puppet of its own; the Coordinator or the Moderator stands behind the kettle */
+    var sil = roles.map(function (r) { return cell(mark(r, 1, 28), id(r)); }).join('') +
+      cell(S.pmxMark({ role: 'coordinator', size: 28, grill: true }), id('coordinator') + ' · Grill Me') + cell(S.pmxMark({ role: 'moderator', size: 28, grill: true }), id('moderator') + ' · Grill Me');
     var seats = [1, 2, 3, 4, 5, 6, 7, 8].map(function (s) { return cell(mark('builder', s, 28), 'seat ' + s); }).join('');
     var states = ['idle', 'queued', 'working', 'done', 'needs', 'failed', 'abstained', 'optional'].map(function (st) { return cell(mark('checker', 2, 28, st), st); }).join('') + cell(mark('builder', 3, 28, 'idle', true), 'stands in');
     var sizes = [18, 22, 28, 36].map(function (z) { return cell(mark('architect', 4, z), z + ' px'); }).join('');

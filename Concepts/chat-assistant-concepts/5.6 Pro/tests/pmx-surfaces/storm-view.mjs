@@ -6,15 +6,21 @@
    - storm:view-done        after Write the plan: "Plan ready", Open Plan (the one Plan is plans.js's);
    - storm:view-team / storm:view-conversation / storm:view-participant  the common tabs as BrainStorm renders them;
    - storm:evidence         the evidence document (G-26), "Source used in this BrainStorm · recorded example";
-   - storm:wonderer         Wonderer's ideas (G-26) with the core round played and one idea checked;
-   - storm:wonderer-chat    the Wonderer receipt in the transcript (ledger grammar) and the guide at its first step;
-   - storm:view-wonderer-wait  the run view while Wonderer's ideas still need a decision ("Decide on Wonderer's 3 ideas
-                            first", [Open Wonderer's ideas]; never "Ready" over a dead primary);
-   - storm:wonderer-guide   the Wonderer guide after one idea is decided ("2 ideas left. Decide on each: ...");
+   DL-218 (2026-10-16) and the steer of 2026-10-20: the Wonderer runs alongside and the team decides its leads;
+   Grill Me is a switch, so the Coordinator questions you before anyone drafts (steps in _wonderer.mjs):
+   - storm:wonderer         Wonderer's leads (G-26): three passes, every lead with the team's decision, its reason and
+                            who recorded it, and one lead you sent with Check it back from research;
+   - storm:wonderer-held    Wonderer's leads while the first pass is held until every blind proposal is in (paused);
+   - storm:wonderer-chat    one Wonderer card per pass in the chat, What we agreed confirmed, the guide at Write the plan;
+   - storm:view-wonderer-wait  the run view while the last pass is out: Write the plan waits with its reason, the
+                            Wonderer's section beside it (paused so it holds still; never "Ready" over a dead primary);
+   - storm:wonderer-guide   Grill Me before anyone drafts: the guide while the grilling round is open (the Ask Card
+                            itself is questions.js's, checked by questions-verify and wonderer-grill-verify);
    - storm:guide-failed     a rejected recorded step: the guide's failed sentence + Replay beside the card's failed face.
                             A rejected step cannot be reached through the controls, so this one surface makes the
                             protocol's normalize refuse (page-side stub, restored in after()).
    `canon` (A2-27a): the principle-10 names each state shows. */
+import { wondererRun, toWrite, pauseWhen, leave as leaveRun, QUIET_CHANGE } from './_wonderer.mjs';
 const DOC = '.bs-document';
 async function startRecording(h, flow) {
   await h.closeAll();
@@ -33,12 +39,6 @@ function view(id, title, then, extra = {}) {
     async open(h) { const run = await startRecording(h, extra.flow || 'synthesis'); await openView(h, run); if (then) await then(h, run); await h.settle(); },
     async after(h) { await leave(h); } }, extra);
 }
-async function wondererRun(h) {
-  await h.closeAll();
-  await h.action('b13-start', { flow: 'leads' }); await h.wait(900);
-  if (!(await h.clickVisible('#pmOverlayRoot [data-action="collab-modal-commit"]'))) throw new Error('no Start on the BrainStorm sheet');
-  await h.wait(500);
-}
 export default () => [
   view('storm:view-synthesis', 'BrainStorm run view, How they decided: ready to write the plan (8.4)', null),
   view('storm:view-constraint', 'BrainStorm run view: a rule beats the vote, the ruled-out option and its backers kept', null, { flow: 'constraint' }),
@@ -56,38 +56,35 @@ export default () => [
     await h.ev(() => { const d = document.querySelector('.bs-document details[data-bs-section="evidence"]'); if (d) d.open = true; }); await h.wait(150);
     if (!(await h.clickVisible(`${DOC} [data-action="brainstorm-open-evidence"]`))) throw new Error('no source link'); await h.wait(300);
   }),
-  { id: 'storm:wonderer', title: 'Wonderer’s ideas (G-26): the core round played, one idea checked', kind: 'view', tags: ['app', 'storm', 'view', 'wonderer'], canon: ['Wonderer', 'BrainStorm'],
+  { id: 'storm:wonderer', title: 'Wonderer’s leads (G-26, DL-218): three passes, each lead with the team’s decision and reason, one lead you checked', kind: 'view', tags: ['app', 'storm', 'view', 'wonderer'], canon: ['Wonderer', 'BrainStorm'],
     async open(h) {
-      await wondererRun(h);
-      await h.clickVisible('[data-action="b13-open"]'); await h.wait(300);
-      await h.clickVisible('[data-action="b13-core"]');
-      await h.clickVisible('[data-action="b13-research"][data-lead="fence"]');
-      await h.page.waitForFunction(() => { const r = window.PM56_BATCH13.currentRun(); return r && r.wonderer.leads[0].state === 'researched' && r.wonderer.corePlayback.status === 'completed'; }, null, { timeout: 20000 });
+      const run = await wondererRun(h);
+      await toWrite(h, { checkLead: true });
+      await h.action('b13-open', { run }); await h.wait(300);
       await h.settle();
     },
-    async after(h) { await leave(h); } },
-  { id: 'storm:wonderer-chat', title: 'The Wonderer receipt in the chat (ledger grammar, G-26)', kind: 'chat', tags: ['app', 'storm', 'chat', 'wonderer'], canon: ['Wonderer'], roots: '.b13-entry, .b13-guide',
-    async open(h) { await wondererRun(h); await h.settle(); },
-    async after(h) { await leave(h); } },
-  { id: 'storm:view-wonderer-wait', title: 'BrainStorm run view while Wonderer’s ideas wait for a decision', kind: 'view', tags: ['app', 'storm', 'view', 'wonderer'], canon: ['BrainStorm', 'Wonderer'],
+    change: QUIET_CHANGE, async after(h) { await leaveRun(h); } },
+  { id: 'storm:wonderer-held', title: 'Wonderer’s leads held until every blind proposal is in (the run paused while the helpers draft alone)', kind: 'view', tags: ['app', 'storm', 'view', 'wonderer'], canon: ['Wonderer', 'BrainStorm'],
     async open(h) {
       await wondererRun(h);
-      await h.clickVisible('[data-action="b13-open"]'); await h.wait(300);
-      await h.clickVisible('[data-action="b13-core"]');
-      await h.page.waitForFunction(() => { const r = window.PM56_BATCH13.currentRun(); return r && r.wonderer.corePlayback.status === 'completed'; }, null, { timeout: 20000 });
-      const run = await h.ev(() => window.PM56_BATCH13.currentRun().id);
+      const run = await pauseWhen(h, r => r.wonderer.passes[0] && r.wonderer.passes[0].status === 'held' && r.brainstorm.phase === 'blind_proposals');
+      await h.action('b13-open', { run }); await h.wait(300);
+      await h.settle();
+    },
+    change: QUIET_CHANGE, async after(h) { await leaveRun(h); } },
+  { id: 'storm:wonderer-chat', title: 'The Wonderer in the chat: one card per pass, What we agreed confirmed, the guide at Write the plan', kind: 'chat', tags: ['app', 'storm', 'chat', 'wonderer'], canon: ['Wonderer'], roots: '.b13-entry, .b13-guide, .wg-card, .wg-agreed',
+    async open(h) { await wondererRun(h); await toWrite(h); await h.settle(); },
+    change: QUIET_CHANGE, async after(h) { await leaveRun(h); } },
+  { id: 'storm:view-wonderer-wait', title: 'BrainStorm run view while the Wonderer’s last pass is out: Write the plan waits, with its reason (paused)', kind: 'view', tags: ['app', 'storm', 'view', 'wonderer'], canon: ['BrainStorm', 'Wonderer'],
+    async open(h) {
+      await wondererRun(h);
+      const run = await pauseWhen(h, r => r.brainstorm.phase === 'synthesis' && r.wonderer.passes[2] && r.wonderer.passes[2].status === 'exploring');
       await openView(h, run);
     },
-    async after(h) { await leave(h); } },
-  { id: 'storm:wonderer-guide', title: 'The Wonderer guide mid-way (one idea decided, two left)', kind: 'chat', tags: ['app', 'storm', 'chat', 'wonderer'], canon: ['Wonderer'], roots: '.b13-guide',
-    async open(h) {
-      await wondererRun(h);
-      await h.clickVisible('[data-action="b13-open"]'); await h.wait(300);
-      await h.ev(() => { const t = document.querySelector('[data-lead-id="fallback"] textarea'); t.value = 'I choose a reversible rollout.'; t.dispatchEvent(new Event('input', { bubbles: true })); });
-      await h.clickVisible('[data-action="b13-decide"][data-lead="fallback"][data-kind="user_decided"]'); await h.wait(300);
-      await h.settle();
-    },
-    async after(h) { await leave(h); } },
+    change: QUIET_CHANGE, async after(h) { await leaveRun(h); } },
+  { id: 'storm:wonderer-guide', title: 'Grill Me before anyone drafts: the guide while the Coordinator’s grilling round is open', kind: 'chat', tags: ['app', 'storm', 'chat', 'wonderer'], canon: ['Wonderer', 'Grill Me'], roots: '.b13-guide',
+    async open(h) { await wondererRun(h, { confirm: false }); await h.ev(() => window.PM56_CLOCK.setScale(1)); await h.settle(); },
+    change: QUIET_CHANGE, async after(h) { await leaveRun(h); } },
   { id: 'storm:guide-failed', title: 'A rejected recorded step: the failed card and the guide’s Replay', kind: 'chat', tags: ['app', 'storm', 'chat'], canon: ['BrainStorm'], roots: '.bs-demo-guide',
     async open(h) {
       await h.closeAll();

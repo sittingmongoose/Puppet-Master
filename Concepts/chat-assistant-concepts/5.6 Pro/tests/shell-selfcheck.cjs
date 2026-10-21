@@ -212,12 +212,13 @@ const B = (name, html) => { built.push([name, html]); return html; };
 
   const shelf = B('pmxShelf', X.pmxShelf({ key: 'sh', title: 'Add specialists', helper: 'Optional helpers', items: [
     { key: 'sp-w', mark: '<i>W</i>', name: 'Wonderer', helper: 'Ideas', state: 'off', input: { attrs: 'data-collab-input="wonderer"' } },
-    { key: 'sp-g', mark: '<i>G</i>', name: 'Grill Me', helper: 'Asks', state: 'on', input: { attrs: 'data-collab-input="grillMe"' }, control: '<i>CTRL</i>' },
+    { key: 'sp-g', mark: '<i>G</i>', name: 'Grill Me', helper: 'Asks', state: 'on', input: { attrs: 'data-collab-input="grillMe"' }, control: '<i>CTRL</i>', isSwitch: true, addWord: 'Turn on', removeWord: 'Turn off' },
     { key: 'sp-x', mark: '<i>X</i>', name: 'Other', state: 'disabled', reason: 'Not available in this preview yet.' }] }));
   pc('A8 pmxShelf head (canon title, Optional)', has(shelf, '<div class="pmx-shelf" data-k="sh"', '<h3 class="pmx-q-title">Add specialists</h3><span class="pmx-q-meta">Optional</span></header><p class="pmx-help">Optional helpers</p>'));
   pc('A8 off item: real checkbox inside the Add label', has(shelf, '<div class="pmx-spec" data-k="sp-w" data-state="off"', '<div class="pmx-spec-copy"><b>Wonderer</b><span class="pmx-help">Ideas</span></div>', '<label class="pmx-add"', '<input type="checkbox" class="pmx-add-input" data-collab-input="wonderer" data-pmx-harness>', '<span>Add</span></label>'));
-  pc('A8 on item: checked, Remove, control shown', has(shelf, 'data-k="sp-g" data-state="on"', '<input type="checkbox" class="pmx-add-input" data-collab-input="grillMe" checked data-pmx-harness>', '<span>Remove</span>', '<i>CTRL</i>'));
-  pc('A8 Add / Remove glyphs resolve (plus, minus; A2-09), no dashed square', !shelf.includes('pmx-glyph-missing') && has(shelf, 'data-app-icon="plus"', 'data-app-icon="minus"'));
+  /* DL-218: Grill Me is a switch (it adds nobody), so its item says Turn on / Turn off and is a role="switch" */
+  pc('A8 on switch item: checked, Turn off, a switch, control shown', has(shelf, 'data-k="sp-g" data-state="on" data-switch="1"', '<input type="checkbox" class="pmx-add-input" data-collab-input="grillMe" checked role="switch" aria-checked="true" data-pmx-harness>', '<span>Turn off</span>', '<i>CTRL</i>'));
+  pc('A8 Add / switch glyphs resolve (plus from the app table, ring-dot from PMX_GLYPHS; A2-09), no dashed square', !shelf.includes('pmx-glyph-missing') && has(shelf, 'data-app-icon="plus"', X.pmxGlyph('ring-dot', 13)) && !X.pmxGlyph('ring-dot', 13).includes('data-app-icon'));
   pc('A8 disabled item: the reason replaces Add', has(shelf, 'data-k="sp-x" data-state="disabled"', '<p class="pmx-reason">Not available in this preview yet.</p>') && !/data-k="sp-x"[^]*?pmx-add-input[^]*?<\/div><\/div>$/.test(shelf));
 
   const step = B('pmxStepper', X.pmxStepper({ key: 'st', input: { key: 'cfg-parallelism', attrs: 'data-collab-input="cfg-parallelism"' }, value: 3, min: 1, max: 8, cap: 2, capText: 'Your plan runs 2 at once.', unit: 'at once', affects: 'parallel' }));
@@ -566,11 +567,19 @@ const B = (name, html) => { built.push([name, html]); return html; };
      at the 8-helper limit with both specialists; a small team never gets one */
   const castSp = n => ({ key: 'cx', kind: 'crew', fitKey: 'cx-fit', hub: { key: 'cx-hub', role: 'coordinator', label: 'Coordinator' },
     seats: Array.from({ length: n }, (_, i) => ({ key: 'cx-s' + i, role: 'builder', seat: (i % 8) + 1, label: ['Builder', 'Checker', 'Tester', 'Docs writer', 'Integrator', 'Architect', 'Reviewer', 'Researcher'][i % 8] })),
-    wing: [{ key: 'cx-w', role: 'wonderer', seat: 1, label: 'Wonderer' }, { key: 'cx-g', role: 'grill', seat: 2, label: 'Grill Me' }], you: { label: 'You' }, caption: 'Words.' });
-  g17('F3-601 pmxCastPlate(spec, "wrap"): 8 helpers and both specialists on 2-3 rows, a fork from the hub and a join to You, at scale-1 widths', () => {
+    /* DL-218, F3-595: the wing holds the Wonderer only; Grill Me is the kettle at the hub */
+    wing: [{ key: 'cx-w', role: 'wonderer', seat: 7, label: 'Wonderer' }], you: { label: 'You' }, caption: 'Words.' });
+  g17('F3-601 pmxCastPlate(spec, "wrap"): 8 helpers and the Wonderer on 2-3 rows, a fork from the hub and a join to You, at scale-1 widths', () => {
     const h = X.pmxCastPlate(castSp(8), 'wrap'), t = /data-cast="wrap" data-tiers="([23])"/.exec(h), w = /viewBox="0 0 (\d+) /.exec(h);
-    return [!!t && !!w && +w[1] <= 576 && has(h, 'data-mode="wrap"', 'data-k="cx:wrap:fork"', 'data-k="cx:wrap:join"', 'data-k="cx:wrap:toyou"', 'data-k="cx-w"', 'data-k="cx-g"'), h.slice(0, 400)]; });
-  g17('F3-601 pmxCastFit: 8 helpers and both specialists still hold a drawing before the caption (the wrap); 2 helpers get no wrap', () => {
+    return [!!t && !!w && +w[1] <= 576 && has(h, 'data-mode="wrap"', 'data-k="cx:wrap:fork"', 'data-k="cx:wrap:join"', 'data-k="cx:wrap:toyou"', 'data-k="cx-w"'), h.slice(0, 400)]; });
+  g17('DL-218 Grill Me has no seat: the Coordinator stands behind the kettle at the hub in every mode', () => {
+    const withKettle = n => { const sp = castSp(n); sp.hub.grill = true; return sp; };
+    const modes = ['full', 'compact', 'strip', 'wrap'].map(m => X.pmxCastPlate(withKettle(m === 'wrap' ? 8 : 3), m)).filter(Boolean);
+    return [modes.length >= 3 && modes.every(h => /data-k="cx-hub"[^>]*>[\s\S]*?data-grill="1"/.test(h) && !/Grill Me/.test(h)), modes.map(h => h.slice(0, 120)).join(' | ')]; });
+  g17('DL-218 the kettle is the lead’s alone: crown or gavel behind it; any other role ignores grill', () => {
+    const c = X.pmxMark({ role: 'coordinator', grill: true, size: 28 }), m = X.pmxMark({ role: 'moderator', grill: true, size: 28 }), b = X.pmxMark({ role: 'builder', grill: true, size: 28 });
+    return [/data-grill="1"/.test(c) && /data-prop="crown"/.test(c) && /data-grill="1"/.test(m) && /data-prop="gavel"/.test(m) && !/data-grill/.test(b), [c, m, b].map(x => x.slice(0, 160)).join(' | ')]; });
+  g17('F3-601 pmxCastFit: 8 helpers and the Wonderer still hold a drawing before the caption (the wrap); 2 helpers get no wrap', () => {
     const big = X.pmxCastFit(castSp(8)), small = X.pmxCastFit(castSp(2));
     return [big.includes('data-cast="wrap"') && big.indexOf('data-cast="wrap"') < big.indexOf('data-mode="caption"') && !/--pmx-fit-min:40px/.test(big) && !small.includes('data-cast="wrap"'), big.slice(0, 300) + ' | ' + small.slice(0, 200)]; });
   g17('cycle 1 pmxPlateFit without a caption keeps its modes only (no caption plate)', () => { const h = X.pmxPlateFit({ key: 'fy', fit: 'full', plates: [X.pmxPlate({ mode: 'full', fitH: 170 })] }); return [!h.includes('data-mode="caption"'), h]; });

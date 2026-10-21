@@ -1,7 +1,7 @@
 {
   "suite": "collaboration-verify",
-  "total": 87,
-  "pass": 87,
+  "total": 96,
+  "pass": 96,
   "fail": 0,
   "results": [
     {
@@ -40,19 +40,19 @@
       "detail": ""
     },
     {
-      "name": "crew: Open Panel pops the SAME run out to the full shared panel shell",
+      "name": "crew: Open Panel opens the SAME run in the docked run view (editor pane, .collab-panel hooks, no dialog)",
       "pass": true,
-      "detail": "{\"titleMatches\":true,\"hasTranscriptTab\":true}"
+      "detail": "{\"titleMatches\":true,\"hasTranscriptTab\":true,\"docked\":true,\"noDialog\":true}"
     },
     {
       "name": "crew: Message sets the composer destination to this run (destinationKind === kind)",
       "pass": true,
-      "detail": "{\"kind\":\"workflow\",\"destinationKind\":\"crew\",\"refId\":\"crew-query-perf\",\"participantId\":null,\"label\":\"Crew · Crew · Query Performance Rollout\",\"detail\":\"3 participants\",\"glyph\":\"users\"}"
+      "detail": "{\"kind\":\"workflow\",\"destinationKind\":\"crew\",\"refId\":\"crew-query-perf\",\"participantId\":null,\"label\":\"Crew · Query Performance Rollout\",\"detail\":\"3 helpers\",\"glyph\":\"kind-crew\"}"
     },
     {
       "name": "crew: the composer chrome visibly changes and names the destination",
       "pass": true,
-      "detail": "{\"visible\":true,\"text\":\"To: Crew · Crew · Query Performance Rollout · 3 participants · 3\"}"
+      "detail": "{\"visible\":true,\"text\":\"To: Crew · Query Performance Rollout · 3 helpers · 3\"}"
     },
     {
       "name": "brainstorm: the shared transcript card renders on its own thread with the common card structure",
@@ -65,19 +65,19 @@
       "detail": ""
     },
     {
-      "name": "brainstorm: Open Panel pops the SAME run out to the full shared panel shell",
+      "name": "brainstorm: Open Panel opens the SAME run in the docked run view (editor pane, .collab-panel hooks, no dialog)",
       "pass": true,
-      "detail": "{\"titleMatches\":true,\"hasTranscriptTab\":true}"
+      "detail": "{\"titleMatches\":true,\"hasTranscriptTab\":true,\"docked\":true,\"noDialog\":true}"
     },
     {
       "name": "brainstorm: Message sets the composer destination to this run (destinationKind === kind)",
       "pass": true,
-      "detail": "{\"kind\":\"workflow\",\"destinationKind\":\"brainstorm\",\"refId\":\"brainstorm-provider-failover\",\"participantId\":null,\"label\":\"BrainStorm · BrainStorm · Provider Failover Strategy\",\"detail\":\"5 participants\",\"glyph\":\"brain\"}"
+      "detail": "{\"kind\":\"workflow\",\"destinationKind\":\"brainstorm\",\"refId\":\"brainstorm-provider-failover\",\"participantId\":null,\"label\":\"BrainStorm · Provider Failover Strategy\",\"detail\":\"5 helpers\",\"glyph\":\"kind-brainstorm\"}"
     },
     {
       "name": "brainstorm: the composer chrome visibly changes and names the destination",
       "pass": true,
-      "detail": "{\"visible\":true,\"text\":\"To: BrainStorm · BrainStorm · Provider Failover Strategy · 5 participants · 5\"}"
+      "detail": "{\"visible\":true,\"text\":\"To: BrainStorm · Provider Failover Strategy · 5 helpers · 5\"}"
     },
     {
       "name": "review: the shared transcript card renders on its own thread with the common card structure",
@@ -90,19 +90,19 @@
       "detail": ""
     },
     {
-      "name": "review: Open Panel pops the SAME run out to the full shared panel shell",
+      "name": "review: Open Panel opens the SAME run in the docked run view (editor pane, .collab-panel hooks, no dialog)",
       "pass": true,
-      "detail": "{\"titleMatches\":true,\"hasTranscriptTab\":true}"
+      "detail": "{\"titleMatches\":true,\"hasTranscriptTab\":true,\"docked\":true,\"noDialog\":true}"
     },
     {
       "name": "review: Message sets the composer destination to this run (destinationKind === kind)",
       "pass": true,
-      "detail": "{\"kind\":\"workflow\",\"destinationKind\":\"review\",\"refId\":\"review-orchestrator-boundary\",\"participantId\":null,\"label\":\"Review · Multi-Pass Review · Orchestrator Boundary Changes\",\"detail\":\"3 participants\",\"glyph\":\"eye\"}"
+      "detail": "{\"kind\":\"workflow\",\"destinationKind\":\"review\",\"refId\":\"review-orchestrator-boundary\",\"participantId\":null,\"label\":\"Review · Multi-Pass Review · Orchestrator Boundary Changes\",\"detail\":\"3 reviewers\",\"glyph\":\"kind-review\"}"
     },
     {
       "name": "review: the composer chrome visibly changes and names the destination",
       "pass": true,
-      "detail": "{\"visible\":true,\"text\":\"To: Review · Multi-Pass Review · Orchestrator Boundary Changes · 3 participants · 3\"}"
+      "detail": "{\"visible\":true,\"text\":\"To: Review · Multi-Pass Review · Orchestrator Boundary Changes · 3 reviewers · 3\"}"
     },
     {
       "name": "chat_room: the shared transcript card renders on its own thread with the common card structure",
@@ -115,19 +115,19 @@
       "detail": ""
     },
     {
-      "name": "chat_room: Open Panel pops the SAME run out to the full shared panel shell",
+      "name": "chat_room: Open Panel opens the SAME run in the docked run view (editor pane, .collab-panel hooks, no dialog)",
       "pass": true,
-      "detail": "{\"titleMatches\":true,\"hasTranscriptTab\":true}"
+      "detail": "{\"titleMatches\":true,\"hasTranscriptTab\":true,\"docked\":true,\"noDialog\":true}"
     },
     {
       "name": "chat_room: Message sets the composer destination to this run (destinationKind === kind)",
       "pass": true,
-      "detail": "{\"kind\":\"workflow\",\"destinationKind\":\"chat_room\",\"refId\":\"chatroom-onboarding\",\"participantId\":null,\"label\":\"Chat Room · Chat Room · Onboarding Redesign Options\",\"detail\":\"3 participants\",\"glyph\":\"users\"}"
+      "detail": "{\"kind\":\"workflow\",\"destinationKind\":\"chat_room\",\"refId\":\"chatroom-onboarding\",\"participantId\":null,\"label\":\"Chat Room · Onboarding Redesign Options\",\"detail\":\"3 helpers\",\"glyph\":\"kind-chat_room\"}"
     },
     {
       "name": "chat_room: the composer chrome visibly changes and names the destination",
       "pass": true,
-      "detail": "{\"visible\":true,\"text\":\"To: Chat Room · Chat Room · Onboarding Redesign Options · 3 participants · 3\"}"
+      "detail": "{\"visible\":true,\"text\":\"To: Chat Room · Onboarding Redesign Options · 3 helpers · 3\"}"
     },
     {
       "name": "clicking a participant with real output opens their own transcript (not empty, not a fabricated summary)",
@@ -152,7 +152,7 @@
     {
       "name": "crew: the modal is populated from Settings defaults (RTC.definitions.crew)",
       "pass": true,
-      "detail": "{\"rows\":3,\"config\":{\"coordinator\":\"parent_assistant\",\"assignmentStrategy\":\"manager_directed\",\"memberCount\":3,\"parallelism\":3,\"autoEnabled\":false,\"autoComplexity\":\"high\",\"autoMaxMembers\":4,\"contextSharing\":\"shared\",\"synthesisPolicy\":\"coordinator_adjudicated\",\"timeLimitMinutes\":45,\"tokenLimit\":400000,\"costLimitUsd\":6},\"grillMe\":false}"
+      "detail": "{\"rows\":3,\"config\":{\"coordinator\":\"parent_assistant\",\"assignmentStrategy\":\"manager_directed\",\"memberCount\":3,\"parallelism\":3,\"autoEnabled\":true,\"autoConfigured\":true,\"autoComplexity\":\"high\",\"autoMaxMembers\":4,\"contextSharing\":\"shared\",\"synthesisPolicy\":\"coordinator_adjudicated\",\"timeLimitMinutes\":45,\"tokenLimit\":400000,\"costLimitUsd\":6,\"autoPolicy\":{\"revision\":1,\"isDefault\":true,\"name\":\"Crew Auto default\",\"purpose\":\"\",\"rows\":[{\"rowId\":\"auto-default-1\",\"role\":\"Builder\",\"requestedModelId\":\"sonnet46\",\"persona\":\"Implementer\",\"requestedEffort\":\"\",\"requestedFast\":false,\"additiveRoleKind\":\"none\"},{\"rowId\":\"auto-default-2\",\"role\":\"Builder\",\"requestedModelId\":\"sonnet46\",\"persona\":\"Implementer\",\"requestedEffort\":\"\",\"requestedFast\":false,\"additiveRoleKind\":\"none\"},{\"rowId\":\"auto-default-3\",\"role\":\"Checker\",\"requestedModelId\":\"sonnet46\",\"persona\":\"Reviewer\",\"requestedEffort\":\"\",\"requestedFast\":false,\"additiveRoleKind\":\"none\"}],\"config\":{\"coordinator\":\"parent_assistant\",\"assignmentStrategy\":\"manager_directed\",\"parallelism\":3,\"autoComplexity\":\"high\",\"autoMinIndependent\":\"2\",\"timeLimitMinutes\":45,\"tokenLimit\":400000,\"costLimitUsd\":6},\"maxMembers\":4},\"autoRosterTemplate\":[{\"role\":\"Builder\",\"requestedModelId\":\"sonnet46\",\"persona\":\"Implementer\"},{\"role\":\"Builder\",\"requestedModelId\":\"sonnet46\",\"persona\":\"Implementer\"},{\"role\":\"Checker\",\"requestedModelId\":\"sonnet46\",\"persona\":\"Reviewer\"}]},\"grillMe\":false}"
     },
     {
       "name": "crew: cancelling the modal starts nothing (no draft retained, no dialog left open)",
@@ -172,7 +172,7 @@
     {
       "name": "brainstorm: the modal is populated from Settings defaults (RTC.definitions.brainstorm)",
       "pass": true,
-      "detail": "{\"rows\":4,\"config\":{\"coreParticipants\":4,\"questionLimit\":20,\"grillExtension\":25,\"externalResearch\":\"maximum\",\"independentProposals\":true,\"debateRounds\":2,\"voting\":\"evidence_weighted\",\"preserveDissent\":true,\"timeLimitMinutes\":90,\"tokenLimit\":900000,\"costLimitUsd\":14,\"concurrency\":4},\"grillMe\":false}"
+      "detail": "{\"rows\":4,\"config\":{\"coreParticipants\":4,\"questionLimit\":20,\"grillExtension\":25,\"externalResearch\":\"maximum\",\"independentProposals\":true,\"debateRounds\":2,\"voting\":\"evidence_weighted\",\"preserveDissent\":true,\"timeLimitMinutes\":90,\"tokenLimit\":900000,\"costLimitUsd\":14,\"concurrency\":4,\"synthesisModelId\":\"sonnet46\"},\"grillMe\":false}"
     },
     {
       "name": "brainstorm: cancelling the modal starts nothing (no draft retained, no dialog left open)",
@@ -192,7 +192,7 @@
     {
       "name": "review: the modal is populated from Settings defaults (RTC.definitions.review)",
       "pass": true,
-      "detail": "{\"rows\":3,\"config\":{\"strategy\":\"multi_pass\",\"reviewerCount\":3,\"blindInitialPass\":true,\"peerCorroboration\":true,\"preserveDissent\":true,\"autoRepair\":false,\"timeLimitMinutes\":30,\"tokenLimit\":350000,\"costLimitUsd\":5},\"grillMe\":false}"
+      "detail": "{\"rows\":3,\"config\":{\"strategy\":\"multi_pass\",\"reviewerCount\":3,\"blindInitialPass\":true,\"peerCorroboration\":true,\"preserveDissent\":true,\"autoRepair\":false,\"timeLimitMinutes\":30,\"tokenLimit\":350000,\"costLimitUsd\":5,\"alsoGive\":{\"changes\":true,\"tests\":true,\"rules\":true}},\"grillMe\":false}"
     },
     {
       "name": "review: cancelling the modal starts nothing (no draft retained, no dialog left open)",
@@ -212,7 +212,7 @@
     {
       "name": "chat_room: the modal is populated from Settings defaults (RTC.definitions.chat_room)",
       "pass": true,
-      "detail": "{\"rows\":4,\"config\":{\"participantCount\":4,\"moderator\":\"dedicated_moderator\",\"moderatorPersona\":\"Product Manager\",\"turnPolicy\":\"moderated\",\"mentionsEnabled\":true,\"repliesEnabled\":true,\"tools\":\"read_only\",\"maxRounds\":5,\"stopCondition\":\"rounds_or_moderator_close\",\"output\":\"transcript_plus_optional_summary\",\"timeLimitMinutes\":60,\"costLimitUsd\":4},\"grillMe\":false}"
+      "detail": "{\"rows\":4,\"config\":{\"participantCount\":4,\"moderator\":\"dedicated_moderator\",\"moderatorPersona\":\"Product Manager\",\"turnPolicy\":\"moderated\",\"mentionsEnabled\":true,\"repliesEnabled\":true,\"tools\":\"read_only\",\"maxRounds\":5,\"stopCondition\":\"rounds_or_moderator_close\",\"output\":\"transcript_plus_optional_summary\",\"timeLimitMinutes\":60,\"costLimitUsd\":4,\"moderatorModelId\":\"sonnet46\"},\"grillMe\":false}"
     },
     {
       "name": "chat_room: cancelling the modal starts nothing (no draft retained, no dialog left open)",
@@ -220,7 +220,7 @@
       "detail": "{\"draft\":null,\"dialogGone\":true}"
     },
     {
-      "name": "the crew configure modal opened for the substitution drive-through",
+      "name": "the crew configure modal opened for the offline-model drive-through",
       "pass": true,
       "detail": ""
     },
@@ -230,19 +230,34 @@
       "detail": "kimi-k3-turbo"
     },
     {
+      "name": "the Configure modal shows the offline notice on the row immediately, with a Fix and data-failure (no separate action needed to force a re-render)",
+      "pass": true,
+      "detail": "{\"text\":\"Kimi K3 Turbo is offline right now. Pick another model to start. Fix\",\"failure\":\"model_offline\",\"fix\":true}"
+    },
+    {
+      "name": "Start stays disabled with the same sentence while an offline model is chosen, and nothing is created",
+      "pass": true,
+      "detail": "{\"disabled\":true,\"reason\":\"Kimi K3 Turbo is offline right now. Pick another model to start.\"}"
+    },
+    {
+      "name": "Fix opens that row's own model picker",
+      "pass": true,
+      "detail": "true"
+    },
+    {
+      "name": "picking another model clears the notice and enables Start",
+      "pass": true,
+      "detail": "{\"notice\":false,\"disabled\":false}"
+    },
+    {
       "name": "committing the modal creates exactly one new run (Crew Auto aside)",
       "pass": true,
       "detail": "10"
     },
     {
-      "name": "the committed participant records BOTH requested and effective identity, with a substitution reason (never a silent substitution)",
+      "name": "the committed participants run on the models chosen: requested equals effective, with no substitution",
       "pass": true,
-      "detail": "{\"requested\":\"kimi-k3-turbo\",\"effective\":\"kimi-k3\",\"reason\":\"Provider window exhausted on this account. Substituted within the same provider.\"}"
-    },
-    {
-      "name": "the committed run's panel renders the requested/effective disclosure for the substituted participant",
-      "pass": true,
-      "detail": "effective Kimi K3 · Moonshot"
+      "detail": "[{\"requested\":\"sonnet46\",\"effective\":\"sonnet46\",\"reason\":null},{\"requested\":\"sonnet46\",\"effective\":\"sonnet46\",\"reason\":null},{\"requested\":\"sonnet46\",\"effective\":\"sonnet46\",\"reason\":null}]"
     },
     {
       "name": "a normal (non-substituted) participant renders no effective-route chrome — disclosure is not noise",
@@ -250,14 +265,9 @@
       "detail": "true"
     },
     {
-      "name": "the Configure modal repaints the requested/effective note immediately on selecting an unavailable model (no separate action needed to force a re-render)",
-      "pass": true,
-      "detail": "true"
-    },
-    {
       "name": "Multi-Pass Review reuses the same model on two reviewer slots without collapsing their identity",
       "pass": true,
-      "detail": "[{\"id\":\"p-25\",\"model\":\"opus5\"},{\"id\":\"p-27\",\"model\":\"glm52\"},{\"id\":\"p-29\",\"model\":\"opus5\"}]"
+      "detail": "[{\"id\":\"p-26\",\"model\":\"opus5\"},{\"id\":\"p-28\",\"model\":\"glm52\"},{\"id\":\"p-30\",\"model\":\"opus5\"}]"
     },
     {
       "name": "the review configure modal opened for the reviewer-count bounds drive-through",
@@ -275,19 +285,19 @@
       "detail": "{\"n\":8,\"disabled\":false,\"warn\":false}"
     },
     {
-      "name": "a 9th reviewer goes out of range: Commit disables and the modal discloses it",
+      "name": "a 9th add is refused and the add control shows the reason",
       "pass": true,
-      "detail": "{\"n\":9,\"disabled\":true,\"warn\":true}"
+      "detail": "{\"n\":8,\"addDisabled\":true,\"reason\":\"Add a reviewerReview holds up to 8 reviewers.Start from a team\",\"commitDisabled\":false}"
     },
     {
       "name": "the panel names the single frozen target pack hash all initial passes shared",
       "pass": true,
-      "detail": "Frozen target changes · hash a1c9f02e · frozen 3:45 AM"
+      "detail": "a1c9f02e Snapshot of orchestrator-subagent-integration.md#executionLimits, taken 11:50 PM. Every reviewer read that exact version."
     },
     {
       "name": "a finding produced against a DIFFERENT target hash is excluded from corroboration, not silently merged",
       "pass": true,
-      "detail": "Excluded — different frozen packA finding from Reviewer 3, produced against a target pack that changed mid-run.target_hash f77e10bb vs frozen a1c9f02e. Different target_hash than the frozen pack (a1c9f02e vs f77e10bb). Excluded from corroboration and reported as excluded rather than silently merged or silently dropped."
+      "detail": "[\"Set aside: this reviewer saw an older version of the file.\",\"different_target_hash\",\"f77e10bb\"]"
     },
     {
       "name": "at least one finding is corroborated by more than one reviewer under that same frozen pack",
@@ -297,7 +307,7 @@
     {
       "name": "Review states it is read-only and never auto-repairs, and no control anywhere on the run exposes a repair action",
       "pass": true,
-      "detail": "{\"targetTxt\":\"Frozen target changes · hash a1c9f02e · frozen 3:45 AM\",\"excludedTxt\":\"Excluded — different frozen packA finding from Reviewer 3, produced against a target pack that changed mid-run.target_hash f77e10bb vs frozen a1c9f02e. Different target_hash than the frozen pack (a1c9f02e vs f77e10bb). Excluded from corroboration and reported as excluded rather than silently merged or silently dropped.\",\"readonlyNote\":\"Review is read-only and never auto-repairs. assistant.multi_agent.review.auto_repair is locked off.\",\"hasRepairAction\":false}"
+      "detail": "{\"targetTxt\":\"a1c9f02e Snapshot of orchestrator-subagent-integration.md#executionLimits, taken 11:50 PM. Every reviewer read that exact version.\",\"excludedTxt\":\"Set aside: this reviewer saw an older version of the file.\",\"excludedReason\":\"different_target_hash\",\"excludedHash\":\"f77e10bb\",\"readonlyNote\":\"Review never changes your files and never auto-repairs.\",\"hasRepairAction\":false}"
     },
     {
       "name": "the review configure modal reopened for the auto-repair lock check",
@@ -307,7 +317,7 @@
     {
       "name": "assistant.multi_agent.review.auto_repair is locked off and not a reachable escape hatch in the configure modal",
       "pass": true,
-      "detail": "{\"found\":true,\"disabled\":true,\"text\":\"Auto-repair — permanently off. assistant.multi_agent.review.auto_repair is locked and is not a user-reachable escape hatch.\"}"
+      "detail": "{\"found\":true,\"disabled\":true,\"text\":\"Auto-repair: permanently off. Review never changes your files\"}"
     },
     {
       "name": "the brainstorm configure modal opened for the question-arithmetic drive-through",
@@ -337,7 +347,7 @@
     {
       "name": "the question bank is ONE object on the run, not duplicated per participant (shared budget, not per-agent)",
       "pass": true,
-      "detail": "[\"id\",\"runId\",\"role\",\"name\",\"requestedProviderId\",\"requestedAccountId\",\"requestedModelId\",\"requestedModelName\",\"effectiveModelId\",\"effectiveModelName\",\"requestedPersona\",\"effectivePersona\",\"additiveRoleKind\",\"status\",\"substitutionReason\",\"evidenceNote\",\"blockedReason\",\"current\",\"required\",\"sessionId\",\"sessionIsolation\",\"outcome\",\"vote\",\"votingRole\",\"waiver\",\"attempts\",\"assignmentRevision\",\"demo\"]"
+      "detail": "[\"id\",\"runId\",\"role\",\"name\",\"requestedProviderId\",\"requestedAccountId\",\"requestedModelId\",\"requestedModelName\",\"requestedEffort\",\"requestedFast\",\"effectiveModelId\",\"effectiveModelName\",\"requestedPersona\",\"effectivePersona\",\"additiveRoleKind\",\"status\",\"substitutionReason\",\"evidenceNote\",\"blockedReason\",\"current\",\"required\",\"sessionId\",\"sessionIsolation\",\"outcome\",\"vote\",\"votingRole\",\"waiver\",\"attempts\",\"assignmentRevision\",\"demo\"]"
     },
     {
       "name": "the live run panel shows the base maximum before Grill Me",
@@ -357,12 +367,12 @@
     {
       "name": "the disqualified alternative stays visible regardless of vote count (hard constraint section)",
       "pass": true,
-      "detail": "Disqualified regardless of vote countFully automatic cross-account failover (an early variant of prop-a) — violates: Never spend from a personal account without explicit confirmation.Disqualified regardless of the ring design’s other merits; it is visible in the rejected-alternatives section and was never revived by discussion."
+      "detail": "Fully automatic cross-account failover (an early variant of prop-a) is ruled out: it breaks your rule “Never spend from a personal account without explicit confirmation”. Votes can’t override a rule."
     },
     {
       "name": "material dissent is preserved and rendered, not smoothed over",
       "pass": true,
-      "detail": "Preserved dissent · ProductThe resolver-level breaker in prop-c is the right plumbing, but without prop-b’s explicit account-boundary sitting visibly above it, a future caller could still wire automatic personal-account failover through the resolver by accident. This dissent stays open until that boundary is a first-class resolver parameter, not a caller convention."
+      "detail": "The resolver-level breaker in prop-c is the right plumbing, but without prop-b’s explicit account-boundary sitting visibly above it, a future caller could still wire automatic personal-account failover through the resolver by accident. This dissent stays open until that boundary is a first-class resolver parameter, not a caller convention.Product · fairly sure · kept word for word"
     },
     {
       "name": "Synthesize produces exactly one synthesis, preserving the dissent count from the protocol",
@@ -380,29 +390,34 @@
       "detail": "1 -> 1 coordinator response messages"
     },
     {
-      "name": "Crew Auto starts unchecked and unconfigured",
+      "name": "Crew Auto starts on by default, with default rules (E-02)",
       "pass": true,
-      "detail": "{\"checked\":false,\"autoConfigured\":false}"
+      "detail": "{\"checked\":true,\"autoConfigured\":true,\"autoEnabled\":true,\"policy\":true}"
     },
     {
-      "name": "checking Crew Auto before it is configured OPENS the configuration modal rather than enabling anything directly",
+      "name": "unchecking Crew Auto turns it off for this chat only: no sheet, the project default and the runs untouched",
       "pass": true,
-      "detail": "{\"modalOpen\":true,\"isAutoMode\":true,\"autoEnabled\":false}"
+      "detail": "{\"modalOpen\":false,\"chat\":false,\"projectDefault\":true,\"runs\":10}"
     },
     {
-      "name": "unlike the four Wand-menu configure rows above, the Crew Auto route DOES close the Wand menu behind it (collab-crew-auto-toggle calls ctx.closeMenu()) — confirms the fix exists, just not applied to the other four rows",
+      "name": "checking it again turns Crew Auto back on in this chat",
       "pass": true,
       "detail": "true"
     },
     {
-      "name": "cancelling the Crew Auto modal leaves it unconfigured and starts nothing",
+      "name": "\"Crew Auto settings…\" opens the Crew Auto sheet in place of the Wand menu",
       "pass": true,
-      "detail": "{\"autoConfigured\":false,\"runs\":10}"
+      "detail": "{\"modalOpen\":true,\"isAutoMode\":true,\"menuClosed\":true}"
+    },
+    {
+      "name": "cancelling the Crew Auto sheet changes no rules and starts nothing",
+      "pass": true,
+      "detail": "{\"revision\":1,\"runs\":10}"
     },
     {
       "name": "the \"widen authority\" demo control is durably refused (recorded, not a toast alone) and starts nothing",
       "pass": true,
-      "detail": "{\"text\":true,\"runs\":10}"
+      "detail": "{\"refuseShown\":true,\"text\":true,\"runs\":10}"
     },
     {
       "name": "committing Crew Auto configuration records it as configured and enabled, but STILL starts no run by itself",
@@ -427,12 +442,42 @@
     {
       "name": "an EXPLICIT promotion is the only thing that adds a promotion record, with lineage to the source message",
       "pass": true,
-      "detail": "[{\"id\":\"promo-141\",\"target\":\"todo\",\"summary\":\"Round 3 close. Still nothing promoted — say the word and I will promote a conclusion.\",\"sourceMessageId\":\"msg-140\",\"at\":\"2026-09-04T03:46:03.224Z\"}]"
+      "detail": "[{\"id\":\"promo-147\",\"target\":\"todo\",\"summary\":\"Round 3 close. Still nothing promoted — say the word and I will promote a conclusion.\",\"sourceMessageId\":\"msg-146\",\"at\":\"2026-10-20T23:51:46.323Z\"}]"
     },
     {
       "name": "the explicit promotion is recorded as a durable, visible receipt in the transcript",
       "pass": true,
       "detail": ""
+    },
+    {
+      "name": "Run again with changes… on a cancelled run opens a fresh-run sheet (\"Run this Crew again\"), not a reconfiguration",
+      "pass": true,
+      "detail": "{\"open\":true,\"reconfigure\":null,\"rerunOf\":\"run-158\",\"title\":\"Run this Crew again Starts a fresh run; this one stays as it is.\"}"
+    },
+    {
+      "name": "its Start creates exactly one new waiting run and leaves the ended run exactly as it was",
+      "pass": true,
+      "detail": "{\"endedBefore\":{\"status\":\"canceled\",\"purpose\":\"First job for crew\",\"title\":\"First job for crew\",\"rev\":1,\"parts\":\"p-152,p-154,p-156\",\"msgs\":2},\"endedAfter\":{\"status\":\"canceled\",\"purpose\":\"First job for crew\",\"title\":\"First job for crew\",\"rev\":1,\"parts\":\"p-152,p-154,p-156\",\"msgs\":2},\"fresh\":{\"id\":\"run-170\",\"purpose\":\"Changed job\",\"rerunOf\":\"run-158\",\"density\":\"waiting\"}}"
+    },
+    {
+      "name": "E-31: a helper message that arrives on a live run streams into its lane through PM56_PMX.stream (a kept island, words arriving)",
+      "pass": true,
+      "detail": "{\"e31State\":\"running\",\"e31Density\":\"live\",\"e31Mid\":{\"streaming\":true,\"keep\":true,\"words\":12,\"html\":\"<q data-collab-stream=\\\"msg-89\\\">I would keep the account boundary first-class: the spend guard says no</q>\",\"text\":\"I would keep the account boundary first-class: the spend guard says no\"}}"
+    },
+    {
+      "name": "E-31: once every word is in, the whole message lands once, with its inline markup, and the island is gone",
+      "pass": true,
+      "detail": "{\"streaming\":false,\"keep\":false,\"words\":0,\"html\":\"“I would keep the <strong>account</strong> <strong>boundary</strong> first-class: the spend guard says no before a single token leaves, for every helper in the run.”\",\"text\":\"“I would keep the account boundary first-class: the spend guard says no before a single token leaves, for every helper in the run.”\"}"
+    },
+    {
+      "name": "E-31: pausing the run mid-stream ends the stream at once: no island, the written message whole, no words still arriving",
+      "pass": true,
+      "detail": "{\"e31Before\":{\"streaming\":true,\"keep\":true,\"words\":26,\"html\":\"<q data-collab-stream=\\\"msg-90\\\">A long second thought that is still arriving when the run stops: more words more words more words more words more words more words more words</q>\",\"text\":\"A long second thought that is still arriving when the run stops: more words more words more words more words more words more words more words\"},\"e31Paused\":{\"streaming\":false,\"keep\":false,\"words\":0,\"html\":\"“A long second thought that is still arriving when the run stops: more words more words more words more words more words more words more words more words more words more words more words more words more words more words more words more words more words more words more words more words more words more words more words more words more words more words more words more words more words more words more words more words more words more words more words more words more words more words more words more words more words more words more words more words more words more words more words more words more words more words more words more words more words more words more words more words more words more words more words more words ”\",\"text\":\"“A long second thought that is still arriving when the run stops: more words more words more words more words more words more words more words more words more words more words more words more words more words more words more words more words more words more words more words more words more words more words more words more words more words more words more words more words more words more words more words more words more words more words more words more words more words more words more words more words more words more words more words more words more words more words more words more words more words more words more words more words more words more words more words more words more words more words more words more words ”\"}}"
+    },
+    {
+      "name": "E-31: a helper that fails mid-stream stops streaming (its lane says it didn’t finish; nothing still arriving)",
+      "pass": true,
+      "detail": "{\"e31Fb\":{\"streaming\":true,\"keep\":true,\"words\":26,\"html\":\"<q data-collab-stream=\\\"msg-93\\\">Words from a helper that fails part-way: still coming still coming still coming still coming still coming still coming still coming still coming still coming still</q>\",\"text\":\"Words from a helper that fails part-way: still coming still coming still coming still coming still coming still coming still coming still coming still coming still\"},\"e31Fa\":{\"streaming\":false,\"keep\":false,\"words\":0,\"html\":\"“Words from a helper that fails part-way: still coming still coming still coming still coming still coming still coming still coming still coming still coming still coming still coming still coming still coming still coming still coming still coming still coming still coming still coming still coming still coming still coming still coming still coming still coming still coming still coming still coming still coming still coming still coming still coming still coming still coming still coming still coming still coming still coming still coming still coming still coming still coming still coming still coming still coming still coming still coming still coming still coming still coming still coming still coming still coming still coming still coming still coming still coming still coming still coming still coming ”\",\"text\":\"“Words from a helper that fails part-way: still coming still coming still coming still coming still coming still coming still coming still coming still coming still coming still coming still coming still coming still coming still coming still coming still coming still coming still coming still coming still coming still coming still coming still coming still coming still coming still coming still coming still coming still coming still coming still coming still coming still coming still coming still coming still coming still coming still coming still coming still coming still coming still coming still coming still coming still coming still coming still coming still coming still coming still coming still coming still coming still coming still coming still coming still coming still coming still coming still coming ”\"}}"
     },
     {
       "name": "no console errors during the whole run",
