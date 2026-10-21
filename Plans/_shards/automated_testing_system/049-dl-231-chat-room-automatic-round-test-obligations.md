@@ -2,9 +2,9 @@
 
 Source: `Plans/Automated_Testing_System.md`
 
-Source lines: L6716-L6802
+Source lines: L6716-L6811
 
-Source SHA256: `46b8158ec22dd46ca54c25bb178a7d8c9e9ab05f1d85a9570fb2e2b747368a87`
+Source SHA256: `43ced988255e047f6410149fa3f48c7398c3c6c1697b7b6f16a7ba1815f5dd9f`
 
 ---
 
@@ -13,16 +13,18 @@ Source SHA256: `46b8158ec22dd46ca54c25bb178a7d8c9e9ab05f1d85a9570fb2e2b747368a87
 | Case | Required proof |
 |---|---|
 | Start and initial Grill Me | Start begins round 1 with no Ask Everyone or Next Round click. With Grill Me on, no participant turn starts before the current What we agreed Confirm; round 1 starts automatically after it. A Wonderer never delays the round. |
-| Automatic rounds | With pause_between_rounds false or absent, run every later round without a click under the same moderated, round_robin or free_discussion policy and its deterministic recorded participant order, until the configured limit or stop condition. No automatic start dispatches cmd.chat_room.next_round or any other command. |
+| Automatic rounds | With pause_between_rounds false or absent, completing a round creates no pacing wait. Run every eligible later round without a click under the same moderated, round_robin or free_discussion policy and its deterministic recorded participant order, until the configured limit or stop condition. Existing permission, needs-you and Grill Me gates remain in force, including every later session's current Confirm; only dependent work waits, and eligible round progression continues automatically once the gate clears. No automatic start dispatches cmd.chat_room.next_round or any other command. |
+| Mid-run Grill Me and later Confirm | Enable Grill Me during round 2. Running work continues and the session starts at the next round boundary. Only the round or step consuming its answers waits for its current What we agreed Confirm. A later session needs a fresh Confirm; an earlier session's Confirm cannot release its dependent work. Eligible round progression resumes automatically after each current Confirm without a Next Round click when pause_between_rounds is off. |
+| Ordinary needs-you gates | With Grill Me off and pause_between_rounds false, raise an ordinary user-decision question and a permission request. Only dependent work waits for the answer or approval; clearing the gate resumes eligible round progression automatically. Questions, approvals and failures keep the needs dock tone even between numbered rounds. |
 | Pausing between rounds | With the switch true, wait after each non-final round, show Round N done as the user's move and offer Next Round, Summarize Now and End discussion. One Next Round starts exactly one round under the unchanged policy. |
 | Next Round refusal | Return run_state_invalid with no committed work when the switch is false or absent, a round is running, round 1 has not run, all configured rounds are used, the stop condition is met, the room is paused or terminal, it waits for Grill Me or another user action instead of between rounds, the wait position is unknown, or ask_everyone_once has finished. Exercise both chat_room_card and chat_room_panel. |
 | Exhaustion and stop condition | Wait after the final round or an earlier stop condition; never finish automatically. Preserve This room used all its rounds at exhaustion. Add 2 more rounds raises add_rounds through reconfigure and starts the next round immediately; added rounds obey the switch. Summarize Now writes a summary and does not end the room. End discussion completes; Cancel cancels. |
 | Pause and Resume | Pause wins over automatic continuation and holds at the next safe turn boundary. Resume continues the round in progress, with later automatic rounds unless the switch is on. No turn is cancelled, duplicated or restarted by a switch change. |
 | Messages | A message queued mid-round reaches its addressees exactly once when the next round starts, whether automatically or through Next Round. Send now steers without cancelling a turn; the next speaker reads it first and all later speakers in that round see it. |
 | Definition and Settings | New definitions persist a boolean pause_between_rounds. Reject it on Crew, Review or BrainStorm. Existing definitions without it read false. The sheet copies assistant.multi_agent.chat_room.pause_between_rounds, factory false; Save as default uses the Settings transaction and later defaults never alter a committed room. |
-| Mid-run on and off | Both card and panel raise set_pause_between_rounds through cmd.collaboration.reconfigure. Under revision/currentness checks, bump the definition revision once and write one system entry. Turning on during a round waits only after it finishes; turning off at a between-round wait starts the next round immediately. Preserve the turn, reject terminal reconfiguration, fence stale revisions and replay, and allow only one actionable host. |
+| Mid-run on and off | Both card and panel raise set_pause_between_rounds through cmd.collaboration.reconfigure. Under revision/currentness checks, bump the definition revision once and write one system entry. Turning on during a round waits only after it finishes; turning off at a between-round wait starts the next round immediately subject to existing gates. Preserve the turn, reject terminal reconfiguration, fence stale revisions and replay, and allow only one actionable host. |
 | One-shot policy | ask_everyone_once asks every participant once and then stops starting turns regardless of the switch; no extra round follows from a between-round control. |
-| Dock | Between automatic rounds publish live, never yourmove. Publish yourmove only at the switch-on between-round wait, after the final round or stop condition, while paused, or while round 1 waits for Grill Me Confirm (ACD-476). |
+| Dock | Between automatic rounds publish live when no existing user gate or manual pause requires attention. Publish yourmove at the switch-on between-round wait, after the final round or stop condition, while paused, and while any Grill Me session waits for its current Confirm, before round 1 or after mid-run activation before the round needing its answers. Questions, approvals and failures remain needs (ACD-476). Round completion alone creates no user attention. |
 
 Schema validation and explicit fixture-only owner-state joins prove static admission constraints. Automatic progression, dispatch counts, transcript writes, actual Settings/storage behavior, UI/dock rendering, provider work, races and recovery remain future runtime obligations. A passing fixture gate is no native implementation proof.
 
@@ -34,12 +36,15 @@ unit_type: validation_criterion
 status: accepted
 owner_doc: Plans/Automated_Testing_System.md
 canonical_text: >-
-  DL-231 and CWR-044 require the test rows above for Start, Grill Me Confirm, automatic rounds,
+  DL-231 and CWR-044 require the test rows above for Start, initial and later Grill Me Confirm,
+  ordinary needs-you and permission gates, automatic rounds,
   pausing between rounds, Next Round refusal, exhaustion, stop conditions, Pause/Resume, messages,
   definition/Settings defaults, mid-run switching, ask_everyone_once and ACD-476's dock. Static
   positives cover boolean pause_between_rounds, a missing legacy field, on/off
   set_pause_between_rounds requests from chat_room_card and chat_room_panel, and the existing
-  reconfigure results. Negatives reject non-booleans, the field on other kinds, malformed changes,
+  reconfigure results. ParticipantActivity positives express a mid-run Grill Me Confirm and an
+  ordinary needs-you question through existing decision_ref fields; they prove shape only.
+  Negatives reject non-booleans, the field on other kinds, malformed changes,
   non-Chat Room switching and cmd.chat_room.next_round outside the switch-on between-round wait.
   Fixture-only owner-state joins prove run_state_invalid for switch false or absent, a running
   round, before round 1, exhausted rounds, met stop conditions, paused/terminal state, other or
@@ -48,8 +53,10 @@ canonical_text: >-
   order, exactly one user-started round, one revision and system entry per switch, boundary
   activation without cancelled work, immediate continuation when switched off at the between-round
   wait, one actionable host, exact-once message delivery, manual pause precedence, nonterminal
-  exhaustion and correct live/yourmove dock tones. Replay, stale currentness, denial and restart
-  must not duplicate turns, system entries or messages. Passing static schema and fixture joins
+  exhaustion and correct needs and live/yourmove dock tones. Only work consuming a gated answer
+  waits; each later Grill Me session requires its own current Confirm, and eligible rounds resume
+  automatically after an existing permission, needs-you or Confirm gate clears. Replay, stale
+  currentness, denial and restart must not duplicate turns, system entries or messages. Passing static schema and fixture joins
   establishes none of these native protocol, dispatch, persistence, provider or visual facts.
 gui_related: true
 gui_classification_reason: Covers the setup check, run switch, round controls and live/yourmove dock presentation.
@@ -57,7 +64,9 @@ depends_on: [CWR-024, CWR-031, CWR-044, ACD-476, ATS-062, UCC-207, WM-095, CV-36
 unblocks: []
 acceptance_criteria:
   - Every schema positive passes its selected definition and aggregate root; every negative fails its named shape or fixture-join invariant.
-  - All eleven CWR-044 acceptance criteria have explicit test rows, including no command dispatch for automatic starts.
+  - All thirteen CWR-044 acceptance criteria have explicit test rows, including no command dispatch for automatic starts.
+  - Mid-run Grill Me activation and every later session require a fresh current Confirm for dependent work; clearing it resumes eligible automatic progression.
+  - Ordinary needs-you questions and permission requests still gate dependent work with Grill Me off and no pacing pause; clearing them resumes eligible automatic progression, and questions, approvals and failures remain needs.
   - Defaults, mid-run switching, message timing and dock attention obey the same owner boundary.
   - Static fixture success claims no native protocol, UI, persistence or recovery proof.
 validation_surfaces:

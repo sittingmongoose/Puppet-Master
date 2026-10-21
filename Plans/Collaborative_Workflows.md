@@ -187,11 +187,11 @@ The Chat Room modal configures topic and room name; participants with model, acc
 
 Turn policy is deterministic and replayable. `moderated` routes each turn through the configured moderator. `round_robin` cycles participants in configured order. `free_discussion` admits participants under the concurrency limit with recorded admission order. `ask_everyone_once` asks each participant exactly once and then stops.
 
-A room runs its rounds by itself (CWR-044, DL-231). Starting the room starts round 1: the setup sheet's Start is the user's go, and there is no separate `Ask Everyone` step. A round ends when every participant has taken its turn under the active turn policy, and the room then starts the next round under the same policy, until its last configured round or until its stop condition (`stop_condition`) is met. The user never has to press `Next Round` between rounds, and a room between two rounds is live, not waiting on the user. These round starts are the room's own progression and dispatch no command. `Pause between rounds` (`pause_between_rounds`, off by default) brings back the wait: with it on, the room waits after every round before its last, shows `Round N done` as the user's move and offers `Next Round`, `Summarize Now` and `End discussion`. `Next Round` (`cmd.chat_room.next_round`) then starts exactly one round under the active policy and never silently changes the policy. The switch is set on the setup sheet and can be changed while the room runs, from its card and from its run view.
+A room runs its rounds by itself (CWR-044, DL-231). Starting the room starts round 1: the setup sheet's Start is the user's go, and there is no separate `Ask Everyone` step. A round ends when every participant has taken its turn under the active turn policy, and the room then starts the next round under the same policy, until its last configured round or until its stop condition (`stop_condition`) is met. With `Pause between rounds` off, completing a round creates no user pacing wait and needs no `Next Round` click. Existing permission, needs-you and Grill Me gates remain in force, including every later session's current Confirm; only dependent work waits, and eligible round progression continues automatically after the gate clears (CWR-031, CWR-042). A room between two automatic rounds reads as live when no existing user gate or manual pause requires attention (ACD-476). These round starts are the room's own progression and dispatch no command. `Pause between rounds` (`pause_between_rounds`, off by default) brings back the pacing wait: with it on, the room waits after every round before its last, shows `Round N done` as the user's move and offers `Next Round`, `Summarize Now` and `End discussion`. `Next Round` (`cmd.chat_room.next_round`) then starts exactly one round under the active policy and never silently changes the policy. The switch is set on the setup sheet and can be changed while the room runs, from its card and from its run view.
 
 The user interacts through messages to the whole room, addressing selected participants, `@mention` of a participant, reply or thread where the policy supports it, adding or removing a participant through controlled reconfiguration, `Pause between rounds`, `Next Round` while the room pauses between rounds, `Pause`, `Resume`, `Cancel`, `Summarize Now`, and `End discussion`, which ends the room as `completed` through `cmd.chat_room.end`. `Pause` holds the room at the next safe turn boundary. `Resume` continues it: the round in progress carries on, and later rounds start by themselves unless `Pause between rounds` is on. `Summarize Now` writes a summary and never ends the room. User messages reach the room through the ordinary targeted composer and are delivered to the addressed participants exactly once. A message sent while a round is in progress is queued for the next round unless the user sends it now to steer the round without interrupting it; a message sent now is read first by the next participant to speak, and every later speaker in that round sees it (CWR-024, DL-112, 2026-09-27). A queued message is delivered when the next round starts, whether the room starts that round by itself or the user presses `Next Round`. Reconfiguration that adds or removes a participant bumps the definition revision and is recorded in the transcript as a `system` message; it never rewrites prior transcript attribution. After the last configured round the room enters `waiting` and shows `This room used all its rounds`; it remains available for `Add 2 more rounds`, `Summarize Now`, or `End discussion`, and does not finish by itself. Adding rounds is the same reconfiguration, and continuing without a member who never joined or failed is an explicit waiver through it (CWR-024, DL-138). `Add 2 more rounds` starts the next round at once, and the added rounds then run like the others. A room whose stop condition is met before its last round stops starting rounds and waits in the same way (DL-231).
 
-A room never waits for the Wonderer: round 1 starts on time, and its first pass joins the room between turns whenever it is delivered. The Wonderer takes no turn under any turn policy. A room with Grill Me on still has the moderator grill the user about the topic before round 1, and round 1 waits until the user confirms what was agreed (section 9, DL-218); after that Confirm the room starts round 1 by itself.
+A room never waits for the Wonderer: round 1 starts on time, and its first pass joins the room between turns whenever it is delivered. The Wonderer takes no turn under any turn policy. A room with Grill Me on still has the moderator grill the user about the topic before round 1, and round 1 waits until the user confirms what was agreed (section 9, DL-218); after that Confirm the room starts round 1 by itself. Grill Me turned on mid-run starts at the next round boundary while running work continues; every later session needs its own fresh Confirm before the round or step that uses its answers. Only that dependent work waits, and eligible rounds continue automatically once the gate clears (CWR-031, CWR-042).
 
 ### 6.4 Promotion
 
@@ -3483,11 +3483,15 @@ canonical_text: >-
   (CWR-042); a room never waits for the Wonderer (CWR-041). A round ends when every participant has
   taken its turn under the active turn policy, and the room then starts the next round under the
   same policy, until its last configured round or until its stop condition (stop_condition) is met.
+  Automatic pacing removes no existing permission, needs-you or Grill Me gate, including every
+  later session's current What we agreed Confirm; only dependent work waits, and eligible round
+  progression continues automatically after the gate clears (CWR-031, CWR-042).
   These round starts are the room's own progression and dispatch no command, just as a scheduled
   message's dispatch is not a user command; each round still uses the turn policy's deterministic,
-  recorded participant order. The user never presses Next Round between rounds, and a room between
-  two rounds reads as live. ask_everyone_once still asks each participant exactly once and then
-  stops.
+  recorded participant order. With Pause between rounds off, completing a round creates no user
+  pacing wait and needs no Next Round click. A room between two automatic rounds reads as live when
+  no existing user gate or manual pause requires attention. ask_everyone_once still asks each
+  participant exactly once and then stops.
   Pause between rounds is the definition's pause_between_rounds, a boolean that is false by default;
   its Settings default is assistant.multi_agent.chat_room.pause_between_rounds. It is set on the
   Chat Room setup sheet and can be switched while the room runs from the room's card
@@ -3496,8 +3500,8 @@ canonical_text: >-
   definition revision under the expected-revision check and writes one system transcript entry. It
   takes effect at the next round boundary and never cancels a turn. Turned on during a round, that
   round finishes and the room then waits; turned off while the room waits between rounds, the next
-  round starts at once. Like every control that changes a run, it is actionable in only one place
-  at a time (CWR-020). With it on, the room enters waiting after every round but its last, shows
+  round starts at once subject to existing gates. Like every control that changes a run, it is
+  actionable in only one place at a time (CWR-020). With it on, the room enters waiting after every round but its last, shows
   Round N done as the user's move, and offers Next Round, Summarize Now and End discussion. Next
   Round is cmd.chat_room.next_round, the user's command, and it starts exactly one round.
   After the last configured round, or when the stop condition is met first, the room waits as
@@ -3508,26 +3512,31 @@ canonical_text: >-
   the round in progress, and later rounds start by themselves unless Pause between rounds is on.
   Summarize Now writes the summary and does not end the room. A queued message is delivered when the
   next round starts, however that round starts.
-  A Chat Room is the user's move only while it waits on the user: between rounds while Pause between
-  rounds is on, after its last round or at its stop condition, while it is paused, and while round 1
-  waits for the user's Confirm of What we agreed. Its dock item then has the yourmove tone
-  (ACD-476). A room between two automatic rounds is a live run, never the user's move.
+  A Chat Room's wait between rounds while Pause between rounds is on, its wait after its last round
+  or at its stop condition, its manual pause, and any Grill Me session waiting for its current
+  Confirm of What we agreed have the yourmove dock tone (ACD-476). This includes the initial
+  Confirm before round 1 and a session turned on mid-run before the round that needs its answers.
+  Questions, approvals and failures keep the needs tone. An automatic round boundary alone creates
+  no user attention; a room between two automatic rounds reads as live when no existing user gate
+  or manual pause requires attention.
 gui_related: true
 gui_classification_reason: This unit fixes when a Chat Room starts its rounds, when it waits for the user, and what its sheet, card, run view and dock item offer for it.
 depends_on: [CWR-020, CWR-024, CWR-031, CWR-042]
 unblocks: []
 acceptance_criteria:
   - "Starting a room starts round 1 with no further click; with Grill Me on, round 1 starts by itself after Confirm."
-  - "With Pause between rounds off, every later round starts by itself under the same turn policy, with no click, until the last configured round or the stop condition."
+  - "With Pause between rounds off, every eligible later round starts by itself under the same turn policy, with no pacing click, until the last configured round or the stop condition; existing user gates remain in force."
   - "With Pause between rounds on, the room waits after every round but its last and shows Round N done, and one Next Round starts exactly one round."
-  - "The room waits on the user only between rounds while Pause between rounds is on, after its last round or at its stop condition, while paused, or while round 1 waits for Grill Me's Confirm; it never finishes by itself after its last round."
+  - "With Pause between rounds off, completing a round creates no user pacing wait. Existing permission, needs-you and Grill Me gates remain in force, including every later session's current Confirm; only dependent work waits, and eligible round progression continues automatically after the gate clears. The room still waits at exhaustion or its stop condition and never finishes automatically."
+  - "Enabling Grill Me during round 2 starts its session at the next boundary while running work continues; only the round or step consuming its answers waits for its current What we agreed Confirm. Every later session needs a fresh Confirm; a prior session's Confirm cannot release it, and eligible round progression resumes automatically after the current Confirm."
+  - "With Grill Me off, an ordinary needs-you question or permission request still waits for the user's answer or approval; only dependent work waits, and eligible round progression continues automatically once that gate clears."
   - "Pause holds the room at the next safe turn boundary, and Resume continues the round in progress and the automatic rounds after it."
   - "A message queued during a round is delivered when the next round starts, whether the room starts it by itself or the user presses Next Round."
   - "pause_between_rounds persists as a definition field, false by default, and the sheet's check opens from its Settings default."
-  - "Switching Pause between rounds while the room runs bumps the definition revision once, writes one system transcript entry, takes effect at the next round boundary and cancels no turn; turned off while the room waits between rounds, the next round starts at once."
+  - "Switching Pause between rounds while the room runs bumps the definition revision once, writes one system transcript entry, takes effect at the next round boundary and cancels no turn; turned off while the room waits between rounds, the next round starts at once subject to existing gates."
   - "No automatic round start dispatches cmd.chat_room.next_round or any other command."
   - "ask_everyone_once asks each participant exactly once and then stops, whatever Pause between rounds says."
-  - "A room between two automatic rounds publishes a live dock item, never a yourmove item."
+  - "A room between two automatic rounds publishes a live dock item when no existing user gate or manual pause requires attention. Every Grill Me session waiting for its current Confirm is yourmove; questions, approvals and failures remain needs."
 validation_surfaces:
   - python3 scripts/pm-plan-index.py validate
   - node tests/collaboration-verify.mjs
@@ -3558,7 +3567,7 @@ negative_constraints:
   - Do not make a Chat Room wait for Next Round between rounds while Pause between rounds is off.
   - Do not dispatch a command for an automatic round start.
   - Do not cancel or restart a turn when Pause between rounds is switched.
-  - Do not show a room between two automatic rounds as the user's move.
+  - Do not make automatic round completion alone the user's move or override an existing user gate's attention tone.
   - Do not let a room finish by itself after its last round.
 owner_hints:
   - Plans/Collaborative_Workflows.md

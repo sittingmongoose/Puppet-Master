@@ -3553,6 +3553,32 @@
         "turn_policy": "round_robin",
         "participant_order": []
       }
+    },
+    {
+      "name": "activity_room_midrun_grill_me_confirm",
+      "definition": "ParticipantActivity",
+      "value": {
+        "schema_id": "pm.collaboration.participant_activity_projection.v1",
+        "schema_version": "1.0.0",
+        "participant_id": "prun-room-moderator",
+        "state": "needs_you",
+        "verb": "Waiting for your Confirm",
+        "decision_ref": "agreement:room-session-2",
+        "since": "2026-09-27T12:00:00Z"
+      }
+    },
+    {
+      "name": "activity_room_ordinary_needs_you_question",
+      "definition": "ParticipantActivity",
+      "value": {
+        "schema_id": "pm.collaboration.participant_activity_projection.v1",
+        "schema_version": "1.0.0",
+        "participant_id": "prun-room-moderator",
+        "state": "needs_you",
+        "verb": "Waiting for your answer",
+        "decision_ref": "question:room-choice-2",
+        "since": "2026-09-27T12:00:00Z"
+      }
     }
   ],
   "invalid": [
@@ -5507,6 +5533,42 @@
         "configured_max_rounds": 4,
         "stop_condition_met": false,
         "turn_policy": "round_robin"
+      }
+    },
+    {
+      "name": "room_next_round_midrun_grill_me_confirm",
+      "base_valid": "room_round_request",
+      "rejects_for": "a mid-run Grill Me session after round 2 needs its current Confirm; Next Round cannot clear that gate",
+      "reason": "DL-231 / CWR-044: a mid-run Grill Me session after round 2 needs its current Confirm; Next Round cannot clear that gate",
+      "semantic_rule": "run_state_invalid",
+      "context": {
+        "collaboration_run_id": "crun-room-0001",
+        "kind": "chat_room",
+        "state": "waiting",
+        "pause_between_rounds": false,
+        "completed_rounds": 2,
+        "configured_max_rounds": 4,
+        "stop_condition_met": false,
+        "turn_policy": "round_robin",
+        "waiting_between_rounds": false
+      }
+    },
+    {
+      "name": "room_next_round_ordinary_needs_you_question",
+      "base_valid": "room_round_request",
+      "rejects_for": "with Grill Me off, an ordinary needs-you question after round 2 still needs its answer; Next Round cannot clear that gate",
+      "reason": "DL-231 / CWR-044: with Grill Me off, an ordinary needs-you question after round 2 still needs its answer; Next Round cannot clear that gate",
+      "semantic_rule": "run_state_invalid",
+      "context": {
+        "collaboration_run_id": "crun-room-0001",
+        "kind": "chat_room",
+        "state": "waiting",
+        "pause_between_rounds": false,
+        "completed_rounds": 2,
+        "configured_max_rounds": 4,
+        "stop_condition_met": false,
+        "turn_policy": "round_robin",
+        "waiting_between_rounds": false
       }
     }
   ]

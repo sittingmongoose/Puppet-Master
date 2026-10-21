@@ -955,7 +955,7 @@
         "pause_between_rounds": {
           "type": "boolean",
           "default": false,
-          "description": "DL-231 / CWR-044: Chat Room only. False when absent on existing definitions. A new sheet copies its Settings default at commit; set_pause_between_rounds changes it at the next round boundary without cancelling a turn."
+          "description": "DL-231 / CWR-044: Chat Room only. False when absent on existing definitions. The sheet snapshots its Settings default when it opens; commit writes the current draft choice into the definition. set_pause_between_rounds changes it at the next round boundary without cancelling a turn."
         },
         "summary_style": {
           "$ref": "#/$defs/non_empty_string"

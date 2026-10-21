@@ -2,9 +2,9 @@
 
 Source: `Plans/assistant-chat-design.md`
 
-Source lines: L26714-L27423
+Source lines: L26714-L27426
 
-Source SHA256: `a088e3b95f4a2c70b434f2190140323322817518fa7266c4c576542be03b8420`
+Source SHA256: `bb59714a795da49437137863dcf3065fb5f3da6f13274f751ed7116e85abb358`
 
 ---
 
@@ -26,9 +26,12 @@ canonical_text: >-
   never floats over the transcript. Items come in this order: needs you (an approval, a question,
   a failure, a tie or a held scheduled message that waits on the user), your move (a turn that is
   the user's but is not a problem, such as a Chat Room that waits on the user: after its last round,
-  while paused, between rounds while Pause between rounds is on, or while round 1 waits for Grill
-  Me's Confirm; a room between two automatic rounds is a live run, never your move, CWR-044,
-  DL-231), live runs (newest first), and the next coming-up scheduled item. A needs-you item also shows while its transcript item is only partly
+  while paused, between rounds while Pause between rounds is on, or while any Grill Me session
+  waits for its current Confirm, before round 1 or after mid-run activation before the round that
+  needs its answers, CWR-044, DL-231), live runs (newest first), and the next coming-up scheduled
+  item. Questions, approvals and failures remain needs, including between numbered rounds. A room
+  between two automatic rounds reads as live only when no existing user gate or manual pause
+  requires attention. A needs-you item also shows while its transcript item is only partly
   visible. A fourth and later item collapses into one overflow line that opens Activity. Each item
   is an AttentionItem projection {source_kind, source_id, tone, sentence, primary_action_route,
   since} published by the owner of the source record, with tone needs | yourmove | live | comingup;
@@ -53,7 +56,7 @@ acceptance_criteria:
   - "No dock action approves or declines a permission request."
   - "Every dock sentence is the producing owner's sentence; the dock holds no copy of owner state."
   - "The dock reserves its own space and never covers transcript content."
-  - "A Chat Room shows a your-move item only while it waits on the user (CWR-044); between two automatic rounds it shows as a live run."
+  - "A Chat Room's pacing, exhaustion or stop-condition wait, manual pause and every Grill Me session's current Confirm use yourmove (CWR-044); questions, approvals and failures use needs. Between automatic rounds it shows as live only when no existing user gate or manual pause requires attention."
 validation_surfaces:
   - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
   - python3 scripts/pm-plan-index.py validate

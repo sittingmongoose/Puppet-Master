@@ -2,9 +2,9 @@
 
 Source: `Plans/Decision_Log.md`
 
-Source lines: L14505-L16971
+Source lines: L14505-L16975
 
-Source SHA256: `06fbd3871f2573338e38e69424a3d0b55f0fc6305b0a42b4b1ef75261e22fdb6`
+Source SHA256: `267cf935f449201397de2834188a8db66a6e42fdd7489850253edf0a8d95d6c8`
 
 ---
 
@@ -2408,7 +2408,9 @@ canonical_text: >-
   them once. Decision: rounds are automatic. When a round ends, the room starts the next round by
   itself under the same turn policy and keeps going until its last configured round or its stop
   condition, so the user never presses Next Round between rounds, and a room between rounds reads as
-  live rather than as the user's move. Automatic is the default. A Pause between rounds option brings
+  live rather than as the user's move. Automatic is the default. Automatic pacing removes no existing
+  gate: permission, needs-you questions and Grill Me waits stay in force, and rounds continue
+  automatically once a gate clears. A Pause between rounds option brings
   back the earlier behaviour for anyone who wants it: it is set on the Chat Room setup sheet and can
   be switched while the room runs from the room's card in the chat and from its run view (the side
   panel), and with it on the room waits after every round, shows Round N done as the user's move,
@@ -2438,9 +2440,11 @@ canonical_text: >-
   cancels a turn; it has the Settings default assistant.multi_agent.chat_room.pause_between_rounds
   beside the room's turn policy and rounds, because the sheet opens from Settings defaults and Save
   as default should keep the choice for someone who always wants to read each round before the next;
-  and a Chat Room's your-move dock item covers only a room that waits on the user, which is between
-  rounds with the option on, after its last round, while paused, or while round 1 waits for Grill
-  Me's Confirm. Affected units: Collaborative Workflows sections 6.2, 6.3, 10, 12, 14 and 18,
+  and a Chat Room's your-move dock item covers only a room that waits on the user, such as between
+  rounds with the option on, after its last round, while paused, or while any Grill Me session waits
+  for its current Confirm: before round 1, or a session turned on mid-run before the round that needs
+  its answers. Questions, approvals and failures keep the needs tone. Affected units: Collaborative
+  Workflows sections 6.2, 6.3, 10, 12, 14 and 18,
   CWR-024, CWR-031, CWR-032 and the new CWR-044, and the chat's dock requirement ACD-476.
 gui_related: true
 gui_classification_reason: Changes when a Chat Room waits for the user and what its setup sheet, card, run view and dock item offer between rounds.
