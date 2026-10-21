@@ -2,9 +2,9 @@
 
 Source: `Plans/assistant-chat-design.md`
 
-Source lines: L26714-L27419
+Source lines: L26714-L27423
 
-Source SHA256: `369a81ddb3a047c4ea3c13b21bf5ea4fc54cc98d1fc34504b4c19542f045fec1`
+Source SHA256: `a088e3b95f4a2c70b434f2190140323322817518fa7266c4c576542be03b8420`
 
 ---
 
@@ -25,8 +25,10 @@ canonical_text: >-
   composer stack directly after the provider quota-wait strip; it reserves its own height there and
   never floats over the transcript. Items come in this order: needs you (an approval, a question,
   a failure, a tie or a held scheduled message that waits on the user), your move (a turn that is
-  the user's but is not a problem, such as a finished round), live runs (newest first), and the next
-  coming-up scheduled item. A needs-you item also shows while its transcript item is only partly
+  the user's but is not a problem, such as a Chat Room that waits on the user: after its last round,
+  while paused, between rounds while Pause between rounds is on, or while round 1 waits for Grill
+  Me's Confirm; a room between two automatic rounds is a live run, never your move, CWR-044,
+  DL-231), live runs (newest first), and the next coming-up scheduled item. A needs-you item also shows while its transcript item is only partly
   visible. A fourth and later item collapses into one overflow line that opens Activity. Each item
   is an AttentionItem projection {source_kind, source_id, tone, sentence, primary_action_route,
   since} published by the owner of the source record, with tone needs | yourmove | live | comingup;
@@ -51,6 +53,7 @@ acceptance_criteria:
   - "No dock action approves or declines a permission request."
   - "Every dock sentence is the producing owner's sentence; the dock holds no copy of owner state."
   - "The dock reserves its own space and never covers transcript content."
+  - "A Chat Room shows a your-move item only while it waits on the user (CWR-044); between two automatic rounds it shows as a live run."
 validation_surfaces:
   - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
   - python3 scripts/pm-plan-index.py validate
@@ -69,6 +72,7 @@ node_compile_hint:
 source_lineage:
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/DESIGN-SPEC.md (SHA-256 dc0a02e550dd2e927faa59006cecab098e7c08b4aeb2479bf62e219f9b5907de) sections 4.3 C14-C15, 4.5 G-10, 7.4, 7.8"
   - "IMPACT-REGISTER B-ACD-10, B-ACD-08 (reference only)"
+  - "Plans/Decision_Log.md DL-231 (a finished Chat Room round is no longer the user's move, 2026-10-21)"
 preserved_exact_tokens:
   - "dock"
   - "AttentionItem"
