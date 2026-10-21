@@ -62,7 +62,14 @@
         options: [{ label: 'Yes, measure first' }, { label: 'Pick a default now' }], recommended: 'Yes, measure first' }
     ]
   };
-  var FACTS = { crew: ['f-ending', 'CRLF, the line ending RFC 4180 names', 8000], room: ['f-keys', '/ is free; Ctrl+K opens the command menu', 1600], deepplan: ['f-size', 'about 2,000 items (median of the collection stats)', 7000] };
+  var FACTS = { crew: ['f-ending', 'CRLF, the line ending RFC 4180 names', 8000], room: ['f-keys', '/ is free; Ctrl+K opens the command menu', 1600], deepplan: ['f-size', 'about 2,000 items, the median of the collection stats', 7000] };
+  /* Grill Me turned on mid-run (CWR-042): the decision the Coordinator or the Moderator asks at the next boundary */
+  var MIDRUN = {
+    crew: [{ id: 'd-quote-mid', title: 'Quoting', prompt: 'Quote only the cells that need it (commas, quotes, line breaks)?', why: 'The next part writes the file’s cells. The parts already running keep going; only the next one waits for you.',
+      options: [{ label: 'Yes, only where needed' }, { label: 'Quote every cell' }], recommended: 'Yes, only where needed' }],
+    room: [{ id: 'd-optional', title: 'The shortcut', prompt: 'Keep any shortcut optional, with a way to turn it off?', why: 'The next round weighs the shortcut. This round goes on; only the next one waits for you.',
+      options: [{ label: 'Yes, optional and easy to turn off' }, { label: 'Always on' }], recommended: 'Yes, optional and easy to turn off' }]
+  };
   /* a later decision asked mid-run (steer 2026-10-20): its own small round and What we agreed, gating only the export */
   var LATER = [{ id: 'd-bom', title: 'Byte order mark', prompt: 'Leave the byte order mark out of the file?', why: 'The Integrator writes the file next. Some spreadsheet apps want one for accented letters; these two titles have none. Nothing else waits on this.',
     options: [{ label: 'Yes, leave it out' }, { label: 'Add one' }], recommended: 'Yes, leave it out' }];
@@ -71,29 +78,29 @@
       { summary: 'Explored the ground around exporting a small collection to CSV: where spreadsheets treat text as code, how CSV became a standard late, where size starts to matter, and what happens to a file after it leaves.',
         angles: [{ key: 'adjacent', signal: 'strong: spreadsheets run some cells' }, { key: 'history', signal: 'CSV was written down only in 2005' }, { key: 'scale', signal: 'weak for two records' }, { key: 'human', signal: 'people reopen and resave exports' }],
         leads: [
-          { id: 'l1', angle: 'adjacent', title: 'Spreadsheets run a cell that starts with =, +, − or @ as a formula.', tether: 'The titles are free text, and whoever opens the export may open it in a spreadsheet.',
+          { id: 'l1', check: { outcome: 'supported', note: 'A title starting with =, +, − or @ would run as a formula; neither title does, and the handoff now warns about it.', evidence: { label: 'OWASP: CSV injection', url: 'https://owasp.org/www-community/attacks/CSV_Injection' } }, angle: 'adjacent', title: 'Spreadsheets run a cell that starts with =, +, − or @ as a formula.', tether: 'The titles are free text, and whoever opens the export may open it in a spreadsheet.',
             source: { kind: 'url', url: 'https://owasp.org/www-community/attacks/CSV_Injection', label: 'owasp.org · CSV injection' },
             dossier: { found: 'Security guides call this CSV injection; a title like “=HYPERLINK(…)” becomes live.', why: 'It turns a text export into something that can act.', next: 'Whether either title starts with one of those characters.' } },
-          { id: 'l2', angle: 'history', title: 'RFC 4180 wrote CSV down in 2005, after decades of tools that each quoted differently.', tether: 'The importers that read this file may each follow their own dialect.',
+          { id: 'l2', check: { outcome: 'supported', note: 'RFC 4180 names the quoting rule and the CRLF line ending the importers expect; the export follows both.', evidence: { label: 'RFC 4180, section 2', url: 'https://www.rfc-editor.org/rfc/rfc4180#section-2' } }, angle: 'history', title: 'RFC 4180 wrote CSV down in 2005, after decades of tools that each quoted differently.', tether: 'The importers that read this file may each follow their own dialect.',
             source: { kind: 'url', url: 'https://www.rfc-editor.org/rfc/rfc4180', label: 'rfc-editor.org · RFC 4180' },
             dossier: { found: 'One short document names the quoting rule and the CRLF line ending.', why: 'It gives the Crew one reference to check against.', next: 'Nothing; use it as the reference.' } },
-          { id: 'l3', angle: 'scale', title: 'At a few rows, streaming a file is overkill; at millions it is the only way.', tether: 'The job exports two records today, but the same code may export a whole library later.',
+          { id: 'l3', check: { outcome: 'not_supported', note: 'At two records the whole file is a few hundred bytes; streaming changes nothing for this job.' }, angle: 'scale', title: 'At a few rows, streaming a file is overkill; at millions it is the only way.', tether: 'The job exports two records today, but the same code may export a whole library later.',
             source: { kind: 'url', url: 'https://en.wikipedia.org/wiki/Comma-separated_values', label: 'wikipedia.org · Comma-separated values' },
             dossier: { found: 'Large exports stream row by row instead of building the file in memory.', why: 'It bounds when the design would need to change.', next: 'Only if the export grows.' } },
-          { id: 'l4', angle: 'human', title: 'People often open an exported CSV in a spreadsheet and save it again, which rewrites its quotes.', tether: 'Whoever receives the file may round-trip it before it reaches an importer.',
+          { id: 'l4', check: { outcome: 'supported', note: 'Opening and resaving in a spreadsheet rewrote the quotes in the sample file; the handoff note stays.', evidence: { label: 'Microsoft Support: import or export text or CSV files', url: 'https://support.microsoft.com/en-us/office/import-or-export-text-txt-or-csv-files-5250ac4c-663c-47ce-937b-339e391393ba' } }, angle: 'human', title: 'People often open an exported CSV in a spreadsheet and save it again, which rewrites its quotes.', tether: 'Whoever receives the file may round-trip it before it reaches an importer.',
             source: { kind: 'url', url: 'https://support.microsoft.com/en-us/office/import-or-export-text-txt-or-csv-files-5250ac4c-663c-47ce-937b-339e391393ba', label: 'support.microsoft.com · Import or export text or CSV files' },
             dossier: { found: 'Spreadsheets save CSV in their own dialect.', why: 'The quotes the Crew keeps can still be lost after it.', next: 'A note in the handoff.' } }
         ] },
       { summary: 'A second pass, asked for by the CSV specialist, around line breaks inside a cell: tools that claim CSV support but break on them, exports that dodge quoting, and what a trusted export leads to.',
         angles: [{ key: 'contradiction', signal: 'strong: “supports CSV” often means “no line breaks”' }, { key: 'inversion', signal: 'drop the quotes instead' }, { key: 'future', signal: 'an import comes next' }],
         leads: [
-          { id: 'l5', angle: 'contradiction', title: 'Many tools that say they read CSV break on a line break inside a quoted cell.', tether: 'If a title held a line break, the export could be right and still fail to import.',
+          { id: 'l5', check: { outcome: 'not_supported', note: 'Neither title has a line break, so nothing in this export trips over it.' }, angle: 'contradiction', title: 'Many tools that say they read CSV break on a line break inside a quoted cell.', tether: 'If a title held a line break, the export could be right and still fail to import.',
             source: { kind: 'url', url: 'https://www.rfc-editor.org/rfc/rfc4180#section-2', label: 'rfc-editor.org · RFC 4180, section 2' },
             dossier: { found: 'The standard allows line breaks in quoted cells; many readers do not.', why: 'It is the gap between correct and compatible.', next: 'Whether either title contains a line break.' } },
-          { id: 'l6', angle: 'inversion', title: 'Some exports avoid quoting entirely by stripping commas and quotes from the text.', tether: 'It is the opposite of what the job asks: keep every comma and quote.',
+          { id: 'l6', check: { outcome: 'not_supported', note: 'Stripping commas and quotes would change both titles; the job forbids losing them.' }, angle: 'inversion', title: 'Some exports avoid quoting entirely by stripping commas and quotes from the text.', tether: 'It is the opposite of what the job asks: keep every comma and quote.',
             source: { kind: 'message', role: 'CSV specialist', label: 'the CSV specialist’s question' },
             dossier: { found: 'Stripping is common in quick scripts.', why: 'It names the shortcut the Crew must not take.', next: 'Nothing.' } },
-          { id: 'l7', angle: 'future', title: 'Once an export is trusted, people ask for an import of the same file.', tether: 'The format chosen now becomes the format an import must read.',
+          { id: 'l7', check: { outcome: 'not_supported', note: 'Nothing in this job asks for an import; the format chosen still suits one later.' }, angle: 'future', title: 'Once an export is trusted, people ask for an import of the same file.', tether: 'The format chosen now becomes the format an import must read.',
             source: { kind: 'url', url: 'https://en.wikipedia.org/wiki/Comma-separated_values', label: 'wikipedia.org · Comma-separated values' },
             dossier: { found: 'Exports and imports tend to arrive as a pair.', why: 'It argues for a format an import can trust.', next: 'Keep it for the next request.' } }
         ] }
@@ -102,21 +109,21 @@
       { summary: 'Explored the ground around reaching search: the shortcut the web settled on, who single-key shortcuts get in the way of, how apps teach a key, and a way in that needs no key at all.',
         angles: [{ key: 'history', signal: 'strong: / became the web’s search key' }, { key: 'human', signal: 'single-key shortcuts and assistive tech' }, { key: 'adjacent', signal: 'games print the key on the button' }, { key: 'inversion', signal: 'no shortcut at all' }],
         leads: [
-          { id: 'r1', angle: 'history', title: 'Web apps from GitHub to Gmail settled on / to jump to search.', tether: 'The room is choosing a key for search; people may already know this one.',
+          { id: 'r1', dossier: { found: 'GitHub, Gmail and YouTube all move focus to search on /.', why: 'People may already know the key.', next: 'Whether / is free in this app.' }, check: { outcome: 'supported', note: 'GitHub’s and Gmail’s published shortcut lists both use / for search.', evidence: { label: 'GitHub Docs: keyboard shortcuts', url: 'https://docs.github.com/en/get-started/accessibility/keyboard-shortcuts' } }, angle: 'history', title: 'Web apps from GitHub to Gmail settled on / to jump to search.', tether: 'The room is choosing a key for search; people may already know this one.',
             source: { kind: 'url', url: 'https://docs.github.com/en/get-started/accessibility/keyboard-shortcuts', label: 'docs.github.com · Keyboard shortcuts' } },
-          { id: 'r2', angle: 'human', title: 'Single-key shortcuts must be possible to turn off or remap for people using speech input.', tether: 'A / shortcut is a single-key shortcut.',
+          { id: 'r2', dossier: { found: 'WCAG 2.1 success criterion 2.1.4 asks that single-key shortcuts can be turned off or remapped.', why: 'A / shortcut is exactly that kind.', next: 'Put the setting in the plan.' }, check: { outcome: 'supported', note: 'Single-key shortcuts must be possible to turn off or remap, so the setting goes in the plan.', evidence: { label: 'WCAG 2.1, character key shortcuts', url: 'https://www.w3.org/WAI/WCAG21/Understanding/character-key-shortcuts.html' } }, angle: 'human', title: 'Single-key shortcuts must be possible to turn off or remap for people using speech input.', tether: 'A / shortcut is a single-key shortcut.',
             source: { kind: 'url', url: 'https://www.w3.org/WAI/WCAG21/Understanding/character-key-shortcuts.html', label: 'w3.org · Character key shortcuts' } },
-          { id: 'r3', angle: 'inversion', title: 'Instead of a shortcut, open search from a command palette that already has a key.', tether: 'Reaching search might need no new key at all.',
+          { id: 'r3', dossier: { found: 'Editors open a command palette with one shortcut and search inside it.', why: 'Search might need no key of its own.', next: 'Whether the palette is reachable without a key.' }, check: { outcome: 'not_supported', note: 'A command palette still needs a key to open, so it doesn’t replace the shortcut.' }, angle: 'inversion', title: 'Instead of a shortcut, open search from a command palette that already has a key.', tether: 'Reaching search might need no new key at all.',
             source: { kind: 'url', url: 'https://en.wikipedia.org/wiki/Command_palette', label: 'wikipedia.org · Command palette' } },
-          { id: 'r4', angle: 'adjacent', title: 'Games print the key for an action right on its button.', tether: 'The visible Search button could teach the shortcut.',
+          { id: 'r4', dossier: { found: 'Games and some editors print an action’s key on its button.', why: 'The button can teach the shortcut to people who never read a list.', next: 'How the key reads on a small button.' }, check: { outcome: 'supported', note: 'A key printed on the button reads at the size of the Search button in both themes tried.', evidence: { label: 'Wikipedia: keyboard shortcut', url: 'https://en.wikipedia.org/wiki/Keyboard_shortcut' } }, angle: 'adjacent', title: 'Games print the key for an action right on its button.', tether: 'The visible Search button could teach the shortcut.',
             source: { kind: 'url', url: 'https://en.wikipedia.org/wiki/Keyboard_shortcut', label: 'wikipedia.org · Keyboard shortcut' } }
         ] },
       { summary: 'A second pass, asked for by Product, around how people find a shortcut they don’t know yet.', stopReason: 'new searches kept returning shapes it had already seen, so it stopped rather than pad the list.',
         angles: [{ key: 'human', signal: 'a hint at the moment of need' }, { key: 'adjacent', signal: 'menus that show their keys' }, { key: 'future', signal: 'nothing new' }],
         leads: [
-          { id: 'r5', angle: 'human', title: 'People learn a shortcut when it is shown at the moment they use the slow way.', tether: 'Clicking the Search button is that moment.',
+          { id: 'r5', dossier: { found: 'Shortcuts shown at the moment someone uses the slow way are learned more often.', why: 'Clicking Search is that moment.', next: 'A hint on hover or after a click.' }, check: { outcome: 'supported', note: 'Discoverability guidance puts the hint at the moment of the slow action, which the hover card does.', evidence: { label: 'Wikipedia: discoverability', url: 'https://en.wikipedia.org/wiki/Discoverability' } }, angle: 'human', title: 'People learn a shortcut when it is shown at the moment they use the slow way.', tether: 'Clicking the Search button is that moment.',
             source: { kind: 'url', url: 'https://en.wikipedia.org/wiki/Discoverability', label: 'wikipedia.org · Discoverability' } },
-          { id: 'r6', angle: 'adjacent', title: 'Desktop menus list each item’s key beside it.', tether: 'A hover card on the Search button could do the same.',
+          { id: 'r6', dossier: { found: 'Desktop menus list each item’s key beside it.', why: 'It is the same teaching move as the button.', next: 'Nothing new beyond the hover card.' }, check: { outcome: 'not_supported', note: 'This app has no menu for search, so the hover card already covers it.' }, angle: 'adjacent', title: 'Desktop menus list each item’s key beside it.', tether: 'A hover card on the Search button could do the same.',
             source: { kind: 'url', url: 'https://en.wikipedia.org/wiki/Menu_(computing)', label: 'wikipedia.org · Menu' } }
         ] }
     ]
@@ -147,8 +154,12 @@
   function say(r, body, o) { var m = C().appendMessage(r.id, Object.assign({ senderKind: 'coordinator', senderName: WG().leadName(r), messageType: 'message', body: body }, o || {})); return m; }
   function fail(code) { if (active) active.error = code; stop(); render(); }
   function render() { var c = ctx(); c.renderApp(); c.renderOverlays(); }
+  /* the n-th pass this recording asked for, by the id its request returned: a pass you asked for in between never shifts
+     the script (R3, M1) */
+  function passOf(r, n) { var w = WG().engine.state(r), id = active && active.passIds ? active.passIds[n] : null; return w && id ? w.passes.filter(function (x) { return x.id === id; })[0] || null : null; }
   function deliverPass(r, n) {
-    var w = WG().engine.state(r), pass = w.passes[n], spec = clone(PASSES[active.flow][n]);
+    var pass = passOf(r, n); if (!pass) return { ok: true };
+    var spec = clone(PASSES[active.flow][n]);
     spec.leads.forEach(function (l) {
       if (l.source.kind !== 'message') return;
       /* a lead that grew from the message asking for this pass cites that message; else the run's first words */
@@ -196,22 +207,29 @@
     active.runId = r.id;
     begin(r, 'crew');
   });
-  /* the run starts: the Wonderer's first pass starts with it, and the one who talks to you starts grilling you */
+  /* the run starts: the Wonderer's first pass starts with it, and the one who talks to you starts grilling you. Each
+     switch is respected (R6): with the Wonderer removed its steps are skipped, with Grill Me off nobody grills you */
   function begin(r, flow) {
-    WG().startPass(r, { kind: 'start' });
-    var res = WG().begin('run:' + r.id, { by: WG().leadRole(r), subject: r.purpose, tree: clone(GRILL[flow]), cap: 25 });
-    if (!res.ok) return fail(res.error);
+    var wg = WG(); active.passIds = [];
+    if (wg.wondererP(r)) {
+      var p1 = wg.startPass(r, { kind: 'start' }); active.passIds[0] = p1.ok ? p1.pass.id : null;
+      /* the recording asks for its one further pass itself; the leads it checks itself stay with it */
+      wg.reservePasses(r, 1); wg.scriptChecks(r, flow === 'room' ? ['r2', 'r3'] : ['l1', 'l5']);
+    }
+    wg.setMidRunFixture(r, MIDRUN[flow]);
+    if (wg.grillOn(r)) { var res = wg.begin('run:' + r.id, { by: wg.leadRole(r), subject: r.purpose, tree: clone(GRILL[flow]) }); if (!res.ok) return fail(res.error); }
     active.at = { start: Date.now() };
     arm(); render();
   }
+  function hasW(r) { return !!WG().engine.state(r); }
   function envelope(r) { return { epoch: r.stopEpoch, sourceHash: r.crew.input.sourceHash }; }
   function crewTick(r) {
-    var W = window.PM56_CREW, wg = WG(), w = wg.engine.state(r), s = r.grill;
+    var W = window.PM56_CREW, wg = WG(), s = r.grill;
     /* the interview: the fact research finds, while you answer round 1 */
     if (s && s.tree.some(function (n) { return n.id === FACTS.crew[0] && n.state === 'researching'; }) && at('fact', FACTS.crew[2])) { wg.factFound('run:' + r.id, FACTS.crew[0], FACTS.crew[1]); render(); return; }
-    wg.pump(r);
+    if (hasW(r)) wg.pump(r);
     /* the Wonderer explores alongside, from the start */
-    if (w.passes[0] && w.passes[0].status === 'exploring' && at('pass1', 2600)) { if (!deliverPass(r, 0).ok) return fail('pass_1'); render(); return; }
+    if (passOf(r, 0) && passOf(r, 0).status === 'exploring' && at('pass1', 2600)) { if (!deliverPass(r, 0).ok) return fail('pass_1'); render(); return; }
     if (wg.holds(r) || r.status === 'paused') return;
     /* a later session gates only its own step: everything else in the script keeps going */
     if (r.status !== 'running') { if (r.status === 'completed') stop(); return; }
@@ -230,6 +248,7 @@
     var steps = [], p = function (i) { return r.participants[i]; }, key = 'run:' + r.id;
     var decide = function (x, when) {
       return { wait: 650, run: function (r, W, wg) {
+        if (!hasW(r) || !wg.engine.lead(r, x[0])) return true;
         var res = wg.dispose(r, x[0], x[1], x[2]); if (!res.ok) return res;
         var l = wg.engine.lead(r, x[0]);
         say(r, 'Lead ' + l.n + ', “' + l.title.replace(/\.$/, '') + '”: ' + ({ explore: 'explore', use: 'use', set_aside: 'set aside' })[x[1]] + '. ' + x[2] + (x[1] === 'explore' ? ' It becomes a read-only part for the ' + p(x[3].slot).role + '.' : ''));
@@ -237,31 +256,38 @@
         return true;
       } };
     };
-    var claim = function (id) { return { wait: 650, run: function (r, W) { return W.claim(r.id, id, envelope(r)); } }; };
-    var deliver = function (id) { return { wait: 700, run: function (r, W) { var x = W.deliver(r.id, id, W.payload(r.id, id)); WG().pump(r); return x; } }; };
+    /* an exploration part exists only if its lead was explored (no Wonderer, no exploration parts) */
+    var has = function (r, id) { return r.crew.assignments.some(function (a) { return a.id === id; }); };
+    var claim = function (id) { return { wait: 650, run: function (r, W) { if (!has(r, id)) return true; return W.claim(r.id, id, envelope(r)); } }; };
+    var deliver = function (id) { return { wait: 700, run: function (r, W) { if (!has(r, id)) return true; var x = W.deliver(r.id, id, W.payload(r.id, id)); if (hasW(r)) WG().pump(r); return x; } }; };
     /* the first pass arrived before the split; the Coordinator decides each of its leads while it splits the job */
-    steps.push({ wait: 500, run: function (r) { if (!WG().engine.state(r).passes[0] || WG().engine.state(r).passes[0].status === 'exploring') return 'later'; say(r, 'Thanks, that settles it. Before I split the job I’m deciding each of the Wonderer’s four leads.'); return true; } });
+    steps.push({ wait: 500, run: function (r) { if (!hasW(r)) return true; if (!passOf(r, 0) || passOf(r, 0).status === 'exploring') return 'later'; say(r, 'Thanks, that settles it. Before I split the job I’m deciding each of the Wonderer’s four leads.'); return true; } });
     CREW_DECIDE.forEach(function (x) { steps.push(decide(x)); });
     steps.push(claim('normalize'), claim('quoting'));
     /* both slots are taken, so the pass the CSV specialist asks for queues behind the parts (steer 2026-10-20) */
     steps.push({ wait: 800, run: function (r, W, wg) {
-      var wp = wg.wondererP(r);
+      var wp = wg.wondererP(r); if (!wp) return true;
       var m = C().appendMessage(r.id, { senderKind: 'participant', senderId: p(1).id, senderName: p(1).role, messageType: 'request', recipientIds: [wp.id], body: 'Wonderer, look wider around line breaks inside a cell: what do other tools do with them?' });
-      return wg.startPass(r, { kind: 'participant', id: p(1).id, name: p(1).role }, 'line breaks inside a cell', m.id);
+      var res = wg.startPass(r, { kind: 'participant', id: p(1).id, name: p(1).role }, 'line breaks inside a cell', m.id, { scripted: true });
+      if (res.ok) active.passIds[1] = res.pass.id;
+      return res;
     } });
     steps.push({ wait: 900, run: function (r, W, wg) {
       var m = C().appendMessage(r.id, { senderKind: 'participant', senderId: p(1).id, senderName: p(1).role, messageType: 'message', body: 'Checking the quoting cases against RFC 4180, as the Coordinator said: commas, quotes and line breaks each come back unchanged.' });
-      wg.engine.takeUp(r, 'l2', m.id, { id: p(1).id }); return true;
+      if (hasW(r) && wg.engine.lead(r, 'l2')) wg.engine.takeUp(r, 'l2', m.id, { id: p(1).id }); return true;
     } });
     steps.push(deliver('normalize'), deliver('quoting'), claim('explore-l1'));
     /* pass 2 lands; the Coordinator decides each lead on delivery */
-    steps.push({ wait: 1800, run: function (r) { var w = WG().engine.state(r); if (w.passes[1].status !== 'exploring') return w.passes[1].status === 'queued' ? 'later' : true; return deliverPass(r, 1); } });
-    steps.push({ wait: 500, run: function (r) { say(r, 'The Wonderer’s second pass is in. Deciding its three leads now.'); return true; } });
+    steps.push({ wait: 1800, run: function (r) { var q = passOf(r, 1); if (!q) return true; if (q.status !== 'exploring') return q.status === 'queued' ? 'later' : true; return deliverPass(r, 1); } });
+    steps.push({ wait: 500, run: function (r) { var q = passOf(r, 1); if (q && q.status === 'delivered') say(r, 'The Wonderer’s second pass is in. Deciding its three leads now.'); return true; } });
     CREW_DECIDE2.forEach(function (x) { steps.push(decide(x)); });
     /* a later decision asked mid-run: its own small round and What we agreed, gating only the export part */
     steps.push({ wait: 700, run: function (r) {
+      /* with Grill Me off a decision only you can make would reach you as the ordinary needs-you prompt (DL-138);
+         this recording's file needs none, so it goes on */
+      if (!WG().grillOn(r)) return true;
       say(r, 'One decision for you before the Integrator writes the file. The explorations keep going while you answer; only the export part waits.');
-      var res = WG().begin(key, { by: 'coordinator', subject: 'the export', tree: clone(LATER), cap: 25, gate: 'part:export', gateLabel: 'the export part' });
+      var res = WG().begin(key, { by: 'coordinator', subject: 'the export', tree: clone(LATER), gate: 'part:export', gateLabel: 'the export part' });
       return res.ok ? true : res;
     } });
     steps.push(deliver('explore-l1'), claim('explore-l5'), deliver('explore-l5'), claim('export'));
@@ -303,16 +329,22 @@
     if (!active.begun) { active.begun = true; begin(r, 'room'); return; }
     if (s && s.tree.some(function (n) { return n.id === FACTS.room[0] && n.state === 'researching'; }) && at('fact', FACTS.room[2])) { wg.factFound('run:' + r.id, FACTS.room[0], FACTS.room[1]); render(); return; }
     if (r.status !== 'running') { if (r.status === 'completed') stop(); return; }
+    /* no Wonderer on this room (you removed it): its steps are skipped (R6) */
+    if (!w) return;
     var cr = r.chatRoom, replies = r.messages.filter(function (m) { return m.senderKind === 'participant' && m.roomRound; });
-    /* a Chat Room never waits for the Wonderer (steer 2026-10-20): round 1 starts on time and the first pass joins the
-       room when it is ready, between turns (here, once the first reply of round 1 has landed) */
-    if (w.passes[0] && w.passes[0].status === 'exploring' && replies.length >= 1 && at('pass1', 3000)) { deliverPass(r, 0); render(); return; }
-    if (w.passes[1] && w.passes[1].status === 'exploring' && replies.length >= 5 && at('pass2', 1800)) { deliverPass(r, 1); render(); return; }
-    /* the Moderator decides each lead as it arrives, one per tick, between turns */
-    var und = w.leads.filter(function (l) { return !l.disposition && wg.engine.visible(r, l.passId); })[0];
-    if (und && ROOM_DECIDE[und.id] && at('decide:' + und.id, 700)) {
-      var x = ROOM_DECIDE[und.id], res = wg.dispose(r, und.id, x[0], x[1]); if (!res.ok) return fail(res.error);
-      say(r, 'Lead ' + und.n + ': ' + ({ explore: 'explore', use: 'use', set_aside: 'set aside' })[x[0]] + '. ' + x[1] + (x[0] === 'explore' ? ' Engineering checks it in round 2.' : ''));
+    /* a Chat Room never waits for the Wonderer: round 1 starts on time and the first pass joins the room when it is
+       ready, between turns (here, once the first reply of round 1 has landed) */
+    var p1 = passOf(r, 0), p2 = passOf(r, 1);
+    if (p1 && p1.status === 'exploring' && replies.length >= 1 && at('pass1', 3000)) { deliverPass(r, 0); render(); return; }
+    if (p2 && p2.status === 'exploring' && replies.length >= 5 && at('pass2', 1800)) { deliverPass(r, 1); render(); return; }
+    /* the Moderator decides each lead as it arrives, between turns: every lead of a pass on the tick it lands, so no
+       lead is still undecided when the room is summed up (m1) */
+    var und = w.leads.filter(function (l) { return !l.disposition && wg.engine.visible(r, l.passId) && ROOM_DECIDE[l.id]; });
+    if (und.length && at('decide:' + und[0].passId, 700)) {
+      for (var i = 0; i < und.length; i++) {
+        var l = und[i], x = ROOM_DECIDE[l.id], res = wg.dispose(r, l.id, x[0], x[1]); if (!res.ok) return fail(res.error);
+        say(r, 'Lead ' + l.n + ': ' + ({ explore: 'explore', use: 'use', set_aside: 'set aside' })[x[0]] + '. ' + x[1] + (x[0] === 'explore' ? ' Engineering checks it in round 2.' : ''));
+      }
       render(); return;
     }
     /* the helpers' replies that take up a lead link to it; checks come back in round 2 */
@@ -321,12 +353,13 @@
       active.seen[m.id] = 1;
       var slot = r.participants.findIndex(function (p) { return p.id === m.senderId; }), ids = (ROOM_TAKEUP[m.roomRound] || {})[slot] || [];
       ids.forEach(function (id) { if (wg.engine.lead(r, id)) wg.engine.takeUp(r, id, m.id, { id: m.senderId }); });
-      if (m.roomRound === 2 && slot === 2 && wg.engine.lead(r, 'r2').research && wg.engine.lead(r, 'r2').research.status === 'running') wg.engine.finishResearch(r, 'r2', { outcome: 'supported', note: 'Single-key shortcuts must be possible to turn off or remap, so the setting goes in the plan.', evidence: { label: 'WCAG 2.1, character key shortcuts', url: 'https://www.w3.org/WAI/WCAG21/Understanding/character-key-shortcuts.html' } });
-      if (m.roomRound === 2 && slot === 1 && wg.engine.lead(r, 'r3') && wg.engine.lead(r, 'r3').research && wg.engine.lead(r, 'r3').research.status === 'running') wg.engine.finishResearch(r, 'r3', { outcome: 'not_supported', note: 'A command palette still needs a key to open, so it doesn’t replace the shortcut.' });
+      var lr = function (id) { var l = wg.engine.lead(r, id); return l && l.research && l.research.status === 'running' ? l : null; };
+      if (m.roomRound === 2 && slot === 2 && lr('r2')) wg.engine.finishResearch(r, 'r2', clone(lr('r2').check));
+      if (m.roomRound === 2 && slot === 1 && lr('r3')) wg.engine.finishResearch(r, 'r3', clone(lr('r3').check));
       /* Product asks the Wonderer for a second pass in round 2; it joins between turns */
-      if (m.roomRound === 2 && slot === 0 && wg.engine.state(r).passes.length === 1) wg.startPass(r, { kind: 'participant', id: m.senderId, name: 'Product' }, 'how people find a shortcut they don’t know yet', m.id, { queue: false });
+      if (m.roomRound === 2 && slot === 0 && !active.passIds[1]) { var res2 = wg.startPass(r, { kind: 'participant', id: m.senderId, name: 'Product' }, 'how people find a shortcut they don’t know yet', m.id, { queue: false, scripted: true }); if (res2.ok) active.passIds[1] = res2.pass.id; }
     });
-    /* an explored lead, and any lead you sent with Check it, is researched by a participant in the next round (CWR-041) */
+    /* an explored lead, and the lead you sent with Check it, is researched by a participant in the next round (CWR-041) */
     if (cr.round && cr.round.number === 2 && !active.researching) {
       active.researching = true;
       [['r2', 2, 'Engineering'], ['r3', 1, 'Design']].forEach(function (x) { var l = wg.engine.lead(r, x[0]); if (l && l.research && l.research.status === 'queued') wg.engine.startResearch(r, x[0], { id: r.participants[x[1]].id, name: x[2] }); });
@@ -353,19 +386,39 @@
     var s = WG().threadSession(active.threadId); if (!s) return;
     if (s.tree.some(function (n) { return n.id === FACTS.deepplan[0] && n.state === 'researching'; }) && at('fact', FACTS.deepplan[2])) { WG().factFound('thread:' + active.threadId, FACTS.deepplan[0], FACTS.deepplan[1]); render(); }
   }
+  /* the plan's steps follow what you confirmed, answer by answer, and say what is still open (R7): every offered
+     alternative of every decision has its own wording, so the written plan never contradicts What we agreed */
+  function deepSteps(a) {
+    var ans = {}, open = {};
+    a.decisions.forEach(function (d) { ans[d.id] = d.answer; });
+    a.open.forEach(function (o) { open[o.id] = o; });
+    var step = function (id, title, text, dep) { return { t: 'plan_step', plan_step_id: id, title: title, text: text, depends_on: dep || [], parallel_group_id: null, parent_step_id: null }; };
+    var where = ans['d-where'], rank = ans['d-rank'], target = ans['d-target'], fallback = ans['d-fallback'], measure = ans['d-measure'];
+    var upload = where === 'Allow an upload for big collections';
+    var whereText = !where ? 'Where search runs is still open, so this step keeps the collection on the device until you decide.' : upload ? 'Small collections stay on the device; a big one may be uploaded to the search service, as you allowed.' : 'Nothing leaves the device.';
+    var rankText = !rank ? ' Ranking is still open; results keep today’s order until you decide.' : rank === 'Rank by recency instead' ? ' Results are ranked by recency, newest first, as you chose.' : ' Today’s ranking stays as it is.';
+    var size = !target ? 'the size you leave open' : target === 'Yes, up to 10,000 items' ? '10,000 items' : target === 'Up to 100,000 items' ? '100,000 items' : 'whatever fits on the device';
+    var steps = [step('snapshot', upload ? 'Build a local snapshot, with an upload path for big collections' : 'Build a local snapshot of the collection', whereText + rankText),
+      step('search', 'Search the snapshot off the typing path', 'Keep only the newest query’s answer, so typing stays responsive up to ' + size + '.', ['snapshot'])];
+    if (fallback === 'No fallback') steps.push(step('nofallback', 'Remove the plain local filter', 'You chose no fallback, so the snapshot search is the only path once it ships.', ['search']));
+    else steps.push(step('fallback', 'Keep the plain local filter as the fallback', fallback ? 'It stays the path when the snapshot is not ready.' : 'The fallback is still open; the plain filter stays until you decide.', ['search']));
+    steps.push(measure === 'Pick a default now'
+      ? step('default', 'Choose the default now: ' + size, 'You chose to pick the default now; the plan measures it on the slowest supported device after it ships.', ['search'])
+      : step('measure', measure ? 'Measure before choosing the default' : 'Measure before choosing the default (still open)', 'On the slowest supported device, up to ' + size + '.' + (measure ? '' : ' Measuring first stays the plan until you decide.'), ['search']));
+    return steps;
+  }
   function deepWrite(tid, a) {
     var c = ctx(), t = c.state.threads.filter(function (x) { return x.id === tid; })[0], P = window.PM56_PLANS;
     c.appendMessage({ id: tid + '-writing', role: 'assistant', type: 'text', recordedExample: true, time: new Date().toISOString(), body: 'Thanks. Writing the plan from what we agreed: ' + a.decisions.length + ' decisions' + (a.open.length ? ', and ' + a.open.length + ' left open, which the plan names as open questions' : '') + '.' }, t);
     setTimeout(function () {
       if (!active || active.threadId !== tid || !P) return;
       var pid = 'wg-plan-' + (++serial), tpl = clone(P.fixture()['ap-index']), h = function (x) { return { t: 'heading', d: 2, text: x }; }, p = function (x) { return { t: 'paragraph', text: x }; };
-      var blocks = [h('Objective'), p('Offline collection search that keeps typing responsive.'), h('Decisions you made (Grill Me)'),
+      var up = a.decisions.some(function (d) { return d.id === 'd-where' && d.answer === 'Allow an upload for big collections'; }), title = up ? 'Collection search, local first' : 'Offline collection search';
+      var blocks = [h('Objective'), p(up ? 'Collection search that keeps typing responsive: local first, with an upload for big collections.' : 'Offline collection search that keeps typing responsive.'), h('Decisions you made (Grill Me)'),
         { t: 'unordered_list', items: a.decisions.map(function (d) { return d.title + ': ' + d.answer; }) }].concat(a.open.length ? [h('Left open'), { t: 'unordered_list', items: a.open.map(function (o) { return o.title + ' — ' + o.why; }) }] : [])
         .concat(a.facts.length ? [h('Looked up, not asked'), { t: 'unordered_list', items: a.facts.map(function (f) { return f.title + ': ' + f.fact; }) }] : [])
-        .concat([h('Steps'), { t: 'plan_step', plan_step_id: 'snapshot', title: 'Build a local snapshot of the collection', text: 'Nothing leaves the device; ranking stays as it is.', depends_on: [], parallel_group_id: null, parent_step_id: null },
-          { t: 'plan_step', plan_step_id: 'search', title: 'Search the snapshot off the typing path', text: 'Keep only the newest query’s answer.', depends_on: ['snapshot'], parallel_group_id: null, parent_step_id: null },
-          { t: 'plan_step', plan_step_id: 'measure', title: 'Measure before choosing the default', text: 'On the slowest supported device, up to the agreed size.', depends_on: ['search'], parallel_group_id: null, parent_step_id: null }]);
-      Object.assign(tpl, { plan_id: pid, thread_id: tid, title: 'Offline collection search', version: 1, strategy: 'Thorough', backend: 'direct', status: 'ready', current: true, view: 'rich', revisions: { 1: blocks }, grillMe: true,
+        .concat([h('Steps')]).concat(deepSteps(a));
+      Object.assign(tpl, { plan_id: pid, thread_id: tid, title: title, version: 1, strategy: 'Thorough', backend: 'direct', status: 'ready', current: true, view: 'rich', revisions: { 1: blocks }, grillMe: true,
         revisionLog: [], sources: [{ kind: 'creation', ref: 'grill-me:' + tid, note: 'Written after you confirmed What we agreed.' }], attachmentRefs: [], research: [], runHistory: [], approved: null, attention: null, wait: null, schedule: null,
         goalBinding: null, topology: null, planunits: [], unitsMaterialized: null, todosCreated: null });
       P.all()[pid] = tpl;
@@ -383,6 +436,12 @@
     if (!r) return;
     if (active.flow === 'crew') crewTick(r); else roomTick(r);
   }
+  /* how a session ended, in plain words (m2): every decision, a wrap-up, the limit, or Grill Me turned off */
+  function endedWords(s) {
+    var a = WG().grill.agreed(s), n = a.open.length, open = n ? ' ' + n + (n === 1 ? ' decision is' : ' decisions are') + ' left open.' : '';
+    return (a.endedBy === 'wrap_up' ? 'You wrapped up.' : a.endedBy === 'cap' ? 'The question limit was reached.' : a.endedBy === 'switched_off' ? 'Grill Me is off, so the questions stopped.' : 'That’s every decision.') + open + ' Read What we agreed, then Confirm.';
+  }
+  function who(pass) { return pass.by.kind === 'user' ? 'You' : pass.by.name || 'A helper'; }
   function step(c) {
     var a = active, flow = a.flow, r = current(), wg = WG();
     var key = flow === 'deepplan' ? 'thread:' + a.threadId : r ? 'run:' + r.id : '', s = key ? wg.sessionOf(key) : null;
@@ -390,31 +449,40 @@
     if (a.error) return { text: 'This recording stopped here (' + a.error.replace(/_/g, ' ') + '). Everything so far is kept. Replay starts it again.', replay: true };
     if (flow !== 'deepplan' && !r) return { text: 'Set up the ' + (flow === 'crew' ? 'Crew' : 'room') + ': the Wonderer and Grill Me are already on. Press Start.', act: { action: 'wg-demo-configure', label: 'Set it up' } };
     if (s && s.status === 'grilling') {
-      var rd = wg.grill.round(s), only = s.later ? ' Only ' + (s.gateLabel || 'that step') + ' waits; the explorations keep going.' : '';
-      return rd ? { text: (s.later ? 'A later decision: ' : 'Round ' + rd.n + ': ') + lead + ' is grilling you. Each answer is filled in with the recommended one. Change any, say Not sure, or accept them all.' + only + (rd.n === 1 && !s.later ? ' A fact it can look up is being researched, not asked.' : ''), act: { action: 'wg-open-round', label: c.state.decision ? '' : 'Answer round ' + rd.n, data: { key: key } } }
+      var rd = wg.grill.round(s), only = s.later ? ' Only ' + (s.gateLabel || 'that step') + ' waits; everything else keeps going.' : '';
+      return rd ? { text: (s.later ? 'A later decision: ' + lead + ' is grilling you before ' + (s.gateLabel || 'the next step') + '. ' : 'Round ' + rd.n + ': ' + lead + ' is grilling you. ') + 'Each answer is filled in with the recommended one; it counts once you send or accept the round. Change any, say Not sure, or accept them all.' + only + (rd.n === 1 && !s.later && s.routed.length ? ' A fact it can look up is being researched, not asked.' : ''), act: { action: 'wg-open-round', label: c.state.decision ? '' : (s.later ? 'Answer it' : 'Answer round ' + rd.n), data: { key: key } } }
         : { text: lead.charAt(0).toUpperCase() + lead.slice(1) + ' is looking a fact up. Every question left depends on it, so the session waits rather than ending early. Nothing for you yet.' };
     }
-    if (s && s.status === 'agreeing') return { text: 'That’s every decision. Read What we agreed, then Confirm. ' + (s.later ? 'Only ' + (s.gateLabel || 'that step') + ' waits for it.' : flow === 'crew' ? 'The split waits for it.' : flow === 'room' ? 'Round 1 waits for it.' : 'The plan isn’t written until then.'), act: { action: 'wg-confirm', label: 'Confirm', data: { key: key } } };
+    if (s && s.status === 'agreeing') return { text: endedWords(s) + ' ' + (s.later ? 'Only ' + (s.gateLabel || 'that step') + ' waits for it.' : flow === 'crew' ? 'The split waits for it.' : flow === 'room' ? 'Round 1 waits for it.' : 'The plan isn’t written until then.'), act: { action: 'wg-confirm', label: 'Confirm', data: { key: key } } };
     if (flow === 'deepplan') return a.planId ? { text: 'The plan is written from what you agreed. Nothing has been built. Open it from its card.', replay: true } : { text: 'Writing the plan from what you agreed.' };
     var w = wg.engine.state(r), c2 = wg.counts(r);
     if (flow === 'crew') {
-      if (r.status === 'completed') return { text: 'Done. Open the Crew’s panel: the result lists every Wonderer lead and what the Crew did with it.', act: { action: 'crew-open-work', label: 'Open Panel', data: { run: r.id } }, replay: true };
-      if (w.passes.length > 1 && w.passes[1].status === 'queued') return { text: 'The CSV specialist asked the Wonderer for a second pass. Both slots are busy, so the pass is queued behind the parts; nobody waits for it.' };
-      if (w.passes.length > 1 && w.passes[1].status === 'exploring') return { text: 'A slot freed up, so the Wonderer’s second pass is exploring. The Coordinator decides each of its leads as it arrives.' };
-      if (r.crew.assignments.some(function (x) { return x.leadId && x.status === 'running'; })) return { text: 'An explored lead is now a read-only part: a helper checks it and writes nothing. Watch its status change in place.' };
-      if (!r.crew.assignments.some(function (x) { return x.attempt; })) return { text: c2.total ? 'The Coordinator decides each Wonderer lead as it splits the job: explore, use or set aside, each with a reason you can read.' : 'The Wonderer’s first pass arrives before the split.' };
-      return { text: 'The Crew works. Its card counts the leads explored, used, set aside and waiting; the final result waits until every lead is decided and back from research.' };
+      if (r.status === 'completed') return { text: 'Done. Open the Crew’s panel: the result lists ' + (w ? 'every Wonderer lead and what the Crew did with it.' : 'what each part did.'), act: { action: 'crew-open-work', label: 'Open Panel', data: { run: r.id } }, replay: true };
+      if (r.grillPending) return { text: 'Grill Me is on now. The Coordinator questions you at the next assignment; the parts already running keep going.' };
+      var q = w && w.passes.filter(function (x) { return x.status === 'queued'; })[0], x = w && w.passes.filter(function (y) { return y.n > 1 && y.status === 'exploring'; })[0];
+      if (q) return { text: who(q) + ' asked the Wonderer for pass ' + q.n + '. Both slots are busy, so it is queued behind the parts: the team keeps working, and the final result waits for it.' };
+      if (x) return { text: 'A slot freed up, so pass ' + x.n + ' is exploring. The Coordinator decides each of its leads as it arrives.' };
+      if (r.crew.assignments.some(function (z) { return z.leadId && z.status === 'running'; })) return { text: 'An explored lead is now a read-only part: a helper checks it and writes nothing. Watch its status change in place.' };
+      if (!r.crew.assignments.some(function (z) { return z.attempt; })) return { text: !w ? 'The Coordinator splits the job. You removed the Wonderer, so there are no leads this time.' : c2.total ? 'The Coordinator decides each Wonderer lead as it splits the job: explore, use or set aside, each with a reason you can read.' : 'The Wonderer’s first pass arrives before the split.' };
+      return { text: 'The Crew works. ' + (w ? 'Its card counts the leads explored, used, set aside and undecided; the final result waits until every lead is decided and back from research.' : 'Each part is checked before it counts.') };
     }
     var cr = r.chatRoom;
-    if (r.status === 'completed') return { text: 'The room ended. Its summary lists every lead, with what the room did with it or “not taken up”.', replay: true };
-    if (!cr.roundsSoFar && !(cr.round && !cr.round.complete)) return { text: 'Start round 1. It doesn’t wait for the Wonderer: its leads join the room between turns when they are ready, and it never takes a turn.', act: { action: 'collab-room-next-round', label: 'Start round 1', data: { run: r.id } } };
-    if (cr.round && !cr.round.complete) return { text: c2.total ? 'The Wonderer’s leads joined between turns, and the Moderator decides each one as it arrives. A reply that takes up a lead links to it.' : 'Each helper speaks once. The Wonderer is still exploring alongside.' };
+    if (r.status === 'completed') return { text: 'The room ended. ' + (w ? 'Its summary lists every lead, with what the room did with it or “not taken up”.' : 'Nothing became a To-Do or Plan by itself.'), replay: true };
+    if (r.grillPending) return { text: 'Grill Me is on now. The Moderator questions you before the next round; this round goes on.' };
+    if (!cr.roundsSoFar && !(cr.round && !cr.round.complete)) return { text: 'Start round 1. ' + (w ? 'It doesn’t wait for the Wonderer: its leads join the room between turns when they are ready, and it never takes a turn.' : 'Each helper speaks once.'), act: { action: 'collab-room-next-round', label: 'Start round 1', data: { run: r.id } } };
+    if (cr.round && !cr.round.complete) return { text: w && c2.total ? 'The Wonderer’s leads joined between turns, and the Moderator decides each one as it arrives. A reply that takes up a lead links to it.' : w ? 'Each helper speaks once. The Wonderer is still exploring alongside.' : 'Each helper speaks once.' };
+    var undecided = w ? w.leads.filter(function (l) { return !l.disposition && wg.engine.visible(r, l.passId); }).length : 0;
     if (cr.roundsSoFar === 1) {
-      var r3 = wg.engine.lead(r, 'r3');
-      if (r3 && !r3.research) return { text: 'The Moderator set lead 3 aside. Check it sends it to research anyway: only you can do that.', act: { action: 'wg-check-it', label: 'Check lead 3', data: { run: r.id, lead: 'r3' } } };
-      return { text: 'Start round 2: Engineering checks the explored lead, and Design checks the one you sent.', act: { action: 'collab-room-next-round', label: 'Start round 2', data: { run: r.id } } };
+      /* the guide reads lead 3's real state before it says what the Moderator did with it (M3) */
+      var r3 = w && wg.engine.lead(r, 'r3');
+      if (r3 && !r3.research && r3.disposition) return { text: 'The Moderator ' + (r3.disposition.kind === 'set_aside' ? 'set lead 3 aside' : r3.disposition.kind === 'use' ? 'is using lead 3 as a hypothesis' : 'chose to explore lead 3') + '. Check it sends it to research anyway: only you can do that.', act: { action: 'wg-check-it', label: 'Check lead 3', data: { run: r.id, lead: 'r3' } } };
+      if (r3 && !r3.disposition && !r3.research) return { text: 'The Moderator decides lead 3 as it arrives. You can Check any lead now, whatever the room decides.' };
+      return { text: 'Start round 2' + (w ? ': Engineering checks the explored lead' + (r3 && r3.research && r3.research.via === 'check_it' ? ', and Design checks the one you sent.' : '.') : '.'), act: { action: 'collab-room-next-round', label: 'Start round 2', data: { run: r.id } } };
     }
-    if (cr.roundsSoFar === 2 && !cr.summary) return { text: 'Sum it up: the summary lists every lead, even the ones the room never took up. Nothing waits on a lead.', act: { action: 'collab-room-summarize', label: 'Summarize Now', data: { run: r.id } } };
+    if (cr.roundsSoFar === 2 && !cr.summary) {
+      if (undecided) return { text: 'The Moderator is deciding the last ' + (undecided === 1 ? 'lead' : undecided + ' leads') + ' as they arrive. Nothing waits on a lead: you can sum up now or in a moment.' , act: { action: 'collab-room-summarize', label: 'Summarize Now', data: { run: r.id } } };
+      return { text: 'Sum it up: the summary lists every lead' + (w ? ', each with what the room did with it.' : '.') + ' Nothing waits on a lead.', act: { action: 'collab-room-summarize', label: 'Summarize Now', data: { run: r.id } } };
+    }
     return { text: 'End the discussion. Nothing becomes a To-Do or Plan by itself.', act: { action: 'room-finish', label: 'End discussion', data: { run: r.id } } };
   }
   function guide(c) {

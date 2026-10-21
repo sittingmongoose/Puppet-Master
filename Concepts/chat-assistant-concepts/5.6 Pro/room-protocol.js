@@ -42,7 +42,9 @@
  function roundGate(r){
   const WG=window.PM56_WG;if(!WG)return null;
   if(WG.holds(r))return 'grill_me_waits_for_confirm';
-  if(WG.stepHeld(r,'round:'+((r.chatRoom.roundsSoFar||0)+1)))return 'grill_me_waits_for_confirm';
+  const nx=(r.chatRoom.roundsSoFar||0)+1;
+  /* (a pending Grill Me is taken by beginRound itself: pressing Next Round starts the interview for that round) */
+  if(WG.stepHeld(r,'round:'+nx))return 'grill_me_waits_for_confirm';
   return null;
  }
  function beginRound(id,x){
@@ -50,6 +52,8 @@
   if(s.round&&!s.round.complete)return {ok:true,reused:true,round:s.round.number};
   const max=r.config.turnPolicy==='ask_everyone_once'?1:+r.config.maxRounds;
   if(s.roundsSoFar>=max)return fail('round_limit_reached');
+  /* Grill Me turned on mid-run starts at the next round boundary: here, before this round (CWR-042, m5) */
+  const WGr=window.PM56_WG;if(WGr&&WGr.takeMidRun(r)){const nx=(s.roundsSoFar||0)+1;WGr.beginMidRun(r,'round:'+nx,'round '+nx);}
   const rg=roundGate(r);if(rg)return fail(rg);
   const addressed=(s.pendingRecipientIds||r.participants.map(p=>p.id)).filter(pid=>!wonderer(r.participants.find(p=>p.id===pid)));s.pendingRecipientIds=null;
   s.round={number:s.roundsSoFar+1,participantIds:addressed.slice(),messages:[],complete:false,replyTo:s.lastUserMessageId};
@@ -142,9 +146,14 @@
   const WG=window.PM56_WG,leads=WG&&WG.engine.state(r)?WG.listingText(r):[];
   const body=s.input.summary+(leads.length?'\n\nThe Wonderer’s leads, and what the room did with each:\n'+leads.map(t=>'- '+t.replace(/^\d+\. /,'')).join('\n'):'');
   const m=C.appendMessage(id,{senderKind:'coordinator',senderId:'moderator:'+id,senderName:'Moderator',messageType:'response',body});m.roomConclusion=true;freeze(m);
-  s.summary={round:s.roundsSoFar,messageId:m.id};return {ok:true,messageId:m.id};
+  s.summary={round:s.roundsSoFar,messageId:m.id,leads:leads.slice()};return {ok:true,messageId:m.id};
  }
- function finish(id){const r=run(id);if(!owns(id))return fail('room_missing');if(r.status==='completed')return {ok:true,reused:true};if(r.status!=='running'||r.chatRoom.pendingRecipientIds||!r.chatRoom.summary||!r.chatRoom.round?.complete||r.chatRoom.summary.round!==r.chatRoom.roundsSoFar)return fail('current_summary_required');r.status='completed';r.completedAt=new Date().toISOString();r.stopEpoch++;r.participants.forEach(p=>{p.status='done';p.outcome='completed';p.current='Discussion complete';});return {ok:true};}
+ function finish(id){const r=run(id);if(!owns(id))return fail('room_missing');if(r.status==='completed')return {ok:true,reused:true};if(r.status!=='running'||r.chatRoom.pendingRecipientIds||!r.chatRoom.summary||!r.chatRoom.round?.complete||r.chatRoom.summary.round!==r.chatRoom.roundsSoFar)return fail('current_summary_required');/* a lead the Moderator decided after the summary was written is listed again as the room ends, so no lead it decided
+     reads "not taken up" (m1); the summary itself stays as it was written */
+  const WGf=window.PM56_WG,now=WGf&&WGf.engine.state(r)?WGf.listingText(r):[],was=(r.chatRoom.summary.leads||[]);
+  const changed=now.filter(t=>was.indexOf(t)<0);
+  if(changed.length){const m=C.appendMessage(id,{senderKind:'coordinator',senderId:'moderator:'+id,senderName:'Moderator',messageType:'response',body:'Before the room ends: '+(changed.length===1?'one of the Wonderer’s leads was':changed.length+' of the Wonderer’s leads were')+' decided after the summary.\n'+changed.map(t=>'- '+t.replace(/^\d+\. /,'')).join('\n')});m.roomLeadsUpdate=true;freeze(m);}
+  r.status='completed';r.completedAt=new Date().toISOString();r.stopEpoch++;r.participants.forEach(p=>{p.status='done';p.outcome='completed';p.current='Discussion complete';});return {ok:true};}
  function promotionRequest(id,mid,target){const r=run(id),m=r?.messages.find(m=>m.id===mid);return r&&m?{runId:id,messageId:mid,target,threadId:r.threadId,definitionRevision:r.definitionRevision,messageHash:hash({id:m.id,body:m.body,senderId:m.senderId})}:null;}
  function validatePromotion(x,target){
   const r=run(x?.runId);if(!owns(r?.id)||!['running','completed'].includes(r.status))return fail('room_unavailable');

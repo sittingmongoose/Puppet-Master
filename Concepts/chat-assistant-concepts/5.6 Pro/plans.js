@@ -2061,6 +2061,8 @@
 
     'pd-revise': function(ctx,btn){
       var r=rec(btn.dataset.id); if(!r || r.status!=='ready') return;
+      /* a Grill Me interview on this plan holds its next revision until you confirm what you agreed (APR-072) */
+      if(window.PM56_WG&&window.PM56_WG.threadHolds&&window.PM56_WG.threadHolds(r.thread_id,'revise')){ ctx.toast('Revise waits for your Confirm','The assistant is grilling you about this plan. The next revision follows what you agree, once you confirm it.'); return; }
       RT.composer.destination = reviseTarget(r);
       ctx.toast('Composer targeted at '+r.title+' · V'+r.version);
       ctx.renderApp();
@@ -2308,7 +2310,12 @@
       var before=questionBudget(wf);
       r.grillMe=!before.grill_me_enabled;
       var after=setGrill(wf, r.grillMe);
-      openDlg(ctx,'info',r.plan_id); ctx.renderApp();
+      /* DL-218 (APR-072): Grill Me on means the assistant grills you, round by round, before the next revision; off
+         ends that interview like Wrap up (PM56_WG) */
+      var WGp=window.PM56_WG;
+      if(WGp&&WGp.planGrill){ if(r.grillMe){ ctx.state.dialog=null; WGp.planGrill(r); } else WGp.planGrillOff(r); }
+      if(!(WGp&&r.grillMe)) openDlg(ctx,'info',r.plan_id);
+      ctx.renderApp();
       ctx.toast(r.grillMe?'Grill Me on':'Grill Me off',
         'Effective limit '+before.effective_limit+' → '+after.effective_limit+
         '; asked stayed at '+after.questions_asked+' and no answer was deleted.');

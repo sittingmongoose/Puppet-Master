@@ -67,8 +67,8 @@
   /* ---------------------------------------------------------------- the view model (A1-50) */
   function qmaxOf(b, r) {
     var qb = b.questionBank || {}, base = Number(qb.baselineLimit) || 20, ext = Number(qb.grillExtension) || 25, on = !!qb.grillMeEnabled;
-    /* DL-218: the Coordinator's grilling questions come out of the same shared allowance */
-    var asked = (qb.askedIds || []).length + (WG() && WG().sessionsOf ? WG().sessionsOf(r).reduce(function (t, s) { return t + (s.asked || 0); }, 0) : 0);
+    /* DL-218: the Coordinator's grilling questions are charged to this same bank (one counter, M6/R2) */
+    var asked = (qb.askedIds || []).length;
     return { cls: 'collab-qmax', text: on ? 'Maximum questions: ' + (base + ext) + ' (' + base + ' + Grill Me ' + ext + ')' : 'Maximum questions: ' + base,
       asked: asked, limit: on ? base + ext : base, grill: on, extension: ext, canToggle: r.status === 'running' || r.status === 'paused' };
   }
@@ -111,6 +111,8 @@
     var ws = WG() && r.wonderer ? WG().gate(r) : { ok: true };
     if (b.synthesis) vm.synthesize = { state: 'done', planId: b.synthesis.planId, title: titleOf(b.synthesis.selected), dissent: b.synthesis.dissentPreserved };
     else if (b.phase === 'synthesis' && r.status === 'running' && !ws.ok) vm.synthesize = { state: 'waiting', wonderer: true, code: ws.code, count: ws.count, reason: ws.reason };
+    /* Grill Me turned on late gates Write the plan until you confirm that session (CWR-042) */
+    else if (b.phase === 'synthesis' && r.status === 'running' && WG() && WG().stepHeld(r, 'synthesis')) vm.synthesize = { state: 'waiting', reason: 'it waits for your Confirm of what you agreed with the Coordinator.' };
     else if (b.phase === 'synthesis' && r.status === 'running') vm.synthesize = { state: 'ready' };
     else vm.synthesize = { state: 'waiting', reason: r.status === 'paused' ? 'Resume the run first.' : r.status !== 'running' ? 'This run has stopped.' : 'after the last vote' };
   }

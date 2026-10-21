@@ -113,6 +113,14 @@
   /* Grill Me (DL-218): a grilling round's flow carries flow.grill {key, by, byName, round, count, asked, cap}; the round
      leaves through PM56_WG.grillAnswered, never the stock receipt */
   function grillOf(flow) { return flow && flow.grill ? flow.grill : null; }
+  /* Accept all says what it does (m3): every recommendation while you have touched nothing, "the rest" once you have,
+     and "send" when every answer is yours */
+  function acceptLabel(qs, short) {
+    var touched = qs.filter(function (q) { return q.touched; }).length;
+    if (!touched) return qs.length === 1 ? 'Accept it' : (short ? 'Accept all ' + qs.length : 'Accept all ' + qs.length + ' recommended');
+    if (touched >= qs.length) return qs.length === 1 ? 'Send it' : 'Send all ' + qs.length + ' answers';
+    return 'Accept the rest';
+  }
   function hintHtml(ctx, o) {
     var rec = o.rec ? '<span class="qs-rec">' + iconOf(ctx, 'check', 11) + 'Recommended</span>' : '';
     return rec + (o.hint ? (rec ? '<span class="qs-rec-sep"> · </span>' : '') + ctx.esc(o.hint) : '');
@@ -259,7 +267,7 @@
         { a: 'qs-wrap-up', label: 'Wrap up', kind: 'text' },
         { a: 'skip-question', label: 'Not sure', kind: 'text' },
         { a: 'prev-question', label: 'Back', kind: 'soft', icon: 'left', disabled: idx === 0 },
-        { a: 'qs-accept-round', label: 'Accept all ' + qs.length, kind: 'soft' },
+        { a: 'qs-accept-round', label: acceptLabel(qs, true), kind: 'soft' },
         idx === last
           ? { a: 'submit-questionnaire', label: 'Send answers', kind: 'primary', icon: 'send', after: true }
           : { a: 'next-question', label: 'Next', kind: 'primary', icon: 'chevron', after: true }
@@ -1096,14 +1104,31 @@
     var st = qsState(ctx);
     /* Grill Me (DL-218, CWR-043): the round bar names who is grilling you and the round; the foot adds Accept all (every
        recommended answer you have not changed) and Wrap up (end the interview now) */
-    var g = m.grill, N = window.PM56_NEON;
+    var g = m.grill, N = window.PM56_NEON, W = window.PM56_WG;
+    /* the counter is the run's one QuestionBank, read live (a later session goes on counting) */
+    var live = g && W && W.sessionOf ? W.sessionOf(g.key) : null, cnt = live && W.grill && W.grill.counter ? W.grill.counter(live) : { asked: g ? g.asked : 0, limit: g ? g.cap : 0 };
+    /* the map starts folded so the question stays in view; the bar carries its one-line tally either way */
+    var mapOpen = g ? !!ctx.state.wgMapOpen : false;
+    var tally = g && W && W.treeTally ? W.treeTally(g.key) : '';
     var bar = g ? '<div class="qs-grill-bar" data-k="qs-grill-bar:' + ctx.esc(g.key) + ':' + g.round + '"><span class="qs-grill-kettle" aria-hidden="true">' + (N && N.icon ? N.icon('grill', 16, 'nx-still') : iconOf(ctx, 'grill', 16)) + '</span>'
-      + '<span class="qs-grill-who"><b>The ' + ctx.esc(String(g.byName || '').toLowerCase() === 'assistant' ? 'assistant' : g.byName) + ' is grilling you</b><span class="qs-grill-meta">Round ' + g.round + ' · ' + g.count + (g.count === 1 ? ' decision' : ' decisions') + ' ready · '
-      + Math.min(g.asked, g.cap) + ' of up to ' + g.cap + ' questions asked</span></span></div>' : '';
+      + '<span class="qs-grill-who"><b>The ' + ctx.esc(String(g.byName || '').toLowerCase() === 'assistant' ? 'assistant' : g.byName) + ' is grilling you' + (g.later && g.gateLabel ? ' before ' + ctx.esc(g.gateLabel) : '') + '</b><span class="qs-grill-meta">Round ' + g.round + ' · ' + g.count + (g.count === 1 ? ' decision' : ' decisions') + ' ready · '
+      + Math.min(cnt.asked, cnt.limit) + ' of up to ' + cnt.limit + ' questions asked</span>'
+      /* the safety copy lives in the bar now, so the foot is one row (m7) */
+      + (tally ? '<span class="qs-grill-tally">' + tally + '</span>' : '')
+      + '<span class="qs-grill-note">Nothing acts on your answers until you confirm what you agreed.</span></span>'
+      + '<button type="button" class="text-button qs-grill-maptoggle" data-action="qs-grill-map" aria-expanded="' + mapOpen + '" aria-controls="qs-grill-map">' + iconOf(ctx, mapOpen ? 'chevron-down' : 'chevron-right', 12) + '<span>Map</span></button></div>'
+      + (mapOpen && W && W.treeHtml ? '<div class="qs-grill-map" id="qs-grill-map" data-k="qs-grill-map:' + ctx.esc(g.key) + '">' + W.treeHtml(g.key, { jump: true, where: 'ask' }) + '</div>' : '') : '';
     var unsure = g && m.notSure ? '<p class="qs-grill-unsure" data-k="qs-unsure">' + iconOf(ctx, 'ring-dashed', 12) + 'You said not sure: this decision stays open. Pick an answer to settle it.</p>' : '';
-    var gfoot = g ? '<div class="qs-grill-foot" data-k="qs-grill-foot">' + actionBtn(ctx, { a: 'qs-wrap-up', label: 'Wrap up', kind: 'text' })
-      + '<span class="qs-grill-note">Nothing acts on your answers until you confirm what you agreed.</span>'
-      + actionBtn(ctx, { a: 'qs-accept-round', label: qs.length === 1 ? 'Accept the recommended answer' : 'Accept all ' + qs.length + ' recommended', kind: 'text', icon: 'check' }) + '</div>' : '';
+    /* one foot for a grilling round (m7): Wrap up at the start; Back, Not sure, Accept (the round's soft-primary) and
+       Next at the end; the count stays left of Back */
+    var gfoot = '';
+    if (g) {
+      var accept = { a: 'qs-accept-round', label: acceptLabel(qs, false), kind: 'soft', icon: 'check' };
+      gfoot = '<div class="qs-ask-foot qs-grill-foot" data-k="qs-ask-foot">'
+        + actionBtn(ctx, { a: 'qs-wrap-up', label: 'Wrap up', kind: 'text' })
+        + '<span class="qs-ask-count" data-k="qs-ask-n:' + idx + '">' + (idx + 1) + ' of ' + qs.length + '</span>'
+        + actionBtn(ctx, back) + (skip ? actionBtn(ctx, skip) : '') + actionBtn(ctx, accept) + actionBtn(ctx, next) + '</div>';
+    }
     return '<section class="decision-surface qs qs-ask' + (st.bodyScroll ? ' is-scroll' : '') + (g ? ' qs-grill' : '') + '" data-qs="8" data-k="qs:8"' + (g ? ' data-grill="' + ctx.esc(g.key) + '"' : '') + '>'
       + '<button type="button" class="qs-ask-x" data-action="close-decision" title="Close and return later; answers are preserved" aria-label="Close decision">'
       + iconOf(ctx, 'close', 12) + '</button>'
@@ -1117,13 +1142,12 @@
       + '</div>'
       + askSpine(ctx, m)
       + '</div>'
-      + gfoot
-      + '<div class="qs-ask-foot" data-k="qs-ask-foot">'
-      + '<span class="qs-ask-count" data-k="qs-ask-n:' + idx + '">Question ' + (idx + 1) + ' of ' + qs.length + '</span>'
-      + actionBtn(ctx, back)
-      + (skip ? actionBtn(ctx, skip) : '')
-      + actionBtn(ctx, next)
-      + '</div>'
+      + (g ? gfoot : '<div class="qs-ask-foot" data-k="qs-ask-foot">'
+        + '<span class="qs-ask-count" data-k="qs-ask-n:' + idx + '">Question ' + (idx + 1) + ' of ' + qs.length + '</span>'
+        + actionBtn(ctx, back)
+        + (skip ? actionBtn(ctx, skip) : '')
+        + actionBtn(ctx, next)
+        + '</div>')
       + '</section>';
   }
 
@@ -1366,7 +1390,7 @@
     var q = currentQuestion(ctx);
     if (!q) return true;
     if (q.type === 'choice') q.answer = '';
-    q.otherOn = true;
+    q.otherOn = true; q.touched = true;
     qsState(ctx).mention = null;
     ctx.renderApp();
     if (takeOf(ctx) === 8) popAskSelect('__other__');
@@ -1379,7 +1403,8 @@
 
   CH('answer-choice', function (ctx, btn) {
     var q = currentQuestion(ctx);
-    if (q) { q.other = ''; q.otherOn = false; q.notSure = false; }
+    /* a pick is your answer (touched); a preselected recommendation you never touch is only a draft (ACD-503) */
+    if (q) { q.other = ''; q.otherOn = false; q.notSure = false; q.touched = true; }
     qsState(ctx).mention = null;
     clearAuto(ctx);
     if (takeOf(ctx) === 8) popAskSelect(btn && btn.getAttribute('data-value'));
@@ -1419,7 +1444,7 @@
     /* Grill Me: Not sure is a real answer (SS-038); the decision stays open and the round moves on, no toast */
     if (grillOf(activeFlow(ctx))) {
       var q = currentQuestion(ctx), qs = ctx.state.questions || [];
-      if (q) { q.notSure = true; q.answer = ''; q.other = ''; q.otherOn = false; }
+      if (q) { q.notSure = true; q.answer = ''; q.other = ''; q.otherOn = false; q.touched = true; }
       if (takeOf(ctx) === 8 && (ctx.state.questionIndex | 0) < qs.length - 1) captureReel(ctx);
       ctx.state.questionIndex = Math.min(qs.length - 1, (ctx.state.questionIndex | 0) + 1);
       ctx.renderApp();
@@ -1438,6 +1463,8 @@
     return true;
   }
   EXT.action('qs-accept-round', function (ctx) { return grillLeave(ctx, 'accept'); });
+  /* the frontier map in the round bar (open by default where there is room; your choice sticks) */
+  EXT.action('qs-grill-map', function (ctx) { var open = !!ctx.state.wgMapOpen; ctx.state.wgMapOpen = !open; ctx.renderApp(); requestAnimationFrame(function () { var b = document.querySelector('.qs-grill-maptoggle'); if (b) b.focus(); }); return true; });
   EXT.action('qs-wrap-up', function (ctx) { return grillLeave(ctx, 'wrap'); });
 
   EXT.action('close-decision', function (ctx) {
@@ -1478,7 +1505,7 @@
       requestAnimationFrame(syncAskBody);
     }
     var hadPreset = q.type === 'choice' && String(q.answer || '').trim();
-    q.other = v;
+    q.other = v; q.touched = true;
     if (q.type === 'choice') q.answer = '';
     if (q.type === 'text') q.answer = v;
     if (String(v).trim()) q.otherOn = true;

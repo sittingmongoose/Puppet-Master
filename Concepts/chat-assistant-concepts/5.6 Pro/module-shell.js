@@ -1427,7 +1427,8 @@
       /* a switch item (DL-218: Grill Me adds nobody) says Turn on / Turn off instead of Add / Remove (it.addWord, it.removeWord) */
       var add = state === 'disabled' ? '<p class="pmx-reason">' + str(it.reason) + '</p>'
         : '<label class="pmx-add" data-on="' + (state === 'on' ? 1 : 0) + '"' + (it.isSwitch ? ' data-switch="1"' : '') + '><input type="checkbox" class="pmx-add-input"' + raw(inp.attrs) + (state === 'on' ? ' checked' : '') + (it.isSwitch ? ' role="switch" aria-checked="' + (state === 'on') + '"' : '') + ' data-pmx-harness>' +
-          pmxGlyph(it.isSwitch ? (state === 'on' ? 'ring-dot' : 'ring') : state === 'on' ? 'minus' : 'plus', 13) + '<span>' + (state === 'on' ? (it.removeWord || 'Remove') : (it.addWord || 'Add')) + '</span></label>';
+          pmxGlyph(it.isSwitch ? (state === 'on' ? 'ring-dot' : 'ring') : state === 'on' ? 'minus' : 'plus', 13) + '<span class="pmx-add-word">' + (state === 'on' ? (it.removeWord || 'Remove') : (it.addWord || 'Add')) + '</span>' +
+          (it.isSwitch ? '<span class="pmx-add-short" aria-hidden="true">' + (state === 'on' ? 'On' : 'Off') + '</span>' : '') + '</label>';
       return '<div class="pmx-spec"' + k(it.key) + ' data-state="' + state + '"' + (it.isSwitch ? ' data-switch="1"' : '') + at('data-pmx-affects', it.affects) + '>' + str(it.mark) +
         '<div class="pmx-spec-copy"><b>' + str(it.name) + '</b>' + (it.helper ? '<span class="pmx-help">' + it.helper + '</span>' : '') + '</div>' +
         '<div class="pmx-spec-control">' + (state === 'on' ? str(it.control) : '') + add + '</div></div>';

@@ -17,6 +17,30 @@
 .wg-pass-say q { quotes: '“' '”'; color: var(--text); }
 .wg-pass-say.wg-exploring { color: var(--muted); }
 .wg-pass-angles { margin: 4px 0 0; max-width: 72ch; font: var(--pmx-fs-help); color: var(--muted); }
+/* the territory (25): the compass of the eight angles beside the summary, so the ground a pass covered reads first */
+.wg-territory { display: flex; align-items: flex-start; gap: 14px; margin: 10px 0 0; min-width: 0; }
+.wg-territory-text { min-width: 0; flex: 1 1 auto; }
+.wg-territory-text > .wg-pass-say { margin-top: 0; }
+.wg-compass { flex: none; display: block; overflow: visible; }
+.wg-cmp-rim { fill: none; stroke: var(--border-strong); stroke-width: 1; stroke-dasharray: 2 3; }
+.wg-cmp-ray line { stroke: var(--border-strong); stroke-width: 1.2; stroke-linecap: round; }
+.wg-cmp-ray[data-on="1"] line { stroke: var(--pmx-seat-7); stroke-width: 2; }
+.wg-cmp-ray circle { fill: var(--pmx-seat-7); }
+.wg-cmp-ray[data-on="1"][data-leads="0"] circle { fill: var(--pmx-card, var(--surface)); stroke: var(--pmx-seat-7); stroke-width: 1.4; }
+.wg-cmp-hub { fill: var(--muted); }
+/* where the pass's leads stand now: one mark and count per status */
+.wg-tally { display: flex; flex-wrap: wrap; gap: 4px 14px; margin: 8px 0 0; font: var(--pmx-fs-fine); color: var(--muted); }
+.wg-tally-i { display: inline-flex; align-items: center; gap: 5px; white-space: nowrap; }
+.wg-tally-i > .wg-st-mark { line-height: 0; }
+/* the second layer: each angle explored, its brief signal and how many leads it gave (SS-037) */
+.wg-angles-disc { margin-top: 8px; }
+.wg-angles-disc .pmx-disc-sum { min-height: 28px; font: var(--pmx-fs-help); color: var(--muted); }
+.wg-angles { margin: 4px 0 0; padding: 0; list-style: none; }
+.wg-angles > li { display: grid; grid-template-columns: minmax(120px, auto) minmax(0, 1fr) auto; column-gap: 12px; align-items: baseline; padding: 6px 0; box-shadow: 0 -1px 0 var(--border); font: var(--pmx-fs-help); }
+.wg-angles-name { display: inline-flex; align-items: center; gap: 6px; color: var(--text); white-space: nowrap; }
+.wg-angles-name b { font-weight: 600; }
+.wg-angles-signal { min-width: 0; color: var(--muted); overflow-wrap: anywhere; }
+.wg-angles-n { color: var(--muted); white-space: nowrap; font-variant-numeric: tabular-nums; }
 .wg-held { display: flex; gap: 8px; align-items: flex-start; margin: 12px 0 0; font: var(--pmx-fs-help); color: var(--muted); }
 .wg-held b { color: var(--text); }
 .wg-held > .nx-st { flex: none; margin-top: 2px; }
@@ -30,9 +54,11 @@
 .wg-lead-body { min-width: 0; }
 .wg-lead-title { margin: 0; font: var(--pmx-w-620) 13.5px/19px var(--font-ui); color: var(--text); overflow-wrap: anywhere; }
 .wg-lead-tether { margin: 4px 0 0; font: var(--pmx-fs-help); color: var(--muted); overflow-wrap: anywhere; }
-.wg-angle { color: var(--pmx-seat-7); font-weight: 600; }
-.wg-angle::after { content: ' · '; color: var(--subtle); font-weight: var(--pmx-w-reg); }
-.wg-lead-src, .wg-lead-evidence, .wg-lead-taken { display: flex; align-items: flex-start; gap: 6px; min-width: 0; margin: 4px 0 0; font: var(--pmx-fs-fine); color: var(--subtle); }
+.wg-angle { display: inline-flex; align-items: center; gap: 4px; color: var(--text); font-weight: 600; }
+.wg-angle::after { content: '·'; margin: 0 5px 0 1px; color: var(--muted); font-weight: var(--pmx-w-reg); }
+.wg-angle-mark { flex: none; color: var(--pmx-seat-7); }
+/* the source is required information (CWR-043): it reads in the muted ink, never the faint fine print (m8) */
+.wg-lead-src, .wg-lead-evidence, .wg-lead-taken { display: flex; align-items: flex-start; gap: 6px; min-width: 0; margin: 4px 0 0; font: var(--pmx-fs-fine); color: var(--muted); }
 .wg-lead-src > svg, .wg-lead-evidence > svg, .wg-lead-taken > svg, .wg-lead-src > .nx-i, .wg-lead-evidence > .nx-i, .wg-lead-taken > .nx-i { flex: none; margin-top: 2px; }
 .wg-lead-src > span, .wg-lead-src > a { min-width: 0; overflow-wrap: anywhere; }
 .wg-lead-src q { quotes: '“' '”'; }
@@ -47,14 +73,23 @@
 .wg-lead-status[data-status="set_aside"] .wg-st-head > b, .wg-lead-status[data-status="not_supported"] .wg-st-head > b, .wg-lead-status[data-status="held"] .wg-st-head > b, .wg-lead-status[data-status="waiting"] .wg-st-head > b { color: var(--muted); }
 .wg-lead-why { margin: 2px 0 0 20px; max-width: 64ch; font: var(--pmx-w-reg) 12.5px/18.5px var(--pmx-voice); color: var(--muted); overflow-wrap: anywhere; }
 .wg-lead-why q { quotes: '“' '”'; color: var(--text); }
-.wg-who { color: var(--subtle); }
-.wg-hyp { font: var(--pmx-fs-fine); color: var(--subtle); }
+.wg-who { color: var(--muted); }
+.wg-hyp { font: var(--pmx-fs-fine); color: var(--muted); }
 .wg-by { display: inline-flex; align-items: center; gap: 4px; color: var(--muted); white-space: nowrap; }
-.wg-by::before { content: 'recorded by'; margin-right: 2px; color: var(--subtle); }
+.wg-by::before { content: 'recorded by'; margin-right: 2px; color: var(--muted); }
+.wg-by-wrap { display: contents; }
+/* the team's decision stays under a research result (M4): one quiet line with who recorded it, then its reason */
+.wg-lead-decision { display: flex; flex-wrap: wrap; align-items: center; column-gap: 12px; row-gap: 2px; margin: 6px 0 0 20px; font: var(--pmx-w-reg) 12px/18px var(--font-ui); color: var(--muted); overflow-x: clip; }
+.wg-dec-word b { color: var(--text); font-weight: 600; }
+.wg-lead-decision + .wg-lead-why { margin-left: 20px; }
+.wg-lead-result q { color: var(--text); }
+.wg-st-flask { color: var(--muted); }
+.wg-st-flask > svg { display: block; }
 /* the separating dot sits in the gap before each part, so a part that wraps to a new line starts clean: the dot
    of the first part on a line falls outside the row and is clipped */
 .wg-who, .wg-hyp, .wg-by { position: relative; }
-.wg-who::after, .wg-hyp::after, .wg-by::after { content: '·'; position: absolute; right: 100%; width: 12px; text-align: center; color: var(--subtle); }
+.wg-who::after, .wg-hyp::after, .wg-by::after { content: '·'; position: absolute; right: 100%; width: 12px; text-align: center; color: var(--muted); }
+.wg-lead-decision .wg-by::after { content: '·'; }
 .wg-by > .pmx-mark { flex: none; }
 .wg-check { align-self: start; display: inline-flex; align-items: center; gap: 6px; min-height: 28px; padding: 0 10px; white-space: nowrap; }
 .wg-lead .pmx-disc { margin-top: 6px; }
@@ -75,6 +110,9 @@ body.pm56-reduced .wg-lead[data-flash="1"]::after, html[data-motion="reduced"] .
 @container wgcard (max-width: 420px) {
   .wg-lead { grid-template-columns: 18px minmax(0, 1fr); }
   .wg-check { grid-column: 2; justify-self: start; margin-top: 4px; padding-left: 0; }
+  .wg-territory { gap: 10px; }
+  .wg-angles > li { grid-template-columns: minmax(0, 1fr) auto; }
+  .wg-angles-signal { grid-column: 1 / -1; }
 }
 
 /* ---------------------------------------------------------------- lanes */
@@ -112,6 +150,12 @@ body.pm56-reduced .wg-lead[data-flash="1"]::after, html[data-motion="reduced"] .
 .wg-listing-s > .nx-st, .wg-listing-s > svg { display: inline-flex; vertical-align: -2px; margin-right: 5px; }
 .wg-listing-s b { color: var(--text); font-weight: 600; }
 .wg-listing li[data-status="supported"] .wg-listing-s b { color: var(--positive); }
+.wg-listing-d, .wg-listing-r { grid-column: 2; display: block; margin-top: 1px; overflow-wrap: anywhere; }
+.wg-listing-d b, .wg-listing-r b { color: var(--text); font-weight: 600; }
+.wg-listing-d q { quotes: '“' '”'; }
+.wg-listing-r > .wg-st-mark { display: inline-flex; vertical-align: -2px; margin-right: 5px; }
+.wg-listing li[data-status="supported"] .wg-listing-r b { color: var(--positive); }
+.wg-listing-t .wg-hyp { margin-left: 6px; }
 
 /* ---------------------------------------------------------------- What we agreed */
 .wg-agreed { position: relative; container: wgagreed / inline-size; min-width: 0; padding: 14px 16px 14px; border-radius: var(--pmx-r-card); background: var(--pmx-card, var(--surface)); box-shadow: 0 0 0 1px var(--pmx-focus-edge); color: var(--text); box-sizing: border-box; }
@@ -120,25 +164,29 @@ body.pm56-reduced .wg-lead[data-flash="1"]::after, html[data-motion="reduced"] .
 .wg-agreed-head > div { min-width: 0; }
 .wg-agreed-kettle { flex: none; display: inline-flex; }
 .wg-agreed-title { margin: 0; font: var(--pmx-fs-result); letter-spacing: var(--pmx-ls-result, 0); color: var(--text); }
-.wg-agreed-head .wg-fine { display: block; margin-top: 2px; }
+.wg-agreed-prov { display: block; font: var(--pmx-fs-fine); color: var(--muted); }
+.wg-agreed-head .wg-agreed-prov { margin-top: 2px; }
 .wg-agreed-list { margin: 12px 0 0; padding: 0; list-style: none; }
 .wg-agreed-row { display: grid; grid-template-columns: 18px minmax(0, 1fr) minmax(0, 1.15fr); column-gap: 10px; align-items: baseline; padding: 8px 0; box-shadow: 0 -1px 0 var(--border); }
 .wg-agreed-n { font: var(--pmx-w-650) 12px/19px var(--font-ui); color: var(--accent); text-align: right; font-variant-numeric: tabular-nums; }
 .wg-agreed-q { min-width: 0; font: var(--pmx-w-reg) 12.5px/19px var(--font-ui); color: var(--muted); overflow-wrap: anywhere; }
 .wg-agreed-a { display: flex; flex-direction: column; min-width: 0; }
 .wg-agreed-a > b { font: var(--pmx-w-620) 13px/19px var(--font-ui); color: var(--text); overflow-wrap: anywhere; }
-.wg-agreed-a > .wg-fine { margin-top: 1px; }
+.wg-agreed-a > .wg-agreed-prov { margin-top: 1px; }
 .wg-agreed-sub { display: flex; align-items: center; gap: 6px; margin: 14px 0 0; font: var(--pmx-w-reg) 12.5px/19px var(--font-ui); color: var(--text); }
-.wg-agreed-sub .wg-fine { margin-left: 4px; }
+.wg-agreed-sub .wg-agreed-prov { display: inline; margin-left: 4px; }
 .wg-agreed-open { margin: 4px 0 0; padding: 0 0 0 28px; list-style: none; }
-.wg-agreed-open > li { display: flex; flex-direction: column; padding: 6px 0; box-shadow: 0 -1px 0 var(--border); }
+.wg-agreed-open > li { display: grid; grid-template-columns: minmax(0, 1fr) auto; column-gap: 10px; padding: 6px 0; box-shadow: 0 -1px 0 var(--border); }
 .wg-agreed-open .wg-agreed-q { color: var(--text); }
-.wg-agreed-open .wg-fine { margin-top: 1px; }
-.wg-agreed-facts { display: flex; gap: 6px; align-items: flex-start; margin: 10px 0 0; font: var(--pmx-fs-fine); color: var(--subtle); }
+.wg-agreed-open .wg-agreed-prov { grid-column: 1; margin-top: 1px; }
+.wg-ask-again { grid-column: 2; grid-row: 1 / 3; align-self: center; min-height: 28px; padding: 0 8px; color: var(--accent); font-weight: 600; }
+.wg-agreed-facts { display: flex; gap: 6px; align-items: flex-start; margin: 10px 0 0; font: var(--pmx-fs-fine); color: var(--muted); }
+.wg-agreed-map { margin-top: 10px; }
+.wg-agreed-map .pmx-disc-sum { min-height: 28px; font: var(--pmx-fs-help); color: var(--muted); }
 .wg-agreed-facts > svg, .wg-agreed-facts > .nx-i { flex: none; margin-top: 2px; }
 .wg-agreed-acts { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 12px; margin-top: 14px; padding-top: 12px; box-shadow: 0 -1px 0 var(--border); }
 .wg-agreed-acts .primary-button, .wg-agreed-acts .text-button { min-height: 32px; }
-.wg-agreed-acts .wg-fine { flex: 1 1 100%; margin: 0; }
+.wg-agreed-acts .wg-agreed-prov { flex: 1 1 100%; margin: 0; }
 .wg-agreed-note { display: flex; gap: 8px; align-items: flex-start; margin: 14px 0 0; padding-top: 12px; box-shadow: 0 -1px 0 var(--border); font: var(--pmx-w-reg) 12.5px/19px var(--font-ui); color: var(--muted); }
 .wg-agreed-note b { color: var(--text); }
 .wg-agreed-note > .nx-st { flex: none; margin-top: 2px; }
@@ -148,12 +196,38 @@ body.pm56-reduced .wg-lead[data-flash="1"]::after, html[data-motion="reduced"] .
   .wg-agreed-a { grid-column: 2; margin-top: 2px; }
 }
 
+/* ---------------------------------------------------------------- the design tree (the frontier map, 24)
+   Settled decisions, the round's frontier, what research is looking up and what waits, each under the decision it
+   hangs off; a thin rule joins a decision to what it unlocks. Calm: the shared still marks, no colour fills. */
+.wg-tree-wrap { min-width: 0; }
+.wg-tree-tally { display: flex; flex-wrap: wrap; gap: 4px 14px; margin: 0 0 6px; font: var(--pmx-fs-fine); color: var(--muted); }
+.wg-tree-tally-i { display: inline-flex; align-items: center; gap: 5px; white-space: nowrap; }
+.wg-tree, .wg-tree-kids { margin: 0; padding: 0; list-style: none; }
+.wg-tree-kids { margin-left: 7px; padding-left: 14px; box-shadow: inset 1px 0 0 var(--border-strong); }
+.wg-tree-li { min-width: 0; }
+.wg-tree-node { display: grid; grid-template-columns: 16px minmax(0, 1fr); column-gap: 8px; align-items: start; width: 100%; min-width: 0; padding: 3px 0; text-align: left; font: var(--pmx-w-reg) 12.5px/18px var(--font-ui); color: var(--muted); background: transparent; border: 0; border-radius: 4px; }
+button.wg-tree-node { cursor: pointer; }
+button.wg-tree-node:hover .wg-tree-t { text-decoration: underline; text-underline-offset: 3px; }
+button.wg-tree-node:focus-visible { outline: 2px solid var(--pmx-focus-outline, var(--accent)); outline-offset: 1px; }
+.wg-tree-mark { display: inline-flex; margin-top: 2px; line-height: 0; color: var(--muted); }
+.wg-tree-t { grid-column: 2; color: var(--text); font-weight: 600; overflow-wrap: anywhere; }
+.wg-tree-d { grid-column: 2; min-width: 0; overflow-wrap: anywhere; }
+.wg-tree-fine { color: var(--muted); }
+.wg-tree-li[data-state="frontier"] > .wg-tree-node .wg-tree-d { color: var(--accent); font-weight: 600; }
+.wg-tree-li[data-state="waiting"] > .wg-tree-node .wg-tree-t, .wg-tree-li[data-state="next"] > .wg-tree-node .wg-tree-t { font-weight: var(--pmx-w-reg); }
+.wg-tree-li[data-state="settled"] > .wg-tree-node .wg-tree-d { color: var(--text); }
+.wg-tree-li[data-kind="fact"] > .wg-tree-node .wg-tree-t { font-weight: var(--pmx-w-reg); font-style: normal; }
+.crew-grill, .room-grill { margin-top: 12px; }
+
 /* ---------------------------------------------------------------- the shelf's Grill Me switch */
 .pmx-spec-who { display: inline-flex; align-items: center; gap: 6px; min-height: 32px; font: var(--pmx-fs-help); color: var(--muted); white-space: nowrap; }
 .pmx-spec-who > .pmx-mark { flex: none; }
 
 /* ---------------------------------------------------------------- NieR Mode: ink, no hue */
-html[data-o55-nier="on"] .wg-lead-n, html[data-o55-nier="on"] .wg-angle, html[data-o55-nier="on"] .wg-takeup-link, html[data-o55-nier="on"] .wg-agreed-n { color: var(--text); }
+html[data-o55-nier="on"] .wg-lead-n, html[data-o55-nier="on"] .wg-angle, html[data-o55-nier="on"] .wg-angle-mark, html[data-o55-nier="on"] .wg-takeup-link, html[data-o55-nier="on"] .wg-agreed-n { color: var(--text); }
+html[data-o55-nier="on"] .wg-cmp-ray[data-on="1"] line { stroke: var(--text); }
+html[data-o55-nier="on"] .wg-cmp-ray circle { fill: var(--text); }
+html[data-o55-nier="on"] .wg-tree-li[data-state="frontier"] > .wg-tree-node .wg-tree-d { color: var(--text); }
 html[data-o55-nier="on"] .wg-lead[data-flash="1"]::after { background: var(--pmx-soft-fill); }
 /* Retro: square corners, the family's own box */
 body[data-theme^="retro"] .wg-card, body[data-theme^="retro"] .wg-agreed { border-radius: 2px; }

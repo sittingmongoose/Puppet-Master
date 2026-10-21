@@ -1,0 +1,79 @@
+/* pm56-neon-live.css - 5.6 Pro's own copy of the neon-icons.css rules that PMConcept7's dead-CSS purge removed from
+   the shared file (478dff921e, 2026-10-19, "remove 496 certified dead CSS rules"). Those rules are dead for
+   PMConcept7, which also reads neon-icons.css, but live here: without them the in-app Reduced motion setting stops no
+   neon act, the chat title's Working reads in the warning amber instead of the accent, the composer's capability dots
+   are tinted, and the activity lines, the working card's phase icon, the Fast bolt, the NieR activity underline and a
+   few more lose their ink. Restored here, not in neon-icons.css, so PMConcept7 stays byte-identical (ruling of
+   2026-10-21, concept review R1). Only 5.6 Pro's build.py reads this file, right after neon-icons.css (CSS_LAST), so
+   the cascade is the one 5.6 Pro shipped before the purge; every later neon-icons.css rule on these elements is a
+   zero-specificity :where() rule. The rules are the original bytes, in their original order. */
+
+/* module-shell's picker chevron (CHEVRON) keeps the 2-unit weight it was drawn with (section 2) */
+svg.pmx-chevron { --nx-stroke-base: 2; }
+
+/* filled chips (primary buttons) already carry their own fill: the act plays, the halo stays off (section 7) */
+.primary-button > svg.nx, .soft-button.primary > svg.nx { --nx-hiv: hidden; --nx-fl: none; }
+
+/* the Fast bolt is lit while Fast mode is on (section 8b) */
+svg.fast-bolt, svg.meta-fast, svg.fast-row-bolt { --nx-ink: var(--warning); --nx-hiv: visible; --nx-hi-a: var(--nx-h-bolt-i); animation: none; opacity: 1; }
+
+/* Grill Me's kettle on a setup sheet: hovering the row or focusing its box or switch plays the act once (section 8d) */
+.pmx-check:where(:hover, :focus-within) > .pmx-check-glyph > svg:where(.nx),
+.pmx-spec:where(:hover, :focus-within) > .pmx-spec-glyph > svg:where(.nx) {
+  --nx-hi-a: var(--nx-h-swell-i);
+  --nx-1: var(--nx-d1) var(--nx-ease) backwards;
+}
+
+/* the in-app Reduced motion setting (body.pm56-reduced, the Demo Studio switch): every neon act stops (section 10) */
+body.pm56-reduced svg.nx, body.pm56-reduced svg.nx .nx-p, body.pm56-reduced svg.nx .nx-h, body.pm56-reduced svg.nx .nx-ov, body.pm56-reduced .nx-st, body.pm56-reduced .nx-st::before, body.pm56-reduced .nx-bolt::before { animation: none !important; transition: none !important; }
+
+/* NieR Mode (section 11): the bar's backlight slot is unused */
+html[data-o55-nier="on"] .activity-item[data-hover-domain]::after { display: none; }
+
+/* NieR Mode: the decision row's "?" stays paper on its ink block */
+html[data-o55-nier="on"] .pmx-decision[data-tone] .pmx-decision-mark > .nx-st-waiting > svg.nx { --nx-ink: var(--o55-nier-on-ink); }
+
+/* NieR Mode: a working domain carries an ink underline under its glyph; the reduced-motion setting stops every act */
+html[data-o55-nier="on"][data-ab-goal="working"] .activity-item[data-hover-domain="goal"]::after,
+html[data-o55-nier="on"][data-ab-todo="working"] .activity-item[data-hover-domain="todo"]::after,
+html[data-o55-nier="on"][data-ab-subagents="working"] .activity-item[data-hover-domain="subagents"]::after,
+html[data-o55-nier="on"][data-ab-crew="working"] .activity-item[data-hover-domain="crew"]::after,
+html[data-o55-nier="on"][data-ab-brainstorm="working"] .activity-item[data-hover-domain="brainstorm"]::after,
+html[data-o55-nier="on"][data-ab-review="working"] .activity-item[data-hover-domain="review"]::after,
+html[data-o55-nier="on"][data-ab-chat_room="working"] .activity-item[data-hover-domain="chat_room"]::after,
+html[data-o55-nier="on"][data-ab-changes="working"] .activity-item[data-hover-domain="changes"]::after,
+html[data-o55-nier="on"][data-ab-artifacts="working"] .activity-item[data-hover-domain="artifacts"]::after {
+  display: block; top: anchor(bottom); width: 12px; height: 2px; translate: -50% 3px; border-radius: 0; z-index: 0;
+  background: var(--o55-nier-ink); opacity: 1;
+}
+html[data-o55-nier="on"] body.pm56-reduced svg.nx .nx-c, html[data-o55-nier="on"] body.pm56-reduced .nx-st::after { animation: none !important; }
+
+/* section 12: menu rows, toggled icon buttons, activity line tones, the capability dots, the working card's phase icon,
+   the chat title's status word in its tone, and the decision panel's head glyph; section 13: the Lens trigger in NieR */
+.menu-item .menu-icon { color: inherit; }
+.icon-button.active { color: var(--text); border-color: var(--border-strong); background: var(--surface-4); }
+.icon-button.active > svg.nx { --nx-hiv: visible; --nx-hi-a: var(--nx-h-concept-i); }
+.activity-line [data-tone="blocked"] { color: var(--danger); }
+.activity-line [data-tone="attention"] { color: var(--warning); }
+.activity-line [data-tone="working"] { color: var(--accent); }
+.activity-line [data-tone="changed"] { color: var(--accent-2); }
+.activity-line [data-tone="done"] { color: var(--positive); }
+.activity-line [data-tone="idle"] { color: var(--subtle); }
+.activity-line [data-tone="paused"] { color: var(--muted); }
+.capability-dot, .capability-dot.goal { color: var(--text); background: var(--surface-3); }
+.composer-infield .capability-dot, .composer-infield .capability-dot.goal { color: var(--text); background: var(--surface-3); border-color: var(--border); }
+.composer-infield .capability-dot.bsd > svg.nx[data-nx="eye"] { color: var(--text); }
+.capability-dot.bsd > svg.nx[data-nx="kind-bsd-auto"] { --nx-hi-a: 0; }
+.capability-dot:hover > svg.nx { --nx-hi-a: var(--nx-h-swell-i); --nx-1: var(--nx-d1) var(--nx-ease) backwards; }
+.working-head .work-phase-icon { background: var(--surface-3); color: var(--muted); box-shadow: none; }
+.working-head .work-phase-icon > svg.nx-r-status { --nx-1: var(--nx-d1) var(--nx-ease) backwards; animation: ab-breathe 2200ms ease-in-out infinite; }
+html[data-o55-nier="on"] .working-head .work-phase-icon > svg.nx-r-status { animation-timing-function: steps(3, end); }
+.chat-state > .nx-st { margin-right: 1px; }
+.chat-state[data-tone="blocked"] { color: var(--danger); }
+.chat-state[data-tone="attention"] { color: var(--warning); }
+.chat-state[data-tone="working"] { color: var(--accent); }
+.chat-state[data-tone="changed"] { color: var(--accent-2); }
+.chat-state[data-tone="done"] { color: var(--positive); }
+.chat-state[data-tone="idle"], .chat-state[data-tone="paused"] { color: var(--muted); }
+.decision-top > .event-icon { color: var(--accent); }
+html[data-o55-nier="on"] .pm-lens-trigger.is-on svg.nx { animation-timing-function: steps(3, end); }

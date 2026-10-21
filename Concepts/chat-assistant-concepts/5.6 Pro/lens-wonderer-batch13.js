@@ -55,6 +55,8 @@
     t.messages=[{id:tid+'-request',role:'user',type:'text',body:input.objective+(grill?' Ask me what you need to know first.':' Collection contents must stay on the device.')}];
     C.openConfigure('brainstorm');const d=C.draft();
     d.name=flows[flow].title;d.purpose=input.objective;d.brainstormInput=input;d.wonderer=true;d.grillMe=grill;
+    /* this recording follows the Wonderer's leads: removing it stops Start with a stated reason (R6) */
+    d.recordingNeeds={wonderer:true};
     // IMPACT A1-01: a recorded draft is flagged; its rules are copied into the user field as prefill only
     d.mustHaves=input.constraints.filter(x=>x.hard).map(x=>x.text).join('\n');if(C.markRecorded)C.markRecorded(d);
     d.wondererInput={seedId:'offline-search',seed:input.objective,projectId:t.projectId??null,flow};
@@ -112,9 +114,14 @@
     const fence=artifact(r,'fence','Latest-query fence.json',{kind:'latest_query_fence',latestRequest:2,arrivals:[{requestId:2,value:'new result'},{requestId:1,value:'old result'}],expected:'new result'});
     const measure=artifact(r,'measurement','Measurement availability.json',{kind:'measurement_availability',measurements:[],note:'No worker startup, transfer, latency, CPU or memory measurements have been supplied.'});
     w.artifactIds=[fence.id,measure.id];
-    W.startPass(r,{kind:'start'});
+    /* each scripted pass is delivered to the id its request returned, never to passes[n] (R3); the recording keeps
+       its two further passes in the leads flow, so your own request waits for them */
+    const p1=W.startPass(r,{kind:'start'});w.corePlayback.passIds=[p1.ok?p1.pass.id:null];
+    W.reservePasses(r,d.wondererInput.flow==='leads'?2:0);
+    /* Grill Me turned on mid-run asks this one decision at the next chapter */
+    W.setMidRunFixture(r,MIDRUN);
     const s=session(r.threadId);if(s)s.runId=r.id;
-    if(W.grillOn(r)){const g=W.begin('run:'+r.id,{by:'coordinator',subject:r.purpose,tree:copy(GRILL),cap:(r.config.questionLimit||20)+(r.config.grillExtension||25)});if(!g.ok)w.corePlayback.errors.push(g.error);}
+    if(W.grillOn(r)){const g=W.begin('run:'+r.id,{by:'coordinator',subject:r.purpose,tree:copy(GRILL)});if(!g.ok)w.corePlayback.errors.push(g.error);}
     arm(r);return {ok:true};
   }
   function sourceResult(a){
@@ -140,12 +147,19 @@
     if(id==='reorder')return {outcome:'supported',note:'Showing partial results reorders the list; the options show results only once complete, so ranking holds.',evidence:{label:'Local query check: ranking kept when results arrive whole'}};
     if(id==='index')return {outcome:'supported',note:'The snapshot answers the two-row sample in one pass, without waiting on a network.',evidence:{label:'Local query check'}};
     if(id==='huge')return {outcome:'not_supported',note:'At the agreed 10,000 items the copy is small; it only matters far beyond the size the plan sets.'};
-    return {outcome:'not_supported',note:'Nothing in the supplied samples supports it.'};
+    if(id==='instant')return {outcome:'supported',note:'The local filter answers the two-row sample at once, well inside a tenth of a second, while the full search runs.',evidence:{label:'Local query check: first answer from the in-memory filter'}};
+    if(id==='debounce')return {outcome:'not_supported',note:'With the newest-answer fence in place, waiting for a pause only adds delay; the stale replies are already dropped.'};
+    if(id==='fulltext')return {outcome:'not_supported',note:'Neither option rules out a richer index later; nothing in this decision needs it now.'};
+    return {outcome:'not_supported',note:'The supplied samples hold nothing that bears on it, so it stays out of the plan.'};
   }
   const RESEARCHER={fence:2,speed:2,reorder:0,index:1,instant:1,debounce:3,fulltext:0,huge:2};
   function say(r,body,o){return C.appendMessage(r.id,Object.assign({senderKind:'coordinator',senderName:'Coordinator',messageType:'message',body},o||{}));}
+  /* the n-th pass this recording asked for, by the id its request returned (R3: a pass you asked for in between never
+     shifts the script) */
+  function passOf(r,n){const ids=r.wonderer.corePlayback.passIds||[];return r.wonderer.passes.find(p=>p.id===ids[n])||null;}
   function deliverPass(r,n){
-    const W=WG(),w=r.wonderer,pass=w.passes[n],spec=copy(n===2?PASS3:n?PASS2:PASS1);
+    const W=WG(),w=r.wonderer,pass=passOf(r,n),spec=copy(n===2?PASS3:n?PASS2:PASS1);
+    if(!pass)return {ok:true};
     spec.leads.forEach(l=>{if(l.source.kind==='message'){const m=r.messages.find(x=>x.id===pass.askedIn);l.source=m?{kind:'message',messageId:m.id,label:l.source.label}:{kind:'url',url:'https://en.wikipedia.org/wiki/Search_engine_indexing',label:'wikipedia.org'};}});
     return W.deliverPass(r,pass.id,spec);
   }
@@ -155,44 +169,44 @@
     const P=i=>r.participants.find(p=>p.id===a[i].participantId),pass2=r.wonderer.flow==='leads';
     const out=[],say2=(x,d)=>say(r,'Lead '+W.engine.lead(r,x).n+': '+({explore:'explore',use:'use',set_aside:'set aside'})[d[0]]+'. '+d[1]+(d[0]==='explore'?' It is checked in the Evidence round.':''));
     /* the first pass runs during intake, before the blind proposals take the concurrency (steer 2026-10-20) */
-    out.push({wait:300,run:()=>{if(r.wonderer.passes[0].status==='exploring')return 'later';a.forEach((t,i)=>{const p=P(i);p.status='working';p.current='Drafting alone';});return {ok:true};}});
+    out.push({wait:300,run:()=>{if(passOf(r,0)&&passOf(r,0).status==='exploring')return 'later';a.forEach((t,i)=>{const p=P(i);p.status='working';p.current='Drafting alone';});return {ok:true};}});
     a.forEach((attempt,i)=>out.push({wait:650,run:()=>B.submitProposal(r.id,{...x(),attemptId:attempt.id,assignmentRevision:attempt.assignmentRevision,proposal:copy(records.proposals[i])})}));
-    out.push({wait:700,run:()=>r.wonderer.passes[0].status==='exploring'?'later':B.normalize(r.id,x())});
-    /* Grill Me turned on mid-run: the Coordinator grills you at this chapter boundary; only the vote waits */
-    out.push({wait:300,run:()=>{if(!W.takeMidRun(r))return {ok:true};say(r,'Grill Me is on now, so I have one decision for you. The debate goes on while you answer; only the vote waits for it.');return W.begin('run:'+r.id,{by:'coordinator',subject:r.purpose,tree:copy(MIDRUN),cap:(r.config.questionLimit||20)+(r.config.grillExtension||25),gate:'vote',gateLabel:'the vote'});}});
-    out.push({wait:900,run:()=>B.debate(r.id,{...x(),round:1,messages:[
+    out.push({wait:700,boundary:true,run:()=>passOf(r,0)&&passOf(r,0).status==='exploring'?'later':B.normalize(r.id,x())});
+    out.push({wait:900,boundary:true,run:()=>B.debate(r.id,{...x(),round:1,messages:[
       {participantId:a[1].participantId,body:'The Wonderer’s third lead fits: answer from the local filter at once, then refine. It stays a hypothesis until we measure.',evidenceRefs:['requirements','latency']},
       {participantId:a[3].participantId,body:'Wonderer, look wider around what happens to the ranking when results arrive in pieces. Streaming could reorder what people are looking at.',evidenceRefs:['requirements','query']}]})});
     out.push({wait:300,run:()=>{
       const msgs=r.messages.filter(m=>m.senderKind==='participant'),take=msgs.find(m=>m.senderId===a[1].participantId&&/third lead/.test(m.body)),ask=msgs.find(m=>m.senderId===a[3].participantId&&/^Wonderer,/.test(m.body));
       if(take)W.engine.takeUp(r,'instant',take.id,{id:a[1].participantId});
       /* the debate holds the slots, so the pass Adversarial Review asks for queues behind it */
-      if(pass2&&ask){const p=P(3);return W.startPass(r,{kind:'participant',id:p.id,name:p.role},'what happens to the ranking when results arrive in pieces',ask.id,{queue:true});}
+      if(pass2&&ask){const p=P(3),res=W.startPass(r,{kind:'participant',id:p.id,name:p.role},'what happens to the ranking when results arrive in pieces',ask.id,{queue:true,scripted:true});if(res.ok)r.wonderer.corePlayback.passIds[1]=res.pass.id;return res;}
       return {ok:true};}});
     out.push({wait:400,run:()=>{say(r,'Recording the team’s decision on each of the Wonderer’s first four leads, from this round of the debate.');return {ok:true};}});
     DECIDE1.forEach(d=>out.push({wait:750,run:()=>{const res=W.dispose(r,d[0],d[1],d[2]);if(res.ok)say2(d[0],[d[1],d[2]]);return res;}}));
     if(pass2){
-      out.push({wait:500,run:()=>{const q=r.wonderer.passes[1];if(q&&q.status==='queued'){W.engine.startQueued(r);}return {ok:true};}});
-      out.push({wait:1700,run:()=>r.wonderer.passes[1]&&r.wonderer.passes[1].status==='exploring'?deliverPass(r,1):{ok:true}});
+      out.push({wait:500,run:()=>{const q=passOf(r,1);if(q&&q.status==='queued'){W.engine.startQueued(r);}return {ok:true};}});
+      out.push({wait:1700,run:()=>passOf(r,1)&&passOf(r,1).status==='exploring'?deliverPass(r,1):{ok:true}});
       out.push({wait:300,run:()=>{say(r,'The Wonderer’s second pass is in. Deciding its leads as they arrive.');return {ok:true};}});
       DECIDE2.forEach(d=>out.push({wait:650,run:()=>{const res=W.dispose(r,d[0],d[1],d[2]);if(res.ok)say2(d[0],[d[1],d[2]]);return res;}}));
     }
-    out.push({wait:900,run:()=>B.debate(r.id,{...x(),round:2,messages:[
+    out.push({wait:900,boundary:true,run:()=>B.debate(r.id,{...x(),round:2,messages:[
       {participantId:a[0].participantId,body:pass2?'Lead 5 matters: if partial results reorder the list, the plan should show results only once they are complete.':'Measure startup and transfer costs before choosing a default cutoff.',evidenceRefs:['query','latency']},
       {participantId:a[2].participantId,body:'Lead 1’s fence is cheap: keep only the newest request’s answer, whatever else we choose.',evidenceRefs:['requirements','capabilities']}]})});
     out.push({wait:300,run:()=>{const msgs=r.messages.filter(m=>m.senderKind==='participant');const m5=msgs.find(m=>m.senderId===a[0].participantId&&/^Lead 5/.test(m.body)),m1=msgs.find(m=>m.senderId===a[2].participantId&&/fence/.test(m.body));if(m5)W.engine.takeUp(r,'reorder',m5.id,{id:a[0].participantId});if(m1)W.engine.takeUp(r,'fence',m1.id,{id:a[2].participantId});return {ok:true};}});
-    out.push({wait:800,run:()=>B.recordEvidence(r.id,{...x(),checks:r.brainstorm.proposals.map(q=>({proposalId:q.id,evidenceRefs:q.evidenceRefs,summary:q.facts.networkRequired?'This candidate requires a network and fails the offline rule.':'This candidate preserves local data; device performance is unmeasured.'}))})});
-    /* the Evidence round researches every lead the team explores, each by a core helper */
-    ['fence','speed','reorder'].forEach(id=>out.push({wait:700,run:()=>{const l=W.engine.lead(r,id);if(!l||!l.research||l.research.status!=='queued')return {ok:true};const p=r.participants[RESEARCHER[id]];return W.engine.startResearch(r,id,{id:p.id,name:p.role});}}));
-    ['fence','speed','reorder'].forEach(id=>out.push({wait:900,run:()=>{const l=W.engine.lead(r,id);if(!l||!l.research||l.research.status!=='running')return {ok:true};return W.engine.finishResearch(r,id,researchResult(r,id));}}));
+    out.push({wait:800,boundary:true,run:()=>B.recordEvidence(r.id,{...x(),checks:r.brainstorm.proposals.map(q=>({proposalId:q.id,evidenceRefs:q.evidenceRefs,summary:q.facts.networkRequired?'This candidate requires a network and fails the offline rule.':'This candidate preserves local data; device performance is unmeasured.'}))})});
+    /* the Evidence round researches every lead the team explores and every lead you sent with Check it (section 8.5,
+       B1), each by a core helper, one after another */
+    const queued=()=>r.wonderer.leads.filter(l=>l.research&&l.research.status==='queued'&&W.engine.visible(r,l.passId));
+    for(let i=0;i<4;i++)out.push({wait:700,run:()=>{const l=queued()[0];if(!l)return {ok:true};const p=r.participants[RESEARCHER[l.id]!=null?RESEARCHER[l.id]:1];return W.engine.startResearch(r,l.id,{id:p.id,name:p.role});}});
+    for(let i=0;i<4;i++)out.push({wait:900,run:()=>{const l=r.wonderer.leads.find(l=>l.research&&l.research.status==='running');if(!l)return {ok:true};return W.engine.finishResearch(r,l.id,researchResult(r,l.id));}});
     /* at the vote Implementation asks for one last pass: Write the plan waits while it is in flight */
-    if(pass2)out.push({wait:700,gate:'vote',run:()=>{const p=P(2),m=C.appendMessage(r.id,{senderKind:'participant',senderId:p.id,senderName:p.role,messageType:'request',recipientIds:[r.wonderer.participantId],body:'Wonderer, one last look: what breaks when a collection is huge?'});return W.startPass(r,{kind:'participant',id:p.id,name:p.role},'what breaks when a collection is huge',m.id,{queue:false});}});
-    out.push({wait:900,gate:pass2?'':'vote',run:()=>{for(let i=0;i<a.length;i++){const res=B.vote(r.id,a[i].participantId,{...x(),...copy(records.votes[i])});if(!res.ok)return res;}return {ok:true};}});
-    out.push({wait:900,run:()=>B.decide(r.id,{...x(),selectedProposalId:'worker',reason:r.wonderer.flow==='dissent'?'Choose the local snapshot path. The hosted option has more recorded support but violates the no-upload requirement; those preferences stay as dissent.':'Choose a local snapshot design with a reversible fallback. The offline constraint remains controlling; recorded opposing preferences remain dissent, and no unmeasured speedup is asserted.',steps:records.steps})});
+    if(pass2)out.push({wait:700,gate:'vote',boundary:true,run:()=>{const p=P(2),m=C.appendMessage(r.id,{senderKind:'participant',senderId:p.id,senderName:p.role,messageType:'request',recipientIds:[r.wonderer.participantId],body:'Wonderer, one last look: what breaks when a collection is huge?'});const res=W.startPass(r,{kind:'participant',id:p.id,name:p.role},'what breaks when a collection is huge',m.id,{queue:false,scripted:true});if(res.ok)r.wonderer.corePlayback.passIds[2]=res.pass.id;return res;}});
+    out.push({wait:900,gate:pass2?'':'vote',boundary:!pass2,run:()=>{for(let i=0;i<a.length;i++){const res=B.vote(r.id,a[i].participantId,{...x(),...copy(records.votes[i])});if(!res.ok)return res;}return {ok:true};}});
+    out.push({wait:900,boundary:true,run:()=>B.decide(r.id,{...x(),selectedProposalId:'worker',reason:r.wonderer.flow==='dissent'?'Choose the local snapshot path. The hosted option has more recorded support but violates the no-upload requirement; those preferences stay as dissent.':'Choose a local snapshot design with a reversible fallback. The offline constraint remains controlling; recorded opposing preferences remain dissent, and no unmeasured speedup is asserted.',steps:records.steps})});
     /* Write the plan waits (CWR-041, steer 2026-10-20): while the last pass is in flight, while its lead is undecided (it
        is decided on delivery), and while its research and any lead you sent with Check it are out */
     if(pass2){
-      out.push({wait:2600,run:()=>r.wonderer.passes[2]&&r.wonderer.passes[2].status==='exploring'?deliverPass(r,2):{ok:true}});
+      out.push({wait:2600,run:()=>passOf(r,2)&&passOf(r,2).status==='exploring'?deliverPass(r,2):{ok:true}});
       DECIDE3.forEach(d=>out.push({wait:900,run:()=>{const l=W.engine.lead(r,d[0]);if(!l||l.disposition)return {ok:true};const res=W.dispose(r,d[0],d[1],d[2]);if(res.ok)say(r,'The last pass is in. Lead '+l.n+': explore. '+d[2]);return res;}}));
     }
     out.push({wait:600,run:()=>{r.wonderer.leads.filter(l=>l.research&&l.research.status==='queued').forEach(l=>{const p=r.participants[RESEARCHER[l.id]||1];W.engine.startResearch(r,l.id,{id:p.id,name:p.role});});return {ok:true};}});
@@ -208,13 +222,16 @@
     const at=(k,wait)=>{const t=Date.now();if(cp.at[k]==null){cp.at[k]=t;return false;}return t-cp.at[k]>=ms(wait);};
     /* research finds the intake fact while you answer; the Wonderer's first pass lands, held, while you are grilled */
     const s=r.grill;
-    if(s&&s.tree.some(n=>n.id==='f-size'&&n.state==='researching')&&at('fact',1600)){W.factFound('run:'+r.id,'f-size','about 2,000 items (median of the collection stats)');refresh();return;}
-    if(w.passes[0]&&w.passes[0].status==='exploring'&&at('pass1',2600)){deliverPass(r,0);refresh();return;}
+    if(s&&s.tree.some(n=>n.id==='f-size'&&n.state==='researching')&&at('fact',1600)){W.factFound('run:'+r.id,'f-size','about 2,000 items, the median of the collection stats');refresh();return;}
+    if(passOf(r,0)&&passOf(r,0).status==='exploring'&&at('pass1',2600)){deliverPass(r,0);refresh();return;}
     if(W.holds(r)||cp.status==='completed'||cp.status==='failed')return;
     if(cp.status==='not_started')cp.status='playing';
     const list=cp.list||(cp.list=steps(r)),st=list[cp.step];
     if(!st){cp.status='completed';refresh();return stopClock(r);}
     if(!at('s'+cp.step,st.wait))return;
+    /* Grill Me turned on mid-run starts at the next chapter boundary, whichever it is (CWR-042, R4): the vote waits for
+       its Confirm while the debate goes on, or, once the vote is under way, Write the plan does */
+    if(st.boundary&&W.takeMidRun(r)){const early=['intake','blind_proposals','normalize','debate','evidence'].includes(r.brainstorm.phase);W.beginMidRun(r,early?'vote':'synthesis',early?'the vote':'Write the plan');refresh();return;}
     /* at the vote the recording gives you a moment to Check a lead (optional; it goes on without you) */
     if(st.gate==='vote'&&!cp.offered){cp.offered=true;cp.at['s'+cp.step]=Date.now()+ms(4200);refresh();return;}
     const res=st.run();
@@ -233,6 +250,7 @@
     const g=WG().gate(r);if(!g.ok)return g;
     if(r.status!=='running')return {ok:false,code:'stopped',reason:'The run isn’t running.',count:0};
     if(r.brainstorm.phase!=='synthesis')return {ok:false,code:'core',reason:'The team is still working through the chapters.',count:0};
+    if(WG().stepHeld(r,'synthesis'))return {ok:false,code:'grill',reason:'It waits for your Confirm of what you agreed with the Coordinator.',count:0};
     return {ok:true,code:'',reason:'',count:0};
   }
   /* ---- presentation: the Wonderer workspace (G-26 STORM-B, rebuilt for DL-218). A pmxView with the Wonderer's mark:
@@ -270,6 +288,14 @@
     const s=session();if(!s)return '';
     return '<section class="b13-lens-tools" data-k="b13-lens-tools"><p class="b13-say"><b>What the assistant would read</b> · Lens never rewrites the conversation. Check what it would include, or change a message to test an out-of-date preview.</p><div class="b13-acts">'+btn(c,'b13-effective','See what it would read')+btn(c,'b13-change-message','Change message 2')+'</div></section>';
   }
+  /* how a session ended, in the guide's words (m2): every decision, a wrap-up, the limit, or Grill Me turned off */
+  function agreedWords(sess){
+    const a=WG().grill.agreed(sess),n=a.open.length,open=n?' '+n+(n===1?' decision is':' decisions are')+' left open.':'';
+    if(a.endedBy==='wrap_up')return 'You wrapped up.'+open+' Read What we agreed.';
+    if(a.endedBy==='cap')return 'The question limit was reached.'+open+' Read What we agreed.';
+    if(a.endedBy==='switched_off')return 'Grill Me is off, so the Coordinator stopped asking.'+open+' Read What we agreed.';
+    return 'That’s every decision.'+open+' Read What we agreed.';
+  }
   /* The guide reads the live state and moves on with the user. Its caption is the run's provenance (the card's words). */
   function wondererStep(c,s){
     const r=current(c),W=WG();
@@ -280,22 +306,28 @@
     if(['canceled','cancelled','failed'].includes(r.status)&&!b.synthesis)return {text:'This example ended. Everything so far is kept.'};
     if(b.synthesis)return {text:'Plan written. It lists every Wonderer lead with the team’s decision and reason; the core votes and the disagreement are unchanged. Nothing has been built.',actions:[{action:'brainstorm-open-plan',label:'Open Plan',attrs:'data-run="'+esc(r.id)+'"'}]};
     if(gs&&gs.status==='grilling')return {text:'Grill Me is on, so the Coordinator is grilling you before anyone drafts. Meanwhile the Wonderer explores in its own context; its leads are held until every blind proposal is in.',actions:[{action:'wg-open-round',label:'Answer the round',attrs:'data-key="run:'+esc(r.id)+'"'}]};
-    if(gs&&gs.status==='agreeing')return {text:'Confirm what you agreed. The blind proposals wait for it.',actions:[{action:'wg-show-agreed',label:'See what we agreed',attrs:'data-key="run:'+esc(r.id)+'"'}]};
+    if(gs&&gs.status==='agreeing')return {text:agreedWords(gs)+' The blind proposals wait for your Confirm.',actions:[{action:'wg-show-agreed',label:'See what we agreed',attrs:'data-key="run:'+esc(r.id)+'"'}]};
     if(r.status==='paused')return {text:'Paused. Resume it from the Wonderer’s leads.',actions:open};
     const held=w.passes.some(p=>p.status==='held');
     if(w.flow==='dissent'&&!W.grillOn(r)&&['intake','blind_proposals','normalize'].includes(b.phase))return {text:'Every helper drafts alone, and the Wonderer’s leads are held until every proposal is in. Turn Grill Me on now: the Coordinator questions you at the next chapter, and only the vote waits for your answer.',actions:[{action:'collab-brainstorm-toggle-grill',label:'Turn Grill Me on',attrs:'data-run="'+esc(r.id)+'"'}]};
     const later=W.activeSession(r);
-    if(later&&later.later)return later.status==='agreeing'?{text:'Confirm what you agreed. Only the vote waits for it; the debate went on.',actions:[{action:'wg-show-agreed',label:'See what we agreed',attrs:'data-key="run:'+esc(r.id)+'"'}]}:{text:'Grill Me is on mid-run: the Coordinator has one decision for you. The debate goes on; only the vote waits for your answer.',actions:[{action:'wg-open-round',label:'Answer it',attrs:'data-key="run:'+esc(r.id)+'"'}]};
+    if(later&&later.later){const gl=later.gateLabel||'that step',vb=/^the vote$/.test(gl)?'the debate goes on':'everything else keeps going';
+      return later.status==='agreeing'?{text:agreedWords(later)+' Only '+gl+' waits for your Confirm; '+vb+'.',actions:[{action:'wg-show-agreed',label:'See what we agreed',attrs:'data-key="run:'+esc(r.id)+'"'}]}
+        :W.grill.round(later)?{text:'Grill Me is on mid-run: the Coordinator has a decision for you before '+gl+'. '+vb.charAt(0).toUpperCase()+vb.slice(1)+'; only '+gl+' waits for your answer.',actions:[{action:'wg-open-round',label:'Answer it',attrs:'data-key="run:'+esc(r.id)+'"'}]}
+          :{text:'The Coordinator is looking a fact up before it asks you about '+gl+'. Nothing for you yet.'};}
     if(['intake','blind_proposals'].includes(b.phase))return {text:held?'Every helper drafts alone. The Wonderer’s first pass ran during intake; its leads are held until every proposal is in, so nobody’s draft is shaped by them.':'The Wonderer’s first pass runs during intake, before the helpers start drafting.',actions:open};
     if(b.phase==='normalize'||b.phase==='debate'){
-      if(w.passes.length>1&&w.passes[1].status==='queued')return {text:'Adversarial Review asked the Wonderer for a second pass. The debate holds the slots, so the pass is queued behind it.',actions:open};
-      if(w.passes.length>1&&w.passes[1].status==='exploring')return {text:'A slot freed up, so the second pass is exploring. Its leads are decided as they arrive.',actions:open};
+      /* who asked comes from the pass itself (a pass you asked for says you did) */
+      const q=w.passes.find(p=>p.status==='queued'),x=w.passes.find(p=>p.n>1&&p.status==='exploring'),who=p=>p.by.kind==='user'?'You':p.by.name||'A helper';
+      if(q)return {text:who(q)+' asked the Wonderer for pass '+q.n+'. The debate holds the slots, so the pass is queued behind it; the team keeps working, and Write the plan waits for it.',actions:open};
+      if(x)return {text:'A slot freed up, so pass '+x.n+' is exploring. Its leads are decided as they arrive.',actions:open};
       return {text:'Every proposal is in, so the leads are released. The team weighs them in the Debate, and the Coordinator records each decision with its reason.',actions:open};
     }
     if(b.phase==='evidence')return {text:'The Evidence round checks every lead the team chose to explore. Watch each one end supported or not supported.',actions:open};
     const used=w.leads.find(l=>l.disposition&&l.disposition.kind==='use'&&!l.research&&!l.checkedByUser);
     if(b.phase==='vote'&&used&&!w.leads.some(l=>l.checkedByUser))return {text:'Lead '+used.n+' is being used as a hypothesis. Check it sends it to research anyway: only you can do that.',actions:[{action:'wg-check-it',label:'Check lead '+used.n,attrs:'data-run="'+esc(r.id)+'" data-lead="'+esc(used.id)+'"'}]};
-    if(b.phase==='vote')return {text:w.passes.length>2?'Implementation asked for one last pass. The team votes meanwhile; the Wonderer never votes.':'The team votes. The Wonderer never votes.',actions:open};
+    const last=passOf(r,2);
+    if(b.phase==='vote')return {text:last?(last.by.kind==='user'?'You':last.by.name)+' asked for one last pass. The team votes meanwhile; the Wonderer never votes.':'The team votes. The Wonderer never votes.',actions:open};
     const g=gateState(r);
     if(!g.ok)return {text:'Write the plan waits: '+g.reason.charAt(0).toLowerCase()+g.reason.slice(1)+' That is the team’s work, not yours.',actions:open};
     return {text:'Every lead is decided and back from research. Press Write the plan: one plan, listing every lead.',actions:[{action:'collab-brainstorm-synthesize',label:'Write the plan',attrs:'data-run="'+esc(r.id)+'"'}]};

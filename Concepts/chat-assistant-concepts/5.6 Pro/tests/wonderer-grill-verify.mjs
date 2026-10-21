@@ -60,10 +60,16 @@ const coord = { role: 'coordinator', name: 'Coordinator' }, mod = { role: 'moder
   q.deliver(r, p2.pass.id, { summary: 's', angles: ANG, leads: [lead('b1'), lead('b2'), lead('b3')] });
   const p3 = q.requestPass(r, { by: { kind: 'user' }, messageId: 'm1' });
   q.failPass(r, p3.pass.id, 'timed_out');
-  check('W2f a failed further pass does not count toward the two', q.passesLeft(r) === 1);
+  check('W2f a failed further pass does not count toward the two', q.passesLeft(r) === 1 && p3.pass.n === 3);
   const p4 = q.requestPass(r, { by: { kind: 'user' }, messageId: 'm1' });
+  /* R12: the retry keeps its further-pass number (3) with a new attempt identity, and no pass number passes 3 */
+  check('W2h a retried further pass keeps its number with a new attempt identity (R12)', p4.ok && p4.pass.n === 3 && p4.pass.attempt === 2 && p4.pass.attemptId !== p3.pass.attemptId && p4.pass.id !== p3.pass.id, JSON.stringify(p4.pass && { n: p4.pass.n, attempt: p4.pass.attempt, id: p4.pass.id }));
   q.deliver(r, p4.pass.id, { summary: 's', angles: ANG, leads: [lead('c1'), lead('c2'), lead('c3')] });
   check('W2g at most two further passes that did not fail', q.requestPass(r, { by: { kind: 'coordinator' }, messageId: 'm1' }).error === 'pass_limit' && q.passesLeft(r) === 0);
+  check('W2i every pass number runs 1 to 3 (R12)', r.wonderer.passes.every(x => x.n >= 1 && x.n <= 3), r.wonderer.passes.map(x => x.n + ':' + x.status).join(' '));
+  /* a pass asked for after a failed first pass is pass 2 (CWR-041) */
+  const r2 = runOf('crew'); q.attach(r2, { seed: 'x' }); const f1 = q.requestPass(r2, { by: { kind: 'start' } }); q.failPass(r2, f1.pass.id, 'failed');
+  check('W2j a pass asked for after a failed first pass is pass 2', q.requestPass(r2, { by: { kind: 'user' }, messageId: 'm1' }).pass.n === 2);
 }
 {
   const { q, r } = delivered('crew', 3);
@@ -124,10 +130,10 @@ const coord = { role: 'coordinator', name: 'Coordinator' }, mod = { role: 'moder
   check('W8d a Chat Room never waits on a lead', room.q.gate(room.r).ok);
   check('W8e a room’s summary lists an undecided lead as not taken up', room.q.listing(room.r).every(x => x.word === 'Not taken up'));
   const c = q.counts(r);
-  check('W8f the card counts leads explored, used, set aside and waiting', c.explored === 1 && c.used === 1 && c.setAside === 1 && c.waiting === 0);
+  check('W8f the card counts leads explored, used, set aside and undecided', c.explored === 1 && c.used === 1 && c.setAside === 1 && c.undecided === 0);
   check('W9 the Wonderer never votes and never takes a turn', !q.canVote({ additiveRoleKind: 'wonderer' }) && !q.canTakeTurn({ additiveRoleKind: 'wonderer' }) && q.canVote({ additiveRoleKind: 'none' }));
   q.close(r);
-  check('W10 once the team writes the result, a new pass and Check it are refused with that reason', q.requestPass(r, { by: { kind: 'user' }, messageId: 'm1' }).error === 'team_writing_result' && q.checkIt(r, 'l3').error === 'team_writing_result');
+  check('W10 once the team writes the result, a new pass and Check it are refused with that reason', q.requestPass(r, { by: { kind: 'user' }, messageId: 'm1' }).error === 'lead_admission_closed' && q.checkIt(r, 'l3').error === 'lead_admission_closed');
 }
 
 /* ------------------------------------------------------------------ engine: Grill Me (CWR-042, SS-038, APR-072) */
@@ -178,6 +184,38 @@ check('G1b every decision carries a recommended answer', GE.create({ by: 'coordi
   const c = GE.create({ by: 'moderator', tree: JSON.parse(JSON.stringify(TREE)), cap: 1 }).session; GE.next(c);
   check('G5b the question limit is a safety net that ends the session', GE.questions(c).length === 1 && (GE.acceptRound(c), GE.submitRound(c)).ended === 'cap');
   check('G5c Confirm before the end is refused', GE.confirm(GE.create({ by: 'coordinator', tree: TREE }).session).error === 'nothing_to_confirm_yet');
+}
+/* B2 (engine half): Wrap up never submits a draft; only answers you gave stand, the rest of the round is open */
+{
+  const s = GE.create({ by: 'assistant', tree: JSON.parse(JSON.stringify(TREE)) }).session; GE.next(s);
+  GE.answer(s, 'd2', 'No');
+  const w = GE.wrapUp(s), a = GE.agreed(s);
+  check('G6 Wrap up keeps only the answer you gave; the untouched question is open, not answered (B2)', w.ended === 'wrap_up' && a.decisions.length === 1 && a.decisions[0].id === 'd2' && a.decisions[0].took === 'own' && a.open.some(o => o.id === 'd1' && /Not answered: you wrapped up/.test(o.why)), JSON.stringify(a.decisions.concat(a.open)));
+}
+/* M6, R2, m9: one counter per run; a question is charged once, on its first presentation; at the limit Keep going
+   revisits but admits no new question */
+{
+  const bank = GE.localBank(4);
+  const s1 = GE.create({ by: 'coordinator', tree: JSON.parse(JSON.stringify(TREE)), bank }).session; GE.next(s1);
+  GE.acceptRound(s1); GE.submitRound(s1);                /* d1, d2 charged; d3 asked next (3) */
+  GE.answer(s1, 'd3', null); GE.submitRound(s1);         /* d3 not sure; waits on f1 */
+  GE.factFound(s1, 'f1', 'x'); GE.acceptRound(s1); GE.submitRound(s1); /* d4 (4): the bank is full */
+  check('G7 a session charges the run’s one counter once per question (4 of 4)', GE.counter(s1).asked === 4 && GE.counter(s1).limit === 4, JSON.stringify(GE.counter(s1)));
+  const before = GE.counter(s1).asked, kg = GE.keepGoing(s1);
+  check('G7b Keep going asks the Not sure decision again for free (no second charge, M6)', kg.opened && GE.round(s1).ids.join() === 'd3' && GE.counter(s1).asked === before, JSON.stringify({ kg, asked: GE.counter(s1).asked }));
+  GE.acceptRound(s1); GE.submitRound(s1);
+  const s2 = GE.create({ by: 'coordinator', tree: [{ id: 'e1', prompt: 'E?', options: [{ label: 'Yes' }, { label: 'No' }], recommended: 'Yes' }], bank, gate: 'part:x' }).session;
+  const n2 = GE.next(s2);
+  check('G7c a later session borrows the same counter: at the limit it admits no new question (R2)', n2.ended === 'cap' && GE.counter(s2).asked === 4 && GE.agreed(s2).open.some(o => o.id === 'e1' && /limit/.test(o.why)), JSON.stringify(n2));
+  const kg2 = GE.keepGoing(s1.status === 'confirmed' ? s1 : s1);
+  check('G7d at the limit Keep going still revisits answers already given, free (ACD-503)', kg2.opened && GE.counter(s1).asked === 4 && GE.round(s1).ids.join() === 'd1,d2,d4', JSON.stringify(kg2));
+  const s3 = GE.create({ by: 'assistant', tree: JSON.parse(JSON.stringify(TREE)), bank: GE.localBank(10) }).session; GE.next(s3); GE.answer(s3, 'd1', null); GE.answer(s3, 'd2', 'Yes'); GE.submitRound(s3);
+  GE.wrapUp(s3); const charged = GE.counter(s3).asked, again = GE.reopen(s3, 'd1');
+  check('G7e Ask again reopens one open decision without charging it again', again.opened && GE.round(s3).ids.join() === 'd1' && GE.counter(s3).asked === charged);
+  const off = GE.create({ by: 'coordinator', tree: JSON.parse(JSON.stringify(TREE)) }).session; GE.next(off);
+  check('G8 Grill Me turned off ends a session like Wrap up, open items listed (M2)', GE.switchOff(off).ended === 'switched_off' && GE.agreed(off).open.length >= 2 && GE.agreed(off).decisions.length === 0);
+  const m = GE.map(GE.create({ by: 'assistant', tree: JSON.parse(JSON.stringify(TREE)) }).session);
+  check('G9 the design tree knows what each decision unlocks', m.find(n => n.id === 'd1').unlocks.join() === 'd3' && m.find(n => n.id === 'f1').unlocks.join() === 'd4');
 }
 
 /* ------------------------------------------------------------------ static: the sources say the same */
@@ -272,7 +310,7 @@ async function browser() {
     const done = await ev(id => { const r = window.PM56_COLLAB.run(id), W = window.PM56_WG; return { st: r.status, leads: r.crew.summary && r.crew.summary.leads ? r.crew.summary.leads.length : 0, total: W.engine.counts(r).total, explore: r.crew.assignments.filter(a => a.leadId && a.readOnly).length, wAssign: r.crew.assignments.some(a => r.participants.find(p => p.id === a.participantId)?.additiveRoleKind === 'wonderer'), cards: document.querySelectorAll('.wg-card').length }; }, crew.id);
     check('B3b the Crew finished and its result lists every lead', done.st === 'completed' && done.leads === done.total && done.total === 7, JSON.stringify(done));
     const closed = await ev(id => { const r = window.PM56_COLLAB.run(id), W = window.PM56_WG; return [W.engine.requestPass(r, { by: { kind: 'user' }, messageId: 'x' }).error, W.engine.checkIt(r, 'l3').error]; }, crew.id);
-    check('B3g after the final result starts, a new pass and Check it are refused (the team is writing the result)', closed.every(e => e === 'team_writing_result'), closed.join(','));
+    check('B3g after the final result starts, a new pass and Check it are refused (the team is writing the result)', closed.every(e => e === 'lead_admission_closed'), closed.join(','));
     check('B3c explored leads became read-only parts; the Wonderer got no part', done.explore === 2 && !done.wAssign, JSON.stringify(done));
     check('B3d one Wonderer card per pass in the main chat', done.cards === 2, String(done.cards));
     /* the BrainStorm */
@@ -306,7 +344,9 @@ async function browser() {
     const refused = await ev(id => { const r = window.PM56_COLLAB.run(id); return window.PM56_WG.gate(r).ok; }, bsId);
     await act('collab-brainstorm-synthesize', { run: bsId }); await sleep(1500);
     const plan = await ev(id => { const r = window.PM56_COLLAB.run(id), p = window.PM56_BRAINSTORM.planPayload(r); return { synth: !!r.brainstorm.synthesis, text: JSON.stringify(p.blocks), total: window.PM56_WG.engine.counts(r).total }; }, bsId);
-    check('B5b the Plan lists every lead with its decision and reason', refused && plan.synth && /Wonderer leads/.test(plan.text) && (plan.text.match(/ — (Using|Set aside|Supported|Not supported)/g) || []).length === plan.total, plan.text.slice(0, 200));
+    /* M4: every lead keeps the team's decision, its reason and recorder, and a research result is added under it */
+    const decided = plan.text.match(/ — (Explore|Use|Set aside) \(the Coordinator: [^)]+\)/g) || [], researched = plan.text.match(/ — Explore \(the Coordinator: [^)]+\) → (Supported|Not supported): /g) || [];
+    check('B5b the Plan lists every lead with the team’s decision and reason, and research under it (M4)', refused && plan.synth && /Wonderer leads/.test(plan.text) && decided.length === plan.total && researched.length >= 3, JSON.stringify({ total: plan.total, decided: decided.length, researched: researched.length }));
     /* Grill Me turned on mid-run (the 'dissent' recording) */
     await ev(() => { const b = document.createElement('button'); b.dataset.flow = 'dissent'; window.PM56_EXT.run('b13-start', b, new Event('click')); }); await sleep(900); await startSheet();
     const dsId = await ev(() => window.PM56_BATCH13.currentRun().id);
@@ -364,9 +404,187 @@ async function browser() {
     check('APR-072 no Plan document before Confirm', await noPlan());
     await page.locator('.wg-agreed [data-action="wg-confirm"]').first().click(); await sleep(2500);
     check('APR-072b the Plan is written after Confirm', !(await noPlan()));
+    await reviewRound1({ page, ev, act, sleep, startSheet, answerAll });
     check('B7 no page errors', !errs.length, errs.slice(0, 3).join(' | '));
   } catch (e) { check('B0 the browser pass ran to the end', false, e && e.stack || e); }
   if (cdp) await b.close().catch(() => {}); else await b.close();
+}
+/* ------------------------------------------------------------------ concept review, round 1 (2026-10-21)
+   Every finding of CONCEPT-REVIEW-ASTRA.md and CONCEPT-REVIEW-OPUS.md, replayed the way the reviewers reproduced it,
+   so it stays fixed. PM56_CLOCK runs the recordings faster where only the order of things matters. */
+async function reviewRound1({ page, ev, act, sleep, startSheet, answerAll }) {
+  const fast = k => ev(k => window.PM56_CLOCK.setScale(k), k);
+  const until = (fn, arg, ms = 60000) => page.waitForFunction(fn, arg, { timeout: ms }).then(() => true, () => false);
+  const click = async sel => { try { const l = page.locator(sel).first(); if (await l.count() && await l.isVisible()) { await l.click({ timeout: 3000 }); return true; } } catch (e) { } return false; };
+  const roundOpen = () => until(() => !!document.querySelector('.qs-grill [data-action="qs-accept-round"]'), null, 20000);
+  const thread = () => ev(() => window.PM56_WG_DEMOS.snapshot().threadId);
+  const agreedOf = t => ev(t => { const s = window.PM56_WG.threadSession(t), a = window.PM56_WG.grill.agreed(s); return { st: s.status, ended: a.endedBy, dec: a.decisions.map(d => d.id + '=' + d.answer + '/' + d.took), open: a.open.map(o => o.id + ':' + o.why), asked: a.counter.asked }; }, t);
+  const confirmAll = async (ms = 40000) => { const t0 = Date.now(); while (Date.now() - t0 < ms) { if (await click('.wg-agreed[data-state="open"] [data-action="wg-confirm"]')) return true; if (await click('.qs-grill [data-action="qs-accept-round"]')) { await sleep(900); continue; } await sleep(400); } return false; };
+
+  /* B2 = R1: Wrap up with the drafts untouched settles nothing (Deep Plan) */
+  await ev(() => window.PM56_WG_DEMOS.start('deepplan')); await roundOpen(); await sleep(600);
+  let t = await thread();
+  await click('.qs-grill [data-action="qs-wrap-up"]'); await sleep(1800);
+  let ag = await agreedOf(t);
+  check('R1-B2 Wrap up with every draft untouched settles nothing: the round is open, not answered', ag.st === 'agreeing' && !ag.dec.length && ag.open.some(o => /^d-where:Not answered: you wrapped up/.test(o)) && ag.open.some(o => /^d-rank:Not answered/.test(o)), JSON.stringify(ag));
+  /* B2b: an answer you picked counts; the untouched one does not */
+  await ev(() => window.PM56_WG_DEMOS.start('deepplan')); await roundOpen(); await sleep(600); t = await thread();
+  await page.locator('.qs-grill .qs-ask-opt').nth(1).click(); await sleep(400);
+  await click('.qs-grill [data-action="qs-wrap-up"]'); await sleep(1800);
+  ag = await agreedOf(t);
+  check('R1-B2b Wrap up keeps the answer you picked and leaves the untouched one open', ag.dec.join() === 'd-where=Allow an upload for big collections/own' && ag.open.some(o => /^d-rank:Not answered/.test(o)), JSON.stringify(ag));
+
+  /* M6 = R2: Not sure, then Keep going asks it again for free; Ask again is offered on the open row */
+  await ev(() => window.PM56_WG_DEMOS.start('deepplan')); await roundOpen(); await sleep(600); t = await thread();
+  await click('.qs-grill [data-action="skip-question"]'); await sleep(500);
+  await answerAll(40000);
+  ag = await agreedOf(t);
+  const askAgain = await ev(() => !!document.querySelector('.wg-agreed[data-state="open"] [data-action="wg-ask-again"][data-node="d-where"]'));
+  await click('.wg-agreed[data-state="open"] [data-action="wg-keep-going"]'); await sleep(1500);
+  const kg = await ev(t => { const s = window.PM56_WG.threadSession(t), rd = window.PM56_WG.grill.round(s); return { asked: window.PM56_WG.grill.counter(s).asked, ids: rd ? rd.ids : [] }; }, t);
+  check('R1-M6 Keep going asks the Not sure decision again without charging it twice', ag.open.some(o => /^d-where:You said/.test(o)) && askAgain && kg.ids.includes('d-where') && kg.asked === ag.asked, JSON.stringify({ before: ag.asked, kg, askAgain }));
+
+  /* R7: the written plan follows a confirmed alternative answer */
+  await ev(() => window.PM56_WG_DEMOS.start('deepplan')); await roundOpen(); await sleep(600); t = await thread();
+  await click('.qs-grill [data-action="next-question"]'); await sleep(500);
+  await page.locator('.qs-grill .qs-ask-opt').nth(1).click(); await sleep(300);
+  await answerAll(40000); await click('.wg-agreed[data-state="open"] [data-action="wg-confirm"]');
+  await until(t => window.PM56_EXT.ctx().state.threads.find(x => x.id === t).messages.some(m => m.type === 'plan-card-v2'), t, 15000);
+  const plan = await ev(() => { const id = window.PM56_WG_DEMOS.snapshot().planId, p = window.PM56_PLANS.all()[id]; return JSON.stringify(p && p.revisions[1]); });
+  check('R1-R7 the Plan written after Confirm follows “Rank by recency instead”', /ranked by recency/.test(plan) && !/ranking stays as it is/i.test(plan) && /Rank by recency instead/.test(plan), plan.slice(0, 300));
+
+  /* R6: a Crew recording with the Wonderer removed plays to the end; one with Grill Me off grills nobody */
+  await ev(() => window.PM56_WG_DEMOS.start('crew')); await sleep(1400);
+  await ev(() => { const i = document.querySelector('#pmOverlayRoot [data-collab-input="wonderer"]'); if (i && i.checked) i.click(); });
+  await sleep(500); await startSheet(); await fast(4);
+  await confirmAll(40000);
+  const r6 = await until(() => { const s = window.PM56_WG_DEMOS.snapshot(), r = s && window.PM56_COLLAB.run(s.runId); return !!r && (r.status === 'completed' || !!s.error); }, null, 90000);
+  const r6s = await ev(() => { const s = window.PM56_WG_DEMOS.snapshot(), r = window.PM56_COLLAB.run(s.runId); return { st: r.status, error: s.error, w: !!r.wonderer, grill: !!r.grill }; });
+  check('R1-R6 a Crew recording with the Wonderer removed plays to the end, Grill Me still on', r6 && r6s.st === 'completed' && !r6s.error && !r6s.w && r6s.grill, JSON.stringify(r6s));
+  await fast(1);
+  await ev(() => window.PM56_WG_DEMOS.start('crew')); await sleep(1400);
+  await ev(() => { const i = document.querySelector('#pmOverlayRoot [data-collab-input="grillMe"]'); if (i && i.checked) i.click(); });
+  await sleep(500); await startSheet(); await fast(4);
+  const r6b = await until(() => { const s = window.PM56_WG_DEMOS.snapshot(), r = s && window.PM56_COLLAB.run(s.runId); return !!r && (r.status === 'completed' || !!s.error); }, null, 90000);
+  const r6bs = await ev(() => { const s = window.PM56_WG_DEMOS.snapshot(), r = window.PM56_COLLAB.run(s.runId); return { st: r.status, error: s.error, sessions: window.PM56_WG.sessionsOf(r).length, bank: r.grillBank }; });
+  check('R1-R6b with Grill Me off nobody grills you: no session and no question bank', r6b && r6bs.st === 'completed' && !r6bs.error && r6bs.sessions === 0 && !r6bs.bank, JSON.stringify(r6bs));
+  await fast(1);
+  await ev(() => { const b = document.createElement('button'); b.dataset.flow = 'leads'; window.PM56_EXT.run('b13-start', b, new Event('click')); }); await sleep(1000);
+  await ev(() => { const i = document.querySelector('#pmOverlayRoot [data-collab-input="wonderer"]'); if (i && i.checked) i.click(); }); await sleep(500);
+  const need = await ev(() => { const b = [...document.querySelectorAll('#pmOverlayRoot .pmx-sheet .pmx-foot .primary-button')].pop(); return { disabled: !!(b && b.disabled), text: (document.querySelector('#pmOverlayRoot .pmx-sheet') || {}).textContent || '' }; });
+  check('R1-R6c a recording that needs the Wonderer says so before Start and does not start', need.disabled && /follows the Wonderer’s leads/.test(need.text), JSON.stringify({ disabled: need.disabled }));
+  await ev(() => { const c = window.PM56_EXT.ctx(); c.closeDialog ? c.closeDialog() : (c.state.dialog = null); c.renderOverlays(); });
+
+  /* R11: the Grill Me switch is named, described and keeps the keyboard focus */
+  await ev(() => { const C = window.PM56_COLLAB, c = window.PM56_EXT.ctx(); c.switchThread('query'); C.openConfigure('crew'); const d = C.draft(); d.purpose = 'Export the collection.'; d.wonderer = true; d.grillMe = true; c.openDialog({ type: 'collab-configure' }); c.renderOverlays(); }); await sleep(700);
+  const sw = await ev(() => { const i = document.querySelector('#pmOverlayRoot [data-collab-input="grillMe"]'), d = i && document.getElementById(i.getAttribute('aria-describedby') || ''); return { label: i && i.getAttribute('aria-label'), role: i && i.getAttribute('role'), described: d ? d.textContent : '' }; });
+  await page.focus('#pmOverlayRoot [data-collab-input="grillMe"]'); await page.keyboard.press('Space'); await sleep(500);
+  const after = await ev(() => { const a = document.activeElement; return { on: a && a.getAttribute && a.getAttribute('data-collab-input'), checked: a && a.checked, ring: a && a.closest && getComputedStyle(a.closest('.pmx-add')).outlineStyle }; });
+  check('R1-R11 the switch is named Grill Me, described by its helper, and keeps focus with a visible ring after Space', sw.label === 'Grill Me' && sw.role === 'switch' && /questions you/.test(sw.described) && after.on === 'grillMe' && after.checked === false && after.ring !== 'none', JSON.stringify({ sw, after }));
+  await ev(() => { const c = window.PM56_EXT.ctx(); c.state.dialog = null; c.renderOverlays(); });
+
+  /* R5 + M1: a Crew with the Wonderer; the lane during a lookup; your extra pass while the recording owns the next */
+  await ev(() => window.PM56_WG_DEMOS.start('crew')); await sleep(1400); await startSheet(); await roundOpen(); await sleep(600);
+  let crew = await ev(() => window.PM56_WG_DEMOS.snapshot().runId);
+  for (let i = 0; i < 2; i++) { await click('.qs-grill [data-action="qs-accept-round"]'); await sleep(1200); }
+  const looking = await until(id => { const s = window.PM56_WG.sessionOf('run:' + id); return s && window.PM56_WG.grill.waiting(s); }, crew, 8000);
+  await act('wg-open-round', { key: 'run:' + crew }); await sleep(600);
+  const r5 = await ev(id => { const s = window.PM56_WG.sessionOf('run:' + id); return { st: s.status, agreed: !!document.querySelector('.wg-agreed[data-state="open"]'), lookup: !!document.querySelector('.wg-lookup') }; }, crew);
+  check('R1-R5 opening the lead’s lane during a lookup shows the lookup, never What we agreed', looking && r5.st === 'grilling' && !r5.agreed && r5.lookup, JSON.stringify(r5));
+  await confirmAll(40000);
+  await until(id => window.PM56_COLLAB.run(id).crew.assignments.some(a => a.status === 'running'), crew, 30000);
+  await act('wg-ask-pass', { run: crew }); await sleep(400);
+  const m1 = await ev(id => { const r = window.PM56_COLLAB.run(id); return { mine: r.wonderer.passes.filter(p => p.by.kind === 'user').length, ask: window.PM56_WG.askState(r) }; }, crew);
+  check('R1-M1 while the recording owns the next pass, yours is refused with a stated reason (no deadlock)', m1.mine === 0 && !m1.ask.ok && /recording asks|exploring|queued/.test(m1.ask.say), JSON.stringify(m1));
+  await fast(4);
+  await until(id => { const r = window.PM56_COLLAB.run(id), w = r.wonderer; return w.reserved === 0 && w.passes.length === 2 && w.passes[1].status === 'delivered' && r.status === 'running'; }, crew, 60000);
+  await act('wg-ask-pass', { run: crew }); await sleep(300);
+  const mine = await ev(id => { const r = window.PM56_COLLAB.run(id), p = r.wonderer.passes.find(x => x.by.kind === 'user'); return p ? { n: p.n, status: p.status } : null; }, crew);
+  await confirmAll(20000);
+  const m1b = await until(id => window.PM56_COLLAB.run(id).status === 'completed', crew, 90000);
+  const m1s = await ev(id => { const r = window.PM56_COLLAB.run(id), s = window.PM56_WG_DEMOS.snapshot(); return { st: r.status, error: s.error, passes: r.wonderer.passes.map(p => p.n + ':' + p.by.kind + ':' + p.status) }; }, crew);
+  check('R1-M1b a pass you ask for after the scripted ones is pass 3, and the recording still finishes', !!mine && mine.n === 3 && m1b && !m1s.error, JSON.stringify({ mine, m1s }));
+  const lin = await ev(id => { const r = window.PM56_COLLAB.run(id), x = window.PM56_WG.engine.listing(r).find(l => l.id === 'l5'); return x; }, crew);
+  check('R1-M4 after research the lead keeps the team’s decision, reason and recorder beside its result', lin && lin.disposition === 'explore' && /line break/.test(lin.dispositionReason) && lin.recordedBy === 'Coordinator' && lin.research === 'not_supported' && !!lin.researchNote, JSON.stringify(lin));
+  await fast(1);
+
+  /* m5 + R4 (Crew): Grill Me turned on mid-run grills you at the next assignment; only that part waits */
+  await ev(() => window.PM56_WG_DEMOS.start('crew')); await sleep(1400);
+  await ev(() => { const i = document.querySelector('#pmOverlayRoot [data-collab-input="grillMe"]'); if (i && i.checked) i.click(); }); await sleep(400); await startSheet(); await fast(3);
+  crew = await ev(() => window.PM56_WG_DEMOS.snapshot().runId);
+  await until(id => window.PM56_COLLAB.run(id).crew.assignments.some(a => a.status === 'running'), crew, 40000);
+  await act('wg-toggle-grill', { run: crew });
+  const began = await until(id => window.PM56_WG.sessionsOf(window.PM56_COLLAB.run(id)).length === 1, crew, 40000);
+  const cm = await ev(id => { const r = window.PM56_COLLAB.run(id), s = window.PM56_WG.sessionsOf(r)[0]; return { gate: s && s.gate, running: r.crew.assignments.filter(a => a.status === 'running').map(a => a.id), bank: r.grillBank && r.grillBank.effective_limit }; }, crew);
+  check('R1-m5 Crew: Grill Me turned on mid-run grills you before the next part; running parts go on', began && /^part:/.test(cm.gate) && cm.bank === 25, JSON.stringify(cm));
+  await fast(1); await confirmAll(30000); await fast(4);
+  check('R1-m5b the Crew finishes after that Confirm', await until(id => window.PM56_COLLAB.run(id).status === 'completed', crew, 90000));
+  await fast(1);
+
+  /* B1: Check it on a held BrainStorm lead reaches no core participant before the Evidence round */
+  await ev(() => { const b = document.createElement('button'); b.dataset.flow = 'leads'; window.PM56_EXT.run('b13-start', b, new Event('click')); }); await sleep(900); await startSheet();
+  const bs = await ev(() => window.PM56_BATCH13.currentRun().id);
+  await until(id => { const w = window.PM56_COLLAB.run(id).wonderer; return w.passes[0] && w.passes[0].status === 'held'; }, bs, 20000);
+  await act('wg-check-it', { run: bs, lead: 'speed' }); await sleep(3500);
+  const held = await ev(id => { const r = window.PM56_COLLAB.run(id), l = window.PM56_WG.engine.lead(r, 'speed'), row = document.querySelector('[data-k$=":speed"]'); return { rs: l.research && l.research.status, via: l.research && l.research.via, by: l.research && l.research.by, phase: r.brainstorm.phase }; }, bs);
+  check('R1-B1 a held lead you Check is recorded, not researched, while the helpers draft alone', held.rs === 'queued' && held.via === 'check_it' && !held.by && /intake|blind/.test(held.phase), JSON.stringify(held));
+  await confirmAll(30000); await fast(5);
+  let startPhase = null;
+  for (let i = 0; i < 200 && !startPhase; i++) { await sleep(150); startPhase = await ev(id => { const r = window.PM56_COLLAB.run(id), l = window.PM56_WG.engine.lead(r, 'speed'); return l.research && l.research.status !== 'queued' ? r.brainstorm.phase : null; }, bs); }
+  check('R1-B1b it is researched in the Evidence round, by a core helper', startPhase === 'evidence', String(startPhase));
+  await until(id => { const r = window.PM56_COLLAB.run(id); return r.wonderer.corePlayback.status === 'completed'; }, bs, 120000);
+  await fast(1);
+
+  /* M2 + R4 (BrainStorm): on then off clears the request; on during the Debate grills at the next chapter; off during
+     an open round ends it like Wrap up; the vote waits for that Confirm */
+  const dissent = async () => { await ev(() => { const b = document.createElement('button'); b.dataset.flow = 'dissent'; window.PM56_EXT.run('b13-start', b, new Event('click')); }); await sleep(900); await startSheet(); return ev(() => window.PM56_BATCH13.currentRun().id); };
+  let d = await dissent();
+  await act('collab-brainstorm-toggle-grill', { run: d }); await act('collab-brainstorm-toggle-grill', { run: d });
+  await fast(6);
+  await until(id => window.PM56_COLLAB.run(id).brainstorm.votes.length >= 4, d, 90000);
+  const m2 = await ev(id => { const r = window.PM56_COLLAB.run(id); return { pending: !!r.grillPending, sessions: window.PM56_WG.sessionsOf(r).length, on: window.PM56_WG.grillOn(r) }; }, d);
+  check('R1-M2 turning Grill Me on and then off before the boundary clears the request: nobody is grilled', !m2.pending && m2.sessions === 0 && !m2.on, JSON.stringify(m2));
+  await fast(1);
+  d = await dissent(); await fast(5);
+  await until(id => window.PM56_COLLAB.run(id).brainstorm.phase === 'debate', d, 60000);
+  await fast(1); await act('collab-brainstorm-toggle-grill', { run: d }); await fast(5);
+  const late = await until(id => { const s = window.PM56_WG.sessionsOf(window.PM56_COLLAB.run(id))[0]; return !!s && !!window.PM56_WG.grill.round(s); }, d, 60000);
+  await fast(1);
+  const r4 = await ev(id => { const r = window.PM56_COLLAB.run(id), s = window.PM56_WG.sessionsOf(r)[0]; return { gate: s.gate, phase: r.brainstorm.phase, votes: r.brainstorm.votes.length }; }, d);
+  check('R1-R4 Grill Me turned on during the Debate grills you at the next chapter; the vote waits', late && r4.gate === 'vote' && r4.votes === 0, JSON.stringify(r4));
+  await act('collab-brainstorm-toggle-grill', { run: d }); await sleep(800);
+  const offS = await ev(id => { const s = window.PM56_WG.sessionsOf(window.PM56_COLLAB.run(id))[0]; return { st: s.status, ended: s.endedBy, agreed: !!document.querySelector('.wg-agreed[data-state="open"]') }; }, d);
+  check('R1-M2b turning it off with a round open ends the session like Wrap up, open items listed', offS.st === 'agreeing' && offS.ended === 'switched_off' && offS.agreed, JSON.stringify(offS));
+  const heldVote = await ev(id => { const r = window.PM56_COLLAB.run(id), a = r.brainstorm.attempts[0]; return window.PM56_BRAINSTORM.vote(id, a.participantId, { epoch: r.stopEpoch, sourceHash: r.brainstorm.input.sourceHash, position: 'support', proposalId: r.brainstorm.proposals[0].id, confidence: 'medium', reason: 'x', evidenceRefs: [] }).error; }, d);
+  await click('.wg-agreed[data-state="open"] [data-action="wg-confirm"]'); await fast(6);
+  const voted = await until(id => window.PM56_COLLAB.run(id).brainstorm.votes.length >= 4, d, 60000);
+  check('R1-R4b the vote waited for that Confirm, then went on', heldVote === 'grill_me_waits_for_confirm' && voted, String(heldVote));
+  await fast(1);
+
+  /* m5 (Chat Room): Grill Me turned on mid-run grills you before the next round */
+  await ev(() => window.PM56_WG_DEMOS.start('room')); await sleep(1400);
+  await ev(() => { const i = document.querySelector('#pmOverlayRoot [data-collab-input="grillMe"]'); if (i && i.checked) i.click(); }); await sleep(400); await startSheet(); await sleep(1200);
+  const room = await ev(() => window.PM56_WG_DEMOS.snapshot().runId);
+  await act('collab-room-next-round', { run: room }); await fast(4);
+  await until(id => { const c = window.PM56_COLLAB.run(id).chatRoom; return c.roundsSoFar === 1 && (!c.round || c.round.complete); }, room, 60000);
+  await fast(1); await act('wg-toggle-grill', { run: room }); await act('collab-room-next-round', { run: room }); await sleep(800);
+  const rm = await ev(id => { const r = window.PM56_COLLAB.run(id), s = window.PM56_WG.sessionsOf(r)[0]; return { gate: s && s.gate, round2: !!(r.chatRoom.round && r.chatRoom.round.number === 2) }; }, room);
+  check('R1-m5c Chat Room: Grill Me turned on mid-run grills you before round 2, and round 2 waits', rm.gate === 'round:2' && !rm.round2, JSON.stringify(rm));
+  await confirmAll(30000); await act('collab-room-next-round', { run: room }); await sleep(600);
+  check('R1-m5d round 2 starts after that Confirm', await ev(id => { const r = window.PM56_COLLAB.run(id); return !!(r.chatRoom.round && r.chatRoom.round.number === 2); }, room));
+
+  /* M5 + m8 = R10: required words read at 4.5:1 or better on their real background, NieR's Recommended included */
+  const contrast = await ev(async () => {
+    const parse = c => { const m = /rgba?\(([^)]+)\)/.exec(c || ''); if (!m) return null; const p = m[1].split(/[ ,/]+/).filter(Boolean).map(Number); return { r: p[0], g: p[1], b: p[2], a: p.length > 3 ? p[3] : 1 }; };
+    const over = (top, bot) => ({ r: top.r * top.a + bot.r * (1 - top.a), g: top.g * top.a + bot.g * (1 - top.a), b: top.b * top.a + bot.b * (1 - top.a), a: 1 });
+    const bgOf = el => { const layers = []; for (let x = el; x && x.nodeType === 1; x = x.parentElement) { const c = parse(getComputedStyle(x).backgroundColor); if (c && c.a > 0) layers.push(c); if (c && c.a >= 1) break; } let acc = { r: 0, g: 0, b: 0, a: 1 }; const base = parse(getComputedStyle(document.body).backgroundColor); if (base) acc = base; for (let i = layers.length - 1; i >= 0; i--) acc = over(layers[i], acc); return acc; };
+    const lum = c => { const f = v => { v /= 255; return v <= .03928 ? v / 12.92 : Math.pow((v + .055) / 1.055, 2.4); }; return .2126 * f(c.r) + .7152 * f(c.g) + .0722 * f(c.b); };
+    const ratio = el => { const fg = parse(getComputedStyle(el).color), bg = bgOf(el); const op = parseFloat(getComputedStyle(el).opacity || '1'); const f = over({ ...fg, a: (fg.a || 1) * op }, bg); const a = lum(f), b = lum(bg); return (Math.max(a, b) + .05) / (Math.min(a, b) + .05); };
+    const out = {};
+    for (const sel of ['.qs-ask-opt.is-on .qs-rec', '.qs-grill-note', '.wg-agreed-prov', '.wg-who', '.wg-hyp', '.wg-lead-src']) { const el = document.querySelector(sel); if (el && el.getClientRects().length) out[sel] = Math.round(ratio(el) * 100) / 100; }
+    return out;
+  });
+  check('R1-R10 required words and the Recommended mark meet 4.5:1 here (' + Object.keys(contrast).length + ' measured)', Object.values(contrast).every(v => v >= 4.5), JSON.stringify(contrast));
 }
 if (argv.includes('--browser')) await browser();
 const failed = results.filter(r => !r.pass);
