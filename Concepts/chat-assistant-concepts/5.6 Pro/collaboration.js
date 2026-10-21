@@ -1418,8 +1418,6 @@
     if (wgf) {
       if (wgf.sentence) out.sentence = wgf.sentence; else if (WG_().holds(run)) out.sentence = generic.sentence;
       out.decision = generic.decision;
-      /* the dock line says the same move (a kind's own dock, such as the room's "start the first round", would not) */
-      if (wgf.attention || WG_().holds(run)) out.dock = generic.dock;
       if (wgf.attention) { out.density = 'attention'; own.density = 'attention'; } else if (WG_().holds(run)) { out.density = 'live'; own.density = 'live'; }
     }
     /* normalise the tolerated shapes */
@@ -1649,6 +1647,9 @@
       var say = esc(att ? att.plain : sentenceOf(run).reason);
       /* a kind may word its own dock line ({tone, sentence} as HTML), e.g. a Chat Room round that is your move */
       var own = kindParts(run, ctx, UI.face[run.id] || 'live', null);
+      /* DL-218: while Grill Me asks for your move, the dock says that move, not the kind's own next step */
+      var wgf = WG_() && WG_().face(run);
+      if (wgf && (wgf.attention || WG_().holds(run))) own = null;
       if (own && own.dock && own.dock.sentence) { say = own.dock.sentence; if ({ live: 1, needs: 1, yourmove: 1 }[own.dock.tone]) tone = own.dock.tone; }
       out.push({ runId: run.id, tone: tone, at: Date.parse(run.createdAt) || 0,
         html: S.pmxDockLine({ key: 'pmx-dock:' + run.id, tone: tone, runId: run.id, markHtml: S.pmxKindMark(run.kind, 16), kindWord: esc(KIND_LABEL[run.kind]),
