@@ -391,7 +391,11 @@ async function browser() {
     check('B6e the Moderator decided each lead as it arrived; pass 2 stopped early with fewer leads', arrival.decided && arrival.early, JSON.stringify(arrival));
     const room = await ev(id => { const r = window.PM56_COLLAB.run(id), w = r.participants.find(p => p.additiveRoleKind === 'wonderer'), sum = r.messages.find(m => m.roomConclusion); return { st: r.status, wTurn: r.messages.some(m => m.senderId === w.id && m.roomRound), sum: sum ? sum.body : '', total: window.PM56_WG.engine.counts(r).total }; }, roomId);
     check('B6b the Wonderer takes no turn in any round', room.st === 'completed' && !room.wTurn, JSON.stringify({ st: room.st, wTurn: room.wTurn }));
-    check('B6c the room’s summary lists every lead with what the room did with it', (room.sum.match(/^- /gm) || []).length === room.total && /Using|Set aside|Supported|Not supported/.test(room.sum), room.sum.slice(-300));
+    check('B6c the room’s summary lists every lead with what the room did with it', (room.sum.match(/^- /gm) || []).length === room.total && /Use \(the Moderator|Set aside \(the Moderator/.test(room.sum), room.sum.slice(-300));
+    /* m1: a lead the Moderator decided never ends the room reading "not taken up" (the summary, or the leads update
+       written as the room ends) */
+    const m1room = await ev(id => { const r = window.PM56_COLLAB.run(id), msgs = r.messages.filter(m => m.roomConclusion || m.roomLeadsUpdate).map(m => m.body); const last = {}; msgs.forEach(b => b.split('\n').filter(x => /^- /.test(x)).forEach(x => { last[x.split(' — ')[0]] = x; })); const bad = r.wonderer.leads.filter(l => l.disposition && /not taken up/.test(last['- ' + l.title] || '')); return bad.map(l => l.id); }, roomId);
+    check('B6h no lead the Moderator decided ends the room as “not taken up” (m1)', !m1room.length, JSON.stringify(m1room));
     /* the Deep Plan */
     await ev(() => window.PM56_WG_DEMOS.start('deepplan')); await sleep(1500);
     const tid = await ev(() => window.PM56_WG_DEMOS.snapshot().threadId);
@@ -419,6 +423,9 @@ async function reviewRound1({ page, ev, act, sleep, startSheet, answerAll }) {
   const roundOpen = () => until(() => !!document.querySelector('.qs-grill [data-action="qs-accept-round"]'), null, 20000);
   const thread = () => ev(() => window.PM56_WG_DEMOS.snapshot().threadId);
   const agreedOf = t => ev(t => { const s = window.PM56_WG.threadSession(t), a = window.PM56_WG.grill.agreed(s); return { st: s.status, ended: a.endedBy, dec: a.decisions.map(d => d.id + '=' + d.answer + '/' + d.took), open: a.open.map(o => o.id + ':' + o.why), asked: a.counter.asked }; }, t);
+  /* play a recorded run to its end, answering every round with its recommendations and confirming every agreement
+     (a later decision asks again mid-run, so a run may need more than one Confirm) */
+  const finish = async (id, ms = 120000) => { const t0 = Date.now(); while (Date.now() - t0 < ms) { const st = await ev(id => { const r = window.PM56_COLLAB.run(id), s = window.PM56_WG_DEMOS.snapshot(); return r.status === 'completed' ? 'done' : s && s.error ? 'error:' + s.error : ''; }, id); if (st) return st; if (await click('.wg-agreed[data-state="open"] [data-action="wg-confirm"]')) { await sleep(500); continue; } if (await click('.qs-grill [data-action="qs-accept-round"]')) { await sleep(800); continue; } await sleep(400); } return 'timeout'; };
   const confirmAll = async (ms = 40000) => { const t0 = Date.now(); while (Date.now() - t0 < ms) { if (await click('.wg-agreed[data-state="open"] [data-action="wg-confirm"]')) return true; if (await click('.qs-grill [data-action="qs-accept-round"]')) { await sleep(900); continue; } await sleep(400); } return false; };
 
   /* B2 = R1: Wrap up with the drafts untouched settles nothing (Deep Plan) */
@@ -457,15 +464,14 @@ async function reviewRound1({ page, ev, act, sleep, startSheet, answerAll }) {
   await ev(() => window.PM56_WG_DEMOS.start('crew')); await sleep(1400);
   await ev(() => { const i = document.querySelector('#pmOverlayRoot [data-collab-input="wonderer"]'); if (i && i.checked) i.click(); });
   await sleep(500); await startSheet(); await fast(4);
-  await confirmAll(40000);
-  const r6 = await until(() => { const s = window.PM56_WG_DEMOS.snapshot(), r = s && window.PM56_COLLAB.run(s.runId); return !!r && (r.status === 'completed' || !!s.error); }, null, 90000);
+  const r6 = (await finish(await ev(() => window.PM56_WG_DEMOS.snapshot().runId))) === 'done';
   const r6s = await ev(() => { const s = window.PM56_WG_DEMOS.snapshot(), r = window.PM56_COLLAB.run(s.runId); return { st: r.status, error: s.error, w: !!r.wonderer, grill: !!r.grill }; });
   check('R1-R6 a Crew recording with the Wonderer removed plays to the end, Grill Me still on', r6 && r6s.st === 'completed' && !r6s.error && !r6s.w && r6s.grill, JSON.stringify(r6s));
   await fast(1);
   await ev(() => window.PM56_WG_DEMOS.start('crew')); await sleep(1400);
   await ev(() => { const i = document.querySelector('#pmOverlayRoot [data-collab-input="grillMe"]'); if (i && i.checked) i.click(); });
   await sleep(500); await startSheet(); await fast(4);
-  const r6b = await until(() => { const s = window.PM56_WG_DEMOS.snapshot(), r = s && window.PM56_COLLAB.run(s.runId); return !!r && (r.status === 'completed' || !!s.error); }, null, 90000);
+  const r6b = (await finish(await ev(() => window.PM56_WG_DEMOS.snapshot().runId))) === 'done';
   const r6bs = await ev(() => { const s = window.PM56_WG_DEMOS.snapshot(), r = window.PM56_COLLAB.run(s.runId); return { st: r.status, error: s.error, sessions: window.PM56_WG.sessionsOf(r).length, bank: r.grillBank }; });
   check('R1-R6b with Grill Me off nobody grills you: no session and no question bank', r6b && r6bs.st === 'completed' && !r6bs.error && r6bs.sessions === 0 && !r6bs.bank, JSON.stringify(r6bs));
   await fast(1);
@@ -500,8 +506,7 @@ async function reviewRound1({ page, ev, act, sleep, startSheet, answerAll }) {
   await until(id => { const r = window.PM56_COLLAB.run(id), w = r.wonderer; return w.reserved === 0 && w.passes.length === 2 && w.passes[1].status === 'delivered' && r.status === 'running'; }, crew, 60000);
   await act('wg-ask-pass', { run: crew }); await sleep(300);
   const mine = await ev(id => { const r = window.PM56_COLLAB.run(id), p = r.wonderer.passes.find(x => x.by.kind === 'user'); return p ? { n: p.n, status: p.status } : null; }, crew);
-  await confirmAll(20000);
-  const m1b = await until(id => window.PM56_COLLAB.run(id).status === 'completed', crew, 90000);
+  const m1b = (await finish(crew)) === 'done';
   const m1s = await ev(id => { const r = window.PM56_COLLAB.run(id), s = window.PM56_WG_DEMOS.snapshot(); return { st: r.status, error: s.error, passes: r.wonderer.passes.map(p => p.n + ':' + p.by.kind + ':' + p.status) }; }, crew);
   check('R1-M1b a pass you ask for after the scripted ones is pass 3, and the recording still finishes', !!mine && mine.n === 3 && m1b && !m1s.error, JSON.stringify({ mine, m1s }));
   const lin = await ev(id => { const r = window.PM56_COLLAB.run(id), x = window.PM56_WG.engine.listing(r).find(l => l.id === 'l5'); return x; }, crew);
@@ -517,8 +522,8 @@ async function reviewRound1({ page, ev, act, sleep, startSheet, answerAll }) {
   const began = await until(id => window.PM56_WG.sessionsOf(window.PM56_COLLAB.run(id)).length === 1, crew, 40000);
   const cm = await ev(id => { const r = window.PM56_COLLAB.run(id), s = window.PM56_WG.sessionsOf(r)[0]; return { gate: s && s.gate, running: r.crew.assignments.filter(a => a.status === 'running').map(a => a.id), bank: r.grillBank && r.grillBank.effective_limit }; }, crew);
   check('R1-m5 Crew: Grill Me turned on mid-run grills you before the next part; running parts go on', began && /^part:/.test(cm.gate) && cm.bank === 25, JSON.stringify(cm));
-  await fast(1); await confirmAll(30000); await fast(4);
-  check('R1-m5b the Crew finishes after that Confirm', await until(id => window.PM56_COLLAB.run(id).status === 'completed', crew, 90000));
+  await fast(4);
+  check('R1-m5b the Crew finishes after that Confirm', (await finish(crew)) === 'done');
   await fast(1);
 
   /* B1: Check it on a held BrainStorm lead reaches no core participant before the Evidence round */
@@ -573,18 +578,54 @@ async function reviewRound1({ page, ev, act, sleep, startSheet, answerAll }) {
   await confirmAll(30000); await act('collab-room-next-round', { run: room }); await sleep(600);
   check('R1-m5d round 2 starts after that Confirm', await ev(id => { const r = window.PM56_COLLAB.run(id); return !!(r.chatRoom.round && r.chatRoom.round.number === 2); }, room));
 
-  /* M5 + m8 = R10: required words read at 4.5:1 or better on their real background, NieR's Recommended included */
-  const contrast = await ev(async () => {
+  /* m10: an ordinary Plan's Question budget "Turn Grill Me on" starts the real grilling on that Plan's thread, over
+     the Plan's own counter; its Revise waits for Confirm; Confirm lets it go */
+  await ev(() => { const b = document.createElement('button'); b.dataset.action = 'reset-all'; document.body.appendChild(b); b.click(); b.remove(); }); await sleep(800);
+  const plan10 = await ev(() => { const c = window.PM56_EXT.ctx(), all = Object.values(window.PM56_PLANS.all()); const p = all.find(x => x.status === 'ready' && !x.grillMe && c.state.threads.some(t => t.id === x.thread_id)); if (!p) return null; window.PM56_DEMO.selectThread(p.thread_id); return { id: p.plan_id, tid: p.thread_id }; });
+  let m10 = { plan: plan10 };
+  if (plan10) {
+    await sleep(600);
+    await act('pd-inspect', { id: plan10.id }); await sleep(500);
+    const onBtn = await click('[data-action="pd-q-grill"][data-id="' + plan10.id + '"]');
+    await roundOpen(); await sleep(500);
+    m10.on = onBtn;
+    m10.card = await ev(() => { const g = document.querySelector('.qs-grill'); return g ? g.textContent.replace(/\s+/g, ' ').slice(0, 200) : ''; });
+    m10.held = await ev(tid => window.PM56_WG.threadHolds(tid, 'revise'), plan10.tid);
+    await act('pd-revise', { id: plan10.id }); await sleep(400);
+    m10.toast = await ev(() => window.PM56_EXT.ctx().state.toast.map(t => t.title).join(' | '));
+    m10.bank = await ev(id => { const s = window.PM56_PLANS.budgetOwner && window.PM56_PLANS.budgetOwner.projection('plan:' + id); return s ? s.questions_asked : null; }, plan10.id);
+    await answerAll(40000); await click('.wg-agreed[data-state="open"] [data-action="wg-confirm"]'); await sleep(600);
+    m10.after = await ev(tid => window.PM56_WG.threadHolds(tid, 'revise'), plan10.tid);
+  }
+  check('R1-m10 an ordinary Plan’s Turn Grill Me on grills you on its thread, Revise waits for Confirm, then goes', !!plan10 && m10.on && /assistant/i.test(m10.card) && m10.held === true && /Revise waits/i.test(m10.toast) && m10.bank >= 1 && m10.after === false, JSON.stringify(m10));
+
+  /* M5 + m8 = R10: required words read at 4.5:1 or better on their real background, NieR's Recommended included, in
+     a light and a dark theme of every family */
+  const measure = sels => ev(sels => {
     const parse = c => { const m = /rgba?\(([^)]+)\)/.exec(c || ''); if (!m) return null; const p = m[1].split(/[ ,/]+/).filter(Boolean).map(Number); return { r: p[0], g: p[1], b: p[2], a: p.length > 3 ? p[3] : 1 }; };
     const over = (top, bot) => ({ r: top.r * top.a + bot.r * (1 - top.a), g: top.g * top.a + bot.g * (1 - top.a), b: top.b * top.a + bot.b * (1 - top.a), a: 1 });
-    const bgOf = el => { const layers = []; for (let x = el; x && x.nodeType === 1; x = x.parentElement) { const c = parse(getComputedStyle(x).backgroundColor); if (c && c.a > 0) layers.push(c); if (c && c.a >= 1) break; } let acc = { r: 0, g: 0, b: 0, a: 1 }; const base = parse(getComputedStyle(document.body).backgroundColor); if (base) acc = base; for (let i = layers.length - 1; i >= 0; i--) acc = over(layers[i], acc); return acc; };
+    const bgOf = el => { const layers = []; for (let x = el; x && x.nodeType === 1; x = x.parentElement) { const c = parse(getComputedStyle(x).backgroundColor); if (c && c.a > 0) layers.push(c); if (c && c.a >= 1) break; } let acc = parse(getComputedStyle(document.documentElement).backgroundColor) || { r: 0, g: 0, b: 0, a: 1 }; if (acc.a < 1) acc = over(acc, { r: 255, g: 255, b: 255, a: 1 }); for (let i = layers.length - 1; i >= 0; i--) acc = over(layers[i], acc); return acc; };
     const lum = c => { const f = v => { v /= 255; return v <= .03928 ? v / 12.92 : Math.pow((v + .055) / 1.055, 2.4); }; return .2126 * f(c.r) + .7152 * f(c.g) + .0722 * f(c.b); };
-    const ratio = el => { const fg = parse(getComputedStyle(el).color), bg = bgOf(el); const op = parseFloat(getComputedStyle(el).opacity || '1'); const f = over({ ...fg, a: (fg.a || 1) * op }, bg); const a = lum(f), b = lum(bg); return (Math.max(a, b) + .05) / (Math.min(a, b) + .05); };
+    const ratio = el => { const fg = parse(getComputedStyle(el).color), bg = bgOf(el); let op = 1; for (let x = el; x && x.nodeType === 1; x = x.parentElement) op *= parseFloat(getComputedStyle(x).opacity || '1'); const f = over({ ...fg, a: (fg.a == null ? 1 : fg.a) * op }, bg); const a = lum(f), b = lum(bg); return (Math.max(a, b) + .05) / (Math.min(a, b) + .05); };
     const out = {};
-    for (const sel of ['.qs-ask-opt.is-on .qs-rec', '.qs-grill-note', '.wg-agreed-prov', '.wg-who', '.wg-hyp', '.wg-lead-src']) { const el = document.querySelector(sel); if (el && el.getClientRects().length) out[sel] = Math.round(ratio(el) * 100) / 100; }
+    for (const sel of sels) { const el = [...document.querySelectorAll(sel)].find(e => e.getClientRects().length && e.textContent.trim()); if (el) out[sel] = Math.round(ratio(el) * 100) / 100; }
     return out;
-  });
-  check('R1-R10 required words and the Recommended mark meet 4.5:1 here (' + Object.keys(contrast).length + ' measured)', Object.values(contrast).every(v => v >= 4.5), JSON.stringify(contrast));
+  }, sels);
+  const crewThread = await ev(id => window.PM56_COLLAB.run(id).threadId, (await ev(() => (window.PM56_COLLAB.runs().filter(r => r.kind === 'crew' && r.wonderer && r.status === 'completed').pop() || {}).id)));
+  const low = {};
+  for (const theme of ['basic-dark', 'basic-light', 'glass-light', 'friendly-light', 'retro-dark', 'nier-dark', 'nier-light']) {
+    await ev(t => window.PM56_DEMO.setTheme(t), theme); await sleep(400);
+    await ev(() => window.PM56_WG_DEMOS.start('deepplan')); await roundOpen(); await sleep(700);
+    const a = await measure(['.qs-ask-opt.is-on .qs-rec', '.qs-grill-note', '.qs-grill-meta']);
+    await ev(t => { const c = window.PM56_EXT.ctx(); c.switchThread(t); c.renderApp(); }, crewThread); await sleep(700);
+    await ev(() => { const el = document.querySelector('.transcript .wg-card'); if (el) el.scrollIntoView({ block: 'start' }); }); await sleep(400);
+    const b = await measure(['.wg-who', '.wg-hyp', '.wg-lead-src', '.wg-agreed-prov', '.wg-lead-decision']);
+    Object.entries({ ...a, ...b }).forEach(([k, v]) => { if (v < 4.5) low[theme + ' ' + k] = v; });
+    low['n:' + theme] = Object.keys({ ...a, ...b }).length;
+  }
+  await ev(() => window.PM56_DEMO.setTheme('basic-dark'));
+  const misses = Object.entries(low).filter(([k]) => !/^n:/.test(k)), counted = Object.entries(low).filter(([k]) => /^n:/.test(k)).map(([k, v]) => v);
+  check('R1-R10 required words and the Recommended mark meet 4.5:1 on their real background in seven themes (' + counted.join('/') + ' measured)', !misses.length && counted.every(n => n >= 6), JSON.stringify(Object.fromEntries(misses)));
 }
 if (argv.includes('--browser')) await browser();
 const failed = results.filter(r => !r.pass);
