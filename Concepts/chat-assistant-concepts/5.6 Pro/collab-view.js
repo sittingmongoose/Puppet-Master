@@ -39,13 +39,15 @@
   var KIND_MOD = { crew: 'PM56_CREW', review: 'PM56_REVIEW', brainstorm: 'PM56_BRAINSTORM', chat_room: 'PM56_ROOM' };
   var OVERVIEW_WORD = { crew: 'Summary', review: 'Report', brainstorm: 'How they decided', chat_room: 'Discussion' };
   var TAB_KEYS = ['overview', 'transcript', 'participants', 'usage'];
-  var SPECIAL = { wonderer: 1, grill_me: 1, grillme: 1, grill: 1 };
+  /* DL-218: the Wonderer is the one specialist participant; Grill Me is a switch and is never a participant */
+  var SPECIAL = { wonderer: 1 };
 
   function esc(s) {
     return String(s == null ? '' : s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#39;');
   }
   function S() { return window.PM56_SHELL; }
   function C() { return window.PM56_COLLAB; }
+  function WG() { return window.PM56_WG || null; }
   function PMX() { return window.PM56_PMX; }
   function copy() { return (S() && S().PMX_COPY) || {}; }
   function fill(tpl, vars) { return S().pmxFill(tpl, vars); }
@@ -71,7 +73,7 @@
   }
 
   /* ================================================================ run facts */
-  function specialKind(p) { var k = String(p && p.additiveRoleKind || 'none').toLowerCase(); return SPECIAL[k] ? (k === 'wonderer' ? 'wonderer' : 'grill') : ''; }
+  function specialKind(p) { var k = String(p && p.additiveRoleKind || 'none').toLowerCase(); return SPECIAL[k] ? 'wonderer' : ''; }
   function coreOf(run) { return list(run.participants).filter(function (p) { return !specialKind(p); }); }
   function specialsOf(run) { return list(run.participants).filter(function (p) { return !!specialKind(p); }); }
   function kindWord(run) {
@@ -85,7 +87,6 @@
   function seatOf(run, p) {
     var k = specialKind(p);
     if (k === 'wonderer') return 7;
-    if (k) return 8;
     var core = coreOf(run);
     for (var i = 0; i < core.length; i++) if (core[i].id === p.id) return i + 1;
     return 1;
@@ -305,9 +306,14 @@
     if (st && !st.done && streamEnded(run, m)) settleStream(st);
     var streaming = !!(st && !st.done && o.stream);
     var fresh = FRESH[m.id] && t - FRESH[m.id] < 1400, swap = st && st.done && st.doneAt && t - st.doneAt < 600;
+    /* DL-218 (CWR-043): a Wonderer pass is one message that lists its leads with their statuses in place; a helper's
+       message that takes up a lead links to it */
+    var pass = WG() ? WG().entryHtml(run, m) : '';
+    if (pass) return { key: key, mid: m.id, cls: o.cls, markHtml: s.mark, who: s.who, when: whenOf(run, m) + ' · a pass for the team to weigh', attrs: fresh ? 'data-cv-fresh="1"' : '', streaming: false, bodyHtml: pass };
+    var links = WG() ? WG().leadLinks(run, m) : '';
     return { key: key, mid: m.id, cls: o.cls, markHtml: s.mark, who: s.who, when: whenOf(run, m) + (streaming ? ' · writing now' : ''),
       attrs: (fresh ? 'data-cv-fresh="1"' : '') + (swap ? ' data-cv-swap="1"' : ''), streaming: streaming,
-      bodyHtml: streaming ? '<p></p>' : S().pmxMd(sayOf(m.body), { mode: 'full' }) };
+      bodyHtml: (streaming ? '<p></p>' : S().pmxMd(sayOf(m.body), { mode: 'full' })) + (streaming ? '' : links) };
   }
   function streamEnded(run, m) {
     if (!flowing(present(run)) || reduced()) return true;
@@ -335,7 +341,7 @@
   function outcomeOf(p) {
     var O = copy().outcome || {}, out = helperWord(p);
     if (p.outcome && p.outcome !== 'completed') out = ({ timed_out: O.timedOut, unavailable: O.unavailable, canceled: O.canceled }[p.outcome]) || out;
-    if (specialKind(p) && p.status !== 'done') out = O.optional || 'Optional';
+    if (specialKind(p)) out = p.status === 'working' ? 'Exploring' : 'Never votes';
     return out;
   }
   function teamRow(run, p) {
@@ -348,8 +354,11 @@
     var lead = run.kind === 'chat_room' ? ' · a Moderator calls on them' : run.kind === 'review' ? ' · each reads on its own' : ' · a Coordinator hands out the work';
     var html = S().pmxViewSection({ key: 'cv-core:' + run.id, title: run.kind === 'review' ? 'The reviewers' : 'Core team', meta: esc(helperNoun(run, core.length)) + lead,
       body: '<div class="collab-view-team">' + core.map(function (p) { return teamRow(run, p); }).join('') + '</div>' });
-    if (specs.length) html += S().pmxViewSection({ key: 'cv-specs:' + run.id, cls: 'collab-view-specs', title: 'Specialists', meta: 'they never replace a helper, and their work isn’t counted as the team’s',
+    if (specs.length) html += S().pmxViewSection({ key: 'cv-specs:' + run.id, cls: 'collab-view-specs', title: 'Specialists', meta: 'the Wonderer runs alongside the team: it never replaces a helper, votes or takes a turn',
       body: '<div class="collab-view-team">' + specs.map(function (p) { return teamRow(run, p); }).join('') + '</div>' });
+    /* DL-218: Grill Me is a switch, so it has no row here; the team says who grills you instead */
+    if (WG() && WG().grillOn(run)) html += '<p class="collab-view-line wg-team-grill">' + S().pmxMark({ role: run.kind === 'chat_room' ? 'moderator' : 'lead', size: 18, grill: true }) +
+      '<span><b>Grill Me is on.</b> It adds nobody: the ' + (run.kind === 'chat_room' ? 'Moderator' : 'Coordinator') + ' questions you ' + (run.kind === 'crew' ? 'before it splits the job' : run.kind === 'chat_room' ? 'before round 1' : 'at intake, before the blind proposals') + '.</span></p>';
     return html;
   }
 
@@ -388,6 +397,7 @@
           name: esc(p.role), route: p.current ? esc(p.current) : '', outcome: esc(outcomeOf(p)), cost: '' });
       }).join('') + '</div>' });
     if (!isOwned) html += legacy(run, st);
+    if (WG() && run.kind !== 'review' && !(run.kind === 'brainstorm' && !isOwned)) html += WG().section(run);
     var msgs = list(run.messages).filter(function (m) { return m.senderKind !== 'system'; }).slice(-3);
     if (msgs.length) html += S().pmxViewSection({ key: 'cv-now:' + run.id, title: 'As it happens', meta: 'the latest ' + plural(msgs.length, 'message', 'messages'),
       body: S().pmxTimeline({ key: 'cv-latest:' + run.id, entries: msgs.map(function (m) { return entryOf(run, m, { keyPrefix: 'cv-latest:' }); }) }) });
@@ -488,19 +498,18 @@
     var dissent = list(b.dissent).map(function (d, i) {
       return S().pmxQuote({ key: i ? 'collab-dissent-' + i : 'collab-dissent', cls: 'collab-dissent', text: esc(d.reason), who: esc(d.participantRole), note: 'still disagrees' });
     }).join('');
-    var leads = list(b.wondererLeads).map(function (w) {
-      return '<li data-k="collab-lead-' + esc(w.id) + '"><span><b>' + esc(w.lead) + '</b>' + (w.seed ? '<small>Relates to: ' + esc(w.seed) + '</small>' : '') +
-        '<small>Why it matters: ' + esc(w.tether || w.connection || '') + '</small></span></li>';
-    }).join('');
+    /* DL-218: Write the plan waits, with its reason, while a Wonderer lead is undecided or in research */
+    var wgate = WG() ? WG().gate(run) : { ok: true };
     var synth = b.synthesis ? '<p class="collab-view-line">The plan summary is ready, but this example can’t create the plan document yet.</p>' + S().pmxMd(b.synthesis.summary || '', { mode: 'full' })
-      : '<div class="collab-view-acts">' + btn({ action: 'collab-brainstorm-synthesize', attrs: runAttr(run), primary: true, disabled: b.phase !== 'vote' || finished(st), label: 'Write the plan' }) +
+      : '<div class="collab-view-acts">' + btn({ action: 'collab-brainstorm-synthesize', attrs: runAttr(run), primary: true, disabled: b.phase !== 'vote' || finished(st) || !wgate.ok, label: 'Write the plan' }) +
         (b.phase === 'debate' && !finished(st) ? btn({ action: 'collab-brainstorm-next-round', attrs: runAttr(run), label: 'One more debate round' }) : '') + '</div>' +
-        '<p class="pmx-fine collab-view-help">' + (b.phase === 'vote' ? 'Writes one plan from the winning idea. Disagreements and ruled-out ideas stay in it.' : 'Available once the votes are in.') + '</p>';
+        '<p class="pmx-fine collab-view-help">' + (b.phase === 'vote' ? (wgate.ok ? 'Writes one plan from the winning idea. Disagreements, ruled-out ideas and every Wonderer lead stay in it.' : esc(wgate.reason)) : 'Available once the votes are in.') + '</p>';
+    var leads = WG() ? WG().section(run) : '';
     return S().pmxViewSection({ key: 'cv-qs:' + run.id, title: 'Questions for you', body: questions }) +
       ((board || voteRows || ruled) ? S().pmxViewSection({ key: 'cv-vote:' + run.id, title: 'The vote', meta: plural(votes.length, 'vote', 'votes') + ' in · a rule always wins',
         body: board + (voteRows ? '<ul class="collab-view-lines collab-view-votes">' + voteRows + '</ul>' : '') + ruled }) : '') +
       (dissent ? S().pmxViewSection({ key: 'cv-dissent:' + run.id, title: 'Still disagrees', body: dissent }) : '') +
-      (leads ? S().pmxViewSection({ key: 'cv-leads:' + run.id, title: 'Wonderer’s ideas', meta: 'hypotheses, not checked yet', body: '<ul class="collab-view-lines">' + leads + '</ul>' }) : '') +
+      leads +
       S().pmxViewSection({ key: 'cv-synth:' + run.id, title: 'The plan', body: synth });
   }
   /* Chat Room (legacy) Discussion: the room controls and Promote to above the conversation (G-15, G-16) */

@@ -1,36 +1,345 @@
-/* Wonderer lead records on the existing CollaborativeRun, not a new workflow.
- * Evidence is read through an injected artifact-owner adapter. Local concept
- * receipts do not certify research quality, live tools, or native execution. */
-(function(root,factory){const api=factory();if(typeof module==='object'&&module.exports)module.exports=api;else root.PM56_WONDERER_ENGINE=api;})(typeof window==='object'?window:globalThis,function(){
- 'use strict';const copy=x=>JSON.parse(JSON.stringify(x)),fail=error=>({ok:false,error});
- const stable=x=>JSON.stringify(x);let sequence=0;
- const fp=a=>a&&a.status!=='revoked'?stable([a.id,a.projectId,a.threadId,a.version,a.content,a.status]):null;
- const text=x=>typeof x==='string'&&x.trim().length>0;
- class Protocol {
-  constructor(readArtifact){this.read=readArtifact;}
-  receipt(r,kind,data={}){const x={id:'wonder-receipt-'+(++sequence),kind,runId:r.id,epoch:r.stopEpoch,...copy(data)};r.wonderer.receipts.push(x);return x;}
-  gate(r){if(!r?.wonderer)return 'wonderer_not_configured';if(r.status!=='running')return 'run_not_running';const p=r.participants.find(p=>p.id===r.wonderer.participantId);if(!p||p.additiveRoleKind!=='wonderer'||p.status==='disabled')return 'specialist_unavailable';if(r.definitionRevision!==r.wonderer.definitionRevision)return 'definition_changed';return null;}
-  attach(r,input){if(!input)return {ok:false,error:'no_input'};if(r.wonderer)return {ok:true,reused:true};const p=r.participants.find(p=>p.additiveRoleKind==='wonderer');if(!p)return fail('wonderer_not_configured');if(!text(input.seed)||!text(input.seedId))return fail('seed_required');
-   r.wonderer={version:1,seed:input.seed,seedId:input.seedId,seedRevision:1,definitionRevision:r.definitionRevision,projectId:input.projectId??r.projectId??null,participantId:p.id,persona:'Wonderer',methodologySkill:'builtin:wonderer',leads:[],receipts:[],rejected:[],pending:[],defaultVote:'abstain',providerCalls:0,costUsd:null};return {ok:true};}
-  add(r,x){const why=this.gate(r);if(why)return fail(why);const w=r.wonderer;if(!text(x.id)||!text(x.claim)||!text(x.tether)||!text(x.dimension)||x.seedId!==w.seedId)return fail('untethered_lead');if(x.claim.length>1600||x.tether.length>800)return fail('lead_too_large');if(w.leads.length>=5)return fail('lead_budget');if(w.leads.some(l=>l.id===x.id))return fail('duplicate_lead');const l={...copy(x),revision:1,state:'hypothesis',seedRevision:w.seedRevision,evidence:null,decision:null,included:false,dispositionReason:null,history:[]};w.leads.push(l);this.receipt(r,'lead_added',{leadId:l.id});return {ok:true};}
-  lead(r,id){return r.wonderer?.leads.find(l=>l.id===id);}
-  refresh(r){const w=r?.wonderer;if(!w)return null;for(const l of w.leads){const staleSeed=l.seedRevision!==w.seedRevision,staleEvidence=l.evidence&&(!this.read(l.evidence.artifactId)||fp(this.read(l.evidence.artifactId))!==l.evidence.fingerprint);if((staleSeed||staleEvidence)&&!['stale','dropped'].includes(l.state)){l.history.push({state:l.state,evidence:copy(l.evidence),decision:copy(l.decision),included:l.included});l.state='stale';l.included=false;l.dispositionReason=staleSeed?'seed_changed':'evidence_changed';this.receipt(r,'lead_invalidated',{leadId:l.id,reason:l.dispositionReason});}}
-   return w;}
-  begin(r,id,artifactId){const why=this.gate(r);if(why)return fail(why);this.refresh(r);const l=this.lead(r,id),a=this.read(artifactId),w=r.wonderer,p=r.participants.find(p=>p.id===w.participantId);if(!l)return fail('lead_missing');if(l.state==='dropped')return fail('lead_dropped');if(l.seedRevision!==w.seedRevision)return fail('retether_to_current_seed');if(!a||!fp(a)||a.threadId!==r.threadId||(w.projectId!=null&&a.projectId!==w.projectId))return fail('evidence_unavailable');if(w.pending.some(t=>t.leadId===id&&!t.finished))return fail('research_pending');
-   const ticket={id:'wonder-ticket-'+(++sequence),runId:r.id,threadId:r.threadId,projectId:a.projectId,epoch:r.stopEpoch,definitionRevision:r.definitionRevision,participantId:p.id,assignmentRevision:p.assignmentRevision,leadId:id,leadRevision:l.revision,seedRevision:w.seedRevision,artifactId,fingerprint:fp(a),finished:false};w.pending.push(ticket);l.state='research_pending';l.included=false;l.decision=null;l.dispositionReason=null;this.receipt(r,'research_requested',{ticketId:ticket.id,leadId:id,artifactId});return {ok:true,ticket:copy(ticket),source:copy(a)};}
-  complete(r,ticketId,x){const w=r?.wonderer,t=w?.pending.find(t=>t.id===ticketId);if(!t)return fail('ticket_missing');if(t.finished)return t.responseFingerprint===stable(x)?{ok:true,reused:true}:fail('ticket_consumed');const l=this.lead(r,t.leadId),p=r.participants.find(p=>p.id===t.participantId),a=this.read(t.artifactId);let why=this.gate(r);
-   if(!why&&(t.epoch!==r.stopEpoch||t.definitionRevision!==r.definitionRevision||p?.assignmentRevision!==t.assignmentRevision))why='stale_assignment_or_epoch';
-   if(!why&&(!l||t.leadRevision!==l.revision||t.seedRevision!==w.seedRevision))why='stale_seed_or_lead';
-   if(!why&&fp(a)!==t.fingerprint)why='stale_evidence';
-   if(why){t.finished=true;t.rejected=why;w.rejected.push({ticketId,reason:why});if(l?.state==='research_pending'){l.state='stale';l.included=false;}this.receipt(r,'research_rejected',{ticketId,reason:why});return fail(why);}
-   if(!x||!['supports','refutes','inconclusive'].includes(x.outcome)||!text(x.summary)||x.artifactId!==t.artifactId)return fail('invalid_research_result');
-   t.finished=true;t.responseFingerprint=stable(x);l.evidence={artifactId:t.artifactId,version:a.version,fingerprint:t.fingerprint,outcome:x.outcome,summary:x.summary,provenance:a.provenance||'Supplied local evidence; not live external research.',ticketId};l.seedRevision=w.seedRevision;l.state=x.outcome==='supports'?'researched':'unsubstantiated';this.receipt(r,'research_recorded',{leadId:l.id,artifactId:a.id,outcome:x.outcome});return {ok:true,state:l.state};
+/* wonderer-protocol.js - the Wonderer lead engine (DL-218, 2026-10-16; Plans/Collaborative_Workflows.md section 9.2,
+ * CWR-041, CWR-043; the method itself is Plans/Skills_System.md SS-037).
+ *
+ * The Wonderer runs ALONGSIDE a Crew, a BrainStorm or a Chat Room and feeds what it finds back to the run's agents, who
+ * decide what is worth exploring. This file is the rule book for that and nothing else: it keeps the passes and the
+ * leads on run.wonderer and refuses whatever the canon refuses. Presentation is wonderer-grill.js; the BrainStorm
+ * workspace document is lens-wonderer-batch13.js. It is UMD, so tests/wonderer-grill-verify.mjs runs it under node.
+ *
+ *   PASSES   The first pass starts with the run (in a BrainStorm, during intake, before the blind proposals take the
+ *            concurrency). A further pass runs only when a core participant, the coordinator, the moderator or the user
+ *            asks for one in an addressed message, at most two further passes; a failed pass does not count toward
+ *            the two. A later pass queues behind core work when no slot is free (it is queued, never "waits its
+ *            turn"). The Wonderer never asks itself. A pass works 3 or 4 of the method's eight angles; 3 to 5 leads is
+ *            its target, not a minimum: it may stop early with one or two, or with none ("no new leads" is a truthful
+ *            result), and it never returns more than 5. A lead without a tether is drift and is dropped; a lead
+ *            without a source is not delivered. (Steer of 2026-10-20 from the two Plans reviews.)
+ *   DELIVERY Every core participant and the coordinator or moderator get the pass summary; a lead's dossier opens on
+ *            demand. In a BrainStorm a pass is HELD until every blind proposal is in, and released at Normalize.
+ *   DECIDING The agents decide each lead as it arrives: explore | use | set_aside, with a one-line reason, recorded by
+ *            the coordinator (Crew, BrainStorm) or the moderator (Chat Room): in the Debate for a BrainStorm's first
+ *            pass, while splitting for a Crew, on delivery for any later pass. A disposition without a reason is
+ *            refused. An explored lead ends supported (with evidence) or not supported (set aside, with the reason).
+ *   CHECK IT The user's only override: it sends any lead to research, whatever its disposition, and never waits. On a
+ *            lead already in research (or already checked) it shows that research instead of starting another.
+ *   CLOSED   Once synthesis or a Crew's final result starts (close()), a new pass request and Check it are refused
+ *            with a stated reason: the team is writing the result.
+ *   NEVER    The Wonderer never votes, never takes a debate or room turn, never argues for or against a proposal,
+ *            never disposes, explores or sends its own leads to research.
+ *   WAITS    BrainStorm's Write the plan and a Crew's final result are unavailable, with a stated reason, while a pass
+ *            is in flight, a lead is undecided or a lead's research is in flight. A Chat Room never waits for the
+ *            Wonderer: round 1 starts on time and a pass joins between turns; its summary lists every lead with its
+ *            decision, or "not taken up".
+ *
+ * Every refusal is { ok:false, error } with a code; wonderer-grill.js words it (REFUSED). Nothing here touches the
+ * DOM, a provider or the network. */
+(function (root, factory) {
+  var api = factory();
+  if (typeof module === 'object' && module.exports) module.exports = api;
+  else root.PM56_WONDERER_ENGINE = api;
+})(typeof window === 'object' ? window : globalThis, function () {
+  'use strict';
+  var copy = function (x) { return x == null ? x : JSON.parse(JSON.stringify(x)); };
+  var fail = function (error, extra) { var r = { ok: false, error: error }; if (extra) for (var k in extra) r[k] = extra[k]; return r; };
+  var text = function (x) { return typeof x === 'string' && x.trim().length > 0; };
+  var oneLine = function (x) { return text(x) && !/[\r\n]/.test(x) && x.trim().length <= 160; };
+  var seq = 0;
+
+  /* SS-037: the eight angles, by the words the run shows */
+  var ANGLES = {
+    history: 'History', adjacent: 'Adjacent field', contradiction: 'Contradiction', inversion: 'Inversion',
+    scale: 'Scale boundary', human: 'Human dimension', dependency: 'Hidden dependency', future: 'Implied future'
+  };
+  var KINDS = { crew: 1, brainstorm: 1, chat_room: 1 };
+  var DISPOSITIONS = { explore: 1, use: 1, set_aside: 1 };
+  var MAX_PASSES = 3;              /* the first, plus at most two further passes that did not fail (CWR-041) */
+  var MAX_FURTHER = 2;
+  var TARGET_LEADS = [3, 5], MAX_LEADS = 5, MIN_ANGLES = 3, MAX_ANGLES = 4;   /* 3 to 5 is the target; 0 to 5 is allowed */
+  var IN_FLIGHT = { queued: 1, exploring: 1 };
+
+  /* the status a lead shows, in place (CWR-043): one word set, every surface reads it from here */
+  var STATUS_WORD = {
+    waiting: 'Waiting for the team', exploring: 'Exploring', using: 'Using', set_aside: 'Set aside',
+    supported: 'Supported', not_supported: 'Not supported'
+  };
+
+  function recorderOf(kind) { return kind === 'chat_room' ? 'moderator' : 'coordinator'; }
+  function isWonderer(p) { return !!p && String(p.additiveRoleKind || '').toLowerCase() === 'wonderer'; }
+
+  function Protocol(opts) {
+    opts = opts || {};
+    this.now = typeof opts.now === 'function' ? opts.now : function () { return new Date().toISOString(); };
   }
-  decide(r,id,kind,reason){const why=this.gate(r);if(why)return fail(why);this.refresh(r);const l=this.lead(r,id);if(!l)return fail('lead_missing');if(!['include','exclude','user_decided'].includes(kind)||!text(reason))return fail('explicit_reason_required');if(l.state==='research_pending')return fail('research_pending');if(kind==='include'&&!['researched','user_decided'].includes(l.state))return fail('lead_not_substantiated');if(kind==='user_decided'&&['stale','dropped'].includes(l.state))return fail('refresh_stale_lead');
-   if(l.decision?.kind===kind&&l.decision?.reason===reason&&l.decision?.seedRevision===r.wonderer.seedRevision)return {ok:true,reused:true};if(kind==='user_decided')l.state='user_decided';if(kind==='exclude'&&l.state==='stale')l.state='dropped';l.decision={kind,reason,actor:'user',seedRevision:r.wonderer.seedRevision};l.included=kind!=='exclude';l.dispositionReason=reason;this.receipt(r,'lead_disposition',{leadId:id,decision:copy(l.decision)});return {ok:true};}
-  retether(r,id,claim,tether){const why=this.gate(r);if(why)return fail(why);const l=this.lead(r,id);if(!l||!text(claim)||!text(tether)||claim.length>1600||tether.length>800)return fail('invalid_lead');l.history.push({state:l.state,evidence:copy(l.evidence),decision:copy(l.decision),included:l.included,claim:l.claim,tether:l.tether});Object.assign(l,{claim,tether,revision:l.revision+1,state:'hypothesis',seedRevision:r.wonderer.seedRevision,evidence:null,decision:null,included:false});return {ok:true};}
-  seed(r,newSeed){const why=this.gate(r);if(why)return fail(why);if(!text(newSeed))return fail('seed_required');r.wonderer.seed=newSeed;r.wonderer.seedRevision++;this.refresh(r);return {ok:true};}
-  convergence(r){const w=this.refresh(r);if(!w)return {ok:true,additions:[],unresolved:[]};const unresolved=w.leads.filter(l=>!l.decision||l.state==='stale'||l.state==='research_pending');return {ok:unresolved.length===0,additions:w.leads.filter(l=>l.included&&['researched','user_decided'].includes(l.state)).map(copy),unresolved:unresolved.map(l=>l.id),all:copy(w.leads),defaultVote:'abstain'};}
- }
- return {Protocol,copy};
+  var P = Protocol.prototype;
+
+  P.receipt = function (r, kind, data) {
+    var x = { id: 'wonder-receipt-' + (++seq), kind: kind, runId: r.id, at: this.now() };
+    if (data) for (var k in data) x[k] = copy(data[k]);
+    r.wonderer.receipts.push(x);
+    return x;
+  };
+  P.state = function (r) { return r && r.wonderer && r.wonderer.version === 2 ? r.wonderer : null; };
+  P.participant = function (r) { return ((r && r.participants) || []).filter(isWonderer)[0] || null; };
+
+  /* attach(run, {seed, seedId, kind}) - a run with a Wonderer participant gets its record; the first pass starts with
+     the run (startPass with by.kind 'start'). */
+  P.attach = function (r, input) {
+    if (!r) return fail('run_missing');
+    if (this.state(r)) return { ok: true, reused: true };
+    input = input || {};
+    var kind = input.kind || r.kind;
+    if (!KINDS[kind]) return fail('kind_has_no_wonderer');
+    var p = this.participant(r);
+    if (!p) return fail('wonderer_not_configured');
+    if (!text(input.seed)) return fail('seed_required');
+    r.wonderer = {
+      version: 2, kind: kind, seed: input.seed, seedId: input.seedId || ('seed-' + r.id), participantId: p.id,
+      persona: 'Wonderer', methodologySkill: 'builtin:wonderer', recorder: recorderOf(kind),
+      held: kind === 'brainstorm', passes: [], leads: [], dropped: [], refused: [], receipts: [], defaultVote: 'abstain', closedAt: null
+    };
+    this.receipt(r, 'attached', { runKind: kind });
+    return { ok: true };
+  };
+
+  /* who may ask for a pass: the run itself (the first pass), a core participant, the coordinator, the moderator or the
+     user, in an addressed message. The Wonderer never asks itself. */
+  /* the further passes that count toward the two: every later pass that did not fail */
+  function further(w) { return w.passes.filter(function (x) { return x.by.kind !== 'start' && x.status !== 'failed'; }).length; }
+  /* requestPass(run, {by, about, messageId, queue}) - queue: no slot is free for it yet (a later pass queues behind core
+     work); startQueued() starts it when one frees up */
+  P.requestPass = function (r, req) {
+    var w = this.state(r); if (!w) return fail('wonderer_not_configured');
+    req = req || {};
+    var by = req.by || {}, passes = w.passes;
+    if (w.closedAt) return fail('team_writing_result');
+    if (by.kind === 'start') {
+      if (passes.length) return fail('first_pass_already_started');
+    } else {
+      if (by.kind === 'wonderer' || (by.id && by.id === w.participantId)) return fail('wonderer_cannot_request_pass');
+      if (!/^(participant|coordinator|moderator|user)$/.test(String(by.kind || ''))) return fail('pass_request_needs_an_asker');
+      if (!text(req.messageId)) return fail('pass_request_must_be_addressed');
+      if (!passes.length) return fail('first_pass_not_started');
+      if (further(w) >= MAX_FURTHER) { w.refused.push({ at: this.now(), by: copy(by), reason: 'pass_limit' }); return fail('pass_limit'); }
+    }
+    if (passes.some(function (x) { return IN_FLIGHT[x.status]; })) return fail('pass_running');
+    var queued = !!req.queue && by.kind !== 'start';
+    var pass = { id: 'pass-' + r.id + '-' + (passes.length + 1), n: passes.length + 1, by: copy(by), about: req.about || '', askedIn: req.messageId || null, messageId: null,
+      status: queued ? 'queued' : 'exploring', queuedAt: queued ? this.now() : null, startedAt: queued ? null : this.now(), deliveredAt: null, releasedAt: null, summary: '', territory: '', angles: [], leadIds: [] };
+    passes.push(pass);
+    this.receipt(r, queued ? 'pass_queued' : 'pass_started', { passId: pass.id, by: by });
+    return { ok: true, pass: copy(pass), left: this.passesLeft(r), queued: queued };
+  };
+  P.startQueued = function (r) {
+    var w = this.state(r); if (!w) return fail('wonderer_not_configured');
+    var pass = w.passes.filter(function (x) { return x.status === 'queued'; })[0];
+    if (!pass) return fail('nothing_queued');
+    pass.status = 'exploring'; pass.startedAt = this.now();
+    this.receipt(r, 'pass_started', { passId: pass.id, from: 'queue' });
+    return { ok: true, passId: pass.id };
+  };
+  P.passesLeft = function (r) { var w = this.state(r); return w ? Math.max(0, MAX_FURTHER - further(w)) : 0; };
+  /* close(): synthesis or a Crew's final result has started; nothing new reaches the team after this */
+  P.close = function (r) { var w = this.state(r); if (!w) return { ok: true }; if (!w.closedAt) { w.closedAt = this.now(); this.receipt(r, 'closed'); } return { ok: true }; };
+
+  /* deliver(run, passId, {summary, territory, angles:[{key, signal}], leads:[{id, angle, title, tether, source, dossier}]})
+     A lead without a tether is drift (dropped); a lead without a source is not delivered. The pass needs 3-4 angles and,
+     after the drops, at most 5 leads: 3 to 5 is the target, so 1, 2 or none is a truthful early stop (stoppedEarly).
+     In a BrainStorm the pass is held until release(). */
+  P.deliver = function (r, passId, out) {
+    var w = this.state(r); if (!w) return fail('wonderer_not_configured');
+    var pass = w.passes.filter(function (x) { return x.id === passId; })[0];
+    if (!pass) return fail('pass_missing');
+    if (pass.status !== 'exploring') return fail('pass_already_delivered');
+    out = out || {};
+    var angles = Array.isArray(out.angles) ? out.angles : [];
+    if (angles.length < MIN_ANGLES || angles.length > MAX_ANGLES || angles.some(function (a) { return !ANGLES[a && a.key]; })) return fail('three_or_four_angles');
+    if (!text(out.summary)) return fail('summary_required');
+    if ((out.leads || []).length > MAX_LEADS) return fail('at_most_five_leads');
+    var kept = [], dropped = [], self = this, seen = {};
+    w.leads.forEach(function (l) { seen[l.id] = 1; });
+    (out.leads || []).forEach(function (x) {
+      if (!x || !text(x.id) || seen[x.id]) { dropped.push({ id: x && x.id, reason: 'invalid_or_duplicate' }); return; }
+      if (!text(x.title) || !ANGLES[x.angle]) { dropped.push({ id: x.id, reason: 'invalid_lead' }); return; }
+      if (!text(x.tether)) { dropped.push({ id: x.id, reason: 'drift_no_tether' }); return; }
+      var s = x.source || {};
+      if (!(s.kind === 'url' && text(s.url)) && !(s.kind === 'message' && text(s.messageId))) { dropped.push({ id: x.id, reason: 'no_source' }); return; }
+      kept.push(x);
+    });
+    if (kept.length > MAX_LEADS) return fail('at_most_five_leads', { kept: kept.length, dropped: dropped });
+    var n0 = w.leads.length;
+    kept.forEach(function (x, i) {
+      w.leads.push({ id: x.id, n: n0 + i + 1, passId: pass.id, angle: x.angle, title: x.title, tether: x.tether, source: copy(x.source),
+        dossier: copy(x.dossier || null), disposition: null, research: null, takenUpBy: [], checkedByUser: false, hypothesis: true });
+      pass.leadIds.push(x.id);
+    });
+    dropped.forEach(function (d) { w.dropped.push({ passId: pass.id, id: d.id, reason: d.reason }); });
+    pass.summary = out.summary; pass.territory = out.territory || ''; pass.angles = angles.map(function (a) { return { key: a.key, name: ANGLES[a.key], signal: a.signal || '' }; });
+    /* fewer than the target is a truthful result: it stopped early, or found nothing new */
+    pass.stoppedEarly = kept.length < TARGET_LEADS[0]; pass.stopReason = out.stopReason || '';
+    pass.deliveredAt = this.now();
+    pass.status = w.held ? 'held' : 'delivered';
+    if (pass.status === 'delivered') pass.releasedAt = pass.deliveredAt;
+    this.receipt(r, pass.status === 'held' ? 'pass_held' : 'pass_delivered', { passId: pass.id, leads: pass.leadIds, dropped: dropped });
+    return { ok: true, held: pass.status === 'held', delivered: copy(pass.leadIds), dropped: dropped };
+  };
+  /* failPass: a Wonderer that fails, times out or is unavailable is recorded with that outcome; the run goes on. */
+  P.failPass = function (r, passId, outcome) {
+    var w = this.state(r); if (!w) return fail('wonderer_not_configured');
+    var pass = w.passes.filter(function (x) { return x.id === passId; })[0];
+    if (!pass || !IN_FLIGHT[pass.status]) return fail('pass_missing');
+    pass.status = 'failed'; pass.outcome = /^(failed|timed_out|unavailable)$/.test(outcome) ? outcome : 'failed';
+    this.receipt(r, 'pass_failed', { passId: passId, outcome: pass.outcome });
+    return { ok: true };
+  };
+  /* release(run, {proposalsIn}) - BrainStorm, at Normalize: only once every blind proposal is in */
+  P.release = function (r, o) {
+    var w = this.state(r); if (!w) return fail('wonderer_not_configured');
+    if (!w.held) return { ok: true, reused: true };
+    if (!(o && o.proposalsIn === true)) return fail('blind_proposals_not_in');
+    w.held = false;
+    var at = this.now(), released = [];
+    w.passes.forEach(function (x) { if (x.status === 'held') { x.status = 'delivered'; x.releasedAt = at; released.push(x.id); } });
+    this.receipt(r, 'passes_released', { passes: released });
+    return { ok: true, released: released };
+  };
+  /* who sees a pass: nobody but the Wonderer while it is held (CWR-041: no core participant reads a BrainStorm pass
+     before every blind proposal is in) */
+  P.visible = function (r, passId) {
+    var w = this.state(r); if (!w) return false;
+    var pass = w.passes.filter(function (x) { return x.id === passId; })[0];
+    return !!pass && pass.status === 'delivered';
+  };
+  P.lead = function (r, id) { var w = this.state(r); return w ? w.leads.filter(function (l) { return l.id === id; })[0] || null : null; };
+  P.passOf = function (r, lead) { var w = this.state(r); return w && lead ? w.passes.filter(function (x) { return x.id === lead.passId; })[0] || null : null; };
+
+  /* dispose(run, leadId, {kind, reason, by:{role, name, id}}) - the agents' decision, recorded by the coordinator or,
+     in a Chat Room, the moderator, with a one-line reason that is shown */
+  P.dispose = function (r, id, d) {
+    var w = this.state(r); if (!w) return fail('wonderer_not_configured');
+    var l = this.lead(r, id); if (!l) return fail('lead_missing');
+    d = d || {};
+    var by = d.by || {};
+    if (by.role === 'wonderer' || (by.id && by.id === w.participantId)) return fail('wonderer_cannot_dispose');
+    if (by.role !== w.recorder) return fail(w.recorder === 'moderator' ? 'moderator_records_dispositions' : 'coordinator_records_dispositions');
+    if (!this.visible(r, l.passId)) return fail('lead_held_until_proposals_in');
+    if (!DISPOSITIONS[d.kind]) return fail('unknown_disposition');
+    if (!oneLine(d.reason)) return fail('one_line_reason_required');
+    if (l.disposition) return l.disposition.kind === d.kind && l.disposition.reason === d.reason ? { ok: true, reused: true } : fail('already_decided');
+    l.disposition = { kind: d.kind, reason: d.reason.trim(), by: { role: by.role, name: by.name || (by.role === 'moderator' ? 'Moderator' : 'Coordinator') }, at: this.now(), messageId: d.messageId || null };
+    if (d.kind === 'explore' && !l.research) l.research = { status: 'queued', via: 'explore', by: null, assignmentId: d.assignmentId || null };
+    this.receipt(r, 'lead_disposed', { leadId: id, disposition: l.disposition });
+    return { ok: true };
+  };
+  /* Check it (cmd.collaboration.research_lead): the user's override, on any lead, whatever its disposition; it never
+     waits for the agents. A lead already in research or with a result keeps it. */
+  P.checkIt = function (r, id, o) {
+    var w = this.state(r); if (!w) return fail('wonderer_not_configured');
+    var l = this.lead(r, id); if (!l) return fail('lead_missing');
+    if (o && o.takesRequests === false) return fail('run_takes_no_requests');
+    if (w.closedAt) return fail('team_writing_result');
+    /* a lead already in research, or already checked, shows that research; no second one starts */
+    if (l.research) return { ok: true, existing: true, research: copy(l.research) };
+    l.checkedByUser = true;
+    l.research = { status: 'queued', via: 'check_it', by: null, assignmentId: null };
+    this.receipt(r, 'check_it', { leadId: id });
+    return { ok: true };
+  };
+  /* research is a core agent's job, never the Wonderer's */
+  P.startResearch = function (r, id, by) {
+    var w = this.state(r); if (!w) return fail('wonderer_not_configured');
+    var l = this.lead(r, id); if (!l) return fail('lead_missing');
+    by = by || {};
+    if (by.role === 'wonderer' || (by.id && by.id === w.participantId)) return fail('wonderer_cannot_research');
+    if (!l.research || l.research.status !== 'queued') return fail('nothing_to_research');
+    l.research.status = 'running'; l.research.by = { id: by.id || null, name: by.name || 'A helper', role: by.role || 'participant' }; l.research.startedAt = this.now();
+    this.receipt(r, 'research_started', { leadId: id, by: l.research.by });
+    return { ok: true };
+  };
+  P.finishResearch = function (r, id, x) {
+    var w = this.state(r); if (!w) return fail('wonderer_not_configured');
+    var l = this.lead(r, id); if (!l) return fail('lead_missing');
+    if (!l.research || l.research.status !== 'running') return fail('research_not_running');
+    x = x || {};
+    if (x.outcome === 'supported') {
+      if (!x.evidence || !text(x.evidence.label)) return fail('supported_needs_evidence');
+      l.hypothesis = false;
+    } else if (x.outcome !== 'not_supported') return fail('unknown_outcome');
+    if (!oneLine(x.note)) return fail('one_line_reason_required');
+    l.research.status = x.outcome; l.research.note = x.note.trim(); l.research.evidence = copy(x.evidence || null); l.research.at = this.now();
+    this.receipt(r, 'research_finished', { leadId: id, outcome: x.outcome });
+    return { ok: true };
+  };
+  /* a participant message that takes up a lead links to it (CWR-043) */
+  P.takeUp = function (r, id, messageId, who) {
+    var l = this.lead(r, id); if (!l) return fail('lead_missing');
+    if (!text(messageId)) return fail('message_required');
+    var w = this.state(r);
+    if (who && (who.role === 'wonderer' || (who.id && who.id === w.participantId))) return fail('wonderer_cannot_take_up_its_own_lead');
+    if (l.takenUpBy.indexOf(messageId) < 0) l.takenUpBy.push(messageId);
+    return { ok: true };
+  };
+
+  /* the Wonderer never votes and never takes a turn (CWR-041); every protocol asks these */
+  P.canVote = function (p) { return !isWonderer(p); };
+  P.canTakeTurn = function (p) { return !isWonderer(p); };
+
+  /* one status per lead, in place: waiting for the team, exploring, using, set aside, supported, not supported */
+  P.status = function (l) {
+    if (!l) return 'waiting';
+    var rs = l.research && l.research.status;
+    if (rs === 'supported') return 'supported';
+    if (rs === 'not_supported') return 'not_supported';
+    if (rs === 'queued' || rs === 'running') return 'exploring';
+    if (l.disposition && l.disposition.kind === 'use') return 'using';
+    if (l.disposition && l.disposition.kind === 'set_aside') return 'set_aside';
+    return 'waiting';
+  };
+  P.statusWord = function (l) { return STATUS_WORD[this.status(l)]; };
+  /* the run card's summary line: leads explored, used, set aside and waiting (held leads are waiting) */
+  P.counts = function (r) {
+    var w = this.state(r), self = this, c = { total: 0, explored: 0, used: 0, setAside: 0, waiting: 0, exploring: 0, supported: 0, notSupported: 0, held: 0, undecided: 0, passes: 0 };
+    if (!w) return c;
+    c.passes = w.passes.length;
+    w.leads.forEach(function (l) {
+      var s = self.status(l);
+      c.total++;
+      if (!self.visible(r, l.passId)) c.held++;
+      if (!l.disposition) c.undecided++;
+      if (s === 'exploring' || s === 'supported' || s === 'not_supported') c.explored++;
+      if (s === 'exploring') c.exploring++;
+      if (s === 'supported') c.supported++;
+      if (s === 'not_supported') c.notSupported++;
+      if (s === 'using') c.used++;
+      if (s === 'set_aside') c.setAside++;
+      if (s === 'waiting') c.waiting++;
+    });
+    return c;
+  };
+  /* what waits (CWR-041): BrainStorm synthesis and a Crew's final result wait while any lead is undecided or in
+     research; a Chat Room never waits. code: '' | held | undecided | research | exploring */
+  P.gate = function (r) {
+    var w = this.state(r), self = this;
+    if (!w || w.kind === 'chat_room') return { ok: true, code: '', count: 0 };
+    if (w.passes.some(function (x) { return IN_FLIGHT[x.status]; })) return { ok: false, code: 'exploring', count: 0 };
+    var held = w.leads.filter(function (l) { return !self.visible(r, l.passId); });
+    if (held.length) return { ok: false, code: 'held', count: held.length };
+    var undecided = w.leads.filter(function (l) { return !l.disposition; });
+    if (undecided.length) return { ok: false, code: 'undecided', count: undecided.length, ids: undecided.map(function (l) { return l.id; }) };
+    var research = w.leads.filter(function (l) { return l.research && (l.research.status === 'queued' || l.research.status === 'running'); });
+    if (research.length) return { ok: false, code: 'research', count: research.length, ids: research.map(function (l) { return l.id; }) };
+    return { ok: true, code: '', count: 0 };
+  };
+  /* the result, the Plan or the room summary lists every lead with its decision and reason, or "not taken up" */
+  P.listing = function (r) {
+    var w = this.state(r), self = this;
+    if (!w) return [];
+    return w.leads.map(function (l) {
+      var s = self.status(l), d = l.disposition, rs = l.research;
+      var reason = rs && (rs.status === 'supported' || rs.status === 'not_supported') ? rs.note : d ? d.reason : '';
+      return { id: l.id, n: l.n, pass: (self.passOf(r, l) || {}).n || 1, title: l.title, angle: ANGLES[l.angle], tether: l.tether, status: s,
+        word: !d && !rs && w.kind === 'chat_room' ? 'Not taken up' : STATUS_WORD[s], disposition: d ? d.kind : null, reason: reason,
+        recordedBy: d ? d.by.name : '', checkedByUser: l.checkedByUser, hypothesis: l.hypothesis, evidence: rs && rs.evidence ? copy(rs.evidence) : null };
+    });
+  };
+  return { Protocol: Protocol, ANGLES: ANGLES, STATUS_WORD: STATUS_WORD, MAX_PASSES: MAX_PASSES, MAX_FURTHER: MAX_FURTHER, TARGET_LEADS: TARGET_LEADS, copy: copy, recorderOf: recorderOf, isWonderer: isWonderer };
 });

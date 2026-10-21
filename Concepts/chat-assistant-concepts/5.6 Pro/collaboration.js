@@ -317,6 +317,11 @@
       brainstorm: o.brainstorm || null,
       review: o.review || null,
       chatRoom: o.chatRoom || null,
+      /* DL-218: the Wonderer's passes and leads (wonderer-protocol.js) and Grill Me's sessions (grill-protocol.js) are
+         part of the one run shape too, null until the run has them */
+      wonderer: o.wonderer || null,
+      grill: o.grill || null,
+      grills: o.grills || null,
       demo: true
     };
   }
@@ -340,6 +345,25 @@
   function findRun(id) { var arr = RTC.runs; for (var i = 0; i < arr.length; i++) if (arr[i].id === id) return arr[i]; return null; }
   function runsForThread(tid) { return RTC.runs.filter(function (r) { return r.threadId === tid; }); }
   function participant(run, pid) { var arr = run.participants; for (var i = 0; i < arr.length; i++) if (arr[i].id === pid) return arr[i]; return null; }
+
+  /* DL-218 seed leads: built through the one lead engine (wonderer-protocol.js loads before this file), so a seed's
+     passes, leads and decisions obey the same rules as a played example. spec: {summary, angles, leads, release,
+     decide: [[leadId, kind, reason]], research: [[leadId, by, outcome, note, evidence]], takeUp: [[leadId, messageIndex]]} */
+  function seedWonderer(run, spec) {
+    var E2 = window.PM56_WONDERER_ENGINE; if (!E2) return;
+    var eng = new E2.Protocol(), lead = run.kind === 'chat_room' ? 'moderator' : 'coordinator';
+    if (!eng.attach(run, { kind: run.kind, seed: run.purpose }).ok) return;
+    var pass = eng.requestPass(run, { by: { kind: 'start' } }).pass;
+    var wp = run.participants.filter(function (p) { return p.additiveRoleKind === 'wonderer'; })[0];
+    var src = function (l) { if (l.source && l.source.kind === 'message') l.source.messageId = run.messages[l.source.index].id; return l; };
+    eng.deliver(run, pass.id, { summary: spec.summary, angles: spec.angles, leads: spec.leads.map(src) });
+    if (spec.release) eng.release(run, { proposalsIn: true });
+    var m = mkMsg(run, { senderKind: 'participant', senderId: wp && wp.id, senderName: 'Wonderer', messageType: 'wonderer_pass', body: 'Pass 1: ' + spec.summary });
+    m.passId = pass.id; run.wonderer.passes[0].messageId = m.id; run.messages.splice(spec.at || 0, 0, m);
+    (spec.decide || []).forEach(function (x) { eng.dispose(run, x[0], { kind: x[1], reason: x[2], by: { role: lead } }); });
+    (spec.research || []).forEach(function (x) { eng.startResearch(run, x[0], { name: x[1] }); eng.finishResearch(run, x[0], { outcome: x[2], note: x[3], evidence: x[4] }); });
+    (spec.takeUp || []).forEach(function (x) { var mm = run.messages[x[1]]; if (mm) { (mm.leadIds = mm.leadIds || []).push(x[0]); eng.takeUp(run, x[0], mm.id); } });
+  }
 
   /* =====================================================================
      4. SEED RUNS — one worked example per kind, each on the demo thread its
@@ -394,14 +418,14 @@
       title: 'BrainStorm · Provider Failover Strategy',
       purpose: 'Decide how the assistant fails over between model providers during a quota exhaustion.',
       status: 'running', definitionRevision: 1,
-      config: { coreParticipants: 4, questionLimit: 20, grillExtension: 25, grillMeEnabled: false, externalResearch: 'maximum', independentProposals: true, debateRounds: 2, voting: 'evidence_weighted', preserveDissent: true },
+      config: { coreParticipants: 4, questionLimit: 20, grillExtension: 25, grillMeEnabled: false, grill_me_enabled: false, externalResearch: 'maximum', independentProposals: true, debateRounds: 2, voting: 'evidence_weighted', preserveDissent: true },
       coordinator: { kind: 'dedicated_synthesis_model', label: 'Claude Opus 5 (synthesis)' },
       participants: [
         mkParticipant({ role: 'Architecture', requestedModelId: 'opus5', persona: 'Architect', status: 'done', current: 'Proposal submitted.' }),
         mkParticipant({ role: 'Product', requestedModelId: 'sonnet46', persona: 'Product Manager', status: 'done', current: 'Proposal submitted; dissenting on the final pick.' }),
         mkParticipant({ role: 'Implementation', requestedModelId: 'qwen38-coder', persona: 'Implementer', status: 'done', current: 'Proposal submitted.' }),
         mkParticipant({ role: 'Adversarial Review', requestedModelId: 'glm52', persona: 'Reviewer', status: 'done', current: 'Flagged a hard-constraint conflict on the fully automatic option.' }),
-        mkParticipant({ role: 'Wonderer', requestedModelId: 'sonnet46-personal', persona: 'Wonderer', additiveRoleKind: 'wonderer', status: 'done', current: '4 connected leads handed to the evidence round.' })
+        mkParticipant({ role: 'Wonderer', requestedModelId: 'sonnet46-personal', persona: 'Wonderer', additiveRoleKind: 'wonderer', status: 'done', current: '3 leads from pass 1, released once every blind proposal was in.' })
       ],
       brainstorm: {
         phase: 'vote',
@@ -429,23 +453,6 @@
         dissent: [
           { participantRole: 'Product', position: 'oppose (of the synthesis leaning toward prop-c-as-mechanism)', confidence: 'medium', reason: 'The resolver-level breaker in prop-c is the right plumbing, but without prop-b’s explicit account-boundary sitting visibly above it, a future caller could still wire automatic personal-account failover through the resolver by accident. This dissent stays open until that boundary is a first-class resolver parameter, not a caller convention.' }
         ],
-        /* WONV-002/005, WONDER-002/003: ONE lead vocabulary. This fixture used
-           `connection`/`status` while the other used `seed`/`tether`/`state`,
-           so the same object had two shapes and a reader could not tell a
-           tethered hypothesis from a researched lead without knowing which
-           fixture it came from. `seed` names what the lead hangs off,
-           `tether` says how, `state` is the disposition, and `enteredPlan`
-           records whether it has been allowed into a Plan. */
-        wondererLeads: [
-          { id: 'w1', lead: 'CDN edge-failover practice favors a gradual canary percentage over a binary cutover.',
-            seed: 'health-checked ring in prop-a',
-            tether: 'Suggests the health-checked ring in prop-a could shed traffic gradually instead of all-or-nothing, reducing the flapping risk Architecture flagged.',
-            state: 'hypothesis', enteredPlan: false },
-          { id: 'w2', lead: 'Airline overbooking policy publishes the compensation rule in advance rather than deciding case-by-case.',
-            seed: 'account-spend policy in prop-b',
-            tether: 'Argues for a fixed, disclosed account-spend policy (prop-b) over an ad hoc mid-incident judgment call.',
-            state: 'hypothesis', enteredPlan: false }
-        ],
         provisioning: [
           { id: 'rc-1', capability: 'provider-status-checker CLI', state: 'ready', scope: 'run-scoped, temporary', permissionRequestRef: 'perm-req-771', cleanupRequired: true, note: 'Resolved an existing capability first; nothing was installed persistently.' }
         ],
@@ -457,6 +464,25 @@
     bs.messages.push(mkMsg(bs, { senderKind: 'participant', senderId: bs.participants[0].id, senderName: bs.participants[0].name, messageType: 'response', body: 'Blind proposal submitted before seeing any other participant’s output: a PM-owned, health-checked failover ring.' }));
     bs.messages.push(mkMsg(bs, { senderKind: 'participant', senderId: bs.participants[3].id, senderName: bs.participants[3].name, messageType: 'conflict', body: 'The early fully-automatic cross-account variant of the ring proposal violates a hard user constraint. Flagging it as disqualified regardless of how the vote goes.' }));
     bs.messages.push(mkMsg(bs, { senderKind: 'participant', senderId: bs.participants[1].id, senderName: bs.participants[1].name, messageType: 'vote', body: 'Dissenting from where the room is leaning: the account-spend boundary has to be first-class, not a caller convention on top of the resolver.' }));
+    /* DL-218: the Wonderer's first pass ran in its own context from the start, was held until every blind proposal was
+       in, and the Coordinator recorded the team's decision on each lead in the Debate */
+    seedWonderer(bs, { at: 2, release: true,
+      summary: 'Explored the ground around failing over between providers when a quota runs out: how other fields move load, how a published rule beats a judgment call, and where failover machinery stops paying off.',
+      angles: [{ key: 'adjacent', signal: 'strong: shifting load gradually is a solved shape elsewhere' }, { key: 'human', signal: 'the person who pays is not the one waiting' }, { key: 'scale', signal: 'small: at one provider a plain retry wins' }],
+      leads: [
+        { id: 'w1', angle: 'adjacent', title: 'Traffic managers move load to a healthy backend a slice at a time, not all at once.', tether: 'The health-checked ring could shift work between providers gradually, which tames the flapping Architecture worried about.',
+          source: { kind: 'url', url: 'https://sre.google/workbook/canarying-releases/', label: 'sre.google · Canarying releases' },
+          dossier: { found: 'Release and traffic tooling shifts a small share first, watches, then widens.', why: 'It answers the ring’s all-or-nothing risk without a new mechanism.', next: 'Whether the resolver’s breaker can hold a share rather than a switch.' } },
+        { id: 'w2', angle: 'human', title: 'Airlines publish their overbooking compensation rule before anyone is bumped.', tether: 'Argues for writing the personal-account spend rule down before an outage instead of deciding it mid-incident.',
+          source: { kind: 'url', url: 'https://www.transportation.gov/individuals/aviation-consumer-protection/bumping-oversales', label: 'transportation.gov · Bumping and oversales' },
+          dossier: { found: 'The rule and the payout are fixed and disclosed in advance.', why: 'Users named the personal-account limit twice; a published rule protects it.', next: 'Where the rule is shown to the user before a failover.' } },
+        { id: 'w3', angle: 'scale', title: 'With one provider and light load, a plain retry beats any failover machinery.', tether: 'The ring only pays off when there are several providers to move between.',
+          source: { kind: 'message', index: 1, label: 'Architecture’s proposal' },
+          dossier: { found: 'Below a few providers the ring adds parts without adding choices.', why: 'It bounds where the design is worth its cost.', next: 'Nothing for this decision.' } }
+      ],
+      decide: [['w1', 'explore', 'Could settle the flapping risk; check it before the vote.'], ['w2', 'use', 'Supports making the spend rule explicit; it stays a hypothesis.'], ['w3', 'set_aside', 'This decision is about outages across several providers.']],
+      research: [['w1', 'Implementation', 'supported', 'Gradual shifting is standard practice and fits the resolver’s breaker.', { label: 'SRE workbook: Canarying releases', url: 'https://sre.google/workbook/canarying-releases/' }]],
+      takeUp: [['w2', 4]] });
     runs.push(bs);
 
     /* --- REVIEW · 'subagents' — Multi-Pass, 3 reviewers, one model reused on
@@ -612,7 +638,7 @@
       kind:'brainstorm', threadId:'subagents', title:'BrainStorm · storage engine for the event log',
       purpose:'Two viable approaches; the vote did not separate them.',
       status:'blocked', blockedReason:'Vote tie — synthesis must resolve it on constraints and evidence.',
-      config:{ questionLimit:20, grillExtension:25, debateRounds:2, voting:'evidence_weighted' },
+      config:{ questionLimit:20, grillExtension:25, debateRounds:2, voting:'evidence_weighted', grill_me_enabled:true },
       coordinator:{ kind:'dedicated_synthesis_model', label:'Synthesis model' },
       participants:[
         mkParticipant({ role:'Architect', requestedModelId:'opus5', persona:'Architect', status:'done', outcome:'completed', required:true }),
@@ -621,10 +647,7 @@
         mkParticipant({ role:'Ops', requestedModelId:'haiku46', persona:'Implementer', status:'done', outcome:'completed', required:true }),
         mkParticipant({ role:'Wonderer', requestedModelId:'sonnet46-personal', persona:'Wonderer',
           additiveRoleKind:'wonderer', required:false, status:'done', outcome:'completed',
-          current:'Contributed three adjacent leads and argued in round 2, then abstained.' }),
-        mkParticipant({ role:'Grill Me', requestedModelId:'haiku46', persona:'Implementer',
-          additiveRoleKind:'grill_me', required:false, status:'done', outcome:'completed',
-          current:'Raised the decision frontier; no automatic vote.' })
+          current:'Delivered three leads before the Debate; took no turn and cast no vote.' })
       ]
     });
     tievote.participants[0].vote='support'; tievote.participants[1].vote='support';
@@ -636,22 +659,6 @@
                      askedIds:[], resolvedIds:[], duplicateIds:[], researchRoutedIds:[] },
       proposals:[], debateRounds:2, votes:[], hardConstraintViolations:[],
       dissent:[{ by:'Reviewer', text:'Append-only segments make compaction an operational problem nobody has owned yet.' }],
-      /* WONV-002/005/008: a lead is TETHERED to its seed and carries an
-         explicit disposition. `hypothesis` is not a conclusion, and only a
-         `researched` or `user_decided` lead may enter a Plan. */
-      wondererLeads:[
-        { id:'lead-1',
-          lead:'Content-addressed segment names would make replication a copy rather than a protocol.',
-          seed:'append-only segment proposal',
-          tether:'Follows directly from the append-only segment proposal raised in round 1.',
-          state:'hypothesis', enteredPlan:false },
-        { id:'lead-2',
-          lead:'Compaction could be scheduled off the write path entirely.',
-          seed:'compaction ownership objection',
-          tether:'Follows from the Reviewer’s dissent about unowned compaction.',
-          state:'researched', enteredPlan:true,
-          research_ref:'research:compaction-off-path' }
-      ],
       /* PART-014: the tie is broken on recorded grounds, never on response
          order or model prestige. The record names which grounds decided it. */
       synthesis:{
@@ -669,6 +676,19 @@
       provisioning:[] };
     tievote.messages.push(mkMsg(tievote,{ senderKind:'system', senderName:'System',
       body:'Support 2, oppose 2 across the four eligible voters. The Wonderer abstained by default and is excluded from the denominator — it is not counted as opposition, and the support percentage is 50% of 4, not 40% of 5. The tie is resolved by hard constraints, evidence quality, feasibility and risk in synthesis, never by response order.' }));
+    seedWonderer(tievote, { at: 0, release: true,
+      summary: 'Explored around choosing a storage engine for the event log: what replication looked like where segments are named by their content, where compaction stalls writes, and what happens if you refuse to choose.',
+      angles: [{ key: 'history', signal: 'strong: content-addressed stores replicate by copying' }, { key: 'contradiction', signal: 'compaction on the write path stalls the busiest moments' }, { key: 'inversion', signal: 'running both engines for a while' }],
+      leads: [
+        { id: 'lead-1', angle: 'history', title: 'Content-addressed segment names made replication a file copy rather than a protocol.', tether: 'Follows from the append-only segment proposal: replicating a segment could be copying it.',
+          source: { kind: 'url', url: 'https://git-scm.com/book/en/v2/Git-Internals-Git-Objects', label: 'git-scm.com · Git objects' } },
+        { id: 'lead-2', angle: 'contradiction', title: 'Engines that compact on the write path stall writes exactly when the log is busiest.', tether: 'Follows from the Reviewer’s objection that nobody owns compaction yet.',
+          source: { kind: 'url', url: 'https://en.wikipedia.org/wiki/Log-structured_merge-tree', label: 'wikipedia.org · Log-structured merge-tree' } },
+        { id: 'lead-3', angle: 'inversion', title: 'Instead of choosing, write to both engines for a while and read from the faster.', tether: 'The tie between the two approaches could be broken by running both side by side.',
+          source: { kind: 'url', url: 'https://martinfowler.com/bliki/ParallelChange.html', label: 'martinfowler.com · Parallel change' } }
+      ],
+      decide: [['lead-1', 'use', 'Carry it into the segment design as a hypothesis.'], ['lead-2', 'explore', 'If it holds, compaction stops being a write-path risk.'], ['lead-3', 'set_aside', 'Two engines double the operations load the Reviewer already flagged.']],
+      research: [['lead-2', 'Reviewer', 'supported', 'Compaction can run off the write path; who owns it stays the Reviewer’s open question.', { label: 'Log-structured merge-tree: background compaction', url: 'https://en.wikipedia.org/wiki/Log-structured_merge-tree' }]] });
     runs.push(tievote);
 
     var coordfail = mkRun({
@@ -879,6 +899,9 @@
 
   /* IMPACT A1-20 / A1-28: the decision a run needs from you, in words (who needs what, and who is not blocked) */
   function attentionOf(run) {
+    /* DL-218: while Grill Me holds the run, your move is the interview (the round, or Confirm) */
+    var wg = WG_() && WG_().attention(run);
+    if (wg) return { tone: wg.tone, strong: wg.strong, text: wg.text, word: wg.word, plain: wg.strong + ' ' + wg.text, actions: wg.actions };
     var c = completionProjection(run), K = KIND_LABEL[run.kind], lead = LEAD_WORD[run.kind] || 'Coordinator';
     var b = blockedHelper(run), noun = NOUN[run.kind];
     function mk(tone, strong, text, word) { return { tone: tone, strong: strong, text: text, word: word || 'Needs attention', plain: strong + (text ? ' ' + text : '') }; }
@@ -911,7 +934,8 @@
   /* the live sentence, from the record (a kind replaces it through cardParts().sentence) */
   function runningSentence(run) {
     var k = run.kind, P = run.participants || [];
-    var working = P.filter(function (p) { return p.status === 'working'; });
+    /* the Wonderer explores alongside: it is never one of the helpers at work (DL-218) */
+    var working = P.filter(function (p) { return p.status === 'working' && p.additiveRoleKind !== 'wonderer'; });
     if (run.status === 'waiting') return { status: 'waiting', word: 'Waiting', reason: run.blockedReason ? String(run.blockedReason) : 'for its turn to run.' };
     if (k === 'chat_room') {
       var rr = roomRounds(run);
@@ -924,6 +948,9 @@
       var core = P.filter(function (p) { return p.required; });
       if (ph === 5) { var v = (b.votes || []).length; return { status: 'running', word: 'Voting', reason: v + ' of ' + core.length + ' have voted.' }; }
       if (ph === 3) return { status: 'running', word: 'Debating', reason: 'round ' + Math.max(1, Number(b.debateRound || 1)) + ' of ' + Number(b.debateRounds || (run.config || {}).debateRounds || 2) + '.' };
+      /* DL-218: Write the plan waits for the team's decisions on the Wonderer's leads, or for research, never for you */
+      var wg = ph === 6 && WG_() && run.wonderer ? WG_().gate(run) : null;
+      if (wg && !wg.ok) return { status: 'running', word: 'Write the plan waits', reason: wg.reason };
       return { status: 'running', word: 'Running', reason: ['The team is reading the question.', 'Each helper is drafting a plan on its own.', 'Lining up the options side by side.', '', 'Checking the facts behind each option.', '', 'Writing the plan from the vote and your rules.'][ph] || 'The team is working.' };
     }
     if (k === 'review') {
@@ -1043,7 +1070,6 @@
   /* ---- marks, lanes and the head cluster (B1, C2, C5): identity is silhouette x spike x hue, never initials ---- */
   function markRole(p) {
     if (p.additiveRoleKind === 'wonderer') return 'Wonderer';
-    if (p.additiveRoleKind === 'grill_me' || p.additiveRoleKind === 'grillMe') return 'Grill Me';
     return p.effectivePersona || p.requestedPersona || 'Implementer';
   }
   function markState(p) {
@@ -1066,7 +1092,8 @@
   function clusterOf(run, size, st) {
     var S = S_(), out = [];
     var leadState = st === 'waiting' ? 'queued' : st === 'completed' ? 'done' : (coordinatorSlot(run) && coordinatorSlot(run).outcome && coordinatorSlot(run).outcome !== 'completed') ? 'failed' : 'idle';
-    if (run.kind !== 'review') out.push(S.pmxMark({ role: run.kind === 'chat_room' ? 'moderator' : 'lead', size: size, state: leadState }));
+    /* Grill Me on (DL-218, F3-594): the lead stands behind the kettle grill for the run */
+    if (run.kind !== 'review') out.push(S.pmxMark({ role: run.kind === 'chat_room' ? 'moderator' : 'lead', size: size, state: leadState, grill: grillOnRun(run) }));
     var blind = run.kind === 'review' && (run.participants || []).length > 1 && (run.config || {}).blindInitialPass !== false;
     (run.participants || []).forEach(function (p, i) {
       if (blind && i) out.push('|');
@@ -1186,7 +1213,7 @@
      The narrow "+N more · Show all" row the builder adds is what an attention card shows under its first lane
      (collaboration.css), so the loud face keeps its budget (7.2) and the other helpers are one click away. */
   function lanesOf(run, open, rankOrder) {
-    var S = S_(), all = (run.participants || []).map(function (p, i) { var l = laneOf(run, p); l.i = i; return l; });
+    var S = S_(), all = (run.participants || []).filter(function (p) { return !(p.additiveRoleKind === 'wonderer' && WG_()); }).map(function (p, i) { var l = laneOf(run, p); l.i = i; return l; });
     all.sort(function (a, b) { return a.rank - b.rank || a.i - b.i; });
     /* the rank picks which lanes show; they are drawn in the team's own order, so a state change never moves a row
        (a moved row re-enters: M6's settle face would lose lanes for a frame). The attention face keeps the rank
@@ -1229,6 +1256,9 @@
     if (cl) parts.push(cl.card);
     var si = (run.participants || []).map(standInOf).filter(Boolean)[0];
     if (si && parts.length < 2) parts.push(si.card);
+    /* DL-218 (CWR-043): the summary line counts the Wonderer's leads explored, used, set aside and waiting */
+    var lc = WG_() ? WG_().countsText(run) : '';
+    if (lc) parts.unshift(esc(lc));
     return { recorded: rec, parts: parts.slice(0, 3) };
   }
 
@@ -1269,6 +1299,7 @@
     return { action: a[1], label: esc(l ? l[1] : 'Play the recording') };
   }
   function decisionActions(run, att) {
+    if (att && att.actions) return att.actions.slice();
     var K = KIND_LABEL[run.kind], c = completionProjection(run), b = blockedHelper(run), out = [];
     if (c.attention_reason === 'vote_tie_unresolved') {
       out.push({ action: 'collab-brainstorm-synthesize', label: 'Write the plan', primary: true });
@@ -1380,6 +1411,17 @@
     for (var k in generic) if (Object.prototype.hasOwnProperty.call(generic, k)) out[k] = generic[k];
     for (var k2 in own) if (Object.prototype.hasOwnProperty.call(own, k2) && own[k2] !== undefined && own[k2] !== null && (!shared || SHARED_OK[k2])) out[k2] = own[k2];
     if (!shared && own.decision === null) out.decision = null;
+    /* DL-218: while Grill Me holds the run, the interview is the card's one loud moment, whatever the kind says */
+    /* (steer 2026-10-20) the first session holds the whole run; a later one only asks for your move while its round or
+       What we agreed is open, and the kind's own lanes and sentence stay (only one step waits) */
+    var wgf = WG_() && WG_().face(run);
+    if (wgf) {
+      if (wgf.sentence) out.sentence = wgf.sentence; else if (WG_().holds(run)) out.sentence = generic.sentence;
+      out.decision = generic.decision;
+      /* the dock line says the same move (a kind's own dock, such as the room's "start the first round", would not) */
+      if (wgf.attention || WG_().holds(run)) out.dock = generic.dock;
+      if (wgf.attention) { out.density = 'attention'; own.density = 'attention'; } else if (WG_().holds(run)) { out.density = 'live'; own.density = 'live'; }
+    }
     /* normalise the tolerated shapes */
     if (Array.isArray(out.cluster)) {
       var objs = out.cluster.filter(function (x) { return x && typeof x === 'object'; });
@@ -1549,7 +1591,7 @@
       if (p.track) body += S.pmxTrack({ key: 'trk:' + id, cls: ((face === 'collapsed' ? 'collab-card-meta' : '') + (p.track.cls ? ' ' + p.track.cls : '')).trim(), stops: p.track.stops, nowText: p.track.nowText });
       if (face !== 'collapsed') {
         if (p.board) body += p.board;
-        if (face === 'live' || face === 'attention' || (face === 'failed' && hasStarted(run))) body += p.lanes != null ? p.lanes : lanesOf(run, !!UI.allLanes[id], face === 'attention');
+        if (face === 'live' || face === 'attention' || (face === 'failed' && hasStarted(run))) { var lh = p.lanes != null ? p.lanes : lanesOf(run, !!UI.allLanes[id], face === 'attention'); body += WG_() ? WG_().decorateLanes(run, lh) : lh; }
         if (p.meta) body += S.pmxMeta({ key: 'meta:' + id, cls: 'collab-card-meta', parts: p.meta.parts, recorded: p.meta.recorded });
       }
     }
@@ -1946,6 +1988,8 @@
     var run = findRun(btn.dataset.run); if (!run) return true;
     var qb = run.brainstorm.questionBank;
     qb.grillMeEnabled = !qb.grillMeEnabled;
+    /* DL-218, steer 2026-10-20: Grill Me turned on mid-run grills you at the next chapter; nothing running stops */
+    if (qb.grillMeEnabled && WG_()) WG_().requestMidRunGrill(run); else if (run.config) run.config.grill_me_enabled = !!qb.grillMeEnabled;
     var eff = qb.baselineLimit + (qb.grillMeEnabled ? qb.grillExtension : 0);
     run.messages.push(mkMsg(run, { senderKind: 'system', senderName: 'System', messageType: 'message', body: 'Grill Me ' + (qb.grillMeEnabled ? 'enabled' : 'disabled') + '. Effective question maximum is now ' + eff + '. The ' + qb.askedIds.length + ' questions already asked still count — the allowance did not reset.' }));
     ctx.renderOverlays(); ctx.renderApp();
@@ -2054,8 +2098,12 @@
   };
   /* IMPACT A3-02: one specialist default, read by the sheet's prefill and by commit (it used to be hard-coded in
      commit only, so the sheet never showed which AI a specialist would use). */
-  var SPECIALIST_DEFAULTS = { wonderer: { modelId: 'sonnet46-personal', persona: 'Wonderer' }, grillMe: { modelId: 'haiku46', persona: 'Implementer' } };
-  var SPECIALIST_SEAT = { wonderer: 7, grillMe: 8 };
+  /* DL-218 (2026-10-16): only the Wonderer is a participant, with its own model and the Wonderer Persona. Grill Me is
+     a switch (the definition's grill_me_enabled): no model, no Persona (DL-133), no seat, no row. */
+  var SPECIALIST_DEFAULTS = { wonderer: { modelId: 'sonnet46-personal', persona: 'Wonderer' } };
+  var SPECIALIST_SEAT = { wonderer: 7 };
+  function WG_() { return window.PM56_WG || null; }
+  function grillOnRun(run) { return !!(run && run.config && run.config.grill_me_enabled); }
   /* The plan's concurrency in this concept (the Crew example's capacity.maxConcurrent). "You asked for 3; your plan
      runs 2 at once" reads it; a recorded draft reads its own fixture capacity. */
   var PLAN_CAPACITY = 2;
@@ -2185,13 +2233,12 @@
       });
       run.participants.forEach(function (p) {
         if (p.additiveRoleKind === 'wonderer') routes.wonderer = { modelId: p.requestedModelId, persona: p.requestedPersona || 'Wonderer' };
-        if (p.additiveRoleKind === 'grill_me') routes.grillMe = { modelId: p.requestedModelId, persona: p.requestedPersona || 'Implementer' };
       });
     } else {
       rows = defaultRows(kind, ctx);
     }
     var wonderer = run ? run.participants.some(function (p) { return p.additiveRoleKind === 'wonderer'; }) : false;
-    var grillMe = run ? (run.participants.some(function (p) { return p.additiveRoleKind === 'grill_me'; }) || !!(run.brainstorm && run.brainstorm.questionBank && run.brainstorm.questionBank.grillMeEnabled)) : false;
+    var grillMe = run ? (grillOnRun(run) || !!(run.brainstorm && run.brainstorm.questionBank && run.brainstorm.questionBank.grillMeEnabled)) : false;
     var config = JSON.parse(JSON.stringify(run ? run.config : def));
     RTC.draft = {
       kind: kind, reconfigureRunId: reconfigureRunId || null, autoMode: !!autoMode,
@@ -2554,7 +2601,6 @@
     for (var i = 0; i < d.rows.length; i++) if (UNAVAILABLE_DEMO[d.rows[i].requestedModelId]) return offlineSentence(d.rows[i].requestedModelId, verb);
     var sr = d.specialistRoutes || {};
     if (d.wonderer && sr.wonderer && UNAVAILABLE_DEMO[sr.wonderer.modelId]) return offlineSentence(sr.wonderer.modelId, verb);
-    if (d.grillMe && sr.grillMe && UNAVAILABLE_DEMO[sr.grillMe.modelId]) return offlineSentence(sr.grillMe.modelId, verb);
     var c = d.config || {};
     if (d.kind === 'chat_room' && UNAVAILABLE_DEMO[c.moderatorModelId]) return offlineSentence(c.moderatorModelId, verb);
     if (UNAVAILABLE_DEMO[c.synthesisModelId]) return offlineSentence(c.synthesisModelId, verb);
@@ -2664,7 +2710,7 @@
   }
   function draftCluster(d, state) {
     var S = S_(), out = [];
-    if (d.kind !== 'review') out.push(S.pmxMark({ role: d.kind === 'chat_room' ? 'moderator' : 'lead', size: 18, state: state }));
+    if (d.kind !== 'review') out.push(S.pmxMark({ role: d.kind === 'chat_room' ? 'moderator' : 'lead', size: 18, state: state, grill: !!d.grillMe }));
     d.rows.forEach(function (r) { out.push(S.pmxMark({ role: markOf(r.persona), seat: seatOf(d, r), size: 18, state: state, standin: !!(standInFor(d, r.requestedModelId) || {}).strong && (standInFor(d, r.requestedModelId) || {}).tone !== 'failed' })); });
     return out;
   }
@@ -2725,10 +2771,11 @@
      done: bool, after: {rowId: [rowId...]}, stop: chapter index, rounds} gives the seats their run state instead
      of the sheet's plan (a queued seat in a run view is one that really waits, never the sheet's guess). ---- */
   var CAST_KEY = { crew: 'crew', review: 'rev', brainstorm: 'bs', chat_room: 'room' };
+  /* the wing holds the Wonderer only (F3-595, DL-218): Grill Me has no seat; it shows as the kettle grill at the
+     Coordinator's or the Moderator's seat (hub.grill), or at BrainStorm's Understand chapter */
   function castWing(d, kind, live) {
     var k = CAST_KEY[kind] || kind, st = (live && live.states) || {}, out = [];
-    if (d.wonderer) out.push({ key: 'pmx-p-seat:' + k + ':wonderer', role: 'wonderer', seat: SPECIALIST_SEAT.wonderer, label: 'Wonderer', sub: 'doesn’t vote', state: st.wonderer || (kind === 'brainstorm' && live ? 'abstained' : 'idle'), part: 'wonderer specialists' });
-    if (d.grillMe) out.push({ key: 'pmx-p-seat:' + k + ':grill', role: 'grill', seat: SPECIALIST_SEAT.grillMe, label: 'Grill Me', sub: 'asks you first', state: st.grill || 'idle', part: 'grill specialists' + (kind === 'brainstorm' ? ' questions' : '') });
+    if (d.wonderer) out.push({ key: 'pmx-p-seat:' + k + ':wonderer', role: 'wonderer', seat: SPECIALIST_SEAT.wonderer, label: 'Wonderer', sub: 'never votes', state: st.wonderer || (kind === 'brainstorm' && live && live.vote ? 'abstained' : 'idle'), part: 'wonderer specialists' });
     return out;
   }
   function castSeats(d, kind, live, o) {
@@ -2758,7 +2805,7 @@
     var caption = (eff >= n ? (n === 1 ? 'The Coordinator and 1 helper.' : 'All ' + n + ' work at once.') : eff + ' work at once; the other ' + waiting + (waiting === 1 ? ' waits its turn.' : ' wait their turn.')) + ' You get one checked result.';
     return { key: 'pmx-plate-crew', kind: 'crew', fitKey: 'pmx-plate-fit:crew', affects: 'team', busPart: 'assign',
       input: { label: 'The job', text: jobWords(d), mirror: 'job', part: 'job' },
-      hub: { key: 'pmx-p-seat:crew:lead', role: 'coordinator', label: 'Coordinator', sub: (live && live.coordinator) || coord.sub || coord.label, state: (live && live.lead) || 'idle', part: 'lead' },
+      hub: { key: 'pmx-p-seat:crew:lead', role: 'coordinator', label: 'Coordinator', sub: (live && live.coordinator) || coord.sub || coord.label, state: (live && live.lead) || 'idle', part: 'lead' + (d.grillMe ? ' grill' : ''), grill: !!d.grillMe },
       seats: seats, wing: castWing(d, 'crew', live),
       you: { label: 'You', sub: live && live.done ? 'got one checked result' : 'one checked result', part: 'you' },
       waits: { label: 'waits its turn', many: 'wait their turn', part: 'parallel' },
@@ -2794,11 +2841,11 @@
     /* compact and strip at 576: the seven chapter names and four long helper names need the width, and BrainStorm's slot
        at 1024 x 768 holds the caption only */
     return { key: 'pmx-plate-bs', kind: 'brainstorm', fitKey: 'pmx-plate-fit:bs', affects: 'team', busPart: 'team', modes: ['full', 'compact', 'lean', 'strip', 'wrap'], w: { compact: 576, lean: 576, strip: 576 },
-      chapters: BS_CHAPTERS.map(function (c, i) { return { label: c[0], state: stop < 0 ? 'next' : i < stop ? 'done' : i === stop ? 'now' : 'next', part: c[1] + (i === 0 ? ' job' : '') + (i === 5 ? rules : '') }; }),
+      chapters: BS_CHAPTERS.map(function (c, i) { return { label: c[0], state: stop < 0 ? 'next' : i < stop ? 'done' : i === stop ? 'now' : 'next', part: c[1] + (i === 0 ? ' job' + (d.grillMe ? ' grill' : '') : '') + (i === 5 ? rules : ''), grill: i === 0 && !!d.grillMe }; }),
       seats: castSeats(d, 'brainstorm', live, { noun: 'Helper', part: 'team blind', dash: false }), screens: n > 1,
       wing: castWing(d, 'brainstorm', live),
       you: { label: 'You', sub: 'one plan', part: 'you' },
-      note: n > 1 ? { text: 'Screens: each drafts alone; nobody sees the others’ ideas.', part: 'blind' } : null,
+      note: n > 1 ? { text: d.grillMe ? 'Screens: each drafts alone. The Coordinator grills you first.' : 'Screens: each drafts alone; nobody sees the others’ ideas.', part: d.grillMe ? 'blind grill' : 'blind' } : null,
       caption: '<span data-pmx-part="team job">' + esc(caption) + '</span>' };
   }
   function brainstormPlateFit(d) { return S_().pmxCastFit(brainstormCast(d)); }
@@ -2816,7 +2863,7 @@
     var caption = n + ' helpers and the Moderator talk it through. You pick what, if anything, to keep.';
     return { key: 'pmx-plate-room', kind: 'chat_room', fitKey: 'pmx-plate-fit:room', affects: 'team', busPart: 'policy', strip: 'line', modes: ['full', 'compact', 'strip', 'lean', 'wrap'],
       input: { label: 'The topic', text: roomTopic(d), mirror: 'job', part: 'job' },
-      hub: { key: 'pmx-p-seat:room:mod', role: 'moderator', label: 'Moderator', sub: cfg.moderatorPersona || 'Product Manager', state: (live && live.lead) || 'idle', part: 'moderator' },
+      hub: { key: 'pmx-p-seat:room:mod', role: 'moderator', label: 'Moderator', sub: cfg.moderatorPersona || 'Product Manager', state: (live && live.lead) || 'idle', part: 'moderator' + (d.grillMe ? ' grill' : ''), grill: !!d.grillMe },
       seats: castSeats(d, 'chat_room', live, { noun: 'Helper', part: 'team', dash: false }), wing: castWing(d, 'chat_room', live),
       you: { label: 'You', sub: 'pick what to keep', part: 'you' },
       note: { text: note, part: 'policy rounds' },
@@ -2876,7 +2923,7 @@
       cfg.moderatorPersona = cfg.moderatorPersona || ((run.coordinator && run.coordinator.label || '').match(/\(([^)]+?) persona\)/) || [])[1] || 'Product Manager';
     }
     if (pack) TARGETS.forEach(function (t) { if (!tgt && t.kind === pack.targetKind) tgt = t; });
-    var d = { kind: run.kind, rows: rows, config: cfg, wonderer: specs.some(function (p) { return sk(p) === 'wonderer'; }), grillMe: specs.some(function (p) { return sk(p) === 'grill'; }),
+    var d = { kind: run.kind, rows: rows, config: cfg, wonderer: specs.some(function (p) { return sk(p) === 'wonderer'; }), grillMe: grillOnRun(run),
       purpose: run.purpose || run.title || '', name: run.title || '', mustHaves: '', reviewTargetChoice: tgt ? tgt.value : 'changes' };
     var cr = run.chatRoom, R = cfg.turnPolicy === 'ask_everyone_once' ? 1 : (+cfg.maxRounds || 0);
     var hubState = function () {
@@ -2884,7 +2931,8 @@
       if (!notYet && /^(failed|timed_out|unavailable)$/.test(String(hubP.outcome || ''))) s = 'failed';
       return paused && s === 'working' ? 'idle' : s;
     };
-    var live = Object.assign({ states: states, lead: hubP ? hubState() : run.status === 'completed' ? 'done' : 'idle', done: run.status === 'completed',
+    var grilling = !!(WG_() && WG_().holds(run));
+    var live = Object.assign({ states: states, lead: hubP ? hubState() : run.status === 'completed' ? 'done' : grilling ? 'working' : 'idle', done: run.status === 'completed', vote: !!(run.brainstorm && /vote|synthesis|completed/.test(String(run.brainstorm.phase || ''))),
       coordinator: hubP ? short(hubP.effectiveModelName || hubP.requestedModelName || hubP.requestedModelId) : run.coordinator && run.coordinator.kind === 'parent_assistant' ? 'This chat’s assistant' : (run.coordinator && run.coordinator.label) || '',
       rounds: run.kind === 'chat_room' && cr && cr.roundsSoFar && R ? 'round ' + cr.roundsSoFar + ' of ' + R : '' }, o.live || {});
     if (o.live && o.live.states) live.states = Object.assign(states, o.live.states);
@@ -2951,27 +2999,37 @@
     var reason = d.autoMode ? 'Crew Auto teams can’t include specialists.' : d.scheduleIntent ? 'Scheduled builds can’t use specialists: they run while you’re away.' : '';
     var rec = isRecordedDraft(d);
     var routes = d.specialistRoutes || SPECIALIST_DEFAULTS;
+    /* DL-218: who questions you first, when Grill Me is on (the one who already talks to you) */
+    var who = d.kind === 'chat_room' ? 'The Moderator' : 'The Coordinator', when = d.kind === 'crew' ? 'before it splits the job' : d.kind === 'chat_room' ? 'before round 1' : 'before anyone drafts';
     function item(key, name, helper, role) {
       var on = !!d[key];
       var state = reason ? 'disabled' : (rec && !on) ? 'disabled' : on ? 'on' : 'off';
-      return { key: 'pmx-spec-' + key, name: name, helper: helper, state: state, reason: reason || (rec ? 'This recorded example uses its own team.' : ''),
+      /* the helper is one line in the shelf; its whole sentence rides in the app hover card */
+      var it = { key: 'pmx-spec-' + key, name: name, helper: '<span data-hover-key="collab-spec-help:' + key + '" data-hover-tip="' + esc(helper) + '">' + esc(helper) + '</span>', state: state, reason: reason || (rec ? 'This recorded example uses its own team.' : ''),
         affects: (key === 'wonderer' ? 'wonderer' : 'grill') + ' specialists',
-        /* item 11 (Jared, 2026-10-07: "The Grill me icon should be a grill ... in neon design like the rest"): the
-           shelf's Grill Me item is the neon kettle grill in Grill Me's seat hue, and hovering the row or focusing its
-           Add plays the grill's act (neon-icons.css 8d). Once added, Grill Me's puppet stands behind the same kettle in
-           the plate and the roster. Wonderer keeps its puppet mark. */
-        mark: key === 'grillMe' ? '<span class="pmx-spec-glyph" style="--nx-ink:var(--pmx-seat-' + SPECIALIST_SEAT[key] + ')">' + S.pmxGlyph('grill', 24) + '</span>'
-          : S.pmxMark({ role: role, seat: SPECIALIST_SEAT[key], size: 24, state: on ? 'idle' : 'optional' }),
-        input: { attrs: 'data-collab-input="' + key + '"' },
-        control: PK.modelButton('collab-pick-model', 'collab-model-spec-' + key, (routes[key] || SPECIALIST_DEFAULTS[key]).modelId, 'data-specialist="' + key + '"') };
+        input: { attrs: 'data-collab-input="' + key + '"' } };
+      if (key === 'wonderer') {
+        it.mark = S.pmxMark({ role: role, seat: SPECIALIST_SEAT[key], size: 24, state: on ? 'idle' : 'optional' });
+        it.control = PK.modelButton('collab-pick-model', 'collab-model-spec-' + key, (routes[key] || SPECIALIST_DEFAULTS[key]).modelId, 'data-specialist="' + key + '"');
+      } else {
+        /* item 11 (Jared, 2026-10-07: "The Grill me icon should be a grill ... in neon design like the rest"): the item
+           is the neon kettle grill, and hovering the row or focusing its switch plays the grill's act (neon-icons.css
+           8d). DL-218: Grill Me is a switch, so it has no model picker, no seat and no row; when it is on, the
+           Coordinator's or the Moderator's puppet stands behind the same kettle on the plate, and the item names who
+           will question you first. */
+        it.mark = '<span class="pmx-spec-glyph" style="--nx-ink:var(--pmx-seat-lead)">' + S.pmxGlyph('grill', 24) + '</span>';
+        it.addWord = 'Turn on'; it.removeWord = 'Turn off'; it.isSwitch = true;
+        it.control = on ? '<span class="pmx-spec-who">' + S.pmxMark({ role: d.kind === 'chat_room' ? 'moderator' : 'coordinator', size: 18, grill: true }) + '<span>' + esc(who) + ' asks first</span></span>' : '';
+      }
+      return it;
     }
-    var grillHelp = d.kind === 'brainstorm' ? 'Asks you the key decisions first. Allows 25 more questions.' : 'Asks you the key decisions first, with suggested answers.';
+    var grillHelp = who + ' questions you ' + when + ', round by round, with a recommended answer for each decision.' + (d.kind === 'brainstorm' ? ' Allows 25 more questions.' : '');
     /* J-2 / 6.3: the canon helper ("Extra helpers that join the team. They never replace one.") rides in the
        title's hover card and a short meta, so the side column fits the 88 px hero at 1440 x 900 */
     return S.pmxShelf({ key: 'q-specialists', n: d.autoMode ? null : 4,
-      title: '<span data-hover-key="collab-specialists" data-hover-tip="Extra helpers that join the ' + (d.kind === 'crew' ? 'Crew' : d.kind === 'chat_room' ? 'room' : 'team') + '. They never replace one.">Add specialists</span>',
+      title: '<span data-hover-key="collab-specialists" data-hover-tip="The Wonderer joins the ' + (d.kind === 'crew' ? 'Crew' : d.kind === 'chat_room' ? 'room' : 'team') + ' and never replaces a helper. Grill Me is a switch: it adds nobody.">Add specialists</span>',
       meta: 'Optional · they never replace a helper',
-      items: [item('wonderer', 'Wonderer', 'Ideas from other fields, marked hypothesis. Doesn’t vote.', 'wonderer'), item('grillMe', 'Grill Me', grillHelp, 'grill')] });
+      items: [item('wonderer', 'Wonderer', 'Explores around the topic and hands its ideas to the team to weigh. Never votes.', 'wonderer'), item('grillMe', 'Grill Me', grillHelp, 'grill')] });
   }
 
   /* E-02: the project default, or with a thread id this chat's answer (its Crew Auto check overrides the default) */
@@ -3745,11 +3803,11 @@
     return { ok: true };
   }
 
+  /* the Wonderer is the one additive participant (CWR-041); Grill Me never becomes one (CWR-042) */
   function specialistParticipant(d, key) {
-    var sr = (d.specialistRoutes && d.specialistRoutes[key]) || SPECIALIST_DEFAULTS[key];
-    return key === 'wonderer'
-      ? mkParticipant({ role: 'Wonderer', requestedModelId: sr.modelId, persona: sr.persona || 'Wonderer', additiveRoleKind: 'wonderer', required: false, status: 'waiting', current: 'Additive: explores adjacent leads. Abstains from the final vote by default.' })
-      : mkParticipant({ role: 'Grill Me', requestedModelId: sr.modelId, persona: sr.persona || 'Implementer', additiveRoleKind: 'grill_me', required: false, status: 'waiting', current: 'Additive: maps the decision frontier. No automatic vote.' });
+    if (key !== 'wonderer') return null;
+    var sr = (d.specialistRoutes && d.specialistRoutes.wonderer) || SPECIALIST_DEFAULTS.wonderer;
+    return mkParticipant({ role: 'Wonderer', requestedModelId: sr.modelId, persona: sr.persona || 'Wonderer', additiveRoleKind: 'wonderer', required: false, status: 'waiting', current: 'Runs alongside: explores around the topic and hands its leads to the team. Never votes or takes a turn.' });
   }
   function mustHaveLines(d) { return String(d.mustHaves || '').split(/\n+/).map(function (s) { return s.trim(); }).filter(Boolean); }
   /* IMPACT A1-01: the review target comes from the user field draft.reviewTargetChoice */
@@ -3817,10 +3875,10 @@
     var recorded = isRecordedDraft(d);
     if (!String(d.name || '').trim()) d.name = cardTitleOf(d);
     var coreParticipants = d.rows.map(function (r) { return mkParticipant({ role: r.role, requestedModelId: r.requestedModelId, persona: r.persona, requestedEffort: r.requestedEffort, requestedFast: r.requestedFast, status: 'waiting', current: '' }); });
-    /* PART-002/PART-011/WONV-007: core slots are REQUIRED by definition; Wonderer and Grill Me are additive and
-       optional, and they join on the models the sheet showed (PART-01, IMPACT A3-02) */
-    if (d.wonderer) coreParticipants.push(specialistParticipant(d, 'wonderer'));
-    if (d.grillMe && d.kind !== 'review') coreParticipants.push(specialistParticipant(d, 'grillMe'));
+    /* PART-002/PART-011/WONV-007: core slots are REQUIRED by definition; the Wonderer is additive and optional, and
+       joins on the model the sheet showed (PART-01, IMPACT A3-02). Grill Me adds nobody: it is the definition's
+       grill_me_enabled switch (DL-218), set below. */
+    if (d.wonderer && d.kind !== 'review') coreParticipants.push(specialistParticipant(d, 'wonderer'));
 
     if (d.reconfigureRunId) {
       var run = findRun(d.reconfigureRunId);
@@ -3829,6 +3887,7 @@
         run.title = d.name; run.purpose = d.purpose;
         run.config = JSON.parse(JSON.stringify(d.config));
         run.participants = coreParticipants.map(function (p) { p.runId = run.id; return p; });
+        if (WG_()) WG_().attach(run, d);
         if (run.kind === 'brainstorm' && run.brainstorm) { if (run.brainstorm.questionBank) run.brainstorm.questionBank.grillMeEnabled = d.grillMe; run.brainstorm.mustHaves = mustHaveLines(d); }
         run.messages.push(mkMsg(run, { senderKind: 'system', senderName: 'System', messageType: 'message', body: 'Setup changed. Prior messages keep who said them.' }));
       }
@@ -3862,6 +3921,7 @@
       if (newRun.kind === 'review' && d.reviewTarget && window.PM56_REVIEW) window.PM56_REVIEW.admit(newRun, d);
       if (newRun.kind === 'brainstorm' && d.brainstormInput && window.PM56_BRAINSTORM) window.PM56_BRAINSTORM.admit(newRun, d);
     }
+    if (WG_()) WG_().attach(newRun, d);
     if (d.wondererInput && window.PM56_WONDERER) window.PM56_WONDERER.admit(newRun, d);
     /* IMPACT A3-03 / D-6: provenance from the commit path, with no key on the run */
     UI.prov[newRun.id] = recorded ? 'recorded' : 'wand';
@@ -4402,11 +4462,14 @@
     const fingerprint=window.PM56_CREW.signature(d);
     if(existing)return existing.crew?.requestFingerprint===fingerprint?{ok:true,runId:existing.id,reused:true}:{ok:false,error:'conflicting_start'};
     const participants=d.rows.map(row=>mkParticipant({...row,persona:row.persona,status:'waiting',current:'Waiting for its assignment'}));
+    /* DL-218: the Wonderer runs alongside the recorded Crew (it gets no assignment); Grill Me adds nobody */
+    if(d.wonderer)participants.push(specialistParticipant(d,'wonderer'));
     const run=mkRun({kind:'crew',threadId:d.threadId||ctx.state.selectedThread,title:d.name,purpose:d.purpose,
       status:'running',config:JSON.parse(JSON.stringify(d.config)),participants,
       coordinator:{kind:d.config.coordinator,label:d.config.coordinator==='parent_assistant'?'Current assistant':'Selected coordinator'},
       idempotency_key:d.requestKey,definitionRevision:d.policyRevision||1});
     participants.forEach(p=>p.runId=run.id);
+    if(WG_())WG_().attach(run,d);
     window.PM56_CREW.admit(run,d,ctx,fingerprint);
     RTC.runs.push(run);effect('runs');effect('cards');effect('participants',participants.length);effect('events');
     // Local calculations create no provider call or billed Usage record.

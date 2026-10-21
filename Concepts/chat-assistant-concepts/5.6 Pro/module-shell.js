@@ -314,14 +314,27 @@
     pennant: { hand: 'L', armL: 'M11 16.3 4.4 14.8', strL: 'M10 2.2 4.4 14.8',
       held: pp('pl full', 'M4.2 22.6V6.6') + pp('pf full', 'M4.2 6.6 .8 8.3 4.2 10Z'), halo: 'M4.2 22.6V6.6M4.2 6.6 .8 8.3 4.2 10Z' }
   };
-  /* Grill Me stands behind a little kettle grill (the neon 'grill' glyph's anatomy: a dome lid riding just above
-     the rim, the bowl, two splayed legs and three grill marks), its hands on the lid: the mark reads as a grill first. */
+  /* Grill Me has no puppet of its own (DL-218, F3-594): it is a switch, not a participant. While it is on, the
+     Coordinator or the Moderator who grills you stands behind a little kettle grill (the neon 'grill' glyph's anatomy:
+     a dome lid riding just above the rim, the bowl, two splayed legs and three grill marks), one hand on the lid, and
+     keeps its own prop: the Coordinator's crown on its head, the Moderator's gavel raised in its other hand. The lead's
+     text colour stays (DL-111); only the kettle is drawn in the prop ink. GRILL_LEAD re-rigs the figure for each. */
   var GRILL = {
     head: [14, 8.5, 3.6], strC: 'M14 2.2V4.9', strL: 'M10 2.2 8.8 15.4', strR: 'M18 2.2 19.2 15.4',
     body: 'M11.2 12.6H16.8L17.4 15.6H10.6Z', arms: 'M11 13.4 8.8 15.4M17 13.4 19.2 15.4',
     lid: 'M7.6 19A6.4 5.4 0 0 1 20.4 19Z', knob: 'M12.6 12.9H15.4M14 12.9V13.6', rim: 'M6.6 19.8H21.4',
     bowl: 'M7.6 19.8A6.4 4.6 0 0 0 20.4 19.8', legs: 'M9.9 23.1 8.3 27.4M18.1 23.1 19.7 27.4', marks: 'M10.6 21.1l.9.9M13.5 21.1l.9.9M16.4 21.1l.9.9'
   };
+  /* the lead's own prop over the kettle figure: the crown sits on the smaller head (head at 14, 8.5, r 3.6; the crown is
+     PROPS.crown's, moved and scaled to it); the Moderator raises its gavel in the left hand, the right hand stays on the lid */
+  var GRILL_LEAD = {
+    crown: { strC: 'M14 2.2V3.2', head: pp('pf', 'M10.4 8.4 10.1 4.8 12.2 6.5 14 4.4 15.8 6.5 17.9 4.8 17.6 8.4Z', 'translate(14 8.5) scale(.857) translate(-14 -10.6)'),
+      halo: 'M10.91 6.61 10.66 3.52 12.46 4.98 14 3.19 15.54 4.98 17.34 3.52 17.09 6.61Z' },
+    gavel: { armL: 'M11 13.4 6.6 10.4', strL: 'M10 2.2 6.6 10.4', held: pp('pl full hdl', 'M6.6 10.4 4.7 4.9') + pp('pf full', 'M6.5 3.2 7.2 5.1 2.9 6.6 2.2 4.7Z'),
+      halo: 'M11 13.4 6.6 10.4 4.7 4.9M6.5 3.2 7.2 5.1 2.9 6.6 2.2 4.7Z' }
+  };
+  /* Retro and NieR: the lead's prop rows over the kettle sprite, and the tiny NieR cells */
+  var PX_GRILL_LEAD = { crown: { 1: '....q.q.q....', 2: '....qqqqq....' }, gavel: { 2: 'qqq', 3: '.p.', 4: '.p.', 5: '.p.' } };
   /* You hold the control: an unstrung head-and-shoulders figure (the user mark) raising the cross-shaped control,
      its two strings hanging free. */
   var YOU = {
@@ -474,19 +487,25 @@
     var halo = PUP.bar + strC + armL + armR + PUP.legs + PUP.body + headD(PUP.head) + (P.halo || '');
     return { rig: strs + pp('bar', PUP.bar) + pp('grip', PUP.grip) + ppStuds(M) + '<g class="pmx-pp-fig">' + fig + '</g>', halo: halo };
   }
-  function ppGrill(state, M) {
-    var G = GRILL, fig = (M.bust ? '' : pp('limb full', G.arms) + pp('body full', G.body)) + (M.z <= 18 ? pp('shoulders bust', PUP.bust) : '') + ppHead(G.head, 'grill', M) +
+  /* ppGrill(state, M, lead): the grilling lead behind the kettle; lead is 'crown' (the Coordinator, the chat's own
+     assistant) or 'gavel' (the Moderator) */
+  function ppGrill(state, M, lead) {
+    var G = GRILL, L = GRILL_LEAD[lead] || GRILL_LEAD.crown, arms = (L.armL || 'M11 13.4 8.8 15.4') + 'M17 13.4 19.2 15.4';
+    var fig = (M.bust ? '' : pp('limb full', arms) + pp('body full', G.body)) + (M.z <= 18 ? pp('shoulders bust', PUP.bust) : '') + ppHead(G.head, 'grill', M) + (L.head || '') + (M.bust ? '' : L.held || '') +
       pp('pf gl', G.lid) + pp('pl gl', G.knob) + pp('pf gb', G.bowl + 'Z') + pp('pl gr', G.rim) + (M.bust ? '' : pp('pl gl full', G.legs)) + (M.g2 ? pp('pl gm g2', G.marks) : '');
-    var strs = pp('str', G.strC) + (M.bust ? '' : pp('str full', G.strL) + pp('str full', state === 'failed' ? PUP.cutR.str + PUP.cutR.tip : G.strR));
+    var strs = pp('str', L.strC || G.strC) + (M.bust ? '' : pp('str full', L.strL || G.strL) + pp('str full', state === 'failed' ? PUP.cutR.str + PUP.cutR.tip : G.strR));
     return { rig: strs + pp('bar', PUP.bar) + pp('grip', PUP.grip) + ppStuds(M) + '<g class="pmx-pp-fig">' + fig + '</g>',
-      halo: PUP.bar + G.strC + G.arms + headD(G.head) + G.lid + G.rim + G.bowl + G.legs };
+      halo: PUP.bar + (L.strC || G.strC) + arms + headD(G.head) + G.lid + G.rim + G.bowl + G.legs + (L.halo || '') };
   }
   function ppYou(M) {
     var Y = YOU, fig = pp('body', Y.body) + pp('limb', Y.arms) + ppHead(Y.head, 'you', M);
     return { rig: '<g class="pmx-pp-fig">' + fig + pp('str', Y.strs) + pp('bar', Y.bar) + pp('grip', Y.grip) + '</g>', halo: Y.arms + Y.body + headD(Y.head) + Y.bar + Y.grip };
   }
-  function ppPixel(prop, state) {
-    if (prop === 'grill') return pxSprite(state === 'failed' ? pxLay(PX_GRILL, { 3: '.........._', 4: '.........._', 5: '.........._', 6: '.........._' }) : PX_GRILL);
+  function ppPixel(prop, state, grill) {
+    if (grill) {
+      var gr = pxLay(PX_GRILL, PX_GRILL_LEAD[prop] || PX_GRILL_LEAD.crown);
+      return pxSprite(state === 'failed' ? pxLay(gr, { 3: '.........._', 4: '.........._', 5: '.........._', 6: '.........._' }) : gr);
+    }
     if (prop === 'you') return pxSprite(PX_YOU);
     var rows = pxLay(PX.base, PX[prop] || {}), side = PROPS[prop] && PROPS[prop].hand === 'L' ? 'R' : 'L';
     if (state === 'needs') rows = pxLay(rows, PX['raise' + side]);
@@ -560,8 +579,8 @@
     if (r.moon) s += pnSQ('i', r.moon[0], r.moon[1], 1.8);
     return s;
   }
-  function pnUnit(prop, state, M) {
-    if (M.z <= 16) return '<g class="pmx-pn-px">' + pnPix(prop === 'you' ? PN.tinyYou : PN.tiny, prop === 'you' ? null : PN_TINY_ROLE[prop]) + '</g>';
+  function pnUnit(prop, state, M, grill) {
+    if (M.z <= 16) return '<g class="pmx-pn-px">' + pnPix(prop === 'you' ? PN.tinyYou : PN.tiny, prop === 'you' ? null : (PN_TINY_ROLE[prop] || []).concat(grill ? PN_TINY_ROLE.grill : [])) + '</g>';
     var I = PN, s = '';
     if (prop === 'you') {
       var Y = I.you;
@@ -580,19 +599,21 @@
     if (M.g3) I.hands.forEach(function (k) { fig += pnSQ('g sj', k[0], k[1], I.handS); });
     fig += pnP('g so', I.head) + pnR('i', I.visor[0], I.visor[1], I.visor[2], I.visor[3]);
     if (big && state === 'done') fig += pnP('ko', I.joy); else if (big && state !== 'failed') fig += pnR('g scan', I.scan[0], I.scan[1], I.scan[2], I.scan[3]);
-    return s + '<g class="pmx-pn-fig">' + fig + pnRole(prop) + '</g>';
+    return s + '<g class="pmx-pn-fig">' + fig + pnRole(prop) + (grill ? pnRole('grill') : '') + '</g>';
   }
-  /* markInner(sil, seat, state, standin, role, size) - the inside of a mark (28 grid). role, when given, picks the
+  /* markInner(sil, seat, state, standin, role, size, grill) - the inside of a mark (28 grid). role, when given, picks the
      exact prop (moderator's gavel, teacher's page); without it the prop follows the silhouette. size: the mark's
-     size (pmxMark passes it); a plate seat passes none and gets the richest detail. */
-  function markInner(sil, seat, state, standin, role, size) {
+     size (pmxMark passes it); a plate seat passes none and gets the richest detail. grill (DL-218): a lead (crown or
+     gavel) that is grilling you stands behind the kettle grill; any other role ignores it. */
+  function markInner(sil, seat, state, standin, role, size, grill) {
     state = str(state) || 'idle';
     var prop = role != null && role !== '' ? propOf(role) : (SIL_PROP[sil] || 'hardhat'), M = ppMat(size), out;
-    if (M.nier) out = '<g class="pmx-pp" data-prop="' + prop + '" data-fam="nier">' + pnUnit(prop, state, M) + '</g>';
-    else if (M.px) out = '<g class="pmx-pp" data-prop="' + prop + '" data-fam="px"><g class="pmx-pp-px">' + ppPixel(prop, state) + '</g></g>';
+    var kettle = !!grill && (prop === 'crown' || prop === 'gavel'), gAttr = kettle ? ' data-grill="1"' : '';
+    if (M.nier) out = '<g class="pmx-pp" data-prop="' + prop + '" data-fam="nier"' + gAttr + '>' + pnUnit(prop, state, M, kettle) + '</g>';
+    else if (M.px) out = '<g class="pmx-pp" data-prop="' + prop + '" data-fam="px"' + gAttr + '><g class="pmx-pp-px">' + ppPixel(prop, state, kettle) + '</g></g>';
     else {
-      var v = prop === 'grill' ? ppGrill(state, M) : prop === 'you' ? ppYou(M) : ppVector(prop, state, M);
-      out = '<g class="pmx-pp" data-prop="' + prop + '" data-fam="v">' + (M.halo ? '<path class="pmx-pp-halo" d="' + v.halo + '"/>' : '') + '<g class="pmx-pp-v">' + v.rig + '</g></g>';
+      var v = kettle ? ppGrill(state, M, prop) : prop === 'you' ? ppYou(M) : ppVector(prop, state, M);
+      out = '<g class="pmx-pp" data-prop="' + prop + '" data-fam="v"' + gAttr + '>' + (M.halo ? '<path class="pmx-pp-halo" d="' + v.halo + '"/>' : '') + '<g class="pmx-pp-v">' + v.rig + '</g></g>';
     }
     if (state === 'working') out += pp('floor', PUP.floor);
     if (state === 'done') out += '<circle class="pmx-m-nd" cx="23" cy="23" r="5.4"/><path class="pmx-m-nc" d="m20.6 23.1 1.7 1.7 3.2-3.4"/>';
@@ -608,15 +629,15 @@
     Object.defineProperty(SIL, s, { enumerable: true, get: function () { return markInner(s, 1, 'idle', false); } });
   });
   var MARK_SIZES = { 12: 1, 16: 1, 18: 1, 22: 1, 24: 1, 28: 1, 36: 1 };
-  /* pmxMark({key,role,seat,size,state,standin,cls,label}) */
+  /* pmxMark({key,role,seat,size,state,standin,cls,label,grill}) - grill: the lead stands behind the kettle (DL-218) */
   function pmxMark(o) {
     o = o || {};
     var sil = silOf(o.role);
     var size = MARK_SIZES[o.size] ? o.size : 22;
     var state = str(o.state) || 'idle';
-    return '<span class="' + cls('pmx-mark', o.cls) + '"' + k(o.key) + ' data-role="' + esc(roleKey(o.role) || sil) + '" data-sil="' + sil + '" data-state="' + esc(state) + '" data-size="' + size + '"' + (o.standin ? ' data-standin="1"' : '') +
+    return '<span class="' + cls('pmx-mark', o.cls) + '"' + k(o.key) + ' data-role="' + esc(roleKey(o.role) || sil) + '" data-sil="' + sil + '" data-state="' + esc(state) + '" data-size="' + size + '"' + (o.standin ? ' data-standin="1"' : '') + (o.grill && sil === 'lead' ? ' data-grill="1"' : '') +
       ' style="' + seatStyle(sil, o.seat) + '"' + (o.label ? ' role="img" aria-label="' + esc(o.label) + '"' : ' aria-hidden="true"') + raw(o.attrs) + '>' +
-      '<svg viewBox="0 0 28 28" aria-hidden="true">' + markInner(sil, o.seat, state, o.standin, o.role || sil, size) + '</svg></span>';
+      '<svg viewBox="0 0 28 28" aria-hidden="true">' + markInner(sil, o.seat, state, o.standin, o.role || sil, size, o.grill) + '</svg></span>';
   }
 
   /* ---------------------------------------------------------------- B3/B4 plate */
@@ -661,7 +682,8 @@
     /* band({y,h,name}) draws nothing: it only names the three plate bands
        (upstage, stage, house) so kind layouts share one vocabulary. */
     band: function () { return ''; },
-    /* seat({key,x,y,role,seat,state,standin,label,sub,part,floor}) - floor: 'bar' (works at once) or 'hatch'
+    /* seat({key,x,y,role,seat,state,standin,label,sub,part,floor,grill}) - grill: the lead behind the kettle (DL-218).
+       floor: 'bar' (works at once) or 'hatch'
        (waits its turn) drawn under the mark; a working seat has its bar anyway. J-2 reference update + lead
        ruling (review cycle 1): the name's baseline sits at +42 over a floor mark and +30 without one (the mark
        ends at +14, the bar at +17.4, the hatch at +22), so its ink keeps >= 8 px from the mark and the floor
@@ -687,8 +709,8 @@
          transform-box:fill-box and transform-origin:center for its pop (pmx-system.css), which would scale a transform
          attribute about the figure's middle and shift a 1.5x seat 7 px up and left off its string */
       return '<g class="pmx-p-seat"' + k(o.key) + pos(o.x, o.y) + ' data-state="' + esc(state) + '"' + (floor ? ' data-floor="' + floor + '"' : '') + part(o.part) + '>' + fb +
-        '<g transform="translate(' + (-half) + ' ' + (-half) + ')' + (sc !== 1 ? ' scale(' + sc + ')' : '') + '"><g class="pmx-p-mark" data-sil="' + sil + '" data-state="' + esc(state) + '" style="' + seatStyle(sil, o.seat) + '">' +
-        markInner(sil, o.seat, state, o.standin, o.role) + '</g></g>' + lab + sub + '</g>';
+        '<g transform="translate(' + (-half) + ' ' + (-half) + ')' + (sc !== 1 ? ' scale(' + sc + ')' : '') + '"><g class="pmx-p-mark" data-sil="' + sil + '" data-state="' + esc(state) + '"' + (o.grill && sil === 'lead' ? ' data-grill="1"' : '') + ' style="' + seatStyle(sil, o.seat) + '">' +
+        markInner(sil, o.seat, state, o.standin, o.role, null, o.grill) + '</g></g>' + lab + sub + '</g>';
     },
     /* bus({key,from:{x,y},y,to:[{x,y,style,part,key}],style,part}) - the cast's strings, orthogonal only (2026-10-07):
        a stem from `from` straight down to the bus at y, the bus across every drop (drawn outward from the stem), and a
@@ -770,6 +792,14 @@
     chapter: function (o) {
       o = o || {};
       var state = str(o.state) || 'next';
+      /* grill (DL-218): the Coordinator stands behind the kettle at this stop (BrainStorm's Understand), at .8, in its
+         live state; the stop keeps its label */
+      if (o.grill) {
+        var ls = { now: 'working', done: 'done' }[state] || 'idle';
+        return '<g class="pmx-p-chapter pmx-p-chapter--grill"' + k(o.key) + pos(o.x, o.y || 0) + ' data-state="' + esc(state) + '" data-grill="1"' + part(o.part) + '>' +
+          '<g transform="translate(-11.2 -13.2) scale(.8)"><g class="pmx-p-mark" data-sil="lead" data-state="' + ls + '" data-grill="1" style="' + seatStyle('lead') + '">' + markInner('lead', null, ls, false, o.lead || 'coordinator', null, true) + '</g></g>' +
+          (o.label ? svgText('pmx-p-sub', 0, 23, o.label, 'middle') : '') + '</g>';
+      }
       /* the chapter a run is on wears a ring as well as the accent (2026-10-08: retro's accent and positive are both
          green, and NieR inks both, so the fill alone did not say "here") */
       return '<g class="pmx-p-chapter"' + k(o.key) + pos(o.x, o.y || 0) + ' data-state="' + esc(state) + '"' + part(o.part) + '>' + (state === 'now' ? '<path class="pmx-p-chap-ring" d="M0 -9.5 9.5 0 0 9.5 -9.5 0z"/>' : '') + '<path class="pmx-p-chap" d="M0 -6 6 0 0 6 -6 0z"/>' +
@@ -1002,8 +1032,11 @@
         if ((cw[ci] + cw[ci + 1] - 2) / 1.04 > room) { if (cw[ci] >= cw[ci + 1]) cw[ci] = Math.max(24, room - cw[ci + 1]); else cw[ci + 1] = Math.max(24, room - cw[ci]); }
       }
       cw[cw.length - 1] = Math.min(cw[cw.length - 1], 2 * (youX - Math.ceil(ylw / 2) - 6 - cx[cx.length - 1]));
-      out += P.line({ key: kp + 'chapters', from: { x: cx[0], y: L }, to: { x: cx[cx.length - 1], y: L }, style: 'fixed', part: sp.chapterPart || 'rounds' });
-      ch.forEach(function (c, i) { out += P.chapter({ key: kp + 'ch:' + i, x: cx[i], y: L, label: castLabel(c.label, cw[i], 10.5), state: c.state, part: c.part }); });
+      /* Grill Me (DL-218): BrainStorm's bar has no Coordinator seat, so the Coordinator who grills you stands behind the
+         kettle at the first chapter (Understand, where intake runs), in place of its diamond; the line starts past it */
+      var g0 = ch[0] && ch[0].grill ? 12 : 0;
+      out += P.line({ key: kp + 'chapters', from: { x: cx[0] + g0, y: L }, to: { x: cx[cx.length - 1], y: L }, style: 'fixed', part: sp.chapterPart || 'rounds' });
+      ch.forEach(function (c, i) { out += P.chapter({ key: kp + 'ch:' + i, x: cx[i], y: L, label: castLabel(c.label, cw[i], 10.5), state: c.state, part: c.part, grill: c.grill, lead: c.lead }); });
       out += P.line({ key: kp + 'toyou', from: { x: cx[cx.length - 1] + 8, y: L }, to: { x: youX - Math.round(yh) - 2, y: L }, style: 'toyou', part: you.part || 'you' });
       /* You stands 2 above the line so its name keeps the chapters' baseline (+23) and still clears the figure */
       out += P.you({ x: youX, y: L - 2, s: ys, at: 'below', ly: 25, label: esc(you.label), part: you.part || 'you' });
@@ -1028,7 +1061,7 @@
         /* the hub's name and second line sit 16 apart, on -3 and 13 (You's two lines take the same baselines): Friendly's
            Poppins name no longer touches "This chat's assistant" under it (14 apart, -2 and 12, it overlapped by 1 px),
            and the second line still keeps 9 above a compact plate's bus (2026-10-08) */
-        out += '<g class="pmx-p-hub"' + part(hb.part) + '>' + P.seat({ key: hb.key, x: hx, y: BY, s: s, role: hb.role || 'lead', seat: hb.seat, state: hb.state, part: hb.part, at: 'right', ly: hb.sub ? -3 : 4, subDy: 16,
+        out += '<g class="pmx-p-hub"' + part(hb.part) + '>' + P.seat({ key: hb.key, x: hx, y: BY, s: s, role: hb.role || 'lead', seat: hb.seat, state: hb.state, part: hb.part, grill: hb.grill, at: 'right', ly: hb.sub ? -3 : 4, subDy: 16,
           label: esc(hb.label), sub: hb.sub ? esc(hb.sub) : '' }) + '</g>';
         edgeFrom = hx + Math.round(half) + 3 + hlw + 10;
         stem = { x: hx, y: BY + Math.round(half) + 1 };
@@ -1131,7 +1164,7 @@
       items.forEach(function (c, j) {
         var isHub = hb && j === 0, w2 = Math.min(lw, castW(c.label, 11));
         if (prevEnd != null && hb && j === 1) out += P.line({ key: kp + 'in', from: { x: prevEnd + 6, y: Y }, to: { x: x - half - 2, y: Y }, style: 'fixed', part: sp.busPart || 'assign' });
-        out += P.seat({ key: c.key, x: x, y: Y, s: s, role: isHub ? (c.role || 'lead') : c.role, seat: c.seat, state: c.state, standin: c.standin, part: c.part, at: 'right', label: castLabel(c.label, lw, 11) });
+        out += P.seat({ key: c.key, x: x, y: Y, s: s, role: isHub ? (c.role || 'lead') : c.role, seat: c.seat, state: c.state, standin: c.standin, part: c.part, grill: isHub && c.grill, at: 'right', label: castLabel(c.label, lw, 11) });
         prevEnd = x + half + 3 + w2;
         x = prevEnd + (isHub ? g.hub : g.gap) + half;
       });
@@ -1174,7 +1207,7 @@
     var lab = pitch - 6, ly = half + G.name;
     x = M + Math.max(0, Math.floor((W - 2 * M - (fixed + n * pitch + wingW)) / 2));
     var hx = null;
-    if (hb) { hx = x + hubCell / 2; out += P.seat({ key: hb.key, x: Math.round(hx), y: Y, s: s, role: hb.role || 'lead', seat: hb.seat, state: hb.state, part: hb.part, ly: ly, label: esc(hb.label) }); x += hubCell + 16; }
+    if (hb) { hx = x + hubCell / 2; out += P.seat({ key: hb.key, x: Math.round(hx), y: Y, s: s, role: hb.role || 'lead', seat: hb.seat, state: hb.state, part: hb.part, grill: hb.grill, ly: ly, label: esc(hb.label) }); x += hubCell + 16; }
     var cw = castCells(needs, pitch, G.pmin), xs = castXs(cw, x);
     if (hb) out += P.line({ key: kp + 'in', from: { x: Math.round(hx) + half + 2, y: Y }, to: { x: xs[0] - half - 2, y: Y }, style: 'fixed', part: sp.busPart || 'assign' });
     if (sp.screens) for (i = 0; i < n - 1; i++) out += P.screen({ key: kp + 'scr:' + i, x: Math.round((xs[i] + xs[i + 1]) / 2), y: Y + 1, h: 22, part: 'blind' });
@@ -1229,7 +1262,7 @@
     var sx0 = x, ex = sx0 + per * pitch, jx = ex + 6, yX = Math.round(jx + 10 + youCell / 2);
     var bp = sp.busPart || 'assign';
     if (hb) {
-      out += P.seat({ key: hb.key, x: hx, y: Ym, s: s, role: hb.role || 'lead', seat: hb.seat, state: hb.state, part: hb.part, ly: ly, label: esc(hb.label) });
+      out += P.seat({ key: hb.key, x: hx, y: Ym, s: s, role: hb.role || 'lead', seat: hb.seat, state: hb.state, part: hb.part, grill: hb.grill, ly: ly, label: esc(hb.label) });
       out += P.line({ key: kp + 'in', from: { x: hx + half + 2, y: Ym }, to: { x: fx, y: Ym }, style: 'fixed', part: bp });
       out += P.line({ key: kp + 'fork', from: { x: fx, y: Y0 }, to: { x: fx, y: Y1 }, style: 'fixed', part: bp, draw: 'down' });
     }
@@ -1391,10 +1424,11 @@
     var items = (o.items || []).map(function (it) {
       var state = it.state === 'on' || it.state === 'disabled' ? it.state : 'off';
       var inp = it.input || {};
+      /* a switch item (DL-218: Grill Me adds nobody) says Turn on / Turn off instead of Add / Remove (it.addWord, it.removeWord) */
       var add = state === 'disabled' ? '<p class="pmx-reason">' + str(it.reason) + '</p>'
-        : '<label class="pmx-add" data-on="' + (state === 'on' ? 1 : 0) + '"><input type="checkbox" class="pmx-add-input"' + raw(inp.attrs) + (state === 'on' ? ' checked' : '') + ' data-pmx-harness>' +
-          pmxGlyph(state === 'on' ? 'minus' : 'plus', 13) + '<span>' + (state === 'on' ? 'Remove' : 'Add') + '</span></label>';
-      return '<div class="pmx-spec"' + k(it.key) + ' data-state="' + state + '"' + at('data-pmx-affects', it.affects) + '>' + str(it.mark) +
+        : '<label class="pmx-add" data-on="' + (state === 'on' ? 1 : 0) + '"' + (it.isSwitch ? ' data-switch="1"' : '') + '><input type="checkbox" class="pmx-add-input"' + raw(inp.attrs) + (state === 'on' ? ' checked' : '') + (it.isSwitch ? ' role="switch" aria-checked="' + (state === 'on') + '"' : '') + ' data-pmx-harness>' +
+          pmxGlyph(it.isSwitch ? (state === 'on' ? 'ring-dot' : 'ring') : state === 'on' ? 'minus' : 'plus', 13) + '<span>' + (state === 'on' ? (it.removeWord || 'Remove') : (it.addWord || 'Add')) + '</span></label>';
+      return '<div class="pmx-spec"' + k(it.key) + ' data-state="' + state + '"' + (it.isSwitch ? ' data-switch="1"' : '') + at('data-pmx-affects', it.affects) + '>' + str(it.mark) +
         '<div class="pmx-spec-copy"><b>' + str(it.name) + '</b>' + (it.helper ? '<span class="pmx-help">' + it.helper + '</span>' : '') + '</div>' +
         '<div class="pmx-spec-control">' + (state === 'on' ? str(it.control) : '') + add + '</div></div>';
     }).join('');

@@ -95,10 +95,12 @@
        controls{primary{action, label, helper | disabled+reason+code, cmd}, secondary[], message},
        queued[{id, text, participantId}], queuedLine, queuedFailure (E-18: words only),
        hooks{msgKey, promoteAction, goal, legacy}, usage{costUsd, inputTokens, outputTokens}, cls } */
-  function seatOf(run, pid) { for (var i = 0; i < run.participants.length; i++) if (run.participants[i].id === pid) return i + 1; return 1; }
+  function seatOf(run, pid) { for (var i = 0; i < run.participants.length; i++) if (run.participants[i].id === pid) return run.participants[i].additiveRoleKind === 'wonderer' ? 7 : i + 1; return 1; }
+  function WG() { return window.PM56_WG || null; }
   function personOf(run, pid) { for (var i = 0; i < run.participants.length; i++) if (run.participants[i].id === pid) return run.participants[i]; return null; }
+  /* the table is the Moderator and the helpers who take turns; the Wonderer runs alongside (DL-218) and is listed apart */
   function teamOf(run) {
-    return run.participants.map(function (p, i) {
+    return run.participants.filter(function (p) { return p.additiveRoleKind !== 'wonderer'; }).map(function (p, i) {
       var req = p.requestedModelName || '', eff = p.effectiveModelName || '';
       var si = req && eff && req !== eff ? { requested: req, effective: eff, reason: 'offline', sameProvider: /same.provider/i.test(p.substitutionReason || '') } : null;
       return { pid: p.id, name: p.name || p.role || 'Helper', persona: p.effectivePersona || p.requestedPersona || '', seat: i + 1, model: eff || req, standIn: si };
@@ -127,8 +129,8 @@
     });
   }
   function msgOf(run, m, ch, hooks) {
-    var kind = m.senderKind === 'user' ? 'you' : m.senderKind === 'coordinator' ? 'moderator' : 'helper';
-    var p = kind === 'helper' ? personOf(run, m.senderId) : null;
+    var kind = m.senderKind === 'user' ? 'you' : m.senderKind === 'coordinator' ? 'moderator' : m.messageType === 'wonderer_pass' ? 'wonderer' : 'helper';
+    var p = kind === 'helper' || kind === 'wonderer' ? personOf(run, m.senderId) : null;
     var reply = null;
     if (m.replyTo) { var src = run.messages.filter(function (x) { return x.id === m.replyTo; })[0]; if (src && src.senderKind === 'user') reply = firstSentence(src.body); }
     /* E-18: a steered message (Send now mid-round) and the reply that read it */
@@ -139,7 +141,9 @@
       who: kind === 'you' ? 'You' : kind === 'moderator' ? 'Moderator' : (p ? (p.name || p.role) : m.senderName || 'Helper'),
       seat: p ? seatOf(run, p.id) : 0, persona: p ? (p.effectivePersona || p.requestedPersona) : '',
       when: when(m.createdAt), body: String(m.body || ''), chapter: ch, replyTo: reply, promotable: false, pinned: false,
-      steered: kind === 'you' && !!m.roomSteer, readNote: note
+      steered: kind === 'you' && !!m.roomSteer, readNote: note,
+      /* DL-218: the Wonderer's pass lists its leads in place; a helper's message that takes up a lead links to it */
+      passHtml: kind === 'wonderer' && WG() ? WG().entryHtml(run, m) : '', leadLinks: kind !== 'wonderer' && WG() ? WG().leadLinks(run, m) : ''
     };
   }
   function msgById(run, id) { for (var i = 0; i < run.messages.length; i++) if (run.messages[i].id === id) return run.messages[i]; return null; }
@@ -151,7 +155,7 @@
     var chs = chapters(run, list);
     var msgs = list.map(function (m, i) {
       var v = msgOf(run, m, chs[i], hooks);
-      v.promotable = v.kind !== 'you' && !!v.body.trim() && ['running', 'completed'].indexOf(run.status) >= 0;
+      v.promotable = v.kind !== 'you' && v.kind !== 'wonderer' && !!v.body.trim() && ['running', 'completed'].indexOf(run.status) >= 0;
       return v;
     });
     var round = s.round ? { number: s.round.number, complete: !!s.round.complete, total: s.round.participantIds.length, spoken: s.round.messages.length } : null;
@@ -176,7 +180,11 @@
     /* E-18: Message works while the room runs (a mid-round send is queued for the next round, never refused) */
     var controls = { primary: null, secondary: [], message: null };
     if (live) {
-      if (!s.round) controls.primary = { action: 'collab-room-next-round', label: COPY.ask.label, helper: COPY.ask.helper, cmd: 'cmd.chat_room.next_round' };
+      /* DL-218: round 1 waits for your Confirm (Grill Me) and for the Wonderer's first pass, and says so */
+      var rg = !s.round && window.PM56_ROOM && window.PM56_ROOM.roundGate ? window.PM56_ROOM.roundGate(run) : null;
+      if (!s.round && rg) controls.primary = { action: 'collab-room-next-round', label: COPY.ask.label, disabled: true, code: rg, cmd: 'cmd.chat_room.next_round',
+        reason: 'Round 1 waits until you confirm what you agreed with the Moderator.' };
+      else if (!s.round) controls.primary = { action: 'collab-room-next-round', label: COPY.ask.label, helper: COPY.ask.helper, cmd: 'cmd.chat_room.next_round' };
       else if (roundGoing) controls.primary = { action: 'collab-room-next-round', label: COPY.next.label, disabled: true, reason: refusal('round_incomplete'), code: 'round_incomplete', cmd: 'cmd.chat_room.next_round' };
       else if (summaryCurrent) {
         controls.primary = { action: 'room-finish', label: COPY.end.label, helper: COPY.end.helper, cmd: 'cmd.chat_room.end' };
@@ -245,6 +253,7 @@
   function mark(m, size) {
     if (m.kind === 'you') return S.pmxMark({ role: 'you', size: size });
     if (m.kind === 'moderator') return S.pmxMark({ role: 'moderator', size: size });
+    if (m.kind === 'wonderer') return S.pmxMark({ role: 'wonderer', seat: 7, size: size });
     return S.pmxMark({ role: m.persona || 'helper', seat: m.seat || 1, size: size });
   }
   function runAttr(vm) { return ' data-run="' + esc(vm.runId) + '"'; }
@@ -281,7 +290,7 @@
     return {
       key: m.key, mid: m.id, markHtml: mark(m, 22), who: whoButton(vm, m), when: esc(m.when), cls: 'pmx-rv-msg',
       attrs: ' data-room-message="' + esc(m.id) + '" data-who="' + m.kind + '"' + (arriving(vm, m.id) ? ' data-arrive="1"' : ''),
-      bodyHtml: reply + S.pmxMd(m.body, { mode: 'full' }) + acts + (m.pinned ? '' : receipts(vm, m.id))
+      bodyHtml: m.passHtml ? m.passHtml : reply + S.pmxMd(m.body, { mode: 'full' }) + (m.leadLinks || '') + acts + (m.pinned ? '' : receipts(vm, m.id))
     };
   }
   function liveEntry(vm) {
@@ -349,6 +358,7 @@
     else if (vm.round && !vm.round.complete) out = '<b>Round ' + vm.round.number + ' of ' + vm.maxRounds + '</b> · The helpers are answering.';
     else if (vm.summary && vm.summary.current && vm.roundsSoFar) out = '<b>Round ' + vm.roundsSoFar + ' done</b> · The Moderator summed it up. Your move.';
     else if (vm.roundsSoFar) out = '<b>Round ' + vm.roundsSoFar + ' done</b> · Your move.';
+    else if (st === 'running' && WG() && run && WG().holds(run)) out = '<b>Your move</b> · The Moderator is grilling you before round 1.';
     else if (st === 'running') out = '<b>Your move</b> · ' + COPY.firstMove;
     else out = '<b>Not started</b> · ' + plural(vm.team.length, 'helper') + ' · ' + esc(vm.policy.label) + '.';
     return '<span class="room-meta pmx-rv-say">' + out + '</span>' + (vm.recorded ? '<span class="pmx-rv-prov">' + g('play-ring', 13) + '<span>' + COPY.recorded + '</span></span>' : '');
@@ -369,6 +379,9 @@
     var rows = '<li>' + S.pmxMark({ role: 'moderator', size: 18 }) + '<span><b>Moderator</b> · ' + esc(mod.persona) + '<small>' + COPY.moderatorJob + '</small></span></li>' +
       vm.team.map(function (t) { return '<li>' + S.pmxMark({ role: t.persona || 'helper', seat: t.seat, size: 18 }) + '<span><b>' + esc(t.name) + '</b> · ' + esc(t.persona) + '</span></li>'; }).join('');
     /* no Technical details (2026-10-07, Jared): the commands stay on the sheet's Advanced page only */
+    var run = C.run(vm.runId), wp = run && WG() ? WG().wondererP(run) : null, grill = run && WG() && WG().grillOn(run);
+    if (wp) rows += '<li>' + S.pmxMark({ role: 'wonderer', seat: 7, size: 18 }) + '<span><b>Wonderer</b> · alongside<small>Explores around the topic and hands the room its leads. Takes no turn and never votes.</small></span></li>';
+    if (grill) rows = rows.replace(S.pmxMark({ role: 'moderator', size: 18 }), S.pmxMark({ role: 'moderator', size: 18, grill: true })) + '<li class="pmx-rv-grill">' + S.pmxGlyph('grill', 16) + '<span><b>Grill Me</b> is on<small>It adds nobody: the Moderator questions you before round 1.</small></span></li>';
     return '<p class="pmx-fine pmx-rv-asidehead">' + COPY.table + '</p><ul class="pmx-rv-table">' + rows + '</ul>' +
       '<p class="pmx-rv-policy"><b>' + esc(vm.policy.label) + '</b> · up to ' + plural(vm.maxRounds, 'round') + '</p>' +
       '<p class="pmx-rv-promise">' + g('not', 14) + '<span>' + COPY.promise + '</span></p>' +
@@ -403,7 +416,8 @@
     var states = {}, speaking = vm.speaking && vm.speaking.pid;
     (vm.team || []).forEach(function (t) { states[t.pid] = speaking === t.pid ? 'working' : 'idle'; });
     var rounds = vm.roundsSoFar ? 'round ' + vm.roundsSoFar + ' of ' + (vm.maxRounds || vm.roundsSoFar) : '';
-    try { return fn(run, { key: 'room-plate:' + run.id, live: { states: states, rounds: rounds, done: run.status === 'completed' } }) || ''; } catch (e) { return ''; }
+    var grilling = !!(WG() && WG().holds(run));
+    try { return fn(run, { key: 'room-plate:' + run.id, live: { states: states, rounds: rounds, done: run.status === 'completed', lead: run.status === 'completed' ? 'done' : grilling ? 'working' : 'idle' } }) || ''; } catch (e) { return ''; }
   }
   function viewParts(run, tab, ctx, generic) {
     var vm = discussionVM(run); if (!vm) return null;
@@ -415,7 +429,7 @@
     else if (pid) participant = participantView(vm, pid);
     else if (tab === 'transcript') {
       var guide = demos() && demos().editorGuide ? demos().editorGuide(run.id) : '';
-      main = guide + pinnedSummary(vm) + '<div class="pmx-rv-scriptwrap">' + script(vm) + '</div>';
+      main = guide + pinnedSummary(vm) + '<div class="pmx-rv-scriptwrap">' + script(vm) + '</div>' + (WG() ? WG().section(run) : '');
     }
     var mess = vm.messages.length;
     return {

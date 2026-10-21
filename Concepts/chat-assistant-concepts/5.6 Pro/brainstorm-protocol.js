@@ -44,7 +44,9 @@
    grillExtension:{enumerable:true,configurable:true,get:()=>P.budgetOwner.projection(budgetKey).grill_me_extension},
    grillMeEnabled:{enumerable:true,configurable:true,get:()=>P.budgetOwner.projection(budgetKey).grill_me_enabled,set:v=>P.budgetOwner.setGrill(budgetKey,!!v)}
   });
-  core(r).forEach(p=>{p.status='working';p.outcome=null;p.current='Independent proposal against the frozen brief';});
+  /* DL-218: with Grill Me on, the Coordinator grills you at intake and the blind proposals wait for your Confirm */
+  const grill=!!d.grillMe;
+  core(r).forEach(p=>{p.status=grill?'waiting':'working';p.outcome=null;p.current=grill?'Drafts alone once you confirm what you agreed with the Coordinator':'Independent proposal against the frozen brief';});
   r.expectedOutputs=[{id:'deep-plan-'+r.id,delivered:false}];
   /* IMPACT A3-03: the recorded stamp reads the one provenance predicate (the words stay exact: the run view's
      display rewrite, G-33, matches them) */
@@ -56,6 +58,7 @@
   if(!a||!current(r,a)||a.assignmentRevision!==x.assignmentRevision)return fail('stale_assignment');
   if(a.status==='completed')return JSON.stringify(a.proposal)===JSON.stringify(x.proposal)?{ok:true,reused:true}:fail('conflicting_proposal');
   if(!['intake','blind_proposals'].includes(b.phase))return fail('proposal_round_closed');
+  if(window.PM56_WG&&window.PM56_WG.holds(r))return fail('grill_me_waits_for_confirm');
   const q=x.proposal;
   if(!object(q)||!q.id||!q.optionKey||!q.title||!q.approach||!object(q.facts)||!evidenceValid(r,q.evidenceRefs)||['assumptions','benefits','costs','risks','validation','rollback'].some(k=>!Array.isArray(q[k])||!q[k].length))return fail('incomplete_proposal');
   if(b.input.constraints.some(c=>!(c.field in q.facts)||typeof q.facts[c.field]!==typeof c.expected))return fail('missing_constraint_fact');
@@ -74,7 +77,10 @@
    if(old){old.originatingParticipantIds.push(a.participantId);old.originalProposalIds.push(q.id);}
    else map.set(q.optionKey,{...clone(q),id:q.optionKey,originatingParticipantIds:[a.participantId],originalProposalIds:[q.id],fingerprint:JSON.stringify(semantic)});
   }
-  b.proposals=freeze([...map.values()]);b.phase='normalize';say(r,'message',b.attempts.length+' independent proposals consolidated into '+b.proposals.length+' alternatives. All origins retained.');return {ok:true};
+  b.proposals=freeze([...map.values()]);b.phase='normalize';say(r,'message',b.attempts.length+' independent proposals consolidated into '+b.proposals.length+' alternatives. All origins retained.');
+  /* DL-218 (CWR-041): the Wonderer's leads reach the core participants only now, once every blind proposal is in */
+  const WG=window.PM56_WG;if(WG&&r.wonderer&&r.wonderer.held){const rel=WG.engine.release(r,{proposalsIn:true});if(rel.ok&&rel.released&&rel.released.length)say(r,'message','Every blind proposal is in, so the Wonderer’s '+plural(WG.engine.counts(r).total,'lead')+' are released to the team.');}
+  return {ok:true};
  }
  function debate(id,x){
   const r=run(id),why=gate(r,x);if(why)return fail(why);const b=r.brainstorm;
@@ -98,6 +104,9 @@
  }
  function vote(id,participantId,x){
   const r=run(id),why=gate(r,x);if(why)return fail(why);const b=r.brainstorm,a=b.attempts.find(a=>a.participantId===participantId);
+  const voter=r.participants.find(p=>p.id===participantId);if(voter&&voter.additiveRoleKind==='wonderer')return fail('wonderer_never_votes');
+  /* a later grilling session (Grill Me turned on mid-run) gates only the vote, the step that uses its answers */
+  if(window.PM56_WG&&window.PM56_WG.stepHeld(r,'vote'))return fail('grill_me_waits_for_confirm');
   if(!a||!current(r,a)||a.status!=='completed')return fail('participant_not_current');
   if(!['evidence','vote'].includes(b.phase))return fail('evidence_round_incomplete');
   if(!b.proposals.some(q=>q.id===x.proposalId)||!['support','oppose','abstain'].includes(x.position)||!['high','medium','low'].includes(x.confidence)||!x.reason||!evidenceValid(r,x.evidenceRefs))return fail('invalid_vote');
@@ -120,7 +129,14 @@
   const b=r.brainstorm,d=b.decision,q=b.proposals.find(q=>q.id===d.selectedProposalId),h=text=>({t:'heading',d:2,text}),p=text=>({t:'paragraph',text}),ul=items=>({t:'unordered_list',items});
   const blocks=[h('Objective'),p(b.input.objective),h('Decision'),p(q.title+' — '+d.reason),h('Constraints'),ul(b.input.constraints.map(c=>c.text)),h('Research and evidence'),...b.input.evidence.map(e=>p(e.label+' — '+(e.summary||e.provenance)+' [source: '+e.id+']')),h('Implementation'),...d.steps.map(s=>({t:'plan_step',plan_step_id:s.id,title:s.title,text:s.text,depends_on:s.dependsOn,parent_step_id:null,parallel_group_id:null})),h('Verification'),ul(d.steps.map(s=>s.acceptance)),h('Assumptions'),ul(q.assumptions),h('Risks and trade-offs'),ul([...q.risks,...q.costs]),h('Rollback'),ul(q.rollback),h('Alternatives considered'),...b.proposals.filter(p=>p.id!==q.id).map(o=>p(o.title+' — '+(b.hardConstraintViolations.filter(h=>h.proposalId===o.id).map(h=>'Disqualified: '+h.constraint).join('; ')||'Not selected: '+o.approach))),h('Dissent'),...(b.dissent.length?b.dissent.map(v=>p(v.participantRole+' ['+v.position+'; confidence '+v.confidence+']: '+v.reason+' · evidence: '+v.evidenceRefs.join(', '))):[p('No opposing position was recorded in this example.')]),h('Scope notes'),p(b.input.scopeNotes),h('Provenance'),p('Recorded BrainStorm example. Local evidence is frozen, not live external research; provider, persistence and native-runtime proof are outside this demonstration.')];
   const result={runId:r.id,threadId:r.threadId,sourceHash:b.input.sourceHash,title:q.title,blocks,steps:d.steps,sourceRefs:b.input.evidence.map(e=>({ref:'brainstorm-evidence:'+r.id+':'+e.id,kind:'recorded_evidence',summary:e.label})),ledgerEntries:[{k:'objective',v:b.input.objective},{k:'decision',v:q.title+' — '+d.reason},...b.input.constraints.map(c=>({k:'constraint',v:c.text})),...b.dissent.map(v=>({k:'dissent',v:v.participantRole+': '+v.reason}))]};
-  return window.PM56_WONDERER?.augmentPlan(r,result)||result;
+  /* DL-218 (CWR-041): the Plan lists every Wonderer lead with its decision and reason; a used lead stays a hypothesis */
+  const WG=window.PM56_WG;
+  if(WG&&r.wonderer&&r.wonderer.version===2){
+   const rows=WG.engine.listing(r);
+   blocks.push(h('Wonderer leads'),p('The Wonderer ran alongside the team and never voted. The team decided each lead; a lead it used is still a hypothesis, not a fact or a decision.'),ul(WG.listingText(r)));
+   rows.forEach(x=>{result.ledgerEntries.push({k:'wonderer_lead',v:x.title+' — '+x.word+(x.reason?': '+x.reason:'')});if(x.evidence)result.sourceRefs.push({ref:'wonderer-evidence:'+r.id+':'+x.id,kind:'recorded_evidence',summary:x.evidence.label});});
+  }
+  return result;
  }
  function synthesize(id){
   const r=run(id);if(!owns(id))return fail('brainstorm_input_unavailable');const b=r.brainstorm;
@@ -129,7 +145,10 @@
   if(b.phase!=='synthesis'||!b.decision)return fail('synthesis_not_ready');
   if(b.attempts.some(a=>!current(r,a)))return fail('stale_participant_result');
   if(b.hardConstraintViolations.some(h=>h.proposalId===b.decision.selectedProposalId))return fail('hard_constraint_disqualified');
-  const wonderGate=window.PM56_WONDERER?.convergence(r);if(wonderGate&&!wonderGate.ok)return fail('wonderer_dispositions_incomplete');
+  const wonderGate=window.PM56_WG&&r.wonderer?window.PM56_WG.engine.gate(r):null;if(wonderGate&&!wonderGate.ok)return fail(wonderGate.code==='research'?'wonderer_research_in_flight':wonderGate.code==='exploring'?'wonderer_pass_in_flight':'wonderer_dispositions_incomplete');
+  if(window.PM56_WG&&window.PM56_WG.stepHeld(r,'synthesis'))return fail('grill_me_waits_for_confirm');
+  /* synthesis starts: a new pass request and Check it are refused from here (the team is writing the result) */
+  if(window.PM56_WG&&r.wonderer)window.PM56_WG.engine.close(r);
   const result=P.createFromBrainstorm(planPayload(r));if(!result.ok)return result;
   const q=b.proposals.find(q=>q.id===b.decision.selectedProposalId);
   b.synthesis=freeze({planId:result.planId,selected:q.id,summary:b.decision.reason,dissentPreserved:b.dissent.length,sourceHash:b.input.sourceHash});
@@ -176,7 +195,7 @@
   ['Line up','Line up the options','Normalize','team'],['Debate','Debate','Debate','rounds'],['Check facts','Check the facts','Evidence round','research'],
   ['Vote','Vote','Vote','team'],['Write the plan','Write the plan','Synthesis','you']];
  const PHASE_STOP={intake:1,blind_proposals:1,normalize:2,debate:3,evidence:4,vote:5,synthesis:6,completed:7};
- const SPEC_SEAT={wonderer:7,grillMe:8};
+ const SPEC_SEAT={wonderer:7};
  const CONF_WORD={high:'very sure',medium:'fairly sure',low:'unsure'},CONF_N={high:3,medium:2,low:1};
  const WAIT_NOUN='the team hasn’t started drafting';
 
@@ -275,14 +294,16 @@
     Wonderer abstains in the wing), a rule-broken option struck with its rule, preserved dissent as a
     pull-quote on the one-Plan result face. Every action carries data-run (G-19). Reads the protocol record
     only; runs without a protocol owner (seeds, wand-started) keep COLLAB's generic parts (null here). ---- */
- function seatP(r,p){if(p.additiveRoleKind==='wonderer')return SPEC_SEAT.wonderer;if(p.additiveRoleKind==='grill_me')return SPEC_SEAT.grillMe;const i=core(r).indexOf(p);return i<0?1:(i%8)+1;}
- function roleP(p){return p.additiveRoleKind==='wonderer'?'wonderer':p.additiveRoleKind==='grill_me'?'grill':String(p.effectivePersona||p.requestedPersona||'Implementer');}
+ function seatP(r,p){if(p.additiveRoleKind==='wonderer')return SPEC_SEAT.wonderer;const i=core(r).indexOf(p);return i<0?1:(i%8)+1;}
+ function roleP(p){return p.additiveRoleKind==='wonderer'?'wonderer':String(p.effectivePersona||p.requestedPersona||'Implementer');}
  function markP(r,p,size,state){return S_().pmxMark({role:roleP(p),seat:seatP(r,p),size,state,standin:!!(p.effectiveModelId&&p.requestedModelId&&p.effectiveModelId!==p.requestedModelId)});}
  function wondererP(r){return r.participants.find(p=>p.additiveRoleKind==='wonderer'&&p.status!=='disabled')||null;}
  function stopOf(r){const b=r.brainstorm;return b.synthesis?7:(PHASE_STOP[b.phase]!=null?PHASE_STOP[b.phase]:1);}
  function ruleWords(t){t=String(t||'').replace(/\.\s*$/,'');return t.charAt(0).toLowerCase()+t.slice(1);}
+ /* DL-218: while Grill Me holds the run the Coordinator is still at Understand the ask; nobody drafts yet */
+ function grillHolds(r){const W=window.PM56_WG;return !!(W&&W.holds&&W.holds(r));}
  function trackOf(r,now){
-  const at=stopOf(r),done=at>=7;
+  const at=grillHolds(r)?0:stopOf(r),done=at>=7;
   return {key:'bs-track:'+r.id,stops:CHAPTERS.map((c,i)=>({key:'pmx-stop:'+r.id+':'+i,
     label:'<span data-hover-key="bs-stop:'+i+'" data-hover-tip="'+H(c[1])+' ('+H(c[2])+' in the product)">'+H(c[0])+'</span>',state:done||i<at?'done':i===at?'now':'next'})),
    nowText:'<b>'+H(CHAPTERS[Math.min(at,6)][1])+'</b> · '+(now?now+' · ':'')+'step '+Math.min(at+1,7)+' of 7'};
@@ -382,14 +403,18 @@
   const inn=b.attempts.filter(a=>a.status==='completed').length,voted=b.votes.length,phase=b.phase;
   const q=b.decision&&b.proposals.find(x=>x.id===b.decision.selectedProposalId);
   const progress={intake:'while drafting',blind_proposals:'while drafting',normalize:'while lining up the options',debate:'while debating',evidence:'while checking the facts',vote:'while voting',synthesis:'before writing the plan',completed:''}[phase]||'';
-  const w=wondererP(r),gate=window.PM56_WONDERER&&window.PM56_WONDERER.convergence?window.PM56_WONDERER.convergence(r):null,blocked=!!(gate&&!gate.ok);
+  const WG=window.PM56_WG,w=wondererP(r),gate=WG&&r.wonderer?WG.gate(r):null,blocked=!!(gate&&!gate.ok);
+  const wpass=r.wonderer&&r.wonderer.passes?r.wonderer.passes[r.wonderer.passes.length-1]:null,wstate=['vote','synthesis','completed'].includes(phase)?'abstained':wpass&&wpass.status==='exploring'?'working':'idle';
   const budget=budgetOf(r);
-  const qline=budget?(budget.exhausted?'The team has asked all the questions it’s allowed. It will decide the rest from research and your earlier answers.':(budget.questions_asked?budget.questions_asked+' asked · '+budget.questions_remaining+' left (shared)':'No questions yet · up to '+budget.effective_limit+' (shared)')):'';
+  /* DL-218: the Coordinator's grilling questions come out of the same shared allowance, so the card counts them too */
+  const WGq=window.PM56_WG,grillAsked=WGq&&WGq.sessionsOf?WGq.sessionsOf(r).reduce((t,x)=>t+(x.asked||0),0):0;
+  const qAsked=budget?budget.questions_asked+grillAsked:0,qLeft=budget?Math.max(0,budget.effective_limit-qAsked):0;
+  const qline=budget?(budget.exhausted||(qAsked&&!qLeft)?'The team has asked all the questions it’s allowed. It will decide the rest from research and your earlier answers.':(qAsked?qAsked+' asked · '+qLeft+' left (shared)':'No questions yet · up to '+budget.effective_limit+' (shared)')):'';
   const reused=(b.input.answers||[]).length;
   const cluster=cs.map(p=>{const a=b.attempts.find(x=>x.participantId===p.id)||{},v=b.votes.find(x=>x.participantId===p.id);
     const st=b.synthesis?'done':phase==='vote'||phase==='evidence'||phase==='synthesis'?(v?'done':'working'):a.status==='completed'&&(phase==='intake'||phase==='blind_proposals')?'done':'working';
     return {role:roleP(p),seat:seatP(r,p),name:p.role,state:r.status==='running'||b.synthesis?st:'idle',standin:!!(p.effectiveModelId&&p.effectiveModelId!==p.requestedModelId)};})
-   .concat(w?[{role:'wonderer',seat:SPEC_SEAT.wonderer,name:'Wonderer',state:'abstained'}]:[]);
+   .concat(w?[{role:'wonderer',seat:SPEC_SEAT.wonderer,name:'Wonderer',state:wstate}]:[]);
   const openA={action:'brainstorm-open-results',attrs:ra,label:'Open Panel',core:true};
   const clusterHtml=cluster.map(c=>({html:S.pmxMark({role:c.role,seat:c.seat,size:18,state:c.state,standin:c.standin}),mini:S.pmxMark({role:c.role,seat:c.seat,size:12})}));
   const base={kindWord:'BrainStorm',owned:true,openAction:'brainstorm-open-results',cluster:clusterHtml,
@@ -416,6 +441,8 @@
   const straggle=cs.filter(p=>{const a=b.attempts.find(x=>x.participantId===p.id);return a&&a.status!=='completed';}).map(p=>p.role);
   if(phase==='intake'||phase==='blind_proposals'){
    now=inn+' of '+n+' in';board=notesBoard(r);
+   /* held by Grill Me: no sealed notes yet (nobody is writing), the chapter is Understand the ask */
+   if(grillHolds(r)){now='Grill Me';board='';}
    sentence=!inn?{status:'starting',word:'Starting',reason:'Everyone drafts an idea alone. '+(reused?plural(reused,'earlier answer')+' reused, so nobody asks again.':'Nobody sees the others’ ideas.')}
     :{status:'running',word:'Running',reason:inn+' of '+n+' ideas are in. '+H(listWords(straggle))+(straggle.length===1?' is':' are')+' still writing. Nobody sees the others’ ideas yet.'};
    if(!inn)density='starting';
@@ -450,20 +477,12 @@
    const write={action:'collab-brainstorm-synthesize',attrs:ra,label:'Write the plan',primary:!blocked,disabled:blocked},
     again={action:'collab-brainstorm-next-round',attrs:ra,label:'One more debate round'};
    if(blocked){
-    /* Wonderer's ideas still need a decision (b13 convergence): a warm needs-you row whose sentence prints the one
-       reason the Wonderer workspace prints (never "Ready" beside a dead primary; review fix) */
-    const W=window.PM56_WONDERER,leads=(r.wonderer&&r.wonderer.leads)||[];
-    /* the one reason string (STORM-B's PM56_WONDERER.convergenceState), worded as the run view's next-step row words it:
-       undecided -> "Decide on Wonderer’s N ideas first."; stale / pending -> the reason itself; then "Then write the plan."
-       One live action (Open Wonderer’s ideas); no dead Write the plan beside it (the view draws none either) */
-    const ws=W&&typeof W.convergenceState==='function'?W.convergenceState(r)
-     :leads.some(l=>l.state==='stale')?{code:'stale',reason:'Check or set aside the ideas that changed first.'}
-     :leads.some(l=>l.state==='research_pending')?{code:'pending',reason:'Wait for the check that is running to finish first.'}
-     :{code:'undecided',reason:'Give each idea a decision first.',count:gate.unresolved.length};
-    const cnt=ws.count||gate.unresolved.length,left=ws.code==='undecided'&&cnt?'Decide on Wonderer’s '+plural(cnt,'idea')+' first.':(ws.reason||'Give each idea a decision first.');
-    const acts=[{action:'b13-open',attrs:ra,label:'Open Wonderer’s ideas',primary:true}];
-    decision={tone:'warm',glyph:'ring-dot',sentence:'<b>'+H(left)+'</b> Then write the plan.',actions:running?acts:[]};
-    sentence={status:'needs',word:'Almost ready',reason:H(left)+' Then write the plan.'};
+    /* DL-218 (CWR-041/043): Write the plan waits while a Wonderer lead is undecided or in research. That is the team's
+       work, not a decision for you, so the card is not loud: it says why it waits (the one reason PM56_WG.gate gives
+       the run view and the Wonderer workspace) and keeps the lanes; Check it on any lead stays yours */
+    decision=null;density='live';
+    sentence={status:'running',word:'Write the plan waits',reason:H(gate.reason)};
+    lanes='';
    }else{
     tone='accent';
     const acts=[write,again];
@@ -479,7 +498,7 @@
   if(playable)actions.push({action:'brainstorm-example-play',attrs:ra,label:'Play the recording'});
   return Object.assign(base,{density,tone,sentence,decision,track:trackOf(r,now),board,lanes,followOns,
    pointer:'Deciding in the panel beside the chat',
-   meta:{recorded:rec,parts:[qline,rec?'':S.pmxCost({state:'running',spent:r.usage&&r.usage.costUsd,limit:r.config.costLimitUsd||14})].filter(Boolean)},
+   meta:{recorded:rec,parts:[WG&&r.wonderer?H(WG.countsText(r)):'',qline,rec?'':S.pmxCost({state:'running',spent:r.usage&&r.usage.costUsd,limit:r.config.costLimitUsd||14})].filter(Boolean).slice(0,2)},
    actions,
    more:[{action:'collab-open-configure',attrs:'data-kind="brainstorm" data-reconfigure="'+H(r.id)+'"',label:'Change setup…',disabled:running,reason:running?'Stop this BrainStorm first; what it has done so far is kept.':''}]});
  }
