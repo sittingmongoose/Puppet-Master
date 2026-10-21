@@ -329,6 +329,8 @@ async function browser() {
     const roomId = await ev(() => window.PM56_WG_DEMOS.snapshot().runId);
     const r0 = await ev(id => { const r = window.PM56_COLLAB.run(id); return window.PM56_ROOM.beginRound(id, window.PM56_ROOM.envelope(id)); }, roomId);
     check('B6 round 1 waits for Confirm', r0.error === 'grill_me_waits_for_confirm', JSON.stringify(r0));
+    const roomDock = await ev(() => (document.querySelector('.pmx-dock-say') || {}).textContent || '');
+    check('B6g while the Moderator grills you, the dock says that move, not the room’s “start the first round”', /Moderator is grilling you/.test(roomDock) && !/start the first round/.test(roomDock), roomDock);
     await answerAll(30000);
     await page.locator('.wg-agreed [data-action="wg-confirm"]').first().click(); await sleep(3500);
     const onTime = await ev(id => { const r = window.PM56_COLLAB.run(id), W = window.PM56_WG; return { exploring: W.engine.state(r).passes[0].status === 'exploring', gate: window.PM56_ROOM.roundGate(r) }; }, roomId);
