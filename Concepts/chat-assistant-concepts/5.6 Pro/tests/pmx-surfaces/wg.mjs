@@ -71,5 +71,24 @@ export default () => [
       await h.ev(() => { const a = document.querySelector('.wg-agreed[data-state="open"]'); if (!a) return; const d = a.querySelector('.wg-agreed-map details, details.wg-agreed-map'); if (d) d.open = true; else { const s = a.querySelector('.wg-agreed-map .pmx-disc-sum'); if (s) s.click(); } a.scrollIntoView({ block: 'start' }); });
       await h.page.mouse.move(2, 2); await h.wait(400); await h.settle();
     },
-    async after(h) { await leave(h); } }
+    async after(h) { await leave(h); } },
+  /* round 2 (2026-10-21): the surfaces the round touched, at 519, 480 and 400 px too (the shelf stacks below 520 px and
+     says On/Off below 460; the Ask Card keeps its note and one-row foot at phone width; the map draws its tree) */
+  { id: 'wg:sheet-crew', title: 'The recorded Crew sheet: the shelf with both specialists on, its helpers whole (m6, N3)', kind: 'sheet', tags: ['app', 'wonderer', 'sheet'], canon: ['Crew', 'Wonderer', 'Grill Me'],
+    sizes: [[1440, 900], [1280, 800], [519, 860], [480, 860], [400, 860]],
+    async open(h) { await h.closeAll(); await h.ev(() => window.PM56_WG_DEMOS.start('crew')); await h.wait(1400); await h.page.mouse.move(2, 2); await h.settle(); },
+    async after(h) { await h.closeAll(); } },
+  { id: 'wg:sheet-room', title: 'The recorded Chat Room sheet: Grill Me names the Moderator, the helpers whole', kind: 'sheet', tags: ['app', 'wonderer', 'sheet'], canon: ['Chat Room', 'Wonderer', 'Grill Me'],
+    sizes: [[1440, 900], [1280, 800], [519, 860], [480, 860], [400, 860]],
+    async open(h) { await h.closeAll(); await h.ev(() => window.PM56_WG_DEMOS.start('room')); await h.wait(1400); await h.page.mouse.move(2, 2); await h.settle(); },
+    async after(h) { await h.closeAll(); } },
+  { id: 'wg:ask-round', title: 'Deep Plan’s grilling round with the map open: the round bar, the tree with its connectors, the one-row foot', kind: 'chat', tags: ['app', 'wonderer', 'chat'], canon: ['Grill Me'],
+    roots: '.qs-grill', sizes: [[1440, 900], [900, 800], [480, 860], [400, 860]], change: QUIET_CHANGE,
+    async open(h) {
+      await h.closeAll(); await h.ev(() => window.PM56_WG_DEMOS.start('deepplan')); await h.wait(1400);
+      await until(h, () => !!document.querySelector('.qs-grill [data-action="qs-accept-round"]'), null, 20000);
+      await h.ev(() => { const c = window.PM56_EXT.ctx(); c.state.wgMapOpen = true; c.renderApp(); });
+      await h.page.mouse.move(2, 2); await h.wait(500); await h.settle();
+    },
+    async after(h) { await h.ev(() => { const c = window.PM56_EXT.ctx(); c.state.wgMapOpen = false; }); await leave(h); } }
 ];

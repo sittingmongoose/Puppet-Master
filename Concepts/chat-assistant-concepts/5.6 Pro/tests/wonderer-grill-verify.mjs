@@ -266,20 +266,27 @@ check('R2-n17 What we agreed’s title has a real face in Friendly and Retro (70
 async function pixelRatios(page, sels) {
   const out = {};
   for (const sel of sels) {
-    const info = await page.evaluate(sel => {
+    let info = await page.evaluate(sel => {
       const el = [...document.querySelectorAll(sel)].find(e => e.getClientRects().length && e.textContent.trim() && getComputedStyle(e).visibility !== 'hidden');
       if (!el) return null;
       document.querySelectorAll('[data-pxc]').forEach(x => x.removeAttribute('data-pxc'));
       el.setAttribute('data-pxc', '1');
-      const br = el.getBoundingClientRect(); if (br.top < 0 || br.bottom > innerHeight) el.scrollIntoView({ block: 'center' });
+      const br = el.getBoundingClientRect(); if (br.top < 0 || br.bottom > innerHeight) el.scrollIntoView({ block: 'center', behavior: 'instant' });
+      return true;
+    }, sel);
+    if (!info) continue;
+    await page.waitForTimeout(120);
+    const geo = await page.evaluate(() => {
+      const el = document.querySelector('[data-pxc="1"]'); if (!el) return null;
       const cs = getComputedStyle(el), tw = document.createTreeWalker(el, NodeFilter.SHOW_TEXT), rects = [];
       for (let t = tw.nextNode(); t; t = tw.nextNode()) { if (!t.textContent.trim() || (t.parentElement && t.parentElement.closest('svg'))) continue; const rg = document.createRange(); rg.selectNodeContents(t); rects.push(...[...rg.getClientRects()].filter(r => r.width > 4 && r.height > 4)); }
       const r = rects[0] || el.getBoundingClientRect();
       let op = 1; for (let x = el; x && x.nodeType === 1; x = x.parentElement) op *= parseFloat(getComputedStyle(x).opacity || '1');
       return { color: cs.color, op, rect: { x: Math.max(0, r.left), y: Math.max(0, r.top), w: Math.min(r.width, 360), h: r.height } };
-    }, sel);
-    if (!info || info.rect.w < 4) continue;
-    const vp = page.viewportSize(); if (info.rect.y + info.rect.h > vp.height || info.rect.x + 4 > vp.width) continue;
+    });
+    if (!geo || geo.rect.w < 4) { await page.evaluate(() => document.querySelectorAll('[data-pxc]').forEach(x => x.removeAttribute('data-pxc'))); continue; }
+    Object.assign(info === true ? (info = {}) : info, geo);
+    const vp = page.viewportSize(); if (info.rect.y + info.rect.h > vp.height || info.rect.x + 4 > vp.width) { await page.evaluate(() => document.querySelectorAll('[data-pxc]').forEach(x => x.removeAttribute('data-pxc'))); continue; }
     info.rect.w = Math.min(info.rect.w, vp.width - info.rect.x);
     await page.evaluate(() => { const st = document.createElement('style'); st.id = 'pxc-hide'; st.textContent = '[data-pxc="1"], [data-pxc="1"] * { color: transparent !important; -webkit-text-fill-color: transparent !important; text-shadow: none !important; text-decoration-color: transparent !important; } [data-pxc="1"] svg, [data-pxc="1"] .nx-i { visibility: hidden !important; }'; document.head.appendChild(st); });
     await page.waitForTimeout(80);
