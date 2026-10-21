@@ -93,10 +93,11 @@ export function cardSurfaces(prefix = 'storm', extra = {}) {
     async open(h) { if (extra.setup) await extra.setup(h); await wondererRun(h); await toWrite(h); await h.settle(); await showCard(h); },
     change: QUIET_CHANGE, async after(h) { await fast(h, 1); await h.closeAll(); }
   }, extra.surface || {}), Object.assign({
-    id: prefix + ':card-wonderer-grill', title: 'BrainStorm card while the Coordinator grills you: the kettle at its seat, Grilling you in the lanes (DL-218)', kind: 'chat', tags: ['app', 'storm', 'chat'], canon: [{ name: 'BrainStorm', minCard: 360 }, 'Grill Me'],
-    /* the Ask Card docks over most of the chat while you are grilled, so the card is brought in by its decision row */
-    async open(h) { if (extra.setup) await extra.setup(h); await wondererRun(h, { confirm: false }); await fast(h, 1); await h.settle();
-      await h.ev(() => { const el = document.querySelector('.transcript .collab-kind-brainstorm [data-action="wg-open-round"]'); if (el) el.scrollIntoView({ block: 'center' }); }); await h.wait(300); },
+    id: prefix + ':card-wonderer-grill', title: 'BrainStorm card while the Coordinator grills you (the Ask Card closed for later): Understand the ask, Grilling you in the lanes (DL-218)', kind: 'chat', tags: ['app', 'storm', 'chat'], canon: [{ name: 'BrainStorm', minCard: 360 }, 'Grill Me'],
+    /* the Ask Card docks over most of the chat while you are grilled: close it for later (the card's Answer round 1
+       brings it back) and look at the card */
+    async open(h) { if (extra.setup) await extra.setup(h); await wondererRun(h, { confirm: false }); await fast(h, 1);
+      await h.clickVisible('.qs-grill .qs-ask-x'); await h.wait(500); await h.settle(); await showCard(h); },
     change: QUIET_CHANGE, async after(h) { await fast(h, 1); await h.closeAll(); }
   }, extra.surface || {})]);
 }
