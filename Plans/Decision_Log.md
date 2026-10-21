@@ -16883,3 +16883,89 @@ owner_hints:
 ```
 
 ContractRef: ContractName:Plans/FinalGUISpec.md#F3-077, ContractName:Plans/FinalGUISpec.md#F3-244, ContractName:Plans/FinalGUISpec.md#F3-430, ContractName:Plans/Planning_Wizard.md#PWIZ-023, ContractName:Plans/FinalGUISpec.md#F3-521, ContractName:Plans/FinalGUISpec.md#F3-653, ContractName:Plans/Settings_System.md#SSYS-054, ContractName:Plans/FinalGUISpec.md#F3-650, ContractName:Plans/FinalGUISpec.md#F3-630, ContractName:Plans/storage-plan.md#SP-330, ContractName:Plans/UI_Command_Catalog.md#UCC-200, ContractName:Plans/Contracts_V0.md#CV-361, ContractName:Plans/FinalGUISpec.md#F3-619, ContractName:Plans/FinalGUISpec.md#F3-441, ContractName:Plans/DRY_Rules.md#DR-068, ContractName:Plans/usage-feature.md#UF-107, ContractName:Plans/Decision_Log.md#DL-177, ContractName:Plans/Glossary.md#G-030, ContractName:Plans/usage-feature.md#UF-093, ContractName:Plans/FinalGUISpec.md#F3-628, ContractName:Plans/FinalGUISpec.md#F3-652, ContractName:Plans/assistant-chat-design.md#ACD-475
+
+### DL-231 - Chat Room Rounds Run By Themselves, With An Option To Pause Between Rounds
+
+```yaml
+plan_unit_id: DL-231
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: >-
+  Decided by Jared on 2026-10-21, with a refinement the same day, both relayed by the Plans lead.
+  Question: when a Chat Room round finishes, should the agents carry on to the next round by
+  themselves until the round limit, or wait each time for the user to press Next Round? Why it came
+  up: the recorded Chat Room example stopped after round 1 with Round 1 done, Your move, Next Round
+  and Summarize Now, and Jared asked what a Chat Room is for. A Chat Room is several AIs holding a
+  conversation among themselves under a turn policy (moderated, round robin or free discussion) that
+  the user can join at any time; ask_everyone_once is the mode that puts the question to all of
+  them once. Decision: rounds are automatic. When a round ends, the room starts the next round by
+  itself under the same turn policy and keeps going until its last configured round or its stop
+  condition, so the user never presses Next Round between rounds, and a room between rounds reads as
+  live rather than as the user's move. Automatic is the default. A Pause between rounds option brings
+  back the earlier behaviour for anyone who wants it: it is set on the Chat Room setup sheet and can
+  be switched while the room runs from the room's card in the chat and from its run view (the side
+  panel), and with it on the room waits after every round, shows Round N done as the user's move,
+  and offers Next Round, Summarize Now and End discussion. Unchanged: after its last round the room
+  waits until the user adds rounds, chooses Summarize Now or ends the discussion, and never finishes
+  by itself (DL-138), and Add 2 more rounds then carries on; a message sent during a round is queued
+  for the next round unless the user sends it now to steer (DL-112); Pause, Resume, Summarize Now,
+  End discussion and Cancel stay available throughout; ask_everyone_once still asks each participant
+  once and stops; Grill Me still grills the user before round 1, which waits for Confirm, and a room
+  never waits for the Wonderer (DL-218). Options considered: waiting for Next Round after every
+  round, the earlier behaviour, which is now the Pause between rounds option; and automatic rounds
+  with no way to pause between them, which the refinement replaced by adding the option. For
+  cmd.chat_room.next_round the options were to raise it from the moderator as the record of every
+  round start (rejected: no catalog surface raises a command for a run's own progress, and a
+  scheduled message's dispatch is an internal action rather than a user command for the same
+  reason), to narrow it to the user's start of round 1 (rejected: Start already starts round 1), and
+  to keep it as the user's command for starting the next round while the room pauses between rounds
+  (chosen: its identity, request, result, handler and surfaces all stay, so no command is minted or
+  retired, and the room's automatic round starts dispatch no command, as BrainStorm's phases advance
+  without one). The mechanics are the Plans lead's and the writer's readings, not Jared's words: the
+  setup sheet's Start is the user's go, so round 1 starts when the room starts and the Ask Everyone
+  step before it is retired; a room whose stop condition is met before its last round stops starting
+  rounds and waits in the same way; the option is the definition field pause_between_rounds, false
+  by default, switched while the room runs through cmd.collaboration.reconfigure with the change
+  set_pause_between_rounds, the way Grill Me is turned on mid-run, so it bumps the definition
+  revision, writes one system transcript entry, takes effect at the next round boundary and never
+  cancels a turn; it has the Settings default assistant.multi_agent.chat_room.pause_between_rounds
+  beside the room's turn policy and rounds, because the sheet opens from Settings defaults and Save
+  as default should keep the choice for someone who always wants to read each round before the next;
+  and a Chat Room's your-move dock item covers only a room that waits on the user, which is between
+  rounds with the option on, after its last round, while paused, or while round 1 waits for Grill
+  Me's Confirm. Affected units: Collaborative Workflows sections 6.2, 6.3, 10, 12, 14 and 18,
+  CWR-024, CWR-031, CWR-032 and the new CWR-044, and the chat's dock requirement ACD-476.
+gui_related: true
+gui_classification_reason: Changes when a Chat Room waits for the user and what its setup sheet, card, run view and dock item offer between rounds.
+split_recommended: false
+depends_on: [DL-112, DL-138, DL-218]
+unblocks: [CWR-044]
+acceptance_criteria:
+- Collaborative Workflows and the chat design agree with this decision; a Chat Room's rounds run by themselves unless Pause between rounds is on, and a room between two automatic rounds is never the user's move.
+- The mechanics listed above as the lead's and the writer's readings are not read as Jared's words.
+validation_surfaces:
+- python3 scripts/pm-shard-plans.py --check
+- python3 scripts/pm-plan-index.py validate
+risk_class: owner_drift
+reasoning_tier: high
+context_scope: chat_room_rounds
+implementation_surfaces:
+- Plans/Decision_Log.md
+- Plans/Collaborative_Workflows.md
+- Plans/assistant-chat-design.md
+node_compile_hint:
+  mode: owner_decision_record
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - "Plans lead's T3 task brief of 2026-10-21 relaying Jared's answer (automatic rounds) and his same-day refinement (an option to pause between rounds, in the setup sheet, the room's card and its side panel); decision lineage"
+preserved_exact_tokens: []
+negative_constraints:
+- Do not make a Chat Room wait for Next Round between rounds unless Pause between rounds is on.
+- Do not read the lead's and the writer's readings listed in this row as Jared's words.
+owner_hints:
+- Plans/Decision_Log.md
+```
+
+ContractRef: ContractName:Plans/Collaborative_Workflows.md#CWR-044, ContractName:Plans/Collaborative_Workflows.md#CWR-024, ContractName:Plans/Collaborative_Workflows.md#CWR-031, ContractName:Plans/Collaborative_Workflows.md#CWR-032, ContractName:Plans/assistant-chat-design.md#ACD-476, ContractName:Plans/Decision_Log.md#DL-112, ContractName:Plans/Decision_Log.md#DL-138, ContractName:Plans/Decision_Log.md#DL-218

@@ -181,15 +181,17 @@ Chat Room is a persistent multi-agent conversation used for debate, diagnosis, b
 
 ### 6.2 Configuration
 
-The Chat Room modal configures topic and room name; participants with model, account, and Persona per participant; moderator (its model and Persona write `coordinator_spec`, CWR-037); turn policy closed to `moderated | round_robin | free_discussion | ask_everyone_once`; mention and reply behavior; tool policy; shared context and attachments; maximum rounds or stop condition; synthesis, vote, and unresolved-opinion output; and time and cost limits.
+The Chat Room modal configures topic and room name; participants with model, account, and Persona per participant; moderator (its model and Persona write `coordinator_spec`, CWR-037); turn policy closed to `moderated | round_robin | free_discussion | ask_everyone_once`; mention and reply behavior; tool policy; shared context and attachments; maximum rounds or stop condition; whether the room pauses between rounds (`pause_between_rounds`, off by default, CWR-044); synthesis, vote, and unresolved-opinion output; and time and cost limits.
 
 ### 6.3 Turn policy and interaction
 
-Turn policy is deterministic and replayable. `moderated` routes each turn through the configured moderator. `round_robin` cycles participants in configured order. `free_discussion` admits participants under the concurrency limit with recorded admission order. `ask_everyone_once` asks each participant exactly once and then stops. `Next Round` advances one round under the active policy and never silently changes the policy.
+Turn policy is deterministic and replayable. `moderated` routes each turn through the configured moderator. `round_robin` cycles participants in configured order. `free_discussion` admits participants under the concurrency limit with recorded admission order. `ask_everyone_once` asks each participant exactly once and then stops.
 
-The user interacts through `Ask Everyone`, addressing selected participants, `@mention` of a participant, reply or thread where the policy supports it, adding or removing a participant through controlled reconfiguration, `Next Round`, `Pause`, `Resume`, `Cancel`, `Summarize Now`, and `End discussion`, which ends the room as `completed` through `cmd.chat_room.end`. User messages reach the room through the ordinary targeted composer and are delivered to the addressed participants exactly once. A message sent while a round is in progress is queued for the next round unless the user sends it now to steer the round without interrupting it; a message sent now is read first by the next participant to speak, and every later speaker in that round sees it (CWR-024, DL-112, 2026-09-27). Reconfiguration that adds or removes a participant bumps the definition revision and is recorded in the transcript as a `system` message; it never rewrites prior transcript attribution. After the last configured round the room enters `waiting` and shows `This room used all its rounds`; it remains available for `Add 2 more rounds`, `Summarize Now`, or `End discussion`, and does not finish by itself. Adding rounds is the same reconfiguration, and continuing without a member who never joined or failed is an explicit waiver through it (CWR-024, DL-138).
+A room runs its rounds by itself (CWR-044, DL-231). Starting the room starts round 1: the setup sheet's Start is the user's go, and there is no separate `Ask Everyone` step. A round ends when every participant has taken its turn under the active turn policy, and the room then starts the next round under the same policy, until its last configured round or until its stop condition (`stop_condition`) is met. The user never has to press `Next Round` between rounds, and a room between two rounds is live, not waiting on the user. These round starts are the room's own progression and dispatch no command. `Pause between rounds` (`pause_between_rounds`, off by default) brings back the wait: with it on, the room waits after every round before its last, shows `Round N done` as the user's move and offers `Next Round`, `Summarize Now` and `End discussion`. `Next Round` (`cmd.chat_room.next_round`) then starts exactly one round under the active policy and never silently changes the policy. The switch is set on the setup sheet and can be changed while the room runs, from its card and from its run view.
 
-A room never waits for the Wonderer: round 1 starts on time, and its first pass joins the room between turns whenever it is delivered. The Wonderer takes no turn under any turn policy. A room with Grill Me on still has the moderator grill the user about the topic before round 1, and round 1 waits until the user confirms what was agreed (section 9, DL-218).
+The user interacts through messages to the whole room, addressing selected participants, `@mention` of a participant, reply or thread where the policy supports it, adding or removing a participant through controlled reconfiguration, `Pause between rounds`, `Next Round` while the room pauses between rounds, `Pause`, `Resume`, `Cancel`, `Summarize Now`, and `End discussion`, which ends the room as `completed` through `cmd.chat_room.end`. `Pause` holds the room at the next safe turn boundary. `Resume` continues it: the round in progress carries on, and later rounds start by themselves unless `Pause between rounds` is on. `Summarize Now` writes a summary and never ends the room. User messages reach the room through the ordinary targeted composer and are delivered to the addressed participants exactly once. A message sent while a round is in progress is queued for the next round unless the user sends it now to steer the round without interrupting it; a message sent now is read first by the next participant to speak, and every later speaker in that round sees it (CWR-024, DL-112, 2026-09-27). A queued message is delivered when the next round starts, whether the room starts that round by itself or the user presses `Next Round`. Reconfiguration that adds or removes a participant bumps the definition revision and is recorded in the transcript as a `system` message; it never rewrites prior transcript attribution. After the last configured round the room enters `waiting` and shows `This room used all its rounds`; it remains available for `Add 2 more rounds`, `Summarize Now`, or `End discussion`, and does not finish by itself. Adding rounds is the same reconfiguration, and continuing without a member who never joined or failed is an explicit waiver through it (CWR-024, DL-138). `Add 2 more rounds` starts the next round at once, and the added rounds then run like the others. A room whose stop condition is met before its last round stops starting rounds and waits in the same way (DL-231).
+
+A room never waits for the Wonderer: round 1 starts on time, and its first pass joins the room between turns whenever it is delivered. The Wonderer takes no turn under any turn policy. A room with Grill Me on still has the moderator grill the user about the topic before round 1, and round 1 waits until the user confirms what was agreed (section 9, DL-218); after that Confirm the room starts round 1 by itself.
 
 ### 6.4 Promotion
 
@@ -370,7 +372,7 @@ The exact collaborative command IDs owned by this document are listed below. The
 | `cmd.collaboration.open` | navigation_wrapper | `CollaborationOpenRequest` / `CollaborationOpenResult` | Navigation only. `target` is `card \| run_view \| activity_detail` with an optional `focus` (tab, `participant_id` or `finding_id`); `run_view` is the run's editor document (CWR-020). Cannot start, pause, resume, or mutate a run, and route success is not run success. |
 | `cmd.collaboration.participant.open` | navigation_wrapper | `CollaborationParticipantOpenRequest` / `CollaborationParticipantOpenResult` | Navigation only. Opens the exact participant transcript with requested/effective identity, assignment, tools, artifacts, Usage, and state. An empty participant returns a truthful empty transcript. |
 | `cmd.collaboration.export` | domain_action | `CollaborationExportRequest` / `CollaborationExportResult` | `content_kind` is `transcript \| result_artifact \| report`, beside the format. Exports the referenced transcript or artifact version and hash through the artifact and file owners. Never re-renders or re-generates content as part of export. |
-| `cmd.collaboration.reconfigure` | domain_action | `CollaborationReconfigureRequest` / `CollaborationReconfigureResult` | Bumps the definition revision under an expected-revision check, records a `system` transcript entry, and never rewrites prior transcript attribution or widens the permission ceiling. Available only while the run is `waiting`, `running`, `blocked` or `paused`; a completed run is run again through configure and a new start. `accept_stale_target: true` finishes a stale Review on its old pack with a staleness disclosure and requires `target_pack_stale`. |
+| `cmd.collaboration.reconfigure` | domain_action | `CollaborationReconfigureRequest` / `CollaborationReconfigureResult` | Bumps the definition revision under an expected-revision check, records a `system` transcript entry, and never rewrites prior transcript attribution or widens the permission ceiling. Available only while the run is `waiting`, `running`, `blocked` or `paused`; a completed run is run again through configure and a new start. `accept_stale_target: true` finishes a stale Review on its old pack with a staleness disclosure and requires `target_pack_stale`. A Chat Room's `set_pause_between_rounds` change turns `pause_between_rounds` on or off, takes effect at the next round boundary and never cancels a turn (CWR-044). |
 | `cmd.brainstorm.next_round` | domain_action | `BrainstormRoundRequest` / `BrainstormRoundResult` | Advances exactly one protocol round under the configured debate policy. Cannot skip the blind-proposal phase and cannot exceed configured debate rounds. |
 | `cmd.brainstorm.synthesize_plan` | domain_action | `BrainstormSynthesisRequest` / `AssistantPlanCreateResult` | Requests Plan creation from the Plan owner and returns that owner's create result. Creates exactly one Plan, preserves dissent and rejected alternatives in the synthesis, and leaves the BrainStorm card in place. Accepts `tie_resolution: coordinator` on a tied vote. Unavailable while a pass, undecided lead or lead research remains; starting it closes lead admission and binds the lead/research revision (section 9.2). |
 | `cmd.collaboration.research_lead` | domain_action | `CollaborationLeadResearchRequest` / `CollaborationLeadResearchResult` | Check it: asks a running or waiting Crew, BrainStorm or Chat Room run to research one Wonderer lead, whatever its disposition (section 9.2, DL-218). A committed result has receipts, resulting revision and currentness, and either terminal evidence or a set-aside reason, or observable_work_ref for research still running. In-flight research returns the same operation; after synthesis starts, refuse lead_admission_closed (section 9.2). Never accepts a lead as fact without evidence. |
@@ -378,7 +380,7 @@ The exact collaborative command IDs owned by this document are listed below. The
 | `cmd.review.create_todos` | domain_action | `ReviewCreateTodosRequest` / `ReviewCreateTodosResult` | Converts explicitly selected confirmed findings into bounded To-Do items through the To-Do owner with lineage back to each `finding_id`. Never converts rejected, duplicate, or uncertain findings implicitly. |
 | `cmd.review.send_findings_to_agent` | domain_action | `ReviewSendFindingsRequest` / `ComposerBufferResult` | Its tagged `review_findings` source writes a fix request from selected findings; its `taught_rule_check` source writes a fix request from failed taught-rule checks on a finished reply (AMS-053). Both fill only the source thread's empty composer, return `ComposerBufferResult`, refuse `composer_not_empty`, retain source lineage in message metadata, and never send or run the draft (DL-138). |
 | `cmd.review.run_again` | domain_action | `ReviewRunAgainRequest` / `CollaborationStartResult` | Starts a new review run against a newly frozen target pack. Never merges results into the prior run and never reuses a stale `ReviewTargetPack`. |
-| `cmd.chat_room.next_round` | domain_action | `ChatRoomRoundRequest` / `ChatRoomRoundResult` | Advances exactly one round under the active turn policy without changing that policy. Returns the deterministic participant order used. |
+| `cmd.chat_room.next_round` | domain_action | `ChatRoomRoundRequest` / `ChatRoomRoundResult` | The user's start of the next round while the room waits between rounds because `pause_between_rounds` is on (CWR-044, DL-231). Starts exactly one round under the active turn policy without changing that policy, and returns the deterministic participant order used. The room starts round 1 itself when it starts, and every later round itself while the switch is off; those starts dispatch no command. Refused with `run_state_invalid` while a round is running, before round 1 and after the last configured round, where `Add 2 more rounds` applies. |
 | `cmd.chat_room.summarize` | domain_action | `ChatRoomSummarizeRequest` / `ArtifactResult` | Produces a synthesis artifact through the artifact owner. Creates no To-Do, Plan, or Goal and does not end the room. |
 | `cmd.chat_room.promote_to_plan` | domain_action | `ChatRoomPromotePlanRequest` / `ChatRoomPromotePlanResult` | Explicit promotion only. Routes to the Plan owner with source lineage to run, message, and participant. The Plan owner admits or rejects; promotion never bypasses its rules. |
 | `cmd.chat_room.promote_to_todo` | domain_action | `ChatRoomPromoteTodoRequest` / `ChatRoomPromoteTodoResult` | Explicit promotion only. Routes to the To-Do owner with source lineage. Never mutates the thread To-Do list directly. |
@@ -387,9 +389,9 @@ The exact collaborative command IDs owned by this document are listed below. The
 | `cmd.chat.crew_auto.set` | domain_action | `CrewAutoSetRequest` / `CrewAutoSetResult` | Sets Crew Auto at the scope its request names (CWR-038): `thread`, from a chat's check, sets only that chat's override of the project value; `project`, from the Crew Auto sheet, commits the rules and the team in one `CrewAutoSetRequest` and turns Crew Auto on for the project. An enable that finds no stored Crew Auto configuration returns `configuration_required` and changes no check. Commits before any check changes. Cannot widen authority. |
 | `cmd.chat.crew_auto.open_config` | shell_view | `CrewAutoConfigRoute` / `RouteResult` | Opens the Crew Auto configuration modal. Route success is not enablement; the check state changes only through `cmd.chat.crew_auto.set`. |
 
-Source surfaces for the ten original `cmd.collaboration.*` rows are `workflow_modal`, `workflow_card`, `workflow_panel`, `activity`, and `composer`; `cmd.collaboration.reconfigure` additionally has `brainstorm_panel` for turning Grill Me on mid-run (DL-218); `cmd.collaboration.research_lead` is raised from `workflow_card`, `workflow_panel` and `wonderer_workspace` (DL-218). `cmd.brainstorm.*` surfaces are `brainstorm_card` and `brainstorm_panel`, and `cmd.brainstorm.research_lead` also `wonderer_workspace`, the Wonderer workspace surface the central catalog registers (CWR-031; Plans/UI_Command_Catalog.md UCC-169, UCC-171); `cmd.review.*` surfaces are `review_card` and `review_panel`, with the catalog-owned `message_chrome` origin additionally allowed only for the `taught_rule_check` variant of `cmd.review.send_findings_to_agent` (UCC-172); its `review_findings` variant keeps the Review-only origins; `cmd.chat_room.*` surfaces are `chat_room_card` and `chat_room_panel`; `cmd.chat.crew_auto.set` surfaces are `multi_agent_menu` and `crew_auto_modal`; `cmd.chat.crew_auto.open_config` surfaces are `multi_agent_menu`, `workflow_modal` and `crew_auto_receipt` (CWR-038).
+Source surfaces for the ten original `cmd.collaboration.*` rows are `workflow_modal`, `workflow_card`, `workflow_panel`, `activity`, and `composer`; `cmd.collaboration.reconfigure` additionally has `brainstorm_panel` for turning Grill Me on mid-run (DL-218), and `chat_room_card` and `chat_room_panel` for switching a Chat Room's `Pause between rounds` while it runs (CWR-044, DL-231); `cmd.collaboration.research_lead` is raised from `workflow_card`, `workflow_panel` and `wonderer_workspace` (DL-218). `cmd.brainstorm.*` surfaces are `brainstorm_card` and `brainstorm_panel`, and `cmd.brainstorm.research_lead` also `wonderer_workspace`, the Wonderer workspace surface the central catalog registers (CWR-031; Plans/UI_Command_Catalog.md UCC-169, UCC-171); `cmd.review.*` surfaces are `review_card` and `review_panel`, with the catalog-owned `message_chrome` origin additionally allowed only for the `taught_rule_check` variant of `cmd.review.send_findings_to_agent` (UCC-172); its `review_findings` variant keeps the Review-only origins; `cmd.chat_room.*` surfaces are `chat_room_card` and `chat_room_panel`; `cmd.chat.crew_auto.set` surfaces are `multi_agent_menu` and `crew_auto_modal`; `cmd.chat.crew_auto.open_config` surfaces are `multi_agent_menu`, `workflow_modal` and `crew_auto_receipt` (CWR-038).
 
-`cmd.chat.plan.build_with_crew`, owned by `Plans/Assistant_Plan_Runtime.md`, is produced by the Crew sheet in Build With Crew mode and never decomposes into `cmd.collaboration.start`. The revisions to `open`, `reconfigure`, `message`, `export`, `synthesize_plan` and `send_findings_to_agent` above, and the rows `cmd.chat_room.end` and `cmd.brainstorm.research_lead`, are specified by CWR-031 (2026-09-27); `cmd.collaboration.research_lead`, and the alias status of `cmd.brainstorm.research_lead`, by CWR-041 (DL-218).
+`cmd.chat.plan.build_with_crew`, owned by `Plans/Assistant_Plan_Runtime.md`, is produced by the Crew sheet in Build With Crew mode and never decomposes into `cmd.collaboration.start`. The revisions to `open`, `reconfigure`, `message`, `export`, `synthesize_plan` and `send_findings_to_agent` above, and the rows `cmd.chat_room.end` and `cmd.brainstorm.research_lead`, are specified by CWR-031 (2026-09-27); `cmd.collaboration.research_lead`, and the alias status of `cmd.brainstorm.research_lead`, by CWR-041 (DL-218); the narrowed `cmd.chat_room.next_round` row and reconfigure's `set_pause_between_rounds` change, by CWR-044 (DL-231).
 
 ## 11. Typed requests, results, errors, and availability
 
@@ -407,7 +409,7 @@ This document is the semantic owner of the following record families. Physical k
 
 | Schema ID | Record | Ownership note |
 |---|---|---|
-| `pm.collaboration.definition.v1` | `CollaborativeDefinition` | Owned here. Carries `collaboration_id`, `kind`, `project_id`, `thread_id`, `name`, `purpose`, `revision`, `participant_specs`, `coordinator_spec` (typed, CWR-037), `context_policy_ref`, `tool_policy_ref`, `permission_ceiling_ref`, `concurrency`, `time_limit_seconds`, `token_limit`, `cost_limit`, `transcript_policy`, `output_policy`, `stuck_policy`, `shared_notes_policy` (Crew), `evidence_citation_rule` (Review), `moderator_style`, `mention_policy`, `stop_condition`, `summary_style` (Chat Room), `hard_constraints` and `provisioning_posture` (BrainStorm), and `grill_me_enabled` (Crew, BrainStorm and Chat Room, CWR-042); see CWR-032. |
+| `pm.collaboration.definition.v1` | `CollaborativeDefinition` | Owned here. Carries `collaboration_id`, `kind`, `project_id`, `thread_id`, `name`, `purpose`, `revision`, `participant_specs`, `coordinator_spec` (typed, CWR-037), `context_policy_ref`, `tool_policy_ref`, `permission_ceiling_ref`, `concurrency`, `time_limit_seconds`, `token_limit`, `cost_limit`, `transcript_policy`, `output_policy`, `stuck_policy`, `shared_notes_policy` (Crew), `evidence_citation_rule` (Review), `moderator_style`, `mention_policy`, `stop_condition`, `summary_style` and `pause_between_rounds` (Chat Room; the last is CWR-044), `hard_constraints` and `provisioning_posture` (BrainStorm), and `grill_me_enabled` (Crew, BrainStorm and Chat Room, CWR-042); see CWR-032. |
 | `pm.collaboration.participant_spec.v1` | `ParticipantSpec` | Owned here. Carries `participant_slot_id`, `role`, `requested_provider_id`, `requested_account_id`, `requested_model_id`, `requested_persona_id`, `requested_skill_ids`, `requested_tool_profile_id`, `additive_role_kind`. A Wonderer is a spec with `additive_role_kind` `wonderer` and its own requested model and Persona (CWR-028); Grill Me is never a spec (DL-218). Effective values live in the runtime assignment record with a substitution or failure reason. |
 | `pm.collaboration.run.v1` | `CollaborativeRun` | Owned here. Carries `collaboration_run_id`, `collaboration_id`, `definition_revision`, `kind`, `parent_run_id`, `assistant_plan_id`, `plan_version`, `goal_id`, `state`, `participant_run_refs`, `coordinator_run_ref`, `transcript_ref`, `artifact_refs`, `usage_group_ref`, `requested_effective_snapshot_ref`, `admission_source`, `crew_auto_revision`, `stop_reason` (on a `cancelled` run only, CWR-029), `created_at`, `completed_at`. |
 | `pm.collaboration.message.v1` | `CollaborationMessage` | Owned here. Carries `collaboration_message_id`, `collaboration_run_id`, `sender_kind`, `sender_id`, `recipient_ids`, `message_type`, `body_ref`, `reply_to`, `attachment_refs`, `created_at`, `sequence`. The `collaboration_message_id` of a participant's or coordinator's message is allocated when the message starts streaming, and the record is written once, when the message is complete, with its `sequence` assigned at that write (EP-129, EP-130). |
@@ -457,7 +459,7 @@ The participant activity projection (CWR-030) is derived on read from these even
 
 Settings stores ordinary project-bound defaults and renders the manager. This document stores the actual run and the frozen effective roster. Settings never stores a run, a transcript, a participant assignment, a finding, a vote, or a question bank; this document never becomes a second settings store.
 
-Settings provides a **Multi-Agent Workflows** manager with `Crew`, `BrainStorm`, `Review`, and `Chat Room` tabs. The default keys it owns are `assistant.multi_agent.crew.participant_count` (3), `assistant.multi_agent.crew.coordinator` (`parent_assistant`), `assistant.multi_agent.crew.assignment_strategy` (`manager_directed`), `assistant.multi_agent.crew.parallelism` (3), `assistant.multi_agent.crew.auto_enabled` (true), `assistant.multi_agent.crew.auto_complexity` (`high`), `assistant.multi_agent.crew.auto_max_members` (4), `assistant.multi_agent.brainstorm.core_participants` (4), `assistant.multi_agent.brainstorm.question_limit` (20), `assistant.multi_agent.grill_me.question_extension` (25), `assistant.multi_agent.brainstorm.external_research` (`maximum`), `assistant.multi_agent.brainstorm.independent_proposals` (true), `assistant.multi_agent.brainstorm.debate_rounds` (2), `assistant.multi_agent.brainstorm.voting` (`evidence_weighted`), `assistant.multi_agent.brainstorm.preserve_dissent` (true), `assistant.multi_agent.review.strategy` (`multi_pass`), `assistant.multi_agent.review.reviewer_count` (3), `assistant.multi_agent.review.blind_initial_pass` (true), `assistant.multi_agent.review.peer_corroboration` (true), `assistant.multi_agent.review.preserve_dissent` (true), `assistant.multi_agent.review.auto_repair` (false, locked off for this feature), `assistant.multi_agent.chat_room.participant_count` (4), `assistant.multi_agent.chat_room.turn_policy` (`moderated`), and `assistant.multi_agent.chat_room.max_rounds` (5). The Deep Plan Grill Me toggle uses `assistant.chat.deep_plan.grill_me_default` (false). The Grill Me extension is also the whole question maximum of a Crew or a Chat Room with Grill Me on (section 9.3, DL-218). A chat's `crew_auto_override` belongs to chat thread metadata, not the project Settings value (DL-138).
+Settings provides a **Multi-Agent Workflows** manager with `Crew`, `BrainStorm`, `Review`, and `Chat Room` tabs. The default keys it owns are `assistant.multi_agent.crew.participant_count` (3), `assistant.multi_agent.crew.coordinator` (`parent_assistant`), `assistant.multi_agent.crew.assignment_strategy` (`manager_directed`), `assistant.multi_agent.crew.parallelism` (3), `assistant.multi_agent.crew.auto_enabled` (true), `assistant.multi_agent.crew.auto_complexity` (`high`), `assistant.multi_agent.crew.auto_max_members` (4), `assistant.multi_agent.brainstorm.core_participants` (4), `assistant.multi_agent.brainstorm.question_limit` (20), `assistant.multi_agent.grill_me.question_extension` (25), `assistant.multi_agent.brainstorm.external_research` (`maximum`), `assistant.multi_agent.brainstorm.independent_proposals` (true), `assistant.multi_agent.brainstorm.debate_rounds` (2), `assistant.multi_agent.brainstorm.voting` (`evidence_weighted`), `assistant.multi_agent.brainstorm.preserve_dissent` (true), `assistant.multi_agent.review.strategy` (`multi_pass`), `assistant.multi_agent.review.reviewer_count` (3), `assistant.multi_agent.review.blind_initial_pass` (true), `assistant.multi_agent.review.peer_corroboration` (true), `assistant.multi_agent.review.preserve_dissent` (true), `assistant.multi_agent.review.auto_repair` (false, locked off for this feature), `assistant.multi_agent.chat_room.participant_count` (4), `assistant.multi_agent.chat_room.turn_policy` (`moderated`), `assistant.multi_agent.chat_room.max_rounds` (5), and `assistant.multi_agent.chat_room.pause_between_rounds` (false). The Chat Room sheet's `Pause between rounds` check opens from that last default, and `Save as default` keeps it beside the room's turn policy and rounds (CWR-044, DL-231). The Deep Plan Grill Me toggle uses `assistant.chat.deep_plan.grill_me_default` (false). The Grill Me extension is also the whole question maximum of a Crew or a Chat Room with Grill Me on (section 9.3, DL-218). A chat's `crew_auto_override` belongs to chat thread metadata, not the project Settings value (DL-138).
 
 These keys require Settings inventory census and registration through `Plans/Settings_System.md` and `Plans/settings_inventory.json`; they are named here to fix the ownership boundary, not to claim registration. A default read at modal-open time is a snapshot: changing a Settings default afterward never retroactively alters a committed definition or a running run. The effective roster frozen at start is the run's truth, and the panel shows it even after Settings change.
 
@@ -515,7 +517,7 @@ Structural tests validate every record schema and fixture, the closed four-value
 
 Behavioral tests must prove that each kind opens its configuration modal populated from Settings defaults; that a changed Settings default does not retroactively alter a committed definition or a running run; that per-participant model and Persona selection applies and that repeated model choices are permitted; that clicking a participant opens that participant's own transcript; that a card expands inline and opens the same run in its run view, the document docked in the editor pane (CWR-020); that `Message` targets the ordinary composer with visibly changed chrome naming the destination; and that the target ribbon and participant transcripts survive a restart.
 
-Protocol tests must prove that Crew Auto cannot start without a committed configuration and cannot widen authority; that ordinary Chat Room discussion creates no To-Do, Plan, or Goal without an explicit promotion; that Review initial passes are concurrent, blind, and run against one frozen target pack, that mixed target versions cannot form one consensus, and that Review never auto-repairs; that BrainStorm runs independent proposals before debate, is read-only against the target project, preserves dissent, and outputs exactly one Deep Plan document; and that Grill Me raises the effective question maximum from the base of 20 by the configured extension of 25 to 45 without per-agent duplicate inflation. They must also prove that Grill Me adds no participant, puts its questions only to the user and lets nothing act before Confirm; and that a Wonderer pass is withheld until every blind proposal is in, every lead carries a tether and a source, the Wonderer never votes, and synthesis never starts with an undecided lead (DL-218).
+Protocol tests must prove that Crew Auto cannot start without a committed configuration and cannot widen authority; that ordinary Chat Room discussion creates no To-Do, Plan, or Goal without an explicit promotion; that a Chat Room's rounds advance with no click unless `Pause between rounds` is on, and that it then waits after every round (CWR-044); that Review initial passes are concurrent, blind, and run against one frozen target pack, that mixed target versions cannot form one consensus, and that Review never auto-repairs; that BrainStorm runs independent proposals before debate, is read-only against the target project, preserves dissent, and outputs exactly one Deep Plan document; and that Grill Me raises the effective question maximum from the base of 20 by the configured extension of 25 to 45 without per-agent duplicate inflation. They must also prove that Grill Me adds no participant, puts its questions only to the user and lets nothing act before Confirm; and that a Wonderer pass is withheld until every blind proposal is in, every lead carries a tether and a source, the Wonderer never votes, and synthesis never starts with an undecided lead (DL-218).
 
 Negative tests must prove that a failed participant produces a degraded, named result rather than a fabricated one; that an unavailable requested identity is disclosed rather than substituted; that a participant cannot self-approve; that a manual Stop defeats every automatic continuation; and that a provider-native multi-agent construct is never read back as canonical state.
 
@@ -1997,7 +1999,7 @@ canonical_text: >-
   written once and delivered exactly once (section 2.3). End discussion ends a room through
   cmd.chat_room.end (CWR-031, DL-130): no further rounds or messages are taken, the run settles
   completed rather than cancelled, and promotion of the room's existing messages stays available.
-  After the last configured round the room enters waiting and shows This room used all its rounds. It stays waiting until the user adds rounds, chooses Summarize Now or ends the discussion; it never finishes automatically at that boundary (DL-138). The Moderator row writes the room's coordinator_spec (CWR-037).
+  After the last configured round the room enters waiting and shows This room used all its rounds. It stays waiting until the user adds rounds, chooses Summarize Now or ends the discussion; it never finishes automatically at that boundary (DL-138). Add 2 more rounds starts the next round at once, and the added rounds then run like the others: by themselves, or with a wait after each one while Pause between rounds is on (CWR-044, DL-231). The Moderator row writes the room's coordinator_spec (CWR-037).
 gui_related: true
 gui_classification_reason: This unit maps Chat Room card actions and Advanced rows to commands and definition fields.
 depends_on: [CWR-005, CWR-018]
@@ -2005,6 +2007,7 @@ unblocks: []
 acceptance_criteria:
   - The room waits after its last configured round so Add 2 more rounds remains valid.
   - Adding two rounds bumps the definition revision and writes one system transcript entry.
+  - Add 2 more rounds starts the next round at once, with no Next Round.
   - Continuing without a member records an explicit waiver with actor, reason and currentness.
   - The four Chat Room kind rows persist as definition fields.
   - A message sent mid-round is queued for the next round unless the user sends it now, and sending it now cancels no turn.
@@ -2028,6 +2031,7 @@ source_lineage:
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/ANSWERS.json sha256:4f8d3b25857faab5237b33f80d116b421fd75e81a89c233aaed19dcd8ecb844f n03, p15, p17"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/IMPACT-REGISTER.md sha256:71227f8edda108ed849256d909ff12f859f98bef58202ef988f9d3b4e4f8d493 B-CW-10 (WAIT part)"
   - "Design lead ruling of 2026-09-27 on DL-112's follow-up (who receives a steer), relayed in the G1 follow-up task"
+  - "Plans/Decision_Log.md DL-231 (rounds run by themselves, with Pause between rounds, 2026-10-21)"
 preserved_exact_tokens:
   - "This room used all its rounds"
   - "Add 2 more rounds"
@@ -2474,8 +2478,9 @@ canonical_text: >-
   optional focus naming a tab, a participant_id or a finding_id; run_view is the editor document of
   CWR-020, and route success is still not run success. cmd.collaboration.reconfigure is available
   only while the run is waiting, running, blocked or paused, and it carries participant retry,
-  replacement and explicit waiver, coordinator or moderator replacement, added rounds, and turning
-  Grill Me on mid-run. Enabling it schedules the coordinator or moderator to grill at the next
+  replacement and explicit waiver, coordinator or moderator replacement, added rounds, turning
+  Grill Me on mid-run, and switching a Chat Room's pause_between_rounds on or off with
+  set_pause_between_rounds (CWR-044, DL-231). Enabling Grill Me schedules the coordinator or moderator to grill at the next
   round, assignment or phase boundary; running work continues and only the step using the new
   answers waits for that session's current What we agreed Confirm. A completed run is never
   reconfigured: running it again is configure plus a new start with a definition seeded from the
@@ -2527,6 +2532,7 @@ acceptance_criteria:
   - "cmd.chat_room.end settles the room completed, never cancelled."
   - "cmd.brainstorm.research_lead never makes a lead a fact without evidence."
   - "Turning Grill Me on mid-run gates only the step needing the newly confirmed answers."
+  - "set_pause_between_rounds switches a Chat Room's pause_between_rounds both ways and takes effect at the next round boundary."
   - "The BrainStorm research-lead ID normalizes to the canonical shared command without changing its semantics."
 validation_surfaces:
   - python3 scripts/pm-plan-index.py validate
@@ -2541,6 +2547,7 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
   - "Plans/Decision_Log.md DL-218"
+  - "Plans/Decision_Log.md DL-231 (Pause between rounds switched mid-run)"
   - "/mnt/Cursor/share/puppet-master/2026-10-16-wonderer-grill-me/DECISIONS.md sha256:dfa2f354936defd187d610de4aee77a3d8b75b6d25692e592ba48f7b66bfebce"
   - "/mnt/Cursor/share/puppet-master/2026-10-16-wonderer-grill-me/DEFAULTS-APPROVED.md sha256:f199f188e3e4b1ecd5474a1bc2f87c2d5156863909eb9de9cc3ee9fcb7bfd5be"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-followups-20260929/ANSWERS-20260929.md sha256:345247dfb965fa19ae2f68847125c5b6cafe26126a56bb5b80242e88d3fa9d5c (DL-138, question 18)"
@@ -2597,7 +2604,8 @@ canonical_text: >-
   (how the run finishes), and, for Crew, shared_notes_policy, closed as
   `shared_space | private_per_participant` and realized through the notebook shared_slice and
   participant scopes (CWR-012). Review adds evidence_citation_rule (CWR-025). Chat Room adds
-  moderator_style, mention_policy, stop_condition and summary_style (CWR-024). BrainStorm adds
+  moderator_style, mention_policy, stop_condition and summary_style (CWR-024), and
+  pause_between_rounds, a boolean that is false by default (CWR-044). BrainStorm adds
   hard_constraints[] and provisioning_posture (CWR-027), and its synthesis model is the definition's
   coordinator or synthesis model of section 3. The permission ceiling is shown and never configured
   upward. These fields are written into the definition at commit, and a later Settings change never
@@ -3456,3 +3464,104 @@ owner_hints:
 ```
 
 ContractRef: ContractName:Plans/Skills_System.md, ContractName:Plans/Personas.md, ContractName:Plans/Runtime_Artifacts_Panel.md, ContractName:Plans/Assistant_Plan_Runtime.md, ContractName:Plans/Decision_Log.md
+
+## Chat Room Rounds Addendum (2026-10-21)
+
+On 2026-10-21 Jared decided that a Chat Room runs its rounds by itself, and that a Pause between rounds option brings back the wait after every round for anyone who wants it (DL-231). Section 6.3 carries the prose; this unit fixes it.
+
+### CWR-044 - Chat Room Rounds Run By Themselves, With Pause Between Rounds
+
+```yaml
+plan_unit_id: CWR-044
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Collaborative_Workflows.md
+canonical_text: >-
+  A Chat Room runs its rounds by itself (DL-231). Starting the room starts round 1: the setup
+  sheet's Start is the user's go, and there is no separate Ask Everyone step. With Grill Me on, the
+  moderator grills the user first and round 1 starts by itself once the user confirms What we agreed
+  (CWR-042); a room never waits for the Wonderer (CWR-041). A round ends when every participant has
+  taken its turn under the active turn policy, and the room then starts the next round under the
+  same policy, until its last configured round or until its stop condition (stop_condition) is met.
+  These round starts are the room's own progression and dispatch no command, just as a scheduled
+  message's dispatch is not a user command; each round still uses the turn policy's deterministic,
+  recorded participant order. The user never presses Next Round between rounds, and a room between
+  two rounds reads as live. ask_everyone_once still asks each participant exactly once and then
+  stops.
+  Pause between rounds is the definition's pause_between_rounds, a boolean that is false by default;
+  its Settings default is assistant.multi_agent.chat_room.pause_between_rounds. It is set on the
+  Chat Room setup sheet and can be switched while the room runs from the room's card
+  (chat_room_card) and its run view (chat_room_panel) through cmd.collaboration.reconfigure with the
+  change set_pause_between_rounds, the way Grill Me is turned on mid-run: the change bumps the
+  definition revision under the expected-revision check and writes one system transcript entry. It
+  takes effect at the next round boundary and never cancels a turn. Turned on during a round, that
+  round finishes and the room then waits; turned off while the room waits between rounds, the next
+  round starts at once. Like every control that changes a run, it is actionable in only one place
+  at a time (CWR-020). With it on, the room enters waiting after every round but its last, shows
+  Round N done as the user's move, and offers Next Round, Summarize Now and End discussion. Next
+  Round is cmd.chat_room.next_round, the user's command, and it starts exactly one round.
+  After the last configured round, or when the stop condition is met first, the room waits as
+  CWR-024 says and never finishes by itself (DL-138); Add 2 more rounds starts the next round at
+  once. At any time during the rounds the user can message the room (queued for the next round by
+  default, or Send now into the round in progress; CWR-024, DL-112), Pause, Resume, Summarize Now,
+  End discussion or Cancel. Pause holds the room at the next safe turn boundary. Resume continues
+  the round in progress, and later rounds start by themselves unless Pause between rounds is on.
+  Summarize Now writes the summary and does not end the room. A queued message is delivered when the
+  next round starts, however that round starts.
+  A Chat Room is the user's move only while it waits on the user: between rounds while Pause between
+  rounds is on, after its last round or at its stop condition, while it is paused, and while round 1
+  waits for the user's Confirm of What we agreed. Its dock item then has the yourmove tone
+  (ACD-476). A room between two automatic rounds is a live run, never the user's move.
+gui_related: true
+gui_classification_reason: This unit fixes when a Chat Room starts its rounds, when it waits for the user, and what its sheet, card, run view and dock item offer for it.
+depends_on: [CWR-020, CWR-024, CWR-031, CWR-042]
+unblocks: []
+acceptance_criteria:
+  - "Starting a room starts round 1 with no further click; with Grill Me on, round 1 starts by itself after Confirm."
+  - "With Pause between rounds off, every later round starts by itself under the same turn policy, with no click, until the last configured round or the stop condition."
+  - "With Pause between rounds on, the room waits after every round but its last and shows Round N done, and one Next Round starts exactly one round."
+  - "The room waits on the user only between rounds while Pause between rounds is on, after its last round or at its stop condition, while paused, or while round 1 waits for Grill Me's Confirm; it never finishes by itself after its last round."
+  - "Pause holds the room at the next safe turn boundary, and Resume continues the round in progress and the automatic rounds after it."
+  - "A message queued during a round is delivered when the next round starts, whether the room starts it by itself or the user presses Next Round."
+  - "pause_between_rounds persists as a definition field, false by default, and the sheet's check opens from its Settings default."
+  - "Switching Pause between rounds while the room runs bumps the definition revision once, writes one system transcript entry, takes effect at the next round boundary and cancels no turn; turned off while the room waits between rounds, the next round starts at once."
+  - "No automatic round start dispatches cmd.chat_room.next_round or any other command."
+  - "ask_everyone_once asks each participant exactly once and then stops, whatever Pause between rounds says."
+  - "A room between two automatic rounds publishes a live dock item, never a yourmove item."
+validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
+  - node tests/collaboration-verify.mjs
+risk_class: chat_room_waits_without_cause
+reasoning_tier: standard
+context_scope: chat_room
+implementation_surfaces:
+  - Plans/Collaborative_Workflows.md
+  - Plans/assistant-chat-design.md
+  - Plans/UI_Command_Catalog.md
+  - Plans/Settings_System.md
+  - Plans/collaborative_workflows_contracts.schema.json
+node_compile_hint:
+  mode: collaborative_runtime_contract
+  create_worknodes: false
+source_lineage:
+  - "Plans/Decision_Log.md DL-231 (Jared's decision of 2026-10-21 and its refinement the same day, relayed by the Plans lead)"
+  - "Plans/Decision_Log.md DL-112, DL-138, DL-218"
+preserved_exact_tokens:
+  - "pause_between_rounds"
+  - "Pause between rounds"
+  - "set_pause_between_rounds"
+  - "cmd.chat_room.next_round"
+  - "Round N done"
+  - "assistant.multi_agent.chat_room.pause_between_rounds"
+  - "yourmove"
+negative_constraints:
+  - Do not make a Chat Room wait for Next Round between rounds while Pause between rounds is off.
+  - Do not dispatch a command for an automatic round start.
+  - Do not cancel or restart a turn when Pause between rounds is switched.
+  - Do not show a room between two automatic rounds as the user's move.
+  - Do not let a room finish by itself after its last round.
+owner_hints:
+  - Plans/Collaborative_Workflows.md
+```
+
+ContractRef: ContractName:Plans/Decision_Log.md#DL-231, ContractName:Plans/assistant-chat-design.md#ACD-476, ContractName:Plans/Settings_System.md
