@@ -75100,9 +75100,20 @@ window.PM56_B19DEMO={start:flow=>start(E.ctx(),flow),snapshot:()=>{const r=curre
   }
   /* the guide narrates; its only buttons are Set it up before Start (the sheet, if you closed it) and Replay. Where the
      example waits for you, its words name the control on screen; step().act stays for the wg-demo-step QA hook */
+  /* a narrated sentence stays at least HOLD_SAY on screen before the next replaces it, so a step that lands just after
+     another (or just after your Confirm) never flashes a sentence by; your move (a round to answer, Confirm, the end)
+     always shows at once */
+  var HOLD_SAY = 2200;
+  function steady(st) {
+    var K = window.PM56_CLOCK, now = K && K.now ? K.now() : Date.now(), say = active.say;
+    var urgent = !!st.replay || !!(st.act && /^(wg-open-round|wg-confirm|wg-demo-configure)$/.test(st.act.action)) || /Your move|is looking a fact up/.test(st.text);
+    if (!say || say.text === st.text || urgent || say.urgent || now - say.at >= HOLD_SAY) { if (!say || say.text !== st.text) active.say = { text: st.text, at: now, urgent: urgent }; return st; }
+    if (!active.sayTimer) active.sayTimer = (K && K.after ? K.after : function (m, f) { return setTimeout(f, m); }).call(K, HOLD_SAY - (now - say.at) + 30, function () { if (active) active.sayTimer = null; render(); });
+    return { text: say.text };
+  }
   function guide(c) {
     if (!active || c.state.selectedThread !== active.threadId || c.state.dialog) return '';
-    var st = step(c), acts = [];
+    var st = steady(step(c)), acts = [];
     if (st.act && st.act.action === 'wg-demo-configure') acts.push({ action: 'wg-demo-configure', label: st.act.label });
     if (st.replay) acts.push({ action: 'wg-demo-replay', label: 'Replay' });
     return S().pmxGuide({ key: 'wg-demo-guide', cls: 'wg-demo-guide', placement: 'dock', step: c.esc(st.text), actions: acts, close: { action: 'wg-demo-close', label: 'Close the example' } });
