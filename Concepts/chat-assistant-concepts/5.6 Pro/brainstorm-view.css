@@ -13,6 +13,8 @@
 .bs-next-say b { color: var(--text); }
 .bs-next-sum { flex: 1 1 100%; margin: 0; padding-left: 25px; max-width: 78ch; font: var(--pmx-w-reg) 13px/20px var(--pmx-voice); color: var(--text); }
 .bs-next-acts { flex: none; display: flex; gap: 10px; }
+/* a primary that waits (Write the plan, with the reason beside it) reads as waiting, as the room view's does */
+.bs-next-acts .primary-button[disabled] { opacity: .45; cursor: default; }
 .bs-next-acts .primary-button { min-height: 32px; }
 
 /* ---- the recommendation ---- */
@@ -80,7 +82,7 @@
 .bs-answers b, .bs-alsolist b, .bs-list b { color: var(--text); }
 
 /* the sections after the disclosures keep the block rhythm below their last hairline */
-.bs-secs + .bs-wonder, .bs-secs + .bs-also { margin-top: 28px; }
+.bs-secs + .bs-wonder, .bs-secs + .bs-also, .bs-secs + .wg-section { margin-top: 28px; }
 
 /* Wonderer's ideas (hypotheses, not checked yet) */
 .bs-lead { padding: 12px 0; }

@@ -3518,7 +3518,7 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
       const cur=deep?state.deepPlanStrategy:state.planStrategy;
       /* item 11 (Jared, 2026-10-07): Grill Me's row carries the neon kettle grill; hovering or focusing the row plays
          its act (the lid swings open, flames and a puff of smoke, the lid drops shut) through the concept hover rule */
-      const grill=`<div class="menu-divider"></div><button class="menu-item ${state.grillMe?'active':''}" data-action="toggle-grill-me"><span class="menu-icon">${icon('grill',14)}</span><span class="menu-copy"><strong>Grill Me</strong><span>Let the workflow ask more questions before planning</span></span>${state.grillMe?icon('check',11):''}</button>`;
+      const grill=`<div class="menu-divider"></div><button class="menu-item ${state.grillMe?'active':''}" data-action="toggle-grill-me"><span class="menu-icon">${icon('grill',14)}</span><span class="menu-copy"><strong>Grill Me</strong><span>The assistant questions you first, round by round, with a recommended answer for each decision</span></span>${state.grillMe?icon('check',11):''}</button>`;
       return `<div class="menu-head"><strong>${deep?'Deep Plan':'Plan'}</strong></div>${opts.map(o=>`<button class="menu-item ${cur===o[0]?'active':''}" data-action="set-plan-strategy" data-mode="${deep?'Deep Plan':'Plan'}" data-value="${o[0]}"><span class="menu-copy"><strong>${o[0]}</strong><span>${o[1]}</span></span>${cur===o[0]?icon('check',11):''}</button>`).join('')}${deep?grill:''}`;
     }
     if(id==='review'){

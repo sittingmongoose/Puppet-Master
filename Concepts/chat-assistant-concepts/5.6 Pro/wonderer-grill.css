@@ -1,0 +1,159 @@
+/* wonderer-grill.css - DL-218 in the chat (wonderer-grill.js): the Wonderer's pass and its leads, the What we agreed card,
+   the lanes, the Wonderer section of a run view and the shelf's Grill Me switch. The concept's grammar holds: no pills,
+   no boxes with a coloured side, no nested boxes, no uppercase micro-labels, no emoji. Leads are rows between hairlines;
+   status is a still mark from the shared status set plus a word. J-2: text keeps 8 px from every hairline, body 13/20,
+   helper 12/17.5. Motion is transform and opacity only, and reduced motion takes every end state at once. */
+
+/* ---------------------------------------------------------------- the pass */
+.wg-pass { min-width: 0; }
+.wg-pass + .wg-pass { margin-top: 20px; padding-top: 16px; box-shadow: 0 -1px 0 var(--border); }
+.wg-pass-head { display: flex; align-items: center; gap: 10px; min-width: 0; margin: 0; }
+.wg-pass-head > .pmx-mark { flex: none; }
+.wg-pass-title { display: flex; flex-wrap: wrap; align-items: baseline; column-gap: 8px; row-gap: 2px; min-width: 0; margin: 0; font: var(--pmx-w-reg) 13px/19px var(--font-ui); color: var(--muted); }
+.wg-pass-title > b { color: var(--text); font-weight: var(--pmx-w-640); }
+.wg-fine { display: inline; font: var(--pmx-fs-fine); color: var(--subtle); }
+.wg-pass-say { display: flex; gap: 8px; align-items: flex-start; margin: 8px 0 0; max-width: 72ch; font: var(--pmx-w-reg) 13px/20px var(--pmx-voice); color: var(--text); }
+.wg-pass-say > .nx-st, .wg-pass-say > svg { flex: none; margin-top: 3px; }
+.wg-pass-say q { quotes: '“' '”'; color: var(--text); }
+.wg-pass-say.wg-exploring { color: var(--muted); }
+.wg-pass-angles { margin: 4px 0 0; max-width: 72ch; font: var(--pmx-fs-help); color: var(--muted); }
+.wg-held { display: flex; gap: 8px; align-items: flex-start; margin: 12px 0 0; font: var(--pmx-fs-help); color: var(--muted); }
+.wg-held b { color: var(--text); }
+.wg-held > .nx-st { flex: none; margin-top: 2px; }
+
+/* ---------------------------------------------------------------- the leads: numbered rows between hairlines */
+.wg-leads { margin: 12px 0 0; padding: 0; list-style: none; counter-reset: none; }
+.wg-lead { position: relative; display: grid; grid-template-columns: 22px minmax(0, 1fr) auto; column-gap: 10px; align-items: start; padding: 12px 0; min-width: 0; }
+.wg-lead + .wg-lead { box-shadow: 0 -1px 0 var(--border); }
+.wg-lead:first-child { box-shadow: 0 -1px 0 var(--border); }
+.wg-lead-n { display: block; padding-top: 1px; font: var(--pmx-w-650) 12px/19px var(--font-ui); color: var(--pmx-seat-7); text-align: right; font-variant-numeric: tabular-nums; }
+.wg-lead-body { min-width: 0; }
+.wg-lead-title { margin: 0; font: var(--pmx-w-620) 13.5px/19px var(--font-ui); color: var(--text); overflow-wrap: anywhere; }
+.wg-lead-tether { margin: 4px 0 0; font: var(--pmx-fs-help); color: var(--muted); overflow-wrap: anywhere; }
+.wg-angle { color: var(--pmx-seat-7); font-weight: 600; }
+.wg-angle::after { content: ' · '; color: var(--subtle); font-weight: var(--pmx-w-reg); }
+.wg-lead-src, .wg-lead-evidence, .wg-lead-taken { display: flex; align-items: flex-start; gap: 6px; min-width: 0; margin: 4px 0 0; font: var(--pmx-fs-fine); color: var(--subtle); }
+.wg-lead-src > svg, .wg-lead-evidence > svg, .wg-lead-taken > svg, .wg-lead-src > .nx-i, .wg-lead-evidence > .nx-i, .wg-lead-taken > .nx-i { flex: none; margin-top: 2px; }
+.wg-lead-src > span, .wg-lead-src > a { min-width: 0; overflow-wrap: anywhere; }
+.wg-lead-src q { quotes: '“' '”'; }
+.wg-src-link, .wg-lead-evidence a { color: var(--muted); text-decoration: none; }
+.wg-src-link:hover, .wg-lead-evidence a:hover { color: var(--text); text-decoration: underline; text-underline-offset: 2px; }
+.wg-src-link:focus-visible, .wg-lead-evidence a:focus-visible { outline: 2px solid var(--pmx-focus-outline); outline-offset: 2px; border-radius: 3px; }
+.wg-lead-status { display: flex; flex-wrap: wrap; align-items: center; column-gap: 12px; row-gap: 2px; margin: 8px 0 0; font: var(--pmx-w-reg) 12.5px/18.5px var(--font-ui); color: var(--muted); overflow-x: clip; }
+.wg-st-head { display: inline-flex; align-items: center; gap: 6px; }
+.wg-st-mark { display: inline-flex; flex: none; }
+.wg-lead-status .wg-st-head > b { color: var(--text); font-weight: var(--pmx-w-620); }
+.wg-lead-status[data-status="supported"] .wg-st-head > b { color: var(--positive); }
+.wg-lead-status[data-status="set_aside"] .wg-st-head > b, .wg-lead-status[data-status="not_supported"] .wg-st-head > b, .wg-lead-status[data-status="held"] .wg-st-head > b, .wg-lead-status[data-status="waiting"] .wg-st-head > b { color: var(--muted); }
+.wg-lead-why { margin: 2px 0 0 20px; max-width: 64ch; font: var(--pmx-w-reg) 12.5px/18.5px var(--pmx-voice); color: var(--muted); overflow-wrap: anywhere; }
+.wg-lead-why q { quotes: '“' '”'; color: var(--text); }
+.wg-who { color: var(--subtle); }
+.wg-hyp { font: var(--pmx-fs-fine); color: var(--subtle); }
+.wg-by { display: inline-flex; align-items: center; gap: 4px; color: var(--muted); white-space: nowrap; }
+.wg-by::before { content: 'recorded by'; margin-right: 2px; color: var(--subtle); }
+/* the separating dot sits in the gap before each part, so a part that wraps to a new line starts clean: the dot
+   of the first part on a line falls outside the row and is clipped */
+.wg-who, .wg-hyp, .wg-by { position: relative; }
+.wg-who::after, .wg-hyp::after, .wg-by::after { content: '·'; position: absolute; right: 100%; width: 12px; text-align: center; color: var(--subtle); }
+.wg-by > .pmx-mark { flex: none; }
+.wg-check { align-self: start; display: inline-flex; align-items: center; gap: 6px; min-height: 28px; padding: 0 10px; white-space: nowrap; }
+.wg-lead .pmx-disc { margin-top: 6px; }
+.wg-lead .pmx-disc-sum { min-height: 28px; font: var(--pmx-fs-help); color: var(--muted); }
+.wg-dossier .pmx-disc-body p { margin: 4px 0 0; max-width: 68ch; }
+.wg-dossier .pmx-disc-body b { color: var(--text); font-weight: 600; }
+/* a "takes up" link points here: the row lights once (opacity on an overlay; reduced motion keeps the end state) */
+.wg-lead[data-flash="1"]::after { content: ''; position: absolute; inset: 2px -8px; border-radius: var(--pmx-r-sm); background: var(--pmx-seat-fill-7); pointer-events: none; animation: wg-flash 2.2s var(--pmx-ease-out, ease-out) forwards; }
+@keyframes wg-flash { 0% { opacity: 0; } 12% { opacity: 1; } 70% { opacity: 1; } 100% { opacity: 0; } }
+@media (prefers-reduced-motion: reduce) { .wg-lead[data-flash="1"]::after { animation: none; opacity: 0; } }
+body.pm56-reduced .wg-lead[data-flash="1"]::after, html[data-motion="reduced"] .wg-lead[data-flash="1"]::after { animation: none; opacity: 0; }
+
+/* ---------------------------------------------------------------- the main chat card: one per pass */
+.wg-card { position: relative; container: wgcard / inline-size; min-width: 0; padding: 14px 16px 12px; border-radius: var(--pmx-r-card); background: var(--pmx-card, var(--surface)); color: var(--text); box-sizing: border-box; }
+.wg-card .wg-leads--chat .wg-lead { padding: 10px 0; }
+.wg-card-foot { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; column-gap: 12px; row-gap: 4px; margin-top: 8px; padding-top: 8px; box-shadow: 0 -1px 0 var(--border); }
+.wg-card-foot .wg-fine { flex: 1 1 220px; min-width: 0; }
+@container wgcard (max-width: 420px) {
+  .wg-lead { grid-template-columns: 18px minmax(0, 1fr); }
+  .wg-check { grid-column: 2; justify-self: start; margin-top: 4px; padding-left: 0; }
+}
+
+/* ---------------------------------------------------------------- lanes */
+.wg-lanes-wait { display: flex; align-items: center; gap: 6px; margin: 2px 0 0; padding: 0 16px; font: var(--pmx-fs-fine); color: var(--subtle); }
+.wg-lanes-wait > .nx-st { flex: none; }
+.wg-lane--lead .pmx-lane-l2 q { quotes: none; }
+
+/* ---------------------------------------------------------------- run views: the Wonderer section */
+/* "Open the leads" scrolls the section to the top of the view: it lands below the editor's tab strip, not under it */
+.wg-section { scroll-margin-top: 52px; }
+.wg-section .wg-pass[data-where="view"] { padding-top: 4px; }
+.wg-section .wg-pass[data-where="view"] + .wg-pass { padding-top: 16px; }
+.wg-gate, .wg-empty { display: flex; gap: 8px; align-items: flex-start; margin: 0 0 16px; font: var(--pmx-w-reg) 13px/20px var(--font-ui); color: var(--muted); }
+.wg-gate b { color: var(--text); }
+.wg-gate > .nx-st, .wg-empty > .nx-st { flex: none; margin-top: 3px; }
+.wg-ask { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; margin: 16px 0 0; padding-top: 12px; box-shadow: 0 -1px 0 var(--border); }
+.wg-ask .text-button { display: inline-flex; align-items: center; gap: 6px; }
+
+/* a helper's message that takes up a lead links to it */
+.wg-takeup { display: flex; flex-wrap: wrap; gap: 4px 12px; margin: 6px 0 0; }
+.wg-takeup-link { display: inline-flex; align-items: center; gap: 6px; max-width: 100%; min-height: 26px; padding: 0 8px 0 0; font: var(--pmx-fs-help); color: var(--pmx-seat-7); }
+.wg-takeup-link > span:first-of-type { font-weight: 600; white-space: nowrap; }
+.wg-takeup-t { min-width: 0; color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.wg-takeup-t::before { content: '· '; color: var(--subtle); }
+
+/* every lead, listed in a result, a Plan or a room summary */
+.wg-listing { margin: 12px 0 0; padding-top: 10px; box-shadow: 0 -1px 0 var(--border); min-width: 0; }
+.wg-listing-head { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 8px; margin: 0; font: var(--pmx-w-reg) 12.5px/19px var(--font-ui); color: var(--text); }
+.wg-listing-head .wg-fine { margin-left: 2px; }
+.wg-listing ol { margin: 6px 0 0; padding: 0; list-style: none; }
+.wg-listing li { display: grid; grid-template-columns: 18px minmax(0, 1fr); column-gap: 8px; padding: 4px 0; font: var(--pmx-fs-help); color: var(--muted); }
+.wg-listing li .wg-lead-n { font-size: 11.5px; line-height: 17.5px; }
+.wg-listing-t { color: var(--text); overflow-wrap: anywhere; }
+.wg-listing-s { grid-column: 2; display: block; margin-top: 1px; }
+.wg-listing-s > .nx-st, .wg-listing-s > svg { display: inline-flex; vertical-align: -2px; margin-right: 5px; }
+.wg-listing-s b { color: var(--text); font-weight: 600; }
+.wg-listing li[data-status="supported"] .wg-listing-s b { color: var(--positive); }
+
+/* ---------------------------------------------------------------- What we agreed */
+.wg-agreed { position: relative; container: wgagreed / inline-size; min-width: 0; padding: 14px 16px 14px; border-radius: var(--pmx-r-card); background: var(--pmx-card, var(--surface)); box-shadow: 0 0 0 1px var(--pmx-focus-edge); color: var(--text); box-sizing: border-box; }
+.wg-agreed[data-state="confirmed"], .wg-agreed[data-state="superseded"] { box-shadow: none; }
+.wg-agreed-head { display: flex; align-items: center; gap: 12px; min-width: 0; }
+.wg-agreed-head > div { min-width: 0; }
+.wg-agreed-kettle { flex: none; display: inline-flex; }
+.wg-agreed-title { margin: 0; font: var(--pmx-fs-result); letter-spacing: var(--pmx-ls-result, 0); color: var(--text); }
+.wg-agreed-head .wg-fine { display: block; margin-top: 2px; }
+.wg-agreed-list { margin: 12px 0 0; padding: 0; list-style: none; }
+.wg-agreed-row { display: grid; grid-template-columns: 18px minmax(0, 1fr) minmax(0, 1.15fr); column-gap: 10px; align-items: baseline; padding: 8px 0; box-shadow: 0 -1px 0 var(--border); }
+.wg-agreed-n { font: var(--pmx-w-650) 12px/19px var(--font-ui); color: var(--accent); text-align: right; font-variant-numeric: tabular-nums; }
+.wg-agreed-q { min-width: 0; font: var(--pmx-w-reg) 12.5px/19px var(--font-ui); color: var(--muted); overflow-wrap: anywhere; }
+.wg-agreed-a { display: flex; flex-direction: column; min-width: 0; }
+.wg-agreed-a > b { font: var(--pmx-w-620) 13px/19px var(--font-ui); color: var(--text); overflow-wrap: anywhere; }
+.wg-agreed-a > .wg-fine { margin-top: 1px; }
+.wg-agreed-sub { display: flex; align-items: center; gap: 6px; margin: 14px 0 0; font: var(--pmx-w-reg) 12.5px/19px var(--font-ui); color: var(--text); }
+.wg-agreed-sub .wg-fine { margin-left: 4px; }
+.wg-agreed-open { margin: 4px 0 0; padding: 0 0 0 28px; list-style: none; }
+.wg-agreed-open > li { display: flex; flex-direction: column; padding: 6px 0; box-shadow: 0 -1px 0 var(--border); }
+.wg-agreed-open .wg-agreed-q { color: var(--text); }
+.wg-agreed-open .wg-fine { margin-top: 1px; }
+.wg-agreed-facts { display: flex; gap: 6px; align-items: flex-start; margin: 10px 0 0; font: var(--pmx-fs-fine); color: var(--subtle); }
+.wg-agreed-facts > svg, .wg-agreed-facts > .nx-i { flex: none; margin-top: 2px; }
+.wg-agreed-acts { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 12px; margin-top: 14px; padding-top: 12px; box-shadow: 0 -1px 0 var(--border); }
+.wg-agreed-acts .primary-button, .wg-agreed-acts .text-button { min-height: 32px; }
+.wg-agreed-acts .wg-fine { flex: 1 1 100%; margin: 0; }
+.wg-agreed-note { display: flex; gap: 8px; align-items: flex-start; margin: 14px 0 0; padding-top: 12px; box-shadow: 0 -1px 0 var(--border); font: var(--pmx-w-reg) 12.5px/19px var(--font-ui); color: var(--muted); }
+.wg-agreed-note b { color: var(--text); }
+.wg-agreed-note > .nx-st { flex: none; margin-top: 2px; }
+.wg-agreed[data-state="superseded"] .wg-agreed-list, .wg-agreed[data-state="superseded"] .wg-agreed-open { opacity: .62; }
+@container wgagreed (max-width: 420px) {
+  .wg-agreed-row { grid-template-columns: 18px minmax(0, 1fr); }
+  .wg-agreed-a { grid-column: 2; margin-top: 2px; }
+}
+
+/* ---------------------------------------------------------------- the shelf's Grill Me switch */
+.pmx-spec-who { display: inline-flex; align-items: center; gap: 6px; min-height: 32px; font: var(--pmx-fs-help); color: var(--muted); white-space: nowrap; }
+.pmx-spec-who > .pmx-mark { flex: none; }
+
+/* ---------------------------------------------------------------- NieR Mode: ink, no hue */
+html[data-o55-nier="on"] .wg-lead-n, html[data-o55-nier="on"] .wg-angle, html[data-o55-nier="on"] .wg-takeup-link, html[data-o55-nier="on"] .wg-agreed-n { color: var(--text); }
+html[data-o55-nier="on"] .wg-lead[data-flash="1"]::after { background: var(--pmx-soft-fill); }
+/* Retro: square corners, the family's own box */
+body[data-theme^="retro"] .wg-card, body[data-theme^="retro"] .wg-agreed { border-radius: 2px; }

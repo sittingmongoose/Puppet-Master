@@ -33,7 +33,6 @@
   var PHASE_GERUND = { intake: 'understanding the ask', blind_proposals: 'drafting', normalize: 'lining up the options', debate: 'debating', evidence: 'checking the facts', vote: 'voting', synthesis: 'writing the plan' };
   var SURE = { high: 'very sure', medium: 'fairly sure', low: 'unsure' };
   var POS = { support: 'For', oppose: 'Against', abstain: 'Abstained' };
-  var LEAD_WORD = { hypothesis: 'Hypothesis', research_pending: 'Checking', researched: 'Checked', unsubstantiated: 'Not supported', user_decided: 'Your choice', stale: 'Out of date', dropped: 'Set aside' };
   function stopIndex(phase) { if (phase === 'completed') return STOPS.length; for (var i = 0; i < STOPS.length; i++) if (STOPS[i][0] === phase) return i; return 0; }
   function plural(n, one, many) { return n + ' ' + (n === 1 ? one : (many || one + 's')); }
   function joinAnd(list) { list = list.filter(Boolean); return list.length < 2 ? (list[0] || '') : list.slice(0, -1).join(', ') + ' and ' + list[list.length - 1]; }
@@ -49,10 +48,12 @@
 
   /* ---------------------------------------------------------------- people */
   function core(r) { return (r.participants || []).filter(function (p) { return !p.additiveRoleKind || p.additiveRoleKind === 'none'; }); }
-  function specialists(r) { return (r.participants || []).filter(function (p) { return p.additiveRoleKind === 'wonderer' || p.additiveRoleKind === 'grill_me'; }); }
-  function markRole(p) { return p.additiveRoleKind === 'wonderer' ? 'wonderer' : p.additiveRoleKind === 'grill_me' ? 'grill' : (p.effectivePersona || p.requestedPersona || p.role); }
-  /* seat hues follow the row order, specialists keep COLLAB's seats 7 and 8 (3.3: one hue per helper everywhere) */
-  function seatOf(r, p) { if (p.additiveRoleKind === 'wonderer') return 7; if (p.additiveRoleKind === 'grill_me') return 8; var i = core(r).indexOf(p); return i < 0 ? 1 : i + 1; }
+  /* DL-218: the Wonderer is the one specialist participant; Grill Me is a switch, never a participant */
+  function specialists(r) { return (r.participants || []).filter(function (p) { return p.additiveRoleKind === 'wonderer'; }); }
+  function markRole(p) { return p.additiveRoleKind === 'wonderer' ? 'wonderer' : (p.effectivePersona || p.requestedPersona || p.role); }
+  /* seat hues follow the row order, the Wonderer keeps COLLAB's seat 7 (3.3: one hue per helper everywhere) */
+  function seatOf(r, p) { if (p.additiveRoleKind === 'wonderer') return 7; var i = core(r).indexOf(p); return i < 0 ? 1 : i + 1; }
+  function WG() { return window.PM56_WG || null; }
   function byRole(r, role) { return (r.participants || []).filter(function (p) { return p.role === role; })[0] || null; }
   function byId(r, id) { return (r.participants || []).filter(function (p) { return p.id === id; })[0] || null; }
   function modelShort(p) { return String(p.effectiveModelName || p.requestedModelName || '').split(' · ')[0]; }
@@ -66,7 +67,8 @@
   /* ---------------------------------------------------------------- the view model (A1-50) */
   function qmaxOf(b, r) {
     var qb = b.questionBank || {}, base = Number(qb.baselineLimit) || 20, ext = Number(qb.grillExtension) || 25, on = !!qb.grillMeEnabled;
-    var asked = (qb.askedIds || []).length;
+    /* DL-218: the Coordinator's grilling questions come out of the same shared allowance */
+    var asked = (qb.askedIds || []).length + (WG() && WG().sessionsOf ? WG().sessionsOf(r).reduce(function (t, s) { return t + (s.asked || 0); }, 0) : 0);
     return { cls: 'collab-qmax', text: on ? 'Maximum questions: ' + (base + ext) + ' (' + base + ' + Grill Me ' + ext + ')' : 'Maximum questions: ' + base,
       asked: asked, limit: on ? base + ext : base, grill: on, extension: ext, canToggle: r.status === 'running' || r.status === 'paused' };
   }
@@ -104,13 +106,11 @@
     vm.alsoConsidered = String(input.scopeNotes || '').split(/\.\s+(?=[A-Z][A-Za-z -]{2,30}:)/).map(function (s) {
       var m = s.match(/^([A-Z][A-Za-z -]{2,30}):\s*(.+?)\.?$/); return m ? { what: m[1], why: m[2].charAt(0).toUpperCase() + m[2].slice(1) + '.' } : null;
     }).filter(Boolean);
-    var W = window.PM56_WONDERER, conv = r.wonderer && W && W.convergence ? W.convergence(r) : null;
+    /* DL-218 (CWR-041): Write the plan waits while a Wonderer lead is undecided or in research; the one reason string
+       (PM56_WG.gate), so the card, this view and the Wonderer workspace agree */
+    var ws = WG() && r.wonderer ? WG().gate(r) : { ok: true };
     if (b.synthesis) vm.synthesize = { state: 'done', planId: b.synthesis.planId, title: titleOf(b.synthesis.selected), dissent: b.synthesis.dissentPreserved };
-    else if (b.phase === 'synthesis' && r.status === 'running' && conv && !conv.ok) {
-      /* the one reason string (PM56_WONDERER.convergenceState), so the card, this view and the workspace agree */
-      var ws = W.convergenceState ? W.convergenceState(r) : { code: 'undecided', reason: 'Give each idea a decision first.', count: conv.unresolved.length };
-      vm.synthesize = { state: 'waiting', wonderer: true, code: ws.code, count: ws.count, reason: ws.reason };
-    }
+    else if (b.phase === 'synthesis' && r.status === 'running' && !ws.ok) vm.synthesize = { state: 'waiting', wonderer: true, code: ws.code, count: ws.count, reason: ws.reason };
     else if (b.phase === 'synthesis' && r.status === 'running') vm.synthesize = { state: 'ready' };
     else vm.synthesize = { state: 'waiting', reason: r.status === 'paused' ? 'Resume the run first.' : r.status !== 'running' ? 'This run has stopped.' : 'after the last vote' };
   }
@@ -133,7 +133,6 @@
     if (b.synthesis) vm.synthesize = { state: 'done', legacy: true, summary: b.synthesis.summary, title: titleOf(b.synthesis.selected) };
     else if ((b.phase === 'vote' || b.phase === 'synthesis') && r.status === 'running') vm.synthesize = { state: 'ready' };
     else vm.synthesize = { state: 'waiting', reason: r.status === 'running' ? 'after the last vote' : 'This run is not running.' };
-    if ((b.wondererLeads || []).length) vm.wonderer = { legacy: true, leads: b.wondererLeads.map(function (w) { var st = w.state || w.status || 'hypothesis'; return { key: 'collab-lead-' + w.id, claim: w.lead, relates: w.seed || '', why: w.tether || w.connection || '', state: LEAD_WORD[st] || 'Hypothesis' }; }) };
   }
   /* BrainStormDecisionVM {options[], ruledOut[], dissent[], wonderer, qmax, synthesize} (8.0 A1-50), plus the facts
      both faces read: phase, stop, counts, votes, deciding, debate, recommendation, rules, sources, answers. */
@@ -149,7 +148,7 @@
     var one = vm.rules.length === 1;
     vm.rulesLabel = vm.rulesBy === 'recording' ? (one ? 'The recording’s rule' : 'The recording’s rules') : (one ? 'Your rule' : 'Your rules');
     vm.ruleOwner = vm.rulesBy === 'recording' ? 'the recording’s' : 'your';
-    if (r.wonderer && r.wonderer.leads) vm.wonderer = { runId: r.id, leads: r.wonderer.leads.map(function (l) { return { key: 'bs-lead:' + l.id, claim: l.claim, relates: l.dimension || '', why: l.tether || '', state: LEAD_WORD[l.state] || 'Hypothesis' }; }) };
+    if (r.wonderer && r.wonderer.version === 2) vm.wonderer = { runId: r.id };
     return vm;
   }
 
@@ -187,10 +186,10 @@
         '<div class="bs-next-acts"><button type="button" class="primary-button" data-action="collab-brainstorm-synthesize"' + run + '>Write the plan</button></div></div>';
     }
     if (s.wonderer) {
-      /* review fix: never the "Ready…" sentence over a dead primary; the sentence says what is left and opens it */
-      var left = s.code === 'undecided' && s.count ? 'Decide on Wonderer’s ' + plural(s.count, 'idea') + ' first.' : s.reason;
-      return '<div class="bs-next" data-k="bs-next" data-state="waiting"><p class="bs-next-say">' + g('ring-dashed', 15) + '<span><b>' + esc(left) + '</b> Then write the plan.</span></p>' +
-        '<div class="bs-next-acts"><button type="button" class="primary-button" data-action="b13-open"' + run + '>Open Wonderer’s ideas</button></div></div>';
+      /* review fix: never the "Ready…" sentence over a dead primary; the sentence says why Write the plan waits (the team's
+         decisions or research, never yours: DL-218) and opens the leads */
+      return '<div class="bs-next" data-k="bs-next" data-state="waiting"><p class="bs-next-say">' + g('ring-dashed', 15) + '<span><b>Write the plan waits.</b> ' + esc(s.reason) + '</span></p>' +
+        '<div class="bs-next-acts"><button type="button" class="primary-button" data-action="collab-brainstorm-synthesize"' + run + ' disabled>Write the plan</button><button type="button" class="text-button" data-action="b13-open"' + run + '>Open the Wonderer’s leads</button></div></div>';
     }
     return '<div class="bs-next" data-k="bs-next" data-state="waiting"><p class="bs-next-say">' + g('ring-dashed', 15) + '<span><b>Write the plan</b> · ' + esc(s.reason || 'after the last vote') + '</span></p>' +
       '<div class="bs-next-acts"><button type="button" class="primary-button" data-action="collab-brainstorm-synthesize"' + run + ' disabled>Write the plan</button></div></div>';
@@ -234,14 +233,10 @@
     return '<div class="bs-srcs">' + vm.sources.map(function (s) { return '<button type="button" class="text-button bs-srcrow" data-action="brainstorm-open-evidence" data-run="' + esc(vm.runId) + '" data-evidence="' + esc(s.id) + '">' + g('file', 14) + '<span>' + esc(s.label) + '</span></button>'; }).join('') + '</div>' +
       (vm.answers.length ? '<p class="bs-sub">Your earlier answers, so nobody asks them again</p><ul class="bs-answers">' + vm.answers.map(function (a) { return '<li><span>' + esc(a.q) + '</span> <b>' + esc(a.a) + '</b></li>'; }).join('') + '</ul>' : '');
   }
+  /* DL-218: the Wonderer section is the shared one (wonderer-grill.js): every pass and lead with its status in place */
   function wondererHtml(vm) {
-    var w = vm.wonderer; if (!w || !w.leads.length) return '';
-    var rows = w.leads.map(function (l) {
-      return '<li class="bs-lead" data-k="' + esc(l.key) + '"><p class="bs-lead-idea">' + esc(l.claim) + '</p>' + (l.relates ? '<p class="bs-lead-line"><span>Relates to:</span> ' + esc(l.relates) + '</p>' : '') +
-        (l.why ? '<p class="bs-lead-line"><span>Why it matters:</span> ' + esc(l.why) + '</p>' : '') + '<p class="bs-lead-state">' + esc(l.state) + '</p></li>';
-    }).join('');
-    var open = w.runId ? '<p class="bs-lead-open"><button type="button" class="text-button" data-action="b13-open" data-run="' + esc(w.runId) + '">Open Wonderer’s ideas</button></p>' : '';
-    return S.pmxViewSection({ key: 'bs-v-wonder', cls: 'bs-wonder', title: 'Wonderer’s ideas', meta: '(hypotheses, not checked yet)', body: '<ul class="bs-leads">' + rows + '</ul>' + open });
+    var w = vm.wonderer, r = w && C() && C().run(w.runId); if (!r || !WG()) return '';
+    return WG().section(r, { key: 'bs' });
   }
   /* renderDecision(vm, ctx, {guide}) -> the "How they decided" body, for both populations */
   function renderDecision(vm, ctx, o) {
@@ -251,7 +246,7 @@
     var rec = vm.recommendation ? S.pmxViewSection({ key: 'bs-v-rec', cls: 'bs-rec', title: 'The recommendation', body: '<p class="bs-rec-pick">' + esc(vm.recommendation.title) + '</p><p class="bs-rec-why">' + esc(vm.recommendation.reason) + '</p>' }) : '';
     var dis = vm.dissent.length ? details({ key: 'bs-d-dissent:' + vm.runId, section: 'dissent', open: true, title: 'Still disagrees', meta: 'Kept in the plan so you can weigh it.',
       body: vm.dissent.map(function (d) { return S.pmxQuote({ key: d.key, cls: d.cls, text: esc(d.text), who: esc(d.who), note: (d.sure ? esc(d.sure) + ' · ' : '') + 'kept word for word' }) + srcButtons(vm, d.sources); }).join('') }) : '';
-    var votes = vm.votes.length ? details({ key: 'bs-d-votes:' + vm.runId, section: 'votes', title: 'How they voted', meta: vm.counts.voted + ' of ' + vm.counts.voters + ' voted · Wonderer doesn’t vote', body: votesTable(vm, r) }) : '';
+    var votes = vm.votes.length ? details({ key: 'bs-d-votes:' + vm.runId, section: 'votes', title: 'How they voted', meta: vm.counts.voted + ' of ' + vm.counts.voters + ' voted · the Wonderer never votes', body: votesTable(vm, r) }) : '';
     var debate = vm.debate.length ? details({ key: 'bs-d-debate:' + vm.runId, section: 'debate', title: 'The debate', meta: plural(vm.debate.length, 'round'), body: debateHtml(vm, r) }) : '';
     var evidence = vm.protocol ? details({ key: 'bs-d-evidence:' + vm.runId, section: 'evidence', title: 'Sources and earlier answers', meta: plural(vm.sources.length, 'source'), body: evidenceHtml(vm) }) : '';
     var also = vm.alsoConsidered.length ? S.pmxViewSection({ key: 'bs-v-also', cls: 'bs-also', title: 'Also considered', body: '<ul class="bs-alsolist">' + vm.alsoConsidered.map(function (a) { return '<li><b>' + esc(a.what) + '</b> · considered, not material: ' + esc(a.why) + '</li>'; }).join('') + '</ul>' }) : '';
@@ -289,7 +284,10 @@
     return (r.messages || []).filter(function (m) { return !pid || m.senderId === pid; }).map(function (m) {
       var p = m.senderId ? byId(r, m.senderId) : null, sys = m.senderKind === 'system';
       var who = p ? p.role : (SENDER[m.senderName] || m.senderName || 'Coordinator');
-      return { key: 'collab-msg-' + m.id, mid: m.id, cls: 'collab-msg', kind: sys ? 'system' : 'message', markHtml: p ? markOf(r, p, 22) : S.pmxMark({ role: 'coordinator', size: 22 }), who: esc(who), bodyHtml: S.pmxMd(sayAs(r, m, vm), { mode: 'full' }) };
+      /* DL-218: the Wonderer's pass lists its leads; a helper's message that takes up a lead links to it */
+      var pass = WG() ? WG().entryHtml(r, m) : '';
+      return { key: 'collab-msg-' + m.id, mid: m.id, cls: 'collab-msg', kind: sys ? 'system' : 'message', markHtml: p ? markOf(r, p, 22) : S.pmxMark({ role: m.senderKind === 'user' ? 'you' : 'coordinator', size: 22 }), who: esc(m.senderKind === 'user' ? 'You' : who),
+        bodyHtml: pass || (S.pmxMd(sayAs(r, m, vm), { mode: 'full' }) + (WG() ? WG().leadLinks(r, m) : '')) };
     });
   }
   function outcomeWord(p) {
@@ -297,7 +295,7 @@
     if (p.outcome === 'completed' || p.status === 'done') return 'Done';
     if (p.status === 'disabled') return 'Not available';
     if (p.outcome === 'failed') return 'Failed';
-    return p.additiveRoleKind === 'wonderer' ? 'Doesn’t vote' : 'Waiting';
+    return p.additiveRoleKind === 'wonderer' ? 'Never votes' : 'Waiting';
   }
   function teamRows(r, list) {
     return list.map(function (p) {
@@ -338,17 +336,21 @@
     if (r.status === 'canceled' || r.status === 'cancelled') return '<b>Cancelled</b> while ' + esc(PHASE_GERUND[vm.phase] || 'working') + ' · everything so far is kept';
     if (r.status === 'failed') return '<b>Failed</b> · ' + esc(r.blockedReason || 'it stopped before a result.');
     if (vm.provenance === 'wand' && !vm.protocol && C() && C().waitingReason) return '<b>Waiting</b> · ' + esc(C().waitingReason(r));
-    var word = vm.synthesize && vm.synthesize.wonderer ? 'Deciding on Wonderer’s ideas' : PHASE_WORD[vm.phase] || 'Running';
+    var word = vm.synthesize && vm.synthesize.wonderer ? 'Deciding on the Wonderer’s leads' : PHASE_WORD[vm.phase] || 'Running';
     return '<b>' + esc(word) + '</b> · ' + who + ' · nothing gets built yet';
   }
   function asideHtml(r, vm) {
     var rows = [], q = vm.qmax, step = Math.min(vm.stop, 6);
     if (vm.phase === 'evidence' || vm.phase === 'vote') rows.push('<li><b>Voting</b> · ' + vm.counts.voted + ' of ' + vm.counts.voters + ' in.' + (vm.deciding.length ? ' ' + esc(joinAnd(vm.deciding)) + (vm.deciding.length === 1 ? ' is' : ' are') + ' still deciding.' : '') + '</li>');
     else rows.push('<li><b>' + esc(STOPS[step][1]) + '</b> · ' + nw('step ' + (step + 1) + ' of 7') + '</li>');
-    if (specialists(r).some(function (p) { return p.additiveRoleKind === 'wonderer'; })) rows.push('<li><b>Wonderer</b> abstains: its ideas stay hypotheses until checked.</li>');
+    if (specialists(r).some(function (p) { return p.additiveRoleKind === 'wonderer'; })) rows.push('<li><b>Wonderer</b> runs alongside and never votes: ' + esc(WG() ? (WG().countsText(r) || 'its leads go to the team at Line up') : 'its leads stay hypotheses until explored') + '.</li>');
+    if (WG() && WG().grillOn(r)) {
+      var ss = WG().sessionsOf(r), atStart = ss.some(function (s) { return !s.later; });
+      rows.push('<li><b>Grill Me</b> is on: ' + (atStart ? 'the Coordinator grilled you at intake' : ss.length ? 'the Coordinator grilled you mid-run, and only the step that needed your answers waited' : 'the Coordinator questions you at the next chapter') + '. It adds nobody to the team.</li>');
+    }
     /* the exact legacy .collab-qmax text is a hidden harness node (IMPACT A2-19); the reader sees the plain line */
     rows.push('<li class="bs-q"><p class="' + q.cls + '" data-k="collab-qmax" data-pmx-harness>' + esc(q.text) + '</p><p class="bs-q-line"><b>Questions for you</b> · ' + nw('up to ' + q.limit) + (q.grill ? ' ' + nw('(' + (q.limit - q.extension) + ' + Grill Me ' + q.extension + ')') : '') + '</p><p class="bs-q-help">' + (q.asked ? plural(q.asked, 'question') + ' asked so far' : 'No questions asked yet') + ', shared by everyone. It’s a limit, not a target.</p>' +
-      (q.canToggle ? S.pmxCheck({ key: 'bs-grill:' + r.id, cls: 'bs-grill', attrs: 'data-action="collab-brainstorm-toggle-grill" data-run="' + esc(r.id) + '"', checked: q.grill, label: 'Grill Me', glyph: 'grill', helper: 'Allow up to ' + q.extension + ' more questions.' + (q.asked ? ' The ' + q.asked + ' already asked still count.' : '') }) : '') + '</li>');
+      (q.canToggle ? S.pmxCheck({ key: 'bs-grill:' + r.id, cls: 'bs-grill', attrs: 'data-action="collab-brainstorm-toggle-grill" data-run="' + esc(r.id) + '"', checked: q.grill, label: 'Grill Me', glyph: 'grill', helper: 'The Coordinator asks any later decision as a grilling round. Allows up to ' + q.extension + ' more questions.' + (q.asked ? ' The ' + q.asked + ' already asked still count.' : '') }) : '') + '</li>');
     rows.push('<li><b>' + costWords(r, vm).split(' · ').map(nw).join(' · ') + '</b></li>');
     var mode = MODE[r.id] || 'rich';
     var modes = vm.protocol ? '<p class="bs-modes"><span>Show as</span>' + [['rich', 'Formatted'], ['markdown', 'Plain text']].map(function (m) { return '<button type="button" class="text-button" data-action="brainstorm-view" data-run="' + esc(r.id) + '" data-mode="' + m[0] + '" aria-pressed="' + (mode === m[0]) + '">' + m[1] + '</button>'; }).join('') + '</p>' : '';
@@ -357,7 +359,7 @@
   }
   function actionsHtml(r) {
     var run = ' data-run="' + esc(r.id) + '"', out = '';
-    if (r.wonderer) out += '<button type="button" class="text-button" data-action="b13-open"' + run + '>Wonderer’s ideas</button>';
+    if (r.wonderer) out += '<button type="button" class="text-button" data-action="b13-open"' + run + '>Wonderer’s leads</button>';
     if (r.status === 'running') out += '<button type="button" class="text-button" data-action="collab-pause"' + run + '>' + g('pause', 13) + 'Pause</button>';
     if (r.status === 'paused') out += '<button type="button" class="text-button" data-action="collab-resume"' + run + '>' + g('play', 13) + 'Resume</button>';
     return out;
@@ -388,7 +390,7 @@
     else if (tab === 'usage') main = framed ? undefined : costHtml(r, vm);
     else if (vm.protocol && (MODE[r.id] || 'rich') === 'markdown') main = guide + '<pre class="bs-pre bs-plain">' + esc(B.markdown(r)) + '</pre>';
     else main = renderDecision(vm, ctx, { guide: guide });
-    var wlink = r.wonderer ? '<button type="button" class="text-button" data-action="b13-open" data-run="' + esc(r.id) + '">Wonderer’s ideas</button>' : '';
+    var wlink = r.wonderer ? '<button type="button" class="text-button" data-action="b13-open" data-run="' + esc(r.id) + '">Wonderer’s leads</button>' : '';
     return { status: statusHtml(r, vm), actions: framed ? (wlink ? wlink + (generic.actions || '') : undefined) : actionsHtml(r),
       plate: plate(r, vm), tabs: framed ? undefined : tabsHtml(r, tab), main: main, aside: asideHtml(r, vm), vm: vm };
   }

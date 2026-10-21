@@ -12,7 +12,8 @@
  function preflight(d){
   if(!d?.roomInput)return fail('room_input_missing');
   if(d.reconfigureRunId)return fail('completed_example_requires_fresh_run');
-  if(d.rows.length!==3||d.wonderer||d.grillMe)return fail('recorded_example_requires_three_core_participants');
+  /* DL-218: the recorded room can run with the Wonderer alongside and Grill Me on; it still needs three core helpers */
+  if(d.rows.length!==3)return fail('recorded_example_requires_three_core_participants');
   if(!['moderated','ask_everyone_once'].includes(d.config.turnPolicy))return fail('recorded_example_supports_moderated_or_ask_everyone_once');
   if(!Number.isInteger(+d.config.maxRounds)||+d.config.maxRounds<1||+d.config.maxRounds>2)return fail('recorded_example_has_one_or_two_rounds');
   if(!d.roomInput.topic||!Array.isArray(d.roomInput.rounds)||d.roomInput.rounds.length<+d.config.maxRounds)return fail('recorded_rounds_missing');
@@ -21,7 +22,7 @@
  function admit(r,d){
   r.chatRoom={protocolVersion:1,roundsSoFar:0,turnPolicy:d.config.turnPolicy,promotions:[],input:freeze(clone(d.roomInput)),
    sourceHash:hash(d.roomInput),definitionRevision:r.definitionRevision,round:null,summary:null,lastUserMessageId:null,pendingRecipientIds:null,deliveries:[],admittedRoster:r.participants.map(p=>({id:p.id,revision:p.assignmentRevision,attemptId:p.attempts.at(-1)?.attempt_id||null})),operationResults:{}};
-  r.usage={costUsd:0,inputTokens:0,outputTokens:0};r.participants.forEach(p=>{p.status='waiting';p.current='Ready for discussion';p.outcome=null;});
+  r.usage={costUsd:0,inputTokens:0,outputTokens:0};r.participants.forEach(p=>{p.status='waiting';p.current=wonderer(p)?'Runs alongside the room; takes no turn':'Ready for discussion';p.outcome=null;});
  }
  function gate(r,x){
   if(!owns(r?.id))return 'room_missing';
@@ -33,12 +34,24 @@
   return null;
  }
  const envelope=id=>{const r=run(id);return r?{epoch:r.stopEpoch,sourceHash:r.chatRoom.sourceHash}:null;};
+ /* DL-218 (Collaborative_Workflows 6.3, CWR-041): the Wonderer takes no turn in any round under any turn policy. A Chat
+    Room never waits for the Wonderer (steer 2026-10-20): round 1 starts on time and a pass joins between turns. Only
+    Grill Me holds a round: round 1 until you confirm the Moderator's interview, or the one round a later grilling
+    session gates ('round:N'). */
+ const wonderer=p=>!!p&&p.additiveRoleKind==='wonderer';
+ function roundGate(r){
+  const WG=window.PM56_WG;if(!WG)return null;
+  if(WG.holds(r))return 'grill_me_waits_for_confirm';
+  if(WG.stepHeld(r,'round:'+((r.chatRoom.roundsSoFar||0)+1)))return 'grill_me_waits_for_confirm';
+  return null;
+ }
  function beginRound(id,x){
   const r=run(id),why=gate(r,x);if(why)return fail(why);const s=r.chatRoom;
   if(s.round&&!s.round.complete)return {ok:true,reused:true,round:s.round.number};
   const max=r.config.turnPolicy==='ask_everyone_once'?1:+r.config.maxRounds;
   if(s.roundsSoFar>=max)return fail('round_limit_reached');
-  const addressed=s.pendingRecipientIds||r.participants.map(p=>p.id);s.pendingRecipientIds=null;
+  const rg=roundGate(r);if(rg)return fail(rg);
+  const addressed=(s.pendingRecipientIds||r.participants.map(p=>p.id)).filter(pid=>!wonderer(r.participants.find(p=>p.id===pid)));s.pendingRecipientIds=null;
   s.round={number:s.roundsSoFar+1,participantIds:addressed.slice(),messages:[],complete:false,replyTo:s.lastUserMessageId};
   s.summary=null;(s.steering||[]).forEach(e=>{if(!e.readBy)e.speaking=null;});
   addressed.forEach(id=>{const p=r.participants.find(p=>p.id===id);p.status='waiting';p.current='Awaiting moderated turn';});
@@ -73,7 +86,7 @@
   const r=run(id),dest=buffer.destination,check=canSend(id,dest);if(!check.ok)return check;
   if(thread.id!==r.threadId)return fail('wrong_thread');
   const prior=r.messages.find(m=>m.id===message.id);if(prior)return prior.body===message.body?{ok:true,reused:true}:fail('conflicting_user_message');
-  const ids=dest.participantId?[dest.participantId]:r.participants.map(p=>p.id);
+  const ids=dest.participantId?[dest.participantId]:r.participants.filter(p=>!wonderer(p)).map(p=>p.id);
   const ref=C.appendMessage(id,{id:message.id,senderKind:'user',senderName:'You',body:message.body,recipientIds:ids,createdAt:message.sentAt});
   Object.assign(message,ref);r.messages[r.messages.length-1]=message;
   r.chatRoom.summary=null;r.chatRoom.lastUserMessageId=message.id;r.chatRoom.pendingRecipientIds=ids;
@@ -126,7 +139,9 @@
   const r=run(id);if(!owns(id)||r.status!=='running'||!r.chatRoom.round?.complete)return fail('round_incomplete');
   const s=r.chatRoom;if(s.summary&&s.summary.round===s.roundsSoFar)return {ok:true,reused:true,messageId:s.summary.messageId};
   // Recorded moderator input, not a live inference or a claim of measured performance.
-  const body=s.input.summary;const m=C.appendMessage(id,{senderKind:'coordinator',senderId:'moderator:'+id,senderName:'Moderator',messageType:'response',body});m.roomConclusion=true;freeze(m);
+  const WG=window.PM56_WG,leads=WG&&WG.engine.state(r)?WG.listingText(r):[];
+  const body=s.input.summary+(leads.length?'\n\nThe Wonderer’s leads, and what the room did with each:\n'+leads.map(t=>'- '+t.replace(/^\d+\. /,'')).join('\n'):'');
+  const m=C.appendMessage(id,{senderKind:'coordinator',senderId:'moderator:'+id,senderName:'Moderator',messageType:'response',body});m.roomConclusion=true;freeze(m);
   s.summary={round:s.roundsSoFar,messageId:m.id};return {ok:true,messageId:m.id};
  }
  function finish(id){const r=run(id);if(!owns(id))return fail('room_missing');if(r.status==='completed')return {ok:true,reused:true};if(r.status!=='running'||r.chatRoom.pendingRecipientIds||!r.chatRoom.summary||!r.chatRoom.round?.complete||r.chatRoom.summary.round!==r.chatRoom.roundsSoFar)return fail('current_summary_required');r.status='completed';r.completedAt=new Date().toISOString();r.stopEpoch++;r.participants.forEach(p=>{p.status='done';p.outcome='completed';p.current='Discussion complete';});return {ok:true};}
@@ -269,7 +284,7 @@
  const HELP={ask:'Everyone gives an opening view.',next:'Each helper speaks once more.',sum:'The Moderator writes where everyone agrees, where they differ, and what’s still open.',end:'Locks the conversation. You can still promote messages.'};
  const tip=(key,text)=>'data-hover-key="room-act-'+key+'" data-hover-tip="'+escH(text)+'"';
  function personaOf(p){return String(p&&(p.effectivePersona||p.requestedPersona)||'Implementer');}
- function markFor(r,p,size,state,key){const i=r.participants.indexOf(p);return SH().pmxMark({key,role:personaOf(p),seat:(Math.max(0,i)%8)+1,size,state});}
+ function markFor(r,p,size,state,key){const i=r.participants.indexOf(p);return SH().pmxMark({key,role:wonderer(p)?'wonderer':personaOf(p),seat:wonderer(p)?7:(Math.max(0,i)%8)+1,size,state});}
  function refusalWords(code){const t=SH().pmxRefusalText?SH().pmxRefusalText(code):null;return t?t.text:'This room can’t take that right now.';}
  /* the facts every face reads: the protocol adapter's view of the record */
  function roomFacts(r){
@@ -279,7 +294,8 @@
   const delivered=round?round.messages.map(byId).filter(Boolean):[];
   const pending=inRound?round.participantIds.filter(pid=>!delivered.some(m=>m.senderId===pid)):[];
   const pp=id=>r.participants.find(p=>p.id===id)||null;
-  const said=r.messages.filter(m=>m.senderKind==='participant');
+  /* the Wonderer's pass is not a reply in the room (it takes no turn) */
+  const said=r.messages.filter(m=>m.senderKind==='participant'&&m.messageType!=='wonderer_pass');
   const summary=s.summary?byId(s.summary.messageId):null;
   return {s,pol,max,round,inRound,delivered,speaker:pp(pending[0]),next:pp(pending[1]),said,replies:said.length,
    n:round?(inRound?round.number:s.roundsSoFar):1,summary,summarized:!!(s.summary&&round&&round.complete&&s.summary.round===s.roundsSoFar),
@@ -302,7 +318,8 @@
     queued ring. Marks are keyed so the speaker marker can find them (identity keys only, 5.3). */
  function clusterOf(r,f){
   const S=SH(),done=r.status==='completed',live=r.status==='running';
-  return [S.pmxMark({key:'cm:'+r.id+':mod',role:'moderator',size:18,state:done?'done':'idle'})].concat(r.participants.map(p=>
+  const grilling=!!(window.PM56_WG&&window.PM56_WG.holds(r));
+  return [S.pmxMark({key:'cm:'+r.id+':mod',role:'moderator',size:18,state:done?'done':grilling?'working':'idle',grill:!!(r.config&&r.config.grill_me_enabled)})].concat(r.participants.map(p=>
    markFor(r,p,18,done?'done':live&&f.speaker===p?'working':live&&f.next===p?'queued':'idle','cm:'+r.id+':'+p.id)));
  }
  function laneFor(r,p,o){const S=SH();return S.pmxLane(Object.assign({key:'pmx-lane:'+r.id+':'+p.id,action:'room-open-discussion',attrs:'data-run="'+escH(r.id)+'" data-participant="'+escH(p.id)+'"'+(o.message?' data-message="'+escH(o.message)+'"':''),mark:markFor(r,p,22,o.state||'idle'),name:escH(p.role)},o));}
@@ -387,7 +404,8 @@
   /* a send the room can't take keeps its words in the composer; a queued one (E-18) says where it stands. Either
      way the words get a line of their own on the card (queueLine), never a cut-off tail of the meta line */
   if(refused.has(r.id)&&(canSend(r.id).ok||r.status!=='running'||refused.get(r.id).at!==roomMoment(r)))refused.delete(r.id);
-  out.meta={recorded:f.prov==='recorded',parts:r.status==='running'?[escH(pol.label),'you can sum up and end after any round']:[escH(pol.label)]};
+  const lc=window.PM56_WG?window.PM56_WG.countsText(r):'';
+  out.meta={recorded:f.prov==='recorded',parts:lc?[escH(pol.label),escH(lc)]:r.status==='running'?[escH(pol.label),'you can sum up and end after any round']:[escH(pol.label)]};
   const endItem={action:'room-finish',label:'End discussion',disabled:!(f.summarized&&r.status==='running'),reason:f.summarized?'':refusalWords('current_summary_required'),attrs:tip('end',HELP.end)};
   const exportItem={action:'room-export',label:'Download transcript (.md)'};
   out.more=[endItem,exportItem];
@@ -520,7 +538,7 @@
  }
  if(PMXo()&&PMXo().after)PMXo().after((c,phase)=>{if(phase==='app')afterApp();});
 
- window.PM56_ROOM={owns,preflight,admit,envelope,beginRound,request,submit,canSend,receiveUser,summarize,finish,promotionRequest,validatePromotion,promote,inline,controls,documentHtml,exportTranscript,hash,
+ window.PM56_ROOM={roundGate,owns,preflight,admit,envelope,beginRound,request,submit,canSend,receiveUser,summarize,finish,promotionRequest,validatePromotion,promote,inline,controls,documentHtml,exportTranscript,hash,
   sheetParts,cardParts,facts:id=>owns(id)?roomFacts(run(id)):null,waitingNoun:WAIT_NOUN,
   queued:id=>queued(id).map(e=>({id:e.id,text:e.text,participantId:e.participantId,at:e.at})),queueState,enqueue,steer,deliverQueued};
 })();

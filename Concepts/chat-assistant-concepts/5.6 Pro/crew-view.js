@@ -256,7 +256,8 @@
       var deps = (a.dependsOn || []).map(function (d) { return (byId(A, d) || {}).participantId; }).filter(Boolean);
       if (a.participantId && deps.length) after[a.participantId] = deps;
     });
-    return fn(r, { key: 'crew-vp:' + r.id, live: { states: states, after: after, done: presentState(r) === 'completed', lead: presentState(r) === 'completed' ? 'done' : 'idle' } });
+    var grilling = !!(window.PM56_WG && window.PM56_WG.holds(r));
+    return fn(r, { key: 'crew-vp:' + r.id, live: { states: states, after: after, done: presentState(r) === 'completed', lead: presentState(r) === 'completed' ? 'done' : grilling ? 'working' : 'idle' } });
   }
 
   /* =====================================================================
@@ -318,7 +319,8 @@
       { value: 'usage', label: 'Cost', attrs: at }] });
   }
   function teamVerb(r, p) {
-    var A = assignments(r), a = A.filter(function (x) { return x.participantId === p.id; })[0], st = presentState(r);
+    var A = assignments(r), a = A.filter(function (x) { return x.participantId === p.id && !x.leadId; })[0], st = presentState(r);
+    if (p.additiveRoleKind === 'wonderer') { var c = window.PM56_WG ? window.PM56_WG.counts(r) : null; return 'runs alongside, never takes a part' + (c && c.total ? ' · ' + c.total + ' leads handed over' : ''); }
     if (!a) return p.current ? 'working on ' + esc(p.current) : 'ready';
     if (a.status === 'done') return esc(a.title) + ' checked';
     if (a.status === 'running') return (st === 'paused' ? 'paused on ' : 'working on ') + esc(a.title);
@@ -330,8 +332,9 @@
   }
   function teamSection(r) {
     var st = presentState(r), n = assignments(r).length, d = doneCount(r);
-    var lead = '<li data-k="crew-team:' + esc(r.id) + ':lead">' + leadMark(18, st === 'completed' ? 'done' : 'idle') + '<span class="crew-team-line"><b>Coordinator</b><span>' +
-      (st === 'completed' ? 'checked each part' : !assignments(r).some(function (a) { return a.attempt; }) ? 'reads the job and splits it into parts' : d ? 'checked ' + d + ' of ' + n + ' parts' : 'hands out the parts and checks each one') + '</span></span></li>';
+    var WG = window.PM56_WG, grilling = !!(WG && WG.holds(r));
+    var lead = '<li data-k="crew-team:' + esc(r.id) + ':lead">' + (grilling ? S().pmxMark({ role: 'lead', size: 18, state: 'working', grill: true }) : leadMark(18, st === 'completed' ? 'done' : 'idle')) + '<span class="crew-team-line"><b>Coordinator</b><span>' +
+      (grilling ? 'is grilling you before it splits the job (Grill Me is on; it adds nobody)' : st === 'completed' ? 'checked each part' : !assignments(r).some(function (a) { return a.attempt; }) ? 'reads the job and splits it into parts' : d ? 'checked ' + d + ' of ' + n + ' parts' : 'hands out the parts and checks each one') + '</span></span></li>';
     var rows = (r.participants || []).map(function (p) {
       return '<li data-k="crew-team:' + esc(r.id) + ':' + esc(p.id) + '">' + mark(r, p, 18, seatState(r, p)) + '<span class="crew-team-line"><b>' + esc(p.role) + '</b><span>' + teamVerb(r, p) + '</span></span></li>';
     }).join('');
@@ -342,9 +345,14 @@
     return (r.messages || []).filter(function (m) { return !filterPid || m.senderId === filterPid; }).map(function (m) {
       var t = toMs(m.at || m.createdAt), when = t0 != null && t != null ? S().pmxTime.clock(t - t0) : '';
       if (m.senderKind === 'system') return { key: 'collab-msg-' + m.id, mid: m.id, kind: 'system', bodyHtml: esc(plainBody(r, m)) };
-      var p = m.senderId ? participant(r, m.senderId) : null, verb = verbOf(r, m);
-      return { key: 'collab-msg-' + m.id, mid: m.id, markHtml: p ? mark(r, p, 22) : leadMark(22), who: esc(m.senderName || (p ? p.role : 'Coordinator')),
-        when: (verb ? esc(verb) + ' · ' : '') + esc(when), bodyHtml: S().pmxMd(plainBody(r, m), { mode: 'full' }) };
+      var p = m.senderId ? participant(r, m.senderId) : null, verb = verbOf(r, m), WG = window.PM56_WG;
+      /* DL-218 (CWR-043): one Wonderer message per pass, its leads listed with their statuses; a helper's message that
+         takes up a lead links to it */
+      var pass = WG ? WG.entryHtml(r, m) : '';
+      if (pass) return { key: 'collab-msg-' + m.id, mid: m.id, markHtml: p ? mark(r, p, 22) : leadMark(22), who: 'Wonderer', when: 'handed the Crew its leads · ' + esc(when), bodyHtml: pass };
+      var you = m.senderKind === 'user';
+      return { key: 'collab-msg-' + m.id, mid: m.id, markHtml: you ? S().pmxMark({ role: 'you', size: 22 }) : p ? mark(r, p, 22) : leadMark(22), who: esc(you ? 'You' : m.senderName || (p ? p.role : 'Coordinator')),
+        when: (verb ? esc(verb) + ' · ' : '') + esc(when), bodyHtml: S().pmxMd(plainBody(r, m), { mode: 'full' }) + (WG ? WG.leadLinks(r, m) : '') };
     });
   }
   function conversation(r) {
@@ -408,8 +416,9 @@
      more = Run another Crew, the live plate, Summary and Conversation, the aside, the root hooks); the frame keeps its
      tabs, Team, Cost, the helper view, More and view state. Without it, the full set for this file's own frame. */
   function summaryMain(r, vm) {
-    return (vm.result ? S().pmxViewSection({ key: 'crew-v-result:' + r.id, title: 'The result', body: renderPlanVM(vm, 'result', { run: r }) }) : '') +
-      teamSection(r) +
+    var WG = window.PM56_WG;
+    return (vm.result ? S().pmxViewSection({ key: 'crew-v-result:' + r.id, title: 'The result', body: renderPlanVM(vm, 'result', { run: r }) + (WG ? WG.listingHtml(r, { title: 'Every Wonderer lead, and what the Crew did with it' }) : '') }) : '') +
+      teamSection(r) + (WG ? WG.section(r) : '') +
       S().pmxViewSection({ key: 'crew-v-plan:' + r.id, title: 'The plan', meta: vm.parts.length + ' parts · ' + ((vm.concurrency && vm.concurrency.runs) || 1) + ' at a time', body: renderPlanVM(vm, 'plan', { run: r }) }) +
       recentSection(r) +
       S().pmxViewSection({ key: 'crew-v-source:' + r.id, title: 'What the Crew started from', body: renderPlanVM(vm, 'source', { run: r }) });

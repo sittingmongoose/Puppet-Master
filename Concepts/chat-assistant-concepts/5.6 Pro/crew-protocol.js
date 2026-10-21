@@ -18,7 +18,8 @@
   if(!d.requestKey||!c.state.threads.some(t=>t.id===(d.threadId||c.state.selectedThread)))return fail('destination_missing');
   if(d.reconfigureRunId||d.boundPlanId)return fail('bound_plan_or_reconfiguration_not_in_this_example');
   if(!['Agent'].includes(c.state.mode))return fail('parent_mode_disallows_example_execution');
-  if(d.wonderer||d.grillMe||(!Array.isArray(d.rows)||d.rows.length!==3))return fail('this_recorded_work_contract_requires_three_core_roles');
+  /* DL-218: the recorded Crew can run with the Wonderer alongside and Grill Me on; it still needs three core roles */
+  if(!Array.isArray(d.rows)||d.rows.length!==3)return fail('this_recorded_work_contract_requires_three_core_roles');
   if(i.sourceHash!==sourceHash(i))return fail('source_hash_mismatch');
   if(!Array.isArray(i.rows)||!i.rows.length||i.rows.some(r=>typeof r.id!=='string'||typeof r.title!=='string')||new Set(i.rows.map(r=>r.id)).size!==i.rows.length)return fail('invalid_input_rows');
   if(i.taskSet!=='collection-csv-v1'||!Number.isInteger(i.capacity?.maxConcurrent)||i.capacity.maxConcurrent<1||!Number.isInteger(i.capacity.maxMembers)||i.capacity.maxMembers<3)return fail('invalid_or_insufficient_example_capacity');
@@ -39,17 +40,46 @@
  }
  function authority(r){const c=E.ctx();return r.crew.parent.mode===c.state.mode&&r.crew.parent.permissions===c.state.permissions&&r.crew.parent.worktree===c.state.worktree;}
  function gate(r,x){if(!r?.crew?.protocolVersion)return 'crew_work_missing';if(!x||x.epoch!==r.stopEpoch)return 'stale_epoch';if(x.sourceHash!==r.crew.input.sourceHash)return 'different_source';if(r.definitionRevision!==r.crew.definitionRevision)return 'definition_changed';if(!authority(r))return 'parent_context_changed';if(r.status!=='running')return 'run_not_running';return null;}
- function current(r,a){const p=r.participants.find(p=>p.id===a.participantId);return !!(a.attempt&&p&&p.assignmentRevision===a.attempt.assignmentRevision&&p.attempts.at(-1)?.attempt_id===(a.completionAttemptId||a.attempt.id)&&(!a.completionAttemptId||p.outcome==='completed'));}
+ /* an exploration part (DL-218) keeps its attempt on itself: a helper that already finished its own part can explore a
+    lead without making that part stale */
+ function current(r,a){if(a.leadId)return !!(a.attempt&&r.participants.some(p=>p.id===a.participantId)&&(a.status!=='done'||a.completionAttemptId===a.attempt.id));const p=r.participants.find(p=>p.id===a.participantId);return !!(a.attempt&&p&&p.assignmentRevision===a.attempt.assignmentRevision&&p.attempts.at(-1)?.attempt_id===(a.completionAttemptId||a.attempt.id)&&(!a.completionAttemptId||p.outcome==='completed'));}
+ /* DL-218 (Collaborative_Workflows 5.2): Grill Me holds the split until you confirm what you agreed; a Crew with the
+    Wonderer waits for its first pass before the Coordinator splits the job, and the Coordinator records a decision on
+    every lead of that pass while it splits */
+ function splitGate(r){
+  const WG=window.PM56_WG;if(!WG)return null;
+  if(WG.holds(r))return 'grill_me_waits_for_confirm';
+  const w=WG.engine.state(r);if(!w)return null;
+  const first=w.passes[0];if(!first||first.status==='exploring')return 'waiting_for_wonderer_first_pass';
+  if(first.status==='delivered'&&first.leadIds.some(id=>!WG.engine.lead(r,id).disposition))return 'wonderer_leads_undecided_at_split';
+  return null;
+ }
  function claim(id,assignmentId,x){
   const r=run(id),why=gate(r,x);if(why)return fail(why);const a=r.crew.assignments.find(t=>t.id===assignmentId);if(!a)return fail('assignment_missing');
+  if(!r.crew.assignments.some(t=>t.attempt)){const sg=splitGate(r);if(sg)return fail(sg);}
+  /* a later grilling session gates only the part that needs its answers (steer 2026-10-20) */
+  if(window.PM56_WG&&window.PM56_WG.stepHeld(r,'part:'+assignmentId))return fail('grill_me_waits_for_confirm');
   if(a.status==='done')return current(r,a)?{ok:true,reused:true,attempt:clone(a.attempt)}:fail('stale_participant_attempt');
   if(a.status==='running')return current(r,a)?{ok:true,reused:true,attempt:clone(a.attempt)}:fail('stale_participant_attempt');
   if(a.dependsOn.some(d=>{const dep=r.crew.assignments.find(t=>t.id===d);return dep.status!=='done'||!current(r,dep);}))return fail('dependencies_pending');
-  if(r.crew.assignments.filter(t=>t.status==='running').length>=r.crew.effectiveConcurrency)return fail('concurrency_full');
+  /* a later Wonderer pass that is exploring holds one slot (it queued behind the parts when none was free) */
+  const wl=window.PM56_WG&&window.PM56_WG.engine.state(r),wSlot=wl&&wl.passes.some(x=>x.n>1&&x.status==='exploring')?1:0;
+  if(r.crew.assignments.filter(t=>t.status==='running').length+wSlot>=r.crew.effectiveConcurrency)return fail('concurrency_full');
+  if(a.leadId){
+   const q=r.participants.find(p=>p.id===a.participantId);if(!q||q.additiveRoleKind==='wonderer'||['failed','timed_out','unavailable','canceled'].includes(q.outcome))return fail('participant_unavailable');
+   const attempt={id:'crew-explore-'+r.id+'-'+a.id,assignmentRevision:q.assignmentRevision,participantId:q.id};
+   a.status='running';a.attempt=freeze(attempt);q.current=a.title;
+   C.appendMessage(id,{senderKind:'coordinator',senderName:'Coordinator',messageType:'request',recipientIds:[q.id],body:a.title+' (read-only). Done when: '+a.expects});
+   if(window.PM56_WG)window.PM56_WG.engine.startResearch(r,a.leadId,{id:q.id,name:a.assignedRole,role:'participant'});
+   return {ok:true,attempt:clone(attempt)};
+  }
   const p=r.participants.find(p=>p.id===a.participantId);if(!p||p.outcome)return fail('participant_unavailable');
   const attempt={id:'crew-attempt-'+r.id+'-'+a.id+'-'+p.assignmentRevision,assignmentRevision:p.assignmentRevision,participantId:p.id};
   p.attempts.push({attempt_id:attempt.id,outcome:'in_flight',epoch:r.stopEpoch});p.status='working';p.current=a.title;
-  a.status='running';a.attempt=freeze(attempt);C.appendMessage(id,{senderKind:'coordinator',senderName:'Coordinator',messageType:'request',recipientIds:[p.id],body:a.title+'. Done when: '+a.expects});return {ok:true,attempt:clone(attempt)};
+  a.status='running';a.attempt=freeze(attempt);C.appendMessage(id,{senderKind:'coordinator',senderName:'Coordinator',messageType:'request',recipientIds:[p.id],body:a.title+'. Done when: '+a.expects});
+  /* an exploration part is the lead's research, by a core helper (the Wonderer never explores its own leads) */
+  if(a.leadId&&window.PM56_WG)window.PM56_WG.engine.startResearch(r,a.leadId,{id:p.id,name:a.assignedRole,role:'participant'});
+  return {ok:true,attempt:clone(attempt)};
  }
  function quote(s){return /[",\r\n]/.test(s)?'"'+s.replace(/"/g,'""')+'"':s;}
  function calculate(input,assignmentId,dependencies){
@@ -62,7 +92,8 @@
  }
  function payload(id,assignmentId){const r=run(id);if(!owns(id))return null;const a=r.crew.assignments.find(t=>t.id===assignmentId);if(!a?.attempt)return null;
   const deps=Object.fromEntries(a.dependsOn.map(k=>[k,r.crew.assignments.find(t=>t.id===k).result]));
-  return {epoch:r.stopEpoch,sourceHash:r.crew.input.sourceHash,attemptId:a.attempt.id,assignmentRevision:a.attempt.assignmentRevision,result:calculate(r.crew.input,assignmentId,deps),evidenceRefs:['input','output-contract']};
+  const result=a.outputContract==='lead_exploration'?clone((r.crew.findings||{})[a.leadId]||null):calculate(r.crew.input,assignmentId,deps);
+  return {epoch:r.stopEpoch,sourceHash:r.crew.input.sourceHash,attemptId:a.attempt.id,assignmentRevision:a.attempt.assignmentRevision,result,evidenceRefs:['input','output-contract']};
  }
  function deliver(id,assignmentId,x){
   const r=run(id),why=gate(r,x);if(why)return fail(why);const a=r.crew.assignments.find(t=>t.id===assignmentId);if(!a)return fail('assignment_missing');
@@ -74,15 +105,41 @@
   if(!x.result||stable(x.result)!==stable(expected))return fail('output_contract_unsatisfied');
   if(!Array.isArray(x.evidenceRefs)||!x.evidenceRefs.includes('input')||!x.evidenceRefs.includes('output-contract')||x.evidenceRefs.some(v=>!['input','output-contract'].includes(v)))return fail('evidence_missing');
   a.result=freeze(clone(x.result));a.status='done';a.evidenceNote=a.proof||'Checked against what the part was asked to do.';
-  C.setOutcome(id,a.participantId,'completed',{reason:a.evidenceNote});a.completionAttemptId=r.participants.find(p=>p.id===a.participantId).attempts.at(-1).attempt_id;
+  if(!a.leadId){C.setOutcome(id,a.participantId,'completed',{reason:a.evidenceNote});a.completionAttemptId=r.participants.find(p=>p.id===a.participantId).attempts.at(-1).attempt_id;}
+  if(a.leadId){
+   a.completionAttemptId=a.attempt.id;
+   /* the lead ends supported (with evidence) or not supported (with the reason research did not support it) */
+   const f=a.result,WG=window.PM56_WG;if(WG)WG.engine.finishResearch(r,a.leadId,{outcome:f.outcome,note:f.note,evidence:f.evidence||null});
+   const m=C.appendMessage(id,{senderKind:'participant',senderId:a.participantId,senderName:a.assignedRole,messageType:'response',body:(f.outcome==='supported'?'Supported: ':'Not supported: ')+f.note+' Nothing was written.'});
+   m.leadIds=[a.leadId];if(WG)WG.engine.takeUp(r,a.leadId,m.id,{id:a.participantId});return {ok:true};
+  }
   C.appendMessage(id,{senderKind:'participant',senderId:a.participantId,senderName:a.assignedRole,messageType:'response',body:a.title+' is done and checked. '+a.evidenceNote});return {ok:true};
+ }
+ /* DL-218 (CWR-041): an explored lead becomes a read-only exploration assignment with its own expected output, for a
+    core helper; the Wonderer gets no assignment. finding: the recorded result {outcome, note, evidence} it returns. */
+ function addExploration(id,leadId,slot,finding){
+  const r=run(id);if(!owns(id))return fail('crew_work_missing');const WG=window.PM56_WG,l=WG&&WG.engine.lead(r,leadId);if(!l)return fail('lead_missing');
+  if(!l.research||l.research.status!=='queued')return fail('lead_not_queued_for_research');
+  if(r.crew.assignments.some(a=>a.leadId===leadId))return {ok:true,reused:true};
+  const p=r.participants[slot];if(!p||p.additiveRoleKind==='wonderer')return fail('wonderer_cannot_research');
+  if(!finding||!['supported','not_supported'].includes(finding.outcome)||!finding.note)return fail('finding_required');
+  (r.crew.findings=r.crew.findings||{})[leadId]=clone(finding);
+  const a={id:'explore-'+leadId,title:'Explore lead '+l.n,slot,dependsOn:[],outputContract:'lead_exploration',readOnly:true,leadId,
+   expects:'A read-only finding: supported, with evidence, or not supported, with the reason.',proof:'Read-only: it looked, and wrote nothing.',
+   participantId:p.id,assignedRole:p.role,expectedOutput:'A read-only finding on lead '+l.n+': supported, with evidence, or not supported, with the reason.',status:'pending',attempt:null,result:null};
+  r.crew.assignments.push(a);l.research.assignmentId=a.id;return {ok:true,assignmentId:a.id};
  }
  function finalize(id,x){const r=run(id);if(r?.crew?.summary){return r.status==='completed'&&x?.epoch===r.stopEpoch&&x.sourceHash===r.crew.input.sourceHash&&r.crew.assignments.every(a=>current(r,a))?{ok:true,reused:true,artifactId:r.crew.summary.artifactId}:fail('stale_finalization');}
   const why=gate(r,x);if(why)return fail(why);if(r.crew.assignments.some(a=>a.status!=='done'||!current(r,a)))return fail('assignments_incomplete_or_stale');
+  /* the final result waits until every Wonderer lead has a decision and every lead in research has its result */
+  const WG=window.PM56_WG,wg=WG&&WG.engine.state(r)?WG.engine.gate(r):null;if(wg&&!wg.ok)return fail(wg.code==='research'?'wonderer_research_in_flight':wg.code==='exploring'?'wonderer_pass_in_flight':'wonderer_leads_open');
+  /* the final result starts: a new pass request and Check it are refused from here (the team is writing the result) */
+  if(WG)WG.engine.close(r);
   const output=r.crew.assignments.find(a=>a.id==='export').result,artifactId='crew-csv-'+id;
   r.artifacts.push({id:artifactId,label:output.filename,kind:'csv',body:output.content,readOnly:true,sourceRunId:id,sourceHash:r.crew.input.sourceHash});
-  r.crew.summary=freeze({artifactId,completedAssignments:3,rowCount:output.rowCount,sourceHash:r.crew.input.sourceHash});r.expectedOutputs[0].delivered=true;r.status='completed';r.completedAt=new Date().toISOString();
-  C.appendMessage(id,{senderKind:'coordinator',senderName:'Coordinator',messageType:'handoff',body:'Every part is checked. '+output.filename+' is ready, and no project files were changed.'});
+  const leads=WG&&WG.engine.state(r)?WG.engine.listing(r):[];
+  r.crew.summary=freeze({artifactId,completedAssignments:r.crew.assignments.length,rowCount:output.rowCount,sourceHash:r.crew.input.sourceHash,leads:clone(leads)});r.expectedOutputs[0].delivered=true;r.status='completed';r.completedAt=new Date().toISOString();
+  C.appendMessage(id,{senderKind:'coordinator',senderName:'Coordinator',messageType:'handoff',body:'Every part is checked. '+output.filename+' is ready, and no project files were changed.'+(leads.length?' Every Wonderer lead is listed with what the Crew did with it.':'')});
   parentSummary(r,output);return {ok:true,artifactId};
  }
  /* G-30, IMPACT A1-46: the parent assistant's ordinary reply under the card. Only a recorded run gets one (the
@@ -95,11 +152,17 @@
  const summaryHeld=new Map();
  function summaryDelay(){const P=X_();if(!P||P.reduced?.())return 0;const tk=(n,f)=>{const v=Number(P.t?.(n));return v>0?v:f;};return tk('stop',240)+tk('at-r1',20)+tk('row',180);}
  function summaryLater(ms,fn){const P=X_();return P?.timeline?.after?P.timeline.after(ms,fn):setTimeout(fn,ms);}
+ /* the reply names what the Wonderer's leads came to, in plain words (every lead is listed in the result) */
+ function wonderWords(leads){
+  const n=k=>leads.filter(x=>x.status===k).length,sup=leads.filter(x=>x.status==='supported');
+  return '\n\nThe Wonderer handed the Crew '+plural(leads.length,'lead')+'. '+(sup.length?'One check turned something up: '+sup[0].title.replace(/\.$/,'')+' ('+sup[0].reason.replace(/\.$/,'')+'). ':'')+
+   [n('using')?n('using')+' carried in as '+(n('using')===1?'a hypothesis':'hypotheses'):'',n('set_aside')?n('set_aside')+' set aside':'',n('not_supported')?n('not_supported')+' not supported':''].filter(Boolean).join(', ')+'. The Crew’s result lists each one with the reason.';
+ }
  function parentSummary(r,output){
   if(C.provenance?.(r.id)!=='recorded'||summaryHeld.has(r.id))return;
   const post=()=>{summaryHeld.delete(r.id);const c=E.ctx(),t=c.state.threads.find(t=>t.id===r.threadId);if(!t||t.messages.some(m=>m.crewSummaryOf===r.id)||!run(r.id))return;
    c.appendMessage({id:'crew-summary-'+r.id,role:'assistant',type:'text',crewSummaryOf:r.id,recordedExample:true,time:new Date().toISOString(),
-    body:'The Crew finished '+output.filename+': '+output.rowCount+' rows in their original order, titles trimmed, and every comma and quote kept inside its cell. Each part was checked before it counted, and nothing in your project was changed.'},t);
+    body:'The Crew finished '+output.filename+': '+output.rowCount+' rows in their original order, titles trimmed, and every comma and quote kept inside its cell. Each part was checked before it counted, and nothing in your project was changed.'+(r.crew.summary&&r.crew.summary.leads&&r.crew.summary.leads.length?wonderWords(r.crew.summary.leads):'')},t);
    c.renderApp();};
   const ms=summaryDelay();if(!ms){post();return;}
   summaryHeld.set(r.id,true);summaryLater(ms,post);
@@ -338,7 +401,7 @@
    const waitsOn=a.dependsOn.filter(k=>byId[k]?.status!=='done').map(k=>byId[k]?.title).filter(Boolean);
    return {id:a.id,title:a.title,status:a.status,checked:a.status==='done'&&current(r,a),owner:{id:p.id,name:a.assignedRole,persona:p.requestedPersona||p.persona||'Implementer',seat:seatOf(p.id),
     requestedModel:String(p.requestedModelName||'').split(' · ')[0],effectiveModel:String(p.effectiveModelName||'').split(' · ')[0],standIn:!!(p.effectiveModelId&&p.requestedModelId&&p.effectiveModelId!==p.requestedModelId)},
-    doneWhen:a.expectedOutput,startsAfter:after,waitsOn,secondTry:tries>1,evidence:a.evidenceNote||'',did:DID[a.id]||'did its part',
+    doneWhen:a.expectedOutput,startsAfter:after,waitsOn,secondTry:tries>1,evidence:a.evidenceNote||'',did:a.leadId?a.title.replace(/^Explore/,'explored')+' (read-only)':DID[a.id]||'did its part',leadId:a.leadId||null,readOnly:!!a.readOnly,
     cls:'crew-work-row',key:'crew-part:'+r.id+':'+a.id};});
   const out=w.summary&&r.artifacts.find(a=>a.id===w.summary.artifactId);
   const lines=out?String(out.body).split(/\r?\n/).filter(Boolean):[];
@@ -397,8 +460,13 @@
   const OPEN='<span>Open<span class="pmx-long"> Panel</span></span>';
   /* the cast: the Coordinator first, then each part's owner in its seat, in its state (C2) */
   const st=x=>fin||x.checked?'done':!started?'queued':x.status==='running'?'working':x.waitsOn.length?'queued':'idle';
-  const cast=[{role:'lead',seat:0,state:fin?'done':started?'working':'idle'}].concat(vm.parts.map(x=>({role:x.owner.persona,seat:x.owner.seat,state:st(x),standin:x.owner.standIn})));
-  out.cluster=cast.map(c=>({html:S.pmxMark({role:c.role,seat:c.seat,size:18,state:c.state,standin:c.standin}),mini:S.pmxMark({role:c.role,seat:c.seat,size:12,state:c.state})}));
+  /* DL-218: the Coordinator stands behind the kettle while Grill Me is on; a helper with an exploration part is drawn once
+     (its own part's state); the Wonderer runs alongside at the end of the cluster */
+  const seen={},own=vm.parts.filter(x=>{if(seen[x.owner.id])return false;seen[x.owner.id]=1;return true;}),wp=r.participants.find(p=>p.additiveRoleKind==='wonderer');
+  const wpass=r.wonderer&&r.wonderer.passes?r.wonderer.passes[r.wonderer.passes.length-1]:null;
+  const cast=[{role:'lead',seat:0,state:fin?'done':started?'working':'idle',grill:!!(r.config&&r.config.grill_me_enabled)}].concat(own.map(x=>({role:x.owner.persona,seat:x.owner.seat,state:st(x),standin:x.owner.standIn})))
+   .concat(wp?[{role:'wonderer',seat:7,state:fin?'done':wpass&&wpass.status==='exploring'?'working':'idle'}]:[]);
+  out.cluster=cast.map(c=>({html:S.pmxMark({role:c.role,seat:c.seat,size:18,state:c.state,standin:c.standin,grill:c.grill}),mini:S.pmxMark({role:c.role,seat:c.seat,size:12,state:c.state,grill:c.grill})}));
   /* the track: counted stops, never a percent (C4); "Put it together" once both parts are checked */
   const at=!started?0:(exporting||vm.parts.filter(x=>x.id!=='export').every(x=>x.checked))?2:1;
   out.track={stops:STOPS.map((l,i)=>({key:'pmx-stop:'+r.id+':'+i,label:l,state:fin||i<at?'done':i===at&&started?'now':'next'})),
@@ -428,12 +496,12 @@
       .concat(vm.parts.map(x=>({mark:S.pmxMark({role:x.owner.persona,seat:x.owner.seat,size:18,state:'done'}),name:H(x.owner.name),did:H(x.did+(x.secondTry?', 2nd try':''))})))})},
     receipt:Object.assign({},g,{glyph:'check',headline:rcHead,recorded:rec}),
     actions:[{action:'crew-open-work',label:OPEN,primary:!viewing,core:true}].concat(vm.result?[{action:'crew-export-result',label:'Download',core:true}]:[]),followOns:[],
-    meta:{recorded:rec,parts:[startedBy||'Completed · started by you']}});
+    meta:{recorded:rec,parts:[window.PM56_WG?H(window.PM56_WG.countsText(r)):'',startedBy||'Completed · started by you'].filter(Boolean)}});
    return out;
   }
   const costNow=rec?'':S.pmxCost({state:'running',spent:r.usage?.costUsd,limit:r.config?.costLimitUsd||6});
   out.meta=auto?{recorded:false,parts:[startedBy,rec?recWords:costNow,clampWords].filter(Boolean)}
-   :{recorded:rec,parts:[costNow,clampWords,standIn||''].filter(Boolean).slice(0,3)};
+   :{recorded:rec,parts:[window.PM56_WG?H(window.PM56_WG.countsText(r)):'',costNow,clampWords,standIn||''].filter(Boolean).slice(0,3)};
   /* starting and live keep COLLAB's actions with the S-tier labels ("Play", "Open"; 7.2) and the open action pointed at
      the Crew's own run view */
   if(Array.isArray(generic?.actions))out.actions=generic.actions.map(a=>a&&a.action==='crew-example-play'?Object.assign({},a,{label:'<span>Play<span class="pmx-long"> the recording</span></span>'})
@@ -441,7 +509,10 @@
   if(failure)return out;
   /* the sentence (8.1 table; 9.0 rule 8: at most 110 characters) */
   let sentence;
-  if(!started)sentence={status:'starting',word:'Starting',reason:'The Coordinator is reading the job.'};
+  const sg=!started?splitGate(r):null;
+  if(!started&&sg==='waiting_for_wonderer_first_pass')sentence={status:'starting',word:'Starting',reason:'The Coordinator splits the job once the Wonderer’s first pass is in.'};
+  else if(!started&&sg==='wonderer_leads_undecided_at_split')sentence={status:'running',word:'Splitting the job',reason:'The Coordinator is deciding each Wonderer lead as it splits the job.'};
+  else if(!started)sentence={status:'starting',word:'Starting',reason:'The Coordinator is reading the job.'};
   else if(exporting)sentence={status:'running',word:'Running',reason:H(exporting.owner.name)+' is putting the checked parts together.'};
   else if(running.length){const next=vm.parts.find(x=>x.status==='pending'&&x.waitsOn.length);
    sentence={status:'running',word:'Running',reason:H(listWords(running.map(x=>x.owner.name)))+(running.length>1?' are':' is')+' working.'+(next?' '+H(next.owner.name)+' starts after '+(next.waitsOn.length>1?'both parts are':'that part is')+' checked.':'')};}
@@ -457,7 +528,7 @@
     name:H(started?x.title:x.owner.name),sub:H(x.owner.effectiveModel),verb:H(verb),verbKey:'vb:'+r.id+':'+x.id+':'+s,
     line2:started?H(x.owner.name)+' · '+l2:l2,line2Kind:'detail'});};
   const shown=vm.parts.length>3?vm.parts.slice(0,2):vm.parts;
-  Object.assign(out,{density:started?'live':'starting',sentence,
+  Object.assign(out,{density:started||sg?'live':'starting',sentence,
    lanes:S.pmxLanes({key:'pmx-lanes:'+r.id,kind:'crew',runId:r.id,lanesHtml:shown.map(lane).join(''),
     more:vm.parts.length>3?{count:vm.parts.length-2,text:'Show all',action:'collab-toggle-expand',attrs:ra}:null})});
   return out;
@@ -490,7 +561,7 @@
     cmd.collaboration.reconfigure): opens this run's Change setup sheet through COLLAB's own open path. Its own action
     name, so a card never carries a second `collab-open-configure[data-kind="crew"]` beside the wand row. */
  E.action('crew-pick-coordinator',(c,b)=>{const r=run(b.dataset.run);if(!r||r.kind!=='crew')return true;const x=document.createElement('button');x.dataset.kind='crew';x.dataset.reconfigure=r.id;E.run('collab-open-configure',x,new Event('click'));return true;});
- window.PM56_CREW={activityRuns,activityMembers,activityHover,activityBody,preflight,signature,sourceHash,admit,owns,claim,deliver,payload,calculate,finalize,evaluate,commitPolicy,renderSummary,current,sheetParts,cardParts,planVM,autoCap};
+ window.PM56_CREW={activityRuns,activityMembers,activityHover,activityBody,preflight,signature,sourceHash,admit,owns,claim,addExploration,splitGate,deliver,payload,calculate,finalize,evaluate,commitPolicy,renderSummary,current,sheetParts,cardParts,planVM,autoCap};
  /* A2-26: evaluate declares its side-effect-free dry run (evaluate.dryRun, the flag COLLAB's Crew Auto sheet reads).
     A pass-through stand-in assigned over it (the pmx-verify ledger spy wraps it to count calls without copying its
     properties) keeps the declaration: this accessor exists only for that and goes when the spy copies own properties

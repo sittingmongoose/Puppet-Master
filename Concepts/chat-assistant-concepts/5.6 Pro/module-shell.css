@@ -1222,6 +1222,12 @@ body[data-theme^="retro"] .pmx-finding-claim{font-size:12.5px;}
 .pmx-view .pmx-view-status b{color:var(--text);}
 .pmx-view .pmx-view-head .pmx-view-acts{grid-column:2;grid-row:1 / 4;display:flex;flex-direction:row;flex-wrap:wrap;justify-content:flex-end;gap:4px;align-items:center;padding:0;border:0;background:none;}
 .pmx-view .pmx-view-acts .text-button{color:var(--muted);}
+/* a phone-width view: the actions go under the title, so a run with four of them (Wonderer's leads, Pause, Message,
+   More) never squeezes its title into a one-word column */
+@media (max-width: 560px){
+  .pmx-view .pmx-view-head.drawer-head{grid-template-columns:minmax(0,1fr);}
+  .pmx-view .pmx-view-head .pmx-view-acts{grid-column:1;grid-row:4;justify-content:flex-start;margin:8px 0 0 -8px;}
+}
 .pmx-view-plate{margin:18px 0 0;}
 .pmx-view-plate .pmx-plate{margin:0;}
 .pmx-view > .pmx-tabs{margin-top:18px;}

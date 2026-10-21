@@ -110,6 +110,13 @@
   function optDesc(o) {
     return (o && typeof o === 'object' && o.description) ? String(o.description) : '';
   }
+  /* Grill Me (DL-218): a grilling round's flow carries flow.grill {key, by, byName, round, count, asked, cap}; the round
+     leaves through PM56_WG.grillAnswered, never the stock receipt */
+  function grillOf(flow) { return flow && flow.grill ? flow.grill : null; }
+  function hintHtml(ctx, o) {
+    var rec = o.rec ? '<span class="qs-rec">' + iconOf(ctx, 'check', 11) + 'Recommended</span>' : '';
+    return rec + (o.hint ? (rec ? '<span class="qs-rec-sep"> · </span>' : '') + ctx.esc(o.hint) : '');
+  }
   function answeredCount(qs) {
     var n = 0;
     for (var i = 0; i < qs.length; i++) if (hasAnswer(qs[i])) n++;
@@ -188,6 +195,8 @@
           var label = optLabel(o);
           return {
             value: label, label: label, hint: optDesc(o),
+            /* Grill Me (DL-218, CWR-043): every decision carries a recommended answer, preselected, so one action accepts it */
+            rec: !!q.recommended && q.recommended === label,
             selected: q.type === 'choice' ? q.answer === label
               : (Array.isArray(q.answer) && q.answer.indexOf(label) >= 0)
           };
@@ -216,9 +225,12 @@
     });
     if (flow && flow.note) evidence.push({ label: 'About this flow', lines: [flow.note] });
 
+    var grill = grillOf(flow);
     return {
       type: 'question',
       take: takeOf(ctx),
+      grill: grill,
+      notSure: !!q.notSure,
       key: 'q:' + (flow ? flow.id : 'none') + ':' + (q.id || idx),
       icon: 'question',
       title: (flow && flow.title) || 'Questionnaire',
@@ -241,7 +253,17 @@
       stepsLabel: 'Questions',
       queue: queue,
       progress: { pct: qs.length ? Math.round(ans / qs.length * 100) : 0, label: ans + ' of ' + qs.length + ' answered' },
-      actions: [
+      actions: grill ? [
+        /* a grilling round (DL-218): Wrap up ends the interview, Not sure leaves this decision open, Accept all takes every
+           recommended answer you have not changed; nothing here cancels (the × keeps the round for later) */
+        { a: 'qs-wrap-up', label: 'Wrap up', kind: 'text' },
+        { a: 'skip-question', label: 'Not sure', kind: 'text' },
+        { a: 'prev-question', label: 'Back', kind: 'soft', icon: 'left', disabled: idx === 0 },
+        { a: 'qs-accept-round', label: 'Accept all ' + qs.length, kind: 'soft' },
+        idx === last
+          ? { a: 'submit-questionnaire', label: 'Send answers', kind: 'primary', icon: 'send', after: true }
+          : { a: 'next-question', label: 'Next', kind: 'primary', icon: 'chevron', after: true }
+      ] : [
         { a: 'cancel-questionnaire', label: 'Cancel questionnaire', kind: 'text danger' },
         { a: 'skip-question', label: 'Skip', kind: 'text' },
         { a: 'prev-question', label: 'Back', kind: 'soft', icon: 'left', disabled: idx === 0 },
@@ -693,7 +715,7 @@
           + '<span class="qs-tech-key">' + (i + 1) + '.</span>'
           + '<span class="qs-tech-val">' + ctx.esc(o.label) + '</span>'
           + '<span class="qs-tech-state">' + (o.selected ? (multi ? 'included' : 'selected') : '—') + '</span>'
-          + (o.hint ? '<span class="qs-tech-hint">' + ctx.esc(o.hint) + '</span>' : '') + '</button>';
+          + (o.hint || o.rec ? '<span class="qs-tech-hint">' + hintHtml(ctx, o) + '</span>' : '') + '</button>';
       }).join('') + '</div>';
     } else if (style === 'stack') {
       body = '<div class="qs-opt-stack" data-k="qs-opts">' + opts.map(function (o, i) {
@@ -702,7 +724,7 @@
           + optNum(i)
           + '<span class="qs-opt-box">' + (o.selected ? iconOf(ctx, 'check', 10) : '') + '</span>'
           + '<span class="qs-opt-text"><strong>' + ctx.esc(o.label) + '</strong>'
-          + (o.hint ? '<span>' + ctx.esc(o.hint) + '</span>' : '') + '</span></button>';
+          + (o.hint || o.rec ? '<span>' + hintHtml(ctx, o) + '</span>' : '') + '</span></button>';
       }).join('') + '</div>';
     } else if (style === 'ask') {
       body = '<div class="qs-ask-opts' + (multi ? ' is-multi' : ' is-choice') + '" data-k="qs-opts">' + opts.map(function (o, i) {
@@ -712,9 +734,9 @@
           + '<span class="qs-ask-mark qs-ask-mark-' + (multi ? 'check' : 'radio') + (o.selected ? ' is-on' : '')
           + '" aria-hidden="true"></span>'
           + optNum(i)
-          + (o.hint
+          + (o.hint || o.rec
             ? '<span class="qs-ask-opt-copy"><span class="qs-ask-opt-label">' + ctx.esc(o.label) + '</span>'
-              + '<span class="qs-ask-opt-desc">' + ctx.esc(o.hint) + '</span></span>'
+              + '<span class="qs-ask-opt-desc">' + hintHtml(ctx, o) + '</span></span>'
             : '<span class="qs-ask-opt-label">' + ctx.esc(o.label) + '</span>')
           + '</button>';
       }).join('') + '</div>';
@@ -724,7 +746,7 @@
           + '" data-value="' + ctx.esc(o.value) + '" data-k="qs-opt:' + ctx.esc(o.value) + '" style="--i:' + i + '">'
           + optNum(i)
           + '<strong>' + ctx.esc(o.label) + '</strong>'
-          + (o.hint ? '<br><span class="qs-grid-hint">' + ctx.esc(o.hint) + '</span>' : '') + '</button>';
+          + (o.hint || o.rec ? '<br><span class="qs-grid-hint">' + hintHtml(ctx, o) + '</span>' : '') + '</button>';
       }).join('') + '</div>';
     }
     return body + otherRow(ctx, m, style);
@@ -1067,12 +1089,22 @@
         + (selN ? ' · <span class="qs-ask-sub-n">' + selN + ' selected</span>' : '') + '</div>';
     }
     var back = { a: 'prev-question', label: 'Back', kind: 'soft', disabled: idx === 0 };
-    var skip = review ? null : { a: 'skip-question', label: 'Skip', kind: 'text' };
+    var skip = review ? null : { a: 'skip-question', label: m.grill ? 'Not sure' : 'Skip', kind: 'text' };
     var next = idx === last
-      ? { a: 'submit-questionnaire', label: 'Submit', kind: 'primary' }
+      ? { a: 'submit-questionnaire', label: m.grill ? 'Send answers' : 'Submit', kind: 'primary' }
       : { a: 'next-question', label: 'Next', kind: 'primary' };
     var st = qsState(ctx);
-    return '<section class="decision-surface qs qs-ask' + (st.bodyScroll ? ' is-scroll' : '') + '" data-qs="8" data-k="qs:8">'
+    /* Grill Me (DL-218, CWR-043): the round bar names who is grilling you and the round; the foot adds Accept all (every
+       recommended answer you have not changed) and Wrap up (end the interview now) */
+    var g = m.grill, N = window.PM56_NEON;
+    var bar = g ? '<div class="qs-grill-bar" data-k="qs-grill-bar:' + ctx.esc(g.key) + ':' + g.round + '"><span class="qs-grill-kettle" aria-hidden="true">' + (N && N.icon ? N.icon('grill', 16, 'nx-still') : iconOf(ctx, 'grill', 16)) + '</span>'
+      + '<span class="qs-grill-who"><b>The ' + ctx.esc(String(g.byName || '').toLowerCase() === 'assistant' ? 'assistant' : g.byName) + ' is grilling you</b><span class="qs-grill-meta">Round ' + g.round + ' · ' + g.count + (g.count === 1 ? ' decision' : ' decisions') + ' ready · '
+      + Math.min(g.asked, g.cap) + ' of up to ' + g.cap + ' questions asked</span></span></div>' : '';
+    var unsure = g && m.notSure ? '<p class="qs-grill-unsure" data-k="qs-unsure">' + iconOf(ctx, 'ring-dashed', 12) + 'You said not sure: this decision stays open. Pick an answer to settle it.</p>' : '';
+    var gfoot = g ? '<div class="qs-grill-foot" data-k="qs-grill-foot">' + actionBtn(ctx, { a: 'qs-wrap-up', label: 'Wrap up', kind: 'text' })
+      + '<span class="qs-grill-note">Nothing acts on your answers until you confirm what you agreed.</span>'
+      + actionBtn(ctx, { a: 'qs-accept-round', label: qs.length === 1 ? 'Accept the recommended answer' : 'Accept all ' + qs.length + ' recommended', kind: 'text', icon: 'check' }) + '</div>' : '';
+    return '<section class="decision-surface qs qs-ask' + (st.bodyScroll ? ' is-scroll' : '') + (g ? ' qs-grill' : '') + '" data-qs="8" data-k="qs:8"' + (g ? ' data-grill="' + ctx.esc(g.key) + '"' : '') + '>'
       + '<button type="button" class="qs-ask-x" data-action="close-decision" title="Close and return later; answers are preserved" aria-label="Close decision">'
       + iconOf(ctx, 'close', 12) + '</button>'
       + '<div class="qs-ask-row">'
@@ -1080,10 +1112,12 @@
          the footer stay put. Keyed per question, so every question opens at its top; data-scroll-key puts it in
          app.js's captureScroll/restoreScroll, so a re-render (an answer picked, a work tick) keeps the reader's place. */
       + '<div class="qs-ask-body' + askEdges + '" data-k="qs-ask-body:' + ctx.esc(m.key) + '" data-scroll-key="qs-ask-body:' + ctx.esc(m.key) + '">'
-      + reel(ctx, m, askTitle(ctx, m) + sub + inputHtml(ctx, m, 'ask'))
+      + bar
+      + reel(ctx, m, askTitle(ctx, m) + sub + inputHtml(ctx, m, 'ask') + unsure)
       + '</div>'
       + askSpine(ctx, m)
       + '</div>'
+      + gfoot
       + '<div class="qs-ask-foot" data-k="qs-ask-foot">'
       + '<span class="qs-ask-count" data-k="qs-ask-n:' + idx + '">Question ' + (idx + 1) + ' of ' + qs.length + '</span>'
       + actionBtn(ctx, back)
@@ -1345,7 +1379,7 @@
 
   CH('answer-choice', function (ctx, btn) {
     var q = currentQuestion(ctx);
-    if (q) { q.other = ''; q.otherOn = false; }
+    if (q) { q.other = ''; q.otherOn = false; q.notSure = false; }
     qsState(ctx).mention = null;
     clearAuto(ctx);
     if (takeOf(ctx) === 8) popAskSelect(btn && btn.getAttribute('data-value'));
@@ -1382,9 +1416,29 @@
     qsState(ctx).reelDir = 'next';
     qsState(ctx).mention = null;
     clearAuto(ctx);
+    /* Grill Me: Not sure is a real answer (SS-038); the decision stays open and the round moves on, no toast */
+    if (grillOf(activeFlow(ctx))) {
+      var q = currentQuestion(ctx), qs = ctx.state.questions || [];
+      if (q) { q.notSure = true; q.answer = ''; q.other = ''; q.otherOn = false; }
+      if (takeOf(ctx) === 8 && (ctx.state.questionIndex | 0) < qs.length - 1) captureReel(ctx);
+      ctx.state.questionIndex = Math.min(qs.length - 1, (ctx.state.questionIndex | 0) + 1);
+      ctx.renderApp();
+      return true;
+    }
     if (takeOf(ctx) === 8) captureReel(ctx);
     return false;
   });
+  /* Grill Me: one action accepts the whole round; Wrap up ends the interview. Both leave like a submit. */
+  function grillLeave(ctx, mode) {
+    var flow = activeFlow(ctx), g = grillOf(flow), W = window.PM56_WG;
+    if (!g || !W) return false;
+    var qs = ctx.state.questions || [];
+    if (mode === 'accept') qs.forEach(function (q) { if (!q.notSure && !hasAnswer(q)) q.answer = q.recommended; });
+    beginLeave(ctx, function () { W.grillAnswered(ctx, flow, qs, mode); }, mode === 'wrap' ? 'close' : 'submit');
+    return true;
+  }
+  EXT.action('qs-accept-round', function (ctx) { return grillLeave(ctx, 'accept'); });
+  EXT.action('qs-wrap-up', function (ctx) { return grillLeave(ctx, 'wrap'); });
 
   EXT.action('close-decision', function (ctx) {
     var d = ctx.state.decision;
@@ -1399,6 +1453,7 @@
     return true;
   });
   EXT.action('submit-questionnaire', function (ctx) {
+    if (grillLeave(ctx, 'submit')) return true;
     var qs = ctx.state.questions || [];
     var missing = null;
     for (var i = 0; i < qs.length; i++) if (qs[i].required && !hasAnswer(qs[i])) { missing = qs[i]; break; }

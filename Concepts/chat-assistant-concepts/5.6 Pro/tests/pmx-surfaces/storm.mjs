@@ -11,8 +11,9 @@
    same calls brainstorm-demo-batch4.js makes on its 450 ms clock, one phase at a time so each density holds still):
    sealed notes (3 of 4 ideas in), the debate, the vote staged as positions (3 of 4 voted; and all 4 with the popular
    option ruled out), ready to write the plan (the accent decision, whose sentence says what the rule did), the result
-   face with the kept dissent (constraint flow: a rule rules the popular option out), and the Wonderer's run at Write
-   the plan while its ideas still need a decision (the warm row that prints why Write the plan waits). `cardSurfaces(prefix, extra)` is exported so a scratch run can wrap the same steps. */
+   face with the kept dissent (constraint flow: a rule rules the popular option out), and the Wonderer's run (DL-218,
+   steer 2026-10-20): the card while the Coordinator grills you (the kettle at its seat), and at Write the plan with
+   every lead decided (the summary line counts the leads explored, used, set aside and waiting). `cardSurfaces(prefix, extra)` is exported so a scratch run can wrap the same steps. */
 const SHEET = '#pmOverlayRoot .pmx-sheet';
 const CANON = ['BrainStorm', 'Wonderer', 'Grill Me'];
 async function openSheet(h) {
@@ -81,27 +82,23 @@ const PHASES = [
   ['ready', 'ready to write the plan (the accent decision; a rule ruled the popular option out)', 'constraint', h => UPTO(h, 'decide')],
   ['result', 'the one-Plan result face with the kept dissent (the Plan card is born beneath it)', 'constraint', h => UPTO(h, 'write')]
 ];
-/* the Wonderer's run (b13 "leads"): the core round is played, so the card stands at Write the plan while Wonderer's
-   ideas still need a decision */
-async function wondererAtWrite(h) {
-  await h.closeAll();
-  await h.action('b13-start', { flow: 'leads' }); await h.wait(900);
-  if (!(await h.clickVisible('#pmOverlayRoot [data-action="collab-modal-commit"]'))) throw new Error('the Wonderer sheet did not start');
-  await h.wait(700);
-  await h.ev(() => { const C = window.PM56_COLLAB, c = window.PM56_EXT.ctx(); const r = C.runsForThread(c.state.selectedThread).filter(r => r.wonderer).at(-1); window.PM56_WONDERER.playCore(r); });
-  await h.page.waitForFunction(() => { const C = window.PM56_COLLAB, c = window.PM56_EXT.ctx(); const r = C.runsForThread(c.state.selectedThread).filter(r => r.wonderer).at(-1); return r && r.brainstorm.phase === 'synthesis'; }, null, { timeout: 30000 });
-  await h.ev(() => { const c = window.PM56_EXT.ctx(); for (const t of [...(c.state.editorTabs || [])]) c.closeEditor(t.id || t); c.state.editorRevealed = false; c.renderApp(); });
-  await h.wait(500);
-}
+import { wondererRun, toWrite, fast, QUIET_CHANGE } from './_wonderer.mjs';
 export function cardSurfaces(prefix = 'storm', extra = {}) {
   return PHASES.map(([name, title, flow, go]) => Object.assign({
     id: prefix + ':card-' + name, title: 'BrainStorm card, ' + title + ' (8.4, 7.1)', kind: 'chat', tags: ['app', 'storm', 'chat'], canon: [{ name: 'BrainStorm', minCard: 360 }],
     async open(h) { if (extra.setup) await extra.setup(h); await startRecorded(h, flow); await go(h); await h.settle(); await showCard(h); },
     async after(h) { await h.closeAll(); }
   }, extra.surface || {})).concat([Object.assign({
-    id: prefix + ':card-wonderer-open', title: 'BrainStorm card with Wonderer: decide on Wonderer’s ideas first, then write the plan (8.4, b13 convergence)', kind: 'chat', tags: ['app', 'storm', 'chat'], canon: [{ name: 'BrainStorm', minCard: 360 }, 'Wonderer'],
-    async open(h) { if (extra.setup) await extra.setup(h); await wondererAtWrite(h); await h.settle(); await showCard(h); },
-    async after(h) { await h.closeAll(); }
+    id: prefix + ':card-wonderer-open', title: 'BrainStorm card with the Wonderer at Write the plan: every lead decided, the leads counted (8.4, DL-218)', kind: 'chat', tags: ['app', 'storm', 'chat'], canon: [{ name: 'BrainStorm', minCard: 360 }, 'Wonderer'],
+    async open(h) { if (extra.setup) await extra.setup(h); await wondererRun(h); await toWrite(h); await h.settle(); await showCard(h); },
+    change: QUIET_CHANGE, async after(h) { await fast(h, 1); await h.closeAll(); }
+  }, extra.surface || {}), Object.assign({
+    id: prefix + ':card-wonderer-grill', title: 'BrainStorm card while the Coordinator grills you (the Ask Card closed for later): Understand the ask, Grilling you in the lanes (DL-218)', kind: 'chat', tags: ['app', 'storm', 'chat'], canon: [{ name: 'BrainStorm', minCard: 360 }, 'Grill Me'],
+    /* the Ask Card docks over most of the chat while you are grilled: close it for later (the card's Answer round 1
+       brings it back) and look at the card */
+    async open(h) { if (extra.setup) await extra.setup(h); await wondererRun(h, { confirm: false }); await fast(h, 1);
+      await h.clickVisible('.qs-grill .qs-ask-x'); await h.wait(500); await h.settle(); await showCard(h); },
+    change: QUIET_CHANGE, async after(h) { await fast(h, 1); await h.closeAll(); }
   }, extra.surface || {})]);
 }
 export default () => [

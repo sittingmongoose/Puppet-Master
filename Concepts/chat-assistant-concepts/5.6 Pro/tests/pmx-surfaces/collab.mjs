@@ -3,8 +3,9 @@
    wand.mjs opens each collaboration sheet in its default state (wand:crew, wand:crew-auto, wand:chat_room,
    wand:brainstorm, wand:review). These are the other states the blueprint draws, each reached through the sheet's
    own controls, never by writing state:
-   - Crew with a job typed and Wonderer added, and with both specialists (beyond the common case, 6.3);
-   - BrainStorm with both specialists (a common case, 6.3);
+   - Crew with a job typed and Wonderer added, and with the Wonderer added and Grill Me on (beyond the common case, 6.3;
+     DL-218: Grill Me is a switch, so it adds no seat or row; the Coordinator stands behind the kettle);
+   - BrainStorm with the Wonderer added and Grill Me on (a common case, 6.3);
    - Crew after a helper was removed ("Removed Builder · Bring back");
    - Crew with five helpers (lead ruling: Crew 4 and 5 may scroll at 1280 after yielding) and with eight (the add
      control shows the limit instead; not a common case, so the no-scroll rule does not apply);
@@ -13,7 +14,7 @@
    - Review started from its "Deep audit" team (owner answer E-37: Review gets "Start from a team");
    - the Crew sheet's Advanced page;
    - Crew Auto opened from the Crew sheet ("Crew Auto settings…"): the swap, with "Back to Crew";
-   - Review set to one reviewer (Single Agent), and BrainStorm with Grill Me added (the question budget at 45).
+   - Review set to one reviewer (Single Agent), and BrainStorm with Grill Me on (the question budget at 45).
    `canon` (A2-27a): the principle-10 names each state shows. */
 const SPECIALISTS = ['Wonderer', 'Grill Me'];
 const SHEET = '#pmOverlayRoot .pmx-sheet';
@@ -207,10 +208,10 @@ export default () => [
     await typeJob(h, 'Export the collection to CSV without losing quotes or order. Add tests.');
     await addSpecialist(h, 'wonderer');
   }, { canon: ['Crew', ...SPECIALISTS] }),
-  sheet('collab:crew-both-specialists', 'Crew sheet with both specialists (beyond the common case: the side column may scroll at 1280)', 'crew', async h => {
+  sheet('collab:crew-both-specialists', 'Crew sheet with the Wonderer added and Grill Me on (beyond the common case: the side column may scroll at 1280)', 'crew', async h => {
     await addSpecialist(h, 'wonderer'); await addSpecialist(h, 'grillMe');
   }, { canon: ['Crew', ...SPECIALISTS], common: false }),
-  sheet('collab:brainstorm-specialists', 'BrainStorm with both specialists (a common case, 6.3)', 'brainstorm', async h => {
+  sheet('collab:brainstorm-specialists', 'BrainStorm with the Wonderer added and Grill Me on (a common case, 6.3)', 'brainstorm', async h => {
     await addSpecialist(h, 'wonderer'); await addSpecialist(h, 'grillMe');
   }, { canon: ['BrainStorm', ...SPECIALISTS] }),
   sheet('collab:crew-removed', 'Crew sheet after a helper was removed: "Removed Builder · Bring back"', 'crew', async h => {
@@ -276,7 +277,7 @@ export default () => [
   sheet('collab:review-deep', 'Review from the "Deep audit" team: five reviewers, one a Critical Advisor (E-37)', 'review', async h => {
     await pickChoice(h, 'recipe', 'deep');
   }, { canon: ['Review', 'Multi-Pass Review'], rosterScrollAfterYield: ['1280x800'] }),
-  sheet('collab:brainstorm-grill', 'BrainStorm with Grill Me added: the question budget reads 45', 'brainstorm', async h => {
+  sheet('collab:brainstorm-grill', 'BrainStorm with Grill Me on: the question budget reads 45', 'brainstorm', async h => {
     await addSpecialist(h, 'grillMe');
   }, { canon: ['BrainStorm', 'Grill Me'] })
 ];
