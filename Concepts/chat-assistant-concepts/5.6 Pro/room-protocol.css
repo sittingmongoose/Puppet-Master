@@ -83,3 +83,23 @@ body.pm56-reduced .pmx-run[data-density="result"] .pmx-room-card-summary, body.p
 @container pmxrun (max-width: 359.98px){
   .pmx-run[data-pmx-kind="chat_room"] .pmx-decision-say{height:auto;min-height:0;}
 }
+/* "Pause between rounds" (Jared, 2026-10-21): the card's and the panel's switch are Grill Me's run-view switch
+   (pmxCheck: box, glyph, bold label, its state in words); on the card it sits under the lanes on its own hairline */
+.pmx-run .pmx-room-pause{margin:8px 0 0;padding:8px 0 0;box-shadow:0 -1px 0 var(--border);min-width:0;}
+.pmx-run .pmx-room-pause .pmx-check-copy b{font:600 12.5px/18px var(--font-ui);}
+.pmx-run .pmx-room-pause .pmx-check-copy small{margin-top:1px;}
+.pmx-run[data-density="collapsed"] .pmx-room-pause{display:none;}
+.pmx-rv-aside .pmx-room-pause, .room-document .pmx-room-pause{margin:10px 0 12px;}
+/* the sheet's switch beside the rounds stepper: the specialists shelf's switch (Turn on / Turn off, On / Off narrow) */
+.pmx-sheet .pmx-ctl-pause .pmx-add{position:relative;display:inline-flex;align-items:center;gap:5px;height:32px;padding:0 10px;font:600 12.5px/17px var(--font-ui);color:var(--accent);cursor:pointer;white-space:nowrap;}
+.pmx-sheet .pmx-ctl-pause .pmx-add[data-on="1"]{color:var(--muted);}
+.pmx-sheet .pmx-ctl-pause .pmx-add:hover > span{text-decoration:underline;text-underline-offset:3px;}
+.pmx-sheet .pmx-ctl-pause .pmx-add:has(> .pmx-add-input:focus-visible){outline:2px solid var(--pmx-focus-outline, var(--accent));outline-offset:2px;border-radius:6px;}
+@media (max-width: 459.98px){
+  .pmx-sheet .pmx-ctl-pause .pmx-add[data-switch="1"] > .pmx-add-word{display:none;}
+  .pmx-sheet .pmx-ctl-pause .pmx-add[data-switch="1"] > .pmx-add-short{display:inline;}
+  .pmx-sheet .pmx-ctl-pause .pmx-add[data-switch="1"]{padding:0 6px;}
+}
+/* the room's own plain lines in the Discussion (Paused, Pause between rounds is on…) */
+.pmx-rv-msg.pmx-rv-sys .pmx-rv-sysline{margin:0;font:var(--pmx-fs-meta);color:var(--muted);}
+.pmx-rv-msg.pmx-rv-sys .pmx-rv-sysw{font-weight:var(--pmx-w-reg);color:var(--muted);}

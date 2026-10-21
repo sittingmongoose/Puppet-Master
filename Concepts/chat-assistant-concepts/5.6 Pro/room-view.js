@@ -26,8 +26,8 @@
   var COPY = {
     kind: 'Chat Room',
     tabs: { transcript: 'Discussion', participants: 'Team', usage: 'Cost' },
-    ask: { label: 'Ask Everyone', helper: 'Everyone gives an opening view.' },
     next: { label: 'Next Round', helper: 'Each helper speaks once more.' },
+    more: { label: 'Add 2 more rounds', helper: 'Two more rounds on the same topic.' },
     summarize: { label: 'Summarize Now', helper: 'The Moderator writes where everyone agrees, where they differ, and what’s still open.' },
     end: { label: 'End discussion', helper: 'Locks the conversation. You can still promote messages.' },
     message: 'Message',
@@ -44,14 +44,14 @@
     toYou: 'to you',
     landed: 'Where the room landed',
     table: 'At the table',
-    emptyRoom: 'Nobody has spoken yet. Ask Everyone starts the first round.',
+    emptyRoom: 'Nobody has spoken yet. Round 1 opens by itself.',
     emptyWaiting: 'Nothing has been said yet.',
     queued: 'Queued for the next round',
     queuedHeld: 'Queued · it goes when the next round ends',
     queuedPaused: 'Queued · the room is paused',
     steered: 'Sent during the round · the next speaker reads it, nobody was interrupted',
     readNote: 'read your note',
-    firstMove: 'start the first round.'
+    firstMove: 'Round 1 opens.'
   };
   /* 9.3: refusal codes read as sentences through the shared map (the code stays in data-failure) */
   function refusal(code) { var t = S.pmxRefusalText ? S.pmxRefusalText(code) : null; return t ? t.text : ''; }
@@ -129,7 +129,7 @@
     });
   }
   function msgOf(run, m, ch, hooks) {
-    var kind = m.senderKind === 'user' ? 'you' : m.senderKind === 'coordinator' ? 'moderator' : m.messageType === 'wonderer_pass' ? 'wonderer' : 'helper';
+    var kind = m.senderKind === 'user' ? 'you' : m.senderKind === 'system' ? 'system' : m.senderKind === 'coordinator' ? 'moderator' : m.messageType === 'wonderer_pass' ? 'wonderer' : 'helper';
     var p = kind === 'helper' || kind === 'wonderer' ? personOf(run, m.senderId) : null;
     var reply = null;
     if (m.replyTo) { var src = run.messages.filter(function (x) { return x.id === m.replyTo; })[0]; if (src && src.senderKind === 'user') reply = firstSentence(src.body); }
@@ -138,7 +138,7 @@
     (m.readSteering || []).forEach(function (sid) { var n = run.messages.filter(function (x) { return x.id === sid; })[0]; if (n && !note) note = firstSentence(n.body); });
     return {
       id: m.id, key: hooks.msgKey + m.id, kind: kind, pid: kind === 'helper' ? m.senderId : kind === 'moderator' ? 'moderator' : null,
-      who: kind === 'you' ? 'You' : kind === 'moderator' ? 'Moderator' : (p ? (p.name || p.role) : m.senderName || 'Helper'),
+      who: kind === 'you' ? 'You' : kind === 'system' ? 'Room' : kind === 'moderator' ? 'Moderator' : (p ? (p.name || p.role) : m.senderName || 'Helper'),
       seat: p ? seatOf(run, p.id) : 0, persona: p ? (p.effectivePersona || p.requestedPersona) : '',
       when: when(m.createdAt), body: String(m.body || ''), chapter: ch, replyTo: reply, promotable: false, pinned: false,
       steered: kind === 'you' && !!m.roomSteer, readNote: note,
@@ -151,11 +151,12 @@
     var s = run.chatRoom, hooks = { msgKey: 'room-msg-', promoteAction: 'room-promote', goal: false, legacy: false };
     var live = run.status === 'running', pol = policyOf(s.turnPolicy || (run.config || {}).turnPolicy);
     var max = pol.value === 'ask_everyone_once' ? 1 : +((run.config || {}).maxRounds || 1);
-    var list = run.messages.filter(function (m) { return m.senderKind !== 'system'; });
+    /* the room's own plain lines (Paused, Pause between rounds is on/off…) stay in the script, in their round */
+    var list = run.messages.slice();
     var chs = chapters(run, list);
     var msgs = list.map(function (m, i) {
       var v = msgOf(run, m, chs[i], hooks);
-      v.promotable = v.kind !== 'you' && v.kind !== 'wonderer' && !!v.body.trim() && ['running', 'completed'].indexOf(run.status) >= 0;
+      v.promotable = v.kind !== 'you' && v.kind !== 'wonderer' && v.kind !== 'system' && !!v.body.trim() && ['running', 'completed'].indexOf(run.status) >= 0;
       return v;
     });
     var round = s.round ? { number: s.round.number, complete: !!s.round.complete, total: s.round.participantIds.length, spoken: s.round.messages.length } : null;
@@ -180,19 +181,22 @@
     /* E-18: Message works while the room runs (a mid-round send is queued for the next round, never refused) */
     var controls = { primary: null, secondary: [], message: null };
     if (live) {
-      /* DL-218: round 1 waits for your Confirm (Grill Me) and for the Wonderer's first pass, and says so */
-      var rg = !s.round && window.PM56_ROOM && window.PM56_ROOM.roundGate ? window.PM56_ROOM.roundGate(run) : null;
-      if (!s.round && rg) controls.primary = { action: 'collab-room-next-round', label: COPY.ask.label, disabled: true, code: rg, cmd: 'cmd.chat_room.next_round',
-        reason: 'Round 1 waits until you confirm what you agreed with the Moderator.' };
-      else if (!s.round) controls.primary = { action: 'collab-room-next-round', label: COPY.ask.label, helper: COPY.ask.helper, cmd: 'cmd.chat_room.next_round' };
-      else if (roundGoing) controls.primary = { action: 'collab-room-next-round', label: COPY.next.label, disabled: true, reason: refusal('round_incomplete'), code: 'round_incomplete', cmd: 'cmd.chat_room.next_round' };
-      else if (summaryCurrent) {
-        controls.primary = { action: 'room-finish', label: COPY.end.label, helper: COPY.end.helper, cmd: 'cmd.chat_room.end' };
-        if (left) controls.secondary.push({ action: 'collab-room-next-round', label: COPY.next.label + ' (' + (s.roundsSoFar + 1) + ' of ' + max + ')' });
-      } else if (left) {
-        controls.primary = { action: 'collab-room-next-round', label: COPY.next.label + ' (' + (s.roundsSoFar + 1) + ' of ' + max + ')', helper: COPY.next.helper, cmd: 'cmd.chat_room.next_round' };
-        controls.secondary.push({ action: 'collab-room-summarize', label: COPY.summarize.label });
-      } else controls.primary = { action: 'collab-room-summarize', label: COPY.summarize.label, helper: COPY.summarize.helper, cmd: 'cmd.chat_room.summarize' };
+      /* automatic rounds (Jared, 2026-10-21): round 1 opens with Start (after Grill Me's Confirm when it is on), and each
+         round starts the next by itself, so no control starts a round while they run. The room's controls appear where
+         it waits for you (R.waitsFor): Pause between rounds on, a summary you asked for, your message, or the last
+         round ("This room used all its rounds": Summarize Now, Add 2 more rounds, End discussion, DL-138). While the
+         rounds run, Summarize Now and End discussion are there at any time and act when the round ends. */
+      var why = R.waitsFor ? R.waitsFor(run) : null, recordedRoom = C.provenance ? C.provenance(run.id) === 'recorded' : true;
+      var nextBtn = function (p) { return { action: 'collab-room-next-round', label: COPY.next.label + ' (' + (s.roundsSoFar + 1) + ' of ' + max + ')', helper: p ? COPY.next.helper : '', cmd: 'cmd.chat_room.next_round' }; };
+      var addMore = { action: 'room-add-rounds', label: COPY.more.label, disabled: recordedRoom, reason: recordedRoom ? 'This recording has no replies past round ' + max + '.' : '' };
+      var sumBtn = { action: 'collab-room-summarize', label: COPY.summarize.label, helper: COPY.summarize.helper, cmd: 'cmd.chat_room.summarize' };
+      var endBtn = { action: 'room-finish', label: COPY.end.label, helper: COPY.end.helper, cmd: 'cmd.chat_room.end' };
+      if (!s.round) { /* round 1 opens by itself: nothing to press */ }
+      else if (!why) { if (!summaryCurrent) controls.secondary.push(sumBtn); controls.secondary.push(endBtn); }
+      else if (why === 'summed') { controls.primary = endBtn; controls.secondary.push(nextBtn(false)); }
+      else if (why === 'between' || why === 'message') { controls.primary = nextBtn(true); controls.secondary.push(sumBtn, endBtn); }
+      else if (summaryCurrent) { controls.primary = endBtn; if (pol.value !== 'ask_everyone_once') controls.secondary.push(addMore); }
+      else { controls.primary = sumBtn; if (pol.value !== 'ask_everyone_once') controls.secondary.push(addMore); controls.secondary.push(endBtn); }
       controls.message = { action: 'collab-message', label: COPY.message };
     }
     /* E-18: the messages queued above the composer, shown here as words only (Edit and Send now live once, there) */
@@ -229,7 +233,10 @@
     var live = run.status === 'running' && !waiting, left = (s.roundsSoFar || 0) < max;
     var controls = { primary: null, secondary: [], message: null };
     if (live) {
-      controls.primary = left ? { action: 'collab-room-next-round', label: COPY.next.label + ' (' + ((s.roundsSoFar || 0) + 1) + ' of ' + max + ')', helper: COPY.next.helper, cmd: 'cmd.chat_room.next_round' }
+      /* a seed room with Pause between rounds on waits between rounds (Next Round); otherwise its rounds run by themselves
+         and only the last one leaves you a move */
+      var waitsHere = !left || !!(run.config || {}).pauseBetweenRounds;
+      if (waitsHere) controls.primary = left ? { action: 'collab-room-next-round', label: COPY.next.label + ' (' + ((s.roundsSoFar || 0) + 1) + ' of ' + max + ')', helper: COPY.next.helper, cmd: 'cmd.chat_room.next_round' }
         : { action: 'collab-room-summarize', label: COPY.summarize.label, helper: COPY.summarize.helper, cmd: 'cmd.chat_room.summarize' };
       if (left) controls.secondary.push({ action: 'collab-room-summarize', label: COPY.summarize.label });
       controls.message = { action: 'collab-message', label: COPY.message };
@@ -283,6 +290,9 @@
     return now - seen[id] < 700;
   }
   function entry(vm, m) {
+    /* the room's own plain line (Paused, Pause between rounds is on…): no speaker, no actions */
+    if (m.kind === 'system') return { key: m.key, mid: m.id, markHtml: g('ring', 14), who: '<span class="pmx-rv-sysw">' + esc(m.who) + '</span>', when: esc(m.when), cls: 'pmx-rv-msg pmx-rv-sys',
+      attrs: ' data-room-message="' + esc(m.id) + '" data-who="system"', bodyHtml: '<p class="pmx-rv-sysline">' + esc(m.body) + '</p>' };
     var reply = m.replyTo ? '<p class="pmx-rv-reply">' + g('quote', 12) + '<span>' + COPY.toYou + ': “' + esc(m.replyTo) + '”</span></p>' : '';
     if (m.readNote) reply += '<p class="pmx-rv-reply" data-room-read-note="1">' + g('quote', 12) + '<span>' + COPY.readNote + ': “' + esc(m.readNote) + '”</span></p>';
     if (m.steered) reply += '<p class="pmx-rv-reply" data-room-steered="1">' + g('send', 12) + '<span>' + COPY.steered + '</span></p>';
@@ -356,10 +366,19 @@
       out = '<b>Finished</b> · ' + plural(vm.roundsSoFar, 'round') + ' · ' + (kept || 'nothing kept yet');
     } else if (vm.speaking) out = '<b>Round ' + vm.round.number + ' of ' + vm.maxRounds + '</b> · ' + esc(vm.speaking.name) + ' is speaking' + (vm.upNext ? ' · Up next: ' + esc(vm.upNext.name) : '') + '.';
     else if (vm.round && !vm.round.complete) out = '<b>Round ' + vm.round.number + ' of ' + vm.maxRounds + '</b> · The helpers are answering.';
+    else if (vm.roundsSoFar && vm.source === 'protocol') {
+      /* the room waits for you only where it says "Your move"; otherwise the next round is starting by itself */
+      var why = R.waitsFor ? R.waitsFor(run) : null, summed = !!(vm.summary && vm.summary.current);
+      out = why === 'last' ? '<b>This room used all its rounds</b> · ' + (summed ? 'The Moderator summed it up. ' : '') + 'Your move.'
+        : why === 'summed' ? '<b>Round ' + vm.roundsSoFar + ' done</b> · The Moderator summed it up. Your move.'
+        : why === 'message' ? '<b>Round ' + vm.roundsSoFar + ' done</b> · Your message is with the room. Your move.'
+        : why === 'between' ? '<b>Round ' + vm.roundsSoFar + ' done</b> · Pause between rounds is on. Your move.'
+        : '<b>Round ' + vm.roundsSoFar + ' done</b> · ' + (run.chatRoom.after || (vm.policy.value === 'ask_everyone_once' && !summed) ? 'The Moderator is summing up.' : 'Round ' + (vm.roundsSoFar + 1) + ' starting.');
+    }
     else if (vm.summary && vm.summary.current && vm.roundsSoFar) out = '<b>Round ' + vm.roundsSoFar + ' done</b> · The Moderator summed it up. Your move.';
-    else if (vm.roundsSoFar) out = '<b>Round ' + vm.roundsSoFar + ' done</b> · Your move.';
+    else if (vm.roundsSoFar) out = vm.controls.primary ? '<b>Round ' + vm.roundsSoFar + ' done</b> · Your move.' : '<b>Round ' + vm.roundsSoFar + ' done</b> · Round ' + (vm.roundsSoFar + 1) + ' starting.';
     else if (st === 'running' && WG() && run && WG().holds(run)) out = '<b>Your move</b> · The Moderator is grilling you before round 1.';
-    else if (st === 'running') out = '<b>Your move</b> · ' + COPY.firstMove;
+    else if (st === 'running') out = '<b>Starting</b> · ' + COPY.firstMove;
     else out = '<b>Not started</b> · ' + plural(vm.team.length, 'helper') + ' · ' + esc(vm.policy.label) + '.';
     return '<span class="room-meta pmx-rv-say">' + out + '</span>' + (vm.recorded ? '<span class="pmx-rv-prov">' + g('play-ring', 13) + '<span>' + COPY.recorded + '</span></span>' : '');
   }
@@ -368,11 +387,13 @@
      room's own Message stands in for the frame's. */
   function actionsHtml(vm, generic) {
     var c = vm.controls, p = c.primary, out = generic && generic.actions != null ? String(generic.actions) : '';
-    c.secondary.forEach(function (a) { out += '<button type="button" class="text-button" data-action="' + a.action + '"' + runAttr(vm) + '>' + esc(a.label) + '</button>'; });
+    var why2 = [];
+    c.secondary.forEach(function (a) { out += '<button type="button" class="text-button" data-action="' + a.action + '"' + runAttr(vm) + (a.disabled ? ' disabled' : '') + '>' + esc(a.label) + '</button>'; if (a.disabled && a.reason) why2.push(a.reason); });
     if (c.message && !(generic && generic.actions != null)) out += '<button type="button" class="text-button" data-action="' + c.message.action + '"' + runAttr(vm) + '>' + c.message.label + '</button>';
     if (p) out += '<button type="button" class="primary-button" data-action="' + p.action + '"' + runAttr(vm) + (p.disabled ? ' disabled data-failure="' + esc(p.code || '') + '"' : '') + '>' + esc(p.label) + '</button>';
     var say = p ? (p.disabled ? p.reason : p.helper) : '';
-    return (out ? '<div class="room-controls pmx-rv-controls">' + out + '</div>' : '') + (say ? '<p class="' + (p && p.disabled ? 'pmx-reason' : 'pmx-help') + ' pmx-rv-acthelp">' + esc(say) + '</p>' : '');
+    return (out ? '<div class="room-controls pmx-rv-controls">' + out + '</div>' : '') + (say ? '<p class="' + (p && p.disabled ? 'pmx-reason' : 'pmx-help') + ' pmx-rv-acthelp">' + esc(say) + '</p>' : '') +
+      why2.map(function (w) { return '<p class="pmx-reason pmx-rv-acthelp">' + esc(w) + '</p>'; }).join('');
   }
   function aside(vm) {
     var mod = vm.moderator;
@@ -390,7 +411,7 @@
       : grill ? '<li class="pmx-rv-grill">' + S.pmxGlyph('grill', 16) + '<span><b>Grill Me</b> is on<small>It adds nobody: the Moderator questions you before round 1.</small></span></li>' : '';
     if (!live && grill) rows += sw;
     return '<p class="pmx-fine pmx-rv-asidehead">' + COPY.table + '</p><ul class="pmx-rv-table">' + rows + '</ul>' +
-      '<p class="pmx-rv-policy"><b>' + esc(vm.policy.label) + '</b> · up to ' + plural(vm.maxRounds, 'round') + '</p>' + (live ? sw : '') +
+      '<p class="pmx-rv-policy"><b>' + esc(vm.policy.label) + '</b> · up to ' + plural(vm.maxRounds, 'round') + '</p>' + (run && R.pauseSwitch ? R.pauseSwitch(run, 'view') : '') + (live ? sw : '') +
       '<p class="pmx-rv-promise">' + g('not', 14) + '<span>' + COPY.promise + '</span></p>' +
       (vm.source === 'protocol' ? '<button type="button" class="text-button pmx-rv-export" data-action="room-export"' + runAttr(vm) + '>' + g('download', 14) + '<span>' + COPY.download + '</span></button>' : '');
   }
@@ -438,7 +459,7 @@
       var guide = demos() && demos().editorGuide ? demos().editorGuide(run.id) : '';
       main = guide + pinnedSummary(vm) + '<div class="pmx-rv-scriptwrap">' + script(vm) + '</div>' + (WG() ? WG().section(run) : '');
     }
-    var mess = vm.messages.length;
+    var mess = vm.messages.filter(function (m) { return m.kind !== 'system'; }).length;
     return {
       title: esc(isRoomDoc(ctx) && vm.source === 'legacy' ? bareTitle(run.title) : run.title), kindWord: COPY.kind,
       status: statusHtml(vm), actions: actionsHtml(vm, generic || {}), plate: plateOf(run, vm),

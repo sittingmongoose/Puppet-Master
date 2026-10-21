@@ -561,7 +561,9 @@
       title: 'Chat Room · Onboarding Redesign Options',
       purpose: 'Debate three onboarding directions before anything is written to a Plan.',
       status: 'running', definitionRevision: 1,
-      config: { turnPolicy: 'moderated', maxRounds: 5, roundsSoFar: 2, moderator: 'Product Manager persona (dedicated)' },
+      /* Pause between rounds is on here (Jared, 2026-10-21: rounds run by themselves unless it is): this seed waits for
+         you between its rounds, so it keeps its Next Round */
+      config: { turnPolicy: 'moderated', maxRounds: 5, roundsSoFar: 2, moderator: 'Product Manager persona (dedicated)', pauseBetweenRounds: true },
       coordinator: { kind: 'dedicated_moderator', label: 'Moderator (Product Manager persona)' },
       participants: [
         mkParticipant({ role: 'Product', requestedModelId: 'sonnet46', persona: 'Product Manager', status: 'waiting', current: 'Waiting for the next moderated turn.' }),
@@ -1222,7 +1224,9 @@
        order: its first lane is the helper that needs you. */
     function order(list) { return rankOrder ? list : list.slice().sort(function (a, b) { return a.i - b.i; }); }
     var runAttr = 'data-run="' + esc(run.id) + '"', narrow = open ? false : { action: 'collab-show-lanes', attrs: runAttr };
-    if (open || all.length <= 3) return S.pmxLanes({ key: 'lanes:' + run.id, lanesHtml: order(all.slice(0, 8)).map(function (l) { return l.html; }).join(''), kind: run.kind, runId: run.id, narrow: narrow });
+    /* once shown, Show fewer folds them back: at every width when lanes were left out, else where the attention fold is */
+    var less = open && all.length >= 2 ? { action: 'collab-show-lanes', attrs: runAttr, always: all.length > 3 } : null;
+    if (open || all.length <= 3) return S.pmxLanes({ key: 'lanes:' + run.id, lanesHtml: order(all.slice(0, 8)).map(function (l) { return l.html; }).join(''), kind: run.kind, runId: run.id, narrow: narrow, less: less });
     var shown = order(all.slice(0, 2)), rest = all.slice(2), count = {};
     rest.forEach(function (l) { count[l.state] = (count[l.state] || 0) + 1; });
     var WORD = { working: 'working', queued: 'waiting', done: 'done', needs: 'need you', failed: 'didn’t finish', abstained: 'skipped' };
@@ -1608,7 +1612,9 @@
       } else if (UI.more[id]) {
         foot = moreRowHtml(run, st, p, shown);
       } else {
-        foot = S.pmxActions({ key: 'acts:' + id, collabHooks: true, items: withRun(acts, run), expand: { attrs: ra, open: UI.expanded[id] === 'open' || face === 'live' || face === 'attention' || face === 'result' || face === 'failed' }, more: { attrs: ra } });
+        /* the foot is drawn only on a card that shows its body, so its chevron is always Collapse (2026-10-21: a starting
+           or waiting card drew Expand, whose first click changed nothing and whose second folded the card) */
+        foot = S.pmxActions({ key: 'acts:' + id, collabHooks: true, items: withRun(acts, run), expand: { attrs: ra, open: true }, more: { attrs: ra } });
         var ptr = viewing && inView ? (p.pointer || (run.kind === 'review' ? S.PMX_COPY.oneControlSet.review : S.PMX_COPY.oneControlSet.panel)) : '';
         if (ptr) foot = foot.replace(/^(<div[^>]*>)/, '$1<span class="pmx-collab-choosing" data-k="choosing:' + esc(id) + '">' + S.pmxGlyph('chevron-right', 14) + '<span>' + esc(ptr) + '</span></span>');
       }
@@ -1679,7 +1685,11 @@
   UI.allLanes = UI.allLanes || {};
   /* view state (A3-07): "Show all" lists every helper's lane on the card; the run view's Team tab has the same list */
   EXT.action('collab-show-lanes', function (ctx, btn) { var id = btn.dataset.run; UI.allLanes[id] = !UI.allLanes[id]; ctx.renderApp(); return true; });
-  EXT.action('collab-toggle-expand', function (ctx, btn) { var id = btn.dataset.run; UI.expanded[id] = UI.expanded[id] === 'open' ? 'closed' : 'open'; ctx.renderApp(); return true; });
+  /* the chevron flips what is on screen: a card showing its body folds, a folded card or a receipt opens. The stored
+     choice alone said nothing on a card's first click (unset read as folded, though the card was open), so that click
+     only flipped the chevron (2026-10-21) */
+  function shownOpen(id) { var f = UI.face[id]; return !!f && f !== 'collapsed' && f !== 'receipt'; }
+  EXT.action('collab-toggle-expand', function (ctx, btn) { var id = btn.dataset.run; UI.expanded[id] = shownOpen(id) ? 'closed' : 'open'; ctx.renderApp(); return true; });
   EXT.action('collab-toggle-more', function (ctx, btn) {
     var id = btn.dataset.run, run = findRun(id);
     UI.more[id] = !UI.more[id]; UI.cancelAsk[id] = false;
@@ -3144,7 +3154,12 @@
         howHtml:
           S.pmxCtl({ key: 'ctl-policy', label: 'Who talks when', helper: 'How the conversation moves from one helper to the next.', affects: 'policy', control: choiceTrigger(d, 'turnPolicy', false, ctx) }) +
           S.pmxCtl({ key: 'ctl-rounds', label: 'Rounds', helper: 'A round means everyone gets one turn. You can end early or add more.', affects: 'rounds',
-            control: S.pmxStepper({ key: 'step-rounds', input: { key: 'cfg-maxRounds', attrs: 'data-collab-input="cfg-maxRounds"' }, value: rounds, min: 1, max: 20, cells: false, unit: 'rounds', affects: 'rounds' }) }),
+            control: S.pmxStepper({ key: 'step-rounds', input: { key: 'cfg-maxRounds', attrs: 'data-collab-input="cfg-maxRounds"' }, value: rounds, min: 1, max: 20, cells: false, unit: 'rounds', affects: 'rounds' }) }) +
+          /* Jared, 2026-10-21: the rounds run by themselves; this switch makes the room wait for you after each one. Off
+             by default; Grill Me's switch grammar (Turn on / Turn off, On / Off at phone width) */
+          S.pmxCtl({ key: 'ctl-pause', cls: 'pmx-ctl-pause', label: 'Pause between rounds', affects: 'rounds',
+            helper: pol.value === 'ask_everyone_once' ? 'One answer each is a single round, so there is nothing to pause between.' : cfg.pauseBetweenRounds ? 'On: the room waits for you after each round.' : 'Off: rounds run one after another. On: the room waits for you after each.',
+            control: pol.value === 'ask_everyone_once' ? '' : pauseSwitchCtl(!!cfg.pauseBetweenRounds) }),
         promises: [
           { key: 'pr-changes', glyph: 'not', strong: 'Talking changes nothing.', text: 'You pick what, if anything, to keep.', part: 'you' },
           { key: 'pr-read', glyph: 'lock', text: 'Helpers can read your project and the web, never change it.', part: 'permission' }],
@@ -3152,7 +3167,7 @@
         readback: [
           { part: 'team', html: '<b>' + inkText('rb:room:n', plural2(n, 'helper')) + '</b> talk it through, ' },
           { part: 'policy', html: '<b>' + inkText('rb:room:pol', pol.read) + '</b>, ' },
-          { part: 'rounds', html: 'for up to <b>' + inkText('rb:room:r', plural2(rounds, 'round')) + '</b>. Nothing changes unless you pick it.' }],
+          { part: 'rounds', html: 'for up to <b>' + inkText('rb:room:r', plural2(rounds, 'round')) + '</b>' + (cfg.pauseBetweenRounds ? ', <b>waiting for you after each one</b>' : ', one after another') + '. Nothing changes unless you pick it.' }],
         estimate: recorded ? { recorded: true } : { text: 'About ' + (n * Math.min(rounds, 5)) + ' replies · usually 4–10 min · stops at $' + Number(cfg.costLimitUsd || 4).toFixed(2) + ' · an estimate, not a promise' },
         primaryDisabled: rangeBad || needsJob,
         primaryReason: rangeBad ? 'Chat Room needs 2 to 8 helpers.' : needsJob ? 'Add a question first.' : ''
@@ -3243,6 +3258,11 @@
     var P = window.PM56_PLANS, id = d.scheduleIntent && d.scheduleIntent.expected && d.scheduleIntent.expected.plan_id;
     if (!id && window.PM56_SCHED && window.PM56_SCHED.currentCrewTarget) id = window.PM56_SCHED.currentCrewTarget();
     return P && P.get && id ? P.get(id) : null;
+  }
+  /* the sheet's "Pause between rounds" switch: the specialists shelf's switch (Grill Me), so it reads and works the same */
+  function pauseSwitchCtl(on) {
+    return '<label class="pmx-add" data-switch="1" data-on="' + (on ? 1 : 0) + '"><input type="checkbox" class="pmx-add-input" data-collab-input="cfg-pauseBetweenRounds" role="switch" aria-checked="' + on + '" aria-label="Pause between rounds"' + (on ? ' checked' : '') + ' data-pmx-harness>' +
+      S_().pmxGlyph(on ? 'ring-dot' : 'ring', 13) + '<span class="pmx-add-word">' + (on ? 'Turn off' : 'Turn on') + '</span><span class="pmx-add-short" aria-hidden="true">' + (on ? 'On' : 'Off') + '</span></label>';
   }
   function moderatorRow(ctx, d) {
     var S = S_(), PK = window.PM56_PICKERS;
@@ -3737,6 +3757,7 @@
     else if (k === 'grillMe') d.grillMe = !!t.checked;
     else if (k.indexOf('focus-') === 0) { d.reviewFocus = d.reviewFocus || {}; d.reviewFocus[k.slice(6)] = !!t.checked; }
     else if (k === 'cfg-reviewerCount') { if (d.kind === 'review') setReviewerCount(d, t.value); }
+    else if (k === 'cfg-pauseBetweenRounds') d.config.pauseBetweenRounds = !!t.checked;
     else if (k.indexOf('cfg-') === 0) {
       var field = k.slice(4);
       var LIM = { parallelism: [1, 8], debateRounds: [1, 4], maxRounds: [1, 20] };
@@ -4683,6 +4704,8 @@
     crewAutoAllowed: function (threadId) { return crewAutoOn(threadId == null ? ((EXT.ctx && EXT.ctx() && EXT.ctx().state || {}).selectedThread) : threadId); },
     runs: function () { return RTC.runs; },
     run: findRun,
+    /* Show all (A3-07): true once every lane of this run's card is asked for; each kind's own lanes read it */
+    lanesOpen: function (id) { return !!(UI.allLanes && UI.allLanes[id]); },
     runsForThread: runsForThread,
     draft: function () { return RTC.draft; },
     restore: restoreFixture,

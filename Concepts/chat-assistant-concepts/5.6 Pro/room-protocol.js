@@ -1,6 +1,11 @@
 /* B06 Chat Room concept slice. One CollaborativeRun and one shared message store.
    Recorded participant replies, never live model calls. Discussion is read-only;
-   explicit selected-message promotion delegates to the existing Plan/To-Do owner. */
+   explicit selected-message promotion delegates to the existing Plan/To-Do owner.
+   Automatic rounds (Jared, 2026-10-21; the Plans canon follows on its own branch): Start Chat Room starts round 1
+   (with Grill Me on, after your Confirm); each round then starts the next by itself, after a short beat, until the
+   room's last configured round. A room waits for you only after its last round ("This room used all its rounds":
+   Summarize Now, Add 2 more rounds, End discussion; DL-138), when paused, when you asked it to sum up, or after every
+   round when "Pause between rounds" is on (the sheet, the card and the panel). See AUTOMATIC ROUNDS below. */
 (function(){
  'use strict';
  const E=window.PM56_EXT,C=window.PM56_COLLAB,RT=window.PM56_RUNTIME;
@@ -23,6 +28,10 @@
   r.chatRoom={protocolVersion:1,roundsSoFar:0,turnPolicy:d.config.turnPolicy,promotions:[],input:freeze(clone(d.roomInput)),
    sourceHash:hash(d.roomInput),definitionRevision:r.definitionRevision,round:null,summary:null,lastUserMessageId:null,pendingRecipientIds:null,deliveries:[],admittedRoster:r.participants.map(p=>({id:p.id,revision:p.assignmentRevision,attemptId:p.attempts.at(-1)?.attempt_id||null})),operationResults:{}};
   r.usage={costUsd:0,inputTokens:0,outputTokens:0};r.participants.forEach(p=>{p.status='waiting';p.current=wonderer(p)?'Runs alongside the room; takes no turn':'Ready for discussion';p.outcome=null;});
+  /* "Pause between rounds" (off by default): the sheet's choice; the card's and the panel's switch change it mid-run */
+  r.chatRoom.pauseBetween=!!d.config.pauseBetweenRounds;r.chatRoom.admittedAt=nowClock();
+  /* Start Chat Room is your go: round 1 opens by itself (Grill Me's Confirm first, when it is on) */
+  schedule(r.id,START);
  }
  function gate(r,x){
   if(!owns(r?.id))return 'room_missing';
@@ -80,10 +89,63 @@
   freeze(m);round.messages.push(m.id);
   s.operationResults[x.requestId]={signature:stable(x),messageId:m.id};p.status='waiting';p.current='Turn delivered';
   if(round.messages.length===round.participantIds.length){round.complete=true;s.roundsSoFar=round.number;}
-  /* E-18: like the main chat's queue at the end of a turn, the first queued message goes to the room when the round ends */
-  if(round.complete)flushQueue(id);
+  /* E-18: like the main chat's queue at the end of a turn, the first queued message goes to the room when the round ends
+     (not when you asked the room to sum up or end: then it stays queued) */
+  if(round.complete&&!s.after)flushQueue(id);
+  /* Pause asked during the turn holds here, at the turn boundary */
+  if(s.pausing){s.pausing=false;holdAtBoundary(r);}
+  else if(round.complete)schedule(id,BEAT,'boundary');
   return {ok:true,messageId:m.id,roundComplete:round.complete};
  }
+ /* ---- AUTOMATIC ROUNDS. One timer per room: 'advance' starts the next round when the room goes on by itself;
+    'boundary' runs what a round's end asks for (a summary, the end of the room, One answer each's summary) and then
+    advances. Times are motion time (PM56_CLOCK), so a film or a test can run them faster. ---- */
+ const BEAT=2500,START=400,GRILL_GRACE=1500,timers=new Map();
+ const clockMs=v=>{const K=window.PM56_CLOCK;return K&&K.ms?K.ms(v):v;},nowClock=()=>{const K=window.PM56_CLOCK;return K&&K.now?K.now():performance.now();};
+ const maxOf=r=>(r.chatRoom.turnPolicy||r.config.turnPolicy)==='ask_everyone_once'?1:+r.config.maxRounds;
+ const once=r=>(r.chatRoom.turnPolicy||r.config.turnPolicy)==='ask_everyone_once';
+ function schedule(id,delay,what){const t=timers.get(id);if(t)clearTimeout(t);timers.set(id,setTimeout(()=>{timers.delete(id);if(what==='boundary')boundary(id);else advance(id);},clockMs(delay||0)));}
+ /* why the room waits for you between rounds now, or null when it goes on by itself */
+ function waitsFor(r){
+  if(!owns(r?.id)||r.status!=='running')return null;const s=r.chatRoom;
+  if(s.round&&!s.round.complete)return null;
+  if(!s.round&&!s.roundsSoFar)return null;
+  if(s.after)return null;
+  /* One answer each: the Moderator sums up by itself once everyone has answered (the sheet's promise), then it waits */
+  if(once(r)&&!s.summary)return null;
+  if(s.roundsSoFar>=maxOf(r))return 'last';
+  if(s.summary&&s.summary.round===s.roundsSoFar)return 'summed';
+  if(s.pauseBetween)return s.pendingRecipientIds&&s.pendingRecipientIds.length?'message':'between';
+  return null;
+ }
+ /* round 1 waits for Grill Me's Confirm when Grill Me is on (DL-218), never for the Wonderer; a room whose interview
+    never began (nothing to ask) starts after a short grace */
+ function grillFirst(r){const WG=window.PM56_WG,s=r.chatRoom;if(!WG||s.roundsSoFar||s.round)return false;if(WG.holds(r))return true;
+  return WG.grillOn(r)&&!r.grill&&nowClock()-(s.admittedAt||0)<GRILL_GRACE;}
+ function goesOn(r){if(!owns(r?.id)||r.status!=='running')return false;const s=r.chatRoom;if(s.round&&!s.round.complete)return false;if(s.roundsSoFar>=maxOf(r)||s.after)return false;
+  if(s.roundsSoFar&&waitsFor(r))return false;return true;}
+ function startRound(id){const x=beginRound(id,envelope(id));if(x.ok&&!x.reused)document.dispatchEvent(new CustomEvent('pm56:room-round',{detail:{runId:id}}));return x;}
+ function advance(id){const r=run(id);if(!goesOn(r))return;if(grillFirst(r)){if(!window.PM56_WG.holds(r))schedule(id,300);return;}
+  startRound(id);const c=E.ctx();if(c)c.renderApp();}
+ function boundary(id){const r=run(id);if(!owns(id)||r.status!=='running')return;const s=r.chatRoom;if(s.round&&!s.round.complete)return;
+  const ask=s.after;s.after=null;
+  if(ask==='end'){if(!(s.summary&&s.summary.round===s.roundsSoFar))summarize(id);finish(id);}
+  else if(ask==='summarize'||(once(r)&&s.roundsSoFar>=1&&!s.summary))summarize(id);
+  else advance(id);
+  const c=E.ctx();if(c)c.renderApp();}
+ /* Pause during a turn: the speaker finishes, then the room holds (COLLAB's paused face, the same words as its Pause) */
+ function holdAtBoundary(r){if(r.status!=='running')return;r.status='paused';r.stopEpoch+=1;C.appendMessage(r.id,{senderKind:'system',senderName:'System',messageType:'message',body:'Paused. Nothing was lost.'});}
+ /* Summarize Now and End discussion are always there while the room runs: asked during a round they act when it ends */
+ function askAfterRound(id,what){const r=run(id);if(!owns(id)||r.status!=='running')return fail('room_not_running');const s=r.chatRoom;
+  if(!(s.round&&!s.round.complete))return {ok:true,now:true};if(s.after!=='end')s.after=what;return {ok:true,later:true};}
+ function endDiscussion(id){const r=run(id);if(!owns(id))return fail('room_missing');if(r.status==='completed')return {ok:true,reused:true};
+  const later=askAfterRound(id,'end');if(!later.ok)return later;if(later.later)return later;
+  const s=r.chatRoom;if(!(s.summary&&s.summary.round===s.roundsSoFar)){const x=summarize(id);if(!x.ok)return x;}return finish(id);}
+ function setPauseBetween(id,on){const r=run(id);if(!owns(id))return fail('room_missing');if(!['running','paused'].includes(r.status))return fail('room_ended_or_paused');
+  const s=r.chatRoom;on=!!on;if(!!s.pauseBetween===on)return {ok:true,reused:true};s.pauseBetween=on;
+  C.appendMessage(id,{senderKind:'system',senderName:'System',messageType:'message',body:'Pause between rounds is '+(on?'on.':'off.')});
+  /* turned off while the room waits between rounds: the next round starts at once; on during a round: it waits after it */
+  if(!on&&r.status==='running')advance(id);return {ok:true};}
  function canSend(id,dest){const r=run(id);if(!owns(id))return fail('room_missing');if(r.status!=='running')return fail('room_ended_or_paused');if(r.chatRoom.round&&!r.chatRoom.round.complete)return fail('finish_current_round');if(r.chatRoom.pendingRecipientIds?.length)return fail('finish_pending_delivery');if(r.config.turnPolicy==='ask_everyone_once'&&r.chatRoom.roundsSoFar>=1||r.chatRoom.roundsSoFar>=+r.config.maxRounds)return fail('round_limit_reached');if(dest?.participantId&&!r.participants.some(p=>p.id===dest.participantId))return fail('participant_missing');return {ok:true};}
  function receiveUser(id,message,buffer,thread){
   if(message&&message.roomSteer)return steer(id,message,buffer&&buffer.destination,thread);
@@ -178,9 +240,25 @@
  const isRecorded=d=>!!(C.isRecordedDraft?C.isRecordedDraft(d):d&&d.roomInput);
  const sayNo=(c,title,code)=>{const t=window.PM56_SHELL&&window.PM56_SHELL.pmxRefusalText?window.PM56_SHELL.pmxRefusalText(code):null;c.toast(title,t?t.text:'Nothing changed.');};
  E.chainAction('collab-modal-commit',(c)=>{const d=C.draft();if(d?.kind!=='chat_room'||!isRecorded(d))return false;const ok=preflight(d);if(ok.ok)return false;const t=window.PM56_SHELL?.pmxRefusalText?.(ok.error);d.lastFailure={error:ok.error,message:t?t.text:'This recorded example needs exactly 3 helpers, no specialists, Moderator guides or One answer each, and 1 or 2 rounds.'};c.renderOverlays();return true;});
- E.chainAction('collab-room-next-round',(c,b)=>{if(!owns(b.dataset.run))return false;const x=beginRound(b.dataset.run,envelope(b.dataset.run));if(x.ok)document.dispatchEvent(new CustomEvent('pm56:room-round',{detail:{runId:b.dataset.run}}));else sayNo(c,x.error==='grill_me_waits_for_confirm'?'The next round waits for you':'Round not started',x.error);c.renderApp();return true;});
- E.chainAction('collab-room-summarize',(c,b)=>{if(!owns(b.dataset.run))return false;const x=summarize(b.dataset.run);if(!x.ok)sayNo(c,'Summary not ready',x.error);c.renderApp();return true;});
- E.action('room-finish',(c,b)=>{const x=finish(b.dataset.run);if(!x.ok)sayNo(c,'Discussion not ended',x.error);c.renderApp();return true;});
+ /* Next Round where the room waits (Pause between rounds, or after a summary): one round, then the room's own rule */
+ E.chainAction('collab-room-next-round',(c,b)=>{if(!owns(b.dataset.run))return false;const x=startRound(b.dataset.run);if(!x.ok)sayNo(c,x.error==='grill_me_waits_for_confirm'?'The next round waits for you':'Round not started',x.error);c.renderApp();return true;});
+ E.chainAction('collab-room-summarize',(c,b)=>{if(!owns(b.dataset.run))return false;const id=b.dataset.run,a=askAfterRound(id,'summarize');const x=!a.ok?a:a.later?a:summarize(id);if(!x.ok)sayNo(c,'Summary not ready',x.error);c.renderApp();return true;});
+ E.action('room-finish',(c,b)=>{const x=endDiscussion(b.dataset.run);if(!x.ok)sayNo(c,'Discussion not ended',x.error);c.renderApp();return true;});
+ /* Add 2 more rounds (DL-138) after the last round: a recording has no replies past its last round, so here it says so */
+ E.action('room-add-rounds',(c,b)=>{const r=run(b.dataset.run);if(!owns(r?.id))return true;sayNo(c,'No more rounds','recorded_rounds_missing');c.renderApp();return true;});
+ /* the "Pause between rounds" switch on the card and in the panel: Space or a click; the focus stays on the switch */
+ E.action('room-toggle-pause-between',(c,b)=>{const id=b.dataset.run,r=run(id);if(!owns(r?.id))return true;const where=b.getAttribute('data-room-pause')||'';
+  const x=setPauseBetween(id,!r.chatRoom.pauseBetween);if(!x.ok)sayNo(c,'Nothing changed',x.error);c.renderApp();
+  /* the panel redraws after the chat, so the focus is put back now and once more after that redraw (R2-5) */
+  const refocus=()=>{const again=document.querySelector('[data-room-pause="'+where+'"][data-run="'+CSS.escape(id)+'"]');if(again&&document.activeElement!==again){try{again.focus({preventScroll:true});}catch(e){}}};
+  refocus();requestAnimationFrame(refocus);setTimeout(refocus,80);return true;});
+ /* Pause: between rounds at once (COLLAB's), during a turn at its end; Resume goes on with the rounds */
+ E.chainAction('collab-pause',(c,b)=>{const r=run(b.dataset.run);if(!owns(r?.id)||r.status!=='running')return false;const s=r.chatRoom;
+  const D=window.PM56_ROOM_DEMOS,mid=s.round&&!s.round.complete&&!!(D&&D.speaking&&D.speaking(r.id));if(!mid)return false;s.pausing=true;c.renderApp();return true;});
+ E.chainAction('collab-resume',(c,b)=>{const id=b.dataset.run;if(owns(id)){const r=run(id);r.chatRoom.pausing=false;queueMicrotask(()=>{const q=run(id);if(q&&q.status==='running'&&!(q.chatRoom.round&&!q.chatRoom.round.complete))schedule(id,START,q.chatRoom.roundsSoFar?'boundary':undefined);});}return false;});
+ E.chainAction('collab-cancel',(c,b)=>{const id=b.dataset.run;if(owns(id)){const t=timers.get(id);if(t)clearTimeout(t);timers.delete(id);run(id).chatRoom.pausing=false;}return false;});
+ /* Grill Me's Confirm releases the round it held: round 1, or the round a later session gated */
+ document.addEventListener('pm56:wg-confirmed',e=>{const k=String(e.detail&&e.detail.key||'');if(k.indexOf('run:')!==0)return;const id=k.slice(4);if(owns(id))schedule(id,START);});
  E.action('room-select-message',(c,b)=>{if(!owns(b.dataset.run))return true;view.set(b.dataset.run,{...view.get(b.dataset.run),selected:b.dataset.message});c.renderApp();return true;});
  E.chainAction('collab-open-panel',(c,b)=>{if(!owns(b.dataset.run)||b.classList.contains('ab-row'))return false;c.closeDialog();c.closeMenu();c.state.editorRevealed=true;c.openEditor('room:'+b.dataset.run);return true;});
  E.chainAction('collab-open-configure',(c,b)=>{const r=run(b.dataset.reconfigure);if(!owns(r?.id))return false;if(['running','paused'].includes(r.status)){c.toast('Keep the current discussion','End or cancel this discussion before setting up another one.');return true;}if(c.state.selectedThread!==r.threadId)c.switchThread(r.threadId);C.openConfigure('chat_room',r.id);const d=C.draft();d.reconfigureRunId=null;d.roomInput=clone(r.chatRoom.input);c.openDialog({type:'collab-configure'});return true;});
@@ -223,7 +301,7 @@
     anything else in this chat, its "Not sent" rows go */
  (RT.composer.commitHooks||(RT.composer.commitHooks=[])).push((c,t,msg,buf)=>{try{const d=buf&&buf.destination;if(d&&owns(d.refId))return;
   (C.runsForThread?C.runsForThread(t.id):[]).forEach(r=>{if(!owns(r.id)||['running','paused'].includes(r.status))return;const q=r.chatRoom.queued;if(q&&q.length)q.length=0;});}catch(err){console.error('PM56 room queue commitHook threw',err);}});
- E.chainAction('reset-all',()=>{view.clear();refused.clear();streamStart.clear();speakerOf.clear();return false;});
+ E.chainAction('reset-all',()=>{view.clear();refused.clear();streamStart.clear();speakerOf.clear();for(const t of timers.values())clearTimeout(t);timers.clear();return false;});
  /* =====================================================================
     PRESENTATION (ROOM-A; DESIGN-SPEC 8.3, 7, 5.5): PM56_ROOM.sheetParts(draft, ctx, generic) and
     PM56_ROOM.cardParts(run, ctx, face, generic). COLLAB draws the frame (KIND INTERFACE in COLLAB-NOTES); these
@@ -268,14 +346,14 @@
    {key:'pr-read',glyph:'lock',text:'Helpers can read your project and the web, never change it.',part:'permission'}];
   out.readback=once
    ?[{part:'team',html:'<b>'+ink('rb:room:n',plural(n,'helper'))+'</b> '},{part:'policy',html:'<b>'+ink('rb:room:pol','each answer once')+'</b>, '},{part:'moderator',html:'then <b>the Moderator</b> sums it up. Nothing changes unless you pick it.'}]
-   :[{part:'team',html:'<b>'+ink('rb:room:n',plural(n,'helper'))+'</b> talk it through, '},{part:'policy',html:'<b>'+ink('rb:room:pol',pol.read)+'</b>, '},{part:'rounds',html:'for up to <b>'+ink('rb:room:r',plural(R,'round'))+'</b>. Nothing changes unless you pick it.'}];
+   :[{part:'team',html:'<b>'+ink('rb:room:n',plural(n,'helper'))+'</b> talk it through, '},{part:'policy',html:'<b>'+ink('rb:room:pol',pol.read)+'</b>, '},{part:'rounds',html:'for up to <b>'+ink('rb:room:r',plural(R,'round'))+'</b>'+(cfg.pauseBetweenRounds?', <b>waiting for you after each one</b>':', one after another')+'. Nothing changes unless you pick it.'}];
   /* 8.3 estimate: replies = helpers x rounds; time and cost are ranges and say they are an estimate */
   const replies=n*R,lo=Math.max(1,Math.round(replies*0.27)),hi=Math.max(lo+2,Math.round(replies*0.67));
   out.estimate=recorded?{recorded:true}:{text:'About '+(replies===1?'1 reply':replies+' replies')+' · usually '+lo+'–'+hi+' min · roughly $'+(replies*0.027).toFixed(2)+'–$'+(replies*0.08).toFixed(2)+' · an estimate, not a promise'};
   /* the preview's first frame (A16): the card's top frame as it will be born */
   const stops=[];for(let i=1;i<=R;i++)stops.push('Round '+i);
   out.firstFrame=recorded
-   ?{density:'starting',status:'yourmove',word:'Your move',reason:'start the first round.',stops,nowText:'<b>Round 1 of '+R+'</b> · not started'}
+   ?{density:'starting',status:'starting',word:'Starting',reason:'Round 1 opens when you press Start.',stops,nowText:'<b>Round 1 of '+R+'</b> · not started'}
    :{density:'waiting',status:'waiting',word:'Waiting to start',reason:escH(C.waitingReason?C.waitingReason({kind:'chat_room'}):'Nothing runs by itself in this preview, so the Moderator hasn’t opened the first round yet.'),stops,nowText:'<b>Round 1 of '+R+'</b> · not started'};
   return out;
  }
@@ -290,7 +368,7 @@
  const refused=new Map();
  /* the moment a refusal belongs to: it is shown until the round (or the room's state) moves on */
  const roomMoment=r=>{const s=r&&r.chatRoom;return s?[s.round?s.round.number:0,s.round&&s.round.complete?1:0,s.roundsSoFar,s.pendingRecipientIds?1:0,r.status].join(':'):'';};
- const HELP={ask:'Everyone gives an opening view.',next:'Each helper speaks once more.',sum:'The Moderator writes where everyone agrees, where they differ, and what’s still open.',end:'Locks the conversation. You can still promote messages.'};
+ const HELP={next:'Each helper speaks once more.',sum:'The Moderator writes where everyone agrees, where they differ, and what’s still open. During a round it sums up when the round ends.',end:'The Moderator sums up first, then the conversation locks. You can still promote messages.',more:'Two more rounds on the same topic.',pause:'Off: rounds run one after another. On: the room waits for you after each round.'};
  const tip=(key,text)=>'data-hover-key="room-act-'+key+'" data-hover-tip="'+escH(text)+'"';
  function personaOf(p){return String(p&&(p.effectivePersona||p.requestedPersona)||'Implementer');}
  function markFor(r,p,size,state,key){const i=r.participants.indexOf(p);return SH().pmxMark({key,role:wonderer(p)?'wonderer':personaOf(p),seat:wonderer(p)?7:(Math.max(0,i)%8)+1,size,state});}
@@ -359,9 +437,14 @@
     up, its headline leads and the helpers fold to their marks. A room that stopped mid-round (paused, cancelled,
     the Moderator stopped) says who spoke, who was speaking and who hadn't, in plain words. */
  function lanesOf(r,f){
-  const S=SH(),out=[],live=r.status==='running';
-  const wrap=more=>out.length?S.pmxLanes({key:'lanes:'+r.id,lanesHtml:out.join(''),more,runId:r.id,kind:'chat_room'}):'';
-  const moreOf=n=>n>0?{count:n,text:'Show all',action:'room-open-discussion',attrs:'data-run="'+escH(r.id)+'"'}:null;
+  const S=SH(),out=[],live=r.status==='running',all=!!(C.lanesOpen&&C.lanesOpen(r.id)),ra='data-run="'+escH(r.id)+'"';
+  /* Show all lists every speaker in place and Show fewer folds back (2026-10-21, Jared: Show all "compacts the box"; it
+     opened the room document, and the narrow row folded the card). Open discussion stays the way to the document. */
+  let cut=0;
+  const fold=()=>{if(out.length>3&&!all){cut=out.length-2;out.length=2;}};
+  const wrap=more=>out.length?S.pmxLanes({key:'lanes:'+r.id,lanesHtml:out.join(''),more:all?null:more,runId:r.id,kind:'chat_room',
+   less:all&&out.length>=2?{action:'collab-show-lanes',attrs:ra,always:out.length>3}:null}):'';
+  const moreOf=n=>n>0?{count:n,text:'Show all',action:'collab-show-lanes',attrs:ra}:null;
   if(live&&f.inRound&&f.speaker){
    /* the island's key carries the words' hash: a kept island never gets new children, so other words get a new island */
    const w=speakingWords(r,f),key='l2:'+r.id+':'+f.speaker.id+':quote:r'+f.round.number+(w?':'+hash(w.text).slice(8):'');
@@ -382,16 +465,17 @@
     if(m)out.push(laneFor(r,p,{verb:'spoke in round '+m.roomRound,verbKey:'vb:'+p.id+':spoke:'+m.id,message:m.id,line2:quoteOf(m),line2Kind:'quote'}));
     else if(p===f.speaker)out.push(laneFor(r,p,{verb:'was speaking '+how,verbKey:'vb:'+p.id+':cut:'+f.round.number,line2:r.status==='paused'?'their reply isn’t finished yet':'their reply wasn’t finished',line2Kind:'detail'}));
     else out.push(laneFor(r,p,{verb:'hadn’t spoken yet',verbKey:'vb:'+p.id+':not:'+f.round.number,line2:r.status==='paused'?'speaks after you resume':'the round stopped before their turn',line2Kind:'detail'}));});
-   if(out.length>3){const n=out.length-2;out.length=2;return wrap(moreOf(n));}
-   return wrap(null);
+   fold();return wrap(moreOf(cut));
   }
+  const spoke=()=>f.delivered.forEach(m=>{const p=r.participants.find(p=>p.id===m.senderId);if(p)out.push(laneFor(r,p,{state:r.status==='completed'?'done':'idle',verb:'spoke in round '+m.roomRound,verbKey:'vb:'+p.id+':spoke:'+m.id,message:m.id,line2:quoteOf(m),line2Kind:'quote'}));});
   if(live&&f.summarized&&f.summary){
    out.push(moderatorLane(r,{verb:'summed up round '+f.s.summary.round,verbKey:'vb:mod:sum:'+f.summary.id,message:f.summary.id,line2:quoteOf(f.summary),line2Kind:'quote'}));
+   /* the Moderator's headline leads; Show all adds every helper's line under it */
+   if(all)spoke();
    return wrap(moreOf(f.delivered.length));
   }
-  f.delivered.forEach(m=>{const p=r.participants.find(p=>p.id===m.senderId);if(p)out.push(laneFor(r,p,{state:r.status==='completed'?'done':'idle',verb:'spoke in round '+m.roomRound,verbKey:'vb:'+p.id+':spoke:'+m.id,message:m.id,line2:quoteOf(m),line2Kind:'quote'}));});
-  if(out.length>3){const n=out.length-2;out.length=2;return wrap(moreOf(n));}
-  return wrap(null);
+  spoke();fold();
+  return wrap(moreOf(cut));
  }
  /* promotion (8.3, G-16): Promote to To-Do · Plan · Goal as three text buttons, Goal disabled with its printed
     reason, acting on the whole summary message until point-level promotion exists (D-11). Card-only class names
@@ -414,10 +498,13 @@
      way the words get a line of their own on the card (queueLine), never a cut-off tail of the meta line */
   if(refused.has(r.id)&&(canSend(r.id).ok||r.status!=='running'||refused.get(r.id).at!==roomMoment(r)))refused.delete(r.id);
   const lc=window.PM56_WG?window.PM56_WG.countsText(r):'';
-  out.meta={recorded:f.prov==='recorded',parts:lc?[escH(pol.label),escH(lc)]:r.status==='running'?[escH(pol.label),'you can sum up and end after any round']:[escH(pol.label)]};
-  const endItem={action:'room-finish',label:'End discussion',disabled:!(f.summarized&&r.status==='running'),reason:f.summarized?'':refusalWords('current_summary_required'),attrs:tip('end',HELP.end)};
+  const auto=!once(r)&&!r.chatRoom.pauseBetween;
+  out.meta={recorded:f.prov==='recorded',parts:lc?[escH(pol.label),escH(lc)]:r.status==='running'?[escH(pol.label),once(r)?'everyone answers once':auto?'rounds run one after another':'waits for you after each round']:[escH(pol.label)]};
+  /* End discussion and Summarize Now work at any time while the room runs; asked during a round they act at its end */
+  const endItem={action:'room-finish',label:'End discussion',disabled:r.status!=='running',reason:r.status==='running'?'':refusalWords('room_not_running'),attrs:tip('end',HELP.end)};
+  const sumItem={action:'collab-room-summarize',label:'Summarize Now',attrs:tip('sum',HELP.sum)};
   const exportItem={action:'room-export',label:'Download transcript (.md)'};
-  out.more=[endItem,exportItem];
+  out.more=r.status==='running'&&!f.summarized?[sumItem,endItem,exportItem]:[endItem,exportItem];
   if(done){
    const m=f.summary||[...r.messages].reverse().find(m=>m.senderKind==='coordinator'),made=promotionsWord(r);
    const head=m?firstSentence(m.body).replace(/[.!]+$/,''):'The discussion ended';
@@ -444,7 +531,7 @@
    out.lanes='';
    return out;
   }
-  out.lanes=lanesOf(r,f)+queueLine(r);
+  out.lanes=lanesOf(r,f)+queueLine(r)+pauseSwitch(r,f,'card');
   if(r.status!=='running'){
    /* paused and cancelled keep COLLAB's shared sentence and actions (A3-04); the lanes and the track above are the
       room's own words. The Moderator stopping is the room's own case (7.6 G-31, IMPACT A1-28). */
@@ -455,37 +542,71 @@
     out.receipt={glyph:'warn',headline:'Needs attention · the Moderator stopped',time:escH(plural(f.s.roundsSoFar,'round')+' done'),cost:'',recorded:f.prov==='recorded'};
     out.more=[exportItem];
    }
+   /* a paused room waits for you: Resume goes on with the rounds */
+   if(r.status==='paused')out.dock={tone:'yourmove',sentence:escH('Paused · Resume goes on with the rounds')};
    return out;
   }
   if(f.inRound){
    const sp=f.speaker?escH(f.speaker.role):'',nx=f.next?escH(f.next.role):'';
    out.density='live';out.decision=null;
-   out.sentence={status:'running',word:escH(S.pmxFill(T.status.round,{n:f.n,m:f.max})),reason:sp?(sp+(f.round.replyTo?' is answering your message':' is speaking')+(nx?' · Up next: '+nx+'.':' · Then it’s your move.')):'The round is ending.'};
+   /* what follows this round: the next one by itself, or the moment the room waits for you */
+   const sx=r.chatRoom,then=sx.pausing?'Pausing after this turn.':sx.after==='end'?'The room ends after this round.':sx.after==='summarize'?'The Moderator sums up after this round.'
+    :f.n>=f.max?(once(r)?'Then the Moderator sums up.':'Then it’s your move.'):sx.pauseBetween?'Then it’s your move.':'Round '+(f.n+1)+' follows.';
+   out.sentence={status:'running',word:escH(S.pmxFill(T.status.round,{n:f.n,m:f.max})),reason:sp?(sp+(f.round.replyTo?' is answering your message':' is speaking')+(nx?' · Up next: '+nx+'.':' · '+then)):'The round is ending.'};
    out.dock={tone:'live',sentence:escH('Round '+f.n+' of '+f.max+(f.speaker?' · '+f.speaker.role+' is speaking':''))};
    return out;
   }
+  /* between rounds while the room goes on by itself: live, never "your move" (a short line until the next round) */
+  const why=waitsFor(r);
+  if(!why&&!f.userWaiting){
+   const sx=r.chatRoom,first=!f.started;
+   const word=first?'Starting':'Round '+f.n+' done',say=first?(window.PM56_WG&&window.PM56_WG.grillOn(r)&&!r.grill?'The Moderator is getting ready.':'Round 1 opens.')
+    :sx.after==='end'||sx.after==='summarize'||(once(r)&&!f.summarized)?'The Moderator is summing up.':'Round '+(f.n+1)+' starting.';
+   out.density=first?'starting':'live';out.decision=null;
+   out.sentence={status:first?'starting':'running',word:escH(word),reason:escH(say)};
+   out.dock={tone:'live',sentence:escH(first?'Round 1 opens':'Round '+f.n+' done · '+say.charAt(0).toLowerCase()+say.slice(1).replace(/\.$/,''))};
+   return out;
+  }
   /* between rounds: "your move", the accent decision (7.4), never a warm needs-you */
-  const A={ask:{action:'collab-room-next-round',label:'Ask Everyone',primary:true,attrs:tip('ask',HELP.ask)},
-   next:p=>({action:'collab-room-next-round',label:'Next Round',primary:p,soft:!p,attrs:tip('next',HELP.next)}),
+  /* the room waits for you (7.4: "your move", the accent decision, never a warm needs-you): only after its last round,
+     after a summary you asked for, after every round with Pause between rounds on, or for a message of yours */
+  const A={next:p=>({action:'collab-room-next-round',label:'Next Round',primary:p,soft:!p,attrs:tip('next',HELP.next)}),
    sum:p=>({action:'collab-room-summarize',label:'Summarize Now',primary:p,soft:!p,attrs:tip('sum',HELP.sum)}),
-   end:p=>({action:'room-finish',label:'End discussion',primary:p,soft:!p,attrs:tip('end',HELP.end)})};
+   end:p=>({action:'room-finish',label:'End discussion',primary:p,soft:!p,attrs:tip('end',HELP.end)}),
+   more:{action:'room-add-rounds',label:'Add 2 more rounds',soft:true,disabled:f.prov==='recorded',reason:f.prov==='recorded'?'This recording has no replies past round '+f.max+'.':'',attrs:tip('more',HELP.more)}};
   let word,say,acts;
-  if(!f.started&&!f.userWaiting){word='Your move';say='start the first round.';acts=[A.ask];}
-  else if(f.userWaiting){word='Your message is with the room';say='start the next round so they can answer.';acts=f.lastUsed?[A.sum(true)]:[A.next(true)];}
-  else if(!f.summarized&&!f.lastUsed){word='Round '+f.n+' done';say='Your move.';acts=[A.next(true),A.sum(false)];}
-  else if(!f.summarized){word='Round '+f.n+' done';say='That was the last round: sum it up, then end the discussion.';acts=[A.sum(true)];}
-  else if(!f.lastUsed){word='Round '+f.n+' is summed up';say='Your move: keep going, or end the discussion.';acts=[A.end(true),A.next(false)];}
-  else{word='Summed up';say='Your move: end the discussion.';acts=[A.end(true)];}
+  if(f.userWaiting){word='Your message is with the room';say='start the next round so they can answer.';acts=f.lastUsed?[A.sum(true)]:[A.next(true),A.end(false)];}
+  /* One answer each is always one round: no more rounds to add */
+  else if(f.lastUsed&&!f.summarized){word='This room used all its rounds';say=once(r)?'everyone answered once.':'sum it up, add more rounds, or end the discussion.';acts=once(r)?[A.sum(true),A.end(false)]:[A.sum(true),A.more,A.end(false)];}
+  else if(f.lastUsed){word='Summed up';say=once(r)?'everyone answered once. Promote the summary, or end the discussion.':'Your move: promote the summary, or end the discussion.';acts=once(r)?[A.end(true)]:[A.end(true),A.more];}
+  else if(f.summarized){word='Round '+f.n+' is summed up';say='Your move: keep going, or end the discussion.';acts=[A.end(true),A.next(false)];}
+  else{word='Round '+f.n+' done';say='Pause between rounds is on, so the room waits for you.';acts=[A.next(true),A.sum(false),A.end(false)];}
+  /* the end-of-rounds wait with a summary: promote it here, as on a finished room (a real step of yours) */
+  if(f.lastUsed&&f.summarized&&f.summary&&!viewing)out.board=promoteRow(r,f.summary);
   out.density='attention';
   out.sentence={status:'yourmove',word:escH(word),reason:escH(say)};
   /* 7.12 one control set: while the room document is open beside the chat its controls are the only ones, and the
      decision row says where they are */
   out.decision={tone:'accent',glyph:'ring-dot',sentence:'<b>'+escH(word)+'.</b> '+escH(viewing?T.oneControlSet.panel+'.':say.charAt(0).toUpperCase()+say.slice(1)),actions:viewing?[]:acts};
-  out.dock={tone:'yourmove',sentence:escH(!f.started?'Your move · start the first round':'Round '+f.n+' of '+f.max+' is done · your move')};
+  out.dock={tone:'yourmove',sentence:escH(f.lastUsed?'All '+plural(f.max,'round')+' done · your move':'Round '+f.n+' of '+f.max+' is done · your move')};
   /* DON'T 31: a control on the card is never repeated in More */
   const onCard={};out.decision.actions.forEach(a=>{onCard[a.action]=1;});
   out.more=out.more.filter(x=>!onCard[x.action]);
   return out;
+ }
+ /* "Pause between rounds" (Jared, 2026-10-21): the card's and the panel's switch, in Grill Me's switch grammar (a
+    labelled checkbox switch, its state in words, Space or a click, the focus kept on it after it re-renders). It works
+    mid-run and never cancels a turn: on during a round, the room waits once that round ends; off while the room waits
+    between rounds, the next round starts at once. Hidden where it changes nothing (One answer each, a room whose rounds are used up). */
+ function pauseSwitch(r,f,where){
+  if(!owns(r.id)||once(r)||!['running','paused'].includes(r.status))return '';
+  /* shown through the last round (so a switch turned off a moment ago keeps its place and its focus), gone once the
+     rounds are used up */
+  const s=r.chatRoom,left=s.roundsSoFar<f.max;if(!left)return '';
+  const on=!!s.pauseBetween,S=SH();
+  return '<div class="pmx-room-pause" data-k="room-pause:'+where+':'+escH(r.id)+'">'+S.pmxCheck({key:'room-pause-check:'+where+':'+escH(r.id),cls:'room-pause',glyph:'pause',checked:on,label:'Pause between rounds',
+   attrs:'role="switch" aria-checked="'+on+'" data-action="room-toggle-pause-between" data-run="'+escH(r.id)+'" data-room-pause="'+where+'" aria-label="Pause between rounds" '+tip('pause',HELP.pause),
+   helper:on?'On. The room waits for you after each round.':'Off. Rounds run one after another.'})+'</div>';
  }
  /* ---- E-18 queue, presentation: the card's queue line and the queued rows above the composer (the main chat's
     queue strip: the words, Edit, Send now, and a Remove; J-2 sizes). The rows carry pmx classes, so the chat
@@ -551,7 +672,7 @@
  }
  if(PMXo()&&PMXo().after)PMXo().after((c,phase)=>{if(phase==='app')afterApp();});
 
- window.PM56_ROOM={roundGate,owns,preflight,admit,envelope,beginRound,request,submit,canSend,receiveUser,summarize,finish,promotionRequest,validatePromotion,promote,inline,controls,documentHtml,exportTranscript,hash,
+ window.PM56_ROOM={pauseSwitch:(r,where)=>owns(r?.id)?pauseSwitch(r,roomFacts(r),where):'',roundGate,owns,preflight,admit,envelope,beginRound,startRound,waitsFor,goesOn,setPauseBetween,endDiscussion,askAfterRound,maxRounds:id=>owns(id)?maxOf(run(id)):null,pace:{beat:BEAT,start:START},request,submit,canSend,receiveUser,summarize,finish,promotionRequest,validatePromotion,promote,inline,controls,documentHtml,exportTranscript,hash,
   sheetParts,cardParts,facts:id=>owns(id)?roomFacts(run(id)):null,waitingNoun:WAIT_NOUN,
   queued:id=>queued(id).map(e=>({id:e.id,text:e.text,participantId:e.participantId,at:e.at})),queueState,enqueue,steer,deliverQueued};
 })();
