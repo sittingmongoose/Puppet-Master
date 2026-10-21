@@ -172,10 +172,13 @@ async function main() {
 
     /* card expands inline, then Open Panel opens the SAME run in the docked run view (COLLAB step 3, spec 4.4 / 7.9 /
        G-14: the editor pane, not a centred dialog; the view root keeps the .collab-panel hooks) */
-    await clickSel(`[data-action="collab-toggle-expand"][data-run="${s.id}"]`);
+    /* the chevron flips what is on screen (2026-10-21): a folded card (collapsed, or a receipt) opens with it; a card
+       that already shows its body is left open, since its chevron is Collapse */
+    const folded = await ev(id => { const c = document.querySelector(`.collab-card[data-run-id="${id}"]`); return !!c && /^(collapsed|receipt)$/.test(c.getAttribute('data-density') || ''); }, s.id);
+    if (folded) await clickSel(`[data-action="collab-toggle-expand"][data-run="${s.id}"]`);
     const expanded = await ev(id => {
-      const b = document.querySelector(`.collab-card[data-run-id="${id}"] .collab-card-body`);
-      return !!(b && b.offsetParent !== null);
+      const c = document.querySelector(`.collab-card[data-run-id="${id}"]`), b = c && c.querySelector('.collab-card-body'), f = c && c.querySelector(':scope > .collab-card-foot [data-action="collab-toggle-expand"]');
+      return !!(b && b.offsetParent !== null && f && f.getAttribute('aria-expanded') === 'true');
     }, s.id);
     check(`${s.kind}: Expand reveals the inline card body (participants, kind detail, usage)`, expanded);
 
