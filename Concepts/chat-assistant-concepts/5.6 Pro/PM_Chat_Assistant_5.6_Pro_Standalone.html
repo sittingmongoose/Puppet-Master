@@ -24590,8 +24590,18 @@ setTimeout(function(){if(!window.__PM56_BOOT_OK){var r=document.getElementById('
     now() { const r = performance.now(); this._v += (r - this._r) * this.scale; this._r = r; return this._v; },
     /* announced, so an interval armed with ms() can re-arm at the new rate */
     setScale(k) { this.now(); this.scale = Math.max(0, Number(k) || 0); window.dispatchEvent(new Event('pm56-clock-scale')); },
-    ms(realMs) { return this.scale > 0 ? realMs / this.scale : realMs; }   /* a real-time delay for a motion-time one */
+    ms(realMs) { return this.scale > 0 ? realMs / this.scale : realMs; },   /* a real-time delay for a motion-time one */
+    /* after(motionMs, fn): a one-shot timer in motion time that keeps its due moment when the scale changes (a film or a
+       test that speeds the recordings up or slows them down mid-wait). Returns a handle; clock.cancel(handle) stops it. */
+    after(motionMs, fn) {
+      const h = { due: this.now() + Math.max(0, +motionMs || 0), fn, t: 0, done: false };
+      const arm = () => { clearTimeout(h.t); h.t = setTimeout(() => { if (h.done) return; const left = h.due - this.now(); if (left > 1) { arm(); return; } h.done = true; timers.delete(h); h.fn(); }, Math.max(0, this.ms(h.due - this.now()))); };
+      timers.add(h); arm(); h.rearm = arm; return h;
+    },
+    cancel(h) { if (h && h.t != null) { h.done = true; clearTimeout(h.t); timers.delete(h); } }
   };
+  const timers = new Set();
+  window.addEventListener('pm56-clock-scale', () => { timers.forEach(h => { if (!h.done) h.rearm(); }); });
   window.PM56_CLOCK = clock;
 
   /* Registry for working-animation takes that live outside app.js.
@@ -66401,7 +66411,10 @@ root.PM56_SCHEDULE_TIME=api;if(typeof module!=='undefined')module.exports=api;
  const clockMs=v=>{const K=window.PM56_CLOCK;return K&&K.ms?K.ms(v):v;},nowClock=()=>{const K=window.PM56_CLOCK;return K&&K.now?K.now():performance.now();};
  const maxOf=r=>(r.chatRoom.turnPolicy||r.config.turnPolicy)==='ask_everyone_once'?1:+r.config.maxRounds;
  const once=r=>(r.chatRoom.turnPolicy||r.config.turnPolicy)==='ask_everyone_once';
- function schedule(id,delay,what){const t=timers.get(id);if(t)clearTimeout(t);timers.set(id,setTimeout(()=>{timers.delete(id);if(what==='boundary')boundary(id);else advance(id);},clockMs(delay||0)));}
+ /* motion-time timers (PM56_CLOCK.after keeps its due moment when a film or a test changes the clock's scale) */
+ const later=(motionMs,fn)=>{const K=window.PM56_CLOCK;return K&&K.after?K.after(motionMs,fn):setTimeout(fn,clockMs(motionMs));};
+ const unlater=h=>{const K=window.PM56_CLOCK;if(h&&typeof h==='object'&&K&&K.cancel)K.cancel(h);else clearTimeout(h);};
+ function schedule(id,delay,what){const t=timers.get(id);if(t)unlater(t);timers.set(id,later(delay||0,()=>{timers.delete(id);if(what==='boundary')boundary(id);else advance(id);}));}
  /* why the room waits for you between rounds now, or null when it goes on by itself */
  function waitsFor(r){
   if(!owns(r?.id)||r.status!=='running')return null;const s=r.chatRoom;
@@ -66553,7 +66566,7 @@ root.PM56_SCHEDULE_TIME=api;if(typeof module!=='undefined')module.exports=api;
  E.chainAction('collab-pause',(c,b)=>{const r=run(b.dataset.run);if(!owns(r?.id)||r.status!=='running')return false;const s=r.chatRoom;
   const D=window.PM56_ROOM_DEMOS,mid=s.round&&!s.round.complete&&!!(D&&D.speaking&&D.speaking(r.id));if(!mid)return false;s.pausing=true;c.renderApp();return true;});
  E.chainAction('collab-resume',(c,b)=>{const id=b.dataset.run;if(owns(id)){const r=run(id);r.chatRoom.pausing=false;queueMicrotask(()=>{const q=run(id);if(q&&q.status==='running'&&!(q.chatRoom.round&&!q.chatRoom.round.complete))schedule(id,START,q.chatRoom.roundsSoFar?'boundary':undefined);});}return false;});
- E.chainAction('collab-cancel',(c,b)=>{const id=b.dataset.run;if(owns(id)){const t=timers.get(id);if(t)clearTimeout(t);timers.delete(id);run(id).chatRoom.pausing=false;}return false;});
+ E.chainAction('collab-cancel',(c,b)=>{const id=b.dataset.run;if(owns(id)){const t=timers.get(id);if(t)unlater(t);timers.delete(id);run(id).chatRoom.pausing=false;}return false;});
  /* Grill Me's Confirm releases the round it held: round 1, or the round a later session gated */
  document.addEventListener('pm56:wg-confirmed',e=>{const k=String(e.detail&&e.detail.key||'');if(k.indexOf('run:')!==0)return;const id=k.slice(4);if(owns(id))schedule(id,START);});
  E.action('room-select-message',(c,b)=>{if(!owns(b.dataset.run))return true;view.set(b.dataset.run,{...view.get(b.dataset.run),selected:b.dataset.message});c.renderApp();return true;});
@@ -66598,7 +66611,7 @@ root.PM56_SCHEDULE_TIME=api;if(typeof module!=='undefined')module.exports=api;
     anything else in this chat, its "Not sent" rows go */
  (RT.composer.commitHooks||(RT.composer.commitHooks=[])).push((c,t,msg,buf)=>{try{const d=buf&&buf.destination;if(d&&owns(d.refId))return;
   (C.runsForThread?C.runsForThread(t.id):[]).forEach(r=>{if(!owns(r.id)||['running','paused'].includes(r.status))return;const q=r.chatRoom.queued;if(q&&q.length)q.length=0;});}catch(err){console.error('PM56 room queue commitHook threw',err);}});
- E.chainAction('reset-all',()=>{view.clear();refused.clear();streamStart.clear();speakerOf.clear();for(const t of timers.values())clearTimeout(t);timers.clear();return false;});
+ E.chainAction('reset-all',()=>{view.clear();refused.clear();streamStart.clear();speakerOf.clear();for(const t of timers.values())unlater(t);timers.clear();return false;});
  /* =====================================================================
     PRESENTATION (ROOM-A; DESIGN-SPEC 8.3, 7, 5.5): PM56_ROOM.sheetParts(draft, ctx, generic) and
     PM56_ROOM.cardParts(run, ctx, face, generic). COLLAB draws the frame (KIND INTERFACE in COLLAB-NOTES); these
@@ -66996,9 +67009,12 @@ root.PM56_SCHEDULE_TIME=api;if(typeof module!=='undefined')module.exports=api;
  /* pacing of the recorded turns: the words stream at MS_WORD a word (as before), the whole reply then stays on screen
     for HOLD so it can be read, then it lands and the next helper speaks */
  const MS_WORD=70,HOLD=3600,ms=v=>{const K=window.PM56_CLOCK;return K&&K.ms?K.ms(v):v;};
+ /* motion-time timers that keep their due moment when the clock's scale changes (PM56_CLOCK.after) */
+ const later=(motionMs,fn)=>{const K=window.PM56_CLOCK;return K&&K.after?K.after(motionMs,fn):setTimeout(fn,ms(motionMs));};
+ const unlater=h=>{const K=window.PM56_CLOCK;if(h&&typeof h==='object'&&K&&K.cancel)K.cancel(h);else clearTimeout(h);};
  function current(){if(!active)return null;let r=active.runId?C.run(active.runId):C.runsForThread(active.threadId).find(r=>W.owns(r.id));if(r)active.runId=r.id;return r;}
  function configure(){if(!active)return;C.openConfigure('chat_room');const d=C.draft();d.name='Make search easier to reach';d.nameEdited=true;d.purpose='How should people reach search: a visible button, a keyboard shortcut, or both?';d.rows=d.rows.slice(0,3);d.rows.forEach((r,i)=>{r.role=['Product','Design','Engineering'][i];r.persona=['Product Manager','Architect','Implementer'][i];});d.config.participantCount=3;d.config.turnPolicy=active.kind==='plan'?'ask_everyone_once':'moderated';d.config.maxRounds=active.kind==='plan'?1:2;d.roomInput=fixture();d.wonderer=false;d.grillMe=false;if(C.markRecorded)C.markRecorded(d);E.ctx().openDialog({type:'collab-configure'});}
- function stop(id){const t=clocks.get(id);if(t)clearTimeout(t);clocks.delete(id);turns.delete(id);}
+ function stop(id){const t=clocks.get(id);if(t)unlater(t);clocks.delete(id);turns.delete(id);}
  function start(kind){if(!flows[kind])return;const c=E.ctx(),old=current();if(old){stop(old.id);if(['running','paused'].includes(old.status)){const b=document.createElement('button');b.dataset.run=old.id;E.run('collab-cancel',b,new Event('click'));}}
   const id='room-demo-'+kind+'-'+(++serial),t=clone(c.state.threads.find(t=>t.id==='plain')||c.state.threads[0]);Object.assign(t,{id,title:flows[kind].label+' · recorded example',goalId:null,status:'ready',pinned:false,archived:false,messages:[{id:id+'-seed',role:'user',type:'text',body:'Talk through how to make search easier to reach. Don’t create any work until I pick something.'}]});c.state.threads.push(t);
   Object.assign(c.state,{mode:'Ask',demoOpen:false,menu:null,dialog:null,hover:null,historyMode:'closed',editorTabs:[],activeEditor:null,editorRevealed:false,composer:''});c.state.activity.open=false;c.state.capabilities.goal=false;c.state.work={step:0,running:false,expanded:false,started:false,completed:false,elapsed:0,openPhase:null};window.PM56_RUNTIME.composer.destination=null;active={kind,threadId:id,runId:null,events:[],errors:[]};c.switchThread(id);configure();
@@ -67008,12 +67024,12 @@ root.PM56_SCHEDULE_TIME=api;if(typeof module!=='undefined')module.exports=api;
  function nextTurn(r){const round=r.chatRoom.round;if(!round||round.complete)return null;const pid=round.participantIds.find(pid=>!round.messages.some(mid=>r.messages.find(m=>m.id===mid)?.senderId===pid));if(!pid)return null;const slot=r.participants.findIndex(p=>p.id===pid);return {pid,slot,text:(r.chatRoom.input.rounds[round.number-1]||[])[slot]||''};}
  function play(id){const r=C.run(id);if(!W.owns(id)||clocks.has(id)||!r.chatRoom.round||r.chatRoom.round.complete)return;const owner=active,round=r.chatRoom.round;
   /* a paused room (Pause holds at the turn boundary) arms no speaker until it is resumed */
-  function arm(){if(r.status==='paused'){turns.delete(id);clocks.set(id,setTimeout(()=>{clocks.delete(id);arm();},ms(150)));return;}if(r.status!=='running'){turns.delete(id);return;}
-   const t=nextTurn(r);if(!t){turns.delete(id);return;}turns.set(id,{pid:t.pid,text:t.text,msPerWord:MS_WORD});const words=t.text.split(/\s+/).filter(Boolean).length;clocks.set(id,setTimeout(next,ms(words*MS_WORD+HOLD)));}
+  function arm(){if(r.status==='paused'){turns.delete(id);clocks.set(id,later(150,()=>{clocks.delete(id);arm();}));return;}if(r.status!=='running'){turns.delete(id);return;}
+   const t=nextTurn(r);if(!t){turns.delete(id);return;}turns.set(id,{pid:t.pid,text:t.text,msPerWord:MS_WORD});const words=t.text.split(/\s+/).filter(Boolean).length;clocks.set(id,later(words*MS_WORD+HOLD,next));}
   /* Pause holds the turn; after Resume the reply stays on screen a beat before it lands */
   let held=false;
-  function next(){clocks.delete(id);if(!C.run(id)||C.run(id)!==r||r.status==='canceled'||r.status==='completed'){turns.delete(id);return;}if(r.status==='paused'){held=true;clocks.set(id,setTimeout(next,ms(120)));return;}
-   if(held){held=false;clocks.set(id,setTimeout(next,ms(1500)));return;}
+  function next(){clocks.delete(id);if(!C.run(id)||C.run(id)!==r||r.status==='canceled'||r.status==='completed'){turns.delete(id);return;}if(r.status==='paused'){held=true;clocks.set(id,later(120,next));return;}
+   if(held){held=false;clocks.set(id,later(1500,next));return;}
    const t=nextTurn(r);if(!t){turns.delete(id);return;}const x=W.request(id,t.pid);if(!x){turns.delete(id);return;}const result=W.submit(id,{...x,body:t.text});
    if(!result.ok){turns.delete(id);if(owner)owner.errors.push(result.error);E.ctx().renderApp();return;}if(owner)owner.events.push({round:round.number,participantId:t.pid,messageId:result.messageId});
    if(!round.complete)arm();else turns.delete(id);E.ctx().renderApp();
@@ -67056,7 +67072,7 @@ root.PM56_SCHEDULE_TIME=api;if(typeof module!=='undefined')module.exports=api;
  E.chainAction('reset-all',()=>{for(const id of [...clocks.keys()])stop(id);turns.clear();active=null;return false;});
  ['plan-demo-start','schedule-demo-start','review-demo-start','brainstorm-demo-start','crew-demo-start','wg-demo-start','b13-start'].forEach(n=>E.chainAction(n,()=>{active=null;return false;}));
  const G=window.PM56_REPAIR_DEMOS,old=G.gallery;G.gallery=c=>'<section class="demo-section"><h3>Chat Room recorded examples</h3><div class="demo-section-body">'+Object.entries(flows).map(([id,f])=>'<button class="demo-trigger" data-action="room-demo-start" data-flow="'+id+'"><strong>'+c.esc(f.label)+'</strong><small>'+c.esc(f.detail)+'</small></button>').join('')+'</div></section>'+old(c);
- window.PM56_ROOM_DEMOS={start,configure,fixture,play,pace:{msPerWord:MS_WORD,hold:HOLD},speaking:id=>turns.get(id)||null,freeze:id=>{const t=clocks.get(id);if(t)clearTimeout(t);clocks.set(id,0);},snapshot:()=>active?clone({...active,runId:current()?.id||null}):null,editorGuide:id=>current()?.id===id?guide(E.ctx(),true):''};
+ window.PM56_ROOM_DEMOS={start,configure,fixture,play,pace:{msPerWord:MS_WORD,hold:HOLD},speaking:id=>turns.get(id)||null,freeze:id=>{const t=clocks.get(id);if(t)unlater(t);clocks.set(id,0);},snapshot:()=>active?clone({...active,runId:current()?.id||null}):null,editorGuide:id=>current()?.id===id?guide(E.ctx(),true):''};
 })();
 
 /* B07 Teach: explicit user capture and immutable-content revision history.
