@@ -1060,6 +1060,10 @@ async function reviewRound1({ page, ev, act, sleep, startSheet, answerAll }) {
   /* M5 + m8 = R10: required words read at 4.5:1 or better on their real background, NieR's Recommended included, in
      a light and a dark theme of every family */
   const measure = sels => pixelRatios(page, sels);
+  /* the recordings play at a readable pace now (2026-10-21), so ones started by earlier checks may still be playing in
+     other chats; they are cancelled first, so nothing redraws the chat while its pixels are read */
+  await ev(() => { const C = window.PM56_COLLAB; C.runs().filter(r => ['running', 'paused'].includes(r.status) && C.provenance && C.provenance(r.id) === 'recorded').forEach(r => { const b = document.createElement('button'); b.dataset.run = r.id; window.PM56_EXT.run('collab-cancel', b, new Event('click')); }); window.PM56_EXT.ctx().renderApp(); });
+  await sleep(600);
   const crewThread = await ev(id => window.PM56_COLLAB.run(id).threadId, (await ev(() => (window.PM56_COLLAB.runs().filter(r => r.kind === 'crew' && r.wonderer && r.status === 'completed').pop() || {}).id)));
   const low = {};
   for (const theme of ['basic-dark', 'basic-light', 'glass-light', 'friendly-light', 'retro-dark', 'nier-dark', 'nier-light']) {
