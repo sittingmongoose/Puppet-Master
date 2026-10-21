@@ -4,8 +4,12 @@
  * you before round 1; and a Deep Plan where the assistant grills you (APR-072). Everything is pre-written: no provider,
  * network or native call. Each flow drives the real owners (crew-protocol.js, room-protocol.js, the lead engine and the
  * Grill Me engine through PM56_WG), one step at a time on a 450 ms tick that waits whenever the next move is yours
- * (answering a round, Confirm, Check it), and a guide in the dock narrates the next step and can take it for you
- * ("Do this step" presses the same control you would). */
+ * (answering a round, Confirm).
+ * Playback (2026-10-21, Jared: recorded examples should play on their own): each example plays from Start, paced so
+ * every decision stays on screen long enough to read, and stops only where the real product waits for you: the Ask
+ * Card and What we agreed's Confirm, the room's end-of-rounds wait, and the end. The room opens round 1 by itself once
+ * you confirm and runs its rounds one after another (room-protocol.js, AUTOMATIC ROUNDS). The guide narrates what is happening
+ * and what comes next and names the control on screen; it never takes a step for you (wg-demo-step stays a QA hook). */
 (function () {
   'use strict';
   var E = window.PM56_EXT; if (!E || !E.slot) return;
@@ -16,6 +20,9 @@
   function clone(x) { return JSON.parse(JSON.stringify(x)); }
   function ms(v) { var K = window.PM56_CLOCK; return K && K.ms ? K.ms(v) : v; }
   var active = null, serial = 0, timer = 0;
+  /* the pace: the Crew's recorded steps were written at a quick 300-1800 ms; PACE stretches each so a decision, a claim
+     or a delivery stays on screen long enough to read (motion time, so a test can run it faster) */
+  var PACE = 2.8, ROOM_DECIDE_MS = 2600;
 
   var flows = {
     crew: { label: 'A Crew that grills you first, with a Wonderer alongside', detail: 'Grill Me before the split → leads decided as they arrive → pass 2 queues for a slot → one later decision gates only the export' },
@@ -246,12 +253,15 @@
     if (hasW(r)) wg.pump(r);
     /* the Wonderer explores alongside, from the start */
     if (passOf(r, 0) && passOf(r, 0).status === 'exploring' && at('pass1', 2600)) { if (!deliverPass(r, 0).ok) return fail('pass_1'); render(); return; }
-    if (wg.holds(r) || r.status === 'paused') return;
+    /* Pause holds the script; after Resume the current step waits its full time again */
+    if (r.status === 'paused') { active.wasPaused = true; return; }
+    if (active.wasPaused) { active.wasPaused = false; if (active.at) delete active.at['step' + active.step]; }
+    if (wg.holds(r)) return;
     /* a later session gates only its own step: everything else in the script keeps going */
     if (r.status !== 'running') { if (r.status === 'completed') stop(); return; }
     var steps = active.steps || (active.steps = crewScript(r));
     var st = steps[active.step]; if (!st) { stop(); return; }
-    if (st.wait && !at('step' + active.step, st.wait)) return;
+    if (st.wait && !at('step' + active.step, st.wait * PACE)) return;
     var out = st.run(r, W, wg);
     if (out === 'later') return;
     if (out && out.ok === false) {
@@ -356,7 +366,7 @@
     /* the Moderator decides each lead as it arrives, between turns: every lead of a pass on the tick it lands, so no
        lead is still undecided when the room is summed up (m1) */
     var und = w.leads.filter(function (l) { return !l.disposition && wg.engine.visible(r, l.passId) && ROOM_DECIDE[l.id]; });
-    if (und.length && at('decide:' + und[0].passId, 700)) {
+    if (und.length && at('decide:' + und[0].passId, ROOM_DECIDE_MS)) {
       for (var i = 0; i < und.length; i++) {
         var l = und[i], x = ROOM_DECIDE[l.id], res = wg.dispose(r, l.id, x[0], x[1]); if (!res.ok) return fail(res.error);
         say(r, 'Lead ' + l.n + ': ' + ({ explore: 'explore', use: 'use', set_aside: 'set aside' })[x[0]] + '. ' + x[1] + (x[0] === 'explore' ? ' Engineering checks it in round 2.' : ''));
@@ -440,7 +450,7 @@
       P.all()[pid] = tpl;
       c.appendMessage({ id: tid + '-plan', role: 'system', type: 'plan-card-v2', planId: pid, time: new Date().toISOString() }, t);
       active.planId = pid; render();
-    }, ms(1200));
+    }, ms(2800));
   }
 
   /* ================================================================ the tick and the guide */
@@ -468,14 +478,14 @@
     if (flow !== 'deepplan' && !r) return { text: 'Set up the ' + (flow === 'crew' ? 'Crew' : 'room') + ': the Wonderer and Grill Me are already on. Press Start.', act: { action: 'wg-demo-configure', label: 'Set it up' } };
     if (s && s.status === 'grilling') {
       var rd = wg.grill.round(s), only = s.later ? ' Only ' + (s.gateLabel || 'that step') + ' waits; everything else keeps going.' : '';
-      return rd ? { text: (s.later ? 'A later decision: ' + lead + ' is grilling you before ' + (s.gateLabel || 'the next step') + '. ' : 'Round ' + rd.n + ': ' + lead + ' is grilling you. ') + 'Each answer is filled in with the recommended one; it counts once you send or accept the round. Change any, say Not sure, or accept them all.' + only + (rd.n === 1 && !s.later && s.routed.length ? ' A fact it can look up is being researched, not asked.' : ''), act: { action: 'wg-open-round', label: c.state.decision ? '' : (s.later ? 'Answer it' : 'Answer round ' + rd.n), data: { key: key } } }
+      return rd ? { text: (s.later ? 'A later decision: ' + lead + ' is grilling you before ' + (s.gateLabel || 'the next step') + '. ' : 'Round ' + rd.n + ': ' + lead + ' is grilling you. ') + 'Your move: answer on the Ask Card. Each answer is filled in with the recommended one; it counts once you send or accept the round. Change any, say Not sure, or accept them all.' + only + (rd.n === 1 && !s.later && s.routed.length ? ' A fact it can look up is being researched, not asked.' : ''), act: { action: 'wg-open-round', label: c.state.decision ? '' : (s.later ? 'Answer it' : 'Answer round ' + rd.n), data: { key: key } } }
         : { text: lead.charAt(0).toUpperCase() + lead.slice(1) + ' is looking a fact up. Every question left depends on it, so the session waits rather than ending early. Nothing for you yet.' };
     }
-    if (s && s.status === 'agreeing') return { text: endedWords(s) + ' ' + (s.later ? 'Only ' + (s.gateLabel || 'that step') + ' waits for it.' : flow === 'crew' ? 'The split waits for it.' : flow === 'room' ? 'Round 1 waits for it.' : 'The plan isn’t written until then.'), act: { action: 'wg-confirm', label: 'Confirm', data: { key: key } } };
+    if (s && s.status === 'agreeing') return { text: endedWords(s) + ' ' + (s.later ? 'Only ' + (s.gateLabel || 'that step') + ' waits for it; the rest keeps going.' : flow === 'crew' ? 'The split waits for it, then the Crew plays on.' : flow === 'room' ? 'Round 1 opens once you confirm.' : 'The plan isn’t written until then.'), act: { action: 'wg-confirm', label: 'Confirm', data: { key: key } } };
     if (flow === 'deepplan') return a.planId ? { text: 'The plan is written from what you agreed. Nothing has been built. Open it from its card.', replay: true } : { text: 'Writing the plan from what you agreed.' };
     var w = wg.engine.state(r), c2 = wg.counts(r);
     if (flow === 'crew') {
-      if (r.status === 'completed') return { text: 'Done. Open the Crew’s panel: the result lists ' + (w ? 'every Wonderer lead and what the Crew did with it.' : 'what each part did.'), act: { action: 'crew-open-work', label: 'Open Panel', data: { run: r.id } }, replay: true };
+      if (r.status === 'completed') return { text: 'Done. Open Panel on the card: the result lists ' + (w ? 'every Wonderer lead and what the Crew did with it.' : 'what each part did.'), replay: true };
       if (r.grillPending) return { text: 'Grill Me is on now. The Coordinator questions you at the next assignment; the parts already running keep going.' };
       var q = w && w.passes.filter(function (x) { return x.status === 'queued'; })[0], x = w && w.passes.filter(function (y) { return y.n > 1 && y.status === 'exploring'; })[0];
       if (q) return { text: who(q) + ' asked the Wonderer for pass ' + q.n + '. Both slots are busy, so it is queued behind the parts: the team keeps working, and the final result waits for it.' };
@@ -487,28 +497,33 @@
     var cr = r.chatRoom;
     if (r.status === 'completed') return { text: 'The room ended. ' + (w ? 'Its summary lists every lead, with what the room did with it or “not taken up”.' : 'Nothing became a To-Do or Plan by itself.'), replay: true };
     if (r.grillPending) return { text: 'Grill Me is on now. The Moderator questions you before the next round; this round goes on.' };
-    if (!cr.roundsSoFar && !(cr.round && !cr.round.complete)) return { text: 'Start round 1. ' + (w ? 'It doesn’t wait for the Wonderer: its leads join the room between turns when they are ready, and it never takes a turn.' : 'Each helper speaks once.'), act: { action: 'collab-room-next-round', label: 'Start round 1', data: { run: r.id } } };
-    if (cr.round && !cr.round.complete) return { text: w && c2.total ? 'The Wonderer’s leads joined between turns, and the Moderator decides each one as it arrives. A reply that takes up a lead links to it.' : w ? 'Each helper speaks once. The Wonderer is still exploring alongside.' : 'Each helper speaks once.' };
+    if (!cr.roundsSoFar && !(cr.round && !cr.round.complete)) return { text: 'The room is starting. Round 1 opens in a moment.', act: { action: 'collab-room-next-round', label: 'Start round 1', data: { run: r.id } } };
+    /* lead 3 (M3): once the Moderator has decided it, the guide says what Check it would do; the rounds go on by
+       themselves, so it is said during round 1, never as a step the room waits for */
+    var r3 = w && wg.engine.lead(r, 'r3'), why = window.PM56_ROOM && window.PM56_ROOM.waitsFor ? window.PM56_ROOM.waitsFor(r) : null;
+    var r3say = r3 && !r3.research && r3.disposition ? ' The Moderator ' + (r3.disposition.kind === 'set_aside' ? 'set lead 3 aside' : r3.disposition.kind === 'use' ? 'is using lead 3 as a hypothesis' : 'chose to explore lead 3') + '; Check it on that lead’s row sends it to research anyway, and only you can do that. Design checks it in round 2.' : '';
+    if (cr.round && !cr.round.complete) return { text: (w && c2.total ? 'Round ' + cr.round.number + ': the Wonderer’s leads joined between turns, and the Moderator decides each one as it arrives. A reply that takes up a lead links to it.' : w ? 'Round ' + cr.round.number + ': each helper speaks once. The room doesn’t wait for the Wonderer: its leads join between turns when they are ready, and it never takes a turn.' : 'Round ' + cr.round.number + ': each helper speaks once.') + (cr.round.number === 1 ? r3say : ''), act: r3say && cr.round.number === 1 ? { action: 'wg-check-it', label: 'Check lead 3', data: { run: r.id, lead: 'r3' } } : null };
     var undecided = w ? w.leads.filter(function (l) { return !l.disposition && wg.engine.visible(r, l.passId); }).length : 0;
     if (cr.roundsSoFar === 1) {
-      /* the guide reads lead 3's real state before it says what the Moderator did with it (M3) */
-      var r3 = w && wg.engine.lead(r, 'r3');
-      if (r3 && !r3.research && r3.disposition) return { text: 'The Moderator ' + (r3.disposition.kind === 'set_aside' ? 'set lead 3 aside' : r3.disposition.kind === 'use' ? 'is using lead 3 as a hypothesis' : 'chose to explore lead 3') + '. Check it sends it to research anyway: only you can do that.', act: { action: 'wg-check-it', label: 'Check lead 3', data: { run: r.id, lead: 'r3' } } };
-      if (r3 && !r3.disposition && !r3.research) return { text: 'The Moderator decides lead 3 as it arrives. You can Check any lead now, whatever the room decides.' };
-      return { text: 'Start round 2' + (w ? ': Engineering checks the explored lead' + (r3 && r3.research && r3.research.via === 'check_it' ? ', and Design checks the one you sent.' : '.') : '.'), act: { action: 'collab-room-next-round', label: 'Start round 2', data: { run: r.id } } };
+      /* round 2 starts by itself after a short beat; with Pause between rounds on, the room waits for Next Round */
+      var r2 = 'Round 1 is done.' + (w ? ' In round 2 Engineering checks the explored lead' + (r3 && r3.research && r3.research.via === 'check_it' ? ', and Design checks the one you sent.' : '.') : '');
+      if (why === 'between' || why === 'message') return { text: r2 + ' Pause between rounds is on, so the room waits for you: press Next Round on the card for round 2.' + r3say, act: r3say ? { action: 'wg-check-it', label: 'Check lead 3', data: { run: r.id, lead: 'r3' } } : { action: 'collab-room-next-round', label: 'Start round 2', data: { run: r.id } } };
+      return { text: r2 + ' Round 2 starts by itself in a moment.' };
     }
     if (cr.roundsSoFar === 2 && !cr.summary) {
       /* the guide waits the moment it takes the Moderator to decide what just arrived, so the summary it offers lists
          every lead with its decision (m1); Summarize Now on the card is never blocked */
       if (undecided) return { text: 'The Moderator is deciding the last ' + (undecided === 1 ? 'lead' : undecided + ' leads') + ' as they arrive; the summary comes next. Nothing waits on a lead: Summarize Now on the card works at any time.' };
-      return { text: 'Sum it up: the summary lists every lead' + (w ? ', each with what the room did with it.' : '.') + ' Nothing waits on a lead.', act: { action: 'collab-room-summarize', label: 'Summarize Now', data: { run: r.id } } };
+      return { text: 'That was the last round, so the room waits for you now: press Summarize Now on the card. The summary lists every lead' + (w ? ', each with what the room did with it.' : '.') + ' Nothing waits on a lead.', act: { action: 'collab-room-summarize', label: 'Summarize Now', data: { run: r.id } } };
     }
-    return { text: 'End the discussion. Nothing becomes a To-Do or Plan by itself.', act: { action: 'room-finish', label: 'End discussion', data: { run: r.id } } };
+    return { text: 'The Moderator summed it up. Press End discussion on the card when you are done. Nothing becomes a To-Do or Plan by itself.', act: { action: 'room-finish', label: 'End discussion', data: { run: r.id } } };
   }
+  /* the guide narrates; its only buttons are Set it up before Start (the sheet, if you closed it) and Replay. Where the
+     example waits for you, its words name the control on screen; step().act stays for the wg-demo-step QA hook */
   function guide(c) {
     if (!active || c.state.selectedThread !== active.threadId || c.state.dialog) return '';
     var st = step(c), acts = [];
-    if (st.act && st.act.label) acts.push({ action: 'wg-demo-step', label: st.act.label === 'Confirm' ? 'Confirm' : 'Do this step' });
+    if (st.act && st.act.action === 'wg-demo-configure') acts.push({ action: 'wg-demo-configure', label: st.act.label });
     if (st.replay) acts.push({ action: 'wg-demo-replay', label: 'Replay' });
     return S().pmxGuide({ key: 'wg-demo-guide', cls: 'wg-demo-guide', placement: 'dock', step: c.esc(st.text), actions: acts, close: { action: 'wg-demo-close', label: 'Close the example' } });
   }
