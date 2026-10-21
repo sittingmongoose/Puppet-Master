@@ -292,7 +292,7 @@
     {
       "name": "the panel names the single frozen target pack hash all initial passes shared",
       "pass": true,
-      "detail": "a1c9f02e Snapshot of orchestrator-subagent-integration.md#executionLimits, taken 4:41 AM. Every reviewer read that exact version."
+      "detail": "a1c9f02e Snapshot of orchestrator-subagent-integration.md#executionLimits, taken 4:31 PM. Every reviewer read that exact version."
     },
     {
       "name": "a finding produced against a DIFFERENT target hash is excluded from corroboration, not silently merged",
@@ -307,7 +307,7 @@
     {
       "name": "Review states it is read-only and never auto-repairs, and no control anywhere on the run exposes a repair action",
       "pass": true,
-      "detail": "{\"targetTxt\":\"a1c9f02e Snapshot of orchestrator-subagent-integration.md#executionLimits, taken 4:41 AM. Every reviewer read that exact version.\",\"excludedTxt\":\"Set aside: this reviewer saw an older version of the file.\",\"excludedReason\":\"different_target_hash\",\"excludedHash\":\"f77e10bb\",\"readonlyNote\":\"Review never changes your files and never auto-repairs.\",\"hasRepairAction\":false}"
+      "detail": "{\"targetTxt\":\"a1c9f02e Snapshot of orchestrator-subagent-integration.md#executionLimits, taken 4:31 PM. Every reviewer read that exact version.\",\"excludedTxt\":\"Set aside: this reviewer saw an older version of the file.\",\"excludedReason\":\"different_target_hash\",\"excludedHash\":\"f77e10bb\",\"readonlyNote\":\"Review never changes your files and never auto-repairs.\",\"hasRepairAction\":false}"
     },
     {
       "name": "the review configure modal reopened for the auto-repair lock check",
@@ -442,7 +442,7 @@
     {
       "name": "an EXPLICIT promotion is the only thing that adds a promotion record, with lineage to the source message",
       "pass": true,
-      "detail": "[{\"id\":\"promo-147\",\"target\":\"todo\",\"summary\":\"Round 3 close. Still nothing promoted — say the word and I will promote a conclusion.\",\"sourceMessageId\":\"msg-146\",\"at\":\"2026-10-21T04:42:36.276Z\"}]"
+      "detail": "[{\"id\":\"promo-146\",\"target\":\"todo\",\"summary\":\"Round 3 close. Still nothing promoted — say the word and I will promote a conclusion.\",\"sourceMessageId\":\"msg-145\",\"at\":\"2026-10-21T16:32:29.826Z\"}]"
     },
     {
       "name": "the explicit promotion is recorded as a durable, visible receipt in the transcript",
@@ -452,17 +452,17 @@
     {
       "name": "Run again with changes… on a cancelled run opens a fresh-run sheet (\"Run this Crew again\"), not a reconfiguration",
       "pass": true,
-      "detail": "{\"open\":true,\"reconfigure\":null,\"rerunOf\":\"run-158\",\"title\":\"Run this Crew again Starts a fresh run; this one stays as it is.\"}"
+      "detail": "{\"open\":true,\"reconfigure\":null,\"rerunOf\":\"run-157\",\"title\":\"Run this Crew again Starts a fresh run; this one stays as it is.\"}"
     },
     {
       "name": "its Start creates exactly one new waiting run and leaves the ended run exactly as it was",
       "pass": true,
-      "detail": "{\"endedBefore\":{\"status\":\"canceled\",\"purpose\":\"First job for crew\",\"title\":\"First job for crew\",\"rev\":1,\"parts\":\"p-152,p-154,p-156\",\"msgs\":2},\"endedAfter\":{\"status\":\"canceled\",\"purpose\":\"First job for crew\",\"title\":\"First job for crew\",\"rev\":1,\"parts\":\"p-152,p-154,p-156\",\"msgs\":2},\"fresh\":{\"id\":\"run-170\",\"purpose\":\"Changed job\",\"rerunOf\":\"run-158\",\"density\":\"waiting\"}}"
+      "detail": "{\"endedBefore\":{\"status\":\"canceled\",\"purpose\":\"First job for crew\",\"title\":\"First job for crew\",\"rev\":1,\"parts\":\"p-151,p-153,p-155\",\"msgs\":2},\"endedAfter\":{\"status\":\"canceled\",\"purpose\":\"First job for crew\",\"title\":\"First job for crew\",\"rev\":1,\"parts\":\"p-151,p-153,p-155\",\"msgs\":2},\"fresh\":{\"id\":\"run-169\",\"purpose\":\"Changed job\",\"rerunOf\":\"run-157\",\"density\":\"waiting\"}}"
     },
     {
       "name": "E-31: a helper message that arrives on a live run streams into its lane through PM56_PMX.stream (a kept island, words arriving)",
       "pass": true,
-      "detail": "{\"e31State\":\"running\",\"e31Density\":\"live\",\"e31Mid\":{\"streaming\":true,\"keep\":true,\"words\":13,\"html\":\"<q data-collab-stream=\\\"msg-89\\\">I would keep the account boundary first-class: the spend guard says no before</q>\",\"text\":\"I would keep the account boundary first-class: the spend guard says no before\"}}"
+      "detail": "{\"e31State\":\"running\",\"e31Density\":\"live\",\"e31Mid\":{\"streaming\":true,\"keep\":true,\"words\":11,\"html\":\"<q data-collab-stream=\\\"msg-89\\\">I would keep the account boundary first-class: the spend guard says</q>\",\"text\":\"I would keep the account boundary first-class: the spend guard says\"}}"
     },
     {
       "name": "E-31: once every word is in, the whole message lands once, with its inline markup, and the island is gone",
@@ -472,7 +472,7 @@
     {
       "name": "E-31: pausing the run mid-stream ends the stream at once: no island, the written message whole, no words still arriving",
       "pass": true,
-      "detail": "{\"e31Before\":{\"streaming\":true,\"keep\":true,\"words\":22,\"html\":\"<q data-collab-stream=\\\"msg-90\\\">A long second thought that is still arriving when the run stops: more words more words more words more words more words</q>\",\"text\":\"A long second thought that is still arriving when the run stops: more words more words more words more words more words\"},\"e31Paused\":{\"streaming\":false,\"keep\":false,\"words\":0,\"html\":\"“A long second thought that is still arriving when the run stops: more words more words more words more words more words more words more words more words more words more words more words more words more words more words more words more words more words more words more words more words more words more words more words more words more words more words more words more words more words more words more words more words more words more words more words more words more words more words more words more words more words more words more words more words more words more words more words more words more words more words more words more words more words more words more words more words more words more words more words more words ”\",\"text\":\"“A long second thought that is still arriving when the run stops: more words more words more words more words more words more words more words more words more words more words more words more words more words more words more words more words more words more words more words more words more words more words more words more words more words more words more words more words more words more words more words more words more words more words more words more words more words more words more words more words more words more words more words more words more words more words more words more words more words more words more words more words more words more words more words more words more words more words more words more words ”\"}}"
+      "detail": "{\"e31Before\":{\"streaming\":true,\"keep\":true,\"words\":26,\"html\":\"<q data-collab-stream=\\\"msg-90\\\">A long second thought that is still arriving when the run stops: more words more words more words more words more words more words more words</q>\",\"text\":\"A long second thought that is still arriving when the run stops: more words more words more words more words more words more words more words\"},\"e31Paused\":{\"streaming\":false,\"keep\":false,\"words\":0,\"html\":\"“A long second thought that is still arriving when the run stops: more words more words more words more words more words more words more words more words more words more words more words more words more words more words more words more words more words more words more words more words more words more words more words more words more words more words more words more words more words more words more words more words more words more words more words more words more words more words more words more words more words more words more words more words more words more words more words more words more words more words more words more words more words more words more words more words more words more words more words more words ”\",\"text\":\"“A long second thought that is still arriving when the run stops: more words more words more words more words more words more words more words more words more words more words more words more words more words more words more words more words more words more words more words more words more words more words more words more words more words more words more words more words more words more words more words more words more words more words more words more words more words more words more words more words more words more words more words more words more words more words more words more words more words more words more words more words more words more words more words more words more words more words more words more words ”\"}}"
     },
     {
       "name": "E-31: a helper that fails mid-stream stops streaming (its lane says it didn’t finish; nothing still arriving)",
