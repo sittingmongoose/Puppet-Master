@@ -1,9 +1,19 @@
-# Frozen baseline and deferred follow-up — 2026-10-21
+# Baseline after the checked reseal landing — 2026-10-21
 
-Frozen main: `40bf3f157436a659804113eb7f08bbb248b0122d`. The existing baseline records commit `856b130fc4c45fbedc9cca7a14164e8749e3fc30` at `2026-10-21T17:46:57Z`. Its file is unchanged; SHA-256 `cb56bf422174bf03225a0ea1cf29547f3f09556b152072643fda6cbc91096dc6`.
+Frozen main was `40bf3f157436a659804113eb7f08bbb248b0122d`. The original baseline file had SHA-256 `cb56bf422174bf03225a0ea1cf29547f3f09556b152072643fda6cbc91096dc6`. It remained unchanged through the first landing check and push.
 
-All 15 ignored audit input hashes were reconstructed from predecessor captures and match this baseline. Final-edition measurements use the refreshed local edition. The local landing comparison selects the old backed-up edition so input identity remains comparable. No shared edition is changed during preparation.
+The checked first main push is `63aebecebdf511d827b7dc21ece8311acd4d2769`, verified on both destinations. Astra round 1 reviewed `79e749839611c14da312b0d9dab044241c0a57bb`: OK, 0 FIX, 0 LOW. Its review SHA-256 is `00cc5e621200dada1f5d8ba88954f98e96031df0babbcf913facf51d88049359`. The review and Jared's explicit GO are bound in the reseal record and execution evidence.
 
-Local landing check exit 1; 0 blockers; 0 infrastructure results.
+After the push, the reviewed currentness edition was written in place after a fresh full backup. All 15 installed hashes stayed stable through validation and both baseline recordings. Currentness remains `UNKNOWN_OPEN`, all four authority flags remain false and runtime stays disabled.
 
-Snapshot and baseline recording remain deferred until Astra review and explicit GO. After the first checked main push, install and validate the reviewed currentness edition. In a full local checkout at that main, run `snapshot-current --run-id pds-20261021-002-current-planunit-snapshot --expected-doc-count 96 --supersedes-run-id pds-20261021-001-current-planunit-snapshot` (advance the id if occupied), then `pm-landing-check.py --record-baseline`. Commit both together as a separate follow-up. Never record a baseline to excuse this review comparison.
+In a full local worktree at that pushed main, `snapshot-current` generated `pds-20261021-002-current-planunit-snapshot` with 96 documents and superseded `pds-20261021-001-current-planunit-snapshot`. Baseline recording followed snapshot generation. The baseline commit field is the already-pushed main `63aebecebdf511d827b7dc21ece8311acd4d2769`.
+
+| Check | New baseline total |
+|---|---:|
+| run-gates | 1486 |
+| audit-governance | 1469 |
+| current snapshot | 0 |
+
+The export-bucket count is 14, down from 22. A second complete recording reproduced all check totals, keyed rows, buckets, exports and input bindings. The row-level reconciliation accounts for every old bucket. The snapshot and baseline are committed together. No baseline was refreshed to excuse an unpushed landing.
+
+Final baseline capture: `/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261021/landing-20261021/followup/baseline-final.json`; SHA-256 `cb9dfaf6d06c994b3b95a57ae9c63dfdff1767e6666bddd278455b7cb32ae01a`. Reconciliation: `/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261021/landing-20261021/followup/export-reconciliation.json`; SHA-256 `5a465bff08d4d2d9a69c7ff7975111b88e6161f9884b1a8bfc14f8fc13bb7a63`. Full command captures and their SHA-256 manifest are bound in `execution-evidence.json`. The later shared follow-up check and final publication are bound in `/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261021/landing-20261021/COMPLETION.json`.

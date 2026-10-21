@@ -112,164 +112,11 @@
   {
    "check": "audit-governance",
    "count": 1,
-   "error": "stale_audit_status_index",
-   "fingerprints": [
-    "-"
-   ],
-   "path": "Plans/.audits/_audit_status_index.json",
-   "subcheck": "audit_status_index"
-  },
-  {
-   "check": "audit-governance",
-   "count": 100,
-   "error": "artifact_hash_stale",
-   "fingerprints": [
-    "006060b1ba34",
-    "00aeaf66762d",
-    "0208470a833d",
-    "02e88efe93f2",
-    "07606ac0eff7",
-    "0a062621371f",
-    "0c0df700f182",
-    "0d5a4c1bd729",
-    "1337f4f4f8d5",
-    "170a1a1d9b4c",
-    "1d02f20504cd",
-    "20a83d82a118",
-    "250ba53ef462",
-    "2547b980a0af",
-    "2b035ae98b68",
-    "309f09e3b0cb",
-    "34210f4b20a2",
-    "3cc88a81a6b6",
-    "3fe5270c9f97",
-    "406e4960b0af",
-    "434b687c7354",
-    "5031034ef416",
-    "509794320d22",
-    "51cc67e11f2e",
-    "56cf0cbbbef5",
-    "5844e4ddea5b",
-    "5b8d4606777e",
-    "5be7b58b7d79",
-    "5c2ab156e825",
-    "5d20ed10c28d",
-    "62faaa0355e7",
-    "634e7385cc66",
-    "63c1a97523a3",
-    "6d74b3b68a9b",
-    "6e5ea4af684c",
-    "6f1997e7e49f",
-    "7179390db24e",
-    "750e458e018e",
-    "762bd2d5793f",
-    "773e43c5248c",
-    "79e290647b55",
-    "7b567360b358",
-    "7fc16db89a1d",
-    "822f8a061af2",
-    "83e3d1dc67cb",
-    "87d817b82583",
-    "8b92de3768c7",
-    "8bc2f68ff62c",
-    "8c7c0a0d9f19",
-    "91e62a36d1df",
-    "9575baaa44e7",
-    "97beb1d5ef62",
-    "9d07b1f6ec84",
-    "a43d782aee55",
-    "a73a589b0519",
-    "a8cc061ce8e5",
-    "aa504ba3d340",
-    "ad806aa4a20f",
-    "b21a6497ffa1",
-    "b24792ae8c78",
-    "b44881cf25ff",
-    "b486a3828c86",
-    "b62ef72fd77b",
-    "b6fdf3feeb81",
-    "b9c22c65c4eb",
-    "bcdbfa4808c6",
-    "bef3b7eee8bd",
-    "c32ce6f9f967",
-    "c3dae427003f",
-    "c565d7421593",
-    "c6b3cbb2ef08",
-    "c8b2a5ce9af0",
-    "c918d8212916",
-    "c972cd512bda",
-    "cc737c8f79f0",
-    "d3d8886c3519",
-    "d631770d6ed3",
-    "d72bee9fbde0",
-    "d7f97e7e225a",
-    "d8752eaf9f0d",
-    "db82cfa394c7",
-    "e1ade002c5fa",
-    "e21e5378ade3",
-    "e4113f8a0592",
-    "e831bd4210ec",
-    "e875772849eb",
-    "e8917947a167",
-    "edcc9e4c61f5",
-    "ee011077a03a",
-    "efa93ac8292c",
-    "f5a74abf4388",
-    "f7ba1ca3404f",
-    "f89fc69bb7f2",
-    "f9a68a8dc280",
-    "faaab5c7061a",
-    "fb52412d724c",
-    "fbbc36723c8e",
-    "fd76dc7bb8fc",
-    "fe0fd2a0302e",
-    "ffd7850e5506"
-   ],
-   "path": "Plans/.evidence/pm7-usage-recovery-plan-sharding-2026-08-29/evidence.json",
-   "subcheck": "evidence"
-  },
-  {
-   "check": "audit-governance",
-   "count": 1,
    "error": "buildability_gate_report_stale_or_not_canonical",
    "fingerprints": [
     "c6f2600bdef5"
    ],
    "path": "Plans/.implementation_readiness/buildability_gate_report.json",
-   "subcheck": "implementation_readiness"
-  },
-  {
-   "check": "audit-governance",
-   "count": 25,
-   "error": "event_authority_currentness_source_drift",
-   "fingerprints": [
-    "0aaf110e740b",
-    "11307f8ee89e",
-    "1898b669f430",
-    "1e89965ec8c7",
-    "2f5d55a27d5f",
-    "38b5411a13f7",
-    "3a148e9930cd",
-    "41f4e93fb130",
-    "64392ff7cf25",
-    "76cc647afe33",
-    "87144dca10ac",
-    "948eca363615",
-    "966713e6ac2f",
-    "97e212c23116",
-    "9bbda8d47e30",
-    "a40aa02ebc9f",
-    "a56f058b4b3a",
-    "c6c40780fef1",
-    "d5be4dc5e9b9",
-    "d94a146403ea",
-    "d9e287f261e5",
-    "dd5519df234d",
-    "e62a59ff2641",
-    "eb336c21b3dd",
-    "f2d15cfaa221"
-   ],
-   "path": "",
    "subcheck": "implementation_readiness"
   },
   {
@@ -339,125 +186,6 @@
   },
   {
    "check": "audit-governance",
-   "count": 100,
-   "error": "artifact_hash_stale",
-   "fingerprints": [
-    "006060b1ba34",
-    "00aeaf66762d",
-    "0208470a833d",
-    "02e88efe93f2",
-    "07606ac0eff7",
-    "0a062621371f",
-    "0c0df700f182",
-    "0d5a4c1bd729",
-    "1337f4f4f8d5",
-    "170a1a1d9b4c",
-    "1d02f20504cd",
-    "20a83d82a118",
-    "250ba53ef462",
-    "2547b980a0af",
-    "2b035ae98b68",
-    "309f09e3b0cb",
-    "34210f4b20a2",
-    "3cc88a81a6b6",
-    "3fe5270c9f97",
-    "406e4960b0af",
-    "434b687c7354",
-    "5031034ef416",
-    "509794320d22",
-    "51cc67e11f2e",
-    "56cf0cbbbef5",
-    "5844e4ddea5b",
-    "5b8d4606777e",
-    "5be7b58b7d79",
-    "5c2ab156e825",
-    "5d20ed10c28d",
-    "62faaa0355e7",
-    "634e7385cc66",
-    "63c1a97523a3",
-    "6d74b3b68a9b",
-    "6e5ea4af684c",
-    "6f1997e7e49f",
-    "7179390db24e",
-    "750e458e018e",
-    "762bd2d5793f",
-    "773e43c5248c",
-    "79e290647b55",
-    "7b567360b358",
-    "7fc16db89a1d",
-    "822f8a061af2",
-    "83e3d1dc67cb",
-    "87d817b82583",
-    "8b92de3768c7",
-    "8bc2f68ff62c",
-    "8c7c0a0d9f19",
-    "91e62a36d1df",
-    "9575baaa44e7",
-    "97beb1d5ef62",
-    "9d07b1f6ec84",
-    "a43d782aee55",
-    "a73a589b0519",
-    "a8cc061ce8e5",
-    "aa504ba3d340",
-    "ad806aa4a20f",
-    "b21a6497ffa1",
-    "b24792ae8c78",
-    "b44881cf25ff",
-    "b486a3828c86",
-    "b62ef72fd77b",
-    "b6fdf3feeb81",
-    "b9c22c65c4eb",
-    "bcdbfa4808c6",
-    "bef3b7eee8bd",
-    "c32ce6f9f967",
-    "c3dae427003f",
-    "c565d7421593",
-    "c6b3cbb2ef08",
-    "c8b2a5ce9af0",
-    "c918d8212916",
-    "c972cd512bda",
-    "cc737c8f79f0",
-    "d3d8886c3519",
-    "d631770d6ed3",
-    "d72bee9fbde0",
-    "d7f97e7e225a",
-    "d8752eaf9f0d",
-    "db82cfa394c7",
-    "e1ade002c5fa",
-    "e21e5378ade3",
-    "e4113f8a0592",
-    "e831bd4210ec",
-    "e875772849eb",
-    "e8917947a167",
-    "edcc9e4c61f5",
-    "ee011077a03a",
-    "efa93ac8292c",
-    "f5a74abf4388",
-    "f7ba1ca3404f",
-    "f89fc69bb7f2",
-    "f9a68a8dc280",
-    "faaab5c7061a",
-    "fb52412d724c",
-    "fbbc36723c8e",
-    "fd76dc7bb8fc",
-    "fe0fd2a0302e",
-    "ffd7850e5506"
-   ],
-   "path": "Plans/.evidence/pm7-usage-recovery-plan-sharding-2026-08-29/evidence.json",
-   "subcheck": "plan_graph"
-  },
-  {
-   "check": "audit-governance",
-   "count": 1,
-   "error": "complete_final_summary_live_plan_unit_count_stale",
-   "fingerprints": [
-    "1b8d6a9f5ca2"
-   ],
-   "path": "Plans/.plan_migration/pds-20260611-002-atomize-planunits/final_validation_summary.json",
-   "subcheck": "plan_migration"
-  },
-  {
-   "check": "audit-governance",
    "count": 1,
    "error": "doc_count_mismatch",
    "fingerprints": [
@@ -474,77 +202,6 @@
     "-"
    ],
    "path": "Plans/.plan_migration/pds-20260611-002-atomize-planunits/inventory.json",
-   "subcheck": "plan_migration"
-  },
-  {
-   "check": "audit-governance",
-   "count": 62,
-   "error": "stale_batch_report_sha256_after",
-   "fingerprints": [
-    "0443a8a64362",
-    "069b8d900b4f",
-    "08a9a46c91b3",
-    "125972355026",
-    "1a17ebe43999",
-    "1df0fec09fa6",
-    "1efcf0f63478",
-    "20ba3fcaf0eb",
-    "26dec7bd186a",
-    "2803999fab50",
-    "30a84cc7765b",
-    "30d3fe13d326",
-    "3943b4f9c2eb",
-    "462d5fc00f35",
-    "51b8be608fae",
-    "54b25c2e2d7e",
-    "55b8a6424033",
-    "5b6a9a320efa",
-    "61ab5c5afad3",
-    "65ee6ddb6e42",
-    "69655fccea46",
-    "6ae603266cbf",
-    "6af53840dfb4",
-    "6bc1a21da9c5",
-    "715b945063ba",
-    "71fd0f842b10",
-    "73f95cc83872",
-    "76165ab54851",
-    "76cc66b925a5",
-    "7ab3f254de90",
-    "7b1adafa0b47",
-    "7d189bfc9676",
-    "86c36fd5d1c8",
-    "883bfff60c5b",
-    "8e579375935a",
-    "9832a9faf6f7",
-    "9a3e3d8086c5",
-    "9f92f1e93c6a",
-    "a3d6b9da09aa",
-    "a47b5e065dbb",
-    "a53bf1ceca1a",
-    "a5e47c255c00",
-    "bbf215aece6b",
-    "c267768dc3da",
-    "c6b69aa21324",
-    "cb5ae4b99f77",
-    "cc96deb2f372",
-    "cef8b5299b01",
-    "cf717be3123b",
-    "d4c9842d881e",
-    "d5b43e78e9fe",
-    "d77e7399c218",
-    "d96cbf194ff1",
-    "e18da9741b49",
-    "e313eca21a32",
-    "ea38087f9e8d",
-    "ecc220e594c4",
-    "eeb53355df7f",
-    "eef2baaf7a4e",
-    "effe719f6acc",
-    "f2560dbf86cf",
-    "faf7b790337c"
-   ],
-   "path": "Plans/.plan_migration/pds-20260611-002-atomize-planunits/batch_report.jsonl",
    "subcheck": "plan_migration"
   },
   {
@@ -696,159 +353,174 @@
    "subcheck": "prd_planning_runtime_contracts"
   },
   {
-   "check": "audit-governance",
-   "count": 1,
-   "error": "stale_hash",
-   "fingerprints": [
-    "271f85538f3e"
-   ],
-   "path": "Plans/00-plans-index.md",
-   "subcheck": "spec_lock"
-  },
-  {
-   "check": "audit-governance",
-   "count": 1,
-   "error": "stale_hash",
-   "fingerprints": [
-    "271f85538f3e"
-   ],
-   "path": "Plans/Automated_Testing_System.md",
-   "subcheck": "spec_lock"
-  },
-  {
-   "check": "audit-governance",
-   "count": 1,
-   "error": "stale_hash",
-   "fingerprints": [
-    "271f85538f3e"
-   ],
-   "path": "Plans/Commands_System.md",
-   "subcheck": "spec_lock"
-  },
-  {
-   "check": "audit-governance",
-   "count": 1,
-   "error": "stale_hash",
-   "fingerprints": [
-    "271f85538f3e"
-   ],
-   "path": "Plans/Contracts_V0.md",
-   "subcheck": "spec_lock"
-  },
-  {
-   "check": "audit-governance",
-   "count": 1,
-   "error": "stale_hash",
-   "fingerprints": [
-    "271f85538f3e"
-   ],
-   "path": "Plans/Crosswalk.md",
-   "subcheck": "spec_lock"
-  },
-  {
-   "check": "audit-governance",
-   "count": 1,
-   "error": "stale_hash",
-   "fingerprints": [
-    "271f85538f3e"
-   ],
-   "path": "Plans/FinalGUISpec.md",
-   "subcheck": "spec_lock"
-  },
-  {
-   "check": "audit-governance",
-   "count": 1,
-   "error": "stale_hash",
-   "fingerprints": [
-    "271f85538f3e"
-   ],
-   "path": "Plans/Planning_Ledger_System.md",
-   "subcheck": "spec_lock"
-  },
-  {
-   "check": "audit-governance",
-   "count": 1,
-   "error": "stale_hash",
-   "fingerprints": [
-    "271f85538f3e"
-   ],
-   "path": "Plans/UI_Command_Catalog.md",
-   "subcheck": "spec_lock"
-  },
-  {
-   "check": "audit-governance",
-   "count": 1,
-   "error": "stale_hash",
-   "fingerprints": [
-    "271f85538f3e"
-   ],
-   "path": "Plans/Wiring_Matrix.md",
-   "subcheck": "spec_lock"
-  },
-  {
-   "check": "audit-governance",
-   "count": 1,
-   "error": "stale_hash",
-   "fingerprints": [
-    "271f85538f3e"
-   ],
-   "path": "Plans/assistant-chat-design.md",
-   "subcheck": "spec_lock"
-  },
-  {
-   "check": "audit-governance",
-   "count": 1,
-   "error": "stale_hash",
-   "fingerprints": [
-    "271f85538f3e"
-   ],
-   "path": "Plans/storage-plan.md",
-   "subcheck": "spec_lock"
-  },
-  {
-   "check": "audit-governance",
-   "count": 1,
-   "error": "missing_ref",
-   "fingerprints": [
-    "03831cef575a"
-   ],
-   "path": "Plans/00-plans-index.md",
-   "subcheck": "support_refs"
-  },
-  {
    "check": "run-gates",
-   "count": 16,
-   "error": "raw_capture_manifest_path_unresolved",
+   "count": 1,
+   "error": "raw_capture_manifest_entry_not_in_verifier_file_set",
    "fingerprints": [
-    "21a61f2e6d90",
-    "3dd7d0368ec0",
-    "6d4b03c978f3",
-    "754ac6b4c159",
-    "7da68d814c20",
-    "84cb34d07a03",
-    "89f7626fc70e",
-    "8a50dc9bbda8",
-    "9c34c1b0924e",
-    "baee8a97e9fc",
-    "c11f21245f69",
-    "d0c89b39f6c9",
-    "d81e27d9cc5f",
-    "e03118e493b8",
-    "eb1d247cea7f",
-    "f37d0ed49674"
+    "83643d28b802"
    ],
-   "path": "tests/fixtures/governance/raw_evidence_capture_modes.json",
+   "path": "tests/agent_packet_restrictions/successor_20260813/model_retest_r8_candidate_v9_run_01/direct_appserver_receipts/slot-bravo_S10A_DECISION_A14.json",
    "subcheck": "json_syntax"
   },
   {
    "check": "run-gates",
    "count": 1,
-   "error": "missing_ref",
+   "error": "raw_capture_manifest_entry_not_in_verifier_file_set",
    "fingerprints": [
-    "03831cef575a"
+    "1c54b72c32ec"
    ],
-   "path": "Plans/00-plans-index.md",
-   "subcheck": "lint_contractrefs"
+   "path": "tests/agent_packet_restrictions/successor_20260813/r10_simple_goal_prompts_v1/canary_004/r10-codex-app-canary-004-evidence/parent_capture.raw.jsonl",
+   "subcheck": "json_syntax"
+  },
+  {
+   "check": "run-gates",
+   "count": 1,
+   "error": "raw_capture_manifest_entry_not_in_verifier_file_set",
+   "fingerprints": [
+    "1c54b72c32ec"
+   ],
+   "path": "tests/agent_packet_restrictions/successor_20260813/r10_simple_goal_prompts_v1/canary_004/r10-codex-app-canary-004-evidence/parent_prefix.raw.jsonl",
+   "subcheck": "json_syntax"
+  },
+  {
+   "check": "run-gates",
+   "count": 1,
+   "error": "raw_capture_manifest_entry_not_in_verifier_file_set",
+   "fingerprints": [
+    "83643d28b802"
+   ],
+   "path": "tests/agent_packet_restrictions/successor_20260813/r9_control_plane_stabilization_v1/simulator_runs/iteration-002-final-self-test-001/fault_evidence/fault-019-forced-loss-instead-of-drain/cells/slot-alpha/000_S10A_DECISION_A01/attempt.json",
+   "subcheck": "json_syntax"
+  },
+  {
+   "check": "run-gates",
+   "count": 1,
+   "error": "raw_capture_manifest_entry_not_in_verifier_file_set",
+   "fingerprints": [
+    "83643d28b802"
+   ],
+   "path": "tests/agent_packet_restrictions/successor_20260813/r9_control_plane_stabilization_v1/simulator_runs/iteration-002-final-self-test-001/fault_evidence/fault-024-loss-after-raw/cells/slot-alpha/000_S10A_DECISION_A01/raw_result.json",
+   "subcheck": "json_syntax"
+  },
+  {
+   "check": "run-gates",
+   "count": 1,
+   "error": "raw_capture_manifest_entry_not_in_verifier_file_set",
+   "fingerprints": [
+    "83643d28b802"
+   ],
+   "path": "tests/agent_packet_restrictions/successor_20260813/r9_control_plane_stabilization_v1/simulator_runs/iteration-002-final-self-test-002/fault_evidence/024-loss-after-raw/run/cells/slot-alpha/000_S10A_DECISION_A01/raw_result.json",
+   "subcheck": "json_syntax"
+  },
+  {
+   "check": "run-gates",
+   "count": 1,
+   "error": "raw_capture_manifest_entry_not_in_verifier_file_set",
+   "fingerprints": [
+    "83643d28b802"
+   ],
+   "path": "tests/agent_packet_restrictions/successor_20260813/r9_control_plane_stabilization_v1/simulator_runs/iteration-002-final-self-test-002/fault_evidence/026-attempt-only-crash/run/cells/slot-alpha/000_S10A_DECISION_A01/attempt.json",
+   "subcheck": "json_syntax"
+  },
+  {
+   "check": "run-gates",
+   "count": 1,
+   "error": "raw_capture_manifest_entry_not_in_verifier_file_set",
+   "fingerprints": [
+    "83643d28b802"
+   ],
+   "path": "tests/agent_packet_restrictions/successor_20260813/r9_control_plane_stabilization_v1/simulator_runs/iteration-003-final-self-test-001/fault_evidence/019-forced-loss-instead-of-drain/run/cells/slot-alpha/000_S10A_DECISION_A01/attempt.json",
+   "subcheck": "json_syntax"
+  },
+  {
+   "check": "run-gates",
+   "count": 1,
+   "error": "raw_capture_manifest_entry_not_in_verifier_file_set",
+   "fingerprints": [
+    "83643d28b802"
+   ],
+   "path": "tests/agent_packet_restrictions/successor_20260813/r9_control_plane_stabilization_v1/simulator_runs/iteration-004-final-self-test-001/fault_evidence/025-loss-after-completion/run/cells/slot-alpha/000_S10A_DECISION_A01/completion.json",
+   "subcheck": "json_syntax"
+  },
+  {
+   "check": "run-gates",
+   "count": 1,
+   "error": "raw_capture_manifest_entry_not_in_verifier_file_set",
+   "fingerprints": [
+    "83643d28b802"
+   ],
+   "path": "tests/agent_packet_restrictions/successor_20260813/r9_control_plane_stabilization_v1/simulator_runs/iteration-004-final-self-test-001/fault_evidence/026-attempt-only-crash/run/cells/slot-alpha/000_S10A_DECISION_A01/attempt.json",
+   "subcheck": "json_syntax"
+  },
+  {
+   "check": "run-gates",
+   "count": 1,
+   "error": "raw_capture_manifest_entry_not_in_verifier_file_set",
+   "fingerprints": [
+    "83643d28b802"
+   ],
+   "path": "tests/agent_packet_restrictions/successor_20260813/r9_control_plane_stabilization_v1/simulator_runs/iteration-005-final-self-test-001/fault_evidence/024-loss-after-raw/run/cells/slot-alpha/000_S10A_DECISION_A01/completion.json",
+   "subcheck": "json_syntax"
+  },
+  {
+   "check": "run-gates",
+   "count": 1,
+   "error": "raw_capture_manifest_entry_not_in_verifier_file_set",
+   "fingerprints": [
+    "83643d28b802"
+   ],
+   "path": "tests/agent_packet_restrictions/successor_20260813/r9_control_plane_stabilization_v1/simulator_runs/iteration-005-final-self-test-001/fault_evidence/026-attempt-only-crash/run/cells/slot-alpha/000_S10A_DECISION_A01/raw_result.json",
+   "subcheck": "json_syntax"
+  },
+  {
+   "check": "run-gates",
+   "count": 1,
+   "error": "raw_capture_manifest_entry_not_in_verifier_file_set",
+   "fingerprints": [
+    "83643d28b802"
+   ],
+   "path": "tests/agent_packet_restrictions/successor_20260813/r9_control_plane_stabilization_v1/simulator_runs/iteration-008-final-self-test-002/fault_evidence/019-forced-loss-instead-of-drain/run/cells/slot-alpha/000_S10A_DECISION_A01/raw_result.json",
+   "subcheck": "json_syntax"
+  },
+  {
+   "check": "run-gates",
+   "count": 1,
+   "error": "raw_capture_manifest_entry_not_in_verifier_file_set",
+   "fingerprints": [
+    "83643d28b802"
+   ],
+   "path": "tests/agent_packet_restrictions/successor_20260813/r9_control_plane_stabilization_v1/simulator_runs/iteration-008-final-self-test-002/fault_evidence/027-attempt-only-crash/run/cells/slot-alpha/000_S10A_DECISION_A01/raw_result.json",
+   "subcheck": "json_syntax"
+  },
+  {
+   "check": "run-gates",
+   "count": 1,
+   "error": "raw_capture_manifest_entry_not_in_verifier_file_set",
+   "fingerprints": [
+    "83643d28b802"
+   ],
+   "path": "tests/agent_packet_restrictions/successor_20260813/r9_control_plane_stabilization_v1/simulator_runs/iteration-010-successor-exit-002/fault_evidence/024-loss-after-raw/run/cells/slot-alpha/000_S10A_DECISION_A01/completion.json",
+   "subcheck": "json_syntax"
+  },
+  {
+   "check": "run-gates",
+   "count": 1,
+   "error": "raw_capture_manifest_entry_not_in_verifier_file_set",
+   "fingerprints": [
+    "83643d28b802"
+   ],
+   "path": "tests/agent_packet_restrictions/successor_20260813/r9_control_plane_stabilization_v1/simulator_runs/iteration-010-successor-exit-002/fault_evidence/027-attempt-only-crash/run/cells/slot-alpha/000_S10A_DECISION_A01/raw_result.json",
+   "subcheck": "json_syntax"
+  },
+  {
+   "check": "run-gates",
+   "count": 1,
+   "error": "raw_capture_mode_census_mismatch",
+   "fingerprints": [
+    "08ea05121408"
+   ],
+   "path": "tests/fixtures/governance/raw_evidence_capture_modes.json",
+   "subcheck": "json_syntax"
   },
   {
    "check": "run-gates",
@@ -912,114 +584,11 @@
   {
    "check": "run-gates",
    "count": 1,
-   "error": "stale_audit_status_index",
-   "fingerprints": [
-    "-"
-   ],
-   "path": "Plans/.audits/_audit_status_index.json",
-   "subcheck": "validate_audit_status_index"
-  },
-  {
-   "check": "run-gates",
-   "count": 50,
-   "error": "artifact_hash_stale",
-   "fingerprints": [
-    "00aeaf66762d",
-    "02e88efe93f2",
-    "07606ac0eff7",
-    "0a062621371f",
-    "0d5a4c1bd729",
-    "1337f4f4f8d5",
-    "1d02f20504cd",
-    "20a83d82a118",
-    "250ba53ef462",
-    "34210f4b20a2",
-    "3fe5270c9f97",
-    "434b687c7354",
-    "5031034ef416",
-    "509794320d22",
-    "56cf0cbbbef5",
-    "5b8d4606777e",
-    "5d20ed10c28d",
-    "62faaa0355e7",
-    "6d74b3b68a9b",
-    "750e458e018e",
-    "762bd2d5793f",
-    "79e290647b55",
-    "7b567360b358",
-    "822f8a061af2",
-    "8b92de3768c7",
-    "8bc2f68ff62c",
-    "91e62a36d1df",
-    "97beb1d5ef62",
-    "a8cc061ce8e5",
-    "b24792ae8c78",
-    "b44881cf25ff",
-    "b62ef72fd77b",
-    "bcdbfa4808c6",
-    "bef3b7eee8bd",
-    "c32ce6f9f967",
-    "c3dae427003f",
-    "c918d8212916",
-    "cc737c8f79f0",
-    "d3d8886c3519",
-    "d72bee9fbde0",
-    "d8752eaf9f0d",
-    "e1ade002c5fa",
-    "e831bd4210ec",
-    "e8917947a167",
-    "efa93ac8292c",
-    "f89fc69bb7f2",
-    "faaab5c7061a",
-    "fbbc36723c8e",
-    "fd76dc7bb8fc",
-    "fe0fd2a0302e"
-   ],
-   "path": "Plans/.evidence/pm7-usage-recovery-plan-sharding-2026-08-29/evidence.json",
-   "subcheck": "validate_evidence"
-  },
-  {
-   "check": "run-gates",
-   "count": 1,
    "error": "buildability_gate_report_stale_or_not_canonical",
    "fingerprints": [
     "c6f2600bdef5"
    ],
    "path": "Plans/.implementation_readiness/buildability_gate_report.json",
-   "subcheck": "validate_implementation_readiness"
-  },
-  {
-   "check": "run-gates",
-   "count": 25,
-   "error": "event_authority_currentness_source_drift",
-   "fingerprints": [
-    "0aaf110e740b",
-    "11307f8ee89e",
-    "1898b669f430",
-    "1e89965ec8c7",
-    "2f5d55a27d5f",
-    "38b5411a13f7",
-    "3a148e9930cd",
-    "41f4e93fb130",
-    "64392ff7cf25",
-    "76cc647afe33",
-    "87144dca10ac",
-    "948eca363615",
-    "966713e6ac2f",
-    "97e212c23116",
-    "9bbda8d47e30",
-    "a40aa02ebc9f",
-    "a56f058b4b3a",
-    "c6c40780fef1",
-    "d5be4dc5e9b9",
-    "d94a146403ea",
-    "d9e287f261e5",
-    "dd5519df234d",
-    "e62a59ff2641",
-    "eb336c21b3dd",
-    "f2d15cfaa221"
-   ],
-   "path": "",
    "subcheck": "validate_implementation_readiness"
   },
   {
@@ -1089,65 +658,6 @@
   },
   {
    "check": "run-gates",
-   "count": 50,
-   "error": "artifact_hash_stale",
-   "fingerprints": [
-    "00aeaf66762d",
-    "02e88efe93f2",
-    "07606ac0eff7",
-    "0a062621371f",
-    "0d5a4c1bd729",
-    "1337f4f4f8d5",
-    "1d02f20504cd",
-    "20a83d82a118",
-    "250ba53ef462",
-    "34210f4b20a2",
-    "3fe5270c9f97",
-    "434b687c7354",
-    "5031034ef416",
-    "509794320d22",
-    "56cf0cbbbef5",
-    "5b8d4606777e",
-    "5d20ed10c28d",
-    "62faaa0355e7",
-    "6d74b3b68a9b",
-    "750e458e018e",
-    "762bd2d5793f",
-    "79e290647b55",
-    "7b567360b358",
-    "822f8a061af2",
-    "8b92de3768c7",
-    "8bc2f68ff62c",
-    "91e62a36d1df",
-    "97beb1d5ef62",
-    "a8cc061ce8e5",
-    "b24792ae8c78",
-    "b44881cf25ff",
-    "b62ef72fd77b",
-    "bcdbfa4808c6",
-    "bef3b7eee8bd",
-    "c32ce6f9f967",
-    "c3dae427003f",
-    "c918d8212916",
-    "cc737c8f79f0",
-    "d3d8886c3519",
-    "d72bee9fbde0",
-    "d8752eaf9f0d",
-    "e1ade002c5fa",
-    "e831bd4210ec",
-    "e8917947a167",
-    "efa93ac8292c",
-    "f89fc69bb7f2",
-    "faaab5c7061a",
-    "fbbc36723c8e",
-    "fd76dc7bb8fc",
-    "fe0fd2a0302e"
-   ],
-   "path": "Plans/.evidence/pm7-usage-recovery-plan-sharding-2026-08-29/evidence.json",
-   "subcheck": "validate_plan_graph"
-  },
-  {
-   "check": "run-gates",
    "count": 1,
    "error": "doc_count_mismatch",
    "fingerprints": [
@@ -1164,63 +674,6 @@
     "-"
    ],
    "path": "Plans/.plan_migration/pds-20260611-002-atomize-planunits/inventory.json",
-   "subcheck": "validate_plan_migration"
-  },
-  {
-   "check": "run-gates",
-   "count": 48,
-   "error": "stale_batch_report_sha256_after",
-   "fingerprints": [
-    "0443a8a64362",
-    "125972355026",
-    "1df0fec09fa6",
-    "1efcf0f63478",
-    "20ba3fcaf0eb",
-    "26dec7bd186a",
-    "2803999fab50",
-    "30d3fe13d326",
-    "3943b4f9c2eb",
-    "462d5fc00f35",
-    "51b8be608fae",
-    "54b25c2e2d7e",
-    "55b8a6424033",
-    "5b6a9a320efa",
-    "61ab5c5afad3",
-    "65ee6ddb6e42",
-    "69655fccea46",
-    "6ae603266cbf",
-    "6bc1a21da9c5",
-    "715b945063ba",
-    "71fd0f842b10",
-    "73f95cc83872",
-    "76165ab54851",
-    "76cc66b925a5",
-    "7b1adafa0b47",
-    "86c36fd5d1c8",
-    "883bfff60c5b",
-    "9832a9faf6f7",
-    "9a3e3d8086c5",
-    "9f92f1e93c6a",
-    "a3d6b9da09aa",
-    "a47b5e065dbb",
-    "a53bf1ceca1a",
-    "bbf215aece6b",
-    "c267768dc3da",
-    "cc96deb2f372",
-    "cef8b5299b01",
-    "cf717be3123b",
-    "d4c9842d881e",
-    "d5b43e78e9fe",
-    "d96cbf194ff1",
-    "e18da9741b49",
-    "ecc220e594c4",
-    "eeb53355df7f",
-    "eef2baaf7a4e",
-    "effe719f6acc",
-    "f2560dbf86cf",
-    "faf7b790337c"
-   ],
-   "path": "Plans/.plan_migration/pds-20260611-002-atomize-planunits/batch_report.jsonl",
    "subcheck": "validate_plan_migration"
   },
   {
@@ -1311,148 +764,24 @@
    ],
    "path": "Plans/home_layout_event_contracts.schema.json",
    "subcheck": "validate_prd_planning_runtime_contracts"
-  },
-  {
-   "check": "run-gates",
-   "count": 1,
-   "error": "stale_hash",
-   "fingerprints": [
-    "271f85538f3e"
-   ],
-   "path": "Plans/00-plans-index.md",
-   "subcheck": "verify_spec_lock"
-  },
-  {
-   "check": "run-gates",
-   "count": 1,
-   "error": "stale_hash",
-   "fingerprints": [
-    "271f85538f3e"
-   ],
-   "path": "Plans/Automated_Testing_System.md",
-   "subcheck": "verify_spec_lock"
-  },
-  {
-   "check": "run-gates",
-   "count": 1,
-   "error": "stale_hash",
-   "fingerprints": [
-    "271f85538f3e"
-   ],
-   "path": "Plans/Commands_System.md",
-   "subcheck": "verify_spec_lock"
-  },
-  {
-   "check": "run-gates",
-   "count": 1,
-   "error": "stale_hash",
-   "fingerprints": [
-    "271f85538f3e"
-   ],
-   "path": "Plans/Contracts_V0.md",
-   "subcheck": "verify_spec_lock"
-  },
-  {
-   "check": "run-gates",
-   "count": 1,
-   "error": "stale_hash",
-   "fingerprints": [
-    "271f85538f3e"
-   ],
-   "path": "Plans/Crosswalk.md",
-   "subcheck": "verify_spec_lock"
-  },
-  {
-   "check": "run-gates",
-   "count": 1,
-   "error": "stale_hash",
-   "fingerprints": [
-    "271f85538f3e"
-   ],
-   "path": "Plans/FinalGUISpec.md",
-   "subcheck": "verify_spec_lock"
-  },
-  {
-   "check": "run-gates",
-   "count": 1,
-   "error": "stale_hash",
-   "fingerprints": [
-    "271f85538f3e"
-   ],
-   "path": "Plans/Planning_Ledger_System.md",
-   "subcheck": "verify_spec_lock"
-  },
-  {
-   "check": "run-gates",
-   "count": 1,
-   "error": "stale_hash",
-   "fingerprints": [
-    "271f85538f3e"
-   ],
-   "path": "Plans/UI_Command_Catalog.md",
-   "subcheck": "verify_spec_lock"
-  },
-  {
-   "check": "run-gates",
-   "count": 1,
-   "error": "stale_hash",
-   "fingerprints": [
-    "271f85538f3e"
-   ],
-   "path": "Plans/Wiring_Matrix.md",
-   "subcheck": "verify_spec_lock"
-  },
-  {
-   "check": "run-gates",
-   "count": 1,
-   "error": "stale_hash",
-   "fingerprints": [
-    "271f85538f3e"
-   ],
-   "path": "Plans/assistant-chat-design.md",
-   "subcheck": "verify_spec_lock"
-  },
-  {
-   "check": "run-gates",
-   "count": 1,
-   "error": "stale_hash",
-   "fingerprints": [
-    "271f85538f3e"
-   ],
-   "path": "Plans/storage-plan.md",
-   "subcheck": "verify_spec_lock"
   }
  ],
  "checks": {
   "audit-governance": {
-   "failure_total": 3258,
+   "failure_total": 1469,
    "status": "fail",
    "subchecks": {
     "audit_closure": {
      "reported": 201,
      "sampled": 100
     },
-    "audit_status_index": {
-     "reported": 1,
-     "sampled": 1
-    },
-    "evidence": {
-     "exported": 844,
-     "reported": 844,
-     "sampled": 100
-    },
     "implementation_readiness": {
-     "reported": 48,
-     "sampled": 48
-    },
-    "plan_graph": {
-     "exported": 844,
-     "reported": 844,
-     "sampled": 100
+     "reported": 23,
+     "sampled": 23
     },
     "plan_migration": {
-     "reported": 65,
-     "sampled": 65
+     "reported": 2,
+     "sampled": 2
     },
     "pm7_gui_fixtures": {
      "reported": 3,
@@ -1462,14 +791,6 @@
      "exported": 1240,
      "reported": 1240,
      "sampled": 100
-    },
-    "spec_lock": {
-     "reported": 11,
-     "sampled": 11
-    },
-    "support_refs": {
-     "reported": 1,
-     "sampled": 1
     }
    }
   },
@@ -1484,43 +805,24 @@
    }
   },
   "run-gates": {
-   "failure_total": 3274,
+   "failure_total": 1486,
    "status": "fail",
    "subchecks": {
     "json_syntax": {
-     "reported": 16,
-     "sampled": 16
-    },
-    "lint_contractrefs": {
-     "reported": 1,
-     "sampled": 1
+     "reported": 17,
+     "sampled": 17
     },
     "validate_audit_closure": {
      "reported": 201,
      "sampled": 50
     },
-    "validate_audit_status_index": {
-     "reported": 1,
-     "sampled": 1
-    },
-    "validate_evidence": {
-     "exported": 844,
-     "reported": 844,
-     "sampled": 50
-    },
     "validate_implementation_readiness": {
-     "reported": 48,
-     "sampled": 48
-    },
-    "validate_plan_graph": {
-     "exported": 844,
-     "reported": 844,
-     "sampled": 50
+     "reported": 23,
+     "sampled": 23
     },
     "validate_plan_migration": {
-     "exported": 65,
-     "reported": 65,
-     "sampled": 50
+     "reported": 2,
+     "sampled": 2
     },
     "validate_pm7_gui_fixtures": {
      "reported": 3,
@@ -1530,32 +832,12 @@
      "exported": 1240,
      "reported": 1240,
      "sampled": 50
-    },
-    "verify_spec_lock": {
-     "reported": 11,
-     "sampled": 11
     }
    }
   }
  },
- "commit": "856b130fc4c45fbedc9cca7a14164e8749e3fc30",
+ "commit": "63aebecebdf511d827b7dc21ece8311acd4d2769",
  "export_buckets": [
-  {
-   "check": "audit-governance",
-   "count": 844,
-   "error": "artifact_hash_stale",
-   "fingerprints": null,
-   "path": "Plans/.evidence/pm7-usage-recovery-plan-sharding-2026-08-29/evidence.json",
-   "subcheck": "evidence"
-  },
-  {
-   "check": "audit-governance",
-   "count": 844,
-   "error": "artifact_hash_stale",
-   "fingerprints": null,
-   "path": "Plans/.evidence/pm7-usage-recovery-plan-sharding-2026-08-29/evidence.json",
-   "subcheck": "plan_graph"
-  },
   {
    "check": "audit-governance",
    "count": 72,
@@ -2027,123 +1309,6 @@
    ],
    "path": "Plans/storage_boot_recovery_control.schema.json",
    "subcheck": "prd_planning_runtime_contracts"
-  },
-  {
-   "check": "run-gates",
-   "count": 844,
-   "error": "artifact_hash_stale",
-   "fingerprints": null,
-   "path": "Plans/.evidence/pm7-usage-recovery-plan-sharding-2026-08-29/evidence.json",
-   "subcheck": "validate_evidence"
-  },
-  {
-   "check": "run-gates",
-   "count": 844,
-   "error": "artifact_hash_stale",
-   "fingerprints": null,
-   "path": "Plans/.evidence/pm7-usage-recovery-plan-sharding-2026-08-29/evidence.json",
-   "subcheck": "validate_plan_graph"
-  },
-  {
-   "check": "run-gates",
-   "count": 1,
-   "error": "complete_final_summary_live_plan_unit_count_stale",
-   "fingerprints": [
-    "1b8d6a9f5ca2"
-   ],
-   "path": "Plans/.plan_migration/pds-20260611-002-atomize-planunits/final_validation_summary.json",
-   "subcheck": "validate_plan_migration"
-  },
-  {
-   "check": "run-gates",
-   "count": 1,
-   "error": "doc_count_mismatch",
-   "fingerprints": [
-    "1b8d6a9f5ca2"
-   ],
-   "path": "Plans/.plan_migration/pds-20260611-002-atomize-planunits/inventory.json",
-   "subcheck": "validate_plan_migration"
-  },
-  {
-   "check": "run-gates",
-   "count": 1,
-   "error": "inventory_doc_set_mismatch",
-   "fingerprints": [
-    "-"
-   ],
-   "path": "Plans/.plan_migration/pds-20260611-002-atomize-planunits/inventory.json",
-   "subcheck": "validate_plan_migration"
-  },
-  {
-   "check": "run-gates",
-   "count": 62,
-   "error": "stale_batch_report_sha256_after",
-   "fingerprints": [
-    "0443a8a64362",
-    "069b8d900b4f",
-    "08a9a46c91b3",
-    "125972355026",
-    "1a17ebe43999",
-    "1df0fec09fa6",
-    "1efcf0f63478",
-    "20ba3fcaf0eb",
-    "26dec7bd186a",
-    "2803999fab50",
-    "30a84cc7765b",
-    "30d3fe13d326",
-    "3943b4f9c2eb",
-    "462d5fc00f35",
-    "51b8be608fae",
-    "54b25c2e2d7e",
-    "55b8a6424033",
-    "5b6a9a320efa",
-    "61ab5c5afad3",
-    "65ee6ddb6e42",
-    "69655fccea46",
-    "6ae603266cbf",
-    "6af53840dfb4",
-    "6bc1a21da9c5",
-    "715b945063ba",
-    "71fd0f842b10",
-    "73f95cc83872",
-    "76165ab54851",
-    "76cc66b925a5",
-    "7ab3f254de90",
-    "7b1adafa0b47",
-    "7d189bfc9676",
-    "86c36fd5d1c8",
-    "883bfff60c5b",
-    "8e579375935a",
-    "9832a9faf6f7",
-    "9a3e3d8086c5",
-    "9f92f1e93c6a",
-    "a3d6b9da09aa",
-    "a47b5e065dbb",
-    "a53bf1ceca1a",
-    "a5e47c255c00",
-    "bbf215aece6b",
-    "c267768dc3da",
-    "c6b69aa21324",
-    "cb5ae4b99f77",
-    "cc96deb2f372",
-    "cef8b5299b01",
-    "cf717be3123b",
-    "d4c9842d881e",
-    "d5b43e78e9fe",
-    "d77e7399c218",
-    "d96cbf194ff1",
-    "e18da9741b49",
-    "e313eca21a32",
-    "ea38087f9e8d",
-    "ecc220e594c4",
-    "eeb53355df7f",
-    "eef2baaf7a4e",
-    "effe719f6acc",
-    "f2560dbf86cf",
-    "faf7b790337c"
-   ],
-   "path": "Plans/.plan_migration/pds-20260611-002-atomize-planunits/batch_report.jsonl",
-   "subcheck": "validate_plan_migration"
   },
   {
    "check": "run-gates",
@@ -2621,11 +1786,11 @@
  "max_fingerprints_per_bucket": 200,
  "readiness_audit_inputs": {
   "files": {
-   "Plans/.audits/event-authority-2026-08-13-currentness/CURRENT_EVENT_SOURCE_INVENTORY.json": "b4bd38d539036ab294eafceb4da0715894aab441cd8e990b7ea5132477d989a6",
-   "Plans/.audits/event-authority-2026-08-13-currentness/EVENT_FAMILY_DENOMINATOR_STATUS.json": "7edd78c19a98270fbd0d9e2c9da43608e9412beb9eda947ffda159f3140c2c6e",
-   "Plans/.audits/event-authority-2026-08-13-currentness/EVENT_OCCURRENCES.jsonl": "ed048b97d800e886f18158c69ba12a3ce7238f95707fbd4b6ff44a50b947458a",
+   "Plans/.audits/event-authority-2026-08-13-currentness/CURRENT_EVENT_SOURCE_INVENTORY.json": "7f1472349026943361f1b85b54df2da6ea2d17f826e01313fe730bd2aaa1ee49",
+   "Plans/.audits/event-authority-2026-08-13-currentness/EVENT_FAMILY_DENOMINATOR_STATUS.json": "8d7124e546f0951f7398708b3741c413fc67739fd035bb6b14d3fca69570925c",
+   "Plans/.audits/event-authority-2026-08-13-currentness/EVENT_OCCURRENCES.jsonl": "368d5e70524ac0dbc21fdd406f04943e2d1d2c2d91c6ebb7d6cd106ea75e94a0",
    "Plans/.audits/event-authority-2026-08-13-currentness/README.md": "cb21ad9f4db699bb262ea920f155131827cd677679ab54bb651ad3f4e3722318",
-   "Plans/.audits/event-authority-2026-08-13-currentness/VALIDATOR_RECEIPT.json": "22cc6480cc7b7018d8f5a799a885abf096a7c49c50bd922ef68ade0a3b1e0325",
+   "Plans/.audits/event-authority-2026-08-13-currentness/VALIDATOR_RECEIPT.json": "75f0a3f2a245e61e102efb27fd1da7bbd732b01952ea47b162c9e81fd35d6b78",
    "Plans/.audits/event-authority-2026-08-13-currentness/adjudication/EXPECTED_252_EVENT_TYPES.tsv": "d59142bc9ceef3f8c2d2257b7a6fbe9307ddae236720a0ac5a8c62afc7c5f541",
    "Plans/.audits/event-authority-2026-08-13-currentness/adjudication/GROUP_ARTIFACT_MANIFEST.json": "fc212fc26784ba0dec1094705b811663fb7a92f38289af0d20503a7f0247af5e",
    "Plans/.audits/event-authority-2026-08-13-currentness/adjudication/QUARANTINED_EVENT_DISPOSITIONS.jsonl": "e77c83e1861c4b02739d7609c7c4fe066a6fe4f901a8e61511c698e0bb949294",
@@ -2639,8 +1804,10 @@
   },
   "schema_id": "pm.landing_check.readiness_audit_inputs.v1"
  },
- "recorded_at_utc": "2026-10-21T17:46:57Z",
- "run_dir": "Plans/.plan_migration/pds-20261021-001-current-planunit-snapshot",
+ "recorded_at_utc": "2026-10-21T20:38:57Z",
+ "run_dir": "Plans/.plan_migration/pds-20261021-002-current-planunit-snapshot",
  "schema_id": "pm.landing_check.baseline.v1",
- "untracked_inputs": []
+ "untracked_inputs": [
+  "tests/agent_packet_restrictions"
+ ]
 }
