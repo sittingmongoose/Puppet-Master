@@ -67,6 +67,25 @@
       "run-gates": 3274
     }
   },
+  "approved_landing": {
+    "FIX": 0,
+    "LOW": 0,
+    "authority": "Jared explicit GO in this thread on 2026-10-21",
+    "authorization_evidence": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/governance-reseal-20261021/landing-20261021/authorization.json",
+      "sha256": "3415109ac01dabf20560a6451f8be700a07068158dda14836f52f41b50807995"
+    },
+    "frozen_main_sha": "40bf3f157436a659804113eb7f08bbb248b0122d",
+    "go_ref": "user:2026-10-21-explicit-reseal-landing-GO",
+    "preparation_fields_are_point_in_time": true,
+    "received_at_utc": "2026-10-21T19:48:01.133245+00:00",
+    "retain_own_T3_worktree": true,
+    "review_head_sha": "79e749839611c14da312b0d9dab044241c0a57bb",
+    "review_path": "/mnt/Cursor/share/puppet-master/2026-10-21-reseal/reviews/RESEAL-astra-r1.md",
+    "review_sha256": "00cc5e621200dada1f5d8ba88954f98e96031df0babbcf913facf51d88049359",
+    "stop_if_main_moved": true,
+    "verdict": "OK"
+  },
   "authority": "Jared assigned the 2026-10-21 governance reseal in this task. Landing requires later explicit GO.",
   "before": {
     "validate_evidence": 844,
