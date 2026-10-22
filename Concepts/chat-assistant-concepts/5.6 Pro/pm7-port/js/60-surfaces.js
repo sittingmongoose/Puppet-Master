@@ -139,7 +139,7 @@
   /* the chat's own label for an id (editorTabLabel and the module slots), else null */
   function chatLabel(id, given) {
     if (typeof given === 'function') { try { given = given(id); } catch (_) { given = null; } }
-    if (given) return decodeEntities(str(given));
+    if (given && given !== 'Untitled') return decodeEntities(str(given));
     var a = app();
     if (a && typeof a.editorTabLabel === 'function') {
       try { var l = a.editorTabLabel(id); if (l && l !== 'Untitled') return decodeEntities(str(l)); } catch (_) {}

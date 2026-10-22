@@ -70,7 +70,10 @@
     var id = String(c.editorId || '');
     if (id.indexOf(PRE) !== 0) return '';
     var rec = find(c, parse(id));
-    return rec && rec.name ? String(rec.name).split('/').pop() : 'Attachment';
+    if (!rec || !rec.name) return 'Attachment';
+    // a file's own name; a folder keeps its last folder name and slash (src/analytics/ -> analytics/)
+    var name = String(rec.name), folder = /\/$/.test(name), parts = name.replace(/\/+$/, '').split('/');
+    return (parts.pop() || name) + (folder ? '/' : '');
   });
   e0.slot('editorDocument', function (c) {
     var id = String(c.editorId || '');

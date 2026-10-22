@@ -15,8 +15,8 @@
    tab sits on its panel's own plate and effects, as every Home tab does */
 .pm56-frame.pm56-tab > .pm56-tab-host.pm56-host::before,
 .pm56-frame.pm56-tab > .pm56-tab-host.pm56-host::after {
-  content: none !important;
-  display: none !important;
+  content: none;
+  display: none;
 }
 .pm56-frame.pm56-tab > .pm56-tab-host.pm56-host > .editor-body.pm56-tab-body {
   box-sizing: border-box;
