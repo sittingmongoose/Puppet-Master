@@ -40,7 +40,6 @@ try {
   await page.goto('file://' + FILE);
   await page.waitForFunction(() => window.__PM56_BOOT_OK === true, null, { timeout: 20000 });
   await page.waitForTimeout(800);
-  const hosted = await page.evaluate(() => PM56_TEST.kind === 'pm7');
 
   const sig = () => page.evaluate(() => {
     const el = document.querySelector('#pmOverlayRoot > [data-overlay="hover"]');
@@ -174,18 +173,9 @@ try {
     check('press dismisses the tag', gone.s === 'NONE', `goneAfter=${gone.dt}ms`);
     await sleep(2000);
     const supp = await sig();
-    if (hosted) {
-      // PMConcept7 closes the pointer tag on press; the newly focused control
-      // can open its focus tag. Its controller owns this hosted policy.
-      const source = await page.evaluate(() => document.querySelector('#pm-hover-tag-visual[data-open="true"]')?.dataset.source);
-      check('host press closes the pointer tag and permits the focused control’s focus tag', supp.includes(pair.ka) && source === 'focus', `after 2s=${supp} source=${source}`);
-    } else check('press suppresses while the pointer stays', supp === 'NONE', `after 2s=${supp}`);
+    check('press suppresses while the pointer stays', supp === 'NONE', `after 2s=${supp}`);
     await page.mouse.move(clear.x, clear.y, { steps: 2 });
     await page.mouse.up(); // release away from the anchor: no click, suppression lifts on pointerout
-    if (hosted) {
-      await page.evaluate(() => document.activeElement?.blur());
-      await waitSig(null, 1200);
-    }
     await sleep(300);
     await armEntry(pair.ka);
     await page.mouse.move(pair.A.x, pair.A.y, { steps: 4 });
