@@ -184,7 +184,8 @@ port's tests click, and its words are `studio.chat.*` in `75-demo-studio.json`, 
 the copy does not know yet keeps the chat's own words under More examples. The section reuses primitives every look
 already styles (tiles, screen rows, choice cards, the joined choice row), so the five looks, light and dark, Reduced
 Motion and the legibility floor carry over; `50-demo-studio.css` adds only the moments' column width and the one-line
-take card.
+take card. The Start page's recipes gain two chat ones: Watch the assistant work (a live agent turn, the Studio stays
+open) and Grill Me, then a Crew (the Wonderer and Grill Me recorded example, which plays on its own).
 
 Looks: the sheet carries `data-pmds-look` (basic, friendly, retro, glass, nier) and `data-pmds-mode`. Basic is quiet and
 exact; Friendly draws on the DS, 3DS, Wii and Wii U menus and iisu (a pinstriped ground, channel tiles with a white bezel
