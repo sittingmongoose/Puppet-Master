@@ -26,12 +26,15 @@
 .pm56-frame.pm56-tab { container-name: pm56host pm56tab; }
 #pmw-chat56[hidden] { display: none !important; }
 /* the page's own chat content under the layer is hidden while the 5.6 chat shows (visibility only: nothing moves, and
-   keyboard focus cannot wander into it); the Guided Tour teaches the page's own chat, so the tour lifts this, and the
-   stand-in (chat.standIn on) takes the column instead */
-html:not([data-o55-tour]) #chatPanel[data-pm56="on"]:not([data-pmw-sc="on"]) > :not(#pmw-chat56):not(#pmw-chat) { visibility: hidden !important; }
-html[data-o55-tour] #pmw-chat56,
+   keyboard focus cannot wander into it); the Guided Tour teaches the page's own chat, so while it runs 00-host.js takes
+   data-pm56 off #chatPanel, which lifts this and hides the layer, and the stand-in (chat.standIn on) takes the column
+   instead */
+#chatPanel[data-pm56="on"]:not([data-pmw-sc="on"]) > :not(#pmw-chat56):not(#pmw-chat) { visibility: hidden !important; }
+#chatPanel:not([data-pm56="on"]) > #pmw-chat56,
 #chatPanel[data-pmw-sc="on"] > #pmw-chat56 { display: none !important; }
-html[data-o55-tour] #pmOverlayRoot.pm56-host > * { display: none !important; }
+/* the body-level layers: display:contents, hidden while the tour runs (00-host.js syncTour) */
+#pm56-layers.pm56-layers { display: contents; }
+#pm56-layers.pm56-layers[hidden] { display: none !important; }
 
 /* the host: the chat's html/body rules land here (scoped CSS), so it is the chat's canvas */
 #pmRoot.pm56-host,

@@ -513,7 +513,12 @@ def page_lint_counts(html: str) -> dict[str, int]:
     compound is html and that use :has(). important: `!important` in stylesheets, comments removed.
     """
     star = has = important = 0
+    # the 5.6 Pro chat's sheet keeps a ratchet of its own (chat56_layer.page_lint_problems): its rules are scoped under
+    # .pm56-host, imported whole from the standalone chat, and counted against its own recorded baseline
+    own = set(_chat56().OWN_SHEETS) if '<!-- C56:CSS:START -->' in html else set()
     for _name, body in built_stylesheets(html):
+        if _name in own:
+            continue
         for _line, sel in css_selectors(body):
             names = page_wide_universal(sel)
             if names and any(name not in PAGE_STATE_OK for name in names):

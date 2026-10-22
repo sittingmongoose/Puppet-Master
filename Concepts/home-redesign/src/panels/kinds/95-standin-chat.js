@@ -962,8 +962,10 @@ function reveal(o) {
 }
 
 /* ---- the browser kind: its captures attach here; Send to chat posts, lists or inserts the part it picked ---- */
+/* the browser kind's captures and sends reach the stand-in only while it is the chat on screen (off, the 5.6 Pro chat's
+   port bridge takes them) */
 function onCapture(e) {
-  if (!e || !e.capture) return;
+  if (!e || !e.capture || !drawn()) return;
   addAtt(attFromCapture(e.tabId, e.capture));
 }
 function insertAtCaret(text) {
@@ -980,7 +982,7 @@ function insertAtCaret(text) {
   focusComposer(caret);
 }
 function onSend(e) {
-  if (!e || !e.what) return;
+  if (!e || !e.what || !drawn()) return;
   var a = e.how === 'capture' ? attFromCapture(e.tabId, e.what) : attFromComponent(e.tabId, e.what);
   if (!a) return;
   if (!drawn()) {

@@ -329,8 +329,14 @@ def simple_parts(comp: str) -> list[str]:
 ROOT_IDS = ('#pmRoot', '#pmOverlayRoot')
 
 
+# The chat's own state classes on <body> that its CSS reads (166 rules on .pm56-reduced alone, several ending in `*`):
+# 00-host.js mirrors them onto every host, and the scoper moves them from body to the host, so a toggle restyles the
+# chat's hosts and not the whole page. pm56-reduced is also on while PMConcept7's html[data-motion="reduced"] is.
+HOST_STATE_CLASSES = ('pm56-reduced', 'pm-theming', 'pmx-title-morphing', 'tx-flying')
+
+
 def is_theme_part(p: str) -> bool:
-    return 'data-theme' in p
+    return 'data-theme' in p or p in tuple('.' + c for c in HOST_STATE_CLASSES)
 
 
 def host_from(parts: list[str], tag: str = HOST_TAG) -> str:
@@ -655,6 +661,26 @@ def js_safe(js: str) -> str:
     return js.replace('<!--', '<\\!--')
 
 
+VAR_REF = re.compile(r'var\(\s*(--[\w-]+)')
+VAR_DECL = re.compile(r'(?<![\w-])(--[\w-]+)\s*:')
+JS_VAR_SET = re.compile(r'setProperty\(\s*[\'"`](--[\w-]+)')
+
+
+def leaked_custom_properties(text: str, chat_css: str, chat_js: str) -> list[str]:
+    """Custom properties the chat reads (var(--x ...)) but never declares, which the page already declares: inherited
+    from PMConcept7's ancestors they would replace the chat's own fallbacks (measured: --nx-stroke-base)."""
+    refs = set(VAR_REF.findall(chat_css)) | set(VAR_REF.findall(chat_js))
+    decls = set(VAR_DECL.findall(strip_comments(chat_css)))
+    # what the chat itself writes on <html> / <body> at run time must keep reaching it (--ph-x, --qs-ask-room ...)
+    js_set = set(JS_VAR_SET.findall(chat_js))
+    js_prefixes = tuple(re.findall(r'setProperty\(\s*[\'"`](--[\w-]+-)[\'"`]\s*\+', chat_js))
+    page_css = ''.join(re.findall(r'<style\b[^>]*>(.*?)</style>', text, re.S | re.I))
+    page_decls = set(VAR_DECL.findall(page_css)) | set(JS_VAR_SET.findall(text))
+    # every name the chat uses that the page also declares: the chat's own declarations (on the host or deeper) win
+    # over this zero-specificity reset, and wherever it declares none, its fallback applies as in the standalone
+    return sorted(v for v in (refs | decls) & page_decls if v not in js_set and not v.startswith(js_prefixes or ('\0',)))
+
+
 def build_css(text: str, notes: dict) -> str:
     spec = chat_build_spec()
     parts = []
@@ -663,8 +689,16 @@ def build_css(text: str, notes: dict) -> str:
         if name in HOSTED_SKIP_CSS:
             continue
         parts.append(f'/* ---- 5.6 Pro/{name} (scoped) ---- */\n' + scope_css(rename_css_classes(read_chat(name)), notes, kf) + '\n')
+    chat_css = ''.join(read_chat(n) for n in spec['CSS_ORDER'] if n not in HOSTED_SKIP_CSS)
+    chat_js = ''.join(read_chat(n) for n in spec['HEAD_JS'] + spec['PRE_MODULES_JS'] + [m + '.js' for m in spec['MODULES']
+                                                                                    if m not in HOSTED_SKIP_JS] + ['app.js'])
+    leaked = leaked_custom_properties(text, chat_css, chat_js)
+    notes['custom_properties_reset'] = len(leaked)
     for p in port_files('css', '.css'):
         parts.append(f'/* ---- pm7-port/css/{p.name} ---- */\n' + p.read_text(encoding='utf-8').rstrip() + '\n')
+        if p.name.startswith('01-') and leaked:
+            parts.append('/* ---- generated (chat56_layer.leaked_custom_properties): the chat\'s fallbacks, not PMConcept7\'s values ---- */\n'
+                         ':where(.pm56-host) { ' + ' '.join(f'{v}: initial;' for v in leaked) + ' }\n')
     return ''.join(parts)
 
 
@@ -757,12 +791,43 @@ def lint() -> list[str]:
             if re.search(r'(?:^|[\s,}])(?:html|body|:root)\b[^{},]*:has\(', code):
                 problems.append(f'page-wide :has() in 5.6 Pro/{rel}')
             for _, sel in build.css_selectors(t):
-                if not re.search(r'\.pm56-(?:host|frame)|#pmw-chat56|#pmRoot|#pmOverlayRoot|#chatPanel', sel):
+                if not re.search(r'\.pm56-(?:host|frame)|#pmw-chat56|#pm56-layers|#pmRoot|#pmOverlayRoot|#chatPanel', sel):
                     problems.append(f'unscoped selector in 5.6 Pro/{rel}: {sel[:100]} (scope it under .pm56-host)')
         else:
             if re.search(r'\binnerWidth\b', t) and not p.name.startswith('00-'):
                 problems.append(f'5.6 Pro/{rel} reads the window width (read PM56_HOST.width())')
     return problems
+
+
+# The chat's stylesheet is left out of the opus-5.5 page lint ratchet (build.py page_lint_counts) and counted here
+# against its own baseline: page-wide `*` selectors, html-rooted :has() and !important in <style id="pm56-css">. A count
+# may shrink; a growth fails. Record a new baseline only for a change that is meant (python3 chat56_layer.py --record).
+OWN_SHEETS = ('pm56-css',)
+PAGE_LINT_BASELINE = TOOLS / 'page_lint_baseline.json'
+
+
+def page_lint_counts(built: str) -> dict:
+    build = _opus_build()
+    m = re.search(r'<style id="pm56-css">(.*?)</style>', built, re.S)
+    css = m.group(1) if m else ''
+    star = has = 0
+    for _line, sel in build.css_selectors(css):
+        names = build.page_wide_universal(sel)
+        if names and any(n not in build.PAGE_STATE_OK for n in names):
+            star += 1
+        comps = build.compounds(sel)
+        if comps and re.match(r'html(?![\w-])', comps[0]) and ':has(' in sel:
+            has += 1
+    return {'page_wide_star': star, 'html_rooted_has': has, 'important': strip_comments(css).count('!important')}
+
+
+def page_lint_problems(built: str) -> list[str]:
+    if not PAGE_LINT_BASELINE.is_file():
+        return [f'chat56: page lint baseline missing: {PAGE_LINT_BASELINE.name}']
+    allowed = json.loads(PAGE_LINT_BASELINE.read_text(encoding='utf-8')).get('counts', {})
+    actual = page_lint_counts(built)
+    return [f'chat56: page lint ratchet: {k} grew from {allowed.get(k, 0)} to {v}' for k, v in actual.items()
+            if v > int(allowed.get(k, 0))]
 
 
 MARKERS = [CSS_START, CSS_END, JS_START, JS_END, '<style id="pm56-css">', '<script id="pm56-js">',
@@ -793,13 +858,14 @@ def published_problems(built: str) -> list[str]:
             Path(path).unlink(missing_ok=True)
         if r.returncode:
             problems.append(f'chat56: syntax error in {sid}: ' + ' | '.join(r.stderr.strip().splitlines()[-4:])[:600])
+    problems.extend(page_lint_problems(built))
     m = re.search(r'<style id="pm56-css">(.*?)</style>', built, re.S)
     if m:
         bad = []
         for item in _rules(parse_css(strip_comments(m.group(1)))):
             for sel in split_top(item):
                 s = sel.strip()
-                if s and not re.search(r'\.pm56-(?:host|frame)|#pmw-chat56|#chatPanel', s):
+                if s and not re.search(r'\.pm56-(?:host|frame)|#pmw-chat56|#pm56-layers|#chatPanel', s):
                     bad.append(s[:100])
         if bad:
             problems.append(f'chat56: {len(bad)} chat selectors are not scoped, first: {bad[0]}')
@@ -815,6 +881,14 @@ def _rules(items: list):
 
 
 if __name__ == '__main__':
+    if '--record' in sys.argv:
+        # record the chat sheet's lint counts from a built page: python3 chat56_layer.py --record /tmp/x/PMConcept7.html
+        page = Path(sys.argv[sys.argv.index('--record') + 1]).read_text(encoding='utf-8')
+        PAGE_LINT_BASELINE.write_text(json.dumps({'counts': page_lint_counts(page),
+                                                  'note': 'the 5.6 Pro chat sheet (pm56-css); see OWN_SHEETS'}, indent=2) + '\n',
+                                      encoding='utf-8')
+        print(PAGE_LINT_BASELINE.read_text())
+        sys.exit(0)
     # quick self-test: python3 chat56_layer.py 'body[data-theme="x"] .a, html[data-motion] *'
     nn: dict = {}
     for arg in sys.argv[1:]:

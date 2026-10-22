@@ -27,10 +27,23 @@
     return /light/.test(t) ? 'basic-light' : 'basic-dark';
   }
   function hosts() { return Array.prototype.slice.call(doc.querySelectorAll('.pm56-host')); }
+  /* the chat's own state classes on <body> are mirrored onto every host (chat56_layer HOST_STATE_CLASSES: its CSS
+     reads them on the host, so a toggle restyles the chat only); pm56-reduced also follows PMConcept7's Reduced
+     Motion (html[data-motion="reduced"]) */
+  var STATE_CLASSES = ['pm56-reduced', 'pm-theming', 'pmx-title-morphing', 'tx-flying'];
+  function stateOn(c) {
+    if (c === 'pm56-reduced' && doc.documentElement.getAttribute('data-motion') === 'reduced') return true;
+    return !!(doc.body && doc.body.classList.contains(c));
+  }
   function paintHost(el) {
     var t = pageTheme();
     if (el.getAttribute('data-theme') !== t) el.setAttribute('data-theme', t);
+    for (var i = 0; i < STATE_CLASSES.length; i++) {
+      var on = stateOn(STATE_CLASSES[i]);
+      if (el.classList.contains(STATE_CLASSES[i]) !== on) el.classList.toggle(STATE_CLASSES[i], on);
+    }
   }
+  function syncState() { hosts().forEach(paintHost); }
   function syncTheme() {
     var t = pageTheme();
     hosts().forEach(function (el) { if (el.getAttribute('data-theme') !== t) el.setAttribute('data-theme', t); });
@@ -55,7 +68,7 @@
       frame.appendChild(root);
     }
     if (cp && frame.parentNode !== cp) cp.appendChild(frame);
-    if (cp) cp.setAttribute('data-pm56', 'on');
+    if (cp && !doc.documentElement.hasAttribute('data-o55-tour')) cp.setAttribute('data-pm56', 'on');
     if (!layers) {
       layers = el('div', { id: 'pm56-layers', class: 'pmw-scope pm56-layers' });
       overlay = el('div', { id: 'pmOverlayRoot', class: 'pm56-host pm56-overlay' });
@@ -69,9 +82,26 @@
   mount();
   /* the chat column widens for a pinned History only while the chat draws it (46-chat.js historyShown): the drawer's
      mode is body[data-ph-drawer] (history.js), so each change asks the narrow ladder to measure again */
-  if (typeof MutationObserver === 'function' && doc.body) new MutationObserver(function () {
-    try { if (window.PMW && PMW.narrow && PMW.narrow.schedule) PMW.narrow.schedule(); } catch (_) {}
-  }).observe(doc.body, { attributes: true, attributeFilter: ['data-ph-drawer'] });
+  if (typeof MutationObserver === 'function' && doc.body) new MutationObserver(function (recs) {
+    var drawer = false, cls = false;
+    recs.forEach(function (r) { if (r.attributeName === 'data-ph-drawer') drawer = true; else cls = true; });
+    if (cls) syncState();
+    if (drawer) { try { if (window.PMW && PMW.narrow && PMW.narrow.schedule) PMW.narrow.schedule(); } catch (_) {} }
+  }).observe(doc.body, { attributes: true, attributeFilter: ['data-ph-drawer', 'class'] });
+  /* the Guided Tour teaches the page's own chat: while html[data-o55-tour] is on, the column gives #chatPanel back
+     (data-pm56 off) and the body-level layers hide (state on elements, never an html-rooted rule) */
+  function syncTour() {
+    var tour = doc.documentElement.hasAttribute('data-o55-tour'), cp = doc.getElementById('chatPanel');
+    if (cp) { if (tour) cp.removeAttribute('data-pm56'); else cp.setAttribute('data-pm56', 'on'); }
+    if (layers) layers.hidden = tour;
+  }
+  syncTour();
+  if (typeof MutationObserver === 'function') new MutationObserver(function (recs) {
+    var tour = false, motion = false;
+    recs.forEach(function (r) { if (r.attributeName === 'data-o55-tour') tour = true; else motion = true; });
+    if (tour) syncTour();
+    if (motion) syncState();
+  }).observe(doc.documentElement, { attributes: true, attributeFilter: ['data-o55-tour', 'data-motion'] });
   /* what the chat appends to <body> goes to the effects layer (class prefixes only the chat uses) */
   var FX_CLASS = /(?:^|\s)(?:pm56-|pmx-|tx-fly|rec-tap)/;
   function isChatFx(n) { return !!(n && n.nodeType === 1 && fx && FX_CLASS.test(n.className && n.className.baseVal != null ? n.className.baseVal : (n.className || ''))); }

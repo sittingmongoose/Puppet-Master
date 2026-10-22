@@ -1,0 +1,57 @@
+/* pm7-port/css/01-reset.css: what PMConcept7's own page rules would otherwise change on the chat's elements (foundation
+   lane). Measured 2026-10-22 (computed styles of the chat stage, standalone against hosted, Basic Dark 1920x1080, and
+   every PMConcept7 rule that matches a chat element). The host part of every rule is :where()-wrapped, so each rule
+   has the specificity of the PMConcept7 rule it answers and wins it by order (this sheet comes later), while any rule
+   of the chat's own (scoped, at least one class more) still wins.
+
+   The chat56 layer adds one generated rule after this file: every custom property the chat uses that PMConcept7 also
+   declares (--accent, --border, --radius-md, --success, the --nx-* glyph tokens ...) starts from its initial value on
+   each host, so a name the chat reads with a fallback and does not declare itself gets that fallback, as in the
+   standalone, instead of PMConcept7's inherited value; the chat's own declarations on the host win as before. A look
+   that wants PMConcept7's value declares it on .pm56-host[data-theme] (higher specificity). Not reset, by design:
+   PMConcept7's glyph layer sets --nx-stroke-base on 14 and 15 px icons themselves (svg:where(.nx[width="14"]), the
+   shared glyph registry, D44), so the chat's small icons draw at PMConcept7's 2.3 px stroke, not the standalone's
+   1.8. */
+
+/* inherited text properties: the chat's body rule sets font-family, font-size, line-height, color and smoothing on the
+   host; the rest come from PMConcept7's html, body and #chatPanel (letter-spacing: var(--letter-spacing) on html and
+   body), so the host starts them from the initial values the standalone's body had */
+:where(.pm56-host) {
+  letter-spacing: normal;
+  word-spacing: normal;
+  text-transform: none;
+  text-indent: 0;
+  text-shadow: none;
+  font-style: normal;
+  font-variant: normal;
+  font-weight: 400;
+  font-stretch: normal;
+  font-feature-settings: normal;
+  font-kerning: auto;
+  text-align: start;
+  white-space: normal;
+  word-break: normal;
+  overflow-wrap: normal;
+  hyphens: manual;
+  tab-size: 8;
+  cursor: auto;
+  visibility: visible;
+  direction: ltr;
+  list-style: disc outside none;
+  caret-color: auto;
+  -webkit-text-stroke: 0;
+}
+
+/* PMConcept7's universal reset (* { box-sizing; margin: 0; padding: 0 }) took the user agent's margins and paddings
+   from the chat's paragraphs, headings, lists, figures and form controls; the standalone keeps them wherever the chat
+   sets nothing itself */
+:where(.pm56-host) :where(*) {
+  margin: revert;
+  padding: revert;
+}
+
+/* svg { flex-shrink: 0 } (PMConcept7's shelves) kept the chat's icons from shrinking in tight rows */
+:where(.pm56-host) svg { flex-shrink: revert; }
+
+/* .message { position: relative } (PMConcept7's own chat) moved the containing block of the chat's message parts */
+:where(.pm56-host) .message { position: revert; }
