@@ -1558,7 +1558,7 @@
 
   function cssVar(name, fallback) {
     var v = '';
-    try { v = getComputedStyle(document.documentElement).getPropertyValue(name).trim(); } catch (e) {}
+    try { v = getComputedStyle((window.PM56_HOST?window.PM56_HOST.root():document.documentElement)).getPropertyValue(name).trim(); } catch (e) {}
     return v || fallback;
   }
   function morphEaseOut() { return cssVar('--pm-ease-pop', 'cubic-bezier(.22,.80,.28,1)'); }

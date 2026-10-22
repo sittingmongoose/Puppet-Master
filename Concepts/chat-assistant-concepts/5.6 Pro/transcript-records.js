@@ -212,7 +212,7 @@
     return !!((window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches)
       ||document.body.classList.contains('pm56-reduced')||document.documentElement.getAttribute('data-motion')==='reduced');
   }
-  function token(name,d){const v=parseFloat(getComputedStyle(document.documentElement).getPropertyValue(name));return isFinite(v)&&v>0?v:d;}
+  function token(name,d){const v=parseFloat(getComputedStyle((window.PM56_HOST?window.PM56_HOST.root():document.documentElement)).getPropertyValue(name));return isFinite(v)&&v>0?v:d;}
   E.action('feed-stretch',(ctx,btn)=>{
     const id=btn&&btn.dataset.stretch,box=btn&&btn.closest('.tx-stretch');
     const rows=box&&box.querySelector(':scope > .tx-stretch-rows');

@@ -308,7 +308,7 @@
      everywhere else in this codebase. */
   function themeColor(varName, fallback) {
     try {
-      var v = getComputedStyle(document.documentElement).getPropertyValue(varName);
+      var v = getComputedStyle((window.PM56_HOST?window.PM56_HOST.root():document.documentElement)).getPropertyValue(varName);
       return (v && v.trim()) || fallback;
     } catch (e) { return fallback; }
   }

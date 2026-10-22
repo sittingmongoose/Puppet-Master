@@ -500,13 +500,24 @@
   let phoneLayout=isPhone();
   let activityPinLayout=activityPinnedInLayout();
   function savePrefs() {
+    if(HOSTED){ safeStorage.set('pm56-hosted-prefs', JSON.stringify(hostedPrefs())); return; }
     safeStorage.set(HOSTED?'pm56-hosted-prefs':'pm56-prefs', JSON.stringify({theme:state.theme,historyMode:state.historyMode,historyWidth:state.historyWidth,editorWidth:state.editorWidth,activityWidth:state.activityWidth,model:state.model,effort:state.effort||'',effortChosen:!!state.effort,fast:state.fast,capabilities:state.capabilities}));
     if(window.PM56_NIER_SAVED) window.PM56_NIER_SAVED();   /* NieR Mode's Save signal part (nier-world.js) */
+  }
+  /* Hosted: only the chat's own choices persist here (model, effort, fast mode, the Activity width, the capability
+     switches the chat owns). The look, the History pin and the column widths are PMConcept7's (its look settings and
+     the layout's chat column), and the thought stream and ELI5 defaults are Settings values (PM_CHAT_SETTINGS): no
+     second store for any of them. */
+  const HOSTED_PREF_KEYS=['model','effort','effortChosen','fast','activityWidth','capabilities'];
+  function hostedPrefs(){
+    const caps=Object.assign({},state.capabilities); delete caps.thought; delete caps.eli5;
+    return {model:state.model,effort:state.effort||'',effortChosen:!!state.effort,fast:state.fast,activityWidth:state.activityWidth,capabilities:caps};
   }
   function loadPrefs() {
     const raw = HOSTED ? safeStorage.get('pm56-hosted-prefs') : safeStorage.get('pm56-prefs'); if (!raw) return;
     try {
-      const p = JSON.parse(raw);
+      let p = JSON.parse(raw);
+      if (HOSTED) { const q={}; HOSTED_PREF_KEYS.forEach(k=>{ if(k in p) q[k]=p[k]; }); if(q.capabilities){ const own=q.capabilities; q.capabilities=Object.assign({},state.capabilities,own,{thought:state.capabilities.thought,eli5:state.capabilities.eli5}); } p=q; }
       const chosen = !!p.effortChosen;
       delete p.effortChosen;
       Object.assign(state, p);
@@ -4747,22 +4758,38 @@ suggested path                    migration 0043, reversible</div></div></sectio
   function hostedSavedTabs(){ try { const v=JSON.parse(safeStorage.get(HOSTED_TABS_KEY)||'[]'); return Array.isArray(v)?v.map(String):[]; } catch(e){ return []; } }
   function hostedOpen(id,o){
     o=o||{};
-    const ev=o.event||(typeof window.event!=='undefined'?window.event:null);
+    let ev=o.event||(typeof window.event!=='undefined'?window.event:null);
+    if(!(ev&&ev.type&&/click|key|pointer|mouse/.test(ev.type))) ev=null;
+    const by=o.by||'user';
+    const background=o.background!=null?!!o.background:(/^agent:/.test(by)||!!(ev&&(ev.ctrlKey||ev.metaKey)));
     if(!state.editorTabs.includes(id)) state.editorTabs.push(id);
     hostedTabs.add(id); hostedSaveTabs();
-    state.editorRevealed=true;
-    if(!o.background) state.activeEditor=id;
     hostedSyncing=true;
-    try { HOST.openTab(id,{label:editorTabLabel(id),by:o.by||'user',background:o.background,event:ev&&ev.type&&/click|key|pointer|mouse/.test(ev.type)?ev:null,mode:o.mode,line:o.line,where:o.where}); }
+    try { HOST.openTab(id,{label:editorTabLabel(id),by,background,event:ev,mode:o.mode,line:o.line,where:o.where}); }
     finally { hostedSyncing=false; }
+    hostedReconcile();
     renderApp();
   }
   function hostedForget(id){
     hostedTabs.delete(id); hostedSaveTabs();
     const i=state.editorTabs.indexOf(id);
     if(i>=0) state.editorTabs.splice(i,1);
-    if(state.activeEditor===id){ const a=window.PM_HOME&&PM_HOME.active&&PM_HOME.active(); state.activeEditor=a&&state.editorTabs.includes(a.tabId)?a.tabId:(state.editorTabs[Math.max(0,i-1)]||state.editorTabs[0]||null); }
-    state.editorRevealed=state.editorTabs.length>0;
+    hostedReconcile();
+  }
+  /* state.activeEditor and state.editorRevealed follow what the panels show: the focused panel's active tab when it is
+     a chat tab, else the chat tab that was active and is still the active tab of some panel, else the first such; a
+     chat tab that is open but behind another tab is not revealed (pmx run cards key "Deciding in the panel beside the
+     chat" on it). Returns whether anything changed. */
+  function hostedReconcile(){
+    const H=window.PM_HOME; if(!H||!H.active) return false;
+    let a=null, visible=[];
+    try { a=H.active(); } catch(e){}
+    try { visible=(H.panels?H.panels():[]).map(p=>p.active).filter(t=>t&&hostedTabs.has(t)); } catch(e){}
+    const act=a&&hostedTabs.has(a.tabId)?a.tabId:(visible.includes(state.activeEditor)?state.activeEditor:(visible[0]||null));
+    const rev=visible.length>0;
+    const changed=state.activeEditor!==act||state.editorRevealed!==rev;
+    state.activeEditor=act; state.editorRevealed=rev;
+    return changed;
   }
   function hostedClose(id){
     hostedSyncing=true;
@@ -4814,10 +4841,14 @@ suggested path                    migration 0043, reversible</div></div></sectio
       if(!H||!H.on) return;
       /* tabs restored from the saved layout: the chat draws the ones it knows */
       const mine=new Set(hostedSavedTabs());
-      try { (H.tabs?H.tabs():[]).forEach(t=>{ if(mine.has(t.tabId)&&chatOwnsId(t.tabId)){ hostedTabs.add(t.tabId); if(!state.editorTabs.includes(t.tabId)) state.editorTabs.push(t.tabId); HOST.adopt(t.tabId); } }); } catch(err){ console.error('[pm56] restoring chat tabs failed',err); }
-      state.editorRevealed=state.editorTabs.length>0;
-      H.on('close',e=>{ if(hostedSyncing||!e||!hostedTabs.has(e.tabId)) return; hostedForget(e.tabId); renderApp(); });
-      H.on('activate',e=>{ if(hostedSyncing||!e||!hostedTabs.has(e.tabId)) return; if(state.activeEditor!==e.tabId){ state.activeEditor=e.tabId; state.editorRevealed=true; renderApp(); } });
+      /* the surfaces lane routes some ids to the panels' own kinds (file: to the editor, link: to the browser): those
+         tabs are the chat's to track but not to draw */
+      const chatBody=id=>{ const S=window.PM56_SURFACES; try { const r=S&&S.route&&S.route(id); return !(r&&r.body&&r.body!=='chat'); } catch(e){ return true; } };
+      try { (H.tabs?H.tabs():[]).forEach(t=>{ if(mine.has(t.tabId)&&chatOwnsId(t.tabId)){ hostedTabs.add(t.tabId); if(!state.editorTabs.includes(t.tabId)) state.editorTabs.push(t.tabId); if(chatBody(t.tabId)) HOST.adopt(t.tabId); } }); } catch(err){ console.error('[pm56] restoring chat tabs failed',err); }
+      hostedReconcile();
+      H.on('close',e=>{ if(hostedSyncing||!e) return; if(hostedTabs.has(e.tabId)){ hostedForget(e.tabId); renderApp(); } else if(hostedReconcile()) renderApp(); });
+      /* any activation counts: a file or terminal taking a panel's front hides the chat tab behind it */
+      ['activate','open','focus','layout'].forEach(ev=>H.on(ev,()=>{ if(hostedSyncing) return; if(hostedReconcile()) renderApp(); }));
       /* the chat column's surface (CONTRACT 6.1): History, compose, reveal; the stand-in answers while it is on */
       /* the stand-in registers its surface when the panels finish booting (their 'ready'), which can come after this */
       claimSurface();

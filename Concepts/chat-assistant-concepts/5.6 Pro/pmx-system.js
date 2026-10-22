@@ -47,7 +47,8 @@
   var mqReduced = null;
   function reduced() {
     try { if (!mqReduced) mqReduced = window.matchMedia('(prefers-reduced-motion: reduce)'); } catch (e) { }
-    return !!((mqReduced && mqReduced.matches) || (document.body && document.body.classList.contains('pm56-reduced')));
+    return !!((mqReduced && mqReduced.matches) || (document.body && document.body.classList.contains('pm56-reduced'))
+      || (window.PM56_HOST && window.PM56_HOST.reduced()));   /* hosted: PMConcept7's Reduced Motion too */
   }
   function overlayRoot() { return document.getElementById('pmOverlayRoot'); }
   function appRoot() { return document.getElementById('pmRoot'); }
@@ -62,7 +63,8 @@
      wait('dock') is --pmx-wait-dock (a logic wait, never scaled), ease('out') is --pmx-ease-out. */
   var tokCache = { theme: null, v: Object.create(null) };
   function tokRaw(name) {
-    var b = document.body; if (!b) return '';
+    /* hosted (PMConcept7): the tokens are declared on the chat's host (.pm56-host), not on <body> */
+    var b = window.PM56_HOST ? window.PM56_HOST.root() : document.body; if (!b) return '';
     /* NieR Mode paints basic-* under html[data-o55-nier] with its own stepped eases (nier.css): part of the key */
     var th = (b.getAttribute('data-theme') || '') + (document.documentElement.hasAttribute('data-o55-nier') ? '+nier' : '');
     if (tokCache.theme !== th) { tokCache.theme = th; tokCache.v = Object.create(null); }

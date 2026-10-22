@@ -115,7 +115,8 @@
     return a;
   }
 
-  const reduced = () => window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  /* hosted (PMConcept7): its Reduced Motion setting (html[data-motion="reduced"]) counts too */
+  const reduced = () => window.matchMedia('(prefers-reduced-motion: reduce)').matches || !!(window.PM56_HOST && window.PM56_HOST.reduced());
 
   window.PM56_MOTION = { words, wordCount, roll, flip, flipHeight, reduced, esc };
 

@@ -929,7 +929,7 @@
     if (!p) return 0;
     try {
       if (!castCtx) castCtx = document.createElement('canvas').getContext('2d');
-      var fam = getComputedStyle(document.body).getPropertyValue('--font-ui').trim() || 'sans-serif';
+      var fam = getComputedStyle((window.PM56_HOST?window.PM56_HOST.root():document.body)).getPropertyValue('--font-ui').trim() || 'sans-serif';
       castCtx.font = (fs === 11 ? 600 : 400) + ' ' + fs + 'px ' + fam;
       var w = castCtx.measureText(p).width;
       if (w > 0) return Math.ceil(w * 1.04 + 1);

@@ -1379,7 +1379,7 @@
   /* a name on request takes at least one shimmer cycle (--pmx-shimmer), so the answer is seen even when it is quick */
   function namingHold(){
     var v='', n;
-    try{ v=getComputedStyle(document.body).getPropertyValue('--pmx-shimmer').trim(); }catch(err){}
+    try{ v=getComputedStyle((window.PM56_HOST?window.PM56_HOST.root():document.body)).getPropertyValue('--pmx-shimmer').trim(); }catch(err){}
     n=parseFloat(v);
     if(!isFinite(n) || n<=0) return 1370;
     return /ms$/.test(v) ? n : /s$/.test(v) ? n*1000 : n;

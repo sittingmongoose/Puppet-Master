@@ -681,14 +681,58 @@ def leaked_custom_properties(text: str, chat_css: str, chat_js: str) -> list[str
     return sorted(v for v in (refs | decls) & page_decls if v not in js_set and not v.startswith(js_prefixes or ('\0',)))
 
 
+def _patch_modules():
+    import importlib.util
+    for p in sorted(TOOLS.glob('patches_*.py')):
+        spec = importlib.util.spec_from_file_location('pm56_' + p.stem, p)
+        mod = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(mod)
+        yield p.name, mod
+
+
+def hosted_css_patches() -> dict:
+    """stylesheet -> [(old, new, count, source)], from every pm7-port/tools/patches_*.py HOSTED_CSS_PATCHES (each lane's
+    own file, the lead's ruling of 2026-10-22; first written by the nier lane): applied to the chat's stylesheet text
+    before scoping, in the hosted build only. An old string that does not occur exactly count times fails the build."""
+    out: dict = {}
+    for name, mod in _patch_modules():
+        for f, old, new, count in getattr(mod, 'HOSTED_CSS_PATCHES', []):
+            out.setdefault(f, []).append((old, new, count, name))
+    return out
+
+
+def hosted_js_patches() -> dict:
+    """script -> [(old, new, count, source)] from HOSTED_JS_PATCHES in the same files, applied to a chat script's text
+    before it is bundled (hosted build only), on the same exact-count contract."""
+    out: dict = {}
+    for name, mod in _patch_modules():
+        for f, old, new, count in getattr(mod, 'HOSTED_JS_PATCHES', []):
+            out.setdefault(f, []).append((old, new, count, name))
+    return out
+
+
+def apply_css_patches(name: str, css: str, patches: dict) -> str:
+    for old, new, count, src in patches.get(name, []):
+        n = css.count(old)
+        if n != count:
+            raise ValueError(f'chat56 layer: {src} patches {name}: {old!r} occurs {n} times (need {count})')
+        css = css.replace(old, new)
+    return css
+
+
+apply_js_patches = apply_css_patches
+
+
 def build_css(text: str, notes: dict) -> str:
     spec = chat_build_spec()
     parts = []
     kf = page_keyframes(text)
+    patches = hosted_css_patches()
     for name in spec['CSS_ORDER']:
         if name in HOSTED_SKIP_CSS:
             continue
-        parts.append(f'/* ---- 5.6 Pro/{name} (scoped) ---- */\n' + scope_css(rename_css_classes(read_chat(name)), notes, kf) + '\n')
+        css = apply_css_patches(name, read_chat(name), patches)
+        parts.append(f'/* ---- 5.6 Pro/{name} (scoped) ---- */\n' + scope_css(rename_css_classes(css), notes, kf) + '\n')
     chat_css = ''.join(read_chat(n) for n in spec['CSS_ORDER'] if n not in HOSTED_SKIP_CSS)
     chat_js = ''.join(read_chat(n) for n in spec['HEAD_JS'] + spec['PRE_MODULES_JS'] + [m + '.js' for m in spec['MODULES']
                                                                                     if m not in HOSTED_SKIP_JS] + ['app.js'])
@@ -706,12 +750,14 @@ def build_scripts() -> tuple[str, str, str]:
     spec = chat_build_spec()
     early = ''.join(f'/* ---- pm7-port/js/{p.name} ---- */\n' + p.read_text(encoding='utf-8').rstrip() + '\n'
                     for p in port_files('js', '.js', 0, 9))
-    data = ('\n'.join(read_chat(n) for n in spec['HEAD_JS']) + '\n' + spec['EXT_SHIM'] + '\n'
-            + '\n'.join(read_chat(n) for n in spec['PRE_MODULES_JS']) + '\n'
-            + '\n'.join(read_chat(m + '.js') for m in spec['MODULES'] if m not in HOSTED_SKIP_JS))
+    jp = hosted_js_patches()
+    js = lambda n: apply_js_patches(n, read_chat(n), jp)
+    data = ('\n'.join(js(n) for n in spec['HEAD_JS']) + '\n' + spec['EXT_SHIM'] + '\n'
+            + '\n'.join(js(n) for n in spec['PRE_MODULES_JS']) + '\n'
+            + '\n'.join(js(m + '.js') for m in spec['MODULES'] if m not in HOSTED_SKIP_JS))
     class_map = 'window.PM56_CLASS_MAP=' + json.dumps(RENAME_CLASSES, sort_keys=True) + ';\n'
     main = class_map + early + rename_js_classes(data)
-    app = read_chat('app.js')
+    app = js('app.js')
     if app.count('  renderApp(false);\n  scrollTranscriptToEnd(true);') != 1:
         raise ValueError('chat56 layer: the boot render in app.js changed')
     app = rename_js_classes(app.replace('  renderApp(false);\n  scrollTranscriptToEnd(true);',

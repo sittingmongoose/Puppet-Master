@@ -256,7 +256,13 @@
         if (r && typeof r.render === 'function') r.render(body, { id: id, api: api });
         else if (app) app.paintBody(body, id);
       } catch (err) { try { console.error('[pm56] tab body failed for ' + id, err); } catch (_) {} }
-      try { if (app && api.update) api.update({ label: app.label(id) }); } catch (_) {}
+      /* the tab's label: the router's when it has one, else the chat's (never the chat's 'Untitled' over a label the
+         router gave) */
+      try {
+        var S = window.PM56_SURFACES, lab = S && typeof S.labelFor === 'function' ? S.labelFor(id) : null;
+        if (!lab && app) { lab = app.label(id); if (lab === 'Untitled') lab = null; }
+        if (lab && api.update) api.update({ label: lab });
+      } catch (_) {}
     }
     rec.paint = paint;
     paint();
@@ -335,13 +341,19 @@
     bind: function (a) { app = a; wrapKinds(); hostKeys(root); hostKeys(overlay); hostKeys(fx); return H; },
     endLoad: function () { loading = false; },
     hears: hears,
+    /* PMConcept7's Reduced Motion (html[data-motion="reduced"]) or the chat's own body.pm56-reduced */
+    reduced: function () { return doc.documentElement.getAttribute('data-motion') === 'reduced' || !!(doc.body && doc.body.classList.contains('pm56-reduced')); },
     app: function () { return app; },
     /* the chat opened an id: the surfaces lane's router first, else one Home tab with the chat's body */
     openTab: function (id, o) {
       o = o || {};
       var S = window.PM56_SURFACES;
       if (S && typeof S.open === 'function') {
-        try { var r = S.open(id, o); if (r) return r; } catch (err) { try { console.error('[pm56] PM56_SURFACES.open failed', err); } catch (_) {} }
+        try {
+          /* the chat's own body for this id, for the kinds the router gives the chat's body */
+          var r = S.open(id, Object.assign({ render: function (body) { if (app) app.paintBody(body, id); } }, o));
+          if (r) return r;
+        } catch (err) { try { console.error('[pm56] PM56_SURFACES.open failed', err); } catch (_) {} }
       }
       if (!window.PM_HOME || !PM_HOME.openEditor) return null;
       wrapKinds();

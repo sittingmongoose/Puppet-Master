@@ -648,14 +648,14 @@
     marker travels from the finished speaker's mark to the next one's in the head cluster (320 move). Both are
     driven by real protocol events only (a new speaker), never by a loop; reduced motion shows the end state. */
  const speakerOf=new Map();
- function tokenMs(name,fallback){try{const v=getComputedStyle(document.body).getPropertyValue(name).trim();const n=parseFloat(v);return isFinite(n)?(/ms$/.test(v)?n:/s$/.test(v)?n*1000:n):fallback;}catch(e){return fallback;}}
+ function tokenMs(name,fallback){try{const v=getComputedStyle((window.PM56_HOST?window.PM56_HOST.root():document.body)).getPropertyValue(name).trim();const n=parseFloat(v);return isFinite(n)?(/ms$/.test(v)?n:/s$/.test(v)?n*1000:n):fallback;}catch(e){return fallback;}}
  function travel(card,runId,from,to){
   const P=PMXo(),a=card.querySelector('[data-k="cm:'+runId+':'+from+'"]'),b=card.querySelector('[data-k="cm:'+runId+':'+to+'"]');
   if(!P||!a||!b||(P.reduced&&P.reduced()))return;
   const ra=a.getBoundingClientRect(),rb=b.getBoundingClientRect();if(!ra.width||!rb.width)return;
   const el=document.createElement('i');el.className='pmx-room-marker';el.setAttribute('aria-hidden','true');
   el.style.left=Math.round(ra.left+ra.width/2-7)+'px';el.style.top=Math.round(ra.bottom+2)+'px';document.body.appendChild(el);
-  const ease=(getComputedStyle(document.body).getPropertyValue('--pmx-ease-move')||'').trim()||'cubic-bezier(.65,0,.35,1)';
+  const ease=(getComputedStyle((window.PM56_HOST?window.PM56_HOST.root():document.body)).getPropertyValue('--pmx-ease-move')||'').trim()||'cubic-bezier(.65,0,.35,1)';
   const an=P.animate(el,[{transform:'translate(0,0)'},{transform:'translate('+Math.round(rb.left-ra.left)+'px,'+Math.round(rb.bottom-ra.bottom)+'px)'}],{duration:tokenMs('--pmx-t-move',320),easing:ease,fill:'forwards'});
   if(!an){el.remove();return;}an.onfinish=()=>el.remove();an.oncancel=()=>el.remove();
  }

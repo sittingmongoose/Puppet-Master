@@ -769,7 +769,7 @@
   }
   function groundOf(el) {
     for (var e = el; e && e.nodeType === 1; e = e.parentElement) { var c = getComputedStyle(e).backgroundColor; if (isOpaque(c)) return c; }
-    return getComputedStyle(document.body).backgroundColor || '#000';
+    return getComputedStyle((window.PM56_HOST?window.PM56_HOST.root():document.body)).backgroundColor || '#000';
   }
   function textLayer(text, font, lh, color, width) {
     var d = document.createElement('div'); d.className = 'tx-fly tx-fly-text'; d.textContent = text;
