@@ -381,13 +381,28 @@ async function browser() {
   /* answer every round with Accept all until What we agreed is open; notes whether it waited on a lookup on the way */
   const answerAll = async (maxMs = 30000) => {
     let waited = false; const t0 = Date.now();
+    await ev(() => {
+      const root = window.PM56_HOST?.root?.() || document.body, tid = PM56_EXT.ctx().state.selectedThread;
+      const p = window.__c56AnswerLookup = { seen: false, witness: null };
+      const read = () => { const el = root.querySelector('.wg-lookup'); if (el && PM56_EXT.ctx().state.selectedThread === tid) { p.seen = true; p.witness = { thread: tid, at: performance.now(), text: el.textContent }; } };
+      p.observer = new MutationObserver(read); p.observer.observe(root, { childList: true, subtree: true, characterData: true }); read();
+    });
+    const done = async agreed => {
+      const observed = await ev(() => ({ seen: !!__c56AnswerLookup.seen, witness: __c56AnswerLookup.witness }));
+      return { agreed, waited: waited || observed.seen, lookupWitness: observed.witness };
+    };
+    try {
     while (Date.now() - t0 < maxMs) {
-      if (await ev(() => !!document.querySelector('.wg-agreed[data-state="open"]'))) return { agreed: true, waited };
-      if (await ev(() => !!document.querySelector('.qs-grill [data-action="qs-accept-round"]'))) { await page.locator('.qs-grill [data-action="qs-accept-round"]').first().click(); await sleep(1300); continue; }
       if (await ev(() => !!document.querySelector('.wg-lookup'))) waited = true;
+      if (await ev(() => !!document.querySelector('.wg-agreed[data-state="open"]'))) return await done(true);
+      if (await ev(() => !!document.querySelector('.qs-grill [data-action="qs-accept-round"]'))) {
+        await page.locator('.qs-grill [data-action="qs-accept-round"]').first().click({ timeout: 1500 }).catch(e => { if (!/Timeout|detached|not attached/.test(e.message)) throw e; });
+        await sleep(500); continue;
+      }
       await sleep(500);
     }
-    return { agreed: false, waited };
+    return await done(false);
+    } finally { await ev(() => { window.__c56AnswerLookup?.observer.disconnect(); delete window.__c56AnswerLookup; }); }
   };
   const wonLanes = () => ev(() => [...document.querySelectorAll('.pmx-lane[data-k*=":"]')].filter(l => /Wonderer/.test(l.querySelector('.pmx-lane-name')?.textContent || '')).map(l => l.textContent));
   try {
