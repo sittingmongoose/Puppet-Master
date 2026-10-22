@@ -387,8 +387,12 @@ async function browser() {
     let resumed = false; const t0 = Date.now();
     await ev(() => {
       const root = window.PM56_HOST?.root?.() || document.body, tid = PM56_EXT.ctx().state.selectedThread;
-      const p = window.__c56AnswerLookup = { seen: false, witness: null, since: null, samples: 0 };
+      const p = window.__c56AnswerLookup = { seen: false, witness: null, since: null, samples: 0, agreedFacts: null };
       const read = () => {
+        if (p.agreedFacts == null && PM56_EXT.ctx().state.selectedThread === tid && root.querySelector('.wg-agreed[data-state="open"]')) {
+          const run = PM56_COLLAB.run(PM56_WG_DEMOS.snapshot()?.runId);
+          p.agreedFacts = run?.grill?.tree.filter(n => n.kind === 'fact').map(n => ({ id: n.id, state: n.state })) || [];
+        }
         const el = [...root.querySelectorAll('.wg-lookup')].find(el => /next round waits for it/.test(el.textContent));
         const r = el?.getBoundingClientRect(), h = r && document.elementFromPoint(r.left + Math.min(20, r.width / 2), r.top + r.height / 2);
         if (el && r.width && r.height && h && (h === el || el.contains(h)) && PM56_EXT.ctx().state.selectedThread === tid) {
@@ -401,9 +405,9 @@ async function browser() {
     const done = async agreed => {
       const observed = await ev(() => {
         const r = PM56_COLLAB.run(PM56_WG_DEMOS.snapshot()?.runId);
-        return { seen: !!__c56AnswerLookup.seen, witness: __c56AnswerLookup.witness, facts: r?.grill?.tree.filter(n => n.kind === 'fact').map(n => ({ id: n.id, state: n.state })) || [] };
+        return { seen: !!__c56AnswerLookup.seen, witness: __c56AnswerLookup.witness, agreedFacts: __c56AnswerLookup.agreedFacts, facts: r?.grill?.tree.filter(n => n.kind === 'fact').map(n => ({ id: n.id, state: n.state })) || [] };
       });
-      return { agreed, waited: observed.seen && (!resumeOnLookup || observed.facts.length > 0 && observed.facts.every(n => n.state === 'found')), lookupWitness: observed.witness, factsAfter: observed.facts };
+      return { agreed, waited: observed.seen && (!resumeOnLookup || observed.agreedFacts?.length > 0 && observed.agreedFacts.every(n => n.state === 'found')), lookupWitness: observed.witness, factsWhenAgreedOpened: observed.agreedFacts, factsAfter: observed.facts };
     };
     try {
     while (Date.now() - t0 < maxMs) {

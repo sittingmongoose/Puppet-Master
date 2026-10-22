@@ -48,7 +48,11 @@ for (const flow of flows) {
     const click = async selector => {
       const el = page.locator(selector).filter({ visible: true }).first();
       if (!await el.count() || !await el.isEnabled()) return false;
-      await el.scrollIntoViewIfNeeded(); await page.waitForTimeout(900); await el.click();
+      try {
+        await el.scrollIntoViewIfNeeded({ timeout: 1800 }); await page.waitForTimeout(900);
+        if (!await el.isVisible() || !await el.isEnabled()) return false;
+        await el.click({ timeout: 1800 });
+      } catch (e) { if (/Timeout|detached|not attached/.test(e.message)) return false; throw e; }
       moves.push({ selector, elapsedMs: Date.now() - start }); return true;
     };
     while (Date.now() - start < 240000) {
