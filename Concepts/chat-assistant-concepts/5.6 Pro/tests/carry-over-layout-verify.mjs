@@ -57,11 +57,14 @@ async function installMeasurements() {
         if (/hidden|clip|auto|scroll/.test(cs.overflowY)) { clip.top = Math.max(clip.top, r.top); clip.bottom = Math.min(clip.bottom, r.bottom); }
       }
       const rs = rects(el), clipped = !rs.length || rs.some(r => r.left < clip.left - .6 || r.right > clip.right + .6 || r.top < clip.top - .6 || r.bottom > clip.bottom + .6);
+      const misses = [];
       const hit = rs.every(r => [0.1, 0.5, 0.9].every(f => {
         const h = document.elementFromPoint(r.left + r.width * f, r.top + r.height * .5);
-        return !!h && (el.contains(h) || h.contains(el));
+        const ok = !!h && (el.contains(h) || h.contains(el));
+        if (!ok) misses.push({ x: r.left + r.width * f, y: r.top + r.height * .5, top: h ? `${h.tagName}#${h.id}.${h.className?.baseVal ?? h.className}` : null });
+        return ok;
       }));
-      return { text: el.textContent.trim(), rects: rs, clip, clipped, hit };
+      return { text: el.textContent.trim(), rects: rs, clip, clipped, hit, ...(misses.length ? { misses } : {}) };
     };
     const overlap = (a, b) => Math.min(a.right, b.right) - Math.max(a.left, b.left) > .5 && Math.min(a.bottom, b.bottom) - Math.max(a.top, b.top) > .5;
     window.__c56layout = { box, rects, inspect, visible, overlap, ink };
@@ -79,6 +82,7 @@ async function sheet(kind) {
 }
 async function shelf() {
   await page.locator('#pmOverlayRoot .pmx-shelf .pmx-q-head').scrollIntoViewIfNeeded();
+  await page.evaluate(() => new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve))));
   return ev(() => {
     const M = __c56layout, h = document.querySelector('#pmOverlayRoot .pmx-shelf .pmx-q-head');
     const parts = ['.pmx-q-n', '.pmx-q-title', '.pmx-q-meta'].map(s => h?.querySelector(s)).filter(Boolean).map(M.inspect);
@@ -95,6 +99,7 @@ async function chrome() {
     const el = page.locator(sel).first();
     if (!await el.count()) { out.push({ missing: sel, clipped: true }); continue; }
     await el.scrollIntoViewIfNeeded();
+    await page.evaluate(() => new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve))));
     out.push(...await ev(sel => {
       const M = __c56layout, el = document.querySelector(sel);
       return (sel.includes('roster') ? [...el.querySelectorAll('.pmx-roster-col > b')].filter(c => /Persona/.test(c.textContent)) : [el]).map(M.inspect);
