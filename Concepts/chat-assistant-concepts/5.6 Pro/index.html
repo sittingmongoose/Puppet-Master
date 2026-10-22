@@ -71402,7 +71402,9 @@ function playback(ctx){const tid=ctx.thread.id,s=store.sessions[tid],r=get(s?.wo
  }
  function follow(){while(s.play.step<list.length){const b=list[s.play.step];if(b.until?b.until():b.skip&&b.skip())s.play.step++;else break;}if(s.play.step===list.length){s.play.done=true;r.demoPlaybackDone=true;}}
  s.play.say=()=>{follow();return s.play.done?(r.flow==='recovery'?'Done · The original Plan run completed. Normalization was reused, and the independently checked total is 9,532 cents.':'Done · The Plan still opens the exact V1 evidence after source V2 appears. Exploring its documents admitted no work.'):list[s.play.step].say;};
- const pl=RP.play({key:'b17',live:()=>store.sessions[tid]===s&&s.guide!==false,threads:()=>[tid],next:()=>{follow();const i=s.play.step,b=list[i];if(!b||b.until)return null;return {id:'b17:'+i,wait:b.wait,run:()=>Promise.resolve(b.run()).then(ok=>{if(ok!==false&&s.play.step===i)s.play.step++;return ok;})};},render:()=>c().renderApp(),superseded:()=>{s.guide=false;}});players.set(tid,pl);
+ const pl=RP.play({key:'b17',live:()=>store.sessions[tid]===s&&s.guide!==false,threads:()=>[tid],next:()=>{follow();const i=s.play.step,b=list[i];if(!b||b.until)return null;/* a step's sentence shows once it becomes current (the product may get there by itself, as the failed lookup does): its
+   time on screen counts from then, not from the last press */
+const at=RP.seen(s,'b17:'+i);return {id:'b17:'+i,wait:b.wait,notBefore:at+b.wait,since:at,run:()=>Promise.resolve(b.run()).then(ok=>{if(ok!==false&&s.play.step===i)s.play.step++;return ok;})};},render:()=>c().renderApp(),superseded:()=>{s.guide=false;}});players.set(tid,pl);
 }
 function guide(ctx,doc=false){const s=store.sessions[ctx.thread.id],r=get(s?.workId);if(!r||s.guide===false||ctx.state.dialog||doc!==(innerWidth<=1100&&ctx.state.editorRevealed))return '';const pl=players.get(ctx.thread.id),failed=!!pl?.errors.length,text=failed?'The recording stopped because a control was unavailable. Replay starts it again.':s.play?s.play.say():!r.planId?'Send the prepared request. Build remains a separate explicit action.':r.failure?'Open the workspace, reconnect the original input, then Retry on the Plan.':'Use the Plan and workspace controls.';
  return PM56_SHELL.pmxGuide({key:'b17-guide',cls:'b17-guide',placement:doc?'doc':'dock',step:ctx.esc(RP.steady(s,text,/^(Your move|Done)/.test(text),()=>E.ctx().renderApp())),actions:s.play?.done||failed?[{action:'b17-replay',label:'Replay'}]:[],next:pl&&pl.progress(),close:{action:'b17-close',label:'Close guide'}});}
@@ -71704,7 +71706,8 @@ function say(ctx,r){const m=record(r),b=build(r),pl=players.get(r.threadId);
  return {text:'The next window opened and the same run resumed. The rest of the work is running.'};}
 function controlsTry(ctx,r){return '<details class="b18-clock" '+(r.clockOpen?'open':'')+'><summary>'+PM56_SHELL.pmxGlyph('chevron-down',13)+'<span>Try it yourself: demo clock and controls</span></summary><div class="b18-controls">'+controls(ctx,r)+'</div></details>';}
 E.slot('composerBelow',ctx=>{
- const r=sessions.get(ctx.thread.id);if(!r||r.closed||ctx.state.dialog)return '';
+ /* hidden behind a sheet, but for a harness driving the lab by hand (PM56_RECPLAY_HOLD), as the lab always was */
+ const r=sessions.get(ctx.thread.id);if(!r||r.closed||ctx.state.dialog&&!window.PM56_RECPLAY_HOLD)return '';
  /* a session another example built on (Batch 18's crew example) keeps its own guide text and its controls */
  if(r.instruction){const title=r.guideTitle||'Recurring execution windows';
   return PM56_SHELL.pmxGuide({key:'b18-guide',cls:'b18-guide',attrs:'data-b18-flow="'+ctx.esc(r.flow)+'"',placement:'dock',caption:'Guided example · '+ctx.esc(title)+' · no AI cost',step:ctx.esc(r.instruction),
@@ -71849,7 +71852,7 @@ function say(ctx,r){const m=message(r),target=room(r),pl=players.get(r.threadId)
  if(m.state==='sent')return {text:'Done · One scheduled message, in two places: this chat and the room’s discussion, ready for its next round. It went to this exact room and nowhere else.',done:true};
  if(m.state==='held')return {text:'Held: the room can’t take it right now, so the message waits instead of going anywhere else.',done:true};
  return {text:'Scheduled for this room, tomorrow at 9:00. Next: the clock reaches 9:00.'};}
-function guide(ctx){const r=get();if(!r||r.closed||ctx.state.dialog)return '';const m=message(r),target=room(r),ref=m?.attachment_refs[0]?.snapshot_ref;
+function guide(ctx){const r=get();if(!r||r.closed||ctx.state.dialog&&!window.PM56_RECPLAY_HOLD)return '';const m=message(r),target=room(r),ref=m?.attachment_refs[0]?.snapshot_ref;
  let controls='';
  if(r.flow==='folder'){
   if(!m)controls=button('att-upload-folder','Choose a folder')+button('b18c-sample-folder','Load sample folder (fixture)');
@@ -71859,7 +71862,7 @@ function guide(ctx){const r=get();if(!r||r.closed||ctx.state.dialog)return '';co
  const s=say(ctx,r),text=RP.steady(r,s.text,!!s.done,()=>E.ctx().renderApp()),pl=players.get(r.threadId),end=s.done&&text===s.text;
  /* the one pmx guide look (G-25); the demo controls only once the recording has ended, folded */
  return PM56_SHELL.pmxGuide({key:'b18c-guide',cls:'b18c-guide',attrs:'data-b18c-flow="'+ctx.esc(r.flow)+'"',placement:'dock',caption:'Recorded example · no AI cost',step:ctx.esc(text),
-  extra:(r.note?'<p class="b18-decision" role="status">'+ctx.esc(r.note)+'</p>':'')+(end||window.PM56_RECPLAY_HOLD?'<details class="b18-clock b18c-try"><summary>'+PM56_SHELL.pmxGlyph('chevron-down',13)+'<span>Try it yourself: demo clock and controls</span></summary><div class="b18c-controls">'+controls+'</div></details>':''),
+  extra:(r.note?'<p class="b18-decision" role="status">'+ctx.esc(r.note)+'</p>':'')+(end||window.PM56_RECPLAY_HOLD?'<details class="b18-clock b18c-try"'+(window.PM56_RECPLAY_HOLD?' open':'')+'><summary>'+PM56_SHELL.pmxGlyph('chevron-down',13)+'<span>Try it yourself: demo clock and controls</span></summary><div class="b18c-controls">'+controls+'</div></details>':''),
   actions:end?[{action:'b18c-replay',label:'Replay'}]:[],next:pl?pl.progress():null,close:{action:'b18c-close',label:'Close the example'}});
 }
 E.action('b18c-replay',ctx=>{const r=get();if(r){r.closed=true;const pl=players.get(r.threadId);if(pl)pl.stop();begin(r.flow);}return true;});
@@ -71946,7 +71949,7 @@ function playback(ctx){const r=current();if(!r)return;stopPlayback(r.threadId);r
   const run=beat.run;return {...beat,run:()=>Promise.resolve(run()).then(ok=>{if(ok!==false&&r.play.step===i&&(!b.wand||beat.id.endsWith(':row')))r.play.step++;return ok;})};},render:()=>c().renderApp(),superseded:()=>{r.guide=false;}});players.set(r.threadId,pl);
 }
 function button(action,label,extra){return '<button class="soft-button" data-action="'+action+'" '+(extra||'')+'>'+label+'</button>';}
-function guide(ctx,doc=false){const r=sessions.get(ctx.thread.id);if(!r||r.guide===false||ctx.state.dialog||doc!==(innerWidth<=1100&&ctx.state.editorRevealed))return '';const pl=players.get(r.threadId),failed=!!pl?.errors.length,text=failed?'The recording stopped because a control was unavailable. Replay starts it again.':r.play?r.play.say():r.hint;
+function guide(ctx,doc=false){const r=sessions.get(ctx.thread.id);if(!r||r.guide===false||ctx.state.dialog&&!window.PM56_RECPLAY_HOLD||doc!==(innerWidth<=1100&&ctx.state.editorRevealed))return '';const pl=players.get(r.threadId),failed=!!pl?.errors.length,text=failed?'The recording stopped because a control was unavailable. Replay starts it again.':r.play?r.play.say():r.hint;
  /* a harness that drives the journey by hand (PM56_RECPLAY_HOLD: tests/b19) keeps the lab's own controls */
  const lab=window.PM56_RECPLAY_HOLD?'<div class="b18-controls">'+(r.flow==='intake'?button('b19-open-picker','Open attach picker')+button('b19-retry-failed','Retry failed sample')+button('b19-download-first','Download first ready'):r.flow==='live'?button('b19-open-live-details','Open live Details')+button('b19-simulate-drift','Simulate working-tree change')+button('b19-download-stored','Download stored version'):button('b19-open-folder-details','Open manifest Details')+button('b19-record-receipt','Record materialization receipt')+button('b19-freeze-folder','Freeze manifest for schedule'))+'</div>'+(r.last?'<p class="b18-decision" role="status">'+ctx.esc(r.last)+'</p>':''):'';
  return PM56_SHELL.pmxGuide({key:'b19-guide',cls:'att-guide b19-guide',placement:doc?'doc':'dock',step:ctx.esc(RP.steady(r,text,/^Done/.test(text),()=>E.ctx().renderApp())),extra:lab,actions:r.play?.done||failed?[{action:'b19-replay',label:'Replay'}]:[],next:pl&&pl.progress(),close:{action:'b19-close',label:'Close guide'}});}
